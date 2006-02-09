@@ -1,0 +1,14 @@
+Package: fPortfolio
+Version: 220.10063
+Date: 1996 - 2005
+Title: Financial Software Collection - fPortfolio
+Author: Diethelm Wuertz and many others, see the SOURCE file
+Depends: R (>= 1.9.0), methods, fBasics, fCalendar, fSeries, fMultivar, fExtremes
+Maintainer: Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
+Description: fPortfolio from Rmetrics
+	Rmetrics is an Environment and 
+	Software Collection for teaching
+	"Financial Engineering and Computational Finance"
+License: GPL Version 2 or laterLicense: GPL Version 2 or later
+URL: http://www.rmetrics.org
+Packaged: Wed Nov  2 08:27:08 2005; myself

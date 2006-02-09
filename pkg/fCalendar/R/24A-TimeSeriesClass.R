@@ -1,0 +1,1609 @@
+
+# This library is free software; you can redistribute it and/or
+# modify it under the terms of the GNU Library General Public
+# License as published by the Free Software Foundation; either
+# version 2 of the License, or (at your option) any later version.
+#
+# This library is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
+# GNU Library General Public License for more details.
+#
+# You should have received a copy of the GNU Library General 
+# Public License along with this library; if not, write to the 
+# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+# MA  02111-1307  USA
+
+# Copyrights (C)
+# for this R-port: 
+#   1999 - 2004, Diethelm Wuertz, GPL
+#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
+#   info@rmetrics.org
+#   www.rmetrics.org
+# for the code accessed (or partly included) from other R-ports:
+#   see R's copyright and license files
+# for the code accessed (or partly included) from contributed R-ports
+# and other sources
+#   see Rmetrics's copyright file
+
+
+################################################################################
+# FUNCTION:            GENERATION OF TIME SERIES OBJECTS:
+#  'timeSeries'         S4 Class definition for a 'timeSeries' object
+#  timeSeries           Creates a 'timeSeries' object from scratch
+#  read.timeSeries      Reads from a spreadsheet and creates a 'timeSeries'
+# METHODS:
+#   as.timeSeries       S3: Creates a dummy 'time Series' from a 'matrix'
+#   is.timeSeries       S3: Tests for a 'timeSeries' object
+#   print.timeSeries    S3: Print method for a 'timeSeries' object
+#   plot.timeSeries     S3: Plot method for a 'timeSeries' object
+#   lines.timeSeries    S3: Lines method for a 'timeSeries' object
+#   Ops.timeSeries      S3: Arith method for a 'timeSeries' object
+#   [.timeSeries        S3: [ method for a 'timeSeries' object
+#   head.timeSeries     S3: returns the head of a 'timeSeries' object
+#   tail.timeSeries     S3: returns the tail of a 'timeSeries' object
+# FUNCTION:            REPRESENTATION OF TIME SERIES OBJECTS:
+#  seriesData           Extracts data slot from 'timeSeries' object
+#  seriesPositions      Extracts positions slot from 'timeSeries' object
+# METHODS:
+#  start.timeSeries     S3: Extracts start date of a 'timeSeries' object 
+#  end.timeSeries       S3: Extracts end date of a 'timeSeries' object 
+#  as.vector.timeSeries S3: Converts a univariate 'timeSeries' to a vector
+#  as.matrix.timeSeries S3: Converts a 'timeSeries' to a matrix
+#  as.data.frame.timeS* S3: Converts a 'timeSeries' to a data.frame
+# FUNCTION:            MATHEMATICAL OPERATIONS ON TIME SERIES OBJECTS:
+#  applySeries          Applies a function to margins of a 'timeSeries'         
+#  cutSeries            Cuts out a piece from a 'timeSeries' object
+#  mergeSeries          Merges a 'timeSeries' object with a 'matrix'
+#  returnSeries         Computes returns from a 'timeSeries' object
+#  revSeries            Reverts a 'timeSeries' object
+#  diffSeries           Differences a 'timeSeries' object
+#  lagSeries            Lags a 'timeSeries' object
+#  outlierSeries        Removes outliers from a 'timeSeries' object
+#  logSeries            Returns logarithms of a 'timeSeries' object
+#  absSeries            Returns abolute values of a 'timeSeries' object
+# FUNCTION:            FOR DAILY OPERATIONS:
+#  alignDailySeries     Aligns a 'timeSeries' object to new positions 
+#  ohlcDailyPlot        Plots open–high–low–close bar chart         
+################################################################################
+
+
+################################################################################
+# GENERATION OF TIMESERIES OBJECTS:
+#   We have defined a 'timeSeries' class which is in many aspects similar
+#   to the S-Plus class with the same name, but has also some important
+#   differeneces. The class has seven Slots, the 'Data' slot which holds 
+#   the time series data in matrix form, the 'position' slot which holds
+#   the time/date as a character vector, the 'format' and 'FinCenter'
+#   slots which are the same as for the 'timeDate' object, the 'units'
+#   slot which holds the column names of the data matrix, and a 'title'
+#   and a documentation' slot which hold descriptive character strings.
+#   Date and time is managed in the same way as for 'timeDate' objects.
+
+
+# ------------------------------------------------------------------------------
+
+require(methods)
+
+
+# ------------------------------------------------------------------------------
+
+
+setClass("timeSeries", 
+    # A class implemented by Diethelm Wuertz
+    
+    # Description:
+    #   Class representatation for 'timeSeries' Objects.
+   
+    # CLASS:
+    
+    representation(
+        Data = "matrix",
+        positions = "character",
+        format = "character",
+        FinCenter = "character",      
+        units = "character",
+        recordIDs = "data.frame",
+        title = "character",
+        documentation = "character")    
+)
+   
+
+# ------------------------------------------------------------------------------
+
+
+timeSeries =
+function (data, charvec, units = NULL, format = "ISO", zone = "GMT", 
+FinCenter = myFinCenter, recordIDs = data.frame(), title = NULL, 
+documentation = NULL, ...) 
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Creates a 'timeSeries' object from scratch.
+    
+    # Arguments:
+    #   data -a 'data frame or a 'matrix' object of numeric data.
+    #   charvec - a character vector of dates and times.
+    #   units - an optional units string, NULL defaults an empty 
+    #       string.
+    #   format - the format specification of the input character 
+    #       vector.
+    #   zone - the time zone or financial center where the data were 
+    #       recorded.
+    #   FinCenter - a character with the the location of the  
+    #       financial center named as "continent/city". 
+    #   recordIDS - stores record IDs in form of a data frame
+    #   title - an optional title string, if not specified the inputs 
+    #       data name is deparsed.
+    #   documentation - optional documentation string.
+    
+    # Value:
+    #   Returns a S4 object of class 'timeSeries'.
+    #   positions - these are the POSIX date/time strings created  
+    #       by default from the dimnames of the data matrix, or 
+    #       alternatively if the data are read from a CSV file, 
+    #       the first column is expected to hold the positions, 
+    #       and the column name the "format" string.
+    
+    # Details:
+    #    This is a minimal implementation of the SPLUS "timeSeries" 
+    #    object.
+    
+    # Example:
+    #   data.mat = matrix(round(rnorm(30),2), 10)
+    #   charvec =  paste("2004-01-", c(paste("0", 1:9, sep=""), 10:30), sep="")
+    #   timeSeries(data.mat, charvec)
+   
+    # FUNCTION:
+
+    # Trace:
+    if (FinCenter == "") FinCenter = "GMT"
+    trace = FALSE
+    
+    # To Character Vector:
+    charvec = as.character(charvec)
+    
+    # To Matrix:
+    data = as.matrix(data)
+         
+    # Format:
+    if (format == "" | format == "ISO") {
+        if (nchar(charvec[1]) == 10) 
+            format = "%Y-%m-%d" else format = "%Y-%m-%d %H:%M:%S" } 
+
+    # Create 'timeDate' object:     
+    timeDates = timeDate(charvec = charvec, format = format, zone = zone, 
+        FinCenter = FinCenter) 
+        
+    # Add Dimnames:
+    rownames(data) = format.POSIXlt(timeDates@Data)
+    if (is.null(units)) units = paste("TS.", 1:dim(data)[2], sep="")
+    colnames(data) = units
+    
+    # Add title and Documentation:
+    if (is.null(title)) title = "Time Series Object"
+    doc = paste("Created at", Sys.timeDate()@FinCenter, Sys.timeDate()@Data)
+    if (is.null(documentation)) documentation = doc
+    
+    # Return Value:
+    new("timeSeries", 
+        Data = as.matrix(data), 
+        positions = rownames(data),
+        format = timeDates@format,
+        FinCenter = timeDates@FinCenter,  
+        units = as.character(units), 
+        recordIDs = as.data.frame(recordIDs),
+        title = as.character(title), 
+        documentation = as.character(documentation) )            
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+read.timeSeries =
+function(file, zone = "GMT", FinCenter = "", title = "", 
+documentation = "", sep = ";")
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Reads from a spreadsheet and creates a 'timeSeries' object
+    
+    # Arguments:
+    #   file - the filename of a spreadsheet data set from which
+    #       to import the data records.
+    #   zone - the time zone or financial center where the data were 
+    #       recorded.
+    #   FinCenter - a character with the the location of the  
+    #       financial center named as "continent/city". By default
+    #       an empty string which means that internally "GMT" will
+    #       be used.
+    #   title - an optional title string, if not specified the inputs 
+    #       data name is deparsed.
+    #   documentation - optional documentation string.
+    
+    # Value:
+    #   Returns a S4 object of class 'timeSeries'.
+    
+    # Notes:
+    #   Note we expect that the header of the spreadsheet file in
+    #   the first cell holds the time/date format specification! 
+    
+    # FUNCTION:
+    
+    # Financial Center:
+    if (FinCenter == "") FinCenter = "GMT"
+    
+    # Read Data:
+    zfile = zip.file.extract(file, "Rdata.zip")
+    header = scan(zfile, what = "", nlines = 1, sep = sep, quiet = TRUE)
+    x = read.table(zfile, header = TRUE, sep = sep)
+    n = dim(x)[2]
+    data = as.matrix(x[, 2:n])
+    charvec = as.character(as.vector(x[, 1]))
+    format = header[1]
+    units = header[2:n]
+    
+    # Create Time Series:
+    ans = timeSeries(data, charvec, units, format, zone = "GMT", 
+        FinCenter, recordIDS = data.frame(), title = "", 
+        documentation = file) 
+        
+    # For dates only, cut format string:
+    if (nchar(ans@positions[1]) == 10) 
+        ans@format = substring(ans@format, 1, 8)
+        
+    # Return Value:
+    ans
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+as.timeSeries =
+function(x, dimnames = TRUE, format = "") 
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Creates a dummy time Series object from a matrix
+    
+    # Arguments:
+    #   x - a 'matrix' object to be converted.
+    #   dimnames - a logical, if TRUE the dimension names of the
+    #       matrix are assigned to the time series object
+    #   format - a character string with the format in POSIX 
+    #       notation to be passed to the time series object
+    
+    # Value:
+    #   Returns a S4 object of class 'timeSeries'.
+    
+    # FUNCTION:
+    
+    # Is it a command like "as.timeSeries(data(nyse))" ?
+    if (is.character(x)) {
+    	DATA = eval(x)
+    	DATA.FRAME = eval(parse(text = DATA))
+    	if (!is.data.frame(DATA.FRAME)) 
+    		stop(paste(DATA, "is not a valid data frame")) 
+    	# Try to find out the format:
+    	Format = as.character(DATA.FRAME[1,1])
+    	if (nchar(Format) == 8) format = "%Y%m%d"
+    	if (nchar(Format) == 10) format = "%Y-%m-%d"
+    	if (nchar(Format) == 12) format = "%Y%m%d%H%M"
+    	if (nchar(Format) == 16) format = "%Y-%m-%d %H:%M"
+    	if (format == "") stop("Could not identify format type")    
+    	data = as.matrix(DATA.FRAME[, -1])   
+    	charvec = as.character(DATA.FRAME[, 1])	                           
+		ans = timeSeries(data = data, charvec = charvec, 
+			units = colnames(DATA.FRAME)[-1], FinCenter = "GMT", 
+			zone = "GMT", format = format)		
+		return(ans)
+	}
+    
+    # Time Series Decoration: 
+    if (dimnames) {
+        colNames = colnames(x)[-1]
+        rowNames = as.vector(x[, 1])
+        data = as.matrix(x[, -1])
+        # DW: 2005-02-15
+        data = apply(data, 2, as.numeric)
+        ###
+    } else {
+        data = as.matrix(x)
+        rows = dim(data)[1]
+        cols = dim(data)[2]
+        colNames = as.character(1:cols)
+        rowNames = as.character(1:rows) 
+    }
+    
+    # Names:
+    colnames(data) = colNames
+    rownames(data) = rowNames 
+        
+    # Return Value:
+    timeSeries(data = data, charvec = as.character(rowNames), 
+        units = colNames, format = format, zone = myFinCenter)
+}
+   
+
+# ------------------------------------------------------------------------------
+
+
+is.timeSeries = 
+function (object) 
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Tests for a 'timeSeries' object.
+    
+    # Arguments:
+    #   object - a 'timeSeries' object to be tested.
+    
+    # Value:
+    #   Returns 'TRUE' or 'FALSE' depending on whether its
+    #   argument is of 'timeSeries' type or not.
+        
+    # FUNCTION:
+    
+    # Check:
+    ans = inherits(object, "timeSeries")
+    
+    # Return Value:
+    ans
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+print.timeSeries =
+function(x, ...)
+{   # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   Print method for an S4 object of class "timeSeries"
+        
+    # Arguments:
+    #   x - an object of class "timeSeries"
+    
+    # Value:
+    #   Prints a 'timeSeries' object.
+        
+    # FUNCTION:
+        
+    # Return Value:
+    print.default(x@Data)
+}
+
+  
+# ------------------------------------------------------------------------------
+
+
+plot.timeSeries =
+function(x, reference.grid = TRUE, lty = 1, ...) 
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Plot method for an object of class "timeSeries"
+        
+    # Arguments:
+    #   x - a "timeSeries" object
+    #   reference.grid - a logical value. Should a grid be
+    #       added to the plot?
+    
+    # Example:
+    #   data(DowJones30); x = as.timeSeries(DowJones30)
+    #   par(mfrow = c(2, 1)); plot(x[,1:3]); plot(x[,3])
+    
+    # Value:
+    #   Plots a 'timeSeries' object.
+    
+    # FUNCTION:
+    
+    # Internal Functions:
+    # Partial Copy from "its" Package
+    # Makes "its" and "Hmisc" obsolete
+    # ... these internal functions will be replaced in a future version!
+    setClass("its", 
+        representation("matrix", dates = "POSIXt"))
+    # Time Series:
+    .its <<-  
+    function(x, dates = as.POSIXct(x = strptime(dimnames(x)[[1]], format = 
+    "%Y-%m-%d")), names=dimnames(x)[[2]], format = "%Y-%m-%d",...) {
+        if(!is(dates, "POSIXt")) stop("dates should be in POSIX format")
+        dates = as.POSIXct(dates)
+        if(is.null(dim(x))){dim(x) = c(length(x),1)}
+        # addDimnames:
+        if(is.null(dimnames(x))) {dimnames(x) = list(NULL,NULL)}
+        if(is.null(dimnames(x)[[1]])&(nrow(x)>0)) dimnames(x)[[1]] = 1:nrow(x)
+        if(is.null(dimnames(x)[[2]])&(ncol(x)>0)) dimnames(x)[[2]] = 1:ncol(x) 
+        # Continue:
+        if(!(nrow(x) == length(dates))) 
+            {stop("dates length must match matrix nrows")}
+        if(!(ncol(x) == length(names))) 
+            {stop("names length must match matrix ncols")}
+        dimnames(x)[[1]] = format(dates,format=format,...)
+        dimnames(x)[[2]] = names
+        return(new("its" ,x, dates = dates)) }
+    # Time Series Plot:
+    .itsPlot <<- 
+    function(x, y, colvec = 1:ncol(x), type = "l", ltypvec = 1, lwdvec = 1, 
+    yrange, format, at, reference.grid, ...) {
+        if (missing(yrange)){ylim = range(x, na.rm = TRUE)} else {ylim = yrange}
+        firstp = TRUE
+        xdates = x@dates
+        n = dim(x)[1]
+        m = dim(x)[2]
+        # Make line control parameters correct length
+        colveclong = rep(colvec, length.out = m)
+        ltypveclong = rep(ltypvec, length.out = m)
+        lwdveclong = rep(lwdvec, length.out = m)
+        for (i in 1:m){
+            vpoints = c(1,which(!is.na(x[,i])),n)
+            xxx = x[,i] 
+            for (j in 1:ncol(xxx)) {
+                if(!firstp){par(new = TRUE)} else {firstp = FALSE}
+                plot(x = xdates[vpoints], y = xxx[vpoints, j], type = type,
+                    col = colveclong[i], ylim = ylim, lty = ltypveclong[i],
+                    lwd = lwdveclong[i], xaxt = "n", ...) } }
+        if (reference.grid) grid()
+        axis.POSIXct(x = xdates[vpoints], side = 1, at = at, format = format) }
+    # "[" Method:   
+    "[.its" <<- function(x, i, j, drop, ...) {
+        if (match("dates", names(list(...)),0) > 0) {
+            dates = list(...)[["dates"]]
+            if (!missing(i)) stop("cannot specify both dates and i")
+            if (!is(dates, "POSIXt")) stop("dates should be in POSIX format")
+            dates = as.POSIXct(dates)
+            i = match(dates, dates(x))
+            if (any(is.na(i))) stop("some dates are not found") }
+        if (missing(drop)) {drop = FALSE}
+        if (missing(i)) {i = min(1,nrow(x)):nrow(x)}
+        if (missing(j)) {j = min(1,ncol(x)):ncol(x)}
+          subx <- x@.Data[i, j, drop = drop]
+    	  dates <- x@dates[i]
+    	  ans <- new("its", subx, dates = dates)
+        return(ans) }
+        
+    # Transform:
+    x.its = .its(x@Data, dates = as.POSIXct(seriesPositions(x)), 
+        format = x@format)
+            
+    # Plot:
+    .itsPlot(x.its, ltypvec = lty, reference.grid = reference.grid, ...)
+   
+    # Return Value:
+    invisible(x)
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+lines.timeSeries =
+function(x, ...) 
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Plot method for an object of class "timeSeries"
+        
+    # Arguments:
+    #   x - a "timeSeries" object
+    #   reference.grid - a logical value. Should a grid be
+    #       added to the plot?
+        
+    # Value:
+    #   Plots a 'timeSeries' object.
+    
+    # FUNCTION:
+   
+    # Add to Plot:
+    lines(x = as.POSIXct(seriesPositions(x)), y = x@Data, ...)
+            
+    # Return Value:
+    invisible(x)
+}
+
+
+# ------------------------------------------------------------------------------
+ 
+
+Ops.timeSeries = 
+function(e1, e2 = 1)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Uses group 'Ops' generic functions for 'timeSeries' objects
+    
+    # Arguments:
+    #   e1, e2 - two objects of class 'timeSeries'.
+    
+    # Value:
+    #   Returns an object of class 'timeSeries'.
+
+    # FUNCTION:
+    
+    # Save:
+    s1 = e1
+    s2 = e2
+    
+    # Which one is a 'timeSeries' object?
+    i1 = inherits(e1, "timeSeries")
+    i2 = inherits(e2, "timeSeries")
+    
+    # Match positions and FinCenter?
+    if (i1 && i2) {
+        if (!identical(e1@positions, e2@positions)) 
+            stop("positions slot must match")
+        if (!identical(e1@FinCenter, e2@FinCenter)) 
+            stop("FinCenter slot must match") }
+            
+    # Extract Data Slot:
+    if (i1)  e1 = e1@Data
+    if (i2)  e2 = e2@Data
+        
+    # Compute:
+    s = NextMethod(.Generic)
+    
+    # Make timeSeries:
+    if (i1) { s1@Data = s; s = s1 }
+    if (!i1 && i2) { s2@Data = s; s = s2 } 
+    if (i1 && !i2) s@units = s1@units
+    if (!i1 && i2) s@units = s2@units
+    if (i1 && i2) s@units = paste(s1@units, "_", s2@units, sep ="")
+    colnames(s@Data) = s@units
+    
+    # Return Value:
+    s
+}
+    
+    
+# ------------------------------------------------------------------------------
+
+
+"[.timeSeries" =
+function(x, i = min(1, nrow(x@Data)):nrow(x@Data), 
+j = min(1, ncol(x@Data)):ncol(x@Data))
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Extracts or replaces subsets from 'timeSeries' objects
+    
+    # Arguments:
+    #   x - a 'timeSeries' object
+    #   i, j - subset indexes.
+    
+    # Value:
+    #   Returns a subset from an object 'timeSeries'.
+    
+    # FUNCTION:
+    
+    # Check Timezone:
+    if (Sys.getenv("TZ")[[1]] != "GMT") warning("Set timezone to GMT!")
+    
+    # Subsets:
+    if(missing(i)) { i <- min(1, nrow(x@Data)):nrow(x@Data) }
+    if(missing(j)) { j <- min(1, ncol(x@Data)):ncol(x@Data) }
+        
+    # Subset:
+    subx <- x@Data[i, j, drop = FALSE]
+    x@Data = subx
+    x@positions = x@positions[i]
+    x@units = colnames(subx)
+    
+    # Return Value:
+    x
+}         
+
+
+# ------------------------------------------------------------------------------
+
+
+revSeries =
+function(x) 
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Time revert 'timeSeries' objects
+    
+    # Arguments:
+    #   x - a 'timeSeries' object.
+    
+    # Value:
+    #   Returns a reverted object of class 'timeSeries'.
+    
+    # FUNCTION:
+    
+    # Revert:
+    x@Data = apply(x@Data, 2, rev)
+    x@positions = rev(x@positions)
+    
+    # Return Value:
+    x
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+diffSeries = 
+function(x, lag = 1, diff = 1, trim = FALSE, pad = NA) 
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Difference 'timeSeries' objects.
+    
+    # Arguments:
+    #   x - a 'timeSeries' object.
+    #   lag - an integer indicating which lag to use. 
+    #       By default 1.
+    #   diff - an integer indicating the order of the difference.
+    #       By default 1.
+    #   trim - a logical. Should NAs at the befinning of the
+    #       series be removed?
+    #   pad - a umeric value with which NAs should be replaced
+    #       at the befinning of the series.
+
+    # Value:
+    #   Returns a differenced object of class 'timeSeries'.
+    
+    # FUNCTION:
+        
+    # Convert:
+    y = as.data.frame(x)
+    y = as.matrix(x)
+        
+    # Check NAs:
+    if (any(is.na(y))) stop("NAs are not allowed in time series")
+        
+    # Difference:
+    z = diff(y, lag = lag, difference = diff)
+        
+    # Trim:
+    if (!trim) {
+        diffNums = dim(y)[1] - dim(z)[1]
+        zpad = matrix(0*y[1:diffNums, ] + pad, nrow = diffNums)
+        rownames(zpad) = rownames(y)[1:diffNums] 
+        z = rbind(zpad, z)}
+            
+    # Return Value:
+    timeSeries(data = z, charvec = rownames(z), units = colnames(z),
+        format = x@format, FinCenter = x@FinCenter,
+        title = x@title, documentation = x@documentation)
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+lagSeries = 
+function(x, k = 1, trim = FALSE, units = NULL)
+{   # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   Lags 'timeSeries' objects.
+    
+    # Arguments:
+    #   x - a 'timeSeries' object.
+    #   k - an integer indicating which lag to use. 
+    #       By default 1.
+    #   trim - a logical. Should NAs at the befinning of the
+    #       series be removed? 
+    
+    # Value:
+    #   Returns a lagged object of class 'timeSeries'.
+ 
+    # FUNCTION:
+    
+    # Column Names:
+    colNames = units
+    
+    # Internal Function:
+    tslagMat = function(x, k = 1) {
+        # Internal Function:
+        tslag1 = function(x, k) {
+            y = x
+            if (k > 0) y = c(rep(NA, times = k), x[1:(length(x)-k)])
+            if (k < 0) y = c(x[(-k+1):length(x)], rep(NA, times = -k))
+            y }
+        # Bind:
+        ans = NULL
+        for (i in k) {
+            ans = cbind(ans, tslag1(x, i)) }
+        # As Vector:
+        if (length(k) == 1) ans = as.vector(ans)
+        # Return Value:
+        ans }
+        
+    # Convert:
+    y = as.data.frame(x)
+    y = as.matrix(y)
+    Dim = dim(y)[2]
+    
+    # Lag on each Column:
+    z = NULL
+    for (i in 1:Dim) {
+        ts = tslagMat( y[, i], k = k)     #, trim = FALSE)
+        z = cbind(z, ts) }
+    
+    # Add Names:
+    rownames(z) = rownames(y)    
+    colnames(z) = rep(colnames(y), each = length(k)) 
+        
+    # Return Value:
+    ans = timeSeries(data = z, charvec = rownames(z), units = colnames(z),
+        format = x@format, FinCenter = x@FinCenter,
+        title = x@title, documentation = x@documentation)
+    
+    # Trim:
+    if (trim) {
+        idx = !is.na(apply(ans@Data, 1, sum))
+        ans = ans[idx,] }
+        
+    # Augment Colnames:
+    a = colnames(z)
+    kcols = rep(k, times = ncol(y))
+    b = paste("[", kcols, "]", sep="") 
+    ab = paste(a, b, sep = "")
+    colnames(ans@Data) <- ab
+    
+    # Return Value:
+    ans      
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+outlierSeries = 
+function(x, sd = 10, complement = TRUE) 
+{	# A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   Returns outliers in a timeSeries object or the complement
+    
+    # Arguments:
+    #   x - a 'timeSeries' object.
+    #	sd - a numeric value of standard deviations, e.g. 10
+    #		means that values larger or smaller tahn ten 
+    #		times the standard deviation of the series will
+    #		be removed.
+    #	complement - a logical flag, should the outler series
+    #		or its complement be returns.
+    
+    # FUNCTION:
+    
+	# Check if univariate Series:
+	if (dim(x@Data)[2] != 1) 
+    	stop("Supports only univariate timeSeries Objects")
+    
+    # Find Outliers:
+    SD = sd * sd(x@Data)
+    if (complement) {
+	    x  = x[abs(x@Data) <= SD]
+	} else {
+		x = x[abs(x@Data) > SD]
+	}
+	
+	# Return Value:
+	x
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+logSeries = 
+function(x) 
+{	# A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   Returns logarithmic values of a 'timeSeries' object
+    
+    # Arguments:
+    #   x - a 'timeSeries' object.
+    
+    # FUNCTION:
+    
+    # Absolute Values:
+    x@Data = log(x@Data)
+	
+	# Return Value:
+	x
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+absSeries = 
+function(x) 
+{	# A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   Returns absolute values of a 'timeSeries' object
+    
+    # Arguments:
+    #   x - a 'timeSeries' object.
+    
+    # FUNCTION:
+    
+    # Absolute Values:
+    x@Data = abs(x@Data)
+	
+	# Return Value:
+	x
+}
+
+
+
+# ------------------------------------------------------------------------------
+
+
+head.timeSeries = 
+function(x, ...)
+{   # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   Returns the head of a 'timeSeries' objects
+    
+    # Arguments:
+    #   x - a 'timeSeries' object.
+    
+    # Value:
+    #   Returns the head of an object of class 'timeSeries'.
+ 
+    # FUNCTION:
+    
+    # Head:
+    ans = head(as.data.frame(x), ...)
+    
+    # Return Value:
+    ans
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+tail.timeSeries = 
+function(x, ...)
+{   # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   Returns the tail of a 'timeSeries' object
+    
+    # Arguments:
+    #   x - a 'timeSeries' object.
+    
+    # Value:
+    #   Returns the tail of an object of class 'timeSeries'.
+ 
+    # FUNCTION:
+    
+    # Tail:
+    ans = tail(as.data.frame(x), ...)
+    
+    # Return Value:
+    ans
+}
+     
+
+################################################################################
+# REPRESENTATION OF TIMESERIES OBJECTS:
+#   This is a collection of functions to represent 'timeSeries' objects
+#   in different forms. Included are functions to extract the data slot 
+#   from 'timeSeries' object, to extract the position slot, to extracts 
+#   the start and end date of a 'timeSeries' object, and to convert an 
+#   an univariate "timeSeries" to a vector or 'timeSeries' objects to a
+#   matrix or data frame.
+
+
+seriesData =
+function(object)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #    Returns the series Data of an ordered data object.
+    
+    # Arguments:
+    #   object - a 'timeSeries' object
+    
+    # Value:
+    #    Returns an object of class 'matrix'.
+    
+    # FUNCTION:
+    
+    # Test:
+    if(class(object) != "timeSeries") stop("Object is not a time Series")
+    
+    # Get Data Slot:
+    ans = object@Data
+    
+    # Return Value:
+    ans
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+seriesPositions =
+function(object)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Extracts the positions of a 'timeSeries' objects and 
+    #   converts them to a 'timeDate' object.
+    
+    # Arguments:
+    #   object - a 'timeSeries' object
+    
+    # Value:
+    #   Returns 'timeSeries' positions as 'timeDate' objects.
+    
+    # FUNCTION:
+        
+    # Create 'timeDate' Object:
+    ans = timeDate(charvec = object@positions, format = object@format, 
+        zone = object@FinCenter, FinCenter = object@FinCenter)   
+        
+    # Return Value:
+    ans   
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+start.timeSeries =
+function(x, ...)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Extracts the first position as a character string
+    
+    # Arguments:
+    #   x - a 'timeSeries' object.
+    #   ... - arguments passed to other methods.
+    
+    # Value:
+    #   Returns the first time/date as an object of class 'timeDate'.
+  
+    # FUNCTION:
+    
+    # S3 Method:
+    ans = start.timeDate(seriesPositions(x))
+
+    # Return Value:
+    ans
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+end.timeSeries =
+function(x, ...)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Extracts the last position as a character string
+    
+    # Arguments:
+    #   x - a 'timeSeries' object.
+    #   ... - arguments passed to other methods.
+    
+    # Value:
+    #   Returns the last time/date as an object of class 'timeDate'.
+    
+    # FUNCTION:
+    
+    # S3 Method:
+    ans = end.timeDate(seriesPositions(x))
+
+    # Return Value:
+    ans
+}
+
+
+# ******************************************************************************
+
+
+as.vector.timeSeries =
+function(x, mode = "any") 
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Converts a univariate "timeSeries" to a vector
+
+    # Arguments:
+    #   x - a 'timeSeries' object
+    
+    # Value:
+    #   Returns the data slot of 'timesSeries' object as a vector.
+        
+    # FUNCTION:
+        
+    # Check:
+    if (class(x) != "timeSeries") 
+        stop("x is not a timeSeries object!")
+    if (dim(as.matrix(x))[[2]] != 1) 
+        stop("x is not a univariate timeSeries object!")
+        
+    # Convert:
+    rownames = dimnames(x)[[1]]
+    x = x@Data
+    class(x) = "numeric"
+    x = as.vector(x)
+    names(x) = rownames
+    
+    # Return Value:
+    x 
+}
+    
+
+# ------------------------------------------------------------------------------
+
+
+as.matrix.timeSeries =
+function(x) 
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Converts a multivariate "timeSeries" to a matrix
+
+    # Arguments:
+    #   x - a 'timeSeries' object
+    
+    # Value:
+    #   Returns the data slot of a 'timesSeries' object as a vector.
+    
+    # FUNCTION:
+    
+    # Check:
+    if (class(x) != "timeSeries") stop("x is not a timeSeries object!")
+        
+    # Convert:
+    ans = as.matrix(x@Data) # is matrix
+        
+    # Return Value:
+    ans 
+}
+    
+
+# ------------------------------------------------------------------------------
+
+
+as.data.frame.timeSeries =
+function(x, row.names = NULL, optional = NULL) 
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Converts a multivariate "timeSeries" to a data.frame
+    
+    # Arguments:
+    #   x - a 'timeSeries' object
+    #   row.names, optional - not used
+    
+    # Value:
+    #   Returns the data slot of a 'timesSeries' object as a data frame.
+    
+    # FUNCTION:
+    
+    # Check:
+    if (class(x) != "timeSeries") stop("x is not a timeSeries object!")
+        
+    # Convert:
+    dimNames = dimnames(x@Data)
+    ans = as.matrix(x@Data) 
+    dimnames(ans) = dimNames
+    ans = as.data.frame(ans)
+    
+    # Return Value:
+    ans
+}
+    
+
+################################################################################
+# MATHEMATICAL OPERATIONS ON TIMESERIES OBJECTS:
+#   This is a collection of functions to perform mathematical operations
+#   on 'timeSeries' objects. Included are functions to apply a function 
+#   to margins of a 'timeSeries', to cut out a piece from a 'timeSeries' 
+#   object, to ggregates and coursene a 'timeSeries' object, to merge 
+#   a 'timeSeries' object with a 'matrix', and to compute returns from 
+#   a 'timeSeries' object.
+
+
+applySeries =
+function(x, from = NULL, to = NULL, FUN = colAvgs, units = NULL, ...)
+{   # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   Apply a function to the margins of a 'timeSeries' object
+    
+    # Details:
+    #   This function can be used to aggregate and coursen a 
+    #   'timeSeries' object.
+    
+    # Arguments:
+    #   x - a 'timeSeries' object to be aggregated
+    #   from, to - two 'timeDate' position vectors which size the 
+    #       blocks
+    #   MARGIN - a vector giving the subscripts which the function 
+    #       will be applied over. '1' indicates rows, '2' indicates 
+    #       columns, 'c(1,2)' indicates rows and columns.
+    #   FUN - function to use for aggregation, by default 'colAvgs'
+    #   include.from, include.to - two logicals, should the
+    #       endpoints of the investigation be included? By 
+    #       default, the starting point is included, the endpoint 
+    #       not.
+    #   colNames - a character vector with column names, allows to 
+    #       overwrite the column names of the input 'timeSeries'
+    #       object.
+    
+    # Value:
+    #   Returns a S4 object of class 'timeSeries'.
+    
+    # Notes:
+    #   The size of the 'moving' window and the selection of an
+    #   'adj'-acent endpoint are not needed, all the information
+    #   is kept in the 'from' and 'to' position vectors.
+  
+    # FUNCTION:
+    
+    # Column Names:
+    colNames = units
+    
+    # Check object:
+    if (class(x) != "timeSeries") stop("s is not a timeSeries object")
+    
+    # Function:
+    fun = match.fun(FUN)
+    
+    # Blocks:
+    j.pos = as.POSIXct(seriesPositions(x))
+    j.from = as.POSIXct(from)
+    j.to = as.POSIXct(to)
+    
+    # Iterate:
+    y = x@Data
+    pos = seriesPositions(x)
+    rowNames = rownames(x@Data)
+    rowBind = NULL
+    for (i in 1:from@Dim) {
+        test = (j.pos >= j.from[i] & j.pos <= j.to[i])
+        # make sure that cutted is a matrix ...
+        cutted = as.matrix(y[test, ])
+        ### if (sum(test)>0) rownames(cutted) <- rowNames[test]
+        ans = fun(cutted, ...)
+        rowBind = rbind(rowBind, ans) 
+    }
+    rownames(rowBind) = as.character(to)
+    if (is.null(colNames)) {
+        units = x@units }
+    else {
+        units = colNames }
+    
+    # Return Value:
+    timeSeries(data = rowBind, charvec = as.character(to), units = units, 
+        format = x@format, zone = "GMT", FinCenter = x@FinCenter, 
+        title = x@title, documentation = x@documentation, ...)       
+}   
+
+
+# ------------------------------------------------------------------------------
+
+
+cutSeries = 
+function(x, from, to)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Cuts out a piece from a 'timeSeries' object.
+    
+    # Arguments:
+    #   x - a 'timeSeries' object
+    #   from, to - two 'timeDate' position vectors which size the 
+    #       blocks
+    
+    # Value:
+    #   Returns a S4 object of class 'timeSeries'.
+    
+    # FUNCTION:
+    
+    # Cut:
+    from = timeDate(from)
+    to = timeDate(to)
+    Positions = seriesPositions(x)
+    Units = x@units
+    colNames = colnames(x@Data)
+    test = (Positions >= from & Positions <= to)
+    Data = as.matrix(x@Data)[test, ]
+    Data = as.matrix(Data)
+    
+    # Replace Data Slot:
+    x@Data = Data
+    x@positions = x@positions[test]
+    x@units = Units
+    x@recordIDs = data.frame()
+    colnames(x@Data) = colNames
+    
+    # Return Value:
+    x
+}
+
+    
+# ------------------------------------------------------------------------------
+
+
+mergeSeries = 
+function(x, y, units = NULL)
+{   # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   Merges a 'timeSeries' with a 'matrix' object 
+    
+    # Arguments:
+    #   x - a 'timeSeries' object
+    #   y - a numeric matrix with the same number of rows as x
+    
+    # Value:
+    #   Returns a S4 object of class 'timeSeries'.
+    
+    # FUNCTION:
+    
+    # Test Input:
+    if (class(x) != "timeSeries") stop("x must be a timeSeries")
+    if (!is.matrix(y)) stop("y must be a matrix")
+    xRows = dim(x@Data)[1]
+    yRows = dim(as.matrix(y))[1]
+    if (xRows != yRows) stop("x and y must be of same length")
+    
+    # Bind Data:
+    x@Data = cbind(x@Data, y)
+    
+    # Add Column Names:
+    if (is.null(colnames(y))) 
+        colnames(y) <- paste("Y", 1:(dim(y)[2]), sep="")
+    colnames(x@Data) <- c(x@units, colnames(y))
+    if (!is.null(units)) {
+        x@units = units
+        colnames(x@Data) <- units }     
+    
+    # Return Value:
+    new("timeSeries", 
+        Data = x@Data, 
+        positions = x@positions, 
+        format = as.character(x@format), 
+        FinCenter = as.character(x@FinCenter),
+        units = colnames(x@Data), 
+        recordIDs = data.frame(),
+        title = as.character(x@title), 
+        documentation = as.character(x@documentation) )          
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+returnSeries =
+function(x, type = c("continuous", "discrete"), percentage = FALSE, 
+trim = TRUE, digits = 4, units = NULL)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Computes returns from a financial price series
+    
+    # Arguments:    
+    #   x - a univariate or multivariate 'timeSeries' object or a  
+    #       numeric vector or matrix.
+    #   type - a character string specifying how to compute the
+    #       returns. Valid choices are: "continuous" and "discrete". 
+    #       For the default type = "continuous", the returns are 
+    #       calculated as the logarithm differences, otherwise if 
+    #       type = "discrete", the returns are calculated as 
+    #       percentage changes. 
+    #   percentage - by default FALSE, if TRUE the series will be  
+    #       expressed in % changes.
+    #   trim - a logical flag, by default TRUE, the first missing 
+    #       observation in the return series will be removed. 
+
+    # Value:
+    #   Returns a S4 object of class 'timeSeries'.
+    
+    # FUNCTION:
+    
+    # Type:
+    type = type[1]
+    
+    # Internal Function for One Column Object:
+    getReturnsForOneColumn =
+    function(x = x, type = type, percentage = percentage) {
+        # Object has to be a vector:
+        x = as.vector(x)
+        # Continuous: Calculate Log Returns:
+        if (type == "continuous") { 
+                x = c(NA, diff(log(x))) }   
+        # Discrete: Calculate Returns:
+        if (type == "discrete") { 
+            x = c(NA, diff(c(x, NA))/x)[-(length(x)+1)] }   
+        # Percentage Return ?
+        if (percentage) { x = x*100 }
+        # Return Value:
+        x }
+        
+    # Result:
+    if (class(x) == "timeSeries") {
+        y = seriesData(x)
+        ans = NULL
+        for ( i in 1:(dim(y)[[2]]) ) {
+            ans = cbind(ans, getReturnsForOneColumn(x = y[,i], 
+                type = type, percentage = percentage)) }
+        rownames(ans) = rownames(y)
+        colnames(ans) = colnames(y)
+        ans = new("timeSeries", 
+            Data = as.matrix(ans), 
+            positions = as.character(x@positions), 
+            format = as.character(x@format), 
+            FinCenter = as.character(x@FinCenter), 
+            units = as.character(x@units), 
+            recordIDs = data.frame(),
+            title = as.character(x@title), 
+            documentation = as.character(x@documentation) ) }
+    else {  
+        x = as.vector(x)        
+        ans = getReturnsForOneColumn(x = x, type = type, 
+            percentage = percentage) }
+            
+    # Trim:
+    if (trim) ans = ans[-1, ]
+    if (percentage) digits = digits - 2
+    ans@Data = round(ans@Data, digits = digits)
+    
+    # Add New Units:
+    if (!is.null(units)){
+	    ans@units = units
+	    colnames(ans@Data) = units
+	}
+    
+    # Return Value:
+    ans
+}
+
+
+################################################################################
+
+
+alignDailySeries = 
+function (x, method = c("before", "after", "interp", "fillNA"), 
+include.weekends = FALSE, units = NULL) 
+{   # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   Aligns an univariate 'timeSeries' object to new positions
+    
+    # Arguments:
+    #   x - an object of class "timeSeries".
+    #   method - 
+    #       "before" - use the data from the row whose position is
+    #           just before the unmatched position; 
+    #       "after" - use the data from the row whose position is
+    #           just after the unmatched position; 
+    #       "linear" - interpolate linearly between "before" and 
+    #           "after". 
+    #       "fillNA" - fill missing days with NA values
+    #   include.weekends - a logical value. Should weekend dates be 
+    #       included or removed?
+    
+    # FUNCTION:
+    
+    # Settings:
+    method = method[1]
+    
+    # Internal Function
+    # Univariate Time Series Alignment:
+    alignDailySeries.OneColumn = 
+    function (x, method = method, include.weekends = include.weekends) {
+        # Settings:
+        units = x@units
+        FinCenter = x@FinCenter
+        # Units:
+        # myUnits <<- "days"
+        myUnits <- "days"
+        # Fill with NAs:
+        if (method == "fillNA") {
+            colsX = 1
+            dtCount = as.integer(julian(seriesPositions(x)))
+            cbind(dtCount, x@Data)
+            newX = rep(NA, times = colsX * (max(dtCount) - min(dtCount) + 1))
+            newX = matrix(newX, ncol = colsX)
+            index = dtCount - min(dtCount) + 1
+            newX[index, ] = x@Data
+            colnames(newX) = colnames(x@Data)
+            newPos = (min(dtCount):max(dtCount)) * 24 * 3600
+            class(newPos) = "POSIXct"
+            newPos = as.POSIXlt(newPos)
+            td = timeSeries(newX, newPos, units = colnames(newX), 
+                zone = x@FinCenter, FinCenter = x@FinCenter)}
+        # Interpolate with real Values:
+        else {
+            # Wich method ?
+            if (method == "interp") {
+                method = "linear"
+                f = 0.5 }
+            if (method == "before") {
+                method = "constant"
+                f = 0 }
+            if (method == "after") {
+                method = "constant"
+                f = 1 }
+            # Get Positions and Data:
+            positions = seriesPositions(x)
+            u = as.integer(julian(positions))
+            v = as.vector(x@Data[, 1])
+            # Approximate:
+            #   method - specifies the interpolation method to be used.  
+            #       Choices are "linear" or "constant".
+            #   f - For method="constant" a number between 0 and 1 inclusive,
+            #       indicating a compromise between left- and right-continuous
+            #       step functions. If 'y0' and 'y1' are the values to the left
+            #       and right of the point then the value is 'y0*(1-f)+y1*f' so
+            #       that 'f=0' is right-continuous and 'f=1' is left-continuous.    
+            x = u[1]:u[length(u)]
+            y = approx(u, v, xout = x, method = method, f = f)$y
+            # Create timeSeries:
+            poschar = as.character(positions)
+            td = timeSeries(y, timeSequence(from = poschar[1], 
+                to = poschar[length(poschar)], FinCenter = FinCenter, 
+                format = "%Y-%m-%d"), FinCenter = FinCenter)
+            td@format = "%Y-%m-%d" }
+        # Handle Weekends:
+        if (!include.weekends) {
+            # Internal Functions:
+            is.weekday = function(x) {
+                # x - a 'timeDate' object
+                wday = as.POSIXlt(as.POSIXct(x))$wday
+                return(!(wday == 0 | wday == 6)) }
+            # Test:
+            test = is.weekday(seriesPositions(td))
+            td@Data = as.matrix(td@Data[test, 1])
+            td@positions = td@positions[test] }
+        # Units:
+        td@units = units
+        colnames(td@Data) = units
+        ans = td
+        # Return Value:
+        ans }
+        
+    # First Column:
+    ans = alignDailySeries.OneColumn(x = x[, 1], method = method, 
+        include.weekends = include.weekends)
+        
+    # Next Columns:
+    DimX = dim(x@Data)[2]
+    if ( DimX > 1 ) {
+        for ( i in 2:DimX ) {
+            ans.add = alignDailySeries.OneColumn(x = x[, i], 
+                method = method, include.weekends = include.weekends)
+            ans = mergeSeries(ans, ans.add@Data) }  
+            
+     # Add New Units:
+    if (!is.null(units)){
+	    ans@units = units
+	    colnames(ans@Data) = units
+	}        }
+    
+    # Return Value:
+    ans
+   
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+ohlcDailyPlot =
+function(x, volume = TRUE, colOrder = c(1:5), units = 1e6, xlab = 
+c("Date", "Date"), ylab = c("Price", "Volume"), main = c("O-H-L-C", "Volume"), 
+grid.nx = 7, grid.lty = "solid", ...) 
+{   # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   Plots open–high–low–close bar chart 
+    
+    # Reference:
+    #   Build on top of Adrian Trapletti's plotOHLC()
+    #   function from his R-package "tseries".
+    
+    # FUNCTION:
+    
+    # Units:
+    # myUnits <<- "days"
+    myUnits <<- "days"
+    
+    # Internal Function:
+    addDailyNA = function(x) {
+        # Fill:
+        colsX = 5
+        dtCount = as.integer(julian(seriesPositions(x)))
+        cbind(dtCount, x@Data)
+        newX = rep(NA, times = colsX*(max(dtCount) - min(dtCount) + 1))
+        newX = matrix(newX, ncol = colsX)
+        index = dtCount - min(dtCount) + 1
+        newX[index, ] = x@Data
+        colnames(newX) = colnames(x@Data)
+        newPos = (min(dtCount):max(dtCount)) * 24 * 3600
+        class(newPos) = "POSIXct"
+        newPos = as.POSIXlt(newPos) 
+        # New Daily Time Series:
+        ans = timeSeries(newX, newPos, units = colnames(newX), 
+            zone = x@FinCenter, FinCenter = x@FinCenter)
+        # Return Value:
+        ans }
+     
+    # Next:   
+    x.filled = addDailyNA(x[, colOrder])
+    jul = as.integer(julian(seriesPositions(x.filled)))
+    X = ts(x.filled@Data[, 1:4], start = min(jul), end = max(jul))
+    
+    # plotOHLC - require ( tseries ) :
+    plotOHLC = function (x, xlim = NULL, ylim = NULL, xlab = "Time", 
+    ylab, col = par("col"), bg = par("bg"), axes = TRUE, frame.plot = 
+    axes, ann = par("ann"), main = NULL, date = c("calendar", "julian"), 
+    format = "%Y-%m-%d", origin = "1899-12-30", ...) {
+        if ((!is.mts(x)) || (colnames(x)[1] != "Open") || (colnames(x)[2] != 
+            "High") || (colnames(x)[3] != "Low") || (colnames(x)[4] != 
+            "Close")) stop("x is not a open/high/low/close time series")
+        xlabel <- if (!missing(x)) deparse(substitute(x)) else NULL
+        if (missing(ylab)) ylab <- xlabel
+        date <- match.arg(date)
+        time.x <- time(x)
+        dt <- min(lag(time.x) - time.x)/3
+        if (is.null(xlim)) xlim <- range(time.x)
+        if (is.null(ylim)) ylim <- range(x[is.finite(x)])
+        plot.new()
+        plot.window(xlim, ylim, ...)
+        segments(time.x, x[, "High"], time.x, x[, "Low"], col = col[1], bg = bg)
+        segments(time.x - dt, x[, "Open"], time.x, x[, "Open"], col = col[1], 
+            bg = bg)
+        segments(time.x, x[, "Close"], time.x + dt, x[, "Close"], 
+            col = col[1], bg = bg)
+        if (ann) title(main = main, xlab = xlab, ylab = ylab, ...)
+        if (axes) {
+            if (date == "julian") {
+                axis(1, ...)
+                axis(2, ...) }
+            else {
+                n <- NROW(x)
+                lab.ind <- round(seq(1, n, length = 5))
+                D <- as.vector(time.x[lab.ind] * 86400) + as.POSIXct(origin, 
+                    tz = "GMT")
+                DD <- format.POSIXct(D, format = format, tz = "GMT")
+                axis(1, at = time.x[lab.ind], lab = DD, ...)
+                axis(2, ...) } }
+        if (frame.plot) box(...) }
+    
+    # Plot OHLC: 
+    plotOHLC(X, origin = "1970-01-01", xlab = xlab[1], ylab = ylab[1])
+    print(axTicks(1))
+    print(axTicks(2))
+    title(main = main[1])
+    grid(nx = grid.nx, ny = NULL, lty = grid.lty, ...)
+    
+    # Include Volume?
+    if (volume) {
+        Volume = x[, 5]/units
+        plot(Volume, reference.grid = FALSE, type = "h", 
+            xlab = xlab[2], ylab = ylab[2])
+        title(main = main[2])
+        grid(nx = grid.nx, ny = NULL, lty = grid.lty, ...) }
+    
+    # Return value:
+    invisible()  
+}   
+
+   
+################################################################################
+

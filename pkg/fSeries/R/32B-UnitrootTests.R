@@ -1,0 +1,936 @@
+
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2, or (at your option)
+# any later version.
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# General Public License for more details.
+#
+# A copy of the GNU General Public License is available via WWW at
+# http://www.gnu.org/copyleft/gpl.html.  You can also obtain it by
+# writing to the Free Software Foundation, Inc., 59 Temple Place,
+# Suite 330, Boston, MA  02111-1307  USA. 
+
+# Copyrights (C)
+# for this R-port: 
+#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
+# for the code accessed (or partly included) from other R-ports:
+#   R: see R's copyright and license file
+#   ts: collected by Brian Ripley. See SOURCES
+#   tseries: Compiled by Adrian Trapletti <a.trapletti@bluewin.ch>
+#   fracdiff: S original by Chris Fraley <fraley@stat.washington.edu>
+#     R-port: by Fritz Leisch <leisch@ci.tu-wien.ac.at>
+#     since 2003-12: Martin Maechler
+#   lmtest: Torsten Hothorn <Torsten.Hothorn@rzmail.uni-erlangen.de>
+#     Achim Zeileis <zeileis@ci.tuwien.ac.at>
+#     David Mitchell
+#   mda: S original by Trevor Hastie & Robert Tibshirani
+#     R port by Friedrich Leisch, Kurt Hornik and Brian D. Ripley
+#   mgcv: Simon Wood <simon@stats.gla.ac.uk>
+#   modreg: Brian Ripley and the R Core Team
+#   polspline: Charles Kooperberg <clk@fhcrc.org>
+#   nnet: S original by Venables & Ripley. 
+#     R port by Brian Ripley <ripley@stats.ox.ac.uk>
+#       following earlier work by Kurt Hornik and Albrecht Gebhardt
+
+
+################################################################################
+# FUNCTION:                PART I:
+#  urTest                   Unit Root Test Suite
+#  adfTest                  Augmented Dickey - Fuller Unit Root Test
+#  unitrootTest             ADF Unit Root Test using McKinnons Test Statistics
+# FUNCTION:                PART II: TSERIES UNIT ROOT / COINTEGRATION TESTS
+#  .tsppTest                Phillips - Perron Unit Root Test
+#  .tskpssTest              KPSS - Unit Root Test for Stationarity
+# FUNCTION:                PART III: URCA UNIT ROOT 
+#  urdfTest                 Augmented Dickey-Fuller test for unit roots
+#  urersTest                Elliott-Rothenberg-Stock test for unit roots
+#  urkpssTest               KPSS unit root test for stationarity
+#  urppTest                 Phillips-Perron test for unit roots
+#  urspTest                 Schmidt-Phillips test for unit roots
+#  urzaTest                 Zivot-Andrews test for unit roots
+# REQUIREMENTS:            DESCRIPTION:
+#  embed                    Required from fBasics.A0-SPlusCompatibility
+################################################################################
+
+
+urTest = 
+function(x, method = c("unitroot", "adf", "urers", "urkpss", "urpp", 
+"ursp", "urza"), title = NULL, description = NULL, ...)  
+{   # A function implemented by Diethelm Wuertz
+    
+    # FUNCTION:
+    
+    # Match Function:
+    funTest = match.fun(paste(method[1], Test, sep = ""))
+    
+    # Test:
+    ans = funTest(x = x, ...)
+    
+    # Add:
+    if (!is.null(title)) ans@title = as.character(title)
+    if (!is.null(description)) ans@description = as.character(description)
+    
+    # Return Value:
+    ans
+    
+}
+        
+
+################################################################################
+# PART I:
+
+
+adfTest = 
+function(x, lags = 1, type = c("nc", "c", "ct"), title = NULL, 
+description = NULL)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:     
+    #   Tests the null hypothesis of a unit root in y.
+
+    # Arguments:
+    #   x - numeric vector
+    #   type - specifies the regression model to be estimatied and the 
+    #       null hypothesis, "nc" no constant and no trend, "c" add 
+    #       constant, "ct" add constant and trend.
+    #   lags - specifies the number of lagged differences of x to be 
+    #       included in the regression model. If 'lags' = h, a term 
+    #       sum_{i=1}^{h-1} beta_i * diff(x)_(t-h) is added to the 
+    #       regression equation. 
+
+    # Value:      
+    #   A list of class "htest" containing the following components:
+    #   statistic - the value of the test statistic (t-statistic)
+    #   parameter - the number of lags.
+    #   p.value - the p-value of the test
+    #   method - a character string indicating what type of test was performed
+    #   data.name - a character string giving the name of the data y
+
+    # Reference:   
+    #   S. E. SAID and D. A. DICKEY (1984): Testing for Unit Roots in 
+    #   Autoregressive-Moving Average Models of Unlag.diffnown Order. 
+    #   Biometrika 71, 599–607.
+    
+    # Source:
+    #   This function is an augmented version of Adrian Trapletti's
+    #   function adf.test() which considers type "ct" only. We have added
+    #   the types "c" and "nc" together with the appropriate statistics.
+
+    # Call:
+    CALL = match.call()
+    
+    # Test:
+    test = list()
+    
+    # Data Set Name:
+    DNAME = deparse(substitute(x))
+    test$data.name = DNAME   
+    
+    # Transform:
+    if (class(x) == "timeSeries") x = seriesData(x)
+    x = as.vector(x)
+    
+    # Check Arguments:
+    if (lags < 0) stop("Lags are negative")
+    
+    # Settings:
+    doprint = FALSE
+    type = type[1]  
+    lags = lags + 1
+    y = diff(x)
+    n = length(y)
+    z = embed(y, lags)
+    y.diff = z[, 1]
+    y.lag.1 = x[lags:n]
+    tt = lags:n
+   
+    # Regression:             
+    if (lags > 1) {
+        y.diff.lag = z[,2:lags]
+        if (type == "nc"){
+            res = lm(y.diff ~ y.lag.1 - 1 + y.diff.lag) }
+        if (type == "c"){
+            res = lm(y.diff ~ y.lag.1 + 1 +  y.diff.lag) }
+        if (type == "ct") {
+            res = lm(y.diff ~ y.lag.1 + 1 + tt + y.diff.lag) } 
+    } else {
+        if (type == "nc") {
+            res = lm(y.diff ~ y.lag.1 - 1) }
+        if (type == "c"){
+            res = lm(y.diff ~ y.lag.1 + 1) }
+        if (type == "ct") {
+            res = lm(y.diff ~ y.lag.1 + 1  + tt)  }
+    }
+    
+    # Regression Summary:
+    res.sum = summary(res)
+    if (doprint) print(res.sum)
+    
+    # Statistic:
+    if (type == "nc") coefNum = 1 else coefNum = 2
+    STAT = res.sum$coefficients[coefNum, 1] / res.sum$coefficients[coefNum, 2]
+    names(STAT) = "Dickey-Fuller"
+    test$statistic = STAT
+        
+    # P Value:
+    if (type == "nc")
+        table = cbind(
+            c(-2.66, -2.26, -1.95, -1.60, +0.92, +1.33, +1.70, +2.16),
+            c(-2.62, -2.25, -1.95, -1.61, +0.91, +1.31, +1.66, +2.08),
+            c(-2.60, -2.24, -1.95, -1.61, +0.90, +1.29, +1.64, +2.03),
+            c(-2.58, -2.23, -1.95, -1.62, +0.89, +1.29, +1.63, +2.01),
+            c(-2.58, -2.23, -1.95, -1.62, +0.89, +1.28, +1.62, +2.00),
+            c(-2.58, -2.23, -1.95, -1.62, +0.89, +1.28, +1.62, +2.00))
+    if (type == "c")
+        table = cbind(
+            c(-3.75, -3.33, -3.00, -2.63, -0.37, +0.00, +0.34, +0.72),
+            c(-3.58, -3.22, -2.93, -2.60, -0.40, -0.03, +0.29, +0.66),
+            c(-3.51, -3.17, -2.89, -2.58, -0.42, -0.05, +0.26, +0.63),
+            c(-3.46, -3.14, -2.88, -2.57, -0.42, -0.06, +0.24, +0.62),
+            c(-3.44, -3.13, -2.87, -2.57, -0.43, -0.07, +0.24, +0.61),
+            c(-3.43, -3.12, -2.86, -2.57, -0.44, -0.07, +0.23, +0.60))
+    if (type == "ct")
+        table = cbind(
+            c(-4.38, -3.95, -3.60, -3.24, -1.14, -0.80, -0.50, -0.15),
+            c(-4.15, -3.80, -3.50, -3.18, -1.19, -0.87, -0.58, -0.24),
+            c(-4.04, -3.73, -3.45, -3.15, -1.22, -0.90, -0.62, -0.28),
+            c(-3.99, -3.69, -3.43, -3.13, -1.23, -0.92, -0.64, -0.31),
+            c(-3.98, -3.68, -3.42, -3.13, -1.24, -0.93, -0.65, -0.32),
+            c(-3.96, -3.66, -3.41, -3.12, -1.25, -0.94, -0.66, -0.33))        
+    table = t(table)
+    tablen = dim(table)[2]
+    tableT = c(25, 50, 100, 250, 500, 1e+05)
+    tablep = c(0.01, 0.025, 0.05, 0.1, 0.9, 0.95, 0.975, 0.99)
+    tableipl = numeric(tablen)
+    for (i in (1:tablen)) 
+        tableipl[i] = approx(tableT, table[, i], n, rule = 2)$y   
+    PVAL = approx(tableipl, tablep, STAT, rule = 2)$y 
+    if (is.na(approx(tableipl, tablep, STAT, rule = 1)$y)) {
+        if (PVAL == min(tablep)) {
+            warning("p-value smaller than printed p-value") 
+        } else {
+            warning("p-value greater than printed p-value") 
+        }
+    }
+    names(PVAL) = ""
+    test$p.value = PVAL
+            
+    # Parameter:
+    PARAMETER = lags - 1
+    names(PARAMETER) = "Lag Order"
+    test$parameter = PARAMETER
+        
+    # Add:
+    if (is.null(title)) title = "Augmented Dickey-Fuller Test"
+    if (is.null(description)) description = date()
+    
+    # Add Regression:
+    test$lm = res
+    
+    # Return Value:
+    new("fHTEST", 
+        call = CALL,
+        data = list(x = x),
+        test = test, 
+        title = as.character(title),
+        description = as.character(description)
+        )   
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+unitrootTest =
+function(x, lags = 1, type = c("nc", "c", "ct"), title = NULL, 
+description = NULL)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:     
+    #   Tests the null hypothesis of a unit root in x.
+
+    # Arguments:
+    #   x - numeric vector
+    #   type - specifies the regression model to be estimatied and the 
+    #       null hypothesis, "nc" no constant and no trend, "c" add 
+    #       constant, "ct" add constant and trend.
+    #   lags - specifies the number of lagged differences of x to be 
+    #       included in the regression model. If 'lags' = h, a term 
+    #       sum_{i=1}^{h-1} beta_i * diff(x)_(t-h) is added to the 
+    #       regression equation. 
+
+    # Value:      
+    #   A list with class "htest" containing the following components:
+    #   statistic - the value of the test statistic (t-statistic)
+    #   parameter - the number of lags.
+    #   p.value - the p-value of the test
+    #   method - a character string indicating what "trend" type of 
+    #       the test was performed
+    #   data.name - a character string giving the name of the data y
+
+    # Reference:   
+    #   Said S.E., Dickey D.A. (1984): Testing for Unit Roots in 
+    #   Autoregressive-Moving Average Models of Unlag.diffnown Order. 
+    #   Biometrika 71, 599–-607.
+    
+    # Source:
+    #   This function is an augmented version of Adrian Trapletti's
+    #   function adf.test() which considers trend "ct" only. We have added
+    #   the trend types "c" and "nc" together with the appropriate statistics.
+    
+    # FUNCTION:
+    
+    # Call:
+    CALL = match.call()
+    
+    # Test:
+    test = list()
+    
+    # Data Set Name:
+    DNAME = deparse(substitute(x))
+    test$data.name = DNAME   
+    
+    # Transform:
+    if (class(x) == "timeSeries") x = seriesData(x)
+    x = as.vector(x)
+    
+    # Check Arguments:
+    if (lags < 0) stop("Lags are negative")
+    
+    # Settings:
+    type = type[1]
+    lags = lags + 1
+    y = diff(x)
+    n = length(y)
+    z = embed(y, lags)
+    y.diff = z[, 1]
+    y.lag.1 = x[lags:n]
+    tt = lags:n
+   
+    # Regression:         
+    if (lags > 1) {
+        y.diff.lag = z[,2:lags]
+        if (type == "nc"){
+            res = lm(y.diff ~ y.lag.1 - 1 + y.diff.lag) }
+        if (type == "c"){
+            res = lm(y.diff ~ y.lag.1 + 1 +  y.diff.lag) }
+        if (type == "ct") {
+            res = lm(y.diff ~ y.lag.1 + 1 + tt + y.diff.lag) } 
+        if (type == "ctt") {
+            res = lm(y.diff ~ y.lag.1 + 1 + tt + tt^2 + y.diff.lag) } 
+    } else {
+        if (type == "nc") {
+            res = lm(y.diff ~ y.lag.1 - 1) }
+        if (type == "c"){
+            res = lm(y.diff ~  y.lag.1 + 1) }
+        if (type == "ct") {
+            res = lm(y.diff ~ y.lag.1 + 1  + tt)  } 
+        if (type == "ctt") {
+            res = lm(y.diff ~ y.lag.1 + 1 + tt + tt^2) } 
+    }
+    res.sum = summary(res)
+    test$regression = res.sum
+    
+    # Statistic:
+    if (type == "nc") coefNum = 1 else coefNum = 2
+    STATISTIC = 
+        res.sum$coefficients[coefNum, 1] / res.sum$coefficients[coefNum, 2]
+    names(STATISTIC) = "DF"
+    test$statistic = STATISTIC
+       
+    # P Value:
+    if (type == "nc") { itv = 1 }
+    if (type == "c")  { itv = 2 }
+    if (type == "ct") { itv = 3 }
+    if (type == "ctt"){ itv = 4 }
+    # Statistic == "t" : itt = 1
+    PVAL1 = 
+        .urcval(arg = STATISTIC, nobs = n, niv = 1, itt = 1, itv = itv, nc = 2)
+    # Statistic == "n" : itt = 2
+    PVAL2 = 
+        .urcval(arg = STATISTIC, nobs = n, niv = 1, itt = 2, itv = itv, nc = 2)
+    PVAL = c(PVAL1, PVAL2)
+    names(PVAL) = c("t", "n")
+    test$p.value = PVAL
+          
+    # Parameter:
+    PARAMETER = lags - 1
+    names(PARAMETER) = "Lag Order"
+    test$parameter = PARAMETER
+       
+    # Add:
+    if (is.null(title)) title = "Augmented Dickey-Fuller Test"
+    if (is.null(description)) description = date()
+    
+    # Return Value:
+    new("fHTEST", 
+        call = CALL,
+        data = list(x = x),
+        test = test, 
+        title = as.character(title),
+        description = as.character(description)
+        )    
+}
+
+    
+
+################################################################################
+# PART II:
+
+
+# PACKAGE DESCRIPTION:
+#  Package: tseries
+#  Version: 0.9-21
+#  Date: 2004-04-23
+#  Title: Time series analysis and computational finance
+#  Author: Compiled by Adrian Trapletti <a.trapletti@bluewin.ch>
+#  Maintainer: Kurt Hornik <Kurt.Hornik@R-project.org>
+#  Description: Package for time series analysis and computational finance
+#  Depends: R (>= 1.9.0), quadprog
+#  License: GPL (see file COPYING)
+#  Packaged: Thu Apr 22 16:32:16 2004; hornik
+
+
+.tsppTest = 
+function(x, type = c("stationary", "explosive"), lshort = TRUE, title = NULL,
+description = NULL)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Phillips - Perron Unit Root Test
+    
+    # FUNCTION:
+    
+    # Call:  
+    CALL = match.call()
+    
+    # Test:
+    test = list()
+    
+    # Data Set Name:
+    DNAME = deparse(substitute(x))
+    test$data.name = DNAME   
+    
+    # Transform:
+    if (class(x) == "timeSeries") x = seriesData(x)
+    x = as.vector(x)
+    
+    # Statistic:
+    z = embed(x, 2)
+    yt = z[,1]
+    yt1 = z[,2]
+    n = length(yt)
+    tt = (1:n)-n/2
+    res = lm(yt ~ 1 + tt + yt1)
+    if (res$rank < 3) stop("Singularities in Regression")
+    res.sum = summary(res)
+    u = residuals(res)
+    ssqru = sum(u^2)/n
+    if (lshort) {
+        l = trunc(4*(n/100)^0.25)
+    } else { 
+        l = trunc(12*(n/100)^0.25)
+    }
+    ssqrtl = .C("ppSum", as.souble(as.vector(u)), as.integer(n), 
+        as.integer(l), ssqrtl = as.double(ssqru), PACKAGE = "fSeries")$ssqrtl
+    n2 = n^2
+    trm1 = n2*(n2-1)*sum(yt1^2)/12
+    trm2 = n*sum(yt1*(1:n))^2
+    trm3 = n*(n+1)*sum(yt1*(1:n))*sum(yt1)
+    trm4 = (n*(n+1)*(2*n+1)*sum(yt1)^2)/6
+    Dx = trm1-trm2+trm3-trm4
+    # "Z(alpha)")
+        alpha = res.sum$coefficients[3, 1]
+        STATISTIC1 = n*(alpha-1)-(n^6)/(24*Dx)*(ssqrtl-ssqru)
+        table1 = cbind(
+            c(22.5, 25.7, 27.4, 28.4, 28.9, 29.5),
+            c(19.9, 22.4, 23.6, 24.4, 24.8, 25.1),
+            c(17.9, 19.8, 20.7, 21.3, 21.5, 21.8),
+            c(15.6, 16.8, 17.5, 18.0, 18.1, 18.3),
+            c(3.66, 3.71, 3.74, 3.75, 3.76, 3.77),
+            c(2.51, 2.60, 2.62, 2.64, 2.65, 2.66),
+            c(1.53, 1.66, 1.73, 1.78, 1.78, 1.79),
+            c(0.43, 0.65, 0.75, 0.82, 0.84, 0.87)) 
+    # "Z(t_alpha)"
+        tstat = (res.sum$coefficients[3, 1]-1)/res.sum$coefficients[3, 2]
+        STATISTIC2 = sqrt(ssqru)/sqrt(ssqrtl)*tstat-(n^3) /
+            (4*sqrt(3)*sqrt(Dx)*sqrt(ssqrtl))*(ssqrtl-ssqru)
+        table2 = cbind(
+            c(4.38, 4.15, 4.04, 3.99, 3.98, 3.96),
+            c(3.95, 3.80, 3.73, 3.69, 3.68, 3.66),
+            c(3.60, 3.50, 3.45, 3.43, 3.42, 3.41),
+            c(3.24, 3.18, 3.15, 3.13, 3.13, 3.12),
+            c(1.14, 1.19, 1.22, 1.23, 1.24, 1.25),
+            c(0.80, 0.87, 0.90, 0.92, 0.93, 0.94),
+            c(0.50, 0.58, 0.62, 0.64, 0.65, 0.66),
+            c(0.15, 0.24, 0.28, 0.31, 0.32, 0.33)) 
+    STATISTIC = c(STATISTIC1, STAISTIC2)
+    names(STATISTIC) = paste("Dickey-Fuller", type)
+    
+    # P Value:
+    table = -table
+    tablen = dim(table)[2]
+    tableT = c(25, 50, 100, 250, 500, 100000)
+    tablep = c(0.01, 0.025, 0.05, 0.10, 0.90, 0.95, 0.975, 0.99)
+    tableipl = numeric(tablen)
+    for (i in (1:tablen))
+        tableipl[i] = approx(tableT, table[, i], n, rule=2)$y
+    interpol = approx(tableipl, tablep, STAT, rule=2)$y
+    if (is.na(approx(tableipl, tablep, STAT, rule=1)$y)) {
+        if (interpol == min(tablep)) {
+            warning("p-value smaller than printed p-value")
+        } else {
+            warning("p-value greater than printed p-value") 
+        }
+    }
+    if (alternative == "stationary") {
+        PVAL = interpol
+    } else if (alternative == "explosive") {
+        PVAL = 1 - interpol
+    } else {
+        stop("irregular alternative") 
+    }
+    names(PVAL) = ""
+    
+    # Parameter:
+    PARAMETER = l
+    names(PARAMETER) = "Truncation Lag"
+        
+    # Test:
+    # Alternative: alternative = type[1]
+    # type = c("Z(alpha)", "Z(t_alpha)"), 
+    test.alpha = .pp.test(x = x, alternative = type[1], 
+        type = "Z_alpha", lshort = lshort)
+    class(test.alpha) = c("list")
+    test.talpha = .pp.test(x = x, alternative = type[1], 
+        type = "Z(t_alpha)", lshort = lshort)
+    class(test.talpha) = c("list")
+    
+    # Statistic:
+    STATISTIC = c(test.alpha$statistic, test.talpha$statistic)
+    names(STATISTIC) = paste(type[1], c("DF Z(alpha)", "DF Z(t_alpha)"))
+    test$statistic = STATISTIC
+    
+    # P Value:
+    PVAL = c(test.alpha$p.value, test.talpha$p.value)
+    names(PVAL) = names(STATISTIC)
+    test$p.value = PVAL
+    
+    # P Value:
+    PARAMETER = test.alpha$parameter
+    names(PARAMETER) = "Truncation Lag"
+    test$parameter = PARAMETER
+    
+    # Add:
+    if (is.null(title)) title = "Phillips-Perron Unit Root Test"
+    if (is.null(description)) description = description = date()
+    
+    # Return Value:
+    new("fHTEST", 
+        call = CALL,
+        data = list(x = x),
+        data.name = test$data.name,
+        test = test, 
+        title = as.character(title),
+        description = as.character(description)
+        )   
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.tskpssTest = 
+function(x, type = c("level", "trend"), lshort = TRUE, title = NULL,
+description = NULL)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   KPSS - Unit Root Test for Stationarity
+    
+    # FUNCTION:
+    
+    # Call:  
+    CALL = match.call()
+    
+    # Test:
+    test = list()
+    
+    # Data Set Name:
+    DNAME = deparse(substitute(x))
+    test$data.name = DNAME   
+    
+    # Transform:
+    if (class(x) == "timeSeries") x = seriesData(x)
+    x = as.vector(x)
+
+    # Statistic:     
+    n = length(x)
+    if (type[1] == "trend") {
+        t = 1:n
+        e = residuals(lm(x ~ t))
+        table = c(0.216, 0.176, 0.146, 0.119) 
+    } else if (type[1] == "level") {
+        e = residuals(lm(x ~ 1))
+        table = c(0.739, 0.574, 0.463, 0.347) 
+    }
+    tablep = c(0.010, 0.025, 0.050, 0.100)
+    s = cumsum(e)
+    eta = sum(s^2)/(n^2)
+    s2 = sum(e^2)/n
+    if (lshort) {
+        l = trunc(3*sqrt(n)/13)
+    } else {
+        l = trunc(10*sqrt(n)/14)
+    }
+    s2 = .C("ppSum", as.double(as.vector(e)), as.integer(n),
+         as.integer(l), s2 = as.double(s2), PACKAGE = "fSeries")$s2
+    STATISTIC = eta/s2
+    names(STATISTIC) = paste("KPSS", type[1])
+    test$statistic = STATISTIC
+    
+    # P Value:
+    PVAL = approx(table, tablep, STATISTIC, rule = 2)$y
+    if (is.na(approx(table, tablep, STATISTIC, rule = 1)$y)) {
+        if (PVAL == min(tablep)) {
+            warning("p-value smaller than printed p-value")
+        } else {
+            warning("p-value greater than printed p-value") 
+        }
+    }
+    names(PVAL) = ""
+    test$p.value = PVAL
+    
+    # Parameter:
+    PARAMETER = l
+    names(PARAMETER) = "Truncation Lag"
+    test$parameter = PARAMETER
+  
+    # Add:
+    if(is.null(title)) title = paste("KPSS Test for", type[1], "Stationarity")
+    if (is.null(description)) description = date()
+    
+    # Return Value:
+    new("fHTEST", 
+        call = CALL,
+        data = list(x = x),
+        test = test, 
+        title = as.character(title),
+        description = as.character(description)
+        )   
+}
+
+
+################################################################################
+# PART III:
+
+
+#
+# Package: urca
+# Title: Unit root and cointegration tests for time series data
+# Author: Bernhard Pfaff <bernhard.pfaff@drkw.com>
+# Maintainer: Bernhard Pfaff <bernhard.pfaff@drkw.com>
+# Depends: nlme
+# Description: Unit root and cointegration tests 
+# License: GPL version 2 or newer
+#
+
+
+################################################################################
+# FUNCTION:            DESCRIPTOION:
+#  urdfTest             Augmented Dickey-Fuller test for unit roots
+#  urersTest            Elliott-Rothenberg-Stock test for unit roots
+#  urkpssTest           KPSS unit root test for stationarity
+#  urppTest             Phillips-Perron test for unit roots
+#  urspTest             Schmidt-Phillips test for unit roots
+#  urzaTest             Zivot-Andrews test for unit roots
+################################################################################
+
+
+urdfTest =
+function(x, lags = 1, type = c("nc", "c", "ct"), doplot = TRUE)
+{   # A function implemented by Diethelm Wuertz
+    
+    # Description:  
+    #   Elliott-Rothenberg-Stock test for unit roots   
+
+    # Notes:
+    #   Requires "urca" which is not part of this distribution
+    #	Wraps -
+    # 		ur.df(y, type = c("none", "drift", "trend"), lags = 1)
+    
+    # FUNCTION:
+    
+	# Compute:
+	x = as.vector(x)
+	if (type[1] == "nc") Type = "none"
+	if (type[1] == "c")  Type = "drift"
+	if (type[1] == "ct") Type = "trend"
+	
+	urca = ur.df(x, type = Type, lags = lags)
+	output = capture.output(summary(urca))[-(1:4)]
+	for (i in 1:length(output)) output[i] = paste(" ", output[i])
+	output = output[-length(output)][-3]
+	
+	# Test Results:
+	ans = list(
+		name = "ur.df", 
+		test = urca,
+		output = output,
+	)	
+	
+	# Plot:
+	if (doplot) plot(urca)
+			
+	# Return Value:
+	new("fHTEST", 
+		call = match.call(),
+		data = list(x = x),
+		test = ans,
+		title = "Augmented Dickey-Fuller Unit Root Test",
+		description = as.character(date())
+	)
+}
+    
+
+# ------------------------------------------------------------------------------
+
+
+urersTest =
+function(x, type = c("DF-GLS", "P-test"), model = c("constant", "trend"),
+lag.max = 4, doplot = TRUE)
+{   # A function implemented by Diethelm Wuertz
+    
+    # Description:  
+    #   Elliott-Rothenberg-Stock test for unit roots   
+
+    # Notes:
+    #   Requires "urca" which is not part of this distribution
+    #	Wraps -
+    # 		ur.ers(y, type = c("DF-GLS", "P-test"), 
+    #		model = c("constant", "trend"), lag.max = 4)
+    
+    # FUNCTION:
+    
+	# Compute:
+	x = as.vector(x)
+	urca = ur.ers(x, type = type[1], model = model[1], lag.max = lag.max)
+	output = capture.output(summary(urca))[-(1:4)]
+	for (i in 1:length(output)) output[i] = paste(" ", output[i])
+	output = output[-length(output)]
+	if (type[1] == "DF-GLS") output = output[-(4:7)]
+	
+	# Test Results:
+	ans = list(
+		name = "ur.ers", 
+		test = urca,
+		output = output,
+	)	
+	
+	# Plot:
+	if (doplot & type[1] == "DF-GLS") plot(urca)
+			
+	# Return Value:
+	new("fHTEST", 
+		call = match.call(),
+		data = list(x = x),
+		test = ans,
+		title = "Elliott-Rothenberg-Stock Unit Root Test",
+		description = as.character(date())
+	)
+}
+    
+
+# ------------------------------------------------------------------------------
+
+    
+urkpssTest =
+function(x, type = c("mu", "tau"), lags = c("short", "long", "nil"),
+use.lag = NULL, doplot = TRUE)
+{   # A function implemented by Diethelm Wuertz
+    
+    # Description:  
+    #   KPSS unit root test for stationarity
+
+    # Notes:
+    #   Requires "urca" which is not part of this distribution
+    #	Wraps:
+	# 		ur.kpss(y, type = c("mu", "tau"), lags = c("short", "long", "nil"), 
+	#		use.lag = NULL)
+    
+    # FUNCTION:
+    
+    # Compute:
+	x = as.vector(x)
+	urca = ur.kpss(x, type = type[1], lags = lags[1], use.lag = use.lag)
+	output = capture.output(summary(urca))[-(1:4)]
+	output = output[-length(output)]
+	for (i in 1:length(output)) output[i] = paste(" ", output[i])
+	
+	# Test Results:
+	ans = list(
+		name = "ur.kpss", 
+		test = urca,
+		output = output,
+	)	
+	
+	# Plot:
+	if (doplot) plot(urca)
+			
+	# Return Value:
+	new("fHTEST", 
+		call = match.call(),
+		data = list(x = x),
+		test = ans,
+		title = "KPSS Unit Root Test",
+		description = as.character(date())
+	)
+}   
+
+
+# ------------------------------------------------------------------------------
+
+
+urppTest =
+function(x, type = c("Z-alpha", "Z-tau"), model = c("constant", "trend"),
+lags = c("short", "long"), use.lag = NULL, doplot = TRUE)
+{   # A function implemented by Diethelm Wuertz
+    
+    # Description:  
+    #   Phillips-Perron test for unit roots
+
+    # Note:
+    #   Requires "urca" which is not part of this distribution
+    #	Wraps:
+	# 		ur.pp(x, type = c("Z-alpha", "Z-tau"), model = c("constant", 
+	#		"trend"), lags = c("short", "long"), use.lag = NULL)
+    
+    # FUNCTION:
+    
+    # Compute:
+	x = as.vector(x)
+	urca = ur.pp(x, type = type[1], mode = model[1], lags = lags[1], 
+		use.lag = use.lag)
+	output = capture.output(summary(urca))[-c(1:4, 7:10)]
+	for (i in 1:length(output)) output[i] = paste(" ", output[i])
+	output = output[-length(output)]
+	
+	# Test Results:
+	ans = list(
+		name = "ur.pp", 
+		test = urca,
+		output = output
+	)	
+	
+	# Plot:
+	if (doplot) plot(urca)
+			
+	# Return Value:
+	new("fHTEST", 
+		call = match.call(),
+		data = list(x = x),
+		test = ans,
+		title = "Phillips-Perron Unit Root Test",
+		description = as.character(date())
+	)
+}   
+    
+
+# ------------------------------------------------------------------------------
+
+
+urspTest =
+function(x, type = c("tau", "rho"), pol.deg = c(1, 2, 3, 4),
+signif = c(0.01, 0.05, 0.10), doplot = TRUE)
+{   # A function implemented by Diethelm Wuertz
+    
+    # Description:  
+    #   Schmidt-Phillips test for unit roots
+
+    # Note:
+    #   Requires "urca" which is not part of this distribution
+    #	Wraps:
+	# 		ur.sp(y, type = c("tau", "rho"), pol.deg = c(1, 2, 3, 4), 
+	#		signif = c(0.01, 0.05, 0.1))
+	
+    # FUNCTION:
+    
+    # Compute:
+	x = as.vector(x)
+	urca = ur.sp(x, type = type[1], pol.deg = pol.deg[1], signif = signif[1])
+	output = capture.output(summary(urca))[-(1:8)]
+	output = output[-length(output)]
+	for (i in 1:length(output)) output[i] = paste(" ", output[i])
+	
+	# Test Results:
+	ans = list(
+		name = "ur.pp", 
+		test = urca,
+		output = output,
+	)	
+	
+	# Plot:
+	if (doplot) plot(urca)
+			
+	# Return Value:
+	new("fHTEST", 
+		call = match.call(),
+		data = list(x = x),
+		test = ans,
+		title = "Schmidt-Phillips Unit Root Test",
+		description = as.character(date())
+	)
+}   
+
+
+# ------------------------------------------------------------------------------
+
+
+urzaTest =
+function(x, model = c("intercept", "trend", "both"), lag = 2, doplot = TRUE)
+{   # A function implemented by Diethelm Wuertz
+    
+    # Description:  
+    #   Zivot-Andrews test for unit roots
+    
+    # Note:
+    #   Requires "urca" which is not part of this distribution
+	#	Wraps:
+	# 		ur.za(y, model = c("intercept", "trend", "both"), lag)
+	
+    # FUNCTION:
+    
+   	# Compute:
+	x = as.vector(x)
+	urca = ur.za(x, model = model[1], lag = lag)
+	output = capture.output(summary(urca))[-(1:8)]
+	output = output[-length(output)]
+	for (i in 1:length(output)) output[i] = paste(" ", output[i])
+	
+	# Test Results:
+	ans = list(
+		name = "ur.pp", 
+		test = urca,
+		output = output,
+	)	
+	
+	# Plot:
+	if (doplot) plot(urca)
+			
+	# Return Value:
+	new("fHTEST", 
+		call = match.call(),
+		data = list(x = x),
+		test = ans,
+		title = "Zivot & Andrews Unit Root Test",
+		description = as.character(date())
+	)
+}   
+
+
+################################################################################
+

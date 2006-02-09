@@ -1,0 +1,540 @@
+\name{TimeSeriesClass}
+
+\alias{TimeSeriesClass}
+
+\alias{timeSeries}
+\alias{timeSeries-class}
+
+\alias{read.timeSeries}
+
+\alias{as.timeSeries}
+\alias{is.timeSeries}
+\alias{print.timeSeries}
+\alias{plot.timeSeries}
+\alias{lines.timeSeries}
+\alias{Ops.timeSeries}
+\alias{[.timeSeries}   
+\alias{head.timeSeries}
+\alias{tail.timeSeries}
+
+\alias{seriesData}
+\alias{seriesPositions}
+\alias{start.timeSeries}
+\alias{end.timeSeries}
+\alias{as.vector.timeSeries}
+\alias{as.matrix.timeSeries}
+\alias{as.data.frame.timeSeries}
+
+\alias{applySeries}
+\alias{cutSeries}
+\alias{diffSeries}    
+\alias{lagSeries} 
+\alias{mergeSeries}
+\alias{returnSeries}
+\alias{logSeries}
+\alias{absSeries}
+\alias{revSeries}
+\alias{outlierSeries}
+
+\alias{alignDailySeries}
+\alias{ohlcDailyPlot}
+
+
+\title{timeSeries Class and Methods}
+
+
+\description{
+    
+    A collection and description of functions 
+    and methods dealing with regular and irregular 
+    'timeSeries' objects. Dates and times are 
+    implemented as 'timeDate' objects. Included 
+    are functions and methods for the generation 
+    and representation of 'timeSeries' objects, 
+    and for mathematical operations.          
+    \cr
+    
+    IMPORTANT: \cr
+    The \code{timeDate} and \code{timeSeries} classes are so far
+    tested only under MS Windows XP operating system. Note, that
+    your time zone environment variable must be set to "GMT". The
+    reason for this is, that the functions work internally with "GMT"
+    POSIX date and time objects whereas the Daylight Saving Time is 
+    added on top of this through the information in the Ical Calendar
+    Library.
+    \cr
+    
+    The functions and methods for the Generation of 'timeSeries' Objects are:         
+
+    \tabular{ll}{   
+    \code{timeSeries} \tab Creates a 'timeSeries' object from scratch, \cr
+    \code{read.timeSeries} \tab Reads a 'timeSeries' from a spreadsheet file, \cr
+    \code{as.timeSeries} \tab S3: Creates 'time Series' from a 'matrix', \cr
+    \code{is.timeSeries} \tab S3: Tests if an object is of class a 'timeSeries', \cr
+    \code{print.timeSeries} \tab S3: Print method for a 'timeSeries' object, \cr
+    \code{plot.timeSeries} \tab S3: Plot method for a 'timeSeries' object, \cr
+    \code{lines.timeSeries} \tab S3: Lines method for a 'timeSeries' object, \cr
+    \code{Ops.timeSeries} \tab S3: Arith method for a 'timeSeries' object, \cr
+    \code{[.timeSeries} \tab S3: "[" method for a 'timeSeries' object, \cr
+    \code{head.timeSeries} \tab S3: returns the head of a 'timeSeries' object, \cr
+    \code{tail.timeSeries} \tab S3: returns the tail of a 'timeSeries' object. }           
+            
+    The functions and methods for the Representation of 'timeSeries' Objects are:         
+            
+    \tabular{ll}{        
+    \code{seriesData} \tab Extracts data slot from a 'timeSeries', \cr
+    \code{seriesPositions} \tab Extracts positions slot from a 'timeSeries', \cr
+    \code{start.timeSeries} \tab S3: Extracts start date of a 'timeSeries', \cr
+    \code{end.timeSeries} \tab S3: Extracts end date of a 'timeSeries', \cr
+    \code{as.vector.timeSeries} \tab S3: Converts a 'timeSeries' to a vector, \cr
+    \code{as.matrix.timeSeries} \tab S3: Converts a 'timeSeries' to a matrix, \cr
+    \code{as.data.frame.timeSeries} \tab S3: Converts a 'timeSeries' to a data.frame. }          
+           
+    The functions and methods for Math Operations of 'timeSeries' Objects are:         
+            
+    \tabular{ll}{         
+    \code{applySeries} \tab Applies a function to margins of a 'timeSeries', \cr
+    \code{alignDailySeries} \tab Aligns a daily 'timeSeries' to new positions, \cr        
+    \code{cutSeries} \tab Cuts out a piece from a 'timeSeries' object, \cr
+    \code{mergeSeries} \tab Merges a 'timeSeries' object with a 'matrix', \cr
+    % since R 2.1 no hyphens - are allowed in tabular
+    \code{ohlcDailyPlot} \tab Plots open high low close bar chart, \cr
+    \code{revSeries} \tab Reverts the order of 'timeSeries' object, \cr
+    \code{diffSeries} \tab Takes differences from a 'timeSeries' object, \cr
+    \code{lagSeries} \tab Lags a 'timeSeries' object, \cr
+    \code{outlierSeries} \tab Removes outliers from a 'timeSeries' object, \cr
+    \code{returnSeries} \tab Computes returns from a 'timeSeries' object, \cr
+    \code{logSeries} \tab Returns logarithms of a 'timeSeries' object, \cr
+    \code{absSeries} \tab Returns absolute values of a 'timeSeries' object.}
+        
+}
+
+
+\usage{
+timeSeries(data, charvec, units = NULL, format = "ISO", zone = "GMT", 
+    FinCenter = myFinCenter, recordIDs = data.frame(), title = NULL, 
+    documentation = NULL, ...) 
+read.timeSeries(file, zone = "GMT", FinCenter = "", title = "", 
+    documentation = "", sep = ";")
+    
+as.timeSeries(x, dimnames = TRUE, format = "")
+is.timeSeries(object) 
+\method{print}{timeSeries}(x, ...)
+\method{plot}{timeSeries}(x, reference.grid = TRUE, lty = 1, ...) 
+\method{lines}{timeSeries}(x, ...)
+\method{Ops}{timeSeries}(e1, e2)
+\method{[}{timeSeries}(x, i = min(1, nrow(x@Data)):nrow(x@Data), 
+    j = min(1, ncol(x@Data)):ncol(x@Data))
+\method{head}{timeSeries}(x, \dots)
+\method{tail}{timeSeries}(x, \dots)
+
+seriesData(object)
+seriesPositions(object)
+\method{start}{timeSeries}(x, \dots)
+\method{end}{timeSeries}(x, \dots)
+\method{as.vector}{timeSeries}(x, mode = "any")
+\method{as.matrix}{timeSeries}(x)
+\method{as.data.frame}{timeSeries}(x, row.names = NULL, optional = NULL)
+
+applySeries(x, from = NULL, to = NULL, FUN = colAvgs, units = NULL, ...) 
+cutSeries(x, from, to)
+diffSeries(x, lag = 1, diff = 1, trim = FALSE, pad = NA)
+lagSeries(x, k = 1, trim = FALSE, units = NULL)
+outlierSeries(x, sd = 10, complement = TRUE)
+mergeSeries(x, y, units = NULL)
+returnSeries(x, type = c("continuous", "discrete"), percentage = FALSE, 
+    trim = TRUE, digits = 4, units = NULL)
+revSeries(x)
+logSeries(x)
+absSeries(x)
+    
+alignDailySeries(x, method = c("before", "after", "interp", "fillNA"), 
+    include.weekends = FALSE, units = NULL)
+ohlcDailyPlot(x, volume = TRUE, colOrder = c(1:5), units = 1e6, 
+    xlab = c("Date", "Date"), ylab = c("Price", "Volume"), 
+    main = c("O-H-L-C", "Volume"), grid.nx = 7, grid.lty = "solid", \dots) 
+}
+
+
+\arguments{
+  
+    \item{charvec}{
+        a character vector of dates and times.
+        }
+    \item{complement}{
+    	[outlierSeries] - \cr
+    	a logical flag, should the outler series
+		or its complement be returns, by default \code{TRUE}
+		which returns the series free of outliers.
+		}
+    \item{colOrder}{
+        [ohlcDailyPlot] - \cr 
+        an integer vector which gives the order of the prices and the
+        volume in the input object. By default the following order of
+        columns from 1 to 5 is assumed: Open, high, low, close, and volume.
+        }
+    \item{data}{
+        a \code{data.frame} or a \code{matrix} object of numeric data.
+        }
+    \item{diff}{
+        [diffSeries] - \cr
+        an integer indicating the order of the difference. By default 1.
+        }
+    \item{digits}{
+        [returnSeries] - \cr
+        an integer value. The number of digits to be printed in the 
+        output.
+        }
+    \item{dimnames}{
+        [as.timeSeries] - \cr
+        a logical, if \code{TRUE} the dimension names of the
+        matrix are assigned to the time series object.
+        }
+    \item{documentation}{
+        optional documentation string, or a vector of character strings.
+        }
+    \item{e1, e2}{
+        [Ops] - \cr   
+        two objects of class \code{timeSeries}.
+        }
+    \item{file}{
+        the filename of a spreadsheet data set from which
+        to import the data records.
+        }
+    \item{FinCenter}{
+        a character with the the location of the  financial center named 
+        as "continent/city". 
+        }
+    \item{format}{
+        the format specification of the input character vector,
+        \cr
+        [as.timeSeries] - \cr
+        a character string with the format in POSIX notation to be passed 
+        to the time series object.
+        }
+    \item{from, to}{
+        starting date and end date, \code{to} must be after \code{from}.
+        }
+    \item{FUN}{ 
+        [applySeries] - \cr
+        a function to use for aggregation, by default \code{colAvgs}.
+        }
+    \item{grid.lty, grid.nx}{
+        [ohlcDailyPlot] - \cr
+        The type of grid line and the number of grid lines used in the
+        plot.
+        }
+    \item{i, j}{
+        ["["] - \cr 
+        index arguments used for subsettings.
+        }        
+     \item{include.weekends}{   
+        [alignDailySeries] - \cr
+        a logical value. Should weekend dates be included or removed
+        from the series.
+        } 
+    \item{k}{   
+        [lagSeries] - \cr   
+        an integer value. The number of lags (in units of observations).
+        By default 1.
+        }
+    \item{lag}{   
+        [diffSeries] - \cr
+        an integer indicating which lag to use. By default 1.
+        }
+    \item{lty}{   
+        [plot] - \cr
+        an integer value, the typ of line to be drawn. By default 1,
+        a solid line.
+        }       
+    \item{main}{
+        [ohlcDailyPlot] - \cr
+        a character string to title the price and volume plot.
+        }
+    \item{method}{ 
+        [alignDailySeries] - \cr
+        the method to be used for the alignment. A character string, one
+        of \code{"before"}, use the data from the row whose position is
+        just before the unmatched position, or \code{"after"}, use the 
+        data from the row whose position is just after the unmatched 
+        position, or \code{"linear"}, interpolate linearly between 
+        \code{"before"} and \code{"after"}. 
+        }
+    \item{mode}{
+        [as.vector] - \cr
+        A character string giving an atomic mode, or \code{"any"}.
+        }  
+    \item{optional, row.names}{
+        [as.data.frame] - \cr
+        both arguments are currently not used.
+        }       
+    \item{object}{
+        [is][seriesData][seriesPositions] -    
+        an object of class \code{timeSeries}.
+        }
+    \item{pad}{
+        [diffSeries] - \cr
+        which value should get the padded values? By default \code{NA}.
+        Another choice often used would be zero.
+        }
+    \item{percentage}{
+        [returnSeries] - \cr
+        a logical value. By default \code{FALSE}, if \code{TRUE} the 
+        series will be expressed in percentage changes.
+        }
+    \item{recordIDs}{
+        a data frame which can be used for record identification.
+        }
+    \item{reference.grid}{
+        [plot] - \cr    
+        a logical value. Should a grid be added to the plot? By
+        default \code{TRUE}.
+        } 
+    \item{sd}{
+    	[outlierSeries] - \cr
+    	a numeric value of standard deviations, e.g. 10
+		means that values larger or smaller tahn ten 
+		times the standard deviation will be removed from
+		the series.
+		}
+    \item{sep}{
+        [read.timeSeries] - \cr
+        the field seperator used in the spreadsheet file to separate 
+        columns.
+        }
+    \item{title}{
+        an optional title string, if not specified the inputs data 
+        name is deparsed.
+        }
+    \item{trim}{
+        [diffSeries][returnSeries] - \cr
+        a logical value. By default \code{TRUE}, the first missing 
+        observation in the return series will be removed. 
+        }
+    \item{type}{
+        [returnSeries] - \cr
+        a character string specifying how to compute the returns. Valid 
+        choices are: \code{continuous} and \code{discrete}. For the 
+        default \code{type="continuous"}, the returns are calculated as 
+        the logarithmic differences, otherwise if \code{type="discrete"}, 
+        the returns are calculated as percentage changes. 
+        }
+    \item{units}{
+        [applySeries][lag][allignDailySeries][returnSeries][mergeSeries] - \cr
+        an optional character string, which allows to overwrite the 
+        current column names of a \code{timeSeries} object. By default 
+        \code{NULL} which means that the column names are selected
+        automatically.
+        \cr
+        [ohlcDailyPlot] - \cr
+        a numeric value, specifying in which multiples the volume should
+        be referenced on the plot labels. By default 1e6, i.e. in units
+        of 1 Million.
+        }
+    \item{volume}{
+        [ohlcDailyPlot] - \cr
+        a logigical value. Should a volume plot added to the OHLC Plot.
+        By default \code{TRUE}.
+        }
+    \item{x}{
+        [as] - \cr   
+        a \code{matrix} type object to be converted.\cr
+        [as.vector][as.matrix][as.data.frame] -\cr
+        [applySeries] - \cr
+        [cut][end][mergeSeries][plot][print][rev][start] - \cr
+        an object of class \code{timeSeries}.
+        }
+    \item{xlab, ylab}{
+        [ohlcDailyPlot] - \cr
+        two string vectors to name the x and y axis of the price and
+        volume plot.
+        }
+    \item{y}{
+        [mergeSeries] - \cr   
+        a \code{matrix} type object to be merged with an object of
+        class \code{timeSeries}. Must have the same number of rows.
+        }
+    \item{zone}{
+        the time zone or financial center where the data were recorded.
+        }   
+    \item{\dots}{
+        arguments passed to other methods.
+        }
+       
+}
+
+
+\value{
+
+    \code{timeSeries}\cr
+    \code{read.timeSeries}\cr
+    \code{as.timeSeries}
+    \cr
+    return a S4 object of class \code{timeSeries}.
+    \cr
+    
+    \code{seriesData}\cr
+    \code{seriesPositions}
+    \cr
+    extract the \code{@Data} and \code{@position} slots from a 
+    \code{timeSeries} object. Thus, \code{seriesData} returns an 
+    object of class \code{matrix}, and \code{seriesPositions}
+    returns an object of class \code{timeDate}.
+    \cr
+    
+    \code{is.timeSeries}
+    \cr
+    returns \code{TRUE} or \code{FALSE} depending on whether its
+    argument is of \code{timeSeries} type or not.
+    \cr
+        
+    \code{aggregateSeries}\cr
+    \code{applySeries}\cr
+    \code{cutSeries}\cr
+    \code{mergeSeries}\cr
+    \code{returnSeries}\cr
+    \code{revSeries}
+    \cr
+    return a S4 object of class \code{timeSeries}.
+    \cr
+    
+    \code{end, start}
+    \cr
+    return a S4 object of class \code{timedate}. These are the 
+    start and end dates of a \code{timeSeries} object.
+    \cr
+    
+    \code{as.vector}\cr
+    \code{as.matrix}\cr
+    \code{as.data.frame}
+    \cr
+    these are methods which convert a S4 object of class \code{timeSeries}
+    either to a vector, a matrix or to a data frame.
+    \cr
+    
+    \code{plot}\cr
+    \code{print}
+    \cr
+    plot and print methods for an object of class \code{timeSeries}.
+    Note that the plot function requires the packages \code{its} and
+    \code{Hmisc}.
+    \cr
+        
+}
+
+
+\details{
+
+    \bold{Generation of Time Series Objects:}
+    \cr
+    
+    We have defined a \code{timeSeries} class which is in many aspects similar
+    to the S-Plus class with the same name, but has also some important
+    differences. The class has seven Slots, the 'Data' slot which holds 
+    the time series data in matrix form, the 'position' slot which holds
+    the time/date as a character vector, the 'format' and 'FinCenter'
+    slots which are the same as for the 'timeDate' object, the 'units'
+    slot which holds the column names of the data matrix, and a 'title'
+    and a 'documentation' slot which hold descriptive character strings.
+    Date and time is managed in the same way as for \code{timeDate} objects.
+
+}
+
+
+\note{
+
+    These functions were written for Rmetrics users using R and Rmetrics
+    under Microsoft's Windows operating system where timze zones, 
+    daylight saving times and holiday calendars are insuffeciently 
+    supported. The functions are untested for other system environments, 
+    but may be used.
+    
+    Please, also be aware of the notes remarked in the help page describing
+    the \code{timeDate} class.
+    
+    IT IS IMPORTANT THAT YOU SET YOUR ENVIRONMENT VARIABLE TZ TO 'GMT',
+    OTHERWISE SOME OF THE 'TIMEDATE' FUNCTIONS WOULD NOT PROPERLY WORK! 
+
+}
+
+
+
+\examples{
+## SOURCE("fCalendar.24A-TimeSeriesClass")
+
+## data - 
+   xmpBasics("\nStart: Load Microsoft Data > ")
+   data(msft.dat)
+   myFinCenter = "GMT"
+   msft.dat[1:3, ]
+
+## timeSeries -
+   xmpBasics("\nNext: Create a timeSeries Object > ")
+   close = msft.dat[, 5]
+   ts = timeSeries(close, as.character(msft.dat[, 1]), format = "\%m/\%d/\%Y", 
+     units = "MSFT", zone = "GMT", FinCenter = "GMT")
+   class(ts)
+   ts[1:3,]
+   c(start(ts), end(ts))
+    
+## cutSeries -    
+   xmpBasics("\nNext: Cut out April Data from 2001 > ")
+   ts.Apr01 = cutSeries(ts, "2001-04-01", "2001-04-30") 
+   ts.Apr01
+
+## returnSeries -  
+   xmpBasics("\nNext: Compute Returns > ")
+   # Compute Returns:
+   args(returnSeries)
+   # Continuous Returns:
+   returnSeries(ts.Apr01)
+   # Discrete Returns:
+   returnSeries(ts.Apr01, type = "discrete")
+   # Don't trim:
+   returnSeries(ts.Apr01, trim = FALSE)
+   # Use Percentage Values:
+   returnSeries(ts.Apr01, percentage = TRUE, trim = FALSE)
+
+## mergeSeries -    
+   xmpBasics("\nNext: Merge Series with Returns > ")
+   # Include last Day from March:
+   ts.APR01 = cutSeries(ts, "2001-03-29", "2001-04-30") 
+   ts.merged = mergeSeries(x = ts.APR01, 
+     returnSeries(ts.APR01, trim = FALSE)@Data, units = c("MSFT", "Returns"))
+   ts.merged
+    
+## alignDailySeries -     
+   xmpBasics("\nNext: Align with NA > ")
+   args(alignDailySeries)
+   ts.ret = returnSeries(ts.APR01, trim = TRUE)
+   GoodFriday(2001)   
+   EasterMonday(2001) 
+   alignDailySeries(ts.ret, method = "fillNA", include.weekends = FALSE)
+   alignDailySeries(ts.ret, method = "fillNA", include.weekends = TRUE)
+    
+## alignDailySeries - 
+   xmpBasics("\nNext: Interpolate > ")
+   ts.ret
+   alignDailySeries(ts.ret, method = "interp", include.weekend = FALSE)
+   alignDailySeries(ts.ret, method = "interp", include.weekend = TRUE)
+
+## applySeries -   
+   xmpBasics("\nNext: Aggregate weekly > ")
+   GoodFriday(2001)
+   to = timeSequence(from = "2001-04-11", length.out = 3, 
+     by = "weeks", format = "\%Y-\%m-\%d", FinCenter = "GMT") 
+   from = to - 6*24*3600
+   data.frame(from, to)
+   applySeries(ts.ret, from, to, FUN = sum)
+}
+   
+
+\author{
+
+    Diethelm Wuertz for the Rmetrics \R-port.
+    
+}
+
+
+\keyword{chron}
+
