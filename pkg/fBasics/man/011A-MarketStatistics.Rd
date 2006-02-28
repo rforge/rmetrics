@@ -15,7 +15,7 @@
 \alias{ciaByIndicator}
             
 
-\title{Import Market Data from the Internet}
+\title{CIA Factbook}
 
 
 \description{
@@ -31,20 +31,20 @@
     
     \tabular{ll}{
     \code{ciaCountries} \tab Returns a list of CIA country codes, \cr
-	\code{ciaIndicators} \tab Returns a list of CIA indicator codes, \cr
-	\code{ciaByCountry} \tab Returns all Indicators by country, \cr 
-	\code{ciaByIndicator} \tab Returns for all countries indicator ranking. }
-	
-	To load statistics from the WFE:
-	
-	\tabular{ll}{
+    \code{ciaIndicators} \tab Returns a list of CIA indicator codes, \cr
+    \code{ciaByCountry} \tab Returns all Indicators by country, \cr 
+    \code{ciaByIndicator} \tab Returns for all countries indicator ranking. }
+    
+    To load statistics from the WFE:
+    
+    \tabular{ll}{
     \code{data(wfe1)} \tab Market capitalization of domestic companies, \cr
-	\code{data(wfe2)} \tab Total number of companies with shares listed, \cr
-	\code{data(wfe3)} \tab Total value of share trading, \cr 
-	\code{data(wfe4)} \tab Market value of bonds listed, \cr
-	\code{data(wfe5)} \tab Total value of bond trading, and \cr
-	\code{data(wfe6)} \tab Price earning ratio an gross dividend yield. }
-	
+    \code{data(wfe2)} \tab Total number of companies with shares listed, \cr
+    \code{data(wfe3)} \tab Total value of share trading, \cr 
+    \code{data(wfe4)} \tab Market value of bonds listed, \cr
+    \code{data(wfe5)} \tab Total value of bond trading, and \cr
+    \code{data(wfe6)} \tab Price earning ratio an gross dividend yield. }
+    
 }
 
 
@@ -63,7 +63,7 @@ ciaByIndicator(code = 2001, from = FALSE, details = TRUE)
 \arguments{
 
     \item{code}{
-    	[ciaByCountry] - \cr
+        [ciaByCountry] - \cr
         a character string denoting the country code.
         \cr
         [ciaByIndicator] - \cr
@@ -101,17 +101,17 @@ ciaByIndicator(code = 2001, from = FALSE, details = TRUE)
     returns a data frame with countries and contry codes.
     \cr
     
-	\code{ciaIndicators}
+    \code{ciaIndicators}
     \cr
     returns a data frame with indicator codes.
     \cr
 
-	\code{ciaByCountry}
+    \code{ciaByCountry}
     \cr
     returns a data frame with indicators by country.
     \cr
-	
-	\code{ciaByIndicator}
+    
+    \code{ciaByIndicator}
     \cr
     returns a data frame with ranked data for a given indicator.
     
@@ -120,22 +120,22 @@ ciaByIndicator(code = 2001, from = FALSE, details = TRUE)
 
 \details{
 
-	Financial and economic market statistics can be found at several 
-	web pages for free. The "OECD Factbook" from the 'Organisation for
-	Economic Co-operation and Development', \emph{www.oecd.org},
-	"The World Factbook" from the 'Central Intelligence Agency'
-	of the US, \emph{www.cia.gov}, and the "Penn World Tables" from
-	the 'Center for International Comparisons' at University of
-	Pennsylvania, \emph{pwt.econ.upenn.edu}, offer sources of economic,
-	environmental and social indicators for the world's core economies.
-	
-	Statistical data from the exchanges around the world can be obtained
-	from the 'World Federation of Stock Exchanges', \emph{www.fibv.com}.
-	
-	Further sources of statistical data can be found on the web pages of
-	the 'Bank for International Settlement', \emph{www.bis.org}, and
-	on the web pages of the 'International Monetary Fund', \emph{www.imf.org}.
-	
+    Financial and economic market statistics can be found at several 
+    web pages for free. The "OECD Factbook" from the 'Organisation for
+    Economic Co-operation and Development', \emph{www.oecd.org},
+    "The World Factbook" from the 'Central Intelligence Agency'
+    of the US, \emph{www.cia.gov}, and the "Penn World Tables" from
+    the 'Center for International Comparisons' at University of
+    Pennsylvania, \emph{pwt.econ.upenn.edu}, offer sources of economic,
+    environmental and social indicators for the world's core economies.
+    
+    Statistical data from the exchanges around the world can be obtained
+    from the 'World Federation of Stock Exchanges', \emph{www.fibv.com}.
+    
+    Further sources of statistical data can be found on the web pages of
+    the 'Bank for International Settlement', \emph{www.bis.org}, and
+    on the web pages of the 'International Monetary Fund', \emph{www.imf.org}.
+    
 }
 
 
@@ -178,10 +178,10 @@ WFE, 2004,
    Table
    # Create Barplot:
    barplot(Table, beside = TRUE, legend = rownames(Table),
-	 col = c("lightblue", "mistyrose", "lightcyan", "lavender", "cornsilk"))
+     col = c("lightblue", "mistyrose", "lightcyan", "lavender", "cornsilk"))
    title(main = "Stock Market Capitalization\n 1991 - 2003")
    mtext("Source: World Federation of Exchanges", side = 4, 
-	 line = -2, cex = 0.7) 
+     line = -2, cex = 0.7) 
 }
 
 
