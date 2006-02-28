@@ -1,7 +1,7 @@
 
 #
 # Example:
-# 	A Compendium for R and Rmetrics users to the book 
+#   A Compendium for R and Rmetrics users to the book 
 #     "Modeling Financial Time Series with S-Plus" 
 #     written by E. Zivot and J. Wang
 #   ISBN 0-387-95549-6
@@ -13,13 +13,13 @@
 #   This is not a COPY of the S-Plus "example.ssc" files accompanying the
 #     book of Zivot and Wang. It is worth to note that this file contents a 
 #     new implementation of the examples tailored to Rmetrics based on R.
-# 	Diethelm Wuertz
-# 	  www.rmetrics.org
-# 	  www.itp.phys.ethz.ch
-# 	  www.finance.ch
+#   Diethelm Wuertz
+#     www.rmetrics.org
+#     www.itp.phys.ethz.ch
+#     www.finance.ch
 #
 # Author:
-#	(C) 2002-2004, Diethelm Wuertz, GPL
+#   (C) 2002-2004, Diethelm Wuertz, GPL
 #
 
     
@@ -444,9 +444,9 @@
     # Rmetrics prefers ISO-8601 Input:
     # ... jump to the next century
     timeSequence(from = "2000-01-01", to = "2002-10-01", 
-    	by = "quarters", format = "%Y-%m-%d")
+        by = "quarters", format = "%Y-%m-%d")
     timeSequence(from = "20000101", to = "20021001", 
-    	by = "quarters", format = "%Y%m%d")
+        by = "quarters", format = "%Y%m%d")
     timeSequence(from = "2000-01-01 16:15:00", to = "2002-10-01 16:15:00", 
         by = "quarters", format = "%Y-%m-%d %H:%M:%S")
     ###
@@ -498,7 +498,7 @@
     #  timeLastNdayInMonth  the last n-day in year/month
     # Create dates with the first day in month ...
     td = timeSequence(from = "1900-01-01", to = "1901-03-01", 
-    	by = "months", format = "%Y-%m-%d")
+        by = "months", format = "%Y-%m-%d")
     # ... now look for the first Monday in Month:
     # Nore, "n"-day is a "Mon"-day, nth=1 for the 1st occurrence.
     timeNthNdayInMonth(charvec = as.character(td), nday = 1, nth = 1)
@@ -520,7 +520,7 @@
     
     # ... another weekly sequence using "timeSequence"
     td = timeSequence("2000-01-01", "2000-12-31", 
-    	by = "weeks", format = "%Y-%m-%d")
+        by = "weeks", format = "%Y-%m-%d")
     td
     # Starts on?
     td@Data[1]$wday
@@ -720,7 +720,7 @@
 # Section 2.2.5 - Creating 'timeSeries' Objects
 
 
-	# The function 'read.timeSeries' allows you to read data from a
+    # The function 'read.timeSeries' allows you to read data from a
     # spreadsheet file and transforms it ditrectly to a 'timeSeries'
     # object.
     args(read.timeSeries)
@@ -980,23 +980,23 @@
     
     
     # The file "IP.dat.csv" contains data representing seasonally 
-	# adjusted U.S. Industrial Production Index. 
-	# The file "CPI.dat.csv" contains data representing seasonally 
-	# adjusted U.S. Consumer Price Index (CPI). 
-	# Data are downloadable from Economagics's web site.
-	# Start with IP:
-	IP.dat = read.timeSeries(
-		paste(dataPath, "IP.dat.csv", sep = ""))
-	IP.dat[1,]
-	end(IP.dat)
-	# Next CPI
-	CPI.dat = read.timeSeries(
-		paste(dataPath, "CPI.dat.csv", sep = ""))
-	CPI.dat[1,]
-	end(CPI.dat)
-	###
-	
-	
+    # adjusted U.S. Industrial Production Index. 
+    # The file "CPI.dat.csv" contains data representing seasonally 
+    # adjusted U.S. Consumer Price Index (CPI). 
+    # Data are downloadable from Economagics's web site.
+    # Start with IP:
+    IP.dat = read.timeSeries(
+        paste(dataPath, "IP.dat.csv", sep = ""))
+    IP.dat[1,]
+    end(IP.dat)
+    # Next CPI
+    CPI.dat = read.timeSeries(
+        paste(dataPath, "CPI.dat.csv", sep = ""))
+    CPI.dat[1,]
+    end(CPI.dat)
+    ###
+    
+    
     # Disaggregate - Interpolating monthly CPI to daily CPI:
     # p. 35
     # CPI Data is monthly - thus we have to disaggregate ...
@@ -1009,14 +1009,14 @@
     
     
     # The file "DowJones30.csv" contains closing prices for 30 stocks
-	# represented in the Dow Jones Industrial Average Index. 
-	# Data are downloadable from Yahoo's web site.	
-	DowJones30 = read.timeSeries(
-		paste(dataPath, "DowJones30.csv", sep = ""))
-	DowJones30[1,]
-	head(DowJones30)
+    # represented in the Dow Jones Industrial Average Index. 
+    # Data are downloadable from Yahoo's web site.  
+    DowJones30 = read.timeSeries(
+        paste(dataPath, "DowJones30.csv", sep = ""))
+    DowJones30[1,]
+    head(DowJones30)
     tail(DowJones30)
-	###
+    ###
     
     
     # Disaggregate - Using "before", "after", "interp" methods
@@ -1050,7 +1050,7 @@
     # ... that we miss no days according to different holiday rules
     # Cut nicely:
     cpi.daily.interp = 
-    	cutSeries(cpi.daily.interp, "1991-01-01", "2000-12-31")
+        cutSeries(cpi.daily.interp, "1991-01-01", "2000-12-31")
     cpi.daily.interp[c(1:3, 21:23)]
     # ... note weekends are excluded
     #
@@ -1058,13 +1058,13 @@
     msft.daily.p = DowJones30[, "MSFT"] 
     msft.daily.interp = 
         alignDailySeries(msft.daily.p, method = "interp", 
-        	include.weekends = TRUE)
+            include.weekends = TRUE)
     c(start(msft.daily.interp), end(msft.daily.interp)) 
     msft.daily.interp = cutSeries(msft.daily.interp, 
-    	from = start(cpi.daily.interp), to = end(cpi.daily.interp))
+        from = start(cpi.daily.interp), to = end(cpi.daily.interp))
     # Cut nicely:
     msft.daily.interp = 
-    	cutSeries(msft.daily.interp, "1991-01-01", "2000-12-31")
+        cutSeries(msft.daily.interp, "1991-01-01", "2000-12-31")
     msft.daily.interp[c(1:3, 21:23)]
     # Ceck Dimensions:
     dim(cpi.daily.interp@Data)
@@ -1089,13 +1089,13 @@
     
     # The file "shiller.annual.csv" holds Robert Shiller's financial
     # and economic data.
-	shiller.annual = read.timeSeries(
-		paste(dataPath, "shiller.annual.csv", sep = ""))
-	shiller.annual[1, ]
+    shiller.annual = read.timeSeries(
+        paste(dataPath, "shiller.annual.csv", sep = ""))
+    shiller.annual[1, ]
     tail(shiller.annual, 1)
-	###
-	
-	
+    ###
+    
+    
     # Disaggregate:
     # p. 37
     # Rmetrics 
@@ -1105,70 +1105,70 @@
     #   using cubic spline interpolations.
     # Select Data:
     div.annual  = shiller.annual[, "dividend"]     
-	# Write Your Personal Disaggregation Function:
-	disaggregateAnnualSeries = function(data, k, out.positions, 
-	 	type = "spline") {
-		# Here we assume an univariate timeSeries as input
-		data = cumsum(as.vector(seriesData(data)))
-		n = length(data)
-		# Use cubic Spline Interpolation:
-		if (type == "spline") {
-			ans = spline(x = (1:n)*k, data, n = n*k, xmin = 1, xmax = n*k)$y
-			ans = c(ans[1], diff(ans)) }
-		else {
-			# Here you can add further approaches based on
-			# other approximations, interpolations, imputations,
-			# and regression schemes ...
-			stop("Wrong type selected") }
-		# Convert Result to timSeries Object
-		timeSeries(ans, out.positions, FinCenter = "GMT", units = "dividend") }	
-	# Create disaggregated Series:
-	monthly.dates = timeCalendar(
-		y = rep(1871:2000, each = 12), m = rep(1:12, times = 130) )
-	div.monthly = disaggregateAnnualSeries(
-		data = div.annual, k = 12, out.positions = monthly.dates )
-	# Print:
-	div.monthly[1:24, ]
-	# ... Note, there are smaller differences for the first year
-	# which is extrapolated from the spline fit. 
-	###
-	
-			
-	# Compare just the numbers with SPlus for the first 72 months:
-	# Rmetrics
-	# Annual Data:
-	time.annually = as.numeric((1:6)*12)
-	div.annually = as.vector(unlist(seriesData(shiller.annual[1:6, "dividend"])))
-	# Now Monthly:
-	time.monthly = 1:72
-	div.monthly.R = as.vector(div.monthly)[1:72]
-	div.monthly.SPlus = c(	
-		0.02999, 0.01867, 0.01916, 0.01963, 0.02009, 0.02054,
-		0.02097, 0.02140, 0.02181, 0.02220, 0.02259, 0.02296,
-		0.02332, 0.02367, 0.02400, 0.02433, 0.02463, 0.02493,
-		0.02522, 0.02549, 0.02575, 0.02599, 0.02623, 0.02645,
-		0.02666, 0.02685, 0.02703, 0.02720, 0.02736, 0.02751,
-		0.02764, 0.02776, 0.02787, 0.02796, 0.02804, 0.02811,
-		0.02817, 0.02818, 0.02816, 0.02809, 0.02798, 0.02783,
-		0.02764, 0.02741, 0.02714, 0.02683, 0.02648, 0.02608,
-		0.02567, 0.02530, 0.02501, 0.02479, 0.02465, 0.02458,
-		0.02458, 0.02465, 0.02479, 0.02501, 0.02530, 0.02567,
-		0.02607, 0.02636, 0.02650, 0.02650, 0.02636, 0.02607,
-		0.02563, 0.02505, 0.02432, 0.02345, 0.02243, 0.02127)	
-	# Plot it:
-	div = c(div.monthly.SPlus, div.monthly.R)
-	par(mfrow = c(2, 1), cex = 0.7)
-	plot(1870+time.monthly/12, div.monthly.SPlus, ylim = range(div),
-		xlab = "Year", ylab = "Dividend", main = "First six years")
-	points(1870+time.monthly/12, div.monthly.R, col = "green")
-	# Use year-midpoints
-	points(1870+time.annually/12 - 0.5, div.annually/12, col = "red")
-	# Annual Values:
-	apply(matrix(div.monthly.SPlus, byrow = TRUE, ncol = 12), 1, sum)
-	apply(matrix(div.monthly.R, byrow = TRUE, ncol = 12), 1, sum)
-	# ... note the extrapolation part looks different.
-	###
-		
+    # Write Your Personal Disaggregation Function:
+    disaggregateAnnualSeries = function(data, k, out.positions, 
+        type = "spline") {
+        # Here we assume an univariate timeSeries as input
+        data = cumsum(as.vector(seriesData(data)))
+        n = length(data)
+        # Use cubic Spline Interpolation:
+        if (type == "spline") {
+            ans = spline(x = (1:n)*k, data, n = n*k, xmin = 1, xmax = n*k)$y
+            ans = c(ans[1], diff(ans)) }
+        else {
+            # Here you can add further approaches based on
+            # other approximations, interpolations, imputations,
+            # and regression schemes ...
+            stop("Wrong type selected") }
+        # Convert Result to timSeries Object
+        timeSeries(ans, out.positions, FinCenter = "GMT", units = "dividend") } 
+    # Create disaggregated Series:
+    monthly.dates = timeCalendar(
+        y = rep(1871:2000, each = 12), m = rep(1:12, times = 130) )
+    div.monthly = disaggregateAnnualSeries(
+        data = div.annual, k = 12, out.positions = monthly.dates )
+    # Print:
+    div.monthly[1:24, ]
+    # ... Note, there are smaller differences for the first year
+    # which is extrapolated from the spline fit. 
+    ###
+    
+            
+    # Compare just the numbers with SPlus for the first 72 months:
+    # Rmetrics
+    # Annual Data:
+    time.annually = as.numeric((1:6)*12)
+    div.annually = as.vector(unlist(seriesData(shiller.annual[1:6, "dividend"])))
+    # Now Monthly:
+    time.monthly = 1:72
+    div.monthly.R = as.vector(div.monthly)[1:72]
+    div.monthly.SPlus = c(  
+        0.02999, 0.01867, 0.01916, 0.01963, 0.02009, 0.02054,
+        0.02097, 0.02140, 0.02181, 0.02220, 0.02259, 0.02296,
+        0.02332, 0.02367, 0.02400, 0.02433, 0.02463, 0.02493,
+        0.02522, 0.02549, 0.02575, 0.02599, 0.02623, 0.02645,
+        0.02666, 0.02685, 0.02703, 0.02720, 0.02736, 0.02751,
+        0.02764, 0.02776, 0.02787, 0.02796, 0.02804, 0.02811,
+        0.02817, 0.02818, 0.02816, 0.02809, 0.02798, 0.02783,
+        0.02764, 0.02741, 0.02714, 0.02683, 0.02648, 0.02608,
+        0.02567, 0.02530, 0.02501, 0.02479, 0.02465, 0.02458,
+        0.02458, 0.02465, 0.02479, 0.02501, 0.02530, 0.02567,
+        0.02607, 0.02636, 0.02650, 0.02650, 0.02636, 0.02607,
+        0.02563, 0.02505, 0.02432, 0.02345, 0.02243, 0.02127)   
+    # Plot it:
+    div = c(div.monthly.SPlus, div.monthly.R)
+    par(mfrow = c(2, 1), cex = 0.7)
+    plot(1870+time.monthly/12, div.monthly.SPlus, ylim = range(div),
+        xlab = "Year", ylab = "Dividend", main = "First six years")
+    points(1870+time.monthly/12, div.monthly.R, col = "green")
+    # Use year-midpoints
+    points(1870+time.annually/12 - 0.5, div.annually/12, col = "red")
+    # Annual Values:
+    apply(matrix(div.monthly.SPlus, byrow = TRUE, ncol = 12), 1, sum)
+    apply(matrix(div.monthly.R, byrow = TRUE, ncol = 12), 1, sum)
+    # ... note the extrapolation part looks different.
+    ###
+        
     
 # ------------------------------------------------------------------------------
 # Section 2.2.7 - Merging Time Series
@@ -1181,11 +1181,11 @@
     # Data are downloadable and can be updated from Economagics's web site. 
     # Rmetrics
     IP.dat = read.timeSeries(
-    	paste(dataPath, "IP.dat.csv", sep = ""))
+        paste(dataPath, "IP.dat.csv", sep = ""))
     IP.dat[1, ]
     end(IP.dat)
     CPI.dat = read.timeSeries(
-    	paste(dataPath, "CPI.dat.csv", sep = ""))
+        paste(dataPath, "CPI.dat.csv", sep = ""))
     CPI.dat[1, ]
     end(CPI.dat)
     ###
@@ -1230,45 +1230,45 @@
     # Show the arguments of the "interpNA" function:
     # p. 40
     # Let us a write a simple function for NA imputation:
-	interpNA = 
-	function(x, method = c("linear", "constant", "before", "after")) {
-		# Description:
-		#  	Interpolates missing values in a vector	 	
-		# Which Method?
-		method = method[1]
-		f = 0
-		if (method == "before") { method = "constant"; f = 0 }
-		if (method == "after") { method = "constant"; f = 1 }
-		# Interpolate:
-		n = length(x)
-		idx = (1:n)[!is.na(x)]
-	    x = approx(idx, x[idx], 1:n, method = method, f = f)$y
-	    # Return Value:
-	    matrix(x, ncol = 1) }    
+    interpNA = 
+    function(x, method = c("linear", "constant", "before", "after")) {
+        # Description:
+        #   Interpolates missing values in a vector     
+        # Which Method?
+        method = method[1]
+        f = 0
+        if (method == "before") { method = "constant"; f = 0 }
+        if (method == "after") { method = "constant"; f = 1 }
+        # Interpolate:
+        n = length(x)
+        idx = (1:n)[!is.na(x)]
+        x = approx(idx, x[idx], 1:n, method = method, f = f)$y
+        # Return Value:
+        matrix(x, ncol = 1) }    
     ###
     
     
     # Use "interpNA" Function:
     # p. 40
     dates = c(
-	    "01/02/1990", "01/03/1990", "01/04/1990", "01/05/1990", "01/09/1990",
-	 	"01/10/1990", "01/12/1990", "01/15/1990", "01/16/1990", "01/17/1990",
-	 	"01/18/1990", "01/19/1990", "01/22/1990", "01/23/1990", "01/24/1990",
-	 	"01/25/1990", "01/26/1990", "01/29/1990", "01/30/1990", "01/31/1990")
-	close = c(
-		2810.15, 2809.73, 2796.08, 2773.25, 2766.00, 2750.64, 2689.21, 
-		2669.37, 2692.62, 2659.13,      NA, 2677.90, 2600.45, 2615.32, 
-		2604.50, 2561.04, 2559.23, 2553.38, 2543.24, 2590.54)
-	djia.close = 
-		timeSeries(close, dates, format = "%m/%d/%Y", FinCenter = "GMT",
-		units = "djia.close")
-	djia.close[10:12]
-	dimNames = dimnames(djia.close@Data)
-	# Use linear interpolation scheme:
-	djia.close@Data <- interpNA(x = seriesData(djia.close))
-	dimnames(djia.close@Data) <- dimNames
-	djia.close[10:12]
-	# ... Try to implement spline interpolation
+        "01/02/1990", "01/03/1990", "01/04/1990", "01/05/1990", "01/09/1990",
+        "01/10/1990", "01/12/1990", "01/15/1990", "01/16/1990", "01/17/1990",
+        "01/18/1990", "01/19/1990", "01/22/1990", "01/23/1990", "01/24/1990",
+        "01/25/1990", "01/26/1990", "01/29/1990", "01/30/1990", "01/31/1990")
+    close = c(
+        2810.15, 2809.73, 2796.08, 2773.25, 2766.00, 2750.64, 2689.21, 
+        2669.37, 2692.62, 2659.13,      NA, 2677.90, 2600.45, 2615.32, 
+        2604.50, 2561.04, 2559.23, 2553.38, 2543.24, 2590.54)
+    djia.close = 
+        timeSeries(close, dates, format = "%m/%d/%Y", FinCenter = "GMT",
+        units = "djia.close")
+    djia.close[10:12]
+    dimNames = dimnames(djia.close@Data)
+    # Use linear interpolation scheme:
+    djia.close@Data <- interpNA(x = seriesData(djia.close))
+    dimnames(djia.close@Data) <- dimNames
+    djia.close[10:12]
+    # ... Try to implement spline interpolation
     ###
 
 
@@ -1276,20 +1276,20 @@
 # Section 2.3 - TIME SERIES MANIPULATIONS 
 
 
-	# In this Chapter we deal only with "Date" data, therefore we set
-	myFinCenter = "GMT"
-	###
-	
-	
-	# The function 'read.timeSeries' allows you to read data from a
+    # In this Chapter we deal only with "Date" data, therefore we set
+    myFinCenter = "GMT"
+    ###
+    
+    
+    # The function 'read.timeSeries' allows you to read data from a
     # spreadsheet file and transforms it ditrectly to a 'timeSeries'
     # object.
     args(read.timeSeries)
     # Where are the Data?
     dataPath = "library/fBasics/data/"
-    ###	
-	  
-	  
+    ### 
+      
+      
 # ------------------------------------------------------------------------------    
 # Section 2.3.1 - PART A: Creating Lags
 
@@ -1441,7 +1441,7 @@
     # Create a series of discrete returns:
     # p. 46
     ret.d = returnSeries(singleIndex.dat, type = "discrete", 
-		percentage = TRUE, trim = FALSE, digits = 5)
+        percentage = TRUE, trim = FALSE, digits = 5)
     ret.d[1:3, ]
     ###
     
@@ -1480,15 +1480,15 @@
     c(start(ret.cc), end(ret.cc))
     # Last Days in Month:
     from = timeSequence("1990-03-01", "2000-03-01", "month",
-    	format = "%Y-%m-%d") - 24*3600
+        format = "%Y-%m-%d") - 24*3600
     to   = timeSequence("1991-02-01", "2001-02-01", "month",
-    	format = "%Y-%m-%d") - 24*3600 
+        format = "%Y-%m-%d") - 24*3600 
     # Annual Sum Aggregates on Monthly Scale:
     applySeries(x = ret.cc, from, to, colSums)[1:3, ]
     rbind(
-    	colSums(seriesData(ret.cc[1:12, ])),
-    	colSums(seriesData(ret.cc[2:13, ])),
-    	colSums(seriesData(ret.cc[3:14, ])))
+        colSums(seriesData(ret.cc[1:12, ])),
+        colSums(seriesData(ret.cc[2:13, ])),
+        colSums(seriesData(ret.cc[3:14, ])))
     # Note, that the rownames are to my feeling somewhat strange.
     # "The annual return reported for Feb 1990 is the sum of the 
     # twelve monthly returns from February 1990 through January 
@@ -1506,10 +1506,10 @@
     to = timeCalendar(y = 1991:2001, m = 1) - 24*3600
     applySeries(x = ret.cc, from = from, to = to, FUN = colSums)[1:3, ]
     rbind(
-    	colSums(seriesData(ret.cc[1:11, ])),
-    	colSums(seriesData(ret.cc[12:23, ])),
-    	colSums(seriesData(ret.cc[24:35, ])))
-    ###	
+        colSums(seriesData(ret.cc[1:11, ])),
+        colSums(seriesData(ret.cc[12:23, ])),
+        colSums(seriesData(ret.cc[24:35, ])))
+    ### 
     
     
     # Next, monthly >>discrete<< returns on an annual step size
@@ -1517,12 +1517,12 @@
     # Last Days in Month:
     ret.d = returnSeries(singleIndex.dat, type = "discrete", digits = 12)
     from = timeSequence("1990-03-01", "2000-03-01", "month",
-    	format = "%Y-%m-%d") - 24*3600
+        format = "%Y-%m-%d") - 24*3600
     to   = timeSequence("1991-02-01", "2001-02-01", "month",
-    	format = "%Y-%m-%d") - 24*3600 
-	colProds = function (x) { round (
-		apply(x+1, MARGIN = 2, FUN = prod) - 1 , digits = 6 ) }
-	applySeries(x = ret.d, from, to, FUN = colProds)[1:3, ]
+        format = "%Y-%m-%d") - 24*3600 
+    colProds = function (x) { round (
+        apply(x+1, MARGIN = 2, FUN = prod) - 1 , digits = 6 ) }
+    applySeries(x = ret.d, from, to, FUN = colProds)[1:3, ]
     colProds(seriesData(ret.d)[1:12, ])
     ### 
     
@@ -1531,13 +1531,13 @@
     # p. 48
     # Last Days in Month:
     ret.d = returnSeries(singleIndex.dat, type = "discrete", 
-    	trim = FALSE, digits = 12)
+        trim = FALSE, digits = 12)
     from = timeCalendar(y = 1990:2000, m = 2) - 24*3600
     to = timeCalendar(y = 1991:2001, m = 1) - 24*3600
     colProds = function (x) { round (
-		apply(x+1, MARGIN = 2, FUN = prod) - 1 , digits = 4 ) }
-	applySeries(x = ret.d, from, to, FUN = colProds)[1:3, ]
-	###
+        apply(x+1, MARGIN = 2, FUN = prod) - 1 , digits = 4 ) }
+    applySeries(x = ret.d, from, to, FUN = colProds)[1:3, ]
+    ###
     
 
 # ------------------------------------------------------------------------------
@@ -1591,10 +1591,10 @@
     # Plot:
     par(mfrow = c(2, 1), cex = 0.7)
     plot(msft.p, type = "l", ylab = msft.p@units, 
-    	main = msft.p@title, col = "steelblue4")
+        main = msft.p@title, col = "steelblue4")
     # Use solid grid lines ...
     plot(msft.p, type = "l", ylab = msft.p@units, 
-    	main = msft.p@title, col = "steelblue4")
+        main = msft.p@title, col = "steelblue4")
     grid(lty = "solid")
     ###
     
@@ -1609,7 +1609,7 @@
     # With Legend and Plot Arguments:
     # > legend(0.1, 1400, legend = colnames(singleIndex.ts), lty = c(1, 3))
     plot(singleIndex.dat, lty = c(1, 3), xlab = "Year", 
-    	ylab = "Index - Stock Price", col = "steelblue4")
+        ylab = "Index - Stock Price", col = "steelblue4")
     title(singleIndex.dat@title)
     ### 
 
@@ -1670,11 +1670,11 @@
     par(mfrow = c(3, 2), cex = 0.5)
     for ( i in 1:6 ) {
         plot(
-        	DJ.ret[, i], 
-        	type = "l", 
-        	xlab = "Year", 
-        	ylab = "Return", 
-        	col = "steelblue4")
+            DJ.ret[, i], 
+            type = "l", 
+            xlab = "Year", 
+            ylab = "Return", 
+            col = "steelblue4")
         title(main = DJ.ret@units[i])  }
     ###
         
@@ -1700,7 +1700,7 @@
     par(mfrow = c(3, 2), cex = 0.5)
     for ( i in 1:6 ) {
         qqnorm(
-        	seriesData(DJ.ret[, i]), 
+            seriesData(DJ.ret[, i]), 
             ylim = c(-15, 15),
             main = DJ.ret@units[i],
             col = "steelblue4")

@@ -1,7 +1,7 @@
 
 #*******************************************************************************
 # fCalendar - A SOFTWARE COLLECTION FOR FINANCIAL ENGINEERS
-# PART I: Time, Date and Calendar Tools
+# Time, Date and Calendar Tools
 #
 # collected by Diethelm Wuertz
 # Version 0.9
@@ -38,14 +38,14 @@
 
 ################################################################################
  
-	
+    
 .First.lib =  
 function(lib, pkg)
 {   # A function implemented by Diethelm Wuertz
     
     # Package:
     cat("\nRmetrics, (C) 1999-2005, Diethelm Wuertz, GPL")
-    cat("\nfCalendar: Markets, Basic Statistics, Date and Time\n")
+    cat("\nfCalendar: Time, Date and Calendar Tools\n")
 
     # Load dll:
     library.dynam("fCalendar", pkg, lib)

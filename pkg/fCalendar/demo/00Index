@@ -1,9 +1,9 @@
-funCalendar 				Function Addons
+funCalendar                 Function Addons
 
-xmpDWChapter21              Date and Time Conventions and Standards
-xmpDWChapter22              Manage POSIXt Objects from R's base Package
-xmpDWChapter23              Calendar Time Date Objects
-xmpDWChapter24              Calendar Time Series Objects
-xmpDWChapter25				Calendarical Calculations
+xmpDWChapter021             Date and Time Conventions and Standards
+xmpDWChapter022             Manage POSIXt Objects from R's base Package
+xmpDWChapter023             Calendar Time Date Objects
+xmpDWChapter024             Calendar Time Series Objects
+xmpDWChapter025             Calendarical Calculations
 
 xmpZWChapter02              Zivot-Wang Chapter 2 Time Series in S-Plus
