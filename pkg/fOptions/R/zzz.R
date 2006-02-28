@@ -1,7 +1,7 @@
 
 #*******************************************************************************
 # fOptions - A SOFTWARE COLLECTION FOR FINANCIAL ENGINEERS
-# PART IV: Pricing and Hedging of Options
+# Valuation of Options
 #
 # collected by Diethelm Wuertz
 #    
