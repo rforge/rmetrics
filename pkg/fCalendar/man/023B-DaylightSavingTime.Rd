@@ -99,55 +99,55 @@
 
 \description{
 
-	A collection and description of functions for about 
-	100 cities and regions, which return the daylight 
-	saving time tables. 
-	\cr
-	
-	The functions are:
-	
-	Adelaide Algiers Amsterdam Anchorage Andorra Athens Auckland Bahrain
-	Bangkok Beirut Belfast Belgrade Berlin Bogota Bratislava Brisbane
-	Brussels Bucharest Budapest BuenosAires Cairo Calcutta Caracas
-	Casablanca Cayman Chicago Copenhagen Darwin Denver Detroit Dubai
-	Dublin Eastern Edmonton Frankfurt Helsinki HongKong Honolulu
-	Indianapolis Istanbul Jakarta Jerusalem Johannesburg Kiev
-	KualaLumpur Kuwait Lagos Lisbon Ljubljana London LosAngeles
-	Luxembourg Madrid Manila Melbourne MexicoCity Monaco Montreal Moscow
-	Nairobi Nassau NewYork Nicosia Oslo Pacific Paris Perth Prague Riga
-	Riyadh Rome Seoul Shanghai Singapore Sofia Stockholm Sydney Taipei
-	Tallinn Tehran Tokyo Tunis Vaduz Vancouver Vienna Vilnius Warsaw
-	Winnipeg Zagreb Zurich.
-	
+    A collection and description of functions for about 
+    100 cities and regions, which return the daylight 
+    saving time tables. 
+    \cr
+    
+    The functions are:
+    
+    Adelaide Algiers Amsterdam Anchorage Andorra Athens Auckland Bahrain
+    Bangkok Beirut Belfast Belgrade Berlin Bogota Bratislava Brisbane
+    Brussels Bucharest Budapest BuenosAires Cairo Calcutta Caracas
+    Casablanca Cayman Chicago Copenhagen Darwin Denver Detroit Dubai
+    Dublin Eastern Edmonton Frankfurt Helsinki HongKong Honolulu
+    Indianapolis Istanbul Jakarta Jerusalem Johannesburg Kiev
+    KualaLumpur Kuwait Lagos Lisbon Ljubljana London LosAngeles
+    Luxembourg Madrid Manila Melbourne MexicoCity Monaco Montreal Moscow
+    Nairobi Nassau NewYork Nicosia Oslo Pacific Paris Perth Prague Riga
+    Riyadh Rome Seoul Shanghai Singapore Sofia Stockholm Sydney Taipei
+    Tallinn Tehran Tokyo Tunis Vaduz Vancouver Vienna Vilnius Warsaw
+    Winnipeg Zagreb Zurich.
+    
 }
 
 
 \note{
 
-	There are currently two synonymes available "Pacific" for Los Angeles
-	and "Eastern" for New York. 
-	
-	Note that we leave the space in all double named cities like New York 
-	or Hong Kong and don't use an underscore for it.
-	
-	All the entries are retrieved from the Ical library which is 
-	available under GNU's GPL licence. 
+    There are currently two synonymes available "Pacific" for Los Angeles
+    and "Eastern" for New York. 
+    
+    Note that we leave the space in all double named cities like New York 
+    or Hong Kong and don't use an underscore for it.
+    
+    All the entries are retrieved from the Ical library which is 
+    available under GNU's GPL licence. 
 
 }
 
 
 \author{
 
-	Diethelm Wuertz for the Rmetrics \R-port.
-	
+    Diethelm Wuertz for the Rmetrics \R-port.
+    
 }
 
 
 \examples{
-## SOURCE("fCalendar.23B-DaylightSavingTime")
+## SOURCE("fCalendar.023B-DaylightSavingTime")
 
 ## data - 
-   xmpBasics("\nStart: DST Rules for Zurich > ")
+   xmpCalendar("\nStart: DST Rules for Zurich > ")
    Zurich()
 }
 

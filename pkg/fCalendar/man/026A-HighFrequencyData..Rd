@@ -45,30 +45,30 @@
     'CCYYMMDDhhmm' Dates and Times functions are:
     
     \tabular{ll}{   
-	\code{xjulian} \tab Julian minute counts for 'CCYYMMDDhhmm' formats, \cr
-	\code{xdate} \tab 'CCYYMMDDhhmm' from Julian minute counts, \cr
-	\code{xday.of.week} \tab day of week from 'CCYYMMDDhhmm' dates/times, \cr
-	\code{xleap.year} \tab Decides if 'CCYYMMDDhhmm' is a leap year or not. }            
-			
-	Filter and outlier detection functions are:	
-	
-	\tabular{ll}{		
-	\code{fxdata.contributors} \tab Creates a table with contributor names, \cr  
-	\code{fxdata.parser} \tab Parses FX contributors and delay times, \cr
-	\code{fxdata.filter} \tab Filters price and spread values from FX records, \cr
-	\code{fxdata.varmin} \tab Aggregates records to variable minutes format. }
-    		
-	Functions for De-Seasonalization and De-Volatilization:
-	
-	\tabular{ll}{
-	\code{xts.log} \tab Calculates logarithms for xts time series values, \cr
-	\code{xts.diff} \tab Differentiates xts time series values with lag=1, \cr
-	\code{xts.cut} \tab Cuts a piece out of a xts time series, \cr
-	\code{xts.interp} \tab Interpolates for equidistant time steps, \cr
-	\code{xts.map} \tab Creates a volatility adjusted time-mapping, \cr 
-	\code{xts.upsilon} \tab Interpolates a time series in upsilon time, \cr
-	\code{xts.dvs} \tab Creates a de-volatilizised time series, \cr
-	\code{xts.dwh} \tab Plots intra-daily/weekly histograms. }  
+    \code{xjulian} \tab Julian minute counts for 'CCYYMMDDhhmm' formats, \cr
+    \code{xdate} \tab 'CCYYMMDDhhmm' from Julian minute counts, \cr
+    \code{xday.of.week} \tab day of week from 'CCYYMMDDhhmm' dates/times, \cr
+    \code{xleap.year} \tab Decides if 'CCYYMMDDhhmm' is a leap year or not. }            
+            
+    Filter and outlier detection functions are: 
+    
+    \tabular{ll}{       
+    \code{fxdata.contributors} \tab Creates a table with contributor names, \cr  
+    \code{fxdata.parser} \tab Parses FX contributors and delay times, \cr
+    \code{fxdata.filter} \tab Filters price and spread values from FX records, \cr
+    \code{fxdata.varmin} \tab Aggregates records to variable minutes format. }
+            
+    Functions for De-Seasonalization and De-Volatilization:
+    
+    \tabular{ll}{
+    \code{xts.log} \tab Calculates logarithms for xts time series values, \cr
+    \code{xts.diff} \tab Differentiates xts time series values with lag=1, \cr
+    \code{xts.cut} \tab Cuts a piece out of a xts time series, \cr
+    \code{xts.interp} \tab Interpolates for equidistant time steps, \cr
+    \code{xts.map} \tab Creates a volatility adjusted time-mapping, \cr 
+    \code{xts.upsilon} \tab Interpolates a time series in upsilon time, \cr
+    \code{xts.dvs} \tab Creates a de-volatilizised time series, \cr
+    \code{xts.dwh} \tab Plots intra-daily/weekly histograms. }  
                 
 }
 
@@ -456,10 +456,10 @@ Guillaume D.M., Dacorogna M.M., Dave R.R., Mueller U.A., Olsen R.B.,
 
 
 \examples{
-## SOURCE("fCalendar.99X-HighFrequencyData")
+## SOURCE("fCalendar.026A-HighFrequencyData")
 
 ## xjulian - 
-   xmpBasics("\nStart: Julian Counts > ")
+   xmpCalendar("\nStart: Julian Counts > ")
    # Return the number of minute counts for the last day in every 
    # month for year 2000 beginning January 1st, 2001 at 16:00:
    xjulian(c(
@@ -474,7 +474,7 @@ Guillaume D.M., Dacorogna M.M., Dave R.R., Mueller U.A., Olsen R.B.,
      200011301600, 200012311600), origin = 20000101)
      
 ## xdate - 
-   xmpBasics("\nNext: Convert Julian Counts to Dates > ")
+   xmpCalendar("\nNext: Convert Julian Counts to Dates > ")
    # Return the number of minute counts for th
    # Manage Date/Time in Extended Date/Time Format, ISO-8601
    # Date: 1973-01-01 15:30
@@ -483,16 +483,16 @@ Guillaume D.M., Dacorogna M.M., Dave R.R., Mueller U.A., Olsen R.B.,
   
 ## xday.of.week -
    # Calculate the day of week for 1973-01-01 16:15
-   xmpBasics("\nNext: Compute Day of Week > ")
+   xmpCalendar("\nNext: Compute Day of Week > ")
    xday.of.week(197301011615)
         
 ## xleap.year -
-   xmpBasics("\nNext: Check for Leap Years > ")
+   xmpCalendar("\nNext: Check for Leap Years > ")
    # Falls Februar 1st, 2000 16:15 in a leap year?
    xleap.year(200002011615)    
    
 ## fxdata.contributors - 
-   xmpBasics("\nStart: Filter Contributors > ")
+   xmpCalendar("\nStart: Filter Contributors > ")
    # Print contributor list:
    data(usdthb)
    usdthb[1:25, ]
@@ -500,7 +500,7 @@ Guillaume D.M., Dacorogna M.M., Dave R.R., Mueller U.A., Olsen R.B.,
    fxdata.contributors(usdthb, include = 5)
    
 ## fxdata.parser - 
-   xmpBasics("\nNext: Parse Records > ")
+   xmpCalendar("\nNext: Parse Records > ")
    # Parse data:
    # Create a contributor list and mark the first 5 market makers:
    parser.table = fxdata.contributors(usdthb, include = 5)
@@ -508,7 +508,7 @@ Guillaume D.M., Dacorogna M.M., Dave R.R., Mueller U.A., Olsen R.B.,
    fxdata.parser(usdthb, parser.table)[1:25,]
    
 ## fxdata.filter - 
-   xmpBasics("\nNext: Filter Records > ")
+   xmpCalendar("\nNext: Filter Records > ")
    # Filter data and plot unfiltered data:
    par(mfrow = c(2, 1))
    NumberOfRecords = length(usdthb[,1])
@@ -537,13 +537,13 @@ Guillaume D.M., Dacorogna M.M., Dave R.R., Mueller U.A., Olsen R.B.,
    lines(x = c(1, NumberOfRecords), y = c(0, 0), col = 4)
    
 ## fxdata.varmin - 
-   xmpBasics("\nNext: Variable Minute Records > ")
+   xmpCalendar("\nNext: Variable Minute Records > ")
    # Variable Minute Records from filter accepted Data,
    # create a varmin file and print the first 25 entries:
    fxdata.varmin(usdthb$accepted, digits = 5)[1:25, ]  
    
 ## xts.log - 
-   xmpBasics("\nStart: Log Prices of FX Data > ")
+   xmpCalendar("\nStart: Log Prices of FX Data > ")
    # Calculate log-prices from AUDUSD bid prices
    options(digits = 10)
    data(audusd)
@@ -553,22 +553,22 @@ Guillaume D.M., Dacorogna M.M., Dave R.R., Mueller U.A., Olsen R.B.,
    data.frame(log.prices)[1:25, ]
    
 ## xts.diff - 
-   xmpBasics("\nNext: Returns of FX Data > ")
+   xmpCalendar("\nNext: Returns of FX Data > ")
    # Calculate one hourly AUDUSD log-returns
    prices = list(t = audusd[,"XDATE"], x = audusd[,"BID"])
    # Calculate the returns and print the first 25 entries:
    data.frame(xts.diff(xts.log(prices)))[1:25, ]
    
 ## xts.cut - 
-   xmpBasics("\nNext: Cut out a Piece From a FX File > ")
+   xmpCalendar("\nNext: Cut out a Piece From a FX File > ")
    # Retrieve the AUDUSD bid quotes for October 21, 1997, 16:00 
    prices = list(t = audusd[,"XDATE"], x = audusd[,"BID"])
    # Retrieve prices and print the first 25 entries:
    data.frame(xts.cut(prices, from.date = 19971021, 
-   	 to.date = 19971021))[1:25,]
+     to.date = 19971021))[1:25,]
 
 ## xts.interp - 
-   xmpBasics("\nNext: Interpolate of FX Data > ")
+   xmpCalendar("\nNext: Interpolate of FX Data > ")
    # Interpolate AUDUSD bid prices 
    # on a 15 minutes  time scale for October 21, 1997:
    prices = list(t = audusd[,"XDATE"], x = audusd[,"BID"])
@@ -576,7 +576,7 @@ Guillaume D.M., Dacorogna M.M., Dave R.R., Mueller U.A., Olsen R.B.,
    data.frame(xts.interp(prices, deltat = 15))[1:25, ]
    
 ## xts.map - 
-   xmpBasics("\nNext: Create Business Time Map > ")
+   xmpCalendar("\nNext: Create Business Time Map > ")
    options(object.size = 5e8)
    par(mfrow = c(2, 1))
    # Load and plot prices:
@@ -592,7 +592,7 @@ Guillaume D.M., Dacorogna M.M., Dave R.R., Mueller U.A., Olsen R.B.,
    tmap 
    
 ## xts.upsilon -  
-   xmpBasics("\nNext: De-seasonalize in Upsilon Time > ")
+   xmpCalendar("\nNext: De-seasonalize in Upsilon Time > ")
    index = list(t = fdax9710[,"XDATE"], x = fdax9710[,"FDAX"])  
    # Start on Monday - end on Sunday, 3 weeks:
    index = xts.cut(index, from.date = 19971006, to.date = 19971026)
@@ -604,7 +604,7 @@ Guillaume D.M., Dacorogna M.M., Dave R.R., Mueller U.A., Olsen R.B.,
      main="Prices in Upsilon time")
     
 ## xts.dvs - 
-   xmpBasics("\nNext: De-volatilize Time Series > ")
+   xmpCalendar("\nNext: De-volatilize Time Series > ")
    index = list(t=fdax9710[,"XDATE"], x=fdax9710[,"FDAX"])  
    # Start on Monday - end on Sunday, 3 weeks:
    index = xts.cut(index, from.date=19971006, to.date=19971026)
@@ -615,7 +615,7 @@ Guillaume D.M., Dacorogna M.M., Dave R.R., Mueller U.A., Olsen R.B.,
 
 \dontrun{
 ## xts.dws -
-   xmpBasics("\nNext: Plot daily/weekly Charts > ")
+   xmpCalendar("\nNext: Plot daily/weekly Charts > ")
    # NOTE:
    # The file \code{fdax97m.csv} is too large and therefore not part 
    # of  this distribution. Please contact \emph{inf@rmetrics.org}.

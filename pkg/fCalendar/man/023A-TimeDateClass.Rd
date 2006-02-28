@@ -113,33 +113,33 @@
      Methods for Math Operations with 'timeDate' Objects are:
 
     \tabular{ll}{   
- 	\code{[.timeDate} \tab Extracts, replaces subsets from 'timeDate' objects, \cr
-	\code{+.timeDate} \tab Performs arithmetic + ops on 'timeDate' objects, \cr
-	\code{-.timeDate} \tab  Performs arithmetic - ops on 'timeDate' objects, \cr
-	\code{Ops.timeDate} \tab 'Ops' generic functions for 'timeDate' objects, \cr
-	\code{diff.timeDate} \tab Returns suitably lagged and iterated differences, \cr
-	\code{difftimeDate} \tab Returns a difference of two 'timeDate' objects, \cr
-	\code{c.timeDate} \tab Concatenates objects of class 'timeDate', \cr
-	\code{rep.timeDate} \tab Replicates objects of class 'timeDate', \cr
-	\code{start.timeDate} \tab Extracts the first object of a 'timeDate' vector, \cr
-	\code{end.timeDate} \tab Extracts the last object of a 'timeDate' vector, \cr
-	\code{modify.timeDate} \tab Sorts, rounds or truncates a 'timeDate' object, \cr
-	\code{rev.timeDate} \tab Reverts  a 'timeDate' vector object. }          
-     		
+    \code{[.timeDate} \tab Extracts, replaces subsets from 'timeDate' objects, \cr
+    \code{+.timeDate} \tab Performs arithmetic + ops on 'timeDate' objects, \cr
+    \code{-.timeDate} \tab  Performs arithmetic - ops on 'timeDate' objects, \cr
+    \code{Ops.timeDate} \tab 'Ops' generic functions for 'timeDate' objects, \cr
+    \code{diff.timeDate} \tab Returns suitably lagged and iterated differences, \cr
+    \code{difftimeDate} \tab Returns a difference of two 'timeDate' objects, \cr
+    \code{c.timeDate} \tab Concatenates objects of class 'timeDate', \cr
+    \code{rep.timeDate} \tab Replicates objects of class 'timeDate', \cr
+    \code{start.timeDate} \tab Extracts the first object of a 'timeDate' vector, \cr
+    \code{end.timeDate} \tab Extracts the last object of a 'timeDate' vector, \cr
+    \code{modify.timeDate} \tab Sorts, rounds or truncates a 'timeDate' object, \cr
+    \code{rev.timeDate} \tab Reverts  a 'timeDate' vector object. }          
+            
     Mthods for Transformations of 'timeDate' Objects are:
         
     \tabular{ll}{       
-	\code{as.character.timeDate} \tab Returns a 'timeDate' object as character string, \cr
-	\code{as.data.frame.timeDate} \tab Returns a 'timeDate' object as data frame, \cr
-	\code{as.POSIXct.timeDate} \tab Returns a 'timeDate' object as POSIXct object, \cr
-	\code{as.POSIXlt} \tab As POSIXlt, Use Method (Overwrite), \cr
-	\code{as.POSIXlt.default} \tab Default method for POSIXlt, \cr
-	\code{julian.timeDate} \tab Returns Julian day counts since 1970-01-01, \cr
-	\code{julian.POSIXt} \tab A Julian Patch, \cr
-	\code{atoms.timeDate} \tab Returns date/time atoms from a 'timeDate' object, \cr
-	\code{atoms} \tab Extract atoms, Use Method, \cr
-	\code{atoms.default} \tab Default method for atoms, \cr
-	\code{months.timeDate} \tab Extract months atom from a 'timeDate' object. }
+    \code{as.character.timeDate} \tab Returns a 'timeDate' object as character string, \cr
+    \code{as.data.frame.timeDate} \tab Returns a 'timeDate' object as data frame, \cr
+    \code{as.POSIXct.timeDate} \tab Returns a 'timeDate' object as POSIXct object, \cr
+    \code{as.POSIXlt} \tab As POSIXlt, Use Method (Overwrite), \cr
+    \code{as.POSIXlt.default} \tab Default method for POSIXlt, \cr
+    \code{julian.timeDate} \tab Returns Julian day counts since 1970-01-01, \cr
+    \code{julian.POSIXt} \tab A Julian Patch, \cr
+    \code{atoms.timeDate} \tab Returns date/time atoms from a 'timeDate' object, \cr
+    \code{atoms} \tab Extract atoms, Use Method, \cr
+    \code{atoms.default} \tab Default method for atoms, \cr
+    \code{months.timeDate} \tab Extract months atom from a 'timeDate' object. }
     
         
 }
@@ -153,19 +153,19 @@ timeDate(charvec, format = NULL, zone = "GMT", FinCenter = myFinCenter)
 timeCalendar(y = currentYear, m = 1:12, d = NULL, h = NULL, min = NULL, 
     s = NULL, FinCenter = myFinCenter)
 timeSequence(from = "2004-01-01", to = format(Sys.time(), "\%Y-\%m-\%d"), 
-	by = "day", length.out = NULL, format = "", FinCenter = myFinCenter)
+    by = "day", length.out = NULL, format = "", FinCenter = myFinCenter)
 Sys.timeDate(FinCenter = myFinCenter) 
 
 timeLastDayInMonth(charvec, format = "\%Y-\%m-\%d", 
-	FinCenter = "GMT")
+    FinCenter = "GMT")
 timeNdayOnOrAfter(charvec, nday = 1, format = "\%Y-\%m-\%d", 
-	FinCenter = "GMT")
-timeNdayOnOrBefore(charvec, nday = 1, format = "\%Y-\%m-\%d", 	
-	FinCenter = "GMT")
+    FinCenter = "GMT")
+timeNdayOnOrBefore(charvec, nday = 1, format = "\%Y-\%m-\%d",   
+    FinCenter = "GMT")
 timeNthNdayInMonth(charvec, nday = 1, nth = 1, format = "\%Y-\%m-\%d", 
     FinCenter = "GMT")
 timeLastNdayInMonth(charvec, nday = 1, format = "\%Y-\%m-\%d", 
-	FinCenter = "GMT")
+    FinCenter = "GMT")
 
 is.timeDate(object) 
 \method{print}{timeDate}(x, \dots)
@@ -183,14 +183,14 @@ weekDay(x)
 \method{Ops}{timeDate}(e1, e2)
 \method{diff}{timeDate}(x, lag = 1, differences = 1, \dots)
 difftimeDate(time1, time2, 
-	units = c("auto", "secs", "mins", "hours", "days", "weeks"))
+    units = c("auto", "secs", "mins", "hours", "days", "weeks"))
 
 \method{c}{timeDate}(\dots, recursive = FALSE)
 \method{rep}{timeDate}(x, times, \dots)
 \method{start}{timeDate}(x, \dots)
 \method{end}{timeDate}(x, \dots)
 \method{modify}{timeDate}(x, method = c("sort", "round", "trunc"),
-	units = c("secs", "mins", "hours", "days"))
+    units = c("secs", "mins", "hours", "days"))
 \method{rev}{timeDate}(x)
 
 \method{as.character}{timeDate}(x, \dots)
@@ -205,10 +205,10 @@ difftimeDate(time1, time2,
 \arguments{
   
     \item{abbreviate}{
-    	[months] - \cr
-    	currently not used.
-    	}
-   	\item{by}{
+        [months] - \cr
+        currently not used.
+        }
+    \item{by}{
         a character string, containing one of "sec", "min",
         "hour", "day", "week", "month" or "year".
         This can optionally be preceded by an integer and a
@@ -218,19 +218,19 @@ difftimeDate(time1, time2,
         a character vector of dates and times.
         }
     \item{differences}{
-    	[lag] - \cr
-    	an integer indicating the order of the difference.
-    	}
+        [lag] - \cr
+        an integer indicating the order of the difference.
+        }
     \item{drop}{
-    	["["] - \cr
-    	a logical flag, by default \code{TRUE}.
-    	}
+        ["["] - \cr
+        a logical flag, by default \code{TRUE}.
+        }
     \item{e1, e2}{
-    	["+"][["-"]["Ops"] - \cr
-    	usually objects of class \code{timeDate}, in the case of
-    	addition and subtraction \code{e2} may be of class
-    	\code{numeric}.
-    	}
+        ["+"][["-"]["Ops"] - \cr
+        usually objects of class \code{timeDate}, in the case of
+        addition and subtraction \code{e2} may be of class
+        \code{numeric}.
+        }
     \item{FinCenter}{
         a character with the the location of the  
         financial center named as "continent/city". 
@@ -248,15 +248,15 @@ difftimeDate(time1, time2,
         seconds of the days (0-59), defaults are 0. 
         }
     \item{holidays}{
-    	[isBizday] - \cr
-    	holiday dates from a holiday calendar. An object of class
-    	\code{timeDate}.
-    	}
+        [isBizday] - \cr
+        holiday dates from a holiday calendar. An object of class
+        \code{timeDate}.
+        }
     \item{lag}{
-    	[lag] - \cr
-    	an integer indicating which lag to use.  
-		}
-	\item{length.out}{
+        [lag] - \cr
+        an integer indicating which lag to use.  
+        }
+    \item{length.out}{
         length.out integer, optional. Desired length  
         of the sequence, if specified "to" will be ignored.
         }
@@ -265,11 +265,11 @@ difftimeDate(time1, time2,
         \code{0} (Sunday) to \code{6} (Saturday).
         }
     \item{method}{
-    	[modify] - \cr
-    	a character string defining the modification method, one of
-    	\code{"sort"}, \code{"round"}, or \code{"trunc"}. 
-		}
-	\item{nth}{
+        [modify] - \cr
+        a character string defining the modification method, one of
+        \code{"sort"}, \code{"round"}, or \code{"trunc"}. 
+        }
+    \item{nth}{
         an integer vector numbering the n-th occurence.
         }     
     \item{object}{
@@ -281,34 +281,34 @@ difftimeDate(time1, time2,
         by the \code{grep} function. Wild cards are allowed.
         }
     \item{recursive}{
-		[c] - \cr
-		a logical. If recursive  is set to \code{TRUE}, the function 
-		recursively descends through lists combining all their elements 
-		into a vector. 
-		}
-	\item{time1, time2}{
-    	[difftime] - \cr
-    	two objects objects of class \code{timeDate}.
-    	}
+        [c] - \cr
+        a logical. If recursive  is set to \code{TRUE}, the function 
+        recursively descends through lists combining all their elements 
+        into a vector. 
+        }
+    \item{time1, time2}{
+        [difftime] - \cr
+        two objects objects of class \code{timeDate}.
+        }
     \item{times}{
-    	[rep] - \cr
-    	an optional non-negative integer. A vector giving the number of 
-    	times to repeat each element if of length \code{length(x)}, or 
-    	to repeat the whole vector if of length \code{1}.
-    	}
+        [rep] - \cr
+        an optional non-negative integer. A vector giving the number of 
+        times to repeat each element if of length \code{length(x)}, or 
+        to repeat the whole vector if of length \code{1}.
+        }
     \item{tz}{
         inputs the time zone to POSIX objects, i.e. the time zone, 
         \code{zone}, or financial center string, \code{FinCenter}, 
         as used by \code{timeDate} objects.
         }
     \item{units}{
-    	a character string denoting the date/time units in which the 
-    	results are desired.
-    	}
+        a character string denoting the date/time units in which the 
+        results are desired.
+        }
     \item{x}{
-    	[isWeekday][isWeekend][isBizday][weekDay] - \cr
-    	an object of class \code{timeDate}.
-		\cr
+        [isWeekday][isWeekend][isBizday][weekDay] - \cr
+        an object of class \code{timeDate}.
+        \cr
         [format][print] - \cr
         an object of class \code{timeDate}.
         }
@@ -371,16 +371,16 @@ difftimeDate(time1, time2,
     argument is of \code{timeDate} type or not.
     \cr
     
-   	\code{isWeekday}\cr
-   	\code{isWeekend}\cr
-   	\code{isBizday}\cr
-   	\code{weekDay}
-   	\cr
-   	The first thres functions return logical vectors indicating
-   	if a date is a weekday, a weekend day, or a business.day. The
-   	function \code{weekDay} returns a three letter character string
-   	with the names of the day of the week.
-   	\cr
+    \code{isWeekday}\cr
+    \code{isWeekend}\cr
+    \code{isBizday}\cr
+    \code{weekDay}
+    \cr
+    The first thres functions return logical vectors indicating
+    if a date is a weekday, a weekend day, or a business.day. The
+    function \code{weekDay} returns a three letter character string
+    with the names of the day of the week.
+    \cr
     
     \emph{Print Method:}
     \cr
@@ -699,7 +699,7 @@ Zivot, E., Wang J. (2003);
 
 
 \examples{
-## SOURCE("fCalendar.23A-TimeDateClass")
+## SOURCE("fCalendar.023A-TimeDateClass")
 
 ## c -
    xmpCalendar("\nStart: Create Character Vectors > ") 

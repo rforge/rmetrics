@@ -152,11 +152,11 @@ ohlcDailyPlot(x, volume = TRUE, colOrder = c(1:5), units = 1e6,
         a character vector of dates and times.
         }
     \item{complement}{
-    	[outlierSeries] - \cr
-    	a logical flag, should the outler series
-		or its complement be returns, by default \code{TRUE}
-		which returns the series free of outliers.
-		}
+        [outlierSeries] - \cr
+        a logical flag, should the outler series
+        or its complement be returns, by default \code{TRUE}
+        which returns the series free of outliers.
+        }
     \item{colOrder}{
         [ohlcDailyPlot] - \cr 
         an integer vector which gives the order of the prices and the
@@ -281,12 +281,12 @@ ohlcDailyPlot(x, volume = TRUE, colOrder = c(1:5), units = 1e6,
         default \code{TRUE}.
         } 
     \item{sd}{
-    	[outlierSeries] - \cr
-    	a numeric value of standard deviations, e.g. 10
-		means that values larger or smaller tahn ten 
-		times the standard deviation will be removed from
-		the series.
-		}
+        [outlierSeries] - \cr
+        a numeric value of standard deviations, e.g. 10
+        means that values larger or smaller tahn ten 
+        times the standard deviation will be removed from
+        the series.
+        }
     \item{sep}{
         [read.timeSeries] - \cr
         the field seperator used in the spreadsheet file to separate 
@@ -450,16 +450,16 @@ ohlcDailyPlot(x, volume = TRUE, colOrder = c(1:5), units = 1e6,
 
 
 \examples{
-## SOURCE("fCalendar.24A-TimeSeriesClass")
+## SOURCE("fCalendar.024A-TimeSeriesClass")
 
 ## data - 
-   xmpBasics("\nStart: Load Microsoft Data > ")
+   xmpCalendar("\nStart: Load Microsoft Data > ")
    data(msft.dat)
    myFinCenter = "GMT"
    msft.dat[1:3, ]
 
 ## timeSeries -
-   xmpBasics("\nNext: Create a timeSeries Object > ")
+   xmpCalendar("\nNext: Create a timeSeries Object > ")
    close = msft.dat[, 5]
    ts = timeSeries(close, as.character(msft.dat[, 1]), format = "\%m/\%d/\%Y", 
      units = "MSFT", zone = "GMT", FinCenter = "GMT")
@@ -468,12 +468,12 @@ ohlcDailyPlot(x, volume = TRUE, colOrder = c(1:5), units = 1e6,
    c(start(ts), end(ts))
     
 ## cutSeries -    
-   xmpBasics("\nNext: Cut out April Data from 2001 > ")
+   xmpCalendar("\nNext: Cut out April Data from 2001 > ")
    ts.Apr01 = cutSeries(ts, "2001-04-01", "2001-04-30") 
    ts.Apr01
 
 ## returnSeries -  
-   xmpBasics("\nNext: Compute Returns > ")
+   xmpCalendar("\nNext: Compute Returns > ")
    # Compute Returns:
    args(returnSeries)
    # Continuous Returns:
@@ -486,7 +486,7 @@ ohlcDailyPlot(x, volume = TRUE, colOrder = c(1:5), units = 1e6,
    returnSeries(ts.Apr01, percentage = TRUE, trim = FALSE)
 
 ## mergeSeries -    
-   xmpBasics("\nNext: Merge Series with Returns > ")
+   xmpCalendar("\nNext: Merge Series with Returns > ")
    # Include last Day from March:
    ts.APR01 = cutSeries(ts, "2001-03-29", "2001-04-30") 
    ts.merged = mergeSeries(x = ts.APR01, 
@@ -494,7 +494,7 @@ ohlcDailyPlot(x, volume = TRUE, colOrder = c(1:5), units = 1e6,
    ts.merged
     
 ## alignDailySeries -     
-   xmpBasics("\nNext: Align with NA > ")
+   xmpCalendar("\nNext: Align with NA > ")
    args(alignDailySeries)
    ts.ret = returnSeries(ts.APR01, trim = TRUE)
    GoodFriday(2001)   
@@ -503,13 +503,13 @@ ohlcDailyPlot(x, volume = TRUE, colOrder = c(1:5), units = 1e6,
    alignDailySeries(ts.ret, method = "fillNA", include.weekends = TRUE)
     
 ## alignDailySeries - 
-   xmpBasics("\nNext: Interpolate > ")
+   xmpCalendar("\nNext: Interpolate > ")
    ts.ret
    alignDailySeries(ts.ret, method = "interp", include.weekend = FALSE)
    alignDailySeries(ts.ret, method = "interp", include.weekend = TRUE)
 
 ## applySeries -   
-   xmpBasics("\nNext: Aggregate weekly > ")
+   xmpCalendar("\nNext: Aggregate weekly > ")
    GoodFriday(2001)
    to = timeSequence(from = "2001-04-11", length.out = 3, 
      by = "weeks", format = "\%Y-\%m-\%d", FinCenter = "GMT") 
