@@ -28,7 +28,7 @@
 
 
 ################################################################################
-# FUNCTION:		   		DESCRIPTION:
+# FUNCTION:             DESCRIPTION:
 #  xmpExtremes           Sets Prompt
 #  xmpfExtremes          Popups the example menu
 ################################################################################
@@ -38,13 +38,13 @@ xmpExtremes =
 function(prompt = "") 
 {   # A function implemented by Diethelm WUertz
 
-	# Description:
-	#	Sets prompt
-	
-	# FUNCTION:
-	
-	# Return Value:
-	invisible(prompt)
+    # Description:
+    #   Sets prompt
+    
+    # FUNCTION:
+    
+    # Return Value:
+    invisible(prompt)
 }
 
 
@@ -53,37 +53,37 @@ function(prompt = "")
 
 xmpfExtremes =
 function() 
-{	# A function implemented by Diethelm WUertz
+{   # A function implemented by Diethelm WUertz
 
-	# Description:
-	#	Popups the example menu
-	
-	# FUNCTION:
-	
-	# Popup:	
-	path = paste(.Library,"/fExtremes", sep = "") 
-	entries = .read.fExtremes.00Index (file.path(path, "demoIndex"))	
-	example = select.list(entries[,1])
-	selected = 0
-	for (i in 1:length(entries[,1])) {
-		if (example == entries[i,1]) selected = i
-	}
-	if (example == "") {
-		cat("\nNo demo selected\n")
-	} else {
-		cat("\nLibrary: ", "fExtremes", "\nExample: ", 
-			entries[selected, 1], "\nTitle:   ", entries[selected, 2], "\n")
-		source(paste(path, "/demo/", example, ".R", sep = ""))
-	}
-	if(TRUE) {
-		cat("\n")
-	}
-	
-	# Return Value:
-	invisible()
+    # Description:
+    #   Popups the example menu
+    
+    # FUNCTION:
+    
+    # Popup:    
+    path = paste(.Library,"/fExtremes", sep = "") 
+    entries = .read.fExtremes.00Index (file.path(path, "demoIndex"))    
+    example = select.list(entries[,1])
+    selected = 0
+    for (i in 1:length(entries[,1])) {
+        if (example == entries[i,1]) selected = i
+    }
+    if (example == "") {
+        cat("\nNo demo selected\n")
+    } else {
+        cat("\nLibrary: ", "fExtremes", "\nExample: ", 
+            entries[selected, 1], "\nTitle:   ", entries[selected, 2], "\n")
+        source(paste(path, "/demo/", example, ".R", sep = ""))
+    }
+    if(TRUE) {
+        cat("\n")
+    }
+    
+    # Return Value:
+    invisible()
 }
-	
-	
+    
+    
 # ------------------------------------------------------------------------------
 
 
@@ -93,14 +93,14 @@ function (file)
     if (is.character(file)) {
         if (file == "") {
             file <- stdin()
-    	} else {
+        } else {
             file <- file(file, "r")
             on.exit(close(file))
         }
     }
     if (!inherits(file, "connection")) 
         stop(paste("argument", 
-        	sQuote("file"), "must be a character string or connection"))
+            sQuote("file"), "must be a character string or connection"))
     y <- matrix("", nr = 0, nc = 2)
     x <- paste(readLines(file), collapse = "\n")
     for (chunk in unlist(strsplit(x, "\n[       \n]*\n"))) {
@@ -111,9 +111,9 @@ function (file)
                 chunk <- gsub("\n[      ]+", "  ", chunk)
                 x <- strsplit(unlist(strsplit(chunk, "\n")), "[    ]")
                 cbind(unlist(lapply(x, "[[", 1)), unlist(lapply(x, 
-                  	function(t) {
-                    	paste(t[-c(1, which(nchar(t) == 0))], collapse = " ")
-                  	})))
+                    function(t) {
+                        paste(t[-c(1, which(nchar(t) == 0))], collapse = " ")
+                    })))
             }
         })
         if (!inherits(entries, "try-error") && NCOL(entries) == 2) 
@@ -123,6 +123,6 @@ function (file)
     y
 }
 
-	
+    
 ################################################################################
 

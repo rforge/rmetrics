@@ -39,7 +39,7 @@ function (x, block=20, quantiles = seq(0.990,0.999,0.001), doplot = TRUE, ...)
 {   # A function written by D. Wuertz
     
     # Description:
-    # 	Calculates and Plots Theta(1,2,3)
+    #   Calculates and Plots Theta(1,2,3)
     
     # FUNCTION:
     
@@ -117,19 +117,19 @@ plottype = c("thresh", "K"), labels = TRUE, autoscale = TRUE, ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
-    #	Calculates Theta(1,2) and plots Theta(1)
+    #   Calculates Theta(1,2) and plots Theta(1)
  
     # Notes:
     #   Wraps "exindex" from Alexander McNeil's evir package
 
     # FUNCTION:
     
-	# Wrapper:
-	plottype = plottype[1]
-	reverse = FALSE
-	if (plottype == "K") reverse = TRUE
-	ans = exindex(data = x, block = block , start = start, end = end, 
-		reverse = reverse, auto.scale = autoscale, labels = labels, ...) 
+    # Wrapper:
+    plottype = plottype[1]
+    reverse = FALSE
+    if (plottype == "K") reverse = TRUE
+    ans = exindex(data = x, block = block , start = start, end = end, 
+        reverse = reverse, auto.scale = autoscale, labels = labels, ...) 
 
     # Return Value:
     ans

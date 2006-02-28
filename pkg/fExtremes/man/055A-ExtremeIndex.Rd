@@ -110,7 +110,7 @@ exindexesPlot(x, block = 20, quantiles = seq(0.990, 0.999, 0.001),
 }
 
 
-\authors{
+\author{
 
     Alexander McNeil, for the \code{exindexPlot} function, and \cr
     Diethelm Wuertz for the \code{exindexesPlot} function.
