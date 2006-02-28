@@ -1,6 +1,6 @@
-\name{TimeSeriesData}
+\name{TimeSeriesImport}
 
-\alias{TimeSeriesData}
+\alias{TimeSeriesImport}
 
 \alias{fWEBDATA}
 \alias{fWEBDATA-class}
@@ -24,7 +24,7 @@
     
     A collection and description of functions to import 
     financial and economic market from the Internet.
-    Download functions are availalble for economic and
+    Download functions are available for economic and
     financial market data form Economagic's, from 
     Yahoo's, and from the Federal Reserve's Internet
     sites.

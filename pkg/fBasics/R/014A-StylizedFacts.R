@@ -194,13 +194,13 @@ ci = 0.95, main = "ACF", doprint = TRUE)
     x = seq(0, lag.max, by = 1)
     y = z$acf 
     plot(x = x[-1], y = y[-1], type = "l", main = main, 
-    	col = "steelblue4", xlab = "lag", ylab = "ACF", 
-    	xlim = c(0, lag.max), ylim = c(-2*cl, max(y[-1])) )
-	# abline(h = 0, lty = 3)
+        col = "steelblue4", xlab = "lag", ylab = "ACF", 
+        xlim = c(0, lag.max), ylim = c(-2*cl, max(y[-1])) )
+    # abline(h = 0, lty = 3)
     if (doprint) {
-	    cat ('\nLong Memory Autocorrelation Function:\n')
-	        paste (cat ('\n  Maximum Lag        '), cat(lag.max))
-	        paste (cat ('\n  Cut-Off ConfLevel  '), cat(cl))
+        cat ('\nLong Memory Autocorrelation Function:\n')
+            paste (cat ('\n  Maximum Lag        '), cat(lag.max))
+            paste (cat ('\n  Cut-Off ConfLevel  '), cat(cl))
     }
     ACF = acf(x.ret, lag.max = lag.max, plot = FALSE)$acf[,,1]
     lines(x = 1:lag.max, y = ACF[-1], type = "l", col = "steelblue4")
@@ -240,87 +240,87 @@ ci = 0.95, main = "ACF", doprint = TRUE)
 
 lacfPlot = 
 function(x, n = 12, lag.max = 20)
-{	# A function implemented by Diethelm Wuertz
+{   # A function implemented by Diethelm Wuertz
 
-	# Description:
-	#	Computes the lagged autocorrelation function
-	
-	# Arguments:
-	#	x - numeric vector of prices or Index Values:
-	
-	# FUNCTION:
-	
-	# Truncate to multiple of n:
-	x = as.vector(x)
-	N = trunc(length(x)/n)
-	M = length(x) - n*N
-	if (M > 0) x = x[-c(1:M)]
-	
-	# One Step Volatilities:
-	x.ret = c(0, diff(log(x)))
-	x.mat = matrix(x.ret, byrow = TRUE, ncol = n)
+    # Description:
+    #   Computes the lagged autocorrelation function
+    
+    # Arguments:
+    #   x - numeric vector of prices or Index Values:
+    
+    # FUNCTION:
+    
+    # Truncate to multiple of n:
+    x = as.vector(x)
+    N = trunc(length(x)/n)
+    M = length(x) - n*N
+    if (M > 0) x = x[-c(1:M)]
+    
+    # One Step Volatilities:
+    x.ret = c(0, diff(log(x)))
+    x.mat = matrix(x.ret, byrow = TRUE, ncol = n)
     u = apply(abs(x.mat), 1, mean)
-	
-	# n-step Volatilities:
-	index = n*(1:N)
-	v = abs(c(0, diff(log(x[index]))))
-	
-	# Zero Tau:
-	L = length(u)
-	RhoZero = cor(u, v)
-	print(RhoZero)
-	
-	# Positive Tau:
-	RhoPos = NULL
-	for (tau in 1:lag.max) {
-		X = u[-((L-tau+1):L)]
-		X2 = X 
-		Y = v[-((L-tau+1):L)]
-		Y2 = v[-(1:tau)]
-		X.mean = mean(X)
-		Y.mean = mean(Y)		
-		X1 = sum((X - X.mean)^2)
-		Y1 = sum((Y - Y.mean)^2)	
-		XY1 = sum( (X2-X.mean)*(Y2-Y.mean) )
-		rho = XY1/sqrt(X1*Y1)
-		RhoPos = c(RhoPos, rho)
-	}
-	
-	# Negative Tau:
-	RhoNeg = NULL
-	for (tau in 1:lag.max) {
-		X = v[-((L-tau+1):L)]
-		X2 = X 
-		Y = u[-((L-tau+1):L)]
-		Y2 = u[-(1:tau)]
-		X.mean = mean(X)
-		Y.mean = mean(Y)		
-		X1 = sum((X - X.mean)^2)
-		Y1 = sum((Y - Y.mean)^2)	
-		XY1 = sum( (X2-X.mean)*(Y2-Y.mean) )
-		rho = XY1/sqrt(X1*Y1)
-		RhoNeg = c(RhoNeg, rho)
-	}
-	
-	# Correlations:
-	Lagged = RhoPos - RhoNeg
-	Rho = c(rev(RhoNeg), RhoZero, RhoPos)
-	
-	# Plot:
-	plot(x = (-lag.max):(lag.max), y = Rho, type = "l", xlab = "tau", 
-		ylab = "Correlation", ylim = c(min(Lagged), max(Rho)),
-		main = "Lagged Correlations")
-	points(-lag.max:lag.max, Rho, pch = 19, cex = 0.7)
-	lines(0:lag.max, c(0, Lagged), col = "red")
-	points(0:lag.max, c(0, Lagged), pch = 19, cex = 0.7, col = "red")
-	abline(h = 0, col = "grey", lty = 3)
-	ci = 1/sqrt(length(u))
-	abline(h = +ci, col = "blue")
-	abline(h = -ci, col = "blue")
-	grid()
-	
-	# Return Value:
-	list(Rho = Rho, Lagged = Lagged)
+    
+    # n-step Volatilities:
+    index = n*(1:N)
+    v = abs(c(0, diff(log(x[index]))))
+    
+    # Zero Tau:
+    L = length(u)
+    RhoZero = cor(u, v)
+    print(RhoZero)
+    
+    # Positive Tau:
+    RhoPos = NULL
+    for (tau in 1:lag.max) {
+        X = u[-((L-tau+1):L)]
+        X2 = X 
+        Y = v[-((L-tau+1):L)]
+        Y2 = v[-(1:tau)]
+        X.mean = mean(X)
+        Y.mean = mean(Y)        
+        X1 = sum((X - X.mean)^2)
+        Y1 = sum((Y - Y.mean)^2)    
+        XY1 = sum( (X2-X.mean)*(Y2-Y.mean) )
+        rho = XY1/sqrt(X1*Y1)
+        RhoPos = c(RhoPos, rho)
+    }
+    
+    # Negative Tau:
+    RhoNeg = NULL
+    for (tau in 1:lag.max) {
+        X = v[-((L-tau+1):L)]
+        X2 = X 
+        Y = u[-((L-tau+1):L)]
+        Y2 = u[-(1:tau)]
+        X.mean = mean(X)
+        Y.mean = mean(Y)        
+        X1 = sum((X - X.mean)^2)
+        Y1 = sum((Y - Y.mean)^2)    
+        XY1 = sum( (X2-X.mean)*(Y2-Y.mean) )
+        rho = XY1/sqrt(X1*Y1)
+        RhoNeg = c(RhoNeg, rho)
+    }
+    
+    # Correlations:
+    Lagged = RhoPos - RhoNeg
+    Rho = c(rev(RhoNeg), RhoZero, RhoPos)
+    
+    # Plot:
+    plot(x = (-lag.max):(lag.max), y = Rho, type = "l", xlab = "tau", 
+        ylab = "Correlation", ylim = c(min(Lagged), max(Rho)),
+        main = "Lagged Correlations")
+    points(-lag.max:lag.max, Rho, pch = 19, cex = 0.7)
+    lines(0:lag.max, c(0, Lagged), col = "red")
+    points(0:lag.max, c(0, Lagged), pch = 19, cex = 0.7, col = "red")
+    abline(h = 0, col = "grey", lty = 3)
+    ci = 1/sqrt(length(u))
+    abline(h = +ci, col = "blue")
+    abline(h = -ci, col = "blue")
+    grid()
+    
+    # Return Value:
+    list(Rho = Rho, Lagged = Lagged)
 }
 
 
@@ -334,16 +334,17 @@ function(x, cells = "FD", include.lowest = FALSE)
     result = hist(x, nclass = cells, include.lowest = include.lowest, 
         plot = FALSE)
     prob.counts = result$counts/sum(result$counts) / diff(result$breaks)[1]
+    
     # Return Value:
     list(breaks = result$breaks, counts = prob.counts) 
 }
 
 
 .loglogpdfPlot = 
-function(x, n = 50, doplot = TRUE, ...) 
+function(x, n = 50, cells = "FD", include.lowest = FALSE, doplot = TRUE, ...) 
 {
     # Histogram Count & Breaks:
-    histogram = .histpdf(x, cells = "FD", include.lowest = FALSE)
+    histogram = .histpdf(x, cells = cells, include.lowest = include.lowest)
     yh = histogram$counts
     xh = histogram$breaks
     xh = xh[1:(length(xh)-1)] + diff(xh)/2

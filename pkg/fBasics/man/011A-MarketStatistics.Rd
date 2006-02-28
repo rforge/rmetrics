@@ -21,8 +21,8 @@
 \description{
     
     A collection and description of functions to extract 
-    financial and economic market statistcs from the
-    data availalble in the CIA World Factbook and from the
+    financial and economic market statistics from the
+    data available in the CIA World Factbook and from the
     exchange data collected by the World Federation of 
     Stock Exchanges.
     \cr

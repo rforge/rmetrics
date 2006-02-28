@@ -28,7 +28,10 @@
 
 
 ################################################################################
-# FUNCTIONS:            DESCRIPTION:
+# FUNCTION:             DESCRIPTION:
+#  fWEBDATA              Class Representation
+#  show.fWEBDATA         S4 Show Method
+# FUNCTION:             IMPORT DATA FUNCTIONS:
 #  economagicImport      Downloads market data from EconoMagic's web site
 #  yahooImport           Downloads market data from Yahoo's web site 
 #  .yahooImport          ... the old download function 
@@ -36,9 +39,9 @@
 #  fredImport            Downloads market data from St. Louis FED web site
 #  forecastsImport       Downloads monthly data from www.forecasts.org
 # FUNCTION:             ONLY FOR SPLUS VERSION:
-#  as.Date				 Converts date represenatation
-#  data					 Loads or lists specified data sets
-#  download.file 		 Downloads files from Internet using "lynx" or "wget"
+#  as.Date               Converts date represenatation
+#  data                  Loads or lists specified data sets
+#  download.file         Downloads files from Internet using "lynx" or "wget"
 #  strsplit              Splits elements of a character vector into substrings
 ################################################################################
 
@@ -86,7 +89,8 @@ function(object)
 setMethod("show", "fWEBDATA", show.fWEBDATA)
 
 
-# ------------------------------------------------------------------------------
+################################################################################
+# IMPORT DATA FUNCTIONS
 
 
 economagicImport =
@@ -97,7 +101,7 @@ save = FALSE, colname = "VALUE", try = TRUE)
 {   # A function implemented by Diethelm Wuertz
     
     # Description:
-    #	Downloads market data from EconoMagic's web site
+    #   Downloads market data from EconoMagic's web site
     
     # Notes:
     #   Note, only the first column is returned, the remaining are  
@@ -118,7 +122,7 @@ save = FALSE, colname = "VALUE", try = TRUE)
     
     # Frequency:
     freq = frequency[1]
-	       
+           
     # Download:
     if (try) {
         # First try if the Internet can be accessed:
@@ -177,16 +181,16 @@ save = FALSE, colname = "VALUE", try = TRUE)
         # DW - add hyphens:
         rowNames = as.character(z[, 1])
         if (freq == "daily") {
-	        rowNames = paste(
-	        	substring(rowNames, 1, 4), "-",
-	        	substring(rowNames, 5, 6), "-",
-	        	substring(rowNames, 7, 8), sep = "")
+            rowNames = paste(
+                substring(rowNames, 1, 4), "-",
+                substring(rowNames, 5, 6), "-",
+                substring(rowNames, 7, 8), sep = "")
         } else {
-	        rowNames = paste(
-	        	substring(rowNames, 1, 4), "-",
-	        	substring(rowNames, 5, 6), "-01", sep = "")
-    	}
-        z[, 1] = rowNames	
+            rowNames = paste(
+                substring(rowNames, 1, 4), "-",
+                substring(rowNames, 5, 6), "-01", sep = "")
+        }
+        z[, 1] = rowNames   
         
         # Save to file:
         if (save) {
@@ -197,15 +201,15 @@ save = FALSE, colname = "VALUE", try = TRUE)
         
         # Return Value:
         ans = new("fWEBDATA",     
-	        call = match.call(),
-	        param = c(
-	        	"Instrument Query" = query, 
-	        	"Frequency" = frequency, 
-	        	"Instrument Name" = colname),
-	        data = z, 
-	        title = "Web Data Import from Economagic", 
-	        description = as.character(date()) )
-	    return(ans)
+            call = match.call(),
+            param = c(
+                "Instrument Query" = query, 
+                "Frequency" = frequency, 
+                "Instrument Name" = colname),
+            data = z, 
+            title = "Web Data Import from Economagic", 
+            description = as.character(date()) )
+        return(ans)
     }
     
     # Return Value:
@@ -225,8 +229,8 @@ swap = 20, try = TRUE)
     # Example:
     #   IBM SHARES, test 19/20 century change 01-12-1999 -- 31-01-2000:
     #   yahooImport(
-    #		query = "s=IBM&a=11&b=1&c=1999&d=0&q=31&f=2000&z=IBM&x=.csv", 
-    #		file = "IBM.CSV", save = TRUE)
+    #       query = "s=IBM&a=11&b=1&c=1999&d=0&q=31&f=2000&z=IBM&x=.csv", 
+    #       file = "IBM.CSV", save = TRUE)
 
     # Notes:
     #   Requires: fields() cuts a string in fields
@@ -284,9 +288,9 @@ swap = 20, try = TRUE)
 
         # DW - add hyphens:
         # rowNames = paste(
-        #	substring(rowNames, 1, 4), "-",
-        #	substring(rowNames, 5, 6), "-",
-        #	substring(rowNames, 7, 8), sep = "")
+        #   substring(rowNames, 1, 4), "-",
+        #   substring(rowNames, 5, 6), "-",
+        #   substring(rowNames, 7, 8), sep = "")
         # <
         colNames = scan(file = file, n = dim(x1)[2],  what = "", sep = ",")[-1]
         dimnames(z) = list(rowNames, colNames)
@@ -308,12 +312,12 @@ swap = 20, try = TRUE)
         
         # Return Value:
         ans = new("fWEBDATA",     
-	        call = match.call(),
-	        param = c("Instrument Query" = query),
-	        data = z, 
-	        title = "Web Data Import from Yahoo", 
-	        description = as.character(date()) )
-	    return(ans)
+            call = match.call(),
+            param = c("Instrument Query" = query),
+            data = z, 
+            title = "Web Data Import from Yahoo", 
+            description = as.character(date()) )
+        return(ans)
     }
     
     # Return Value:
@@ -394,9 +398,9 @@ save = FALSE, try = TRUE)
         for (s in keynames) {
             grepped = paste(gsub("</td", "", x[grep(s, x) + offset]))
             # DW 2005-05-30
-	        if (length(grepped) == 0) grepped = "NA"
-	        if (grepped == "") grepped = "NA"
-	        ### DW
+            if (length(grepped) == 0) grepped = "NA"
+            if (grepped == "") grepped = "NA"
+            ### DW
             stats = c(stats, grepped)
         }
         for (i in 1:length(keynames)) {
@@ -406,7 +410,7 @@ save = FALSE, try = TRUE)
              
         # Return Value:
         ans = list(query = query, 
-        	keystats = data.frame(cbind(Keyname = keynames, Statistic = stats)))   
+            keystats = data.frame(cbind(Keyname = keynames, Statistic = stats)))   
         class(ans) = "keystats"
         ans    
     }
@@ -419,7 +423,7 @@ save = FALSE, try = TRUE)
 print.keystats = 
 function(x, ...)
 {
-	# Title:
+    # Title:
     cat("\nTitle:\n")
     cat("Yahoo Key Statistics\n", sep = "")
     
@@ -534,14 +538,14 @@ frequency = "daily", save = FALSE, sep = ";", try = TRUE)
         
         # Return Value:
         ans = new("fWEBDATA",     
-	        call = match.call(),
-	        param = c(
-	        	"Instrument Query" = query,
-	        	"Frequency" = frequency),
-	        data = z, 
-	        title = "Web Data Import from FED St. Louis", 
-	        description = as.character(date()) )
-	    return(ans)
+            call = match.call(),
+            param = c(
+                "Instrument Query" = query,
+                "Frequency" = frequency),
+            data = z, 
+            title = "Web Data Import from FED St. Louis", 
+            description = as.character(date()) )
+        return(ans)
     }
     
     # Return Value:
@@ -557,39 +561,39 @@ function(query, file = "tempfile",
 source = "http://www.forecasts.org/data/data/", save = FALSE, try = TRUE) 
 {   # A function implemented by Diethelm Wuertz
 
-	# Description:
-	#	Downloads Monthly Market Data, Indices and Benchmarks from the 
-	#	Financial Forecast Center, "www.forecasts.org".
-	
-	# Value:
-	#	An One Column data frame with row names denoting the dates
-	#	given in the POSIX format "%Y%m%d".
-		
-	# Examples:
-	#   forecastsImport(query = "GOLD")
-    #	forecastsImport(query = "MDISCRT")
-    #	forecastsImport(query = "EXJPUS")
-    #	forecastsImport(query = "GS3M")
-    #	forecastsImport(query = "FEDFUNDS")
+    # Description:
+    #   Downloads Monthly Market Data, Indices and Benchmarks from the 
+    #   Financial Forecast Center, "www.forecasts.org".
     
-	# Notes:
-	#	This function is not written for daily data sets.
-	#   Some example data sets include:  
-	#   Indices:
-	#	  djiaM     sp500M   sp100M     nysecompM  nasdcompM  djcompM  
-	#	  djtransM  djutilM  spmc400M   spsc600M   r1000M     r2000M    
-	#	  r3000M    w5000M   valuM	 
-	#	  nik225M  daxM      hangsengM  ftse100M   tse300M    mtM
-	#   Ohter:  
-	#	  MDISCRT	   
-	#	  EXJPUS	    
-	#	  GS3M
+    # Value:
+    #   An One Column data frame with row names denoting the dates
+    #   given in the POSIX format "%Y%m%d".
+        
+    # Examples:
+    #   forecastsImport(query = "GOLD")
+    #   forecastsImport(query = "MDISCRT")
+    #   forecastsImport(query = "EXJPUS")
+    #   forecastsImport(query = "GS3M")
+    #   forecastsImport(query = "FEDFUNDS")
+    
+    # Note:
+    #   This function is not written for daily data sets.
+    #   Some example data sets include:  
+    #   Indices:
+    #     djiaM     sp500M   sp100M     nysecompM  nasdcompM  djcompM  
+    #     djtransM  djutilM  spmc400M   spsc600M   r1000M     r2000M    
+    #     r3000M    w5000M   valuM   
+    #     nik225M  daxM      hangsengM  ftse100M   tse300M    mtM
+    #   Ohter:  
+    #     MDISCRT      
+    #     EXJPUS        
+    #     GS3M
 
-	# FUNCTION:
-	
-	# Download:
-	if (try) {
-		# Try for Internet Connection:
+    # FUNCTION:
+    
+    # Download:
+    if (try) {
+        # Try for Internet Connection:
         z = try(forecastsImport(file = file, source = source, query = query, 
             save = save, try = FALSE))
         if (class(z) == "try-error") {
@@ -599,69 +603,70 @@ source = "http://www.forecasts.org/data/data/", save = FALSE, try = TRUE)
             return(z) 
         } 
     } else { 
-		# File Name:
-		queryFile = paste(query, ".htm", sep = "")
-		# Construct URL:
-		url = paste(source, queryFile, sep = "")
-		# Download file:
-		download.file(url, file) 
-		# Scan the file:
-		x = scan(file, what = "", sep = "\n")
-		# Extract dates ^19XX and ^20XX:
-		x = x[regexpr("^[12][90]", x) > 0]
-		# Write back to file:
-		write(x, file)	
-		# Read as data frame:
-		x = read.table(file)
-		# Two types of date strings are used %Y-%m-%d and %Y.%m
-		# transform to %Y%m and paste the 28th to the format string:
-		x[, 1] = substr(gsub("-", ".", as.vector(x[, 1])), 1, 7)
-		x = data.frame(x[, 2], row.names = 
-			as.character(10000*as.numeric(x[, 1]) + 28))
-		# Add column name:
-		colnames(x) = query
-		# Save Download ?
-		if (save) {
-		    write.table(paste("%Y%m%d;", query, sep = ""), file, 
-		    	quote = FALSE, row.names = FALSE, col.names = FALSE)
-			write.table(x, file, quote = FALSE, append = TRUE, 
-				col.names = FALSE, sep=";") 
-		} else {
-		    unlink(file) 
-		}  
-		      
-		# Return Value:
+        # File Name:
+        queryFile = paste(query, ".htm", sep = "")
+        # Construct URL:
+        url = paste(source, queryFile, sep = "")
+        # Download file:
+        download.file(url, file) 
+        # Scan the file:
+        x = scan(file, what = "", sep = "\n")
+        # Extract dates ^19XX and ^20XX:
+        x = x[regexpr("^[12][90]", x) > 0]
+        # Write back to file:
+        write(x, file)  
+        # Read as data frame:
+        x = read.table(file)
+        # Two types of date strings are used %Y-%m-%d and %Y.%m
+        # transform to %Y%m and paste the 28th to the format string:
+        x[, 1] = substr(gsub("-", ".", as.vector(x[, 1])), 1, 7)
+        x = data.frame(x[, 2], row.names = 
+            as.character(10000*as.numeric(x[, 1]) + 28))
+        # Add column name:
+        colnames(x) = query
+        # Save Download ?
+        if (save) {
+            write.table(paste("%Y%m%d;", query, sep = ""), file, 
+                quote = FALSE, row.names = FALSE, col.names = FALSE)
+            write.table(x, file, quote = FALSE, append = TRUE, 
+                col.names = FALSE, sep=";") 
+        } else {
+            unlink(file) 
+        }  
+              
+        # Return Value:
         ans = new("fWEBDATA",     
-	        call = match.call(),
-	        param = c("Instrument Query" = query),
-	        data = x,
-	        title = "Web Data Import from Forecasts", 
-	        description = as.character(date()) )
-	    return(ans)
-	}
-	
-	# Return Value:
-	invisible()
+            call = match.call(),
+            param = c("Instrument Query" = query),
+            data = x,
+            title = "Web Data Import from Forecasts", 
+            description = as.character(date()) )
+        return(ans)
+    }
+    
+    # Return Value:
+    invisible()
 }
  
 
 ################################################################################
+# Only for SPlus Version
 
 
 if (!exists("as.Date")) 
-{	
+{   
 as.Date = 
 function(x, format = "%d-%m-%y")
-{	# A Function implemented by Diethelm Wuertz
+{   # A Function implemented by Diethelm Wuertz
 
-	# Description:
-	#	Mimics R's as.Date function
-	
-	# Used by yahooImport ...
-	ans = timeDate(s, in.format = format, format = "%Y-%02m-%02d")	
-	
-	# Return Value:
-    ans	
+    # Description:
+    #   Mimics R's as.Date function
+    
+    # Used by yahooImport ...
+    ans = timeDate(s, in.format = format, format = "%Y-%02m-%02d")  
+    
+    # Return Value:
+    ans 
 }
 }
 

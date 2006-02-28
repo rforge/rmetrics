@@ -29,83 +29,89 @@
 
 ################################################################################
 # FUNCTION:             DESCRIPTION:  
-#   dgh                   Returns density for generalized hyperbolic DF
-#   pgh                   Returns probability for generalized hyperbolic DF
-#   qgh                   Returns quantiles for generalized hyperbolic DF
-#   rgh                   Returns random variates for generalized hyperbolic DF
-#   .rghyp                ... Internal functions for the evaluation
-#	.rgigjd                   of random variates for the generalized
-#   .rgigjd1                  hyperbolic distribution function ...
+#  dgh                   Returns density for generalized hyperbolic DF
+#  pgh                   Returns probability for generalized hyperbolic DF
+#  qgh                   Returns quantiles for generalized hyperbolic DF
+#  rgh                   Returns random variates for generalized hyperbolic DF
+#  .rghyp                ... Internal functions for the evaluation
+#  .rgigjd                   of random variates for the generalized
+#  .rgigjd1                  hyperbolic distribution function ...
 # FUNCTION:             DESCRIPTION:
-#   .BesselK1             Internal Function  
-#   dhyp                  Returns density for hyperbolic DF
-#   phyp                  Returns probability for hyperbolic DF
-#   qhyp                  Returns quantiles for hyperbolic DF
-#   rhyp                  Returns random variates for hyperbolic DF
-#   .*hyp[1234]             [1], ..., [4] first to fourth parameterization
-#   hypMode               Computes the hyperbolic mode
-#   .hyp[1234]Mode          [1], ..., [4] first to fourth parameterization
+#  .BesselK1             Internal Function  
+#  dhyp                  Returns density for hyperbolic DF
+#  phyp                  Returns probability for hyperbolic DF
+#  qhyp                  Returns quantiles for hyperbolic DF
+#  rhyp                  Returns random variates for hyperbolic DF
+#  .*hyp[1234]             [1], ..., [4] first to fourth parameterization
+#  hypMode               Computes the hyperbolic mode
+#  .hyp[1234]Mode          [1], ..., [4] first to fourth parameterization
 # FUNCTION:             DESCRIPTION:
-#   dnig                  Returns density for inverse Gaussian DF
-#   pnig                  Returns probability for for inverse Gaussian DF
-#   qnig                  Returns quantiles for for inverse Gaussian DF 
-#   rnig                  Returns random variates for inverse Gaussian DF
+#  dnig                  Returns density for inverse Gaussian DF
+#  pnig                  Returns probability for for inverse Gaussian DF
+#  qnig                  Returns quantiles for for inverse Gaussian DF 
+#  rnig                  Returns random variates for inverse Gaussian DF
+# FUNCTION:             DESCRIPTION:
+#  hypSlider             Displays hyperbolic distribution function
+#  nigSlider             Displays normal inverse Gausssian distribution function
 ################################################################################
 
+
+################################################################################
+# gh
 
 
 dgh = 
 function(x, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1)
-{	# A function implemented by Diethelm Wuertz
-	
-	# Description:
-	#	Returns density for the generalized hyperbolic distribution
-	
-	# FUNCTION:
-	
-	# Checks:
-	if (alpha <= 0) stop("alpha must be greater than zero")  
-	if (delta <= 0) stop("delta must be greater than zero")
-	if (abs(beta) >= alpha) stop("abs value of beta must be less than alpha")
+{   # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   Returns density for the generalized hyperbolic distribution
+    
+    # FUNCTION:
+    
+    # Checks:
+    if (alpha <= 0) stop("alpha must be greater than zero")  
+    if (delta <= 0) stop("delta must be greater than zero")
+    if (abs(beta) >= alpha) stop("abs value of beta must be less than alpha")
 
-	# Density:
-	denom = sqrt(2*pi) * alpha^(lambda-0.5) * delta^lambda * 
-		besselK(delta * sqrt(alpha^2-beta^2), lambda) 			
-	a = (alpha^2-beta^2)^(lambda/2) / denom
-	f = ( delta^2 + (x - mu)^2 ) ^ ( ( lambda - 0.5) / 2 )
-	# Use exponential scaled form to prevent from overflows:
-	arg = alpha * sqrt(delta^2+(x-mu)^2)
-	k = besselK(arg, lambda -0.5, expon.scaled = TRUE)
-	e = exp(beta*(x-mu)-arg)	
-	
-	# Put all together:
-	ans = a*f*k*e
-	
-	# Attributes:
-	attr(ans, "param") = c(alpha = alpha, beta = beta, delta = delta, 
+    # Density:
+    denom = sqrt(2*pi) * alpha^(lambda-0.5) * delta^lambda * 
+        besselK(delta * sqrt(alpha^2-beta^2), lambda)           
+    a = (alpha^2-beta^2)^(lambda/2) / denom
+    f = ( delta^2 + (x - mu)^2 ) ^ ( ( lambda - 0.5) / 2 )
+    # Use exponential scaled form to prevent from overflows:
+    arg = alpha * sqrt(delta^2+(x-mu)^2)
+    k = besselK(arg, lambda -0.5, expon.scaled = TRUE)
+    e = exp(beta*(x-mu)-arg)    
+    
+    # Put all together:
+    ans = a*f*k*e
+    
+    # Attributes:
+    attr(ans, "param") = c(alpha = alpha, beta = beta, delta = delta, 
         mu = mu, lambda = lambda)
       
     # Return Value:  
-	ans
+    ans
 }
 
 
 # ------------------------------------------------------------------------------
 
-	
+    
 pgh = 
 function(q, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1) 
-{	# A function implemented by Diethelm Wuertz
+{   # A function implemented by Diethelm Wuertz
 
     # Description:
-	#	Returns probability for the generalized hyperbolic distribution
-	
-	# FUNCTION:
-	
-	# Checks:
-	if (alpha <= 0) stop("alpha must be greater than zero")  
-	if (delta <= 0) stop("delta must be greater than zero")
-	if (abs(beta) >= alpha) stop("abs value of beta must be less than alpha")
+    #   Returns probability for the generalized hyperbolic distribution
+    
+    # FUNCTION:
+    
+    # Checks:
+    if (alpha <= 0) stop("alpha must be greater than zero")  
+    if (delta <= 0) stop("delta must be greater than zero")
+    if (abs(beta) >= alpha) stop("abs value of beta must be less than alpha")
     
     # Probability:
     ans = NULL
@@ -123,26 +129,26 @@ function(q, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1)
     # Return Value: 
     ans
 }
-   	
+    
  
 # ------------------------------------------------------------------------------
 
-	
+    
 qgh = 
 function (p, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1) 
-{	# A function implemented by Diethelm Wuertz
+{   # A function implemented by Diethelm Wuertz
 
-	# Description:
-	#	Returns quantiles for the generalized hyperbolic distribution
-	
+    # Description:
+    #   Returns quantiles for the generalized hyperbolic distribution
+    
     # FUNCTION:
     
     # Checks:
-	if (alpha <= 0) stop("alpha must be greater than zero")  
-	if (delta <= 0) stop("delta must be greater than zero")
-	if (abs(beta) >= alpha) stop("abs value of beta must be less than alpha")
-	
-	# Internal Function:
+    if (alpha <= 0) stop("alpha must be greater than zero")  
+    if (delta <= 0) stop("delta must be greater than zero")
+    if (abs(beta) >= alpha) stop("abs value of beta must be less than alpha")
+    
+    # Internal Function:
     froot <<- function(x, alpha, beta, delta, mu, lambda, p) {
         pgh(q = x, alpha = alpha, beta = beta, delta = delta, 
             mu = mu, lambda = lambda) - p
@@ -180,30 +186,30 @@ function (p, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1)
 
 rgh = 
 function (n, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1)
-{	# A function implemented by Diethelm Wuertz
-	
-	# Description:
-	#	Returns random variates for the generalized hyperbolic distribution
-	
-	# FUNCTION:
-	
-	# Checks:
-	if (alpha <= 0) stop("alpha must be greater than zero")  
-	if (delta <= 0) stop("delta must be greater than zero")
-	if (abs(beta) >= alpha) stop("abs value of beta must be less than alpha")
-	
-	# Settings:
-	theta = c(lambda, alpha, beta, delta, mu)
-	
-	# Random Numbers:
-	ans = .rghyp(n, theta)
-	
-	# Attributes:
-	attr(ans, "param") = c(alpha = alpha, beta = beta, delta = delta, 
+{   # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   Returns random variates for the generalized hyperbolic distribution
+    
+    # FUNCTION:
+    
+    # Checks:
+    if (alpha <= 0) stop("alpha must be greater than zero")  
+    if (delta <= 0) stop("delta must be greater than zero")
+    if (abs(beta) >= alpha) stop("abs value of beta must be less than alpha")
+    
+    # Settings:
+    theta = c(lambda, alpha, beta, delta, mu)
+    
+    # Random Numbers:
+    ans = .rghyp(n, theta)
+    
+    # Attributes:
+    attr(ans, "param") = c(alpha = alpha, beta = beta, delta = delta, 
         mu = mu, lambda = lambda)
-	
-	# Return Value:
-	ans 
+    
+    # Return Value:
+    ans 
 }
 
 
@@ -212,41 +218,41 @@ function (n, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1)
 
 .rghyp = 
 function(n, theta)
-{	# A function implemented by Diethelm Wuertz
+{   # A function implemented by Diethelm Wuertz
 
-	# Author:
-	#	Original Version by David Scott
-	
-	# FUNCTION:
-	
-	# Settings:
-	lambda = theta[1]
-	alpha = theta[2]
-	beta = theta[3]
-	delta = theta[4]
-	mu = theta[5]
-	chi = delta^2
-	psi = alpha^2 - beta^2
+    # Author:
+    #   Original Version by David Scott
+    
+    # FUNCTION:
+    
+    # Settings:
+    lambda = theta[1]
+    alpha = theta[2]
+    beta = theta[3]
+    delta = theta[4]
+    mu = theta[5]
+    chi = delta^2
+    psi = alpha^2 - beta^2
 
-	# Ckecks:
-	if (alpha <= 0) stop("alpha must be greater than zero")  
-	if (delta <= 0) stop("delta must be greater than zero")
-	if (abs(beta) >= alpha) stop("abs value of beta must be less than alpha")
-	
-	# Random Numbers:
-	if (lambda == 1){
-		X = .rgigjd1(n, c(lambda, chi, psi))
-	} else{
-		X = .rgigjd(n, c(lambda, chi, psi))
-	}
-	
-	# Result:
-	sigma = sqrt(X)
-	Z = rnorm(n)
-	Y = mu + beta*sigma^2 + sigma*Z
-	
-	# Return Value:
-	Y
+    # Ckecks:
+    if (alpha <= 0) stop("alpha must be greater than zero")  
+    if (delta <= 0) stop("delta must be greater than zero")
+    if (abs(beta) >= alpha) stop("abs value of beta must be less than alpha")
+    
+    # Random Numbers:
+    if (lambda == 1){
+        X = .rgigjd1(n, c(lambda, chi, psi))
+    } else{
+        X = .rgigjd(n, c(lambda, chi, psi))
+    }
+    
+    # Result:
+    sigma = sqrt(X)
+    Z = rnorm(n)
+    Y = mu + beta*sigma^2 + sigma*Z
+    
+    # Return Value:
+    Y
 }
 
 
@@ -255,64 +261,64 @@ function(n, theta)
 
 .rgigjd = 
 function(n, theta)
-{	# A function implemented by Diethelm Wuertz
+{   # A function implemented by Diethelm Wuertz
 
-	# Author:
-	#	Original Version by David Scott
-	
-	# FUNCTION:
-	
-	# Settings:
-	lambda = theta[1]
-	chi = theta[2]
-	psi = theta[3]
-	
-	# Checks:
-	if (chi < 0) stop("chi can not be negative")
-	if (psi < 0) stop("psi can not be negative")
-	if ((lambda >= 0)&(psi==0)) stop("When lambda >= 0, psi must be > 0")
-	if ((lambda <= 0)&(chi==0)) stop("When lambda <= 0, chi must be > 0")
-	if (chi == 0) stop("chi = 0, use rgamma")
-	if (psi == 0) stop("algorithm only valid for psi > 0")
-	
-	alpha = sqrt(psi/chi)
-	beta = sqrt(psi*chi)
-	
-	m = (lambda-1+sqrt((lambda-1)^2+beta^2))/beta
-	
-	g = function(y){
-		0.5*beta*y^3 - y^2*(0.5*beta*m+lambda+1) +
-	  		y*((lambda-1)*m-0.5*beta) + 0.5*beta*m
-	}
-	
-	upper = m
-	while (g(upper) <= 0) upper = 2*upper
-	yM = uniroot(g, interval=c(0,m))$root
-	yP = uniroot(g, interval=c(m,upper))$root
-	
-	a = (yP-m)*(yP/m)^(0.5*(lambda-1))*exp(-0.25*beta*(yP+1/yP-m-1/m))
-	b = (yM-m)*(yM/m)^(0.5*(lambda-1))*exp(-0.25*beta*(yM+1/yM-m-1/m))
-	c = -0.25*beta*(m+1/m) + 0.5*(lambda-1)*log(m)
-	
-	output = numeric(n)
-	
-	for(i in 1:n){
-		need.value = TRUE
-		while(need.value==TRUE){
-		  	R1 = runif (1)
-		  	R2 = runif (1)
-		  	Y = m + a*R2/R1 + b*(1-R2)/R1
-		  	if (Y>0){
-		    	if (-log(R1)>=-0.5*(lambda-1)*log(Y)+0.25*beta*(Y+1/Y)+c){
-		      		need.value = FALSE
-		    	}
-		  	}
-		}
-		output[i] = Y
-	}
-	
-	# Return Value:
-	output/alpha
+    # Author:
+    #   Original Version by David Scott
+    
+    # FUNCTION:
+    
+    # Settings:
+    lambda = theta[1]
+    chi = theta[2]
+    psi = theta[3]
+    
+    # Checks:
+    if (chi < 0) stop("chi can not be negative")
+    if (psi < 0) stop("psi can not be negative")
+    if ((lambda >= 0)&(psi==0)) stop("When lambda >= 0, psi must be > 0")
+    if ((lambda <= 0)&(chi==0)) stop("When lambda <= 0, chi must be > 0")
+    if (chi == 0) stop("chi = 0, use rgamma")
+    if (psi == 0) stop("algorithm only valid for psi > 0")
+    
+    alpha = sqrt(psi/chi)
+    beta = sqrt(psi*chi)
+    
+    m = (lambda-1+sqrt((lambda-1)^2+beta^2))/beta
+    
+    g = function(y){
+        0.5*beta*y^3 - y^2*(0.5*beta*m+lambda+1) +
+            y*((lambda-1)*m-0.5*beta) + 0.5*beta*m
+    }
+    
+    upper = m
+    while (g(upper) <= 0) upper = 2*upper
+    yM = uniroot(g, interval=c(0,m))$root
+    yP = uniroot(g, interval=c(m,upper))$root
+    
+    a = (yP-m)*(yP/m)^(0.5*(lambda-1))*exp(-0.25*beta*(yP+1/yP-m-1/m))
+    b = (yM-m)*(yM/m)^(0.5*(lambda-1))*exp(-0.25*beta*(yM+1/yM-m-1/m))
+    c = -0.25*beta*(m+1/m) + 0.5*(lambda-1)*log(m)
+    
+    output = numeric(n)
+    
+    for(i in 1:n){
+        need.value = TRUE
+        while(need.value==TRUE){
+            R1 = runif (1)
+            R2 = runif (1)
+            Y = m + a*R2/R1 + b*(1-R2)/R1
+            if (Y>0){
+                if (-log(R1)>=-0.5*(lambda-1)*log(Y)+0.25*beta*(Y+1/Y)+c){
+                    need.value = FALSE
+                }
+            }
+        }
+        output[i] = Y
+    }
+    
+    # Return Value:
+    output/alpha
 }
 
 
@@ -321,71 +327,72 @@ function(n, theta)
 
 .rgigjd1 = 
 function(n, theta)
-{	# A function implemented by Diethelm Wuertz
+{   # A function implemented by Diethelm Wuertz
 
-	# Description:
-	# 	Modified version of rgigjd to generate random observations
-	# 	from a generalised inverse Gaussian distribution in the
-	# 	special case where lambda = 1.
-	
-	# Author:
-	#	Original Version by David Scott
+    # Description:
+    #   Modified version of rgigjd to generate random observations
+    #   from a generalised inverse Gaussian distribution in the
+    #   special case where lambda = 1.
+    
+    # Author:
+    #   Original Version by David Scott
 
-	# FUNCTION:
-	
-	if (length(theta) == 2) theta = c(1, theta)
-	
-	# Settings:
-	lambda = 1
-	chi = theta[2]
-	psi = theta[3]
-	
-	# Checks:
-	if (chi < 0) stop("chi can not be negative")
-	if (psi < 0) stop("psi can not be negative")	
-	if (chi == 0) stop("chi = 0, use rgamma")
-	if (psi == 0) stop("When lambda >= 0, psi must be > 0")
-	
-	alpha = sqrt(psi/chi)
-	beta = sqrt(psi*chi)
-	m = abs(beta)/beta
-	g = function(y){
-		0.5*beta*y^3 - y^2*(0.5*beta*m+lambda+1) +
-		  	y*(-0.5*beta) + 0.5*beta*m
-	}
-	
-	upper = m
-	while (g(upper)<=0) upper = 2*upper
-	yM = uniroot(g,interval=c(0,m))$root
-	yP = uniroot(g,interval=c(m,upper))$root
-	
-	a = (yP-m)*exp(-0.25*beta*(yP+1/yP-m-1/m))
-	b = (yM-m)*exp(-0.25*beta*(yM+1/yM-m-1/m))
-	c = -0.25*beta*(m+1/m)
-	
-	output = numeric(n)
-	
-	for(i in 1:n){
-		need.value = TRUE
-		while(need.value==TRUE){
-		  	R1 = runif (1)
-		  	R2 = runif (1)
-		  	Y = m + a*R2/R1 + b*(1-R2)/R1
-		  	if (Y>0){
-		    	if (-log(R1)>=0.25*beta*(Y+1/Y)+c){
-		      		need.value = FALSE
-		    	}
-		  	}
-		}
-		output[i] = Y
-	}
-	
-	# Return Value:
-	output/alpha
+    # FUNCTION:
+    
+    if (length(theta) == 2) theta = c(1, theta)
+    
+    # Settings:
+    lambda = 1
+    chi = theta[2]
+    psi = theta[3]
+    
+    # Checks:
+    if (chi < 0) stop("chi can not be negative")
+    if (psi < 0) stop("psi can not be negative")    
+    if (chi == 0) stop("chi = 0, use rgamma")
+    if (psi == 0) stop("When lambda >= 0, psi must be > 0")
+    
+    alpha = sqrt(psi/chi)
+    beta = sqrt(psi*chi)
+    m = abs(beta)/beta
+    g = function(y){
+        0.5*beta*y^3 - y^2*(0.5*beta*m+lambda+1) +
+            y*(-0.5*beta) + 0.5*beta*m
+    }
+    
+    upper = m
+    while (g(upper)<=0) upper = 2*upper
+    yM = uniroot(g,interval=c(0,m))$root
+    yP = uniroot(g,interval=c(m,upper))$root
+    
+    a = (yP-m)*exp(-0.25*beta*(yP+1/yP-m-1/m))
+    b = (yM-m)*exp(-0.25*beta*(yM+1/yM-m-1/m))
+    c = -0.25*beta*(m+1/m)
+    
+    output = numeric(n)
+    
+    for(i in 1:n){
+        need.value = TRUE
+        while(need.value==TRUE){
+            R1 = runif (1)
+            R2 = runif (1)
+            Y = m + a*R2/R1 + b*(1-R2)/R1
+            if (Y>0){
+                if (-log(R1)>=0.25*beta*(Y+1/Y)+c){
+                    need.value = FALSE
+                }
+            }
+        }
+        output[i] = Y
+    }
+    
+    # Return Value:
+    output/alpha
 }
 
 
 ################################################################################
+# Hyperbolic Distribution
 
 
 .BesselK1 = 
@@ -1292,14 +1299,15 @@ function(a.bar = 1, b.bar = 0, delta  = 1, mu = 0)
 }   
 
 
-# ******************************************************************************
+################################################################################
+# Normal Inverse Gaussian Distribution
 
 
 dnig = 
 function(x, alpha = 1, beta = 0, delta = 1, mu = 0)
 {
-	dgh(x = x, alpha = alpha, beta = beta, delta = delta, mu = mu, 
-		lambda = -0.5)
+    dgh(x = x, alpha = alpha, beta = beta, delta = delta, mu = mu, 
+        lambda = -0.5)
 }
 
 
@@ -1355,8 +1363,8 @@ function (x, alpha = 1, beta = 0, delta = 1, mu = 0)
 pnig = 
 function(q, alpha = 1, beta = 0, delta = 1, mu = 0)
 {
-	pgh(q = q, alpha = alpha, beta = beta, delta = delta, mu = mu, 
-		lambda = -0.5)
+    pgh(q = q, alpha = alpha, beta = beta, delta = delta, mu = mu, 
+        lambda = -0.5)
 }
 
 
@@ -1406,8 +1414,8 @@ function (q, alpha = 1, beta = 0, delta = 1, mu = 0)
 qnig = 
 function(p, alpha = 1, beta = 0, delta = 1, mu = 0)
 {
-	qgh(p = p, alpha = alpha, beta = beta, delta = delta, mu = mu, 
-		lambda = -0.5)
+    qgh(p = p, alpha = alpha, beta = beta, delta = delta, mu = mu, 
+        lambda = -0.5)
 }
 
 
@@ -1503,6 +1511,145 @@ function(n, alpha = 1, beta = 0, delta = 1, mu = 0)
     
     # Return Value:
     X
+}
+
+
+################################################################################
+# Distribution Sliders
+
+
+hypSlider = 
+function()
+{   # A function implemented by Diethelm Wuertz
+
+    # Hyperbolic Distribution:
+    #   dhyp(x, alpha = 1, beta = 0, delta = 1, mu = 0, pm = c(1, 2, 3, 4))
+        
+    # FUNCTION:
+    
+    # Internal Function:
+    refresh.code = function(...)
+    {
+        # Sliders:
+        N     = .sliderMenu(no = 1)
+        alpha = .sliderMenu(no = 2)
+        beta  = .sliderMenu(no = 3)
+        delta = .sliderMenu(no = 4)
+        mu    = .sliderMenu(no = 5)
+        pm    = .sliderMenu(no = 6)
+        
+        # Plot Data:     
+        xmin = round(qhyp(0.01, alpha, beta, delta, mu, pm), digits = 2)
+        xmax = round(qhyp(0.99, alpha, beta, delta, mu, pm), digits = 2)
+        s = seq(xmin, xmax, length = N)
+        y1 = dhyp(s, alpha, beta, delta, mu, pm)
+        y2 = phyp(s, alpha, beta, delta, mu, pm)
+        main1 = paste("HYP Density\n", 
+            "alpha = ", as.character(alpha), " | ",
+            "beta = ", as.character(beta), " | ",
+            "delta = ", as.character(delta), " | ",
+            "mu = ", as.character(mu) )
+        main2 = paste("HYP Probability\n",
+            "xmin 0.01% = ", as.character(xmin), " | ",
+            "xmax 0.99% = ", as.character(xmax), " | ",
+            "pm = ", as.character(pm) )      
+         
+        # Frame
+        par(mfrow = c(2, 1), cex = 0.7)
+        
+        # Density:
+        plot(s, y1, type = "l", xlim = c(xmin, xmax), col = "steelblue")
+        abline (h = 0, lty = 3)
+        title(main = main1)  
+
+        # Probability:           
+        plot(s, y2, type = "l", xlim = c(xmin, xmax), ylim = c(0, 1),
+            col = "steelblue" )
+        abline(h = 0.0, lty = 3)
+        abline(h = 1.0, lty = 3)
+        abline(h = 0.5, lty = 3)
+        abline(v = mu, lty = 3, col = "red")
+        title(main = main2)       
+        
+        # Reset Frame:
+        par(mfrow = c(1, 1), cex = 0.7)
+    }
+  
+    # Open Slider Menu:
+    .sliderMenu(refresh.code,
+       names =       c( "N","alpha","beta","delta", "mu","pm"),
+       minima =      c(  50,  0.00, -2.00,   0.00, -5.0,   1),
+       maxima =      c(1000,  2.00, +2.00,   5.00, +5.0,   4),
+       resolutions = c(  50,  0.20,  0.20,   1.00,  1.0,   1),
+       starts =      c(  50,  1.00,  0.00,   1.00,  0.0,   1))
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+nigSlider = 
+function()
+{   # A function implemented by Diethelm Wuertz
+
+    # Normal Inverse Gaussian Distribution:
+    #   dnig(x, alpha = 1, beta = 0, delta = 1, mu = 0) 
+
+    # FUNCTION:
+    
+    # Internal Function:
+    refresh.code = function(...)
+    {
+        # Sliders:
+        N     = .sliderMenu(no = 1)
+        alpha = .sliderMenu(no = 2)
+        beta  = .sliderMenu(no = 3)
+        delta = .sliderMenu(no = 4)
+        mu    = .sliderMenu(no = 5)
+        
+        # Plot Data:      
+        xmin = round(qnig(0.01, alpha, beta, delta, mu), digits = 2)
+        xmax = round(qnig(0.99, alpha, beta, delta, mu), digits = 2)
+        s = seq(xmin, xmax, length = N)
+        y1 = dnig(s, alpha, beta, delta, mu)
+        y2 = pnig(s, alpha, beta, delta, mu)
+        main1 = paste("NIG Density\n", 
+            "alpha = ", as.character(alpha), " | ",
+            "beta = ", as.character(beta), " | ",
+            "delta = ", as.character(delta), " | ",
+            "mu = ", as.character(mu))
+        main2 = paste("NIG Probability\n",
+            "xmin 0.01% = ", as.character(xmin), " | ",
+            "xmax 0.99% = ", as.character(xmax), " | ")       
+      
+        # Frame:
+        par(mfrow = c(2, 1), cex = 0.7)
+        
+        # Density:
+        plot(s, y1, type = "l", xlim = c(xmin, xmax), col = "steelblue")
+        abline (h = 0, lty = 3)
+        title(main = main1)  
+   
+        # Probability:
+        plot(s, y2, type = "l", xlim = c(xmin, xmax), ylim = c(0, 1),
+            col = "steelblue" )
+        abline(h = 0.0, lty = 3)
+        abline(h = 1.0, lty = 3)
+        abline(h = 0.5, lty = 3)
+        abline(v = mu, lty = 3, col = "red")
+        title(main = main2)     
+        
+        # Frame:
+        par(mfrow = c(1, 1), cex = 0.7)
+    }
+  
+    # Open Slider Menu:
+    .sliderMenu(refresh.code,
+       names =       c( "N", "alpha", "beta", "delta", "mu"),
+       minima =      c(  50,   0.00,   -2.00,    0.00, -5.0),
+       maxima =      c(1000,   2.00,   +2.00,   10.00, +5.0),
+       resolutions = c(  50,   0.20,    0.20,    1.00,  1.0),
+       starts =      c(  50,   1.00,    0.00,    1.00,  0.0))
 }
 
 

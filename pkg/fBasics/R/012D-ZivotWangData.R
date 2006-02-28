@@ -28,7 +28,7 @@
 
 
 ################################################################################
-# FUNCTION:		   		DESCRIPTION:
-#  fbasicsDataSets		 Are located in the fBasics/data directory
+# FUNCTION:         DESCRIPTION:
+#  ZivotWangData     Data sets used for the examples in Zivot/Wang's book
 ################################################################################
 

@@ -69,7 +69,7 @@ function(object)
     x = object
     
     # Title:
-    cat("\nTitle:\n", x@title, "\n", sep = "")
+    cat("\nTitle:\n ", x@title, "\n", sep = "")
     
     # Call:
     # cat("\nCall:\n", deparse(x@call), "\n", sep = "")
@@ -111,9 +111,9 @@ function(object)
         cat("  STATISTIC:\n")
         for (i in 1:length(Names)) {        
             if (!is.na(statistic[i])) {
-	            cat(paste("    ", Names[i], ": ",
-                	round(statistic[i], digits = 4), "\n", sep = "" ) )  
-        	}
+                cat(paste("    ", Names[i], ": ",
+                    round(statistic[i], digits = 4), "\n", sep = "" ) )  
+            }
         }
     } 
              
@@ -125,14 +125,14 @@ function(object)
         cat("  P VALUE:\n")     
         for (i in 1:length(Names)) {
             if (!is.na(pval[i])) {
-	            if (class(version) != "Sversion") {
-	                cat(paste("    ", Names[i], space, 
-	                format.pval(pval[i], digits = 4), " \n", sep = "" ) ) 
-	            } else {
-	                cat(paste("    ", Names[i], space, 
-	                round(pval[i], digits = 4), " \n", sep = "" ) )  
-	            }
-         	}
+                if (class(version) != "Sversion") {
+                    cat(paste("    ", Names[i], space, 
+                    format.pval(pval[i], digits = 4), " \n", sep = "" ) ) 
+                } else {
+                    cat(paste("    ", Names[i], space, 
+                    round(pval[i], digits = 4), " \n", sep = "" ) )  
+                }
+            }
         }
     }
          
@@ -151,11 +151,11 @@ function(object)
     
     # More Specific Output Results:
     if (!is.null(test$output)) {
-	    cat(test$output, fill = FALSE, sep = "\n")
-	}
-	
+        cat(test$output, fill = FALSE, sep = "\n")
+    }
+    
     # Description:
-    cat("\nDescription:\n", x@description, sep = "")   
+    cat("\nDescription:\n ", x@description, sep = "")   
     cat("\n\n")
     
     # Return Value:
@@ -169,7 +169,7 @@ function(object)
 setMethod("show", "fHTEST", show.fHTEST)
 
 
-# ******************************************************************************
+################################################################################
 
 
 jbTable = 
@@ -400,7 +400,7 @@ function(X, p, N, digits = 4)
             q*(1-p)*z[nx, ny+1] + p*q*z[nx+1,ny+1] 
         if (length(zo) == 0) zo = NA
     } else {
-	    # Value:
+        # Value:
         zo = approx(x = Ns, y = z[w, ], xout = N)$y
     }
 

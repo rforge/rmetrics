@@ -1075,16 +1075,16 @@ exact = TRUE, conf.int = FALSE, conf.level = 0.95, ...)
             u = absigma - qansariw(0.5, m, n)
             sgr = sigma[u <= 0]
             if (length(sgr) == 0) {
-	            sgr = NA
+                sgr = NA
             } else {
-	            sgr = max(sgr)
+                sgr = max(sgr)
             }
             sle = sigma[u > 0]
             if (length(sle) == 0) {
-	            sle = NA
+                sle = NA
             } else {
-	            sle = min(sle)
-        	}
+                sle = min(sle)
+            }
             ESTIMATE = mean(c(sle, sgr))
         }
     } else {
@@ -1575,9 +1575,9 @@ function(x, y, title = NULL, description = NULL)
     
     # P Values:
     PVAL = c(
-    	two.sided$p.value, 
-    	less$p.value, 
-    	greater$p.value)
+        two.sided$p.value, 
+        less$p.value, 
+        greater$p.value)
     names(PVAL) = c(
         "Alternative Two-Sided", 
         "Alternative      Less", 

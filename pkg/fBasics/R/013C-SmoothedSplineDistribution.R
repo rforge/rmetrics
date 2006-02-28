@@ -42,21 +42,21 @@
 
 dssd = 
 function(x, param) 
-{	# A function implemented by Diethelm Wuertz
+{   # A function implemented by Diethelm Wuertz
 
-	# Description:
-	#  Evaluate density using smoothing spline ANOVA model 
-	
-	# Arguments:
-    #	param - an S3 object of class "ssd" as returned from the
-    #		function 'ssdFit'.
+    # Description:
+    #  Evaluate density using smoothing spline ANOVA model 
+    
+    # Arguments:
+    #   param - an S3 object of class "ssd" as returned from the
+    #       function 'ssdFit'.
     
     # FUNCTION:
-	
-	# Return Value:
-	class(param) = "ssden"
-	.dssden(object = param, x = x) 
-}	
+    
+    # Return Value:
+    class(param) = "ssden"
+    .dssden(object = param, x = x) 
+}   
 
 
 # ------------------------------------------------------------------------------
@@ -64,20 +64,20 @@ function(x, param)
  
 pssd = 
 function(q, param) 
-{	# A function implemented by Diethelm Wuertz
+{   # A function implemented by Diethelm Wuertz
 
-	# Description:
-	#  	Evaluate probability using smoothing spline ANOVA model 
-	
-	# Arguments:
-    #	param - an S3 object of class "ssd" as returned from the
-    #		function 'ssdFit'.
+    # Description:
+    #   Evaluate probability using smoothing spline ANOVA model 
+    
+    # Arguments:
+    #   param - an S3 object of class "ssd" as returned from the
+    #       function 'ssdFit'.
     
     # FUNCTION:
-	
-	# Return Value:
-	class(param) = "ssden"
-	.pssden(object = param, q = q) 
+    
+    # Return Value:
+    class(param) = "ssden"
+    .pssden(object = param, q = q) 
 }
 
 
@@ -86,20 +86,20 @@ function(q, param)
 
 qssd = 
 function(p, param) 
-{	# A function implemented by Diethelm Wuertz
+{   # A function implemented by Diethelm Wuertz
 
-	# Description:
-	# 	Evaluate quantiles using smoothing spline ANOVA model 	
-	
-	# Arguments:
-    #	param - an S3 object of class "ssd" as returned from the
-    #		function 'ssdFit'.
+    # Description:
+    #   Evaluate quantiles using smoothing spline ANOVA model   
+    
+    # Arguments:
+    #   param - an S3 object of class "ssd" as returned from the
+    #       function 'ssdFit'.
     
     # FUNCTION:
-	
-	# Return Value:
-	class(param) = "ssden"
-	.qssden(object = param, p = p) 
+    
+    # Return Value:
+    class(param) = "ssden"
+    .qssden(object = param, p = p) 
 }
 
 
@@ -110,18 +110,18 @@ rssd =
 function(n, param) 
 {   # A function implemented by Diethelm Wuertz
 
-	# Description:
-	# 	Generate random deviates using smoothing spline ANOVA model 
-	
-	# Arguments:
-    #	param - an S3 object of class "ssd" as returned from the
-    #		function 'ssdFit'.
+    # Description:
+    #   Generate random deviates using smoothing spline ANOVA model 
+    
+    # Arguments:
+    #   param - an S3 object of class "ssd" as returned from the
+    #       function 'ssdFit'.
     
     # FUNCTION:
-	
-	# Return Value:
-	class(param) = "ssden"
-	.qssden(object = param, p = runif(n)) 
+    
+    # Return Value:
+    class(param) = "ssden"
+    .qssden(object = param, p = runif(n)) 
 }
 
 
@@ -134,16 +134,16 @@ function(n, param)
 
 
 # Code Copied from:
-#	Package: gss
-#	Version: 0.9-3
-#	Depends: R (>= 1.7.0)
-#	Title: General Smoothing Splines
-#	Author: Chong Gu <chong@stat.purdue.edu>
-#	Maintainer: Chong Gu <chong@stat.purdue.edu>
-#	Description: A comprehensive package for structural multivariate
-#	        function estimation using smoothing splines.
-#	License: GPL
-#	Packaged: Thu Sep 23 16:28:03 2004
+#   Package: gss
+#   Version: 0.9-3
+#   Depends: R (>= 1.7.0)
+#   Title: General Smoothing Splines
+#   Author: Chong Gu <chong@stat.purdue.edu>
+#   Maintainer: Chong Gu <chong@stat.purdue.edu>
+#   Description: A comprehensive package for structural multivariate
+#           function estimation using smoothing splines.
+#   License: GPL
+#   Packaged: Thu Sep 23 16:28:03 2004
 
 
 # ******************************************************************************
@@ -153,13 +153,13 @@ function(n, param)
 function (object, x) 
 {
     # Description:
-    # 	Evaluate density estimate
+    #   Evaluate density estimate
     
     # FUNCTION:
     
     if (class(object) != "ssden") {
-    	stop("error in .dssden: not a ssden object")
-	}
+        stop("error in .dssden: not a ssden object")
+    }
     if (dim(object$mf)[2] == 1 & is.vector(x)) {
         x = data.frame(x)
         colnames(x) = colnames(object$mf)
@@ -184,7 +184,7 @@ function (object, x)
             for (i in 1:nrk) {
                 nq = nq + 1
                 r = r + 10^object$theta[nq] * 
-                	rk$fun(x.new, xx, nu = i, env = rk$env, out = TRUE)
+                    rk$fun(x.new, xx, nu = i, env = rk$env, out = TRUE)
             }
         }
     }
@@ -201,15 +201,15 @@ function (object, x)
 function(object, q) 
 {
     # Description
-    #	Compute cdf for univariate density estimate
+    #   Compute cdf for univariate density estimate
     
     # FUNCTION:
     
     if (class(object) != "ssden") {
-	    stop("error in .pssden: not a ssden object")
+        stop("error in .pssden: not a ssden object")
     }
     if (dim(object$mf)[2] != 1) {
-	    stop("error in .pssden: not a 1-D density")
+        stop("error in .pssden: not a 1-D density")
     }
     
     mn = min(object$domain)
@@ -244,18 +244,18 @@ function(object, q)
 
 .qssden = 
 function(object, p) 
-{	
-	# Description:
-	# 	Compute quantiles for univariate density estimate
-	
+{   
+    # Description:
+    #   Compute quantiles for univariate density estimate
+    
     # FUNCTION:
     
     if (class(object) != "ssden") {
-	    stop("error in .qssden: not a ssden object")
+        stop("error in .qssden: not a ssden object")
     }
     if (dim(object$mf)[2] != 1) {
-	    stop("error in .qssden: not a 1-D density")
-   	}
+        stop("error in .qssden: not a 1-D density")
+    }
     
     mn = min(object$domain)
     mx = max(object$domain)

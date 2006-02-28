@@ -30,15 +30,18 @@
 ################################################################################
 # FUNCTION:             DESCRIPTION:
 #  dsymstb               Returns density for symmetric stable DF
-#   psymstb               Returns probabilities for symmetric stable DF
-#   qsymstb               Returns quantiles for symmetric stable DF
-#   rsymstb               Returns random variates for symmetric stable DF
+#  psymstb               Returns probabilities for symmetric stable DF
+#  qsymstb               Returns quantiles for symmetric stable DF
+#  rsymstb               Returns random variates for symmetric stable DF
 # FUNCTIONS:            DESCRIPTION:
 #  stableMode            Computes stable mode
 #  dstable               Returns density for stable DF
-#   pstable               Returns probabilities for stable DF
-#   qstable               Returns quantiles for stable DF
-#   rstable               Returns random variates for stable DF
+#  pstable               Returns probabilities for stable DF
+#  qstable               Returns quantiles for stable DF
+#  rstable               Returns random variates for stable DF
+# FUNCTION:             DESCRIPTION:
+#  symstbSlider          Displays symmetric stable distribution function
+#  stableSlider          Displays stable distribution function
 ################################################################################
 
 
@@ -284,54 +287,54 @@ function (f, lower, upper, subdivisions, rel.tol, abs.tol, ...)
 
 stableMode = 
 function(alpha, beta) 
-{	# A function implemented by Diethelm Wuertz
+{   # A function implemented by Diethelm Wuertz
 
-	# Description:
-	#	Compute the mode of the stable distribution function
-	
-	# Notes:
-	#	# Test for values close to beta = 1
-	#   alpha = seq(0, 2, by = 0.1)
-	#   ans = NULL
-	#   for ( i in 1:length(alpha) ) {
-	#     ans = rbind(ans, c(alpha[i], 
-	#	    stableMode(alpha = alpha[i], beta = 0.99 ),
-	#	    stableMode(alpha = alpha[i], beta = 0.99999 ),
-	#	    stableMode(alpha = alpha[i], beta = 0.99999999 ),
-	#	    stableMode(alpha = alpha[i], beta = 0.99999999999 ) ) ) }
+    # Description:
+    #   Compute the mode of the stable distribution function
+    
+    # Notes:
+    #   # Test for values close to beta = 1
+    #   alpha = seq(0, 2, by = 0.1)
+    #   ans = NULL
+    #   for ( i in 1:length(alpha) ) {
+    #     ans = rbind(ans, c(alpha[i], 
+    #       stableMode(alpha = alpha[i], beta = 0.99 ),
+    #       stableMode(alpha = alpha[i], beta = 0.99999 ),
+    #       stableMode(alpha = alpha[i], beta = 0.99999999 ),
+    #       stableMode(alpha = alpha[i], beta = 0.99999999999 ) ) ) }
     #   ans
-	#
-	#   alpha          0.99       0.99999    0.99999999 0.99999999999
-	#   0.0    0.000000e+00  0.000000e+00  0.000000e+00  0.000000e+00
-	#   0.2   -3.214142e-01 -3.246759e-01 -3.246787e-01 -3.246788e-01
-	#   0.4   -6.105318e-01 -6.158562e-01 -6.158616e-01 -6.158616e-01
-	#   0.6   -6.550106e-01 -6.594746e-01 -6.594790e-01 -6.594790e-01
-	#   0.8   -5.558811e-01 -5.590032e-01 -5.590063e-01 -5.590063e-01
-	#   1.0   -4.271033e-01 -4.293078e-01 -4.293099e-01 -4.293099e-01
-	#   1.2   -3.074015e-01 -3.090820e-01 -3.090804e-01 -3.090804e-01
-	#   1.4   -2.050956e-01 -2.063979e-01 -2.063951e-01 -2.063951e-01
-	#   1.6   -1.199623e-01 -1.208875e-01 -1.208853e-01 -1.208853e-01
-	#   1.8   -5.098617e-02 -5.145758e-02 -5.145639e-02 -5.145639e-02
-	#   2.0   -7.487432e-05 -7.487432e-05 -7.487432e-05 -7.487432e-05
+    #
+    #   alpha          0.99       0.99999    0.99999999 0.99999999999
+    #   0.0    0.000000e+00  0.000000e+00  0.000000e+00  0.000000e+00
+    #   0.2   -3.214142e-01 -3.246759e-01 -3.246787e-01 -3.246788e-01
+    #   0.4   -6.105318e-01 -6.158562e-01 -6.158616e-01 -6.158616e-01
+    #   0.6   -6.550106e-01 -6.594746e-01 -6.594790e-01 -6.594790e-01
+    #   0.8   -5.558811e-01 -5.590032e-01 -5.590063e-01 -5.590063e-01
+    #   1.0   -4.271033e-01 -4.293078e-01 -4.293099e-01 -4.293099e-01
+    #   1.2   -3.074015e-01 -3.090820e-01 -3.090804e-01 -3.090804e-01
+    #   1.4   -2.050956e-01 -2.063979e-01 -2.063951e-01 -2.063951e-01
+    #   1.6   -1.199623e-01 -1.208875e-01 -1.208853e-01 -1.208853e-01
+    #   1.8   -5.098617e-02 -5.145758e-02 -5.145639e-02 -5.145639e-02
+    #   2.0   -7.487432e-05 -7.487432e-05 -7.487432e-05 -7.487432e-05
 
-	# FUNCTION:
-	
-	if (beta > 0.99999999999) beta = 0.99999999999
-	if (beta == 0) {
-		ans = 0 
-	} else {
-		if (alpha == 0) {
-			ans = 0
-		} else {
-			ans = optimize(f = dstable, interval = c(-0.7, 0), 
-				maximum = TRUE, alpha = alpha, beta = beta)$maximum
-		}
-	}
-	
-	# Return Value:
-	ans
+    # FUNCTION:
+    
+    if (beta > 0.99999999999) beta = 0.99999999999
+    if (beta == 0) {
+        ans = 0 
+    } else {
+        if (alpha == 0) {
+            ans = 0
+        } else {
+            ans = optimize(f = dstable, interval = c(-0.7, 0), 
+                maximum = TRUE, alpha = alpha, beta = beta)$maximum
+        }
+    }
+    
+    # Return Value:
+    ans
 }
-	
+    
 
 # ------------------------------------------------------------------------------
 
@@ -340,7 +343,7 @@ dstable =
 function(x, alpha, beta, gamma = 1, delta = 0, pm = c(0, 1, 2))
 {   # A function implemented by Diethelm Wuertz
 
-	# Description:
+    # Description:
     #   Return alpha-stable density function (pdf) in form
     #   of parmeterization 1. 
     #   The function uses the approach of J.P. Nolan for general 
@@ -368,36 +371,36 @@ function(x, alpha, beta, gamma = 1, delta = 0, pm = c(0, 1, 2))
     subdivisions = 1000
     tol = .Machine$double.eps
     if (class(version) == "Sversion") {
-	    subdivisions = 100
-	    tol = sqrt(tol)
-	}
-	
-	# Parameter Check:
+        subdivisions = 100
+        tol = sqrt(tol)
+    }
+    
+    # Parameter Check:
     if (alpha > +2)  stop("Error: alpha greater than 2")
     if (alpha <= 0)  stop("Error: alpha less or equal 0")
     if (beta  < -1)  stop("Error: beta less than -1")
     if (beta  > +1)  stop("Error: beta greater than 1")
     
     # Parameterizations:
-	pm = pm[1]
-	if (pm == 1) {
-		if (alpha == 1) {
-			delta = delta + beta*(2/pi)*gamma*log(gamma)
-		} else {
-			delta = delta + beta*gamma*tan(pi*alpha/2)
-		}
-	}
-	if (pm == 2) {
-		delta = delta - alpha^(-1/alpha)*gamma*stableMode(alpha, beta)
-		gamma = alpha^(-1/alpha) * gamma
-	}
+    pm = pm[1]
+    if (pm == 1) {
+        if (alpha == 1) {
+            delta = delta + beta*(2/pi)*gamma*log(gamma)
+        } else {
+            delta = delta + beta*gamma*tan(pi*alpha/2)
+        }
+    }
+    if (pm == 2) {
+        delta = delta - alpha^(-1/alpha)*gamma*stableMode(alpha, beta)
+        gamma = alpha^(-1/alpha) * gamma
+    }
     
     # Special Cases:
     if (alpha == 2) {
-	    result = dnorm(x, mean = 0, sd = sqrt(2))
+        result = dnorm(x, mean = 0, sd = sqrt(2))
     }
     if (alpha == 1 & beta == 0) {
-	    result = dcauchy(x) 
+        result = dcauchy(x) 
     }
     
     # Shift and Scale:
@@ -427,9 +430,9 @@ function(x, alpha, beta, gamma = 1, delta = 0, pm = c(0, 1, 2))
                 alpha = alpha, beta = beta)$maximum
             c2 = ( alpha / (pi*abs(alpha-1)*(xarg-varzeta)) ) 
             result1 = .integrateStable(f = g1, lower = -theta0, 
-            	upper = theta2, subdivisions = subdivisions, 
-            	rel.tol = tol, abs.tol = tol, xarg = xarg, 
-            	alpha = alpha, beta = beta)[[1]]
+                upper = theta2, subdivisions = subdivisions, 
+                rel.tol = tol, abs.tol = tol, xarg = xarg, 
+                alpha = alpha, beta = beta)[[1]]
             result2 = .integrateStable(f = g1, lower = theta2, 
                 upper = pi/2, subdivisions = subdivisions, 
                 rel.tol = tol, abs.tol = tol, xarg = xarg, 
@@ -446,15 +449,15 @@ function(x, alpha, beta, gamma = 1, delta = 0, pm = c(0, 1, 2))
                 result = c(result, gamma(1+1/alpha)*cos(theta0) /
                     (pi*(1+varzeta^2)^(1/(2*alpha)))) 
             } else {
-            	if (z > varzeta) { 
-                	result = c(result, fct1(xarg = z, alpha = alpha, 
-                		beta = beta, tol = tol, subdivisions = subdivisions)) 
-            	}
-            	if (z < varzeta) {
-                	result = c(result, fct1(xarg = -z, alpha = alpha, 
-                		beta = -beta, tol = tol, subdivisions = subdivisions))
-            	}
-        	}
+                if (z > varzeta) { 
+                    result = c(result, fct1(xarg = z, alpha = alpha, 
+                        beta = beta, tol = tol, subdivisions = subdivisions)) 
+                }
+                if (z < varzeta) {
+                    result = c(result, fct1(xarg = -z, alpha = alpha, 
+                        beta = -beta, tol = tol, subdivisions = subdivisions))
+                }
+            }
         }
     }  
         
@@ -494,10 +497,10 @@ function(x, alpha, beta, gamma = 1, delta = 0, pm = c(0, 1, 2))
         for (z in x) {
             if (z >= 0) {
                 result = c(result, fct2(xarg = z, alpha = alpha, 
-                	beta = beta, tol = tol, subdivisions = subdivisions))
+                    beta = beta, tol = tol, subdivisions = subdivisions))
             } else {
                 result = c(result, fct2(xarg = -z, alpha = alpha, 
-                	beta = -beta, tol = tol, subdivisions = subdivisions)) 
+                    beta = -beta, tol = tol, subdivisions = subdivisions)) 
             }
         }
     }
@@ -523,9 +526,9 @@ function(q, alpha, beta, gamma = 1, delta = 0, pm = c(0, 1, 2))
     subdivisions = 1000  
     tol = .Machine$double.eps
     if (class(version) == "Sversion") {
-	    subdivisions = 100
-	    tol = sqrt(tol)
-	}   
+        subdivisions = 100
+        tol = sqrt(tol)
+    }   
     x = q
     
     # Parameter Check:
@@ -535,20 +538,20 @@ function(q, alpha, beta, gamma = 1, delta = 0, pm = c(0, 1, 2))
     if (beta  > +1)  stop("Error: beta greater than 1")
     
     # Parameterizations:
-	pm = pm[1]
-	if (pm == 1) {
-		if (alpha== 1) {
-			delta = delta + beta*(2/pi)*gamma*log(gamma)
-		} else {
-			delta = delta + beta*gamma*tan(pi*alpha/2)
-		}
-	}
-	if (pm == 2) {
-		delta = delta - alpha^(-1/alpha)*gamma*stableMode(alpha, beta)
-		gamma = alpha^(-1/alpha) * gamma
-	}
-	
-	# Special Cases:
+    pm = pm[1]
+    if (pm == 1) {
+        if (alpha== 1) {
+            delta = delta + beta*(2/pi)*gamma*log(gamma)
+        } else {
+            delta = delta + beta*gamma*tan(pi*alpha/2)
+        }
+    }
+    if (pm == 2) {
+        delta = delta - alpha^(-1/alpha)*gamma*stableMode(alpha, beta)
+        gamma = alpha^(-1/alpha) * gamma
+    }
+    
+    # Special Cases:
     if (alpha == 2)  result = pnorm(x, mean = 0, sd = sqrt(2))
     if (alpha == 1 & beta == 0) result = pcauchy(x) 
 
@@ -595,16 +598,16 @@ function(q, alpha, beta, gamma = 1, delta = 0, pm = c(0, 1, 2))
         for ( i in 1:length(result) ) { 
         varzeta = -beta * tan(pi*alpha/2)
             if (abs(x[i] - varzeta) < 2 * .Machine$double.eps) { 
-            	theta0 = (1/alpha) * atan( beta * tan(pi*alpha/2))
-            	result[i] = (1/pi)*(pi/2-theta0)
+                theta0 = (1/alpha) * atan( beta * tan(pi*alpha/2))
+                result[i] = (1/pi)*(pi/2-theta0)
             } else { 
-            	if (x[i] > varzeta) result[i] = 
-                	FCT1(xarg = x[i], alpha = alpha, beta = beta, 
-                		tol = tol, subdivisions = subdivisions)
-            	if (x[i] < varzeta) result[i] = 
-                	1 - FCT1(xarg = -x[i], alpha = alpha, beta = -beta, 
-                		tol = tol, subdivisions = subdivisions)
-         	}
+                if (x[i] > varzeta) result[i] = 
+                    FCT1(xarg = x[i], alpha = alpha, beta = beta, 
+                        tol = tol, subdivisions = subdivisions)
+                if (x[i] < varzeta) result[i] = 
+                    1 - FCT1(xarg = -x[i], alpha = alpha, beta = -beta, 
+                        tol = tol, subdivisions = subdivisions)
+            }
          }
     }
                     
@@ -644,10 +647,10 @@ function(q, alpha, beta, gamma = 1, delta = 0, pm = c(0, 1, 2))
         for ( i in 1:length(result) ) { 
             if (beta >= 0) {
                 result[i] = FCT2(xarg = x[i], alpha = alpha, 
-               		beta = beta, tol = tol, subdivisions = subdivisions)
+                    beta = beta, tol = tol, subdivisions = subdivisions)
             } else {
                 result[i] = 1 - FCT2(xarg = -x[i], alpha = alpha, 
-                	beta = -beta, tol = tol, subdivisions = subdivisions)
+                    beta = -beta, tol = tol, subdivisions = subdivisions)
             }
         }
     }
@@ -670,9 +673,9 @@ function(p, alpha, beta, gamma = 1, delta = 0, pm = c(0, 1, 2))
     subdivisions = 1000
     tol = .Machine$double.eps
     if (class(version) == "Sversion") {
-	    subdivisions = 100
-	    tol = sqrt(tol)
-	}   
+        subdivisions = 100
+        tol = sqrt(tol)
+    }   
 
     # Parameter Check:
     if (alpha > +2)  stop("Error: alpha greater than 2")
@@ -681,20 +684,20 @@ function(p, alpha, beta, gamma = 1, delta = 0, pm = c(0, 1, 2))
     if (beta  > +1)  stop("Error: beta greater than 1")
     
     # Parameterizations:
-	pm = pm[1]
-	if (pm == 1) {
-		if (alpha== 1) {
-			delta = delta + beta*(2/pi)*gamma*log(gamma)
-		} else {
-			delta = delta + beta*gamma*tan(pi*alpha/2)
-		}
-	}
-	if (pm == 2) {
-		delta = delta - alpha^(-1/alpha)*gamma*stableMode(alpha, beta)
-		gamma = alpha^(-1/alpha) * gamma
-	}
-	
-	# Special Cases:
+    pm = pm[1]
+    if (pm == 1) {
+        if (alpha== 1) {
+            delta = delta + beta*(2/pi)*gamma*log(gamma)
+        } else {
+            delta = delta + beta*gamma*tan(pi*alpha/2)
+        }
+    }
+    if (pm == 2) {
+        delta = delta - alpha^(-1/alpha)*gamma*stableMode(alpha, beta)
+        gamma = alpha^(-1/alpha) * gamma
+    }
+    
+    # Special Cases:
     if (alpha == 2)  result = qnorm(p, mean = 0, sd = sqrt(2))
     if (alpha == 1 & beta == 0) result = qcauchy(p) 
     
@@ -781,18 +784,18 @@ function(n, alpha, beta, gamma = 1, delta = 0, pm = c(0, 1, 2))
     if (beta  > +1)  stop("Error: beta greater than 1")
     
     # Parameterizations:
-	pm = pm[1]
-	if (pm == 1) {
-		if (alpha== 1) {
-			delta = delta + beta*(2/pi)*gamma*log(gamma)
-		} else {
-			delta = delta + beta*gamma*tan(pi*alpha/2)
-		}
-	}
-	if (pm == 2) {
-		delta = delta - alpha^(-1/alpha)*gamma*stableMode(alpha, beta)
-		gamma = alpha^(-1/alpha) * gamma
-	}
+    pm = pm[1]
+    if (pm == 1) {
+        if (alpha== 1) {
+            delta = delta + beta*(2/pi)*gamma*log(gamma)
+        } else {
+            delta = delta + beta*gamma*tan(pi*alpha/2)
+        }
+    }
+    if (pm == 2) {
+        delta = delta - alpha^(-1/alpha)*gamma*stableMode(alpha, beta)
+        gamma = alpha^(-1/alpha) * gamma
+    }
     
     # Calculate uniform and exponential distributed random numbers:
     theta = pi * (runif(n)-1/2)
@@ -819,6 +822,136 @@ function(n, alpha, beta, gamma = 1, delta = 0, pm = c(0, 1, 2))
     ans
 }
     
+
+################################################################################
+# Distribution Sliders
+
+
+symstbSlider = 
+function()
+{   # A function implemented by Diethelm Wuertz
+
+    # Description
+    #   Displays the symmetric stable distribution
+    
+    # FUNCTION:
+    
+    # Internal Function:
+    refresh.code = function(...)
+    {
+        # Sliders:
+        N     = .sliderMenu(no = 1)
+        alpha = .sliderMenu(no = 2)
+        
+        # Compute Data:        
+        xmin = round(qsymstb(0.01, alpha), digits = 2)
+        xmax = round(qsymstb(0.99, alpha), digits = 2)
+        s = seq(xmin, xmax, length = N)
+        y1 = dsymstb(s, alpha)
+        y2 = psymstb(s, alpha)
+        main1 = paste("Symmetric Stable Density\n", 
+            "alpha = ", as.character(alpha))
+        main2 = paste("Symmetric Stable Probability\n",
+            "xmin [0.01%] = ", as.character(xmin), " | ",
+            "xmax [0.99%] = ", as.character(xmax))       
+        
+        # Frame:
+        par(mfrow = c(2, 1), cex = 0.7)
+        
+        # Density:
+        plot(s, y1, type = "l", xlim = c(xmin, xmax), col = "steelblue")
+        abline (h = 0, lty = 3)
+        title(main = main1)     
+        
+        # Probability:
+        plot(s, y2, type = "l", xlim = c(xmin, xmax), ylim = c(0, 1),
+            col = "steelblue" )
+        abline (h = 0, lty = 3)
+        title(main = main2) 
+        
+        # Reset Frame:
+        par(mfrow = c(1, 1), cex = 0.7)
+    }
+  
+    # Open Slider Menu:
+    .sliderMenu(refresh.code,
+       names =       c(  "N", "alpha"),
+       minima =      c(   50,   0.10),
+       maxima =      c( 1000,   2.00),
+       resolutions = c(   50,   0.10),
+       starts =      c(   50,   1.75))
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+stableSlider =  
+function()
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Displays the stable distribution
+
+    # FUNCTION:
+    
+    # Internal Function:
+    refresh.code = function(...)
+    {
+        # Sliders:
+        N     = .sliderMenu(no = 1)
+        alpha = .sliderMenu(no = 2)
+        beta  = .sliderMenu(no = 3)
+        gamma = .sliderMenu(no = 4)
+        delta = .sliderMenu(no = 5)
+        pm    = .sliderMenu(no = 6)
+         
+        # Compute Data:  
+        xmin = round(qstable(0.01, alpha, beta, gamma, delta, pm), digits = 2)
+        xmax = round(qstable(0.99, alpha, beta, gamma, delta, pm), digits = 2)
+        s = seq(xmin, xmax, length = N)
+        y1 = dstable(s, alpha, beta, gamma, delta, pm)
+        y2 = pstable(s, alpha, beta, gamma, delta, pm)
+        main1 = paste("Stable Density\n", 
+            "alpha = ", as.character(alpha), " | ",
+            "beta = ", as.character(beta), " | ",
+            "gamma = ", as.character(gamma), " | ",
+            "delta = ", as.character(delta))
+        main2 = paste("Stable Probability\n",
+            "xmin 0.01% = ", as.character(xmin), " | ",
+            "xmax 0.99% = ", as.character(xmax), " | ",
+            "pm = ", as.character(pm))        
+        
+        # Frame:
+        par(mfrow = c(2, 1), cex = 0.7)   
+        
+        # Density:
+        plot(s, y1, type = "l", xlim = c(xmin, xmax), col = "steelblue")
+        abline (h = 0, lty = 3)
+        title(main = main1)       
+        
+        # Probability:
+        plot(s, y2, type = "l", xlim = c(xmin, xmax), ylim = c(0, 1),
+            col = "steelblue" )
+        abline(h = 0.0, lty = 3)
+        abline(h = 1.0, lty = 3)
+        abline(h = 0.5, lty = 3)
+        abline(v = delta, lty = 3, col = "red")
+        title(main = main2)      
+        
+        # Reset Frame:
+        par(mfrow = c(1, 1), cex = 0.7)
+    }
+  
+    # Open Slider Menu:
+    .sliderMenu(refresh.code,
+       names =       c(  "N", "alpha", "beta", "gamma", "delta", "pm"),
+       minima =      c(   10,    0.00,  -1.00,    0.00,    -5.0,    0),
+       maxima =      c( 1000,    2.00,  +1.00,    5.00,    +5.0,    2),
+       resolutions = c(   50,    0.20,   0.20,    1.00,     1.0,    1),
+       starts =      c(   50,    1.80,   0.00,    1.00,     0.0,    0))
+}
+
 
 ################################################################################
 

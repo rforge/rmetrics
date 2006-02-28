@@ -115,7 +115,7 @@ function(x, title = NULL, description = NULL)
     call = match.call()
     
     # Transform:
-    if (class(x) == "timeSeries") seriesData(x)
+    if (class(x) == "timeSeries") x = seriesData(x)
     x = as.vector(x)
     
     # Test:
@@ -158,7 +158,7 @@ function(x, title = NULL, description = NULL)
 
 .shapiro.test = 
 function (x) 
-{	# A copy from R:
+{   # A copy from R:
 
     DNAME <- deparse(substitute(x))
     x <- sort(x[complete.cases(x)])
@@ -167,10 +167,10 @@ function (x)
     if (n < 3 || n > 5000) {
         # stop("sample size must be between 3 and 5000")
         RVAL <- list(statistic = NA, p.value = NA, 
-        	method = "Shapiro-Wilk normality test", data.name = DNAME)
-    	class(RVAL) <- "htest"
-    	return(RVAL)
-	}
+            method = "Shapiro-Wilk normality test", data.name = DNAME)
+        class(RVAL) <- "htest"
+        return(RVAL)
+    }
     rng <- x[n] - x[1]
     if (rng == 0) 
         stop("all 'x' values are identical")
@@ -184,7 +184,7 @@ function (x)
         stop(gettextf("ifault=%d. This should not happen", sw$ifault), 
             domain = NA)
     RVAL <- list(statistic = c(W = sw$w), p.value = sw$pw, 
-    	method = "Shapiro-Wilk normality test", data.name = DNAME)
+        method = "Shapiro-Wilk normality test", data.name = DNAME)
     class(RVAL) <- "htest"
     
     return(RVAL)
@@ -216,7 +216,7 @@ function(x, title = NULL, description = NULL)
     call = match.call()
     
     # Transform:
-    if (class(x) == "timeSeries") seriesData(x)
+    if (class(x) == "timeSeries") x = seriesData(x)
     x = as.vector(x)
     
     # Works both in R and SPlus:
@@ -263,7 +263,7 @@ function(x, title = NULL, description = NULL)
     call = match.call()
     
     # Transform:
-    if (class(x) == "timeSeries") seriesData(x)
+    if (class(x) == "timeSeries") x = seriesData(x)
     x = as.vector(x)
     
     # Test:
@@ -474,7 +474,7 @@ function(x, title = NULL, description = NULL)
     DNAME = deparse(substitute(x))
     
     # Transform:
-    if (class(x) == "timeSeries") seriesData(x)
+    if (class(x) == "timeSeries") x = seriesData(x)
     x = as.vector(x)
     
     # Test:
@@ -546,7 +546,7 @@ function (x, title = NULL, description = NULL)
     DNAME = deparse(substitute(x))
     
     # Transform:
-    if (class(x) == "timeSeries") seriesData(x)
+    if (class(x) == "timeSeries") x = seriesData(x)
     x = as.vector(x)
    
     # Test:
@@ -576,8 +576,8 @@ function (x, title = NULL, description = NULL)
     # Result:
     ### DW:
     if (PVAL > 1) {
-	    PVAL = NA
-	    W = NA
+        PVAL = NA
+        W = NA
     }
     ###
     test = list(
@@ -636,7 +636,7 @@ function(x, title = NULL, description = NULL)
     DNAME = deparse(substitute(x))
     
     # Transform:
-    if (class(x) == "timeSeries") seriesData(x)
+    if (class(x) == "timeSeries") x = seriesData(x)
     x = as.vector(x)
     
     # Test:
@@ -662,8 +662,8 @@ function(x, title = NULL, description = NULL)
     # Result:
     ### DW:
     if (PVAL > 1) {
-	    PVAL = NA
-	    W = NA
+        PVAL = NA
+        W = NA
     }
     ###
     test = list(statistic = c(W = W), 
@@ -721,7 +721,7 @@ function(x, title = NULL, description = NULL)
     DNAME = deparse(substitute(x))
     
     # Transform:
-    if (class(x) == "timeSeries") seriesData(x)
+    if (class(x) == "timeSeries") x = seriesData(x)
     x = as.vector(x)
    
     # Test:
@@ -826,7 +826,7 @@ function (x, title = NULL, description = NULL)
     DNAME = deparse(substitute(x))
     
     # Transform:
-    if (class(x) == "timeSeries") seriesData(x)
+    if (class(x) == "timeSeries") x = seriesData(x)
     x = as.vector(x)
     
     # Moore's Default Value:
@@ -908,7 +908,7 @@ function(x, title = NULL, description = NULL)
     DNAME = deparse(substitute(x))
     
     # Transform:
-    if (class(x) == "timeSeries") seriesData(x)
+    if (class(x) == "timeSeries") x = seriesData(x)
     x = as.vector(x)
    
     # Test:
@@ -1144,28 +1144,28 @@ function(type = c("LM", "ALM"), size = c("all", "small"))
 
 pjb = 
 function(q, N = Inf, type = c("LM", "ALM")) 
-{	# A function implemented by Diethelm Wuertz
+{   # A function implemented by Diethelm Wuertz
 
-	# Description:
-	#	Computes probabilities for the Jarque Bera Test
-	
-	# Arguments:
-	
-	# FUNCTION:
-	
-	# Check Arguments:
-	if (N < 5) stop("N must be at least 5")
-	if (!(type == "LM" | type == "ALM")) stop("Type must be either LM or ALM")
-	
-	# Compute Probabilities:
-	if (is.finite(N)) {
-		ans = pTable(X = jbTable(type = type), q, N)
-	} else {
-		ans = pchi(q, 2)
-	}
-	
-	# Return Value:
-	ans
+    # Description:
+    #   Computes probabilities for the Jarque Bera Test
+    
+    # Arguments:
+    
+    # FUNCTION:
+    
+    # Check Arguments:
+    if (N < 5) stop("N must be at least 5")
+    if (!(type == "LM" | type == "ALM")) stop("Type must be either LM or ALM")
+    
+    # Compute Probabilities:
+    if (is.finite(N)) {
+        ans = pTable(X = jbTable(type = type), q, N)
+    } else {
+        ans = pchi(q, 2)
+    }
+    
+    # Return Value:
+    ans
 } 
 
 
@@ -1174,28 +1174,28 @@ function(q, N = Inf, type = c("LM", "ALM"))
 
 qjb = 
 function(p, N = Inf, type = c("LM", "ALM"))
-{	# A function implemented by Diethelm Wuertz
+{   # A function implemented by Diethelm Wuertz
 
-	# Description:
-	#	Computes Quantiles for the Jarque Bera Test
-	
-	# Arguments:
-	
-	# FUNCTION:
-	
-	# Check Arguments:
-	if (N < 5) stop("N must be at least 5")
-	if (!(type == "LM" | type == "ALM")) stop("Type must be either LM or ALM")
-		
-	# Compute Quantiles:
-	if (is.finite(N)) {
-		ans = qTable(X = jbTable(type = type), p, N)
-	} else {
-		ans = qchi(p, 2)
-	}
-	
-	# Return Value:
-	ans
+    # Description:
+    #   Computes Quantiles for the Jarque Bera Test
+    
+    # Arguments:
+    
+    # FUNCTION:
+    
+    # Check Arguments:
+    if (N < 5) stop("N must be at least 5")
+    if (!(type == "LM" | type == "ALM")) stop("Type must be either LM or ALM")
+        
+    # Compute Quantiles:
+    if (is.finite(N)) {
+        ans = qTable(X = jbTable(type = type), p, N)
+    } else {
+        ans = qchi(p, 2)
+    }
+    
+    # Return Value:
+    ans
 } 
 
 
@@ -1212,7 +1212,7 @@ function(x)
     # Arguments: 
     
     # Notes:
-    # 	S3 Version type of test.
+    #   S3 Version type of test.
     #   See also the Jarque-Bera test in Adrian Trapletti's
     #   contributed "tseries" R package.
   
@@ -1261,8 +1261,8 @@ function(x)
     
     # Result:
     RVAL = list(statistic = round(STATISTIC, 2), parameter = 
-    	round(PARAMETER, 2), p.value = round(PVAL, 2), method = 
-    	METHOD, data.name = DNAME)
+        round(PARAMETER, 2), p.value = round(PVAL, 2), method = 
+        METHOD, data.name = DNAME)
         
     # Return Value:
     class(RVAL) = "htest"
@@ -1275,20 +1275,20 @@ function(x)
 
 jbTest = 
 function(x, title = NULL, description = NULL)
-{	# A function implemented by Diethelm Wuertz
+{   # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Performs finite sample adjusted Jarque-Bera LM and ALM test  
     
     # Arguments:
-    #	x - a univariate timeSeries object or numeric vector
+    #   x - a univariate timeSeries object or numeric vector
     
-	# Notes:
-    # 	S3 Version type of test.  
+    # Notes:
+    #   S3 Version type of test.  
     
     # FUNCTION:
     # Settings:
-	call = match.call()
+    call = match.call()
     if (class(x) == "timeSeries") seriesData(x)
     x = as.vector(x)
     DNAME = deparse(substitute(x))
@@ -1299,7 +1299,7 @@ function(x, title = NULL, description = NULL)
     parameter = test$parameter[2]
     statistic = c(test$statistic, test$parameter[1])
     p.value = c(test$parameter[3], test$parameter[4], 
-    	Asymptotic = test$p.value[[1]])
+        Asymptotic = test$p.value[[1]])
     test$parameter = parameter
     test$statistic = statistic
     test$p.value = p.value
@@ -1312,11 +1312,11 @@ function(x, title = NULL, description = NULL)
         
     # Return Value:
     new("fHTEST", 
-    	call = call, 
-    	data = list(x = x), 
-    	test = test, 
+        call = call, 
+        data = list(x = x), 
+        test = test, 
         title = as.character(title), 
-        description = as.character(description) )	
+        description = as.character(description) )   
 }
 
 

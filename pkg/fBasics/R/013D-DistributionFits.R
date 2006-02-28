@@ -109,12 +109,12 @@ description = NULL, ...)
     # Optional Plot:
     if (doplot) {
         if (span == "auto") {
-	        df = r$estimate[1]
-		    span.min = qt(0.001, df)
-		    span.max = qt(0.999, df)
-		    span = seq(span.min, span.max, length = 100)  
-		}
-		par(err = -1)
+            df = r$estimate[1]
+            span.min = qt(0.001, df)
+            span.max = qt(0.999, df)
+            span = seq(span.min, span.max, length = 100)  
+        }
+        par(err = -1)
         z = density(x, n = 100, ...)
         x = z$x[z$y > 0]
         y = z$y[z$y > 0]
@@ -133,7 +133,7 @@ description = NULL, ...)
         
     # Fit:
     fit = list(estimate = c(df = r$estimate), minimum = -r$minimum, 
-    	code = r$code, gradient = r$gradient, steps = steps) 
+        code = r$code, gradient = r$gradient, steps = steps) 
         
     # Return Value:
     new("fDISTFIT",     
@@ -156,59 +156,59 @@ description = NULL, ...)
 
 .phiStable =
 function()
-{	# A function implemented by Diethelm Wuertz
+{   # A function implemented by Diethelm Wuertz
 
-	# Description:
-	#	Create Contour Table for McCulloch Estimators
-	
-	# FUNCTION:
-	
-	# Settings:
-	alpha = c(seq(0.50, 1.95, by = 0.1), 1.95, 1.99)
-	beta = c(-0.95, seq(-0.90, 0.90, by = 0.10), 0.95)
-	m = length(alpha)
-	n = length(beta)
+    # Description:
+    #   Create Contour Table for McCulloch Estimators
+    
+    # FUNCTION:
+    
+    # Settings:
+    alpha = c(seq(0.50, 1.95, by = 0.1), 1.95, 1.99)
+    beta = c(-0.95, seq(-0.90, 0.90, by = 0.10), 0.95)
+    m = length(alpha)
+    n = length(beta)
 
-	# phi1:
-	phi1 = function(alpha, beta)
-	{
-		( qstable(0.95, alpha, beta) - qstable(0.05, alpha, beta) ) / 
-		( qstable(0.75, alpha, beta) - qstable(0.25, alpha, beta) )
-	}
+    # phi1:
+    phi1 = function(alpha, beta)
+    {
+        ( qstable(0.95, alpha, beta) - qstable(0.05, alpha, beta) ) / 
+        ( qstable(0.75, alpha, beta) - qstable(0.25, alpha, beta) )
+    }
 
-	# phi2:
-	phi2 = function(alpha, beta)
-	{
-		( ( qstable(0.95, alpha, beta) - qstable(0.50, alpha, beta) ) -
-	  	( qstable(0.50, alpha, beta) - qstable(0.05, alpha, beta) ) ) /   
-	  	( qstable(0.95, alpha, beta) - qstable(0.05, alpha, beta) )
-	}
+    # phi2:
+    phi2 = function(alpha, beta)
+    {
+        ( ( qstable(0.95, alpha, beta) - qstable(0.50, alpha, beta) ) -
+        ( qstable(0.50, alpha, beta) - qstable(0.05, alpha, beta) ) ) /   
+        ( qstable(0.95, alpha, beta) - qstable(0.05, alpha, beta) )
+    }
 
-	# Phi:
-	Phi1 = Phi2 = matrix(rep(0, n*m), ncol = n)
-	for ( i in 1:m ) {
-		for ( j in 1:n ) {
-			Phi1[i,j] = phi1(alpha[i], beta[j])
-			Phi2[i,j] = phi2(alpha[i], beta[j])
-			print( c(alpha[i], beta[j], Phi1[i,j], Phi2[i,j]) ) 
-		} 
-	}
-		
-	#Plot:
-	contour(alpha, beta, Phi1, levels = c(2.5, 3, 5, 10, 20, 40), 
-		xlab = "alpha", ylab = "beta", labcex = 1.5, xlim = c(0.5, 2.0))
-	contour(alpha, beta, Phi2, levels = c(-0.8, -0.6, -0.4, -0.2, 0,
-		0.2, 0.4, 0.6, 0.8), col = "red",  labcex = 1.5, add = TRUE)
-	
-	# Result:
-	.PhiStable = list(Phi1 = Phi1, Phi2 = Phi2, alpha = alpha, beta = beta)
-	
-	# Dump:
-	if (FALSE) dump(".PhiStable", "PhiStable.R")
+    # Phi:
+    Phi1 = Phi2 = matrix(rep(0, n*m), ncol = n)
+    for ( i in 1:m ) {
+        for ( j in 1:n ) {
+            Phi1[i,j] = phi1(alpha[i], beta[j])
+            Phi2[i,j] = phi2(alpha[i], beta[j])
+            print( c(alpha[i], beta[j], Phi1[i,j], Phi2[i,j]) ) 
+        } 
+    }
+        
+    #Plot:
+    contour(alpha, beta, Phi1, levels = c(2.5, 3, 5, 10, 20, 40), 
+        xlab = "alpha", ylab = "beta", labcex = 1.5, xlim = c(0.5, 2.0))
+    contour(alpha, beta, Phi2, levels = c(-0.8, -0.6, -0.4, -0.2, 0,
+        0.2, 0.4, 0.6, 0.8), col = "red",  labcex = 1.5, add = TRUE)
+    
+    # Result:
+    .PhiStable = list(Phi1 = Phi1, Phi2 = Phi2, alpha = alpha, beta = beta)
+    
+    # Dump:
+    if (FALSE) dump(".PhiStable", "PhiStable.R")
 
-	# Return Value:
-	.PhiStable
-}	
+    # Return Value:
+    .PhiStable
+}   
 
 
 # ------------------------------------------------------------------------------
@@ -216,89 +216,89 @@ function()
 
 .qStableFit =
 function(x, doplot = TRUE, title = NULL, description = NULL)
-{	# A function implemented by Diethelm Wuertz
+{   # A function implemented by Diethelm Wuertz
 
-	# Description:
-	#	Estimate Stable Parameters by McCulloch Approach
-	
-	# Note:
-	#	This implementation assumes delta=1 and gamma=0
-	
-	# FUNCTION:
-	
-	# Settings:
-	CALL = match.call()
-	
-	# Load Contour Table:
-	data(PhiStable)
-	Phi1 = .PhiStable$Phi1
-	Phi2 = .PhiStable$Phi2
-	alpha = .PhiStable$alpha
-	beta = .PhiStable$beta
-	
-	# Estimate phi:
-	r = sort(x)
-	N = length(r)
-	q95 = r[round(0.95*N)]
-	q75 = r[round(0.75*N)]
-	q50 = r[round(0.50*N)]
-	q25 = r[round(0.25*N)]
-	q05 = r[round(0.05*N)]
-	phi1 = max( (q95-q05) / (q75-q25), 2.4389 )
-	phi2 = ((q95-q50)-(q50-q05)) / (q95-q05)
-	# print(c(min(Phi1), phi1, max(Phi1)))
-	# print(c(min(Phi2), phi2, max(Phi2)))
-	
-	# Plot:
-	if (doplot) {
-		contour(alpha, beta, Phi1, levels = c(2.5, 3, 5, 10, 20, 40), 
-			xlab = "alpha", ylab = "beta", xlim = c(0.5, 2.0))
-		contour(alpha, beta, Phi2, levels = c(-0.8, -0.6, -0.4, -0.2,
-			0.2, 0.4, 0.6, 0.8), col = "red", add = TRUE)
-		lines(c(0.5, 2), c(0, 0), col = "red")
-		contour(alpha, beta, Phi1, levels = phi1, add = TRUE, lty = 3,
-			col = "blue")
-		contour(alpha, beta, Phi2, levels = phi2, add = TRUE, lty = 3,
-			col = "blue")
-		title(main = "Stable Quantiles")
-	}
-	
-	# Extract Estimate from Contours, if possible:
-	u = contourLines(alpha, beta, Phi1, levels = phi1)
-	Len = length(u)
-	if( Len > 0) {
-		u = u[[1]][-1]
-		v = contourLines(alpha, beta, Phi2, levels = phi2)
-		# print("v")
-		# print(v)
-		v = v[[1]][-1]	
-		xout = seq(min(v$y), max(v$y), length = 200)
-		z = approx(v$y, v$x, xout = xout)$y - approx(u$y, u$x, xout = xout)$y
-		index = which.min(abs(z))		
-		V = round(xout[index], 3)
-		U = round(approx(v$y, v$x, xout = xout[index])$y, 3)	
-		if (doplot) points(U, V, pch = 19, cex = 1)
-	} else {
-		U = V = NA
-	}
-	
-  	# Add Title and Description:
+    # Description:
+    #   Estimate Stable Parameters by McCulloch Approach
+    
+    # Note:
+    #   This implementation assumes delta=1 and gamma=0
+    
+    # FUNCTION:
+    
+    # Settings:
+    CALL = match.call()
+    
+    # Load Contour Table:
+    data(PhiStable)
+    Phi1 = .PhiStable$Phi1
+    Phi2 = .PhiStable$Phi2
+    alpha = .PhiStable$alpha
+    beta = .PhiStable$beta
+    
+    # Estimate phi:
+    r = sort(x)
+    N = length(r)
+    q95 = r[round(0.95*N)]
+    q75 = r[round(0.75*N)]
+    q50 = r[round(0.50*N)]
+    q25 = r[round(0.25*N)]
+    q05 = r[round(0.05*N)]
+    phi1 = max( (q95-q05) / (q75-q25), 2.4389 )
+    phi2 = ((q95-q50)-(q50-q05)) / (q95-q05)
+    # print(c(min(Phi1), phi1, max(Phi1)))
+    # print(c(min(Phi2), phi2, max(Phi2)))
+    
+    # Plot:
+    if (doplot) {
+        contour(alpha, beta, Phi1, levels = c(2.5, 3, 5, 10, 20, 40), 
+            xlab = "alpha", ylab = "beta", xlim = c(0.5, 2.0))
+        contour(alpha, beta, Phi2, levels = c(-0.8, -0.6, -0.4, -0.2,
+            0.2, 0.4, 0.6, 0.8), col = "red", add = TRUE)
+        lines(c(0.5, 2), c(0, 0), col = "red")
+        contour(alpha, beta, Phi1, levels = phi1, add = TRUE, lty = 3,
+            col = "blue")
+        contour(alpha, beta, Phi2, levels = phi2, add = TRUE, lty = 3,
+            col = "blue")
+        title(main = "Stable Quantiles")
+    }
+    
+    # Extract Estimate from Contours, if possible:
+    u = contourLines(alpha, beta, Phi1, levels = phi1)
+    Len = length(u)
+    if( Len > 0) {
+        u = u[[1]][-1]
+        v = contourLines(alpha, beta, Phi2, levels = phi2)
+        # print("v")
+        # print(v)
+        v = v[[1]][-1]  
+        xout = seq(min(v$y), max(v$y), length = 200)
+        z = approx(v$y, v$x, xout = xout)$y - approx(u$y, u$x, xout = xout)$y
+        index = which.min(abs(z))       
+        V = round(xout[index], 3)
+        U = round(approx(v$y, v$x, xout = xout[index])$y, 3)    
+        if (doplot) points(U, V, pch = 19, cex = 1)
+    } else {
+        U = V = NA
+    }
+    
+    # Add Title and Description:
     if (is.null(title)) title = "Stable Parameter Estimation"
     if (is.null(description)) description = as.character(date())
     
     if (is.na(U) | is.na(V)) {
-	    GAM = NA
+        GAM = NA
     } else {
-	    phi3 = qstable(0.75, U, V) - qstable(0.25, U, V)
-	    GAM = (q75-q25) / phi3  
-	}
-	
-	if (is.na(U) | is.na(V)) {
-	    DELTA = NA
+        phi3 = qstable(0.75, U, V) - qstable(0.25, U, V)
+        GAM = (q75-q25) / phi3  
+    }
+    
+    if (is.na(U) | is.na(V)) {
+        DELTA = NA
     } else {
-	    phi4 = -qstable(0.50, U, V) + V*tan(pi*U/2)
-		DELTA = phi4*GAM - V*GAM*tan(pi*U/2) + q50
-	}
+        phi4 = -qstable(0.50, U, V) + V*tan(pi*U/2)
+        DELTA = phi4*GAM - V*GAM*tan(pi*U/2) + q50
+    }
         
     # Fit:
     fit = list(estimate = c(alpha = U, beta = V, gamma = GAM, delta = DELTA)) 
@@ -326,7 +326,7 @@ title = NULL, description = NULL)
     #   Estimates Stable Parameters by MLE approach
     
     # Note:
-	#	This implementation assumes delta=1 and gamma=0
+    #   This implementation assumes delta=1 and gamma=0
     
     # FUNCTION:
     
@@ -345,7 +345,7 @@ title = NULL, description = NULL)
         gamma = x[3]
         delta = x[4]
         f = -sum(log(dstable(y, alpha = alpha, beta = beta,
-        	gamma = gamma, delta = delta)))
+            gamma = gamma, delta = delta)))
         # Print Iteration Path:
         steps <<- steps + 1
         cat("\n Optimization Step:         ", steps)
@@ -356,18 +356,18 @@ title = NULL, description = NULL)
         
     # Minimization:
     r = nlm(f = establemle, p = c(log(alpha/(2-alpha)), atanh(beta),
-    	gamma, delta), y = x)
+        gamma, delta), y = x)
     alpha = 2/(1+exp(-r$estimate[1]))
-	beta = tanh(r$estimate[2])
-	gamma = r$estimate[3]
-	delta = r$estimate[4]
-	        
+    beta = tanh(r$estimate[2])
+    gamma = r$estimate[3]
+    delta = r$estimate[4]
+            
     # Optional Plot:
     if (doplot) {
-		span.min = qstable(0.01, alpha, beta)
-		span.max = qstable(0.99, alpha, beta)
-		span = seq(span.min, span.max, length = 100)  
-		par(err = -1)
+        span.min = qstable(0.01, alpha, beta)
+        span.max = qstable(0.99, alpha, beta)
+        span = seq(span.min, span.max, length = 100)  
+        par(err = -1)
         z = density(x, n = 100)
         x = z$x[z$y > 0]
         y = z$y[z$y > 0]
@@ -386,8 +386,8 @@ title = NULL, description = NULL)
         
     # Fit:
     fit = list(estimate = c(alpha = alpha, beta = beta, gamma = gamma, 
-    	delta = delta), minimum = -r$minimum, code = r$code, gradient = 
-    	r$gradient, steps = steps) 
+        delta = delta), minimum = -r$minimum, code = r$code, gradient = 
+        r$gradient, steps = steps) 
     
     # Return Value:
     new("fDISTFIT",     
@@ -406,32 +406,32 @@ title = NULL, description = NULL)
 stableFit = 
 function(x, alpha = 1.75, beta = 0, gamma = 1, delta = 0, 
 type = c("q", "mle"), doplot = TRUE, title = NULL, description = NULL)
-{   # A function implemented by Diethelm Wuertz	
+{   # A function implemented by Diethelm Wuertz 
 
-	# Description 
-	#	Stable Parameter Estimation
-	
-	# FUNCTION:
+    # Description 
+    #   Stable Parameter Estimation
+    
+    # FUNCTION:
 
-	# Start Values: Use Quantile Method:
-	ans = .qStableFit(x, doplot, title, description)
-	
-	# Continue with MLE Approach:
-	if (type[1] == "mle") {
-		Alpha = ans@fit$estimate[1]
-		Beta  = ans@fit$estimate[2]
-		Gamma = ans@fit$estimate[3]
-		Delta = ans@fit$estimate[4]
-		if (is.na(Alpha)) Alpha = alpha
-		if (is.na(Beta)) Beta = beta
-		if (is.na(Gamma)) Gamma = gamma
-		if (is.na(Delta)) Delta = delta
-		ans = .mleStableFit(x, Alpha, Beta, Gamma, Delta, doplot, 
-			title, description)
-	}
-			
-	# Return Value:
-	ans
+    # Start Values: Use Quantile Method:
+    ans = .qStableFit(x, doplot, title, description)
+    
+    # Continue with MLE Approach:
+    if (type[1] == "mle") {
+        Alpha = ans@fit$estimate[1]
+        Beta  = ans@fit$estimate[2]
+        Gamma = ans@fit$estimate[3]
+        Delta = ans@fit$estimate[4]
+        if (is.na(Alpha)) Alpha = alpha
+        if (is.na(Beta)) Beta = beta
+        if (is.na(Gamma)) Gamma = gamma
+        if (is.na(Delta)) Delta = delta
+        ans = .mleStableFit(x, Alpha, Beta, Gamma, Delta, doplot, 
+            title, description)
+    }
+            
+    # Return Value:
+    ans
 }
 
 
@@ -464,30 +464,30 @@ span = "auto", title = NULL, description = NULL, ...)
 
     # Log-likelihood Function:
     eghmle = function(x, y = x){ 
-	    # alpha and delta must be positive ...
-	    alpha = exp(-x[1])            # alpha >= 0
-	    beta = alpha * tanh(x[2])     # abs(beta) <= alpha
-	    delta = exp(-x[3])            # delta >= 0
-	    mu = x[4]
-	    lambda = x[5]
-	    # if (alpha <= 0) return(Inf)  
-		# if (delta <= 0) return(Inf)
-		# if (abs(beta) >= alpha) return(Inf)
+        # alpha and delta must be positive ...
+        alpha = exp(-x[1])            # alpha >= 0
+        beta = alpha * tanh(x[2])     # abs(beta) <= alpha
+        delta = exp(-x[3])            # delta >= 0
+        mu = x[4]
+        lambda = x[5]
+        # if (alpha <= 0) return(Inf)  
+        # if (delta <= 0) return(Inf)
+        # if (abs(beta) >= alpha) return(Inf)
         f = -sum(log(dgh(y, alpha, beta, delta, mu, lambda)))
         # Print Iteration Path:
         steps <<- steps + 1
         if (trace) {
-	        cat("\n Optimization Step:         ", steps)
-        	cat("\n Objective Function Value:  ", -f)
-        	cat("\n Parameter Estimates:       ", 
-        	alpha, beta, delta, mu, lambda, "\n") 
-    	}
+            cat("\n Optimization Step:         ", steps)
+            cat("\n Objective Function Value:  ", -f)
+            cat("\n Parameter Estimates:       ", 
+            alpha, beta, delta, mu, lambda, "\n") 
+        }
         f 
     }
         
     # Variable Transformation and Minimization:
     r = nlm(f = eghmle, 
-    	p = c(-log(alpha), atanh(beta/alpha), -log(delta), mu, lambda), y = x)  
+        p = c(-log(alpha), atanh(beta/alpha), -log(delta), mu, lambda), y = x)  
     r$estimate[1] = exp(-r$estimate[1])
     r$estimate[2] = r$estimate[1] * tanh(r$estimate[2])     
     r$estimate[3] = exp(-r$estimate[3])
@@ -495,16 +495,16 @@ span = "auto", title = NULL, description = NULL, ...)
     # Optional Plot:
     if (doplot) {
         if (span == "auto") {
-	        alpha = r$estimate[1]
-		    beta = r$estimate[2]
-		    delta = r$estimate[3]
-		    mu = r$estimate[4]
-		    lambda = r$estimate[5]
-		    span.min = qgh(0.001, alpha, beta, delta, mu, lambda)
-		    span.max = qgh(0.999, alpha, beta, delta, mu, lambda)
-		    span = seq(span.min, span.max, length = 100)  
-		}
-	    par(err = -1)
+            alpha = r$estimate[1]
+            beta = r$estimate[2]
+            delta = r$estimate[3]
+            mu = r$estimate[4]
+            lambda = r$estimate[5]
+            span.min = qgh(0.001, alpha, beta, delta, mu, lambda)
+            span.max = qgh(0.999, alpha, beta, delta, mu, lambda)
+            span = seq(span.min, span.max, length = 100)  
+        }
+        par(err = -1)
         z = density(x, n = 100, ...)
         x = z$x[z$y > 0]
         y = z$y[z$y > 0]
@@ -528,9 +528,9 @@ span = "auto", title = NULL, description = NULL, ...)
         
     # Fit:
     fit = list(estimate = c(alpha = r$estimate[1], beta = r$estimate[2],
-    	delta = r$estimate[3], mu = r$estimate[4], lambda = r$estimate[5]), 
-    	minimum = -r$minimum, code = r$code, gradient = r$gradient, 
-    	steps = steps)
+        delta = r$estimate[3], mu = r$estimate[4], lambda = r$estimate[5]), 
+        minimum = -r$minimum, code = r$code, gradient = r$gradient, 
+        steps = steps)
         
     # Return Value:
     new("fDISTFIT",     
@@ -571,29 +571,29 @@ span = "auto", title = NULL, description = NULL, ...)
     
     # Log-likelihood Function:
     ehypmle = function(x, y = x){ 
-		# alpha and delta must be positive ...
-	    alpha = exp(-x[1])            # alpha >= 0
-	    beta = alpha * tanh(x[2])     # abs(beta) <= alpha
-	    delta = exp(-x[3])            # delta >= 0
-	    mu = x[4]
-	    lambda = x[5]
-	    # if (alpha <= 0) return(Inf)  
-		# if (delta <= 0) return(Inf)
-		# if (abs(beta) >= alpha) return(Inf)
+        # alpha and delta must be positive ...
+        alpha = exp(-x[1])            # alpha >= 0
+        beta = alpha * tanh(x[2])     # abs(beta) <= alpha
+        delta = exp(-x[3])            # delta >= 0
+        mu = x[4]
+        lambda = x[5]
+        # if (alpha <= 0) return(Inf)  
+        # if (delta <= 0) return(Inf)
+        # if (abs(beta) >= alpha) return(Inf)
         f = -sum(log(dhyp(y, alpha, beta, delta, mu)))
         # Print Iteration Path:
         steps <<- steps + 1
         if (trace) {
-	        cat("\n Optimization Step:         ", steps)
-        	cat("\n Objective Function Value:  ", -f)
-        	cat("\n Parameter Estimates:       ", alpha, beta, delta, mu, "\n") 
-    	}
+            cat("\n Optimization Step:         ", steps)
+            cat("\n Objective Function Value:  ", -f)
+            cat("\n Parameter Estimates:       ", alpha, beta, delta, mu, "\n") 
+        }
         f 
     }
         
     # Variable Transformation and Minimization:
     r = nlm(f = ehypmle, 
-    	p = c(-log(alpha), atanh(beta/alpha), -log(delta), mu), y = x)  
+        p = c(-log(alpha), atanh(beta/alpha), -log(delta), mu), y = x)  
     r$estimate[1] = exp(-r$estimate[1])
     r$estimate[2] = r$estimate[1] * tanh(r$estimate[2])
     r$estimate[3] = exp(-r$estimate[3])
@@ -601,15 +601,15 @@ span = "auto", title = NULL, description = NULL, ...)
     # Optional Plot:
     if (doplot) {
         if (span == "auto") {
-	        alpha = r$estimate[1]
-		    beta = r$estimate[2]
-		    delta = r$estimate[3]
-		    mu = r$estimate[4]
-		    span.min = qhyp(0.01, alpha, beta, delta, mu)
-		    span.max = qhyp(0.99, alpha, beta, delta, mu)
-		    span = seq(span.min, span.max, length = 100)  
-		}
-	    par(err = -1)
+            alpha = r$estimate[1]
+            beta = r$estimate[2]
+            delta = r$estimate[3]
+            mu = r$estimate[4]
+            span.min = qhyp(0.01, alpha, beta, delta, mu)
+            span.max = qhyp(0.99, alpha, beta, delta, mu)
+            span = seq(span.min, span.max, length = 100)  
+        }
+        par(err = -1)
         z = density(x, n = 100, ...)
         x = z$x[z$y > 0]
         y = z$y[z$y > 0]
@@ -632,8 +632,8 @@ span = "auto", title = NULL, description = NULL, ...)
         
     # Fit:
     fit = list(estimate = c(alpha = r$estimate[1], beta = r$estimate[2],
-    	delta = r$estimate[3], mu = r$estimate[4]), minimum = -r$minimum, 
-    	code = r$code, gradient = r$gradient, steps = steps)
+        delta = r$estimate[3], mu = r$estimate[4]), minimum = -r$minimum, 
+        code = r$code, gradient = r$gradient, steps = steps)
         
     # Return Value:
     new("fDISTFIT",     
@@ -671,9 +671,9 @@ span = "auto", title = NULL, description = NULL, ...)
     # Log-likelihood Function:
     enigmle = function(x, y = x) { 
         if (x[1] <= 0) return(Inf)  
-		if (x[3] <= 0) return(Inf)
-		if (abs(x[2]) >= x[1]) return(Inf)
-		f = -sum(log(dnig(y, x[1], x[2], x[3], x[4])))
+        if (x[3] <= 0) return(Inf)
+        if (abs(x[2]) >= x[1]) return(Inf)
+        f = -sum(log(dnig(y, x[1], x[2], x[3], x[4])))
         # Print Iteration Path:
         steps <<- steps + 1
         cat("\n Optimization Step:         ", steps)
@@ -688,17 +688,17 @@ span = "auto", title = NULL, description = NULL, ...)
     # Optional Plot:
     if (doplot) {
         if (span == "auto") {
-	        alpha = r$estimate[1]
-		    beta = r$estimate[2]
-		    delta = r$estimate[3]
-		    mu = r$estimate[4]
-		    span.min = qnig(0.001, alpha, beta, delta, mu)
-		    span.max = qnig(0.999, alpha, beta, delta, mu)
-		    print(span.min)
-		    print(span.max)
-		    span = seq(span.min, span.max, length = 100)   
-		}
-		par(err=-1)
+            alpha = r$estimate[1]
+            beta = r$estimate[2]
+            delta = r$estimate[3]
+            mu = r$estimate[4]
+            span.min = qnig(0.001, alpha, beta, delta, mu)
+            span.max = qnig(0.999, alpha, beta, delta, mu)
+            print(span.min)
+            print(span.max)
+            span = seq(span.min, span.max, length = 100)   
+        }
+        par(err=-1)
         z = density(x, n = 100)
         x = z$x[z$y > 0]
         y = z$y[z$y > 0]
@@ -709,7 +709,7 @@ span = "auto", title = NULL, description = NULL, ...)
             mu = r$estimate[4])
         ylim = log(c(min(y.points), max(y.points)))
         plot(x, log(y), xlim = c(span[1], span[length(span)]), 
-        	ylim = ylim, type = "p", xlab = "x", ylab = "log f(x)")
+            ylim = ylim, type = "p", xlab = "x", ylab = "log f(x)")
         title("NIG: Parameter Estimation")
         lines(x = span, y = log(y.points), col = "steelblue4") 
         if (exists("grid")) grid() 
@@ -782,26 +782,26 @@ function(x, ...)
 ssdFit = 
 function (x, alpha = 1.4, seed = NULL, title = NULL, description = NULL) 
 {
-	# Description:
-	#	Estimate probability densities using smoothing spline ANOVA 
-	#	models with cubic spline, linear spline, or thin-plate spline 
-	#	marginals for numerical variables.
-	
-	# FUNCTION:
-	
-	# Fit: 
-	x.orig = x
-	CALL = match.call()
-	
-	ans = .ssden(~x, alpha = alpha, seed = seed)
-	ans$call = CALL
-	class(ans) = "ssd"
-	
-	# Add Title and Description:
+    # Description:
+    #   Estimate probability densities using smoothing spline ANOVA 
+    #   models with cubic spline, linear spline, or thin-plate spline 
+    #   marginals for numerical variables.
+    
+    # FUNCTION:
+    
+    # Fit: 
+    x.orig = x
+    CALL = match.call()
+    
+    ans = .ssden(~x, alpha = alpha, seed = seed)
+    ans$call = CALL
+    class(ans) = "ssd"
+    
+    # Add Title and Description:
     if (is.null(title)) title = "Smooth Spline Distribution Fit"
     if (is.null(description)) description = as.character(date())
-	
-	# Return Value:
+    
+    # Return Value:
     ans
 }
 
@@ -818,20 +818,20 @@ function(x, ...)
     cat("\nCall:\n", deparse(x$call), "\n\n", sep = "")
     
     if (FALSE) {
-	    # terms
-	    cat("Terms:\n")
-	    print.default(x$terms$labels)
-	    cat("\n")
-	    
-	    # terms overview
-	    cat("Number of unpenalized and penalized terms:\n\n")
-	    print.default(x$desc)
-	    cat("\n")
-	}
+        # terms
+        cat("Terms:\n")
+        print.default(x$terms$labels)
+        cat("\n")
+        
+        # terms overview
+        cat("Number of unpenalized and penalized terms:\n\n")
+        print.default(x$desc)
+        cat("\n")
+    }
     
     # Smoothing Parameters:
     cat("Smoothing parameters are selected by CV with alpha=", x$alpha, ".", 
-    	sep = "")
+        sep = "")
     cat("\n")
     
     # the rest are suppressed
@@ -850,16 +850,16 @@ function(x, ...)
 #  .nlm0
 ################################################################################
 # Code Copied from:
-#	Package: gss
-#	Version: 0.9-3
-#	Depends: R (>= 1.7.0)
-#	Title: General Smoothing Splines
-#	Author: Chong Gu <chong@stat.purdue.edu>
-#	Maintainer: Chong Gu <chong@stat.purdue.edu>
-#	Description: A comprehensive package for structural multivariate
-#	        function estimation using smoothing splines.
-#	License: GPL
-#	Packaged: Thu Sep 23 16:28:03 2004
+#   Package: gss
+#   Version: 0.9-3
+#   Depends: R (>= 1.7.0)
+#   Title: General Smoothing Splines
+#   Author: Chong Gu <chong@stat.purdue.edu>
+#   Maintainer: Chong Gu <chong@stat.purdue.edu>
+#   Description: A comprehensive package for structural multivariate
+#           function estimation using smoothing splines.
+#   License: GPL
+#   Packaged: Thu Sep 23 16:28:03 2004
 ################################################################################
 
 
@@ -869,7 +869,7 @@ nbasis = NULL, seed = NULL, domain = as.list(NULL), ext = 0.05,
 prec = 1.0e-07, maxiter = 30) 
 {
     # Description:
-    #	Fit density model
+    #   Fit density model
      
     # FUNCTION:
     
@@ -904,7 +904,7 @@ prec = 1.0e-07, maxiter = 30)
     id.basis = sample(nobs, nbasis, prob = cnt2)
     
     # Generate terms:
-	term = .mkterm.cubic1(mf, domain)
+    term = .mkterm.cubic1(mf, domain)
     term$labels = term$labels[term$labels != "1"]
     
     # Generate default quadrature:
@@ -936,16 +936,16 @@ prec = 1.0e-07, maxiter = 30)
     rk = term[[Name]]$rk
     nq = nq+1
     r = array(c(r, rk$fun(x.basis, x, nu = 1, env = rk$env, 
-    	out = TRUE)), c(nbasis, nobs, nq))
+        out = TRUE)), c(nbasis, nobs, nq))
     qd.r = array(c(qd.r, rk$fun(x.basis, qd.x, nu = 1, env = 
-    	rk$env,out = TRUE)), c(nbasis,nmesh,nq))
+        rk$env,out = TRUE)), c(nbasis,nmesh,nq))
     q = array(c(q, rk$fun(x.basis, x.basis, nu = 1, env = 
-    	rk$env, out = TRUE)), c(nbasis, nbasis, nq))
+        rk$env, out = TRUE)), c(nbasis, nbasis, nq))
 
     # Check s rank:
     nnull = dim(s)[2]
     if (qr(s)$rank < nnull)
-    	stop("error in .ssden: fixed effect MLE is not unique")
+        stop("error in .ssden: fixed effect MLE is not unique")
     s = t(s)
     qd.s = t(qd.s)
     
@@ -957,8 +957,8 @@ prec = 1.0e-07, maxiter = 30)
     
     # Result:
     obj = c(list(call = match.call(), mf = mf, cnt = cnt, terms = term,
-    	desc = NULL, alpha = alpha, domain = domain, quad = quadrature,
-    	id.basis = id.basis), z)
+        desc = NULL, alpha = alpha, domain = domain, quad = quadrature,
+        id.basis = id.basis), z)
     class(obj) = "ssden"
     
     # Return Value:
@@ -973,7 +973,7 @@ prec = 1.0e-07, maxiter = 30)
 function(mf, range)
 {
     # Description:
-    #	Make phi and rk for cubic spline model terms
+    #   Make phi and rk for cubic spline model terms
 
     # FUNCTION:
     
@@ -990,7 +990,7 @@ function(mf, range)
     term.labels = labels(mt)
     if (attr(attr(mf, "terms"), "intercept")) {
         term.labels = c("1", term.labels)
-	}
+    }
     
     # Create the phi and rk functions:
     term = list(labels = term.labels)
@@ -1074,9 +1074,9 @@ function(mf, range)
                     ## actor variable:
                     if (!is.ordered(x[[i]])) {
                         rk.wk = mkrk.nominal(levels(x[[i]]))
-                	} else {
-	                	rk.wk = mkrk.ordinal(levels(x[[i]]))
-                	}
+                    } else {
+                        rk.wk = mkrk.ordinal(levels(x[[i]]))
+                    }
                     phi.wk = rk.wk
                     n.phi = c(n.phi,0)
                     bin.fac = c(bin.fac, !(nlevels(x[[i]]) > 2))
@@ -1086,18 +1086,18 @@ function(mf, range)
             }
             # phi:
             if (sum(n.phi+bin.fac) < dm) {
-	            nphi = 0
-        	} else {
+                nphi = 0
+            } else {
                 phi.env = list(dim = dm, n.phi = n.phi, phi = phi.list)
                 phi.fun <<- function(x, nu = 1, env) {
                     z = 1
                     for (i in 1:env$dim) {
                         if (env$n.phi[i]) {
                             z = z * env$phi[[i]]$fun(x[[i]], env$phi[[i]]$env)
-                    	} else {
+                        } else {
                             wk = as.factor(names(env$phi[[i]]$env$code)[1])
                             z = z * env$phi[[i]]$fun(x[[i]], wk, 
-                            	env$phi[[i]]$env)
+                                env$phi[[i]]$env)
                         }
                     }
                     z
@@ -1109,7 +1109,7 @@ function(mf, range)
             }
             # rk:
             rk.env = list(dim = dm, n.phi = n.phi, nphi = nphi, 
-            	phi = phi.list, rk = rk.list)
+                phi = phi.list, rk = rk.list)
             rk.fun <<- function(x, y, nu, env,outer.prod = FALSE) {
                 div = env$n.phi + 1
                 ind = nu - 1 + env$nphi
@@ -1119,14 +1119,14 @@ function(mf, range)
                     ind = ind%/%div[i]
                     if (code == div[i]) {
                         z = z * env$rk[[i]]$fun(x[[i]], y[[i]],
-                   			env$rk[[i]]$env,outer.prod)
-                	} else {
+                            env$rk[[i]]$env,outer.prod)
+                    } else {
                         phix = env$phi[[i]]$fun(x[[i]], env$phi[[i]]$env)
                         phiy = env$phi[[i]]$fun(y[[i]], env$phi[[i]]$env)
                         if (outer.prod) {
-	                        z = z * outer(phix, phiy)
+                            z = z * outer(phix, phiy)
                         } else {
-	                        z = z * phix * phiy
+                            z = z * phix * phiy
                         }
                     }
                 }
@@ -1138,7 +1138,7 @@ function(mf, range)
             rk = list(fun = rk.fun, env = rk.env)
         }
         term[[label]] = list(vlist = vlist, iphi = iphi, nphi = nphi,
-        	phi=phi, irk = irk, nrk = nrk, rk = rk)
+            phi=phi, irk = irk, nrk = nrk, rk = rk)
     }
     # Return Value:
     term
@@ -1152,7 +1152,7 @@ function(mf, range)
 function(range)
 {
     # Description:
-    #	Make phi function for cubic splines
+    #   Make phi function for cubic splines
     
     # FUNCTION:
     
@@ -1184,7 +1184,7 @@ function(range)
 function(range)
 {
     # Description:
-    #	Make RK for cubic splines
+    #   Make RK for cubic splines
     
     # FUNCTION:
     
@@ -1212,10 +1212,10 @@ function(range)
             k2(x)*k2(y)-k4(abs(x-y))
         }
         if (outer.prod) {
-	        outer(x, y, rk)
-    	} else {
-	    	rk(x, y)
-    	}
+            outer(x, y, rk)
+        } else {
+            rk(x, y)
+        }
     }
     
     # Return Value:
@@ -1229,7 +1229,7 @@ function(range)
 function(size, interval) 
 {
     # Description:
-    # 	Generate Gauss-Legendre quadrature
+    #   Generate Gauss-Legendre quadrature
     
     # FUNCTION:
     
@@ -1263,23 +1263,23 @@ function(size, interval)
 .sspdsty = 
 function(s, r, q, cnt, qd.s, qd.r, qd.wt, prec, maxiter, alpha)
 {
-	# Description:
-	#	Fit single smoothing parameter density
-	
-	# Note:
-	#	Global variables introduced for SPlus compatibility
+    # Description:
+    #   Fit single smoothing parameter density
     
-	# FUNCTION:
-	
-	# Settings:
-	nxi <<- dim(r)[1]
+    # Note:
+    #   Global variables introduced for SPlus compatibility
+    
+    # FUNCTION:
+    
+    # Settings:
+    nxi <<- dim(r)[1]
     nobs <<- dim(r)[2]
     nqd <<- length(qd.wt)
     if (!is.null(s)) {
-	    nnull <<- dim(s)[1]
-	} else {
-		nnull <<- 0
-	}
+        nnull <<- dim(s)[1]
+    } else {
+        nnull <<- 0
+    }
     nxis <<- nxi + nnull
     if (is.null(cnt)) cnt <<- 0
     
@@ -1298,36 +1298,36 @@ function(s, r, q, cnt, qd.s, qd.r, qd.wt, prec, maxiter, alpha)
     # Internal Function:
     cv <<- function(lambda) {
         fit <<- .Fortran("dnewton",
-	        cd = as.double(cd), 
-	        as.integer(nxis),
-	        as.double(10^(lambda+theta)*q), 
-	        as.integer(nxi),
-	        as.double(rbind(10^theta*r, s)), 
-	        as.integer(nobs),
-	        as.integer(sum(cnt)), 
-	        as.integer(cnt),
-	        as.double(t(rbind(10^theta*qd.r, qd.s))), 
-	        as.integer(nqd),
-	        as.double(qd.wt),
-	        as.double(prec), 
-	        as.integer(maxiter),
-	        as.double(.Machine$double.eps),
-	        wk = double(2*(nqd+nobs)+nxis*(nxis+4)+max(nxis, 3)),
-	        info = integer(1),
-	        PACKAGE = "fBasics")
+            cd = as.double(cd), 
+            as.integer(nxis),
+            as.double(10^(lambda+theta)*q), 
+            as.integer(nxi),
+            as.double(rbind(10^theta*r, s)), 
+            as.integer(nobs),
+            as.integer(sum(cnt)), 
+            as.integer(cnt),
+            as.double(t(rbind(10^theta*qd.r, qd.s))), 
+            as.integer(nqd),
+            as.double(qd.wt),
+            as.double(prec), 
+            as.integer(maxiter),
+            as.double(.Machine$double.eps),
+            wk = double(2*(nqd+nobs)+nxis*(nxis+4)+max(nxis, 3)),
+            info = integer(1),
+            PACKAGE = "fBasics")
         if (fit$info == 1) 
-        	stop("error in .ssden: Newton iteration diverges")
+            stop("error in .ssden: Newton iteration diverges")
         if (fit$info == 2) 
-        	warning("gss warning in .ssden: Newton iteration fails to converge")
+            warning("gss warning in .ssden: Newton iteration fails to converge")
         if (class(version) != "Sversion") {
-        	assign("cd", fit$cd, inherit = TRUE)
-        	assign("int", fit$wk[3], inherit = TRUE)
-    	} else {
-    		assign("cd", fit$cd)
-        	assign("int", fit$wk[3])
-        	cd <<- cd
-    		int <<- int
-    	}
+            assign("cd", fit$cd, inherit = TRUE)
+            assign("int", fit$wk[3], inherit = TRUE)
+        } else {
+            assign("cd", fit$cd)
+            assign("int", fit$wk[3])
+            cd <<- cd
+            int <<- int
+        }
         cv = alpha*fit$wk[2]-fit$wk[1]
         alpha.wk = max(0,log.la0-lambda-5)*(3-alpha) + alpha
         alpha.wk = min(alpha.wk, 3)
@@ -1341,9 +1341,9 @@ function(s, r, q, cnt, qd.s, qd.r, qd.wt, prec, maxiter, alpha)
     mu.s = apply(qd.wt*t(qd.s), 2, sum) / sum(qd.wt)
     v.s = apply(qd.wt*t(qd.s^2), 2, sum) / sum(qd.wt)
     if (is.null(s)) {
-	    theta <<- 0
+        theta <<- 0
     } else {
-	    theta <<- log10(sum(v.s-mu.s^2)/nnull/sum(v.r-mu.r^2)*nxi) / 2
+        theta <<- log10(sum(v.s-mu.s^2)/nnull/sum(v.r-mu.r^2)*nxi) / 2
     }
     log.la0 <<- log10(sum(v.r-mu.r^2)/sum(diag(q))) + theta
         
@@ -1363,10 +1363,10 @@ function(s, r, q, cnt, qd.s, qd.r, qd.wt, prec, maxiter, alpha)
     jk1 = cv(zz$est)
     c = cd[1:nxi]
     if (nnull) {
-	    d = cd[nxi+(1:nnull)]
-	} else {
-		d = NULL
-	}
+        d = cd[nxi+(1:nnull)]
+    } else {
+        d = NULL
+    }
     
     # Return Value:
     list(lambda = zz$est, theta = theta, c = c, d = d, int = int, cv = zz$min)
@@ -1379,9 +1379,9 @@ function(s, r, q, cnt, qd.s, qd.r, qd.wt, prec, maxiter, alpha)
 .nlm0 = 
 function(fun, range, prec = 1.0e-7)
 {
-	# Description:
-	#	minimization of univariate function on finite intervals
-	#	using 3-point quadratic fit with golden-section safe-guard
+    # Description:
+    #   minimization of univariate function on finite intervals
+    #   using 3-point quadratic fit with golden-section safe-guard
 
     # FUNCTION:
     
@@ -1423,12 +1423,12 @@ function(fun, range, prec = 1.0e-7)
         a = (d.u-d.l) / (delta.l+delta.u)
         b = d.l-a*sigma.l
         if (a <= 0) {
-	        nn.x = max(range)
-    	} else {
-	    	nn.x = -b/2/a
-    	}
+            nn.x = max(range)
+        } else {
+            nn.x = -b/2/a
+        }
         
-    	# New bracket:
+        # New bracket:
         if (ml.fit<mu.fit) {
             uu.x = mu.x
             uu.fit = mu.fit
@@ -1447,10 +1447,10 @@ function(fun, range, prec = 1.0e-7)
         # Safeguard:
         if ((nn.x < ll.x) | (nn.x > uu.x) | (delta < prec)) {
             if (range.u > range.l) {
-	            nn.x = uu.x - ratio*range.u
-        	} else {
-	        	nn.x = ll.x + ratio*range.l
-        	}
+                nn.x = uu.x - ratio*range.u
+            } else {
+                nn.x = ll.x + ratio*range.l
+            }
         }
         
         # Update middle points:
@@ -1514,17 +1514,17 @@ function(FUN)
 
 
 if (!exists("which.min")) 
-{	
+{   
 which.min = 
 function(x)
-{	# A function implemented by Diethelm Wuertz
+{   # A function implemented by Diethelm Wuertz
 
     # FUNCTION:
     
     # For S-Plus Compatibility:
- 	ans = order(x)[1]
- 	
- 	# Return Value:
+    ans = order(x)[1]
+    
+    # Return Value:
     ans
 }}
 
@@ -1533,17 +1533,17 @@ function(x)
 
 
 if (!exists("which.max")) 
-{	
+{   
 which.max = 
 function(x)
-{	# A function implemented by Diethelm Wuertz
+{   # A function implemented by Diethelm Wuertz
 
     # FUNCTION:
     
     # For S-Plus Compatibility:
- 	ans = rev(order(x))[1]
- 	
- 	# Return Value:
+    ans = rev(order(x))[1]
+    
+    # Return Value:
     ans
 }}
 

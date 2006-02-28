@@ -28,7 +28,7 @@
 
 
 # ##############################################################################
-# FUNCTION:                 DESCRIPTION:
+# FUNCTION:                 PORTABLE INNOVATIONS:
 #  set.lcgseed               Set initial random seed
 #  get.lcgseed               Get the current valus of the random seed
 #  runif.lcg                 Uniform linear congruational generator
