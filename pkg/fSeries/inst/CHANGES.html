@@ -1,4 +1,8 @@
-
+<HTML>
+ <HEAD>
+  <TITLE>Rmetrics::CHANGES</TITLE>
+ </HEAD>
+<BODY BGCOLOR="WHITE">
 <P>
 <B><FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="7">
    <FONT COLOR="#7F0000">Rmetrics</FONT></FONT></FONT></B>
@@ -12,7 +16,7 @@
 
 <P>
 <B><FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2">
-    2005-11-02 Built 220.10063</FONT></FONT>
+    2005-12-18 Built 221.10065</FONT></FONT>
 </B></P>
 
 
@@ -23,27 +27,58 @@ to the packages included in the Rmetrics environment. The packages are:
 
 fBasics, fCalendar, fSeries, fMultivar, fExtremes, fOptions, fPortfolio
 
+________________________________________________________________________________ 
+Rmetrics VERSION 221.10065
+
+2005-02-19 Rmetrics
+    Rmetrics has been compiled for R Version 2.2.1
+    
+2006-02-12 fCalendar
+    The explicit setting to timezone GMT is no longer necessary.
+
+2006-02-12 fSeries
+    The long awaites GARCH functions are now available for simulating,
+    modelling, and forecasting GARCH and APARCH time series processes.  
+    
++++ many other smaller improvements and fixings ...
+    
+________________________________________________________________________________ 
+Rmetrics VERSION 220.10064
+
+2005-12-01 fSeries: GarchModelling
+    Major improvements could be achieved for the fSeries Package for GARCH
+    Modelling, although the GARCH modelling functions are still in an
+    experimental state and not yet finished.
+    
+2005-12-01 fCalendar: timeDate and timeSeries
+    A paper was submitted to JSS describing 'timeDate' and 'timeSeries' 
+    Classes. A draft can be downloaded from www.rmetrics.org.
+    
+2005-12-01
+    Updates of the following files (if it was necessary) are now available:
+    CHANGES.html, COPYING.html, COPYRIGHT.html, FAQ.html, README.html
+    DocFactSheet.pdf, DocRefCard.pdf, DocRmetrics.pdf
 
 ________________________________________________________________________________ 
 Rmetrics VERSION 220.10063
 Rmetrics VERSION 211.10062
 
 2005-11-02
-	This is a preliminary version with smaller modifications, updates, and
-	additions compared to Rmetrics 201.0061.
-	
-	Not yet updated is the documentation included in DocFactSheet.pdf
-	Doc, DocRefcard.pdf, and DocRmetrics.pdf. These documents have Version
-	211.10062. This update is under progress.
-	
-	The major effort was invested to make under both environments MS Windows  
-	and Linux Rmetrics running based on the new compiler suite with
-	gfortran. Please note, that I have done this move for Rmetrics already 
-	under MS Windows, although this is not yet done for R. The reason why
-	I have done this, is that I develop under MS Windows, and that I wan't
-	support two systems based on different compiler suites. The Mac Version
-	is not yet tested, but hopefully it will run.
-	
+    This is a preliminary version with smaller modifications, updates, and
+    additions compared to Rmetrics 201.0061.
+    
+    Not yet updated is the documentation included in DocFactSheet.pdf
+    Doc, DocRefcard.pdf, and DocRmetrics.pdf. These documents have Version
+    211.10062. This update is under progress.
+    
+    The major effort was invested to make under both environments MS Windows  
+    and Linux Rmetrics running based on the new compiler suite with
+    gfortran. Please note, that I have done this move for Rmetrics already 
+    under MS Windows, although this is not yet done for R. The reason why
+    I have done this, is that I develop under MS Windows, and that I wan't
+    support two systems based on different compiler suites. The Mac Version
+    is not yet tested, but hopefully it will run without any problems.
+    
 ________________________________________________________________________________
 Rmetrics VERSION 201.10061
 
@@ -930,4 +965,7 @@ Rmetrics VERSION 1081
     "src/chardate.c" removed, now using R-package "date"
         
 
-</PRE>      
+</PRE>  
+</BODY>
+</HTML>
+    

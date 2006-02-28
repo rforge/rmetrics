@@ -1,12 +1,10 @@
 
 #*******************************************************************************
-# F - A SOFTWARE COLLECTION FOR FINANCIAL ENGINEERS
+# fMultivar - A SOFTWARE COLLECTION FOR FINANCIAL ENGINEERS
+# The Dynamical Process Behind Financial Markets
 #
-#     fSeries
-#     The Dynamical Process Behind Financial Markets
-#
-#     collected and maintained by Diethelm Wuertz
-#
+# collected by Diethelm Wuertz
+# Version 0.9
 #*******************************************************************************
 
 
@@ -43,14 +41,14 @@
 
 .First.lib = 
 function(lib, pkg)
-{ 	# A function implemented by Diethelm Wuertz
-	
-	# Package:
-	cat("\nRmetrics, (C) 1999-2005, Diethelm Wuertz, GPL")
-	cat("\nfSeries: The Dynamical Process Behind Financial Markets\n")
+{   # A function implemented by Diethelm Wuertz
+    
+    # Package:
+    cat("\nRmetrics, (C) 1999-2005, Diethelm Wuertz, GPL")
+    cat("\nfSeries: The Dynamical Process Behind Financial Markets\n")
 
-	# Load dll:
-	library.dynam("fSeries", pkg, lib)
+    # Load dll:
+    library.dynam("fSeries", pkg, lib)
 }
 
 

@@ -138,7 +138,7 @@ main()
 //*** OUTPUT ***//	
 
 
-	garchobj.MLE(1);				
+	garchobj.MLE(0);				
 		
 		// 	0 : MLE (Second derivatives), 
 		//	1 : MLE (OPG Matrix), 
