@@ -32,6 +32,8 @@
 %Part IV
 \alias{waveletFit}
 
+\alias{hurstSlider}
+
 \title{Long Range Dependence Modelling}
 
 
