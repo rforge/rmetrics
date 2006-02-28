@@ -1,35 +1,38 @@
 
 #
-# Example
+# Description:
 #	Portfolio Assets Modelling
 #
 # Description:
-#   This example shows how to select the four most dissimilar assets from 
-#   Berndt's data set and how to fit the distributional paramaters
-#   for these assets. Finally we show how to simulate an artificial
-#	set of assets with distributions from fitted parameters.
+#	This example shows how to select the four most dissimilar assets 
+#	from Berndt's data set and how to fit the distributional paramaters 
+#	for these assets. Finally we show how to simulate an artificial 
+#	data set of assets with distributions from fitted parameters.
 #
 # Content:
-#	PART I - Select the 4 most dissimilar assets from Berndt's data set
+#	1. Select the 4 most dissimilar assets from Berndt's data set
+#	2. Fit the distributional parameters for Berndt's data set
+#	3. Simulate an artificial data set of assets
+#
+# Last Check:
+#	2006-02-05 ok
 #
 # Author:
-#	(C) 2003, Diethelm Wuertz, GPL
+#	(C) 2003-2006, Diethelm Wuertz, GPL
 #
 
 
 ################################################################################
 # Requirements:
 
-	require(fBasics)
-	require(fCalendar)
-	require(fSeries)
-	require(fMultivar)
-	require(fExtremes)
+	
+	# Load Packages:
 	require(fPortfolio)
+	###
+	
 
-
-################################################################################
-# PART I - Select the 4 most dissimilar assets from Berndt's data set:
+# ------------------------------------------------------------------------------
+# 1. Select the 4 most dissimilar assets from Berndt's data set
 
 
 	# The data set "berndtInvest" is from Berndt's textbook 
@@ -41,27 +44,29 @@
 	# The first column holds the date, the 11th the market rate,
 	# and the last (the 18th) the risk free rate.
 	###
-	
-	
-	# Load the Data:
+		
+	# Load the Data and Create an Object of Class 'timeSeries':
 	data(berndtInvest)
 	berndtInvest = as.timeSeries(berndtInvest, format = "%d-%B-%y")
 	class(berndtInvest)
 	head(berndtInvest)
 	# Exclude the Date, Market Returns and Interest Rate Columns 
 	# from the data frame, then multiply by 100 for percentual returns ...
-	allAssets = 100 * berndtInvest[, -c(10, 17)]
+	allAssets = 100 * berndtInvest[, -c(1, 10, 17)]
 	# Assign Dates as Row Names:
 	class(allAssets)
 	head(allAssets)
 	###
-	
+		
+	# Graph Frame:
+	par(mfrow = c(2, 1), cex = 0.7)
+	###
 	
 	# Select the "n" Most Dissimilar Assets from 
 	# Hierarchical Clustering:
 	n = 4
 	args(assetsSelect)
-	clustered = assetsSelect(allAssets)
+	clustered = assetsSelect(allAssets, doplot = TRUE)
 	# Create my Assets Set from the "n" selected Symbols:
 	myAssets = allAssets[, c(clustered$order[1:n])]
 	colnames(myAssets)
@@ -69,27 +74,24 @@
 	mu.vec = colAvgs(myAssets)
 	mu.vec
 	# or ...
-	mu.vec = colMeans(myAssets@Data)
+	mu.vec = colMeans(myAssets)
 	mu.vec
 	# Print the Covariance Matrix:
-	cov.mat = cov(myAssets@Data)
+	cov.mat = cov(myAssets)
 	cov.mat
-	# Plot:
-	par(mfrow = c(2, 1), cex = 0.7)
-	plot(clustered)	
 	###
-	
-		
+			
 	# Plot Cumulated Returns of the Assets:
 	ts.plot(colCumsums(myAssets), col = 1:4)
-	legend(0, 300, legend = colnames(myAssets@Data), pch = "----", col = 1:4)
+	grid()
+	legend(0, 300, legend = colnames(myAssets), pch = "----", col = 1:4)
 	title(main = "Cumulated Returns", ylab = "Cumulated Returns")
 	abline(h = 0, lty = 3)
 	###
 
 
-################################################################################
-# PART II - Fit the parameters for Berndt's data set:
+# ------------------------------------------------------------------------------
+# 2. Fit the distributional parameters for Berndt's data set
 
 
 	# How do we classify a Portfolio ?
@@ -101,7 +103,6 @@
 	# The function "assetsFit" fits the parameters of the distribution
 	# by maximum log-likelihood estimation.
 	###
-	
 	
 	# Fit myAsssets Data Set:	
 	# Fit a multivariate normal distribution:
@@ -119,9 +120,9 @@
 	print(fit.st@model)
 	class(fit.st@model)
 	###
-	
-	
+		
 	# Investigate the fitted Parameters:
+	par(mfrow = c(1, 1), cex = 0.7)
 	# Extract mu, Omega, beta and df:
 	alpha = fit.st@model$alpha
 	Omega = fit.st@model$Omega
@@ -137,7 +138,6 @@
 	y = rep(1:n, each = n)
 	z = as.vector(z)
 	# Plot:
-	par(mfrow = c(1, 1), cex = 0.7)
 	plot(x, y, type = "n", xlim = c(-0.5, n+0.5), ylim = c(0, n+0.5),
 		xlab = "", ylab = "")
 	abline(h = n - 0.5, lty = 3)
@@ -146,24 +146,21 @@
 	abline(v = 0.5, lty = 3)
 	symbols(x, y, squares = abs(z), inches = 0.25, add = TRUE, 
 		bg = "steelblue4" )
-	text(1:n, rep(0, n), c(colnames(myAssets@Data), "skew") )
-	text(rep(0, n), 1:n, c(colnames(myAssets@Data), "mean") )
+	text(1:n, rep(0, n), c(colnames(myAssets), "skew") )
+	text(rep(0, n), 1:n, c(colnames(myAssets), "mean") )
 	title(main = "Parameter Plot")
 	text(n+0.5, n+0.5, "df")
-    #
 	text(1:n, rep(n, n)-0.25, as.character(round(mu, 3)), col = "orange")
 	###
-	
-	
+		
 	# Use methods:
-	# print(fit.st)
-	# plot(fit.st)
-	# summary(fit.st)
+	print(fit.st)
+	plot(fit.st, which = 1)
 	###
 	
 
-################################################################################
-# PART III - Simulate an artificial portfolio:
+# ------------------------------------------------------------------------------
+# 3. Simulate an artificial data set of assets
 
 
 	# Two ways for Simulation:
@@ -175,13 +172,13 @@
 	# For details we refer to Rmetric's 'Multivariate Distribution'
 	###
 
-	
 	# Method 1:
 	simulatedAssets = assetsSim(
-		n = length(myAssets@Data[,1]), 
+		n = length(myAssets[,1]), 
 		model = fit.st@model)
 	simulatedAssets
 	###
+	
 	# Method 2:
 	# fit.st@model
 	# alpha = fit.st@model$alpha
@@ -189,7 +186,8 @@
 	# beta = fit.st@model$beta
 	# simulatedAssets = assetsSim(n = 120, 
 	#	model = list(beta = beta, Omega = Omega, alpha = alpha, df = Inf))
-	# # Plot Cumulated Returns of the Assets:
+	# Plot Cumulated Returns of the Assets:
+	par(mfrow = c(1, 1))
 	ts.plot(colCumsums(simulatedAssets), col = 1:4)
 	legend(0, 300, legend = colnames(simulatedAssets), col = 1:4, lty = 1)
 	title(main = "Cumulated Returns", ylab = "Cumulated Returns")
@@ -199,3 +197,4 @@
 	
 ################################################################################
 
+	

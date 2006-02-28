@@ -1,7 +1,7 @@
 
 #*******************************************************************************
 # fPortfolio - A SOFTWARE COLLECTION FOR FINANCIAL ENGINEERS
-# PART VI: Portfolio Selection and Optimization
+# Portfolio Selection and Optimization
 #
 # collected by Diethelm Wuertz
 # Version 0.9
@@ -38,7 +38,7 @@
 
 ################################################################################
  
-	
+    
 .First.lib =  
 function(lib, pkg)
 {   # A function implemented by Diethelm Wuertz

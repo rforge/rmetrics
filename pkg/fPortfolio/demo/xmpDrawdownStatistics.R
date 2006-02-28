@@ -4,38 +4,51 @@
 #	Investigate the Maximum Drawdown of a Brownian Motion
 #
 # Description:
-#  	In the first part of this example we show for discrete times
+# 	The example shows how to compute the expectation value E[D]
+#	of Drawdowns for Brownian Motion on a strand of length "horizon"
+#	with given drift "mu" and variance "sigma".
 #
-#  	We consider the "Discrete Times" (DT)
+# Content:
+#	1. Simulation of the Maximum Drawdown Process
+#   2. Functions for QN() and QP() from Magdon-Ismail et al.
+#   Density, Probability and RVS for mean Max-Drawdowns
+#	2. Scaling Behavior of the Average Drawdown
+#	3. Compute and Plot Auxiliary function Q(x)
+#	4. Investigate Asymptotic Bheaviour of Q(x)
+#	5. Make a table for the Q(x) Functions:
 #
-# 		The example shows how to compute the expectation value E[D]
-#		of Drawdowns for Brownian Motion on a strand of length "horizon"
-#		with given drift "mu" and variance "sigma".
+# References:
+#	Magdon-Ismail M., Atiya A.F., Pratap A., Abu-Mostafa Y.S. (2003);
+#		On the Maximum Drawdown of a Brownian Motion,
+#		Preprint, CalTech, Pasadena USA, p. 24. 
 #
-#		1	Simulation of the Maximum Drawdown Process
-
-
-
-#.	Density, Probability and RVS for mean Max-Drawdowns
-#		2. 	Scaling Behavior of the Average Drawdown
-#		3.	Compute and Plot Auxiliary function Q(x)
-#		4.	Investigate Asymptotic Bheaviour of Q(x)
-#		5. 	Make a table for the Q(x) Functions:
-
+# Last Check:
+#	2006-02-05 ERRORS
 #
 # Author:
-#	(C) 2003, Diethelm Wuertz, GPL
+#	(C) 2003-2006, Diethelm Wuertz, GPL
 #
 
 ################################################################################
-# Simulation of the Maximum Drawdown Process
+# Load Required Package:
 	
+	# Load:
+	require(fPortfolio)
+	###
+
+
+# ------------------------------------------------------------------------------
+# 1. Simulation of the Maximum Drawdown Process
+	
+	
+	# Graph Frame:
+	par(mfcol = c(3, 2), cex = 0.5)
+	###
 	
 	# Generate Drawdons from Time Series:
 	horizon = 500	# horizon of the investor, time T
 	mu = 0.0		# Drift of Brownian Motion
 	sigma = 1.0		# Standard Deviation of Brownian Motion	
-	par(mfcol = c(3, 2), cex = 0.5)
 	DD = NULL
 	for (i in 1:3) {
 		# Generate the log-Return Process:
@@ -47,11 +60,11 @@
 		# Evaluate the Maximum Drawdown:
 		h = max(D)	
 		# Plot the log-Price Process:
-		ts.plot(Y, main="Time Series") 
-		lines(cummax(Y), col="blue") 
-		DD = cbind(DD, D) }	
+		ts.plot(Y, main = "Time Series") 
+		lines(cummax(Y), col = "steelblue") 
+		DD = cbind(DD, D) 
+	}	
 	###
-	
 	
 	# Plot Drawdown Series:
 	for (i in 1:3) {
@@ -60,33 +73,36 @@
 	###
 	
 	
-################################################################################
-#
-
+# ------------------------------------------------------------------------------
+# 2. Functions for QN() and QP() from Magdon-Ismail et al.
+	
+	# Function QN():
 	QN = 
 	function(x) {	
 	 	# Compute mu's:
 	 	mu = sqrt(x) * sqrt(2/1000)
 	 	# Normalized Expectation Value:
-	 	Q = naxddStats(-mu, sigma = 1, horizon = 1000) * mu / 2 	
+	 	Q = maxddStats(mean = -mu, sd = 1, horizon = 1000) * mu / 2 	
 	 	# Return Value:
-	 	Q }	
+	 	Q 
+	}	
+	###
 
-
+	# Function QP():
 	QP = 
 	function(x) {	
 	 	# Compute mu's:
 	 	mu = sqrt(x) * sqrt(2/1000)
 	 	# Normalized Expectation Value:
-	 	Q = naxddStats(mu, sigma = 1, horizon = 1000) * mu / 2 	
+	 	Q = maxddStats(mean = mu, sd = 1, horizon = 1000) * mu / 2 	
 	 	# Return Value:
-	 	Q }		
-			
+	 	Q 
+	}
+	###				
 		
 
-################################################################################
-# Drawdown Distribution - No trend
-	
+# ------------------------------------------------------------------------------
+# Drawdown Distribution - No trend	
 
 	# Settings:
 	horizon = 1000		         # horizon of the investor, time T
@@ -94,15 +110,14 @@
 	xlim = c(0, 5)*sqrt(horizon) # Range of expected Drawdons
 	N = 1000
 	###
-	
-		
+			
 	# Plot Histogram of Simulated Max Drawdowns:
+	par(mfrow = c(2, 1), cex = 0.7)
 	h = rmaxdd(n = samples, mean = 0, sd = 1, horizon = horizon)
 	hist(x = h, n = 50, probability = TRUE, xlim = xlim, 
 		main = "Max. Drawdown Density")	
 	###
-	
-	
+		
 	# Compare with True Density:
 	n = 200
 	x = seq(0, xlim[2], length = n)
@@ -110,7 +125,6 @@
 	lines(x, d, lwd = 2, col = "steelblue4")
 	###
 	
-		
 	# Count Frequencies of Drawdowns Greater or Equal to "h":
 	n = 50
 	x = seq(0, xlim[2], length = n)
@@ -118,7 +132,6 @@
 	for (i in 1:n) g[i] = length (h[h>x[i]]) / samples
 	plot(x, g, type ="h", xlab = "q", main = "Max. Drawdown Probability")
 	###
-	
 		
 	# Compare with True Probability "G_D(h)":
 	n = 50
@@ -136,8 +149,6 @@
 	
 	
 ################################################################################	
-	
-
 
 #
 #	Example - averageDrawdown:
@@ -161,37 +172,35 @@
 # ------------------------------------------------------------------------------
 # Plot Density and Probability Function for Zero Drift:
 
-
 	# Density:
-	par(mfcol = c(3, 2))
-	x = seq(0, 25, length=500)
-	d = dmaxdd(x, sd=1, horizon=10)
-	plot(x, d, type="l", xlim=c(0,100), ylab="D", main="Density"); grid()
-	lines(x*2, dmaxdd(x*2, sd=1, horizon=100), col="red")
-	lines(x*4, dmaxdd(x*4, sd=1, horizon=1000), col="blue")
+	par(mfcol = c(2, 1), cex = 0.7)
+	x = seq(0, 25, length = 500)
+	d = dmaxdd(x, sd = 1, horizon = 10)
+	plot(x, d, type = "l", xlim = c(0, 100), ylab = "D", main = "Density")
+	grid()
+	lines(x*2, dmaxdd(x*2, sd = 1, horizon = 100), col = "red")
+	lines(x*4, dmaxdd(x*4, sd = 1, horizon = 1000), col = "blue")
 	lines(x*4, 0*x)
 	###
-	
 	
 	# Probability:
-	x = seq(0, 25, length=500)
-	p = pmaxdd(x, sd=1, horizon=10)
-	plot(x, p, type="l", xlim=c(0,100), ylab="P", main="Probability"); grid()
-	lines(x*2, pmaxdd(x*2, sd=1, horizon=100), col="red")
-	lines(x*4, pmaxdd(x*4, sd=1, horizon=1000), col="blue")
+	x = seq(0, 25, length = 500)
+	p = pmaxdd(x, sd = 1, horizon = 10)
+	plot(x, p, type="l", xlim = c(0, 100), ylab = "P", main = "Probability")
+	grid()
+	lines(x*2, pmaxdd(x*2, sd = 1, horizon = 100), col = "red")
+	lines(x*4, pmaxdd(x*4, sd = 1, horizon = 1000), col = "blue")
 	lines(x*4, 0*x)
 	###
 	
-	
 	# Random Variates:
-	r = rmaxdd(100, mean = 0, sd = 1,horizon = 1000)
+	r = rmaxdd(100, mean = 0, sd = 1, horizon = 1000)
 	###
 
 		
 # ------------------------------------------------------------------------------
 # Show Scaling Behaviour for the Expectation Value of Drawdowns
 
-	
 	# Note, if we multiply the "horizon" by tau, and if we reduce
 	# at the same time the drift by a factor 1/sqrt(tau), then
 	# the drawdowns are enlarged by a factor of sqrt(tau)!
@@ -199,31 +208,33 @@
 	sigma = 1
 	###
 	
-	
 	# Consider a short and long investment horizon:
+	par(mfrow = c(1, 1))
 	horizon = c(10, 100, 1000)
 	for (i in 1:3) {
 		mu = mu.norm / sqrt(horizon[i])
-		h = averageDrawdown(mu = mu, sigma = 1, horizon = horizon[i])
+		h = maxddStats(mean = mu, sd = 1, horizon = horizon[i])
 		h.norm = h / sqrt(horizon[i])
 		# Plot Expectation:
 		if (i == 1) plot(mu.norm, h.norm, xlab="mu*sqrt(T)", 
 			ylab = "E[h]/sqrt(T)", main = "T = 10, 100, 1000")
-		if (i > 1) points(mu.norm, h.norm, pch = 2+i, col = i) }
+		if (i > 1) points(mu.norm, h.norm, pch = 2+i, col = i) 
+	}
+	grid()
 	###
 	
 			
 # ------------------------------------------------------------------------------
 # Plot the Auxiliary Function Q(x):
-
 	
 	# Reproduce Figure 1 from Magdon-Ismael et al. [2003]
+	par(mfrow = c(1, 1))
 	sigma = 1; horizon = 1000
-	x = seq(0, 5, by=0.01)
+	x = seq(0, 5, by = 0.01)
 	plot(x, QN(x), type = "l", lwd = 2, ylab = "Q(x)", 
 		main = "Comparison of Q(x)")
 	grid()
-	lines(x, QP(x), col="red", lwd=2)
+	lines(x, QP(x), col = "red", lwd = 2)
 	Q0 = sqrt(pi/8)*sqrt(2*x)
 	lines(x, Q0, col = "steelblue4", lwd = 2)
 	###
@@ -232,8 +243,8 @@
 # ------------------------------------------------------------------------------
 # Investigate the Asymptotic Behavior of the Q(x) Functions:
 	
-
 	# Reproduce Figure 2 and 3 from Magdon-Ismael et al. [2003]
+	par(mfrow = c(2, 2))
 	sigma = 1; horizon = 1000
 	# QN - Figure 2 from Magdon-Ismael et al. [2003]
 	x = seq(0, 2.5, by=0.01)
@@ -251,7 +262,6 @@
 	
 # ------------------------------------------------------------------------------
 # Make a Table for the Q Function:
-
 
 	# Reproduce Table in Appendix B from Magdon-Ismael et al. [2003]
  	# For QP(xp):
@@ -277,9 +287,7 @@
 	###
  	
 
-# ------------------------------------------------------------------------------
-
-
+################################################################################
 #   Example - rmaxdd:
 #
 #		The example shows how to simulate a Brownian Motion path
@@ -288,51 +296,56 @@
 #		process, from which we compute the Maximum Drawdon.
  
 
+
+# ------------------------------------------------------------------------------
 # 	Example 2:
 
 	# Evaluate the "Time Under Water":
 	TUW = diff(which (diff(cummax(cumsum(X))) != 0))
 	rev(sort(TUW))
+	###
 
 	
 # ------------------------------------------------------------------------------
-
-
 #	Example 3:
 
 	# Compute averaged Maximum Drawdowns and 
 	# compare with theoretical result:
-	# Use the functions "rmaxdd" and "averageDrawdown" ...
+	# Use the functions "rmaxdd" and "maxddStats" ...
 	gamma = sqrt(pi/8)
 	aveDD = aveDDt = NULL
 	horizon = 12
-	mu = seq(0.0, 0.10, length=10)
+	mu = seq(0.0, 0.10, length = 10)
 	sigma = 0.1 * 2^(1:10)/2
-	aveDD = aveDDt = matrix(rep(0, time=100), 10)
+	aveDD = aveDDt = matrix(rep(0, time = 100), 10)
 	for (i in 1:length(sigma)) {
-	for (j in 1:length(mu)) {
-		# The simulated Values from subsamples:
-		aveDD[i,j]  = mean(rmaxdd(20000, mu[i], sigma[i], horizon))
-		# The theoretical Value:
-		aveDDt[i,j] = averageDrawdown(mu[i], sigma[i], horizon)
-		} }	
+		for (j in 1:length(mu)) {
+			# The simulated Values from subsamples:
+			aveDD[i,j]  = mean(rmaxdd(20000, mu[i], sigma[i], horizon))
+			# The theoretical Value:
+			aveDDt[i,j] = maxddStats(mean = mu[i], sd = sigma[i], horizon)
+		}
+	}	
+	###
+	
 	# Plot Result:
 	mean(aveDD/aveDDt)
 	sqrt(var(as.vector(aveDD/aveDDt)))
 	par(mfrow=c(1,1))
-	perspPlot(x=1:10, y = 1:10, aveDD/aveDDt, zlim=c(0.6, 0.8))
-
+	perspPlot(x=1:10, y = 1:10, aveDD/aveDDt, zlim = c(0.6, 0.8))
+	###
 	
-	par(mfrow = c(2,2))
+	# Plot:
+	par(mfrow = c(2, 2))
 	plot(aveDD, aveDDt, cex = 0.1)
-	plot(log(sigma), aveDD, cex=0.1, ylim=c(min(aveDD), max(aveDDt)))
-	points(log(sigma), aveDDt, cex=0.1, col="red")
+	plot(log(sigma), aveDD, cex = 0.1, ylim = c(min(aveDD), max(aveDDt)))
+	points(log(sigma), aveDDt, cex = 0.1, col = "red")
 	log(aveDD) - log(aveDDt)
+	###
 
-	
 	
 ################################################################################
-# Utility functions:
+# Utility Functions:
 
 
 L.maxdd = 
@@ -377,7 +390,8 @@ function(h, mu, sigma = 1, horizon = 100)
 				(sigma^4*eta^2 - mu^2*H^2 + sigma^2*mu*H) } }
 	
 	# Return Value:
-	L }	
+	L 
+}	
 	
 	
 # ------------------------------------------------------------------------------
@@ -493,4 +507,9 @@ function(n = 5, h = 1, mu = 0.1, sigma = 1, eps = 1e-9)
 	
 ################################################################################
 # Brownian motion with drift:
+
+	# To do ...
+	
+
+################################################################################
 
