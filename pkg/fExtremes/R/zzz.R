@@ -1,7 +1,7 @@
 
 #*******************************************************************************
 # fExtremes - A SOFTWARE COLLECTION FOR FINANCIAL ENGINEERS
-# PART III: Beyond the Sample: Dealing with Extreme Values
+# Beyond the Sample: Dealing with Extreme Values
 #
 # collected by Diethelm Wuertz
 # Version 0.9
@@ -41,15 +41,15 @@
 
 .First.lib = 
 function(lib, pkg)
-{ 	# A function implemted by D. Wuertz
+{   # A function implemted by D. Wuertz
 
-	# Package:
-	cat("\nRmetrics, (C) 1999-2004, Diethelm Wuertz, GPL")
-	cat("\nfExtremes: Beyond the Sample: Dealing with Extreme Values\n")
-	
-	# Load dll:
-	# library.dynam("fExtremes", pkg, lib)
-	
+    # Package:
+    cat("\nRmetrics, (C) 1999-2004, Diethelm Wuertz, GPL")
+    cat("\nfExtremes: Beyond the Sample: Dealing with Extreme Values\n")
+    
+    # Load dll:
+    # library.dynam("fExtremes", pkg, lib)
+    
 }
 
 
