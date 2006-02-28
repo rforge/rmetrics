@@ -1,7 +1,7 @@
 
 #*******************************************************************************
 # fBasics - A SOFTWARE COLLECTION FOR FINANCIAL ENGINEERS
-# PART I: Markets, Basic Statistics, Date and Time Management
+# Markets and Basic Statistics
 #
 # collected by Diethelm Wuertz
 # Version 0.9
@@ -38,14 +38,14 @@
 
 ################################################################################
  
-	
+    
 .First.lib =  
 function(lib, pkg)
 {   # A function implemented by Diethelm Wuertz
     
     # Package:
     cat("\nRmetrics, (C) 1999-2005, Diethelm Wuertz, GPL")
-    cat("\nfBasics: Markets, Basic Statistics, Hypothesis Testing\n")
+    cat("\nfBasics: Markets and Basic Statistics\n")
 
     # Load dll:
     library.dynam("fBasics", pkg, lib)
@@ -53,19 +53,19 @@ function(lib, pkg)
     # Example time series for internal use:
     # data(singleIndex.dat)
     # .univTS = timeSeries(
-    # 	data = matrix(singleIndex.dat[, 3], ncol = 1),
-    #	charvec = as.character(singleIndex.dat[, 1]),
-    #	units = "SP500",
-    #	format = "%d-%b-%Y", 
-    #	zone = "GMT",
-    #	FinCenter = "GMT")
+    #   data = matrix(singleIndex.dat[, 3], ncol = 1),
+    #   charvec = as.character(singleIndex.dat[, 1]),
+    #   units = "SP500",
+    #   format = "%d-%b-%Y", 
+    #   zone = "GMT",
+    #   FinCenter = "GMT")
     #.bivTS = timeSeries(
-    #	data = as.matrix(singleIndex.dat[, 2:3]),
-    #	charvec = as.character(singleIndex.dat[, 1]),
-    #	units = c("MSFT", "SP500"),
-    #	format = "%d-%b-%Y", 
-    #	zone = "GMT",
-    #	FinCenter = "GMT") 	
+    #   data = as.matrix(singleIndex.dat[, 2:3]),
+    #   charvec = as.character(singleIndex.dat[, 1]),
+    #   units = c("MSFT", "SP500"),
+    #   format = "%d-%b-%Y", 
+    #   zone = "GMT",
+    #   FinCenter = "GMT")  
     
     .Sys.timezone = function() Sys.getenv("TZ")[[1]]
 
