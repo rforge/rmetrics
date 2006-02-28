@@ -68,7 +68,7 @@ function(trace = TRUE)
     # Value:
     
     # Author:
-    #   This code was written by Lorenzo (2005), Copyright GPL
+    #   This code was written by Lorenzo Isella (2005), Copyright GPL
     
     # FUNCTION:
     
@@ -103,12 +103,13 @@ function(trace = TRUE)
     rtnchoice = 2
                   
     # Now I introduce some options about the covariance matrix I am going 
-    # to use the choices are:0 for the historical cov matrix
+    # to use the choices are:
+    # 0 for the historical cov matrix
     # 1 for the constant correlation model (the non-diagonal elements are
-    # assumed to be constant; empirically it works in many cases)
+    #   assumed to be constant; empirically it works in many cases)
     # 2 for the shrinkage of the historical covariance matrix with 
-    # different targets (bayesian priors are used to shrink
-    # the historical covariance matrix; see paper by Oliver Ledoit)
+    #   different targets (bayesian priors are used to shrink
+    #   the historical covariance matrix; see paper by Oliver Ledoit)
     choicecov = 2
     
     # Now I specify the number of upper and lower constrains (different 
@@ -132,7 +133,7 @@ function(trace = TRUE)
     # of my portfolio) whose weights I want to limit I need at least 
     # two weights to limit [technicality of the code]; in case I want 
     # to limit only one, I can choose a maxweight =1 for the second
-    limupper = c(1,20)
+    limupper = c(1, 20)
     
     # like I did above, I now enter the maximum allowed weight for the 
     # limited assets the weights have to match the assets given above
@@ -148,12 +149,12 @@ function(trace = TRUE)
 
     # Now I need to choose which target I am using for the shrinkage of 
     # the covariance matrix
-    #  1:diagonal, unit variance
-    #  2:diagonal, common variance
-    #  3:diagonal, common (co)variance
-    #  4:diagonal, unequal variance
-    #  5:perfect positive correlation
-    #  6:constant correlation
+    #  1: diagonal, unit variance
+    #  2: diagonal, common variance
+    #  3: diagonal, common (co)variance
+    #  4: diagonal, unequal variance
+    #  5: perfect positive correlation
+    #  6: constant correlation
     target = 6 
     
     # In the following I use some brutal approximation:the assets are 
@@ -167,8 +168,8 @@ function(trace = TRUE)
     # I then optimize the portfolio according to the simulated data
     # I will then Monte-Carlo simulate some sequences of returns for the 
     # assets of my portfolio according to a multivariate statistics.
-    # correlation=1 -> Gaussian correlated multivariate 
-    # correlation=0 -> Gaussian uncorrelated multivariate   
+    # correlation = 1 -> Gaussian correlated multivariate 
+    # correlation = 0 -> Gaussian uncorrelated multivariate   
     correlation = 1
     
     # The following two lines implement the confidence level of the portfolio.
@@ -180,16 +181,16 @@ function(trace = TRUE)
     # portfolios countinG them from the efficient frontier of course.
     # This is quite time-consuming, so the default is NOT to work all this out. 
     # At this point I have the collected rtns of the simulated ptfs
-    # confidence=1 -> I compute the confidence level
-    # confidence=0 -> I do not compute the confidence level 
+    # confidence = 1 -> I compute the confidence level
+    # confidence = 0 -> I do not compute the confidence level 
     confidence = 1 #0
     alpha = 0.9
     
 
     # END OF PART DEALING WITH THE OPTIONS TO SET UP THE OPTIMIZATION PROBLEM
     
-    ############################################################################
-    # the vector "assetmeans" will be containing in general the expected 
+    # NEW SECTION:
+    # The vector "assetmeans" will be containing in general the expected 
     # rather than the historical rtns of the assets.
     assetmeans  = seq(1:nassets)
     assetmeans1 = seq(1:nassets)
@@ -356,7 +357,8 @@ function(trace = TRUE)
     statfactor = nlength/(nlength-1)^3
     vars = vars*statfactor
     # Now a test
-    columntemp = (wsubkij[, 1, 1]-wbarsubij[1, 1])*(wsubkij[, 1, 1]-wbarsubij[1, 1])
+    columntemp = (wsubkij[, 1, 1]-wbarsubij[1, 1]) * 
+    	(wsubkij[, 1, 1] - wbarsubij[1, 1])
     vars11 = statfactor*sum(columntemp)
     numbertest = 0
     for (k in 1:nlength) {
