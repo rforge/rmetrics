@@ -47,7 +47,7 @@ xmpPortfolio(prompt = "")
 }
 
 
-\notes{
+\note{
 
     The example in the manual pages may be interactive and ask for
     input from the user. To achieve this you have to type on the

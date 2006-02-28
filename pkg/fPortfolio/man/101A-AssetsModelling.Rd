@@ -162,13 +162,12 @@ assetsStats(x)
     'timeSeries' objects, as 'data.frame' objects, or any other rectangular 
     object which can be transformed into an object of class 'matrix'.
     
-    The functions \code{assetsFit} for the parameter estimation and 
+    The function \code{assetsFit} for the parameter estimation and 
     \code{assetsSim} for the simulation of assets sets use code based on 
-    functions from the mentioned package \code{"mtvnorm"}  and \code{"sn"}. 
-    The required functionality from the contributed R package \code{"sn"}
-    for fitting data to a multivariate Normal, skew-Normal, or skew-Student-t
-    is available from builtin functions, so it is not necessary to load
-    the packages \code{"mtvnorm"} and \code{"sn"}. 
+    functions from the contributed packages \code{"mtvnorm"} and \code{"sn"}. 
+    The required functionality for fitting data to a multivariate Normal, 
+    skew-Normal, or skew-Student-t is available from builtin functions, so 
+    it is not necessary to load the packages \code{"mtvnorm"} and \code{"sn"}. 
     
     The function \code{assetsStats} implements benchmark formulas and
     statistics as reported in the help page of the hedge fund software 
@@ -187,9 +186,9 @@ assetsStats(x)
 }
 
 
-\notes{
+\note{
 
-    The 'Rmetrics' packages \code{fbasics} and \code{fExtremes} are
+    The 'Rmetrics' packages \code{fBasics} and \code{fExtremes} are
     required.
     
 }

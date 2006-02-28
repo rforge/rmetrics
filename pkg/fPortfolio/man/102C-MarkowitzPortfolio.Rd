@@ -27,13 +27,20 @@
     and Monte Carlo portfolios can also be evaluated.
     \cr
     
+    The functions are:
+    
+    \tabular{ll}{
+    \code{portfolioMarkowitz} \tab Optimize mean variance Markowitz portfolio, \cr
+    \code{frontierMarkowitz} \tab computes efficient frontier of portfolio, \cr
+    \code{montecarloMarkowitz} \tab creates randomly created portfolios. }
+       
 }
     
 
 \usage{
 portfolioMarkowitz(x, targetReturn, title = NULL, description = NULL)
-frontierMarkowitz(x, Rf = 0, length = 300, r.range = NULL, s.range = NULL, 
-	title = NULL, description = NULL, \dots)
+frontierMarkowitz(data, Rf = 0, short = FALSE, length = 300, r.range = NULL, 
+    s.range = NULL, title = NULL, description = NULL, \dots)
 montecarloMarkowitz(object, mc = 5000, doplot = FALSE, add = TRUE, \dots)
 
 \method{print}{fPFOLIO}(x, \dots)
@@ -46,6 +53,13 @@ montecarloMarkowitz(object, mc = 5000, doplot = FALSE, add = TRUE, \dots)
   
     \item{alpha}{
         a numeric value, the confidence interval, by default 0.05.
+        }
+    \item{data}{
+        [frontierMarkowitz] - \cr
+        either a rectangular time series object which can be
+        transformed into a matrix, or a list with two named entries,
+        \code{mu}, the returns of the multivariate series, and
+        \code{Sigma}, the covariance matrix of the multivariate series.
         }
     \item{description}{
         [portfolioMarkowitz][frontierMarkowitz] - \cr
@@ -83,6 +97,11 @@ montecarloMarkowitz(object, mc = 5000, doplot = FALSE, add = TRUE, \dots)
         [frontierMarkowitz] - \cr
         the number of random portfolios to be generated.
         }
+    \item{short}{
+        [frontierMarkowitz] - \cr
+        a logical flag, if set to TRUE short selling would be allowed 
+        otherwise not wich is the default setting.
+        }
     \item{targetReturn}{
         [portfolioMarkowitz] - \cr
         the target return, a numeric value.
@@ -93,7 +112,7 @@ montecarloMarkowitz(object, mc = 5000, doplot = FALSE, add = TRUE, \dots)
         object.
         }
     \item{which}{
-    	which of the five plots should be displayed? \code{which} can 
+        which of the five plots should be displayed? \code{which} can 
         be either a character string, \code{"all"} (displays all plots) 
         or \code{"ask"} (interactively asks which one to display), or a 
         vector of 6 logical values, for those elements which are set 
@@ -243,7 +262,6 @@ Huang C.J., Litzenberger R.H. (1988);
 
 \dontrun{
 ## berndtInvest -
-   xmpPortfolio("\nStart: Load monthly data set of returns > ")
    data(berndtInvest)
    # Exclude Date, Market and Interest Rate columns from data frame,
    # then multiply by 100 for percentual returns ...
@@ -251,25 +269,14 @@ Huang C.J., Litzenberger R.H. (1988);
    rownames(berndtAssets) = berndtInvest[, 1]
    head(berndtAssets)
    
-## Markowitz Portfolios:
-   myPortfolio = portfolioMarkowitz(berndtAssets, targetReturn = 20/100/12)
+## portfolioMarkowitz - 
+   myPortfolio = portfolioMarkowitz(x = berndtAssets, targetReturn = 20/100/12)
    print(myPortfolio)
-   pm = myPortfolio@pfolio$pm
-   ps = myPortfolio@pfolio$ps
-   pw = myPortfolio@pfolio$pw
-   pfolioTargetReturn(berndtAssets, pw)
-   pfolioTargetRisk(berndtAssets, pw)
    
-   myPortfolio = portfolioMarkowitz(berndtAssets, targetReturn = 20/100/12)
-   print(myPortfolio)
-   pm = myPortfolio@pfolio$pm; pm
-   ps = myPortfolio@pfolio$ps; ps
-   pw = myPortfolio@pfolio$pw; pw
-   pfolioTargetReturn(berndtAssets, pw)
-   pfolioTargetRisk(berndtAssets, pw)
- 
-## Plot results:
-   plot(myPortfolio)
+## pfolioTargetReturn -
+## pfolioTargetRisk -
+   pfolioTargetReturn(x = berndtAssets, weights = myPortfolio@pfolio$pw)
+   pfolioTargetRisk(x = berndtAssets, weights = myPortfolio@pfolio$pw)
 } 
 }
 

@@ -65,7 +65,7 @@ maxddStats(mean = 0, sd = 1, horizon = 1000)
 }
 
 
-\notes{
+\note{
 
     Currrently, for the functions \code{dmaxdd} and \code{pmaxdd} only the
     trend or driftless case is implemented. 
