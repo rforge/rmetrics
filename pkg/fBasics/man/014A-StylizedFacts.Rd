@@ -50,10 +50,10 @@ scalinglawPlot(x, span = ceiling(log(length(x)/252)/log(2)), doplot = TRUE, \dot
 acfPlot(x, \dots)
 pacfPlot(x, \dots)
 ccfPlot(x, y, lag.max = max(2, floor(10*log10(length(x)))), 
-	type = c("correlation", "covariance", "partial"), \dots)	
+    type = c("correlation", "covariance", "partial"), \dots)    
 lacfPlot(x, n = 12, lag.max)
 lmacfPlot(x, lag.max = max(2, floor(10*log10(length(x)))), ci = 0.95, 
-	main = "ACF", doprint = TRUE)
+    main = "ACF", doprint = TRUE)
 teffectPlot(x, deltas = seq(from = 0.2, to = 3, by = 0.2), lag.max = 10, 
     ymax = NA, standardize = TRUE)
 }
@@ -88,9 +88,9 @@ teffectPlot(x, deltas = seq(from = 0.2, to = 3, by = 0.2), lag.max = 10,
         a character string, the title of the plot.
         }
     \item{n}{
-    	[lacfPlot] - cr
-    	an integer, the number of lags.
-    	\cr
+        [lacfPlot] - \cr
+        an integer, the number of lags.
+        \cr
         [logpdfPlot] - \cr
         an integer, the number of break and count points.
         }
@@ -114,7 +114,7 @@ teffectPlot(x, deltas = seq(from = 0.2, to = 3, by = 0.2), lag.max = 10,
         numeric vectors, 
         \cr
         [acfPlot][pacfPlot][ccfPlot] - \cr
-  		a numeric vector or matrix or a univariate or 
+        a numeric vector or matrix or a univariate or 
         multivariate (not \code{ccf}) time series object.
         }
     \item{ymax}{
