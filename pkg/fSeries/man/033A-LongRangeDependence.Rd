@@ -84,21 +84,22 @@
     \code{rsFit} \tab R/S Rescaled Range Statistic method, \cr
     \code{perFit} \tab periodogram method, \cr
     \code{boxperFit} \tab boxed (modified) periodogram method, \cr
-    \code{whittleFit} \tab Whittle estimator. }
+    \code{whittleFit} \tab Whittle estimator, \cr
+    \code{hurstSlider} \tab Interactive Display of Hurst Estimates. }
        
     Function for the wavelet estimator:
     \tabular{ll}{
-	\code{waveletFit} \tab wavelet estimator. }
+    \code{waveletFit} \tab wavelet estimator. }
     
 }
 
 
 \usage{
 fbmSim(n = 100, H = 0.7, method = c("mvn", "chol", "lev", "circ", "wave"),
-	waveJ = 7, doplot = TRUE, fgn = FALSE)
+    waveJ = 7, doplot = TRUE, fgn = FALSE)
 fgnSim(n = 1000, H = 0.7, method = c("beran", "durbin", "paxson"))
 farimaSim(n = 1000, model = list(ar = c(0.5, -0.5), d = 0.3, ma = 0.1),
-	method = c("freq", "time"), \dots) 
+    method = c("freq", "time"), \dots) 
     
 fgnTrueacf(n, H) 
 fgnTruefft(n, H) 
@@ -106,28 +107,29 @@ farimaTrueacf(n, H)
 farimaTruefft(n, H)
    
 aggvarFit(x, levels = 50, minnpts = 3, cut.off = 10^c(0.7, 2.5), 
-	doplot = FALSE, trace = FALSE, title = NULL, description = NULL)    
+    doplot = FALSE, trace = FALSE, title = NULL, description = NULL)    
 diffvarFit(x, levels = 50, minnpts = 3, cut.off = 10^c(0.7, 2.5), 
-	doplot = FALSE, trace = FALSE, title = NULL, description = NULL) 
+    doplot = FALSE, trace = FALSE, title = NULL, description = NULL) 
 absvalFit(x, levels = 50, minnpts = 3, cut.off = 10^c(0.7, 2.5), moment = 1, 
-	doplot = FALSE, trace = FALSE, title = NULL, description = NULL) 
+    doplot = FALSE, trace = FALSE, title = NULL, description = NULL) 
 higuchiFit(x, levels = 50, minnpts = 2, cut.off = 10^c(0.7, 2.5), 
-	doplot = FALSE, trace = FALSE, title = NULL, description = NULL)
+    doplot = FALSE, trace = FALSE, title = NULL, description = NULL)
 pengFit(x, levels = 50, minnpts = 3, cut.off = 10^c(0.7, 2.5), 
-	method = c("mean", "median"), 
-	doplot = FALSE, trace = FALSE, title = NULL, description = NULL)
+    method = c("mean", "median"), 
+    doplot = FALSE, trace = FALSE, title = NULL, description = NULL)
 rsFit(x, levels = 50, minnpts = 3, cut.off = 10^c(0.7, 2.5), 
-	doplot = FALSE, trace = FALSE, title = NULL, description = NULL)
+    doplot = FALSE, trace = FALSE, title = NULL, description = NULL)
 perFit(x, cut.off = 0.1, method = c("per", "cumper"), 
-	doplot = FALSE, title = NULL, description = NULL)
+    doplot = FALSE, title = NULL, description = NULL)
 boxperFit(x, nbox = 100, cut.off = 0.10, 
-	doplot = FALSE, trace = FALSE, title = NULL, description = NULL)	  
+    doplot = FALSE, trace = FALSE, title = NULL, description = NULL)      
 whittleFit(x, order = c(1, 1), subseries = 1, method = c("fgn", "farma"), 
-	trace = FALSE, spec = FALSE, title = NULL, description = NULL)
+    trace = FALSE, spec = FALSE, title = NULL, description = NULL)
+hurstSlider(x = fgnSim())
   
 waveletFit(x, length = NULL, order = 2, octave = c(2, 8), 
-	doplot = FALSE, title = NULL, description = NULL)
-	    
+    doplot = FALSE, title = NULL, description = NULL)
+        
 show.fHURST(object)
 }
 
@@ -135,25 +137,25 @@ show.fHURST(object)
 \arguments{
     
     \item{cut.off}{
-       	[*Fit] - \cr
-       	a numeric vector with the lower and upper cut-off 
-       	points for the estimation. They should be chosen 
-       	to define a linear range. The default values are 
-       	c(0.7, 2.5), i.e. 10\^0.7 and 10\^2.5, respectively.
-       	}
+        [*Fit] - \cr
+        a numeric vector with the lower and upper cut-off 
+        points for the estimation. They should be chosen 
+        to define a linear range. The default values are 
+        c(0.7, 2.5), i.e. 10\^0.7 and 10\^2.5, respectively.
+        }
     \item{description}{
         [*Fit] - \cr
         a character string which allows for a brief description.
         }
     \item{doplot}{
-    	[*Fit] - \cr
-    	a logical flag, by default FALSE. Should a plot be displayed?
-    	}
+        [*Fit] - \cr
+        a logical flag, by default FALSE. Should a plot be displayed?
+        }
     \item{fgn}{
-    	[fbmSim] - \cr
-    	a logical flag, if \code{FALSE}, the functions returns a FBM 
-    	series otherwise a FGN series.
-    	}
+        [fbmSim] - \cr
+        a logical flag, if \code{FALSE}, the functions returns a FBM 
+        series otherwise a FGN series.
+        }
     \item{H}{
         [fgnSim] - \cr
         the Hurst exponent, a numeric value between 0.5 and 1,
@@ -165,13 +167,13 @@ show.fHURST(object)
         If set to \code{NULL}, the previous power will be used.
         }
     \item{levels}{
-       	[*Fit] - \cr
-       	the number of aggregation levels or number of blocks from 
-       	which the variances or moments are computed.
-      	}
+        [*Fit] - \cr
+        the number of aggregation levels or number of blocks from 
+        which the variances or moments are computed.
+        }
     \item{method}{
-    	[fbmSim] - \cr
-    	the method how to generate the FBM time series sequence, one
+        [fbmSim] - \cr
+        the method how to generate the FBM time series sequence, one
         of the following five character strings: \code{"mvn"}, 
         \code{"chol"}, \code{"lev"}, \code{"circ"}, or \code{"wave"}.
         [fgnSim] - \cr
@@ -185,18 +187,18 @@ show.fHURST(object)
         \code{"time"}.
         \cr
         [pengFit] - \cr
-    	a string naming the method how to do the averaging, either
-    	calculating the \code{"mean"} or the \code{"median"}. 
+        a string naming the method how to do the averaging, either
+        calculating the \code{"mean"} or the \code{"median"}. 
         \cr
         [perFit] - \cr
-    	a string naming the method how to fit the data, either
-    	using the peridogram itself \code{"per"}, or using the
-    	cumulated periodogram \code{"cumper"}. 
+        a string naming the method how to fit the data, either
+        using the peridogram itself \code{"per"}, or using the
+        cumulated periodogram \code{"cumper"}. 
         \cr
-    	[whittleFit] - \cr
-    	a string naming the underlying time series process to 
-    	be estimated, either \code{"fgn"} for FGN processes, or
-	    \code{"farima"}for FARIMA models.
+        [whittleFit] - \cr
+        a string naming the underlying time series process to 
+        be estimated, either \code{"fgn"} for FGN processes, or
+        \code{"farima"}for FARIMA models.
         }
     \item{minnpts}{
         [*Fit] - \cr
@@ -204,16 +206,16 @@ show.fHURST(object)
         estimate the variance or moments at any aggregation level.
         }
     \item{model}{
-     	a list with model parameters \code{ar}, \code{ma} and \code{d}.
-     	\code{ar} is a numeric vector giving the AR coefficients, 
-		\code{d} is an integer value giving the degree of differencing,
-		and \code{ma} is a numeric vector giving the MA coefficients.
-		Thus the order of the time series process is FARMA(p, d, q)
-		with \code{p=length(ar)} and \code{q=length(ma)}. \code{d} is
-		a fractional value for FARMA models. By default an 
-		FARMA(2, d, 1) model with coefficients \code{ar=c(0.5, -0.5)},
-		\code{ma=0.1}, and \code{d=0.3} will be generated.
-		}
+        a list with model parameters \code{ar}, \code{ma} and \code{d}.
+        \code{ar} is a numeric vector giving the AR coefficients, 
+        \code{d} is an integer value giving the degree of differencing,
+        and \code{ma} is a numeric vector giving the MA coefficients.
+        Thus the order of the time series process is FARMA(p, d, q)
+        with \code{p=length(ar)} and \code{q=length(ma)}. \code{d} is
+        a fractional value for FARMA models. By default an 
+        FARMA(2, d, 1) model with coefficients \code{ar=c(0.5, -0.5)},
+        \code{ma=0.1}, and \code{d=0.3} will be generated.
+        }
     \item{moment}{
         [absvalHurst] - \cr
         an integer value, by default 1 which denotes absolute values. 
@@ -226,53 +228,53 @@ show.fHURST(object)
         by default 1000.
         }
     \item{nbox}{
-    	[boxperFit] - \cr
-    	is the number of boxes to divide the data into. A numeric value,
-    	by default 100.
-    	}
+        [boxperFit] - \cr
+        is the number of boxes to divide the data into. A numeric value,
+        by default 100.
+        }
     \item{object}{
         an object of class \code{fHurst}.
         }
     \item{octave}{  
-       	[waveletFit] - \cr
-       	beginning and ending octave for estimation. An integer
-       	vector with two elements. By default \code{c(2, 8)}. If the
-       	upper value is too large, it will be replaced by the maximum
-       	allowed value.
-       	}
+        [waveletFit] - \cr
+        beginning and ending octave for estimation. An integer
+        vector with two elements. By default \code{c(2, 8)}. If the
+        upper value is too large, it will be replaced by the maximum
+        allowed value.
+        }
     \item{order}{   
-       	[waveletFit] - \cr
-       	the order of the wavelet. An integer value, by default 
-       	\code{2}.
-       	}
+        [waveletFit] - \cr
+        the order of the wavelet. An integer value, by default 
+        \code{2}.
+        }
     \item{spec}{
-    	[whittleFit] - \cr
-    	Should the periodogram be returned? A logical flag, by default 
-    	FALSE.
-    	}
+        [whittleFit] - \cr
+        Should the periodogram be returned? A logical flag, by default 
+        FALSE.
+        }
     \item{subseries}{
-    	[whittleFit] - \cr
-    	allows optionally to subdivide the series into subseries. A
-    	numeric value, by default 1.
-    	}
+        [whittleFit] - \cr
+        allows optionally to subdivide the series into subseries. A
+        numeric value, by default 1.
+        }
     \item{title}{
-       	a character string which allows for a project title.
-       	}
+        a character string which allows for a project title.
+        }
     \item{trace}{
-    	a logical value, by defaul FALSE. Should the estimation 
-    	process be traced?
-    	}
+        a logical value, by defaul FALSE. Should the estimation 
+        process be traced?
+        }
     \item{waveJ}{
-    	[fbmSim] - \cr
-    	an integer parameter for the simulation of FBM using the wavelet 
-    	method.
-    	}
+        [fbmSim] - \cr
+        an integer parameter for the simulation of FBM using the wavelet 
+        method.
+        }
     \item{x}{
-       	[*Fit] - \cr
-       	the numeric vector of data, an object of class \code{timeSeries},
-       	or any other object which can be transofrmed into a numeric
-       	vector by the function \code{as.vector}.
-		}
+        [*Fit] - \cr
+        the numeric vector of data, an object of class \code{timeSeries},
+        or any other object which can be transofrmed into a numeric
+        vector by the function \code{as.vector}.
+        }
     \item{\dots}{
         arguments to be passed.
         }
@@ -287,12 +289,12 @@ show.fHURST(object)
     \cr
     
     \code{fgnTrueacf(n, H)},
-	\code{fgnTruefft(n, H)}, 
-	\code{farimaTrueacf(n, H)}, and
-	\code{farimaTruefft(n, H)}
-	return the true covariance and the true spectrum of the FGN
-	or FARIMA time series process.
-	\cr
+    \code{fgnTruefft(n, H)}, 
+    \code{farimaTrueacf(n, H)}, and
+    \code{farimaTruefft(n, H)}
+    return the true covariance and the true spectrum of the FGN
+    or FARIMA time series process.
+    \cr
     
     \code{*Fit} returns an S4 object of class \code{fHURST} with the
     following slots:
@@ -357,15 +359,15 @@ show.fHURST(object)
     generator named \code{"durbin"} produces a FGN series by 
     using the Durbin-Levinson coefficients. The algorithm was
     reimplemented in pure S based on the C source code written by
-	V. Teverovsky [199x]. The third generator named 
-	\code{"paxson"} was proposed by V. Paxson [199x], this
-	approaximate method is a very fast and requires low storage. 
-	However, the algorithm reveals some weakness in the method
-	which was discussed by D.A. Rolls [2001].
-	\cr
-	
-	\emph{Fractional ARIMA Processes:}
-	\cr
+    V. Teverovsky [199x]. The third generator named 
+    \code{"paxson"} was proposed by V. Paxson [199x], this
+    approaximate method is a very fast and requires low storage. 
+    However, the algorithm reveals some weakness in the method
+    which was discussed by D.A. Rolls [2001].
+    \cr
+    
+    \emph{Fractional ARIMA Processes:}
+    \cr
     The function \code{farimaSim} is a generator for fractional
     ARIMA time series processes. A Gaussian FARIMA(0,d,0) series
     can be created, where \emph{d } is related to the the Hurst 
@@ -431,7 +433,7 @@ show.fHURST(object)
     the logarithm of the differenced sample variances versus the 
     logarithm of the block sizes provides an estimate for the Hurst 
     exponent \code{H}. 
- 	\cr
+    \cr
  
        
     %% 3.3
@@ -445,8 +447,8 @@ show.fHURST(object)
     \code{beta=M*(H-1)} of the regression line of the logarithm of 
     the statistic versus the logarithm of the block sizes provides 
     an estimate for the Hurst exponent \code{H}. 
-  	\cr
-  	
+    \cr
+    
       
     %% 3.4
     \emph{Higuchi or Fractal Dimension Method:}
@@ -556,24 +558,24 @@ show.fHURST(object)
     \bold{IV: Functions to perform a Wavelet Analysis:}
     \cr
 
-	The function \code{waveletFit} computes the Discrete Wavelet 
-	Transform, averages the squares of the coefficients of the transform, 
-	and then performs a linear regression on the logarithm of the 
-	average, versus the log of the scale parameter of the transform. 
-	The result should be directly proportional to \code{H} providing
-	an estimate for the Hurst exponent. 
-	\cr
-	
-	
-	\bold{V: Statistical Tests:}
-	\cr
-	
-	The ...
-	
+    The function \code{waveletFit} computes the Discrete Wavelet 
+    Transform, averages the squares of the coefficients of the transform, 
+    and then performs a linear regression on the logarithm of the 
+    average, versus the log of the scale parameter of the transform. 
+    The result should be directly proportional to \code{H} providing
+    an estimate for the Hurst exponent. 
+    \cr
+    
+    
+    \bold{V: Statistical Tests:}
+    \cr
+    
+    The ...
+    
 }
 
 
-\authors{
+\author{
 
     V. Paxson, code as listed in the Appendix of his paper 1995, \cr
     J. Beran, ported by Maechler, code as listed in the Appendix of his Book, \cr
@@ -588,17 +590,17 @@ show.fHURST(object)
 \references{
 
 Beran J. (1992);
-	\emph{Statistics for Long-Memory Processes},
-	Chapman and Hall, New York, 1994.
-	
+    \emph{Statistics for Long-Memory Processes},
+    Chapman and Hall, New York, 1994.
+    
 %Harte D.S. (1987);
-%	\emph{Test for Hurst Effect},
-%	 Biometrica 74, pp. 95-102.
-	
+%   \emph{Test for Hurst Effect},
+%    Biometrica 74, pp. 95-102.
+    
 Haslett J., Raftery A.E. (1989);
     \emph{Space-Time Modelling with Long-Memory Dependence: 
-    	Assessing Ireland's Wind Power Resource},
-	Applied Statistics 38, pp. 1--50.
+        Assessing Ireland's Wind Power Resource},
+    Applied Statistics 38, pp. 1--50.
 
 Paxson V. (1995); 
     \emph{Fast Approximation of Self-Similar Network Traffic},
@@ -606,9 +608,9 @@ Paxson V. (1995);
     Computer Communcation Review27, p.5--18, 1997.
     
 Rolls D.A. (2001);
-	\emph{Improved Fast Approximate Synthesis of Fractional Gaussian Noise},
-	Thesis, Department of Mathematics and Statistics,
-	Queen's University at Kingston, Kingston, Ontario, Canada, 5 pages.
+    \emph{Improved Fast Approximate Synthesis of Fractional Gaussian Noise},
+    Thesis, Department of Mathematics and Statistics,
+    Queen's University at Kingston, Kingston, Ontario, Canada, 5 pages.
     
 Taqqu M., et al.
     \emph{Hurst Exponent},

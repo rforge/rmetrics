@@ -1,6 +1,6 @@
-\name{GarchOxModelling}
+\name{GarchOxInterface}
 
-\alias{GarchOxModelling}
+\alias{GarchOxInterface}
 
 \alias{garchOxFit}
 \alias{print.garchOx}
@@ -33,7 +33,7 @@
 \usage{
 garchOxFit(formula.mean = ~ arma(0, 0), formula.var = ~ garch(1, 1), 
 	series = x, cond.dist = c("gaussian", "t", "ged", "skewed-t"), 
-	include.mean = TRUE, truncation = 100, trace = TRUE, title = NULL,
+	include.mean = TRUE, trace = TRUE, control = list(), title = NULL,
 	description = NULL)
 	
 \method{print}{garchOx}(x, digits, \dots)
@@ -51,19 +51,26 @@ garchOxFit(formula.mean = ~ arma(0, 0), formula.var = ~ garch(1, 1),
 	    Student-t "t", a generalized error "sged", or a skewed
 	    Student-t "skewed-t" can be chosen.
 	    }	
-	\item{description}{
+	\item{control}{
+  		a list of additional control parameters:\cr
+  		\code{truncation} - the number of truncation points,by default
+  			100, \cr
+  		\code{xscale} - should the time series be scaled by the
+  			standard deviation ?
+  		}	
+  	\item{description}{
         a character string which allows for a brief description.
         }
     \item{digits}{
   		the number of digits to be printed.
   		}
   	\item{formula.mean}{
-  		formula object which specifies the mean. AR and MA models can
-  		be specified as ARMA(0,q) and ARMA(p,0) respectively.
+  		formula object which specifies the mean. Pure AR and MA models 
+  		can be specified as ARMA(0,q) and ARMA(p,0) respectively.
   		}
   	\item{formula.var}{
   		formula object which specifies the variance. Use \code{~garch(p,q)}
-  		to specify GARCH(p,q) models, ...
+  		to specify GARCH(p,q) models.
   		}
   	\item{include.mean}{
   		should the mean be included? By default TRUE.
@@ -73,7 +80,8 @@ garchOxFit(formula.mean = ~ arma(0, 0), formula.var = ~ garch(1, 1),
   		code{garchOxFit}.
   		}
   	\item{series}{
-  		the series to be modeled.
+  		the time series to be modeled. The time series can be scaled
+  		settting \code{control$xcale=TRUE}.
   		}
   	\item{title}{
         a character string which allows for a project title.
@@ -81,9 +89,6 @@ garchOxFit(formula.mean = ~ arma(0, 0), formula.var = ~ garch(1, 1),
     \item{trace}{
 		a logical. Trace optimizer output? By default TRUE.
 		}
-  	\item{truncation}{
-  		number of truncation points.
-  		}	
   	\item{x}{
   		an object of class \code{garchOx} as returned from the function
   		\code{garchOxFit}.

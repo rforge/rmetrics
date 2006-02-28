@@ -28,25 +28,25 @@
 
 
 ################################################################################
-# DATASET:		 	   DESCRIPTION:
-#  RS.txt    			Monthly 91 day Treasury Bill rate  
-#  R20.txt    			Monthly Yield on 20 Year UK Gilts  
-#  RSQ.txt    			Quarterly 91 day Treasury Bill rate  
-#  R20Q.txt    			Quarterly Yield on 20 Year UK Gilts  
-#  RSQREAL.txt    		Quarterly real 91 day Treasury Bill rate  
-#  FTAPRICE.txt    		FTA All Share Price Index  
-#  FTADIV.txt    		FTA All Share Dividend Index  
-#  FTARET.txt    		FTA All Share Nominal Returns  
-#  RPI.txt    			UK Retail Price Index  
-#  EXCHD.txt    		Dollar/Sterling Exchange Rate  
-#  EXCHQ.txt    		Dollar/Sterling Exchange Rate  
-#  SP500.txt    		SP 500 Annual Data Index  
-#  SP500R.txt    		SP 500 Real Returns  
-#  SP500D.txt    		SP 500 Daily Data Index  
-#  FT30.txt    			FT 30 Index  
-#  FTSE100.txt   	 	FTSE 100 Index  
-#  CTLD.txt    			Courtaulds Share Price  
-#  LGEN.txt    			Legal and General Share Price  
-#  PRU.txt    			Prudential Share Price.   
+# DATASET:             DESCRIPTION:
+#  RS.txt               Monthly 91 day Treasury Bill rate  
+#  R20.txt              Monthly Yield on 20 Year UK Gilts  
+#  RSQ.txt              Quarterly 91 day Treasury Bill rate  
+#  R20Q.txt             Quarterly Yield on 20 Year UK Gilts  
+#  RSQREAL.txt          Quarterly real 91 day Treasury Bill rate  
+#  FTAPRICE.txt         FTA All Share Price Index  
+#  FTADIV.txt           FTA All Share Dividend Index  
+#  FTARET.txt           FTA All Share Nominal Returns  
+#  RPI.txt              UK Retail Price Index  
+#  EXCHD.txt            Dollar/Sterling Exchange Rate  
+#  EXCHQ.txt            Dollar/Sterling Exchange Rate  
+#  SP500.txt            SP 500 Annual Data Index  
+#  SP500R.txt           SP 500 Real Returns  
+#  SP500D.txt           SP 500 Daily Data Index  
+#  FT30.txt             FT 30 Index  
+#  FTSE100.txt          FTSE 100 Index  
+#  CTLD.txt             Courtaulds Share Price  
+#  LGEN.txt             Legal and General Share Price  
+#  PRU.txt              Prudential Share Price.   
 ################################################################################
 

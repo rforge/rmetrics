@@ -16,7 +16,7 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2004, Diethelm Wuertz, GPL
+#   1999 - 2006, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
 #   www.rmetrics.org
@@ -28,41 +28,59 @@
 
 
 ################################################################################
-# FUNCTION:         DESCRIPTION:
-#  pdftest           Returns probabilities for the ADF Test
-#  qdftest           Returns quantiles for the ADF Test
-#  dfTable           Augmented Dickey-Fuller finite sample test table
-# FUNCTION:         DESCRIPTION:
-#  punitroot         Returns cumulative probability for unit root distributions
-#  qunitroot         Returns quantiles for unit root distributions
-# INTERNAL:         DESCRIPTION:
-#  .strsplitUrcval   String split function for S-Plus compatibility
-#  .urcval           Implements unit root statists
-#  .probsUrcval      Probability values
-#  .urc1 ... .urc12  Statistical values
+# FUNCTION:          DICKEY FULLER TEST:
+#  pdftest            Returns probabilities for the ADF Test
+#  qdftest            Returns quantiles for the ADF Test
+#  dfTable            Augmented Dickey-Fuller finite sample test table
+# FUNCTION:          PROBABILIY AND QUANTILES:
+#  punitroot          Returns cumulative probability for unit root distributions
+#  qunitroot          Returns quantiles for unit root distributions
+# INTERNAL:          UTILITY FUNCTIONS:
+#  .strsplitUrcval    String split function for S-Plus compatibility
+#  .urcval            Implements unit root statists
+#  .probsUrcval       Probability values
+#  .urc1 ... .urc12   Statistical values
 ################################################################################
 
 
-# ------------------------------------------------------------------------------
+################################################################################
+# Functions required from fBasics::Hypothesis Testing
+# FUNCTION:          NORMALITY TESTS:
+#  fHTEST             Class Representation
+#  show.fHTEST        S4 Print Method
+# FUNCTION:          PVALUE AND STATISTICS TABLES:
+#  pPlot              General finite sample probability plot
+#  pTable             Interpolated probabilities from finite sample table
+#  .pTable            Utility function called by the function 'pTable'
+#  qTable             Interpolated quantiles from finite sample table
+#  .qTable            Utility function called by the function 'qTable'
+# FUNCTION:          INTERNAL FUNCTIONS:
+#  .interpTable.old   'akima' interpolation utility function
+#  .interpTable.new   'akima' interpolation utility function
+################################################################################
+
+
+################################################################################
+# AUGMENTED DICKEY-FULLER TEST:
 
 
 pdftest = 
 function(q, n.sample, trend = c("nc", "c", "ct"), statistic = c("t", "n")) 
-{	# A function implemented by Diethelm Wuertz
+{   # A function implemented by Diethelm Wuertz
 
-	# Description:
-	#	Probabilities for the ADF Test
-	
-	# Arguments:
-	
-	# FUNCTION:
-	
-	# Compute Probabilities:
-	X = dfTable(trend = trend[1], statistic = statistic[1])
-	ans = pTable(t(X), q, n.sample)
-	
-	# Return Value:
-	ans
+    # Description:
+    #   Probabilities for the ADF Test
+    
+    # Arguments:
+    
+    # FUNCTION:
+    
+    # Compute Probabilities:
+    X = dfTable(trend = trend[1], statistic = statistic[1])
+    ans = pTable(t(X), q, n.sample)
+    
+    # Return Value:
+    ans
 } 
 
 
@@ -71,21 +89,21 @@ function(q, n.sample, trend = c("nc", "c", "ct"), statistic = c("t", "n"))
 
 qdftest = 
 function(p, n.sample, trend = c("nc", "c", "ct"), statistic = c("t", "n"))
-{	# A function implemented by Diethelm Wuertz
+{   # A function implemented by Diethelm Wuertz
 
-	# Description:
-	# 	Quantiles for the ADF Test
-	
-	# Arguments:
-	
-	# FUNCTION:
-	
-	# Compute Quantiles:
-	X = dfTable(trend = trend[1], statistic = statistic[1])
-	ans = qTable(X = t(X), p, n.sample)
-	
-	# Return Value:
-	ans
+    # Description:
+    #   Quantiles for the ADF Test
+    
+    # Arguments:
+    
+    # FUNCTION:
+    
+    # Compute Quantiles:
+    X = dfTable(trend = trend[1], statistic = statistic[1])
+    ans = qTable(X = t(X), p, n.sample)
+    
+    # Return Value:
+    ans
 } 
 
 
@@ -94,91 +112,92 @@ function(p, n.sample, trend = c("nc", "c", "ct"), statistic = c("t", "n"))
 
 dfTable =
 function(trend = c("nc", "c", "ct"), statistic = c("t", "n"))
-{	# A function implemented by Diethelm Wuertz
+{   # A function implemented by Diethelm Wuertz
 
     # Description:     
     #   Critical Values for the ADF test.
     
     
-	# Select Type:
-	type = trend[1]
-	statistic = statistic[1]
-	
-	# Tables:
-	if (statistic == "t") {
-		# Hamilton Table B.6 - OLS t-Statistic
-		if (type == "nc") {
-			table = cbind(
-	            c(-2.66, -2.26, -1.95, -1.60, +0.92, +1.33, +1.70, +2.16),
-	            c(-2.62, -2.25, -1.95, -1.61, +0.91, +1.31, +1.66, +2.08),
-	            c(-2.60, -2.24, -1.95, -1.61, +0.90, +1.29, +1.64, +2.03),
-	            c(-2.58, -2.23, -1.95, -1.62, +0.89, +1.29, +1.63, +2.01),
-	            c(-2.58, -2.23, -1.95, -1.62, +0.89, +1.28, +1.62, +2.00),
-	            c(-2.58, -2.23, -1.95, -1.62, +0.89, +1.28, +1.62, +2.00))
-		} else if (type == "c") {
-			table = cbind(
-	            c(-3.75, -3.33, -3.00, -2.63, -0.37, +0.00, +0.34, +0.72),
-	            c(-3.58, -3.22, -2.93, -2.60, -0.40, -0.03, +0.29, +0.66),
-	            c(-3.51, -3.17, -2.89, -2.58, -0.42, -0.05, +0.26, +0.63),
-	            c(-3.46, -3.14, -2.88, -2.57, -0.42, -0.06, +0.24, +0.62),
-	            c(-3.44, -3.13, -2.87, -2.57, -0.43, -0.07, +0.24, +0.61),
-	            c(-3.43, -3.12, -2.86, -2.57, -0.44, -0.07, +0.23, +0.60))
-		} else if (type == "ct") {
-			table = cbind(
-	            c(-4.38, -3.95, -3.60, -3.24, -1.14, -0.80, -0.50, -0.15),
-	            c(-4.15, -3.80, -3.50, -3.18, -1.19, -0.87, -0.58, -0.24),
-	            c(-4.04, -3.73, -3.45, -3.15, -1.22, -0.90, -0.62, -0.28),
-	            c(-3.99, -3.69, -3.43, -3.13, -1.23, -0.92, -0.64, -0.31),
-	            c(-3.98, -3.68, -3.42, -3.13, -1.24, -0.93, -0.65, -0.32),
-	            c(-3.96, -3.66, -3.41, -3.12, -1.25, -0.94, -0.66, -0.33))      
-		} else {
-			stop("Invalid type specified")
-		}
-	} else if (statistic == "z" || statistic == "n") {
-		# Hamilton Table B.5 - Based on OLS Autoregressive Coefficient
-		if (type == "nc") {
-			table = cbind(
-	            c(-11.9,  -9.3,  -7.3,  -5.3, +1.01, +1.40, +1.79, +2.28),
-	            c(-12.9,  -9.9,  -7.7,  -5.5, +0.97, +1.35, +1.70, +2.16),
-	            c(-13.3, -10.2,  -7.9,  -5.6, +0.95, +1.31, +1.65, +2.09),
-	            c(-13.6, -10.3,  -8.0,  -5.7, +0.93, +1.28, +1.62, +2.04),
-	            c(-13.7, -10.4,  -8.0,  -5.7, +0.93, +1.28, +1.61, +2.04),
-	            c(-13.8, -10.5,  -8.1,  -5.7, +0.93, +1.28, +1.60, +2.03))
-		} else if (type == "c") {
-			table = cbind(
-	            c(-17.2, -14.6, -12.5, -10.2, -0.76, +0.01, +0.65, +1.40),
-	            c(-18.9, -15.7, -13.3, -10.7, -0.81, -0.07, +0.53, +1.22),
-	            c(-19.8, -16.3, -13.7, -11.0, -0.83, -0.10, +0.47, +1.14),
-	            c(-20.3, -16.6, -14.0, -11.2, -0.84, -0.12, +0.43, +1.09),
-	            c(-20.5, -16.8, -14.0, -11.2, -0.84, -0.13, +0.42, +1.06),
-	            c(-20.7, -16.9, -14.1, -11.3, -0.85, -0.13, +0.41, +1.04))
-		} else if (type == "ct") {
-			table = cbind(
-	            c(-22.5, -19.9, -17.9, -15.6, -3.66, -2.51, -1.53, -0.43),
-	            c(-25.7, -22.4, -19.8, -16.8, -3.71, -2.60, -1.66, -0.65),
-	            c(-27.4, -23.6, -20.7, -17.5, -3.74, -2.62, -1.73, -0.75),
-	            c(-28.4, -24.4, -21.3, -18.0, -3.75, -2.64, -1.78, -0.82),
-	            c(-28.9, -24.8, -21.5, -18.1, -3.76, -2.65, -1.78, -0.84),
-	            c(-29.5, -25.1, -21.8, -18.3, -3.77, -2.66, -1.79, -0.87))      
-		} else {
-			stop("Invalid type specified")
-		}
-	} else {
-		stop("Invalid statistic specified")
-	}
-			
-	# Transpose:
-	table = t(table)
-	colnames(table) = c("0.010", "0.025", "0.050", "0.100", "0.900", 
-		"0.950", "0.975", "0.990")
-	rownames(table) = c(" 25", " 50", "100", "250", "500", "Inf")
-	
-	# Return Value:
-	as.data.frame(table)
+    # Select Type:
+    type = trend[1]
+    statistic = statistic[1]
+    
+    # Tables:
+    if (statistic == "t") {
+        # Hamilton Table B.6 - OLS t-Statistic
+        if (type == "nc") {
+            table = cbind(
+                c(-2.66, -2.26, -1.95, -1.60, +0.92, +1.33, +1.70, +2.16),
+                c(-2.62, -2.25, -1.95, -1.61, +0.91, +1.31, +1.66, +2.08),
+                c(-2.60, -2.24, -1.95, -1.61, +0.90, +1.29, +1.64, +2.03),
+                c(-2.58, -2.23, -1.95, -1.62, +0.89, +1.29, +1.63, +2.01),
+                c(-2.58, -2.23, -1.95, -1.62, +0.89, +1.28, +1.62, +2.00),
+                c(-2.58, -2.23, -1.95, -1.62, +0.89, +1.28, +1.62, +2.00))
+        } else if (type == "c") {
+            table = cbind(
+                c(-3.75, -3.33, -3.00, -2.63, -0.37, +0.00, +0.34, +0.72),
+                c(-3.58, -3.22, -2.93, -2.60, -0.40, -0.03, +0.29, +0.66),
+                c(-3.51, -3.17, -2.89, -2.58, -0.42, -0.05, +0.26, +0.63),
+                c(-3.46, -3.14, -2.88, -2.57, -0.42, -0.06, +0.24, +0.62),
+                c(-3.44, -3.13, -2.87, -2.57, -0.43, -0.07, +0.24, +0.61),
+                c(-3.43, -3.12, -2.86, -2.57, -0.44, -0.07, +0.23, +0.60))
+        } else if (type == "ct") {
+            table = cbind(
+                c(-4.38, -3.95, -3.60, -3.24, -1.14, -0.80, -0.50, -0.15),
+                c(-4.15, -3.80, -3.50, -3.18, -1.19, -0.87, -0.58, -0.24),
+                c(-4.04, -3.73, -3.45, -3.15, -1.22, -0.90, -0.62, -0.28),
+                c(-3.99, -3.69, -3.43, -3.13, -1.23, -0.92, -0.64, -0.31),
+                c(-3.98, -3.68, -3.42, -3.13, -1.24, -0.93, -0.65, -0.32),
+                c(-3.96, -3.66, -3.41, -3.12, -1.25, -0.94, -0.66, -0.33))      
+        } else {
+            stop("Invalid type specified")
+        }
+    } else if (statistic == "z" || statistic == "n") {
+        # Hamilton Table B.5 - Based on OLS Autoregressive Coefficient
+        if (type == "nc") {
+            table = cbind(
+                c(-11.9,  -9.3,  -7.3,  -5.3, +1.01, +1.40, +1.79, +2.28),
+                c(-12.9,  -9.9,  -7.7,  -5.5, +0.97, +1.35, +1.70, +2.16),
+                c(-13.3, -10.2,  -7.9,  -5.6, +0.95, +1.31, +1.65, +2.09),
+                c(-13.6, -10.3,  -8.0,  -5.7, +0.93, +1.28, +1.62, +2.04),
+                c(-13.7, -10.4,  -8.0,  -5.7, +0.93, +1.28, +1.61, +2.04),
+                c(-13.8, -10.5,  -8.1,  -5.7, +0.93, +1.28, +1.60, +2.03))
+        } else if (type == "c") {
+            table = cbind(
+                c(-17.2, -14.6, -12.5, -10.2, -0.76, +0.01, +0.65, +1.40),
+                c(-18.9, -15.7, -13.3, -10.7, -0.81, -0.07, +0.53, +1.22),
+                c(-19.8, -16.3, -13.7, -11.0, -0.83, -0.10, +0.47, +1.14),
+                c(-20.3, -16.6, -14.0, -11.2, -0.84, -0.12, +0.43, +1.09),
+                c(-20.5, -16.8, -14.0, -11.2, -0.84, -0.13, +0.42, +1.06),
+                c(-20.7, -16.9, -14.1, -11.3, -0.85, -0.13, +0.41, +1.04))
+        } else if (type == "ct") {
+            table = cbind(
+                c(-22.5, -19.9, -17.9, -15.6, -3.66, -2.51, -1.53, -0.43),
+                c(-25.7, -22.4, -19.8, -16.8, -3.71, -2.60, -1.66, -0.65),
+                c(-27.4, -23.6, -20.7, -17.5, -3.74, -2.62, -1.73, -0.75),
+                c(-28.4, -24.4, -21.3, -18.0, -3.75, -2.64, -1.78, -0.82),
+                c(-28.9, -24.8, -21.5, -18.1, -3.76, -2.65, -1.78, -0.84),
+                c(-29.5, -25.1, -21.8, -18.3, -3.77, -2.66, -1.79, -0.87))      
+        } else {
+            stop("Invalid type specified")
+        }
+    } else {
+        stop("Invalid statistic specified")
+    }
+            
+    # Transpose:
+    table = t(table)
+    colnames(table) = c("0.010", "0.025", "0.050", "0.100", "0.900", 
+        "0.950", "0.975", "0.990")
+    rownames(table) = c(" 25", " 50", "100", "250", "500", "Inf")
+    
+    # Return Value:
+    as.data.frame(table)
 } 
 
 
-# ******************************************************************************
+################################################################################
+# PROBABILIY AND QUANTILES:
 
 
 punitroot =
@@ -307,19 +326,19 @@ statistic = c("t", "n"), na.rm = FALSE)
 }
 
 
-# ------------------------------------------------------------------------------
-
+################################################################################
+# UTILITY FUNCTIONS:
 
 .strsplitUrcval = 
 function(x, sep = " ") 
-{	# A function implemented by Diethelm Wuertz
+{   # A function implemented by Diethelm Wuertz
 
-	# Description:
-	#	strsplit function for SPlus compatibility
-	
-	# FUNCTION:
-	
-	# Split:
+    # Description:
+    #   strsplit function for SPlus compatibility
+    
+    # FUNCTION:
+    
+    # Split:
     if (exists("strsplit")) {
         # R:
         ans = strsplit(x = x , split = sep)
@@ -445,7 +464,7 @@ function (arg, nobs = 0, niv = 1, itt = 1, itv = 1, nc = 1)
 }
 
 
-# ******************************************************************************
+# ------------------------------------------------------------------------------
 
 
 .probsUrcval = 
@@ -540,7 +559,7 @@ structure(list(V1 = c(1.0e-04, 2.0e-04, 5.0e-04, 0.001, 0.002, 0.003,
 )
 
 
-################################################################################
+# ------------------------------------------------------------------------------
 
 
 .urc1 = 

@@ -28,7 +28,7 @@
 
 
 ################################################################################
-# DATASET:		  DESCRIPTION:
+# DATASET:        DESCRIPTION:
 # Chapter 1        Financial Time Series and Their Characteristics
 #  dibmln.txt       Daily log returns of IBM (62/7/3 to 97/12)  
 #  dvwew.txt        Daily simple returns of valueweighted and equalweighted indexes 

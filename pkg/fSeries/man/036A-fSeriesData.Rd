@@ -8,6 +8,7 @@
 \alias{dem2gbp}
 \alias{cac40}
 \alias{sp500dge}
+\alias{sp500index}
 
 \alias{ibmbj}
 
@@ -84,17 +85,15 @@
 	\cr
 	
 	
+	\code{sp500index}\cr
 	\code{sp500dge}
 	\cr
-	Daily SP500 index values. The data 
-	cover the period January 1995 until December 1999, and have 1249 
-	observations. The first column of the file \code{CAC40} lists 
-	the averaged return of the Index, and the second column 
-	\code{CAC40VOL} lists the realized volatility. The data are
-	used as a benchmark for GARCH modeling by Laurent and Peters
-	(2002).\cr
-	\code{"\%Y-\%m-\%d"} - ISO-8601 Dates, \cr 
-	\code{"SP500"} - SP500 Index Value.
+	The first file \code{sp500index} lists daily SP500 index values. 
+	The data cover the period January 1995 until December 1999, and 
+	have 1249 observations. The first column of the file lists 
+	dates, and the second column lists index values. The second file
+	lists daily returns from the SP500 as used in the paper of Ding,
+	Granger and Engle.
 	\cr
 		
 	

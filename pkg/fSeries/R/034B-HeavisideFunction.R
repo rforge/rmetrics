@@ -29,11 +29,11 @@
 
 ################################################################################
 # FUNCTION:             HEAVISIDE AND RELATED FUNCTIONS:
-#  H                      Computes Heaviside unit step function
-#  Sign                   Another signum function
-#  Delta                  Computes delta function
-#  Boxcar                 Computes boxcar function
-#  Ramp                   Computes ramp function
+#  H                     Computes Heaviside unit step function
+#  Sign                  Another signum function
+#  Delta                 Computes delta function
+#  Boxcar                Computes boxcar function
+#  Ramp                  Computes ramp function
 ################################################################################
 
 
@@ -51,8 +51,8 @@ function(x, a = 0)
     #   Computes the Heaviside or unit step function.
     
     # Arguments:
-    #	x - a numeric vector.
-    #	a - the location of the break.
+    #   x - a numeric vector.
+    #   a - the location of the break.
     
     # Details:
     #   The Heaviside step function is 1 for x>a, 1/2 for x=a,
@@ -79,8 +79,8 @@ function(x, a = 0)
     #   Computes the (modofied) Sign function.
     
     # Arguments:
-    #	x - a numeric vector.
-    #	a - the location of the break.
+    #   x - a numeric vector.
+    #   a - the location of the break.
     
     # Details:
     #   The Sign function is 1 for x>a, 0 for x=a,
@@ -107,8 +107,8 @@ function(x, a = 0)
     #   Computes the delta function.
     
     # Arguments:
-    #	x - a numeric vector.
-    #	a - the location of the break.
+    #   x - a numeric vector.
+    #   a - the location of the break.
     
     # Details:
     #   The delta function is defined as: delta(x) = d/dx H(x-a)
@@ -134,8 +134,8 @@ function(x, a = 0.5)
     #   Computes the boxcar function.
     
     # Arguments:
-    #	x - a numeric vector.
-    #	a - the location of the break.
+    #   x - a numeric vector.
+    #   a - the location of the break.
     
     # Details:
     #   The boxcar function is defined as: Pi(x) = H(x+a) - H(x-a)
@@ -161,8 +161,8 @@ function(x, a = 0)
     #   Computes the ramp function.
     
     # Arguments:
-    #	x - a numeric vector.
-    #	a - the location of the break.
+    #   x - a numeric vector.
+    #   a - the location of the break.
     
     # Details:
     #   The ramp function is defined as: R(x)= (x-a)*H(x-a)

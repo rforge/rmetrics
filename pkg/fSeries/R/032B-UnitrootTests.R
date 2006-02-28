@@ -16,25 +16,15 @@
 
 # Copyrights (C)
 # for this R-port: 
+#   1999 - 2006, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
+#   info@rmetrics.org
+#   www.rmetrics.org
 # for the code accessed (or partly included) from other R-ports:
-#   R: see R's copyright and license file
-#   ts: collected by Brian Ripley. See SOURCES
-#   tseries: Compiled by Adrian Trapletti <a.trapletti@bluewin.ch>
-#   fracdiff: S original by Chris Fraley <fraley@stat.washington.edu>
-#     R-port: by Fritz Leisch <leisch@ci.tu-wien.ac.at>
-#     since 2003-12: Martin Maechler
-#   lmtest: Torsten Hothorn <Torsten.Hothorn@rzmail.uni-erlangen.de>
-#     Achim Zeileis <zeileis@ci.tuwien.ac.at>
-#     David Mitchell
-#   mda: S original by Trevor Hastie & Robert Tibshirani
-#     R port by Friedrich Leisch, Kurt Hornik and Brian D. Ripley
-#   mgcv: Simon Wood <simon@stats.gla.ac.uk>
-#   modreg: Brian Ripley and the R Core Team
-#   polspline: Charles Kooperberg <clk@fhcrc.org>
-#   nnet: S original by Venables & Ripley. 
-#     R port by Brian Ripley <ripley@stats.ox.ac.uk>
-#       following earlier work by Kurt Hornik and Albrecht Gebhardt
+#   see R's copyright and license files
+# for the code accessed (or partly included) from contributed R-ports
+# and other sources
+#   see Rmetrics's copyright file
 
 
 ################################################################################
@@ -55,6 +45,13 @@
 # REQUIREMENTS:            DESCRIPTION:
 #  embed                    Required from fBasics.A0-SPlusCompatibility
 ################################################################################
+
+
+################################################################################
+
+
+################################################################################
+# PART I:
 
 
 urTest = 
@@ -80,8 +77,7 @@ function(x, method = c("unitroot", "adf", "urers", "urkpss", "urpp",
 }
         
 
-################################################################################
-# PART I:
+# ------------------------------------------------------------------------------
 
 
 adfTest = 
@@ -629,15 +625,14 @@ description = NULL)
 # PART III:
 
 
-#
-# Package: urca
-# Title: Unit root and cointegration tests for time series data
-# Author: Bernhard Pfaff <bernhard.pfaff@drkw.com>
-# Maintainer: Bernhard Pfaff <bernhard.pfaff@drkw.com>
-# Depends: nlme
-# Description: Unit root and cointegration tests 
-# License: GPL version 2 or newer
-#
+# PACKAGE DESCRIPTION:
+#  Package: urca
+#  Title: Unit root and cointegration tests for time series data
+#  Author: Bernhard Pfaff <bernhard.pfaff@drkw.com>
+#  Maintainer: Bernhard Pfaff <bernhard.pfaff@drkw.com>
+#  Depends: nlme
+#  Description: Unit root and cointegration tests 
+#  License: GPL version 2 or newer
 
 
 ################################################################################
@@ -660,40 +655,40 @@ function(x, lags = 1, type = c("nc", "c", "ct"), doplot = TRUE)
 
     # Notes:
     #   Requires "urca" which is not part of this distribution
-    #	Wraps -
-    # 		ur.df(y, type = c("none", "drift", "trend"), lags = 1)
+    #   Wraps -
+    #       ur.df(y, type = c("none", "drift", "trend"), lags = 1)
     
     # FUNCTION:
     
-	# Compute:
-	x = as.vector(x)
-	if (type[1] == "nc") Type = "none"
-	if (type[1] == "c")  Type = "drift"
-	if (type[1] == "ct") Type = "trend"
-	
-	urca = ur.df(x, type = Type, lags = lags)
-	output = capture.output(summary(urca))[-(1:4)]
-	for (i in 1:length(output)) output[i] = paste(" ", output[i])
-	output = output[-length(output)][-3]
-	
-	# Test Results:
-	ans = list(
-		name = "ur.df", 
-		test = urca,
-		output = output,
-	)	
-	
-	# Plot:
-	if (doplot) plot(urca)
-			
-	# Return Value:
-	new("fHTEST", 
-		call = match.call(),
-		data = list(x = x),
-		test = ans,
-		title = "Augmented Dickey-Fuller Unit Root Test",
-		description = as.character(date())
-	)
+    # Compute:
+    x = as.vector(x)
+    if (type[1] == "nc") Type = "none"
+    if (type[1] == "c")  Type = "drift"
+    if (type[1] == "ct") Type = "trend"
+    
+    urca = ur.df(x, type = Type, lags = lags)
+    output = capture.output(summary(urca))[-(1:4)]
+    for (i in 1:length(output)) output[i] = paste(" ", output[i])
+    output = output[-length(output)][-3]
+    
+    # Test Results:
+    ans = list(
+        name = "ur.df", 
+        test = urca,
+        output = output,
+    )   
+    
+    # Plot:
+    if (doplot) plot(urca)
+            
+    # Return Value:
+    new("fHTEST", 
+        call = match.call(),
+        data = list(x = x),
+        test = ans,
+        title = "Augmented Dickey-Fuller Unit Root Test",
+        description = as.character(date())
+    )
 }
     
 
@@ -710,38 +705,38 @@ lag.max = 4, doplot = TRUE)
 
     # Notes:
     #   Requires "urca" which is not part of this distribution
-    #	Wraps -
-    # 		ur.ers(y, type = c("DF-GLS", "P-test"), 
-    #		model = c("constant", "trend"), lag.max = 4)
+    #   Wraps -
+    #       ur.ers(y, type = c("DF-GLS", "P-test"), 
+    #       model = c("constant", "trend"), lag.max = 4)
     
     # FUNCTION:
     
-	# Compute:
-	x = as.vector(x)
-	urca = ur.ers(x, type = type[1], model = model[1], lag.max = lag.max)
-	output = capture.output(summary(urca))[-(1:4)]
-	for (i in 1:length(output)) output[i] = paste(" ", output[i])
-	output = output[-length(output)]
-	if (type[1] == "DF-GLS") output = output[-(4:7)]
-	
-	# Test Results:
-	ans = list(
-		name = "ur.ers", 
-		test = urca,
-		output = output,
-	)	
-	
-	# Plot:
-	if (doplot & type[1] == "DF-GLS") plot(urca)
-			
-	# Return Value:
-	new("fHTEST", 
-		call = match.call(),
-		data = list(x = x),
-		test = ans,
-		title = "Elliott-Rothenberg-Stock Unit Root Test",
-		description = as.character(date())
-	)
+    # Compute:
+    x = as.vector(x)
+    urca = ur.ers(x, type = type[1], model = model[1], lag.max = lag.max)
+    output = capture.output(summary(urca))[-(1:4)]
+    for (i in 1:length(output)) output[i] = paste(" ", output[i])
+    output = output[-length(output)]
+    if (type[1] == "DF-GLS") output = output[-(4:7)]
+    
+    # Test Results:
+    ans = list(
+        name = "ur.ers", 
+        test = urca,
+        output = output,
+    )   
+    
+    # Plot:
+    if (doplot & type[1] == "DF-GLS") plot(urca)
+            
+    # Return Value:
+    new("fHTEST", 
+        call = match.call(),
+        data = list(x = x),
+        test = ans,
+        title = "Elliott-Rothenberg-Stock Unit Root Test",
+        description = as.character(date())
+    )
 }
     
 
@@ -758,37 +753,37 @@ use.lag = NULL, doplot = TRUE)
 
     # Notes:
     #   Requires "urca" which is not part of this distribution
-    #	Wraps:
-	# 		ur.kpss(y, type = c("mu", "tau"), lags = c("short", "long", "nil"), 
-	#		use.lag = NULL)
+    #   Wraps:
+    #       ur.kpss(y, type = c("mu", "tau"), lags = c("short", "long", "nil"), 
+    #       use.lag = NULL)
     
     # FUNCTION:
     
     # Compute:
-	x = as.vector(x)
-	urca = ur.kpss(x, type = type[1], lags = lags[1], use.lag = use.lag)
-	output = capture.output(summary(urca))[-(1:4)]
-	output = output[-length(output)]
-	for (i in 1:length(output)) output[i] = paste(" ", output[i])
-	
-	# Test Results:
-	ans = list(
-		name = "ur.kpss", 
-		test = urca,
-		output = output,
-	)	
-	
-	# Plot:
-	if (doplot) plot(urca)
-			
-	# Return Value:
-	new("fHTEST", 
-		call = match.call(),
-		data = list(x = x),
-		test = ans,
-		title = "KPSS Unit Root Test",
-		description = as.character(date())
-	)
+    x = as.vector(x)
+    urca = ur.kpss(x, type = type[1], lags = lags[1], use.lag = use.lag)
+    output = capture.output(summary(urca))[-(1:4)]
+    output = output[-length(output)]
+    for (i in 1:length(output)) output[i] = paste(" ", output[i])
+    
+    # Test Results:
+    ans = list(
+        name = "ur.kpss", 
+        test = urca,
+        output = output,
+    )   
+    
+    # Plot:
+    if (doplot) plot(urca)
+            
+    # Return Value:
+    new("fHTEST", 
+        call = match.call(),
+        data = list(x = x),
+        test = ans,
+        title = "KPSS Unit Root Test",
+        description = as.character(date())
+    )
 }   
 
 
@@ -805,38 +800,38 @@ lags = c("short", "long"), use.lag = NULL, doplot = TRUE)
 
     # Note:
     #   Requires "urca" which is not part of this distribution
-    #	Wraps:
-	# 		ur.pp(x, type = c("Z-alpha", "Z-tau"), model = c("constant", 
-	#		"trend"), lags = c("short", "long"), use.lag = NULL)
+    #   Wraps:
+    #       ur.pp(x, type = c("Z-alpha", "Z-tau"), model = c("constant", 
+    #       "trend"), lags = c("short", "long"), use.lag = NULL)
     
     # FUNCTION:
     
     # Compute:
-	x = as.vector(x)
-	urca = ur.pp(x, type = type[1], mode = model[1], lags = lags[1], 
-		use.lag = use.lag)
-	output = capture.output(summary(urca))[-c(1:4, 7:10)]
-	for (i in 1:length(output)) output[i] = paste(" ", output[i])
-	output = output[-length(output)]
-	
-	# Test Results:
-	ans = list(
-		name = "ur.pp", 
-		test = urca,
-		output = output
-	)	
-	
-	# Plot:
-	if (doplot) plot(urca)
-			
-	# Return Value:
-	new("fHTEST", 
-		call = match.call(),
-		data = list(x = x),
-		test = ans,
-		title = "Phillips-Perron Unit Root Test",
-		description = as.character(date())
-	)
+    x = as.vector(x)
+    urca = ur.pp(x, type = type[1], mode = model[1], lags = lags[1], 
+        use.lag = use.lag)
+    output = capture.output(summary(urca))[-c(1:4, 7:10)]
+    for (i in 1:length(output)) output[i] = paste(" ", output[i])
+    output = output[-length(output)]
+    
+    # Test Results:
+    ans = list(
+        name = "ur.pp", 
+        test = urca,
+        output = output
+    )   
+    
+    # Plot:
+    if (doplot) plot(urca)
+            
+    # Return Value:
+    new("fHTEST", 
+        call = match.call(),
+        data = list(x = x),
+        test = ans,
+        title = "Phillips-Perron Unit Root Test",
+        description = as.character(date())
+    )
 }   
     
 
@@ -853,37 +848,37 @@ signif = c(0.01, 0.05, 0.10), doplot = TRUE)
 
     # Note:
     #   Requires "urca" which is not part of this distribution
-    #	Wraps:
-	# 		ur.sp(y, type = c("tau", "rho"), pol.deg = c(1, 2, 3, 4), 
-	#		signif = c(0.01, 0.05, 0.1))
-	
+    #   Wraps:
+    #       ur.sp(y, type = c("tau", "rho"), pol.deg = c(1, 2, 3, 4), 
+    #       signif = c(0.01, 0.05, 0.1))
+    
     # FUNCTION:
     
     # Compute:
-	x = as.vector(x)
-	urca = ur.sp(x, type = type[1], pol.deg = pol.deg[1], signif = signif[1])
-	output = capture.output(summary(urca))[-(1:8)]
-	output = output[-length(output)]
-	for (i in 1:length(output)) output[i] = paste(" ", output[i])
-	
-	# Test Results:
-	ans = list(
-		name = "ur.pp", 
-		test = urca,
-		output = output,
-	)	
-	
-	# Plot:
-	if (doplot) plot(urca)
-			
-	# Return Value:
-	new("fHTEST", 
-		call = match.call(),
-		data = list(x = x),
-		test = ans,
-		title = "Schmidt-Phillips Unit Root Test",
-		description = as.character(date())
-	)
+    x = as.vector(x)
+    urca = ur.sp(x, type = type[1], pol.deg = pol.deg[1], signif = signif[1])
+    output = capture.output(summary(urca))[-(1:8)]
+    output = output[-length(output)]
+    for (i in 1:length(output)) output[i] = paste(" ", output[i])
+    
+    # Test Results:
+    ans = list(
+        name = "ur.pp", 
+        test = urca,
+        output = output,
+    )   
+    
+    # Plot:
+    if (doplot) plot(urca)
+            
+    # Return Value:
+    new("fHTEST", 
+        call = match.call(),
+        data = list(x = x),
+        test = ans,
+        title = "Schmidt-Phillips Unit Root Test",
+        description = as.character(date())
+    )
 }   
 
 
@@ -899,36 +894,36 @@ function(x, model = c("intercept", "trend", "both"), lag = 2, doplot = TRUE)
     
     # Note:
     #   Requires "urca" which is not part of this distribution
-	#	Wraps:
-	# 		ur.za(y, model = c("intercept", "trend", "both"), lag)
-	
+    #   Wraps:
+    #       ur.za(y, model = c("intercept", "trend", "both"), lag)
+    
     # FUNCTION:
     
-   	# Compute:
-	x = as.vector(x)
-	urca = ur.za(x, model = model[1], lag = lag)
-	output = capture.output(summary(urca))[-(1:8)]
-	output = output[-length(output)]
-	for (i in 1:length(output)) output[i] = paste(" ", output[i])
-	
-	# Test Results:
-	ans = list(
-		name = "ur.pp", 
-		test = urca,
-		output = output,
-	)	
-	
-	# Plot:
-	if (doplot) plot(urca)
-			
-	# Return Value:
-	new("fHTEST", 
-		call = match.call(),
-		data = list(x = x),
-		test = ans,
-		title = "Zivot & Andrews Unit Root Test",
-		description = as.character(date())
-	)
+    # Compute:
+    x = as.vector(x)
+    urca = ur.za(x, model = model[1], lag = lag)
+    output = capture.output(summary(urca))[-(1:8)]
+    output = output[-length(output)]
+    for (i in 1:length(output)) output[i] = paste(" ", output[i])
+    
+    # Test Results:
+    ans = list(
+        name = "ur.pp", 
+        test = urca,
+        output = output,
+    )   
+    
+    # Plot:
+    if (doplot) plot(urca)
+            
+    # Return Value:
+    new("fHTEST", 
+        call = match.call(),
+        data = list(x = x),
+        test = ans,
+        title = "Zivot & Andrews Unit Root Test",
+        description = as.character(date())
+    )
 }   
 
 

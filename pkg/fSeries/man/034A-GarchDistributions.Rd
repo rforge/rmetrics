@@ -35,6 +35,8 @@
 \alias{gedFit}
 \alias{sgedFit}
 
+\alias{absMoments}
+
 
 \title{GARCH Distributions and Parameter Estimation}
 
@@ -62,8 +64,6 @@
 	
 	The estimatore are:
 	
-	The functions are:
-	
 	\tabular{ll}{
 	\code{normFit} \tab MLE parameter fit for a Normal distribution, \cr
 	\code{snormFit} \tab MLE parameter fit for a skew Normal distribution, \cr
@@ -71,6 +71,13 @@
 	\code{stdFit} \tab MLE parameter fit for a skew Sudent-t distribution, \cr
 	\code{gedFit} \tab MLE parameter fit for a generalized error distribution, \cr
 	\code{nigFit} \tab MLE parameter fit for a skew generalized error distribution. }
+	
+	Utility Function:
+	
+	\tabular{ll}{
+	\code{absMoments} \tab Computes absolute moments of a symmetric density. }
+	
+	
 }
 
 
@@ -106,11 +113,17 @@ stdFit(x, \dots)
 sstdFit(x, \dots)
 gedFit(x, \dots)
 sgedFit(x, \dots)
+
+absMoments(n, density = c("dnorm", "dged", "dstd"), \dots)
 }
 
 
 \arguments{
 
+    \item{density}{
+    	[absMoments] - \cr
+        a character string naming the symmetric density function.
+        }
     \item{mean, sd, nu, xi}{
         location parameter \code{mean},
         scale parameter \code{sd},
@@ -118,7 +131,10 @@ sgedFit(x, \dots)
         skewness parameter \code{xi}.
         }
     \item{n}{
-        number of observations.
+    	[rnorm][r*ged][r*std] - \cr
+        the number of observations.\cr
+        [absMoments] - \cr
+        the number of absolute Moments.
         } 
     \item{p}{
         a numeric vector of probabilities.
@@ -127,7 +143,10 @@ sgedFit(x, \dots)
         a numeric vector of quantiles.
         }
     \item{\dots}{
-		parameters parsed to the optimization function \code{nlm}.
+    	[*Fit] - \cr
+		parameters parsed to the optimization function \code{nlm}.\cr
+		[absMoments] - \cr
+		parameters passed to the density function.
 		}
     
 }
@@ -140,10 +159,8 @@ sgedFit(x, \dots)
     \code{q*} returns the quantile function, and
     \code{r*} generates random deviates, \cr
     all values are numeric vectors.
-    \cr
     
-    The functions \code{*Fit} return a list with the following components:
-  
+    \code{*Fit} return a list with the following components: \cr
   	\item{estimate}{
 		the point at which the maximum value of the log liklihood 
 		function is obtained.
@@ -176,6 +193,10 @@ sgedFit(x, \dots)
   	\item{steps}{
 		number of function calls.
 		}
+	
+	\code{absMoments} returns a numeric vector of length \code{n} with the
+	values of the absolute moments of the density function.
+	
     
     
 }

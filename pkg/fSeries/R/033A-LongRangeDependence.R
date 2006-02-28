@@ -47,7 +47,7 @@
 
 ################################################################################
 # PART II: Reimplemented functions from
-#	Beran's SPlus Scripts
+#   Beran's SPlus Scripts
 # FUNCTIONS:          DESCRIPTION:
 #  farimaTrueacf       Returns FARMA true autocorrelation function
 #  farimaTruefft       Returns FARMA true fast Fourier transform
@@ -114,8 +114,8 @@
 #  .beranTest          Not yet ready for usage ...
 #  .rsTest             Not yet ready for usage ...
 #  .vsTest             Not yet ready for usage ...
-# SLIDER:
-#  .hurstSlider        Not yet ready for usage ...
+# FUNCTION:			  SLIDER:
+#  hurstSlider         Hurst Slider
 ################################################################################
 
 
@@ -1092,7 +1092,7 @@ function(n, H)
 fgnTrueacf = 
 function(n, H)
 {
-	.ckFGN0(n = n, H = H)
+    .ckFGN0(n = n, H = H)
 }
 
 
@@ -1137,7 +1137,7 @@ function(n, H)
 fgnTruefft = 
 function(n, H)
 {
-	.gkFGN0(n = n, H = H)
+    .gkFGN0(n = n, H = H)
 }
 
 
@@ -1245,7 +1245,7 @@ function(n, H)
 farimaTrueacf = 
 function(n, H)
 {
-	.ckFARIMA0(n = n, H = H)
+    .ckFARIMA0(n = n, H = H)
 }
 
 
@@ -1289,7 +1289,7 @@ function(n, H)
 farimaTruefft = 
 function(n, H)
 {
-	.gkFARIMA0(n = n, H = H)
+    .gkFARIMA0(n = n, H = H)
 }
 
 
@@ -3321,7 +3321,7 @@ function(LengthH, DataLength, bc = c("periodic", "symmetric"))
 
 .beranTest =
 function()
-{	# A function implemented by Diethelm Wuertz
+{   # A function implemented by Diethelm Wuertz
 
     # Result:
     ans = NA
@@ -3443,22 +3443,26 @@ function(x, q)
 }
 
 
-# ******************************************************************************
+################################################################################
 # Slider:
 
 
-.hurstSlider =
+hurstSlider =
 function(x = fgnSim())
 {   # A function implemented by Diethelm Wuertz
         
     # Description:
-    #   Displays interactively estimation od Hurst component
+    #   Displays interactively Hurst exponent estimates
+    
+    # Arguments:
+    #   x - a numerical vector or any other object which can
+    #       transformed into a numeric vector.
     
     # FUNCTION:
     
-    # Series:
-    x <<- x
-       
+    # Transform and Save Series:
+    .xHurst <<- as.vector(x)   
+    
     # Graphic Frame:
     par(mfrow = c(1, 1), cex = 0.7)
     
@@ -3471,58 +3475,66 @@ function(x = fgnSim())
         minnpts = .sliderMenu(no = 3)
         lower  = .sliderMenu(no = 4)
         range = .sliderMenu(no = 5)
-        moment = .sliderMenu(no = 6)
-        
-        # Fit:
-        if (method == 1) ans = aggvarFit(x = x, levels = levels, 
-        	minnpts = minnpts, cut.off = 10^c(lower, lower+range), 
-        	doplot = TRUE)
-        if (method == 2) ans = diffvarFit(x = x, levels = levels, 
-        	minnpts = minnpts, cut.off = 10^c(lower, lower+range), 
-        	doplot = TRUE)
-        if (method == 3) ans = absvalFit(x = x, levels = levels, 
-        	minnpts = minnpts, cut.off = 10^c(lower, lower+range), 
-        	doplot = TRUE)
-        if (method == 4) ans = higuchiFit(x = x, levels = levels, 
-        	minnpts = minnpts, cut.off = 10^c(lower, lower+range), 
-        	doplot = TRUE)
-        if (method == 5) ans = pengFit(x = x, levels = levels, 
-        	minnpts = minnpts, cut.off = 10^c(lower, lower+range), 
-        	method = "mean", doplot = TRUE)
-        if (method == 6) ans = rsFit(x = x, levels = levels, 
-        	minnpts = minnpts, cut.off = 10^c(lower, lower+range), 
-        	method = "mean", doplot = TRUE)
-        if (method >= 7) ans = perFit(x = x, cut.off = lower, 
-        	doplot = TRUE)
-        # ...
         
         # Plot:
-        show(ans)
+        description = paste("Method", method, as.character(date()))
+        if (method == 1) ans = aggvarFit(x = .xHurst, levels = levels, 
+            minnpts = minnpts, cut.off = 10^c(lower, lower+range), 
+            doplot = TRUE, description = description)
+            
+        if (method == 2) ans = diffvarFit(x = .xHurst, levels = levels, 
+            minnpts = minnpts, cut.off = 10^c(lower, lower+range), 
+            doplot = TRUE, description = description)
+            
+        if (method == 3) ans = absvalFit(x = .xHurst, levels = levels, 
+            minnpts = minnpts, cut.off = 10^c(lower, lower+range), 
+            doplot = TRUE, description = description)
+            
+        if (method == 4) ans = higuchiFit(x = .xHurst, levels = levels, 
+            minnpts = minnpts, cut.off = 10^c(lower, lower+range), 
+            doplot = TRUE, description = description)
+            
+        if (method == 5) ans = pengFit(x = .xHurst, levels = levels, 
+            minnpts = minnpts, cut.off = 10^c(lower, lower+range), 
+            method = "mean", doplot = TRUE, description = description)
+            
+        if (method == 6) ans = rsFit(x = .xHurst, levels = levels, 
+            minnpts = minnpts, cut.off = 10^c(lower, lower+range), 
+            doplot = TRUE, description = description)
+            
+        if (method >= 7) ans = perFit(x = .xHurst, cut.off = lower, 
+            doplot = TRUE, description = description)
         
-        # Add Text:
-        if (method <= 7)
-        	mtext(text = paste(
-	        	"levels = ", levels, " | ",
-	        	"minnpts = ", minnpts, " | ",
-	        	"cut.off = 10^[", lower, ", ", lower+range, "]",
-	        	sep = ""), line = -1.5, side = 3, cex = 0.8)
-	    if (method == 7)
-        	mtext(text = paste(
-	        	"cut.off = ", lower,
-	        	sep = ""), line = -1.5, side = 3, cex = 0.8)
-                           
+        # Add Legend:
+        show(ans)
+        if (method == 7) {
+            mtext(text = paste(
+                "cut.off = ", lower,
+                sep = ""), line = -1.5, side = 3, cex = 0.8)
+        } else {
+            mtext(text = paste(
+                "levels = ", levels, " | ",
+                "minnpts = ", minnpts, " | ",
+                "cut.off = 10^[", lower, ", ", lower+range, "]",
+                sep = ""), line = -1.5, side = 3, cex = 0.8)
+        }
+        what = paste("Method:",
+          "1:aggvar | 2:diffvar | 3:absval | 4:higuchi | 5:peng | 6:rs | 7:per")
+        mtext(what, side = 4, cex = 0.55, line = 0.9, adj = 0, 
+            col = "steelblue")
+                   
         # Reset Frame:
         par(mfrow = c(1, 1), cex = 0.7)
     }
   
     # Open Slider Menu:
     .sliderMenu(refresh.code,
-        names       = c("method", "levels", "minnpts", "lower", "range", "moment"),
-        minima      = c(       1,       10,         1,     0.1,     0.1,        1),
-        maxima      = c(       9,      200,        10,     1.5,     3.0,        8), 
-        resolutions = c(       1,        5,         1,     0.1,     0.1,        1),
-        starts      = c(       1,       50,         3,     0.7,     1.8,        1)) 
-} 
+        names       = c("method", "levels", "minnpts", "lower", "range"),
+        minima      = c(       1,       10,         1,     0.1,     0.1),
+        maxima      = c(       7,      200,        10,     1.5,     3.0), 
+        resolutions = c(       1,        5,         1,     0.1,     0.1),
+        starts      = c(       1,       50,         3,     0.7,     1.8)) 
+}
 
 
 ################################################################################

@@ -130,16 +130,16 @@ function(x, m = 3, eps = NULL, title = NULL, description = NULL)
     STATISTIC = NULL
     NAMES = NULL
     for(i in (1:k)) {
-		res = .C("bdstest_main", as.integer(n), as.integer(m),
-    		as.double(x), as.double(cc), cstan = as.double(cstan), 
-    		as.double(eps[i]), as.integer(0), PACKAGE = "fSeries")
-    	ans = res$cstan[2:m+1]
-     	STATISTIC = c(STATISTIC, ans)	
-     	names.1 = rep(paste("eps[", i, "]", sep = ""), times = length(ans))
-     	names.2 = paste("m=", as.character(2:m), sep = "")
-     	NAMES = c(NAMES, paste(names.1, names.2))
+        res = .C("bdstest_main", as.integer(n), as.integer(m),
+            as.double(x), as.double(cc), cstan = as.double(cstan), 
+            as.double(eps[i]), as.integer(0), PACKAGE = "fSeries")
+        ans = res$cstan[2:m+1]
+        STATISTIC = c(STATISTIC, ans)   
+        names.1 = rep(paste("eps[", i, "]", sep = ""), times = length(ans))
+        names.2 = paste("m=", as.character(2:m), sep = "")
+        NAMES = c(NAMES, paste(names.1, names.2))
     }
-	# colnames(STATISTIC) = as.character(eps)
+    # colnames(STATISTIC) = as.character(eps)
     # rownames(STATISTIC) = as.character(2:m)
     names(STATISTIC) = NAMES
     test$statistic = STATISTIC
@@ -155,8 +155,8 @@ function(x, m = 3, eps = NULL, title = NULL, description = NULL)
     
     PARAMETER = c(m, eps)
     names(PARAMETER) = c(
-    	"Max Embedding Dimension", 
-    	paste("eps[", 1:length(eps), "]", sep = "") )
+        "Max Embedding Dimension", 
+        paste("eps[", 1:length(eps), "]", sep = "") )
     test$parameter = PARAMETER
     
     # Add:
@@ -235,9 +235,9 @@ title = NULL, description = NULL)
     test$statistic = STATISTIC
     
     # P Values:
-	PVAL1 = 1 - pchisq(STATISTIC1, qstar)
-	PVAL2 = 1 - pf(STATISTIC2, qstar, t-lag-qstar)   
-	PVAL = c(PVAL1, PVAL2)   
+    PVAL1 = 1 - pchisq(STATISTIC1, qstar)
+    PVAL2 = 1 - pf(STATISTIC2, qstar, t-lag-qstar)   
+    PVAL = c(PVAL1, PVAL2)   
     names(PVAL) = c("Chi-squared", "F") 
     test$p.value = PVAL
     
