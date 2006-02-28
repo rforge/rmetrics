@@ -180,9 +180,9 @@ corr=NULL, sigma=NULL, maxpts = 25000, abseps = 0.001, releps = 0)
     } else {
       if (carg$uni) {
         RET = list(value = pnorm(carg$upper, mean=carg$mean, 
-        						sd=sqrt(carg$sigma)) -
+                                sd=sqrt(carg$sigma)) -
                             pnorm(carg$lower, mean=carg$mean, 
-                            	sd=sqrt(carg$sigma)),
+                                sd=sqrt(carg$sigma)),
                     error = 0, msg="univariate: using pnorm")
       } else {
           lower = (carg$lower - carg$mean)/sqrt(diag(carg$sigma))
@@ -226,16 +226,16 @@ releps = 0)
     } else {
         if (!is.null(carg$corr)) {
             RET = .mvt(lower=carg$lower, upper=carg$upper, df=df, 
-            			corr=carg$corr,
-                       	delta=carg$mean,  maxpts=maxpts,
-                       	abseps=abseps,releps=releps)
+                        corr=carg$corr,
+                        delta=carg$mean,  maxpts=maxpts,
+                        abseps=abseps,releps=releps)
         } else {
             lower = carg$lower/sqrt(diag(carg$sigma))
             upper = carg$upper/sqrt(diag(carg$sigma))
             corr = cov2cor(carg$sigma)
             RET = .mvt(lower=lower, upper=upper, df=df, corr=corr,
-                       	delta=carg$mean, maxpts=maxpts,
-                       	abseps=abseps,releps=releps)
+                        delta=carg$mean, maxpts=maxpts,
+                        abseps=abseps,releps=releps)
         }
     }
     attr(RET$value, "error") = RET$error
@@ -288,20 +288,20 @@ abseps = 0.001, releps = 0)
     tol = 1.0e-10
 
     ret = .Fortran("mvtdst", 
-    	N = as.integer(n), 
-		NU = as.integer(df),
-		LOWER = as.double(lower), 
-		UPPER = as.double(upper), 
-		INFIN = as.integer(infin),
-		CORREL = as.double(corrF), 
-		DELTA = as.double(delta), 
-		MAXPTS = as.integer(maxpts),
-		ABSEPS = as.double(abseps), 
-		RELEPS = as.double(releps),  
-		TOL = as.double(tol),
-		error = as.double(error), 
-		value = as.double(value),
-		inform = as.integer(inform), PACKAGE = "fMultivar")
+        N = as.integer(n), 
+        NU = as.integer(df),
+        LOWER = as.double(lower), 
+        UPPER = as.double(upper), 
+        INFIN = as.integer(infin),
+        CORREL = as.double(corrF), 
+        DELTA = as.double(delta), 
+        MAXPTS = as.integer(maxpts),
+        ABSEPS = as.double(abseps), 
+        RELEPS = as.double(releps),  
+        TOL = as.double(tol),
+        error = as.double(error), 
+        value = as.double(value),
+        inform = as.integer(inform), PACKAGE = "fMultivar")
     
     error = ret$error; value = ret$value; inform = ret$inform
 

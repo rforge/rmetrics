@@ -71,35 +71,35 @@ data = list(), ...)
 
     # DW:
     if (method == "dw") 
-    	ans = .dwtest(formula = formula, data = data, ...)
+        ans = .dwtest(formula = formula, data = data, ...)
 
     # BP:
     if (method == "bp") 
-    	ans = .bptest(formula = formula, data = data, ...)
+        ans = .bptest(formula = formula, data = data, ...)
     
     # GQ:
     if (method == "gq") 
-    	ans = .gqtest(formula = formula, data = data, ...)
+        ans = .gqtest(formula = formula, data = data, ...)
     
     # HMC:
     if (method == "hmc") 
-    	ans = .hmctest(formula = formula, data = data, ...)
+        ans = .hmctest(formula = formula, data = data, ...)
            
     # HARV:
     if (method == "harv") 
-    	ans = .harvtest(formula = formula, data = data, ...)
+        ans = .harvtest(formula = formula, data = data, ...)
        
     # RAIN:
     if (method == "rain") 
-    	ans = .raintest(formula = formula, data = data, ...)
+        ans = .raintest(formula = formula, data = data, ...)
     
     # RESET:
     if (method == "reset") 
-    	ans = .reset(formula = formula, data = data, ...)
+        ans = .reset(formula = formula, data = data, ...)
           
     # BG:
     if (method == "bg") 
-    	ans = .bgtest(formula = formula, data = data, ...)
+        ans = .bgtest(formula = formula, data = data, ...)
      
     # Return Result:
     ans 
@@ -112,62 +112,62 @@ data = list(), ...)
 dwTest = 
 function(formula, alternative = c("greater", "two.sided", "less"),
 iterations = 15, exact = NULL, tol = 1.0e-10, data = list())
-{	
-	.dw.test(formula, alternative, iterations, exact, tol, data)
+{   
+    .dw.test(formula, alternative, iterations, exact, tol, data)
 }
-	
-	
+    
+    
 bpTest = 
 function(formula, varformula = NULL, studentize = TRUE, data = list())
 {
-	.bptest(formula, varformula, studentize, data)
+    .bptest(formula, varformula, studentize, data)
 }
-	
-	
+    
+    
 gqTest = 
 function(formula, point=0.5, order.by = NULL, data = list())
 {
-	.gqtest(formula, point, order.by, data)
+    .gqtest(formula, point, order.by, data)
 }
 
-	
+    
 hmcTest = 
 function(formula, point = 0.5, order.by = NULL, simulate.p = TRUE, 
 nsim = 1000, plot = FALSE, data = list()) 
-{	
-	.hmctest(formula, point, order.by, simulate.p, nsim, plot, data) 
+{   
+    .hmctest(formula, point, order.by, simulate.p, nsim, plot, data) 
 }
-			
+            
 
 harvTest = 
 function(formula, order.by = NULL, data = list())
 {
-	.harvtest(formula, order.by, data)
+    .harvtest(formula, order.by, data)
 }
 
-	
+    
 rainTest = 
 function(formula, fraction = 0.5, order.by = NULL, center = NULL, 
 data = list())
 {
-	.raintest(formula, fraction, order.by, center, data)
+    .raintest(formula, fraction, order.by, center, data)
 }
-	
-	
+    
+    
 resetTest = 
 function(formula, power = 2:3, type = c("fitted", "regressor", "princomp"), 
 data = list())
 {
-	.reset(formula, power, type, data)
+    .reset(formula, power, type, data)
 }
 
-	
+    
 bgTest = function(formula, order = 1, type = c("Chisq", "F"), data = list())
 {
-	.bgtest(formula, order, type, data)
+    .bgtest(formula, order, type, data)
 }
-	
-	
+    
+    
 # ##############################################################################
 # Regression Builtin:
 
@@ -196,70 +196,70 @@ bgTest = function(formula, order = 1, type = c("Chisq", "F"), data = list())
 function(formula, alternative = c("greater", "two.sided", "less"),
 iterations = 15, exact = NULL, tol = 1e-10, data = list())
 {
-	dname = paste(deparse(substitute(formula)))
-	alternative = match.arg(alternative)
-	mf = model.frame(formula, data = data)
-	y = model.response(mf)
-	X = model.matrix(formula, data = data)
-	n = nrow(X)
-	if (is.null(exact)) exact = (n < 100)
-	k = ncol(X)
-	res = lm.fit(X,y)$residuals
-	dw = sum(diff(res)^2)/sum(res^2)
-	A = diag(c(1,rep(2, n-2), 1))
-	A[abs(row(A)-col(A))==1] = -1
-	Q1 = chol2inv(qr.R(qr(X)))
-	
-  	if (exact) {
-	    MA = diag(rep(1,n)) - X %*% Q1 %*% t(X)
-	    MA = MA %*% A
-	    ev = eigen(MA)$values[1:(n-k)]
-	    if (any(Im(ev)>tol)) warning("imaginary parts of eigenvalues discarded")
-	    ev = Re(ev)
-	    ev = ev[ev > tol]
-    	pdw = function(dw) .Fortran("pan", as.double(c(dw,ev)), 
-    		as.integer(length(ev)),
+    dname = paste(deparse(substitute(formula)))
+    alternative = match.arg(alternative)
+    mf = model.frame(formula, data = data)
+    y = model.response(mf)
+    X = model.matrix(formula, data = data)
+    n = nrow(X)
+    if (is.null(exact)) exact = (n < 100)
+    k = ncol(X)
+    res = lm.fit(X,y)$residuals
+    dw = sum(diff(res)^2)/sum(res^2)
+    A = diag(c(1,rep(2, n-2), 1))
+    A[abs(row(A)-col(A))==1] = -1
+    Q1 = chol2inv(qr.R(qr(X)))
+    
+    if (exact) {
+        MA = diag(rep(1,n)) - X %*% Q1 %*% t(X)
+        MA = MA %*% A
+        ev = eigen(MA)$values[1:(n-k)]
+        if (any(Im(ev)>tol)) warning("imaginary parts of eigenvalues discarded")
+        ev = Re(ev)
+        ev = ev[ev > tol]
+        pdw = function(dw) .Fortran("pan", as.double(c(dw,ev)), 
+            as.integer(length(ev)),
              as.double(0), as.integer(iterations), x=double(1), 
              PACKAGE = "fMultivar")$x
-    	pval = switch(alternative,
-      		"two.sided" = (2*min(pdw(dw), 1-pdw(dw))),
-      		"less" = (1 - pdw(dw)),
-      		"greater" = pdw(dw))
+        pval = switch(alternative,
+            "two.sided" = (2*min(pdw(dw), 1-pdw(dw))),
+            "less" = (1 - pdw(dw)),
+            "greater" = pdw(dw))
 
-	    if ((pval > 1) | (pval < 0)) {
-		  	warning1 = "exact p value cannot be computed (not in [0,1]),"
-		  	warning2 = "approximate p value will be used"
-	      	warning(paste(warning1, warning2))
-	      	exact = FALSE
-	    }
-  	}
+        if ((pval > 1) | (pval < 0)) {
+            warning1 = "exact p value cannot be computed (not in [0,1]),"
+            warning2 = "approximate p value will be used"
+            warning(paste(warning1, warning2))
+            exact = FALSE
+        }
+    }
   
-  	if (!exact) {
-    	XAXQ = t(X) %*% A %*% X %*% Q1
-    	P = 2*(n-1) - sum(diag(XAXQ))
-    	Q = 2*(3*n - 4) - 2* sum(diag(t(X) %*% A %*% A %*% X %*% Q1)) + sum(
-         	diag(XAXQ %*% XAXQ))
-    	dmean = P/(n-k)
-    	dvar = 2/((n-k)*(n-k+2)) * (Q - P*dmean)
-    	pval = switch(alternative,
-      		"two.sided" = (2*pnorm(abs(dw-dmean), sd=sqrt(dvar), 
-      		lower.tail = FALSE)),
-      		"less" = pnorm(dw, mean = dmean, sd = sqrt(dvar), 
-      		lower.tail = FALSE),
-      	"greater" = pnorm(dw, mean = dmean, sd = sqrt(dvar)))
-  	}
+    if (!exact) {
+        XAXQ = t(X) %*% A %*% X %*% Q1
+        P = 2*(n-1) - sum(diag(XAXQ))
+        Q = 2*(3*n - 4) - 2* sum(diag(t(X) %*% A %*% A %*% X %*% Q1)) + sum(
+            diag(XAXQ %*% XAXQ))
+        dmean = P/(n-k)
+        dvar = 2/((n-k)*(n-k+2)) * (Q - P*dmean)
+        pval = switch(alternative,
+            "two.sided" = (2*pnorm(abs(dw-dmean), sd=sqrt(dvar), 
+            lower.tail = FALSE)),
+            "less" = pnorm(dw, mean = dmean, sd = sqrt(dvar), 
+            lower.tail = FALSE),
+        "greater" = pnorm(dw, mean = dmean, sd = sqrt(dvar)))
+    }
 
-  	alternative = switch(alternative,
-    	"two.sided" = "true autocorelation is not 0",
-    	"less" = "true autocorrelation is less than 0",
-    	"greater" = "true autocorrelation is greater than 0")
+    alternative = switch(alternative,
+        "two.sided" = "true autocorelation is not 0",
+        "less" = "true autocorrelation is less than 0",
+        "greater" = "true autocorrelation is greater than 0")
 
-  	names(dw) = "DW"
+    names(dw) = "DW"
   
-  	RVAL = list(statistic = dw, method = "Durbin-Watson test",
-    	alternative = alternative, p.value= pval, data.name=dname)
-  	class(RVAL) = "htest"
-  	return(RVAL)
+    RVAL = list(statistic = dw, method = "Durbin-Watson test",
+        alternative = alternative, p.value= pval, data.name=dname)
+    class(RVAL) = "htest"
+    return(RVAL)
 }
 
 
@@ -269,42 +269,42 @@ iterations = 15, exact = NULL, tol = 1e-10, data = list())
 .bptest = 
 function(formula, varformula = NULL, studentize = TRUE, data = list())
 {
-	dname = paste(deparse(substitute(formula)))
-	mf = model.frame(formula, data = data)
-	y = model.response(mf)
-	X = model.matrix(formula, data = data)
-	k = ncol(X)
-	n = nrow(X)
+    dname = paste(deparse(substitute(formula)))
+    mf = model.frame(formula, data = data)
+    y = model.response(mf)
+    X = model.matrix(formula, data = data)
+    k = ncol(X)
+    n = nrow(X)
 
-  	resi = lm.fit(X,y)$residuals
-  	sigma2 = sum(resi^2)/n
-  	if (is.null(varformula)) varformula = formula
-  	Z = model.matrix(varformula, data = data)
+    resi = lm.fit(X,y)$residuals
+    sigma2 = sum(resi^2)/n
+    if (is.null(varformula)) varformula = formula
+    Z = model.matrix(varformula, data = data)
 
-  	if (studentize) {
-    	w = resi^2 - sigma2
-    	fv = lm.fit(Z,w)$fitted
-    	bp = n * sum(fv^2)/sum(w^2)
-    	method = "studentized Breusch-Pagan test"
-  	} else {
-    	f = resi^2/sigma2 -1
-    	fv = lm.fit(Z,f)$fitted
-    	bp = 0.5 * sum(fv^2)
-    	method = "Breusch-Pagan test"
-  	}
+    if (studentize) {
+        w = resi^2 - sigma2
+        fv = lm.fit(Z,w)$fitted
+        bp = n * sum(fv^2)/sum(w^2)
+        method = "studentized Breusch-Pagan test"
+    } else {
+        f = resi^2/sigma2 -1
+        fv = lm.fit(Z,f)$fitted
+        bp = 0.5 * sum(fv^2)
+        method = "Breusch-Pagan test"
+    }
 
-  	names(bp) = "BP"
-  	df = ncol(Z)-1
-  	names(df) = "df"
+    names(bp) = "BP"
+    df = ncol(Z)-1
+    names(df) = "df"
   
-  	RVAL = list(statistic = bp,
-      	parameter = df,
-      	method = method,
-      	p.value= 1-pchisq(bp,df),
-      	data.name=dname)
+    RVAL = list(statistic = bp,
+        parameter = df,
+        method = method,
+        p.value= 1-pchisq(bp,df),
+        data.name=dname)
 
-	class(RVAL) = "htest"
-	return(RVAL)
+    class(RVAL) = "htest"
+    return(RVAL)
 }
 
 
@@ -314,40 +314,40 @@ function(formula, varformula = NULL, studentize = TRUE, data = list())
 .gqtest = 
 function(formula, point = 0.5, order.by = NULL, data = list())
 {
-	dname = paste(deparse(substitute(formula)))
-	mf = model.frame(formula, data = data)
-	y = model.response(mf)
-	X = model.matrix(formula, data = data)
-	k = ncol(X)
-	n = nrow(X)
-	if (point < 1) point = floor(point*n)
-	if (point > n - k | point < k) stop("inadmissable breakpoint")
-	
-	if (!is.null(order.by)) {
-    	x = model.matrix(order.by, data = data)
-    	x = as.vector(x[,ncol(x)])
-    	X = as.matrix(X[order(x),])
-    	y = y[order(x)]
-  	}
+    dname = paste(deparse(substitute(formula)))
+    mf = model.frame(formula, data = data)
+    y = model.response(mf)
+    X = model.matrix(formula, data = data)
+    k = ncol(X)
+    n = nrow(X)
+    if (point < 1) point = floor(point*n)
+    if (point > n - k | point < k) stop("inadmissable breakpoint")
+    
+    if (!is.null(order.by)) {
+        x = model.matrix(order.by, data = data)
+        x = as.vector(x[,ncol(x)])
+        X = as.matrix(X[order(x),])
+        y = y[order(x)]
+    }
 
-  	rss1 = sum(lm.fit(as.matrix(X[1:point,]),y[1:point])$residuals^2)
-  	rss2 = sum(lm.fit(as.matrix(X[(point+1):n,]),y[(point+1):n])$residuals^2)
+    rss1 = sum(lm.fit(as.matrix(X[1:point,]),y[1:point])$residuals^2)
+    rss2 = sum(lm.fit(as.matrix(X[(point+1):n,]),y[(point+1):n])$residuals^2)
 
-  	gq = (rss2/(n-point-k))/(rss1/(point-k))
-  	df = c(n-point-k, point-k)
-  	names(df) = c("df1", "df2")
-  	PVAL = 1-pf(gq, df[1], df[2])
-  	method = "Goldfeld-Quandt test"
-  	names(gq) = "GQ"
+    gq = (rss2/(n-point-k))/(rss1/(point-k))
+    df = c(n-point-k, point-k)
+    names(df) = c("df1", "df2")
+    PVAL = 1-pf(gq, df[1], df[2])
+    method = "Goldfeld-Quandt test"
+    names(gq) = "GQ"
   
-  	RVAL = list(statistic = gq,
-      	parameter = df,
-      	method = method,
-      	p.value= PVAL,
-      	data.name = dname)
+    RVAL = list(statistic = gq,
+        parameter = df,
+        method = method,
+        p.value= PVAL,
+        data.name = dname)
 
-  	class(RVAL) = "htest"
-  	return(RVAL)
+    class(RVAL) = "htest"
+    return(RVAL)
 }
 
 
@@ -358,53 +358,53 @@ function(formula, point = 0.5, order.by = NULL, data = list())
 function(formula, point = 0.5, order.by = NULL, simulate.p = TRUE,
 nsim=1000, plot = FALSE, data=list()) 
 {
-	dname = paste(deparse(substitute(formula)))
-	mf = model.frame(formula, data = data)
-	y = model.response(mf)
-	X = model.matrix(formula, data = data)
-	k = ncol(X)
-	n = nrow(X)
-	if (point < 1) point = floor(point*n)
-	if (point > n - k | point < k) stop("inadmissable breakpoint")
-	
-	if (!is.null(order.by)) {
-    	x = model.matrix(order.by, data = data)
-    	x = as.vector(x[,ncol(x)])
-    	X = as.matrix(X[order(x),])
-    	y = y[order(x)]
-  	}
+    dname = paste(deparse(substitute(formula)))
+    mf = model.frame(formula, data = data)
+    y = model.response(mf)
+    X = model.matrix(formula, data = data)
+    k = ncol(X)
+    n = nrow(X)
+    if (point < 1) point = floor(point*n)
+    if (point > n - k | point < k) stop("inadmissable breakpoint")
+    
+    if (!is.null(order.by)) {
+        x = model.matrix(order.by, data = data)
+        x = as.vector(x[,ncol(x)])
+        X = as.matrix(X[order(x),])
+        y = y[order(x)]
+    }
 
-  	resi = lm.fit(X,y)$residuals
-  	hmc = sum(resi[1:point]^2)/sum(resi^2)
+    resi = lm.fit(X,y)$residuals
+    hmc = sum(resi[1:point]^2)/sum(resi^2)
 
-  	if (plot) {
-    	stats = c(0,cumsum(resi^2))/sum(resi^2)
-    	stats = ts(stats, start=0, freq=n)
-    	plot(stats, xlab="fraction", ylab="Harrison-McCabe statistics", 
-    		xaxs="i", yaxs="i")
-    	abline(0,1)
-  	}
+    if (plot) {
+        stats = c(0,cumsum(resi^2))/sum(resi^2)
+        stats = ts(stats, start=0, freq=n)
+        plot(stats, xlab="fraction", ylab="Harrison-McCabe statistics", 
+            xaxs="i", yaxs="i")
+        abline(0,1)
+    }
 
-  	names(hmc) = "HMC"
-  	if (simulate.p) {
-    	stat = rep(0, nsim)
-    	for (i in 1:nsim) {
-      		x = rnorm(n)
-      		x = (x - mean(x))/sqrt(var(x))
-      		stat[i] = sum(x[1:point]^2)/sum(x^2)
-    	}
-	    PVAL = mean(stat <= hmc)
-  	} else {
-    	PVAL = NA
-	}
+    names(hmc) = "HMC"
+    if (simulate.p) {
+        stat = rep(0, nsim)
+        for (i in 1:nsim) {
+            x = rnorm(n)
+            x = (x - mean(x))/sqrt(var(x))
+            stat[i] = sum(x[1:point]^2)/sum(x^2)
+        }
+        PVAL = mean(stat <= hmc)
+    } else {
+        PVAL = NA
+    }
 
-  	RVAL = list(statistic = hmc,
-      	method = "Harrison-McCabe test",
-      	p.value= PVAL,
-      	data.name=dname)
+    RVAL = list(statistic = hmc,
+        method = "Harrison-McCabe test",
+        p.value= PVAL,
+        data.name=dname)
 
-  	class(RVAL) = "htest"
-  	return(RVAL)
+    class(RVAL) = "htest"
+    return(RVAL)
 }
 
 # ------------------------------------------------------------------------------
@@ -435,8 +435,8 @@ function(formula, order.by=NULL, data=list())
       for(r in ((q+2):n))
       {
           X1 = X1 - (X1 %*% outer(xr, xr) %*% X1)/fr
-  	  betar = betar + X1 %*% xr * w[r-q-1]*sqrt(fr)
-  	  xr = as.vector(X[r,])
+      betar = betar + X1 %*% xr * w[r-q-1]*sqrt(fr)
+      xr = as.vector(X[r,])
           fr = as.vector((1 + (t(xr) %*% X1 %*% xr)))
           w[r-q] = (y[r] - t(xr) %*% betar)/sqrt(fr)
       }
@@ -583,10 +583,10 @@ function(formula, power=2:3, type=c("fitted", "regressor",
   df = c(df1, df2)
   names(df) = c("df1","df2")
   RVAL = list(statistic = reset,
-	parameter = df,
-	method = "RESET test",
-	p.value= as.vector(1-pf(reset, df1, df2)),
-	data.name=dname)
+    parameter = df,
+    method = "RESET test",
+    p.value= as.vector(1-pf(reset, df1, df2)),
+    data.name=dname)
   class(RVAL) = "htest"
   return(RVAL)
 }
@@ -632,8 +632,8 @@ function(formula, order = 1, type = c("Chisq", "F"), data = list())
 
   names(bg) = "LM test"
   RVAL = list(statistic = bg, parameter = df,
-    	method = paste("Breusch-Godfrey test for serial correlation of order", 
-    		max(order)), p.value = p.val, data.name =   dname)
+        method = paste("Breusch-Godfrey test for serial correlation of order", 
+            max(order)), p.value = p.val, data.name =   dname)
   class(RVAL) = "htest"
   return(RVAL)
 }
@@ -641,4 +641,4 @@ function(formula, order = 1, type = c("Chisq", "F"), data = list())
 
 ################################################################################
 
-		
+        

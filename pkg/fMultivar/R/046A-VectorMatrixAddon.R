@@ -46,7 +46,7 @@
 #  dim                  R  Returns the dimension of a matrix object
 #  ncol|nrow            R  Counts columns|rows of a matrix object
 #  length               R  Counts elements of a matrix object
-#   "["|"[["            R  Cubsets a matrix object
+#   "["|"[["            R  Subsets a matrix object
 #   (Arith)             R  Elementwise Arithmetic: + - * /
 #   (Lops)              R  Elementwise logical Ops: > < >= <= == !=
 #  cbind|rbind          R  Augments a matrix object by columns|rows
@@ -90,11 +90,11 @@
 ################################################################################
 # NOTES:
 #  WHERE YOU FIND THE FUCTIONS?
-#	R  Basic R Package
+#   R  Basic R Package
 #   B  Rmetrics fBasics Package
 #   M  This Rmetrics fMultivar Package
 #  REQUIREMENTS:
-#	fBasics
+#   fBasics
 #   fSeries
 #   EMV
 ################################################################################
@@ -153,7 +153,7 @@ function(n)
     #   Creates a Pascal matrix
     
     # Arguments:
-    #	n - the dimension of the square matrix
+    #   n - the dimension of the square matrix
     
     # Details:
     #   http://mathworld.wolfram.com/PascalMatrix.html
@@ -355,45 +355,45 @@ function(x)
 
 norm = 
 function(x, p = 2) 
-{	# A function implemented by Diethelm Wuertz
-	
-	# Description:
-	#	Returns the spectral norm of a matrix
-	
-	# Details:
-	#	http://mathworld.wolfram.com/MatrixNorm.html:
-	# 	For p = 1
-	#		The maximum absolute column sum norm |A|_1 is defined 
-	#		as the maximum of the sum of the absolute valued elements
-	#		of columns of the matrix.
-	# 	For p = 2:
-	#		The spectral |A|_2 norm is "the" of a matrix. This value
-	#   	is computed as the square root of the maximum eigenvalue   
-	#   	of A^H A where A^H is the conjugate transpose.
-	#   For p = Inf:
-	#		The maximum absolute row sum norm |A|_inf is defined 
-	#		as the maximum of the sum of the absolute valued elements
-	#		of rows of the matrix.
+{   # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   Returns the spectral norm of a matrix
+    
+    # Details:
+    #   http://mathworld.wolfram.com/MatrixNorm.html:
+    #   For p = 1
+    #       The maximum absolute column sum norm |A|_1 is defined 
+    #       as the maximum of the sum of the absolute valued elements
+    #       of columns of the matrix.
+    #   For p = 2:
+    #       The spectral |A|_2 norm is "the" of a matrix. This value
+    #       is computed as the square root of the maximum eigenvalue   
+    #       of A^H A where A^H is the conjugate transpose.
+    #   For p = Inf:
+    #       The maximum absolute row sum norm |A|_inf is defined 
+    #       as the maximum of the sum of the absolute valued elements
+    #       of rows of the matrix.
 
-	# FUNCTION:
-	
-	# Compute Norm:
-	ans = NA
-	if (p == 1) {
-		x = abs(x)
-		ans = max(apply(x, 2, sum)) 
-	}
-	if (p == 2) {
-		ans = sqrt(max(eigen(t(x) %*% x)$values))
-	}
-	if (p == Inf) {
-		x = abs(x)
-		ans = max(apply(x, 1, sum)) 
-	}
-	if (is.na(ans)) stop("Invalid value for p")
-		
-	# Return value:
-	ans
+    # FUNCTION:
+    
+    # Compute Norm:
+    ans = NA
+    if (p == 1) {
+        x = abs(x)
+        ans = max(apply(x, 2, sum)) 
+    }
+    if (p == 2) {
+        ans = sqrt(max(eigen(t(x) %*% x)$values))
+    }
+    if (p == Inf) {
+        x = abs(x)
+        ans = max(apply(x, 1, sum)) 
+    }
+    if (is.na(ans)) stop("Invalid value for p")
+        
+    # Return value:
+    ans
 }
 
 
@@ -470,20 +470,20 @@ function(x, y)
 
 mexp =
 function(x, order = 8, method = c("pade", "taylor"))
-{	# A function implemented by Diethelm Wuertz
+{   # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Returns matrix exponential of a square matrix
     
     # Author:
-    #	Package: mexp
-	#	Version: 0.1
-	#	Title: Matrix exponential
-	#	Date: 2004-01-22
-	#	Author: David Firth
-	#	Maintainer: David Firth <d.firth@warwick.ac.uk>
-	#	Description: Exponentiate a matrix by Pade or Taylor approximation
-	# 	License: GPL Version 2 or later
+    #   Package: mexp
+    #   Version: 0.1
+    #   Title: Matrix exponential
+    #   Date: 2004-01-22
+    #   Author: David Firth
+    #   Maintainer: David Firth <d.firth@warwick.ac.uk>
+    #   Description: Exponentiate a matrix by Pade or Taylor approximation
+    #   License: GPL Version 2 or later
 
     # FUNCTION:
     
@@ -491,11 +491,11 @@ function(x, order = 8, method = c("pade", "taylor"))
     method = method[1]
     a = x 
     if (!is.matrix(a)) 
-    	stop("invalid (non-matrix) argument")
+        stop("invalid (non-matrix) argument")
     if (dim(a)[1] != dim(a)[2]) 
-    	stop("matrix not square")
+        stop("matrix not square")
     if (!is.numeric(order)) 
-    	stop("order must be an integer number")
+        stop("order must be an integer number")
     if (!(method %in% c("pade", "taylor"))){
         stop("method must be \"pade\" or \"taylor\"")} 
             
@@ -505,18 +505,18 @@ function(x, order = 8, method = c("pade", "taylor"))
     order = as.integer(order)
     ntaylor = npade = 0
     if (method == "Pade") {
-	    npade = order 
+        npade = order 
     } else {
-	    ntaylor = order
-	}
+        ntaylor = order
+    }
     accuracy = as.double(0)
     result = .Fortran("matrexp", 
-    	a, 
-    	size, 
-    	ntaylor, 
-    	npade, 
-    	accuracy,
-    	PACKAGE = "fMultivar")
+        a, 
+        size, 
+        ntaylor, 
+        npade, 
+        accuracy,
+        PACKAGE = "fMultivar")
     accuracy = result[[5]]
     result = matrix(result[[1]], size, size)
     attr(result, "accuracy") = accuracy
@@ -530,29 +530,29 @@ function(x, order = 8, method = c("pade", "taylor"))
 
 ################################################################################
 # FUNCTION:
-#  vech				Stack the lower triange of a matrix as vector
-#  vec				Stack a matrix as a column vector
+#  vech             Stack the lower triange of a matrix as vector
+#  vec              Stack a matrix as a column vector
 #  %x%              Kronecker Product, is part of R's base package
 ################################################################################
 
 
 vech = 
 function(x)
-{	# A function implemented by Diethelm Wuertz
+{   # A function implemented by Diethelm Wuertz
 
-	# Description:
-	#	vech is the operator that stacks the lower triangle
-	#	of a NxN matrix as an N(N+1)/2x1 vector:
-	#	vech(X) =(X11, X21, X22, X31, ..., XNN)'
-	
-	# Note:
-	# 	Example for a 3x3 Matrix:
-	#	X11, X21, X22, X31, X32, X33
-	
-	# FUNCTION:
-	
-	# Return Value:
-	t(x[!upper.tri(x)])
+    # Description:
+    #   vech is the operator that stacks the lower triangle
+    #   of a NxN matrix as an N(N+1)/2x1 vector:
+    #   vech(X) =(X11, X21, X22, X31, ..., XNN)'
+    
+    # Note:
+    #   Example for a 3x3 Matrix:
+    #   X11, X21, X22, X31, X32, X33
+    
+    # FUNCTION:
+    
+    # Return Value:
+    t(x[!upper.tri(x)])
 }
 
 
@@ -561,21 +561,21 @@ function(x)
 
 vec = 
 function(x)
-{	# A function implemented by Diethelm Wuertz
+{   # A function implemented by Diethelm Wuertz
 
-	# Description:
-	#	vec is the operator that stacks a matrix
-	#	as a column vector:
-	#	vec(X) = (X11, X21, ..., XN1, X12, X22, ..., XNN)'
+    # Description:
+    #   vec is the operator that stacks a matrix
+    #   as a column vector:
+    #   vec(X) = (X11, X21, ..., XN1, X12, X22, ..., XNN)'
 
-	# Note:
-	# 	Example for a 3x3 Matrix:
-	#	X11, X21, X22, X31, X32, X33
-	
-	# FUNCTION:
-	
-	# Return Value:
-	t(t(as.vector(x)))
+    # Note:
+    #   Example for a 3x3 Matrix:
+    #   X11, X21, X22, X31, X32, X33
+    
+    # FUNCTION:
+    
+    # Return Value:
+    t(t(as.vector(x)))
 }
 
 
@@ -584,19 +584,19 @@ function(x)
 
 .tslag1 = 
 function(x, k) 
-{	# A function implemented by Diethelm Wuertz
+{   # A function implemented by Diethelm Wuertz
 
-	# Description:
-	#	Internal Function used by function tslag.
-		
-	
-	# FUNCTION:
-	y = x
-	if (k > 0) y = c(rep(NA, times = k), x[1:(length(x)-k)])
-	if (k < 0) y = c(x[(-k+1):length(x)], rep(NA, times = -k))
-	
-	# Return Value:
-	y 
+    # Description:
+    #   Internal Function used by function tslag.
+        
+    
+    # FUNCTION:
+    y = x
+    if (k > 0) y = c(rep(NA, times = k), x[1:(length(x)-k)])
+    if (k < 0) y = c(x[(-k+1):length(x)], rep(NA, times = -k))
+    
+    # Return Value:
+    y 
 }
 
 
@@ -605,47 +605,47 @@ function(x, k)
 
 tslag = 
 function(x, k = 1, trim = FALSE)
-{	# A function implemented by Diethelm Wuertz
+{   # A function implemented by Diethelm Wuertz
 
-	# Description:
-	#	Creates a lagged or leading vector/matrix of selected order(s).
-	
-	# Arguments:
-	#	x - a vector of data, missing values (NA) are allowed. 
-	#	k - the number of positions the new series is to lag 
-	#		or to lead the input series. 
-	#	trim - a logical flag, if TRUE, the missing values at the 
-	#		beginning or end of the returned series will be trimmed. 
-	#		The default value is FALSE. 
-	
-	# Details:
-	#	With a positive value of "k" we get a lagged series and with
-	#	a negative value we get a leading series. 
-	
-	# Examples:
-	#	tslag(rnorm(10), 2)
-	#	tslag(rnorm(10), -2:2)
-	#	tslag(rnorm(10), -2:2, trim = TRUE)
-	
-	# FUNCTION:
-		
-	# Bind:
-	ans = NULL
-	for ( i in k) {
-		ans = cbind(ans, .tslag1(x, i)) 
-	}
-		
-	# Trim:
-	if (trim) {
-		indexes = (1:length(ans[,1]))[!is.na(apply(ans, 1, sum))]
-		ans = ans[indexes, ] 
-	}
-		
-	# As Vector:
-	if (length(k) == 1) ans = as.vector(ans)
-	
-	# Return Value:
-	ans
+    # Description:
+    #   Creates a lagged or leading vector/matrix of selected order(s).
+    
+    # Arguments:
+    #   x - a vector of data, missing values (NA) are allowed. 
+    #   k - the number of positions the new series is to lag 
+    #       or to lead the input series. 
+    #   trim - a logical flag, if TRUE, the missing values at the 
+    #       beginning or end of the returned series will be trimmed. 
+    #       The default value is FALSE. 
+    
+    # Details:
+    #   With a positive value of "k" we get a lagged series and with
+    #   a negative value we get a leading series. 
+    
+    # Examples:
+    #   tslag(rnorm(10), 2)
+    #   tslag(rnorm(10), -2:2)
+    #   tslag(rnorm(10), -2:2, trim = TRUE)
+    
+    # FUNCTION:
+        
+    # Bind:
+    ans = NULL
+    for ( i in k) {
+        ans = cbind(ans, .tslag1(x, i)) 
+    }
+        
+    # Trim:
+    if (trim) {
+        indexes = (1:length(ans[,1]))[!is.na(apply(ans, 1, sum))]
+        ans = ans[indexes, ] 
+    }
+        
+    # As Vector:
+    if (length(k) == 1) ans = as.vector(ans)
+    
+    # Return Value:
+    ans
 }
 
 
@@ -654,46 +654,46 @@ function(x, k = 1, trim = FALSE)
 
 pdl = 
 function(x, d = 2, q = 3, trim = FALSE)
-{	# A function implemented by Diethelm Wuertz
+{   # A function implemented by Diethelm Wuertz
 
-	# Description:
-	#	Regressor matrix for polynomial distributed lags
-	
-	# Aruments:
-	#	x - a numeric vector.
-	#	d - an integer specifying the order of the polynomial. 
-	# 	q - an integer specifying the number of lags to use in 
-	#		creating polynomial distributed lags. This must be 
-	#		greater than d. 
-	#	trim - a logical flag; if TRUE, the missing values at 
-	#		the beginning of the returned matrix will be trimmed. 
+    # Description:
+    #   Regressor matrix for polynomial distributed lags
+    
+    # Aruments:
+    #   x - a numeric vector.
+    #   d - an integer specifying the order of the polynomial. 
+    #   q - an integer specifying the number of lags to use in 
+    #       creating polynomial distributed lags. This must be 
+    #       greater than d. 
+    #   trim - a logical flag; if TRUE, the missing values at 
+    #       the beginning of the returned matrix will be trimmed. 
 
-	# Value:
-	#	Returns a matrix representing the regressor matrix. 
+    # Value:
+    #   Returns a matrix representing the regressor matrix. 
 
-	# Example:
-	#	stack.loss = c(
-	#		42, 37, 37, 28, 18, 18, 19, 20, 15, 14, 14, 
-	#		13, 11, 12,  8,  7,  8,  8,  9, 15, 15)
-	#	pdl(stack.loss)
-	
-	# FUNCTION:
+    # Example:
+    #   stack.loss = c(
+    #       42, 37, 37, 28, 18, 18, 19, 20, 15, 14, 14, 
+    #       13, 11, 12,  8,  7,  8,  8,  9, 15, 15)
+    #   pdl(stack.loss)
+    
+    # FUNCTION:
 
-	# Polynomial distributed lags:
-	M = tslag(x, 1:q, FALSE)
-	C = NULL
-	for (i in 0:d) { C = rbind(C, (1:q)^i) }
-	Z = NULL
-	for (i in 1:(d+1)) { Z = cbind(Z, apply(t(C[i,]*t(M)), 1, sum)) }
-	Z[, 1] = Z[, 1] + x
-	
-	# Trim:
-	if (trim) {
-		indexes = (1:length(Z[,1]))[!is.na(apply(Z, 1, sum))]
-		Z = Z[indexes, ] }
+    # Polynomial distributed lags:
+    M = tslag(x, 1:q, FALSE)
+    C = NULL
+    for (i in 0:d) { C = rbind(C, (1:q)^i) }
+    Z = NULL
+    for (i in 1:(d+1)) { Z = cbind(Z, apply(t(C[i,]*t(M)), 1, sum)) }
+    Z[, 1] = Z[, 1] + x
+    
+    # Trim:
+    if (trim) {
+        indexes = (1:length(Z[,1]))[!is.na(apply(Z, 1, sum))]
+        Z = Z[indexes, ] }
 
-	# Return Value:
-	Z
+    # Return Value:
+    Z
 }
 
 

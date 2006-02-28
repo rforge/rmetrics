@@ -51,19 +51,19 @@ function(x, n, trim = TRUE, na.rm = FALSE, FUN, ...)
     x.orig = x
     if (is.timeSeries(x)) TS = TRUE else TS = FALSE
     if (TS) {
-    	positions = x.orig@positions
-    	x = x.orig@Data[, 1]
-    	
-	} else {
-		x = as.vector(x.orig)
-		names(x) = NULL
-	}
-	
-	# Remove NAs:
+        positions = x.orig@positions
+        x = x.orig@Data[, 1]
+        
+    } else {
+        x = as.vector(x.orig)
+        names(x) = NULL
+    }
+    
+    # Remove NAs:
     if (na.rm) { 
-	    if (TS) positions = positions[!is.na(x)]
-    	x = as.vector(na.omit(x))
-	}
+        if (TS) positions = positions[!is.na(x)]
+        x = as.vector(na.omit(x))
+    }
     
     # Roll FUN:
     start = 1
@@ -79,15 +79,15 @@ function(x, n, trim = TRUE, na.rm = FALSE, FUN, ...)
     
     # Trim:
     if (!trim) 
-    	ans = c(rep(NA, (n-1)), ans)
+        ans = c(rep(NA, (n-1)), ans)
     if (trim & TS)
-    	positions = positions[-(1:(n-1))]
+        positions = positions[-(1:(n-1))]
         
     # Back to timeSeries:
     if (TS) {
-    	ans = timeSeries(as.matrix(ans), positions, units = x.orig@units,
-    		FinCenter = x.orig@FinCenter)
-	}
+        ans = timeSeries(as.matrix(ans), positions, units = x.orig@units,
+            FinCenter = x.orig@FinCenter)
+    }
     
     # Return value:
     ans
@@ -95,7 +95,7 @@ function(x, n, trim = TRUE, na.rm = FALSE, FUN, ...)
 
 
 # ------------------------------------------------------------------------------
-	
+    
 
 rollMean = 
 function(x, n = 9, trim = TRUE, na.rm = FALSE) 
@@ -105,20 +105,20 @@ function(x, n = 9, trim = TRUE, na.rm = FALSE)
     #   Compute rolling mean
 
     # Examples:
-	#
-	# 	x = timeSeries(as.matrix(cumsum(rnorm(12))), timeCalendar(), 
-	# 		units = "rnorm",FinCenter = "GMT")
-	# 	rollMean(x, n = 4, trim = FALSE, na.rm = FALSE)
-	# 	rollMean(x, n = 4, trim = TRUE, na.rm = FALSE)
-	#
-	# 	x@Data[8, ] = NA
-	# 	rollMean(x, n = 4, trim = FALSE, na.rm = FALSE)
-	# 	rollMean(x, n = 4, trim = FALSE, na.rm = TRUE)
-	# 	rollMean(x, n = 4, trim = TRUE, na.rm = TRUE)
-	
-	# FUNCTION:
-	
-	# Roll Mean:
+    #
+    #   x = timeSeries(as.matrix(cumsum(rnorm(12))), timeCalendar(), 
+    #       units = "rnorm",FinCenter = "GMT")
+    #   rollMean(x, n = 4, trim = FALSE, na.rm = FALSE)
+    #   rollMean(x, n = 4, trim = TRUE, na.rm = FALSE)
+    #
+    #   x@Data[8, ] = NA
+    #   rollMean(x, n = 4, trim = FALSE, na.rm = FALSE)
+    #   rollMean(x, n = 4, trim = FALSE, na.rm = TRUE)
+    #   rollMean(x, n = 4, trim = TRUE, na.rm = TRUE)
+    
+    # FUNCTION:
+    
+    # Roll Mean:
     rmean = rollFun(x = x, n = n, trim = trim, na.rm = na.rm, FUN = mean) 
     
     # Return Value:
@@ -145,12 +145,12 @@ function(x, n = 9, trim = TRUE, unbiased = TRUE, na.rm = FALSE)
     
     # Unbiased ?
     if (!unbiased) {
-    	if (TS) {
-    		rvar@Data = (rvar@Data * (n-1))/n
-		} else {
-			rvar = (rvar * (n-1))/n
-		}
-	}
+        if (TS) {
+            rvar@Data = (rvar@Data * (n-1))/n
+        } else {
+            rvar = (rvar * (n-1))/n
+        }
+    }
 
     # Return Value:
     rvar 
@@ -203,101 +203,101 @@ function(x, n = 9, trim = TRUE, na.rm = FALSE)
 .roll.RUnit =
 function()
 {
-	
-	# Try Vector:
-	cat("\n-------- Vector -------------------------------\n")
-	
-	# .roll.RUnit()
-	n = 3
-	
-	for (na.rm in c(TRUE, FALSE)) {
-		
-		x = 1:10
-		if (na.rm) x[6] = NA
-		cat("\n\nna.rm: ", na.rm)
-		cat("\nx: ", x, "\n")
-		
-		for (trim in c(TRUE, FALSE)) {
-		
-			cat("\ntrim: ", trim, "\n\n")
-			
-			# Sum:
-			ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = sum)
-			print(ans)
-			# 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90
-			
-			# Mean:
-			ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = mean)
-			#  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18
-			print(ans)
-			
-			# Var:
-			ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = var)
-			#  2.5 2.5 2.5 2.5 2.5 2.5 2.5 2.5 2.5 2.5 2.5 2.5 2.5 2.5 2.5 2.5
-			print(ans)
-			
-			# Min:
-			ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = min)
-			#  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16
-			print(ans)
-			
-			# Max:
-			ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = max)
-		 	#  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20
-			print(ans)
-			
-		}
-	}
-	
-	# Try timeSeries:
-	cat("\n-------- Time Series --------------------------\n")
-	charvec = paste("1999", 10, 11:20, sep = "-")
-	ts = timeSeries(data = 1:10, charvec, units = "SERIES", zone = "GMT",
-		FinCenter = "GMT") 
-	
-	# .roll.RUnit()
-	n = 3
-	
-	for (na.rm in c(TRUE, FALSE)) {
-		
-		x = ts
-		if (na.rm) x@Data[6, ] = NA
-		cat("\n\nna.rm: ", na.rm)
-		print(x)
-		
-		for (trim in c(TRUE, FALSE)) {
-		
-			cat("\ntrim: ", trim, "\n\n")
-			
-			# Sum:
-			ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = sum)
-			print(ans)
-			# 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90
-			
-			# Mean:
-			ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = mean)
-			#  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18
-			print(ans)
-			
-			# Var:
-			ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = var)
-			#  2.5 2.5 2.5 2.5 2.5 2.5 2.5 2.5 2.5 2.5 2.5 2.5 2.5 2.5 2.5 2.5
-			print(ans)
-			
-			# Min:
-			ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = min)
-			#  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16
-			print(ans)
-			
-			# Max:
-			ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = max)
-		 	#  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20
-			print(ans)
-			
-		}
-	}
-		
-	invisible()
+    
+    # Try Vector:
+    cat("\n-------- Vector -------------------------------\n")
+    
+    # .roll.RUnit()
+    n = 3
+    
+    for (na.rm in c(TRUE, FALSE)) {
+        
+        x = 1:10
+        if (na.rm) x[6] = NA
+        cat("\n\nna.rm: ", na.rm)
+        cat("\nx: ", x, "\n")
+        
+        for (trim in c(TRUE, FALSE)) {
+        
+            cat("\ntrim: ", trim, "\n\n")
+            
+            # Sum:
+            ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = sum)
+            print(ans)
+            # 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90
+            
+            # Mean:
+            ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = mean)
+            #  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18
+            print(ans)
+            
+            # Var:
+            ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = var)
+            #  2.5 2.5 2.5 2.5 2.5 2.5 2.5 2.5 2.5 2.5 2.5 2.5 2.5 2.5 2.5 2.5
+            print(ans)
+            
+            # Min:
+            ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = min)
+            #  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16
+            print(ans)
+            
+            # Max:
+            ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = max)
+            #  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20
+            print(ans)
+            
+        }
+    }
+    
+    # Try timeSeries:
+    cat("\n-------- Time Series --------------------------\n")
+    charvec = paste("1999", 10, 11:20, sep = "-")
+    ts = timeSeries(data = 1:10, charvec, units = "SERIES", zone = "GMT",
+        FinCenter = "GMT") 
+    
+    # .roll.RUnit()
+    n = 3
+    
+    for (na.rm in c(TRUE, FALSE)) {
+        
+        x = ts
+        if (na.rm) x@Data[6, ] = NA
+        cat("\n\nna.rm: ", na.rm)
+        print(x)
+        
+        for (trim in c(TRUE, FALSE)) {
+        
+            cat("\ntrim: ", trim, "\n\n")
+            
+            # Sum:
+            ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = sum)
+            print(ans)
+            # 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90
+            
+            # Mean:
+            ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = mean)
+            #  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18
+            print(ans)
+            
+            # Var:
+            ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = var)
+            #  2.5 2.5 2.5 2.5 2.5 2.5 2.5 2.5 2.5 2.5 2.5 2.5 2.5 2.5 2.5 2.5
+            print(ans)
+            
+            # Min:
+            ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = min)
+            #  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16
+            print(ans)
+            
+            # Max:
+            ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = max)
+            #  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20
+            print(ans)
+            
+        }
+    }
+        
+    invisible()
 }
 
 

@@ -50,15 +50,15 @@ function (x, ...)
     # FUNCTION:
     
     # Convert to Matrix:
-   	if (class(x) == "timeSeries") {
-	   	TS = TRUE
-	   	positions = x@positions
-	   	FinCenter = x@FinCenter
-	   	units = x@units
-	   	x = x@Data
-   	} else {
-	   	TS = FALSE
-    	x = as.matrix(x, ...)
+    if (class(x) == "timeSeries") {
+        TS = TRUE
+        positions = x@positions
+        FinCenter = x@FinCenter
+        units = x@units
+        x = x@Data
+    } else {
+        TS = FALSE
+        x = as.matrix(x, ...)
     }
     
     # Remove:
@@ -69,8 +69,8 @@ function (x, ...)
     
     # timeSeries:
     if (TS) {
-	    ans = timeSeries(data = ans, charvec = rownames(ans), 
-	    	units = units, FinCenter = FinCenter)
+        ans = timeSeries(data = ans, charvec = rownames(ans), 
+            units = units, FinCenter = FinCenter)
     }
        
     # Return Value:
@@ -97,15 +97,15 @@ function(x, type = c("zeros", "mean", "median"), ...)
     # FUNCTION:
 
     # Convert to Matrix:
-   	if (class(x) == "timeSeries") {
-	   	TS = TRUE
-	   	positions = x@positions
-	   	FinCenter = x@FinCenter
-	   	units = x@units
-	   	ans = x@Data
-   	} else {
-	   	TS = FALSE
-    	ans = as.matrix(x, ...)
+    if (class(x) == "timeSeries") {
+        TS = TRUE
+        positions = x@positions
+        FinCenter = x@FinCenter
+        units = x@units
+        ans = x@Data
+    } else {
+        TS = FALSE
+        ans = as.matrix(x, ...)
     }
     
     # Type:
@@ -125,8 +125,8 @@ function(x, type = c("zeros", "mean", "median"), ...)
     
     # timeSeries:
     if (TS) {
-	    ans = timeSeries(data = ans, charvec = positions, units = units, 
-	    	FinCenter = FinCenter)
+        ans = timeSeries(data = ans, charvec = positions, units = units, 
+            FinCenter = FinCenter)
     }
     
     # Return Value:
@@ -161,15 +161,15 @@ function(x, method = c("linear", "before", "after"), ...)
     # FUNCTION:
     
     # Convert to Matrix:
-   	if (class(x) == "timeSeries") {
-	   	TS = TRUE
-	   	positions = x@positions
-	   	FinCenter = x@FinCenter
-	   	units = x@units
-	   	x = x@Data
-   	} else {
-	   	TS = FALSE
-    	x = as.matrix(x, ...)
+    if (class(x) == "timeSeries") {
+        TS = TRUE
+        positions = x@positions
+        FinCenter = x@FinCenter
+        units = x@units
+        x = x@Data
+    } else {
+        TS = FALSE
+        x = as.matrix(x, ...)
     }
     
     # Internal Function:    
@@ -198,8 +198,8 @@ function(x, method = c("linear", "before", "after"), ...)
         
     # timeSeries:
     if (TS) {
-	    x = timeSeries(data = x, charvec = positions, units = units, 
-	    	FinCenter = FinCenter)
+        x = timeSeries(data = x, charvec = positions, units = units, 
+            FinCenter = FinCenter)
     }
     
     # Return Value:
@@ -239,15 +239,15 @@ function(x, k = max(dim(as.matrix(x))[1]*0.01,2), correlation = FALSE, ...)
 
     # Settings:
     # Convert to Matrix:
-   	if (class(x) == "timeSeries") {
-	   	TS = TRUE
-	   	positions = x@positions
-	   	FinCenter = x@FinCenter
-	   	units = x@units
-	   	x = x@Data
-   	} else {
-	   	TS = FALSE
-    	x = as.matrix(x, ...)
+    if (class(x) == "timeSeries") {
+        TS = TRUE
+        positions = x@positions
+        FinCenter = x@FinCenter
+        units = x@units
+        x = x@Data
+    } else {
+        TS = FALSE
+        x = as.matrix(x, ...)
     }
     
     # KNN:
@@ -255,8 +255,8 @@ function(x, k = max(dim(as.matrix(x))[1]*0.01,2), correlation = FALSE, ...)
     
     # timeSeries
     if (TS) {
-	    ans = timeSeries(data = ans, charvec = positions, units = units, 
-	    	FinCenter = FinCenter)
+        ans = timeSeries(data = ans, charvec = positions, units = units, 
+            FinCenter = FinCenter)
     }
     
     # Return Value:
@@ -270,89 +270,89 @@ function(x, k = max(dim(as.matrix(x))[1]*0.01,2), correlation = FALSE, ...)
 .knn = 
 function(m, k = max(dim(m)[1]*0.01,2), na.rm = TRUE, nan.rm = TRUE,
 inf.rm = TRUE, correlation = FALSE, dist.bound = FALSE)
-{	# A copy from EMV package
+{   # A copy from EMV package
 
-	# Notes:
-	#	Package: EMV
-	#	Title: Estimation of Missing Values for a Data Matrix
-	#	Version: 1.3.1
-	#	Author: Raphael Gottardo
-	#	Description: Estimation of missing values in a matrix by 
-	#		a k-th nearest neighboors algorithm
-	#	Maintainer: Raphael Gottardo <raph@stat.washington.edu>
-	#	License: GPL version 2 or later
-	#	Packaged: Thu Oct 7 15:29:04 2004
+    # Notes:
+    #   Package: EMV
+    #   Title: Estimation of Missing Values for a Data Matrix
+    #   Version: 1.3.1
+    #   Author: Raphael Gottardo
+    #   Description: Estimation of missing values in a matrix by 
+    #       a k-th nearest neighboors algorithm
+    #   Maintainer: Raphael Gottardo <raph@stat.washington.edu>
+    #   License: GPL version 2 or later
+    #   Packaged: Thu Oct 7 15:29:04 2004
 
-	# FUNCTION:
-	
-	# Check:
-	if (is.matrix(m) == FALSE)
-		stop(message = "not a valid matrix object")
-	
-	# Dimension:
-	n = dim(m)[1]
+    # FUNCTION:
+    
+    # Check:
+    if (is.matrix(m) == FALSE)
+        stop(message = "not a valid matrix object")
+    
+    # Dimension:
+    n = dim(m)[1]
 
-	# At least 2 to compute the mean 
-  	if (k < 2)
-    	stop(message="k should be bigger than 1")
+    # At least 2 to compute the mean 
+    if (k < 2)
+        stop(message="k should be bigger than 1")
 
     # At most n-1 neighboors
-  	if (k > n)
-    	k <- n-1
+    if (k > n)
+        k <- n-1
     
-  	nb.col = dim(m)[2]
-  	nb.row = dim(m)[1]
+    nb.col = dim(m)[2]
+    nb.row = dim(m)[1]
 
-	# Code when linking to C
+    # Code when linking to C
     missing.code = -9999999
   
-  	vector = as.double(t(m))
-  	tmp = vector
+    vector = as.double(t(m))
+    tmp = vector
   
-	# Replace the missing values by -9999999 (C code) 
+    # Replace the missing values by -9999999 (C code) 
     vector[is.finite(vector) == FALSE] = missing.code
   
     # Compute:
-  	result = .C("knnc",
-		vector = as.double(vector),
-		nb.col = as.integer(nb.col),
-		nb.row = as.integer(nb.row),
-		k = as.integer(k),
-		as.integer(correlation),
-		distance = double(nb.row),
-		as.double(dist.bound),
-		PACKAGE = "fMultivar")
+    result = .C("knnc",
+        vector = as.double(vector),
+        nb.col = as.integer(nb.col),
+        nb.row = as.integer(nb.row),
+        k = as.integer(k),
+        as.integer(correlation),
+        distance = double(nb.row),
+        as.double(dist.bound),
+        PACKAGE = "fMultivar")
 
-  	vector = result$vector
-  	
-	# Still missing values if complete row of missing values
-	vector[vector == missing.code] = tmp[vector == missing.code]
+    vector = result$vector
+    
+    # Still missing values if complete row of missing values
+    vector[vector == missing.code] = tmp[vector == missing.code]
   
-	# Remove the non-missing rows for the distances
-  	distance = result$distance[result$distance != missing.code & 
-  		result$distance != -missing.code]
-  	row = (1:nb.row)[result$distance != missing.code & 
-  		result$distance != -missing.code]
-  	distance = cbind(row,distance)
+    # Remove the non-missing rows for the distances
+    distance = result$distance[result$distance != missing.code & 
+        result$distance != -missing.code]
+    row = (1:nb.row)[result$distance != missing.code & 
+        result$distance != -missing.code]
+    distance = cbind(row,distance)
   
-  	if (na.rm == FALSE) {
-    	vector[is.na(tmp) == TRUE & is.nan(tmp) == FALSE] = NA
-	}
-  
-  	if (inf.rm == FALSE) {
-		index = is.finite(tmp) == FALSE & is.na(tmp) == FALSE & 
-			is.nan(tmp) == FALSE
-      	vector[index] = tmp[index]
+    if (na.rm == FALSE) {
+        vector[is.na(tmp) == TRUE & is.nan(tmp) == FALSE] = NA
     }
   
-  	if (nan.rm == FALSE)
-    	vector[is.nan(tmp) == TRUE] = NaN
+    if (inf.rm == FALSE) {
+        index = is.finite(tmp) == FALSE & is.na(tmp) == FALSE & 
+            is.nan(tmp) == FALSE
+        vector[index] = tmp[index]
+    }
   
-	# Coerce vector back into the matrix
-  	newdata = matrix(vector , nrow = nb.row, ncol = nb.col, byrow = TRUE)
-  	
-  	# Return Value:
-  	list(data = newdata, distance = distance)
+    if (nan.rm == FALSE)
+        vector[is.nan(tmp) == TRUE] = NaN
+  
+    # Coerce vector back into the matrix
+    newdata = matrix(vector , nrow = nb.row, ncol = nb.col, byrow = TRUE)
+    
+    # Return Value:
+    list(data = newdata, distance = distance)
 }
 
 

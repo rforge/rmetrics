@@ -1,3 +1,4 @@
+*	 Original: mvt.f DW
 *
 *    $Id: mvt.f,v 1.11 2004/10/14 13:39:01 hothorn Exp $
 *

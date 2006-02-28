@@ -42,10 +42,10 @@
 
 
 # Example SP500 Index:
-#	require(fBasics)
-#	x = as.timeSeries(singleIndex.dat, format = "%d-%b-%Y")[, 2]
+#   require(fBasics)
+#   x = as.timeSeries(singleIndex.dat, format = "%d-%b-%Y")[, 2]
 
-	
+    
 # ------------------------------------------------------------------------------
 
 
@@ -59,15 +59,15 @@ trim = TRUE, digits = 4)
     
     # Note:
     #   Function for S-Plus Compatibility
-    #	Call: 
-    #		returnSeries(x, type = c("continuous", "discrete"), 
-    #		percentage = FALSE, trim = TRUE, digits = 4) 
+    #   Call: 
+    #       returnSeries(x, type = c("continuous", "discrete"), 
+    #       percentage = FALSE, trim = TRUE, digits = 4) 
     
     # FUNCTION:
     
     # Return Value:
     returnSeries(x = x, type = type[1], percentage = percentage, 
-    	trim = trim, digits = digits)
+        trim = trim, digits = digits)
  
 }
 
@@ -90,9 +90,9 @@ function(x)
         TS = TRUE
         positions = x@positions
         x = seriesData(x)
-	}
+    }
 
-	# Check for Univariate Series:
+    # Check for Univariate Series:
     if (NCOL(x) > 1) {
         stop("x is not a vector or univariate timeSeries")
     }
@@ -110,8 +110,8 @@ function(x)
         from[i] = max(which(cmaxx[1:to[i]] == 0))   
         
     if (TS) {
-	    from = positions[from]
-	    to = positions[to]
+        from = positions[from]
+        to = positions[to]
     }
         
     # Return Value:
@@ -147,7 +147,7 @@ function(x, r = 0, scale = sqrt(250))
     # Sharpe Ratio:
     if(NROW(x) == 1) {
         return(NA)
-	} else {
+    } else {
         y = diff(x)
         return(scale * (mean(y)-r)/sd(y))
     }
@@ -172,7 +172,7 @@ function(x)
     # Check for timeSeries Object:
     TS = FALSE
     if (is.timeSeries(x)) {
-	    TS = TRUE
+        TS = TRUE
         Unit = x@units
         x = seriesData(x)
     }

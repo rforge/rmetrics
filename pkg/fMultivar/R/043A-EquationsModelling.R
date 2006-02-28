@@ -127,7 +127,7 @@ title = NULL, description = NULL, ...)
     # FUNCTION:
     
     # Fit:
-	ans = systemfit(method = method[1], eqns = formulas, 
+    ans = systemfit(method = method[1], eqns = formulas, 
         data = as.data.frame(data), ...) 
     fit = list()
     fit$fit = ans   
@@ -160,26 +160,26 @@ title = NULL, description = NULL, ...)
 
 print.fEQNS =
 function(x, ...)
-{	# A function implemented by Diethelm Wuertz
+{   # A function implemented by Diethelm Wuertz
 
-	# FUNCTION:
-	
-	cat("\nTitle:\n")
-	cat(paste(x@method, "Equations Fit\n"))
-	
-	cat("\nFormulas:\n")
-	form = t(matrix(capture.output(x@formulas), ncol = 2))
-	cat(form[, 2], sep = "\n")
-	
-	cat("\nFit Results:\n")
-	output = capture.output(summary(x@fit$fit)) [-(1:3)]
-	for (i in 1:length(output)) output[i] = paste(" ", output[i])
-	cat(output, fill = FALSE, sep = "\n")
-	
-	cat("Description:\n")
-	cat(x@description, "\n\n")
-	
-	invisible(x)
+    # FUNCTION:
+    
+    cat("\nTitle:\n")
+    cat(paste(x@method, "Equations Fit\n"))
+    
+    cat("\nFormulas:\n")
+    form = t(matrix(capture.output(x@formulas), ncol = 2))
+    cat(form[, 2], sep = "\n")
+    
+    cat("\nFit Results:\n")
+    output = capture.output(summary(x@fit$fit)) [-(1:3)]
+    for (i in 1:length(output)) output[i] = paste(" ", output[i])
+    cat(output, fill = FALSE, sep = "\n")
+    
+    cat("Description:\n")
+    cat(x@description, "\n\n")
+    
+    invisible(x)
 }  
 
 
@@ -211,7 +211,7 @@ function(object, ...)
 
 coef.fEQNS = 
 function(object, ...) 
-{	# A function implemented by Diethelm Wuertz
+{   # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Returns the fitted values
@@ -232,7 +232,7 @@ function(object, ...)
 
 fitted.fEQNS = 
 function(object, ...) 
-{	# A function implemented by Diethelm Wuertz
+{   # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Returns the fitted values
@@ -260,7 +260,7 @@ function(object, ...)
 
 residuals.fEQNS = 
 function(object, ...) 
-{	# A function implemented by Diethelm Wuertz
+{   # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Returns all residuals
@@ -289,7 +289,7 @@ function(object, ...)
 
 vcov.fEQNS = 
 function(object, ...) 
-{	# A function implemented by Diethelm Wuertz
+{   # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Returns the variance-covariance matrix of the coefficients
@@ -324,13 +324,13 @@ interval = "none", ci = 0.95, ...)
 
 systemfitBuiltin = 
 function(builtin = "/fMultivar/demo/funSystemfit.R") 
-{	# A function implemented by Diethelm Wuertz
+{   # A function implemented by Diethelm Wuertz
 
-	# Builtin:
-	Builtin = paste(.Library, builtin, sep = "") 
-	
-	# Return Value:
-	source(Builtin)	
+    # Builtin:
+    Builtin = paste(.Library, builtin, sep = "") 
+    
+    # Return Value:
+    source(Builtin) 
 }
 
 
@@ -339,7 +339,7 @@ function(builtin = "/fMultivar/demo/funSystemfit.R")
 
 SUR = 
 function(formulas, data = list(), ...)
-{	# A function implemented by Diethelm Wuertz
+{   # A function implemented by Diethelm Wuertz
 
     # Fit:
     ans = eqnsFit(formulas = formulas, data = data, method = "SUR", ...)
