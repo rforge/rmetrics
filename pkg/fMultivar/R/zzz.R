@@ -1,12 +1,10 @@
 
 #*******************************************************************************
-# F - A SOFTWARE COLLECTION FOR FINANCIAL ENGINEERS
+# fMultivar - A SOFTWARE COLLECTION FOR FINANCIAL ENGINEERS
+# Multivariate Financial Markets Analysis
 #
-#     fMultivar
-#     Multivariate Financial Markets Analysis
-#
-#     collected and maintained by Diethelm Wuertz
-#
+# collected by Diethelm Wuertz
+# Version 0.9
 #*******************************************************************************
 
 
@@ -43,14 +41,14 @@
 
 .First.lib = 
 function(lib, pkg)
-{ 	# A function implemented by Diethelm Wuertz
-	
-	# Package:
-	cat("\nRmetrics, (C) 1999-2005, Diethelm Wuertz, GPL")
-	cat("\nfSeries 2: Multivariate Financial Markets Analysis\n")
+{   # A function implemented by Diethelm Wuertz
+    
+    # Package:
+    cat("\nRmetrics, (C) 1999-2005, Diethelm Wuertz, GPL")
+    cat("\nfMultivariate: Multivariate Financial Markets Analysis\n")
 
-	# Load dll:
-	library.dynam("fMultivar", pkg, lib)
+    # Load dll:
+    library.dynam("fMultivar", pkg, lib)
 }
 
 
