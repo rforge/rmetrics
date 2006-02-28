@@ -29,3 +29,25 @@
 
 ################################################################################
 
+
+isISO8601 =
+function(x)
+{   # A function written by Diethelm Wuertz
+
+    # FUNCTION:
+    
+    # Check:
+    if (class(x) != "timeDate") {
+        stop("x is not a timeDate object")
+    } 
+    
+    # Test: 
+    ans = FALSE
+    if (x@format == "%Y-%m-%d %H:%M:%S") ans = TRUE
+    if (x@format == "%Y-%m-%d") ans = TRUE
+    if (x@format == "%Y%m%d%H%M%S") ans = TRUE
+    if (x@format == "%Y%m%d") ans = TRUE
+    
+    # Return Value:
+    ans
+}

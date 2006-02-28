@@ -595,6 +595,8 @@ function (sdates, origin = 19600101)
         
     # FUNCTION:
     
+    if (class(sdates) == "sdate") sdates = as.vector(sdates)
+    
     # Internal Function:
     .julian = function(m, d, y, origin = c(month = 1, day = 1, year = 1960)) {  
         only.origin = all(missing(m), missing(d), missing(y))
@@ -653,6 +655,9 @@ function(sdates)
     
     # FUNCTION::fBasic  
     
+    # Convert:
+    if (class(sdates) == "sdate") sdates = as.vector(sdates)
+        
     # Year - Month - Day:
     # Sunday 0, Monday 1, ..., Saturday 6
     year = sdates%/%10000
@@ -690,7 +695,10 @@ function(sdates)
     #   year is a leap year or not.
     
     # FUNCTION:
-        
+      
+    # Convert:
+    if (class(sdates) == "sdate") sdates = as.vector(sdates)
+      
     # Year:
     year = sdates%/%10000
     
@@ -719,11 +727,11 @@ function(x, ...)
     
     # Print in the same format as 'timeDate' objects:
     if (class(version) != "Sversion") {
-	    print(timeDate(x, ...))
-	} else {
-		print(timeDate(as.character(x), in.format = "%04y%02m%02d", 
-			format = "[%04Y-%02m-%02d]"), ...)
-	}
+        print(timeDate(x, ...))
+    } else {
+        print(timeDate(as.character(x), in.format = "%04y%02m%02d", 
+            format = "[%04Y-%02m-%02d]"), ...)
+    }
     
     # Return Value:
     invisible()
@@ -735,67 +743,67 @@ function(x, ...)
 
 fjulian = 
 function(fdates, origin = 19600101, order = 'mdy', cc = NULL, swap = 20)
-{	# # A function implemented by Diethelm Wuertz
+{   # # A function implemented by Diethelm Wuertz
 
-	# Description:
- 	#	Transforms formatted dates (fdates) from several formats 
- 	#	as 8/11/73 11Aug1973, ... into ISO-8601 Gregorian dates
- 	#	... makes use of C-Program char_date.c implemented by 
-	#	Terry Therneau
-	
-	# Notes:
-	#	cc - Century, becoming obsolete with the introduction of
-	#		swap.
+    # Description:
+    #   Transforms formatted dates (fdates) from several formats 
+    #   as 8/11/73 11Aug1973, ... into ISO-8601 Gregorian dates
+    #   ... makes use of C-Program char_date.c implemented by 
+    #   Terry Therneau
+    
+    # Notes:
+    #   cc - Century, becoming obsolete with the introduction of
+    #       swap.
  
-	# Requirements:
-	#	R-package "date"
-	#	Splus Like Function .julian
-	
-	# Function Calls:
-	#	C: char_date()
- 	
-	# FUNCTION:
-	
-	# Formats:
-	order.vec = switch(order,
- 		'ymd'= c(1,2,3),
- 		'ydm'= c(1,3,2),
- 		'mdy'= c(2,3,1),
- 		'myd'= c(2,1,3),
- 		'dym'= c(3,1,2),
- 		'dmy'= c(3,2,1),
- 		stop("Invalid value for 'order' option"), 
- 		PACKAGE = "fCalendar")
-	nn = length(fdates)
-	temp = .C("char_date", 
-		as.integer(nn),
-		as.integer(order.vec),
-		as.character(fdates),
-		month = integer(nn),
-		day = integer(nn),
-		year = integer(nn),
-		PACKAGE = "fCalendar")
-	month = temp[[4]]
-	day = temp[[5]]
-	year = temp[[6]]
-	yy = year - 100 * floor (year/100)
-	
-	# Swap:
-	cc = 19 + trunc(sign(swap-yy)+1)/2
-	year = cc*100 + yy
- 	
-	# Origin:
-	cc0 = origin %/% 1000000
-	yymmdd0 = origin - cc0*1000000
-	yy0 = yymmdd0 %/% 10000
-	mm0 = yymmdd0 %/% 100 - yy0*100
-	dd0 = yymmdd0 - yy0*10000 - mm0*100
+    # Requirements:
+    #   R-package "date"
+    #   Splus Like Function .julian
+    
+    # Function Calls:
+    #   C: char_date()
+    
+    # FUNCTION:
+    
+    # Formats:
+    order.vec = switch(order,
+        'ymd'= c(1,2,3),
+        'ydm'= c(1,3,2),
+        'mdy'= c(2,3,1),
+        'myd'= c(2,1,3),
+        'dym'= c(3,1,2),
+        'dmy'= c(3,2,1),
+        stop("Invalid value for 'order' option"), 
+        PACKAGE = "fCalendar")
+    nn = length(fdates)
+    temp = .C("char_date", 
+        as.integer(nn),
+        as.integer(order.vec),
+        as.character(fdates),
+        month = integer(nn),
+        day = integer(nn),
+        year = integer(nn),
+        PACKAGE = "fCalendar")
+    month = temp[[4]]
+    day = temp[[5]]
+    year = temp[[6]]
+    yy = year - 100 * floor (year/100)
+    
+    # Swap:
+    cc = 19 + trunc(sign(swap-yy)+1)/2
+    year = cc*100 + yy
+    
+    # Origin:
+    cc0 = origin %/% 1000000
+    yymmdd0 = origin - cc0*1000000
+    yy0 = yymmdd0 %/% 10000
+    mm0 = yymmdd0 %/% 100 - yy0*100
+    dd0 = yymmdd0 - yy0*10000 - mm0*100
 
-	# Result:
- 	ans = .julian(month, day, year, origin = c(mm0, dd0, cc0*100+yy0))
- 	
- 	# Return Value:
- 	ans
+    # Result:
+    ans = .julian(month, day, year, origin = c(mm0, dd0, cc0*100+yy0))
+    
+    # Return Value:
+    ans
 }
 
 
@@ -804,50 +812,50 @@ function(fdates, origin = 19600101, order = 'mdy', cc = NULL, swap = 20)
 
 .julian =
 function(m, d, y, origin = c(month = 1, day = 1, year = 1960))
-{	# A function implemented by Diethelm Wuertz
-	
-	# Description:
-	#	This function is a synonyme for Splus' "julian()" with the
-	#	same list of arguments.
-	
-	# Note:
-	#	SPlus like function.
+{   # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   This function is a synonyme for Splus' "julian()" with the
+    #   same list of arguments.
+    
+    # Note:
+    #   SPlus like function.
 
-	# FUNCTION:
-	
-	# Selection:
-	.R = TRUE
-	.S = FALSE
-	
-	# Implementation under R:
-	if(.R) {	
-		only.origin = all(missing(m), missing(d), missing(y))
-		if(only.origin) m = d = y = NULL	# return days since origin
-		nms = names(d)
-		max.len = max(length(m), length(d), length(y))	
-		# prepend new origin value and rep out to common max. length:
-		m = c(origin[1], rep(m, length = max.len))
-		d = c(origin[2], rep(d, length = max.len))
-		y = c(origin[3], rep(y, length = max.len))	
-		# code from julian date in the S book (p.269)
-		y = y + ifelse(m > 2, 0, -1)
-		m = m + ifelse(m > 2, -3, 9)
-		c = y %/% 100
-		ya = y - 100 * c
-		out = (146097 * c) %/% 4 + (1461 * ya) %/% 4 + 
-			(153 * m + 2) %/% 5 + d + 1721119	
-		# now subtract the new origin from all dates
-		if(!only.origin) {
-			if(all(origin == 0)) out = out[-1] else out = out[-1] - out[1] }	
-		names(out) = nms
-		result = out }
-	
-	# Synonyme for S:
-	if(.S) {
-		result = julian(m = m, d = d, y = y, origin. = origin)}
+    # FUNCTION:
+    
+    # Selection:
+    .R = TRUE
+    .S = FALSE
+    
+    # Implementation under R:
+    if(.R) {    
+        only.origin = all(missing(m), missing(d), missing(y))
+        if(only.origin) m = d = y = NULL    # return days since origin
+        nms = names(d)
+        max.len = max(length(m), length(d), length(y))  
+        # prepend new origin value and rep out to common max. length:
+        m = c(origin[1], rep(m, length = max.len))
+        d = c(origin[2], rep(d, length = max.len))
+        y = c(origin[3], rep(y, length = max.len))  
+        # code from julian date in the S book (p.269)
+        y = y + ifelse(m > 2, 0, -1)
+        m = m + ifelse(m > 2, -3, 9)
+        c = y %/% 100
+        ya = y - 100 * c
+        out = (146097 * c) %/% 4 + (1461 * ya) %/% 4 + 
+            (153 * m + 2) %/% 5 + d + 1721119   
+        # now subtract the new origin from all dates
+        if(!only.origin) {
+            if(all(origin == 0)) out = out[-1] else out = out[-1] - out[1] }    
+        names(out) = nms
+        result = out }
+    
+    # Synonyme for S:
+    if(.S) {
+        result = julian(m = m, d = d, y = y, origin. = origin)}
 
-	# Return Value:
-	result
+    # Return Value:
+    result
 }
 
 
@@ -856,45 +864,45 @@ function(m, d, y, origin = c(month = 1, day = 1, year = 1960))
 
 month.day.year = 
 function(jul, origin = c(month = 1, day = 1, year = 1960))
-{	# # A function implemented by Diethelm Wuertz
+{   # # A function implemented by Diethelm Wuertz
 
-	# Description:
-	#	This function is a synonyme for Splus' "month.day.year()" with
-	#	the same list of arguments.
-	
-	# Note:
-	#	Splus like function.
-	
-	# FUNCTION:	
-	
-	# Selection:
-	.R = TRUE
-	.S = FALSE
-	
-	# Implementation under R:
-	if (.R) {
-		shift = .julian(1, 1, 1960, 0)	
-		j = jul + shift
-		j = j - 1721119
-		y = (4 * j - 1) %/% 146097
-		j = 4 * j - 1 - 146097 * y
-		d = j %/% 4
-		j = (4 * d + 3) %/% 1461
-		d = 4 * d + 3 - 1461 * j
-		d = (d + 4) %/% 4
-		m = (5 * d - 3) %/% 153
-		d = 5 * d - 3 - 153 * m
-		d = (d + 5) %/% 5
-		y = 100 * y + j
-		y = y + ifelse(m < 10, 0, 1)
-		m = m + ifelse(m < 10, 3, -9)
-		result = list(month = m, day = d, year = y)}	
-	# Synonyme for S:
-	if (.S) { 
-		result = month.day.year(jul = jul, origin. = origin)}	
-			
-	# Return Value:
-	result
+    # Description:
+    #   This function is a synonyme for Splus' "month.day.year()" with
+    #   the same list of arguments.
+    
+    # Note:
+    #   Splus like function.
+    
+    # FUNCTION: 
+    
+    # Selection:
+    .R = TRUE
+    .S = FALSE
+    
+    # Implementation under R:
+    if (.R) {
+        shift = .julian(1, 1, 1960, 0)  
+        j = jul + shift
+        j = j - 1721119
+        y = (4 * j - 1) %/% 146097
+        j = 4 * j - 1 - 146097 * y
+        d = j %/% 4
+        j = (4 * d + 3) %/% 1461
+        d = 4 * d + 3 - 1461 * j
+        d = (d + 4) %/% 4
+        m = (5 * d - 3) %/% 153
+        d = 5 * d - 3 - 153 * m
+        d = (d + 5) %/% 5
+        y = 100 * y + j
+        y = y + ifelse(m < 10, 0, 1)
+        m = m + ifelse(m < 10, 3, -9)
+        result = list(month = m, day = d, year = y)}    
+    # Synonyme for S:
+    if (.S) { 
+        result = month.day.year(jul = jul, origin. = origin)}   
+            
+    # Return Value:
+    result
 }
 
 
@@ -903,24 +911,24 @@ function(jul, origin = c(month = 1, day = 1, year = 1960))
 
 leap.year = 
 function(y)
-{	# A function implemented by Diethelm Wuertz
+{   # A function implemented by Diethelm Wuertz
 
-	# Description:
-	#	Decides if a year is a leap year or not
-	
-	# Arguments:
-	#	y - an integer value or vector giving the year.
-	
-	# Example:
-	#	leap.year(1980:2005)
-	
-	# FUNCTION:
-	
-	# Result:
-	ans = y %% 4 == 0 & (y %% 100 != 0 | y %% 400 == 0)
-	
-	# Return Value:
-	ans
+    # Description:
+    #   Decides if a year is a leap year or not
+    
+    # Arguments:
+    #   y - an integer value or vector giving the year.
+    
+    # Example:
+    #   leap.year(1980:2005)
+    
+    # FUNCTION:
+    
+    # Result:
+    ans = y %% 4 == 0 & (y %% 100 != 0 | y %% 400 == 0)
+    
+    # Return Value:
+    ans
 }
 
 
@@ -929,21 +937,21 @@ function(y)
 
 day.of.week = 
 function(month, day, year) 
-{	# A function implemented by Diethelm Wuertz
+{   # A function implemented by Diethelm Wuertz
 
-	# Description:
-	#	A Synonyme for sday.of.week() function
-	
-	# Note:
-	#	SPlus like.
+    # Description:
+    #   A Synonyme for sday.of.week() function
+    
+    # Note:
+    #   SPlus like.
 
-	# FUNCTION:
-	
-	# Result:
-	ans = sday.of.week(year * 10000 + month * 100 + day)
-	
-	# Return Value:
-	ans
+    # FUNCTION:
+    
+    # Result:
+    ans = sday.of.week(year * 10000 + month * 100 + day)
+    
+    # Return Value:
+    ans
 }
 
 

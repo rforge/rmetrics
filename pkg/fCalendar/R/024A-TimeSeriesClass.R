@@ -282,24 +282,27 @@ function(x, dimnames = TRUE, format = "")
     
     # Is it a command like "as.timeSeries(data(nyse))" ?
     if (is.character(x)) {
-    	DATA = eval(x)
-    	DATA.FRAME = eval(parse(text = DATA))
-    	if (!is.data.frame(DATA.FRAME)) 
-    		stop(paste(DATA, "is not a valid data frame")) 
-    	# Try to find out the format:
-    	Format = as.character(DATA.FRAME[1,1])
-    	if (nchar(Format) == 8) format = "%Y%m%d"
-    	if (nchar(Format) == 10) format = "%Y-%m-%d"
-    	if (nchar(Format) == 12) format = "%Y%m%d%H%M"
-    	if (nchar(Format) == 16) format = "%Y-%m-%d %H:%M"
-    	if (format == "") stop("Could not identify format type")    
-    	data = as.matrix(DATA.FRAME[, -1])   
-    	charvec = as.character(DATA.FRAME[, 1])	                           
-		ans = timeSeries(data = data, charvec = charvec, 
-			units = colnames(DATA.FRAME)[-1], FinCenter = "GMT", 
-			zone = "GMT", format = format)		
-		return(ans)
-	}
+        DATA = eval(x)
+        DATA.FRAME = eval(parse(text = DATA))
+        if (!is.data.frame(DATA.FRAME)) 
+            stop(paste(DATA, "is not a valid data frame")) 
+        # Try to find out the format:
+        # DW 2006-02-14
+        if (format == "") {
+            Format = as.character(DATA.FRAME[1,1])
+            if (nchar(Format) == 8) format = "%Y%m%d"
+            if (nchar(Format) == 10) format = "%Y-%m-%d"
+            if (nchar(Format) == 12) format = "%Y%m%d%H%M"
+            if (nchar(Format) == 16) format = "%Y-%m-%d %H:%M"
+            if (format == "") stop("Could not identify format type") 
+        }   
+        data = as.matrix(DATA.FRAME[, -1])   
+        charvec = as.character(DATA.FRAME[, 1])                            
+        ans = timeSeries(data = data, charvec = charvec, 
+            units = colnames(DATA.FRAME)[-1], FinCenter = "GMT", 
+            zone = "GMT", format = format)      
+        return(ans)
+    }
     
     # Time Series Decoration: 
     if (dimnames) {
@@ -462,8 +465,8 @@ function(x, reference.grid = TRUE, lty = 1, ...)
         if (missing(i)) {i = min(1,nrow(x)):nrow(x)}
         if (missing(j)) {j = min(1,ncol(x)):ncol(x)}
           subx <- x@.Data[i, j, drop = drop]
-    	  dates <- x@dates[i]
-    	  ans <- new("its", subx, dates = dates)
+          dates <- x@dates[i]
+          ans <- new("its", subx, dates = dates)
         return(ans) }
         
     # Transform:
@@ -580,7 +583,13 @@ j = min(1, ncol(x@Data)):ncol(x@Data))
     # FUNCTION:
     
     # Check Timezone:
-    if (Sys.getenv("TZ")[[1]] != "GMT") warning("Set timezone to GMT!")
+    TZ = Sys.getenv("TZ")  
+    if (TZ[[1]] != "GMT") {
+        Sys.putenv(TZ = "GMT")
+        TZ.RESET = TRUE
+    } else {
+        TZ.RESET = FALSE
+    }
     
     # Subsets:
     if(missing(i)) { i <- min(1, nrow(x@Data)):nrow(x@Data) }
@@ -593,6 +602,7 @@ j = min(1, ncol(x@Data)):ncol(x@Data))
     x@units = colnames(subx)
     
     # Return Value:
+    if (TZ.RESET) Sys.putenv(TZ = TZ)
     x
 }         
 
@@ -758,36 +768,36 @@ function(x, k = 1, trim = FALSE, units = NULL)
 
 outlierSeries = 
 function(x, sd = 10, complement = TRUE) 
-{	# A function implemented by Diethelm Wuertz
+{   # A function implemented by Diethelm Wuertz
     
     # Description:
     #   Returns outliers in a timeSeries object or the complement
     
     # Arguments:
     #   x - a 'timeSeries' object.
-    #	sd - a numeric value of standard deviations, e.g. 10
-    #		means that values larger or smaller tahn ten 
-    #		times the standard deviation of the series will
-    #		be removed.
-    #	complement - a logical flag, should the outler series
-    #		or its complement be returns.
+    #   sd - a numeric value of standard deviations, e.g. 10
+    #       means that values larger or smaller tahn ten 
+    #       times the standard deviation of the series will
+    #       be removed.
+    #   complement - a logical flag, should the outler series
+    #       or its complement be returns.
     
     # FUNCTION:
     
-	# Check if univariate Series:
-	if (dim(x@Data)[2] != 1) 
-    	stop("Supports only univariate timeSeries Objects")
+    # Check if univariate Series:
+    if (dim(x@Data)[2] != 1) 
+        stop("Supports only univariate timeSeries Objects")
     
     # Find Outliers:
     SD = sd * sd(x@Data)
     if (complement) {
-	    x  = x[abs(x@Data) <= SD]
-	} else {
-		x = x[abs(x@Data) > SD]
-	}
-	
-	# Return Value:
-	x
+        x  = x[abs(x@Data) <= SD]
+    } else {
+        x = x[abs(x@Data) > SD]
+    }
+    
+    # Return Value:
+    x
 }
 
 
@@ -796,7 +806,7 @@ function(x, sd = 10, complement = TRUE)
 
 logSeries = 
 function(x) 
-{	# A function implemented by Diethelm Wuertz
+{   # A function implemented by Diethelm Wuertz
     
     # Description:
     #   Returns logarithmic values of a 'timeSeries' object
@@ -808,9 +818,9 @@ function(x)
     
     # Absolute Values:
     x@Data = log(x@Data)
-	
-	# Return Value:
-	x
+    
+    # Return Value:
+    x
 }
 
 
@@ -819,7 +829,7 @@ function(x)
 
 absSeries = 
 function(x) 
-{	# A function implemented by Diethelm Wuertz
+{   # A function implemented by Diethelm Wuertz
     
     # Description:
     #   Returns absolute values of a 'timeSeries' object
@@ -831,9 +841,9 @@ function(x)
     
     # Absolute Values:
     x@Data = abs(x@Data)
-	
-	# Return Value:
-	x
+    
+    # Return Value:
+    x
 }
 
 
@@ -1364,9 +1374,9 @@ trim = TRUE, digits = 4, units = NULL)
     
     # Add New Units:
     if (!is.null(units)){
-	    ans@units = units
-	    colnames(ans@Data) = units
-	}
+        ans@units = units
+        colnames(ans@Data) = units
+    }
     
     # Return Value:
     ans
@@ -1488,12 +1498,13 @@ include.weekends = FALSE, units = NULL)
             ans.add = alignDailySeries.OneColumn(x = x[, i], 
                 method = method, include.weekends = include.weekends)
             ans = mergeSeries(ans, ans.add@Data) }  
-            
-     # Add New Units:
+    }
+         
+    # Add New Units:
     if (!is.null(units)){
-	    ans@units = units
-	    colnames(ans@Data) = units
-	}        }
+        ans@units = units
+        colnames(ans@Data) = units
+    }       
     
     # Return Value:
     ans

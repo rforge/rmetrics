@@ -54,16 +54,6 @@
     and for mathematical operations.          
     \cr
     
-    IMPORTANT: \cr
-    The \code{timeDate} and \code{timeSeries} classes are so far
-    tested only under MS Windows XP operating system. Note, that
-    your time zone environment variable must be set to "GMT". The
-    reason for this is, that the functions work internally with "GMT"
-    POSIX date and time objects whereas the Daylight Saving Time is 
-    added on top of this through the information in the Ical Calendar
-    Library.
-    \cr
-    
     The functions and methods for the Generation of 'timeSeries' Objects are:         
 
     \tabular{ll}{   

@@ -38,15 +38,15 @@
 #  fxdata.parser         Parses FX contributors and delay times
 #  fxdata.filter         Filters price and spread values from FX data records
 #  fxdata.varmin         Aggregates data records to variable minutes data format
-# FUNCTION:		   		DESCRIPTION:
-#  xts.log				 Calculates logarithms for xts time series values
-#  xts.diff				 Differentiates xts time series values with lag=1
-#  xts.cut				 Cuts a piece out of a xts time series
-#  xts.interp			 Interpolates for equidistant time steps
-#  xts.map				 Creates a volatility adjusted time-mapping 
-#  xts.upsilon			 Interpolates a time series in upsilon time
-#  xts.dvs				 Creates a de-volatilizised time series
-#  xts.dwh				 Plots intra-daily/weekly histograms 
+# FUNCTION:             DESCRIPTION:
+#  xts.log               Calculates logarithms for xts time series values
+#  xts.diff              Differentiates xts time series values with lag=1
+#  xts.cut               Cuts a piece out of a xts time series
+#  xts.interp            Interpolates for equidistant time steps
+#  xts.map               Creates a volatility adjusted time-mapping 
+#  xts.upsilon           Interpolates a time series in upsilon time
+#  xts.dvs               Creates a de-volatilizised time series
+#  xts.dwh               Plots intra-daily/weekly histograms 
 ################################################################################
 
 
@@ -383,19 +383,19 @@ function(x, digits = 4)
 
 xts.log = 
 function(xts)
-{	# A function implemented by D. Wuertz
-		
- 	# Description:
- 	#	Calculate logarithms for xts time series values;
- 	 
-	# Details:
-	#	This function is mainly used for calculating 
-	#	log-prices from prices.
- 	
-	# FUNCTION:
- 	
-	# Return Values:
- 	list(t = xts$t, x = log(xts$x))
+{   # A function implemented by D. Wuertz
+        
+    # Description:
+    #   Calculate logarithms for xts time series values;
+     
+    # Details:
+    #   This function is mainly used for calculating 
+    #   log-prices from prices.
+    
+    # FUNCTION:
+    
+    # Return Values:
+    list(t = xts$t, x = log(xts$x))
 }
 
 
@@ -404,19 +404,19 @@ function(xts)
 
 xts.diff = 
 function(xts)
-{	# A function implemented by D. Wuertz
-		
- 	# Description:
- 	#	Differnetiate xts time series values with lag=1
- 	#	and add a zero at the beginning so that the
- 	#	differentiated time series has the same length
- 	#	as the original time series; mainly used to 
- 	#	calculate log-returns from log-prices.
- 	
-	# FUNCTION:
- 	
-	# Return Values:
- 	list(t = xts$t, x = c(0, diff(xts$x)))
+{   # A function implemented by D. Wuertz
+        
+    # Description:
+    #   Differnetiate xts time series values with lag=1
+    #   and add a zero at the beginning so that the
+    #   differentiated time series has the same length
+    #   as the original time series; mainly used to 
+    #   calculate log-returns from log-prices.
+    
+    # FUNCTION:
+    
+    # Return Values:
+    list(t = xts$t, x = c(0, diff(xts$x)))
 }
 
 
@@ -425,40 +425,40 @@ function(xts)
 
 xts.cut =  
 function(xts, from.date, to.date)
-{	# A function implemented by D. Wuertz
-		
- 	# Description:
- 	#	Cut a piece out of a xts time series:
- 	#	Simply forward/back-extrapolate if 'from' 
- 	#	and/or 'to' is out of the data range.
- 	
-	# Notes:
- 	#	This kind of extrapolation to the start and 
- 	#	end date may be not a good and final solution.
- 	#	Perhaps one should also have the option to
- 	#	provide a first and last xts record; e.g. for
- 	#	the extraction of monthly data, the last xts
- 	#	record from the previous month and the first
- 	#	record from the following month.) 
+{   # A function implemented by D. Wuertz
+        
+    # Description:
+    #   Cut a piece out of a xts time series:
+    #   Simply forward/back-extrapolate if 'from' 
+    #   and/or 'to' is out of the data range.
+    
+    # Notes:
+    #   This kind of extrapolation to the start and 
+    #   end date may be not a good and final solution.
+    #   Perhaps one should also have the option to
+    #   provide a first and last xts record; e.g. for
+    #   the extraction of monthly data, the last xts
+    #   record from the previous month and the first
+    #   record from the following month.) 
 
- 	# FUNCTION:	
- 		
-	# Date/time:
- 	from = from.date*10000+0000
- 	to = to.date*10000+2359	
-	
- 	# Extrapolate:
- 	time = xts$t
-	x = xts$x
- 	if (from < time[1]){
- 		time = c(from, time) 
- 		x = c(x[1], x)}
- 	if (to > time[length(time)]){
-	 	time = c(time, to)
-	 	x = c(x, x[length(x)])}	
+    # FUNCTION: 
+        
+    # Date/time:
+    from = from.date*10000+0000
+    to = to.date*10000+2359 
+    
+    # Extrapolate:
+    time = xts$t
+    x = xts$x
+    if (from < time[1]){
+        time = c(from, time) 
+        x = c(x[1], x)}
+    if (to > time[length(time)]){
+        time = c(time, to)
+        x = c(x, x[length(x)])} 
 
-	# Return Values:
- 	list(t=time[time >= from & time <= to], x=x[time >= from & time <= to])
+    # Return Values:
+    list(t=time[time >= from & time <= to], x=x[time >= from & time <= to])
 }
 
 
@@ -467,56 +467,56 @@ function(xts, from.date, to.date)
 
 xts.interp = 
 function(xts, deltat = 1, method = "constant")
-{	# A function implemented by D. Wuertz
-		
- 	# Description:
- 	#	Create time-steps "equidistant in physical time"
- 	#	for the data records for the time range starting
-	#	at "from.date" (CCYYMMDD) and ending at "to.date".
-	#	The time intervals are of length "deltat" measured
-	#	in minutes. 
-	#	The method to be used in approximating the interpolation 
-	#	is described by "method". This must be either "linear" or 
-	#	"constant". "linear" results in a linear interpolation,
-	#	whereas "constant" keeps the previous value (left value)
-	#	within the interpolation region.	
- 	 
-	# Note:
- 	#	ceiling(), floor(), approx(), xjulian(), xdate()
+{   # A function implemented by D. Wuertz
+        
+    # Description:
+    #   Create time-steps "equidistant in physical time"
+    #   for the data records for the time range starting
+    #   at "from.date" (CCYYMMDD) and ending at "to.date".
+    #   The time intervals are of length "deltat" measured
+    #   in minutes. 
+    #   The method to be used in approximating the interpolation 
+    #   is described by "method". This must be either "linear" or 
+    #   "constant". "linear" results in a linear interpolation,
+    #   whereas "constant" keeps the previous value (left value)
+    #   within the interpolation region.    
+     
+    # Note:
+    #   ceiling(), floor(), approx(), xjulian(), xdate()
 
- 	# FUNCTION:
- 	
-	# Date/time - Fill the current day:
- 	from = floor(xts$t[1]/10000)*10000+0000
- 	to = floor(xts$t[length(xts$t)]/10000)*10000+2359
- 		
-	# Out-of-Range Extrapolation:
- 	time = xts$t; x = xts$x
- 	if (from < time[1]) {
-	 	time = c(from, time)
-	 	x = c(x[1], x) }
- 	if (to > time[length(time)]){ 
- 		time = c(time, to)
- 		x = c(x, x[length(x)]) } 	
- 			
-	# Convert to Julian Calender times:
- 	time = xjulian(time)	
- 		
-	# Interpolate:
- 	tapprox1 = ceiling(xjulian(from)/deltat)
- 	tapprox2 = floor(xjulian(to)/deltat)
- 	tapprox = deltat*(tapprox1:tapprox2)	
- 	
- 	# Interpolation:
- 	# Collapsing to unique x values in "approx" may be likely.
- 	# This results in warning messages, which we will suppress.
- 	currentWarningFlag = .Options$warn
- 	options(warn=-1)
- 	x.prox = approx(time, x, tapprox, method = method)$y
- 	options(warn=currentWarningFlag)
- 		
-	# Return Value:
- 	list(t = xdate(tapprox), x = x.prox)
+    # FUNCTION:
+    
+    # Date/time - Fill the current day:
+    from = floor(xts$t[1]/10000)*10000+0000
+    to = floor(xts$t[length(xts$t)]/10000)*10000+2359
+        
+    # Out-of-Range Extrapolation:
+    time = xts$t; x = xts$x
+    if (from < time[1]) {
+        time = c(from, time)
+        x = c(x[1], x) }
+    if (to > time[length(time)]){ 
+        time = c(time, to)
+        x = c(x, x[length(x)]) }    
+            
+    # Convert to Julian Calender times:
+    time = xjulian(time)    
+        
+    # Interpolate:
+    tapprox1 = ceiling(xjulian(from)/deltat)
+    tapprox2 = floor(xjulian(to)/deltat)
+    tapprox = deltat*(tapprox1:tapprox2)    
+    
+    # Interpolation:
+    # Collapsing to unique x values in "approx" may be likely.
+    # This results in warning messages, which we will suppress.
+    currentWarningFlag = .Options$warn
+    options(warn=-1)
+    x.prox = approx(time, x, tapprox, method = method)$y
+    options(warn=currentWarningFlag)
+        
+    # Return Value:
+    list(t = xdate(tapprox), x = x.prox)
 }
 
 
@@ -525,59 +525,59 @@ function(xts, deltat = 1, method = "constant")
 
 xts.map = 
 function(xts, mean.deltat, alpha) 
-{	# A function implemented by D. Wuertz
-		
- 	# Description:
- 	#	Create a volatility adjusted time-mapping for a later 
- 	#	extraction of records in weekly periodic upsilon time.
- 	 
-	# Notes:
- 	#	"from" must start on a Monday, 
- 	#	"to" must end on a Sunday!
- 	#	The proper starting and ending day is not yet 
- 	#	automatically be checked. See als the ToDo in
- 	#	the function xts.cut().
-	#   Function Calls:
- 	#	matrix(), apply(), approx()
- 	 
- 	# FUNCTION:
+{   # A function implemented by D. Wuertz
+        
+    # Description:
+    #   Create a volatility adjusted time-mapping for a later 
+    #   extraction of records in weekly periodic upsilon time.
+     
+    # Notes:
+    #   "from" must start on a Monday, 
+    #   "to" must end on a Sunday!
+    #   The proper starting and ending day is not yet 
+    #   automatically be checked. See als the ToDo in
+    #   the function xts.cut().
+    #   Function Calls:
+    #   matrix(), apply(), approx()
+     
+    # FUNCTION:
  
-	# Interpolate prices:
-	xts = xts.cut(xts=xts, 
+    # Interpolate prices:
+    xts = xts.cut(xts=xts, 
     from.date = floor(xts$t[1]/10000), 
     to.date = floor(xts$t[length(xts$t)])/10000)
- 	epts = xts.interp(xts, deltat=1)	
- 		
-	# Volatilities on 1 minute time intervals:
- 	volas = matrix(abs(xts.diff(xts.log(epts))$x)^alpha,
- 		ncol = 10080, byrow = TRUE) 	
- 			
-	# Weekly mean volatilities:
- 	vmean = apply(volas, 2, mean) 	
- 		
-	# During the week normalized cumulated volatilies:
- 	cumvmean = cumsum(vmean)
- 	cumvmean = 10080*cumvmean/cumvmean[length(cumvmean)]	
- 		
-	# Calculate time map on predefined mean.dt
- 	timesteps = 10080/mean.deltat
- 	tvals = mean.deltat*(1:timesteps)
- 	tmap = approx(cumvmean, 1:10080, tvals, method="linear")$y 	
- 		
-	# Calculate all timepoints t for the whole time period 
- 	# from/to:
- 	time = apply(matrix(10080*(0:(nrow(volas)-1)),
- 		ncol = 1, byrow = TRUE), 1, rep, timesteps)
- 	time = matrix(time, ncol=1, byrow = TRUE) +
- 		matrix(rep(tmap, nrow(volas)), ncol = 1, byrow = TRUE)	
- 			
-	# Interpolate time series for those points:
- 	# xmap physical time, ymap risk-adjusted time
-	tapprox = approx(1:length(epts$x), epts$x,
- 		time, method = "linear")	
- 			
- 	# Return Value:
-	list(xmap = tvals, ymap = round(tmap))
+    epts = xts.interp(xts, deltat=1)    
+        
+    # Volatilities on 1 minute time intervals:
+    volas = matrix(abs(xts.diff(xts.log(epts))$x)^alpha,
+        ncol = 10080, byrow = TRUE)     
+            
+    # Weekly mean volatilities:
+    vmean = apply(volas, 2, mean)   
+        
+    # During the week normalized cumulated volatilies:
+    cumvmean = cumsum(vmean)
+    cumvmean = 10080*cumvmean/cumvmean[length(cumvmean)]    
+        
+    # Calculate time map on predefined mean.dt
+    timesteps = 10080/mean.deltat
+    tvals = mean.deltat*(1:timesteps)
+    tmap = approx(cumvmean, 1:10080, tvals, method="linear")$y  
+        
+    # Calculate all timepoints t for the whole time period 
+    # from/to:
+    time = apply(matrix(10080*(0:(nrow(volas)-1)),
+        ncol = 1, byrow = TRUE), 1, rep, timesteps)
+    time = matrix(time, ncol=1, byrow = TRUE) +
+        matrix(rep(tmap, nrow(volas)), ncol = 1, byrow = TRUE)  
+            
+    # Interpolate time series for those points:
+    # xmap physical time, ymap risk-adjusted time
+    tapprox = approx(1:length(epts$x), epts$x,
+        time, method = "linear")    
+            
+    # Return Value:
+    list(xmap = tvals, ymap = round(tmap))
 }
 
 
@@ -587,84 +587,84 @@ function(xts, mean.deltat, alpha)
 xts.upsilon = 
 function(xts, weekly.map = seq(from = 59, by = 60, length = 168), 
 method = "constant", doplot = TRUE, ...)
-{	# A function implemented by D. Wuertz
-	
-	# Description:
-	#	Interpolate data (prices, returns, etc. on a weekly.
-	#	time schedule. The time schedule "weekly.map" is a 
-	#	vector counting its elements in minutes from the 
-	#	beginning to the end of the week. For hourly entries
-	#	the length of the vector is 168. 
-	#	"seq(from=59, by=60, length=168)
-	#	creates such a map.
-	
-	# FUNCTION:
-	
-	# Interpolate:
-	xts = xts.interp(xts=xts, deltat=1, method=method)
-	xts.t = matrix(xts$t, byrow=TRUE, ncol=7*24*60)
-	xts.x = matrix(xts$x, byrow=TRUE, ncol=7*24*60)
-	zt = xts.t[, weekly.map[1]]
-	zx = xts.x[, weekly.map[1]]
-	for (i in 2:length(weekly.map)) {
-		zt = cbind(zt, xts.t[, weekly.map[i]])
-		zx = cbind(zx, xts.x[, weekly.map[i]])	}
-	if(doplot) plot(as.vector(t(zx)), type = "l", ylab = "Prices", ...)	
-		
-	# Return Value:
-	list(t = as.vector(t(zt)), x = as.vector(t(zx))) 
+{   # A function implemented by D. Wuertz
+    
+    # Description:
+    #   Interpolate data (prices, returns, etc. on a weekly.
+    #   time schedule. The time schedule "weekly.map" is a 
+    #   vector counting its elements in minutes from the 
+    #   beginning to the end of the week. For hourly entries
+    #   the length of the vector is 168. 
+    #   "seq(from=59, by=60, length=168)
+    #   creates such a map.
+    
+    # FUNCTION:
+    
+    # Interpolate:
+    xts = xts.interp(xts=xts, deltat=1, method=method)
+    xts.t = matrix(xts$t, byrow=TRUE, ncol=7*24*60)
+    xts.x = matrix(xts$x, byrow=TRUE, ncol=7*24*60)
+    zt = xts.t[, weekly.map[1]]
+    zx = xts.x[, weekly.map[1]]
+    for (i in 2:length(weekly.map)) {
+        zt = cbind(zt, xts.t[, weekly.map[i]])
+        zx = cbind(zx, xts.x[, weekly.map[i]])  }
+    if(doplot) plot(as.vector(t(zx)), type = "l", ylab = "Prices", ...) 
+        
+    # Return Value:
+    list(t = as.vector(t(zt)), x = as.vector(t(zx))) 
 }
  
 
 # ------------------------------------------------------------------------------
-		
+        
 
 xts.dvs = 
 function(xts, k, volatility, doplot = TRUE, ...) 
-{	# A function implemented by D. Wuertz
-	
- 	# Description:
- 	#	Create a de-volatilizised time series according
-	#	to Bin Zhous dv-series algorithm. "xts" are 
-	#	prices.
-	
- 	# Arguments:
- 	#	Fortran: SUBROUTINE DVSERIES()
- 	#	subroutine dv(vmax, s, ms, nt, ns, k)
-	#	vmax	volatility threshold 
-	#	s(nt)	original time series of log prices
- 	#	ms(nt)	index
-	#	nt		their lengths
-	#	ns
-	#	k		length of averaging interval
-	
-	# FUNCTION:	
-	
-	# Settings:
-	xts = xts.log(xts)
-	nt = length(xts$x)
-	ns = 0
-		
-	# Execute Fortran Program:
-	result = .Fortran("dv",
- 		as.double(volatility),
- 		as.double(xts$x),
-		as.integer(rep(0, nt)),
- 		as.integer(nt),
-		as.integer(ns),
- 		as.integer(k),
- 		PACKAGE = "fCalendar")
- 		
- 		
-	# Select dv-Series:
-	test = sum(result[[3]][result[[3]]>0])
-	
-	# Plot:
-	if(doplot && test > 0) 
-		plot(exp(xts$x[result[[3]]>0]), type="l", ylab="Prices", ...)
-			
-	# Return Value:
- 	list(t=xts$t[result[[3]]>0], x=exp(xts$x[result[[3]]>0]))
+{   # A function implemented by D. Wuertz
+    
+    # Description:
+    #   Create a de-volatilizised time series according
+    #   to Bin Zhous dv-series algorithm. "xts" are 
+    #   prices.
+    
+    # Arguments:
+    #   Fortran: SUBROUTINE DVSERIES()
+    #   subroutine dv(vmax, s, ms, nt, ns, k)
+    #   vmax    volatility threshold 
+    #   s(nt)   original time series of log prices
+    #   ms(nt)  index
+    #   nt      their lengths
+    #   ns
+    #   k       length of averaging interval
+    
+    # FUNCTION: 
+    
+    # Settings:
+    xts = xts.log(xts)
+    nt = length(xts$x)
+    ns = 0
+        
+    # Execute Fortran Program:
+    result = .Fortran("dv",
+        as.double(volatility),
+        as.double(xts$x),
+        as.integer(rep(0, nt)),
+        as.integer(nt),
+        as.integer(ns),
+        as.integer(k),
+        PACKAGE = "fCalendar")
+        
+        
+    # Select dv-Series:
+    test = sum(result[[3]][result[[3]]>0])
+    
+    # Plot:
+    if(doplot && test > 0) 
+        plot(exp(xts$x[result[[3]]>0]), type="l", ylab="Prices", ...)
+            
+    # Return Value:
+    list(t=xts$t[result[[3]]>0], x=exp(xts$x[result[[3]]>0]))
 }
 
 
@@ -674,57 +674,57 @@ function(xts, k, volatility, doplot = TRUE, ...)
 xts.dwh = 
 function(xts, deltat = 60, period = "weekly", dolog = TRUE, dodiff = TRUE, 
 doplot = TRUE)
-{ 	# A function implemented by D. Wuertz
-	
-	# Description:
-	#	Plot intra-daily/weekly histogram of volatility. 
-	#	"xts" is the data list(t,x) input , may be either a price,
-	#	a logprice, or return; choose properly "dolog" and 
-	#	"dodiff" flags:
-	#	xts prices - dolog=TRUE dodiff=TRUE
-	#	xts logprices - dolog=FALSE dodiff=TRUE
-	#	xts (log)returns - dolog=FALSE dodiff=FALSE
-	#	"from.date" (CCYYMMDD) and "to.date" cut out a proper
-	#	part of the time series. Start on Monday, so the weekly
-	#	plot also starts on Monday.
-	#	"deltat" is the width of the bins in minutes. 
-	#	"period" may be one of "daily", "weekly" or "both"
-	
- 	# FUNCTION:
-	
-	# Interpolate:
-	xts = xts.interp(xts, deltat=deltat)
-	if(dolog) xts = xts.log(xts)
-	if(dodiff) xts = xts.diff(xts)
-	mult = 60/deltat
-	nd = 1440/deltat
-	nw = 7*nd
-	if(period == "daily" || period == "both") { 
- 	xd = apply(matrix(abs(xts$x), byrow = TRUE, ncol = nd), 2, mean)
-		xd = as.vector(matrix(c(xd, xd, rep(0, length(xd))), 
-			byrow = TRUE, ncol = nd))
-		td = as.vector(matrix(c(1:nd, 1:nd, 1:nd), byrow = TRUE, 
-			ncol = nd))/mult
-		if(doplot) plot(x = c(0,0,td,0), y = c(0,xd,0,0), type = "l", 
-			xlab = "hours", ylab = "mean", main = "Daily", 
-			xlim = c(0,24)) }
-	if(period == "weekly" || period == "both") { 
- 	xw = apply(matrix(abs(xts$x), byrow = TRUE, ncol = nw), 2, mean)
-		xw = as.vector(matrix(c(xw, xw, rep(0, length(xw))), 
-			byrow = TRUE, ncol = nw))
-		tw = as.vector(matrix(c(1:nw, 1:nw, 1:nw), byrow = TRUE, 
-			ncol = nw))/mult
-		if(doplot) plot(x = c(0,0,tw,0), y = c(0,xw,0,0), type = "l",
-			xlab = "hours", ylab = "mean", main = "Weekly", 
-			xlim = c(0,168)) }
+{   # A function implemented by D. Wuertz
+    
+    # Description:
+    #   Plot intra-daily/weekly histogram of volatility. 
+    #   "xts" is the data list(t,x) input , may be either a price,
+    #   a logprice, or return; choose properly "dolog" and 
+    #   "dodiff" flags:
+    #   xts prices - dolog=TRUE dodiff=TRUE
+    #   xts logprices - dolog=FALSE dodiff=TRUE
+    #   xts (log)returns - dolog=FALSE dodiff=FALSE
+    #   "from.date" (CCYYMMDD) and "to.date" cut out a proper
+    #   part of the time series. Start on Monday, so the weekly
+    #   plot also starts on Monday.
+    #   "deltat" is the width of the bins in minutes. 
+    #   "period" may be one of "daily", "weekly" or "both"
+    
+    # FUNCTION:
+    
+    # Interpolate:
+    xts = xts.interp(xts, deltat=deltat)
+    if(dolog) xts = xts.log(xts)
+    if(dodiff) xts = xts.diff(xts)
+    mult = 60/deltat
+    nd = 1440/deltat
+    nw = 7*nd
+    if(period == "daily" || period == "both") { 
+    xd = apply(matrix(abs(xts$x), byrow = TRUE, ncol = nd), 2, mean)
+        xd = as.vector(matrix(c(xd, xd, rep(0, length(xd))), 
+            byrow = TRUE, ncol = nd))
+        td = as.vector(matrix(c(1:nd, 1:nd, 1:nd), byrow = TRUE, 
+            ncol = nd))/mult
+        if(doplot) plot(x = c(0,0,td,0), y = c(0,xd,0,0), type = "l", 
+            xlab = "hours", ylab = "mean", main = "Daily", 
+            xlim = c(0,24)) }
+    if(period == "weekly" || period == "both") { 
+    xw = apply(matrix(abs(xts$x), byrow = TRUE, ncol = nw), 2, mean)
+        xw = as.vector(matrix(c(xw, xw, rep(0, length(xw))), 
+            byrow = TRUE, ncol = nw))
+        tw = as.vector(matrix(c(1:nw, 1:nw, 1:nw), byrow = TRUE, 
+            ncol = nw))/mult
+        if(doplot) plot(x = c(0,0,tw,0), y = c(0,xw,0,0), type = "l",
+            xlab = "hours", ylab = "mean", main = "Weekly", 
+            xlim = c(0,168)) }
 
-	# Result:
-	if (period == "daily") result = list(td = td, xd = xd)
-	if (period == "weekly") result = list(tw = tw, xw = xw)
-	if (period == "both") result = list(td = td, xd = xd, tw = tw, xw = xw)
-	
-	# Return Value:	
-	result
+    # Result:
+    if (period == "daily") result = list(td = td, xd = xd)
+    if (period == "weekly") result = list(tw = tw, xw = xw)
+    if (period == "both") result = list(td = td, xd = xd, tw = tw, xw = xw)
+    
+    # Return Value: 
+    result
 }
 
 
