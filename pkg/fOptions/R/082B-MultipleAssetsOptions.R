@@ -70,7 +70,7 @@ sigma1, sigma2, rho, title = NULL, description = NULL)
     
     # Parameters:
     # TypeFlag = c("c", "p"), S1, S2, X1, X2, Time, r, b1, b2, sigma1, 
-    #	sigma2, rho
+    #   sigma2, rho
     param = list()
     param$TypeFlag = TypeFlag
     param$S1 = S1
@@ -316,7 +316,7 @@ b1, b2, sigma1, sigma2, rho, title = NULL, description = NULL)
     
     # Parameters:
     # TypeFlag = c("1", "2", "3", "4"), S1, S2, Q, time1, Time2, r, 
-    #	b1, b2, sigma1, sigma2, rho
+    #   b1, b2, sigma1, sigma2, rho
     param = list()
     param$TypeFlag = TypeFlag
     param$S1 = S1
@@ -398,7 +398,7 @@ r, b1, b2, sigma1, sigma2, rho, title = NULL, description = NULL)
    
     # Parameters:
     # TypeFlag = c("cmin", "cmax", "pmin", "pmax"), S1, S2, X, Time, r, 
-    #	b1, b2, sigma1, sigma2, rho
+    #   b1, b2, sigma1, sigma2, rho
     param = list()
     param$TypeFlag = TypeFlag
     param$S1 = S1

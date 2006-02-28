@@ -104,7 +104,7 @@ S, X, H, K, Time, r, b, sigma, title = NULL, description = NULL)
     
     # Parameters:
     # TypeFlag = c("cdi", "cui", "pdi", "pui", "cdo", "cuo", "pdo", "puo"), 
-	#	S, X, H, K, Time, r, b, sigma
+    #   S, X, H, K, Time, r, b, sigma
     param = list()
     param$TypeFlag = TypeFlag
     param$S = S
@@ -213,7 +213,7 @@ sigma, delta1, delta2, title = NULL, description = NULL)
     
     # Parameters:
     # TypeFlag = c("co", "ci", "po", "pi"), S, X, L, U, Time, r, b, 
-	#	sigma, delta1, delta2
+    #   sigma, delta1, delta2
     param = list()
     param$TypeFlag = TypeFlag
     param$S = S
@@ -385,7 +385,7 @@ description = NULL)
     
     # Parameters:
     # TypeFlag = c("cdoA", "cuoA", "pdoA", "puoA", "coB1", "poB1", 
-	#	"cdoB2", "cuoB2"), S, X, H, time1, Time2, r, b, sigma
+    #   "cdoB2", "cuoB2"), S, X, H, time1, Time2, r, b, sigma
     param = list()
     param$TypeFlag = TypeFlag
     param$S = S
@@ -484,7 +484,7 @@ description = NULL)
 
     # Parameters:
     # TypeFlag = c("cuo", "cui", "cdo", "cdi", "puo", "pui", "pdo", "pdi"), 
-	#	S1, S2, X, H, Time, r, b1, b2, sigma1, sigma2, rho
+    #   S1, S2, X, H, Time, r, b1, b2, sigma1, sigma2, rho
     param = list()
     param$TypeFlag = TypeFlag
     param$S1 = S1
@@ -582,7 +582,7 @@ description = NULL)
     
     # Parameters:
     # TypeFlag = c("cdo", "pdo", "cdi", "pdi", "cuo", "puo", "cui", "pui"), 
-	#	S1, S2, X, H, time1, Time2, r, b1, b2, sigma1, sigma2, rho
+    #   S1, S2, X, H, time1, Time2, r, b1, b2, sigma1, sigma2, rho
     param = list()
     param$TypeFlag = TypeFlag
     param$S1 = S1
@@ -716,8 +716,8 @@ r, b, sigma, title = NULL, description = NULL)
     
     # Parameters:
     # TypeFlag = c("cuo", "cui", "pdo", "pdi"), S, X, H, time1, Time2, 
-	#	r, b, sigma
-	param = list()
+    #   r, b, sigma
+    param = list()
     param$TypeFlag = TypeFlag
     param$S = S
     param$X = X
@@ -854,8 +854,8 @@ r, b, sigma, title = NULL, description = NULL)
     
     # Parameters:
     # TypeFlag = c("cdi", "cdo", "pdi", "pdo"), S, X, L, U, Time , 
-	#	r, b, sigma
-	param = list()
+    #   r, b, sigma
+    param = list()
     param$TypeFlag = TypeFlag
     param$S = S
     param$X = X

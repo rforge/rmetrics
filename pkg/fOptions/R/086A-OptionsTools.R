@@ -43,8 +43,8 @@ function(prompt = "")
     
     # FUNCTION:
     
-	# Return Value:
-	invisible(prompt)
+    # Return Value:
+    invisible(prompt)
 }
 
 
@@ -89,14 +89,14 @@ function (file)
     if (is.character(file)) {
         if (file == "") {
             file <- stdin()
-    	} else {
+        } else {
             file <- file(file, "r")
             on.exit(close(file))
         }
     }
     if (!inherits(file, "connection")) 
         stop(paste("argument", 
-        	sQuote("file"), "must be a character string or connection"))
+            sQuote("file"), "must be a character string or connection"))
     y <- matrix("", nr = 0, nc = 2)
     x <- paste(readLines(file), collapse = "\n")
     for (chunk in unlist(strsplit(x, "\n[       \n]*\n"))) {
@@ -107,9 +107,9 @@ function (file)
                 chunk <- gsub("\n[      ]+", "  ", chunk)
                 x <- strsplit(unlist(strsplit(chunk, "\n")), "[    ]")
                 cbind(unlist(lapply(x, "[[", 1)), unlist(lapply(x, 
-                  	function(t) {
-                    	paste(t[-c(1, which(nchar(t) == 0))], collapse = " ")
-                  	})))
+                    function(t) {
+                        paste(t[-c(1, which(nchar(t) == 0))], collapse = " ")
+                    })))
             }
         })
         if (!inherits(entries, "try-error") && NCOL(entries) == 2) 
@@ -119,7 +119,7 @@ function (file)
     y
 }
 
-	
+    
 ################################################################################
 
    

@@ -122,7 +122,7 @@ NULL, description = NULL, ...)
     symmetric <<- symmetric
     opt = list()
     params = c(lambda = lambda, omega = omega, alpha = alpha,
-    	beta = beta, gamma = gamma, rf = rfr)
+        beta = beta, gamma = gamma, rf = rfr)
     
     # Log-Likelihood Function:
     .llhHNGarch <<- function(par) {
@@ -168,14 +168,14 @@ NULL, description = NULL, ...)
      
     # Estimate parameters:
     if (exists("nlm")) {
-    	opt = nlm(.llhHNGarch, par.start, ...) 
-	} else {
-		opt = nlminb(par.start, .llhHNGarch, ...)
-		opt$minimum = opt$objective
-		opt$estimate = opt$parameters
-	}
+        opt = nlm(.llhHNGarch, par.start, ...) 
+    } else {
+        opt = nlminb(par.start, .llhHNGarch, ...)
+        opt$minimum = opt$objective
+        opt$estimate = opt$parameters
+    }
     
-   	# Log-Likelihood:
+    # Log-Likelihood:
     opt$minimum = -opt$minimum + length(x)*sqrt(2*pi)
     opt$params = params
     opt$symmetric = symmetric
@@ -226,8 +226,8 @@ function(x, ...)
     #   Print method for the  HN-GARCH time series model. 
     
     # Arguments:
-    #	x - an object of class "hngarch" as returned by the 
-    #	function "hngarchFit"
+    #   x - an object of class "hngarch" as returned by the 
+    #   function "hngarchFit"
     
     # FUNCTION:
 
@@ -246,12 +246,12 @@ function(x, ...)
     # Parameters:
     cat("\nParameters:\n")
     print(format(object$params, digits = 4, ...), print.gap = 2, 
-    	quote = FALSE)
+        quote = FALSE)
     
     # Coefficients:
     cat("\nCoefficients: lambda, omega, alpha, beta, gamma\n")
     print(format(object$estimate, digits = 4, ...), print.gap = 2, 
-    	quote = FALSE)
+        quote = FALSE)
     
     # Likelihood:
     cat("\nLog-Likelihood:\n")
@@ -283,8 +283,8 @@ function(object, ...)
     #   Computes diagnostics for a HN-GARCH time series model. 
 
     # Arguments:
-    #	object - an object of class "hngarch" as returned by the 
-    #	function "hngarchFit"
+    #   object - an object of class "hngarch" as returned by the 
+    #   function "hngarchFit"
     
     # FUNCTION:
     
@@ -302,12 +302,12 @@ function(object, ...)
     # Parameters:
     cat("\nParameters:\n")
     print(format(object$params, digits = 4, ...), print.gap = 2, 
-    	quote = FALSE)
+        quote = FALSE)
     
     # Coefficients:
     cat("\nCoefficients: lambda, omega, alpha, beta, gamma\n")
     print(format(object$estimate, digits = 4, ...), print.gap = 2, 
-    	quote = FALSE)
+        quote = FALSE)
     
     # Likelihood:
     cat("\nLog-Likelihood:\n")
@@ -358,8 +358,8 @@ function(model)
     #   License: GPL
     
     # Arguments:
-    #	model - a moel specification for a Heston-Nandi Garch
-    #		process.
+    #   model - a moel specification for a Heston-Nandi Garch
+    #       process.
 
     # FUNCTION:
     

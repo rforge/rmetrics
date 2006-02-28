@@ -194,7 +194,7 @@ b1, b2, sigma1, sigma2, rho, title = NULL, description = NULL)
     
     # Parameters:
     # TypeFlag = c("c", "p", "ud", "du"), S1, S2, X1, X2, K, Time, r, 
-	#	b1, b2, sigma1, sigma2, rho
+    #   b1, b2, sigma1, sigma2, rho
     param = list()
     param$TypeFlag = TypeFlag
     param$S1 = S1
@@ -436,7 +436,7 @@ eta, phi, title = NULL, description = NULL)
     
     # Parameters:
     # TypeFlag = as.character(1:28), S, X, H, K, Time, r, b, sigma, eta, phi
-	param = list()
+    param = list()
     param$TypeFlag = TypeFlag
     param$S = S
     param$X = X

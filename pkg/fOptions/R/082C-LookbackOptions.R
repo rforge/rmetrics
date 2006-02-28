@@ -406,7 +406,7 @@ r, b, sigma, title = NULL, description = NULL)
     
     # Parameters:
     # TypeFlag = c("c", "p", "cr", "pr"), S, SMin, SMax, time1, Time2, 
-	#	r, b, sigma
+    #   r, b, sigma
     param = list()
     param$TypeFlag = TypeFlag
     param$S = S

@@ -72,7 +72,7 @@ function(x)
     #   Computes the Error function for real argument "x"
     
     # Arguments:
-    #	x - a real numeric value or vector.
+    #   x - a real numeric value or vector.
     
     # FUNCTION:
     
@@ -98,8 +98,8 @@ function(x, log = FALSE)
     # Arguments:
     #   z - a complex or real vector
     #   log - if TRUE the logarithm of the gamma is calculated
-    #	  otherwise if FALSE, the gamma function itself 
-    #	  will be calculated.
+    #     otherwise if FALSE, the gamma function itself 
+    #     will be calculated.
     
     # Source:
     #   For the Fortran Routine:
@@ -143,7 +143,7 @@ function(x)
     #   Computes the Psi or Digamma function for complex or real argument
     
     # Arguments:
-    #	z - a complex numeric value or vector.
+    #   z - a complex numeric value or vector.
     
     # Details:
     #   [AS} formula 6.3.1
@@ -234,10 +234,10 @@ function(x, n)
     #   Computes Pochhammer's Symbol
     
     # Arguments:
-    #	z - a complex numeric value or vector.
+    #   z - a complex numeric value or vector.
     #   n - an integer n >=0. An notation used in the theory of special 
-    #   	functions for the rising factorial, also known as the rising 
-    #		factorial power (Graham et al. 1994). 
+    #       functions for the rising factorial, also known as the rising 
+    #       factorial power (Graham et al. 1994). 
     
     # Details:
     #   as defined in [AS] by formula 6.1.22
@@ -278,34 +278,34 @@ function(x, n)
 
 
 if (.S) {
-	beta =
-	function(a, b)
-	{ 	# A function implemented by Diethelm Wuertz
+    beta =
+    function(a, b)
+    {   # A function implemented by Diethelm Wuertz
     
-	    # Description:
-	    #   Computes the beta function
-	    
-	    # Result:
-	    ans = gamma(a) * gamma(b) / gamma(a+b)  
-	
-	    # Return Value:
-	    ans  
-	}
-	
-	
-	lbeta = 
-	function(a, b)
-	{	# A function implemented by Diethelm Wuertz
+        # Description:
+        #   Computes the beta function
+        
+        # Result:
+        ans = gamma(a) * gamma(b) / gamma(a+b)  
     
-	    # Description:
-	    #   Computes the beta function
-	   
-		# Result:
-	    ans = lgamma(a) + lgamma(b) - lgamma(a+b)
-	
-	    # Return Value:
-	    ans  
-	}
+        # Return Value:
+        ans  
+    }
+    
+    
+    lbeta = 
+    function(a, b)
+    {   # A function implemented by Diethelm Wuertz
+    
+        # Description:
+        #   Computes the beta function
+       
+        # Result:
+        ans = lgamma(a) + lgamma(b) - lgamma(a+b)
+    
+        # Return Value:
+        ans  
+    }
 }
 
 

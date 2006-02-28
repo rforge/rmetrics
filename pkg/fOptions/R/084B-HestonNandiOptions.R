@@ -76,12 +76,12 @@ function(TypeFlag = c("c", "p"), model, S, X, Time.inDays, r.daily)
     # Integrate:
     call1 = integrate(.fstar, 0, Inf, const = 1, model = model, 
         S = S, X = X, Time.inDays = Time.inDays, r.daily = r.daily)
-	# For SPlus Compatibility:
-	if (is.null(call1$value)) call1$value = call1$integral
+    # For SPlus Compatibility:
+    if (is.null(call1$value)) call1$value = call1$integral
     call2 = integrate(.fstar, 0, Inf, const = 0, model = model, 
         S = S, X = X, Time.inDays = Time.inDays, r.daily = r.daily)
     # For SPlus Compatibility:
-	if (is.null(call2$value)) call2$value = call2$integral
+    if (is.null(call2$value)) call2$value = call2$integral
         
     # Compute Call Price:
     call.price = S/2 + exp(-r.daily*Time.inDays) * call1$value - 
@@ -160,12 +160,12 @@ S, X, Time.inDays, r.daily)
         delta1 = integrate(.fdelta, 0, Inf, const = 1, model = model, 
             S = S, X = X, Time.inDays = Time.inDays, r.daily = r.daily)
         # For SPlus Compatibility:
-		if (is.null(delta1$value)) delta1$value = delta1$integral   
-		delta2 = integrate(.fdelta, 0, Inf, const = 0, model = model, 
+        if (is.null(delta1$value)) delta1$value = delta1$integral   
+        delta2 = integrate(.fdelta, 0, Inf, const = 0, model = model, 
             S = S, X = X, Time.inDays = Time.inDays, r.daily = r.daily) 
         # For SPlus Compatibility:
-		if (is.null(delta2$value)) delta2$value = delta2$integral   
-		# Compute Call and Put Delta :
+        if (is.null(delta2$value)) delta2$value = delta2$integral   
+        # Compute Call and Put Delta :
         greek = 1/2 + exp(-r.daily*Time.inDays) * delta1$value - 
             X * exp(-r.daily*Time.inDays) * delta2$value 
         if (TypeFlag == "p") greek = greek - 1 }
@@ -185,11 +185,11 @@ S, X, Time.inDays, r.daily)
         gamma1 = integrate(.fgamma, 0, Inf, const = 1, model = model, 
             S = S, X = X, Time.inDays = Time.inDays, r.daily = r.daily)
         # For SPlus Compatibility:
-		if (is.null(gamma1$value)) gamma1$value = gamma1$integral    
+        if (is.null(gamma1$value)) gamma1$value = gamma1$integral    
         gamma2 = integrate(.fgamma, 0, Inf, const = 0, model = model, 
             S = S, X = X, Time.inDays = Time.inDays, r.daily = r.daily)
         # For SPlus Compatibility:
-		if (is.null(gamma2$value)) gamma2$value = gamma2$integral   
+        if (is.null(gamma2$value)) gamma2$value = gamma2$integral   
         # Compute Call and Put Gamma :
         greek = put.gamma = exp(-r.daily*Time.inDays) * gamma1$value - 
             X * exp(-r.daily*Time.inDays) * gamma2$value }

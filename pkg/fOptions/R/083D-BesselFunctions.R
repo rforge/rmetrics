@@ -147,11 +147,11 @@ function(x, nu)
 
 # CFC = 
 
-	# Description:
-	# 	Continued Fraction Constant
-	
-#	as.numeric(BesselI(2, 1)/BesselI(2, 0))
-	
+    # Description:
+    #   Continued Fraction Constant
+    
+#   as.numeric(BesselI(2, 1)/BesselI(2, 0))
+    
  
 # ------------------------------------------------------------------------------ 
  
@@ -183,12 +183,12 @@ function(X, N)
         
     # Very small arguments:
     if (X == 0) {  
-		if (N == 0) {
-	       return(c(BI = 1, BK = Inf, DI = 0, DK = -Inf)) 
-   		}     
+        if (N == 0) {
+           return(c(BI = 1, BK = Inf, DI = 0, DK = -Inf)) 
+        }     
        if (N >= 1) {
-	       return(c(BI = 0, BK = Inf, DI = 0, DK = -Inf))    
-   		}
+           return(c(BI = 0, BK = Inf, DI = 0, DK = -Inf))    
+        }
     }
          
     # Start values:

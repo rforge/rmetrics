@@ -151,7 +151,7 @@ function(x, kappa, mu, ip = 0)
     # Description:
     #   Computes Whittaker's M Function
     
-   	# Arguments:
+    # Arguments:
     
     # FUNCTION:
     
@@ -206,7 +206,7 @@ function(x, n, ip = 0)
     #   Computes the Hermite Polynomial 
     
     # Arguments:
-    #	n - the index of the Hermite polynomial.
+    #   n - the index of the Hermite polynomial.
     
     # FUNCTION:
     

@@ -127,50 +127,50 @@ sigma = 0.30, table = NA, method = c("LN", "RG", "JI"))
     # Log-Normal Approximation:
     if (method == "LN") {
         for ( i in 1:length(S) ) {
-	        moments = masian(Time = Time[i], r = r[i], 
-	        	sigma = sigma[i])$rawMoments 
-	        moments = moments / Time[i]^(1:4)   
-	        meanlog = ( 2*log(moments[1]) - log(moments[2])/2 ) 
-	        sdlog = ( sqrt ( log(moments[2]) - 2*log(moments[1]) ) ) 
-	        d2 = ( -log(X[i]/S[i]) + meanlog*Time[i] ) / ( sdlog*sqrt(Time[i]) )
-	        d1 = d2 + sdlog*sqrt(Time[i])
-	        call[i] = moments[1]*pnorm(d1)-(X[i]/S[i])*pnorm(d2)
+            moments = masian(Time = Time[i], r = r[i], 
+                sigma = sigma[i])$rawMoments 
+            moments = moments / Time[i]^(1:4)   
+            meanlog = ( 2*log(moments[1]) - log(moments[2])/2 ) 
+            sdlog = ( sqrt ( log(moments[2]) - 2*log(moments[1]) ) ) 
+            d2 = ( -log(X[i]/S[i]) + meanlog*Time[i] ) / ( sdlog*sqrt(Time[i]) )
+            d1 = d2 + sdlog*sqrt(Time[i])
+            call[i] = moments[1]*pnorm(d1)-(X[i]/S[i])*pnorm(d2)
         }
      }
     
      # Reciprocal-Gamma Approximation:
      if (method == "RG") {
         for ( i in 1:length(S) ) {
-	        moments = masian(Time = Time[i], r = r[i], 
-	        	sigma = sigma[i])$rawMoments
-	        moments = moments / Time[i]^(1:4)   
-	        alpha = (2*moments[2] - moments[1]^2) / (moments[2] - moments[1]^2)
-	        beta = (moments[2] - moments[1]^2) / (moments[1]*moments[2])
-	        call[i] = moments[1]*pgamma(S[i]/X[i], shape=alpha-1, scale=beta) - 
-	            (X[i]/S[i])*pgamma(S[i]/X[i], shape=alpha, scale=beta)
-	    }
-	 }
+            moments = masian(Time = Time[i], r = r[i], 
+                sigma = sigma[i])$rawMoments
+            moments = moments / Time[i]^(1:4)   
+            alpha = (2*moments[2] - moments[1]^2) / (moments[2] - moments[1]^2)
+            beta = (moments[2] - moments[1]^2) / (moments[1]*moments[2])
+            call[i] = moments[1]*pgamma(S[i]/X[i], shape=alpha-1, scale=beta) - 
+                (X[i]/S[i])*pgamma(S[i]/X[i], shape=alpha, scale=beta)
+        }
+     }
     
      # Johnson-Type-I Approximation:
      if (method == "JI") {
         for ( i in 1:length(S) ) {
-	        cmoments = masian(Time = Time[i], r = r[i], 
-	        	sigma = sigma[i])$centralMoments  
-	        cmoments = cmoments / Time[i]^(1:4) 
-	        mu = cmoments[1]    
-	        varsigma = sqrt(cmoments[2])    
-	        eta = cmoments[3] / varsigma^3
-	        omega = 0.5 * ( 8 + 4*eta^2 + 4*sqrt(4*eta^2+eta^4) )^(1/3)
-	        omega = omega + 1/omega - 1
-	        b = 1 / sqrt(log(omega))
-	        a = 0.5 * b * log(omega*(omega-1)/varsigma^2)
-	        d = sign(eta)   
-	        c = d*mu - exp(  (0.5/b-a)/b  )
-	        Q = a + b*log((X[i]/S[i]-c)/d)
-	        call[i] = mu - X[i]/S[i] + (X[i]/S[i] - c) * pnorm( Q ) - 
-	            d * exp ( (1-2*a*b)/(2*b^2) ) * pnorm ( Q - 1/b )
-		}
-	}
+            cmoments = masian(Time = Time[i], r = r[i], 
+                sigma = sigma[i])$centralMoments  
+            cmoments = cmoments / Time[i]^(1:4) 
+            mu = cmoments[1]    
+            varsigma = sqrt(cmoments[2])    
+            eta = cmoments[3] / varsigma^3
+            omega = 0.5 * ( 8 + 4*eta^2 + 4*sqrt(4*eta^2+eta^4) )^(1/3)
+            omega = omega + 1/omega - 1
+            b = 1 / sqrt(log(omega))
+            a = 0.5 * b * log(omega*(omega-1)/varsigma^2)
+            d = sign(eta)   
+            c = d*mu - exp(  (0.5/b-a)/b  )
+            Q = a + b*log((X[i]/S[i]-c)/d)
+            call[i] = mu - X[i]/S[i] + (X[i]/S[i] - c) * pnorm( Q ) - 
+                d * exp ( (1-2*a*b)/(2*b^2) ) * pnorm ( Q - 1/b )
+        }
+    }
         
     # Call Price:
     Price = S* exp(-r*Time) * call
@@ -435,10 +435,10 @@ sigma = 0.30, table = NA, method = c("LN", "RG", "JI"))
 
 .GramCharlierAsianDensity = 
 function(Time = 1, r = 0.09, sigma = 0.30, method = c("LN", "RG", "JI"))
-{	# A function ported by Diethelm Wuertz 
+{   # A function ported by Diethelm Wuertz 
 
-	# Return Value:
-	NA
+    # Return Value:
+    NA
 }
 
 
@@ -737,7 +737,7 @@ dt = 1.0e-10)
     
     # ?
     Price = Price + 
-    	ZhangApproximateAsianOption(TypeFlag, S, X, Time, r, sigma, table) 
+        ZhangApproximateAsianOption(TypeFlag, S, X, Time, r, sigma, table) 
     
     # Return Value:
     Price
@@ -748,8 +748,8 @@ ZhangApproximateAsianOption =
 function(TypeFlag = c("c", "p"), S = 100, X = 100, Time = 1, r = 0.09, 
 sigma = 0.30, table = NA)
 {
-	# Settings:
-	TypeFlag = TypeFlag[1]
+    # Settings:
+    TypeFlag = TypeFlag[1]
     
     # Test for Table:
     if (is.data.frame(table)) {
@@ -761,22 +761,22 @@ sigma = 0.30, table = NA)
     }
     
     # Compute:  
-	I = 0
-	xi = (Time*X-I)*exp(-r*Time)/S - (1-exp(-r*Time))/r 
-	eta = (sigma^2/(4*r^3)) * (-3 + 2*r*Time + 4*exp(-r*Time) - exp(-2*r*Time))
-	
+    I = 0
+    xi = (Time*X-I)*exp(-r*Time)/S - (1-exp(-r*Time))/r 
+    eta = (sigma^2/(4*r^3)) * (-3 + 2*r*Time + 4*exp(-r*Time) - exp(-2*r*Time))
+    
     # Call:
     price = (S/Time) * 
-		( -xi * pnorm(-xi/sqrt(2*eta)) + sqrt(eta/pi)*exp(-xi^2/(4*eta)) )	 
+        ( -xi * pnorm(-xi/sqrt(2*eta)) + sqrt(eta/pi)*exp(-xi^2/(4*eta)) )   
     if (TypeFlag == "c") {
-	    ans = price
+        ans = price
     } else { 
-   		ans = CallPutParityAsianOption(TypeFlag = "c", price, 
-   			S, X, Time, sigma, r, table = table)
-	}
-    	
+        ans = CallPutParityAsianOption(TypeFlag = "c", price, 
+            S, X, Time, sigma, r, table = table)
+    }
+        
     # Return Value:
-	ans
+    ans
 } 
 
 
@@ -1046,13 +1046,13 @@ function(x, y, tau, nu, ip = 0)
     #   $ P^{(\nu)} (k, \tau) $. Proposition 2 described bu eq. (16)
 
     # Note:
-	#   Requires Confluent Hypergeometric Functions
+    #   Requires Confluent Hypergeometric Functions
 
-	# Reference:
-	#	[L] V. Linetzky, Spectral Expansions for Asian (Average Price)
-	#  	Options, Preprint, revised Version from October 2002
+    # Reference:
+    #   [L] V. Linetzky, Spectral Expansions for Asian (Average Price)
+    #   Options, Preprint, revised Version from October 2002
 
-	# Function:
+    # Function:
     result = V = rep(0, length = length(x))
     for (i in 1:length(x)) {
         p = x[i]
@@ -1284,9 +1284,9 @@ sigma = 0.30)
     #   of Curran's approximation.
     
     # Note:
-    #	Rescale sigma:
-    # 	Note the formula of Thompson work for Time=1 only!
-    # 	Thus the easiest way to cover times to maturity different
+    #   Rescale sigma:
+    #   Note the formula of Thompson work for Time=1 only!
+    #   Thus the easiest way to cover times to maturity different
     #     from unity can be achieved by scale the volatility and 
     #     interest rate! - Just do it
     
@@ -1365,9 +1365,9 @@ sigma = 0.30)
     #   double integration.
     
     # Note:
-    #	Rescale sigma:
-    # 	Note the formula of Thompson work for Time=1 only!
-    # 	Thus the easiest way to cover times to maturity different
+    #   Rescale sigma:
+    #   Note the formula of Thompson work for Time=1 only!
+    #   Thus the easiest way to cover times to maturity different
     #     from unity can be achieved by scale the volatility and 
     #     interest rate! - Just do it
     
@@ -1446,9 +1446,9 @@ sigma = 0.30)
     #   Thompson's formula. 
     
     # Note:
-    #	Rescale sigma:
-    # 	Note the formula of Thompson work for Time=1 only!
-    # 	Thus the easiest way to cover times to maturity different
+    #   Rescale sigma:
+    #   Note the formula of Thompson work for Time=1 only!
+    #   Thus the easiest way to cover times to maturity different
     #     from unity can be achieved by scale the volatility and 
     #     interest rate! - Just do it
     

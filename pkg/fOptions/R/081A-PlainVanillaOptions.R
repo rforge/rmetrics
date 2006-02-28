@@ -376,7 +376,7 @@ description = NULL)
     
     # Result:
     result = GBSOption(TypeFlag = TypeFlag, S = FT, X = X, Time = Time, 
-    	r = r, b = 0, sigma = sigma)@price
+        r = r, b = 0, sigma = sigma)@price
     
     # Parameters:
     param = list()

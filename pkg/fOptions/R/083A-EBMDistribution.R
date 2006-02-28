@@ -566,7 +566,7 @@ function(x, y, deriv = c(1, 2))
 
 .thetaEBM =
 function(r, u) 
-{	# A function written by Diethelm Wuertz
+{   # A function written by Diethelm Wuertz
 
     # Description:
     #   Calculate the integral "\theta_r(u)" given by equations 
@@ -574,29 +574,29 @@ function(r, u)
     #   Integral of Exponential Brownian Motion".
     
     # Arguments:
-    #	r - vector of numeric values
+    #   r - vector of numeric values
     #   u - numeric value
     
     # FUNCTION:
     
     # Function to be integrated:  
-	f = function(x, rr, uu) {
-		fx = rep(0, length = length(x))
-		for (i in 1:length(x) ) 
-			fx[i] = exp(-x[i]^2/(2*uu)) * exp(-rr*cosh(x[i])) * 
-				sinh(x[i]) * sin(pi*x[i]/uu) 
-		fx }
-	
+    f = function(x, rr, uu) {
+        fx = rep(0, length = length(x))
+        for (i in 1:length(x) ) 
+            fx[i] = exp(-x[i]^2/(2*uu)) * exp(-rr*cosh(x[i])) * 
+                sinh(x[i]) * sin(pi*x[i]/uu) 
+        fx }
+    
     # Loop over r-Vector:
-	result = rep(0, length=length(r))
-	for ( i in 1: length(r) ) {
-		result[i] = integrate(f, lower = 0, upper = 30, rr = r[i], uu = u, 
-			subdivisions = 100, rel.tol = .Machine$double.eps^0.25, 
-			abs.tol = .Machine$double.eps^0.25)$value 
-		result[i] = result[i] * (r/sqrt((2*u*pi^3))) * exp(pi^2/(2*u)) }
-	
-	# Return Value:
-	result
+    result = rep(0, length=length(r))
+    for ( i in 1: length(r) ) {
+        result[i] = integrate(f, lower = 0, upper = 30, rr = r[i], uu = u, 
+            subdivisions = 100, rel.tol = .Machine$double.eps^0.25, 
+            abs.tol = .Machine$double.eps^0.25)$value 
+        result[i] = result[i] * (r/sqrt((2*u*pi^3))) * exp(pi^2/(2*u)) }
+    
+    # Return Value:
+    result
 }
 
 
@@ -605,7 +605,7 @@ function(r, u)
 
 .psiEBM = 
 function(r, u)
-{	# A function written by Diethelm Wuertz
+{   # A function written by Diethelm Wuertz
 
     # Description:
     #   Calculate the integral "\psi_r(u)" given by equations 
@@ -613,17 +613,17 @@ function(r, u)
     #   Integral of Exponential Brownian Motion".
     
     # Arguments:
-    #	r - vector of numeric values
+    #   r - vector of numeric values
     #   u - numeric value
     
     # FUNCTION:
     
     # Calculate psi() from theta():
-	result = sqrt(2*u*pi^3) * exp(-pi^2/(2*u)) * .thetaEBM(r, u)
-	
-	# Return Value:
-	result
-	
+    result = sqrt(2*u*pi^3) * exp(-pi^2/(2*u)) * .thetaEBM(r, u)
+    
+    # Return Value:
+    result
+    
 }
 
 
@@ -632,7 +632,7 @@ function(r, u)
 
 d2EBM =
 function(u, t = 1) 
-{	# A function written by Diethelm Wuertz
+{   # A function written by Diethelm Wuertz
 
     # Description:
     #   Calculate the density integral "f_A_t(u)" given by  
@@ -640,28 +640,28 @@ function(u, t = 1)
     #   Integral of Exponential Brownian Motion".
     
     # Arguments:
-    #	t - numeric value
+    #   t - numeric value
     #   u - numeric value
     
-	# FUNCTION:
-	
-	# Function to be integrated:
-	f = function(x, tt, uu) {
-	    fx = rep(0, length=length(x))
-	    for (i in 1:length(x) )
-			fx[i] = (1/uu) * exp(-(1+exp(2*x[i]))/(2*uu)) *  
-				.thetaEBM(r=exp(x[i])/uu, u=tt) 
-		fx }
-	
-	# Integrate:
-	result = rep(0, length = length(u))
-	for (i in 1:length(u)) {
-	result[i] = integrate(f, lower = -16, upper = 4, tt = t, uu = u[i], 
-		subdivisions = 100, rel.tol=.Machine$double.eps^0.25, 
-		abs.tol=.Machine$double.eps^0.25)$value }
-	
-	# Return Value:
-	result
+    # FUNCTION:
+    
+    # Function to be integrated:
+    f = function(x, tt, uu) {
+        fx = rep(0, length=length(x))
+        for (i in 1:length(x) )
+            fx[i] = (1/uu) * exp(-(1+exp(2*x[i]))/(2*uu)) *  
+                .thetaEBM(r=exp(x[i])/uu, u=tt) 
+        fx }
+    
+    # Integrate:
+    result = rep(0, length = length(u))
+    for (i in 1:length(u)) {
+    result[i] = integrate(f, lower = -16, upper = 4, tt = t, uu = u[i], 
+        subdivisions = 100, rel.tol=.Machine$double.eps^0.25, 
+        abs.tol=.Machine$double.eps^0.25)$value }
+    
+    # Return Value:
+    result
 }
 
 
@@ -671,30 +671,30 @@ function(u, t = 1)
 
 .gxuEBM =
 function(x, u)
-{	# A function written by Diethelm Wuertz
+{   # A function written by Diethelm Wuertz
 
     # Description:
     #   Interchange the Integrals - and first integrate:
     #   1/u^2 * sinh(x) * exp(-(1/(2*u))*(1+exp(2*x))) * exp(x) * 
-    #		exp(-exp(x)*cosh(y)/u)
+    #       exp(-exp(x)*cosh(y)/u)
     
-	# FUNCTION:
-	
-	# Compute g(x, u): 
-	fx = rep(0, length = length(x)) 
-	if (u > 0) {
-	  	for ( i in 1:length(x) ) {
-	  		su = (u)^(-3/2) * sinh(x[i])
-      		cx = cosh(x[i])/sqrt(u)
-      		sx = sinh(x[i])/sqrt(u)
-      		Asymptotics = exp(x[i]) / sqrt(u) / 2
-      		if (Asymptotics <= 33.0) {
-    			fx[i] = su * pnorm(-cx) / dnorm(sx) }
-      		else {
-    			fx[i] = su * exp(-1/(2*u)) * (1-1/cx^2+3/cx^4) / cx  } } } 
-    			
-	# Return Value:
-	fx
+    # FUNCTION:
+    
+    # Compute g(x, u): 
+    fx = rep(0, length = length(x)) 
+    if (u > 0) {
+        for ( i in 1:length(x) ) {
+            su = (u)^(-3/2) * sinh(x[i])
+            cx = cosh(x[i])/sqrt(u)
+            sx = sinh(x[i])/sqrt(u)
+            Asymptotics = exp(x[i]) / sqrt(u) / 2
+            if (Asymptotics <= 33.0) {
+                fx[i] = su * pnorm(-cx) / dnorm(sx) }
+            else {
+                fx[i] = su * exp(-1/(2*u)) * (1-1/cx^2+3/cx^4) / cx  } } } 
+                
+    # Return Value:
+    fx
 }
 
 
@@ -703,16 +703,16 @@ function(x, u)
 
 .gxtEBM = 
 function(x, t)
-{  	# A function written by Diethelm Wuertz
+{   # A function written by Diethelm Wuertz
 
     # Description:
     
     # FUNCTION:
     
     # Compute g(x, t):
-	fx = exp(pi^2/(2*t)) / sqrt(2*t*pi^3) * exp(-x^2/(2*t))
+    fx = exp(pi^2/(2*t)) / sqrt(2*t*pi^3) * exp(-x^2/(2*t))
 
-	# Return Value:
+    # Return Value:
     fx
 }
 
@@ -722,14 +722,14 @@ function(x, t)
 
 .gxtuEBM =  
 function(x, t, u)
-{  	# A function written by Diethelm Wuertz
+{   # A function written by Diethelm Wuertz
 
     # FUNCTION:
     
     # Result:
-	fx = .gxtEBM(x = x, t = t) * .gxuEBM(x = x, u = u) * sin(pi*x/t) 
+    fx = .gxtEBM(x = x, t = t) * .gxuEBM(x = x, u = u) * sin(pi*x/t) 
 
-	# Return Value:
+    # Return Value:
     fx
 }
 
@@ -738,25 +738,25 @@ function(x, t, u)
 
 dEBM =
 function(u, t = 1)
-{	# A function written by Diethelm Wuertz
+{   # A function written by Diethelm Wuertz
 
-	# Arguments;
-	#   t - a numeric value
-	#   u - a vector of numeric values
-	
-	# FUNCTION:
-	
-	# Calculate Density:
-	result = rep(0, length = length(u))
-	for (i in 1:length(u) ) {
-		result[i] = integrate(.gxtuEBM, lower = 0, upper = 100, 
-			subdivisions = 100, rel.tol = .Machine$double.eps^0.25,
-			t = t, u = u[i])$value 
-		print(c(u[i], result[i]))
-	}
-		
-	# Return Value:
-	result
+    # Arguments;
+    #   t - a numeric value
+    #   u - a vector of numeric values
+    
+    # FUNCTION:
+    
+    # Calculate Density:
+    result = rep(0, length = length(u))
+    for (i in 1:length(u) ) {
+        result[i] = integrate(.gxtuEBM, lower = 0, upper = 100, 
+            subdivisions = 100, rel.tol = .Machine$double.eps^0.25,
+            t = t, u = u[i])$value 
+        print(c(u[i], result[i]))
+    }
+        
+    # Return Value:
+    result
 }
 
 
@@ -765,24 +765,24 @@ function(u, t = 1)
 
 pEBM = 
 function(u, t = 1)
-{	# A function written by Diethelm Wuertz
+{   # A function written by Diethelm Wuertz
 
-	# Arguments;
-	#   t - a numeric value
-	#   u - a vector of numeric value
-	
-	# FUNCTION:
-	
-	# Calculate Probability:
-	result = rep(0, length=length(u))
-	result[1] = integrate(fx, lower = 0, upper = u[1], t = t)$value
-	if (length(u) > 1) {
-		for (i in 2:length(u) ) {
-			result[i] = result[i-1] + 
-				integrate(dEBM, lower = u[i-1], upper = u[i], t = t)$value } }
-		
-	# Return Value:
-	result
+    # Arguments;
+    #   t - a numeric value
+    #   u - a vector of numeric value
+    
+    # FUNCTION:
+    
+    # Calculate Probability:
+    result = rep(0, length=length(u))
+    result[1] = integrate(fx, lower = 0, upper = u[1], t = t)$value
+    if (length(u) > 1) {
+        for (i in 2:length(u) ) {
+            result[i] = result[i-1] + 
+                integrate(dEBM, lower = u[i-1], upper = u[i], t = t)$value } }
+        
+    # Return Value:
+    result
 }
 
 
@@ -791,22 +791,22 @@ function(u, t = 1)
 
 dasymEBM = 
 function(u, t = 1)
-{	# A function written by Diethelm Wuertz
+{   # A function written by Diethelm Wuertz
 
-	# Description:
-	#   Calculates the asymptotic behavior of the density
-	#   function f of the exponential Brownian maotion
-	
-	# FUNCTION:
-	
-	# Asymptotic Density:
-	alpha = log ( 8*u*exp(-2*t) )
-	beta = exp (  -((log(alpha/(4*t)))^2)/(8*t)  )
-	f = sqrt(t) * exp(t/2) * exp(-alpha^2/(8*t)) * beta
-	f = f / ( u * sqrt(u) * alpha * gamma (alpha /(4*t)) )
-	
-	# Return Value:
-	f
+    # Description:
+    #   Calculates the asymptotic behavior of the density
+    #   function f of the exponential Brownian maotion
+    
+    # FUNCTION:
+    
+    # Asymptotic Density:
+    alpha = log ( 8*u*exp(-2*t) )
+    beta = exp (  -((log(alpha/(4*t)))^2)/(8*t)  )
+    f = sqrt(t) * exp(t/2) * exp(-alpha^2/(8*t)) * beta
+    f = f / ( u * sqrt(u) * alpha * gamma (alpha /(4*t)) )
+    
+    # Return Value:
+    f
 }
 
 

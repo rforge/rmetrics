@@ -187,7 +187,7 @@ sigmaE, rho, title = NULL, description = NULL)
     
     # Parameters:
     # TypeFlag = c("c", "p"), E, S, X, Time, r, rf, q, sigmaS, sigmaE, rho
-	param = list()
+    param = list()
     param$TypeFlag = TypeFlag
     param$E = E
     param$S = S
