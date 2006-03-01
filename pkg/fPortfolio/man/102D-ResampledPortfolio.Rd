@@ -4,7 +4,7 @@
 
 \alias{frontierResampled}
 
-\title{Resampled Portfolio}
+\title{Resampled Portfolio Frontier}
 
 
 \description{
@@ -16,23 +16,45 @@
     The functions are:
     
     \tabular{ll}{
-    \code{.portfolioResampled} \tab ... . }
+    \code{frontierResampled} \tab ... . }
        
 }
     
 
 \usage{
-frontierResampled(trace = TRUE)
+frontierResampled(x = as.matrix(read.csv("nova-updated.csv", header = FALSE)),
+    expectedReturns = read.csv("expected-returns.csv"), frequency = 52,
+    type = list(nFrontier = 200, returnChoice = 2, covarianceChoice = 2,
+    targetChoice = 6, correlationChoice = 1), confidenceLevel = TRUE, 
+    trace = TRUE)
 }
 
 
 \arguments{
   
-    \item{trace}{
-        trace
+    \item{x}{
+        any rectangular multivariate time series object which can be
+        transformed into a matrix throught the function \code{as.matrix}. 
         } 
-
-        
+    \item{expectedReturns}{
+        expectedReturns
+        } 
+    \item{frequency}{
+        frequency of time series records. An integer value, by default
+        52 which denotes weekly data records.
+        }  
+    \item{type}{
+        a control list with the following entries: ...
+        }
+    \item{confidenceLevel}{
+        a logical flag, if \code{TRUE} then 95% confidence levels are 
+        returned, otherwise not. By default \code{TRUE}.
+        }
+    \item{trace}{
+        a logical if \code{TRUE} then the portfolio resampling process
+        will be ttraced, otherwise not. By default \code{TRUE}.
+        }
+       
 }
 
 \details{
@@ -77,23 +99,25 @@ frontierResampled(trace = TRUE)
 
 \value{
 
-    none
+    A list ...
     
 }
 
 
 \references{
 
-Elton E.J., Gruber M.J. (1991); 
-    \emph{Modern Portfolio Theory and Investment Analysis}, 
-    4th Edition, Wiley, NY, pp. 65--93.
+Michaud, R.O. (1998); 
+    \emph{Efficient Asset Management: A Practical Guide to Stock 
+        Portfolio Optimization and Asset Allocation }, 
+    President and Fallows of the Harvard College, USA.
     
 }
 
 
 \author{
 
-    Diethelm Wuertz for the Rmetrics port.
+    Lorenzo Isella for the R code,\cr
+    Diethelm Wuertz for this Rmetrics port.
     
 }
 
@@ -103,7 +127,9 @@ Elton E.J., Gruber M.J. (1991);
 
 \dontrun{
 ## file -
+   frontierResampled()
 } 
+
 }
 
 

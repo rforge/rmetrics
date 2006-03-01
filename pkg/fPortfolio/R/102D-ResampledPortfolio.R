@@ -17,42 +17,40 @@
 
 ################################################################################    
     
-
-.frontierResampled.RUnit =
-function()
-{
-    # library(tseries)
-    niter = 200
-    rtnchoice = 2 
-    choicecov = 2
-    nupper = 0
-    nlower = 0
-    limupper = c(1,20)
-    maxweight = c(0.00001, 1)
-    target = 6 
-    correlation = 1
-    confidence = 0
-    alpha = 0.9
-  
-}
- 
-    
-# ------------------------------------------------------------------------------
-    
    
 frontierResampled = 
-function(trace = TRUE)
+function(x = as.matrix(read.csv("nova-updated.csv", header = FALSE)),
+expectedReturns = read.csv("expected-returns.csv"), frequency = 52,
+type = list(nFrontier = 200, returnChoice = 2, covarianceChoice = 2,
+targetChoice = 6, correlationChoice = 1), confidenceLevel = TRUE, 
+trace = TRUE)
 {   # A function implemented by Diethelm Wuertz
-
-    x = as.matrix(read.csv("nova-updated.csv", header = FALSE))
-    expected.returns = read.csv("expected-returns.csv")
-    doplot = TRUE
-    
-    # solve.QP is needed !
 
     # Description:
     
     # Arguments:
+    #   x - any rectangular multivariate time series object which can be
+    #       transformed into a matrix throught the function 'as.matrix'.  
+    #   expectedReturns - expected returns
+    #   frequency - frequency of time series records. An integer value, by 
+    #       default 52 which denotes weekly data records.
+    #   type - a control list with the following entries: ...
+    #   confidenceLevel - a logical flag, if TRUE then 95% confidence 
+    #       levels are returned, otherwise not. By default TRUE.
+    #   trace - a logical if TRUE then the portfolio resampling process
+    #       will be ttraced, otherwise not. By default TRUE.
+    
+    # Value:
+    
+    # Note:
+    #   solve.QP is needed !
+    
+    # Author:
+    #   This code was written by Lorenzo Isella (2005), Copyright GPL
+    
+    # FUNCTION:
+    
+    # Default Settings:
     #   niter = by default 200
     #   rtnchoice = by default 2 
     #   choicecov = by default 2
@@ -65,12 +63,8 @@ function(trace = TRUE)
     #   confidence = by default 0
     #   alpha = by default 0.9
     
-    # Value:
-    
-    # Author:
-    #   This code was written by Lorenzo Isella (2005), Copyright GPL
-    
-    # FUNCTION:
+    # Plot:
+    doplot = TRUE
     
     # I read the matrix containing the historical returns the historical 
     # returns of the i-th asset are the i-th column of the matrix
@@ -83,7 +77,7 @@ function(trace = TRUE)
    
     # Now we start dealing with a part in which I have to make some choices
     # Number of efficient frontiers I am going to Monte-Carlo simulate
-    niter = 200
+    niter = nFrontier # 200
     
     # Now I save the historical covariance matrix
     histcovmat = cov(rtnmat)
@@ -96,11 +90,11 @@ function(trace = TRUE)
     nassets = vecdim[2]
     
     # Now I choose whether I want to use the historical rtns of something else
-    # rtnchoice=0 -> historical rtns
-    # rtnchoice=1 -> expected rtns to be read from a file 
-    # rtnchoice=2 -> shrinkage of the historical expected rtns
+    # rtnchoice = 0 -> historical rtns
+    # rtnchoice = 1 -> expected rtns to be read from a file 
+    # rtnchoice = 2 -> shrinkage of the historical expected rtns
     # (James-Stein estimator)
-    rtnchoice = 2
+    rtnchoice = returnChoice # 2
                   
     # Now I introduce some options about the covariance matrix I am going 
     # to use the choices are:
@@ -110,7 +104,7 @@ function(trace = TRUE)
     # 2 for the shrinkage of the historical covariance matrix with 
     #   different targets (bayesian priors are used to shrink
     #   the historical covariance matrix; see paper by Oliver Ledoit)
-    choicecov = 2
+    choicecov = covarianceChoice # 2
     
     # Now I specify the number of upper and lower constrains (different 
     # from the no SS). I want to use on the asset weights, 
@@ -132,7 +126,7 @@ function(trace = TRUE)
     # it contains the assets (in this case the 1st and 20th ones 
     # of my portfolio) whose weights I want to limit I need at least 
     # two weights to limit [technicality of the code]; in case I want 
-    # to limit only one, I can choose a maxweight =1 for the second
+    # to limit only one, I can choose a maxweight = 1 for the second
     limupper = c(1, 20)
     
     # like I did above, I now enter the maximum allowed weight for the 
@@ -155,7 +149,7 @@ function(trace = TRUE)
     #  4: diagonal, unequal variance
     #  5: perfect positive correlation
     #  6: constant correlation
-    target = 6 
+    target = targetChoice # 6 
     
     # In the following I use some brutal approximation:the assets are 
     # distributed according to a Gaussian multivariate (this can be 
@@ -170,7 +164,7 @@ function(trace = TRUE)
     # assets of my portfolio according to a multivariate statistics.
     # correlation = 1 -> Gaussian correlated multivariate 
     # correlation = 0 -> Gaussian uncorrelated multivariate   
-    correlation = 1
+    correlation = correlationChoice # 1
     
     # The following two lines implement the confidence level of the portfolio.
     # as intended by Michaud in his book. It is the same idea as in Jobson-
@@ -183,13 +177,13 @@ function(trace = TRUE)
     # At this point I have the collected rtns of the simulated ptfs
     # confidence = 1 -> I compute the confidence level
     # confidence = 0 -> I do not compute the confidence level 
-    confidence = 1 #0
+    confidence = confidenceLevel # 1 #0
     alpha = 0.9
     
 
     # END OF PART DEALING WITH THE OPTIONS TO SET UP THE OPTIMIZATION PROBLEM
     
-    # NEW SECTION:
+    # NEW SECTION::
     # The vector "assetmeans" will be containing in general the expected 
     # rather than the historical rtns of the assets.
     assetmeans  = seq(1:nassets)
@@ -200,7 +194,7 @@ function(trace = TRUE)
     # containing the expected rtns of the ptf. Careful about how the file 
     # is written!
     # I removed a column for the expected rtns in the file which is read here
-    assettemp = expected.returns
+    assettemp = expectedReturns
     for ( i in 1:nassets) {
         # Vector containing the expected rtns provided by the wealth manager 
         assetmeans1[i] = assettemp[i, 1]
@@ -267,7 +261,7 @@ function(trace = TRUE)
     }
    
 
-    # NEW SECTION
+    # NEW SECTION:
     # after reading the historical data, I start to perform some operations 
     # on them. I need to get the the historical correlation matrix first.
     # Now I have the historical correlations
@@ -303,7 +297,7 @@ function(trace = TRUE)
     # Now I have the constant covariance matrix
 
     
-    # NEW SECTION
+    # NEW SECTION:
     # Now I implement the formula of the shrinkage of the covariance matrix
     # Now I need to define a few parameters
     # A = sum(var(sqrt(nlength)*histcovmat))
@@ -358,7 +352,7 @@ function(trace = TRUE)
     vars = vars*statfactor
     # Now a test
     columntemp = (wsubkij[, 1, 1]-wbarsubij[1, 1]) * 
-    	(wsubkij[, 1, 1] - wbarsubij[1, 1])
+        (wsubkij[, 1, 1] - wbarsubij[1, 1])
     vars11 = statfactor*sum(columntemp)
     numbertest = 0
     for (k in 1:nlength) {
@@ -556,7 +550,7 @@ function(trace = TRUE)
     }
   
      
-    # NEW SECTION   
+    # NEW SECTION:   
     # Now I have all the data for the optimization problem.
     # I determine the min var ptf without any stochastic sampling
     # (pure mean variance problem)
@@ -646,7 +640,7 @@ function(trace = TRUE)
     # on in the code
     
   
-    # NEW SECTION 
+    # NEW SECTION: 
     # I define the step in the rtns along the efficient frontier
     delta = (maxval-minval)/Npoints   
     # I slightly correct the max value along the efficient frontier to be 
@@ -709,7 +703,7 @@ function(trace = TRUE)
     }
    
     
-    # NEW SECTION
+    # NEW SECTION:
     # Now I start performing the iterations (i.e. the optimization of many 
     # Gaussian-distributed random portfolios)
     # Right now I generate the matrix containing the multivariate Gaussian 
@@ -851,7 +845,7 @@ function(trace = TRUE)
     }
    
     
-    # NEW SECTION
+    # NEW SECTION:
     # Now I work out the efficient frontier using simply Markowitz without 
     # any sampling since in general I am not using the historical covariance 
     # matrix, I cannot use portfolio.optim but I need to resort to solve.QP 
@@ -902,7 +896,7 @@ function(trace = TRUE)
     }
  
         
-    # NEW SECTION
+    # NEW SECTION:
     # Now I work out the std and the expected rtn of the ptf by using 
     # the average weights obtained from the sampling with the "true" 
     # covariance matrix and the "true" expected rtns this is the idea 
@@ -927,7 +921,7 @@ function(trace = TRUE)
     }
    
     
-    # NEW SECTION
+    # NEW SECTION:
     # Now I work out the set of ptfs statistically equivalent to the minvar, 
     # max rtn and middlE rtn ptfs first I need to count how many ptfs of 
     # each kind I have
@@ -980,7 +974,7 @@ function(trace = TRUE)
     # Now a save a vector with the parameters used in this simulation
     param = c(rtnchoice,choicecov,target,confidence,correlation)
     write.csv(param,"parameters.csv")
-    annualizedrtn = 52*assetmeans
+    annualizedrtn = frequency*assetmeans
     # just a diagnostic
     write.csv(annualizedrtn,"exprtn.csv")
     # Now I create an array containing the numbers of the constrained 
@@ -989,21 +983,21 @@ function(trace = TRUE)
     write.csv(saveconstr,"extra-constrains.csv")
     # Now I just redefine and annualized a few objects needed to plot 
     # the efficient frontiers
-    mystd = mystd*sqrt(52)
-    exprtn = exprtn*52
-    mcrtn = mcrtn*52
-    mcstd = mcstd*sqrt(52)
+    mystd = mystd*sqrt(frequency)
+    exprtn = exprtn*frequency
+    mcrtn = mcrtn*frequency
+    mcstd = mcstd*sqrt(frequency)
    
     
-    # NEW SECTION 
+    # NEW SECTION: 
     if (confidence == 1) {
         # Now I annualize the collected stds and the collected rtns along 
         # the stochastic trajectories
-        # collectstd = collectstd*sqrt(52)
-        # collectrtn = collectrtn*52
+        # collectstd = collectstd*sqrt(frequency)
+        # collectrtn = collectrtn*frequency
         if (confidence == 1) {
-            JKstd = JKstd*sqrt(52)
-            JKrtn = JKrtn*52
+            JKstd = JKstd*sqrt(frequency)
+            JKrtn = JKrtn*frequency
         }              
         # Now I need to start defining a grid which will contain first 
         # 100% of the random ptfs and then 90% of them.
@@ -1087,16 +1081,16 @@ function(trace = TRUE)
     }
     
 
-    # NEW SECTION:
+    # NEW SECTION::
     # Now I also save the portfolios weights along the efficient frontier 
     write.csv(ptfweight, "ptf-weights-along-frontier-resampled.csv")
     
     
-    # NEW SECTION:
+    # NEW SECTION::
     # Finally, some plots
     if (doplot) {
         # Efficient Frontier Plot:
-        plot(mystd,exprtn, "l", col = 10, 
+        plot(mystd, exprtn, type = "l", col = 10, 
             main = "Markowitz and Resampled Frontiers", 
             xlab = "Standard Deviation", ylab = "Expected Return",lwd=2)
         lines(mcstd, mcrtn, col = 300, lwd = 2)
@@ -1105,7 +1099,7 @@ function(trace = TRUE)
             c(col = 10, col = 300) ) 
         # Confidence Level Plot:
         if (confidence == 1) {       
-            plot(mystd, exprtn, "l", col = 10, 
+            plot(mystd, exprtn, type = "l", col = 10, 
                 main = "Confidence Level", 
                 xlab = "Standard Deviation", 
                 ylab = "Expected Return", lwd = 2)
@@ -1116,14 +1110,16 @@ function(trace = TRUE)
     }
     
     
-    # NEW SECTION:
+    # NEW SECTION::
     if (trace) print("The End")
     
     # Return Value:
-    ans = list(
+    pfolio = list(
         mystd = mystd, exprtn = exprtn, mcrtn = mcrtn, rtnline = rtnline,
         ptfweight = ptfweight)
-    invisible(ans)
+        
+    # Return Value:
+    pfolio
 }
 
 
