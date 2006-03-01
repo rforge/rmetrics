@@ -258,7 +258,7 @@ Huang C.J., Litzenberger R.H. (1988);
 
 
 \examples{
-## SOURCE("fPortfolio.B2-MarkowitzPortfolio")
+## SOURCE("fPortfolio.102C-MarkowitzPortfolio")
 
 \dontrun{
 ## berndtInvest -

@@ -76,7 +76,7 @@
 
 
 \examples{
-## SOURCE("fPortfolio.X1-PortfolioData")
+## SOURCE("fPortfolio.109A-PortfolioData")
 
 ## -
 }

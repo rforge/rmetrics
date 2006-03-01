@@ -58,19 +58,20 @@ xmpPortfolio(prompt = "")
 
 \author{
 
-    Diethelm Wuertz for the Rmetrics Port.
+    Diethelm Wuertz for the \R-Port.
 
 }
 
 
 \examples{
-## SOURCE("fPortfolio.Z1-PortfolioTools")
+## SOURCE("fPortfolio.109B-PortfolioTools")
 
 \dontrun{
 ## xmpfPortfolio -
    # Popup the examples menu:
    xmpfPortfolio()
 }
+
 }
 
 

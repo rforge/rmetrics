@@ -36,10 +36,10 @@
 
 \usage{
 frontierTwoAssetsMarkowitz(x, length = 100, 
-	title = NULL, description = NULL) 
+    title = NULL, description = NULL) 
 frontierTwoAssetsCVaR(x, length= 100, alpha = 0.05,
-	title = NULL, description = NULL) 
-	
+    title = NULL, description = NULL) 
+    
 \method{print}{fPFOLIO2}(x, \dots)
 \method{plot}{fPFOLIO2}(x, \dots)
 \method{summary}{fPFOLIO2}(object, \dots)
@@ -141,7 +141,7 @@ Elton E.J., Gruber M.J. (1991);
 
 
 \examples{
-## SOURCE("fPortfolio.B3-TwoAssetsPortfolio")
+## SOURCE("fPortfolio.102B-TwoAssetsPortfolio")
 
 \dontrun{
 ## berndtInvest -
@@ -172,71 +172,63 @@ Elton E.J., Gruber M.J. (1991);
    
   
   
-show =
-function(i,j) { 
-w = (0:100)/100
-alpha = 0.04
-par(mfrow = c(2,2), cex = 0.5)
- 
+    show = function(i, j) { 
+        w = (0:100)/100 
+        alpha = 0.04
+        par(mfrow = c(2, 2), cex = 0.5)
+        
+        print(c(i, j))
+        twoAssets = cbind(berndtInvest[, i], berndtInvest[, j])
+        print(head(twoAssets))
+        
+        means = apply(twoAssets, 2, mean)
+        x.Return = y.VaR = y.CVaR = y.CVaRplus = NULL
+        for (k in 1:101) {
+            weights = c(w[k], 1-w[k])
+            x.Return = c(x.Return, weights %*% means)
+            y.VaR = c(y.VaR, -VaR(twoAssets, weights, alpha))
+            y.CVaR = c(y.CVaR, -CVaR(twoAssets, weights, alpha))
+            y.CVaRplus = c(y.CVaRplus, -CVaRplus(twoAssets, weights, alpha))
+        }
+        plot(x = range(x.Return), y = range(c(y.VaR, y.CVaR, y.CVaRplus)), 
+            xlab = as.character(i), ylab = as.character(j), type = "n")
+        lines(x.Return, as.vector(y.VaR), col ="red")
+        lines(x.Return, as.vector(y.CVaR), col = "green")
+        lines(x.Return, as.vector(y.CVaRplus), col = "blue")
+    }
+
+    par(mfrow = c(1,1)) 
+    w = (0:200)/200
+    alpha = 0.04
+    for (i in 2:17) {
+        for (j in (i+1):18) {    
+            twoAssets = cbind(berndtInvest[, i], berndtInvest[, j])   
+            means = apply(twoAssets, 2, mean)
+            x = NULL
+            y = NULL
+            for (k in 1:201) {
+                weights = c(w[k], 1-w[k])
+                x = c(x, weights %*% means)
+                y = c(y, -CVaRplus(twoAssets, weights, alpha))
+            }
+            s = round(100*abs( y[201] - y[1] ) / ( max(y) - min(y)))
+            print(c(i, j, s))
+            plot(x, y, main = paste(as.character(i), as.character(j)))
+        }
+    }
     
-   print(c(i, j))
-   twoAssets = cbind(berndtInvest[, i], berndtInvest[, j])
-   print(head(twoAssets))
-  
-
-   means = apply(twoAssets, 2, mean)
-   x.Return = y.VaR = y.CVaR = y.CVaRplus = NULL
-   for (k in 1:101) {
-		weights = c(w[k], 1-w[k])
-		x.Return = c(x.Return, weights %*% means)
-		y.VaR = c(y.VaR, -VaR(twoAssets, weights, alpha))
-		y.CVaR = c(y.CVaR, -CVaR(twoAssets, weights, alpha))
-		y.CVaRplus = c(y.CVaRplus, -CVaRplus(twoAssets, weights, alpha))
-	}
-	plot(x = range(x.Return), y = range(c(y.VaR, y.CVaR, y.CVaRplus)), 
-		xlab = as.character(i), ylab = as.character(j), type = "n")
-	lines(x.Return, as.vector(y.VaR), col ="red")
-	lines(x.Return, as.vector(y.CVaR), col = "green")
-	lines(x.Return, as.vector(y.CVaRplus), col = "blue")
-}
-
-
-par(mfrow = c(1,1))
-	
-w = (0:200)/200
-alpha = 0.04
-for (i in 2:17) {
-for (j in (i+1):18) {   
-    
-   
-   	twoAssets = cbind(berndtInvest[, i], berndtInvest[, j])
-  
-  	means = apply(twoAssets, 2, mean)
-   	x = NULL
-   	y = NULL
-   	for (k in 1:201) {
-		weights = c(w[k], 1-w[k])
-		x = c(x, weights %*% means)
-		y = c(y, -CVaRplus(twoAssets, weights, alpha))
-	}
-	s = round(100*abs( y[201] - y[1] ) / ( max(y) - min(y)))
-	print(c(i, j, s))
-	plot(x, y, main = paste(as.character(i), as.character(j)))
-}
-}
-	
-
-	i = 5; j = 13
-	twoAssets = cbind(berndtInvest[, i], berndtInvest[, j]) 	
-	means = apply(twoAssets, 2, mean)
-   	x = y = NULL
-   	for (k in 1:201) {
-		weights = c(w[k], 1-w[k])
-		x = c(x, weights %*% means)
-		y = c(y, -VaR(twoAssets, weights, alpha)) }
-	s = round(100*abs( y[201] - y[1] ) / ( max(y) - min(y)))
-	plot(x, y, main = paste(as.character(i), as.character(j)))
-			
+    i = 5; j = 13
+    twoAssets = cbind(berndtInvest[, i], berndtInvest[, j])     
+    means = apply(twoAssets, 2, mean)
+    x = y = NULL
+    for (k in 1:201) {
+        weights = c(w[k], 1-w[k])
+        x = c(x, weights %*% means)
+        y = c(y, -VaR(twoAssets, weights, alpha)) 
+    }
+    s = round(100*abs( y[201] - y[1] ) / ( max(y) - min(y)))
+    plot(x, y, main = paste(as.character(i), as.character(j)))
+            
 }
    
 }

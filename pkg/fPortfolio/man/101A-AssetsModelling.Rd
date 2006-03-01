@@ -315,7 +315,7 @@ collection.
 
 
 \examples{
-## SOURCE("fPortfolio.A1-AssetsModelling")
+## SOURCE("fPortfolio.101A-AssetsModelling")
 
 ## berndtInvest -
    xmpPortfolio("\nStart: Load monthly data set of returns > ")

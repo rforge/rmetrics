@@ -99,7 +99,7 @@ Elton E.J., Gruber M.J. (1991);
 
 
 \examples{
-## SOURCE("fPortfolio.B2-ResampledPortfolio")
+## SOURCE("fPortfolio.102D-ResampledPortfolio")
 
 \dontrun{
 ## file -

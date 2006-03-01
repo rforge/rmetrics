@@ -200,7 +200,7 @@ Uryasev S. (2000);
 
 
 \examples{
-## SOURCE("fPortfolio.B1-VaRModelling")
+## SOURCE("fPortfolio.102A-VaRModelling")
 
 ## assetsSim -
    xmpPortfolio("\nStart: Artificial Mean Variance Portfolio > ")
