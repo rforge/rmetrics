@@ -270,7 +270,7 @@ Coles S. (2001);
 
 
 \examples{
-## SOURCE("fExtremes.54B-GpdGlmFit")
+## SOURCE("fExtremes.054B-GpdGlmFit")
 
 ## Use Rain Data:
    data(rain)

@@ -107,16 +107,16 @@
 
 \description{
 
-	Builtin functions as available in the contributed 
-	\R-packages 'evir' and 'ismev'. They are used only 
-	as internal functions, and they are not thought 
-	for usage by Rmetrics users.
-	
+    Builtin functions as available in the contributed 
+    \R-packages 'evir' and 'ismev'. They are used only 
+    as internal functions, and they are not thought 
+    for usage by Rmetrics users.
+    
 }
 
 
 \examples{
-## SOURCE("fExtremes.55A-ExtremesBuiltin")
+## SOURCE("fExtremes.056A-ExtremesBuiltin")
 
 ## -
 }

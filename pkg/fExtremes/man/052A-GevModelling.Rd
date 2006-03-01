@@ -113,7 +113,7 @@ shaparmPlot(x, revert = FALSE, standardize = FALSE, tails = 0.01*(1:10),
         interval is produced.
         }
     \item{alpha.range, xi.range}{
-    	[saparmPlot] - \cr
+        [saparmPlot] - \cr
         plotting ranges.
         }
     \item{autoscale}{
@@ -136,7 +136,7 @@ shaparmPlot(x, revert = FALSE, standardize = FALSE, tails = 0.01*(1:10),
         \code{"semester"} or \code{"year"}.
         }
     \item{both.tails}{
-     	[shaparmPlot] - \cr
+        [shaparmPlot] - \cr
         a logical, decides whether or not both tails should be 
         investigated. By default TRUE. If FALSE only the lower
         tail will be investigated.
@@ -149,7 +149,7 @@ shaparmPlot(x, revert = FALSE, standardize = FALSE, tails = 0.01*(1:10),
     \item{doplot}{
         a logical. Should the results be plotted?
         \cr
-    	[shaparmPlot] - \cr
+        [shaparmPlot] - \cr
         a vector of logicals of the same lengths as tails
         defining for wich tail depths plots should be created,
         by default plots will be generated for a tail depth of 5
@@ -157,7 +157,7 @@ shaparmPlot(x, revert = FALSE, standardize = FALSE, tails = 0.01*(1:10),
         TRUE, FALSE, FALSE, FALSE, FALSE, FALSE)}.
         }
     \item{doprint}{
-    	[shaparmPlot] - \cr
+        [shaparmPlot] - \cr
         a logical, decides whether or not for all tail depths the
         result for the shape parameter \code{1/alpha} should be
         printed.
@@ -216,7 +216,7 @@ shaparmPlot(x, revert = FALSE, standardize = FALSE, tails = 0.01*(1:10),
         \code{quantile} (a quantile estimate) should be plotted.
         }
     \item{p}{
-    	[qgev][qevs] - \cr
+        [qgev][qevs] - \cr
         a numeric vector of probabilities.
         [hillPlot] - \cr
         probability required when option \code{quantile} is
@@ -232,7 +232,7 @@ shaparmPlot(x, revert = FALSE, standardize = FALSE, tails = 0.01*(1:10),
         increasing number of order statistics \code{FALSE}.
         }
     \item{revert}{
-    	[shaparmPlot] - \cr
+        [shaparmPlot] - \cr
         a logical value, by default FALSE, if set to TRUE the
         sign of the vector will be reverted: \code{x = -x}.
         }
@@ -242,13 +242,13 @@ shaparmPlot(x, revert = FALSE, standardize = FALSE, tails = 0.01*(1:10),
         a point.
         }
     \item{standardize}{
-    	[shaparmPlot] - \cr
+        [shaparmPlot] - \cr
         a logical value, by default FALSE, if set to 
         TRUE the vector \code{x} will be standardized: 
         \code{x = (x-mean(x))/sqrt(var(x))}.
         }
     \item{tails}{
-    	[shaparmPlot] - \cr
+        [shaparmPlot] - \cr
         a numeric vector of tail depths to be considered; by
         default ten values ranging from 0.1 to 1.0 in steps of 0.1
         corresponding to values ranging from 1 to 10 percent.
@@ -260,7 +260,7 @@ shaparmPlot(x, revert = FALSE, standardize = FALSE, tails = 0.01*(1:10),
         \code{"pwm"}.
         }
     \item{which}{
-    	[shaparmPlot] - \cr
+        [shaparmPlot] - \cr
         a vector of 3 logicals indicating which plots from the 
         three methods will be created. The first entry decides
         for the Pickands estimator, the second for the Hill 
@@ -324,7 +324,7 @@ shaparmPlot(x, revert = FALSE, standardize = FALSE, tails = 0.01*(1:10),
     All values are numeric vectors.
     \cr
 
-	\code{gevSim}
+    \code{gevSim}
     \cr
     returns a vector of data points from the simulated series.
     \cr
@@ -378,7 +378,7 @@ shaparmPlot(x, revert = FALSE, standardize = FALSE, tails = 0.01*(1:10),
     distributions.
     \cr
         
-	\bold{Parameter Estimation:}
+    \bold{Parameter Estimation:}
     \cr\cr
     \code{gevFit} estimates the parameters either by the probability 
     weighted moment method, \code{method="pwm"} or by maximum log 
@@ -461,8 +461,8 @@ shaparmPlot(x, revert = FALSE, standardize = FALSE, tails = 0.01*(1:10),
     \code{evds}'s function \code{dgev} by \code{help(dgev, package="evd")}.
     \cr
     
-  	\bold{Generalized Extreme Value Distribution:}
-  	\cr\cr
+    \bold{Generalized Extreme Value Distribution:}
+    \cr\cr
     If method \code{"mle"} is selected the parameter fitting in \code{gevFit} 
     is passed to the internal function \code{gev.mle} or \code{gumbel.mle}
     depending on the value of \code{gumbel}, \code{FALSE} or \code{TRUE}.
@@ -496,7 +496,7 @@ Embrechts, P., Klueppelberg, C., Mikosch, T. (1997);
 
   
 \examples{
-## SOURCE("fExtremes.52A-GevModelling")
+## SOURCE("fExtremes.052A-GevModelling")
 
 ## *gev  -
    xmpExtremes("\nStart: GEV Frechet >")

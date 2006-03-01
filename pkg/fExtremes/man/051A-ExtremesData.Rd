@@ -104,7 +104,7 @@ deCluster(x, run = NA, doplot = TRUE)
 \arguments{
 
     \item{block}{
-    	[blockMaxima] - \cr
+        [blockMaxima] - \cr
         the block size. A numeric value is interpreted as the number  
         of data values in each successive block. All the data is used,
         so the last block may not contain \code{block} observations. 
@@ -116,7 +116,7 @@ deCluster(x, run = NA, doplot = TRUE)
         \code{"semester"} or \code{"year"}. By default monthly blocks
         from daily data are assumed.
         }
-   	\item{choices}{
+    \item{choices}{
         [interactivePlot] - \cr
         a vector of character strings for the
         choice menu. By Default \code{"Plot 1"} ... \code{"Plot 9"}
@@ -396,7 +396,7 @@ Embrechts, P., Klueppelberg, C., Mikosch, T. (1997);
 
 
 \examples{ 
-## SOURCE("fExtremes.51A-ExtremesData")
+## SOURCE("fExtremes.051A-ExtremesData")
 
 ## emdPlot -
    xmpExtremes("\nStart: Empirical Distribution Function >")

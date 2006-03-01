@@ -131,7 +131,7 @@ potFit(x, threshold = NA, nextremes = NA, run = NA, \dots)
 
   
 \examples{
-## SOURCE("fExtremes.53C-PotFit")
+## SOURCE("fExtremes.053C-PotFit")
 
 ## Use Danish Fire Insurance Loss Data:
    data(danish)

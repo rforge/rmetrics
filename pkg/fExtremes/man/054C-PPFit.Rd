@@ -208,7 +208,7 @@ Coles S. (2001);
 
 
 \examples{
-## SOURCE("fExtremes.54C-PPFit")
+## SOURCE("fExtremes.054C-PPFit")
 
 ## Use Rain Data:
    data(rain)

@@ -266,7 +266,7 @@ Coles S. (2001);
 
   
 \examples{
-## SOURCE("fExtremes.54A-ExtremesGlm")
+## SOURCE("fExtremes.054A-ExtremesGlm")
 
 ## Simulated GEV Data:
    xmpExtremes("\nStart: Simulte GEV Sample >")

@@ -98,7 +98,7 @@ Embrechts, P., Klueppelberg, C., Mikosch, T. (1997);
 
 
 \examples{
-## SOURCE("fExtremes.53A-GpdModelling")
+## SOURCE("fExtremes.053A-GpdModelling")
 
 ## *gpd  -
    xmpExtremes("\nStart: Simulate GPD Distributed sample >")

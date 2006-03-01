@@ -129,14 +129,14 @@ Embrechts, P., Klueppelberg, C., Mikosch, T. (1997);
 
 \seealso{
   
-    \code{\link{hillPlot}},
-    \code{\link{gevFit}}. 
+    \code{hillPlot},
+    \code{gevFit}. 
   
 }
 
 
 \examples{
-## SOURCE("fExtremes.55A-ExtremeIndex")
+## SOURCE("fExtremes.055A-ExtremeIndex")
 
 ## Extremal Index for the right and left tails 
 ## of the BMW log returns:

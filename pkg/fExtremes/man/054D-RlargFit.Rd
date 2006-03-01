@@ -201,7 +201,7 @@ Coles S. (2001);
 
 
 \examples{
-## SOURCE("fExtremes.54D-RlargFit")
+## SOURCE("fExtremes.054D-RlargFit")
 
 ## Use Venice Data:
    data(venice)

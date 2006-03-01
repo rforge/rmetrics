@@ -22,11 +22,11 @@
 
 \description{
   
-   	A collection and description of functions to model 
-   	the Generalized Pareto Distribution, GPD, based on 
-   	\R's 'evir' package. Two approaches for parameter 
-   	estimation are provided: Maximum likelihood estimation 
-   	and the probability weighted moment method.
+    A collection and description of functions to model 
+    the Generalized Pareto Distribution, GPD, based on 
+    \R's 'evir' package. Two approaches for parameter 
+    estimation are provided: Maximum likelihood estimation 
+    and the probability weighted moment method.
     \cr
     
     The functions are:
@@ -305,7 +305,7 @@ gpdtailPlot(fit, optlog = NA, extend = 1.5, labels = TRUE, \dots)
 
 Hosking J.R.M., Wallis J.R., (1987);
     \emph{Parameter and quantile estimation for the generalized
-    	Pareto distribution},   
+        Pareto distribution},   
     Technometrics 29, 339--349.
     
 }
@@ -322,7 +322,7 @@ Hosking J.R.M., Wallis J.R., (1987);
 
   
 \examples{
-## SOURCE("fExtremes.53B-GpdFit")
+## SOURCE("fExtremes.053B-GpdFit")
 
 ## Load Data:
    data(danish)
@@ -359,8 +359,8 @@ Hosking J.R.M., Wallis J.R., (1987);
    tail = gpdtailPlot(fit)
    gpdqPlot(tail, 0.995)
    title(main = "Danish Data: 99.5th Percentile") 
-	
-## gpdquantPlot - 	
+    
+## gpdquantPlot -   
    xmpExtremes("\nNext: 99.9th Percentiles for Danish Fire Data > ")
    par(mfrow = c(1, 1))
    gpdquantPlot(danish, p = 0.999)
