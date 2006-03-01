@@ -123,11 +123,13 @@ s.range = NULL, title = NULL, description = NULL, ...)
 
     # Check Data: 
     if (is.list(data)) {
-        x = NA
+        # data is a list with entries list(mu, Sigma)
+        x.mat = NA
         mu = data$mu
         Sigma = data$Sigma
         plottype = "mucov"
     } else {
+        # data is a rectangular time series object:
         x.mat = as.matrix(data)
         # Mean Vector  and Covariance Matrix:
         mu = apply(x.mat, MARGIN = 2, FUN = mean)
@@ -135,27 +137,19 @@ s.range = NULL, title = NULL, description = NULL, ...)
         plottype = "series"
     }
     
-    # Settings:
-    C0 = 1
-    
     # Ranges for mean and Standard Deviation:
     if (is.null(r.range)) r.range = range(mu)
     if (is.null(s.range)) s.range = c(0, max(sqrt(diag(Sigma))))
   
-    # Settings:
-    returns = mu
-    covar = Sigma
-    dimension = length(returns)  
-           
     # Calculate Efficient Frontier:
     pmmin = min(r.range)
     pmmax = max(r.range)
-    ps = pm = diversification = rep(0, length = length)
+    ps = pm = diversification = rep(0, times = length)
     eps = 1.0e-6
     k = 0
-    for (pm.now in seq(pmmin + eps, pmmax - eps, length = length)) {
+    for (PM in seq(pmmin+eps, pmmax-eps, length = length)) {
         k = k+1
-        ef = .portfolio.optim(x = x, pm = pm.now, covmat = covar) 
+        ef = .portfolio.optim(pm = PM, returns = mu, covmat = Sigma) 
         pm[k] = ef$pm
         ps[k] = ef$ps
         diversification[k] = length (ef$pw[ef$pw > 0.01])
@@ -165,9 +159,9 @@ s.range = NULL, title = NULL, description = NULL, ...)
     pfolio = list(
         what = "frontier",
         plottype = plottype,
-        data = x, 
+        data = data, 
         pw = NA, pm = pm, ps = ps, 
-        returns = returns, cov = covar, 
+        returns = mu, cov = Sigma, 
         r.range = r.range, s.range = s.range, 
         Rf = NA, Rm = NA, Sm = NA, 
         Rew = NA, Sew = NA,
@@ -325,13 +319,14 @@ function(x, targetReturn, title = NULL, description = NULL)
    
     # Transform to matrix:
     x = as.matrix(x)
+    MU = apply(x, 2, mean)
     COV = cov(x)
     
     # Quadratic Programming:
     pfolio = list()
     pfolio$what = "portfolio"
     pfolio$method = "QP"
-    opt = .portfolio.optim(x = x, pm = targetReturn, covmat = COV)
+    opt = .portfolio.optim(pm = targetReturn, returns = MU, covmat = COV)
     pfolio$pw = opt$pw
     pfolio$pm = opt$pm
     pfolio$ps = opt$ps  
@@ -716,7 +711,7 @@ function(object, Rf = 0, add = TRUE)
     # Calculate Tangency Portfolio, if it exists!
     # The test is true, when the slope could be evaluated.
     if (!is.na(slope)) {
-      tangency = .portfolio.optim(x = object$data, pm = ym, 
+      tangency = .portfolio.optim(pm = ym, returns = object$returns,
         covmat = object$cov) 
       # Portfolio Weights in Percent:
       pw = 100 * tangency$pw   
@@ -749,14 +744,13 @@ function(object, add = TRUE)
     # FUNCTION:
     
     # Calculate equally weighted portfolio:
-    x = object$data
-    means = apply(x, 2, mean)
-    covmat = cov(x)
+    means = object$returns
+    covmat = object$cov
     ew.weights = rep(1/length(object$returns), times = length(object$returns))
     Rew = (ew.weights %*% means)[[1,1]]
     Sew = (ew.weights %*% covmat %*% ew.weights)[[1,1]]
     if (add) {
-        points(sqrt(Sew), Rew, col = "steelblue4")
+        points(sqrt(Sew), Rew, col = "steelblue")
     }
     
     # Return Value:
@@ -797,7 +791,7 @@ title = NULL, description = NULL, ...)
     
     # Check Data: 
     if (is.list(data)) {
-        x = NA
+        x.mat = NA
         mu = data$mu
         Sigma = data$Sigma
         plottype = "mucov"
@@ -928,7 +922,7 @@ function()
 
 
 .portfolio.optim = 
-function(x, pm = mean(x), covmat = cov(x)) 
+function(pm, returns, covmat) 
 {   # A Builtin function modified by Diethelm Wuertz
 
     # Description:  
@@ -948,20 +942,21 @@ function(x, pm = mean(x), covmat = cov(x))
     # FUNCTION:
     
     # Optimize:
-    k = dim(x)[2]
+    k = dim(covmat)[2] # dim(x)[2]
     dvec = rep(0, k)
     a1 = rep(1, k)
-    a2 = apply(x, 2, mean)    
+    a2 = returns # apply(x, 2, mean)    
     a3 = matrix(0, k, k)
     diag(a3) = 1
     b3 = rep(0, k)
     Amat = t(rbind(a1, a2, a3))
     b0 = c(1, pm, b3)    
     res = .solve.QP(covmat, dvec, Amat, bvec = b0, meq = 2)
-    y = t(res$solution %*% t(x))
+    weights = res$solution
+    ps = sqrt(weights %*% covmat %*% weights)
     
     # Result:
-    ans = list(pw = res$solution, px = y, pm = mean(y), ps = sd(y))
+    ans = list(pw = weights, pm = pm, ps = ps)
     
     # Return value:
     ans
@@ -1011,9 +1006,9 @@ function(Dmat, dvec, Amat, bvec, meq)
         iter = as.integer(iter), work = as.double(work),
         ierr = as.integer(factorized), PACKAGE = "fPortfolio")
     if (res1$ierr == 1) {
-        stop("constraints are inconsistent, no solution!")
+        warning("constraints are inconsistent, no solution!")
     } else if (res1$ierr == 2) {
-        stop("matrix D in quadratic function is not positive definite!")
+        warning("matrix D in quadratic function is not positive definite!")
     }
     
     # Return Value:
