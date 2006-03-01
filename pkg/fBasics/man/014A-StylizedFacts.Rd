@@ -277,7 +277,7 @@ Ding Z., Granger C.W.J., Engle R.F. (1993);
 
 
 \examples{
-## SOURCE("fBasics.14A-StylizedFacts")
+## SOURCE("fBasics.014A-StylizedFacts")
 
 ## logpdfPlot -
    xmpBasics("\nStart: log PDF Plot > ")

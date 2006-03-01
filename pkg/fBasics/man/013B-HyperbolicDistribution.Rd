@@ -201,7 +201,7 @@ Raible S. (2000);
 
 
 \examples{
-## SOURCE("fBasics.13B-HyperbolicDistribution")
+## SOURCE("fBasics.013B-HyperbolicDistribution")
 
 ## hyp -
    xmpBasics("\nStart: Hyperbolic Distribution > ")

@@ -125,7 +125,7 @@ colCumsums(x, na.rm = FALSE, \dots)
         value set to 1.
         }
     \item{FUN}{
-    	[colStats][rowStats - \cr
+        [colStats][rowStats - \cr
         the statistical function to be applied.
         }
         \item{na.rm}{
@@ -225,7 +225,7 @@ colCumsums(x, na.rm = FALSE, \dots)
 
 
 \examples{
-## SOURCE("fBasics.15A-BasicStatistics")
+## SOURCE("fBasics.015A-BasicStatistics")
 
 ## basicStats -
    xmpBasics("\nStart: Basic Statistics of log-Returns > ")

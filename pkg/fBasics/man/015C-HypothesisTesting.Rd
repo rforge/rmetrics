@@ -42,7 +42,7 @@
 show.fHTEST(object)
 
 pPlot(X, nN = 100, nStat = 100, logN = TRUE, logStat = FALSE, 
-	fill = FALSE, linear = TRUE, digits = 8, doplot = TRUE, \dots)
+    fill = FALSE, linear = TRUE, digits = 8, doplot = TRUE, \dots)
 pTable(X, Stat, N, digits = 4)
 qTable(X, p, N, digits = 4)
 }
@@ -51,50 +51,50 @@ qTable(X, p, N, digits = 4)
 \arguments{
   
     \item{digits}{
-    	an integer value with the number of rounding digits.
-    	}
+        an integer value with the number of rounding digits.
+        }
     \item{doplot}{
-    	a logical flag. Should a plot be displayed?
-    	}
-   	\item{fill}{
-    	[pPlot] - \cr
-    	a logical flag deciding if missing data should be filled
-    	with asymptotic values zero and one.
-    	}
-   	\item{linear}{
-    	[pPlot] - \cr
-    	a logical flag indicating the type of interpolation.
-    	}
+        a logical flag. Should a plot be displayed?
+        }
+    \item{fill}{
+        [pPlot] - \cr
+        a logical flag deciding if missing data should be filled
+        with asymptotic values zero and one.
+        }
+    \item{linear}{
+        [pPlot] - \cr
+        a logical flag indicating the type of interpolation.
+        }
     \item{logN, logStat}{
-    	[pPlot] - \cr
-    	two logical flags deciding if the data should be on a 
-    	logarithmic scale or not.
-    	}
+        [pPlot] - \cr
+        two logical flags deciding if the data should be on a 
+        logarithmic scale or not.
+        }
     \item{N}{
-    	an integer value or vector of sample sizes.
-    	}
-   	\item{nN, nStat}{
-    	[pPlot] - \cr
-    	two integer values with the size of the table.
-    	}
+        an integer value or vector of sample sizes.
+        }
+    \item{nN, nStat}{
+        [pPlot] - \cr
+        two integer values with the size of the table.
+        }
     \item{object}{
         [show] - \cr
         an S4 object of class \code{"fHTEST"}.
         }
     \item{p}{
-    	a numeric value or vector of probabilities.
-    	}
+        a numeric value or vector of probabilities.
+        }
     \item{Stat}{
-    	a numeric value or vector of quantiles or statistic values.
-    	}
+        a numeric value or vector of quantiles or statistic values.
+        }
     \item{X}{
-    	[pPlot][*Table] - \cr
-    	a data frame or matrix of a finite sample test table.
-    	}
+        [pPlot][*Table] - \cr
+        a data frame or matrix of a finite sample test table.
+        }
     \item{\dots}{
-    	[pPlot] - \cr
-    	additional arguments to be passed.
-    	}
+        [pPlot] - \cr
+        additional arguments to be passed.
+        }
        
 }
 
@@ -106,25 +106,25 @@ qTable(X, p, N, digits = 4)
     of class \code{"fHTEST"}. The object contains the following slots:
     
     \item{@call}{
-		the function call.	
-		}
-	\item{@data}{
+        the function call.  
+        }
+    \item{@data}{
         the data as specified by the input argument(s).
         }
     \item{@test}{
-    	a list whose elements contail the results from the statistical
-    	test. The information provided is similar to a list object of
-    	class{"htest"}.
-    	}
+        a list whose elements contail the results from the statistical
+        test. The information provided is similar to a list object of
+        class{"htest"}.
+        }
     \item{@title}{
-    	a character string with the name of the test. This can be 
-    	overwritten specifying a user defined input argument.
-    	}
+        a character string with the name of the test. This can be 
+        overwritten specifying a user defined input argument.
+        }
     \item{@description}{
-    	a character string with an optional user defined description. 
-    	By default just the current date when the test was applied will
-    	be returned.}
-	
+        a character string with an optional user defined description. 
+        By default just the current date when the test was applied will
+        be returned.}
+    
     
     The slot \code{@test} returns an object of class \code{"list"} 
     containing the following elements:
@@ -142,8 +142,8 @@ qTable(X, p, N, digits = 4)
         a numeric value or vector of sample estimates.
         }
     \item{conf.int}{
-    	a numeric two row vector or matrix of 95% confidence levels.
-    	}
+        a numeric two row vector or matrix of 95% confidence levels.
+        }
     \item{method}{
         a character string indicating what type of test was performed.
         }
@@ -170,7 +170,7 @@ qTable(X, p, N, digits = 4)
 
 
 \examples{
-## SOURCE("fBasics.15C-HypothesisTesting")
+## SOURCE("fBasics.015C-HypothesisTesting")
 
 ## fHTEST -
    getClass("fHTEST")

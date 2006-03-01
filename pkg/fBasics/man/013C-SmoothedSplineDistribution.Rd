@@ -51,9 +51,9 @@ rssd(n, param)
         a numeric vector of quantiles.
         }
     \item{param}{
-    	a S3 object specifying the parameters as
-    	returned by the function \code{ssdFit}.
-    	}
+        a S3 object specifying the parameters as
+        returned by the function \code{ssdFit}.
+        }
     
 }
 
@@ -71,33 +71,33 @@ rssd(n, param)
 
 \details{
 
-	This is an easy to use version for the functions implemented
-	in Chong Gu's contributed R package "gss" which is downloadable
-	from the CRAN server. If you require more functionality, e.g.
-	to tailor the parameter estimate we recommend to install Gu's 
-	package. The installation does not interfere with the functions
-	implemented in Rmetrics.
-	
-	Note, before you can use the functions you have to estimate the
-	parameters \code{param} using the function \code{ssdFit}.
-	
+    This is an easy to use version for the functions implemented
+    in Chong Gu's contributed R package "gss" which is downloadable
+    from the CRAN server. If you require more functionality, e.g.
+    to tailor the parameter estimate we recommend to install Gu's 
+    package. The installation does not interfere with the functions
+    implemented in Rmetrics.
+    
+    Note, before you can use the functions you have to estimate the
+    parameters \code{param} using the function \code{ssdFit}.
+    
 }
 
 
 \note{
 
-	The functions do not implement the full functionality provided
-	by R's contributed package "gss". Only the "cubic" spline method
-	is provided and most of the optional arguments are set to default
-	values. Since the original "gss" package does not interfere with
-	Rmetrics you can load it in parallel. 
-	
-	It's worth to note that the "gss" package does not work under SPlus,
-	but the modified and adapted functions \code{ssdFit} and \code{*ssd}
-	can be used.
-		
+    The functions do not implement the full functionality provided
+    by R's contributed package "gss". Only the "cubic" spline method
+    is provided and most of the optional arguments are set to default
+    values. Since the original "gss" package does not interfere with
+    Rmetrics you can load it in parallel. 
+    
+    It's worth to note that the "gss" package does not work under SPlus,
+    but the modified and adapted functions \code{ssdFit} and \code{*ssd}
+    can be used.
+        
 }
-	
+    
 
 \author{
 
@@ -110,19 +110,19 @@ rssd(n, param)
 \references{
 
 Gu C., Wang, J. (2003);
- 	emph{Penalized likelihood density estimation: Direct cross-validation 
- 	and scalable approximation}, 
- 	Statistica Sinica, 13, 811--826. 
+    emph{Penalized likelihood density estimation: Direct cross-validation 
+    and scalable approximation}, 
+    Statistica Sinica, 13, 811--826. 
 
 Gu C. (2002);
-	\emph{Smoothing Spline ANOVA Models},
-	New York, Springer-Verlag. 
+    \emph{Smoothing Spline ANOVA Models},
+    New York, Springer-Verlag. 
 
 }
 
 
 \examples{
-## SOURCE("fBasics.13C-SmoothedSplineDistribution")
+## SOURCE("fBasics.013C-SmoothedSplineDistribution")
 
 ## ssd -
 \dontrun{

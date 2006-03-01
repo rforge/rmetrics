@@ -191,7 +191,7 @@ Weron, A., Weron R. (1999);
 }
 
 \examples{  
-## SOURCE("fBasics.13A-StableDistribution")
+## SOURCE("fBasics.013A-StableDistribution")
 
 ## rsymstb -
    xmpBasics("\nStart: Symmetric Stable Distribuion:  > ")

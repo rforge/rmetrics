@@ -12,8 +12,8 @@
 
 \description{
 
-	Tools used in the fBasics library.
-	\cr
+    Tools used in the fBasics library.
+    \cr
 }
 
 
@@ -25,45 +25,45 @@ xmpBasics(prompt = "")
 
 \arguments{
 
-  	\item{prompt}{
-		the string printed when prompting the user for input. 
-	}
+    \item{prompt}{
+        the string printed when prompting the user for input. 
+    }
 }
 
 
 \value{
   
-	xmpfBasics
-	\cr
-	Popups the example menu.
-	\cr
-	
-	xmpBasics
-	\cr
-	Nothing, the default, or the the prompt if you have set
-	\code{xmpBasics = readline} on the command prompt. 
-	
+    xmpfBasics
+    \cr
+    Popups the example menu.
+    \cr
+    
+    xmpBasics
+    \cr
+    Nothing, the default, or the the prompt if you have set
+    \code{xmpBasics = readline} on the command prompt. 
+    
 }
 
 
 \note{
 
-	The example in the manual pages may be interactive and ask for
-	input from the user. To achieve this you have to type on the
-	command line: \code{xmpBasics = readline}
+    The example in the manual pages may be interactive and ask for
+    input from the user. To achieve this you have to type on the
+    command line: \code{xmpBasics = readline}
 
 }
 
 
 \author{
 
-	Diethelm Wuertz for the Rmetrics \R-port.
+    Diethelm Wuertz for the Rmetrics \R-port.
 
 }
 
 
 \examples{
-## SOURCE("fBasics-xmpTools")
+## SOURCE("fBasics.016A-BasicsTools")
 }
 
 

@@ -154,7 +154,7 @@ WFE, 2004,
     
 
 \examples{
-## SOURCE("fBasics.11A-MarketStatistics")
+## SOURCE("fBasics.011A-MarketStatistics")
 
 ## Pie Chart from CIA Oil Production Indicator (Code 2173): 
    # Search for Code:

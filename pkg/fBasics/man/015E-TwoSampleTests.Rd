@@ -86,23 +86,23 @@
 ks2Test(x, y, title = NULL, description = NULL)
 
 %.locationTest(x, y, method =  c("t", "kruskal2"), 
-%	title = NULL, description = NULL)
+%   title = NULL, description = NULL)
 tTest(x, y, title = NULL, description = NULL) 
 kw2Test(x, y, title = NULL, description = NULL)
 
 %.varianceTest(x, y,  method = c("varf", "bartlett2", "fligner2"), 
-%	title = NULL, description = NULL)
+%   title = NULL, description = NULL)
 varfTest(x, y, title = NULL, description = NULL)
 bartlett2Test(x, y, title = NULL, description = NULL)
 fligner2Test(x, y, title = NULL, description = NULL)
 
 %.scaleTest(x, y,  method = c("ansari", "mood"), 
-%	title = NULL, description = NULL)
+%   title = NULL, description = NULL)
 ansariTest(x, y, title = NULL, description = NULL)
 moodTest(x, y, title = NULL, description = NULL)
 
 %.correlationTest(x, y, method = c("pearson", "kendall", "spearman"), 
-%	title = NULL, description = NULL)
+%   title = NULL, description = NULL)
 pearsonTest(x, y, title = NULL, description = NULL)
 kendallTest(x, y, title = NULL, description = NULL)
 spearmanTest(x, y, title = NULL, description = NULL)
@@ -117,10 +117,10 @@ qansariw(p, m, n = m)
   
     \item{description}{
         optional description string, or a vector of character strings.
-    	}
+        }
     \item{m, n}{
-    	[*ansariw] - \cr
-    	}
+        [*ansariw] - \cr
+        }
     %\item{method}{
     %    [corTest] - \cr
     %    indicates the three different methods for the correlation
@@ -128,17 +128,17 @@ qansariw(p, m, n = m)
     %    vector \code{c("pearson", "kendall", "spearman")}.
     %    }   
     \item{p}{
-    	[qansariw] - \cr
-    	a numeric vector of quantiles.
-    	}
+        [qansariw] - \cr
+        a numeric vector of quantiles.
+        }
     \item{q}{
-    	[pansariw] - \cr
-    	a numeric vector of quantiles.
-    	}
+        [pansariw] - \cr
+        a numeric vector of quantiles.
+        }
     \item{title}{
-    	an optional title string, if not specified the inputs data 
+        an optional title string, if not specified the inputs data 
         name is deparsed.
-    	}
+        }
     \item{x, y}{
         a numeric vector of data values.
         \cr
@@ -163,26 +163,26 @@ qansariw(p, m, n = m)
     the following slots:
     
     \item{@call}{
-		the function call.	
-		}
-	\item{@data}{
+        the function call.  
+        }
+    \item{@data}{
         the data as specified by the input argument(s).
         }
     \item{@test}{
-    	a list whose elements contail the results from the statistical
-    	test. The information provided is similar to a list object of
-    	class{"htest"}.
-    	}
+        a list whose elements contail the results from the statistical
+        test. The information provided is similar to a list object of
+        class{"htest"}.
+        }
     \item{@title}{
-    	a character string with the name of the test. This can be 
-    	overwritten specifying a user defined input argument.
-    	}
+        a character string with the name of the test. This can be 
+        overwritten specifying a user defined input argument.
+        }
     \item{@description}{
-    	a character string with an optional user defined description. 
-    	By default just the current date when the test was applied will
-    	be returned.
-    	}
-	
+        a character string with an optional user defined description. 
+        By default just the current date when the test was applied will
+        be returned.
+        }
+    
     
     The slot \code{@test} returns an object of class \code{"list"} 
     containing (at least) the following elements:
@@ -200,8 +200,8 @@ qansariw(p, m, n = m)
         a numeric value or vector of sample estimates.
         }
     \item{conf.int}{
-    	a numeric two row vector or matrix of 95% confidence levels.
-    	}
+        a numeric two row vector or matrix of 95% confidence levels.
+        }
     \item{method}{
         a character string indicating what type of test was performed.
         }
@@ -222,7 +222,7 @@ qansariw(p, m, n = m)
 
 \details{
     
-	The tests may be of interest for many financial 
+    The tests may be of interest for many financial 
     and economic applications, especially for the 
     comparison of two time series. The tests are grouped 
     according to their functionalities.
@@ -262,15 +262,15 @@ qansariw(p, m, n = m)
     The function \code{bartlett2Test} performs the Bartlett's test of the 
     null hypothesis that the variances in each of the samples are the 
     same. This fact of equal variances across samples is also called 
-	\emph{homogeneity of variances}. Note, that Bartlett's test is 
-	sensitive to departures from normality. That is, if the samples 
-	come from non-normal distributions, then Bartlett's test may simply 
-	be testing for non-normality. The Levene test (not yet implemented)
-	is an alternative to the Bartlett test that is less sensitive to 
-	departures from normality. 
-	
-	The function \code{fligner2Test} performs the Fligner-Killeen test of 
-	the null that the variances in each of the two samples are the same. 
+    \emph{homogeneity of variances}. Note, that Bartlett's test is 
+    sensitive to departures from normality. That is, if the samples 
+    come from non-normal distributions, then Bartlett's test may simply 
+    be testing for non-normality. The Levene test (not yet implemented)
+    is an alternative to the Bartlett test that is less sensitive to 
+    departures from normality. 
+    
+    The function \code{fligner2Test} performs the Fligner-Killeen test of 
+    the null that the variances in each of the two samples are the same. 
     \cr
     
     \bold{Differences in Scale:}
@@ -286,7 +286,7 @@ qansariw(p, m, n = m)
     functions are available: \code{dansariw}, \code{pansariw}, and 
     \code{qansariw}.
     
- 	The function code{moodTest}, is another test which performs a 
+    The function code{moodTest}, is another test which performs a 
     two--sample test for a difference in scale parameters. The underlying 
     model is that the two samples are drawn from \emph{f(x-l)} and 
     \emph{f((x-l)/s)/s}, respectively, where \emph{l} is a common 
@@ -309,7 +309,7 @@ qansariw(p, m, n = m)
 
 \note{
 
-	Some of the test implementations are selected from \R's \code{ctest} 
+    Some of the test implementations are selected from \R's \code{ctest} 
     package.  
        
 }
@@ -350,7 +350,7 @@ Moore, D.S. (1986);
 
 
 \examples{
-## SOURCE("fBasics.15E-TwoSampleTests")
+## SOURCE("fBasics.015E-TwoSampleTests")
 
 ## x, y -
    xmpBasics("\nStart: Create two Samples > ")

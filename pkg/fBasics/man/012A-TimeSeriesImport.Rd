@@ -65,8 +65,8 @@ fredImport(query, file = "tempfile",
     source = "http://research.stlouisfed.org/fred2/series/", 
     frequency = "daily", save = FALSE, sep = ";", try = TRUE) 
 forecastsImport(query, file = "tempfile", 
-	source = "http://www.forecasts.org/data/data/", save = FALSE, 
-	try = TRUE) 
+    source = "http://www.forecasts.org/data/data/", save = FALSE, 
+    try = TRUE) 
     
 show.fWEBDATA(object)
 \method{print}{keystats}(x, \dots)
@@ -76,7 +76,7 @@ show.fWEBDATA(object)
 \arguments{
 
     \item{colname}{
-    	[economagicImport] - \cr
+        [economagicImport] - \cr
         a character string which defines the name of the value
         column. By default "VALUE".
         }
@@ -120,13 +120,13 @@ show.fWEBDATA(object)
         checked.
         }
     \item{x}{
-    	[print.keystats] - \cr
-    	an object of class \code{keystats} as returned by the function
-    	\code{keystatsImport}.
-    	}
+        [print.keystats] - \cr
+        an object of class \code{keystats} as returned by the function
+        \code{keystatsImport}.
+        }
     \item{\dots}{
-    	optional arguments passed to the \code{print.keystats} function.
-		}        
+        optional arguments passed to the \code{print.keystats} function.
+        }        
 }
 
 
@@ -137,24 +137,24 @@ show.fWEBDATA(object)
     with the following slots:
     
     \item{@call}{
-		the function call.	
-		}
-	\item{@data}{
+        the function call.  
+        }
+    \item{@data}{
         the data as downloaded formatted as a data.frame.
         }
     \item{@param}{
-    	a character vector whose elements contain the values of selected 
-    	parameters of the argument list.
-    	}
+        a character vector whose elements contain the values of selected 
+        parameters of the argument list.
+        }
     \item{@title}{
-    	a character string with the name of the download. This can be 
-    	overwritten specifying a user defined input argument.
-    	}
+        a character string with the name of the download. This can be 
+        overwritten specifying a user defined input argument.
+        }
     \item{@description}{
-    	a character string with an optional user defined description. 
-    	By default just the current date when the test was applied will
-    	be returned.}
-    	
+        a character string with an optional user defined description. 
+        By default just the current date when the test was applied will
+        be returned.}
+        
     The function \code{keystatsImport} returns an S3 object of class 
     \code{keystsats} with two entries: \code{$query} holds the query
     name, and \code{keystats} holds the dataframe with the statistical
@@ -268,7 +268,7 @@ show.fWEBDATA(object)
 
 \examples{
 \dontrun{
-## SOURCE("fBasics.12A-TimeSeriesData")
+## SOURCE("fBasics.012A-TimeSeriesData")
 
 ## economagicImport -
    xmpBasics("\nStart: Daily Foreign Exchange Rates > ")

@@ -46,13 +46,13 @@
 
 \usage{
 tFit(x, df = 4, doplot = TRUE, span = "auto", title = NULL, 
-	description = NULL, \dots)
-	
+    description = NULL, \dots)
+    
 stableFit(x, alpha = 1.75, beta = 0, gamma = 1, delta = 0, 
-	type = c("q", "mle"), doplot = TRUE, title = NULL, description = NULL)
-	
+    type = c("q", "mle"), doplot = TRUE, title = NULL, description = NULL)
+    
 ghFit(x, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1, doplot = TRUE, 
-    span = "auto", title = NULL, description = NULL, \dots)	
+    span = "auto", title = NULL, description = NULL, \dots) 
 hypFit(x, alpha = 1, beta = 0, delta = 1, mu = 0, doplot = TRUE, 
     span = "auto", title = NULL, description = NULL, \dots)
 nigFit(x, alpha = 1, beta = 0, delta = 1, mu = 0, doplot = TRUE, 
@@ -216,17 +216,17 @@ ssdFit(x, alpha = 1.4, seed = NULL, title = NULL, description = NULL)
 
 \note{
 
-	The function \code{ssdFit} does not implement the full functionality 
-	provided by R's contributed package "gss". Only the "cubic" spline 
-	method is provided and most of the optional arguments are set to 
-	default values. Since the original "gss" package does not interfere 
-	with Rmetrics you can load it in parallel, and use the function
-	\code{ssden} in place of \code{ssdFit}.
-	
-	It's worth to note that the "gss" package does not work under SPlus,
-	but the modified and adapted functions \code{ssdFit} and \code{*ssd}
-	can be used.  
-		
+    The function \code{ssdFit} does not implement the full functionality 
+    provided by R's contributed package "gss". Only the "cubic" spline 
+    method is provided and most of the optional arguments are set to 
+    default values. Since the original "gss" package does not interfere 
+    with Rmetrics you can load it in parallel, and use the function
+    \code{ssden} in place of \code{ssdFit}.
+    
+    It's worth to note that the "gss" package does not work under SPlus,
+    but the modified and adapted functions \code{ssdFit} and \code{*ssd}
+    can be used.  
+        
 }
 
 
@@ -239,7 +239,7 @@ ssdFit(x, alpha = 1.4, seed = NULL, title = NULL, description = NULL)
 
 
 \examples{
-## SOURCE("fBasics.13D-DistributionFits")
+## SOURCE("fBasics.013D-DistributionFits")
 
 ## tFit -
    xmpBasics("\nStart: MLE Fit to Student's t Density > ")

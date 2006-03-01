@@ -114,17 +114,17 @@ gofnorm(x, doprint = TRUE)
         The default value is \code{"ks"}.
         } 
     \item{N}{ 
-		an integer value specifying the sample size. 
-		}  
+        an integer value specifying the sample size. 
+        }  
     \item{p}{ 
-		a numeric vector of probabilities. Missing values are not
-		allowed. 
-		}
-	\item{q}{	
-		vector of quantiles or test statistics. Missing values are not
-		allowed. 
-		}		
-	\item{size}{
+        a numeric vector of probabilities. Missing values are not
+        allowed. 
+        }
+    \item{q}{   
+        vector of quantiles or test statistics. Missing values are not
+        allowed. 
+        }       
+    \item{size}{
         [jbTable] - \cr
         a character string denoting the size of the table. If set
         to \code{"all"} then all data are used from the table, if
@@ -331,9 +331,9 @@ gofnorm(x, doprint = TRUE)
 
 \note{
 
-	Some of the test implementations are selected from R's \code{ctest} 
-	and \code{nortest} packages. 
-	
+    Some of the test implementations are selected from R's \code{ctest} 
+    and \code{nortest} packages. 
+    
 }
 
 
@@ -397,9 +397,9 @@ Weiss M.S. (1978);
     JASA 73, 872--75.
     
 Wuertz D., Katzgraber H.G. (2005);
-	\emph{Precise finite-sample quantiles of the
-		Jarque-Bera adjusted Lagrange multiplier test},
-	ETHZ Preprint.
+    \emph{Precise finite-sample quantiles of the
+        Jarque-Bera adjusted Lagrange multiplier test},
+    ETHZ Preprint.
 }
 
 
@@ -417,7 +417,7 @@ Wuertz D., Katzgraber H.G. (2005);
 
 
 \examples{
-## SOURCE("fBasics.15D-OneSampleTests")
+## SOURCE("fBasics.015D-OneSampleTests")
 
 ## Series:
    xmpBasics("\nStart: Create Series > ")

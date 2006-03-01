@@ -51,7 +51,7 @@
 \usage{ 
 tsPlot(x, \dots) 
 histPlot(x, col = "steelblue4", border = "white", main = x@units, 
-	add.fit = TRUE, \dots)
+    add.fit = TRUE, \dots)
 densityPlot(x, col = "steelblue4", main = x@units, add.fit = TRUE, \dots)
 
 circlesPlot(x, y, size = 1, \dots)
@@ -68,11 +68,11 @@ greyPal(n = 64, start = 255-n, end = 255)
 \arguments{
   
     \item{add.fit}{
-    	[histPlot][densityPlot] - \cr
-    	a logical flag, if set to \code{TRUE} which is the default
-    	value than a normal fit will be added to the plot, otherwise
-    	not.
-    	}
+        [histPlot][densityPlot] - \cr
+        a logical flag, if set to \code{TRUE} which is the default
+        value than a normal fit will be added to the plot, otherwise
+        not.
+        }
     \item{col, border}{
         two character strings, defining the colors used to fill the
         bars and to plot the borders of the bars for the \code{histPlot},
@@ -86,15 +86,15 @@ greyPal(n = 64, start = 255-n, end = 255)
         the numeric value \code{cex}, the default size is 0.7.
         }  
     \item{main}{
-    	character string of main title(s).
-    	} 
+        character string of main title(s).
+        } 
     \item{n, start, end}{
         [greyPal] - cr
         \code{n} gives the number of greys to be constructed,
-		\code{start} and \code{end} span the range of the color palette.
-    	By default 64 grey tones equidistant chosen from the color range 
-    	(191, 191, 191) to (255, 255, 255).
-    	} 
+        \code{start} and \code{end} span the range of the color palette.
+        By default 64 grey tones equidistant chosen from the color range 
+        (191, 191, 191) to (255, 255, 255).
+        } 
     \item{size}{
         a numeric vector like \code{z}, the third variable in the 
         function \code{circlesPlot}. The argument gives the size of the 
@@ -231,7 +231,7 @@ greyPal(n = 64, start = 255-n, end = 255)
 
 
 \examples{
-## SOURCE("fBasics.12B-PlotFunctions")
+## SOURCE("fBasics.012B-PlotFunctions")
 
 \dontrun{
 ## tsPlot -
