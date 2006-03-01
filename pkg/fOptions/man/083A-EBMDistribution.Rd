@@ -176,7 +176,7 @@ dasymEBM(u, t = 1)
 
 
 \examples{
-## SOURCE("fOptions.E1-EBMDistribution")
+## SOURCE("fOptions.083A-EBMDistribution")
 
 ## Calculate Log-Normal Density and its Derivaties,
    x = exp(seq(-2.8, 1.2, length = 100))
@@ -189,10 +189,10 @@ dasymEBM(u, t = 1)
    plot(x, y0, type = "l", main = "Log-Normal Density")
    plot(x, y1, type = "l", main = "1st Derivative")
    z = derivative(xa, dlognorm(xa, deriv = 0), deriv = 1)
-   points(z$x, z$y, col = "steelblue4")
+   points(z$x, z$y, col = "steelblue")
    plot(x, y2, type = "l", main = "2nd Derivative")
    z = derivative(xa, dlognorm(xa, deriv = 0), deriv = 2)
-   points(z$x, z$y, col = "steelblue4")
+   points(z$x, z$y, col = "steelblue")
 
 ## Calculate Reciprocal-Gamma Density and its Derivaties:
    alpha = 2; beta = 1
@@ -206,10 +206,10 @@ dasymEBM(u, t = 1)
    plot(x, y0, type = "l", main = "Rec-Gamma Density")
    plot(x, y1, type = "l", main = "1st Derivative")
    z = derivative(xa, drgam(xa, alpha, beta, deriv = 0), deriv = 1)
-   points(z$x, z$y, col = "steelblue4")
+   points(z$x, z$y, col = "steelblue")
    plot(x, y2, type = "l", main = "2nd Derivative")
    z = derivative(xa, drgam(xa, alpha, beta, deriv = 0), deriv = 2)
-   points(z$x, z$y, col = "steelblue4")
+   points(z$x, z$y, col = "steelblue")
     
 ## Calculate Johnson-Type-I Density and its Derivaties:
    a = 0.3; b = 1.2; c = -0.2; d = 0.8
@@ -223,10 +223,10 @@ dasymEBM(u, t = 1)
    plot(x, y0, type = "l", main = "Johnson Type I Density")
    plot(x, y1, type = "l", main = "1st Derivative")
    z = derivative(xa, djohnson(xa, a, b, c, d, deriv = 0), deriv = 1)
-   points(z$x, z$y, col = "steelblue4")
+   points(z$x, z$y, col = "steelblue")
    plot(x, y2, type = "l", main = "2nd Derivative")
    z = derivative(xa, djohnson(xa, a, b, c, d, deriv = 0), deriv = 2)
-   points(z$x, z$y, col = "steelblue4")
+   points(z$x, z$y, col = "steelblue")
 }
 
 

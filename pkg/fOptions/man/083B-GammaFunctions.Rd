@@ -29,22 +29,22 @@
     The functions are:
 
     \tabular{ll}{
-	\code{erf} \tab the Error function, \cr
-	\code{gamma*} \tab the Gamma function, \cr
-	\code{lgamma*} \tab the logarithm of the Gamma function, \cr
-	\code{digamma*} \tab the first derivative of the Log Gamma function, \cr
-	\code{trigamma*} \tab the second derivative of the Log Gamma function, \cr
-	\code{tetragamma*} \tab the third derivative of the Log Gamma function, \cr
-	\code{pentagamma*} \tab  the fourth derivative of the Log Gammafunction, \cr
-	\code{beta*} \tab the Beta function, \cr
-	\code{lbeta*} \tab the logarithm of the Beta function, \cr
-	\code{Psi} \tab Psi(x) the Psi or Digamma function, \cr
-	\code{igamma} \tab P(a,x) the incomplete Gamma function, \cr
-	\code{cgamma} \tab Gamma function for complex argument, \cr
-	\code{Pochhammer} \tab the Pochhammer symbol. }
+    \code{erf} \tab the Error function, \cr
+    \code{gamma*} \tab the Gamma function, \cr
+    \code{lgamma*} \tab the logarithm of the Gamma function, \cr
+    \code{digamma*} \tab the first derivative of the Log Gamma function, \cr
+    \code{trigamma*} \tab the second derivative of the Log Gamma function, \cr
+    \code{tetragamma*} \tab the third derivative of the Log Gamma function, \cr
+    \code{pentagamma*} \tab  the fourth derivative of the Log Gammafunction, \cr
+    \code{beta*} \tab the Beta function, \cr
+    \code{lbeta*} \tab the logarithm of the Beta function, \cr
+    \code{Psi} \tab Psi(x) the Psi or Digamma function, \cr
+    \code{igamma} \tab P(a,x) the incomplete Gamma function, \cr
+    \code{cgamma} \tab Gamma function for complex argument, \cr
+    \code{Pochhammer} \tab the Pochhammer symbol. }
                      
-	The functions marked by an asterisk are part of R's base
-	package.
+    The functions marked by an asterisk are part of R's base
+    package.
     
 }
 
@@ -115,7 +115,7 @@ Weisstein E.W. (2004);
 
 
 \examples{
-## SOURCE("fOptions.E2-GammaFunctions")
+## SOURCE("fOptions.083B-GammaFunctions")
 
 ## Calculate Error, Gamma and Related Functions
 

@@ -32,11 +32,11 @@
 
 \usage{
 RollGeskeWhaleyOption(S, X, time1, Time2, r, D, sigma,
-	title = NULL, description = NULL) 
+    title = NULL, description = NULL) 
 BAWAmericanApproxOption(TypeFlag, S, X, Time, r, b, sigma,
-	title = NULL, description = NULL)
+    title = NULL, description = NULL)
 BSAmericanApproxOption(TypeFlag, S, X, Time, r, b, sigma,
-	title = NULL, description = NULL) 
+    title = NULL, description = NULL) 
 }
 
 
@@ -50,9 +50,9 @@ BSAmericanApproxOption(TypeFlag, S, X, Time, r, b, sigma,
         a single dividend with time to dividend payout \code{t1}.
         }
     \item{description}{
-    	a character string which allows for a brief description.
-    	}
-   	\item{r}{
+        a character string which allows for a brief description.
+        }
+    \item{r}{
         the annualized rate of interest, a numeric value; 
         e.g. 0.25 means 25\% pa.
         }
@@ -74,8 +74,8 @@ BSAmericanApproxOption(TypeFlag, S, X, Time, r, b, sigma,
         0.5 means 6 months.
         }
     \item{title}{
-    	a character string which allows for a project title.
-    	}
+        a character string which allows for a project title.
+        }
     \item{TypeFlag}{
         a character string either "c" for a call option or a "p" 
         for a put option.
@@ -170,7 +170,7 @@ Roll R. (1977);
 
 
 \examples{
-## SOURCE("fOptions.A2-BasicAmericanOptions")
+## SOURCE("fOptions.081B-BasicAmericanOptions")
 
 ## All the examples are from Haug's Option Guide (1997)
 

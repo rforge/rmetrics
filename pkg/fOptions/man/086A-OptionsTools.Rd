@@ -65,7 +65,7 @@ xmpOptions(prompt = "")
 
 
 \examples{
-## SOURCE("fOptions.Z1-OptionsTools")
+## SOURCE("fOptions.086A-OptionsTools")
 
 \dontrun{
 ## xmpfOptions -

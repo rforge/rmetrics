@@ -37,29 +37,29 @@
     The functions are:
 
     \tabular{ll}{
-	\code{GapOption} \tab Gap Option, \cr
-	\code{CashOrNothingOption} \tab Cash Or Nothing Option, \cr
-	\code{TwoAssetCashOrNothingOption} \tab Two Asset Cash Or Nothing Option, \cr
-	\code{AssetOrNothingOption} \tab Asset Or Nothing Option, \cr
-	\code{SuperShareOption} \tab Super Share Option, \cr
-	\code{BinaryBarrierOption} \tab Binary Barrier Option. }
+    \code{GapOption} \tab Gap Option, \cr
+    \code{CashOrNothingOption} \tab Cash Or Nothing Option, \cr
+    \code{TwoAssetCashOrNothingOption} \tab Two Asset Cash Or Nothing Option, \cr
+    \code{AssetOrNothingOption} \tab Asset Or Nothing Option, \cr
+    \code{SuperShareOption} \tab Super Share Option, \cr
+    \code{BinaryBarrierOption} \tab Binary Barrier Option. }
 
 }
 
 
 \usage{
 GapOption(TypeFlag, S, X1, X2, Time, r, b, sigma, title = NULL, 
-	description = NULL)
+    description = NULL)
 CashOrNothingOption(TypeFlag, S, X, K, Time, r, b, sigma,
-	title = NULL, description = NULL) 
+    title = NULL, description = NULL) 
 TwoAssetCashOrNothingOption(TypeFlag, S1, S2, X1, X2, K, Time, r, 
     b1, b2, sigma1, sigma2, rho, title = NULL, description = NULL)
 AssetOrNothingOption(TypeFlag, S, X, Time, r, b, sigma,
-	title = NULL, description = NULL)
+    title = NULL, description = NULL)
 SuperShareOption(S, XL, XH, Time, r, b, sigma, title = NULL, 
-	description = NULL)
+    description = NULL)
 BinaryBarrierOption(TypeFlag, S, X, H, K, Time, r, b, sigma, 
-	eta, phi, title = NULL, description = NULL)
+    eta, phi, title = NULL, description = NULL)
 }
 
 
@@ -75,8 +75,8 @@ BinaryBarrierOption(TypeFlag, S, X, H, K, Time, r, b, sigma,
         asset, a numeric value.
         }
     \item{description}{
-    	a character string which allows for a brief description.
-    	}
+        a character string which allows for a brief description.
+        }
     \item{eta, phi}{
         [BinaryBarrier*] - \cr
         a set of parameters to price 28 different types of Binary 
@@ -167,8 +167,8 @@ BinaryBarrierOption(TypeFlag, S, X, H, K, Time, r, b, sigma,
         e.g. 0.5 means 6 months.
         }
     \item{title}{
-    	a character string which allows for a project title.
-    	}
+        a character string which allows for a project title.
+        }
     \item{TypeFlag}{
         a character string either \code{"c"} for a call option or 
         a \code{"p"} for a put option. \cr
@@ -352,7 +352,7 @@ Reiner E., Rubinstein M. (1991);
 
 
 \examples{
-## SOURCE("fOptions.B5-BinaryOptions")
+## SOURCE("fOptions.082E-BinaryOptions")
 
 ## Examples from Chapter 2.11 in E.G. Haug's Option Guide (1997)
 

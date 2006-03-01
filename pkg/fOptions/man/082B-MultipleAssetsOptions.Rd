@@ -25,12 +25,12 @@
     The functions are:
 
     \tabular{ll}{
-	\code{TwoAssetCorrelationOption} \tab Two Asset Correlation Option, \cr
-	\code{EuropeanExchangeOption} \tab Exchange-One-Asset-For-Another ..., \cr
-	\code{AmericanExchangeOption} \tab ... European or American Option, \cr
-	\code{ExchangeOnExchangeOption} \tab  Exchange Option on an Exchange Option, \cr
-	\code{TwoRiskyAssetsOption} \tab Option on the Min/Max of 2 Risky Assets, \cr
-	\code{SpreadApproxOption} \tab Spread Option Approximation. }
+    \code{TwoAssetCorrelationOption} \tab Two Asset Correlation Option, \cr
+    \code{EuropeanExchangeOption} \tab Exchange-One-Asset-For-Another ..., \cr
+    \code{AmericanExchangeOption} \tab ... European or American Option, \cr
+    \code{ExchangeOnExchangeOption} \tab  Exchange Option on an Exchange Option, \cr
+    \code{TwoRiskyAssetsOption} \tab Option on the Min/Max of 2 Risky Assets, \cr
+    \code{SpreadApproxOption} \tab Spread Option Approximation. }
     
 }
 
@@ -58,8 +58,8 @@ SpreadApproxOption(TypeFlag, S1, S2, X, Time, r, sigma1,
         asset, a numeric value; e.g. 0.1 means 10\% pa.
         }
     \item{description}{
-    	a character string which allows for a brief description.
-    	}
+        a character string which allows for a brief description.
+        }
     \item{Q, Q1, Q2}{
         additionally , quantity of the first and second asset.
         }
@@ -87,8 +87,8 @@ SpreadApproxOption(TypeFlag, S1, S2, X, Time, r, sigma1,
         e.g. 0.5 means 6 months.
         }
     \item{title}{
-    	a character string which allows for a project title.
-    	}
+        a character string which allows for a project title.
+        }
     \item{TypeFlag}{
         usually a character string either \code{"c"} for a call option 
         or a \code{"p"} for a put option, except for \cr
@@ -302,7 +302,7 @@ Zhang P.G. (1995);
 
 
 \examples{
-## SOURCE("fOptions.B2-MultipleAssetsOptions")
+## SOURCE("fOptions.082B-MultipleAssetsOptions")
 
 ## Examples from Chapter 2.8 in E.G. Haug's Option Guide (1997)
 

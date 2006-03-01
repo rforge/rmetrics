@@ -29,36 +29,36 @@
     \tabular{ll}{
     \code{ExecutiveStockOption} \tab Executive Stock Option, \cr
     \code{ForwardStartOption} \tab Forward Start Option, \cr
-  	\code{RatchetOption} \tab Ratchet Option, \cr
-	\code{TimeSwitchOption} \tab Time Switch Option, \cr
-	\code{SimpleChooserOption} \tab Simple Chooser Option, \cr
-	\code{ComplexChooserOption} \tab Complex Chooser Option, \cr
-	\code{OptionOnOption} \tab Option On Option, \cr
-	\code{WriterExtendibleOption} \tab Writer Extendible Option, \cr
-	\code{HolderExtendibleOption} \tab Holder Extendible Option. }
+    \code{RatchetOption} \tab Ratchet Option, \cr
+    \code{TimeSwitchOption} \tab Time Switch Option, \cr
+    \code{SimpleChooserOption} \tab Simple Chooser Option, \cr
+    \code{ComplexChooserOption} \tab Complex Chooser Option, \cr
+    \code{OptionOnOption} \tab Option On Option, \cr
+    \code{WriterExtendibleOption} \tab Writer Extendible Option, \cr
+    \code{HolderExtendibleOption} \tab Holder Extendible Option. }
     
 }
 
 
 \usage{
 ExecutiveStockOption(TypeFlag, S, X, Time, r, b, sigma, lambda,
-	title = NULL, description = NULL)
+    title = NULL, description = NULL)
 ForwardStartOption(TypeFlag, S, alpha, time1, Time2, r, b, sigma,
-	title = NULL, description = NULL) 
+    title = NULL, description = NULL) 
 RatchetOption(TypeFlag, S, alpha, time1, Time2, r, b, sigma,
-	title = NULL, description = NULL)
+    title = NULL, description = NULL)
 TimeSwitchOption(TypeFlag, S, X, Time, r, b, sigma, A, m, dt,
-	title = NULL, description = NULL)
+    title = NULL, description = NULL)
 SimpleChooserOption(S, X, time1, Time2, r, b, sigma,
-	title = NULL, description = NULL) 
+    title = NULL, description = NULL) 
 ComplexChooserOption(S, Xc, Xp, Time, Timec, Timep, r, b, sigma, 
-	doprint = FALSE, title = NULL, description = NULL)
+    doprint = FALSE, title = NULL, description = NULL)
 OptionOnOption(TypeFlag, S, X1, X2, time1, Time2, r, b, sigma, 
-	doprint = FALSE, title = NULL, description = NULL)
+    doprint = FALSE, title = NULL, description = NULL)
 WriterExtendibleOption(TypeFlag, S, X1, X2, time1, Time2, r, b, sigma,
-	title = NULL, description = NULL)
+    title = NULL, description = NULL)
 HolderExtendibleOption(TypeFlag, S, X1, X2, time1, Time2, r, b, sigma, A,
-	title = NULL, description = NULL)
+    title = NULL, description = NULL)
 }
 
 
@@ -91,8 +91,8 @@ HolderExtendibleOption(TypeFlag, S, X1, X2, time1, Time2, r, b, sigma, A,
         e.g. 0.1 means 10\% pa.
         }
     \item{description}{
-    	a character string which allows for a brief description.
-    	}
+        a character string which allows for a brief description.
+        }
     \item{doprint}{
         a logical. Should the critical value \code{I} be printed?
         By defaut \code{FALSE}.
@@ -140,8 +140,8 @@ HolderExtendibleOption(TypeFlag, S, X1, X2, time1, Time2, r, b, sigma, A,
         elapsed time \code{Time2} in the future.
         }
     \item{title}{
-    	a character string which allows for a project title.
-    	}
+        a character string which allows for a project title.
+        }
     \item{TypeFlag}{
         usually a character string either \code{"c"} for a call option 
         or a \code{"p"} for a put option;\cr
@@ -384,7 +384,7 @@ Rubinstein M. (1991);
 
 
 \examples{
-## SOURCE("fOptions.B1-MultipleExercisesOptions")
+## SOURCE("fOptions.082A-MultipleExercisesOptions")
 
 ## Examples from Chapter 2.1 - 2.7 in E.G. Haug's Option Guide (1997)
 

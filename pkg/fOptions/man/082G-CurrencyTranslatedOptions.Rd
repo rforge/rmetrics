@@ -26,23 +26,23 @@
     The functions are:
 
     \tabular{ll}{
-	\code{FEInDomesticFXOption} \tab Foreign Exchange In Domestic Currency Option, \cr
-	\code{QuantoOption} \tab Quanto Option, \cr
-	\code{EquityLinkedFXOption} \tab Equity Linked FX Option, \cr
-	\code{TakeoverFXOption} \tab Takeover FX Option. }
+    \code{FEInDomesticFXOption} \tab Foreign Exchange In Domestic Currency Option, \cr
+    \code{QuantoOption} \tab Quanto Option, \cr
+    \code{EquityLinkedFXOption} \tab Equity Linked FX Option, \cr
+    \code{TakeoverFXOption} \tab Takeover FX Option. }
     
 }
 
 
 \usage{
 FEInDomesticFXOption(TypeFlag, S, E, X, Time, r, q, sigmaS, 
-	sigmaE, rho, title = NULL, description = NULL)
+    sigmaE, rho, title = NULL, description = NULL)
 QuantoOption(TypeFlag, S, Ep, X, Time, r, rf, q, sigmaS, 
     sigmaE, rho, title = NULL, description = NULL) 
 EquityLinkedFXOption(TypeFlag, E, S, X, Time, r, rf, q, 
     sigmaS, sigmaE,rho, title = NULL, description = NULL)
 TakeoverFXOption(V, B, E, X, Time, r, rf, sigmaV, sigmaE, 
-	rho, title = NULL, description = NULL)
+    rho, title = NULL, description = NULL)
 }
 
 
@@ -54,8 +54,8 @@ TakeoverFXOption(V, B, E, X, Time, r, rf, sigmaV, sigmaE,
         the option expiration, a numeric value.
         }
     \item{description}{
-    	a character string which allows for a brief description.
-    	}
+        a character string which allows for a brief description.
+        }
     \item{E}{
         [FEInDomesticFX*] - \cr
         the spot exchange rate specified in units of the domestic
@@ -115,8 +115,8 @@ TakeoverFXOption(V, B, E, X, Time, r, rf, sigmaV, sigmaE,
         the time to maturity, a numeric value.
         }
     \item{title}{
-    	a character string which allows for a project title.
-    	}
+        a character string which allows for a project title.
+        }
     \item{TypeFlag}{
         a character string either "c" for a call option or a "p" 
         for a put option.
@@ -213,7 +213,7 @@ Haug E.G. (1997);
 
 
 \examples{
-## SOURCE("fOptions.B7-CurrencyTranslatedOptions")
+## SOURCE("fOptions.082G-CurrencyTranslatedOptions")
 
 ## Examples from Chapter 2.13 in E.G. Haug's Option Guide (1997)
 

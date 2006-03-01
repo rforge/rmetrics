@@ -125,7 +125,7 @@ Heston S.L., Nandi S. (1997);
 
 
 \examples{
-## SOURCE("fOptions.C2-HestonNandiOptions")
+## SOURCE("fOptions.084B-HestonNandiOptions")
 
 ## model -
    # Define the Model Parameters for a Heston-Nandi Option:

@@ -23,12 +23,12 @@
     The functions are:
 
     \tabular{ll}{
-	\code{runif.halton} \tab Uniform Halton sequence, \cr
-	\code{rnorm.halton} \tab Normal Halton sequence, \cr
-	\code{runif.sobol} \tab Uniform scrambled Sobol sequence, \cr
-	\code{rnorm.sobol} \tab Normal scrambled Sobol sequence, \cr
-	\code{runif.pseudo} \tab Uniform pseudo random numbers, \cr
-	\code{norma.pseudo} \tab Normal pseudo random numbers.}
+    \code{runif.halton} \tab Uniform Halton sequence, \cr
+    \code{rnorm.halton} \tab Normal Halton sequence, \cr
+    \code{runif.sobol} \tab Uniform scrambled Sobol sequence, \cr
+    \code{rnorm.sobol} \tab Normal scrambled Sobol sequence, \cr
+    \code{runif.pseudo} \tab Uniform pseudo random numbers, \cr
+    \code{norma.pseudo} \tab Normal pseudo random numbers.}
             
 }
 
@@ -148,7 +148,7 @@ Joe S., Kuo F.Y. (1998);
 
 
 \examples{
-## SOURCE("fOptions.D1-LowDiscrepancy")
+## SOURCE("fOptions.085A-LowDiscrepancy")
 
 
 ## *.halton - 

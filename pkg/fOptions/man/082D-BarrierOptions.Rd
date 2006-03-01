@@ -380,7 +380,7 @@ Haug E.G. (1997);
 
 
 \examples{
-## SOURCE("fOptions.B4-BarrierOptions")
+## SOURCE("fOptions.082D-BarrierOptions")
 
 ## Examples from Chapter 2.10 in E.G. Haug's Option Guide (1997)
 

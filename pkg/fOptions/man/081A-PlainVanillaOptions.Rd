@@ -53,18 +53,18 @@
 
 \usage{
 GBSOption(TypeFlag, S, X, Time, r, b, sigma, 
-	title = NULL, description = NULL)
+    title = NULL, description = NULL)
 GBSGreeks(Selection, TypeFlag, S, X, Time, r, b, sigma)
 GBSCharacteristics(TypeFlag, S, X, Time, r, b, sigma)
 GBSVolatility(price, TypeFlag, S, X, Time, r, b, tol, maxiter)
 BlackScholesOption(\dots)
 
 Black76Option(TypeFlag, FT, X, Time, r, sigma, 
-	title = NULL, description = NULL)
+    title = NULL, description = NULL)
 
 MiltersenSchwartzOption(TypeFlag, Pt, FT, X, time, Time, 
     sigmaS, sigmaE, sigmaF, rhoSE, rhoSF, rhoEF, KappaE, KappaF, 
-	title = NULL, description = NULL)
+    title = NULL, description = NULL)
 
 NDF(x)
 CND(x)
@@ -85,8 +85,8 @@ CBND(x1, x2, rho)
         e.g. 0.1 means 10\% pa.
         }
     \item{description}{
-    	a character string which allows for a brief description.
-    	}
+        a character string which allows for a brief description.
+        }
     \item{FT}
         {[Black76*][MiltersenSchwartz*] - \cr
         the futures price, a numeric value.
@@ -151,8 +151,8 @@ CBND(x1, x2, rho)
         the time to maturity measured in years, a numeric value.
         }
     \item{title}{
-    	a character string which allows for a project title.
-    	}
+        a character string which allows for a project title.
+        }
     \item{TypeFlag}{
         a character string either \code{"c"} for a call option or 
         a \code{"p"} for a put option.
@@ -339,7 +339,7 @@ Miltersen K., Schwartz E.S. (1998);
 
 
 \examples{
-## SOURCE("fOptions.A1-PlainVanillaOptions")
+## SOURCE("fOptions.081A-PlainVanillaOptions")
 
 ## All the examples are from Haug's Option Guide (1997)
 

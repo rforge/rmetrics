@@ -24,11 +24,11 @@
     The functions are:
 
     \tabular{ll}{  
-	\code{hngarchSim} \tab Simulates a Heston-Nandi Garch(1,1) process, \cr
-	\code{hngarchFit} \tab MLE for a Heston Nandi Garch(1,1) model, \cr
-	\code{hngarchStats} \tab True moments of the log-Return distribution, \cr
-	\code{print.hngarch} \tab Print method, \cr
-	\code{summary.hngarch} \tab Diagnostic summary.}
+    \code{hngarchSim} \tab Simulates a Heston-Nandi Garch(1,1) process, \cr
+    \code{hngarchFit} \tab MLE for a Heston Nandi Garch(1,1) model, \cr
+    \code{hngarchStats} \tab True moments of the log-Return distribution, \cr
+    \code{print.hngarch} \tab Print method, \cr
+    \code{summary.hngarch} \tab Diagnostic summary.}
     
 }
 
@@ -36,8 +36,8 @@
 \usage{
 hngarchSim(model, n, innov, n.start, start.innov, rand.gen, \dots)
 hngarchFit(x, model = list(lambda = -0.5, omega = var(x), alpha =
-	0.1 * var(x), beta = 0.1, gamma = 0, rf = 0), symmetric = TRUE, 
-	trace = FALSE, title = NULL, description = NULL, \dots)
+    0.1 * var(x), beta = 0.1, gamma = 0, rf = 0), symmetric = TRUE, 
+    trace = FALSE, title = NULL, description = NULL, \dots)
 hngarchStats(model)
 
 \method{print}{hngarch}(x, \dots)
@@ -48,8 +48,8 @@ hngarchStats(model)
 \arguments{
 
     \item{description}{
-    	a brief description of the porject of type character.
-    	}
+        a brief description of the porject of type character.
+        }
     \item{innov}{
         [hngarchSim] - \cr
         is a univariate time series or vector of innovations to produce 
@@ -102,8 +102,8 @@ hngarchStats(model)
         the parameters are estimated for an asymmetric HN Garch(1,1) model.
         }
     \item{title}{
-    	a character string which allows for a project title.
-    	}
+        a character string which allows for a project title.
+        }
     \item{trace}{
         [hngarchFit] - \cr
         a logical value. Should the optimizarion be traced?
@@ -215,7 +215,7 @@ Heston S.L., Nandi S. (1997);
 
 
 \examples{
-## SOURCE("fOptions.C1-HestonNandiGarchFit")
+## SOURCE("fOptions.084A-HestonNandiGarchFit")
 
 ## hngarchSim -
    # Simulate a Heston Nandi Garch(1,1) Process:

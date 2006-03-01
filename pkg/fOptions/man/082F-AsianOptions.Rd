@@ -35,20 +35,20 @@
     The functions are:
 
     \tabular{ll}{
-	\code{GeometricAverageRateOption} \tab Geometric Average Rate Option, \cr
-	\code{TurnbullWakemanAsianApproxOption} \tab Turnbull and Wakeman's Approximation, \cr
-	\code{LevyAsianApproxOption} \tab Levy's Approximation. }
+    \code{GeometricAverageRateOption} \tab Geometric Average Rate Option, \cr
+    \code{TurnbullWakemanAsianApproxOption} \tab Turnbull and Wakeman's Approximation, \cr
+    \code{LevyAsianApproxOption} \tab Levy's Approximation. }
     
 }
 
 
 \usage{
 GeometricAverageRateOption(TypeFlag, S, X, Time, r, b, sigma,
-	title = NULL, description = NULL)
+    title = NULL, description = NULL)
 TurnbullWakemanAsianApproxOption(TypeFlag, S, SA, X, Time, time, 
-	tau, r, b, sigma, title = NULL, description = NULL)
+    tau, r, b, sigma, title = NULL, description = NULL)
 LevyAsianApproxOption(TypeFlag, S, SA, X, Time, time, r, b, 
-	sigma, title = NULL, description = NULL)
+    sigma, title = NULL, description = NULL)
 }
 
 
@@ -59,8 +59,8 @@ LevyAsianApproxOption(TypeFlag, S, SA, X, Time, time, r, b,
         e.g. 0.1 means 10\% pa.
         }
     \item{description}{
-    	a character string which allows for a brief description.
-    	}
+        a character string which allows for a brief description.
+        }
     \item{r}{
         the annualized rate of interest, a numeric value; 
         e.g. 0.25 means 25\% pa.
@@ -80,8 +80,8 @@ LevyAsianApproxOption(TypeFlag, S, SA, X, Time, time, r, b,
         e.g. 0.5 means 6 months.
         }
     \item{title}{
-    	a character string which allows for a project title.
-    	}
+        a character string which allows for a project title.
+        }
     \item{TypeFlag}{
         a character string either \code{"c"} for a call option or 
         a \code{"p"} for a put option.
@@ -142,7 +142,7 @@ Haug E.G. (1997);
 
 
 \examples{
-## SOURCE("fOptions.B6-AsianOptions")
+## SOURCE("fOptions.082F-AsianOptions")
 
 ## Examples from Chapter 2.12 in E.G. Haug's Option Guide (1997)
 

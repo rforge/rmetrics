@@ -33,14 +33,14 @@
 
 \usage{
 CRRBinomialTreeOption(TypeFlag = c("ce", "pe", "ca", "pa"), S, X, 
-	Time, r, b, sigma, n, title = NULL, description = NULL)
+    Time, r, b, sigma, n, title = NULL, description = NULL)
 JRBinomialTreeOption(TypeFlag = c("ce", "pe", "ca", "pa"), S, X, 
-	Time, r, b, sigma, n, title = NULL, description = NULL)
+    Time, r, b, sigma, n, title = NULL, description = NULL)
 TIANBinomialTreeOption(TypeFlag = c("ce", "pe", "ca", "pa"), S, X, 
-	Time, r, b, sigma, n, title = NULL, description = NULL)
+    Time, r, b, sigma, n, title = NULL, description = NULL)
 
 BinomialTreeOption(TypeFlag = c("ce", "pe", "ca", "pa"), S, X, 
-	Time, r, b, sigma, n, title = NULL, description = NULL)
+    Time, r, b, sigma, n, title = NULL, description = NULL)
 BinomialTreePlot(BinomialTreeValues, dx = -0.025, dy = 0.4, 
     cex = 1, digits = 2, \dots)
 }
@@ -60,9 +60,9 @@ BinomialTreePlot(BinomialTreeValues, dx = -0.025, dy = 0.4,
         and symbols should be scaled relative to the default.
         }
     \item{description}{
-    	a character string which allows for a brief description.
-    	}
-   	\item{digits}{
+        a character string which allows for a brief description.
+        }
+    \item{digits}{
         an integer value, how many digits should be displayed in the
         option tree?
         }
@@ -89,8 +89,8 @@ BinomialTreePlot(BinomialTreeValues, dx = -0.025, dy = 0.4,
         value; e.g. 0.5 means 6 months.
         }
     \item{title}{
-    	a character string which allows for a project title.
-    	}
+        a character string which allows for a project title.
+        }
     \item{TypeFlag}{
         a character string either \code{"ce"}, \code{"ca"} for an 
         European or American call option or a \code{"pe"}, \code{"pa"} 
@@ -159,7 +159,7 @@ BinomialTreePlot(BinomialTreeValues, dx = -0.025, dy = 0.4,
 
 
 \examples{
-## SOURCE("fOptions.A3-BinomialTreeOptions")
+## SOURCE("fOptions.081C-BinomialTreeOptions")
 
 ## Cox-Ross-Rubinstein Binomial Tree Option Model:
    # Example 14.1 from Hull's Book:

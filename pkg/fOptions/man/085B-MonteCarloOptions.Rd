@@ -23,11 +23,11 @@
     The functions are:
 
     \tabular{ll}{
-	\code{sobolInnovations} \tab Example for scrambled Sobol innovations, \cr
-	\code{wienerPath} \tab Example for a Wiener price path, \cr
-	\code{plainVanillaPayoff} \tab Example for the plain vanilla option's payoff, \cr
-	\code{arithmeticAsianPayoff} \tab Example for the arithmetic Asian option's payoff, \cr
-	\code{MonteCarloOption} \tab Monte Carlo Simulator for options. }
+    \code{sobolInnovations} \tab Example for scrambled Sobol innovations, \cr
+    \code{wienerPath} \tab Example for a Wiener price path, \cr
+    \code{plainVanillaPayoff} \tab Example for the plain vanilla option's payoff, \cr
+    \code{arithmeticAsianPayoff} \tab Example for the arithmetic Asian option's payoff, \cr
+    \code{MonteCarloOption} \tab Monte Carlo Simulator for options. }
     
 }
 
@@ -218,7 +218,7 @@ Jaeckel P. (2002);
 
 
 \examples{
-## SOURCE("fOptions.D2-MonteCarloOptions")
+## SOURCE("fOptions.085B-MonteCarloOptions")
    
 ## How to perform a Monte Carlo Simulation?
    

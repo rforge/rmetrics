@@ -19,13 +19,13 @@
     as their derivatives.     
     \cr     
 
-	The functions are:
+    The functions are:
 
     \tabular{ll}{
- 	\code{BesselI} \tab modified Bessel function of the 1st Kind, \cr
- 	\code{BesselDI} \tab its derivative, \cr
-	\code{BesselK} \tab the modified Bessel function of the 3nd Kind, \cr
-	\code{BesselDK} \tab its derivative. }   
+    \code{BesselI} \tab modified Bessel function of the 1st Kind, \cr
+    \code{BesselDI} \tab its derivative, \cr
+    \code{BesselK} \tab the modified Bessel function of the 3nd Kind, \cr
+    \code{BesselDK} \tab its derivative. }   
     
 }
 
@@ -83,7 +83,7 @@ Weisstein E.W. (2004);
 
 
 \examples{
-## SOURCE("fOptions.E4-BesselFunctions")
+## SOURCE("fOptions.083D-BesselFunctions")
 
 ## Bessel I0 and K0 - 
    # Abramowitz-Stegun: Table 9.8, p. 416-422

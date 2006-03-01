@@ -26,26 +26,26 @@
     The functions are:
 
     \tabular{ll}{
-	\code{FloatingStrikeLookbackOption} \tab Floating Strike Lookback Option, \cr
-	\code{FixedStrikeLookbackOption} \tab Fixed Strike Lookback Option, \cr
-	\code{PTFloatingStrikeLookbackOption} \tab PT Floating Strike Lookback Option, \cr
-	\code{PTFixedStrikeLookbackOption} \tab  PT Fixed Strike Lookback Option, \cr
-	\code{ExtremeSpreadOption} \tab Extreme Spread Options.}
+    \code{FloatingStrikeLookbackOption} \tab Floating Strike Lookback Option, \cr
+    \code{FixedStrikeLookbackOption} \tab Fixed Strike Lookback Option, \cr
+    \code{PTFloatingStrikeLookbackOption} \tab PT Floating Strike Lookback Option, \cr
+    \code{PTFixedStrikeLookbackOption} \tab  PT Fixed Strike Lookback Option, \cr
+    \code{ExtremeSpreadOption} \tab Extreme Spread Options.}
     
 }
 
 
 \usage{
 FloatingStrikeLookbackOption(TypeFlag, S, SMinOrMax, Time, r, 
-	b, sigma, title = NULL, description = NULL)
+    b, sigma, title = NULL, description = NULL)
 FixedStrikeLookbackOption(TypeFlag, S, SMinOrMax, X, Time, r, 
-	b, sigma, title = NULL, description = NULL)
+    b, sigma, title = NULL, description = NULL)
 PTFloatingStrikeLookbackOption(TypeFlag, S, SMinOrMax, time1, 
-	Time2, r, b, sigma, lambda, title = NULL, description = NULL) 
+    Time2, r, b, sigma, lambda, title = NULL, description = NULL) 
 PTFixedStrikeLookbackOption(TypeFlag, S, X, time1, Time2, r, b, 
-	sigma, title = NULL, description = NULL)
+    sigma, title = NULL, description = NULL)
 ExtremeSpreadOption(TypeFlag, S, SMin, SMax, time1, Time2, r, b, 
-	sigma, title = NULL, description = NULL)
+    sigma, title = NULL, description = NULL)
 }
 
 
@@ -56,8 +56,8 @@ ExtremeSpreadOption(TypeFlag, S, SMin, SMax, time1, Time2, r, b,
         e.g. 0.1 means 10\% pa.
         }
     \item{description}{
-    	a character string which allows for a brief description.
-    	}
+        a character string which allows for a brief description.
+        }
     \item{lambda}{
         The \code{lambda} factor enables the creation of so-called
         "fractional" lookback options where the strike is fixed at
@@ -107,8 +107,8 @@ ExtremeSpreadOption(TypeFlag, S, SMin, SMax, time1, Time2, r, b,
         ending at the maturity time \code{Time2} of the option.
         }
     \item{title}{
-    	a character string which allows for a project title.
-    	}
+        a character string which allows for a project title.
+        }
     \item{TypeFlag}{
         usually a character string either \code{"c"} for a call option 
         or a \code{"p"} for a put option, except for \cr
@@ -267,7 +267,7 @@ Heynen R.C., Kat H.M. (1994);
 
 
 \examples{
-## SOURCE("fOptions.B3-LookbackOptions")
+## SOURCE("fOptions.082C-LookbackOptions")
 
 ## Examples from Chapter 2.9 in E.G. Haug's Option Guide (1997)
 

@@ -66,7 +66,7 @@ hermiteH(x, n, ip = 0)
         }
     \item{n}{
         [hermiteH] - \cr
-        the index of the Hermite polynomial.
+        the index of the Hermite polynomial, a positive integer value.
         }
 }
 
@@ -122,7 +122,7 @@ Weisstein E.W. (2004);
 
 
 \examples{
-## SOURCE("fOptions.E3-HypergeometricFunctions")
+## SOURCE("fOptions.083N-HypergeometricFunctions")
 
 ## kummerM - 
    # Abramowitz-Stegun: Formula 13.6.3/13.6.21
