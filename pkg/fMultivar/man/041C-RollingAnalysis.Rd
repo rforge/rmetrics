@@ -13,21 +13,21 @@
 
 \description{
 
-	A collection and description of functions 
-	to perform a rolling analysis. A rolling 
-	analysis is often required in building trading 
-	models.
-	\cr
-		
-	The functions are:
-	
-	\tabular{ll}{
-	\code{rollFun} \tab Rolling or moving sample statistics, \cr
-	\code{rollMin} \tab Rolling or moving sample minimum, \cr
-	\code{rollMax} \tab Rolling or moving sample maximum, \cr
-	\code{rollMean}	\tab Rolling or moving sample mean, \cr
-	\code{rollVar} \tab Rolling or moving sample variance. }
-			
+    A collection and description of functions 
+    to perform a rolling analysis. A rolling 
+    analysis is often required in building trading 
+    models.
+    \cr
+        
+    The functions are:
+    
+    \tabular{ll}{
+    \code{rollFun} \tab Rolling or moving sample statistics, \cr
+    \code{rollMin} \tab Rolling or moving sample minimum, \cr
+    \code{rollMax} \tab Rolling or moving sample maximum, \cr
+    \code{rollMean} \tab Rolling or moving sample mean, \cr
+    \code{rollVar} \tab Rolling or moving sample variance. }
+            
 }
 
 
@@ -42,72 +42,72 @@ rollVar(x, n = 9, trim = TRUE, unbiased = TRUE, na.rm = FALSE)
 
 \arguments{
 
-  	\item{FUN}{
-    	the rolling function, arguments to this function can be
-    	passed through the \code{\dots} argument.
-    	}
-  	\item{n}{
-  		an integer specifying the number of periods or 
-  		terms to use in each rolling/moving sample.
-  		}
-  	\item{na.rm}{
-  		a logical flag: if TRUE, missing values in x will be removed 
-  		before computation. The default is FALSE.
-  		}
-  	\item{trim}{
-    	a logical flag: if TRUE, the first n-1 missing values in 
-    	the returned object will be removed; if FALSE, they will 
-    	be saved in the returned object. The default is TRUE.
-    	}
+    \item{FUN}{
+        the rolling function, arguments to this function can be
+        passed through the \code{\dots} argument.
+        }
+    \item{n}{
+        an integer specifying the number of periods or 
+        terms to use in each rolling/moving sample.
+        }
+    \item{na.rm}{
+        a logical flag: if TRUE, missing values in x will be removed 
+        before computation. The default is FALSE.
+        }
+    \item{trim}{
+        a logical flag: if TRUE, the first n-1 missing values in 
+        the returned object will be removed; if FALSE, they will 
+        be saved in the returned object. The default is TRUE.
+        }
     \item{unbiased}{
-    	a logical flag. If TRUE, the unbiased sample variance 
-    	will be returned. The default is TRUE.
-    	}
-  	\item{x}{
-  		a univariate \code{timeSeries} object or a numeric vector.
-  		}
-  	\item{\dots}{
-  		additional arguments to be passed.
-  		}
-  	
+        a logical flag. If TRUE, the unbiased sample variance 
+        will be returned. The default is TRUE.
+        }
+    \item{x}{
+        a univariate \code{timeSeries} object or a numeric vector.
+        }
+    \item{\dots}{
+        additional arguments to be passed.
+        }
+    
 }
 
 
 \value{
 
-  	The functions return a \code{timeSeries} object or a numeric
-  	vector, depending on the argument \code{x}.
-  	
-  	\code{rollMax} returns the rolling sample maximum, \cr 
-  	\code{rollMin} returns the rolling sample minimum, \cr
-  	\code{rollMean} returns the rolling sample mean, and \cr
-  	\code{rollVar} returns the biased/unbiased rolling sample variance. 
-  	
-  	Note, that the function \code{rollFun} always returns a numeric
-  	vector, independent of the argument \code{x}.
-  	
-  	If you like to operate for \code{x} with rectangular objects, 
-  	you have to call the functions columnwise within a loop.
+    The functions return a \code{timeSeries} object or a numeric
+    vector, depending on the argument \code{x}.
+    
+    \code{rollMax} returns the rolling sample maximum, \cr 
+    \code{rollMin} returns the rolling sample minimum, \cr
+    \code{rollMean} returns the rolling sample mean, and \cr
+    \code{rollVar} returns the biased/unbiased rolling sample variance. 
+    
+    Note, that the function \code{rollFun} always returns a numeric
+    vector, independent of the argument \code{x}.
+    
+    If you like to operate for \code{x} with rectangular objects, 
+    you have to call the functions columnwise within a loop.
 
 }
 
 
 \author{
 
-	Diethelm Wuertz for the Rmetrics \R-port.
-	
+    Diethelm Wuertz for the Rmetrics \R-port.
+    
 }
 
 
 \seealso{
 
-	\code{\link{var}}.
-	
+    \code{\link{var}}.
+    
 }
 
 
 \examples{
-## SOURCE("fMultivar.D3-RollingAnalysis")
+## SOURCE("fMultivar.041C-RollingAnalysis")
 
 ## Rolling Analysis:
 \dontrun{

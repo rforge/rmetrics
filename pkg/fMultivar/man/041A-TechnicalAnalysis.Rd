@@ -34,41 +34,41 @@
 
 \description{
 
-	A collection and description of functions 
-	for the technical analysis of stock markets. 
-	The collection provides a set of the most 
-	common technical indicators.
-	\cr
-	
-	The functions are:
-	
-	\tabular{ll}{
-	\code{emaTA} \tab Exponential Moving Average, \cr
-	\code{biasTA} \tab Bias Indicator, \cr
-	\code{medpriceTA} \tab Medium Price Indicator, \cr
-	\code{typicalpriceTA} \tab Typical Price Indicator, \cr
-	\code{wcloseTA}	\tab Weighted Close Indicator, \cr
-	\code{rocTA} \tab Rate of Change, \cr
-	\code{oscTA} \tab Oscillator Indicator, \cr
-	\code{momTA} \tab Momentum Indicator, \cr
-	\code{macdTA} \tab MACD Indicator, \cr
-	\code{cdsTA} \tab MACD Signal Line, \cr
-	\code{cdoTA} \tab MACD Oscillator, \cr
-	\code{vohlTA} \tab High/Low Volatility, \cr
-	\code{vorTA} \tab Volatility Ratio, \cr
-	\code{fpkTA} \tab Fast Percent K, \cr
-	\code{fpdTA} \tab Fast Percent D, \cr
-	\code{spdTA} \tab Slow Percent D, \cr
-	\code{apdTA} \tab Averaged Percent D, \cr
-	\code{wprTA} \tab William's Percent R, \cr
-	\code{rsiTA} \tab Relative Strength Index. }
-	
-	S-Plus Like Moving Averages:
-	\tabular{ll}{
-	\code{SMA} \tab Simple Moving Average, \cr       
-	\code{EWMA} \tab Exponentially Weighted  Moving Average.}
-	
-	
+    A collection and description of functions 
+    for the technical analysis of stock markets. 
+    The collection provides a set of the most 
+    common technical indicators.
+    \cr
+    
+    The functions are:
+    
+    \tabular{ll}{
+    \code{emaTA} \tab Exponential Moving Average, \cr
+    \code{biasTA} \tab Bias Indicator, \cr
+    \code{medpriceTA} \tab Medium Price Indicator, \cr
+    \code{typicalpriceTA} \tab Typical Price Indicator, \cr
+    \code{wcloseTA} \tab Weighted Close Indicator, \cr
+    \code{rocTA} \tab Rate of Change, \cr
+    \code{oscTA} \tab Oscillator Indicator, \cr
+    \code{momTA} \tab Momentum Indicator, \cr
+    \code{macdTA} \tab MACD Indicator, \cr
+    \code{cdsTA} \tab MACD Signal Line, \cr
+    \code{cdoTA} \tab MACD Oscillator, \cr
+    \code{vohlTA} \tab High/Low Volatility, \cr
+    \code{vorTA} \tab Volatility Ratio, \cr
+    \code{fpkTA} \tab Fast Percent K, \cr
+    \code{fpdTA} \tab Fast Percent D, \cr
+    \code{spdTA} \tab Slow Percent D, \cr
+    \code{apdTA} \tab Averaged Percent D, \cr
+    \code{wprTA} \tab William's Percent R, \cr
+    \code{rsiTA} \tab Relative Strength Index. }
+    
+    S-Plus Like Moving Averages:
+    \tabular{ll}{
+    \code{SMA} \tab Simple Moving Average, \cr       
+    \code{EWMA} \tab Exponentially Weighted  Moving Average.}
+    
+    
 }
 
 
@@ -101,72 +101,72 @@ EWMA(x, lambda, startup = 0)
 
 \arguments{
 
-  	\item{lag, lag1, lag2, lag3, lag4}{
-		integer values, time lags.
-		}
-	\item{n}{
-	    [SMA] - \cr
-		integer value, time lag.
-		}
-  	\item{lambda}{
-		[emaTA][EWMA] - \cr
-		a numeric value between zero and one giving the decay length 
-		of the exponential moving average. If an integer value greater 
-		than one is given, lambda is used as a lag of "n" periods to 
-		calculate the decay parameter. 
-		}
-	\item{startup}{
-		[emaTA][EWMA] - \cr
-		an integer value, the startup position of the exponential
-		moving average, by default 0.
-		}
-	\item{x, high, low, close}{
-		a numeric vector of prices, either opening, closing, or
-		high and low values.
-		For \code{ohlcPlot} a multivariate time series object of 
-		class \code{mts}.
-		}
+    \item{lag, lag1, lag2, lag3, lag4}{
+        integer values, time lags.
+        }
+    \item{n}{
+        [SMA] - \cr
+        integer value, time lag.
+        }
+    \item{lambda}{
+        [emaTA][EWMA] - \cr
+        a numeric value between zero and one giving the decay length 
+        of the exponential moving average. If an integer value greater 
+        than one is given, lambda is used as a lag of "n" periods to 
+        calculate the decay parameter. 
+        }
+    \item{startup}{
+        [emaTA][EWMA] - \cr
+        an integer value, the startup position of the exponential
+        moving average, by default 0.
+        }
+    \item{x, high, low, close}{
+        a numeric vector of prices, either opening, closing, or
+        high and low values.
+        For \code{ohlcPlot} a multivariate time series object of 
+        class \code{mts}.
+        }
 
 }
 
 
 \value{
 
-	\code{*TA}
-	\cr	
-	The technical Indicators return the following numeric vectors:
+    \code{*TA}
+    \cr 
+    The technical Indicators return the following numeric vectors:
 
-	\code{emaTA}  returns the Exponential Moving Average, EMA \cr
-	\code{biasTA} returns the EMA-Bias, \cr
-	\code{rocTA}  returns the Rate of Change Indicator, \cr
-	\code{oscTA}  returns the EMA Oscillator Indicator, \cr
-	\code{momTA}  returns the Momentum Oscillator, \cr
-	\code{macdTA} returns the MACD Oscillator, \cr
-	\code{cdsTA}  returns the MACD Signal Line, \cr
-	\code{cdo}    returns the MACD Oscillator, \cr
-	\code{vohlTA} returns the High/Low Volatility Oscillator, \cr
-	\code{vorTA}  returns Volatility Ratio Oscillator, \cr
-	\code{fpkTA}  returns the Fast Percent-K Stochastics Indicator, \cr
-	\code{fpdTA}  returns the Fast Percent-D Stochastics Indicator, \cr
-	\code{spdTA}  returns the Slow Percent-D Stochastics Indicator, \cr
-	\code{apdTA}  returns the Averaged Percent-D Stochastics Indicator, \cr
-	\code{wprTA}  returns the Williams Percent-R Stochastics Indicator, \cr
-	\code{rsiTA}  returns the Relative Strength Index Stochastics Indicator, \cr
-	\code{medpriceTA} returns the Medium Price, \cr
-	\code{typicalpriceTA} returns the Typical Price, \cr
-	\code{wcloseTA} returns the Weighted Closing Price. \cr
+    \code{emaTA}  returns the Exponential Moving Average, EMA \cr
+    \code{biasTA} returns the EMA-Bias, \cr
+    \code{rocTA}  returns the Rate of Change Indicator, \cr
+    \code{oscTA}  returns the EMA Oscillator Indicator, \cr
+    \code{momTA}  returns the Momentum Oscillator, \cr
+    \code{macdTA} returns the MACD Oscillator, \cr
+    \code{cdsTA}  returns the MACD Signal Line, \cr
+    \code{cdo}    returns the MACD Oscillator, \cr
+    \code{vohlTA} returns the High/Low Volatility Oscillator, \cr
+    \code{vorTA}  returns Volatility Ratio Oscillator, \cr
+    \code{fpkTA}  returns the Fast Percent-K Stochastics Indicator, \cr
+    \code{fpdTA}  returns the Fast Percent-D Stochastics Indicator, \cr
+    \code{spdTA}  returns the Slow Percent-D Stochastics Indicator, \cr
+    \code{apdTA}  returns the Averaged Percent-D Stochastics Indicator, \cr
+    \code{wprTA}  returns the Williams Percent-R Stochastics Indicator, \cr
+    \code{rsiTA}  returns the Relative Strength Index Stochastics Indicator, \cr
+    \code{medpriceTA} returns the Medium Price, \cr
+    \code{typicalpriceTA} returns the Typical Price, \cr
+    \code{wcloseTA} returns the Weighted Closing Price. \cr
 
 }
 
 
 \author{
 
-	Diethelm Wuertz for the Rmetrics \R-port.
+    Diethelm Wuertz for the Rmetrics \R-port.
 }
 
 
 \examples{
-## SOURCE("fSeries.D1-TechnicalAnalysis")
+## SOURCE("fMultivar.014A-TechnicalAnalysis")
 
 ## -
 }

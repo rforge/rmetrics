@@ -343,7 +343,7 @@ Hothorn T., Bretz F., Genz A. (2001);
 
 
 \examples{
-## SOURCE("fMultivar.A2-MultivariateDistribution")
+## SOURCE("fMultivar.047B-MultivariateDistribution")
 
 ## rmvst - 
    xmpMultivar("\nStart: Student-t with Random Deviates > ")

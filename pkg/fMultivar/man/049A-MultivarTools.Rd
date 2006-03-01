@@ -12,10 +12,10 @@
 
 \description{
 
-	Popups the example menu and starts or continues the example 
-	and demo programs.
-	\cr
-	
+    Popups the example menu and starts or continues the example 
+    and demo programs.
+    \cr
+    
 }
 
 
@@ -27,45 +27,45 @@ xmpMultivar(prompt = "")
 
 \arguments{
 
-  	\item{prompt}{
-		the string printed when prompting the user for input. 
-		}	
+    \item{prompt}{
+        the string printed when prompting the user for input. 
+        }   
 }
 
 
 \value{
   
-	\code{xmpfMultivar}
-	\cr
-	Popups the example menu.
-	\cr
-	
-	\code{xmpMultivar}
-	\cr
-	Nothing, the default, or the the prompt if you have set
-	\code{xmpMultivar = readline} on the command prompt. 
-	
+    \code{xmpfMultivar}
+    \cr
+    Popups the example menu.
+    \cr
+    
+    \code{xmpMultivar}
+    \cr
+    Nothing, the default, or the the prompt if you have set
+    \code{xmpMultivar = readline} on the command prompt. 
+    
 }
 
 
 \details{
 
-	The example in the manual pages may be interactive and ask for
-	input from the user. To achieve this you have to type on the
-	command line: \code{xmpMultivar = readline}
+    The example in the manual pages may be interactive and ask for
+    input from the user. To achieve this you have to type on the
+    command line: \code{xmpMultivar = readline}
 
 }
 
 
 \author{
 
-	Diethelm Wuertz for the Rmetrics \R-port.
+    Diethelm Wuertz for the Rmetrics \R-port.
 
 }
 
 
 \examples{
-## SOURCE("fMultivar.Z1-MultivarTools")
+## SOURCE("fMultivar.049A-MultivarTools")
 
 \dontrun{
 ## xmpfMultivar -

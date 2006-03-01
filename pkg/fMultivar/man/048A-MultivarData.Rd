@@ -21,7 +21,7 @@
 
     A collection and description of data sets 
     used in examples of multivariate data analysis.
-	\cr
+    \cr
 
     \code{CobbDouglas}
     \code{logCobbDouglas}
@@ -45,18 +45,18 @@
     variables from the Citibase data base: RTDR, IVRDR, FYCP, LEH,
     and PUCD.
   
-  	\code{spc1970} and 
-  	\code{spcindis}
-  	\cr
-  	These data are indicators for daily SP500 Stock Data together
-  	with an set of trading indicators for technical analysis.
-  	\cr
-  	
+    \code{spc1970} and 
+    \code{spcindis}
+    \cr
+    These data are indicators for daily SP500 Stock Data together
+    with an set of trading indicators for technical analysis.
+    \cr
+    
 }
 
 
 \format{
-	
+    
     All files are in CSV Excel spreadsheet format. The
     delimiter is a semicolon. 
     
@@ -65,7 +65,7 @@
 
 
 \examples{
-## SOURCE("fMultivar.X1-MultivarData")
+## SOURCE("fMultivar.048A-MultivarData")
 
 ## -
 } 
