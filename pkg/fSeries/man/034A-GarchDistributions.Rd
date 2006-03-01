@@ -50,34 +50,34 @@
     addition maximum likelihood estimators are available to 
     fit the parameters of a distribution and to compute 
     basic statistical properties. 
-	\cr
+    \cr
     
     The functions are:
     
     \tabular{ll}{
-	\code{[dpqr]norm} \tab Normal distribution from R's base package, \cr
-	\code{[dpqr]snorm} \tab Skew Normal distribution, \cr
-	\code{[dpqr]std} \tab Symmetric Student-t Distribution, \cr
-	\code{[dpqr]sstd} \tab Skew Student-t Distribution, \cr
-	\code{[dpqr]ged} \tab Symmetric GED distribution, \cr
-	\code{[dpqr]sged} \tab Skew GED distribution. }
-	
-	The estimatore are:
-	
-	\tabular{ll}{
-	\code{normFit} \tab MLE parameter fit for a Normal distribution, \cr
-	\code{snormFit} \tab MLE parameter fit for a skew Normal distribution, \cr
-	\code{stdFit} \tab MLE parameter fit for a Sudent-t distribution, \cr
-	\code{stdFit} \tab MLE parameter fit for a skew Sudent-t distribution, \cr
-	\code{gedFit} \tab MLE parameter fit for a generalized error distribution, \cr
-	\code{nigFit} \tab MLE parameter fit for a skew generalized error distribution. }
-	
-	Utility Function:
-	
-	\tabular{ll}{
-	\code{absMoments} \tab Computes absolute moments of a symmetric density. }
-	
-	
+    \code{[dpqr]norm} \tab Normal distribution from R's base package, \cr
+    \code{[dpqr]snorm} \tab Skew Normal distribution, \cr
+    \code{[dpqr]std} \tab Symmetric Student-t Distribution, \cr
+    \code{[dpqr]sstd} \tab Skew Student-t Distribution, \cr
+    \code{[dpqr]ged} \tab Symmetric GED distribution, \cr
+    \code{[dpqr]sged} \tab Skew GED distribution. }
+    
+    The estimatore are:
+    
+    \tabular{ll}{
+    \code{normFit} \tab MLE parameter fit for a Normal distribution, \cr
+    \code{snormFit} \tab MLE parameter fit for a skew Normal distribution, \cr
+    \code{stdFit} \tab MLE parameter fit for a Sudent-t distribution, \cr
+    \code{stdFit} \tab MLE parameter fit for a skew Sudent-t distribution, \cr
+    \code{gedFit} \tab MLE parameter fit for a generalized error distribution, \cr
+    \code{nigFit} \tab MLE parameter fit for a skew generalized error distribution. }
+    
+    Utility Function:
+    
+    \tabular{ll}{
+    \code{absMoments} \tab Computes absolute moments of a symmetric density. }
+    
+    
 }
 
 
@@ -121,7 +121,7 @@ absMoments(n, density = c("dnorm", "dged", "dstd"), \dots)
 \arguments{
 
     \item{density}{
-    	[absMoments] - \cr
+        [absMoments] - \cr
         a character string naming the symmetric density function.
         }
     \item{mean, sd, nu, xi}{
@@ -131,7 +131,7 @@ absMoments(n, density = c("dnorm", "dged", "dstd"), \dots)
         skewness parameter \code{xi}.
         }
     \item{n}{
-    	[rnorm][r*ged][r*std] - \cr
+        [rnorm][r*ged][r*std] - \cr
         the number of observations.\cr
         [absMoments] - \cr
         the number of absolute Moments.
@@ -143,11 +143,11 @@ absMoments(n, density = c("dnorm", "dged", "dstd"), \dots)
         a numeric vector of quantiles.
         }
     \item{\dots}{
-    	[*Fit] - \cr
-		parameters parsed to the optimization function \code{nlm}.\cr
-		[absMoments] - \cr
-		parameters passed to the density function.
-		}
+        [*Fit] - \cr
+        parameters parsed to the optimization function \code{nlm}.\cr
+        [absMoments] - \cr
+        parameters passed to the density function.
+        }
     
 }
 
@@ -161,42 +161,42 @@ absMoments(n, density = c("dnorm", "dged", "dstd"), \dots)
     all values are numeric vectors.
     
     \code{*Fit} return a list with the following components: \cr
-  	\item{estimate}{
-		the point at which the maximum value of the log liklihood 
-		function is obtained.
-		}
-  	\item{objective}{
-		the value of the estimated maximum, i.e. the value of the
-		log liklihood function.
-		}
-  	\item{message}{
-		an integer indicating why the optimization process terminated.
-		}
-  	\item{code}{
-		an integer indicating why the optimization process terminated.\cr
-		1: relative gradient is close to zero, current iterate is probably 
-			solution; \cr
-		2: successive iterates within tolerance, current iterate is probably 
-			solution; \cr
-		3: last global step failed to locate a point lower than \code{estimate}. 
-			Either \code{estimate} is an approximate local minimum of the 
-			function or \code{steptol} is too small; \cr
- 		4: iteration limit exceeded; \cr
- 		5: maximum step size \code{stepmax} exceeded five consecutive times. 
- 			Either the function is unbounded below, becomes asymptotic to a 
- 			finite value from above in some direction or \code{stepmax} 
-			is too small.
-			}
-  	\item{gradient}{
-		the gradient at the estimated maximum.
-		}
-  	\item{steps}{
-		number of function calls.
-		}
-	
-	\code{absMoments} returns a numeric vector of length \code{n} with the
-	values of the absolute moments of the density function.
-	
+    \item{estimate}{
+        the point at which the maximum value of the log liklihood 
+        function is obtained.
+        }
+    \item{objective}{
+        the value of the estimated maximum, i.e. the value of the
+        log liklihood function.
+        }
+    \item{message}{
+        an integer indicating why the optimization process terminated.
+        }
+    \item{code}{
+        an integer indicating why the optimization process terminated.\cr
+        1: relative gradient is close to zero, current iterate is probably 
+            solution; \cr
+        2: successive iterates within tolerance, current iterate is probably 
+            solution; \cr
+        3: last global step failed to locate a point lower than \code{estimate}. 
+            Either \code{estimate} is an approximate local minimum of the 
+            function or \code{steptol} is too small; \cr
+        4: iteration limit exceeded; \cr
+        5: maximum step size \code{stepmax} exceeded five consecutive times. 
+            Either the function is unbounded below, becomes asymptotic to a 
+            finite value from above in some direction or \code{stepmax} 
+            is too small.
+            }
+    \item{gradient}{
+        the gradient at the estimated maximum.
+        }
+    \item{steps}{
+        number of function calls.
+        }
+    
+    \code{absMoments} returns a numeric vector of length \code{n} with the
+    values of the absolute moments of the density function.
+    
     
     
 }
@@ -222,9 +222,9 @@ absMoments(n, density = c("dnorm", "dged", "dstd"), \dots)
     
     \bold{Parameter Estimation:}
     \cr\cr
-	The function \code{\link{nlm}} is used to minimize the "negative" maximum 
-	log-likelihood function. \code{nlm} carries out a minimization using 
-	a Newton-type algorithm.
+    The function \code{\link{nlm}} is used to minimize the "negative" maximum 
+    log-likelihood function. \code{nlm} carries out a minimization using 
+    a Newton-type algorithm.
     
 }
 
@@ -250,7 +250,7 @@ Fernandez C., Steel M.F.J. (2000);
 
 
 \examples{
-## SOURCE("fSeries.34A-GarchDistributions")
+## SOURCE("fSeries.034A-GarchDistributions")
 
 ## snorm -
    xmpSeries("\nStart: Skew Normal Distribuion:  > ")
@@ -318,7 +318,7 @@ Fernandez C., Steel M.F.J. (2000);
 ## sgedFit -
    xmpSeries("\nNext: MLE Fit to skew Generalized Error Density > ")
    sgedFit(rsged(1000, mean = -1, sd = 0.5, nu = 3, xi = 3/2),
-   	 print.level = 2)
+     print.level = 2)
 }
 
 

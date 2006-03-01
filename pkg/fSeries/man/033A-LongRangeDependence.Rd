@@ -566,13 +566,13 @@ show.fHURST(object)
     average, versus the log of the scale parameter of the transform. 
     The result should be directly proportional to \code{H} providing
     an estimate for the Hurst exponent. 
-    \cr
+    %\cr
     
     
-    \bold{V: Statistical Tests:}
-    \cr
+    %\bold{V: Statistical Tests:}
+    %\cr
     
-    The ...
+    %The ...
     
 }
 
@@ -622,7 +622,7 @@ Taqqu M., et al.
 
 
 \examples{
-## SOURCE("fSeries.33A-LongRangeDependence")
+## SOURCE("fSeries.033A-LongRangeDependence")
 
 ## fgnSim -
    par(mfrow = c(3, 1), cex = 0.75)  

@@ -105,7 +105,7 @@ urzaTest(x, model = c("intercept", "trend", "both"), lag, doplot = TRUE)
         a character string which allows for a brief description.
         }
     \item{doplot}{
-    	[ur*Test] - \cr
+        [ur*Test] - \cr
         a logical flag, by default \code{TRUE}. Should a diagnostical
         plot be displayed?
         }
@@ -315,11 +315,11 @@ urzaTest(x, model = c("intercept", "trend", "both"), lag, doplot = TRUE)
         hypothesis.
         }
     \item{$name}{
-    	the name of the underlying function, which may be wrapped.
-    	}
+        the name of the underlying function, which may be wrapped.
+        }
     \item{$output}{
-    	additional test results to be printed.
-    	}
+        additional test results to be printed.
+        }
         
 }
 
@@ -375,7 +375,7 @@ Schwert G.W. (1989);
 
 
 \examples{
-## SOURCE("fSeries.32B-UnitrootTests")
+## SOURCE("fSeries.032B-UnitrootTests")
 
 \dontrun{
 ## adfTest - 

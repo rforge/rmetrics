@@ -456,7 +456,7 @@ Nocedal J., Wright S.J. (1999);
 
 
 \examples{
-## SOURCE("fSeries1.34C-GarchModelling")
+## SOURCE("fSeries1.034C-GarchModelling")
 \dontrun{
 #   garchSpec -
 #   garchSim - 

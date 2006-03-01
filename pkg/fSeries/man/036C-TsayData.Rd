@@ -174,7 +174,7 @@ Tsay, R.S. (2002);
 
 
 \examples{
-## SOURCE("fBasics.36C-TsayData")
+## SOURCE("fSeries.036C-TsayData")
 
 ## *.txt - 
   

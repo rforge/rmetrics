@@ -604,7 +604,7 @@ Haslett J. and Raftery A.E. (1989);
 
 
 \examples{
-## SOURCE("fSeries.31A-ArmaModelling")
+## SOURCE("fSeries.031A-ArmaModelling")
 
 ## armaSim/armaFit -
    xmpSeries("\nStart: Simulate an ARMA(2, 1) process > ")
