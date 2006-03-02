@@ -1,23 +1,23 @@
 
 #
 # Example:
-# 	Urca Functions Addons
+#   Urca Functions Addons
 #
 # Description:
-#	This file summarizes the R functions from R's contributed
-#	package 'urca' written by Bernhard Pfaff and the function 
+#   This file summarizes the R functions from R's contributed
+#   package 'urca' written by Bernhard Pfaff and the function 
 #   'BIC' from the nlme package required from the 'urca' package.
 #
-#	In general you will not need the functions listed in this file.
-#	Install the 'urca' package together with the 'nlme' package
-#	and Rmetrics functions for unit root testing will run. However,
-#	if you are working with an operating system for which no
-#	compiled versions of these two packages are availalbe, you
-#	can just execute the command
+#   In general you will not need the functions listed in this file.
+#   Install the 'urca' package together with the 'nlme' package
+#   and Rmetrics functions for unit root testing will run. However,
+#   if you are working with an operating system for which no
+#   compiled versions of these two packages are availalbe, you
+#   can just execute the command
 #
-#		xmpfSeries() und select 'funUrca' from the menu list
+#       xmpfSeries() und select 'funUrca' from the menu list
 #
-#	This will load the functions to run the unit root tests.
+#   This will load the functions to run the unit root tests.
 #    
 
 
@@ -28,38 +28,38 @@
 BIC =
 function (object, ...) 
 {
-	UseMethod("BIC")
+    UseMethod("BIC")
 }
 
 
 BIC.logLik =
 function(object, ...)
 {
-  	# BIC for logLik objects
-  	ans = -2 * (c(object) - attr(object, "df") * log(attr(object, "nobs"))/2)
-  	
-  	# Return Value:
-  	ans
+    # BIC for logLik objects
+    ans = -2 * (c(object) - attr(object, "df") * log(attr(object, "nobs"))/2)
+    
+    # Return Value:
+    ans
 }
 
 
 BIC.lm = 
 function(object, ...)
 {
-  	# BIC for various fitted objects
-  	if ((rt = nargs()) > 1) {
-	    object = list(object, ...)
-	    val = lapply(object, logLik)
-	    val = as.data.frame(t(sapply(val, 
-	    	function(el) c(attr(el, "df"), BIC(el)))))
-	    names(val) = c("df", "BIC")
-	    row.names(val) = as.character(match.call()[-1])
-  	} else {
-    	val = BIC(logLik(object))
-  	}
-  	
-  	# Return Value:
-  	val
+    # BIC for various fitted objects
+    if ((rt = nargs()) > 1) {
+        object = list(object, ...)
+        val = lapply(object, logLik)
+        val = as.data.frame(t(sapply(val, 
+            function(el) c(attr(el, "df"), BIC(el)))))
+        names(val) = c("df", "BIC")
+        row.names(val) = as.character(match.call()[-1])
+    } else {
+        val = BIC(logLik(object))
+    }
+    
+    # Return Value:
+    val
 }
 
 
@@ -77,7 +77,7 @@ function(object, ...)
 # Imports: nlme, methods, graphics, stats
 # LazyLoad: yes
 # Description: Unit root and cointegration tests encountered in applied 
-#	 econometric analysis are implemented.
+#    econometric analysis are implemented.
 # License: GPL version 2 or newer
 # URL: http://www.r-project.org 
 # Packaged: Wed Mar  9 16:31:06 2005; bp
