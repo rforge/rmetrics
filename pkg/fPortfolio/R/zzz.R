@@ -49,18 +49,6 @@ function(lib, pkg)
     
     # Load dll:
     library.dynam("fPortfolio", pkg, lib)
-    
-    # Load Builtins:
-    sink("@message@")
-    test = try(require(corpcor), silent = TRUE)
-    if (!test) 
-        source(paste(.Library,"/fPortfolio/demo/funCorpcor.R", sep = ""))
-    test = try(require(covRobust), silent = TRUE)
-    if (!test) 
-        source(paste(.Library,"/fPortfolio/demo/funCovRobust.R", sep = ""))
-    sink()
-    unlink("@message@")
-
 }
 
 
