@@ -612,7 +612,7 @@ function(x)
     x = as.matrix(x)
     
     # Check if matrix is positive definite:
-    ans = is.positive.definite(m = x)\
+    ans = is.positive.definite(m = x)
     
     # Return Value:
     ans
