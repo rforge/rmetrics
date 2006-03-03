@@ -44,10 +44,18 @@
 #  plot.fASSETS          S3: Plot method for an object of class fASSETS
 #  summary.fASSETS       S3: Summary method for an object of class fASSETS
 # FUNCTION:             STATISTICS AND TESTS:
-#  assetsStats           Computes basic statistics of asset sets 
+#  assetsStats           Computes basic statistics of asset sets  
+# FUNCTION:             MEAN AND VARIANCE ESTIMATION:
+# .assetsMV              Estimates mean and variance for a set of assets
+#   method = "cov"        Standard Covariance Estimation
+#   method = "shrink"     using Shrinkage
+#   method = bagged"      using bagging
+#  .isPD                 Checks if the matrix x is positive definite
+#  .makePD               Forces the matrix x to be positive definite
+# FUNCTION:             NORMALITY TESTS:
 # .assetsTest            Test for multivariate Normal Assets
 #   method = "shapiro"    calling Shapiro test
-#   method = "energy"     calling Energy test 
+#   method = "energy"     calling Energy test
 # .mvenergyTest          Multivariate Energy Test
 #  .mvnorm.etest          Internal Function used by .assetsTest
 #  .mvnorm.e              Internal Function used by .assetsTest
@@ -55,7 +63,9 @@
 #  .mvnormBoot            Internal Function used by .assetsTest
 # .mvshapiroTest         Multivariate Shapiro Test
 # REQUIREMENTS:         DESCRIPTION:
-#  .msn.quantities       Function from R package sn [in fMultivar]
+#  .msn.quantities       Function from R package sn [in fMultivar]      
+#  copcor                R contributed package copcor
+#  covRobust             R contributed package covRobust
 ################################################################################
 
 
@@ -488,8 +498,151 @@ function(x)
     
     # Return Value:
     ans
-}   
+} 
 
+
+################################################################################
+# Mean and Covariance
+
+
+.assetsMV = 
+function(x, method = c("cov", "shrink", "bagged"), check = TRUE,
+force = FALSE, R.bagged = 100, lambda.shrink = 0.1, ...)
+{   # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   Compute mean and variance from multivariate time series
+    
+    # Arguments:
+    #   x - a multivariate time series, a data frame, or any other
+    #       rectangular object of assets which can be converted into
+    #       a matrix by the function 'as.matrix'. Optional Dates are 
+    #       rownames, instrument names are column names.
+    #   method - Which method should be used to compute the covarinace?
+    #       cov - standard covariance computation
+    #       shrink - estimation with shrinkage method
+    #       bagged - estimation with bagging
+    
+    # Note:
+    #   The output of this function can be used for portfolio
+    #   optimization.
+    
+    # FUNCTION:
+    
+    # Transform Input:
+    x.mat = as.matrix(x)
+    N = dim(x)[1]
+       
+    # Attribute Control List:
+    control = c(method = method[1])
+    
+    # Compute Mean:
+    mu = colMeans(x)
+    
+    # Compute Covariance:
+    method = match.arg(method)
+    if (method == "cov") {
+        Sigma = cov(x.mat)
+    } else if (method == "shrink") {
+        fit = cov.shrink(x = x.mat, lambda = lambda.shrink)
+        Sigma = fit 
+        attr(Sigma, "lambda") = NULL
+        control = c(control, lambda = as.character(lambda.shrink))
+    } else if (method == "bagged") {
+        fit = cov.bagged(x = x.mat, R = R.bagged)
+        Sigma = fit 
+        control = c(control, R = as.character(R.bagged))
+    } else if (method == "nnve") {
+        # Nearest Neighbour Variance Estimation:
+        fit = cov.nnve(datamat = x.mat, ...)
+        Sigma = fit$cov
+    }
+       
+    # Add Size to Control List:
+    control = c(control, size = as.character(N))
+    
+    # Add Names for Covariance Matrix to Control List:
+    names(mu) = colnames(x)
+    colnames(Sigma) = rownames(Sigma) = colNames = colnames(x)
+    
+    # Check Positive Definiteness:
+    if (check) {
+        result = .isPD(Sigma)
+        if(result) {
+            control = c(control, posdef = "TRUE")
+        } else {
+            control = c(control, posdef = "FALSE")
+        }
+    }
+    
+    # Check Positive Definiteness:
+    control = c(control, forced = "FALSE")
+    if (!result & force) {
+        Sigma = make.positive.definite(m = Sigma)
+        control = c(control, forced = "TRUE")
+    }
+    
+    # Result:
+    ans = list(mu = mu, Sigma = Sigma)
+    attr(ans, "control") = control
+    
+    # Return Value:
+    ans
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.isPD =
+function(x)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Checks if the matrix x is positive definite
+    
+    # Arguments:
+    #   x - a symmetric matrix or any other rectangular object
+    #       describing a covariance matrix which can be converted into
+    #       a matrix by the function 'as.matrix'. 
+    
+    # FUNCTION:
+    
+    # Transform:
+    x = as.matrix(x)
+    
+    # Check if matrix is positive definite:
+    ans = is.positive.definite(m = x)\
+    
+    # Return Value:
+    ans
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.makePD =
+function(x)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Forces the matrix x to be positive definite
+    
+    # Arguments:
+    #   x - a symmetric matrix or any other rectangular object
+    #       describing a covariance matrix which can be converted into
+    #       a matrix by the function 'as.matrix'. 
+    
+    # FUNCTION:
+    
+    # Make Positive Definite:
+    ans = make.positive.definite(m = x)
+    
+    # Return Value:
+    ans
+}
+        
 
 ################################################################################
 # S4 Normality Test:
