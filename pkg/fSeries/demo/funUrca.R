@@ -1,5 +1,5 @@
 
-# Function Builtin uroot  
+# Function Builtin: urca  
 #   This function Builtin will be used when the original package 'urca'
 #   is not available for your hardware configuration and/or operating 
 #   system. 
