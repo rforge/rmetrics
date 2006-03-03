@@ -45,11 +45,15 @@
 #  summary.fASSETS       S3: Summary method for an object of class fASSETS
 # FUNCTION:             STATISTICS AND TESTS:
 #  assetsStats           Computes basic statistics of asset sets 
-#  .mvnormTest           Test for multivariate Normal Assets
-#  .mvnorm.etest
-#  .mvnorm.e
-#  .normal.e
-#  .mvnormBoot
+# .assetsTest            Test for multivariate Normal Assets
+#   method = "shapiro"    calling Shapiro test
+#   method = "energy"     calling Energy test 
+# .mvenergyTest          Multivariate Energy Test
+#  .mvnorm.etest          Internal Function used by .assetsTest
+#  .mvnorm.e              Internal Function used by .assetsTest
+#  .normal.e              Internal Function used by .assetsTest
+#  .mvnormBoot            Internal Function used by .assetsTest
+# .mvshapiroTest         Multivariate Shapiro Test
 # REQUIREMENTS:         DESCRIPTION:
 #  .msn.quantities       Function from R package sn [in fMultivar]
 ################################################################################
@@ -488,13 +492,10 @@ function(x)
 
 
 ################################################################################
+# S4 Normality Test:
 
 
-################################################################################
-# S4 Test:
-
-
-.mvnormTest =
+.assetsTest =
 function(x, method = c("shapiro", "energy"), Replicates = 99, 
 title = NULL, description = NULL)
 {
@@ -511,7 +512,7 @@ title = NULL, description = NULL)
     } else if (method == "energy" | method == "e") {
         test = .mvenergyTest(x, Replicates = Replicates)
     } else {
-        stop("Unvalid method specified")
+        stop("No valid method specified")
     }
     
     # Return Value:
@@ -526,7 +527,7 @@ title = NULL, description = NULL)
 function(x, Replicates = 99, title = NULL, description = NULL)
 {
     # Example:
-    #   .mvnormTest(x = assetsSim(100), 99)
+    #   .mvenergyTest(x = assetsSim(100), 99)
     
     # FUNCTION:
     
@@ -536,7 +537,7 @@ function(x, Replicates = 99, title = NULL, description = NULL)
     
     # Test:
     test = .mvnorm.etest(x = x, R = Replicates)
-    names(test$p.value) = "p.value"
+    names(test$p.value) = ""
     class(test) = "list"
     
     # Add:
@@ -580,6 +581,10 @@ function(x, R)
     # Description:
     #   Parametric bootstrap E-test for multivariate normality
     
+    # Author: 
+    #   Maria L. Rizzo <rizzo@math.ohiou.edu> and 
+    #   Gabor J. Szekely <gabors@bgnet.bgsu.edu>
+
     # FUNCTION:
     
     # Test:
@@ -618,6 +623,10 @@ function(x)
     # Description:
     #   E-statistic for multivariate normality
     
+    # Author: 
+    #   Maria L. Rizzo <rizzo@math.ohiou.edu> and 
+    #   Gabor J. Szekely <gabors@bgnet.bgsu.edu>
+    
     # FUNCTION:
     
     # Statistic:
@@ -651,6 +660,10 @@ function(x)
 {
     # Description:
     #   Statistic for univariate Normality
+    
+    # Author: 
+    #   Maria L. Rizzo <rizzo@math.ohiou.edu> and 
+    #   Gabor J. Szekely <gabors@bgnet.bgsu.edu>
     
     # FUNCTION:
     
@@ -695,6 +708,11 @@ function(x)
 function(data, statistic, R, strata = rep(1, n), L = NULL, m = 0, 
 weights = NULL, ran.gen=function(d, p) d, mle = NULL, ...)
 {    
+    # Author: 
+    #   S original <http://statwww.epfl.ch/davison/BMA/library.html>
+    #   by Angelo Canty <cantya@mcmaster.ca>  
+    #   R port by  Brian Ripley <ripley@stats.ox.ac.uk>
+
     # R replicates of bootstrap applied to  statistic(data)
     # Various auxilliary functions find the indices to be used for the
     # bootstrap replicates and then this function loops over those replicates.
@@ -738,7 +756,13 @@ weights = NULL, ran.gen=function(d, p) d, mle = NULL, ...)
 
 .mvshapiroTest = 
 function(x, title = NULL, description = NULL)
-{
+{   
+    # Description:
+    #   Computes Shapiro's normality test for multivariate variables
+    
+    # Author: 
+    #   Slawomir Jarek
+
     # Example:
     #   .mvshapiroTest(x = assetsSim(100))
     
