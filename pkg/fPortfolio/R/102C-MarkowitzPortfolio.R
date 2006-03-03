@@ -34,10 +34,10 @@
 #  montecarloMarkowitz       Adds randomly created portfolios
 #  portfolioMarkowitz        Mean-variance Markowitz (target) portfolio
 # METHODS:                  DESCRIPTION:   
-#  .frontier.default         S3: Extract points on the efficient frontier
 #  print.fPFOLIO             S3: Print method for objects of class fPFOLIO
 #  plot.fPFOLIO              S3: Plot method for objects of class fPFOLIO
 #  summary.fPFOLIO           S3: Summary method for objects of class fPFOLIO
+#  .frontier.default         S3: Extract points on the efficient frontier
 # FUNCTIONS:                SPECIAL PORTFOLIOS:
 #  .tangencyMarkowitz        Adds tangency portfolio
 #  .equalweightsMarkowitz    Adds equal weights Portfolio
@@ -359,43 +359,6 @@ function(x, targetReturn, title = NULL, description = NULL)
 # ******************************************************************************
 
 
-.frontier =
-function (object, ...) 
-{   # A function implemented by Diethelm Wuertz
-
-    # FUNCTION:
-    
-     # Return Value:
-     UseMethod(".frontier")
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.frontier.default =
-function(object, ...)
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   S3 method for an object of class "fPFOLIO" to extract
-    #   the points on the efficient frontier
-    
-    # FUNCTION:
-    
-    # Frontier:
-    pfolio = object@pfolio
-    mu = pfolio$pm
-    sigma = pfolio$ps
-    
-    # Return Value:
-    data.frame(sigma = sigma, mu = mu)
-}
-
-
-# ******************************************************************************
-
-
 print.fPFOLIO =
 function(x, ...) 
 {   # A function implemented by Diethelm Wuertz
@@ -641,6 +604,9 @@ function(object, ...)
     # Description:
     #   Summary Method for an object of class "fPFOLIO"
     
+    # Arguments:
+    #   object - an object of class fPFOLIO
+    
     # FUNCTION:
   
     # Extract Portfolio:
@@ -656,6 +622,42 @@ function(object, ...)
     invisible(object)
 }
 
+# ------------------------------------------------------------------------------
+
+
+.frontier =
+function (object, ...) 
+{   # A function implemented by Diethelm Wuertz
+
+    # FUNCTION:
+    
+     # Return Value:
+     UseMethod(".frontier")
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.frontier.default =
+function(object, ...)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   S3 method for an object of class "fPFOLIO" to extract
+    #   the points on the efficient frontier
+    
+    # FUNCTION:
+    
+    # Frontier:
+    pfolio = object@pfolio
+    mu = pfolio$pm
+    sigma = pfolio$ps
+    
+    # Return Value:
+    data.frame(sigma = sigma, mu = mu)
+}
+
 
 ################################################################################
 
@@ -665,15 +667,10 @@ function(object, Rf = 0, add = TRUE)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   This function calculates the properties of the tangency portfolio,
-    #   and adds the "capital market line" and the tangency portfolio, Rm
-    #   and Sm, to the efficient frontier.
-    
-    # NOTE: 
-    #   Not for all risk free rates there exists a tangency portfolio!!!
+    #   Calculates the properties of the tangency portfolio
     
     # Arguments:
-    #   object - An object of class portfolio
+    #   object - an object of class portfolio
     
     # Value:
     #   An updated object of class portfolio with the following 
@@ -684,12 +681,15 @@ function(object, Rf = 0, add = TRUE)
     #   t.weights - weights of the tangency portfolio
     
     # Note:
+    #   Not for all risk free rates there exists a tangency portfolio!!!
+    #   In addition adds the "capital market line" and the tangency portfolio, 
+    #   Rm and Sm, to the efficient frontier.
     #   I have not yet checked if this works for all values of Rf !!
-    #   I hope it works properly even if there exists no tangency portfolio.
+    #   I hope it works properly even if there exists no tangency portfolio.  
     
     # FUNCTION:
     
-    # Find the Index (location of the Tangency Point:
+    # Find the Index (location of the tangency point:
     delta.pm = diff(object$pm)
     delta.ps = diff(object$ps)
     slope1 = slope.keep = delta.pm/delta.ps
@@ -703,7 +703,7 @@ function(object, Rf = 0, add = TRUE)
     pm.pos = object$pm[slope.keep > 0]
     ps.pos = object$ps[slope.keep > 0]
 
-    # Here are the mean return and the standard deviation
+    # Here are the mean return and the standard deviation:
     mean.m = (pm.pos[index] + pm.pos[index+1]) / 2 
     sigma.m = (ps.pos[index] + ps.pos[index+1]) / 2
     # ... together with the slope
@@ -752,8 +752,7 @@ function(object, add = TRUE)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   This function adds the equal weighted Portfolio to
-    #   efficient frontier plot. 
+    #   Adds the equal weighted portfolio to efficient frontier plot
     
     # FUNCTION:
     
@@ -785,8 +784,11 @@ title = NULL, description = NULL, ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Calculates the efficient frontier from a matrix
-    #   of either market or simulated assets given in matrix "x". 
+    #   Calculates the efficient frontier, short selling allowed
+    
+    # Details  from a matrix
+    #   Calculates the efficient frontier (short selling allowed) from a
+    #   a matrix of either market or simulated assets given in matrix "x". 
     #   Each time series represents a column in this matrix.
     
     # Arguments:     
@@ -900,7 +902,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   RUnit Test
+    #   Performs a RUnit Test
     
     # FUNCTION:
 
@@ -939,7 +941,10 @@ function()
 function(pm, returns, covmat) 
 {   # A Builtin function modified by Diethelm Wuertz
 
-    # Description:  
+    # Description: 
+    #   Computes a point on the efficient frontier
+    
+    # Note:
     #   Package: tseries
     #   Version: 0.9-21
     #   Date: 2004-04-23
@@ -985,7 +990,10 @@ function(pm, returns, covmat)
 function(Dmat, dvec, Amat, bvec, meq)
 {   # A Builtin function modified by Diethelm Wuertz
 
-    # Description:   
+    # Description:
+    #   Solves the quadratic programming problem
+    
+    # Note:   
     #   Package: quadprog
     #   Version: 1.4-7
     #   Date: 2004-01-31
