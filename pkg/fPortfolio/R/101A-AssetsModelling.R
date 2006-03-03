@@ -28,28 +28,30 @@
 
 
 ################################################################################
-# FUNCTION:             DESCRIPTION:
+# FUNCTION:             SIMULATION AND ASSET PICKING:
 #  assetsSim             Simulates a set of artificial assets
-#  .msn.quantities        Internal function copied from R package sn
 #  assetsSelect          Clusters a set of assets
-#   method = hclust       hierarchical clustering
-#   method = kmeans       k-means clustering
+#   method = "hclust"    hierarchical clustering
+#   method = "kmeans"    k-means clustering
+# FUNCTION:             PARAMETER ESTIMATION:
 #  fASSETS               Class representation for "fASSETS" Objects
 #  assetsFit             Estimates the parameters of set of assets
-#   method = norm         assuming a multivariate Normal distribution
-#   method = snorm        assuming a multivariate skew-Normal distribution
-#   method = st           assuming a multivariate skew-Student-t  
+#   method = "norm"       assuming a multivariate Normal distribution
+#   method = "snorm"      assuming a multivariate skew-Normal distribution
+#   method = "st"         assuming a multivariate skew-Student-t  
 # METHODS:              DESCRIPTION:
 #  print.fASSETS         S3: Print method for an object of class fASSETS
 #  plot.fASSETS          S3: Plot method for an object of class fASSETS
 #  summary.fASSETS       S3: Summary method for an object of class fASSETS
-# STATS AND TESTS:      DESCRIPTION:
+# FUNCTION:             STATISTICS AND TESTS:
 #  assetsStats           Computes basic statistics of asset sets 
 #  .mvnormTest           Test for multivariate Normal Assets
 #  .mvnorm.etest
 #  .mvnorm.e
 #  .normal.e
 #  .mvnormBoot
+# REQUIREMENTS:         DESCRIPTION:
+#  .msn.quantities       Function from R package sn [in fMultivar]
 ################################################################################
 
 
@@ -116,7 +118,7 @@ alpha = rep(0, dim), df = Inf), assetNames = NULL)
 }
 
 
-# ******************************************************************************
+################################################################################
 
 
 assetsSelect = 
@@ -161,7 +163,7 @@ kmeans.centers = 5, kmeans.maxiter = 10, doplot = TRUE, ...)
 }
 
 
-# ******************************************************************************
+################################################################################
 
 
 setClass("fASSETS", 
@@ -190,8 +192,10 @@ description = NULL, fixed.df = NA, ...)
     #   the skewness, and the fatness of tails.
     
     # Arguments:
-    #   x - A data frame of assets, dates are rownames,
-    #       instrument names are column names.
+    #   x - A multivariate time series, a data frame, or any other
+    #       rectangular object of assets which can be converted into
+    #       a matrix by the function as.matrix. Optional Dates are 
+    #       rownames, instrument names are column names.
     #   type - Which type of distribution should be fitted?
     #       a) norm - multivariate Normal
     #       b) snorm - multivariate skew-Normal

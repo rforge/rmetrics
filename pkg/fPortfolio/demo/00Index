@@ -1,3 +1,5 @@
+funCorpcor                      Builtin Functions from corpcor
+funCovRobust                    Builtin Functions from covRobust
 xmpMultivariateDistribution     Multivariate Normal and Student-t Distributions
 xmpAssetsModelling              Modelling of Financial Assets Sets  
 xmpDrawdownStatistics           Maximum Drawdown Statistics

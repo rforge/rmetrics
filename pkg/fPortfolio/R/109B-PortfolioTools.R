@@ -30,7 +30,7 @@
 ################################################################################
 # FUNCTION:             DESCRIPTION:
 #  xmpBasics             Sets prompt
-#  xmpfBasics            Popups the example menu
+#  xmpfPortfolio            Popups the example menu
 ################################################################################
 
 
@@ -46,7 +46,7 @@ function(prompt = "")
 
 xmpfPortfolio = 
 function() 
-{   # A function implemented by Diethelm Wuertz
+{   # A function implemented by Diethelm WUertz
 
     # Description:
     #   Popups the example menu
@@ -55,26 +55,28 @@ function()
     
     # Popup:
     path = paste(.Library,"/fPortfolio", sep = "") 
-    entries = .read.fPortfolioIndex (file.path(path, "demo", "00Index"))    
+    entries = .read.fPortfolio.00Index (file.path(path, "demoIndex"))    
     example = select.list(entries[,1])
     selected = 0
     for (i in 1:length(entries[,1])) {
-        if (example == entries[i,1]) selected = i}
+        if (example == entries[i,1]) selected = i
+    }
     if (example == "") {
         cat("\nNo demo selected\n")
     } else {
         cat("\nLibrary: ", "fPortfolio", "\nExample: ", 
-            entries[selected,1], "\nTitle:   ", entries[selected,2], "\n")
+            entries[selected, 1], "\nTitle:   ", entries[selected, 2], "\n")
         source(paste(path, "/demo/", example, ".R", sep = ""))
     }
     if (TRUE) {
-        cat("\n") }
+        cat("\n") 
+    }
     
     # Return Value:
     invisible()
 }
 
-    
+
 # ------------------------------------------------------------------------------
 
 
