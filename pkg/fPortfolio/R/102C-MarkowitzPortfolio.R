@@ -34,7 +34,7 @@
 #  montecarloMarkowitz       Adds randomly created portfolios
 #  portfolioMarkowitz        Mean-variance Markowitz (target) portfolio
 # METHODS:                  DESCRIPTION:   
-#  .frontier.fPFOLIO         S3: Extract points on the efficient frontier
+#  .frontier.default         S3: Extract points on the efficient frontier
 #  print.fPFOLIO             S3: Print method for objects of class fPFOLIO
 #  plot.fPFOLIO              S3: Plot method for objects of class fPFOLIO
 #  summary.fPFOLIO           S3: Summary method for objects of class fPFOLIO
@@ -116,9 +116,9 @@ s.range = NULL, title = NULL, description = NULL, ...)
     
     # Short Selling Allowed ?
     if (short) {
-        return(.frontierShortSelling(data = data, Rf = Rf, length = length, 
-            r.range = r.range, s.range = s.range, title = title, 
-            description = description, ...))
+        return(.frontierShortSellingMarkowitz(data = data, Rf = Rf, 
+            length = length, r.range = r.range, s.range = s.range, 
+            title = title, description = description, ...))
     }
 
     # Check Data: 
@@ -359,7 +359,21 @@ function(x, targetReturn, title = NULL, description = NULL)
 # ******************************************************************************
 
 
-.frontier.fPFOLIO =
+.frontier =
+function (object, ...) 
+{   # A function implemented by Diethelm Wuertz
+
+    # FUNCTION:
+    
+     # Return Value:
+     UseMethod(".frontier")
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.frontier.default =
 function(object)
 {   # A function implemented by Diethelm Wuertz
 
@@ -372,10 +386,10 @@ function(object)
     # Frontier:
     pfolio = object@pfolio
     mu = pfolio$pm
-    Sigma = pfolio$ps
+    sigma = pfolio$ps
     
     # Return Value:
-    list(Sigma = Sigma, mu = mu)
+    data.frame(sigma = sigma, mu = mu)
 }
 
 

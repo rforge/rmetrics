@@ -30,7 +30,7 @@
 ################################################################################
 # FUNCTION:             MEAN AND VARIANCE ESTIMATION:
 #  .meanVariance         Estimates mean and Variance for a set of assets
-# REQUIREMENTS:
+# FUNCTION:             REQUIREMENTS:       
 #  copcor                R contributed package copcor
 #  covRobust             R contributed package covRobust
 ################################################################################
