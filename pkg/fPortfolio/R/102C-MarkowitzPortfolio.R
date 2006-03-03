@@ -374,7 +374,7 @@ function (object, ...)
 
 
 .frontier.default =
-function(object)
+function(object, ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
