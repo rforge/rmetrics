@@ -1,24 +1,23 @@
 
-#
-# Example:
-#   Urca Functions Addons
-#
-# Description:
-#   This file summarizes the R functions from R's contributed
-#   package 'urca' written by Bernhard Pfaff and the function 
-#   'BIC' from the nlme package required from the 'urca' package.
-#
-#   In general you will not need the functions listed in this file.
-#   Install the 'urca' package together with the 'nlme' package
-#   and Rmetrics functions for unit root testing will run. However,
-#   if you are working with an operating system for which no
-#   compiled versions of these two packages are availalbe, you
-#   can just execute the command
-#
-#       xmpfSeries() und select 'funUrca' from the menu list
-#
-#   This will load the functions to run the unit root tests.
-#    
+# Function Builtin uroot  
+#   This function Builtin will be used when the original package 'urca'
+#   is not available for your hardware configuration and/or operating 
+#   system. 
+
+# Package: urca
+# Version: 0.7-9
+# Date: 2005-03-09
+# Title: Unit root and cointegration tests for time series data
+# Author: Bernhard Pfaff <bernhard.pfaff@pfaffikus.de>
+# Maintainer: Bernhard Pfaff <bernhard@pfaffikus.de>
+# Depends: R (>= 2.0.0)
+# Imports: nlme, methods, graphics, stats
+# LazyLoad: yes
+# Description: Unit root and cointegration tests encountered in applied 
+#    econometric analysis are implemented.
+# License: GPL version 2 or newer
+# URL: http://www.r-project.org 
+# Packaged: Wed Mar  9 16:31:06 2005; bp  
 
 
 ################################################################################
@@ -65,23 +64,6 @@ function(object, ...)
 
 ################################################################################
 # PART II: Copy of urca ...
-
-
-# Package: urca
-# Version: 0.7-9
-# Date: 2005-03-09
-# Title: Unit root and cointegration tests for time series data
-# Author: Bernhard Pfaff <bernhard.pfaff@pfaffikus.de>
-# Maintainer: Bernhard Pfaff <bernhard@pfaffikus.de>
-# Depends: R (>= 2.0.0)
-# Imports: nlme, methods, graphics, stats
-# LazyLoad: yes
-# Description: Unit root and cointegration tests encountered in applied 
-#    econometric analysis are implemented.
-# License: GPL version 2 or newer
-# URL: http://www.r-project.org 
-# Packaged: Wed Mar  9 16:31:06 2005; bp
-
 
 
 #
