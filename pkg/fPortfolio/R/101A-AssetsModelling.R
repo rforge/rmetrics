@@ -46,21 +46,21 @@
 # FUNCTION:             STATISTICS AND TESTS:
 #  assetsStats           Computes basic statistics of asset sets  
 # FUNCTION:             MEAN AND VARIANCE ESTIMATION:
-# .assetsMV              Estimates mean and variance for a set of assets
+#  assetsMeanCov         Estimates mean and variance for a set of assets
 #   method = "cov"        Standard Covariance Estimation
 #   method = "shrink"     using Shrinkage
 #   method = bagged"      using bagging
 #  .isPD                 Checks if the matrix x is positive definite
 #  .makePD               Forces the matrix x to be positive definite
 # FUNCTION:             NORMALITY TESTS:
-# .assetsTest            Test for multivariate Normal Assets
+#  assetsTest            Test for multivariate Normal Assets
 #   method = "shapiro"    calling Shapiro test
-#   method = "energy"     calling Energy test
+#   method = "energy"     calling E-Statistic (energy) test
 # .mvenergyTest          Multivariate Energy Test
-#  .mvnorm.etest          Internal Function used by .assetsTest
-#  .mvnorm.e              Internal Function used by .assetsTest
-#  .normal.e              Internal Function used by .assetsTest
-#  .mvnormBoot            Internal Function used by .assetsTest
+#  .mvnorm.etest          Internal Function used by assetsTest
+#  .mvnorm.e              Internal Function used by assetsTest
+#  .normal.e              Internal Function used by assetsTest
+#  .mvnormBoot            Internal Function used by assetsTest
 # .mvshapiroTest         Multivariate Shapiro Test
 # REQUIREMENTS:         DESCRIPTION:
 #  .msn.quantities       Function from R package sn [in fMultivar]      
@@ -505,9 +505,9 @@ function(x)
 # Mean and Covariance
 
 
-.assetsMV = 
+assetsMeanCov = 
 function(x, method = c("cov", "shrink", "bagged"), check = TRUE,
-force = FALSE, R.bagged = 100, lambda.shrink = 0.1, ...)
+force = TRUE, baggedR = 100, ...)
 {   # A function implemented by Diethelm Wuertz
     
     # Description:
@@ -544,14 +544,12 @@ force = FALSE, R.bagged = 100, lambda.shrink = 0.1, ...)
     if (method == "cov") {
         Sigma = cov(x.mat)
     } else if (method == "shrink") {
-        fit = cov.shrink(x = x.mat, lambda = lambda.shrink)
+        fit = cov.shrink(x = x.mat, ...)
         Sigma = fit 
-        attr(Sigma, "lambda") = NULL
-        control = c(control, lambda = as.character(lambda.shrink))
     } else if (method == "bagged") {
-        fit = cov.bagged(x = x.mat, R = R.bagged)
+        fit = cov.bagged(x = x.mat, R = baggedR, ...)
         Sigma = fit 
-        control = c(control, R = as.character(R.bagged))
+        control = c(control, R = as.character(baggedR))
     } else if (method == "nnve") {
         # Nearest Neighbour Variance Estimation:
         fit = cov.nnve(datamat = x.mat, ...)
@@ -577,9 +575,9 @@ force = FALSE, R.bagged = 100, lambda.shrink = 0.1, ...)
     
     # Check Positive Definiteness:
     control = c(control, forced = "FALSE")
-    if (!result & force) {
-        Sigma = make.positive.definite(m = Sigma)
+    if (force) {
         control = c(control, forced = "TRUE")
+        if (!result) Sigma = make.positive.definite(m = Sigma)       
     }
     
     # Result:
@@ -648,8 +646,8 @@ function(x)
 # S4 Normality Test:
 
 
-.assetsTest =
-function(x, method = c("shapiro", "energy"), Replicates = 99, 
+assetsTest =
+function(x, method = c("shapiro", "energy"), Replicates = 100, 
 title = NULL, description = NULL)
 {
     # Example:

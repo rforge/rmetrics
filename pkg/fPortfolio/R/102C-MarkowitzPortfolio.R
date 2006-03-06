@@ -133,7 +133,7 @@ s.range = NULL, title = NULL, description = NULL, ...)
         x.mat = as.matrix(data)
         # Mean Vector  and Covariance Matrix:
         mu = apply(x.mat, MARGIN = 2, FUN = mean)
-        Sigma = apply(x.mat, MARGIN = 2, FUN = var)
+        Sigma = cov(x.mat)
         plottype = "series"
     }
     
@@ -252,7 +252,7 @@ function(object, mc = 5000, doplot = FALSE, add = TRUE, ...)
     }
     
     # Monte Carlo Loop:
-    rr = ss = rep(0, mc)
+    rr = ss = rep(0, times = mc)
     for (k in 1:mc) {  
         weights = abs(rcauchy(dimension))
         weights = weights/sum(weights)           
@@ -815,7 +815,7 @@ title = NULL, description = NULL, ...)
         x.mat = as.matrix(x)
         # Mean Vector  and Covariance Matrix:
         mu = apply(x.mat, MARGIN = 2, FUN = mean)
-        Sigma = apply(x.mat, MARGIN = 2, FUN = var)
+        Sigma = cov(x.mat)
         plottype = "series"
     }
     

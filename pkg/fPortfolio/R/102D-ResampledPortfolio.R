@@ -21,7 +21,7 @@
 frontierResampled = 
 function(x = as.matrix(read.csv("nova-updated.csv", header = FALSE)),
 expectedReturns = read.csv("expected-returns.csv"), frequency = 52,
-type = list(nFrontier = 200, returnChoice = 2, covarianceChoice = 2,
+control = list(nFrontier = 200, returnChoice = 2, covarianceChoice = 2,
 targetChoice = 6, correlationChoice = 1), confidenceLevel = TRUE, 
 trace = TRUE)
 {   # A function implemented by Diethelm Wuertz
@@ -34,7 +34,12 @@ trace = TRUE)
     #   expectedReturns - expected returns
     #   frequency - frequency of time series records. An integer value, by 
     #       default 52 which denotes weekly data records.
-    #   type - a control list with the following entries: ...
+    #   control - a control list with the following entries: ...
+    #       nFrontier
+    #       returnChoice
+    #       covarianceChoice
+    #       targetChoice
+    #       correlationChoice
     #   confidenceLevel - a logical flag, if TRUE then 95% confidence 
     #       levels are returned, otherwise not. By default TRUE.
     #   trace - a logical if TRUE then the portfolio resampling process
@@ -77,7 +82,7 @@ trace = TRUE)
    
     # Now we start dealing with a part in which I have to make some choices
     # Number of efficient frontiers I am going to Monte-Carlo simulate
-    niter = nFrontier # 200
+    niter = control$nFrontier # 200
     
     # Now I save the historical covariance matrix
     histcovmat = cov(rtnmat)
@@ -94,7 +99,7 @@ trace = TRUE)
     # rtnchoice = 1 -> expected rtns to be read from a file 
     # rtnchoice = 2 -> shrinkage of the historical expected rtns
     # (James-Stein estimator)
-    rtnchoice = returnChoice # 2
+    rtnchoice = control$returnChoice # 2
                   
     # Now I introduce some options about the covariance matrix I am going 
     # to use the choices are:
@@ -104,7 +109,7 @@ trace = TRUE)
     # 2 for the shrinkage of the historical covariance matrix with 
     #   different targets (bayesian priors are used to shrink
     #   the historical covariance matrix; see paper by Oliver Ledoit)
-    choicecov = covarianceChoice # 2
+    choicecov = control$covarianceChoice # 2
     
     # Now I specify the number of upper and lower constrains (different 
     # from the no SS). I want to use on the asset weights, 
@@ -149,7 +154,7 @@ trace = TRUE)
     #  4: diagonal, unequal variance
     #  5: perfect positive correlation
     #  6: constant correlation
-    target = targetChoice # 6 
+    target = control$targetChoice # 6 
     
     # In the following I use some brutal approximation:the assets are 
     # distributed according to a Gaussian multivariate (this can be 
@@ -164,7 +169,7 @@ trace = TRUE)
     # assets of my portfolio according to a multivariate statistics.
     # correlation = 1 -> Gaussian correlated multivariate 
     # correlation = 0 -> Gaussian uncorrelated multivariate   
-    correlation = correlationChoice # 1
+    correlation = control$correlationChoice # 1
     
     # The following two lines implement the confidence level of the portfolio.
     # as intended by Michaud in his book. It is the same idea as in Jobson-
@@ -626,7 +631,8 @@ trace = TRUE)
     if (trace) print("ok so far")
     # finally! this calls to the solve.QP routine works out the 
     # min var ptf
-    resminvar = solve.QP(Dmat, dvec, Amat, bvec2, meq = 1)
+    ### We use here the Rmetrics builtin .solve.QP --
+    resminvar = .solve.QP(Dmat, dvec, Amat, bvec2, meq = 1)
     if (trace) print("ok so far2")
     # composition of the min var ptf
     minvarweights = resminvar$solution
@@ -764,7 +770,7 @@ trace = TRUE)
         # this gives the MV portfolio 
         # which is the portfolio with
         # the lowest return 
-        resminvar3 = solve.QP(Dmat3,dvec,Amat,bvec2,meq=1)
+        resminvar3 = .solve.QP(Dmat3,dvec,Amat,bvec2,meq=1)
         stochaminvarweights = resminvar3$solution
         ptfweight[1, ] = (resminvar3$solution+ptfweight[1, ])
         # this is the lowest expected return of each
@@ -816,7 +822,7 @@ trace = TRUE)
                 Amat4 = t(Atrasp3)
             }           
             # Now I re-express the optimization problem
-            res = solve.QP(Dmat3,dvec,Amat4,bvec3,meq=2)
+            res = .solve.QP(Dmat3,dvec,Amat4,bvec3,meq=2)
             # if (trace) print("ok optim")
             # I am mainly interested in the ptf composition which is saved 
             # and finally averaged in the ptf weight array.         
@@ -888,7 +894,7 @@ trace = TRUE)
         # Now I have 2 equality constrains
         # the ptf has to be totally invested
         # and I fix its expected rtn
-        nosample = solve.QP(Dmat, dvec, Amatnew, bvecnew, meq = 2)
+        nosample = .solve.QP(Dmat, dvec, Amatnew, bvecnew, meq = 2)
         # ptf std
         mystd[i] = sqrt(nosample$solution %*% Dmat %*% nosample$solution)
         # ptf weights
