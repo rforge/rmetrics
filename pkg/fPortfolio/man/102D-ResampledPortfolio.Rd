@@ -24,7 +24,7 @@
 \usage{
 frontierResampled(x = as.matrix(read.csv("nova-updated.csv", header = FALSE)),
     expectedReturns = read.csv("expected-returns.csv"), frequency = 52,
-    type = list(nFrontier = 200, returnChoice = 2, covarianceChoice = 2,
+    control = list(nFrontier = 200, returnChoice = 2, covarianceChoice = 2,
     targetChoice = 6, correlationChoice = 1), confidenceLevel = TRUE, 
     trace = TRUE)
 }
@@ -43,7 +43,7 @@ frontierResampled(x = as.matrix(read.csv("nova-updated.csv", header = FALSE)),
         frequency of time series records. An integer value, by default
         52 which denotes weekly data records.
         }  
-    \item{type}{
+    \item{control}{
         a control list with the following entries: ...
         }
     \item{confidenceLevel}{

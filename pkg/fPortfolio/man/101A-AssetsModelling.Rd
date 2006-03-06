@@ -9,6 +9,8 @@
 \alias{assetsFit}
 \alias{assetsSelect}
 \alias{assetsStats}
+\alias{assetsMeanCov}
+\alias{assetsTest}
 
 \alias{print.fASSETS}
 \alias{plot.fASSETS}
@@ -37,6 +39,8 @@
     \code{assetsSelect} \tab Asset Selection from Portfolios, \cr
     \code{assetsFit} \tab Fits the parameter of a data set of assets, \cr
     \code{assetsStats} \tab Computes benchmark statistics of asset sets, \cr
+    \code{assetsMeanCov} \tab Computes mean and covariance matri, \cr
+    \code{assetsTest} \tab Test for multivariate Normal distribution, \cr
     \code{print} \tab S3 print method for an object of class 'fASSETS', \cr
     \code{plot} \tab S3 Plot method for an object of class 'fASSETS", \cr
     \code{summary} \tab S3 summary method for an object of class 'fASSETS'. }
@@ -49,9 +53,15 @@ assetsSim(n, dim = 2, model = list(mu = rep(0, dim), Omega = diag(dim),
     alpha = rep(0, dim), df = Inf), assetNames = NULL) 
 assetsSelect(x, method = c("hclust", "kmeans"), 
     kmeans.centers = 5, kmeans.maxiter = 10, doplot = TRUE, \dots)
+    
 assetsFit(x, method = c("st", "snorm", "norm"), title = NULL, 
     description = NULL, fixed.df = NA, \dots)
+
+assetsMeanCov(x, method = c("cov", "shrink", "bagged"), check = TRUE,
+    force = TRUE, baggedR = 100, \dots)
 assetsStats(x)
+assetsTest(x, method = c("shapiro", "energy"), Replicates = 100, 
+    title = NULL, description = NULL)
 
 \method{print}{fASSETS}(x, \dots)
 \method{plot}{fASSETS}(x, which = "ask", \dots)
@@ -65,6 +75,16 @@ assetsStats(x)
         [assetsSim] - \cr
         a vector of character strings of length \code{dim} allowing
         for modifying the names of the individual assets.
+        }
+    \item{baggedR}{
+        [assetsMeanCov] - \cr
+        an integer value, the number of bootstrap replicates, by
+        default 100. This value is only used if \code{method="bagged"}.
+        }
+    \item{check}{
+        [assetsMeanCov] - \cr
+        a logical flag. Should the covariance matrix be tested to be
+        positive definite? By default \code{TRUE}.
         }
     \item{description}{
         [assetsFit] - \cr
@@ -82,6 +102,11 @@ assetsStats(x)
         \code{fixed.df=NA} the value of \code{df} will be included in the
         optimization process, otherwise not.
         }
+    \item{force}{
+        [assetsMeanCov] - \cr
+        a logical flag. Should the covariance matrix be forced to be
+        positive definite? By default \code{TRUE}.
+        }
     \item{kmeans.centers}{
         [assetsSelect] - \cr
         either the number of clusters or a set of initial cluster centers. 
@@ -94,16 +119,33 @@ assetsStats(x)
         }
     \item{method}{
         [assetsFit] - \cr
-        a character string, which type of distribution should be fitted? \cr
-        \code{"st"} a multivariate skew-Student-t, \cr
-        \code{"snorm"} a multivariate skew-normal, or \cr
-        \code{"norm"} a multivariate normel. \cr
+        a character string, which type of distribution should be fitted?
+        \code{method="st"} denotes a multivariate skew-Student-t distribution,
+        \code{method="snorm"} a multivariate skew-Normal distribution, and
+        \code{method="norm"} a multivariate Normel distribution.  
         By default a multivariate normal distribution will be fitted to the
-        empirical market data. \cr
+        empirical market data.\cr
+        [assetsMeanVar] - \cr
+        a character string, whicht determines how to compute the covariance
+        matix. If \code{method="cov"} is selected then the standard 
+        covariance will be computed by R's base function \code{cov}, if 
+        \code{method="shrink"} is selected then the covariance will be
+        computed using the shrinkage approach as suggested in Schaefer and
+        Strimmer [2005], if \code{method="bagged"} is selected then the 
+        covariance will be calculated from the bootstrap aggregated (bagged)
+        version of the covariance estimator.\cr
         [assetsSelect] - \cr
         a character string, which clustering method should be applied? 
         Either \code{hclust} for hierarchical clustering of dissimilarities,
-        or \code{kmeans} for k-means clustering.
+        or \code{kmeans} for k-means clustering.\cr
+        [assetsTest] - \cr
+        a character string, which the selects which test should be applied.
+        If \code{method="shapiro"} then Shapiro's multivariate Normality 
+        test will be applied as implemented in R's contributed package
+        \code{mvnormtest}. If \code{method="energy"} then the E-statistic 
+        (energy) for testing multivariate Normality will be used as proposed 
+        and implemented by Szekely and Rizzo [2005] using parametric 
+        bootstrap.
         }
     \item{model}{
         [assetsSim] - \cr
@@ -127,6 +169,11 @@ assetsStats(x)
         [summary] - \cr
         An object of class \code{fASSETS}.
         }  
+    \item{Replicates}{
+        [assetsTest] - \cr
+        an integer value, the number of bootstrap replicates, by
+        default 100. This value is only used if \code{method="energy"}.
+        }
     \item{title}{
         [assetsFit] - \cr
         a character string, assigning a title to an 
@@ -140,9 +187,9 @@ assetsStats(x)
         \code{TRUE} the correponding plot will be displayed.
         }
     \item{x}{
-        [assetsFit][assetsStats] - \cr
+        [assetsFit][assetsStats][assetsMeanVar] - \cr
         a numeric matrix of returns or any other rectangular object like
-        a data.frame or a multivariate time series objects which can be 
+        a data.frame or a multivariate time series object which can be 
         transformed by the function \code{as.matrix} to an object of 
         class \code{matrix}.
         \cr
@@ -161,52 +208,63 @@ assetsStats(x)
     Data sets of assets \code{x} can be expressed as multivariate 
     'timeSeries' objects, as 'data.frame' objects, or any other rectangular 
     object which can be transformed into an object of class 'matrix'.
+    \cr
     
+    
+    \bold{Parameter Estimation:}
+    \cr\cr
     The function \code{assetsFit} for the parameter estimation and 
     \code{assetsSim} for the simulation of assets sets use code based on 
     functions from the contributed packages \code{"mtvnorm"} and \code{"sn"}. 
     The required functionality for fitting data to a multivariate Normal, 
     skew-Normal, or skew-Student-t is available from builtin functions, so 
     it is not necessary to load the packages \code{"mtvnorm"} and \code{"sn"}. 
+    \cr
     
+    
+    \bold{Assets Mean and Covariance:}
+    \cr\cr   
+    The function \code{assetsMeanCov} computes the mean vector and covariance
+    matrix of an assets set. For the covariance matrix one can select from
+    three choicdes: The standard covariance computation through R's base
+    function \code{cov} and a shrinked and bagged version for the covariance.
+    The latter two choices implement the covariance computation from the
+    functions \code{cov.shrink()} and \code{cov.bagged()} which are part
+    of the contributed R package \code{corpcov}.
+    \cr
+    
+    
+    \bold{Assets Statistics:}
+    \cr\cr   
     The function \code{assetsStats} implements benchmark formulas and
     statistics as reported in the help page of the hedge fund software 
     from \emph{www.AlternativeSoft.com}. The computed statistics are listed
     in the 'Value' section below. Note, that the functions were written for
     monthly recorded data sets. Be aware of this when you use or generate 
-    asset sets on different time scales, then you have them to scale
+    asset sets on different time scales, then you have to scale them
     properly.
+    \cr
     
+    
+    \bold{Assets Selection:}
+    \cr\cr   
     The function \code{assetsSelect} calls the functions \code{hclust}
-    and \code{kmeans} from R's \code{"stats"} package. \code{hclust}
+    or \code{kmeans} from R's \code{"stats"} package. \code{hclust}
     performs a hierarchical cluster analysis on the set of dissimilarities 
     \code{hclust(dist(t(x)))} and \code{kmeans} performs a k-means
-    clustering on the data matrix itself.  
-
-}
-
-
-\note{
-
-    The 'Rmetrics' packages \code{fBasics} and \code{fExtremes} are
-    required.
+    clustering on the data matrix itself. 
+    \cr
+     
     
+    \bold{Assets Tests:}
+    \cr\cr   
+    The function \code{assetsTest} performs two tests for multivariate
+    Normality of an assets Set.
+
 }
+
 
 \value{
-
-    \code{assetsSim} 
-    \cr
-    returns a matrix, the artifical data records represent the assets 
-    of the portfolio. Row names and column names are not created, they
-    have to be added afterwards.
-    \cr
-    
-    \code{assetsSelects}
-    if \code{method="hclust"} was selected then the function returns a
-    S3 object of class "hclust", otherwise if \code{method="kmeans"} was 
-    selected then the function returns an obkject of class list. For
-    details we refer to the help pages of \code{hclust} and \code{kmeans}.
   
     \code{assetsFit} 
     \cr
@@ -259,13 +317,41 @@ assetsStats(x)
         documentation of this function for explanation of its 
         components.  
         }
+        
     Note that the \code{@fit$model} slot can be used as input to the 
     function \code{assetsSim} for simulating a similar portfolio of 
     assets compared with the original portfolio data, usually market
     assets.
     \cr
+   
+     
+    \code{assetsMeanCov}
+    \cr
+    returns a list with two entries named \code{mu} and Sigma{Sigma}.
+    The first denotes the vector of assets means, and the second the 
+    covariance matrix. Note, that the output of this function can be
+    used as data input for the portfolio functions to compute the
+    efficient frontier.
+    \cr
     
-  
+    
+    \code{assetsSelect}
+    \cr
+    if \code{method="hclust"} was selected then the function returns a
+    S3 object of class "hclust", otherwise if \code{method="kmeans"} was 
+    selected then the function returns an obkject of class list. For
+    details we refer to the help pages of \code{hclust} and \code{kmeans}.
+    \cr
+
+    
+    \code{assetsSim} 
+    \cr
+    returns a matrix, the artifical data records represent the assets 
+    of the portfolio. Row names and column names are not created, they
+    have to be added afterwards.
+    \cr
+    
+    
     \code{assetsStats}
     \cr
     returns a data frame with the following entries per column and asset: 
@@ -284,15 +370,86 @@ assetsStats(x)
     \code{mSharpe} - Monthly Sharpe Ratio, \cr
     \code{mModSharpe} - Monthly Modified Sharpe Ratio, and \cr
     \code{skPrice} - Skewness/Kurtosis Price.
+    \cr
+    
+    
+    \code{assetsTest}
+    \cr
+    returns an object of class \code{fHTEST}. 
+    
   
 }
 
 
 \references{
 
-The references are listed in the \code{MultivariateDistribution}
-collection.
+Azzalini A. (1985);
+    \emph{A Class of Distributions Which Includes the Normal Ones},
+    Scandinavian Journal of Statistics 12, 171--178. 
+
+Azzalini A. (1986);
+    \emph{Further Results on a Class of Distributions Which Includes 
+        the Normal Ones},
+    Statistica 46, 199--208. 
+
+Azzalini A., Dalla Valle A. (1996);
+    \emph{The Multivariate Skew-normal Distribution},
+    Biometrika 83, 715--726. 
+
+Azzalini A., Capitanio A. (1999);
+    \emph{Statistical Applications of the Multivariate Skew-normal 
+        Distribution},
+    Journal Roy. Statist. Soc. B61, 579--602. 
+
+Azzalini A., Capitanio A. (2003);
+    \emph{Distributions Generated by Perturbation of Symmetry with 
+        Emphasis on a Multivariate Skew-t Distribution},
+    Journal Roy. Statist. Soc. B65, 367--389. 
     
+Breiman L. (1996); 
+    \emph{Bagging Predictors},
+    Machine Learning 24, 123--140.
+  
+Genz A., Bretz F. (1999);
+    \emph{Numerical Computation of Multivariate t-Probabilities
+        with Application to Power Calculation of Multiple Contrasts}, 
+    Journal of Statistical Computation and Simulation 63, 361--378.
+
+Genz A. (1992);
+    \emph{Numerical Computation of Multivariate Normal Probabilities},
+    Journal of Computational and Graphical Statistics 1, 141--149.
+    
+Genz A. (1993); 
+    \emph{Comparison of Methods for the Computation of Multivariate
+        Normal Probabilities},
+    Computing Science and Statistics 25, 400--405.
+    
+Hothorn T., Bretz F., Genz A. (2001);
+    \emph{On Multivariate t and Gauss Probabilities in R},
+    R News 1/2, 27--29.
+      
+Ledoit O., Wolf. M. (2003);
+    \emph{ImprovedEestimation of the Covariance Matrix of Stock Returns 
+    with an Application to Portfolio Selection},
+    Journal of Empirical Finance 10, 503--621. 
+
+Rizzo M.L. (2002);
+    \emph{A New Rotation Invariant Goodness-of-Fit Test}, 
+    PhD dissertation, Bowling Green State University.
+
+Schaefer J., Strimmer K. (2005);  
+    \emph{A Shrinkage Approach to
+    Large-Scale Covariance Estimation and Implications for Functional Genomics},
+    Statist. Appl. Genet. Mol. Biol. 4, 32.
+ 
+Szekely G.J., Rizzo, M.L. (2005); 
+    \emph{A New Test for Multivariate Normality},
+    Journal of Multivariate Analysis 93, 58--80.
+    
+Szekely G.J. (1989); 
+    \emph{Potential and Kinetic Energy in Statistics},
+     Lecture Notes, Budapest Institute of Technology, TechnicalUniversity.
+
 }
 
 
@@ -308,7 +465,9 @@ collection.
 
     Adelchi Azzalini for R's \code{sn} package, \cr
     Torsten Hothorn for R's \code{mtvnorm} package, \cr
+    Juliane Schaefer and Korbinian Strimmer for R's \code{corpcov} package, \cr
     Alan Ganz and Frank Bretz for the underlying Fortran Code, \cr
+    Maria Rizzoand Gabor Szekely for R's \code{energy} package, \cr
     Diethelm Wuertz for the Rmetrics port.
     
 }
