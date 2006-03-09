@@ -1106,6 +1106,9 @@ function(x, ...)
         
     # Minimization:
     fit = nlm(f = loglik, p = p, y = x, ...)
+    Names = c("mean", "sd", "nu")
+    names(fit$estimate) = Names
+    names(fit$gradient) = Names
     
     # Return Value:
     fit
@@ -1139,6 +1142,9 @@ function(x, ...)
         
     # Minimization:
     fit = nlm(f = loglik, p = p, y = x, ...)
+    Names = c("mean", "sd", "nu", "xi")
+    names(fit$estimate) = Names
+    names(fit$gradient) = Names
     
     # Return Value:
     fit
