@@ -1240,7 +1240,7 @@ function(object, ...)
     
     # Print:
     x = object
-    cat("\nObject:       ", as.character(match.call())[2])
+    cat(  "Object:       ", as.character(match.call())[2])
     cat("\nStart Record: ", as.character(start(x)))
     cat("\nEnd Record:   ", as.character(end(x)))
     cat("\nObservations: ", length(as.character(x)))
