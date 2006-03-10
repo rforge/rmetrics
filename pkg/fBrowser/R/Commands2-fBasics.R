@@ -36,7 +36,7 @@
 # Web Data Import
 
 
-.fBasics.TimeSeriesImport.1 = 
+.fBasics.Import.class = 
 function() 
 {   # A function implemented by Diethelm Wuertz
     
@@ -45,79 +45,113 @@ function()
 }
 
 
-.fBasics.TimeSeriesImport.2 = 
+.fBasics.Import.economagic = 
 function() 
 {   # A function implemented by Diethelm Wuertz
     
     # Economagic Series Download:
+    myFunction = function(value, file, frequency, save, colname, try,
+        object2x, report) {
+        object <<- economagicImport(query = value, file = file, 
+            frequency = frequency, save = save, colname = colname,
+            try = try)
+        if (object2x) object <<- as.timeSeries(object@data)
+        object }   
     tkExecute(
-        fun = economagicImport,
+        fun = myFunction,
         params = list(
-            query = "fedny/day-fxus2eu", 
+            value = "fedny/day-fxus2eu", 
             file = "tempfile",
             source = "http://www.economagic.com/em-cgi/data.exe/",
             frequency = "daily", 
             save = FALSE,
             colname = "USDEUR",
-            try = TRUE),
+            try = TRUE,
+            object2x = TRUE,
+            report = TRUE),
         infoName = "Economagic Download",
         tkoutput = TRUE,
-        console = NULL ) 
+        console = NULL,
+        title = "Economagic Download",
+        description = NULL ) 
 }
 
 
-.fBasics.TimeSeriesImport.3 = 
+.fBasics.Import.yahoo = 
 function() 
 {   # A function implemented by Diethelm Wuertz
 
     # Yahoo Series Download:
+    myFunction = function(value, from, to, file, source, save, sep, 
+        swap, try, object2x, report) {
+            if (to == "today") to = as.character(Sys.Date())
+        from.y = as.integer(substr(from, 1, 4))
+        from.m = as.integer(substr(from, 6, 7)) - 1
+        from.d = as.integer(substr(from, 9, 10))
+        to.y = as.integer(substr(to, 1, 4))
+        to.m = as.integer(substr(to, 6, 7)) - 1
+        to.d = as.integer(substr(to, 9, 10))
+        query = paste("s=", value, "&a=", from.m, "&b=", from.d, "&c=", 
+             from.y, "&d=", to.m, "&q=", to.d, "&f=", to.y, "&z=", value, 
+             "&x=.csv", sep = "")
+        object <<- yahooImport(query = value, file = file, source = source, 
+            save = save, sep = sep, swap = swap, try = try)
+        if (object2x) object <<- as.timeSeries(object@data)
+        object }   
     tkExecute(
-        fun = yahooImport,
+        fun = myFunction,
         params = list(
-            query = "s=IBM&a=11&b=1&c=1999&d=0&q=31&f=2000&z=IBM&x=.csv",
+            value = "IBM",
+            from = "2000-01-01",
+            to = "today",
             file = "tempfile",
             source = "http://chart.yahoo.com/table.csv?",
             save = FALSE,
             sep = ";",
             swap = 20,
-            try = TRUE),
+            try = TRUE,
+            object2x = TRUE,
+            report = TRUE),
         infoName = "Yahoo Download",
         tkoutput = TRUE,
-        console = NULL )
+        console = NULL,
+        title = "Yahoo Download",
+        description = NULL ) 
 }
 
 
-.fBasics.TimeSeriesImport.4 = 
+.fBasics.Import.fred = 
 function() 
 {   # A function implemented by Diethelm Wuertz
     
     # FRED St. Louis Series Download:
+    myFunction = function(value, file, source, frequency, save, sep, 
+        try, object2x, report) {
+        object <<- fredImport(query = value, file = file, source = source, 
+            frequency = frequency, save = save, sep = sep, try = try)
+        if (object2x) object <<- as.timeSeries(object@data)
+        object }   
     tkExecute(
-        fun = fredImport,
+        fun = myFunction,
         params = list(
-            query = "DPRIME", 
+            value = "DPRIME", 
             file = "tempfile",
             source = "http://research.stlouisfed.org/fred2/series/", 
             frequency = "daily", 
             save = FALSE, 
             sep = ";", 
-            try = TRUE),
+            try = TRUE, 
+            object2x = TRUE,
+            report = TRUE),
         infoName = "FRED Download",
         tkoutput = TRUE,
-        console = NULL )
+        console = NULL,
+        title = "FRED Download",
+        description = NULL ) 
 }
 
 
-.fBasics.TimeSeriesImport.5 = 
-function() 
-{   # A function implemented by Diethelm Wuertz
-    
-    # ... Extract Data Slot as.timeSeries:
-    tkDataSot(object)
-}
-
-
-.fBasics.TimeSeriesImport.6 = 
+.fBasics.Import.keystats = 
 function() 
 {   # A function implemented by Diethelm Wuertz
 
@@ -143,143 +177,157 @@ function()
 # Basic Statistics
 
 
-.fBasics.BasicStatistics.1 = 
+.fBasics.BasicStatistics.sp500monthly = 
 function() 
 {   # A function implemented by Diethelm Wuertz
     
     # Example timeSeries: x = Monthly SP500 Returns
-    tkGetData(Data = "sp500Monthly", infoName = "Daily SP500 Returns")
+    tkGetData(Data = "sp500Monthly", infoName = "End of Month SP500 Returns")
 }
 
 
-.fBasics.BasicStatistics.2 = 
+.fBasics.BasicStatistics.mean = 
 function() 
 {   # A function implemented by Diethelm Wuertz
     
     # Mean:
-    myFunction = function(series) {
+    myFunction = function(series, object2x, report) {
         x = eval(parse(text = series))
-        object <<- mean(as.vector(x))
-        .tkReport("Mean")
+        object <<- c(mean = mean(as.vector(x)))
         object }
     tkExecute(
         fun = myFunction,
         params = list(
-            series = "x"),
-        infoName = "Mean",
+            series = "x",
+            object2x = FALSE,
+            report = TRUE),
+        infoName = "Compute Mean",
         tkoutput = TRUE,
         console = NULL,
-        title = NULL,
+        title = "Compute Mean",
         description = NULL )  
 }
 
 
-.fBasics.BasicStatistics.3 = 
+.fBasics.BasicStatistics.var = 
 function() 
 {   # A function implemented by Diethelm Wuertz
     
     # Variance:
-    myFunction = function(series) {
+    myFunction = function(series, object2x, report) {
         x = eval(parse(text = series))
-        object <<- var(as.vector(x))
-        .tkReport("Variance")
+        object <<- c(var = var(as.vector(x)))
         object }
     tkExecute(
         fun = myFunction,
         params = list(
-            series = "x"),
-        infoName = "Variance",
+            series = "x",
+            object2x = FALSE,
+            report = TRUE),
+        infoName = "Compute Variance",
         tkoutput = TRUE,
         console = NULL,
-        title = NULL,
+        title = "Compute Variance",
         description = NULL )
 }
 
 
-.fBasics.BasicStatistics.4 = 
+.fBasics.BasicStatistics.skewness = 
 function() 
 {   # A function implemented by Diethelm Wuertz
     
     # Skewness:
-    myFunction = function(series) {
+    myFunction = function(series, na.rm, method, object2x, report) {
         x = eval(parse(text = series))
-        object <<- skewness(as.vector(x))
-        .tkReport("Skewness")
+        object <<- c(skewness = skewness(as.vector(x), 
+            na.rm = na.rm, method = method))
+        attr(object, "method") <<- method
         object }
     tkExecute(
         fun = myFunction,
         params = list(
-            series = "x"),
-        infoName = "Skewness",
+            series = "x",
+            na.rm = FALSE,
+            method = "moment",
+            object2x = FALSE,
+            report = TRUE),
+        infoName = "Compute Skewness",
         tkoutput = TRUE,
         console = NULL,
-        title = NULL,
+        title = "Compute Skewness",
         description = NULL )
 }
 
 
-.fBasics.BasicStatistics.5 = 
+.fBasics.BasicStatistics.kurtosis = 
 function() 
 {   # A function implemented by Diethelm Wuertz
     
     # Kurtosis:
-    myFunction = function(series) {
+    myFunction = function(series, na.rm, method, object2x, report) {
         x = eval(parse(text = series))
-        object <<- kurtosis(as.vector(x))
-        .tkReport("Kurtosis")
+        object <<- c(kurtosis = kurtosis(as.vector(x), 
+            na.rm = na.rm, method = method))
+        attr(object, "method") <<- method
         object }
     tkExecute(
         fun = myFunction,
         params = list(
-            series = "x"),
-        infoName = "Kurtosis",
+            series = "x",
+            na.rm = FALSE,
+            method = "excess",
+            object2x = FALSE,
+            report = TRUE),
+        infoName = "Compute Kurtosis",
         tkoutput = TRUE,
         console = NULL,
-        title = NULL,
+        title = "Compute Kurtosis",
         description = NULL )
 }
 
 
-.fBasics.BasicStatistics.6 = 
+.fBasics.BasicStatistics.summary = 
 function() 
 {   # A function implemented by Diethelm Wuertz
     
     # Summary:
-    myFunction = function(series) {
+    myFunction = function(series, object2x, report) {
         x = eval(parse(text = series))
         object <<- summary(as.vector(x))
-        .tkReport("Summary")
         object }
     tkExecute(
         fun = myFunction,
         params = list(
-            series = "x"),
-        infoName = "Summary",
+            series = "x",
+            object2x = FALSE,
+            report = TRUE),
+        infoName = "Print Summary Statistics",
         tkoutput = TRUE,
         console = NULL,
-        title = NULL,
+        title = "Print Summary Statistics",
         description = NULL )   
 }
 
 
-.fBasics.BasicStatistics.7 = 
+.fBasics.BasicStatistics.basicStats = 
 function() 
 {   # A function implemented by Diethelm Wuertz
     
     # Basic Statistics:
-    myFunction = function(series) {
+    myFunction = function(series, object2x, report) {
         x = eval(parse(text = series))
         object <<- basicStats(as.vector(x), ci = 0.95) 
-        .tkReport("Basic Statistics")
         object }
     tkExecute(
         fun = myFunction,
         params = list(
-            series = "x"),
-        infoName = "Basic Statistics",
+            series = "x",
+            object2x = FALSE,
+            report = TRUE),
+        infoName = "Print Basic Statistics",
         tkoutput = TRUE,
         console = NULL,
-        title = NULL,
+        title = "Print Basic Statistics",
         description = NULL )     
 }
 
@@ -288,7 +336,7 @@ function()
 # Basic Plots
 
 
-.fBasics.PlotFunctions.1 = 
+.fBasics.PlotFunctions.sp500Monthly = 
 function() 
 {   # A function implemented by Diethelm Wuertz
     
@@ -297,7 +345,34 @@ function()
 }
 
 
-.fBasics.PlotFunctions.2 = 
+.fBasics.PlotFunctions.plot = 
+function() 
+{   # A function implemented by Diethelm Wuertz
+    
+    # 1D: Series Plot:
+    myFunction = function(series, typecol, xlab, ylab) {
+        x = eval(parse(text = series))
+        par(mfrow = c(1, 1), cex = 0.7) 
+        plot(x, type = type, col = col, xlab = xlab, ylab = ylab)
+        title(main = paste("\n\n", plotTitle, sep = ""))
+        invisible() }
+    tkExecute(
+        fun = myFunction,
+        params = list(
+            series = "x",
+            type = "l",
+            col = "steelblue",
+            xlab = "Index",
+            ylab = "Series"),
+        infoName = "Series Plot",
+        tkoutput = TRUE,
+        console = NULL,
+        title = NULL,
+        description = NULL )       
+}
+
+
+.fBasics.PlotFunctions.acfPlot = 
 function() 
 {   # A function implemented by Diethelm Wuertz
     
@@ -322,7 +397,7 @@ function()
 }
 
 
-.fBasics.PlotFunctions.3 = 
+.fBasics.PlotFunctions.pacfPlot = 
 function() 
 {   # A function implemented by Diethelm Wuertz
     
@@ -342,30 +417,7 @@ function()
 }
 
 
-.fBasics.PlotFunctions.4 = 
-function() 
-{   # A function implemented by Diethelm Wuertz
-    
-    # 1D: Series Plot:
-    myFunction = function(series) {
-        x = eval(parse(text = series))
-        par(mfrow = c(1, 1), cex = 0.7) 
-        plot(x, col = "steelblue", xlab = "", ylab = "")
-        title(main = paste("\n\n", plotTitle, sep = ""))
-        invisible() }
-    tkExecute(
-        fun = myFunction,
-        params = list(
-            series = "x"),
-        infoName = "Series Plot",
-        tkoutput = TRUE,
-        console = NULL,
-        title = NULL,
-        description = NULL )       
-}
-
-
-.fBasics.PlotFunctions.5 = 
+.fBasics.PlotFunctions.histPlot = 
 function() 
 {   # A function implemented by Diethelm Wuertz
     
@@ -388,17 +440,16 @@ function()
 }
 
 
-.fBasics.PlotFunctions.6 = 
+.fBasics.PlotFunctions.msftsp500Monthly = 
 function() 
 {   # A function implemented by Diethelm Wuertz
 
     # * Example timeSeries: x = MSFT|SP500 Returns:
-    tkGetData(Data = "msftsp500Monthly", 
-        infoName = "Monthly MSFT|SP500 Returns")
+    tkGetData(Data = "msftsp500Monthly", infoName = "Monthly MSFT|SP500 Returns")
 }
 
 
-.fBasics.PlotFunctions.7 = 
+.fBasics.PlotFunctions.bivariatePlot = 
 function() 
 {   # A function implemented by Diethelm Wuertz
   
@@ -421,7 +472,7 @@ function()
 }
 
 
-.fBasics.PlotFunctions.8 = 
+.fBasics.PlotFunctions.scatterPlot = 
 function() 
 {   # A function implemented by Diethelm Wuertz
     
@@ -450,153 +501,7 @@ function()
 # Return Distributions
 
 
-.fBasics.ReturnDistributions.1 = 
-function() 
-{   # A function implemented by Diethelm Wuertz
-    
-    # Normal Slider:
-    .normSlider(GenerateRandomNumbers = TRUE)
-}
-
-
-.fBasics.ReturnDistributions.2 = 
-function() 
-{   # A function implemented by Diethelm Wuertz
-
-    # Normal Slider:
-    .normSlider()
-}
-
-
-.fBasics.ReturnDistributions.3 = 
-function() 
-{   # A function implemented by Diethelm Wuertz
-    
-    # Hyperbolic Slider:
-    .hypSlider(GenerateRandomNumbers = TRUE)
-}
-
-
-.fBasics.ReturnDistributions.4 = 
-function() 
-{   # A function implemented by Diethelm Wuertz
-
-    # Hyperbolic Slider:
-    .hypSlider()
-}
-
-
-.fBasics.ReturnDistributions.5 = 
-function() 
-{   # A function implemented by Diethelm Wuertz
-
-    # Normal Inverse Gaussian Slider:
-    .nigSlider(GenerateRandomNumbers = TRUE)
-}
-
-
-.fBasics.ReturnDistributions.6 = 
-function() 
-{   # A function implemented by Diethelm Wuertz
-
-    # Normal Inverse Gaussian Slider:
-    .nigSlider()  
-}
-
-
-.fBasics.ReturnDistributions.7 = 
-function() 
-{   # A function implemented by Diethelm Wuertz
-    
-    # Symmetric Stable Slider:
-    .symstbSlider(GenerateRandomNumbers = TRUE)
-}
-
-
-.fBasics.ReturnDistributions.8 = 
-function() 
-{   # A function implemented by Diethelm Wuertz
-    
-    # Symmetric Stable Slider:
-    .symstbSlider()
-}
-
-
-.fBasics.ReturnDistributions.9 = 
-function() 
-{   # A function implemented by Diethelm Wuertz
-    
-    # Stable Slider:
-    .stableSlider(GenerateRandomNumbers = TRUE)
-}
-
-
-.fBasics.ReturnDistributions.10 = 
-function() 
-{   # A function implemented by Diethelm Wuertz
-    
-    # Stable Slider:
-    .stableSlider()
-}
-
-
-.fBasics.ReturnDistributions.11 = 
-function() 
-{   # A function implemented by Diethelm Wuertz
-    
-    # * Example timeSeries: x = Monthly SP500 Returns:
-    tkGetData(Data = "sp500Monthly", infoName = "Monthly SP500 Returns")
-}
-
-
-.fBasics.ReturnDistributions.12 = 
-function() 
-{   # A function implemented by Diethelm Wuertz
-    
-    return(NA)
-    
-    o = ssdFit(rnorm(100))
-    print(o)
-    
-    # Plot Data:     
-    xmin = min(x)
-    xmax = max(x)
-    s = seq(xmin, xmax, length = 100)
-    y1 = dssd(s, object)
-    y2 = phyp(s, object)
-    main1 = paste("Spline Smoothed Density\n", 
-        "alpha = 1.4", " | ",
-        "seed = 4711" )
-    main2 = paste("Spline Smoothed Probability\n",
-        "xmin = ", as.character(xmin), " | ",
-        "xmax = ", as.character(xmax) )  
-              
-    par(mfrow = c(2, 1), cex = 0.7)
-    
-    hist(x, probability = TRUE, col = "steelblue", border = "white",
-        xlim = c(xmin, xmax))
-    lines(s, y1)
-    abline(h = 0, lty = 3)
-    abline(v = mu, lty = 3, col = "red")
-    title(main = main1)  
-         
-    plot(s, y2, type = "l", xlim = c(xmin, xmax), ylim = c(0, 1),
-        col = "steelblue" )
-    abline(h = 0.0, lty = 3)
-    abline(h = 1.0, lty = 3)
-    abline(h = 0.5, lty = 3)
-    abline(v = mu, lty = 3, col = "red")
-    title(main = main2) 
-          
-    par(mfrow = c(1, 1), cex = 0.7)
-}
-
-
-# ******************************************************************************
-# Distribution Fits
-
-
-.fBasics.DistributionFits.1 = 
+.fBasics.ReturnDistributions.nyseDaily = 
 function() 
 {   # A function implemented by Diethelm Wuertz
     
@@ -605,7 +510,262 @@ function()
 } 
 
 
-.fBasics.DistributionFits.2 = 
+.fBasics.ReturnDistributions.rnorm = 
+function() 
+{   # A function implemented by Diethelm Wuertz
+    
+    # Normal RVs:
+    myFunction = function(n, mean, sd, object2x, report) {
+        object <<- as.ts(rnorm(n, mean, sd))
+        attr(object, "control") <<- 
+            c(dist = "norm", mean = as.character(mean), sd = as.character(sd))
+        object}
+    tkExecute(
+        fun = myFunction,
+        params = list(
+            n = 100,
+            mean = 0,
+            sd = 1,
+            object2x = TRUE,
+            report = TRUE),
+        infoName = "Normal RVs",
+        tkoutput = TRUE,
+        console = NULL,
+        title = "Normal RVs",
+        description = NULL )  
+}
+
+
+.fBasics.ReturnDistributions.rnormSlider = 
+function() 
+{   # A function implemented by Diethelm Wuertz
+    
+    # Normal Slider:
+    .normSlider(GenerateRandomNumbers = TRUE)
+}
+
+
+.fBasics.ReturnDistributions.dnormSlider = 
+function() 
+{   # A function implemented by Diethelm Wuertz
+
+    # Normal Slider:
+    .normSlider()
+}
+
+
+.fBasics.ReturnDistributions.rhyp = 
+function() 
+{   # A function implemented by Diethelm Wuertz
+    
+    # Hyperbolic RVs:
+    myFunction = function(n, alpha, beta, delta, mu, parameterization, 
+        object2x, report) {
+        object <<- as.ts(rhyp(n = n, alpha = alpha, beta = beta, delta = delta,
+            pm = parameterization))
+        attr(object, "param") <<- NULL   
+        attr(object, "control") <<- 
+            c(dist = "hyp", 
+            alpha = as.character(alpha), 
+            beta = as.character(beta),
+            delta = as.character(delta), 
+            mu = as.character(mu),
+            pm = as.character(parameterization))
+        object}
+    tkExecute(
+        fun = myFunction,
+        params = list(
+            n = 100,
+            alpha = 1,
+            beta = 0,
+            delta = 1,
+            mu = 0,
+            parameterization = 1,
+            object2x = TRUE,
+            report = TRUE),
+        infoName = "Hyperbolic RVs",
+        tkoutput = TRUE,
+        console = NULL,
+        title = "Hyperbolic RVs",
+        description = NULL )  
+}
+
+
+.fBasics.ReturnDistributions.rhypSlider = 
+function() 
+{   # A function implemented by Diethelm Wuertz
+    
+    # Hyperbolic Slider:
+    .hypSlider(GenerateRandomNumbers = TRUE)
+}
+
+
+.fBasics.ReturnDistributions.dhypSlider = 
+function() 
+{   # A function implemented by Diethelm Wuertz
+
+    # Hyperbolic Slider:
+    .hypSlider()
+}
+
+
+.fBasics.ReturnDistributions.rnig = 
+function() 
+{   # A function implemented by Diethelm Wuertz
+    
+    # Normal Inverse Gaussian RVs:
+    myFunction = function(n, alpha, beta, delta, mu, 
+        object2x, report) {
+        object <<- as.ts(rnig(n = n, alpha = alpha, beta = beta, 
+            delta = delta))
+        # attr(object, "param") <<- NULL   
+        attr(object, "control") <<- 
+            c(dist = "nig", 
+            alpha = as.character(alpha), 
+            beta = as.character(beta),
+            delta = as.character(delta), 
+            mu = as.character(mu))
+        object}
+    tkExecute(
+        fun = myFunction,
+        params = list(
+            n = 100,
+            alpha = 1,
+            beta = 0,
+            delta = 1,
+            mu = 0,
+            object2x = TRUE,
+            report = TRUE),
+        infoName = "Normal Inverse Gaussian RVs",
+        tkoutput = TRUE,
+        console = NULL,
+        title = "Normal Inverse Gaussian RVs",
+        description = NULL )  
+}
+
+
+.fBasics.ReturnDistributions.rnigSlider = 
+function() 
+{   # A function implemented by Diethelm Wuertz
+
+    # Normal Inverse Gaussian Slider:
+    .nigSlider(GenerateRandomNumbers = TRUE)
+}
+
+
+.fBasics.ReturnDistributions.dnigSlider = 
+function() 
+{   # A function implemented by Diethelm Wuertz
+
+    # Normal Inverse Gaussian Slider:
+    .nigSlider()  
+}
+
+
+.fBasics.ReturnDistributions.rsymstb = 
+function() 
+{   # A function implemented by Diethelm Wuertz
+    
+    # Symmetric Stable RVs:
+    myFunction = function(n, alpha, object2x, report) {
+        object <<- as.ts(rsymstb(n = n, alpha = alpha))
+        # attr(object, "param") <<- NULL   
+        attr(object, "control") <<- 
+            c(dist = "symstb", 
+            alpha = as.character(alpha))
+        object}
+    tkExecute(
+        fun = myFunction,
+        params = list(
+            n = 100,
+            alpha = 1.8,
+            object2x = TRUE,
+            report = TRUE),
+        infoName = "Symmetric Stable RVs",
+        tkoutput = TRUE,
+        console = NULL,
+        title = "Symmetric Stable RVs",
+        description = NULL )  
+}
+
+
+.fBasics.ReturnDistributions.rsymstbSlider = 
+function() 
+{   # A function implemented by Diethelm Wuertz
+    
+    # Symmetric Stable Slider:
+    .symstbSlider(GenerateRandomNumbers = TRUE)
+}
+
+
+.fBasics.ReturnDistributions.dsymstbSlider = 
+function() 
+{   # A function implemented by Diethelm Wuertz
+    
+    # Symmetric Stable Slider:
+    .symstbSlider()
+}
+
+
+.fBasics.ReturnDistributions.rstable = 
+function() 
+{   # A function implemented by Diethelm Wuertz
+    
+    # Stable RVs:
+    myFunction = function(n, alpha, beta, gamma, delta, parameterization, 
+        object2x, report) {
+        object <<- as.ts(rstable(n = n, alpha = alpha, beta = beta, 
+            gamma = gamma, delta = delta, pm = parameterization)) 
+        attr(object, "control") <<- 
+            c(dist = "stable", 
+            alpha = as.character(alpha), 
+            beta = as.character(beta),
+            gamma = as.character(gamma),
+            delta = as.character(delta), 
+            pm = as.character(parameterization))
+        object}
+    tkExecute(
+        fun = myFunction,
+        params = list(
+            n = 100,
+            alpha = 1,
+            beta = 0,
+            gamma = 1,
+            delta = 0,
+            mu = 0,
+            parameterization = 0,
+            object2x = TRUE,
+            report = TRUE),
+        infoName = "Stable RVs",
+        tkoutput = TRUE,
+        console = NULL,
+        title = "Stable RVs",
+        description = NULL )  
+}
+
+.fBasics.ReturnDistributions.rstableSlider = 
+function() 
+{   # A function implemented by Diethelm Wuertz
+    
+    # Stable Slider:
+    .stableSlider(GenerateRandomNumbers = TRUE)
+}
+
+
+.fBasics.ReturnDistributions.dstableSlider = 
+function() 
+{   # A function implemented by Diethelm Wuertz
+    
+    # Stable Slider:
+    .stableSlider()
+}
+
+
+# ******************************************************************************
+# Distribution Fits
+
+
+.fBasics.DistributionFits.norm = 
 function() 
 {   # A function implemented by Diethelm Wuertz
     
@@ -621,12 +781,12 @@ function()
         infoName = "Normal Fit",
         tkoutput = TRUE,
         console = NULL,
-        title = NULL,
+        title = "Normal Fit",
         description = NULL )      
 } 
 
 
-.fBasics.DistributionFits.3 = 
+.fBasics.DistributionFits.hyp = 
 function() 
 {   # A function implemented by Diethelm Wuertz
     
@@ -642,12 +802,12 @@ function()
         infoName = "Hyperbolic Fit",
         tkoutput = TRUE,
         console = NULL,
-        title = NULL,
+        title = "Hyperbolic Fit",
         description = NULL ) 
 } 
 
 
-.fBasics.DistributionFits.4 = 
+.fBasics.DistributionFits.nig = 
 function() 
 {   # A function implemented by Diethelm Wuertz
 
@@ -663,7 +823,7 @@ function()
         infoName = "Normal Inverse Gaussian Fit",
         tkoutput = TRUE,
         console = NULL,
-        title = NULL,
+        title = "Normal Inverse Gaussian Fit",
         description = NULL )
 }
 
@@ -672,7 +832,7 @@ function()
 # One Sample Tests
 
 
-.fBasics.OneSampleTests.1 = 
+.fBasics.NormalityTests.sp500Monthly = 
 function() 
 {   # A function implemented by Diethelm Wuertz
 
@@ -681,7 +841,7 @@ function()
 }
 
 
-.fBasics.OneSampleTests.2 = 
+.fBasics.NormalityTests.getClass = 
 function() 
 {   # A function implemented by Diethelm Wuertz
     
@@ -690,7 +850,7 @@ function()
 }
 
 
-.fBasics.OneSampleTests.3 = 
+.fBasics.NormalityTests.ksnormTest = 
 function() 
 {   # A function implemented by Diethelm Wuertz
 
@@ -711,7 +871,7 @@ function()
 }
 
       
-.fBasics.OneSampleTests.4 = 
+.fBasics.NormalityTests.shapiroTest = 
 function() 
 {   # A function implemented by Diethelm Wuertz
     
@@ -732,7 +892,7 @@ function()
 }
 
 
-.fBasics.OneSampleTests.5 = 
+.fBasics.NormalityTests.jarqueberaTest = 
 function() 
 {   # A function implemented by Diethelm Wuertz
     
@@ -753,7 +913,7 @@ function()
 }
 
 
-.fBasics.OneSampleTests.6 = 
+.fBasics.NormalityTests.dagoTest = 
 function() 
 {   # A function implemented by Diethelm Wuertz
 
@@ -774,7 +934,7 @@ function()
 }
 
 
-.fBasics.OneSampleTests.7 = 
+.fBasics.NormalityTests.adTest = 
 function() 
 {   # A function implemented by Diethelm Wuertz
 
@@ -795,7 +955,7 @@ function()
 }
 
 
-.fBasics.OneSampleTests.8 = 
+.fBasics.NormalityTests.cvmTest = 
 function() 
 {   # A function implemented by Diethelm Wuertz
 
@@ -816,7 +976,7 @@ function()
 }
 
         
-.fBasics.OneSampleTests.9 = 
+.fBasics.NormalityTests.lillieTest = 
 function() 
 {   # A function implemented by Diethelm Wuertz
 
@@ -837,7 +997,7 @@ function()
 }
 
 
-.fBasics.OneSampleTests.10 = 
+.fBasics.NormalityTests.pchiTest = 
 function() 
 {   # A function implemented by Diethelm Wuertz
 
@@ -858,7 +1018,7 @@ function()
 }
 
 
-.fBasics.OneSampleTests.11 = 
+.fBasics.NormalityTests.sfTest = 
 function() 
 {   # A function implemented by Diethelm Wuertz
 
@@ -883,7 +1043,7 @@ function()
 # Two Sample Tests
 
 
-.fBasics.TwoSampleTests.1  = 
+.fBasics.BivariateTests.msftsp500Monthly  = 
 function() 
 {   # A function implemented by Diethelm Wuertz
 
@@ -893,7 +1053,7 @@ function()
 }
 
 
-.fBasics.TwoSampleTests.2  = 
+.fBasics.BivariateTests.getClass  = 
 function() 
 {   # A function implemented by Diethelm Wuertz
 
@@ -902,7 +1062,7 @@ function()
 }
 
 
-.fBasics.TwoSampleTests.3  = 
+.fBasics.BivariateTests.ks2Test  = 
 function() 
 {   # A function implemented by Diethelm Wuertz
 
@@ -923,7 +1083,7 @@ function()
 }
 
         
-.fBasics.TwoSampleTests.4  = 
+.fBasics.BivariateTests.tTest  = 
 function() 
 {   # A function implemented by Diethelm Wuertz
 
@@ -944,7 +1104,7 @@ function()
 }
 
 
-.fBasics.TwoSampleTests.5  = 
+.fBasics.BivariateTests.kw2Test  = 
 function() 
 {   # A function implemented by Diethelm Wuertz
 
@@ -965,7 +1125,7 @@ function()
 }
 
 
-.fBasics.TwoSampleTests.6  = 
+.fBasics.BivariateTests.varfTest  = 
 function() 
 {   # A function implemented by Diethelm Wuertz
 
@@ -986,7 +1146,7 @@ function()
 }
 
 
-.fBasics.TwoSampleTests.7  = 
+.fBasics.BivariateTests.bartlett2Test  = 
 function() 
 {   # A function implemented by Diethelm Wuertz
 
@@ -1007,7 +1167,7 @@ function()
 }
 
 
-.fBasics.TwoSampleTests.8  = 
+.fBasics.BivariateTests.fligner2Test  = 
 function() 
 {   # A function implemented by Diethelm Wuertz
 
@@ -1028,7 +1188,7 @@ function()
 }
 
 
-.fBasics.TwoSampleTests.9  = 
+.fBasics.BivariateTests.ansariTest  = 
 function() 
 {   # A function implemented by Diethelm Wuertz
 
@@ -1049,7 +1209,7 @@ function()
 }
 
         
-.fBasics.TwoSampleTests.10 = 
+.fBasics.BivariateTests.moodTest = 
 function() 
 {   # A function implemented by Diethelm Wuertz
 
@@ -1070,7 +1230,7 @@ function()
 }
 
 
-.fBasics.TwoSampleTests.11 = 
+.fBasics.BivariateTests.pearsonTest = 
 function() 
 {   # A function implemented by Diethelm Wuertz
 
@@ -1091,7 +1251,7 @@ function()
 }
 
 
-.fBasics.TwoSampleTests.12 = 
+.fBasics.BivariateTests.kendallTest = 
 function() 
 {
     # Correlation: Kendall's tau Test:
@@ -1111,7 +1271,7 @@ function()
 }
 
 
-.fBasics.TwoSampleTests.13 = 
+.fBasics.BivariateTests.spearmanTest = 
 function() 
 {   # A function implemented by Diethelm Wuertz
 
@@ -1136,7 +1296,7 @@ function()
 # D1-StylizedFacts
 
 
-.fBasics.StylizedFacts.1 = 
+.fBasics.StylizedFacts.nyseDaily = 
 function() 
 {   # A function implemented by Diethelm Wuertz
     
@@ -1145,7 +1305,7 @@ function()
 }
 
 
-.fBasics.StylizedFacts.2 =  
+.fBasics.StylizedFacts.teffectPlot =  
 function() 
 {   # A function implemented by Diethelm Wuertz
 
@@ -1173,7 +1333,7 @@ function()
 }
 
 
-.fBasics.StylizedFacts.3 =  
+.fBasics.StylizedFacts.lmacfPlot =  
 function() 
 {   # A function implemented by Diethelm Wuertz
     
@@ -1199,7 +1359,7 @@ function()
 }
 
 
-.fBasics.StylizedFacts.4 =  
+.fBasics.StylizedFacts.logpdfPlot =  
 function() 
 {   # A function implemented by Diethelm Wuertz
     
@@ -1221,7 +1381,7 @@ function()
 }
 
 
-.fBasics.StylizedFacts.5 =  
+.fBasics.StylizedFacts.qqgaussPlot =  
 function() 
 {   # A function implemented by Diethelm Wuertz
 
@@ -1245,7 +1405,7 @@ function()
 }
 
 
-.fBasics.StylizedFacts.6 =  
+.fBasics.StylizedFacts.scalinglawPlot =  
 function() 
 {   # A function implemented by Diethelm Wuertz
  

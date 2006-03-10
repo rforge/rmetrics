@@ -49,31 +49,29 @@ function()
     # Add Menu:
     Label = "Time Date Class"
     subLabel = c(
-        "* Example timeDate: x = 2005-[1:12]-01",
         "* Example timeDate: x = 12 Random Dates in 2005",
         "* Example timeDate: x = 12 Random Times in 2005",
         "Print timeDate Class Representation",
-        "Current Date and Time",
-        "List of Financial Centers",
-        "DST Rules for a Financial Center",
         "Create timeDate Sequence",
         "Create timeDate Calendar",
-        "Last Day in Month for timeDates",
-        "The N-Day On-Or-After timeDates",
-        "The N-Day On-Or-Before timeDates",
-        "n-th ocurrance of a N-day for timeDates",
-        "The last N-day in each Month for timeDates",
+        "   The Current Date and Time", 
+        "   The Last Day in Month for timeDates",
+        "   The N-Day On-Or-After timeDates",
+        "   The N-Day On-Or-Before timeDates",
+        "   The n-th ocurrance of a N-day for timeDates",
+        "   The last N-day in each Month for timeDates",       
+        "Print List of Financial Centers",
+        "Print DST Rules for a Financial Center",    
         "Print Summary of a timeDate Object")
     Command = c(
-        ".fCalendar.TimeDateClass.1",
-        ".fCalendar.TimeDateClass.2",
-        ".fCalendar.TimeDateClass.3",
+        ".fCalendar.TimeDateClass.dates",
+        ".fCalendar.TimeDateClass.times",
         ".fCalendar.TimeDateClass.4",
         ".fCalendar.TimeDateClass.5",
         ".fCalendar.TimeDateClass.6",
         ".fCalendar.TimeDateClass.7",
         ".fCalendar.TimeDateClass.8",
-        ".fCalendar.TimeDateClass.9",
+        ".fCalendar.TimeDateClass.9",    
         ".fCalendar.TimeDateClass.10",
         ".fCalendar.TimeDateClass.11",
         ".fCalendar.TimeDateClass.12",
@@ -85,7 +83,6 @@ function()
     # Add Menu:
     Label = "Time Date Methods"
     subLabel = c(
-        "* Example timeDate: x = 2005-[1:12]-01",
         "* Example timeDate: x = 12 Random Dates in 2005",
         "* Example timeDate: x = 12 Random Times in 2005",
         "Print timeDate Class Representation",
@@ -95,17 +92,15 @@ function()
         "Sort a timeDate Vector by Time and Date",
         "Round a timeDate Vector to a Given Unit",
         "Truncate a timeDate Vector to a Given Unit",
-        "Return a timeDate Vector in Reverse Order",
-        "Convert timeDate to a character vector",
+        "Revert a timeDate Vector",
+        "Convert timeDate to a character Vector",
         "Convert timeDate to a data frame",
         "Convert timeDate to a POSIXct Object",
-        "Julian Day Counts from timeDate Vector",
-        "Extract data.frame of timeDate Atoms",
-        "... copy object to x")
+        "Extract Julian Day Counts from timeDate Vector",
+        "Extract data.frame from timeDate Atoms")
     Command = c(
-        ".fCalendar.TimeDateMethods.1",
-        ".fCalendar.TimeDateMethods.2",
-        ".fCalendar.TimeDateMethods.3",
+        ".fCalendar.TimeDateMethods.dates",
+        ".fCalendar.TimeDateMethods.times",
         ".fCalendar.TimeDateMethods.4",
         ".fCalendar.TimeDateMethods.5",
         ".fCalendar.TimeDateMethods.6",
@@ -118,8 +113,7 @@ function()
         ".fCalendar.TimeDateMethods.13",
         ".fCalendar.TimeDateMethods.14",
         ".fCalendar.TimeDateMethods.15",
-        ".fCalendar.TimeDateMethods.16",
-        ".fCalendar.TimeDateMethods.17")
+        ".fCalendar.TimeDateMethods.16")
     addToolbarMenu(fCalendarMenu, Label, subLabel, Command)
     
     # Add Menu:
@@ -128,32 +122,26 @@ function()
         "* Example timeSeries: x = MSFT|SP500 Returns",
         "Print timeSeries Class Representation",
         "is.timeSeries ?",
-        "Show Head of Series",
-        "Show Tail of Series",
         "NYI - Apply a Function to Series",
         "Align a Daily Series",
         "Cut Out a Piece from a Series",
         "Difference a Series",
         "Return a Lagged Series",
-        "NYI - Merge a Series with a Matrix Object",
+        "Merge a Series with a Matrix Object",
         "Get Returns from a Series",
-        "Revert a Series in Time",
-        "... copy object to x")
+        "Revert a Series in Time")
     Command = c(
         ".fCalendar.TimeSeriesClass.1",
         ".fCalendar.TimeSeriesClass.2",
-        ".fCalendar.TimeSeriesClass.3",
-        ".fCalendar.TimeSeriesClass.4",
-        ".fCalendar.TimeSeriesClass.5",
-        ".fCalendar.TimeSeriesClass.6",
-        ".fCalendar.TimeSeriesClass.7",
-        ".fCalendar.TimeSeriesClass.8",
-        ".fCalendar.TimeSeriesClass.9",
-        ".fCalendar.TimeSeriesClass.10",
-        ".fCalendar.TimeSeriesClass.11",
-        ".fCalendar.TimeSeriesClass.12",
-        ".fCalendar.TimeSeriesClass.13",
-        ".fCalendar.TimeSeriesClass.14")
+        ".fCalendar.TimeSeriesClass.is",
+        ".fCalendar.TimeSeriesClass.apply",
+        ".fCalendar.TimeSeriesClass.align",
+        ".fCalendar.TimeSeriesClass.cut",
+        ".fCalendar.TimeSeriesClass.diff",
+        ".fCalendar.TimeSeriesClass.lag",
+        ".fCalendar.TimeSeriesClass.merge",
+        ".fCalendar.TimeSeriesClass.returns",
+        ".fCalendar.TimeSeriesClass.rev")
     addToolbarMenu(fCalendarMenu, Label, subLabel, Command)    
     
     # Add Menu:
@@ -207,8 +195,7 @@ function()
     addToolbarMenu(fCalendarMenu, Label, subLabel, Command)
   
     # Cascade fileMenu:
-    cascadeToolbarMenu(Menu = fCalendarMenu, Label = "fCalendar")
-            
+    cascadeToolbarMenu(Menu = fCalendarMenu, Label = "fCalendar")    
 }
 
 

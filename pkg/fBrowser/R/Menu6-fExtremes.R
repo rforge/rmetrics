@@ -28,204 +28,89 @@
     
     
 ################################################################################
-# FUNCTION:
-# .SeriesPopup
-################################################################################
+# fExtremes Popup
+
 
         
 .fExtremes.PopupMenu =
 function()
 {   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   fBasics Popup Menu
-    
-    # FUNCTION:
     
     # Menu:
     fExtremesMenu <<- newToolbarMenu()
         
-    
     # Add Menu:
     Label = "Extremes Plots"
     subLabel = c(
         "* Example timeSeries: x = NYSE Returns",
-        "Empirical Distribution Function",
-        "Quantile Quantile Plot",
-        "QQ-Plot with 95% Intervals",
-        #Exploratory QQ Plot for EV Analysis",
+        "Plot of Empirical Distribution",
+        "Plot of Normal Quantiles",
+        "... with 95% Intervals",
+        "Plot of Pareto Quantiles",
         "Sample Mean Excess Plot",
         "... Mean Excess Function Plot",
         "... Mean Residual Life Plot",
+        "Plot of Max/Sum Ratio",
         "Records Development",
         "... Development of Subsamples",
-        "Ratio of Maximums and Sums",
-        "ACF Exceedences of Heights",
-        "... of Distances")
+        "Plot of ACF of Exceedences")
     Command = c(
-        ".fExtremes.A2Cmd.1",
-        ".fExtremes.A2Cmd.2",
-        ".fExtremes.A2Cmd.3",
-        ".fExtremes.A2Cmd.4",
-        ".fExtremes.A2Cmd.5",
-        ".fExtremes.A2Cmd.6",
-        ".fExtremes.A2Cmd.7",
-        ".fExtremes.A2Cmd.8",
-        ".fExtremes.A2Cmd.9",
-        ".fExtremes.A2Cmd.10",
-        ".fExtremes.A2Cmd.11",
-        ".fExtremes.A2Cmd.12")
+        ".fExtremes.Plots.bmw",
+        ".fExtremes.Plots.emd",
+        ".fExtremes.Plots.qq",
+        ".fExtremes.Plots.qqbayes",
+        ".fExtremes.Plots.q",
+        ".fExtremes.Plots.me",
+        ".fExtremes.Plots.mrl",
+        ".fExtremes.Plots.mxf",
+        ".fExtremes.Plots.msratio",
+        ".fExtremes.Plots.records",
+        ".fExtremes.Plots.ssrecords",
+        ".fExtremes.Plots.xacf")
     addToolbarMenu(fExtremesMenu, Label, subLabel, Command)
-    
-              
-    # Add Menu:
-    Label = "Extremes Preprocessing"
-    subLabel = c(
-        "* Example timeSeries: x = NYSE Returns",
-        "5% Series Points below Threshold Value",
-        "5% Series Points above Threshold Value",
-        "Monthly Block Minima Series Points",
-        "Monthly Block Maxima Series Points")
-    Command = c(
-        ".fExtremes.A3Cmd.1",
-        ".fExtremes.A3Cmd.2",
-        ".fExtremes.A3Cmd.3",
-        ".fExtremes.A3Cmd.4",
-        ".fExtremes.A3Cmd.5")
-    addToolbarMenu(fExtremesMenu, Label, subLabel, Command)
-    
         
     # Add Menu:
-    Label = "Gev Distribution"
-    subLabel = c(
-        "Generate GEV Random Numbers",
-        "GEV Distribution Slider")
-    Command = c(
-        ".fExtremes.B1Cmd.1",
-        ".fExtremes.B1Cmd.2")
-    addToolbarMenu(fExtremesMenu, Label, subLabel, Command)
-    
-        
-    # Add Menu:
-    Label = "Gev Fit"
+    Label = "Generalized Extreme Values"
     subLabel = c(
         "* Example timeSeries: x = BMW Max Losses",
         "GEV Simulation", 
-        "GEV Parameter Estimation")
-    Command = c(
-        ".fExtremes.B2Cmd.1",
-        ".fExtremes.B2Cmd.2",
-        ".fExtremes.B2Cmd.3")
-    addToolbarMenu(fExtremesMenu, Label, subLabel, Command)
-    
-                  
-    # Add Menu:
-    Label = "Gev Glm Fit"
-    subLabel = c(
-        "NYI: GEV GLM Fit")
-    Command = c(
-        ".fExtremes.B3Cmd.1")
-    addToolbarMenu(fExtremesMenu, Label, subLabel, Command)
-    
-               
-    # Add Menu:
-    Label = "Mda Plots"
-    subLabel = c(
-        "* Example timeSeries: x = BMW Log Returns",
+        "... Random Number Slider",
+        "... Distribution Slider",
+        "GEV Parameter Estimation",
+        "... Summary Report",
+        "... Return Level Plot",
         "Hill Plot", 
         "Shape Parameter Plots")
     Command = c(
-        ".fExtremes.B4Cmd.1",
-        ".fExtremes.B4Cmd.2",
-        ".fExtremes.B4Cmd.3")
-    addToolbarMenu(fExtremesMenu, Label, subLabel, Command)
-    
-                  
-    # Add Menu:
-    Label = "Gpd Distribution"
-    subLabel = c(
-        "Generate Random Numbers",
-        "GPD Distribution Slider")
-    Command = c(
-        ".fExtremes.C1Cmd.1",
-        ".fExtremes.C1Cmd.2")
-    addToolbarMenu(fExtremesMenu, Label, subLabel, Command)
-    
+        ".fExtremes.GEV.bmw",
+        ".fExtremes.GEV.sim",
+        ".fExtremes.GEV.RandSlider",
+        ".fExtremes.GEV.DistSlider",
+        ".fExtremes.GEV.fit",
+        ".fExtremes.GEV.summary",
+        ".fExtremes.GEV.rlevel",
+        ".fExtremes.MDA.hill",
+        ".fExtremes.MDA.shaparm") 
+    addToolbarMenu(fExtremesMenu, Label, subLabel, Command)        
 
-    # Add Menu:   
-    Label = "Gpd Fit"
-    subLabel = c(
-        "* Example timeSeries: x = Danish Fire Losses",
-        "GPD Simulation",
-        "GPD Fit")
-    Command = c(
-        ".fExtremes.C2Cmd.1",
-        ".fExtremes.C2Cmd.2",
-        ".fExtremes.C2Cmd.3")
-    addToolbarMenu(fExtremesMenu, Label, subLabel, Command)
-           
-           
     # Add Menu:
-    Label = "Gpd Glm Fit"
+    Label = "Peaks Over Threshold"
     subLabel = c(
-        "NYI: GPD GLM Fit")
+        "* Example timeSeries: x = BMW Max Losses",
+        "GPD Simulation", 
+        "... Random Number Slider",
+        "... Distribution Slider",
+        "GPD Parameter Estimation",
+        "... Summary Report")
     Command = c(
-        ".fExtremes.C3Cmd.1")
+        ".fExtremes.GPD.bmw",
+        ".fExtremes.GPD.sim",
+        ".fExtremes.GPD.RandSlider",
+        ".fExtremes.GPD.DistSlider",
+        ".fExtremes.GPD.fit",
+        ".fExtremes.GPD.summary")
     addToolbarMenu(fExtremesMenu, Label, subLabel, Command)
-    
-                  
-    # Add Menu:
-    Label = "Pot Fit"
-    subLabel = c(
-        "* Example timeSeries: x = Danish Fire Losses",
-        "POT Simulation",
-        "POT Fit",
-        "... Summary Report",
-        "k-Block Return Level")
-    Command = c(
-        ".fExtremes.C4Cmd.1",
-        ".fExtremes.C4Cmd.2",
-        ".fExtremes.C4Cmd.3",
-        ".fExtremes.C4Cmd.4",
-        ".fExtremes.C4Cmd.5")
-    addToolbarMenu(fExtremesMenu, Label, subLabel, Command)
-    
-        
-    # Add Menu:
-    Label = "PP Fit"
-    subLabel = c(
-        "PP Fit")
-    Command = c(
-        ".fExtremes.C5Cmd.1")
-    addToolbarMenu(fExtremesMenu, Label, subLabel, Command)
-    
-        
-    # Add Menu:
-    Label = "Rlarg Fit"
-    subLabel = c(
-        "Rlarg Fit")
-    Command = c(
-        ".fExtremes.C6Cmd.1")
-    addToolbarMenu(fExtremesMenu, Label, subLabel, Command)
-    
-        
-    # Add Menu:
-    Label = "Extremal Index Plots"
-    subLabel = c(
-        "* Example timeSeries: x = BMW log Returns",
-        "Monthly Extremal Index - Lower Tail", 
-        "N-Days Extremal Index - Lower Tail",
-        "Monthly Extremal Index - Upper Tail", 
-        "N-Days Extremal Index - Lower Tail")
-    Command = c(
-        ".fExtremes.D1Cmd.1",
-        ".fExtremes.D1Cmd.2",
-        ".fExtremes.D1Cmd.3",
-        ".fExtremes.D1Cmd.4",
-        ".fExtremes.D1Cmd.5")
-    addToolbarMenu(fExtremesMenu, Label, subLabel, Command)
-    
-                  
+                     
     # Cascade fileMenu:
     cascadeToolbarMenu(Menu = fExtremesMenu, Label = "fExtremes")
            
