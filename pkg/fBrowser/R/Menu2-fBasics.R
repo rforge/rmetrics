@@ -46,25 +46,63 @@ function()
     fBasicsMenu <<- newToolbarMenu()
      
     # Add Menu:
-    Label = "Web Data Import"
+    Label = "Time Series Import"
     subLabel = c(
         "Print fWEBDATA Class representation",
         "Economagic Series Download", 
         "Yahoo Series Download",
-        "FRED St. Louis Series Download",
-        "... Extract Data Slot as.timeSeries",
-        "Yahoo Key Statistics Download")
+        "FRED St. Louis Series Download")
     Command = c(
-        ".fBasics.TimeSeriesImport.1",
-        ".fBasics.TimeSeriesImport.2",
-        ".fBasics.TimeSeriesImport.3",
-        ".fBasics.TimeSeriesImport.4",
-        ".fBasics.TimeSeriesImport.5",
-        ".fBasics.TimeSeriesImport.6")
+        ".fBasics.Import.class",
+        ".fBasics.Import.economagic",
+        ".fBasics.Import.yahoo",
+        ".fBasics.Import.fred")
     addToolbarMenu(fBasicsMenu, Label, subLabel, Command)
+ 
     
     # Add Menu:
-    Label = "Basic Statistics"
+    Label = "Time Series Plots"
+    subLabel = c(
+        "* Example timeSeries: x = SP500 Returns",
+        "Univariate Time Series Plot",
+        "Autocorrelation Function Plot",
+        "Partial ACF Plot",
+        "Histogram Plot",
+        "* Example timeSeries: x = MSFT|SP500 Returns",
+        "Bivariate Time Series Plot",
+        "Scatterdiagramm Plot")
+    Command = c(
+        ".fBasics.PlotFunctions.sp500Monthly",
+        ".fBasics.PlotFunctions.plot",
+        ".fBasics.PlotFunctions.acfPlot",
+        ".fBasics.PlotFunctions.pacfPlot",
+        ".fBasics.PlotFunctions.histPlot",
+        ".fBasics.PlotFunctions.msftsp500Monthly",
+        ".fBasics.PlotFunctions.bivariatePlot",
+        ".fBasics.PlotFunctions.scatterPlot")
+    addToolbarMenu(fBasicsMenu, Label, subLabel, Command)
+    
+     # Add Menu:
+    Label = "Stylized Facts"
+    subLabel = c(
+        "* Example timeSeries: x = NYSE Returns",
+        "Taylor Effect", 
+        "Long Memory Behavior",
+        "Log PDF Plot",
+        "Normal QQ Plot",
+        "Scaling Law Plot")
+    Command = c(
+        ".fBasics.StylizedFacts.nyseDaily",
+        ".fBasics.StylizedFacts.teffectPlot",
+        ".fBasics.StylizedFacts.lmacfPlot",
+        ".fBasics.StylizedFacts.logpdfPlot",
+        ".fBasics.StylizedFacts.qqgaussPlot",
+        ".fBasics.StylizedFacts.scalinglawPlot")
+    addToolbarMenu(fBasicsMenu, Label, subLabel, Command)
+  
+        
+     # Add Menu:
+    Label = "Time Series Statistics"
     subLabel = c(
         "* Example timeSeries: x = SP500 Returns",
         "mean - Compute Mean",
@@ -74,83 +112,61 @@ function()
         "summary - Summary Report",
         "basicStats - Basic Statistics")
     Command = c(
-        ".fBasics.BasicStatistics.1",
-        ".fBasics.BasicStatistics.2",
-        ".fBasics.BasicStatistics.3",
-        ".fBasics.BasicStatistics.4",
-        ".fBasics.BasicStatistics.5",
-        ".fBasics.BasicStatistics.6",
-        ".fBasics.BasicStatistics.7")
+        ".fBasics.BasicStatistics.sp500monthly",
+        ".fBasics.BasicStatistics.mean",
+        ".fBasics.BasicStatistics.var",
+        ".fBasics.BasicStatistics.skewness",
+        ".fBasics.BasicStatistics.kurtosis",
+        ".fBasics.BasicStatistics.summary",
+        ".fBasics.BasicStatistics.basicStats")
     addToolbarMenu(fBasicsMenu, Label, subLabel, Command)
     
-    # Add Menu:
-    Label = "Basic Plots"
-    subLabel = c(
-        "* Example timeSeries: x = SP500 Returns",
-        "1D: ACF Plot",
-        "1D: PACF Plot",
-        "1D: Series Plot", 
-        "1D: Histogram Plot",
-        "* Example timeSeries: x = MSFT|SP500 Returns",
-        "2D: Series Plot",
-        "2D: Scatterdiagramm Plot")
-    Command = c(
-        ".fBasics.PlotFunctions.1",
-        ".fBasics.PlotFunctions.2",
-        ".fBasics.PlotFunctions.3",
-        ".fBasics.PlotFunctions.4",
-        ".fBasics.PlotFunctions.5",
-        ".fBasics.PlotFunctions.6",
-        ".fBasics.PlotFunctions.7",
-        ".fBasics.PlotFunctions.8")
-    addToolbarMenu(fBasicsMenu, Label, subLabel, Command)
-        
     # Add Menu:
     Label = "Return Distributions"
     subLabel = c(
-        "Generate NORM Random Numbers",
-        "Plot NORM Distribution",
-        "Generate HYP Random Numbers",
-        "Plot HYP Distribution", 
-        "Generate NIG Random Numbers",
-        "Plot NIG Distribution",
-        "Generate SYMSTB Random Numbers",
-        "Plot SYMSTB Distribution", 
-        "Generate STABLE Random Numbers",
-        "Plot STABLE Distribution",
-        "* Example timeSeries: x - SP500 Returns",
-        "NYI - Smoothed Spline Density Plot")
+        "* Example timeSeries: x - Daily NYSE Returns",
+        "Generate Normal Random Numbers",
+        "... Random Variates Slider",
+        "... Distribution Slider",
+        "... Fit Normal Distribution",
+        "Generate Hyperbolic Random Numbers",
+        "... Random Variates Slider",
+        "... Distribution Slider",
+        "... Fit Hyperbolic Distribution",
+        "Generate Normal Inveres Gaussian Numbers",
+        "... Random Variates Slider",
+        "... Distribution Slider",
+        "... Fit Normal Inverse Gaussian",
+        "Generate Symmetric Stable Random Numbers",
+        "... Random Variates Slider",
+        "... Distribution Slider",
+        "Generate Stable Random Numbers",
+        "... Random Variates Slider",
+        "... Distribution Slider")
     Command = c(
-        ".fBasics.ReturnDistributions.1",
-        ".fBasics.ReturnDistributions.2",
-        ".fBasics.ReturnDistributions.3",
-        ".fBasics.ReturnDistributions.4",
-        ".fBasics.ReturnDistributions.5",
-        ".fBasics.ReturnDistributions.6",
-        ".fBasics.ReturnDistributions.7",
-        ".fBasics.ReturnDistributions.8",
-        ".fBasics.ReturnDistributions.9",
-        ".fBasics.ReturnDistributions.10",
-        ".fBasics.ReturnDistributions.11",
-        ".fBasics.ReturnDistributions.12")
-    addToolbarMenu(fBasicsMenu, Label, subLabel, Command)    
-    
-    # Add Menu:
-    Label = "Distribution Fits"
-    subLabel = c(
-        "* Example timeSeries: x = NYSE Returns",
-        "Fit Normal Distribution", 
-        "Fit Hyperbolic Distribution", 
-        "Fit Normal Inverse Gaussian")
-    Command = c(
-        ".fBasics.DistributionFits.1",
-        ".fBasics.DistributionFits.2",
-        ".fBasics.DistributionFits.3",
-        ".fBasics.DistributionFits.4")
-    addToolbarMenu(fBasicsMenu, Label, subLabel, Command)            
+        ".fBasics.ReturnDistributions.nyseDaily",
+        ".fBasics.ReturnDistributions.rnorm",
+        ".fBasics.ReturnDistributions.rnormSlider",
+        ".fBasics.ReturnDistributions.dnormSlider",
+        ".fBasics.DistributionFits.norm",
+        ".fBasics.ReturnDistributions.rhyp",
+        ".fBasics.ReturnDistributions.rhypSlider",
+        ".fBasics.ReturnDistributions.dhypSlider",
+        ".fBasics.DistributionFits.hyp",
+        ".fBasics.ReturnDistributions.rnig",
+        ".fBasics.ReturnDistributions.rnigSlider",
+        ".fBasics.ReturnDistributions.dnigSlider",
+        ".fBasics.DistributionFits.nig",
+        ".fBasics.ReturnDistributions.rsymstb",
+        ".fBasics.ReturnDistributions.rsymstbSlider",
+        ".fBasics.ReturnDistributions.dsymstbSlider",
+        ".fBasics.ReturnDistributions.rstable",
+        ".fBasics.ReturnDistributions.rstableSlider",
+        ".fBasics.ReturnDistributions.dstableSlider")
+    addToolbarMenu(fBasicsMenu, Label, subLabel, Command)             
 
     # Add Menu:   
-    Label = "One Sample Tests"
+    Label = "Normality Tests"
     subLabel = c(
         "* Example timeSeries: x = SP500 Returns",
         "Print fHTEST Class Representation",
@@ -164,21 +180,21 @@ function()
         "Pearson Chi-Square Normality Test",
         "Shapiro-Francia Normality Test")
     Command = c(
-        ".fBasics.OneSampleTests.1",
-        ".fBasics.OneSampleTests.2",
-        ".fBasics.OneSampleTests.3",
-        ".fBasics.OneSampleTests.4",
-        ".fBasics.OneSampleTests.5",
-        ".fBasics.OneSampleTests.6",
-        ".fBasics.OneSampleTests.7",
-        ".fBasics.OneSampleTests.8",
-        ".fBasics.OneSampleTests.9",
-        ".fBasics.OneSampleTests.10",
-        ".fBasics.OneSampleTests.11")
+        ".fBasics.NormalityTests.sp500Monthly",
+        ".fBasics.NormalityTests.getClass",
+        ".fBasics.NormalityTests.ksnormTest",
+        ".fBasics.NormalityTests.shapiroTest",
+        ".fBasics.NormalityTests.jarqueberaTest",
+        ".fBasics.NormalityTests.dagoTest",
+        ".fBasics.NormalityTests.adTest",
+        ".fBasics.NormalityTests.cvmTest",
+        ".fBasics.NormalityTests.lillieTest",
+        ".fBasics.NormalityTests.pchiTest",
+        ".fBasics.NormalityTests.sfTest")
     addToolbarMenu(fBasicsMenu, Label, subLabel, Command)
 
     # Add Menu:
-    Label = "Two Sample Tests"
+    Label = "Bivariate Sample Tests"
     subLabel = c(
         "* Example timeSeries: x = MSFT|SP500 Returns",
         "Print fHTEST Class Representation",
@@ -194,39 +210,21 @@ function()
         "Correlation: Kendall's tau Test",
         "Correlation: Spearman's rho Test")
     Command = c(
-        ".fBasics.TwoSampleTests.1",
-        ".fBasics.TwoSampleTests.2",
-        ".fBasics.TwoSampleTests.3",
-        ".fBasics.TwoSampleTests.4",
-        ".fBasics.TwoSampleTests.5",
-        ".fBasics.TwoSampleTests.6",
-        ".fBasics.TwoSampleTests.7",
-        ".fBasics.TwoSampleTests.8",
-        ".fBasics.TwoSampleTests.9",
-        ".fBasics.TwoSampleTests.10",
-        ".fBasics.TwoSampleTests.11",
-        ".fBasics.TwoSampleTests.12",
-        ".fBasics.TwoSampleTests.13")
+        ".fBasics.BivariateTests.msftsp500Monthly",
+        ".fBasics.BivariateTests.getClass",
+        ".fBasics.BivariateTests.ks2Test",
+        ".fBasics.BivariateTests.tTest",
+        ".fBasics.BivariateTests.kw2Test",
+        ".fBasics.BivariateTests.varfTest",
+        ".fBasics.BivariateTests.bartlett2Test",
+        ".fBasics.BivariateTests.fligner2Test",
+        ".fBasics.BivariateTests.ansariTest",
+        ".fBasics.BivariateTests.moodTest",
+        ".fBasics.BivariateTests.pearsonTest",
+        ".fBasics.BivariateTests.kendallTest",
+        ".fBasics.BivariateTests.spearmanTest")
     addToolbarMenu(fBasicsMenu, Label, subLabel, Command)
     
-    # Add Menu:
-    Label = "Stylized Facts"
-    subLabel = c(
-        "* Example timeSeries: x = NYSE Returns",
-        "Taylor Effect", 
-        "Long Memory Behavior",
-        "Log PDF Plot",
-        "Normal QQ Plot",
-        "Scaling Law Plot")
-    Command = c(
-        ".fBasics.StylizedFacts.1",
-        ".fBasics.StylizedFacts.2",
-        ".fBasics.StylizedFacts.3",
-        ".fBasics.StylizedFacts.4",
-        ".fBasics.StylizedFacts.5",
-        ".fBasics.StylizedFacts.6")
-    addToolbarMenu(fBasicsMenu, Label, subLabel, Command)
-  
     # Cascade fileMenu:
     cascadeToolbarMenu(Menu = fBasicsMenu, Label = "fBasics")
             

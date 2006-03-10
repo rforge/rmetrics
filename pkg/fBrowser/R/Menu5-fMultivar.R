@@ -94,23 +94,23 @@ function()
     addToolbarMenu(fMultivarMenu, Label, subLabel, Command)
         
     # Add Menu:
-    Label = "Equations Modelling"
-    subLabel = c(
-        "Not yet implemented")
-    Command = c(
-        ".fMultivar.EquationsModelling.1")
-    addToolbarMenu(fMultivarMenu, Label, subLabel, Command)
+    # Label = "Equations Modelling"
+    # subLabel = c(
+    #     "Not yet implemented")
+    # Command = c(
+    #     ".fMultivar.EquationsModelling.1")
+    # addToolbarMenu(fMultivarMenu, Label, subLabel, Command)
         
     # Add Menu:
     Label = "Matrix Addon"
     subLabel = c(
-        "Create a Pascal Matrix",
+        "* Example: Pascal Matrix",
         "Return diag Matrix",
         "Return lower Triangular",
         "Return upper Triangular",
         "Compute the Determinant",
         "Compute the Inverse",
-        "Compute the Matrix Norm",
+        "Compute the Norm",
         "Compute the Rank",
         "Compute the Transposed",
         "Exponentiate a Square Matrix",
@@ -145,16 +145,14 @@ function()
         "Interpolate NAs",
         "knn Algorithm",
         "* Example timeSeries: x = MSFT|SP500 Returns",
-        "Substitute NAs",
-        "... Save object to x") 
+        "Substitute NAs") 
     Command = c(
         ".fMultivar.MissingValues.1",
         ".fMultivar.MissingValues.2",
         ".fMultivar.MissingValues.3",
         ".fMultivar.MissingValues.4",
         ".fMultivar.MissingValues.5",
-        ".fMultivar.MissingValues.6",
-        ".fMultivar.MissingValues.7")
+        ".fMultivar.MissingValues.6")
     addToolbarMenu(fMultivarMenu, Label, subLabel, Command) 
         
     # Add Menu:
@@ -209,9 +207,9 @@ function()
     Label = "Benchmark Analysis"
     subLabel = c(
         "* Example timeSeries: x = SP500 Index",
-        "Maximum Draw-Down",
-        "Sharpe Ratio",
-        "Sterling Ratio")
+        "Compute Maximum Draw-Down",
+        "Compute Sharpe Ratio",
+        "Compute Sterling Ratio")
     Command = c(
         ".fMultivar.BenchmarkAnalysis.1",
         ".fMultivar.BenchmarkAnalysis.2",

@@ -28,18 +28,6 @@
 
 
 ################################################################################
-# FUNCTION:
-#  PlainVanillaOptions
-#  BasicAmericanOptions
-#  BinomialTreeOptions
-#  MultipleExercisesOptions
-#  MultipleAssetsOptions
-#  LookbackOptions
-#  BarrierOptions
-#  BinaryOptions
-#  AsianOptions
-#  CurrencyTranslatedOptions
-################################################################################
 
 
 # ******************************************************************************
