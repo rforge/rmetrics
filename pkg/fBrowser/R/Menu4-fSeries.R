@@ -114,24 +114,7 @@ function()
         ".fSeries.LongMemoryModelling.1")
     addToolbarMenu(fSeriesMenu, Label, subLabel, Command)
     
-    
-    # Add Menu:
-    Label = "Chaotic Time Series"
-    subLabel = c(
-        "Henon Map", 
-        "Ikeda Map", 
-        "Logistic Map", 
-        "Lorentz Attractor", 
-        "Roessler Attractor")
-    Command = c(
-        ".fSeries.ChaoticTimeSeries.1",
-        ".fSeries.ChaoticTimeSeries.2",
-        ".fSeries.ChaoticTimeSeries.3",
-        ".fSeries.ChaoticTimeSeries.4",
-        ".fSeries.ChaoticTimeSeries.5")
-    addToolbarMenu(fSeriesMenu, Label, subLabel, Command)
-        
-    
+   
     # Add Menu:
     Label = "Portable Innovations"
     subLabel = c(
@@ -160,18 +143,7 @@ function()
         ".fSeries.TimeSeriesTests.4")
     addToolbarMenu(fSeriesMenu, Label, subLabel, Command)
         
-    
-    # Add Menu:
-    Label = "Unit Root Distribution"
-    subLabel = c(
-        #  punitroot - Returns McKinnon's cumulative probability
-        #  qunitroot - Returns McKinnon's quantiles
-        "Unitroot Distribution")
-    Command = c(
-        ".fSeries.UnitRootDistribution.1")
-    addToolbarMenu(fSeriesMenu, Label, subLabel, Command)
-        
-    
+
     # Add Menu:
     Label = "Unit Root Tests"
     subLabel = c(
@@ -180,7 +152,8 @@ function()
         # "Print fURTEST Class Representation"
         # "is.fURTEST Object ?"
         "ADF Test",
-        "McKinnon's Unit Root Test")
+        "McKinnon's Unit Root Test",
+        "Unitroot Distribution")
         #
         #  urersTest - Elliott-Rothenberg-Stock test for unit roots
         #  urkpssTest - KPSS unit root test for stationarity
@@ -192,35 +165,29 @@ function()
         ".fSeries.UnitRootTests.1",
         ".fSeries.UnitRootTests.2",
         ".fSeries.UnitRootTests.3",
-        ".fSeries.UnitRootTests.4")
+        ".fSeries.UnitRootTests.4",
+        ".fSeries.UnitRootDistribution.1")
     addToolbarMenu(fSeriesMenu, Label, subLabel, Command)
-        
-    
-    # Add Menu:
-    Label = "Heaviside Function"
-    subLabel = c(
-        "Heaviside And Related Functions")
-    Command = c(
-        ".fSeries.HeavisideFunction.1")
-    addToolbarMenu(fSeriesMenu, Label, subLabel, Command)
-        
+       
     
     # Add Menu:
     Label = "Garch Distributions"
     subLabel = c(
         "Generate Skew Normal Random Numbers",
-        "Skew Normal Distribution Slider",
+        "... Skew Normal Distribution Slider",
         "Generate Skew Student-t Random Numbers",
-        "Skew Student-t Distribution Slider",
+        "... Skew Student-t Distribution Slider",
         "Generate Skew GED Random Numbers",
-        "Skew GED Distribution Slider")
+        "... Skew GED Distribution Slider",
+        "Heaviside And Related Functions")
     Command = c(
         ".fSeries.GarchDistributions.1",
         ".fSeries.GarchDistributions.2",
         ".fSeries.GarchDistributions.3",
         ".fSeries.GarchDistributions.4",
         ".fSeries.GarchDistributions.5",
-        ".fSeries.GarchDistributions.6")
+        ".fSeries.GarchDistributions.6",
+        ".fSeries.HeavisideFunction.1")
     addToolbarMenu(fSeriesMenu, Label, subLabel, Command)
         
    
@@ -245,7 +212,7 @@ function()
     addToolbarMenu(fSeriesMenu, Label, subLabel, Command)
     
     # Add Menu:
-    Label = "Series Data"
+    Label = "fSeries Time Series Data"
     subLabel = c(
         "nyseres - ",
         "recession - ",
@@ -269,9 +236,27 @@ function()
         ".fSeries.SeriesData.9",
         ".fSeries.SeriesData.10",)
     addToolbarMenu(fSeriesMenu, Label, subLabel, Command)
+    
+    
+     # Add Menu:
+    Label = "Chaotic Time Series Data"
+    subLabel = c(
+        "Henon Map", 
+        "Ikeda Map", 
+        "Logistic Map", 
+        "Lorentz Attractor", 
+        "Roessler Attractor")
+    Command = c(
+        ".fSeries.ChaoticTimeSeries.1",
+        ".fSeries.ChaoticTimeSeries.2",
+        ".fSeries.ChaoticTimeSeries.3",
+        ".fSeries.ChaoticTimeSeries.4",
+        ".fSeries.ChaoticTimeSeries.5")
+    addToolbarMenu(fSeriesMenu, Label, subLabel, Command)
+        
         
     # Add Menu: 
-    Label = "Mills Data"
+    Label = "Mills Time Series Data"
     subLabel = c(
         "RS - Monthly 91 Day Treasury Bill Rate",  
         "R20 - Monthly Yield on 20 Year UK Gilts",  

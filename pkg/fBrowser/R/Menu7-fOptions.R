@@ -219,28 +219,26 @@ function()
         
     
     # Add Menu:
-    Label = "Heston Nandi Garch Fit"
-    subLabel = c(
-        "Simulate HN-GARCH Process",
-        "Fit HN-GARCH",
-        "... Print Summary Report",
-        "... Print Statistics")
-    Command = c(
-        ".fOptions.HestonNandi.1",
-        ".fOptions.HestonNandi.2",
-        ".fOptions.HestonNandi.3",
-        ".fOptions.HestonNandi.4")
-    addToolbarMenu(fOptionsMenu, Label, subLabel, Command)
-        
+    # Label = "Heston Nandi Garch Fit"
+    # subLabel = c(
+    #    "Simulate HN-GARCH Process",
+    #    "Fit HN-GARCH",
+    #    "... Print Summary Report",
+    #    "... Print Statistics")
+    # Command = c(
+    #    ".fOptions.HestonNandi.1",
+    #    ".fOptions.HestonNandi.2",
+    #    ".fOptions.HestonNandi.3",
+    #    ".fOptions.HestonNandi.4")
+    # addToolbarMenu(fOptionsMenu, Label, subLabel, Command)  
     
     # Add Menu:
-    Label = "Heston Nandi Options"
-    subLabel = c(
-        "Not yet implemented")
-    Command = c(
-        ".fOptions.C2Cmd.1")
-    addToolbarMenu(fOptionsMenu, Label, subLabel, Command)
-    
+    # Label = "Heston Nandi Options"
+    # subLabel = c(
+    #    "Not yet implemented")
+    # Command = c(
+    #     ".fOptions.C2Cmd.1")
+    # addToolbarMenu(fOptionsMenu, Label, subLabel, Command)
         
     # Add Menu:
     Label = "Low Discrepancy Sequences"
@@ -258,8 +256,7 @@ function()
         ".fOptions.LowDiscrepancy.4",
         ".fOptions.LowDiscrepancy.5",
         ".fOptions.LowDiscrepancy.6")
-    addToolbarMenu(fOptionsMenu, Label, subLabel, Command)
-    
+    addToolbarMenu(fOptionsMenu, Label, subLabel, Command)    
         
     # Add Menu:
     Label = "Monte Carlo Options"
@@ -274,62 +271,43 @@ function()
         ".fOptions.MonteCarlo.3",
         ".fOptions.MonteCarlo.4")
     addToolbarMenu(fOptionsMenu, Label, subLabel, Command)
-    
         
     # Add Menu:
-    Label = "Exponential BM"
-    subLabel = c(
-        "Not yet implemented")
-    Command = c(
-        ".fOptions.ExponentialBM.1")
-    addToolbarMenu(fOptionsMenu, Label, subLabel, Command)
-    
+    # Label = "Exponential BM"
+    # subLabel = c(
+    #    "Not yet implemented")
+    # Command = c(
+    #    ".fOptions.ExponentialBM.1")
+    # addToolbarMenu(fOptionsMenu, Label, subLabel, Command)
         
     # Add Menu:
-    Label = "Gamma Functions"
+    Label = "Special Functions"
     subLabel = c(
-        "Gamma Function",
-        "Psi Function",
-        "Complex Gamma Function")
+        "Plot Gamma Function",
+        "Plot Psi Function",
+        "Plot Complex Gamma Function",
+        "Kummer Function Slider",
+        "Whittaker Function Slider",
+        "Bessel Function Slider")
     Command = c(
         ".fOptions.Gamma.1",
         ".fOptions.Gamma.2",
-        ".fOptions.Gamma.3")
-    addToolbarMenu(fOptionsMenu, Label, subLabel, Command)
-    
-        
-    # Add Menu:
-    Label = "Hypergeometric Functions"
-    subLabel = c(
-        "Kummer Function Slider",
-        "Whittaker Function Slider")
-    Command = c(
+        ".fOptions.Gamma.3",
         ".fOptions.Hypergeometric.1",
-        ".fOptions.Hypergeometric.2")
-    addToolbarMenu(fOptionsMenu, Label, subLabel, Command)
-    
-        
-    # Add Menu:
-    Label = "Bessel Functions"
-    subLabel = c(
-        "Bessel Function Slider")
-    Command = c(
+        ".fOptions.Hypergeometric.2",
         ".fOptions.Bessel.1")
     addToolbarMenu(fOptionsMenu, Label, subLabel, Command)
-    
         
     # Add Menu:
-    Label = "EBM Asian Options"
-    subLabel = c(
-        "Not yet implemented")
-    Command = c(
-        ".fOptions.EBMAsian.1")
-    addToolbarMenu(fOptionsMenu, Label, subLabel, Command)
-    
-        
+    # Label = "EBM Asian Options"
+    # subLabel = c(
+    #     "Not yet implemented")
+    # Command = c(
+    #     ".fOptions.EBMAsian.1")
+    # addToolbarMenu(fOptionsMenu, Label, subLabel, Command)
+          
     # Cascade fileMenu:
-    cascadeToolbarMenu(Menu = fOptionsMenu, Label = "fOptions")        
-             
+    cascadeToolbarMenu(Menu = fOptionsMenu, Label = "fOptions")                 
 }       
         
 

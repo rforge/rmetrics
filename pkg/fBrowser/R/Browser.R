@@ -116,7 +116,7 @@ function(menuToolbar =c("File", "fBasics", "fCalendar", "fSeries",
     
     # Text Frame:    
     textFrame <<- tkframe(base, relief = "groove", borderwidth = 2)
-    fontText <<- tkfont.create(family = "courier", size = 8)
+    fontText <<- tkfont.create(family = "courier", size = 9)
     scr <<- tkscrollbar(textFrame, repeatinterval = 5, 
         command = function(...) tkyview(txt, ...))
     txt <<- tktext(textFrame, bg = "white", font = fontText, 
@@ -292,7 +292,7 @@ function(x)
 function (dataframe, colname.bgcolor = "black", rowname.bgcolor = "grey90", 
 body.bgcolor = "white", colname.textcolor = "white", 
 rowname.textcolor = "darkred", body.textcolor = "black", 
-font = "Courier 8", maxheight = 30, maxwidth = 80, title = NULL, 
+font = "Courier 9", maxheight = 30, maxwidth = 80, title = NULL, 
 rowname.bar = "left", colname.bar = "top", rownumbers = FALSE, 
 placement = "-20-40") 
 {
@@ -502,7 +502,6 @@ what = c("x", "object", "tested", "fitted", "predicted"), tkoutput = FALSE)
         predicted = "Active Predicted Object:  ")[what]
     
     # Assign:
-    saveTitle <<- paste(what, "=", infoName)  
     saveTitle <<- paste(toPaste, saveTitle)           
     
     # Active DataSet Info Line:
@@ -546,10 +545,11 @@ what = c("x", "object", "tested", "fitted", "predicted"), tkoutput = FALSE)
     }
       
     # tkoutput:
-    if (tkoutput)
+    if (tkoutput) {
         tkTitle(infoName)
         tkOutput(capture.output(data))
-        
+    }
+      
     # Console:
     if (!is.null(console)) {
         eval(parse(text = console))
@@ -774,13 +774,14 @@ function(...)
 
 
 tkSummary =
-function(object)
+function(object, title = NULL)
 {   # A function implemented by Diethelm Wuertz
 
     # FUNCTION:
     
     # Summary:
-    .tkOutput(capture.output(summary(object))) 
+    if (!is.null(title)) tkTitle(title)
+    tkOutput(capture.output(summary(object))) 
 }
 
 
@@ -868,7 +869,7 @@ function(class)
 
 
 
-.getTime =
+tkGetTime =  
 function()
 {   # A function implemented by Diethelm Wuertz
 
@@ -877,11 +878,11 @@ function()
     
     # Output:
     tkTitle("Current Date and Time")
-    .tkOutput(ans) 
+    tkOutput(ans) 
 }
 
 
-.getFinCenters =
+tkGetFinCenters =
 function()
 {   # A function implemented by Diethelm Wuertz
 
@@ -1143,7 +1144,7 @@ function()
 
 
 tkGetData = 
-function(Data = "nyseDaily", infoName = Data, report = TRUE )
+function(Data, infoName, report = TRUE )
 {
     # tkExampleData(Data = "nyse", asTimeSeries = TRUE, asReturnSeries = TRUE)
     # tkExampleData(Data = "nyse", asTimeSeries = TRUE, asReturnSeries = TRUE, asVector = TRUE)
@@ -1154,17 +1155,17 @@ function(Data = "nyseDaily", infoName = Data, report = TRUE )
     x <<- eval(parse(text = Data))
     consoleCmd = "print(head(x)); print(tail(x))"
     
-    if (dim(x)[2] != 1) x  <<- as.timeSeries(x)
-    attr(x, "data") <<- Data
+    if (dim(x)[2] != 1) x <<- as.timeSeries(x)
     
     x <<- tkSaveAs(
         data = x, 
         infoName = infoName,
         console = consoleCmd,
-        what = "x" )
+        what = "x",
+        tkoutput = FALSE )
+    attr(x, "data") = Data
         
     plotTitle <<- infoName
-    
     if (report) {
         tkTitle(plotTitle)
         tkOutput(capture.output(head(x)))
@@ -1176,14 +1177,13 @@ function(Data = "nyseDaily", infoName = Data, report = TRUE )
 }
 
 tkGetDataFrame = 
-function(Data = "nyseDaily", infoName = Data, report = TRUE )
+function(Data, infoName, report = TRUE )
 {
     
     command = paste("data(", Data, ")", sep = "")
     eval(parse(text = command))
     x <<- eval(parse(text = Data))
     consoleCmd = "print(head(x)); print(tail(x))"
-    
     attr(x, "data") <<- Data
     
     x <<- tkSaveAs(
@@ -1193,7 +1193,6 @@ function(Data = "nyseDaily", infoName = Data, report = TRUE )
         what = "x" )
         
     plotTitle <<- infoName
-    
     if (report) {
         tkTitle(plotTitle)
         tkOutput(capture.output(head(x)))
