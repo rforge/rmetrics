@@ -70,7 +70,7 @@ function()
     addToolbarMenu(fExtremesMenu, Label, subLabel, Command)
         
     # Add Menu:
-    Label = "Generalized Extreme Values"
+    Label = "Block Maxima"
     subLabel = c(
         "* Example timeSeries: x = BMW Max Losses",
         "GEV Simulation", 
