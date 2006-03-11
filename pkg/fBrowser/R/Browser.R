@@ -115,11 +115,9 @@ function(menuToolbar =c("File", "fBasics", "fCalendar", "fSeries",
     # Put things together - Focus ...
     tkfocus(popupFrame) 
     
-    
     # Text Frame:    
     textFrame <<- tkframe(base, relief = "groove", borderwidth = 2)
     fontText <<- tkfont.create(family = fontFamily, size = fontSize)
-  
     txt <<- tktext(textFrame, bg = "white", fg = "blue", font = fontText,
           width = 80, height = 25, wrap = "none")
     yscr <<- tkscrollbar(textFrame, repeatinterval = 5,
@@ -128,16 +126,13 @@ function(menuToolbar =c("File", "fBasics", "fCalendar", "fSeries",
           command = function(...) tkxview(txt, ...))
     tkconfigure(txt, yscrollcommand = function(...) tkset(yscr, ...))
     tkconfigure(txt, xscrollcommand = function(...) tkset(xscr, ...))
-   
     tkgrid(txt, yscr)
     tkgrid(xscr)
     tkgrid.configure(yscr, sticky = "ns")
     tkgrid.configure(xscr, sticky = "ew")
-
     tkinsert(txt, "end", "Rmetrics, (C) 1999-2006, Diethelm Wuertz, GPL\n")
     tkinsert(txt, "end", "Version 2.2.1\n\n")  
     tkfocus(txt)
-
     
     # Command Console:
     commandFrame = tkframe(base, relief = "groove", borderwidth = 2) 
@@ -150,48 +145,52 @@ function(menuToolbar =c("File", "fBasics", "fCalendar", "fSeries",
         commandVal = tclvalue(Command)
         ans = eval(parse(text = commandVal), parent.frame())
         tkinsert(txt, "end", paste(">", commandVal, "\n"))
-        tktag.add(txt, "currentLine", "end - 2 lines linestart", "end - 2 lines lineend")
+        tktag.add(txt, "currentLine", "end - 2 lines linestart", 
+            "end - 2 lines lineend")
         tktag.configure(txt, "currentLine", foreground = "red")
         if (length(grep("<-", commandVal)) == 0) {
             tkOutput(capture.output(ans)) 
             tkyview.moveto(txt, 1)
         }
-        invisible() 
-    }
-    tkbind(entryCommand, "<Return>", CommandOnOK)
-    
+        invisible() }
+    tkbind(entryCommand, "<Return>", CommandOnOK)  
         
     # Active DataSet Info Line:
     infoFrame <<- tkframe(base, relief = "groove", borderwidth = 2)
-    infoLabelText <<- tclVar(paste("Active Series Data: x = rnorm(1000)"))
+    infoLabelText <<- 
+        tclVar(paste("Active Series Data: x = rnorm(1000)"))
     infoLabel <<- tklabel(infoFrame, text = tclvalue(infoLabelText))
     tkconfigure(infoLabel, textvariable = infoLabelText)
     tkgrid(infoLabel)
     
     # Active Object Info Line:
     objectFrame <<- tkframe(base, relief = "groove", borderwidth = 2)
-    objectLabelText <<- tclVar(paste("Active Object: object = NULL"))
+    objectLabelText <<- 
+        tclVar(paste("Active Object: object = NULL"))
     objectLabel <<- tklabel(objectFrame, text = tclvalue(objectLabelText))
     tkconfigure(objectLabel, textvariable = objectLabelText)
     tkgrid(objectLabel)  
     
     # Active Test Object:
     testFrame <<- tkframe(base, relief = "groove", borderwidth = 2)
-    testLabelText <<- tclVar(paste("Active Test: Tested Object = NULL"))
+    testLabelText <<- 
+        tclVar(paste("Active Test: Tested Object = NULL"))
     testLabel <<- tklabel(testFrame, text = tclvalue(testLabelText))
     tkconfigure(testLabel, textvariable = testLabelText)
     tkgrid(testLabel)  
     
     # Active Fit Object:
     fitFrame <<- tkframe(base, relief = "groove", borderwidth = 2)
-    fitLabelText <<- tclVar(paste("Active Fit: Fitted Object = NULL"))
+    fitLabelText <<- 
+        tclVar(paste("Active Fit: Fitted Object = NULL"))
     fitLabel <<- tklabel(fitFrame, text = tclvalue(fitLabelText))
     tkconfigure(fitLabel, textvariable = fitLabelText)
     tkgrid(fitLabel)  
     
     # Active Predict Object:
     predictFrame <<- tkframe(base, relief = "groove", borderwidth = 2)
-    predictLabelText <<- tclVar(paste("Active Prediction: Predicted Object = NULL"))
+    predictLabelText <<- 
+        tclVar(paste("Active Prediction: Predicted Object = NULL"))
     predictLabel <<- tklabel(predictFrame, text = tclvalue(predictLabelText))
     tkconfigure(predictLabel, textvariable = predictLabelText)
     tkgrid(predictLabel)
@@ -268,15 +267,13 @@ function (Menu, Label)
     # Return Value:
     ans 
 }
-       
-
+ 
 
 ################################################################################
 # FUNCTION:                 DESCRIPTION:
 #  tkExecute
 #  tkSaveAs 
 #  .xMenu
-#  .objectMenu
 ################################################################################
 
 
@@ -394,6 +391,7 @@ function(data, infoName, console = NULL,
 what = c("x", "object", "tested", "fitted", "predicted"), tkoutput = FALSE)
 {   # A function implemented by Diethelm Wuertz
 
+    # What ot save ?
     what = what[1]
     toPaste = c(
         x = "Active x:  ", 
@@ -402,7 +400,7 @@ what = c("x", "object", "tested", "fitted", "predicted"), tkoutput = FALSE)
         fitted = "Active Fitted Object:  ", 
         predicted = "Active Predicted Object:  ")[what]
     
-    # Assign:
+    # Assign Title:
     saveTitle <<- paste(toPaste, saveTitle)           
     
     # Active DataSet Info Line:
@@ -487,8 +485,6 @@ function(...)
 tkSummary =
 function(object, title = NULL)
 {   # A function implemented by Diethelm Wuertz
-
-    # FUNCTION:
     
     # Summary:
     if (!is.null(title)) tkTitle(title)
@@ -499,8 +495,6 @@ function(object, title = NULL)
 tkParameters = .tkParameters = 
 function(parameters)
 {   # A function implemented by Diethelm Wuertz
-
-    # FUNCTION:
     
     # Output Function for Parameters:
     parameters = cbind(parameters)              
@@ -513,12 +507,9 @@ function(parameters)
 }
 
 
-
 tkOutput = .tkOutput = 
 function(output)
 {   # A function implemented by Diethelm Wuertz
-
-    # FUNCTION:
     
     # Output Function - Object:
     for (i in 1:length(output)) { 
@@ -540,14 +531,13 @@ function(description = NULL)
 }
 
 
-
 tkReport = .tkReport =
 function(title)
 {   # A function implemented by Diethelm Wuertz
 
     tkTitle(title)
-    .tkOutput(capture.output(object))
-    .tkDescription()  
+    tkOutput(capture.output(object))
+    tkDescription()  
 }
       
 
@@ -560,9 +550,8 @@ function(class)
     
     # Output:
     tkTitle(paste(class, "Class Representation"))
-    .tkOutput(ans)   
+    tkOutput(ans)   
 }
-
 
 
 tkGetTime =  
@@ -587,7 +576,7 @@ function()
     
     # Output:
     tkTitle("List of Financial Centers")
-    .tkOutput(ans) 
+    tkOutput(ans) 
 }
 
 
@@ -668,7 +657,8 @@ function(Data, infoName, report = TRUE )
 
 tkDataExample = 
 function(Data = "nyse", asTimeSeries = FALSE, asReturnSeries = FALSE, 
-asVector = FALSE, asTS = FALSE, infoName = Data, plotTitle = Data, report = FALSE )
+asVector = FALSE, asTS = FALSE, infoName = Data, plotTitle = Data, 
+report = FALSE )
 {
 
     command = paste("data(", Data, ")", sep = "")
@@ -775,3 +765,5 @@ function()
     invisible()
 }
 
+
+################################################################################
