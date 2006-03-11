@@ -702,7 +702,7 @@ function()
 # Time Series Class
 
 
-.fCalendar.TimeSeriesClass.1 = 
+.fCalendar.TimeSeriesClass.msftsp500Monthly = 
 function() 
 {   # A function implemented by Diethelm Wuertz
     
@@ -711,7 +711,7 @@ function()
 }
 
 
-.fCalendar.TimeSeriesClass.2 = 
+.fCalendar.TimeSeriesClass.getClass = 
 function()
 {   # A function implemented by Diethelm Wuertz
 
@@ -720,28 +720,40 @@ function()
 }
 
 
-.fCalendar.TimeSeriesClass.is = 
+.fCalendar.TimeSeriesClass.timeSeries = 
 function()
 {   # A function implemented by Diethelm Wuertz
 
-    # is.timeSeries ?
-    myFunction = function(series, report) { 
-        x = eval(parse(text = series))
-        is.timeSeries(object = x) }
+    # Create timeSeries Object:
+    myFunction = function(data, charvec, units, format, zone, FinCenter,
+        pbject2x, record) { 
+        data = eval(parse(text = data))
+        charvec = as.character(eval(parse(text = charvec)))
+        units = as.character(eval(parse(text = units)))
+        object <<- timeSeries(data = data, charvec = charvec, 
+            units = units, format = format, zone = zone , 
+            FinCenter = FinCenter)
+        object }
     tkExecute(
         fun = myFunction,
         params = list(
-            series = "x",
+            data = "matrix(rnorm(24), ncol=2)",
+            charvec = "timeCalendar(y=2006, m=1:12)",
+            units = "LETTERS[1:2]",
+            format = "%Y-%m-%d",
+            zone = "GMT",
+            FinCenter = "GMT",
+            object2x = TRUE,
             report = TRUE),
-        infoName = "is.timeSeries ?",
+        infoName = "Create a timSeries Object",
         tkoutput = TRUE,
         console = "print(object)",
-        title = "is.timeSeries ?",
+        title = "Create a timSeries Object",
         description = NULL )
 }
 
 
-.fCalendar.TimeSeriesClass.apply = 
+.fCalendar.TimeSeriesClass.applySeries = 
 function()
 {   # A function implemented by Diethelm Wuertz
 
@@ -769,7 +781,7 @@ function()
 }
 
 
-.fCalendar.TimeSeriesClass.align = 
+.fCalendar.TimeSeriesClass.alignSeries = 
 function()
 {   # A function implemented by Diethelm Wuertz
 
@@ -796,7 +808,7 @@ function()
 }
 
 
-.fCalendar.TimeSeriesClass.cut = 
+.fCalendar.TimeSeriesClass.cutSeries = 
 function()
 {   # A function implemented by Diethelm Wuertz
 
@@ -819,7 +831,7 @@ function()
 }
 
 
-.fCalendar.TimeSeriesClass.diff = 
+.fCalendar.TimeSeriesClass.diffSeries = 
 function()
 {   # A function implemented by Diethelm Wuertz
 
@@ -846,7 +858,7 @@ function()
 }
 
 
-.fCalendar.TimeSeriesClass.lag = 
+.fCalendar.TimeSeriesClass.lagSeries = 
 function()
 {   # A function implemented by Diethelm Wuertz
 
@@ -871,7 +883,7 @@ function()
 }
 
 
-.fCalendar.TimeSeriesClass.merge = 
+.fCalendar.TimeSeriesClass.mergeSeries = 
 function()
 {   # A function implemented by Diethelm Wuertz
 
@@ -896,7 +908,7 @@ function()
 }
 
 
-.fCalendar.TimeSeriesClass.returns = 
+.fCalendar.TimeSeriesClass.returnSeries = 
 function()
 {   # A function implemented by Diethelm Wuertz
 
@@ -925,7 +937,7 @@ function()
 }
 
 
-.fCalendar.TimeSeriesClass.rev = 
+.fCalendar.TimeSeriesClass.revSeries = 
 function()
 {   # A function implemented by Diethelm Wuertz
 
