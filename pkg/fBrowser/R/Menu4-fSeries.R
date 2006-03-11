@@ -106,6 +106,7 @@ function()
     addToolbarMenu(fSeriesMenu, Label, subLabel, Command)
     
     
+    if (FALSE) {
     # Add Menu:
     Label = "Long Memory Modelling"
     subLabel = c(
@@ -113,8 +114,9 @@ function()
     Command = c(
         ".fSeries.LongMemoryModelling.1")
     addToolbarMenu(fSeriesMenu, Label, subLabel, Command)
-    
+    }
    
+    if (FALSE) {
     # Add Menu:
     Label = "Portable Innovations"
     subLabel = c(
@@ -126,7 +128,7 @@ function()
         ".fSeries.PortableInnovations.2",
         ".fSeries.PortableInnovations.3")
     addToolbarMenu(fSeriesMenu, Label, subLabel, Command)
-      
+   }  
     
     # Add Menu:
     Label = "Time Series Tests"

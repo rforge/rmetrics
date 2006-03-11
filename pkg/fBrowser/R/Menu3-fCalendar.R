@@ -47,7 +47,7 @@ function()
      
     
     # Add Menu:
-    Label = "Time Date Class"
+    Label = "Create a Time Date Object"
     subLabel = c(
         "* Example timeDate: x = 12 Random Dates in 2005",
         "* Example timeDate: x = 12 Random Times in 2005",
@@ -81,7 +81,7 @@ function()
     addToolbarMenu(fCalendarMenu, Label, subLabel, Command)
     
     # Add Menu:
-    Label = "Time Date Methods"
+    Label = "Manipulate a timeDate Object"
     subLabel = c(
         "* Example timeDate: x = 12 Random Dates in 2005",
         "* Example timeDate: x = 12 Random Times in 2005",
@@ -121,27 +121,27 @@ function()
     subLabel = c(
         "* Example timeSeries: x = MSFT|SP500 Returns",
         "Print timeSeries Class Representation",
-        "is.timeSeries ?",
-        "NYI - Apply a Function to Series",
-        "Align a Daily Series",
-        "Cut Out a Piece from a Series",
-        "Difference a Series",
-        "Return a Lagged Series",
-        "Merge a Series with a Matrix Object",
-        "Get Returns from a Series",
-        "Revert a Series in Time")
+        "Create a timSeries Object",
+        "Apply a Function to a timSeries",
+        "Align a Daily timeSeries",
+        "Cut Out a Piece from a timeSeries",
+        "Difference a timeSeries",
+        "Lag a timeSeries",
+        "Merge a timeSeries with a matrix Object",
+        "Compute Returns from a timeSeries",
+        "Revert a timeSeries in Time Order")
     Command = c(
-        ".fCalendar.TimeSeriesClass.1",
-        ".fCalendar.TimeSeriesClass.2",
-        ".fCalendar.TimeSeriesClass.is",
-        ".fCalendar.TimeSeriesClass.apply",
-        ".fCalendar.TimeSeriesClass.align",
-        ".fCalendar.TimeSeriesClass.cut",
-        ".fCalendar.TimeSeriesClass.diff",
-        ".fCalendar.TimeSeriesClass.lag",
-        ".fCalendar.TimeSeriesClass.merge",
-        ".fCalendar.TimeSeriesClass.returns",
-        ".fCalendar.TimeSeriesClass.rev")
+        ".fCalendar.TimeSeriesClass.msftsp500Monthly",
+        ".fCalendar.TimeSeriesClass.getClass",
+        ".fCalendar.TimeSeriesClass.timeSeries",
+        ".fCalendar.TimeSeriesClass.applySeries",
+        ".fCalendar.TimeSeriesClass.alignSeries",
+        ".fCalendar.TimeSeriesClass.cutSeries",
+        ".fCalendar.TimeSeriesClass.diffSeries",
+        ".fCalendar.TimeSeriesClass.lagSeries",
+        ".fCalendar.TimeSeriesClass.mergeSeries",
+        ".fCalendar.TimeSeriesClass.returnSeries",
+        ".fCalendar.TimeSeriesClass.revSeries")
     addToolbarMenu(fCalendarMenu, Label, subLabel, Command)    
     
     # Add Menu:
@@ -159,6 +159,7 @@ function()
     addToolbarMenu(fCalendarMenu, Label, subLabel, Command)
     
     # Add Menu:
+    if (FALSE) {
     Label = "High Frequency Data"
     subLabel = c(
         "* Example data.frame: x = FX Reuters USDTHB",
@@ -193,7 +194,8 @@ function()
         ".fCalendar.HighFrequencyData.14",
         ".fCalendar.HighFrequencyData.15")
     addToolbarMenu(fCalendarMenu, Label, subLabel, Command)
-  
+    }
+
     # Cascade fileMenu:
     cascadeToolbarMenu(Menu = fCalendarMenu, Label = "fCalendar")    
 }

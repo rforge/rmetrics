@@ -38,6 +38,86 @@ function()
     # Menu:
     fMultivarMenu <<- newToolbarMenu()
    
+        # Add Menu:
+    Label = "Technical Analysis"
+    subLabel = c(
+        "* Example Data: Open-High-Low-Close SP500",
+        "emaTA - Exponential Moving Average",
+        "biasTA - EMA Price Bias",
+        "medpriceTA - Median Price",                    
+        "typicalpriceTA - Typical Price",
+        "wcloseTA - Weighted Close Price",
+        "rocTA - Rate of Change",
+        "oscTA - EMA-Oscillator",
+        "momTA - Momentum Oscillator",
+        "macdTA -  MACD Oscillator",
+        "cdsTA - MACD Signal Line",
+        "cdoTA - MACD Oscillator",
+        "vohlTA - High/Low Volatility",
+        "vorTA - Volatility Ratio",
+        "fpkTA - Fast %K Stochastics",
+        "fpdTA - Fast %D Stochastics",
+        "spdTA - Slow %D Stochastics",
+        "apdTA - Averaged %D Stochastics",
+        "wprTA - Williams %R Stochastics",
+        "rsiTA - Relative Strength Index",
+        "... merge Series and Indicator")
+    Command = c(
+        ".fMultivar.TechnicalAnalysis.1",
+        ".fMultivar.TechnicalAnalysis.2",
+        ".fMultivar.TechnicalAnalysis.3",
+        ".fMultivar.TechnicalAnalysis.4",
+        ".fMultivar.TechnicalAnalysis.5",
+        ".fMultivar.TechnicalAnalysis.6",
+        ".fMultivar.TechnicalAnalysis.7",
+        ".fMultivar.TechnicalAnalysis.8",
+        ".fMultivar.TechnicalAnalysis.9",
+        ".fMultivar.TechnicalAnalysis.10",
+        ".fMultivar.TechnicalAnalysis.11",
+        ".fMultivar.TechnicalAnalysis.12",
+        ".fMultivar.TechnicalAnalysis.13",
+        ".fMultivar.TechnicalAnalysis.14",
+        ".fMultivar.TechnicalAnalysis.15",
+        ".fMultivar.TechnicalAnalysis.16",
+        ".fMultivar.TechnicalAnalysis.17",
+        ".fMultivar.TechnicalAnalysis.18",
+        ".fMultivar.TechnicalAnalysis.19",
+        ".fMultivar.TechnicalAnalysis.20",
+        ".fMultivar.TechnicalAnalysis.21")
+    addToolbarMenu(fMultivarMenu, Label, subLabel, Command) 
+        
+    # Add Menu:
+    Label = "Benchmark Analysis"
+    subLabel = c(
+        "* Example timeSeries: x = SP500 Index",
+        "Compute Maximum Draw-Down",
+        "Compute Sharpe Ratio",
+        "Compute Sterling Ratio")
+    Command = c(
+        ".fMultivar.BenchmarkAnalysis.1",
+        ".fMultivar.BenchmarkAnalysis.2",
+        ".fMultivar.BenchmarkAnalysis.3",
+        ".fMultivar.BenchmarkAnalysis.4")
+    addToolbarMenu(fMultivarMenu, Label, subLabel, Command)     
+        
+    # Add Menu:
+    Label = "Rolling Analysis"
+    subLabel = c(
+        "* Example timeSeries: x = SP500 Index",
+        "Rolling Mean",
+        "Rolling Variance",
+        "Rolling Minimum",
+        "Rolling Maximum",
+        "... Save object to x")
+    Command = c(
+        ".fMultivar.RollingAnalysis.1",
+        ".fMultivar.RollingAnalysis.2",
+        ".fMultivar.RollingAnalysis.3",
+        ".fMultivar.RollingAnalysis.4",
+        ".fMultivar.RollingAnalysis.5",
+        ".fMultivar.RollingAnalysis.6")
+    addToolbarMenu(fMultivarMenu, Label, subLabel, Command)
+    
     # Add Menu:
     Label = "Regression Modelling"
     subLabel = c(
@@ -154,86 +234,6 @@ function()
         ".fMultivar.MissingValues.5",
         ".fMultivar.MissingValues.6")
     addToolbarMenu(fMultivarMenu, Label, subLabel, Command) 
-        
-    # Add Menu:
-    Label = "Technical Analysis"
-    subLabel = c(
-        "* Example Data: Open-High-Low-Close SP500",
-        "emaTA - Exponential Moving Average",
-        "biasTA - EMA Price Bias",
-        "medpriceTA - Median Price",                    
-        "typicalpriceTA - Typical Price",
-        "wcloseTA - Weighted Close Price",
-        "rocTA - Rate of Change",
-        "oscTA - EMA-Oscillator",
-        "momTA - Momentum Oscillator",
-        "macdTA -  MACD Oscillator",
-        "cdsTA - MACD Signal Line",
-        "cdoTA - MACD Oscillator",
-        "vohlTA - High/Low Volatility",
-        "vorTA - Volatility Ratio",
-        "fpkTA - Fast %K Stochastics",
-        "fpdTA - Fast %D Stochastics",
-        "spdTA - Slow %D Stochastics",
-        "apdTA - Averaged %D Stochastics",
-        "wprTA - Williams %R Stochastics",
-        "rsiTA - Relative Strength Index",
-        "... merge Series and Indicator")
-    Command = c(
-        ".fMultivar.TechnicalAnalysis.1",
-        ".fMultivar.TechnicalAnalysis.2",
-        ".fMultivar.TechnicalAnalysis.3",
-        ".fMultivar.TechnicalAnalysis.4",
-        ".fMultivar.TechnicalAnalysis.5",
-        ".fMultivar.TechnicalAnalysis.6",
-        ".fMultivar.TechnicalAnalysis.7",
-        ".fMultivar.TechnicalAnalysis.8",
-        ".fMultivar.TechnicalAnalysis.9",
-        ".fMultivar.TechnicalAnalysis.10",
-        ".fMultivar.TechnicalAnalysis.11",
-        ".fMultivar.TechnicalAnalysis.12",
-        ".fMultivar.TechnicalAnalysis.13",
-        ".fMultivar.TechnicalAnalysis.14",
-        ".fMultivar.TechnicalAnalysis.15",
-        ".fMultivar.TechnicalAnalysis.16",
-        ".fMultivar.TechnicalAnalysis.17",
-        ".fMultivar.TechnicalAnalysis.18",
-        ".fMultivar.TechnicalAnalysis.19",
-        ".fMultivar.TechnicalAnalysis.20",
-        ".fMultivar.TechnicalAnalysis.21")
-    addToolbarMenu(fMultivarMenu, Label, subLabel, Command) 
-        
-    # Add Menu:
-    Label = "Benchmark Analysis"
-    subLabel = c(
-        "* Example timeSeries: x = SP500 Index",
-        "Compute Maximum Draw-Down",
-        "Compute Sharpe Ratio",
-        "Compute Sterling Ratio")
-    Command = c(
-        ".fMultivar.BenchmarkAnalysis.1",
-        ".fMultivar.BenchmarkAnalysis.2",
-        ".fMultivar.BenchmarkAnalysis.3",
-        ".fMultivar.BenchmarkAnalysis.4")
-    addToolbarMenu(fMultivarMenu, Label, subLabel, Command)     
-        
-    # Add Menu:
-    Label = "Rolling Analysis"
-    subLabel = c(
-        "* Example timeSeries: x = SP500 Index",
-        "Rolling Mean",
-        "Rolling Variance",
-        "Rolling Minimum",
-        "Rolling Maximum",
-        "... Save object to x")
-    Command = c(
-        ".fMultivar.RollingAnalysis.1",
-        ".fMultivar.RollingAnalysis.2",
-        ".fMultivar.RollingAnalysis.3",
-        ".fMultivar.RollingAnalysis.4",
-        ".fMultivar.RollingAnalysis.5",
-        ".fMultivar.RollingAnalysis.6")
-    addToolbarMenu(fMultivarMenu, Label, subLabel, Command)
         
     # Cascade fileMenu:
     cascadeToolbarMenu(Menu = fMultivarMenu, Label = "fMultivar")
