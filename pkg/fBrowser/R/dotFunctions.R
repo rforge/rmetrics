@@ -280,18 +280,6 @@ title = NULL, description = NULL)
 }
 
 
-# ------------------------------------------------------------------------------
-
-
-.normFit = 
-function(x) 
-{   # A function implemented by Diethelm Wuertz
-
-    X = as.vector(x)
-    list(estimate = c(mean = mean(X), sd = sd(X))) 
-}
-
-
 ################################################################################
 
 

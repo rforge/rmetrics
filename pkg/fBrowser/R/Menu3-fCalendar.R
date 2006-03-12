@@ -28,9 +28,7 @@
     
     
 ################################################################################
-# FUNCTION:
-#  .fCalendar.PopupMenu
-################################################################################
+#  fCalendar PopupMenu
 
 
 .fCalendar.PopupMenu =
@@ -117,7 +115,7 @@ function()
     addToolbarMenu(fCalendarMenu, Label, subLabel, Command)
     
     # Add Menu:
-    Label = "Time Series Class"     
+    Label = "Compose and Modify a Time Series Object"     
     subLabel = c(
         "* Example timeSeries: x = MSFT|SP500 Returns",
         "Print timeSeries Class Representation",
@@ -152,10 +150,10 @@ function()
         "Return Holiday Date",
         "NYSE Holiday Calendar")
     Command = c(
-        ".fCalendar.HolidayCalendars.1",
-        ".fCalendar.HolidayCalendars.2",
-        ".fCalendar.HolidayCalendars.3",
-        ".fCalendar.HolidayCalendars.4")
+        ".fCalendar.Holidays.easterDate",
+        ".fCalendar.Holidays.holidayList",
+        ".fCalendar.Holidays.holidayDate",
+        ".fCalendar.Holidays.nyseHolidays")
     addToolbarMenu(fCalendarMenu, Label, subLabel, Command)
     
     # Add Menu:

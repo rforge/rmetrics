@@ -28,9 +28,6 @@
 
 
 ################################################################################
-
-
-# ******************************************************************************
 # PlainVanillaOptions
 
 
@@ -1533,7 +1530,7 @@ function()
     # ... Print Summary Report
     myFunction <<- function(fit) {
         fit = eval(parse(text = "fit"))
-        .tkOutput(capture.output(summary(fit))) }
+        tkOutput(capture.output(summary(fit))) }
     tkExecute(
         fun = myFunction,
         params = list(
@@ -1553,11 +1550,11 @@ function()
     myFunction <<- function(model) {
         model = eval(parse(text = model))
         object <<- hngarchStats(model) 
-        .tkTitle("Heston-Nandi Statistics")
+        tkTitle("Heston-Nandi Statistics")
         output = t(as.data.frame(object))
         colnames(output) = "Statistic"
-        .tkOutput(capture.output(output))
-        .tkDescription()
+        tkOutput(capture.output(output))
+        tkDescription()
         object }
     tkExecute(
         fun = myFunction,

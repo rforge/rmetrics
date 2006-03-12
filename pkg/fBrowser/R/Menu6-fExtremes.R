@@ -77,7 +77,6 @@ function()
         "... Random Number Slider",
         "... Distribution Slider",
         "GEV Parameter Estimation",
-        "... Summary Report",
         "... Return Level Plot",
         "Hill Plot", 
         "Shape Parameter Plots")
@@ -87,7 +86,6 @@ function()
         ".fExtremes.GEV.RandSlider",
         ".fExtremes.GEV.DistSlider",
         ".fExtremes.GEV.fit",
-        ".fExtremes.GEV.summary",
         ".fExtremes.GEV.rlevel",
         ".fExtremes.MDA.hill",
         ".fExtremes.MDA.shaparm") 
@@ -100,15 +98,13 @@ function()
         "GPD Simulation", 
         "... Random Number Slider",
         "... Distribution Slider",
-        "GPD Parameter Estimation",
-        "... Summary Report")
+        "GPD Parameter Estimation")
     Command = c(
         ".fExtremes.GPD.bmw",
         ".fExtremes.GPD.sim",
         ".fExtremes.GPD.RandSlider",
         ".fExtremes.GPD.DistSlider",
-        ".fExtremes.GPD.fit",
-        ".fExtremes.GPD.summary")
+        ".fExtremes.GPD.fit")
     addToolbarMenu(fExtremesMenu, Label, subLabel, Command)
                      
     # Cascade fileMenu:

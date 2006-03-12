@@ -28,10 +28,6 @@
 
 
 ################################################################################
-# fExtremes Commands
-
-
-# ******************************************************************************
 # Extremes Plots
 
       
@@ -49,9 +45,8 @@ function()
     # Empirical Distribution Function:
     myFunction = function(series, object2x, report) {
         x = eval(parse(text = series))
-        par(mfrow = c(1, 1))
         object <<- emdPlot(x, doplot = TRUE, plottype = "", labels = TRUE,
-        	pch = 19, col = "steelblue")
+            pch = 19, col = "steelblue")
         object }
     tkExecute(
         fun = myFunction,
@@ -59,11 +54,7 @@ function()
             series = "x",
             object2x = FALSE,
             report = TRUE),
-        infoName = "Plot of Empirical Distribution",
-        tkoutput = FALSE,
-        console = NULL,
-        title = "Plot of Empirical Distribution",
-        description = NULL )   
+        infoName = "Plot of Empirical Distribution" )   
 }
 
 
@@ -73,9 +64,8 @@ function()
     # Quantile Quantile Plot:
     myFunction = function(series, object2x, report) {
         x = eval(parse(text = series))
-        par(mfrow = c(1, 1))
         object <<- qqPlot(x = x, doplot = TRUE, labels = TRUE,
-        	pch = 19, col = "steelblue")
+            pch = 19, col = "steelblue")
         object }
     tkExecute(
         fun = myFunction,
@@ -83,11 +73,7 @@ function()
             series = "x",
             object2x = FALSE,
             report = TRUE),
-        infoName = "Plot of Normal Quantiles",
-        tkoutput = FALSE,
-        console = NULL,
-        title = "Plot of Normal Quantiles",
-        description = NULL )       
+        infoName = "Plot of Normal Quantiles" )       
 }
 
 
@@ -97,9 +83,8 @@ function()
     # Normal QQ-Plot with 95% Intervals:
     myFunction = function(series, object2x, report) {
         x = eval(parse(text = series))
-        par(mfrow = c(1, 1))
         object <<- qqbayesPlot(x = x, doplot = TRUE, labels = TRUE,
-        	pch = 19, col = "steelblue")
+            pch = 19, col = "steelblue")
         object }
     tkExecute(
         fun = myFunction,
@@ -107,11 +92,7 @@ function()
             series = "x",
             object2x = FALSE,
             report = TRUE),
-        infoName = "Normal QQ Bayes Plot",
-        tkoutput = FALSE,
-        console = NULL,
-        title = "Normal QQ Bayes Plot",
-        description = NULL )       
+        infoName = "Normal QQ Bayes Plot" )       
 }
                
 
@@ -121,7 +102,6 @@ function()
     # Exponential/Pareto quantile plot:
     myFunction = function(series, xi, object2x, report) {
         x = eval(parse(text = series))
-        par(mfrow = c(1, 1))
         object <<- qPlot(x = x, xi = xi, trim = NA, threshold = NA, 
             doplot = TRUE, labels = TRUE, pch = 19, col = "steelblue")
         object }
@@ -132,11 +112,7 @@ function()
             xi = 0,
             object2x = FALSE,
             report = TRUE),
-        infoName = "Plot of Pareto Quantiles",
-        tkoutput = FALSE,
-        console = NULL,
-        title = "Plot of Pareto Quantiles",
-        description = NULL )       
+        infoName = "Plot of Pareto Quantiles" )       
 }
 
 
@@ -146,7 +122,6 @@ function()
     # Mean Excess Function Plot
     myFunction = function(series, object2x, report) {
         x = eval(parse(text = series))
-        par(mfrow = c(1, 1))
         object <<- mePlot(x = x, doplot = TRUE, labels = TRUE, pch = 19, 
             col = "steelblue")
         object }
@@ -156,11 +131,7 @@ function()
             series = "x",
             object2x = FALSE,
             report = TRUE),
-        infoName = "Mean Excess Function Plot",
-        tkoutput = FALSE,
-        console = NULL,
-        title = "Mean Excess Function Plot",
-        description = NULL )       
+        infoName = "Mean Excess Function Plot" )       
 }
 
 
@@ -170,7 +141,6 @@ function()
     # Mean Residual Life Plot:
     myFunction = function(series, conf, object2x, report) {
         x = eval(parse(text = series))
-        par(mfrow = c(1, 1))
         object <<- mrlPlot(x = x, conf = 0.95, umin = NA, umax = NA, 
             nint = 100, doplot = TRUE, plottype = c("autoscale", ""), 
             labels = TRUE, col = "steelblue")
@@ -182,11 +152,7 @@ function()
             conf = 0.95,
             object2x = FALSE,
             report = TRUE),
-        infoName = "Mean Residual Life Plot",
-        tkoutput = FALSE,
-        console = NULL,
-        title = "Mean Residual Life Plot",
-        description = NULL )       
+        infoName = "Mean Residual Life Plot" )       
 }
 
 
@@ -196,7 +162,6 @@ function()
     # Mean Excess Function Plot:
     myFunction = function(series, tail, object2x, report) {
         x = eval(parse(text = series))
-        par(mfrow = c(1, 1))
         object <<- mxfPlot(x = x, tail = 0.05, doplot = TRUE, labels = TRUE,
             pch = 19, col = "steelblue")
         object }
@@ -207,11 +172,7 @@ function()
             tail = 0.05,
             object2x = FALSE,
             report = TRUE),
-        infoName = "Plot of Mean Excesses",
-        tkoutput = FALSE,
-        console = NULL,
-        title = "Plot of Mean Excessws",
-        description = NULL )       
+        infoName = "Plot of Mean Excesses" )       
 }
 
 
@@ -221,7 +182,6 @@ function()
     # Plot of the ratio of maximum and sum:
     myFunction = function(series, p, object2x, report) {
         x = eval(parse(text = series))
-        par(mfrow = c(1, 1))
         object <<- msratioPlot(x, p = 1:4, doplot = TRUE,
             plottype = c("autoscale", ""), labels = TRUE)
         object }
@@ -231,11 +191,7 @@ function()
             series = "x",
             object2x = FALSE,
             report = TRUE),
-        infoName = "Plot of Maximum/Sum Ratio",
-        tkoutput = FALSE,
-        console = NULL,
-        title = "Plot of Maximum/Sum Ratio",
-        description = NULL )       
+        infoName = "Plot of Maximum/Sum Ratio" )       
 }
 
 
@@ -245,7 +201,6 @@ function()
     #  Record development compared with iid data:
     myFunction = function(series, conf, object2x, report) {
         x = eval(parse(text = series))
-        par(mfrow = c(1, 1))
         object <<- recordsPlot(x, conf = 0.95, doplot = TRUE, 
             labels = TRUE, pch = 19, col = "steelblue")
         object }
@@ -256,11 +211,7 @@ function()
             conf = 0.95,
             object2x = FALSE,
             report = TRUE),
-        infoName = "Plot of Records Development",
-        tkoutput = FALSE,
-        console = NULL,
-        title = "Plot of Records Development",
-        description = NULL )       
+        infoName = "Plot of Records Development" )       
 }
 
 
@@ -271,7 +222,6 @@ function()
     myFunction = function(series, subsamples, plottype, object2x, report) {
         x = eval(parse(text = series))
         plottype = eval(parse(text = plottype))
-        par(mfrow = c(1, 1))
         object <<- ssrecordsPlot(x = x, subsamples = 10, doplot = TRUE, 
             plottype = plottype, labels = TRUE)
         object }
@@ -283,11 +233,7 @@ function()
             plottype = "c('lin', 'log')",
             object2x = FALSE,
             report = TRUE),
-        infoName = "Plot of Subsample Records",
-        tkoutput = FALSE,
-        console = NULL,
-        title = "Plot of Subsample Records",
-        description = NULL )       
+        infoName = "Plot of Subsample Records" )       
 }
 
 
@@ -298,7 +244,6 @@ function()
     # ACF of exceedences over a threshold:
     myFunction = function(series, object2x, report) {
         x = eval(parse(text = series))
-        par(mfrow = c(1, 1))
         object <<- xacfPlot()
         object }
     tkExecute(
@@ -307,16 +252,11 @@ function()
             series = "x",
             object2x = FALSE,
             report = TRUE),
-        infoName = "Plot of ACF of Exceedences",
-        tkoutput = FALSE,
-        console = NULL,
-        title = "Plot of ACF of Exceedences",
-        description = NULL )       
+        infoName = "Plot of ACF of Exceedences" )       
 }
 
 
-
-# ******************************************************************************
+################################################################################
 # Generalized Extreme Value
 
 
@@ -362,11 +302,7 @@ function()
             scale = 1,
             object2x = TRUE,
             report = TRUE),
-        infoName = "Simulated GEV Series",
-        tkoutput = FALSE,
-        console = "print(head(object))",
-        title = "Simulated GEV Series",
-        description = NULL )
+        infoName = "Simulated GEV Series" )
 }
 
 
@@ -377,12 +313,6 @@ function()
     myFunction <<- function(series, type, gumbel, object2x, report) { 
         x = eval(parse(text = series))
         object <<- gevFit(x = x, type = type, gumbel = gumbel)
-        fittedObject <<- tkSaveAs(
-            data = object, 
-            infoName = "GEV Fit", 
-            console = NULL, 
-            what = "fitted", 
-            tkoutput = FALSE)
         object }
     tkExecute(
         fun = myFunction,
@@ -392,11 +322,7 @@ function()
             gumbel = FALSE,
             object2x = FALSE,
             report = TRUE),
-        infoName = "GEV Parameter Fit",
-        tkoutput = FALSE,
-        console = NULL,
-        title = "GEV Parameter Fit",
-        description = NULL )
+        infoName = "GEV Parameter Fit" )
 }
 
 
@@ -404,7 +330,7 @@ function()
 function()
 {
     # Summary Report:
-    tkSummary(fitted@bject)
+    tkGetSummary(fitted@bject)
 }
 
 
@@ -421,11 +347,7 @@ function()
             k.blocks = 20, 
             object2x = FALSE,
             report = TRUE),
-        infoName = "Return Level Plot",
-        tkoutput = FALSE,
-        console = NULL,
-        title = "Return Level Plot",
-        description = NULL ) 
+        infoName = "Return Level Plot" ) 
 }
 
 
@@ -453,11 +375,7 @@ function()
             ci = 0.95,
             object2x = FALSE,
             report = TRUE),
-        infoName = "Hill Plot",
-        tkoutput = FALSE,
-        console = NULL,
-        title = "Hill Plot",
-        description = NULL )
+        infoName = "Hill Plot" )
 }
 
 
@@ -482,11 +400,7 @@ function()
             standardize = FALSE,
             object2x = FALSE,
             report = TRUE),
-        infoName = "Shape Parameter Plots",
-        tkoutput = FALSE,
-        console = NULL,
-        title = "Shape Parameter Plots",
-        description = NULL )
+        infoName = "Shape Parameter Plots" )
 }   
 
 
@@ -537,11 +451,7 @@ function()
             scale = 1,
             object2x = TRUE,
             report = TRUE),
-        infoName = "Simulated GPD Series",
-        tkoutput = FALSE,
-        console = "print(head(object))",
-        title = "Simulated GPD Series",
-        description = NULL )
+        infoName = "Simulated GPD Series" )
 }
 
 
@@ -558,13 +468,6 @@ function()
         object <<- gpdFit(x = x, threshold = threshold, 
             nextremes = nextremes, type = type, 
             information = c("observed", "expected") )
-        # Save Fit:
-        fittedObject <<- tkSaveAs(
-            data = object, 
-            infoName = "GPD Fit", 
-            console = NULL, 
-            what = "fitted", 
-            tkoutput = FALSE)
         object }
     tkExecute(
         fun = myFunction,
@@ -575,11 +478,7 @@ function()
             type = "c('mle', 'pwm')", 
             object2x = FALSE,
             report = TRUE),
-        infoName = "GPD Parameter Fit",
-        tkoutput = FALSE,
-        console = NULL,
-        title = "GPD Parameter Fit",
-        description = NULL )
+        infoName = "GPD Parameter Fit")
 }
 
 
@@ -587,7 +486,7 @@ function()
 function()
 {
     # Summary Report:
-    tkSummary(fitted@bject)
+    tkGetSummary(fitted@bject)
 }
 
     
@@ -612,11 +511,7 @@ function()
             like.num = 50,
             object2x = FALSE,
             report = FALSE),
-        infoName = "GPD q-Plot",
-        tkoutput = FALSE,
-        console = NULL,
-        title = "GPD q-Plot",
-        description = NULL )
+        infoName = "GPD q-Plot" )
 }
 
 
@@ -645,11 +540,7 @@ function()
             ci = 0.95,
             object2x = FALSE,
             report = FALSE),
-        infoName = "Estimate of a High Quantile",
-        tkoutput = FALSE,
-        console = NULL,
-        title = "Estimate of a High Quantile",
-        description = NULL )
+        infoName = "Estimate of a High Quantile" )
 }
 
 
@@ -667,11 +558,7 @@ function()
             plevels = "c(0.99, 0.995, 0.999, 0.9995, 0.9999)",
             object2x = FALSE,
             report = TRUE),
-        infoName = "GPD Risk Measures",
-        tkoutput = FALSE,
-        console = NULL,
-        title = "GPD Risk Measures",
-        description = NULL )
+        infoName = "GPD Risk Measures" )
 }
 
 
@@ -693,11 +580,7 @@ function()
             like.num = 50,
             object2x = FALSE,
             report = TRUE),
-        infoName = "Expected Shortfall Estimates",
-        tkoutput = FALSE,
-        console = NULL,
-        title = "Expected Shortfall Estimates",
-        description = NULL )
+        infoName = "Expected Shortfall Estimates" )
 }
 
 
@@ -705,7 +588,7 @@ function()
 function()
 {
     myFunction = function(series, models, start, end, reverse, ci,
-        lables) {
+        lables, object2x, report) {
         x = eval(parse(text = series))
         object <<- gpdshapePlot(x = x, models = models, start = start, 
             end = end, reverse = reverse, ci = ci, autoscale = TRUE, 
@@ -720,21 +603,18 @@ function()
             end = 500,
             reverse = TRUE,
             ci = 0.95,
-            labels = TRUE),
-        infoName = "GPD Shape Plot",
-        tkoutput = FALSE,
-        console = NULL,
-        title = "GPD Shape Plot",
-        description = NULL )
+            labels = TRUE,
+            object2x = FALSE,
+            report = TRUE),
+        infoName = "GPD Shape Plot" )
 }
 
 
 .fExtremes.GPD.tail = 
 function()
 {
-    myFunction = function(fittedObject, extend, labels) {
+    myFunction = function(fittedObject, extend, labels, object2x, report) {
         fit = eval(parse(text = fittedObject))
-        par(mfrow = c(1, 1))
         object <<- gpdtailPlot(fit = fit, extend = extend, labels = labels)
         title(main = "GPD Tail Plot")
         object }
@@ -744,12 +624,10 @@ function()
             fittedObject = "fit",
             optlog = NA,
             extend = 1.5,
-            labels = TRUE),
-        infoName = "GPD Tail Plot",
-        tkoutput = FALSE,
-        console = NULL,
-        title = "GPD Tail Plot",
-        description = NULL )
+            labels = TRUE,
+            object2x = FALSE,
+            report = TRUE),
+        infoName = "GPD Tail Plot" )
 }
 
 

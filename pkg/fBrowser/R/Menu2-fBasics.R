@@ -53,10 +53,10 @@ function()
         "Yahoo Series Download",
         "FRED St. Louis Series Download")
     Command = c(
-        ".fBasics.Import.class",
-        ".fBasics.Import.economagic",
-        ".fBasics.Import.yahoo",
-        ".fBasics.Import.fred")
+        ".fBasics.Import.getClass",
+        ".fBasics.Import.economagicImport",
+        ".fBasics.Import.yahooImport",
+        ".fBasics.Import.fredImport")
     addToolbarMenu(fBasicsMenu, Label, subLabel, Command)
  
     
@@ -148,15 +148,15 @@ function()
         ".fBasics.ReturnDistributions.rnorm",
         ".fBasics.ReturnDistributions.rnormSlider",
         ".fBasics.ReturnDistributions.dnormSlider",
-        ".fBasics.DistributionFits.norm",
+        ".fBasics.DistributionFits.normFit",
         ".fBasics.ReturnDistributions.rhyp",
         ".fBasics.ReturnDistributions.rhypSlider",
         ".fBasics.ReturnDistributions.dhypSlider",
-        ".fBasics.DistributionFits.hyp",
+        ".fBasics.DistributionFits.hypFit",
         ".fBasics.ReturnDistributions.rnig",
         ".fBasics.ReturnDistributions.rnigSlider",
         ".fBasics.ReturnDistributions.dnigSlider",
-        ".fBasics.DistributionFits.nig",
+        ".fBasics.DistributionFits.nigFit",
         ".fBasics.ReturnDistributions.rsymstb",
         ".fBasics.ReturnDistributions.rsymstbSlider",
         ".fBasics.ReturnDistributions.dsymstbSlider",

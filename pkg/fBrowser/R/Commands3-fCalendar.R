@@ -28,11 +28,7 @@
 
 
 ################################################################################
-# fCalendar Commands
-
-
-# ******************************************************************************
-# Time Date Class
+# Create a timeDate Object
 
 
 .fCalendar.TimeDateClass.dates = 
@@ -40,7 +36,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # * Example timeDate: x = 12 Random Dates in Current Year
-    myFunction = function(FinCenter, object2x) {
+    myFunction = function(FinCenter, object2x, report) {
         y = rep(currentYear, 12)
         d = trunc(runif(12, 1, 29))
         m = trunc(runif(12, 1, 13))
@@ -50,12 +46,9 @@ function()
         fun = myFunction,
         params = list( 
             FinCenter = "GMT",
-            object2x = TRUE),
-        infoName = "12 Random Dates in Current Year",
-        tkoutput = TRUE,
-        console = NULL,
-        title = "12 Random Dates in Current Year",
-        description = NULL )          
+            object2x = TRUE,
+            report = TRUE),
+        infoName = "12 Random Dates in Current Year" )          
 }
 
 
@@ -64,7 +57,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # * Example timeDate: x = 12 Random Times in Current Year 
-    myFunction = function(FinCenter, object2x) {
+    myFunction = function(FinCenter, object2x, report) {
         y = rep(2005, 12)
         d = trunc(runif(12, 1, 29))
         m = trunc(runif(12, 1, 13))
@@ -78,12 +71,9 @@ function()
         fun = myFunction,
         params = list( 
             FinCenter = "GMT",
-            object2x = TRUE),
-        infoName = "12 Random Times in Current Year",
-        tkoutput = TRUE,
-        console = NULL,
-        title = "12 Random Times in Current Year",
-        description = NULL )          
+            object2x = TRUE,
+            report = TRUE),
+        infoName = "12 Random Times in Current Year" )          
 }
 
 
@@ -118,11 +108,7 @@ function()
             FinCenter = "GMT",
             object2x = FALSE,
             report = TRUE),
-        infoName = "timeDate Sequence",
-        tkoutput = FALSE,
-        console = "print(object[1:5])",
-        title = "timeDate Sequence",
-        description = NULL )          
+        infoName = "timeDate Sequence" )          
 }
 
 
@@ -153,11 +139,7 @@ function()
             FinCenter = "GMT",
             object2x = FALSE,
             report = TRUE),
-        infoName = "timeDate Calendar",
-        tkoutput = FALSE,
-        console = "print(object[1:5])",
-        title = "timeDate Calendar",
-        description = NULL )          
+        infoName = "timeDate Calendar" )          
 }
 
 
@@ -189,11 +171,7 @@ function()
             FinCenter = "GMT",
             object2x = FALSE,
             report = TRUE),
-        infoName = "Last Day in Month",
-        tkoutput = TRUE,
-        console = "print(object[1:5])",
-        title = "Last Day in Month",
-        description = NULL )          
+        infoName = "Last Day in Month" )          
 }
 
 
@@ -217,11 +195,7 @@ function()
             FinCenter = "GMT",
             object2x = FALSE,
             report = TRUE),
-        infoName = "The N-Day On-Or-After",
-        tkoutput = TRUE,
-        console = "print(object[1:5])",
-        title = "The N-Day On-Or-After",
-        description = NULL )               
+        infoName = "The N-Day On-Or-After" )               
 }
 
 
@@ -245,11 +219,7 @@ function()
             FinCenter = "GMT",
             object2x = FALSE,
             report = TRUE),
-        infoName = "The N-Day On-Or-Before",
-        tkoutput = TRUE,
-        console = "print(object[1:5])",
-        title = "The N-Day On-Or-Before",
-        description = NULL )              
+        infoName = "The N-Day On-Or-Before" )              
 }
 
 
@@ -259,7 +229,7 @@ function()
     
     # The n-th ocurrance of a n-day in year/month
     myFunction = function(series, nday, nth, format, FinCenter, 
-        object2x, report = TRUE) {
+        object2x, report) {
         x = eval(parse(text = series))
         object <<- timeNthNdayInMonth(charvec = as.character(x), 
             nday = nday, nt = nth, format = format, FinCenter = FinCenter)  
@@ -274,11 +244,7 @@ function()
             FinCenter = "GMT",
             object2x = FALSE,
             report = TRUE),
-        infoName = "The n-th Ocurrance of a n-Day",
-        tkoutput = TRUE,
-        console = "print(object[1:5])",
-        title = "The n-th Ocurrance of a n-Day",
-        description = NULL )              
+        infoName = "The n-th Ocurrance of a n-Day" )              
 }
 
 
@@ -302,11 +268,7 @@ function()
             FinCenter = "GMT",
             object2x = FALSE,
             report = TRUE),
-        infoName = "The Last N-Day",
-        tkoutput = TRUE,
-        console = "print(object[1:5])",
-        title = "The Last N-Day",
-        description = NULL )              
+        infoName = "The Last N-Day" )              
 }
 
 
@@ -324,19 +286,17 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # DST Rules for a Financial Center:
-    myFunction = function(FinCenter){
+    myFunction = function(FinCenter, object2x, report){
         FUN = match.fun(FinCenter)
         object <<- FUN()
         object }
     tkExecute(
         fun = myFunction,
         params = list(
-            FinCenter = "Zurich"),
-        infoName = "DST Rules",
-        tkoutput = TRUE,
-        console = NULL,
-        title = "Daylight Saving Time Rules",
-        description = NULL )
+            FinCenter = "Zurich",
+            object2x = FALSE,
+            report = TRUE),
+        infoName = "DST Rules" )
 }
 
 
@@ -345,13 +305,13 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Print Summary of a 'timeDate' object
-    tkSummary(x, title = "timeDate Summary")
+    tkGetSummary(x, title = "timeDate Summary")
 }                                               
 
 
 
-# ******************************************************************************
-# Time Date Methods
+################################################################################
+# Manipulate a timeDate Object
 
 
 .fCalendar.TimeDateMethods.dates = 
@@ -359,7 +319,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # * Example timeDate: x = 12 Random Dates in Current Year
-    myFunction = function(FinCenter, object2x) {
+    myFunction = function(FinCenter, object2x, report) {
         y = rep(currentYear, 12)
         d = trunc(runif(12, 1, 29))
         m = trunc(runif(12, 1, 13))
@@ -369,12 +329,9 @@ function()
         fun = myFunction,
         params = list( 
             FinCenter = "GMT",
-            object2x = TRUE),
-        infoName = "12 Random Dates in Current Year",
-        tkoutput = TRUE,
-        console = NULL,
-        title = "12 Random Dates in Current Year",
-        description = NULL )          
+            object2x = TRUE,
+            report = TRUE),
+        infoName = "12 Random Dates in Current Year" )          
 }
 
 
@@ -383,7 +340,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # * Example timeDate: x = 12 Random Times in Current Year 
-    myFunction = function(FinCenter, object2x) {
+    myFunction = function(FinCenter, object2x, report) {
         y = rep(2005, 12)
         d = trunc(runif(12, 1, 29))
         m = trunc(runif(12, 1, 13))
@@ -397,12 +354,9 @@ function()
         fun = myFunction,
         params = list( 
             FinCenter = "GMT",
-            object2x = TRUE),
-        infoName = "12 Random Times in Current Year",
-        tkoutput = TRUE,
-        console = NULL,
-        title = "12 Random Times in Current Year",
-        description = NULL )          
+            object2x = TRUE,
+            report = TRUE ),
+        infoName = "12 Random Times in Current Year" )          
 }
 
 
@@ -420,7 +374,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Extract the first object of a timeDate Vector
-    myFunction = function(series, object2x) {
+    myFunction = function(series, object2x, report) {
         x = eval(parse(text = series))
         object <<- start(modify(x = x, "sort"))
         object }
@@ -428,12 +382,9 @@ function()
         fun = myFunction,
         params = list(
             series = "x",
-            object2x = FALSE),
-        infoName = "First timeDate Value",
-        tkoutput = TRUE,
-        console = NULL,
-        title = "First timeDate Value",
-        description = NULL )
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "First timeDate Value" )
 }
 
 
@@ -442,7 +393,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Extract the last object of a timeDate Vector:
-    myFunction = function(series, object2x) {
+    myFunction = function(series, object2x, report) {
         x = eval(parse(text = series))
         object <<- end(modify(x = x, "sort"))
         object  }
@@ -450,12 +401,9 @@ function()
         fun = myFunction,
         params = list(
             series = "x",
-            object2x = FALSE),
-        infoName = "Last timeDate Value",
-        tkoutput = TRUE,
-        console = NULL,
-        title = "Last timeDate Value",
-        description = NULL )
+            object2x = FALSE,
+            report = TRUE),
+        infoName = "Last timeDate Value" )
 }
 
 
@@ -482,11 +430,7 @@ function()
             seconds = 0,
             object2x = FALSE,
             report = TRUE),
-        infoName = "+/- Time Span a timeDate Object",
-        tkoutput = FALSE,
-        console = "print(object[1:5])",
-        title = "+/- Time Span a timeDate Object",
-        description = NULL )          
+        infoName = "+/- Time Span a timeDate Object" )          
 }
 
 
@@ -505,11 +449,7 @@ function()
             series = "x",
             object2x = FALSE,
             report = TRUE),
-        infoName = "Sort a timeDate Object",
-        tkoutput = FALSE,
-        console = "print(object[1:5])",
-        title = "Sort a timeDate Vector",
-        description = NULL )          
+        infoName = "Sort a timeDate Object" )          
 }
 
 
@@ -529,11 +469,7 @@ function()
             units = "days",
             object2x = FALSE,
             report = TRUE),
-        infoName = "Round a timeDate Object",
-        tkoutput = FALSE,
-        console = "print(object[1:5])",
-        title = "Round a timeDate Object",
-        description = NULL )
+        infoName = "Round a timeDate Object" )
 }
 
 
@@ -553,10 +489,7 @@ function()
             units = "days",
             object2x = FALSE,
             report = TRUE),
-        infoName = "Truncate a timeDate Object",
-        console = "print(object[1:5])",
-        title = "Truncate a timeDate Object",
-        description = NULL )
+        infoName = "Truncate a timeDate Object" )
 }
 
 
@@ -575,11 +508,7 @@ function()
             series = "x",
             object2x = FALSE,
             report = TRUE),
-        infoName = "Revert a timeDate Object",
-        tkoutput = TRUE,
-        console = "print(object[1:5])",
-        title = "Revert a timeDate Object",
-        description = NULL )
+        infoName = "Revert a timeDate Object" )
 }
 
 
@@ -598,11 +527,7 @@ function()
             series = "x",
             object2x = FALSE,
             report = TRUE),
-        infoName = "timeDate Object to Character",
-        tkoutput = TRUE,
-        console = "print(head(object))",
-        title = "timeDate Object to Character",
-        description = NULL )
+        infoName = "timeDate Object to Character" )
 }
 
 
@@ -621,11 +546,7 @@ function()
             series = "x",
             object2x = FALSE, 
             report = TRUE),
-        infoName = "timeDate Object to Data Frame",
-        tkoutput = TRUE,
-        console = "print(head(object))",
-        title = "timeDate Object to Data Frame",
-        description = NULL )
+        infoName = "timeDate Object to Data Frame" )
 }
 
 
@@ -644,11 +565,7 @@ function()
             series = "x",
             object2x = FALSE,
             report = TRUE),
-        infoName = "timeDate Object to POSIXct",
-        tkoutput = TRUE,
-        console = "print(head(object))",
-        title = "timeDate Object to POSIXct",
-        description = NULL )
+        infoName = "timeDate Object to POSIXct" )
 }
 
 
@@ -667,11 +584,7 @@ function()
             series = "x",
             object2x = FALSE,
             report = TRUE),
-        infoName = "timeDate Object to Julian Counts",
-        tkoutput = TRUE,
-        console = "print(object[1:5])",
-        title = "timeDate Object to Julian Counts",
-        description = NULL )
+        infoName = "timeDate Object to Julian Counts" )
 }
 
 
@@ -690,16 +603,12 @@ function()
             series = "x",
             object2x = FALSE,
             report = TRUE),
-        infoName = "Extract Atoms from timeDate Object",
-        tkoutput = TRUE,
-        console = "print(object)",
-        title = "Extract Atoms from timeDate Object",
-        description = NULL )
+        infoName = "Extract Atoms from timeDate Object" )
 }
 
 
-# ******************************************************************************
-# Time Series Class
+################################################################################
+# Compose and Modify a timeSeries Object
 
 
 .fCalendar.TimeSeriesClass.msftsp500Monthly = 
@@ -745,11 +654,7 @@ function()
             FinCenter = "GMT",
             object2x = TRUE,
             report = TRUE),
-        infoName = "Create a timSeries Object",
-        tkoutput = TRUE,
-        console = "print(object)",
-        title = "Create a timSeries Object",
-        description = NULL )
+        infoName = "Create a timSeries Object" )
 }
 
 
@@ -773,11 +678,7 @@ function()
             FUN = "colAvgs",
             object2x = FALSE,
             report = TRUE),
-        infoName = "Apply FUN to timeSeries Object",
-        tkoutput = TRUE,
-        console = "print(head(object))",
-        title = "Apply FUN to timeSeries Object",
-        description = NULL )
+        infoName = "Apply FUN to timeSeries Object" )
 }
 
 
@@ -786,7 +687,8 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Align Daily Series:
-    myFunction = function(series, method, include.weekends, object2x) { 
+    myFunction = function(series, method, include.weekends, 
+        object2x, report) { 
         x = eval(parse(text = series))
         ans = alignDailySeries(x = x, method = method, 
             include.weekends = include.weekends) 
@@ -799,12 +701,9 @@ function()
             series = "x",
             method = "before",
             include.weekends = TRUE,
-            object2x = FALSE),
-        infoName = "Aligned Daily timeSeries",
-        tkoutput = TRUE,
-        console = "print(head(object))",
-        title = NULL,
-        description = NULL )
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Aligned Daily timeSeries")
 }
 
 
@@ -813,7 +712,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Cut Series:
-    myFunction = function(series, from, to, object2x) {
+    myFunction = function(series, from, to, object2x, report) {
         x = eval(parse(text = series))
         object <<- cutSeries(x = x, from = from, to = to) 
         object }
@@ -822,12 +721,10 @@ function()
         params = list(
             series = "x",
             from = "2000-01-01",
-            to = "2000-12-31"),
-        infoName = "Cutted timeSeries",
-        tkoutput = TRUE,
-        console = "print(head(object))",
-        title = NULL,
-        description = NULL )
+            to = "2000-12-31",
+            object2x = FALSE,
+            report = TRUE),
+        infoName = "Cutted timeSeries" )
 }
 
 
@@ -836,7 +733,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Difference Series:
-    myFunction = function(series, lag, diff, trim, pa, object2x) {
+    myFunction = function(series, lag, diff, trim, pa, object2x, report) {
         x = eval(parse(text = series))
         object <<- diffSeries(x = x, lag = lag, diff = diff, 
             trim = trim, pad = pad) 
@@ -849,12 +746,9 @@ function()
             diff = 1, 
             trim = FALSE, 
             pad = NA,
-            object2x = FALSE),
-        infoName = "Differenced timeSeries",
-        tkoutput = TRUE,
-        console = "print(head(object))",
-        title = NULL,
-        description = NULL )
+            object2x = FALSE, 
+            report = TRUE ),
+        infoName = "Differenced timeSeries" )
 }
 
 
@@ -863,7 +757,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Lag Series:
-    myFunction = function(series, k, trim, object2x) {
+    myFunction = function(series, k, trim, object2x, report) {
         x = eval(parse(text = series))
         k = as.integer(k)
         object <<- lagSeries(x = x, k = k, trim  = trim, colNames = NULL) 
@@ -874,12 +768,9 @@ function()
             series = "x",
             k = 1, 
             trim = FALSE,
-            object2x = FALSE),
-        infoName = "Lagged timeSeries",
-        tkoutput = TRUE,
-        console = "print(head(object))",
-        title = NULL,
-        description = NULL )
+            object2x = FALSE,
+            report = TRUE),
+        infoName = "Lagged timeSeries" )
 }
 
 
@@ -900,11 +791,7 @@ function()
             matrix = "object@Data",
             object2x = FALSE,
             report = TRUE),
-        infoName = "Merge Series with Matrix",
-        tkoutput = FALSE,
-        console = "print(head(object))",
-        title = "Merge Series with Matrix",
-        description = NULL )
+        infoName = "Merge Series with Matrix" )
 }
 
 
@@ -929,11 +816,7 @@ function()
             digits = 4,
             object2x = FALSE,
             report = TRUE),
-        infoName = "Compute Return Series",
-        tkoutput = FALSE,
-        console = "print(head(object))",
-        title = "Compute Return Series",
-        description = NULL )
+        infoName = "Compute Return Series" )
 }
 
 
@@ -952,103 +835,92 @@ function()
             series = "x",
             object2x = FALSE,
             report = TRUE),
-        infoName = "Revert timeSeries Object",
-        tkoutput = FALSE,
-        console = "print(head(object))",
-        title = "Revert timeSeries Object",
-        description = NULL )
+        infoName = "Revert timeSeries Object" )
 }
 
 
-# ******************************************************************************
+################################################################################
 # Holiday Calendars
 
 
-.fCalendar.HolidayCalendars.1 = function() .fCalendar.E5Cmd(1)
-.fCalendar.HolidayCalendars.2 = function() .fCalendar.E5Cmd(2)
-.fCalendar.HolidayCalendars.3 = function() .fCalendar.E5Cmd(3)
-.fCalendar.HolidayCalendars.4 = function() .fCalendar.E5Cmd(4)
-
-
-.fCalendar.HolidayCalendars.1 = 
+.fCalendar.Holidays.easterDate = 
 function()
 {   # A function implemented by Diethelm Wuertz
 
     # Date of Easter & Related Dates:
-    myFunction = function(year, shift) {
+    myFunction = function(year, shift, object2x, report) {
         year = eval(parse(text = year)) 
-        easter(year = year, shift = shift) }
-    tkExecute(
-        fun = myFunction,
-        params = list(
-            year = as.character(currentYear),
-            shift = 0 ),
-        infoName = "Date of Easter",
-        tkoutput = TRUE,
-        console = "print(object)",
-        title = NULL,
-        description = NULL )
-}
-
-
-.fCalendar.HolidayCalendars.2 = 
-function()
-{   # A function implemented by Diethelm Wuertz
-
-    # List of Supported Holidays:  
-    object <<- .infoObject(
-        data = .holidayList(), 
-        infoName = "Holiday List")
-    .tkReport("Holiday List")
-}
-
-
-.fCalendar.HolidayCalendars.3 = 
-function()
-{   # A function implemented by Diethelm Wuertz
-
-    # Return Holiday Date:
-    myFunction = function(year, Holiday) {
-        year = eval(parse(text = year))
-        object <<- holiday(year, Holiday)
-        .tkReport(paste("Holiday Dates", "-", Holiday))
+        object = timeDate(easter(year = year, shift = shift))
         object }
     tkExecute(
         fun = myFunction,
         params = list(
             year = as.character(currentYear),
-            Holiday = "LaborDay" ),
-        infoName = "Holiday Dates",
-        tkoutput = TRUE,
-        console = NULL,
-        title = NULL,
-        description = NULL )
+            shift = 0,
+            object2x = FALSE,
+            report = TRUE),
+        infoName = "Holiday Date(s)" )
 }
 
 
-.fCalendar.HolidayCalendars.4 = 
+.fCalendar.Holidays.holidayList = 
+function()
+{   # A function implemented by Diethelm Wuertz
+
+    # List of Supported Holidays:  
+    myFunction = function(object2x, report) {
+        object <<- .holidayList()
+        object }
+    tkExecute(
+        fun = myFunction,
+        params = list(
+            object2x = FALSE,
+            report = TRUE),
+        infoName = "Holiday List" )
+}
+
+
+.fCalendar.Holidays.holidayDate = 
+function()
+{   # A function implemented by Diethelm Wuertz
+
+    # Return Holiday Date:
+    myFunction = function(year, Holiday, object2x, report) {
+        year = eval(parse(text = year))
+        object <<- holiday(year, Holiday)
+        object }
+    tkExecute(
+        fun = myFunction,
+        params = list(
+            year = as.character(currentYear),
+            Holiday = "Easter",
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Holiday Date(s)" )
+}
+
+
+.fCalendar.Holidays.nyseHolidays = 
 function()
 {   # A function implemented by Diethelm Wuertz
 
     # NYSE Holiday Calendar:
-    myFunction = function(fromYear, toYear) {
+    myFunction = function(fromYear, toYear, object2x, report) {
         years = seq(fromYear, toYear, by = sign(toYear-fromYear))
         object <<- holiday.NYSE(years) 
         object }
     tkExecute(
         fun = myFunction,
         params = list(
-            fromYear = 2005,
-            toYear = 2005),
-        infoName = "NYSE Holiday Dates",
-        tkoutput = TRUE,
-        console = NULL,
-        title = NULL,
-        description = NULL )
+            fromYear = currentYear,
+            toYear = currentYear,
+            object2x = FALSE,
+            report = TRUE),
+        infoName = "NYSE Holiday Dates" )
 }
 
 
-# ******************************************************************************
+################################################################################
 # High Frequency Data Tools
 
 
@@ -1058,13 +930,7 @@ function()
 
     # * Example data.frame: x = FX Reuters USDTHB:
     data(usdthb)
-    x <<- tkSaveAs(
-        data = usdthb, 
-        infoName = "FX Reuters USDTHB",
-        tkoutput = TRUE,
-        console = "print(tail(data))",
-        title = NULL,
-        description = NULL )
+    x <<- tkSaveAsX(data = usdthb, infoName = "FX Reuters USDTHB")
 }
 
 
@@ -1078,8 +944,7 @@ function()
         object <<- fxdata.contributors(x = x, include = include)
         print(object)
         cat("\n")
-        x <<- tkSaveAs(
-            data = fxdata.parser(x = x, parser.table = object),
+        x <<- tkSaveAsX(data = fxdata.parser(x = x, parser.table = object),
             infoName = "parsed Data") 
         y = head(x)
         y[, 1] = as.character(y[, 1])
@@ -1139,7 +1004,6 @@ function()
             parameter = "strong"),
         infoName = "Filtered FX Data",
         tkoutput = TRUE,
-        console = NULL,
         title = NULL,
         description = NULL )   
 }
@@ -1160,7 +1024,6 @@ function()
             digits = 4),
         infoName = "Variable Minutes formatted FX Data",
         tkoutput = TRUE,
-        console = "print(head(object))",
         title = NULL,
         description = NULL )  
 }
@@ -1172,13 +1035,7 @@ function()
 
     # * Example data.frame: x = FX Reuters AUDUSD:
     data(audusd)
-    x <<- tkSaveAs(
-        data = audusd, 
-        infoName = "FX Reuters AUDUSD",
-        tkoutput = TRUE,
-        console = "print(tail(data))",
-        title = NULL,
-        description = NULL )
+    x <<- tkSaveAsX(data = audusd, infoName = "FX Reuters AUDUSD")
 }
 
 
@@ -1198,7 +1055,6 @@ function()
             object2x = TRUE ),
         infoName = "List of FX Prices",
         tkoutput = TRUE,
-        console = "print(tail(data.frame(object)))",
         title = NULL,
         description = NULL )  
 }
@@ -1220,7 +1076,6 @@ function()
             object2x = FALSE),
         infoName = "List of Log FX Prices",
         tkoutput = TRUE,
-        console = "print(tail(data.frame(object)))",
         title = NULL,
         description = NULL )   
 }
@@ -1242,7 +1097,6 @@ function()
             object2x = TRUE),
         infoName = "List of Log FX Returns",
         tkoutput = TRUE,
-        console = "print(tail(data.frame(object)))",
         title = NULL,
         description = NULL )
 }
@@ -1266,7 +1120,6 @@ function()
             object2x = FALSE),
         infoName = "List of Cutted Series",
         tkoutput = TRUE,
-        console = "print(tail(data.frame(object)))",
         title = NULL,
         description = NULL )
 }
@@ -1290,7 +1143,6 @@ function()
             object2x = FALSE),
         infoName = "List of Cutted Series",
         tkoutput = TRUE,
-        console = "print(tail(data.frame(object)))",
         title = NULL,
         description = NULL )
 }
@@ -1310,8 +1162,7 @@ function()
 
     # :
     data(fdax97m)
-    x <<- tkSaveAs(
-        data = as.timeSeries(fdax97m, format = "%Y%m%d%H%M"),
+    x <<- tkSaveAsX(data = as.timeSeries(fdax97m, format = "%Y%m%d%H%M"),
         infoName = "FDAX Index 1997")
 }
 
@@ -1368,7 +1219,6 @@ function()
             doplot = TRUE),
         infoName = "Series & Time Map",
         tkoutput = TRUE,
-        console = NULL,
         title = NULL,
         description = NULL )  
 }
@@ -1427,7 +1277,6 @@ function()
             doplot = TRUE),
         infoName = "Series & Parameters",
         tkoutput = TRUE,
-        console = NULL,
         title = NULL,
         description = NULL )       
 }
@@ -1469,7 +1318,6 @@ function()
             doplot = TRUE),
         infoName = "Series & Time Map",
         tkoutput = TRUE,
-        console = NULL,
         title = NULL,
         description = NULL )     
 }

@@ -29,18 +29,6 @@
 
 ################################################################################
 # Regression Modelling
-# Regression Tests
-# Equations Modelling
-# Matrix Addon
-# Missing Values
-# Technical Analysis
-# Benchmark Analysis
-# Rolling Analysis
-################################################################################
-       
-        
-# ******************************************************************************
-# Regression Modelling
 
 
 .fMultivar.Regression.1 = 
@@ -54,11 +42,8 @@ function()
     y = 0.7 * x1 + 0.3 * x2
     eps = 0.1 * rnorm(1000)
     y = y + eps
-    x <<- tkSaveAs(
-        data = data.frame(x = y, x1 = x1, x2 = x2),
-        infoName = "0.7*x1+0.3*x2+eps",
-        console = NULL,
-        what = "x")
+    x <<- tkSaveAsX(data = data.frame(x = y, x1 = x1, x2 = x2),
+        infoName = "0.7*x1+0.3*x2+eps")
 }
 
 
@@ -73,11 +58,8 @@ function()
     eps = 0.1 * rnorm(1000)
     y = 0.7 * x1 + 0.3 * x2 + eps
     p = 1 / ( 1 + exp(-y) )
-    x <<- tkSaveAs(
-        data = data.frame(x = p, x1 = x1, x2 = x2),
-        infoName = "LOGIT(0.7*x1+0.3*x2+eps)",
-        console = NULL,
-        what = "x")
+    x <<- tkSaveAsX(data = data.frame(x = p, x1 = x1, x2 = x2),
+        infoName = "LOGIT(0.7*x1+0.3*x2+eps)")
     # family = binomial(link = logit)
     # glm(formula = x ~ x1 + x2, family = family, data = x)
 }
@@ -95,11 +77,8 @@ function()
     y = sin(x1) + exp(x2)
     eps = 0.1 * rnorm(1000, sd = sd(y))
     y = y + eps
-    x <<- tkSaveAs(
-        data = data.frame(x = y, x1 = x1, x2 = x2),
-        infoName = "x = 0.7*sin(x1)+0.3*exp(x2)+eps",
-        console = NULL,
-        what = "x")
+    x <<- tkSaveAsX(data = data.frame(x = y, x1 = x1, x2 = x2),
+        infoName = "x = 0.7*sin(x1)+0.3*exp(x2)+eps")
     # fit = gam(formula = x ~ s(x1) + s(x2), data = x)
     # plot(fit, pages = 1, scale = 0)   
 }
@@ -273,7 +252,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # ... Print Summary
-    tkSummary(object)
+    tkGetSummary(object)
 }
 
 
@@ -289,11 +268,8 @@ function()
     data(Greene4Table131)
     Greene4Table131 = as.timeSeries(Greene4Table131[, c(1, 6:8)])
     colnames(Greene4Table131@Data) = c("x", "x1", "x2")
-    x <<- tkSaveAs(
-        data = Greene4Table131,
-        infoName = "Green: x=realInvest | x1=realGNP x2=realInterest",
-        what = "x",
-        tkoutput = TRUE)
+    x <<- tkSaveAsX(data = Greene4Table131,
+        infoName = "Green: x=realInvest | x1=realGNP x2=realInterest")
 }
 
 
@@ -725,8 +701,8 @@ function()
     # eigen(x) Eigenvalues and Eigevectors:
     what = "eigen(x) Eigenvalues and Eigevectors"
     object <<- eigen(x)
-    .tkTitle(what)
-    .tkOutput(capture.output(object))
+    tkTitle(what)
+    tkOutput(capture.output(object))
 }
     
     
@@ -737,8 +713,8 @@ function()
     # svd(x) Singular Value Decomposition:
     what = "svd(x) Singular Value Decomposition"
     object <<- svd(x)
-    .tkTitle(what)
-    .tkOutput(capture.output(object))
+    tkTitle(what)
+    tkOutput(capture.output(object))
 }
     
     
@@ -749,8 +725,8 @@ function()
     # kappa(x) Condition Number:
     what = "kappa(x) Condition Number"
     object <<- svd(x)
-    .tkTitle(what)
-    .tkOutput(capture.output(object))
+    tkTitle(what)
+    tkOutput(capture.output(object))
 }
     
     
@@ -761,8 +737,8 @@ function()
     # QR Decomposition:
     what = "QR Decomposition"
     object <<- qr(x)
-    .tkTitle(what)
-    .tkOutput(capture.output(object))
+    tkTitle(what)
+    tkOutput(capture.output(object))
 }
 
 
@@ -869,10 +845,7 @@ function()
     X@Data[9, ] = c(NA, NA)
     X@Data[10, 2] = NA
     X@Data[24, 1] = NA
-    x <<- tkSaveAs(
-        data = X,
-        infoName = "MSFT | SP500 Returns",
-        console = "print(data)" )
+    x <<- tkSaveAsX(data = X, infoName = "MSFT | SP500 Returns")
 }
 
 
@@ -902,10 +875,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # ... Save object as x:
-    x <<- .infoObject(
-        data = object, 
-        InfoName = "saved object",
-        console = "print(head(object))" )   
+    NA
 }
 
 
@@ -920,11 +890,8 @@ function()
     # Data: Open-High-Low-Close SP500
     data(spc1970)
     spc1995 = spc1970[-(1:6319),]
-    x <<- tkSaveAs(
-        data = as.timeSeries(spc1995), 
-        infoName = "SPC500 Open-High-Low-Close",
-        what = "x",
-        tkoutput = TRUE) 
+    x <<- tkSaveAsX(data = as.timeSeries(spc1995), 
+        infoName = "SPC500 Open-High-Low-Close") 
 }
 
 
@@ -1410,7 +1377,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # ... merge time Series
-    x <<- tkSaveAs(mergeSeries(x, object@Data), "Merged Series & Indicator")
+    x <<- tkSaveAsX(mergeSeries(x, object@Data), "Merged Series & Indicator")
     print(start(x))
     print(tail(x))
 }
@@ -1506,12 +1473,7 @@ function()
     # Example timeSeries: x = SP500 Index
     x = as.timeSeries(data(singleIndex.dat), format = "%d-%b-%Y")[, 2]
     attr(x, "data") <- "singleIndex.dat[,2]"
-    x <<- tkSaveAs(
-        data = x, 
-        infoName = "SP500 Index",
-        console = "print(head(data))",
-        what = "x",
-        tkoutput = TRUE)
+    x <<- tkSaveAsX(data = x, infoName = "SP500 Index")
 }   
 
 
@@ -1633,11 +1595,7 @@ function()
     
     # ... Save object to x:
     x <<- merge(x, object@Data)
-    x <<- tkSaveAs(
-        data = x, 
-        infoName = "x and rolling series merged",
-        console = "print(head(x))",
-        what = "x" ) 
+    x <<- tkSaveAsX(data = x, infoName = "x and rolling series merged") 
 }
 
 

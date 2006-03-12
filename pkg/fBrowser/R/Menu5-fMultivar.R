@@ -107,15 +107,13 @@ function()
         "Rolling Mean",
         "Rolling Variance",
         "Rolling Minimum",
-        "Rolling Maximum",
-        "... Save object to x")
+        "Rolling Maximum")
     Command = c(
         ".fMultivar.RollingAnalysis.1",
         ".fMultivar.RollingAnalysis.2",
         ".fMultivar.RollingAnalysis.3",
         ".fMultivar.RollingAnalysis.4",
-        ".fMultivar.RollingAnalysis.5",
-        ".fMultivar.RollingAnalysis.6")
+        ".fMultivar.RollingAnalysis.5")
     addToolbarMenu(fMultivarMenu, Label, subLabel, Command)
     
     # Add Menu:
@@ -130,11 +128,7 @@ function()
         "PPR - Projection Pursuit Regression",
         "MARS - Multiadaptive Regression Splines",
         "POLYMARS - Polytochomous MARS Regression",
-        "NNET - Neural Network Regression",
-        "... Print Summary") 
-        #... Fitted Values",
-        #... Residuals",
-        #... Predict" 
+        "NNET - Neural Network Regression")
     Command = c(
         ".fMultivar.Regression.1",
         ".fMultivar.Regression.2",
@@ -145,8 +139,7 @@ function()
         ".fMultivar.Regression.7",
         ".fMultivar.Regression.8",
         ".fMultivar.Regression.9",
-        ".fMultivar.Regression.10",
-        ".fMultivar.Regression.11")
+        ".fMultivar.Regression.10")
     addToolbarMenu(fMultivarMenu, Label, subLabel, Command)
   
     # Add Menu:

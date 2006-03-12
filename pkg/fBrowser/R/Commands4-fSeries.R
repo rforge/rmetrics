@@ -29,26 +29,9 @@
 
 ################################################################################
 # Arma Modelling
-# Garch Modelling
-# Long Memory Modelling
-# Chaotic Time Series
-# PortableI nnovations
-# Time Series Tests
-# Unit Root Distribution
-# Unit Root Tests
-# Heaviside Function
-# SkewNormal Distribution
-# Skew Student Distribution
-# Skew Ged Distribution
-# Garch Distribution Fits
-################################################################################
-    
-
-# ******************************************************************************
-# Arma Modelling
 
 
-.fSeries.ArmaModelling.1 = 
+.fSeries.ArmaModelling.nyseDaily = 
 function()
 {   # A function implemented by Diethelm Wuertz
      
@@ -58,16 +41,7 @@ function()
 }
 
 
-.fSeries.ArmaModelling.2 = 
-function()
-{   # A function implemented by Diethelm Wuertz
-    
-    # Example timeSeries: x = DEMGPD Returns
-    tkGetData(Data = "dem2gbp", infoName = "Daily DEMGBP Returns")
-}
-
-
-.fSeries.ArmaModelling.3 = 
+.fSeries.ArmaModelling.fARMA = 
 function()
 {   # A function implemented by Diethelm Wuertz
     
@@ -76,7 +50,7 @@ function()
 }
 
 
-.fSeries.ArmaModelling.4 = 
+.fSeries.ArmaModelling.armaSim = 
 function()
 {   # A function implemented by Diethelm Wuertz
     
@@ -99,101 +73,60 @@ function()
             n = 100,
             object2x = TRUE,
             report = FALSE),
-        infoName = "Simulated ARMA",
-        tkoutput = FALSE,
-        console = ".header.ts(x)",
-        title = "Simulated ARMA Model",
-        description = NULL )
+        infoName = "Simulated ARMA" )
 }
 
 
-.fSeries.ArmaModelling.5 = 
+.fSeries.ArmaModelling.armaFit = 
 function()
 {   # A function implemented by Diethelm Wuertz
     
     # Fit ARMA Process:
-    myFunction <<- function(formula, method, include.mean) {
+    myFunction <<- function(formula, method, include.mean, object2x, report) {
         formula = as.formula(formula)
         include.mean = as.logical(include.mean)
         object <<- armaFit(formula = formula, method = method, 
             include.mean = include.mean, fixed = NULL,
             fracdiff.M = 100, fracdiff.h = -1, title = NULL, 
             description = NULL)
-        fittedObject <<- tkSaveAs(
-            data = object,
-            infoName = "Fitted ARMA",
-            console = NULL,
-            what = "fitted")
         object }
     tkExecute(
         fun = myFunction,
         params = list(
             formula = "x ~ arima(2, 0, 1)", 
             method = "CSS-ML",
-            include.mean = TRUE),
-        infoName = "Fitted ARMA",
-        tkoutput = TRUE,
-        console = NULL,
-        title = NULL,
-        description = NULL )  
+            include.mean = TRUE,
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Fitted ARMA")  
 }
 
 
-.fSeries.ArmaModelling.6 = 
+.fSeries.ArmaModelling.summary = 
 function()
 {   # A function implemented by Diethelm Wuertz
     
     # Summary Report:
     par(mfrow = c(2, 2), cex = 0.7)
-    tkSummary(object)   
+    tkGetSummary(object)   
 }
 
 
-.fSeries.ArmaModelling.7 = 
-function()
-{   # A function implemented by Diethelm Wuertz
-    
-    # Save Fitted Values in x:        
-    x <<- tkSaveAs(
-        data = fitted.values(object@fit), 
-        infoName = "Vector of ARMA Fitted Values",
-        console = "cat('\nVector of ARMA Fitted Values:\n', data[1:5]) ",
-        what = "x" ) 
-}
-
-
-.fSeries.ArmaModelling.8 = 
-function()
-{   # A function implemented by Diethelm Wuertz
-    
-    # Save Residual Values in x:
-    x <<- tkSaveAs(
-        data = residuals(object@fit), 
-        infoName = "Vector of ARMA Residuals",
-        console = "cat('\nVector of ARMA Residuals:\n', data[1:5]) ",
-        what = "x" )
-}
-
-
-.fSeries.ArmaModelling.9 = 
+.fSeries.ArmaModelling.predict = 
 function()
 {   # A function implemented by Diethelm Wuertz
     
     # ARMA Forecast:
-    myFunction = function(fit, n.ahead, n.back, conf) {
+    myFunction = function(fit, n.ahead, n.back, conf, object2x, report) {
         fit = eval(parse(text = as.character(fit)))
         conf = eval(parse(text = conf))
         object <<- predict.fARMA(object = fit, n.ahead = n.ahead, 
             n.back = n.back, conf = conf, doplot = TRUE, 
-            doprint = TRUE)
-        predictedObject <<- tkSaveAs(
-            data = object, 
-            infoName = "ARMA Prediction",
-            what = "predicted") 
+            doprint = TRUE) 
         output = capture.output(object)
-        .tkTitle("ARIMA Prediction")
-        .tkOutput(output)
-        .tkDescription(date())
+        tkTitle("ARIMA Prediction")
+        tkOutput(output)
+        tkDescription(date())
         object }
     tkExecute(
         fun = myFunction,
@@ -201,29 +134,19 @@ function()
             fit = "fittedObject",
             n.ahead = 10,
             n.back = 50,
-            conf = "c(80, 95)"),
-        infoName = "ARMA Prediction",
-        tkoutput = TRUE,
-        console = NULL,
-        title = NULL,
-        description = NULL )  
+            conf = "c(80, 95)",
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Predicted ARMA" )  
 }
     
    
-# ******************************************************************************
+################################################################################
 # Garch Modelling
 
 
-.fSeries.GarchModelling.1 = 
-function()
-{   # A function implemented by Diethelm Wuertz
-    
-    # Example timeSeries: x = NYSE Returns
-    tkGetData(Data = "nyseDaily", infoName = "Daily NYSE Returns")
-}
 
-
-.fSeries.GarchModelling.2 = 
+.fSeries.GarchModelling.dem2gbpDaily = 
 function()
 {   # A function implemented by Diethelm Wuertz
     
@@ -232,7 +155,7 @@ function()
 }
 
 
-.fSeries.GarchModelling.3 = 
+.fSeries.GarchModelling.fGARCH = 
 function()
 {   # A function implemented by Diethelm Wuertz
     
@@ -241,490 +164,299 @@ function()
 }
 
 
-.fSeries.GarchModelling.4 = 
+.fSeries.GarchModelling.garchSim = 
 function()
 {   # A function implemented by Diethelm Wuertz
     
     # Simulate GARCH Process:
-    myFunction = function(omega, alpha, beta, mu, n, object2x) {
-        omega = omega
-        alpha = as.numeric(unlist(strsplit(alpha, ",")))
-        beta = as.numeric(unlist(strsplit(beta, ",")))
-        mu = mu
-        n = as.integer(n)
-        object <<- garchSim(model = list(omega = omega, alpha = alpha, 
-            beta = beta, mu = mu), n = n, innov = NULL, 
-            n.start = 100, start.innov = NULL, rand.gen = rnorm)
-        if (object2x) 
-            x <<- tkSaveAs(
-                data = object,
-                infoName = "Simulated GARCH") 
+    myFunction = function(model, n, n.start, presample, cond.dist,
+        rseed, object2x, report) {
+        model = eval(parse(text = model)) 
+        if (presample == "NULL") presample = NULL
+        cond.dist = eval(parse(text = cond.dist)) 
+        if (rseed == "NULL") rseed = NULL
+        object <<- garchSim(model, n, n.start, presample, cond.dist, rseed)
         object }
     tkExecute(
         fun = myFunction,
         params = list(
-            omega = 1.0e-6,
-            alpha = "0.1", 
-            beta = "0.8",
-            mu = 0,
-            n = 1000,
-            object2x = TRUE),
-        infoName = "Simulated GARCH",
-        tkoutput = FALSE,
-        console = ".header.ts(x)",
-        title = NULL,
-        description = NULL )
+            model = "list(omega=1e-06,alpha=0.1,beta=0.8)",
+            n = 100,
+            n.start = 100,
+            presample = "NULL",
+            cond.dist = "c('rnorm','rged','rstd','rsnorm','rsged','rsstd')",
+            rseed= "NULL",
+            object2x = TRUE,
+            report = TRUE ),
+        infoName = "Simulated GARCH" )
 }
 
 
-.fSeries.GarchModelling.5 = 
+.fSeries.GarchModelling.garchFit = 
 function()
 {   # A function implemented by Diethelm Wuertz
     
     # Fit GARCH Process:
-    myFunction = function(order) {
-        order = eval(parse(text = order))
-        garchFit(x = x, order = order)
-    }
-    tkExecute(
-        fun = myFunction,
-        params = list(
-            order = "c(1, 1)"),
-        infoName = "Fitted GARCH",
-        tkoutput = TRUE,
-        console = NULL,
-        title = NULL,
-        description = NULL ) 
-}
-
-
-.fSeries.GarchModelling.6 = 
-function()
-{   # A function implemented by Diethelm Wuertz
-    
-    # ... Print Summary Report:
-    tkSummary(object)
-}
-
-
-.fSeries.GarchModelling.7 = 
-function()
-{   # A function implemented by Diethelm Wuertz
-
-    # ... Fitted Values:
-    x <<- tkSaveAs(
-        data = as.vector(object$fitted.values[,1]), 
-        infoName = "GARCH Fitted Values",
-        console = "print(data[1:5])",
-        what = "x" ) 
-}
-
-
-.fSeries.GarchModelling.8 = 
-function()
-{   # A function implemented by Diethelm Wuertz
-    
-    # ... Residual Values:
-    x <<- tkSaveAs(
-        data = object$residuals, 
-        infoName = "GARCH Residuals",
-        console = "print(data[1:5])" )
-}
-
-
-.fSeries.GarchModelling.9 = 
-function()
-{   # A function implemented by Diethelm Wuertz
-    
-    # Print fAPARCH Class Representation
-    tkGetClass("fGARCH")     
-}
-
-
-.fSeries.GarchModelling.10 = 
-function()
-{   # A function implemented by Diethelm Wuertz
-    
-    # Simulate  GARCH Process:
-    myFunction = function(omega, alpha, gamma, alpha.lags, beta, 
-        beta.lags, delta, n, object2x) {
-        alpha = as.numeric(unlist(strsplit(alpha, ",")))
-        gamma = as.numeric(unlist(strsplit(gamma, ",")))
-        alpha.lags = as.numeric(unlist(strsplit(alpha.lags, ",")))
-        beta = as.numeric(unlist(strsplit(beta, ",")))
-        beta.lags = as.numeric(unlist(strsplit(beta.lags, ",")))
-        n = as.integer(n)
-        rand.gen = rnorm 
-        object <<- aparchSim(model = list(omega = omega, alpha = alpha, 
-            gamma = gamma, alpha.lags = alpha.lags, beta = beta, 
-            beta.lags = beta.lags, delta = delta), n = n, 
-            innov = rand.gen(n, ...), n.start = 100, start.innov = NULL, 
-            rand.gen = rnorm) 
-        if (object2x) 
-            x <<- tkSaveAs(
-                data = object,
-                infoName = "Simulated APARCH") 
+    myFunction <<- function(formula.mean, formula.var, series, init.rec, 
+        delta, skew, shape, cond.dist, include.mean, include.delta, 
+        include.skew, include.shape, leverage, trace, algorithm, control, 
+        object2x, report) {
+        formula.mean = as.formula(formula.mean)
+        formula.var = as.formula(formula.var)
+        x = eval(parse(text = series))
+        init.rec = eval(parse(text = init.rec))
+        cond.dist = eval(parse(text = cond.dist))
+        if (include.delta == "NULL") include.delta = NULL
+        if (include.skew == "NULL") include.skew = NULL
+        if (include.shape == "NULL") include.shape = NULL
+        if (leverage == "NULL") leverage = NULL
+        algorithm = eval(parse(text = algorithm))
+        control = eval(parse(text = control))
+        object <<- garchFit(formula.mean, formula.var, series = x, init.rec, 
+            delta, skew, shape, cond.dist, include.mean, include.delta, 
+            include.skew, include.shape, leverage, trace, algorithm, 
+            control, title = NULL, description = NULL) 
         object }
     tkExecute(
         fun = myFunction,
         params = list(
-            omega = 1.0e-6,
-            alpha = "0.1", 
-            gamma = "0",
-            alpha.lags = "1",
-            beta = "0.8",
-            beta.lags = "1",
-            delta = 1.0,
-            n = 1000,
-            object2x = TRUE),
-        infoName = "Simulated APARCH",
-        tkoutput = FALSE,
-        console = ".header.ts(x)",
-        title = NULL,
-        description = NULL )
+            formula.mean = "~arma(0, 0)", 
+            formula.var = "~garch(1, 1)",
+            series = "x",
+            init.rec = "c('mci', 'uev')",
+            delta = 2, 
+            skew = 1, 
+            shape = 4,
+            cond.dist = "c('dnorm','dsnorm','dged','dsged','dstd','dsstd')", 
+            include.mean = TRUE, 
+            include.delta = "NULL", 
+            include.skew = "NULL", 
+            include.shape = "NULL", 
+            leverage = "NULL", 
+            trace = TRUE, 
+            algorithm = "c('sqp','nlminb','lbfgsb','nlminb+nm','lbfgsb+nm')", 
+            control = "list()",
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Fitted GARCH")  
 }
 
 
-.fSeries.GarchModelling.11 = 
-function()
-{   # A function implemented by Diethelm Wuertz
-    
-    # Fit GARCH Process:
-    myFunction = function(alpha.lags, beta.lags, delta, 
-        opt.gamma, opt.delta, opt.disparm, distribution, disparm) {
-        alpha.lags = as.numeric(unlist(strsplit(alpha.lags, ",")))
-        beta.lags = as.numeric(unlist(strsplit(beta.lags, ",")))
-        disparm = as.numeric(unlist(strsplit(disparm, ",")))
-        aparchFit(x = x, order = list(alpha.lags = alpha.lags, 
-            beta.lags = beta.lags, delta = delta), opt = list(gamma = 
-            opt.gamma, delta = opt.delta, disparm = opt.disparm), 
-            distribution = distribution, disparm = disparm, 
-            n.cond = NULL, doprint = TRUE, method = "Nelder-Mead") 
-    }
-    tkExecute(
-        fun = myFunction,
-        params = list(
-            alpha.lags = "1",
-            beta.lags = "1",
-            delta = 2.0,
-            opt.gamma = FALSE,
-            opt.delta = FALSE,
-            opt.disparm = FALSE,
-            distribution = "norm",
-            disparm = "1, 4, 1.9"),
-        infoName = "Fitted APARCH",
-        tkoutput = TRUE,
-        console = NULL,
-        title = NULL,
-        description = NULL ) 
-}
-
-
-.fSeries.GarchModelling.12 = 
+.fSeries.GarchModelling.summary = 
 function()
 {   # A function implemented by Diethelm Wuertz
     
     # ... Print Summary Report:
-    tkSummary(object)
+    tkGetSummary(object)
 }
 
 
-.fSeries.GarchModelling.13 = 
+.fSeries.GarchModelling.predict = 
 function()
 {   # A function implemented by Diethelm Wuertz
     
-    # ... Fitted Values:
-    x <<- tkSaveAs(
-        data = as.vector(object$fitted.values[,1]), 
-        infoName = "APARCH Fitted Values",
-        console = "print(data[1:5])",
-        what = "x" ) 
-}
-
-.fSeries.GarchModelling.14 = 
-function()
-{   # A function implemented by Diethelm Wuertz
-    
-    # ... Residual Values:
-    x <<- tkSaveAs(
-        data = object$residuals, 
-        infoName = "APARCH Residuals",
-        console = "print(data[1:5])",
-        what = "x" )
+    # ... Print Summary Report:
+    tkGetSummary(object)
 }
 
 
-# ******************************************************************************
+
+################################################################################
 # Long Memory Modelling
 
 
-.fSeries.LongMemoryModelling.1 = 
+.fSeries.LongMemoryModelling.fHURST = 
 function()
 {   # A function implemented by Diethelm Wuertz
     
-    # FGN Simulation:
-    myFunction = function(n, H, method, mean, std) {
-        n = as.integer(n)
-        H = as.numeric(H)
-        mean = as.numeric(mean)
-        std = as.numeric(std)
-        object <<- fgnSim(n = n, H = H, method = method, 
-            mean = mean, std = std) 
+    # Print ARMA Class Representation:
+    tkGetClass("fHURST")   
+}
+
+
+.fSeries.LongMemoryModelling.fgnSim = 
+function()
+{   # A function implemented by Diethelm Wuertz
+    
+    # Fractional Gaussian Noise Simulation:
+    myFunction = function(n, H, method, object2x, report) {
+        method = eval(parse(text = method)) 
+        object <<- fgnSim(n, H, method) 
         object }
-    .xMenu(
+    tkExecute(
         fun = myFunction,
         params = list(
-            n = "1000", 
-            H = "0.7",
-            method = "beran",
-            mean = "0",
-            std = "1"),
-        infoName = "Simulated FGN Process",
-        tkoutput = FALSE,
-        console = "print(head(x))",
-        title = NULL,
-        description = NULL )  
+            n = 100,
+            H = 0.7,
+            method = "c('beran','durbin','paxson')",
+            object2x = TRUE,
+            report = TRUE),
+        infoName = "Simulated Fractional Gaussian Noise" )  
 } 
 
 
-# ******************************************************************************
+.fSeries.LongMemoryModelling.fbmSim = 
+function()
+{   # A function implemented by Diethelm Wuertz
+    
+    # Fractional Brownian Motion Simulation:
+    myFunction = function(n, H, method, object2x, report) {
+        method = eval(parse(text = method)) 
+        object <<- fbmSim(n, H, method, waveJ, doplot = TRUE, fgn) 
+        object }
+    tkExecute(
+        fun = myFunction,
+        params = list(
+            n = 100,
+            H = 0.7,
+            method = "c('mvn','chol','lev','circ','wave')",
+            waveJ = 7,
+            fgn = FALSE,
+            object2x = TRUE,
+            report = TRUE),
+        infoName = "Simulated Fractional Brownian Motion" )  
+} 
+
+
+################################################################################
 # Chaotic Time Series
 
 
-.fSeries.ChaoticTimeSeries.1 = 
+.fSeries.ChaoticTimeSeries.henonSim = 
 function()
 {   # A function implemented by Diethelm Wuertz
     
     # Henon Map:
-    myFunction = function(n, a, b, start, oject2x) {
-        n = as.integer(n)
-        parms = c(a = as.numeric(a), b = as.numeric(b))
-        start = eval(parse(text = start))
+    myFunction = function(n, a, b, start, par, oject2x, report) {
+        parms = c(a = a, b = b)
+        if (!is.numeric(start)) start = eval(parse(text = start))
+        eval(parse(text = par))
         object <<- henonSim(n = n, parms = parms, start = start, 
             doplot = TRUE)
         object }
-    par(mfrow = c(1, 1), cex = 0.7)
     tkExecute(
         fun = myFunction,
         params = list(
-            n = "1000", 
-            a = "1.4",
-            b = "0.3",
+            n = 1000, 
+            a = 1.4,
+            b = 0.3,
             start = "runif(2)",
-            object2x = FALSE ),
-        infoName = "Henon Map",
-        tkoutput = FALSE,
-        console = NULL,
-        title = NULL,
-        description = NULL ) 
+            par = "par(mfrow=c(1,1))",
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Henon Map" ) 
 }
 
 
-.fSeries.ChaoticTimeSeries.2 = 
+.fSeries.ChaoticTimeSeries.ikedaSim = 
 function()
 {   # A function implemented by Diethelm Wuertz
     
     # Ikeda Map:
-    myFunction = function(n, a, b, start, object2x) {
+    myFunction = function(n, a, b, start, par, object2x, report) {
         n = as.integer(n)
-        parms = c(a = as.numeric(a), b = as.numeric(b), c = as.numeric(c))
+        parms = c(a = a, b = b, c = c)
         start = eval(parse(text = start))
-        object <<- ikedaSim(n = n, parms = parms, start = start, 
-            doplot = TRUE)
+        eval(parse(text = par))
+        object <<- ikedaSim(n = n, parms = parms, start = start, doplot = TRUE)
         object }
-    par(mfrow = c(2, 2), cex = 0.7)
     tkExecute(
         fun = myFunction,
         params = list(
-            n = "1000", 
-            a = "0.4",
-            b = "6.0",
-            c = "0.9",
+            n = 1000, 
+            a = 0.4,
+            b = 6.0,
+            c = 0.9,
             start = "runif(2)",
-            object2x = FALSE ),
-        infoName = "Henon Map",
-        tkoutput = FALSE,
-        console = NULL,
-        title = NULL,
-        description = NULL ) 
+            par = "par(mfrow=c(2,2))",
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Ikeda Map") 
 }
 
 
-.fSeries.ChaoticTimeSeries.3 = 
+.fSeries.ChaoticTimeSeries.logisticSim = 
 function()
 {   # A function implemented by Diethelm Wuertz
     
     # Logistic Map:
-    myFunction = function(n, r, start, object2x) {
+    myFunction = function(n, r, start, par, object2x, report) {
         n = as.integer(n)
         parms = c(r = as.numeric(r))
         start = eval(parse(text = start))
+        eval(parse(text = par))
         object <<- logisticSim(n = n, parms = parms, start = start, 
             doplot = TRUE)
         object }
-    par(mfrow = c(1, 1), cex = 0.7)
     tkExecute(
         fun = myFunction,
         params = list(
             n = 1000, 
             r = 4.0,
             start = "runif(1)",
-            object2x = FALSE ),
-        infoName = "Logistic Map",
-        tkoutput = FALSE,
-        console = NULL,
-        title = NULL,
-        description = NULL ) 
+            par = "par(mfrow=c(1,1))",
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Logistic Map" ) 
 }
 
 
-.fSeries.ChaoticTimeSeries.4 = 
+.fSeries.ChaoticTimeSeries.lorentzSim = 
 function()
 {   # A function implemented by Diethelm Wuertz
 
     # Lorentz Attractor:
-    myFunction = function(times, sigma, r, b, start, object2x) {
-        par(mfrow = c(3, 2), cex = 0.7)
+    myFunction = function(times, sigma, r, b, start, par, object2x, report) {
         times = eval(parse(text = times))
         parms = c(sigma = sigma, r = r, b = b)
         start = eval(parse(text = start))
+        eval(parse(text = par))
         object <<- lorentzSim(times = times, parms = parms, 
             start = start, doplot = TRUE)
         object }
-    par(mfrow = c(3, 2), cex = 0.7)
     tkExecute(
         fun = myFunction,
         params = list(
-            times = "seq(0, 40, by = 0.01)", 
+            times = "seq(0, 20, by = 0.01)", 
             sigma = 16.0,
             r = 45.92,
             b = 4.0,
             start = "c(-14, -13, 47)",
-            object2x = FALSE ),
-        infoName = "Lorentz Attractor",
-        tkoutput = FALSE,
-        console = NULL,
-        title = NULL,
-        description = NULL )
+            par = "par(mfrow=c(3,2))",
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Lorentz Attractor" )
 }
 
 
-.fSeries.ChaoticTimeSeries.5 = 
+.fSeries.ChaoticTimeSeries.roesslerSim = 
 function()
 {   # A function implemented by Diethelm Wuertz
     
     # Roessler Attractor:
-    myFunction = function(times, a, b, c, start, object2x) {
+    myFunction = function(times, a, b, c, start, par, object2x, report) {
         par(mfrow = c(3, 2), cex = 0.7)
         times = eval(parse(text = times))
         start = eval(parse(text = start))
+        eval(parse(text = par))
         object <<- roesslerSim(times = times, parms = c(a = a, 
             b = b, c = c), start = start, doplot = TRUE)
         object }
-    par(mfrow = c(4, 2), cex = 0.7)
     tkExecute(
         fun = myFunction,
         params = list(
-            times = "seq(0, 100, by = 0.01)", 
+            times = "seq(0,50,by=0.01)", 
             a = 0.2,
             b = 0.2,
             c = 8.0,
-            start = "c(-1.894, -9.92, 0.025)",
+            start = "c(-1.894,-9.92,0.025)",
+            par = "par(mfrow=c(3,2))",
             object2x = FALSE ),
-        infoName = "Roessler Attractor",
-        tkoutput = FALSE,
-        console = NULL,
-        title = NULL,
-        description = NULL )
+        infoName = "Roessler Attractor" )
 }
 
 
-# ******************************************************************************
-# Portable Innovations
-
-
-.fSeries.PortableInnovations.1 = 
-function()
-{   # A function implemented by Diethelm Wuertz
-    
-    # Uniform Innovations:
-    myFunction = function(n, min, max, object2x) {
-        n = as.integer(n)
-        min = as.numeric(min)
-        max = as.numeric(max)
-        object <<- runif.lcg(n = n, min = min, max = max)
-        object }
-    tkExecute(
-        fun = myFunction,
-        params = list(
-            n = 1000, 
-            min = 0,
-            max = 1,
-            object2x = FALSE),
-        infoName = "Portable Uniform Innovations",
-        tkoutput = FALSE,
-        console = "print(head(object))",
-        title = NULL,
-        description = NULL )
-}
-  
-
-.fSeries.PortableInnovations.2 = 
-function()
-{   # A function implemented by Diethelm Wuertz
-
-    # FUNCTION:
-    
-    # Normal Innovations:
-    myFunction = function(n, min, max, object2x) {
-        n = as.integer(n)
-        mean = as.numeric(mean)
-        sd = as.numeric(sd)
-       object <<-  rnorm.lcg(n = n, mean = mean, sd = sd)
-       object
-    }
-    tkExecute(
-        fun = myFunction,
-        params = list(
-            n = 1000, 
-            mean = 0,
-            sd = 1,
-            object2x = FALSE),
-        infoName = "Portable Normal Innovations",
-        tkoutput = FALSE,
-        console = "print(head(object))",
-        title = NULL,
-        description = NULL )
-}
-  
-
-.fSeries.PortableInnovations.3 = 
-function()
-{   # A function implemented by Diethelm Wuertz
-    
-    # Student-t Innovations:
-    myFunction = function(n, df, object2x) {
-        n = as.integer(n)
-        df = as.numeric(df)
-        object <<- rt.lcg(n = n, df = df)
-        object
-    }
-    tkExecute(
-        fun = myFunction,
-        params = list(
-            n = 1000, 
-            df = 4,
-            object2x = FALSE),
-        infoName = "Portable Student-t Innovations",
-        tkoutput = FALSE,
-        console = "print(head(object))",
-        title = NULL,
-        description = NULL )
-}
-
-
-
-# ******************************************************************************
+################################################################################
 # Time Series Tests
 
 
@@ -815,7 +547,7 @@ function()
 }
 
 
-# ******************************************************************************
+################################################################################
 # Unit Root Distribution
 
 
@@ -825,13 +557,13 @@ function()
     
     # Output:
     output = capture.output(.unitrootSlider())
-    .tkTitle(What)
-    .tkOutput(output)
-    .tkDescription() 
+    tkTitle(What)
+    tkOutput(output)
+    tkDescription() 
 }
 
 
-# ******************************************************************************
+################################################################################
 # Unit Root Tests
 
 
@@ -869,7 +601,7 @@ function()
     
     # ADF Unit Root Test
     output <<- capture.output(adfTest(x))
-    .tkOutput(output)
+    tkOutput(output)
 }
     
 .fSeries.UnitRootTests.4 = 
@@ -878,7 +610,7 @@ function()
     
     # McKinnon Unit Root Test
     output <<- capture.output(unitrootTest(x))
-    .tkOutput(output)
+    tkOutput(output)
 }
 
 
@@ -897,7 +629,7 @@ function(choice)
 }
 
 
-# ******************************************************************************
+################################################################################
 # Skew Normal|Student|GED Distributions
 
 
@@ -971,71 +703,59 @@ function()
 .fSeries.GarchDistributionFits.2 = 
 function() 
 {   # A function implemented by Diethelm Wuertz
-
-    # FUNCTION:
     
     # Fit to Normal Distribution
-    tkFit(normFit, "Fit to Normal Distribution")
+    tkGetFit(normFit, "Fit to Normal Distribution")
 }
    
 
 .fSeries.GarchDistributionFits.3 = 
 function() 
 {   # A function implemented by Diethelm Wuertz
-
-    # FUNCTION:
     
     # Fit to Skew Normal Distribution
-    tkFit(snormFit, "Fit to Skew Normal Distribution")
+    tkGetFit(snormFit, "Fit to Skew Normal Distribution")
 }
    
 
 .fSeries.GarchDistributionFits.4 = 
 function() 
 {   # A function implemented by Diethelm Wuertz
-
-    # FUNCTION:
     
     # Fit to Sudent-t Distribution
-    tkFit(stdFit, "Fit to Student-t Distribution")        
+    tkGetFit(stdFit, "Fit to Student-t Distribution")        
 }
    
 
 .fSeries.GarchDistributionFits.5 = 
 function() 
 {   # A function implemented by Diethelm Wuertz
-
-    # FUNCTION:
     
     # Fit Skew Sudent-t Distribution
-    tkFit(sstdFit, "Fit to Skew Student-t Distribution")     
+    tkGetFit(sstdFit, "Fit to Skew Student-t Distribution")     
 }
    
 
 .fSeries.GarchDistributionFits.6 = 
 function() 
 {   # A function implemented by Diethelm Wuertz
-
-    # FUNCTION:
     
     # Fit GED Distribution
-    tkFit(gedFit, "Fit to GED Distribution")     
+    tkGetFit(gedFit, "Fit to GED Distribution")     
 }
    
 
 .fSeries.GarchDistributionFits.7 = 
 function() 
 {   # A function implemented by Diethelm Wuertz
-
-    # FUNCTION:
     
     # Fit Skew GED Distribution
-    tkFit(sgedFit, "Fit to Skew GED Distribution")   
+    tkGetFit(sgedFit, "Fit to Skew GED Distribution")   
 }       
         
         
-# ******************************************************************************
-# fSeries data
+################################################################################
+# fSeries Data
 
         
 .fSeries.SeriesData.1 = 
@@ -1126,13 +846,84 @@ function()
     # kmenta:
     tkGetData(Data = "kmenta", infoName = "Data Set")
 }
+
+
+################################################################################
+# Portable Innovations
+
+
+.fSeries.PortableInnovations.runiflcg = 
+function()
+{   # A function implemented by Diethelm Wuertz
+    
+    # Uniform Innovations:
+    myFunction = function(n, min, max, as.ts, object2x, report) {
+        object <<- runif.lcg(n = n, min = min, max = max)
+        if (as.ts) object <<- as.ts(object)
+        object }
+    tkExecute(
+        fun = myFunction,
+        params = list(
+            n = 100, 
+            min = 0,
+            max = 1,
+            as.ts = TRUE,
+            object2x = FALS,
+            report = TRUE ),
+        infoName = "Portable Uniform Innovations" )
+}
+  
+
+.fSeries.PortableInnovations.rnormlcg = 
+function()
+{   # A function implemented by Diethelm Wuertz
+
+    # FUNCTION:
+    
+    # Normal Innovations:
+    myFunction = function(n, mean, sd, as.ts, object2x, report) {
+       object <<- rnorm.lcg(n = n, mean = mean, sd = sd)
+       if (as.ts) object <<- as.ts(object)
+       object }
+    tkExecute(
+        fun = myFunction,
+        params = list(
+            n = 100, 
+            mean = 0,
+            sd = 1,
+            as.ts = TRUE,
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Portable Normal Innovations" )
+}
+  
+
+.fSeries.PortableInnovations.rtlcg = 
+function()
+{   # A function implemented by Diethelm Wuertz
+    
+    # Student-t Innovations:
+    myFunction = function(n, df, as.ts, object2x, report) {
+        object <<- rt.lcg(n = n, df = df)
+        if (as.ts) object <<- as.ts(object)
+        object }
+    tkExecute(
+        fun = myFunction,
+        params = list(
+            n = 100, 
+            df = 4,
+            as.ts = TRUE, 
+            object2x = FALSE,
+            report = TRUE),
+        infoName = "Portable Student-t Innovations" )
+}
    
     
-# ------------------------------------------------------------------------------
+################################################################################
 # Mills Data
 
 
-.fSeries.MillsData.1 = 
+.fSeries.MillsData.RS = 
 function() 
 {   # A function implemented by Diethelm Wuertz
 
@@ -1143,7 +934,7 @@ function()
 }
 
 
-.fSeries.MillsData.2 = 
+.fSeries.MillsData.R20 = 
 function() 
 {   # A function implemented by Diethelm Wuertz
 
@@ -1152,7 +943,7 @@ function()
 }
 
 
-.fSeries.MillsData.3 = 
+.fSeries.MillsData.RSQ = 
 function() 
 {   # A function implemented by Diethelm Wuertz
 
@@ -1161,7 +952,7 @@ function()
 }
 
 
-.fSeries.MillsData.4 = 
+.fSeries.MillsData.R20Q = 
 function() 
 {   # A function implemented by Diethelm Wuertz
 
@@ -1170,7 +961,7 @@ function()
 }
  
 
-.fSeries.MillsData.5 = 
+.fSeries.MillsData.RSQREAL = 
 function() 
 {   # A function implemented by Diethelm Wuertz
 
@@ -1179,7 +970,7 @@ function()
 }
 
 
-.fSeries.MillsData.6 = 
+.fSeries.MillsData.FTAPRICE = 
 function() 
 {   # A function implemented by Diethelm Wuertz
 
@@ -1188,7 +979,7 @@ function()
 }
 
 
-.fSeries.MillsData.7 = 
+.fSeries.MillsData.FTADIV = 
 function() 
 {   # A function implemented by Diethelm Wuertz
 
@@ -1197,7 +988,7 @@ function()
 }
 
 
-.fSeries.MillsData.8 = 
+.fSeries.MillsData.FTARET = 
 function() 
 {   # A function implemented by Diethelm Wuertz
 
@@ -1206,7 +997,7 @@ function()
 }
 
 
-.fSeries.MillsData.9 = 
+.fSeries.MillsData.RPI = 
 function() 
 {   # A function implemented by Diethelm Wuertz
 
@@ -1215,7 +1006,7 @@ function()
 }
 
 
-.fSeries.MillsData.10 = 
+.fSeries.MillsData.EXCHD = 
 function() 
 {   # A function implemented by Diethelm Wuertz
 
@@ -1224,7 +1015,7 @@ function()
 }
 
 
-.fSeries.MillsData.11 = 
+.fSeries.MillsData.EXCHQ = 
 function() 
 {   # A function implemented by Diethelm Wuertz
 
@@ -1233,7 +1024,7 @@ function()
 }
 
 
-.fSeries.MillsData.12 = 
+.fSeries.MillsData.SP500 = 
 function() 
 {   # A function implemented by Diethelm Wuertz
 
@@ -1242,7 +1033,7 @@ function()
 }
 
 
-.fSeries.MillsData.13 = 
+.fSeries.MillsData.SP500R = 
 function() 
 {   # A function implemented by Diethelm Wuertz
 
@@ -1251,7 +1042,7 @@ function()
 }
 
 
-.fSeries.MillsData.14 = 
+.fSeries.MillsData.SP500D = 
 function() 
 {   # A function implemented by Diethelm Wuertz
 
@@ -1260,7 +1051,7 @@ function()
 }
 
 
-.fSeries.MillsData.15 = 
+.fSeries.MillsData.FT30 = 
 function() 
 {   # A function implemented by Diethelm Wuertz
 
@@ -1269,7 +1060,7 @@ function()
 }
 
 
-.fSeries.MillsData.16 = 
+.fSeries.MillsData.FTSE100 = 
 function() 
 {   # A function implemented by Diethelm Wuertz
 
@@ -1277,7 +1068,7 @@ function()
     tkGetData(Data = "FTSE100", infoName = "FTSE 100 Index")
 }
 
-.fSeries.MillsData.17 = 
+.fSeries.MillsData.CTLD = 
 function() 
 {   # A function implemented by Diethelm Wuertz
 
@@ -1286,7 +1077,7 @@ function()
 }
 
 
-.fSeries.MillsData.18 = 
+.fSeries.MillsData.LGEN = 
 function() 
 {   # A function implemented by Diethelm Wuertz
 
@@ -1295,7 +1086,7 @@ function()
 }
 
 
-.fSeries.MillsData.19 = 
+.fSeries.MillsData.PRU = 
 function() 
 {   # A function implemented by Diethelm Wuertz
 

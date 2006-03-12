@@ -1,485 +1,20 @@
 ################################################################################
 # FUNCTION:                 DESCRIPTION:
-#  .sliderMenu
-# FUNCTION:                 DESCRIPTION:
-#  .normSlider
-#  .hypSlider
-#  .nigSlider
-#  .symstbSlider
-#  .stableSlider
-#  .gevSlider
-#  .gpdSlider
-#  .unitrootSlider
-#  .snormSlider
-#  .sstdSlider
-#  .sgedSlider
+#  gevSlider
+#  gpdSlider
+#  unitrootSlider
+#  snormSlider
+#  sstdSlider
+#  sgedSlider
 # FUNCTIONS
-#  .HeavisideSlider
-#  .BesselISlider
+#  heavisideSlider
+#  besselSlider
+#  kummerSlider
+#  whittakerSlider
 ################################################################################
 
 
-.sliderMenu =   
-function(refresh.code, names, minima, maxima, resolutions, starts, 
-title = "Slider", no = 0, set.no.value = 0)
-{   # A function implemented by Diethelm Wuertz
-
-    # FUNCTION:
-    
-    if (!exists("slider.env")) {
-        slider.env <<- new.env() 
-    }
-        
-    if (no != 0) {
-        options(show.error.messages = FALSE)
-        ans = as.numeric(tclvalue(get(paste("slider", no, sep = ""),
-            env = slider.env)))
-        options(show.error.messages = TRUE)
-        return(ans)
-    }
-                    
-    if (set.no.value[1] != 0) { 
-        try(eval(parse(text = paste("tclvalue(slider", set.no.value[1], 
-            ")<-", set.no.value[2], sep = "")), env = slider.env),
-            silent = TRUE)
-        return(set.no.value[2]) 
-    }
-    
-    nt = tktoplevel()
-    tkwm.title(nt, title)
-    
-    
-    for (i in seq(names)) {
-        eval(parse(text = paste("assign(\"slider", i, "\", 
-            tclVar(starts[i]), env = slider.env)", sep = "")))
-        tkpack(fr<-tkframe(nt))
-        lab = tklabel(fr, text = names[i])
-        sc = tkscale(fr, command = refresh.code, from = minima[i], 
-            to = maxima[i], showvalue = TRUE, resolution = 
-            resolutions[i], orient = "horiz")
-        assign("sc", sc, env = slider.env)
-        tkgrid(sc, lab)
-        eval(parse(text = paste("tkconfigure(sc, variable = slider", i, ")",
-            sep = "")), env = slider.env)
-    }
-    tkpack(fr<-tkframe(nt)) 
-    
-    quitButton = tkbutton(fr, text = "   Quit   ", 
-        command = function() {
-            tkdestroy(nt) 
-        } )
-    
-    resetButton = tkbutton(fr, text = "   Start | Reset   ", 
-        command = function() {
-            for (i in seq(starts)) eval(parse(text = 
-                paste("tclvalue(slider", i, ")<-", starts[i], sep = "")),
-                env = slider.env)
-            refresh.code()    
-        }  )
-        
-    # Compose:
-    tkgrid(resetButton, quitButton, sticky = "sew")
-}
-  
-  
-################################################################################
-
-
-normSlider = .normSlider =  
-function(GenerateRandomNumbers = FALSE)
-{   # A function implemented by Diethelm Wuertz
-
-    # Normal Distribution:
-    #   dnorm(x, mean = 0, sd = 1)
-        
-    # FUNCTION:
-    
-    # Internal Function:
-    refresh.code = function(...)
-    {
-        # Sliders:
-        N    = .sliderMenu(no = 1)
-        mean = .sliderMenu(no = 2)
-        sd   = .sliderMenu(no = 3)
-        
-        # Plot Data:     
-        xmin = round(qnorm(0.01, mean, sd), digits = 2)
-        xmax = round(qnorm(0.99, mean, sd), digits = 2)
-        s = seq(xmin, xmax, length = N)
-        y1 = dnorm(s, mean, sd)
-        y2 = pnorm(s, mean, sd)
-        main1 = paste("NORM Density\n", 
-            "mean = ", as.character(mean), " | ",
-            "sd = ", as.character(sd))
-        main2 = paste("NORM Probability\n",
-            "xmin 0.01% = ", as.character(xmin), " | ",
-            "xmax 0.99% = ", as.character(xmax) )      
-            
-            
-        # Random Numbers:
-        if (GenerateRandomNumbers)
-            x <<- .infoX(
-                data = rnorm(N, mean, sd),
-                infoName = "Normal Random Deviates") 
-         
-        # Frame
-        par(mfrow = c(2, 1), cex = 0.7)
-        
-        # Density:
-        if (GenerateRandomNumbers) {
-            hist(x, probability = TRUE, n = 20, col = "steelblue", 
-                border = "white", xlim = c(xmin, xmax), 
-                ylim = c(0, 1.1*max(y1)), main = main1 )
-            lines(s, y1, col = "orange")
-        } else {
-            plot(s, y1, type = "l", xlim = c(xmin, xmax), col = "steelblue")
-            abline (h = 0, lty = 3)
-            title(main = main1)  
-        }
-
-        # Probability:           
-        plot(s, y2, type = "l", xlim = c(xmin, xmax), ylim = c(0, 1),
-            col = "steelblue" )
-        abline(h = 0.0, lty = 3)
-        abline(h = 1.0, lty = 3)
-        abline(h = 0.5, lty = 3)
-        abline(v = mean, lty = 3, col = "red")
-        title(main = main2)       
-        
-        # Reset Frame:
-        par(mfrow = c(1, 1), cex = 0.7)
-    }
-  
-    # Open Slider Menu:
-    .sliderMenu(refresh.code,
-       names =       c( "N", "mean",  "sd"),
-       minima =      c(  50,  -5.00,  0.20),
-       maxima =      c(1000,   5.00, 10.00),
-       resolutions = c(  50,   0.10,  0.20),
-       starts =      c(  50,   0.00,  1.00))
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-hypSlider = .hypSlider = 
-function(GenerateRandomNumbers = FALSE)
-{   # A function implemented by Diethelm Wuertz
-
-    # Hyperbolic Distribution:
-    #   dhyp(x, alpha = 1, beta = 0, delta = 1, mu = 0, pm = c(1, 2, 3, 4))
-        
-    # FUNCTION:
-    
-    # Internal Function:
-    refresh.code = function(...)
-    {
-        # Sliders:
-        N     = .sliderMenu(no = 1)
-        alpha = .sliderMenu(no = 2)
-        beta  = .sliderMenu(no = 3)
-        delta = .sliderMenu(no = 4)
-        mu    = .sliderMenu(no = 5)
-        pm    = .sliderMenu(no = 6)
-        
-        # Plot Data:     
-        xmin = round(qhyp(0.01, alpha, beta, delta, mu, pm), digits = 2)
-        xmax = round(qhyp(0.99, alpha, beta, delta, mu, pm), digits = 2)
-        s = seq(xmin, xmax, length = N)
-        y1 = dhyp(s, alpha, beta, delta, mu, pm)
-        y2 = phyp(s, alpha, beta, delta, mu, pm)
-        main1 = paste("HYP Density\n", 
-            "alpha = ", as.character(alpha), " | ",
-            "beta = ", as.character(beta), " | ",
-            "delta = ", as.character(delta), " | ",
-            "mu = ", as.character(mu) )
-        main2 = paste("HYP Probability\n",
-            "xmin 0.01% = ", as.character(xmin), " | ",
-            "xmax 0.99% = ", as.character(xmax), " | ",
-            "pm = ", as.character(pm) )      
-            
-            
-        # Random Numbers:
-        if (GenerateRandomNumbers)
-            x <<- .infoX(data = rhyp(N, alpha, beta, delta, mu, pm),
-                infoName = "Hyperbolic Random Deviates") 
-         
-        # Frame
-        par(mfrow = c(2, 1), cex = 0.7)
-        
-        # Density:
-        if (GenerateRandomNumbers) {
-            hist(x, probability = TRUE, n = 20, col = "steelblue", 
-                border = "white", xlim = c(xmin, xmax), 
-                ylim = c(0, 1.1*max(y1)), main = main1 )
-            lines(s, y1, col = "orange")
-        } else {
-            plot(s, y1, type = "l", xlim = c(xmin, xmax), col = "steelblue")
-            abline (h = 0, lty = 3)
-            title(main = main1)  
-        }
-
-        # Probability:           
-        plot(s, y2, type = "l", xlim = c(xmin, xmax), ylim = c(0, 1),
-            col = "steelblue" )
-        abline(h = 0.0, lty = 3)
-        abline(h = 1.0, lty = 3)
-        abline(h = 0.5, lty = 3)
-        abline(v = mu, lty = 3, col = "red")
-        title(main = main2)       
-        
-        # Reset Frame:
-        par(mfrow = c(1, 1), cex = 0.7)
-    }
-  
-    # Open Slider Menu:
-    .sliderMenu(refresh.code,
-       names =       c( "N","alpha","beta","delta", "mu","pm"),
-       minima =      c(  50,  0.00, -2.00,   0.00, -5.0,   1),
-       maxima =      c(1000,  2.00, +2.00,   5.00, +5.0,   4),
-       resolutions = c(  50,  0.20,  0.20,   1.00,  1.0,   1),
-       starts =      c(  50,  1.00,  0.00,   1.00,  0.0,   1))
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-nigSlider = .nigSlider = 
-function(GenerateRandomNumbers = FALSE)
-{   # A function implemented by Diethelm Wuertz
-
-    # Normal Inverse Gaussian Distribution:
-    #   dnig(x, alpha = 1, beta = 0, delta = 1, mu = 0) 
-
-    # FUNCTION:
-    
-    # Internal Function:
-    refresh.code = function(...)
-    {
-        # Sliders:
-        N     = .sliderMenu(no = 1)
-        alpha = .sliderMenu(no = 2)
-        beta  = .sliderMenu(no = 3)
-        delta = .sliderMenu(no = 4)
-        mu    = .sliderMenu(no = 5)
-        
-        # Plot Data:      
-        xmin = round(qnig(0.01, alpha, beta, delta, mu), digits = 2)
-        xmax = round(qnig(0.99, alpha, beta, delta, mu), digits = 2)
-        s = seq(xmin, xmax, length = N)
-        y1 = dnig(s, alpha, beta, delta, mu)
-        y2 = pnig(s, alpha, beta, delta, mu)
-        main1 = paste("NIG Density\n", 
-            "alpha = ", as.character(alpha), " | ",
-            "beta = ", as.character(beta), " | ",
-            "delta = ", as.character(delta), " | ",
-            "mu = ", as.character(mu))
-        main2 = paste("NIG Probability\n",
-            "xmin 0.01% = ", as.character(xmin), " | ",
-            "xmax 0.99% = ", as.character(xmax), " | ")       
-        
-        # Random Numbers:
-        if (GenerateRandomNumbers)
-            x <<- .infoX(data = rnig(N, alpha, beta, delta, mu),
-                infoName = "Normal Inverse Gaussian Random Deviates") 
-             
-        # Frame:
-        par(mfrow = c(2, 1), cex = 0.7)
-        
-        # Density:
-        if (GenerateRandomNumbers) {
-            hist(x, probability = TRUE, n = 20, col = "steelblue", 
-                border = "white", xlim = c(xmin, xmax), 
-                ylim = c(0, 1.1*max(y1)), main = main1 )
-            lines(s, y1, col = "orange")
-        } else {
-            plot(s, y1, type = "l", xlim = c(xmin, xmax), col = "steelblue")
-            abline (h = 0, lty = 3)
-            title(main = main1)  
-        }
-   
-        # Probability:
-        plot(s, y2, type = "l", xlim = c(xmin, xmax), ylim = c(0, 1),
-            col = "steelblue" )
-        abline(h = 0.0, lty = 3)
-        abline(h = 1.0, lty = 3)
-        abline(h = 0.5, lty = 3)
-        abline(v = mu, lty = 3, col = "red")
-        title(main = main2)     
-        
-        # Frame:
-        par(mfrow = c(1, 1), cex = 0.7)
-    }
-  
-    # Open Slider Menu:
-    .sliderMenu(refresh.code,
-       names =       c( "N", "alpha", "beta", "delta", "mu"),
-       minima =      c(  50,   0.00,   -2.00,    0.00, -5.0),
-       maxima =      c(1000,   2.00,   +2.00,   10.00, +5.0),
-       resolutions = c(  50,   0.20,    0.20,    1.00,  1.0),
-       starts =      c(  50,   1.00,    0.00,    1.00,  0.0))
-}
-
-
-# ******************************************************************************
-
-
-symstbSlider = .symstbSlider = 
-function(GenerateRandomNumbers = FALSE)
-{   # A function implemented by Diethelm Wuertz
-
-    # Normal Inverse Gaussian Distribution:
-    #   ...
-    
-    # FUNCTION:
-    
-    # Internal Function:
-    refresh.code = function(...)
-    {
-        # Sliders:
-        N     = .sliderMenu(no = 1)
-        alpha = .sliderMenu(no = 2)
-        
-        # Compute Data:        
-        xmin = round(qsymstb(0.01, alpha), digits = 2)
-        xmax = round(qsymstb(0.99, alpha), digits = 2)
-        s = seq(xmin, xmax, length = N)
-        y1 = dsymstb(s, alpha)
-        y2 = psymstb(s, alpha)
-        main1 = paste("Symmetric Stable Density\n", 
-            "alpha = ", as.character(alpha))
-        main2 = paste("Symmetric Stable Probability\n",
-            "xmin [0.01%] = ", as.character(xmin), " | ",
-            "xmax [0.99%] = ", as.character(xmax))       
-        
-        # Frame:
-        par(mfrow = c(2, 1), cex = 0.7)
-        
-        # Random Numbers:
-        if (GenerateRandomNumbers)
-            x <<- .infoX(data = rstable(N, alpha),
-                infoName = "Symmetric Stable Random Deviates")         
-        
-        # Density:
-        if (GenerateRandomNumbers) {
-            hist(x, probability = TRUE, n = 20, col = "steelblue", 
-                border = "white", xlim = c(xmin, xmax), 
-                ylim = c(0, 1.1*max(y1)), main = main1 )
-            lines(s, y1, col = "orange")
-        } else {
-            plot(s, y1, type = "l", xlim = c(xmin, xmax), col = "steelblue")
-            abline (h = 0, lty = 3)
-            title(main = main1)  
-        }    
-        
-        # Probability:
-        plot(s, y2, type = "l", xlim = c(xmin, xmax), ylim = c(0, 1),
-            col = "steelblue" )
-        abline (h = 0, lty = 3)
-        title(main = main2) 
-        
-        # Reset Frame:
-        par(mfrow = c(1, 1), cex = 0.7)
-    }
-  
-    # Open Slider Menu:
-    .sliderMenu(refresh.code,
-       names =       c(  "N", "alpha"),
-       minima =      c(   50,   0.10),
-       maxima =      c( 1000,   2.00),
-       resolutions = c(   50,   0.10),
-       starts =      c(   50,   1.75))
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-stableSlider = .stableSlider =  
-function(GenerateRandomNumbers = FALSE)
-{   # A function implemented by Diethelm Wuertz
-
-    # Stable Distribution:
-    #   dstable(x, alpha, beta, gamma = 1, delta = 0, pm = c(0, 1, 2)) 
-
-    # FUNCTION:
-    
-    # Internal Function:
-    refresh.code = function(...)
-    {
-        # Sliders:
-        N     = .sliderMenu(no = 1)
-        alpha = .sliderMenu(no = 2)
-        beta  = .sliderMenu(no = 3)
-        gamma = .sliderMenu(no = 4)
-        delta = .sliderMenu(no = 5)
-        pm    = .sliderMenu(no = 6)
-         
-        # Compute Data:  
-        xmin = round(qstable(0.01, alpha, beta, gamma, delta, pm), digits = 2)
-        xmax = round(qstable(0.99, alpha, beta, gamma, delta, pm), digits = 2)
-        s = seq(xmin, xmax, length = N)
-        y1 = dstable(s, alpha, beta, gamma, delta, pm)
-        y2 = pstable(s, alpha, beta, gamma, delta, pm)
-        main1 = paste("Stable Density\n", 
-            "alpha = ", as.character(alpha), " | ",
-            "beta = ", as.character(beta), " | ",
-            "gamma = ", as.character(gamma), " | ",
-            "delta = ", as.character(delta))
-        main2 = paste("Stable Probability\n",
-            "xmin 0.01% = ", as.character(xmin), " | ",
-            "xmax 0.99% = ", as.character(xmax), " | ",
-            "pm = ", as.character(pm))        
-        
-        # Frame:
-        par(mfrow = c(2, 1), cex = 0.7) 
-        
-        # Random Numbers:
-        if (GenerateRandomNumbers)
-            x <<- .infoX(data = rstable(N, alpha, beta, gamma, delta, pm),
-                infoName = "Stable Random Deviates")   
-        
-        # Density:
-        if (GenerateRandomNumbers) {
-            hist(x, probability = TRUE, n = 20, col = "steelblue", 
-                border = "white", xlim = c(xmin, xmax), 
-                ylim = c(0, 1.1*max(y1)), main = main1 )
-            lines(s, y1, col = "orange")
-        } else {
-            plot(s, y1, type = "l", xlim = c(xmin, xmax), col = "steelblue")
-            abline (h = 0, lty = 3)
-            title(main = main1)  
-        }       
-        
-        # Probability:
-        plot(s, y2, type = "l", xlim = c(xmin, xmax), ylim = c(0, 1),
-            col = "steelblue" )
-        abline(h = 0.0, lty = 3)
-        abline(h = 1.0, lty = 3)
-        abline(h = 0.5, lty = 3)
-        abline(v = delta, lty = 3, col = "red")
-        title(main = main2)      
-        
-        # Reset Frame:
-        par(mfrow = c(1, 1), cex = 0.7)
-    }
-  
-    # Open Slider Menu:
-    .sliderMenu(refresh.code,
-       names =       c(  "N", "alpha", "beta", "gamma", "delta", "pm"),
-       minima =      c(   10,    0.00,  -1.00,    0.00,    -5.0,    0),
-       maxima =      c( 1000,    2.00,  +1.00,    5.00,    +5.0,    2),
-       resolutions = c(   50,    0.20,   0.20,    1.00,     1.0,    1),
-       starts =      c(   50,    1.80,   0.00,    1.00,     0.0,    0))
-}
-
-
-################################################################################
-
-
-gevSlider = .gevSlider =  
+gevSlider =  
 function(GenerateRandomNumbers = FALSE)
 {   # A function implemented by Diethelm Wuertz
 
@@ -554,7 +89,7 @@ function(GenerateRandomNumbers = FALSE)
 # ******************************************************************************
 
 
-gpdSlider = .gpdSlider =  
+gpdSlider = 
 function(GenerateRandomNumbers = FALSE)
 {   # A function implemented by Diethelm Wuertz
 
@@ -630,7 +165,7 @@ function(GenerateRandomNumbers = FALSE)
 # ------------------------------------------------------------------------------
 
 
-unitrootSlider = .unitrootSlider = 
+unitrootSlider = 
 function()
 {   # A function implemented by Diethelm Wuertz
 
@@ -696,7 +231,7 @@ function()
 ################################################################################
 
 
-snormSlider = .snormSlider = 
+snormSlider = 
 function(GenerateRandomNumbers = FALSE)
 {   # A function implemented by Diethelm Wuertz
     
@@ -778,7 +313,7 @@ function(GenerateRandomNumbers = FALSE)
 # ------------------------------------------------------------------------------
 
 
-sstdSlider = .sstdSlider = 
+sstdSlider = 
 function(GenerateRandomNumbers = FALSE)
 {   # A function implemented by Diethelm Wuertz
 
@@ -862,7 +397,7 @@ function(GenerateRandomNumbers = FALSE)
 # ------------------------------------------------------------------------------
 
 
-sgedSlider = .sgedSlider = 
+sgedSlider = 
 function(GenerateRandomNumbers = FALSE)
 {   # A function implemented by Diethelm Wuertz
 
@@ -946,7 +481,7 @@ function(GenerateRandomNumbers = FALSE)
 ################################################################################
 
 
-heavisideSlider = .HeavisideSlider = 
+heavisideSlider = 
 function()
 {   # A function implemented by Diethelm Wuertz
 
@@ -996,7 +531,7 @@ function()
 # ------------------------------------------------------------------------------
 
 
-besselSlider = .BesselSlider = 
+besselSlider = 
 function()
 {   # A function implemented by Diethelm Wuertz
 
@@ -1057,7 +592,7 @@ function()
 # ------------------------------------------------------------------------------
 
 
-kummerSlider = .KummerSlider = 
+kummerSlider = 
 function()
 {   # A function implemented by Diethelm Wuertz
 
@@ -1108,7 +643,7 @@ function()
 # ------------------------------------------------------------------------------
 
 
-whittakerSlider = .WhittakerSlider = 
+whittakerSlider = 
 function()
 {   # A function implemented by Diethelm Wuertz
 

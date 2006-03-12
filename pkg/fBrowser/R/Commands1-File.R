@@ -138,9 +138,9 @@ function()
     
     # Classify Active Object
     output = capture.output(class(object))
-    .tkTitle("Classification of Active Object")
-    .tkOutput(output)
-    .tkDescription()
+    tkTitle("Classification of Active Object")
+    tkOutput(output)
+    tkDescription()
 }
 
 # ******************************************************************************      
@@ -156,7 +156,7 @@ function()
     output = capture.output(object)
     
     # Title and Description are already captured in the output
-    .tkOutput(output)
+    tkOutput(output)
 }
 
 
