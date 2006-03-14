@@ -42,14 +42,12 @@ function()
     
     # Menu:
     fCalendarMenu <<- newToolbarMenu()
-     
     
     # Add Menu:
     Label = "Create a Time Date Object"
     subLabel = c(
         "* Example timeDate: x = 12 Random Dates in 2005",
         "* Example timeDate: x = 12 Random Times in 2005",
-        "Print timeDate Class Representation",
         "Create timeDate Sequence",
         "Create timeDate Calendar",
         "   The Current Date and Time", 
@@ -59,23 +57,20 @@ function()
         "   The n-th ocurrance of a N-day for timeDates",
         "   The last N-day in each Month for timeDates",       
         "Print List of Financial Centers",
-        "Print DST Rules for a Financial Center",    
-        "Print Summary of a timeDate Object")
+        "Print DST Rules for a Financial Center")
     Command = c(
         ".fCalendar.TimeDateClass.dates",
         ".fCalendar.TimeDateClass.times",
-        ".fCalendar.TimeDateClass.4",
-        ".fCalendar.TimeDateClass.5",
-        ".fCalendar.TimeDateClass.6",
-        ".fCalendar.TimeDateClass.7",
-        ".fCalendar.TimeDateClass.8",
-        ".fCalendar.TimeDateClass.9",    
-        ".fCalendar.TimeDateClass.10",
-        ".fCalendar.TimeDateClass.11",
-        ".fCalendar.TimeDateClass.12",
-        ".fCalendar.TimeDateClass.13",
-        ".fCalendar.TimeDateClass.14",
-        ".fCalendar.TimeDateClass.15")
+        ".fCalendar.TimeDateClass.timeSequence",
+        ".fCalendar.TimeDateClass.timeCalendar",
+        ".fCalendar.TimeDateClass.getTime",
+        ".fCalendar.TimeDateClass.timeDayInPeriod",
+        ".fCalendar.TimeDateClass.timeNdayOnOrAfter",    
+        ".fCalendar.TimeDateClass.timeNdayOnOrBefore",
+        ".fCalendar.TimeDateClass.timeNthNdayInMonth",
+        ".fCalendar.TimeDateClass.timeLastNdayInMonth",
+        ".fCalendar.TimeDateClass.getFinCenters",
+        ".fCalendar.TimeDateClass.FinCenter")
     addToolbarMenu(fCalendarMenu, Label, subLabel, Command)
     
     # Add Menu:
@@ -83,7 +78,6 @@ function()
     subLabel = c(
         "* Example timeDate: x = 12 Random Dates in 2005",
         "* Example timeDate: x = 12 Random Times in 2005",
-        "Print timeDate Class Representation",
         "Extract the first object of a timeDate Vector",
         "Extract the last object of a timeDate Vector",
         "+/- a time Span to/from a timeDate Vector",
@@ -99,26 +93,24 @@ function()
     Command = c(
         ".fCalendar.TimeDateMethods.dates",
         ".fCalendar.TimeDateMethods.times",
-        ".fCalendar.TimeDateMethods.4",
-        ".fCalendar.TimeDateMethods.5",
-        ".fCalendar.TimeDateMethods.6",
-        ".fCalendar.TimeDateMethods.7",
-        ".fCalendar.TimeDateMethods.8",
-        ".fCalendar.TimeDateMethods.9",
-        ".fCalendar.TimeDateMethods.10",
-        ".fCalendar.TimeDateMethods.11",
-        ".fCalendar.TimeDateMethods.12",
-        ".fCalendar.TimeDateMethods.13",
-        ".fCalendar.TimeDateMethods.14",
-        ".fCalendar.TimeDateMethods.15",
-        ".fCalendar.TimeDateMethods.16")
+        ".fCalendar.TimeDateMethods.start",
+        ".fCalendar.TimeDateMethods.end",
+        ".fCalendar.TimeDateMethods.plusminus",
+        ".fCalendar.TimeDateMethods.sort",
+        ".fCalendar.TimeDateMethods.round",
+        ".fCalendar.TimeDateMethods.trunc",
+        ".fCalendar.TimeDateMethods.rev",
+        ".fCalendar.TimeDateMethods.asCharacter",
+        ".fCalendar.TimeDateMethods.asDataFrame",
+        ".fCalendar.TimeDateMethods.asPOSIXct",
+        ".fCalendar.TimeDateMethods.julian",
+        ".fCalendar.TimeDateMethods.atoms")
     addToolbarMenu(fCalendarMenu, Label, subLabel, Command)
     
     # Add Menu:
     Label = "Compose and Modify a Time Series Object"     
     subLabel = c(
         "* Example timeSeries: x = MSFT|SP500 Returns",
-        "Print timeSeries Class Representation",
         "Create a timSeries Object",
         "Apply a Function to a timSeries",
         "Align a Daily timeSeries",
@@ -130,10 +122,9 @@ function()
         "Revert a timeSeries in Time Order")
     Command = c(
         ".fCalendar.TimeSeriesClass.msftsp500Monthly",
-        ".fCalendar.TimeSeriesClass.getClass",
         ".fCalendar.TimeSeriesClass.timeSeries",
         ".fCalendar.TimeSeriesClass.applySeries",
-        ".fCalendar.TimeSeriesClass.alignSeries",
+        ".fCalendar.TimeSeriesClass.alignDailySeries",
         ".fCalendar.TimeSeriesClass.cutSeries",
         ".fCalendar.TimeSeriesClass.diffSeries",
         ".fCalendar.TimeSeriesClass.lagSeries",
@@ -157,7 +148,7 @@ function()
     addToolbarMenu(fCalendarMenu, Label, subLabel, Command)
     
     # Add Menu:
-    if (FALSE) {
+    if (FALSE) { # -- OLD DON'T USE NOW !!
     Label = "High Frequency Data"
     subLabel = c(
         "* Example data.frame: x = FX Reuters USDTHB",

@@ -28,9 +28,7 @@
     
     
 ################################################################################
-# FUNCTION:
-#  .fBasics.PopupMenu
-################################################################################
+# fBasics Popup Menu
 
 
 .fBasics.PopupMenu =
@@ -48,12 +46,10 @@ function()
     # Add Menu:
     Label = "Time Series Import"
     subLabel = c(
-        "Print fWEBDATA Class representation",
         "Economagic Series Download", 
         "Yahoo Series Download",
         "FRED St. Louis Series Download")
     Command = c(
-        ".fBasics.Import.getClass",
         ".fBasics.Import.economagicImport",
         ".fBasics.Import.yahooImport",
         ".fBasics.Import.fredImport")
@@ -169,7 +165,6 @@ function()
     Label = "Normality Tests"
     subLabel = c(
         "* Example timeSeries: x = SP500 Returns",
-        "Print fHTEST Class Representation",
         "Kolmogorov-Smirnov Normality Test",
         "Shapiro-Wilk Normality Test", 
         "Jarque-Bera Normality Test",
@@ -181,7 +176,6 @@ function()
         "Shapiro-Francia Normality Test")
     Command = c(
         ".fBasics.NormalityTests.sp500Monthly",
-        ".fBasics.NormalityTests.getClass",
         ".fBasics.NormalityTests.ksnormTest",
         ".fBasics.NormalityTests.shapiroTest",
         ".fBasics.NormalityTests.jarqueberaTest",
@@ -197,7 +191,6 @@ function()
     Label = "Bivariate Sample Tests"
     subLabel = c(
         "* Example timeSeries: x = MSFT|SP500 Returns",
-        "Print fHTEST Class Representation",
         "Kolmogorov-Smirnov Test",
         "Location: Unpaired t-Test",
         "Location: Kruskal-Wallis Test",
@@ -211,7 +204,6 @@ function()
         "Correlation: Spearman's rho Test")
     Command = c(
         ".fBasics.BivariateTests.msftsp500Monthly",
-        ".fBasics.BivariateTests.getClass",
         ".fBasics.BivariateTests.ks2Test",
         ".fBasics.BivariateTests.tTest",
         ".fBasics.BivariateTests.kw2Test",

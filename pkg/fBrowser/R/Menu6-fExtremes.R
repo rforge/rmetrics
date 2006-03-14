@@ -30,7 +30,6 @@
 ################################################################################
 # fExtremes Popup
 
-
         
 .fExtremes.PopupMenu =
 function()
@@ -42,68 +41,78 @@ function()
     # Add Menu:
     Label = "Extremes Plots"
     subLabel = c(
-        "* Example timeSeries: x = NYSE Returns",
+        "* Example timeSeries: x = BMW Daily Returns",
         "Plot of Empirical Distribution",
         "Plot of Normal Quantiles",
-        "... with 95% Intervals",
+        "Quantile Plot with 95% Intervals",
         "Plot of Pareto Quantiles",
         "Sample Mean Excess Plot",
-        "... Mean Excess Function Plot",
-        "... Mean Residual Life Plot",
+        "Mean Excess Function Plot",
+        "Mean Residual Life Plot",
         "Plot of Max/Sum Ratio",
-        "Records Development",
-        "... Development of Subsamples",
+        "Development of Records",
+        "Development of Subsample Records",
         "Plot of ACF of Exceedences")
     Command = c(
-        ".fExtremes.Plots.bmw",
-        ".fExtremes.Plots.emd",
-        ".fExtremes.Plots.qq",
-        ".fExtremes.Plots.qqbayes",
-        ".fExtremes.Plots.q",
-        ".fExtremes.Plots.me",
-        ".fExtremes.Plots.mrl",
-        ".fExtremes.Plots.mxf",
-        ".fExtremes.Plots.msratio",
-        ".fExtremes.Plots.records",
-        ".fExtremes.Plots.ssrecords",
-        ".fExtremes.Plots.xacf")
+        ".fExtremes.ExtremesPlots.bmwDaily",
+        ".fExtremes.ExtremesPlots.emd",
+        ".fExtremes.ExtremesPlots.qq",
+        ".fExtremes.ExtremesPlots.qqbayes",
+        ".fExtremes.ExtremesPlots.q",
+        ".fExtremes.ExtremesPlots.me",
+        ".fExtremes.ExtremesPlots.mrl",
+        ".fExtremes.ExtremesPlots.mxf",
+        ".fExtremes.ExtremesPlots.msratio",
+        ".fExtremes.ExtremesPlots.records",
+        ".fExtremes.ExtremesPlots.ssrecords",
+        ".fExtremes.ExtremesPlots.xacf")
+    addToolbarMenu(fExtremesMenu, Label, subLabel, Command)
+    
+    # Add Menu:
+    Label = "Data Preprocessing"
+    subLabel = c(
+        "* Example timeSeries: x = BMW Daily Returns",
+        "Find Threshold")
+    Command = c(
+        ".fExtremes.DataPreprocessing.bmwDaily",
+        ".fExtremes.DataPreprocessing.findThreshold")
     addToolbarMenu(fExtremesMenu, Label, subLabel, Command)
         
     # Add Menu:
     Label = "Block Maxima"
     subLabel = c(
-        "* Example timeSeries: x = BMW Max Losses",
+        "* Example timeSeries: x = BMW Daily Returns",
+        "GEV Distribution",
         "GEV Simulation", 
-        "... Random Number Slider",
-        "... Distribution Slider",
+        "Generate Block Maxima Series",
+        "Generate Block Maxima Vector",
         "GEV Parameter Estimation",
-        "... Return Level Plot",
+        "Return Level Plot",
         "Hill Plot", 
         "Shape Parameter Plots")
     Command = c(
-        ".fExtremes.GEV.bmw",
+        ".fExtremes.GEV.bmwDaily",
+        ".fExtremes.GEV.gevSlider",
         ".fExtremes.GEV.sim",
-        ".fExtremes.GEV.RandSlider",
-        ".fExtremes.GEV.DistSlider",
+        ".fExtremes.GEV.blockmaxSeries",
+        ".fExtremes.GEV.blockmaxVector",
         ".fExtremes.GEV.fit",
-        ".fExtremes.GEV.rlevel",
-        ".fExtremes.MDA.hill",
-        ".fExtremes.MDA.shaparm") 
+        ".fExtremes.GEV.gevrlevelPlot",
+        ".fExtremes.MDA.hillPlot",
+        ".fExtremes.MDA.shaparmPlot") 
     addToolbarMenu(fExtremesMenu, Label, subLabel, Command)        
 
     # Add Menu:
     Label = "Peaks Over Threshold"
     subLabel = c(
-        "* Example timeSeries: x = BMW Max Losses",
+        "* Example timeSeries: x = BMW Daily Returns",
+        "GPD Distribution",
         "GPD Simulation", 
-        "... Random Number Slider",
-        "... Distribution Slider",
         "GPD Parameter Estimation")
     Command = c(
-        ".fExtremes.GPD.bmw",
+        ".fExtremes.GPD.bmwDaily",
+        ".fExtremes.GPD.gpdSlider",
         ".fExtremes.GPD.sim",
-        ".fExtremes.GPD.RandSlider",
-        ".fExtremes.GPD.DistSlider",
         ".fExtremes.GPD.fit")
     addToolbarMenu(fExtremesMenu, Label, subLabel, Command)
                      

@@ -109,11 +109,11 @@ function()
         "Rolling Minimum",
         "Rolling Maximum")
     Command = c(
-        ".fMultivar.RollingAnalysis.1",
-        ".fMultivar.RollingAnalysis.2",
-        ".fMultivar.RollingAnalysis.3",
-        ".fMultivar.RollingAnalysis.4",
-        ".fMultivar.RollingAnalysis.5")
+        ".fMultivar.RollingAnalysis.sp500IndexMonthly",
+        ".fMultivar.RollingAnalysis.rollMean",
+        ".fMultivar.RollingAnalysis.rollVar",
+        ".fMultivar.RollingAnalysis.rollMin",
+        ".fMultivar.RollingAnalysis.rollMax")
     addToolbarMenu(fMultivarMenu, Label, subLabel, Command)
     
     # Add Menu:
@@ -130,16 +130,16 @@ function()
         "POLYMARS - Polytochomous MARS Regression",
         "NNET - Neural Network Regression")
     Command = c(
-        ".fMultivar.Regression.1",
-        ".fMultivar.Regression.2",
-        ".fMultivar.Regression.3",
-        ".fMultivar.Regression.4",
-        ".fMultivar.Regression.5",
-        ".fMultivar.Regression.6",
-        ".fMultivar.Regression.7",
-        ".fMultivar.Regression.8",
-        ".fMultivar.Regression.9",
-        ".fMultivar.Regression.10")
+        ".fMultivar.Regression.lmData",
+        ".fMultivar.Regression.glmData",
+        ".fMultivar.Regression.gamData",
+        ".fMultivar.Regression.lmFit",
+        ".fMultivar.Regression.glmFit",
+        ".fMultivar.Regression.gamFit",
+        ".fMultivar.Regression.pprFit",
+        ".fMultivar.Regression.marsFit",
+        ".fMultivar.Regression.polymarsFit",
+        ".fMultivar.Regression.nnetFit")
     addToolbarMenu(fMultivarMenu, Label, subLabel, Command)
   
     # Add Menu:
