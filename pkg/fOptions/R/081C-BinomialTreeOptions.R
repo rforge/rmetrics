@@ -366,7 +366,7 @@ title = NULL, description = NULL)
     #    )
     
     # Return Value:
-    Tree     
+    invisible(Tree)     
 }
 
 

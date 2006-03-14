@@ -573,27 +573,27 @@ function(x, ...)
     Parameter = unlist(x@parameters)
     Names = names(Parameter)
     Parameter = cbind(as.character(Parameter))
-    rownames(Parameter) = Names
+    rownames(Parameter) = paste("", Names)
     colnames(Parameter) = "Value:"
     
     # Title:
-    cat("\nTitle:\n")
+    cat("\nTitle:\n ")
     cat(x@title, "\n")
     
     # Call:
-    cat("\nCall:", deparse(x@call), "", sep = "\n")
+    cat("\nCall:", paste("", deparse(x@call)), "", sep = "\n")
     
     # Parameters:
     cat("Parameters:\n")
     print(Parameter, quote = FALSE)
     
     # Price:
-    cat("\nOption Price:\n")
+    cat("\nOption Price:\n ")
     cat(x@price, "\n")
     
     # Description:
-    cat("\nDescription:\n")
-    cat(x@description, "\n")  
+    cat("\nDescription:\n ")
+    cat(x@description, "\n\n")  
     
     # Return Value:
     invisible()
