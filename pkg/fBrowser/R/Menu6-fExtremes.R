@@ -44,27 +44,23 @@ function()
         "* Example timeSeries: x = BMW Daily Returns",
         "Plot of Empirical Distribution",
         "Plot of Normal Quantiles",
-        "Quantile Plot with 95% Intervals",
         "Plot of Pareto Quantiles",
         "Sample Mean Excess Plot",
         "Mean Excess Function Plot",
         "Mean Residual Life Plot",
         "Plot of Max/Sum Ratio",
         "Development of Records",
-        "Development of Subsample Records",
         "Plot of ACF of Exceedences")
     Command = c(
         ".fExtremes.ExtremesPlots.bmwDaily",
         ".fExtremes.ExtremesPlots.emd",
         ".fExtremes.ExtremesPlots.qq",
-        ".fExtremes.ExtremesPlots.qqbayes",
         ".fExtremes.ExtremesPlots.q",
         ".fExtremes.ExtremesPlots.me",
         ".fExtremes.ExtremesPlots.mrl",
         ".fExtremes.ExtremesPlots.mxf",
         ".fExtremes.ExtremesPlots.msratio",
         ".fExtremes.ExtremesPlots.records",
-        ".fExtremes.ExtremesPlots.ssrecords",
         ".fExtremes.ExtremesPlots.xacf")
     addToolbarMenu(fExtremesMenu, Label, subLabel, Command)
     

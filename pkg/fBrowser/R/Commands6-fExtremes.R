@@ -30,26 +30,6 @@
 ################################################################################
 # Extremes Plots
 
-      
-.fExtremes.ExtremesPlots.bmwDaily = 
-function()
-{   # A function implemented by Diethelm Wuertz
-
-    # BMW Data Set:
-    myFunction = function(object2x, report) {
-        object <<- tkGetDemoData(Data = "bmwDaily", report = report) 
-        object }
-    tkExecute(
-        fun = myFunction,
-        params = list(
-            object2x = TRUE,
-            report = FALSE),
-        infoName = "BMW Daily Data Set" )       
-}
-
-
-# ------------------------------------------------------------------------------
-
 
 .fExtremes.ExtremesPlots.emd = 
 function()
@@ -80,46 +60,27 @@ function()
 function()
 {   # A function implemented by Diethelm Wuertz
 
-    # Quantile Quantile Plot:
-    myFunction = function(series, par, object2x, report) {
-        x = tkEval(series)
-        eval(parse(text = par))
-        object <<- qqPlot(x = x, doplot = TRUE, labels = TRUE,
-            pch = 19, col = "steelblue")
-        object }
-    tkExecute(
-        fun = myFunction,
-        params = list(
-            series = "x",
-            par = "par(mfrow=c(1,1))",
-            object2x = FALSE,
-            report = FALSE ),
-        infoName = "Plot of Normal Quantiles" )       
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.fExtremes.ExtremesPlots.qqbayes = 
-function()
-{   # A function implemented by Diethelm Wuertz
-
     # Normal QQ-Plot with 95% Intervals:
-    myFunction = function(series, par, object2x, report) {
+    myFunction = function(series, cf, par, object2x, report) {
         x = tkEval(series)
-        eval(parse(text = par))
-        object <<- qqbayesPlot(x = x, doplot = TRUE, labels = TRUE,
-            pch = 19, col = "steelblue")
+        tkEval(par)
+        if (cf) {
+            object <<- qqbayesPlot(x = x, doplot = TRUE, labels = TRUE,
+                pch = 19, col = "steelblue")
+        } else {
+            object <<- qqPlot(x = x, doplot = TRUE, labels = TRUE,
+                pch = 19, col = "steelblue")
+        }
         object }
     tkExecute(
         fun = myFunction,
         params = list(
             series = "x",
+            cf = FALSE,
             par = "par(mfrow=c(1,1))",
             object2x = FALSE,
             report = FALSE ),
-        infoName = "Normal QQ Bayes Plot" )       
+        infoName = "Normal QQ Plot" )       
 }
                
 
@@ -259,45 +220,24 @@ function()
 function()
 {   # A function implemented by Diethelm Wuertz
 
-    #  Record development compared with iid data:
-    myFunction = function(series, conf, par, object2x, report) {
-        x = tkEval(series)
-        eval(parse(text = par))
-        object <<- recordsPlot(x, conf = 0.95, doplot = TRUE, 
-            labels = TRUE, pch = 19, col = "steelblue")
-        object }
-    tkExecute(
-        fun = myFunction,
-        params = list(
-            series = "x",
-            conf = 0.95,
-            par = "par(mfrow=c(1,1))",
-            object2x = FALSE,
-            report = FALSE ),
-        infoName = "Plot of Records Development" )       
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.fExtremes.ExtremesPlots.ssrecords = 
-function()
-{   # A function implemented by Diethelm Wuertz
-
-    # another records plot, investigates subsamples
+    # Records Plot:
     myFunction = function(series, subsamples, plottype, par, object2x, report) {
         x = tkEval(series)
         plottype = tkSplit(plottype)
         eval(parse(text = par))
-        object <<- ssrecordsPlot(x = x, subsamples = 10, doplot = TRUE, 
-            plottype = plottype, labels = TRUE)
+        if (subsamples == 1) {
+            object <<- recordsPlot(x, conf = 0.95, doplot = TRUE, 
+                labels = TRUE, pch = 19, col = "steelblue")
+        } else {
+            object <<- ssrecordsPlot(x = x, subsamples = 10, doplot = TRUE, 
+                plottype = plottype, labels = TRUE)
+        }
         object }
     tkExecute(
         fun = myFunction,
         params = list(
             series = "x",
-            subsamples = 10,
+            subsamples = 1,
             plottype = "lin & log",
             par = "par(mfrow=c(1,1))",
             object2x = FALSE,
@@ -315,16 +255,21 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # ACF of exceedences over a threshold:
-    myFunction = function(series, par, object2x, report) {
+    myFunction = function(series, threshold, lag.max, doplot, par, 
+        object2x, report) {
         x = tkEval(series)
-        eval(parse(text = par))
-        object <<- xacfPlot()
+        if (report) tkTitle("ACF of Exceedences Over a Threshold")
+        if (doplot) tkEval(par)
+        object <<- xacfPlot(x, threshold, lag.max, doplot)
         object }
     tkExecute(
         fun = myFunction,
         params = list(
             series = "x",
-            par = "par(mfrow=c(1,1))",
+            threshold = 0.95,
+            lag.max = 15,
+            doplot = TRUE,
+            par = "par(mfrow=c(2,2))",
             object2x = FALSE,
             report = FALSE ),
         infoName = "Plot of ACF of Exceedences" )       
@@ -333,26 +278,6 @@ function()
 
 ################################################################################
 # Data Preprocessing
-
-
-.fExtremes.DataPreprocessing.bmwDaily =  
-function()
-{   # A function implemented by Diethelm Wuertz
-
-    # BMW Data Set:
-    myFunction = function(object2x, report) {
-        object <<- tkGetDemoData(Data = "bmwDaily", report = report) 
-        object }
-    tkExecute(
-        fun = myFunction,
-        params = list(
-            object2x = TRUE,
-            report = FALSE),
-        infoName = "BMW Daily Data Set" )       
-}
-
-
-# ------------------------------------------------------------------------------
 
 
 .fExtremes.DataPreprocessing.findThreshold = 
@@ -382,26 +307,6 @@ function()
 
 ################################################################################
 # Generalized Extreme Value
-
-
-.fExtremes.GEV.bmwDaily = 
-function()
-{   # A function implemented by Diethelm Wuertz
-
-    # BMW Data Set:
-    myFunction = function(object2x, report) {
-        object <<- tkGetDemoData(Data = "bmwDaily", report = report) 
-        object }
-    tkExecute(
-        fun = myFunction,
-        params = list(
-            object2x = TRUE,
-            report = FALSE),
-        infoName = "BMW Daily Data Set" )       
-}
-
-
-# ------------------------------------------------------------------------------
 
 
 .fExtremes.GEV.gevSlider = 
@@ -603,26 +508,6 @@ function()
 
 ################################################################################
 # Peaks over Threshold
-
-
-.fExtremes.GPD.bmwDaily = 
-function()
-{   # A function implemented by Diethelm Wuertz
-
-    # BMW Data Set:
-    myFunction = function(object2x, report) {
-        object <<- tkGetDemoData(Data = "bmwDaily", report = report) 
-        object }
-    tkExecute(
-        fun = myFunction,
-        params = list(
-            object2x = TRUE,
-            report = FALSE),
-        infoName = "BMW Daily Data Set" )       
-}
-
-
-# ------------------------------------------------------------------------------
 
 
 .fExtremes.GPD.gpdSlider = 

@@ -135,18 +135,6 @@ function()
 # Basic Statistics
 
 
-.fBasics.BasicStatistics.sp500monthly = 
-function() 
-{   # A function implemented by Diethelm Wuertz
-    
-    # Example timeSeries: x = Monthly SP500 Returns
-    tkGetData(Data = "sp500Monthly", infoName = "End of Month SP500 Returns")
-}
-
-
-# ------------------------------------------------------------------------------
-
-
 .fBasics.BasicStatistics.mean = 
 function() 
 {   # A function implemented by Diethelm Wuertz
@@ -288,18 +276,6 @@ function()
 # Basic Plots
 
 
-.fBasics.PlotFunctions.sp500Monthly = 
-function() 
-{   # A function implemented by Diethelm Wuertz
-    
-    # * Example timeSeries: x = Monthly SP500 Returns:
-    tkGetData(Data = "sp500Monthly", infoName = "Monthly SP500 Returns")
-}
-
-
-# ------------------------------------------------------------------------------
-
-
 .fBasics.PlotFunctions.plot = 
 function() 
 {   # A function implemented by Diethelm Wuertz
@@ -390,18 +366,6 @@ function()
 # ------------------------------------------------------------------------------
 
 
-.fBasics.PlotFunctions.msftsp500Monthly = 
-function() 
-{   # A function implemented by Diethelm Wuertz
-
-    # * Example timeSeries: x = MSFT|SP500 Returns:
-    tkGetData(Data = "msftsp500Monthly", infoName = "Monthly MSFT|SP500 Returns")
-}
-
-
-# ------------------------------------------------------------------------------
-
-
 .fBasics.PlotFunctions.bivariatePlot = 
 function() 
 {   # A function implemented by Diethelm Wuertz
@@ -443,18 +407,6 @@ function()
 
 ################################################################################
 # Return Distributions
-
-
-.fBasics.ReturnDistributions.nyseDaily = 
-function() 
-{   # A function implemented by Diethelm Wuertz
-    
-    # * Example timeSeries: x - Daily NYSE Returns
-    tkGetData(Data = "nyseDaily", infoName = "Daily NYSE Returns")
-} 
-
-
-# ------------------------------------------------------------------------------
 
 
 .fBasics.ReturnDistributions.rnorm = 
@@ -775,18 +727,6 @@ function()
 # Normality Tests
 
 
-.fBasics.NormalityTests.sp500Monthly = 
-function() 
-{   # A function implemented by Diethelm Wuertz
-
-    # * Example timeSeries: - x = Monthly SP500 Returns
-    tkGetData(Data = "sp500Monthly", infoName = "Monthly SP500 Returns")
-}
-
-
-# ------------------------------------------------------------------------------
-
-
 .fBasics.NormalityTests.ksnormTest = 
 function() 
 {   # A function implemented by Diethelm Wuertz
@@ -984,19 +924,6 @@ function()
 
 ################################################################################
 # Bivariate Tests
-
-
-.fBasics.BivariateTests.msftsp500Monthly  = 
-function() 
-{   # A function implemented by Diethelm Wuertz
-
-    # * Example timeSeries: x = MSFT|SP500 Returns
-    tkGetData(Data = "msftsp500Monthly", 
-        infoName = "Monthly MSFT|SP500 Returns")
-}
-
-
-# ------------------------------------------------------------------------------
 
 
 .fBasics.BivariateTests.ks2Test  = 
@@ -1239,18 +1166,6 @@ function()
 
 ################################################################################
 # Stylized Facts
-
-
-.fBasics.StylizedFacts.nyseDaily = 
-function() 
-{   # A function implemented by Diethelm Wuertz
-    
-    # * Example timeSeries: x = Daily NYSE Returns
-    tkGetData(Data = "nyseDaily", infoName = "Daily NYSE Returns")
-}
-
-
-# ------------------------------------------------------------------------------
 
 
 .fBasics.StylizedFacts.teffectPlot =  

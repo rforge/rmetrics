@@ -540,17 +540,18 @@ function()
 
 
 tkGetDemoData = 
-function(Data, report)
+function(Data, report, FUN = "as.timeSeries")
 {
     # Get and Save:
     command = paste("data(", Data, ")", sep = "")
-    eval(parse(text = command))
-    ans = eval(parse(text = Data))
-    if (dim(ans)[2] != 1) ans = as.timeSeries(ans)
+    tkEval(command)
+    ans = tkEval(Data)
+    fun = match.fun(FUN)
+    ans = fun(ans)
     attr(ans, "control") <- c(data = Data)
     
     # Title:
-    if (report) tkTitle("Demo Data Set")
+    if (report) tkTitle(paste(Data, "Demo Data Set"))
     
     # Return Value:
     ans

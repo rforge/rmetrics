@@ -37,7 +37,16 @@ function()
     
     # LM - Example Data:
     # Example Data: x = 0.7*x1 + 0.3*x2 + eps
-    tkGetDataFrame("lmData", "lm Demo Data")
+    myFunction = function(object2x, report) {
+        object <<- tkGetDemoData(Data = "lmData", report = report,
+            FUN = "as.data.frame") 
+        object }
+    tkExecute(
+        fun = myFunction,
+        params = list(
+            object2x = TRUE,
+            report = FALSE),
+        infoName = "LM Data Set" )       
 }
 
 
@@ -52,7 +61,16 @@ function()
     # Example Data: x = 10*sin(x1) + exp(x2) + eps
     # family = binomial(link = logit)
     # glm(formula = x ~ x1 + x2, family = family, data = x)
-    tkGetDataFrame("glmData", "glm Demo Data")
+    myFunction = function(object2x, report) {
+        object <<- tkGetDemoData(Data = "glmData", report = report,
+            FUN = "as.data.frame") 
+        object }
+    tkExecute(
+        fun = myFunction,
+        params = list(
+            object2x = TRUE,
+            report = FALSE),
+        infoName = "GLM Data Set" )      
 }
 
 
@@ -66,7 +84,16 @@ function()
     # GAM - Example Data:
     # Example Data: x = 0.7*sin(x1) + 0.3*exp(x2) + eps
     # fit = gam(formula = x ~ s(x1) + s(x2), data = x)  
-    tkGetDataFrame("gamData", "gam Demo Data")   
+    myFunction = function(object2x, report) {
+        object <<- tkGetDemoData(Data = "gamData", report = report,
+            FUN = "as.data.frame") 
+        object }
+    tkExecute(
+        fun = myFunction,
+        params = list(
+            object2x = TRUE,
+            report = FALSE),
+        infoName = "GAM Data Set" )         
 }
 
 
@@ -78,17 +105,16 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Linear Modelling:
-    myFunction = function(formula, family, object2x, report) {
-        object <<- regFit(
-            formula = as.formula(formula),
-            family = eval(parse(text = "gaussian")), 
-            data = x, method = "LM", nterms = NA, size = NA)
+    myFunction = function(series, formula, object2x, report) {
+        x = tkEval(series)
+        formula = as.formula(formula)
+        object <<- regFit(formula = formula, data = x)
         object }
     tkExecute(
         fun = myFunction,
         params = list(
-            formula = "x ~ x1 + x2",
-            family = "gaussian",
+            series = "x",
+            formula = "x ~ x1 + x2",   
             object2x = FALSE,
             report = TRUE ), 
         infoName = "LM Modelling" ) 
@@ -103,17 +129,19 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Generalized Linear Modelling:
-    myFunction = function(formula, family, object2x, report){
-        object <<- regFit(
-            formula = as.formula(formula),
-            family = eval(parse(text = "gaussian")), 
-            data = x, method = "GLM", nterms = NA, size = NA)
+    myFunction = function(series, formula, family, object2x, report){
+        x = tkEval(series)
+        formula = as.formula(formula)
+        family = tkEval(family)
+        object <<- regFit(formula = formula,
+            family = family, data = x, method = "GLM")
         object }
     tkExecute(
         fun = myFunction,
         params = list(
+            series = "x", 
             formula = "x ~ x1 + x2",
-            family = "gaussian",
+            family = "gaussian()",
             object2x = FALSE,
             report = TRUE ), 
         infoName = "GLM Modelling" ) 
@@ -1418,18 +1446,6 @@ function()
 # Benchmark Analysis
 
 
-.fMultivar.BenchmarkAnalysis.1 = 
-function()
-{   # A function implemented by Diethelm Wuertz
-    
-    # * Example timeSeries: x = SP500 Index
-    tkGetData(Data = "sp500IndexMonthly", infoName = "Monthly SP500 Index")
-}
-
-
-# ------------------------------------------------------------------------------
-
-
 .fMultivar.BenchmarkAnalysis.2 = 
 function()
 {   # A function implemented by Diethelm Wuertz
@@ -1513,18 +1529,6 @@ function()
 
 ################################################################################
 # Rolling Analysis
-
-
-.fMultivar.RollingAnalysis.sp500IndexMonthly = 
-function()
-{   # A function implemented by Diethelm Wuertz
-    
-    # * Example timeSeries: x = SP500 Index
-    tkGetData(Data = "sp500IndexMonthly", infoName = "Monthly SP500 Index")
-}   
-
-
-# ------------------------------------------------------------------------------
 
 
 .fMultivar.RollingAnalysis.rollMean = 

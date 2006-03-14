@@ -31,26 +31,6 @@
 # Arma Modelling
 
 
-.fSeries.ArmaModelling.nyseDaily =  
-function()
-{   # A function implemented by Diethelm Wuertz
-
-    # BMW Data Set:
-    myFunction = function(object2x, report) {
-        object <<- tkGetDemoData(Data = "nyseDaily", report = report) 
-        object }
-    tkExecute(
-        fun = myFunction,
-        params = list(
-            object2x = TRUE,
-            report = FALSE),
-        infoName = "Nyse Daily Data Set" )       
-}
-
-
-# ------------------------------------------------------------------------------
-
-
 .fSeries.ArmaModelling.armaSim = 
 function()
 {   # A function implemented by Diethelm Wuertz
@@ -149,39 +129,6 @@ function()
 # Garch Modelling
 
 
-.fSeries.GarchModelling.dem2gbpDaily =  
-function()
-{   # A function implemented by Diethelm Wuertz
-
-    # BMW Data Set:
-    myFunction = function(object2x, report) {
-        object <<- tkGetDemoData(Data = "dem2gbp", report = report) 
-        object }
-    tkExecute(
-        fun = myFunction,
-        params = list(
-            object2x = TRUE,
-            report = FALSE),
-        infoName = "DEMGBP Daily Data Set" )       
-}
-
-
-
-# ------------------------------------------------------------------------------
-
-
-.fSeries.GarchModelling.fGARCH = 
-function()
-{   # A function implemented by Diethelm Wuertz
-    
-    # Print GARCH Class Representation
-    tkGetClass("fGARCH")   
-}
-
-
-# ------------------------------------------------------------------------------
-
-
 .fSeries.GarchModelling.garchSim = 
 function()
 {   # A function implemented by Diethelm Wuertz
@@ -278,18 +225,6 @@ function()
 
 ################################################################################
 # Long Memory Modelling
-
-
-.fSeries.LongMemoryModelling.fHURST = 
-function()
-{   # A function implemented by Diethelm Wuertz
-    
-    # Print ARMA Class Representation:
-    tkGetClass("fHURST")   
-}
-
-
-# ------------------------------------------------------------------------------
 
 
 .fSeries.LongMemoryModelling.fgnSim = 
@@ -493,18 +428,6 @@ function()
 # Dependency Tests
 
 
-.fSeries.TimeSeriesTests.1 = 
-function()
-{   # A function implemented by Diethelm Wuertz
-    
-    # Example timeSeries: x - NYSE log Returns
-    tkGetData(Data = "nyseDaily", infoName = "Daily NYSE Returns")
-}
-   
-
-# ------------------------------------------------------------------------------
-
- 
 .fSeries.TimeSeriesTests.2 = 
 function()
 {   # A function implemented by Diethelm Wuertz
