@@ -31,23 +31,24 @@
 # Arma Modelling
 
 
-.fSeries.ArmaModelling.nyseDaily = 
+.fSeries.ArmaModelling.nyseDaily =  
 function()
 {   # A function implemented by Diethelm Wuertz
-     
-    # Example timeSeries: x = NYSE Returns
-    # * Example timeSeries: x - NYSE Returns
-    tkGetData(Data = "nyseDaily", infoName = "Daily NYSE Returns")
+
+    # BMW Data Set:
+    myFunction = function(object2x, report) {
+        object <<- tkGetDemoData(Data = "nyseDaily", report = report) 
+        object }
+    tkExecute(
+        fun = myFunction,
+        params = list(
+            object2x = TRUE,
+            report = FALSE),
+        infoName = "Nyse Daily Data Set" )       
 }
 
 
-.fSeries.ArmaModelling.fARMA = 
-function()
-{   # A function implemented by Diethelm Wuertz
-    
-    # Print ARMA Class Representation:
-    tkGetClass("fARMA")   
-}
+# ------------------------------------------------------------------------------
 
 
 .fSeries.ArmaModelling.armaSim = 
@@ -77,18 +78,26 @@ function()
 }
 
 
+# ------------------------------------------------------------------------------
+
+
 .fSeries.ArmaModelling.armaFit = 
 function()
 {   # A function implemented by Diethelm Wuertz
     
     # Fit ARMA Process:
-    myFunction <<- function(formula, method, include.mean, object2x, report) {
+    myFunction <<- function(formula, method, include.mean, doplot, 
+        par, object2x, report) {
         formula = as.formula(formula)
         include.mean = as.logical(include.mean)
         object <<- armaFit(formula = formula, method = method, 
             include.mean = include.mean, fixed = NULL,
             fracdiff.M = 100, fracdiff.h = -1, title = NULL, 
             description = NULL)
+        if (doplot) {
+            eval(parse(text = par))
+            summary(object)
+        }
         object }
     tkExecute(
         fun = myFunction,
@@ -96,20 +105,15 @@ function()
             formula = "x ~ arima(2, 0, 1)", 
             method = "CSS-ML",
             include.mean = TRUE,
+            doplot = TRUE,
+            par = "par(mfrow=c(2,2),cex=0.7)",
             object2x = FALSE,
             report = TRUE ),
         infoName = "Fitted ARMA")  
 }
 
 
-.fSeries.ArmaModelling.summary = 
-function()
-{   # A function implemented by Diethelm Wuertz
-    
-    # Summary Report:
-    par(mfrow = c(2, 2), cex = 0.7)
-    tkGetSummary(object)   
-}
+# ------------------------------------------------------------------------------
 
 
 .fSeries.ArmaModelling.predict = 
@@ -145,14 +149,25 @@ function()
 # Garch Modelling
 
 
-
-.fSeries.GarchModelling.dem2gbpDaily = 
+.fSeries.GarchModelling.dem2gbpDaily =  
 function()
 {   # A function implemented by Diethelm Wuertz
-    
-    # Example timeSeries: x = GBPDEM Returns
-    tkGetData(Data = "dem2gbp", infoName = "Daily DEMGBP Returns")
+
+    # BMW Data Set:
+    myFunction = function(object2x, report) {
+        object <<- tkGetDemoData(Data = "dem2gbp", report = report) 
+        object }
+    tkExecute(
+        fun = myFunction,
+        params = list(
+            object2x = TRUE,
+            report = FALSE),
+        infoName = "DEMGBP Daily Data Set" )       
 }
+
+
+
+# ------------------------------------------------------------------------------
 
 
 .fSeries.GarchModelling.fGARCH = 
@@ -164,6 +179,9 @@ function()
 }
 
 
+# ------------------------------------------------------------------------------
+
+
 .fSeries.GarchModelling.garchSim = 
 function()
 {   # A function implemented by Diethelm Wuertz
@@ -173,7 +191,7 @@ function()
         rseed, object2x, report) {
         model = eval(parse(text = model)) 
         if (presample == "NULL") presample = NULL
-        cond.dist = eval(parse(text = cond.dist)) 
+        cond.dist = tkSplit(cond.dist) 
         if (rseed == "NULL") rseed = NULL
         object <<- garchSim(model, n, n.start, presample, cond.dist, rseed)
         object }
@@ -184,12 +202,15 @@ function()
             n = 100,
             n.start = 100,
             presample = "NULL",
-            cond.dist = "c('rnorm','rged','rstd','rsnorm','rsged','rsstd')",
+            cond.dist = "rnorm & rged & rstd & rsnorm & rsged & rsstd",
             rseed= "NULL",
             object2x = TRUE,
             report = TRUE ),
         infoName = "Simulated GARCH" )
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fSeries.GarchModelling.garchFit = 
@@ -203,14 +224,14 @@ function()
         object2x, report) {
         formula.mean = as.formula(formula.mean)
         formula.var = as.formula(formula.var)
-        x = eval(parse(text = series))
-        init.rec = eval(parse(text = init.rec))
-        cond.dist = eval(parse(text = cond.dist))
+        x = tkEval(series)
+        init.rec = tkSplit(init.rec)
+        cond.dist = tkSplit(cond.dist)
         if (include.delta == "NULL") include.delta = NULL
         if (include.skew == "NULL") include.skew = NULL
         if (include.shape == "NULL") include.shape = NULL
         if (leverage == "NULL") leverage = NULL
-        algorithm = eval(parse(text = algorithm))
+        algorithm = tkSplit(algorithm)
         control = eval(parse(text = control))
         object <<- garchFit(formula.mean, formula.var, series = x, init.rec, 
             delta, skew, shape, cond.dist, include.mean, include.delta, 
@@ -223,18 +244,18 @@ function()
             formula.mean = "~arma(0, 0)", 
             formula.var = "~garch(1, 1)",
             series = "x",
-            init.rec = "c('mci', 'uev')",
+            init.rec = "mci & uev",
             delta = 2, 
             skew = 1, 
             shape = 4,
-            cond.dist = "c('dnorm','dsnorm','dged','dsged','dstd','dsstd')", 
+            cond.dist = "dnorm & dsnorm & dged & dsged & dstd & dsstd", 
             include.mean = TRUE, 
             include.delta = "NULL", 
             include.skew = "NULL", 
             include.shape = "NULL", 
             leverage = "NULL", 
             trace = TRUE, 
-            algorithm = "c('sqp','nlminb','lbfgsb','nlminb+nm','lbfgsb+nm')", 
+            algorithm = "sqp & nlminb & lbfgsb & nlminb+nm & lbfgsb+nm", 
             control = "list()",
             object2x = FALSE,
             report = TRUE ),
@@ -242,13 +263,7 @@ function()
 }
 
 
-.fSeries.GarchModelling.summary = 
-function()
-{   # A function implemented by Diethelm Wuertz
-    
-    # ... Print Summary Report:
-    tkGetSummary(object)
-}
+# ------------------------------------------------------------------------------
 
 
 .fSeries.GarchModelling.predict = 
@@ -274,13 +289,16 @@ function()
 }
 
 
+# ------------------------------------------------------------------------------
+
+
 .fSeries.LongMemoryModelling.fgnSim = 
 function()
 {   # A function implemented by Diethelm Wuertz
     
     # Fractional Gaussian Noise Simulation:
     myFunction = function(n, H, method, object2x, report) {
-        method = eval(parse(text = method)) 
+        method = tkSplit(method) 
         object <<- fgnSim(n, H, method) 
         object }
     tkExecute(
@@ -288,11 +306,14 @@ function()
         params = list(
             n = 100,
             H = 0.7,
-            method = "c('beran','durbin','paxson')",
+            method = "beran & durbin & paxson",
             object2x = TRUE,
             report = TRUE),
         infoName = "Simulated Fractional Gaussian Noise" )  
 } 
+
+
+# ------------------------------------------------------------------------------
 
 
 .fSeries.LongMemoryModelling.fbmSim = 
@@ -301,7 +322,7 @@ function()
     
     # Fractional Brownian Motion Simulation:
     myFunction = function(n, H, method, object2x, report) {
-        method = eval(parse(text = method)) 
+        method = tkSplit(method) 
         object <<- fbmSim(n, H, method, waveJ, doplot = TRUE, fgn) 
         object }
     tkExecute(
@@ -309,7 +330,7 @@ function()
         params = list(
             n = 100,
             H = 0.7,
-            method = "c('mvn','chol','lev','circ','wave')",
+            method = "mvn & chol & lev & circ & wave",
             waveJ = 7,
             fgn = FALSE,
             object2x = TRUE,
@@ -348,6 +369,9 @@ function()
 }
 
 
+# ------------------------------------------------------------------------------
+
+
 .fSeries.ChaoticTimeSeries.ikedaSim = 
 function()
 {   # A function implemented by Diethelm Wuertz
@@ -373,6 +397,9 @@ function()
             report = TRUE ),
         infoName = "Ikeda Map") 
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fSeries.ChaoticTimeSeries.logisticSim = 
@@ -401,15 +428,18 @@ function()
 }
 
 
+# ------------------------------------------------------------------------------
+
+
 .fSeries.ChaoticTimeSeries.lorentzSim = 
 function()
 {   # A function implemented by Diethelm Wuertz
 
     # Lorentz Attractor:
     myFunction = function(times, sigma, r, b, start, par, object2x, report) {
-        times = eval(parse(text = times))
+        times = tkEval(times)
         parms = c(sigma = sigma, r = r, b = b)
-        start = eval(parse(text = start))
+        start = tkEval(start)
         eval(parse(text = par))
         object <<- lorentzSim(times = times, parms = parms, 
             start = start, doplot = TRUE)
@@ -427,6 +457,9 @@ function()
             report = TRUE ),
         infoName = "Lorentz Attractor" )
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fSeries.ChaoticTimeSeries.roesslerSim = 
@@ -457,7 +490,7 @@ function()
 
 
 ################################################################################
-# Time Series Tests
+# Dependency Tests
 
 
 .fSeries.TimeSeriesTests.1 = 
@@ -468,6 +501,9 @@ function()
     tkGetData(Data = "nyseDaily", infoName = "Daily NYSE Returns")
 }
    
+
+# ------------------------------------------------------------------------------
+
  
 .fSeries.TimeSeriesTests.2 = 
 function()
@@ -516,7 +552,10 @@ function()
         description = NULL )
 }
    
- 
+
+# ------------------------------------------------------------------------------
+
+
 .fSeries.TimeSeriesTests.4 = 
 function()
 {   # A function implemented by Diethelm Wuertz
@@ -573,13 +612,11 @@ function()
     
     # has Unit Root:
     x <<- rnorm(1000)
-    
-    # Info:activeDataSet <<- paste("x =", What[choice])
-    infoLabelText <<- tclVar(paste("Active Series Data:", activeDataSet))
-    tkconfigure(infoLabel, textvariable = infoLabelText)
-    tkgrid(infoLabel)
 }
    
+
+# ------------------------------------------------------------------------------
+
  
 .fSeries.UnitRootTests.2 = 
 function() 
@@ -594,6 +631,9 @@ function()
     tkgrid(infoLabel)
 }
    
+
+# ------------------------------------------------------------------------------
+
  
 .fSeries.UnitRootTests.3 = 
 function() 
@@ -603,7 +643,8 @@ function()
     output <<- capture.output(adfTest(x))
     tkOutput(output)
 }
-    
+  
+  
 .fSeries.UnitRootTests.4 = 
 function() 
 {   # A function implemented by Diethelm Wuertz
@@ -614,7 +655,36 @@ function()
 }
 
 
-# ******************************************************************************
+.fSeries.UnitRootTests.urersTest = 
+function()
+{   # A function implemented by Diethelm Wuertz
+    
+    # ERS Unit Root Test:
+    myFunction = function(series, type, model, lag.max, doplot, 
+        object2x, report) {
+        x = tkEval(series)
+        type = tkSplit(type)
+        print(type)
+        object <<- urersTest(x, type, model, lag.max, doplot) 
+        if (report) tkTitle("ERS Unit Root Test")
+        object }
+    tkExecute(
+        fun = myFunction,
+        params = list(
+            series = "x", 
+            type = "DF-GLS | P-test", 
+            model = "constant | trend",
+            by = "day", 
+            lag.max = 4, 
+            format = "%Y-%m-%d", 
+            doplot = TRUE,
+            object2x = FALSE,
+            report = TRUE),
+        infoName = "ERS Unit Root Test" )          
+}
+
+
+################################################################################
 # Heaviside Function
 
 
@@ -642,6 +712,9 @@ function()
 }
 
 
+# ------------------------------------------------------------------------------
+
+
 .fSeries.GarchDistributions.2 = 
 function() 
 {   # A function implemented by Diethelm Wuertz
@@ -649,6 +722,9 @@ function()
     # Skew Normal Distribution Slider
     .normSlider(TRUE)
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fSeries.GarchDistributions.3 = 
@@ -660,6 +736,9 @@ function()
 }
 
 
+# ------------------------------------------------------------------------------
+
+
 .fSeries.GarchDistributions.4 = 
 function() 
 {   # A function implemented by Diethelm Wuertz
@@ -667,6 +746,9 @@ function()
     # Generate Student-t Distribution Slider
     .stdSlider(TRUE)
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fSeries.GarchDistributions.5 = 
@@ -678,6 +760,9 @@ function()
 }
 
 
+# ------------------------------------------------------------------------------
+
+
 .fSeries.GarchDistributions.6 = 
 function() 
 {   # A function implemented by Diethelm Wuertz
@@ -687,7 +772,7 @@ function()
 }
 
 
-# ******************************************************************************
+################################################################################
 # Garch Distribution Fits
 
 
@@ -699,6 +784,9 @@ function()
     tkGetData(Data = "nyseDaily", infoName = "Daily NYSE Returns")
 }
    
+
+# ------------------------------------------------------------------------------
+
 
 .fSeries.GarchDistributionFits.2 = 
 function() 
@@ -718,6 +806,9 @@ function()
 }
    
 
+# ------------------------------------------------------------------------------
+
+
 .fSeries.GarchDistributionFits.4 = 
 function() 
 {   # A function implemented by Diethelm Wuertz
@@ -727,6 +818,9 @@ function()
 }
    
 
+# ------------------------------------------------------------------------------
+
+
 .fSeries.GarchDistributionFits.5 = 
 function() 
 {   # A function implemented by Diethelm Wuertz
@@ -735,6 +829,9 @@ function()
     tkGetFit(sstdFit, "Fit to Skew Student-t Distribution")     
 }
    
+
+# ------------------------------------------------------------------------------
+
 
 .fSeries.GarchDistributionFits.6 = 
 function() 
@@ -767,6 +864,9 @@ function()
 }
 
 
+# ------------------------------------------------------------------------------
+
+
 .fSeries.SeriesData.2 = 
 function() 
 {   # A function implemented by Diethelm Wuertz
@@ -774,6 +874,9 @@ function()
     # recession:
     tkGetDataFrame(Data = "recession", infoName = "Data Set")
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fSeries.SeriesData.3 = 
@@ -785,6 +888,9 @@ function()
 }
 
 
+# ------------------------------------------------------------------------------
+
+
 .fSeries.SeriesData.4 = 
 function() 
 {   # A function implemented by Diethelm Wuertz
@@ -792,6 +898,9 @@ function()
     # cac40:
     tkGetDataFrame(Data = "cac40", infoName = "Data Set")
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fSeries.SeriesData.5 = 
@@ -803,6 +912,9 @@ function()
 }
 
 
+# ------------------------------------------------------------------------------
+
+
 .fSeries.SeriesData.6 = 
 function() 
 {   # A function implemented by Diethelm Wuertz
@@ -810,6 +922,9 @@ function()
     # surex1.ts:
     tkGetDataFrame(Data = "surex1.ts", infoName = "Data Set")
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fSeries.SeriesData.7 = 
@@ -821,6 +936,9 @@ function()
 }
 
 
+# ------------------------------------------------------------------------------
+
+
 .fSeries.SeriesData.8 = 
 function() 
 {   # A function implemented by Diethelm Wuertz
@@ -830,6 +948,9 @@ function()
 }
 
 
+# ------------------------------------------------------------------------------
+
+
 .fSeries.SeriesData.9 = 
 function() 
 {   # A function implemented by Diethelm Wuertz
@@ -837,6 +958,9 @@ function()
     # klein:
     tkGetData(Data = "klein", infoName = "Data Set")
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fSeries.SeriesData.10 = 
@@ -874,11 +998,12 @@ function()
 }
   
 
+# ------------------------------------------------------------------------------
+
+
 .fSeries.PortableInnovations.rnormlcg = 
 function()
 {   # A function implemented by Diethelm Wuertz
-
-    # FUNCTION:
     
     # Normal Innovations:
     myFunction = function(n, mean, sd, as.ts, object2x, report) {
@@ -897,6 +1022,9 @@ function()
         infoName = "Portable Normal Innovations" )
 }
   
+
+# ------------------------------------------------------------------------------
+
 
 .fSeries.PortableInnovations.rtlcg = 
 function()
@@ -934,6 +1062,9 @@ function()
 }
 
 
+# ------------------------------------------------------------------------------
+
+
 .fSeries.MillsData.R20 = 
 function() 
 {   # A function implemented by Diethelm Wuertz
@@ -941,6 +1072,9 @@ function()
     # R20 - Monthly Yield on 20 Year UK Gilts:
     tkGetData(Data = "R20", infoName = "Monthly Yield on 20 Year UK Gilts")
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fSeries.MillsData.RSQ = 
@@ -952,6 +1086,9 @@ function()
 }
 
 
+# ------------------------------------------------------------------------------
+
+
 .fSeries.MillsData.R20Q = 
 function() 
 {   # A function implemented by Diethelm Wuertz
@@ -961,6 +1098,9 @@ function()
 }
  
 
+# ------------------------------------------------------------------------------
+
+
 .fSeries.MillsData.RSQREAL = 
 function() 
 {   # A function implemented by Diethelm Wuertz
@@ -968,6 +1108,9 @@ function()
     # RSQREAL - Quarterly Real 91 Day Treasury Bill:
     tkGetData(Data = "RSQREAL", infoName = "Quarterly Real 91 Day TBill")
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fSeries.MillsData.FTAPRICE = 
@@ -979,6 +1122,9 @@ function()
 }
 
 
+# ------------------------------------------------------------------------------
+
+
 .fSeries.MillsData.FTADIV = 
 function() 
 {   # A function implemented by Diethelm Wuertz
@@ -986,6 +1132,9 @@ function()
     # FTADIV - FTA All Share Dividend Index:
     tkGetData(Data = "FTADIV", infoName = "FTA All Share Dividend Index")
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fSeries.MillsData.FTARET = 
@@ -997,6 +1146,9 @@ function()
 }
 
 
+# ------------------------------------------------------------------------------
+
+
 .fSeries.MillsData.RPI = 
 function() 
 {   # A function implemented by Diethelm Wuertz
@@ -1004,6 +1156,9 @@ function()
     # RPI - UK Retail Price Index:
     tkGetData(Data = "RPI", infoName = "UK Retail Price Index")
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fSeries.MillsData.EXCHD = 
@@ -1015,6 +1170,9 @@ function()
 }
 
 
+# ------------------------------------------------------------------------------
+
+
 .fSeries.MillsData.EXCHQ = 
 function() 
 {   # A function implemented by Diethelm Wuertz
@@ -1022,6 +1180,9 @@ function()
     # EXCHQ - Dollar/Sterling Exchange Rate:
     tkGetData(Data = "EXCHQ", infoName = "Dollar/Sterling Exchange Rate")
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fSeries.MillsData.SP500 = 
@@ -1033,6 +1194,9 @@ function()
 }
 
 
+# ------------------------------------------------------------------------------
+
+
 .fSeries.MillsData.SP500R = 
 function() 
 {   # A function implemented by Diethelm Wuertz
@@ -1040,6 +1204,9 @@ function()
     # SP500R - SP 500 Real Returns:
     tkGetData(Data = "SP500R", infoName = "SP 500 Annual Data Index")
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fSeries.MillsData.SP500D = 
@@ -1051,6 +1218,9 @@ function()
 }
 
 
+# ------------------------------------------------------------------------------
+
+
 .fSeries.MillsData.FT30 = 
 function() 
 {   # A function implemented by Diethelm Wuertz
@@ -1058,6 +1228,9 @@ function()
     # FT30 - Financial Times FT 30 Index:
     tkGetData(Data = "FT30", infoName = "SP 500 Daily Data Index")
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fSeries.MillsData.FTSE100 = 
@@ -1068,6 +1241,10 @@ function()
     tkGetData(Data = "FTSE100", infoName = "FTSE 100 Index")
 }
 
+
+# ------------------------------------------------------------------------------
+
+
 .fSeries.MillsData.CTLD = 
 function() 
 {   # A function implemented by Diethelm Wuertz
@@ -1077,6 +1254,9 @@ function()
 }
 
 
+# ------------------------------------------------------------------------------
+
+
 .fSeries.MillsData.LGEN = 
 function() 
 {   # A function implemented by Diethelm Wuertz
@@ -1084,6 +1264,9 @@ function()
     # LGEN - Legal and General Share Price:
     tkGetData(Data = "LGEN", infoName = "Legal and General Share Price")
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fSeries.MillsData.PRU = 

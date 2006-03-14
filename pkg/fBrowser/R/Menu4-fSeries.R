@@ -28,7 +28,7 @@
     
     
 ################################################################################
-# fSSeries Popup Menu
+# fSeries Popup Menu
 
         
 .fSeries.PopupMenu =
@@ -48,13 +48,11 @@ function()
     Label = "Arma Modelling"
     subLabel = c(
         "* Example timeSeries: x = NYSE Returns",
-        "Print fARMA Class Representation", 
         "ARMA Series Simulation", 
         "ARMA Parameter Estimation",
         "Forecast ARMA Process")
      Command = c(
         ".fSeries.ArmaModelling.nyseDaily",
-        ".fSeries.ArmaModelling.fARMA",
         ".fSeries.ArmaModelling.armaSim",
         ".fSeries.ArmaModelling.armaFit",
         ".fSeries.ArmaModelling.predict")
@@ -65,13 +63,11 @@ function()
     Label = "Garch Modelling"
     subLabel = c(
         "* Example timeSeries: x = DEMGBP Returns",
-        "Print fGARCH Class Representation", 
         "GARCH Series Simulation", 
         "GARCH Parameter Estimation",
         "Forecast GARCH Process")
     Command = c(
         ".fSeries.GarchModelling.dem2gbpDaily",
-        ".fSeries.GarchModelling.fGARCH",
         ".fSeries.GarchModelling.garchSim",
         ".fSeries.GarchModelling.garchFit",
         ".fSeries.GarchModelling.predict")
@@ -82,18 +78,16 @@ function()
     # Add Menu:
     Label = "Long Memory Modelling"
     subLabel = c(
-        "Print fHURST Class Representation",
         "Simulate FGN Process",
         "Simulate FBM/FGN Process")
     Command = c(
-        ".fSeries.LongMemoryModelling.fHURST",
         ".fSeries.LongMemoryModelling.fgnSim",
         ".fSeries.LongMemoryModelling.fbmSim")
     addToolbarMenu(fSeriesMenu, Label, subLabel, Command)
     }
     
     # Add Menu:
-    Label = "Time Series Tests"
+    Label = "Dependency Tests"
     subLabel = c(
         # runs Test goes here ?
         "* Example timeSeries: x - NYSE log Returns",
@@ -113,11 +107,10 @@ function()
     subLabel = c(
         "* Example timeSeries: x - has Unit Root",
         "* Example timeSeries: x - has no Unit Root",
-        # "Print fURTEST Class Representation"
-        # "is.fURTEST Object ?"
         "ADF Test",
         "McKinnon's Unit Root Test",
-        "Unitroot Distribution")
+        "... Unitroot Distribution",
+        "RS Test")
         #
         #  urersTest - Elliott-Rothenberg-Stock test for unit roots
         #  urkpssTest - KPSS unit root test for stationarity
@@ -130,7 +123,8 @@ function()
         ".fSeries.UnitRootTests.2",
         ".fSeries.UnitRootTests.3",
         ".fSeries.UnitRootTests.4",
-        ".fSeries.UnitRootDistribution.1")
+        ".fSeries.UnitRootDistribution.1",
+        ".fSeries.UnitRootTests.urersTest",)
     addToolbarMenu(fSeriesMenu, Label, subLabel, Command)
        
     

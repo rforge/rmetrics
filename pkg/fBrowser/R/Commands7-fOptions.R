@@ -33,9 +33,11 @@
 
 .fOptions.PlainVanilla.1 =
 function()
-{
+{   # A function implemented by Diethelm Wuertz
+
     # GBS Option:
-    myFunction = function(TypeFlag, S, X, Time, r, b, sigma) {
+    myFunction = function(TypeFlag, S, X, Time, r, b, sigma, object2x, 
+        report) {
         object <<- GBSOption(TypeFlag = TypeFlag, S = S, X = X, 
             Time = Time, r = r, b = b, sigma = sigma) 
         object }
@@ -48,20 +50,23 @@ function()
             Time = 1, 
             r = 0.10, 
             b = 0.10, 
-            sigma = 0.30),
-        infoName = "GBS Option",
-        tkoutput = TRUE,
-        console = NULL,
-        title = NULL,
-        description = NULL ) 
+            sigma = 0.30,
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "GBS Option" ) 
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fOptions.PlainVanilla.2 =
 function()
-{ 
+{   # A function implemented by Diethelm Wuertz
+
     # Black76 Option:
-    myFunction = function(TypeFlag, FT, X, Time, r, sigma) {
+    myFunction = function(TypeFlag, FT, X, Time, r, sigma, object2x, 
+        report) {
         object <<- Black76Option(TypeFlag = TypeFlag, FT = FT, X = X, 
             Time = Time, r = r, sigma = sigma) 
         object }
@@ -73,21 +78,23 @@ function()
             X = 80, 
             Time = 0.5, 
             r = 0.05, 
-            sigma = 0.266),
-        infoName = "Black76 Option",
-        tkoutput = TRUE,
-        console = NULL,
-        title = NULL,
-        description = NULL ) 
+            sigma = 0.266,
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Black76 Option" ) 
 }
     
+
+# ------------------------------------------------------------------------------
+
     
 .fOptions.PlainVanilla.3 =
 function()
-{
+{   # A function implemented by Diethelm Wuertz
+
     # Miltersen Schwartz Option:
     myFunction = function(TypeFlag, Pt, FT, X, time, Time, sigmaS, sigmaE,
-        sigmaF, rhoSE, rhoSF, rhoEF, KappaE, KappaF) {
+        sigmaF, rhoSE, rhoSF, rhoEF, KappaE, KappaF, object2x, report) {
         object <<- MiltersenSchwartzOption(TypeFlag = TypeFlag, Pt = Pt, 
             FT = FT, X = X, time = time, Time = Time, sigmaS = sigmaS, 
             sigmaE = sigmaE, sigmaF = sigmaF, rhoSE = rhoSE, 
@@ -110,46 +117,55 @@ function()
             rhoSF = 0.0805, 
             rhoEF = 0.1243, 
             KappaE = 1.0450, 
-            KappaF = 0.2000),
-        infoName = "Miltersen Schwartz Option",
-        tkoutput = TRUE,
-        console = NULL,
-        title = NULL,
-        description = NULL ) 
+            KappaF = 0.2000,
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Miltersen Schwartz Option" ) 
 }
 
 
-# ******************************************************************************
+################################################################################
 # Basic American Options
 
 
 .fOptions.BasicAmerican.1 =
 function()
-{
+{   # A function implemented by Diethelm Wuertz
+
     # Roll Geske Whaley Option:
-    myFunction <<- function(S, X, time1, Time2, r, D, sigma) {
+    myFunction = function(S, X, time1, Time2, r, D, sigma, object2x, 
+        report) {
         object <<- RollGeskeWhaleyOption(S = S, X = X, time1 = time1, 
             Time2 = Time2, r = r, D = D, sigma = sigma) 
         object }
     tkExecute(
         fun = myFunction,
-        params = list(S = 80, X = 82, time1 = 0.25, Time2 = 0.3333, 
-            r = 0.06, D = 4, sigma = 0.30),
-        infoName = "Roll Geske Whaley Option",
-        tkoutput = TRUE,
-        console = NULL,
-        title = NULL,
-        description = NULL )
+        params = list(
+            S = 80, 
+            X = 82, 
+            time1 = 0.25, 
+            Time2 = 0.3333, 
+            r = 0.06, 
+            D = 4, 
+            sigma = 0.30,
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Roll Geske Whaley Option" )
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fOptions.BasicAmerican.2 =
 function()
-{
+{   # A function implemented by Diethelm Wuertz
+
     # BAW American Approx Option:
-    myFunction <<- function(TypeFlag, S, X, Time, r, b, sigma) {
-        object <<- BAWAmericanApproxOption(TypeFlag = TypeFlag, S = S, X = X, 
-            Time = Time, r = r, b = b, sigma = sigma) 
+    myFunction = function(TypeFlag, S, X, Time, r, b, sigma, 
+        object2x, report) {
+        object <<- BAWAmericanApproxOption(TypeFlag = TypeFlag, 
+            S = S, X = X, Time = Time, r = r, b = b, sigma = sigma) 
         object }
     tkExecute(
         fun = myFunction,
@@ -160,22 +176,25 @@ function()
             Time = 0.5, 
             r = 0.10, 
             b = 0, 
-            sigma = 0.25),
-        infoName = "BAW American Option",
-        tkoutput = TRUE,
-        console = NULL,
-        title = NULL,
-        description = NULL )
+            sigma = 0.25,
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "BAW American Option" )
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fOptions.BasicAmerican.3 =
 function()
-{
+{   # A function implemented by Diethelm Wuertz
+
     # BS American Approx Option:
-    myFunction <<- function(TypeFlag, S, X, Time, r, b, sigma) {
-        object <<- BSAmericanApproxOption(TypeFlag = TypeFlag, S = S, X = X, 
-            Time = Time, r = r, b = b, sigma = sigma)
+    myFunction = function(TypeFlag, S, X, Time, r, b, sigma, 
+        object2x, report) {
+        object <<- BSAmericanApproxOption(TypeFlag = TypeFlag, 
+            S = S, X = X, Time = Time, r = r, b = b, sigma = sigma)
         object }
     tkExecute(
         fun = myFunction,
@@ -186,26 +205,26 @@ function()
             Time = 0.75, 
             r = 0.04, 
             b = - 0.04, 
-            sigma = 0.35),
-        infoName = "BS American Option",
-        tkoutput = TRUE,
-        console = NULL,
-        title = NULL,
-        description = NULL )
+            sigma = 0.35,
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "BS American Option" )
 }
 
 
-# ******************************************************************************
+################################################################################
 # Binomial Tree Options
 
 
 .fOptions.BinomialTree.1 =
 function()
-{
-    # CRRBinomialTreeOption:
-    myFunction <<- function(TypeFlag, S, X, Time,  r, b, sigma, n) {
-        object <<- CRRBinomialTreeOption(TypeFlag = TypeFlag, S = S, X = X, 
-            Time = Time, r = r, b = b, sigma = sigma, n = n)
+{   # A function implemented by Diethelm Wuertz
+
+    # CRR Binomial Tree Option:
+    myFunction = function(TypeFlag, S, X, Time,  r, b, sigma, n, 
+        object2x, report) {
+        object <<- CRRBinomialTreeOption(TypeFlag = TypeFlag, S = S, 
+            X = X, Time = Time, r = r, b = b, sigma = sigma, n = n)
             }
     tkExecute(
         fun = myFunction,
@@ -216,22 +235,25 @@ function()
             r = 0.10, 
             b = 0.10, 
             sigma = 0.40, 
-            n = 50),
-        infoName = "CRRBinomialTreeOption",
-        tkoutput = TRUE,
-        console = NULL,
-        title = NULL,
-        description = NULL )
+            n = 50,
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "CRRBinomialTreeOption" )
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fOptions.BinomialTree.2 =
 function()
-{
-    # JRBinomialTreeOption
-    myFunction <<- function(TypeFlag, S, X, Time,  r, b, sigma, n) {
-        object <<- JRBinomialTreeOption(TypeFlag = TypeFlag, S = S, X = X, 
-            Time = Time, r = r, b = b, sigma = sigma, n = n)
+{   # A function implemented by Diethelm Wuertz
+
+    # JR Binomial Tree Option:
+    myFunction = function(TypeFlag, S, X, Time,  r, b, sigma, n, 
+        object2x, report) {
+        object <<- JRBinomialTreeOption(TypeFlag = TypeFlag, S = S, 
+            X = X, Time = Time, r = r, b = b, sigma = sigma, n = n)
         object }
     tkExecute(
         fun = myFunction,
@@ -243,22 +265,25 @@ function()
             r = 0.10, 
             b = 0.10, 
             sigma = 0.40, 
-            n = 50),
-        infoName = "JRBinomialTreeOption",
-        tkoutput = TRUE,
-        console = NULL,
-        title = NULL,
-        description = NULL )
+            n = 50,
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "JRBinomialTreeOption" )
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fOptions.BinomialTree.3 =
 function()
-{
-    # TIANBinomialTreeOption
-    myFunction <<- function(TypeFlag, S, X, Time, r, b, sigma, n) {
-        object <<- TIANBinomialTreeOption(TypeFlag = TypeFlag, S = S, X = X, 
-            Time = Time, r = r, b = b, sigma = sigma, n = n)
+{   # A function implemented by Diethelm Wuertz
+
+    # TIAN Binomial Tree Option:
+    myFunction = function(TypeFlag, S, X, Time, r, b, sigma, n, 
+        object2x, report) {
+        object <<- TIANBinomialTreeOption(TypeFlag = TypeFlag, S = S, 
+            X = X, Time = Time, r = r, b = b, sigma = sigma, n = n)
         object }
     tkExecute(
         fun = myFunction,
@@ -270,22 +295,25 @@ function()
             r = 0.10, 
             b = 0.10, 
             sigma = 0.40, 
-            n = 50),
-        infoName = "TIANBinomialTreeOption",
-        tkoutput = TRUE,
-        console = NULL,
-        title = NULL,
-        description = NULL )
+            n = 50,
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "TIANBinomialTreeOption" )
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fOptions.BinomialTree.4 =
 function()
-{
-    # BinomialTreeOption
-    myFunction <<- function(TypeFlag, S, X, Time,  r, b, sigma, n) {
-        object <<- BinomialTreeOption(TypeFlag = TypeFlag, S = S, X = X, 
-            Time = Time, r = r, b = b, sigma = sigma, n = n)
+{   # A function implemented by Diethelm Wuertz
+
+    # Binomial Tree Option:
+    myFunction = function(TypeFlag, S, X, Time,  r, b, sigma, n, 
+        object2x, report) {
+        object <<- BinomialTreeOption(TypeFlag = TypeFlag, S = S, 
+            X = X, Time = Time, r = r, b = b, sigma = sigma, n = n)
         object }
     tkExecute(
         fun = myFunction,
@@ -297,23 +325,24 @@ function()
             r = 0.10, 
             b = 0.10, 
             sigma = 0.40, 
-            n = 50),
-        infoName = "BinomialTreeOption",
-        tkoutput = TRUE,
-        console = NULL,
-        title = NULL,
-        description = NULL )
+            n = 50,
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "BinomialTreeOption" )
 }
 
     
-# ******************************************************************************
+################################################################################
 # Multiple Exercises Options
 
 
 .fOptions.MultipleExercises.1 =
 function()
-{       
-    myFunction <<- function(TypeFlag, S, X, Time, r, b, sigma, lambda) {
+{   # A function implemented by Diethelm Wuertz
+ 
+    # Executive Stock Option:
+    myFunction = function(TypeFlag, S, X, Time, r, b, sigma, lambda, 
+        object2x, report) {
         object <<- ExecutiveStockOption(TypeFlag, S, X, Time, 
             r, b, sigma, lambda)
         object }
@@ -327,21 +356,25 @@ function()
             r = 0.07, 
             b = 0.04, 
             sigma = 0.38, 
-            lambda = 0.15),
-        infoName = "Executive Stock Option",
-        tkoutput = TRUE,
-        console = NULL,
-        title = NULL,
-        description = NULL )
+            lambda = 0.15,
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Executive Stock Option" )
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fOptions.MultipleExercises.2 =
 function()
-{ 
-    myFunction <<- function(TypeFlag, S, alpha, time1, Time2, r, b, sigma) {
-        object <<- ForwardStartOption(TypeFlag, S, alpha, time1, Time2, r, b, 
-            sigma)
+{   # A function implemented by Diethelm Wuertz
+
+    # Forward Start Option:
+    myFunction = function(TypeFlag, S, alpha, time1, Time2, r, b, 
+        sigma, object2x, report) {
+        object <<- ForwardStartOption(TypeFlag, S, alpha, time1, 
+            Time2, r, b, sigma)
         object }
     tkExecute(
         fun = myFunction,
@@ -353,21 +386,25 @@ function()
             Time2 = 0.25, 
             r = 0.08, 
             b = 0.04, 
-            sigma = 0.30),
-        infoName = "Forward Start Option",
-        tkoutput = TRUE,
-        console = NULL,
-        title = NULL,
-        description = NULL )
+            sigma = 0.30,
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Forward Start Option" )
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fOptions.MultipleExercises.3 =
 function()
-{ 
-    myFunction <<- function(TypeFlag, S, alpha, time1, Time2, r, b, sigma) {
-        object <<- RatchetOption(TypeFlag, S, alpha, time1, Time2, r, 
-            b, sigma)
+{   # A function implemented by Diethelm Wuertz
+
+    # Ratchet Option:
+    myFunction = function(TypeFlag, S, alpha, time1, Time2, r, b, 
+        sigma, object2x, report) {
+        object <<- RatchetOption(TypeFlag, S, alpha, time1, Time2, 
+            r, b, sigma)
         object }
     tkExecute(
         fun = myFunction,
@@ -379,19 +416,22 @@ function()
             Time2 = c(0.75, 0.50), 
             r = 0.08, 
             b = 0.04, 
-            sigma = 0.30),
-        infoName = "Ratchet Option",
-        tkoutput = TRUE,
-        console = NULL,
-        title = NULL,
-        description = NULL )
+            sigma = 0.30,
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Ratchet Option" )
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fOptions.MultipleExercises.4 =
 function()
-{ 
-    myFunction <<- function(TypeFlag, S, X, Time, r, b, sigma, A, m, dt) {
+{   # A function implemented by Diethelm Wuertz
+    # Time Switch Option:
+    myFunction = function(TypeFlag, S, X, Time, r, b, sigma, A, m, dt, 
+        object2x, report) {
         object <<- TimeSwitchOption(TypeFlag, S, X, Time, r, b, sigma, 
             A, m, dt)
         object }
@@ -407,19 +447,23 @@ function()
             sigma = 0.26, 
             A = 5, 
             m = 0, 
-            dt = 0.002739726),
-        infoName = "Time Switch Option",
-        tkoutput = TRUE,
-        console = NULL,
-        title = NULL,
-        description = NULL )
+            dt = 0.002739726,
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Time Switch Option" )
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fOptions.MultipleExercises.5 =
 function()
-{ 
-    myFunction <<- function(S, X, time1, Time2, r, b, sigma) {
+{   # A function implemented by Diethelm Wuertz
+
+    # Simple Chooser Option:
+    myFunction = function(S, X, time1, Time2, r, b, sigma, 
+        object2x, report) {
         object <<- SimpleChooserOption(S, X, time1, Time2, 
             r, b, sigma)
         object }
@@ -432,19 +476,23 @@ function()
             Time2 = 0.50, 
             r = 0.08, 
             b = 0.08, 
-            sigma = 0.25),
-        infoName = "SimpleChooserOption",
-        tkoutput = TRUE,
-        console = NULL,
-        title = NULL,
-        description = NULL )
+            sigma = 0.25,
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "SimpleChooserOption" )
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fOptions.MultipleExercises.6 =
 function()
-{ 
-    myFunction <<- function(S, Xc, Xp, Time, Timec, Timep, r, b, sigma) {
+{   # A function implemented by Diethelm Wuertz
+
+    # Complex Chooser Option:
+    myFunction = function(S, Xc, Xp, Time, Timec, Timep, r, b, sigma, 
+        object2x, report) {
         object <<- ComplexChooserOption(S, Xc, Xp, Time, Timec, Timep, 
             r, b, sigma)
         object }
@@ -460,19 +508,23 @@ function()
             r = 0.10, 
             b = 0.05, 
             sigma = 0.35, 
-            doprint = FALSE),
-        infoName = "Complex Chooser Option",
-        tkoutput = TRUE,
-        console = NULL,
-        title = NULL,
-        description = NULL )
+            doprint = FALSE,
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Complex Chooser Option" )
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fOptions.MultipleExercises.7 =
 function()
-{ 
-    myFunction <<- function(TypeFlag, S, X1, X2, time1, Time2, r, b, sigma) {
+{   # A function implemented by Diethelm Wuertz
+
+    # Option On Option:
+    myFunction = function(TypeFlag, S, X1, X2, time1, Time2, r, b, 
+        sigma, object2x, report) {
         object <<- OptionOnOption(TypeFlag, S, X1, X2, time1, Time2, 
             r, b, sigma)
         object }
@@ -487,19 +539,23 @@ function()
             Time2 = 0.25, 
             r = 0.08, 
             b = 0.05, 
-            sigma = 0.35),
-        infoName = "Option On Option",
-        tkoutput = TRUE,
-        console = NULL,
-        title = NULL,
-        description = NULL )
+            sigma = 0.35,
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Option On Option" )
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fOptions.MultipleExercises.8 =
 function()
-{ 
-    myFunction <<- function(TypeFlag, S, X1, X2, time1, Time2, r, b, sigma, A) {
+{   # A function implemented by Diethelm Wuertz
+
+    # Holder Extendible Option:
+    myFunction = function(TypeFlag, S, X1, X2, time1, Time2, r, b, 
+        sigma, A, object2x, report) {
         object <<- HolderExtendibleOption(TypeFlag, S, X1, X2, time1, 
             Time2, r, b, sigma, A)
         object }
@@ -514,21 +570,25 @@ function()
             r = 0.08, 
             b = 0.08, 
             sigma = 0.25, 
-            A = 1),
-        infoName = "Holder Extendible Option",
-        tkoutput = TRUE,
-        console = NULL,
-        title = NULL,
-        description = NULL )
+            A = 1,
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Holder Extendible Option" )
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fOptions.MultipleExercises.9 =
 function()
-{ 
-    myFunction <<- function(TypeFlag, S, X1, X2, time1, Time2, r, b, sigma) {
-        object <<- WriterExtendibleOption(TypeFlag, S, X1, X2, time1, Time2, r, 
-            b, sigma)
+{   # A function implemented by Diethelm Wuertz
+
+    # Writer Extendible Option:
+    myFunction = function(TypeFlag, S, X1, X2, time1, Time2, r, b, 
+        sigma, object2x, report) {
+        object <<- WriterExtendibleOption(TypeFlag, S, X1, X2, time1, 
+            Time2, r, b, sigma)
         object }
     tkExecute(
         fun = myFunction,
@@ -541,26 +601,26 @@ function()
             Time2 = 0.75, 
             r = 0.10, 
             b = 0.10, 
-            sigma = 0.30),
-        infoName = "Writer Extendible Option",
-        tkoutput = TRUE,
-        console = NULL,
-        title = NULL,
-        description = NULL )
+            sigma = 0.30,
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Writer Extendible Option" )
 }
 
 
-# ******************************************************************************
+################################################################################
 # Multiple Assets Options
 
 
 .fOptions.MultipleAssets.1 =
 function()
-{   
-    myFunction <<- function(TypeFlag, S1, S2, X1, X2, Time, r, b1, b2,
-        sigma1, sigma2, rho) {
-        object <<- TwoAssetCorrelationOption(TypeFlag, S1, S2, X1, X2, Time, 
-            r, b1, b2, sigma1, sigma2, rho)
+{   # A function implemented by Diethelm Wuertz
+
+    # Two Asset Correlation Option:
+    myFunction = function(TypeFlag, S1, S2, X1, X2, Time, r, b1, b2,
+        sigma1, sigma2, rho, object2x, report) {
+        object <<- TwoAssetCorrelationOption(TypeFlag, S1, S2, X1, X2, 
+            Time, r, b1, b2, sigma1, sigma2, rho)
         object }
     tkExecute(
         fun = myFunction,
@@ -576,20 +636,23 @@ function()
             b2 = 0.10, 
             sigma1 = 0.2, 
             sigma2 = 0.3, 
-            rho = 0.75),
-        infoName = "Two Asset Correlation Option",
-        tkoutput = TRUE,
-        console = NULL,
-        title = NULL,
-        description = NULL )
+            rho = 0.75,
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Two Asset Correlation Option" )
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fOptions.MultipleAssets.2 =
 function()
-{ 
-    myFunction <<- function(S1, S2, Q1, Q2, Time, r, b1, b2, sigma1, sigma2, 
-        rho) {
+{   # A function implemented by Diethelm Wuertz
+
+    # Two Asset Correlation Option:
+    myFunction = function(S1, S2, Q1, Q2, Time, r, b1, b2, sigma1, 
+        sigma2, rho, object2x, report) {
         object <<- TwoAssetCorrelationOption(S1, S2, Q1, Q2, Time,  
             r, b1, b2, sigma1, sigma2, rho)
         object }
@@ -606,20 +669,23 @@ function()
             b2 = 0.06, 
             sigma1 = 0.2, 
             sigma2 = 0.25, 
-            rho = -0.5),
-        infoName = "Two Asset Correlation Option",
-        tkoutput = TRUE,
-        console = NULL,
-        title = NULL,
-        description = NULL )
+            rho = -0.5,
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Two Asset Correlation Option" )
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fOptions.MultipleAssets.3 =
 function()
-{ 
-    myFunction <<- function(S1, S2, Q1, Q2, Time, r, b1, b2, sigma1, sigma2, 
-        rho) {
+{   # A function implemented by Diethelm Wuertz
+
+    # American Exchange Option:
+    myFunction = function(S1, S2, Q1, Q2, Time, r, b1, b2, sigma1, 
+        sigma2, rho, object2x, report) {
         object <<- AmericanExchangeOption(S1, S2, Q1, Q2, Time, r, 
             b1, b2, sigma1, sigma2, rho)
         object }
@@ -636,20 +702,23 @@ function()
             b2 = 0.06, 
             sigma1 = 0.2, 
             sigma2 = 0.25, 
-            rho = -0.5),
-        infoName = "American Exchange Option",
-        tkoutput = TRUE,
-        console = NULL,
-        title = NULL,
-        description = NULL )
+            rho = -0.5,
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "American Exchange Option" )
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fOptions.MultipleAssets.4 =
 function()
-{ 
-    myFunction <<- function(TypeFlag, S1, S2, Q, time1, Time2, r, b1, b2, 
-        sigma1, sigma2, rho) {
+{   # A function implemented by Diethelm Wuertz
+
+    # Exchange On Exchange Option:
+    myFunction = function(TypeFlag, S1, S2, Q, time1, Time2, r, b1, b2, 
+        sigma1, sigma2, rho, object2x, report) {
         object <<- ExchangeOnExchangeOption(TypeFlag, S1, S2, Q, time1,  
             Time2, r, b1, b2, sigma1, sigma2, rho)
         object }
@@ -667,19 +736,24 @@ function()
             b2 = 0.10, 
             sigma1 = 0.20, 
             sigma2 = 0.25, 
-            rho = -0.5),
-        infoName = "Exchange On Exchange Option",
-        tkoutput = TRUE)
+            rho = -0.5,
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Exchange On Exchange Option" )
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fOptions.MultipleAssets.5 =
 function()
-{ 
-    myFunction <<- function(TypeFlag, S1, S2, X, Time, r, b1, b2, sigma1, 
-        sigma2, rho) {
-        object <<- TwoRiskyAssetsOption(TypeFlag, S1, S2, X, Time, r, b1, b2, 
-            sigma1, sigma2, rho)
+{   # A function implemented by Diethelm Wuertz
+    # Two Risky Assets Option:
+    myFunction = function(TypeFlag, S1, S2, X, Time, r, b1, b2, sigma1, 
+        sigma2, rho, object2x, report) {
+        object <<- TwoRiskyAssetsOption(TypeFlag, S1, S2, X, Time, r, 
+            b1, b2, sigma1, sigma2, rho)
         object }
     tkExecute(
         fun = myFunction,
@@ -694,19 +768,23 @@ function()
             b2 = -0.04, 
             sigma1 = 0.11, 
             sigma2 = 0.16, 
-            rho = 0.63),
-        infoName = "Two Risky Assets Option",
-        tkoutput = TRUE,
-        console = NULL,
-        title = NULL,
-        description = NULL )
+            rho = 0.63,
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Two Risky Assets Option" )
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fOptions.MultipleAssets.6 =
 function()
-{ 
-    myFunction <<- function(TypeFlag, S1, S2, X, Time, r, sigma1, sigma2, rho) {
+{   # A function implemented by Diethelm Wuertz
+
+    # Spread Approx Option:
+    myFunction = function(TypeFlag, S1, S2, X, Time, r, sigma1, sigma2, 
+        rho, object2x, report) {
         object <<- SpreadApproxOption(TypeFlag, S1, S2, X, Time, r, 
             sigma1, sigma2, rho)
         object }
@@ -721,25 +799,26 @@ function()
             r = 0.05, 
             sigma1 = 0.29, 
             sigma2 = 0.36, 
-            rho = 0.42),
-        infoName = "Spread Approx Option",
-        tkoutput = TRUE,
-        console = NULL,
-        title = NULL,
-        description = NULL )
+            rho = 0.42,
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Spread Approx Option" )
 }
 
 
-# ******************************************************************************
+################################################################################
 # Lookback Options
 
 
 .fOptions.Lookback.1 =
 function()
-{
-    myFunction <<- function(TypeFlag, S, SMinOrMax, Time, r, b, sigma) {
-        object <<- FloatingStrikeLookbackOption(TypeFlag, S, SMinOrMax, Time, 
-            r, b, sigma)
+{   # A function implemented by Diethelm Wuertz
+
+    # Floating Strike Lookback Option:
+    myFunction = function(TypeFlag, S, SMinOrMax, Time, r, b, sigma, 
+        object2x, report) {
+        object <<- FloatingStrikeLookbackOption(TypeFlag, S, SMinOrMax, 
+            Time, r, b, sigma)
         object }
     tkExecute(
         fun = myFunction,
@@ -750,21 +829,25 @@ function()
             Time = 0.5, 
             r = 0.10, 
             b = 0.04, 
-            sigma = 0.30),
-        infoName = "Floating Strike Lookback Option",
-        tkoutput = TRUE,
-        console = NULL,
-        title = NULL,
-        description = NULL )
+            sigma = 0.30,
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Floating Strike Lookback Option" )
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fOptions.Lookback.2 =
 function()
-{
-    myFunction <<- function(TypeFlag, S, SMinOrMax, X, Time, r, b, sigma) {
-        object <<- FixedStrikeLookbackOption(TypeFlag, S, SMinOrMax, X, Time, 
-            r, b, sigma)
+{   # A function implemented by Diethelm Wuertz
+
+    # Fixed Strike Lookback Option:
+    myFunction = function(TypeFlag, S, SMinOrMax, X, Time, r, b, 
+        sigma, object2x, report) {
+        object <<- FixedStrikeLookbackOption(TypeFlag, S, SMinOrMax, 
+            X, Time, r, b, sigma)
         object }
     tkExecute(
         fun = myFunction,
@@ -776,22 +859,25 @@ function()
             Time = 0.5, 
             r = 0.10, 
             b = 0.10, 
-            sigma = 0.30),
-        infoName = "Fixed Strike Lookback Option",
-        tkoutput = TRUE,
-        console = NULL,
-        title = NULL,
-        description = NULL )
+            sigma = 0.30,
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Fixed Strike Lookback Option" )
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fOptions.Lookback.3 =
 function()
-{
-    myFunction <<- function(TypeFlag, S, SMinOrMax, time1, Time2, r, b, 
-        sigma, lambda) {
-        object <<- PTFloatingStrikeLookbackOption(TypeFlag, S, SMinOrMax, time1, 
-            Time2, r, b, sigma, lambda)
+{   # A function implemented by Diethelm Wuertz
+
+    # PT Floating Strike Lookback Option:
+    myFunction = function(TypeFlag, S, SMinOrMax, time1, Time2, r, 
+        b, sigma, lambda, object2x, report) {
+        object <<- PTFloatingStrikeLookbackOption(TypeFlag, S, 
+            SMinOrMax, time1, Time2, r, b, sigma, lambda)
         object }
     tkExecute(
         fun = myFunction,
@@ -804,21 +890,25 @@ function()
             r = 0.06, 
             b = 0.06, 
             sigma = 0.20, 
-            lambda  = 1),
-        infoName = "PT Floating Strike Lookback Option",
-        tkoutput = TRUE,
-        console = NULL,
-        title = NULL,
-        description = NULL )
+            lambda = 1,
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "PT Floating Strike Lookback Option" )
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fOptions.Lookback.4 =
 function()
-{
-    myFunction <<- function(TypeFlag, S, X, time1, Time2, r, b, sigma) {
-        object <<- PTFixedStrikeLookbackOption(TypeFlag, S, X, time1, Time2, r, 
-            b, sigma)
+{   # A function implemented by Diethelm Wuertz
+
+    # PT Fixed Strike Lookback Option:
+    myFunction = function(TypeFlag, S, X, time1, Time2, r, b, sigma, 
+        object2x, report) {
+        object <<- PTFixedStrikeLookbackOption(TypeFlag, S, X, time1, 
+            Time2, r, b, sigma)
         object }
     tkExecute(
         fun = myFunction,
@@ -830,20 +920,23 @@ function()
             Time2 = 1.0, 
             r = 0.06, 
             b = 0.06, 
-            sigma = 0.20),
-        infoName = "PT Fixed Strike Lookback Option",
-        tkoutput = TRUE,
-        console = NULL,
-        title = NULL,
-        description = NULL )
+            sigma = 0.20,
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "PT Fixed Strike Lookback Option" )
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fOptions.Lookback.5 =
 function()
-{
-    myFunction <<- function(TypeFlag, S, SMin, SMax, time1, Time2, 
-        r, b, sigma) {
+{   # A function implemented by Diethelm Wuertz
+
+    # Extreme Spread Option:
+    myFunction = function(TypeFlag, S, SMin, SMax, time1, Time2, 
+        r, b, sigma, object2x, report) {
         object <<- ExtremeSpreadOption(TypeFlag, S, SMin, SMax, time1, 
             Time2, r, b, sigma)
         object }
@@ -858,23 +951,24 @@ function()
             Time2 = 1, 
             r = 0.1, 
             b = 0.1, 
-            sigma = 0.30),
-        infoName = "Extreme Spread Option",
-        tkoutput = TRUE,
-        console = NULL,
-        title = NULL,
-        description = NULL )    
+            sigma = 0.30,
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Extreme Spread Option" )    
 }
 
 
-# ******************************************************************************
+################################################################################
 # Barrier Options
 
 
 .fOptions.Barrier.1 =
 function()
-{
-    myFunction <<- function(TypeFlag, S, X, H, K, Time, r, b, sigma) {
+{   # A function implemented by Diethelm Wuertz
+
+    # Standard Barrier Option:
+    myFunction = function(TypeFlag, S, X, H, K, Time, r, b, sigma, 
+        object2x, report) {
         object <<- StandardBarrierOption(TypeFlag, S, X, H, K, 
             Time, r, b, sigma)
         object }
@@ -889,20 +983,23 @@ function()
             Time = 0.5, 
             r = 0.08, 
             b = 0.04, 
-            sigma = 0.25),
-        infoName = "Standard Barrier Option",
-        tkoutput = TRUE,
-        console = NULL,
-        title = NULL,
-        description = NULL )
+            sigma = 0.25,
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Standard Barrier Option" )
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fOptions.Barrier.2 =
 function()
-{   
-    myFunction <<- function(TypeFlag, S, X, L, U, Time, r, b, sigma, delta1,
-        delta2) {
+{   # A function implemented by Diethelm Wuertz
+
+    # Double Barrier Option:
+    myFunction = function(TypeFlag, S, X, L, U, Time, r, b, sigma, 
+        delta1, delta2, object2x, report) {
         object <<- DoubleBarrierOption(TypeFlag, S, X, L, U, Time,  
             r, b, sigma, delta1, delta2)
         object }
@@ -919,19 +1016,23 @@ function()
             b = 0.10, 
             sigma = 0.15, 
             delta1 = -0.1, 
-            delta2 = 0.1),
-        infoName = "DoubleB arrier Option",
-        tkoutput = TRUE,
-        console = NULL,
-        title = NULL,
-        description = NULL )
+            delta2 = 0.1,
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "DoubleB arrier Option" )
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fOptions.Barrier.3 =
 function()
-{   
-    myFunction <<- function(TypeFlag, S, X, H, time1, Time2, r, b, sigma) {
+{   # A function implemented by Diethelm Wuertz
+
+    # PT Single Asset Barrier Option:
+    myFunction = function(TypeFlag, S, X, H, time1, Time2, r, b, 
+        sigma, object2x, report) {
         object <<- PTSingleAssetBarrierOption(TypeFlag, S, X, H,  
             time1, Time2, r, b, sigma)
         object }
@@ -946,20 +1047,23 @@ function()
             Time2 = 1, 
             r = 0.20, 
             b = 0.20, 
-            sigma = 0.25),
-        infoName = "PT Single Asset Barrier Option",
-        tkoutput = TRUE,
-        console = NULL,
-        title = NULL,
-        description = NULL )
+            sigma = 0.25,
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "PT Single Asset Barrier Option" )
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fOptions.Barrier.4 =
 function()
-{   
-    myFunction <<- function(TypeFlag, S1, S2, X, H, Time, r, b1, b2, sigma1, 
-        sigma2, rho) {
+{   # A function implemented by Diethelm Wuertz
+
+    # Two Asset Barrier Option:
+    myFunction = function(TypeFlag, S1, S2, X, H, Time, r, b1, b2, 
+        sigma1, sigma2, rho, object2x, report) {
         object <<- TwoAssetBarrierOption(TypeFlag, S1, S2, X, H, 
             Time, r, b1, b2, sigma1, sigma2, rho)
         object }
@@ -977,20 +1081,23 @@ function()
             b2 = 0.08, 
             sigma1 = 0.2, 
             sigma2 = 0.2, 
-            rho = -0.5),
-        infoName = "Two Asset Barrier Option",
-        tkoutput = TRUE,
-        console = NULL,
-        title = NULL,
-        description = NULL )
+            rho = -0.5,
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Two Asset Barrier Option" )
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fOptions.Barrier.5 =
 function()
-{   
-    myFunction <<- function(TypeFlag, S1, S2, X, H, time1, Time2, r, b1, 
-        b2, sigma1, sigma2, rho) {
+{   # A function implemented by Diethelm Wuertz
+
+    # PT Two Asset Barrier Option:
+    myFunction = function(TypeFlag, S1, S2, X, H, time1, Time2, r, b1, 
+        b2, sigma1, sigma2, rho, object2x, report) {
         object <<- PTTwoAssetBarrierOption(TypeFlag, S1, S2, X, H, 
             time1, Time2, r, b1, b2, sigma1, sigma2, rho)
         object }
@@ -1009,19 +1116,23 @@ function()
             b2 = 0.1, 
             sigma1 = 0.25, 
             sigma2 = 0.30, 
-            rho = -0.5),
-        infoName = "PT Two Asset Barrier Option",
-        tkoutput = TRUE,
-        console = NULL,
-        title = NULL,
-        description = NULL )
+            rho = -0.5,
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "PT Two Asset Barrier Option" )
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fOptions.Barrier.6 =
 function()
-{   
-    myFunction <<- function(TypeFlag, S, X, H, time1, Time2, r, b, sigma) {
+{   # A function implemented by Diethelm Wuertz
+
+    # Look Barrier Option:
+    myFunction = function(TypeFlag, S, X, H, time1, Time2, r, b, 
+        sigma, object2x, report) {
         object <<- LookBarrierOption(TypeFlag, S, X, H, time1, 
             Time2, r, b, sigma)
         object }
@@ -1036,19 +1147,22 @@ function()
             Time2 = 1, 
             r = 0.1, 
             b = 0.1, 
-            sigma = 0.15),
-        infoName = "Look Barrier Option",
-        tkoutput = TRUE,
-        console = NULL,
-        title = NULL,
-        description = NULL )
+            sigma = 0.15,
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Look Barrier Option" )
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fOptions.Barrier.7 =
 function()
-{   
-    myFunction <<- function(S, H, sigma, dt) {
+{   # A function implemented by Diethelm Wuertz
+
+    # Discrete Barrier Option:
+    myFunction = function(S, H, sigma, dt, object2x, report) {
         object <<- DiscreteBarrierOption(S, H, 
             sigma, dt)
         object }
@@ -1058,19 +1172,23 @@ function()
             S = 100, 
             H = 105, 
             sigma = 0.25, 
-            dt = 0.1),
-        infoName = "Discrete Barrier Option",
-        tkoutput = TRUE,
-        console = NULL,
-        title = NULL,
-        description = NULL )
+            dt = 0.1,
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Discrete Barrier Option" )
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fOptions.Barrier.8 =
 function()
-{   
-    myFunction <<- function(TypeFlag, S, X, L, U, Time, r, b, sigma) {
+{   # A function implemented by Diethelm Wuertz
+
+    # Soft Barrier Option:
+    myFunction = function(TypeFlag, S, X, L, U, Time, r, b, sigma, 
+        object2x, report) {
         object <<- SoftBarrierOption(TypeFlag, S, X, L, U, Time, 
             r, b, sigma)
         object }
@@ -1085,23 +1203,24 @@ function()
             Time = 0.5, 
             r = 0.1, 
             b = 0.05, 
-            sigma = 0.20),
-        infoName = "Soft Barrier Option",
-        tkoutput = TRUE,
-        console = NULL,
-        title = NULL,
-        description = NULL )
+            sigma = 0.20,
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Soft Barrier Option" )
 }
 
 
-# ******************************************************************************
+################################################################################
 # Binary Options
 
 
 .fOptions.Binary.1 =
 function()
-{    
-    myFunction <<- function(TypeFlag, S, X1, X2, Time, r, b, sigma) {
+{   # A function implemented by Diethelm Wuertz
+
+    # Gap Option:
+    myFunction = function(TypeFlag, S, X1, X2, Time, r, b, sigma, 
+        object2x, report) {
         object <<- GapOption(TypeFlag, S, X1, X2, Time, 
             r, b, sigma)
         object }
@@ -1115,21 +1234,25 @@ function()
             Time = 0.5, 
             r = 0.09, 
             b = 0.09, 
-            sigma = 0.20),
-        infoName = "GapOption",
-        tkoutput = TRUE,
-        console = NULL,
-        title = NULL,
-        description = NULL )
+            sigma = 0.20,
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "GapOption" )
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fOptions.Binary.2 =
 function()
-{    
-    myFunction <<- function(TypeFlag, S, X, K, Time, r, b, sigma) {
-        object <<- CashOrNothingOption(TypeFlag, S, X, K, Time, r, b, 
-            sigma)
+{   # A function implemented by Diethelm Wuertz
+
+    # Cash Or Nothing Option:
+    myFunction = function(TypeFlag, S, X, K, Time, r, b, sigma, 
+        object2x, report) {
+        object <<- CashOrNothingOption(TypeFlag, S, X, K, Time, 
+            r, b, sigma)
         object }
     tkExecute(
         fun = myFunction,
@@ -1141,22 +1264,25 @@ function()
             Time = 0.75, 
             r = 0.06, 
             b = 0, 
-            sigma = 0.35),
-        infoName = "Cash Or Nothing Option",
-        tkoutput = TRUE,
-        console = NULL,
-        title = NULL,
-        description = NULL )
+            sigma = 0.35,
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Cash Or Nothing Option" )
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fOptions.Binary.3 =
 function()
-{    
-    myFunction <<- function(TypeFlag, S1, S2, X1, X2, K, Time, r, b1,
-        b2, sigma1, sigma2, rho) {
-        object <<- TwoAssetCashOrNothingOption(TypeFlag, S1, S2, X1, X2, K, 
-            Time, r, b1, b2, sigma1, sigma2, rho)
+{   # A function implemented by Diethelm Wuertz
+
+    # Two Asset Cash Or Nothing Option:
+    myFunction = function(TypeFlag, S1, S2, X1, X2, K, Time, r, b1,
+        b2, sigma1, sigma2, rho, object2x, report) {
+        object <<- TwoAssetCashOrNothingOption(TypeFlag, S1, S2, X1, 
+            X2, K, Time, r, b1, b2, sigma1, sigma2, rho)
         object }
     tkExecute(
         fun = myFunction,
@@ -1173,19 +1299,23 @@ function()
             b2 = 0.06, 
             sigma1 = 0.20, 
             sigma2 = 0.25, 
-            rho = 0.50),
-        infoName = "Two Asset Cash Or Nothing Option",
-        tkoutput = TRUE,
-        console = NULL,
-        title = NULL,
-        description = NULL )
+            rho = 0.50,
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Two Asset Cash Or Nothing Option" )
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fOptions.Binary.4 =
 function()
-{    
-    myFunction <<- function(TypeFlag, S, X, Time, r, b, sigma) {
+{   # A function implemented by Diethelm Wuertz
+ 
+    # Asset Or Nothing Option:
+    myFunction = function(TypeFlag, S, X, Time, r, b, sigma, 
+        object2x, report) {
         object <<- AssetOrNothingOption(TypeFlag, S, X, Time, 
             r, b, sigma)
         object }
@@ -1198,19 +1328,22 @@ function()
             Time = 0.5, 
             r = 0.07, 
             b = 0.02, 
-            sigma = 0.27),
-        infoName = "Asset Or Nothing Option",
-        tkoutput = TRUE,
-        console = NULL,
-        title = NULL,
-        description = NULL )
+            sigma = 0.27,
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Asset Or Nothing Option" )
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fOptions.Binary.5 =
 function()
-{    
-    myFunction <<- function(S, XL, XH, Time, r, b, sigma) {
+{   # A function implemented by Diethelm Wuertz
+
+    # Super Share Option:
+    myFunction = function(S, XL, XH, Time, r, b, sigma, object2x, report) {
         object <<- SuperShareOption(S, XL, XH, Time, 
             r, b, sigma)
         object }
@@ -1223,21 +1356,25 @@ function()
             Time = 0.25, 
             r = 0.10, 
             b = 0, 
-            sigma = 0.20),
-        infoName = "Super Share Option",
-        tkoutput = TRUE,
-        console = NULL,
-        title = NULL,
-        description = NULL )
+            sigma = 0.20,
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Super Share Option" )
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fOptions.Binary.6 =
 function()
-{    
-    myFunction <<- function(TypeFlag, S, X, H, K, Time, r, b, sigma) {
-        object <<- BinaryBarrierOption(TypeFlag, S, X, H, K, Time, r, 
-            b, sigma)
+{   # A function implemented by Diethelm Wuertz
+
+    # Binary Barrier Option:
+    myFunction = function(TypeFlag, S, X, H, K, Time, r, b, sigma, 
+        object2x, report) {
+        object <<- BinaryBarrierOption(TypeFlag, S, X, H, K, Time, 
+            r, b, sigma)
         object }
     tkExecute(
         fun = myFunction,
@@ -1249,23 +1386,24 @@ function()
             K = 15, 
             Time = 0.5, 
             r = 0.1, b = 0.1, 
-            sigma = 0.20),
-        infoName = "Binary Barrier Option",
-        tkoutput = TRUE,
-        console = NULL,
-        title = NULL,
-        description = NULL )
+            sigma = 0.20,
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Binary Barrier Option" )
 }
 
 
-# ******************************************************************************
+################################################################################
 # Asian Options
 
 
 .fOptions.Asian.1 =
 function()
-{
-    myFunction <<- function(TypeFlag, S, X, Time, r, b, sigma) {
+{   # A function implemented by Diethelm Wuertz
+
+    # Geometric Average Rate Option:
+    myFunction = function(TypeFlag, S, X, Time, r, b, sigma, object2x, 
+        report) {
         object <<- GeometricAverageRateOption(TypeFlag, S, X, Time, 
             r, b, sigma)
         object }
@@ -1278,20 +1416,23 @@ function()
             Time = 0.25, 
             r = 0.05, 
             b = 0.08, 
-            sigma = 0.20),
-        infoName = "Geometric Average Rate Option",
-        tkoutput = TRUE,
-        console = NULL,
-        title = NULL,
-        description = NULL )
+            sigma = 0.20,
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Geometric Average Rate Option" )
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fOptions.Asian.2 =
 function()
-{
-    myFunction <<- function(TypeFlag, S, SA, X, Time, time, tau, r, 
-        b, sigma) {
+{   # A function implemented by Diethelm Wuertz
+
+    # Turnbull Wakeman Asian Approx Option:
+    myFunction = function(TypeFlag, S, SA, X, Time, time, tau, r, 
+        b, sigma, object2x, report) {
         object <<- TurnbullWakemanAsianApproxOption(TypeFlag, S, SA, 
             X, Time, time, tau, r, b, sigma)
         object }
@@ -1307,19 +1448,23 @@ function()
             tau = 0.0, 
             r = 0.07, 
             b = 0.02, 
-            sigma = 0.25),
-        infoName = "Turnbull Wakeman Asian Approx Option",
-        tkoutput = TRUE,
-        console = NULL,
-        title = NULL,
-        description = NULL )
+            sigma = 0.25,
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Turnbull Wakeman Asian Approx Option" )
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fOptions.Asian.3 =
 function()
-{
-    myFunction <<- function(TypeFlag, S, SA, X, Time, time, r, b, sigma) {
+{   # A function implemented by Diethelm Wuertz
+
+    # Levy Asian Approx Option:
+    myFunction = function(TypeFlag, S, SA, X, Time, time, r, b, sigma, 
+        object2x, report) {
         object <<- LevyAsianApproxOption(TypeFlag, S, SA, X, Time,  
             time, r, b, sigma)
         object }
@@ -1334,23 +1479,24 @@ function()
             time = 0.50, 
             r = 0.10, 
             b = 0.05, 
-            sigma = 0.15),
-        infoName = "Levy Asian Approx Option",
-        tkoutput = TRUE,
-        console = NULL,
-        title = NULL,
-        description = NULL )
+            sigma = 0.15,
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Levy Asian Approx Option" )
 }
 
 
-# ******************************************************************************
+################################################################################
 # Currency Translated Options
 
 
 .fOptions.CurrencyTranslated.1 =
 function()
-{
-    myFunction <<- function(TypeFlag, S, X, Time, r, b, sigma) {
+{   # A function implemented by Diethelm Wuertz
+
+    # FE In Domestic FX Option:
+    myFunction = function(TypeFlag, S, X, Time, r, b, sigma, 
+        object2x, report) {
         object <<- FEInDomesticFXOption(TypeFlag, S, X, Time, 
             r, b, sigma)
         object }
@@ -1363,20 +1509,23 @@ function()
             Time = 1, 
             r = 0.10, 
             b = 0.10, 
-            sigma = 0.30),
-        infoName = "FE In Domestic FX Option",
-        tkoutput = TRUE,
-        console = NULL,
-        title = NULL,
-        description = NULL )
+            sigma = 0.30,
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "FE In Domestic FX Option" )
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fOptions.CurrencyTranslated.2 =
 function()
-{
-    myFunction <<- function(TypeFlag, S, Ep, X, Time, r, rf, q,
-        sigmaS, sigmaE, rho) {
+{   # A function implemented by Diethelm Wuertz
+
+    # Quanto Option:
+    myFunction = function(TypeFlag, S, Ep, X, Time, r, rf, q,
+        sigmaS, sigmaE, rho, object2x, report) {
         object <<- QuantoOption(TypeFlag, S, Ep, X, Time, r, rf, q,
             sigmaS, sigmaE, rho)
         object }
@@ -1393,22 +1542,25 @@ function()
             q = 0.04, 
             sigmaS = 0.2, 
             sigmaE = 0.10, 
-            rho = 0.30),
-        infoName = "Quanto Option",
-        tkoutput = TRUE,
-        console = NULL,
-        title = NULL,
-        description = NULL )
+            rho = 0.30,
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Quanto Option" )
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fOptions.CurrencyTranslated.3 =
 function()
-{
-    myFunction <<- function(TypeFlag, E, S, X, Time, r, rf, q, sigmaS,
-        sigmaE, rho) {
-        object <<- EquityLinkedFXOption(TypeFlag, E, S, X, Time, r, rf, q, 
-            sigmaS, sigmaE, rho)
+{   # A function implemented by Diethelm Wuertz
+
+    # Equity Linked FX Option:
+    myFunction = function(TypeFlag, E, S, X, Time, r, rf, q, sigmaS,
+        sigmaE, rho, object2x, report) {
+        object <<- EquityLinkedFXOption(TypeFlag, E, S, X, Time, r, 
+            rf, q, sigmaS, sigmaE, rho)
         object }
     tkExecute(
         fun = myFunction,
@@ -1423,19 +1575,23 @@ function()
             q = 0.04, 
             sigmaS = 0.20, 
             sigmaE = 0.12, 
-            rho = -0.40),
-        infoName = "Equity Linked FX Option",
-        tkoutput = TRUE,
-        console = NULL,
-        title = NULL,
-        description = NULL )
+            rho = -0.40,
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Equity Linked FX Option" )
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fOptions.CurrencyTranslated.4 =
 function()
-{
-    myFunction <<- function(V, B, E, X, Time, r, rf, sigmaV, sigmaE, rho) {
+{   # A function implemented by Diethelm Wuertz
+
+    # Takeover FX Option:
+    myFunction = function(V, B, E, X, Time, r, rf, sigmaV, sigmaE, 
+        rho, object2x, report) {
         object <<- TakeoverFXOption(V, B, E, X, Time, r, rf,  
             sigmaV, sigmaE, rho)
         object }
@@ -1451,24 +1607,24 @@ function()
             rf = 0.06, 
             sigmaV = 0.20, 
             sigmaE = 0.25, 
-            rho = 0.1),
-        infoName = "Takeover FX Option",
-        tkoutput = TRUE,
-        console = NULL,
-        title = NULL,
-        description = NULL )
+            rho = 0.1,
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Takeover FX Option" )
 }
 
 
-# ******************************************************************************
+################################################################################
 # HestonNandiGarchFit
 
 
 .fOptions.HestonNandi.1 =
 function()
-{
+{   # A function implemented by Diethelm Wuertz
+
     # Simulate HN-GARCH Process
-    myFunction <<- function(lambda, omega, alpha, beta, gamma, rf, object2x) {
+    myFunction = function(lambda, omega, alpha, beta, gamma, rf, 
+        object2x, report) {
         model = list(lambda = lambda, omega = omega, alpha = alpha, 
             beta = beta, gamma = gamma, rf = rf)
         object <<- hngarchSim(model = model, n = n, innov = NULL, 
@@ -1484,20 +1640,23 @@ function()
             gamma = 0,
             rf = 0,
             n = 1000,
-            object2x = TRUE),
-        infoName = "",
-        tkoutput = FALSE,
-        console = "print(head(object))" )
+            object2x = TRUE,
+            report = TRUE ),
+        infoName = "" )
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fOptions.HestonNandi.2 =
 function()
-{
-    # Fit HN-GARCH
-    myFunction <<- function(series, lambda, omega, alpha, beta, gamma, rf,
-        symmetric) {
-        x = eval(parse(text = series))
+{   # A function implemented by Diethelm Wuertz
+
+    # Fit HN-GARCH:
+    myFunction = function(series, lambda, omega, alpha, beta, gamma, rf,
+        symmetric, object2x, report) {
+        x = tkEval(series)
         omega = eval(parse(text = omega))
         alpha = eval(parse(text = alpha))
         model = list(lambda = lambda, omega = omega, alpha = alpha,
@@ -1515,39 +1674,43 @@ function()
             beta = 0.1,
             gamma = 0,
             rf = 0,
-            symmetric = TRUE),
-        infoName = "",
-        tkoutput = TRUE,
-        console = NULL,
-        title = NULL,
-        description = NULL )
+            symmetric = TRUE,
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "HN GARCH Fit" )
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fOptions.HestonNandi.3 =
 function()
-{
-    # ... Print Summary Report
-    myFunction <<- function(fit) {
+{   # A function implemented by Diethelm Wuertz
+
+    # ... Print Summary Report:
+    myFunction = function(fit, object2x, report) {
         fit = eval(parse(text = "fit"))
         tkOutput(capture.output(summary(fit))) }
     tkExecute(
         fun = myFunction,
         params = list(
-            object = "fit"),
-        infoName = "Summary Report",
-        tkoutput = TRUE,
-        console = NULL,
-        title = NULL,
-        description = NULL )
+            object = "fit",
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Summary Report")
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fOptions.HestonNandi.4 =
 function()
-{
-    # ... Print Statistics
-    myFunction <<- function(model) {
+{   # A function implemented by Diethelm Wuertz
+
+    # ... Print Statistics:
+    myFunction = function(model, object2x, report) {
         model = eval(parse(text = model))
         object <<- hngarchStats(model) 
         tkTitle("Heston-Nandi Statistics")
@@ -1559,158 +1722,171 @@ function()
     tkExecute(
         fun = myFunction,
         params = list(
-            model = "fit$model"),
-        infoName = "Statistics",
-        tkoutput = FALSE,
-        console = NULL,
-        title = NULL,
-        description = NULL )
+            model = "fit$model",
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Statistics" )
 }
 
 
-# ******************************************************************************
-# C2-HestonNandiOptions
+################################################################################
+# Heston Nandi Options
 
 
-.fOptions.C2Cmd.1 <- function() .fOptions.C2Cmd(1)
-.fOptions.C2Cmd.2 <- function() .fOptions.C2Cmd(2)
-.fOptions.C2Cmd.3 <- function() .fOptions.C2Cmd(3)
-.fOptions.C2Cmd.4 <- function() .fOptions.C2Cmd(4)
-
-
-.fOptions.C2Cmd =
+.fOptions.C2Cmd.1 =
 function()
-{
-if (choice == 1) {
-    myFunction <<- function(x) {
+{   # A function implemented by Diethelm Wuertz
+
+    myFunction = function(x, object2x, report) {
         object <<- NA }
     tkExecute(
         fun = myFunction,
         params = list(
-            x = "x"),
-        infoName = "",
-        tkoutput = TRUE,
-        console = NULL,
-        title = NULL,
-        description = NULL )
-}
-if (choice == 2) {
-    myFunction <<- function(x) {
-        object <<- NA }
-    tkExecute(
-        fun = myFunction,
-        params = list(
-            x = "x"),
-        infoName = "",
-        tkoutput = TRUE,
-        console = NULL,
-        title = NULL,
-        description = NULL )
-}
-if (choice == 3) {
-    myFunction <<- function(x) {
-        object <<- NA }
-    tkExecute(
-        fun = myFunction,
-        params = list(
-            x = "x"),
-        infoName = "",
-        tkoutput = TRUE,
-        console = NULL,
-        title = NULL,
-        description = NULL )
-}
-if (choice == 4) {
-    myFunction <<- function(x) {
-        object <<- NA }
-    tkExecute(
-        fun = myFunction,
-        params = list(
-            x = "x"),
-        infoName = "",
-        tkoutput = TRUE,
-        console = NULL,
-        title = NULL,
-        description = NULL )
-}
+            x = "x",
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Heston Nandi Option" )
 }
 
 
-# ******************************************************************************
+# ------------------------------------------------------------------------------
+
+
+.fOptions.C2Cmd.2 =
+function()
+{   # A function implemented by Diethelm Wuertz
+
+    myFunction = function(x, object2x, report) {
+        object <<- NA }
+    tkExecute(
+        fun = myFunction,
+        params = list(
+            x = "x",
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Heston Nandi Option" )
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.fOptions.C2Cmd.3 =
+function()
+{   # A function implemented by Diethelm Wuertz
+
+    myFunction = function(x, object2x, report) {
+        object <<- NA }
+    tkExecute(
+        fun = myFunction,
+        params = list(
+            x = "x",
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Heston Nandi Option" )
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.fOptions.C2Cmd.4 =
+function()
+{   # A function implemented by Diethelm Wuertz
+
+    myFunction = function(x, object2x, report) {
+        object <<- NA }
+    tkExecute(
+        fun = myFunction,
+        params = list(
+            x = "x",
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Heston Nandi Option" )
+}
+
+
+################################################################################
 # Low Discrepancy Sequences
 
 
 .fOptions.LowDiscrepancy.1 =
 function()
-{
+{   # A function implemented by Diethelm Wuertz
+
     tkExecute(
         fun = runif.pseudo,
         params = list(
             n = 100, 
             dimension = 5, 
-            init = TRUE),
-        infoName = "Uniform Pseudo Random Numbers",
-        tkoutput = TRUE,
-        console = NULL,
-        title = "Uniform Pseudo Random Numbers",
-        description = NULL )
+            init = TRUE,
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Uniform Pseudo Random Numbers" )
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fOptions.LowDiscrepancy.2 =
 function()
-{
+{   # A function implemented by Diethelm Wuertz
+
     tkExecute(
         fun = rnorm.pseudo,
         params = list(
             n = 100, 
             dimension = 5, 
-            init = TRUE),
-        infoName = "Normal Pseudo Random Numbers",
-        tkoutput = TRUE,
-        console = NULL,
-        title = "Normal Pseudo Random Numbers",
-        description = NULL )
+            init = TRUE,
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Normal Pseudo Random Numbers" )
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fOptions.LowDiscrepancy.3 =
 function()
-{
+{   # A function implemented by Diethelm Wuertz
+
     tkExecute(
         fun = runif.halton,
         params = list(
             n = 100, 
             dimension = 5, 
-            init = TRUE),
-        infoName = "Uniform Halton Numbers",
-        tkoutput = TRUE,
-        console = NULL,
-        title = "Uniform Halton Numbers",
-        description = NULL )
+            init = TRUE,
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Uniform Halton Numbers" )
 }
 
 
 .fOptions.LowDiscrepancy.4 =
 function()
-{
+{   # A function implemented by Diethelm Wuertz
+
     tkExecute(
         fun = rnorm.halton,
         params = list(
             n = 100, 
             dimension = 5, 
-            init = TRUE),
-        infoName = "Normal Halton Numbers",
-        tkoutput = TRUE,
-        console = NULL,
-        title = "Normal Halton Numbers",
-        description = NULL )
+            init = TRUE,
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Normal Halton Numbers" )
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fOptions.LowDiscrepancy.5 =
 function()
-{
+{   # A function implemented by Diethelm Wuertz
+
     tkExecute(
         fun = runif.sobol,
         params = list(
@@ -1718,18 +1894,20 @@ function()
             dimension = 5, 
             init = TRUE,
             scrambling = 0,
-            seed = 4711),
-        infoName = "Uniform Sobol Numbers",
-        tkoutput = TRUE,
-        console = NULL,
-        title = "Uniform Sobol Numbers",
-        description = NULL )
+            seed = 4711,
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Uniform Sobol Numbers" )
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fOptions.LowDiscrepancy.6 =
 function()
-{
+{   # A function implemented by Diethelm Wuertz
+
     tkExecute(
         fun = rnorm.sobol,
         params = list(
@@ -1737,26 +1915,25 @@ function()
             dimension = 5, 
             init = TRUE,
             scrambling = 0,
-            seed = 4711),
-        infoName = "Normal Sobol Numbers",
-        tkoutput = TRUE,
-        console = NULL,
-        title = "Normal Sobol Numbers",
-        description = NULL )
+            seed = 4711,
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Normal Sobol Numbers" )
 }
 
 
-# ******************************************************************************
+################################################################################
 # Monte Carlo Options
 
 
 .fOptions.MonteCarlo.1 =
 function()
-{
-    # MC: Plain Vanilla Payoff with Normal Innovations
+{   # A function implemented by Diethelm Wuertz
+
+    # Plain Vanilla Payoff with Normal Innovations
     TypeFlag <<- S <<- X <<- Time <<- r <<- b <<- sigma <<- delta.t <<- NA
     myFunction = function(TypeFlag, S, X, Time, r, b, sigma,
-        delta.t, pathLength, mcSteps, mcLoops, antithetic) {
+        delta.t, pathLength, mcSteps, mcLoops, antithetic, object2x, report) {
         TypeFlag <<- TypeFlag
         S <<- S
         X <<- X
@@ -1805,22 +1982,24 @@ function()
             pathLength = 30, 
             mcSteps = 5000, 
             mcLoops = 50, 
-            antithetic = TRUE),
-        infoName = "Monte Carlo Option",
-        tkoutput = TRUE,
-        console = NULL,
-        title = NULL,
-        description = NULL )
+            antithetic = TRUE,
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Monte Carlo Option" )
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fOptions.MonteCarlo.2 =
 function()
-{
-    # MC: Plain Vanilla Payoff with Sobol Innovations
+{   # A function implemented by Diethelm Wuertz
+
+    # Plain Vanilla Payoff with Sobol Innovations
     TypeFlag <<- S <<- X <<- Time <<- r <<- b <<- sigma <<- delta.t <<- NA
-    myFunction <<- function(TypeFlag, S, X, Time, r, b, sigma,
-        delta.t, pathLength, mcSteps, mcLoops, antithetic) {
+    myFunction = function(TypeFlag, S, X, Time, r, b, sigma,
+        delta.t, pathLength, mcSteps, mcLoops, antithetic, object2x, report) {
         TypeFlag <<- TypeFlag
         S <<- S
         X <<- X
@@ -1871,22 +2050,24 @@ function()
             pathLength = 30, 
             mcSteps = 5000, 
             mcLoops = 50, 
-            antithetic = TRUE),
-        infoName = "MCOption",
-        tkoutput = FALSE,
-        console = NULL,
-        title = NULL,
-        description = NULL )
+            antithetic = TRUE,
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "MC Option" )
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fOptions.MonteCarlo.3 =
 function()
-{   
-    # MC: Arithmetic Asian Payoff with Normal Innovations
+{   # A function implemented by Diethelm Wuertz
+
+    # Arithmetic Asian Payoff with Normal Innovations
     TypeFlag <<- S <<- X <<- Time <<- r <<- b <<- sigma <<- delta.t <<- NA
-    myFunction <<- function(TypeFlag, S, X, Time, r, b, sigma,
-        delta.t, pathLength, mcSteps, mcLoops, antithetic) {
+    myFunction = function(TypeFlag, S, X, Time, r, b, sigma,
+        delta.t, pathLength, mcSteps, mcLoops, antithetic, object2x, report) {
         TypeFlag <<- TypeFlag
         S <<- S
         X <<- X
@@ -1936,22 +2117,24 @@ function()
             pathLength = 30, 
             mcSteps = 5000, 
             mcLoops = 50, 
-            antithetic = TRUE),
-        infoName = "MCOption",
-        tkoutput = FALSE,
-        console = NULL,
-        title = NULL,
-        description = NULL )
+            antithetic = TRUE,
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "MC Option" )
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fOptions.MonteCarlo.4 =
 function()
-{   
-    # MC: Arithmetic Asian Payoff with Sobol Innovations
+{   # A function implemented by Diethelm Wuertz
+
+    # Arithmetic Asian Payoff with Sobol Innovations
     TypeFlag <<- S <<- X <<- Time <<- r <<- b <<- sigma <<- delta.t <<- NA
-    myFunction <<- function(TypeFlag, S, X, Time, r, b, sigma,
-        delta.t, pathLength, mcSteps, mcLoops, antithetic) {
+    myFunction = function(TypeFlag, S, X, Time, r, b, sigma,
+        delta.t, pathLength, mcSteps, mcLoops, antithetic, object2x, report) {
         TypeFlag <<- TypeFlag
         S <<- S
         X <<- X
@@ -2000,36 +2183,37 @@ function()
             pathLength = 30, 
             mcSteps = 5000, 
             mcLoops = 50, 
-            antithetic = TRUE),
-        infoName = "MCOption",
-        tkoutput = FALSE,
-        console = NULL,
-        title = NULL,
-        description = NULL )
+            antithetic = TRUE,
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "MC Option" )
 }
 
 
-# ******************************************************************************
+################################################################################
 # Exponential Brownian Motion
 
 
 .fOptions.ExponentialBM.1 =
 function()
-{
+{   # A function implemented by Diethelm Wuertz
+
+    # Exponential Brownian Motion
     tkTitle("Exponential Brownian Motion")
     tkOutput("\tSorry, not yet implemented!\n")
 }
 
 
-# ******************************************************************************
+################################################################################
 # Gamma Functions
 
 
 .fOptions.Gamma.1 =
 function()
-{
+{   # A function implemented by Diethelm Wuertz
+
     # Plot Gamma Function:
-    myFunction <<- function(range, by) {
+    myFunction = function(range, by, object2x, report) {
         n = round(range, 0)
         par(mfrow = c(1, 1), cex = 0.7)
         plot(x = 0, y = 0, xlim = c(-n, n), ylim = c(-n, n), 
@@ -2051,20 +2235,22 @@ function()
         fun = myFunction,
         params = list(
             range = 4,
-            by = 0.001),
-        infoName = "Gamma Function",
-        tkoutput = FALSE,
-        console = NULL,
-        title = NULL,
-        description = NULL )
+            by = 0.001,
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Gamma Function" )
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fOptions.Gamma.2 =
 function()
-{
+{   # A function implemented by Diethelm Wuertz
+
     # Plot Psi Function:
-    myFunction <<- function(range, by) {      
+    myFunction = function(range, by, object2x, report) {      
         par(mfrow = c(1, 1), cex = 0.7)
         n = round(range, 0)
         plot(x = 0, y = 0, xlim = c(-n, n), ylim = c(-n, n), 
@@ -2083,20 +2269,22 @@ function()
         fun = myFunction,
         params = list(
             range = 4,
-            by = 0.001),
-        infoName = "Psi Function",
-        tkoutput = FALSE,
-        console = NULL,
-        title = NULL,
-        description = NULL )
+            by = 0.001,
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Psi Function" )
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fOptions.Gamma.3 =
 function()
-{
+{   # A function implemented by Diethelm Wuertz
+
     # Plot Complex Gamma Function:
-    myFunction <<- function(range, by, col, nlevels) {            
+    myFunction = function(range, by, col, nlevels, object2x, report) {            
         col = eval(parse(text = col))
         par(mfrow = c(2, 1), cex = 0.7)
         n = round(range, 0)
@@ -2127,31 +2315,34 @@ function()
             range = 4,
             by = 0.05,
             col = "rainbow(256)",
-            nlevels = 50),
-        infoName = "Complex Gamma Function",
-        tkoutput = TRUE,
-        console = NULL,
-        title = NULL,
-        description = NULL )
+            nlevels = 50,
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Complex Gamma Function" )
 }
 
 
-# ******************************************************************************
-# E3-HypergeometricFunctions
+################################################################################
+# Hypergeometric Functions
 
 
 .fOptions.Hypergeometric.1 =
 function()
-{
+{   # A function implemented by Diethelm Wuertz
+
     # Menu:
     tkTitle("Kummer Function Slider")
     kummerSlider()
 }
     
+
+# ------------------------------------------------------------------------------
+
     
 .fOptions.Hypergeometric.2 =
 function()
-{
+{   # A function implemented by Diethelm Wuertz
+
     # Menu:
     tkTitle("Whittaker Function Slider")
     whittakerSlider()
@@ -2159,35 +2350,30 @@ function()
 }
 
 
-# ******************************************************************************
-# E4-BesselFunctions
+################################################################################
+# Bessel Functions
 
 
 .fOptions.Bessel.1 =
 function()
-{
+{   # A function implemented by Diethelm Wuertz
+
     # Menu:
     tkTitle("Bessel Function Slider")
     besselSlider()
 }
 
 
-# ******************************************************************************
-# E5-EBMAsianOptions
+################################################################################
+# EBM Asian Options
 
 
-.fOptions.EBMAsian.1 <- function() .fOptions.EBMAsian(1)
-.fOptions.EBMAsian.2 <- function() .fOptions.EBMAsian(2)
-.fOptions.EBMAsian.3 <- function() .fOptions.EBMAsian(3)
-.fOptions.EBMAsian.4 <- function() .fOptions.EBMAsian(4)
-
-
-.fOptions.EBMAsian =
+.fOptions.EBMAsian.1 =
 function()
-{
-# Choices:
-if (choice == 1) {
-    myFunction <<- function(TypeFlag, S, X, Time, r, sigma, method) {
+{   # A function implemented by Diethelm Wuertz
+
+    myFunction = function(TypeFlag, S, X, Time, r, sigma, method, 
+        object2x, report) {
         object <<- MomentMatchedAsianOption(TypeFlag, S, X, Time, r, 
             sigma, method) 
         object }
@@ -2200,15 +2386,21 @@ if (choice == 1) {
             Time = 1, 
             r = 0.09, 
             sigma = 0.30,
-            method = "LN"),
-        infoName = "MomentMatchedAsianOption",
-        tkoutput = TRUE,
-        console = NULL,
-        title = NULL,
-        description = NULL )
+            method = "LN",
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Moment Matched Asian Option" )
 }
-if (choice == 2) {
-    myFunction <<- function(x, Time, r, sigma, method) {
+
+
+# ------------------------------------------------------------------------------
+
+
+.fOptions.EBMAsian.2 =
+function()
+{   # A function implemented by Diethelm Wuertz
+
+    myFunction = function(x, Time, r, sigma, method, object2x, report) {
         x = eval(parse(text = x))
         object <<- MomentMatchedAsianDensity(x = x, Time, r, 
             sigma, method) 
@@ -2224,16 +2416,22 @@ if (choice == 2) {
             Time = 1, 
             r = 0.09, 
             sigma = 0.30,
-            method = "LN"),
-        infoName = "Moment Matched Asian Density",
-        tkoutput = FALSE,
-        console = "print(head(object))",
-        title = NULL,
-        description = NULL )
+            method = "LN",
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Moment Matched Asian Density" )
 }
 
-if (choice == 3) {
-    myFunction <<- function(TypeFlag, S, X, Time, r, sigma, method) {
+
+# ------------------------------------------------------------------------------
+
+
+.fOptions.EBMAsian.2 =
+function()
+{   # A function implemented by Diethelm Wuertz
+
+    myFunction = function(TypeFlag, S, X, Time, r, sigma, method, 
+        object2x, report) {
         object <<- GramCharlierAsianOption(TypeFlag, S, X, Time, r, 
             sigma, method) 
         object }
@@ -2246,14 +2444,11 @@ if (choice == 3) {
             Time = 1, 
             r = 0.09, 
             sigma = 0.30,
-            method = "LN"),
-        infoName = "Gram Charlier Asian Option",
-        tkoutput = TRUE,
-        console = NULL,
-        title = NULL,
-        description = NULL )
+            method = "LN",
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Gram Charlier Asian Option" )
 }     
-}
 
 
 ################################################################################

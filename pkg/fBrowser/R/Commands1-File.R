@@ -28,21 +28,8 @@
 
 
 ################################################################################
-# FUNCTION:
-# .classifyActiveDataSet
-# .listActiveDataSet
-# .plotActiveDataSet
-# .tsplotActiveDataSet
-# .plottsActiveDataSet
-# .classifyActiveObject
-# .printActiveObject
-# .openFile
-################################################################################
 
-
-# ******************************************************************************
-        
-    
+   
 .classifyActiveDataSet = 
 function() 
 {   # A function implemented by Diethelm Wuertz
@@ -56,7 +43,8 @@ function()
 }
 
         
-# ******************************************************************************
+
+# ------------------------------------------------------------------------------
             
     
 .listActiveDataSet =  
@@ -81,7 +69,7 @@ function()
     
     # Plot Active Data Set:   
     .fun <<- function(series, type, main, col, grid) {
-        x = eval(parse(text = series))
+        x = tkEval(series)
         plot(x = x, type = type, main = main, col = col)
         grid = as.logical(grid)
         if (grid) grid()

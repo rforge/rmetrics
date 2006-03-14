@@ -47,9 +47,12 @@ function()
     fileMenu = newToolbarMenu()
    
     # Add Menu:      
-    Label = "Classify Active Data Set"
-    subLabel = NULL
-    Command = ".classifyActiveDataSet"
+    Label = 
+        "Classify Active Data Set"
+    subLabel = 
+        NULL
+    Command = 
+        ".classifyActiveDataSet"
     addToolbarMenu(fileMenu, Label, subLabel, Command)      
 
     # Add Menu:

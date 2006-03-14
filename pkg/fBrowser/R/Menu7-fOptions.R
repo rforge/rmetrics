@@ -28,9 +28,7 @@
     
     
 ################################################################################
-# FUNCTION
-#  .fOptions.PopupMenu
-################################################################################
+#  fOptions Popup Menu
 
 
 .fOptions.PopupMenu =
@@ -38,14 +36,13 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   fBasics Popup Menu
+    #   fOptions Popup Menu
     
     # FUNCTION:
     
     # Menu:
     fOptionsMenu <<- newToolbarMenu()
-    
-    
+   
     # Add Menu:
     Label = "Plain Vanilla Options"
     subLabel = c(
@@ -58,7 +55,6 @@ function()
         ".fOptions.PlainVanilla.3")
     addToolbarMenu(fOptionsMenu, Label, subLabel, Command)
     
-    
     # Add Menu:
     Label = "Basic American Options"
     subLabel = c(
@@ -69,21 +65,18 @@ function()
         ".fOptions.BasicAmerican.1",
         ".fOptions.BasicAmerican.2",
         ".fOptions.BasicAmerican.3",)
-    addToolbarMenu(fOptionsMenu, Label, subLabel, Command)
-    
+    addToolbarMenu(fOptionsMenu, Label, subLabel, Command)    
     
     # Add Menu:
     Label = "Binomial Tree Options"
     subLabel = c(
         "CRR Binomial Tree Option",
         "JR Binomial Tree Option",
-        "TIAN BinomialTree Option",
-        "Binomial Tree")
+        "TIAN BinomialTree Option")
     Command = c(
         ".fOptions.BinomialTree.1",
         ".fOptions.BinomialTree.2",
-        ".fOptions.BinomialTree.3",
-        ".fOptions.BinomialTree.4")
+        ".fOptions.BinomialTree.3")
     addToolbarMenu(fOptionsMenu, Label, subLabel, Command)
     
     
@@ -219,26 +212,28 @@ function()
         
     
     # Add Menu:
-    # Label = "Heston Nandi Garch Fit"
-    # subLabel = c(
-    #    "Simulate HN-GARCH Process",
-    #    "Fit HN-GARCH",
-    #    "... Print Summary Report",
-    #    "... Print Statistics")
-    # Command = c(
-    #    ".fOptions.HestonNandi.1",
-    #    ".fOptions.HestonNandi.2",
-    #    ".fOptions.HestonNandi.3",
-    #    ".fOptions.HestonNandi.4")
-    # addToolbarMenu(fOptionsMenu, Label, subLabel, Command)  
+    if (FALSE) {
+    Label = "Heston Nandi Garch Fit"
+    subLabel = c(
+       "Simulate HN-GARCH Process",
+       "Fit HN-GARCH",
+       "... Print Summary Report",
+       "... Print Statistics")
+    Command = c(
+       ".fOptions.HestonNandi.1",
+       ".fOptions.HestonNandi.2",
+       ".fOptions.HestonNandi.3",
+       ".fOptions.HestonNandi.4")
+    addToolbarMenu(fOptionsMenu, Label, subLabel, Command) } 
     
     # Add Menu:
-    # Label = "Heston Nandi Options"
-    # subLabel = c(
-    #    "Not yet implemented")
-    # Command = c(
-    #     ".fOptions.C2Cmd.1")
-    # addToolbarMenu(fOptionsMenu, Label, subLabel, Command)
+    if (FALSE) {
+    Label = "Heston Nandi Options"
+    subLabel = c(
+       "Not yet implemented")
+    Command = c(
+        ".fOptions.C2Cmd.1")
+    addToolbarMenu(fOptionsMenu, Label, subLabel, Command) }
         
     # Add Menu:
     Label = "Low Discrepancy Sequences"
@@ -273,12 +268,13 @@ function()
     addToolbarMenu(fOptionsMenu, Label, subLabel, Command)
         
     # Add Menu:
-    # Label = "Exponential BM"
-    # subLabel = c(
-    #    "Not yet implemented")
-    # Command = c(
-    #    ".fOptions.ExponentialBM.1")
-    # addToolbarMenu(fOptionsMenu, Label, subLabel, Command)
+    if (FALSE) {
+    Label = "Exponential BM"
+    subLabel = c(
+       "Not yet implemented")
+    Command = c(
+       ".fOptions.ExponentialBM.1")
+    addToolbarMenu(fOptionsMenu, Label, subLabel, Command) }
         
     # Add Menu:
     Label = "Special Functions"
@@ -299,12 +295,13 @@ function()
     addToolbarMenu(fOptionsMenu, Label, subLabel, Command)
         
     # Add Menu:
-    # Label = "EBM Asian Options"
-    # subLabel = c(
-    #     "Not yet implemented")
-    # Command = c(
-    #     ".fOptions.EBMAsian.1")
-    # addToolbarMenu(fOptionsMenu, Label, subLabel, Command)
+    if (FALSE) {
+    Label = "EBM Asian Options"
+    subLabel = c(
+        "Not yet implemented")
+    Command = c(
+        ".fOptions.EBMAsian.1")
+    addToolbarMenu(fOptionsMenu, Label, subLabel, Command) }
           
     # Cascade fileMenu:
     cascadeToolbarMenu(Menu = fOptionsMenu, Label = "fOptions")                 
