@@ -68,12 +68,12 @@ function()
         "Bivariate Time Series Plot",
         "Scatterdiagramm Plot")
     Command = c(
-        ".fBasics.PlotFunctions.sp500Monthly",
+        ".fData.sp500Monthly",
         ".fBasics.PlotFunctions.plot",
         ".fBasics.PlotFunctions.acfPlot",
         ".fBasics.PlotFunctions.pacfPlot",
         ".fBasics.PlotFunctions.histPlot",
-        ".fBasics.PlotFunctions.msftsp500Monthly",
+        ".fData.msftsp500Monthly",
         ".fBasics.PlotFunctions.bivariatePlot",
         ".fBasics.PlotFunctions.scatterPlot")
     addToolbarMenu(fBasicsMenu, Label, subLabel, Command)
@@ -88,7 +88,7 @@ function()
         "Normal QQ Plot",
         "Scaling Law Plot")
     Command = c(
-        ".fBasics.StylizedFacts.nyseDaily",
+        ".fData.nyseDaily",
         ".fBasics.StylizedFacts.teffectPlot",
         ".fBasics.StylizedFacts.lmacfPlot",
         ".fBasics.StylizedFacts.logpdfPlot",
@@ -108,7 +108,7 @@ function()
         "summary - Summary Report",
         "basicStats - Basic Statistics")
     Command = c(
-        ".fBasics.BasicStatistics.sp500monthly",
+        ".fData.sp500Monthly",
         ".fBasics.BasicStatistics.mean",
         ".fBasics.BasicStatistics.var",
         ".fBasics.BasicStatistics.skewness",
@@ -140,7 +140,7 @@ function()
         "... Random Variates Slider",
         "... Distribution Slider")
     Command = c(
-        ".fBasics.ReturnDistributions.nyseDaily",
+        ".fData.nyseDaily",
         ".fBasics.ReturnDistributions.rnorm",
         ".fBasics.ReturnDistributions.rnormSlider",
         ".fBasics.ReturnDistributions.dnormSlider",
@@ -175,7 +175,7 @@ function()
         "Pearson Chi-Square Normality Test",
         "Shapiro-Francia Normality Test")
     Command = c(
-        ".fBasics.NormalityTests.sp500Monthly",
+        ".fData.sp500Monthly",
         ".fBasics.NormalityTests.ksnormTest",
         ".fBasics.NormalityTests.shapiroTest",
         ".fBasics.NormalityTests.jarqueberaTest",
@@ -203,7 +203,7 @@ function()
         "Correlation: Kendall's tau Test",
         "Correlation: Spearman's rho Test")
     Command = c(
-        ".fBasics.BivariateTests.msftsp500Monthly",
+        ".fData.msftsp500Monthly",
         ".fBasics.BivariateTests.ks2Test",
         ".fBasics.BivariateTests.tTest",
         ".fBasics.BivariateTests.kw2Test",

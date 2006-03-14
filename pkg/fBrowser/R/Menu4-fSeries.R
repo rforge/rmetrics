@@ -50,9 +50,9 @@ function()
         "* Example timeSeries: x = NYSE Returns",
         "ARMA Series Simulation", 
         "ARMA Parameter Estimation",
-        "Forecast ARMA Process")
+        "ARMA Forecasting")
      Command = c(
-        ".fSeries.ArmaModelling.nyseDaily",
+        ".fData.nyseDaily",
         ".fSeries.ArmaModelling.armaSim",
         ".fSeries.ArmaModelling.armaFit",
         ".fSeries.ArmaModelling.predict")
@@ -65,15 +65,36 @@ function()
         "* Example timeSeries: x = DEMGBP Returns",
         "GARCH Series Simulation", 
         "GARCH Parameter Estimation",
-        "Forecast GARCH Process")
+        "GARCH Forecasting",
+        "Conditional Distribution Slider")
     Command = c(
-        ".fSeries.GarchModelling.dem2gbpDaily",
+        ".fData.dem2gbpDaily",
         ".fSeries.GarchModelling.garchSim",
         ".fSeries.GarchModelling.garchFit",
-        ".fSeries.GarchModelling.predict")
+        ".fSeries.GarchModelling.predict",
+        ".fSeries.GarchDistributions.garchSlider")
     addToolbarMenu(fSeriesMenu, Label, subLabel, Command)
     
-    
+    # Add Menu:
+    Label = "Garch Distribution Fits"
+    subLabel = c(
+        "* Example timeSeries: x - NYSE log Returns",
+        "Fit Normal Distribution",
+        "Fit Skew Normal Distribution",
+        "Fit Sudent-t Distribution",
+        "Fit Skew Sudent-t Distribution",
+        "Fit GED Distribution",
+        "Fit Skew GED Distribution")
+    Command = c(
+        ".fSeries.GarchDistributionFits.1",
+        ".fSeries.GarchDistributionFits.2",
+        ".fSeries.GarchDistributionFits.3",
+        ".fSeries.GarchDistributionFits.4",
+        ".fSeries.GarchDistributionFits.5",
+        ".fSeries.GarchDistributionFits.6",
+        ".fSeries.GarchDistributionFits.7")   
+    addToolbarMenu(fSeriesMenu, Label, subLabel, Command)
+      
     if (FALSE) {
     # Add Menu:
     Label = "Long Memory Modelling"
@@ -95,10 +116,10 @@ function()
         "Teraesvirta NN Test", 
         "White NN Test")
     Command = c(
-        ".fSeries.TimeSeriesTests.1",
-        ".fSeries.TimeSeriesTests.2",
-        ".fSeries.TimeSeriesTests.3",
-        ".fSeries.TimeSeriesTests.4")
+        ".fData.nyseDaily",
+        ".fSeries.TimeSeriesTests.bdsTest",
+        ".fSeries.TimeSeriesTests.tnnTest",
+        ".fSeries.TimeSeriesTests.wnnTest")
     addToolbarMenu(fSeriesMenu, Label, subLabel, Command)
         
 
@@ -107,66 +128,23 @@ function()
     subLabel = c(
         "* Example timeSeries: x - has Unit Root",
         "* Example timeSeries: x - has no Unit Root",
-        "ADF Test",
-        "McKinnon's Unit Root Test",
-        "... Unitroot Distribution",
-        "RS Test")
-        #
-        #  urersTest - Elliott-Rothenberg-Stock test for unit roots
-        #  urkpssTest - KPSS unit root test for stationarity
-        #  urppTest - Phillips-Perron test for unit roots
-        #  urspTest - Schmidt-Phillips test for unit roots
-        #  urzaTest - Zivot-Andrews test for unit roots
-        # "Summary Report"
+        "Augmented Dickey-Fuller Test",
+        "McKinnon's ADF Test",
+        "Elliott-Rothenberg-Stock Test",
+        "KPSS unit root test for stationarity",
+        "Phillips-Perron test for unit roots",
+        "Schmidt-Phillips test for unit roots",
+        "Zivot-Andrews test for unit roots")
     Command = c(
-        ".fSeries.UnitRootTests.1",
-        ".fSeries.UnitRootTests.2",
-        ".fSeries.UnitRootTests.3",
-        ".fSeries.UnitRootTests.4",
-        ".fSeries.UnitRootDistribution.1",
-        ".fSeries.UnitRootTests.urersTest",)
-    addToolbarMenu(fSeriesMenu, Label, subLabel, Command)
-       
-    
-    # Add Menu:
-    Label = "Garch Distributions"
-    subLabel = c(
-        "Generate Skew Normal Random Numbers",
-        "... Skew Normal Distribution Slider",
-        "Generate Skew Student-t Random Numbers",
-        "... Skew Student-t Distribution Slider",
-        "Generate Skew GED Random Numbers",
-        "... Skew GED Distribution Slider",
-        "Heaviside And Related Functions")
-    Command = c(
-        ".fSeries.GarchDistributions.1",
-        ".fSeries.GarchDistributions.2",
-        ".fSeries.GarchDistributions.3",
-        ".fSeries.GarchDistributions.4",
-        ".fSeries.GarchDistributions.5",
-        ".fSeries.GarchDistributions.6",
-        ".fSeries.HeavisideFunction.1")
-    addToolbarMenu(fSeriesMenu, Label, subLabel, Command)
-        
-   
-    # Add Menu:
-    Label = "Garch Distribution Fits"
-    subLabel = c(
-        "* Example timeSeries: x - NYSE log Returns",
-        "Fit Normal Distribution",
-        "Fit Skew Normal Distribution",
-        "Fit Sudent-t Distribution",
-        "Fit Skew Sudent-t Distribution",
-        "Fit GED Distribution",
-        "Fit Skew GED Distribution")
-    Command = c(
-        ".fSeries.GarchDistributionFits.1",
-        ".fSeries.GarchDistributionFits.2",
-        ".fSeries.GarchDistributionFits.3",
-        ".fSeries.GarchDistributionFits.4",
-        ".fSeries.GarchDistributionFits.5",
-        ".fSeries.GarchDistributionFits.6",
-        ".fSeries.GarchDistributionFits.7")   
+        ".fSeries.UnitRootTests.hasUnitRoot",
+        ".fSeries.UnitRootTests.hasNoUnitRoot",
+        ".fSeries.UnitRootTests.adfTest",
+        ".fSeries.UnitRootTests.unitrootTest",
+        ".fSeries.UnitRootTests.urersTest",
+        ".fSeries.UnitRootTests.urkpssTest",
+        ".fSeries.UnitRootTests.urppTest",
+        ".fSeries.UnitRootTests.urspTest",
+        ".fSeries.UnitRootTests.urzaTest")
     addToolbarMenu(fSeriesMenu, Label, subLabel, Command)
     
     # Add Menu:

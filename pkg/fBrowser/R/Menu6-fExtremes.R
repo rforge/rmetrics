@@ -52,7 +52,7 @@ function()
         "Development of Records",
         "Plot of ACF of Exceedences")
     Command = c(
-        ".fExtremes.ExtremesPlots.bmwDaily",
+        ".fData.bmwDaily",
         ".fExtremes.ExtremesPlots.emd",
         ".fExtremes.ExtremesPlots.qq",
         ".fExtremes.ExtremesPlots.q",
@@ -70,7 +70,7 @@ function()
         "* Example timeSeries: x = BMW Daily Returns",
         "Find Threshold")
     Command = c(
-        ".fExtremes.DataPreprocessing.bmwDaily",
+        ".fData.bmwDaily",
         ".fExtremes.DataPreprocessing.findThreshold")
     addToolbarMenu(fExtremesMenu, Label, subLabel, Command)
         
@@ -87,7 +87,7 @@ function()
         "Hill Plot", 
         "Shape Parameter Plots")
     Command = c(
-        ".fExtremes.GEV.bmwDaily",
+        ".fData.bmwDaily",
         ".fExtremes.GEV.gevSlider",
         ".fExtremes.GEV.sim",
         ".fExtremes.GEV.blockmaxSeries",
@@ -106,7 +106,7 @@ function()
         "GPD Simulation", 
         "GPD Parameter Estimation")
     Command = c(
-        ".fExtremes.GPD.bmwDaily",
+        ".fData.bmwDaily",
         ".fExtremes.GPD.gpdSlider",
         ".fExtremes.GPD.sim",
         ".fExtremes.GPD.fit")

@@ -231,7 +231,7 @@ function()
 ################################################################################
 
 
-snormSlider = 
+.snormSlider = 
 function(GenerateRandomNumbers = FALSE)
 {   # A function implemented by Diethelm Wuertz
     
@@ -313,7 +313,7 @@ function(GenerateRandomNumbers = FALSE)
 # ------------------------------------------------------------------------------
 
 
-sstdSlider = 
+.sstdSlider = 
 function(GenerateRandomNumbers = FALSE)
 {   # A function implemented by Diethelm Wuertz
 
@@ -397,7 +397,7 @@ function(GenerateRandomNumbers = FALSE)
 # ------------------------------------------------------------------------------
 
 
-sgedSlider = 
+.sgedSlider = 
 function(GenerateRandomNumbers = FALSE)
 {   # A function implemented by Diethelm Wuertz
 

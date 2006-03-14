@@ -222,6 +222,59 @@ function()
 }
 
 
+# ------------------------------------------------------------------------------
+
+
+.fSeries.GarchDistributions.garchSlider = 
+function() 
+{   # A function implemented by Diethelm Wuertz
+    
+    # GARCH Conditional Distribution Sliders:
+    myFunction = function(slider, object2x, report) {
+        slider = tkSplit(slider)
+        if (slider == "t") slider = "std"
+        fun = match.fun(paste(".s", slider, "Slider", sep = ""))
+        object <<- fun() 
+        object }
+    tkExecute(
+        fun = myFunction,
+        params = list(
+            slider = "norm & t & ged",
+            object2x = FALSE,
+            report = FALSE ),
+        infoName = "GARCH Sliders" ) 
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.fSeries.GarchDistributions.conddistFit = 
+function() 
+{   # A function implemented by Diethelm Wuertz
+    
+    # GARCH Conditional Distribution Fit:
+    myFunction = function(series, cond.dist, skew, object2x, report) {
+        x = tkEval(series)
+        cond.dist = tkSplit(cond.dist)
+        if (cond.dist == "t") cond.dist = "std"
+        if (skew) cond.dist = paste("s", cond.dist, sep = "")
+        fun = match.fun(paste(cond.dist, "Fit", sep = ""))
+        if (report) tkTitle("GARCH Conditional Distribution Fit")
+        object <<- fun(x) 
+        object$cond.dist = cond.dist
+        object }
+    tkExecute(
+        fun = myFunction,
+        params = list(
+            series = "x",
+            cond.dist = "norm & t & ged",
+            skew = FALSE,
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Conditional Distribution Fit" ) 
+}
+
 
 ################################################################################
 # Long Memory Modelling
@@ -243,7 +296,7 @@ function()
             H = 0.7,
             method = "beran & durbin & paxson",
             object2x = TRUE,
-            report = TRUE),
+            report = FALSE ),
         infoName = "Simulated Fractional Gaussian Noise" )  
 } 
 
@@ -269,7 +322,7 @@ function()
             waveJ = 7,
             fgn = FALSE,
             object2x = TRUE,
-            report = TRUE),
+            report = FALSE ),
         infoName = "Simulated Fractional Brownian Motion" )  
 } 
 
@@ -299,7 +352,7 @@ function()
             start = "runif(2)",
             par = "par(mfrow=c(1,1))",
             object2x = FALSE,
-            report = TRUE ),
+            report = FALSE ),
         infoName = "Henon Map" ) 
 }
 
@@ -329,7 +382,7 @@ function()
             start = "runif(2)",
             par = "par(mfrow=c(2,2))",
             object2x = FALSE,
-            report = TRUE ),
+            report = FALSE ),
         infoName = "Ikeda Map") 
 }
 
@@ -358,7 +411,7 @@ function()
             start = "runif(1)",
             par = "par(mfrow=c(1,1))",
             object2x = FALSE,
-            report = TRUE ),
+            report = FALSE ),
         infoName = "Logistic Map" ) 
 }
 
@@ -389,7 +442,7 @@ function()
             start = "c(-14, -13, 47)",
             par = "par(mfrow=c(3,2))",
             object2x = FALSE,
-            report = TRUE ),
+            report = FALSE ),
         infoName = "Lorentz Attractor" )
 }
 
@@ -419,7 +472,8 @@ function()
             c = 8.0,
             start = "c(-1.894,-9.92,0.025)",
             par = "par(mfrow=c(3,2))",
-            object2x = FALSE ),
+            object2x = FALSE,
+            report = FAKLSE ),
         infoName = "Roessler Attractor" )
 }
 
@@ -428,12 +482,12 @@ function()
 # Dependency Tests
 
 
-.fSeries.TimeSeriesTests.2 = 
+.fSeries.TimeSeriesTests.bdsTest = 
 function()
 {   # A function implemented by Diethelm Wuertz
     
     # BDS NN Test:
-    myFunction = function(m, eps) {
+    myFunction = function(m, eps, object2x, report) {
         m = as.integer(m)
         if (eps == "NULL") eps = NULL
         object <<- bdsTest(x = x, m = m, eps = eps, title = NULL, 
@@ -443,23 +497,21 @@ function()
         fun = myFunction,
         params = list(
             m = 3,
-            eps = "NULL"),
-        infoName = "BDS NN Test",
-        tkoutput = TRUE,
-        console = NULL,
-        title = NULL,
-        description = NULL )
+            eps = "NULL",
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "BDS NN Test" )
 }
   
   
-.fSeries.TimeSeriesTests.3 = 
+.fSeries.TimeSeriesTests.tnnTest = 
 function()
 {   # A function implemented by Diethelm Wuertz
 
     # FUNCTION:
     
     # Teraesvirta NN Test:
-    myFunction = function(lag) {
+    myFunction = function(lag, object2x, report) {
         lag = as.integer(lag)
         object <<- tnnTest(x = x, lag = lag, title = NULL, 
             description = NULL) 
@@ -467,26 +519,24 @@ function()
     tkExecute(
         fun = myFunction,
         params = list(
-            lag = "1"),
-        infoName = "Teraesvirta NN Test",
-        tkoutput = TRUE,
-        console = NULL,
-        title = NULL,
-        description = NULL )
+            lag = "1",
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Teraesvirta NN Test" )
 }
    
 
 # ------------------------------------------------------------------------------
 
 
-.fSeries.TimeSeriesTests.4 = 
+.fSeries.TimeSeriesTests.wnnTest = 
 function()
 {   # A function implemented by Diethelm Wuertz
 
     # FUNCTION:
     
     # White NN Test:
-    myFunction = function(lag, qstar, q, range) {
+    myFunction = function(lag, qstar, q, range, object2x, report) {
         lag = as.integer(lag)
         qstar = as.integer(qstar)
         q = as.integer(q)
@@ -500,12 +550,10 @@ function()
             lag = 1,
             qstar = 2,
             q = 10,
-            range = 4),
-        infoName = "White NN Test",
-        tkoutput = TRUE,
-        console = NULL,
-        title = NULL,
-        description = NULL ) 
+            range = 4,
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "White NN Test" ) 
 }
 
 
@@ -529,77 +577,126 @@ function()
 # Unit Root Tests
 
 
-.fSeries.UnitRootTests.1 = 
+.fSeries.UnitRootTests.hasUnitRoot = 
 function() 
 {   # A function implemented by Diethelm Wuertz
     
-    # has Unit Root:
-    x <<- rnorm(1000)
+    # Has Unit Root:
+    myFunction = function(n, as.ts, object2x, report) {
+        ans = rnorm(n)
+        if (as.ts) ans = as.ts(ans)
+        object <<- ans
+        if (report) tkTitle("Has No Unit Root: rnorm(1000)")
+        object }
+    tkExecute(
+        fun = myFunction,
+        params = list(
+            n = 100,
+            as.ts = FALSE,
+            object2x = TRUE,
+            report = FALSE),
+        infoName = "Data Set has Unit Root" )     
 }
    
 
 # ------------------------------------------------------------------------------
 
  
-.fSeries.UnitRootTests.2 = 
+.fSeries.UnitRootTests.hasNoUnitRoot = 
 function() 
 {   # A function implemented by Diethelm Wuertz
     
-    # has No Unit Root
-    x <<- cumsum(c(0, rnorm(1000))) 
-    
-    # Info:activeDataSet <<- paste("x =", What[choice])
-    infoLabelText <<- tclVar(paste("Active Series Data:", activeDataSet))
-    tkconfigure(infoLabel, textvariable = infoLabelText)
-    tkgrid(infoLabel)
+    # Has No Unit Root:
+    myFunction = function(n, as.ts, object2x, report) {
+        ans = cumsum(c(0, rnorm(n))) 
+        if (as.ts) ans = as.ts(ans)
+        object <<- ans 
+        if (report) tkTitle("Has No Unit Root: cumsum(c(0, rnorm(1000)))")
+        object }
+    tkExecute(
+        fun = myFunction,
+        params = list(
+            n = 100,
+            as.ts = TRUE,
+            object2x = TRUE,
+            report = FALSE),
+        infoName = "Data Set has no Unit Root" )        
 }
    
 
 # ------------------------------------------------------------------------------
 
  
-.fSeries.UnitRootTests.3 = 
+.fSeries.UnitRootTests.adfTest = 
 function() 
 {   # A function implemented by Diethelm Wuertz
     
-    # ADF Unit Root Test
-    output <<- capture.output(adfTest(x))
-    tkOutput(output)
+    # ADF Unit Root Test:
+    myFunction = function(series, lags, type, object2x, report) {
+        x = tkEval(series)
+        type = tkSplit(type)
+        object <<- adfTest(x, lags, type, title = NULL, description = NULL) 
+        object }
+    tkExecute(
+        fun = myFunction,
+        params = list(
+            series = "x",
+            lags = 1,
+            type = "nc & c & ct", 
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "ADF Unit Root Test" ) 
 }
+
+
+# ------------------------------------------------------------------------------
   
   
-.fSeries.UnitRootTests.4 = 
+.fSeries.UnitRootTests.unitrootTest = 
 function() 
 {   # A function implemented by Diethelm Wuertz
     
-    # McKinnon Unit Root Test
-    output <<- capture.output(unitrootTest(x))
-    tkOutput(output)
+    # McKinnon ADF Unit Root Test:
+    myFunction = function(series, lags, type, object2x, report) {
+        x = tkEval(series)
+        type = tkSplit(type)
+        object <<- unitrootTest(x, lags, type, title = NULL, 
+            description = NULL) 
+        object }
+    tkExecute(
+        fun = myFunction,
+        params = list(
+            series = "x",
+            lags = 1,
+            type = "nc & c & ct", 
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "McKinnon Unit Root Test" ) 
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fSeries.UnitRootTests.urersTest = 
 function()
 {   # A function implemented by Diethelm Wuertz
     
-    # ERS Unit Root Test:
+    # Elliott-Rothenberg-Stock Unit Root Test:
     myFunction = function(series, type, model, lag.max, doplot, 
         object2x, report) {
         x = tkEval(series)
         type = tkSplit(type)
-        print(type)
+        model = tkSplit(model)
         object <<- urersTest(x, type, model, lag.max, doplot) 
-        if (report) tkTitle("ERS Unit Root Test")
         object }
     tkExecute(
         fun = myFunction,
         params = list(
             series = "x", 
-            type = "DF-GLS | P-test", 
-            model = "constant | trend",
-            by = "day", 
+            type = "DF-GLS & P-test", 
+            model = "constant & trend",
             lag.max = 4, 
-            format = "%Y-%m-%d", 
             doplot = TRUE,
             object2x = FALSE,
             report = TRUE),
@@ -607,172 +704,116 @@ function()
 }
 
 
-################################################################################
-# Heaviside Function
+# ------------------------------------------------------------------------------
 
 
-.fSeries.HeavisideFunction.1 = 
-function(choice)
-{   # A function implemented by Diethelm Wuertz
-
-    # FUNCTION:
-    
-    # Heaviside And Related Functions:
-    .HeavisideSlider()
-}
-
-
-################################################################################
-# Skew Normal|Student|GED Distributions
-
-
-.fSeries.GarchDistributions.1 = 
-function() 
+.fSeries.UnitRootTests.urkpssTest =
+function()
 {   # A function implemented by Diethelm Wuertz
     
-    # Generate Skew Normal Random Numbers
-    .snormSlider(TRUE)
+    # "KPSS Unit Root Test
+    myFunction = function(series, lags, type, doplot, object2x, report) {
+        x = tkEval(series)
+        type = tkSplit(type)
+        lags = tkSplit(lags)
+        object <<- urkpssTest(x, type, lags, use.lag = NULL, doplot) 
+        object }
+    tkExecute(
+        fun = myFunction,
+        params = list(
+            series = "x",
+            type = "mu & tau",
+            lags = "short & long & nil",
+            doplot = TRUE,
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "KPSS Unit Root Test" ) 
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-.fSeries.GarchDistributions.2 = 
-function() 
+.fSeries.UnitRootTests.urppTest = 
+function()
 {   # A function implemented by Diethelm Wuertz
     
-    # Skew Normal Distribution Slider
-    .normSlider(TRUE)
+    # Phillips-Perron Unit Root Test:
+    myFunction = function(series, lags, type, object2x, report) {
+        x = tkEval(series)
+        type = tkSplit(type)
+        model = tkSplit(model)
+        lags = tkSplit(lags)
+        object <<- urppTest(x, type, model, lags, use.lag = NULL, doplot) 
+        object }
+    tkExecute(
+        fun = myFunction,
+        params = list(
+            series = "x",
+            type = "Z-alpha & Z-tau", 
+            model = "constant & trend",
+            lags = "short & long",
+            doplot = TRUE,
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Phillips-Perron Unit Root Test" ) 
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-.fSeries.GarchDistributions.3 = 
-function() 
+.fSeries.UnitRootTests.urspTest = 
+function()
 {   # A function implemented by Diethelm Wuertz
     
-    # Generate Skew Student-t Random Numbers
-    .sstdSlider(TRUE)
+    # Schmidt-Phillips Unit Root Test:
+    myFunction = function(series, type, pol.deg, signif, doplot, 
+        object2x, report) {
+        x = tkEval(series)
+        type = tkSplit(type)
+        pol.deg = tkEval(pol.deg)
+        signif = tkEval(signif)
+        object <<- urspTest(x, type, pol.deg, signif, doplot) 
+        object }
+    tkExecute(
+        fun = myFunction,
+        params = list(
+            series = "x",
+            type = "tau & rho", 
+            pol.deg = "c(1,2,3,4)",
+            signif = "c(0.01,0.05,0.1)",
+            doplot = TRUE,
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Schmidt-Phillips Unit Root Test" ) 
 }
 
 
 # ------------------------------------------------------------------------------
-
-
-.fSeries.GarchDistributions.4 = 
-function() 
+    
+.fSeries.UnitRootTests.urzaTest =
+function()
 {   # A function implemented by Diethelm Wuertz
     
-    # Generate Student-t Distribution Slider
-    .stdSlider(TRUE)
+    # Zivot & Andrews Unit Root Test:
+    myFunction = function(series, model, lag, doplot, object2x, report) {
+        x = tkEval(series)
+        model = tkSplit(model)
+        object <<- urzaTest(x, model, lag, doplot) 
+        object }
+    tkExecute(
+        fun = myFunction,
+        params = list(
+            series = "x",
+            model = "intercept & trend & both",
+            lag = 2,
+            doplot = TRUE,
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Zivot & Andrews Unit Root Test" ) 
 }
 
-
-# ------------------------------------------------------------------------------
-
-
-.fSeries.GarchDistributions.5 = 
-function() 
-{   # A function implemented by Diethelm Wuertz
-    
-    # Generate Skew GED Random Numbers
-    .sgedSlider(TRUE)
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.fSeries.GarchDistributions.6 = 
-function() 
-{   # A function implemented by Diethelm Wuertz
-    
-    # Generate GED Distribution Slider
-    .gedSlider(TRUE)
-}
-
-
-################################################################################
-# Garch Distribution Fits
-
-
-.fSeries.GarchDistributionFits.1 = 
-function() 
-{   # A function implemented by Diethelm Wuertz
-    
-    # * Example timeSeries: x - NYSE log Returns
-    tkGetData(Data = "nyseDaily", infoName = "Daily NYSE Returns")
-}
-   
-
-# ------------------------------------------------------------------------------
-
-
-.fSeries.GarchDistributionFits.2 = 
-function() 
-{   # A function implemented by Diethelm Wuertz
-    
-    # Fit to Normal Distribution
-    tkGetFit(normFit, "Fit to Normal Distribution")
-}
-   
-
-.fSeries.GarchDistributionFits.3 = 
-function() 
-{   # A function implemented by Diethelm Wuertz
-    
-    # Fit to Skew Normal Distribution
-    tkGetFit(snormFit, "Fit to Skew Normal Distribution")
-}
-   
-
-# ------------------------------------------------------------------------------
-
-
-.fSeries.GarchDistributionFits.4 = 
-function() 
-{   # A function implemented by Diethelm Wuertz
-    
-    # Fit to Sudent-t Distribution
-    tkGetFit(stdFit, "Fit to Student-t Distribution")        
-}
-   
-
-# ------------------------------------------------------------------------------
-
-
-.fSeries.GarchDistributionFits.5 = 
-function() 
-{   # A function implemented by Diethelm Wuertz
-    
-    # Fit Skew Sudent-t Distribution
-    tkGetFit(sstdFit, "Fit to Skew Student-t Distribution")     
-}
-   
-
-# ------------------------------------------------------------------------------
-
-
-.fSeries.GarchDistributionFits.6 = 
-function() 
-{   # A function implemented by Diethelm Wuertz
-    
-    # Fit GED Distribution
-    tkGetFit(gedFit, "Fit to GED Distribution")     
-}
-   
-
-.fSeries.GarchDistributionFits.7 = 
-function() 
-{   # A function implemented by Diethelm Wuertz
-    
-    # Fit Skew GED Distribution
-    tkGetFit(sgedFit, "Fit to Skew GED Distribution")   
-}       
-        
         
 ################################################################################
 # fSeries Data

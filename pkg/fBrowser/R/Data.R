@@ -1,95 +1,130 @@
+# fBasics: sp500Monthly nyseDaily msftsp500Monthly
+# fCalendar: msftsp500Monthly [USDTHB] 
+# fSeries: nyseDaily dem2gbpDaily 
 
 
-.BasicStatistics.sp500monthly = 
-function() 
+
+.fData.nyseDaily =  
+function()
 {   # A function implemented by Diethelm Wuertz
-    
-    # Example timeSeries: x = Monthly SP500 Returns
-    tkGetData(Data = "sp500Monthly", infoName = "End of Month SP500 Returns")
+
+    # BMW Data Set:
+    myFunction = function(object2x, report) {
+        object <<- tkGetDemoData(Data = "nyseDaily", report = report) 
+        object }
+    tkExecute(
+        fun = myFunction,
+        params = list(
+            object2x = TRUE,
+            report = FALSE),
+        infoName = "Nyse Daily Data Set" )       
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-.fBasics.PlotFunctions.sp500Monthly = 
-function() 
+.fData.dem2gbpDaily =  
+function()
 {   # A function implemented by Diethelm Wuertz
-    
-    # * Example timeSeries: x = Monthly SP500 Returns:
-    tkGetData(Data = "sp500Monthly", infoName = "Monthly SP500 Returns")
+
+    # BMW Data Set:
+    myFunction = function(object2x, report) {
+        object <<- tkGetDemoData(Data = "dem2gbp", report = report) 
+        object }
+    tkExecute(
+        fun = myFunction,
+        params = list(
+            object2x = TRUE,
+            report = FALSE),
+        infoName = "DEMGBP Daily Data Set" )       
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-.fBasics.PlotFunctions.msftsp500Monthly = 
-function() 
+.fData.bmwDaily =  
+function()
 {   # A function implemented by Diethelm Wuertz
 
-    # * Example timeSeries: x = MSFT|SP500 Returns:
-    tkGetData(Data = "msftsp500Monthly", infoName = "Monthly MSFT|SP500 Returns")
+    # BMW Data Set:
+    myFunction = function(object2x, report) {
+        object <<- tkGetDemoData(Data = "bmwDaily", report = report) 
+        object }
+    tkExecute(
+        fun = myFunction,
+        params = list(
+            object2x = TRUE,
+            report = FALSE),
+        infoName = "BMW Daily Data Set" )       
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-.fBasics.ReturnDistributions.nyseDaily = 
-function() 
-{   # A function implemented by Diethelm Wuertz
-    
-    # * Example timeSeries: x - Daily NYSE Returns
-    tkGetData(Data = "nyseDaily", infoName = "Daily NYSE Returns")
-} 
-
-
-# ------------------------------------------------------------------------------
-
-
-
-.fBasics.NormalityTests.sp500Monthly = 
-function() 
+.fData.sp500Monthly = 
+function()
 {   # A function implemented by Diethelm Wuertz
 
-    # * Example timeSeries: - x = Monthly SP500 Returns
-    tkGetData(Data = "sp500Monthly", infoName = "Monthly SP500 Returns")
+    # MSFT and SP%00 Data Sets:
+    myFunction = function(object2x, report) {
+        object <<- tkGetDemoData(Data = "p500Monthly", report = report) 
+        object }
+    tkExecute(
+        fun = myFunction,
+        params = list(
+            object2x = TRUE,
+            report = FALSE),
+        infoName = "SP500 Index Monthly Data" )       
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-
-.fBasics.BivariateTests.msftsp500Monthly  = 
-function() 
+.fData.sp500IndexMonthly = 
+function()
 {   # A function implemented by Diethelm Wuertz
 
-    # * Example timeSeries: x = MSFT|SP500 Returns
-    tkGetData(Data = "msftsp500Monthly", 
-        infoName = "Monthly MSFT|SP500 Returns")
+    # MSFT and SP%00 Data Sets:
+    myFunction = function(object2x, report) {
+        object <<- tkGetDemoData(Data = "p500IndexMonthly", report = report) 
+        object }
+    tkExecute(
+        fun = myFunction,
+        params = list(
+            object2x = TRUE,
+            report = FALSE),
+        infoName = "SP500 Index Monthly Data" )       
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-.fBasics.StylizedFacts.nyseDaily = 
-function() 
+.fData.msftsp500Monthly = 
+function()
 {   # A function implemented by Diethelm Wuertz
-    
-    # * Example timeSeries: x = Daily NYSE Returns
-    tkGetData(Data = "nyseDaily", infoName = "Daily NYSE Returns")
+
+    # MSFT and SP%00 Data Sets:
+    myFunction = function(object2x, report) {
+        object <<- tkGetDemoData(Data = "msftsp500Monthly", report = report) 
+        object }
+    tkExecute(
+        fun = myFunction,
+        params = list(
+            object2x = TRUE,
+            report = FALSE),
+        infoName = "msftsp500 Monthly Data Set" )       
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-
-
-.fCalendar.TimeDateMethods.dates = 
+.fData.randomDates = 
 function() 
 {   # A function implemented by Diethelm Wuertz
     
@@ -114,7 +149,7 @@ function()
 # ------------------------------------------------------------------------------
 
 
-.fCalendar.TimeDateMethods.times = 
+.fData.randomTimes = 
 function() 
 {   # A function implemented by Diethelm Wuertz
     
@@ -141,27 +176,7 @@ function()
 }
 
 
-# ------------------------------------------------------------------------------
-
-
-.fCalendar.TimeSeriesClass.msftsp500Monthly = 
-function()
-{   # A function implemented by Diethelm Wuertz
-
-    # MSFT and SP%00 Data Sets:
-    myFunction = function(object2x, report) {
-        object <<- tkGetDemoData(Data = "msftsp500Monthly", report = report) 
-        object }
-    tkExecute(
-        fun = myFunction,
-        params = list(
-            object2x = TRUE,
-            report = FALSE),
-        infoName = "msftsp500 Monthly Data Set" )       
-}
-
-
-# ------------------------------------------------------------------------------
+# ##############################################################################
 
 
 .fCalendar.HighFrequencyData.1 = 
@@ -174,166 +189,5 @@ function()
 }
 
 
-# ------------------------------------------------------------------------------
-
-
-.fSeries.ArmaModelling.nyseDaily =  
-function()
-{   # A function implemented by Diethelm Wuertz
-
-    # BMW Data Set:
-    myFunction = function(object2x, report) {
-        object <<- tkGetDemoData(Data = "nyseDaily", report = report) 
-        object }
-    tkExecute(
-        fun = myFunction,
-        params = list(
-            object2x = TRUE,
-            report = FALSE),
-        infoName = "Nyse Daily Data Set" )       
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.fSeries.GarchModelling.dem2gbpDaily =  
-function()
-{   # A function implemented by Diethelm Wuertz
-
-    # BMW Data Set:
-    myFunction = function(object2x, report) {
-        object <<- tkGetDemoData(Data = "dem2gbp", report = report) 
-        object }
-    tkExecute(
-        fun = myFunction,
-        params = list(
-            object2x = TRUE,
-            report = FALSE),
-        infoName = "DEMGBP Daily Data Set" )       
-}
-
-
-
-# ------------------------------------------------------------------------------
-
-
-
-.fSeries.TimeSeriesTests.1 = 
-function()
-{   # A function implemented by Diethelm Wuertz
-    
-    # Example timeSeries: x - NYSE log Returns
-    tkGetData(Data = "nyseDaily", infoName = "Daily NYSE Returns")
-}
-   
-
-# ------------------------------------------------------------------------------
-
-
-.fMultivar.BenchmarkAnalysis.1 = 
-function()
-{   # A function implemented by Diethelm Wuertz
-    
-    # * Example timeSeries: x = SP500 Index
-    tkGetData(Data = "sp500IndexMonthly", infoName = "Monthly SP500 Index")
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-
-
-.fMultivar.RollingAnalysis.sp500IndexMonthly = 
-function()
-{   # A function implemented by Diethelm Wuertz
-    
-    # * Example timeSeries: x = SP500 Index
-    tkGetData(Data = "sp500IndexMonthly", infoName = "Monthly SP500 Index")
-}   
-
-
-# ------------------------------------------------------------------------------
-
-
-      
-.fExtremes.ExtremesPlots.bmwDaily = 
-function()
-{   # A function implemented by Diethelm Wuertz
-
-    # BMW Data Set:
-    myFunction = function(object2x, report) {
-        object <<- tkGetDemoData(Data = "bmwDaily", report = report) 
-        object }
-    tkExecute(
-        fun = myFunction,
-        params = list(
-            object2x = TRUE,
-            report = FALSE),
-        infoName = "BMW Daily Data Set" )       
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.fExtremes.DataPreprocessing.bmwDaily =  
-function()
-{   # A function implemented by Diethelm Wuertz
-
-    # BMW Data Set:
-    myFunction = function(object2x, report) {
-        object <<- tkGetDemoData(Data = "bmwDaily", report = report) 
-        object }
-    tkExecute(
-        fun = myFunction,
-        params = list(
-            object2x = TRUE,
-            report = FALSE),
-        infoName = "BMW Daily Data Set" )       
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.fExtremes.GEV.bmwDaily = 
-function()
-{   # A function implemented by Diethelm Wuertz
-
-    # BMW Data Set:
-    myFunction = function(object2x, report) {
-        object <<- tkGetDemoData(Data = "bmwDaily", report = report) 
-        object }
-    tkExecute(
-        fun = myFunction,
-        params = list(
-            object2x = TRUE,
-            report = FALSE),
-        infoName = "BMW Daily Data Set" )       
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.fExtremes.GPD.bmwDaily = 
-function()
-{   # A function implemented by Diethelm Wuertz
-
-    # BMW Data Set:
-    myFunction = function(object2x, report) {
-        object <<- tkGetDemoData(Data = "bmwDaily", report = report) 
-        object }
-    tkExecute(
-        fun = myFunction,
-        params = list(
-            object2x = TRUE,
-            report = FALSE),
-        infoName = "BMW Daily Data Set" )       
-}
-
-
-# ------------------------------------------------------------------------------
+################################################################################
 

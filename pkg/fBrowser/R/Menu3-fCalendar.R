@@ -59,8 +59,8 @@ function()
         "Print List of Financial Centers",
         "Print DST Rules for a Financial Center")
     Command = c(
-        ".fCalendar.TimeDateClass.dates",
-        ".fCalendar.TimeDateClass.times",
+        ".fData.randomDates",
+        ".fData.randomTimes",
         ".fCalendar.TimeDateClass.timeSequence",
         ".fCalendar.TimeDateClass.timeCalendar",
         ".fCalendar.TimeDateClass.getTime",
@@ -91,8 +91,8 @@ function()
         "Extract Julian Day Counts from timeDate Vector",
         "Extract data.frame from timeDate Atoms")
     Command = c(
-        ".fCalendar.TimeDateMethods.dates",
-        ".fCalendar.TimeDateMethods.times",
+        ".fData.randomDates",
+        ".fData.randomTimes",
         ".fCalendar.TimeDateMethods.start",
         ".fCalendar.TimeDateMethods.end",
         ".fCalendar.TimeDateMethods.plusminus",
@@ -121,7 +121,7 @@ function()
         "Compute Returns from a timeSeries",
         "Revert a timeSeries in Time Order")
     Command = c(
-        ".fCalendar.TimeSeriesClass.msftsp500Monthly",
+        ".fData.msftsp500Monthly",
         ".fCalendar.TimeSeriesClass.timeSeries",
         ".fCalendar.TimeSeriesClass.applySeries",
         ".fCalendar.TimeSeriesClass.alignDailySeries",

@@ -94,7 +94,7 @@ function()
         "Compute Sharpe Ratio",
         "Compute Sterling Ratio")
     Command = c(
-        ".fMultivar.BenchmarkAnalysis.1",
+        ".fData.sp500IndexMonthly",
         ".fMultivar.BenchmarkAnalysis.2",
         ".fMultivar.BenchmarkAnalysis.3",
         ".fMultivar.BenchmarkAnalysis.4")
@@ -109,7 +109,7 @@ function()
         "Rolling Minimum",
         "Rolling Maximum")
     Command = c(
-        ".fMultivar.RollingAnalysis.sp500IndexMonthly",
+        ".fData.sp500IndexMonthly",
         ".fMultivar.RollingAnalysis.rollMean",
         ".fMultivar.RollingAnalysis.rollVar",
         ".fMultivar.RollingAnalysis.rollMin",
