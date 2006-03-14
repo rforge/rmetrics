@@ -965,17 +965,15 @@ function(x, y)
 
 
 findThreshold =
-function(x, n = NA)
+function(x, n = floor(0.05*length(x)))
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Finds upper thresold for a given number of Extremes.
     
     # Arguments:
-    #   n   - a numeric value or vector giving number of extremes 
-    #         above the threshold. If "n" is not specified, "n"
-    #         is set to an integer representing 5% of the data 
-    #         from the whole data set "x".
+    #   n - a numeric value or vector giving number of extremes 
+    #       above the threshold. 
         
     # Note:
     #   Imported from R-package evir/EVIS.
@@ -983,10 +981,11 @@ function(x, n = NA)
     # FUNCTION:
     
     # Settings:
+    x = as.vector(x)
     if(is.na(n[1])) n = floor(0.05*length(x))
     
     # Continue:
-    x = rev(sort(as.numeric(x)))
+    x = rev(sort(x))
     thresholds = unique(x)
     indices = match(x[n], thresholds)
     indices = pmin(indices + 1, length(thresholds)) 

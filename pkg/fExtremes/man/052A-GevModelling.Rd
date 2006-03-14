@@ -11,6 +11,8 @@
 
 \alias{GevFit}
 \alias{gevSim}
+\alias{blockmaxSeries}
+\alias{blockmaxVector}
 \alias{gevFit}
 \alias{print.gevFit}
 \alias{plot.gevFit}
@@ -61,6 +63,8 @@
     
     \tabular{ll}{
     \code{gevSim} \tab generates data from the GEV, \cr
+    \code{blockmaxSeries} \tab generates block maxima from a timeSeries object, \cr
+    \code{blockmaxVector} \tab generates block maxima from a numeric vector, \cr
     \code{gevFit} \tab fits empirical or simulated data to the distribution, \cr 
     \code{print} \tab print method for a fitted GEV object, \cr
     \code{plot} \tab plot method for a fitted GEV object, \cr 
@@ -87,7 +91,9 @@ qevd(p, loc = 0, scale = 1, shape = 0, lower.tail = TRUE)
 revd(n, loc = 0, scale = 1, shape = 0)
 
 gevSim(model = list(shape = 0.25, location = 0, scale = 1), n = 1000)
-gevFit(x, block = NA, type = c("mle", "pwm"), gumbel = FALSE, \dots)
+blockmaxSeries(x, block = c("monthly", "quarterly")) 
+blockmaxVector(x, block = 20)
+gevFit(x, type = c("mle", "pwm"), gumbel = FALSE, \dots)
 \method{print}{gevFit}(x, \dots)
 \method{plot}{gevFit}(x, which = "all", \dots)
 \method{summary}{gevFit}(object, doplot = TRUE, which = "all", \dots)
@@ -123,17 +129,13 @@ shaparmPlot(x, revert = FALSE, standardize = FALSE, tails = 0.01*(1:10),
         parameters may be entered.
         }
     \item{block}{
-        [gevFit] - \cr
-        the block size. Only used if \code{method="mle"} is selected.
-        A numeric value is interpreted as the
-        number of data values in each successive block. All the data is
-        used, so the last block may not contain \code{block} observations.
-        If the \code{data} has a \code{times} attribute containing (in
-        an object of class \code{"POSIXct"}, or an object that can be
-        converted to that class; see \code{\link{as.POSIXct}}) the
-        times/dates of each observation, then \code{block} may instead
-        take the character values \code{"month"}, \code{"quarter"},
-        \code{"semester"} or \code{"year"}.
+        [blockmaxSeries] - \cr
+        a character string either \code{"monthly"} or \code{"quarterly"}
+        which determines the block size.
+        \cr
+        [blockmaxVector] - \cr
+        an integer value which determines the block size as number of
+        records.
         }
     \item{both.tails}{
         [shaparmPlot] - \cr
@@ -275,6 +277,13 @@ shaparmPlot(x, revert = FALSE, standardize = FALSE, tails = 0.01*(1:10),
         desplayed. By default \code{which="all"}.
         }
     \item{x}{
+        [blockmaxSeries] - \cr
+        an object of class \code{"timeSeries"}.
+        \cr
+        [blockmaxVector] - \cr
+        a numeric vector or any other object which can be converted by the 
+        function \code{as.vector} into a numeric vector.
+        \cr
         [dgev][devd] - \cr
         a numeric vector of quantiles.
         \cr
@@ -498,6 +507,8 @@ Embrechts, P., Klueppelberg, C., Mikosch, T. (1997);
 \examples{
 ## SOURCE("fExtremes.052A-GevModelling")
 
+
+\dontrun{
 ## *gev  -
    xmpExtremes("\nStart: GEV Frechet >")
    # Create and plot 1000 GEV/Frechet distributed rdv:
@@ -647,6 +658,7 @@ Embrechts, P., Klueppelberg, C., Mikosch, T. (1997);
    x = rgev(10000, xi = 1/4)
    shaparmPlot(x, revert = TRUE, both.tails = FALSE)
    lines(c(0.01, 0.1), c(4, 4), col = "steelblue3") # True Value
+}
 }
 
 

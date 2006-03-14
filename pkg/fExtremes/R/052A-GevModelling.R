@@ -40,22 +40,16 @@
 #   rgev                  Random variates for the GEV Distribution
 # FUNCTION:             MOMENTS:
 #  .gevMoments            Computes true statistics for GEV distribution
-################################################################################
-
-
-################################################################################
 # FUNCTION:             GEV MODELLING FROM EVIS:
 #  gevSim                Simulates GEV including Gumbel rvs [EVIS/EVIR]
+#  blockmaxSeries        Generates block maxima from a 'timeSeries' object
+#  blockmaxVector        Generates block maxima from a numeric vector 
 #  gevFit                Fits GEV Distribution
 #   print.gevFit          Print Method for object of class "gevFit"
 #   plot.gevFit           Plot Method for object of class "gevFit"
 #   summary.gevFit        Summary Method for object of class "gevFit"
 # FUNCTION:             ADDITIONAL PLOT:
 #  gevrlevelPlot         Calculates Return Levels Based on GEV Fit
-################################################################################
-
-
-################################################################################
 # FUNCTION:             MDA ESTIMATORS:
 #  hillPlot              Plot Hill's estimator
 #  shaparmPlot           Pickands, Hill & Decker-Einmahl-deHaan Estimator
@@ -65,6 +59,7 @@
 ################################################################################
 
 
+################################################################################
 # PART I: GEV DISTRIBUTION FAMILY: [USE FROM EVD]
 
 
@@ -135,9 +130,11 @@ function (p, loc = 0, scale = 1, shape = 0, lower.tail = TRUE)
         stop("invalid shape")
     if (!lower.tail) 
         p = 1 - p
-    if (shape == 0) 
+    if (shape == 0) {
         return(loc - scale * log(-log(p)))
-    else return(loc + scale * ((-log(p))^(-shape) - 1)/shape)
+    } else {
+        return(loc + scale * ((-log(p))^(-shape) - 1)/shape)
+    }
 }
 
 
@@ -153,13 +150,15 @@ function (n, loc = 0, scale = 1, shape = 0)
         stop("invalid scale")
     if (length(shape) != 1) 
         stop("invalid shape")
-    if (shape == 0) 
+    if (shape == 0) {
         return(loc - scale * log(rexp(n)))
-    else return(loc + scale * (rexp(n)^(-shape) - 1)/shape)
+    } else {
+        return(loc + scale * (rexp(n)^(-shape) - 1)/shape)
+    }
 }
 
 
-# ******************************************************************************
+################################################################################
 
 
 dgev =
@@ -186,9 +185,9 @@ function(x, xi = 1, mu = 0, sigma = 1, log = FALSE)
     if (length(shape) != 1) 
         stop("invalid shape")
     x = (x - loc)/scale
-    if (shape == 0) 
+    if (shape == 0) {
         d = log(1/scale) - x - exp(-x)
-    else {
+    } else {
         nn = length(x)
         xx = 1 + shape * x
         xxpos = xx[xx > 0 | is.na(xx)]
@@ -233,11 +232,14 @@ function(q, xi = 1, mu = 0, sigma = 1, lower.tail = TRUE)
     if (length(shape) != 1) 
         stop("invalid shape")
     q = (q - loc)/scale
-    if (shape == 0) 
+    if (shape == 0) {
         p = exp(-exp(-q))
-    else p = exp(-pmax(1 + shape * q, 0)^(-1/shape))
-    if (!lower.tail) 
+    } else {
+        p = exp(-pmax(1 + shape * q, 0)^(-1/shape))
+    }
+    if (!lower.tail) {
         p = 1 - p
+    }
     
     # Return Value:
     p
@@ -274,10 +276,11 @@ function (p, xi = 1, mu = 0, sigma = 1, lower.tail = TRUE)
         stop("invalid shape")
     if (!lower.tail) 
         p = 1 - p
-    if (shape == 0) 
+    if (shape == 0) {
         q = loc - scale * log(-log(p))
-    else 
+    } else {
         q = loc + scale * ((-log(p))^(-shape) - 1)/shape
+    }
         
     # Return Value:
     q
@@ -310,17 +313,18 @@ function (n, xi = 1, mu = 0, sigma = 1)
         stop("invalid scale")
     if (length(shape) != 1) 
         stop("invalid shape")
-    if (shape == 0) 
+    if (shape == 0) {
         r = loc - scale * log(rexp(n))
-    else 
+    } else {
         r = loc + scale * (rexp(n)^(-shape) - 1)/shape
-
+    }
+    
     # Return Value:
     r
 }
 
 
-# ------------------------------------------------------------------------------
+################################################################################
 
 
 .gevMoments = 
@@ -366,8 +370,6 @@ function(xi, mu = 0, beta = 1)
     
     
 ################################################################################
-
-
 # GEV MODELLING FROM EVIS:
 
 
@@ -392,12 +394,73 @@ function(model = list(shape = 0.25, location = 0, scale = 1), n = 1000)
 # ------------------------------------------------------------------------------
 
 
+blockmaxSeries = 
+function(x, block = c("monthly", "quarterly"))   
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Generates block maxima from a 'timeSeries' object
+    
+    # FUNCTION:
+    
+    # Block Maxima:
+    block = block[1]
+    colFun = function(x) colStats(x, FUN = max)
+    if (block == "monthly") {
+        from = unique(timeFirstDayInMonth(seriesPositions(x)))
+        to = unique(timeLastDayInMonth(seriesPositions(x)))
+        x = applySeries(x, from, to, FUN = colFun) 
+    } else if (block == "quarterly") {
+        from = unique(timeFirstDayInQuarter(seriesPositions(x)))
+        to = unique(timeLastDayInQuarter(seriesPositions(x)))
+        x = applySeries(x, from, to, FUN = colFun) 
+    } else {
+        stop("Unknown block size")
+    }
+    
+    # Return Value:
+    x
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+blockmaxVector = 
+function(x, block = 20)   
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Generates block maxima from any univariate vector which can 
+    #   converted into a numeric vector
+    
+    # FUNCTION:
+    
+    # Block Maxima:
+    colFun = function(x) colStats(x, FUN = max)
+    data = as.vector(x)
+    nblocks = (length(data) %/% block) + 1
+    grouping = rep(1:nblocks, rep(block, nblocks))[1:length(data)]
+    x = as.vector(tapply(data, grouping, FUN = max))
+    
+    # Return Value:
+    x
+}
+
+
+
+# ------------------------------------------------------------------------------
+
+
 gevFit =
-function(x, block = NA, type = c("mle", "pwm"), gumbel = FALSE, ...)
+function(x, type = c("mle", "pwm"), gumbel = FALSE, ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Fits parameters to a GEV distribution
+    
+    # Arguments:
+    # x - a numeric vector of Block Maxima
     
     # Note:
     #   Argument named "method is already used for the selection
@@ -409,122 +472,7 @@ function(x, block = NA, type = c("mle", "pwm"), gumbel = FALSE, ...)
     # Settings:
     call = match.call()
     type = type[1]
-    
-    # Internal Function:
-    gev.pwm = function(data, block = NA, ...) {
-    # Probability Weighted Moment method.
-    # Blocks and data:
-    n.all = NA
-    if (!is.na(block)) {
-        n.all = length(data)
-        if (is.character(block)) {
-            times = as.POSIXlt(attributes(data)$times)
-            if (block %in% c("semester", "quarter")) {
-                sem = quart = times$mon
-                sem[sem %in% 0:5] = quart[quart %in% 0:2] = 0
-                sem[sem %in% 6:11] = quart[quart %in% 3:5] = 1
-                quart[quart %in% 6:8] = 2
-                quart[quart %in% 9:11] = 3 }
-            grouping = switch(block, 
-                semester = paste(times$year, sem), 
-                quarter = paste(times$year, quart), 
-                month = paste(times$year, times$mon), 
-                year = times$year, 
-                stop("unknown time period"))
-            data = tapply(data, grouping, max) }
-        else {
-            data = as.numeric(data)
-            nblocks = (length(data)%/%block) + 1
-            grouping = rep(1:nblocks, rep(block, nblocks))[1:length(data)]
-            data = tapply(data, grouping, max) } }
-    data = as.numeric(data)
-    n = length(data)    
-    
-    # Internal Function - Sample Moments:
-    sampwm = function (x, nmom) {
-        # a = 0, b = 0, kind = 1
-        x = rev(sort(x))
-        moments = rep(0, nmom)
-        moments[1] = mean(x)
-        n = length(x)
-        for (i in 1:n) {
-            weight = 1/n
-            for (j in 2:nmom) {
-                weight = weight*(n-i-j+2)/(n-j+1)
-                moments[j] = moments[j] + weight*x[i] } }
-        return(moments) }
-    
-    # Internal Function:
-    y = function(x, w0, w1, w2) { (3^x-1)/(2^x-1) - (3*w2 - w0)/(2*w1 - w0) }       
-    # Calculate:
-    w = sampwm(data, nmom = 3)
-    w0 = w[1]
-    w1 = w[2]
-    w2 = w[3]      
-    xi = uniroot(f = y, interval = c(-5,+5), 
-        w0 = w[1], w1 = w[2], w2 = w[3])$root
-    sigma = beta = (2*w1-w0)*xi / gamma(1-xi) / (2^xi-1)
-    mu = w0 + beta*(1-gamma(1-xi))/xi
-    # Output:
-    fit = list(n.all = n.all, n = n, data = data, bock = block, 
-        par.ests = c(xi, sigma, mu), par.ses = rep(NA, 3),
-        varcov = matrix(rep(NA, 9), 3, 3), converged = NA, 
-        nllh.final = NA, call=match.call(), selected = "pwm")
-    names(fit$par.ests) = c("xi", "sigma", "mu")
-    names(fit$par.ses) = c("xi", "sigma", "mu") 
-    # Return Value:
-    class(fit) = "gev" 
-    fit }
-    
-    # Internal Function:
-    gumbel.pwm = function(data, block = NA, ...) {
-    # "Probability Weighted Moment" method.
-    # Blocks and data:
-    n.all = NA
-    if (!is.na(block)) {
-        n.all = length(data)
-        if (is.character(block)) {
-            times = as.POSIXlt(attributes(data)$times)
-            if (block %in% c("semester", "quarter")) {
-                sem = quart = times$mon
-                sem[sem %in% 0:5] = quart[quart %in% 0:2] = 0
-                sem[sem %in% 6:11] = quart[quart %in% 3:5] = 1
-                quart[quart %in% 6:8] = 2
-                quart[quart %in% 9:11] = 3 }
-            grouping = switch(block, 
-                semester = paste(times$year, sem), 
-                quarter = paste(times$year, quart), 
-                month = paste(times$year, times$mon), 
-                year = times$year, 
-                stop("unknown time period"))
-            data = tapply(data, grouping, max) }
-        else {
-            data = as.numeric(data)
-            nblocks = (length(data)%/%block) + 1
-            grouping = rep(1:nblocks, rep(block, nblocks))[1:length(data)]
-            data = tapply(data, grouping, max) } }
-    data = as.numeric(data)
-    n = length(data)
-    # Sample Moments:
-    x = rev(sort(data))
-    lambda = c(mean(x), 0)
-    for (i in 1:n) {
-        weight = (n-i)/(n-1)/n
-        lambda[2] = lambda[2] + weight*x[i] } 
-    # Calculate Parameters:
-    xi = 0
-    sigma = beta = lambda[2]/log(2)
-    mu = lambda[1] - 0.5772*beta
-    # Output:
-    fit = list(n.all = n.all, n = n, data = data, block = block, 
-        par.ests = c(sigma, mu), par.ses = rep(NA, 2),
-        varcov = matrix(rep(NA, 4), 2, 2), converged = NA, 
-        nllh.final = NA, call = match.call(), selected = "pwm")
-    names(fit$par.ests) = c("sigma", "mu")
-    names(fit$par.ses) = c("sigma", "mu")
-    # Return Value:
-    class(fit) = "gev" # not gumbel!
-    fit }
+    block = NA
     
     # Estimate Parameters:
     if (gumbel) {   
@@ -532,21 +480,26 @@ function(x, block = NA, type = c("mle", "pwm"), gumbel = FALSE, ...)
         if (length(type) > 1) type = type[1]
         # Probability Weighted Moment Estimation
         if (type == "pwm") {
-            fitted = gumbel.pwm(data = x, block = block, ...) }
+            fitted = .gumbel.pwm(data = x, block = block, ...) 
+        }
         # Maximum Log Likelihood Estimation
         # Use Alexander McNeils EVIS:
         if (type == "mle") { 
-            fitted = gumbel(data = x, block = block, ...) } }   
-    else {
+            fitted = gumbel(data = x, block = block, ...) 
+        } 
+    } else {
         # Add Call and Type
         if (length(type) > 1) type = type[1]
         # Probability Weighted Moment Estimation:
         if (type == "pwm") { 
-            fitted = gev.pwm(data = x, block = block, ...) }
+            fitted = .gev.pwm(data = x, block = block, ...) 
+        }
         # Maximum Log Likelihood Estimation
         # Use Alexander McNeils EVIS (renames as gev.mle)
         if (type == "mle") { 
-            fitted = gev(data = x, block = block, ...) }    }
+            fitted = gev(data = x, block = block, ...) 
+        }    
+    }
             
     # Compute Residuals:
     if (gumbel) {
@@ -554,13 +507,14 @@ function(x, block = NA, type = c("mle", "pwm"), gumbel = FALSE, ...)
         xi = 0
         sigma = fitted$par.ests[1]
         mu = fitted$par.ests[2] 
-        fitted$residuals = exp( - exp( - (fitted$data - mu)/sigma)) }
-    else {
+        fitted$residuals = exp( - exp( - (fitted$data - mu)/sigma)) 
+    } else {
         # GEV:
         xi = fitted$par.ests[1]
         sigma = fitted$par.ests[2]
         mu = fitted$par.ests[3]
-        fitted$residuals = (1 + (xi * (fitted$data - mu))/sigma)^(-1/xi) }  
+        fitted$residuals = (1 + (xi * (fitted$data - mu))/sigma)^(-1/xi) 
+    }  
         
     # Make Unique:
     fit = list()
@@ -583,6 +537,97 @@ function(x, block = NA, type = c("mle", "pwm"), gumbel = FALSE, ...)
 # ------------------------------------------------------------------------------
 
 
+.sampwm = 
+function (x, nmom) 
+{
+    # a = 0, b = 0, kind = 1
+    x = rev(sort(x))
+    moments = rep(0, nmom)
+    moments[1] = mean(x)
+    n = length(x)
+    for (i in 1:n) {
+        weight = 1/n
+        for (j in 2:nmom) {
+            weight = weight*(n-i-j+2)/(n-j+1)
+            moments[j] = moments[j] + weight*x[i] 
+        } 
+    }
+    
+    # Return Value:
+    return(moments) 
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.gev.pwm = 
+function(data, block = NA, ...) 
+{
+    # Probability Weighted Moment method.
+    data = as.vector(data)
+    n = length(data)    
+    
+    # Internal Function:
+    y = function(x, w0, w1, w2) { (3^x-1)/(2^x-1) - (3*w2 - w0)/(2*w1 - w0) }       
+    # Calculate:
+    w = .sampwm(data, nmom = 3)
+    w0 = w[1]
+    w1 = w[2]
+    w2 = w[3]      
+    xi = uniroot(f = y, interval = c(-5,+5), 
+        w0 = w[1], w1 = w[2], w2 = w[3])$root
+    sigma = beta = (2*w1-w0)*xi / gamma(1-xi) / (2^xi-1)
+    mu = w0 + beta*(1-gamma(1-xi))/xi
+    # Output:
+    fit = list(n.all = n.all, n = n, data = data, bock = block, 
+        par.ests = c(xi, sigma, mu), par.ses = rep(NA, 3),
+        varcov = matrix(rep(NA, 9), 3, 3), converged = NA, 
+        nllh.final = NA, call=match.call(), selected = "pwm")
+    names(fit$par.ests) = c("xi", "sigma", "mu")
+    names(fit$par.ses) = c("xi", "sigma", "mu") 
+    
+    # Return Value:
+    class(fit) = "gev" 
+    fit 
+}
+    
+    
+# ------------------------------------------------------------------------------
+
+
+.gumbel.pwm = function(data, block = NA, ...) 
+{
+    # "Probability Weighted Moment" method.
+    data = as.vector(data)
+    n = length(data)
+    # Sample Moments:
+    x = rev(sort(data))
+    lambda = c(mean(x), 0)
+    for (i in 1:n) {
+        weight = (n-i)/(n-1)/n
+        lambda[2] = lambda[2] + weight*x[i] } 
+    # Calculate Parameters:
+    xi = 0
+    sigma = beta = lambda[2]/log(2)
+    mu = lambda[1] - 0.5772*beta
+    # Output:
+    fit = list(n.all = n.all, n = n, data = data, block = block, 
+        par.ests = c(sigma, mu), par.ses = rep(NA, 2),
+        varcov = matrix(rep(NA, 4), 2, 2), converged = NA, 
+        nllh.final = NA, call = match.call(), selected = "pwm")
+    names(fit$par.ests) = c("sigma", "mu")
+    names(fit$par.ses) = c("sigma", "mu")
+    
+    # Return Value:
+    class(fit) = "gev" # not gumbel!
+    fit 
+}
+    
+
+# ------------------------------------------------------------------------------
+
+
 print.gevFit =
 function(x, ...)
 {   # A function implemented by Diethelm Wuertz
@@ -592,17 +637,22 @@ function(x, ...)
     
     # FUNCTION:
     
+    # Title:
+    cat("\nTitle:\n GEV Fit\n")
+    
     # Function Call:
-    cat("\nCall:\n")
+    cat("\nCall:\n ")
     cat(paste(deparse(x$call), sep = "\n", collapse = "\n"), "\n", sep = "")
             
     # Estimation Type:
-    cat("\nEstimation Type:", x$type, "\n") 
+    cat("\nEstimation Type:\n ", x$type, "\n") 
     
     # Estimated Parameters:
     cat("\nEstimated Parameters:\n")
     print(x$par.ests)
-    cat("\n")
+    
+    # Desription:
+    cat("\nDescription\n ", as.character(date()), "\n\n")
     
     # Return Value:
     invisible(x)
@@ -635,7 +685,7 @@ function(x, which = "all", ...)
             xlab = "Index",
             ylab = "Data", 
             main = "Block Maxima") 
-        }
+    }
     plot.2 <<- function(x) {
         # Lowess Fit to Scatterplot of Residuals:
         plot(x$residuals, pch = 19, cex = 0.5,
@@ -645,7 +695,7 @@ function(x, which = "all", ...)
         lines(lowess(1:length(x$residuals), x$residuals),  
             col = "steelblue") 
         grid()
-        }
+    }
     plot.3 <<- function(x) {
         # Histogram Plot of Residuals with Gaussian Fit:
         hist(x$residuals, probability = TRUE, breaks = "FD",
@@ -657,7 +707,7 @@ function(x, which = "all", ...)
         # sigma = x$par.ests[2]
         # mu = x$par.ests[3]
         # r = range(x$residuals)
-        }
+    }
     plot.4 <<- function(x) {            
         # Quantile-Quantile Plot:
         # evir::qplot
@@ -666,7 +716,7 @@ function(x, which = "all", ...)
             # ylab = "Exponential Quantiles",
             main = "Quantile-Quantile Plot") 
         grid()
-        }
+    }
             
     # Plot:
     interactivePlot(
@@ -701,19 +751,33 @@ function(object, doplot = TRUE, which = "all", ...)
 
     # FUNCTION:
     
-    # Print:
-    print(object, ...)
+    # Title:
+    cat("\nTitle:\n GEV Fit\n")
+    
+    # Function Call:
+    cat("\nCall:\n ")
+    cat(paste(deparse(object$call), sep = "\n", 
+        collapse = "\n"), "\n", sep = "")
+            
+    # Estimation Type:
+    cat("\nEstimation Type:\n ", object$type, "\n") 
+    
+    # Estimated Parameters:
+    cat("\nEstimated Parameters:\n")
+    print(object$par.ests)
     
     # Summary:
     if (object$type[2] == "mle") {
-        cat("\nStandard Deviations:\n"); print(object$par.ses)
-        cat("\nLog-Likelihood Value: ", object$llh)
-        cat("\nType of Convergence:  ", object$converged, "\n") } 
-    cat("\n")
+        cat("\nStandard Deviations:\n "); 
+        print(object$par.ses)
+        cat("\nLog-Likelihood Value:\n ", object$llh, "\n")
+        cat("\nType of Convergence:\n ", object$converged, "\n") } 
     
     # Plot:
     if (doplot) plot(object, which = which, ...)
-    cat("\n")
+    
+    # Desription:
+    cat("\nDescription\n ", as.character(date()), "\n\n")
     
     # Return Value:
     invisible(object)
@@ -732,22 +796,17 @@ function(object, k.blocks = 20, add = FALSE, ...)
     
     # FUNCTION:
     
-    # Settings
-    fit = object
-    
     # Use "rlevel.gev":
-    ans = rlevel.gev(out = fit$fit, k.blocks = k.blocks, add = add, ...)
-    ans = c(min = ans[1], v = ans[2], max = ans[3])
+    ans = rlevel.gev(out = object$fit, k.blocks = k.blocks, add = add, ...)
+    object$rlevel = c(min = ans[1], v = ans[2], max = ans[3], "k.blocks" = k.blocks)
     
     # Return Value:
-    ans 
+    invisible(object)
 }
 
 
 ################################################################################
-
-
-# PART III: MDA ESTIMATORS:
+# MDA ESTIMATORS:
 
 
 hillPlot = 

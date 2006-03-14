@@ -94,7 +94,7 @@ interactivePlot(x, choices = paste("Plot", 1:9),
     plotFUN = paste("plot.", 1:9, sep = ""), which = "all", \dots)
 gridVector(x, y)
 
-findThreshold(x, n = NA)
+findThreshold(x, n = floor(0.05*length(x)))
 blocks(x, block = "month", FUN = max)
 blockMaxima(x, block = "month", details = FALSE, doplot = TRUE, \dots)
 deCluster(x, run = NA, doplot = TRUE)
@@ -146,17 +146,17 @@ deCluster(x, run = NA, doplot = TRUE)
         maximum number of lags at which to calculate the autocorrelation 
         functions. The default value is 15.
         }
+    \item{n}{
+        [findThreshold] - \cr
+        a numeric value or vector giving number of extremes above 
+        the threshold. By default, \code{n} is 
+        set to an integer representing 5\% of the data from the 
+        whole data set \code{x}.
+        }
     \item{nint}{
         [mrlPlot] - \cr
         the number of intervals, see \code{umin} and \code{umax}. The 
         default value is 100.
-        }
-    \item{n}{
-        [findThreshold] - \cr
-        a numeric value or vector giving number of extremes above 
-        the threshold. If \code{n} is not specified, \code{n} is 
-        set to an integer representing 5\% of the data from the 
-        whole data set \code{x}.
         }
     \item{p}{
         [msratioPlot] - \cr
