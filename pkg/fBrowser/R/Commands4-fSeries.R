@@ -163,9 +163,10 @@ function()
 .fSeries.GarchModelling.garchFit = 
 function()
 {   # A function implemented by Diethelm Wuertz
-    
+
     # Fit GARCH Process:
-    myFunction <<- function(formula.mean, formula.var, series, init.rec, 
+    helpTopic <<- "garchFit"
+    myFunction = function(formula.mean, formula.var, series, init.rec, 
         delta, skew, shape, cond.dist, include.mean, include.delta, 
         include.skew, include.shape, leverage, trace, algorithm, control, 
         object2x, report) {
@@ -225,7 +226,7 @@ function()
 # ------------------------------------------------------------------------------
 
 
-.fSeries.GarchDistributions.garchSlider = 
+.fSeries.GarchDistributions.conddistSlider = 
 function() 
 {   # A function implemented by Diethelm Wuertz
     

@@ -66,33 +66,15 @@ function()
         "GARCH Series Simulation", 
         "GARCH Parameter Estimation",
         "GARCH Forecasting",
-        "Conditional Distribution Slider")
+        "Conditional Distribution Slider",
+        "Conditional Distribution Fit")
     Command = c(
         ".fData.dem2gbpDaily",
         ".fSeries.GarchModelling.garchSim",
         ".fSeries.GarchModelling.garchFit",
         ".fSeries.GarchModelling.predict",
-        ".fSeries.GarchDistributions.garchSlider")
-    addToolbarMenu(fSeriesMenu, Label, subLabel, Command)
-    
-    # Add Menu:
-    Label = "Garch Distribution Fits"
-    subLabel = c(
-        "* Example timeSeries: x - NYSE log Returns",
-        "Fit Normal Distribution",
-        "Fit Skew Normal Distribution",
-        "Fit Sudent-t Distribution",
-        "Fit Skew Sudent-t Distribution",
-        "Fit GED Distribution",
-        "Fit Skew GED Distribution")
-    Command = c(
-        ".fSeries.GarchDistributionFits.1",
-        ".fSeries.GarchDistributionFits.2",
-        ".fSeries.GarchDistributionFits.3",
-        ".fSeries.GarchDistributionFits.4",
-        ".fSeries.GarchDistributionFits.5",
-        ".fSeries.GarchDistributionFits.6",
-        ".fSeries.GarchDistributionFits.7")   
+        ".fSeries.GarchDistributions.conddistSlider",
+        ".fSeries.GarchDistributions.conddistFit")
     addToolbarMenu(fSeriesMenu, Label, subLabel, Command)
       
     if (FALSE) {

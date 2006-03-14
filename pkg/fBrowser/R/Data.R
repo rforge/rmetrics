@@ -30,7 +30,8 @@ function()
 
     # BMW Data Set:
     myFunction = function(object2x, report) {
-        object <<- tkGetDemoData(Data = "dem2gbp", report = report) 
+        object <<- tkGetDemoData(Data = "dem2gbp", report = report, 
+        FUN = function(x) as.ts(as.vector(t(x))) ) 
         object }
     tkExecute(
         fun = myFunction,

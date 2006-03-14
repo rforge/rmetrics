@@ -62,6 +62,8 @@ fontSize = 9, fontFamily = "Courier New", guiTitle = "Rmetrics" )
     object <<- NULL
     objectTitle <<- "NULL"
     
+    helpTopic <<- "help"
+    
     # Frames:
     base <<- tktoplevel(width=800)
     tkwm.title(base, guiTitle) 
@@ -224,6 +226,8 @@ description = NULL, ...)
 
     # FUNCTION:
     
+    print(helpTopic)
+    
     # Set Object Title"
     objectTitle <<- infoName
     
@@ -325,12 +329,20 @@ description = NULL, ...)
                 if (!is.null(description)) tkDescription(description)
             }
         }
+
         okButton <- tkbutton(tt, text = "   Ok   ", 
             command = OnOK)
         quitButton <- tkbutton(tt, text = "   Quit   ", 
             command = function() tkdestroy(tt) )
+            
         tkbind(entry.Name, "<Return>", OnOK)
         tkgrid(okButton, quitButton, sticky = "sew")
+
+        
+        helpButton <- tkbutton(tt, text = "   Help   ",
+             command = function() print(help(helpTopic)) )
+        tkgrid(helpButton, sticky = "sew")
+        
         tkfocus(tt)
     }    
     invisible()
@@ -546,7 +558,11 @@ function(Data, report, FUN = "as.timeSeries")
     command = paste("data(", Data, ")", sep = "")
     tkEval(command)
     ans = tkEval(Data)
-    fun = match.fun(FUN)
+    if (class(FUN) == "function") {
+        fun = FUN
+    } else {
+        fun = match.fun(FUN)
+    }
     ans = fun(ans)
     attr(ans, "control") <- c(data = Data)
     
