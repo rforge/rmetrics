@@ -31,65 +31,54 @@
 # Regression Modelling
 
 
-.fMultivar.Regression.1 = 
+.fMultivar.Regression.lmData = 
 function() 
 {   # A function implemented by Diethelm Wuertz
     
     # LM - Example Data:
     # Example Data: x = 0.7*x1 + 0.3*x2 + eps
-    x1 = rnorm(1000)
-    x2 = rnorm(1000)
-    y = 0.7 * x1 + 0.3 * x2
-    eps = 0.1 * rnorm(1000)
-    y = y + eps
-    x <<- tkSaveAsX(data = data.frame(x = y, x1 = x1, x2 = x2),
-        infoName = "0.7*x1+0.3*x2+eps")
+    tkGetDataFrame("lmData", "lm Demo Data")
 }
 
 
-.fMultivar.Regression.2 = 
+# ------------------------------------------------------------------------------
+
+
+.fMultivar.Regression.glmData = 
 function() 
 {   # A function implemented by Diethelm Wuertz
     
     # GLM / BINOMIAL / LOGIT - Example Data:
     # Example Data: x = 10*sin(x1) + exp(x2) + eps
-    x1 = rnorm(1000)
-    x2 = rnorm(1000)
-    eps = 0.1 * rnorm(1000)
-    y = 0.7 * x1 + 0.3 * x2 + eps
-    p = 1 / ( 1 + exp(-y) )
-    x <<- tkSaveAsX(data = data.frame(x = p, x1 = x1, x2 = x2),
-        infoName = "LOGIT(0.7*x1+0.3*x2+eps)")
     # family = binomial(link = logit)
     # glm(formula = x ~ x1 + x2, family = family, data = x)
+    tkGetDataFrame("glmData", "glm Demo Data")
 }
 
 
-.fMultivar.Regression.3 = 
+# ------------------------------------------------------------------------------
+
+
+.fMultivar.Regression.gamData = 
 function() 
 {   # A function implemented by Diethelm Wuertz
 
-    
     # GAM - Example Data:
     # Example Data: x = 0.7*sin(x1) + 0.3*exp(x2) + eps
-    x1 = rnorm(1000)
-    x2 = rnorm(1000)
-    y = sin(x1) + exp(x2)
-    eps = 0.1 * rnorm(1000, sd = sd(y))
-    y = y + eps
-    x <<- tkSaveAsX(data = data.frame(x = y, x1 = x1, x2 = x2),
-        infoName = "x = 0.7*sin(x1)+0.3*exp(x2)+eps")
-    # fit = gam(formula = x ~ s(x1) + s(x2), data = x)
-    # plot(fit, pages = 1, scale = 0)   
+    # fit = gam(formula = x ~ s(x1) + s(x2), data = x)  
+    tkGetDataFrame("gamData", "gam Demo Data")   
 }
 
 
-.fMultivar.Regression.4 = 
+# ------------------------------------------------------------------------------
+
+
+.fMultivar.Regression.lmFit = 
 function() 
 {   # A function implemented by Diethelm Wuertz
     
     # Linear Modelling:
-    myFunction = function(formula, family) {
+    myFunction = function(formula, family, object2x, report) {
         object <<- regFit(
             formula = as.formula(formula),
             family = eval(parse(text = "gaussian")), 
@@ -99,21 +88,22 @@ function()
         fun = myFunction,
         params = list(
             formula = "x ~ x1 + x2",
-            family = "gaussian"),
-        infoName = "LM Modelling",
-        tkoutput = TRUE,
-        console = NULL,
-        title = NULL,
-        description = NULL) 
+            family = "gaussian",
+            object2x = FALSE,
+            report = TRUE ), 
+        infoName = "LM Modelling" ) 
 }
 
 
-.fMultivar.Regression.5 = 
+# ------------------------------------------------------------------------------
+
+
+.fMultivar.Regression.glmFit = 
 function() 
 {   # A function implemented by Diethelm Wuertz
     
     # Generalized Linear Modelling:
-    myFunction = function(formula, family){
+    myFunction = function(formula, family, object2x, report){
         object <<- regFit(
             formula = as.formula(formula),
             family = eval(parse(text = "gaussian")), 
@@ -123,21 +113,22 @@ function()
         fun = myFunction,
         params = list(
             formula = "x ~ x1 + x2",
-            family = "gaussian"),
-        infoName = "GLM Modelling",
-        tkoutput = TRUE,
-        console = NULL,
-        title = NULL,
-        description = NULL ) 
+            family = "gaussian",
+            object2x = FALSE,
+            report = TRUE ), 
+        infoName = "GLM Modelling" ) 
 }
 
 
-.fMultivar.Regression.6 = 
+# ------------------------------------------------------------------------------
+
+
+.fMultivar.Regression.gamFit = 
 function() 
 {   # A function implemented by Diethelm Wuertz
     
     # Generalized Additive Modelling
-    myFunction = function(formula){
+    myFunction = function(formula, object2x, report){
         object <<- regFit(
             formula = as.formula(formula), 
             family = gaussian(), 
@@ -146,21 +137,22 @@ function()
     tkExecute(
         fun = myFunction,
         params = list(
-            formula = "x ~ s(x1) + s(x2)"), 
-        infoName = "GAM Modelling",
-        tkoutput = TRUE,
-        console = NULL,
-        title = NULL,
-        description = NULL ) 
+            formula = "x ~ s(x1) + s(x2)",
+            object2x = FALSE,
+            report = TRUE ),  
+        infoName = "GAM Modelling" ) 
 }
 
 
-.fMultivar.Regression.7 = 
+# ------------------------------------------------------------------------------
+
+
+.fMultivar.Regression.pprFit = 
 function() 
 {   # A function implemented by Diethelm Wuertz
     
     # Projection Pursuit Regression:
-    myFunction = function(formula){
+    myFunction = function(formula, object2x, report){
         object <<- regFit(
             formula = as.formula(formula),
             family = eval(parse(text = "gaussian")), 
@@ -169,21 +161,22 @@ function()
     tkExecute(
         fun = myFunction,
         params = list(
-            formula = "Y ~ X1 + X2"),
-        infoName = "PPR Modelling",
-        tkoutput = TRUE,
-        console = NULL,
-        title = NULL,
-        description = NULL ) 
+            formula = "Y ~ X1 + X2",
+            object2x = FALSE,
+            report = TRUE ), 
+        infoName = "PPR Modelling" ) 
 }
 
 
-.fMultivar.Regression.8 = 
+# ------------------------------------------------------------------------------
+
+
+.fMultivar.Regression.marsFit = 
 function() 
 {   # A function implemented by Diethelm Wuertz
     
     # MARS Pursuit Regression:
-    myFunction = function(formula){
+    myFunction = function(formula, object2x, report){
         object <<- regFit(
             formula = as.formula(formula),
             family = eval(parse(text = "gaussian")), 
@@ -192,21 +185,22 @@ function()
     tkExecute(
         fun = myFunction,
         params = list(
-            formula = "Y ~ X1 + X2"), 
-        infoName = "MARS Modelling",
-        tkoutput = TRUE,
-        console = NULL,
-        title = NULL,
-        description = NULL )
+            formula = "Y ~ X1 + X2",
+            object2x = FALSE,
+            report = TRUE ), 
+        infoName = "MARS Modelling" )
 }
 
 
-.fMultivar.Regression.9 = 
+# ------------------------------------------------------------------------------
+
+
+.fMultivar.Regression.polymarsFit = 
 function() 
 {   # A function implemented by Diethelm Wuertz
     
     # POLYMARS Pursuit Regression:
-    myFunction = function(formula){
+    myFunction = function(formula, object2x, report){
         object <<- regFit(
             formula = as.formula(formula),
             family = eval(parse(text = "gaussian")), 
@@ -215,21 +209,22 @@ function()
     tkExecute(
         fun = myFunction,
         params = list(
-            formula = "Y ~ X1 + X2"),
-        infoName = "POLYMARS Modelling",
-        tkoutput = TRUE,
-        console = NULL,
-        title = NULL,
-        description = NULL )  
+            formula = "Y ~ X1 + X2",
+            object2x = FALSE,
+            report = TRUE ), 
+        infoName = "POLYMARS Modelling" )  
 }
 
 
-.fMultivar.Regression.10 = 
+# ------------------------------------------------------------------------------
+
+
+.fMultivar.Regression.nnetFit = 
 function() 
 {   # A function implemented by Diethelm Wuertz
     
     # Neural Network Regression:
-    myFunction = function(formula){
+    myFunction = function(formula, object2x, report){
         object <<- regFit(
             formula = as.formula(formula),
             family = eval(parse(text = "gaussian")), 
@@ -238,25 +233,14 @@ function()
     tkExecute(
         fun = myFunction,
         params = list(
-            formula = "Y ~ X1 + X2"), 
-        infoName = "NNET Modelling",
-        tkoutput = TRUE,
-        console = NULL,
-        title = NULL,
-        description = NULL ) 
+            formula = "Y ~ X1 + X2",
+            object2x = FALSE,
+            report = TRUE ), 
+        infoName = "NNET Modelling" ) 
 }
 
 
-.fMultivar.Regression.11 = 
-function() 
-{   # A function implemented by Diethelm Wuertz
-    
-    # ... Print Summary
-    tkGetSummary(object)
-}
-
-
-# ******************************************************************************
+################################################################################
 # Regression Tests
 
 
@@ -271,6 +255,9 @@ function()
     x <<- tkSaveAsX(data = Greene4Table131,
         infoName = "Green: x=realInvest | x1=realGNP x2=realInterest")
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fMultivar.RegressionTests.2 = 
@@ -290,12 +277,11 @@ function()
             formula = "x ~ x1 + x2",
             order = 1,
             type = "Chisq"),
-        infoName = "Breusch - Godfrey Test",
-        tkoutput = TRUE,
-        console = NULL,
-        title = "Breusch - Godfrey Test",
-        description = NULL )
+        infoName = "Breusch - Godfrey Test")
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fMultivar.RegressionTests.3 = 
@@ -312,13 +298,12 @@ function()
         fun = myFunction,
         params = list(
             formula = "x ~ x1 + x2",
-            studentize = TRUE),
-        infoName = "Breusch - Pagan Test",
-        tkoutput = TRUE,
-        console = NULL,
-        title = "Breusch - Pagan Test",
-        description = NULL )
+            studentize = TRUE ),
+        infoName = "Breusch - Pagan Test" )
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fMultivar.RegressionTests.4 = 
@@ -338,19 +323,18 @@ function()
             formula = "x ~ x1 + x2",
             alternative = "greater",
             iterations = 15),
-        infoName = "Durbin - Watson Test",
-        tkoutput = TRUE,
-        console = NULL,
-        title = NULL,
-        description = NULL )
+        infoName = "Durbin - Watson Test" )
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fMultivar.RegressionTests.5 = 
 function()
 {   # A function implemented by Diethelm Wuertz
     
-    # Goldfeld - Quandt Test
+    # Goldfeld - Quandt Test:
     myFunction = function(formula, alternative, iterations) {
         formula = as.formula(formula)
         object <<- dwTest(formula = formula, data = x)
@@ -361,12 +345,11 @@ function()
             formula = "x ~ x1 + x2",
             alternative = "greater",
             iterations = 15),
-        infoName = " Test",
-        tkoutput = TRUE,
-        console = NULL,
-        title = " Test",
-        description = NULL )
+        infoName = "Goldfeld - Quandt Test" )
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fMultivar.RegressionTests.6 = 
@@ -384,12 +367,11 @@ function()
             formula = "x ~ x1 + x2",
             alternative = "greater",
             iterations = 15),
-        infoName = " Test",
-        tkoutput = TRUE,
-        console = NULL,
-        title = " Test",
-        description = NULL ) 
+        infoName = "Harvey - Collier Test" ) 
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fMultivar.RegressionTests.7 = 
@@ -407,12 +389,11 @@ function()
             formula = "x ~ x1 + x2",
             alternative = "greater",
             iterations = 15),
-        infoName = " Test",
-        tkoutput = TRUE,
-        console = NULL,
-        title = " Test",
-        description = NULL )
+        infoName = "Harrison - McCabe Test" )
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fMultivar.RegressionTests.8 = 
@@ -429,12 +410,11 @@ function()
             formula = "x ~ x1 + x2",
             alternative = "greater",
             iterations = 15),
-        infoName = " Test",
-        tkoutput = TRUE,
-        console = NULL,
-        title = " Test",
-        description = NULL )
+        infoName = "Rainbow Test")
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fMultivar.RegressionTests.9 = 
@@ -452,15 +432,11 @@ function()
             formula = "x ~ x1 + x2",
             alternative = "greater",
             iterations = 15),
-        infoName = " Test",
-        tkoutput = TRUE,
-        console = NULL,
-        title = " Test",
-        description = NULL ) 
+        infoName = "Ramsey RESET Test" ) 
 }
 
 
-# ******************************************************************************
+################################################################################
 # Equations Modelling
 
 
@@ -473,7 +449,7 @@ function()
 }
 
 
-# ******************************************************************************
+################################################################################
 # Matrix Addon
 
 
@@ -482,183 +458,201 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Generate Pascal Matrix:
-    myFunction = function(n, object2x) {
+    myFunction = function(n, object2x, report) {
         n = as.integer(n)
         object <<- pascal(n)
+        colnames(object) = rownames(object) = LETTERS[1:5]
+        if (report) tkTitle("Pascal Matrix")
         object }
     tkExecute(
         fun = myFunction,
         params = list(
             n = 5,
-            object2x = FALSE),
-        infoName = "pascal(n)",
-        tkoutput = TRUE,
-        console = NULL,
-        title = "Pascal Matrix",
-        description = NULL )
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Pascal Matrix")
 }
     
+
+# ------------------------------------------------------------------------------
+
     
 .fMultivar.MatrixAddon.2 =
 function()
 {   # A function implemented by Diethelm Wuertz
 
     # Return Diagonal Matrix:
-    myFunction = function(object2x) {
+    myFunction = function(object2x, report) {
         object <<- diag(x)
+        if (report) tkTitle("Diagonal Matrix")
         object }
     tkExecute(
         fun = myFunction,
         params = list(
-            object2x = FALSE),
-        infoName = "diag(x)",
-        tkoutput = TRUE,
-        title = "Diagonal Matrix",
-        description = NULL ) 
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Diagonal Matrix" ) 
 }
     
+
+# ------------------------------------------------------------------------------
+
     
 .fMultivar.MatrixAddon.3 =
 function()
 {   # A function implemented by Diethelm Wuertz
     
     # Return Lower Triangular Matrix:
-    myFunction = function(object2x) {
+    myFunction = function(object2x, report) {
         object <<- triang(x)
+        if (report) tkTitle("Lower Triangular Matrix")
         object }
     tkExecute(
         fun = myFunction,
         params = list(
-            object2x = FALSE),
-        infoName = "triang(x)",
-        tkoutput = TRUE,
-        title = "Lower Triangular Matrix",
-        description = NULL ) 
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Lower Triangular") 
 }
     
+
+# ------------------------------------------------------------------------------
+
     
 .fMultivar.MatrixAddon.4 =
 function()
 {   # A function implemented by Diethelm Wuertz
     
     # Return Upper Triangular Matrix:
-    myFunction = function(object2x) {
+    myFunction = function(object2x, report) {
         object <<- Triang(x)
+        if (report) tkTitle("Upper Triangular Matrix")
         object }
     tkExecute(
         fun = myFunction,
         params = list(
-            object2x = FALSE),
-        infoName = "Triang(x)",
-        tkoutput = TRUE,
-        title = "Upper Triangular Matrix",
-        description = NULL ) 
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Upper Triangular" ) 
 }
     
+
+# ------------------------------------------------------------------------------
+
     
 .fMultivar.MatrixAddon.5 =
 function()
 {   # A function implemented by Diethelm Wuertz
     
     # Return Determinant:
-    myFunction = function(object2x) {
+    myFunction = function(object2x, report) {
         object <<- det(x)
+        if (report) tkTitle("Determinant")
         object }
     tkExecute(
         fun = myFunction,
         params = list(
-            object2x = FALSE),
-        infoName = "det(x)",
-        tkoutput = TRUE,
-        title = "Determinant",
-        description = NULL )
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Determinant" )
 }
     
+
+# ------------------------------------------------------------------------------
+
     
 .fMultivar.MatrixAddon.6 =
 function()
 {   # A function implemented by Diethelm Wuertz
     
     # Return Inverse Matrix:
-    myFunction = function(object2x) {
+    myFunction = function(object2x, report) {
         object <<- inv(x)
+        if (report) tkTitle("Inverse Matrix")
         object }
     tkExecute(
         fun = myFunction,
         params = list(
-            object2x = FALSE),
-        infoName = "inv(x)",
-        tkoutput = TRUE,
-        title = "Inverse of Matrix",
-        description = NULL ) 
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Inverse" ) 
 }
     
+
+# ------------------------------------------------------------------------------
+
     
 .fMultivar.MatrixAddon.7 =
 function()
 {   # A function implemented by Diethelm Wuertz
     
     # norm(x, p) p-Norm:
-    myFunction = function(p, object2x) {
+    myFunction = function(p, object2x, report) {
         p = as.integer(p)
         object <<- norm(x, p)
+        if (report) tkTitle("Norm of Matrix")
         object }
     tkExecute(
         fun = myFunction,
         params = list(
             p = 2,
-            object2x = FALSE),
-        infoName = "norm(x)",
-        tkoutput = TRUE,
-        title = "p-Norm",
-        description = NULL )
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Norm" )
 }
     
+
+# ------------------------------------------------------------------------------
+
     
 .fMultivar.MatrixAddon.8 =
 function()
 {   # A function implemented by Diethelm Wuertz
 
     # rk(x, method) Rank:
-    myFunction = function(method, object2x) {
+    myFunction = function(method, object2x, report) {
         object <<- rk(x = x, method = method)
+        if (report) tkTitle("Rank of Matrix")
         object }
     tkExecute(
         fun = myFunction, 
         params = list(,
-        object2x = FALSE),
-        infoName = "rk(x)",
-        tkoutput = TRUE,
-        title = "Rank",
-        description = NULL )
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Rank" )
 }
     
+
+# ------------------------------------------------------------------------------
+
     
 .fMultivar.MatrixAddon.9 =
 function()
 {   # A function implemented by Diethelm Wuertz
 
     # t(x) Transposed"
-    myFunction = function(method, object2x) {
+    myFunction = function(method, object2x, report) {
         object <<- t(x)
+        if (report) tkTitle("Transpose of Matrix")
         object }
     tkExecute(
         fun = myFunction, 
         params = list(
-            object2x = FALSE),
-        infoName = "t(x)",
-        tkoutput = TRUE,
-        title = "Transposed",
-        description = NULL )
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Transpose" )
 }
     
+
+# ------------------------------------------------------------------------------
+
     
 .fMultivar.MatrixAddon.10 =
 function()
 {   # A function implemented by Diethelm Wuertz
 
     # mexp(x, order, method) Exponentiate Square Matrix:
-    myFunction = function(order, method) {
+    myFunction = function(order, method, report) {
         object <<- mexp(x = x, order = order, method = method, object2x)
         object  }
     tkExecute(
@@ -666,83 +660,118 @@ function()
         params = list(
             order = 8, 
             method = "pade",
-            object2x = FALSE),
-        infoName = "t(x)",
-        tkoutput = TRUE,
-        title = "Exponentiate",
-        description = NULL )
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Exponentiate" )
 }
     
+
+# ------------------------------------------------------------------------------
+
     
 .fMultivar.MatrixAddon.11 =
 function()
 {   # A function implemented by Diethelm Wuertz
 
     # chol(x, pivot) Cholesky Factors:
-    myFunction = function(pivot, object2x) {
+    myFunction = function(pivot, object2x, report) {
         object <<- chol(x = x, pivot = pivot, LINPACK = pivot) 
         object  }
     tkExecute(
         fun = myFunction,
         params = list(
             pivot = FALSE,
-            object2x = FALSE),
-        infoName = "t(x)",
-        tkoutput = TRUE,
-        title = "Cholesky Factors",
-        description = NULL )
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Cholesky Factors" )
 }
     
+
+# ------------------------------------------------------------------------------
+
     
 .fMultivar.MatrixAddon.12 =
 function()
 {   # A function implemented by Diethelm Wuertz
 
     # eigen(x) Eigenvalues and Eigevectors:
-    what = "eigen(x) Eigenvalues and Eigevectors"
-    object <<- eigen(x)
-    tkTitle(what)
-    tkOutput(capture.output(object))
+    myFunction = function(object2x, report) {
+        object <<- eigen(x)
+        object  }
+    tkExecute(
+        fun = myFunction,
+        params = list(
+            pivot = FALSE,
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Eigenvalues and -vectors" )
 }
     
+
+# ------------------------------------------------------------------------------
+
     
 .fMultivar.MatrixAddon.13 =
 function()
 {   # A function implemented by Diethelm Wuertz
 
     # svd(x) Singular Value Decomposition:
-    what = "svd(x) Singular Value Decomposition"
-    object <<- svd(x)
-    tkTitle(what)
-    tkOutput(capture.output(object))
+    myFunction = function(object2x, report) {
+        object <<- svd(x)
+        object  }
+    tkExecute(
+        fun = myFunction,
+        params = list(
+            pivot = FALSE,
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "SV Decomposition" )
 }
     
+
+# ------------------------------------------------------------------------------
+
     
 .fMultivar.MatrixAddon.14 =
 function()
 {   # A function implemented by Diethelm Wuertz
 
     # kappa(x) Condition Number:
-    what = "kappa(x) Condition Number"
-    object <<- svd(x)
-    tkTitle(what)
-    tkOutput(capture.output(object))
+    myFunction = function(object2x, report) {
+        object <<- kappa(x)
+        object  }
+    tkExecute(
+        fun = myFunction,
+        params = list(
+            pivot = FALSE,
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Condition Number" )
 }
     
+
+# ------------------------------------------------------------------------------
+
     
 .fMultivar.MatrixAddon.15 =
 function()
 {   # A function implemented by Diethelm Wuertz
 
     # QR Decomposition:
-    what = "QR Decomposition"
-    object <<- qr(x)
-    tkTitle(what)
-    tkOutput(capture.output(object))
+    myFunction = function(object2x, report) {
+        object <<- qr(x)
+        object  }
+    tkExecute(
+        fun = myFunction,
+        params = list(
+            pivot = FALSE,
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "QR Decomposition" )
 }
 
 
-# ******************************************************************************
+################################################################################
 # Missing Values
 
 
@@ -762,26 +791,29 @@ function()
 }
 
 
+# ------------------------------------------------------------------------------
+
+
 .fMultivar.MissingValues.2 =
 function()
 {   # A function implemented by Diethelm Wuertz
     
     # Remove NAs: 
-    myFunction = function(series, object2x) {
-        x = eval(parse(text = series))
+    myFunction = function(series, object2x, report) {
+        x = tkEval(series)
         object <<- removeNA(x = x) 
         object }
     tkExecute(
         fun = myFunction,
         params = list(
             series = "x", 
-            object2x = FALSE),
-        infoName = "Remove NAs",
-        tkoutput = FALSE,
-        console = "print(head(object))",
-        title = NULL,
-        description = NULL )   
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Remove NAs" )   
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fMultivar.MissingValues.3 =
@@ -789,8 +821,8 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Interpolate NAs:
-    myFunction = function(series, method, object2x) {
-        x = eval(parse(text = series))
+    myFunction = function(series, method, object2x, report) {
+        x = tkEval(series)
         object <<- interpNA(x = x, method = method) 
         object }
     tkExecute(
@@ -798,13 +830,13 @@ function()
         params = list(
             series = "x",
             method = "before", 
-            object2x = FALSE),
-        infoName = "Interpolate NAs",
-        tkoutput = FALSE,
-        console = "print(head(object))",
-        title = NULL,
-        description = NULL )      
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Interpolate NAs" )      
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fMultivar.MissingValues.4 =
@@ -812,8 +844,8 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # knn Algorithm:
-    myFunction = function(series, correlation, object2x) {
-        x = eval(parse(text = series))
+    myFunction = function(series, correlation, object2x, report) {
+        x = tkEval(series)
         object <<- knnNA(x = x, k = max(dim(as.matrix(x))[1] * 0.01, 2), 
             correlation = correlation) 
         object }
@@ -822,13 +854,13 @@ function()
         params = list(
             series = "x",
             correlation = FALSE, 
-            object2x = FALSE),
-        infoName = "knn Algorithm",
-        tkoutput = FALSE,
-        console = "print(head(object))",
-        title = NULL,
-        description = NULL )          
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "knn Algorithm" )          
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fMultivar.MissingValues.5 =
@@ -849,37 +881,29 @@ function()
 }
 
 
+# ------------------------------------------------------------------------------
+
+
 .fMultivar.MissingValues.6 =
 function()
 {   # A function implemented by Diethelm Wuertz
     
     # Substitute NAs:
-    myFunction = function(series, type) {
-        x = eval(parse(text = series))
+    myFunction = function(series, type, object2x, report) {
+        x = tkEval(series)
         substituteNA(x = x, type = type) }
     tkExecute(
         fun = myFunction,
         params = list(
             series = "x",
-            type = "zeros"),
-        infoName = "Substitute NAs",
-        tkoutput = FALSE,
-        console = "print(head(object))",
-        title = NULL,
-        description = NULL )      
+            type = "zeros", 
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Substitute NAs" )      
 }
 
 
-.fMultivar.MissingValues.7 =
-function()
-{   # A function implemented by Diethelm Wuertz
-    
-    # ... Save object as x:
-    NA
-}
-
-
-# ******************************************************************************
+################################################################################
 # Technical Analysis
 
 
@@ -895,12 +919,15 @@ function()
 }
 
 
+# ------------------------------------------------------------------------------
+
+
 .fMultivar.TechnicalAnalysis.2 =
 function()
 {   # A function implemented by Diethelm Wuertz
     
     # emaTA - Exponential Moving Average
-    myFunction = function(select, lag, doplot, col) {
+    myFunction = function(select, lag, doplot, col, object2x, report) {
         object <<- .dailyTA(X = x, indicator = "ema", 
             select = select, lag = lag)
         if (doplot) {
@@ -917,13 +944,14 @@ function()
             select = "Close", 
             lag = 9,
             doplot = TRUE,
-            col = "red"),
-        infoName = "EMA Indicator",
-        tkoutput = FALSE,
-        console = "print(head(object))",
-        title = NULL,
-        description = NULL )   
+            col = "red", 
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "EMA Indicator" )   
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fMultivar.TechnicalAnalysis.3 =
@@ -931,7 +959,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # biasTA - EMA Price Bias
-    myFunction = function(select, lag, doplot, col) {
+    myFunction = function(select, lag, doplot, col, object2x, report) {
         object <<- .dailyTA(X = x, indicator = "bias", 
             select = select, lag = lag)
         if (doplot) {
@@ -947,13 +975,14 @@ function()
             select = "Close", 
             lag = 9,
             doplot = TRUE,
-            col = "red"),
-        infoName = "EMA Price Bias",
-        tkoutput = FALSE,
-        console = "print(head(object))",
-        title = NULL,
-        description = NULL )  
+            col = "red", 
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "EMA Price Bias" )  
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fMultivar.TechnicalAnalysis.4 =
@@ -961,7 +990,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # medpriceTA - Median Price
-    myFunction = function(select, lag, doplot, col) {
+    myFunction = function(select, lag, doplot, col, object2x, report) {
         object <<- .dailyTA(X = x, indicator = "medprice", 
             select = select, lag = lag)
         if (doplot) {
@@ -978,13 +1007,14 @@ function()
             select = "Close", 
             lag = 9,
             doplot = TRUE,
-            col = "red"),
-        infoName = "Median Price",
-        tkoutput = FALSE,
-        console = "print(head(object))",
-        title = NULL,
-        description = NULL )  
+            col = "red", 
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Median Price" )  
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fMultivar.TechnicalAnalysis.5 =
@@ -992,7 +1022,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # typicalpriceTA - Typical Price
-    myFunction = function(select, lag, doplot, col) {
+    myFunction = function(select, lag, doplot, col, object2x, report) {
         object <<- .dailyTA(X = x, indicator = "typicalprice", 
             select = select, lag = lag)
         if (doplot) {
@@ -1009,13 +1039,14 @@ function()
             select = "Close", 
             lag = 9,
             doplot = TRUE,
-            col = "red"),
-        infoName = "Typical Price",
-        tkoutput = FALSE,
-        console = "print(head(object))",
-        title = NULL,
-        description = NULL )  
+            col = "red", 
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Typical Price" )  
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fMultivar.TechnicalAnalysis.6 =
@@ -1023,7 +1054,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # wcloseTA - Weighted Close Price
-    myFunction = function(select, lag, doplot, col) {
+    myFunction = function(select, lag, doplot, col, object2x, report) {
         object <<- .dailyTA(X = x, indicator = "wclose", 
             select = select, lag = lag)
         if (doplot) {
@@ -1040,13 +1071,14 @@ function()
             select = "Close", 
             lag = 9,
             doplot = TRUE,
-            col = "red"),
-        infoName = "Weighted Closing Price",
-        tkoutput = FALSE,
-        console = "print(head(object))",
-        title = NULL,
-        description = NULL )  
+            col = "red", 
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Weighted Closing Price" )  
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fMultivar.TechnicalAnalysis.7 =
@@ -1054,7 +1086,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # rocTA - Rate of Change
-    myFunction = function(select, lag, doplot, col) {
+    myFunction = function(select, lag, doplot, col, object2x, report) {
         object <<- .dailyTA(X = x, indicator = "roc", 
             select = select, lag = lag)
         if (doplot) {
@@ -1070,13 +1102,14 @@ function()
             select = "Close", 
             lag = 9,
             doplot = TRUE,
-            col = "red"),
-        infoName = "Rate of Change",
-        tkoutput = FALSE,
-        console = "print(head(object))",
-        title = NULL,
-        description = NULL )  
+            col = "red", 
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Rate of Change")  
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fMultivar.TechnicalAnalysis.8 =
@@ -1084,7 +1117,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # oscTA - EMA-Oscillator
-    myFunction = function(select, lag1, lag2, doplot, col) {
+    myFunction = function(select, lag1, lag2, doplot, col, object2x, report) {
         object <<- .dailyTA(X = x, indicator = "osc", 
             select = select, lag = c(lag1, lag2))
         if (doplot) {
@@ -1101,13 +1134,14 @@ function()
             lag1 = 9,
             lag2 = 23,
             doplot = TRUE,
-            col = "red"),
-        infoName = "EMA-Oscillator",
-        tkoutput = FALSE,
-        console = "print(head(object))",
-        title = NULL,
-        description = NULL )  
+            col = "red", 
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "EMA-Oscillator" )  
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fMultivar.TechnicalAnalysis.9 =
@@ -1115,7 +1149,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # momTA - Momentum Oscillator
-    myFunction = function(select, lag, doplot, col) {
+    myFunction = function(select, lag, doplot, col, object2x, report) {
         object <<- .dailyTA(X = x, indicator = "mom", 
             select = select, lag = lag)
         if (doplot) {
@@ -1132,13 +1166,14 @@ function()
             select = "Close", 
             lag = 9,
             doplot = TRUE,
-            col = "red"),
-        infoName = "Momentum Oscillator",
-        tkoutput = FALSE,
-        console = "print(head(object))",
-        title = NULL,
-        description = NULL )  
+            col = "red", 
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Momentum Oscillator" )  
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fMultivar.TechnicalAnalysis.10 =
@@ -1146,7 +1181,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # macdTA -  MACD Oscillator
-    myFunction = function(select, lag1, lag2, doplot, col) {
+    myFunction = function(select, lag1, lag2, doplot, col, object2x, report) {
         object <<- .dailyTA(X = x, indicator = "macd", 
             select = select, lag = c(lag1, lag2))
         if (doplot) {
@@ -1164,12 +1199,10 @@ function()
             lag1 = 9,
             lag2 = 23,
             doplot = TRUE,
-            col = "red"),
-        infoName = "MACD Oscillator",
-        tkoutput = FALSE,
-        console = "print(head(object))",
-        title = NULL,
-        description = NULL )  
+            col = "red", 
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "MACD Oscillator" )  
 }
 
 
@@ -1186,11 +1219,11 @@ function()
         params = list(
             select = ..., 
             lag = ...),
-        infoName = "... TA Indicator",
-        tkoutput = FALSE )  
-    print(start(object))
-    print(tail(object))
+        infoName = "... TA Indicator" )
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fMultivar.TechnicalAnalysis.12 =
@@ -1205,11 +1238,11 @@ function()
         params = list(
             select = ..., 
             lag = ...),
-        infoName = "... TA Indicator",
-        tkoutput = FALSE )  
-    print(start(object))
-    print(tail(object))
+        infoName = "... TA Indicator" )
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fMultivar.TechnicalAnalysis.13 =
@@ -1225,11 +1258,11 @@ function()
         params = list(
             select = ..., 
             lag = ...),
-        infoName = "... TA Indicator",
-        tkoutput = FALSE )  
-    print(start(object))
-    print(tail(object))
+        infoName = "... TA Indicator" )  
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fMultivar.TechnicalAnalysis.14 =
@@ -1245,11 +1278,11 @@ function()
         params = list(
             select = ..., 
             lag = ...),
-        infoName = "... TA Indicator",
-        tkoutput = FALSE )  
-    print(start(object))
-    print(tail(object))
+        infoName = "... TA Indicator" )  
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fMultivar.TechnicalAnalysis.15 =
@@ -1265,11 +1298,11 @@ function()
         params = list(
             select = ..., 
             lag = ...),
-        infoName = "... TA Indicator",
-        tkoutput = FALSE )  
-    print(start(object))
-    print(tail(object))
+        infoName = "... TA Indicator" )  
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fMultivar.TechnicalAnalysis.16 =
@@ -1285,11 +1318,11 @@ function()
         params = list(
             select = ..., 
             lag = ...),
-        infoName = "... TA Indicator",
-        tkoutput = FALSE )  
-    print(start(object))
-    print(tail(object))
+        infoName = "... TA Indicator" )  
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fMultivar.TechnicalAnalysis.17 =
@@ -1305,11 +1338,11 @@ function()
         params = list(
             select = ..., 
             lag = ...),
-        infoName = "... TA Indicator",
-        tkoutput = FALSE )  
-    print(start(object))
-    print(tail(object))
+        infoName = "... TA Indicator" )  
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fMultivar.TechnicalAnalysis.18 =
@@ -1325,11 +1358,11 @@ function()
         params = list(
             select = ..., 
             lag = ...),
-        infoName = "... TA Indicator",
-        tkoutput = FALSE )  
-    print(start(object))
-    print(tail(object))
+        infoName = "... TA Indicator" )  
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fMultivar.TechnicalAnalysis.19 =
@@ -1345,11 +1378,11 @@ function()
         params = list(
             select = ..., 
             lag = ...),
-        infoName = "... TA Indicator",
-        tkoutput = FALSE )  
-    print(start(object))
-    print(tail(object))
+        infoName = "... TA Indicator" )  
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fMultivar.TechnicalAnalysis.20 =
@@ -1365,11 +1398,11 @@ function()
         params = list(
             select = ..., 
             lag = ...),
-        infoName = "... TA Indicator",
-        tkoutput = FALSE )  
-    print(start(object))
-    print(tail(object))
+        infoName = "... TA Indicator" )  
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fMultivar.TechnicalAnalysis.21 =
@@ -1378,12 +1411,10 @@ function()
     
     # ... merge time Series
     x <<- tkSaveAsX(mergeSeries(x, object@Data), "Merged Series & Indicator")
-    print(start(x))
-    print(tail(x))
 }
 
 
-# ******************************************************************************
+################################################################################
 # Benchmark Analysis
 
 
@@ -1392,8 +1423,11 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # * Example timeSeries: x = SP500 Index
-    tkGetData(Data = "sp500Index", infoName = "Monthly SP500 Index")
+    tkGetData(Data = "sp500IndexMonthly", infoName = "Monthly SP500 Index")
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fMultivar.BenchmarkAnalysis.2 = 
@@ -1401,14 +1435,17 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Maximum Draw-Down:
-    myFunction = function(series) {
-        x = eval(parse(text = series))
+    myFunction = function(series, object2x, report) {
+        x = tkEval(series)
         object <<- maxDrawDown(x) 
+        if (report) tkTitle("Maximum Draw-Down")
         object }
     tkExecute(
         fun = myFunction,
         params = list(
-            series = "x"),
+            series = "x", 
+            object2x = FALSE,
+            report = TRUE ),
         infoName = "maxDrawDown",
         tkoutput = TRUE,
         console = NULL,
@@ -1417,22 +1454,28 @@ function()
 }
 
 
+# ------------------------------------------------------------------------------
+
+
 .fMultivar.BenchmarkAnalysis.3 = 
 function()
 {   # A function implemented by Diethelm Wuertz
     
     # Sharpe Ratio:
-    myFunction = function(series, r, scale) {
-        x = eval(parse(text = series))
+    myFunction = function(series, r, scale, object2x, report) {
+        x = tkEval(series)
         scale = eval(parse(text = scale))
         object <<- sharpeRatio(x = x, r = r, scale = scale) 
+        if (report) tkTitle("Sharpe Ratio")
         object }
     tkExecute(
         fun = myFunction,
         params = list(
             series = "x", 
             r = 0, 
-            scale = "sqrt(12)" ),
+            scale = "sqrt(12)", 
+            object2x = FALSE,
+            report = TRUE ),
         infoName = "Sharpe Ratio",
         tkoutput = TRUE,
         console = NULL,
@@ -1441,19 +1484,25 @@ function()
 }
 
 
+# ------------------------------------------------------------------------------
+
+
 .fMultivar.BenchmarkAnalysis.4 = 
 function()
 {   # A function implemented by Diethelm Wuertz
     
     # Sterling Ratio:
-    myFunction = function(series) {
-        x = eval(parse(text = series))
+    myFunction = function(series, object2x, report) {
+        x = tkEval(series)
         object <<- sterlingRatio(x = x) 
+        if (report) tkTitle("Sterling Ratio")
         object }
     tkExecute(
         fun = myFunction,
         params = list(
-            series = "x"),
+            series = "x", 
+            object2x = FALSE,
+            report = TRUE ),
         infoName = "Sterling Ratio",
         tkoutput = TRUE,
         console = NULL,
@@ -1462,31 +1511,33 @@ function()
 }
 
 
-# ******************************************************************************
+################################################################################
 # Rolling Analysis
 
 
-.fMultivar.RollingAnalysis.1 = 
+.fMultivar.RollingAnalysis.sp500IndexMonthly = 
 function()
 {   # A function implemented by Diethelm Wuertz
     
-    # Example timeSeries: x = SP500 Index
-    x = as.timeSeries(data(singleIndex.dat), format = "%d-%b-%Y")[, 2]
-    attr(x, "data") <- "singleIndex.dat[,2]"
-    x <<- tkSaveAsX(data = x, infoName = "SP500 Index")
+    # * Example timeSeries: x = SP500 Index
+    tkGetData(Data = "sp500IndexMonthly", infoName = "Monthly SP500 Index")
 }   
 
 
-.fMultivar.RollingAnalysis.2 = 
+# ------------------------------------------------------------------------------
+
+
+.fMultivar.RollingAnalysis.rollMean = 
 function()
 {   # A function implemented by Diethelm Wuertz
     
     # Rolling Mean:
-    myFunction = function(n, trim, na.rm, doplot) {
+    myFunction = function(n, trim, na.rm, doplot, par, object2x, report) {
+        if (report) tkTitle("Rolling Mean")
         object <<- rollMean(x, n, trim, na.rm)
         if (doplot) {
-            par(mfrow = c(1, 1), cex = 0.7)
-            plot(x, ylab = "x")
+            eval(parse(text = par))
+            plot(x, ylab = "x", main = "Rolling Mean")
             lines(object, col = "steelblue")
         }
         object }
@@ -1496,26 +1547,30 @@ function()
             n = 9, 
             trim = TRUE, 
             na.rm = FALSE,
-            doplot = TRUE),
-        infoName = "Rolling Mean",
-        tkoutput = FALSE,
-        console = "print(head(object))",
-        title = NULL,
-        description = NULL )      
+            doplot = TRUE,
+            par = "par(mfrow=c(1,1))",
+            pbject2x = FALSE,
+            report = TRUE ),
+        infoName = "Rolling Mean" )      
 }   
 
 
-.fMultivar.RollingAnalysis.3 = 
+# ------------------------------------------------------------------------------
+
+
+.fMultivar.RollingAnalysis.rollVar = 
 function()
 {   # A function implemented by Diethelm Wuertz
     
     # Rolling Variance:
-    myFunction = function(n, trim, na.rm, doplot) {
+    myFunction = function(n, trim, na.rm, doplot, par, object2x, report) {
+        if (report) tkTitle("Rolling Variance")
         object <<- rollVar(x, n, trim, na.rm)
         if (doplot) {
-            par(mfrow = c(2, 1), cex = 0.7)
-            plot(x, ylab = "x")
+            eval(parse(text = par))
+            plot(x, ylab = "x", col = "steelblue", main = "Rolling Variance")
             plot(object, ylab = "rollVar(x)")
+            abline(h = 0)
         }
         object }
     tkExecute(
@@ -1524,25 +1579,28 @@ function()
             n = 9, 
             trim = TRUE, 
             na.rm = FALSE,
-            doplot = TRUE),
-        infoName = "Rolling Variance",
-        tkoutput = FALSE,
-        console = "print(head(object))",
-        title = NULL,
-        description = NULL )        
+            doplot = TRUE,
+            par = "par(mfrow=c(1,1))",
+            pbject2x = FALSE,
+            report = TRUE ),
+        infoName = "Rolling Variance" )        
 }   
 
 
-.fMultivar.RollingAnalysis.4 = 
+# ------------------------------------------------------------------------------
+
+
+.fMultivar.RollingAnalysis.rollMin = 
 function()
 {   # A function implemented by Diethelm Wuertz
     
     # Rolling Minimum:
-    myFunction = function(n, trim, na.rm, doplot) {
+    myFunction = function(n, trim, na.rm, doplot, par, object2x, report) {
+        if (report) tkTitle("Rolling Minimum")
         object <<- rollMin(x, n, trim, na.rm)
         if (doplot) {
-            par(mfrow = c(1, 1), cex = 0.7)
-            plot(x, ylab = "x")
+            eval(parse(text = par))
+            plot(x, ylab = "x", main = "Rolling Minimum")
             lines(object, col = "steelblue")
         }
         object }
@@ -1552,26 +1610,29 @@ function()
             n = 9, 
             trim = TRUE, 
             na.rm = FALSE,
-            doplot = TRUE),
-        infoName = "Rolling Min",
-        tkoutput = FALSE,
-        console = "print(head(object))",
-        title = NULL,
-        description = NULL )    
+            doplot = TRUE,
+            par = "par(mfrow=c(1,1))",
+            pbject2x = FALSE,
+            report = TRUE ),
+        infoName = "Rolling Min" )    
 }   
 
 
-.fMultivar.RollingAnalysis.5 = 
+# ------------------------------------------------------------------------------
+
+
+.fMultivar.RollingAnalysis.rollMax = 
 function()
 {   # A function implemented by Diethelm Wuertz
     
     # Rolling Maximum:
-    myFunction = function(n, trim, na.rm, doplot) {
+    myFunction = function(n, trim, na.rm, doplot, par, object2x, report) {
+        if (report) tkTitle("Rolling Maximum")
         object <<- rollMax(x, n, trim, na.rm)
         if (doplot) {
-            par(mfrow = c(1, 1), cex = 0.7)
+            eval(parse(text = par))
             plot(x, ylab = "x")
-            lines(object, col = "steelblue")
+            lines(object, col = "steelblue", main = "Rolling Maximum")
         }
         object }
     tkExecute(
@@ -1580,23 +1641,12 @@ function()
             n = 9, 
             trim = FALSE, 
             na.rm = FALSE,
-            doplot = TRUE),
-        infoName = "Rolling Max",
-        tkoutput = FALSE,
-        console = "print(head(object))",
-        title = NULL,
-        description = NULL )    
+            doplot = TRUE,
+            par = "par(mfrow=c(1,1))",
+            pbject2x = FALSE,
+            report = TRUE ),
+        infoName = "Rolling Max" )    
 }   
-
-
-.fMultivar.RollingAnalysis.6 = 
-function()
-{   # A function implemented by Diethelm Wuertz
-    
-    # ... Save object to x:
-    x <<- merge(x, object@Data)
-    x <<- tkSaveAsX(data = x, infoName = "x and rolling series merged") 
-}
 
 
 ################################################################################

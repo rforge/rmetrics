@@ -31,15 +31,6 @@
 # Web Data Import
 
 
-.fBasics.Import.getClass = 
-function() 
-{   # A function implemented by Diethelm Wuertz
-    
-    # Print fWEBDATA Class Representation:
-    tkGetClass("fWEBDATA")  
-}
-
-
 .fBasics.Import.economagicImport = 
 function() 
 {   # A function implemented by Diethelm Wuertz
@@ -66,6 +57,9 @@ function()
             report = TRUE),
         infoName = "Economagic Download" ) 
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fBasics.Import.yahooImport = 
@@ -105,6 +99,9 @@ function()
             report = TRUE),
         infoName = "Yahoo Download" ) 
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fBasics.Import.fredImport = 
@@ -147,13 +144,16 @@ function()
 }
 
 
+# ------------------------------------------------------------------------------
+
+
 .fBasics.BasicStatistics.mean = 
 function() 
 {   # A function implemented by Diethelm Wuertz
     
     # Mean:
     myFunction = function(series, object2x, report) {
-        x = eval(parse(text = series))
+        x = tkEval(series)
         object <<- c(mean = mean(as.vector(x)))
         object }
     tkExecute(
@@ -166,13 +166,16 @@ function()
 }
 
 
+# ------------------------------------------------------------------------------
+
+
 .fBasics.BasicStatistics.var = 
 function() 
 {   # A function implemented by Diethelm Wuertz
     
     # Variance:
     myFunction = function(series, object2x, report) {
-        x = eval(parse(text = series))
+        x = tkEval(series)
         object <<- c(var = var(as.vector(x)))
         object }
     tkExecute(
@@ -185,13 +188,16 @@ function()
 }
 
 
+# ------------------------------------------------------------------------------
+
+
 .fBasics.BasicStatistics.skewness = 
 function() 
 {   # A function implemented by Diethelm Wuertz
     
     # Skewness:
     myFunction = function(series, na.rm, method, object2x, report) {
-        x = eval(parse(text = series))
+        x = tkEval(series)
         object <<- c(skewness = skewness(as.vector(x), 
             na.rm = na.rm, method = method))
         attr(object, "method") <<- method
@@ -208,13 +214,16 @@ function()
 }
 
 
+# ------------------------------------------------------------------------------
+
+
 .fBasics.BasicStatistics.kurtosis = 
 function() 
 {   # A function implemented by Diethelm Wuertz
     
     # Kurtosis:
     myFunction = function(series, na.rm, method, object2x, report) {
-        x = eval(parse(text = series))
+        x = tkEval(series)
         object <<- c(kurtosis = kurtosis(as.vector(x), 
             na.rm = na.rm, method = method))
         attr(object, "method") <<- method
@@ -231,13 +240,16 @@ function()
 }
 
 
+# ------------------------------------------------------------------------------
+
+
 .fBasics.BasicStatistics.summary = 
 function() 
 {   # A function implemented by Diethelm Wuertz
     
     # Summary:
     myFunction = function(series, object2x, report) {
-        x = eval(parse(text = series))
+        x = tkEval(series)
         object <<- summary(as.vector(x))
         object }
     tkExecute(
@@ -250,13 +262,16 @@ function()
 }
 
 
+# ------------------------------------------------------------------------------
+
+
 .fBasics.BasicStatistics.basicStats = 
 function() 
 {   # A function implemented by Diethelm Wuertz
     
     # Basic Statistics:
     myFunction = function(series, object2x, report) {
-        x = eval(parse(text = series))
+        x = tkEval(series)
         object <<- basicStats(as.vector(x), ci = 0.95) 
         object }
     tkExecute(
@@ -282,13 +297,16 @@ function()
 }
 
 
+# ------------------------------------------------------------------------------
+
+
 .fBasics.PlotFunctions.plot = 
 function() 
 {   # A function implemented by Diethelm Wuertz
     
     # 1D: Time Series Plot:
     myFunction = function(series, type, col, xlab, ylab, grid) {
-        x = eval(parse(text = series))
+        x = tkEval(series)
         plot(x, type = type, col = col, xlab = xlab, ylab = ylab)
         title(main = paste("\n\n", plotTitle, sep = "")) 
         if (grid) grid()}
@@ -305,13 +323,16 @@ function()
 }
 
 
+# ------------------------------------------------------------------------------
+
+
 .fBasics.PlotFunctions.acfPlot = 
 function() 
 {   # A function implemented by Diethelm Wuertz
     
     # 1D: ACF Plot:
     myFunction = function(series, grid) {
-        x = eval(parse(text = series))
+        x = tkEval(series)
         acfPlot(x)
         title(main = paste("\n\n", plotTitle, sep = ""))
         if (grid) grid() }
@@ -324,13 +345,16 @@ function()
 }
 
 
+# ------------------------------------------------------------------------------
+
+
 .fBasics.PlotFunctions.pacfPlot = 
 function() 
 {   # A function implemented by Diethelm Wuertz
     
     # 1D: PACF Plot:
     myFunction = function(series, grid) {
-        x = eval(parse(text = series))
+        x = tkEval(series)
         pacfPlot(x)
         title(main = paste("\n\n", plotTitle, sep = ""))
         if (grid) grid() }
@@ -343,13 +367,16 @@ function()
 }
 
 
+# ------------------------------------------------------------------------------
+
+
 .fBasics.PlotFunctions.histPlot = 
 function() 
 {   # A function implemented by Diethelm Wuertz
     
     # 1D: Histogram Plot:
     myFunction = function(series) {
-        x = eval(parse(text = series))
+        x = tkEval(series)
         histPlot(x)
         title(main = paste("\n\n", plotTitle, sep = "")) }
     tkExecute(
@@ -358,6 +385,9 @@ function()
             series = "x"),
         infoName = "Histogram Plot" )       
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fBasics.PlotFunctions.msftsp500Monthly = 
@@ -369,13 +399,16 @@ function()
 }
 
 
+# ------------------------------------------------------------------------------
+
+
 .fBasics.PlotFunctions.bivariatePlot = 
 function() 
 {   # A function implemented by Diethelm Wuertz
   
     # 2D: Series Plot:
     myFunction = function(series) {
-        x = eval(parse(text = series))
+        x = tkEval(series)
         plot(x, xlab = "", ylab = "")
         title(main = paste("\n\n", plotTitle, sep = "")) }
     tkExecute(
@@ -386,13 +419,16 @@ function()
 }
 
 
+# ------------------------------------------------------------------------------
+
+
 .fBasics.PlotFunctions.scatterPlot = 
 function() 
 {   # A function implemented by Diethelm Wuertz
     
     # 2D: Scatter Diagramm Plot:
     myFunction = function(series) {
-        x = eval(parse(text = series))
+        x = tkEval(series)
         plot(as.vector(x[, 1]), as.vector(x[,2]),
             xlab = x@units[1], ylab = x@units[2], 
             pch = 19, col  = "steelblue")
@@ -418,6 +454,9 @@ function()
 } 
 
 
+# ------------------------------------------------------------------------------
+
+
 .fBasics.ReturnDistributions.rnorm = 
 function() 
 {   # A function implemented by Diethelm Wuertz
@@ -440,6 +479,9 @@ function()
 }
 
 
+# ------------------------------------------------------------------------------
+
+
 .fBasics.ReturnDistributions.rnormSlider = 
 function() 
 {   # A function implemented by Diethelm Wuertz
@@ -449,6 +491,9 @@ function()
 }
 
 
+# ------------------------------------------------------------------------------
+
+
 .fBasics.ReturnDistributions.dnormSlider = 
 function() 
 {   # A function implemented by Diethelm Wuertz
@@ -456,6 +501,9 @@ function()
     # Normal Slider:
     .normSlider()
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fBasics.ReturnDistributions.rhyp = 
@@ -483,6 +531,8 @@ function()
 }
 
 
+# ------------------------------------------------------------------------------
+
 .fBasics.ReturnDistributions.rhypSlider = 
 function() 
 {   # A function implemented by Diethelm Wuertz
@@ -492,6 +542,9 @@ function()
 }
 
 
+# ------------------------------------------------------------------------------
+
+
 .fBasics.ReturnDistributions.dhypSlider = 
 function() 
 {   # A function implemented by Diethelm Wuertz
@@ -499,6 +552,9 @@ function()
     # Hyperbolic Slider:
     .hypSlider()
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fBasics.ReturnDistributions.rnig = 
@@ -525,6 +581,9 @@ function()
 }
 
 
+# ------------------------------------------------------------------------------
+
+
 .fBasics.ReturnDistributions.rnigSlider = 
 function() 
 {   # A function implemented by Diethelm Wuertz
@@ -534,6 +593,9 @@ function()
 }
 
 
+# ------------------------------------------------------------------------------
+
+
 .fBasics.ReturnDistributions.dnigSlider = 
 function() 
 {   # A function implemented by Diethelm Wuertz
@@ -541,6 +603,9 @@ function()
     # Normal Inverse Gaussian Slider:
     .nigSlider()  
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fBasics.ReturnDistributions.rsymstb = 
@@ -562,6 +627,9 @@ function()
 }
 
 
+# ------------------------------------------------------------------------------
+
+
 .fBasics.ReturnDistributions.rsymstbSlider = 
 function() 
 {   # A function implemented by Diethelm Wuertz
@@ -571,6 +639,9 @@ function()
 }
 
 
+# ------------------------------------------------------------------------------
+
+
 .fBasics.ReturnDistributions.dsymstbSlider = 
 function() 
 {   # A function implemented by Diethelm Wuertz
@@ -578,6 +649,9 @@ function()
     # Symmetric Stable Slider:
     .symstbSlider()
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fBasics.ReturnDistributions.rstable = 
@@ -605,6 +679,10 @@ function()
         infoName = "Stable RVs" )  
 }
 
+
+# ------------------------------------------------------------------------------
+
+
 .fBasics.ReturnDistributions.rstableSlider = 
 function() 
 {   # A function implemented by Diethelm Wuertz
@@ -612,6 +690,9 @@ function()
     # Stable Slider:
     .stableSlider(GenerateRandomNumbers = TRUE)
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fBasics.ReturnDistributions.dstableSlider = 
@@ -623,7 +704,7 @@ function()
 }
 
 
-# ******************************************************************************
+################################################################################
 # Distribution Fits
 
 
@@ -646,13 +727,16 @@ function()
 } 
 
 
+# ------------------------------------------------------------------------------
+
+
 .fBasics.DistributionFits.hypFit = 
 function() 
 {   # A function implemented by Diethelm Wuertz
     
     # Hyperbolic Distribution:
     myFunction = function(series, object2x, report) {
-        x = eval(parse(text = series))
+        x = tkEval(series)
         object <<- hypFit(x)
         object }
     tkExecute(
@@ -665,13 +749,16 @@ function()
 } 
 
 
+# ------------------------------------------------------------------------------
+
+
 .fBasics.DistributionFits.nigFit = 
 function() 
 {   # A function implemented by Diethelm Wuertz
 
     # Normal Inverse Gaussian Distribution:
     myFunction = function(series, object2x, report) {
-        x = eval(parse(text = series))
+        x = tkEval(series)
         object <<- nigFit(x)
         object }
     tkExecute(
@@ -697,13 +784,7 @@ function()
 }
 
 
-.fBasics.NormalityTests.getClass = 
-function() 
-{   # A function implemented by Diethelm Wuertz
-    
-    # Print fHTEST Class Representation:
-    tkGetClass("fHTEST")
-}
+# ------------------------------------------------------------------------------
 
 
 .fBasics.NormalityTests.ksnormTest = 
@@ -712,7 +793,7 @@ function()
 
     # One-sample Kolmogorov-Smirnov Test:
     myFunction = function(series, object2x, report) {
-        x = eval(parse(text = series))
+        x = tkEval(series)
         object <<- ksnormTest(x)
         object }
     tkExecute(
@@ -724,14 +805,17 @@ function()
         infoName = "One-sample Kolmogorov-Smirnov Test" ) 
 }
 
-      
+
+# ------------------------------------------------------------------------------
+
+
 .fBasics.NormalityTests.shapiroTest = 
 function() 
 {   # A function implemented by Diethelm Wuertz
     
     # Shapiro - Wilk Test:
     myFunction = function(series, object2x, report) {
-        x = eval(parse(text = series))
+        x = tkEval(series)
         object <<- shapiroTest(x)
         object }
     tkExecute(
@@ -744,13 +828,16 @@ function()
 }
 
 
+# ------------------------------------------------------------------------------
+
+
 .fBasics.NormalityTests.jarqueberaTest = 
 function() 
 {   # A function implemented by Diethelm Wuertz
     
     # Jarque-Bera Test:
     myFunction = function(series, object2x, report) {
-        x = eval(parse(text = series))
+        x = tkEval(series)
         object <<- jarqueberaTest(x)
         object }
     tkExecute(
@@ -763,13 +850,16 @@ function()
 }
 
 
+# ------------------------------------------------------------------------------
+
+
 .fBasics.NormalityTests.dagoTest = 
 function() 
 {   # A function implemented by Diethelm Wuertz
 
     # d'Agostino Test:
     myFunction = function(series, object2x, report) {
-        x = eval(parse(text = series))
+        x = tkEval(series)
         object <<- dagoTest(x)
         object }
     tkExecute(
@@ -782,13 +872,16 @@ function()
 }
 
 
+# ------------------------------------------------------------------------------
+
+
 .fBasics.NormalityTests.adTest = 
 function() 
 {   # A function implemented by Diethelm Wuertz
 
     # Anderson - Darling Normality Test:
     myFunction = function(series, object2x, report) {
-        x = eval(parse(text = series))
+        x = tkEval(series)
         object <<- adTest(x)
         object }
     tkExecute(
@@ -801,13 +894,16 @@ function()
 }
 
 
+# ------------------------------------------------------------------------------
+
+
 .fBasics.NormalityTests.cvmTest = 
 function() 
 {   # A function implemented by Diethelm Wuertz
 
     # Cramer - von Mises Normality Test:
     myFunction = function(series, object2x, report) {
-        x = eval(parse(text = series))
+        x = tkEval(series)
         object <<- cvmTest(x)
         object }
     tkExecute(
@@ -819,6 +915,9 @@ function()
         infoName = "Cramer - von Mises Normality Test" )
 }
 
+
+# ------------------------------------------------------------------------------
+
         
 .fBasics.NormalityTests.lillieTest = 
 function() 
@@ -826,7 +925,7 @@ function()
 
     # Lilliefors (KS) Normality Test:
     myFunction = function(series, object2x, report) {
-        x = eval(parse(text = series))
+        x = tkEval(series)
         object <<- lillieTest(x)
         object }
     tkExecute(
@@ -839,13 +938,16 @@ function()
 }
 
 
+# ------------------------------------------------------------------------------
+
+
 .fBasics.NormalityTests.pchiTest = 
 function() 
 {   # A function implemented by Diethelm Wuertz
 
     # Pearson Chi-Square Normality Test:
     myFunction = function(series, object2x, report) {
-        x = eval(parse(text = series))
+        x = tkEval(series)
         object <<- pchiTest(x)
         object }
     tkExecute(
@@ -858,13 +960,16 @@ function()
 }
 
 
+# ------------------------------------------------------------------------------
+
+
 .fBasics.NormalityTests.sfTest = 
 function() 
 {   # A function implemented by Diethelm Wuertz
 
     # Shapiro - Francia Normality Test:
     myFunction = function(series, object2x, report) {
-        x = eval(parse(text = series))
+        x = tkEval(series)
         object <<- sfTest(x)
         object }
     tkExecute(
@@ -891,13 +996,7 @@ function()
 }
 
 
-.fBasics.BivariateTests.getClass  = 
-function() 
-{   # A function implemented by Diethelm Wuertz
-
-    # Print fHTEST Class Representation
-    tkGetClass("fHTEST") 
-}
+# ------------------------------------------------------------------------------
 
 
 .fBasics.BivariateTests.ks2Test  = 
@@ -906,7 +1005,7 @@ function()
 
     # Kolmogorov-Smirnov Test:
     myFunction = function(series, object2x, report) {
-        x = eval(parse(text = series))
+        x = tkEval(series)
         object <<- ks2Test(x[,1], x[,2])
         object }
     tkExecute(
@@ -918,6 +1017,9 @@ function()
         infoName = "Kolmogorov-Smirnov Test" )
 }
 
+
+# ------------------------------------------------------------------------------
+
         
 .fBasics.BivariateTests.tTest  = 
 function() 
@@ -925,7 +1027,7 @@ function()
 
     # Location: Unpaired t-Test:
     myFunction = function(series, object2x, report) {
-        x = eval(parse(text = series))
+        x = tkEval(series)
         object <<- tTest(x[,1], x[,2])
         object }
     tkExecute(
@@ -938,13 +1040,16 @@ function()
 }
 
 
+# ------------------------------------------------------------------------------
+
+
 .fBasics.BivariateTests.kw2Test  = 
 function() 
 {   # A function implemented by Diethelm Wuertz
 
     # Location: Kruskal-Wallis Test:
     myFunction = function(series, object2x, report) {
-        x = eval(parse(text = series))
+        x = tkEval(series)
         object <<- kw2Test(x[,1], x[,2])
         object }
     tkExecute(
@@ -957,13 +1062,16 @@ function()
 }
 
 
+# ------------------------------------------------------------------------------
+
+
 .fBasics.BivariateTests.varfTest  = 
 function() 
 {   # A function implemented by Diethelm Wuertz
 
     # Variance: F Test:
     myFunction = function(series, object2x, report) {
-        x = eval(parse(text = series))
+        x = tkEval(series)
         object <<- varfTest(x[,1], x[,2])
         object }
     tkExecute(
@@ -976,13 +1084,16 @@ function()
 }
 
 
+# ------------------------------------------------------------------------------
+
+
 .fBasics.BivariateTests.bartlett2Test  = 
 function() 
 {   # A function implemented by Diethelm Wuertz
 
     # Variance: Bartlett Test:
     myFunction = function(series, object2x, report) {
-        x = eval(parse(text = series))
+        x = tkEval(series)
         object <<- bartlett2Test(x[,1], x[,2])
         object }
     tkExecute(
@@ -995,13 +1106,16 @@ function()
 }
 
 
+# ------------------------------------------------------------------------------
+
+
 .fBasics.BivariateTests.fligner2Test  = 
 function() 
 {   # A function implemented by Diethelm Wuertz
 
     # Variance: Fligner-Killeen Test:
     myFunction = function(series, object2x, report) {
-        x = eval(parse(text = series))
+        x = tkEval(series)
         object <<- fligner2Test(x[,1], x[,2])
         object }
     tkExecute(
@@ -1014,13 +1128,16 @@ function()
 }
 
 
+# ------------------------------------------------------------------------------
+
+
 .fBasics.BivariateTests.ansariTest  = 
 function() 
 {   # A function implemented by Diethelm Wuertz
 
     # Scale: Ansari-Bradley Test:
     myFunction = function(series, object2x, report) {
-        x = eval(parse(text = series))
+        x = tkEval(series)
         object <<- ansariTest(x[,1], x[,2])
         object }
     tkExecute(
@@ -1032,6 +1149,9 @@ function()
         infoName = "Scale: Ansari-Bradley Test" )
 }
 
+
+# ------------------------------------------------------------------------------
+
         
 .fBasics.BivariateTests.moodTest = 
 function() 
@@ -1039,7 +1159,7 @@ function()
 
     # Scale: Mood Test:
     myFunction = function(series, object2x, report) {
-        x = eval(parse(text = series))
+        x = tkEval(series)
         object <<- moodTest(x[,1], x[,2])
         object }
     tkExecute(
@@ -1052,13 +1172,16 @@ function()
 }
 
 
+# ------------------------------------------------------------------------------
+
+
 .fBasics.BivariateTests.pearsonTest = 
 function() 
 {   # A function implemented by Diethelm Wuertz
 
     # Correlation: Pearson Test:
     myFunction = function(series, object2x, report) {
-        x = eval(parse(text = series))
+        x = tkEval(series)
         object <<- pearsonTest(x[,1], x[,2])
         object }
     tkExecute(
@@ -1071,12 +1194,15 @@ function()
 }
 
 
+# ------------------------------------------------------------------------------
+
+
 .fBasics.BivariateTests.kendallTest = 
 function() 
 {
     # Correlation: Kendall's tau Test:
     myFunction = function(series, object2x, report) {
-        x = eval(parse(text = series))
+        x = tkEval(series)
         object <<- kendallTest(x[,1], x[,2])
         object }
     tkExecute(
@@ -1089,13 +1215,16 @@ function()
 }
 
 
+# ------------------------------------------------------------------------------
+
+
 .fBasics.BivariateTests.spearmanTest = 
 function() 
 {   # A function implemented by Diethelm Wuertz
 
     # Correlation: Spearman's rho Test:
     myFunction = function(series, object2x, report) {
-        x = eval(parse(text = series))
+        x = tkEval(series)
         object <<- spearmanTest(x[,1], x[,2])
         object }
     tkExecute(
@@ -1108,7 +1237,7 @@ function()
 }
 
 
-# ******************************************************************************
+################################################################################
 # Stylized Facts
 
 
@@ -1121,13 +1250,16 @@ function()
 }
 
 
+# ------------------------------------------------------------------------------
+
+
 .fBasics.StylizedFacts.teffectPlot =  
 function() 
 {   # A function implemented by Diethelm Wuertz
 
     # Taylor Effect:
     myFunction = function(series, deltas, lag.max, standardize, report) {
-        x = eval(parse(text = series))
+        x = tkEval(series)
         deltas = eval(parse(text = deltas))
         object <<- teffectPlot(as.vector(x), deltas = deltas, 
             lag.max = lag.max, standardize = standardize) 
@@ -1136,7 +1268,7 @@ function()
         fun = myFunction,
         params = list(
             series = "x",
-            deltas = "seq(0.2, 3, by=0.2)",
+            deltas = "seq(0.2,3,by=0.2)",
             lag.max = 10,
             standardize = TRUE,
             report = FALSE),
@@ -1147,13 +1279,16 @@ function()
 }
 
 
+# ------------------------------------------------------------------------------
+
+
 .fBasics.StylizedFacts.lmacfPlot =  
 function() 
 {   # A function implemented by Diethelm Wuertz
     
     # Long Memory Behaviour:
     myFunction = function(series, lag.max, ci, report) {
-        x = eval(parse(text = series))
+        x = tkEval(series)
         lag.max = eval(parse(text = lag.max))
         object <<- lmacfPlot(abs(as.vector(x))) 
         object }
@@ -1171,13 +1306,16 @@ function()
 }
 
 
+# ------------------------------------------------------------------------------
+
+
 .fBasics.StylizedFacts.logpdfPlot =  
 function() 
 {   # A function implemented by Diethelm Wuertz
     
     # Log PDF Plot:
     myFunction = function(series) {
-        x = eval(parse(text = series))
+        x = tkEval(series)
         object <<- logpdfPlot(abs(as.vector(x))) 
         object }
     tkExecute(
@@ -1191,13 +1329,16 @@ function()
 }
 
 
+# ------------------------------------------------------------------------------
+
+
 .fBasics.StylizedFacts.qqgaussPlot =  
 function() 
 {   # A function implemented by Diethelm Wuertz
 
     # Normal QQ Plot:
     myFunction = function(series, span, report) {
-        x = eval(parse(text = series))
+        x = tkEval(series)
         object <<- qqgaussPlot(as.vector(x), span = span) 
         object }
     tkExecute(
@@ -1213,13 +1354,16 @@ function()
 }
 
 
+# ------------------------------------------------------------------------------
+
+
 .fBasics.StylizedFacts.scalinglawPlot =  
 function() 
 {   # A function implemented by Diethelm Wuertz
  
     # Scaling Law Plot:
     myFunction = function(series, span, report) {
-        x = eval(parse(text = series))
+        x = tkEval(series)
         if (span == "NULL") span = ceiling(log(length(as.vector(x))/252)/log(2))
         print(span)
         object <<- scalinglawPlot(x, span = span) 

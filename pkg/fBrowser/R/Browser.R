@@ -30,13 +30,25 @@
 ################################################################################
 # fBrowser / .gui
 
+
+tkEval =
+function(what)
+{
+    eval(parse(text = what))
+}
+
+
+tkSplit = 
+function(what)
+{
+    sub(" ", "", strsplit(what, "&")[[1]][1])
+}
+
    
 fBrowser = .gui =
 function(menuToolbar =c("File", "fBasics", "fCalendar", "fSeries",
 "fMultivar", "fExtremes", "fOptions", "Help"), 
-fontSize = 9, fontFamily = "Courier New",
-
-guiTitle = "Rmetrics" )
+fontSize = 9, fontFamily = "Courier New", guiTitle = "Rmetrics" )
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -51,8 +63,10 @@ guiTitle = "Rmetrics" )
     objectTitle <<- "NULL"
     
     # Frames:
-    base <<- tktoplevel()
+    base <<- tktoplevel(width=800)
     tkwm.title(base, guiTitle) 
+    tkfocus()
+    
     popupFrame <<- tkmenu(base)  
     tkconfigure(base, menu = popupFrame)
     for (i in 1:length(menuToolbar)) {
@@ -60,6 +74,8 @@ guiTitle = "Rmetrics" )
         fun.PopupMenu = match.fun(cmd)
         fun.PopupMenu()
     }
+    tkfocus()
+    
     
     # Text Frame:    
     textFrame <<- tkframe(base, relief = "groove", borderwidth = 2)
@@ -79,7 +95,8 @@ guiTitle = "Rmetrics" )
     tkinsert(txt, "end", "\nRmetrics (C) 1999-2006, Diethelm Wuertz, GPL\n")
     tkinsert(txt, "end", "Version 2.2.1\n\n")
     tkinsert(txt, "end", "Rmetrics is free software and comes with ABSOLUTELY NO WARRANTY.\n\n")
-    tkfocus(txt)
+    # tkfocus(txt)
+    tkfocus()
     
     # Command Console:
     commandFrame = tkframe(base, relief = "groove", borderwidth = 2) 
@@ -92,6 +109,7 @@ guiTitle = "Rmetrics" )
         commandVal = tclvalue(Command)
         ans = eval(parse(text = commandVal), parent.frame())
         tkinsert(txt, "end", paste(">", commandVal, "\n"))
+        # Display Prompt in another Color:
         tktag.add(txt, "currentLine", "end - 2 lines linestart", 
             "end - 2 lines lineend")
         tktag.configure(txt, "currentLine", foreground = "red")
@@ -102,7 +120,7 @@ guiTitle = "Rmetrics" )
     
     # Active Input/Value Data Frame:
     activeFrame <<- tkframe(base, relief = "groove", borderwidth = 2)
-    infoLabelText <<- tclVar(paste("INPUT: ", xTitle))
+    infoLabelText <<- tclVar(paste("ts: ", xTitle))
     objectLabelText <<- tclVar(paste("VALUE: ", objectTitle))
     infoLabel <<- tkbutton(activeFrame, relief = "ridge",
         command = function() tkOutput(capture.output(x)),
@@ -117,7 +135,7 @@ guiTitle = "Rmetrics" )
         command = function() x <<- tkGetClass(class(object)[1]),
         text = "Slots", fg = "darkgreen")
     summaryLabel <<- tkbutton(activeFrame, relief = "ridge",
-        command = function() x <<- tkGetSummary(capture.output(object)),
+        command = function() x <<- tkGetSummary(object),
         text = "Summary", fg = "darkgreen")
     copyLabel <<- tkbutton(activeFrame, relief = "ridge",
         command = function() x <<- tkObjectToX(object),
@@ -130,6 +148,8 @@ guiTitle = "Rmetrics" )
     tkpack(textFrame, fill = "both", expand = TRUE)  
     tkpack(commandFrame)
     tkpack(activeFrame, fill = "x")
+    
+    tkfocus()
 }
 
 
@@ -146,10 +166,8 @@ function()
     # FUNCTION:
     
     # Create New Toolbar Menu:
-    ans = tkmenu(popupFrame, tearoff = FALSE) 
-    
-    # Return Value:
-    ans
+    Menu = tkmenu(popupFrame, tearoff = FALSE) 
+    # tkfocus(Menu)
 }
 
 
@@ -164,7 +182,7 @@ function(popupMenu, Label, subLabel, Command)
     
     # Add Toolbar Menu:
     if (is.null(subLabel)) {
-        ans = tkadd(popupMenu, "command", label = Label, 
+        tkadd(popupMenu, "command", label = Label, 
             command = match.fun(Command))
     } else { 
         Menu = tkmenu(popupMenu, tearoff = FALSE)
@@ -172,11 +190,8 @@ function(popupMenu, Label, subLabel, Command)
             tkadd(Menu, "command", label = subLabel[i], 
                 command = match.fun(Command[i]))
         }
-        ans = tkadd(popupMenu, "cascade", label = Label, menu = Menu)
+        tkadd(popupMenu, "cascade", label = Label, menu = Menu)
     }
-    
-    # Return Value:
-    ans
 }
  
 
@@ -190,11 +205,7 @@ function (Menu, Label)
     # FUNCTION:
     
     # Cascade Toolbar Menu:
-    ans = tkadd(popupFrame, "cascade", label = Label, menu = Menu) 
-    tkfocus(popupFrame)
-    
-    # Return Value:
-    ans 
+    tkadd(popupFrame, "cascade", label = Label, menu = Menu) 
 }
  
 
@@ -245,11 +256,20 @@ description = NULL, ...)
             Character = c( Character, is.character(params[[i]]) )
             Logical = c( Logical, is.logical(params[[i]]) )
             Null = c( Null, is.null(params[[i]]) )
-            assign( argNames[i], tclVar(as.character(params[[i]])) )
-            entry.Name <- tkentry(tt, width = "25", fg = "red",
-                textvariable = get(argNames[i]) )
+            if (Logical[i]) {           
+                assign( argNames[i], tclVar(as.integer(params[[i]])) )    
+                entry.Name <- tkcheckbutton(tt, variable = get(argNames[i]),
+                    anchor = "e" )
+            } else { 
+                assign( argNames[i], tclVar(params[[i]]) )    
+                entry.Name <- tkentry(tt, width = "25", fg = "red", 
+                    textvariable = get(argNames[i]) )
+            }
+            # print( get(argNames[i]) ) 
             label.Name <- tklabel(tt, text = argNames[i])
-            tkgrid(entry.Name, label.Name)
+            tkgrid(label.Name, entry.Name)
+            tkgrid.configure(label.Name, sticky = "e")
+            tkgrid.configure(entry.Name, sticky = "w")
         }
         # Internal Function:
         OnOK <-
@@ -265,7 +285,9 @@ description = NULL, ...)
                 if (Numeric[i]) 
                     z[[i]] = as.numeric(tclvalue(get(argNames[i])))
                 if (Logical[i]) 
-                    z[[i]] = as.logical(tclvalue(get(argNames[i]))) 
+                    # z[[i]] = as.logical(tclvalue(get(argNames[i]))) 
+                    z[[i]] = as.logical(as.integer(tclvalue(get(argNames[i]))))
+                # print(z[[i]])
             }
             FUN = match.fun(fun)
             f = FUN
@@ -291,7 +313,15 @@ description = NULL, ...)
             # Output:
             if (tkoutput) {
                 if (!is.null(title)) tkTitle(title)
-                tkOutput(capture.output(object)) 
+                CO = capture.output(object)
+                N.CO = length(CO)
+                if ( N.CO > 100 ) {
+                    tkOutput(capture.output(object)[1:10])
+                    tkOutput("...")
+                    tkOutput(capture.output(object)[(N.CO-9):N.CO])
+                } else {
+                    tkOutput(capture.output(object)) 
+                }
                 if (!is.null(description)) tkDescription(description)
             }
         }
@@ -306,6 +336,9 @@ description = NULL, ...)
     invisible()
         
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 tkSaveAsX =  
@@ -326,6 +359,9 @@ function(data, infoName)
 }
 
 
+# ------------------------------------------------------------------------------
+
+
 tkSaveAsObject =  
 function(data, infoName)
 {   # A function implemented by Diethelm Wuertz
@@ -342,6 +378,9 @@ function(data, infoName)
     # Return Value:
     data
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 tkObjectToX =  
@@ -384,16 +423,22 @@ function(title, col = "blue")
 }
 
 
+# ------------------------------------------------------------------------------
+
+
 tkOutput =
 function(output)
 {   # A function implemented by Diethelm Wuertz
     
     # Output Function - Object:
     for (i in 1:length(output)) { 
-        tkinsert(txt, "end", paste(output[i], "\n"))   
-        tkyview.moveto(txt, 1)     
+        tkinsert(txt, "end", paste(output[i], "\n"))       
     }   
+    tkyview.moveto(txt, 1) 
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 tkDescription = 
@@ -424,6 +469,9 @@ function(object, title = NULL)
 }
 
 
+# ------------------------------------------------------------------------------
+
+
 tkGetParameters = 
 function(parameters)
 {   # A function implemented by Diethelm Wuertz
@@ -440,6 +488,9 @@ function(parameters)
 }
      
 
+# ------------------------------------------------------------------------------
+
+
 tkGetClass = 
 function(class)
 {   # A function implemented by Diethelm Wuertz
@@ -451,6 +502,9 @@ function(class)
     tkTitle(paste(class, "Class Representation"))
     tkOutput(ans)   
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 tkGetTime =  
@@ -466,6 +520,9 @@ function()
 }
 
 
+# ------------------------------------------------------------------------------
+
+
 tkGetFinCenters =
 function()
 {   # A function implemented by Diethelm Wuertz
@@ -477,6 +534,30 @@ function()
     tkTitle("List of Financial Centers")
     tkOutput(ans) 
 }
+
+
+# ------------------------------------------------------------------------------
+
+
+tkGetDemoData = 
+function(Data, report)
+{
+    # Get and Save:
+    command = paste("data(", Data, ")", sep = "")
+    eval(parse(text = command))
+    ans = eval(parse(text = Data))
+    if (dim(ans)[2] != 1) ans = as.timeSeries(ans)
+    attr(ans, "control") <- c(data = Data)
+    
+    # Title:
+    if (report) tkTitle("Demo Data Set")
+    
+    # Return Value:
+    ans
+}
+
+
+# ------------------------------------------------------------------------------
 
 
 tkGetData = 
@@ -507,6 +588,9 @@ function(Data, infoName, description = NULL, report = TRUE )
 }
 
 
+# ------------------------------------------------------------------------------
+
+
 tkGetDataFrame = 
 function(Data, infoName, report = TRUE )
 {
@@ -514,7 +598,6 @@ function(Data, infoName, report = TRUE )
     command = paste("data(", Data, ")", sep = "")
     eval(parse(text = command))
     x <<- eval(parse(text = Data))
-    consoleCmd = "print(head(x)); print(tail(x))"
     attr(x, "data") <<- Data
     
     x <<- tkSaveAsX(data = x, infoName = infoName)
@@ -529,6 +612,9 @@ function(Data, infoName, report = TRUE )
     
     invisible()
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 tkGetFit = 
@@ -548,3 +634,4 @@ function(fun, infoName = "Distribution", ...)
 
 
 ################################################################################
+
