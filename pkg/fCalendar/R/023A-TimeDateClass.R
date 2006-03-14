@@ -39,6 +39,9 @@
 #  Sys.timeDate         Returns system time as an object of class 'timeDate'   
 # FUNCTION:            SPECIAL MONTHLY SEQUENCES:
 #  timeLastDayInMonth   Computes the last day in a given month and year
+#  timeFirstDayInMonth  Computes the first day in a given month and year
+#  timeLastDayInQuarter Computes the last day in a given quarter and year
+#  timeFirstDayInQuarter Computes the first day in a given quarter and year
 #  timeNdayOnOrAfter    Computes date in month that is a n-day ON OR AFTER date
 #  timeNdayOnOrBefore   Computes date in month that is a n-day ON OR BEFORE date
 #  timeNthNdayInMonth   Computes n-th ocurrance of a n-day in year/month
@@ -70,6 +73,7 @@
 #  start.timeDate         Extracts the first object of a 'timeDate' vector
 #  end.timeDate           Extracts the last object of a 'timeDate' vector
 #  modify.timeDate        Sorts, Rounds or truncates a 'timeDate' vector
+#  unique.timeDate        Remove duplicates from a 'timeDate' vector
 #  rev.timeDate           Reverts  a 'timeDate' vector object
 # S3 MEHOD:              OBJECT TRANSFORMATION:
 #  as.character.timeDate  Returns a 'timeDate' object as character string
@@ -422,10 +426,15 @@ function(charvec, format = NULL, zone = "GMT", FinCenter = myFinCenter)
         charvec = gsub("24:00:00", "23:59:59", charvec) 
     }
     if (nchar.iso == 14) {
-        s[grep("240000", charvec)] = 1
-        charvec = gsub("240000", "235959", charvec) 
-    }   
-    
+        # Fixed DW 2006-03-13
+        charvec.date = substr(charvec, 1, 8)
+        charvec.time = substr(charvec, 9, 14)
+        s[grep("240000", charvec.time)] = 1
+        sub.charvec = substr(charvec, 9, 14)
+        # charvec = gsub("240000", "235959", charvec) 
+        charvec.time = gsub("240000", "235959", charvec.time) 
+        charvec = paste(charvec.date, charvec.time, sep ="")
+    }     
     # Convert "charvec" to standard ISO format:
     charvec = format(strptime(charvec, format)+s, iso.format)
     
@@ -689,12 +698,19 @@ s = NULL, FinCenter = myFinCenter)
     if (len[6] == 0) s = 0
     
     # Presettings:
-    m = rep(m, length = data.len)
-    d = rep(d, length = data.len)
-    y = rep(y, length = data.len)
-    h = rep(h, length = data.len)
-    min = rep(min, length = data.len)
-    s = rep(s, length = data.len)
+    # m = rep(m, length = data.len)
+    # d = rep(d, length = data.len)
+    # y = rep(y, length = data.len)
+    # h = rep(h, length = data.len)
+    # min = rep(min, length = data.len)
+    # s = rep(s, length = data.len)
+    # DW 2006-03-13
+    if (length(m) < data.len) m = rep(m, length = data.len)
+    if (length(d) < data.len) d = rep(d, length = data.len)
+    if (length(y) < data.len) y = rep(y, length = data.len)
+    if (length(h) < data.len) h = rep(h, length = data.len)
+    if (length(min) < data.len) min = rep(min, length = data.len)
+    if (length(s) < data.len) s = rep(s, length = data.len)
     
     # Date-Time Strings:
     # Note Format is always of type  "%Y%m%d%H%M%S"  !   
@@ -873,8 +889,7 @@ function(charvec, format = "%Y-%m-%d", FinCenter = "GMT")
     
     # Arguments:
     #   charvec - a character vector of dates and times.
-    #   format - the format specification of the input character 
-    #       vector.
+    #   format - the format specification of the input character vector.
     #   FinCenter - a character string with the the location of the  
     #       financial center named as "continent/city". 
     
@@ -906,6 +921,123 @@ function(charvec, format = "%Y-%m-%d", FinCenter = "GMT")
     if (TZ.RESET) Sys.putenv(TZ = TZ)
     timeDate(lt, format = "%Y-%m-%d", zone = FinCenter, 
         FinCenter = FinCenter)
+}
+
+
+# ------------------------------------------------------------------------------
+
+    
+timeFirstDayInMonth = 
+function(charvec, format = "%Y-%m-%d", FinCenter = "GMT") 
+{   # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   Computes the last day in a given month and year
+    
+    # FUNCTION:
+    
+    # Check Timezone:
+    TZ = Sys.getenv("TZ")
+    if (TZ[[1]] != "GMT") {
+        Sys.putenv(TZ = "GMT")
+        TZ.RESET = TRUE
+    } else {
+        TZ.RESET = FALSE
+    }
+    if (FinCenter == "") {
+        FinCenter = "GMT"
+    }
+    
+    # First Day In Month:
+    lt = strptime(charvec, format)
+    lt$mday = 1
+
+    # Return Value:
+    if (TZ.RESET) Sys.putenv(TZ = TZ)
+    timeDate(lt, format = "%Y-%m-%d", zone = FinCenter, FinCenter = FinCenter)
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+timeLastDayInQuarter = 
+function(charvec, format = "%Y-%m-%d", FinCenter = "GMT") 
+{   # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   Computes the last day in a given month and year
+    
+    # FUNCTION:
+    
+    # First Day in Month:
+    charvec = timeFirstDayInMonth(charvec = charvec, format = format, 
+        FinCenter = FinCenter)
+    
+    # Check Timezone:
+    TZ = Sys.getenv("TZ")
+    if (TZ[[1]] != "GMT") {
+        Sys.putenv(TZ = "GMT")
+        TZ.RESET = TRUE
+    }
+    else {
+        TZ.RESET = FALSE
+    }
+    if (FinCenter == "") {
+        FinCenter = "GMT"
+    }
+    
+    # Last Day in Quarter:
+    lt = strptime(charvec, format)
+    last.quarter = rep(c(3,6,9,12), each = 3) - 1
+    lt$mon = last.quarter[1 + lt$mon] 
+    if (TZ.RESET) Sys.putenv(TZ = TZ)
+    charvec = timeDate(lt, format = "%Y-%m-%d", zone = FinCenter, 
+        FinCenter = FinCenter)
+        
+    # Return Value:
+    if (TZ.RESET) Sys.putenv(TZ = TZ)
+    timeLastDayInMonth(charvec = charvec, format = format, 
+        FinCenter = FinCenter)
+}
+
+
+# ------------------------------------------------------------------------------
+    
+    
+timeFirstDayInQuarter = 
+function(charvec, format = "%Y-%m-%d", FinCenter = "GMT") 
+{   # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   Computes the last day in a given month and year
+    
+    # FUNCTION:
+    
+    # First Day in Month:
+    charvec = timeFirstDayInMonth(charvec =charvec, format = format, 
+        FinCenter = FinCenter)
+    
+    # Check Timezone:
+    TZ = Sys.getenv("TZ")
+    if (TZ[[1]] != "GMT") {
+        Sys.putenv(TZ = "GMT")
+        TZ.RESET = TRUE
+    } else {
+        TZ.RESET = FALSE
+    }
+    if (FinCenter == "") {
+        FinCenter = "GMT"
+    }
+    
+    # First Day in Quarter:
+    lt = strptime(charvec, format)
+    first.quarter = rep(c(1,4,7,10), each = 3) - 1
+    lt$mon = first.quarter[1 + lt$mon] 
+
+    # Return Value:
+    if (TZ.RESET) Sys.putenv(TZ = TZ)
+    timeDate(lt, format = "%Y-%m-%d", zone = FinCenter, FinCenter = FinCenter)
 }
 
     
@@ -2008,6 +2140,32 @@ function(x, method = c("sort", "round", "trunc"), units = c("secs",
     # Return Value:
     if (TZ.RESET) Sys.putenv(TZ = TZ)
     ans  
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+unique.timeDate =
+function(x, incomparables = FALSE, ...) 
+{   # A function Implemented by Diethelm Wuertz
+
+    # Description:
+    #   Returns a timeDate object with duplicate entries removed
+    
+    # Arguments:
+    #   x - an object of class timeDate
+    #   incomparables - not used
+    
+    # FUNCTION:
+    
+    # Remove Duplicates:
+    ans = unique(x@Data)
+    x@Data = timeDate(ans, FinCenter = "GMT")@Data
+    x@Dim = length(as.character(ans))
+    
+    # Return Value:
+    x
 }
 
 

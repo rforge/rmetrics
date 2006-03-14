@@ -13,6 +13,9 @@
 \alias{Sys.timeDate}
 
 \alias{timeLastDayInMonth}
+\alias{timeFirstDayInMonth}
+\alias{timeLastDayInQuarter}
+\alias{timeFirstDayInQuarter}
 \alias{timeNdayOnOrAfter}
 \alias{timeNdayOnOrBefore}
 \alias{timeNthNdayInMonth}
@@ -44,6 +47,7 @@
 \alias{end.timeDate}
 
 \alias{modify.timeDate}
+\alias{unique.timeDate}
 \alias{rev.timeDate}
 
 \alias{as.character.timeDate}
@@ -88,7 +92,10 @@
     The functions for Special Monthly 'timeDate' Sequences are:
     
     \tabular{ll}{
+    \code{timeFirstDayInMonth} \tab Computes the first day in a given month and year, \cr
     \code{timeLastDayInMonth} \tab Computes the last day in a given month and year, \cr
+    \code{timeFirstDayInQuarter} \tab Computes the first day in a given quarter and year, \cr
+    \code{timeLastDayInQuarter} \tab Computes the last day in a given quarter and year, \cr
     \code{timeNdayOnOrAfter} \tab Computes date that is a "on-or-after" n-day, \cr  
     \code{timeNdayOnOrBefore} \tab Computes date that is a "on-or-before" n-day, \cr
     \code{timeNthNdayInMonth} \tab Computes n-th ocurrance of a n-day in year/month, \cr
@@ -123,7 +130,8 @@
     \code{rep.timeDate} \tab Replicates objects of class 'timeDate', \cr
     \code{start.timeDate} \tab Extracts the first object of a 'timeDate' vector, \cr
     \code{end.timeDate} \tab Extracts the last object of a 'timeDate' vector, \cr
-    \code{modify.timeDate} \tab Sorts, rounds or truncates a 'timeDate' object, \cr
+    \code{modify.timeDate} \tab Sorts, rounds or truncates a 'timeDate' vector, \cr
+    \code{unique.timeDate} \tab Remove duplicates from a 'timeDate' vector, \cr
     \code{rev.timeDate} \tab Reverts  a 'timeDate' vector object. }          
             
     Mthods for Transformations of 'timeDate' Objects are:
@@ -156,8 +164,11 @@ timeSequence(from = "2004-01-01", to = format(Sys.time(), "\%Y-\%m-\%d"),
     by = "day", length.out = NULL, format = "", FinCenter = myFinCenter)
 Sys.timeDate(FinCenter = myFinCenter) 
 
-timeLastDayInMonth(charvec, format = "\%Y-\%m-\%d", 
-    FinCenter = "GMT")
+timeFirstDayInMonth(charvec, format = "\%Y-\%m-\%d", FinCenter = "GMT")
+timeLastDayInMonth(charvec, format = "\%Y-\%m-\%d", FinCenter = "GMT")
+timeFirstDayInQuarter(charvec, format = "\%Y-\%m-\%d", FinCenter = "GMT")
+timeLastDayInQuarter(charvec, format = "\%Y-\%m-\%d", FinCenter = "GMT")
+
 timeNdayOnOrAfter(charvec, nday = 1, format = "\%Y-\%m-\%d", 
     FinCenter = "GMT")
 timeNdayOnOrBefore(charvec, nday = 1, format = "\%Y-\%m-\%d",   
@@ -191,6 +202,7 @@ difftimeDate(time1, time2,
 \method{end}{timeDate}(x, \dots)
 \method{modify}{timeDate}(x, method = c("sort", "round", "trunc"),
     units = c("secs", "mins", "hours", "days"))
+\method{unique}{timeDate}(x, incomparables = FALSE, \dots)
 \method{rev}{timeDate}(x)
 
 \method{as.character}{timeDate}(x, \dots)
@@ -251,6 +263,10 @@ difftimeDate(time1, time2,
         [isBizday] - \cr
         holiday dates from a holiday calendar. An object of class
         \code{timeDate}.
+        }
+    \item{incomparables}{
+        [unique] - \cr
+        not used.
         }
     \item{lag}{
         [lag] - \cr
