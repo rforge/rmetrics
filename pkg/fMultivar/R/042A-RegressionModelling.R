@@ -483,7 +483,7 @@ function(x, ...)
     object = x
     
     # Title:
-    cat("\nTitle:\n")
+    cat("\nTitle:\n ")
     cat(as.character(object@title), "\n")
     
     # Call:
@@ -492,12 +492,12 @@ function(x, ...)
     #    "\n", sep = "") 
         
     # Formula:
-    cat("\nFormula:\n")
+    cat("\nFormula:\n ")
     cat(as.character(object@formula), "\n")
     
     # Family:
     if (object@family[1] != "" && object@family[2] != "") {     
-        cat("\nFamily:\n")
+        cat("\nFamily:\n ")
         cat(as.character(object@family), "\n") }
     
     # Digits:
