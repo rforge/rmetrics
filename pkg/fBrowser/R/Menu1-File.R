@@ -68,6 +68,30 @@ function()
     addToolbarMenu(fileMenu, Label, subLabel, Command) 
     
     # Add Menu:
+    Label = "List Rmetrics Data Files"
+    subLabel = 
+        NULL
+    Command = 
+        ".listRmetricsData"
+    addToolbarMenu(fileMenu, Label, subLabel, Command)  
+    
+    # Add Menu:
+    Label = "Load Rmetrics Data File"
+    subLabel = 
+        NULL
+    Command = 
+        ".loadRmetricsData"
+    addToolbarMenu(fileMenu, Label, subLabel, Command)  
+    
+    # Add Menu:
+    Label = "________________________________"
+    subLabel = 
+        NULL
+    Command = 
+        "tkSeparator"
+    addToolbarMenu(fileMenu, Label, subLabel, Command) 
+    
+    # Add Menu:
     Label = "Install Package() ..."
     subLabel = 
         NULL
@@ -92,14 +116,14 @@ function()
     addToolbarMenu(fileMenu, Label, subLabel, Command) 
     
     # Add Menu:          
-    Label = "fLibrary Demos"
+    Label = "Run a Rmetrics Demo"
     subLabel = c(
-        "fBasics",
-        "fCalendar", 
-        "fSeries", 
-        "fMultivar", 
-        "fExtremes", 
-        "fOptions")
+        "from fBasics",
+        "from fCalendar", 
+        "from fSeries", 
+        "from fMultivar", 
+        "from fExtremes", 
+        "from fOptions")
     Command = c(
         "xmpfBasics",
         "xmpfCalendar",

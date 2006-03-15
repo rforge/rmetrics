@@ -79,6 +79,64 @@ function()
 
 
 # ------------------------------------------------------------------------------
+
+
+.listRmetricsData =  
+function() 
+{   # A function implemented by Diethelm Wuertz
+
+    # FUNCTION:
+    
+    # List Active Data Set
+    lsData = data(package = 
+        c("fBasics", "fSeries", "fMultivar", "fExtremes", "fBrowser"))
+
+    tkOutput(capture.output(lsData)) 
+}    
+
+
+# ------------------------------------------------------------------------------
+
+.loadRmetricsData =  
+function() 
+{   # A function implemented by Diethelm Wuertz
+
+    # FUNCTION:
+    
+    # List Active Data Set
+    # lsData = data(package = 
+    #     c("fBasics", "fSeries", "fMultivar", "fExtremes", "fBrowser"))
+    # tkOutput(capture.output(lsData)) 
+    helpTopic <<- "data"
+    myFunction = function(data, try.as.timeSeries, object2x, report) {
+        eval(parse(text = paste("data (", data, ")")))
+        eval(parse(text = paste("Data = ", data)))
+        if (try.as.timeSeries) {
+            TEST = is.data.frame(Data)
+            if (TEST) {
+                DIM2 = dim(Data)[2]
+                if (DIM2 > 1) {
+                    TS = as.logical(!is.character(try(ans <- as.timeSeries(Data), 
+                        silent = TRUE))) 
+                    if (TS) Data = ans
+                }   
+            }
+        }
+        object <<- Data
+        infoName <<- data
+        if (report) tkTitle("Rmetrics Data File")
+        object }  
+    tkExecute(
+        fun = myFunction,
+        params = list(
+            data = "bmwDaily", 
+            try.as.timeSeries = TRUE,
+            object2x = TRUE,
+            report = TRUE),
+        infoName = "Data File" ) 
+}    
+
+# ------------------------------------------------------------------------------
    
 
 .menuInstallPackages =

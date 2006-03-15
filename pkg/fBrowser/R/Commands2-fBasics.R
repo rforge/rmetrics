@@ -335,8 +335,8 @@ function()
     myFunction = function(series, lag.max, ci, doplot, par, object2x, report) {
         x = tkEval(series)
         lag.max = eval(parse(text = lag.max))
-        object <<- lmacfPlot(abs(as.vector(x))) 
         if (doplot) tkEval(par)
+        object <<- lmacfPlot(abs(as.vector(x))) 
         object }
     tkExecute(
         fun = myFunction,
@@ -345,7 +345,7 @@ function()
             lag.max = "max(2, floor(10*log10(length(x))))",
             ci = 0.95,
             doplot = TRUE,
-            par = "par(mfrow=c(1,1))",
+            par = "par(mfrow=c(2,1))",
             object2x = FALSE,
             report = FALSE ),
         infoName = "Long Memory Plot" ) 

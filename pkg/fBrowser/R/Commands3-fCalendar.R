@@ -688,8 +688,8 @@ function()
     tkExecute(
         fun = myFunction,
         params = list(
-            data = "matrix(rnorm(24), ncol=2)",
-            charvec = "timeCalendar(y=2006, m=1:12)",
+            data = "matrix(rnorm(24),ncol=2)",
+            charvec = "timeCalendar(y=2006,m=1:12)",
             units = "LETTERS[1:2]",
             format = "%Y-%m-%d",
             zone = "GMT",
@@ -709,23 +709,30 @@ function()
 
     # Apply a Function to Series:
     helpTopic <<- "applySeries"
-    myFunction = function(series, from, to, FUN, object2x, report) {
+    myFunction = function(series, from, to, by, FUN, object2x, report) {
         x = tkEval(series)
-        FUN = match.fun(FUN)
-        object <<- applySeries(x = x, from = from, to = to, FUN = FUN,
-            units = NULL) 
-        if (report) tkTitle("Apply Function to timeSeries")
+        by = tkSplit(by)
+        if (from == "NULL") from = NULL
+        if (to == "NULL") to = NULL
+        fun = match.fun(FUN)
+        object <<- applySeries(x = x, from = from, to = to, by = by, 
+            FUN = fun, units = NULL) 
+        if (report) {
+	        tkTitle("Apply Function to timeSeries Object")
+	        tkOutput(paste("Function:\n", FUN, "\n"))
+        }
         object }
     tkExecute(
         fun = myFunction,
         params = list(
             series = "x",
-            from = "2000-01-01",
-            to = "2000-12-31",
+            from = "NULL",
+            to = "NULL",
+            by = "monthly & quarterly",
             FUN = "colAvgs",
             object2x = FALSE,
             report = TRUE),
-        infoName = "Apply FUN to timeSeries Object" )
+        infoName = "Apply FUN to timeSeries" )
 }
 
 
@@ -741,9 +748,10 @@ function()
     myFunction = function(series, method, include.weekends, 
         object2x, report) { 
         x = tkEval(series)
+        method = tkSplit(method)
         ans = alignDailySeries(x = x, method = method, 
             include.weekends = include.weekends) 
-        ans@FinCenter = x@FinCenter 
+        # ans@FinCenter = x@FinCenter 
         object <<- ans
         if (report) tkTitle("Align Daily Series")
         object }
@@ -751,7 +759,7 @@ function()
         fun = myFunction,
         params = list(
             series = "x",
-            method = "before",
+            method = "fillNA & before & after & interp",
             include.weekends = TRUE,
             object2x = FALSE,
             report = TRUE ),
@@ -777,9 +785,9 @@ function()
         fun = myFunction,
         params = list(
             series = "x",
-            from = "2000-01-01",
-            to = "2000-12-31",
-            object2x = FALSE,
+            from = "2005-03-01",
+            to = "2005-04-31",
+            object2x = TRUE,
             report = TRUE),
         infoName = "Cut a timeSeries" )
 }
@@ -890,7 +898,7 @@ function()
             series = "x",
             type = "continuous & discrete",
             percentage = FALSE, 
-            trim = TRUE,
+            trim = FALSE,
             digits = 4,
             object2x = FALSE,
             report = TRUE),

@@ -47,12 +47,14 @@ function()
     # Add Menu:
     Label = "Arma Modelling"
     subLabel = c(
-        "* Example timeSeries: x = NYSE Returns",
+        "* Demo tS: x = NYSE Returns",
+        "__________________________________________",
         "ARMA Series Simulation", 
         "ARMA Parameter Estimation",
         "ARMA Forecasting")
      Command = c(
         ".fData.nyseDaily",
+        "tkSeparator",
         ".fSeries.ArmaModelling.armaSim",
         ".fSeries.ArmaModelling.armaFit",
         ".fSeries.ArmaModelling.predict")
@@ -62,17 +64,21 @@ function()
     # Add Menu:
     Label = "Garch Modelling"
     subLabel = c(
-        "* Example timeSeries: x = DEMGBP Returns",
+        "* Demo tS: x = DEMGBP Daily Returns",
+        "__________________________________________",
         "GARCH Series Simulation", 
         "GARCH Parameter Estimation",
         "GARCH Forecasting",
+        "__________________________________________",
         "Conditional Distribution Slider",
         "Conditional Distribution Fit")
     Command = c(
         ".fData.dem2gbpDaily",
+        "tkSeparator",
         ".fSeries.GarchModelling.garchSim",
         ".fSeries.GarchModelling.garchFit",
         ".fSeries.GarchModelling.predict",
+        "tkSeparator",
         ".fSeries.GarchDistributions.conddistSlider",
         ".fSeries.GarchDistributions.conddistFit")
     addToolbarMenu(fSeriesMenu, Label, subLabel, Command)
@@ -101,12 +107,14 @@ function()
     Label = "Dependency Tests"
     subLabel = c(
         # runs Test goes here ?
-        "* Example timeSeries: x - NYSE log Returns",
+        "* Demo tS: x - NYSE Daily Returns",
+        "__________________________________________",
         "BDS Test", 
         "Teraesvirta NN Test", 
         "White NN Test")
     Command = c(
         ".fData.nyseDaily",
+        "tkSeparator",
         ".fSeries.TimeSeriesTests.bdsTest",
         ".fSeries.TimeSeriesTests.tnnTest",
         ".fSeries.TimeSeriesTests.wnnTest")
@@ -116,8 +124,8 @@ function()
     # Add Menu:
     Label = "Unit Root Tests"
     subLabel = c(
-        "* Example timeSeries: x - has Unit Root",
-        "* Example timeSeries: x - has no Unit Root",
+        "* Demo tS: x - has Unit Root",
+        "* Demo tS: x - has no Unit Root",
         "__________________________________________",
         "Augmented Dickey-Fuller Test",
         "McKinnon's ADF Test",

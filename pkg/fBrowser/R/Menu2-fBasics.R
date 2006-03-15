@@ -59,21 +59,27 @@ function()
     # Add Menu:
     Label = "Time Series Plots"
     subLabel = c(
-        "* Example timeSeries: x = SP500 Returns",
+        "* Demo tS: x = SP500 Monthly Returns",
+        "__________________________________________",
         "Univariate Time Series Plot",
         "Autocorrelation Function Plot",
         "Partial ACF Plot",
         "Histogram Plot",
-        "* Example timeSeries: x = MSFT|SP500 Returns",
+        "__________________________________________",
+        "* Demo tS: x = MSFT|SP500 Monthly Returns",
+        "__________________________________________",
         "Bivariate Time Series Plot",
         "Scatterdiagramm Plot")
     Command = c(
         ".fData.sp500Monthly",
+        "tkSeparator",
         ".fBasics.PlotFunctions.plot",
         ".fBasics.PlotFunctions.acfPlot",
         ".fBasics.PlotFunctions.pacfPlot",
         ".fBasics.PlotFunctions.histPlot",
+        "tkSeparator",
         ".fData.msftsp500Monthly",
+        "tkSeparator",
         ".fBasics.PlotFunctions.bivariatePlot",
         ".fBasics.PlotFunctions.scatterPlot")
     addToolbarMenu(fBasicsMenu, Label, subLabel, Command)
@@ -89,19 +95,24 @@ function()
     # Add Menu:
     Label = "Distribution of Returns"
     subLabel = c(
-        "* Example timeSeries: x - Daily NYSE Returns",
+        "* Demo tS: x - NYSE Daily Returns",
+        "__________________________________________",
+        "Histogram Plot",
         "Distribution Fit",
         "Distribution Slider",
+        "__________________________________________",
         "Generate Normal RVs",
         "Generate Hyperbolic RVs",
         "Generate Normal Inveres Gaussian RVs",
         "Generate Symmetric Stable RVs",
-        "Generate Stable RVs",
-        )    
+        "Generate Stable RVs")    
     Command = c(
         ".fData.nyseDaily",
+        "tkSeparator",
+        ".fBasics.PlotFunctions.histPlot",
         ".fBasics.ReturnDistributions.distFit",
         ".fBasics.ReturnDistributions.distSlider",
+        "tkSeparator",
         ".fBasics.ReturnDistributions.rnorm",
         ".fBasics.ReturnDistributions.rhyp",
         ".fBasics.ReturnDistributions.rnig",        
@@ -112,7 +123,8 @@ function()
     # Add Menu:
     Label = "Basic Statistics of Returns"
     subLabel = c(
-        "* Example timeSeries: x = SP500 Returns",
+        "* Demo tS: x = SP500 Monthly Returns",
+        "__________________________________________",
         "mean - Compute Mean",
         "var - Compute Variance",
         "skewness - Compute Skewness",
@@ -121,6 +133,7 @@ function()
         "basicStats - Basic Statistics")
     Command = c(
         ".fData.sp500Monthly",
+        "tkSeparator",
         ".fBasics.BasicStatistics.mean",
         ".fBasics.BasicStatistics.var",
         ".fBasics.BasicStatistics.skewness",
@@ -132,7 +145,8 @@ function()
     # Add Menu:
     Label = "Stylized Facts of Returns"
     subLabel = c(
-        "* Example timeSeries: x = NYSE Returns",
+        "* Demo tS: x = NYSE Daily Returns",
+        "__________________________________________",
         "Taylor Effect", 
         "Long Memory Behavior",
         "Log PDF Plot",
@@ -140,6 +154,7 @@ function()
         "Scaling Law Plot")
     Command = c(
         ".fData.nyseDaily",
+        "tkSeparator",
         ".fBasics.StylizedFacts.teffectPlot",
         ".fBasics.StylizedFacts.lmacfPlot",
         ".fBasics.StylizedFacts.logpdfPlot",
@@ -158,7 +173,8 @@ function()
     # Add Menu:   
     Label = "Normality Tests"
     subLabel = c(
-        "* Example timeSeries: x = SP500 Returns",
+        "* Demo tS: x = SP500 Monthly Returns",
+        "__________________________________________",
         "Kolmogorov-Smirnov Normality Test",
         "Shapiro-Wilk Normality Test", 
         "Jarque-Bera Normality Test",
@@ -170,6 +186,7 @@ function()
         "Shapiro-Francia Normality Test")
     Command = c(
         ".fData.sp500Monthly",
+        "tkSeparator",
         ".fBasics.NormalityTests.ksnormTest",
         ".fBasics.NormalityTests.shapiroTest",
         ".fBasics.NormalityTests.jarqueberaTest",
@@ -184,7 +201,8 @@ function()
     # Add Menu:
     Label = "Bivariate Sample Tests"
     subLabel = c(
-        "* Example timeSeries: x = MSFT|SP500 Returns",
+        "* Demo tS: x = MSFT|SP500 Monthly Returns",
+        "__________________________________________",
         "Kolmogorov-Smirnov Test",
         "Location: Unpaired t-Test",
         "Location: Kruskal-Wallis Test",
@@ -198,6 +216,7 @@ function()
         "Correlation: Spearman's rho Test")
     Command = c(
         ".fData.msftsp500Monthly",
+        "tkSeparator",
         ".fBasics.BivariateTests.ks2Test",
         ".fBasics.BivariateTests.tTest",
         ".fBasics.BivariateTests.kw2Test",

@@ -296,6 +296,7 @@ function()
         "tkSeparator"
     addToolbarMenu(fOptionsMenu, Label, subLabel, Command) 
     
+    if (FALSE) {
     # Add Menu:
     Label = "Special Functions"
     subLabel = c(
@@ -326,7 +327,8 @@ function()
     Command = c(
         ".fOptions.EBMAsian.1")
     addToolbarMenu(fOptionsMenu, Label, subLabel, Command) }
-          
+    }
+ 
     # Cascade fileMenu:
     cascadeToolbarMenu(Menu = fOptionsMenu, Label = "fOptions")                 
 }       

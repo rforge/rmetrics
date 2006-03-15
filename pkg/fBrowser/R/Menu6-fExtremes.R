@@ -41,7 +41,8 @@ function()
     # Add Menu:
     Label = "Extremes Plots"
     subLabel = c(
-        "* Example timeSeries: x = BMW Daily Returns",
+        "* Demo tS:: x = BMW Daily Returns",
+        "____________________________________",
         "Plot of Empirical Distribution",
         "Plot of Normal Quantiles",
         "Plot of Pareto Quantiles",
@@ -53,6 +54,7 @@ function()
         "Plot of ACF of Exceedences")
     Command = c(
         ".fData.bmwDaily",
+        "tkSeparator",
         ".fExtremes.ExtremesPlots.emd",
         ".fExtremes.ExtremesPlots.qq",
         ".fExtremes.ExtremesPlots.q",
@@ -68,7 +70,7 @@ function()
     # Add Menu:
     Label = "Data Preprocessing"
     subLabel = c(
-        "* Example timeSeries: x = BMW Daily Returns",
+        "* Demo tS:: x = BMW Daily Returns",
         "Find Threshold")
     Command = c(
         ".fData.bmwDaily",
@@ -87,22 +89,26 @@ function()
     # Add Menu:
     Label = "Block Maxima"
     subLabel = c(
-        "* Example timeSeries: x = BMW Daily Returns",
+        "* Demo tS:: x = BMW Daily Returns",
+        "* Extract Block Maxima Series",
+        "* Extract Block Maxima Vector",
+        "____________________________________",
         "GEV Distribution",
-        "GEV Simulation", 
-        "Generate Block Maxima Series",
-        "Generate Block Maxima Vector",
+        "GEV Simulation",     
         "GEV Parameter Estimation",
+        "____________________________________",
         "Return Level Plot",
         "Hill Plot", 
         "Shape Parameter Plots")
     Command = c(
         ".fData.bmwDaily",
-        ".fExtremes.GEV.gevSlider",
-        ".fExtremes.GEV.sim",
         ".fExtremes.GEV.blockmaxSeries",
         ".fExtremes.GEV.blockmaxVector",
+        "tkSeparator",
+        ".fExtremes.GEV.gevSlider",
+        ".fExtremes.GEV.sim",
         ".fExtremes.GEV.fit",
+        "tkSeparator",
         ".fExtremes.GEV.gevrlevelPlot",
         ".fExtremes.MDA.hillPlot",
         ".fExtremes.MDA.shaparmPlot") 
@@ -119,12 +125,14 @@ function()
     # Add Menu:
     Label = "Peaks Over Threshold"
     subLabel = c(
-        "* Example timeSeries: x = BMW Daily Returns",
+        "* Demo tS:: x = BMW Daily Returns",
+        "____________________________________",
         "GPD Distribution",
         "GPD Simulation", 
         "GPD Parameter Estimation")
     Command = c(
         ".fData.bmwDaily",
+        "tkSeparator",
         ".fExtremes.GPD.gpdSlider",
         ".fExtremes.GPD.sim",
         ".fExtremes.GPD.fit")

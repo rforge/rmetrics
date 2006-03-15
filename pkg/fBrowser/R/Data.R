@@ -65,6 +65,26 @@ function()
 # ------------------------------------------------------------------------------
 
 
+.fData.ibmsp500Daily =  
+function()
+{   # A function implemented by Diethelm Wuertz
+
+    # BMW Data Set:
+    myFunction = function(object2x, report) {
+        object <<- tkGetDemoData(Data = "ibmsp500Daily", report = report) 
+        object }
+    tkExecute(
+        fun = myFunction,
+        params = list(
+            object2x = TRUE,
+            report = FALSE),
+        infoName = "ibmsp500Daily" )       
+}
+
+
+# ------------------------------------------------------------------------------
+
+
 .fData.sp500Monthly = 
 function()
 {   # A function implemented by Diethelm Wuertz
