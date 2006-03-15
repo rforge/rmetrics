@@ -1127,7 +1127,8 @@ function(x, row.names = NULL, optional = NULL)
 
 
 applySeries =
-function(x, from = NULL, to = NULL, FUN = colAvgs, units = NULL, ...)
+function(x, from = NULL, to = NULL, by = c("monthly", "quarterly"), 
+FUN = colAvgs, units = NULL, ...)
 {   # A function implemented by Diethelm Wuertz
     
     # Description:
@@ -1163,11 +1164,26 @@ function(x, from = NULL, to = NULL, FUN = colAvgs, units = NULL, ...)
   
     # FUNCTION:
     
-    # Column Names:
-    colNames = units
-    
     # Check object:
     if (class(x) != "timeSeries") stop("s is not a timeSeries object")
+    
+    # Monthly from and to:
+    if (is.null(from) & is.null(to)) {
+        if (by[1] == "monthly") {
+            # Use monthly blocks:
+            from = unique(timeFirstDayInMonth(seriesPositions(x)))
+            to = unique(timeLastDayInMonth(seriesPositions(x)))
+        } else if (by == "quarterly") {
+            from = unique(timeFirstDayInQuarter(seriesPositions(x)))
+            to = unique(timeLastDayInQuarter(seriesPositions(x)))
+        } else {
+            stop("by must be eiter monthly or quarterly")
+        } 
+        from@FinCenter = to@FinCenter = x@FinCenter
+    }
+    
+    # Column Names:
+    colNames = units
     
     # Function:
     fun = match.fun(FUN)
@@ -1192,13 +1208,13 @@ function(x, from = NULL, to = NULL, FUN = colAvgs, units = NULL, ...)
     }
     rownames(rowBind) = as.character(to)
     if (is.null(colNames)) {
-        units = x@units }
-    else {
+        units = x@units 
+    } else {
         units = colNames }
     
     # Return Value:
     timeSeries(data = rowBind, charvec = as.character(to), units = units, 
-        format = x@format, zone = "GMT", FinCenter = x@FinCenter, 
+        format = x@format, zone = x@FinCenter, , FinCenter = x@FinCenter, 
         title = x@title, documentation = x@documentation, ...)       
 }   
 
@@ -1361,11 +1377,12 @@ trim = TRUE, digits = 4, units = NULL)
             units = as.character(x@units), 
             recordIDs = data.frame(),
             title = as.character(x@title), 
-            documentation = as.character(x@documentation) ) }
-    else {  
+            documentation = as.character(x@documentation) ) 
+    } else {  
         x = as.vector(x)        
         ans = getReturnsForOneColumn(x = x, type = type, 
-            percentage = percentage) }
+            percentage = percentage) 
+    }
             
     # Trim:
     if (trim) ans = ans[-1, ]
@@ -1436,9 +1453,9 @@ include.weekends = FALSE, units = NULL)
             class(newPos) = "POSIXct"
             newPos = as.POSIXlt(newPos)
             td = timeSeries(newX, newPos, units = colnames(newX), 
-                zone = x@FinCenter, FinCenter = x@FinCenter)}
-        # Interpolate with real Values:
-        else {
+                zone = x@FinCenter, FinCenter = x@FinCenter)
+        } else {
+            # Interpolate with real Values:
             # Wich method ?
             if (method == "interp") {
                 method = "linear"
@@ -1585,8 +1602,8 @@ grid.nx = 7, grid.lty = "solid", ...)
         if (axes) {
             if (date == "julian") {
                 axis(1, ...)
-                axis(2, ...) }
-            else {
+                axis(2, ...) 
+            } else {
                 n <- NROW(x)
                 lab.ind <- round(seq(1, n, length = 5))
                 D <- as.vector(time.x[lab.ind] * 86400) + as.POSIXct(origin, 

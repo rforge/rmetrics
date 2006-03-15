@@ -134,10 +134,7 @@
 #   center, and the second lists all centers available in the database.
 #   There is no dependency on the POSIX implementation of your operating
 #   system because all time zone and day light saving time information
-#   is stored locally in ASCII files. It is important to say, that
-#   the "TZ" environment variable must set to "GMT" in your System
-#   Environment that there are no conflicts with the POSIX time zone
-#   management.
+#   is stored locally in ASCII files. 
 
   
 rulesFinCenter =
@@ -374,6 +371,9 @@ function(charvec, format = NULL, zone = "GMT", FinCenter = myFinCenter)
      
     # FUNCTION:
 
+    # Missing charvec
+    if (missing(charvec)) return(NULL)
+    
     # Trace:
     trace = FALSE
     
