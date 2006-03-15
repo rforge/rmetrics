@@ -98,8 +98,8 @@
 \alias{wooster}
 
 
-\alias{bmw.ret}
-\alias{dax.ret}
+\alias{bmwRet} % renamed from bmw.ret
+\alias{daxRet} % renamed from dax.ret
 
 
 \title{evir Builtin Functions}
