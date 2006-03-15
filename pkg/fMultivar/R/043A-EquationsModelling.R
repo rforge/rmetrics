@@ -78,7 +78,8 @@ setClass("fEQNS",
         formulas = "list",
         data = "data.frame",
         method = "character",
-        fit = "list",   
+        fit = "list", 
+        predicted.values = "list",  
         title = "character",
         description = "character"))
         
@@ -150,6 +151,7 @@ title = NULL, description = NULL, ...)
         data = as.data.frame(data),
         method = as.character(method[1]), 
         fit = fit,
+        predicted.values = list(),
         title = as.character(title), 
         description = as.character(description) )
 }

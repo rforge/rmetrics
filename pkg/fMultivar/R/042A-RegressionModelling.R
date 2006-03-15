@@ -121,6 +121,7 @@ setClass("fREG",
         data = "data.frame",
         method = "character",
         fit = "list",
+        predicted.values = "list",
         title = "character",
         description = "character"
     )  
@@ -273,6 +274,7 @@ nterms = NA, size = NA, title = NULL, description = NULL, ...)
         data = as.data.frame(data),
         method = as.character(method), 
         fit = fit,
+        predicted.values = list(),
         title = as.character(title), 
         description = as.character(description) )
 }
