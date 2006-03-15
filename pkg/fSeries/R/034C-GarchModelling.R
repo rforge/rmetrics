@@ -782,6 +782,7 @@ setClass("fGARCH",
         fitted.values = "numeric",
         h.t = "numeric",
         sigma.t = "numeric",
+        predicted.values = "list",
         title = "character",
         description = "character")  
 )
@@ -951,6 +952,7 @@ control = list(), title = NULL, description = NULL, ...)
         fitted.values = fitted.values,
         h.t = h.t,
         sigma.t = as.vector(sigma.t),
+        predicted.values = list(),
         title = as.character(title),
         description = as.character(description) 
     )
@@ -2002,6 +2004,7 @@ title = NULL, description = NULL, ...)
         fitted.values = series - fit$residuals,
         h = numeric(),
         sigma.t = numeric(),
+        predicted.values = list(),
         title = as.character(title),
         description = as.character(description) 
     )

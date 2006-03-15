@@ -113,6 +113,7 @@ setClass("fARMA",
         fit = "list",
         residuals = "numeric",
         fitted.values = "numeric",
+        predicted.values = "list",
         title = "character",
         description = "character")  
 )
@@ -362,6 +363,7 @@ title = NULL, description = NULL, ...)
         fit = fit,
         residuals = as.vector(fit$residuals),
         fitted.values = as.vector(fit$fitted.values),
+        predicted.values = list(),
         title = as.character(title), 
         description = as.character(description) )
 }
