@@ -41,87 +41,102 @@ function()
         # Add Menu:
     Label = "Technical Analysis"
     subLabel = c(
-        "* Example Data: Open-High-Low-Close SP500",
-        "emaTA - Exponential Moving Average",
-        "biasTA - EMA Price Bias",
-        "medpriceTA - Median Price",                    
-        "typicalpriceTA - Typical Price",
-        "wcloseTA - Weighted Close Price",
-        "rocTA - Rate of Change",
-        "oscTA - EMA-Oscillator",
-        "momTA - Momentum Oscillator",
-        "macdTA -  MACD Oscillator",
-        "cdsTA - MACD Signal Line",
-        "cdoTA - MACD Oscillator",
-        "vohlTA - High/Low Volatility",
-        "vorTA - Volatility Ratio",
-        "fpkTA - Fast %K Stochastics",
-        "fpdTA - Fast %D Stochastics",
-        "spdTA - Slow %D Stochastics",
-        "apdTA - Averaged %D Stochastics",
-        "wprTA - Williams %R Stochastics",
-        "rsiTA - Relative Strength Index",
-        "... merge Series and Indicator")
+        "* Demo tS: Open-High-Low-Close SP500",
+        "____________________________________",
+        "Exponential Moving Average",
+        "EMA Price Bias",
+        "Median Price",                    
+        "Typical Price",
+        "Weighted Close Price",
+        "Rate of Change",
+        "EMA-Oscillator",
+        "Momentum Oscillator",
+        "MACD Oscillator",
+        "MACD Signal Line",
+        "cMACD Oscillator",
+        "High/Low Volatility",
+        "Volatility Ratio",
+        "Fast %K Stochastics",
+        "Fast %D Stochastics",
+        "Slow %D Stochastics",
+        "Averaged %D Stochastics",
+        "Williams %R Stochastics",
+        "Relative Strength Index")
     Command = c(
-        ".fMultivar.TechnicalAnalysis.1",
-        ".fMultivar.TechnicalAnalysis.2",
-        ".fMultivar.TechnicalAnalysis.3",
-        ".fMultivar.TechnicalAnalysis.4",
-        ".fMultivar.TechnicalAnalysis.5",
-        ".fMultivar.TechnicalAnalysis.6",
-        ".fMultivar.TechnicalAnalysis.7",
-        ".fMultivar.TechnicalAnalysis.8",
-        ".fMultivar.TechnicalAnalysis.9",
-        ".fMultivar.TechnicalAnalysis.10",
-        ".fMultivar.TechnicalAnalysis.11",
-        ".fMultivar.TechnicalAnalysis.12",
-        ".fMultivar.TechnicalAnalysis.13",
-        ".fMultivar.TechnicalAnalysis.14",
-        ".fMultivar.TechnicalAnalysis.15",
-        ".fMultivar.TechnicalAnalysis.16",
-        ".fMultivar.TechnicalAnalysis.17",
-        ".fMultivar.TechnicalAnalysis.18",
-        ".fMultivar.TechnicalAnalysis.19",
-        ".fMultivar.TechnicalAnalysis.20",
-        ".fMultivar.TechnicalAnalysis.21")
+        ".fData.spcDaily",
+        "tkSeparator",
+        ".fMultivar.TechnicalAnalysis.emaTA",
+        ".fMultivar.TechnicalAnalysis.biasTA",
+        ".fMultivar.TechnicalAnalysis.medpriceTA",
+        ".fMultivar.TechnicalAnalysis.typicalpriceTA",
+        ".fMultivar.TechnicalAnalysis.wcloseTA",
+        ".fMultivar.TechnicalAnalysis.rocTA",
+        ".fMultivar.TechnicalAnalysis.oscTA",
+        ".fMultivar.TechnicalAnalysis.momTA",
+        ".fMultivar.TechnicalAnalysis.macdTA",
+        ".fMultivar.TechnicalAnalysis.cdsTA",
+        ".fMultivar.TechnicalAnalysis.cdoTA",
+        ".fMultivar.TechnicalAnalysis.vohlTA",
+        ".fMultivar.TechnicalAnalysis.vorTA",
+        ".fMultivar.TechnicalAnalysis.fpkTA",
+        ".fMultivar.TechnicalAnalysis.fpdTA",
+        ".fMultivar.TechnicalAnalysis.spdTA",
+        ".fMultivar.TechnicalAnalysis.apdTA",
+        ".fMultivar.TechnicalAnalysis.wprTA",
+        ".fMultivar.TechnicalAnalysis.rsiTA")
     addToolbarMenu(fMultivarMenu, Label, subLabel, Command) 
         
     # Add Menu:
     Label = "Benchmark Analysis"
     subLabel = c(
-        "* Example timeSeries: x = SP500 Index",
+        "* Demo tS: x = SP500 Index",
+        "_____________________________",
         "Compute Maximum Draw-Down",
         "Compute Sharpe Ratio",
         "Compute Sterling Ratio")
     Command = c(
         ".fData.sp500IndexMonthly",
+        "tkSeparator",
         ".fMultivar.BenchmarkAnalysis.2",
         ".fMultivar.BenchmarkAnalysis.3",
         ".fMultivar.BenchmarkAnalysis.4")
     addToolbarMenu(fMultivarMenu, Label, subLabel, Command)     
         
+    if (FALSE) {
     # Add Menu:
     Label = "Rolling Analysis"
     subLabel = c(
-        "* Example timeSeries: x = SP500 Index",
+        "* Demo tS: x = SP500 Index",
+        "__________________________",
         "Rolling Mean",
         "Rolling Variance",
         "Rolling Minimum",
         "Rolling Maximum")
     Command = c(
         ".fData.sp500IndexMonthly",
+        "tkSeparator",
         ".fMultivar.RollingAnalysis.rollMean",
         ".fMultivar.RollingAnalysis.rollVar",
         ".fMultivar.RollingAnalysis.rollMin",
         ".fMultivar.RollingAnalysis.rollMax")
     addToolbarMenu(fMultivarMenu, Label, subLabel, Command)
+    }
     
+    # Add Menu:
+    Label = "________________________"
+    subLabel = 
+        NULL
+    Command = 
+        "tkSeparator"
+    addToolbarMenu(fMultivarMenu, Label, subLabel, Command) 
+       
     # Add Menu:
     Label = "Regression Modelling"
     subLabel = c(
-        "* Example Data: x = 0.7*x1 + 0.3*x2 + eps",
-        "* Example Data: x = 10*sin(x1) + exp(x2) + eps",
-        "* Example Data: x = Logit(0.7*x1 + 0.3*x2 + eps)",
+        "* Demo Data: x = 0.7*x1 + 0.3*x2 + eps",
+        "* Demo Data: x = 10*sin(x1) + exp(x2) + eps",
+        "* Demo Data: x = Logit(0.7*x1 + 0.3*x2 + eps)",
+        "_____________________________________________",
         "LM- Linear Modelling",
         "GLM - Generalized Linear Modelling",
         "GAM - Generalized Additive Modelling",
@@ -133,6 +148,7 @@ function()
         ".fMultivar.Regression.lmData",
         ".fMultivar.Regression.glmData",
         ".fMultivar.Regression.gamData",
+        "tkSeparator",
         ".fMultivar.Regression.lmFit",
         ".fMultivar.Regression.glmFit",
         ".fMultivar.Regression.gamFit",
@@ -145,7 +161,8 @@ function()
     # Add Menu:
     Label = "Regression Tests"
     subLabel = c(
-        "* Example timeSeries: realInvest ~ realGNP + realInterest",
+        "* Demo tS: realInvest ~ realGNP + realInterest",
+        "____________________________________________",
         "Breusch-Godfrey Test",
         "Breusch-Pagan Test",
         "Durbin-Watson Test",
@@ -156,6 +173,7 @@ function()
         "Ramsey RESET Test")
     Command = c(
         ".fMultivar.RegressionTests.1",
+        "tkSeparator",
         ".fMultivar.RegressionTests.2",
         ".fMultivar.RegressionTests.3",
         ".fMultivar.RegressionTests.4",
@@ -167,6 +185,14 @@ function()
     addToolbarMenu(fMultivarMenu, Label, subLabel, Command)
         
     # Add Menu:
+    Label = "________________________"
+    subLabel = 
+        NULL
+    Command = 
+        "tkSeparator"
+    addToolbarMenu(fMultivarMenu, Label, subLabel, Command) 
+    
+    # Add Menu:
     # Label = "Equations Modelling"
     # subLabel = c(
     #     "Not yet implemented")
@@ -177,7 +203,8 @@ function()
     # Add Menu:
     Label = "Matrix Addon"
     subLabel = c(
-        "* Example: Pascal Matrix",
+        "* Demo Matrix: Pascal Matrix",
+        "____________________________",
         "Return diag Matrix",
         "Return lower Triangular",
         "Return upper Triangular",
@@ -187,6 +214,7 @@ function()
         "Compute the Rank",
         "Compute the Transposed",
         "Exponentiate a Square Matrix",
+        "____________________________",
         "Cholesky Factors",
         "Eigenvalues and Eigevectors",
         "Singular Value Decomposition",
@@ -194,6 +222,7 @@ function()
         "QR Decomposition")
     Command = c(
         ".fMultivar.MatrixAddon.1",
+        "tkSeparator",
         ".fMultivar.MatrixAddon.2",
         ".fMultivar.MatrixAddon.3",
         ".fMultivar.MatrixAddon.4",
@@ -203,6 +232,7 @@ function()
         ".fMultivar.MatrixAddon.8",
         ".fMultivar.MatrixAddon.9",
         ".fMultivar.MatrixAddon.10",
+        "tkSeparator",
         ".fMultivar.MatrixAddon.11",
         ".fMultivar.MatrixAddon.12",
         ".fMultivar.MatrixAddon.13",
@@ -213,19 +243,17 @@ function()
     # Add Menu:
     Label = "Missing Values"
     subLabel = c(
-        "* Example timeSeries: x = MSFT|SP500 Values",
+        "* Demo tS: x = MSFT|SP500 Values",
+        "___________________________________",
         "Remove NAs", 
         "Interpolate NAs",
-        "knn Algorithm",
-        "* Example timeSeries: x = MSFT|SP500 Returns",
-        "Substitute NAs") 
+        "knn Algorithm")
     Command = c(
         ".fMultivar.MissingValues.1",
+        "tkSeparator",
         ".fMultivar.MissingValues.2",
         ".fMultivar.MissingValues.3",
-        ".fMultivar.MissingValues.4",
-        ".fMultivar.MissingValues.5",
-        ".fMultivar.MissingValues.6")
+        ".fMultivar.MissingValues.4")
     addToolbarMenu(fMultivarMenu, Label, subLabel, Command) 
         
     # Cascade fileMenu:

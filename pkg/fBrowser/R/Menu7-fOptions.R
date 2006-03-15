@@ -80,7 +80,7 @@ function()
     addToolbarMenu(fOptionsMenu, Label, subLabel, Command) 
         
     # Add Menu:
-    Label = "________________________________"
+    Label = "____________________________"
     subLabel = 
         NULL
     Command = 
@@ -216,7 +216,7 @@ function()
             
         
     # Add Menu:
-    Label = "________________________________"
+    Label = "____________________________"
     subLabel = 
         NULL
     Command = 
@@ -288,15 +288,15 @@ function()
        ".fOptions.ExponentialBM.1")
     addToolbarMenu(fOptionsMenu, Label, subLabel, Command) }
            
+    if (FALSE) {
     # Add Menu:
-    Label = "________________________________"
+    Label = "____________________________"
     subLabel = 
         NULL
     Command = 
         "tkSeparator"
     addToolbarMenu(fOptionsMenu, Label, subLabel, Command) 
     
-    if (FALSE) {
     # Add Menu:
     Label = "Special Functions"
     subLabel = c(

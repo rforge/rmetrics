@@ -46,8 +46,8 @@ function()
     # Add Menu:
     Label = "Create a Time Date Object"
     subLabel = c(
-        "* Example timeDate: x = 12 Random Dates in 2005",
-        "* Example timeDate: x = 12 Random Times in 2005",
+        "* Demo tS: x = 12 Random Dates in 2005",
+        "* Demo tS: x = 12 Random Times in 2005",
         "__________________________________________",
         "Create timeDate Sequence",
         "Create timeDate Calendar",
@@ -82,8 +82,8 @@ function()
     # Add Menu:
     Label = "Manipulate a timeDate Object"
     subLabel = c(
-        "* Example timeDate: x = 12 Random Dates in 2005",
-        "* Example timeDate: x = 12 Random Times in 2005",
+        "* Demo tS: x = 12 Random Dates in 2005",
+        "* Demo tS: x = 12 Random Times in 2005",
         "__________________________________________",
         "Extract the first object of a timeDate Vector",
         "Extract the last object of a timeDate Vector",
@@ -122,7 +122,7 @@ function()
     addToolbarMenu(fCalendarMenu, Label, subLabel, Command)
     
     # Add Menu:
-    Label = "________________________________"
+    Label = "_________________________________"
     subLabel = 
         NULL
     Command = 
@@ -134,13 +134,13 @@ function()
     subLabel = c(
         "* Create a timSeries Object",
         "* Demo tS: x = IBM|SP500 Daily Returns",
-        "__________________________________________",
+        "______________________________________",
         "Cut Out a Piece from a timeSeries",
         "Compute Returns from a timeSeries",
         "Merge a timeSeries with a matrix Object",
         "Align a Daily timeSeries",
         "Edit a timeSeries Object",
-        "__________________________________________",
+        "______________________________________",
         "Difference a timeSeries",
         "Lag a timeSeries",
         "Revert a timeSeries in Time Order",
@@ -162,7 +162,7 @@ function()
     addToolbarMenu(fCalendarMenu, Label, subLabel, Command)    
     
     # Add Menu:
-    Label = "________________________________"
+    Label = "_________________________________"
     subLabel = 
         NULL
     Command = 

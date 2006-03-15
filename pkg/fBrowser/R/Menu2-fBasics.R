@@ -85,7 +85,7 @@ function()
     addToolbarMenu(fBasicsMenu, Label, subLabel, Command)
     
     # Add Menu:
-    Label = "________________________________"
+    Label = "__________________________"
     subLabel = 
         NULL
     Command = 
@@ -96,11 +96,11 @@ function()
     Label = "Distribution of Returns"
     subLabel = c(
         "* Demo tS: x - NYSE Daily Returns",
-        "__________________________________________",
+        "___________________________________",
         "Histogram Plot",
         "Distribution Fit",
         "Distribution Slider",
-        "__________________________________________",
+        "___________________________________",
         "Generate Normal RVs",
         "Generate Hyperbolic RVs",
         "Generate Normal Inveres Gaussian RVs",
@@ -124,7 +124,7 @@ function()
     Label = "Basic Statistics of Returns"
     subLabel = c(
         "* Demo tS: x = SP500 Monthly Returns",
-        "__________________________________________",
+        "___________________________________",
         "mean - Compute Mean",
         "var - Compute Variance",
         "skewness - Compute Skewness",
@@ -146,7 +146,7 @@ function()
     Label = "Stylized Facts of Returns"
     subLabel = c(
         "* Demo tS: x = NYSE Daily Returns",
-        "__________________________________________",
+        "________________________________",
         "Taylor Effect", 
         "Long Memory Behavior",
         "Log PDF Plot",
@@ -163,7 +163,7 @@ function()
     addToolbarMenu(fBasicsMenu, Label, subLabel, Command)
 
     # Add Menu:
-    Label = "________________________________"
+    Label = "__________________________"
     subLabel = 
         NULL
     Command = 
@@ -174,7 +174,7 @@ function()
     Label = "Normality Tests"
     subLabel = c(
         "* Demo tS: x = SP500 Monthly Returns",
-        "__________________________________________",
+        "____________________________________",
         "Kolmogorov-Smirnov Normality Test",
         "Shapiro-Wilk Normality Test", 
         "Jarque-Bera Normality Test",
@@ -202,7 +202,7 @@ function()
     Label = "Bivariate Sample Tests"
     subLabel = c(
         "* Demo tS: x = MSFT|SP500 Monthly Returns",
-        "__________________________________________",
+        "_________________________________________",
         "Kolmogorov-Smirnov Test",
         "Location: Unpaired t-Test",
         "Location: Kruskal-Wallis Test",

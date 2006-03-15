@@ -105,6 +105,28 @@ function()
 # ------------------------------------------------------------------------------
 
 
+.fData.spcDaily = 
+function()
+{   # A function implemented by Diethelm Wuertz
+
+    # SPC 500 Open-High-Low-Close:
+    myFunction = function(object2x, report) {
+        data(spc1970)
+        object <<- as.timeSeries(spc1970[-(1:6319), ])
+        if (report) tkTitle(paste(" SPC 500 Daily OHLC Demo Data Set"))
+        object }
+    tkExecute(
+        fun = myFunction,
+        params = list(
+            object2x = TRUE,
+            report = FALSE),
+        infoName = "SP500 Daily OHLC" )       
+}
+
+
+# ------------------------------------------------------------------------------
+
+
 .fData.sp500IndexMonthly = 
 function()
 {   # A function implemented by Diethelm Wuertz

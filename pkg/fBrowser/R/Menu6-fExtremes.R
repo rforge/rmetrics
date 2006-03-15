@@ -41,8 +41,8 @@ function()
     # Add Menu:
     Label = "Extremes Plots"
     subLabel = c(
-        "* Demo tS:: x = BMW Daily Returns",
-        "____________________________________",
+        "* Demo tS: x = BMW Daily Returns",
+        "__________________________________",
         "Plot of Empirical Distribution",
         "Plot of Normal Quantiles",
         "Plot of Pareto Quantiles",
@@ -79,7 +79,7 @@ function()
     }
         
     # Add Menu:
-    Label = "________________________________"
+    Label = "______________________"
     subLabel = 
         NULL
     Command = 
@@ -89,14 +89,14 @@ function()
     # Add Menu:
     Label = "Block Maxima"
     subLabel = c(
-        "* Demo tS:: x = BMW Daily Returns",
+        "* Demo tS: x = BMW Daily Returns",
         "* Extract Block Maxima Series",
         "* Extract Block Maxima Vector",
-        "____________________________________",
+        "_________________________________",
         "GEV Distribution",
         "GEV Simulation",     
         "GEV Parameter Estimation",
-        "____________________________________",
+        "_________________________________",
         "Return Level Plot",
         "Hill Plot", 
         "Shape Parameter Plots")
@@ -115,7 +115,7 @@ function()
     addToolbarMenu(fExtremesMenu, Label, subLabel, Command)        
 
     # Add Menu:
-    Label = "________________________________"
+    Label = "______________________"
     subLabel = 
         NULL
     Command = 
@@ -125,8 +125,8 @@ function()
     # Add Menu:
     Label = "Peaks Over Threshold"
     subLabel = c(
-        "* Demo tS:: x = BMW Daily Returns",
-        "____________________________________",
+        "* Demo tS: x = BMW Daily Returns",
+        "________________________________",
         "GPD Distribution",
         "GPD Simulation", 
         "GPD Parameter Estimation")

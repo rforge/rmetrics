@@ -48,7 +48,7 @@ function()
     Label = "Arma Modelling"
     subLabel = c(
         "* Demo tS: x = NYSE Returns",
-        "__________________________________________",
+        "_______________________________",
         "ARMA Series Simulation", 
         "ARMA Parameter Estimation",
         "ARMA Forecasting")
@@ -65,11 +65,11 @@ function()
     Label = "Garch Modelling"
     subLabel = c(
         "* Demo tS: x = DEMGBP Daily Returns",
-        "__________________________________________",
+        "_____________________________________",
         "GARCH Series Simulation", 
         "GARCH Parameter Estimation",
         "GARCH Forecasting",
-        "__________________________________________",
+        "_____________________________________",
         "Conditional Distribution Slider",
         "Conditional Distribution Fit")
     Command = c(
@@ -108,7 +108,7 @@ function()
     subLabel = c(
         # runs Test goes here ?
         "* Demo tS: x - NYSE Daily Returns",
-        "__________________________________________",
+        "_________________________________",
         "BDS Test", 
         "Teraesvirta NN Test", 
         "White NN Test")
@@ -126,10 +126,10 @@ function()
     subLabel = c(
         "* Demo tS: x - has Unit Root",
         "* Demo tS: x - has no Unit Root",
-        "__________________________________________",
+        "___________________________________",
         "Augmented Dickey-Fuller Test",
         "McKinnon's ADF Test",
-        "____________________________________[urca]",
+        "______________________________[urca]",
         "Elliott-Rothenberg-Stock Test",
         "KPSS unit root test for stationarity",
         "Phillips-Perron test for unit roots",
