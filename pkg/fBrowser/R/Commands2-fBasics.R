@@ -135,7 +135,311 @@ function()
 
 
 ################################################################################
-# Basic Statistics
+# Time Series Plots
+
+
+.fBasics.PlotFunctions.plot = 
+function() 
+{   # A function implemented by Diethelm Wuertz
+    
+    # 1D: Time Series Plot:
+    helpTopic <<- "plot"
+    myFunction = function(series, type, col, xlab, ylab, par, grid) {
+        x = tkEval(series)
+        tkEval(par)
+        plot(x, type = type, col = col, xlab = xlab, ylab = ylab)
+        # title(main = paste("\n\n", plotTitle, sep = "")) 
+        if (grid) grid()}
+    tkExecute(
+        fun = myFunction,
+        params = list(
+            series = "x",
+            type = "l",
+            col = "steelblue",
+            xlab = "Index",
+            ylab = "Series",
+            par = "par(mfrow=c(1,1))",
+            grid = FALSE ),
+        infoName = "Series Plot")       
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.fBasics.PlotFunctions.acfPlot = 
+function() 
+{   # A function implemented by Diethelm Wuertz
+    
+    # 1D: ACF Plot:
+    helpTopic <<- "acf"
+    myFunction = function(series, par, grid) {
+        x = tkEval(series)
+        tkEval(par)
+        acfPlot(x)
+        # title(main = paste("\n\n", plotTitle, sep = ""))
+        if (grid) grid() }
+    tkExecute(
+        fun = myFunction,
+        params = list(
+            series = "x",
+            par = "par(mfrow=c(1,1))",
+            grid = "FALSE"),
+        infoName = "ACF Plot" )            
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.fBasics.PlotFunctions.pacfPlot = 
+function() 
+{   # A function implemented by Diethelm Wuertz
+    
+    # 1D: PACF Plot:
+    helpTopic <<- "acf"
+    myFunction = function(series, par, grid) {
+        x = tkEval(series)
+        tkEval(par)
+        pacfPlot(x)
+        # title(main = paste("\n\n", plotTitle, sep = ""))
+        if (grid) grid() }
+    tkExecute(
+        fun = myFunction,
+        params = list(
+            series = "x",
+            par = "par(mfrow=c(1,1))",
+            grid = TRUE),
+        infoName = "PACF Plot" )            
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.fBasics.PlotFunctions.histPlot = 
+function() 
+{   # A function implemented by Diethelm Wuertz
+    
+    # 1D: Histogram Plot:
+    helpTopic <<- "hist"
+    myFunction = function(series, par) {
+        x = tkEval(series)
+        tkEval(par)
+        histPlot(x)
+        # title(main = paste("\n\n", plotTitle, sep = "")) 
+        }
+    tkExecute(
+        fun = myFunction,
+        params = list(
+            series = "x",
+            par = "par(mfrow=c(1,1))" ),
+        infoName = "Histogram Plot" )       
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.fBasics.PlotFunctions.bivariatePlot = 
+function() 
+{   # A function implemented by Diethelm Wuertz
+  
+    # 2D: Series Plot:
+    helpTopic <<- "plot"
+    myFunction = function(series, par) {
+        x = tkEval(series)
+        tkEval(par)
+        plot(x, xlab = "", ylab = "")
+        # title(main = paste("\n\n", plotTitle, sep = "")) 
+        }
+    tkExecute(
+        fun = myFunction,
+        params = list(
+            series = "x",
+            par = "par(mfrow=c(1,1))" ),
+        infoName = "2D Series Plot" )       
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.fBasics.PlotFunctions.scatterPlot = 
+function() 
+{   # A function implemented by Diethelm Wuertz
+    
+    # 2D: Scatter Diagramm Plot:
+    helpTopic <<- "plot"
+    myFunction = function(series, par) {
+        x = tkEval(series)
+        tkEval(par)
+        plot(as.vector(x[, 1]), as.vector(x[,2]),
+            xlab = x@units[1], ylab = x@units[2], 
+            pch = 19, col  = "steelblue")
+        # title(main = paste("\n\n", plotTitle, sep = "")) 
+        }
+    tkExecute(
+        fun = myFunction,
+        params = list(
+            series = "x",
+            par = "par(mfrow=c(1,1))" ),
+        infoName = "Scatter Diagram Plot" )         
+}
+
+
+################################################################################
+# Stylized Facts
+
+
+.fBasics.StylizedFacts.teffectPlot =  
+function() 
+{   # A function implemented by Diethelm Wuertz
+
+    # Taylor Effect:
+    helpTopic <<- "teffectPlot"
+    myFunction = function(series, deltas, lag.max, standardize, 
+        doplot, par, grid, object2x, report) {
+        x = tkEval(series)
+        deltas = eval(parse(text = deltas))
+        object <<- teffectPlot(as.vector(x), deltas = deltas, 
+            lag.max = lag.max, standardize = standardize) 
+        if (doplot) tkEval(par)
+        if (grid) grid()
+        object }
+    tkExecute(
+        fun = myFunction,
+        params = list(
+            series = "x",
+            deltas = "seq(0.2,3,by=0.05)",
+            lag.max = 20,
+            standardize = TRUE,
+            doplot = TRUE,
+            par = "par(mfrow=c(1,1))",
+            grid = FALSE,
+            object2x = FALSE,
+            report = FALSE ),
+        infoName = "Taylor Effect Plot" ) 
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.fBasics.StylizedFacts.lmacfPlot =  
+function() 
+{   # A function implemented by Diethelm Wuertz
+    
+    # Long Memory Behaviour:
+    helpTopic <<- "lmacfPlot"
+    myFunction = function(series, lag.max, ci, doplot, par, object2x, report) {
+        x = tkEval(series)
+        lag.max = eval(parse(text = lag.max))
+        object <<- lmacfPlot(abs(as.vector(x))) 
+        if (doplot) tkEval(par)
+        object }
+    tkExecute(
+        fun = myFunction,
+        params = list(
+            series = "x",
+            lag.max = "max(2, floor(10*log10(length(x))))",
+            ci = 0.95,
+            doplot = TRUE,
+            par = "par(mfrow=c(1,1))",
+            object2x = FALSE,
+            report = FALSE ),
+        infoName = "Long Memory Plot" ) 
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.fBasics.StylizedFacts.logpdfPlot =  
+function() 
+{   # A function implemented by Diethelm Wuertz
+    
+    # Log PDF Plot:
+    helpTopic <<- "logpdfPlot"
+    myFunction = function(series, doplot, par, grid, object2x, report) {
+        x = tkEval(series)
+        object <<- logpdfPlot(abs(as.vector(x))) 
+        if (doplot) tkEval(par)
+        if (grid) grid()
+        object }
+    tkExecute(
+        fun = myFunction,
+        params = list(
+            series = "x",
+            doplot = TRUE,
+            par = "par(mfrow=c(1,1))",
+            grid = TRUE,
+            object2x = FALSE,
+            report = FALSE ),
+        infoName = "Log PDF Plot" ) 
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.fBasics.StylizedFacts.qqgaussPlot =  
+function() 
+{   # A function implemented by Diethelm Wuertz
+
+    # Normal QQ Plot:
+    helpTopic <<- "qqgaussPlot"
+    myFunction = function(series, span, doplot, par, object2x, report) {
+        x = tkEval(series)
+        object <<- qqgaussPlot(as.vector(x), span = span) 
+        if (doplot) tkEval(par)
+        object }
+    tkExecute(
+        fun = myFunction,
+        params = list(
+            series = "x",
+            span = 5,
+            doplot = TRUE,
+            par = "par(mfrow=c(1,1))",
+            object2x = FALSE,
+            report = FALSE ),
+        infoName = "Normal QQ Plot" ) 
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.fBasics.StylizedFacts.scalinglawPlot =  
+function() 
+{   # A function implemented by Diethelm Wuertz
+ 
+    # Scaling Law Plot:
+    helpTopic <<- "scalinglawPlot"
+    myFunction = function(series, span, doplot, par, object2x, report) {
+        x = tkEval(series)
+        if (span == "NULL") {
+            span = ceiling(log(length(as.vector(x))/252)/log(2))
+        } else {
+            span = as.numeric(span)
+        }
+        object <<- scalinglawPlot(x, span = span) 
+        object }
+    tkExecute(
+        fun = myFunction,
+        params = list(
+            series = "x",
+            span = "NULL",
+            doplot = TRUE,
+            par = "par(mfrow=c(1,1))",
+            object2x = FALSE,
+            report = FALSE ),
+        infoName = "Scaling Law Plot" ) 
+}
+
+
+################################################################################
+# Time Series Statistics
 
 
 .fBasics.BasicStatistics.mean = 
@@ -194,6 +498,7 @@ function()
     helpTopic <<- "skewness"
     myFunction = function(series, na.rm, method, object2x, report) {
         x = tkEval(series)
+        method = tkSplit(method)
         object <<- c(skewness = skewness(as.vector(x), 
             na.rm = na.rm, method = method))
         attr(object, "method") <<- method
@@ -204,7 +509,7 @@ function()
         params = list(
             series = "x",
             na.rm = FALSE,
-            method = "moment",
+            method = "moment & fisher",
             object2x = FALSE,
             report = TRUE),
         infoName = "Skewness" )
@@ -222,6 +527,7 @@ function()
     helpTopic <<- "kurtosis"
     myFunction = function(series, na.rm, method, object2x, report) {
         x = tkEval(series)
+        method = tkSplit(method)
         object <<- c(kurtosis = kurtosis(as.vector(x), 
             na.rm = na.rm, method = method))
         attr(object, "method") <<- method
@@ -232,7 +538,7 @@ function()
         params = list(
             series = "x",
             na.rm = FALSE,
-            method = "excess",
+            method = "excess & moment & fisher",
             object2x = FALSE,
             report = TRUE),
         infoName = "Kurtosis" )
@@ -272,157 +578,20 @@ function()
     
     # Basic Statistics:
     helpTopic <<- "basicStats"
-    myFunction = function(series, object2x, report) {
+    myFunction = function(series, ci, column, object2x, report) {
         x = tkEval(series)
-        object <<- basicStats(as.vector(x), ci = 0.95) 
+        object <<- basicStats(as.vector(x), ci, column) 
         if (report) tkTitle("Basic Statistis")
         object }
     tkExecute(
         fun = myFunction,
         params = list(
             series = "x",
+            ci = 0.95,
+            column = 1,
             object2x = FALSE,
             report = TRUE),
         infoName = "Basic Statistics" )     
-}
-
-
-################################################################################
-# Basic Plots
-
-
-.fBasics.PlotFunctions.plot = 
-function() 
-{   # A function implemented by Diethelm Wuertz
-    
-    # 1D: Time Series Plot:
-    helpTopic <<- "plot"
-    myFunction = function(series, type, col, xlab, ylab, grid) {
-        x = tkEval(series)
-        plot(x, type = type, col = col, xlab = xlab, ylab = ylab)
-        title(main = paste("\n\n", plotTitle, sep = "")) 
-        if (grid) grid()}
-    tkExecute(
-        fun = myFunction,
-        params = list(
-            series = "x",
-            type = "l",
-            col = "steelblue",
-            xlab = "Index",
-            ylab = "Series",
-            grid = FALSE ),
-        infoName = "Series Plot")       
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.fBasics.PlotFunctions.acfPlot = 
-function() 
-{   # A function implemented by Diethelm Wuertz
-    
-    # 1D: ACF Plot:
-    helpTopic <<- "acf"
-    myFunction = function(series, grid) {
-        x = tkEval(series)
-        acfPlot(x)
-        title(main = paste("\n\n", plotTitle, sep = ""))
-        if (grid) grid() }
-    tkExecute(
-        fun = myFunction,
-        params = list(
-            series = "x",
-            grid = "FALSE"),
-        infoName = "ACF Plot" )            
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.fBasics.PlotFunctions.pacfPlot = 
-function() 
-{   # A function implemented by Diethelm Wuertz
-    
-    # 1D: PACF Plot:
-    helpTopic <<- "acf"
-    myFunction = function(series, grid) {
-        x = tkEval(series)
-        pacfPlot(x)
-        title(main = paste("\n\n", plotTitle, sep = ""))
-        if (grid) grid() }
-    tkExecute(
-        fun = myFunction,
-        params = list(
-            series = "x",
-            grid = TRUE),
-        infoName = "PACF Plot" )            
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.fBasics.PlotFunctions.histPlot = 
-function() 
-{   # A function implemented by Diethelm Wuertz
-    
-    # 1D: Histogram Plot:
-    helpTopic <<- "hist"
-    myFunction = function(series) {
-        x = tkEval(series)
-        histPlot(x)
-        title(main = paste("\n\n", plotTitle, sep = "")) }
-    tkExecute(
-        fun = myFunction,
-        params = list(
-            series = "x"),
-        infoName = "Histogram Plot" )       
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.fBasics.PlotFunctions.bivariatePlot = 
-function() 
-{   # A function implemented by Diethelm Wuertz
-  
-    # 2D: Series Plot:
-    helpTopic <<- "plot"
-    myFunction = function(series) {
-        x = tkEval(series)
-        plot(x, xlab = "", ylab = "")
-        title(main = paste("\n\n", plotTitle, sep = "")) }
-    tkExecute(
-        fun = myFunction,
-        params = list(
-            series = "x"),
-        infoName = "2D Series Plot" )       
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.fBasics.PlotFunctions.scatterPlot = 
-function() 
-{   # A function implemented by Diethelm Wuertz
-    
-    # 2D: Scatter Diagramm Plot:
-    helpTopic <<- "plot"
-    myFunction = function(series) {
-        x = tkEval(series)
-        plot(as.vector(x[, 1]), as.vector(x[,2]),
-            xlab = x@units[1], ylab = x@units[2], 
-            pch = 19, col  = "steelblue")
-        title(main = paste("\n\n", plotTitle, sep = "")) }
-    tkExecute(
-        fun = myFunction,
-        params = list(
-            series = "x"),
-        infoName = "Scatter Diagram Plot" )         
 }
 
 
@@ -450,32 +619,6 @@ function()
             object2x = TRUE,
             report = TRUE),
         infoName = "Normal RVs" )  
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.fBasics.ReturnDistributions.rnormSlider = 
-function() 
-{   # A function implemented by Diethelm Wuertz
-    
-    # Normal Slider:
-    helpTopic <<- "dnorm"
-    .normSlider(GenerateRandomNumbers = TRUE)
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.fBasics.ReturnDistributions.dnormSlider = 
-function() 
-{   # A function implemented by Diethelm Wuertz
-
-    # Normal Slider:
-    helpTopic <<- "dnorm"
-    .normSlider()
 }
 
 
@@ -510,31 +653,6 @@ function()
 
 # ------------------------------------------------------------------------------
 
-.fBasics.ReturnDistributions.rhypSlider = 
-function() 
-{   # A function implemented by Diethelm Wuertz
-    
-    # Hyperbolic Slider:
-    helpTopic <<- "dhyp"
-    .hypSlider(GenerateRandomNumbers = TRUE)
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.fBasics.ReturnDistributions.dhypSlider = 
-function() 
-{   # A function implemented by Diethelm Wuertz
-
-    # Hyperbolic Slider:
-    helpTopic <<- "dhyp"
-    .hypSlider()
-}
-
-
-# ------------------------------------------------------------------------------
-
 
 .fBasics.ReturnDistributions.rnig = 
 function() 
@@ -564,32 +682,6 @@ function()
 # ------------------------------------------------------------------------------
 
 
-.fBasics.ReturnDistributions.rnigSlider = 
-function() 
-{   # A function implemented by Diethelm Wuertz
-
-    # Normal Inverse Gaussian Slider:
-    helpTopic <<- "dnig"
-    .nigSlider(GenerateRandomNumbers = TRUE)
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.fBasics.ReturnDistributions.dnigSlider = 
-function() 
-{   # A function implemented by Diethelm Wuertz
-
-    # Normal Inverse Gaussian Slider:
-    helpTopic <<- "dnig"
-    .nigSlider()  
-}
-
-
-# ------------------------------------------------------------------------------
-
-
 .fBasics.ReturnDistributions.rsymstb = 
 function() 
 {   # A function implemented by Diethelm Wuertz
@@ -607,32 +699,6 @@ function()
             object2x = TRUE,
             report = TRUE),
         infoName = "Symmetric Stable RVs" )  
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.fBasics.ReturnDistributions.rsymstbSlider = 
-function() 
-{   # A function implemented by Diethelm Wuertz
-    
-    # Symmetric Stable Slider:
-    helpTopic <<- "dsymstb"
-    .symstbSlider(GenerateRandomNumbers = TRUE)
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.fBasics.ReturnDistributions.dsymstbSlider = 
-function() 
-{   # A function implemented by Diethelm Wuertz
-    
-    # Symmetric Stable Slider:
-    helpTopic <<- "dsymstb"
-    .symstbSlider()
 }
 
 
@@ -669,96 +735,52 @@ function()
 # ------------------------------------------------------------------------------
 
 
-.fBasics.ReturnDistributions.rstableSlider = 
+.fBasics.ReturnDistributions.distSlider = 
 function() 
 {   # A function implemented by Diethelm Wuertz
     
-    # Stable Slider:
-    helpTopic <<- "dstable"
-    .stableSlider(GenerateRandomNumbers = TRUE)
+    # RVS Sliders:
+    helpTopic <<- ""
+    myFunction = function(dist, object2x, report) {
+        dist = tkSplit(dist)
+        fun = match.fun(paste(dist, "Slider", sep = ""))
+        object <<- fun() 
+        object }
+    tkExecute(
+        fun = myFunction,
+        params = list(
+            dist = "hyp & nig & symstb & stable",
+            object2x = FALSE,
+            report = FALSE ),
+        infoName = "RVs Slider" ) 
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-.fBasics.ReturnDistributions.dstableSlider = 
+.fBasics.ReturnDistributions.distFit = 
 function() 
 {   # A function implemented by Diethelm Wuertz
     
-    # Stable Slider:
-    helpTopic <<- "dstable"
-    .stableSlider()
-}
-
-
-################################################################################
-# Distribution Fits
-
-
-.fBasics.DistributionFits.normFit = 
-function() 
-{   # A function implemented by Diethelm Wuertz
-    
-    # Normal Distribution:
-    helpTopic <<- "normFit"
-    myFunction = function(series, object2x, report) {
-        x = as.vector(eval(parse(text = series)))
-        object <<- list(estimate = c(mean = mean(x), sd = sd(x))) 
-        object }
-    tkExecute(
-        fun = myFunction,
-        params = list(
-            series = "x",
-            object2x = FALSE,
-            report = TRUE),
-        infoName = "Normal Fit" )      
-} 
-
-
-# ------------------------------------------------------------------------------
-
-
-.fBasics.DistributionFits.hypFit = 
-function() 
-{   # A function implemented by Diethelm Wuertz
-    
-    # Hyperbolic Distribution:
-    helpTopic <<- "hypFit"
-    myFunction = function(series, object2x, report) {
+    # RVS Sliders:
+    helpTopic <<- ""
+    myFunction = function(series, dist, doplot, par, object2x, report) {
         x = tkEval(series)
-        object <<- hypFit(x)
+        dist = tkSplit(dist)
+        fun = match.fun(paste(dist, "Fit", sep = ""))
+        object <<- fun(x, doplot = doplot) 
         object }
     tkExecute(
         fun = myFunction,
         params = list(
             series = "x",
+            dist = "hyp & nig",
+            doplot = TRUE,
+            par = "par(mfrow=c(1,1))",
             object2x = FALSE,
-            report = TRUE),
-        infoName = "Hyperbolic Fit" ) 
-} 
-
-
-# ------------------------------------------------------------------------------
-
-
-.fBasics.DistributionFits.nigFit = 
-function() 
-{   # A function implemented by Diethelm Wuertz
-
-    # Normal Inverse Gaussian Distribution:
-    helpTopic <<- "nigFit"
-    myFunction = function(series, object2x, report) {
-        x = tkEval(series)
-        object <<- nigFit(x)
-        object }
-    tkExecute(
-        fun = myFunction,
-        params = list(
-            series = "x",
-            object2x = FALSE,
-            report = TRUE),
-        infoName = "Normal Inverse Gaussian Fit" )
+            report = FALSE ),
+        infoName = "RVs Fit" ) 
 }
 
 
@@ -1220,135 +1242,6 @@ function()
             object2x = FALSE,
             report = TRUE ),
         infoName = "Correlation: Spearman's rho Test" )
-}
-
-
-################################################################################
-# Stylized Facts
-
-
-.fBasics.StylizedFacts.teffectPlot =  
-function() 
-{   # A function implemented by Diethelm Wuertz
-
-    # Taylor Effect:
-    helpTopic <<- "teffectPlot"
-    myFunction = function(series, deltas, lag.max, standardize, 
-        object2x, report) {
-        x = tkEval(series)
-        deltas = eval(parse(text = deltas))
-        object <<- teffectPlot(as.vector(x), deltas = deltas, 
-            lag.max = lag.max, standardize = standardize) 
-        object }
-    tkExecute(
-        fun = myFunction,
-        params = list(
-            series = "x",
-            deltas = "seq(0.2,3,by=0.2)",
-            lag.max = 10,
-            standardize = TRUE,
-            object2x = FALSE,
-            report = FALSE ),
-        infoName = "Taylor Effect Plot" ) 
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.fBasics.StylizedFacts.lmacfPlot =  
-function() 
-{   # A function implemented by Diethelm Wuertz
-    
-    # Long Memory Behaviour:
-    helpTopic <<- "lmacfPlot"
-    myFunction = function(series, lag.max, ci, object2x, report) {
-        x = tkEval(series)
-        lag.max = eval(parse(text = lag.max))
-        object <<- lmacfPlot(abs(as.vector(x))) 
-        object }
-    tkExecute(
-        fun = myFunction,
-        params = list(
-            series = "x",
-            lag.max = "max(2, floor(10*log10(length(x))))",
-            ci = 0.95,
-            object2x = FALSE,
-            report = FALSE ),
-        infoName = "Long Memory Plot" ) 
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.fBasics.StylizedFacts.logpdfPlot =  
-function() 
-{   # A function implemented by Diethelm Wuertz
-    
-    # Log PDF Plot:
-    helpTopic <<- "logpdfPlot"
-    myFunction = function(series, object2x, report) {
-        x = tkEval(series)
-        object <<- logpdfPlot(abs(as.vector(x))) 
-        object }
-    tkExecute(
-        fun = myFunction,
-        params = list(
-            series = "x",
-            object2x = FALSE,
-            report = FALSE ),
-        infoName = "Log PDF Plot" ) 
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.fBasics.StylizedFacts.qqgaussPlot =  
-function() 
-{   # A function implemented by Diethelm Wuertz
-
-    # Normal QQ Plot:
-    helpTopic <<- "qqgaussPlot"
-    myFunction = function(series, span, object2x, report) {
-        x = tkEval(series)
-        object <<- qqgaussPlot(as.vector(x), span = span) 
-        object }
-    tkExecute(
-        fun = myFunction,
-        params = list(
-            series = "x",
-            span = 5,
-            object2x = FALSE,
-            report = FALSE ),
-        infoName = "Normal QQ Plot" ) 
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.fBasics.StylizedFacts.scalinglawPlot =  
-function() 
-{   # A function implemented by Diethelm Wuertz
- 
-    # Scaling Law Plot:
-    helpTopic <<- "scalinglawPlot"
-    myFunction = function(series, span, object2x, report) {
-        x = tkEval(series)
-        if (span == "NULL") span = ceiling(log(length(as.vector(x))/252)/log(2))
-        print(span)
-        object <<- scalinglawPlot(x, span = span) 
-        object }
-    tkExecute(
-        fun = myFunction,
-        params = list(
-            series = "x",
-            span = "NULL",
-            object2x = FALSE,
-            report = FALSE ),
-        infoName = "Scaling Law Plot" ) 
 }
 
 

@@ -44,6 +44,12 @@ function(what)
     sub(" ", "", strsplit(what, "&")[[1]][1])
 }
 
+
+tkSeparator =
+function() {
+    invisible()
+}
+
    
 fBrowser = .gui =
 function(menuToolbar =c("File", "fBasics", "fCalendar", "fSeries",

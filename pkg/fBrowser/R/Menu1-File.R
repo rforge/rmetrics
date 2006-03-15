@@ -28,10 +28,7 @@
     
     
 ################################################################################
-# FUNCTION:
-#  .File.PopupMenu
-################################################################################
-
+# File Popup Menu
 
 
 .File.PopupMenu =
@@ -63,6 +60,14 @@ function()
     addToolbarMenu(fileMenu, Label, subLabel, Command)  
     
     # Add Menu:
+    Label = "________________________________"
+    subLabel = 
+        NULL
+    Command = 
+        "tkSeparator"
+    addToolbarMenu(fileMenu, Label, subLabel, Command) 
+    
+    # Add Menu:
     Label = "Install Package() ..."
     subLabel = 
         NULL
@@ -78,6 +83,14 @@ function()
         ".menuUpdatePackages"
     addToolbarMenu(fileMenu, Label, subLabel, Command)  
    
+    # Add Menu:
+    Label = "________________________________"
+    subLabel = 
+        NULL
+    Command = 
+        "tkSeparator"
+    addToolbarMenu(fileMenu, Label, subLabel, Command) 
+    
     # Add Menu:          
     Label = "fLibrary Demos"
     subLabel = c(
@@ -96,6 +109,14 @@ function()
         "xmpfOptions")
     addToolbarMenu(fileMenu, Label, subLabel, Command)     
         
+    # Add Menu:
+    Label = "________________________________"
+    subLabel = 
+        NULL
+    Command = 
+        "tkSeparator"
+    addToolbarMenu(fileMenu, Label, subLabel, Command) 
+    
     # Add Menu:
     Label = "Quit"
     subLabel = 

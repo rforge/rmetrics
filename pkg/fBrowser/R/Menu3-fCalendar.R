@@ -108,7 +108,15 @@ function()
     addToolbarMenu(fCalendarMenu, Label, subLabel, Command)
     
     # Add Menu:
-    Label = "Compose and Modify a Time Series Object"     
+    Label = "________________________________"
+    subLabel = 
+        NULL
+    Command = 
+        "tkSeparator"
+    addToolbarMenu(fCalendarMenu, Label, subLabel, Command) 
+    
+    # Add Menu:
+    Label = "Compose and Modify a Time Series"     
     subLabel = c(
         "* Example timeSeries: x = MSFT|SP500 Returns",
         "Create a timSeries Object",
@@ -132,6 +140,14 @@ function()
         ".fCalendar.TimeSeriesClass.returnSeries",
         ".fCalendar.TimeSeriesClass.revSeries")
     addToolbarMenu(fCalendarMenu, Label, subLabel, Command)    
+    
+    # Add Menu:
+    Label = "________________________________"
+    subLabel = 
+        NULL
+    Command = 
+        "tkSeparator"
+    addToolbarMenu(fCalendarMenu, Label, subLabel, Command) 
     
     # Add Menu:
     Label = "Holiday Calendars"

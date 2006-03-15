@@ -2417,7 +2417,7 @@ function()
     # Menu:
     helpTopic <<- ""
     tkTitle("Kummer Function Slider")
-    kummerSlider()
+    .kummerSlider()
 }
     
 
@@ -2431,7 +2431,7 @@ function()
     # Menu:
     helpTopic <<- ""
     tkTitle("Whittaker Function Slider")
-    whittakerSlider()
+    .whittakerSlider()
 
 }
 
@@ -2447,7 +2447,7 @@ function()
     # Menu:
     helpTopic <<- ""
     tkTitle("Bessel Function Slider")
-    besselSlider()
+    .besselSlider()
 }
 
 

@@ -64,6 +64,7 @@ function()
         ".fExtremes.ExtremesPlots.xacf")
     addToolbarMenu(fExtremesMenu, Label, subLabel, Command)
     
+    if (FALSE) {
     # Add Menu:
     Label = "Data Preprocessing"
     subLabel = c(
@@ -73,7 +74,16 @@ function()
         ".fData.bmwDaily",
         ".fExtremes.DataPreprocessing.findThreshold")
     addToolbarMenu(fExtremesMenu, Label, subLabel, Command)
+    }
         
+    # Add Menu:
+    Label = "________________________________"
+    subLabel = 
+        NULL
+    Command = 
+        "tkSeparator"
+    addToolbarMenu(fExtremesMenu, Label, subLabel, Command) 
+    
     # Add Menu:
     Label = "Block Maxima"
     subLabel = c(
@@ -98,6 +108,14 @@ function()
         ".fExtremes.MDA.shaparmPlot") 
     addToolbarMenu(fExtremesMenu, Label, subLabel, Command)        
 
+    # Add Menu:
+    Label = "________________________________"
+    subLabel = 
+        NULL
+    Command = 
+        "tkSeparator"
+    addToolbarMenu(fExtremesMenu, Label, subLabel, Command) 
+    
     # Add Menu:
     Label = "Peaks Over Threshold"
     subLabel = c(

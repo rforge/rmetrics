@@ -76,6 +76,14 @@ function()
         ".fSeries.GarchDistributions.conddistSlider",
         ".fSeries.GarchDistributions.conddistFit")
     addToolbarMenu(fSeriesMenu, Label, subLabel, Command)
+          
+    # Add Menu:
+    Label = "________________________________"
+    subLabel = 
+        NULL
+    Command = 
+        "tkSeparator"
+    addToolbarMenu(fSeriesMenu, Label, subLabel, Command) 
       
     if (FALSE) {
     # Add Menu:
@@ -110,8 +118,10 @@ function()
     subLabel = c(
         "* Example timeSeries: x - has Unit Root",
         "* Example timeSeries: x - has no Unit Root",
+        "__________________________________________",
         "Augmented Dickey-Fuller Test",
         "McKinnon's ADF Test",
+        "____________________________________[urca]",
         "Elliott-Rothenberg-Stock Test",
         "KPSS unit root test for stationarity",
         "Phillips-Perron test for unit roots",
@@ -120,14 +130,24 @@ function()
     Command = c(
         ".fSeries.UnitRootTests.hasUnitRoot",
         ".fSeries.UnitRootTests.hasNoUnitRoot",
+        "tkSeparator",
         ".fSeries.UnitRootTests.adfTest",
         ".fSeries.UnitRootTests.unitrootTest",
+        "tkSeparator",
         ".fSeries.UnitRootTests.urersTest",
         ".fSeries.UnitRootTests.urkpssTest",
         ".fSeries.UnitRootTests.urppTest",
         ".fSeries.UnitRootTests.urspTest",
         ".fSeries.UnitRootTests.urzaTest")
     addToolbarMenu(fSeriesMenu, Label, subLabel, Command)
+    
+    # Add Menu:
+    Label = "________________________________"
+    subLabel = 
+        NULL
+    Command = 
+        "tkSeparator"
+    addToolbarMenu(fSeriesMenu, Label, subLabel, Command) 
     
     # Add Menu:
     Label = "DATA: fSeries Time Series"

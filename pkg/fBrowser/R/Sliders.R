@@ -14,7 +14,7 @@
 ################################################################################
 
 
-gevSlider =  
+.gevSlider =  
 function(GenerateRandomNumbers = FALSE)
 {   # A function implemented by Diethelm Wuertz
 
@@ -89,7 +89,7 @@ function(GenerateRandomNumbers = FALSE)
 # ******************************************************************************
 
 
-gpdSlider = 
+.gpdSlider = 
 function(GenerateRandomNumbers = FALSE)
 {   # A function implemented by Diethelm Wuertz
 
@@ -165,7 +165,7 @@ function(GenerateRandomNumbers = FALSE)
 # ------------------------------------------------------------------------------
 
 
-unitrootSlider = 
+.unitrootSlider = 
 function()
 {   # A function implemented by Diethelm Wuertz
 
@@ -481,7 +481,7 @@ function(GenerateRandomNumbers = FALSE)
 ################################################################################
 
 
-heavisideSlider = 
+.heavisideSlider = 
 function()
 {   # A function implemented by Diethelm Wuertz
 
@@ -531,7 +531,7 @@ function()
 # ------------------------------------------------------------------------------
 
 
-besselSlider = 
+.besselSlider = 
 function()
 {   # A function implemented by Diethelm Wuertz
 
@@ -592,7 +592,7 @@ function()
 # ------------------------------------------------------------------------------
 
 
-kummerSlider = 
+.kummerSlider = 
 function()
 {   # A function implemented by Diethelm Wuertz
 
@@ -643,7 +643,7 @@ function()
 # ------------------------------------------------------------------------------
 
 
-whittakerSlider = 
+.whittakerSlider = 
 function()
 {   # A function implemented by Diethelm Wuertz
 

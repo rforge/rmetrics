@@ -77,8 +77,15 @@ function()
         ".fOptions.BinomialTree.1",
         ".fOptions.BinomialTree.2",
         ".fOptions.BinomialTree.3")
-    addToolbarMenu(fOptionsMenu, Label, subLabel, Command)
-    
+    addToolbarMenu(fOptionsMenu, Label, subLabel, Command) 
+        
+    # Add Menu:
+    Label = "________________________________"
+    subLabel = 
+        NULL
+    Command = 
+        "tkSeparator"
+    addToolbarMenu(fOptionsMenu, Label, subLabel, Command) 
     
     # Add Menu:
     Label = "Multiple Exercises Options"
@@ -162,8 +169,7 @@ function()
         ".fOptions.Barrier.7",
         ".fOptions.Barrier.8")
     addToolbarMenu(fOptionsMenu, Label, subLabel, Command)
-    
-    
+       
     # Add Menu:
     Label = "Binary Options"
     subLabel = c(
@@ -181,8 +187,7 @@ function()
         ".fOptions.Binary.5",
         ".fOptions.Binary.6")
    addToolbarMenu(fOptionsMenu, Label, subLabel, Command)
-    
-    
+        
     # Add Menu:
     Label = "Asian Options"
     subLabel = c(
@@ -194,8 +199,7 @@ function()
         ".fOptions.Asian.2",
         ".fOptions.Asian.3")
     addToolbarMenu(fOptionsMenu, Label, subLabel, Command)
-    
-    
+        
     # Add Menu:
     Label = "Currency Translated Options"
     subLabel = c(
@@ -209,7 +213,15 @@ function()
         ".fOptions.CurrencyTranslated.3",
         ".fOptions.CurrencyTranslated.4")
     addToolbarMenu(fOptionsMenu, Label, subLabel, Command)
+            
         
+    # Add Menu:
+    Label = "________________________________"
+    subLabel = 
+        NULL
+    Command = 
+        "tkSeparator"
+    addToolbarMenu(fOptionsMenu, Label, subLabel, Command) 
     
     # Add Menu:
     if (FALSE) {
@@ -275,22 +287,34 @@ function()
     Command = c(
        ".fOptions.ExponentialBM.1")
     addToolbarMenu(fOptionsMenu, Label, subLabel, Command) }
-        
+           
+    # Add Menu:
+    Label = "________________________________"
+    subLabel = 
+        NULL
+    Command = 
+        "tkSeparator"
+    addToolbarMenu(fOptionsMenu, Label, subLabel, Command) 
+    
     # Add Menu:
     Label = "Special Functions"
     subLabel = c(
-        "Plot Gamma Function",
-        "Plot Psi Function",
-        "Plot Complex Gamma Function",
+        "Gamma Function Plot",
+        "Psi Function Plot",
+        "Complex Gamma Function Plot",
+        "______________________________",
         "Kummer Function Slider",
         "Whittaker Function Slider",
+        "______________________________",
         "Bessel Function Slider")
     Command = c(
         ".fOptions.Gamma.1",
         ".fOptions.Gamma.2",
         ".fOptions.Gamma.3",
+        "tkSeparator",
         ".fOptions.Hypergeometric.1",
         ".fOptions.Hypergeometric.2",
+        "tkSeparator",
         ".fOptions.Bessel.1")
     addToolbarMenu(fOptionsMenu, Label, subLabel, Command)
         

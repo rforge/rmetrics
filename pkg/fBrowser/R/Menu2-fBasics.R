@@ -78,27 +78,39 @@ function()
         ".fBasics.PlotFunctions.scatterPlot")
     addToolbarMenu(fBasicsMenu, Label, subLabel, Command)
     
-     # Add Menu:
-    Label = "Stylized Facts"
+    # Add Menu:
+    Label = "________________________________"
+    subLabel = 
+        NULL
+    Command = 
+        "tkSeparator"
+    addToolbarMenu(fBasicsMenu, Label, subLabel, Command) 
+    
+    # Add Menu:
+    Label = "Distribution of Returns"
     subLabel = c(
-        "* Example timeSeries: x = NYSE Returns",
-        "Taylor Effect", 
-        "Long Memory Behavior",
-        "Log PDF Plot",
-        "Normal QQ Plot",
-        "Scaling Law Plot")
+        "* Example timeSeries: x - Daily NYSE Returns",
+        "Distribution Fit",
+        "Distribution Slider",
+        "Generate Normal RVs",
+        "Generate Hyperbolic RVs",
+        "Generate Normal Inveres Gaussian RVs",
+        "Generate Symmetric Stable RVs",
+        "Generate Stable RVs",
+        )    
     Command = c(
         ".fData.nyseDaily",
-        ".fBasics.StylizedFacts.teffectPlot",
-        ".fBasics.StylizedFacts.lmacfPlot",
-        ".fBasics.StylizedFacts.logpdfPlot",
-        ".fBasics.StylizedFacts.qqgaussPlot",
-        ".fBasics.StylizedFacts.scalinglawPlot")
-    addToolbarMenu(fBasicsMenu, Label, subLabel, Command)
-  
-        
-     # Add Menu:
-    Label = "Time Series Statistics"
+        ".fBasics.ReturnDistributions.distFit",
+        ".fBasics.ReturnDistributions.distSlider",
+        ".fBasics.ReturnDistributions.rnorm",
+        ".fBasics.ReturnDistributions.rhyp",
+        ".fBasics.ReturnDistributions.rnig",        
+        ".fBasics.ReturnDistributions.rsymstb",
+        ".fBasics.ReturnDistributions.rstable")
+    addToolbarMenu(fBasicsMenu, Label, subLabel, Command)      
+    
+    # Add Menu:
+    Label = "Basic Statistics of Returns"
     subLabel = c(
         "* Example timeSeries: x = SP500 Returns",
         "mean - Compute Mean",
@@ -115,52 +127,34 @@ function()
         ".fBasics.BasicStatistics.kurtosis",
         ".fBasics.BasicStatistics.summary",
         ".fBasics.BasicStatistics.basicStats")
-    addToolbarMenu(fBasicsMenu, Label, subLabel, Command)
+    addToolbarMenu(fBasicsMenu, Label, subLabel, Command)       
     
     # Add Menu:
-    Label = "Return Distributions"
+    Label = "Stylized Facts of Returns"
     subLabel = c(
-        "* Example timeSeries: x - Daily NYSE Returns",
-        "Generate Normal Random Numbers",
-        "... Random Variates Slider",
-        "... Distribution Slider",
-        "... Fit Normal Distribution",
-        "Generate Hyperbolic Random Numbers",
-        "... Random Variates Slider",
-        "... Distribution Slider",
-        "... Fit Hyperbolic Distribution",
-        "Generate Normal Inveres Gaussian Numbers",
-        "... Random Variates Slider",
-        "... Distribution Slider",
-        "... Fit Normal Inverse Gaussian",
-        "Generate Symmetric Stable Random Numbers",
-        "... Random Variates Slider",
-        "... Distribution Slider",
-        "Generate Stable Random Numbers",
-        "... Random Variates Slider",
-        "... Distribution Slider")
+        "* Example timeSeries: x = NYSE Returns",
+        "Taylor Effect", 
+        "Long Memory Behavior",
+        "Log PDF Plot",
+        "Normal QQ Plot",
+        "Scaling Law Plot")
     Command = c(
         ".fData.nyseDaily",
-        ".fBasics.ReturnDistributions.rnorm",
-        ".fBasics.ReturnDistributions.rnormSlider",
-        ".fBasics.ReturnDistributions.dnormSlider",
-        ".fBasics.DistributionFits.normFit",
-        ".fBasics.ReturnDistributions.rhyp",
-        ".fBasics.ReturnDistributions.rhypSlider",
-        ".fBasics.ReturnDistributions.dhypSlider",
-        ".fBasics.DistributionFits.hypFit",
-        ".fBasics.ReturnDistributions.rnig",
-        ".fBasics.ReturnDistributions.rnigSlider",
-        ".fBasics.ReturnDistributions.dnigSlider",
-        ".fBasics.DistributionFits.nigFit",
-        ".fBasics.ReturnDistributions.rsymstb",
-        ".fBasics.ReturnDistributions.rsymstbSlider",
-        ".fBasics.ReturnDistributions.dsymstbSlider",
-        ".fBasics.ReturnDistributions.rstable",
-        ".fBasics.ReturnDistributions.rstableSlider",
-        ".fBasics.ReturnDistributions.dstableSlider")
-    addToolbarMenu(fBasicsMenu, Label, subLabel, Command)             
+        ".fBasics.StylizedFacts.teffectPlot",
+        ".fBasics.StylizedFacts.lmacfPlot",
+        ".fBasics.StylizedFacts.logpdfPlot",
+        ".fBasics.StylizedFacts.qqgaussPlot",
+        ".fBasics.StylizedFacts.scalinglawPlot")
+    addToolbarMenu(fBasicsMenu, Label, subLabel, Command)
 
+    # Add Menu:
+    Label = "________________________________"
+    subLabel = 
+        NULL
+    Command = 
+        "tkSeparator"
+    addToolbarMenu(fBasicsMenu, Label, subLabel, Command) 
+    
     # Add Menu:   
     Label = "Normality Tests"
     subLabel = c(
