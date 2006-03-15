@@ -28,24 +28,8 @@
 
 
 ################################################################################
-
-   
-.classifyActiveDataSet = 
-function() 
-{   # A function implemented by Diethelm Wuertz
-
-    # FUNCTION:
-    
-    # Classify Active Data Set
-    output = capture.output(cat(class(x)[[1]], "\n\n"))
-    for (i in 1:length(output)) 
-        tkinsert(txt, "end", paste(output[i], "\n"))  
-}
-
-        
-
-# ------------------------------------------------------------------------------
-            
+# File Popup
+           
     
 .listActiveDataSet =  
 function() 
@@ -55,102 +39,76 @@ function()
     
     # List Active Data Set
     .showDataCmd(as.data.frame(x)) 
-}   
-
-
-# ******************************************************************************
-
-
-.plotActiveDataSet =  
-function() 
-{   # A function implemented by Diethelm Wuertz
-
-    # FUNCTION:
-    
-    # Plot Active Data Set:   
-    .fun <<- function(series, type, main, col, grid) {
-        x = tkEval(series)
-        plot(x = x, type = type, main = main, col = col)
-        grid = as.logical(grid)
-        if (grid) grid()
-        object = invisible()
-        object }
-    .objectMenu(
-        params = list(
-            series = "x",
-            type = "p",
-            main = "Series:x",
-            col = "steelblue",
-            grid = "TRUE"),
-        infoName = "",
-        tkoutput = FALSE)
-}   
-
-
-# ------------------------------------------------------------------------------
-
-
-.tsplotActiveDataSet =  
-function() 
-{   # A function implemented by Diethelm Wuertz
-
-    # FUNCTION:
-    
-    # Time Series Plot Active Data Set:
-    ts.plot(x)
-}  
-
-
-# ------------------------------------------------------------------------------
-
-
-.plottsActiveDataSet =  
-function() 
-{   # A function implemented by Diethelm Wuertz
-
-    # FUNCTION:
-    
-    # Plot Time Series Active Data Set:
-    plot.ts(x)
 }    
 
 
-# ******************************************************************************
+# ------------------------------------------------------------------------------
 
 
-.classifyActiveObject =
-function()
+.listObjects =  
+function() 
 {   # A function implemented by Diethelm Wuertz
 
     # FUNCTION:
     
-    # Classify Active Object
-    output = capture.output(class(object))
-    tkTitle("Classification of Active Object")
-    tkOutput(output)
-    tkDescription()
-}
-
-# ******************************************************************************      
+    # List Active Data Set
+    tkTitle("List of Objects")
+    tkOutput(capture.output(ls())) 
+}    
 
 
-.printActiveObject = 
-function()
+# ------------------------------------------------------------------------------
+
+
+.listTypeOfObjects =  
+function() 
 {   # A function implemented by Diethelm Wuertz
 
     # FUNCTION:
     
-    # Print Active Object
-    output = capture.output(object)
+    # List Active Data Set
+    tkTitle("List of Objects with Class Type")
+    List = ls()
+    L = length(List)
+    Type = NULL
+    for ( i in 1:L ) {
+        Type[i] = class(eval(parse(text = List[i])))
+    }
+    tkOutput(capture.output(data.frame(cbind(List, Type))))
+}    
+
+
+# ------------------------------------------------------------------------------
+   
+
+.menuInstallPackages =
+function()
+{    # A function implemented by Diethelm Wuertz
+
+     # FUNCTION:
     
-    # Title and Description are already captured in the output
-    tkOutput(output)
+     # Install:
+     utils:::menuInstallPkgs()
 }
 
 
-# ******************************************************************************
+# ------------------------------------------------------------------------------
+   
+
+.menuUpdatePackages =
+function()
+{    # A function implemented by Diethelm Wuertz
+
+     # FUNCTION:
     
+     # Update:
+     update.packages(ask='graphics')
+}
+ 
+
+# ------------------------------------------------------------------------------
     
+
 .quitBrowser =  
 function() 
 {   # A function implemented by Diethelm Wuertz
@@ -162,7 +120,7 @@ function()
 }       
 
 
-# ******************************************************************************
+################################################################################
 
         
 .openFile =  
@@ -170,9 +128,6 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # FUNCTION:
-    
-    # Settings
-    what <<- c("Read CSV File")
         
     # Open File:
     # Arguments - Read Table:

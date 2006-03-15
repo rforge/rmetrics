@@ -36,7 +36,8 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Simulate ARMA Process:
-    myFunction <<- function(ar, d, ma, n, object2x, report) {
+    helpTopic <<- "armaSim"
+    myFunction = function(ar, d, ma, n, object2x, report) {
         ar = as.numeric(unlist(strsplit(ar, ",")))
         d = as.numeric(d)
         ma = as.numeric(unlist(strsplit(ma, ",")))
@@ -66,7 +67,8 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Fit ARMA Process:
-    myFunction <<- function(formula, method, include.mean, doplot, 
+    helpTopic <<- "armaFit"
+    myFunction = function(formula, method, include.mean, doplot, 
         par, object2x, report) {
         formula = as.formula(formula)
         include.mean = as.logical(include.mean)
@@ -101,24 +103,26 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # ARMA Forecast:
-    myFunction = function(fit, n.ahead, n.back, conf, object2x, report) {
+    helpTopic <<- "armaFit"
+    myFunction = function(fit, n.ahead, n.back, conf, doplot, par,
+        object2x, report) {
         fit = eval(parse(text = as.character(fit)))
         conf = eval(parse(text = conf))
         object <<- predict.fARMA(object = fit, n.ahead = n.ahead, 
             n.back = n.back, conf = conf, doplot = TRUE, 
             doprint = TRUE) 
-        output = capture.output(object)
-        tkTitle("ARIMA Prediction")
-        tkOutput(output)
-        tkDescription(date())
+        if (report) tkTitle("ARMA Prediction")
+        if (doplot) tkEval(par)
         object }
     tkExecute(
         fun = myFunction,
         params = list(
-            fit = "fittedObject",
+            fit = "object",
             n.ahead = 10,
             n.back = 50,
             conf = "c(80, 95)",
+            doplot = TRUE,
+            par = "par(mfrow = c(1,1))",
             object2x = FALSE,
             report = TRUE ),
         infoName = "Predicted ARMA" )  
@@ -134,6 +138,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Simulate GARCH Process:
+    helpTopic <<- ""
     myFunction = function(model, n, n.start, presample, cond.dist,
         rseed, object2x, report) {
         model = eval(parse(text = model)) 
@@ -219,6 +224,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # ... Print Summary Report:
+    helpTopic <<- ""
     tkGetSummary(object)
 }
 
@@ -231,6 +237,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # GARCH Conditional Distribution Sliders:
+    helpTopic <<- ""
     myFunction = function(slider, object2x, report) {
         slider = tkSplit(slider)
         if (slider == "t") slider = "std"
@@ -255,6 +262,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # GARCH Conditional Distribution Fit:
+    helpTopic <<- ""
     myFunction = function(series, cond.dist, skew, object2x, report) {
         x = tkEval(series)
         cond.dist = tkSplit(cond.dist)
@@ -286,6 +294,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Fractional Gaussian Noise Simulation:
+    helpTopic <<- ""
     myFunction = function(n, H, method, object2x, report) {
         method = tkSplit(method) 
         object <<- fgnSim(n, H, method) 
@@ -310,6 +319,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Fractional Brownian Motion Simulation:
+    helpTopic <<- ""
     myFunction = function(n, H, method, object2x, report) {
         method = tkSplit(method) 
         object <<- fbmSim(n, H, method, waveJ, doplot = TRUE, fgn) 
@@ -337,6 +347,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Henon Map:
+    helpTopic <<- ""
     myFunction = function(n, a, b, start, par, oject2x, report) {
         parms = c(a = a, b = b)
         if (!is.numeric(start)) start = eval(parse(text = start))
@@ -366,6 +377,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Ikeda Map:
+    helpTopic <<- ""
     myFunction = function(n, a, b, start, par, object2x, report) {
         n = as.integer(n)
         parms = c(a = a, b = b, c = c)
@@ -396,6 +408,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Logistic Map:
+    helpTopic <<- ""
     myFunction = function(n, r, start, par, object2x, report) {
         n = as.integer(n)
         parms = c(r = as.numeric(r))
@@ -425,6 +438,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Lorentz Attractor:
+    helpTopic <<- ""
     myFunction = function(times, sigma, r, b, start, par, object2x, report) {
         times = tkEval(times)
         parms = c(sigma = sigma, r = r, b = b)
@@ -456,6 +470,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Roessler Attractor:
+    helpTopic <<- ""
     myFunction = function(times, a, b, c, start, par, object2x, report) {
         par(mfrow = c(3, 2), cex = 0.7)
         times = eval(parse(text = times))
@@ -488,6 +503,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # BDS NN Test:
+    helpTopic <<- ""
     myFunction = function(m, eps, object2x, report) {
         m = as.integer(m)
         if (eps == "NULL") eps = NULL
@@ -512,6 +528,7 @@ function()
     # FUNCTION:
     
     # Teraesvirta NN Test:
+    helpTopic <<- ""
     myFunction = function(lag, object2x, report) {
         lag = as.integer(lag)
         object <<- tnnTest(x = x, lag = lag, title = NULL, 
@@ -537,6 +554,7 @@ function()
     # FUNCTION:
     
     # White NN Test:
+    helpTopic <<- ""
     myFunction = function(lag, qstar, q, range, object2x, report) {
         lag = as.integer(lag)
         qstar = as.integer(qstar)
@@ -567,6 +585,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Output:
+    helpTopic <<- ""
     output = capture.output(.unitrootSlider())
     tkTitle(What)
     tkOutput(output)
@@ -583,6 +602,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Has Unit Root:
+    helpTopic <<- ""
     myFunction = function(n, as.ts, object2x, report) {
         ans = rnorm(n)
         if (as.ts) ans = as.ts(ans)
@@ -608,6 +628,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Has No Unit Root:
+    helpTopic <<- ""
     myFunction = function(n, as.ts, object2x, report) {
         ans = cumsum(c(0, rnorm(n))) 
         if (as.ts) ans = as.ts(ans)
@@ -633,6 +654,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # ADF Unit Root Test:
+    helpTopic <<- ""
     myFunction = function(series, lags, type, object2x, report) {
         x = tkEval(series)
         type = tkSplit(type)
@@ -658,6 +680,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # McKinnon ADF Unit Root Test:
+    helpTopic <<- ""
     myFunction = function(series, lags, type, object2x, report) {
         x = tkEval(series)
         type = tkSplit(type)
@@ -684,6 +707,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Elliott-Rothenberg-Stock Unit Root Test:
+    helpTopic <<- ""
     myFunction = function(series, type, model, lag.max, doplot, 
         object2x, report) {
         x = tkEval(series)
@@ -713,6 +737,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # "KPSS Unit Root Test
+    helpTopic <<- ""
     myFunction = function(series, lags, type, doplot, object2x, report) {
         x = tkEval(series)
         type = tkSplit(type)
@@ -740,6 +765,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Phillips-Perron Unit Root Test:
+    helpTopic <<- ""
     myFunction = function(series, lags, type, object2x, report) {
         x = tkEval(series)
         type = tkSplit(type)
@@ -769,6 +795,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Schmidt-Phillips Unit Root Test:
+    helpTopic <<- ""
     myFunction = function(series, type, pol.deg, signif, doplot, 
         object2x, report) {
         x = tkEval(series)
@@ -798,6 +825,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Zivot & Andrews Unit Root Test:
+    helpTopic <<- ""
     myFunction = function(series, model, lag, doplot, object2x, report) {
         x = tkEval(series)
         model = tkSplit(model)
@@ -946,6 +974,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Uniform Innovations:
+    helpTopic <<- ""
     myFunction = function(n, min, max, as.ts, object2x, report) {
         object <<- runif.lcg(n = n, min = min, max = max)
         if (as.ts) object <<- as.ts(object)
@@ -971,6 +1000,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Normal Innovations:
+    helpTopic <<- ""
     myFunction = function(n, mean, sd, as.ts, object2x, report) {
        object <<- rnorm.lcg(n = n, mean = mean, sd = sd)
        if (as.ts) object <<- as.ts(object)
@@ -996,6 +1026,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Student-t Innovations:
+    helpTopic <<- ""
     myFunction = function(n, df, as.ts, object2x, report) {
         object <<- rt.lcg(n = n, df = df)
         if (as.ts) object <<- as.ts(object)

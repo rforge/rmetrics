@@ -36,6 +36,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Empirical Distribution Function:
+    helpTopic <<- ""
     myFunction = function(series, par, object2x, report) {
         x = tkEval(series)
         eval(parse(text = par))
@@ -61,6 +62,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Normal QQ-Plot with 95% Intervals:
+    helpTopic <<- ""
     myFunction = function(series, cf, par, object2x, report) {
         x = tkEval(series)
         tkEval(par)
@@ -92,6 +94,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Exponential/Pareto quantile plot:
+    helpTopic <<- ""
     myFunction = function(series, xi, par, object2x, report) {
         x = tkEval(series)
         eval(parse(text = par))
@@ -118,6 +121,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Mean Excess Function Plot
+    helpTopic <<- ""
     myFunction = function(series, par, object2x, report) {
         x = tkEval(series)
         eval(parse(text = par))
@@ -143,6 +147,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Mean Residual Life Plot:
+    helpTopic <<- ""
     myFunction = function(series, conf, par, object2x, report) {
         x = tkEval(series)
         eval(parse(text = par))
@@ -170,6 +175,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Mean Excess Function Plot:
+    helpTopic <<- ""
     myFunction = function(series, tail, par, object2x, report) {
         x = tkEval(series)
         eval(parse(text = par))
@@ -196,6 +202,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Plot of the ratio of maximum and sum:
+    helpTopic <<- ""
     myFunction = function(series, p, par, object2x, report) {
         x = tkEval(series)
         eval(parse(text = par))
@@ -221,6 +228,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Records Plot:
+    helpTopic <<- ""
     myFunction = function(series, subsamples, plottype, par, object2x, report) {
         x = tkEval(series)
         plottype = tkSplit(plottype)
@@ -255,6 +263,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # ACF of exceedences over a threshold:
+    helpTopic <<- ""
     myFunction = function(series, threshold, lag.max, doplot, par, 
         object2x, report) {
         x = tkEval(series)
@@ -285,6 +294,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Simulate GEV Series:
+    helpTopic <<- ""
     myFunction = function(series, n, object2x, report) {
         x = tkEval(series)
         if (is.character(n)) n = eval(parse(text = n))
@@ -314,6 +324,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # GEV Distribution Slider:
+    helpTopic <<- ""
     gevSlider()
 }
 
@@ -326,9 +337,11 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Simulate GEV Series:
+    helpTopic <<- ""
     myFunction = function(n, shape, location, scale, object2x, report) {
         object <<- gevSim(model = list(shape = shape, location = location, 
             scale = scale), n = n)  
+        if (report) tkTitle("Simulated GEV Series")
         object }
     tkExecute(
         fun = myFunction,
@@ -351,6 +364,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Simulate GEV Series:
+    helpTopic <<- ""
     myFunction = function(series, block, object2x, report) {
         x = tkEval(series)
         block = tkSplit(block)
@@ -376,6 +390,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Simulate GEV Series:
+    helpTopic <<- ""
     myFunction = function(series, block, object2x, report) {
         x = tkEval(series)
         object <<- as.ts(blockmaxVector(x, block = block))
@@ -402,17 +417,25 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Fit GEV Parameters:
-    myFunction <<- function(series, type, gumbel, object2x, report) { 
+    helpTopic <<- "gevFit"
+    myFunction = function(series, type, gumbel, doplot, par, 
+        object2x, report) { 
         x = tkEval(series)
-        if (EVAL) type = eval(parse(text = type))
+        type = tkSplit(type)
         object <<- gevFit(x = x, type = type, gumbel = gumbel)
+        if (doplot) {
+            tkEval(par)
+            object <<- summary(object)
+        }
         object }
     tkExecute(
         fun = myFunction,
         params = list(
             series = "x",
-            type = "mle", 
+            type = "mle & pwm", 
             gumbel = FALSE,
+            doplot = TRUE,
+            par = "par(mfrow=c(2,2))",
             object2x = FALSE,
             report = TRUE ),
         infoName = "GEV Parameter Fit" )
@@ -427,6 +450,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Return Level Plot:
+    helpTopic <<- ""
     myFunction = function(k.blocks, object2x, report) {
         ans = eval(parse(text = object))
         object <<- gevrlevelPlot(object = ans)
@@ -450,15 +474,15 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Hill Plot:
-    myFunction = function(series, option, start, end, reverse, p, ci,
+    helpTopic <<- "hillPlot"
+    myFunction = function(series, option, start, reverse, ci,
         object2x, report) {
         x = as.vector(tkEval(series))
         option = tkSplit(option)
         par(mfcol = c(1, 1), cex = 0.7)
-        end = NA
-        p = NA
-        object <<- hillPlot(x = x, option = option, start = start, end = end, 
-            reverse = reverse, p = p, ci = ci, autoscale = TRUE, labels = TRUE)
+        object <<- hillPlot(x = x, option = option, start = start, 
+            end = NA, reverse = reverse, p = NA, ci = ci, autoscale = 
+            TRUE, labels = TRUE)
         object }
     tkExecute(
         fun = myFunction,
@@ -466,9 +490,7 @@ function()
             series = "x",
             option = "alpha & xi", 
             start = 15, 
-            end = "NA", 
             reverse = FALSE, 
-            p = "NA", 
             ci = 0.95,
             object2x = FALSE,
             report = TRUE ),
@@ -484,21 +506,28 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Shape Parameter Plots:
-    myFunction <<- function(series, revert, standardize, object2x, report) {
+    helpTopic <<- "shaparmPlot"
+    myFunction = function(series, revert, standardize, object2x, report) {
          x = tkEval(series)
-         par(mfcol = c(3, 2), cex = 0.7)
+         tkEval(par)
+         xi.range = tkEval(xi.range)
+         alpha.range = tkEval(alpha.range)
          object <<- shaparmPlot(x = x, revert, standardize, 
             tails = 0.01*(1:10), doplot = c(FALSE, FALSE, FALSE, 
                 FALSE, TRUE, FALSE, FALSE, FALSE, FALSE, FALSE), 
-            which = c(TRUE, TRUE, TRUE), doprint = FALSE, both.tails = TRUE, 
-            xi.range = c(-0.5, 1.5), alpha.range = c(0, 10))
+            which = c(TRUE, TRUE, TRUE), doprint = FALSE, both.tails = 
+            TRUE, xi.range = xi.range, alpha.range = alpha.range)
+         
          object }
     tkExecute(
         fun = myFunction,
         params = list(
             series = "x",
             revert = FALSE, 
-            standardize = FALSE,
+            standardize = TRUE,
+            par = "par(mfcol=c(3,2),cex=0.7)",
+            xi.range = "c(-0.5, 1.5)", 
+            alpha.range = "c(0, 10)",
             object2x = FALSE,
             report = TRUE ),
         infoName = "Shape Parameter Plots" )
@@ -515,6 +544,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # GEV Distribution Slider:
+    helpTopic <<- ""
     gpdSlider()
 }
 
@@ -527,6 +557,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Simulate GEV Series:
+    helpTopic <<- ""
     myFunction = function(n, shape, location, scale, object2x, report) {
         object <<- as.ts(gpdSim(model = list(shape = shape, 
             location = location, scale = scale), n = n) )
@@ -552,6 +583,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Fit GEV Parameters:
+    helpTopic <<- ""
     myFunction = function(series, threshold, nextremes, type, 
         object2x, report) { 
         x = tkEval(series)
@@ -584,6 +616,7 @@ function()
 
     # Quantile estimates and confidence intervals for high quantiles 
     # above the threshold 
+    helpTopic <<- ""
     myFunction = function(pp, ci.type, ci.p, like.num, object2x, report) {
         ci.type = tkSplit(ci.type)
         object = gpdtailPlot(fittedObject)
@@ -614,6 +647,7 @@ function()
     # A plot showing how the estimate of a high quantile in the tail 
     # of a dataset based on the GPD approximation varies with threshold 
     # or number of extremes:
+    helpTopic <<- ""
     myFunction = function(series, p, models, start, end, reverse, ci,
         object2x, report) {
         x = tkEval(series)
@@ -645,6 +679,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # GPD Risk Measures:
+    helpTopic <<- ""
     myFunction = function(plevels, object2x, report) {
         plevels = tkEval(plevels)
         object <<- gpdriskmeasures(x = fittedObject, plevels = plevels)
@@ -667,6 +702,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Calculates expected shortfall estimates:
+    helpTopic <<- ""
     myFunction = function(series, pp, ci.p, like.num, object2x, report) {
         x = tkEval(series)
         object <<- gpdsfallPlot(x = x, pp = pp, ci.p = ci.p, 
@@ -692,6 +728,7 @@ function()
 function()
 {   # A function implemented by Diethelm Wuertz
 
+    helpTopic <<- ""
     myFunction = function(series, models, start, end, reverse, ci,
         lables, object2x, report) {
         x = tkEval(series)
@@ -722,6 +759,7 @@ function()
 function()
 {   # A function implemented by Diethelm Wuertz
 
+    helpTopic <<- ""
     myFunction = function(fittedObject, extend, labels, object2x, report) {
         fit = eval(parse(text = fittedObject))
         object <<- gpdtailPlot(fit = fit, extend = extend, labels = labels)

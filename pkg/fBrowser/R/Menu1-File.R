@@ -45,51 +45,38 @@ function()
     
     # New Toolbar Menu:
     fileMenu = newToolbarMenu()
-   
-    # Add Menu:      
-    Label = 
-        "Classify Active Data Set"
-    subLabel = 
-        NULL
-    Command = 
-        ".classifyActiveDataSet"
-    addToolbarMenu(fileMenu, Label, subLabel, Command)      
-
+  
     # Add Menu:
     Label = "List Active Data Set"
     subLabel = 
         NULL
     Command = 
         ".listActiveDataSet"
-    addToolbarMenu(fileMenu, Label, subLabel, Command)      
-            
-    # Add Menu:       
-    Label = "Plot Active Data Set"
-    subLabel = c(
-        "use plot()", 
-        "use ts.plot()", 
-        "use plot.ts()")
-    Command = c(
-        ".plotActiveDataSet",
-        ".tsplotActiveDataSet",
-        ".plottsActiveDataSet")
-    addToolbarMenu(fileMenu, Label, subLabel, Command)    
-        
-    # Add Menu:       
-    Label = "Classify Active Object"
-    subLabel = 
-        NULL
-    Command = 
-        ".classifyActiveObject"
-    addToolbarMenu(fileMenu, Label, subLabel, Command)    
-               
+    addToolbarMenu(fileMenu, Label, subLabel, Command)     
+    
     # Add Menu:
-    Label = "Print Active Object"
+    Label = "List Objects"
     subLabel = 
         NULL
     Command = 
-        ".printActiveObject"
-    addToolbarMenu(fileMenu, Label, subLabel, Command) 
+        ".listObjects"
+    addToolbarMenu(fileMenu, Label, subLabel, Command)  
+    
+    # Add Menu:
+    Label = "Install Package() ..."
+    subLabel = 
+        NULL
+    Command = 
+        ".menuInstallPackages"
+    addToolbarMenu(fileMenu, Label, subLabel, Command)  
+    
+    # Add Menu:
+    Label = "Update Package() ..."
+    subLabel = 
+        NULL
+    Command = 
+        ".menuUpdatePackages"
+    addToolbarMenu(fileMenu, Label, subLabel, Command)  
    
     # Add Menu:          
     Label = "fLibrary Demos"

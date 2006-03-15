@@ -36,6 +36,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # * Example timeDate: x = 12 Random Dates in Current Year
+    helpTopic <<- "timeCalendar"
     myFunction = function(FinCenter, object2x, report) {
         y = rep(currentYear, 12)
         d = trunc(runif(12, 1, 29))
@@ -61,6 +62,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # * Example timeDate: x = 12 Random Times in Current Year 
+    helpTopic <<- "timeCalendar"
     myFunction = function(FinCenter, object2x, report) {
         y = rep(2005, 12)
         d = trunc(runif(12, 1, 29))
@@ -90,6 +92,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Create a timeDate Sequence:
+    helpTopic <<- "timeSequence"
     myFunction = function(from, to, by, length.out, format, FinCenter, 
         object2x, report) {
         object <<- timeSequence(from = from, to = to, by = by, 
@@ -120,6 +123,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Create a timeDate Calendar:
+    helpTopic <<- "timeCalendar"
     myFunction = function(y, m, d, h, min, s, FinCenter, object2x, report) {
         object <<- timeCalendar(
             y = eval(parse(text = y)),
@@ -155,6 +159,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # The Current Date and Time:
+    helpTopic <<- "Sys.timeDate"
     tkGetTime()
 }
 
@@ -167,6 +172,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Last Day in Month for a Given Date:
+    helpTopic <<- "timeFirstDayInMonth"
     myFunction = function(series, which, period, format, FinCenter, 
         object2x, report) {
         x = tkEval(series)
@@ -214,6 +220,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # The N-Day On-Or-After a given Date:
+    helpTopic <<- "timeNdayOnOrAfter"
     myFunction = function(series, nday, format, FinCenter, 
         object2x, report) {
         x = tkEval(series)
@@ -242,6 +249,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # The N-Day On-Or-Before a given Date:
+    helpTopic <<- "timeNdayOnOrBefore"
     myFunction = function(series, nday, format, FinCenter, 
         object2x, report) {
         x = tkEval(series)
@@ -270,6 +278,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # The n-th ocurrance of a n-day in year/month
+    helpTopic <<- "timeNthNdayInMonth"
     myFunction = function(series, nday, nth, format, FinCenter, 
         object2x, report) {
         x = tkEval(series)
@@ -299,6 +308,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # The last n-day in year/month 
+    helpTopic <<- "timeLastNdayInMonth"
     myFunction = function(series, nday, format, FinCenter, 
         object2x, report) {
         x = tkEval(series)
@@ -327,6 +337,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # List of Financial Centers
+    helpTopic <<- "timeDate"
     tkGetFinCenters()
 }
 
@@ -339,6 +350,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # DST Rules for a Financial Center:
+    helpTopic <<- "timeDate"
     myFunction = function(FinCenter, object2x, report){
         FUN = match.fun(FinCenter)
         object <<- FUN()
@@ -363,6 +375,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Extract the first object of a timeDate Vector
+    helpTopic <<- "timeDate"
     myFunction = function(series, object2x, report) {
         x = tkEval(series)
         object <<- start(modify(x = x, "sort"))
@@ -386,6 +399,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Extract the last object of a timeDate Vector:
+    helpTopic <<- "timeDate"
     myFunction = function(series, object2x, report) {
         x = tkEval(series)
         object <<- end(modify(x = x, "sort"))
@@ -409,6 +423,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # +/- a time Span from a timeDate Vector
+    helpTopic <<- "timeDate"
     myFunction = function(series, PlusMinus, days, hours, minutes, 
         seconds, object2x, report) {
         x = tkEval(series)
@@ -440,6 +455,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Sort a timeDate Vector by Time and Date:
+    helpTopic <<- "timeDate"
     myFunction = function(series, object2x, report) {
         x = tkEval(series)
         object <<- modify(x = x, method = "sort") 
@@ -463,6 +479,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Round a timeDate Vector to a Given Unit:
+    helpTopic <<- "timeDate"
     myFunction = function(series, units, object2x, report) {
         x = tkEval(series)  
         object <<- modify(x = x, method = "round", units = units) 
@@ -487,6 +504,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Truncate a timeDate Vector to a Given Unit:
+    helpTopic <<- "timeDate"
     myFunction = function(series, units, object2x, report) { 
         x = tkEval(series)
         object <<- modify(x, method = "trunc", units = units)
@@ -511,6 +529,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Return a timeDate Vector in Reverse Order:
+    helpTopic <<- "timeDate"
     myFunction = function(series, object2x, report) { 
         x = tkEval(series)
         object <<- rev(x = x)
@@ -534,6 +553,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Convert timeDate to a character vector:
+    helpTopic <<- "timeDate"
     myFunction = function(series, object2x, report) { 
         x = tkEval(series)
         object <<- as.character(x = x) 
@@ -557,6 +577,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Convert timeDate to a data frame:
+    helpTopic <<- "timeDate"
     myFunction = function(series, object2x, report) { 
         x = tkEval(series)
         object <<- as.data.frame(x = x)
@@ -580,6 +601,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Convert timeDate to a POSIXct Object:
+    helpTopic <<- "timeDate"
     myFunction = function(series, object2, report) { 
         x = tkEval(series)
         object <<- as.POSIXct(x = x)
@@ -603,6 +625,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Julian Day Counts from timeDate Vector:
+    helpTopic <<- "timeDate"
     myFunction = function(series, object2x, report) { 
         x = tkEval(series)
         object <<- julian(x = x)
@@ -626,6 +649,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Extract data.frame of timeDate Atoms:
+    helpTopic <<- "atoms"
     myFunction = function(series, object2x, report) { 
         x = tkEval(series)
         object <<- atoms(x = x)
@@ -650,6 +674,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Create timeSeries Object:
+    helpTopic <<- "timeSeries"
     myFunction = function(data, charvec, units, format, zone, FinCenter,
         pbject2x, record) { 
         data = eval(parse(text = data))
@@ -683,6 +708,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Apply a Function to Series:
+    helpTopic <<- "applySeries"
     myFunction = function(series, from, to, FUN, object2x, report) {
         x = tkEval(series)
         FUN = match.fun(FUN)
@@ -711,6 +737,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Align Daily Series:
+    helpTopic <<- "alignDailySeries"
     myFunction = function(series, method, include.weekends, 
         object2x, report) { 
         x = tkEval(series)
@@ -740,6 +767,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Cut Series:
+    helpTopic <<- "cutSeries"   
     myFunction = function(series, from, to, object2x, report) {
         x = tkEval(series)
         object <<- cutSeries(x = x, from = from, to = to) 
@@ -765,6 +793,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Difference Series:
+    helpTopic <<- "diffSeries"
     myFunction = function(series, lag, diff, trim, pa, object2x, report) {
         x = tkEval(series)
         object <<- diffSeries(x = x, lag = lag, diff = diff, 
@@ -793,6 +822,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Lag Series:
+    helpTopic <<- "lagSeries"
     myFunction = function(series, k, trim, object2x, report) {
         x = tkEval(series)
         k = as.integer(k)
@@ -819,6 +849,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Merge timeSeries Objects:
+    helpTopic <<- "mergeSeries"
     myFunction = function(series, matrix, object2x, report) { 
         x = tkEval(series)
         data = eval(parse(text = matrix))
@@ -844,24 +875,26 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Get Return Series:
+    helpTopic <<- "returnSeries"
     myFunction = function(series, type, percentage, trim, digits, 
         object2x, report) { 
         x = tkEval(series)
-        object <<- returnSeries(x = x, type = type, 
-            percentage = percentage, trim = trim, digits = digits) 
+        type = tkSplit(type)
+        object <<- returnSeries(x = x, type = type, percentage = 
+            percentage, trim = trim, digits = digits, units = NULL) 
         if (report) tkTitle("Compute Return Series")
         object }
     tkExecute(
         fun = myFunction,
         params = list(
             series = "x",
-            type = "continuous",
+            type = "continuous & discrete",
             percentage = FALSE, 
             trim = TRUE,
             digits = 4,
             object2x = FALSE,
             report = TRUE),
-        infoName = "Compute Return Series" )
+        infoName =  "Return Series" )
 }
 
 
@@ -873,6 +906,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Revert Series:
+    helpTopic <<- "revSeries"
     myFunction = function(series, object2x, report) { 
         x = tkEval(series)
         object <<- revSeries(x = x) 
@@ -897,6 +931,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Date of Easter & Related Dates:
+    helpTopic <<- "easter"
     myFunction = function(year, shift, object2x, report) {
         year = eval(parse(text = year)) 
         object <<- timeDate(easter(year = year, shift = shift))
@@ -921,6 +956,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # List of Supported Holidays:  
+    helpTopic <<- "easter"
     myFunction = function(object2x, report) {
         object <<- .holidayList()
         if (report) tkTitle("Holiday List")
@@ -942,6 +978,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Return Holiday Date:
+    helpTopic <<- "holiday"
     myFunction = function(year, Holiday, object2x, report) {
         year = eval(parse(text = year))
         object <<- holiday(year, Holiday)
@@ -966,6 +1003,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # NYSE Holiday Calendar:
+    helpTopic <<- "holiday"
     myFunction = function(fromYear, toYear, object2x, report) {
         years = seq(fromYear, toYear, by = sign(toYear-fromYear))
         object <<- holiday.NYSE(years) 
@@ -991,6 +1029,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # FX Parser for Reuters Data:
+    helpTopic <<- ""
     myFunction = function(series, include) {
         x = tkEval(series)
         object <<- fxdata.contributors(x = x, include = include)
@@ -1020,6 +1059,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # FX Filter for Reuters Data:
+    helpTopic <<- ""
     myFunction = function(parameter) {
         par(mfrow = c(2, 1))
         NumberOfRecords = length(x[, 1])
@@ -1072,6 +1112,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # FX Format on Variable Minutes Scale:
+    helpTopic <<- ""
     myFunction = function(series, digits) {
         x = tkEval(series)
         fxdata.varmin(x = x, digits = digits) }
@@ -1095,6 +1136,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # * Example data.frame: x = FX Reuters AUDUSD:
+    helpTopic <<- ""
     data(audusd)
     x <<- tkSaveAsX(data = audusd, infoName = "FX Reuters AUDUSD")
 }
@@ -1108,6 +1150,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Extract BID Prices from Reuters FX Data:
+    helpTopic <<- ""
     myFunction = function(ReutersData, object2x) {
         x = eval(parse(text = ReutersData))
         object <<- list(t = x[, "XDATE"], x = x[, "BID"])
@@ -1132,6 +1175,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Compute log Prices from Prices:
+    helpTopic <<- ""
     myFunction =  function(Prices, object2x) {
         x = eval(parse(text = Prices))
         object  <<- xts.log(xts = x) 
@@ -1156,6 +1200,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Compute log Returns from log Prices:
+    helpTopic <<- ""
     myFunction =  function(logPrices, object2x) {
         x = eval(parse(text = logPrices))
         object  <<- xts.diff(xts.log(xts = x))
@@ -1180,6 +1225,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Cut Series - Prices|logPrices|logReturns
+    helpTopic <<- ""
     myFunction =  function(series, object2x) {
         x = tkEval(series)
         object  <<- xts.cut(xts = x, from.date = from, to.date = to)
@@ -1206,6 +1252,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Interpolate - Prices|logPrices|logReturns
+    helpTopic <<- ""
     myFunction =  function(series, delta, method, object2x) {
         x = tkEval(series)
         object  <<- xts.interp(xts = x, delta = delta, method = method)
@@ -1232,6 +1279,8 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Convert List to timeSeries Object",
+    helpTopic <<- ""
+    
 }
 
 
@@ -1243,6 +1292,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # :
+    helpTopic <<- ""
     data(fdax97m)
     x <<- tkSaveAsX(data = as.timeSeries(fdax97m, format = "%Y%m%d%H%M"),
         infoName = "FDAX Index 1997")
@@ -1257,7 +1307,8 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # De-seasonalize in Upsilon Time:
-    myFunction =  function(series, from, to, delta, alpha = alpha, doplot) {
+    helpTopic <<- ""
+    myFunction = function(series, from, to, delta, alpha = alpha, doplot) {
         prices = eval(parse(text = series))
         # Settings:
         options(object.size = 5e8)
@@ -1317,6 +1368,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # :
+    helpTopic <<- ""
     myFunction = function(series, kParameter, doplot) {
         prices = eval(parse(text = series))
         # Settings:
@@ -1378,6 +1430,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Plot Daily/Weekly Volatility Charts:
+    helpTopic <<- ""
     myFunction = function(series, from, to, period, deltat, doplot) {
         prices = eval(parse(text = series))
         # Settings:

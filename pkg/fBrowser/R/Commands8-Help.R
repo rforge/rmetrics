@@ -12,6 +12,7 @@ function()
     # FUNCTION:
     
     # About:
+    helpTopic <<- ""
     ans <- tkmessageBox(
         title = "Rmetrics",
         message = paste(
@@ -41,6 +42,7 @@ function()
     # FUNCTION:
     
     # Rmetrics:
+    helpTopic <<- ""
     ans = shell.exec("http://www.rmetrics.org")
     
     # Return Value:
@@ -62,6 +64,7 @@ function()
     # FUNCTION:
     
     # HTML Help:
+    helpTopic <<- ""
     ans = help.start()
     
     # Return Value:

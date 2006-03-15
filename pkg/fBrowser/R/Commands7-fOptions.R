@@ -36,6 +36,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # GBS Option:
+    helpTopic <<- ""
     myFunction = function(TypeFlag, S, X, Time, r, b, sigma, object2x, 
         report) {
         object <<- GBSOption(TypeFlag = TypeFlag, S = S, X = X, 
@@ -65,6 +66,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Black76 Option:
+    helpTopic <<- ""
     myFunction = function(TypeFlag, FT, X, Time, r, sigma, object2x, 
         report) {
         object <<- Black76Option(TypeFlag = TypeFlag, FT = FT, X = X, 
@@ -93,6 +95,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Miltersen Schwartz Option:
+    helpTopic <<- ""
     myFunction = function(TypeFlag, Pt, FT, X, time, Time, sigmaS, sigmaE,
         sigmaF, rhoSE, rhoSF, rhoEF, KappaE, KappaF, object2x, report) {
         object <<- MiltersenSchwartzOption(TypeFlag = TypeFlag, Pt = Pt, 
@@ -133,6 +136,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Roll Geske Whaley Option:
+    helpTopic <<- ""
     myFunction = function(S, X, time1, Time2, r, D, sigma, object2x, 
         report) {
         object <<- RollGeskeWhaleyOption(S = S, X = X, time1 = time1, 
@@ -162,6 +166,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # BAW American Approx Option:
+    helpTopic <<- ""
     myFunction = function(TypeFlag, S, X, Time, r, b, sigma, 
         object2x, report) {
         object <<- BAWAmericanApproxOption(TypeFlag = TypeFlag, 
@@ -191,6 +196,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # BS American Approx Option:
+    helpTopic <<- ""
     myFunction = function(TypeFlag, S, X, Time, r, b, sigma, 
         object2x, report) {
         object <<- BSAmericanApproxOption(TypeFlag = TypeFlag, 
@@ -221,6 +227,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # CRR Binomial Tree Option:
+    helpTopic <<- ""
     myFunction = function(TypeFlag, S, X, Time,  r, b, sigma, n, 
         object2x, report) {
         object <<- CRRBinomialTreeOption(TypeFlag = TypeFlag, S = S, 
@@ -250,6 +257,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # JR Binomial Tree Option:
+    helpTopic <<- ""
     myFunction = function(TypeFlag, S, X, Time,  r, b, sigma, n, 
         object2x, report) {
         object <<- JRBinomialTreeOption(TypeFlag = TypeFlag, S = S, 
@@ -280,6 +288,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # TIAN Binomial Tree Option:
+    helpTopic <<- ""
     myFunction = function(TypeFlag, S, X, Time, r, b, sigma, n, 
         object2x, report) {
         object <<- TIANBinomialTreeOption(TypeFlag = TypeFlag, S = S, 
@@ -310,6 +319,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Binomial Tree Option:
+    helpTopic <<- ""
     myFunction = function(TypeFlag, S, X, Time,  r, b, sigma, n, 
         object2x, report) {
         object <<- BinomialTreeOption(TypeFlag = TypeFlag, S = S, 
@@ -341,6 +351,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
  
     # Executive Stock Option:
+    helpTopic <<- ""
     myFunction = function(TypeFlag, S, X, Time, r, b, sigma, lambda, 
         object2x, report) {
         object <<- ExecutiveStockOption(TypeFlag, S, X, Time, 
@@ -371,6 +382,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Forward Start Option:
+    helpTopic <<- ""
     myFunction = function(TypeFlag, S, alpha, time1, Time2, r, b, 
         sigma, object2x, report) {
         object <<- ForwardStartOption(TypeFlag, S, alpha, time1, 
@@ -401,6 +413,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Ratchet Option:
+    helpTopic <<- ""
     myFunction = function(TypeFlag, S, alpha, time1, Time2, r, b, 
         sigma, object2x, report) {
         object <<- RatchetOption(TypeFlag, S, alpha, time1, Time2, 
@@ -429,7 +442,9 @@ function()
 .fOptions.MultipleExercises.4 =
 function()
 {   # A function implemented by Diethelm Wuertz
+    
     # Time Switch Option:
+    helpTopic <<- ""
     myFunction = function(TypeFlag, S, X, Time, r, b, sigma, A, m, dt, 
         object2x, report) {
         object <<- TimeSwitchOption(TypeFlag, S, X, Time, r, b, sigma, 
@@ -462,6 +477,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Simple Chooser Option:
+    helpTopic <<- ""
     myFunction = function(S, X, time1, Time2, r, b, sigma, 
         object2x, report) {
         object <<- SimpleChooserOption(S, X, time1, Time2, 
@@ -491,6 +507,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Complex Chooser Option:
+    helpTopic <<- ""
     myFunction = function(S, Xc, Xp, Time, Timec, Timep, r, b, sigma, 
         object2x, report) {
         object <<- ComplexChooserOption(S, Xc, Xp, Time, Timec, Timep, 
@@ -523,6 +540,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Option On Option:
+    helpTopic <<- ""
     myFunction = function(TypeFlag, S, X1, X2, time1, Time2, r, b, 
         sigma, object2x, report) {
         object <<- OptionOnOption(TypeFlag, S, X1, X2, time1, Time2, 
@@ -554,6 +572,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Holder Extendible Option:
+    helpTopic <<- ""
     myFunction = function(TypeFlag, S, X1, X2, time1, Time2, r, b, 
         sigma, A, object2x, report) {
         object <<- HolderExtendibleOption(TypeFlag, S, X1, X2, time1, 
@@ -585,6 +604,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Writer Extendible Option:
+    helpTopic <<- ""
     myFunction = function(TypeFlag, S, X1, X2, time1, Time2, r, b, 
         sigma, object2x, report) {
         object <<- WriterExtendibleOption(TypeFlag, S, X1, X2, time1, 
@@ -617,6 +637,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Two Asset Correlation Option:
+    helpTopic <<- ""
     myFunction = function(TypeFlag, S1, S2, X1, X2, Time, r, b1, b2,
         sigma1, sigma2, rho, object2x, report) {
         object <<- TwoAssetCorrelationOption(TypeFlag, S1, S2, X1, X2, 
@@ -651,6 +672,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Two Asset Correlation Option:
+    helpTopic <<- ""
     myFunction = function(S1, S2, Q1, Q2, Time, r, b1, b2, sigma1, 
         sigma2, rho, object2x, report) {
         object <<- TwoAssetCorrelationOption(S1, S2, Q1, Q2, Time,  
@@ -684,6 +706,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # American Exchange Option:
+    helpTopic <<- ""
     myFunction = function(S1, S2, Q1, Q2, Time, r, b1, b2, sigma1, 
         sigma2, rho, object2x, report) {
         object <<- AmericanExchangeOption(S1, S2, Q1, Q2, Time, r, 
@@ -717,6 +740,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Exchange On Exchange Option:
+    helpTopic <<- ""
     myFunction = function(TypeFlag, S1, S2, Q, time1, Time2, r, b1, b2, 
         sigma1, sigma2, rho, object2x, report) {
         object <<- ExchangeOnExchangeOption(TypeFlag, S1, S2, Q, time1,  
@@ -750,6 +774,7 @@ function()
 function()
 {   # A function implemented by Diethelm Wuertz
     # Two Risky Assets Option:
+    helpTopic <<- ""
     myFunction = function(TypeFlag, S1, S2, X, Time, r, b1, b2, sigma1, 
         sigma2, rho, object2x, report) {
         object <<- TwoRiskyAssetsOption(TypeFlag, S1, S2, X, Time, r, 
@@ -783,6 +808,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Spread Approx Option:
+    helpTopic <<- ""
     myFunction = function(TypeFlag, S1, S2, X, Time, r, sigma1, sigma2, 
         rho, object2x, report) {
         object <<- SpreadApproxOption(TypeFlag, S1, S2, X, Time, r, 
@@ -815,6 +841,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Floating Strike Lookback Option:
+    helpTopic <<- ""
     myFunction = function(TypeFlag, S, SMinOrMax, Time, r, b, sigma, 
         object2x, report) {
         object <<- FloatingStrikeLookbackOption(TypeFlag, S, SMinOrMax, 
@@ -844,6 +871,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Fixed Strike Lookback Option:
+    helpTopic <<- ""
     myFunction = function(TypeFlag, S, SMinOrMax, X, Time, r, b, 
         sigma, object2x, report) {
         object <<- FixedStrikeLookbackOption(TypeFlag, S, SMinOrMax, 
@@ -874,6 +902,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # PT Floating Strike Lookback Option:
+    helpTopic <<- ""
     myFunction = function(TypeFlag, S, SMinOrMax, time1, Time2, r, 
         b, sigma, lambda, object2x, report) {
         object <<- PTFloatingStrikeLookbackOption(TypeFlag, S, 
@@ -905,6 +934,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # PT Fixed Strike Lookback Option:
+    helpTopic <<- ""
     myFunction = function(TypeFlag, S, X, time1, Time2, r, b, sigma, 
         object2x, report) {
         object <<- PTFixedStrikeLookbackOption(TypeFlag, S, X, time1, 
@@ -935,6 +965,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Extreme Spread Option:
+    helpTopic <<- ""
     myFunction = function(TypeFlag, S, SMin, SMax, time1, Time2, 
         r, b, sigma, object2x, report) {
         object <<- ExtremeSpreadOption(TypeFlag, S, SMin, SMax, time1, 
@@ -967,6 +998,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Standard Barrier Option:
+    helpTopic <<- ""
     myFunction = function(TypeFlag, S, X, H, K, Time, r, b, sigma, 
         object2x, report) {
         object <<- StandardBarrierOption(TypeFlag, S, X, H, K, 
@@ -998,6 +1030,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Double Barrier Option:
+    helpTopic <<- ""
     myFunction = function(TypeFlag, S, X, L, U, Time, r, b, sigma, 
         delta1, delta2, object2x, report) {
         object <<- DoubleBarrierOption(TypeFlag, S, X, L, U, Time,  
@@ -1031,6 +1064,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # PT Single Asset Barrier Option:
+    helpTopic <<- ""
     myFunction = function(TypeFlag, S, X, H, time1, Time2, r, b, 
         sigma, object2x, report) {
         object <<- PTSingleAssetBarrierOption(TypeFlag, S, X, H,  
@@ -1062,6 +1096,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Two Asset Barrier Option:
+    helpTopic <<- ""
     myFunction = function(TypeFlag, S1, S2, X, H, Time, r, b1, b2, 
         sigma1, sigma2, rho, object2x, report) {
         object <<- TwoAssetBarrierOption(TypeFlag, S1, S2, X, H, 
@@ -1096,6 +1131,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # PT Two Asset Barrier Option:
+    helpTopic <<- ""
     myFunction = function(TypeFlag, S1, S2, X, H, time1, Time2, r, b1, 
         b2, sigma1, sigma2, rho, object2x, report) {
         object <<- PTTwoAssetBarrierOption(TypeFlag, S1, S2, X, H, 
@@ -1131,6 +1167,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Look Barrier Option:
+    helpTopic <<- ""
     myFunction = function(TypeFlag, S, X, H, time1, Time2, r, b, 
         sigma, object2x, report) {
         object <<- LookBarrierOption(TypeFlag, S, X, H, time1, 
@@ -1162,6 +1199,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Discrete Barrier Option:
+    helpTopic <<- ""
     myFunction = function(S, H, sigma, dt, object2x, report) {
         object <<- DiscreteBarrierOption(S, H, 
             sigma, dt)
@@ -1187,6 +1225,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Soft Barrier Option:
+    helpTopic <<- ""
     myFunction = function(TypeFlag, S, X, L, U, Time, r, b, sigma, 
         object2x, report) {
         object <<- SoftBarrierOption(TypeFlag, S, X, L, U, Time, 
@@ -1219,6 +1258,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Gap Option:
+    helpTopic <<- ""
     myFunction = function(TypeFlag, S, X1, X2, Time, r, b, sigma, 
         object2x, report) {
         object <<- GapOption(TypeFlag, S, X1, X2, Time, 
@@ -1249,6 +1289,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Cash Or Nothing Option:
+    helpTopic <<- ""
     myFunction = function(TypeFlag, S, X, K, Time, r, b, sigma, 
         object2x, report) {
         object <<- CashOrNothingOption(TypeFlag, S, X, K, Time, 
@@ -1279,6 +1320,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Two Asset Cash Or Nothing Option:
+    helpTopic <<- ""
     myFunction = function(TypeFlag, S1, S2, X1, X2, K, Time, r, b1,
         b2, sigma1, sigma2, rho, object2x, report) {
         object <<- TwoAssetCashOrNothingOption(TypeFlag, S1, S2, X1, 
@@ -1314,6 +1356,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
  
     # Asset Or Nothing Option:
+    helpTopic <<- ""
     myFunction = function(TypeFlag, S, X, Time, r, b, sigma, 
         object2x, report) {
         object <<- AssetOrNothingOption(TypeFlag, S, X, Time, 
@@ -1343,6 +1386,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Super Share Option:
+    helpTopic <<- ""
     myFunction = function(S, XL, XH, Time, r, b, sigma, object2x, report) {
         object <<- SuperShareOption(S, XL, XH, Time, 
             r, b, sigma)
@@ -1371,6 +1415,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Binary Barrier Option:
+    helpTopic <<- ""
     myFunction = function(TypeFlag, S, X, H, K, Time, r, b, sigma, 
         object2x, report) {
         object <<- BinaryBarrierOption(TypeFlag, S, X, H, K, Time, 
@@ -1402,6 +1447,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Geometric Average Rate Option:
+    helpTopic <<- ""
     myFunction = function(TypeFlag, S, X, Time, r, b, sigma, object2x, 
         report) {
         object <<- GeometricAverageRateOption(TypeFlag, S, X, Time, 
@@ -1431,6 +1477,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Turnbull Wakeman Asian Approx Option:
+    helpTopic <<- ""
     myFunction = function(TypeFlag, S, SA, X, Time, time, tau, r, 
         b, sigma, object2x, report) {
         object <<- TurnbullWakemanAsianApproxOption(TypeFlag, S, SA, 
@@ -1463,6 +1510,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Levy Asian Approx Option:
+    helpTopic <<- ""
     myFunction = function(TypeFlag, S, SA, X, Time, time, r, b, sigma, 
         object2x, report) {
         object <<- LevyAsianApproxOption(TypeFlag, S, SA, X, Time,  
@@ -1495,6 +1543,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # FE In Domestic FX Option:
+    helpTopic <<- ""
     myFunction = function(TypeFlag, S, X, Time, r, b, sigma, 
         object2x, report) {
         object <<- FEInDomesticFXOption(TypeFlag, S, X, Time, 
@@ -1524,6 +1573,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Quanto Option:
+    helpTopic <<- ""
     myFunction = function(TypeFlag, S, Ep, X, Time, r, rf, q,
         sigmaS, sigmaE, rho, object2x, report) {
         object <<- QuantoOption(TypeFlag, S, Ep, X, Time, r, rf, q,
@@ -1557,6 +1607,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Equity Linked FX Option:
+    helpTopic <<- ""
     myFunction = function(TypeFlag, E, S, X, Time, r, rf, q, sigmaS,
         sigmaE, rho, object2x, report) {
         object <<- EquityLinkedFXOption(TypeFlag, E, S, X, Time, r, 
@@ -1590,6 +1641,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Takeover FX Option:
+    helpTopic <<- ""
     myFunction = function(V, B, E, X, Time, r, rf, sigmaV, sigmaE, 
         rho, object2x, report) {
         object <<- TakeoverFXOption(V, B, E, X, Time, r, rf,  
@@ -1623,6 +1675,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Simulate HN-GARCH Process
+    helpTopic <<- ""
     myFunction = function(lambda, omega, alpha, beta, gamma, rf, 
         object2x, report) {
         model = list(lambda = lambda, omega = omega, alpha = alpha, 
@@ -1654,6 +1707,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Fit HN-GARCH:
+    helpTopic <<- ""
     myFunction = function(series, lambda, omega, alpha, beta, gamma, rf,
         symmetric, object2x, report) {
         x = tkEval(series)
@@ -1689,6 +1743,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # ... Print Summary Report:
+    helpTopic <<- ""
     myFunction = function(fit, object2x, report) {
         fit = eval(parse(text = "fit"))
         tkOutput(capture.output(summary(fit))) }
@@ -1710,6 +1765,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # ... Print Statistics:
+    helpTopic <<- ""
     myFunction = function(model, object2x, report) {
         model = eval(parse(text = model))
         object <<- hngarchStats(model) 
@@ -1737,6 +1793,8 @@ function()
 function()
 {   # A function implemented by Diethelm Wuertz
 
+    #
+    helpTopic <<- ""
     myFunction = function(x, object2x, report) {
         object <<- NA }
     tkExecute(
@@ -1756,6 +1814,8 @@ function()
 function()
 {   # A function implemented by Diethelm Wuertz
 
+    #
+    helpTopic <<- ""
     myFunction = function(x, object2x, report) {
         object <<- NA }
     tkExecute(
@@ -1775,6 +1835,8 @@ function()
 function()
 {   # A function implemented by Diethelm Wuertz
 
+    #
+    helpTopic <<- ""
     myFunction = function(x, object2x, report) {
         object <<- NA }
     tkExecute(
@@ -1794,6 +1856,8 @@ function()
 function()
 {   # A function implemented by Diethelm Wuertz
 
+    #
+    helpTopic <<- ""
     myFunction = function(x, object2x, report) {
         object <<- NA }
     tkExecute(
@@ -1814,6 +1878,8 @@ function()
 function()
 {   # A function implemented by Diethelm Wuertz
 
+    #
+    helpTopic <<- ""
     tkExecute(
         fun = runif.pseudo,
         params = list(
@@ -1833,6 +1899,8 @@ function()
 function()
 {   # A function implemented by Diethelm Wuertz
 
+    #
+    helpTopic <<- ""
     tkExecute(
         fun = rnorm.pseudo,
         params = list(
@@ -1852,6 +1920,8 @@ function()
 function()
 {   # A function implemented by Diethelm Wuertz
 
+    #
+    helpTopic <<- ""
     tkExecute(
         fun = runif.halton,
         params = list(
@@ -1868,6 +1938,8 @@ function()
 function()
 {   # A function implemented by Diethelm Wuertz
 
+    #
+    helpTopic <<- ""
     tkExecute(
         fun = rnorm.halton,
         params = list(
@@ -1887,6 +1959,8 @@ function()
 function()
 {   # A function implemented by Diethelm Wuertz
 
+    #
+    helpTopic <<- ""
     tkExecute(
         fun = runif.sobol,
         params = list(
@@ -1908,6 +1982,8 @@ function()
 function()
 {   # A function implemented by Diethelm Wuertz
 
+    #
+    helpTopic <<- ""
     tkExecute(
         fun = rnorm.sobol,
         params = list(
@@ -1931,6 +2007,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Plain Vanilla Payoff with Normal Innovations
+    helpTopic <<- ""  
     TypeFlag <<- S <<- X <<- Time <<- r <<- b <<- sigma <<- delta.t <<- NA
     myFunction = function(TypeFlag, S, X, Time, r, b, sigma,
         delta.t, pathLength, mcSteps, mcLoops, antithetic, object2x, report) {
@@ -1997,6 +2074,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Plain Vanilla Payoff with Sobol Innovations
+    helpTopic <<- ""
     TypeFlag <<- S <<- X <<- Time <<- r <<- b <<- sigma <<- delta.t <<- NA
     myFunction = function(TypeFlag, S, X, Time, r, b, sigma,
         delta.t, pathLength, mcSteps, mcLoops, antithetic, object2x, report) {
@@ -2065,6 +2143,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Arithmetic Asian Payoff with Normal Innovations
+    helpTopic <<- ""
     TypeFlag <<- S <<- X <<- Time <<- r <<- b <<- sigma <<- delta.t <<- NA
     myFunction = function(TypeFlag, S, X, Time, r, b, sigma,
         delta.t, pathLength, mcSteps, mcLoops, antithetic, object2x, report) {
@@ -2132,6 +2211,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Arithmetic Asian Payoff with Sobol Innovations
+    helpTopic <<- ""
     TypeFlag <<- S <<- X <<- Time <<- r <<- b <<- sigma <<- delta.t <<- NA
     myFunction = function(TypeFlag, S, X, Time, r, b, sigma,
         delta.t, pathLength, mcSteps, mcLoops, antithetic, object2x, report) {
@@ -2199,6 +2279,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Exponential Brownian Motion
+    helpTopic <<- ""
     tkTitle("Exponential Brownian Motion")
     tkOutput("\tSorry, not yet implemented!\n")
 }
@@ -2213,6 +2294,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Plot Gamma Function:
+    helpTopic <<- ""
     myFunction = function(range, by, object2x, report) {
         n = round(range, 0)
         par(mfrow = c(1, 1), cex = 0.7)
@@ -2250,6 +2332,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Plot Psi Function:
+    helpTopic <<- ""
     myFunction = function(range, by, object2x, report) {      
         par(mfrow = c(1, 1), cex = 0.7)
         n = round(range, 0)
@@ -2284,6 +2367,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Plot Complex Gamma Function:
+    helpTopic <<- ""
     myFunction = function(range, by, col, nlevels, object2x, report) {            
         col = eval(parse(text = col))
         par(mfrow = c(2, 1), cex = 0.7)
@@ -2331,6 +2415,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Menu:
+    helpTopic <<- ""
     tkTitle("Kummer Function Slider")
     kummerSlider()
 }
@@ -2344,6 +2429,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Menu:
+    helpTopic <<- ""
     tkTitle("Whittaker Function Slider")
     whittakerSlider()
 
@@ -2359,6 +2445,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Menu:
+    helpTopic <<- ""
     tkTitle("Bessel Function Slider")
     besselSlider()
 }
@@ -2372,6 +2459,8 @@ function()
 function()
 {   # A function implemented by Diethelm Wuertz
 
+    #
+    helpTopic <<- ""
     myFunction = function(TypeFlag, S, X, Time, r, sigma, method, 
         object2x, report) {
         object <<- MomentMatchedAsianOption(TypeFlag, S, X, Time, r, 
@@ -2400,6 +2489,8 @@ function()
 function()
 {   # A function implemented by Diethelm Wuertz
 
+    #
+    helpTopic <<- ""
     myFunction = function(x, Time, r, sigma, method, object2x, report) {
         x = eval(parse(text = x))
         object <<- MomentMatchedAsianDensity(x = x, Time, r, 
@@ -2430,6 +2521,8 @@ function()
 function()
 {   # A function implemented by Diethelm Wuertz
 
+    #
+    helpTopic <<- ""
     myFunction = function(TypeFlag, S, X, Time, r, sigma, method, 
         object2x, report) {
         object <<- GramCharlierAsianOption(TypeFlag, S, X, Time, r, 

@@ -71,14 +71,14 @@ function()
 
     # MSFT and SP%00 Data Sets:
     myFunction = function(object2x, report) {
-        object <<- tkGetDemoData(Data = "p500Monthly", report = report) 
+        object <<- tkGetDemoData(Data = "sp500Monthly", report = report) 
         object }
     tkExecute(
         fun = myFunction,
         params = list(
             object2x = TRUE,
             report = FALSE),
-        infoName = "SP500 Index Monthly Data" )       
+        infoName = "SP500 Monthly Return Data" )       
 }
 
 
@@ -91,7 +91,7 @@ function()
 
     # MSFT and SP%00 Data Sets:
     myFunction = function(object2x, report) {
-        object <<- tkGetDemoData(Data = "p500IndexMonthly", report = report) 
+        object <<- tkGetDemoData(Data = "sp500IndexMonthly", report = report) 
         object }
     tkExecute(
         fun = myFunction,
@@ -143,7 +143,7 @@ function()
             FinCenter = "GMT",
             object2x = TRUE,
             report = TRUE),
-        infoName = "12 Random Dates in Current Year" )          
+        infoName = "12 Random Dates" )          
 }
 
 
@@ -165,7 +165,7 @@ function()
         object <<- timeCalendar(y = y, m = m, d = d, h = h, 
             min = min, s = s, FinCenter = FinCenter)
         print(report)
-        if (report) tkTitle("12 Random Dates")
+        if (report) tkTitle("12 Random Times")
         object }
     tkExecute(
         fun = myFunction,
@@ -173,7 +173,7 @@ function()
             FinCenter = "GMT",
             object2x = TRUE,
             report = TRUE ),
-        infoName = "12 Random Times in Current Year" )          
+        infoName = "12 Random Times" )          
 }
 
 

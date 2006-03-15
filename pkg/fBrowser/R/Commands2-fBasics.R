@@ -36,6 +36,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Economagic Series Download:
+    helpTopic <<- "economagicImport"
     myFunction = function(value, file, frequency, save, colname, try,
         object2x, report) {
         object <<- economagicImport(query = value, file = file, 
@@ -67,6 +68,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Yahoo Series Download:
+    helpTopic <<- "yahooImport"
     myFunction = function(value, from, to, file, source, save, sep, 
         swap, try, object2x, report) {
             if (to == "today") to = as.character(Sys.Date())
@@ -109,6 +111,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # FRED St. Louis Series Download:
+    helpTopic <<- "fredImport"
     myFunction = function(value, file, source, frequency, save, sep, 
         try, object2x, report) {
         object <<- fredImport(query = value, file = file, source = source, 
@@ -140,9 +143,11 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Mean:
+    helpTopic <<- "mean"
     myFunction = function(series, object2x, report) {
         x = tkEval(series)
         object <<- c(mean = mean(as.vector(x)))
+        if (report) tkTitle("Mean")
         object }
     tkExecute(
         fun = myFunction,
@@ -150,7 +155,7 @@ function()
             series = "x",
             object2x = FALSE,
             report = TRUE),
-        infoName = "Compute Mean" )  
+        infoName = "Mean" )  
 }
 
 
@@ -162,9 +167,11 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Variance:
+    helpTopic <<- "var"
     myFunction = function(series, object2x, report) {
         x = tkEval(series)
         object <<- c(var = var(as.vector(x)))
+        if (report) tkTitle("Variance")
         object }
     tkExecute(
         fun = myFunction,
@@ -172,7 +179,7 @@ function()
             series = "x",
             object2x = FALSE,
             report = TRUE),
-        infoName = "Compute Variance" )
+        infoName = "Variance" )
 }
 
 
@@ -184,11 +191,13 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Skewness:
+    helpTopic <<- "skewness"
     myFunction = function(series, na.rm, method, object2x, report) {
         x = tkEval(series)
         object <<- c(skewness = skewness(as.vector(x), 
             na.rm = na.rm, method = method))
         attr(object, "method") <<- method
+        if (report) tkTitle("Skewness")
         object }
     tkExecute(
         fun = myFunction,
@@ -198,7 +207,7 @@ function()
             method = "moment",
             object2x = FALSE,
             report = TRUE),
-        infoName = "Compute Skewness" )
+        infoName = "Skewness" )
 }
 
 
@@ -210,11 +219,13 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Kurtosis:
+    helpTopic <<- "kurtosis"
     myFunction = function(series, na.rm, method, object2x, report) {
         x = tkEval(series)
         object <<- c(kurtosis = kurtosis(as.vector(x), 
             na.rm = na.rm, method = method))
         attr(object, "method") <<- method
+        if (report) tkTitle("Kurtosis")
         object }
     tkExecute(
         fun = myFunction,
@@ -224,7 +235,7 @@ function()
             method = "excess",
             object2x = FALSE,
             report = TRUE),
-        infoName = "Compute Kurtosis" )
+        infoName = "Kurtosis" )
 }
 
 
@@ -236,9 +247,11 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Summary:
+    helpTopic <<- "summary"
     myFunction = function(series, object2x, report) {
         x = tkEval(series)
         object <<- summary(as.vector(x))
+        if (report) tkTitle("Summary")
         object }
     tkExecute(
         fun = myFunction,
@@ -246,7 +259,7 @@ function()
             series = "x",
             object2x = FALSE,
             report = TRUE),
-        infoName = "Print Summary Statistics")   
+        infoName = "Summary Statistics")   
 }
 
 
@@ -258,9 +271,11 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Basic Statistics:
+    helpTopic <<- "basicStats"
     myFunction = function(series, object2x, report) {
         x = tkEval(series)
         object <<- basicStats(as.vector(x), ci = 0.95) 
+        if (report) tkTitle("Basic Statistis")
         object }
     tkExecute(
         fun = myFunction,
@@ -268,7 +283,7 @@ function()
             series = "x",
             object2x = FALSE,
             report = TRUE),
-        infoName = "Print Basic Statistics" )     
+        infoName = "Basic Statistics" )     
 }
 
 
@@ -281,6 +296,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # 1D: Time Series Plot:
+    helpTopic <<- "plot"
     myFunction = function(series, type, col, xlab, ylab, grid) {
         x = tkEval(series)
         plot(x, type = type, col = col, xlab = xlab, ylab = ylab)
@@ -294,7 +310,7 @@ function()
             col = "steelblue",
             xlab = "Index",
             ylab = "Series",
-            grid = FALSE),
+            grid = FALSE ),
         infoName = "Series Plot")       
 }
 
@@ -307,6 +323,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # 1D: ACF Plot:
+    helpTopic <<- "acf"
     myFunction = function(series, grid) {
         x = tkEval(series)
         acfPlot(x)
@@ -329,6 +346,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # 1D: PACF Plot:
+    helpTopic <<- "acf"
     myFunction = function(series, grid) {
         x = tkEval(series)
         pacfPlot(x)
@@ -351,6 +369,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # 1D: Histogram Plot:
+    helpTopic <<- "hist"
     myFunction = function(series) {
         x = tkEval(series)
         histPlot(x)
@@ -371,6 +390,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
   
     # 2D: Series Plot:
+    helpTopic <<- "plot"
     myFunction = function(series) {
         x = tkEval(series)
         plot(x, xlab = "", ylab = "")
@@ -391,6 +411,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # 2D: Scatter Diagramm Plot:
+    helpTopic <<- "plot"
     myFunction = function(series) {
         x = tkEval(series)
         plot(as.vector(x[, 1]), as.vector(x[,2]),
@@ -414,6 +435,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Normal RVs:
+    helpTopic <<- "dnorm"
     myFunction = function(n, mean, sd, object2x, report) {
         object <<- as.ts(rnorm(n, mean, sd))
         attr(object, "control") <<- 
@@ -439,6 +461,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Normal Slider:
+    helpTopic <<- "dnorm"
     .normSlider(GenerateRandomNumbers = TRUE)
 }
 
@@ -451,6 +474,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Normal Slider:
+    helpTopic <<- "dnorm"
     .normSlider()
 }
 
@@ -463,6 +487,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Hyperbolic RVs:
+    helpTopic <<- "dhyp"
     myFunction = function(n, alpha, beta, delta, mu, parameterization, 
         object2x, report) {
         object <<- as.ts(rhyp(n = n, alpha = alpha, beta = beta, delta = delta,
@@ -490,6 +515,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Hyperbolic Slider:
+    helpTopic <<- "dhyp"
     .hypSlider(GenerateRandomNumbers = TRUE)
 }
 
@@ -502,6 +528,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Hyperbolic Slider:
+    helpTopic <<- "dhyp"
     .hypSlider()
 }
 
@@ -514,6 +541,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Normal Inverse Gaussian RVs:
+    helpTopic <<- "dnig"
     myFunction = function(n, alpha, beta, delta, mu, 
         object2x, report) {
         object <<- as.ts(rnig(n = n, alpha = alpha, beta = beta, 
@@ -541,6 +569,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Normal Inverse Gaussian Slider:
+    helpTopic <<- "dnig"
     .nigSlider(GenerateRandomNumbers = TRUE)
 }
 
@@ -553,6 +582,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Normal Inverse Gaussian Slider:
+    helpTopic <<- "dnig"
     .nigSlider()  
 }
 
@@ -565,6 +595,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Symmetric Stable RVs:
+    helpTopic <<- "dsymstb"
     myFunction = function(n, alpha, object2x, report) {
         object <<- as.ts(rsymstb(n = n, alpha = alpha))
         object }
@@ -587,6 +618,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Symmetric Stable Slider:
+    helpTopic <<- "dsymstb"
     .symstbSlider(GenerateRandomNumbers = TRUE)
 }
 
@@ -599,6 +631,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Symmetric Stable Slider:
+    helpTopic <<- "dsymstb"
     .symstbSlider()
 }
 
@@ -611,6 +644,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Stable RVs:
+    helpTopic <<- "dstable"
     myFunction = function(n, alpha, beta, gamma, delta, parameterization, 
         object2x, report) {
         object <<- as.ts(rstable(n = n, alpha = alpha, beta = beta, 
@@ -640,6 +674,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Stable Slider:
+    helpTopic <<- "dstable"
     .stableSlider(GenerateRandomNumbers = TRUE)
 }
 
@@ -652,6 +687,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Stable Slider:
+    helpTopic <<- "dstable"
     .stableSlider()
 }
 
@@ -665,6 +701,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Normal Distribution:
+    helpTopic <<- "normFit"
     myFunction = function(series, object2x, report) {
         x = as.vector(eval(parse(text = series)))
         object <<- list(estimate = c(mean = mean(x), sd = sd(x))) 
@@ -687,6 +724,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Hyperbolic Distribution:
+    helpTopic <<- "hypFit"
     myFunction = function(series, object2x, report) {
         x = tkEval(series)
         object <<- hypFit(x)
@@ -709,6 +747,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Normal Inverse Gaussian Distribution:
+    helpTopic <<- "nigFit"
     myFunction = function(series, object2x, report) {
         x = tkEval(series)
         object <<- nigFit(x)
@@ -732,6 +771,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # One-sample Kolmogorov-Smirnov Test:
+    helpTopic <<- "ksnormTest"
     myFunction = function(series, object2x, report) {
         x = tkEval(series)
         object <<- ksnormTest(x)
@@ -754,6 +794,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Shapiro - Wilk Test:
+    helpTopic <<- "shapiroTest"
     myFunction = function(series, object2x, report) {
         x = tkEval(series)
         object <<- shapiroTest(x)
@@ -776,6 +817,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Jarque-Bera Test:
+    helpTopic <<- "jarqueberaTest"
     myFunction = function(series, object2x, report) {
         x = tkEval(series)
         object <<- jarqueberaTest(x)
@@ -798,6 +840,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # d'Agostino Test:
+    helpTopic <<- "dagoTest"
     myFunction = function(series, object2x, report) {
         x = tkEval(series)
         object <<- dagoTest(x)
@@ -820,6 +863,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Anderson - Darling Normality Test:
+    helpTopic <<- "adTest"
     myFunction = function(series, object2x, report) {
         x = tkEval(series)
         object <<- adTest(x)
@@ -842,6 +886,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Cramer - von Mises Normality Test:
+    helpTopic <<- "cvmTest"
     myFunction = function(series, object2x, report) {
         x = tkEval(series)
         object <<- cvmTest(x)
@@ -864,6 +909,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Lilliefors (KS) Normality Test:
+    helpTopic <<- "lillieTest"
     myFunction = function(series, object2x, report) {
         x = tkEval(series)
         object <<- lillieTest(x)
@@ -886,6 +932,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Pearson Chi-Square Normality Test:
+    helpTopic <<- "pchiTest"
     myFunction = function(series, object2x, report) {
         x = tkEval(series)
         object <<- pchiTest(x)
@@ -908,6 +955,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Shapiro - Francia Normality Test:
+    helpTopic <<- "sfTest"
     myFunction = function(series, object2x, report) {
         x = tkEval(series)
         object <<- sfTest(x)
@@ -931,6 +979,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Kolmogorov-Smirnov Test:
+    helpTopic <<- "ks2Test"
     myFunction = function(series, object2x, report) {
         x = tkEval(series)
         object <<- ks2Test(x[,1], x[,2])
@@ -953,6 +1002,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Location: Unpaired t-Test:
+    helpTopic <<- "tTest"
     myFunction = function(series, object2x, report) {
         x = tkEval(series)
         object <<- tTest(x[,1], x[,2])
@@ -975,6 +1025,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Location: Kruskal-Wallis Test:
+    helpTopic <<- "kw2Test"
     myFunction = function(series, object2x, report) {
         x = tkEval(series)
         object <<- kw2Test(x[,1], x[,2])
@@ -997,6 +1048,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Variance: F Test:
+    helpTopic <<- "varfTest"
     myFunction = function(series, object2x, report) {
         x = tkEval(series)
         object <<- varfTest(x[,1], x[,2])
@@ -1019,6 +1071,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Variance: Bartlett Test:
+    helpTopic <<- "bartlett2Test"
     myFunction = function(series, object2x, report) {
         x = tkEval(series)
         object <<- bartlett2Test(x[,1], x[,2])
@@ -1041,6 +1094,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Variance: Fligner-Killeen Test:
+    helpTopic <<- "fligner2Test"
     myFunction = function(series, object2x, report) {
         x = tkEval(series)
         object <<- fligner2Test(x[,1], x[,2])
@@ -1063,6 +1117,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Scale: Ansari-Bradley Test:
+    helpTopic <<- "ansariTest"
     myFunction = function(series, object2x, report) {
         x = tkEval(series)
         object <<- ansariTest(x[,1], x[,2])
@@ -1085,6 +1140,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Scale: Mood Test:
+    helpTopic <<- "moodTest"
     myFunction = function(series, object2x, report) {
         x = tkEval(series)
         object <<- moodTest(x[,1], x[,2])
@@ -1107,6 +1163,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Correlation: Pearson Test:
+    helpTopic <<- "pearsonTest"
     myFunction = function(series, object2x, report) {
         x = tkEval(series)
         object <<- pearsonTest(x[,1], x[,2])
@@ -1128,6 +1185,7 @@ function()
 function() 
 {
     # Correlation: Kendall's tau Test:
+    helpTopic <<- "kendallTest"
     myFunction = function(series, object2x, report) {
         x = tkEval(series)
         object <<- kendallTest(x[,1], x[,2])
@@ -1150,6 +1208,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Correlation: Spearman's rho Test:
+    helpTopic <<- "spearmanTest"
     myFunction = function(series, object2x, report) {
         x = tkEval(series)
         object <<- spearmanTest(x[,1], x[,2])
@@ -1173,7 +1232,9 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Taylor Effect:
-    myFunction = function(series, deltas, lag.max, standardize, report) {
+    helpTopic <<- "teffectPlot"
+    myFunction = function(series, deltas, lag.max, standardize, 
+        object2x, report) {
         x = tkEval(series)
         deltas = eval(parse(text = deltas))
         object <<- teffectPlot(as.vector(x), deltas = deltas, 
@@ -1186,11 +1247,9 @@ function()
             deltas = "seq(0.2,3,by=0.2)",
             lag.max = 10,
             standardize = TRUE,
-            report = FALSE),
-        infoName = "Taylor Effect Plot",
-        tkoutput = FALSE,
-        title = "Taylor Effect Plot",
-        description = NULL ) 
+            object2x = FALSE,
+            report = FALSE ),
+        infoName = "Taylor Effect Plot" ) 
 }
 
 
@@ -1202,7 +1261,8 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Long Memory Behaviour:
-    myFunction = function(series, lag.max, ci, report) {
+    helpTopic <<- "lmacfPlot"
+    myFunction = function(series, lag.max, ci, object2x, report) {
         x = tkEval(series)
         lag.max = eval(parse(text = lag.max))
         object <<- lmacfPlot(abs(as.vector(x))) 
@@ -1213,11 +1273,9 @@ function()
             series = "x",
             lag.max = "max(2, floor(10*log10(length(x))))",
             ci = 0.95,
-            report = FALSE),
-        infoName = "Long Memory Plot",
-        tkoutput = FALSE,
-        title = "Long Memory Plot",
-        description = NULL ) 
+            object2x = FALSE,
+            report = FALSE ),
+        infoName = "Long Memory Plot" ) 
 }
 
 
@@ -1229,18 +1287,18 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Log PDF Plot:
-    myFunction = function(series) {
+    helpTopic <<- "logpdfPlot"
+    myFunction = function(series, object2x, report) {
         x = tkEval(series)
         object <<- logpdfPlot(abs(as.vector(x))) 
         object }
     tkExecute(
         fun = myFunction,
         params = list(
-            series = "x"),
-        infoName = "Log PDF Plot",
-        tkoutput = FALSE,
-        title = "Log PDF Plot",
-        description = NULL ) 
+            series = "x",
+            object2x = FALSE,
+            report = FALSE ),
+        infoName = "Log PDF Plot" ) 
 }
 
 
@@ -1252,7 +1310,8 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Normal QQ Plot:
-    myFunction = function(series, span, report) {
+    helpTopic <<- "qqgaussPlot"
+    myFunction = function(series, span, object2x, report) {
         x = tkEval(series)
         object <<- qqgaussPlot(as.vector(x), span = span) 
         object }
@@ -1261,11 +1320,9 @@ function()
         params = list(
             series = "x",
             span = 5,
-            report = FALSE),
-        infoName = "Normal QQ Plot",
-        tkoutput = FALSE,
-        title = "Normal QQ Plot",
-        description = NULL ) 
+            object2x = FALSE,
+            report = FALSE ),
+        infoName = "Normal QQ Plot" ) 
 }
 
 
@@ -1277,7 +1334,8 @@ function()
 {   # A function implemented by Diethelm Wuertz
  
     # Scaling Law Plot:
-    myFunction = function(series, span, report) {
+    helpTopic <<- "scalinglawPlot"
+    myFunction = function(series, span, object2x, report) {
         x = tkEval(series)
         if (span == "NULL") span = ceiling(log(length(as.vector(x))/252)/log(2))
         print(span)
@@ -1288,11 +1346,9 @@ function()
         params = list(
             series = "x",
             span = "NULL",
-            report = FALSE),
-        infoName = "Scaling Law Plot",
-        tkoutput = FALSE,
-        title = "Scaling Law Plot",
-        description = NULL ) 
+            object2x = FALSE,
+            report = FALSE ),
+        infoName = "Scaling Law Plot" ) 
 }
 
 

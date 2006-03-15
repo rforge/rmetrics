@@ -37,6 +37,7 @@ function()
     
     # LM - Example Data:
     # Example Data: x = 0.7*x1 + 0.3*x2 + eps
+    helpTopic <<- ""
     myFunction = function(object2x, report) {
         object <<- tkGetDemoData(Data = "lmData", report = report,
             FUN = "as.data.frame") 
@@ -61,6 +62,7 @@ function()
     # Example Data: x = 10*sin(x1) + exp(x2) + eps
     # family = binomial(link = logit)
     # glm(formula = x ~ x1 + x2, family = family, data = x)
+    helpTopic <<- ""
     myFunction = function(object2x, report) {
         object <<- tkGetDemoData(Data = "glmData", report = report,
             FUN = "as.data.frame") 
@@ -84,6 +86,7 @@ function()
     # GAM - Example Data:
     # Example Data: x = 0.7*sin(x1) + 0.3*exp(x2) + eps
     # fit = gam(formula = x ~ s(x1) + s(x2), data = x)  
+    helpTopic <<- ""
     myFunction = function(object2x, report) {
         object <<- tkGetDemoData(Data = "gamData", report = report,
             FUN = "as.data.frame") 
@@ -105,6 +108,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Linear Modelling:
+    helpTopic <<- ""
     myFunction = function(series, formula, object2x, report) {
         x = tkEval(series)
         formula = as.formula(formula)
@@ -129,6 +133,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Generalized Linear Modelling:
+    helpTopic <<- ""
     myFunction = function(series, formula, family, object2x, report){
         x = tkEval(series)
         formula = as.formula(formula)
@@ -156,6 +161,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Generalized Additive Modelling
+    helpTopic <<- ""
     myFunction = function(formula, object2x, report){
         object <<- regFit(
             formula = as.formula(formula), 
@@ -180,6 +186,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Projection Pursuit Regression:
+    helpTopic <<- ""
     myFunction = function(formula, object2x, report){
         object <<- regFit(
             formula = as.formula(formula),
@@ -204,6 +211,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # MARS Pursuit Regression:
+    helpTopic <<- ""
     myFunction = function(formula, object2x, report){
         object <<- regFit(
             formula = as.formula(formula),
@@ -228,6 +236,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # POLYMARS Pursuit Regression:
+    helpTopic <<- ""
     myFunction = function(formula, object2x, report){
         object <<- regFit(
             formula = as.formula(formula),
@@ -252,6 +261,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Neural Network Regression:
+    helpTopic <<- ""
     myFunction = function(formula, object2x, report){
         object <<- regFit(
             formula = as.formula(formula),
@@ -277,6 +287,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # * Example timeSeries: realInvest ~ realGNP + realInterest
+    helpTopic <<- ""
     data(Greene4Table131)
     Greene4Table131 = as.timeSeries(Greene4Table131[, c(1, 6:8)])
     colnames(Greene4Table131@Data) = c("x", "x1", "x2")
@@ -293,6 +304,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Breusch-Godfrey Test:
+    helpTopic <<- ""
     myFunction = function(formula, order, type) {
         formula = as.formula(formula)
         order = as.integer(order)
@@ -317,6 +329,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Breusch-Pagan Test:
+    helpTopic <<- ""
     myFunction = function(formula, studentize) {
         formula = as.formula(formula)
         object <<- bpTest(formula = formula, varformula = NULL, 
@@ -339,6 +352,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Durbin-Watson Test:
+    helpTopic <<- ""
     myFunction = function(formula, alternative, iterations) {
         formula = as.formula(formula)
         object <<- dwTest(formula = formula, alternative = alternative,
@@ -363,6 +377,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Goldfeld - Quandt Test:
+    helpTopic <<- ""
     myFunction = function(formula, alternative, iterations) {
         formula = as.formula(formula)
         object <<- dwTest(formula = formula, data = x)
@@ -385,6 +400,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Harvey - Collier Test:
+    helpTopic <<- ""
     myFunction = function(formula, alternative, iterations) {
         formula = as.formula(formula)
         object <<- dwTest(formula = formula, data = x)
@@ -407,6 +423,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Harrison - McCabe Test:
+    helpTopic <<- ""
     myFunction = function(formula, alternative, iterations) {
         formula = as.formula(formula)
         object <<- dwTest(formula = formula, data = x)
@@ -428,6 +445,7 @@ function()
 function()
 {
     # Rainbow Test:
+    helpTopic <<- ""
     myFunction = function(formula, alternative, iterations) {
         formula = as.formula(formula)
         object <<- dwTest(formula = formula, data = x)
@@ -450,6 +468,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Ramsey RESET Test:
+    helpTopic <<- ""
     myFunction = function(formula, alternative, iterations) {
         formula = as.formula(formula)
         object <<- dwTest(formula = formula, data = x)
@@ -473,6 +492,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Equations Modelling:
+    helpTopic <<- ""
     tkinsert(txt, "end", "\n\nSorry, not yet implemented!\n")   
 }
 
@@ -486,6 +506,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Generate Pascal Matrix:
+    helpTopic <<- ""
     myFunction = function(n, object2x, report) {
         n = as.integer(n)
         object <<- pascal(n)
@@ -510,6 +531,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Return Diagonal Matrix:
+    helpTopic <<- ""
     myFunction = function(object2x, report) {
         object <<- diag(x)
         if (report) tkTitle("Diagonal Matrix")
@@ -531,6 +553,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Return Lower Triangular Matrix:
+    helpTopic <<- ""
     myFunction = function(object2x, report) {
         object <<- triang(x)
         if (report) tkTitle("Lower Triangular Matrix")
@@ -552,6 +575,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Return Upper Triangular Matrix:
+    helpTopic <<- ""
     myFunction = function(object2x, report) {
         object <<- Triang(x)
         if (report) tkTitle("Upper Triangular Matrix")
@@ -573,6 +597,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Return Determinant:
+    helpTopic <<- ""
     myFunction = function(object2x, report) {
         object <<- det(x)
         if (report) tkTitle("Determinant")
@@ -594,6 +619,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Return Inverse Matrix:
+    helpTopic <<- ""
     myFunction = function(object2x, report) {
         object <<- inv(x)
         if (report) tkTitle("Inverse Matrix")
@@ -615,6 +641,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # norm(x, p) p-Norm:
+    helpTopic <<- ""
     myFunction = function(p, object2x, report) {
         p = as.integer(p)
         object <<- norm(x, p)
@@ -638,6 +665,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # rk(x, method) Rank:
+    helpTopic <<- ""
     myFunction = function(method, object2x, report) {
         object <<- rk(x = x, method = method)
         if (report) tkTitle("Rank of Matrix")
@@ -659,6 +687,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # t(x) Transposed"
+    helpTopic <<- ""
     myFunction = function(method, object2x, report) {
         object <<- t(x)
         if (report) tkTitle("Transpose of Matrix")
@@ -680,6 +709,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # mexp(x, order, method) Exponentiate Square Matrix:
+    helpTopic <<- ""
     myFunction = function(order, method, report) {
         object <<- mexp(x = x, order = order, method = method, object2x)
         object  }
@@ -702,6 +732,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # chol(x, pivot) Cholesky Factors:
+    helpTopic <<- ""
     myFunction = function(pivot, object2x, report) {
         object <<- chol(x = x, pivot = pivot, LINPACK = pivot) 
         object  }
@@ -723,6 +754,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # eigen(x) Eigenvalues and Eigevectors:
+    helpTopic <<- ""
     myFunction = function(object2x, report) {
         object <<- eigen(x)
         object  }
@@ -744,6 +776,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # svd(x) Singular Value Decomposition:
+    helpTopic <<- ""
     myFunction = function(object2x, report) {
         object <<- svd(x)
         object  }
@@ -765,6 +798,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # kappa(x) Condition Number:
+    helpTopic <<- ""
     myFunction = function(object2x, report) {
         object <<- kappa(x)
         object  }
@@ -786,6 +820,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # QR Decomposition:
+    helpTopic <<- ""
     myFunction = function(object2x, report) {
         object <<- qr(x)
         object  }
@@ -808,6 +843,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # * Example timeSeries: x = MSFT|SP500 Returns:
+    helpTopic <<- ""
     tkGetData(Data = "msftsp500Monthly", 
         infoName = "Return Series with NA")  
     x <<- x[109:132, ]
@@ -827,6 +863,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Remove NAs: 
+    helpTopic <<- ""
     myFunction = function(series, object2x, report) {
         x = tkEval(series)
         object <<- removeNA(x = x) 
@@ -849,6 +886,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Interpolate NAs:
+    helpTopic <<- ""
     myFunction = function(series, method, object2x, report) {
         x = tkEval(series)
         object <<- interpNA(x = x, method = method) 
@@ -872,6 +910,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # knn Algorithm:
+    helpTopic <<- ""
     myFunction = function(series, correlation, object2x, report) {
         x = tkEval(series)
         object <<- knnNA(x = x, k = max(dim(as.matrix(x))[1] * 0.01, 2), 
@@ -896,6 +935,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # * Example timeSeries: x = MSFT|SP500 Returns
+    helpTopic <<- ""
     X = as.timeSeries(singleIndex.dat, format = "%d-%b-%Y")[108:132, ]
     X = returnSeries(X)
     X@units = paste(X@units, ".RET", sep = "")
@@ -917,6 +957,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Substitute NAs:
+    helpTopic <<- ""
     myFunction = function(series, type, object2x, report) {
         x = tkEval(series)
         substituteNA(x = x, type = type) }
@@ -940,6 +981,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Data: Open-High-Low-Close SP500
+    helpTopic <<- ""
     data(spc1970)
     spc1995 = spc1970[-(1:6319),]
     x <<- tkSaveAsX(data = as.timeSeries(spc1995), 
@@ -955,6 +997,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # emaTA - Exponential Moving Average
+    helpTopic <<- ""
     myFunction = function(select, lag, doplot, col, object2x, report) {
         object <<- .dailyTA(X = x, indicator = "ema", 
             select = select, lag = lag)
@@ -987,6 +1030,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # biasTA - EMA Price Bias
+    helpTopic <<- ""
     myFunction = function(select, lag, doplot, col, object2x, report) {
         object <<- .dailyTA(X = x, indicator = "bias", 
             select = select, lag = lag)
@@ -1018,6 +1062,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # medpriceTA - Median Price
+    helpTopic <<- ""
     myFunction = function(select, lag, doplot, col, object2x, report) {
         object <<- .dailyTA(X = x, indicator = "medprice", 
             select = select, lag = lag)
@@ -1050,6 +1095,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # typicalpriceTA - Typical Price
+    helpTopic <<- ""
     myFunction = function(select, lag, doplot, col, object2x, report) {
         object <<- .dailyTA(X = x, indicator = "typicalprice", 
             select = select, lag = lag)
@@ -1082,6 +1128,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # wcloseTA - Weighted Close Price
+    helpTopic <<- ""
     myFunction = function(select, lag, doplot, col, object2x, report) {
         object <<- .dailyTA(X = x, indicator = "wclose", 
             select = select, lag = lag)
@@ -1114,6 +1161,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # rocTA - Rate of Change
+    helpTopic <<- ""
     myFunction = function(select, lag, doplot, col, object2x, report) {
         object <<- .dailyTA(X = x, indicator = "roc", 
             select = select, lag = lag)
@@ -1145,6 +1193,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # oscTA - EMA-Oscillator
+    helpTopic <<- ""
     myFunction = function(select, lag1, lag2, doplot, col, object2x, report) {
         object <<- .dailyTA(X = x, indicator = "osc", 
             select = select, lag = c(lag1, lag2))
@@ -1177,6 +1226,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # momTA - Momentum Oscillator
+    helpTopic <<- ""
     myFunction = function(select, lag, doplot, col, object2x, report) {
         object <<- .dailyTA(X = x, indicator = "mom", 
             select = select, lag = lag)
@@ -1209,6 +1259,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # macdTA -  MACD Oscillator
+    helpTopic <<- ""
     myFunction = function(select, lag1, lag2, doplot, col, object2x, report) {
         object <<- .dailyTA(X = x, indicator = "macd", 
             select = select, lag = c(lag1, lag2))
@@ -1239,6 +1290,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # cdsTA - MACD Signal Line
+    helpTopic <<- ""
     myFunction = function(select, ...) {
         object <<- .dailyTA(X = x, indicator = "...", select = select, ...)
         object }
@@ -1259,6 +1311,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # cdoTA - MACD Oscillator
+    helpTopic <<- ""
     myFunction = function(select, ...)
         .dailyTA(X = x, indicator = "...", select = select, ...)
     tkExecute(
@@ -1278,6 +1331,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # vohlTA - High/Low Volatility
+    helpTopic <<- ""
     myFunction = function(select, ...) {
         object <<- .dailyTA(X = x, indicator = "...", select = select, ...)
         object }
@@ -1298,6 +1352,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # vorTA - Volatility Ratio
+    helpTopic <<- ""
     myFunction = function(select, ...) {
         object <<- .dailyTA(X = x, indicator = "...", select = select, ...)
         object }
@@ -1318,6 +1373,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # fpkTA - Fast %K Stochastics
+    helpTopic <<- ""
     myFunction = function(select, ...) {
         object <<- .dailyTA(X = x, indicator = "...", select = select, ...)
         object }
@@ -1338,6 +1394,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # fpdTA - Fast %D Stochastics
+    helpTopic <<- ""
     myFunction = function(select, ...) {
         object <<- .dailyTA(X = x, indicator = "...", select = select, ...)
         object }
@@ -1358,6 +1415,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # spdTA - Slow %D Stochastics
+    helpTopic <<- ""
     myFunction = function(select, ...) {
         object <<- .dailyTA(X = x, indicator = "...", select = select, ...)
         object }
@@ -1378,6 +1436,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # apdTA - Averaged %D Stochastics
+    helpTopic <<- ""
     myFunction = function(select, ...) {
         object <<- .dailyTA(X = x, indicator = "...", select = select, ...)
         object }
@@ -1398,6 +1457,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # wprTA - Williams %R Stochastics
+    helpTopic <<- ""
     myFunction = function(select, ...) {
         object <<- .dailyTA(X = x, indicator = "...", select = select, ...)
         object }
@@ -1418,6 +1478,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # rsiTA - Relative Strength Index
+    helpTopic <<- ""
     myFunction = function(select, ...) {
         object <<- .dailyTA(X = x, indicator = "...", select = select, ...)
         object }
@@ -1438,6 +1499,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # ... merge time Series
+    helpTopic <<- ""
     x <<- tkSaveAsX(mergeSeries(x, object@Data), "Merged Series & Indicator")
 }
 
@@ -1451,6 +1513,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Maximum Draw-Down:
+    helpTopic <<- ""
     myFunction = function(series, object2x, report) {
         x = tkEval(series)
         object <<- maxDrawDown(x) 
@@ -1478,6 +1541,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Sharpe Ratio:
+    helpTopic <<- ""
     myFunction = function(series, r, scale, object2x, report) {
         x = tkEval(series)
         scale = eval(parse(text = scale))
@@ -1508,6 +1572,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Sterling Ratio:
+    helpTopic <<- ""
     myFunction = function(series, object2x, report) {
         x = tkEval(series)
         object <<- sterlingRatio(x = x) 
@@ -1536,8 +1601,11 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Rolling Mean:
-    myFunction = function(n, trim, na.rm, doplot, par, object2x, report) {
+    helpTopic <<- ""
+    myFunction = function(series, n, trim, na.rm, doplot, par, 
+        object2x, report) {
         if (report) tkTitle("Rolling Mean")
+        x = tkEval(series)
         object <<- rollMean(x, n, trim, na.rm)
         if (doplot) {
             eval(parse(text = par))
@@ -1548,6 +1616,7 @@ function()
     tkExecute(
         fun = myFunction,
         params = list(
+            series = "x",
             n = 9, 
             trim = TRUE, 
             na.rm = FALSE,
@@ -1567,8 +1636,11 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Rolling Variance:
-    myFunction = function(n, trim, na.rm, doplot, par, object2x, report) {
+    helpTopic <<- ""
+    myFunction = function(series, n, trim, na.rm, doplot, par, 
+        object2x, report) {
         if (report) tkTitle("Rolling Variance")
+        x = tkEval(series)
         object <<- rollVar(x, n, trim, na.rm)
         if (doplot) {
             eval(parse(text = par))
@@ -1580,6 +1652,7 @@ function()
     tkExecute(
         fun = myFunction,
         params = list(
+            series = "x",
             n = 9, 
             trim = TRUE, 
             na.rm = FALSE,
@@ -1599,8 +1672,11 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Rolling Minimum:
-    myFunction = function(n, trim, na.rm, doplot, par, object2x, report) {
+    helpTopic <<- ""
+    myFunction = function(series, n, trim, na.rm, doplot, par, 
+        object2x, report) {
         if (report) tkTitle("Rolling Minimum")
+        x = tkEval(series)
         object <<- rollMin(x, n, trim, na.rm)
         if (doplot) {
             eval(parse(text = par))
@@ -1611,6 +1687,7 @@ function()
     tkExecute(
         fun = myFunction,
         params = list(
+            series = "x",
             n = 9, 
             trim = TRUE, 
             na.rm = FALSE,
@@ -1630,8 +1707,11 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Rolling Maximum:
-    myFunction = function(n, trim, na.rm, doplot, par, object2x, report) {
+    helpTopic <<- ""
+    myFunction = function(series, n, trim, na.rm, doplot, par, 
+        object2x, report) {
         if (report) tkTitle("Rolling Maximum")
+        x = tkEval(series)
         object <<- rollMax(x, n, trim, na.rm)
         if (doplot) {
             eval(parse(text = par))
@@ -1642,6 +1722,7 @@ function()
     tkExecute(
         fun = myFunction,
         params = list(
+            series = "x",
             n = 9, 
             trim = FALSE, 
             na.rm = FALSE,

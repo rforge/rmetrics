@@ -226,8 +226,6 @@ description = NULL, ...)
 
     # FUNCTION:
     
-    print(helpTopic)
-    
     # Set Object Title"
     objectTitle <<- infoName
     
