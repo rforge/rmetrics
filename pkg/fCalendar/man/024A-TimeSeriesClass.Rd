@@ -126,7 +126,8 @@ seriesPositions(object)
 \method{as.matrix}{timeSeries}(x)
 \method{as.data.frame}{timeSeries}(x, row.names = NULL, optional = NULL)
 
-applySeries(x, from = NULL, to = NULL, FUN = colAvgs, units = NULL, ...) 
+applySeries(x, from = NULL, to = NULL, by = c("monthly", "quarterly"), 
+    FUN = colAvgs, units = NULL, ...) 
 cutSeries(x, from, to)
 diffSeries(x, lag = 1, diff = 1, trim = FALSE, pad = NA)
 lagSeries(x, k = 1, trim = FALSE, units = NULL)
@@ -148,6 +149,14 @@ ohlcDailyPlot(x, volume = TRUE, colOrder = c(1:5), units = 1e6,
 
 \arguments{
   
+    \item{by}{
+        [applySeries] - \cr
+        a character either \code{"monthly"} or \code{"quarterly"}. The
+        defaull value is \code{"monthly"}. Only operative when both arguments
+        \code{from} and \code{to} have ther default values \code{NULL}.
+        In this case the function \code{FUN} will be applied to monthly or
+        quarterly periods.
+        }
     \item{charvec}{
         a character vector of dates and times.
         }
