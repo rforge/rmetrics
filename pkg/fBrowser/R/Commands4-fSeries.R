@@ -108,9 +108,9 @@ function()
         object2x, report) {
         fit = eval(parse(text = as.character(fit)))
         conf = eval(parse(text = conf))
-        object <<- predict.fARMA(object = fit, n.ahead = n.ahead, 
-            n.back = n.back, conf = conf, doplot = TRUE, 
-            doprint = TRUE) 
+        object@predicted.values <<- predict.fARMA(object = fit, 
+            n.ahead = n.ahead, n.back = n.back, conf = conf, 
+            doplot = TRUE, doprint = FALSE) 
         if (report) tkTitle("ARMA Prediction")
         if (doplot) tkEval(par)
         object }
