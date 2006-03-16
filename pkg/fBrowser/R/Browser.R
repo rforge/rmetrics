@@ -66,6 +66,9 @@ fontSize = 9, fontFamily = "Courier New", guiTitle = "Rmetrics" )
     x <<- as.ts(rnorm(1000))
     xTitle <<- plotTitle <<- "rnorm(1000)"
     object <<- NULL
+    info <<-NULL
+    object2recover <<- NULL
+    info2recover <<-NULL
     objectTitle <<- "NULL"
     
     helpTopic <<- "help"
@@ -129,28 +132,36 @@ fontSize = 9, fontFamily = "Courier New", guiTitle = "Rmetrics" )
     # Active Input/Value Data Frame:
     activeFrame <<- tkframe(base, relief = "groove", borderwidth = 2)
     infoLabelText <<- tclVar(paste("ts: ", xTitle))
-    objectLabelText <<- tclVar(paste("VALUE: ", objectTitle))
+    objectLabelText <<- tclVar(paste("null: ", objectTitle))
     infoLabel <<- tkbutton(activeFrame, relief = "ridge",
         command = function() tkOutput(capture.output(x)),
         text = tclvalue(infoLabelText), fg = "blue")     
     classXLabel <<- tkbutton(activeFrame, relief = "ridge",
         command = function() x <<- tkGetClass(class(x)[1]),
-        text = "Slots", fg = "blue")    
+        text = "Info", fg = "blue")    
     objectLabel <<- tkbutton(activeFrame, relief = "ridge",
         command = function() tkOutput(capture.output(object)),
-        text = tclvalue(objectLabelText), fg = "darkgreen")
+        text = tclvalue(objectLabelText), fg = "red")
     classLabel <<- tkbutton(activeFrame, relief = "ridge",
         command = function() x <<- tkGetClass(class(object)[1]),
-        text = "Slots", fg = "darkgreen")
+        text = "Info", fg = "red")
     summaryLabel <<- tkbutton(activeFrame, relief = "ridge",
         command = function() x <<- tkGetSummary(object),
-        text = "Summary", fg = "darkgreen")
+        text = "Summary", fg = "red")
+    plotLabel <<- tkbutton(activeFrame, relief = "ridge",
+        command = function() plot(object),
+        text = "Plot", fg = "red")
     copyLabel <<- tkbutton(activeFrame, relief = "ridge",
         command = function() x <<- tkObjectToX(object),
-        text = "Object to x", fg = "darkgreen")
+        text = "object to x", fg = "darkgreen")
+    recoverLabel <<- tkbutton(activeFrame, relief = "ridge",
+        command = .onRecover,
+        text = "Recover", fg = "darkgreen")
     tkgrid(activeFrame)
-    tkgrid(infoLabel, classXLabel, 
-        objectLabel, classLabel, summaryLabel, copyLabel)  
+    tkgrid(
+        infoLabel, classXLabel, 
+        objectLabel, classLabel, summaryLabel, plotLabel,
+        copyLabel, recoverLabel)  
        
     # Compose: 
     tkpack(textFrame, fill = "both", expand = TRUE)  
@@ -158,6 +169,18 @@ fontSize = 9, fontFamily = "Courier New", guiTitle = "Rmetrics" )
     tkpack(activeFrame, fill = "x")
     
     tkfocus()
+}
+
+
+.onRecover = 
+function()
+{
+    object <<- object2recover
+    info <<- info2recover
+    what = paste(as.character(class(object)), ":", sep = "")
+    objectLabelText <<- tclVar(paste(what, info))
+    tkconfigure(objectLabel, textvariable = objectLabelText)
+    tkdestroy(tt)
 }
 
 
@@ -235,6 +258,10 @@ description = NULL, ...)
     # Set Object Title"
     objectTitle <<- infoName
     
+    object2recover <<- object
+    info2recover <<- info
+    info <<- infoName 
+    
     if (is.null(params)) {
         FUN = match.fun(fun)
         object <<- FUN(x, ...)
@@ -250,7 +277,6 @@ description = NULL, ...)
         }
     } else {
         # Settings:  
-        info = infoName
         argNames = names(params)
         Character = NULL
         Numeric = NULL

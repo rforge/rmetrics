@@ -324,8 +324,8 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # GEV Distribution Slider:
-    helpTopic <<- ""
-    gevSlider()
+    helpTopic <<- "dgev"
+    .gevSlider()
 }
 
 
@@ -544,8 +544,8 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # GEV Distribution Slider:
-    helpTopic <<- ""
-    gpdSlider()
+    helpTopic <<- "dgpd"
+    .gpdSlider()
 }
 
 

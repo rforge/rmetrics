@@ -68,7 +68,7 @@ function()
     addToolbarMenu(fileMenu, Label, subLabel, Command) 
     
     # Add Menu:
-    Label = "List Rmetrics Data Files"
+    Label = "List Rmetrics Demo Data Files"
     subLabel = 
         NULL
     Command = 
@@ -76,7 +76,7 @@ function()
     addToolbarMenu(fileMenu, Label, subLabel, Command)  
     
     # Add Menu:
-    Label = "Load Rmetrics Data File"
+    Label = "Load Rmetrics Demo Data File"
     subLabel = 
         NULL
     Command = 
@@ -107,6 +107,7 @@ function()
         ".menuUpdatePackages"
     addToolbarMenu(fileMenu, Label, subLabel, Command)  
    
+    if (FALSE) {
     # Add Menu:
     Label = "________________________________"
     subLabel = 
@@ -131,7 +132,8 @@ function()
         "xmpfMultivar",
         "xmpfExtremes",
         "xmpfOptions")
-    addToolbarMenu(fileMenu, Label, subLabel, Command)     
+    addToolbarMenu(fileMenu, Label, subLabel, Command)  
+    }   
         
     # Add Menu:
     Label = "________________________________"

@@ -223,9 +223,22 @@ function()
 function()
 {   # A function implemented by Diethelm Wuertz
     
-    # ... Print Summary Report:
-    helpTopic <<- ""
-    tkGetSummary(object)
+    # GARCH Forecast:
+    helpTopic <<- "garchFit"
+    myFunction = function(fit, n.ahead, object2x, report) {
+        fit = eval(parse(text = as.character(fit)))
+        object <<- predict(object = fit, n.ahead = n.ahead, trace = FALSE)
+        if (report) tkTitle("GARCH Prediction")
+        report <<- FALSE
+        object}
+    tkExecute(
+        fun = myFunction,
+        params = list(
+            fit = "object",
+            n.ahead = 10,
+            object2x = FALSE,
+            report = TRUE ),
+        infoName = "Predicted GARCH" )  
 }
 
 
