@@ -670,7 +670,8 @@ doplot = TRUE, doprint = TRUE, ...)
         plot(ts(c(data[(n-n.back+1):n], pred.mean[1], rep(NA, npred-1)), 
             end = tsp(data)[2] + npred/freq, f = freq), ylim = ylim, 
             ylab = ylab)
-        title(main = paste(object$tstitle)) }
+        title(main = paste(object$tstitle)) 
+    }
          
     # Confidence Intervals:
     xx = tsp(data)[2] + (1:npred)/freq
