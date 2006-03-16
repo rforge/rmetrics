@@ -660,10 +660,11 @@ doplot = TRUE, doprint = TRUE, ...)
     #upper = as.matrix(upper)
     #lower = as.matrix(lower)  
     
-    # Plot History:   
+    # Plot History:  
+    # DW 2006-03-16 thanks to Bernhard Pfaff
+    pred.mean = pred$pred
+    npred = length(pred.mean) 
     if (doplot) {
-        pred.mean = pred$pred
-        npred = length(pred.mean)
         ylim = range( c(data[(n-n.back+1):n], pred.mean), na.rm = TRUE)
         ylim = range(ylim, lower, upper, na.rm = TRUE)   
         ylab = paste("Series: ", object$series)
