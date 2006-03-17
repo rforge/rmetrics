@@ -206,7 +206,7 @@ function()
 
 
 addToolbarMenu =  
-function(popupMenu, Label, subLabel, Command) 
+function(popupMenu, Label = NULL, subLabel, Command) 
 {   # A function implemented by Diethelm Wuertz
 
     # FUNCTION:

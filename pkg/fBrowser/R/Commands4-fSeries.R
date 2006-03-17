@@ -85,7 +85,7 @@ function()
         fun = myFunction,
         params = list(
             formula = "x ~ arima(2, 0, 1)", 
-            method = "CSS-ML",
+            method = "CSS-ML & MLE & CSS",
             include.mean = TRUE,
             doplot = TRUE,
             par = "par(mfrow=c(2,2),cex=0.7)",
