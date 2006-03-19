@@ -46,8 +46,8 @@ function()
     # Add Menu:
     Label = "Create a Time Date Object"
     subLabel = c(
-        "* Demo tS: x = 12 Random Dates in 2005",
-        "* Demo tS: x = 12 Random Times in 2005",
+        "* Demo tS: x = 12 Random Dates",
+        "* Demo tS: x = 12 Random Times",
         "__________________________________________",
         "Create timeDate Sequence",
         "Create timeDate Calendar",
@@ -82,8 +82,8 @@ function()
     # Add Menu:
     Label = "Manipulate a timeDate Object"
     subLabel = c(
-        "* Demo tS: x = 12 Random Dates in 2005",
-        "* Demo tS: x = 12 Random Times in 2005",
+        "* Demo tS: x = 12 Random Dates",
+        "* Demo tS: x = 12 Random Times",
         "__________________________________________",
         "Extract the first object of a timeDate Vector",
         "Extract the last object of a timeDate Vector",

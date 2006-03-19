@@ -50,7 +50,7 @@ function()
             FinCenter = "GMT",
             object2x = TRUE,
             report = TRUE),
-        subject = "12 Random Dates in Current Year" )          
+        subject = "12 Random Dates" )          
 }
 
 
@@ -80,7 +80,7 @@ function()
             FinCenter = "GMT",
             object2x = TRUE,
             report = TRUE),
-        subject = "12 Random Times in Current Year" )          
+        subject = "12 Random Times" )          
 }
 
 
@@ -176,6 +176,8 @@ function()
     myFunction = function(series, which, period, format, FinCenter, 
         object2x, report) {
         x = tkEval(series)
+        which = tkSplit(which)
+        period = tkSplit(period)
         if (which == "first") {
             if (period == "month") {
                 object <<- timeFirstDayInMonth(charvec = as.character(x), 
@@ -188,11 +190,11 @@ function()
             }      
         } else if (which == "last") {
             if (period == "month") {
-                object <<- timeLastDayInQuarter(charvec = as.character(x), 
+                object <<- timeLastDayInMonth(charvec = as.character(x), 
                     format = format, FinCenter = FinCenter) 
                 if (report) tkTitle("Last Days in Month")
             } else if (period == "quarter") {
-                object <<- timeLastDayInMonth(charvec = as.character(x), 
+                object <<- timeLastDayInQuarter(charvec = as.character(x), 
                     format = format, FinCenter = FinCenter) 
                 if (report) tkTitle("Last Days in Quarter")
             }  
@@ -202,8 +204,8 @@ function()
         fun = myFunction,
         prototypes = list(
             series = "x",
-            which = "last",
-            period = "month",
+            which = "last & first",
+            period = "month & quarter",
             format = "%Y-%m-%d",
             FinCenter = "GMT",
             object2x = FALSE,

@@ -37,7 +37,7 @@ fBrowser(toolbar = c(".filePopup", ".fBasicsPopup", ".fCalendarPopup",
     "Rmetrics") 
     
 tkNewPopup()
-tkAddPopupMenu(Menu, Label = NULL, subLabel, Command)
+tkAddPopupMenu(Menu, Label, subLabel, Command)
 tkSeparator()
 tkCascadePopup(Menu, Label)
 

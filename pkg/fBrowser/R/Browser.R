@@ -271,7 +271,7 @@ function()
 
 
 tkAddPopupMenu =  
-function(Menu, Label = NULL, subLabel, Command) 
+function(Menu, Label, subLabel, Command) 
 {   # A function implemented by Diethelm Wuertz
 
     # FUNCTION:
@@ -281,12 +281,12 @@ function(Menu, Label = NULL, subLabel, Command)
         tkadd(Menu, "command", label = Label, 
             command = match.fun(Command))
     } else { 
-        Menu = tkmenu(Menu, tearoff = FALSE)
+        subMenu = tkmenu(Menu, tearoff = FALSE)
         for (i in 1:length(subLabel)) {
-            tkadd(Menu, "command", label = subLabel[i], 
+            tkadd(subMenu, "command", label = subLabel[i], 
                 command = match.fun(Command[i]))
         }
-        tkadd(Menu, "cascade", label = Label, menu = Menu)
+        tkadd(Menu, "cascade", label = Label, menu = subMenu)
     }
 }
 
@@ -329,131 +329,118 @@ function(Menu, Label)
 
 
 tkExecute =
-function(fun, prototypes = NULL, subject = "- missing -", tkoutput = FALSE)
+function(fun, prototypes, subject = "- missing -")
 {   # A function implemented by Diethelm Wuertz
 
     # FUNCTION:
     
     # Set Object Title"
     objectTitle <<- subject
-    
     object2recover <<- object
     info2recover <<- info
     info <<- subject 
+    tkoutput = FALSE
+
+    # Settings:  
+    argNames = names(prototypes)
+    Character = NULL
+    Numeric = NULL
+    Logical = NULL
+    Null = NULL
+    # Parameters:
+    tt <- tktoplevel()
+    tkgrid(tklabel(tt, text = subject, fg = "blue"))
+    for (i in 1:length(prototypes) ) {
+        Numeric = c( Numeric, is.numeric(prototypes[[i]]) )
+        Character = c( Character, is.character(prototypes[[i]]) )
+        Logical = c( Logical, is.logical(prototypes[[i]]) )
+        Null = c( Null, is.null(prototypes[[i]]) )
+        if (Logical[i]) {           
+            assign( argNames[i], tclVar(as.integer(prototypes[[i]])) )    
+            entry.Name <- tkcheckbutton(tt, variable = get(argNames[i]),
+                anchor = "e" )
+        } else { 
+            assign( argNames[i], tclVar(prototypes[[i]]) )    
+            entry.Name <- tkentry(tt, width = "25", fg = "red", 
+                textvariable = get(argNames[i]) )
+        }
+        # print( get(argNames[i]) ) 
+        label.Name <- tklabel(tt, text = argNames[i])
+        tkgrid(label.Name, entry.Name)
+        tkgrid.configure(label.Name, sticky = "e")
+        tkgrid.configure(entry.Name, sticky = "w")
+    }
     
-    if (is.null(prototypes)) {
+    # Internal Function:
+    OnOK <-
+    function(...) {
+        z = list()
+        .n = length(argNames)
+        z[[.n+1]] = NA       # Don't remove this line!
+        z[[.n+1]] = NULL
+        names(z) = argNames
+        for (i in 1:.n ) {
+            if (Character[i]) 
+                z[[i]] = as.character(tclvalue(get(argNames[i])))
+            if (Numeric[i]) 
+                z[[i]] = as.numeric(tclvalue(get(argNames[i])))
+            if (Logical[i]) 
+                # z[[i]] = as.logical(tclvalue(get(argNames[i]))) 
+                z[[i]] = as.logical(as.integer(tclvalue(get(argNames[i]))))
+            # print(z[[i]])
+        }
         FUN = match.fun(fun)
-        object <<- FUN(x, ...)
+        f = FUN
+        formals(f) = z
+        object <<- f()
         # What is object?
         what = paste(as.character(class(object)), ":", sep = "")
+        # Info:            
         objectLabelText <<- tclVar(paste(what, objectTitle))
         tkconfigure(objectLabel, textvariable = objectLabelText)
-        tkgrid(objectLabel)  
+        tkgrid(objectLabel) 
+        # Save:
+        if (length(z$object2x) == 1) {
+            if (z$object2x) 
+                # DEBUG: cat("\n\n object2x:", z$object2x, "\n")
+                x <<- tkSaveAsX(object, subject)
+        }
+        # Print Specification overwrites tkoutput:
+        if (length(z$report) == 1)  {
+            # DEBUG: cat("\n\n object2x:", z$report, "\n")
+            tkoutput = z$report
+        }
+        # Output:
         if (tkoutput) {
-            ans = (capture.output(object))
-            if (!is.null(title)) tkTitle(title)
-            tkOutput(ans)     
+            # if (!is.null(title)) tkTitle(title)
+            CO = capture.output(object)
+            N.CO = length(CO)
+            if ( N.CO > 100 ) {
+                tkOutput(capture.output(object)[1:10])
+                tkOutput("...")
+                tkOutput(capture.output(object)[(N.CO-9):N.CO])
+            } else {
+                tkOutput(capture.output(object)) 
+            }
+            # if (!is.null(description)) tkDescription(description)
         }
-    } else {
-        # Settings:  
-        argNames = names(prototypes)
-        Character = NULL
-        Numeric = NULL
-        Logical = NULL
-        Null = NULL
-        # Parameters:
-        tt <- tktoplevel()
-        tkgrid(tklabel(tt, text = subject, fg = "blue"))
-        for (i in 1:length(prototypes) ) {
-            Numeric = c( Numeric, is.numeric(prototypes[[i]]) )
-            Character = c( Character, is.character(prototypes[[i]]) )
-            Logical = c( Logical, is.logical(prototypes[[i]]) )
-            Null = c( Null, is.null(prototypes[[i]]) )
-            if (Logical[i]) {           
-                assign( argNames[i], tclVar(as.integer(prototypes[[i]])) )    
-                entry.Name <- tkcheckbutton(tt, variable = get(argNames[i]),
-                    anchor = "e" )
-            } else { 
-                assign( argNames[i], tclVar(prototypes[[i]]) )    
-                entry.Name <- tkentry(tt, width = "25", fg = "red", 
-                    textvariable = get(argNames[i]) )
-            }
-            # print( get(argNames[i]) ) 
-            label.Name <- tklabel(tt, text = argNames[i])
-            tkgrid(label.Name, entry.Name)
-            tkgrid.configure(label.Name, sticky = "e")
-            tkgrid.configure(entry.Name, sticky = "w")
-        }
-        # Internal Function:
-        OnOK <-
-        function(...) {
-            z = list()
-            .n = length(argNames)
-            z[[.n+1]] = NA       # Don't remove this line!
-            z[[.n+1]] = NULL
-            names(z) = argNames
-            for (i in 1:.n ) {
-                if (Character[i]) 
-                    z[[i]] = as.character(tclvalue(get(argNames[i])))
-                if (Numeric[i]) 
-                    z[[i]] = as.numeric(tclvalue(get(argNames[i])))
-                if (Logical[i]) 
-                    # z[[i]] = as.logical(tclvalue(get(argNames[i]))) 
-                    z[[i]] = as.logical(as.integer(tclvalue(get(argNames[i]))))
-                # print(z[[i]])
-            }
-            FUN = match.fun(fun)
-            f = FUN
-            formals(f) = z
-            object <<- f()
-            # What is object?
-            what = paste(as.character(class(object)), ":", sep = "")
-            # Info:            
-            objectLabelText <<- tclVar(paste(what, objectTitle))
-            tkconfigure(objectLabel, textvariable = objectLabelText)
-            tkgrid(objectLabel) 
-            # Save:
-            if (length(z$object2x) == 1) {
-                if (z$object2x) 
-                    # DEBUG: cat("\n\n object2x:", z$object2x, "\n")
-                    x <<- tkSaveAsX(object, subject)
-            }
-            # Print Specification overwrites tkoutput:
-            if (length(z$report) == 1)  {
-                # DEBUG: cat("\n\n object2x:", z$report, "\n")
-                tkoutput = z$report
-            }
-            # Output:
-            if (tkoutput) {
-                if (!is.null(title)) tkTitle(title)
-                CO = capture.output(object)
-                N.CO = length(CO)
-                if ( N.CO > 100 ) {
-                    tkOutput(capture.output(object)[1:10])
-                    tkOutput("...")
-                    tkOutput(capture.output(object)[(N.CO-9):N.CO])
-                } else {
-                    tkOutput(capture.output(object)) 
-                }
-                if (!is.null(description)) tkDescription(description)
-            }
-        }
+    }
 
-        okButton <- tkbutton(tt, text = "   Ok   ", 
-            command = OnOK)
-        quitButton <- tkbutton(tt, text = "   Quit   ", 
-            command = function() tkdestroy(tt) )
-            
-        tkbind(entry.Name, "<Return>", OnOK)
-        tkgrid(okButton, quitButton, sticky = "sew")
+    okButton <- tkbutton(tt, text = "   Ok   ", 
+        command = OnOK)
+    quitButton <- tkbutton(tt, text = "   Quit   ", 
+        command = function() tkdestroy(tt) )
+        
+    tkbind(entry.Name, "<Return>", OnOK)
+    tkgrid(okButton, quitButton, sticky = "sew")
 
-        
-        helpButton <- tkbutton(tt, text = "   Help   ",
-             command = function() print(help(helpTopic)) )
-        tkgrid(helpButton, sticky = "sew")
-        
-        tkfocus(tt)
-    }    
+    
+    helpButton <- tkbutton(tt, text = "   Help   ",
+         command = function() print(help(helpTopic)) )
+    tkgrid(helpButton, sticky = "sew")
+    
+    tkfocus(tt)
+    
     invisible()     
 }
 

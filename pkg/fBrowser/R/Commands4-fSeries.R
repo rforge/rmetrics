@@ -988,6 +988,7 @@ function()
     myFunction = function(n, min, max, as.ts, object2x, report) {
         object <<- runif.lcg(n = n, min = min, max = max)
         if (as.ts) object <<- as.ts(object)
+        attr(object, "control") = c(min = min, max = max)
         object }
     tkExecute(
         fun = myFunction,
@@ -996,7 +997,7 @@ function()
             min = 0,
             max = 1,
             as.ts = TRUE,
-            object2x = FALS,
+            object2x = FALSE,
             report = TRUE ),
         subject = "Portable Uniform Innovations" )
 }
@@ -1014,6 +1015,7 @@ function()
     myFunction = function(n, mean, sd, as.ts, object2x, report) {
        object <<- rnorm.lcg(n = n, mean = mean, sd = sd)
        if (as.ts) object <<- as.ts(object)
+       attr(object, "control") = c(mean = mean, sd = sd)
        object }
     tkExecute(
         fun = myFunction,
@@ -1040,6 +1042,7 @@ function()
     myFunction = function(n, df, as.ts, object2x, report) {
         object <<- rt.lcg(n = n, df = df)
         if (as.ts) object <<- as.ts(object)
+        attr(object, "control") = c(df = df)
         object }
     tkExecute(
         fun = myFunction,
@@ -1064,7 +1067,7 @@ function()
     # FUNCTION:
     
     # RS - Monthly 91 Day Treasury Bill Rate:
-    .tkGetData(Data = "RS", subject = "Monthly 91 Day Treasury Bill Rate")
+    .tkGetData(Data = "RS", subject = "91Day M-TBills")
 }
 
 
@@ -1076,7 +1079,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # R20 - Monthly Yield on 20 Year UK Gilts:
-    .tkGetData(Data = "R20", subject = "Monthly Yield on 20 Year UK Gilts")
+    .tkGetData(Data = "R20", subject = "20Y Gilts M-Yield")
 }
 
 
@@ -1088,7 +1091,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # RSQ - Quarterly 91 Day Treasury Bill Rate:
-    .tkGetData(Data = "RSQ", subject = "Quarterly 91 Day Treasury Bill Rate")
+    .tkGetData(Data = "RSQ", subject = "91Day Q-TBills")
 }
 
 
@@ -1100,7 +1103,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # R20Q - Quarterly Yield on 20 Year UK Gilts:
-    .tkGetData(Data = "R20Q", subject = "Quarterly Yield on 20 Year UK Gilts")
+    .tkGetData(Data = "R20Q", subject = "20Y Gilts Q-Yield")
 }
  
 
@@ -1112,7 +1115,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # RSQREAL - Quarterly Real 91 Day Treasury Bill:
-    .tkGetData(Data = "RSQREAL", subject = "Quarterly Real 91 Day TBill")
+    .tkGetData(Data = "RSQREAL", subject = "91Day TBill Q-Real")
 }
 
 
@@ -1124,7 +1127,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # FTAPRICE - FTA All Share Price Index:
-    .tkGetData(Data = "FTAPRICE", subject = "FTA All Share Price Index")
+    .tkGetData(Data = "FTAPRICE", subject = "FTA AS Price")
 }
 
 
@@ -1136,7 +1139,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # FTADIV - FTA All Share Dividend Index:
-    .tkGetData(Data = "FTADIV", subject = "FTA All Share Dividend Index")
+    .tkGetData(Data = "FTADIV", subject = "FTA AS DivIndex")
 }
 
 
@@ -1148,7 +1151,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # FTARET - FTA All Share Nominal Returns:
-    .tkGetData(Data = "FTARET", subject = "FTA All Share Nominal Returns")
+    .tkGetData(Data = "FTARET", subject = "FTA AS NomRets")
 }
 
 
@@ -1160,7 +1163,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # RPI - UK Retail Price Index:
-    .tkGetData(Data = "RPI", subject = "UK Retail Price Index")
+    .tkGetData(Data = "RPI", subject = "UK Retail PI")
 }
 
 
@@ -1172,7 +1175,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # EXCHD - Dollar/Sterling Exchange Rate:
-    .tkGetData(Data = "EXCHD", subject = "")
+    .tkGetData(Data = "EXCHD", subject = "USDGBP D-FX")
 }
 
 
@@ -1184,7 +1187,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # EXCHQ - Dollar/Sterling Exchange Rate:
-    .tkGetData(Data = "EXCHQ", subject = "Dollar/Sterling Exchange Rate")
+    .tkGetData(Data = "EXCHQ", subject = "USDGBP Q-FX")
 }
 
 
@@ -1208,7 +1211,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # SP500R - SP 500 Real Returns:
-    .tkGetData(Data = "SP500R", subject = "SP 500 Annual Data Index")
+    .tkGetData(Data = "SP500R", subject = "SP500Ann Index")
 }
 
 
@@ -1220,7 +1223,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # SP500D - SP 500 Daily Data Index:
-    .tkGetData(Data = "SP500D", subject = "SP 500 Daily Data Index")
+    .tkGetData(Data = "SP500D", subject = "SP500Daily Index")
 }
 
 
@@ -1232,7 +1235,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # FT30 - Financial Times FT 30 Index:
-    .tkGetData(Data = "FT30", subject = "SP 500 Daily Data Index")
+    .tkGetData(Data = "FT30", subject = "FT30Daily Index")
 }
 
 
@@ -1244,7 +1247,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # FTSE100 - FTSE 100 Index:
-    .tkGetData(Data = "FTSE100", subject = "FTSE 100 Index")
+    .tkGetData(Data = "FTSE100", subject = "FTSE100 Index")
 }
 
 
@@ -1256,7 +1259,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # CTLD - Courtaulds Share Price:
-    .tkGetData(Data = "CTLD", subject = "Courtaulds Share Price")
+    .tkGetData(Data = "CTLD", subject = "Courtaulds SP")
 }
 
 
@@ -1268,7 +1271,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # LGEN - Legal and General Share Price:
-    .tkGetData(Data = "LGEN", subject = "Legal and General Share Price")
+    .tkGetData(Data = "LGEN", subject = "Legal&General SP")
 }
 
 
@@ -1280,7 +1283,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # PRU - Prudential Share Price:
-    .tkGetData(Data = "PRU", subject = "Prudential Share Price")
+    .tkGetData(Data = "PRU", subject = "Prudential SP")
 }
 
 
