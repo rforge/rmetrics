@@ -1,6 +1,6 @@
 
 
-.gamData = 
+gamData = 
 function() 
 {   # A function implemented by Diethelm Wuertz
 
@@ -16,5 +16,5 @@ function()
     data.frame(cbind(x = y, x1 = x1, x2 = x2))
 }
 
-gamData = .gamData()
+gamData()
 

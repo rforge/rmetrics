@@ -1,6 +1,6 @@
 
 
-.glmData = 
+glmData = 
 function() 
 {   # A function implemented by Diethelm Wuertz
     
@@ -17,5 +17,5 @@ function()
     data.frame(x = p, x1 = x1, x2 = x2)
 }
 
-glmData = .glmData()
+glmData()
 
