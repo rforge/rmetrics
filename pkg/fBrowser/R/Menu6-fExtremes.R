@@ -31,12 +31,12 @@
 # fExtremes Popup
 
         
-.fExtremes.PopupMenu =
+.fExtremesPopup =
 function()
 {   # A function implemented by Diethelm Wuertz
     
     # Menu:
-    fExtremesMenu <<- newToolbarMenu()
+    fExtremesMenu <<- tkNewPopup()
         
     # Add Menu:
     Label = "Extremes Plots"
@@ -64,7 +64,7 @@ function()
         ".fExtremes.ExtremesPlots.msratio",
         ".fExtremes.ExtremesPlots.records",
         ".fExtremes.ExtremesPlots.xacf")
-    addToolbarMenu(fExtremesMenu, Label, subLabel, Command)
+    tkAddPopupMenu(fExtremesMenu, Label, subLabel, Command)
     
     if (FALSE) {
     # Add Menu:
@@ -75,7 +75,7 @@ function()
     Command = c(
         ".fData.bmwDaily",
         ".fExtremes.DataPreprocessing.findThreshold")
-    addToolbarMenu(fExtremesMenu, Label, subLabel, Command)
+    tkAddPopupMenu(fExtremesMenu, Label, subLabel, Command)
     }
         
     # Add Menu:
@@ -84,7 +84,7 @@ function()
         NULL
     Command = 
         "tkSeparator"
-    addToolbarMenu(fExtremesMenu, Label, subLabel, Command) 
+    tkAddPopupMenu(fExtremesMenu, Label, subLabel, Command) 
     
     # Add Menu:
     Label = "Block Maxima"
@@ -112,7 +112,7 @@ function()
         ".fExtremes.GEV.gevrlevelPlot",
         ".fExtremes.MDA.hillPlot",
         ".fExtremes.MDA.shaparmPlot") 
-    addToolbarMenu(fExtremesMenu, Label, subLabel, Command)        
+    tkAddPopupMenu(fExtremesMenu, Label, subLabel, Command)        
 
     # Add Menu:
     Label = "______________________"
@@ -120,7 +120,7 @@ function()
         NULL
     Command = 
         "tkSeparator"
-    addToolbarMenu(fExtremesMenu, Label, subLabel, Command) 
+    tkAddPopupMenu(fExtremesMenu, Label, subLabel, Command) 
     
     # Add Menu:
     Label = "Peaks Over Threshold"
@@ -136,11 +136,10 @@ function()
         ".fExtremes.GPD.gpdSlider",
         ".fExtremes.GPD.sim",
         ".fExtremes.GPD.fit")
-    addToolbarMenu(fExtremesMenu, Label, subLabel, Command)
+    tkAddPopupMenu(fExtremesMenu, Label, subLabel, Command)
                      
     # Cascade fileMenu:
-    cascadeToolbarMenu(Menu = fExtremesMenu, Label = "fExtremes")
-           
+    tkCascadePopup(Menu = fExtremesMenu, Label = "fExtremes")        
 }
 
 

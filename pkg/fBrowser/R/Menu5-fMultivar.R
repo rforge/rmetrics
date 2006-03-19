@@ -31,12 +31,12 @@
 # fMultivar Popup Menu
 
         
-.fMultivar.PopupMenu =
+.fMultivarPopup =
 function()
 {   # A function implemented by Diethelm Wuertz
     
     # Menu:
-    fMultivarMenu <<- newToolbarMenu()
+    fMultivarMenu <<- tkNewPopup()
    
         # Add Menu:
     Label = "Technical Analysis"
@@ -84,7 +84,7 @@ function()
         ".fMultivar.TechnicalAnalysis.apdTA",
         ".fMultivar.TechnicalAnalysis.wprTA",
         ".fMultivar.TechnicalAnalysis.rsiTA")
-    addToolbarMenu(fMultivarMenu, Label, subLabel, Command) 
+    tkAddPopupMenu(fMultivarMenu, Label, subLabel, Command) 
         
     # Add Menu:
     Label = "Benchmark Analysis"
@@ -100,7 +100,7 @@ function()
         ".fMultivar.BenchmarkAnalysis.2",
         ".fMultivar.BenchmarkAnalysis.3",
         ".fMultivar.BenchmarkAnalysis.4")
-    addToolbarMenu(fMultivarMenu, Label, subLabel, Command)     
+    tkAddPopupMenu(fMultivarMenu, Label, subLabel, Command)     
         
     if (FALSE) {
     # Add Menu:
@@ -119,7 +119,7 @@ function()
         ".fMultivar.RollingAnalysis.rollVar",
         ".fMultivar.RollingAnalysis.rollMin",
         ".fMultivar.RollingAnalysis.rollMax")
-    addToolbarMenu(fMultivarMenu, Label, subLabel, Command)
+    tkAddPopupMenu(fMultivarMenu, Label, subLabel, Command)
     }
     
     # Add Menu:
@@ -128,7 +128,7 @@ function()
         NULL
     Command = 
         "tkSeparator"
-    addToolbarMenu(fMultivarMenu, Label, subLabel, Command) 
+    tkAddPopupMenu(fMultivarMenu, Label, subLabel, Command) 
        
     # Add Menu:
     Label = "Regression Modelling"
@@ -156,7 +156,7 @@ function()
         ".fMultivar.Regression.marsFit",
         ".fMultivar.Regression.polymarsFit",
         ".fMultivar.Regression.nnetFit")
-    addToolbarMenu(fMultivarMenu, Label, subLabel, Command)
+    tkAddPopupMenu(fMultivarMenu, Label, subLabel, Command)
   
     # Add Menu:
     Label = "Regression Tests"
@@ -182,7 +182,7 @@ function()
         ".fMultivar.RegressionTests.7",
         ".fMultivar.RegressionTests.8",
         ".fMultivar.RegressionTests.9")
-    addToolbarMenu(fMultivarMenu, Label, subLabel, Command)
+    tkAddPopupMenu(fMultivarMenu, Label, subLabel, Command)
         
     # Add Menu:
     Label = "________________________"
@@ -190,7 +190,7 @@ function()
         NULL
     Command = 
         "tkSeparator"
-    addToolbarMenu(fMultivarMenu, Label, subLabel, Command) 
+    tkAddPopupMenu(fMultivarMenu, Label, subLabel, Command) 
     
     # Add Menu:
     # Label = "Equations Modelling"
@@ -198,7 +198,7 @@ function()
     #     "Not yet implemented")
     # Command = c(
     #     ".fMultivar.EquationsModelling.1")
-    # addToolbarMenu(fMultivarMenu, Label, subLabel, Command)
+    # tkAddPopupMenu(fMultivarMenu, Label, subLabel, Command)
         
     # Add Menu:
     Label = "Matrix Addon"
@@ -238,7 +238,7 @@ function()
         ".fMultivar.MatrixAddon.13",
         ".fMultivar.MatrixAddon.14",
         ".fMultivar.MatrixAddon.15")
-    addToolbarMenu(fMultivarMenu, Label, subLabel, Command)
+    tkAddPopupMenu(fMultivarMenu, Label, subLabel, Command)
         
     # Add Menu:
     Label = "Missing Values"
@@ -254,11 +254,10 @@ function()
         ".fMultivar.MissingValues.2",
         ".fMultivar.MissingValues.3",
         ".fMultivar.MissingValues.4")
-    addToolbarMenu(fMultivarMenu, Label, subLabel, Command) 
+    tkAddPopupMenu(fMultivarMenu, Label, subLabel, Command) 
         
     # Cascade fileMenu:
-    cascadeToolbarMenu(Menu = fMultivarMenu, Label = "fMultivar")
-        
+    tkCascadePopup(Menu = fMultivarMenu, Label = "fMultivar")        
 }
 
 

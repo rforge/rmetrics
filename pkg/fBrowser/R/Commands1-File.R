@@ -123,17 +123,17 @@ function()
             }
         }
         object <<- Data
-        infoName <<- data
+        subject <<- data
         if (report) tkTitle("Rmetrics Data File")
         object }  
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             data = "bmwDaily", 
             try.as.timeSeries = TRUE,
             object2x = TRUE,
             report = TRUE),
-        infoName = "Data File" ) 
+        subject = "Data File" ) 
 }    
 
 # ------------------------------------------------------------------------------
@@ -196,8 +196,8 @@ function()
     #   strip.white = FALSE, blank.lines.skip = TRUE,
     #   comment.char = "#")
     argNames <<- c("Header", "Separator", "Skip Lines")
-    params <<- c("TRUE", ";", "0")
-    names(params) = argNames
+    prototypes <<- c("TRUE", ";", "0")
+    names(prototypes) = argNames
     
     # Internal Function:
     .start <- function()
@@ -250,7 +250,7 @@ function()
     entryNames <<- paste("entry.", argNames, sep = "")
     valueNames <<- paste("value.", argNames, sep = "")
     for ( i in 1:length(argNames) ) { 
-        assign( argNames[i], params[i] )
+        assign( argNames[i], prototypes[i] )
         assign( valueNames[i], tclVar(get(argNames[i])) )
         tkgrid(
             tklabel(parameterFrame, text = argNames[i] ),

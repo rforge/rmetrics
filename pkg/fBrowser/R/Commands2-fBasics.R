@@ -46,7 +46,7 @@ function()
         object }   
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             value = "fedny/day-fxus2eu", 
             file = "tempfile",
             source = "http://www.economagic.com/em-cgi/data.exe/",
@@ -56,7 +56,7 @@ function()
             try = TRUE,
             object2x = TRUE,
             report = TRUE),
-        infoName = "Economagic Download" ) 
+        subject = "Economagic Download" ) 
 }
 
 
@@ -87,7 +87,7 @@ function()
         object }   
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             value = "IBM",
             from = "2000-01-01",
             to = "today",
@@ -99,7 +99,7 @@ function()
             try = TRUE,
             object2x = TRUE,
             report = TRUE),
-        infoName = "Yahoo Download" ) 
+        subject = "Yahoo Download" ) 
 }
 
 
@@ -120,7 +120,7 @@ function()
         object }   
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             value = "DPRIME", 
             file = "tempfile",
             source = "http://research.stlouisfed.org/fred2/series/", 
@@ -130,7 +130,7 @@ function()
             try = TRUE, 
             object2x = TRUE,
             report = TRUE),
-        infoName = "FRED Download" ) 
+        subject = "FRED Download" ) 
 }
 
 
@@ -152,7 +152,7 @@ function()
         if (grid) grid()}
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             type = "l",
             col = "steelblue",
@@ -160,7 +160,7 @@ function()
             ylab = "Series",
             par = "par(mfrow=c(1,1))",
             grid = FALSE ),
-        infoName = "Series Plot")       
+        subject = "Series Plot")       
 }
 
 
@@ -181,11 +181,11 @@ function()
         if (grid) grid() }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             par = "par(mfrow=c(1,1))",
             grid = "FALSE"),
-        infoName = "ACF Plot" )            
+        subject = "ACF Plot" )            
 }
 
 
@@ -206,11 +206,11 @@ function()
         if (grid) grid() }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             par = "par(mfrow=c(1,1))",
             grid = TRUE),
-        infoName = "PACF Plot" )            
+        subject = "PACF Plot" )            
 }
 
 
@@ -231,10 +231,10 @@ function()
         }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             par = "par(mfrow=c(1,1))" ),
-        infoName = "Histogram Plot" )       
+        subject = "Histogram Plot" )       
 }
 
 
@@ -255,10 +255,10 @@ function()
         }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             par = "par(mfrow=c(1,1))" ),
-        infoName = "2D Series Plot" )       
+        subject = "2D Series Plot" )       
 }
 
 
@@ -281,10 +281,10 @@ function()
         }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             par = "par(mfrow=c(1,1))" ),
-        infoName = "Scatter Diagram Plot" )         
+        subject = "Scatter Diagram Plot" )         
 }
 
 
@@ -309,7 +309,7 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             deltas = "seq(0.2,3,by=0.05)",
             lag.max = 20,
@@ -319,7 +319,7 @@ function()
             grid = FALSE,
             object2x = FALSE,
             report = FALSE ),
-        infoName = "Taylor Effect Plot" ) 
+        subject = "Taylor Effect Plot" ) 
 }
 
 
@@ -340,7 +340,7 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             lag.max = "max(2, floor(10*log10(length(x))))",
             ci = 0.95,
@@ -348,7 +348,7 @@ function()
             par = "par(mfrow=c(2,1))",
             object2x = FALSE,
             report = FALSE ),
-        infoName = "Long Memory Plot" ) 
+        subject = "Long Memory Plot" ) 
 }
 
 
@@ -369,14 +369,14 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             doplot = TRUE,
             par = "par(mfrow=c(1,1))",
             grid = TRUE,
             object2x = FALSE,
             report = FALSE ),
-        infoName = "Log PDF Plot" ) 
+        subject = "Log PDF Plot" ) 
 }
 
 
@@ -396,14 +396,14 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             span = 5,
             doplot = TRUE,
             par = "par(mfrow=c(1,1))",
             object2x = FALSE,
             report = FALSE ),
-        infoName = "Normal QQ Plot" ) 
+        subject = "Normal QQ Plot" ) 
 }
 
 
@@ -427,14 +427,14 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             span = "NULL",
             doplot = TRUE,
             par = "par(mfrow=c(1,1))",
             object2x = FALSE,
             report = FALSE ),
-        infoName = "Scaling Law Plot" ) 
+        subject = "Scaling Law Plot" ) 
 }
 
 
@@ -455,11 +455,11 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             object2x = FALSE,
             report = TRUE),
-        infoName = "Mean" )  
+        subject = "Mean" )  
 }
 
 
@@ -479,11 +479,11 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             object2x = FALSE,
             report = TRUE),
-        infoName = "Variance" )
+        subject = "Variance" )
 }
 
 
@@ -506,13 +506,13 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             na.rm = FALSE,
             method = "moment & fisher",
             object2x = FALSE,
             report = TRUE),
-        infoName = "Skewness" )
+        subject = "Skewness" )
 }
 
 
@@ -535,13 +535,13 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             na.rm = FALSE,
             method = "excess & moment & fisher",
             object2x = FALSE,
             report = TRUE),
-        infoName = "Kurtosis" )
+        subject = "Kurtosis" )
 }
 
 
@@ -561,11 +561,11 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             object2x = FALSE,
             report = TRUE),
-        infoName = "Summary Statistics")   
+        subject = "Summary Statistics")   
 }
 
 
@@ -585,13 +585,13 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             ci = 0.95,
             column = 1,
             object2x = FALSE,
             report = TRUE),
-        infoName = "Basic Statistics" )     
+        subject = "Basic Statistics" )     
 }
 
 
@@ -612,13 +612,13 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             n = 100,
             mean = 0,
             sd = 1,
             object2x = TRUE,
             report = TRUE),
-        infoName = "Normal RVs" )  
+        subject = "Normal RVs" )  
 }
 
 
@@ -638,7 +638,7 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             n = 100,
             alpha = 1,
             beta = 0,
@@ -647,7 +647,7 @@ function()
             parameterization = 1,
             object2x = TRUE,
             report = TRUE),
-        infoName = "Hyperbolic RVs" )  
+        subject = "Hyperbolic RVs" )  
 }
 
 
@@ -667,7 +667,7 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             n = 100,
             alpha = 1,
             beta = 0,
@@ -675,7 +675,7 @@ function()
             mu = 0,
             object2x = TRUE,
             report = TRUE),
-        infoName = "Normal Inverse Gaussian RVs" )  
+        subject = "Normal Inverse Gaussian RVs" )  
 }
 
 
@@ -693,12 +693,12 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             n = 100,
             alpha = 1.8,
             object2x = TRUE,
             report = TRUE),
-        infoName = "Symmetric Stable RVs" )  
+        subject = "Symmetric Stable RVs" )  
 }
 
 
@@ -718,7 +718,7 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             n = 100,
             alpha = 1,
             beta = 0,
@@ -728,7 +728,7 @@ function()
             parameterization = 0,
             object2x = TRUE,
             report = TRUE),
-        infoName = "Stable RVs" )  
+        subject = "Stable RVs" )  
 }
 
 
@@ -748,11 +748,11 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             dist = "hyp & nig & symstb & stable",
             object2x = FALSE,
             report = FALSE ),
-        infoName = "RVs Slider" ) 
+        subject = "RVs Slider" ) 
 }
 
 
@@ -773,14 +773,14 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             dist = "hyp & nig",
             doplot = TRUE,
             par = "par(mfrow=c(1,1))",
             object2x = FALSE,
             report = FALSE ),
-        infoName = "RVs Fit" ) 
+        subject = "RVs Fit" ) 
 }
 
 
@@ -800,11 +800,11 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             object2x = FALSE,
             report = TRUE ),
-        infoName = "One-sample Kolmogorov-Smirnov Test" ) 
+        subject = "One-sample Kolmogorov-Smirnov Test" ) 
 }
 
 
@@ -823,11 +823,11 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Shapiro - Wilk Normality Test" ) 
+        subject = "Shapiro - Wilk Normality Test" ) 
 }
 
 
@@ -846,11 +846,11 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Jarque - Bera Normality Test" )    
+        subject = "Jarque - Bera Normality Test" )    
 }
 
 
@@ -869,11 +869,11 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             object2x = FALSE,
             report = TRUE ),
-        infoName = "d'Agostino Normality Test" ) 
+        subject = "d'Agostino Normality Test" ) 
 }
 
 
@@ -892,11 +892,11 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Anderson - Darling Normality Test" )
+        subject = "Anderson - Darling Normality Test" )
 }
 
 
@@ -915,11 +915,11 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Cramer - von Mises Normality Test" )
+        subject = "Cramer - von Mises Normality Test" )
 }
 
 
@@ -938,11 +938,11 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Lilliefors (KS) Normality Test" )
+        subject = "Lilliefors (KS) Normality Test" )
 }
 
 
@@ -961,11 +961,11 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Pearson Chi-Square Normality Test" )
+        subject = "Pearson Chi-Square Normality Test" )
 }
 
 
@@ -984,11 +984,11 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Shapiro - Francia Normality Test" )
+        subject = "Shapiro - Francia Normality Test" )
 }
 
 
@@ -1008,11 +1008,11 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Kolmogorov-Smirnov Test" )
+        subject = "Kolmogorov-Smirnov Test" )
 }
 
 
@@ -1031,11 +1031,11 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Location: Unpaired t-Test" )
+        subject = "Location: Unpaired t-Test" )
 }
 
 
@@ -1054,11 +1054,11 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Location: Kruskal-Wallis Test" )
+        subject = "Location: Kruskal-Wallis Test" )
 }
 
 
@@ -1077,11 +1077,11 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Variance: F Test" )
+        subject = "Variance: F Test" )
 }
 
 
@@ -1100,11 +1100,11 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Variance: Bartlett Test" )
+        subject = "Variance: Bartlett Test" )
 }
 
 
@@ -1123,11 +1123,11 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Variance: Fligner-Killeen Test" )
+        subject = "Variance: Fligner-Killeen Test" )
 }
 
 
@@ -1146,11 +1146,11 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Scale: Ansari-Bradley Test" )
+        subject = "Scale: Ansari-Bradley Test" )
 }
 
 
@@ -1169,11 +1169,11 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Scale: Mood Test" )
+        subject = "Scale: Mood Test" )
 }
 
 
@@ -1192,11 +1192,11 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Correlation: Pearson Test" )
+        subject = "Correlation: Pearson Test" )
 }
 
 
@@ -1214,11 +1214,11 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Correlation: Kendall's tau Test" )
+        subject = "Correlation: Kendall's tau Test" )
 }
 
 
@@ -1237,11 +1237,11 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Correlation: Spearman's rho Test" )
+        subject = "Correlation: Spearman's rho Test" )
 }
 
 

@@ -31,7 +31,7 @@
 #  fCalendar PopupMenu
 
 
-.fCalendar.PopupMenu =
+.fCalendarPopup =
 function()
 {   # A function implemented by Diethelm Wuertz
 
@@ -41,7 +41,7 @@ function()
     # FUNCTION:
     
     # Menu:
-    fCalendarMenu <<- newToolbarMenu()
+    fCalendarMenu <<- tkNewPopup()
     
     # Add Menu:
     Label = "Create a Time Date Object"
@@ -77,7 +77,7 @@ function()
         "tkSeparator",
         ".fCalendar.TimeDateClass.getFinCenters",
         ".fCalendar.TimeDateClass.FinCenter")
-    addToolbarMenu(fCalendarMenu, Label, subLabel, Command)
+    tkAddPopupMenu(fCalendarMenu, Label, subLabel, Command)
     
     # Add Menu:
     Label = "Manipulate a timeDate Object"
@@ -119,7 +119,7 @@ function()
         "tkSeparator",
         ".fCalendar.TimeDateMethods.julian",
         ".fCalendar.TimeDateMethods.atoms")
-    addToolbarMenu(fCalendarMenu, Label, subLabel, Command)
+    tkAddPopupMenu(fCalendarMenu, Label, subLabel, Command)
     
     # Add Menu:
     Label = "_________________________________"
@@ -127,7 +127,7 @@ function()
         NULL
     Command = 
         "tkSeparator"
-    addToolbarMenu(fCalendarMenu, Label, subLabel, Command) 
+    tkAddPopupMenu(fCalendarMenu, Label, subLabel, Command) 
     
     # Add Menu:
     Label = "Compose and Modify a Time Series"     
@@ -159,7 +159,7 @@ function()
         ".fCalendar.TimeSeriesClass.lagSeries",
         ".fCalendar.TimeSeriesClass.revSeries",
         ".fCalendar.TimeSeriesClass.applySeries")
-    addToolbarMenu(fCalendarMenu, Label, subLabel, Command)    
+    tkAddPopupMenu(fCalendarMenu, Label, subLabel, Command)    
     
     # Add Menu:
     Label = "_________________________________"
@@ -167,7 +167,7 @@ function()
         NULL
     Command = 
         "tkSeparator"
-    addToolbarMenu(fCalendarMenu, Label, subLabel, Command) 
+    tkAddPopupMenu(fCalendarMenu, Label, subLabel, Command) 
     
     # Add Menu:
     Label = "Holiday Calendars"
@@ -181,7 +181,7 @@ function()
         ".fCalendar.Holidays.holidayList",
         ".fCalendar.Holidays.holidayDate",
         ".fCalendar.Holidays.nyseHolidays")
-    addToolbarMenu(fCalendarMenu, Label, subLabel, Command)
+    tkAddPopupMenu(fCalendarMenu, Label, subLabel, Command)
     
     # Add Menu:
     if (FALSE) { # -- OLD DON'T USE NOW !!
@@ -218,11 +218,11 @@ function()
         ".fCalendar.HighFrequencyData.13",
         ".fCalendar.HighFrequencyData.14",
         ".fCalendar.HighFrequencyData.15")
-    addToolbarMenu(fCalendarMenu, Label, subLabel, Command)
+    tkAddPopupMenu(fCalendarMenu, Label, subLabel, Command)
     }
 
     # Cascade fileMenu:
-    cascadeToolbarMenu(Menu = fCalendarMenu, Label = "fCalendar")    
+    tkCascadePopup(Menu = fCalendarMenu, Label = "fCalendar")    
 }
 
 

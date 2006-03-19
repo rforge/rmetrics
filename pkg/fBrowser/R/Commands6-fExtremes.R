@@ -45,12 +45,12 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             par = "par(mfrow=c(1,1))",
             object2x = FALSE,
             report = FALSE ),
-        infoName = "Plot of Empirical Distribution" )   
+        subject = "Plot of Empirical Distribution" )   
 }
 
 
@@ -76,13 +76,13 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             cf = FALSE,
             par = "par(mfrow=c(1,1))",
             object2x = FALSE,
             report = FALSE ),
-        infoName = "Normal QQ Plot" )       
+        subject = "Normal QQ Plot" )       
 }
                
 
@@ -103,13 +103,13 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             xi = 0,
             par = "par(mfrow=c(1,1))",
             object2x = FALSE,
             report = FALSE ),
-        infoName = "Plot of Pareto Quantiles" )       
+        subject = "Plot of Pareto Quantiles" )       
 }
 
 
@@ -130,12 +130,12 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             par = "par(mfrow=c(1,1))",
             object2x = FALSE,
             report = FALSE ),
-        infoName = "Mean Excess Function Plot" )       
+        subject = "Mean Excess Function Plot" )       
 }
 
 
@@ -157,13 +157,13 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             conf = 0.95,
             par = "par(mfrow=c(1,1))",
             object2x = FALSE,
             report = FALSE ),
-        infoName = "Mean Residual Life Plot" )       
+        subject = "Mean Residual Life Plot" )       
 }
 
 
@@ -184,13 +184,13 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             tail = 0.05,
             par = "par(mfrow=c(1,1))",
             object2x = FALSE,
             report = FALSE ),
-        infoName = "Plot of Mean Excesses" )       
+        subject = "Plot of Mean Excesses" )       
 }
 
 
@@ -211,12 +211,12 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             par = "par(mfrow=c(1,1))",
             object2x = FALSE,
             report = FALSE ),
-        infoName = "Plot of Maximum/Sum Ratio" )       
+        subject = "Plot of Maximum/Sum Ratio" )       
 }
 
 
@@ -243,14 +243,14 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             subsamples = 1,
             plottype = "lin & log",
             par = "par(mfrow=c(1,1))",
             object2x = FALSE,
             report = FALSE ),
-        infoName = "Plot of Subsample Records" )       
+        subject = "Plot of Subsample Records" )       
 }
 
 
@@ -273,7 +273,7 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             threshold = 0.95,
             lag.max = 15,
@@ -281,7 +281,7 @@ function()
             par = "par(mfrow=c(2,2))",
             object2x = FALSE,
             report = FALSE ),
-        infoName = "Plot of ACF of Exceedences" )       
+        subject = "Plot of ACF of Exceedences" )       
 }
 
 
@@ -306,12 +306,12 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             n = "floor(0.05*length(as.vector(x)))", 
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Threshold Value" )
+        subject = "Threshold Value" )
 }
 
 
@@ -345,14 +345,14 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             n = 100, 
             shape = 0.25, 
             location = 0, 
             scale = 1,
             object2x = TRUE,
             report = TRUE ),
-        infoName = "Simulated GEV Series" )
+        subject = "Simulated GEV Series" )
 }
 
 
@@ -373,12 +373,12 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x", 
             block = "monthly & quarterly",
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Block Maxima Series" )
+        subject = "Block Maxima Series" )
 }
 
 
@@ -399,12 +399,12 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x", 
             block = 20,
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Block Maxima Vector" )
+        subject = "Block Maxima Vector" )
 }
 
 
@@ -430,7 +430,7 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             type = "mle & pwm", 
             gumbel = FALSE,
@@ -438,7 +438,7 @@ function()
             par = "par(mfrow=c(2,2))",
             object2x = FALSE,
             report = TRUE ),
-        infoName = "GEV Parameter Fit" )
+        subject = "GEV Parameter Fit" )
 }
 
 
@@ -457,12 +457,12 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             object = "object",
             k.blocks = 20, 
             object2x = TRUE,
             report = TRUE ),
-        infoName = "Return Level Plot" ) 
+        subject = "Return Level Plot" ) 
 }
 
 
@@ -486,7 +486,7 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             option = "alpha & xi", 
             start = 15, 
@@ -494,7 +494,7 @@ function()
             ci = 0.95,
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Hill Plot" )
+        subject = "Hill Plot" )
 }
 
 
@@ -521,7 +521,7 @@ function()
          object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             revert = FALSE, 
             standardize = TRUE,
@@ -530,7 +530,7 @@ function()
             alpha.range = "c(0, 10)",
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Shape Parameter Plots" )
+        subject = "Shape Parameter Plots" )
 }   
 
 
@@ -564,14 +564,14 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             n = 100, 
             shape = 0.25, 
             location = 0, 
             scale = 1,
             object2x = TRUE,
             report = TRUE ),
-        infoName = "Simulated GPD Series" )
+        subject = "Simulated GPD Series" )
 }
 
 
@@ -596,14 +596,14 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             threshold = "NA",
             nextremes = "max(10, length(x)/100)",
             type = "mle & pwm", 
             object2x = FALSE,
             report = TRUE ),
-        infoName = "GPD Parameter Fit")
+        subject = "GPD Parameter Fit")
 }
 
 
@@ -626,14 +626,14 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             pp = 0.99,
             ci.type = "likelihood & wald",
             ci.p = 0.95,
             like.num = 50,
             object2x = FALSE,
             report = FALSE),
-        infoName = "GPD q-Plot" )
+        subject = "GPD q-Plot" )
 }
 
 
@@ -657,7 +657,7 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             p = 0.99,
             models = 30,
@@ -667,7 +667,7 @@ function()
             ci = 0.95,
             object2x = FALSE,
             report = FALSE),
-        infoName = "Estimate of a High Quantile" )
+        subject = "Estimate of a High Quantile" )
 }
 
 
@@ -686,11 +686,11 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             plevels = "c(0.99,0.995,0.999,0.9995,0.9999)",
             object2x = FALSE,
             report = TRUE ),
-        infoName = "GPD Risk Measures" )
+        subject = "GPD Risk Measures" )
 }
 
 
@@ -710,14 +710,14 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             pp = 0.99,
             ci.p = 0.95,
             like.num = 50,
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Expected Shortfall Estimates" )
+        subject = "Expected Shortfall Estimates" )
 }
 
 
@@ -738,7 +738,7 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             models = 30,
             start = 15,
@@ -748,7 +748,7 @@ function()
             labels = TRUE,
             object2x = FALSE,
             report = TRUE ),
-        infoName = "GPD Shape Plot" )
+        subject = "GPD Shape Plot" )
 }
 
 
@@ -767,14 +767,14 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             fittedObject = "fit",
             optlog = NA,
             extend = 1.5,
             labels = TRUE,
             object2x = FALSE,
             report = TRUE ),
-        infoName = "GPD Tail Plot" )
+        subject = "GPD Tail Plot" )
 }
 
 

@@ -48,14 +48,14 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             ar = "0.5, -0.5", 
             d = "0",
             ma = "0.8",
             n = 100,
             object2x = TRUE,
             report = FALSE),
-        infoName = "Simulated ARMA" )
+        subject = "Simulated ARMA" )
 }
 
 
@@ -72,10 +72,10 @@ function()
         par, object2x, report) {
         formula = as.formula(formula)
         include.mean = as.logical(include.mean)
+        method = tkSplit(method)
         object <<- armaFit(formula = formula, method = method, 
             include.mean = include.mean, fixed = NULL,
-            fracdiff.M = 100, fracdiff.h = -1, title = NULL, 
-            description = NULL)
+            fracdiff.M = 100, fracdiff.h = -1)
         if (doplot) {
             eval(parse(text = par))
             summary(object)
@@ -83,7 +83,7 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             formula = "x ~ arima(2, 0, 1)", 
             method = "CSS-ML & MLE & CSS",
             include.mean = TRUE,
@@ -91,7 +91,7 @@ function()
             par = "par(mfrow=c(2,2),cex=0.7)",
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Fitted ARMA")  
+        subject = "Fitted ARMA")  
 }
 
 
@@ -116,7 +116,7 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             fit = "object",
             n.ahead = 10,
             n.back = 50,
@@ -125,7 +125,7 @@ function()
             par = "par(mfrow = c(1,1))",
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Predicted ARMA" )  
+        subject = "Predicted ARMA" )  
 }
     
    
@@ -149,7 +149,7 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             model = "list(omega=1e-06,alpha=0.1,beta=0.8)",
             n = 100,
             n.start = 100,
@@ -158,7 +158,7 @@ function()
             rseed= "NULL",
             object2x = TRUE,
             report = TRUE ),
-        infoName = "Simulated GARCH" )
+        subject = "Simulated GARCH" )
 }
 
 
@@ -189,11 +189,11 @@ function()
         object <<- garchFit(formula.mean, formula.var, series = x, init.rec, 
             delta, skew, shape, cond.dist, include.mean, include.delta, 
             include.skew, include.shape, leverage, trace, algorithm, 
-            control, title = NULL, description = NULL) 
+            control) 
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             formula.mean = "~arma(0, 0)", 
             formula.var = "~garch(1, 1)",
             series = "x",
@@ -212,7 +212,7 @@ function()
             control = "list()",
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Fitted GARCH")  
+        subject = "Fitted GARCH")  
 }
 
 
@@ -233,12 +233,12 @@ function()
         object}
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             fit = "object",
             n.ahead = 10,
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Predicted GARCH" )  
+        subject = "Predicted GARCH" )  
 }
 
 
@@ -259,11 +259,11 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             slider = "norm & t & ged",
             object2x = FALSE,
             report = FALSE ),
-        infoName = "GARCH Sliders" ) 
+        subject = "GARCH Sliders" ) 
 }
 
 
@@ -288,13 +288,13 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             cond.dist = "norm & t & ged",
             skew = FALSE,
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Conditional Distribution Fit" ) 
+        subject = "Conditional Distribution Fit" ) 
 }
 
 
@@ -314,13 +314,13 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             n = 100,
             H = 0.7,
             method = "beran & durbin & paxson",
             object2x = TRUE,
             report = FALSE ),
-        infoName = "Simulated Fractional Gaussian Noise" )  
+        subject = "Simulated Fractional Gaussian Noise" )  
 } 
 
 
@@ -339,7 +339,7 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             n = 100,
             H = 0.7,
             method = "mvn & chol & lev & circ & wave",
@@ -347,7 +347,7 @@ function()
             fgn = FALSE,
             object2x = TRUE,
             report = FALSE ),
-        infoName = "Simulated Fractional Brownian Motion" )  
+        subject = "Simulated Fractional Brownian Motion" )  
 } 
 
 
@@ -370,7 +370,7 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             n = 1000, 
             a = 1.4,
             b = 0.3,
@@ -378,7 +378,7 @@ function()
             par = "par(mfrow=c(1,1))",
             object2x = FALSE,
             report = FALSE ),
-        infoName = "Henon Map" ) 
+        subject = "Henon Map" ) 
 }
 
 
@@ -400,7 +400,7 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             n = 1000, 
             a = 0.4,
             b = 6.0,
@@ -409,7 +409,7 @@ function()
             par = "par(mfrow=c(2,2))",
             object2x = FALSE,
             report = FALSE ),
-        infoName = "Ikeda Map") 
+        subject = "Ikeda Map") 
 }
 
 
@@ -432,14 +432,14 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             n = 1000, 
             r = 4.0,
             start = "runif(1)",
             par = "par(mfrow=c(1,1))",
             object2x = FALSE,
             report = FALSE ),
-        infoName = "Logistic Map" ) 
+        subject = "Logistic Map" ) 
 }
 
 
@@ -462,7 +462,7 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             times = "seq(0, 20, by = 0.01)", 
             sigma = 16.0,
             r = 45.92,
@@ -471,7 +471,7 @@ function()
             par = "par(mfrow=c(3,2))",
             object2x = FALSE,
             report = FALSE ),
-        infoName = "Lorentz Attractor" )
+        subject = "Lorentz Attractor" )
 }
 
 
@@ -494,7 +494,7 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             times = "seq(0,50,by=0.01)", 
             a = 0.2,
             b = 0.2,
@@ -503,7 +503,7 @@ function()
             par = "par(mfrow=c(3,2))",
             object2x = FALSE,
             report = FAKLSE ),
-        infoName = "Roessler Attractor" )
+        subject = "Roessler Attractor" )
 }
 
 
@@ -520,17 +520,16 @@ function()
     myFunction = function(m, eps, object2x, report) {
         m = as.integer(m)
         if (eps == "NULL") eps = NULL
-        object <<- bdsTest(x = x, m = m, eps = eps, title = NULL, 
-            description = NULL) 
+        object <<- bdsTest(x = x, m = m, eps = eps) 
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             m = 3,
             eps = "NULL",
             object2x = FALSE,
             report = TRUE ),
-        infoName = "BDS NN Test" )
+        subject = "BDS NN Test" )
 }
   
   
@@ -544,16 +543,15 @@ function()
     helpTopic <<- ""
     myFunction = function(lag, object2x, report) {
         lag = as.integer(lag)
-        object <<- tnnTest(x = x, lag = lag, title = NULL, 
-            description = NULL) 
+        object <<- tnnTest(x = x, lag = lag) 
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             lag = "1",
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Teraesvirta NN Test" )
+        subject = "Teraesvirta NN Test" )
 }
    
 
@@ -574,18 +572,18 @@ function()
         q = as.integer(q)
         range = as.integer(range)
         object <<- wnnTest(x = x, lag = lag, qstar = qstar, q = q, 
-            range = range, title = NULL, description = NULL) 
+            range = range) 
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             lag = 1,
             qstar = 2,
             q = 10,
             range = 4,
             object2x = FALSE,
             report = TRUE ),
-        infoName = "White NN Test" ) 
+        subject = "White NN Test" ) 
 }
 
 
@@ -624,12 +622,12 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             n = 100,
             as.ts = FALSE,
             object2x = TRUE,
             report = FALSE),
-        infoName = "Data Set has Unit Root" )     
+        subject = "Data Set has Unit Root" )     
 }
    
 
@@ -650,12 +648,12 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             n = 100,
             as.ts = TRUE,
             object2x = TRUE,
             report = FALSE),
-        infoName = "Data Set has no Unit Root" )        
+        subject = "Data Set has no Unit Root" )        
 }
    
 
@@ -671,17 +669,17 @@ function()
     myFunction = function(series, lags, type, object2x, report) {
         x = tkEval(series)
         type = tkSplit(type)
-        object <<- adfTest(x, lags, type, title = NULL, description = NULL) 
+        object <<- adfTest(x, lags, type) 
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             lags = 1,
             type = "nc & c & ct", 
             object2x = FALSE,
             report = TRUE ),
-        infoName = "ADF Unit Root Test" ) 
+        subject = "ADF Unit Root Test" ) 
 }
 
 
@@ -697,18 +695,17 @@ function()
     myFunction = function(series, lags, type, object2x, report) {
         x = tkEval(series)
         type = tkSplit(type)
-        object <<- unitrootTest(x, lags, type, title = NULL, 
-            description = NULL) 
+        object <<- unitrootTest(x, lags, type) 
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             lags = 1,
             type = "nc & c & ct", 
             object2x = FALSE,
             report = TRUE ),
-        infoName = "McKinnon Unit Root Test" ) 
+        subject = "McKinnon Unit Root Test" ) 
 }
 
 
@@ -730,7 +727,7 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x", 
             type = "DF-GLS & P-test", 
             model = "constant & trend",
@@ -738,7 +735,7 @@ function()
             doplot = TRUE,
             object2x = FALSE,
             report = TRUE),
-        infoName = "ERS Unit Root Test" )          
+        subject = "ERS Unit Root Test" )          
 }
 
 
@@ -759,14 +756,14 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             type = "mu & tau",
             lags = "short & long & nil",
             doplot = TRUE,
             object2x = FALSE,
             report = TRUE ),
-        infoName = "KPSS Unit Root Test" ) 
+        subject = "KPSS Unit Root Test" ) 
 }
 
 
@@ -788,7 +785,7 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             type = "Z-alpha & Z-tau", 
             model = "constant & trend",
@@ -796,7 +793,7 @@ function()
             doplot = TRUE,
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Phillips-Perron Unit Root Test" ) 
+        subject = "Phillips-Perron Unit Root Test" ) 
 }
 
 
@@ -819,7 +816,7 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             type = "tau & rho", 
             pol.deg = "c(1,2,3,4)",
@@ -827,7 +824,7 @@ function()
             doplot = TRUE,
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Schmidt-Phillips Unit Root Test" ) 
+        subject = "Schmidt-Phillips Unit Root Test" ) 
 }
 
 
@@ -846,14 +843,14 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             model = "intercept & trend & both",
             lag = 2,
             doplot = TRUE,
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Zivot & Andrews Unit Root Test" ) 
+        subject = "Zivot & Andrews Unit Root Test" ) 
 }
 
         
@@ -866,7 +863,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # nyseres:
-    tkGetData(Data = "nyseres", infoName = "Data Set")
+    .tkGetData(Data = "nyseres", subject = "Data Set")
 }
 
 
@@ -878,7 +875,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # recession:
-    tkGetDataFrame(Data = "recession", infoName = "Data Set")
+    ..tkGetDataFrame(Data = "recession", subject = "Data Set")
 }
 
 
@@ -890,7 +887,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # dem2gbp:
-    tkGetData(Data = "dem2gbp", infoName = "Data Set")
+    .tkGetData(Data = "dem2gbp", subject = "Data Set")
 }
 
 
@@ -902,7 +899,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # cac40:
-    tkGetDataFrame(Data = "cac40", infoName = "Data Set")
+    ..tkGetDataFrame(Data = "cac40", subject = "Data Set")
 }
 
 
@@ -914,7 +911,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # nelsonplosser:
-    tkGetDataFrame(Data = "nelsonplosser", infoName = "Data Set")
+    ..tkGetDataFrame(Data = "nelsonplosser", subject = "Data Set")
 }
 
 
@@ -926,7 +923,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # surex1.ts:
-    tkGetDataFrame(Data = "surex1.ts", infoName = "Data Set")
+    ..tkGetDataFrame(Data = "surex1.ts", subject = "Data Set")
 }
 
 
@@ -938,7 +935,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # rf.30day:
-    tkGetData(Data = "rf.30day", infoName = "Data Set")
+    .tkGetData(Data = "rf.30day", subject = "Data Set")
 }
 
 
@@ -950,7 +947,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # black.ts:
-    tkGetData(Data = "black.ts", infoName = "Data Set")
+    .tkGetData(Data = "black.ts", subject = "Data Set")
 }
 
 
@@ -962,7 +959,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # klein:
-    tkGetData(Data = "klein", infoName = "Data Set")
+    .tkGetData(Data = "klein", subject = "Data Set")
 }
 
 
@@ -974,7 +971,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # kmenta:
-    tkGetData(Data = "kmenta", infoName = "Data Set")
+    .tkGetData(Data = "kmenta", subject = "Data Set")
 }
 
 
@@ -994,14 +991,14 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             n = 100, 
             min = 0,
             max = 1,
             as.ts = TRUE,
             object2x = FALS,
             report = TRUE ),
-        infoName = "Portable Uniform Innovations" )
+        subject = "Portable Uniform Innovations" )
 }
   
 
@@ -1020,14 +1017,14 @@ function()
        object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             n = 100, 
             mean = 0,
             sd = 1,
             as.ts = TRUE,
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Portable Normal Innovations" )
+        subject = "Portable Normal Innovations" )
 }
   
 
@@ -1046,13 +1043,13 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             n = 100, 
             df = 4,
             as.ts = TRUE, 
             object2x = FALSE,
             report = TRUE),
-        infoName = "Portable Student-t Innovations" )
+        subject = "Portable Student-t Innovations" )
 }
    
     
@@ -1067,7 +1064,7 @@ function()
     # FUNCTION:
     
     # RS - Monthly 91 Day Treasury Bill Rate:
-    tkGetData(Data = "RS", infoName = "Monthly 91 Day Treasury Bill Rate")
+    .tkGetData(Data = "RS", subject = "Monthly 91 Day Treasury Bill Rate")
 }
 
 
@@ -1079,7 +1076,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # R20 - Monthly Yield on 20 Year UK Gilts:
-    tkGetData(Data = "R20", infoName = "Monthly Yield on 20 Year UK Gilts")
+    .tkGetData(Data = "R20", subject = "Monthly Yield on 20 Year UK Gilts")
 }
 
 
@@ -1091,7 +1088,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # RSQ - Quarterly 91 Day Treasury Bill Rate:
-    tkGetData(Data = "RSQ", infoName = "Quarterly 91 Day Treasury Bill Rate")
+    .tkGetData(Data = "RSQ", subject = "Quarterly 91 Day Treasury Bill Rate")
 }
 
 
@@ -1103,7 +1100,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # R20Q - Quarterly Yield on 20 Year UK Gilts:
-    tkGetData(Data = "R20Q", infoName = "Quarterly Yield on 20 Year UK Gilts")
+    .tkGetData(Data = "R20Q", subject = "Quarterly Yield on 20 Year UK Gilts")
 }
  
 
@@ -1115,7 +1112,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # RSQREAL - Quarterly Real 91 Day Treasury Bill:
-    tkGetData(Data = "RSQREAL", infoName = "Quarterly Real 91 Day TBill")
+    .tkGetData(Data = "RSQREAL", subject = "Quarterly Real 91 Day TBill")
 }
 
 
@@ -1127,7 +1124,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # FTAPRICE - FTA All Share Price Index:
-    tkGetData(Data = "FTAPRICE", infoName = "FTA All Share Price Index")
+    .tkGetData(Data = "FTAPRICE", subject = "FTA All Share Price Index")
 }
 
 
@@ -1139,7 +1136,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # FTADIV - FTA All Share Dividend Index:
-    tkGetData(Data = "FTADIV", infoName = "FTA All Share Dividend Index")
+    .tkGetData(Data = "FTADIV", subject = "FTA All Share Dividend Index")
 }
 
 
@@ -1151,7 +1148,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # FTARET - FTA All Share Nominal Returns:
-    tkGetData(Data = "FTARET", infoName = "FTA All Share Nominal Returns")
+    .tkGetData(Data = "FTARET", subject = "FTA All Share Nominal Returns")
 }
 
 
@@ -1163,7 +1160,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # RPI - UK Retail Price Index:
-    tkGetData(Data = "RPI", infoName = "UK Retail Price Index")
+    .tkGetData(Data = "RPI", subject = "UK Retail Price Index")
 }
 
 
@@ -1175,7 +1172,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # EXCHD - Dollar/Sterling Exchange Rate:
-    tkGetData(Data = "EXCHD", infoName = "")
+    .tkGetData(Data = "EXCHD", subject = "")
 }
 
 
@@ -1187,7 +1184,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # EXCHQ - Dollar/Sterling Exchange Rate:
-    tkGetData(Data = "EXCHQ", infoName = "Dollar/Sterling Exchange Rate")
+    .tkGetData(Data = "EXCHQ", subject = "Dollar/Sterling Exchange Rate")
 }
 
 
@@ -1199,7 +1196,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # SP500 - SP 500 Annual Data Index:
-    tkGetData(Data = "SP500", infoName = "")
+    .tkGetData(Data = "SP500", subject = "")
 }
 
 
@@ -1211,7 +1208,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # SP500R - SP 500 Real Returns:
-    tkGetData(Data = "SP500R", infoName = "SP 500 Annual Data Index")
+    .tkGetData(Data = "SP500R", subject = "SP 500 Annual Data Index")
 }
 
 
@@ -1223,7 +1220,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # SP500D - SP 500 Daily Data Index:
-    tkGetData(Data = "SP500D", infoName = "SP 500 Daily Data Index")
+    .tkGetData(Data = "SP500D", subject = "SP 500 Daily Data Index")
 }
 
 
@@ -1235,7 +1232,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # FT30 - Financial Times FT 30 Index:
-    tkGetData(Data = "FT30", infoName = "SP 500 Daily Data Index")
+    .tkGetData(Data = "FT30", subject = "SP 500 Daily Data Index")
 }
 
 
@@ -1247,7 +1244,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # FTSE100 - FTSE 100 Index:
-    tkGetData(Data = "FTSE100", infoName = "FTSE 100 Index")
+    .tkGetData(Data = "FTSE100", subject = "FTSE 100 Index")
 }
 
 
@@ -1259,7 +1256,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # CTLD - Courtaulds Share Price:
-    tkGetData(Data = "CTLD", infoName = "Courtaulds Share Price")
+    .tkGetData(Data = "CTLD", subject = "Courtaulds Share Price")
 }
 
 
@@ -1271,7 +1268,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # LGEN - Legal and General Share Price:
-    tkGetData(Data = "LGEN", infoName = "Legal and General Share Price")
+    .tkGetData(Data = "LGEN", subject = "Legal and General Share Price")
 }
 
 
@@ -1283,7 +1280,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # PRU - Prudential Share Price:
-    tkGetData(Data = "PRU", infoName = "Prudential Share Price")
+    .tkGetData(Data = "PRU", subject = "Prudential Share Price")
 }
 
 

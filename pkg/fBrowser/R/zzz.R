@@ -41,13 +41,11 @@
     
 .First.lib
 function (lib, pkg) 
-{
+{   # A function implemented by Diethelm Wuertz
     
     # Header:
     cat("\nRmetrics, (C) 1999-2006, Diethelm Wuertz, GPL")
     cat("\nfBrowser: Rmetrics GUI\n")
-    
-   
    
     # Option Settings:
     TypeFlag <<- "c"
@@ -56,12 +54,9 @@ function (lib, pkg)
     Time <<- 1/12
     r <<- 0.1
     b <<- 0.1
-    sigma <<- 0.4
-    
-    
-    
+    sigma <<- 0.4  
 }
 
 
-# ------------------------------------------------------------------------------
+################################################################################
     

@@ -2,43 +2,23 @@
 
 \alias{fBrowser}
 
-\alias{newToolbarMenu}
-\alias{addToolbarMenu}
-\alias{cascadeToolbarMenu}
+\alias{tkNewPopup}
+\alias{tkAddPopupMenu}
+\alias{tkSeparator}
+\alias{tkCascadePopup}
 
-\alias{tkDescription}
-\alias{tkEval}
 \alias{tkExecute}
-\alias{tkGetClass}
-\alias{tkGetData}
-\alias{tkGetDataFrame}
-\alias{tkGetDemoData}
-\alias{tkGetFinCenters}
-\alias{tkGetFit}
-\alias{tkGetParameters}
-\alias{tkGetSummary}
-\alias{tkGetTime}
-\alias{tkObjectToX}
-\alias{tkOutput}
-\alias{tkSaveAsObject}
-\alias{tkSaveAsX}
+\alias{tkEval}
 \alias{tkSplit}
+\alias{tkSaveAsX}
+\alias{tkSaveAsObject}
+\alias{tkObjectToX}
+
 \alias{tkTitle}
-
-\alias{besselSlider}
-\alias{gevSlider}
-\alias{gpdSlider}
-\alias{heavisideSlider}
-\alias{kummerSlider}
-\alias{newToolbarMenu}
-\alias{sgedSlider}
-\alias{snormSlider}
-\alias{sstdSlider}
-\alias{unitrootSlider}
-\alias{whittakerSlider}
-    
-     
-
+\alias{tkOutput}
+\alias{tkDescription}
+  
+ 
 \title{Rmetrics Browser and Graphical User Interface}
 
 
@@ -51,20 +31,26 @@
 
 
 \usage{
-tkEval(what)
-tkSplit(what)
+fBrowser(toolbar = c(".filePopup", ".fBasicsPopup", ".fCalendarPopup", 
+    ".fSeriesPopup", ".fMultivarPopup", ".fExtremesPopup", ".fOptionsPopup", 
+    ".helpPopup"), fontSize = 9, fontFamily = "Courier New", guiTitle = 
+    "Rmetrics") 
+    
+tkNewPopup()
+tkAddPopupMenu(Menu, Label = NULL, subLabel, Command)
+tkSeparator()
+tkCascadePopup(Menu, Label)
 
-newToolbarMenu()
-addToolbarMenu(popupMenu, Label, subLabel, Command)
-cascadeToolbarMenu(Menu, Label)
+tkExecute(fun, prototypes = NULL, subject = "- missing -", tkoutput = FALSE)
+tkEval()
+tkSplit()
+tkSaveAsX(data, subject)
+tkSaveAsObject(data, subject)
+tkObjectToX()
 
-tkExecute(fun = ".fun", params = NULL, infoName = "- missing -", tkoutput = 
-    FALSE, console = NULL, title = NULL, description = NULL, ...)
-tkSaveAsX(data, infoName)
-tkSaveAsObject(data, infoName)
-
-
-
+tkTitle()
+tkOutput()
+tkDescription()
 }
 
 
@@ -103,7 +89,7 @@ tkSaveAsObject(data, infoName)
     
     myFunction = function(..., object2x, report) { }
     
-    tkExecute(fun = myFunction, params, infoName)
+    tkExecute(fun = myFunction, params, subject)
     
     
     *** About Parameter Prototypes ***
@@ -115,35 +101,82 @@ tkSaveAsObject(data, infoName)
     logical
     null
         
-    
-    
+}
+
+
+\arguments{
+
+    \item{toolbar}{
+        [fBrowser] - \cr
+        a vector of character strings naming the popup menus in the
+        toolbar.
+        }
+    \item{fontSize}{
+        [fBrowser] - \cr
+        an integer value, the font size used by the GUI. The default
+        is \code{9}.
+        } 
+    \item{fontFamily}{
+        [fBrowser] - \cr
+        a character string, the font used by the GUI. The default
+        font is \code{"Couurier New"}.
+        }
+    \item{guiTitle}{
+        [fBrowser] - \cr
+        a character string, the title appearing on top of the GUI.
+        }
+    \item{Menu}{
+        [tkAddPopupMenu] - \cr
+        ...
+        }
+    \item{Label}{
+        [tkAddPopupMenu] - \cr
+        ...
+        }
+    \item{subLabel}{
+        [tkAddPopupMenu] - \cr
+        ...
+        }
+    \item{Command}{
+        [tkAddPopupMenu] - \cr
+        ...
+        }
+    \item{fun}{
+        [tkExecute] - \cr
+        ...
+        }
+    \item{prototypes}{
+        [tkExecute] - \cr
+        ...
+        }
+    \item{subject}{
+        [tkExecute] - \cr
+        ...
+        }
+    \item{tkoutput}{
+        [tkExecute] - \cr
+        ...
+        }
+    \item{data}{
+        ...
+        }  
+
 }
 
 
 \note{
 
     The Browser and GUI is still experimental and still under current 
-    development. Just try it ...
+    development.
 
-}
-    
-    
-
-\usage{ 
-fBrowser()
 }
 
 
 \author{
  
-    Diethelm Wuertz for the Rmetrics \R-port.
+    Diethelm Wuertz.
     
 }
-
-
-%\examples{
-%## SOURCE("A1.fCommander")
-%}
 
 
 \keyword{programming}

@@ -46,11 +46,11 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list( 
+        prototypes = list( 
             FinCenter = "GMT",
             object2x = TRUE,
             report = TRUE),
-        infoName = "12 Random Dates in Current Year" )          
+        subject = "12 Random Dates in Current Year" )          
 }
 
 
@@ -76,11 +76,11 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list( 
+        prototypes = list( 
             FinCenter = "GMT",
             object2x = TRUE,
             report = TRUE),
-        infoName = "12 Random Times in Current Year" )          
+        subject = "12 Random Times in Current Year" )          
 }
 
 
@@ -102,7 +102,7 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             from = "2005-01-01", 
             to = "2005-12-31", 
             by = "day", 
@@ -111,7 +111,7 @@ function()
             FinCenter = "GMT",
             object2x = FALSE,
             report = TRUE),
-        infoName = "timeDate Sequence" )          
+        subject = "timeDate Sequence" )          
 }
 
 
@@ -137,7 +137,7 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             y = "2005", 
             m = "1:12", 
             d = "1", 
@@ -147,7 +147,7 @@ function()
             FinCenter = "GMT",
             object2x = FALSE,
             report = TRUE),
-        infoName = "timeDate Calendar" )          
+        subject = "timeDate Calendar" )          
 }
 
 
@@ -160,7 +160,7 @@ function()
     
     # The Current Date and Time:
     helpTopic <<- "Sys.timeDate"
-    tkGetTime()
+    .tkGetTime()
 }
 
 
@@ -200,7 +200,7 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             which = "last",
             period = "month",
@@ -208,7 +208,7 @@ function()
             FinCenter = "GMT",
             object2x = FALSE,
             report = TRUE),
-        infoName = "1st/Last Days in Period" )          
+        subject = "1st/Last Days in Period" )          
 }
 
 
@@ -230,14 +230,14 @@ function()
         object } 
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             nday = 1,
             format = "%Y-%m-%d",
             FinCenter = "GMT",
             object2x = FALSE,
             report = TRUE),
-        infoName = "The N-Day On-Or-After" )               
+        subject = "The N-Day On-Or-After" )               
 }
 
 
@@ -259,14 +259,14 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             nday = 1,
             format = "%Y-%m-%d",
             FinCenter = "GMT",
             object2x = FALSE,
             report = TRUE),
-        infoName = "The N-Day On-Or-Before" )              
+        subject = "The N-Day On-Or-Before" )              
 }
 
 
@@ -288,7 +288,7 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             nday = 1,
             nth = 1, 
@@ -296,7 +296,7 @@ function()
             FinCenter = "GMT",
             object2x = FALSE,
             report = TRUE),
-        infoName = "The n-th Ocurrance of a n-Day" )              
+        subject = "The n-th Ocurrance of a n-Day" )              
 }
 
 
@@ -318,14 +318,14 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             nday = 1,
             format = "%Y-%m-%d",
             FinCenter = "GMT",
             object2x = FALSE,
             report = TRUE),
-        infoName = "The Last N-Day" )              
+        subject = "The Last N-Day" )              
 }
 
 
@@ -338,7 +338,7 @@ function()
     
     # List of Financial Centers
     helpTopic <<- "timeDate"
-    tkGetFinCenters()
+    .tkGetFinCenters()
 }
 
 
@@ -358,11 +358,11 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             FinCenter = "Zurich",
             object2x = FALSE,
             report = TRUE),
-        infoName = "DST Rules" )
+        subject = "DST Rules" )
 }                                              
 
 
@@ -383,11 +383,11 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             object2x = FALSE,
             report = TRUE ),
-        infoName = "First timeDate Value" )
+        subject = "First timeDate Value" )
 }
 
 
@@ -407,11 +407,11 @@ function()
         object  }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             object2x = FALSE,
             report = TRUE),
-        infoName = "Last timeDate Value" )
+        subject = "Last timeDate Value" )
 }
 
 
@@ -434,7 +434,7 @@ function()
         object}
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             PlusMinus = "+",
             days = 1,
@@ -443,7 +443,7 @@ function()
             seconds = 0,
             object2x = FALSE,
             report = TRUE),
-        infoName = "+/- Time Span a timeDate Object" )          
+        subject = "+/- Time Span a timeDate Object" )          
 }
 
 
@@ -463,11 +463,11 @@ function()
         object}  
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             object2x = FALSE,
             report = TRUE),
-        infoName = "Sort a timeDate Object" )          
+        subject = "Sort a timeDate Object" )          
 }
 
 
@@ -487,12 +487,12 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             units = "days",
             object2x = FALSE,
             report = TRUE),
-        infoName = "Round a timeDate Object" )
+        subject = "Round a timeDate Object" )
 }
 
 
@@ -512,12 +512,12 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             units = "days",
             object2x = FALSE,
             report = TRUE),
-        infoName = "Truncate a timeDate Object" )
+        subject = "Truncate a timeDate Object" )
 }
 
 
@@ -537,11 +537,11 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             object2x = FALSE,
             report = TRUE),
-        infoName = "Revert a timeDate Object" )
+        subject = "Revert a timeDate Object" )
 }
 
 
@@ -561,11 +561,11 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             object2x = FALSE,
             report = TRUE),
-        infoName = "timeDate to Character" )
+        subject = "timeDate to Character" )
 }
 
 
@@ -585,11 +585,11 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             object2x = FALSE, 
             report = TRUE),
-        infoName = "timeDate to Data Frame" )
+        subject = "timeDate to Data Frame" )
 }
 
 
@@ -609,11 +609,11 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             object2x = FALSE,
             report = TRUE),
-        infoName = "timeDate to POSIXct" )
+        subject = "timeDate to POSIXct" )
 }
 
 
@@ -633,11 +633,11 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             object2x = FALSE,
             report = TRUE),
-        infoName = "Compute Julian Counts" )
+        subject = "Compute Julian Counts" )
 }
 
 
@@ -657,11 +657,11 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             object2x = FALSE,
             report = TRUE),
-        infoName = "Extract Atoms" )
+        subject = "Extract Atoms" )
 }
 
 
@@ -687,7 +687,7 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             data = "matrix(rnorm(24),ncol=2)",
             charvec = "timeCalendar(y=2006,m=1:12)",
             units = "LETTERS[1:2]",
@@ -696,7 +696,7 @@ function()
             FinCenter = "GMT",
             object2x = TRUE,
             report = TRUE),
-        infoName = "Create a timSeries Object" )
+        subject = "Create a timSeries Object" )
 }
 
 
@@ -724,7 +724,7 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             from = "NULL",
             to = "NULL",
@@ -732,7 +732,7 @@ function()
             FUN = "colAvgs",
             object2x = FALSE,
             report = TRUE),
-        infoName = "Apply FUN to timeSeries" )
+        subject = "Apply FUN to timeSeries" )
 }
 
 
@@ -757,13 +757,13 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             method = "fillNA & before & after & interp",
             include.weekends = TRUE,
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Align Daily Series")
+        subject = "Align Daily Series")
 }
 
 
@@ -783,13 +783,13 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             from = "2005-03-01",
             to = "2005-04-31",
             object2x = TRUE,
             report = TRUE),
-        infoName = "Cut a timeSeries" )
+        subject = "Cut a timeSeries" )
 }
 
 
@@ -810,7 +810,7 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             lag = 1, 
             diff = 1, 
@@ -818,7 +818,7 @@ function()
             pad = NA,
             object2x = FALSE, 
             report = TRUE ),
-        infoName = "Difference a timeSeries" )
+        subject = "Difference a timeSeries" )
 }
 
 
@@ -839,13 +839,13 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             k = 1, 
             trim = FALSE,
             object2x = FALSE,
             report = TRUE),
-        infoName = "Lag a timeSeries" )
+        subject = "Lag a timeSeries" )
 }
 
 
@@ -866,12 +866,12 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             matrix = "object@Data",
             object2x = FALSE,
             report = TRUE),
-        infoName = "Merge Series with Matrix" )
+        subject = "Merge Series with Matrix" )
 }
 
 
@@ -894,7 +894,7 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             type = "continuous & discrete",
             percentage = FALSE, 
@@ -902,7 +902,7 @@ function()
             digits = 4,
             object2x = FALSE,
             report = TRUE),
-        infoName =  "Return Series" )
+        subject =  "Return Series" )
 }
 
 
@@ -922,11 +922,11 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             object2x = FALSE,
             report = TRUE),
-        infoName = "Revert timeSeries" )
+        subject = "Revert timeSeries" )
 }
 
 
@@ -947,12 +947,12 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             year = as.character(currentYear),
             shift = 0,
             object2x = FALSE,
             report = TRUE),
-        infoName = "Holiday Date(s)" )
+        subject = "Holiday Date(s)" )
 }
 
 
@@ -971,10 +971,10 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             object2x = FALSE,
             report = TRUE),
-        infoName = "Holiday List" )
+        subject = "Holiday List" )
 }
 
 
@@ -994,12 +994,12 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             year = as.character(currentYear),
             Holiday = "Easter",
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Holiday Date(s)" )
+        subject = "Holiday Date(s)" )
 }
 
 
@@ -1019,12 +1019,12 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             fromYear = currentYear,
             toYear = currentYear,
             object2x = FALSE,
             report = TRUE),
-        infoName = "NYSE Holiday Dates" )
+        subject = "NYSE Holiday Dates" )
 }
 
 
@@ -1044,7 +1044,7 @@ function()
         print(object)
         cat("\n")
         x <<- tkSaveAsX(data = fxdata.parser(x = x, parser.table = object),
-            infoName = "parsed Data") 
+            subject = "parsed Data") 
         y = head(x)
         y[, 1] = as.character(y[, 1])
         print(y)
@@ -1052,10 +1052,10 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             include = 5),
-        infoName = "FX Data Parser")            
+        subject = "FX Data Parser")            
 }
 
 
@@ -1103,12 +1103,9 @@ function()
         x.filt }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             parameter = "strong"),
-        infoName = "Filtered FX Data",
-        tkoutput = TRUE,
-        title = NULL,
-        description = NULL )   
+        subject = "Filtered FX Data" )   
 }
 
 
@@ -1126,13 +1123,10 @@ function()
         fxdata.varmin(x = x, digits = digits) }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             digits = 4),
-        infoName = "Variable Minutes formatted FX Data",
-        tkoutput = TRUE,
-        title = NULL,
-        description = NULL )  
+        subject = "Variable Minutes formatted FX Data" )  
 }
 
 
@@ -1146,7 +1140,7 @@ function()
     # * Example data.frame: x = FX Reuters AUDUSD:
     helpTopic <<- ""
     data(audusd)
-    x <<- tkSaveAsX(data = audusd, infoName = "FX Reuters AUDUSD")
+    x <<- tkSaveAsX(data = audusd, subject = "FX Reuters AUDUSD")
 }
 
 
@@ -1165,13 +1159,10 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             ReutersData = "x",
             object2x = TRUE ),
-        infoName = "List of FX Prices",
-        tkoutput = TRUE,
-        title = NULL,
-        description = NULL )  
+        subject = "List of FX Prices" )  
 }
 
 
@@ -1190,13 +1181,10 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             Prices = "x",
             object2x = FALSE),
-        infoName = "List of Log FX Prices",
-        tkoutput = TRUE,
-        title = NULL,
-        description = NULL )   
+        subject = "List of Log FX Prices" )   
 }
 
 
@@ -1215,13 +1203,10 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             logPrices = "x",
             object2x = TRUE),
-        infoName = "List of Log FX Returns",
-        tkoutput = TRUE,
-        title = NULL,
-        description = NULL )
+        subject = "List of Log FX Returns" )
 }
 
 
@@ -1240,15 +1225,12 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             from = 19971021,
             to = 19971021,
             object2x = FALSE),
-        infoName = "List of Cutted Series",
-        tkoutput = TRUE,
-        title = NULL,
-        description = NULL )
+        subject = "List of Cutted Series" )
 }
 
 
@@ -1267,15 +1249,12 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             delta = 1,
             method = "constant",
             object2x = FALSE),
-        infoName = "List of Cutted Series",
-        tkoutput = TRUE,
-        title = NULL,
-        description = NULL )
+        subject = "List of Cutted Series" )
 }
 
 
@@ -1303,7 +1282,7 @@ function()
     helpTopic <<- ""
     data(fdax97m)
     x <<- tkSaveAsX(data = as.timeSeries(fdax97m, format = "%Y%m%d%H%M"),
-        infoName = "FDAX Index 1997")
+        subject = "FDAX Index 1997")
 }
 
 
@@ -1354,17 +1333,14 @@ function()
         }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             from = 19970106,
             to = 19971228,
             delta = 60,
             alpha = 1.05,
             doplot = TRUE),
-        infoName = "Series & Time Map",
-        tkoutput = TRUE,
-        title = NULL,
-        description = NULL )  
+        subject = "Series & Time Map" )  
 }
 
 
@@ -1414,19 +1390,16 @@ function()
             charvec = as.character(dvseries$t),
             format = "%Y%m%d%H%M",
             FinCenter = "GMT")
-        list(data = series, params = c(kParameter = kParameter,
+        list(data = series, prototypes = c(kParameter = kParameter,
             AverageVolatility = AverageVolatility))
     }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             kParameter = 8,
             doplot = TRUE),
-        infoName = "Series & Parameters",
-        tkoutput = TRUE,
-        title = NULL,
-        description = NULL )       
+        subject = "Series & Parameters" )       
 }
 
 
@@ -1461,17 +1434,14 @@ function()
         }           
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             from = 19970106,
             to = 19971228,
             period = "both",
             delta = 30,
             doplot = TRUE),
-        infoName = "Series & Time Map",
-        tkoutput = TRUE,
-        title = NULL,
-        description = NULL )     
+        subject = "Series & Time Map" )     
 }
 
 

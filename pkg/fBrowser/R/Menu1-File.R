@@ -31,7 +31,7 @@
 # File Popup Menu
 
 
-.File.PopupMenu =
+.filePopup =
 function()
 {   # A function implemented by Diethelm Wuertz
 
@@ -41,7 +41,7 @@ function()
     # FUNCTION:
     
     # New Toolbar Menu:
-    fileMenu = newToolbarMenu()
+    fileMenu = tkNewPopup()
   
     # Add Menu:
     Label = "List Active Data Set"
@@ -49,7 +49,7 @@ function()
         NULL
     Command = 
         ".listActiveDataSet"
-    addToolbarMenu(fileMenu, Label, subLabel, Command)     
+    tkAddPopupMenu(fileMenu, Label, subLabel, Command)     
     
     # Add Menu:
     Label = "List Objects"
@@ -57,7 +57,7 @@ function()
         NULL
     Command = 
         ".listObjects"
-    addToolbarMenu(fileMenu, Label, subLabel, Command)  
+    tkAddPopupMenu(fileMenu, Label, subLabel, Command)  
     
     # Add Menu:
     Label = "________________________________"
@@ -65,7 +65,7 @@ function()
         NULL
     Command = 
         "tkSeparator"
-    addToolbarMenu(fileMenu, Label, subLabel, Command) 
+    tkAddPopupMenu(fileMenu, Label, subLabel, Command) 
     
     # Add Menu:
     Label = "List Rmetrics Demo Data Files"
@@ -73,7 +73,7 @@ function()
         NULL
     Command = 
         ".listRmetricsData"
-    addToolbarMenu(fileMenu, Label, subLabel, Command)  
+    tkAddPopupMenu(fileMenu, Label, subLabel, Command)  
     
     # Add Menu:
     Label = "Load Rmetrics Demo Data File"
@@ -81,7 +81,7 @@ function()
         NULL
     Command = 
         ".loadRmetricsData"
-    addToolbarMenu(fileMenu, Label, subLabel, Command)  
+    tkAddPopupMenu(fileMenu, Label, subLabel, Command)  
     
     # Add Menu:
     Label = "________________________________"
@@ -89,7 +89,7 @@ function()
         NULL
     Command = 
         "tkSeparator"
-    addToolbarMenu(fileMenu, Label, subLabel, Command) 
+    tkAddPopupMenu(fileMenu, Label, subLabel, Command) 
     
     # Add Menu:
     Label = "Install Package() ..."
@@ -97,7 +97,7 @@ function()
         NULL
     Command = 
         ".menuInstallPackages"
-    addToolbarMenu(fileMenu, Label, subLabel, Command)  
+    tkAddPopupMenu(fileMenu, Label, subLabel, Command)  
     
     # Add Menu:
     Label = "Update Package() ..."
@@ -105,7 +105,7 @@ function()
         NULL
     Command = 
         ".menuUpdatePackages"
-    addToolbarMenu(fileMenu, Label, subLabel, Command)  
+    tkAddPopupMenu(fileMenu, Label, subLabel, Command)  
    
     if (FALSE) {
     # Add Menu:
@@ -114,7 +114,7 @@ function()
         NULL
     Command = 
         "tkSeparator"
-    addToolbarMenu(fileMenu, Label, subLabel, Command) 
+    tkAddPopupMenu(fileMenu, Label, subLabel, Command) 
     
     # Add Menu:          
     Label = "Run a Rmetrics Demo"
@@ -132,7 +132,7 @@ function()
         "xmpfMultivar",
         "xmpfExtremes",
         "xmpfOptions")
-    addToolbarMenu(fileMenu, Label, subLabel, Command)  
+    tkAddPopupMenu(fileMenu, Label, subLabel, Command)  
     }   
         
     # Add Menu:
@@ -141,7 +141,7 @@ function()
         NULL
     Command = 
         "tkSeparator"
-    addToolbarMenu(fileMenu, Label, subLabel, Command) 
+    tkAddPopupMenu(fileMenu, Label, subLabel, Command) 
     
     # Add Menu:
     Label = "Quit"
@@ -149,10 +149,10 @@ function()
         NULL
     Command = 
         ".quitBrowser"
-    addToolbarMenu(fileMenu, Label, subLabel, Command) 
+    tkAddPopupMenu(fileMenu, Label, subLabel, Command) 
     
     # Cascade fileMenu:
-    cascadeToolbarMenu(Menu = fileMenu, Label = "File")        
+    tkCascadePopup(Menu = fileMenu, Label = "File")        
 }
 
 

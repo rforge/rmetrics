@@ -30,7 +30,7 @@
 ################################################################################
 
 
-.Help.PopupMenu =
+.helpPopup =
 function()
 {   # A function implemented by Diethelm Wuertz
 
@@ -40,33 +40,28 @@ function()
     # FUNCTION:
 
     # New Toolbar Menu:
-    helpMenu = newToolbarMenu()
-    
-    
+    helpMenu = tkNewPopup()
+        
     # Add Menu:      
     Label = "About"
     subLabel = NULL
     Command = ".aboutRmetrics"
-    addToolbarMenu(helpMenu, Label, subLabel, Command)      
-  
-      
+    tkAddPopupMenu(helpMenu, Label, subLabel, Command)      
+        
     # Add Menu:      
     Label = "Rmetrics"
     subLabel = NULL
     Command = ".wwwRmetrics"
-    addToolbarMenu(helpMenu, Label, subLabel, Command)  
-  
-           
+    tkAddPopupMenu(helpMenu, Label, subLabel, Command)  
+             
     # Add Menu:      
     Label = "HTML Help"
     subLabel = NULL
     Command = ".helpStart"
-    addToolbarMenu(helpMenu, Label, subLabel, Command)   
-      
-    
+    tkAddPopupMenu(helpMenu, Label, subLabel, Command)   
+         
     # Cascade fileMenu:
-    cascadeToolbarMenu(Menu = helpMenu, Label = "Help") 
-    
+    tkCascadePopup(Menu = helpMenu, Label = "Help")     
 }   
     
 

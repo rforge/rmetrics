@@ -31,7 +31,7 @@
 # fSeries Popup Menu
 
         
-.fSeries.PopupMenu =
+.fSeriesPopup =
 function()
 {   # A function implemented by Diethelm Wuertz
 
@@ -41,7 +41,7 @@ function()
     # FUNCTION:
     
     # Menu:
-    fSeriesMenu <<- newToolbarMenu()
+    fSeriesMenu <<- tkNewPopup()
     
     
     # Add Menu:
@@ -58,7 +58,7 @@ function()
         ".fSeries.ArmaModelling.armaSim",
         ".fSeries.ArmaModelling.armaFit",
         ".fSeries.ArmaModelling.predict")
-    addToolbarMenu(fSeriesMenu, Label, subLabel, Command)
+    tkAddPopupMenu(fSeriesMenu, Label, subLabel, Command)
     
     
     # Add Menu:
@@ -81,7 +81,7 @@ function()
         "tkSeparator",
         ".fSeries.GarchDistributions.conddistSlider",
         ".fSeries.GarchDistributions.conddistFit")
-    addToolbarMenu(fSeriesMenu, Label, subLabel, Command)
+    tkAddPopupMenu(fSeriesMenu, Label, subLabel, Command)
           
     # Add Menu:
     Label = "________________________________"
@@ -89,7 +89,7 @@ function()
         NULL
     Command = 
         "tkSeparator"
-    addToolbarMenu(fSeriesMenu, Label, subLabel, Command) 
+    tkAddPopupMenu(fSeriesMenu, Label, subLabel, Command) 
       
     if (FALSE) {
     # Add Menu:
@@ -100,7 +100,7 @@ function()
     Command = c(
         ".fSeries.LongMemoryModelling.fgnSim",
         ".fSeries.LongMemoryModelling.fbmSim")
-    addToolbarMenu(fSeriesMenu, Label, subLabel, Command)
+    tkAddPopupMenu(fSeriesMenu, Label, subLabel, Command)
     }
     
     # Add Menu:
@@ -118,9 +118,8 @@ function()
         ".fSeries.TimeSeriesTests.bdsTest",
         ".fSeries.TimeSeriesTests.tnnTest",
         ".fSeries.TimeSeriesTests.wnnTest")
-    addToolbarMenu(fSeriesMenu, Label, subLabel, Command)
+    tkAddPopupMenu(fSeriesMenu, Label, subLabel, Command)
         
-
     # Add Menu:
     Label = "Unit Root Tests"
     subLabel = c(
@@ -147,7 +146,7 @@ function()
         ".fSeries.UnitRootTests.urppTest",
         ".fSeries.UnitRootTests.urspTest",
         ".fSeries.UnitRootTests.urzaTest")
-    addToolbarMenu(fSeriesMenu, Label, subLabel, Command)
+    tkAddPopupMenu(fSeriesMenu, Label, subLabel, Command)
     
     # Add Menu:
     Label = "________________________________"
@@ -155,7 +154,7 @@ function()
         NULL
     Command = 
         "tkSeparator"
-    addToolbarMenu(fSeriesMenu, Label, subLabel, Command) 
+    tkAddPopupMenu(fSeriesMenu, Label, subLabel, Command) 
     
     # Add Menu:
     Label = "DATA: fSeries Time Series"
@@ -181,7 +180,7 @@ function()
         ".fSeries.SeriesData.8",
         ".fSeries.SeriesData.9",
         ".fSeries.SeriesData.10",)
-    addToolbarMenu(fSeriesMenu, Label, subLabel, Command)
+    tkAddPopupMenu(fSeriesMenu, Label, subLabel, Command)
     
     # Add Menu:
     Label = "DATA: Portable Innovations"
@@ -193,7 +192,7 @@ function()
         ".fSeries.PortableInnovations.runiflcg",
         ".fSeries.PortableInnovations.rnormlcg",
         ".fSeries.PortableInnovations.rtlcg")
-    addToolbarMenu(fSeriesMenu, Label, subLabel, Command)
+    tkAddPopupMenu(fSeriesMenu, Label, subLabel, Command)
     
     # Add Menu:
     Label = "DATA: Chaotic Time Series Maps"
@@ -209,9 +208,8 @@ function()
         ".fSeries.ChaoticTimeSeries.logisticSim",
         ".fSeries.ChaoticTimeSeries.lorentzSim",
         ".fSeries.ChaoticTimeSeries.roesslerSim")
-    addToolbarMenu(fSeriesMenu, Label, subLabel, Command)
-        
-        
+    tkAddPopupMenu(fSeriesMenu, Label, subLabel, Command)
+              
     # Add Menu: 
     Label = "DATA: Mills Textbook"
     subLabel = c(
@@ -254,12 +252,10 @@ function()
         ".fSeries.MillsData.CTLD",
         ".fSeries.MillsData.LGEN",
         ".fSeries.MillsData.PRU")
-    addToolbarMenu(fSeriesMenu, Label, subLabel, Command)
-    
+    tkAddPopupMenu(fSeriesMenu, Label, subLabel, Command)
     
     # Cascade fileMenu:
-    cascadeToolbarMenu(Menu = fSeriesMenu, Label = "fSeries")
-        
+    tkCascadePopup(Menu = fSeriesMenu, Label = "fSeries")      
 }
 
 

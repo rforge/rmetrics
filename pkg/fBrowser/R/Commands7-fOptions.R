@@ -44,7 +44,7 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             TypeFlag = "c", 
             S = 100, 
             X = 100, 
@@ -54,7 +54,7 @@ function()
             sigma = 0.30,
             object2x = FALSE,
             report = TRUE ),
-        infoName = "GBS Option" ) 
+        subject = "GBS Option" ) 
 }
 
 
@@ -74,7 +74,7 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             TypeFlag = "c", 
             FT = 95, 
             X = 80, 
@@ -83,7 +83,7 @@ function()
             sigma = 0.266,
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Black76 Option" ) 
+        subject = "Black76 Option" ) 
 }
     
 
@@ -106,7 +106,7 @@ function()
         object }
     tkExecute(
         fun = myFunction, 
-        params = list(
+        prototypes = list(
             TypeFlag = "c", 
             Pt = 0.9876, 
             FT = 95,  
@@ -123,7 +123,7 @@ function()
             KappaF = 0.2000,
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Miltersen Schwartz Option" ) 
+        subject = "Miltersen Schwartz Option" ) 
 }
 
 
@@ -144,7 +144,7 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             S = 80, 
             X = 82, 
             time1 = 0.25, 
@@ -154,7 +154,7 @@ function()
             sigma = 0.30,
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Roll Geske Whaley Option" )
+        subject = "Roll Geske Whaley Option" )
 }
 
 
@@ -174,7 +174,7 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             TypeFlag = "p", 
             S = 100, 
             X = 100, 
@@ -184,7 +184,7 @@ function()
             sigma = 0.25,
             object2x = FALSE,
             report = TRUE ),
-        infoName = "BAW American Option" )
+        subject = "BAW American Option" )
 }
 
 
@@ -204,7 +204,7 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             TypeFlag = "c", 
             S = 42, 
             X = 40, 
@@ -214,7 +214,7 @@ function()
             sigma = 0.35,
             object2x = FALSE,
             report = TRUE ),
-        infoName = "BS American Option" )
+        subject = "BS American Option" )
 }
 
 
@@ -235,7 +235,7 @@ function()
             }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             TypeFlag = "pa", 
             S = 50, X = 50, 
             Time = 0.4167, 
@@ -245,7 +245,7 @@ function()
             n = 50,
             object2x = FALSE,
             report = TRUE ),
-        infoName = "CRRBinomialTreeOption" )
+        subject = "CRRBinomialTreeOption" )
 }
 
 
@@ -265,7 +265,7 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             TypeFlag = "pa", 
             S = 50, 
             X = 50, 
@@ -276,7 +276,7 @@ function()
             n = 50,
             object2x = FALSE,
             report = TRUE ),
-        infoName = "JRBinomialTreeOption" )
+        subject = "JRBinomialTreeOption" )
 }
 
 
@@ -296,7 +296,7 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             TypeFlag = "pa", 
             S = 50, 
             X = 50, 
@@ -307,7 +307,7 @@ function()
             n = 50,
             object2x = FALSE,
             report = TRUE ),
-        infoName = "TIANBinomialTreeOption" )
+        subject = "TIANBinomialTreeOption" )
 }
 
 
@@ -327,7 +327,7 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             TypeFlag = "pa", 
             S = 50, 
             X = 50, 
@@ -338,7 +338,7 @@ function()
             n = 50,
             object2x = FALSE,
             report = TRUE ),
-        infoName = "BinomialTreeOption" )
+        subject = "BinomialTreeOption" )
 }
 
     
@@ -359,7 +359,7 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             TypeFlag = "c", 
             S = 60, 
             X = 64, 
@@ -370,7 +370,7 @@ function()
             lambda = 0.15,
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Executive Stock Option" )
+        subject = "Executive Stock Option" )
 }
 
 
@@ -390,7 +390,7 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             TypeFlag = "c", 
             S = 60, 
             alpha = 1.1, 
@@ -401,7 +401,7 @@ function()
             sigma = 0.30,
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Forward Start Option" )
+        subject = "Forward Start Option" )
 }
 
 
@@ -421,7 +421,7 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             TypeFlag = "c", 
             S = 60, 
             alpha = 1.1, 
@@ -432,7 +432,7 @@ function()
             sigma = 0.30,
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Ratchet Option" )
+        subject = "Ratchet Option" )
 }
 
 
@@ -452,7 +452,7 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             TypeFlag = "c", 
             S = 100, 
             X = 110, 
@@ -465,7 +465,7 @@ function()
             dt = 0.002739726,
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Time Switch Option" )
+        subject = "Time Switch Option" )
 }
 
 
@@ -485,7 +485,7 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             S = 50, 
             X = 50, 
             time1 = 0.25, 
@@ -495,7 +495,7 @@ function()
             sigma = 0.25,
             object2x = FALSE,
             report = TRUE ),
-        infoName = "SimpleChooserOption" )
+        subject = "SimpleChooserOption" )
 }
 
 
@@ -515,7 +515,7 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             S = 50, 
             Xc = 55, 
             Xp = 48, 
@@ -528,7 +528,7 @@ function()
             doprint = FALSE,
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Complex Chooser Option" )
+        subject = "Complex Chooser Option" )
 }
 
 
@@ -548,7 +548,7 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             TypeFlag = "pc", 
             S = 500, 
             X1 = 520, 
@@ -560,7 +560,7 @@ function()
             sigma = 0.35,
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Option On Option" )
+        subject = "Option On Option" )
 }
 
 
@@ -579,7 +579,7 @@ function()
             Time2, r, b, sigma, A)
         object }
     tkExecute(
-        params = list(
+        prototypes = list(
             TypeFlag = "c", 
             S = 100, 
             X1 = 100, 
@@ -592,7 +592,7 @@ function()
             A = 1,
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Holder Extendible Option" )
+        subject = "Holder Extendible Option" )
 }
 
 
@@ -612,7 +612,7 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             TypeFlag = "c", 
             S = 80, 
             X1 = 90, 
@@ -624,7 +624,7 @@ function()
             sigma = 0.30,
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Writer Extendible Option" )
+        subject = "Writer Extendible Option" )
 }
 
 
@@ -645,7 +645,7 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             TypeFlag = "c", 
             S1 = 52, 
             S2 = 65, 
@@ -660,7 +660,7 @@ function()
             rho = 0.75,
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Two Asset Correlation Option" )
+        subject = "Two Asset Correlation Option" )
 }
 
 
@@ -680,7 +680,7 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             S1 = 22, 
             S2 = 0.20, 
             Q1 = 1, 
@@ -694,7 +694,7 @@ function()
             rho = -0.5,
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Two Asset Correlation Option" )
+        subject = "Two Asset Correlation Option" )
 }
 
 
@@ -714,7 +714,7 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             S1 = 22, 
             S2 = 0.20, 
             Q1 = 1, 
@@ -728,7 +728,7 @@ function()
             rho = -0.5,
             object2x = FALSE,
             report = TRUE ),
-        infoName = "American Exchange Option" )
+        subject = "American Exchange Option" )
 }
 
 
@@ -748,7 +748,7 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             TypeFlag = as.character(flag), 
             S1 = 105, 
             S2 = 100, 
@@ -763,7 +763,7 @@ function()
             rho = -0.5,
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Exchange On Exchange Option" )
+        subject = "Exchange On Exchange Option" )
 }
 
 
@@ -782,7 +782,7 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             TypeFlag = "cmax", 
             S1 = 100, 
             S2 = 105, 
@@ -796,7 +796,7 @@ function()
             rho = 0.63,
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Two Risky Assets Option" )
+        subject = "Two Risky Assets Option" )
 }
 
 
@@ -816,7 +816,7 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             TypeFlag = "c", 
             S1 = 28, 
             S2 = 20, 
@@ -828,7 +828,7 @@ function()
             rho = 0.42,
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Spread Approx Option" )
+        subject = "Spread Approx Option" )
 }
 
 
@@ -849,7 +849,7 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             TypeFlag = "c", 
             S = 120, 
             SMinOrMax = 100, 
@@ -859,7 +859,7 @@ function()
             sigma = 0.30,
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Floating Strike Lookback Option" )
+        subject = "Floating Strike Lookback Option" )
 }
 
 
@@ -879,7 +879,7 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             TypeFlag = "c", 
             S = 100, 
             SMinOrMax = 100, 
@@ -890,7 +890,7 @@ function()
             sigma = 0.30,
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Fixed Strike Lookback Option" )
+        subject = "Fixed Strike Lookback Option" )
 }
 
 
@@ -910,7 +910,7 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             TypeFlag = "p", 
             S = 90, 
             SMinOrMax = 90, 
@@ -922,7 +922,7 @@ function()
             lambda = 1,
             object2x = FALSE,
             report = TRUE ),
-        infoName = "PT Floating Strike Lookback Option" )
+        subject = "PT Floating Strike Lookback Option" )
 }
 
 
@@ -942,7 +942,7 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             TypeFlag = "c", 
             S = 100, 
             X = 90, 
@@ -953,7 +953,7 @@ function()
             sigma = 0.20,
             object2x = FALSE,
             report = TRUE ),
-        infoName = "PT Fixed Strike Lookback Option" )
+        subject = "PT Fixed Strike Lookback Option" )
 }
 
 
@@ -973,7 +973,7 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             TypeFlag = "c", 
             S = 100, 
             SMin = NA, 
@@ -985,7 +985,7 @@ function()
             sigma = 0.30,
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Extreme Spread Option" )    
+        subject = "Extreme Spread Option" )    
 }
 
 
@@ -1006,7 +1006,7 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             TypeFlag = "cdo", 
             S = 100, 
             X = 90, 
@@ -1018,7 +1018,7 @@ function()
             sigma = 0.25,
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Standard Barrier Option" )
+        subject = "Standard Barrier Option" )
 }
 
 
@@ -1038,7 +1038,7 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             TypeFlag = "co", 
             S = 100, 
             X = 100, 
@@ -1052,7 +1052,7 @@ function()
             delta2 = 0.1,
             object2x = FALSE,
             report = TRUE ),
-        infoName = "DoubleB arrier Option" )
+        subject = "DoubleB arrier Option" )
 }
 
 
@@ -1072,7 +1072,7 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             TypeFlag = "coB1", 
             S = 95, 
             X = 110, 
@@ -1084,7 +1084,7 @@ function()
             sigma = 0.25,
             object2x = FALSE,
             report = TRUE ),
-        infoName = "PT Single Asset Barrier Option" )
+        subject = "PT Single Asset Barrier Option" )
 }
 
 
@@ -1104,7 +1104,7 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             TypeFlag = "puo", 
             S1 = 100, 
             S2 = 100, 
@@ -1119,7 +1119,7 @@ function()
             rho = -0.5,
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Two Asset Barrier Option" )
+        subject = "Two Asset Barrier Option" )
 }
 
 
@@ -1139,7 +1139,7 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             TypeFlag = "pdo", 
             S1 = 100, 
             S2 = 100, 
@@ -1155,7 +1155,7 @@ function()
             rho = -0.5,
             object2x = FALSE,
             report = TRUE ),
-        infoName = "PT Two Asset Barrier Option" )
+        subject = "PT Two Asset Barrier Option" )
 }
 
 
@@ -1175,7 +1175,7 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             TypeFlag = "cuo", 
             S = 100, 
             X = 100, 
@@ -1187,7 +1187,7 @@ function()
             sigma = 0.15,
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Look Barrier Option" )
+        subject = "Look Barrier Option" )
 }
 
 
@@ -1206,14 +1206,14 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             S = 100, 
             H = 105, 
             sigma = 0.25, 
             dt = 0.1,
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Discrete Barrier Option" )
+        subject = "Discrete Barrier Option" )
 }
 
 
@@ -1233,7 +1233,7 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             TypeFlag = "cdo", 
             S = 100, 
             X = 100, 
@@ -1245,7 +1245,7 @@ function()
             sigma = 0.20,
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Soft Barrier Option" )
+        subject = "Soft Barrier Option" )
 }
 
 
@@ -1266,7 +1266,7 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             TypeFlag = "c", 
             S = 50, 
             X1 = 50, 
@@ -1277,7 +1277,7 @@ function()
             sigma = 0.20,
             object2x = FALSE,
             report = TRUE ),
-        infoName = "GapOption" )
+        subject = "GapOption" )
 }
 
 
@@ -1297,7 +1297,7 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             TypeFlag = "p", 
             S = 100, 
             X = 80, 
@@ -1308,7 +1308,7 @@ function()
             sigma = 0.35,
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Cash Or Nothing Option" )
+        subject = "Cash Or Nothing Option" )
 }
 
 
@@ -1328,7 +1328,7 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             TypeFlag = "c", 
             S1 = 100, 
             S2 = 100, 
@@ -1344,7 +1344,7 @@ function()
             rho = 0.50,
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Two Asset Cash Or Nothing Option" )
+        subject = "Two Asset Cash Or Nothing Option" )
 }
 
 
@@ -1364,7 +1364,7 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             TypeFlag = "p", 
             S = 70, 
             X = 65, 
@@ -1374,7 +1374,7 @@ function()
             sigma = 0.27,
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Asset Or Nothing Option" )
+        subject = "Asset Or Nothing Option" )
 }
 
 
@@ -1393,7 +1393,7 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             S = 100, 
             XL = 90, 
             XH = 110, 
@@ -1403,7 +1403,7 @@ function()
             sigma = 0.20,
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Super Share Option" )
+        subject = "Super Share Option" )
 }
 
 
@@ -1423,7 +1423,7 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             TypeFlag = "6", 
             S = 95, 
             X = 102, 
@@ -1434,7 +1434,7 @@ function()
             sigma = 0.20,
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Binary Barrier Option" )
+        subject = "Binary Barrier Option" )
 }
 
 
@@ -1455,7 +1455,7 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             TypeFlag = "p", 
             S = 80, 
             X = 85, 
@@ -1465,7 +1465,7 @@ function()
             sigma = 0.20,
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Geometric Average Rate Option" )
+        subject = "Geometric Average Rate Option" )
 }
 
 
@@ -1485,7 +1485,7 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             TypeFlag = "p", 
             S = 90, 
             SA = 88, 
@@ -1498,7 +1498,7 @@ function()
             sigma = 0.25,
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Turnbull Wakeman Asian Approx Option" )
+        subject = "Turnbull Wakeman Asian Approx Option" )
 }
 
 
@@ -1518,7 +1518,7 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             TypeFlag = "c", 
             S = 100, 
             SA = 100, 
@@ -1530,7 +1530,7 @@ function()
             sigma = 0.15,
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Levy Asian Approx Option" )
+        subject = "Levy Asian Approx Option" )
 }
 
 
@@ -1551,7 +1551,7 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             TypeFlag = "c", 
             S = 100, 
             X = 100, 
@@ -1561,7 +1561,7 @@ function()
             sigma = 0.30,
             object2x = FALSE,
             report = TRUE ),
-        infoName = "FE In Domestic FX Option" )
+        subject = "FE In Domestic FX Option" )
 }
 
 
@@ -1581,7 +1581,7 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             TypeFlag = "c", 
             S = 100, 
             Ep = 1.5, 
@@ -1595,7 +1595,7 @@ function()
             rho = 0.30,
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Quanto Option" )
+        subject = "Quanto Option" )
 }
 
 
@@ -1615,7 +1615,7 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             TypeFlag = "p", 
             E = 1.5, 
             S = 100, 
@@ -1629,7 +1629,7 @@ function()
             rho = -0.40,
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Equity Linked FX Option" )
+        subject = "Equity Linked FX Option" )
 }
 
 
@@ -1649,7 +1649,7 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             V = 100, 
             B = 100, 
             E = 1.5, 
@@ -1662,7 +1662,7 @@ function()
             rho = 0.1,
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Takeover FX Option" )
+        subject = "Takeover FX Option" )
 }
 
 
@@ -1685,7 +1685,7 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             lambda = 4,
             omega = 0.0008,
             alpha = 0.00006,
@@ -1695,7 +1695,7 @@ function()
             n = 1000,
             object2x = TRUE,
             report = TRUE ),
-        infoName = "" )
+        subject = "" )
 }
 
 
@@ -1720,7 +1720,7 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             series = "x",
             lambda = -0.5,
             omega = "var(x)",
@@ -1731,7 +1731,7 @@ function()
             symmetric = TRUE,
             object2x = FALSE,
             report = TRUE ),
-        infoName = "HN GARCH Fit" )
+        subject = "HN GARCH Fit" )
 }
 
 
@@ -1749,11 +1749,11 @@ function()
         tkOutput(capture.output(summary(fit))) }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             object = "fit",
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Summary Report")
+        subject = "Summary Report")
 }
 
 
@@ -1777,11 +1777,11 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             model = "fit$model",
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Statistics" )
+        subject = "Statistics" )
 }
 
 
@@ -1799,11 +1799,11 @@ function()
         object <<- NA }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             x = "x",
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Heston Nandi Option" )
+        subject = "Heston Nandi Option" )
 }
 
 
@@ -1820,11 +1820,11 @@ function()
         object <<- NA }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             x = "x",
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Heston Nandi Option" )
+        subject = "Heston Nandi Option" )
 }
 
 
@@ -1841,11 +1841,11 @@ function()
         object <<- NA }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             x = "x",
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Heston Nandi Option" )
+        subject = "Heston Nandi Option" )
 }
 
 
@@ -1862,11 +1862,11 @@ function()
         object <<- NA }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             x = "x",
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Heston Nandi Option" )
+        subject = "Heston Nandi Option" )
 }
 
 
@@ -1882,13 +1882,13 @@ function()
     helpTopic <<- ""
     tkExecute(
         fun = runif.pseudo,
-        params = list(
+        prototypes = list(
             n = 100, 
             dimension = 5, 
             init = TRUE,
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Uniform Pseudo Random Numbers" )
+        subject = "Uniform Pseudo Random Numbers" )
 }
 
 
@@ -1903,13 +1903,13 @@ function()
     helpTopic <<- ""
     tkExecute(
         fun = rnorm.pseudo,
-        params = list(
+        prototypes = list(
             n = 100, 
             dimension = 5, 
             init = TRUE,
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Normal Pseudo Random Numbers" )
+        subject = "Normal Pseudo Random Numbers" )
 }
 
 
@@ -1924,13 +1924,13 @@ function()
     helpTopic <<- ""
     tkExecute(
         fun = runif.halton,
-        params = list(
+        prototypes = list(
             n = 100, 
             dimension = 5, 
             init = TRUE,
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Uniform Halton Numbers" )
+        subject = "Uniform Halton Numbers" )
 }
 
 
@@ -1942,13 +1942,13 @@ function()
     helpTopic <<- ""
     tkExecute(
         fun = rnorm.halton,
-        params = list(
+        prototypes = list(
             n = 100, 
             dimension = 5, 
             init = TRUE,
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Normal Halton Numbers" )
+        subject = "Normal Halton Numbers" )
 }
 
 
@@ -1963,7 +1963,7 @@ function()
     helpTopic <<- ""
     tkExecute(
         fun = runif.sobol,
-        params = list(
+        prototypes = list(
             n = 100, 
             dimension = 5, 
             init = TRUE,
@@ -1971,7 +1971,7 @@ function()
             seed = 4711,
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Uniform Sobol Numbers" )
+        subject = "Uniform Sobol Numbers" )
 }
 
 
@@ -1986,7 +1986,7 @@ function()
     helpTopic <<- ""
     tkExecute(
         fun = rnorm.sobol,
-        params = list(
+        prototypes = list(
             n = 100, 
             dimension = 5, 
             init = TRUE,
@@ -1994,7 +1994,7 @@ function()
             seed = 4711,
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Normal Sobol Numbers" )
+        subject = "Normal Sobol Numbers" )
 }
 
 
@@ -2047,7 +2047,7 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             TypeFlag = "c", 
             S = 100, 
             X = 100, 
@@ -2062,7 +2062,7 @@ function()
             antithetic = TRUE,
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Monte Carlo Option" )
+        subject = "Monte Carlo Option" )
 }
 
 
@@ -2116,7 +2116,7 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             TypeFlag = "c", 
             S = 100, 
             X = 100, 
@@ -2131,7 +2131,7 @@ function()
             antithetic = TRUE,
             object2x = FALSE,
             report = TRUE ),
-        infoName = "MC Option" )
+        subject = "MC Option" )
 }
 
 
@@ -2184,7 +2184,7 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             TypeFlag = "c", 
             S = 100, 
             X = 100, 
@@ -2199,7 +2199,7 @@ function()
             antithetic = TRUE,
             object2x = FALSE,
             report = TRUE ),
-        infoName = "MC Option" )
+        subject = "MC Option" )
 }
 
 
@@ -2251,7 +2251,7 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             TypeFlag = "c", 
             S = 100, 
             X = 100, 
@@ -2266,7 +2266,7 @@ function()
             antithetic = TRUE,
             object2x = FALSE,
             report = TRUE ),
-        infoName = "MC Option" )
+        subject = "MC Option" )
 }
 
 
@@ -2315,12 +2315,12 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             range = 4,
             by = 0.001,
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Gamma Function" )
+        subject = "Gamma Function" )
 }
 
 
@@ -2350,12 +2350,12 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             range = 4,
             by = 0.001,
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Psi Function" )
+        subject = "Psi Function" )
 }
 
 
@@ -2395,14 +2395,14 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             range = 4,
             by = 0.05,
             col = "rainbow(256)",
             nlevels = 50,
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Complex Gamma Function" )
+        subject = "Complex Gamma Function" )
 }
 
 
@@ -2468,7 +2468,7 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             TypeFlag = "c", 
             S = 100, 
             X = 100, 
@@ -2478,7 +2478,7 @@ function()
             method = "LN",
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Moment Matched Asian Option" )
+        subject = "Moment Matched Asian Option" )
 }
 
 
@@ -2502,7 +2502,7 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             x = "seq(from = 0, to = 2.5, length = 100)",  
             Time = 1, 
             r = 0.09, 
@@ -2510,7 +2510,7 @@ function()
             method = "LN",
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Moment Matched Asian Density" )
+        subject = "Moment Matched Asian Density" )
 }
 
 
@@ -2530,7 +2530,7 @@ function()
         object }
     tkExecute(
         fun = myFunction,
-        params = list(
+        prototypes = list(
             TypeFlag = "c", 
             S = 100, 
             X = 100, 
@@ -2540,7 +2540,7 @@ function()
             method = "LN",
             object2x = FALSE,
             report = TRUE ),
-        infoName = "Gram Charlier Asian Option" )
+        subject = "Gram Charlier Asian Option" )
 }     
 
 

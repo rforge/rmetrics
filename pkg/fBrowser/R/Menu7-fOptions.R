@@ -31,7 +31,7 @@
 #  fOptions Popup Menu
 
 
-.fOptions.PopupMenu =
+.fOptionsPopup =
 function()
 {   # A function implemented by Diethelm Wuertz
 
@@ -41,7 +41,7 @@ function()
     # FUNCTION:
     
     # Menu:
-    fOptionsMenu <<- newToolbarMenu()
+    fOptionsMenu <<- tkNewPopup()
    
     # Add Menu:
     Label = "Plain Vanilla Options"
@@ -53,7 +53,7 @@ function()
         ".fOptions.PlainVanilla.1",
         ".fOptions.PlainVanilla.2",
         ".fOptions.PlainVanilla.3")
-    addToolbarMenu(fOptionsMenu, Label, subLabel, Command)
+    tkAddPopupMenu(fOptionsMenu, Label, subLabel, Command)
     
     # Add Menu:
     Label = "Basic American Options"
@@ -65,7 +65,7 @@ function()
         ".fOptions.BasicAmerican.1",
         ".fOptions.BasicAmerican.2",
         ".fOptions.BasicAmerican.3",)
-    addToolbarMenu(fOptionsMenu, Label, subLabel, Command)    
+    tkAddPopupMenu(fOptionsMenu, Label, subLabel, Command)    
     
     # Add Menu:
     Label = "Binomial Tree Options"
@@ -77,7 +77,7 @@ function()
         ".fOptions.BinomialTree.1",
         ".fOptions.BinomialTree.2",
         ".fOptions.BinomialTree.3")
-    addToolbarMenu(fOptionsMenu, Label, subLabel, Command) 
+    tkAddPopupMenu(fOptionsMenu, Label, subLabel, Command) 
         
     # Add Menu:
     Label = "____________________________"
@@ -85,7 +85,7 @@ function()
         NULL
     Command = 
         "tkSeparator"
-    addToolbarMenu(fOptionsMenu, Label, subLabel, Command) 
+    tkAddPopupMenu(fOptionsMenu, Label, subLabel, Command) 
     
     # Add Menu:
     Label = "Multiple Exercises Options"
@@ -109,9 +109,8 @@ function()
         ".fOptions.MultipleExercises.7",
         ".fOptions.MultipleExercises.8",
         ".fOptions.MultipleExercises.9")
-    addToolbarMenu(fOptionsMenu, Label, subLabel, Command)
-        
-    
+    tkAddPopupMenu(fOptionsMenu, Label, subLabel, Command)
+           
     # Add Menu:
     Label = "Multiple Assets Options"
     subLabel = c(
@@ -128,9 +127,8 @@ function()
         ".fOptions.MultipleAssets.4",
         ".fOptions.MultipleAssets.5",
         ".fOptions.MultipleAssets.6")
-    addToolbarMenu(fOptionsMenu, Label, subLabel, Command)
-    
-    
+    tkAddPopupMenu(fOptionsMenu, Label, subLabel, Command)
+        
     # Add Menu:
     Label = "Lookback Options"
     subLabel = c(
@@ -145,9 +143,8 @@ function()
         ".fOptions.Lookback.3",
         ".fOptions.Lookback.4",
         ".fOptions.Lookback.5")
-    addToolbarMenu(fOptionsMenu, Label, subLabel, Command)
-        
-    
+    tkAddPopupMenu(fOptionsMenu, Label, subLabel, Command)
+           
     # Add Menu:
     Label = "Barrier Options"
     subLabel = c(
@@ -168,7 +165,7 @@ function()
         ".fOptions.Barrier.6",
         ".fOptions.Barrier.7",
         ".fOptions.Barrier.8")
-    addToolbarMenu(fOptionsMenu, Label, subLabel, Command)
+    tkAddPopupMenu(fOptionsMenu, Label, subLabel, Command)
        
     # Add Menu:
     Label = "Binary Options"
@@ -186,7 +183,7 @@ function()
         ".fOptions.Binary.4",
         ".fOptions.Binary.5",
         ".fOptions.Binary.6")
-   addToolbarMenu(fOptionsMenu, Label, subLabel, Command)
+   tkAddPopupMenu(fOptionsMenu, Label, subLabel, Command)
         
     # Add Menu:
     Label = "Asian Options"
@@ -198,7 +195,7 @@ function()
         ".fOptions.Asian.1",
         ".fOptions.Asian.2",
         ".fOptions.Asian.3")
-    addToolbarMenu(fOptionsMenu, Label, subLabel, Command)
+    tkAddPopupMenu(fOptionsMenu, Label, subLabel, Command)
         
     # Add Menu:
     Label = "Currency Translated Options"
@@ -212,16 +209,15 @@ function()
         ".fOptions.CurrencyTranslated.2",
         ".fOptions.CurrencyTranslated.3",
         ".fOptions.CurrencyTranslated.4")
-    addToolbarMenu(fOptionsMenu, Label, subLabel, Command)
-            
-        
+    tkAddPopupMenu(fOptionsMenu, Label, subLabel, Command)
+                   
     # Add Menu:
     Label = "____________________________"
     subLabel = 
         NULL
     Command = 
         "tkSeparator"
-    addToolbarMenu(fOptionsMenu, Label, subLabel, Command) 
+    tkAddPopupMenu(fOptionsMenu, Label, subLabel, Command) 
     
     # Add Menu:
     if (FALSE) {
@@ -236,7 +232,7 @@ function()
        ".fOptions.HestonNandi.2",
        ".fOptions.HestonNandi.3",
        ".fOptions.HestonNandi.4")
-    addToolbarMenu(fOptionsMenu, Label, subLabel, Command) } 
+    tkAddPopupMenu(fOptionsMenu, Label, subLabel, Command) } 
     
     # Add Menu:
     if (FALSE) {
@@ -245,7 +241,7 @@ function()
        "Not yet implemented")
     Command = c(
         ".fOptions.C2Cmd.1")
-    addToolbarMenu(fOptionsMenu, Label, subLabel, Command) }
+    tkAddPopupMenu(fOptionsMenu, Label, subLabel, Command) }
         
     # Add Menu:
     Label = "Low Discrepancy Sequences"
@@ -263,7 +259,7 @@ function()
         ".fOptions.LowDiscrepancy.4",
         ".fOptions.LowDiscrepancy.5",
         ".fOptions.LowDiscrepancy.6")
-    addToolbarMenu(fOptionsMenu, Label, subLabel, Command)    
+    tkAddPopupMenu(fOptionsMenu, Label, subLabel, Command)    
         
     # Add Menu:
     Label = "Monte Carlo Options"
@@ -277,7 +273,7 @@ function()
         ".fOptions.MonteCarlo.2",
         ".fOptions.MonteCarlo.3",
         ".fOptions.MonteCarlo.4")
-    addToolbarMenu(fOptionsMenu, Label, subLabel, Command)
+    tkAddPopupMenu(fOptionsMenu, Label, subLabel, Command)
         
     # Add Menu:
     if (FALSE) {
@@ -286,7 +282,7 @@ function()
        "Not yet implemented")
     Command = c(
        ".fOptions.ExponentialBM.1")
-    addToolbarMenu(fOptionsMenu, Label, subLabel, Command) }
+    tkAddPopupMenu(fOptionsMenu, Label, subLabel, Command) }
            
     if (FALSE) {
     # Add Menu:
@@ -295,7 +291,7 @@ function()
         NULL
     Command = 
         "tkSeparator"
-    addToolbarMenu(fOptionsMenu, Label, subLabel, Command) 
+    tkAddPopupMenu(fOptionsMenu, Label, subLabel, Command) 
     
     # Add Menu:
     Label = "Special Functions"
@@ -317,7 +313,7 @@ function()
         ".fOptions.Hypergeometric.2",
         "tkSeparator",
         ".fOptions.Bessel.1")
-    addToolbarMenu(fOptionsMenu, Label, subLabel, Command)
+    tkAddPopupMenu(fOptionsMenu, Label, subLabel, Command)
         
     # Add Menu:
     if (FALSE) {
@@ -326,11 +322,11 @@ function()
         "Not yet implemented")
     Command = c(
         ".fOptions.EBMAsian.1")
-    addToolbarMenu(fOptionsMenu, Label, subLabel, Command) }
+    tkAddPopupMenu(fOptionsMenu, Label, subLabel, Command) }
     }
  
     # Cascade fileMenu:
-    cascadeToolbarMenu(Menu = fOptionsMenu, Label = "fOptions")                 
+    tkCascadePopup(Menu = fOptionsMenu, Label = "fOptions")                 
 }       
         
 

@@ -31,7 +31,7 @@
 # fBasics Popup Menu
 
 
-.fBasics.PopupMenu =
+.fBasicsPopup =
 function()
 {   # A function implemented by Diethelm Wuertz
 
@@ -41,7 +41,7 @@ function()
     # FUNCTION:
     
     # Menu:
-    fBasicsMenu <<- newToolbarMenu()
+    fBasicsMenu <<- tkNewPopup()
      
     # Add Menu:
     Label = "Time Series Import"
@@ -53,8 +53,7 @@ function()
         ".fBasics.Import.economagicImport",
         ".fBasics.Import.yahooImport",
         ".fBasics.Import.fredImport")
-    addToolbarMenu(fBasicsMenu, Label, subLabel, Command)
- 
+    tkAddPopupMenu(fBasicsMenu, Label, subLabel, Command)
     
     # Add Menu:
     Label = "Time Series Plots"
@@ -82,7 +81,7 @@ function()
         "tkSeparator",
         ".fBasics.PlotFunctions.bivariatePlot",
         ".fBasics.PlotFunctions.scatterPlot")
-    addToolbarMenu(fBasicsMenu, Label, subLabel, Command)
+    tkAddPopupMenu(fBasicsMenu, Label, subLabel, Command)
     
     # Add Menu:
     Label = "__________________________"
@@ -90,7 +89,7 @@ function()
         NULL
     Command = 
         "tkSeparator"
-    addToolbarMenu(fBasicsMenu, Label, subLabel, Command) 
+    tkAddPopupMenu(fBasicsMenu, Label, subLabel, Command) 
     
     # Add Menu:
     Label = "Distribution of Returns"
@@ -118,7 +117,7 @@ function()
         ".fBasics.ReturnDistributions.rnig",        
         ".fBasics.ReturnDistributions.rsymstb",
         ".fBasics.ReturnDistributions.rstable")
-    addToolbarMenu(fBasicsMenu, Label, subLabel, Command)      
+    tkAddPopupMenu(fBasicsMenu, Label, subLabel, Command)      
     
     # Add Menu:
     Label = "Basic Statistics of Returns"
@@ -140,7 +139,7 @@ function()
         ".fBasics.BasicStatistics.kurtosis",
         ".fBasics.BasicStatistics.summary",
         ".fBasics.BasicStatistics.basicStats")
-    addToolbarMenu(fBasicsMenu, Label, subLabel, Command)       
+    tkAddPopupMenu(fBasicsMenu, Label, subLabel, Command)       
     
     # Add Menu:
     Label = "Stylized Facts of Returns"
@@ -160,7 +159,7 @@ function()
         ".fBasics.StylizedFacts.logpdfPlot",
         ".fBasics.StylizedFacts.qqgaussPlot",
         ".fBasics.StylizedFacts.scalinglawPlot")
-    addToolbarMenu(fBasicsMenu, Label, subLabel, Command)
+    tkAddPopupMenu(fBasicsMenu, Label, subLabel, Command)
 
     # Add Menu:
     Label = "__________________________"
@@ -168,7 +167,7 @@ function()
         NULL
     Command = 
         "tkSeparator"
-    addToolbarMenu(fBasicsMenu, Label, subLabel, Command) 
+    tkAddPopupMenu(fBasicsMenu, Label, subLabel, Command) 
     
     # Add Menu:   
     Label = "Normality Tests"
@@ -196,7 +195,7 @@ function()
         ".fBasics.NormalityTests.lillieTest",
         ".fBasics.NormalityTests.pchiTest",
         ".fBasics.NormalityTests.sfTest")
-    addToolbarMenu(fBasicsMenu, Label, subLabel, Command)
+    tkAddPopupMenu(fBasicsMenu, Label, subLabel, Command)
 
     # Add Menu:
     Label = "Bivariate Sample Tests"
@@ -228,11 +227,10 @@ function()
         ".fBasics.BivariateTests.pearsonTest",
         ".fBasics.BivariateTests.kendallTest",
         ".fBasics.BivariateTests.spearmanTest")
-    addToolbarMenu(fBasicsMenu, Label, subLabel, Command)
+    tkAddPopupMenu(fBasicsMenu, Label, subLabel, Command)
     
     # Cascade fileMenu:
-    cascadeToolbarMenu(Menu = fBasicsMenu, Label = "fBasics")
-            
+    tkCascadePopup(Menu = fBasicsMenu, Label = "fBasics")           
 }
 
 

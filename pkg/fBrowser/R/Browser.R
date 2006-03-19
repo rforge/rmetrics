@@ -31,30 +31,11 @@
 # fBrowser / .gui
 
 
-tkEval =
-function(what)
-{
-    eval(parse(text = what))
-}
-
-
-tkSplit = 
-function(what)
-{
-    sub(" ", "", strsplit(what, "&")[[1]][1])
-}
-
-
-tkSeparator =
-function() {
-    invisible()
-}
-
-   
 fBrowser = .gui =
-function(menuToolbar =c("File", "fBasics", "fCalendar", "fSeries",
-"fMultivar", "fExtremes", "fOptions", "Help"), 
-fontSize = 9, fontFamily = "Courier New", guiTitle = "Rmetrics" )
+function(toolbar = c(".filePopup", ".fBasicsPopup", ".fCalendarPopup", 
+".fSeriesPopup", ".fMultivarPopup", ".fExtremesPopup", ".fOptionsPopup", 
+".helpPopup"), fontSize = 9, fontFamily = "Courier New", guiTitle = 
+"Rmetrics" )
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -62,7 +43,7 @@ fontSize = 9, fontFamily = "Courier New", guiTitle = "Rmetrics" )
     
     # FUNCTION:
     
-    # Active Objects:
+    # Global Objects:
     x <<- as.ts(rnorm(1000))
     xTitle <<- plotTitle <<- "rnorm(1000)"
     object <<- NULL
@@ -70,7 +51,6 @@ fontSize = 9, fontFamily = "Courier New", guiTitle = "Rmetrics" )
     object2recover <<- NULL
     info2recover <<-NULL
     objectTitle <<- "NULL"
-    
     helpTopic <<- "help"
     
     # Frames:
@@ -80,13 +60,11 @@ fontSize = 9, fontFamily = "Courier New", guiTitle = "Rmetrics" )
     
     popupFrame <<- tkmenu(base)  
     tkconfigure(base, menu = popupFrame)
-    for (i in 1:length(menuToolbar)) {
-        cmd = paste(".", menuToolbar[i], ".PopupMenu", sep = "")
-        fun.PopupMenu = match.fun(cmd)
-        fun.PopupMenu()
+    for (popup in toolbar) {
+        funPopupMenu = match.fun(popup)
+        funPopupMenu()
     }
     tkfocus()
-    
     
     # Text Frame:    
     textFrame <<- tkframe(base, relief = "groove", borderwidth = 2)
@@ -134,47 +112,133 @@ fontSize = 9, fontFamily = "Courier New", guiTitle = "Rmetrics" )
     infoLabelText <<- tclVar(paste("ts: ", xTitle))
     objectLabelText <<- tclVar(paste("null: ", objectTitle))
     infoLabel <<- tkbutton(activeFrame, relief = "ridge",
-        command = function() tkOutput(capture.output(x)),
-        text = tclvalue(infoLabelText), fg = "blue")     
+        command = .onInfo, text = tclvalue(infoLabelText), fg = "blue")     
     classXLabel <<- tkbutton(activeFrame, relief = "ridge",
-        command = function() x <<- tkGetClass(class(x)[1]),
-        text = "Info", fg = "blue")    
+        command = .onClassX, text = "Info", fg = "blue")    
     objectLabel <<- tkbutton(activeFrame, relief = "ridge",
-        command = function() tkOutput(capture.output(object)),
-        text = tclvalue(objectLabelText), fg = "red")
-    classLabel <<- tkbutton(activeFrame, relief = "ridge",
-        command = function() x <<- tkGetClass(class(object)[1]),
-        text = "Info", fg = "red")
+        command = .onObject, text = tclvalue(objectLabelText), fg = "red")
+    classObjectLabel <<- tkbutton(activeFrame, relief = "ridge",
+        command = .onClassObject, text = "Info", fg = "red")
     summaryLabel <<- tkbutton(activeFrame, relief = "ridge",
-        command = function() x <<- tkGetSummary(object),
-        text = "Summary", fg = "red")
+        command = .onSummary, text = "Summary", fg = "red")
     plotLabel <<- tkbutton(activeFrame, relief = "ridge",
-        command = function() plot(object),
-        text = "Plot", fg = "red")
+        command = .onPlot, text = "Plot", fg = "red")
     copyLabel <<- tkbutton(activeFrame, relief = "ridge",
-        command = function() x <<- tkObjectToX(object),
-        text = "object to x", fg = "darkgreen")
+        command = .onCopy, text = "object to x", fg = "darkgreen")
     recoverLabel <<- tkbutton(activeFrame, relief = "ridge",
-        command = .onRecover,
-        text = "Recover", fg = "darkgreen")
+        command = .onRecover, text = "Recover", fg = "darkgreen")
     tkgrid(activeFrame)
-    tkgrid(
-        infoLabel, classXLabel, 
-        objectLabel, classLabel, summaryLabel, plotLabel,
-        copyLabel, recoverLabel)  
+    tkgrid(infoLabel, classXLabel, objectLabel, classObjectLabel, 
+        summaryLabel, plotLabel, copyLabel, recoverLabel)  
        
     # Compose: 
     tkpack(textFrame, fill = "both", expand = TRUE)  
     tkpack(commandFrame)
-    tkpack(activeFrame, fill = "x")
-    
+    tkpack(activeFrame, fill = "x")  
     tkfocus()
 }
 
 
+# ------------------------------------------------------------------------------
+
+
+.onInfo = 
+function() 
+{   # A function implemented by Diethelm Wuertz
+
+    # FUNCTION:
+    
+    tkOutput(capture.output(x))
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.onClassX = 
+function() 
+{   # A function implemented by Diethelm Wuertz
+
+    # FUNCTION:
+    
+    x <<- .tkGetClass(class(x)[1])
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.onObject =
+function() 
+{   # A function implemented by Diethelm Wuertz
+
+    # FUNCTION:
+    
+    tkOutput(capture.output(object))
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.onClassObject =
+function() 
+{   # A function implemented by Diethelm Wuertz
+
+    # FUNCTION:
+    
+    x <<- .tkGetClass(class(object)[1])
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.onSummary = 
+function() 
+{   # A function implemented by Diethelm Wuertz
+
+    # FUNCTION:
+    
+    x <<- .tkGetSummary(object)
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.onPlot = 
+function() 
+{   # A function implemented by Diethelm Wuertz
+
+    # FUNCTION:
+    
+    plot(object)
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.onCopy =
+function() 
+{   # A function implemented by Diethelm Wuertz
+
+    # FUNCTION:
+    
+    x <<- tkObjectToX(object)
+}
+
+
+# ------------------------------------------------------------------------------
+
+
 .onRecover = 
 function()
-{
+{   # A function implemented by Diethelm Wuertz
+
+    # FUNCTION:
+    
     object <<- object2recover
     info <<- info2recover
     what = paste(as.character(class(object)), ":", sep = "")
@@ -185,12 +249,13 @@ function()
 
 
 ################################################################################
-#  newToolbarMenu
-#  addToolbarMenu
-#  cascadeToolbarMenu
+# tkNewPopup
+# tkAddPopupMenu
+# tkSeparator
+# tkCascadePopup
 
 
-newToolbarMenu = 
+tkNewPopup = 
 function() 
 {   # A function implemented by Diethelm Wuertz
 
@@ -205,32 +270,46 @@ function()
 # ------------------------------------------------------------------------------
 
 
-addToolbarMenu =  
-function(popupMenu, Label = NULL, subLabel, Command) 
+tkAddPopupMenu =  
+function(Menu, Label = NULL, subLabel, Command) 
 {   # A function implemented by Diethelm Wuertz
 
     # FUNCTION:
     
     # Add Toolbar Menu:
     if (is.null(subLabel)) {
-        tkadd(popupMenu, "command", label = Label, 
+        tkadd(Menu, "command", label = Label, 
             command = match.fun(Command))
     } else { 
-        Menu = tkmenu(popupMenu, tearoff = FALSE)
+        Menu = tkmenu(Menu, tearoff = FALSE)
         for (i in 1:length(subLabel)) {
             tkadd(Menu, "command", label = subLabel[i], 
                 command = match.fun(Command[i]))
         }
-        tkadd(popupMenu, "cascade", label = Label, menu = Menu)
+        tkadd(Menu, "cascade", label = Label, menu = Menu)
     }
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+tkSeparator =
+function() 
+{   # A function implemented by Diethelm Wuertz
+
+    # FUNCTION:
+    
+    # Return Value:
+    invisible()
 }
  
 
 # ------------------------------------------------------------------------------
 
    
-cascadeToolbarMenu = 
-function (Menu, Label) 
+tkCascadePopup = 
+function(Menu, Label) 
 {   # A function implemented by Diethelm Wuertz
 
     # FUNCTION:
@@ -242,27 +321,27 @@ function (Menu, Label)
 
 ################################################################################               
 # tkExecute
+# tkEval
+# tkSplit
 # tkSaveAsX 
 # tkSaveAsObject
 # tkObjectToX
 
 
 tkExecute =
-function(fun = ".fun", params = NULL, infoName = "- missing -", 
-tkoutput = FALSE, console = NULL, title = NULL, 
-description = NULL, ...)
+function(fun, prototypes = NULL, subject = "- missing -", tkoutput = FALSE)
 {   # A function implemented by Diethelm Wuertz
 
     # FUNCTION:
     
     # Set Object Title"
-    objectTitle <<- infoName
+    objectTitle <<- subject
     
     object2recover <<- object
     info2recover <<- info
-    info <<- infoName 
+    info <<- subject 
     
-    if (is.null(params)) {
+    if (is.null(prototypes)) {
         FUN = match.fun(fun)
         object <<- FUN(x, ...)
         # What is object?
@@ -277,25 +356,25 @@ description = NULL, ...)
         }
     } else {
         # Settings:  
-        argNames = names(params)
+        argNames = names(prototypes)
         Character = NULL
         Numeric = NULL
         Logical = NULL
         Null = NULL
         # Parameters:
         tt <- tktoplevel()
-        tkgrid(tklabel(tt, text = infoName, fg = "blue"))
-        for (i in 1:length(params) ) {
-            Numeric = c( Numeric, is.numeric(params[[i]]) )
-            Character = c( Character, is.character(params[[i]]) )
-            Logical = c( Logical, is.logical(params[[i]]) )
-            Null = c( Null, is.null(params[[i]]) )
+        tkgrid(tklabel(tt, text = subject, fg = "blue"))
+        for (i in 1:length(prototypes) ) {
+            Numeric = c( Numeric, is.numeric(prototypes[[i]]) )
+            Character = c( Character, is.character(prototypes[[i]]) )
+            Logical = c( Logical, is.logical(prototypes[[i]]) )
+            Null = c( Null, is.null(prototypes[[i]]) )
             if (Logical[i]) {           
-                assign( argNames[i], tclVar(as.integer(params[[i]])) )    
+                assign( argNames[i], tclVar(as.integer(prototypes[[i]])) )    
                 entry.Name <- tkcheckbutton(tt, variable = get(argNames[i]),
                     anchor = "e" )
             } else { 
-                assign( argNames[i], tclVar(params[[i]]) )    
+                assign( argNames[i], tclVar(prototypes[[i]]) )    
                 entry.Name <- tkentry(tt, width = "25", fg = "red", 
                     textvariable = get(argNames[i]) )
             }
@@ -337,7 +416,7 @@ description = NULL, ...)
             if (length(z$object2x) == 1) {
                 if (z$object2x) 
                     # DEBUG: cat("\n\n object2x:", z$object2x, "\n")
-                    x <<- tkSaveAsX(object, infoName)
+                    x <<- tkSaveAsX(object, subject)
             }
             # Print Specification overwrites tkoutput:
             if (length(z$report) == 1)  {
@@ -375,8 +454,35 @@ description = NULL, ...)
         
         tkfocus(tt)
     }    
-    invisible()
-        
+    invisible()     
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+tkEval =
+function(what)
+{   # A function implemented by Diethelm Wuertz
+
+    # FUNCTION:
+    
+    # Return Value:
+    eval(parse(text = what))
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+tkSplit = 
+function(what)
+{   # A function implemented by Diethelm Wuertz
+
+    # FUNCTION:
+    
+    # Return Value:
+    sub(" ", "", strsplit(what, "&")[[1]][1])
 }
 
 
@@ -384,15 +490,17 @@ description = NULL, ...)
 
 
 tkSaveAsX =  
-function(data, infoName)
+function(data, subject)
 {   # A function implemented by Diethelm Wuertz
 
+    # FUNCTION:
+    
     # What is X?
     what = paste(as.character(class(data)), ":", sep = "")
     
     # Save X:
-    xTitle <<- infoName
-    infoLabelText <<- tclVar(paste(what, infoName))
+    xTitle <<- subject
+    infoLabelText <<- tclVar(paste(what, subject))
     tkconfigure(infoLabel, textvariable = infoLabelText, fg = "blue")
     tkgrid(infoLabel)
     
@@ -405,15 +513,15 @@ function(data, infoName)
 
 
 tkSaveAsObject =  
-function(data, infoName)
+function(data, subject)
 {   # A function implemented by Diethelm Wuertz
 
     # What is Object?
     what = paste(as.character(class(data)), ":", sep = "")
     
     # Save Object: 
-    objectTitle <<- infoName
-    infoLabelText <<- tclVar(paste(what, infoName))
+    objectTitle <<- subject
+    infoLabelText <<- tclVar(paste(what, subject))
     tkconfigure(infoLabel, textvariable = infoLabelText)
     tkgrid(infoLabel)
     
@@ -453,6 +561,8 @@ tkTitle =
 function(title, col = "blue")
 {   # A function implemented by Diethelm Wuertz
 
+    # FUNCTION:
+    
     # Output Title Function:
     lines = c("\n", "\n", "Title", "\n ", title, "\n", "\n")
     for (line in lines) {
@@ -472,6 +582,8 @@ tkOutput =
 function(output)
 {   # A function implemented by Diethelm Wuertz
     
+    # FUNCTION:
+    
     # Output Function - Object:
     for (i in 1:length(output)) { 
         tkinsert(txt, "end", paste(output[i], "\n"))       
@@ -487,6 +599,8 @@ tkDescription =
 function(description = NULL)
 {   # A function implemented by Diethelm Wuertz
 
+    # FUNCTION:
+    
     # Output Function - Description:
     if (is.null(description)) 
         description = as.character(date())
@@ -498,10 +612,17 @@ function(description = NULL)
 
 
 ################################################################################
-# tkGet* Functions
+# .tkGetSummary
+# .tkGetParameters
+# .tkGetClass
+# .tkGetTime
+# .tkGetFinCenters
+# .tkGetDemoData
+# .tkGetData
+# .tkGetDataFrame
 
 
-tkGetSummary =
+.tkGetSummary =
 function(object, title = NULL)
 {   # A function implemented by Diethelm Wuertz
     
@@ -514,9 +635,11 @@ function(object, title = NULL)
 # ------------------------------------------------------------------------------
 
 
-tkGetParameters = 
+.tkGetParameters = 
 function(parameters)
 {   # A function implemented by Diethelm Wuertz
+    
+    # FUNCTION:
     
     # Output Function for Parameters:
     parameters = cbind(parameters)              
@@ -533,10 +656,12 @@ function(parameters)
 # ------------------------------------------------------------------------------
 
 
-tkGetClass = 
+.tkGetClass = 
 function(class)
 {   # A function implemented by Diethelm Wuertz
 
+    # FUNCTION:
+    
     # Class:
     ans = (capture.output(getClass(class)))[-1]
     
@@ -549,10 +674,12 @@ function(class)
 # ------------------------------------------------------------------------------
 
 
-tkGetTime =  
+.tkGetTime =  
 function()
 {   # A function implemented by Diethelm Wuertz
 
+    # FUNCTION:
+    
     # Time:
     ans = (capture.output(Sys.timeDate()))
     
@@ -565,11 +692,13 @@ function()
 # ------------------------------------------------------------------------------
 
 
-tkGetFinCenters =
+.tkGetFinCenters =
 function()
 {   # A function implemented by Diethelm Wuertz
 
-    # Time:
+    # FUNCTION:
+    
+    # Financial Centers:
     ans = (capture.output(listFinCenter()))
     
     # Output:
@@ -581,9 +710,12 @@ function()
 # ------------------------------------------------------------------------------
 
 
-tkGetDemoData = 
+.tkGetDemoData = 
 function(Data, report, FUN = "as.timeSeries")
-{
+{   # A function implemented by Diethelm Wuertz
+
+    # FUNCTION:
+    
     # Get and Save:
     command = paste("data(", Data, ")", sep = "")
     tkEval(command)
@@ -607,9 +739,11 @@ function(Data, report, FUN = "as.timeSeries")
 # ------------------------------------------------------------------------------
 
 
-tkGetData = 
-function(Data, infoName, description = NULL, report = TRUE )
-{
+.tkGetData = 
+function(Data, subject, description = NULL, report = TRUE )
+{   # A function implemented by Diethelm Wuertz
+
+    # FUNCTION:
     
     # Get and Save:
     command = paste("data(", Data, ")", sep = "")
@@ -617,11 +751,11 @@ function(Data, infoName, description = NULL, report = TRUE )
     x <<- eval(parse(text = Data))
     if (dim(x)[2] != 1) x <<- as.timeSeries(x)
     
-    x <<- tkSaveAsX(data = x, infoName = infoName)
+    x <<- tkSaveAsX(data = x, subject = subject)
     attr(x, "data") = Data
         
     # Report
-    plotTitle <<- infoName
+    plotTitle <<- subject
     if (report) {
         tkTitle(plotTitle)
         tkOutput(capture.output(head(x)))
@@ -638,18 +772,20 @@ function(Data, infoName, description = NULL, report = TRUE )
 # ------------------------------------------------------------------------------
 
 
-tkGetDataFrame = 
-function(Data, infoName, report = TRUE )
-{
+..tkGetDataFrame = 
+function(Data, subject, report = TRUE )
+{   # A function implemented by Diethelm Wuertz
+
+    # FUNCTION:
     
     command = paste("data(", Data, ")", sep = "")
     eval(parse(text = command))
     x <<- eval(parse(text = Data))
     attr(x, "data") <<- Data
     
-    x <<- tkSaveAsX(data = x, infoName = infoName)
+    x <<- tkSaveAsX(data = x, subject = subject)
         
-    plotTitle <<- infoName
+    plotTitle <<- subject
     if (report) {
         tkTitle(plotTitle)
         tkOutput(capture.output(head(x)))
@@ -658,25 +794,6 @@ function(Data, infoName, report = TRUE )
     }
     
     invisible()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-tkGetFit = 
-function(fun, infoName = "Distribution", ...)
-{
-    # MLE Fit:
-    fit = match.fun(fun)
-    object <<- fit(as.vector(x), ...)
-    objectTitle <<- infoName
-    objectLabelText <<- tclVar(paste("VALUE: ", objectTitle))
-    tkconfigure(objectLabel, textvariable = objectLabelText)
-    tkgrid(objectLabel) 
-    ans = (capture.output(object))
-    tkTitle(infoName)
-    tkOutput(ans)     
 }
 
 

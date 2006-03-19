@@ -1,4 +1,32 @@
 
+# This library is free software; you can redistribute it and/or
+# modify it under the terms of the GNU Library General Public
+# License as published by the Free Software Foundation; either
+# version 2 of the License, or (at your option) any later version.
+#
+# This library is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
+# GNU Library General Public License for more details.
+#
+# You should have received a copy of the GNU Library General 
+# Public License along with this library; if not, write to the 
+# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+# MA  02111-1307  USA
+
+# Copyrights (C)
+# for this R-port: 
+#   1999 - 2004, Diethelm Wuertz, GPL
+#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
+#   info@rmetrics.org
+#   www.rmetrics.org
+# for the code accessed (or partly included) from other R-ports:
+#   see R's copyright and license files
+# for the code accessed (or partly included) from contributed R-ports
+# and other sources
+#   see Rmetrics's copyright file
+
+
 ################################################################################
 # FUNCTION:
 #  .header.ts
@@ -6,7 +34,7 @@
 ################################################################################
 
 
-.head.ts = .header.ts =  
+.head.ts = 
 function(x) 
 {   # A function implemented by Diethelm Wuertz
 
@@ -47,8 +75,9 @@ rowname.textcolor = "darkred", body.textcolor = "black",
 font = "Courier 9", maxheight = 30, maxwidth = 80, title = NULL, 
 rowname.bar = "left", colname.bar = "top", rownumbers = FALSE, 
 placement = "-20-40") 
-{
-    # A function copied from contributed R package relim
+{   # A function copied from contributed R package relim
+
+    # FUNCTION:
     
     object.name <- deparse(substitute(dataframe))
     if (!is.data.frame(dataframe)) 
@@ -195,318 +224,3 @@ placement = "-20-40")
 
 ################################################################################
 
-
-
-# ------------------------------------------------------------------------------
-    
-
-.xMenu =
-function(fun, params, infoName, tkoutput = FALSE, console = NULL,
-title = NULL, description = NULL)
-{   # A function implemented by Diethelm Wuertz
-
-    # FUNCTION:
-     
-    argNames = names(params)
-    Character = NULL
-    Numeric = NULL
-    Logical = NULL
-    Null = NULL
-    
-    tt <- tktoplevel()
-    for (i in 1:length(params) ) {
-        Numeric = c( Numeric, is.numeric(params[[i]]) )
-        Character = c( Character, is.character(params[[i]]) )
-        Logical = c( Logical, is.logical(params[[i]]) )
-        Null = c( Null, is.null(params[[i]]) )
-        assign( argNames[i], tclVar(as.character(params[[i]])) )
-        entry.Name <- tkentry(tt, width = "20", 
-            textvariable = get(argNames[i]) )
-        label.Name <- tklabel(tt, text = argNames[i])
-        tkgrid(entry.Name, label.Name)
-    }
-    
-    # Internal Function:
-    OnOK <-
-    function(...) {
-        z = list()
-        .n = length(argNames)
-        z[[.n+1]] = NA
-        z[[.n+1]] = NULL
-        names(z) = argNames
-
-        for (i in 1:.n ) {
-            if (Character[i]) 
-                z[[i]] = as.character(tclvalue(get(argNames[i])))
-            if (Numeric[i]) 
-                z[[i]] = as.numeric(tclvalue(get(argNames[i])))
-            if (Logical[i]) 
-                z[[i]] = as.logical(tclvalue(get(argNames[i]))) 
-        }
-        
-        FUN = match.fun(fun)
-        f = FUN
-        formals(f) = z
-        x <<- f()
-        
-        # Info:
-        activeDataSet <<- paste("x =", infoName)             
-        seriesTitle <<- infoName
-        infoLabelText <<- tclVar(paste("Active Data Set:", activeDataSet))
-        tkconfigure(infoLabel, textvariable = infoLabelText)
-        tkgrid(infoLabel) 
-        
-        # Output:
-        if (tkoutput) {
-            if (!is.null(title)) tkTitle(title)
-            .tkOutput(capture.output(object)) 
-            if (!is.null(description)) .tkDescription(description)
-        }
-        if (!is.null(console)) {
-            eval(parse(text = console))
-            cat("...\n")
-        }
-    }
-    
-    okButton <- tkbutton(tt, text = "   Ok   ", 
-        command = OnOK)
-    
-    quitButton <- tkbutton(tt, text = "   Quit   ", 
-        command = function() tkdestroy(tt) )
-    
-    tkbind(entry.Name, "<Return>", OnOK)
-    tkgrid(okButton, quitButton, sticky = "sew")
-    tkfocus(tt)
-}
-
-
-################################################################################
-
-
-.objectDataSet =
-function(object)
-{   # A function implemented by Diethelm Wuertz
-
-    x <<- tkSaveAs(
-        data = as.timeSeries(object), 
-        infoName = "Object Data Slot",
-        console = "print(head(data))",
-        what = "x" )
-    invisible()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.sp500DataSet =
-function()
-{   # A function implemented by Diethelm Wuertz
-
-    data(singleIndex.dat)
-    X = as.timeSeries(singleIndex.dat, format = "%d-%b-%Y")[, 2]
-    x <<- tkSaveAs(
-        data = X, 
-        infoName = "SP500 Index",
-        console = "print(head(data))" )
-    plotTitle <<- "SP500 Index"
-    invisible()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.sp500retDataSet =
-function()
-{   # A function implemented by Diethelm Wuertz
-
-    data(singleIndex.dat)
-    X = as.timeSeries(singleIndex.dat, format = "%d-%b-%Y")[, 2]
-    x <<- tkSaveAs(
-        data = returnSeries(X), 
-        infoName = "SP500 Returns",
-        console = "print(head(data))",
-        what = "x" )
-    plotTitle <<- "SP500 Returns"
-    invisible()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.msftsp500DataSet =
-function()
-{   # A function implemented by Diethelm Wuertz
-
-    X = as.timeSeries(singleIndex.dat, format = "%d-%b-%Y")
-    x <<- tkSaveAs(
-        data = X,
-        infoName = "MSFT | SP500 Values",
-        console = "print(head(data))",
-        what = "x" )
-    plotTitle <<- "MSFT | SP500 Values"
-    invisible()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.msftsp500retDataSet =
-function()
-{   # A function implemented by Diethelm Wuertz
-
-    X = as.timeSeries(singleIndex.dat, format = "%d-%b-%Y")
-    x <<- tkSaveAs(
-        data = returnSeries(X), 
-        infoName = "MSFT | SP500 Returns",
-        console = "print(head(data))",
-        what = "x" )
-    plotTitle <<- "MSFT | SP500 Returns"
-    invisible()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.nyseDataSet = 
-function(report = TRUE)
-{   # A function implemented by Diethelm Wuertz
-
-    data(nyse)
-    X = as.timeSeries(nyse)
-    X = returnSeries(X)
-    x = X[X@Data < 1] # Correct for OLD/NEW Index
-    attr(x, "data") <- "NYSE Returns"
-    x <<- tkSaveAs(
-        data = x, 
-        infoName = "NYSE Returns",
-        console = "print(head(data))",
-        what = "x" )
-    plotTitle <<- "NYSE Returns"
-    if (report) {
-        tkTitle(plotTitle)
-        tkOutput(capture.output(head(x)))
-        tkOutput("...")
-        tkOutput(capture.output(tail(x))) 
-    }
-    invisible()
-}
-
-
-.dem2gbpDataSet = 
-function(report = TRUE)
-{   # A function implemented by Diethelm Wuertz
-
-    data(dem2gbp)
-    x = as.ts(as.vector(dem2gbp[, 1]))
-    attr(x, "data") <- "DEMGBP Returns"
-    x <<- tkSaveAs(
-        data = x, 
-        infoName = "DEMGBP Returns",
-        console = "print(.head.ts(data))",
-        what = "x" )
-    plotTitle <<- "DEMGBP Returns"
-    if (report) {
-        tkTitle(plotTitle)
-        tkOutput(capture.output(.head.ts(x)))
-    }
-    invisible()
-}
-
-
-.bmwDataSet = 
-function()
-{   # A function implemented by Diethelm Wuertz
-
-    data(bmw)
-    x = timeSeries(
-        data = matrix(bmw[, 2], ncol = 1),
-        charvec = as.character(bmw[, 1]),
-        units = "BMW",
-        format = "%Y-%m-%d", 
-        zone = "GMT",
-        FinCenter = "GMT")
-    x <<- tkSaveAs(
-        data = x, 
-        infoName = "BMW Returns",
-        console = "print(head(data))",
-        what = "x" )
-    plotTitle <<- "BMW Returns"
-    invisible()
-}
-
-
-.bmwmaxDataSet = 
-function()
-{   # A function implemented by Diethelm Wuertz
-
-    data(bmw)
-    x = timeSeries(
-        data = matrix(bmw[, 2], ncol = 1),
-        charvec = as.character(bmw[, 1]),
-        units = "BMW",
-        format = "%Y-%m-%d", 
-        zone = "GMT",
-        FinCenter = "GMT")
-    blocks = blocks(-x, block = "month")
-    x = timeSeries(
-        data = blocks[, 1],
-        charvec = rownames(blocks),
-        units = "BMW",
-        format = "%Y-%m-%d", 
-        zone = "GMT",
-        FinCenter = "GMT")
-    x <<- tkSaveAs(
-        data = x, 
-        infoName = "BMW Block Maxima Returns",
-        console = "print(head(data))",
-        what = "x" )
-    plotTitle <<- "BMW Returns"
-    invisible()
-} 
-
-
-.danishDataSet = 
-function()
-{   # A function implemented by Diethelm Wuertz
-
-    data(danish)
-    x = timeSeries(
-        data = matrix(danish[, 2], ncol = 1),
-        charvec = as.character(danish[, 1]),
-        units = "DANISH",
-        format = "%Y-%m-%d", 
-        zone = "GMT",
-        FinCenter = "GMT")
-    x <<- tkSaveAs(
-        data = x, 
-        infoName = "Danish Fire Losses",
-        console = "print(head(data))",
-        what = "x" )
-    plotTitle <<- "Danish Fire Losses"
-    invisible()
-}
-
-
-
-# ------------------------------------------------------------------------------
-################################################################################
-
-
-.packagesMenu.loadPackagesCmd = 
-function() {
-    local({pkg <- select.list(sort(.packages(all.available = TRUE)))
-        if(nchar(pkg)) library(pkg, character.only = TRUE)})
-}
-        
-        
-################################################################################
-
-
-
-# ------------------------------------------------------------------------------
-    
