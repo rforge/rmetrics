@@ -86,11 +86,7 @@ function(x, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1)
     
     # Put all together:
     ans = a*f*k*e
-    
-    # Attributes:
-    attr(ans, "param") = c(alpha = alpha, beta = beta, delta = delta, 
-        mu = mu, lambda = lambda)
-      
+
     # Return Value:  
     ans
 }
@@ -121,10 +117,6 @@ function(q, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1)
             lambda = lambda)
         ans = c(ans, as.numeric(unlist(Integral)[1]))
     }
-    
-    # Attributes:
-    attr(ans, "param") = c(alpha = alpha, beta = beta, delta = delta, 
-        mu = mu, lambda = lambda)
        
     # Return Value: 
     ans
@@ -171,10 +163,6 @@ function (p, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1)
         }
         result = c(result, iteration)
     }
-    
-    # Attributes:
-    attr(result, "param") = c(alpha = alpha, beta = beta, delta = delta, 
-        mu = mu, lambda = lambda)
     
     # Return Value:
     result
@@ -550,7 +538,6 @@ function(x, alpha = 1, beta = 0, delta = 1, mu = 0)
     ans = prefac * efun
 
     # Return Value:
-    attr(ans, "param") = c(alpha = alpha, beta = beta, delta = delta, mu = mu)
     ans
 }
 
@@ -578,7 +565,6 @@ function(x, zeta = 1, rho = 0, delta = 1, mu = 0)
     
     # Return Value:
     ans = dhyp(x, alpha, beta, delta, mu)
-    attr(ans, "param") = c(zeta = zeta, rho = rho, delta = delta, mu = mu)
     ans
 }
 
@@ -608,7 +594,6 @@ function(x, xi = 1/sqrt(2), chi = 0, delta = 1, mu = 0)
     
     # Return Value:
     ans = dhyp(x, alpha, beta, delta, mu)
-    attr(ans, "param") = c(xi = xi, chi = chi, delta = delta, mu = mu)
     ans 
 }
 
@@ -637,7 +622,6 @@ function(x, a.bar = 1, b.bar = 0, delta = 1, mu = 0)
     
     # Return Value:
     ans = dhyp(x, alpha, beta, delta, mu)
-    attr(ans, "param") = c(a.bar = a.bar, b.bar = b.bar, delta = delta, mu = mu)
     ans
 }
 
@@ -700,7 +684,6 @@ function(q, alpha = 1, beta = 0, delta = 1, mu = 0, ...)
     }
 
     # Return Value:
-    attr(ans, "param") = c(alpha = alpha, beta = beta, delta = delta, mu = mu)
     ans
 }
 
@@ -728,7 +711,6 @@ function(q, zeta = 1, rho = 0, delta = 1, mu = 0, ...)
     
     # Return Value:
     ans = phyp(q, alpha, beta, delta, mu, ...)
-    attr(ans, "param") = c(zeta = zeta, rho = rho, delta = delta, mu = mu)
     ans
 }
 
@@ -758,7 +740,6 @@ function(q, xi = 1/sqrt(2), chi = 0, delta = 1, mu = 0, ...)
     
     # Return Value:
     ans = phyp(q, alpha, beta, delta, mu, ...)
-    attr(ans, "param") = c(xi = xi, chi = chi, delta = delta, mu = mu)
     ans
 }
 
@@ -786,7 +767,6 @@ function(q, a.bar = 1, b.bar = 0, delta = 1, mu = 0, ...)
     
     # Return Value:
     ans = phyp(q, alpha, beta, delta, mu, ...)
-    attr(ans, "param") = c(a.bar = a.bar, b.bar = b.bar, delta = delta, mu = mu)
     ans
 }
 
@@ -867,7 +847,6 @@ function(p, alpha = 1, beta = 0, delta = 1, mu = 0, ...)
             
     # Return Value:
     ans = result + mu
-    attr(ans, "param") = c(alpha = alpha, beta = beta, delta = delta, mu = mu)
     ans
 }
 
@@ -895,7 +874,6 @@ function(p, zeta = 1, rho = 0, delta = 1, mu = 0, ...)
     
     # Return Value:
     ans = qhyp(p, alpha, beta, delta, mu, ...)
-    attr(ans, "param") = c(zeta = zeta, rho = rho, delta = delta, mu = mu)
     ans
 }
 
@@ -925,7 +903,6 @@ function(p, xi = 1/sqrt(2), chi = 0, delta = 1, mu = 0, ...)
     
     # Return Value:
     ans = qhyp(p, alpha, beta, delta, mu, ...)
-    attr(ans, "param") = c(xi = xi, chi = chi, delta = delta, mu = mu)
     ans
 }
 
@@ -953,7 +930,6 @@ function(p, a.bar = 1, b.bar = 0, delta = 1, mu = 0, ...)
     
     # Return Value:
     ans = qhyp(p, alpha, beta, delta, mu, ...)
-    attr(ans, "param") = c(a.bar = a.bar, b.bar = b.bar, delta = delta, mu = mu)
     ans
 }   
 
@@ -1099,7 +1075,6 @@ function (n, alpha = 1, beta = 0, delta = 1, mu = 0)
 
     # Return Value:
     ans = rhyperb(n = n, theta = theta)
-    attr(ans, "param") = c(alpha = alpha, beta = beta, delta = delta, mu = mu)
     ans
 }
 
@@ -1127,7 +1102,6 @@ function(n, zeta = 1, rho = 0, delta = 1, mu = 0)
     
     # Return Value:
     ans = rhyp(n, alpha, beta, delta, mu)
-    attr(ans, "param") = c(zeta = zeta, rho = rho, delta = delta, mu = mu)
     ans
 }
 
@@ -1157,7 +1131,6 @@ function(n, xi = 1/sqrt(2), chi = 0, delta = 1, mu = 0)
     
     # Return Value:
     ans = rhyp(n, alpha, beta, delta, mu)
-    attr(ans, "param") = c(xi = xi, chi = chi, delta = delta, mu = mu)
     ans
 }
 
@@ -1185,7 +1158,6 @@ function(n, a.bar = 1, b.bar = 0, delta  = 1, mu = 0)
     
     # Return Value:
     ans = rhyp(n, alpha, beta, delta, mu)
-    attr(ans, "param") = c(a.bar = a.bar, b.bar = b.bar, delta = delta, mu = mu)
     ans
 }   
 
@@ -1230,7 +1202,6 @@ function(alpha = 1, beta = 0, delta = 1, mu = 0)
     ans = mu + delta * beta / sqrt(alpha^2 - beta^2)
     
     # Return Value:
-    attr(ans, "param") = c(alpha = alpha, beta = beta, delta = delta, mu = mu)
     ans
 }
 
@@ -1253,7 +1224,6 @@ function(zeta = 1, rho = 0, delta = 1, mu = 0)
     
     # Return Value:
     ans = hypMode(alpha, beta, delta, mu)
-    attr(ans, "param") = c(zeta = zeta, rho = rho, delta = delta, mu = mu)
     ans
 }
 
@@ -1278,7 +1248,6 @@ function(xi = 1/sqrt(2), chi = 0, delta = 1, mu = 0)
     
     # Return Value:
     ans = hypMode(alpha, beta, delta, mu)
-    attr(ans, "param") = c(xi = xi, chi = chi, delta = delta, mu = mu)
     ans
 }
 
@@ -1301,7 +1270,6 @@ function(a.bar = 1, b.bar = 0, delta  = 1, mu = 0)
     
     # Return Value:
     ans = hypMode(alpha, beta, delta, mu)
-    attr(ans, "param") = c(a.bar = a.bar, b.bar = b.bar, delta = delta, mu = mu)
     ans
 }   
 
@@ -1312,7 +1280,8 @@ function(a.bar = 1, b.bar = 0, delta  = 1, mu = 0)
 
 dnig = 
 function(x, alpha = 1, beta = 0, delta = 1, mu = 0)
-{
+{   # A function implemented by Diethelm Wuertz
+
     dgh(x = x, alpha = alpha, beta = beta, delta = delta, mu = mu, 
         lambda = -0.5)
 }
@@ -1369,7 +1338,8 @@ function (x, alpha = 1, beta = 0, delta = 1, mu = 0)
 
 pnig = 
 function(q, alpha = 1, beta = 0, delta = 1, mu = 0)
-{
+{   # A function implemented by Diethelm Wuertz
+
     pgh(q = q, alpha = alpha, beta = beta, delta = delta, mu = mu, 
         lambda = -0.5)
 }
@@ -1420,7 +1390,8 @@ function (q, alpha = 1, beta = 0, delta = 1, mu = 0)
 
 qnig = 
 function(p, alpha = 1, beta = 0, delta = 1, mu = 0)
-{
+{   # A function implemented by Diethelm Wuertz
+
     qgh(p = p, alpha = alpha, beta = beta, delta = delta, mu = mu, 
         lambda = -0.5)
 }
