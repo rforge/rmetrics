@@ -329,7 +329,7 @@ function(Menu, Label)
 
 
 tkExecute =
-function(fun, prototypes, subject = "- missing -")
+function(fun, prototypes, subject = "")
 {   # A function implemented by Diethelm Wuertz
 
     # FUNCTION:
@@ -440,7 +440,6 @@ function(fun, prototypes, subject = "- missing -")
     tkgrid(helpButton, sticky = "sew")
     
     tkfocus(tt)
-    
     invisible()     
 }
 
