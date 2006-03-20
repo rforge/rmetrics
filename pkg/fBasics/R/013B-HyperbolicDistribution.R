@@ -205,8 +205,8 @@ function (n, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1)
     ans = .rghyp(n, theta)
     
     # Attributes:
-    attr(ans, "param") = c(alpha = alpha, beta = beta, delta = delta, 
-        mu = mu, lambda = lambda)
+    attr(ans, "control") = c(dist = "gh", alpha = alpha, beta = beta, 
+    delta = delta, mu = mu, lambda = lambda)
     
     # Return Value:
     ans 
@@ -985,12 +985,19 @@ function (n, alpha = 1, beta = 0, delta = 1, mu = 0, pm = c(1, 2, 3, 4))
     # Settings:
     pm = pm[1]
     
-    # Return Value:
+    # Result:
     ans = NA
-    if (pm == 1) return(.rhyp1(n, alpha, beta, delta, mu))
-    if (pm == 2) return(.rhyp2(n, alpha, beta, delta, mu))
-    if (pm == 3) return(.rhyp3(n, alpha, beta, delta, mu))
-    if (pm == 4) return(.rhyp4(n, alpha, beta, delta, mu))  
+    if (pm == 1) ans = .rhyp1(n, alpha, beta, delta, mu)
+    if (pm == 2) ans = .rhyp2(n, alpha, beta, delta, mu)
+    if (pm == 3) ans = .rhyp3(n, alpha, beta, delta, mu)
+    if (pm == 4) ans = .rhyp4(n, alpha, beta, delta, mu)
+    
+    # Attributes:
+    attr(ans, "control") = c(dist = "hyp", alpha = alpha, beta = beta, 
+    delta = delta, mu = mu)
+    
+    # Return Value:
+    ans
 }   
     
 
@@ -1508,6 +1515,11 @@ function(n, alpha = 1, beta = 0, delta = 1, mu = 0)
             delta, gamma = gamma)*(1-s)
         X = mu + beta*Z + sqrt(Z)*rnorm(n) 
     }
+    
+    # Attributes:
+    attr(X, "control") = c(dist = "nig", alpha = alpha, beta = beta, 
+        delta = delta, mu = mu)
+    
     
     # Return Value:
     X

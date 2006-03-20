@@ -200,12 +200,16 @@ function(n, alpha)
             (cos((1-alpha)*theta)/w)^((1-alpha)/alpha)
     } 
     
+    # Add Attribute:
+    attr(result, "control") = c(dist = "symstb", alpha = as.character(alpha))
+    
     # Return Value:
     result
 }
 
 
 # ------------------------------------------------------------------------------
+
 
 .unirootNA13 = 
 function(f, interval, lower = min(interval), upper = max(interval), 
@@ -817,6 +821,11 @@ function(n, alpha, beta, gamma = 1, delta = 0, pm = c(0, 1, 2))
     
     # Result:
     ans = result * gamma + delta
+    
+    # Add Attribute:
+    attr(ans, "control") = c(dist = "stable", alpha = as.character(alpha),
+        beta = as.character(beta), gamma = as.character(gamma),
+        delta = as.character(delta), pm = as.character(pm))
     
     # Return Value:
     ans
