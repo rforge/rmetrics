@@ -71,7 +71,7 @@ function()
     helpTopic <<- "yahooImport"
     myFunction = function(value, from, to, file, source, save, sep, 
         swap, try, object2x, report) {
-            if (to == "today") to = as.character(Sys.Date())
+        if (to == "today") to = as.character(Sys.Date())
         from.y = as.integer(substr(from, 1, 4))
         from.m = as.integer(substr(from, 6, 7)) - 1
         from.d = as.integer(substr(from, 9, 10))
@@ -81,7 +81,7 @@ function()
         query = paste("s=", value, "&a=", from.m, "&b=", from.d, "&c=", 
              from.y, "&d=", to.m, "&q=", to.d, "&f=", to.y, "&z=", value, 
              "&x=.csv", sep = "")
-        object <<- yahooImport(query = value, file = file, source = source, 
+        object <<- yahooImport(query = query, file = file, source = source, 
             save = save, sep = sep, swap = swap, try = try)
         if (object2x) object <<- as.timeSeries(object@data)
         object }   
@@ -173,7 +173,7 @@ function()
     # 1D: ACF Plot:
     helpTopic <<- "acf"
     myFunction = function(series, par, grid) {
-        x = tkEval(series)
+        x = as.vector(tkEval(series))
         tkEval(par)
         acfPlot(x)
         if (grid) grid() }
@@ -182,7 +182,7 @@ function()
         prototypes = list(
             series = "x",
             par = "par(mfrow=c(1,1))",
-            grid = "FALSE"),
+            grid = FALSE ),
         subject = "ACF Plot" )            
 }
 
@@ -197,7 +197,7 @@ function()
     # 1D: PACF Plot:
     helpTopic <<- "acf"
     myFunction = function(series, par, grid) {
-        x = tkEval(series)
+        x = as.vector(tkEval(series))
         tkEval(par)
         pacfPlot(x)
         if (grid) grid() }
