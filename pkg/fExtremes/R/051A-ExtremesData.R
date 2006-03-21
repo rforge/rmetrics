@@ -659,7 +659,7 @@ labels = TRUE, ...)
         if (labels) {
             xlab = "Trials"
             ylab = "Records"
-            main = "Plot of Record Development" }
+            main = "Plot of Maximum/Sum Ratio" }
         else {
             xlab = ""
             ylab = ""
