@@ -106,8 +106,8 @@ function()
         ".fExtremes.GEV.blockmaxVector",
         "tkSeparator",
         ".fExtremes.GEV.gevSlider",
-        ".fExtremes.GEV.sim",
-        ".fExtremes.GEV.fit",
+        ".fExtremes.GEV.gevSim",
+        ".fExtremes.GEV.gevFit",
         "tkSeparator",
         ".fExtremes.GEV.gevrlevelPlot",
         ".fExtremes.MDA.hillPlot",
@@ -134,8 +134,8 @@ function()
         ".fData.bmwDaily",
         "tkSeparator",
         ".fExtremes.GPD.gpdSlider",
-        ".fExtremes.GPD.sim",
-        ".fExtremes.GPD.fit")
+        ".fExtremes.GPD.gpdSim",
+        ".fExtremes.GPD.gpdFit")
     tkAddPopupMenu(fExtremesMenu, Label, subLabel, Command)
                      
     # Cascade fileMenu:

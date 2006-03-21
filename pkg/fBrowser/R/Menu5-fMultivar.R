@@ -178,7 +178,7 @@ function()
         ".fMultivar.RegressionTests.bpTest",
         ".fMultivar.RegressionTests.dwTest",
         ".fMultivar.RegressionTests.gqTest",
-        ".fMultivar.RegressionTests.harvestTest",
+        ".fMultivar.RegressionTests.harvTest",
         ".fMultivar.RegressionTests.hmcTest",
         ".fMultivar.RegressionTests.rainTest",
         ".fMultivar.RegressionTests.resetTest")

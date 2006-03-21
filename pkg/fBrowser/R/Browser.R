@@ -45,7 +45,7 @@ function(toolbar = c(".filePopup", ".fBasicsPopup", ".fCalendarPopup",
     
     # Global Objects:
     x <<- as.ts(rnorm(1000))
-    xTitle <<- plotTitle <<- "rnorm(1000)"
+    xTitle <<- "rnorm(1000)"
     object <<- NULL
     info <<-NULL
     object2recover <<- NULL
@@ -738,9 +738,8 @@ function(Data, subject, description = NULL, report = TRUE )
     attr(x, "data") = Data
         
     # Report
-    plotTitle <<- subject
     if (report) {
-        tkTitle(plotTitle)
+        tkTitle(subject)
         tkOutput(capture.output(head(x)))
         tkOutput("...")
         tkOutput(capture.output(tail(x))) 
@@ -768,9 +767,8 @@ function(Data, subject, report = TRUE )
     
     x <<- tkSaveAsX(data = x, subject = subject)
         
-    plotTitle <<- subject
     if (report) {
-        tkTitle(plotTitle)
+        tkTitle(subject)
         tkOutput(capture.output(head(x)))
         tkOutput("...")
         tkOutput(capture.output(tail(x))) 

@@ -115,7 +115,7 @@ function()
     Label = "Multiple Assets Options"
     subLabel = c(
         "Two Asset Correlation",
-        "European Exchange",
+        "European On Exchange",
         "American Exchange",
         "Exchange Exchange",
         "Option On The MinMax",
@@ -264,10 +264,10 @@ function()
     # Add Menu:
     Label = "Monte Carlo Options"
     subLabel = c(
-        "MC: Plain Vanilla Payoff with Normal Innovations", 
-        "MC: Plain Vanilla Payoff with Sobol Innovations", 
-        "MC: Arithmetic Asian Payoff with Normal Innovations",
-        "MC: Arithmetic Asian Payoff with Sobol Innovations") 
+        "Plain Vanilla Payoff with Normal Innovations", 
+        "Plain Vanilla Payoff with Sobol Innovations", 
+        "Arithmetic Asian Payoff with Normal Innovations",
+        "Arithmetic Asian Payoff with Sobol Innovations") 
     Command = c(
         ".fOptions.MonteCarlo.1",
         ".fOptions.MonteCarlo.2",

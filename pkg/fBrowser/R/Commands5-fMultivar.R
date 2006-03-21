@@ -425,7 +425,7 @@ function()
 # ------------------------------------------------------------------------------
 
 
-.fMultivar.RegressionTests.gpTest = 
+.fMultivar.RegressionTests.gqTest = 
 function()
 {   # A function implemented by Diethelm Wuertz
     

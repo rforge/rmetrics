@@ -148,7 +148,6 @@ function()
         x = tkEval(series)
         tkEval(par)
         plot(x, type = type, col = col, xlab = xlab, ylab = ylab)
-        # title(main = paste("\n\n", plotTitle, sep = "")) 
         if (grid) grid()}
     tkExecute(
         fun = myFunction,
@@ -177,7 +176,6 @@ function()
         x = tkEval(series)
         tkEval(par)
         acfPlot(x)
-        # title(main = paste("\n\n", plotTitle, sep = ""))
         if (grid) grid() }
     tkExecute(
         fun = myFunction,
@@ -202,7 +200,6 @@ function()
         x = tkEval(series)
         tkEval(par)
         pacfPlot(x)
-        # title(main = paste("\n\n", plotTitle, sep = ""))
         if (grid) grid() }
     tkExecute(
         fun = myFunction,
@@ -227,7 +224,6 @@ function()
         x = tkEval(series)
         tkEval(par)
         histPlot(x)
-        # title(main = paste("\n\n", plotTitle, sep = "")) 
         }
     tkExecute(
         fun = myFunction,
@@ -251,7 +247,6 @@ function()
         x = tkEval(series)
         tkEval(par)
         plot(x, xlab = "", ylab = "")
-        # title(main = paste("\n\n", plotTitle, sep = "")) 
         }
     tkExecute(
         fun = myFunction,
@@ -277,7 +272,6 @@ function()
         plot(as.vector(x[, 1]), as.vector(x[,2]),
             xlab = x@units[1], ylab = x@units[2], 
             pch = 19, col  = "steelblue")
-        # title(main = paste("\n\n", plotTitle, sep = "")) 
         if (grid) grid()
         }
     tkExecute(

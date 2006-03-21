@@ -49,7 +49,7 @@ function()
     tkAddPopupMenu(helpMenu, Label, subLabel, Command)      
         
     # Add Menu:      
-    Label = "Rmetrics"
+    Label = "Rmetrics Homepage"
     subLabel = NULL
     Command = ".wwwRmetrics"
     tkAddPopupMenu(helpMenu, Label, subLabel, Command)  

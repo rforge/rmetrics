@@ -250,7 +250,7 @@ function()
             par = "par(mfrow=c(1,1))",
             object2x = FALSE,
             report = FALSE ),
-        subject = "Plot of Subsample Records" )       
+        subject = "Plot of Records" )       
 }
 
 
@@ -332,15 +332,16 @@ function()
 # ------------------------------------------------------------------------------
 
 
-.fExtremes.GEV.sim = 
+.fExtremes.GEV.gevSim = 
 function()
 {   # A function implemented by Diethelm Wuertz
 
     # Simulate GEV Series:
     helpTopic <<- ""
-    myFunction = function(n, shape, location, scale, object2x, report) {
+    myFunction = function(n, shape, location, scale, as.ts, object2x, report) {
         object <<- gevSim(model = list(shape = shape, location = location, 
             scale = scale), n = n)  
+        if (as.ts) object <<- as.ts(object)
         if (report) tkTitle("Simulated GEV Series")
         object }
     tkExecute(
@@ -350,6 +351,7 @@ function()
             shape = 0.25, 
             location = 0, 
             scale = 1,
+            as.ts = TRUE,
             object2x = TRUE,
             report = TRUE ),
         subject = "Simulated GEV Series" )
@@ -365,17 +367,20 @@ function()
 
     # Simulate GEV Series:
     helpTopic <<- ""
-    myFunction = function(series, block, object2x, report) {
+    myFunction = function(series, block, revertSign, object2x, report) {
         x = tkEval(series)
+        if (revertSign) x = -x
         block = tkSplit(block)
-        print(block)
         object <<- blockmaxSeries(x, block = block)  
+        attr(object,  "control") = c(block = block)
+        if (report) tkTitle("Block Maxima Series")
         object }
     tkExecute(
         fun = myFunction,
         prototypes = list(
             series = "x", 
             block = "monthly & quarterly",
+            revertSign = FALSE,
             object2x = FALSE,
             report = TRUE ),
         subject = "Block Maxima Series" )
@@ -391,8 +396,9 @@ function()
 
     # Simulate GEV Series:
     helpTopic <<- ""
-    myFunction = function(series, block, object2x, report) {
+    myFunction = function(series, block, revertSign, object2x, report) {
         x = tkEval(series)
+        if (revertSign) x = -x
         object <<- as.ts(blockmaxVector(x, block = block))
         attr(object, "control") = c(block = block)
         if (report) tkTitle("Block Maxima Vector")
@@ -402,6 +408,7 @@ function()
         prototypes = list(
             series = "x", 
             block = 20,
+            revertSign = FALSE,
             object2x = FALSE,
             report = TRUE ),
         subject = "Block Maxima Vector" )
@@ -412,7 +419,7 @@ function()
 # ------------------------------------------------------------------------------
 
 
-.fExtremes.GEV.fit = 
+.fExtremes.GEV.gevFit = 
 function()
 {   # A function implemented by Diethelm Wuertz
 
@@ -425,7 +432,7 @@ function()
         object <<- gevFit(x = x, type = type, gumbel = gumbel)
         if (doplot) {
             tkEval(par)
-            object <<- summary(object)
+            plot(object)
         }
         object }
     tkExecute(
@@ -552,7 +559,7 @@ function()
 # ------------------------------------------------------------------------------
 
 
-.fExtremes.GPD.sim = 
+.fExtremes.GPD.gpdSim = 
 function()
 {   # A function implemented by Diethelm Wuertz
 
@@ -578,7 +585,7 @@ function()
 # ------------------------------------------------------------------------------
 
 
-.fExtremes.GPD.fit = 
+.fExtremes.GPD.gpdFit = 
 function()
 {   # A function implemented by Diethelm Wuertz
 
