@@ -199,7 +199,8 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # * Example timeDate: x = 12 Random Dates in Current Year
-    myFunction = function(FinCenter, object2x, report) {
+    myFunction = function(FinCenter, seed, object2x, report) {
+        set.seed(seed)
         y = rep(currentYear, 12)
         d = trunc(runif(12, 1, 29))
         m = trunc(runif(12, 1, 13))
@@ -210,6 +211,7 @@ function()
         fun = myFunction,
         prototypes = list( 
             FinCenter = "GMT",
+            seed = 4711,
             object2x = TRUE,
             report = TRUE),
         subject = "12 Random Dates" )          
@@ -224,7 +226,8 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # * Example timeDate: x = 12 Random Times in Current Year 
-    myFunction = function(FinCenter, object2x, report) {
+    myFunction = function(FinCenter, seed, object2x, report) {
+        set.seed(seed)
         y = rep(2005, 12)
         d = trunc(runif(12, 1, 29))
         m = trunc(runif(12, 1, 13))
@@ -240,6 +243,7 @@ function()
         fun = myFunction,
         prototypes = list( 
             FinCenter = "GMT",
+            seed = 4711,
             object2x = TRUE,
             report = TRUE ),
         subject = "12 Random Times" )          

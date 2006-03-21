@@ -271,19 +271,21 @@ function()
     
     # 2D: Scatter Diagramm Plot:
     helpTopic <<- "plot"
-    myFunction = function(series, par) {
+    myFunction = function(series, par, grid) {
         x = tkEval(series)
         tkEval(par)
         plot(as.vector(x[, 1]), as.vector(x[,2]),
             xlab = x@units[1], ylab = x@units[2], 
             pch = 19, col  = "steelblue")
         # title(main = paste("\n\n", plotTitle, sep = "")) 
+        if (grid) grid()
         }
     tkExecute(
         fun = myFunction,
         prototypes = list(
             series = "x",
-            par = "par(mfrow=c(1,1))" ),
+            par = "par(mfrow=c(1,1))",
+            grid = TRUE ),
         subject = "Scatter Diagram Plot" )         
 }
 
@@ -302,9 +304,9 @@ function()
         doplot, par, grid, object2x, report) {
         x = tkEval(series)
         deltas = eval(parse(text = deltas))
+        if (doplot) tkEval(par)
         object <<- teffectPlot(as.vector(x), deltas = deltas, 
             lag.max = lag.max, standardize = standardize) 
-        if (doplot) tkEval(par)
         if (grid) grid()
         object }
     tkExecute(
@@ -363,8 +365,8 @@ function()
     helpTopic <<- "logpdfPlot"
     myFunction = function(series, doplot, par, grid, object2x, report) {
         x = tkEval(series)
-        object <<- logpdfPlot(abs(as.vector(x))) 
         if (doplot) tkEval(par)
+        object <<- logpdfPlot(abs(as.vector(x))) 
         if (grid) grid()
         object }
     tkExecute(
@@ -391,8 +393,8 @@ function()
     helpTopic <<- "qqgaussPlot"
     myFunction = function(series, span, doplot, par, object2x, report) {
         x = tkEval(series)
-        object <<- qqgaussPlot(as.vector(x), span = span) 
         if (doplot) tkEval(par)
+        object <<- qqgaussPlot(as.vector(x), span = span) 
         object }
     tkExecute(
         fun = myFunction,
@@ -423,6 +425,7 @@ function()
         } else {
             span = as.numeric(span)
         }
+        if (doplot) tkEval(par)
         object <<- scalinglawPlot(x, span = span) 
         object }
     tkExecute(
@@ -605,10 +608,12 @@ function()
     
     # Normal RVs:
     helpTopic <<- "dnorm"
-    myFunction = function(n, mean, sd, object2x, report) {
-        object <<- as.ts(rnorm(n, mean, sd))
+    myFunction = function(n, mean, sd, as.ts, object2x, report) {
+        object <<- rnorm(n, mean, sd)
+        if (as.ts) object <<- as.ts(object)
         attr(object, "control") <<- 
             c(dist = "norm", mean = as.character(mean), sd = as.character(sd))
+        if (report) tkTitle("Normal RVs")
         object }
     tkExecute(
         fun = myFunction,
@@ -616,6 +621,7 @@ function()
             n = 100,
             mean = 0,
             sd = 1,
+            as.ts = TRUE,
             object2x = TRUE,
             report = TRUE),
         subject = "Normal RVs" )  
@@ -633,8 +639,10 @@ function()
     helpTopic <<- "dhyp"
     myFunction = function(n, alpha, beta, delta, mu, parameterization, 
         object2x, report) {
-        object <<- as.ts(rhyp(n = n, alpha = alpha, beta = beta, delta = delta,
-            pm = parameterization))
+        object <<- rhyp(n = n, alpha = alpha, beta = beta, delta = delta,
+            pm = parameterization)
+        if (as.ts) object <<- as.ts(object)
+        if (report) tkTitle("Hyperbolic RVs")
         object }
     tkExecute(
         fun = myFunction,
@@ -645,6 +653,7 @@ function()
             delta = 1,
             mu = 0,
             parameterization = 1,
+            as.ts = TRUE,
             object2x = TRUE,
             report = TRUE),
         subject = "Hyperbolic RVs" )  
@@ -660,10 +669,12 @@ function()
     
     # Normal Inverse Gaussian RVs:
     helpTopic <<- "dnig"
-    myFunction = function(n, alpha, beta, delta, mu, 
+    myFunction = function(n, alpha, beta, delta, mu, as.ts, 
         object2x, report) {
-        object <<- as.ts(rnig(n = n, alpha = alpha, beta = beta, 
-            delta = delta))
+        object <<- rnig(n = n, alpha = alpha, beta = beta, delta = delta,
+            mu = mu)
+        if (as.ts) object <<- as.ts(object)
+        if (report) tkTitle("Normal Inverse Gaussian RVs")
         object }
     tkExecute(
         fun = myFunction,
@@ -673,6 +684,7 @@ function()
             beta = 0,
             delta = 1,
             mu = 0,
+            as.ts = TRUE,
             object2x = TRUE,
             report = TRUE),
         subject = "Normal Inverse Gaussian RVs" )  
@@ -688,14 +700,17 @@ function()
     
     # Symmetric Stable RVs:
     helpTopic <<- "dsymstb"
-    myFunction = function(n, alpha, object2x, report) {
-        object <<- as.ts(rsymstb(n = n, alpha = alpha))
+    myFunction = function(n, alpha, as.ts, object2x, report) {
+        object <<- rsymstb(n = n, alpha = alpha)
+        if (as.ts) object <<- as.ts(object)
+        if (report) tkTitle("Symmetric Stable RVs")
         object }
     tkExecute(
         fun = myFunction,
         prototypes = list(
             n = 100,
             alpha = 1.8,
+            as.ts = TRUE,
             object2x = TRUE,
             report = TRUE),
         subject = "Symmetric Stable RVs" )  
@@ -712,9 +727,11 @@ function()
     # Stable RVs:
     helpTopic <<- "dstable"
     myFunction = function(n, alpha, beta, gamma, delta, parameterization, 
-        object2x, report) {
-        object <<- as.ts(rstable(n = n, alpha = alpha, beta = beta, 
-            gamma = gamma, delta = delta, pm = parameterization)) 
+        as.ts, object2x, report) {
+        object <<- rstable(n = n, alpha = alpha, beta = beta, 
+            gamma = gamma, delta = delta, pm = parameterization)
+        if (as.ts) object <<- as.ts(object)
+        if (report) tkTitle("Stable RVs")
         object }
     tkExecute(
         fun = myFunction,
@@ -726,6 +743,7 @@ function()
             delta = 0,
             mu = 0,
             parameterization = 0,
+            as.ts = TRUE,           
             object2x = TRUE,
             report = TRUE),
         subject = "Stable RVs" )  
@@ -740,7 +758,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # RVS Sliders:
-    helpTopic <<- ""
+    helpTopic <<- "dhyp"
     myFunction = function(dist, object2x, report) {
         dist = tkSplit(dist)
         fun = match.fun(paste(dist, "Slider", sep = ""))
@@ -804,7 +822,7 @@ function()
             series = "x",
             object2x = FALSE,
             report = TRUE ),
-        subject = "One-sample Kolmogorov-Smirnov Test" ) 
+        subject = "One-sample KS Test" ) 
 }
 
 
@@ -827,7 +845,7 @@ function()
             series = "x",
             object2x = FALSE,
             report = TRUE ),
-        subject = "Shapiro - Wilk Normality Test" ) 
+        subject = "Shapiro-Wilk Test" ) 
 }
 
 
@@ -850,7 +868,7 @@ function()
             series = "x",
             object2x = FALSE,
             report = TRUE ),
-        subject = "Jarque - Bera Normality Test" )    
+        subject = "Jarque-Bera Test" )    
 }
 
 
@@ -873,7 +891,7 @@ function()
             series = "x",
             object2x = FALSE,
             report = TRUE ),
-        subject = "d'Agostino Normality Test" ) 
+        subject = "d'Agostino Test" ) 
 }
 
 
@@ -896,7 +914,7 @@ function()
             series = "x",
             object2x = FALSE,
             report = TRUE ),
-        subject = "Anderson - Darling Normality Test" )
+        subject = "Anderson-Darling Test" )
 }
 
 
@@ -919,7 +937,7 @@ function()
             series = "x",
             object2x = FALSE,
             report = TRUE ),
-        subject = "Cramer - von Mises Normality Test" )
+        subject = "Cramer-vonMises Test" )
 }
 
 
@@ -942,7 +960,7 @@ function()
             series = "x",
             object2x = FALSE,
             report = TRUE ),
-        subject = "Lilliefors (KS) Normality Test" )
+        subject = "Lilliefors Test" )
 }
 
 
@@ -965,7 +983,7 @@ function()
             series = "x",
             object2x = FALSE,
             report = TRUE ),
-        subject = "Pearson Chi-Square Normality Test" )
+        subject = "Pearson Test" )
 }
 
 
@@ -988,7 +1006,7 @@ function()
             series = "x",
             object2x = FALSE,
             report = TRUE ),
-        subject = "Shapiro - Francia Normality Test" )
+        subject = "Shapiro-Francia Test" )
 }
 
 
@@ -1012,7 +1030,7 @@ function()
             series = "x",
             object2x = FALSE,
             report = TRUE ),
-        subject = "Kolmogorov-Smirnov Test" )
+        subject = "Kolmogorov-Smirnov" )
 }
 
 
@@ -1035,7 +1053,7 @@ function()
             series = "x",
             object2x = FALSE,
             report = TRUE ),
-        subject = "Location: Unpaired t-Test" )
+        subject = "Location: Unpaired t" )
 }
 
 
@@ -1058,7 +1076,7 @@ function()
             series = "x",
             object2x = FALSE,
             report = TRUE ),
-        subject = "Location: Kruskal-Wallis Test" )
+        subject = "Location: Kruskal-Wallis" )
 }
 
 
@@ -1104,7 +1122,7 @@ function()
             series = "x",
             object2x = FALSE,
             report = TRUE ),
-        subject = "Variance: Bartlett Test" )
+        subject = "Variance: Bartlett" )
 }
 
 
@@ -1127,7 +1145,7 @@ function()
             series = "x",
             object2x = FALSE,
             report = TRUE ),
-        subject = "Variance: Fligner-Killeen Test" )
+        subject = "Variance: Fligner-Killeen" )
 }
 
 
@@ -1150,7 +1168,7 @@ function()
             series = "x",
             object2x = FALSE,
             report = TRUE ),
-        subject = "Scale: Ansari-Bradley Test" )
+        subject = "Scale: Ansari-Bradley" )
 }
 
 
@@ -1173,7 +1191,7 @@ function()
             series = "x",
             object2x = FALSE,
             report = TRUE ),
-        subject = "Scale: Mood Test" )
+        subject = "Scale: Mood" )
 }
 
 
@@ -1196,7 +1214,7 @@ function()
             series = "x",
             object2x = FALSE,
             report = TRUE ),
-        subject = "Correlation: Pearson Test" )
+        subject = "Correlation: Pearson" )
 }
 
 
@@ -1218,7 +1236,7 @@ function()
             series = "x",
             object2x = FALSE,
             report = TRUE ),
-        subject = "Correlation: Kendall's tau Test" )
+        subject = "Correlation: Kendall" )
 }
 
 
@@ -1241,7 +1259,7 @@ function()
             series = "x",
             object2x = FALSE,
             report = TRUE ),
-        subject = "Correlation: Spearman's rho Test" )
+        subject = "Correlation: Spearman" )
 }
 
 

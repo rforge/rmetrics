@@ -389,7 +389,7 @@ function()
             series = "x",
             object2x = FALSE,
             report = TRUE ),
-        subject = "First timeDate Value" )
+        subject = "First Value" )
 }
 
 
@@ -413,7 +413,7 @@ function()
             series = "x",
             object2x = FALSE,
             report = TRUE),
-        subject = "Last timeDate Value" )
+        subject = "Last Value" )
 }
 
 
@@ -445,7 +445,7 @@ function()
             seconds = 0,
             object2x = FALSE,
             report = TRUE),
-        subject = "+/- Time Span a timeDate Object" )          
+        subject = "+/- Time Span Object" )          
 }
 
 
@@ -469,7 +469,7 @@ function()
             series = "x",
             object2x = FALSE,
             report = TRUE),
-        subject = "Sort a timeDate Object" )          
+        subject = "Sort Object" )          
 }
 
 
@@ -494,7 +494,7 @@ function()
             units = "days",
             object2x = FALSE,
             report = TRUE),
-        subject = "Round a timeDate Object" )
+        subject = "Round Object" )
 }
 
 
@@ -519,7 +519,7 @@ function()
             units = "days",
             object2x = FALSE,
             report = TRUE),
-        subject = "Truncate a timeDate Object" )
+        subject = "Truncate Object" )
 }
 
 
@@ -543,7 +543,7 @@ function()
             series = "x",
             object2x = FALSE,
             report = TRUE),
-        subject = "Revert a timeDate Object" )
+        subject = "Revert Object" )
 }
 
 
@@ -567,7 +567,7 @@ function()
             series = "x",
             object2x = FALSE,
             report = TRUE),
-        subject = "timeDate to Character" )
+        subject = "to Character" )
 }
 
 
@@ -591,7 +591,7 @@ function()
             series = "x",
             object2x = FALSE, 
             report = TRUE),
-        subject = "timeDate to Data Frame" )
+        subject = "to Data Frame" )
 }
 
 
@@ -615,7 +615,7 @@ function()
             series = "x",
             object2x = FALSE,
             report = TRUE),
-        subject = "timeDate to POSIXct" )
+        subject = "to POSIXct" )
 }
 
 
@@ -628,18 +628,20 @@ function()
 
     # Julian Day Counts from timeDate Vector:
     helpTopic <<- "timeDate"
-    myFunction = function(series, object2x, report) { 
+    myFunction = function(series, unclass, object2x, report) { 
         x = tkEval(series)
         object <<- julian(x = x)
+        if (unclass) object <<- unclass(object)
         if (report) tkTitle("Julian Counts from timeDate Object")
         object }
     tkExecute(
         fun = myFunction,
         prototypes = list(
             series = "x",
+            unclass = FALSE,
             object2x = FALSE,
             report = TRUE),
-        subject = "Compute Julian Counts" )
+        subject = "Julian Counts" )
 }
 
 
@@ -835,9 +837,8 @@ function()
     helpTopic <<- "lagSeries"
     myFunction = function(series, k, trim, object2x, report) {
         x = tkEval(series)
-        k = as.integer(k)
-        object <<- lagSeries(x = x, k = k, trim  = trim, colNames = NULL) 
-        if (report) tkTitle("La a timeSeries")
+        object <<- lagSeries(x = x, k = k, trim = trim, units = NULL) 
+        if (report) tkTitle("Lag a timeSeries")
         object }
     tkExecute(
         fun = myFunction,

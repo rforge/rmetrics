@@ -401,13 +401,10 @@ function(fun, prototypes, subject = "")
         tkgrid(objectLabel) 
         # Save:
         if (length(z$object2x) == 1) {
-            if (z$object2x) 
-                # DEBUG: cat("\n\n object2x:", z$object2x, "\n")
-                x <<- tkSaveAsX(object, subject)
+            if (z$object2x) x <<- tkSaveAsX(object, subject)
         }
         # Print Specification overwrites tkoutput:
         if (length(z$report) == 1)  {
-            # DEBUG: cat("\n\n object2x:", z$report, "\n")
             tkoutput = z$report
         }
         # Output:

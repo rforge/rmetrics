@@ -108,17 +108,23 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Linear Modelling:
-    helpTopic <<- ""
-    myFunction = function(series, formula, object2x, report) {
+    helpTopic <<- "regFit"
+    myFunction = function(series, formula, doplot, par, object2x, report) {
         x = tkEval(series)
         formula = as.formula(formula)
         object <<- regFit(formula = formula, data = x)
+        if (doplot) {
+            tkEval(par)
+            plot(object)
+        }
         object }
     tkExecute(
         fun = myFunction,
         prototypes = list(
             series = "x",
             formula = "x ~ x1 + x2",   
+            doplot = TRUE, 
+            par = "par(mfrow=c(2,2))",
             object2x = FALSE,
             report = TRUE ), 
         subject = "LM Modelling" ) 
@@ -133,13 +139,18 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Generalized Linear Modelling:
-    helpTopic <<- ""
-    myFunction = function(series, formula, family, object2x, report){
+    helpTopic <<- "regFit"
+    myFunction = function(series, formula, family, doplot, par, 
+        object2x, report){
         x = tkEval(series)
         formula = as.formula(formula)
         family = tkEval(family)
-        object <<- regFit(formula = formula,
-            family = family, data = x, method = "GLM")
+        object <<- regFit(formula = formula, family = family, data = x, 
+            method = "GLM")
+        if (doplot) {
+            tkEval(par)
+            plot(object)
+        }
         object }
     tkExecute(
         fun = myFunction,
@@ -147,6 +158,8 @@ function()
             series = "x", 
             formula = "x ~ x1 + x2",
             family = "gaussian()",
+            doplot = TRUE, 
+            par = "par(mfrow=c(2,2))",
             object2x = FALSE,
             report = TRUE ), 
         subject = "GLM Modelling" ) 
@@ -161,17 +174,27 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Generalized Additive Modelling
-    helpTopic <<- ""
-    myFunction = function(formula, object2x, report){
-        object <<- regFit(
-            formula = as.formula(formula), 
-            family = gaussian(), 
-            data = x, method = "GAM", nterms = NA, size = NA)
+    helpTopic <<- "regFit"
+    myFunction = function(series, formula, family, doplot, par, 
+        object2x, report){
+        x = tkEval(series)
+        formula = as.formula(formula)
+        family = tkEval(family)
+        object <<- regFit(formula = formula, family = family, 
+            data = x, method = "GAM")
+        if (doplot) {
+            tkEval(par)
+            plot(object)
+        }
         object }
     tkExecute(
         fun = myFunction,
         prototypes = list(
+            series = "x",
             formula = "x ~ s(x1) + s(x2)",
+            family = "gaussian()",
+            doplot = TRUE, 
+            par = "par(mfrow=c(2,2))",
             object2x = FALSE,
             report = TRUE ),  
         subject = "GAM Modelling" ) 
@@ -186,17 +209,26 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Projection Pursuit Regression:
-    helpTopic <<- ""
-    myFunction = function(formula, object2x, report){
-        object <<- regFit(
-            formula = as.formula(formula),
-            family = eval(parse(text = "gaussian")), 
-            data = x, method = "PPR", nterms = NA, size = NA)
+    helpTopic <<- "regFit"
+    myFunction = function(series, formula, nterms, doplot, par, 
+        object2x, report){
+        x = tkEval(series)
+        formula = as.formula(formula)
+        object <<- regFit(formula = formula, nterms = nterms,
+            data = x, method = "PPR")
+        if (doplot) {
+            tkEval(par)
+            plot(object)
+        }
         object }
     tkExecute(
         fun = myFunction,
         prototypes = list(
-            formula = "Y ~ X1 + X2",
+            series = "x",
+            formula = "x ~ x1 + x2",
+            nterms = 2,
+            doplot = TRUE, 
+            par = "par(mfrow=c(2,2))",
             object2x = FALSE,
             report = TRUE ), 
         subject = "PPR Modelling" ) 
@@ -211,17 +243,23 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # MARS Pursuit Regression:
-    helpTopic <<- ""
-    myFunction = function(formula, object2x, report){
-        object <<- regFit(
-            formula = as.formula(formula),
-            family = eval(parse(text = "gaussian")), 
-            data = x, method = "MARS", nterms = NA, size = NA)
+    helpTopic <<- "regFit"
+    myFunction = function(series, formula, doplot, par, object2x, report) {
+        x = tkEval(series)
+        formula = as.formula(formula)
+        object <<- regFit(formula = formula, data = x, method = "MARS")
+        if (doplot) {
+            tkEval(par)
+            plot(object)
+        }
         object }
     tkExecute(
         fun = myFunction,
         prototypes = list(
-            formula = "Y ~ X1 + X2",
+            series = "x",
+            formula = "x ~ x1 + x2",
+            doplot = TRUE, 
+            par = "par(mfrow=c(2,2))",
             object2x = FALSE,
             report = TRUE ), 
         subject = "MARS Modelling" )
@@ -236,17 +274,23 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # POLYMARS Pursuit Regression:
-    helpTopic <<- ""
-    myFunction = function(formula, object2x, report){
-        object <<- regFit(
-            formula = as.formula(formula),
-            family = eval(parse(text = "gaussian")), 
-            data = x, method = "POLYMARS", nterms = NA, size = NA)
+    helpTopic <<- "regFit"
+    myFunction = function(series, formula, doplot, par, object2x, report) {
+        x = tkEval(series)
+        formula = as.formula(formula)
+        object <<- regFit(formula = formula, data = x, method = "POLYMARS")
+        if (doplot) {
+            tkEval(par)
+            plot(object)
+        }
         object }
     tkExecute(
         fun = myFunction,
         prototypes = list(
-            formula = "Y ~ X1 + X2",
+            series = "x",
+            formula = "x ~ x1 + x2",
+            doplot = TRUE, 
+            par = "par(mfrow=c(2,2))",
             object2x = FALSE,
             report = TRUE ), 
         subject = "POLYMARS Modelling" )  
@@ -261,17 +305,26 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Neural Network Regression:
-    helpTopic <<- ""
-    myFunction = function(formula, object2x, report){
-        object <<- regFit(
-            formula = as.formula(formula),
-            family = eval(parse(text = "gaussian")), 
-            data = x, method = "NNET", nterms = NA, size = NA)
+    helpTopic <<- "regFit"
+    myFunction = function(series, formula, size, doplot, par, 
+        object2x, report) {
+        x = tkEval(series)
+        formula = as.formula(formula)
+        object <<- regFit(formula = formula, data = x, method = "NNET", 
+            size = size)
+        if (doplot) {
+            tkEval(par)
+            plot(object)
+        }
         object }
     tkExecute(
         fun = myFunction,
         prototypes = list(
-            formula = "Y ~ X1 + X2",
+            series = "x",
+            formula = "x ~ x1 + x2",
+            size = 4,
+            doplot = TRUE, 
+            par = "par(mfrow=c(2,2))",
             object2x = FALSE,
             report = TRUE ), 
         subject = "NNET Modelling" ) 
@@ -299,12 +352,12 @@ function()
 # ------------------------------------------------------------------------------
 
 
-.fMultivar.RegressionTests.2 = 
+.fMultivar.RegressionTests.bgTest = 
 function()
 {   # A function implemented by Diethelm Wuertz
     
     # Breusch-Godfrey Test:
-    helpTopic <<- ""
+    helpTopic <<- "bgTest"
     myFunction = function(formula, order, type) {
         formula = as.formula(formula)
         order = as.integer(order)
@@ -324,12 +377,12 @@ function()
 # ------------------------------------------------------------------------------
 
 
-.fMultivar.RegressionTests.3 = 
+.fMultivar.RegressionTests.bpTest = 
 function()
 {   # A function implemented by Diethelm Wuertz
     
     # Breusch-Pagan Test:
-    helpTopic <<- ""
+    helpTopic <<- "bpTest"
     myFunction = function(formula, studentize) {
         formula = as.formula(formula)
         object <<- bpTest(formula = formula, varformula = NULL, 
@@ -347,12 +400,12 @@ function()
 # ------------------------------------------------------------------------------
 
 
-.fMultivar.RegressionTests.4 = 
+.fMultivar.RegressionTests.dwTest = 
 function()
 {   # A function implemented by Diethelm Wuertz
     
     # Durbin-Watson Test:
-    helpTopic <<- ""
+    helpTopic <<- "dwTest"
     myFunction = function(formula, alternative, iterations) {
         formula = as.formula(formula)
         object <<- dwTest(formula = formula, alternative = alternative,
@@ -372,15 +425,15 @@ function()
 # ------------------------------------------------------------------------------
 
 
-.fMultivar.RegressionTests.5 = 
+.fMultivar.RegressionTests.gpTest = 
 function()
 {   # A function implemented by Diethelm Wuertz
     
     # Goldfeld - Quandt Test:
-    helpTopic <<- ""
+    helpTopic <<- "gpTest"
     myFunction = function(formula, alternative, iterations) {
         formula = as.formula(formula)
-        object <<- dwTest(formula = formula, data = x)
+        object <<- gpTest(formula = formula, data = x)
         object }
     tkExecute(
         fun = myFunction,
@@ -395,12 +448,12 @@ function()
 # ------------------------------------------------------------------------------
 
 
-.fMultivar.RegressionTests.6 = 
+.fMultivar.RegressionTests.harvTest = 
 function()
 {   # A function implemented by Diethelm Wuertz
     
     # Harvey - Collier Test:
-    helpTopic <<- ""
+    helpTopic <<- "harvTest"
     myFunction = function(formula, alternative, iterations) {
         formula = as.formula(formula)
         object <<- dwTest(formula = formula, data = x)
@@ -418,15 +471,15 @@ function()
 # ------------------------------------------------------------------------------
 
 
-.fMultivar.RegressionTests.7 = 
+.fMultivar.RegressionTests.hmcTest = 
 function()
 {   # A function implemented by Diethelm Wuertz
     
     # Harrison - McCabe Test:
-    helpTopic <<- ""
+    helpTopic <<- "hmcTest"
     myFunction = function(formula, alternative, iterations) {
         formula = as.formula(formula)
-        object <<- dwTest(formula = formula, data = x)
+        object <<- hmcTest(formula = formula, data = x)
         object }
     tkExecute(
         fun = myFunction,
@@ -441,11 +494,11 @@ function()
 # ------------------------------------------------------------------------------
 
 
-.fMultivar.RegressionTests.8 = 
+.fMultivar.RegressionTests.rainTest = 
 function()
 {
     # Rainbow Test:
-    helpTopic <<- ""
+    helpTopic <<- "rainTest"
     myFunction = function(formula, alternative, iterations) {
         formula = as.formula(formula)
         object <<- dwTest(formula = formula, data = x)
@@ -463,7 +516,7 @@ function()
 # ------------------------------------------------------------------------------
 
 
-.fMultivar.RegressionTests.9 = 
+.fMultivar.RegressionTests.resetTest = 
 function()
 {   # A function implemented by Diethelm Wuertz
     
@@ -517,7 +570,7 @@ function()
         fun = myFunction,
         prototypes = list(
             n = 5,
-            object2x = FALSE,
+            object2x = TRUE,
             report = TRUE ),
         subject = "Pascal Matrix")
 }
@@ -532,13 +585,15 @@ function()
 
     # Return Diagonal Matrix:
     helpTopic <<- ""
-    myFunction = function(object2x, report) {
+    myFunction = function(matrix, object2x, report) {
+        x =  tkEval(matrix)
         object <<- diag(x)
         if (report) tkTitle("Diagonal Matrix")
         object }
     tkExecute(
         fun = myFunction,
         prototypes = list(
+            matrix = "x",
             object2x = FALSE,
             report = TRUE ),
         subject = "Diagonal Matrix" ) 
@@ -1777,8 +1832,7 @@ function()
             series = "x", 
             object2x = FALSE,
             report = TRUE ),
-        subject = "Sterling Ratio",
-        tkoutput = TRUE) 
+        subject = "Sterling Ratio" ) 
 }
 
 

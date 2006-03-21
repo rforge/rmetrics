@@ -161,7 +161,7 @@ function()
     # Add Menu:
     Label = "Regression Tests"
     subLabel = c(
-        "* Demo tS: realInvest ~ realGNP + realInterest",
+        "* Demo Data: x = 0.7*x1 + 0.3*x2 + eps",
         "____________________________________________",
         "Breusch-Godfrey Test",
         "Breusch-Pagan Test",
@@ -172,16 +172,16 @@ function()
         "Rainbow Test",
         "Ramsey RESET Test")
     Command = c(
-        ".fMultivar.RegressionTests.1",
+        ".fMultivar.Regression.lmData",
         "tkSeparator",
-        ".fMultivar.RegressionTests.2",
-        ".fMultivar.RegressionTests.3",
-        ".fMultivar.RegressionTests.4",
-        ".fMultivar.RegressionTests.5",
-        ".fMultivar.RegressionTests.6",
-        ".fMultivar.RegressionTests.7",
-        ".fMultivar.RegressionTests.8",
-        ".fMultivar.RegressionTests.9")
+        ".fMultivar.RegressionTests.bgTest",
+        ".fMultivar.RegressionTests.bpTest",
+        ".fMultivar.RegressionTests.dwTest",
+        ".fMultivar.RegressionTests.gqTest",
+        ".fMultivar.RegressionTests.harvestTest",
+        ".fMultivar.RegressionTests.hmcTest",
+        ".fMultivar.RegressionTests.rainTest",
+        ".fMultivar.RegressionTests.resetTest")
     tkAddPopupMenu(fMultivarMenu, Label, subLabel, Command)
         
     # Add Menu:

@@ -502,7 +502,7 @@ function()
             start = "c(-1.894,-9.92,0.025)",
             par = "par(mfrow=c(3,2))",
             object2x = FALSE,
-            report = FAKLSE ),
+            report = FALSE ),
         subject = "Roessler Attractor" )
 }
 
