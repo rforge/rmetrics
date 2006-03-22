@@ -65,18 +65,6 @@ function()
         ".fExtremes.ExtremesPlots.records",
         ".fExtremes.ExtremesPlots.xacf")
     tkAddPopupMenu(fExtremesMenu, Label, subLabel, Command)
-    
-    if (FALSE) {
-    # Add Menu:
-    Label = "Data Preprocessing"
-    subLabel = c(
-        "* Demo tS:: x = BMW Daily Returns",
-        "Find Threshold")
-    Command = c(
-        ".fData.bmwDaily",
-        ".fExtremes.DataPreprocessing.findThreshold")
-    tkAddPopupMenu(fExtremesMenu, Label, subLabel, Command)
-    }
         
     # Add Menu:
     Label = "______________________"

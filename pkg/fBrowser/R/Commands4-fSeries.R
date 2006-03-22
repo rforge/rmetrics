@@ -108,11 +108,11 @@ function()
         object2x, report) {
         fit = eval(parse(text = as.character(fit)))
         conf = eval(parse(text = conf))
+        if (doplot) tkEval(par)
         object@predicted.values <<- predict.fARMA(object = fit, 
             n.ahead = n.ahead, n.back = n.back, conf = conf, 
             doplot = TRUE, doprint = FALSE) 
         if (report) tkTitle("ARMA Prediction")
-        if (doplot) tkEval(par)
         object }
     tkExecute(
         fun = myFunction,
@@ -511,12 +511,33 @@ function()
 # Dependency Tests
 
 
+.fSeries.TimeSeriesTests.runsTest = 
+function()
+{   # A function implemented by Diethelm Wuertz
+    
+    # Runs Test:
+    helpTopic <<- "runsTest"
+    myFunction = function(series, object2x, report) {
+        x = tkEval(series)
+        object <<- runsTest(x = x) 
+        if (report) tkTitle("Runs Test")
+        object }
+    tkExecute(
+        fun = myFunction,
+        prototypes = list(
+            series = "x",
+            object2x = FALSE,
+            report = TRUE ),
+        subject = "Runs Test" )
+}
+
+
 .fSeries.TimeSeriesTests.bdsTest = 
 function()
 {   # A function implemented by Diethelm Wuertz
     
-    # BDS NN Test:
-    helpTopic <<- ""
+    # BDS Test:
+    helpTopic <<- "bdsTest"
     myFunction = function(m, eps, object2x, report) {
         m = as.integer(m)
         if (eps == "NULL") eps = NULL
@@ -529,7 +550,7 @@ function()
             eps = "NULL",
             object2x = FALSE,
             report = TRUE ),
-        subject = "BDS NN Test" )
+        subject = "BDS Test" )
 }
   
   
@@ -540,7 +561,7 @@ function()
     # FUNCTION:
     
     # Teraesvirta NN Test:
-    helpTopic <<- ""
+    helpTopic <<- "tnnTest"
     myFunction = function(lag, object2x, report) {
         lag = as.integer(lag)
         object <<- tnnTest(x = x, lag = lag) 
@@ -565,7 +586,7 @@ function()
     # FUNCTION:
     
     # White NN Test:
-    helpTopic <<- ""
+    helpTopic <<- "wnnTest"
     myFunction = function(lag, qstar, q, range, object2x, report) {
         lag = as.integer(lag)
         qstar = as.integer(qstar)
@@ -589,7 +610,6 @@ function()
 
 ################################################################################
 # Unit Root Distribution
-
 
 .fSeries.UnitRootDistribution.1 = 
 function()
@@ -706,6 +726,18 @@ function()
             object2x = FALSE,
             report = TRUE ),
         subject = "McKinnon Unit Root Test" ) 
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.fSeries.UnitRootTests.urca =
+function()
+{   # A function implemented by Diethelm Wuertz
+
+    # Return Value:
+    require(urca)
 }
 
 

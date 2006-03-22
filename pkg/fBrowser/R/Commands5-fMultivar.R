@@ -358,19 +358,24 @@ function()
     
     # Breusch-Godfrey Test:
     helpTopic <<- "bgTest"
-    myFunction = function(formula, order, type) {
+    myFunction = function(series, formula, order, type, object2x, report) {
+        x = tkEval(series)
         formula = as.formula(formula)
-        order = as.integer(order)
+        type = tkSplit(type)
+        if (report) tkTitle("Breusch-Godfrey Test")
         object <<- bgTest(formula = formula, order = order, 
             type = type, data = x)
         object }
     tkExecute(
         fun = myFunction,
         prototypes = list(
+            series = "x",
             formula = "x ~ x1 + x2",
             order = 1,
-            type = "Chisq"),
-        subject = "Breusch - Godfrey Test")
+            type = "Chisq & F",
+            object2x = FALSE,
+            report = TRUE ),
+        subject = "Breusch-Godfrey Test")
 }
 
 
@@ -383,17 +388,23 @@ function()
     
     # Breusch-Pagan Test:
     helpTopic <<- "bpTest"
-    myFunction = function(formula, studentize) {
+    myFunction = function(series, formula, studentize, 
+        object2x, report) {
+        x = tkEval(series)
         formula = as.formula(formula)
-        object <<- bpTest(formula = formula, varformula = NULL, 
+        object <<- bpTest(formula = formula, varformula = NULL,
             studentize = studentize, data = x)
+        if (report) tkTitle("Breusch-Pagan Test")
         object }
     tkExecute(
         fun = myFunction,
         prototypes = list(
+            series = "x",
             formula = "x ~ x1 + x2",
-            studentize = TRUE ),
-        subject = "Breusch - Pagan Test" )
+            studentize = TRUE,
+            object2x = FALSE,
+            report = TRUE ),
+        subject = "Breusch-Pagan Test" )
 }
 
 
@@ -406,19 +417,25 @@ function()
     
     # Durbin-Watson Test:
     helpTopic <<- "dwTest"
-    myFunction = function(formula, alternative, iterations) {
+    myFunction = function(series, formula, alternative, iterations, 
+        object2x, report) {
+        x = tkEval(series)
         formula = as.formula(formula)
+        alternative = tkSplit(alternative)
         object <<- dwTest(formula = formula, alternative = alternative,
-            iterations = iterations, exact = NULL, tol = 1.0e-10, 
-            data = x)
+            iterations = iterations, exact = NULL, tol = 1.0e-10, data = x)
+        if (report) tkTitle("Durbin-Watson Test")
         object }
     tkExecute(
         fun = myFunction,
         prototypes = list(
+            series = "x",
             formula = "x ~ x1 + x2",
-            alternative = "greater",
-            iterations = 15),
-        subject = "Durbin - Watson Test" )
+            alternative = "greater & two.sided & less",
+            iterations = 15,
+            object2x = FALSE,
+            report = TRUE ),
+        subject = "Durbin-Watson Test" )
 }
 
 
@@ -430,18 +447,24 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Goldfeld - Quandt Test:
-    helpTopic <<- "gpTest"
-    myFunction = function(formula, alternative, iterations) {
+    helpTopic <<- "gqTest"
+    myFunction = function(series, formula, point, 
+        object2x, report) {
+        x = tkEval(series)
         formula = as.formula(formula)
-        object <<- gpTest(formula = formula, data = x)
+        object <<- gqTest(formula = formula, point = point, order.by =NULL,
+            data = x)
+        if (report) tkTitle("Goldfeld-Quandt Test")
         object }
     tkExecute(
         fun = myFunction,
         prototypes = list(
+            series = "x",
             formula = "x ~ x1 + x2",
-            alternative = "greater",
-            iterations = 15),
-        subject = "Goldfeld - Quandt Test" )
+            point = 0.5,
+            object2x = FALSE,
+            report = TRUE ),
+        subject = "Goldfeld-Quandt Test" )
 }
 
 
@@ -454,17 +477,21 @@ function()
     
     # Harvey - Collier Test:
     helpTopic <<- "harvTest"
-    myFunction = function(formula, alternative, iterations) {
+    myFunction = function(series, formula, order.by = NULL, 
+        object2x, report) {
+        x = tkEval(series)
         formula = as.formula(formula)
-        object <<- dwTest(formula = formula, data = x)
+        object <<- harvTest(formula = formula, data = x)
+        if (report) tkTitle("Harvey-Collier Test")
         object }
     tkExecute(
         fun = myFunction,
         prototypes = list(
+            series = "x",
             formula = "x ~ x1 + x2",
-            alternative = "greater",
-            iterations = 15),
-        subject = "Harvey - Collier Test" ) 
+            object2x = FALSE,
+            report = TRUE ),
+        subject = "Harvey-Collier Test" ) 
 }
 
 
@@ -477,17 +504,28 @@ function()
     
     # Harrison - McCabe Test:
     helpTopic <<- "hmcTest"
-    myFunction = function(formula, alternative, iterations) {
+    myFunction = function(series, formula, point, simulate.p, nsim, doplot,
+        object2x, report) {
+        x = tkEval(series)
         formula = as.formula(formula)
-        object <<- hmcTest(formula = formula, data = x)
+        if (doplot) tkEval(par)
+        object <<- hmcTest(formula = formula, point = point, order.by = NULL,
+            simulate.p = simulate.p, nsim = nsim, plot = doplot, data = x)
+        if (report) tkTitle("Harrison-McCabe Test")
         object }
     tkExecute(
         fun = myFunction,
         prototypes = list(
+            series = "x",
             formula = "x ~ x1 + x2",
-            alternative = "greater",
-            iterations = 15),
-        subject = "Harrison - McCabe Test" )
+            point = 0.5,
+            simulate.p = TRUE,
+            nsim = 1000,
+            doplot = TRUE,
+            par = "par(mfrow=c(1,1))",
+            object2x = FALSE,
+            report = TRUE ),
+        subject = "Harrison-McCabe Test" )
 }
 
 
@@ -499,16 +537,22 @@ function()
 {
     # Rainbow Test:
     helpTopic <<- "rainTest"
-    myFunction = function(formula, alternative, iterations) {
+    myFunction = function(series, formula, fraction, 
+        object2x, report) {
+        x = tkEval(series)
         formula = as.formula(formula)
-        object <<- dwTest(formula = formula, data = x)
+        object <<- rainTest(formula = formula, fraction = fraction, 
+            order.by = NULL, center = NULL, data = x)
+        if (report) tkTitle("Rainbow Test")
         object }
     tkExecute(
         fun = myFunction,
         prototypes = list(
+            series = "x",
             formula = "x ~ x1 + x2",
-            alternative = "greater",
-            iterations = 15),
+            fraction = 0.5,
+            object2x = FALSE,
+            report = TRUE ),
         subject = "Rainbow Test")
 }
 
@@ -521,17 +565,26 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Ramsey RESET Test:
-    helpTopic <<- ""
-    myFunction = function(formula, alternative, iterations) {
+    helpTopic <<- "resetTest"
+    myFunction = function(series, formula, power, type,
+        object2x, report) {
+        x = tkEval(series)
         formula = as.formula(formula)
-        object <<- dwTest(formula = formula, data = x)
+        power = tkEval(power)
+        type = tkSplit(type)
+        object <<- resetTest(formula = formula, power = power, type = type,
+            data = x)
+        if (report) tkTitle("Ramsey RESET Test")
         object }
     tkExecute(
         fun = myFunction,
         prototypes = list(
+            series = "x",
             formula = "x ~ x1 + x2",
-            alternative = "greater",
-            iterations = 15),
+            power = "2:3",
+            type = "fitted & regressor & princomp",
+            object2x = FALSE,
+            report = TRUE ),
         subject = "Ramsey RESET Test" ) 
 }
 
@@ -559,7 +612,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Generate Pascal Matrix:
-    helpTopic <<- ""
+    helpTopic <<- "VectorMatrixAddon"
     myFunction = function(n, object2x, report) {
         n = as.integer(n)
         object <<- pascal(n)
@@ -584,7 +637,7 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Return Diagonal Matrix:
-    helpTopic <<- ""
+    helpTopic <<- "VectorMatrixAddon"
     myFunction = function(matrix, object2x, report) {
         x =  tkEval(matrix)
         object <<- diag(x)
@@ -608,14 +661,16 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Return Lower Triangular Matrix:
-    helpTopic <<- ""
-    myFunction = function(object2x, report) {
+    helpTopic <<- "VectorMatrixAddon"
+    myFunction = function(matrix, object2x, report) {
+        x =  tkEval(matrix)
         object <<- triang(x)
         if (report) tkTitle("Lower Triangular Matrix")
         object }
     tkExecute(
         fun = myFunction,
         prototypes = list(
+            matrix = "x",
             object2x = FALSE,
             report = TRUE ),
         subject = "Lower Triangular") 
@@ -630,14 +685,16 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Return Upper Triangular Matrix:
-    helpTopic <<- ""
-    myFunction = function(object2x, report) {
+    helpTopic <<- "VectorMatrixAddon"
+    myFunction = function(matrix, object2x, report) {
+        x =  tkEval(matrix)
         object <<- Triang(x)
         if (report) tkTitle("Upper Triangular Matrix")
         object }
     tkExecute(
         fun = myFunction,
         prototypes = list(
+            matrix = "x",
             object2x = FALSE,
             report = TRUE ),
         subject = "Upper Triangular" ) 
@@ -652,14 +709,16 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Return Determinant:
-    helpTopic <<- ""
-    myFunction = function(object2x, report) {
+    helpTopic <<- "VectorMatrixAddon"
+    myFunction = function(matrix, object2x, report) {
+        x =  tkEval(matrix)
         object <<- det(x)
         if (report) tkTitle("Determinant")
         object }
     tkExecute(
         fun = myFunction,
         prototypes = list(
+            matrix = "x",
             object2x = FALSE,
             report = TRUE ),
         subject = "Determinant" )
@@ -674,14 +733,16 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Return Inverse Matrix:
-    helpTopic <<- ""
-    myFunction = function(object2x, report) {
+    helpTopic <<- "VectorMatrixAddon"
+    myFunction = function(matrix, object2x, report) {
+        x =  tkEval(matrix)
         object <<- inv(x)
         if (report) tkTitle("Inverse Matrix")
         object }
     tkExecute(
         fun = myFunction,
         prototypes = list(
+            matrix = "x",
             object2x = FALSE,
             report = TRUE ),
         subject = "Inverse" ) 
@@ -696,16 +757,18 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # norm(x, p) p-Norm:
-    helpTopic <<- ""
-    myFunction = function(p, object2x, report) {
-        p = as.integer(p)
+    helpTopic <<- "VectorMatrixAddon"
+    myFunction = function(matrix, p, object2x, report) {
+        x =  tkEval(matrix)
+        p = as.numeric(tkSplit(p))
         object <<- norm(x, p)
         if (report) tkTitle("Norm of Matrix")
         object }
     tkExecute(
         fun = myFunction,
         prototypes = list(
-            p = 2,
+            matrix = "x",
+            p = c("2 & 1 & Inf"),
             object2x = FALSE,
             report = TRUE ),
         subject = "Norm" )
@@ -720,14 +783,19 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # rk(x, method) Rank:
-    helpTopic <<- ""
-    myFunction = function(method, object2x, report) {
+    helpTopic <<- "VectorMatrixAddon"
+    myFunction = function(matrix, method, object2x, report) {
+        x =  tkEval(matrix)
+        method = tkSplit(method)
         object <<- rk(x = x, method = method)
+        attr(object, "control") = method
         if (report) tkTitle("Rank of Matrix")
         object }
     tkExecute(
         fun = myFunction, 
         prototypes = list(,
+            matrix = "x",
+            method = "qr & chol",
             object2x = FALSE,
             report = TRUE ),
         subject = "Rank" )
@@ -742,14 +810,16 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # t(x) Transposed"
-    helpTopic <<- ""
-    myFunction = function(method, object2x, report) {
+    helpTopic <<- "VectorMatrixAddon"
+    myFunction = function(matrix, method, object2x, report) {
+        x =  tkEval(matrix)
         object <<- t(x)
         if (report) tkTitle("Transpose of Matrix")
         object }
     tkExecute(
         fun = myFunction, 
         prototypes = list(
+            matrix = "x",
             object2x = FALSE,
             report = TRUE ),
         subject = "Transpose" )
@@ -764,18 +834,22 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # mexp(x, order, method) Exponentiate Square Matrix:
-    helpTopic <<- ""
-    myFunction = function(order, method, report) {
-        object <<- mexp(x = x, order = order, method = method, object2x)
+    helpTopic <<- "VectorMatrixAddon"
+    myFunction = function(matrix, order, method, report) {
+        x =  tkEval(matrix)
+        method = tkSplit(method)
+        object <<- mexp(x = x, order = order, method = method)
+        if (report) tkTitle("Exponentiated Matrix")
         object  }
     tkExecute(
         fun = myFunction,
         prototypes = list(
+            matrix = "x",
             order = 8, 
-            method = "pade",
+            method = "pade & taylor",
             object2x = FALSE,
             report = TRUE ),
-        subject = "Exponentiate" )
+        subject = "Exponentiate Matrix" )
 }
     
 
@@ -787,13 +861,16 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # chol(x, pivot) Cholesky Factors:
-    helpTopic <<- ""
-    myFunction = function(pivot, object2x, report) {
+    helpTopic <<- "VectorMatrixAddon"
+    myFunction = function(matrix, pivot, object2x, report) {
+        x =  tkEval(matrix)
         object <<- chol(x = x, pivot = pivot, LINPACK = pivot) 
+        if (report) tkTitle("Cholesky Factors")
         object  }
     tkExecute(
         fun = myFunction,
         prototypes = list(
+            matrix = "x",
             pivot = FALSE,
             object2x = FALSE,
             report = TRUE ),
@@ -809,14 +886,16 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # eigen(x) Eigenvalues and Eigevectors:
-    helpTopic <<- ""
-    myFunction = function(object2x, report) {
+    helpTopic <<- "VectorMatrixAddon"
+    myFunction = function(matrix, object2x, report) {
+        x =  tkEval(matrix)
         object <<- eigen(x)
+        if (report) tkTitle("Eigenvalues and Vectors")
         object  }
     tkExecute(
         fun = myFunction,
         prototypes = list(
-            pivot = FALSE,
+            matrix = "x",
             object2x = FALSE,
             report = TRUE ),
         subject = "Eigenvalues and -vectors" )
@@ -831,14 +910,16 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # svd(x) Singular Value Decomposition:
-    helpTopic <<- ""
-    myFunction = function(object2x, report) {
+    helpTopic <<- "VectorMatrixAddon"
+    myFunction = function(matrix, object2x, report) {
+        x =  tkEval(matrix)
         object <<- svd(x)
+        if (report) tkTitle("Singular Value Decomposition")
         object  }
     tkExecute(
         fun = myFunction,
         prototypes = list(
-            pivot = FALSE,
+            matrix = "x",
             object2x = FALSE,
             report = TRUE ),
         subject = "SV Decomposition" )
@@ -853,14 +934,16 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # kappa(x) Condition Number:
-    helpTopic <<- ""
-    myFunction = function(object2x, report) {
+    helpTopic <<- "VectorMatrixAddon"
+    myFunction = function(matrix, object2x, report) {
+        x =  tkEval(matrix)
         object <<- kappa(x)
+        if (report) tkTitle("Condition Number")
         object  }
     tkExecute(
         fun = myFunction,
         prototypes = list(
-            pivot = FALSE,
+            matrix = "x",
             object2x = FALSE,
             report = TRUE ),
         subject = "Condition Number" )
@@ -875,14 +958,16 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # QR Decomposition:
-    helpTopic <<- ""
-    myFunction = function(object2x, report) {
+    helpTopic <<- "VectorMatrixAddon"
+    myFunction = function(matrix, object2x, report) {
+        x =  tkEval(matrix)
         object <<- qr(x)
+        if (report) tkTitle("QR Decomposition")
         object  }
     tkExecute(
         fun = myFunction,
         prototypes = list(
-            pivot = FALSE,
+            matrix = "x",
             object2x = FALSE,
             report = TRUE ),
         subject = "QR Decomposition" )
@@ -898,15 +983,13 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # * Example timeSeries: x = MSFT|SP500 Returns:
-    helpTopic <<- ""
-    .tkGetData(Data = "msftsp500Monthly", 
-        subject = "Return Series with NA")  
+    helpTopic <<- "MissingValues"
+    .tkGetData(Data = "msftsp500Monthly", subject = "Return Series with NA")  
     x <<- x[109:132, ]
     x@Data[1, 2] <<- NA
     x@Data[9, ] <<- c(NA, NA)
     x@Data[10, 2] <<- NA
     x@Data[24, 1] <<- NA
-    print(x)
 }
 
 
@@ -918,10 +1001,11 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Remove NAs: 
-    helpTopic <<- ""
+    helpTopic <<- "MissingValues"
     myFunction = function(series, object2x, report) {
         x = tkEval(series)
         object <<- removeNA(x = x) 
+        if (report) tkTitle("NA's Removed")
         object }
     tkExecute(
         fun = myFunction,
@@ -941,16 +1025,18 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # Interpolate NAs:
-    helpTopic <<- ""
+    helpTopic <<- "MissingValues"
     myFunction = function(series, method, object2x, report) {
         x = tkEval(series)
+        method = tkSplit(method)
         object <<- interpNA(x = x, method = method) 
+        if (report) tkTitle("Interpolated NAs")
         object }
     tkExecute(
         fun = myFunction,
         prototypes = list(
             series = "x",
-            method = "before", 
+            method = "before & after & linear", 
             object2x = FALSE,
             report = TRUE ),
         subject = "Interpolate NAs" )      
@@ -965,9 +1051,10 @@ function()
 {   # A function implemented by Diethelm Wuertz
     
     # knn Algorithm:
-    helpTopic <<- ""
+    helpTopic <<- "MissingValues"
     myFunction = function(series, correlation, object2x, report) {
         x = tkEval(series)
+        if (report) tkTitle("knn Algorithm")
         object <<- knnNA(x = x, k = max(dim(as.matrix(x))[1] * 0.01, 2), 
             correlation = correlation) 
         object }

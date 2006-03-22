@@ -103,8 +103,8 @@ function()
     tkExecute(
         fun = myFunction,
         prototypes = list(
-            from = "2005-01-01", 
-            to = "2005-12-31", 
+            from = "2005-03-01", 
+            to = "2005-04-30", 
             by = "day", 
             length.out = "NULL", 
             format = "%Y-%m-%d", 

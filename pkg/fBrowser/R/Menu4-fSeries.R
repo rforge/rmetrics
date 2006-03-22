@@ -109,12 +109,14 @@ function()
         # runs Test goes here ?
         "* Demo tS: x - NYSE Daily Returns",
         "_________________________________",
+        "Runs Test",
         "BDS Test", 
         "Teraesvirta NN Test", 
         "White NN Test")
     Command = c(
         ".fData.nyseDaily",
         "tkSeparator",
+        ".fSeries.TimeSeriesTests.runsTest",
         ".fSeries.TimeSeriesTests.bdsTest",
         ".fSeries.TimeSeriesTests.tnnTest",
         ".fSeries.TimeSeriesTests.wnnTest")
@@ -140,7 +142,7 @@ function()
         "tkSeparator",
         ".fSeries.UnitRootTests.adfTest",
         ".fSeries.UnitRootTests.unitrootTest",
-        "tkSeparator",
+        ".fSeries.UnitRootTests.urca",
         ".fSeries.UnitRootTests.urersTest",
         ".fSeries.UnitRootTests.urkpssTest",
         ".fSeries.UnitRootTests.urppTest",

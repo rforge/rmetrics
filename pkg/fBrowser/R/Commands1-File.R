@@ -89,9 +89,10 @@ function()
     
     # List Active Data Set
     lsData = data(package = 
-        c("fBasics", "fSeries", "fMultivar", "fExtremes", "fBrowser"))
+        c("fBasics", "fSeries", "fMultivar", "fExtremes", "fBrowser"),
+        verbose = TRUE)
 
-    tkOutput(capture.output(lsData)) 
+    tkOutput(c(capture.output(lsData), "")) 
 }    
 
 
