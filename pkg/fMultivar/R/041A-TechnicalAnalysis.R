@@ -585,7 +585,7 @@ function(X, indicator = "ema", select = "Close", lag = 9)
     }
             
     if (indicator == "rsi") {
-        ans = rsiTA(x = x[, "Close"], lag = lag)
+        ans = rsiTA(close = x[, "Close"], lag = lag)
     }
          
     # Return Value:
