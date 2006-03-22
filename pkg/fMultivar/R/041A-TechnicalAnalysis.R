@@ -544,11 +544,11 @@ function(X, indicator = "ema", select = "Close", lag = 9)
     }
             
     if (indicator == "vohl") {
-        ans = vohlTA(high = x[, "High"], low = x[, "low"])
+        ans = vohlTA(high = x[, "High"], low = x[, "Low"])
     }
         
     if (indicator == "vor") {
-        ans = vorTA(high = x[, "High"], low = x[, "low"])
+        ans = vorTA(high = x[, "High"], low = x[, "Low"])
     }
         
     if (indicator == "fpk") {
@@ -587,13 +587,11 @@ function(X, indicator = "ema", select = "Close", lag = 9)
     if (indicator == "rsi") {
         ans = rsiTA(x = x[, "Close"], lag = lag)
     }
-        
-    
+         
     # Return Value:
-    timeSeries(data = matrix(ans, ncol =1), charvec = X@positions, 
+    timeSeries(data = matrix(ans, ncol = 1), charvec = X@positions, 
         units = indicator, format = "ISO", zone = "GMT", 
-        FinCenter = "GMT")
-            
+        FinCenter = "GMT")         
 }
 
 
