@@ -113,7 +113,7 @@ dwTest =
 function(formula, alternative = c("greater", "two.sided", "less"),
 iterations = 15, exact = NULL, tol = 1.0e-10, data = list())
 {   
-    .dw.test(formula, alternative, iterations, exact, tol, data)
+    .dwtest(formula, alternative, iterations, exact, tol, data)
 }
     
     
