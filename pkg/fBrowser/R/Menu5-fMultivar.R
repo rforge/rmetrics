@@ -51,9 +51,9 @@ function()
         "Rate of Change",
         "EMA-Oscillator",
         "Momentum Oscillator",
-        "MACD Oscillator",
+        "MACD Indicator",
         "MACD Signal Line",
-        "cMACD Oscillator",
+        "MACD Oscillator",
         "High/Low Volatility",
         "Volatility Ratio",
         "Fast %K Stochastics",
@@ -97,9 +97,9 @@ function()
     Command = c(
         ".fData.sp500IndexMonthly",
         "tkSeparator",
-        ".fMultivar.BenchmarkAnalysis.2",
-        ".fMultivar.BenchmarkAnalysis.3",
-        ".fMultivar.BenchmarkAnalysis.4")
+        ".fMultivar.BenchmarkAnalysis.maxDrawDown",
+        ".fMultivar.BenchmarkAnalysis.sharpeRatio",
+        ".fMultivar.BenchmarkAnalysis.sterlingRatio")
     tkAddPopupMenu(fMultivarMenu, Label, subLabel, Command)     
         
     if (FALSE) {
@@ -251,9 +251,9 @@ function()
     Command = c(
         ".fMultivar.MissingValues.1",
         "tkSeparator",
-        ".fMultivar.MissingValues.2",
-        ".fMultivar.MissingValues.3",
-        ".fMultivar.MissingValues.4")
+        ".fMultivar.MissingValues.removeNA",
+        ".fMultivar.MissingValues.interpNA",
+        ".fMultivar.MissingValues.knnNA")
     tkAddPopupMenu(fMultivarMenu, Label, subLabel, Command) 
         
     # Cascade fileMenu:
