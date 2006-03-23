@@ -38,6 +38,7 @@
 #   print.timeSeries    S3: Print method for a 'timeSeries' object
 #   plot.timeSeries     S3: Plot method for a 'timeSeries' object
 #   lines.timeSeries    S3: Lines method for a 'timeSeries' object
+#   points.timeSeries   S3: Lines method for a 'timeSeries' object
 #   Ops.timeSeries      S3: Arith method for a 'timeSeries' object
 #   [.timeSeries        S3: [ method for a 'timeSeries' object
 #   head.timeSeries     S3: returns the head of a 'timeSeries' object
@@ -493,8 +494,6 @@ function(x, ...)
         
     # Arguments:
     #   x - a "timeSeries" object
-    #   reference.grid - a logical value. Should a grid be
-    #       added to the plot?
         
     # Value:
     #   Plots a 'timeSeries' object.
@@ -503,6 +502,32 @@ function(x, ...)
    
     # Add to Plot:
     lines(x = as.POSIXct(seriesPositions(x)), y = x@Data, ...)
+            
+    # Return Value:
+    invisible(x)
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+points.timeSeries =
+function(x, ...) 
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Plot method for an object of class "timeSeries"
+        
+    # Arguments:
+    #   x - a "timeSeries" object
+        
+    # Value:
+    #   Plots a 'timeSeries' object.
+    
+    # FUNCTION:
+   
+    # Add to Plot:
+    points(x = as.POSIXct(seriesPositions(x)), y = x@Data, ...)
             
     # Return Value:
     invisible(x)
