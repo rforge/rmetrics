@@ -64,6 +64,7 @@
     \code{print.timeSeries} \tab S3: Print method for a 'timeSeries' object, \cr
     \code{plot.timeSeries} \tab S3: Plot method for a 'timeSeries' object, \cr
     \code{lines.timeSeries} \tab S3: Lines method for a 'timeSeries' object, \cr
+    \code{points.timeSeries} \tab S3: Points method for a 'timeSeries' object, \cr
     \code{Ops.timeSeries} \tab S3: Arith method for a 'timeSeries' object, \cr
     \code{[.timeSeries} \tab S3: "[" method for a 'timeSeries' object, \cr
     \code{head.timeSeries} \tab S3: returns the head of a 'timeSeries' object, \cr
@@ -112,6 +113,7 @@ is.timeSeries(object)
 \method{print}{timeSeries}(x, ...)
 \method{plot}{timeSeries}(x, reference.grid = TRUE, lty = 1, ...) 
 \method{lines}{timeSeries}(x, ...)
+\method{points}{timeSeries}(x, ...)
 \method{Ops}{timeSeries}(e1, e2)
 \method{[}{timeSeries}(x, i = min(1, nrow(x@Data)):nrow(x@Data), 
     j = min(1, ncol(x@Data)):ncol(x@Data))
@@ -412,6 +414,8 @@ ohlcDailyPlot(x, volume = TRUE, colOrder = c(1:5), units = 1e6,
     \cr
     
     \code{plot}\cr
+    \code{lines}\cr
+    \code{points}\cr
     \code{print}
     \cr
     plot and print methods for an object of class \code{timeSeries}.
