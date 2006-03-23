@@ -596,7 +596,8 @@ function(data, block = NA, ...)
 # ------------------------------------------------------------------------------
 
 
-.gumbel.pwm = function(data, block = NA, ...) 
+.gumbel.pwm = 
+function(data, block = NA, ...) 
 {
     # "Probability Weighted Moment" method.
     data = as.vector(data)
@@ -798,7 +799,8 @@ function(object, k.blocks = 20, add = FALSE, ...)
     
     # Use "rlevel.gev":
     ans = rlevel.gev(out = object$fit, k.blocks = k.blocks, add = add, ...)
-    object$rlevel = c(min = ans[1], v = ans[2], max = ans[3], "k.blocks" = k.blocks)
+    object$rlevel = 
+        c(min = ans[1], v = ans[2], max = ans[3], "k.blocks" = k.blocks)
     
     # Return Value:
     invisible(object)

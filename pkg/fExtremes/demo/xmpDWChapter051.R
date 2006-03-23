@@ -1,6 +1,6 @@
 #
 # Examples from the Monograph:
-# 	"Rmetrics - Financial Engineering and Computational Finance"
+#   "Rmetrics - Financial Engineering and Computational Finance"
 #     written by Diethelm Wuertz
 #   ISBN to be published
 #
@@ -20,10 +20,10 @@
 #   *** This list is not yet complete ***
 #
 # Author:
-#	(C) 2002-2004, Diethelm Wuertz, GPL
-# 	  www.rmetrics.org
-# 	  www.itp.phys.ethz.ch
-# 	  www.finance.ch
+#   (C) 2002-2004, Diethelm Wuertz, GPL
+#     www.rmetrics.org
+#     www.itp.phys.ethz.ch
+#     www.finance.ch
 #
 
 
@@ -32,18 +32,18 @@
 
 ### Load Library:
 
-	# Load:
-	require(fExtremes)
-	###
-	
-	
+    # Load:
+    require(fExtremes)
+    ###
+    
+    
 # ------------------------------------------------------------------------------
 
 
 ### 5.1.1 Example: Quantile-Quantile Plot
 
-	# Load and Plot the Data 
-    DAX.RET = as.timeSeries(data(dax.ret))
+    # Load and Plot the Data 
+    DAX.RET = as.timeSeries(data(daxRet))
     class(DAX.RET)
     head(DAX.RET)
     qqPlot(DAX.RET, pch = 19, col = "steelblue", cex = 0.7)
@@ -58,10 +58,10 @@
     # Quantile-Quantile Plot:
     .qqPlot = function(x, ...)
     {
-	    x = as.vector(x)
-	    qqnorm(x, ...)
-	    qqline(x)
-	    invisible()
+        x = as.vector(x)
+        qqnorm(x, ...)
+        qqline(x)
+        invisible()
     }
     .qqPlot(DAX.RET)
     ###
@@ -77,7 +77,7 @@
     ###
     
     # Load and Plot the Data 
-    DAX.RET = as.timeSeries(data(dax.ret))  
+    DAX.RET = as.timeSeries(data(daxRet))  
     plot(DAX.RET, main = "DAX Daily log Returns", ylab = "log Return")
     qqPlot(DAX.RET)
     ###
@@ -88,8 +88,8 @@
     
 ### Example: Create Figure 5.1.1 - BMW Data
 
-	# Load and Plot the Data 
-    BMW.RET = as.timeSeries(data(bmw.ret))
+    # Load and Plot the Data 
+    BMW.RET = as.timeSeries(data(bmwRet))
     plot(BMW.RET, main = "BMW Daily log Returns", ylab = "log Return")
     qqPlot(BMW.RET)
     ###
@@ -107,7 +107,7 @@
     # Exponential Variates:
     set.seed(4711)
     mxfPlot(rexp(1000, rate = 2), tail = 0.20)
-   	title(main = "\n\nExponential DF")
+    title(main = "\n\nExponential DF")
     abline(0.5, 0)
     ###
 
@@ -127,8 +127,8 @@
     # DAX log Returns:
     mxfPlot(-100*DAX.RET, tail = 0.20)
     title(main = "\n\nDAX log Returns %")
-	###
-	
+    ###
+    
     
 # ------------------------------------------------------------------------------
     
@@ -136,66 +136,66 @@
 ### Example: Mean Residual Life Plot - Create Figure 5.1.3
 
 
-	# Graph Frame:
-	par(mfrow = c(2, 2), cex = 0.7)	
-	###
-	
-	# Settings:	
-	seed = c(456, 745, 145, 120) 		
-	mains = c(
-		"MRL Plot - Sample 1", "MRL Plot - Sample 2", 
-		"MRL Plot - Sample 3", "MRL Plot - Sample 4") 
-	n = 5000
+    # Graph Frame:
+    par(mfrow = c(2, 2), cex = 0.7) 
+    ###
+    
+    # Settings: 
+    seed = c(456, 745, 145, 120)        
+    mains = c(
+        "MRL Plot - Sample 1", "MRL Plot - Sample 2", 
+        "MRL Plot - Sample 3", "MRL Plot - Sample 4") 
+    n = 5000
 
-	# Create Plots With Your Own Labels and Title:
-	for (i in 1:4) {
-		set.seed(seed[i])
-		mrlPlot(rsymstb(n, alpha = 1.7), nint = 100, 
-			labels = FALSE, plottype = "", xlim = c(0, 60), 
-			ylim = c(-50, 150))
-		title(xlab = "u", ylab = "e", main = mains[i])	
-		grid()		
-	} 
-	###
-	
-	
+    # Create Plots With Your Own Labels and Title:
+    for (i in 1:4) {
+        set.seed(seed[i])
+        mrlPlot(rsymstb(n, alpha = 1.7), nint = 100, 
+            labels = FALSE, plottype = "", xlim = c(0, 60), 
+            ylim = c(-50, 150))
+        title(xlab = "u", ylab = "e", main = mains[i])  
+        grid()      
+    } 
+    ###
+    
+    
 # ------------------------------------------------------------------------------
 
-		
+        
 ### Example: Mean Excess Function Plot
-	
-	# Exponential distribution function:
-	set.seed(7138)
-	mxfPlot(rexp(n, rate = 2), tail = 1, labels = FALSE)
-	title(xlab = "Threshold: u", ylab = "Mean Excess: e",
-		main = "Exponential DF")
-	abline(0.5, 0)
-	###
-	
-	# Lognormal distribution function
-	set.seed(6952)
-	mxfPlot(rlnorm(n, meanlog = 0, sdlog = 2), tail = 1,
-		xlim = c(0, 90), ylim = c(0, 150), labels = FALSE)
-	title(xlab = "Threshold: u", ylab = "Mean Excess: e",
-		main = "Lognormal DF")
-	###
-		
-	# Alpha-stable distribution function:
-	set.seed(9835)
-	mxfPlot(rsymstb(n, alpha = 1.7), tail = 0.1,
-		xlim = c(0, 10), ylim = c(0, 6), labels = FALSE)
-	title(xlab = "Threshold: u", ylab = "Mean Excess: e",
-		main = "1.7 stable DF")
-	abline(0, 0.7)
-	###
+    
+    # Exponential distribution function:
+    set.seed(7138)
+    mxfPlot(rexp(n, rate = 2), tail = 1, labels = FALSE)
+    title(xlab = "Threshold: u", ylab = "Mean Excess: e",
+        main = "Exponential DF")
+    abline(0.5, 0)
+    ###
+    
+    # Lognormal distribution function
+    set.seed(6952)
+    mxfPlot(rlnorm(n, meanlog = 0, sdlog = 2), tail = 1,
+        xlim = c(0, 90), ylim = c(0, 150), labels = FALSE)
+    title(xlab = "Threshold: u", ylab = "Mean Excess: e",
+        main = "Lognormal DF")
+    ###
+        
+    # Alpha-stable distribution function:
+    set.seed(9835)
+    mxfPlot(rsymstb(n, alpha = 1.7), tail = 0.1,
+        xlim = c(0, 10), ylim = c(0, 6), labels = FALSE)
+    title(xlab = "Threshold: u", ylab = "Mean Excess: e",
+        main = "1.7 stable DF")
+    abline(0, 0.7)
+    ###
 
-	
+    
 # ------------------------------------------------------------------------------
 
      
 ### Example 5.1.4: Subsample Records Plot}
 
-	
+    
     # Graph Frame:
     par(mfrow = c(3, 2), cex = 0.7)
     ###
