@@ -139,7 +139,8 @@ function()
     # SPC 500 Open-High-Low-Close:
     myFunction = function(object2x, report) {
         data(spc1970)
-        object <<- as.timeSeries(spc1970[-(1:6319), ])
+        object <<- as.timeSeries(data(spc1970))
+        object <<- cutSeries(object, from = "1999-01-01", to = "2000-12-31")
         if (report) tkTitle(paste(" SPC 500 Daily OHLC Demo Data Set"))
         object }
     tkExecute(
