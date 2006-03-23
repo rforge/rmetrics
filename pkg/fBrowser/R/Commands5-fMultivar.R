@@ -1160,159 +1160,50 @@ function()
 # ------------------------------------------------------------------------------
 
 
-.fMultivar.TechnicalAnalysis.biasTA =
+.fMultivar.TechnicalAnalysis.priceTA =
 function()
 {   # A function implemented by Diethelm Wuertz
 
-    # biasTA - EMA Price Bias
-    helpTopic <<- "TechnicalAnalysis"
-    myFunction = function(series, select, lag, doplot, par, col, merge2x, 
-        object2x, report) {
-        x = tkEval(series)
-        select = tkSplit(select)
-        object <<- .dailyTA(X = x, indicator = "bias", 
-            select = select, lag = lag)
-        if (merge2x) {
-            object2x = FALSE
-            x <<- mergeSeries(x, object@Data)
-        }
-        if (doplot) {
-            tkEval(par) 
-            what = "EMA Price Bias"
-            plot(object, ylab = "Bias", main = what, col = col)
-        }
-        if (report) tkTitle("EMA Price Bias")
-        object }
-    tkExecute(
-        fun = myFunction,
-        prototypes = list(
-            series = "x",
-            select = "Close & Open & High & Low", 
-            lag = 9,
-            doplot = TRUE,
-            par = "par(mfrow=c(2,1),cex=0.7)",
-            col = "red", 
-            merge2x = FALSE,
-            object2x = FALSE,
-            report = TRUE ),
-        subject = "EMA Price Bias" )  
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.fMultivar.TechnicalAnalysis.medpriceTA =
-function()
-{   # A function implemented by Diethelm Wuertz
-
-    # medpriceTA - Median Price
+    # Price Averages:
     helpTopic <<- "TechnicalAnalysis"
     myFunction = function(series, doplot, par, col, merge2x, 
         object2x, report) {
         x = tkEval(series)
-        object <<- .dailyTA(X = x, indicator = "medprice", 
+        medprice = .dailyTA(X = x, indicator = "medprice", 
             select = NULL, lag = NULL)
+        typicalprice = .dailyTA(X = x, indicator = "typicalprice", 
+            select = NULL, lag = NULL)
+        wclose = .dailyTA(X = x, indicator = "wclose", 
+            select = NULL, lag = NULL)
+        object <<- mergeSeries(medprice, cbind(typicalprice@Data, wclose@Data))
         if (merge2x) {
             object2x = FALSE
             x <<- mergeSeries(x, object@Data)
         }
         if (doplot) {
             tkEval(par) 
+            # Median Price
             what = "Median Price"
-            plot(object, ylab = "High+Low)/2", main = what, col = col)
-        }
-        if (report) tkTitle("Median Price")
-        object }
-    tkExecute(
-        fun = myFunction,
-        prototypes = list(
-            series = "x",
-            doplot = TRUE,
-            par = "par(mfrow=c(1,1))",
-            col = "red", 
-            merge2x = FALSE,
-            object2x = FALSE,
-            report = TRUE ),
-        subject = "Median Price" )
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.fMultivar.TechnicalAnalysis.typicalpriceTA =
-function()
-{   # A function implemented by Diethelm Wuertz
-    
-    # typicalpriceTA - Typical Price
-    helpTopic <<- "TechnicalAnalysis"
-    myFunction = function(series, doplot, par, col, merge2x, 
-        object2x, report) {
-        x = tkEval(series)
-        object <<- .dailyTA(X = x, indicator = "typicalprice", 
-            select = NULL, lag = NULL)
-        if (merge2x) {
-            object2x = FALSE
-            x <<- mergeSeries(x, object@Data)
-        }
-        if (doplot) {
-            tkEval(par) 
+            plot(object[,1], ylab = "(High+Low)/2", main = what)
+            # Typical Price
             what = "Typical Price"
-            plot(object, ylab = "Typical Price", main = what, col = col)
-        }
-        if (report) tkTitle("Typical Price")
-        object }
-    tkExecute(
-        fun = myFunction,
-        prototypes = list(
-            series = "x",
-            doplot = TRUE,
-            par = "par(mfrow=c(1,1))",
-            col = "red", 
-            merge2x = FALSE,
-            object2x = FALSE,
-            report = TRUE ),
-        subject = "Typical Price" )  
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.fMultivar.TechnicalAnalysis.wcloseTA =
-function()
-{   # A function implemented by Diethelm Wuertz
-    
-    # wcloseTA - Weighted Close Price
-    helpTopic <<- "TechnicalAnalysis"
-    myFunction = function(series, doplot, par, col, merge2x, 
-        object2x, report) {
-        x = tkEval(series)
-        object <<- .dailyTA(X = x, indicator = "wclose", 
-            select = NULL, lag = NULL)
-        if (merge2x) {
-            object2x = FALSE
-            x <<- mergeSeries(x, object@Data)
-        }
-        if (doplot) {
-            tkEval(par) 
+            plot(object[,2], ylab = "(High+Low+Close)/3", main = what)
+            # Typical Price
             what = "Weighted Closing Price"
-            plot(object, ylab = "Weighted Close", main = what, col = col)
+            plot(object[,3], ylab = "(High+Low+2*Close)/4", main = what)
         }
-        if (report) tkTitle("Weighted Closing Price")
+        if (report) tkTitle("Price Indicators")
         object }
     tkExecute(
         fun = myFunction,
         prototypes = list(
             series = "x",
             doplot = TRUE,
-            par = "par(mfrow=c(1,1))",
-            col = "red", 
+            par = "par(mfrow=c(3,1),cex=0.7)",
             merge2x = FALSE,
             object2x = FALSE,
             report = TRUE ),
-        subject = "Weighted Closing Price" )  
+        subject = "Price Averages" )
 }
 
 
@@ -1325,7 +1216,7 @@ function()
     
     # rocTA - Rate of Change
     helpTopic <<- "TechnicalAnalysis"
-    myFunction = function(series, select, lag, doplot, par, col, merge2x, 
+    myFunction = function(series, select, lag, doplot, par, merge2x, 
         object2x, report) {
         x = tkEval(series)
         select = tkSplit(select)
@@ -1337,8 +1228,12 @@ function()
         }
         if (doplot) {
             tkEval(par) 
+            # Price:
+            what = select
+            plot(x[, select], ylab = what, main = what)
+            # Rate of Change:
             what = "Rate of Change"
-            plot(object, ylab = what, main = what, col = col)
+            plot(object, ylab = what, main = what, col = "red")
         }
         if (report) tkTitle("Rate of Change")
         object }
@@ -1349,8 +1244,7 @@ function()
             select = "Close & Open & High & Low", 
             lag = 9,
             doplot = TRUE,
-            par = "par(mfrow=c(1,1))",
-            col = "red", 
+            par = "par(mfrow=c(2,1),cex=0.7)",
             merge2x = FALSE,
             object2x = FALSE,
             report = TRUE ),
@@ -1408,6 +1302,9 @@ function()
 function()
 {   # A function implemented by Diethelm Wuertz
     
+    # Momentum measures the speed of price change and provides a 
+    # leading indicator of changes in trend.
+    
     # momTA - Momentum Oscillator
     helpTopic <<- "TechnicalAnalysis"
     myFunction = function(series, select, lag, doplot, par, col, merge2x, 
@@ -1452,108 +1349,53 @@ function()
     
     # macdTA -  MACD Oscillator
     helpTopic <<- "TechnicalAnalysis"
-    myFunction = function(series, select, lag1, lag2, doplot, par, col, 
+    myFunction = function(series, select, lag1, lag2, lag3, doplot, par, 
         merge2x, object2x, report) {
         x = tkEval(series)
         select = tkSplit(select)
-        object <<- .dailyTA(X = x, indicator = "macd", 
+        # MACD Indicator:
+        macd = .dailyTA(X = x, indicator = "macd", 
             select = select, lag = c(lag1, lag2))
-        if (merge2x) {
-            object2x = FALSE
-            x <<- mergeSeries(x, object@Data)
-        }
-        if (doplot) {
-            tkEval(par) 
-            what = "MACD Indicator"
-            plot(object, ylab = what, main = what, col = col)
-        }
-        if (report) tkTitle("MACD Indicator")
-        object }
-    tkExecute(
-        fun = myFunction,
-        prototypes = list(
-            series = "x",
-            select = "Close & Open & High & Low", 
-            lag1 = 12,
-            lag2 = 26,
-            doplot = TRUE,
-            par = "par(mfrow=c(1,1))",
-            col = "red", 
-            merge2x = FALSE,
-            object2x = FALSE,
-            report = TRUE ),
-        subject = "MACD Indicator" )  
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.fMultivar.TechnicalAnalysis.cdsTA =
-function()
-{   # A function implemented by Diethelm Wuertz
-    
-    # cdsTA - MACD Signal Line
-    helpTopic <<- "TechnicalAnalysis"
-    myFunction = function(series, select, lag1, lag2, lag3, doplot, par, col, 
-        merge2x, object2x, report) {
-        x = tkEval(series)
-        select = tkSplit(select)
-        object <<- .dailyTA(X = x, indicator = "cds", 
+        # Signal Line:
+        cds = .dailyTA(X = x, indicator = "cds", 
             select = select, lag = c(lag1, lag2, lag3))
+        # Oscillator:
+        cdo = .dailyTA(X = x, indicator = "cdo", 
+            select = select, lag = c(lag1, lag2, lag3))   
+        object <<- mergeSeries(macd, cbind(cds@Data, cdo@Data))   
         if (merge2x) {
             object2x = FALSE
             x <<- mergeSeries(x, object@Data)
         }
         if (doplot) {
             tkEval(par) 
-            what = "MACD Signal Line"
-            plot(object, ylab = what, main = what, col = col)
-        }
-        if (report) tkTitle("MACD Signal Line")
-        object }
-    tkExecute(
-        fun = myFunction,
-        prototypes = list(
-            series = "x",
-            select = "Close & Open & High & Low", 
-            lag1 = 12,
-            lag2 = 26,
-            lag3 = 9,
-            doplot = TRUE,
-            par = "par(mfrow=c(1,1))",
-            col = "red", 
-            merge2x = FALSE,
-            object2x = FALSE,
-            report = TRUE ),
-        subject = "MACD Signal Line" )
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.fMultivar.TechnicalAnalysis.cdoTA =
-function()
-{   # A function implemented by Diethelm Wuertz
-    
-    # cdoTA - MACD Oscillator
-    helpTopic <<- "TechnicalAnalysis"
-    myFunction = function(series, select, lag1, lag2, lag3, doplot, par, col, 
-        merge2x, 
-        object2x, report) {
-        x = tkEval(series)
-        select = tkSplit(select)
-        object <<- .dailyTA(X = x, indicator = "cdo", 
-            select = select, lag = c(lag1, lag2, lag3))
-        if (merge2x) {
-            object2x = FALSE
-            x <<- mergeSeries(x, object@Data)
-        }
-        if (doplot) {
-            tkEval(par) 
-            what = "MACD Oscillator"
-            plot(object, ylab = what, main = what, col = col)
+            # Price | Index:
+            what = select
+            plot(x[, select], ylab = select, main = what)
+            # Add Points at Crossings:
+            z = object[,1]-object[,2]
+            z@Data = sign(z@Data)
+            z = diffSeries(z)
+            z@Data[1] = 0
+            X = x[, select]
+            X = X[z@Data !=0]
+            points(X, pch = 19, col = "red")
+            # MACD Signal Line | Slow MACD:
+            what = "Signal Line | Slow MACD"
+            plot(object[, 1], ylab = select, main = what, col = "black")
+            lines(object[, 2], col = "darkgreen")
+            X = object[, 1]
+            X = X[z@Data !=0]
+            points(X, pch = 19, col = "red")
+            abline(h = 0, col = "grey")
+            # MACD Histogram:
+            what = "MACD Histogram"
+            plot(object[, 3], type = "h", main = what, col = "steelblue")
+            lines(object[, 3])
+            X = object[, 3]
+            X = X[z@Data !=0]
+            points(X, pch = 19, col = "red")
+            abline(h = 0)
         }
         if (report) tkTitle("MACD Oscillator")
         object }
@@ -1566,90 +1408,56 @@ function()
             lag2 = 26,
             lag3 = 9,
             doplot = TRUE,
-            par = "par(mfrow=c(1,1))",
-            col = "red", 
+            par = "par(mfrow=c(3,1),cex=0.7)",
             merge2x = FALSE,
             object2x = FALSE,
             report = TRUE ),
-        subject = "MACD Oscillator" )
+        subject = "MACD Oscillator" )  
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-.fMultivar.TechnicalAnalysis.vohlTA =
+.fMultivar.TechnicalAnalysis.volatilityTA =
 function()
 {   # A function implemented by Diethelm Wuertz
     
     # vohlTA - High/Low Volatility
     helpTopic <<- "TechnicalAnalysis"
-    myFunction = function(series, doplot, par, col, merge2x, 
+    myFunction = function(series, doplot, par, merge2x, 
         object2x, report) {
         x = tkEval(series)
-        object <<- .dailyTA(X = x, indicator = "vohl", 
+        vohl = .dailyTA(X = x, indicator = "vohl", 
             select = NULL, lag = NULL)
+        vor = .dailyTA(X = x, indicator = "vor", 
+            select = NULL, lag = NULL)
+        object <<- mergeSeries(vohl, vor@Data)
         if (merge2x) {
             object2x = FALSE
             x <<- mergeSeries(x, object@Data)
         }
         if (doplot) {
             tkEval(par) 
+            # High/Low Volatility
             what = "High/Low Volatility"
-            plot(object, ylab = "High-Low", main = what, col = col)
-        }
-        if (report) tkTitle("High/Low Volatility")
-        object }
-    tkExecute(
-        fun = myFunction,
-        prototypes = list(
-            series = "x",
-            doplot = TRUE,
-            par = "par(mfrow=c(1,1))",
-            col = "red", 
-            merge2x = FALSE,
-            object2x = FALSE,
-            report = TRUE ),
-        subject = "High/Low Volatility" )  
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.fMultivar.TechnicalAnalysis.vorTA =
-function()
-{   # A function implemented by Diethelm Wuertz
-    
-    # vorTA - Volatility Ratio
-    helpTopic <<- "TechnicalAnalysis"
-    myFunction = function(series, doplot, par, col, merge2x, 
-        object2x, report) {
-        x = tkEval(series)
-        object <<- .dailyTA(X = x, indicator = "vor", 
-            select = NULL, lag = NULL)
-        if (merge2x) {
-            object2x = FALSE
-            x <<- mergeSeries(x, object@Data)
-        }
-        if (doplot) {
-            tkEval(par) 
+            plot(object[,1], ylab = "High-Low", main = what)
+            # vorTA - Volatility Ratio
             what = "Volatility Ratio"
-            plot(object, ylab = "(High-Low)/Low", main = what, col = col)
+            plot(object[,2], ylab = "(High-Low)/Low", main = what)
         }
-        if (report) tkTitle("Volatility Ratio")
+        if (report) tkTitle("Volatility Indicators")
         object }
     tkExecute(
         fun = myFunction,
         prototypes = list(
             series = "x",
             doplot = TRUE,
-            par = "par(mfrow=c(1,1))",
-            col = "red", 
+            par = "par(mfrow=c(2,1),cex=0.7)",
             merge2x = FALSE,
             object2x = FALSE,
             report = TRUE ),
-        subject = "Volatility Ratio" )  
+        subject = "Volatility Indicators" )  
 }
 
 
@@ -1820,9 +1628,11 @@ function()
 function()
 {   # A function implemented by Diethelm Wuertz
     
+    # Williams %R has proven very useful for anticipating market reversals.
+
     # wprTA - Williams %R Stochastics
     helpTopic <<- "TechnicalAnalysis"
-    myFunction = function(series, lag, doplot, par, col, merge2x, 
+    myFunction = function(series, lag, doplot, par, merge2x, 
         object2x, report) {
         x = tkEval(series)
         object <<- .dailyTA(X = x, indicator = "wpr", select = NULL, lag = lag)
@@ -1832,8 +1642,16 @@ function()
         }
         if (doplot) {
             tkEval(par) 
+            # Close:
+            what = "Close"
+            plot(x[, "Close"], ylab = what, main = what)
+            # %R
             what = "Williams %R Stochastics"
-            plot(object, ylab = "%R", main = what, col = col)
+            plot(object, ylab = "%R", main = what, col = "red")
+            abline(h = 0.20, col = "steelblue")
+            abline(h = 0.80, col = "steelblue") 
+            abline(h = 0.10, col = "darkgreen")
+            abline(h = 0.90, col = "darkgreen")   
         }
         if (report) tkTitle("Williams %R Stochastics")
         object }
@@ -1841,14 +1659,59 @@ function()
         fun = myFunction,
         prototypes = list(
             series = "x",
-            lag = 9,
+            lag = 14,
             doplot = TRUE,
-            par = "par(mfrow=c(1,1))",
-            col = "red", 
+            par = "par(mfrow=c(2,1),cex=0.7)",
             merge2x = FALSE,
             object2x = FALSE,
             report = TRUE ),
         subject = "Williams %R Stochastics" )  
+}
+
+
+.wprSlider =  
+function()
+{   # A function implemented by Diethelm Wuertz
+
+    # FUNCTION:
+    
+    # Internal Function:
+    refresh.code = function(...)
+    {
+        # Sliders:
+        lag = .sliderMenu(no = 1)
+        
+        # Compute Data:  
+        # x is global availalble
+        object <<- .dailyTA(X = x, indicator = "wpr", select = NULL, lag = lag)
+         
+        # Frame:
+        par(mfrow = c(2, 1), cex = 0.7)
+        
+        # Plot - Close:
+        what = "Close"
+        plot(x[, "Close"], ylab = what, main = what)
+        
+        # Plot - %R
+        what = "Williams %R Stochastics"
+        plot(object[,1], ylab = "%R", main = what, col = "red")
+        abline(h = 0.20, col = "steelblue")
+        abline(h = 0.80, col = "steelblue") 
+        abline(h = 0.10, col = "darkgreen")
+        abline(h = 0.90, col = "darkgreen")   
+        
+        # Reset Frame:
+        par(mfrow = c(1, 1), cex = 0.7)
+    }
+  
+    # Open Slider Menu:
+    .sliderMenu(refresh.code,
+       names =       c( "lag"),
+       minima =      c(    1 ),
+       maxima =      c(   52 ),
+       resolutions = c(    1 ),
+       starts =      c(   14 )
+    )
 }
 
 
@@ -1859,9 +1722,11 @@ function()
 function()
 {   # A function implemented by Diethelm Wuertz
     
+    # RSI can provide an early warning of an opportunity to buy or sell.
+    
     # rsiTA - Relative Strength Index
     helpTopic <<- "TechnicalAnalysis"
-    myFunction = function(series, select, lag, doplot, par, col, merge2x, 
+    myFunction = function(series, select, lag, doplot, par, merge2x, 
         object2x, report) {
         x = tkEval(series)
         select = tkSplit(select)
@@ -1873,8 +1738,18 @@ function()
         }
         if (doplot) {
             tkEval(par) 
+            # Price:
+            what = select
+            plot(x[, select], ylab = what, main = what)
+            # ylim does not work - still to fix
+            # RSI:
             what = "Relative Strength Index"
-            plot(object, ylab = "RSI", main = what, col = col)
+            z = object[c(1, dim(object@Data)[1])]
+            z@Data[,1] = c(0,1)
+            plot(z, type = "n", ylab = "RSI", main = what)
+            lines(object, col = "red")
+            abline(h = 0.3, col = "steelblue")
+            abline(h = 0.7, col = "steelblue")
         }
         if (report) tkTitle("Relative Strength Index")
         object }
@@ -1883,10 +1758,9 @@ function()
         prototypes = list(
             series = "x",
             select = "Close & Open & High & Low", 
-            lag = 9,
+            lag = 14,
             doplot = TRUE,
-            par = "par(mfrow=c(1,1))",
-            col = "red", 
+            par = "par(mfrow=c(2,1),cex=0.7)",
             merge2x = FALSE,
             object2x = FALSE,
             report = TRUE ),
