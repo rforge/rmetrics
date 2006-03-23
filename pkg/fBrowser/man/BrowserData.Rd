@@ -18,7 +18,8 @@
 \description{
 
     A collection and description of data sets 
-    including ...
+    used by the browser in examples and 
+    demonstrations. 
     \cr
 
 
@@ -27,7 +28,37 @@
 
 \format{
     
-    The files are in ...
+    \bold{Time and Date Data:}
+    
+    Two Data Sets with randomly generated dates and times.
+    
+    
+    \bold{TData for Regression Modelling:}
+    
+    \code{lmData}
+    
+    \code{glmData}
+    
+    \code{gamData}
+    
+    
+    \bold{Daily Market Data Examples:}
+    
+    
+    \code{bmwDaily}
+    
+    \code{nyseDaily}
+    
+    \code{ibmsp500Daily}
+    
+    
+    \bold{Monthly Market Data Example:}
+    
+    \code{sp500Monthly}
+    
+    \code{msftsp500Monthly}
+    
+    \code{sp500IndexMonthly}
     
 }
  
