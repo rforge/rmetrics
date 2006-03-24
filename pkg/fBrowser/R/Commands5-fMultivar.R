@@ -1441,10 +1441,10 @@ function()
             tkEval(par) 
             # High/Low Volatility
             what = "High/Low Volatility"
-            plot(object[,1], ylab = "High-Low", main = what)
+            plot(object[, 1], ylab = "High-Low", main = what)
             # vorTA - Volatility Ratio
             what = "Volatility Ratio"
-            plot(object[,2], ylab = "(High-Low)/Low", main = what)
+            plot(object[, 2], ylab = "(High-Low)/Low", main = what)
         }
         if (report) tkTitle("Volatility Indicators")
         object }
@@ -1458,6 +1458,59 @@ function()
             object2x = FALSE,
             report = TRUE ),
         subject = "Volatility Indicators" )  
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.fMultivar.TechnicalAnalysis.stochasticTA =
+function()
+{   # A function implemented by Diethelm Wuertz
+    
+    # stochasticTA - Fast Stochastics
+    helpTopic <<- "TechnicalAnalysis"
+    myFunction = function(series, lag1, lag2, type, doplot, par, merge2x, 
+        object2x, report) {
+        x = tkEval(series)
+        type = tkSplit(type)
+        close = as.vector(x[, "Close"])
+        high = as.vector(x[, "High"])
+        low = as.vector(x[, "Low"])
+        object <<- x
+        object@Data = stochasticTA(close, high, low, lag1, lag2, type)
+        if (merge2x) {
+            object2x = FALSE
+            x <<- mergeSeries(x, object@Data)
+        }
+        if (doplot) {
+            tkEval(par)
+            # Close:
+            what = "Close" 
+            plot(x[,"Close"], ylab = "Close", main = what)
+            # Stochastics:
+            what = "Stochastic"
+            plot(object[, 1], ylab = what, main = what)
+            lines(object[, 2], col = "red")
+            abline(h = 20, col = "steelblue")
+            abline(h = 80, col = "steelblue")
+            
+        }
+        if (report) tkTitle("Stochastics")
+        object }
+    tkExecute(
+        fun = myFunction,
+        prototypes = list(
+            series = "x",
+            lag1 = 10,
+            lag2 = 3,
+            type = "fast & slow",
+            doplot = TRUE,
+            par = "par(mfrow=c(2,1),cex=0.7)",
+            merge2x = FALSE,
+            object2x = FALSE,
+            report = TRUE ),
+        subject = "Stochastics Oscillator" )  
 }
 
 
