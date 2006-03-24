@@ -19,6 +19,7 @@
 
 \alias{seriesData}
 \alias{seriesPositions}
+\alias{isUnivariate}
 \alias{start.timeSeries}
 \alias{end.timeSeries}
 \alias{as.vector.timeSeries}
@@ -75,6 +76,7 @@
     \tabular{ll}{        
     \code{seriesData} \tab Extracts data slot from a 'timeSeries', \cr
     \code{seriesPositions} \tab Extracts positions slot from a 'timeSeries', \cr
+    \code{isUnivariate} \tab Tests if an object of class 'timeSeries' is univariate, \cr
     \code{start.timeSeries} \tab S3: Extracts start date of a 'timeSeries', \cr
     \code{end.timeSeries} \tab S3: Extracts end date of a 'timeSeries', \cr
     \code{as.vector.timeSeries} \tab S3: Converts a 'timeSeries' to a vector, \cr
@@ -122,6 +124,7 @@ is.timeSeries(object)
 
 seriesData(object)
 seriesPositions(object)
+isUnivariate(x)
 \method{start}{timeSeries}(x, \dots)
 \method{end}{timeSeries}(x, \dots)
 \method{as.vector}{timeSeries}(x, mode = "any")
