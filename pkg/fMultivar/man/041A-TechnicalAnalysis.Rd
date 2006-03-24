@@ -17,11 +17,13 @@
 \alias{cdoTA}
 \alias{vohlTA}
 \alias{vorTA}
+
+\alias{stochasticTA}
 \alias{fpkTA}
 \alias{fpdTA}
-
 \alias{spdTA}
 \alias{apdTA}
+
 \alias{wprTA}
 \alias{rsiTA}
 
@@ -56,6 +58,7 @@
     \code{cdoTA} \tab MACD Oscillator, \cr
     \code{vohlTA} \tab High/Low Volatility, \cr
     \code{vorTA} \tab Volatility Ratio, \cr
+    \code{stochasticTA} \tab Stochastics Oscillator, \cr
     \code{fpkTA} \tab Fast Percent K, \cr
     \code{fpdTA} \tab Fast Percent D, \cr
     \code{spdTA} \tab Slow Percent D, \cr
@@ -83,6 +86,7 @@ cdsTA(x, lag1, lag2, lag3)
 cdoTA(x, lag1, lag2, lag3)
 vohlTA(high, low)
 vorTA(high, low)
+stochasticTA(close, high, low, lag1, lag2, type = c("fast", "slow")) 
 fpkTA(close, high, low, lag)
 fpdTA(close, high, low, lag1, lag2)
 spdTA(close, high, low, lag1, lag2, lag3)
@@ -106,7 +110,7 @@ EWMA(x, lambda, startup = 0)
         }
     \item{n}{
         [SMA] - \cr
-        integer value, time lag.
+        an integer value, time lag.
         }
     \item{lambda}{
         [emaTA][EWMA] - \cr
@@ -119,6 +123,12 @@ EWMA(x, lambda, startup = 0)
         [emaTA][EWMA] - \cr
         an integer value, the startup position of the exponential
         moving average, by default 0.
+        }
+    \item{type}{
+        [stochasticTA] - \cr
+        a character string, either \code{"fast"} or "\code{"slow"}
+        characterizing the type of the percent K and percent D
+        indicator. By default \code{type="fast"}
         }
     \item{x, high, low, close}{
         a numeric vector of prices, either opening, closing, or
@@ -134,7 +144,7 @@ EWMA(x, lambda, startup = 0)
 
     \code{*TA}
     \cr 
-    The technical Indicators return the following numeric vectors:
+    The technical Indicators return the following numeric vectors (or matrix):
 
     \code{emaTA}  returns the Exponential Moving Average, EMA \cr
     \code{biasTA} returns the EMA-Bias, \cr
@@ -146,6 +156,7 @@ EWMA(x, lambda, startup = 0)
     \code{cdo}    returns the MACD Oscillator, \cr
     \code{vohlTA} returns the High/Low Volatility Oscillator, \cr
     \code{vorTA}  returns Volatility Ratio Oscillator, \cr
+    \code{stochasticTA} returns a 2-column matrix with percent K and D Indicator, \cr
     \code{fpkTA}  returns the Fast Percent-K Stochastics Indicator, \cr
     \code{fpdTA}  returns the Fast Percent-D Stochastics Indicator, \cr
     \code{spdTA}  returns the Slow Percent-D Stochastics Indicator, \cr
