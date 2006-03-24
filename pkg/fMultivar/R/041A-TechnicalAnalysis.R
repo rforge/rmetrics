@@ -44,6 +44,7 @@
 #  vohlTA                    High/Low Volatility
 #  vorTA                     Volatility Ratio
 # FUNCTION:                 STOCHASTICS INDICATORS:
+#  stochasticTA              Stochastics %K/%D, fast/slow
 #  fpkTA                     Fast Percent %K
 #  fpdTA                     Fast Percent %D
 #  spdTA                     Slow Percent %D
@@ -284,6 +285,51 @@ function(high, low)
 # ------------------------------------------------------------------------------
 
 
+stochasticTA = 
+function (high, low, close, lag1, lag2, type = c("fast", "slow")) 
+{   # A function written by Diethelm Wuertz
+
+    # Description:
+    #   Stochastic Indicators
+    
+    # Example:
+    #   stochasticTA(high, low, close, lag1 = 10, lag2 = 3, "fast") 
+    #   stochasticTA(high, low, close, lag1 = 10, lag2 = 3, "slow")   
+
+    # FUNCTION:
+    
+    # Settings:
+    trim = FALSE
+    na.rm = FALSE
+    rollHigh = rollMax(high, lag1, trim = trim, na.rm = na.rm)
+    rollLow = rollMin(low, lag1, trim = trim, na.rm = na.rm)
+    
+    # Fast:
+    if (type[1] == "fast") {
+        K = (close - rollLow)/(rollHigh - rollLow) * 100
+        D = rollMean(K, lag2, trim = trim, na.rm = na.rm)
+        K[1:lag1] = K[lag1]
+        D[1:(lag1+lag2-1)] = D[lag1+lag2-1]
+    }
+    
+    # Slow:
+    if (type[1] == "slow") {
+        K = (close - rollLow)/(rollHigh - rollLow) * 100
+        D = rollMean(K, lag2, trim = trim, na.rm = na.rm)
+        K = rollMean(K, lag2, trim = trim, na.rm = na.rm)
+        D = rollMean(D, lag2, trim = trim, na.rm = na.rm)
+        K[1:(lag1+lag2-1)] = K[lag1+lag2-1]
+        D[1:(lag1+2*lag2-2)] = D[lag1+2*lag2-2]
+    }
+    
+    # Return Value:
+    cbind(K, D)
+}
+
+
+# ------------------------------------------------------------------------------
+
+
 fpkTA = 
 function(close, high, low, lag)
 {   # A function written by Diethelm Wuertz
@@ -293,22 +339,33 @@ function(close, high, low, lag)
     
     # FUNCTION:
     
-    minlag = function(x, lag){
-       xm = x
-       for (i in 1:lag){
-         x1 = c(x[1],x[1:(length(x)-1)])
-         xm = pmin(xm,x1)
-         x = x1}
-       xm}
-    maxlag = function(x, lag){
-       xm = x
-       for (i in 1:lag){
-         x1 = c(x[1],x[1:(length(x)-1)])
-         xm = pmax(xm,x1)
-         x = x1}
-       xm}
+    # Minimum:
+    minlag = function(x, lag) {
+        xm = x
+        for (i in 1:lag) {
+            x1 = c(x[1],x[1:(length(x)-1)])
+            xm = pmin(xm,x1)
+            x = x1
+        }
+        xm
+    }
+    
+    # Maximum:
+    maxlag = function(x, lag) {
+        xm = x
+        for (i in 1:lag) {
+            x1 = c(x[1],x[1:(length(x)-1)])
+            xm = pmax(xm,x1)
+            x = x1 
+       }
+       xm
+    }
+       
+    # Result:
     xmin = minlag(low, lag)
     xmax = maxlag(high, lag)
+    
+    # Return Value:
     (close - xmin ) / (xmax -xmin)
 }
 
@@ -325,6 +382,8 @@ function(close, high, low, lag1, lag2)
     #   EMA OF FAST %K
     
     # FUNCTION:
+    
+    # Return Value:
     emaTA(fpkTA(close, high, low, lag1), lag2)
 }
 
