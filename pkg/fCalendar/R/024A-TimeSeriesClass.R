@@ -46,6 +46,7 @@
 # FUNCTION:            REPRESENTATION OF TIME SERIES OBJECTS:
 #  seriesData           Extracts data slot from 'timeSeries' object
 #  seriesPositions      Extracts positions slot from 'timeSeries' object
+#  isUnivariate         Tests if an object of class 'timeSeries' is univariate
 # METHODS:
 #  start.timeSeries     S3: Extracts start date of a 'timeSeries' object 
 #  end.timeSeries       S3: Extracts end date of a 'timeSeries' object 
@@ -986,6 +987,37 @@ function(object)
         
     # Return Value:
     ans   
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+isUnivariate =
+function(x)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Tests if an object of class timeSeries is univariate
+    
+    # FUNCTION:
+    
+    # is univariate ?
+    if (class(x) == "timeSeries") {
+        # timeSeries Object ?
+        DIM = dim(x@Data)[2]
+        # Univariate ?
+        if (DIM == 1) {
+            ans = TRUE 
+        } else {
+            ans = FALSE
+        }
+    } else {
+        stop("x is not an object of class timeSeries")
+    }
+    
+    # Return Value:
+    ans
 }
 
 
