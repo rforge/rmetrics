@@ -49,15 +49,12 @@ function()
         "____________________________________",  
         "MACD Trend Indicator",
         "____________________________________",                 
-        "Rate of Change",
-        "EMA-Oscillator",
+        "Stochastics Oscillator",
+        "Rate of Change Oscillator",
+        "EMA Oscillator",
         "Momentum Oscillator",      
-        "Fast %K Stochastics",
-        "Fast %D Stochastics",
-        "Slow %D Stochastics",
-        "Averaged %D Stochastics",
-        "Williams %R Stochastics",
-        "Relative Strength Index")
+        "Williams %R Oscillator",
+        "RSI Oscillator")
     Command = c(
         ".fData.spcDaily",
         "tkSeparator",
@@ -67,13 +64,10 @@ function()
         "tkSeparator",
         ".fMultivar.TechnicalAnalysis.macdTA",
         "tkSeparator",
+        ".fMultivar.TechnicalAnalysis.stochasticTA",
         ".fMultivar.TechnicalAnalysis.rocTA",
         ".fMultivar.TechnicalAnalysis.oscTA",
         ".fMultivar.TechnicalAnalysis.momTA",
-        ".fMultivar.TechnicalAnalysis.fpkTA",
-        ".fMultivar.TechnicalAnalysis.fpdTA",
-        ".fMultivar.TechnicalAnalysis.spdTA",
-        ".fMultivar.TechnicalAnalysis.apdTA",
         ".fMultivar.TechnicalAnalysis.wprTA",
         ".fMultivar.TechnicalAnalysis.rsiTA")
     tkAddPopupMenu(fMultivarMenu, Label, subLabel, Command) 
