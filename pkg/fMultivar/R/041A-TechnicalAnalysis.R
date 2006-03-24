@@ -286,7 +286,7 @@ function(high, low)
 
 
 stochasticTA = 
-function (high, low, close, lag1, lag2, type = c("fast", "slow")) 
+function (close, high, low, lag1, lag2, type = c("fast", "slow")) 
 {   # A function written by Diethelm Wuertz
 
     # Description:
