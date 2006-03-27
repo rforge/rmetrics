@@ -71,9 +71,9 @@ function (x, loc = 0, scale = 1, shape = 0, log = FALSE)
     if (length(shape) != 1) 
         stop("invalid shape")
     x = (x - loc)/scale
-    if (shape == 0) 
+    if (shape == 0) {
         d = log(1/scale) - x - exp(-x)
-    else {
+    } else {
         nn = length(x)
         xx = 1 + shape * x
         xxpos = xx[xx > 0 | is.na(xx)]
@@ -83,8 +83,11 @@ function (x, loc = 0, scale = 1, shape = 0, log = FALSE)
             (1/shape + 1) * log(xxpos)
         d[xx <= 0 & !is.na(xx)] = -Inf
     }
-    if (!log) 
+    if (!log) {
         d = exp(d)
+    }
+    
+    # Return Value:
     d
 }
 
@@ -107,6 +110,8 @@ function (q, loc = 0, scale = 1, shape = 0, lower.tail = TRUE)
     else p = exp(-pmax(1 + shape * q, 0)^(-1/shape))
     if (!lower.tail) 
         p = 1 - p
+    
+    # Return Value:
     p
 }
 
@@ -459,7 +464,7 @@ function(x, type = c("mle", "pwm"), gumbel = FALSE, ...)
     fit = list()
     fit$fit = fitted
     fit$call = call
-    fit$type = c(if(gumbel) "gum" else "gev", type[1])
+    fit$type = c(if (gumbel) "gum" else "gev", type[1])
     fit$par.ests = fitted$par.ests
     fit$par.ses = fitted$par.ses
     fit$residuals = fitted$residuals
@@ -767,12 +772,12 @@ reverse = FALSE, p = NA, ci = 0.95, autoscale = TRUE, labels = TRUE, ...)
     ordered = ordered[ordered > 0]
     n = length(ordered)
     option = match.arg(option)
-    if((option == "quantile") && (is.na(p)))
+    if ((option == "quantile") && (is.na(p)))
         stop("Input a value for the probability p")
-    if((option == "quantile") && (p < 1 - start/n)) {
+    if ((option == "quantile") && (p < 1 - start/n)) {
         cat("Graph may look strange !! \n\n")
         cat(paste("Suggestion 1: Increase `p' above",
-            format(signif(1 - start/n, 5)), "\n"))
+            format(signif (1 - start/n, 5)), "\n"))
         cat(paste("Suggestion 2: Increase `start' above ",
             ceiling(length(data) * (1 - p)), "\n"))
     }
@@ -786,35 +791,35 @@ reverse = FALSE, p = NA, ci = 0.95, autoscale = TRUE, labels = TRUE, ...)
         xi = xihat,
         quantile = ordered * ((n * (1 - p))/k)^(-1/alphahat))
     ses = y/sqrt(k)
-    if(is.na(end)) end = n
+    if (is.na(end)) end = n
     x = trunc(seq(from = min(end, length(data)), to = start))
     y = y[x]
     ylabel = option
     yrange = range(y)
-    if(ci && (option != "quantile")) {
+    if (ci && (option != "quantile")) {
             qq = qnorm(1 - (1 - ci)/2)
             u = y + ses[x] * qq
             l = y - ses[x] * qq
             ylabel = paste(ylabel, " (CI, p =", ci, ")", sep = "")
             yrange = range(u, l)
     }
-    if(option == "quantile") ylabel = paste("Quantile, p =", p)
+    if (option == "quantile") ylabel = paste("Quantile, p =", p)
     index = x
-    if(reverse) index =  - x
-    if(autoscale)
+    if (reverse) index =  - x
+    if (autoscale)
         plot(index, y, ylim = yrange, type = "l", xlab = "", ylab = "",
             axes = FALSE, ...)
     else plot(index, y, type = "l", xlab = "", ylab = "", axes = FALSE, ...)
     axis(1, at = index, lab = paste(x), tick = FALSE)
     axis(2)
     threshold = findThreshold(data, x)
-    axis(3, at = index, lab = paste(format(signif(threshold, 3))),
+    axis(3, at = index, lab = paste(format(signif (threshold, 3))),
         tick = FALSE)
     box()
-    if(ci && (option != "quantile")) {
+    if (ci && (option != "quantile")) {
         lines(index, u, lty = 2, col = 2)
         lines(index, l, lty = 2, col = 2)}
-    if(labels) {
+    if (labels) {
         title(xlab = "Order Statistics", ylab = ylabel)
         mtext("Threshold", side = 3, line = 3)}
     
@@ -853,20 +858,20 @@ xi.range = c(-0.5, 1.5), alpha.range = c(0, 10))
         tail = tails[i]
         
     # Printing/Plotting Staff:
-    if(doprint) cat("Taildepth: ", tail, "\n")
-    if(select.doplot[1]) {
+    if (doprint) cat("Taildepth: ", tail, "\n")
+    if (select.doplot[1]) {
             xi = shaparmPickands (x, tail, ylim1, doplot=doplot[i], 
             both.tails, ) 
             p1[i] = xi$xi[1]; p2[i] = xi$xi[3] }
-    if(select.doplot[2]) { 
+    if (select.doplot[2]) { 
             xi = shaparmHill (x, tail, ylim1, doplot=doplot[i], 
             both.tails) 
             h1[i] = xi$xi[1]; h2[i] = xi$xi[3] }
-    if(select.doplot[3]) {
+    if (select.doplot[3]) {
             xi = shaparmDEHaan (x, tail, ylim1, doplot=doplot[i], 
             both.tails)
             d1[i] = xi$xi[1]; d2[i] = xi$xi[3] }      
-    if(doprint) {
+    if (doprint) {
         cat("Pickands - Hill - DeckerEinmaalDeHaan: \n")
         print(c(p1[i], h1[i], d1[i]))
         if (both.tails) print(c(p2[i], h2[i], d2[i]))} 
@@ -874,7 +879,7 @@ xi.range = c(-0.5, 1.5), alpha.range = c(0, 10))
 
     
     # Plot Pickands' Summary:
-        if(select.doplot[1]) { 
+        if (select.doplot[1]) { 
             plot (tails, z, type="n", xlab="tail depth", ylab="alpha",
                 ylim=ylim2, main="Pickands Summary")
                 y1 = 1/p1
@@ -888,7 +893,7 @@ xi.range = c(-0.5, 1.5), alpha.range = c(0, 10))
                 points (x1, y1, col=3); lines(x1, y1, col=3)} }
     
     # Plot Hill Summary:
-        if(select.doplot[2]) { 
+        if (select.doplot[2]) { 
             plot (tails, z, type="n", xlab="tail depth", ylab="alpha", 
                 ylim=ylim2, main="Hill Summary")
                 y1 = 1/h1
@@ -902,7 +907,7 @@ xi.range = c(-0.5, 1.5), alpha.range = c(0, 10))
                 points (x1, y1, col=3); lines(x1, y1, col=3)} }
     
     # Plot Deckers-Einmahl-deHaan Summary
-        if(select.doplot[3]) { 
+        if (select.doplot[3]) { 
             plot (tails, z, type="n", xlab="tail depth", ylab="alpha", 
                 ylim=ylim2, 
                     main="Deckers-Einmahl-deHaan Summary")
