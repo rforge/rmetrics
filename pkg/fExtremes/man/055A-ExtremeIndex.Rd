@@ -30,6 +30,7 @@
     The functiona are:
     
     \tabular{ll}{
+    \code{thetaSim} \tab Simulates a time Series with known theta, \cr
     \code{blockTheta} \tab Computes theta from Block Method, \cr
     \code{clusterTheta} \tab Computes theta from Reciprocal Cluster Method, \cr
     \code{runTheta} \tab Computes theta from Run Method, \cr
@@ -42,6 +43,8 @@
 
 \usage{
 show.fTHETA(object)
+
+thetaSim(model = c("max", "pair"), n = 1000, theta = 0.5)
 
 blockTheta(x, block = 22, quantiles = seq(0.950, 0.995, length = 10),
     title = NULL, description = NULL)
@@ -86,6 +89,17 @@ exindexesPlot(x, block = 22, quantiles = seq(0.950, 0.995, length = 10),
         then user specified lables can be passed through the \code{"..."}
         argument.
         }
+    \item{model}{
+        [thetaSim] - \cr
+        a character string denoting the name of the model. Either 
+        \code{"max"} or \code{"pair"}, the first representing the 
+        maximimum Frechet series, and the second the paired exponential
+        series.
+        }
+    \item{n}{
+        [thetaSim] - \cr
+        an integer value, the length of the time series to be generated.
+        }
     \item{object}{
         an object of class \code{"fTHETA} as returned by the functions
         \code{*Theta}.
@@ -104,6 +118,12 @@ exindexesPlot(x, block = 22, quantiles = seq(0.950, 0.995, length = 10),
         \code{start} is the lowest value of \code{K} at which to plot 
         a point, and \code{end} the highest value; \code{K} is the
         number of blocks in which a specified threshold is exceeded.
+        }
+    \item{theta}{
+        [thetaSim] - \cr
+        a numeric value between 0 and 1 setting the value of the
+        extremal index for the maximum Frechet time series. (Not used
+        in the case of the paired exponential series.)
         }
     \item{title}{
         a character string which allows for a project title.
