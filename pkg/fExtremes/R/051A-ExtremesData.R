@@ -28,7 +28,7 @@
 
 
 ################################################################################
-# FUNCTION          PART I: Explorative Data Analysis
+# FUNCTION          EXPLORATIVE DATA ANALYSIS:
 #  emdPlot           Plots empirical distribution function
 #  qqPlot            Creates a quantile-quantile plot
 #  qqbayesPlot       Creates qq-Plot with 95 percent intervals
@@ -39,24 +39,30 @@
 #  recordsPlot       Plots records development
 #   ssrecordsPlot     Plots records development of data subsamples
 #  msratioPlot       Plots ratio of maximums and sums
-#  .sllnPlot         Verify Kolmogorov's Strong Law of large Numbers
-#  .lilPlot          Verify Hartman-Wintner's Law of the iterated logarithm
+#  sllnPlot          Verifies Kolmogorov's Strong Law of large numbers
+#  lilPlot           Verifies Hartman-Wintner's Law of the iterated logarithm
 #  xacfPlot          Plots autocorrelations of exceedences
+################################################################################
+
+
+################################################################################
+# FUNCTION:         PLOT UTILITIES:
 #  interactivePlot   Plots several graphs interactively
 #  gridVector        Creates from two vectors rectangular grid points
 ################################################################################
 
 
 ################################################################################
-# FUNCTION          PART II: Data Preprocessing:
-#  findThreshold     Finds extreme values above a threshold 
-#  blocks            Creates data blocks on vectors and time series
-#  blockMaxima       Calculates block maxima on vectors and time series
+# FUNCTION          DATA PREPROCESSING:
+#  blockMaxima       Returns block maxima from a time series
+#  findThreshold     Upper threshold for a given number of extremes 
+#  pointProcess      Returns peaks over a threshold from a time series
 #  deCluster         Declusters a point process
 ################################################################################
 
 
-# PART I:
+################################################################################
+# EXPLORATIVE DATA ANALYSIS:
 
 
 emdPlot = 
@@ -699,12 +705,12 @@ labels = TRUE, ...)
 # ------------------------------------------------------------------------------
 
 
-.sllnPlot =  
-function (x, mean = NULL, main = "SLLN", ...)
+sllnPlot =  
+function(x, doplot = TRUE, ...)
 {   # A function written by Diethelm Wuertz
 
     # Description:
-    #   Verify Kolmogorov's Strong Law of large Numbers
+    #   Verifies Kolmogorov's strong law of large numbers
     
     # Arguments:
     #   x - sequence of iid non-degenerate rvs.
@@ -715,11 +721,19 @@ function (x, mean = NULL, main = "SLLN", ...)
     # FUNCTION:
     
     # Verify SLLN:
+    x = as.vector(x)
     if (is.null(mean)) mean=mean(cumsum(x)/(1:length(x)))
     nx  =  length(x)
-    plot(cumsum(x)/(1:nx), xlab = "n", ylab = "x", type = "l", main = main, ...)
-    lines(c(0, nx), c(mu, mu), col = 2)
-    y  =  cumsum(x)/(1:nx)
+    
+    # Plot:
+    y  = cumsum(x)/(1:nx)
+    mean = mean(x)
+    if (doplot) {
+        plot(y, xlab = "n", ylab = "x", type = "l", main = "SLLN", 
+            col = "steelblue", ...)
+        lines(c(0, nx), c(mean, mean), col = "brown")
+        grid()
+    }
     
     # Return Value:
     invisible(y)
@@ -729,12 +743,12 @@ function (x, mean = NULL, main = "SLLN", ...)
 # ------------------------------------------------------------------------------
 
 
-.lilPlot =  
-function (x, mean = NULL, sd = NULL, main = "LIL", ...)
+lilPlot =  
+function (x, doplot = TRUE, ...)
 {   # A function written by Diethelm Wuertz
 
     # Description:
-    #   Verify Hartman-Wintner's Law of the iterated logarithm
+    #   Verifies Hartman-Wintner's Law of the iterated logarithm
             
     # Arguments:
     #   x - sequence of iid non-degenerate rvs.
@@ -745,19 +759,26 @@ function (x, mean = NULL, sd = NULL, main = "LIL", ...)
     # FUNCTION:
     
     # Verify LIL:
-    lx  =  length(x)
-    nx  =  1:lx
-    fact  =  sqrt(2*nx*log(log(nx)))
-    if (is.null(mean)) mean  =  mean(cumsum(x))
-    if (is.null(sd)) sd  =  sqrt(var(x))
-    y  =  (cumsum(x)-mean*nx)/fact/sd
-    plot(x = nx, y = y, xlab = "n", ylab = "x", 
-        ylim = range(y[!is.na(y)], -1, 1), type = "l", main = main, ...)
-    lines(c(0,lx), c(1,1), col=2)
-    lines(c(0,lx), c(-1,-1), col=2)
+    x = as.vector(x)
+    lx = length(x)
+    nx = 1:lx
+    fact = sqrt(2*nx*log(log(nx)))
+    mu = mean(x)  
+    sdev = sqrt(var(x))
+    y = (cumsum(x)-mu*nx)/(fact*sdev)
+    
+    # Plot:
+    if (doplot) {
+        plot(x = nx, y = y, xlab = "n", ylab = "x", 
+            ylim = range(y[!is.na(y)], -1, 1), type = "l", 
+            main = "LIL", col = "steelblue", ...)
+        lines(c(0,lx), c(1,1), col = "brown")
+        lines(c(0,lx), c(-1,-1), col = "brown")
+        grid()
+    }
     
     # Return Value:
-    y
+    invisible(y)
 }
 
 
@@ -815,8 +836,8 @@ function(x, threshold = 0.95, lag.max = 15, doplot = TRUE, ...)
 }
 
 
-# ******************************************************************************
-
+################################################################################
+# PLOT UTILITIES:
         
 interactivePlot = 
 function(x, choices = paste("Plot", 1:9), 
@@ -912,7 +933,7 @@ plotFUN = paste("plot.", 1:9, sep = ""), which = "all", ...)
 }
 
 
-# ******************************************************************************
+# ------------------------------------------------------------------------------
 
 
 gridVector = 
@@ -959,30 +980,86 @@ function(x, y)
 
 
 ################################################################################
+# DATA PREPROCESSING:
 
 
-# PART II:
+blockMaxima =
+function (x, block = c("monthly", "quarterly"), doplot = FALSE) 
+{   # A function implemented by Diethelm Wuertz, GPL
+
+    # Description:
+    #   Compute block maxima from a time series or numeric vector
+
+    # FUNCTION:
+    
+    # Maxima:
+    block = block[1]
+    colFun = function(x) colStats(x, FUN = max)
+    if (class(x) == "timeSeries") {
+        if (is.numeric(block)) {
+            data = as.vector(x)
+            nblocks = (length(data) %/% block) + 1
+            grouping = rep(1:nblocks, rep(block, nblocks))[1:length(data)]
+            newdata = tapply(data, grouping, FUN = max) 
+            pos = as.character(seriesPositions(x))
+            newpos = tapply(pos, grouping, FUN = function(x) x[length(x)])
+            ans = timeSeries(data = t(t(newdata)), charvec = newpos, 
+                units = x@units, format = x@format, FinCenter = x@FinCenter)
+        } else if (block == "monthly") {
+            from = unique(timeFirstDayInMonth(seriesPositions(x)))
+            to = unique(timeLastDayInMonth(seriesPositions(x)))
+            ans = applySeries(x, from, to, FUN = colFun)
+        } else if (block == "quarterly") {
+            from = unique(timeFirstDayInQuarter(seriesPositions(x)))
+            to = unique(timeLastDayInQuarter(seriesPositions(x)))
+            ans = applySeries(x, from, to, FUN = colFun)
+        } else {
+            stop("Unknown block size for timeSeries Object")
+        }
+    } else {
+        if (is.numeric(block)) {
+            data = as.vector(x)
+            nblocks = (length(data) %/% block) + 1
+            grouping = rep(1:nblocks, rep(block, nblocks))[1:length(data)]
+            ans = as.vector(tapply(data, grouping, FUN = max))
+            ans = as.ts(ans)
+        } else {
+            stop("For non-timeSeries Objects blocks must be numeric")
+        }
+    }
+    if (doplot) {
+        plot(ans, type = "h", col = "steelblue", main = "Block Maxima")
+        grid()
+    }
+    
+    # Return Value:
+    ans
+}
+
+
+# ------------------------------------------------------------------------------
 
 
 findThreshold =
-function(x, n = floor(0.05*length(x)))
+function(x, n = floor(0.05*length(as.vector(x))))
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Finds upper thresold for a given number of Extremes.
+    #   Upper threshold for a given number of extremes
     
     # Arguments:
+    #   x - a univariate time series object or numeric vector
     #   n - a numeric value or vector giving number of extremes 
-    #       above the threshold. 
-        
-    # Note:
-    #   Imported from R-package evir/EVIS.
+    #       above the threshold, by default 5%.
+    
+    # Example:
+    #   findThreshold(x = as.timeSeries(data(bmwRet)), 
+    #      n = floor(c(0.05, 0.10)*length(as.vector(x))))
 
     # FUNCTION:
     
     # Settings:
     x = as.vector(x)
-    if(is.na(n[1])) n = floor(0.05*length(x))
     
     # Continue:
     x = rev(sort(x))
@@ -990,135 +1067,92 @@ function(x, n = floor(0.05*length(x)))
     indices = match(x[n], thresholds)
     indices = pmin(indices + 1, length(thresholds)) 
     
+    # Result:
+    ans = thresholds[indices]
+    names(ans) = paste("n=", as.character(n), sep = "")
+    
     # Return Value:
-    thresholds[indices]
+    ans
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-blocks =
-function(x, block = "month", FUN = max)
+pointProcess =
+function(x, n = floor(0.05*length(as.vector(x))))
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Creates data blocks on vectors and time series.
-
-    # Note:
-    #   Imported from R-package evir/EVIS.
-    
-    # FUNCTION:
-    
-    # Settings:
-    data = x
-    
-    # Compute:
-    n.all = length(data)
-    if (is.character(block)) {
-        times = as.POSIXlt(attributes(data)$times) 
-        if (block %in% c("semester", "quarter")) {
-            sem = quart = times$mon
-            sem[sem %in% 0:5] = quart[quart %in% 0:2] = 0
-            sem[sem %in% 6:11] = quart[quart %in% 3:5] = 1
-            quart[quart %in% 6:8] = 2
-            quart[quart %in% 9:11] = 3 }
-        grouping = switch(block,
-            semester = paste(times$year, sem),
-            quarter = paste(times$year, quart),
-            quarters = paste(times$year, quart),
-            month = paste(times$year, times$mon),
-            months = paste(times$year, times$mon),
-            year = times$year,
-            years = times$year,
-            stop("unknown time period"))
-        newdata = tapply(data, grouping, FUN=FUN) }
-    else {
-        data = as.numeric(data)
-        nblocks = (length(data) %/% block) + 1
-        grouping = rep(1:nblocks, rep(block, nblocks))[1:length(data)]
-        newdata = tapply(data, grouping, FUN=FUN)}
-       
-    # Return Value: 
-    result = newdata 
-    result
-}
-
-
-# -----------------------------------------------------------------------------
-
-
-blockMaxima = 
-function(x, block = "month", details = FALSE, doplot = TRUE, ...) 
-{   # A function implemented by Diethelm Wuertz
-    
-    # Description:
-    #   Calculates block maxima on vectors and time series.
+    #   Returns peaks over a thrshold from a time series or numeric vector
     
     # Arguments:
-    #   x       - may be alternatively as.vector or as.ts
-    #   block   - as.numeric:   length of a block
-    #             as.character: year | semester | quarter | month
-    
-    # Note:
-    #   Calls McNeils Splus function blocks()
-    #   Output data as vector of transposed 
-    #   result to get proper order of data!
-
+    #   x - a univariate time series object or numeric vector
+    #   n - a numeric value or vector giving number of extremes 
+    #       above the threshold, by default 5%.
+ 
     # FUNCTION:
     
-    # Settings
-    x = blocks(x, block)
-    
-    # Plot:
-    if (doplot) {
-        plot(as.vector(x), type="h", ylab = "Block Maxima",  ...)
-        title(main = paste(block, "- Block Maxima"))
-        grid() }
-    
-    # Details:
-    # if details == FALSE a vector is returned, i.e details are removed!
-    if (!details) x = as.vector(x[is.na(x) == FALSE])
+    # Point Process:
+    threshold = findThreshold(x = x, n = n)
+    if (class(x) == "timeSeries") {
+        newdata = as.vector(x@Data[, 1])
+        newx = newdata[newdata > threshold]
+        pos = as.character(seriesPositions(x))
+        newpos = pos[newdata > threshold]
+        ans = timeSeries(data = t(t(newx)), charvec = newpos, 
+            units = x@units, format = x@format, FinCenter = x@FinCenter)
+    } else {
+        ans = as.ts(x[x > threshold[1]])
+    }
     
     # Return Value:
-    x
+    ans
 }
 
 
-# -----------------------------------------------------------------------------
+# ------------------------------------------------------------------------------
 
 
 deCluster = 
-function(x, run = NA, doplot = TRUE)
+function(x, run, doplot = FALSE)
 {   # A function implemented by Diethelm Wuertz 
 
     # Description:
-    #   Declusters a point process
+    #   Declusters a clustered point process from a 'timeSeries' object
     
     # Note:
     #   Imported from R-package evir/EVIS.
+    
+    # Example:
+    # xPP = pointProcess(-as.timeSeries(data(bmwRet)), n = 300)
+    # deCluster(x = xPP, run = 15, doplot = TRUE)
     
     # FUNCTION:
     
     # Settings:
     labels = TRUE
+    times =  as.POSIXct(seriesPositions(x))
     
-    # Imported Function:
-    series = x
+    # What follows is from package 'evir' by Alexander Mc Neil.
+    # This Requires a reimplementation.
+    series = as.vector(x)
     picture = doplot
-    n = length(as.numeric(series))
-    times = attributes(series)$times
-    if (is.null(times)) 
-        stop("`series' must have a `times' attribute")
+    n = length(as.numeric(series)) 
+    # times = attributes(series)$times
+    # if (is.null(times)) stop("`series' must have a `times' attribute")
     as.posix = is.character(times) || inherits(times, "POSIXt") || 
         inherits(times, "date") || inherits(times, "dates")
-    if (as.posix) 
+    if (as.posix) {
         gaps = as.numeric(difftime(as.POSIXlt(times)[2:n], 
-        as.POSIXlt(times)[1:(n - 1)], units = "days"))
-    else gaps = as.numeric(diff(times))
+            as.POSIXlt(times)[1:(n - 1)], units = "days"))
+    } else {
+        gaps = as.numeric(diff(times))
+    }
     longgaps = gaps > run
-    if (sum(longgaps) <= 1) 
+    if (sum(longgaps) <= 1) {
         stop("Decluster parameter too large")
+    }
     cluster = c(0, cumsum(longgaps))
     cmax = tapply(as.numeric(series), cluster, max)
     newtimes = times[match(cmax, series)]
@@ -1128,9 +1162,10 @@ function(x, run = NA, doplot = TRUE)
         newgaps = as.numeric(difftime(as.POSIXlt(newtimes)[2:n], 
             as.POSIXlt(newtimes)[1:(n - 1)], units = "days"))
         times = as.POSIXlt(times)
-        newtimes = as.POSIXlt(newtimes) }
-    else {
-        newgaps = as.numeric(diff(newtimes)) }
+        newtimes = as.POSIXlt(newtimes) 
+    } else {
+        newgaps = as.numeric(diff(newtimes)) 
+    }
     
     # Plot:
     if (doplot) {
@@ -1139,20 +1174,24 @@ function(x, run = NA, doplot = TRUE)
         #     "to", length(as.numeric(newseries)), "\n"))
         # par(mfrow = c(2, 2))
         if (labels) {
-            main = "de-Clustering"
-            plot(times, series, type = "h", main = main)
-            qPlot(gaps)
-            plot(newtimes, newseries, type = "h", main = main)
-            qPlot(newgaps) }
+            plot(times, series, type = "h", main = "Original Series",
+                col = "steelblue")
+            qPlot(gaps, pch = 19, col = "steelblue")
+            plot(newtimes, newseries, type = "h", main = "Declustered Series",
+                col = "steelblue")
+            qPlot(newgaps, pch = 19, col = "steelblue") 
+        }
     }
     
-    # Result:
-    ans = newseries
-
+    # Result - back to Rmetrics:
+    ans = timeSeries(
+        data = t(t(as.vector(newseries))), charvec = attr(,newseries, "times"), 
+        units = x@units, format = x@format, FinCenter = x@FinCenter)
+        
     # Return Value:
     ans
 }   
-  
+
  
 ################################################################################
 

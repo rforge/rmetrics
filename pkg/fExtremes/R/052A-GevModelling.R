@@ -42,8 +42,6 @@
 #  .gevMoments            Computes true statistics for GEV distribution
 # FUNCTION:             GEV MODELLING FROM EVIS:
 #  gevSim                Simulates GEV including Gumbel rvs [EVIS/EVIR]
-#  blockmaxSeries        Generates block maxima from a 'timeSeries' object
-#  blockmaxVector        Generates block maxima from a numeric vector 
 #  gevFit                Fits GEV Distribution
 #   print.gevFit          Print Method for object of class "gevFit"
 #   plot.gevFit           Plot Method for object of class "gevFit"
@@ -389,65 +387,6 @@ function(model = list(shape = 0.25, location = 0, scale = 1), n = 1000)
     # Return Value:
     ans 
 }
-
-
-# ------------------------------------------------------------------------------
-
-
-blockmaxSeries = 
-function(x, block = c("monthly", "quarterly"))   
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Generates block maxima from a 'timeSeries' object
-    
-    # FUNCTION:
-    
-    # Block Maxima:
-    block = block[1]
-    colFun = function(x) colStats(x, FUN = max)
-    if (block == "monthly") {
-        from = unique(timeFirstDayInMonth(seriesPositions(x)))
-        to = unique(timeLastDayInMonth(seriesPositions(x)))
-        x = applySeries(x, from, to, FUN = colFun) 
-    } else if (block == "quarterly") {
-        from = unique(timeFirstDayInQuarter(seriesPositions(x)))
-        to = unique(timeLastDayInQuarter(seriesPositions(x)))
-        x = applySeries(x, from, to, FUN = colFun) 
-    } else {
-        stop("Unknown block size")
-    }
-    
-    # Return Value:
-    x
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-blockmaxVector = 
-function(x, block = 20)   
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Generates block maxima from any univariate vector which can 
-    #   converted into a numeric vector
-    
-    # FUNCTION:
-    
-    # Block Maxima:
-    colFun = function(x) colStats(x, FUN = max)
-    data = as.vector(x)
-    nblocks = (length(data) %/% block) + 1
-    grouping = rep(1:nblocks, rep(block, nblocks))[1:length(data)]
-    x = as.vector(tapply(data, grouping, FUN = max))
-    
-    # Return Value:
-    x
-}
-
-
 
 # ------------------------------------------------------------------------------
 
