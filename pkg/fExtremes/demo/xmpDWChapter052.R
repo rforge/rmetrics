@@ -11,7 +11,9 @@
 # List of Examples, Exercises and Code Snippets:
 #
 #   5.2.1 Example: Gumbel, Frechet, Weibull - Create Figure 5.2.1
-#       * Example: Tables of Gumbel, Frechet and Weibull Distribution  
+#       * Addon: Tables of Gumbel, Frechet and Weibull Distribution  
+#       * Code Snippet: dgev
+#       * Code Snippet: rgev
 #   5.2.2 Example: GEV Density - Create Figure 5.2.2  
 #   5.2.3 Example: Return Levels - Create Figure 5.2.3
 #   5.2.4 Example: Convergence of Exponential Distribution - Figue 5.2.4
@@ -46,20 +48,26 @@
 ### 5.2.1 Example: Gumbel, Frechet, Weibull - Create Figure 5.2.1
     
     # Weibull Distribution:
-    dweibl = function (x, alpha) { # x < 0, alpha > 0       
+    dweibl = function (x, alpha) { 
+        # x < 0, alpha > 0       
         alpha*((-x)^(alpha-1))*exp(-(-x)^alpha) }
-    pweibl = function (q, alpha) { # q < 0, alpha > 0
+    pweibl = function (q, alpha) { 
+        # q < 0, alpha > 0
         exp(-(-q)^alpha) }
-    qweibl = function (p, alpha) { # alpha > 0
+    qweibl = function (p, alpha) { 
+        # alpha > 0
         -(-log(p))^(1/alpha) }
-    rweibl = function (n, alpha) { # alpha > 0
+    rweibl = function (n, alpha) { 
+        # alpha > 0
         -(-log(runif(n)))^(1/alpha) }
     ###
 
     # Gumbel Distribution:
-    dgumbel = function (x) {# x real
+    dgumbel = function (x) {
+        # x real
         exp(-exp(-x))*exp(-x) }
-    pgumbel = function (q) {# q real
+    pgumbel = function (q) {
+        # q real
         exp(-exp(-q)) }
     qgumbel = function (p) {    
         -log(-log(p)) }
@@ -68,11 +76,14 @@
     ###
 
     # Frechet Distribution:
-    dfrechet = function (x, alpha) {# x > 0, alpha > 0
+    dfrechet = function (x, alpha) {
+        # x > 0, alpha > 0
         alpha*(x^(-alpha-1))*exp(-x^(-alpha)) }
-    pfrechet = function (q, alpha) {# x  >0, alpha > 0          
+    pfrechet = function (q, alpha) {
+        # x  >0, alpha > 0          
         exp(-q^(-alpha))}
-    qfrechet = function (p, alpha) {# abs() handles Inf from q=1
+    qfrechet = function (p, alpha) {
+        # abs() handles Inf from q=1
         abs((-log(p))^(-1/alpha)) }
     rfrechet = function (n, alpha) {
         (-log(runif(n)))^(-1/alpha) }
@@ -114,7 +125,7 @@
 # ------------------------------------------------------------------------------
         
 
-### Example: Tables of Gumbel, Frechet and Weibull Distribution
+### Addon: Tables of Gumbel, Frechet and Weibull Distribution
 
     # Frechet Distribution:
     x = q = c(0:5, Inf)
@@ -129,6 +140,65 @@
     # Gumbel Distribution rounded to 3 digits:
     x = q = -5:5
     round(cbind(x, P = pgumbel(q), D = dgumbel(x)), 3) 
+    ###
+    
+    
+# ------------------------------------------------------------------------------
+
+
+### Code Snippet: dgev
+
+    # Compute Density:
+    .dgev = function (x, xi = 1, mu = 0, sigma = 1)
+    {
+        x = (x - mu)/sigma
+        if (xi == 0) {
+            d = log(1/sigma) - x - exp(-x)
+        } else {
+            nn = length(x); d = numeric(nn)
+            xx = 1 + xi * x
+            xxpos = xx[xx > 0 | is.na(xx)]
+            sigma = rep(sigma, length.out = nn)[xx > 0 | is.na(xx)]
+            d[xx > 0 | is.na(xx)] =
+                log(1/sigma)-xxpos^(-1/xi)-(1/xi+1)*log(xxpos)
+            d[xx <= 0 & !is.na(xx)] = -Inf
+        }
+        exp(d)
+    }
+    ###
+
+    # Try:
+    x = seq(0, 5, length = 20)
+    y = .dgev(x, xi = 0.5, mu = 1, sigma = 0.5)
+    data.frame(x, y)
+    ###
+
+
+# ------------------------------------------------------------------------------
+
+
+### Code Snippet: rgev
+
+    # Generate Random Deviate:
+    .rgev = function (n, xi = 1, mu = 0, sigma = 1)
+    {
+        if (xi == 0) {
+            r = mu - sigma * log(rexp(n))
+        } else {
+            r = mu + sigma * (rexp(n)^(-xi) - 1)/xi
+        }
+        r
+    }
+    ###
+
+    # Try:
+    par(mfrow = c(1, 1))
+    hist(.rgev(1000, xi = 0.5, mu = 1, sigma = 0.5),
+        breaks = "FD", probability = TRUE, xlim = c(0, 5),
+        ylim = c(0, 1), border = "white", col = "steelblue")
+    x = x = seq(0, 5, length = 500)
+    lines(x, .dgev(x, xi = 0.5, mu = 1, sigma = 0.5),
+        lwd = 2, col = "brown")
     ###
     
     

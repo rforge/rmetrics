@@ -6,18 +6,25 @@
 #
 # Details:
 #   Chapter 5.1
-#   Extreme Value Plots
+#   Exploratory data Analysis of Extremes
 #
 # List of Examples, Exercises and Code Snippets:
 #
 #   5.1.1 Example: Quantile-Quantile Plot
 #       * Code Snipptet: qqPlot
-#       * Example: Create Figure 5.1.1 - DAX Data
-#       * Example: Create Figure 5.1.1 - BMW Data
+#       * Example: Create Figure 5.1.1 - DAX and BMW Data
 #   5.1.2 Example: Mean Excess Function Plot - Create Figure 5.1.2
-#       * Example: Mean Residual Life Plot - Create Figure 5.1.3
+#       * Code Snippet: mxfPlot
+#   5.1.3 Example: Mean Residual Life Plot - Create Figure 5.1.3
+#       * Code Snippet: mrlPlot
+#       * Code Snippet: ssrecordsPlot
+#   5.1.4 Example: Subsample Records Plot
+#   5.1.5 Example: Records Plot
+#   5.1.6 Example: Ratio of Maximum and Sum Plot
+#   5.1.7 Example: Laws of Large Numbers
+#   5.1.8 Example: ACF of Exceedences
+#       * Addon: Extreme Data Preprocessing
 #
-#   *** This list is not yet complete ***
 #
 # Author:
 #   (C) 2002-2004, Diethelm Wuertz, GPL
@@ -63,6 +70,7 @@
         qqline(x)
         invisible()
     }
+    DAX.RET = as.timeSeries(data(daxRet))
     .qqPlot(DAX.RET)
     ###
     
@@ -70,25 +78,19 @@
 # ------------------------------------------------------------------------------
 
 
-### Example: Create Figure 5.1.1 - DAX Data
+### Example: Create Figure 5.1.1 - DAX and BMW Data
 
     # Graph Frame:
     par(mfcol = c(2, 2), cex = 0.7)
     ###
     
-    # Load and Plot the Data 
+    # Load and Plot DAX Data 
     DAX.RET = as.timeSeries(data(daxRet))  
     plot(DAX.RET, main = "DAX Daily log Returns", ylab = "log Return")
     qqPlot(DAX.RET)
     ###
-    
-   
-# ------------------------------------------------------------------------------
-    
-    
-### Example: Create Figure 5.1.1 - BMW Data
 
-    # Load and Plot the Data 
+    # Load and Plot BMW Data 
     BMW.RET = as.timeSeries(data(bmwRet))
     plot(BMW.RET, main = "BMW Daily log Returns", ylab = "log Return")
     qqPlot(BMW.RET)
@@ -131,10 +133,39 @@
     
     
 # ------------------------------------------------------------------------------
-    
-    
-### Example: Mean Residual Life Plot - Create Figure 5.1.3
+   
 
+### Code Snippet: mxfPlot
+
+    # Function:
+    .mxfPlot = function(x, tail = 0.05, main = "me-Plot", ...)
+    {
+        # Compute u and e(u)
+        u = rev(sort(x))
+        n = length(x)
+        u = u[1:floor(tail*n)]
+        n = length(u)
+        e = (cumsum(u)-(1:n)*u)/(1:n)
+
+        # Generate Plot and Return u and e(u):
+        plot (u, e, main = main, ...)
+        list(x = u, y = e)
+    }
+    ###
+
+    # Try:
+    par(mfrow = c(2, 2), cex = 0.7)
+    .mxfPlot(rnorm(1000), tail = 0.10)
+    grid()
+    .mxfPlot(rt(1000, df = 4), tail = 0.10)
+    grid()
+    ###
+
+
+# ------------------------------------------------------------------------------
+ 
+    
+### 5.1.3 Example: Mean Residual Life Plot - Create Figure 5.1.3
 
     # Graph Frame:
     par(mfrow = c(2, 2), cex = 0.7) 
@@ -157,6 +188,82 @@
         grid()      
     } 
     ###
+    
+    
+# ------------------------------------------------------------------------------
+   
+
+### Code Snippet: mrlPlot
+
+    # Function:
+    .mrlPlot = function(x, conf = 0.95, nint = 100, ...)
+    {
+        sx = xu = xl = rep(NA, nint)
+        u = seq(mean(x), max(x), length = nint)
+        for(i in 1:nint) {
+            x = x[x >= u[i]]; sx[i] = mean(x - u[i])
+            sigma = qnorm((1 + conf)/2) * sqrt(var(x))
+            xu[i] = sx[i] + sigma/sqrt(length(x))
+            xl[i] = sx[i] - sigma/sqrt(length(x)) }
+
+        # Plot:
+        plot(u[!is.na(xl)], sx[!is.na(xl)], type = "l",
+            ylim = range(c(xl, xu), na.rm = TRUE), ...)
+        lines(u[!is.na(xl)], xl[!is.na(xl)], col = "steelblue")
+        lines(u[!is.na(xu)], xu[!is.na(xu)], col = "steelblue")
+    }
+    ###
+
+    # Try:
+    par(mfrow = c(1, 1))
+    .mrlPlot(rt(5000, 4), xlab = "u", ylab = "e(u)")
+    title(main = "Mean Residual Live Plot")
+    grid()
+    ###
+    
+
+# ------------------------------------------------------------------------------
+   
+
+### Code Snippet: ssrecordsPlot
+
+    # Function:
+    .ssrecordsPlot = function (x, subsamples = 10)
+    {
+        cluster = floor(length(x)/subsamples)
+        save = x
+        records = c()
+        for (i in 1:subsamples) {
+            x = save[((i-1)*cluster+1):(i*cluster)]
+            y = 1:length(x)
+            u = x[1]; v = x.records = 1
+            while (!is.na(v)) {
+                u = x[x > u][1]; v = y[x > u][1]
+                if(!is.na(v)) x.records = c(x.records, v)
+            }
+            if (i == 1) {
+                nc = 1:length(x)
+                csmean = cumsum(1/nc)
+                cssd = sqrt(cumsum(1/nc-1/(nc*nc)))
+                ymax = csmean[length(x)]+2*cssd[length(x)]
+                plot (nc, csmean+cssd, type = "l", ylim = c(0, ymax))
+                lines(nc, csmean); lines(nc, csmean-cssd)
+            }
+            y.records = 1:length(x.records)
+            x.records = x.records[y.records < ymax]
+            points(x.records, y.records[y.records < ymax], col = i)
+            records[i] = y.records[length(y.records)]
+        }
+        records
+    }
+    ###
+    
+    # Try:
+    par(mfrow = c(1, 1))
+    .ssrecordsPlot(rnorm(1000), 10)
+    title(main = "Subrecords Plot")
+    ###
+    
     
     
 # ------------------------------------------------------------------------------
@@ -193,7 +300,7 @@
 # ------------------------------------------------------------------------------
 
      
-### Example 5.1.4: Subsample Records Plot}
+### Example 5.1.4: Subsample Records Plot
 
     
     # Graph Frame:
@@ -231,7 +338,7 @@
 # ------------------------------------------------------------------------------
 
   
-### Example 5.1.5: Plot of Records}
+### Example 5.1.5: Plot of Records
 
     # Graph Frame:
     par(mfrow = c(1, 1))
@@ -269,6 +376,68 @@
     title(main = "\n\nBMW Returns")
     msratioPlot (nyseres)
     title(main = "\n\nNYSE Returns")
+    ###
+    
+    
+# ------------------------------------------------------------------------------
+
+
+#   5.1.7 Example: Laws of Large Numbers
+
+    # Graph Frame:
+    par(mfrow = c(2, 2), cex = 0.7)
+    ###
+    
+    # Kolmogorov's Strong Law of Large Numbers:
+    # Revert the Series for the Loss Tail ...
+    sllnPlot(-as.timeSeries(data(daxRet)))
+    ###
+
+    # Hartman-Wintner's Law of the Iterated Logarithm
+    lilPlot(-as.timeSeries(data(daxRet)))
+    ###
+
+    
+# ------------------------------------------------------------------------------
+
+
+#   5.1.8 Example: ACF of Exceedences
+
+    # Graph Frame:
+    par(mfrow = c(2, 2), cex = 0.7)
+    ###
+    
+    # ACF of Exceedences - Gains:
+    xacfPlot(as.timeSeries(data(daxRet)))
+    ###
+    
+    # ACF of Exceedences - Losses:
+    xacfPlot(as.timeSeries(data(daxRet)))
+    ###
+    
+    
+# ------------------------------------------------------------------------------
+
+
+#   Data Preprocessing:
+
+    # BMW Losses:
+    x = -as.timeSeries(data(bmwRet))
+    
+    # Monthly Losses:
+    blockMaxima(x, block = "monthly", doplot = FALSE) 
+    # 20 Day Losses:
+    blockMaxima(x, block = 20, doplot = FALSE) 
+    ###
+ 
+    # 5% Threshold Values:
+    numberOfPeaks = floor(0.05*length(as.vector(x)))
+    print(numberOfPeaks)
+    findThreshold(x, n = numberOfPeaks)
+    xPP = pointProcess(x, n = numberOfPeaks)
+    par(mfrow = c(2, 2), cex = 0.7)
+    deCluster(x = xPP, run = 15, doplot = TRUE)
+    # Compare with other 'run' lengths ...
     ###
     
  
