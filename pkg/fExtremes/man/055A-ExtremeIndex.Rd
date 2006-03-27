@@ -2,8 +2,19 @@
 
 \alias{ExtremeIndexPlots}
 
+\alias{fTHETA}
+\alias{fTHETA-class}
+
+\alias{show.fTHETA}
+\alias{show,fTHETA-method}
+
 \alias{exindexPlot}
 \alias{exindexesPlot}
+
+\alias{blockTheta}
+\alias{clusterTheta}
+\alias{runTheta}
+\alias{ferrosegersTheta}
 
 \title{Extremal Index Estimation}
 
@@ -19,6 +30,10 @@
     The functiona are:
     
     \tabular{ll}{
+    \code{blockTheta} \tab Computes theta from Block Method, \cr
+    \code{clusterTheta} \tab Computes theta from Reciprocal Cluster Method, \cr
+    \code{runTheta} \tab Computes theta from Run Method, \cr
+    \code{ferrosegersTheta} \tab Computes Theta according to Ferro and Seegers, \cr
     \code{exindexPlot} \tab Calculate and Plot Theta(1,2,3), \cr
     \code{exindexesPlot} \tab Calculate Theta(1,2) and Plot Theta(1). }
     
@@ -26,44 +41,54 @@
 
 
 \usage{
-exindexPlot(x, block = "month", start = 5, end = NA, plottype = c("thresh", 
-    "K"), labels = TRUE, autoscale = TRUE, \dots)
+show.fTHETA(object)
+
+blockTheta(x, block = 22, quantiles = seq(0.950, 0.995, length = 10),
+    title = NULL, description = NULL)
+clusterTheta(x, block = 22, quantiles = seq(0.950, 0.995, length = 10),
+    title = NULL, description = NULL)
+runTheta(x, block = 22, quantiles = seq(0.950, 0.995, length = 10),
+    title = NULL, description = NULL)
+ferrosegersTheta(x, quantiles = seq(0.950, 0.995, length = 10),
+    title = NULL, description = NULL)
     
-exindexesPlot(x, block = 20, quantiles = seq(0.990, 0.999, 0.001), 
-    doplot = TRUE, \dots)
+exindexPlot(x, block = c("monthly", "quarterly"), start = 5, end = NA, 
+    doplot = TRUE, plottype = c("thresh", "K"), labels = TRUE, \dots)
+    
+exindexesPlot(x, block = 22, quantiles = seq(0.950, 0.995, length = 10), 
+    doplot = TRUE, labels = TRUE, \dots)
 }
 
 
 \arguments{
 
-    \item{autoscale}{
-        [exindexPlot] - \cr
-        whether or not plot should be automatically scaled; if not, 
-        \code{xlim} and \code{ylim} graphical parameters may be entered.
-        }
     \item{block}{
-        the block size. A numeric value is interpreted as the number of 
-        data values in each successive block.
-        All the data is used, so the last block may not contain \code{block} 
-        observations.
-        If the \code{x} has a \code{times} attribute containing (in an 
-        object of class \code{"POSIXct"}, or an object that can be
-        converted to that class; see \code{\link{as.POSIXct}}) the
-        times/dates of each observation, then \code{block} may instead
-        take the character values \code{"month"}, \code{"quarter"},
-        \code{"semester"} or \code{"year"}.
-        Note, \code{exindexPlot} supports both numeric and character input,
-        \code{exindexPlot} supports only numeric input.
-        By default, monthly blocks or 20-day blocks are used which are 
-        thought for daily data records.
+        [exindexPlot] - \cr
+        the block size. Either \code{"monthly"}, \code{"quarterly"} or
+        an integer value. An integer value is interpreted as the number 
+        of data values in each successive block. The default value is
+        \code{"monthly"} which correpsond for daily data to approximately
+        22-day periods.
+        \cr
+        [exindexesPlot] - \cr
+        An integer value with the number of data values in each successive 
+        block. By default 22-day sized blocks are used which are thought 
+        for daily data records and span approximately monthly periods.
+        }
+    \item{description}{
+        a character string which allows for a brief description.
         }
     \item{doplot}{
-        [exindexesPlot] - \cr
         a logical, should the results be plotted?
         }
     \item{labels}{
-        [exindexPlot] - \cr
-        whether or not axes should be labelled.
+        whether or not axes should be labelled. If set to \code{FALSE}
+        then user specified lables can be passed through the \code{"..."}
+        argument.
+        }
+    \item{object}{
+        an object of class \code{"fTHETA} as returned by the functions
+        \code{*Theta}.
         }
     \item{plottype}{
         [exindexPlot] - \cr
@@ -80,8 +105,14 @@ exindexesPlot(x, block = 20, quantiles = seq(0.990, 0.999, 0.001),
         a point, and \code{end} the highest value; \code{K} is the
         number of blocks in which a specified threshold is exceeded.
         }
+    \item{title}{
+        a character string which allows for a project title.
+        }
     \item{x}{
-        a numeric vector, note raw values are required, not block maxima.
+        a 'timeSeries' object or any other object which can be transferred
+        by the function \code{as.vector} to a numeric vector. \code{"monthly"}
+        and \code{"quarterly"} blocks require \code{x} to be an object of
+        class \code{"timeSeries"}.
         }
     \item{\dots}{
         additional arguments passed to the plot function.
@@ -112,7 +143,7 @@ exindexesPlot(x, block = 20, quantiles = seq(0.990, 0.999, 0.001),
 
 \author{
 
-    Alexander McNeil, for the \code{exindexPlot} function, and \cr
+    Alexander McNeil, for parts of the \code{exindexPlot} function, and \cr
     Diethelm Wuertz for the \code{exindexesPlot} function.
     
 }
@@ -141,17 +172,16 @@ Embrechts, P., Klueppelberg, C., Mikosch, T. (1997);
 ## Extremal Index for the right and left tails 
 ## of the BMW log returns:
    xmpExtremes("\nStart: Plot the Extremal Index >")
-   data(bmw)
+   data(bmwRet)
    par(mfrow = c(2, 2), cex = 0.7)
-   exindexPlot( bmw, block = "quarter")
-   exindexPlot(-bmw, block = "quarter")   
+   exindexPlot( as.timeSeries(bmwRet), block = "quarterly")
+   exindexPlot(-as.timeSeries(bmwRet), block = "quarterly")   
    
 ## Extremal Index for the right and left tails 
 ## of the BMW log returns:
    xmpExtremes("\nNext: Investigate Tail Depth Dependence >")
-   data(bmw)
-   exindexesPlot( bmw, block = 65)
-   exindexesPlot(-bmw, block = 65)   
+   exindexesPlot( as.timeSeries(bmwRet), block = 65)
+   exindexesPlot(-as.timeSeries(bmwRet), block = 65)   
 }
 
 

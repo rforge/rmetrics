@@ -11,8 +11,6 @@
 
 \alias{GevFit}
 \alias{gevSim}
-\alias{blockmaxSeries}
-\alias{blockmaxVector}
 \alias{gevFit}
 \alias{print.gevFit}
 \alias{plot.gevFit}
@@ -63,8 +61,6 @@
     
     \tabular{ll}{
     \code{gevSim} \tab generates data from the GEV, \cr
-    \code{blockmaxSeries} \tab generates block maxima from a timeSeries object, \cr
-    \code{blockmaxVector} \tab generates block maxima from a numeric vector, \cr
     \code{gevFit} \tab fits empirical or simulated data to the distribution, \cr 
     \code{print} \tab print method for a fitted GEV object, \cr
     \code{plot} \tab plot method for a fitted GEV object, \cr 
@@ -91,8 +87,6 @@ qevd(p, loc = 0, scale = 1, shape = 0, lower.tail = TRUE)
 revd(n, loc = 0, scale = 1, shape = 0)
 
 gevSim(model = list(shape = 0.25, location = 0, scale = 1), n = 1000)
-blockmaxSeries(x, block = c("monthly", "quarterly")) 
-blockmaxVector(x, block = 20)
 gevFit(x, type = c("mle", "pwm"), gumbel = FALSE, \dots)
 \method{print}{gevFit}(x, \dots)
 \method{plot}{gevFit}(x, which = "all", \dots)
@@ -127,15 +121,6 @@ shaparmPlot(x, revert = FALSE, standardize = FALSE, tails = 0.01*(1:10),
         whether or not plot should be automatically
         scaled; if not, \code{xlim} and \code{ylim} graphical
         parameters may be entered.
-        }
-    \item{block}{
-        [blockmaxSeries] - \cr
-        a character string either \code{"monthly"} or \code{"quarterly"}
-        which determines the block size.
-        \cr
-        [blockmaxVector] - \cr
-        an integer value which determines the block size as number of
-        records.
         }
     \item{both.tails}{
         [shaparmPlot] - \cr
@@ -277,13 +262,6 @@ shaparmPlot(x, revert = FALSE, standardize = FALSE, tails = 0.01*(1:10),
         desplayed. By default \code{which="all"}.
         }
     \item{x}{
-        [blockmaxSeries] - \cr
-        an object of class \code{"timeSeries"}.
-        \cr
-        [blockmaxVector] - \cr
-        a numeric vector or any other object which can be converted by the 
-        function \code{as.vector} into a numeric vector.
-        \cr
         [dgev][devd] - \cr
         a numeric vector of quantiles.
         \cr

@@ -12,16 +12,16 @@
 \alias{msratioPlot}
 \alias{recordsPlot}
 \alias{ssrecordsPlot}
+\alias{sllnPlot}
+\alias{lilPlot}
 \alias{xacfPlot}
 
 \alias{interactivePlot}
-
 \alias{gridVector}
 
-
-\alias{findThreshold}
-\alias{blocks}
 \alias{blockMaxima}
+\alias{findThreshold}
+\alias{pointProcess}
 \alias{deCluster}
 
 
@@ -53,6 +53,8 @@
     \code{msratioPlot} \tab Plot of the ratio of maximum and sum, \cr   
     \code{recordsPlot} \tab Record development compared with iid data, \cr
     \code{ssrecordsPlot} \tab another variant, investigates subsamples, \cr
+    \code{sllnPlot} \tab verifies Kolmogorov's strong law of large numbers, \cr
+    \code{lilPlot} \tab verifies Hartman-Wintner's law of the iterated logarithm, \cr
     \code{xacfPlot} \tab ACF of exceedences over a threshold, \cr
     \code{interactivePlot} \tab a framework for interactive plot displays, \cr
     \code{gridVector} \tab creates from two vectors x and y all grid points. }
@@ -60,9 +62,9 @@
     The functions for data preprocessing are:
     
     \tabular{ll}{
-    \code{findThreshold} \tab Upper threshold for a given number of extremes, \cr  
-    \code{blocks} \tab  Create data blocks on vectors and time series, \cr
     \code{blockMaxima} \tab Block Maxima from a vector or a time series, \cr 
+    \code{findThreshold} \tab Upper threshold for a given number of extremes, \cr  
+    \code{pointProcess} \tab Peaks over Threshold from a vector or a time series, \cr 
     \code{deCluster} \tab Declusters clustered point process data. }
    
     
@@ -87,6 +89,9 @@ msratioPlot(x, p = 1:4, doplot = TRUE, plottype = c("autoscale", ""),
 recordsPlot(x, conf = 0.95, doplot = TRUE, labels = TRUE, \dots)
 ssrecordsPlot(x, subsamples = 10, doplot = TRUE, plottype = c("lin", "log"),
     labels = TRUE, \dots)
+    
+sllnPlot(x, doplot = TRUE, ...)
+lilPlot(x, doplot = TRUE, ...)
 
 xacfPlot(x, threshold = 0.95, lag.max = 15, doplot = TRUE, \dots)
 
@@ -94,10 +99,10 @@ interactivePlot(x, choices = paste("Plot", 1:9),
     plotFUN = paste("plot.", 1:9, sep = ""), which = "all", \dots)
 gridVector(x, y)
 
-findThreshold(x, n = floor(0.05*length(x)))
-blocks(x, block = "month", FUN = max)
-blockMaxima(x, block = "month", details = FALSE, doplot = TRUE, \dots)
-deCluster(x, run = NA, doplot = TRUE)
+blockMaxima(x, block = c("monthly", "quarterly"), doplot = FALSE)
+findThreshold(x, n = floor(0.05*length(as.vector(x))))
+pointProcess(x, n = floor(0.05*length(as.vector(x))))
+deCluster(x, run, doplot = FALSE)
 }
 
 
@@ -126,15 +131,8 @@ deCluster(x, run = NA, doplot = TRUE)
         [recordsPlot] - \cr
         a confidence level. By default 0.95, i.e. 95\%.
         }
-    \item{details}{
-        [blockMaxima] - \cr
-        a logical. Should details be printed?
-        }
     \item{doplot}{
         a logical. Should the results be plotted? By default \code{TRUE}.
-        }
-        \item{FUN}{the function to be applied. Additional arguments are
-        passed by the \code{\dots} argument.
         }
     \item{labels}{
         a logical. Whether or not x- and y-axes should be automatically 
@@ -345,17 +343,24 @@ deCluster(x, run = NA, doplot = TRUE)
 
 \value{
   
-    \code{findThreshold} 
-    \cr
-    returns a numeric vector of suitable thresholds. 
-    
     \code{blockMaxima} 
     \cr
-    returns a numeric vector of block maxima data.
+    returns a timeSeries object or a numeric vector of block 
+    maxima data.
+    
+    \code{findThreshold} 
+    \cr
+    returns a numeric value or vector of suitable thresholds. 
+    
+    \code{pointProcess} 
+    \cr
+    returns a timeSeries object or a numeric vector of peaks over
+    a threshold.
     
     \code{deCluster} 
     \cr
-    returns an object for the declustered point process. 
+    returns a timeSeries object or a numeric vector for the 
+    declustered point process. 
 
 }
 
@@ -529,18 +534,16 @@ Embrechts, P., Klueppelberg, C., Mikosch, T. (1997);
    xmpExtremes("\nNext: Compute Block Maxima >")
    # Block Maxima (Minima) for the right and left tails 
    # of the BMW log returns:
-   data(bmw)
    par(mfrow = c(2, 1))
-   blockMaxima( bmw, block = 100)
-   blockMaxima(-bmw, block = 100)     
+   blockMaxima( as.timeSeries(data(bmwRet)), block = 65)
+   blockMaxima(-as.timeSeries(data(bmwRet)), block = 65)     
  
 ## deCluster -
    xmpExtremes("\nNext: De-Cluster Exceedences >")
    # Decluster the 200 exceedances of a particular  
    # threshold in the negative BMW log-return data
-   par(mfrow = c(2, 2))
-   fit = potFit(-bmw, nextremes = 200) 
-   deCluster(fit$fit$data, 30)   
+   PP = pointProcess(-as.timeSeries(data(bmwRet)), n = 300)
+   deCluster(x = PP, run = 15, doplot = TRUE) 
 }
 
 
