@@ -28,15 +28,15 @@
 
 
 ################################################################################
-# FUNCTION:                 EXTREMAL INDEX:
+# FUNCTION:                 DESCRIPTION:
 #  fTHETA                    Class representation
 #  show.fTHETA               S4: Print Method
-#  .thetaSim                 Simulate a series with known theta
+#  thetaSim                  Simulates a time series with known theta
 #
-#  blockTheta               Computes theta from Block Method
-#  clusterTheta             Computes theta from Reciprocal Cluster Method
-#  runTheta                 Computes theta from Run Method
-#  ferrosegersTheta         Computes Theta according to Ferro and Seegers
+#  blockTheta                Computes theta from Block Method
+#  clusterTheta              Computes theta from Reciprocal Cluster Method
+#  runTheta                  Computes theta from Run Method
+#  ferrosegersTheta          Computes Theta according to Ferro and Seegers
 #
 #  exindexesPlot             Computes and Plot Theta(1,2,3)
 #  exindexPlot               Computes Theta(1,2) and Plot Theta(1)
@@ -94,9 +94,19 @@ setMethod("show", "fTHETA", show.fTHETA)
 # ------------------------------------------------------------------------------
 
 
-.thetaSim =
+thetaSim =
 function(model = c("max", "pair"), n = 1000, theta = 0.5)
-{
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Simulates a time series with known theta
+    
+    # Arguments:
+    #   model - a character string denoting the model
+    #       "max" - Max Frechet Series
+    #       "pair" - Paired Exponential Series
+    
+    # Simulate:
     model = model[1]
     if (model == "max") {
         # Frechet rvs: 
@@ -109,6 +119,8 @@ function(model = c("max", "pair"), n = 1000, theta = 0.5)
         eps = rexp(n+1)
         for ( i in 1:n ) X[i] = max(eps[i], eps[i+1])
     }
+    
+    # As time series:
     X = as.ts(X)
     attr(X, "control") = c(model = model, theta = as.character(theta))
     
