@@ -8,13 +8,15 @@
 \alias{show.fTHETA}
 \alias{show,fTHETA-method}
 
-\alias{exindexPlot}
-\alias{exindexesPlot}
+\alias{thetaSim}
 
 \alias{blockTheta}
 \alias{clusterTheta}
 \alias{runTheta}
 \alias{ferrosegersTheta}
+
+\alias{exindexPlot}
+\alias{exindexesPlot}
 
 \title{Extremal Index Estimation}
 

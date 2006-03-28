@@ -9,12 +9,16 @@
 \alias{qevd}
 \alias{revd}
 
-\alias{GevFit}
+\alias{fGEV}
+\alias{fGEV-class}
+
+\alias{GevModelling}
+
 \alias{gevSim}
 \alias{gevFit}
-\alias{print.gevFit}
-\alias{plot.gevFit}
-\alias{summary.gevFit}
+\alias{print.fGEV}
+\alias{plot.fGEV}
+\alias{summary.fGEV}
 \alias{gevrlevelPlot}
 
 \alias{hillPlot}
@@ -67,7 +71,7 @@
     \code{summary} \tab summary method for a fitted GEV object, \cr
     \code{gevrlevelPlot} \tab k-block return level with confidence intervals. }
     
-    Maximum Domain of Attraction Estimators:
+    Maximum Domain of Attraction estimators:
     
     \tabular{ll}{
     \code{hillPlot} \tab shape parameter and Hill estimate of the tail index, \cr
@@ -86,11 +90,11 @@ pevd(q, loc = 0, scale = 1, shape = 0, lower.tail = TRUE)
 qevd(p, loc = 0, scale = 1, shape = 0, lower.tail = TRUE)
 revd(n, loc = 0, scale = 1, shape = 0)
 
-gevSim(model = list(shape = 0.25, location = 0, scale = 1), n = 1000)
-gevFit(x, type = c("mle", "pwm"), gumbel = FALSE, \dots)
-\method{print}{gevFit}(x, \dots)
-\method{plot}{gevFit}(x, which = "all", \dots)
-\method{summary}{gevFit}(object, doplot = TRUE, which = "all", \dots)
+gevSim(model = list(shape = 0.25, location = 0, scale = 1), n = 1000, seed = NULL)
+gevFit(x, type = c("mle", "pwm"), gumbel = FALSE, title = NULL, description = NULL, \dots)
+\method{print}{fGEV}(x, \dots)
+\method{plot}{fGEV}(x, which = "all", \dots)
+\method{summary}{fGEV}(object, doplot = TRUE, which = "all", \dots)
 gevrlevelPlot(object, k.blocks = 20, add = FALSE, \dots)
 
 hillPlot(x, option = c("alpha", "xi", "quantile"), start = 15,
@@ -132,6 +136,9 @@ shaparmPlot(x, revert = FALSE, standardize = FALSE, tails = 0.01*(1:10),
         [hillPlot] - \cr
         probability for asymptotic confidence band; for no
         confidence band set \code{ci} to zero.
+        }
+    \item{description}{
+        a character string which allows for a brief description.
         }
     \item{doplot}{
         a logical. Should the results be plotted?
@@ -223,6 +230,10 @@ shaparmPlot(x, revert = FALSE, standardize = FALSE, tails = 0.01*(1:10),
         a logical value, by default FALSE, if set to TRUE the
         sign of the vector will be reverted: \code{x = -x}.
         }
+    \item{seed}{
+        [gevSim] - \cr
+        an integer value to set the seed for the random number generator.
+        }
     \item{start, end}{
         [hillPlot] - \cr
         lowest and highest number of order statistics at which to plot
@@ -239,6 +250,10 @@ shaparmPlot(x, revert = FALSE, standardize = FALSE, tails = 0.01*(1:10),
         a numeric vector of tail depths to be considered; by
         default ten values ranging from 0.1 to 1.0 in steps of 0.1
         corresponding to values ranging from 1 to 10 percent.
+        }
+    \item{title}{
+        [gevFit] - \cr
+        a character string which allows for a project title.
         }
     \item{type}{
         a character string denoting the type of parameter estimation,

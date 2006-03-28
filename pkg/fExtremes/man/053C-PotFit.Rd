@@ -14,7 +14,7 @@
 
 \description{
   
-    a collection and description of functions to model 
+    A collection and description of functions to model 
     point processes over a threshold, POT, based on \R's 
     'evir' package. 
     \cr
@@ -25,8 +25,8 @@
     \code{potSim} \tab generates data from a point process, \cr
     \code{potFit} \tab fits empirical or simulated data to a point process, \cr 
     \code{print} \tab print method for a fitted POT object of class ..., \cr
-    \code{plot} \tab plot method for a fitted GEV object, \cr 
-    \code{summary} \tab summary method for a fitted GEV object, \cr 
+    \code{plot} \tab plot method for a fitted POT object, \cr 
+    \code{summary} \tab summary method for a fitted POT object, \cr 
     \code{gevrlevelPlot} \tab k-block return level with confidence intervals. }
   
 }
@@ -43,7 +43,6 @@ potFit(x, threshold = NA, nextremes = NA, run = NA, \dots)
 
 
 \arguments{
-
 
     \item{doplot}{
         a logical. Should the results be plotted?
