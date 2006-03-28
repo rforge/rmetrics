@@ -108,10 +108,10 @@ function(model = c("max", "pair"), n = 1000, theta = 0.5)
     
     # Simulate:
     model = model[1]
+    X = rep(0, n)
     if (model == "max") {
         # Frechet rvs: 
         eps = 1/(-log(runif(n)))
-        X = rep(0, n)
         X[1] = theta*eps[1]
         for ( i in 2:n ) X[i] = max( (1-theta)*X[i-1], theta*eps[i] )
     } else if (model == "pair") {

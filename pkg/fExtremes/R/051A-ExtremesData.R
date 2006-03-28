@@ -94,21 +94,24 @@ labels = TRUE, ...)
     
     if (plottype == "x") {
         xs = x[x > 0]
-        ys = y[x > 0] }
+        ys = y[x > 0] 
+    }
     if (plottype == "y") {
         xs = x[y > 0]
-        ys = y[y > 0] }
+        ys = y[y > 0] 
+    }
     if (plottype == "xy") {
         xs = x[x > 0 & y > 0]
-        ys = y[x > 0 & y > 0] }
+        ys = y[x > 0 & y > 0] 
+    }
     
     # Plot:
     if (doplot) {
         if (labels) {
             xlab = "x"
             ylab = "1-F(x)"
-            main = "Empirical Distribution" }
-        else {
+            main = "Empirical Distribution" 
+        } else {
             xlab = ""
             ylab = ""
             main = "" }
@@ -148,11 +151,11 @@ function (x, doplot = TRUE, labels = TRUE, ...)
             xlab = "Normal Quantiles"
             ylab = "Empirical Quantiles"
             main = "Normal QQ-Plot" 
-            print(main) }
-        else {
+        } else {
             xlab = ""
             ylab = ""
-            main = "" }
+            main = "" 
+        }
         qqnorm(x, xlab = xlab, ylab = ylab, main = main, ...) 
         qqline(x) 
         if (labels) grid() 
@@ -265,9 +268,11 @@ labels = TRUE, ...)
     if (!is.na(threshold)) x = x[x >= threshold]
     if (!is.na(trim)) x = x[x < trim]
     if (xi == 0) {
-        y = qexp(ppoints(x)) }
+        y = qexp(ppoints(x)) 
+    }
     if( xi != 0) {
-        y = qgpd(ppoints(x), xi = xi) }
+        y = qgpd(ppoints(x), xi = xi) 
+    }
     
     # Plot:
     if (doplot) {
@@ -275,14 +280,17 @@ labels = TRUE, ...)
             xlab = "Ordered Data"
             ylab = "Quantiles"
             if (xi == 0) {
-                ylab = paste("Exponential", ylab) }
+                ylab = paste("Exponential", ylab) 
+            }
             if (xi != 0) {
-                ylab = paste("GPD(xi=", xi, ") ",  ylab, sep = "") }
-            main = "Exploratory QQ Plot" }
-        else {
+                ylab = paste("GPD(xi=", xi, ") ",  ylab, sep = "") 
+            }
+            main = "Exploratory QQ Plot" 
+        } else {
             xlab = ""
             ylab = ""
-            main = "" }
+            main = "" 
+        }
         plot(sort(x), y, xlab = xlab, ylab = ylab, main = main, ...)
         if (line) abline(lsfit(sort(x), y)) 
         if (labels) grid()
@@ -324,11 +332,12 @@ function (x, tail = 0.05, doplot = TRUE, labels = TRUE, ...)
         if (labels) {
             xlab = "Threshold: u"
             ylab = "Mean Excess: e"
-            main = "Mean Excess Function" }
-        else {
+            main = "Mean Excess Function" 
+        } else {
             xlab = ""
             ylab = ""
-            main = "" }
+            main = "" 
+        }
         plot (u, e, xlab = xlab, ylab = ylab, main = main, ...) 
         if (labels) grid()
     }
@@ -367,9 +376,10 @@ doplot = TRUE, plottype = c("autoscale", ""), labels = TRUE, ...)
     # Settings:
     plottype = plottype[1]
     if (plottype == "autoscale") {
-        autoscale = TRUE }
-    else {
-        autoscale = FALSE }
+        autoscale = TRUE 
+    } else {
+        autoscale = FALSE 
+    }
     
     # Convert x to a vector, if the input is a data.frame.
     if (is.data.frame(x)) x = x[,1] 
@@ -383,7 +393,8 @@ doplot = TRUE, plottype = c("autoscale", ""), labels = TRUE, ...)
         sdev = sqrt(var(x))
         n = length(x)
         xu[i] = sx[i] + (qnorm((1 + conf)/2) * sdev)/sqrt(n)
-        xl[i] = sx[i] - (qnorm((1 + conf)/2) * sdev)/sqrt(n) }
+        xl[i] = sx[i] - (qnorm((1 + conf)/2) * sdev)/sqrt(n) 
+    }
     
     # Plot:
     if (doplot) {
@@ -445,8 +456,10 @@ function(x, doplot = TRUE, labels = TRUE, ...)
             x = x[!is.na(x)]
         for(i in unique(x[duplicated(x)])) {
             which = x == i & !is.na(x)
-            ranks[which] = max(ranks[which]) }
-        ranks }
+            ranks[which] = max(ranks[which]) 
+        }
+        ranks 
+    }
     
     # Convert x to a vector, if the input is a data.frame.
     if(is.data.frame(x)) x = x[,1] 
@@ -468,8 +481,8 @@ function(x, doplot = TRUE, labels = TRUE, ...)
         if (labels) {
             xlab = "Threshold: u"
             ylab = "Mean Excess: e"
-            main = "Mean Excess Plot" }
-        else {
+            main = "Mean Excess Plot" 
+        } else {
             xlab = ""
             ylab = ""
             main = "" }
@@ -526,11 +539,12 @@ function(x, conf = 0.95, doplot = TRUE, labels = TRUE, ...)
         if (labels) {
             xlab = "Trials"
             ylab = "Records"
-            main = "Plot of Record Development" }
-        else {
+            main = "Plot of Record Development" 
+        } else {
             xlab = ""
             ylab = ""
-            main = "" }     
+            main = "" 
+        }     
         ci = qnorm(0.5 + conf.level/2)
         upper = expected + ci * se
         lower = expected - ci * se
@@ -599,7 +613,9 @@ labels = TRUE,  ...)
             ymax = csmean[length(x)]+2*cssd[length(x)]
             # Plot:
             if (doplot) {
-                if (plottype == "log") nc = log(nc)
+                if (plottype == "log") {
+                    nc = log(nc)
+                }
                 if (labels) {
                     if (plottype == "lin") xlab = "n"
                     if (plottype == "log") xlab = "log(n)"
@@ -652,10 +668,13 @@ labels = TRUE, ...)
     # Settings:
     plottype = plottype[1]
     if (plottype == "autoscale") {
-        autoscale = TRUE }
-    else {
-        autoscale = FALSE }
-    if (autoscale) ylim = c(0,1)
+        autoscale = TRUE 
+    } else {
+        autoscale = FALSE 
+    }
+    if (autoscale) {
+        ylim = c(0,1)
+    }
     
     # Convert x to a vector, if the input is a data.frame.
     if(is.data.frame(x)) x = x[,1] 
@@ -665,17 +684,19 @@ labels = TRUE, ...)
         if (labels) {
             xlab = "Trials"
             ylab = "Records"
-            main = "Plot of Maximum/Sum Ratio" }
-        else {
+            main = "Plot of Maximum/Sum Ratio" 
+        } else {
             xlab = ""
             ylab = ""
-            main = "" }             
+            main = "" 
+        }             
         if (autoscale) {
             plot(c(0, length(x)), y = ylim, xlab = xlab, 
-                    ylab = ylab, main = main, type = "n", ...) }
-        else {
+                    ylab = ylab, main = main, type = "n", ...) 
+        } else {
             plot(c(0, length(x)), xlab = xlab, 
-                    ylab = ylab, main = main, type = "n", ...) }
+                    ylab = ylab, main = main, type = "n", ...) 
+        }
         if (labels) grid()
     }
     
@@ -683,16 +704,17 @@ labels = TRUE, ...)
     i = 1
     
     # Suppress warnings for points outside the frame:
-    ratios = matrix(rep(0, times=length(x)*length(p)), byrow=TRUE, 
-        ncol=length(p))
-    if (doplot) par(err=-1)
+    ratios = matrix(rep(0, times = length(x)*length(p)), byrow = TRUE, 
+        ncol = length(p))
+    if (doplot) par(err = -1)
     
     # Loop over all exponents p:
     for (q in p) {
         rnp = cummax(abs(x)^q) / cumsum(abs(x)^q)
         i = i + 1
         ratios[,q] = rnp
-        if (doplot) lines (rnp, col=i) }
+        if (doplot) lines (rnp, col = i) 
+    }
 
     # Result:
     result = data.frame(ratios)
@@ -805,7 +827,8 @@ function(x, threshold = 0.95, lag.max = 15, doplot = TRUE, ...)
         xlab = c("Index", "Lag")
         ylab = c("Heights", "Distances", "ACF")
         main = c("Heights over Threshold", "Distances between Heights", 
-            "Series Heights", "Series Distances") }
+            "Series Heights", "Series Distances") 
+    }
             
     # Convert x to a vector, if the input is a data.frame.
     if (is.data.frame(x)) x = x[,1] 

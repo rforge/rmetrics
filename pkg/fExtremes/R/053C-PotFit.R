@@ -56,8 +56,8 @@ function(x, threshold, nextremes = NA, run = NA)
         attributes(data)$times = times
         start = 1
         end = n
-        span = end - start}
-    else {
+        span = end - start
+    } else {
         start = times[1]
         end = times[n]
         span = as.numeric(difftime(as.POSIXlt(times)[n], as.POSIXlt(times)[1], 
@@ -83,7 +83,6 @@ function(x, threshold, nextremes = NA, run = NA)
         n.exceed = length(exceedances.its) }
     intensity = n.exceed/span
     exceedances = as.numeric(exceedances.its)
-    
     
     # Return Value:
     exceedances
@@ -273,7 +272,9 @@ function(object, doplot = TRUE, which = "all", ...)
     cat("\n")
     
     # Plot:
-    if (doplot) plot.potFit(object, which = which, ...)
+    if (doplot) {
+        plot.potFit(object, which = which, ...)
+    }
     cat("\n")
     
     # Return Value:
@@ -281,5 +282,5 @@ function(object, doplot = TRUE, which = "all", ...)
 }
 
 
-# ******************************************************************************
+################################################################################
 
