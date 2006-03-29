@@ -28,28 +28,28 @@
 
 
 # ##############################################################################
-# FUNCTION:             GPD DISTRIBUTION FAMILY:
-# dgpd                   Density for the Generalized Pareto DF [USE FROM EVIS]
-#  pgpd                   Probability for the Generalized Pareto DF
-#  qgpd                   Quantiles for the Generalized Pareto DF
-#  rgpd                   Random variates for the Generalized Pareto DF
-# FUNCTION:             MOMENTS:
-#  .gpdMoments           Computes true statistics for GPD distribution
-################################################################################
-# FUNCTION:                 GPD MODELLING FROM EVIS:
-#  gpdSim                    Simulates GPD rvs
-#  gpdFit                    Fits GPD Distribution
-#   print.gpd                 Print Method for object of class "gpd"
-#   plot.gpd                  Plot Method for object of class "gpd"
-#   summary.gpd               Summary Method for object of class "gpd"
-# FUNCTION:                 ADDITIONAL PLOTS:
-#  gpdtailPlot               Plots Tail Estimate From GPD Model
-#  gpdquantPlot              Plots of GPD Tail Estimate of a High Quantile
-#  gpdshapePlot              Plots for GPD Shape Parameter
-#  gpdqPlot                  Adds Quantile Estimates to plot.gpd
-#  gpdsfallPlot              Adds Expected Shortfall Estimates to a GPD Plot
-# FUNCTION:                 ADDITIONAL FUNCTION:
-#   gpdriskmeasures          Calculates Quantiles and Expected Shortfalls
+# FUNCTION:              GPD DISTRIBUTION FAMILY:
+# dgpd                    Density for the Generalized Pareto DF [USE FROM EVIS]
+#  pgpd                    Probability for the Generalized Pareto DF
+#  qgpd                    Quantiles for the Generalized Pareto DF
+#  rgpd                    Random variates for the Generalized Pareto DF
+# FUNCTION:              MOMENTS:
+#  .gpdMoments            Computes true statistics for GPD distribution
+# FUNCTION:              GPD MODELLING FROM EVIS:
+#  gpdSim                 Simulates GPD rvs
+#  fGPD                   S4 Class Representation
+#  gpdFit                 Fits GPD Distribution
+#   print.gpd              Print Method for object of class "gpd"
+#   plot.gpd               Plot Method for object of class "gpd"
+#   summary.gpd            Summary Method for object of class "gpd"
+# FUNCTION:              ADDITIONAL PLOTS:
+#  gpdtailPlot            Plots Tail Estimate From GPD Model
+#  gpdquantPlot           Plots of GPD Tail Estimate of a High Quantile
+#  gpdshapePlot           Plots for GPD Shape Parameter
+#  gpdqPlot               Adds Quantile Estimates to plot.gpd
+#  gpdsfallPlot           Adds Expected Shortfall Estimates to a GPD Plot
+# FUNCTION:              ADDITIONAL FUNCTION:
+#  gpdriskmeasures        Calculates Quantiles and Expected Shortfalls
 ################################################################################
 
 
@@ -66,8 +66,8 @@ function(x, xi = 1, mu = 0, beta = 1)
     # Density:
     y = (x - mu)
     if (xi == 0) {
-        d = (1-exp(-y/beta))/beta }
-    else {
+        d = (1-exp(-y/beta))/beta 
+    } else {
         d = 1/beta * (1 + (xi*y)/beta)^((-1/xi) - 1) }  
     
     d[y < 0] = 0
@@ -90,8 +90,8 @@ function(q, xi = 1, mu = 0, beta = 1)
     # Probability:
     y = (q - mu)
     if (xi == 0) {
-        p = y/beta + exp(-y/beta) -1 }
-    else {
+        p = y/beta + exp(-y/beta) -1 
+    } else {
         p = (1 - (1 + (xi*y)/beta)^(-1/xi)) }   
     
     p[y < 0] = 0
@@ -112,10 +112,11 @@ function(p, xi = 1, mu = 0, beta = 1)
     # FUNCTION:
     
     # Quantiles:
-    if (xi == 0) 
+    if (xi == 0) {
         q = mu - beta*log(1-p)
-    else
+    } else {
         q = mu + (beta/xi) * ((1 - p)^( - xi) - 1)
+    }
     
     # Return Value:
     q
@@ -172,9 +173,10 @@ function(xi, mu = 0, beta = 1)
 
 ################################################################################
 
+
 gpdSim = 
 function(model = list(shape = 0.25, location = 0, scale = 1), n = 1000, 
-seed = NULL))
+seed = NULL)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
