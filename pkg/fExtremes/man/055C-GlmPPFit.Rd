@@ -1,6 +1,6 @@
-\name{PPFit}
+\name{GlmPPFit}
 
-\alias{PPFit}
+\alias{GlmPPFit}
 
 \alias{ppFit}
 

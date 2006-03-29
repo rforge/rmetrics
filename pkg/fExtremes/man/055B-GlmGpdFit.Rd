@@ -1,6 +1,6 @@
-\name{GpdGlmFit}
+\name{GlmGpdFit}
 
-\alias{GpdGlmFit}
+\alias{GlmGpdFit}
 
 \alias{gpdglmFit}
 

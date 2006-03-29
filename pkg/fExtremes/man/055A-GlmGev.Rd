@@ -1,6 +1,6 @@
-\name{GevGlmFit}
+\name{GlmGevFit}
 
-\alias{GevGlmFit}
+\alias{GlmGevFit}
 
 \alias{gevglmFit}
 

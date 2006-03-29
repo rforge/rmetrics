@@ -1,6 +1,6 @@
-\name{RlargFit}
+\name{GlmRlargFit}
 
-\alias{RlargFit}
+\alias{GlmRlargFit}
 
 \alias{rlargFit}
 
