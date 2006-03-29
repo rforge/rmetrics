@@ -41,12 +41,13 @@
 # FUNCTION:             MOMENTS:
 #  .gevMoments            Computes true statistics for GEV distribution
 ################################################################################
-# FUNCTION:             GEV MODELLING FROM EVIS:
+# FUNCTION:             GEV MODELLING FROM EVIR:
 #  gevSim                Simulates GEV including Gumbel rvs [EVIS/EVIR]
+#  fGEV                  S4 Class Representation
 #  gevFit                Fits GEV Distribution
-#   print.gevFit          Print Method for object of class "gevFit"
-#   plot.gevFit           Plot Method for object of class "gevFit"
-#   summary.gevFit        Summary Method for object of class "gevFit"
+#   print.fGEV            Print Method for object of class "gevFit"
+#   plot.fGEV             Plot Method for object of class "gevFit"
+#   summary.fGEV          Summary Method for object of class "gevFit"
 #  gevrlevelPlot         Calculates Return Levels Based on GEV Fit
 ################################################################################
 # FUNCTION:             MDA ESTIMATORS:
@@ -106,11 +107,14 @@ function (q, loc = 0, scale = 1, shape = 0, lower.tail = TRUE)
     if (length(shape) != 1) 
         stop("invalid shape")
     q = (q - loc)/scale
-    if (shape == 0) 
+    if (shape == 0) {
         p = exp(-exp(-q))
-    else p = exp(-pmax(1 + shape * q, 0)^(-1/shape))
-    if (!lower.tail) 
+    } else {
+        p = exp(-pmax(1 + shape * q, 0)^(-1/shape))
+    }
+    if (!lower.tail) {
         p = 1 - p
+    }
     
     # Return Value:
     p
@@ -201,8 +205,9 @@ function(x, xi = 1, mu = 0, sigma = 1, log = FALSE)
             (1/shape + 1) * log(xxpos)
         d[xx <= 0 & !is.na(xx)] = -Inf
     }
-    if (!log) 
+    if (!log) {
         d = exp(d)
+    }
     
     # Return Value:
     d
@@ -637,6 +642,7 @@ function(x, ...)
     # FUNCTION:
     
     # @fit Slot:
+    description = x@description
     x = x@fit
     class(x) = "gevFit"
     
@@ -655,7 +661,7 @@ function(x, ...)
     print(x$par.ests)
     
     # Desription:
-    cat("\nDescription\n ", as.character(date()), "\n\n")
+    cat("\nDescription\n ", description, "\n\n")
     
     # Return Value:
     invisible(x)
@@ -759,6 +765,7 @@ function(object, doplot = TRUE, which = "all", ...)
     # FUNCTION:
     
     # @fit Slot:
+    description = object@description
     plotObject = object
     object = object@fit
     class(object) = "gevFit"
@@ -786,10 +793,12 @@ function(object, doplot = TRUE, which = "all", ...)
         cat("\nType of Convergence:\n ", object$converged, "\n") } 
     
     # Plot:
-    if (doplot) plot(plotObject, which = which, ...)
+    if (doplot) {
+        plot(plotObject, which = which, ...)
+    }
     
     # Desription:
-    cat("\nDescription\n ", as.character(date()), "\n\n")
+    cat("\nDescription\n ", description, "\n\n")
     
     # Return Value:
     invisible(object)

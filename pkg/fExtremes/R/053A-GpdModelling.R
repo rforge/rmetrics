@@ -173,18 +173,45 @@ function(xi, mu = 0, beta = 1)
 ################################################################################
 
 gpdSim = 
-function(model = list(shape = 0.25, location = 0, scale = 1), n = 1000)
+function(model = list(shape = 0.25, location = 0, scale = 1), n = 1000, 
+seed = NULL))
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Generates random variates from a GPD distribution
     
-    
     # FUNCTION:
     
+    # Seed:
+    if (is.null(seed)) seed = NA else set.seed(seed)
+    
     # Simulate:
-    rgpd(n = n, xi = model$shape, mu = model$location, beta = model$scale)  
+    ans = rgpd(n = n, xi = model$shape, mu = model$location, 
+        beta = model$scale)  
+    ans = as.ts(ans)
+
+    # Control:
+    attr(ans, "control") = 
+        data.frame(t(unlist(model)), seed = seed, row.names = "")
+        
+    # Return Value:
+    ans 
 }
+
+
+# ------------------------------------------------------------------------------
+
+
+setClass("fGPD", 
+    representation(
+        call = "call",
+        data = "list",
+        method = "character",
+        fit = "list",
+        title = "character",
+        description = "character"
+    )  
+)
 
 
 # ------------------------------------------------------------------------------
@@ -192,7 +219,7 @@ function(model = list(shape = 0.25, location = 0, scale = 1), n = 1000)
 
 gpdFit =
 function(x, threshold = NA, nextremes = NA, type = c("mle", "pwm"),
-information = c("observed", "expected"), ...)
+information = c("observed", "expected"), title = NULL, description = NULL, ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -231,10 +258,20 @@ information = c("observed", "expected"), ...)
     fit$fitted.values = fitted$data - residuals
     fit$llh = fitted$nllh.final
     fit$converged = fitted$converged
+    class(fit) = c("list", "gpdFit")
+    
+    # Add title and description:
+    if (is.null(title)) title = "POT Parameter Estimation"
+    if (is.null(description)) description = as.character(date())
     
     # Return Value:
-    class(fit) = "gpdFit"   
-    fit
+    new("fGEV",
+        call = match.call(),
+        data = list(x = x),
+        method = fit$type,
+        fit = fit,
+        title = "character",
+        description = "character")
 }
 
 
@@ -250,6 +287,11 @@ function(x, ...)
     
     # FUNCTION:
     
+    # @fit Slot:
+    description = object@description
+    x = x@fit
+    class(x) = "potFit"
+    
     # Function Call:
     cat("\nCall:\n")
     cat(paste(deparse(x$call), sep = "\n", collapse = "\n"), "\n", sep = "") 
@@ -260,7 +302,10 @@ function(x, ...)
     # Estimated Parameters:
     cat("\nEstimated Parameters:\n")
     print(x$par.ests)
-    cat("\n")
+    
+    # Desription:
+    cat("\nDescription\n ", description, "\n\n")
+    
     
     # Return Value:
     invisible(x)
@@ -278,6 +323,10 @@ function(x, which = "all", ...)
     #   Plot method for objects of class 'gpdFit'
 
     # FUNCTION:
+    
+    # @fit Slot:
+    x = x@fit
+    class(x) = "potFit"
     
     # Plot Functions:
     plot.1 <<- function(x, ...) {
@@ -399,19 +448,36 @@ function(object, doplot = TRUE, which = "all", ...)
     
     # FUNCTION:
     
-    # Print:
-    print(object, ...)
+    # @fit Slot:
+    description = object@description
+    plotObject = object
+    object = object@fit
+    class(object) = "gpdFit"
     
-    # Summary:
-    # For MLE print additionally:
+    # Function Call:
+    cat("\nCall:\n")
+    cat(paste(deparse(x$call), sep = "\n", collapse = "\n"), "\n", sep = "") 
+            
+    # Estimation Type:
+    cat("\nEstimation Type:", x$type, "\n") 
+    
+    # Estimated Parameters:
+    cat("\nEstimated Parameters:\n")
+    print(x$par.ests)
+    
+    # Summary - For MLE print additionally:
     cat("\nStandard Deviations:\n"); print(object$par.ses)
     cat("\nLog-Likelihood Value: ", object$llh)
     cat("\nType of Convergence:  ", object$conv, "\n") 
     cat("\n")
     
     # Plot:
-    if (doplot) plot(object, which = which, ...)
-    cat("\n")
+    if (doplot) {
+        plot(plotObject, which = which, ...)
+    }
+    
+    # Desription:
+    cat("\nDescription\n ", description, "\n\n")
     
     # Return Value:
     invisible(object)
