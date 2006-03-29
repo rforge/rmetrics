@@ -1,9 +1,12 @@
 \name{GevModelling}
 
+\alias{GevModelling}
+
 \alias{dgev}
 \alias{pgev}
 \alias{qgev}
 \alias{rgev}
+
 \alias{devd}
 \alias{pevd}
 \alias{qevd}
@@ -11,8 +14,6 @@
 
 \alias{fGEV}
 \alias{fGEV-class}
-
-\alias{GevModelling}
 
 \alias{gevSim}
 \alias{gevFit}
