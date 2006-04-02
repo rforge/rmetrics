@@ -36,9 +36,33 @@
 #   plot.fPOT                Print Method for object of class "fPOT"
 #   summary.fPOT             Summary Method for object of class "fPOT"
 ################################################################################
+#
+################################################################################
+
 
 
 potSim = 
+function(x, u = quantile(x, 0.95), run = NULL, column = 1)
+{   # A function implemented by Diethelm Wuertz
+
+    # Example:
+    #   z = potSim(x = as.timeSeries(data(daxRet))); plot(z)
+    
+    # Simulated POT Process:
+    ans = pointProcess(x = x, u = u, column = column)
+    
+    # Optionally Decluster:
+    if (!is.null(run)) ans = deCluster(ans, run = run)
+    
+    # Return Value:
+    ans
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.old.potSim = 
 function(x, threshold, nextremes = NA, run = NA)
 {   # A function implemented by Diethelm Wuertz
 
@@ -60,7 +84,8 @@ function(x, threshold, nextremes = NA, run = NA)
         start = times[1]
         end = times[n]
         span = as.numeric(difftime(as.POSIXlt(times)[n], as.POSIXlt(times)[1], 
-            units = "days"))}
+            units = "days"))
+    }
             
     if (is.na(nextremes) && is.na(threshold)) 
         stop("Enter either a threshold or the number of upper extremes")
@@ -106,7 +131,77 @@ setClass("fPOT",
 # ------------------------------------------------------------------------------
 
 
-potFit =
+potFit = 
+function(x, u = quantile(x, 0.95), run = NULL, title = NULL, description = NULL)
+{
+    # FUNCTION:
+    
+    # Save Call:
+    call = match.call()
+    
+    # Prepare Series:
+    n = length(x@Data) 
+    span = as.numeric(end(x) - start(x))
+    X = .pointProcess(x = x, u = u)
+    if (!is.null(run)) X = .deCluster(x = X, run = run)
+    nX = length(X@Data)
+    meanX = mean(X@Data)-u
+    varX = var(X@Data)
+
+    # Start Solution:
+    shape0 = -0.5*(((meanX^2)/varX)-1)
+    scale0 = 0.5*meanX*(((meanX^2)/varX)+1) /
+        (1+shape0*((nX/span)^(-shape0)-1)/shape0)
+    loc0 = 0
+    theta = c(shape0, scale0, loc0)
+
+    # Fit Parameter:
+    fitted = optim(theta, .potLLH.evir, hessian = TRUE,  
+        exceedances = X@Data, threshold = u, span = span)
+    fit = list()
+    fit$fit = fitted
+    fit$call = call
+    fit$type = c("pot", "mle")
+    fit$span = span
+    fit$threshold = u
+    fit$n.exceed = nX   
+    fit$fit$run = run
+    fit$par.ests = fitted$par
+    fit$par.ses = sqrt(diag(solve(fitted$hessian)))   
+    fit$beta = fit$par.ests[2] + fit$par.ests[1] * (u-fit$par.ests[3])
+    fit$par.ests = c(fit$par.ests, fit$beta)
+    fit$nllh.final = fitted$value
+    names(fit$par.ests) = c("xi", "sigma", "mu", "beta")
+    names(fit$par.ses) = c("xi", "sigma", "mu")
+    
+    # Compute Residuals:
+    xi = fit$par.ests[1]
+    beta = fit$par.ests[4]
+    threshold = fit$threshold 
+    fit$residuals = as.vector(log(1 + (xi * (as.vector(X) - u))/beta)/xi)
+    fit$fitted.values = as.vector(X) - fit$residuals
+    fit$llh = fitted$nllh.final
+    fit$converged = fitted$converged       
+    
+    # Add title and description:
+    if (is.null(title)) title = "POT Parameter Estimation"
+    if (is.null(description)) description = as.character(date())
+    
+    # Return Value:
+    new("fPOT",
+        call = match.call(),
+        data = list(x = X),
+        method = fit$type,
+        fit = fit,
+        title = title,
+        description = description)
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.old.potFit =
 function(x, threshold = NA, nextremes = NA, run = NA, title = NULL,
 description = NULL, ...)
 {   # A function implemented by Diethelm Wuertz
@@ -116,10 +211,12 @@ description = NULL, ...)
 
     # FUNCTION:
     
-    # Call pot() from evir: 
+    # Save Call:
     call = match.call()
-    fitted = pot(data = x, threshold = threshold, nextremes = nextremes, 
-        run = run, picture = FALSE, ...) 
+    
+    # Call pot() from evir: 
+    fitted = .pot.evir(data = x, threshold = threshold, 
+        nextremes = nextremes, run = run, picture = FALSE, ...) 
         
     # Compute Residuals:
     xi = fitted$par.ests[1]
@@ -140,7 +237,8 @@ description = NULL, ...)
             units = "days")) * x$intensity 
     } else {
         x$times = 1:n
-        x$gaps = as.numeric(diff(x$times)) * x$intensity }
+        x$gaps = as.numeric(diff(x$times)) * x$intensity 
+    }
     fitted$times = x$times
     fitted$rawdata = x$rawdata
     fitted$gaps = x$gaps
@@ -168,12 +266,12 @@ description = NULL, ...)
         data = list(x = x),
         method = fit$type,
         fit = fit,
-        title = "character",
-        description = "character")
+        title = title,
+        description = description)
 }
 
 
-# ******************************************************************************
+# ------------------------------------------------------------------------------
 
 
 print.fPOT =
@@ -181,33 +279,30 @@ function(x, ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Print Method for object of class "potFit"
+    #   Print Method for object of class "fPOT"
     
     # FUNCTION:
-
-    # @fit Slot:
-    description = x@description
-    x = x@fit
-    class(x) = "potFit"
+    
+    # Title:
+    cat("\nTitle:\n" , x@title, "\n")
     
     # Function Call:
-    cat("\nCall:\n")
-    cat(paste(deparse(x$call), sep = "\n", collapse = "\n"), "\n", sep = "")
+    cat("\nCall:\n ")
+    cat(paste(deparse(x@call), sep = "\n", collapse = "\n"), "\n", sep = "")
             
     # Estimation Type:
-    cat("\nEstimation Type:", x$type, "\n") 
+    cat("\nEstimation Method:\n", x@method, "\n") 
     
     # Estimated Parameters:
     cat("\nEstimated Parameters:\n")
-    print(x$par.ests)
-    cat("\n")
+    print(x@fit$par.ests)
     
     # Decluster Run Length:
-    if (!is.na(fit$fit$run))
-    cat("\nDecluster Runlength:", x$fit$run, "\n")
+    if (!is.na(x@fit$fit$run))
+    cat("\nDecluster Runlength:", x@fit$fit$run, "\n")
     
     # Desription:
-    cat("\nDescription\n ", description, "\n\n")
+    cat("\nDescription\n ", x@description, "\n\n")
     
     # Return Value:
     invisible(x)
@@ -222,46 +317,63 @@ function(x, which = "all", ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Plot method for objects of class "potFit".
+    #   Plot method for objects of class "fPOT".
 
     # FUNCTION:
-             
-    # @fit Slot:
-    x = x@fit
-    class(x) = "potFit"
     
     # Plot functions:   
     plot.1 <<- function(x, ...) {
-        plot(x$times, x$rawdata , type = "h", 
-            main = "Point Process of Exceedances", ...) }
+        exceedances = x@data$x
+        plot(exceedances, type = "h", col = "steelblue",
+            main = "Point Process of Exceedances", ...) 
+    }
     plot.2 <<- function(x, ...) {
-        plot(x$gaps, ylab = "Gaps", xlab = "Ordering", 
+	    gaps = as.numeric(diff(seriesPositions(x@data$x)))/(24*3600)
+        plot(gaps, col = "steelblue", pch = 19,
+            ylab = "Gaps", xlab = "Ordering", 
             main = "Scatterplot of Gaps", ...)
-        lines(lowess(1:length(x$gaps), x$gaps)) } 
+        lines(lowess(1:length(gaps), gaps)) 
+        grid()
+    } 
     plot.3 <<- function(x, ...) {
-        qplot(x$gaps, 
-            main = "QQ-Plot of Gaps", ...) }           
+        gaps = as.numeric(diff(seriesPositions(x@data$x)))/(24*3600)
+        .qplot.evir(gaps, col = "steelblue", pch = 19, 
+            main = "QQ-Plot of Gaps", ...) 
+        grid()
+    }           
     plot.4 <<- function(x, ...) {
-        acf(x$gaps, lag.max=20, 
-            main = "ACF of Gaps", ...) }
+        gaps = as.numeric(diff(seriesPositions(x@data$x)))/(24*3600)
+        acf(gaps, lag.max = 20, col = "steelblue",
+            main = "ACF of Gaps", ...) 
+    }
     plot.5 <<- function(x, ...) {
-        plot(x$residuals, ylab = "Residuals", xlab = "Ordering", 
+	    residuals = x@fit$residuals
+        plot(residuals, col = "steelblue", pch = 19, 
+            ylab = "Residuals", xlab = "Ordering", 
             main = "Scatterplot of Residuals", ...)
-        lines(lowess(1:length(x$residuals), x$residuals)) }
+        lines(lowess(1:length(residuals), residuals)) 
+        grid()
+    }
     plot.6 <<- function (x, ...) {
-        qplot(x$residuals, 
-            main = "QQ-Plot of Residuals", ...) }
+	    residuals = x@fit$residuals
+        .qplot.evir(residuals, col = "steelblue", pch = 19, 
+            main = "QQ-Plot of Residuals", ...) 
+    }
     plot.7 <<- function (x, ...) { 
-        acf(x$residuals, lag.max = 20, 
-            main = "ACF of Residuals", ...) }
-    fit <<- fit; plot.8 <<- function (x, ...) { 
+        residuals = x@fit$residuals
+        acf(residuals, lag.max = 20, 
+            main = "ACF of Residuals", ...) 
+    }
+    plot.8 <<- function (x, ...) { 
         if (which == "ask") {
-            plot.gpd(x)
-            plot.potFit(fit, which = "ask") } }
+	        fit = x@fit
+            plot.fGPD(fit)
+            plot.fPOT(x, which = "ask") } 
+    }
 
     # Plot:
     interactivePlot(
-        x = x$fit,
+        x,
         choices = c(
             "Point Process of Exceedances", 
             "Scatterplot of Gaps", 
@@ -295,47 +407,145 @@ function(object, doplot = TRUE, which = "all", ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Summary Method for object of class "potFit"
+    #   Summary Method for object of class "fPOT"
     
     # FUNCTION:
-
-    # @fit Slot:
-    plotObject = object
-    object = object@fit
-    class(object) = "potFit"
+    
+    # Title:
+    cat("\nTitle:\n" , object@title, "\n")
     
     # Function Call:
-    cat("\nCall:\n")
-    cat(paste(deparse(x$call), sep = "\n", collapse = "\n"), "\n", sep = "")
+    cat("\nCall:\n ")
+    cat(paste(deparse(object@call), sep = "\n", 
+        collapse = "\n"), "\n", sep = "")
             
     # Estimation Type:
-    cat("\nEstimation Type:", x$type, "\n") 
+    cat("\nEstimation Method:\n", object@method, "\n") 
     
     # Estimated Parameters:
     cat("\nEstimated Parameters:\n")
-    print(x$par.ests)
+    print(object@fit$par.ests)
     cat("\n")
     
     # Decluster Run Length:
-    if (!is.na(fit$fit$run))
-    cat("\nDecluster Runlength:", x$fit$run, "\n")
+    if (!is.na(object@fit$fit$run))
+    cat("\nDecluster Runlength:", object@fit$fit$run, "\n")
     
     # Summary:
-    cat("\nStandard Deviations:\n"); print(object$par.ses)
-    cat("\nLog-Likelihood Value: ", object$llh)
-    cat("\nType of Convergence:  ", object$converged, "\n") 
-    cat("\n")
+    cat("\nStandard Deviations:\n"); print(object@fit$par.ses)
+    cat("\nLog-Likelihood Value:\n ", object@fit$llh)
+    cat("\n\nType of Convergence:\n ", object@fit$converged) 
+    
+    # Desription:
+    cat("\n\nDescription\n ", object@description, "\n\n")
     
     # Plot:
     if (doplot) {
-        plot(plotObject, which = which, ...)
+        plot(object, which = which, ...)
     }
-
-    # Desription:
-    cat("\nDescription\n ", description, "\n\n")
     
     # Return Value:
     invisible(object)
+}
+
+
+################################################################################
+# FROM EVIR
+
+
+.pot.evir = 
+function(data, threshold = NA, nextremes = NA, run = NA, picture = TRUE, ...)
+{   # A copy from evir
+
+    n = length(as.numeric(data))
+    times = attributes(data)$times
+    if(is.null(times)) {
+        times = 1:n
+        attributes(data)$times = times
+        start = 1
+        end = n
+        span = end - start
+    } else {
+        start = times[1]
+        end = times[n]
+        span = as.numeric(difftime(as.POSIXlt(times)[n],
+            as.POSIXlt(times)[1], units = "days"))
+    }
+    if(is.na(nextremes) && is.na(threshold)) {
+        stop("Enter either a threshold or the number of upper extremes")
+    }
+    if(!is.na(nextremes) && !is.na(threshold)) {
+        stop("Enter EITHER a threshold or the number of upper extremes")
+    }
+    if(!is.na(nextremes)) {
+        threshold = findthresh(as.numeric(data), nextremes)
+    }
+    if(threshold > 10) {
+        factor = 10^(floor(log10(threshold)))
+        cat(paste("If singularity problems occur divide data",
+            "by a factor, perhaps", factor, "\n"))
+    }
+    exceedances.its = structure(data[data > threshold], times =
+        times[data > threshold])
+    n.exceed = length(as.numeric(exceedances.its))
+    p.less.thresh = 1 - n.exceed/n
+    if(!is.na(run)) {
+        exceedances.its = decluster(exceedances.its, run, picture)
+        n.exceed = length(exceedances.its)
+    }
+    intensity = n.exceed/span
+    exceedances = as.numeric(exceedances.its)
+    xbar = mean(exceedances) - threshold
+    s2 = var(exceedances)
+    shape0 = -0.5 * (((xbar * xbar)/s2) - 1)
+    extra = ((length(exceedances)/span)^( - shape0) - 1)/shape0
+    betahat = 0.5 * xbar * (((xbar * xbar)/s2) + 1)
+    scale0 = betahat/(1 + shape0 * extra)
+    loc0 = 0
+    theta = c(shape0, scale0, loc0)
+    fit = optim(theta, .potLLH.evir, hessian = TRUE, ..., 
+        exceedances = exceedances, threshold = threshold, span = span)
+    if (fit$convergence) {
+        warning("optimization may not have succeeded")
+    }
+    par.ests = fit$par
+    varcov = solve(fit$hessian)
+    par.ses = sqrt(diag(varcov))   
+    beta = par.ests[2] + par.ests[1] * (threshold - par.ests[3])
+    par.ests = c(par.ests, beta)
+    out = list(n = length(data), period = c(start, end), data = 
+        exceedances.its, span = span, threshold = threshold,
+        p.less.thresh = p.less.thresh, n.exceed = n.exceed, run = run,
+        par.ests = par.ests, par.ses = par.ses, varcov = varcov, 
+        intensity = intensity, nllh.final = fit$value, 
+        converged = fit$convergence)
+    names(out$par.ests) = c("xi", "sigma", "mu", "beta")
+    names(out$par.ses) = c("xi", "sigma", "mu")
+    class(out) = "potd"
+    out
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.potLLH.evir = 
+function(theta, exceedances, threshold, span)
+{   # A copy from evir
+
+    test = (theta[2] <= 0) || (min(1 + (theta[1] * 
+        (exceedances - theta[3])) / theta[2]) <= 0)
+    if (test) {
+        f = 1.0e+6
+    } else {
+        y = logb(1 + (theta[1] * (exceedances - theta[3])) / theta[2])
+        term3 = (1/theta[1] + 1) * sum(y)
+        term1 = span * (1 + (theta[1] * (threshold - theta[3])) /
+            theta[2])^(-1/theta[1])
+        term2 = length(y) * logb(theta[2])
+        f = term1 + term2 + term3
+    }
+    f
 }
 
 
