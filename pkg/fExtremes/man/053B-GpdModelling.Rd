@@ -7,12 +7,15 @@
 \alias{qgpd}
 \alias{rgpd}
 
+\alias{fGPD}
+\alias{fGPD-class}
+
 \alias{gpdSim}
 \alias{gpdFit}
 
-\alias{print.gpdFit}
-\alias{plot.gpdFit}
-\alias{summary.gpdFit}
+\alias{print.fGPD}
+\alias{plot.fGPD}
+\alias{summary.fGPD}
 
 \alias{gpdqPlot}
 \alias{gpdquantPlot}
@@ -68,13 +71,15 @@ pgpd(q, xi = 1, mu = 0, beta = 1)
 qgpd(p, xi = 1, mu = 0, beta = 1) 
 rgpd(n, xi = 1, mu = 0, beta = 1)
 
-gpdSim(model = list(shape = 0.25, location = 0, scale = 1), n = 1000)
+gpdSim(model = list(shape = 0.25, location = 0, scale = 1), n = 1000,
+    seed = NULL)
 gpdFit(x, threshold = NA, nextremes = NA, type = c("mle", "pwm"),
-    information = c("observed", "expected"), \dots)
+    information = c("observed", "expected"), title = NULL, 
+    description = NULL, \dots)
 
-\method{print}{gpdFit}(x, \dots)
-\method{plot}{gpdFit}(x, which = "all", \dots)
-\method{summary}{gpdFit}(object, doplot = TRUE, which = "all", \dots)
+\method{print}{fGPD}(x, \dots)
+\method{plot}{fGPD}(x, which = "all", \dots)
+\method{summary}{fGPD}(object, doplot = TRUE, which = "all", \dots)
 
 gpdqPlot(x, pp = 0.99, ci.type = c("likelihood", "wald"), ci.p = 0.95, 
     like.num = 50)
@@ -109,6 +114,9 @@ gpdtailPlot(fit, optlog = NA, extend = 1.5, labels = TRUE, \dots)
         }
     \item{data}{
         a numeric vector of data.
+        }
+    \item{description}{
+        a character string which allows for a brief description.
         }
     \item{doplot}{
         a logical. Should the results be plotted?
@@ -171,6 +179,10 @@ gpdtailPlot(fit, optlog = NA, extend = 1.5, labels = TRUE, \dots)
         should plot be by increasing threshold (\code{TRUE}) or number 
         of extremes (\code{FALSE}).
         }
+    \item{seed}{
+        [gpdSim] - \cr
+        an integer value to set the seed for the random number generator.
+        }
     \item{q}{
         a numeric vector of quantiles.
         }
@@ -180,6 +192,9 @@ gpdtailPlot(fit, optlog = NA, extend = 1.5, labels = TRUE, \dots)
     \item{threshold}{
         a threshold value (either this or \code{nextremes} must be given 
         but not both).
+        }
+    \item{title}{
+        a character string which allows for a project title.
         }
     \item{type}{
         a character string selecting the desired estimation mehtod, either
@@ -368,6 +383,7 @@ Hosking J.R.M., Wallis J.R., (1987);
 
 
 \examples{
+\dontrun{
 ## SOURCE("fExtremes.053A-GpdModelling")
 
 ## *gpd  -
@@ -471,6 +487,7 @@ Hosking J.R.M., Wallis J.R., (1987);
    fit = gpdFit(danish, threshold = 10, type = "mle")
    par(mfrow = c(1, 1))
    gpdtailPlot(fit, main = "Danish Fire: GPD Tail Estimate", col = "steelblue4")  
+}
 }
 
 

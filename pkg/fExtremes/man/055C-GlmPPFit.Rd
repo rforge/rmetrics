@@ -208,6 +208,7 @@ Coles S. (2001);
 
 
 \examples{
+\dontrun{
 ## SOURCE("fExtremes.054C-PPFit")
 
 ## Use Rain Data:
@@ -227,6 +228,7 @@ Coles S. (2001);
 ## Interactive Plot:
    ##> par(mfrow = c(2, 2), cex = 0.75)
    ##> plot(fit)
+}
 }
 
 

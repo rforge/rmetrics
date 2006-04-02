@@ -8,9 +8,9 @@
 \alias{potSim}
 \alias{potFit}
 
-\alias{print.potFit}
-\alias{plot.potFit}
-\alias{summary.potFit}
+\alias{print.fPOT}
+\alias{plot.fPOT}
+\alias{summary.fPOT}
 
 \title{Modelling Peaks Over a Threshold}
 
@@ -37,7 +37,8 @@
 
 \usage{
 potSim(x, threshold, nextremes = NA, run = NA)
-potFit(x, threshold = NA, nextremes = NA, run = NA, \dots) 
+potFit(x, threshold = NA, nextremes = NA, run = NA, title = NULL,
+    description = NULL, \dots) 
 
 \method{print}{fPOT}(x, \dots)
 \method{plot}{fPOT}(x, which = "all", \dots)
@@ -139,6 +140,7 @@ potFit(x, threshold = NA, nextremes = NA, run = NA, \dots)
 
   
 \examples{
+\dontrun{
 ## SOURCE("fExtremes.053C-PotFit")
 
 ## Use Danish Fire Insurance Loss Data:
@@ -153,6 +155,7 @@ potFit(x, threshold = NA, nextremes = NA, run = NA, \dots)
    xmpExtremes("\nNext: Diagnostic Analysis >")
    par(mfrow = c(3, 3), cex = 0.5)
    summary(fit)
+}
 }
 
 

@@ -270,6 +270,7 @@ Coles S. (2001);
 
 
 \examples{
+\dontrun{
 ## SOURCE("fExtremes.054B-GpdGlmFit")
 
 ## Use Rain Data:
@@ -291,6 +292,7 @@ Coles S. (2001);
    title(main = "Rain")
    gpdglmprofxiPlot(fit, xlow = -0.02, 0.15)
    title(main = "Rain")
+}
 }
 
 

@@ -86,12 +86,13 @@ dgev(x, xi = 1, mu = 0, sigma = 1, log = FALSE)
 pgev(q, xi = 1, mu = 0, sigma = 1, lower.tail = TRUE)
 qgev(p, xi = 1, mu = 0, sigma = 1, lower.tail = TRUE)
 rgev(n, xi = 1, mu = 0, sigma = 1)
+
 devd(x, loc = 0, scale = 1, shape = 0, log = FALSE)
 pevd(q, loc = 0, scale = 1, shape = 0, lower.tail = TRUE)
 qevd(p, loc = 0, scale = 1, shape = 0, lower.tail = TRUE)
 revd(n, loc = 0, scale = 1, shape = 0)
 
-gevSim(model = list(shape = 0.25, location = 0, scale = 1), n = 1000, seed = NULL)
+gevSim(model = list(shape = -0.25, location = 0, scale = 1), n = 1000, seed = NULL)
 gevFit(x, type = c("mle", "pwm"), gumbel = FALSE, title = NULL, description = NULL, \dots)
 \method{print}{fGEV}(x, \dots)
 \method{plot}{fGEV}(x, which = "all", \dots)
@@ -189,7 +190,7 @@ shaparmPlot(x, revert = FALSE, standardize = FALSE, tails = 0.01*(1:10),
         [gevSim] - \cr
         a list with components \code{shape}, \code{location} and 
         \code{scale} giving the parameters of the GEV distribution.
-        By default the shape parameter has the value 0.25, the
+        By default the shape parameter has the value -0.25, the
         location is zero and the scale is one.
         To fit random deviates from a Gumbel distribution set 
         \code{shape=0}.
@@ -295,11 +296,11 @@ shaparmPlot(x, revert = FALSE, standardize = FALSE, tails = 0.01*(1:10),
         a fitted object of class \code{"gevFit"}.
         }
     \item{xi, mu, sigma}{
-        \code{xi} is the shape parameter, 
-        \code{mu} the location parameter,
-        and \code{sigma} is the scale parameter.
-        The default values are \code{xi=1}, \code{mu=0}, and 
-        \code{sigma=1}.
+        [*gev] - \cr
+        \code{xi} is the shape parameter, \code{mu} the location parameter,
+        and \code{sigma} is the scale parameter. The default values are 
+        \code{xi=1}, \code{mu=0}, and \code{sigma=1}. Note, if \code{xi=0} 
+        the distribution is of type Gumbel.
         }
     \item{\dots}{
         [gevFit] - \cr
@@ -499,10 +500,9 @@ Embrechts, P., Klueppelberg, C., Mikosch, T. (1997);
 
   
 \examples{
+\dontrun{
 ## SOURCE("fExtremes.052A-GevModelling")
 
-
-\dontrun{
 ## *gev  -
    xmpExtremes("\nStart: GEV Frechet >")
    # Create and plot 1000 GEV/Frechet distributed rdv:

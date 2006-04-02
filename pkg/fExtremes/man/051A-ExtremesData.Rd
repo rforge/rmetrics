@@ -55,9 +55,7 @@
     \code{ssrecordsPlot} \tab another variant, investigates subsamples, \cr
     \code{sllnPlot} \tab verifies Kolmogorov's strong law of large numbers, \cr
     \code{lilPlot} \tab verifies Hartman-Wintner's law of the iterated logarithm, \cr
-    \code{xacfPlot} \tab ACF of exceedences over a threshold, \cr
-    \code{interactivePlot} \tab a framework for interactive plot displays, \cr
-    \code{gridVector} \tab creates from two vectors x and y all grid points. }
+    \code{xacfPlot} \tab ACF of exceedences over a threshold. }  
     
     The functions for data preprocessing are:
     
@@ -66,7 +64,12 @@
     \code{findThreshold} \tab Upper threshold for a given number of extremes, \cr  
     \code{pointProcess} \tab Peaks over Threshold from a vector or a time series, \cr 
     \code{deCluster} \tab Declusters clustered point process data. }
-   
+    
+    Utility functions are:
+    
+    \tabular{ll}{
+    \code{interactivePlot} \tab a framework for interactive plot displays, \cr
+    \code{gridVector} \tab creates from two vectors x and y all grid points. }
     
 }
 
@@ -95,14 +98,14 @@ lilPlot(x, doplot = TRUE, ...)
 
 xacfPlot(x, threshold = 0.95, lag.max = 15, doplot = TRUE, \dots)
 
+blockMaxima(x, block = c("monthly", "quarterly"), doplot = FALSE)
+findThreshold(x, n = floor(0.05*length(as.vector(x))))
+pointProcess(x, u = quantile(x, 0.95), column = 1)
+deCluster(x, run = 20)
+
 interactivePlot(x, choices = paste("Plot", 1:9), 
     plotFUN = paste("plot.", 1:9, sep = ""), which = "all", \dots)
 gridVector(x, y)
-
-blockMaxima(x, block = c("monthly", "quarterly"), doplot = FALSE)
-findThreshold(x, n = floor(0.05*length(as.vector(x))))
-pointProcess(x, n = floor(0.05*length(as.vector(x))))
-deCluster(x, run, doplot = FALSE)
 }
 
 
@@ -126,6 +129,10 @@ deCluster(x, run, doplot = FALSE)
         a vector of character strings for the
         choice menu. By Default \code{"Plot 1"} ... \code{"Plot 9"}
         allowing for 9 plots at maximum.
+        }
+    \item{column}{
+        an integer value or column name string which allows to extract
+        the specified column from a multivariate time Series.
         }
     \item{conf}{
         [recordsPlot] - \cr
@@ -203,6 +210,10 @@ deCluster(x, run, doplot = FALSE)
         a numeric value at which data are to be left-truncated, value 
         at which data are to be right-truncated or the thresold value, 
         by default 95\%.
+        }
+    \item{u}{
+        a numeric value at which data are to be truncated. By default
+        the threshold value which belongs to the 95\% quantile.
         }
     \item{umin, umax}{
         [mrlPlot] - \cr
@@ -402,7 +413,7 @@ Embrechts, P., Klueppelberg, C., Mikosch, T. (1997);
 
 \examples{ 
 ## SOURCE("fExtremes.051A-ExtremesData")
-
+\dontrun{
 ## emdPlot -
    xmpExtremes("\nStart: Empirical Distribution Function >")
    # Danish fire insurance data show Pareto tail behaviour:
@@ -545,7 +556,7 @@ Embrechts, P., Klueppelberg, C., Mikosch, T. (1997);
    PP = pointProcess(-as.timeSeries(data(bmwRet)), n = 300)
    deCluster(x = PP, run = 15, doplot = TRUE) 
 }
-
+}
 
 \keyword{hplot}
 

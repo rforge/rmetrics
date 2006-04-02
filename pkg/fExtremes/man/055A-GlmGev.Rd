@@ -266,6 +266,7 @@ Coles S. (2001);
 
   
 \examples{
+\dontrun{
 ## SOURCE("fExtremes.054A-ExtremesGlm")
 
 ## Simulated GEV Data:
@@ -303,6 +304,7 @@ Coles S. (2001);
 ## Interactive Plot:
    ##> par(mfrow = c(2, 2))
    ##> plot(fit)
+}
 }
 
 

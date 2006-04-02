@@ -201,6 +201,7 @@ Coles S. (2001);
 
 
 \examples{
+\dontrun{
 ## SOURCE("fExtremes.054D-RlargFit")
 
 ## Use Venice Data:
@@ -214,6 +215,7 @@ Coles S. (2001);
 ## Summarize Results:
    xmpExtremes("Next: Diagnostic Analysis > ")
    summary(fit) 
+}
 }
 
 

@@ -190,7 +190,7 @@ Embrechts, P., Klueppelberg, C., Mikosch, T. (1997);
 
 \examples{
 ## SOURCE("fExtremes.055A-ExtremeIndex")
-
+\dontrun{
 ## Extremal Index for the right and left tails 
 ## of the BMW log returns:
    xmpExtremes("\nStart: Plot the Extremal Index >")
@@ -204,6 +204,7 @@ Embrechts, P., Klueppelberg, C., Mikosch, T. (1997);
    xmpExtremes("\nNext: Investigate Tail Depth Dependence >")
    exindexesPlot( as.timeSeries(bmwRet), block = 65)
    exindexesPlot(-as.timeSeries(bmwRet), block = 65)   
+}
 }
 
 
