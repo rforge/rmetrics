@@ -20,6 +20,8 @@
 \alias{timeNdayOnOrBefore}
 \alias{timeNthNdayInMonth}
 \alias{timeLastNdayInMonth}
+\alias{blockStart}
+\alias{blockEnd}
 
 \alias{is.timeDate}
 \alias{print.timeDate}
@@ -99,7 +101,9 @@
     \code{timeNdayOnOrAfter} \tab Computes date that is a "on-or-after" n-day, \cr  
     \code{timeNdayOnOrBefore} \tab Computes date that is a "on-or-before" n-day, \cr
     \code{timeNthNdayInMonth} \tab Computes n-th ocurrance of a n-day in year/month, \cr
-    \code{timeLastNdayInMonth} \tab Computes the last n-day in year/month. }           
+    \code{timeLastNdayInMonth} \tab Computes the last n-day in year/month \cr
+    \code{blockStart} \tab Computes start dates for numeric blocks of dates, \cr
+    \code{blockEnd} \tab Computes end dates for numeric blocks of dates. }           
          
     The functions for the Representation of 'timedate' Objects are:
     
@@ -177,6 +181,9 @@ timeNthNdayInMonth(charvec, nday = 1, nth = 1, format = "\%Y-\%m-\%d",
     FinCenter = "GMT")
 timeLastNdayInMonth(charvec, nday = 1, format = "\%Y-\%m-\%d", 
     FinCenter = "GMT")
+    
+blockStart(x, block = 20)
+blockEnd(x, block = 20)
 
 is.timeDate(object) 
 \method{print}{timeDate}(x, \dots)
@@ -219,6 +226,10 @@ difftimeDate(time1, time2,
     \item{abbreviate}{
         [months] - \cr
         currently not used.
+        }
+    \item{block}{
+        an integer value specifying the length in number of records
+        for numerically sized blocks of dates.
         }
     \item{by}{
         a character string, containing one of "sec", "min",
@@ -669,9 +680,6 @@ difftimeDate(time1, time2,
     
     The ISO-8601 midnight standard has been implemented. Note, that for
     example "2005-01-01 24:00:00" is a valid date/time string.
-    
-    IT IS IMPORTANT THAT YOU SET YOUR ENVIRONMENT VARIABLE TZ TO 'GMT',
-    OTHERWISE SOME OF THE 'TIMEDATE' FUNCTIONS WOULD NOT PROPERLY WORK! 
     
     Beside the examples given in the manual pages additional demo files
     are available with much more examples including also those from the 

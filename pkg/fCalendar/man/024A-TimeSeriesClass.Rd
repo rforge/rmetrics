@@ -12,19 +12,23 @@
 \alias{print.timeSeries}
 \alias{plot.timeSeries}
 \alias{lines.timeSeries}
+\alias{points.timeSeries}
 \alias{Ops.timeSeries}
 \alias{[.timeSeries}   
 \alias{head.timeSeries}
 \alias{tail.timeSeries}
+\alias{quantile.timeSeries}
 
 \alias{seriesData}
 \alias{seriesPositions}
 \alias{isUnivariate}
+\alias{isMultivariate}
 \alias{start.timeSeries}
 \alias{end.timeSeries}
 \alias{as.vector.timeSeries}
 \alias{as.matrix.timeSeries}
 \alias{as.data.frame.timeSeries}
+\alias{as.ts.timeSeries}
 
 \alias{applySeries}
 \alias{cutSeries}
@@ -69,7 +73,8 @@
     \code{Ops.timeSeries} \tab S3: Arith method for a 'timeSeries' object, \cr
     \code{[.timeSeries} \tab S3: "[" method for a 'timeSeries' object, \cr
     \code{head.timeSeries} \tab S3: returns the head of a 'timeSeries' object, \cr
-    \code{tail.timeSeries} \tab S3: returns the tail of a 'timeSeries' object. }           
+    \code{tail.timeSeries} \tab S3: returns the tail of a 'timeSeries' object \cr
+    \code{quantile.timeSeries} \tab S3: produces quantile of a 'timeSeries' object. }           
             
     The functions and methods for the Representation of 'timeSeries' Objects are:         
             
@@ -81,7 +86,8 @@
     \code{end.timeSeries} \tab S3: Extracts end date of a 'timeSeries', \cr
     \code{as.vector.timeSeries} \tab S3: Converts a 'timeSeries' to a vector, \cr
     \code{as.matrix.timeSeries} \tab S3: Converts a 'timeSeries' to a matrix, \cr
-    \code{as.data.frame.timeSeries} \tab S3: Converts a 'timeSeries' to a data.frame. }          
+    \code{as.data.frame.timeSeries} \tab S3: Converts a 'timeSeries' to a data.frame, \cr
+    \code{as.ts.timeSeries} \tab S3: Converts a 'timeSeries' to a 'ts' object. }          
            
     The functions and methods for Math Operations of 'timeSeries' Objects are:         
             
@@ -121,15 +127,18 @@ is.timeSeries(object)
     j = min(1, ncol(x@Data)):ncol(x@Data))
 \method{head}{timeSeries}(x, \dots)
 \method{tail}{timeSeries}(x, \dots)
+\method{quantile}{timeSeries}(x, probs = 0.95, column = 1, \dots)
 
 seriesData(object)
 seriesPositions(object)
 isUnivariate(x)
+isMultivariate(x)
 \method{start}{timeSeries}(x, \dots)
 \method{end}{timeSeries}(x, \dots)
 \method{as.vector}{timeSeries}(x, mode = "any")
 \method{as.matrix}{timeSeries}(x)
 \method{as.data.frame}{timeSeries}(x, row.names = NULL, optional = NULL)
+\method{as.ts}{timeSeries}(x, column = 1, \dots)
 
 applySeries(x, from = NULL, to = NULL, by = c("monthly", "quarterly"), 
     FUN = colAvgs, units = NULL, ...) 
@@ -164,6 +173,10 @@ ohlcDailyPlot(x, volume = TRUE, colOrder = c(1:5), units = 1e6,
         }
     \item{charvec}{
         a character vector of dates and times.
+        }
+    \item{column}{
+        specifies a column from a multivariate 'timeSeries' object.
+        By default the first column is selected.
         }
     \item{complement}{
         [outlierSeries] - \cr
@@ -285,6 +298,10 @@ ohlcDailyPlot(x, volume = TRUE, colOrder = c(1:5), units = 1e6,
         [returnSeries] - \cr
         a logical value. By default \code{FALSE}, if \code{TRUE} the 
         series will be expressed in percentage changes.
+        }
+    \item{probs}{
+        a numeric value or numeric vector of probabilities with values 
+        in \code{[0,1]}.
         }
     \item{recordIDs}{
         a data frame which can be used for record identification.
@@ -452,15 +469,8 @@ ohlcDailyPlot(x, volume = TRUE, colOrder = c(1:5), units = 1e6,
     These functions were written for Rmetrics users using R and Rmetrics
     under Microsoft's Windows operating system where timze zones, 
     daylight saving times and holiday calendars are insuffeciently 
-    supported. The functions are untested for other system environments, 
-    but may be used.
+    supported. 
     
-    Please, also be aware of the notes remarked in the help page describing
-    the \code{timeDate} class.
-    
-    IT IS IMPORTANT THAT YOU SET YOUR ENVIRONMENT VARIABLE TZ TO 'GMT',
-    OTHERWISE SOME OF THE 'TIMEDATE' FUNCTIONS WOULD NOT PROPERLY WORK! 
-
 }
 
 
