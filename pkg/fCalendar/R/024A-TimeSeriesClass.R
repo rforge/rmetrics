@@ -43,16 +43,19 @@
 #   [.timeSeries        S3: [ method for a 'timeSeries' object
 #   head.timeSeries     S3: returns the head of a 'timeSeries' object
 #   tail.timeSeries     S3: returns the tail of a 'timeSeries' object
+#   quantile.timeSeries S3: produces sample quantiles of a 'timeSeries' object
 # FUNCTION:            REPRESENTATION OF TIME SERIES OBJECTS:
 #  seriesData           Extracts data slot from 'timeSeries' object
 #  seriesPositions      Extracts positions slot from 'timeSeries' object
 #  isUnivariate         Tests if an object of class 'timeSeries' is univariate
+#  isMultivariate       Tests if an object of class 'timeSeries' is multivariate
 # METHODS:
 #  start.timeSeries     S3: Extracts start date of a 'timeSeries' object 
 #  end.timeSeries       S3: Extracts end date of a 'timeSeries' object 
 #  as.vector.timeSeries S3: Converts a univariate 'timeSeries' to a vector
 #  as.matrix.timeSeries S3: Converts a 'timeSeries' to a matrix
 #  as.data.frame.timeS* S3: Converts a 'timeSeries' to a data.frame
+#  as.ts.timeSeries     S3: Converts a 'timeSeries' to ts
 # FUNCTION:            MATHEMATICAL OPERATIONS ON TIME SERIES OBJECTS:
 #  applySeries          Applies a function to margins of a 'timeSeries'         
 #  cutSeries            Cuts out a piece from a 'timeSeries' object
@@ -924,6 +927,35 @@ function(x, ...)
     # Return Value:
     ans
 }
+
+
+# ------------------------------------------------------------------------------
+
+
+quantile.timeSeries = 
+function(x, probs = 0.95, column = 1, ...)
+{   # A function implemented by Diethelm Wuertz
+
+    # Arguments:
+    #   x - an object of class 'timeSeries'. The quantiles will be 
+    #       computed for the selected column.
+    #   probs - a numeric value or numeric vector with probabilities.
+    #   column - the selected column    
+    
+    # Examples:
+    #   quantile(as.timeSeries(data(daxRet)))
+    
+    # FUNCTION:
+    
+    # Take the appropriate column:
+    x = as.vector(x[, column])
+
+    # Compute Quantiles:
+    ans = quantile(x, probs, ...)
+    
+    # Return Value:
+    ans
+}
      
 
 ################################################################################
@@ -1015,6 +1047,28 @@ function(x)
     } else {
         stop("x is not an object of class timeSeries")
     }
+    
+    # Return Value:
+    ans
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+isMultivariate = 
+function(x)
+{   # A function implemented by Diethelm Wuertz
+
+    # FUNCTION:
+    
+    # Examples:
+    #   isMultivariate(as.timeSeries(data(daxRet)))
+    
+    # FUNCTION:
+    
+    # Test:
+    ans = !isUnivariate(x)
     
     # Return Value:
     ans
@@ -1167,6 +1221,28 @@ function(x, row.names = NULL, optional = NULL)
     ans = as.matrix(x@Data) 
     dimnames(ans) = dimNames
     ans = as.data.frame(ans)
+    
+    # Return Value:
+    ans
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+as.ts.timeSeries = 
+function(x, column = 1, ...)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Converts a colum from a 'timeSeries' object into an object
+    #   of class 'ts'.
+    
+    # Example:
+    #   x = as.timeSeries(data(daxRet)); as.ts(x[1:50, ])
+    
+    # Transform:
+    ans = as.ts(as.vector(x@Data[, column]), ...)
     
     # Return Value:
     ans

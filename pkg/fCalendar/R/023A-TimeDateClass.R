@@ -46,6 +46,8 @@
 #  timeNdayOnOrBefore   Computes date in month that is a n-day ON OR BEFORE date
 #  timeNthNdayInMonth   Computes n-th ocurrance of a n-day in year/month
 #  timeLastNdayInMonth  Computes the last n-day in year/month
+#  blockStart
+#  blockEnd
 # S3 METHODS:          REPRESENTATION OF OBJECTS:
 #  print.timeDate       Prints 'timeDate' including 'FinCenter' and 'Data' Slot
 #  summary.timeDate     Summarizes details of a 'timeDate' object
@@ -1258,6 +1260,52 @@ function(charvec, nday = 1, format = "%Y-%m-%d", FinCenter = "GMT")
     if (TZ.RESET) Sys.putenv(TZ = TZ)
     timeDate(format(ct), format = format, zone = FinCenter,
         FinCenter = FinCenter)
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+blockStart =
+function(x, block = 20)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Computes start dates for numeric blocks of dates
+    
+    # Example:
+    #   blockEnd(timeSequence(), block = 30)
+    
+    # Start Dates of Blocks:
+    nx = length(as.character(x))
+    fromIdx = seq(1, nx, by = block)
+    from = x[fromIdx]
+    
+    # Return Value:
+    from
+}
+
+# ------------------------------------------------------------------------------
+
+
+blockEnd =
+function(x, block = 20)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Computes start dates for numeric blocks of dates
+    
+    # Example:
+    #   blockEnd(timeSequence(), block = 30)
+    
+    # End Dates of Blocks:
+    nx = length(as.character(x))
+    fromIdx = seq(1, nx, by = block)
+    toIdx = c(fromIdx[-1]-1, nx)
+    to = x[toIdx]
+    
+    # Return Value:
+    to
 }
 
 
