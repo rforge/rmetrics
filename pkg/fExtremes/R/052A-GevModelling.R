@@ -76,6 +76,7 @@ function (x, loc = 0, scale = 1, shape = 0, log = FALSE)
 {
     # FUNCTION:
     
+    # Density:
     if (min(scale) <= 0) {
         stop("invalid scale")
     }
@@ -99,6 +100,10 @@ function (x, loc = 0, scale = 1, shape = 0, log = FALSE)
         d = exp(d)
     }
     
+    # Add Attribute:
+    attr(d, "control") = data.frame(loc = loc, scale = scale, shape = shape,
+        row.names = "")
+    
     # Return Value:
     d
 }
@@ -112,6 +117,7 @@ function (q, loc = 0, scale = 1, shape = 0, lower.tail = TRUE)
 {
     # FUNCTION:
     
+    # Probabilities:
     if (min(scale) <= 0) 
         stop("invalid scale")
     if (length(shape) != 1) 
@@ -126,6 +132,10 @@ function (q, loc = 0, scale = 1, shape = 0, lower.tail = TRUE)
         p = 1 - p
     }
     
+    # Add Attribute:
+    attr(p, "control") = data.frame(loc = loc, scale = scale, shape = shape,
+        row.names = "")
+    
     # Return Value:
     p
 }
@@ -139,6 +149,7 @@ function (p, loc = 0, scale = 1, shape = 0, lower.tail = TRUE)
 {
     # FUNCTION:
     
+    # Quantiles:
     if (min(p, na.rm = TRUE) <= 0 || max(p, na.rm = TRUE) >= 
         1) 
         stop("`p' must contain probabilities in (0,1)")
@@ -148,11 +159,20 @@ function (p, loc = 0, scale = 1, shape = 0, lower.tail = TRUE)
         stop("invalid shape")
     if (!lower.tail) 
         p = 1 - p
+        
+    # Result:    
     if (shape == 0) {
-        return(loc - scale * log(-log(p)))
+        q = loc - scale * log(-log(p))
     } else {
-        return(loc + scale * ((-log(p))^(-shape) - 1)/shape)
+        q = loc + scale * ((-log(p))^(-shape) - 1)/shape
     }
+    
+    # Add Attribute:
+    attr(q, "control") = data.frame(loc = loc, scale = scale, shape = shape,
+        row.names = "")
+           
+    # Return Value:
+    q
 }
 
 
@@ -164,15 +184,25 @@ function (n, loc = 0, scale = 1, shape = 0)
 {
     # FUNCTION:
     
+    # Random Variates:
     if (min(scale) < 0) 
         stop("invalid scale")
     if (length(shape) != 1) 
         stop("invalid shape")
+     
+    # Result:   
     if (shape == 0) {
-        return(loc - scale * log(rexp(n)))
+        r = loc - scale * log(rexp(n))
     } else {
-        return(loc + scale * (rexp(n)^(-shape) - 1)/shape)
+        r = loc + scale * (rexp(n)^(-shape) - 1)/shape
     }
+    
+    # Add Attribute:
+    attr(r, "control") = data.frame(loc = loc, scale = scale, shape = shape,
+        row.names = "")
+        
+    # Return Value:
+    r
 }
 
 
@@ -197,7 +227,7 @@ function(x, xi = 1, mu = 0, sigma = 1, log = FALSE)
     scale = sigma
     shape = xi
     
-    # Density function:
+    # Density Function:
     if (min(scale) <= 0) {
         stop("invalid scale")
     }
@@ -220,6 +250,10 @@ function(x, xi = 1, mu = 0, sigma = 1, log = FALSE)
     if (!log) {
         d = exp(d)
     }
+    
+    # Add Attribute:
+    attr(d, "control") = data.frame(xi = xi, mu = mu, sigma = sigma,
+        row.names = "")
     
     # Return Value:
     d
@@ -263,6 +297,10 @@ function(q, xi = 1, mu = 0, sigma = 1, lower.tail = TRUE)
     if (!lower.tail) {
         p = 1 - p
     }
+    
+    # Add Attribute:
+    attr(p, "control") = data.frame(xi = xi, mu = mu, sigma = sigma,
+        row.names = "")
     
     # Return Value:
     p
@@ -308,6 +346,10 @@ function (p, xi = 1, mu = 0, sigma = 1, lower.tail = TRUE)
     } else {
         q = loc + scale * ((-log(p))^(-shape) - 1)/shape
     }
+    
+    # Add Attribute:
+    attr(q, "control") = data.frame(xi = xi, mu = mu, sigma = sigma,
+        row.names = "")
         
     # Return Value:
     q
@@ -348,6 +390,10 @@ function (n, xi = 1, mu = 0, sigma = 1)
         r = loc + scale * (rexp(n)^(-shape) - 1)/shape
     }
     
+    # Add Attribute:
+    attr(r, "control") = data.frame(xi = xi, mu = mu, sigma = sigma,
+        row.names = "")
+        
     # Return Value:
     r
 }
@@ -372,6 +418,7 @@ function(xi, mu = 0, beta = 1)
     # MEAN: Returns for x >= 1 NaN:
     g = c(1, 0, NaN)
     xinv = 1/ ( xi + sign(abs(xi)) - 1 )
+    
     # For xi = the result is eulers constant
     euler = 0.57721566490153286060651209008240243104    
     xi0 = c(0, mu+beta*euler, 0)
