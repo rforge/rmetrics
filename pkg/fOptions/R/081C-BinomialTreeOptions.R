@@ -68,14 +68,14 @@ title = NULL, description = NULL)
     
     # European Option:
     if (TypeFlag == "ce" || TypeFlag == "pe") {
-        for ( j in seq(from=n-1, to=0, by=-1) ) 
+        for ( j in seq(from = n-1, to = 0, by = -1) ) 
             for ( i in 0:j )         
                 OptionValue[i+1] = 
                 (p*OptionValue[i+2] + (1-p)*OptionValue[i+1]) * Df }
     
     # American Option:
     if (TypeFlag == "ca" || TypeFlag == "pa") {
-        for ( j in seq(from=n-1, to=0, by=-1) )  
+        for ( j in seq(from = n-1, to = 0, by = -1) )  
             for ( i in 0:j )  
                 OptionValue[i+1] = max((z * (S*u^i*d^(abs(i-j)) - X)), 
                     (p*OptionValue[i+2] + (1-p)*OptionValue[i+1]) * Df) }
@@ -130,8 +130,10 @@ title = NULL, description = NULL)
     
     # Parameters:
     dt = Time/n
-    u = exp( (r-sigma^2/2)*dt+sigma*sqrt(dt) )
-    d = exp( (r-sigma^2/2)*dt-sigma*sqrt(dt) )
+    # DW Bug Fix: r -> b
+    u = exp( (b-sigma^2/2)*dt+sigma*sqrt(dt) )
+    d = exp( (b-sigma^2/2)*dt-sigma*sqrt(dt) )
+    # DW End of Bug Fix
     p = 1/2
     Df = exp(-r*dt)
     
@@ -141,14 +143,14 @@ title = NULL, description = NULL)
     
     # European Option:
     if (TypeFlag == "ce" || TypeFlag == "pe") {
-        for ( j in seq(from=n-1, to=0, by=-1) ) 
+        for ( j in seq(from = n-1, to = 0, by = -1) ) 
             for ( i in 0:j )         
                 OptionValue[i+1] = 
                 (p*OptionValue[i+2] + (1-p)*OptionValue[i+1]) * Df }
     
                 # American Option:
     if (TypeFlag == "ca" || TypeFlag == "pa") {
-        for ( j in seq(from=n-1, to=0, by=-1) )  
+        for ( j in seq(from = n-1, to=0, by = -1) )  
             for ( i in 0:j )  
                 OptionValue[i+1] = max((z * (S*u^i*d^(abs(i-j)) - X)), 
                     (p*OptionValue[i+2] + (1-p)*OptionValue[i+1]) * Df) }
@@ -216,14 +218,14 @@ title = NULL, description = NULL)
     
     # European Option:
     if (TypeFlag == "ce" || TypeFlag == "pe") {
-        for ( j in seq(from=n-1, to=0, by=-1) ) 
+        for ( j in seq(from = n-1, to = 0, by = -1) ) 
             for ( i in 0:j )         
                 OptionValue[i+1] = 
                 (p*OptionValue[i+2] + (1-p)*OptionValue[i+1]) * Df }
     
     # American Option:
     if (TypeFlag == "ca" || TypeFlag == "pa") {
-        for ( j in seq(from=n-1, to=0, by=-1) )  
+        for ( j in seq(from = n-1, to = 0, by = -1) )  
             for ( i in 0:j )  
                 OptionValue[i+1] = max((z * (S*u^i*d^(abs(i-j)) - X)), 
                     (p*OptionValue[i+2] + (1-p)*OptionValue[i+1]) * Df) }
