@@ -13,6 +13,8 @@
 \alias{fredImport}
 \alias{forecastsImport}
 
+\alias{yahooSeries}
+
 \alias{keystatsImport}
 \alias{print.keystats}
 
@@ -35,6 +37,7 @@
     \tabular{ll}{
     \code{economagicImport} \tab Economic series from Economagic's Web site, \cr
     \code{yahooImport} \tab daily stock market data from Yahoo's Web site, \cr
+    \code{yahooSeries} \tab easy to use download from Yahoo, \cr
     \code{keystatsImport} \tab key statistics from Yahoo's Web site, \cr
     \code{fredImport} \tab time series from St. Louis FRED Web site, \cr
     \code{forecastsImport} \tab monthly data from the Financial Forecast Center. }
@@ -68,6 +71,10 @@ forecastsImport(query, file = "tempfile",
     source = "http://www.forecasts.org/data/data/", save = FALSE, 
     try = TRUE) 
     
+yahooSeries(symbols = c("^DJI", "IBM"), from = NULL, to = NULL, 
+    nDaysBack = 365, quote = "Close", aggregation = c("d", "w", "m"), 
+    returns = FALSE, \dots)
+        
 show.fWEBDATA(object)
 \method{print}{keystats}(x, \dots)
 }
@@ -75,6 +82,12 @@ show.fWEBDATA(object)
 
 \arguments{
 
+    \item{aggregation}{
+        [yahooSeries] - \cr
+        a character string denoting the aggregation level of the 
+        downloaded data records, \code{d} for daily, \code{w} for
+        weekly and \code{m} for monthly data records.
+        }
     \item{colname}{
         [economagicImport] - \cr
         a character string which defines the name of the value
@@ -88,6 +101,17 @@ show.fWEBDATA(object)
         a character string, one of "quarterly", "monthly", or "daily",
         defining the frequency of the data records.
         }
+    \item{from, to}{
+        [yahooSeries] - \cr
+        an ISO-8601 formatted character string of the starting (end) 
+        date, e.g. "2005-01-01".
+        }
+    \item{nDaysBack}{
+        [yahooSeries] - \cr
+        an integer giving the length of the download period in number 
+        of days starting n days back from today. Only in use if 
+        \code{from} and \code{to} are not specified.
+        }
     \item{object}{
         an S4 object of class \code{"fWEBDATA"}.
         }
@@ -95,10 +119,20 @@ show.fWEBDATA(object)
         a character string, denoting the location of the data at the 
         web site.
         }
+    \item{returns}{
+        [yahooSeries] - \cr
+        a logical flag. Should return values be computed using the 
+        function \code{returnSeries}?
+        }
     \item{save}{
         a logical value, if set to TRUE the downloaded data file will 
         be stored under the path and file name specified by the
         string \code{file}. By default FALSE.
+        }
+    \item{quote}{
+        [yahooSeries] - \cr
+        a character value or vector of strings giving the column name(s) 
+        of those instruments to be extracted from the download. 
         }
     \item{sep}{
         a character value, defining the field separator for the 
@@ -107,6 +141,10 @@ show.fWEBDATA(object)
         }
     \item{source}{
         a character string with the download URL.
+        }
+    \item{symbols}{
+        [yahooSeries] - \cr
+        a character string value or vector, the Yahoo symbol name(s).
         }
     \item{swap}{
         [yahooImport] - \cr
