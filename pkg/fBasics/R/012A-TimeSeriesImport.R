@@ -38,6 +38,9 @@
 #  keystatsImport        Downloads key statistics from Yahoo's web site  
 #  fredImport            Downloads market data from St. Louis FED web site
 #  forecastsImport       Downloads monthly data from www.forecasts.org
+# FUNCTION              EASY TO USE ROUTINES:
+#  yahooSeries           Easy to use download from Yahoo
+#  .yahooSeries          Utility function  called by 'yahooSeries'
 # FUNCTION:             ONLY FOR SPLUS VERSION:
 #  as.Date               Converts date represenatation
 #  data                  Loads or lists specified data sets
@@ -646,6 +649,163 @@ source = "http://www.forecasts.org/data/data/", save = FALSE, try = TRUE)
     
     # Return Value:
     invisible()
+}
+
+
+################################################################################
+# Easy to use Routines
+
+
+yahooSeries = 
+function(symbols = c("^DJI", "IBM"), from = NULL, to = NULL, 
+nDaysBack = 365, quote = "Close", aggregation = c("d", "w", "m"), 
+returns = FALSE, ...)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Easily downloads time series data from Yahoo
+    
+    # Arguments:
+    #   symbols - a character string value or vector, the Yahoo 
+    #       symbol name(s).
+    #   from - an ISO-8601 formatted character string of the starting 
+    #       date, e.g. "2005-01-01".
+    #   to - ISO formatted character string of the end date,
+    #       e.g. "2005-12-31".
+    #   ndaysBack - an integer giving the length of the download 
+    #       period in number of days starting n days back from today.
+    #       Only in use if 'from' and 'to' are not specified.
+    #   quote - a character value or vector of strings giving the 
+    #       column names of those instruments to be extracted from
+    #       the download. 
+    #   aggregation - a character string denoting the aggregation
+    #       level of the downloaded data records, 'd' for daily, 'w' 
+    #       for weekly and 'm' for monthly data records.
+    #   returns - a logical flag. Should return values be computed
+    #       using the function 'returnSeries'?
+    #   asClass = a character string which decides how the downloaded
+    #       time series will be returned. By default an object of
+    #       class 'timeSeries' will be returned .
+    
+    # Examples:
+    #   yahooSeries(aggregation = "w")
+    #   yahooSeries(aggregation = "m", nDaysBack = 10*366)
+    #   yahooSeries(returnSeries = TRUE)
+    
+    # FUNCTION:
+    
+    # Settings:
+    asClass = c("timeSeries", "zoo", "ts")
+    aggregation = aggregation[1]
+    asClass = asClass[1]
+       
+    # First Symbol:
+    X = .yahooSeries(symbols[1], from = from, to = to, 
+        nDaysBack = nDaysBack, quote = quote, 
+        aggregation = aggregation, asClass = "timeSeries")
+    UNITS = paste(symbols[1], ".", quote, sep = "")
+    if (aggregation == "d") X = alignDailySeries(X, ...) 
+    X@units = UNITS
+    colnames(X@Data) = UNITS
+
+    # Next Symbols:
+    if (length(symbols) > 1) {
+        for (i in 2:length(symbols)) { 
+            Y = .yahooSeries(symbols[i], from = from, to = to, 
+                nDaysBack = nDaysBack, quote = quote, 
+                aggregation = aggregation, asClass = "timeSeries")
+            UNITS = paste(symbols[i], ".", quote, sep = "")
+            if (aggregation == "d") Y = alignDailySeries(Y, ...)
+            X = mergeSeries(X, Y@Data, units = c(X@units, UNITS))
+        }
+    }
+    
+    # Return Series ?
+    if (returns) X = returnSeries(X, ...)  
+    
+    # As zoo Object ?
+    if (asClass == "zoo") X = as.zoo(X)
+    
+    # As ts/mts Object ?
+    if (asClass == "zoo") X = as.ts(X)
+    
+    # Return Value:
+    invisible(X)
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.yahooSeries = 
+function(symbol = "IBM", from = NULL, to = NULL, nDaysBack = 365, 
+quote = "Close", aggregation = c("d", "w", "m"), 
+asClass = c("timeSeries", "zoo", "ts"))
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Easily downloads time series data from Yahoo
+    
+    # Arguments:
+    #   symbol - a character string, the Yahoo Symbol name.
+    #   from - ISO formatted character string of the starting date,
+    #       e.g. "2005-01-01".
+    #   to - ISO formatted character string of the end date,
+    #       e.g. "2005-12-31".
+    #   ndaysBack - an integer giving the length of the download 
+    #       period in number of days starting n days back from Today.
+    #       Only in use if 'from' and 'to' are not specified.
+    #   quote - a character value or vector of strings giving the 
+    #       column names of those instruments to be extracted from
+    #       the download. 
+    #   aggregation - a character string denoting the aggregation
+    #       level of the downloaded date, 'd' for daily, 'w' for
+    #       weekly and 'm' for monthly data records.
+    #   asClass = a character string which decides how the downloaded
+    #       time series will be returned. By default an object of
+    #       class 'timeSeries' will be returned .
+    
+    # Examples:
+    #   yahooSeries(aggregation = "w")
+    #   yahooSeries(aggregation = "m", nDaysBack = 10*366)
+    
+    # FUNCTION:
+    
+    # Automatic Selection of From / To: 
+    if (is.null(from) & is.null(to)) {
+        to = Sys.Date() 
+        from = as.character(to - nDaysBack)
+        to = as.character(to)
+    }
+    
+    # Extract Atoms - From:
+    yearFrom = substring(from, 1, 4)
+    monthFrom = as.character(as.integer(substring(from, 6,7))-1)
+    dayFrom = substring(from, 9, 10)
+    
+    # Exgtract Atoms- To:
+    yearTo = substring(to, 1, 4)
+    monthTo = as.character(as.integer(substring(to, 6,7))-1)
+    dayTo = substring(to, 9, 10)
+    
+    # Download:
+    query = paste("s=", symbol, 
+        "&a=", monthFrom, "&b=", dayFrom, "&c=", yearFrom, 
+        "&d=", monthTo, "&e=", dayTo, "&f=", yearTo,
+        "&g=", aggregation[1], "&x=.csv", sep = "")  
+    X = yahooImport(query)@data 
+    
+    # Extract desired columns from Time Series:
+    ans = as.timeSeries(X)[, quote]
+    
+    # NOT USED - Transform to zoo object if desired:
+    # if (asClass[1] == "zoo")  ans = as.zoo(ans)
+    
+    # NOT USED - Transform to ts/mts object if desired:
+    # if (asClass[1] == "ts")  ans = as.ts(ans)
+    
+    # Return Value:
+    ans
 }
  
 
