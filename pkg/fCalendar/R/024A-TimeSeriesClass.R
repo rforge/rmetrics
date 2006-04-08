@@ -58,15 +58,16 @@
 #  as.ts.timeSeries     S3: Converts a 'timeSeries' to ts
 # FUNCTION:            MATHEMATICAL OPERATIONS ON TIME SERIES OBJECTS:
 #  applySeries          Applies a function to margins of a 'timeSeries'         
-#  cutSeries            Cuts out a piece from a 'timeSeries' object
-#  mergeSeries          Merges a 'timeSeries' object with a 'matrix'
+#  cut|cutSeries        Cuts out a piece from a 'timeSeries' object
+#  merge|mergeSeries    Merges a 'timeSeries' object with a 'matrix'
+#  .mergeSeries         Old Version of mergeSeries
 #  returnSeries         Computes returns from a 'timeSeries' object
-#  revSeries            Reverts a 'timeSeries' object
-#  diffSeries           Differences a 'timeSeries' object
-#  lagSeries            Lags a 'timeSeries' object
+#  rev|revSeries        Reverts a 'timeSeries' object
+#  diff|diffSeries      Differences a 'timeSeries' object
+#  lag|lagSeries        Lags a 'timeSeries' object
 #  outlierSeries        Removes outliers from a 'timeSeries' object
-#  logSeries            Returns logarithms of a 'timeSeries' object
-#  absSeries            Returns abolute values of a 'timeSeries' object
+#  log|logSeries        eturns logarithms of a 'timeSeries' object
+#  abs|absSeries        Returns abolute values of a 'timeSeries' object
 # FUNCTION:            FOR DAILY OPERATIONS:
 #  alignDailySeries     Aligns a 'timeSeries' object to new positions 
 #  ohlcDailyPlot        Plots open–high–low–close bar chart         
@@ -639,8 +640,19 @@ j = min(1, ncol(x@Data)):ncol(x@Data))
 # ------------------------------------------------------------------------------
 
 
+rev.timeSeries = 
+function(x, ...) 
+{
+    revSeries(x, ...) 
+}
+
+
+
+# ------------------------------------------------------------------------------
+
+
 revSeries =
-function(x) 
+function(x, ...) 
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -666,8 +678,18 @@ function(x)
 # ------------------------------------------------------------------------------
 
 
+diff.timeSeries = 
+function(x, lag = 1, diff = 1, trim = FALSE, pad = NA, ...) 
+{
+    diffSeries(x, lag, diff, trim, pad, ...) 
+}
+
+
+# ------------------------------------------------------------------------------
+
+
 diffSeries = 
-function(x, lag = 1, diff = 1, trim = FALSE, pad = NA) 
+function(x, lag = 1, diff = 1, trim = FALSE, pad = NA, ...) 
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -716,8 +738,18 @@ function(x, lag = 1, diff = 1, trim = FALSE, pad = NA)
 # ------------------------------------------------------------------------------
 
 
+lag.timeSeries = 
+function(x, k = 1, trim = FALSE, units = NULL, ...)
+{
+    lagSeries(x, k, trim, units, ...)
+}
+
+
+# ------------------------------------------------------------------------------
+
+
 lagSeries = 
-function(x, k = 1, trim = FALSE, units = NULL)
+function(x, k = 1, trim = FALSE, units = NULL, ...)
 {   # A function implemented by Diethelm Wuertz
     
     # Description:
@@ -833,6 +865,29 @@ function(x, sd = 10, complement = TRUE)
 # ------------------------------------------------------------------------------
 
 
+log.timeSeries = 
+function(x, base = exp(1)) 
+{   # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   Returns logarithmic values of a 'timeSeries' object
+    
+    # Arguments:
+    #   x - a 'timeSeries' object.
+    
+    # FUNCTION:
+    
+    # Absolute Values:
+    x@Data = log(x@Data, base = base)
+    
+    # Return Value:
+    x
+}
+
+
+# ------------------------------------------------------------------------------
+
+
 logSeries = 
 function(x) 
 {   # A function implemented by Diethelm Wuertz
@@ -847,6 +902,29 @@ function(x)
     
     # Absolute Values:
     x@Data = log(x@Data)
+    
+    # Return Value:
+    x
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+abs.timeSeries = 
+function(x) 
+{   # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   Returns absolute values of a 'timeSeries' object
+    
+    # Arguments:
+    #   x - a 'timeSeries' object.
+    
+    # FUNCTION:
+    
+    # Absolute Values:
+    x@Data = abs(x@Data)
     
     # Return Value:
     x
@@ -1355,8 +1433,18 @@ FUN = colAvgs, units = NULL, ...)
 # ------------------------------------------------------------------------------
 
 
+cut.timeSeries = 
+function(x, from, to, ...)
+{
+    cutSeries(x, from, to, ...)
+}
+
+
+# ------------------------------------------------------------------------------
+
+
 cutSeries = 
-function(x, from, to)
+function(x, from, to, ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -1397,9 +1485,80 @@ function(x, from, to)
 # ------------------------------------------------------------------------------
 
 
-mergeSeries = 
+merge.timeSeries = 
+function(x, y, units = NULL, ...)
+{
+    mergeSeries(x, y, units, ...)
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+mergeSeries =
+function(x, y, units = NULL, ...)
+{   # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   Merges two 'timeSeries' objects 
+    
+    # Arguments:
+    #   x, y - 'timeSeries' objects
+    #   units - Ooptional user specified units
+ 
+    # Value:
+    #   Returns a S4 object of class 'timeSeries'.
+    
+    # FUNCTION:
+    
+    # Execute old version if y is a matrix:
+    if (is.matrix(y)) return(.mergeSeries(x, y, units))
+    
+    # Manipulate in matrix form:
+    positions = as.character(c(x@positions, y@positions))
+    LENGTH = length(as.character(seriesPositions(x)))
+    DUP = duplicated(positions)[1:LENGTH]
+    DUP2 = duplicated(positions)[-(1:LENGTH)]
+    M1 = as.matrix(x)
+    M2 = as.matrix(y)
+    dim1 = dim(M1) 
+    dim2 = dim(M2) 
+    X1 = matrix(rep(NA, times = dim1[1]*dim2[2]), ncol = dim2[2])
+    X2 = matrix(rep(NA, times = dim2[1]*dim1[2]), ncol = dim1[2])
+    colnames(X1) = colnames(M2) 
+    NC = (dim1 + dim2)[2]+1
+    Z = rbind(cbind(M1, X1, DUP), cbind(X2, M2, DUP2))
+    Z = Z[order(rownames(Z)), ]
+    NC1 = dim1[2]+1
+    IDX = (1:(dim1+dim2)[1])[Z[, NC] == 1]
+    Z[IDX-1, NC1:(NC-1)] = Z[IDX, NC1:(NC-1)]
+    Z = Z[!Z[, NC], -NC]
+    
+    # Create time series:
+    ans = timeSeries(data = Z, charvec = rownames(Z), FinCenter =
+        "GMT", units = c(x@units, y@units))
+    
+    # Optionally add user specified units:
+    if (!is.null(units)) {
+        ans@units = units
+        colnames(ans@Data) <- units
+    }
+    
+    # Return Value:
+    ans
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.mergeSeries = 
 function(x, y, units = NULL)
 {   # A function implemented by Diethelm Wuertz
+    
+    # IMPORTANT:
+    #   This is the old version where 'y' is a matrix with the same 
+    #   row dimension as 'x'.
     
     # Description:
     #   Merges a 'timeSeries' with a 'matrix' object 
@@ -1519,8 +1678,10 @@ trim = TRUE, digits = 4, units = NULL)
             
     # Trim:
     if (trim) ans = ans[-1, ]
-    if (percentage) digits = digits - 2
-    ans@Data = round(ans@Data, digits = digits)
+    # DW: round replaced by signif
+    # if (percentage) digits = digits - 2
+    ans@Data = signif(ans@Data, digits = digits)
+    # DW
     
     # Add New Units:
     if (!is.null(units)){
@@ -1766,5 +1927,25 @@ grid.nx = 7, grid.lty = "solid", ...)
 }   
 
    
+################################################################################
+
+
+.var.timeSeries =
+function (x, y = NULL, na.rm = FALSE, use) 
+{
+    if (missing(use)) 
+        use <- if (na.rm) "complete.obs" else "all.obs"
+    na.method <- 
+        pmatch(use, c("all.obs", "complete.obs", "pairwise.complete.obs"))
+    if (is.timeSeries(x)) 
+        x <- as.matrix(x)
+    else stopifnot(is.atomic(x))
+    if (is.timeSeries(y)) 
+        y <- as.matrix(y)
+    else stopifnot(is.atomic(y))
+    .Internal(cov(x, y, na.method, FALSE))
+}
+
+
 ################################################################################
 
