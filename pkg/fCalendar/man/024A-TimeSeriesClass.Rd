@@ -32,13 +32,18 @@
 
 \alias{applySeries}
 \alias{cutSeries}
-\alias{diffSeries}    
+\alias{cut.timeSeries}
+\alias{diffSeries} 
+\alias{diff.timeSeries}   
 \alias{lagSeries} 
+\alias{lag.timeSeries} 
 \alias{mergeSeries}
+\alias{merge.timeSeries} 
 \alias{returnSeries}
 \alias{logSeries}
 \alias{absSeries}
 \alias{revSeries}
+\alias{rev.timeSeries}
 \alias{outlierSeries}
 
 \alias{alignDailySeries}
@@ -94,13 +99,12 @@
     \tabular{ll}{         
     \code{applySeries} \tab Applies a function to margins of a 'timeSeries', \cr
     \code{alignDailySeries} \tab Aligns a daily 'timeSeries' to new positions, \cr        
-    \code{cutSeries} \tab Cuts out a piece from a 'timeSeries' object, \cr
-    \code{mergeSeries} \tab Merges a 'timeSeries' object with a 'matrix', \cr
-    % since R 2.1 no hyphens - are allowed in tabular
+    \code{cut, cutSeries} \tab Cuts out a piece from a 'timeSeries' object, \cr
+    \code{merge, mergeSeries} \tab Merges a 'timeSeries' object with a 'matrix', \cr
     \code{ohlcDailyPlot} \tab Plots open high low close bar chart, \cr
-    \code{revSeries} \tab Reverts the order of 'timeSeries' object, \cr
-    \code{diffSeries} \tab Takes differences from a 'timeSeries' object, \cr
-    \code{lagSeries} \tab Lags a 'timeSeries' object, \cr
+    \code{rev, revSeries} \tab Reverts the order of 'timeSeries' object, \cr
+    \code{diff, diffSeries} \tab Takes differences from a 'timeSeries' object, \cr
+    \code{lag, lagSeries} \tab Lags a 'timeSeries' object, \cr
     \code{outlierSeries} \tab Removes outliers from a 'timeSeries' object, \cr
     \code{returnSeries} \tab Computes returns from a 'timeSeries' object, \cr
     \code{logSeries} \tab Returns logarithms of a 'timeSeries' object, \cr
@@ -118,6 +122,7 @@ read.timeSeries(file, zone = "GMT", FinCenter = "", title = "",
     
 as.timeSeries(x, dimnames = TRUE, format = "")
 is.timeSeries(object) 
+
 \method{print}{timeSeries}(x, ...)
 \method{plot}{timeSeries}(x, reference.grid = TRUE, lty = 1, ...) 
 \method{lines}{timeSeries}(x, ...)
@@ -133,6 +138,7 @@ seriesData(object)
 seriesPositions(object)
 isUnivariate(x)
 isMultivariate(x)
+
 \method{start}{timeSeries}(x, \dots)
 \method{end}{timeSeries}(x, \dots)
 \method{as.vector}{timeSeries}(x, mode = "any")
@@ -141,18 +147,24 @@ isMultivariate(x)
 \method{as.ts}{timeSeries}(x, column = 1, \dots)
 
 applySeries(x, from = NULL, to = NULL, by = c("monthly", "quarterly"), 
-    FUN = colAvgs, units = NULL, ...) 
-cutSeries(x, from, to)
-diffSeries(x, lag = 1, diff = 1, trim = FALSE, pad = NA)
-lagSeries(x, k = 1, trim = FALSE, units = NULL)
+    FUN = colAvgs, units = NULL, \dots) 
+cutSeries(x, from, to, \dots)
+diffSeries(x, lag = 1, diff = 1, trim = FALSE, pad = NA, \dots)
+lagSeries(x, k = 1, trim = FALSE, units = NULL, \dots)
 outlierSeries(x, sd = 10, complement = TRUE)
-mergeSeries(x, y, units = NULL)
+mergeSeries(x, y, units = NULL, \dots)
 returnSeries(x, type = c("continuous", "discrete"), percentage = FALSE, 
     trim = TRUE, digits = 4, units = NULL)
-revSeries(x)
+revSeries(x, \dots)
 logSeries(x)
 absSeries(x)
-    
+
+\method{cut}{timeSeries}(x, from, to, \dots)
+\method{diff}{timeSeries}(x, lag = 1, diff = 1, trim = FALSE, pad = NA, \dots)
+\method{lag}{timeSeries}(x, k = 1, trim = FALSE, units = NULL, \dots)
+\method{merge}{timeSeries}(x, y, units = NULL, \dots)
+\method{rev}{timeSeries}(x, \dots)
+
 alignDailySeries(x, method = c("before", "after", "interp", "fillNA"), 
     include.weekends = FALSE, units = NULL)
 ohlcDailyPlot(x, volume = TRUE, colOrder = c(1:5), units = 1e6, 
