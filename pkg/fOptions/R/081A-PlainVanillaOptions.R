@@ -274,8 +274,7 @@ function(Selection = c("Delta", "Theta", "Vega", "Rho", "Lambda", "Gamma",
  
     # Description:
     #   Calculate the Options Greeks for a Generalized  
-    #   Black-Scholes option either for a call or a put 
-    #   option.
+    #   Black-Scholes option either for a call or a put option.
     
     # References:
     #   Haug E.G., The Complete Guide to Option Pricing Formulas
