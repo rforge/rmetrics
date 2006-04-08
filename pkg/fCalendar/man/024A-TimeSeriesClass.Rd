@@ -31,6 +31,7 @@
 \alias{as.ts.timeSeries}
 
 \alias{applySeries}
+
 \alias{cutSeries}
 \alias{cut.timeSeries}
 \alias{diffSeries} 
@@ -41,7 +42,9 @@
 \alias{merge.timeSeries} 
 \alias{returnSeries}
 \alias{logSeries}
+\alias{log.timeSeries}
 \alias{absSeries}
+\alias{abs.timeSeries}
 \alias{revSeries}
 \alias{rev.timeSeries}
 \alias{outlierSeries}
@@ -107,8 +110,8 @@
     \code{lag, lagSeries} \tab Lags a 'timeSeries' object, \cr
     \code{outlierSeries} \tab Removes outliers from a 'timeSeries' object, \cr
     \code{returnSeries} \tab Computes returns from a 'timeSeries' object, \cr
-    \code{logSeries} \tab Returns logarithms of a 'timeSeries' object, \cr
-    \code{absSeries} \tab Returns absolute values of a 'timeSeries' object.}
+    \code{log, logSeries} \tab Returns logarithms of a 'timeSeries' object, \cr
+    \code{abs, absSeries} \tab Returns absolute values of a 'timeSeries' object.}
         
 }
 
@@ -164,6 +167,8 @@ absSeries(x)
 \method{lag}{timeSeries}(x, k = 1, trim = FALSE, units = NULL, \dots)
 \method{merge}{timeSeries}(x, y, units = NULL, \dots)
 \method{rev}{timeSeries}(x, \dots)
+\method{log}{timeSeries(x, base = exp(1))}
+\method{abs}{timeSeries(x)}
 
 alignDailySeries(x, method = c("before", "after", "interp", "fillNA"), 
     include.weekends = FALSE, units = NULL)
@@ -178,10 +183,15 @@ ohlcDailyPlot(x, volume = TRUE, colOrder = c(1:5), units = 1e6,
     \item{by}{
         [applySeries] - \cr
         a character either \code{"monthly"} or \code{"quarterly"}. The
-        defaull value is \code{"monthly"}. Only operative when both arguments
+        default value is \code{"monthly"}. Only operative when both arguments
         \code{from} and \code{to} have ther default values \code{NULL}.
         In this case the function \code{FUN} will be applied to monthly or
         quarterly periods.
+        }
+    \item{base}{
+        [log] - \cr
+        a positive number. The base with respect to which logarithms
+        are computed. Defaults to \code{e=exp(1)}.
         }
     \item{charvec}{
         a character vector of dates and times.
