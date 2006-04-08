@@ -167,8 +167,8 @@ absSeries(x)
 \method{lag}{timeSeries}(x, k = 1, trim = FALSE, units = NULL, \dots)
 \method{merge}{timeSeries}(x, y, units = NULL, \dots)
 \method{rev}{timeSeries}(x, \dots)
-\method{log}{timeSeries(x, base = exp(1))}
-\method{abs}{timeSeries(x)}
+\method{log}{timeSeries}(x, base = exp(1))
+\method{abs}{timeSeries}(x)
 
 alignDailySeries(x, method = c("before", "after", "interp", "fillNA"), 
     include.weekends = FALSE, units = NULL)
