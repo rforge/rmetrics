@@ -75,16 +75,16 @@
 
 
 \usage{
-emdPlot(x, doplot = TRUE, plottype = c("", "x", "y", "xy"), labels = TRUE, \dots)
+emdPlot(x, doplot = TRUE, plottype = c("xy", "x", "y", ""), labels = TRUE, \dots)
 
 qqPlot(x, doplot = TRUE, labels = TRUE, \dots) 
 qqbayesPlot(x, doplot = TRUE, labels = TRUE, \dots)
-qPlot(x, xi = 0, trim = NA, threshold = NA, doplot = TRUE, labels = TRUE, \dots)
+qPlot(x, xi = 0, trim = NULL, threshold = NULL, doplot = TRUE, labels = TRUE, \dots)
 
 mePlot(x, doplot = TRUE, labels = TRUE, \dots)
-mrlPlot(x, conf = 0.95, umin = NA, umax = NA, nint = 100, doplot = TRUE, 
+mrlPlot(x, ci = 0.95, umin = NA, umax = NA, nint = 100, doplot = TRUE, 
      plottype = c("autoscale", ""), labels = TRUE, \dots)  
-mxfPlot(x, tail = 0.05, doplot = TRUE, labels = TRUE, \dots)  
+mxfPlot(x, u = quantile(x, 0.05), doplot = TRUE, labels = TRUE, \dots)  
    
 msratioPlot(x, p = 1:4, doplot = TRUE, plottype = c("autoscale", ""), 
     labels = TRUE, \dots) 
@@ -93,10 +93,10 @@ recordsPlot(x, conf = 0.95, doplot = TRUE, labels = TRUE, \dots)
 ssrecordsPlot(x, subsamples = 10, doplot = TRUE, plottype = c("lin", "log"),
     labels = TRUE, \dots)
     
-sllnPlot(x, doplot = TRUE, ...)
-lilPlot(x, doplot = TRUE, ...)
+sllnPlot(x, doplot = TRUE, labels = TRUE, ...)
+lilPlot(x, doplot = TRUE, labels = TRUE, ...)
 
-xacfPlot(x, threshold = 0.95, lag.max = 15, doplot = TRUE, \dots)
+xacfPlot(x, threshold = 0.95, lag.max = 15, doplot = TRUE, labels = TRUE, \dots)
 
 blockMaxima(x, block = c("monthly", "quarterly"), doplot = FALSE)
 findThreshold(x, n = floor(0.05*length(as.vector(x))))

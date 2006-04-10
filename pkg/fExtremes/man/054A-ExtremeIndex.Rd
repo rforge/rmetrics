@@ -1,6 +1,6 @@
-\name{ExtremeIndexPlots}
+\name{ExtremeIndex}
 
-\alias{ExtremeIndexPlots}
+\alias{ExtremeIndex}
 
 \alias{fTHETA}
 \alias{fTHETA-class}

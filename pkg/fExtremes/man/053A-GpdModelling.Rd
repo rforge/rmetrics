@@ -99,7 +99,7 @@ Embrechts, P., Klueppelberg, C., Mikosch, T. (1997);
 
 \examples{
 ## SOURCE("fExtremes.053A-GpdModelling")
-
+\dontrun{
 ## *gpd  -
    xmpExtremes("\nStart: Simulate GPD Distributed sample >")
    par(mfrow = c(2, 2))
@@ -126,6 +126,7 @@ Embrechts, P., Klueppelberg, C., Mikosch, T. (1997);
    xmpExtremes("\nNext: Compute Quantiles >")
    qgpd(pgpd(seq(-1, 5, 0.25), xi = 1/4 ), xi = 1/4) 
  
+}
 }
 
 
