@@ -41,22 +41,22 @@
 # FUNCTION:             MOMENTS:
 #  .gevMoments            Computes true statistics for GEV distribution
 ################################################################################
-# FUNCTION:             GEV MODELLING FROM EVIR:
+# FUNCTION:             MLE AND PWM ESTIMATORS:
 #  gevSim                Simulates GEV including Gumbel rvs [EVIS/EVIR]
-#  fGEV                  S4 Class Representation
-#  gevFit                Fits GEV Distribution
-#  .gumpwmFit
-#  .gevpwmFit
-#  .sam.pwm
-#  .gummleFit
-#  .gumLLH
-#  .gevmleFit
-#  .gevLLH
+#  fGEVFIT               S4 class representation
+#  gevFit                Fits Parameters of GEV distribution
+#   .gumpwmFit             Gumbel with probability weighted moments
+#   .gevpwmFit             GEV with probability weighted moments
+#   .sam.pwm                Computes sample weights
+#   .gummleFit             Gumbel with max log-likelihood approach
+#   .gumLLH                Gumbel log-likelihood function
+#   .gevmleFit             GEV with max log-likelihood approach
+#   .gevLLH                GEV log-likelihood function
 #   print.fGEV            Print Method for object of class "gevFit"
 #   plot.fGEV             Plot Method for object of class "gevFit"
 #   summary.fGEV          Summary Method for object of class "gevFit"
 #  gevrlevelPlot         Calculates Return Levels Based on GEV Fit
-#  .rlevel.gev.evir
+#  .rlevel.gev.evir       Internal Function
 ################################################################################
 # FUNCTION:             MDA ESTIMATORS:
 #  hillPlot              Plot Hill's estimator

@@ -81,14 +81,8 @@ labels = TRUE, ...)
 
     # FUNCTION:
         
-    # Check Type:
-    if (class(x) == "zoo") {
-        x = as.timeSeries(x)
-    }
-    if (class(x) == "timeSeries") {
-        if (dim(x)[2] > 1) stop("x must be an univariate time series")
-        x = as.vector(x)
-    }
+    # Convert Type:
+    x = as.vector(x)
     
     # Settings:
     plottype = plottype[1]
@@ -152,17 +146,8 @@ function (x, doplot = TRUE, labels = TRUE, ...)
     
     # FUNCTION:
     
-    # Check Type:
-    if (class(x) == "zoo") {
-        x = as.timeSeries(x)
-    }
-    if (class(x) == "timeSeries") {
-        if (dim(x)[2] > 1) stop("x must be a univariate time series")
-        x = as.vector(x)
-    }
-    
-    # Convert x to a vector, if the input is a data.frame.
-    if (is.data.frame(x)) x = x[, 1] 
+    # Convert Type:
+    x = as.vector(x)
     
     # Plot:
     if (doplot) {
@@ -225,14 +210,8 @@ function(x, doplot = TRUE, labels = TRUE, ...)
 
     # FUNCTION:
     
-    # Check Type:
-    if (class(x) == "zoo") {
-        x = as.timeSeries(x)
-    }
-    if (class(x) == "timeSeries") {
-        if (dim(x)[2] > 1) stop("x must be an univariate time series")
-        x = as.vector(x)
-    }
+    # Convert Type:
+    x = as.vector(x)
     
     # Settings:
     mydata = x
@@ -301,12 +280,8 @@ labels = TRUE, ...)
 
     # FUNCTION:
     
-    # Check Type:
-    if (class(x) == "zoo") x = as.timeSeries(x)
-    if (is.timeSeries(x)) {
-        if (dim(x)[2] > 1) stop("x must be a univariate time series")
-        x = as.vector(x)
-    }
+    # Convert Type:
+    x = as.vector(x)
     
     # Settings:
     line = TRUE
@@ -372,14 +347,8 @@ function (x, u = quantile(x, 0.05), doplot = TRUE, labels = TRUE, ...)
     
     # FUNCTION:
     
-    # Check Type:
-    if (class(x) == "zoo") {
-        x = as.timeSeries(x)
-    }
-    if (class(x) == "timeSeries") {
-        if (dim(x)[2] > 1) stop("x must be an univariate time series")
-        x = as.vector(x)
-    }
+    # Convert Type:
+    x = as.vector(x)
     
     # Convert x to a vector, if the input is a data.frame.
     if(is.data.frame(x)) x = x[, 1] 
@@ -433,14 +402,8 @@ doplot = TRUE, plottype = c("autoscale", ""), labels = TRUE, ...)
     
     # FUNCTION:
     
-    # Check Type:
-    if (class(x) == "zoo") {
-        x = as.timeSeries(x)
-    }
-    if (class(x) == "timeSeries") {
-        if (dim(x)[2] > 1) stop("x must be an univariate time series")
-        x = as.vector(x)
-    }
+    # Convert Type:
+    x = as.vector(x)
     
     # Settings:
     plottype = plottype[1]
@@ -510,14 +473,8 @@ function(x, doplot = TRUE, labels = TRUE, ...)
     
     # FUNCTION:
     
-    # Check Type:
-    if (class(x) == "zoo") {
-        x = as.timeSeries(x)
-    }
-    if (class(x) == "timeSeries") {
-        if (dim(x)[2] > 1) stop("x must be an univariate time series")
-        x = as.vector(x)
-    }
+    # Convert Type:
+    x = as.vector(x)
     
     # Settings:
     omit = 0
@@ -590,14 +547,8 @@ function(x, conf = 0.95, doplot = TRUE, labels = TRUE, ...)
 
     # FUNCTION:
     
-    # Check Type:
-    if (class(x) == "zoo") {
-        x = as.timeSeries(x)
-    }
-    if (class(x) == "timeSeries") {
-        if (dim(x)[2] > 1) stop("x must be an univariate time series")
-        x = as.vector(x)
-    }
+    # Convert Type:
+    x = as.vector(x)
     
     # Settings:
     conf.level = conf
@@ -669,14 +620,8 @@ labels = TRUE,  ...)
     
     # FUNCTION:
     
-    # Check Type:
-    if (class(x) == "zoo") {
-        x = as.timeSeries(x)
-    }
-    if (class(x) == "timeSeries") {
-        if (dim(x)[2] > 1) stop("x must be an univariate time series")
-        x = as.vector(x)
-    }
+    # Convert Type:
+    x = as.vector(x)
     
     # Plot type:
     plottype = plottype[1]
@@ -753,14 +698,8 @@ labels = TRUE, ...)
     
     # FUNCTION:
     
-    # Check Type:
-    if (class(x) == "zoo") {
-        x = as.timeSeries(x)
-    }
-    if (class(x) == "timeSeries") {
-        if (dim(x)[2] > 1) stop("x must be an univariate time series")
-        x = as.vector(x)
-    }
+    # Convert Type:
+    x = as.vector(x)
     
     # Settings:
     plottype = plottype[1]
@@ -832,14 +771,8 @@ function(x, doplot = TRUE, labels = TRUE, ...)
     
     # FUNCTION:
     
-    # Check Type:
-    if (class(x) == "zoo") {
-        x = as.timeSeries(x)
-    }
-    if (class(x) == "timeSeries") {
-        if (dim(x)[2] > 1) stop("x must be an univariate time series")
-        x = as.vector(x)
-    }
+    # Convert Type:
+    x = as.vector(x)
     
     # SLLN:
     if (is.null(mean)) mean = mean(cumsum(x)/(1:length(x)))
@@ -887,14 +820,8 @@ function (x, doplot = TRUE, labels = TRUE, ...)
     
     # FUNCTION:
     
-    # Check Type:
-    if (class(x) == "zoo") {
-        x = as.timeSeries(x)
-    }
-    if (class(x) == "timeSeries") {
-        if (dim(x)[2] > 1) stop("x must be an univariate time series")
-        x = as.vector(x)
-    }
+    # Convert Type:
+    x = as.vector(x)
     
     # LIL:
     lx = length(x)
@@ -941,14 +868,8 @@ function(x, threshold = 0.95, lag.max = 15, doplot = TRUE, labels = TRUE...)
     
     # FUNCTION:
     
-    # Check Type:
-    if (class(x) == "zoo") {
-        x = as.timeSeries(x)
-    }
-    if (class(x) == "timeSeries") {
-        if (dim(x)[2] > 1) stop("x must be an univariate time series")
-        x = as.vector(x)
-    }
+    # Convert Type:
+    x = as.vector(x)
     
     # Settings:
     if (labels) {
