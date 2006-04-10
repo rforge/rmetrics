@@ -10,6 +10,15 @@
 
 \alias{var}
 \alias{var.default}
+
+\alias{rownames<-}
+\alias{rownames<-.default}
+
+\alias{colnames<-}
+\alias{colnames<-.default}
+
+
+\alias{data}
             
 
 \title{Masked Objects}
@@ -31,6 +40,12 @@ sort(x, partial = NULL, na.last = NA, decreasing = FALSE,
 log(x, base = exp(1))
 
 var(x, y = NULL, na.rm = FALSE, use)
+
+data(\dots, list = character(0), package = NULL, lib.loc = NULL,
+    verbose = getOption("verbose"), envir = .GlobalEnv)
+    
+rownames(x) <- value
+colnames(x) <- value
 }
 
 
@@ -40,9 +55,18 @@ var(x, y = NULL, na.rm = FALSE, use)
         [log] - \cr
         additional argument to the \code{log} function.
         }
+    \item{list, package, lib.loc, verbose, envir}{
+        [data] - \cr
+        additional arguments to the \code{data} function.
+        }
     \item{partial, na.last, decreasing, method, index.return}{
         [sort] - \cr
         additional arguments to the \code{sort} function.
+        }
+    \item{value}{
+        [colnames][rownames] - \cr
+        additional arguments to the \code{colnames} and \code{rownames}
+        functions.
         }
     \item{x}{
         [log][sort][var] - \cr
@@ -51,6 +75,9 @@ var(x, y = NULL, na.rm = FALSE, use)
     \item{y, na.rm, use}{
         [var] - \cr
         additional arguments to the \code{var} function.
+        }
+    \item{\dots}{
+        arguments to be passed.
         }
  
 }
