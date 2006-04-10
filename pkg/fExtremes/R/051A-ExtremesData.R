@@ -80,13 +80,19 @@ labels = TRUE, ...)
     #       axis
 
     # FUNCTION:
+        
+    # Check Type:
+    if (class(x) == "zoo") {
+        x = as.timeSeries(x)
+    }
+    if (class(x) == "timeSeries") {
+        if (dim(x)[2] > 1) stop("x must be an univariate time series")
+        x = as.vector(x)
+    }
     
     # Settings:
     plottype = plottype[1]
-        
-    # Convert from univariate 'timSeries':
-    if (is.timeSeries(x)) x = as.vector(x)
-    
+         
     # Convert x to a vector, if the input is a data.frame.
     if (is.data.frame(x)) x = x[,1] 
     xs = x = sort(as.numeric(x))
@@ -146,8 +152,14 @@ function (x, doplot = TRUE, labels = TRUE, ...)
     
     # FUNCTION:
     
-    # Convert from univariate 'timSeries':
-    if (is.timeSeries(x)) x = as.vector(x)
+    # Check Type:
+    if (class(x) == "zoo") {
+        x = as.timeSeries(x)
+    }
+    if (class(x) == "timeSeries") {
+        if (dim(x)[2] > 1) stop("x must be a univariate time series")
+        x = as.vector(x)
+    }
     
     # Convert x to a vector, if the input is a data.frame.
     if (is.data.frame(x)) x = x[, 1] 
@@ -213,8 +225,14 @@ function(x, doplot = TRUE, labels = TRUE, ...)
 
     # FUNCTION:
     
-    # Convert from univariate 'timSeries':
-    if (is.timeSeries(x)) x = as.vector(x)
+    # Check Type:
+    if (class(x) == "zoo") {
+        x = as.timeSeries(x)
+    }
+    if (class(x) == "timeSeries") {
+        if (dim(x)[2] > 1) stop("x must be an univariate time series")
+        x = as.vector(x)
+    }
     
     # Settings:
     mydata = x
@@ -283,8 +301,12 @@ labels = TRUE, ...)
 
     # FUNCTION:
     
-    # Convert from univariate 'timSeries':
-    if (is.timeSeries(x)) x = as.vector(x)
+    # Check Type:
+    if (class(x) == "zoo") x = as.timeSeries(x)
+    if (is.timeSeries(x)) {
+        if (dim(x)[2] > 1) stop("x must be a univariate time series")
+        x = as.vector(x)
+    }
     
     # Settings:
     line = TRUE
@@ -343,15 +365,21 @@ labels = TRUE, ...)
 
 mxfPlot = 
 function (x, u = quantile(x, 0.05), doplot = TRUE, labels = TRUE, ...)     
-{   # A function written by D. Wuertz
+{   # A function written by Diethelm Wuertz
     
     # Description:
     #   Creates a simple mean excess function plot.
     
     # FUNCTION:
     
-    # Convert from univariate 'timSeries':
-    if (is.timeSeries(x)) x = as.vector(x)
+    # Check Type:
+    if (class(x) == "zoo") {
+        x = as.timeSeries(x)
+    }
+    if (class(x) == "timeSeries") {
+        if (dim(x)[2] > 1) stop("x must be an univariate time series")
+        x = as.vector(x)
+    }
     
     # Convert x to a vector, if the input is a data.frame.
     if(is.data.frame(x)) x = x[, 1] 
@@ -366,7 +394,6 @@ function (x, u = quantile(x, 0.05), doplot = TRUE, labels = TRUE, ...)
     
     # Plot
     if (doplot) {
-        plottype = plottype[1]
         if (labels) {
             xlab = "Threshold: u"
             ylab = "Mean Excess: e"
@@ -406,8 +433,14 @@ doplot = TRUE, plottype = c("autoscale", ""), labels = TRUE, ...)
     
     # FUNCTION:
     
-    # Convert from univariate 'timSeries':
-    if (is.timeSeries(x)) x = as.vector(x)
+    # Check Type:
+    if (class(x) == "zoo") {
+        x = as.timeSeries(x)
+    }
+    if (class(x) == "timeSeries") {
+        if (dim(x)[2] > 1) stop("x must be an univariate time series")
+        x = as.vector(x)
+    }
     
     # Settings:
     plottype = plottype[1]
@@ -477,8 +510,14 @@ function(x, doplot = TRUE, labels = TRUE, ...)
     
     # FUNCTION:
     
-    # Convert from univariate 'timSeries':
-    if (is.timeSeries(x)) x = as.vector(x)
+    # Check Type:
+    if (class(x) == "zoo") {
+        x = as.timeSeries(x)
+    }
+    if (class(x) == "timeSeries") {
+        if (dim(x)[2] > 1) stop("x must be an univariate time series")
+        x = as.vector(x)
+    }
     
     # Settings:
     omit = 0
@@ -551,8 +590,14 @@ function(x, conf = 0.95, doplot = TRUE, labels = TRUE, ...)
 
     # FUNCTION:
     
-    # Convert from univariate 'timSeries':
-    if (is.timeSeries(x)) x = as.vector(x)
+    # Check Type:
+    if (class(x) == "zoo") {
+        x = as.timeSeries(x)
+    }
+    if (class(x) == "timeSeries") {
+        if (dim(x)[2] > 1) stop("x must be an univariate time series")
+        x = as.vector(x)
+    }
     
     # Settings:
     conf.level = conf
@@ -624,11 +669,14 @@ labels = TRUE,  ...)
     
     # FUNCTION:
     
-    # Convert from univariate 'timSeries':
-    if (is.timeSeries(x)) x = as.vector(x)
-    
-    # Convert x to a vector, if the input is a data.frame.
-    if(is.data.frame(x)) x = x[, 1] 
+    # Check Type:
+    if (class(x) == "zoo") {
+        x = as.timeSeries(x)
+    }
+    if (class(x) == "timeSeries") {
+        if (dim(x)[2] > 1) stop("x must be an univariate time series")
+        x = as.vector(x)
+    }
     
     # Plot type:
     plottype = plottype[1]
@@ -705,8 +753,14 @@ labels = TRUE, ...)
     
     # FUNCTION:
     
-    # Convert from univariate 'timSeries':
-    if (is.timeSeries(x)) x = as.vector(x)
+    # Check Type:
+    if (class(x) == "zoo") {
+        x = as.timeSeries(x)
+    }
+    if (class(x) == "timeSeries") {
+        if (dim(x)[2] > 1) stop("x must be an univariate time series")
+        x = as.vector(x)
+    }
     
     # Settings:
     plottype = plottype[1]
@@ -764,7 +818,7 @@ labels = TRUE, ...)
 
 
 sllnPlot =  
-function(x, doplot = TRUE, ...)
+function(x, doplot = TRUE, labels = TRUE, ...)
 {   # A function written by Diethelm Wuertz
 
     # Description:
@@ -778,16 +832,33 @@ function(x, doplot = TRUE, ...)
     
     # FUNCTION:
     
-    # Verify SLLN:
-    x = as.vector(x)
-    if (is.null(mean)) mean=mean(cumsum(x)/(1:length(x)))
+    # Check Type:
+    if (class(x) == "zoo") {
+        x = as.timeSeries(x)
+    }
+    if (class(x) == "timeSeries") {
+        if (dim(x)[2] > 1) stop("x must be an univariate time series")
+        x = as.vector(x)
+    }
+    
+    # SLLN:
+    if (is.null(mean)) mean = mean(cumsum(x)/(1:length(x)))
     nx  =  length(x)
     
     # Plot:
     y  = cumsum(x)/(1:nx)
     mean = mean(x)
     if (doplot) {
-        plot(y, xlab = "n", ylab = "x", type = "l", main = "SLLN", 
+        if (labels) {
+            xlab = "n"
+            ylab = "x"
+            main = "SLLN" 
+        } else {
+            xlab = ""
+            ylab = ""
+            main = "" 
+        }             
+        plot(y, xlab = xlab, ylab = ylab, type = "l", main = main, 
             col = "steelblue", ...)
         lines(c(0, nx), c(mean, mean), col = "brown")
         grid()
@@ -802,7 +873,7 @@ function(x, doplot = TRUE, ...)
 
 
 lilPlot =  
-function (x, doplot = TRUE, ...)
+function (x, doplot = TRUE, labels = TRUE, ...)
 {   # A function written by Diethelm Wuertz
 
     # Description:
@@ -816,20 +887,37 @@ function (x, doplot = TRUE, ...)
     
     # FUNCTION:
     
-    # Verify LIL:
-    x = as.vector(x)
+    # Check Type:
+    if (class(x) == "zoo") {
+        x = as.timeSeries(x)
+    }
+    if (class(x) == "timeSeries") {
+        if (dim(x)[2] > 1) stop("x must be an univariate time series")
+        x = as.vector(x)
+    }
+    
+    # LIL:
     lx = length(x)
-    nx = 1:lx
+    nx = 3:lx
     fact = sqrt(2*nx*log(log(nx)))
     mu = mean(x)  
     sdev = sqrt(var(x))
-    y = (cumsum(x)-mu*nx)/(fact*sdev)
+    y = (cumsum(x)[-(1:2)]-mu*nx)/(fact*sdev)
     
     # Plot:
     if (doplot) {
+        if (labels) {
+            xlab = "n"
+            ylab = "x"
+            main = "LIL" 
+        } else {
+            xlab = ""
+            ylab = ""
+            main = "" 
+        }        
         plot(x = nx, y = y, xlab = "n", ylab = "x", 
             ylim = range(y[!is.na(y)], -1, 1), type = "l", 
-            main = "LIL", col = "steelblue", ...)
+            main = main, col = "steelblue", ...)
         lines(c(0,lx), c(1,1), col = "brown")
         lines(c(0,lx), c(-1,-1), col = "brown")
         grid()
@@ -844,7 +932,7 @@ function (x, doplot = TRUE, ...)
 
 
 xacfPlot = 
-function(x, threshold = 0.95, lag.max = 15, doplot = TRUE, ...)
+function(x, threshold = 0.95, lag.max = 15, doplot = TRUE, labels = TRUE...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -853,22 +941,28 @@ function(x, threshold = 0.95, lag.max = 15, doplot = TRUE, ...)
     
     # FUNCTION:
     
-    # Convert from univariate 'timSeries':
-    if (is.timeSeries(x)) x = as.vector(x)
+    # Check Type:
+    if (class(x) == "zoo") {
+        x = as.timeSeries(x)
+    }
+    if (class(x) == "timeSeries") {
+        if (dim(x)[2] > 1) stop("x must be an univariate time series")
+        x = as.vector(x)
+    }
     
     # Settings:
-    # Sorry, user specified labels not yet implemented.
-    labels = TRUE
     if (labels) {
         xlab = c("Index", "Lag")
         ylab = c("Heights", "Distances", "ACF")
         main = c("Heights over Threshold", "Distances between Heights", 
             "Series Heights", "Series Distances") 
-    }
-            
-    # Convert x to a vector, if the input is a data.frame.
-    if (is.data.frame(x)) x = x[,1] 
-    # Heights/Distances
+    } else {
+        xlab = c("", "")
+        ylab = c("", "", "")
+        main = c("", "", "", "")
+    } 
+    
+    # Heights/Distances:
     threshold = sort(x)[round(threshold*length(x))]
     Heights = (x-threshold)[(x-threshold)>0]
     Distances = diff((1:length(x))[(x-threshold)>0])
@@ -878,7 +972,8 @@ function(x, threshold = 0.95, lag.max = 15, doplot = TRUE, ...)
         plot (Heights, type="h", xlab = xlab[1], ylab = ylab[1], 
             main = main[1], ...)
         plot (Distances,type="h", xlab = xlab[1], ylab = ylab[2], 
-            main = main[2], ...) }
+            main = main[2], ...) 
+    }
     
     # Correlations:
     Heights = as.vector(acf(Heights, lag.max=lag.max, plot = doplot, 
@@ -897,7 +992,8 @@ function(x, threshold = 0.95, lag.max = 15, doplot = TRUE, ...)
 
 ################################################################################
 # PLOT UTILITIES:
-        
+       
+ 
 interactivePlot = 
 function(x, choices = paste("Plot", 1:9), 
 plotFUN = paste("plot.", 1:9, sep = ""), which = "all", ...)
@@ -1050,10 +1146,21 @@ function (x, block = c("monthly", "quarterly"), doplot = FALSE)
     #   Compute block maxima from a time series or numeric vector
     
     # Example:
-    #   x = -as.timeSeries(data(bmwRet))
-    #   .blockMaxima(x, 200)
+    #   data(bmwRet)
+    #   blockMaxima(bmwRet, 200)
+    
+    #   data(bmwRet); x = bmwRet[5100:5280, ]; x;  block = "monthly"
 
     # FUNCTION:
+    
+    # Check Type:
+    if (class(x) == "zoo") {
+        x = as.timeSeries(x)
+    }
+    if (class(x) == "timeSeries") {
+        if (dim(x)[2] > 1) stop("x must be an univariate time series")
+        x = as.vector(x)
+    }
     
     # Maxima:
     block = block[1]
@@ -1075,10 +1182,8 @@ function (x, block = c("monthly", "quarterly"), doplot = FALSE)
         toIndex = applySeries(x, from, to, FUN = length)@Data
         maxPosition = rownames(x@Data)[cumsum(toIndex)-toIndex+maxIndex-1]
         # Add Attributes: Update rownames, colnames and recordIDs
-        maxValue@positions = rownames(maxValue@Data) = 
-            as.character(maxPosition)  
-        maxValue@units = colnames(maxValue@Data) = 
-            paste("max.", x@units, sep = "")  
+        rownames(maxValue) <- as.character(maxPosition)  
+        colnames(maxValue) <- paste("max.", x@units, sep = "")  
         maxValue@recordIDs = data.frame(
             from = as.character(from), 
             to = as.character(to) )
@@ -1124,8 +1229,14 @@ function(x, n = floor(0.05*length(as.vector(x))))
 
     # FUNCTION:
     
-    # Settings:
-    x = as.vector(x)
+    # Check Type:
+    if (class(x) == "zoo") {
+        x = as.timeSeries(x)
+    }
+    if (class(x) == "timeSeries") {
+        if (dim(x)[2] > 1) stop("x must be an univariate time series")
+        x = as.vector(x)
+    }
     
     # Continue:
     x = rev(sort(x))

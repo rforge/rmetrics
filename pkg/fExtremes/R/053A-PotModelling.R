@@ -36,9 +36,6 @@
 #   plot.fPOT                Print Method for object of class "fPOT"
 #   summary.fPOT             Summary Method for object of class "fPOT"
 ################################################################################
-#
-################################################################################
-
 
 
 potSim = 
@@ -133,7 +130,8 @@ setClass("fPOT",
 
 potFit = 
 function(x, u = quantile(x, 0.95), run = NULL, title = NULL, description = NULL)
-{
+{   # A function implemented by Diethelm Wuertz
+
     # FUNCTION:
     
     # Save Call:
@@ -328,7 +326,7 @@ function(x, which = "all", ...)
             main = "Point Process of Exceedances", ...) 
     }
     plot.2 <<- function(x, ...) {
-	    gaps = as.numeric(diff(seriesPositions(x@data$x)))/(24*3600)
+        gaps = as.numeric(diff(seriesPositions(x@data$x)))/(24*3600)
         plot(gaps, col = "steelblue", pch = 19,
             ylab = "Gaps", xlab = "Ordering", 
             main = "Scatterplot of Gaps", ...)
@@ -347,7 +345,7 @@ function(x, which = "all", ...)
             main = "ACF of Gaps", ...) 
     }
     plot.5 <<- function(x, ...) {
-	    residuals = x@fit$residuals
+        residuals = x@fit$residuals
         plot(residuals, col = "steelblue", pch = 19, 
             ylab = "Residuals", xlab = "Ordering", 
             main = "Scatterplot of Residuals", ...)
@@ -355,7 +353,7 @@ function(x, which = "all", ...)
         grid()
     }
     plot.6 <<- function (x, ...) {
-	    residuals = x@fit$residuals
+        residuals = x@fit$residuals
         .qplot.evir(residuals, col = "steelblue", pch = 19, 
             main = "QQ-Plot of Residuals", ...) 
     }
@@ -366,7 +364,7 @@ function(x, which = "all", ...)
     }
     plot.8 <<- function (x, ...) { 
         if (which == "ask") {
-	        fit = x@fit
+            fit = x@fit
             plot.fGPD(fit)
             plot.fPOT(x, which = "ask") } 
     }

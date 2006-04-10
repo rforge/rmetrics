@@ -558,8 +558,15 @@ description = NULL, ...)
     
     # FUNCTION:
     
-    # Transform:
-    x = as.vector(x)
+    # Check Type:
+    data = list(x = x)
+    if (class(x) == "zoo") {
+        x = as.timeSeries(x)
+    }
+    if (class(x) == "timeSeries") {
+        if (dim(x)[2] > 1) stop("x must be an univariate time series")
+        x = as.vector(x)
+    }
     
     # Settings:
     call = match.call()
@@ -626,12 +633,14 @@ description = NULL, ...)
         if (fit$type[1] == "gev") title = "GEV Parameter Estimation"
         if (fit$type[1] == "gum") title = "Gumbel Parameter Estimation"
     }
-    if (is.null(description)) description = as.character(date())
+    if (is.null(description)) {
+        description = as.character(date())
+    }
     
     # Return Value:
     new("fGEV",
         call = match.call(),
-        data = list(x = x),
+        data = data,
         method = fit$type,
         fit = fit,
         title = title,
@@ -1052,6 +1061,10 @@ function(object, k.blocks = 20, add = FALSE, ...)
     # Description:
     #   Calculates Return Levels Based on GEV Fit
     
+    # Arguments:
+    #   object - an object of class "fGEVFIT" as returned by the 
+    #       function gevFit().
+    
     # Examples:
     #   ans = gevFit(gevSim(), type = "mle", gumbel = FALSE)
     #   ans = gevrlevelPlot(ans); ans@fit$rlevel
@@ -1164,9 +1177,20 @@ reverse = FALSE, doplot = TRUE, labels = TRUE, ...)
     #   hillPlot(gevSim(n=1000), "alpha", doplot = FALSE)
     #   hillPlot(gevSim(n=1000), "xi", doplot = FALSE)
     
+    # Check Type:
+    if (class(x) == "zoo") {
+        x = as.timeSeries(x)
+    }
+    if (class(x) == "timeSeries") {
+        if (dim(x)[2] > 1) stop("x must be an univariate time series")
+        x = as.vector(x)
+    }
+    
     # Settings:
     option = match.arg(option)
-    data = as.vector(x)
+    data = x
+    
+    # MDA:
     ordered = rev(sort(data))
     ordered = ordered[ordered > 0]
     n = length(ordered)
@@ -1185,7 +1209,6 @@ reverse = FALSE, doplot = TRUE, labels = TRUE, ...)
     yrange <- range(u, l)
     if (reverse) index = -x else index = x
 
-    
     # Plot:
     if (doplot) {
         plot(index, y, ylim = yrange, type = "l", xlab = "", ylab = "",
