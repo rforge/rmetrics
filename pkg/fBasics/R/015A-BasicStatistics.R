@@ -290,7 +290,7 @@ function(x, ci = 0.95, column = 1)
         if (!is.numeric(x)) stop("The selected column is not numeric")
     }
     if (class(x) == "timeSeries") {
-        x = x@Data[, colum]
+        x = x@Data[, column]
         warning("Column ", column, " of timeSeries used")
     }
     x = as.vector(x)  
