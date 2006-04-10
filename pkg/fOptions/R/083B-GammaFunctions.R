@@ -234,7 +234,7 @@ function(x, n)
     #   Computes Pochhammer's Symbol
     
     # Arguments:
-    #   z - a complex numeric value or vector.
+    #   x - a complex numeric value or vector.
     #   n - an integer n >=0. An notation used in the theory of special 
     #       functions for the rising factorial, also known as the rising 
     #       factorial power (Graham et al. 1994). 
@@ -257,7 +257,8 @@ function(x, n)
     }
     
     # For Real Arguments:
-    if (is.real(z)) {
+    # DW: 2006-05-10 is.real(z) replaced by is.real(x)
+    if (is.real(x)) {
         Pochhammer = gamma(x + n)/gamma(x) 
     }
         
