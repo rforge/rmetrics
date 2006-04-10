@@ -36,6 +36,10 @@
 # var
 # var.default
 # data
+# "rownames<-"
+# "rownames<-.default"
+# "colnames<-"
+# "colnames<-.default"
 ################################################################################
 
 
@@ -47,7 +51,7 @@
 
 sort = 
 function(x, partial = NULL, na.last = NA, decreasing = FALSE, 
-method = c("shell", "quick"), index.return = FALSE) 
+method = c("shell", "quick"), index.return = FALSE)
 {
     UseMethod("sort")
 }
@@ -154,7 +158,7 @@ function(x, base = exp(1))
 
 
 var = 
-function (x, y = NULL, na.rm = FALSE, use) 
+function(x, y = NULL, na.rm = FALSE, use) 
 {
     UseMethod("var")
 }
@@ -164,7 +168,7 @@ function (x, y = NULL, na.rm = FALSE, use)
 
 
 var.default =
-function (x, y = NULL, na.rm = FALSE, use) 
+function(x, y = NULL, na.rm = FALSE, use) 
 {
     if (missing(use)) 
         use <- if (na.rm) "complete.obs" else "all.obs"
@@ -334,8 +338,10 @@ verbose = getOption("verbose"), envir = .GlobalEnv)
         # then do it ... 
         tS = as.character(!is.character(try(as.timeSeries(
             eval(parse(text = paste("x = ", name)))), silent = TRUE)))  
-        if (as.logical(tS)) x = as.timeSeries(name)
-        eval(parse(text = paste(name, "<<- x")))
+        if (as.logical(tS)) {
+            x = as.timeSeries(name)
+            eval(parse(text = paste(name, "<<- x")))
+        }
     }
     # DW
     invisible(names)
@@ -345,3 +351,63 @@ verbose = getOption("verbose"), envir = .GlobalEnv)
 ################################################################################
 
 
+"rownames<-" = 
+function(x, value)
+{
+    UseMethod("rownames<-")
+}
+
+
+# ------------------------------------------------------------------------------
+    
+
+"rownames<-.default" =
+function(x, value)
+{
+    dn <- dimnames(x)
+    if(is.null(dn)) {
+        if(is.null(value)) return(x)
+        if((nd <- length(dim(x))) < 1)
+            stop("attempt to set rownames on object with no dimensions")
+        dn <- vector("list", nd)
+    }
+    if(length(dn) < 1)
+        stop("attempt to set rownames on object with no dimensions")
+    if(is.null(value)) dn[1] <- list(NULL) else dn[[1]] <- value
+    dimnames(x) <- dn
+    x
+}
+
+
+################################################################################
+
+
+"colnames<-" = 
+function(x, value)
+{
+    UseMethod("colnames<-")
+}
+
+
+# ------------------------------------------------------------------------------
+    
+
+"colnames<-.default" =
+function(x, value)
+{
+    dn <- dimnames(x)
+    if(is.null(dn)) {
+        if(is.null(value)) return(x)
+        if((nd <- length(dim(x))) < 2) stop(
+            "attempt to set colnames on object with less than two dimensions")
+        dn <- vector("list", nd)
+    }
+    if(length(dn) < 2) stop(
+        "attempt to set colnames on object with less than two dimensions")
+    if(is.null(value)) dn[2] <- list(NULL) else dn[[2]] <- value
+    dimnames(x) <- dn
+    x
+}
+
+
+################################################################################
