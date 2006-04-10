@@ -310,6 +310,14 @@ function(x, dimnames = TRUE, format = "")
         return(ans)
     }
     
+    # For zoo objects:
+    if (class(x) == "zoo") {
+        ans = timeSeries(as.matrix(x), attr(x, "index"), 
+            units = colnames(x), FinCenter = "GMT", 
+            zone = "GMT", format = format) 
+        return(ans)
+    }
+               
     # Time Series Decoration: 
     if (dimnames) {
         colNames = colnames(x)[-1]
@@ -1960,7 +1968,25 @@ function(x, value)
 "rownames<-.timeSeries" =
 function(x, value)
 {
-    stop("It is not allowed to change row names of timeSeries objects")
+    X = x@Data
+    dn <- dimnames(X)
+    if(is.null(dn)) {
+        if(is.null(value)) return(x)
+        if((nd <- length(dim(X))) < 2) stop(
+            "attempt to set colnames on object with less than two dimensions")
+        dn <- vector("list", nd)
+    }
+    if(length(dn) < 2) stop(
+        "attempt to set colnames on object with less than two dimensions")
+    if(is.null(value)) dn[1] <- list(NULL) else dn[[1]] <- value
+    dimnames(X) <- dn 
+    
+    # DW addded for timeSeries objects 
+    x@Data = X
+    x@positions = rownames(X)
+       
+    # Return Value: 
+    x
 }
 
 
