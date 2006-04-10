@@ -67,10 +67,14 @@ method = c("bds", "tnn", "wnn"), ...)
     # Load Library:
     # require(tseries)
     
-    # Transform:
-    if (class(x) == "its") x = as.vector(x@.Data[, 1])
-    if (class(x) == "timeSeries") x = seriesData(x)
-    x = as.vector(x)
+    # Check Type:
+    if (class(x) == "zoo") {
+        x = as.timeSeries(x)
+    }
+    if (class(x) == "timeSeries") {
+        if (dim(x)[2] > 1) stop("x must be an univariate time series")
+        x = as.vector(x)
+    }
     
     # Settings:
     method = method[1] 
@@ -112,9 +116,14 @@ function(x, m = 3, eps = NULL, title = NULL, description = NULL)
     DNAME = deparse(substitute(x))
     test$data.name = DNAME   
     
-    # Transform:
-    if (class(x) == "timeSeries") x = seriesData(x)
-    x = as.vector(x)
+    # Check Type:
+    if (class(x) == "zoo") {
+        x = as.timeSeries(x)
+    }
+    if (class(x) == "timeSeries") {
+        if (dim(x)[2] > 1) stop("x must be an univariate time series")
+        x = as.vector(x)
+    }
     
     # Test:
     if (is.null(eps)) eps = seq(0.5*sd(x), 2*sd(x), length = 4)
@@ -200,9 +209,14 @@ title = NULL, description = NULL)
     DNAME = deparse(substitute(x))
     test$data.name = DNAME   
     
-    # Transform:
-    if (class(x) == "timeSeries") x = seriesData(x)
-    x = as.vector(x)
+    # Check Type:
+    if (class(x) == "zoo") {
+        x = as.timeSeries(x)
+    }
+    if (class(x) == "timeSeries") {
+        if (dim(x)[2] > 1) stop("x must be an univariate time series")
+        x = as.vector(x)
+    }
          
     # Test - This part comes from A. Trapletti's Code:
     if (lag < 1) stop("minimum lag is 1")
@@ -286,9 +300,14 @@ function(x, lag = 1, title = NULL, description = NULL)
     DNAME = deparse(substitute(x))
     test$data.name = DNAME   
     
-    # Transform:
-    if (class(x) == "timeSeries") x = seriesData(x)
-    x = as.vector(x)
+    # Check Type:
+    if (class(x) == "zoo") {
+        x = as.timeSeries(x)
+    }
+    if (class(x) == "timeSeries") {
+        if (dim(x)[2] > 1) stop("x must be an univariate time series")
+        x = as.vector(x)
+    }
     
     # Test - This part comes from A. Trapletti's Code:
     if (lag < 1) stop("minimum lag is 1")
