@@ -99,7 +99,7 @@ gevFit(x, type = c("mle", "pwm"), gumbel = FALSE, title = NULL, description = NU
 \method{summary}{fGEV}(object, doplot = TRUE, which = "all", \dots)
 gevrlevelPlot(object, k.blocks = 20, add = FALSE, \dots)
 
-hillPlot(x, option = c("alpha", "xi", "quantile"), start = 15,
+hillPlot(x, option = c("alpha", "xi"), start = 15,
     end = NA, reverse = FALSE, p = NA, ci = 0.95, autoscale = TRUE, 
     labels = TRUE, \dots) 
 shaparmPlot(x, revert = FALSE, standardize = FALSE, tails = 0.01*(1:10), 
