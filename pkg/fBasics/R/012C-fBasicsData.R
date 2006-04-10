@@ -29,6 +29,6 @@
 
 ################################################################################
 # FUNCTION:             DESCRIPTION:
-#  fbasicsDataSets       Are located in the fBasics/data directory
+#  fBasicsDataSets       Are located in the fBasics/data directory
 ################################################################################
 

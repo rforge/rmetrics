@@ -9,7 +9,7 @@
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
 # GNU Library General Public License for more details.
 #
-# You should have received a copy of the GNU Library General 
+# You should have received A copy of the GNU Library General 
 # Public License along with this library; if not, write to the 
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
 # MA  02111-1307  USA
@@ -28,18 +28,18 @@
 
 
 ################################################################################
-# FUNCTION:
-# sort
+# FUNCTION:                    DESCRIPTION
+# sort                          sort has become a generic function
 # sort.default
-# log
+# log                           log has become a generic function
 # log.default
-# var
+# var                           var has become a generic function
 # var.default
-# data
-# "rownames<-"
+# "rownames<-"                  rownames<- has become a generic function
 # "rownames<-.default"
-# "colnames<-"
+# "colnames<-"                  colnames<- has become a generic function
 # "colnames<-.default"
+# data                          data can handle timeSeries objects
 ################################################################################
 
 
@@ -63,8 +63,9 @@ method = c("shell", "quick"), index.return = FALSE)
 sort.default =
 function (x, partial = NULL, na.last = NA, decreasing = FALSE, 
 method = c("shell", "quick"), index.return = FALSE) 
-{   # A Copy of the sort() function from R's base package
+{   # A copy of the sort() function from R's base package
     
+    # Sort:
     if (isfact <- is.factor(x)) {
         if (index.return) 
             stop("'index.return' only for non-factors")
@@ -129,6 +130,8 @@ method = c("shell", "quick"), index.return = FALSE)
         y <- (if (isord) 
             ordered
         else factor)(y, levels = seq(len = nlev), labels = lev)
+        
+    # Return Value:
     y
 }
 
@@ -148,8 +151,9 @@ function(x, base = exp(1))
 
 log.default =
 function(x, base = exp(1))
-{   # A Copy of the log() function from R's base package
+{   # A copy of the log() function from R's base package
 
+    # Log:
     if (missing(base)) .Internal(log(x)) else .Internal(log(x, base))
 }
 
@@ -169,7 +173,9 @@ function(x, y = NULL, na.rm = FALSE, use)
 
 var.default =
 function(x, y = NULL, na.rm = FALSE, use) 
-{
+{   # A copy of the var() function from R's base package
+
+    # var:
     if (missing(use)) 
         use <- if (na.rm) "complete.obs" else "all.obs"
     na.method <- 
@@ -187,10 +193,80 @@ function(x, y = NULL, na.rm = FALSE, use)
 ################################################################################
 
 
+
+
+"rownames<-" = 
+function(x, value)
+{
+    UseMethod("rownames<-")
+}
+
+
+# ------------------------------------------------------------------------------
+    
+
+"rownames<-.default" =
+function(x, value)
+{   # A modfied copy from R's base package
+
+    # rownames<-:
+    dn <- dimnames(x)
+    if(is.null(dn)) {
+        if(is.null(value)) return(x)
+        if((nd <- length(dim(x))) < 1)
+            stop("attempt to set rownames on object with no dimensions")
+        dn <- vector("list", nd)
+    }
+    if(length(dn) < 1)
+        stop("attempt to set rownames on object with no dimensions")
+    if(is.null(value)) dn[1] <- list(NULL) else dn[[1]] <- value
+    dimnames(x) <- dn
+    x
+}
+
+
+################################################################################
+
+
+"colnames<-" = 
+function(x, value)
+{
+    UseMethod("colnames<-")
+}
+
+
+# ------------------------------------------------------------------------------
+    
+
+"colnames<-.default" =
+function(x, value)
+{   # A modfied copy from R's base package
+
+    # colnames<-:
+    dn <- dimnames(x)
+    if(is.null(dn)) {
+        if(is.null(value)) return(x)
+        if((nd <- length(dim(x))) < 2) stop(
+            "attempt to set colnames on object with less than two dimensions")
+        dn <- vector("list", nd)
+    }
+    if(length(dn) < 2) stop(
+        "attempt to set colnames on object with less than two dimensions")
+    if(is.null(value)) dn[2] <- list(NULL) else dn[[2]] <- value
+    dimnames(x) <- dn
+    x
+}
+
+
+################################################################################
+
+
 data = 
 function(..., list = character(0), package = NULL, lib.loc = NULL,
 verbose = getOption("verbose"), envir = .GlobalEnv)
-{
+{   # An extended copy of the var() function from R's base package
+
+    # data:
     fileExt = function(x) sub(".*\\.", "", x)
     names = c(as.character(substitute(list(...))[-1]), list)
     ## Find the directories of the given packages and maybe the working
@@ -350,64 +426,3 @@ verbose = getOption("verbose"), envir = .GlobalEnv)
 
 ################################################################################
 
-
-"rownames<-" = 
-function(x, value)
-{
-    UseMethod("rownames<-")
-}
-
-
-# ------------------------------------------------------------------------------
-    
-
-"rownames<-.default" =
-function(x, value)
-{
-    dn <- dimnames(x)
-    if(is.null(dn)) {
-        if(is.null(value)) return(x)
-        if((nd <- length(dim(x))) < 1)
-            stop("attempt to set rownames on object with no dimensions")
-        dn <- vector("list", nd)
-    }
-    if(length(dn) < 1)
-        stop("attempt to set rownames on object with no dimensions")
-    if(is.null(value)) dn[1] <- list(NULL) else dn[[1]] <- value
-    dimnames(x) <- dn
-    x
-}
-
-
-################################################################################
-
-
-"colnames<-" = 
-function(x, value)
-{
-    UseMethod("colnames<-")
-}
-
-
-# ------------------------------------------------------------------------------
-    
-
-"colnames<-.default" =
-function(x, value)
-{
-    dn <- dimnames(x)
-    if(is.null(dn)) {
-        if(is.null(value)) return(x)
-        if((nd <- length(dim(x))) < 2) stop(
-            "attempt to set colnames on object with less than two dimensions")
-        dn <- vector("list", nd)
-    }
-    if(length(dn) < 2) stop(
-        "attempt to set colnames on object with less than two dimensions")
-    if(is.null(value)) dn[2] <- list(NULL) else dn[[2]] <- value
-    dimnames(x) <- dn
-    x
-}
-
-
-################################################################################
