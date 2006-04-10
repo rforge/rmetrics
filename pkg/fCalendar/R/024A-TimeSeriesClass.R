@@ -1928,9 +1928,112 @@ grid.nx = 7, grid.lty = "solid", ...)
 
    
 ################################################################################
+# NOT YET DOCUMENTED:
 
 
-.var.timeSeries =
+"colnames<-.timeSeries" =
+function(x, value)
+{
+    X = x@Data
+    dn <- dimnames(X)
+    if(is.null(dn)) {
+        if(is.null(value)) return(x)
+        if((nd <- length(dim(X))) < 2) stop(
+            "attempt to set colnames on object with less than two dimensions")
+        dn <- vector("list", nd)
+    }
+    if(length(dn) < 2) stop(
+        "attempt to set colnames on object with less than two dimensions")
+    if(is.null(value)) dn[2] <- list(NULL) else dn[[2]] <- value
+    dimnames(X) <- dn   
+    
+    # DW addded for timeSeries objects 
+    x@Data = X
+    x@units = colnames(X)
+    x
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+"rownames<-.timeSeries" =
+function(x, value)
+{
+    stop("It is not allowed to change row names of timeSeries objects")
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+dim.timeSeries =
+function(x)
+{
+    # This allows that ncol and nrow work properly
+    # Note: dim is .Primitive("dim")
+    dim(x@Data)
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+dimnames.timeSeries =
+function(x)
+{
+    # This allows that colnames and rownames work properly
+    # Note: dimnames is .Primitive("dimnames")
+    dimnames(x@Data)
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+is.array.timeSeries = 
+function(x)
+{
+    # This allows that NCOL and NROW work properly
+    # Note: is.array is .Primitive("is.array")
+    TRUE
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+scale.timeSeries =
+function(x, center = TRUE, scale = TRUE)
+{
+    x@Data = scale(x = x, center = center, scale = scale)
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+summary.timeSeries =
+function(object, ...)
+{
+    summary(as.matrix(object), ...)
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+t.timeSeries =
+function(x)
+{
+    t(x@Data)
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+var.timeSeries =
 function (x, y = NULL, na.rm = FALSE, use) 
 {
     if (missing(use)) 
