@@ -53,6 +53,17 @@
 \alias{ohlcDailyPlot}
 
 
+\alias{colnames<-.timeSeries}
+\alias{rownames<-.timeSeries}
+\alias{dim.timeSeries}
+\alias{dimnames.timeSeries}
+\alias{is.array.timeSeries}
+\alias{scale.timeSeries}
+\alias{summary.timeSeries}
+\alias{t.timeSeries}
+\alias{var.timeSeries}
+
+
 \title{timeSeries Class and Methods}
 
 
@@ -175,6 +186,17 @@ alignDailySeries(x, method = c("before", "after", "interp", "fillNA"),
 ohlcDailyPlot(x, volume = TRUE, colOrder = c(1:5), units = 1e6, 
     xlab = c("Date", "Date"), ylab = c("Price", "Volume"), 
     main = c("O-H-L-C", "Volume"), grid.nx = 7, grid.lty = "solid", \dots) 
+  
+colnames<-.timeSeries(x) <- value
+rownames<-.timeSeries(x) <- value
+
+\method{dim}{timeSeries}(x)
+\method{dimnames}{timeSeries}(x)
+\method{is.array}{timeSeries}(x)
+\method{scale}{timeSeries}(x, center = TRUE, scale = TRUE)
+\method{summary}{timeSeries}(object, \dots)
+\method{t}{timeSeries}(x)
+\method{var}{timeSeries}(x, y = NULL, na.rm = FALSE, use)
 }
 
 
@@ -195,6 +217,11 @@ ohlcDailyPlot(x, volume = TRUE, colOrder = c(1:5), units = 1e6,
         }
     \item{charvec}{
         a character vector of dates and times.
+        }
+    \item{center, scale}{ 
+        [scale] - \cr
+        either a logical value or a numeric vector of length equal to
+        the number of columns of \code{x}.
         }
     \item{column}{
         specifies a column from a multivariate 'timeSeries' object.
@@ -299,6 +326,11 @@ ohlcDailyPlot(x, volume = TRUE, colOrder = c(1:5), units = 1e6,
         position, or \code{"linear"}, interpolate linearly between 
         \code{"before"} and \code{"after"}. 
         }
+    \item{na.rm}{
+        [var] - \cr
+        a logical flag. Should missing values be removed?
+        By default \code{FALSE}.
+        }
     \item{mode}{
         [as.vector] - \cr
         A character string giving an atomic mode, or \code{"any"}.
@@ -308,7 +340,7 @@ ohlcDailyPlot(x, volume = TRUE, colOrder = c(1:5), units = 1e6,
         both arguments are currently not used.
         }       
     \item{object}{
-        [is][seriesData][seriesPositions] -    
+        [is][seriesData][seriesPositions][summary] -    
         an object of class \code{timeSeries}.
         }
     \item{pad}{
@@ -374,6 +406,21 @@ ohlcDailyPlot(x, volume = TRUE, colOrder = c(1:5), units = 1e6,
         be referenced on the plot labels. By default 1e6, i.e. in units
         of 1 Million.
         }
+    \item{use}{
+        [var] - \cr
+        an optional character string giving a method for computing
+        covariances in the presence of missing values. This must 
+        be (an abbreviation of) one of the strings \code{"all.obs"},
+        \code{"complete.obs"} or \code{"pairwise.complete.obs"}.
+        }
+    \item{value}{
+        [colnames<-][rownames<-] - \cr
+        a valid value for column names component of \code{dimnames(x)}. 
+        For a \code{"timeSeries"} object this is either \code{NULL} or a 
+        character vector of length the column dimension. Not, row names
+        cannot be assigne for a \code{"timeSeries"} object, the function
+        \code{rownames()} will stop and return an error message.
+        }
     \item{volume}{
         [ohlcDailyPlot] - \cr
         a logigical value. Should a volume plot added to the OHLC Plot.
@@ -393,7 +440,7 @@ ohlcDailyPlot(x, volume = TRUE, colOrder = c(1:5), units = 1e6,
         volume plot.
         }
     \item{y}{
-        [mergeSeries] - \cr   
+        [mergeSeries][var] - \cr   
         a \code{matrix} type object to be merged with an object of
         class \code{timeSeries}. Must have the same number of rows.
         }
