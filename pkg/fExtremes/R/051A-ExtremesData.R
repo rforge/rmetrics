@@ -859,7 +859,7 @@ function (x, doplot = TRUE, labels = TRUE, ...)
 
 
 xacfPlot = 
-function(x, threshold = 0.95, lag.max = 15, doplot = TRUE, labels = TRUE...)
+function(x, threshold = 0.95, lag.max = 15, doplot = TRUE, labels = TRUE, ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
