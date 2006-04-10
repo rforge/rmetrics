@@ -82,7 +82,7 @@ qqbayesPlot(x, doplot = TRUE, labels = TRUE, \dots)
 qPlot(x, xi = 0, trim = NULL, threshold = NULL, doplot = TRUE, labels = TRUE, \dots)
 
 mePlot(x, doplot = TRUE, labels = TRUE, \dots)
-mrlPlot(x, ci = 0.95, umin = NA, umax = NA, nint = 100, doplot = TRUE, 
+mrlPlot(x, ci = 0.95, umin = min(x), umax = max(x), nint = 100, doplot = TRUE, 
      plottype = c("autoscale", ""), labels = TRUE, \dots)  
 mxfPlot(x, u = quantile(x, 0.05), doplot = TRUE, labels = TRUE, \dots)  
    
