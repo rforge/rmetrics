@@ -8,6 +8,12 @@
 \alias{read.timeSeries}
 
 \alias{as.timeSeries}
+\alias{as.timeSeries.default}
+\alias{as.timeSeries.character}
+\alias{as.timeSeries.matrix}
+\alias{as.timeSeries.data.frame} 
+\alias{as.timeSeries.zoo} 
+
 \alias{is.timeSeries}
 \alias{print.timeSeries}
 \alias{plot.timeSeries}
@@ -25,8 +31,10 @@
 \alias{isMultivariate}
 \alias{start.timeSeries}
 \alias{end.timeSeries}
+
 \alias{as.vector.timeSeries}
 \alias{as.matrix.timeSeries}
+
 \alias{as.data.frame.timeSeries}
 \alias{as.ts.timeSeries}
 
@@ -62,6 +70,11 @@
 \alias{summary.timeSeries}
 \alias{t.timeSeries}
 \alias{var.timeSeries}
+
+
+\alias{as.vector.zoo}
+\alias{as.matrix.zoo}
+\alias{quantile.zoo}
 
 
 \title{timeSeries Class and Methods}
@@ -134,19 +147,22 @@ timeSeries(data, charvec, units = NULL, format = "ISO", zone = "GMT",
 read.timeSeries(file, zone = "GMT", FinCenter = "", title = "", 
     documentation = "", sep = ";")
     
-as.timeSeries(x, dimnames = TRUE, format = "")
+\method{as.timeSeries}{character}(x, \dots)
+\method{as.timeSeries}{matrix}(x, \dots)
+\method{as.timeSeries}{data.frame}(x, \dots)
+\method{as.timeSeries}{zoo}(x, \dots)
 is.timeSeries(object) 
 
-\method{print}{timeSeries}(x, ...)
-\method{plot}{timeSeries}(x, reference.grid = TRUE, lty = 1, ...) 
-\method{lines}{timeSeries}(x, ...)
-\method{points}{timeSeries}(x, ...)
+\method{print}{timeSeries}(x, \dots)
+\method{plot}{timeSeries}(x, reference.grid = TRUE, lty = 1, \dots) 
+\method{lines}{timeSeries}(x, \dots)
+\method{points}{timeSeries}(x, \dots)
 \method{Ops}{timeSeries}(e1, e2)
 \method{[}{timeSeries}(x, i = min(1, nrow(x@Data)):nrow(x@Data), 
     j = min(1, ncol(x@Data)):ncol(x@Data))
 \method{head}{timeSeries}(x, \dots)
 \method{tail}{timeSeries}(x, \dots)
-\method{quantile}{timeSeries}(x, probs = 0.95, column = 1, \dots)
+\method{quantile}{timeSeries}(x, probs = 0.95, \dots)
 
 seriesData(object)
 seriesPositions(object)
@@ -197,6 +213,10 @@ rownames<-.timeSeries(x) <- value
 \method{summary}{timeSeries}(object, \dots)
 \method{t}{timeSeries}(x)
 \method{var}{timeSeries}(x, y = NULL, na.rm = FALSE, use)
+
+\method{as.vector}{zoo}(x, mode = "any")
+\method{as.matrix}{zoo}(x)
+\method{quantile}{zoo}(x, probs = 0.95, \dots)
 }
 
 
