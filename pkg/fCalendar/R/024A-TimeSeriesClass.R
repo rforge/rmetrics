@@ -268,81 +268,94 @@ documentation = "", sep = ";")
 
 
 as.timeSeries =
-function(x, dimnames = TRUE, format = "") 
+function(x, ...)
 {   # A function implemented by Diethelm Wuertz
 
-    # Description:
-    #   Creates a dummy time Series object from a matrix
-    
-    # Arguments:
-    #   x - a 'matrix' object to be converted.
-    #   dimnames - a logical, if TRUE the dimension names of the
-    #       matrix are assigned to the time series object
-    #   format - a character string with the format in POSIX 
-    #       notation to be passed to the time series object
-    
-    # Value:
-    #   Returns a S4 object of class 'timeSeries'.
-    
-    # FUNCTION:
-    
-    # Is it a command like "as.timeSeries(data(nyse))" ?
-    if (is.character(x)) {
-        DATA = eval(x)
-        DATA.FRAME = eval(parse(text = DATA))
-        if (!is.data.frame(DATA.FRAME)) 
-            stop(paste(DATA, "is not a valid data frame")) 
-        # Try to find out the format:
-        # DW 2006-02-14
-        if (format == "") {
-            Format = as.character(DATA.FRAME[1,1])
-            if (nchar(Format) == 8) format = "%Y%m%d"
-            if (nchar(Format) == 10) format = "%Y-%m-%d"
-            if (nchar(Format) == 12) format = "%Y%m%d%H%M"
-            if (nchar(Format) == 16) format = "%Y-%m-%d %H:%M"
-            if (format == "") stop("Could not identify format type") 
-        }   
-        data = as.matrix(DATA.FRAME[, -1])   
-        charvec = as.character(DATA.FRAME[, 1])                            
-        ans = timeSeries(data = data, charvec = charvec, 
-            units = colnames(DATA.FRAME)[-1], FinCenter = "GMT", 
-            zone = "GMT", format = format)      
-        return(ans)
-    }
-    
-    # For zoo objects:
-    if (class(x) == "zoo") {
-        ans = timeSeries(as.matrix(x), attr(x, "index"), 
-            units = colnames(x), FinCenter = "GMT", 
-            zone = "GMT", format = format) 
-        return(ans)
-    }
-               
-    # Time Series Decoration: 
-    if (dimnames) {
-        colNames = colnames(x)[-1]
-        rowNames = as.vector(x[, 1])
-        data = as.matrix(x[, -1])
-        # DW: 2005-02-15
-        data = apply(data, 2, as.numeric)
-        ###
-    } else {
-        data = as.matrix(x)
-        rows = dim(data)[1]
-        cols = dim(data)[2]
-        colNames = as.character(1:cols)
-        rowNames = as.character(1:rows) 
-    }
-    
-    # Names:
-    colnames(data) = colNames
-    rownames(data) = rowNames 
-        
-    # Return Value:
-    timeSeries(data = data, charvec = as.character(rowNames), 
-        units = colNames, format = format, zone = myFinCenter)
+    UseMethod("as.timeSeries")
 }
-   
+
+
+# ------------------------------------------------------------------------------
+
+
+as.timeSeries.default =
+function(x, ...)
+{   # A function implemented by Diethelm Wuertz
+
+    x
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+as.timeSeries.character =
+function(x, ...)
+{   # A function implemented by Diethelm Wuertz
+
+    # Example:
+    #   as.timeSeries(data(nyse))
+    
+    x = eval(parse(text = eval(x)))
+    as.timeSeries(x)
+}
+
+
+
+# ------------------------------------------------------------------------------
+
+
+as.timeSeries.data.frame =
+function(x, ...)
+{   # A function implemented by Diethelm Wuertz
+
+    format = ""
+    Format = as.character(x[1, 1])
+    if (nchar(Format) ==  8) {
+        format = "%Y%m%d"
+    }
+    if (nchar(Format) == 10 & substr(Forma, 5,5) == "-") {
+        format = "%Y-%m-%d"
+    }
+    if (nchar(Format) == 12) {
+        format = "%Y%m%d%H%M"
+    }
+    if (nchar(Format) == 16 & substr(Forma, 5,5) == "-") {
+        format = "%Y-%m-%d %H:%M"
+    }
+    if (format == "") stop("Could not identify format type") 
+                              
+    timeSeries(data = as.matrix(x[, -1]), charvec = as.character(x[, 1]), 
+        units = colnames(x)[-1], format = format, zone = "GMT", 
+        FinCenter = "GMT")      
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+as.timeSeries.matrix =
+function(x, ...)
+{   # A function implemented by Diethelm Wuertz
+
+    x = as.data.frame(x)
+    as.timeSeries(x)
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+as.timeSeries.zoo =
+function(x, ...)
+{   # A function implemented by Diethelm Wuertz
+
+    timeSeries(data = as.matrix(x), charvec = attr(x, "index"), 
+        units = colnames(x), , format = format, , zone = "GMT",
+        FinCenter = "GMT")
+
+}
+
 
 # ------------------------------------------------------------------------------
 
@@ -1019,7 +1032,7 @@ function(x, ...)
 
 
 quantile.timeSeries = 
-function(x, probs = 0.95, column = 1, ...)
+function(x, probs = 0.95, ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Arguments:
@@ -1034,7 +1047,8 @@ function(x, probs = 0.95, column = 1, ...)
     # FUNCTION:
     
     # Take the appropriate column:
-    x = as.vector(x[, column])
+    if (dim(x)[[2]] > 1) stop("x must be an univariate time series")
+    x = as.vector(x[, 1])
 
     # Compute Quantiles:
     ans = quantile(x, probs, ...)
@@ -2078,3 +2092,104 @@ function (x, y = NULL, na.rm = FALSE, use)
 
 ################################################################################
 
+
+as.vector.zoo =
+function(x, mode = "any") 
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Converts a univariate "zoo" series to a vector
+
+    # Arguments:
+    #   x - a 'zoo' object
+    
+    # Example:
+    #   require(tseries); as.vector(get.hist.quote("IBM", quote = "Close"))
+    
+    # Value:
+    #   Returns the data of an 'zoo' object as a named vector.
+        
+    # FUNCTION:
+        
+    # Check:
+    if (class(x) != "zoo") 
+        stop("x is not a timeSeries object!")
+    if (dim(x)[[2]] != 1) 
+        stop("x is not an univariate zoo object!")
+        
+    # Convert:
+    Names = as.character(attr(x, "index"))
+    x = unclass(x)[,1]
+    names(x) = Names
+    attr(x, "index") = NULL
+    
+    # Return Value:
+    x 
+}
+    
+
+# ------------------------------------------------------------------------------
+
+
+as.matrix.zoo =
+function(x) 
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Converts a multivariate "timeSeries" to a matrix
+
+    # Arguments:
+    #   x - a 'timeSeries' object
+    
+    # Value:
+    #   Returns the data of an 'zoo' object as a named matrix.
+    
+    # Example:
+    #   require(tseries); as.matrix(get.hist.quote("IBM"))
+    
+    # FUNCTION:
+    
+    # Check:
+    if (class(x) != "zoo") 
+        stop("x is not a timeSeries object!")
+    if (dim(x)[[2]] <= 1) 
+        stop("x is not a multivariate zoo object!")
+        
+    # Convert:
+    Names = as.character(attr(x, "index"))
+    x = unclass(x)
+    rownames(x) = Names
+    attr(x, "index") = NULL
+        
+    # Return Value:
+    x 
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+quantile.zoo = 
+function(x, probs = 0.95, ...)
+{   # A function implemented by Diethelm Wuertz
+
+    # Arguments:
+    #   x - an object of class 'timeSeries'. The quantiles will be 
+    #       computed for the selected column.
+    #   probs - a numeric value or numeric vector with probabilities.
+    #   column - the selected column    
+    
+    # Examples:
+    #   quantile(as.timeSeries(data(daxRet)))
+    
+    # FUNCTION:
+    
+    # Convert to timeSeries:
+    ans = quantile(as.timeSeries(x), ...)
+       
+    # Return Value:
+    ans
+}
+   
+
+################################################################################ 
