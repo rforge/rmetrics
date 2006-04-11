@@ -67,14 +67,8 @@ function(x, method = c("ks", "sw", "jb", "da"))
     
     # FUNCTION:
     
-    # Check Type:
-    if (class(x) == "zoo") {
-        x = as.timeSeries(x)
-    }
-    if (class(x) == "timeSeries") {
-        if (dim(x)[2] > 1) stop("x must be an univariate time series")
-        x = as.vector(x)
-    }
+    # Convert Type:
+    x = as.vector(x)
     
     # Test:
     if (method[1] == "ks") {
@@ -116,14 +110,8 @@ function(x, title = NULL, description = NULL)
     
     # FUNCTION:
     
-    # Check Type:
-    if (class(x) == "zoo") {
-        x = as.timeSeries(x)
-    }
-    if (class(x) == "timeSeries") {
-        if (dim(x)[2] > 1) stop("x must be an univariate time series")
-        x = as.vector(x)
-    }
+    # Convert Type:
+    x = as.vector(x)
     
     # Call:
     call = match.call()
@@ -223,14 +211,8 @@ function(x, title = NULL, description = NULL)
     
     # FUNCTION:
 
-    # Check Type:
-    if (class(x) == "zoo") {
-        x = as.timeSeries(x)
-    }
-    if (class(x) == "timeSeries") {
-        if (dim(x)[2] > 1) stop("x must be an univariate time series")
-        x = as.vector(x)
-    }
+    # Convert Type:
+    x = as.vector(x)
     
     # Call:
     call = match.call()
@@ -278,14 +260,8 @@ function(x, title = NULL, description = NULL)
     # Data Set Name:
     DNAME = deparse(substitute(x))
         
-    # Check Type:
-    if (class(x) == "zoo") {
-        x = as.timeSeries(x)
-    }
-    if (class(x) == "timeSeries") {
-        if (dim(x)[2] > 1) stop("x must be an univariate time series")
-        x = as.vector(x)
-    }
+    # Convert Type:
+    x = as.vector(x)
     
     # Call:
     call = match.call()
@@ -497,14 +473,8 @@ function(x, title = NULL, description = NULL)
     # Data Set Name:
     DNAME = deparse(substitute(x))
     
-    # Check Type:
-    if (class(x) == "zoo") {
-        x = as.timeSeries(x)
-    }
-    if (class(x) == "timeSeries") {
-        if (dim(x)[2] > 1) stop("x must be an univariate time series")
-        x = as.vector(x)
-    }
+    # Convert Type:
+    x = as.vector(x)
     
     # Call:
     call = match.call()
@@ -574,14 +544,8 @@ function (x, title = NULL, description = NULL)
     # Data Set Name:
     DNAME = deparse(substitute(x))
     
-    # Check Type:
-    if (class(x) == "zoo") {
-        x = as.timeSeries(x)
-    }
-    if (class(x) == "timeSeries") {
-        if (dim(x)[2] > 1) stop("x must be an univariate time series")
-        x = as.vector(x)
-    }
+    # Convert Type:
+    x = as.vector(x)
     
     # Call:
     call = match.call()
@@ -669,14 +633,8 @@ function(x, title = NULL, description = NULL)
     # Data Set Name:
     DNAME = deparse(substitute(x))
     
-    # Check Type:
-    if (class(x) == "zoo") {
-        x = as.timeSeries(x)
-    }
-    if (class(x) == "timeSeries") {
-        if (dim(x)[2] > 1) stop("x must be an univariate time series")
-        x = as.vector(x)
-    }
+    # Convert Type:
+    x = as.vector(x)
     
     # Call:
     call = match.call()
@@ -759,14 +717,8 @@ function(x, title = NULL, description = NULL)
     # Data Set Name:
     DNAME = deparse(substitute(x))
     
-    # Check Type:
-    if (class(x) == "zoo") {
-        x = as.timeSeries(x)
-    }
-    if (class(x) == "timeSeries") {
-        if (dim(x)[2] > 1) stop("x must be an univariate time series")
-        x = as.vector(x)
-    }
+    # Convert Type:
+    x = as.vector(x)
     
     # Call:
     call = match.call()
@@ -869,14 +821,8 @@ function (x, title = NULL, description = NULL)
     # Data Set Name:
     DNAME = deparse(substitute(x))
     
-    # Check Type:
-    if (class(x) == "zoo") {
-        x = as.timeSeries(x)
-    }
-    if (class(x) == "timeSeries") {
-        if (dim(x)[2] > 1) stop("x must be an univariate time series")
-        x = as.vector(x)
-    }
+    # Convert Type:
+    x = as.vector(x)
     
     # Call:
     call = match.call()
@@ -956,14 +902,8 @@ function(x, title = NULL, description = NULL)
     # Data Set Name:
     DNAME = deparse(substitute(x))
     
-    # Check Type:
-    if (class(x) == "zoo") {
-        x = as.timeSeries(x)
-    }
-    if (class(x) == "timeSeries") {
-        if (dim(x)[2] > 1) stop("x must be an univariate time series")
-        x = as.vector(x)
-    }
+    # Convert Type:
+    x = as.vector(x)
     
     # Call:
     call = match.call()
@@ -1024,14 +964,8 @@ function(x)
     
     # FUNCTION:
     
-    # Check Type:
-    if (class(x) == "zoo") {
-        x = as.timeSeries(x)
-    }
-    if (class(x) == "timeSeries") {
-        if (dim(x)[2] > 1) stop("x must be an univariate time series")
-        x = as.vector(x)
-    }
+    # Convert Type:
+    x = as.vector(x)
     
     # runs.test() copied from A. Traplettis tseries package
     runs.test = 
@@ -1112,14 +1046,8 @@ function(x, doprint = TRUE)
     
     # FUNCTION:
     
-    # Check Type:
-    if (class(x) == "zoo") {
-        x = as.timeSeries(x)
-    }
-    if (class(x) == "timeSeries") {
-        if (dim(x)[2] > 1) stop("x must be an univariate time series")
-        x = as.vector(x)
-    }
+    # Convert Type:
+    x = as.vector(x)
     
     # Settings:
     lp1 = length(x)+1
@@ -1189,12 +1117,12 @@ function(type = c("LM", "ALM"), size = c("all", "small"))
     
     # FUNCTION:
     
-    # Create Table:
+    # Select Table:
     if (type[1] == "LM") {
-        data(jbLM) 
+        data(jbLM)
         table = jbLM
     } else if (type[1] == "ALM") {
-        data(jbALM) 
+        data(jbALM)
         table = jbALM
     }
     
@@ -1365,14 +1293,8 @@ function(x, title = NULL, description = NULL)
     # Call:
     call = match.call()
     
-    # Check Type:
-    if (class(x) == "zoo") {
-        x = as.timeSeries(x)
-    }
-    if (class(x) == "timeSeries") {
-        if (dim(x)[2] > 1) stop("x must be an univariate time series")
-        x = as.vector(x)
-    }
+    # Convert Type:
+    x = as.vector(x)
     
     # Test:
     test = .jb.test(x)

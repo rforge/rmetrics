@@ -83,21 +83,9 @@ function(x, y, title = NULL, description = NULL)
     DNAME = paste(deparse(substitute(x)), "and", deparse(substitute(y)))
     test$data.name = DNAME
     
-    # Check Type:
-    if (class(x) == "zoo") {
-        x = as.timeSeries(x)
-    }
-    if (class(x) == "timeSeries") {
-        if (dim(x)[2] > 1) stop("x must be an univariate time series")
-        x = as.vector(x)
-    }
-    if (class(y) == "zoo") {
-        y = as.timeSeries(y)
-    }
-    if (class(y) == "timeSeries") {
-        if (dim(y)[2] > 1) stop("y must be an univariate time series")
-        y = as.vector(y)
-    }
+    # Convert Type:
+    x = as.vector(x)
+    y = as.vector(y)
     
     # Compute Test:
     if (!exists("ks.test")) {
@@ -209,21 +197,9 @@ function(x, y, title = NULL, description = NULL)
     DNAME = paste(deparse(substitute(x)), "and", deparse(substitute(y)))
     test$data.name = DNAME
     
-    # Check Type:
-    if (class(x) == "zoo") {
-        x = as.timeSeries(x)
-    }
-    if (class(x) == "timeSeries") {
-        if (dim(x)[2] > 1) stop("x must be an univariate time series")
-        x = as.vector(x)
-    }
-    if (class(y) == "zoo") {
-        y = as.timeSeries(y)
-    }
-    if (class(y) == "timeSeries") {
-        if (dim(y)[2] > 1) stop("y must be an univariate time series")
-        y = as.vector(y)
-    }
+    # Convert Type:
+    x = as.vector(x)
+    y = as.vector(y)
     
     # Asymptotic Test:
     two.sided = t.test(x = x, y = y, alternative = "two.sided",
@@ -346,21 +322,9 @@ function(x, y, title = NULL, description = NULL)
     DNAME = paste(deparse(substitute(x)), "and", deparse(substitute(y)))
     test$data.name = DNAME
    
-    # Check Type:
-    if (class(x) == "zoo") {
-        x = as.timeSeries(x)
-    }
-    if (class(x) == "timeSeries") {
-        if (dim(x)[2] > 1) stop("x must be an univariate time series")
-        x = as.vector(x)
-    }
-    if (class(y) == "zoo") {
-        y = as.timeSeries(y)
-    }
-    if (class(y) == "timeSeries") {
-        if (dim(y)[2] > 1) stop("y must be an univariate time series")
-        y = as.vector(y)
-    }
+    # Convert Type:
+    x = as.vector(x)
+    y = as.vector(y)
     
     # Sample Estimates:
     ESTIMATE = c(mean(x), mean(y), var(x), var(y))
@@ -476,21 +440,9 @@ function(x, y, title = NULL, description = NULL)
     DNAME = paste(deparse(substitute(x)), "and", deparse(substitute(y)))
     test$data.name = DNAME
     
-    # Check Type:
-    if (class(x) == "zoo") {
-        x = as.timeSeries(x)
-    }
-    if (class(x) == "timeSeries") {
-        if (dim(x)[2] > 1) stop("x must be an univariate time series")
-        x = as.vector(x)
-    }
-    if (class(y) == "zoo") {
-        y = as.timeSeries(y)
-    }
-    if (class(y) == "timeSeries") {
-        if (dim(y)[2] > 1) stop("y must be an univariate time series")
-        y = as.vector(y)
-    }
+    # Convert Type:
+    x = as.vector(x)
+    y = as.vector(y)
     
     # Estimate - Hypothesized Equal Variance:
     ratio = 1
@@ -585,21 +537,9 @@ function(x, y, title = NULL, description = NULL)
     DNAME = paste(deparse(substitute(x)), "and", deparse(substitute(y)))
     test$data.name = DNAME
     
-    # Check Type:
-    if (class(x) == "zoo") {
-        x = as.timeSeries(x)
-    }
-    if (class(x) == "timeSeries") {
-        if (dim(x)[2] > 1) stop("x must be an univariate time series")
-        x = as.vector(x)
-    }
-    if (class(y) == "zoo") {
-        y = as.timeSeries(y)
-    }
-    if (class(y) == "timeSeries") {
-        if (dim(y)[2] > 1) stop("y must be an univariate time series")
-        y = as.vector(y)
-    }
+    # Convert Type:
+    x = as.vector(x)
+    y = as.vector(y)
     
     # Settings:
     x = list(x = x, y = y)
@@ -662,21 +602,9 @@ function(x, y, title = NULL, description = NULL)
     DNAME = paste(deparse(substitute(x)), "and", deparse(substitute(y)))
     test$data.name = DNAME
     
-    # Check Type:
-    if (class(x) == "zoo") {
-        x = as.timeSeries(x)
-    }
-    if (class(x) == "timeSeries") {
-        if (dim(x)[2] > 1) stop("x must be an univariate time series")
-        x = as.vector(x)
-    }
-    if (class(y) == "zoo") {
-        y = as.timeSeries(y)
-    }
-    if (class(y) == "timeSeries") {
-        if (dim(y)[2] > 1) stop("y must be an univariate time series")
-        y = as.vector(y)
-    }
+    # Convert Type:
+    x = as.vector(x)
+    y = as.vector(y)
     
     # Settings:
     x = list(x = x, y = y)
@@ -771,21 +699,9 @@ function(x, y, title = NULL, description = NULL)
     DNAME = paste(deparse(substitute(x)), "and", deparse(substitute(y)))
     test$data.name = DNAME
      
-    # Check Type:
-    if (class(x) == "zoo") {
-        x = as.timeSeries(x)
-    }
-    if (class(x) == "timeSeries") {
-        if (dim(x)[2] > 1) stop("x must be an univariate time series")
-        x = as.vector(x)
-    }
-    if (class(y) == "zoo") {
-        y = as.timeSeries(y)
-    }
-    if (class(y) == "timeSeries") {
-        if (dim(y)[2] > 1) stop("y must be an univariate time series")
-        y = as.vector(y)
-    }
+    # Convert Type:
+    x = as.vector(x)
+    y = as.vector(y)
     
     # Test:
     two.sided = .ansariTest(x = x, y = y, alternative = "two.sided",
@@ -1302,21 +1218,9 @@ function(x, y, title = NULL, description = NULL)
     DNAME = paste(deparse(substitute(x)), "and", deparse(substitute(y)))
     test$data.name = DNAME
     
-    # Check Type:
-    if (class(x) == "zoo") {
-        x = as.timeSeries(x)
-    }
-    if (class(x) == "timeSeries") {
-        if (dim(x)[2] > 1) stop("x must be an univariate time series")
-        x = as.vector(x)
-    }
-    if (class(y) == "zoo") {
-        y = as.timeSeries(y)
-    }
-    if (class(y) == "timeSeries") {
-        if (dim(y)[2] > 1) stop("y must be an univariate time series")
-        y = as.vector(y)
-    }
+    # Convert Type:
+    x = as.vector(x)
+    y = as.vector(y)
 
     # Check Data:
     m = length(x)
@@ -1420,21 +1324,9 @@ function(x, y, title = NULL, description = NULL)
     DNAME = paste(deparse(substitute(x)), "and", deparse(substitute(y)))
     test$data.name = DNAME
     
-    # Check Type:
-    if (class(x) == "zoo") {
-        x = as.timeSeries(x)
-    }
-    if (class(x) == "timeSeries") {
-        if (dim(x)[2] > 1) stop("x must be an univariate time series")
-        x = as.vector(x)
-    }
-    if (class(y) == "zoo") {
-        y = as.timeSeries(y)
-    }
-    if (class(y) == "timeSeries") {
-        if (dim(y)[2] > 1) stop("y must be an univariate time series")
-        y = as.vector(y)
-    }
+    # Convert Type:
+    x = as.vector(x)
+    y = as.vector(y)
     
     # Test:
     two.sided = cor.test(x = x, y = y, alternative = "two.sided",  
@@ -1528,21 +1420,9 @@ function(x, y, title = NULL, description = NULL)
     DNAME = paste(deparse(substitute(x)), "and", deparse(substitute(y)))
     test$data.name = DNAME
     
-    # Check Type:
-    if (class(x) == "zoo") {
-        x = as.timeSeries(x)
-    }
-    if (class(x) == "timeSeries") {
-        if (dim(x)[2] > 1) stop("x must be an univariate time series")
-        x = as.vector(x)
-    }
-    if (class(y) == "zoo") {
-        y = as.timeSeries(y)
-    }
-    if (class(y) == "timeSeries") {
-        if (dim(y)[2] > 1) stop("y must be an univariate time series")
-        y = as.vector(y)
-    }
+    # Convert Type:
+    x = as.vector(x)
+    y = as.vector(y)
     
     # Test:
     two.sided = cor.test(x = x, y = y, alternative = "two.sided",  
@@ -1664,21 +1544,9 @@ function(x, y, title = NULL, description = NULL)
     DNAME = paste(deparse(substitute(x)), "and", deparse(substitute(y)))
     test$data.name = DNAME
     
-    # Check Type:
-    if (class(x) == "zoo") {
-        x = as.timeSeries(x)
-    }
-    if (class(x) == "timeSeries") {
-        if (dim(x)[2] > 1) stop("x must be an univariate time series")
-        x = as.vector(x)
-    }
-    if (class(y) == "zoo") {
-        y = as.timeSeries(y)
-    }
-    if (class(y) == "timeSeries") {
-        if (dim(y)[2] > 1) stop("y must be an univariate time series")
-        y = as.vector(y)
-    }
+    # Convert Type:
+    x = as.vector(x)
+    y = as.vector(y)
     
     # Test:
     two.sided = cor.test(x = x, y = y, alternative = "two.sided",  

@@ -51,14 +51,8 @@ function(x, ...)
     
     # FUNCTION:
     
-    # Check Type:
-    if (class(x) == "zoo") {
-        x = as.timeSeries(x)
-    }
-    if (class(x) == "timeSeries") {
-        if (dim(x)[2] > 1) stop("x must be an univariate time series")
-        x = as.vector(x)
-    }
+    # Convert Type:
+    x = as.vector(x)
     
     # Result:
     ans = acf(x = x, ...)
@@ -81,14 +75,8 @@ function(x, ...)
     
     # FUNCTION:
     
-    # Check Type:
-    if (class(x) == "zoo") {
-        x = as.timeSeries(x)
-    }
-    if (class(x) == "timeSeries") {
-        if (dim(x)[2] > 1) stop("x must be an univariate time series")
-        x = as.vector(x)
-    }
+    # Convert Type:
+    x = as.vector(x)
     
     # For S-Plus compatibility:
     if (exists("pacf")) {
@@ -115,21 +103,9 @@ type = c("correlation", "covariance", "partial"), ...)
     
     # FUNCTION:
     
-    # Check Type:
-    if (class(x) == "zoo") {
-        x = as.timeSeries(x)
-    }
-    if (class(x) == "timeSeries") {
-        if (dim(x)[2] > 1) stop("x must be an univariate time series")
-        x = as.vector(x)
-    }
-    if (class(y) == "zoo") {
-        y = as.timeSeries(y)
-    }
-    if (class(y) == "timeSeries") {
-        if (dim(y)[2] > 1) stop("y must be an univariate time series")
-        y = as.vector(y)
-    }
+    # Convert Type:
+    x = as.vector(x)
+    y = as.vector(y)
     
     # Result:
     # A copy from R's ccf - So you can use it also under SPlus:
@@ -161,14 +137,8 @@ ymax = NA, standardize = TRUE)
 
     # FUNCTION:
     
-    # Check Type:
-    if (class(x) == "zoo") {
-        x = as.timeSeries(x)
-    }
-    if (class(x) == "timeSeries") {
-        if (dim(x)[2] > 1) stop("x must be an univariate time series")
-        x = as.vector(x)
-    }
+    # Convert Type:
+    x = as.vector(x)
     
     # Standardize:
     if(standardize) x = (x-mean(x))/sqrt(var(x))
@@ -210,14 +180,8 @@ ci = 0.95, main = "ACF", doprint = TRUE)
 
     # FUNCTION:
     
-    # Check Type:
-    if (class(x) == "zoo") {
-        x = as.timeSeries(x)
-    }
-    if (class(x) == "timeSeries") {
-        if (dim(x)[2] > 1) stop("x must be an univariate time series")
-        x = as.vector(x)
-    }
+    # Convert Type:
+    x = as.vector(x)
     
     # Transform:
     x.ret = x
@@ -289,14 +253,8 @@ function(x, n = 12, lag.max = 20)
     
     # FUNCTION:
     
-    # Check Type:
-    if (class(x) == "zoo") {
-        x = as.timeSeries(x)
-    }
-    if (class(x) == "timeSeries") {
-        if (dim(x)[2] > 1) stop("x must be an univariate time series")
-        x = as.vector(x)
-    }
+    # Convert Type:
+    x = as.vector(x)
     
     # Truncate to multiple of n:
     N = trunc(length(x)/n)
@@ -466,14 +424,8 @@ function(x, n = 50, doplot = TRUE, type = c("lin-log", "log-log"), ...)
     
     # FUNCTION:
     
-    # Check Type:
-    if (class(x) == "zoo") {
-        x = as.timeSeries(x)
-    }
-    if (class(x) == "timeSeries") {
-        if (dim(x)[2] > 1) stop("x must be an univariate time series")
-        x = as.vector(x)
-    }
+    # Convert Type:
+    x = as.vector(x)
     
     # Settings:
     # if (SPLUSLIKE) splusLikePlot(TRUE)
@@ -511,14 +463,8 @@ function(x, span = 5, col = "steelblue4", main = "Normal Q-Q Plot", ...)
     # Settings:
     # if (SPLUSLIKE) splusLikePlot(TRUE)
     
-    # Check Type:
-    if (class(x) == "zoo") {
-        x = as.timeSeries(x)
-    }
-    if (class(x) == "timeSeries") {
-        if (dim(x)[2] > 1) stop("x must be an univariate time series")
-        x = as.vector(x)
-    }
+    # Convert Type:
+    x = as.vector(x)
     
     # Standardized qqnorm():
     y = (x-mean(x)) / sqrt(var(x))
@@ -551,14 +497,8 @@ function(x, span = ceiling(log(length(x)/252)/log(2)), doplot = TRUE, ...)
 
     # FUNCTION: 
     
-    # Check Type:
-    if (class(x) == "zoo") {
-        x = as.timeSeries(x)
-    }
-    if (class(x) == "timeSeries") {
-        if (dim(x)[2] > 1) stop("x must be an univariate time series")
-        x = as.vector(x)
-    }
+    # Convert Type:
+    x = as.vector(x)
     
     # Settings:
     # if (SPLUSLIKE) splusLikePlot(TRUE)
