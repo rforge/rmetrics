@@ -2,7 +2,7 @@
 
 \alias{MskedObjects}
 
-\alias{data}
+\alias{datax}
             
 
 \title{Masked Objects}
@@ -18,7 +18,7 @@
 
 
 \usage{
-data(\dots, list = character(0), package = NULL, lib.loc = NULL,
+datax(\dots, list = character(0), package = NULL, lib.loc = NULL,
     verbose = getOption("verbose"), envir = .GlobalEnv)
 }
 

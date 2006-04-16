@@ -160,8 +160,8 @@ is.timeSeries(object)
 \method{Ops}{timeSeries}(e1, e2)
 \method{[}{timeSeries}(x, i = min(1, nrow(x@Data)):nrow(x@Data), 
     j = min(1, ncol(x@Data)):ncol(x@Data))
-\method{head}{timeSeries}(x, \dots)
-\method{tail}{timeSeries}(x, \dots)
+\method{head}{timeSeries}(x, n = 6, \dots)
+\method{tail}{timeSeries}(x, n = 6, \dots)
 \method{quantile}{timeSeries}(x, probs = 0.95, \dots)
 
 seriesData(object)
@@ -345,6 +345,11 @@ rownames<-.timeSeries(x) <- value
         data from the row whose position is just after the unmatched 
         position, or \code{"linear"}, interpolate linearly between 
         \code{"before"} and \code{"after"}. 
+        }
+    \item{n}{
+        [head][tail] - \cr
+        an integer specifying the number of lines to be returned. 
+        By default \code{n=6}.
         }
     \item{na.rm}{
         [var] - \cr
