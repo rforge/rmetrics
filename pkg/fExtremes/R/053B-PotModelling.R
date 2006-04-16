@@ -30,11 +30,11 @@
 ################################################################################
 # FUNCTION:                POT MODELLING FROM EVIS:
 #  potSim                   Peaks over a threshold from arbitrary series
-#  fPOT                     S4 Class Representation
+#  fPOTFIT                  S4 Class Representation
 #  potFit                   Fits with POT method
-#   print.fPOT               Print Method for object of class "fPOT"
-#   plot.fPOT                Print Method for object of class "fPOT"
-#   summary.fPOT             Summary Method for object of class "fPOT"
+#   print.fPOTFIT            Print Method for object of class "fPOT"
+#   plot.fPOTFIT             Print Method for object of class "fPOT"
+#   summary.fPOTFIT          Summary Method for object of class "fPOT"
 ################################################################################
 
 
@@ -59,61 +59,7 @@ function(x, u = quantile(x, 0.95), run = NULL, column = 1)
 # ------------------------------------------------------------------------------
 
 
-.old.potSim = 
-function(x, threshold, nextremes = NA, run = NA)
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Generates from an arbitray rvs sequence a series with
-    #   the peaks over a threshold
-    
-    # Settings:
-    data = x
-    n = length(as.numeric(data))
-    times = attributes(data)$times
-    if (is.null(times)) {
-        times = 1:n
-        attributes(data)$times = times
-        start = 1
-        end = n
-        span = end - start
-    } else {
-        start = times[1]
-        end = times[n]
-        span = as.numeric(difftime(as.POSIXlt(times)[n], as.POSIXlt(times)[1], 
-            units = "days"))
-    }
-            
-    if (is.na(nextremes) && is.na(threshold)) 
-        stop("Enter either a threshold or the number of upper extremes")
-    if (!is.na(nextremes) && !is.na(threshold)) 
-        stop("Enter EITHER a threshold or the number of upper extremes")
-    if (!is.na(nextremes)) 
-        threshold = findthresh(as.numeric(data), nextremes)
-    if (threshold > 10) {
-        factor = 10^(floor(log10(threshold)))
-        cat(paste("If singularity problems occur divide data", 
-            "by a factor, perhaps", factor, "\n")) }
-            
-    exceedances.its = structure(data[data > threshold], times = times[data > 
-        threshold])
-    n.exceed = length(as.numeric(exceedances.its))
-    p.less.thresh = 1 - n.exceed/n
-    if (!is.na(run)) {
-        exceedances.its = decluster(exceedances.its, run, picture)
-        n.exceed = length(exceedances.its) }
-    intensity = n.exceed/span
-    exceedances = as.numeric(exceedances.its)
-    
-    # Return Value:
-    exceedances
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-setClass("fPOT", 
+setClass("fPOTFIT", 
     representation(
         call = "call",
         data = "list",
@@ -129,7 +75,8 @@ setClass("fPOT",
 
 
 potFit = 
-function(x, u = quantile(x, 0.95), run = NULL, title = NULL, description = NULL)
+function(x, u = quantile(x, 0.95), run = NULL, title = NULL, 
+description = NULL)
 {   # A function implemented by Diethelm Wuertz
 
     # FUNCTION:
@@ -186,7 +133,7 @@ function(x, u = quantile(x, 0.95), run = NULL, title = NULL, description = NULL)
     if (is.null(description)) description = as.character(date())
     
     # Return Value:
-    new("fPOT",
+    new("fPOTFIT",
         call = match.call(),
         data = list(x = X),
         method = fit$type,
@@ -259,7 +206,7 @@ description = NULL, ...)
     if (is.null(description)) description = as.character(date())
     
     # Return Value:
-    new("fPOT",
+    new("fPOTFIT",
         call = match.call(),
         data = list(x = x),
         method = fit$type,
@@ -272,12 +219,12 @@ description = NULL, ...)
 # ------------------------------------------------------------------------------
 
 
-print.fPOT =
+print.fPOTFIT =
 function(x, ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Print Method for object of class "fPOT"
+    #   Print Method for object of class "fPOTFIT"
     
     # FUNCTION:
     
@@ -310,12 +257,12 @@ function(x, ...)
 # ------------------------------------------------------------------------------
 
 
-plot.fPOT =
+plot.fPOTFIT =
 function(x, which = "all", ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Plot method for objects of class "fPOT".
+    #   Plot method for objects of class "fPOTFIT".
 
     # FUNCTION:
     
@@ -366,7 +313,7 @@ function(x, which = "all", ...)
         if (which == "ask") {
             fit = x@fit
             plot.fGPD(fit)
-            plot.fPOT(x, which = "ask") } 
+            plot.fPOTFIT(x, which = "ask") } 
     }
 
     # Plot:
@@ -400,12 +347,12 @@ function(x, which = "all", ...)
 # ------------------------------------------------------------------------------
 
 
-summary.fPOT =
+summary.fPOTFIT =
 function(object, doplot = TRUE, which = "all", ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Summary Method for object of class "fPOT"
+    #   Summary Method for object of class "fPOTFIT"
     
     # FUNCTION:
     

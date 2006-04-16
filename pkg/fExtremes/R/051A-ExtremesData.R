@@ -535,7 +535,7 @@ function(x, doplot = TRUE, labels = TRUE, ...)
 
 
 recordsPlot = 
-function(x, conf = 0.95, doplot = TRUE, labels = TRUE, ...)
+function(x, ci = 0.95, doplot = TRUE, labels = TRUE, ...)
 {   # A function implemented by Diethelm Wuertz
     
     # Description:
@@ -551,7 +551,7 @@ function(x, conf = 0.95, doplot = TRUE, labels = TRUE, ...)
     x = as.vector(x)
     
     # Settings:
-    conf.level = conf
+    conf.level = ci
     
     # Convert x to a vector, if the input is a data.frame.
     if (is.data.frame(x)) x = x[,1] 
@@ -590,7 +590,7 @@ function(x, conf = 0.95, doplot = TRUE, labels = TRUE, ...)
         lines(trial, lower, lty = 2, col = "brown") 
         if (labels) {
             grid()
-            text = paste("ci =", as.character(round(conf, 3))) 
+            text = paste("ci =", as.character(round(ci, 3))) 
             mtext(text, side = 4, adj = 0, cex = 0.7)
         } 
     }
@@ -689,8 +689,7 @@ labels = TRUE,  ...)
 
 
 msratioPlot = 
-function (x, p = 1:4, doplot = TRUE, plottype = c("autoscale", ""),
-labels = TRUE, ...)
+function (x, p = 1:4, doplot = TRUE, labels = TRUE, ...)
 {   # A function implemented by Diethelm Wuertz
     
     # Description:
@@ -702,7 +701,7 @@ labels = TRUE, ...)
     x = as.vector(x)
     
     # Settings:
-    plottype = plottype[1]
+    plottype = "autoscale"
     
     # Convert x to a vector, if the input is a data.frame.
     if(is.data.frame(x)) x = x[, 1] 
@@ -859,7 +858,7 @@ function (x, doplot = TRUE, labels = TRUE, ...)
 
 
 xacfPlot = 
-function(x, threshold = 0.95, lag.max = 15, doplot = TRUE, labels = TRUE, ...)
+function(x, u = quantile(x, 0.95), lag.max = 15, doplot = TRUE, labels = TRUE, ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -884,15 +883,14 @@ function(x, threshold = 0.95, lag.max = 15, doplot = TRUE, labels = TRUE, ...)
     } 
     
     # Heights/Distances:
-    threshold = sort(x)[round(threshold*length(x))]
-    Heights = (x-threshold)[(x-threshold)>0]
-    Distances = diff((1:length(x))[(x-threshold)>0])
+    Heights = (x-u)[x > u]
+    Distances = diff((1:length(x))[x > u])
     
     # Plot:
     if (doplot) {
         plot (Heights, type="h", xlab = xlab[1], ylab = ylab[1], 
             main = main[1], ...)
-        plot (Distances,type="h", xlab = xlab[1], ylab = ylab[2], 
+        plot (Distances, type = "h", xlab = xlab[1], ylab = ylab[2], 
             main = main[2], ...) 
     }
     
@@ -1178,7 +1176,7 @@ function(x, n = floor(0.05*length(as.vector(x))))
 
 
 pointProcess = 
-function(x, u = quantile(x, 0.95), column = 1)
+function(x, u = quantile(x, 0.95))
 {   # A function implemented by Diethelm Wuertz
 
     # Arguments:
@@ -1191,8 +1189,12 @@ function(x, u = quantile(x, 0.95), column = 1)
     #   pointProcess(as.timeSeries(data(daxRet)))
     
     # Point Process:
+    if (class(x) == "zoo") {
+        x = as.timeSeries(x)
+    }
     if (class(x) == "timeSeries") {
-        X = x[, column][x@Data > u]
+        if (dim(X)[[2]] > 1) stop("x must be a univariate time series")
+        X = x[, 1][x@Data[, 1] > u]
     } else if (class(x) == "numeric") {
         X = x[x > u]
     } else {
@@ -1205,6 +1207,7 @@ function(x, u = quantile(x, 0.95), column = 1)
 
 
 # ------------------------------------------------------------------------------
+
 
 deCluster = 
 function(x, run = 20)
