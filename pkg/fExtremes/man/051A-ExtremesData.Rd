@@ -82,21 +82,21 @@ qqbayesPlot(x, doplot = TRUE, labels = TRUE, \dots)
 qPlot(x, xi = 0, trim = NULL, threshold = NULL, doplot = TRUE, labels = TRUE, \dots)
 
 mePlot(x, doplot = TRUE, labels = TRUE, \dots)
-mrlPlot(x, ci = 0.95, umin = min(x), umax = max(x), nint = 100, doplot = TRUE, 
+mrlPlot(x, ci = 0.95, umin = mean(x), umax = max(x), nint = 100, doplot = TRUE, 
      plottype = c("autoscale", ""), labels = TRUE, \dots)  
 mxfPlot(x, u = quantile(x, 0.05), doplot = TRUE, labels = TRUE, \dots)  
    
 msratioPlot(x, p = 1:4, doplot = TRUE, plottype = c("autoscale", ""), 
     labels = TRUE, \dots) 
    
-recordsPlot(x, conf = 0.95, doplot = TRUE, labels = TRUE, \dots)
+recordsPlot(x, ci = 0.95, doplot = TRUE, labels = TRUE, \dots)
 ssrecordsPlot(x, subsamples = 10, doplot = TRUE, plottype = c("lin", "log"),
     labels = TRUE, \dots)
     
 sllnPlot(x, doplot = TRUE, labels = TRUE, ...)
 lilPlot(x, doplot = TRUE, labels = TRUE, ...)
 
-xacfPlot(x, threshold = 0.95, lag.max = 15, doplot = TRUE, labels = TRUE, \dots)
+xacfPlot(x, u = quantile(x, 0.95), lag.max = 15, doplot = TRUE, labels = TRUE, \dots)
 
 blockMaxima(x, block = c("monthly", "quarterly"), doplot = FALSE)
 findThreshold(x, n = floor(0.05*length(as.vector(x))))
@@ -134,7 +134,7 @@ gridVector(x, y)
         an integer value or column name string which allows to extract
         the specified column from a multivariate time Series.
         }
-    \item{conf}{
+    \item{ci}{
         [recordsPlot] - \cr
         a confidence level. By default 0.95, i.e. 95\%.
         }
@@ -212,8 +212,9 @@ gridVector(x, y)
         by default 95\%.
         }
     \item{u}{
-        a numeric value at which data are to be truncated. By default
-        the threshold value which belongs to the 95\% quantile.
+        a numeric value at which level the data are to be truncated. By 
+        default the threshold value which belongs to the 95\% quantile,
+        \code{u=quantile(x,0.95)}.       
         }
     \item{umin, umax}{
         [mrlPlot] - \cr
