@@ -309,26 +309,57 @@ as.timeSeries.data.frame =
 function(x, ...)
 {   # A function implemented by Diethelm Wuertz
 
-    format = ""
-    Format = as.character(x[1, 1])
-    if (nchar(Format) ==  8) {
-        format = "%Y%m%d"
+    # Examples:
+    #   data(bmwRet); head(as.timeSeries(data(bmwRet)))
+
+    # FUNCTION:
+    
+    # Check if the first column has a valid ISO-format:
+    charvec = as.character(as.vector(x[, 1]))
+    isoFormat = c("%Y%m%d", "%Y-%m-%d", "%Y%m%d%H%M", "%Y-%m-%d %H:%M",
+        "%Y%m%d%H%M%S", "%Y-%m-%d %H:%M:%S")
+    isoCheck = 0
+    for (i in 1:4) {
+        Test = !is.na(strptime(charvec, isoFormat[i])) 
+        if (Test[1]) isoCheck = i
     }
-    if (nchar(Format) == 10 & substr(Forma, 5,5) == "-") {
-        format = "%Y-%m-%d"
+    if (isoCheck == 0) {
+        stop("Could not identify format type") 
+    } else {
+        format = isoFormat[isoCheck]
     }
-    if (nchar(Format) == 12) {
-        format = "%Y%m%d%H%M"
+    
+    # Transform to Matrix:
+    if (dim(x)[2] == 2) {
+        X = matrix(x[, -1], ncol = dim(x)[2] - 1) 
+    } else {
+        X = x[, -1]
     }
-    if (nchar(Format) == 16 & substr(Forma, 5,5) == "-") {
-        format = "%Y-%m-%d %H:%M"
+    colNames = colnames(X) = colnames(x)[-1]
+    Numeric = NULL
+    for (i in 1:length(X[1, ])) {
+        if (is.numeric(X[1, i])) Numeric = c(Numeric, i)
+    }   
+    if (is.null(numeric)) {
+        stop("x contains no numeric columns") 
+    } else {
+        data = as.matrix(X[, Numeric])
+        colnames(data) = colNames[Numeric]
+        if (length(Numeric) != length(X[1, ])) {
+            recordIDs = data.frame(X[, -Numeric])
+            colnames(recordIDs) = colnames(X)[-Numeric]
+        }
     }
-    if (format == "") stop("Could not identify format type") 
-                              
-    timeSeries(data = as.matrix(x[, -1]), charvec = as.character(x[, 1]), 
-        units = colnames(x)[-1], format = format, zone = "GMT", 
-        FinCenter = "GMT")      
+     
+    # Create Time Series Object:                          
+    ans = timeSeries(data = data, charvec = charvec, 
+        units = colnames(data), format = format, zone = "GMT", 
+        FinCenter = "GMT", recordsIDs = recordIDs)  
+        
+    # Return Value:    
+    ans
 }
+
 
 
 # ------------------------------------------------------------------------------
@@ -980,7 +1011,7 @@ function(x)
 
 
 head.timeSeries = 
-function(x, ...)
+function(x, n = 6, ...)
 {   # A function implemented by Diethelm Wuertz
     
     # Description:
@@ -995,7 +1026,7 @@ function(x, ...)
     # FUNCTION:
     
     # Head:
-    ans = head(as.data.frame(x), ...)
+    ans = x[1:n, ]
     
     # Return Value:
     ans
@@ -1006,7 +1037,7 @@ function(x, ...)
 
 
 tail.timeSeries = 
-function(x, ...)
+function(x, n = 6, ...)
 {   # A function implemented by Diethelm Wuertz
     
     # Description:
@@ -1021,7 +1052,8 @@ function(x, ...)
     # FUNCTION:
     
     # Tail:
-    ans = tail(as.data.frame(x), ...)
+    N = dim(x)[1]
+    ans = x[(N-n-1):N, ]
     
     # Return Value:
     ans

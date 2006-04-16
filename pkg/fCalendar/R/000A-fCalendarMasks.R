@@ -39,7 +39,7 @@
 ################################################################################
 
 
-data = 
+datax = 
 function(..., list = character(0), package = NULL, lib.loc = NULL,
 verbose = getOption("verbose"), envir = .GlobalEnv)
 {   # An extended copy of the var() function from R's base package
@@ -193,15 +193,14 @@ verbose = getOption("verbose"), envir = .GlobalEnv)
         # If the data set can be transformed in a timeSeriesobject 
         # then do it ... 
         z = eval(parse(text = paste("x = ", name)))
+        # print(c(class = class(z)))
         if (class(z) == "data.frame") {
-            tS = as.character(!is.character(
-                try(as.timeSeries(z), silent = TRUE)))  
+            tS = as.character(!is.character(try(as.timeSeries(
+                eval(parse(text = paste("x = ", name)))), silent = TRUE)))  
+            # print(c(tS = as.logical(tS)))
             if (as.logical(tS)) {
-                # Only if the data part is numeric, convert it to a timeSeries:
-                if (is.numeric(x[, -1])) {
-                    x = as.timeSeries(name)
-                    eval(parse(text = paste(name, "<<- x")))
-                }
+                z = as.timeSeries(name)
+                eval(parse(text = paste(name, "<<- z")))
             }
         }
     }
