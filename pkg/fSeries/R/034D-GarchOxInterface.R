@@ -26,6 +26,12 @@
 ################################################################################
 
 
+OXPATH <<- "C:\\Ox\\Ox3"
+
+
+# ------------------------------------------------------------------------------
+
+
 garchOxFit = 
 function(formula.mean = ~ arma(0, 0), formula.var = ~ garch(1, 1), 
 series = x, cond.dist = c("gaussian", "t", "ged", "skewed-t"), 
@@ -46,6 +52,10 @@ description = NULL)
     #   control - list of additional control parameters  
     #   title - an optional title string
     #   description - an optional project description string
+    
+    # Example:
+    #   data(dem2gbp); x = dem2gbp[,1]; fit = garchOxFit(); fit
+    
     
     # FUNCTION:
     
@@ -157,7 +167,9 @@ description = NULL)
     write(x, file = "OxSeries.csv", ncolumns = 1, append = TRUE)                        
     
     # Calculate:    
-    command = "C:\\Ox\\bin\\oxl.exe C:\\Ox\\lib\\GarchOxModelling.ox"
+    command = paste(
+        OXPATH, "\\bin\\oxl.exe ",  
+        OXPATH, "\\lib\\GarchOxModelling.ox", sep = "")
     fit$ox = system(command, show.output.on.console = trace, invisible = TRUE)
     fit$model = selected
     fit$call = match.call()
@@ -393,6 +405,6 @@ function(x, ...)
 }
 
 
-# ------------------------------------------------------------------------------
+################################################################################
 
     

@@ -829,9 +829,9 @@ control = list(), title = NULL, description = NULL, ...)
     
     # Example:
     #   # GARCH(1,1): 
-    #   > data(dem2gbp); x = dem2gbp[,1, fit = garchFit(); fit
-    #   > data(dem2gbp); fit = garchFit(series = dem2gbp[,1]); fit
-    #   > fit = garchFit(series = "dem2gbp"); fit
+    #   data(dem2gbp); x = dem2gbp[,1]; fit = garchFit(); fit
+    #   data(dem2gbp); fit = garchFit(series = dem2gbp[,1]); fit
+    #   fit = garchFit(series = "dem2gbp"); fit
         
     # FUNCTION:
   
