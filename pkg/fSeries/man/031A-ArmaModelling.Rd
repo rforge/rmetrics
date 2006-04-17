@@ -9,6 +9,8 @@
 \alias{armaFit}
 
 \alias{predict.fARMA}
+\alias{predictPlot}
+\alias{predictPlot.fARMA}
 
 \alias{print.fARMA}
 \alias{plot.fARMA}
@@ -74,7 +76,7 @@
     \tabular{ll}{
     \code{arima.sim} \tab Simulates from an ARIMA time series model, \cr
     \code{ar, arima, arima0} \tab Fits an AR, ARIMA model to a univariate time series,\cr
-    \code{predict.ARIMA} \tab Forecast from models fitted by "arima", \cr
+    \code{predict} \tab Forecast from models fitted by "arima", \cr
     \code{tsdiag} \tab Plots time-series diagnostics. }
     
     In addition there are two functions for the analysis of the true  
@@ -122,12 +124,11 @@ armaFit(formula = x ~ arima(2, 0, 1),
     include.mean = TRUE, fixed = NULL, fracdiff.M = 100, fracdiff.h = -1, 
     title = NULL, description = NULL, \dots)
 
-\method{predict}{fARMA}(object, n.ahead = 10, n.back = 50, conf = c(80, 95), 
-    doplot = TRUE, doprint = TRUE, \dots)
+\method{predict}{fARMA}(object, n.ahead = 10, n.back = 50, conf = c(80, 95), \dots)
+\method{predictPlot}{fARMA}(object, n.ahead = 10, n.back = 50, conf = c(80, 95), \dots)
     
 \method{print}{fARMA}(x, \dots)
-\method{plot}{fARMA}(x, gof.lag = 10, reference.grid = TRUE, 
-    col = "steelblue", \dots)
+\method{plot}{fARMA}(x, gof.lag = 10, reference.grid = TRUE, col = "steelblue", \dots)
 \method{summary}{fARMA}(object, doplot = TRUE, \dots)
 
 \method{fitted}{fARMA}(object, \dots)
@@ -171,11 +172,6 @@ armaFischer(model = list(ar = c(0.5, -0.5), ma = 0.1))
         Additional arguments required by underlying functions have 
         to be passed through the \code{dots} argument.
         }   
-    \item{doprint}{
-        [predict] - \cr
-        should intermediate results be printed? Arguments used by the 
-        \code{predict} method.
-        }
     \item{fixed}{
         [armaFit] - \cr
         is an optional numeric vector of the same length as the total
@@ -361,7 +357,7 @@ armaFischer(model = list(ar = c(0.5, -0.5), ma = 0.1))
 
     \code{armaFit} 
     \cr
-    returns an S4 object of class \code{"fARMA"}, with the folliwing 
+    returns an S4 object of class \code{"fARMA"}, with the following 
     slots:
 
     \item{call}{

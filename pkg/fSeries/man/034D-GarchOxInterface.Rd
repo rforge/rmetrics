@@ -87,7 +87,8 @@ garchOxFit(formula.mean = ~ arma(0, 0), formula.var = ~ garch(1, 1),
         a character string which allows for a project title.
         }
     \item{trace}{
-        a logical. Trace optimizer output? By default TRUE.
+        a logical flag. Should the estimation process be ttraced? 
+        By default TRUE.
         }
     \item{x}{
         an object of class \code{garchOx} as returned from the function
@@ -131,8 +132,8 @@ garchOxFit(formula.mean = ~ arma(0, 0), formula.var = ~ garch(1, 1),
     together with the "OxGarch" Package, currently G@RCH 4.0. If you are 
     not qualified for a free license, order your copy from Timberlake 
     Consultants. We recommend to install the "Setup.exe" under the path 
-    "C:\\Ox\\" and to unzip the OxGarch Package in the directory 
-    "C:\\Ox\\Packages". 
+    "C:\\Ox\\Ox3" and to unzip the OxGarch Package in the directory 
+    "C:\\Ox\\Ox3\\Packages". An Update to Ox4 has not yet be done.
     \cr
     
     \bold{Distribution:}
