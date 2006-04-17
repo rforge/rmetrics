@@ -130,10 +130,10 @@ title = NULL, description = NULL, ...)
     # Fit:
     ans = systemfit(method = method[1], eqns = formulas, 
         data = as.data.frame(data), ...) 
+    
+    # Rmetrics Conform Output:
     fit = list()
     fit$fit = ans   
-    
-    # Add:
     fit$name = "systemfit"
     fit$coef = coef(ans)
     fit$fitted = fitted(ans)
