@@ -57,6 +57,8 @@
 #   colCumsums            Computes sample cumulated sums by column
 # FUNCTION:             SPLUS FUNCTIONALITY:
 #  stdev                 Returns the standard deviation of a vector
+# FUNCTION:             DESCRIPTION:
+#  .distCheck            Distribution Check
 ################################################################################
 
 
@@ -741,6 +743,75 @@ function(x, na.rm = FALSE)
     sd(x = x, na.rm = na.rm)
 }
   
+
+################################################################################
+
+
+.distCheck = 
+function(fun = "norm", ...)
+{   # A function implemented by Diethelm Wuertz
+
+    # Examples:
+    #   .distCheck("norm", mean = 1, sd = 1)
+    #   .distCheck("t", df = 4)
+    #   .distCheck("exp", rate = 2)
+    #   .distCheck("weibull", shape = 1)
+
+    # FUNCTION:
+    
+    # Distribution Functions:
+    cat("\nDistribution Check for:", fun, "\n")
+    CALL = match.call()
+    cat("Call: ")
+    cat(paste(deparse(CALL), sep = "\n", collapse = "\n"), "\n", sep = "") 
+    dfun = match.fun(paste("d", fun, sep = ""))
+    pfun = match.fun(paste("p", fun, sep = ""))
+    qfun = match.fun(paste("q", fun, sep = ""))
+    rfun = match.fun(paste("r", fun, sep = ""))
+    
+    # Range:
+    xmin = qfun(p = 0.01, ...)
+    xmax = qfun(p = 0.99, ...)
+    
+    # Check 1:
+    NORM = integrate(dfun, lower = -Inf, upper = Inf, 
+        subdivisions = 5000, ...)
+    cat("\n1. Normalization Check:\nNORM ")
+    print(NORM)
+    
+    # Check 2:
+    cat("\n2. [p-pfun(qfun(p))]^2 Check:\n")
+    p = c(0.001, 0.01, 0.1, 0.5, 0.9, 0.99, 0.999)
+    P = pfun(qfun(p, ...), ...)
+    cat("PROB = 0.001, 0.01, 0.1, 0.5, 0.9, 0.99, 0.999\n")
+    RMSE = sd(p-P)
+    print(c(RMSE = RMSE))
+    
+    # Check 3:
+    cat("\n3. r(10'000) Check:\n")
+    set.seed(4711)
+    n = 10000
+    r = rfun(n = 10000, ...)
+    SAMPLE = c(MEAN = mean(r), VAR = var(r))
+    print(signif(SAMPLE, 3))
+    fun1 = function(x, ...) { x * dfun(x, ...) }
+    fun2 = function(x, M, ...) { x^2 * dfun(x, ...) }   
+    MEAN = integrate(fun1, lower = -Inf, upper = Inf, 
+        subdivisions = 5000, ...)
+    cat("   X   ")
+    print(MEAN)
+    VAR = integrate(fun2, lower = -Inf, upper = Inf, 
+        subdivisions = 5000, ...)  
+    cat("   X^2 ")
+    print(VAR)
+    EXACT = c(MEAN = MEAN[[1]], "VAR" = VAR[[1]] - MEAN[[1]]^2)
+    print(signif(EXACT, 3))
+    cat("\n")
+    
+    # Done:
+    invisible()
+}
+
 
 ################################################################################
 
