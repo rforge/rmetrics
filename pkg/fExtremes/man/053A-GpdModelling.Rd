@@ -7,22 +7,23 @@
 \alias{qgpd}
 \alias{rgpd}
 
-\alias{fGPD}
-\alias{fGPD-class}
+\alias{fGPDFIT}
+\alias{fGPDFIT-class}
 
 \alias{gpdSim}
 \alias{gpdFit}
 
-\alias{print.fGPD}
-\alias{plot.fGPD}
-\alias{summary.fGPD}
+\alias{print.fGPDFIT}
+\alias{plot.fGPDFIT}
+\alias{summary.fGPDFIT}
 
-\alias{gpdqPlot}
-\alias{gpdquantPlot}
-\alias{gpdriskmeasures}
-\alias{gpdsfallPlot}
-\alias{gpdshapePlot}
-\alias{gpdtailPlot}
+\alias{gpdQPlot}
+\alias{gpdQuantPlot}
+\alias{gpdSfallPlot}
+\alias{gpdShapePlot}
+\alias{gpdTailPlot}
+
+\alias{gpdRiskMeasures}
 
 \title{GPD Distributions for Extreme Value Theory}
 
@@ -55,12 +56,12 @@
     \code{print} \tab print method for a fitted GPD object of class ..., \cr
     \code{plot} \tab plot method for a fitted GPD object, \cr 
     \code{summary} \tab summary method for a fitted GPD object, \cr
-    \code{gpdqPlot} \tab estimation of high quantiles, \cr
-    \code{gpdquantPlot} \tab variation of high quantiles with threshold, \cr
-    \code{gpdriskmeasures} \tab prescribed quantiles and expected shortfalls, \cr
-    \code{gpdsfallPlot} \tab expected shortfall with confidence intervals, \cr
-    \code{gpdshapePlot} \tab variation of shape with threshold, \cr
-    \code{gpdtailPlot} \tab plot of the tail. }
+    \code{gpdQPlot} \tab estimation of high quantiles, \cr
+    \code{gpdQuantPlot} \tab variation of high quantiles with threshold, \cr
+    \code{gpdRiskMeasures} \tab prescribed quantiles and expected shortfalls, \cr
+    \code{gpdSfallPlot} \tab expected shortfall with confidence intervals, \cr
+    \code{gpdShapePlot} \tab variation of shape with threshold, \cr
+    \code{gpdTailPlot} \tab plot of the tail. }
      
 }
 
@@ -73,47 +74,33 @@ rgpd(n, xi = 1, mu = 0, beta = 1)
 
 gpdSim(model = list(shape = 0.25, location = 0, scale = 1), n = 1000,
     seed = NULL)
-gpdFit(x, threshold = NA, nextremes = NA, type = c("mle", "pwm"),
-    information = c("observed", "expected"), title = NULL, 
-    description = NULL, \dots)
+gpdFit(x, u = quantile(x, 0.95), type = c("mle", "pwm"), information = 
+    c("observed", "expected"), title = NULL, description = NULL, \dots)
 
-\method{print}{fGPD}(x, \dots)
-\method{plot}{fGPD}(x, which = "all", \dots)
-\method{summary}{fGPD}(object, doplot = TRUE, which = "all", \dots)
+\method{print}{fGPDFIT}(x, \dots)
+\method{plot}{fGPDFIT}(x, which = "ask", \dots)
+\method{summary}{fGPDFIT}(object, doplot = TRUE, which = "all", \dots)
 
-gpdqPlot(x, pp = 0.99, ci.type = c("likelihood", "wald"), ci.p = 0.95, 
+gpdQPlot(x, p = 0.99, ci = 0.95, type = c("likelihood", "wald"), 
     like.num = 50)
-gpdquantPlot(data, p = 0.99, models = 30, start = 15, end = 500, 
-    reverse = TRUE, ci = 0.95, autoscale = TRUE, labels = TRUE, \dots)
-gpdriskmeasures(x, plevels = c(0.99, 0.995, 0.999, 0.9995, 0.9999))
-gpdsfallPlot(x, pp = 0.99, ci.p = 0.95, like.num = 50)
-gpdshapePlot(data, models = 30, start = 15, end = 500, reverse = TRUE,
-    ci = 0.95, autoscale = TRUE, labels = TRUE, \dots) 
-gpdtailPlot(fit, optlog = NA, extend = 1.5, labels = TRUE, \dots)
+gpdQuantPlot(x, p = 0.99, ci = 0.95, models = 30, start = 15, end = 500,  
+    doplot = TRUE, plottype = c("normal", "reverse"), labels = TRUE, \dots)
+gpdSfallPlot(x, p = 0.99, ci = 0.95, like.num = 50)
+gpdShapePlot(x, ci = 0.95, models = 30, start = 15, end = 500, 
+    doplot = TRUE, plottype = c("normal", "reverse"), labels = TRUE, \dots)
+gpdTailPlot(object, plottype = c("xy", "x", "y", ""), extend = 1.5, 
+    labels = TRUE, \dots)
+
+gpdRiskMeasures(object, prob = c(0.99, 0.995, 0.999, 0.9995, 0.9999))
 
 }
 
 
 \arguments{
-
-    \item{autoscale}{
-        whether or not plot should be automatically scaled;
-        if not, xlim and ylim graphical parameters may be entered.
-        }     
+    
     \item{ci}{
         the probability for asymptotic confidence band; for no 
         confidence band set to zero.
-        }
-     \item{ci.p}{
-        the probability for confidence interval (must be less 
-        than 0.999).
-        }
-    \item{ci.type}{
-        the method for calculating a confidence interval: 
-        \code{"likelihood"} or \code{"wald"}.
-        }
-    \item{data}{
-        a numeric vector of data.
         }
     \item{description}{
         a character string which allows for a brief description.
@@ -126,10 +113,6 @@ gpdtailPlot(fit, optlog = NA, extend = 1.5, labels = TRUE, \dots)
         should extend as a multiple of the largest data value. This 
         argument must take values greater than 1 and is useful for
         showing estimated quantiles beyond data.
-        }
-    \item{fit}{
-        [print][plot][summary] - \cr
-        print method, a fitted object of class \code{"gpd"}.
         }
     \item{information}{
         whether standard errors should be calculated with
@@ -157,21 +140,11 @@ gpdtailPlot(fit, optlog = NA, extend = 1.5, labels = TRUE, \dots)
         [rgpd][gpdSim\ - \cr
         the number of observations to be generated.
         } 
-    \item{nextremes}{
-        [gpdFit] - \cr
-        the number of upper extremes to be used (either this or 
-        \code{threshold} must be given but not both).
-        }
     \item{object}{
         [summary] - \cr
         a fitted object of class \code{"gpdFit"}.
         }
-    \item{optlog}{
-        optional argument for plots 1 and 2 giving a particular choice 
-        of logarithmic axes: \code{"x"} x-axis only; \code{"y"} y-axis 
-        only; \code{"xy"} both axes; \code{""} neither axis.
-        }
-    \item{p, pp, plevels}{
+    \item{p}{
         a vector of probability levels, the desired probability for the 
         quantile estimate (e.g. 0.99 for the 99th percentile).
         } 
@@ -183,15 +156,17 @@ gpdtailPlot(fit, optlog = NA, extend = 1.5, labels = TRUE, \dots)
         [gpdSim] - \cr
         an integer value to set the seed for the random number generator.
         }
+    \item{prob}{
+        a numeric value.
+        }
+    \item{plottype}{
+        a character string.
+        }
     \item{q}{
         a numeric vector of quantiles.
         }
     \item{start, end}{
         the lowest and maximum number of exceedances to be considered.
-        }
-    \item{threshold}{
-        a threshold value (either this or \code{nextremes} must be given 
-        but not both).
         }
     \item{title}{
         a character string which allows for a project title.
@@ -201,6 +176,9 @@ gpdtailPlot(fit, optlog = NA, extend = 1.5, labels = TRUE, \dots)
         \code{"mle"} for the maximum likelihood mehtod or \code{"pwm"} for 
         the probability weighted moment method. By default, the first will 
         be selected. Note, the function \code{gpd} uses \code{"ml"}.    
+        }
+    \item{u}{
+        the threshold value.    
         }
     \item{which}{
         if \code{which} is set to \code{"ask"} the function will 
@@ -256,15 +234,15 @@ gpdtailPlot(fit, optlog = NA, extend = 1.5, labels = TRUE, \dots)
     returns an object of class \code{"gpd"} describing the 
     fit including parameter estimates and standard errors. 
   
-    \code{gpdquantPlot}
+    \code{gpdQuantPlot}
     \cr
     returns invisible a table of results.
   
-    \code{gpdshapePlot}
+    \code{gpdShapePlot}
     \cr
     returns invisible a table of results.
   
-    \code{gpdtailPlot}
+    \code{gpdTailPlot}
     \cr
     returns invisible a list object containing 
     details of the plot is returned invisibly. This object should be 

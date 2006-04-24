@@ -2,15 +2,15 @@
 
 \alias{PotModelling}
 
-\alias{fPOT}
-\alias{fPOT-class}
+\alias{fPOTFIT}
+\alias{fPOTFIT-class}
 
 \alias{potSim}
 \alias{potFit}
 
-\alias{print.fPOT}
-\alias{plot.fPOT}
-\alias{summary.fPOT}
+\alias{print.fPOTFIT}
+\alias{plot.fPOTFIT}
+\alias{summary.fPOTFIT}
 
 \title{Modelling Peaks Over a Threshold}
 
@@ -36,13 +36,12 @@
 
 
 \usage{
-potSim(x, threshold, nextremes = NA, run = NA)
-potFit(x, threshold = NA, nextremes = NA, run = NA, title = NULL,
-    description = NULL, \dots) 
+potSim(x, u = quantile(x, 0.95), run = 1)
+potFit(x, u = quantile(x, 0.95), run = 1, title = NULL, description = NULL) 
 
-\method{print}{fPOT}(x, \dots)
-\method{plot}{fPOT}(x, which = "all", \dots)
-\method{summary}{fPOT}(object, doplot = TRUE, which  = "all", \dots)
+\method{print}{fPOTFIT}(x, \dots)
+\method{plot}{fPOTFIT}(x, which = "ask", \dots)
+\method{summary}{fPOTFIT}(object, doplot = TRUE, which  = "all", \dots)
 }
 
 
@@ -54,10 +53,6 @@ potFit(x, threshold = NA, nextremes = NA, run = NA, title = NULL,
     \item{doplot}{
         a logical. Should the results be plotted?
         }
-    \item{nextremes}{
-        the number of upper extremes to be used (either
-        this or \code{threshold} must be given but not both).
-        }
     \item{object}{
         [summary] - \cr
         a fitted object of class \code{"potFit"}.
@@ -67,12 +62,11 @@ potFit(x, threshold = NA, nextremes = NA, run = NA, title = NULL,
         the runs method, see \code{\link{deCluster}}, should be entered 
         here.
         }
-    \item{threshold}{
-        a threshold value, either \code{threshold} or \code{nextremes}
-        must be given, but not both).
-        }
     \item{title}{
         a character string which allows for a project title.
+        }
+    \item{u}{
+        a threshold value.
         }
     \item{which}{
         if \code{which} is set to \code{ask} the function will 

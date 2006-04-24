@@ -6,20 +6,29 @@
 \alias{pgev}
 \alias{qgev}
 \alias{rgev}
+\alias{gevMoments}
 
 \alias{devd}
 \alias{pevd}
 \alias{qevd}
 \alias{revd}
+\alias{evdMoments}
 
-\alias{fGEV}
-\alias{fGEV-class}
+\alias{gevMoments}
+
+\alias{fGEVFIT}
+\alias{fGEVFIT-class}
 
 \alias{gevSim}
+\alias{gumbelSim}
+
 \alias{gevFit}
-\alias{print.fGEV}
-\alias{plot.fGEV}
-\alias{summary.fGEV}
+\alias{gumbelFit}
+
+\alias{print.fGEVFIT}
+\alias{plot.fGEVFIT}
+\alias{summary.fGEVFIT}
+
 \alias{gevrlevelPlot}
 
 \alias{hillPlot}
@@ -60,13 +69,17 @@
     \code{[dpqr]frechet} \tab Frechet Distribution, \cr
     \code{[dpqr]gumbel} \tab Gumbel Distribution, \cr
     \code{[dpqr]weibull} \tab Weibull Distribution, \cr
-    \code{[dpqr]evd} \tab an alternative call for the GEV Distribution. }
+    \code{[dpqr]evd} \tab an alternative call for the GEV Distribution, \cr
+    \code{gevMoments} \tab computes true mean and variance, \cr
+    \code{evdMoments} \tab yet another function to compute moments. }
     
     The GEV modelling functions are:
     
     \tabular{ll}{
-    \code{gevSim} \tab generates data from the GEV, \cr
-    \code{gevFit} \tab fits empirical or simulated data to the distribution, \cr 
+    \code{gevSim} \tab generates data from the GEV distribution, \cr
+    \code{gumbelSim} \tab generates data from the Gumbel distribution, \cr
+    \code{gevFit} \tab fits data to the GEV distribution, \cr 
+    \code{gumbelFit} \tab fits data to the Gumbel distribution, \cr 
     \code{print} \tab print method for a fitted GEV object, \cr
     \code{plot} \tab plot method for a fitted GEV object, \cr 
     \code{summary} \tab summary method for a fitted GEV object, \cr
@@ -86,25 +99,38 @@ dgev(x, xi = 1, mu = 0, sigma = 1, log = FALSE)
 pgev(q, xi = 1, mu = 0, sigma = 1, lower.tail = TRUE)
 qgev(p, xi = 1, mu = 0, sigma = 1, lower.tail = TRUE)
 rgev(n, xi = 1, mu = 0, sigma = 1)
+gevMoments(xi = 0, mu = 0, sigma = 1)
 
-devd(x, loc = 0, scale = 1, shape = 0, log = FALSE)
-pevd(q, loc = 0, scale = 1, shape = 0, lower.tail = TRUE)
-qevd(p, loc = 0, scale = 1, shape = 0, lower.tail = TRUE)
-revd(n, loc = 0, scale = 1, shape = 0)
+devd(x, location = 0, scale = 1, shape = 0, log = FALSE)
+pevd(q, location = 0, scale = 1, shape = 0, lower.tail = TRUE)
+qevd(p, location = 0, scale = 1, shape = 0, lower.tail = TRUE)
+revd(n, location = 0, scale = 1, shape = 0)
+evdMoments(location = 0, scale = 1, shape = 0) 
 
 gevSim(model = list(shape = -0.25, location = 0, scale = 1), n = 1000, seed = NULL)
-gevFit(x, type = c("mle", "pwm"), gumbel = FALSE, title = NULL, description = NULL, \dots)
-\method{print}{fGEV}(x, \dots)
-\method{plot}{fGEV}(x, which = "all", \dots)
-\method{summary}{fGEV}(object, doplot = TRUE, which = "all", \dots)
-gevrlevelPlot(object, k.blocks = 20, add = FALSE, \dots)
+gumbelSim(model = list(location = 0, scale = 1), n = 1000, seed = NULL)
 
-hillPlot(x, option = c("alpha", "xi"), start = 15, ci = 0.95, 
-    reverse = FALSE, doplot = TRUE, labels = TRUE, \dots) 
-shaparmPlot(x, revert = FALSE, standardize = FALSE, tails = 0.01*(1:10), 
-    doplot = c(FALSE, FALSE, FALSE, FALSE, TRUE, FALSE, FALSE, FALSE, FALSE, FALSE), 
-    which = c(TRUE, TRUE, TRUE), both.tails = TRUE, doprint = TRUE, 
-    xi.range = c(-0.5, 1.5), alpha.range = c(0, 10)) 
+gevFit(x, block = 1, type = c("mle", "pwm"), title = NULL, description = NULL, \dots)
+gumbelFit(x, block = 1, type = c("mle", "pwm"), title = NULL, description = NULL, \dots)
+
+\method{print}{fGEVFIT}(x, \dots)
+\method{plot}{fGEVFIT}(x, which = "ask", \dots)
+\method{summary}{fGEVFIT}(object, doplot = TRUE, which = "all", \dots)
+
+gevrlevelPlot(object, kBlocks = 20,  ci = c(0.90, 0.95, 0.99), 
+    plottype = c("plot", "add"), labels = TRUE,...)
+
+hillPlot(x, start = 15, ci = 0.95, 
+    doplot = TRUE, plottype = c("alpha", "xi"), labels = TRUE, \dots)
+shaparmPlot(x, p = 0.01*(1:10), xiRange = NULL, alphaRange = NULL,
+    doplot = TRUE, plottype = c("both", "upper"))
+    
+shaparmPickands(x, p = 0.05, xiRange = NULL,  
+    doplot = TRUE, plottype = c("both", "upper"), labels = TRUE, \dots) 
+shaparmHill(x, p = 0.05, xiRange = NULL,  
+    doplot = TRUE, plottype = c("both", "upper"), labels = TRUE, \dots)
+shaparmDEHaan(x, p = 0.05, xiRange = NULL,  
+    doplot = TRUE, plottype = c("both", "upper"), labels = TRUE, \dots)
 }
 
 
@@ -117,21 +143,13 @@ shaparmPlot(x, revert = FALSE, standardize = FALSE, tails = 0.01*(1:10),
         likelihood curve showing the return level and its confidence
         interval is produced.
         }
-    \item{alpha.range, xi.range}{
+    \item{block}{
+        block size.
+        }
+    \item{alphaRange, xiRange}{
         [saparmPlot] - \cr
-        plotting ranges.
-        }
-    \item{autoscale}{
-        [hillPlot] - \cr
-        whether or not plot should be automatically
-        scaled; if not, \code{xlim} and \code{ylim} graphical
-        parameters may be entered.
-        }
-    \item{both.tails}{
-        [shaparmPlot] - \cr
-        a logical, decides whether or not both tails should be 
-        investigated. By default TRUE. If FALSE only the lower
-        tail will be investigated.
+        plotting ranges for \code{alpha} and \code{xi}. By default the
+        values are automatically selected.
         }
     \item{ci}{
         [hillPlot] - \cr
@@ -151,18 +169,7 @@ shaparmPlot(x, revert = FALSE, standardize = FALSE, tails = 0.01*(1:10),
         percent. By default \code{c(FALSE, FALSE, FALSE, FALSE, 
         TRUE, FALSE, FALSE, FALSE, FALSE, FALSE)}.
         }
-    \item{doprint}{
-        [shaparmPlot] - \cr
-        a logical, decides whether or not for all tail depths the
-        result for the shape parameter \code{1/alpha} should be
-        printed.
-        }
-    \item{gumbel}{
-        [gevFit] - \cr
-        a logical, by default FALSE. To fit a Gumbel model with fixed
-        \code{shape=0} set \code{gumbel=TRUE}.
-        }
-    \item{k.blocks}{
+    \item{kBlocks}{
         [gevrlevelPlot] - \cr
         specifies the particular return level to be estimated; default 
         set arbitrarily to 20.
@@ -171,7 +178,7 @@ shaparmPlot(x, revert = FALSE, standardize = FALSE, tails = 0.01*(1:10),
         [hillPlot] - \cr
         whether or not axes should be labelled.
         }
-    \item{loc, scale, shape}{
+    \item{location, scale, shape}{
         \code{loc} is the location parameter, 
         \code{scale} the scale parameter,
         and \code{shape} is the shape parameter.
@@ -186,7 +193,7 @@ shaparmPlot(x, revert = FALSE, standardize = FALSE, tails = 0.01*(1:10),
         probabilities are \code{P[X <= x]}, otherwise, \code{P[X > x]}.
         }
     \item{model}{
-        [gevSim] - \cr
+        [gevSim][gumbelSim] - \cr
         a list with components \code{shape}, \code{location} and 
         \code{scale} giving the parameters of the GEV distribution.
         By default the shape parameter has the value -0.25, the
@@ -195,7 +202,7 @@ shaparmPlot(x, revert = FALSE, standardize = FALSE, tails = 0.01*(1:10),
         \code{shape=0}.
         }
     \item{n}{
-        [gevSim] - \cr
+        [gevSim][gumbelSim] - \cr
         number of generated data points, an integer value.
         \cr
         [rgev][revd] - \cr        
@@ -205,7 +212,7 @@ shaparmPlot(x, revert = FALSE, standardize = FALSE, tails = 0.01*(1:10),
         [summary][grlevelPlot] - \cr
         a fitted object of class \code{"gevFit"}.
         }
-    \item{option}{
+    \item{plottype}{
         [hillPlot] - \cr
         whether \code{alpha}, \code{xi} (1/alpha) or
         \code{quantile} (a quantile estimate) should be plotted.
@@ -221,36 +228,14 @@ shaparmPlot(x, revert = FALSE, standardize = FALSE, tails = 0.01*(1:10),
         [pgev][pevs] - \cr
         a numeric vector of quantiles.
         }
-    \item{reverse}{
-        [hillPlot] - \cr
-        whether plot is to be by increasing threshold, \code{TRUE}, or 
-        increasing number of order statistics \code{FALSE}.
-        }
-    \item{revert}{
-        [shaparmPlot] - \cr
-        a logical value, by default FALSE, if set to TRUE the
-        sign of the vector will be reverted: \code{x = -x}.
-        }
     \item{seed}{
         [gevSim] - \cr
         an integer value to set the seed for the random number generator.
         }
-    \item{start, end}{
+    \item{start}{
         [hillPlot] - \cr
-        lowest and highest number of order statistics at which to plot
+        lowest number of order statistics at which to plot
         a point.
-        }
-    \item{standardize}{
-        [shaparmPlot] - \cr
-        a logical value, by default FALSE, if set to 
-        TRUE the vector \code{x} will be standardized: 
-        \code{x = (x-mean(x))/sqrt(var(x))}.
-        }
-    \item{tails}{
-        [shaparmPlot] - \cr
-        a numeric vector of tail depths to be considered; by
-        default ten values ranging from 0.1 to 1.0 in steps of 0.1
-        corresponding to values ranging from 1 to 10 percent.
         }
     \item{title}{
         [gevFit] - \cr
@@ -263,14 +248,6 @@ shaparmPlot(x, revert = FALSE, standardize = FALSE, tails = 0.01*(1:10),
         \code{"pwm"}.
         }
     \item{which}{
-        [shaparmPlot] - \cr
-        a vector of 3 logicals indicating which plots from the 
-        three methods will be created. The first entry decides
-        for the Pickands estimator, the second for the Hill 
-        estimator, and the last for the Deckers-Einmahl-deHaan
-        estimator. By default all three will be created.
-        By default \code{c(TRUE, TRUE, TRUE)}.
-        \cr
         [plot][summary] - \cr
         a vector of logicals, one for each plot, denoting which plot 
         should be displayed. Alkternatively if \code{which="ask"} the
@@ -383,10 +360,9 @@ shaparmPlot(x, revert = FALSE, standardize = FALSE, tails = 0.01*(1:10),
         
     \bold{Parameter Estimation:}
     \cr\cr
-    \code{gevFit} estimates the parameters either by the probability 
-    weighted moment method, \code{method="pwm"} or by maximum log 
-    likelihood estimation \code{method="mle"}. 
-    As a limiting case the Gumbel distribution can be selected. The 
+    \code{gevFit} and \code{gumbelFit} estimate the parameters either 
+    by the probability weighted moment method, \code{method="pwm"} or 
+    by maximum log likelihood estimation \code{method="mle"}. The 
     summary method produces diagnostic plots for fitted GEV or Gumbel 
     models.
     \cr

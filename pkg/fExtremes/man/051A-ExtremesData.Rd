@@ -86,8 +86,7 @@ mrlPlot(x, ci = 0.95, umin = mean(x), umax = max(x), nint = 100, doplot = TRUE,
      plottype = c("autoscale", ""), labels = TRUE, \dots)  
 mxfPlot(x, u = quantile(x, 0.05), doplot = TRUE, labels = TRUE, \dots)  
    
-msratioPlot(x, p = 1:4, doplot = TRUE, plottype = c("autoscale", ""), 
-    labels = TRUE, \dots) 
+msratioPlot(x, p = 1:4, doplot = TRUE, labels = TRUE, \dots) 
    
 recordsPlot(x, ci = 0.95, doplot = TRUE, labels = TRUE, \dots)
 ssrecordsPlot(x, subsamples = 10, doplot = TRUE, plottype = c("lin", "log"),
@@ -100,7 +99,7 @@ xacfPlot(x, u = quantile(x, 0.95), lag.max = 15, doplot = TRUE, labels = TRUE, \
 
 blockMaxima(x, block = c("monthly", "quarterly"), doplot = FALSE)
 findThreshold(x, n = floor(0.05*length(as.vector(x))))
-pointProcess(x, u = quantile(x, 0.95), column = 1)
+pointProcess(x, u = quantile(x, 0.95))
 deCluster(x, run = 20)
 
 interactivePlot(x, choices = paste("Plot", 1:9), 
@@ -129,10 +128,6 @@ gridVector(x, y)
         a vector of character strings for the
         choice menu. By Default \code{"Plot 1"} ... \code{"Plot 9"}
         allowing for 9 plots at maximum.
-        }
-    \item{column}{
-        an integer value or column name string which allows to extract
-        the specified column from a multivariate time Series.
         }
     \item{ci}{
         [recordsPlot] - \cr
@@ -198,12 +193,6 @@ gridVector(x, y)
     \item{subsamples}{
         [ssrecordsPlot] - \cr
         the number of subsamples, by default 10, an integer value.
-        }
-    \item{tail}{
-        [mxfPlot] - \cr
-        the threshold determined from the relative number of data points 
-        defining the tail, a numeric value; by default 0.05 which says 
-        that 5\% of the data make the tail.
         }
     \item{threshold, trim}{
         [qPlot][xacfPlot] - \cr
