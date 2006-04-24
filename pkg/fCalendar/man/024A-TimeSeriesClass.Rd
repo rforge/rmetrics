@@ -9,6 +9,8 @@
 
 \alias{as.timeSeries}
 \alias{as.timeSeries.default}
+\alias{as.timeSeries.numeric}
+\alias{as.timeSeries.ts}
 \alias{as.timeSeries.character}
 \alias{as.timeSeries.matrix}
 \alias{as.timeSeries.data.frame} 
@@ -57,6 +59,7 @@
 \alias{rev.timeSeries}
 \alias{outlierSeries}
 
+\alias{dummyDailySeries}
 \alias{alignDailySeries}
 \alias{ohlcDailyPlot}
 
@@ -96,7 +99,7 @@
     \tabular{ll}{   
     \code{timeSeries} \tab Creates a 'timeSeries' object from scratch, \cr
     \code{read.timeSeries} \tab Reads a 'timeSeries' from a spreadsheet file, \cr
-    \code{as.timeSeries} \tab S3: Creates 'time Series' from a 'matrix', \cr
+    \code{as.timeSeries} \tab S3: Creates 'time Series' object, \cr
     \code{is.timeSeries} \tab S3: Tests if an object is of class a 'timeSeries', \cr
     \code{print.timeSeries} \tab S3: Print method for a 'timeSeries' object, \cr
     \code{plot.timeSeries} \tab S3: Plot method for a 'timeSeries' object, \cr
@@ -125,6 +128,7 @@
             
     \tabular{ll}{         
     \code{applySeries} \tab Applies a function to margins of a 'timeSeries', \cr
+    \code{dummyDailySeries} \tab Creates a dummy daily 'timeSeries' object, \cr        
     \code{alignDailySeries} \tab Aligns a daily 'timeSeries' to new positions, \cr        
     \code{cut, cutSeries} \tab Cuts out a piece from a 'timeSeries' object, \cr
     \code{merge, mergeSeries} \tab Merges a 'timeSeries' object with a 'matrix', \cr
@@ -148,6 +152,8 @@ read.timeSeries(file, zone = "GMT", FinCenter = "", title = "",
     documentation = "", sep = ";")
     
 \method{as.timeSeries}{character}(x, \dots)
+\method{as.timeSeries}{numeric}(x, \dots)
+\method{as.timeSeries}{ts}(x, \dots)
 \method{as.timeSeries}{matrix}(x, \dots)
 \method{as.timeSeries}{data.frame}(x, \dots)
 \method{as.timeSeries}{zoo}(x, \dots)
@@ -197,6 +203,8 @@ absSeries(x)
 \method{log}{timeSeries}(x, base = exp(1))
 \method{abs}{timeSeries}(x)
 
+
+dummyDailySeries(x)
 alignDailySeries(x, method = c("before", "after", "interp", "fillNA"), 
     include.weekends = FALSE, units = NULL)
 ohlcDailyPlot(x, volume = TRUE, colOrder = c(1:5), units = 1e6, 
