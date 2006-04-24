@@ -73,7 +73,8 @@ forecastsImport(query, file = "tempfile",
     
 yahooSeries(symbols = c("^DJI", "IBM"), from = NULL, to = NULL, 
     nDaysBack = 365, quote = "Close", aggregation = c("d", "w", "m"), 
-    returns = FALSE, \dots)
+    returnClass = c("timeSeries", "ts", "matrix", "data.frame"), 
+    getReturns = FALSE, ...)
         
 show.fWEBDATA(object)
 \method{print}{keystats}(x, \dots)
@@ -106,6 +107,11 @@ show.fWEBDATA(object)
         an ISO-8601 formatted character string of the starting (end) 
         date, e.g. "2005-01-01".
         }
+    \item{getReturns}{
+        [yahooSeries] - \cr
+        a logical flag. Should return values be computed using the 
+        function \code{returnSeries}?
+        }
     \item{nDaysBack}{
         [yahooSeries] - \cr
         an integer giving the length of the download period in number 
@@ -119,11 +125,6 @@ show.fWEBDATA(object)
         a character string, denoting the location of the data at the 
         web site.
         }
-    \item{returns}{
-        [yahooSeries] - \cr
-        a logical flag. Should return values be computed using the 
-        function \code{returnSeries}?
-        }
     \item{save}{
         a logical value, if set to TRUE the downloaded data file will 
         be stored under the path and file name specified by the
@@ -133,6 +134,13 @@ show.fWEBDATA(object)
         [yahooSeries] - \cr
         a character value or vector of strings giving the column name(s) 
         of those instruments to be extracted from the download. 
+        }
+    \item{returnClass}{
+        [yahooSeries] - \cr
+        a character string naming the class of the object to be 
+        returned. By default the function \code{yahooSeries} returns 
+        a \code{"timeSeries"} object, alternatives are: \code{"ts"}, 
+        \code{"matrix"}, or \code{"data.frame"}.
         }
     \item{sep}{
         a character value, defining the field separator for the 
@@ -193,6 +201,10 @@ show.fWEBDATA(object)
         By default just the current date when the test was applied will
         be returned.}
         
+    The function \code{yahooSeries} returns by default an S4 object of 
+    class  \code{timeSeries} or alternatively an object specified by
+    the function argument \code{returnClass}.
+    
     The function \code{keystatsImport} returns an S3 object of class 
     \code{keystsats} with two entries: \code{$query} holds the query
     name, and \code{keystats} holds the dataframe with the statistical
