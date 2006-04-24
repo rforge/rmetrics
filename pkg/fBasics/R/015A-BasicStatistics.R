@@ -789,10 +789,10 @@ function(fun = "norm", ...)
     
     # Check 3:
     cat("\n3. r(10'000) Check:\n")
-    set.seed(4711)
     n = 10000
     r = rfun(n = 10000, ...)
-    SAMPLE = c(MEAN = mean(r), VAR = var(r))
+    SAMPLE = data.frame(t(c(MEAN = mean(r), "VAR" = var(r))), 
+        row.names = "SAMPLE")
     print(signif(SAMPLE, 3))
     fun1 = function(x, ...) { x * dfun(x, ...) }
     fun2 = function(x, M, ...) { x^2 * dfun(x, ...) }   
@@ -804,7 +804,8 @@ function(fun = "norm", ...)
         subdivisions = 5000, ...)  
     cat("   X^2 ")
     print(VAR)
-    EXACT = c(MEAN = MEAN[[1]], "VAR" = VAR[[1]] - MEAN[[1]]^2)
+    EXACT = data.frame(t(c(MEAN = MEAN[[1]], "VAR" = VAR[[1]] - MEAN[[1]]^2)),
+        row.names = "EXACT ")
     print(signif(EXACT, 3))
     cat("\n")
     

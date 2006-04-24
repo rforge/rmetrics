@@ -221,7 +221,7 @@ save = FALSE, colname = "VALUE", try = TRUE)
 
 
 # ------------------------------------------------------------------------------
-
+    
 
 yahooImport = 
 function (query, file = "tempfile", 
@@ -231,9 +231,7 @@ swap = 20, try = TRUE)
 
     # Example:
     #   IBM SHARES, test 19/20 century change 01-12-1999 -- 31-01-2000:
-    #   yahooImport(
-    #       query = "s=IBM&a=11&b=1&c=1999&d=0&q=31&f=2000&z=IBM&x=.csv", 
-    #       file = "IBM.CSV", save = TRUE)
+    #   yahooImport("s=IBM&a=11&b=1&c=1999&d=0&e=31&f=2000&g=d&x=.csv")
 
     # Notes:
     #   Requires: fields() cuts a string in fields
@@ -245,6 +243,7 @@ swap = 20, try = TRUE)
     #   d     Last Quote ends with Month (mm): 0-11, Jan-Dec
     #   e     Last Quote ends with Day (dd)
     #   f     Last Quote ends with Year (yy): as CCYY
+    #   r     Aggregation Level
     #   z     Selected Ticker-Symbol [optional]
 
     # FUNCTION:
@@ -294,7 +293,6 @@ swap = 20, try = TRUE)
         #   substring(rowNames, 1, 4), "-",
         #   substring(rowNames, 5, 6), "-",
         #   substring(rowNames, 7, 8), sep = "")
-        # <
         colNames = scan(file = file, n = dim(x1)[2],  what = "", sep = ",")[-1]
         dimnames(z) = list(rowNames, colNames)
             
@@ -311,7 +309,7 @@ swap = 20, try = TRUE)
         } 
         
         # Result:
-        z = data.frame(cbind(DATE = rowNames, z), row.names = NULL)
+        z = data.frame(DATE = rowNames, z, row.names = NULL)
         
         # Return Value:
         ans = new("fWEBDATA",     
@@ -659,7 +657,8 @@ source = "http://www.forecasts.org/data/data/", save = FALSE, try = TRUE)
 yahooSeries = 
 function(symbols = c("^DJI", "IBM"), from = NULL, to = NULL, 
 nDaysBack = 365, quote = "Close", aggregation = c("d", "w", "m"), 
-returns = FALSE, ...)
+returnClass = c("timeSeries", "ts", "matrix", "data.frame"), 
+getReturns = FALSE, ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -683,7 +682,7 @@ returns = FALSE, ...)
     #       for weekly and 'm' for monthly data records.
     #   returns - a logical flag. Should return values be computed
     #       using the function 'returnSeries'?
-    #   asClass = a character string which decides how the downloaded
+    #   returnClass = a character string which decides how the downloaded
     #       time series will be returned. By default an object of
     #       class 'timeSeries' will be returned .
     
@@ -695,42 +694,47 @@ returns = FALSE, ...)
     # FUNCTION:
     
     # Settings:
-    asClass = c("timeSeries", "zoo", "ts")
-    aggregation = aggregation[1]
-    asClass = asClass[1]
+    returnClass = match.arg(returnClass)
+    aggregation = match.arg(aggregation)
        
     # First Symbol:
     X = .yahooSeries(symbols[1], from = from, to = to, 
         nDaysBack = nDaysBack, quote = quote, 
-        aggregation = aggregation, asClass = "timeSeries")
+        aggregation = aggregation, returnClass = "timeSeries")
     UNITS = paste(symbols[1], ".", quote, sep = "")
     if (aggregation == "d") X = alignDailySeries(X, ...) 
     X@units = UNITS
     colnames(X@Data) = UNITS
+    # print(head(X))
 
     # Next Symbols:
     if (length(symbols) > 1) {
         for (i in 2:length(symbols)) { 
             Y = .yahooSeries(symbols[i], from = from, to = to, 
                 nDaysBack = nDaysBack, quote = quote, 
-                aggregation = aggregation, asClass = "timeSeries")
+                aggregation = aggregation, returnClass = "timeSeries")
+            # print(head(Y))
             UNITS = paste(symbols[i], ".", quote, sep = "")
             if (aggregation == "d") Y = alignDailySeries(Y, ...)
             X = mergeSeries(X, Y@Data, units = c(X@units, UNITS))
+            # print(head(X))
         }
     }
     
     # Return Series ?
-    if (returns) X = returnSeries(X, ...)  
+    if (getReturns) X = returnSeries(X, ...)  
     
-    # As zoo Object ?
-    if (asClass == "zoo") X = as.zoo(X)
-    
-    # As ts/mts Object ?
-    if (asClass == "zoo") X = as.ts(X)
+    # As zoo | ts  Object ?
+    if (returnClass == "atrix") {
+        X = X@data
+    } else if (returnClass == "data.frame") {
+        X = data.frame(X@Data)
+    } else if (returnClass == "ts") {
+        X = as.ts(X@Data)
+    }
     
     # Return Value:
-    invisible(X)
+    X
 }
 
 
@@ -740,11 +744,11 @@ returns = FALSE, ...)
 .yahooSeries = 
 function(symbol = "IBM", from = NULL, to = NULL, nDaysBack = 365, 
 quote = "Close", aggregation = c("d", "w", "m"), 
-asClass = c("timeSeries", "zoo", "ts"))
+returnClass = c("timeSeries", "zoo", "ts"))
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Easily downloads time series data from Yahoo
+    #   Easily downloads univariate time series data from Yahoo
     
     # Arguments:
     #   symbol - a character string, the Yahoo Symbol name.
@@ -761,7 +765,7 @@ asClass = c("timeSeries", "zoo", "ts"))
     #   aggregation - a character string denoting the aggregation
     #       level of the downloaded date, 'd' for daily, 'w' for
     #       weekly and 'm' for monthly data records.
-    #   asClass = a character string which decides how the downloaded
+    #   returnClass = a character string which decides how the downloaded
     #       time series will be returned. By default an object of
     #       class 'timeSeries' will be returned .
     
@@ -797,12 +801,6 @@ asClass = c("timeSeries", "zoo", "ts"))
     
     # Extract desired columns from Time Series:
     ans = as.timeSeries(X)[, quote]
-    
-    # NOT USED - Transform to zoo object if desired:
-    # if (asClass[1] == "zoo")  ans = as.zoo(ans)
-    
-    # NOT USED - Transform to ts/mts object if desired:
-    # if (asClass[1] == "ts")  ans = as.ts(ans)
     
     # Return Value:
     ans
