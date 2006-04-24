@@ -33,8 +33,16 @@
 #  timeSeries           Creates a 'timeSeries' object from scratch
 #  read.timeSeries      Reads from a spreadsheet and creates a 'timeSeries'
 # METHODS:
-#   as.timeSeries       S3: Creates a dummy 'time Series' from a 'matrix'
+#   as.timeSeries       S3: Creates a 'timeSeries' object
+#   as.timeSeries.default
+#   as.timeSeries.numeric
+#   as.timeSeries.ts
+#   as.timeSeries.character
+#   as.timeSeries.data.frame
+#   as.timeSeries.matrix
+#   as.timeSeries.zoo
 #   is.timeSeries       S3: Tests for a 'timeSeries' object
+# METHODS:             DESCRIPTION:
 #   print.timeSeries    S3: Print method for a 'timeSeries' object
 #   plot.timeSeries     S3: Plot method for a 'timeSeries' object
 #   lines.timeSeries    S3: Lines method for a 'timeSeries' object
@@ -69,6 +77,7 @@
 #  log|logSeries        eturns logarithms of a 'timeSeries' object
 #  abs|absSeries        Returns abolute values of a 'timeSeries' object
 # FUNCTION:            FOR DAILY OPERATIONS:
+#  dummyDailySeries     Creates a dummy daily 'timeSeries' object
 #  alignDailySeries     Aligns a 'timeSeries' object to new positions 
 #  ohlcDailyPlot        Plots open–high–low–close bar chart         
 ################################################################################
@@ -282,7 +291,40 @@ as.timeSeries.default =
 function(x, ...)
 {   # A function implemented by Diethelm Wuertz
 
+    # Return Value:
     x
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+as.timeSeries.numeric =
+function(x, ...)
+{   # A function implemented by Diethelm Wuertz
+
+
+    # Create a dummay daily 'timeSeries' object:
+    ans = dummyDailySeries(x)
+    
+    # Return Value:
+    ans
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+as.timeSeries.ts =
+function(x, ...)
+{   # A function implemented by Diethelm Wuertz
+
+
+    # Create a dummay daily 'timeSeries' object:
+    ans = dummyDailySeries(as.vector(x))
+    
+    # Return Value:
+    ans
 }
 
 
@@ -388,7 +430,7 @@ function(x, ...)
 }
 
 
-# ------------------------------------------------------------------------------
+# ******************************************************************************
 
 
 is.timeSeries = 
@@ -1749,6 +1791,39 @@ trim = TRUE, digits = 4, units = NULL)
 
 
 ################################################################################
+
+
+dummyDailySeries =
+function(x)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Creates a dummy daily time Series
+    
+    # Arguments:
+    #   x - a numeric vector 
+    #   origin - the first date in the series
+    
+    # Example:
+    #   dummyDailySeries(rnorm(100))
+    
+    # FUNCTION:
+    
+    # Check:
+    stopifnot(is.numeric(x))
+    
+    # Time Series:
+    positions = timeSequence(from = "1970-01-01", length.out = length(x),
+        FinCenter = "GMT")
+    ans = timeSeries(data = matrix(x, ncol = 1), charvec = positions,
+        units = "TS", FinCenter = "GMT")
+        
+    # Return Value:
+    ans
+}
+
+
+# ------------------------------------------------------------------------------
 
 
 alignDailySeries = 
