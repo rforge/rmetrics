@@ -39,17 +39,35 @@
 
 
 potSim = 
-function(x, u = quantile(x, 0.95), run = NULL, column = 1)
+function(x, u = quantile(x, 0.95), run = 1)
 {   # A function implemented by Diethelm Wuertz
 
+    # Description:
+    #   Simulates a point process from a given time series object
+    
+    # Arguments:
+    #   x - timSeries object
+    #   u - threshold value
+    #   run - cluster size
+    
     # Example:
     #   z = potSim(x = as.timeSeries(data(daxRet))); plot(z)
+    #   z = potSim(x = as.timeSeries(data(daxRet)), run = 20); plot(z)
+    
+    # FUNCTION:
+    
+    # Transform into a timeSeries Object:
+    x = as.timeSeries(x)
     
     # Simulated POT Process:
-    ans = pointProcess(x = x, u = u, column = column)
+    ans = pointProcess(x = x, u = u)
     
     # Optionally Decluster:
-    if (!is.null(run)) ans = deCluster(ans, run = run)
+    if (run > 1) ans = deCluster(ans, run = run)
+    
+    # Add Control:
+    attr(ans, "control") = 
+        data.frame(u = u, q = names(u), run = run, row.names = "")   
     
     # Return Value:
     ans
@@ -62,9 +80,11 @@ function(x, u = quantile(x, 0.95), run = NULL, column = 1)
 setClass("fPOTFIT", 
     representation(
         call = "call",
-        data = "list",
         method = "character",
+        parameter = "list",
+        data = "list",
         fit = "list",
+        residuals = "numeric",
         title = "character",
         description = "character"
     )  
@@ -75,10 +95,14 @@ setClass("fPOTFIT",
 
 
 potFit = 
-function(x, u = quantile(x, 0.95), run = NULL, title = NULL, 
+function(x, u = quantile(x, 0.95), run = 1, title = NULL, 
 description = NULL)
 {   # A function implemented by Diethelm Wuertz
 
+    # Description:
+    
+    # Arguments:
+    
     # FUNCTION:
     
     # Save Call:
@@ -87,8 +111,10 @@ description = NULL)
     # Prepare Series:
     n = length(x@Data) 
     span = as.numeric(end(x) - start(x))
-    X = .pointProcess(x = x, u = u)
-    if (!is.null(run)) X = .deCluster(x = X, run = run)
+    X = pointProcess(x = x, u = u)
+    if (run > 1) X = deCluster(x = X, run = run)
+    
+    # Statistics:
     nX = length(X@Data)
     meanX = mean(X@Data)-u
     varX = var(X@Data)
@@ -101,32 +127,27 @@ description = NULL)
     theta = c(shape0, scale0, loc0)
 
     # Fit Parameter:
-    fitted = optim(theta, .potLLH.evir, hessian = TRUE,  
+    fit = optim(theta, .potLLH.evir, hessian = TRUE,  
         exceedances = X@Data, threshold = u, span = span)
-    fit = list()
-    fit$fit = fitted
+        
+    # Output:
     fit$call = call
     fit$type = c("pot", "mle")
-    fit$span = span
-    fit$threshold = u
-    fit$n.exceed = nX   
-    fit$fit$run = run
-    fit$par.ests = fitted$par
-    fit$par.ses = sqrt(diag(solve(fitted$hessian)))   
+    # fit$span = span
+    # fit$n.exceed = nX   
+    fit$par.ests = fit$par
+    fit$par.ses = sqrt(diag(solve(fit$hessian)))   
     fit$beta = fit$par.ests[2] + fit$par.ests[1] * (u-fit$par.ests[3])
     fit$par.ests = c(fit$par.ests, fit$beta)
-    fit$nllh.final = fitted$value
+    fit$llh = fit$value
     names(fit$par.ests) = c("xi", "sigma", "mu", "beta")
     names(fit$par.ses) = c("xi", "sigma", "mu")
     
     # Compute Residuals:
     xi = fit$par.ests[1]
     beta = fit$par.ests[4]
-    threshold = fit$threshold 
-    fit$residuals = as.vector(log(1 + (xi * (as.vector(X) - u))/beta)/xi)
-    fit$fitted.values = as.vector(X) - fit$residuals
-    fit$llh = fitted$nllh.final
-    fit$converged = fitted$converged       
+    residuals = as.vector(log(1 + (xi * (as.vector(X) - u))/beta)/xi)
+    # fit$fitted.values = as.vector(X) - fit$residuals     
     
     # Add title and description:
     if (is.null(title)) title = "POT Parameter Estimation"
@@ -135,82 +156,11 @@ description = NULL)
     # Return Value:
     new("fPOTFIT",
         call = match.call(),
-        data = list(x = X),
         method = fit$type,
+        parameter = list(u = u, run = run),
+        data = list(x = x, exceedances = X),
         fit = fit,
-        title = title,
-        description = description)
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.old.potFit =
-function(x, threshold = NA, nextremes = NA, run = NA, title = NULL,
-description = NULL, ...)
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Parameter Estimation for the POT model.
-
-    # FUNCTION:
-    
-    # Save Call:
-    call = match.call()
-    
-    # Call pot() from evir: 
-    fitted = .pot.evir(data = x, threshold = threshold, 
-        nextremes = nextremes, run = run, picture = FALSE, ...) 
-        
-    # Compute Residuals:
-    xi = fitted$par.ests[1]
-    beta = fitted$par.ests[4]
-    threshold = fitted$threshold 
-    fitted$residuals = 
-        as.vector(log(1 + (xi * (fitted$data - threshold))/beta)/xi)
-    
-    # Gaps:
-    x = fitted
-    x$rawdata = x$data
-    n = length(as.numeric(x$rawdata))
-    x$times = attributes(x$rawdata)$times
-    if (is.character(x$times) || inherits(x$times, "POSIXt") || 
-        inherits(x$times, "date") || inherits(x$times, "dates")) {
-        x$times = as.POSIXlt(x$times)
-        x$gaps = as.numeric(difftime(x$times[2:n], x$times[1:(n - 1)], 
-            units = "days")) * x$intensity 
-    } else {
-        x$times = 1:n
-        x$gaps = as.numeric(diff(x$times)) * x$intensity 
-    }
-    fitted$times = x$times
-    fitted$rawdata = x$rawdata
-    fitted$gaps = x$gaps
-    
-    # Add:
-    fit = list()
-    fit$fit = fitted
-    fit$call = call
-    fit$type = c("pot", "mle")
-    fit$par.ests = fitted$par.ests
-    fit$par.ses = fitted$par.ses
-    fit$residuals = fitted$residuals
-    fit$fitted.values = fitted$data - fitted$residuals
-    fit$llh = fitted$nllh.final
-    fit$converged = fitted$converged        
-    class(fit) = c("list", "potFit")
-    
-    # Add title and description:
-    if (is.null(title)) title = "POT Parameter Estimation"
-    if (is.null(description)) description = as.character(date())
-    
-    # Return Value:
-    new("fPOTFIT",
-        call = match.call(),
-        data = list(x = x),
-        method = fit$type,
-        fit = fit,
+        residuals = residuals,
         title = title,
         description = description)
 }
@@ -235,19 +185,21 @@ function(x, ...)
     cat("\nCall:\n ")
     cat(paste(deparse(x@call), sep = "\n", collapse = "\n"), "\n", sep = "")
             
+    # Point Process and Decluster Parameters:
+    parameter = cbind(u = x@parameter$u, run = x@parameter$run)
+    rownames(parameter) = paste("", rownames(parameter))
+    cat("\nModel Parameters:\n")
+    print(parameter)
+    
     # Estimation Type:
     cat("\nEstimation Method:\n", x@method, "\n") 
     
     # Estimated Parameters:
     cat("\nEstimated Parameters:\n")
     print(x@fit$par.ests)
-    
-    # Decluster Run Length:
-    if (!is.na(x@fit$fit$run))
-    cat("\nDecluster Runlength:", x@fit$fit$run, "\n")
-    
+
     # Desription:
-    cat("\nDescription\n ", x@description, "\n\n")
+    cat("\nDescription\n", x@description, "\n\n")
     
     # Return Value:
     invisible(x)
@@ -258,7 +210,7 @@ function(x, ...)
 
 
 plot.fPOTFIT =
-function(x, which = "all", ...)
+function(x, which = "ask", ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -267,52 +219,10 @@ function(x, which = "all", ...)
     # FUNCTION:
     
     # Plot functions:   
-    plot.1 <<- function(x, ...) {
-        exceedances = x@data$x
-        plot(exceedances, type = "h", col = "steelblue",
-            main = "Point Process of Exceedances", ...) 
-    }
-    plot.2 <<- function(x, ...) {
-        gaps = as.numeric(diff(seriesPositions(x@data$x)))/(24*3600)
-        plot(gaps, col = "steelblue", pch = 19,
-            ylab = "Gaps", xlab = "Ordering", 
-            main = "Scatterplot of Gaps", ...)
-        lines(lowess(1:length(gaps), gaps)) 
-        grid()
-    } 
-    plot.3 <<- function(x, ...) {
-        gaps = as.numeric(diff(seriesPositions(x@data$x)))/(24*3600)
-        .qplot.evir(gaps, col = "steelblue", pch = 19, 
-            main = "QQ-Plot of Gaps", ...) 
-        grid()
-    }           
-    plot.4 <<- function(x, ...) {
-        gaps = as.numeric(diff(seriesPositions(x@data$x)))/(24*3600)
-        acf(gaps, lag.max = 20, col = "steelblue",
-            main = "ACF of Gaps", ...) 
-    }
-    plot.5 <<- function(x, ...) {
-        residuals = x@fit$residuals
-        plot(residuals, col = "steelblue", pch = 19, 
-            ylab = "Residuals", xlab = "Ordering", 
-            main = "Scatterplot of Residuals", ...)
-        lines(lowess(1:length(residuals), residuals)) 
-        grid()
-    }
-    plot.6 <<- function (x, ...) {
-        residuals = x@fit$residuals
-        .qplot.evir(residuals, col = "steelblue", pch = 19, 
-            main = "QQ-Plot of Residuals", ...) 
-    }
-    plot.7 <<- function (x, ...) { 
-        residuals = x@fit$residuals
-        acf(residuals, lag.max = 20, 
-            main = "ACF of Residuals", ...) 
-    }
     plot.8 <<- function (x, ...) { 
         if (which == "ask") {
             fit = x@fit
-            plot.fGPD(fit)
+            plot.fGPDFIT(fit)
             plot.fPOTFIT(x, which = "ask") } 
     }
 
@@ -329,13 +239,13 @@ function(x, which = "all", ...)
             "ACF of Residuals",
             "GOTO GPD Plots"),
         plotFUN = c(
-            "plot.1", 
-            "plot.2", 
-            "plot.3",
-            "plot.4", 
-            "plot.5", 
-            "plot.6",
-            "plot.7",
+            ".pot1Plot", 
+            ".pot2Plot", 
+            ".pot3Plot",
+            ".pot4Plot", 
+            ".pot5Plot", 
+            ".pot6Plot",
+            ".pot7Plot",
             "plot.8"),
         which = which)
                     
@@ -343,6 +253,316 @@ function(x, which = "all", ...)
     invisible(x)
 }
 
+
+# ------------------------------------------------------------------------------
+
+
+.pot1Plot =
+function(x, labels = TRUE, ...) 
+{   # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   Point Process of Exceedances   
+    
+    # FUNCTION:
+    
+    # Data:
+    exceedances = x@data$exceedances
+    
+    # Labels:
+    if (labels) {
+        main = "Point Process of Exceedances"
+        xlab = "Index"
+        ylab = "Exceedances"
+    } else {
+        main = xlab = ylab = ""
+    }
+              
+    # Plot:
+    plot(exceedances, type = "h", 
+        main = main, xlab = xlab, ylab = ylab, 
+        col = "steelblue", ...) 
+    
+    # Addon:
+    if (labels) {
+        u = signif (x@parameter$u, 3)
+        run = x@parameter$run
+        text = paste("u =", u, "| run =", run)
+        mtext(text, side = 4, adj = 0, cex = 0.7)
+        grid()
+    }
+    
+    # Return Value:
+    invisible()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.pot2Plot =
+function(x, labels = TRUE, ...) 
+{   # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   Scatterplot of Gaps  
+    
+    # FUNCTION:
+    
+    # Data:
+    exceedances = x@data$exceedances
+    gaps = as.numeric(diff(seriesPositions(exceedances))) / (24*3600)
+    
+    # Labels:
+    if (labels) {
+        main = "Scatterplot of Gaps"
+        xlab = "Ordering"
+        ylab = "Gap Lengths"
+    } else {
+        main = xlab = ylab = ""
+    }
+    
+    # Plot:
+    plot(gaps, 
+        main = main, xlab = xlab, ylab = ylab, 
+        pch = 19, col = "steelblue", ...)
+    lines(lowess(1:length(gaps), gaps), col = "brown")
+    
+    # Addon:
+    if (labels) {
+        u = signif (x@parameter$u, 3)
+        run = x@parameter$run
+        text = paste("u =", u, "| run =", run)
+        mtext(text, side = 4, adj = 0, cex = 0.7)
+        grid()
+    }
+    
+    # Return Value:
+    invisible()
+} 
+
+
+# ------------------------------------------------------------------------------
+
+
+.pot3Plot =
+function(x, labels = TRUE, ...) 
+{   # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   Quantile Plot of Gaps
+    
+    # FUNCTION:
+    
+    # Data:
+    exceedances = x@data$exceedances
+    gaps = as.numeric(diff(seriesPositions(exceedances))) / (24*3600)
+    sorted = sort(gaps)
+    y <- qexp(ppoints(gaps))
+    
+    # Labels:
+    if (labels) {
+        main = "Quantile Plot of Gaps"
+        xlab = "Ordered Data"
+        ylab = "Exponential Quantiles"
+    } else {
+        main = xlab = ylab = ""
+    }
+    
+    # Plot:
+    plot(x = sorted, y = y, 
+        main = main, xlab = xlab, ylab = ylab,
+        pch = 19, col = "steelblue", ...)   
+    abline(lsfit(sorted, y))
+    
+    # Addon:
+    if (labels) {
+        u = signif (x@parameter$u, 3)
+        run = x@parameter$run
+        text = paste("u =", u, "| run =", run)
+        mtext(text, side = 4, adj = 0, cex = 0.7)
+        grid()
+    }
+    
+    # Return Value:
+    invisible()
+}  
+
+
+# ------------------------------------------------------------------------------
+
+
+.pot4Plot =
+function(x, labels = TRUE, ...) 
+{   # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   ACF Plot of Gaps
+    
+    # FUNCTION:
+    
+    # Data:
+    exceedances = x@data$exceedances
+    gaps = as.numeric(diff(seriesPositions(exceedances))) / (24*3600)
+    sorted = sort(gaps)
+    y <- qexp(ppoints(gaps))
+    
+    # Labels:
+    if (labels) {
+        main = "ACF Plot of Gaps"
+        xlab = "Lag"
+        ylab = "ACF"
+    } else {
+        main = xlab = ylab = ""
+    }
+    
+    # Plot:
+    acf(gaps, main = main, xlab = xlab, ylab = ylab,
+        col = "steelblue", ...) 
+    # Addon:
+    if (labels) {
+        u = signif (x@parameter$u, 3)
+        run = x@parameter$run
+        text = paste("u =", u, "| run =", run)
+        mtext(text, side = 4, adj = 0, cex = 0.7)
+        # grid()
+    }
+    
+    # Return Value:
+    invisible()
+}        
+
+
+# ------------------------------------------------------------------------------
+
+
+.pot5Plot =
+function(x, labels = TRUE, ...) 
+{   # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   ACF Plot of Gaps
+    
+    # FUNCTION:
+    
+    # Data:
+    residuals = x@residuals
+    
+    # Labels:
+    if (labels) {
+        main = "Scatterplot of Residuals"
+        xlab = "Ordering"
+        ylab = "Residuals"
+    } else {
+        main = xlab = ylab = ""
+    }
+    
+    # Plot:
+    plot(residuals, 
+        main = main, xlab = xlab, ylab = ylab,
+        pch = 19, col = "steelblue", ...)   
+    lines(lowess(1:length(residuals), residuals), col = "brown") 
+    
+    # Addon:
+    if (labels) {
+        u = signif (x@parameter$u, 3)
+        run = x@parameter$run
+        text = paste("u =", u, "| run =", run)
+        mtext(text, side = 4, adj = 0, cex = 0.7)
+        grid()
+    }
+    
+    # Return Value:
+    invisible()
+}   
+
+
+# ------------------------------------------------------------------------------
+
+
+.pot6Plot =
+function(x, labels = TRUE, ...) 
+{   # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   Quantile Plot of Residuals
+    
+    # FUNCTION:
+    
+    # Data:
+    residuals = x@residuals
+    sorted = sort(residuals)
+    y <- qexp(ppoints(residuals))
+    
+    # Labels:
+    if (labels) {
+        main = "Quantile Plot of Residuals"
+        xlab = "Ordered Data"
+        ylab = "Exponential Quantiles"
+    } else {
+        main = xlab = ylab = ""
+    }
+    
+    # Plot:
+    plot(x = sorted, y = y,
+        main = main, xlab = xlab, ylab = ylab,
+        pch = 19, col = "steelblue", ...)   
+    abline(lsfit(sorted, y), col = "brown")
+    
+    # Addon:
+    if (labels) {
+        u = signif (x@parameter$u, 3)
+        run = x@parameter$run
+        text = paste("u =", u, "| run =", run)
+        mtext(text, side = 4, adj = 0, cex = 0.7)
+        grid()
+    }
+    
+    # Return Value:
+    invisible()
+}      
+
+
+# ------------------------------------------------------------------------------
+
+
+.pot7Plot =
+function(x, labels = TRUE, ...) 
+{   # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   ACF Plot of Residuals
+    
+    # FUNCTION:
+    
+    # Data:
+    residuals = x@residuals
+    
+    # Labels:
+    if (labels) {
+        main = "ACF Plot of Residuals"
+        xlab = "Lag"
+        ylab = "ACF"
+    } else {
+        main = xlab = ylab = ""
+    }
+    
+    # Plot:
+    acf(residuals, main = main, xlab = xlab, ylab = ylab,
+        col = "steelblue", ...) 
+    # Addon:
+    if (labels) {
+        u = signif (x@parameter$u, 3)
+        run = x@parameter$run
+        text = paste("u =", u, "| run =", run)
+        mtext(text, side = 4, adj = 0, cex = 0.7)
+        # grid()
+    }
+    
+    # Return Value:
+    invisible()
+}        
+    
 
 # ------------------------------------------------------------------------------
 
@@ -367,19 +587,21 @@ function(object, doplot = TRUE, which = "all", ...)
     # Estimation Type:
     cat("\nEstimation Method:\n", object@method, "\n") 
     
+    # Point Process and Decluster Parameters:
+    parameter = cbind(u = x@parameter$u, run = x@parameter$run)
+    rownames(parameter) = paste("", rownames(parameter))
+    cat("\nModel Parameters:\n")
+    print(parameter)
+      
     # Estimated Parameters:
     cat("\nEstimated Parameters:\n")
     print(object@fit$par.ests)
-    cat("\n")
-    
-    # Decluster Run Length:
-    if (!is.na(object@fit$fit$run))
-    cat("\nDecluster Runlength:", object@fit$fit$run, "\n")
     
     # Summary:
-    cat("\nStandard Deviations:\n"); print(object@fit$par.ses)
+    cat("\nStandard Deviations:\n")
+    print(object@fit$par.ses)
     cat("\nLog-Likelihood Value:\n ", object@fit$llh)
-    cat("\n\nType of Convergence:\n ", object@fit$converged) 
+    cat("\n\nType of Convergence:\n ", object@fit$convergence) 
     
     # Desription:
     cat("\n\nDescription\n ", object@description, "\n\n")
@@ -395,16 +617,18 @@ function(object, doplot = TRUE, which = "all", ...)
 
 
 ################################################################################
-# FROM EVIR
+# COPY FROM EVIR
 
 
 .pot.evir = 
 function(data, threshold = NA, nextremes = NA, run = NA, picture = TRUE, ...)
-{   # A copy from evir
+{   # A copy from R package evir
 
+    # FUNCTION:
+    
     n = length(as.numeric(data))
     times = attributes(data)$times
-    if(is.null(times)) {
+    if (is.null(times)) {
         times = 1:n
         attributes(data)$times = times
         start = 1
@@ -416,16 +640,16 @@ function(data, threshold = NA, nextremes = NA, run = NA, picture = TRUE, ...)
         span = as.numeric(difftime(as.POSIXlt(times)[n],
             as.POSIXlt(times)[1], units = "days"))
     }
-    if(is.na(nextremes) && is.na(threshold)) {
+    if (is.na(nextremes) && is.na(threshold)) {
         stop("Enter either a threshold or the number of upper extremes")
     }
-    if(!is.na(nextremes) && !is.na(threshold)) {
+    if (!is.na(nextremes) && !is.na(threshold)) {
         stop("Enter EITHER a threshold or the number of upper extremes")
     }
-    if(!is.na(nextremes)) {
+    if (!is.na(nextremes)) {
         threshold = findthresh(as.numeric(data), nextremes)
     }
-    if(threshold > 10) {
+    if (threshold > 10) {
         factor = 10^(floor(log10(threshold)))
         cat(paste("If singularity problems occur divide data",
             "by a factor, perhaps", factor, "\n"))
@@ -434,7 +658,7 @@ function(data, threshold = NA, nextremes = NA, run = NA, picture = TRUE, ...)
         times[data > threshold])
     n.exceed = length(as.numeric(exceedances.its))
     p.less.thresh = 1 - n.exceed/n
-    if(!is.na(run)) {
+    if (!is.na(run)) {
         exceedances.its = decluster(exceedances.its, run, picture)
         n.exceed = length(exceedances.its)
     }
@@ -476,8 +700,10 @@ function(data, threshold = NA, nextremes = NA, run = NA, picture = TRUE, ...)
 
 .potLLH.evir = 
 function(theta, exceedances, threshold, span)
-{   # A copy from evir
+{   # A copy from # A copy from R package evirevir
 
+    # FUNCTION:
+    
     test = (theta[2] <= 0) || (min(1 + (theta[1] * 
         (exceedances - theta[3])) / theta[2]) <= 0)
     if (test) {

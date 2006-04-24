@@ -34,22 +34,22 @@
 #  qgpd                    Quantiles for the Generalized Pareto DF
 #  rgpd                    Random variates for the Generalized Pareto DF
 # FUNCTION:              MOMENTS:
-#  .gpdMoments            Computes true statistics for GPD distribution
+#  gpdMoments             Computes true statistics for GPD distribution
 # FUNCTION:              GPD MODELLING FROM EVIS:
 #  gpdSim                 Simulates GPD rvs
-#  fGPD                   S4 Class Representation
+#  fGPDFIT                   S4 Class Representation
 #  gpdFit                 Fits GPD Distribution
 #   print.gpd              Print Method for object of class "gpd"
 #   plot.gpd               Plot Method for object of class "gpd"
 #   summary.gpd            Summary Method for object of class "gpd"
 # FUNCTION:              ADDITIONAL PLOTS:
-#  gpdtailPlot            Plots Tail Estimate From GPD Model
-#  gpdquantPlot           Plots of GPD Tail Estimate of a High Quantile
-#  gpdshapePlot           Plots for GPD Shape Parameter
-#  gpdqPlot               Adds Quantile Estimates to plot.gpd
-#  gpdsfallPlot           Adds Expected Shortfall Estimates to a GPD Plot
+#  gpdTailPlot            Plots Tail Estimate From GPD Model
+#  gpdQuantPlot           Plots of GPD Tail Estimate of a High Quantile
+#  gpdShapePlot           Plots for GPD Shape Parameter
+#  gpdQPlot               Adds Quantile Estimates to plot.gpd
+#  gpdSfallPlot           Adds Expected Shortfall Estimates to a GPD Plot
 # FUNCTION:              ADDITIONAL FUNCTION:
-#  gpdriskmeasures        Calculates Quantiles and Expected Shortfalls
+#  gpdriskMeasures        Calculates Quantiles and Expected Shortfalls
 ################################################################################
 
 
@@ -57,22 +57,150 @@
 # GPD DISTRIBUTION FAMILY:
 
 
+depd = 
+function(x, location = 0, scale = 1, shape = 0, log = FALSE) 
+{
+    # Check:
+    stopifnot(min(scale) > 0) 
+    stopifnot(length(shape) == 1) 
+    
+    # Density:
+    d <- (x - location)/scale
+    nn <- length(d)
+    scale <- rep(scale, length.out = nn)
+    index <- (d > 0 & ((1 + shape * d) > 0)) | is.na(d)
+    if (shape == 0) {
+        d[index] <- log(1/scale[index]) - d[index]
+        d[!index] <- -Inf
+    } else {
+        d[index] <- log(1/scale[index]) - (1/shape+1)*log(1+shape*d[index])
+        d[!index] <- -Inf
+    }
+    
+    # Log:
+    if (!log) 
+        d <- exp(d)
+    
+    # Add Congtrol:
+    attr(d, "control") = data.frame(location = location[1], scale = scale[1], 
+        shape = shape[1], log = log, row.names = "")
+           
+    # Return Value: 
+    d
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+pepd = 
+function(q, location = 0, scale = 1, shape = 0, lower.tail = TRUE) 
+{
+    # Check:
+    stopifnot(min(scale) > 0) 
+    stopifnot(length(shape) == 1) 
+        
+    # Probability:
+    q <- pmax(q - location, 0)/scale
+    if (shape == 0) 
+        p <- 1 - exp(-q)
+    else {
+        p <- pmax(1 + shape * q, 0)
+        p <- 1 - p^(-1/shape)
+    }
+    
+    # Lower Tail:
+    if (!lower.tail) 
+        p <- 1 - p
+       
+    # Add Congtrol:
+    attr(p, "control") = data.frame(location = location[1], scale = scale[1], 
+        shape = shape[1], lower.tail = lower.tail, row.names = "")
+        
+    # Return Value: 
+    p
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+qepd =
+function(p, location = 0, scale = 1, shape = 0, lower.tail = TRUE) 
+{ 
+    # Check:
+    stopifnot(min(scale) > 0) 
+    stopifnot(length(shape) == 1)
+    stopifnot(min(p, na.rm = TRUE) >= 0)
+    stopifnot(max(p, na.rm = TRUE) <= 1) 
+        
+    # Lower Tail:
+    if (lower.tail) 
+        p <- 1 - p
+        
+    # Quantiles:
+    if (shape == 0) {
+        q = location - scale * log(p)
+    } else {
+        q = location + scale * (p^(-shape) - 1)/shape
+    }
+       
+    # Add Congtrol:
+    attr(q, "control") = data.frame(location = location[1], scale = scale[1], 
+        shape = shape[1], lower.tail = lower.tail, row.names = "")
+        
+    # Return Value: 
+    q
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+repd = 
+function(n, location = 0, scale = 1, shape = 0) 
+{
+    # Check:
+    stopifnot(min(scale) > 0) 
+    stopifnot(length(shape) == 1)
+        
+    # Random Variates:
+    if (shape == 0) {
+        r = location + scale * rexp(n)
+    } else {
+        r = location + scale * (runif(n)^(-shape) - 1)/shape
+    }
+    
+    # Add Congtrol:
+    attr(r, "control") = data.frame(location = location[1], scale = scale[1], 
+        shape = shape[1], row.names = "")
+    
+    # Return Value:
+    r
+}
+
+
+# ******************************************************************************
+
+
 dgpd = 
-function(x, xi = 1, mu = 0, beta = 1)
+function(x, xi = 1, mu = 0, beta = 1, log = FALSE)
 {   # A function written by Diethelm Wuertz
 
     # FUNCTION:
     
+    # Transform:
+    shape = xi
+    location = mu
+    scale = beta
+    
     # Density:
-    y = (x - mu)
-    if (xi == 0) {
-        d = (1-exp(-y/beta))/beta 
-    } else {
-        d = 1/beta * (1 + (xi*y)/beta)^((-1/xi) - 1) }  
+    d = depd(x, location, scale, shape, log)
     
-    d[y < 0] = 0
-    if (xi < 0) d[y > (-1/xi)] = 0
-    
+    # Add Congtrol:
+    attr(d, "control") = data.frame(xi = xi, mu = mu, 
+        beta = beta[1], log = log, row.names = "")
+        
     # Return Value:
     d
 }
@@ -82,21 +210,23 @@ function(x, xi = 1, mu = 0, beta = 1)
 
 
 pgpd = 
-function(q, xi = 1, mu = 0, beta = 1)
+function(q, xi = 1, mu = 0, beta = 1, lower.tail = TRUE)
 {   # A function written by Diethelm Wuertz
 
     # FUNCTION:
     
+    # Transform:
+    shape = xi
+    location = mu
+    scale = beta
+    
     # Probability:
-    y = (q - mu)
-    if (xi == 0) {
-        p = y/beta + exp(-y/beta) -1 
-    } else {
-        p = (1 - (1 + (xi*y)/beta)^(-1/xi)) }   
+    p = pepd(q, location, scale, shape, lower.tail)
     
-    p[y < 0] = 0
-    if (xi < 0) p[y > (-1/xi)] = 1
-    
+    # Add Congtrol:
+    attr(p, "control") = data.frame(xi = xi, mu = mu, 
+        beta = beta[1], lower.tail = lower.tail, row.names = "")
+        
     # Return Value:
     p
 }
@@ -106,18 +236,23 @@ function(q, xi = 1, mu = 0, beta = 1)
 
 
 qgpd = 
-function(p, xi = 1, mu = 0, beta = 1)
+function(p, xi = 1, mu = 0, beta = 1, lower.tail = TRUE)
 {   # A function written by Diethelm Wuertz
 
     # FUNCTION:
     
-    # Quantiles:
-    if (xi == 0) {
-        q = mu - beta*log(1-p)
-    } else {
-        q = mu + (beta/xi) * ((1 - p)^( - xi) - 1)
-    }
+    # Transform:
+    shape = xi
+    location = mu
+    scale = beta
     
+    # Quantiles:
+    q = qepd(p, location, scale, shape, lower.tail)
+    
+    # Add Congtrol:
+    attr(q, "control") = data.frame(xi = xi, mu = mu, 
+        beta = beta[1], lower.tail = lower.tail, row.names = "")
+        
     # Return Value:
     q
 }
@@ -132,11 +267,20 @@ function(n, xi = 1, mu = 0, beta = 1)
 
     # FUNCTION:
     
-    # Random variates:
-    rvs = mu + (beta/xi) * ((1 - runif (n))^( - xi) - 1)
+    # Transform:
+    shape = xi
+    location = mu
+    scale = beta
     
+    # Random Variates:
+    r = repd(n, location, scale, shape)
+    
+    # Add Congtrol:
+    attr(r, "control") = data.frame(xi = xi, mu = mu, 
+        beta = beta[1], row.names = "")
+        
     # Return Value:
-    rvs
+    r
 }
 
 
@@ -158,7 +302,7 @@ function(xi, mu = 0, beta = 1)
 
     # FUNCTION: 
     
-    # MEAN: Rreturns 1 for x <= 0 and -Inf's's else
+    # MEAN: Returns 1 for x <= 0 and -Inf's's else
     a = c(1, NaN, NaN)
     gpdMean = beta/(1-xi)*a[sign(xi-1)+2]
     
@@ -167,7 +311,7 @@ function(xi, mu = 0, beta = 1)
     gpdVar = beta*beta/(1-xi)^2/(1-2*xi) * a[sign(2*xi-1)+2]
 
     # Return Value:
-    list(mean = gevMean, var = gevVar)              
+    list(mean = gpdMean, var = gpdVar)              
 }
 
 
@@ -204,77 +348,18 @@ seed = NULL)
 # ------------------------------------------------------------------------------
 
 
-setClass("fGPD", 
+setClass("fGPDFIT", 
     representation(
         call = "call",
-        data = "list",
         method = "character",
+        parameter = "list",
+        data = "list",
         fit = "list",
+        residuals = "numeric",
         title = "character",
         description = "character"
     )  
 )
-
-
-# ------------------------------------------------------------------------------
-
-
-.old.gpdFit =
-function(x, threshold = NA, nextremes = NA, type = c("mle", "pwm"),
-information = c("observed", "expected"), title = NULL, description = NULL, ...)
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Returns an object of class `"gpd"' representing the fit of a
-    #   generalized Pareto model to excesses over a high threshold
-    
-    # Notes:
-    #   This is a wrapper to EVIR's 'gpd' function.
-
-    # FUNCTION:
-    
-    # Make the fit:
-    call = match.call()
-    type = type[1]
-    # if (is.na(threshold) & is.na(nextremes)) threshold = min(x)
-    if (type == "mle") {
-        type = "ml"
-    }
-    fitted = .gpd(data = x, threshold = threshold, nextremes = nextremes, 
-        method = type, information = information, ...) 
-        
-    # Residuals:
-    xi = fitted$par.ests["xi"]
-    beta = fitted$par.ests["beta"]
-    excess = as.numeric(fitted$data) - fitted$threshold
-    residuals = log(1 + (xi * excess)/beta)/xi
-    
-    # Make Unique:
-    fit = list()
-    fit$fit =  fitted
-    fit$call = call
-    fit$type = c("gpd", type[1])
-    fit$par.ests = fitted$par.ests
-    fit$par.ses = fitted$par.ses
-    fit$residuals = residuals
-    fit$fitted.values = fitted$data - residuals
-    fit$llh = fitted$nllh.final
-    fit$converged = fitted$converged
-    class(fit) = c("list", "gpdFit")
-    
-    # Add title and description:
-    if (is.null(title)) title = "POT Parameter Estimation"
-    if (is.null(description)) description = as.character(date())
-    
-    # Return Value:
-    new("fGEV",
-        call = match.call(),
-        data = list(x = x),
-        method = fit$type,
-        fit = fit,
-        title = "character",
-        description = "character")
-}
 
 
 # ------------------------------------------------------------------------------
@@ -294,36 +379,64 @@ information = c("observed", "expected"), title = NULL, description = NULL, ...)
 
     # FUNCTION:
     
-    # Make the fit:
-    type = type[1]
-
-    # parameter Estimation:
-    if (type[1] == "mle") {
-        fit = .gpdmleFit(x, u)
-    } else if (type[1] == "pwm") {
-        fit = .gpdpwmFit(x, u)
+    # Settings:
+    call = match.call()
+    type = match.arg(type)
+    information = match.arg(information)
+    
+    # Check Type and Convert:
+    X = x  
+    xClass = class(x)
+    x = as.timeSeries(x)
+    stopifnot(isUnivariate(x))
+    
+    # Compute Exceedances:
+    exceedances = x[x@Data > u]
+    if (xClass == "numeric") {
+        Names = as.character((1:dim(x)[1])[x@Data > u])
+        exceedances = as.vector(exceedances)
+        names(exceedances) = Names
     }
-    fit$threshold = u
-    data = as.vector(x)
-    fit$prob = 1 - length(data[data>u])/length(data)
+    if (xClass == "ts") {
+        Names = as.character((1:dim(x)[1])[x@Data > u])
+        exceedances = as.ts(as.vector(exceedances))
+        names(exceedances) = Names
+    }
+
+    # Estimate Parameters:
+    x = as.vector(x)
+    if (type == "mle") {
+        fit = .gpdmleFit(x, u, information)
+        fit$llh = fit$fit$value
+        fit$convergence = fit$fit$convergence
+    } else if (type == "pwm") {
+        fit = .gpdpwmFit(x, u)
+        fit$llh = NA
+        fit$convergence = NA
+    }
+    fit$prob = 1 - length(x[x > u]) / length(x)
    
-    # Residuals:
+    # Compute Residuals:
     xi = fit$par.ests["xi"]
     beta = fit$par.ests["beta"]
-    x = as.vector(x)
-    excess = x[x > u] - u
-    residuals = log(1 + (xi * excess)/beta)/xi
+    residuals = log(1 + (xi * (as.vector(exceedances)-u))/beta)/xi
     
     # Add title and description:
-    if (is.null(title)) title = "POT Parameter Estimation"
+    if (is.null(title)) title = "GPD Parameter Estimation"
     if (is.null(description)) description = as.character(date())
     
+    # Compose Parameter List:
+    parameter = list(u = u, type = type)
+    if (information == "mle") parameter$information = information
+    
     # Return Value:
-    new("fGPD",
-        call = match.call(),
-        data = list(x = x, excess = excess, residuals = residuals),
-        method = c("gpd", type[1]), 
+    new("fGPDFIT",
+        call = call,
+        method = c("gpd", type), 
+        parameter = parameter,
+        data = list(x = X, exceedances = exceedances),
         fit = fit,
+        residuals = residuals,
         title = title,
         description = description)
 }
@@ -333,7 +446,7 @@ information = c("observed", "expected"), title = NULL, description = NULL, ...)
 
 
 .gpdmleFit = 
-function (x, u = quantile(x, 0.95), 
+function(x, u = quantile(x, 0.95), 
 information = c("observed", "expected"), ...) 
 {   # A function implemented by Diethelm Wuertz
 
@@ -346,12 +459,14 @@ information = c("observed", "expected"), ...)
     names(fit$par) = c("xi", "beta")
     
     # Error Estimates:
-    if (information[1] == "observed") 
+    if (information[1] == "observed") {
         varcov = solve(fit$hessian)
+    }
     if (information[1] == "expected") {
-        one = (1 + par.ests[1])^2/Nu
-        two = (2 * (1 + par.ests[1]) * par.ests[2]^2)/Nu
-        cov = -((1 + par.ests[1]) * par.ests[2])/Nu
+        Nu = length(excess)
+        one = (1 + fit$par[1])^2/Nu
+        two = (2 * (1 + fit$par[1]) * fit$par[2]^2)/Nu
+        cov = -((1 + fit$par[1]) * fit$par[2])/Nu
         varcov = matrix(c(one, cov, cov, two), 2)
     }
     par.ses = sqrt(diag(varcov))
@@ -373,7 +488,7 @@ function(theta, excess)
     beta = theta[2]
     cond = (beta <= 0) || ((xi <= 0) && (max(excess) > (-beta/xi)))
     if (cond) {
-        func = 1.0e+6
+        func = NA
     } else {
         y = log(1+(xi*excess)/beta) / xi
         func = length(excess) * log(beta) + (1+xi)*sum(y)
@@ -386,7 +501,7 @@ function(theta, excess)
 
 
 .gpdpwmFit = 
-function (x, u = quantile(x, 0.95)) 
+function(x, u = quantile(x, 0.95)) 
 {   # A function implemented by Diethelm Wuertz
 
     x = as.vector(x)
@@ -398,14 +513,15 @@ function (x, u = quantile(x, 0.95))
     xi = 2 - a0/(a0 - 2 * a1)
     beta = (2 * a0 * a1)/(a0 - 2 * a1)
     par.ests = c(xi = xi, beta = beta)
-    list(par.ests = par.ests, par.ses = NA, fit = NA, varcov = NA)
+    par.ses = c(xi = NA, beta = NA)
+    list(par.ests = par.ests, par.ses = par.ses, fit = NA, varcov = NA)
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-print.fGPD =
+print.fGPDFIT =
 function(x, ...)
 {   # A function implemented by Diethelm Wuertz
 
@@ -425,7 +541,7 @@ function(x, ...)
     cat("\nEstimation Method:\n ", x@method, "\n") 
     
     # Estimated Parameters:
-    cat("\nEstimated Parameters:\n ")
+    cat("\nEstimated Parameters:\n")
     print(x@fit$par.ests)
     
     # Desription:
@@ -440,125 +556,17 @@ function(x, ...)
 # ------------------------------------------------------------------------------
 
 
-plot.fGPD =
-function(x, which = "all", ...)
+plot.fGPDFIT =
+function(x, which = "ask", ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Plot method for objects of class 'fGPD'
+    #   Plot method for objects of class 'fGPDFIT'
 
-    # FUNCTION:
+    # Example:
+    #   x = as.timeSeries(danishClaims); plot(gpdFit(x, 4), "ask")
     
-    # Plot Functions:
-    plot.1 <<- function(x, ...) {
-        fit = x@fit
-        data = as.vector(x@data$x)
-        xi = fit$par.ests[1]
-        beta = fit$par.est[2]
-        threshold = fit$threshold
-        optlog = NA
-        extend = 1.5
-        labels = TRUE
-        # Start:
-        plotmin = threshold
-        if (extend <= 1) {
-            stop("extend must be > 1")
-        }
-        plotmax = max(data) * extend
-        xx = seq(from = 0, to = 1, length = 1000)
-        z = qgpd(xx, xi, threshold, beta)
-        z = pmax(pmin(z, plotmax), plotmin)
-        ypoints = ppoints(sort(data))
-        y = pgpd(z, xi, threshold, beta) 
-        type = "eplot"
-        if (!is.na(optlog)) {
-            alog = optlog
-        } else {
-            alog = "x"
-        }
-        if (alog == "xy") {
-            stop("Double log does not make much sense")
-        }
-        yylab = "Fu(x-u)"
-        shape = xi
-        scale = beta
-        location = threshold
-        plot(sort(data), ypoints, xlim = range(plotmin, plotmax),
-            ylim = range(ypoints, y, na.rm = TRUE), xlab = "",
-            ylab = "", log = alog, axes = TRUE, col = "steelblue",
-            pch = 19, main = "Excess Distribution")
-        lines(z[y >= 0], y[y >= 0])    
-        xxlab = "x"
-        if (alog == "x" || alog == "xy" || alog == "yx") {
-            xxlab = paste(xxlab, "(on log scale)")
-        }
-        if (alog == "xy" || alog == "yx" || alog == "y") {
-            yylab = paste(yylab, "(on log scale)")
-        }
-        title(xlab = xxlab, ylab = yylab) 
-    } 
-    plot.2 <<- function(x, ...) {
-        fit = x@fit
-        data = as.vector(x@data$x)
-        xi = fit$par.ests[1]
-        beta = fit$par.est[2]
-        threshold = fit$threshold
-        optlog = NA
-        extend = 1.5 #; if (extend <= 1) stop("extend must be > 1")
-        labels = TRUE
-        # Start:
-        plotmin = threshold
-        if (extend <= 1) {
-            stop("extend must be > 1")
-        }
-        plotmax = max(data) * extend
-        xx = seq(from = 0, to = 1, length = 1000)
-        z = qgpd(xx, xi, threshold, beta)
-        z = pmax(pmin(z, plotmax), plotmin)
-        ypoints = ppoints(sort(data))
-        y = pgpd(z, xi, threshold, beta)
-        type = "tail"
-        if (!is.na(optlog)) {
-            alog = optlog
-        } else {
-            alog = "xy"
-        }
-        prob = fit$fit$p.less.thresh
-        ypoints = (1 - prob) * (1 - ypoints)
-        y = (1 - prob) * (1 - y)
-        yylab = "1-F(x)"
-        shape = xi
-        scale = beta * (1 - prob)^xi
-        location = threshold - (scale * ((1 - prob)^( - xi) - 1))/xi
-        plot(sort(data), ypoints, xlim = range(plotmin, plotmax),
-            ylim = range(ypoints, y, na.rm = TRUE), xlab = "",
-            ylab = "", log = alog, axes = TRUE, col = "steelblue",
-            pch = 19, main = "Tail of Underlying Distribution")
-        lines(z[y >= 0], y[y >= 0])    
-        xxlab = "x"
-        if (alog == "x" || alog == "xy" || alog == "yx") {
-            xxlab = paste(xxlab, "(on log scale)")
-        }
-        if (alog == "xy" || alog == "yx" || alog == "y") {
-            yylab = paste(yylab, "(on log scale)") 
-        }
-        title(xlab = xxlab, ylab = yylab)  
-    }
-    plot.3 <<- function(x, ...) {
-        residuals = x@data$residuals
-        plot(residuals, ylab = "Residuals", xlab = "Ordering", 
-           col = "steelblue", pch = 19,
-           main = "Scatterplot of Residuals")
-        lines(lowess(1:length(residuals), residuals)) 
-        grid()
-    }      
-    plot.4 <<- function(x, ...) {
-        residuals = x@data$residuals
-        xi = 0 # x@fit$par.ests["xi"]
-        qPlot(residuals, xi, col = "steelblue", pch = 19, labels = FALSE, ...)
-        title(xlab = "Ordered Data", ylab = "Exponential Quantiles",
-            main = "QQ-Plot of Residuals") 
-    }
+    # FUNCTION:
             
     # Plot:
     interactivePlot(
@@ -569,10 +577,10 @@ function(x, which = "all", ...)
             "Scatterplot of Residuals", 
             "QQ-Plot of Residuals"),
         plotFUN = c(
-            "plot.1", 
-            "plot.2", 
-            "plot.3",
-            "plot.4"),
+            ".gpd1Plot", 
+            ".gpd2Plot", 
+            ".gpd3Plot",
+            ".gpd4Plot"),
         which = which)
                     
     # Return Value:
@@ -583,7 +591,207 @@ function(x, which = "all", ...)
 # ------------------------------------------------------------------------------
 
 
-summary.fGPD = 
+.gpd1Plot =
+function(x, labels = TRUE, ...)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Empirical Distribution Plot:
+    
+    # Arguments:
+    #   x - an object of class fGPDFIT
+    #   labels - a logical flag. Should labels be printed?
+    
+    # FUNCTION:
+    
+    # Data:
+    extend = 1.5
+    u = x@parameter$u
+    data = as.vector(x@data$exceedances)
+    sorted = sort(data)
+    shape = xi = x@fit$par.ests["xi"]
+    scale = beta = x@fit$par.est["beta"]
+    ypoints = ppoints(sorted)
+    U = max(sorted)*extend
+    z = qgpd(seq(0, 1, length = 1000), xi, u, beta)
+    z = pmax(pmin(z, U), u)
+    y = pgpd(z, xi, u, beta) 
+    
+    # Labels:
+    if (labels) {
+        xlab = "Fu(x-u)"
+        ylab = "x [log Scale]"
+        main = "Excess Distribution"
+    } else {
+        xlab = ylab = main = ""
+    }
+    
+    # Plot:
+    plot(x = sorted, y = ypoints, 
+        xlim = range(u, U), ylim = range(ypoints, y, na.rm = TRUE), 
+        main = main, xlab = xlab, ylab = ylab, 
+        log = "x", axes = TRUE, 
+        col = "steelblue", pch = 19, ...)
+    lines(z[y >= 0], y[y >= 0], col = "brown") 
+    
+    # Addon:
+    if (labels) {
+        u = signif (x@parameter$u, 3)
+        text = paste("u =", u)
+        mtext(text, side = 4, adj = 0, cex = 0.7)
+        grid()
+    }
+    
+    # Return Value:
+    invisible()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.gpd2Plot =
+function(x, labels = TRUE, ...) 
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Tail of Underlying DistributioN
+    
+    # Arguments:
+    #   x - an object of class fGPDFIT
+    #   labels - a logical flag. Should labels be printed?
+    
+    # FUNCTION:
+    
+    # Settings:
+    extend = 1.5
+    u = x@parameter$u
+    data = as.vector(x@data$x)
+    sorted = sort(data[data > u])
+    prob = x@fit$prob
+    shape = xi = x@fit$par.ests["xi"]
+    beta = x@fit$par.ests["beta"]
+    scale = beta * (1-prob)^xi
+    location = u - (scale*((1 - prob)^(-xi)-1))/xi
+
+    # Labels:
+    if (labels) {
+        xlab = "1-F(x) [log scale]"
+        ylab = "x [log scale]"
+        main = "Tail of Underlying Distribution"
+    } else {
+        xlab = ylab = main = ""
+    }
+    
+    # Plot:
+    U = max(data) * extend
+    ypoints = ppoints(sorted)
+    ypoints = (1 - prob) * (1 - ypoints)
+    z = qgpd(seq(0, 1, length = 1000), xi, u, beta)
+    z = pmax(pmin(z, U), u)
+    y = pgpd(z, xi, u, beta)   
+    y = (1 - prob) * (1 - y)
+    plot(x = sorted, y = ypoints, 
+        xlim = range(u, U), ylim = range(ypoints, y, na.rm = TRUE), 
+        main = main, xlab = xlab, ylab = ylab, 
+        log = "xy", axes = TRUE, 
+        col = "steelblue", pch = 19, ...)
+        
+    # Line:
+    lines(z[y >= 0], y[y >= 0], col = "brown")    
+    if (labels) grid()
+    
+    # Return Value:
+    invisible(list(x = sorted, y = ypoints))
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.gpd3Plot =
+function(x, labels = TRUE, ...) 
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Scatterplot of GPD Residuals.
+    
+    # Arguments:
+    #   x - an object of class fGPDFIT
+    #   labels - a logical flag. Should labels be printed?
+    
+    # FUNCTION:
+    
+    # Residuals:
+    residuals = x@residuals
+    
+    # Labels:
+    if (labels) {
+        ylab = "Residuals"
+        xlab = "Ordering"
+        main = "Scatterplot of Residuals"
+    } else {
+        xlab = ylab = main = ""
+    }
+    
+    # Plot:
+    plot(residuals, 
+       main = main, ylab = ylab, xlab = xlab, 
+       col = "steelblue", pch = 19, ...)
+    lines(lowess(1:length(residuals), residuals), col = "brown") 
+    if (labels) grid()
+    
+    # Return Value:
+    invisible(list(x = 1:(length(residuals)), y = residuals))
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.gpd4Plot = 
+function(x, labels = TRUE, ...) 
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   QQ Plot of GPD Residuals.
+    
+    # Arguments:
+    #   x - an object of class fGPDFIT
+    #   labels - a logical flag. Should labels be printed?
+    
+    # FUNCTION:
+    
+    # Data:
+    data = x@residuals
+    sorted = sort(data)
+    
+    # Labels:
+    if (labels) {
+        xlab = "Ordered Data"
+        ylab = "Exponential Quantiles"
+        main = "QQ-Plot of Residuals"
+    } else {
+        xlab = ylab = main = ""
+    }
+    
+    # Plot:
+    y = qexp(ppoints(data))
+    plot(x = sorted, y = y, 
+        main = main, xlab = xlab, ylab = ylab, 
+        col = "steelblue", pch = 19, ...)
+    abline(lsfit(sorted, y), col = "brown")
+    if (labels) grid()
+    
+    # Return Value:
+    invisible(list(x = sorted, y = y))
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+summary.fGPDFIT = 
 function(object, doplot = TRUE, which = "all", ...) 
 {   # A function written by Diethelm Wuertz
 
@@ -591,41 +799,38 @@ function(object, doplot = TRUE, which = "all", ...)
     #   Summary method for objects of class "gpdFit"
     
     # FUNCTION:
-    
-    # @fit Slot:
-    title = object@title
-    description = object@description
-    plotObject = object
-    object = object@fit
-    class(object) = "gpdFit"
-    
+
     # Title:
-    cat("\nTitle:\n" , title, "\n")
+    cat("\nTitle:\n" , object@title, "\n")
     
     # Function Call:
     cat("\nCall:\n")
-    cat(paste(deparse(x$call), sep = "\n", collapse = "\n"), "\n", sep = "") 
+    cat(paste(deparse(object@call), sep = "\n", 
+        collapse = "\n"), "\n", sep = "") 
             
     # Estimation Type:
-    cat("\nEstimation Type:\n ", x$type, "\n") 
+    cat("\nEstimation Type:\n ", object@method, "\n") 
     
     # Estimated Parameters:
     cat("\nEstimated Parameters:\n")
-    print(x$par.ests)
+    print(object@fit$par.ests)
     
     # Summary - For MLE print additionally:
-    cat("\nStandard Deviations:\n"); print(object$par.ses)
-    cat("\nLog-Likelihood Value: ", object$llh)
-    cat("\nType of Convergence:  ", object$conv, "\n") 
-    cat("\n")
+    if (object@method[2] == "mle") {
+        cat("\nStandard Deviations:\n"); print(object@fit$par.ses)
+        if (!is.na(object@fit$llh))
+            cat("\nLog-Likelihood Value:\n ", object@fit$llh, "\n")
+        if (!is.na(object@fit$convergence))
+            cat("\nType of Convergence:\n ", object@fit$convergence, "\n") 
+    }
     
     # Plot:
     if (doplot) {
-        plot(plotObject, which = which, ...)
+        plot(object, which = which, ...)
     }
     
     # Desription:
-    cat("\nDescription\n ", description, "\n\n")
+    cat("\nDescription\n ", object@description, "\n\n")
     
     # Return Value:
     invisible(object)
@@ -635,13 +840,16 @@ function(object, doplot = TRUE, which = "all", ...)
 ################################################################################
 
 
-tailPlot =
+gpdTailPlot =
 function(object, plottype = c("xy", "x", "y", ""), extend = 1.5, 
 labels = TRUE, ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Plots Tail Estimate From GPD Model
+    
+    # Note:
+    #   Code partly copied from R package evir
     
     # Example:
     #   object = gpdFit(as.timeSeries(data(danishClaims)), u = 10)
@@ -673,7 +881,7 @@ labels = TRUE, ...)
     # Plot:
     plot(sort(data), ypoints, xlim = range(plotmin, plotmax), 
          ylim = range(ypoints, y, na.rm = TRUE), col = "steelblue",
-         pch = 19, xlab = "", ylab = "", log = plottype[1], axes = TRUE)
+         pch = 19, xlab = "", ylab = "", log = plottype[1], axes = TRUE, ...)
     lines(z[y >= 0], y[y >= 0])
     grid()
     
@@ -687,6 +895,7 @@ labels = TRUE, ...)
         if (alog == "xy" || alog == "yx" || alog == "y")
             yLab = paste(yLab, "(on log scale)")
         title(xlab = xLab, ylab = yLab)
+        title(main = "Tail Estimate Plot")
     }
     
     # Result:
@@ -702,10 +911,9 @@ labels = TRUE, ...)
 # ------------------------------------------------------------------------------
 
 
-quantPlot =
-function(x, models = 30, p = 0.99, start = 15, end = 500,
-ci = 0.95, doplot = TRUE, plottype = c("normal", "reverse"), 
-labels = TRUE, ...)
+gpdQuantPlot =
+function(x, p = 0.99, ci = 0.95, models = 30, start = 15, end = 500,
+doplot = TRUE, plottype = c("normal", "reverse"), labels = TRUE, ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -713,7 +921,10 @@ labels = TRUE, ...)
     
     # Example:
     #   Danish = as.timeSeries(data(danishClaims))
-    #   quantPlot(Danish)
+    #   gpdquantPlot(Danish)
+    
+    # Note:
+    #   Code partly copied from R package evir
     
     # FUNCTION:
 
@@ -809,6 +1020,7 @@ labels = TRUE, ...)
     attr(mat, "control") = data.frame(cbind(p = p, ci = ci, 
         start = start, end = end), row.names = "")
     
+    # Return Value:
     invisible(mat)
 }
 
@@ -816,9 +1028,9 @@ labels = TRUE, ...)
 # ------------------------------------------------------------------------------
 
 
-shapePlot =
-function(x, models = 30, start = 15, end = 500, ci = 0.95, 
-doplot = TRUE, plottype = c("normal", "everse"), labels = TRUE, ...)
+gpdShapePlot =
+function(x, ci = 0.95, models = 30, start = 15, end = 500,  
+doplot = TRUE, plottype = c("normal", "reverse"), labels = TRUE, ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -895,8 +1107,8 @@ doplot = TRUE, plottype = c("normal", "everse"), labels = TRUE, ...)
 # ------------------------------------------------------------------------------
 
 
-gpdqPlot =
-function(x, p = 0.99, type = c("likelihood", "wald"), ci = 0.95, 
+gpdQPlot =
+function(x, p = 0.99, ci = 0.95, type = c("likelihood", "wald"), 
 like.num = 50)
 {   # A function implemented by Diethelm Wuertz
 
@@ -904,23 +1116,6 @@ like.num = 50)
     #   Adds Quantile Estimates to plot.gpd
     
     # Arguments:
-    #   x  - an object of class 'gpdFit'
-    #   pp - the probability level
-    
-    # FUNCTION:
-
-    # Return Value:
-    .gpd.q(x = x, pp = p, ci.type = type[1], ci.p = ci, like.num = like.num)
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.gpd.q =  
-function(x, pp, ci.type = c("likelihood", "wald"), ci.p = 0.95,
-like.num = 50)
-{
     #   x - a list object returned by 'plot.gpd' or 'tailplot'
     #   p - the desired probability for quantile estimate (e.g. 
     #       0.99 for the 99th percentile)
@@ -929,13 +1124,19 @@ like.num = 50)
     #   ci - probability for confidence interval (must be less 
     #       than 0.999)
     #   like.num - number of times to evaluate profile likelihood
+    
+    # Note:
+    #   A copy from contributed R package evir.
+    
+    # FUNCTION:
 
-
+    # Check:
     if (x$dist != "gpd")
         stop("This function is used only with GPD curves")
-    if (length(pp) > 1)
+    if (length(p) > 1)
         stop("One probability at a time please")
-        
+      
+    # Threshold: 
     threshold = x$lastfit$threshold
     par.ests = x$lastfit$par.ests
     xihat = par.ests["xi"]
@@ -944,18 +1145,27 @@ like.num = 50)
     p.less.thresh = x$lastfit$p.less.thresh
     lambda = 1
     if (x$type == "tail") lambda = 1/(1 - p.less.thresh)
-    a = lambda * (1 - pp)
+    a = lambda * (1-p)
     
-    gfunc = function(a, xihat) (a^( - xihat) - 1) / xihat
+    # Internal Functions:
+    gfunc = 
+    function(a, xihat) {
+        (a^(-xihat)-1) / xihat
+    }
+    gfunc.deriv = 
+    function(a, xihat) {
+        (-(a^(-xihat)-1)/xihat-a^(-xihat)*log(a)) / xihat
+    }
     
-    gfunc.deriv = function(a, xihat)
-        ( - (a^( - xihat) - 1)/xihat - a^( - xihat) * log(a)) / xihat
     q = threshold + betahat * gfunc(a, xihat)
     if (q < x$plotmax) abline(v = q, lty = 2)
     out = as.numeric(q)
-    ci.type = match.arg(ci.type)
     
-    if(ci.type == "wald") {
+    # Type:
+    type = match.arg(type)
+    
+    # Wald:
+    if (type == "wald") {
         if(class(x$lastfit) != "gpd")
         stop("Wald method requires model be fitted with gpd (not pot)")
         scaling = threshold
@@ -969,7 +1179,7 @@ like.num = 50)
         qvar = term1 + term2 + term3
         if(qvar < 0) stop("Negative estimate of quantile variance")
         qse = scaling * sqrt(qvar)
-        qq = qnorm(1 - (1 - ci.p)/2)
+        qq = qnorm(1 - (1 - ci)/2)
         upper = q + qse * qq
         lower = q - qse * qq
         if(upper < x$plotmax) abline(v = upper, lty = 2, col = 2)
@@ -978,26 +1188,28 @@ like.num = 50)
         names(out) = c("Lower CI", "Estimate", "Std.Err", "Upper CI")
     }
     
-    if (ci.type == "likelihood") {
-        parloglik = function(theta, tmp, a, threshold, xpi) {
+    # Likelihood:
+    if (type == "likelihood") {
+        parloglik = 
+        function(theta, tmp, a, threshold, xpi) {
             beta = (theta * (xpi - threshold))/(a^( - theta) - 1)
-            if((beta <= 0) || ((theta <= 0) && (max(tmp) > ( - beta/theta))))
+            if ((beta <= 0) || ((theta <= 0) && (max(tmp) > ( - beta/theta)))) {
                 f = 1e+06
-            else {
+            } else {
                 y = log(1 + (theta * tmp)/beta)
-            y = y/theta
-            f = length(tmp) * log(beta) + (1 + theta) * sum(y)
+                y = y/theta
+                f = length(tmp) * log(beta) + (1 + theta) * sum(y)
             }
             f
         }
         theta = xihat
         parmax = NULL
-        xp = exp(seq(from = log(threshold), to = log(x$plotmax),
-                          length = like.num))
-            excess = as.numeric(x$lastfit$data - threshold)
+        xp = exp(seq(from = log(threshold), to = log(x$plotmax), 
+            length = like.num))
+        excess = as.numeric(x$lastfit$data - threshold)
         for (i in 1:length(xp)) {
-                fit2 = optim(theta, parloglik, method = "BFGS", hessian = FALSE,
-                    tmp = excess, a = a, threshold = threshold, xpi = xp[i])
+            fit2 = optim(theta, parloglik, method = "BFGS", hessian = FALSE,
+                tmp = excess, a = a, threshold = threshold, xpi = xp[i])
             parmax = rbind(parmax, fit2$value)
         }
         parmax =  - parmax
@@ -1013,8 +1225,8 @@ like.num = 50)
              xlim = range(x$plotmin, x$plotmax),
              ylim = range(overallmax, crit), log = dolog)
         axis(4, at = overallmax - qchisq(c(0.95, 0.99), 1)/2,
-                 labels = c("95", "99"), tick = TRUE)
-        aalpha = qchisq(ci.p, 1)
+            labels = c("95", "99"), tick = TRUE)
+        aalpha = qchisq(ci, 1)
         abline(h = overallmax - aalpha/2, lty = 2, col = 2)
         cond = !is.na(xp) & !is.na(parmax)
         smth = spline(xp[cond], parmax[cond], n = 200)
@@ -1024,7 +1236,7 @@ like.num = 50)
         names(out) = c("Lower CI", "Estimate", "Upper CI")
     }
     
-    
+    # Return Value:
     out
 }
 
@@ -1032,8 +1244,8 @@ like.num = 50)
 # ------------------------------------------------------------------------------
 
 
-gpdsfallPlot =
-function(x, pp = 0.99, ci.p = 0.95, like.num = 50)
+gpdSfallPlot =
+function(x, p = 0.99, ci = 0.95, like.num = 50)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -1046,7 +1258,7 @@ function(x, pp = 0.99, ci.p = 0.95, like.num = 50)
     # FUNCTION:
 
     # Return Value:
-    .gpd.sfall(x = x, pp = pp, ci.p = ci.p, like.num = like.num)
+    .gpd.sfall(x = x, pp = p, ci.p = ci, like.num = like.num)
 }
 
 
@@ -1065,8 +1277,6 @@ function(x, pp = 0.99, ci.p = 0.95, like.num = 50)
     #   like.num - number of times to evaluate profile likelihood
 
     # data(danish); gpd.sfall(tailplot(gpd(danish, 10)), 0.99)
-
-
 
     if(x$dist != "gpd")
         stop("This function is used only with GPD curves")
@@ -1145,6 +1355,7 @@ function(x, pp = 0.99, ci.p = 0.95, like.num = 50)
     out = c(min(ci), s, max(ci))
     names(out) = c("Lower CI", "Estimate", "Upper CI")
     
+    # Return Value:
     out
 }
 
@@ -1152,7 +1363,7 @@ function(x, pp = 0.99, ci.p = 0.95, like.num = 50)
 # ------------------------------------------------------------------------------
 
 
-riskMeasures = 
+gpdRiskMeasures = 
 function(object, prob = c(0.99, 0.995, 0.999, 0.9995, 0.9999))
 {   # A function implemented by Diethelm Wuertz
 
@@ -1166,7 +1377,7 @@ function(object, prob = c(0.99, 0.995, 0.999, 0.9995, 0.9999))
     # FUNCTION:
     
     # Settings:
-    u = object@fit$threshold
+    u = object@parameter$u
     par.ests = object@fit$par.ests
     xi = par.ests["xi"]
     beta = par.ests["beta"]
@@ -1175,14 +1386,14 @@ function(object, prob = c(0.99, 0.995, 0.999, 0.9995, 0.9999))
     # Quantile Risk:
     q = u + (beta * ((lambda * (1 - prob))^( - xi) - 1))/xi 
 
-    # Sortfall Risk:  
+    # Shortfall Risk:  
     es = (q * (1 + (beta - xi * u)/q)) / (1 - xi) 
   
     # Risk Matrix:
-    rtn = data.frame(p = prob, quantile = q, shortfall = es)
+    ans = data.frame(p = prob, quantile = q, shortfall = es)
     
     # Return Value:
-    rtn
+    ans
 }
 
 
