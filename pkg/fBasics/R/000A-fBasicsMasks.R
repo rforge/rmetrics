@@ -29,12 +29,17 @@
 
 ################################################################################
 # FUNCTION:                    DESCRIPTION
-# sort                          sort has become a generic function
-# sort.default
 # log                           log has become a generic function
 # log.default
+# round
+# round.default           
+# sample
+# sample.default
+# sort                          sort has become a generic function
+# sort.default
 # var                           var has become a generic function
 # var.default
+#
 # "rownames<-"                  rownames<- has become a generic function
 # "rownames<-.default"
 # "colnames<-"                  colnames<- has become a generic function
@@ -135,6 +140,54 @@ method = c("shell", "quick"), index.return = FALSE)
 }
 
 
+################################################################################
+
+
+sample = 
+function(...)
+{
+    UseMethod("sample")
+}  
+
+
+# ------------------------------------------------------------------------------
+
+    
+sample.default =
+function (x, size, replace = FALSE, prob = NULL, ...) 
+{
+    if (length(x) == 1 && x >= 1) {
+        if (missing(size)) 
+            size <- x
+        .Internal(sample(x, size, replace, prob))
+    } else {
+        if (missing(size)) 
+            size <- length(x)
+        x[.Internal(sample(length(x), size, replace, prob))]
+    }
+}
+
+
+################################################################################
+
+
+round =
+function(x, ...)
+{
+    UseMethod("round")
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+round.default =
+function (x, digits = 0, ...) 
+{
+    .Internal(round(x, digits))
+}       
+            
+            
 ################################################################################
 
 
