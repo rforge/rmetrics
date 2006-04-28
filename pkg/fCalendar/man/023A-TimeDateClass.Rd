@@ -7,7 +7,6 @@
 
 \alias{timeDate}
 \alias{timeDate-class}
-
 \alias{timeCalendar}
 \alias{timeSequence}
 \alias{Sys.timeDate}
@@ -20,41 +19,45 @@
 \alias{timeNdayOnOrBefore}
 \alias{timeNthNdayInMonth}
 \alias{timeLastNdayInMonth}
-\alias{blockStart}
-\alias{blockEnd}
 
-\alias{is.timeDate}
 \alias{print.timeDate}
 \alias{summary.timeDate}
 \alias{format.timeDate}
 
+\alias{is.timeDate}
 \alias{isWeekday}
 \alias{isWeekend}
 \alias{isBizday}
-\alias{weekDay}
-
-%%
+\alias{isHoliday}
+\alias{getDayOfWeek}
+\alias{getDayOfYear}
 
 \alias{[.timeDate}
+\alias{cut.timeDate}
+\alias{start.timeDate}
+\alias{end.timeDate}
+\alias{blockStart}
+\alias{blockEnd}
+
+\alias{Ops.timeDate}
 \alias{+.timeDate}
 \alias{-.timeDate}
-\alias{Ops.timeDate}
 \alias{diff.timeDate}
 \alias{difftimeDate}
+\alias{round.tinmeDate}
+\alias{trunc.timeDate}
 
 \alias{c.timeDate}
 \alias{rep.timeDate}
-
-\alias{start.timeDate}
-\alias{end.timeDate}
-
-\alias{modify.timeDate}
+\alias{sort.timeDate}
+\alias{sample.timeDate}
 \alias{unique.timeDate}
 \alias{rev.timeDate}
 
 \alias{as.character.timeDate}
 \alias{as.data.frame.timeDate}
 \alias{as.POSIXct.timeDate}
+
 \alias{julian.POSIXt}
 \alias{julian.timeDate}
 \alias{atoms.timeDate}
@@ -101,59 +104,65 @@
     \code{timeNdayOnOrAfter} \tab Computes date that is a "on-or-after" n-day, \cr  
     \code{timeNdayOnOrBefore} \tab Computes date that is a "on-or-before" n-day, \cr
     \code{timeNthNdayInMonth} \tab Computes n-th ocurrance of a n-day in year/month, \cr
-    \code{timeLastNdayInMonth} \tab Computes the last n-day in year/month \cr
-    \code{blockStart} \tab Computes start dates for numeric blocks of dates, \cr
-    \code{blockEnd} \tab Computes end dates for numeric blocks of dates. }           
-         
-    The functions for the Representation of 'timedate' Objects are:
+    \code{timeLastNdayInMonth} \tab Computes the last n-day in year/month.}
     
-    \tabular{ll}{       
-    \code{is.timeDate} \tab Checks if the object is of class 'timeDate', \cr
-    \code{print.timeDate} \tab S3: Prints 'timeDate', 'FinCenter' and 'Data' Slot, \cr
-    \code{summary.timeDate} \tab S3: Summarizes details of a 'timeDate' object, \cr
-    \code{format.timeDate} \tab Formats 'timeDate' as ISO conform character string. }
     
-    Additional Calendar Date Functions:
-    
-    \tabular{ll}{ 
+    The functions to represent 'timeDate' objects:
+    \tabular{ll}{
+    \code{print.timeDate} \tab Prints 'timeDate' Object, \cr
+    \code{summary.timeDate} \tab Summarizes details of a 'timeDate' object, \cr
+    \code{format.timeDate} \tab Formats 'timeDate' as ISO conform character string, }
+   
+    The functions for TEST AND REPRESENTATION OF OBJECTS:
+    \tabular{ll}{
+    \code{is.timeDate} \tab Tests if the object is of class 'timeDate', \cr
     \code{isWeekday} \tab Tests if a date is a weekday or not, \cr
     \code{isWeekend} \tab Tests if a date falls on a weekend or not, \cr
     \code{isBizday} \tab Tests if a date is a business day or not, \cr
-    \code{weekDay} \tab Returns the day of the week.}
+    \code{isHoliday} \tab Tests if a date is a non-business day or not, \cr
+    \code{getDayOfWeek} \tab Returns the day of the week to a 'timeDate' object, \cr
+    \code{getDayOfYear} \tab Returns the day of the year to a 'timeDate' object. }
     
-     Methods for Math Operations with 'timeDate' Objects are:
-
-    \tabular{ll}{   
-    \code{[.timeDate} \tab Extracts, replaces subsets from 'timeDate' objects, \cr
-    \code{+.timeDate} \tab Performs arithmetic + ops on 'timeDate' objects, \cr
-    \code{-.timeDate} \tab  Performs arithmetic - ops on 'timeDate' objects, \cr
-    \code{Ops.timeDate} \tab 'Ops' generic functions for 'timeDate' objects, \cr
+    The functions for subsetting 'timeDate' objects:
+    
+    \tabular{ll}{
+    \code{[.timeDate} \tab Extracts or replaces subsets from 'timeDate' objects, \cr
+    \code{cut.timeDate} \tab Extracts a piece from a 'timeDate' object, \cr
+    \code{start.timeDate} \tab Extracts the first entry of a 'timeDate' object, \cr
+    \code{end.timeDate} \tab Extracts the last entry of a 'timeDate' object, \cr
+    \code{blockStart} \tab Creates start dates for equally sized blocks, \cr
+    \code{blockEnd} \tab Creates end dates for equally sized blocks. }
+  
+    The functions to perform mathematical operations:
+    
+    \tabular{ll}{
+    \code{Ops.timeDate} \tab Group 'Ops' generic functions for 'timeDate' objects, \cr
+    \code{+.timeDate} \tab Performs arithmetic + operation on 'timeDate' objects, \cr
+    \code{-.timeDate} \tab Performs arithmetic - operation on 'timeDate' objects, \cr
     \code{diff.timeDate} \tab Returns suitably lagged and iterated differences, \cr
     \code{difftimeDate} \tab Returns a difference of two 'timeDate' objects, \cr
-    \code{c.timeDate} \tab Concatenates objects of class 'timeDate', \cr
-    \code{rep.timeDate} \tab Replicates objects of class 'timeDate', \cr
-    \code{start.timeDate} \tab Extracts the first object of a 'timeDate' vector, \cr
-    \code{end.timeDate} \tab Extracts the last object of a 'timeDate' vector, \cr
-    \code{modify.timeDate} \tab Sorts, rounds or truncates a 'timeDate' vector, \cr
-    \code{unique.timeDate} \tab Remove duplicates from a 'timeDate' vector, \cr
-    \code{rev.timeDate} \tab Reverts  a 'timeDate' vector object. }          
-            
-    Mthods for Transformations of 'timeDate' Objects are:
-        
-    \tabular{ll}{       
+    \code{round.tinmeDate} \tab Rounds objects of class 'timeDate', \cr
+    \code{trunc.timeDate} \tab Truncates objects of class 'timeDate'. }
+    
+    The functions for concatenation, sorting and ordering:
+    
+    \tabular{ll}{
+    \code{c.timeDate} \tab Concatenates 'timeDate' objects, \cr
+    \code{rep.timeDate} \tab Replicates a 'timeDate' object, \cr
+    \code{sort.timeDate} \tab Sorts a 'timeDate' object, \cr
+    \code{sample.timeDate} \tab Resamples a 'timeDate' object, \cr
+    \code{unique.timeDate} \tab NMakes a 'timeDate' object unique, \cr
+    \code{rev.timeDate} \tab Reverts  a 'timeDate' object. }
+    
+    The functions to transform 'timeDate' objects:
+    
+    \tabular{ll}{
     \code{as.character.timeDate} \tab Returns a 'timeDate' object as character string, \cr
     \code{as.data.frame.timeDate} \tab Returns a 'timeDate' object as data frame, \cr
     \code{as.POSIXct.timeDate} \tab Returns a 'timeDate' object as POSIXct object, \cr
-    \code{as.POSIXlt} \tab As POSIXlt, Use Method (Overwrite), \cr
-    \code{as.POSIXlt.default} \tab Default method for POSIXlt, \cr
     \code{julian.timeDate} \tab Returns Julian day counts since 1970-01-01, \cr
-    \code{julian.POSIXt} \tab A Julian Patch, \cr
     \code{atoms.timeDate} \tab Returns date/time atoms from a 'timeDate' object, \cr
-    \code{atoms} \tab Extract atoms, Use Method, \cr
-    \code{atoms.default} \tab Default method for atoms, \cr
-    \code{months.timeDate} \tab Extract months atom from a 'timeDate' object. }
-    
-        
+    \code{months.timeDate} \tab Extract months atom from a 'timeDate' object. }    
 }
 
 
@@ -761,11 +770,6 @@ Zivot, E., Wang J. (2003);
    xmpCalendar("\nNext: Note, ISO and American Formats are Auto-Detected > ")
    timeDate("2004-12-11", FinCenter = "GMT")    
    timeDate("12/11/2004", FinCenter = "GMT")   
-  
-## SOURCE("fBasics.A0-SPlusCompatibility")
-## SOURCE("fBasics.E1-TimeDateClass")
-## SOURCE("fBasics.E2-TimeDatemethods")
-## SOURCE("fBasics.Z1-BasicsTools")
 
 ## c -
    xmpCalendar("\nStart: Create Character Vectors > ") 
@@ -797,38 +801,7 @@ Zivot, E., Wang J. (2003);
    c(GMT[1:2], ZUR[1:2])
    c(ZUR[1:2], GMT[1:2])
    rep(ZUR[2], times = 3)
-   rep(ZUR[2:3], times = 2) 
-
-## round | truncate -
-   xmpCalendar("\nNext: Round and Truncate timeDate Objects > ")
-   modify(GMT, "round", "days")
-   modify(ZUR, "round", "days")
-   modify(GMT, "trunc", "days")
-   modify(ZUR, "trunc", "days")
-
-## start | end | sort - 
-   xmpCalendar("\nNext: Extract First/Last, Sort timeDate Objects > ")
-   c(start(ZUR), end(ZUR))
-   modify(ZUR, "sort") 
-
-## as -
-   xmpCalendar("\nNext: Convert timeDate Objects to Other Objects > ")
-   as.character(ZUR)
-   as.data.frame(ZUR)
-   as.POSIXct(ZUR)
-   
-## julian - 
-   xmpCalendar("\nNext: Julian Time in Days Since 1970-01-01 > ")
-   julian(ZUR)  
-   as.integer(julian(ZUR))
-   julian(ZUR, "days")  
-   as.integer(julian(ZUR, "days"))
-    
-## atoms - 
-   xmpCalendar("\nNext: Atoms from a timeDate Object > ")
-   atoms(ZUR)
-   atoms(ZUR)[,3]
-   atoms(ZUR)[, "d"] 
+   rep(ZUR[2:3], times = 2)  
 }
 
 
