@@ -9,7 +9,7 @@
 \alias{sample.default}
 
 \alias{round}
-\alias(round.default}
+\alias{round.default}
 
 
 \alias{log}
