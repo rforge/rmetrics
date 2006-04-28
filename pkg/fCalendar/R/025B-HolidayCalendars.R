@@ -29,24 +29,24 @@
 
 ################################################################################
 # FUNCTION:           HOLIDAY CALENDAR FUNCTIONS:
-#  easter              Returns date of easter or related feasts as 'sdate'
+#  easter              Returns date of easter or related feasts as '.sdate'
 #  .easter.sunday       Easter Algorithm
-#  holiday             Returns a holiday date of G7 and CH as 'sdate'
+#  holiday             Returns a holiday date of G7 and CH as '.sdate'
 # FUNCTION:           TIME DATE HOLIDAY CALENDARS:
 #  holiday.NYSE        Returns 'timeDate' object for full-day NYSE holidays
 # FUNCTION:           DESCRIPTION:
-#  on.or.after         Computes date in month that is a nday ON OR AFTER date
-#  on.or.before        Computes date in month that is a nday ON OR BEFORE date
-#  nth.of.nday         Computes nth ocurrance of a nday in year/month
-#  last.of.nday        Computes the last nday in year/month
+#  .on.or.after        Computes date in month that is a nday ON OR AFTER date
+#  .on.or.before       Computes date in month that is a nday ON OR BEFORE date
+#  .nth.of.nday        Computes nth ocurrance of a nday in year/month
+#  .last.of.nday       Computes the last nday in year/month
 # FUNCTION:           DESCRIPTION:
-#  sjulian             Computes Julian day numbers from ISO-8601 dates
-#  sdate               Computes ISO-8601 dates from Julian day numbers
-#  sday.of.week        Computes day of the week for ISO-8601 dates 
-#  sleap.year          Returns TRUE/FALSE if dates belong to leap years or not
-#  print.sdate         Print method for objects of class "sdate"
+#  .sjulian            Computes Julian day numbers from ISO-8601 dates
+#  .sdate              Computes ISO-8601 dates from Julian day numbers
+#  .sday.of.week       Computes day of the week for ISO-8601 dates 
+#  .sleap.year         Returns TRUE/FALSE if dates belong to leap years or not
+#  .print.sdate        Print method for objects of class ".sdate"
 # FUNCTION:           DESCRIPTION:
-#  fjulian             Transform formatted dates to julian day numbers
+#  .fjulian             Transform formatted dates to julian day numbers
 # FUNCTION:           DESCRIPTION:
 #  .julian             Implements SPlus like 'julian'
 #  month.day.year      Implements SPlus like 'month.day.year'
@@ -112,7 +112,7 @@ function(year = currentYear, shift = 0)
     
     # Value:
     #   Returns the date of Easter shifted by 'shift' days, 
-    #   "sdate" formatted, an integer of the form CCYYMMDD.
+    #   ".sdate" formatted, an integer of the form CCYYMMDD.
     
     # Details:
     #   By default the date of Easter is calculated and returned
@@ -130,17 +130,17 @@ function(year = currentYear, shift = 0)
     
     # Notes:
     #   The variable currentYear is set in ".FirstLib"
-    #   Calls "month.day.year" and "sjulian"
+    #   Calls "month.day.year" and ".sjulian"
     
     # FUNCTION:
         
 
     # Shift and Compute Easter:
-    mdy = month.day.year(sjulian(.easter.sunday(year))+shift)
+    mdy = month.day.year(.sjulian(.easter.sunday(year))+shift)
     ans = as.integer(mdy$year*10000 + mdy$month*100 + mdy$day)
     
     # Classify as simple integer ISO date format CCYYMMDD
-    class(ans) = "sdate" 
+    ans = timeDate(as.character(ans)) 
     
     # Return Value:
     ans
@@ -166,7 +166,7 @@ function(year = currentYear, Holiday = "Easter")
     
     # Value:
     #   Returns the date of a listed holiday for the selected
-    #   "year"(s), "sdate" formatted, an integer of the form CCYYMMDD.
+    #   "year"(s), ".sdate" formatted, an integer of the form CCYYMMDD.
     
     # Example:
     #   holiday()
@@ -239,7 +239,7 @@ function(year = currentYear, Holiday = "Easter")
     ans = FUN(year)
     
     # Classify as simple integer ISO date format CCYYMMDD
-    class(ans) = "sdate" 
+    ans = timeDate(as.character(ans))
     
     # Return Value:
     ans
@@ -285,39 +285,40 @@ function(y = currentYear)
     # Iterate years:
     for (y in years ) { 
         if (y >= 1885) 
-            holidays = c(holidays, USNewYearsDay(y))
+            holidays = c(holidays, as.character(USNewYearsDay(y)))
         if (y >= 1885) 
-            holidays = c(holidays, USIndependenceDay(y))    
+            holidays = c(holidays, as.character(USIndependenceDay(y)))    
         if (y >= 1885) 
-            holidays = c(holidays, USThanksgivingDay(y))    
+            holidays = c(holidays, as.character(USThanksgivingDay(y)))   
         if (y >= 1885)
-            holidays = c(holidays, USChristmasDay(y))
+            holidays = c(holidays, as.character(USChristmasDay(y)))
         if (y >= 1887)
-            holidays = c(holidays, USLaborDay(y))   
+            holidays = c(holidays, as.character(USLaborDay(y)))
         if (y != 1898 & y != 1906 & y != 1907)
-            holidays = c(holidays, USGoodFriday(y)) 
+            holidays = c(holidays, as.character(USGoodFriday(y)))
         if (y >= 1909 & y <= 1953) 
-            holidays = c(holidays, USColumbusDay(y))        
+            holidays = c(holidays, as.character(USColumbusDay(y)))       
         if (y >= 1998)
-            holidays = c(holidays, USMLKingsBirthday(y))        
+            holidays = c(holidays, as.character(USMLKingsBirthday(y)))        
         if (y >= 1896 & y <= 1953) 
-            holidays = c(holidays, USLincolnsBirthday(y))
+            holidays = c(holidays, as.character(USLincolnsBirthday(y)))
         if (y <= 1970) 
-            holidays = c(holidays, USWashingtonsBirthday(y))
+            holidays = c(holidays, as.character(USWashingtonsBirthday(y)))
         if (y >= 1970) 
-            holidays = c(holidays, USPresidentsDay(y))  
+            holidays = c(holidays, as.character(USPresidentsDay(y))) 
         if (y == 1918 | y == 1921 | (y >= 1934 & y <= 1953)) 
-            holidays = c(holidays, USVeteransDay(y))            
+            holidays = c(holidays, as.character(USVeteransDay(y)))        
         if (y <= 1968 | y == 1972 | y == 1976 | y == 1980) 
-            holidays = c(holidays, USElectionDay(y))        
+            holidays = c(holidays, as.character(USElectionDay(y)))       
         if (y <= 1970) 
-            holidays = c(holidays, USDecorationMemorialDay(y))      
+            holidays = c(holidays, as.character(USDecorationMemorialDay(y)))     
         if (y >= 1971) 
-            holidays = c(holidays, USMemorialDay(y)) }  
+            holidays = c(holidays, as.character(USMemorialDay(y)))
+    }  
 
     # Sort and Convert to 'timeDate':
-    holidays = as.character(sort(holidays))
-    ans = timeDate(holidays, format = "%Y%m%d", FinCenter = "GMT")
+    holidays = sort(holidays)
+    ans = timeDate(holidays)
     
     # Move Sunday Holidays to Monday:
     ans = ans + as.integer(as.POSIXlt(as.POSIXct(ans))$wday==0) * 24 * 3600
@@ -329,19 +330,17 @@ function(y = currentYear)
     y = posix$year + 1900
     m = posix$mon + 1
     lastday = as.POSIXlt(as.POSIXct(timeCalendar(y = y+(m+1)%/%13, 
-        m = m+1-(m+1)%/%13*12, d = 1, FinCenter = "GMT")-24*3600))$mday
+        m = m+1-(m+1)%/%13*12, d = 1)-24*3600))$mday
     ExceptOnLastFriday = timeDate(as.character(
-        last.of.nday(year = y, month = m, lastday = lastday, nday = 5)),
-        format = "%Y%m%d", FinCenter = "GMT")
-    ans = ans - as.integer (
-        ans >= timeDate("1959-07-03", format = "%Y-%m-%d", FinCenter = "GMT") &
+        .last.of.nday(year = y, month = m, lastday = lastday, nday = 5)))
+    ans = ans - as.integer(ans >= timeDate("1959-07-03") &
         as.POSIXlt(as.POSIXct(ans))$wday == 0  &
         ans != ExceptOnLastFriday ) * 24 * 3600 
     
     # Remove Remaining Weekend Dates:
     ans = ans[!(as.POSIXlt(as.POSIXct(ans))$wday == 0 | 
         as.POSIXlt(as.POSIXct(ans))$wday == 6)]
-    ans@FinCenter = "America/New_York"
+    ans@FinCenter = "NewYork"
     
     # Return Value:
     ans
@@ -356,7 +355,7 @@ function(y = currentYear)
 #   form CCYYMMDD.
 
 
-on.or.after = 
+.on.or.after = 
 function(year, month, day, nday)
 {   # A function implemented by Diethelm Wuertz
     
@@ -371,19 +370,19 @@ function(year, month, day, nday)
     #       0 (Sunday) to 6 (Saturday).
     
     # Value:
-    #   The date, an object of class 'sdate' formatted as integer.
+    #   The date, an object of class '.sdate' formatted as integer.
     
     # Example: 
     #   What date has the first Monday on or after March 15, 1986?
-    #   on.or.after(1986, 3, 15, 1)
+    #   .on.or.after(1986, 3, 15, 1)
     
     # FUNCTION:
     
-    # sdate:
+    # .sdate:
     ## "year*10000 + month*100 + day" +
     ##  (nday-day.of.week(month, day, year))%%7
-    sdate = year*10000+month*100+day
-    ans = sdate(sjulian(sdate)+(nday-day.of.week(month, day, year))%%7)
+    .sdate = year*10000+month*100+day
+    ans = .sdate(.sjulian(.sdate)+(nday-day.of.week(month, day, year))%%7)
     
     # Return Value:
     ans
@@ -393,7 +392,7 @@ function(year, month, day, nday)
 # ------------------------------------------------------------------------------
 
 
-on.or.before = 
+.on.or.before = 
 function(year, month, day, nday)
 {   # A function implemented by Diethelm Wuertz
 
@@ -408,19 +407,19 @@ function(year, month, day, nday)
     #       0 (Sunday) to 6 (Saturday).
     
     # Value:
-    #   The date, an object of class 'sdate' formatted as integer.
+    #   The date, an object of class '.sdate' formatted as integer.
 
     # Example: 
     #   What date has Friday on or before April 22, 1977?
-    #   on.or.before(1977, 4, 22, 5) 
+    #   .on.or.before(1977, 4, 22, 5) 
     
     # FUNCTION: 
     
-    # sdate:
+    # .sdate:
     ## "year*10000 + month*100 + day" -
     ##  (-(nday-day.of.week(month,day,year)))%%7
-    sdate = year*10000+month*100+day
-    ans = sdate(sjulian(sdate)-(-(nday-day.of.week(month,day,year)))%%7)
+    .sdate = year*10000+month*100+day
+    ans = .sdate(.sjulian(.sdate)-(-(nday-day.of.week(month,day,year)))%%7)
     
     # Return Value:
     ans
@@ -430,7 +429,7 @@ function(year, month, day, nday)
 # ------------------------------------------------------------------------------
 
 
-nth.of.nday = 
+.nth.of.nday = 
 function(year, month, nday, nth)
 {   # A function implemented by Diethelm Wuertz
 
@@ -446,19 +445,19 @@ function(year, month, nday, nth)
     #   nth - an inter numbering the "n-th" ocurrance of a "nday"
     
     # Value:
-    #   The date, an object of class 'sdate' formatted as integer.
+    #   The date, an object of class '.sdate' formatted as integer.
  
     # Example: 
     #   What date is the second Sunday in October 1980?
-    #   nth.of.nday(1980, 10, 0, 2)
+    #   .nth.of.nday(1980, 10, 0, 2)
     
     # FUNCTION: 
     
-    # sdate:
+    # .sdate:
     ## "year*10000 + month*100" + 7*nth - 6 +
     ##  (nday-day.of.week(year,month,7*nth-6))%%7
-    sdate = year*10000+month*100+1
-    ans = sdate(sjulian(sdate)+(nth-1)*7+(nday-day.of.week(month,1,year))%%7) 
+    .sdate = year*10000+month*100+1
+    ans = .sdate(.sjulian(.sdate)+(nth-1)*7+(nday-day.of.week(month,1,year))%%7) 
     
     # Return Value:
     ans  
@@ -468,7 +467,7 @@ function(year, month, nday, nth)
 # ------------------------------------------------------------------------------
 
 
-last.of.nday = 
+.last.of.nday = 
 function(year, month, lastday, nday)
 {   # A function implemented by Diethelm Wuertz
     
@@ -484,19 +483,19 @@ function(year, month, lastday, nday)
     #       0 (Sunday) to 6 (Saturday).
     
     # Value:
-    #   The date, an object of class 'sdate' formatted as integer.
+    #   The date, an object of class '.sdate' formatted as integer.
     
     # Example: 
     #   What date has the last Monday in May, 1996?
-    #   last.of.nday(1996, 5, 31, 1)
+    #   .last.of.nday(1996, 5, 31, 1)
     
     # FUNCTION:
     
-    # sdate:
+    # .sdate:
     ## "year*10000 + month*100 + lastday" -
     ##  (day.of.week(year,month,lastday)-nday)%%7
-    sdate = year*10000 + month*100 + lastday
-    ans = sdate(sjulian(sdate)-(-(nday-day.of.week(month,lastday,year)))%%7)
+    .sdate = year*10000 + month*100 + lastday
+    ans = .sdate(.sjulian(.sdate)-(-(nday-day.of.week(month,lastday,year)))%%7)
     
     # Return Value:
     ans
@@ -504,20 +503,20 @@ function(year, month, lastday, nday)
 
 
 ################################################################################
-# SDATE - FAMILY:
-#   What is the  'sdate' format? 
-#   'sdate' is a very simple class of objects of integer formatted ISO  
+# .sdate - FAMILY:
+#   What is the  '.sdate' format? 
+#   '.sdate' is a very simple class of objects of integer formatted ISO  
 #   dates CCYYMMDD, e.g. 20040101. I introduced this class long ago 
 #   before R had POSIX date/time objects. Now I use this simple date
 #   format for managing holiday calendars.
-#   The following functions return objects of class 'sdate':
+#   The following functions return objects of class '.sdate':
 #   easter(), holiday()
-#   sdate(), sday.of.week(), sleap.year()
-#   on.or.after(), on.or.before(), nth.of.nday(), last.of.nday()
+#   .sdate(), .sday.of.week(), .sleap.year()
+#   .on.or.after(), .on.or.before(), .nth.of.nday(), .last.of.nday()
 
 
 
-sdate = 
+.sdate = 
 function (julians, origin = 19600101)
 {   # A function implemented by Diethelm Wuertz
 
@@ -531,7 +530,7 @@ function (julians, origin = 19600101)
     #       in ISO-8601 date format CCYYMMDD.
     
     # Value:
-    #   Returns a vector of dates formatted as "sdates", i.e.
+    #   Returns a vector of dates formatted as ".sdates", i.e.
     #   CCYYMMDD integer values.
     
     # FUNCTION:
@@ -564,11 +563,11 @@ function (julians, origin = 19600101)
     # Month - Day - Year Function:
     mdylist = month.day.year(julians, origin = c(month0, day0, year0))
  
-    # In 'sdate' Format:
+    # In '.sdate' Format:
     ans = mdylist$year*10000 + mdylist$month*100 + mdylist$day
     
     # Return Value:
-    class(ans) = "sdate"
+    class(ans) = ".sdate"
     ans
 } 
 
@@ -576,8 +575,8 @@ function (julians, origin = 19600101)
 # ------------------------------------------------------------------------------
 
 
-sjulian = 
-function (sdates, origin = 19600101)
+.sjulian = 
+function (.sdates, origin = 19600101)
 {   # A function implemented by Diethelm Wuertz
     
     # Description:
@@ -585,7 +584,7 @@ function (sdates, origin = 19600101)
     #   formatted dates, CCYYMMDD
     
     # Arguments:
-    #   sdates - an integer variable or vector of dates, formatted
+    #   .sdates - an integer variable or vector of dates, formatted
     #       in ISO-8601 date format CCYYMMDD.
     #   origin - the origin of the Julian day counter, formatted
     #       in ISO-8601 date format CCYYMMDD.
@@ -595,7 +594,7 @@ function (sdates, origin = 19600101)
         
     # FUNCTION:
     
-    if (class(sdates) == "sdate") sdates = as.vector(sdates)
+    if (class(.sdates) == ".sdate") .sdates = as.vector(.sdates)
     
     # Internal Function:
     .julian = function(m, d, y, origin = c(month = 1, day = 1, year = 1960)) {  
@@ -618,9 +617,9 @@ function (sdates, origin = 19600101)
         out }
 
     # ISO-8601 GREGORIAN DATES TO JULIAN DAY NUMBERS:
-    year = sdates%/%10000
-    month = (sdates-10000*year)%/%100
-    day = sdates-10000*year-100*month
+    year = .sdates%/%10000
+    month = (.sdates-10000*year)%/%100
+    day = .sdates-10000*year-100*month
     
     # ISO-8601 ORIGIN:
     year0 = origin%/%10000
@@ -638,15 +637,15 @@ function (sdates, origin = 19600101)
 # ------------------------------------------------------------------------------
 
 
-sday.of.week = 
-function(sdates)
+.sday.of.week = 
+function(.sdates)
 {   # A function implemented by Diethelm Wuertz
     
     # Description:
     #   Calculates the day of week from an ISO-8601 formatted date
     
     # Arguments:
-    #   sdates - an integer variable or vector of dates, formatted
+    #   .sdates - an integer variable or vector of dates, formatted
     #       in ISO-8601 date format CCYYMMDD.
     
     # Value:
@@ -656,13 +655,13 @@ function(sdates)
     # FUNCTION::fBasic  
     
     # Convert:
-    if (class(sdates) == "sdate") sdates = as.vector(sdates)
+    if (class(.sdates) == ".sdate") .sdates = as.vector(.sdates)
         
     # Year - Month - Day:
     # Sunday 0, Monday 1, ..., Saturday 6
-    year = sdates%/%10000
-    month = sdates%/%100 - year*100
-    day = sdates - year*10000 - month*100
+    year = .sdates%/%10000
+    month = .sdates%/%100 - year*100
+    day = .sdates - year*10000 - month*100
     a = (14-month)%/%12
     y = year - a
     m = month + 12*a - 2
@@ -678,8 +677,8 @@ function(sdates)
 # ------------------------------------------------------------------------------
 
 
-sleap.year = 
-function(sdates)
+.sleap.year = 
+function(.sdates)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -687,7 +686,7 @@ function(sdates)
     #   takes the value T(rue) for leap year, otherwise F(alse)
     
     # Arguments:
-    #   sdates - an integer variable or vector of dates, formatted
+    #   .sdates - an integer variable or vector of dates, formatted
     #       in ISO-8601 date format CCYYMMDD.
     
     # Value:
@@ -697,10 +696,10 @@ function(sdates)
     # FUNCTION:
       
     # Convert:
-    if (class(sdates) == "sdate") sdates = as.vector(sdates)
+    if (class(.sdates) == ".sdate") .sdates = as.vector(.sdates)
       
     # Year:
-    year = sdates%/%10000
+    year = .sdates%/%10000
     
     # Leap Years
     ans = year %% 4 == 0 & (year %% 100 != 0 | year %% 400 == 0)
@@ -713,15 +712,15 @@ function(sdates)
 # ------------------------------------------------------------------------------
 
 
-print.sdate =
+.print.sdate =
 function(x, ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Print method for objects of class "sdate".
+    #   Print method for objects of class ".sdate".
     
     # Arguments:
-    #   x - anobject of class "sdate"
+    #   x - anobject of class ".sdate"
     
     # FUNCTION:
     
@@ -741,7 +740,7 @@ function(x, ...)
 # ******************************************************************************
 
 
-fjulian = 
+.fjulian = 
 function(fdates, origin = 19600101, order = 'mdy', cc = NULL, swap = 20)
 {   # # A function implemented by Diethelm Wuertz
 
@@ -940,7 +939,7 @@ function(month, day, year)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   A Synonyme for sday.of.week() function
+    #   A Synonyme for .sday.of.week() function
     
     # Note:
     #   SPlus like.
@@ -948,7 +947,7 @@ function(month, day, year)
     # FUNCTION:
     
     # Result:
-    ans = sday.of.week(year * 10000 + month * 100 + day)
+    ans = .sday.of.week(year * 10000 + month * 100 + day)
     
     # Return Value:
     ans

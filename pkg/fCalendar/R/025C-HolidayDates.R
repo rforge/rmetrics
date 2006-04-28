@@ -32,8 +32,8 @@
 # Copyright 1997, Diethelm Wuertz
 #   www.rmetrics.org
 # Required "Holiday" Functions:
-#   "easter", "on.or.after", "nth.of.nday", "last.of.nday", 
-# The functions return an object of class "sdate"
+#   "easter", ".on.or.after", ".nth.of.nday", ".last.of.nday", 
+# The functions return an object of class ".sdate"
 #   ISO-8601 formatted integers, i.e. CCYYMMDD
 ################################################################################
 
@@ -171,82 +171,73 @@ function()
 Septuagesima = 
 function(year) {
     ans = easter(year, -63)
-    ans }
+    timeDate(as.character(ans)) }
     
 Quinquagesima = 
 function(year) {
     ans = easter(year, -49)
-    ans }
+    timeDate(as.character(ans)) }
     
 AshWednesday = 
 function(year) {
     ans = easter(year, -46)
-    ans }
+    timeDate(as.character(ans)) }
     
 PalmSunday = 
 function(year) {
     ans = easter(year, -7)
-    ans }
+    timeDate(as.character(ans)) }
     
 GoodFriday = 
 function(year) {
-    ans = easter(year, -2)
-    class(ans) = "sdate" 
-    ans } 
+    ans = easter(year, -2) 
+    timeDate(as.character(ans)) } 
     
 Easter = 
 function(year) {
-    ans = easter(year)
-    class(ans) = "sdate" 
-    ans } 
+    ans = easter(year)    
+    timeDate(as.character(ans)) } 
     
 EasterSunday = 
 function(year) {
     ans = easter(year)
-    class(ans) = "sdate" 
-    ans } 
+    timeDate(as.character(ans)) } 
     
 EasterMonday = 
 function(year) {
     ans = easter(year, 1)
-    class(ans) = "sdate" 
-    ans } 
+     
+    timeDate(as.character(ans)) } 
     
 RogationSunday = 
 function(year) {
-    ans = easter(year, 35)
-    class(ans) = "sdate" 
-    ans } 
+    ans = easter(year, 35)   
+    timeDate(as.character(ans)) } 
     
 Ascension = 
 function(year) {
     ans = easter(year, 39)
-    class(ans) = "sdate" 
-    ans } 
+    timeDate(as.character(ans)) } 
     
 Pentecost = 
 function(year) {
-    ans = easter(year, 49)
-    class(ans) = "sdate" 
-    ans } 
+    ans = easter(year, 49) 
+    timeDate(as.character(ans)) } 
     
 PentecostMonday =  
 function(year) {
-    ans = easter(year, 50)
-    class(ans) = "sdate" 
-    ans } 
+    ans = easter(year, 50)     
+    timeDate(as.character(ans)) } 
     
 TrinitySunday = 
 function(year) {
-    ans = easter(year, 56)
-    class(ans) = "sdate" 
-    ans } 
+    ans = easter(year, 56)     
+    timeDate(as.character(ans)) } 
     
 CorpusChristi = 
 function(year) {
-    ans = easter(year, 60)
-    class(ans) = "sdate" 
-    ans } 
+    ans = easter(year, 60)    
+    timeDate(as.character(ans)) } 
 
     
 # ------------------------------------------------------------------------------
@@ -254,51 +245,43 @@ function(year) {
 
 ChristTheKing = 
 function(year) {
-    ans = on.or.after(year, 11, 20, 0)
-    class(ans) = "sdate" 
-    ans } 
+    ans = .on.or.after(year, 11, 20, 0)
+    timeDate(as.character(ans)) } 
     
 Advent1st = 
 function(year) {
-    ans = on.or.after(year, 11, 27, 0)
-    class(ans) = "sdate" 
-    ans } 
+    ans = .on.or.after(year, 11, 27, 0)
+    timeDate(as.character(ans)) } 
     
 Advent2nd = 
 function(year) {
-    ans = on.or.after(year, 12,  4, 0)
-    class(ans) = "sdate" 
-    ans } 
+    ans = .on.or.after(year, 12,  4, 0) 
+    timeDate(as.character(ans)) } 
     
 Advent3rd = 
 function(year) {
-    ans = on.or.after(year, 12, 11, 0)
-    class(ans) = "sdate" 
-    ans } 
+    ans = .on.or.after(year, 12, 11, 0)  
+    timeDate(as.character(ans)) } 
     
 Advent4th = 
 function(year) {
-    ans = on.or.after(year, 12, 18, 0)
-    class(ans) = "sdate" 
-    ans } 
+    ans = .on.or.after(year, 12, 18, 0)     
+    timeDate(as.character(ans)) } 
     
 ChristmasEve = 
 function(year) {
-    ans = year*10000 + 1224
-    class(ans) = "sdate" 
-    ans } 
+    ans = year*10000 + 1224    
+    timeDate(as.character(ans)) } 
     
 ChristmasDay = 
 function(year) {
-    ans = year*10000 + 1225
-    class(ans) = "sdate"
-    ans }
+    ans = year*10000 + 1225   
+    timeDate(as.character(ans)) }
     
 BoxingDay = 
 function(year) {
-    ans = year*10000 + 1226
-    class(ans) = "sdate"
-    ans }
+    ans = year*10000 + 1226    
+    timeDate(as.character(ans)) }
 
     
 # ------------------------------------------------------------------------------
@@ -306,68 +289,57 @@ function(year) {
     
 SolemnityOfMary = 
 function(year) {
-    ans = year*10000 + 0101
-    class(ans) = "sdate"
-    ans }
+    ans = year*10000 + 0101    
+    timeDate(as.character(ans)) }
     
 Epiphany = 
 function(year) {
-    ans = year*10000 + 0106
-    class(ans) = "sdate"
-    ans }
+    ans = year*10000 + 0106   
+    timeDate(as.character(ans)) }
     
 PresentationOfLord = 
 function(year) {
-    ans = year*10000 + 0202
-    class(ans) = "sdate"
-    ans }
+    ans = year*10000 + 0202    
+    timeDate(as.character(ans)) }
     
 Annunciation = 
 function(year) {
-    ans = year*10000 + 0325
-    class(ans) = "sdate"
-    ans }
+    ans = year*10000 + 0325    
+    timeDate(as.character(ans)) }
     
 TransfigurationOfLord = 
 function(year) {
-    ans = year*10000 + 0806
-    class(ans) = "sdate"
-    ans }
+    ans = year*10000 + 0806  
+    timeDate(as.character(ans)) }
     
 AssumptionOfMary = 
 function(year) {
-    ans = year*10000 + 0815
-    class(ans) = "sdate"
-    ans }
+    ans = year*10000 + 0815   
+    timeDate(as.character(ans)) }
     
 BirthOfVirginMary = 
 function(year) {
-    ans = year*10000 + 0908
-    class(ans) = "sdate"
-    ans }
+    ans = year*10000 + 0908   
+    timeDate(as.character(ans)) }
     
 CelebrationOfHolyCross = 
 function(year) {
-    ans = year*10000 + 0914
-    class(ans) = "sdate"
-    ans }
+    ans = year*10000 + 0914   
+    timeDate(as.character(ans)) }
     
 MassOfArchangels = 
 function(year) {
-    ans = year*10000 + 0929
-    class(ans) = "sdate"
-    ans }
+    ans = year*10000 + 0929   
+    timeDate(as.character(ans)) }
     
 AllSaints = function(year) {
-    ans = year*10000 + 1101
-    class(ans) = "sdate"
-    ans }
+    ans = year*10000 + 1101  
+    timeDate(as.character(ans)) }
     
 AllSouls = 
 function(year) {
-    ans = year*10000 + 1102
-    class(ans) = "sdate"
-    ans }
+    ans = year*10000 + 1102   
+    timeDate(as.character(ans)) }
 
     
 # ------------------------------------------------------------------------------
@@ -376,14 +348,12 @@ function(year) {
 NewYearsDay = 
 function(year) {
     ans = year*10000 + 0101
-    class(ans) = "sdate"
-    ans }
+    timeDate(as.character(ans)) }
     
 LaborDay = 
 function(year) {
-    ans = year*10000 + 0501
-    class(ans) = "sdate"
-    ans }
+    ans = year*10000 + 0501  
+    timeDate(as.character(ans)) }
     
     
 # ------------------------------------------------------------------------------
@@ -392,37 +362,33 @@ function(year) {
 CHBerchtoldsDay = 
 function(year) {
     ans = year*10000 + 0102
-    class(ans) = "sdate"
-    ans }
+    timeDate(as.character(ans)) }
     
 CHSechselaeuten = 
 function(year) {
     ans = NULL
     for (y in year) {
-        theDate = nth.of.nday(y, 4, 1, 3)
+        theDate = .nth.of.nday(y, 4, 1, 3)
         if (theDate == easter(y, +1)) {
-            theDate = nth.of.nday(y, 4, 1, 4) }
-        ans = c(ans, theDate) }
-    class(ans) = "sdate"
-    ans }
+            theDate = .nth.of.nday(y, 4, 1, 4) }
+        ans = c(ans, theDate) 
+    }
+    timeDate(as.character(ans)) }
     
 CHAscension = 
 function(year) {
-    ans = easter(year, 39)
-    class(ans) = "sdate" 
-    ans }
+    ans = easter(year, 39)    
+    timeDate(as.character(ans)) }
     
 CHConfederationDay = 
 function(year) {
     ans = year*10000 + 0801
-    class(ans) = "sdate"
-    ans }
+    timeDate(as.character(ans)) }
     
 CHKnabenschiessen = 
 function(year) {
-    ans = nth.of.nday(year, 9, 1, 2)
-    class(ans) = "sdate" 
-    ans } 
+    ans = .nth.of.nday(year, 9, 1, 2)     
+    timeDate(as.character(ans)) } 
 
         
 # ------------------------------------------------------------------------------
@@ -430,27 +396,23 @@ function(year) {
 
 GBMayDay = 
 function(year) {
-    ans = nth.of.nday(year, 5, 1, 1)
-    class(ans) = "sdate" 
-    ans } 
+    ans = .nth.of.nday(year, 5, 1, 1)  
+    timeDate(as.character(ans)) } 
     
 GBBankHoliday = 
 function(year) {
-    ans = last.of.nday(year, 5, 31, 1)
-    class(ans) = "sdate" 
-    ans } 
+    ans = .last.of.nday(year, 5, 31, 1)     
+    timeDate(as.character(ans)) } 
     
 GBSummerBankHoliday = 
 function(year) {
-    ans = last.of.nday(year, 8, 31, 1)
-    class(ans) = "sdate" 
-    ans } 
+    ans = .last.of.nday(year, 8, 31, 1)     
+    timeDate(as.character(ans)) } 
     
 GBMilleniumDay = 
 function(year) {
-    ans = 19991231
-    class(ans) = "sdate"
-    ans }
+    ans = 19991231   
+    timeDate(as.character(ans)) }
 
         
 # ------------------------------------------------------------------------------
@@ -458,33 +420,28 @@ function(year) {
 
 DEAscension = 
 function(year) {
-    ans = easter(year, 39)
-    class(ans) = "sdate" 
-    ans } 
+    ans = easter(year, 39)    
+    timeDate(as.character(ans)) } 
     
 DECorpusChristi =  
 function(year) {
-    ans = easter(year, 60)
-    class(ans) = "sdate" 
-    ans } 
+    ans = easter(year, 60)  
+    timeDate(as.character(ans)) } 
     
 DEGermanUnity = 
 function(year) {
-    ans = year*10000 + 1003
-    class(ans) = "sdate"
-    ans }
+    ans = year*10000 + 1003 
+    timeDate(as.character(ans)) }
     
 DEChristmasEve = 
 function(year) {
     ans = year*10000 + 1224
-    class(ans) = "sdate"
-    ans }
+    timeDate(as.character(ans)) }
     
 DENewYearsEve = 
 function(year) {
     ans = year*10000 + 1231
-    class(ans) = "sdate"
-    ans }
+    timeDate(as.character(ans)) }
 
         
 # ------------------------------------------------------------------------------
@@ -493,37 +450,32 @@ function(year) {
 FRFetDeLaVictoire1945 = 
 function(year) {
     ans = year*10000 + 0508
-    class(ans) = "sdate"
-    ans }
+    timeDate(as.character(ans)) }
     
 FRAscension = 
 function(year) {
     ans = easter(year, 39)
-    ans }
+    timeDate(as.character(ans)) }
     
 FRBastilleDay = 
 function(year) {
     ans = year*10000 + 0714
-    class(ans) = "sdate"
-    ans }
+    timeDate(as.character(ans)) }
     
 FRAssumptionVirginMary = 
 function(year) {
     ans = year*10000 + 0815
-    class(ans) = "sdate"
-    ans }
+    timeDate(as.character(ans)) }
     
 FRAllSaints = 
 function(year) {
-    ans = year*10000 + 1101
-    class(ans) = "sdate"
-    ans }
+    ans = year*10000 + 1101  
+    timeDate(as.character(ans)) }
     
 FRArmisticeDay = 
 function(year) {
-    ans = year*10000 + 1111
-    class(ans) = "sdate"
-    ans }
+    ans = year*10000 + 1111 
+    timeDate(as.character(ans)) }
 
     
 # ------------------------------------------------------------------------------
@@ -532,38 +484,32 @@ function(year) {
 ITEpiphany = 
 function(year) {
     ans = year*10000 + 0106
-    class(ans) = "sdate"
-    ans }
+    timeDate(as.character(ans)) }
     
 ITLiberationDay =  
 function(year) {
     ans = year*10000 + 0425
-    class(ans) = "sdate"
-    ans }
+    timeDate(as.character(ans)) }
     
 ITAssumptionOfVirginMary = 
 function(year) {
     ans = year*10000 + 0815
-    class(ans) = "sdate"
-    ans }
+    timeDate(as.character(ans)) }
     
 ITAllSaints = 
 function(year) {
     ans = year*10000 + 1101
-    class(ans) = "sdate"
-    ans }
+    timeDate(as.character(ans)) }
     
 ITStAmrose = 
 function(year) {
     ans = year*10000 + 1207
-    class(ans) = "sdate"
-    ans }
+    timeDate(as.character(ans)) }
     
 ITImmaculateConception = 
 function(year) {
-    ans = year*10000 + 1208
-    class(ans) = "sdate"
-    ans }
+    ans = year*10000 + 1208  
+    timeDate(as.character(ans)) }
 
     
 # ------------------------------------------------------------------------------
@@ -572,102 +518,87 @@ function(year) {
 USNewYearsDay = 
 function(year) {
     ans = year*10000 + 0101
-    class(ans) = "sdate"
-    ans }
+    timeDate(as.character(ans)) }
     
 USInaugurationDay = 
 function(year) {
-    ans = year*10000 + 0120
-    class(ans) = "sdate"
-    ans }
+    ans = year*10000 + 0120 
+    timeDate(as.character(ans)) }
     
 USMLKingsBirthday = 
 function(year) {
-    ans = nth.of.nday(year, 1, 1, 3)
-    class(ans) = "sdate" 
-    ans } 
+    ans = .nth.of.nday(year, 1, 1, 3)
+    timeDate(as.character(ans)) } 
     
 USLincolnsBirthday = 
 function(year) {
     ans = year*10000 + 0212
-    class(ans) = "sdate"
-    ans }
+    timeDate(as.character(ans)) }
     
 USWashingtonsBirthday = 
 function(year) {
-    ans = nth.of.nday(year, 2, 1, 3)
-    class(ans) = "sdate" 
-    ans } 
+    ans = .nth.of.nday(year, 2, 1, 3)
+    timeDate(as.character(ans)) } 
     
 USMemorialDay = 
 function(year) {
-    ans = last.of.nday(year, 5, 31, 1)
-    class(ans) = "sdate" 
-    ans } 
+    ans = .last.of.nday(year, 5, 31, 1)
+    timeDate(as.character(ans)) } 
     
 USIndependenceDay = 
 function(year) {
     ans = year*10000 + 0704
-    class(ans) = "sdate"
-    ans }
+    timeDate(as.character(ans)) }
     
 USLaborDay = 
 function(year) {
-    ans = nth.of.nday(year, 9, 1, 1)
-    class(ans) = "sdate" 
-    ans } 
+    ans = .nth.of.nday(year, 9, 1, 1)
+    timeDate(as.character(ans)) } 
     
 USColumbusDay = 
 function(year) {
-    ans = nth.of.nday(year, 10, 1, 2)
-    class(ans) = "sdate" 
-    ans } 
+    ans = .nth.of.nday(year, 10, 1, 2)
+    timeDate(as.character(ans)) } 
     
 USElectionDay = 
 function(year) {
-    ans = on.or.after(year, 11, 2, 2)
-    class(ans) = "sdate" 
-    ans } 
+    ans = .on.or.after(year, 11, 2, 2)
+    timeDate(as.character(ans)) } 
     
 USVeteransDay = 
 function(year) {
     ans = year*10000 + 1111
-    class(ans) = "sdate"
-    ans }
+    timeDate(as.character(ans)) }
     
 USThanksgivingDay = 
 function(year) {
-    ans = nth.of.nday(year, 11, 4, 4)
-    ans }
+    ans = .nth.of.nday(year, 11, 4, 4)
+    timeDate(as.character(ans)) }
     
 USChristmasDay = 
 function(year) {
     ans = year*10000 + 1225
-    class(ans) = "sdate"
-    ans }
+    timeDate(as.character(ans)) }
     
 USCPulaskisBirthday = 
 function(year) {
-    ans = nth.of.nday(year, 3, 1, 1)
-    class(ans) = "sdate" 
-    ans }
+    ans = .nth.of.nday(year, 3, 1, 1)  
+    timeDate(as.character(ans)) }
     
 USGoodFriday = 
 function(year) {
     ans = easter(year, -2)
-    class(ans) = "sdate" 
-    ans } 
+    timeDate(as.character(ans)) } 
+    
 USPresidentsDay = 
 function(year) {
-    ans = nth.of.nday(year, 2, 1, 3) 
-    class(ans) = "sdate" 
-    ans }
+    ans = .nth.of.nday(year, 2, 1, 3) 
+    timeDate(as.character(ans)) }
     
 USDecorationMemorialDay = 
 function(year) {
     ans = year*10000 + 0530
-    class(ans) = "sdate"
-    ans }
+    timeDate(as.character(ans)) }
 
     
 # ------------------------------------------------------------------------------
@@ -675,38 +606,33 @@ function(year) {
 
 CAVictoriaDay = 
 function(year) {
-    ans = on.or.before(year, 5, 24, 1)
-    class(ans) = "sdate" 
-    ans } 
+    ans = .on.or.before(year, 5, 24, 1) 
+    timeDate(as.character(ans)) } 
     
 CACanadaDay = 
 function(year) {
     ans = year*10000 + 0701
-    class(ans) = "sdate"
-    ans }
+    timeDate(as.character(ans)) }
     
 CACivicProvincialHoliday = 
 function(year) {
-    ans = nth.of.nday(year, 8, 1, 1)
-    class(ans) = "sdate" 
-    ans }
+    ans = .nth.of.nday(year, 8, 1, 1)
+    timeDate(as.character(ans)) }
     
 CALabourDay = 
 function(year) {
-    ans = nth.of.nday(year, 9, 1, 1)
-    ans }
+    ans = .nth.of.nday(year, 9, 1, 1)
+    timeDate(as.character(ans)) }
     
 CAThanksgivingDay = 
 function(year) {
-    ans = nth.of.nday(year, 10, 1, 2)
-    class(ans) = "sdate" 
-    ans }
+    ans = .nth.of.nday(year, 10, 1, 2)
+    timeDate(as.character(ans)) }
     
 CaRemembranceDay = 
 function(year) {
-    ans = year*10000 + 1111
-    class(ans) = "sdate"
-    ans }
+    ans = year*10000 + 1111 
+    timeDate(as.character(ans)) }
 
     
 # ------------------------------------------------------------------------------
@@ -715,186 +641,157 @@ function(year) {
 JPNewYearsDay = 
 function(year) {
     ans = year*10000 + 0101
-    class(ans) = "sdate"
-    ans }
+    timeDate(as.character(ans)) }
     
 JPGantan = 
 function(year) {
     ans = year*10000 + 0101
-    class(ans) = "sdate"
-    ans }
+    timeDate(as.character(ans)) }
     
 JPBankHolidayJan2 = 
 function(year) {
     ans = year*10000 + 0102
-    class(ans) = "sdate"
-    ans }
+    timeDate(as.character(ans)) }
     
 JPBankHolidayJan3 = 
 function(year) {
     ans = year*10000 + 0103
-    class(ans) = "sdate"
-    ans }
+    timeDate(as.character(ans)) }
     
 JPComingOfAgeDay = 
 function(year) {
     ans = year*10000 + 0115
-    class(ans) = "sdate"
-    ans }
+    timeDate(as.character(ans)) }
     
 JPSeijinNoHi = 
 function(year) {
     ans = year*10000 + 0115
-    class(ans) = "sdate"
-    ans }
+    timeDate(as.character(ans)) }
     
 JPNatFoundationDay = 
 function(year) {
     ans =year*10000 + 0211
-    class(ans) = "sdate"
-    ans }
+    timeDate(as.character(ans)) }
     
 JPKenkokuKinenNoHi = 
 function(year) {
     ans = year*10000 + 0211
-    class(ans) = "sdate"
-    ans }
+    timeDate(as.character(ans)) }
     
 JPGreeneryDay = 
 function(year) {
     ans = year*10000 + 0429
-    class(ans) = "sdate"
-    ans }
+    timeDate(as.character(ans)) }
     
 JPMidoriNoHi = 
 function(year) {
-    ans = year*10000 + 0429
-    class(ans) = "sdate"
-    ans }
+    ans = year*10000 + 0429 
+    timeDate(as.character(ans)) }
     
 JPConstitutionDay = 
 function(year) {
     ans = year*10000 + 0503
-    class(ans) = "sdate"
-    ans }
+    timeDate(as.character(ans)) }
     
 JPKenpouKinenBi = 
 function(year) {
     ans = year*10000 + 0503
-    class(ans) = "sdate"
-    ans }
+    timeDate(as.character(ans)) }
     
 JPNationHoliday = 
 function(year) {
     ans = year*10000 + 0504
-    class(ans) = "sdate"
-    ans }
+    timeDate(as.character(ans)) }
     
 JPKokuminNoKyujitu = 
 function(year) {
     ans = year*10000 + 0504
-    class(ans) = "sdate"
-    ans }
+    timeDate(as.character(ans)) }
     
 JPChildrensDay = 
 function(year) {
     ans = year*10000 + 0505
-    class(ans) = "sdate"
-    ans }
+    timeDate(as.character(ans)) }
     
 JPKodomoNoHi = 
 function(year) {
     ans = year*10000 + 0505
-    class(ans) = "sdate"
-    ans }
+    timeDate(as.character(ans)) }
     
 JPMarineDay = 
 function(year) {
     ans = year*10000 + 0720
-    class(ans) = "sdate"
-    ans }
+    timeDate(as.character(ans)) }
     
 JPUmiNoHi = 
 function(year) {
     ans = year*10000 + 0720
-    class(ans) = "sdate"
-    ans }
+    timeDate(as.character(ans)) }
     
 JPRespectForTheAgedDay = 
 function(year) {
     ans = year*10000 + 0915
-    class(ans) = "sdate"
-    ans }
+    timeDate(as.character(ans)) }
     
 JPKeirouNOhi = 
 function(year) {
     ans = year*10000 + 0915
-    class(ans) = "sdate"
-    ans }
+    timeDate(as.character(ans)) }
     
 JPAutumnalEquinox = 
 function(year) {
     ans = year*10000 + 0924
-    class(ans) = "sdate"
-    ans }
+    timeDate(as.character(ans)) }
     
 JPShuubunNoHi = 
 function(year) {
     ans =year*10000 + 0924
-    class(ans) = "sdate"
-    ans }
+    timeDate(as.character(ans)) }
+    
 JPHealthandSportsDay = 
 function(year) {
-    ans = year*10000 + 1010
-    class(ans) = "sdate"
-    ans }
+    ans = year*10000 + 1010 
+    timeDate(as.character(ans)) }
     
 JPTaiikuNoHi = 
 function(year) {
     ans = year*10000 + 1010
-    class(ans) = "sdate"
-    ans }
+    timeDate(as.character(ans)) }
     
 JPNationalCultureDay = 
 function(year) {
     ans = year*10000 + 1103
-    class(ans) = "sdate"
-    ans }
+    timeDate(as.character(ans)) }
     
 JPBunkaNoHi = 
 function(year) {
     ans = year*10000 + 1103
-    class(ans) = "sdate"
-    ans }
+    timeDate(as.character(ans)) }
+    
 JPThanksgivingDay = 
 function(year) {
     ans = year*10000 + 1123
-    class(ans) = "sdate"
-    ans }
+    timeDate(as.character(ans)) }
     
 JPKinrouKanshaNoHi = 
 function(year) {
     ans = year*10000 + 1123
-    class(ans) = "sdate"
-    ans }
+    timeDate(as.character(ans)) }
     
 JPEmperorsBirthday = 
 function(year) {
     ans = year*10000 + 1123
-    class(ans) = "sdate"
-    ans }
+    timeDate(as.character(ans)) }
     
 JPTennouTanjyouBi = 
 function(year) {
-    year*10000 + 1123
-    class(ans) = "sdate"
-    ans }
+    ans = year*10000 + 1123
+    timeDate(as.character(ans)) }
     
 JPBankHolidayDec31 = 
 function(year) {
-    ans =year*10000 + 1231
-    class(ans) = "sdate"
-    ans }
+    ans = year*10000 + 1231
+    timeDate(as.character(ans)) }
 
     
 ################################################################################

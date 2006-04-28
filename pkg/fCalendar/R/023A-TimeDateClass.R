@@ -16,7 +16,7 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2004, Diethelm Wuertz, GPL
+#   1999 - 2006, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
 #   www.rmetrics.org
@@ -28,56 +28,67 @@
 
 
 ################################################################################
-# FUNCTION:            FINANCIAL CENTERS:
-#  rulesFinCenter       Returns DST rules for a financial center
-#  listFinCenter        Lists all supported financial centers
-# FUNCTION:            GENERATION OF TIMEDATE OBJECTS:
-#  'timeDate'           S4: Class representation for timeDate objects
-#  timeDate             S4: Creates a 'timeDate' object from a character vector
-#  timeCalendar         S4: Creates a 'timeDate' object from calendar atoms
-#  timeSequence         S4: Creates a regularly spaced 'timeDate' object
-#  Sys.timeDate         Returns system time as an object of class 'timeDate'   
-# FUNCTION:            SPECIAL MONTHLY SEQUENCES:
-#  timeLastDayInMonth   Computes the last day in a given month and year
-#  timeFirstDayInMonth  Computes the first day in a given month and year
-#  timeLastDayInQuarter Computes the last day in a given quarter and year
-#  timeFirstDayInQuarter Computes the first day in a given quarter and year
-#  timeNdayOnOrAfter    Computes date in month that is a n-day ON OR AFTER date
-#  timeNdayOnOrBefore   Computes date in month that is a n-day ON OR BEFORE date
-#  timeNthNdayInMonth   Computes n-th ocurrance of a n-day in year/month
-#  timeLastNdayInMonth  Computes the last n-day in year/month
-#  blockStart
-#  blockEnd
-# S3 METHODS:          REPRESENTATION OF OBJECTS:
-#  print.timeDate       Prints 'timeDate' including 'FinCenter' and 'Data' Slot
-#  summary.timeDate     Summarizes details of a 'timeDate' object
-# S3 METHODS:          TEST AND REPRESENTATION OF OBJECTS:
-#  is.timeDate          Checks if the object is of class 'timeDate'
-#  format.timeDate      Formats 'timeDate' as ISO conform character string
-# FUNCTIONS:           DESCRIPTION:
-#  isWeekday            Tests if a date is a weekday or not
-#  isWeekend            Tests if a date falls on a weekend or not
-#  isBizday             Tests if a date is a business day or not
-#  weekDay              Returns the day of the week
-################################################################################
-
-
-################################################################################
-# S3 MEHOD:              MATHEMATICAL OPERATIONS:
+# FUNCTION:              FINANCIAL CENTERS:
+#  rulesFinCenter         Returns DST rules for a financial center
+#  listFinCenter          Lists all supported financial centers
+#
+# FUNCTION:              GENERATION OF TIMEDATE OBJECTS:
+#  'timeDate'             S4 Class representation for timeDate objects
+#  timeDate               Creates a 'timeDate' object from given dates
+#  timeCalendar           Creates a 'timeDate' object from calendar atoms
+#  timeSequence           Creates a regularly spaced 'timeDate' object
+#  Sys.timeDate           Returns system time as an object of class 'timeDate'  
+#
+# FUNCTION:              SPECIAL TIMEDATE OPERATIONS:
+#  timeLastDayInMonth     Computes the last day in a given month and year
+#  timeFirstDayInMonth    Computes the first day in a given month and year
+#  timeLastDayInQuarter   Computes the last day in a given quarter and year
+#  timeFirstDayInQuarter  Computes the first day in a given quarter and year
+#  timeNdayOnOrAfter      Computes date in month that is a n-day ON OR AFTER  
+#  timeNdayOnOrBefore     Computes date in month that is a n-day ON OR BEFORE  
+#  timeNthNdayInMonth     Computes n-th ocurrance of a n-day in year/month
+#  timeLastNdayInMonth    Computes the last n-day in year/month
+#
+# S3 METHODS:            REPRESENTATION OF TIMEDATE OBJECTS:
+#  print.timeDate         Prints 'timeDate' Object
+#  summary.timeDate       Summarizes details of a 'timeDate' object
+#  format.timeDate        Formats 'timeDate' as ISO conform character string
+#
+# S3 METHODS:            TEST AND REPRESENTATION OF OBJECTS:
+#  is.timeDate            Tests if the object is of class 'timeDate'
+#  isWeekday              Tests if a date is a weekday or not
+#  isWeekend              Tests if a date falls on a weekend or not
+#  isBizday               Tests if a date is a business day or not
+#  isHoliday              Tests if a date is a non-business day or not
+#  getDayOfWeek           Returns the day of the week to a 'timeDate' object
+#  getDayOfYear           Returns the day of the year to a 'timeDate' object
+#
+# S3 MEHOD:              SUBSETTING TIMEDATE OBJECTS:
 #  [.timeDate             Extracts or replaces subsets from 'timeDate' Objects
-#  +.timeDate             Performs arithmetic + operation on 'timeDate' objects
-#  -.timeDate             Performs arithmetic - operation on 'timeDate' objects
-#  Ops.timeDate           Group 'Ops' generic functions for 'timeDate' objects
-#  diff.timeDate          Returns suitably lagged and iterated differences
-#  difftimeDate           Returns a difference of two 'timeDate' objects
-#  c.timeDate             Concatenates objects of class 'timeDate'
-#  rep.timeDate           Replicates objects of class 'timeDate'
+#  cut.timeDate
 #  start.timeDate         Extracts the first object of a 'timeDate' vector
 #  end.timeDate           Extracts the last object of a 'timeDate' vector
-#  modify.timeDate        Sorts, Rounds or truncates a 'timeDate' vector
+#  blockStart             Creates start dates for equally sized blocks
+#  blockEnd               Creates end dates for equally sized blocks
+#
+# S3 MEHOD:              MATHEMATICAL OPERATIONS:
+#  Ops.timeDate           Group 'Ops' generic functions for 'timeDate' objects
+#  +.timeDate             Performs arithmetic + operation on 'timeDate' objects
+#  -.timeDate             Performs arithmetic - operation on 'timeDate' objects
+#  diff.timeDate          Returns suitably lagged and iterated differences
+#  difftimeDate           Returns a difference of two 'timeDate' objects
+#  round.tinmeDate        Rounds objects of class 'timeDate'
+#  trunc.timeDate         Truncates objects of class 'timeDate' 
+#
+# S3 MEHOD:              CONCATENATION, ORDERING AND SORTING:
+#  c.timeDate             Concatenates objects of class 'timeDate'
+#  rep.timeDate           Replicates objects of class 'timeDate'
+#  sort.timeDate          Sorts, Rounds or truncates a 'timeDate' vector
+#  sample.timeDate        Resamples objects of class 'timeDate'
 #  unique.timeDate        Remove duplicates from a 'timeDate' vector
 #  rev.timeDate           Reverts  a 'timeDate' vector object
-# S3 MEHOD:              OBJECT TRANSFORMATION:
+#
+# S3 MEHOD:              OBJECT TRANSFORMATIONS:
 #  as.character.timeDate  Returns a 'timeDate' object as character string
 #  as.data.frame.timeDate Returns a 'timeDate' object as data frame
 #  as.POSIXct.timeDate    Returns a 'timeDate' object as POSIXct object
@@ -87,56 +98,10 @@
 ################################################################################
 
 
-# PART I: timeDate Class
-
-
-# IMPORTANT FOR WINDOWS USERS:
-#   Set your timezone environment variable to TZ = GMT !!!
-
-
-# INTRODUCTION:
-
-#   For the management of chronological objects under R three concepts 
-#   are available: The first is the implementation of date and time in 
-#   R’s "chron" package neglecting locals, time zones and day light saving 
-#   times which are not really needed for economic time series. The second 
-#   approach, available in R’s base package implements the POSIX standard 
-#   to date and time objects, named "POSIXt". Unfortunately, the 
-#   representation of these objects is operating system dependent and 
-#   especially under MS Windows several problems appear in the management 
-#   of time zones and day light saving times. Here we present a solution
-#   to overcome these difficulties with POSIX objects and introduce a 
-#   new S4 class of 'timeDate' objects which allow for powerful methods 
-#   to represent dates and times in different financial centers around 
-#   the world. Many of the basic functionalities of these objects are in 
-#   common with SPlus’ 'timeDate' objects and thus many of the programs
-#   written for FinMetrics can also be used within R's environment.
-
-#   A major difference is the time zone concept which is replaced by the
-#   "financial center" concept. Thus, rules for day light saving times, 
-#   holiday calendars, interest rate conventions, and many other aspects
-#   can be easily accessed when a financial center is named. So we can 
-#   distinguish between Frankfurt and Zurich, which both belong to the 
-#   same time zone, but differed in DST changes in the eighties and have
-#   differentholiday calendars. Futhermore, since the underlying time 
-#   refers to "GMT" and DST rules and all other information is available 
-#   in local databases, we are sure, that R delivers with such a time/date 
-#   concept on every computer independent of the implementation of the 
-#   operating system in use, identical results. 
-
-#   Another important feature of the "timeDate" concept used here is the
-#   fact that we don't rely on American or European ways to write dates.
-#   We use consequently the ISO-8601 standard for date and time notations.
-
-
 ################################################################################
-# FINANCIAL CENTERS:
-#   There are two functions concerned with the financial centers. The 
-#   first lists the daylight saving rules for a selected financial
-#   center, and the second lists all centers available in the database.
-#   There is no dependency on the POSIX implementation of your operating
-#   system because all time zone and day light saving time information
-#   is stored locally in ASCII files. 
+# FUNCTION:              FINANCIAL CENTERS:
+#  rulesFinCenter         Returns DST rules for a financial center
+#  listFinCenter          Lists all supported financial centers 
 
   
 rulesFinCenter =
@@ -179,14 +144,9 @@ function(FinCenter = myFinCenter)
         # Note:
         #   Important, the "TZ" environment variable must set 
         #   to "GMT" in your Windows Environment!       
-        # Check Timezone:
-        TZ = Sys.getenv("TZ")  
-        if (TZ[[1]] != "GMT") {
-            Sys.putenv(TZ = "GMT")
-            TZ.RESET = TRUE
-        } else {
-            TZ.RESET = FALSE
-        }
+        # Set Timezone to GMT:
+        myTZ = Sys.getenv("TZ")  
+        Sys.putenv(TZ = "GMT")
         if (FinCenter == "") FinCenter = "GMT"      
         # Read the Rules:
         # Get IcalPath from .FirstLib
@@ -216,19 +176,14 @@ function(FinCenter = myFinCenter)
         ruleChangesGMT = strptime(paste(CCYYMMDD, hhmmss), "%Y%m%d %H%M%S")
         attr(ruleChangesGMT, "tzone") <- "GMT"      
         # Return Value:
-        if (TZ.RESET) Sys.putenv(TZ = TZ)
+        Sys.putenv(TZ = myTZ)
         data.frame(ruleChanges = as.character(ruleChangesGMT), 
             offSet = hms.off) } 
     }
     
-    # Check Timezone:
-    TZ = Sys.getenv("TZ")  
-    if (TZ[[1]] != "GMT") {
-        Sys.putenv(TZ = "GMT")
-        TZ.RESET = TRUE
-    } else {
-        TZ.RESET = FALSE
-    }
+    # Set Timezone to GMT:
+    myTZ = Sys.getenv("TZ")  
+    Sys.putenv(TZ = "GMT")
     if (FinCenter == "") FinCenter = "GMT"
        
     # Match City:
@@ -236,7 +191,7 @@ function(FinCenter = myFinCenter)
     fun = match.fun(City)
     
     # Return Value:
-    if (TZ.RESET) Sys.putenv(TZ = TZ)
+    Sys.putenv(TZ = myTZ)
     fun()
 }  
 
@@ -272,14 +227,9 @@ function(pattern = "*")
     
     # FUNCTION:
     
-    # Check Timezone:
-    TZ = Sys.getenv("TZ")  
-    if (TZ[[1]] != "GMT") {
-        Sys.putenv(TZ = "GMT")
-        TZ.RESET = TRUE
-    } else {
-        TZ.RESET = FALSE
-    }
+    # Set Timezone to GMT:
+    myTZ = Sys.getenv("TZ")  
+    Sys.putenv(TZ = "GMT")
     
     # Load Database:
     # require(fBasics)
@@ -291,27 +241,21 @@ function(pattern = "*")
     result = as.character(tz[grep(pattern = pattern, x = tz)])
     
     # Return Value:
-    if (TZ.RESET) Sys.putenv(TZ = TZ)
+    Sys.putenv(TZ = myTZ)
     result
 }
     
 
 ################################################################################
-# GENERATION OF TIME DATE OBJECTS:   
-#   We have defined a 'timeDate' class which is in many aspects similar
-#   to the S-Plus class with the same name, but has also some important
-#   differeneces. The class has four Slots, the 'Data' slot which holds 
-#   date and time as 'POSIXlt' objects, the 'Dim' slot which gives the
-#   length of the object, the 'format' specification and 'FinCenter' the 
-#   the name of the financial center. Three functions allow to cgenerate
-#   date/time objects: 'timeDate' from character vectors, 'timeCalendar'
-#   from date and time atoms, and 'timeSequence' from a sequence 
-#   specification. Note, time zone transformation is easily handled by
-#   by the 'timeDate' functions which can also take 'timeDate' and
-#   'POSIXt' objects as inputs, while transforming them between financial
-#   centers and/or time zones specified by the arguments 'zone' and
-#   'FinCenter'. Finally the function 'Sys.timeDate' returns system
-#   time in form of a 'timeDate' object.
+# FUNCTION:              GENERATION OF TIMEDATE OBJECTS:
+#  'timeDate'             S4 Class representation for timeDate objects
+#  timeDate               Creates a 'timeDate' object from given dates
+#  .whichFormat
+#  .midnightStandard
+#  .formatFinCenter
+#  timeCalendar           Creates a 'timeDate' object from calendar atoms
+#  timeSequence           Creates a regularly spaced 'timeDate' object
+#  Sys.timeDate           Returns system time as an object of class 'timeDate'
 
 
 require(methods)
@@ -338,7 +282,8 @@ setClass("timeDate",
    
 
 timeDate = 
-function(charvec, format = NULL, zone = "GMT", FinCenter = myFinCenter) 
+function(charvec = Sys.timeDate(), format = NULL, zone = myFinCenter, 
+FinCenter = myFinCenter) 
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -373,76 +318,63 @@ function(charvec, format = NULL, zone = "GMT", FinCenter = myFinCenter)
      
     # FUNCTION:
 
-    # Missing charvec
-    if (missing(charvec)) return(NULL)
-    
-    # Trace:
+    # Settings and Checks:
     trace = FALSE
-    
-    # Check Timezone:
-    TZ = Sys.getenv("TZ")  
-    if (TZ[[1]] != "GMT") {
-        Sys.putenv(TZ = "GMT")
-        TZ.RESET <<- TRUE
-    } else {
-        TZ.RESET <<- FALSE
-    }
     if (FinCenter == "") FinCenter = "GMT"
-        
-    # Some extensions - charvec must not be necessarily a character vector!
-    # If charvec is of type "sdate" convert to character:
-    # This is the old date format which is no longer supported.
-    if (inherits(charvec, "sdate")) {
-        charvec = as.character(charvec)
-        format = "%Y%m%d"
-        zone = FinCenter 
-    }
-    # If charvec is of type "timeDate" extract data slot:
+         
+    # Set Timezone to GMT:
+    myTZ = Sys.getenv("TZ")  
+    Sys.putenv(TZ = "GMT")
+  
+    # If charvec is not a chracter string, then try:
     if (inherits(charvec, "timeDate")) {
         charvec = charvec@Data   
     }
-    # If charvec is of type "POSIXt" convert to character string:
     if (inherits(charvec, "POSIXt")) {
         charvec = format(charvec, "%Y-%m-%d %H:%M:%S") 
     }
+    if (inherits(charvec, "Date")) {
+        charvec = as.character(charvec) 
+    }
+    stopifnot(is.character(charvec))
     
     # Get Dimension:
     Dim = length(charvec)
         
     # ISO Format - Automatic Format Detection:
-    iso.format = "%Y-%m-%d %H:%M:%S"
-    nchar.iso = mean(nchar(charvec))
-    if (is.character(charvec) & is.null(format)) {
-        if (nchar.iso == 10) format = "%Y-%m-%d" 
-        if (nchar.iso == 19) format = "%Y-%m-%d %H:%M:%S"
-        if (nchar.iso ==  8) format = "%Y%m%d"
-        if (nchar.iso == 12) format = "%Y%m%d%H%M"
-        if (nchar.iso == 14) format = "%Y%m%d%H%M%S"
-        if (regexpr("/", charvec[1])[[1]] > 0) format = "%m/%d/%Y" 
+    CHARVEC = is.character(charvec)
+    if (CHARVEC & is.null(format)) format = .whichFormat(charvec) 
+    
+    if (format == "%Y-%m-%d" | format == "%Y%m%d") {
+        zone = FinCenter
+        lt = strptime(charvec, format)
+        # Return Value:
+        Sys.putenv(TZ = myTZ)
+        return(new("timeDate", 
+            Data = lt, 
+            Dim = as.integer(Dim),
+            format = format,
+            FinCenter = FinCenter)) 
     }
     
-    # ISO-8601 Midnight Standard:
-    s = rep(0, length(charvec))
-    if (nchar.iso == 19) {
-        s[grep("24:00:00", charvec)] = 1
-        charvec = gsub("24:00:00", "23:59:59", charvec) 
+    if (format == "%m/%d/%Y") {
+        zone = FinCenter
+        lt = strptime(charvec, format)
+        # Return Value:
+        Sys.putenv(TZ = myTZ)
+        return(new("timeDate", 
+            Data = lt, 
+            Dim = as.integer(Dim),
+            format = format,
+            FinCenter = FinCenter)) 
     }
-    if (nchar.iso == 14) {
-        # Fixed DW 2006-03-13
-        charvec.date = substr(charvec, 1, 8)
-        charvec.time = substr(charvec, 9, 14)
-        s[grep("240000", charvec.time)] = 1
-        sub.charvec = substr(charvec, 9, 14)
-        # charvec = gsub("240000", "235959", charvec) 
-        charvec.time = gsub("240000", "235959", charvec.time) 
-        charvec = paste(charvec.date, charvec.time, sep ="")
-    }     
-    # Convert "charvec" to standard ISO format:
-    charvec = format(strptime(charvec, format)+s, iso.format)
+    
+    # Midnight Standard:
+    charvec = .midnightStandard(charvec, format)
     
     # Financial Centers:
-    recFinCenter = zone # Time zone where the data were recorded
-    useFinCenter = FinCenter # Time zone where the data were used
+    recFinCenter = zone      # Time zone where the data were recorded
+    useFinCenter = FinCenter # Time zone where the data will be used
     
     # Trace Input:
     if (trace) { 
@@ -451,67 +383,11 @@ function(charvec, format = NULL, zone = "GMT", FinCenter = myFinCenter)
         print(charvec) 
     }
 
-    # Internal Function:
-    formatFinCenter = function(charvec, FinCenter, 
-        type = c("gmt2any", "any2gmt")) {
-        type = type[1]
-        signum = 0
-        if (type == "gmt2any") 
-            signum = +1
-        if (type == "any2gmt") 
-            signum = -1
-        if (FinCenter != "GMT") {
-            # Get the DST list from the database: 
-            dst.list = rulesFinCenter(FinCenter)
-            # Update list with last entry: 
-            z = as.matrix(dst.list)
-            z[dim(z)[1], ]
-            vec1 = as.vector(c(z[, 1], "2099-01-01 00:00:00"))
-            vec2 = as.vector(c(z[, 2], rev(z[, 2])[1]))
-            dst.list = data.frame(ruleChanges = as.character(vec1), 
-                offSet = as.integer(vec2))
-            # Extract the dates when DST was changed:
-            dst.dates = as.character(dst.list[, 1])
-            # Extract the Offsets to GMT
-            dst.offsets = as.character(dst.list[, 2])  
-            # The new dates ar the charvec's:
-            new.dates = charvec
-            # The new offsets are still unknown:
-            new.offsets = rep(NA, length(charvec))
-            # Combine all Dates and Offsets:
-            dates = c(dst.dates, new.dates)
-            offsets = c(dst.offsets, new.offsets)
-            # The number of Offsets:
-            n = length(dates)
-            # Order the Dates:
-            o = order(dates)
-            # Dates and Offsets in the right order:
-            o.dates = dates[o]
-            o.offsets = offsets[o]
-            # The points at which we have to determine the offsets
-            xout = (1:n)[is.na(o.offsets)]
-            # The date indexes:
-            x = (1:n)[-xout]
-            # The corresponding offsets
-            y = o.offsets[x]
-            # The new offsets:
-            yout = approx(x, y , xout, method = "constant")$y
-            # All dates:
-            m = length(dst.dates)
-            # Put them in the right order:
-            # Added DW: 2005-05-27
-            idx = order(o[which(o>m)])
-            offSets = yout[idx]      
-            dt = strptime(charvec, "%Y-%m-%d %H:%M:%S")             
-            ans = format(dt + signum * offSets, format="%Y-%m-%d %H:%M:%S") 
-        } else {
-            ans = charvec
-        }
-        ans
-    }
-    
     # Convert:    
     DEBUG = FALSE
+    
+    # ISO Format:
+    iso.format = "%Y-%m-%d %H:%M:%S"
     
     # GMT -> GMT:
     if (recFinCenter == "GMT" && useFinCenter == "GMT") {       
@@ -526,7 +402,7 @@ function(charvec, format = NULL, zone = "GMT", FinCenter = myFinCenter)
         timeTest = sum(lt$hour) + sum(lt$min) + sum(lt$sec) 
         if (timeTest == 0) iso.format = "%Y-%m-%d"
         # Return Value:
-        if (TZ.RESET) Sys.putenv(TZ = TZ)
+        Sys.putenv(TZ = myTZ)
         return(new("timeDate", 
             Data = lt, 
             Dim = as.integer(Dim),
@@ -537,7 +413,7 @@ function(charvec, format = NULL, zone = "GMT", FinCenter = myFinCenter)
     # GMT -> nonGMT     
     if (recFinCenter == "GMT" && useFinCenter != "GMT") {
         if (DEBUG) print("if - 2:") 
-        charvec = formatFinCenter(charvec, useFinCenter, type = "gmt2any")
+        charvec = .formatFinCenter(charvec, useFinCenter, type = "gmt2any")
         if (trace) { 
             cat("\nOutput: ")
             print(useFinCenter)
@@ -548,7 +424,7 @@ function(charvec, format = NULL, zone = "GMT", FinCenter = myFinCenter)
         timeTest = sum(lt$hour) + sum(lt$min) + sum(lt$sec) 
         if (timeTest == 0) iso.format = "%Y-%m-%d"
         # Return Value:
-        if (TZ.RESET) Sys.putenv(TZ = TZ)
+        Sys.putenv(TZ = myTZ)
         return(new("timeDate", 
             Data = lt, 
             Dim = as.integer(Dim),
@@ -559,7 +435,7 @@ function(charvec, format = NULL, zone = "GMT", FinCenter = myFinCenter)
     # nonGMT -> GMT       
     if (recFinCenter != "GMT" && useFinCenter == "GMT") {
         if (DEBUG) print("if - 3:")
-        charvec = formatFinCenter(charvec, recFinCenter, type = "any2gmt")
+        charvec = .formatFinCenter(charvec, recFinCenter, type = "any2gmt")
         if (trace) { 
             cat("\nOutput: ")
             print(useFinCenter)
@@ -570,7 +446,7 @@ function(charvec, format = NULL, zone = "GMT", FinCenter = myFinCenter)
         timeTest = sum(lt$hour) + sum(lt$min) + sum(lt$sec) 
         if (timeTest == 0) iso.format = "%Y-%m-%d"
         # Return Value:
-        if (TZ.RESET) Sys.putenv(TZ = TZ)
+        Sys.putenv(TZ = myTZ)
         return(new("timeDate", 
             Data = lt, 
             Dim = as.integer(Dim),
@@ -591,7 +467,7 @@ function(charvec, format = NULL, zone = "GMT", FinCenter = myFinCenter)
         timeTest = sum(lt$hour) + sum(lt$min) + sum(lt$sec) 
         if (timeTest == 0) iso.format = "%Y-%m-%d"
         # Return Value:
-        if (TZ.RESET) Sys.putenv(TZ = TZ)
+        Sys.putenv(TZ = myTZ)
         return(new("timeDate", 
             Data = lt,
             Dim = as.integer(Dim),
@@ -602,8 +478,8 @@ function(charvec, format = NULL, zone = "GMT", FinCenter = myFinCenter)
     # nonGMT -> other nonGMT 
     if (recFinCenter != useFinCenter) {
         if (DEBUG) print("if - 5:")
-        charvec = formatFinCenter(charvec, recFinCenter, type = "any2gmt")
-        charvec = formatFinCenter(charvec, useFinCenter, type = "gmt2any")
+        charvec = .formatFinCenter(charvec, recFinCenter, type = "any2gmt")
+        charvec = .formatFinCenter(charvec, useFinCenter, type = "gmt2any")
         if (trace) { 
             cat("\nOutput: ") 
             print(useFinCenter)
@@ -614,7 +490,7 @@ function(charvec, format = NULL, zone = "GMT", FinCenter = myFinCenter)
         timeTest = sum(lt$hour) + sum(lt$min) + sum(lt$sec) 
         if (timeTest == 0) iso.format = "%Y-%m-%d"
         # Return Value:
-        if (TZ.RESET) Sys.putenv(TZ = TZ)
+        Sys.putenv(TZ = myTZ)
         return(new("timeDate", 
             Data = lt, 
             Dim = as.integer(Dim),
@@ -623,7 +499,7 @@ function(charvec, format = NULL, zone = "GMT", FinCenter = myFinCenter)
     }    
             
     # Return Value:
-    if (TZ.RESET) Sys.putenv(TZ = TZ)
+    Sys.putenv(TZ = myTZ)
     invisible()         
 }
 
@@ -631,9 +507,155 @@ function(charvec, format = NULL, zone = "GMT", FinCenter = myFinCenter)
 # ------------------------------------------------------------------------------
 
 
+.whichFormat =
+function(charvec)
+{   # A function implemented by Diethelm Wuertz
+
+    # FUNCTION:
+    
+    # Specifications:
+    NCHAR = mean(nchar(charvec[1]))
+    SUBSTR = (substring(charvec[1], 5, 5) == "-")
+    
+    # Human readable ISO:
+    if (NCHAR ==  4 & !SUBSTR) format = "%Y" 
+    if (NCHAR ==  7 &  SUBSTR) format = "%Y-%m"
+    if (NCHAR == 10 &  SUBSTR) format = "%Y-%m-%d" 
+    if (NCHAR == 13 &  SUBSTR) format = "%Y-%m-%d %H"
+    if (NCHAR == 16 &  SUBSTR) format = "%Y-%m-%d %H:%M" 
+    if (NCHAR == 19 &  SUBSTR) format = "%Y-%m-%d %H:%M:%S"
+    
+    # Short ISO:
+    if (NCHAR ==  6 & !SUBSTR) format = "%Y%m"
+    if (NCHAR ==  8 & !SUBSTR) format = "%Y%m%d"
+    if (NCHAR == 10 & !SUBSTR) format = "%Y%m%d%H"
+    if (NCHAR == 12 & !SUBSTR) format = "%Y%m%d%H%M"
+    if (NCHAR == 14 & !SUBSTR) format = "%Y%m%d%H%M%S"
+    
+    # American Format:
+    if (regexpr("/", charvec[1])[[1]] > 0) format = "%m/%d/%Y" 
+    
+    # Return Value:
+    format
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.midnightStandard = 
+function(charvec, format)
+{   # A function implemented by Diethelm Wuertz
+
+    # FUNCTION:
+    
+    # Format:
+    nchar.iso = mean(nchar(charvec))
+    iso.format = "%Y-%m-%d %H:%M:%S"
+    
+    # ISO-8601 Midnight Standard:
+    s = rep(0, length(charvec))
+    if (nchar.iso == 19) {
+        s[grep("24:00:00", charvec)] = 1
+        charvec = gsub("24:00:00", "23:59:59", charvec) 
+        # Convert "charvec" to standard ISO format:
+        charvec = format(strptime(charvec, format)+s, iso.format)
+    }
+    if (nchar.iso == 14) {
+        # Fixed DW 2006-03-13
+        charvec.date = substr(charvec, 1, 8)
+        charvec.time = substr(charvec, 9, 14)
+        s[grep("240000", charvec.time)] = 1
+        sub.charvec = substr(charvec, 9, 14)
+        # charvec = gsub("240000", "235959", charvec) 
+        charvec.time = gsub("240000", "235959", charvec.time) 
+        charvec = paste(charvec.date, charvec.time, sep = "")
+        # Convert "charvec" to standard ISO format:
+        charvec = format(strptime(charvec, format)+s, iso.format)
+    }    
+    
+    # Return Value:
+    charvec 
+}
+    
+
+# ------------------------------------------------------------------------------
+
+
+.formatFinCenter = 
+function(charvec, FinCenter, type = c("gmt2any", "any2gmt")) 
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Internasl function used by function timeDate()
+    
+    # FUNCTION:
+    
+    type = match.arg(type)
+    signum = 0
+    if (type == "gmt2any") 
+        signum = +1
+    if (type == "any2gmt") 
+        signum = -1
+    if (FinCenter != "GMT") {
+        # Get the DST list from the database: 
+        dst.list = rulesFinCenter(FinCenter)
+        # Update list with last entry: 
+        z = as.matrix(dst.list)
+        z[dim(z)[1], ]
+        vec1 = as.vector(c(z[, 1], "2099-01-01 00:00:00"))
+        vec2 = as.vector(c(z[, 2], rev(z[, 2])[1]))
+        dst.list = data.frame(ruleChanges = as.character(vec1), 
+            offSet = as.integer(vec2))
+        # Extract the dates when DST was changed:
+        dst.dates = as.character(dst.list[, 1])
+        # Extract the Offsets to GMT
+        dst.offsets = as.character(dst.list[, 2])  
+        # The new dates ar the charvec's:
+        new.dates = charvec
+        # The new offsets are still unknown:
+        new.offsets = rep(NA, length(charvec))
+        # Combine all Dates and Offsets:
+        dates = c(dst.dates, new.dates)
+        offsets = c(dst.offsets, new.offsets)
+        # The number of Offsets:
+        n = length(dates)
+        # Order the Dates:
+        o = order(dates)
+        # Dates and Offsets in the right order:
+        o.dates = dates[o]
+        o.offsets = offsets[o]
+        # The points at which we have to determine the offsets
+        xout = (1:n)[is.na(o.offsets)]
+        # The date indexes:
+        x = (1:n)[-xout]
+        # The corresponding offsets
+        y = o.offsets[x]
+        # The new offsets:
+        yout = approx(x, y , xout, method = "constant")$y
+        # All dates:
+        m = length(dst.dates)
+        # Put them in the right order:
+        # Added DW: 2005-05-27
+        idx = order(o[which(o>m)])
+        offSets = yout[idx]      
+        dt = strptime(charvec, "%Y-%m-%d %H:%M:%S")             
+        ans = format(dt + signum * offSets, format="%Y-%m-%d %H:%M:%S") 
+    } else {
+        ans = charvec
+    }
+    
+    # Return Value:
+    ans
+}
+
+
+# ------------------------------------------------------------------------------
+
+
 timeCalendar = 
-function(y = currentYear, m = 1:12, d = NULL, h = NULL, min = NULL, 
-s = NULL, FinCenter = myFinCenter)
+function(y = currentYear, m = 1:12, d = 1, h = NULL, min = NULL, 
+s = NULL, zone = myFinCenter, FinCenter = myFinCenter)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -670,18 +692,14 @@ s = NULL, FinCenter = myFinCenter)
   
     # FUNCTION:
     
-    # Trace:
+    # Settings and Check:
     trace = FALSE
-    
-    # Check Timezone:
-    TZ = Sys.getenv("TZ")  
-    if (TZ[[1]] != "GMT") {
-        Sys.putenv(TZ = "GMT")
-        TZ.RESET = TRUE
-    } else {
-        TZ.RESET = FALSE
-    }
     if (FinCenter == "") FinCenter = "GMT"
+    if (is.null(h) & is.null(min) & is.null(s)) zone = FinCenter
+    
+    # Set Timezone to GMT:
+    myTZ = Sys.getenv("TZ")  
+    Sys.putenv(TZ = "GMT")
     
     # Check Input:
     len = c(length(m), length(d), length(y), length(h), length(min), length(s))
@@ -718,14 +736,27 @@ s = NULL, FinCenter = myFinCenter)
     # Note Format is always of type  "%Y%m%d%H%M%S"  !   
     CCYYMMDD = as.integer(y*10000 + m*100 + d)
     chardate = as.character(CCYYMMDD)
-    hhmmss = as.integer(1000000 + h*10000 + min*100 + s)
-    chartime = substr(as.character(hhmmss), 2, 7)
-    charvec = paste(as.vector(chardate), as.vector(chartime), sep = "") 
+    xhhmmss = as.integer(1000000 + h*10000 + min*100 + s)
     
-    # Return Value:  
-    if (TZ.RESET) Sys.putenv(TZ = TZ)
-    timeDate(charvec = charvec, format = "%Y%m%d%H%M%S", 
-        zone = FinCenter, FinCenter = FinCenter) 
+    # Date and Date/Time Checks:
+    if (mean(xhhmmss) == 1000000) {
+        chartime = substr(as.character(xhhmmss), 2, 7)
+        charvec = as.vector(chardate)
+        format = "%Y%m%d"
+        zone = FinCenter
+    } else {
+        chartime = substr(as.character(xhhmmss), 2, 7)
+        charvec = paste(as.vector(chardate), as.vector(chartime), sep = "")
+        format = "%Y%m%d%H%M%S"
+        zone = zone
+    }
+    
+    # Reset TimeZone:  
+    Sys.putenv(TZ = myTZ)
+    
+    # return Value:
+    timeDate(charvec = charvec, format = format,  zone = zone, 
+        FinCenter = FinCenter) 
 }
 
 
@@ -734,7 +765,8 @@ s = NULL, FinCenter = myFinCenter)
 
 timeSequence = 
 function(from = "2004-01-01", to = format(Sys.time(), "%Y-%m-%d"), 
-by = "day", length.out = NULL, format = NULL, FinCenter = myFinCenter)
+by = c("day", "year", "quarters", "month", "week", "hour", "min", "sec"), 
+length.out = NULL, format = NULL, zone = myFinCenter, FinCenter = myFinCenter)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -773,17 +805,14 @@ by = "day", length.out = NULL, format = NULL, FinCenter = myFinCenter)
         
     # FUNCTION:
     
-    # Check Timezone:
-    TZ = Sys.getenv("TZ")  
-    if (TZ[[1]] != "GMT") {
-        Sys.putenv(TZ = "GMT")
-        TZ.RESET = TRUE
-    } else {
-        TZ.RESET = FALSE
-    }
-    if (FinCenter == "") FinCenter = "GMT"
+    # Set Timezone to GMT:
+    myTZ = Sys.getenv("TZ")  
+    Sys.putenv(TZ = "GMT")
     
-    # Convert Quarters:
+    # Settings and Checks:
+    if (!is.null(length.out)) to = from 
+    if (FinCenter == "") FinCenter = "GMT"
+    by = match.arg(by)
     if (by == "quarters") by = "3 months"
     
     # Auto-detect Input Format:
@@ -822,10 +851,10 @@ by = "day", length.out = NULL, format = NULL, FinCenter = myFinCenter)
             
     # Create timeDate Object:  
     ans = timeDate(charvec = charvec, format = NULL, 
-        zone = FinCenter, FinCenter = FinCenter) 
+        zone = zone, FinCenter = FinCenter) 
         
     # Return Value:
-    if (TZ.RESET) Sys.putenv(TZ = TZ)
+    Sys.putenv(TZ = myTZ)
     ans
 }
 
@@ -849,14 +878,9 @@ function(FinCenter = myFinCenter)
     
     # FUNCTION:
     
-    # Check Timezone:
-    TZ = Sys.getenv("TZ")  
-    if (TZ[[1]] != "GMT") {
-        Sys.putenv(TZ = "GMT")
-        TZ.RESET = TRUE
-    } else {
-        TZ.RESET = FALSE
-    }
+    # Set Timezone to GMT:
+    myTZ = Sys.getenv("TZ")  
+    Sys.putenv(TZ = "GMT")
     if (FinCenter == "") FinCenter = "GMT"
     
     # Get System Time:
@@ -864,22 +888,22 @@ function(FinCenter = myFinCenter)
         FinCenter = FinCenter)
         
     # Return Value:
-    if (TZ.RESET) Sys.putenv(TZ = TZ)
+    Sys.putenv(TZ = myTZ)
     ans
     
 }
 
  
 ################################################################################
-# SPECIAL MONTHLY TIME DATE SEQUENCES:
-#   We have implemented five functions to generate special monthly 
-#   sequences. These are functions to compute the last day in a given 
-#   month and year, to compute the dates in amonth that is a n-day 
-#   ON OR AFTER a given date, to compute the dates in a month that 
-#   is a n-day ON OR BEFORE a specified date, to compute the n-th 
-#   ocurrances of a n-day for a specified year/month vectors, and 
-#   finally to compute the last n-day for a specified year/month
-#   value or vector.
+# FUNCTION:              SPECIAL TIMEDATE OPERATIONS:
+#  timeLastDayInMonth     Computes the last day in a given month and year
+#  timeFirstDayInMonth    Computes the first day in a given month and year
+#  timeLastDayInQuarter   Computes the last day in a given quarter and year
+#  timeFirstDayInQuarter  Computes the first day in a given quarter and year
+#  timeNdayOnOrAfter      Computes date in month that is a n-day ON OR AFTER  
+#  timeNdayOnOrBefore     Computes date in month that is a n-day ON OR BEFORE  
+#  timeNthNdayInMonth     Computes n-th ocurrance of a n-day in year/month
+#  timeLastNdayInMonth    Computes the last n-day in year/month
 
 
 timeLastDayInMonth = 
@@ -901,14 +925,9 @@ function(charvec, format = "%Y-%m-%d", FinCenter = "GMT")
     
     # FUNCTION:
     
-    # Check Timezone:
-    TZ = Sys.getenv("TZ")  
-    if (TZ[[1]] != "GMT") {
-        Sys.putenv(TZ = "GMT")
-        TZ.RESET = TRUE
-    } else {
-        TZ.RESET = FALSE
-    }
+    # Set Timezone to GMT:
+    myTZ = Sys.getenv("TZ")  
+    Sys.putenv(TZ = "GMT")
     if (FinCenter == "") FinCenter = "GMT"
     
     # Last day of month:
@@ -920,7 +939,7 @@ function(charvec, format = "%Y-%m-%d", FinCenter = "GMT")
     lt$mday = last.day[1 + lt$mon] + leap.day
     
     # Return Value:
-    if (TZ.RESET) Sys.putenv(TZ = TZ)
+    Sys.putenv(TZ = myTZ)
     timeDate(lt, format = "%Y-%m-%d", zone = FinCenter, 
         FinCenter = FinCenter)
 }
@@ -938,24 +957,17 @@ function(charvec, format = "%Y-%m-%d", FinCenter = "GMT")
     
     # FUNCTION:
     
-    # Check Timezone:
-    TZ = Sys.getenv("TZ")
-    if (TZ[[1]] != "GMT") {
-        Sys.putenv(TZ = "GMT")
-        TZ.RESET = TRUE
-    } else {
-        TZ.RESET = FALSE
-    }
-    if (FinCenter == "") {
-        FinCenter = "GMT"
-    }
+    # Set Timezone to GMT:
+    myTZ = Sys.getenv("TZ")  
+    Sys.putenv(TZ = "GMT")
+    if (FinCenter == "") FinCenter = "GMT"
     
     # First Day In Month:
     lt = strptime(charvec, format)
     lt$mday = 1
 
     # Return Value:
-    if (TZ.RESET) Sys.putenv(TZ = TZ)
+    Sys.putenv(TZ = myTZ)
     timeDate(lt, format = "%Y-%m-%d", zone = FinCenter, FinCenter = FinCenter)
 }
 
@@ -976,29 +988,21 @@ function(charvec, format = "%Y-%m-%d", FinCenter = "GMT")
     charvec = timeFirstDayInMonth(charvec = charvec, format = format, 
         FinCenter = FinCenter)
     
-    # Check Timezone:
-    TZ = Sys.getenv("TZ")
-    if (TZ[[1]] != "GMT") {
-        Sys.putenv(TZ = "GMT")
-        TZ.RESET = TRUE
-    }
-    else {
-        TZ.RESET = FALSE
-    }
-    if (FinCenter == "") {
-        FinCenter = "GMT"
-    }
+    # Set Timezone to GMT:
+    myTZ = Sys.getenv("TZ")  
+    Sys.putenv(TZ = "GMT")
+    if (FinCenter == "") FinCenter = "GMT"
     
     # Last Day in Quarter:
     lt = strptime(charvec, format)
     last.quarter = rep(c(3,6,9,12), each = 3) - 1
     lt$mon = last.quarter[1 + lt$mon] 
-    if (TZ.RESET) Sys.putenv(TZ = TZ)
+    Sys.putenv(TZ = myTZ)
     charvec = timeDate(lt, format = "%Y-%m-%d", zone = FinCenter, 
         FinCenter = FinCenter)
         
     # Return Value:
-    if (TZ.RESET) Sys.putenv(TZ = TZ)
+    Sys.putenv(TZ = myTZ)
     timeLastDayInMonth(charvec = charvec, format = format, 
         FinCenter = FinCenter)
 }
@@ -1020,17 +1024,10 @@ function(charvec, format = "%Y-%m-%d", FinCenter = "GMT")
     charvec = timeFirstDayInMonth(charvec =charvec, format = format, 
         FinCenter = FinCenter)
     
-    # Check Timezone:
-    TZ = Sys.getenv("TZ")
-    if (TZ[[1]] != "GMT") {
-        Sys.putenv(TZ = "GMT")
-        TZ.RESET = TRUE
-    } else {
-        TZ.RESET = FALSE
-    }
-    if (FinCenter == "") {
-        FinCenter = "GMT"
-    }
+    # Set Timezone to GMT:
+    myTZ = Sys.getenv("TZ")  
+    Sys.putenv(TZ = "GMT")
+    if (FinCenter == "") FinCenter = "GMT"
     
     # First Day in Quarter:
     lt = strptime(charvec, format)
@@ -1038,7 +1035,7 @@ function(charvec, format = "%Y-%m-%d", FinCenter = "GMT")
     lt$mon = first.quarter[1 + lt$mon] 
 
     # Return Value:
-    if (TZ.RESET) Sys.putenv(TZ = TZ)
+    Sys.putenv(TZ = myTZ)
     timeDate(lt, format = "%Y-%m-%d", zone = FinCenter, FinCenter = FinCenter)
 }
 
@@ -1075,14 +1072,9 @@ function(charvec, nday = 1, format = "%Y-%m-%d", FinCenter = "GMT")
     
     # FUNCTION:
     
-    # Check Timezone:
-    TZ = Sys.getenv("TZ")  
-    if (TZ[[1]] != "GMT") {
-        Sys.putenv(TZ = "GMT")
-        TZ.RESET = TRUE
-    } else {
-        TZ.RESET = FALSE
-    }
+    # Set Timezone to GMT:
+    myTZ = Sys.getenv("TZ")  
+    Sys.putenv(TZ = "GMT")
     if (FinCenter == "") FinCenter = "GMT"
     
     # timeDate:
@@ -1093,7 +1085,7 @@ function(charvec, nday = 1, format = "%Y-%m-%d", FinCenter = "GMT")
     class(ct) = "POSIXct"
     
     # Return Value:
-    if (TZ.RESET) Sys.putenv(TZ = TZ)
+    Sys.putenv(TZ = myTZ)
     timeDate(format(ct), format = format, zone = FinCenter, 
         FinCenter = FinCenter)
 }
@@ -1127,14 +1119,9 @@ function(charvec, nday = 1, format = "%Y-%m-%d", FinCenter = "GMT")
     
     # FUNCTION: 
     
-    # Check Timezone:
-    TZ = Sys.getenv("TZ")  
-    if (TZ[[1]] != "GMT") {
-        Sys.putenv(TZ = "GMT")
-        TZ.RESET = TRUE
-    } else {
-        TZ.RESET = FALSE
-    }
+    # Set Timezone to GMT:
+    myTZ = Sys.getenv("TZ")  
+    Sys.putenv(TZ = "GMT")
     if (FinCenter == "") FinCenter = "GMT"
     
     # timeDate:
@@ -1145,7 +1132,7 @@ function(charvec, nday = 1, format = "%Y-%m-%d", FinCenter = "GMT")
     class(ct) = "POSIXct"
     
     # Return Value:
-    if (TZ.RESET) Sys.putenv(TZ = TZ)
+    Sys.putenv(TZ = myTZ)
     timeDate(format(ct), format = format, zone = FinCenter, 
         FinCenter = FinCenter)
 }
@@ -1178,17 +1165,13 @@ function(charvec, nday = 1, nth = 1, format = "%Y-%m-%d", FinCenter = "GMT")
     
     # Example: 
     #   What date is the second Monday in April 2004?
+    #   timeNthNdayInMonth("2004-04-01", 1, 2)
     
     # FUNCTION: 
     
-    # Check Timezone:
-    TZ = Sys.getenv("TZ")  
-    if (TZ[[1]] != "GMT") {
-        Sys.putenv(TZ = "GMT")
-        TZ.RESET = TRUE
-    } else {
-        TZ.RESET = FALSE
-    }
+    # Set Timezone to GMT:
+    myTZ = Sys.getenv("TZ")  
+    Sys.putenv(TZ = "GMT")
     if (FinCenter == "") FinCenter = "GMT"
     
     # timeDate:
@@ -1202,7 +1185,7 @@ function(charvec, nday = 1, nth = 1, format = "%Y-%m-%d", FinCenter = "GMT")
     class(ct) = "POSIXct"
 
     # Return Value:
-    if (TZ.RESET) Sys.putenv(TZ = TZ)
+    Sys.putenv(TZ = myTZ)
     timeDate(format(ct), format = format, zone = FinCenter, 
         FinCenter = FinCenter)
 }
@@ -1232,18 +1215,14 @@ function(charvec, nday = 1, format = "%Y-%m-%d", FinCenter = "GMT")
     #   object.
     
     # Example: 
-    #   What date has the last Monday in May, 1996?
+    #   What date has the last Tuesday in May, 1996?
+    #   timeLastNdayInMonth("1996-05-01", 2)
     
     # FUNCTION:
     
-    # Check Timezone:
-    TZ = Sys.getenv("TZ")  
-    if (TZ[[1]] != "GMT") {
-        Sys.putenv(TZ = "GMT")
-        TZ.RESET = TRUE
-    } else {
-        TZ.RESET = FALSE
-    }
+    # Set Timezone to GMT:
+    myTZ = Sys.getenv("TZ")  
+    Sys.putenv(TZ = "GMT")
     if (FinCenter == "") FinCenter = "GMT"
     
     # Last Day:
@@ -1257,9 +1236,465 @@ function(charvec, nday = 1, format = "%Y-%m-%d", FinCenter = "GMT")
     class(ct) = "POSIXct"
 
     # Return Value:
-    if (TZ.RESET) Sys.putenv(TZ = TZ)
+    Sys.putenv(TZ = myTZ)
     timeDate(format(ct), format = format, zone = FinCenter,
         FinCenter = FinCenter)
+}
+
+
+################################################################################
+# S3 METHODS:            REPRESENTATION OF TIMEDATE OBJECTS:
+#  print.timeDate         Prints 'timeDate' Object
+#  summary.timeDate       Summarizes details of a 'timeDate' object
+#  format.timeDate        Formats 'timeDate' as ISO conform character string
+
+
+print.timeDate = 
+function(x, ...) 
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Prints FinCenter and timeDate for a 'timeDate' object
+    
+    # Arguments:
+    #   x - a 'timeDate' object to be printed.
+    #   ... - arguments passed to other methods.
+    
+    # Value:
+    #   Returns a printed report on 'timeDate' objects.
+    
+    # FUNCTION:
+    
+    # Set Timezone to GMT:
+    myTZ = Sys.getenv("TZ")  
+    Sys.putenv(TZ = "GMT")
+    
+    # Print:
+    cat(x@FinCenter, "\n", sep = "")
+    layout = paste("[", as.character(x@Data), "]", sep = "")
+    
+    # Return Value:
+    Sys.putenv(TZ = myTZ)
+    print(layout, quote = FALSE, ...)
+    invisible(x)
+     
+}
+    
+
+# ------------------------------------------------------------------------------
+
+
+summary.timeDate = 
+function(object, ...)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Summarizes details of a 'timeDate' object
+    
+    # Arguments:
+    #   x - a 'timeDate' object to be summarized.
+    
+    # Value:
+    #   Returns a summary report of the details of a 'timeDate'
+    #   object.
+    
+    # FUNCTION:
+    
+    # Set Timezone to GMT:
+    myTZ = Sys.getenv("TZ")  
+    Sys.putenv(TZ = "GMT")
+    
+    # Print:
+    x = object
+    cat(  "Object:       ", as.character(match.call())[2])
+    cat("\nStart Record: ", as.character(start(x)))
+    cat("\nEnd Record:   ", as.character(end(x)))
+    cat("\nObservations: ", length(as.character(x)))
+    cat("\nFormat:       ", x@format)
+    cat("\nFinCenter:    ", x@FinCenter)
+    cat("\n")
+    
+    # Return Value:
+    Sys.putenv(TZ = myTZ)
+    invisible(object)
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+format.timeDate = 
+function(x, ...)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Formats 'timeDate' as ISO conform character string
+    
+    # Arguments:
+    #   x - a 'timeDate' object
+    
+    # Value:
+    #   Returns an ISO conform formatted character string.
+    
+    # FUNCTION:
+    
+    # Set Timezone to GMT:
+    myTZ = Sys.getenv("TZ")  
+    Sys.putenv(TZ = "GMT")
+    
+    # Format - format.POSIXlt(x, format = "", usetz = FALSE, ...) 
+    ans = format.POSIXlt(x@Data, ...)
+    # print(x@FinCenter)    
+    
+    # Return Value:
+    Sys.putenv(TZ = myTZ)
+    ans
+}
+
+
+################################################################################
+# S3 METHODS:            TEST AND REPRESENTATION OF OBJECTS:
+#  is.timeDate            Tests if the object is of class 'timeDate'
+#  isWeekday              Tests if a date is a weekday or not
+#  isWeekend              Tests if a date falls on a weekend or not
+#  isBizday               Tests if a date is a business day or not
+#  isHoliday              Tests if a date is a non-business day or not
+#  getDayOfWeek           Returns the day of the week to a 'timeDate' object
+#  getDayOfYear           Returns the day of the year to a 'timeDate' object
+
+
+is.timeDate = 
+function(object) 
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Checks if object is of class 'timeDate'
+    
+    # Arguments:
+    #   object - a 'timeDate' object to be checked.
+    
+    # Value:
+    #   Returns 'TRUE' or 'FALSE' depending on whether its
+    #   argument is of 'timeDate' type or not.
+ 
+    # FUNCTION:
+    
+    # Set Timezone to GMT:
+    myTZ = Sys.getenv("TZ")  
+    Sys.putenv(TZ = "GMT")
+    
+    # Check Object:
+    ans = inherits(object, "timeDate")
+    
+    # Return Value:
+    Sys.putenv(TZ = myTZ)
+    ans
+}
+    
+
+# ------------------------------------------------------------------------------
+
+
+isWeekday = 
+function(x) 
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Test if a date is a weekday day or not
+    
+    # Arguments:
+    #   x - an object of class "timeDate"
+    
+    # Value:
+    #   returns a logical or a vector of logicals
+    
+    # Example:
+    #   isWeekday(timeDate("2004-07-01"))
+    #   isWeekday(Sys.timeDate())
+    
+    # FUNCTION:
+    
+    # Test for Weekdays:
+    wday = (x@Data)$wday
+    ans = (!(wday == 0 | wday == 6)) 
+    names(ans) = x@Data
+    
+    ans
+}
+
+
+# ------------------------------------------------------------------------------
+
+    
+isWeekend = 
+function(x) 
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Tests if a date is a weekend day or not
+    
+    # Arguments:
+    #   x - an object of class "timeDate"
+    
+    # Value:
+    #   Returns a logical or a vector of logicals
+    
+    # Example:
+    #   isWeekend(timeDate("2004-07-01"))
+    #   isWeekend(Sys.timeDate())
+    
+    # FUNCTION:
+    
+    # Return Value:
+    return(!isWeekday(x)) 
+}   
+
+
+# ------------------------------------------------------------------------------
+
+    
+isBizday = 
+function(x, holidays = holiday.NYSE()) 
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Test if a date is a business day or not
+    
+    # Arguments:
+    #   x - an object of class "timeDate"
+    #   holidays - a holiday calendar
+    
+    # Value:
+    #   Returns a logical or a vector of logicals
+    
+    # Example:
+    #   x = timeSequence(from = "2005-05-15", to = "2005-07-15")
+    #   h = holiday.NYSE(2005)
+    #   cbind(as.character(x), is.bizday(x, h))
+    
+    # FUNCTION:
+    
+    # Test:
+    char.x = substr(as.character(x), 1, 10)
+    char.h = substr(as.character(holidays), 1, 10)
+    Weekday = as.integer(isWeekday(x))
+    nonHoliday = as.integer(!(char.x %in% char.h))
+    
+    # Business Days:
+    bizdays = as.logical(Weekday*nonHoliday)
+    names(bizdays) = x@Data
+    
+    # Return Value:
+    bizdays
+} 
+
+
+# ------------------------------------------------------------------------------
+
+
+isHoliday = 
+function(x, holidays = holiday.NYSE()) 
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Test if a date is a holiday or not
+    
+    # Arguments:
+    #   x - an object of class "timeDate"
+    #   holidays - a holiday calendar
+    
+    # Value:
+    #   Returns a logical or a vector of logicals
+
+    # FUNCTION:
+    
+    # Return Value:
+    return(!isBizday(x, holidays)) 
+}   
+
+
+# ------------------------------------------------------------------------------
+
+
+getDayOfWeek =
+function(x)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Returns day of week for time date objects
+    
+    # Example:
+    #   weekDay(Sys.timeDate())
+    #   weekDay(timeSequence("2005-05-15", "2005-07-15"))
+    
+    wd = c("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat")
+    n = as.POSIXlt(x@Data)$wday + 1
+    wdays = wd[n]
+    names(wdays) = as.character(x@Data)
+    
+    # Return Value:
+    wdays
+}    
+
+
+# ------------------------------------------------------------------------------
+
+
+getDayOfYear =
+function(x)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Returns day of week for time date objects
+    
+    # FUNCTION:
+    
+    # Assign:
+    yd = 1:366
+    n = as.POSIXlt(x@Data)$yday + 1
+    ydays = yd[n]
+    names(ydays) = as.character(x@Data)
+    
+    # Return Value:
+    ydays
+}   
+
+
+################################################################################
+# S3 MEHOD:              SUBSETTING TIMEDATE OBJECTS:
+#  [.timeDate             Extracts or replaces subsets from 'timeDate' Objects
+#  cut.timeDate
+#  start.timeDate         Extracts the first object of a 'timeDate' vector
+#  end.timeDate           Extracts the last object of a 'timeDate' vector
+#  blockStart             Creates start dates for equally sized blocks
+#  blockEnd               Creates end dates for equally sized blocks
+
+
+"[.timeDate" =
+function(x, ..., drop = TRUE)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Extracts or replaces subsets from 'timeDate' objects
+    
+    # Arguments:
+    #   x - a 'timeDate' object
+    
+    # Value:
+    #   Returns a subset from a 'timeDate' object.
+    
+    # FUNCTION:
+    
+    # Set Timezone to GMT:
+    myTZ = Sys.getenv("TZ")  
+    Sys.putenv(TZ = "GMT")
+    
+    # Subsets:
+    val <- lapply(x@Data, "[", ..., drop = drop)
+    attributes(val) <- attributes(x@Data) 
+    
+    # Return Value:
+    Sys.putenv(TZ = myTZ)
+    new("timeDate", 
+        Data = val, 
+        Dim = length(as.character(val)),
+        format = x@format,
+        FinCenter = x@FinCenter)      
+}   
+
+
+# ------------------------------------------------------------------------------
+
+
+cut.timeDate = 
+function(x, from , to, ...)
+{   # A function implemented by Diethelm Wuertz
+
+    # FUNCTION:
+    
+    X = timeDate(x, zone = x@FinCenter, FinCenter = "GMT")
+    FROM = timeDate(from, zone = x@FinCenter, FinCenter = "GMT")
+    TO = timeDate(to, zone = x@FinCenter, FinCenter = "GMT")
+    test = (X >= FROM & X <= TO)
+    ans = timeDate(X[test], zone = "GMT", FinCenter = x@FinCenter)
+    
+    # Return Value:
+    ans
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+start.timeDate =
+function(x, ...)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Extracts the first object of a 'timeDate' vector
+
+    # Arguments:
+    #   x - a 'timeDate' object
+    
+    # Value:
+    #   Returns from 'x' the earliest entry as an object of class 
+    #   'timeDate'.
+    
+    # FUNCTION:
+    
+    # Set Timezone to GMT:
+    myTZ = Sys.getenv("TZ")  
+    Sys.putenv(TZ = "GMT")
+    
+    # Check Class Type:
+    if (!inherits(x, "timeDate")) stop("Wrong class type")
+    
+    # First element:
+    # print(x@FinCenter)
+    xGMT = timeDate(x, zone=x@FinCenter, FinCenter="GMT")@Data
+    z = as.numeric(as.POSIXct(xGMT))
+    order(z)[1]
+    
+    # Return Value:
+    Sys.putenv(TZ = myTZ)
+    x[1]
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+end.timeDate =
+function(x, ...)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Extracts the last object of a 'timeDate' vector
+
+    # Arguments:
+    #   x - a 'timeDate' object
+    
+    # Value:
+    #   Returns an object of class 'timeDate'.
+    
+    # FUNCTION:
+    
+    # Set Timezone to GMT:
+    myTZ = Sys.getenv("TZ")  
+    Sys.putenv(TZ = "GMT")
+    
+    # Check Class Type:
+    if (!inherits(x, "timeDate")) stop("Wrong class type")
+    
+    # Last element:
+    # print(x@FinCenter)
+    xGMT = timeDate(x, zone = x@FinCenter, FinCenter = "GMT")@Data
+    z = as.numeric(as.POSIXct(xGMT))
+    n = order(z)[length(z)]
+    
+    # Return Value:
+    Sys.putenv(TZ = myTZ)
+    x[n]
 }
 
 
@@ -1310,360 +1745,56 @@ function(x, block = 20)
 
 
 ################################################################################
-# TESTS AND REPRESENTATION OF OBJECTS:
-#   We have implemented four methods to test and represent 'timeDate'
-#   objects. The methods check if a given object is of class 'timeDate',
-#   print 'timeDate' objects including 'FinCenter' and 'Data' Slot,
-#   summarize details of a 'timeDate' object, and format 'timeDate' 
-#   objects as ISO conform formatted character strings.
-
-
-is.timeDate = 
-function(object) 
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Checks if object is of class 'timeDate'
-    
-    # Arguments:
-    #   object - a 'timeDate' object to be checked.
-    
-    # Value:
-    #   Returns 'TRUE' or 'FALSE' depending on whether its
-    #   argument is of 'timeDate' type or not.
- 
-    # FUNCTION:
-    
-    # Check Timezone:
-    TZ = Sys.getenv("TZ")  
-    if (TZ[[1]] != "GMT") {
-        Sys.putenv(TZ = "GMT")
-        TZ.RESET = TRUE
-    } else {
-        TZ.RESET = FALSE
-    }
-    
-    # Check Object:
-    ans = inherits(object, "timeDate")
-    
-    # Return Value:
-    if (TZ.RESET) Sys.putenv(TZ = TZ)
-    ans
-}
-    
-
-# ------------------------------------------------------------------------------
-
-
-print.timeDate = 
-function(x, ...) 
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Prints FinCenter and timeDate for a 'timeDate' object
-    
-    # Arguments:
-    #   x - a 'timeDate' object to be printed.
-    #   ... - arguments passed to other methods.
-    
-    # Value:
-    #   Returns a printed report on 'timeDate' objects.
-    
-    # FUNCTION:
-    
-    # Check Timezone:
-    TZ = Sys.getenv("TZ")  
-    if (TZ[[1]] != "GMT") {
-        Sys.putenv(TZ = "GMT")
-        TZ.RESET = TRUE
-    } else {
-        TZ.RESET = FALSE
-    }
-    
-    # Print:
-    print(x@FinCenter)
-    layout = paste("[", as.character(x@Data), "]", sep = "")
-    
-    # Return Value:
-    if (TZ.RESET) Sys.putenv(TZ = TZ)
-    print(layout, quote = FALSE, ...) 
-}
-    
-
-# ------------------------------------------------------------------------------
-
-
-summary.timeDate = 
-function(object, ...)
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Summarizes details of a 'timeDate' object
-    
-    # Arguments:
-    #   x - a 'timeDate' object to be summarized.
-    
-    # Value:
-    #   Returns a summary report of the details of a 'timeDate'
-    #   object.
-    
-    # FUNCTION:
-    
-    # Check Timezone:
-    TZ = Sys.getenv("TZ")  
-    if (TZ[[1]] != "GMT") {
-        Sys.putenv(TZ = "GMT")
-        TZ.RESET = TRUE
-    } else {
-        TZ.RESET = FALSE
-    }
-    
-    # Print:
-    x = object
-    cat(  "Object:       ", as.character(match.call())[2])
-    cat("\nStart Record: ", as.character(start(x)))
-    cat("\nEnd Record:   ", as.character(end(x)))
-    cat("\nObservations: ", length(as.character(x)))
-    cat("\nFormat:       ", x@format)
-    cat("\nFinCenter:    ", x@FinCenter)
-    cat("\n")
-    
-    # Return Value:
-    if (TZ.RESET) Sys.putenv(TZ = TZ)
-    invisible()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-format.timeDate = 
-function(x, ...)
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Formats 'timeDate' as ISO conform character string
-    
-    # Arguments:
-    #   x - a 'timeDate' object
-    
-    # Value:
-    #   Returns an ISO conform formatted character string.
-    
-    # FUNCTION:
-    
-    # Check Timezone:
-    TZ = Sys.getenv("TZ")  
-    if (TZ[[1]] != "GMT") {
-        Sys.putenv(TZ = "GMT")
-        TZ.RESET = TRUE
-    } else {
-        TZ.RESET = FALSE
-    }
-    
-    # Format:
-    # format.POSIXlt(x, format = "", usetz = FALSE, ...) 
-    ans = format.POSIXlt(x@Data, ...)
-    # print(x@FinCenter)    
-    
-    # Return Value:
-    if (TZ.RESET) Sys.putenv(TZ = TZ)
-    ans
-}
-
-
-################################################################################
-
-
-isWeekday = 
-function(x) 
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Test if a date is a weekday day or not
-    
-    # Arguments:
-    #   x - an object of class "timeDate"
-    
-    # Value:
-    #   returns a logical or a vector of logicals
-    
-    # Example:
-    #   isWeekday(timeDate("2004-07-01"))
-    #   isWeekday(Sys.timeDate())
-    
-    # FUNCTION:
-    
-    # Return Value:
-    wday = (x@Data)$wday
-    return(!(wday == 0 | wday == 6)) 
-}
-
-
-# ------------------------------------------------------------------------------
-
-    
-isWeekend = 
-function(x) 
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Tests if a date is a weekend day or not
-    
-    # Arguments:
-    #   x - an object of class "timeDate"
-    
-    # Value:
-    #   returns a logical or a vector of logicals
-    
-    # Example:
-    #   isWeekend(timeDate("2004-07-01"))
-    #   isWeekend(Sys.timeDate())
-    
-    # FUNCTION:
-    
-    # Return Value:
-    return(!isWeekday(x)) 
-}   
-
-
-# ------------------------------------------------------------------------------
-
-    
-isBizday = 
-function(x, holidays = holiday.NYSE()) 
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Test if a date is a business day or not
-    
-    # Arguments:
-    #   x - an object of class "timeDate"
-    #   holidays - a holiday calendar
-    
-    # Value:
-    #   returns a logical or a vector of logicals
-    
-    # Example:
-    #   x = timeSequence(from = "2005-05-15", to = "2005-07-15")
-    #   h = holiday.NYSE(2005)
-    #   cbind(as.character(x), is.bizday(x, h))
-    
-    # FUNCTION:
-    
-    # Test:
-    char.x = substr(as.character(x), 1, 10)
-    char.h = substr(as.character(holidays), 1, 10)
-    Weekday = as.integer(isWeekday(x))
-    nonHoliday = as.integer(!(char.x %in% char.h))
-    
-    # Business Days:
-    bizdays = as.logical(Weekday*nonHoliday)
-    
-    # Return Value:
-    bizdays
-} 
-
-
-# ------------------------------------------------------------------------------
-
-
-weekDay =
-function(x)
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Returns day of week for time date objects
-    
-    # Example:
-    #   weekDay(Sys.timeDate())
-    #   weekDay(timeSequence("2005-05-15", "2005-07-15"))
-    
-    wdays = c("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat")
-    n = as.POSIXlt(x@Data)$wday + 1
-    
-    # Return Value:
-    wdays[n]
-}       
-
-
-################################################################################
-# PART II timeDate Methods:
-
-
-################################################################################
 # S3 MEHOD:              MATHEMATICAL OPERATIONS:
-#  [.timeDate             Extracts or replaces subsets from 'timeDate' Objects
+#  Ops.timeDate           Group 'Ops' generic functions for 'timeDate' objects
 #  +.timeDate             Performs arithmetic + operation on 'timeDate' objects
 #  -.timeDate             Performs arithmetic - operation on 'timeDate' objects
-#  Ops.timeDate           Group 'Ops' generic functions for 'timeDate' objects
 #  diff.timeDate          Returns suitably lagged and iterated differences
 #  difftimeDate           Returns a difference of two 'timeDate' objects
-#  c.timeDate             Concatenates objects of class 'timeDate'
-#  rep.timeDate           Replicates objects of class 'timeDate'
-#  start.timeDate         Extracts the first object of a 'timeDate' vector
-#  end.timeDate           Extracts the last object of a 'timeDate' vector
-#  modify.timeDate        Sorts, Rounds or truncates a 'timeDate' vector
-#  rev.timeDate           Reverts  a 'timeDate' vector object
-# S3 MEHOD:              OBJECT TRANSFORMATION:
-#  as.character.timeDate  Returns a 'timeDate' object as character string
-#  as.data.frame.timeDate Returns a 'timeDate' object as data frame
-#  as.POSIXct.timeDate    Returns a 'timeDate' object as POSIXct object
-#  julian.timeDate        Returns Julian day counts since 1970-01-01
-#  atoms.timeDate         Returns date/time atoms from a 'timeDate' object
-#  months.timeDate        Extract months atom from a 'timeDate' object
-################################################################################
+#  round.tinmeDate        Rounds objects of class 'timeDate'
+#  trunc.timeDate         Truncates objects of class 'timeDate'
 
 
-################################################################################
-# MATHEMATICAL OPERATIONS:
-#   This is a collection of S3 methods for objects of class 'timeDate'.
-#   Included are methods to extracts or replace subsets from 'timeDate' 
-#   objects, to perform arithmetic "+" and "-" operations, to group 
-#   'Ops' generic functions, to return suitably lagged and iterated 
-#   differences, to return differences of two 'timeDate' objects, to
-#   to xoncatenate objects, to replicate objects, to rounds objects,
-#   to truncates objects, to extract the first or last object of a
-#   vector, to ort the objects the elements of a vector, and to revert
-#   'timeDate' vector objects.
-
-
-"[.timeDate" =
-function(x, ..., drop = TRUE)
+Ops.timeDate = 
+function(e1, e2)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Extracts or replaces subsets from 'timeDate' objects
-    
+    #   Uses group 'Ops' generic functions for 'timeDate' objects
+
     # Arguments:
-    #   x - a 'timeDate' object
+    #   e1 - an object of class 'timeDate'
+    #   e2 - an object of class 'timeDate' 
     
     # Value:
-    #   Returns a subset from a 'timeDate' object.
+    #   Returns the 'Ops' grouped object.
     
     # FUNCTION:
     
-    # Check Timezone:
-    TZ = Sys.getenv("TZ")  
-    if (TZ[[1]] != "GMT") {
-        Sys.putenv(TZ = "GMT")
-        TZ.RESET = TRUE
-    } else {
-        TZ.RESET = FALSE
-    }
+    # Set Timezone to GMT:
+    myTZ = Sys.getenv("TZ")  
+    Sys.putenv(TZ = "GMT")
     
-    # Subsets:
-    val <- lapply(x@Data, "[", ..., drop = drop)
-    attributes(val) <- attributes(x@Data) 
+    # Check Logical Operators:
+    if (nargs() == 1)
+        stop(paste("unary", .Generic, "not defined for timeDate objects"))
+    boolean <- switch(.Generic, "<" = , ">" = , "==" = ,
+        "!=" = , "<=" = , ">=" = TRUE, FALSE)
+    if (!boolean) 
+        stop(paste(.Generic, "not defined for timeDate XXX objects"))   
+        
+    # Convert to GMT:
+    e1GMT = timeDate(e1, zone = e1@FinCenter, FinCenter = "GMT")@Data
+    e2GMT = timeDate(e2, zone = e2@FinCenter, FinCenter = "GMT")@Data
+    
+    # Convert to Julian:
+    if (inherits(e1GMT, "POSIXlt")) e1 <- as.POSIXct(e1GMT)
+    if (inherits(e2GMT, "POSIXlt")) e2 <- as.POSIXct(e2GMT)
     
     # Return Value:
-    if (TZ.RESET) Sys.putenv(TZ = TZ)
-    new("timeDate", 
-        Data = val, 
-        Dim = length(as.character(val)),
-        format = x@format,
-        FinCenter = x@FinCenter)      
-}   
+    Sys.putenv(TZ = myTZ)
+    NextMethod(.Generic)
+}
 
 
 # ------------------------------------------------------------------------------
@@ -1686,14 +1817,9 @@ function(e1, e2)
     
     # FUNCTION:
     
-    # Check Timezone:
-    TZ = Sys.getenv("TZ")  
-    if (TZ[[1]] != "GMT") {
-        Sys.putenv(TZ = "GMT")
-        TZ.RESET = TRUE
-    } else {
-        TZ.RESET = FALSE
-    }
+    # Set Timezone to GMT:
+    myTZ = Sys.getenv("TZ")  
+    Sys.putenv(TZ = "GMT")
     
     # Check Class Types:
     test1 = test2 = 1
@@ -1708,7 +1834,7 @@ function(e1, e2)
     ans = timeDate(e1GMT+e2, zone = "GMT", FinCenter = e1@FinCenter)
     
     # Return Value:
-    if (TZ.RESET) Sys.putenv(TZ = TZ)
+    Sys.putenv(TZ = myTZ)
     ans
 }
 
@@ -1738,14 +1864,9 @@ function(e1, e2)
     
     # FUNCTION:
      
-    # Check Timezone:
-    TZ = Sys.getenv("TZ")  
-    if (TZ[[1]] != "GMT") {
-        Sys.putenv(TZ = "GMT")
-        TZ.RESET = TRUE
-    } else {
-        TZ.RESET = FALSE
-    }
+    ## Set Timezone to GMT:
+    myTZ = Sys.getenv("TZ")  
+    Sys.putenv(TZ = "GMT")
     
     # Check Class Types:
     test1 = test2 = 1
@@ -1765,58 +1886,8 @@ function(e1, e2)
         return(timeDate(e1GMT-e2, zone = "GMT", FinCenter = e1@FinCenter)) }
         
     # Return Value:
-    if (TZ.RESET) Sys.putenv(TZ = TZ)
+    Sys.putenv(TZ = myTZ)
     invisible()         
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-Ops.timeDate = 
-function(e1, e2)
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Uses group 'Ops' generic functions for 'timeDate' objects
-
-    # Arguments:
-    #   e1 - an object of class 'timeDate'
-    #   e2 - an object of class 'timeDate' 
-    
-    # Value:
-    #   Returns the 'Ops' grouped object.
-    
-    # FUNCTION:
-    
-    # Check Timezone:
-    TZ = Sys.getenv("TZ")  
-    if (TZ[[1]] != "GMT") {
-        Sys.putenv(TZ = "GMT")
-        TZ.RESET = TRUE
-    } else {
-        TZ.RESET = FALSE
-    }
-    
-    # Check Logical Operators:
-    if (nargs() == 1)
-        stop(paste("unary", .Generic, "not defined for timeDate objects"))
-    boolean <- switch(.Generic, "<" = , ">" = , "==" = ,
-        "!=" = , "<=" = , ">=" = TRUE, FALSE)
-    if (!boolean) 
-        stop(paste(.Generic, "not defined for timeDate XXX objects"))   
-        
-    # Convert to GMT:
-    e1GMT = timeDate(e1, zone = e1@FinCenter, FinCenter = "GMT")@Data
-    e2GMT = timeDate(e2, zone = e2@FinCenter, FinCenter = "GMT")@Data
-    
-    # Convert to Julian:
-    if (inherits(e1GMT, "POSIXlt")) e1 <- as.POSIXct(e1GMT)
-    if (inherits(e2GMT, "POSIXlt")) e2 <- as.POSIXct(e2GMT)
-    
-    # Return Value:
-    if (TZ.RESET) Sys.putenv(TZ = TZ)
-    NextMethod(.Generic)
 }
 
 
@@ -1848,22 +1919,20 @@ function (x, lag = 1, differences = 1, ...)
 
     # FUNCTION:
     
-    # Check Timezone:
-    TZ = Sys.getenv("TZ")  
-    if (TZ[[1]] != "GMT") {
-        Sys.putenv(TZ = "GMT")
-        TZ.RESET = TRUE
-    } else {
-        TZ.RESET = FALSE
-    }
+    # Set Timezone to GMT:
+    myTZ = Sys.getenv("TZ")  
+    Sys.putenv(TZ = "GMT")
     
     # Convert to GMT:
-    xGMT = timeDate(x, zone = x@FinCenter, FinCenter = "GMT") 
+    GMT = timeDate(x, zone = x@FinCenter, FinCenter = "GMT") 
+    ans = diff.POSIXt(as.POSIXct(GMT@Data), 
+        lag = lag, differences = differences, ...) 
         
+    # Reset Timezone:
+    Sys.putenv(TZ = myTZ)
+
     # Return Value:
-    if (TZ.RESET) Sys.putenv(TZ = TZ)
-    diff.POSIXt(x = as.POSIXct(xGMT@Data), xGMT@Data, lag = lag, 
-        differences = differences, ...) 
+    ans
 }
 
 
@@ -1892,14 +1961,9 @@ units = c("auto", "secs", "mins", "hours", "days", "weeks"))
 
     # FUNCTION:
     
-    # Check Timezone:
-    TZ = Sys.getenv("TZ")  
-    if (TZ[[1]] != "GMT") {
-        Sys.putenv(TZ = "GMT")
-        TZ.RESET = TRUE
-    } else {
-        TZ.RESET = FALSE
-    }
+    # Set Timezone to GMT:
+    myTZ = Sys.getenv("TZ")  
+    Sys.putenv(TZ = "GMT")
     
     # Convert to GMT:
     time1GMT = timeDate(time1, zone = time1@FinCenter, 
@@ -1908,12 +1972,71 @@ units = c("auto", "secs", "mins", "hours", "days", "weeks"))
         FinCenter = "GMT") 
 
     # Return Value:
-    if (TZ.RESET) Sys.putenv(TZ = TZ)
+    Sys.putenv(TZ = myTZ)
     difftime(time1GMT@Data, time2GMT@Data, tz = "GMT", units = units[1]) 
 }
 
 
 # ------------------------------------------------------------------------------
+
+
+round.timeDate =
+function(x, units = c("days", "hours", "mins"), ...)     
+{   # A function implemented by Diethelm Wuertz
+
+    # FUNCTION:
+    
+    # Get Units:
+    units = match.arg(units)
+    
+    # Sorting under GMT is not what we want!
+    # GMT = timeDate(x, zone = x@FinCenter, FinCenter = "GMT")
+    # lt = round.POSIXt(GMT@Data, units = units, ...)
+    # ans = timeDate(lt, zone = "GMT", FinCenter = x@FinCenter)
+    
+    # Use:
+    lt = round.POSIXt(x@Data, units = units)
+    ans = timeDate(lt, zone = x@FinCenter, FinCenter = x@FinCenter)
+    
+    # Return Value:
+    ans
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+trunc.timeDate =
+function(x, units = c("days", "hours", "mins"), ...) 
+{   # A function implemented by Diethelm Wuertz
+
+    # FUNCTION:
+    
+    # Get Units:
+    units = match.arg(units)
+    
+    # Sorting under GMT is not what we want!
+    # GMT = timeDate(x, zone = x@FinCenter, FinCenter = "GMT")
+    # lt = trunc.POSIXt(GMT@Data, units = units)
+    # ans = timeDate(lt, zone = "GMT", FinCenter = x@FinCenter)
+    
+    # Use:
+    lt = trunc.POSIXt(x@Data, units = units)
+    ans = timeDate(lt, zone = x@FinCenter, FinCenter = x@FinCenter)
+    
+    # Return Value:
+    ans
+}
+
+
+################################################################################
+# S3 MEHOD:              CONCATENATION, ORDERING AND SORTING:
+#  c.timeDate             Concatenates objects of class 'timeDate'
+#  rep.timeDate           Replicates objects of class 'timeDate'
+#  sample.timeDate        Resamples objects of class 'timeDate'
+#  sort.timeDate          Sorts, Rounds or truncates a 'timeDate' vector
+#  unique.timeDate        Remove duplicates from a 'timeDate' vector
+#  rev.timeDate           Reverts  a 'timeDate' vector object
 
 
 c.timeDate = 
@@ -1938,14 +2061,9 @@ function(..., recursive = FALSE)
 
     # FUNCTION:
     
-    # Check Timezone:
-    TZ = Sys.getenv("TZ")  
-    if (TZ[[1]] != "GMT") {
-        Sys.putenv(TZ = "GMT")
-        TZ.RESET = TRUE
-    } else {
-        TZ.RESET = FALSE
-    }
+    # Set Timezone to GMT:
+    myTZ = Sys.getenv("TZ")  
+    Sys.putenv(TZ = "GMT")
         
     # List all:
     z = list(...)
@@ -1955,13 +2073,14 @@ function(..., recursive = FALSE)
     for (i in 1:length(z)) {
         new = format(timeDate(z[[i]], zone = z[[i]]@FinCenter, 
             FinCenter = "GMT")@Data, "%Y-%m-%d %H:%M:%S")
-        all = c(all, new) }
+        all = c(all, new) 
+    }
     
     # Convert to Financial Center of the first element:
     ans = timeDate(all, zone = "GMT", FinCenter = z[[1]]@FinCenter)
     
     # Return Value:
-    if (TZ.RESET) Sys.putenv(TZ = TZ)
+    Sys.putenv(TZ = myTZ)
     ans
 }
   
@@ -1970,7 +2089,7 @@ function(..., recursive = FALSE)
 
 
 rep.timeDate =
-function(x, times, ...) 
+function(x, ...) 
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -1988,29 +2107,12 @@ function(x, times, ...)
     
     # FUNCTION:
 
-    # Check Timezone:
-    TZ = Sys.getenv("TZ")  
-    if (TZ[[1]] != "GMT") {
-        Sys.putenv(TZ = "GMT")
-        TZ.RESET = TRUE
-    } else {
-        TZ.RESET = FALSE
-    }
-    
-    # Check Class Type:
-    if (!inherits(x, "timeDate")) stop("Wrong class type")
-    
-    # Convert to GMT:
-    xGMT = timeDate(x, zone = x@FinCenter, FinCenter = "GMT") 
-    
-    # Repeats:  
-    lt = rep.POSIXlt(xGMT@Data, times = times, ...)
-    
-    # Convert to timeDate:
-    ans = timeDate(lt, zone="GMT", FinCenter = x@FinCenter)
+    # Replicate: 
+    GMT = timeDate(x, zone = x@FinCenter, FinCenter = "GMT")
+    charvec = rep(as.character(GMT@Data), ...)
+    ans = timeDate(charvec, zone = "GMT", FinCenter = x@FinCenter)
     
     # Return Value:
-    if (TZ.RESET) Sys.putenv(TZ = TZ)
     ans
 }
 
@@ -2018,176 +2120,30 @@ function(x, times, ...)
 # ------------------------------------------------------------------------------
 
 
-start.timeDate =
+sample.timeDate =
 function(x, ...)
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Extracts the first object of a 'timeDate' vector
-
-    # Arguments:
-    #   x - a 'timeDate' object
-    
-    # Value:
-    #   Returns from 'x' the earliest entry as an object of class 
-    #   'timeDate'.
-    
-    # FUNCTION:
-    
-    # Check Timezone:
-    TZ = Sys.getenv("TZ")  
-    if (TZ[[1]] != "GMT") {
-        Sys.putenv(TZ = "GMT")
-        TZ.RESET = TRUE
-    } else {
-        TZ.RESET = FALSE
-    }
-    
-    # Check Class Type:
-    if (!inherits(x, "timeDate")) stop("Wrong class type")
-    
-    # First element:
-    # print(x@FinCenter)
-    xGMT = timeDate(x, zone=x@FinCenter, FinCenter="GMT")@Data
-    z = as.numeric(as.POSIXct(xGMT))
-    order(z)[1]
+{
+    GMT = timeDate(x, zone = x@FinCenter, FinCenter = "GMT")
+    charvec = sample(as.character(GMT@Data), ...)
+    ans = timeDate(charvec, zone = "GMT", FinCenter = x@FinCenter)
     
     # Return Value:
-    if (TZ.RESET) Sys.putenv(TZ = TZ)
-    x[1]
+    ans
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-end.timeDate =
+sort.timeDate =
 function(x, ...)
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Extracts the last object of a 'timeDate' vector
-
-    # Arguments:
-    #   x - a 'timeDate' object
-    
-    # Value:
-    #   Returns an object of class 'timeDate'.
-    
-    # FUNCTION:
-    
-    # Check Timezone:
-    TZ = Sys.getenv("TZ")  
-    if (TZ[[1]] != "GMT") {
-        Sys.putenv(TZ = "GMT")
-        TZ.RESET = TRUE
-    } else {
-        TZ.RESET = FALSE
-    }
-    
-    # Check Class Type:
-    if (!inherits(x, "timeDate")) stop("Wrong class type")
-    
-    # Last element:
-    # print(x@FinCenter)
-    xGMT = timeDate(x, zone = x@FinCenter, FinCenter = "GMT")@Data
-    z = as.numeric(as.POSIXct(xGMT))
-    n = order(z)[length(z)]
+{
+    GMT = timeDate(x, zone = x@FinCenter, FinCenter = "GMT")
+    charvec = sort(as.character(GMT@Data), ...)
+    ans = timeDate(charvec, zone = "GMT", FinCenter = x@FinCenter)
     
     # Return Value:
-    if (TZ.RESET) Sys.putenv(TZ = TZ)
-    x[n]
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-modify.timeDate =
-function(x, method = c("sort", "round", "trunc"), units = c("secs", 
-"mins", "hours", "days"))
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Sorts, rounds or truncates a 'timeDate' vector
-    
-    # Select:
-    method = method[1]
-    units = units[1]
-    
-    # Check Timezone:
-    TZ = Sys.getenv("TZ")  
-    if (TZ[[1]] != "GMT") {
-        Sys.putenv(TZ = "GMT")
-        TZ.RESET = TRUE
-    } else {
-        TZ.RESET = FALSE
-    }
-    
-    # Check Class Type:
-    if (!inherits(x, "timeDate")) stop("Wrong class type")
-    
-    # Internal Function:
-    sort.timeDate = 
-    function(x) {  
-        # Description:
-        #   Time-sorts the objects of a 'timeDate' vector   
-        # Arguments:
-        #   x - a 'timeDate' object to be sorted.
-        #   ... - arguments passed to other methods.    
-        # Value:
-        #   Returns a sorted object of the same class as 'x'.
-        # Sort elements:
-        xGMT = timeDate(x, zone = x@FinCenter, FinCenter = "GMT")@Data
-        z = as.numeric(as.POSIXct(xGMT))
-        n = order(z)  
-        # Return Value:
-        x[n] }
-        
-    # Internal Function
-    round.timeDate = 
-    function(x, units) {   
-        # Description:
-        #   Rounds objects of class 'timeDate'
-        # Arguments:
-        #   x - a 'timeDate' object
-        #   units - a character string, one of the units listed, 
-        #       by default "secs".
-        # Value:
-        #   Returns a rounded object of class 'timeDate'.
-        # Round:
-        xGMT = timeDate(x, zone = x@FinCenter, FinCenter = "GMT") 
-        lt = round.POSIXt(xGMT@Data, units = units) 
-        ans = timeDate(lt, zone = "GMT", FinCenter = x@FinCenter)   
-        # Return Value:
-        ans }
-
-    # Internal Function
-    trunc.timeDate = 
-    function(x, units) {
-        # Description:
-        #   Truncates objects of class 'timeDate'
-        # Arguments:
-        #   x - a 'timeDate' object
-        #   units - one of the units listed, by default "secs". 
-        # Value:
-        #   Returns a truncated object of class 'timeDate'.
-        # Truncate:
-        xGMT = timeDate(x, zone = x@FinCenter, FinCenter = "GMT") 
-        lt = trunc.POSIXt(xGMT@Data, units = units) 
-        ans = timeDate(lt, zone = "GMT", FinCenter = x@FinCenter)  
-        # Return Value:
-        ans }
-        
-    # Modify:
-    ans = NA
-    if (method == "sort")  return(sort.timeDate(x))
-    if (method == "round") return(round.timeDate(x, units))
-    if (method == "trunc") return(trunc.timeDate(x, units))
-    
-    # Return Value:
-    if (TZ.RESET) Sys.putenv(TZ = TZ)
-    ans  
+    ans
 }
 
 
@@ -2195,7 +2151,7 @@ function(x, method = c("sort", "round", "trunc"), units = c("secs",
 
 
 unique.timeDate =
-function(x, incomparables = FALSE, ...) 
+function(x, ...) 
 {   # A function Implemented by Diethelm Wuertz
 
     # Description:
@@ -2207,13 +2163,13 @@ function(x, incomparables = FALSE, ...)
     
     # FUNCTION:
     
-    # Remove Duplicates:
-    ans = unique(x@Data)
-    x@Data = timeDate(ans, FinCenter = "GMT")@Data
-    x@Dim = length(as.character(ans))
+    # Remove Duplicates:    
+    GMT = timeDate(x, zone = x@FinCenter, FinCenter = "GMT")
+    charvec = unique(as.character(GMT@Data), ...)
+    ans = timeDate(charvec, zone = "GMT", FinCenter = x@FinCenter)
     
     # Return Value:
-    x
+    ans
 }
 
 
@@ -2235,34 +2191,25 @@ function(x)
     
     # FUNCTION:
     
-    # Check Timezone:
-    TZ = Sys.getenv("TZ")  
-    if (TZ[[1]] != "GMT") {
-        Sys.putenv(TZ = "GMT")
-        TZ.RESET = TRUE
-    } else {
-        TZ.RESET = FALSE
-    }
-    
-    # Check Class Type:
-    if (!inherits(x, "timeDate")) stop("Wrong class type")
-    
-    # Revert Elements:
-    x@Data = x@Data[length(x@Data[[1]]):1] 
+    # Remove Duplicates:    
+    GMT = timeDate(x, zone = x@FinCenter, FinCenter = "GMT")
+    charvec = rev(as.character(GMT@Data))
+    ans = timeDate(charvec, zone = "GMT", FinCenter = x@FinCenter)
+    ans
     
     # Return Value:
-    if (TZ.RESET) Sys.putenv(TZ = TZ)
     x
 }
 
     
 ################################################################################
-# TRANSFORMATIONS MEHODS:
-#   This is a collection of S3 methods for objects of class 'timeDate'.
-#   Included are methods to transform 'timeDate' objects to character 
-#   strings, to data frames, to POSIXct or POSIXlt objects, to Julian
-#   counts, to extract date/time atoms from calendar dates, and to 
-#   extract the months atom from a 'timeDate' object.
+# S3 MEHOD:              OBJECT TRANSFORMATIONS:
+#  as.character.timeDate  Returns a 'timeDate' object as character string
+#  as.data.frame.timeDate Returns a 'timeDate' object as data frame
+#  as.POSIXct.timeDate    Returns a 'timeDate' object as POSIXct object
+#  julian.timeDate        Returns Julian day counts since 1970-01-01
+#  atoms.timeDate         Returns date/time atoms from a 'timeDate' object
+#  months.timeDate        Extract months atom from a 'timeDate' object
 
 
 as.character.timeDate =
@@ -2281,24 +2228,21 @@ function(x, ...)
 
     # FUNCTION:
     
-    # Check Timezone:
-    TZ = Sys.getenv("TZ")  
-    if (TZ[[1]] != "GMT") {
-        Sys.putenv(TZ = "GMT")
-        TZ.RESET = TRUE
-    } else {
-        TZ.RESET = FALSE
-    }
+    # Set Timezone to GMT:
+    myTZ = Sys.getenv("TZ")  
+    Sys.putenv(TZ = "GMT")
     
     # Check Class Type:
     if (!inherits(x, "timeDate")) stop("Wrong class type")
     
     # Format:
     ans = format.POSIXlt(x@Data)
-    # print(x@FinCenter)
+    attr(ans, "control") = c(FinCenter = x@FinCenter)
+    
+    # Reset Time Zone: 
+    Sys.putenv(TZ = myTZ)
     
     # Return Value: 
-    if (TZ.RESET) Sys.putenv(TZ = TZ)
     ans
 }
 
@@ -2321,24 +2265,22 @@ function(x, ...)
     
     # FUNCTION:
     
-    # Check Timezone:
-    TZ = Sys.getenv("TZ")  
-    if (TZ[[1]] != "GMT") {
-        Sys.putenv(TZ = "GMT")
-        TZ.RESET = TRUE
-    } else {
-        TZ.RESET = FALSE
-    }
+    # Set Timezone to GMT:
+    myTZ = Sys.getenv("TZ")  
+    Sys.putenv(TZ = "GMT")
     
     # Check Class Type:
-    if (!inherits(x, "timeDate")) stop("Wrong class type")
+    stopifnot(inherits(x, "timeDate"))
     
     # Data Frame:
     ans = as.data.frame.POSIXlt(x@Data, ...)
-    # print(x@FinCenter)
+    colnames(ans) = paste(x@FinCenter, ":", substitute(x), sep = "")
+    attr(ans, "control") = c(FinCenter = x@FinCenter)
+    
+    # Reset Time Zone: 
+    Sys.putenv(TZ = myTZ)
     
     # Return Value: 
-    if (TZ.RESET) Sys.putenv(TZ = TZ)
     ans
 }
 
@@ -2363,32 +2305,30 @@ function(x, tz = "")
     
     # FUNCTION:
     
-    # Check Timezone:
-    TZ = Sys.getenv("TZ")  
-    if (TZ[[1]] != "GMT") {
-        Sys.putenv(TZ = "GMT")
-        TZ.RESET = TRUE
-    } else {
-        TZ.RESET = FALSE
-    }
+    # Set Timezone to GMT:
+    myTZ = Sys.getenv("TZ")  
+    Sys.putenv(TZ = "GMT")
     
     # Check Class Type:
     if (!inherits(x, "timeDate")) stop("Wrong class type")
     
     # POSIXlt:
     ans = as.POSIXct.POSIXlt(x@Data)
+    attr(ans, "control") = c(FinCenter = x@FinCenter)
+    
+    # Reset Time Zone: 
+    Sys.putenv(TZ = myTZ)
     
     # Return Value: 
-    if (TZ.RESET) Sys.putenv(TZ = TZ)
     ans
 }
 
 
-# ******************************************************************************
+# ------------------------------------------------------------------------------
 
  
 julian.timeDate = 
-function(x, ...)
+function(x, FinCenter = myFinCenter, ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -2408,14 +2348,9 @@ function(x, ...)
 
     # FUNCTION:
     
-    # Check Timezone:
-    TZ = Sys.getenv("TZ")  
-    if (TZ[[1]] != "GMT") {
-        Sys.putenv(TZ = "GMT")
-        TZ.RESET = TRUE
-    } else {
-        TZ.RESET = FALSE
-    }
+    # Set Timezone to GMT:
+    myTZ = Sys.getenv("TZ")  
+    Sys.putenv(TZ = "GMT")
     
     # Check Class Type:
     if (!inherits(x, "timeDate")) stop("Wrong class type")
@@ -2424,15 +2359,17 @@ function(x, ...)
     if (!exists("myUnits")) units = "secs" else units = myUnits
     
     # POSIX:
-    lt = timeDate(x, zone = x@FinCenter, FinCenter = "GMT")@Data
+    lt = timeDate(x, zone = x@FinCenter, FinCenter = FinCenter)@Data
 
     # Difftime:  
     origin = as.POSIXlt("1970-01-02", tz = "GMT") - 24 * 3600
     res = difftime(as.POSIXct(lt), origin, units = units[1])
     ans = structure(res, origin = origin)
         
-    # Return Value:
-    if (TZ.RESET) Sys.putenv(TZ = TZ)
+    # Reset Time Zone: 
+    Sys.putenv(TZ = myTZ)
+    
+    # Return Value: 
     ans
 }
     
@@ -2457,33 +2394,30 @@ function(x, ...)
     
     # FUNCTION:
     
-    # Check Timezone:
-    TZ = Sys.getenv("TZ")  
-    if (TZ[[1]] != "GMT") {
-        Sys.putenv(TZ = "GMT")
-        TZ.RESET = TRUE
-    } else {
-        TZ.RESET = FALSE
-    }
+    # Set Timezone to GMT:
+    myTZ = Sys.getenv("TZ")  
+    Sys.putenv(TZ = "GMT")
     
     # Check Class Type:
     if (!inherits(x, "timeDate")) stop("Wrong class type")
     
     # mdy:
-    x = x@Data
-    Y = x$year + 1900
-    m = x$mon + 1
-    d = x$mday
-    H = x$hour
-    M = x$min
-    S = x$sec
+    X = x@Data
+    Y = X$year + 1900
+    m = X$mon + 1
+    d = X$mday
+    H = X$hour
+    M = X$min
+    S = X$sec
     
     # Data Frame:
     ans = data.frame(Y = Y, m = m, d = d, H = H, M = M, S = S)
-    # print(x@FinCenter)
+    attr(ans, "control") = c(FinCenter = x@FinCenter)
+    
+    # Reset Time Zone: 
+    Sys.putenv(TZ = myTZ)
     
     # Return Value: 
-    if (TZ.RESET) Sys.putenv(TZ = TZ)
     ans
 }
 
@@ -2509,23 +2443,21 @@ function(x, abbreviate = NULL)
     
     # FUNCTION:
     
-    # Check Timezone:
-    TZ = Sys.getenv("TZ")  
-    if (TZ[[1]] != "GMT") {
-        Sys.putenv(TZ = "GMT")
-        TZ.RESET = TRUE
-    } else {
-        TZ.RESET = FALSE
-    }
+    # Set Timezone to GMT:
+    myTZ = Sys.getenv("TZ")  
+    Sys.putenv(TZ = "GMT")
     
     # Check Class Type:
     if (!inherits(x, "timeDate")) stop("Wrong class type")
     
     # Month:
     ans = x@Data$mon+1
+    attr(ans, "control") = c(FinCenter = x@FinCenter)
     
-    # Return Value:
-    if (TZ.RESET) Sys.putenv(TZ = TZ)
+    # Reset Time Zone: 
+    Sys.putenv(TZ = myTZ)
+    
+    # Return Value: 
     ans
 }
     

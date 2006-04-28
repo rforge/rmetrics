@@ -31,51 +31,54 @@
 # FUNCTION:            GENERATION OF TIME SERIES OBJECTS:
 #  'timeSeries'         S4 Class definition for a 'timeSeries' object
 #  timeSeries           Creates a 'timeSeries' object from scratch
-#  read.timeSeries      Reads from a spreadsheet and creates a 'timeSeries'
-# METHODS:
-#   as.timeSeries       S3: Creates a 'timeSeries' object
-#   as.timeSeries.default
-#   as.timeSeries.numeric
-#   as.timeSeries.ts
-#   as.timeSeries.character
-#   as.timeSeries.data.frame
-#   as.timeSeries.matrix
-#   as.timeSeries.zoo
-#   is.timeSeries       S3: Tests for a 'timeSeries' object
-# METHODS:             DESCRIPTION:
-#   print.timeSeries    S3: Print method for a 'timeSeries' object
-#   plot.timeSeries     S3: Plot method for a 'timeSeries' object
-#   lines.timeSeries    S3: Lines method for a 'timeSeries' object
-#   points.timeSeries   S3: Lines method for a 'timeSeries' object
-#   Ops.timeSeries      S3: Arith method for a 'timeSeries' object
-#   [.timeSeries        S3: [ method for a 'timeSeries' object
-#   head.timeSeries     S3: returns the head of a 'timeSeries' object
-#   tail.timeSeries     S3: returns the tail of a 'timeSeries' object
-#   quantile.timeSeries S3: produces sample quantiles of a 'timeSeries' object
+#  readSeries           Reads from a spreadsheet and creates a 'timeSeries'
+#  returnSeries         Computes returns from a 'timeSeries' object  
+#  applySeries          Applies a function to blocks of a 'timeSeries'
 # FUNCTION:            REPRESENTATION OF TIME SERIES OBJECTS:
 #  seriesData           Extracts data slot from 'timeSeries' object
 #  seriesPositions      Extracts positions slot from 'timeSeries' object
 #  isUnivariate         Tests if an object of class 'timeSeries' is univariate
 #  isMultivariate       Tests if an object of class 'timeSeries' is multivariate
-# METHODS:
+# METHODS:             PRESENTATION OF A TIME SERIES:
+#  print.timeSeries     S3: Print method for a 'timeSeries' object
+#  plot.timeSeries      S3: Plot method for a 'timeSeries' object
+#  lines.timeSeries     S3: Lines method for a 'timeSeries' object
+#  points.timeSeries    S3: Lines method for a 'timeSeries' object
+# METHODS              MATHEMATICAL OPERATIONS:
+#  Ops.timeSeries       S3: Arith method for a 'timeSeries' object
+#  exp.timeSeries       S3: Returns exponentials of a 'timeSeries' object
+#  abs.timeSeries       S3: Returns abolute values of a 'timeSeries' object
+#  sqrt.timeSeries      S3: Returns sqrt values of a 'timeSeries' object
+#  log.timeSeries       S3: Returns logarithms of a 'timeSeries' object
+#  quantile.timeSeries  S3: produces sample quantiles of a 'timeSeries' object
+# METHODS              SUBSETTING METHODS:
+#  [.timeSeries         S3: subsets of a 'timeSeries' object
+#  cut|cutSeries        S3: cuts a block from a 'timeSeries' object
+#  head.timeSeries      S3: returns the head of a 'timeSeries' object
+#  tail.timeSeries      S3: returns the tail of a 'timeSeries' object
 #  start.timeSeries     S3: Extracts start date of a 'timeSeries' object 
-#  end.timeSeries       S3: Extracts end date of a 'timeSeries' object 
-#  as.vector.timeSeries S3: Converts a univariate 'timeSeries' to a vector
-#  as.matrix.timeSeries S3: Converts a 'timeSeries' to a matrix
-#  as.data.frame.timeS* S3: Converts a 'timeSeries' to a data.frame
-#  as.ts.timeSeries     S3: Converts a 'timeSeries' to ts
-# FUNCTION:            MATHEMATICAL OPERATIONS ON TIME SERIES OBJECTS:
-#  applySeries          Applies a function to margins of a 'timeSeries'         
-#  cut|cutSeries        Cuts out a piece from a 'timeSeries' object
-#  merge|mergeSeries    Merges a 'timeSeries' object with a 'matrix'
-#  .mergeSeries         Old Version of mergeSeries
-#  returnSeries         Computes returns from a 'timeSeries' object
-#  rev|revSeries        Reverts a 'timeSeries' object
-#  diff|diffSeries      Differences a 'timeSeries' object
-#  lag|lagSeries        Lags a 'timeSeries' object
-#  outlierSeries        Removes outliers from a 'timeSeries' object
-#  log|logSeries        eturns logarithms of a 'timeSeries' object
-#  abs|absSeries        Returns abolute values of a 'timeSeries' object
+#  end.timeSeries       S3: Extracts end date of a 'timeSeries' object
+#  outlier.timeSeries   S3: Removes outliers from a 'timeSeries' object   
+# METHODS:             CREATES A TIMESERIES FROM OTHER OBJECTS:
+#  is.timeSeries        S3: Tests for a 'timeSeries' object
+#  as.timeSeries        S3: Defines method for a 'timeSeries' object
+#  as.timeS*.default    S3: Returns the input
+#  as.timeS*.numeric    S3: Transforms a numeric vector into a 'timeSeries'
+#  as.timeS*.data.frame S3: Transformas a 'data.frame' into a 'timeSeries'
+#  as.timeS*.matrix     S3: Transformas a 'matrix' into a 'timeSeries'
+#  as.timeS*.ts         S3: Transforms a 'ts' object into a 'timeSeries'
+#  as.timeS*.character  S3: Loads and transformas from a demo file
+#  as.timeS*.zoo        S3: Transforms a 'zoo' object into a 'timeSeries'
+# METHODS:             TRANSFORMS ATIMESERIES INTO OTHER OBJECTS:
+#  as.vector.timeS*     S3: Converts a univariate 'timeSeries' to a vector
+#  as.matrix.timeS*     S3: Converts a 'timeSeries' to a 'matrix'
+#  as.data.frame.t*     S3: Converts a 'timeSeries' to a 'data.frame'
+#  as.ts.timeSeries     S3: Converts a 'timeSeries' to a 'ts'
+# FUNCTION:            OPERATIONS ON TIME SERIES OBJECTS:
+#  merge.timeSeries     S3: Merges a 'timeSeries' object with a 'matrix'
+#  rev.timeSeries       S3: Reverts a 'timeSeries' object
+#  diff.timeSeries      S3: Differences a 'timeSeries' object
+#  lag.timeSeries       S3: Lags a 'timeSeries' object 
 # FUNCTION:            FOR DAILY OPERATIONS:
 #  dummyDailySeries     Creates a dummy daily 'timeSeries' object
 #  alignDailySeries     Aligns a 'timeSeries' object to new positions 
@@ -128,7 +131,7 @@ setClass("timeSeries",
 
 
 timeSeries =
-function (data, charvec, units = NULL, format = "ISO", zone = "GMT", 
+function (data, charvec, units = NULL, format = "ISO", zone = myFinCenter, 
 FinCenter = myFinCenter, recordIDs = data.frame(), title = NULL, 
 documentation = NULL, ...) 
 {   # A function implemented by Diethelm Wuertz
@@ -192,33 +195,51 @@ documentation = NULL, ...)
         
     # Add Dimnames:
     rownames(data) = format.POSIXlt(timeDates@Data)
-    if (is.null(units)) units = paste("TS.", 1:dim(data)[2], sep="")
+    if (is.null(units)) {
+        if (is.null(colnames(data))) {
+            units = paste("TS.", 1:dim(data)[2], sep = "")
+        } else {
+            units = colnames(data)
+        }
+    }
     colnames(data) = units
+    
+    # Record IDs:
+    if (sum(dim(recordIDs)) > 0) rownames(recordIDs) = charvec
     
     # Add title and Documentation:
     if (is.null(title)) title = "Time Series Object"
-    doc = paste("Created at", Sys.timeDate()@FinCenter, Sys.timeDate()@Data)
-    if (is.null(documentation)) documentation = doc
+    if (is.null(documentation)) documentation = as.character(date())
     
-    # Return Value:
-    new("timeSeries", 
+    # Result:
+    ans = new("timeSeries", 
         Data = as.matrix(data), 
         positions = rownames(data),
         format = timeDates@format,
         FinCenter = timeDates@FinCenter,  
         units = as.character(units), 
-        recordIDs = as.data.frame(recordIDs),
+        recordIDs = recordIDs,
         title = as.character(title), 
-        documentation = as.character(documentation) )            
+        documentation = as.character(documentation) 
+    ) 
+    
+    # Return Value:
+    ans          
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-read.timeSeries =
-function(file, zone = "GMT", FinCenter = "", title = "", 
-documentation = "", sep = ";")
+# 'read.timeSeries' has been replaced by Series.
+
+
+# ------------------------------------------------------------------------------
+
+
+readSeries =
+function(file, header = TRUE, sep = ";", zone = myFinCenter, 
+FinCenter = myFinCenter, title = NULL, documentation = NULL, ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -227,6 +248,8 @@ documentation = "", sep = ";")
     # Arguments:
     #   file - the filename of a spreadsheet data set from which
     #       to import the data records.
+    #   header - 
+    #   sep - 
     #   zone - the time zone or financial center where the data were 
     #       recorded.
     #   FinCenter - a character with the the location of the  
@@ -246,27 +269,16 @@ documentation = "", sep = ";")
     
     # FUNCTION:
     
-    # Financial Center:
-    if (FinCenter == "") FinCenter = "GMT"
-    
     # Read Data:
-    zfile = zip.file.extract(file, "Rdata.zip")
-    header = scan(zfile, what = "", nlines = 1, sep = sep, quiet = TRUE)
-    x = read.table(zfile, header = TRUE, sep = sep)
-    n = dim(x)[2]
-    data = as.matrix(x[, 2:n])
-    charvec = as.character(as.vector(x[, 1]))
-    format = header[1]
-    units = header[2:n]
+    df = read.table(file = file, header = header, sep = ";", ...)
+
     
     # Create Time Series:
-    ans = timeSeries(data, charvec, units, format, zone = "GMT", 
-        FinCenter, recordIDS = data.frame(), title = "", 
-        documentation = file) 
+    ans = as.timeSeries(df)
         
-    # For dates only, cut format string:
-    if (nchar(ans@positions[1]) == 10) 
-        ans@format = substring(ans@format, 1, 8)
+    # Add title and Documentation:
+    if (is.null(title)) ans@title = "Time Series Object"
+    if (is.null(documentation)) ans@documentation = as.character(date())
         
     # Return Value:
     ans
@@ -664,22 +676,38 @@ function(e1, e2 = 1)
         if (!identical(e1@positions, e2@positions)) 
             stop("positions slot must match")
         if (!identical(e1@FinCenter, e2@FinCenter)) 
-            stop("FinCenter slot must match") }
+            stop("FinCenter slot must match") 
+    }
             
     # Extract Data Slot:
-    if (i1)  e1 = e1@Data
-    if (i2)  e2 = e2@Data
+    if (i1) e1 = e1@Data
+    if (i2) e2 = e2@Data   
         
     # Compute:
     s = NextMethod(.Generic)
     
     # Make timeSeries:
-    if (i1) { s1@Data = s; s = s1 }
-    if (!i1 && i2) { s2@Data = s; s = s2 } 
-    if (i1 && !i2) s@units = s1@units
-    if (!i1 && i2) s@units = s2@units
-    if (i1 && i2) s@units = paste(s1@units, "_", s2@units, sep ="")
+    if ( i1)        { s1@Data = s; s = s1 }
+    if (!i1 &&  i2) { s2@Data = s; s = s2 } 
+    if ( i1 && !i2) s@units = s1@units
+    if (!i1 &&  i2) s@units = s2@units
+    if ( i1 &&  i2) s@units = paste(s1@units, "_", s2@units, sep = "")
     colnames(s@Data) = s@units
+    
+    df = data.frame()
+    if (i1) {
+        if (dim(s1@recordIDs)[1] > 0) 
+            df = s1@recordIDs 
+    }
+    if (i2) {
+        if (dim(s2@recordIDs)[1] > 0) 
+            df = s2@recordIDs 
+    }
+    if (i1 & i2) {
+        if (dim(s1@recordIDs)[1] > 0 & dim(s2@recordIDs)[1] > 0) 
+            df = data.frame(s1@recordIDs, s2@recordIDs)
+    }
+    s@recordIDs = df
     
     # Return Value:
     s
@@ -725,6 +753,12 @@ j = min(1, ncol(x@Data)):ncol(x@Data))
     x@positions = x@positions[i]
     x@units = colnames(subx)
     
+    # Record IDs:
+    if (sum(dim(x@recordIDs)) > 0) {
+        x@recordIDs <- x@recordIDs[i, , drop = FALSE]
+    }
+        
+    
     # Return Value:
     if (TZ.RESET) Sys.putenv(TZ = TZ)
     x
@@ -734,18 +768,7 @@ j = min(1, ncol(x@Data)):ncol(x@Data))
 # ------------------------------------------------------------------------------
 
 
-rev.timeSeries = 
-function(x, ...) 
-{
-    revSeries(x, ...) 
-}
-
-
-
-# ------------------------------------------------------------------------------
-
-
-revSeries =
+rev.timeSeries =
 function(x, ...) 
 {   # A function implemented by Diethelm Wuertz
 
@@ -764,8 +787,29 @@ function(x, ...)
     x@Data = apply(x@Data, 2, rev)
     x@positions = rev(x@positions)
     
+    # Revert IDs:
+    DF = x@recordIDs
+    DIM = dim(DF)
+    if (sum(DIM) > 0) {
+        df = rev(DF[, 1])
+        if (DIM[2] > 1) 
+            for (i in 2:DIM[2]) df = data.frame(df, rev(DF[, i]))
+        colnames(df) <- colnames(DF)
+        rownames(df) <- x@positions
+        x@recordIDs = df
+    }
+
     # Return Value:
     x
+}
+
+# ------------------------------------------------------------------------------
+
+
+revSeries = 
+function(x, ...) 
+{
+    rev(x, ...) 
 }
 
 
@@ -798,7 +842,7 @@ function(x, lag = 1, diff = 1, trim = FALSE, pad = NA, ...)
     #   trim - a logical. Should NAs at the befinning of the
     #       series be removed?
     #   pad - a umeric value with which NAs should be replaced
-    #       at the befinning of the series.
+    #       at the beginning of the series.
 
     # Value:
     #   Returns a differenced object of class 'timeSeries'.
@@ -820,11 +864,21 @@ function(x, lag = 1, diff = 1, trim = FALSE, pad = NA, ...)
         diffNums = dim(y)[1] - dim(z)[1]
         zpad = matrix(0*y[1:diffNums, ] + pad, nrow = diffNums)
         rownames(zpad) = rownames(y)[1:diffNums] 
-        z = rbind(zpad, z)}
+        z = rbind(zpad, z)
+    }
+    
+    # Record IDs:
+    df = x@recordIDs
+    if (trim) {
+        if (sum(dim(df)) > 0) {
+            TRIM = dim(df)[1] - dim(x)[1]
+            df = df[-(1:TRIM), ]
+        }
+    }
             
     # Return Value:
     timeSeries(data = z, charvec = rownames(z), units = colnames(z),
-        format = x@format, FinCenter = x@FinCenter,
+        format = x@format, FinCenter = x@FinCenter, recordIDs = df,
         title = x@title, documentation = x@documentation)
 }
 
@@ -904,7 +958,8 @@ function(x, k = 1, trim = FALSE, units = NULL, ...)
     # Trim:
     if (trim) {
         idx = !is.na(apply(ans@Data, 1, sum))
-        ans = ans[idx,] }
+        ans = ans[idx,] 
+    }
         
     # Augment Colnames:
     a = colnames(z)
@@ -912,6 +967,16 @@ function(x, k = 1, trim = FALSE, units = NULL, ...)
     b = paste("[", kcols, "]", sep="") 
     ab = paste(a, b, sep = "")
     colnames(ans@Data) <- ab
+    
+    # Record IDs:
+    df = x@recordIDs
+    if (trim) {
+        if (sum(dim(df)) > 0) {
+            TRIM = dim(df)[1] - dim(ans)[1]
+            df = df[-(1:TRIM), ]
+        }
+    }
+    ans@recordIDs = df
     
     # Return Value:
     ans      
@@ -950,6 +1015,52 @@ function(x, sd = 10, complement = TRUE)
     } else {
         x = x[abs(x@Data) > SD]
     }
+    
+    # Return Value:
+    x
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+exp.timeSeries = 
+function(x, base = exp(1)) 
+{   # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   Returns exponential values of a 'timeSeries' object
+    
+    # Arguments:
+    #   x - a 'timeSeries' object.
+    
+    # FUNCTION:
+    
+    # Absolute Values:
+    x@Data = exp(x@Data)
+    
+    # Return Value:
+    x
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+expSeries = 
+function(x) 
+{   # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   Returns exponential values of a 'timeSeries' object
+    
+    # Arguments:
+    #   x - a 'timeSeries' object.
+    
+    # FUNCTION:
+    
+    # Absolute Values:
+    x@Data = exp(x@Data)
     
     # Return Value:
     x
@@ -1048,6 +1159,28 @@ function(x)
 }
 
 
+# ------------------------------------------------------------------------------
+
+
+sqrt.timeSeries = 
+function(x) 
+{   # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   Returns logarithmic values of a 'timeSeries' object
+    
+    # Arguments:
+    #   x - a 'timeSeries' object.
+    
+    # FUNCTION:
+    
+    # Absolute Values:
+    x@Data = sqrt(x@Data)
+    
+    # Return Value:
+    x
+}
+
 
 # ------------------------------------------------------------------------------
 
@@ -1095,7 +1228,7 @@ function(x, n = 6, ...)
     
     # Tail:
     N = dim(x)[1]
-    ans = x[(N-n-1):N, ]
+    ans = x[(N-n+1):N, ]
     
     # Return Value:
     ans
@@ -1405,7 +1538,7 @@ function(x, row.names = NULL, optional = NULL)
 
 
 as.ts.timeSeries = 
-function(x, column = 1, ...)
+function(x, ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -1416,7 +1549,14 @@ function(x, column = 1, ...)
     #   x = as.timeSeries(data(daxRet)); as.ts(x[1:50, ])
     
     # Transform:
-    ans = as.ts(as.vector(x@Data[, column]), ...)
+    if (isUnivariate(x)) {
+        ans = as.ts(as.vector(x@Data[, 1]), ...)
+    } else if (isMultivariate(x)) {
+        ans = as.ts(x@Data, ...)
+    }
+    
+    # Add Attribute:
+    attr(ans, "positions") = seriesPositions(x)
     
     # Return Value:
     ans
@@ -1449,15 +1589,9 @@ FUN = colAvgs, units = NULL, ...)
     #   x - a 'timeSeries' object to be aggregated
     #   from, to - two 'timeDate' position vectors which size the 
     #       blocks
-    #   MARGIN - a vector giving the subscripts which the function 
-    #       will be applied over. '1' indicates rows, '2' indicates 
-    #       columns, 'c(1,2)' indicates rows and columns.
-    #   FUN - function to use for aggregation, by default 'colAvgs'
-    #   include.from, include.to - two logicals, should the
-    #       endpoints of the investigation be included? By 
-    #       default, the starting point is included, the endpoint 
-    #       not.
-    #   colNames - a character vector with column names, allows to 
+    #   blocks - only active when both from and to are NULL
+    #   FUN - function to be applied, by default 'colAvgs'
+    #   units - a character vector with column names, allows to 
     #       overwrite the column names of the input 'timeSeries'
     #       object.
     
@@ -1480,7 +1614,7 @@ FUN = colAvgs, units = NULL, ...)
             # Use monthly blocks:
             from = unique(timeFirstDayInMonth(seriesPositions(x)))
             to = unique(timeLastDayInMonth(seriesPositions(x)))
-        } else if (by == "quarterly") {
+        } else if (by[1] == "quarterly") {
             from = unique(timeFirstDayInQuarter(seriesPositions(x)))
             to = unique(timeLastDayInQuarter(seriesPositions(x)))
         } else {
@@ -1557,9 +1691,17 @@ function(x, from, to, ...)
     # FUNCTION:
     
     # Cut:
-    from = timeDate(from)
-    to = timeDate(to)
     Positions = seriesPositions(x)
+    if (missing(from)) {
+        from = Positions[1]
+    } else {
+        from = timeDate(from)
+    }
+    if (missing(to)) {
+        to = rev(Positions)[1]
+    } else {
+        to = timeDate(to)
+    }
     Units = x@units
     colNames = colnames(x@Data)
     test = (Positions >= from & Positions <= to)
@@ -1600,7 +1742,7 @@ function(x, y, units = NULL, ...)
     
     # Arguments:
     #   x, y - 'timeSeries' objects
-    #   units - Ooptional user specified units
+    #   units - Optional user specified units
  
     # Value:
     #   Returns a S4 object of class 'timeSeries'.
@@ -1723,6 +1865,10 @@ trim = TRUE, digits = 4, units = NULL)
     #       expressed in % changes.
     #   trim - a logical flag, by default TRUE, the first missing 
     #       observation in the return series will be removed. 
+    #   digits - an integer value, the number of digits of the 
+    #       series of returns.
+    #   units - a character value or vector which allows to set new 
+    #       instrument names to the Data matrix
 
     # Value:
     #   Returns a S4 object of class 'timeSeries'.
@@ -1730,7 +1876,7 @@ trim = TRUE, digits = 4, units = NULL)
     # FUNCTION:
     
     # Type:
-    type = type[1]
+    type = match.arg(type)
     
     # Internal Function for One Column Object:
     getReturnsForOneColumn =
@@ -2057,7 +2203,7 @@ grid.nx = 7, grid.lty = "solid", ...)
 
    
 ################################################################################
-# NOT YET DOCUMENTED:
+# ADDONS:
 
 
 "colnames<-.timeSeries" =
@@ -2153,7 +2299,8 @@ function(x)
 scale.timeSeries =
 function(x, center = TRUE, scale = TRUE)
 {
-    x@Data = scale(x = x, center = center, scale = scale)
+    x@Data = scale(x = x@Data, center = center, scale = scale)
+    x
 }
 
 
@@ -2173,7 +2320,10 @@ function(object, ...)
 t.timeSeries =
 function(x)
 {
-    t(x@Data)
+    ans = t(x@Data)
+    
+    # Return Value:
+    ans
 }
 
 
@@ -2187,13 +2337,22 @@ function (x, y = NULL, na.rm = FALSE, use)
         use <- if (na.rm) "complete.obs" else "all.obs"
     na.method <- 
         pmatch(use, c("all.obs", "complete.obs", "pairwise.complete.obs"))
-    if (is.timeSeries(x)) 
+    if (is.timeSeries(x)) {
         x <- as.matrix(x)
-    else stopifnot(is.atomic(x))
-    if (is.timeSeries(y)) 
+    } else {
+        stopifnot(is.atomic(x))
+    }
+    if (is.timeSeries(y)) {
         y <- as.matrix(y)
-    else stopifnot(is.atomic(y))
-    .Internal(cov(x, y, na.method, FALSE))
+    } else {
+        stopifnot(is.atomic(y))
+    }
+    
+    # Covariance:
+    ans = .Internal(cov(x, y, na.method, FALSE))
+    
+    # Return Value:
+    ans
 }
 
 
