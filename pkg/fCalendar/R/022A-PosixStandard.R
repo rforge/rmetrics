@@ -48,7 +48,7 @@
 #  as.difftieme         Converts into difftime
 #  round                Rounds difftime, generic function
 #  as integer           Converts POSIXt into integer
-#  as.numeric           Converts POSIXt into integer
+#  as.numeric           Converts POSIXt into numeric
 #  as.character         Converts POSIXt into character
 #  as.data.frame        Converts POSIXt into data frame
 #  "["                  Subsets a POSIXt object
