@@ -1,28 +1,28 @@
 #
 # Examples from the Monograph:
-# 	"Rmetrics - Financial Engineering and Computational Finance"
+#   "Rmetrics - Financial Engineering and Computational Finance"
 #     written by Diethelm Wuertz
 #   ISBN to be published
 #
 # Details:
 #   Chapter 1.4
-#	Stylized Facts, Structures and Dependencies
+#   Stylized Facts, Structures and Dependencies
 #
 # List of Examples, Exercises and Code Snippets:
 #
 #       * Example: Plot Autocorrelation and Partial Autocorrelations
-# 	1.4.1 Example: Short-Term Autocorrelations
-# 	1.4.2 Example: Short-Term Partial Autocorrelations
+#   1.4.1 Example: Short-Term Autocorrelations
+#   1.4.2 Example: Short-Term Partial Autocorrelations
 #   1.4.3 Example: Long Memory Autocorrelation Function 
 #   1.4.5 Example: Display the Taylor Effect
 #   1.4.6 Example: Compare with Normal Rvs and AR Model
 #   1.4.7 Example: Absolute Value Scaling
 #
 # Author:
-#	(C) 1997-2005, Diethelm Wuertz, GPL
-# 	  www.rmetrics.org
-# 	  www.itp.phys.ethz.ch
-# 	  www.finance.ch
+#   (C) 1997-2005, Diethelm Wuertz, GPL
+#     www.rmetrics.org
+#     www.itp.phys.ethz.ch
+#     www.finance.ch
 #
 
 
@@ -31,47 +31,52 @@
 
 ### Load Packages:
 
-	require(fBasics)
-	###
-	
+    require(fBasics)
+    ###
+    
 
 # ------------------------------------------------------------------------------
 
 
 ### Example: Plot Autocorrelation and Partial Autocorrelations
 
-	# This example plots the autocorrelation function and the 
-	# partial autocorrelation function using acf() and pacf()
-	# functions from R's base package - The pedestrian way ...
+    # This example plots the autocorrelation function and the 
+    # partial autocorrelation function using acf() and pacf()
+    # functions from R's base package - The pedestrian way ...
 
-	# Settings:
-	data(nyse)
-	class(nyse)
-	head(nyse)
-	###
+    # Settings:
+    data(nyse)
+    class(nyse)
+    head(nyse)
+    ###
 
-	# Autocorrelations and Partial Autocorrelations:
-	# ACF and PACF of NYSE log Returns - Use the second column
-	# of the data frame which is the data column
-	par(mfrow = c(2, 2), cex = 0.7)
-	acf(diff(log(nyse[, 2])))
-	pacf(diff(log(nyse[, 2])))
-	###
-	
-	
+    # Autocorrelations and Partial Autocorrelations:
+    # ACF and PACF of NYSE log Returns - Use the second column
+    # of the data frame which is the data column
+    par(mfrow = c(2, 2), cex = 0.7)
+    acf(diff(log(nyse[, 2])))
+    pacf(diff(log(nyse[, 2])))
+    ###
+    
+    
 # ------------------------------------------------------------------------------
 
 
 ### 1.4.1  Example: Short-Term Autocorrelations
 
+    # Plot the autocorrelation function for USDDEM FX BID returns 
+    # for  30 min lags. The demo data file "usddem30u" contains the 
+    # FX BID and ASK Rates. 
+    
+    
     # Graph Frame:
     par(mfrow = c(2, 2), cex = 0.7)
     ###
     
     # Load 30m USDDEM Data in Business Time:
     USDDEM.RET = returnSeries(as.timeSeries(data(usddem30u)))
-	###
-	
+    ###
+    
     # Plot the ACF of the Return Series:
     acfPlot(USDDEM.RET[, "BID"], lag.max = 8, ylim = c(-0.05, 0.20),
         main = "Short Term ACF", xlab = "30 min Lags")
@@ -101,25 +106,28 @@
 
 ### 1.4.2 Example: Long Memory Autocorrelation Function
 
-	# Graphics Frame:
-	par(mfrow = c(2, 2), cex = 0.7)
-	###
-		
+    # Make a simple plot which displays the long-memory behavior of 
+    # the 30 min USDDEM returns. 
+    
+    # Graphics Frame:
+    par(mfrow = c(2, 2), cex = 0.7)
+    ###
+        
     # 30m USDDEM Exchange Rates in Business Time:
     USDDEM.RET = returnSeries(as.timeSeries(data(usddem30u)))
     # Volatility Series of Bid Prices:
-    USDDEM.RET = USDDEM.RET[,"BID"]
+    USDDEM.RET = USDDEM.RET[, "BID"]
     lmacfPlot(USDDEM.RET, lag.max = 48*14, main = "USDCHF 2 Weeks")
     grid()
-	# Output:
+    # Output:
     # Long Memory Autocorrelation Function:
     # Maximum Lag        672
     # Cut-Off ConfLevel  0.006853398
     # Plot-Intercept     -1.65672
     # Plot-Slope         -0.1892507
     # Hurst Exponent     0.9053746
-	###
-		
+    ###
+        
     # Daily NYSE Composite Index Series:
     NYSE.RET = returnSeries(as.timeSeries(data(nyse)))
     # Remove Return Value from Index Redefinition:
@@ -141,55 +149,55 @@
 
 ### 1.4.3 Example: Plot USDDEM and NYSE Lagged Correlations
 
-	# Graph Frame:
-	par(mfrow = c(2, 2), cex = 0.7)
-	###
-		
-	# Load USDDEM Data, Convert to 'timeSeries' Object
-	USDDEM = as.timeSeries(data(usddem30u))
-	# Extract Bid Series:
-	USDDEM.BID = USDDEM[, "BID"]
-	###
-	
-	# Plot Lagged Correlations:
-	lacfPlot(USDDEM.BID, n = 6, lag.max = 15)
-	title(main = "\n\nUSDDEM: 30 min - 3 Business hours")
-	lacfPlot(USDDEM.BID, n = 22, lag.max = 15)
-	title(main = "\n\nUSDDEM 30 min day - 1 Business Day")
-	###
-	
-	# Load NYSE Data and Convert to timeSeries Object:
-	NYSE = as.timeSeries(data(nyse))
-	# Use only Data Before the Index Definition was Changed: 
-	NYSE = cutSeries(NYSE, "1966-01-01", "2002-12-31")
-	###
-	
-	# Plot Lagged Correlations:
-	lacfPlot(NYSE, n = 5, lag.max = 15)
-	title(main = "\n\nNYSE: 1 day - 1 week")
-	lacfPlot(NYSE, n = 20, lag.max = 15)
-	title(main = "\n\nNYSE: 1 day - 1 month")
-	###
-	
-	
+    # Graph Frame:
+    par(mfrow = c(2, 2), cex = 0.7)
+    ###
+        
+    # Load USDDEM Data, Convert to 'timeSeries' Object
+    USDDEM = as.timeSeries(data(usddem30u))
+    # Extract Bid Series:
+    USDDEM.BID = USDDEM[, "BID"]
+    ###
+    
+    # Plot Lagged Correlations:
+    lacfPlot(USDDEM.BID, n = 6, lag.max = 15)
+    title(main = "\n\nUSDDEM: 30 min - 3 Business hours")
+    lacfPlot(USDDEM.BID, n = 22, lag.max = 15)
+    title(main = "\n\nUSDDEM 30 min day - 1 Business Day")
+    ###
+    
+    # Load NYSE Data and Convert to timeSeries Object:
+    NYSE = as.timeSeries(data(nyse))
+    # Use only Data Before the Index Definition was Changed: 
+    NYSE = cutSeries(NYSE, "1966-01-01", "2002-12-31")
+    ###
+    
+    # Plot Lagged Correlations:
+    lacfPlot(NYSE, n = 5, lag.max = 15)
+    title(main = "\n\nNYSE: 1 day - 1 week")
+    lacfPlot(NYSE, n = 20, lag.max = 15)
+    title(main = "\n\nNYSE: 1 day - 1 month")
+    ###
+    
+    
 # ------------------------------------------------------------------------------
-	
-	
+    
+    
 ### 1.4.3 Example: Plot Lagged Correlations from Simulated Series
 
-	# Graph Frame:
-	par(mfrow = c(2, 2), cex = 0.7)
-	###
-	
-	# Load NYSE Data and Convert to timeSeries Object:
-	NYSE = as.timeSeries(data(nyse))
-	# Use only Data Before the Index Definition was Changed: 
-	NYSE = cutSeries(NYSE, "1966-01-01", "2002-12-31")
-	###
-	
-	# Simulate Index by Normal Series:
-	set.seed(4711)
-	nyse.ret = as.vector(returnSeries(NYSE))
+    # Graph Frame:
+    par(mfrow = c(2, 2), cex = 0.7)
+    ###
+    
+    # Load NYSE Data and Convert to timeSeries Object:
+    NYSE = as.timeSeries(data(nyse))
+    # Use only Data Before the Index Definition was Changed: 
+    NYSE = cutSeries(NYSE, "1966-01-01", "2002-12-31")
+    ###
+    
+    # Simulate Index by Normal Series:
+    set.seed(4711)
+    nyse.ret = as.vector(returnSeries(NYSE))
     Mean = mean(nyse.ret)
     SD = sd(nyse.ret)
     nyse.norm = rnorm(length(nyse.ret), mean = Mean, sd = SD)
@@ -203,11 +211,11 @@
     ar = pacf(nyse.ret, plot = FALSE)$acf[1]
     nyse.ar = arima.sim(length(nyse.ret), model = list(ar = ar))
     nyse.ar = ((nyse.ar-mean(nyse.ar))/sd(nyse.ar) ) * SD + Mean
-   	nyse.ar = exp(cumsum(nyse.ar))
+    nyse.ar = exp(cumsum(nyse.ar))
     lacfPlot(nyse.ar, n = 5, lag.max = 15)
     title(main = "\n\nAR(1) Series: 1 day - 1 week")
-	###
-	
+    ###
+    
    
 # ------------------------------------------------------------------------------
 
@@ -223,8 +231,8 @@
     NYSE.RET = outlierSeries(returnSeries(NYSE))
     teffectPlot(NYSE.RET, deltas = seq(from = 0.2, to = 3, by = 0.1))
     title(main = "\n\nNYSE Composite Index", cex = 0.5)
-	###	
-	
+    ### 
+    
     # Taylor Effect - USDCHF Data:
     USDCHF.RET = returnSeries(as.timeSeries(data(usdchf)))
     teffectPlot(USDCHF.RET, deltas = seq(from = 0.2, to = 3, by = 0.1))
@@ -242,8 +250,8 @@
     RNORM = rnorm(9813, mean = Mean, sd = SD)
     teffectPlot(RNORM, deltas = seq(from = 0.2, to = 3, by = 0.1))
     title(main = "\n\nNYSE - Normal RVs", cex = 0.5)
-	###
-		
+    ###
+        
     # Simulated AR Model - Standardised :
     AR = arima.sim(9813, model = list(ar = c(0.124, -0.033)))
     AR = ( (AR-mean(AR))/sd(AR) ) * SD + Mean
@@ -257,15 +265,15 @@
 
 ### 1.4.6 Example: Absolute Value Scaling
 
-	# Absolute Value Scaling of daily NYSE Index:
+    # Absolute Value Scaling of daily NYSE Index:
     NYSE = outlierSeries(returnSeries(as.timeSeries(data(nyse))))
     scalinglawPlot(NYSE, span = 6)$fit$coefficients
     title(main = "\n\nNYSE")
     # Output:
     # Intercept         X
     # 4.1767239 0.5277384
-	###
-	
+    ###
+    
     # Absolute Value Scaling of 30m USDCHF Rates:
     USDCHF = returnSeries(as.timeSeries(data(usdchf)))
     scalinglawPlot(x = USDCHF, span = 6)$fit$coefficients
@@ -281,7 +289,7 @@
 
 ### CodeSnippet: 'scalinglawPlot' Function
 
-	# Function:
+    # Function:
     .scalinglawPlot = function (x, span = 6)
     {
         # We expect a Return series from the Input:
