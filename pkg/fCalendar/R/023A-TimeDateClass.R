@@ -64,10 +64,10 @@
 #  getDayOfYear           Returns the day of the year to a 'timeDate' object
 #
 # S3 MEHOD:              SUBSETTING TIMEDATE OBJECTS:
-#  [.timeDate             Extracts or replaces subsets from 'timeDate' Objects
-#  cut.timeDate
-#  start.timeDate         Extracts the first object of a 'timeDate' vector
-#  end.timeDate           Extracts the last object of a 'timeDate' vector
+#  [.timeDate             Extracts or replaces subsets from 'timeDate' objects
+#  cut.timeDate           Extracts a piece from a 'timeDate' object
+#  start.timeDate         Extracts the first entry of a 'timeDate' object
+#  end.timeDate           Extracts the last entry of a 'timeDate' object
 #  blockStart             Creates start dates for equally sized blocks
 #  blockEnd               Creates end dates for equally sized blocks
 #
@@ -81,12 +81,12 @@
 #  trunc.timeDate         Truncates objects of class 'timeDate' 
 #
 # S3 MEHOD:              CONCATENATION, ORDERING AND SORTING:
-#  c.timeDate             Concatenates objects of class 'timeDate'
-#  rep.timeDate           Replicates objects of class 'timeDate'
-#  sort.timeDate          Sorts, Rounds or truncates a 'timeDate' vector
-#  sample.timeDate        Resamples objects of class 'timeDate'
-#  unique.timeDate        Remove duplicates from a 'timeDate' vector
-#  rev.timeDate           Reverts  a 'timeDate' vector object
+#  c.timeDate             Concatenates 'timeDate' objects
+#  rep.timeDate           Replicates a 'timeDate' object
+#  sort.timeDate          Sorts a 'timeDate' object
+#  sample.timeDate        Resamples a 'timeDate' object
+#  unique.timeDate        NMakes a 'timeDate' object unique
+#  rev.timeDate           Reverts  a 'timeDate' object
 #
 # S3 MEHOD:              OBJECT TRANSFORMATIONS:
 #  as.character.timeDate  Returns a 'timeDate' object as character string
