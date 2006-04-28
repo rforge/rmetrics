@@ -172,7 +172,7 @@ function (x, size, replace = FALSE, prob = NULL, ...)
 
 
 round =
-function(x, ...)
+function(x, digits = 0, ...)
 {
     UseMethod("round")
 }
@@ -184,7 +184,7 @@ function(x, ...)
 round.default =
 function (x, digits = 0, ...) 
 {
-    .Internal(round(x, digits))
+    .Internal(round(x, digits, ...))
 }       
             
             
