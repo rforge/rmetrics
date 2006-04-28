@@ -5,6 +5,13 @@
 \alias{sort}
 \alias{sort.default}
 
+\alias{sample}
+\alias{sample.default}
+
+\alias{round}
+\alias(round.default}
+
+
 \alias{log}
 \alias{log.default}
 
@@ -34,6 +41,10 @@
 sort(x, partial = NULL, na.last = NA, decreasing = FALSE, 
     method = c("shell", "quick"), index.return = FALSE) 
 
+sample.default(x, size, replace = FALSE, prob = NULL, ...) 
+
+round(x, digits = 0, \dots)
+
 log(x, base = exp(1))
 
 var(x, y = NULL, na.rm = FALSE, use)
@@ -49,9 +60,22 @@ colnames(x) <- value
         [log] - \cr
         additional argument to the \code{log} function.
         }
+    \item{digits}{
+        [round] - \cr
+        an integer indicating the precision to be used.
+        }
     \item{partial, na.last, decreasing, method, index.return}{
         [sort] - \cr
         additional arguments to the \code{sort} function.
+        }
+    \item{size, replace, prob}{
+        [sample] - \cr
+        size - is a non-negative integer giving the number of items 
+            to choose, \cr
+        replace - a logical flag. Should sampling be with 
+            replacement? \cr
+        prob -  a vector of probability weights for obtaining the 
+            elements of the vector being sampled.
         }
     \item{value}{
         [colnames][rownames] - \cr
@@ -66,6 +90,10 @@ colnames(x) <- value
         [var] - \cr
         additional arguments to the \code{var} function.
         }
+    \item{...}{
+        [] - \cr
+        arguments to be passed
+    }
  
 }
 
