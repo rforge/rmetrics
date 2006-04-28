@@ -161,11 +161,11 @@
 rulesFinCenter(FinCenter = myFinCenter)
 listFinCenter(pattern = "*")
 
-timeDate(charvec, format = NULL, zone = "GMT", FinCenter = myFinCenter) 
+timeDate(charvec, format = NULL, zone = myFinCenter, FinCenter = myFinCenter) 
 timeCalendar(y = currentYear, m = 1:12, d = NULL, h = NULL, min = NULL, 
-    s = NULL, FinCenter = myFinCenter)
-timeSequence(from = "2004-01-01", to = format(Sys.time(), "\%Y-\%m-\%d"), 
-    by = "day", length.out = NULL, format = "", FinCenter = myFinCenter)
+    s = NULL, zone = myFinCenter, FinCenter = myFinCenter)
+timeSequence(from = "2004-01-01", to = format(Sys.time(), "\%Y-\%m-\%d"), by = "day", 
+    length.out = NULL, format = "", zone = myFinCenter, FinCenter = myFinCenter)
 Sys.timeDate(FinCenter = myFinCenter) 
 
 timeFirstDayInMonth(charvec, format = "\%Y-\%m-\%d", FinCenter = "GMT")

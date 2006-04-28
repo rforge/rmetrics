@@ -51,10 +51,12 @@
 \alias{mergeSeries}
 \alias{merge.timeSeries} 
 \alias{returnSeries}
-\alias{logSeries}
+
 \alias{log.timeSeries}
-\alias{absSeries}
+\alias{exp.timeSeries}
 \alias{abs.timeSeries}
+\alias{sqrt.timeSeries}
+
 \alias{revSeries}
 \alias{rev.timeSeries}
 \alias{outlierSeries}
@@ -200,8 +202,11 @@ absSeries(x)
 \method{lag}{timeSeries}(x, k = 1, trim = FALSE, units = NULL, \dots)
 \method{merge}{timeSeries}(x, y, units = NULL, \dots)
 \method{rev}{timeSeries}(x, \dots)
+
 \method{log}{timeSeries}(x, base = exp(1))
+\method{exp}{timeSeries}(x)
 \method{abs}{timeSeries}(x)
+\method{sqrt}{timeSeries}(x)
 
 
 dummyDailySeries(x)
