@@ -15,6 +15,9 @@
 \alias{log}
 \alias{log.default}
 
+\alias{outlier}
+\alias{outlier.default}
+
 \alias{var}
 \alias{var.default}
 
@@ -25,13 +28,15 @@
 \alias{colnames<-.default}
             
 
-\title{Masked Objects}
+\title{Masked Objects and Additional Generic Functions}
 
 
 \description{
     
     A collection and description of functions which
-    mask function from R's base installation.
+    mask function from R's base installation to generate
+    generic functions and some additional generic
+    functions which may be useful.
     \cr
     
 }
@@ -46,6 +51,8 @@ sample.default(x, size, replace = FALSE, prob = NULL, ...)
 round(x, digits = 0, \dots)
 
 log(x, base = exp(1))
+
+outlier(x, sd = 5, complement = TRUE, ...)
 
 var(x, y = NULL, na.rm = FALSE, use)
     
@@ -67,6 +74,14 @@ colnames(x) <- value
     \item{partial, na.last, decreasing, method, index.return}{
         [sort] - \cr
         additional arguments to the \code{sort} function.
+        }
+    \item{sd, complement}{
+        [outlier] - \cr
+        sd - a numeric value of standard deviations, e.g. 5 means that 
+            values larger or smaller tahn five times the standard 
+            deviation of the series will detected.
+        complement - a logical flag, should the outlier series
+            or its complements be returned ?
         }
     \item{size, replace, prob}{
         [sample] - \cr
