@@ -31,6 +31,7 @@
 # FUNCTION:                    DESCRIPTION
 # log                           log has become a generic function
 # log.default
+
 # round
 # round.default           
 # sample
@@ -208,6 +209,51 @@ function(x, base = exp(1))
     # Log:
     if (missing(base)) .Internal(log(x)) else .Internal(log(x, base))
 }
+
+
+################################################################################
+
+
+outlier = 
+function(x, sd = 5, complement = TRUE, ...) 
+{
+    UseMethod("outlier")
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+outlier.default = 
+function(x, sd = 5, complement = TRUE, ...) 
+{   # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   Returns outliers
+    
+    # Arguments:
+    #   x - a numeric vector
+    #   sd - a numeric value of standard deviations, e.g. 5
+    #       means that values larger or smaller tahn five 
+    #       times the standard deviation of the series will
+    #       be detected.
+    #   complement - a logical flag, should the outlier series
+    #       or its complements be returned.
+    
+    # FUNCTION:
+    
+    # Find Outliers:
+    SD = sd * sd(x)
+    if (complement) {
+        ans  = x[x <= SD]
+    } else {
+        ans = x[x > SD]
+    }
+    
+    # Return Value:
+    ans
+}
+
 
 
 ################################################################################
