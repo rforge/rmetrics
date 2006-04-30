@@ -7,16 +7,16 @@
 
 \alias{holiday.NYSE}
 
-\alias{on.or.after}
-\alias{on.or.before}
-\alias{nth.of.nday} 
-\alias{last.of.nday}
+%\alias{on.or.after}
+%\alias{on.or.before}
+%\alias{nth.of.nday} 
+%\alias{last.of.nday}
 
-\alias{sjulian}
-\alias{sdate}
-\alias{sday.of.week}
-\alias{sleap.year}
-\alias{print.sdate}
+%\alias{sjulian}
+%\alias{sdate}
+%\alias{sday.of.week}
+%\alias{sleap.year}
+%\alias{print.sdate}
 
 \alias{fjulian}
 \alias{.julian}
@@ -84,17 +84,17 @@ easter(year, shift = 0)
 holiday(year, Holiday = Easter)
 holiday.NYSE(y = currentYear)
 
-on.or.after(year, month, day, nday)
-on.or.before(year, month, day, nday)
-nth.of.nday(year, month, nday, nth) 
-last.of.nday(year, month, lastday, nday)
+%on.or.after(year, month, day, nday)
+%on.or.before(year, month, day, nday)
+%nth.of.nday(year, month, nday, nth) 
+%last.of.nday(year, month, lastday, nday)
 
-sjulian(sdates, origin = 19600101)
-sdate(julians, origin = 19600101)
-sday.of.week(sdates)
-sleap.year(sdates)
+%sjulian(sdates, origin = 19600101)
+%sdate(julians, origin = 19600101)
+%sday.of.week(sdates)
+%sleap.year(sdates)
 
-\method{print}{sdate}(x, \dots)
+%\method{print}{sdate}(x, \dots)
 
 fjulian(fdates, origin = 19600101, order = 'mdy', cc = NULL, swap = 20)
 .julian(m, d, y, origin = c(month = 1, day = 1, year = 1960))
@@ -131,12 +131,6 @@ day.of.week(month, day, year)
         [month.day.year] - \cr
         vector of Julian dates (the number of days since origin).
         } 
-    \item{julians}{
-        a numeric vector of Julian Day Counts.
-        }
-    \item{lastday}{
-        the last day in the calendar month.
-        }
     \item{m, d, y}{
         [.julian] - \cr
         vector of month, day and year numbers. The years should be 
@@ -148,13 +142,6 @@ day.of.week(month, day, year)
         [day.of.week] - cr
         vector of integer month numbers.
         }
-    \item{nday}{
-        an integer vector with entries ranging from 
-        \code{0} (Sunday) to \code{6} (Saturday).
-        }
-    \item{nth}{
-        an integer vector numbering the n-th occurence.
-        }
     \item{order}{
         [fjulian] - \cr
         a character string, indicating the order of year, month 
@@ -164,17 +151,9 @@ day.of.week(month, day, year)
         the origin date of the counter, in ISO-8601 date format,
         [CCYYMMDD]. By default Januar 1st, 1960.
         }
-    \item{sdates}{
-        a numeric vector of ISO-8601 formatted Gregorian dates,
-        [CCYYMMDD].
-        }
     \item{shift}{
         a numeric value, the n-day shift. By default the shift is
         set to zero and the function returns the date of Easter.
-        }
-    \item{x}{
-        an object of class \code{"sdate"}. This is an integer
-        value or integer vector formatted as ISO-8601 CCYYMMDD.
         }
     \item{year}{
         an integer vector of years, [CCYY].
@@ -422,22 +401,22 @@ Therneau T. (1991);
    xmpCalendar("\nStart: on.or.after > ")
    # What date had the first advent 2001?
    # The first advent is the Sunday on or after November 27th.
-   on.or.after(year = 2001, month = 11, day = 27, nday = 0)
+   .on.or.after(year = 2001, month = 11, day = 27, nday = 0)
    
 ## on.or.before -
    xmpCalendar("\nNext: on.or.before > ")
    # What date had Monday on or after April, 1st, 2001?
-   on.or.before(year = 2001, month = 11, day = 27, nday = 1)
+   .on.or.before(year = 2001, month = 11, day = 27, nday = 1)
    
 ## nth.of.nday -
    xmpCalendar("\nNext: nth.of.nday > ")
    # What date had the second Sunday in October 1980?
-   nth.of.nday(year = 1980, month = 10, nday = 0, nth = 2)
+   .nth.of.nday(year = 1980, month = 10, nday = 0, nth = 2)
   
 ## last.of.nday -
    xmpCalendar("\nNext: last.of.nday > ")   
    # What date had the last Monday in September, 2002?
-   last.of.nday(year = 1996, month = 9, lastday = 31, nday = 1)  
+   .last.of.nday(year = 1996, month = 9, lastday = 31, nday = 1)  
    
 ## fdates - 
 ## fjulian -

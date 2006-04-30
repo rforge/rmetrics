@@ -48,7 +48,6 @@ isISO8601(x)
 }
 
 
-
 \author{
 
     Diethelm Wuertz for this summary.

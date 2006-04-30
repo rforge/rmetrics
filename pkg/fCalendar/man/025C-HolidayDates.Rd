@@ -279,6 +279,9 @@ JPBankHolidayDec31(year)
    # Sechselaeuten a half Day Bank Holiday in Switzerland
    CHSechselaeuten(2000:2010)
    CHSechselaeuten(currentYear)
+   
+## German Unification Day:
+   DEGermanUnity(currentYear)
 }
 
 

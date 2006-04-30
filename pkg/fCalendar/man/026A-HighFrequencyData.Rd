@@ -505,7 +505,7 @@ Guillaume D.M., Dacorogna M.M., Dave R.R., Mueller U.A., Olsen R.B.,
    # Create a contributor list and mark the first 5 market makers:
    parser.table = fxdata.contributors(usdthb, include = 5)
    # Parse the market makers and print the first 25 entries:
-   fxdata.parser(usdthb, parser.table)[1:25,]
+   fxdata.parser(usdthb, parser.table)[1:25, ]
    
 ## fxdata.filter - 
    xmpCalendar("\nNext: Filter Records > ")
@@ -517,9 +517,9 @@ Guillaume D.M., Dacorogna M.M., Dave R.R., Mueller U.A., Olsen R.B.,
         xlab = "Tick Number from Reuters THB=", 
         ylab = "100*log(Bid[n]/Bid[1])      Bid",
         ylim = c(-20,30), main="USDTHB June 1997 unfiltered")
-   lines(x = c(1, NumberOfRecords), y = rep(usdthb[1, 4], 2), col = 4)
+   lines(x = c(1, NumberOfRecords), y = rep(usdthb[1, 4], 2), col = "steelblue")
    lines(-100*log(usdthb[1, 4]/usdthb[, 4]))
-   lines(x = c(1, NumberOfRecords), y = c(0, 0), col = 4)
+   lines(x = c(1, NumberOfRecords), y = c(0, 0), col = "steelblue")
    # Filter the data:
    usdthb = fxdata.filter(usdthb, parameter = "strong")
    # Quick And Dirty Time Scaling
@@ -531,10 +531,10 @@ Guillaume D.M., Dacorogna M.M., Dave R.R., Mueller U.A., Olsen R.B.,
         ylab = "100*log(Bid[n]/Bid[1])      Bid", 
         ylim = c(-20, 30), main = "USDTHB June 1997 filtered")
    y = rep(usdthb$accepted[1, 4], 2)
-   lines(x = c(1, NumberOfRecords), y = y, col = 4)
+   lines(x = c(1, NumberOfRecords), y = y, col = "steelblue")
    y = -100*log(usdthb$accepted[1, 4]/usdthb$accepted[, 4])
    lines(x = (1:Records)*scale, y = y)
-   lines(x = c(1, NumberOfRecords), y = c(0, 0), col = 4)
+   lines(x = c(1, NumberOfRecords), y = c(0, 0), col = "steelblue")
    
 ## fxdata.varmin - 
    xmpCalendar("\nNext: Variable Minute Records > ")
@@ -565,7 +565,7 @@ Guillaume D.M., Dacorogna M.M., Dave R.R., Mueller U.A., Olsen R.B.,
    prices = list(t = audusd[,"XDATE"], x = audusd[,"BID"])
    # Retrieve prices and print the first 25 entries:
    data.frame(xts.cut(prices, from.date = 19971021, 
-     to.date = 19971021))[1:25,]
+     to.date = 19971021))[1:25, ]
 
 ## xts.interp - 
    xmpCalendar("\nNext: Interpolate of FX Data > ")
@@ -613,7 +613,6 @@ Guillaume D.M., Dacorogna M.M., Dave R.R., Mueller U.A., Olsen R.B.,
    index.dvs = xts.dvs(index, k = 8, 
      volatility = 13.15*var(diff(log(index$x))), main = "Prices from dv-series") 
 
-\dontrun{
 ## xts.dws -
    xmpCalendar("\nNext: Plot daily/weekly Charts > ")
    # NOTE:
@@ -625,8 +624,7 @@ Guillaume D.M., Dacorogna M.M., Dave R.R., Mueller U.A., Olsen R.B.,
    xts = xts.cut(index, from.date = 19970106, to.date = 19971228)
    # Create Daily and Weekly Histograms:
    result = xts.dwh (xts, period = "both", dolog = TRUE, 
-     dodiff = TRUE, deltat = 30, doplot = TRUE)
-}      
+     dodiff = TRUE, deltat = 30, doplot = TRUE)     
 }
 
 
