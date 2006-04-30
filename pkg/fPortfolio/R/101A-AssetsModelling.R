@@ -30,38 +30,43 @@
 ################################################################################
 # FUNCTION:             SIMULATION AND ASSET PICKING:
 #  assetsSim             Simulates a set of artificial assets
-#  assetsSelect          Clusters a set of assets
-#   method = "hclust"    hierarchical clustering
-#   method = "kmeans"    k-means clustering
+#  assetsSelect          Selects individual assets from a set of assets
+#   method = "hclust"     hierarchical clustering of returns
+#   method = "kmeans"     k-means clustering of returns
+#  assetsHistPlot        Displays histograms of individual assets 
+#  assetsQQNormPlot      Displays normal qq-plots of individual assets
+#  assetsPairsPlot       Displays pairs of scatterplots of individual assets
+#  assetsCorTestPlot     Displays and tests pairwise correlations of assets
 # FUNCTION:             PARAMETER ESTIMATION:
 #  fASSETS               Class representation for "fASSETS" Objects
 #  assetsFit             Estimates the parameters of set of assets
 #   method = "norm"       assuming a multivariate Normal distribution
 #   method = "snorm"      assuming a multivariate skew-Normal distribution
 #   method = "st"         assuming a multivariate skew-Student-t  
-# METHODS:              DESCRIPTION:
 #  print.fASSETS         S3: Print method for an object of class fASSETS
 #  plot.fASSETS          S3: Plot method for an object of class fASSETS
 #  summary.fASSETS       S3: Summary method for an object of class fASSETS
 # FUNCTION:             STATISTICS AND TESTS:
-#  assetsStats           Computes basic statistics of asset sets  
-# FUNCTION:             MEAN AND VARIANCE ESTIMATION:
+#  assetsStats           Computes basic statistics of a set of asset  
 #  assetsMeanCov         Estimates mean and variance for a set of assets
-#   method = "cov"        Standard Covariance Estimation
+#   method = "cov"        using Classical Covariance Estimation
+#   method = "mve"        using
+#   method = "mcd"        using
+#   method = "nne"        using
 #   method = "shrink"     using Shrinkage
-#   method = bagged"      using bagging
-#  .isPD                 Checks if the matrix x is positive definite
-#  .makePD               Forces the matrix x to be positive definite
+#   method = "bagged"     using bagging
+#  .isPositiveDefinite    Checks if the matrix x is positive definite
+#  .makePositiveDefinite  Forces the matrix x to be positive definite
 # FUNCTION:             NORMALITY TESTS:
 #  assetsTest            Test for multivariate Normal Assets
 #   method = "shapiro"    calling Shapiro test
 #   method = "energy"     calling E-Statistic (energy) test
-# .mvenergyTest          Multivariate Energy Test
-#  .mvnorm.etest          Internal Function used by assetsTest
-#  .mvnorm.e              Internal Function used by assetsTest
-#  .normal.e              Internal Function used by assetsTest
-#  .mvnormBoot            Internal Function used by assetsTest
-# .mvshapiroTest         Multivariate Shapiro Test
+#  .mvenergyTest         Multivariate Energy Test
+#   .mvnorm.etest         Internal Function used by assetsTest
+#   .mvnorm.e             Internal Function used by assetsTest
+#   .normal.e             Internal Function used by assetsTest
+#   .mvnormBoot           Internal Function used by assetsTest
+#  .mvshapiroTest        Multivariate Shapiro Test
 # REQUIREMENTS:         DESCRIPTION:
 #  .msn.quantities       Function from R package sn [in fMultivar]      
 #  copcor                R contributed package copcor
@@ -132,7 +137,7 @@ alpha = rep(0, dim), df = Inf), assetNames = NULL)
 }
 
 
-################################################################################
+# ------------------------------------------------------------------------------
 
 
 assetsSelect = 
@@ -175,6 +180,229 @@ kmeans.centers = 5, kmeans.maxiter = 10, doplot = TRUE, ...)
     # Return Value:
     ans
 }
+
+
+# ------------------------------------------------------------------------------
+
+    
+assetsHistPlot =
+function(x, method = c("mve", "mcd", "classical"), which = 1:dim(x)[2],
+labels = TRUE, xlim = NULL, ...) 
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Displays histograms of individual assets 
+    
+    # Arguments:
+    #   x - a timeSeries object or any other rectangular object
+    #       which can be transformed by the function as. matrix
+    #       into a numeric matrix.
+    #   method - the method to be used. Minimum volume ellipsoid
+    #       "mve", minimum covariance determinant "mcd", or 
+    #       classical product-moment.
+    #   which - an integer value or vector specifying the number(s)
+    #       of the assets which are selected to be plotted. 
+    #   labels - a logical flag. Should default labels be printed?
+    
+    # FUNCTION:
+    
+    # Settings:
+    x = as.matrix(x)
+    if (is.null(xlim)) xlim = c(min(x), max(x))
+    covRob = cov.rob(x, method = method)
+    dvar = diag(covRob$cov)
+    index = which.min(dvar)[[1]]
+    MEAN = covRob$center[[index]]
+    SD = sqrt(min(dvar))
+    ylim = c(0, dnorm(MEAN, MEAN, SD))
+    
+    # Plot:
+    for (N in which) {
+        hist(x[, N], probability = TRUE, 
+            col = "steelblue", border = "white", 
+            xlim = xlim, ylim = ylim,
+            main = "", xlab = "", ylab = "", ...)
+        if (labels) {
+            title(
+                main = colnames(x)[N],
+                xlab = "Return",
+                ylab = "Density")
+        }
+
+        # Classical:
+        covCla = cov.rob(x, method = "classical")
+        u = seq(xlim[1], xlim[2], length.out = 501)
+        v = dnorm(u, mean = covCla$center[N], sd = sqrt(covCla$cov[N, N]))
+        print(cbind(u,v))
+        lines(u, v, col = "brown")
+        abline(v = covRob$center[N], col = "brown")
+        
+        # Robust:
+        v = dnorm(u, mean = covRob$center[N], sd = sqrt(covRob$cov[N, N]))
+        abline(v = covRob$center[N], col = "orange")
+        lines(u, v, col = "orange")
+    }
+    
+    # Control:
+    control = list(fun = assetsHistPlot, x = x, method = method,
+        which = which, labels = labels)
+        
+    # Return Value:
+    invisible(control)
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+assetsQQNormPlot =
+function(x, which = 1:dim(x)[2], labels = TRUE, ...)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Displays normal qq-plots of individual assets
+    
+    # Arguments:
+    #   x - a timeSeries object or any other rectangular object
+    #       which can be transformed by the function as. matrix
+    #       into a numeric matrix.
+    #   method - the method to be used. Minimum volume ellipsoid
+    #       "mve", minimum covariance determinant "mcd", or 
+    #       classical product-moment. 
+    #   which - an integer value or vector specifying the number(s)
+    #       of the assets which are selected to be plotted. 
+    #   labels - a logical flag. Should default labels be printed?
+    
+    # FUNCTION:
+    
+    # Settings:
+    x = as.matrix(x)
+    ylim = c(min(x), max(x))
+    
+    # Plot:
+    for (i in which) {
+        X = qqnorm(y = x[, i], plot.it = FALSE)
+        if (labels) {
+            plot(X$x, X$y, main = "", xlab = "", ylab = "",
+                col = "steelblue", pch = 19, ylim = ylim, ...)
+            grid() 
+        } else {
+            plot(X$x, X$y, main = "", xlab = "", ylab = "", ...)
+        }
+        qqline(x[, i]) 
+        fit = ltsreg(X$x, X$y)
+        abline(fit, col = "brown")
+        fit = ltsreg(X$x, X$y)
+        abline(fit, col = "orange")  
+        # Add Labels:
+        if (labels) {
+            title(main = colnames(x)[i], 
+                xlab = "Theoretical Quantiles",
+                ylab = "Sample Quantiles")
+        }
+    }
+    
+    # Control:
+    control = list(fun = assetsHistPlot, x = x, which = which, 
+        labels = labels)
+        
+    # Return Value:
+    invisible(control)
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+assetsPairsPlot =
+function(x, labels = TRUE)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Displays pairs of scatterplots of individual assets
+    
+    # Arguments:
+    #   x - a timeSeries object or any other rectangular object
+    #       which can be transformed by the function as. matrix
+    #       into a numeric matrix.
+    #   labels - a logical flag. Should default labels be printed? 
+    
+    # FUNCTION:
+    
+    # Settings:
+    x = as.matrix(x)
+    
+    # Plot:
+    pairs(x, col = "steelblue", pch = 19, cex = 0.7)
+    
+    # Control:
+    control = list(fun = assetsPairPlot, x = x, labels = labels)
+        
+    # Return Value:
+    invisible(control)
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+assetsCorTestPlot = 
+    function(x, scale = 1, labels = TRUE, ...)
+    {   # A function implemented by Diethelm Wuertz
+    
+        # Description:
+        #   Displays and tests pairwise correlations of assets
+        
+        # Arguments:
+        #   x - a timeSeries object or any other rectangular object
+        #       which can be transformed by the function as. matrix
+        #       into a numeric matrix.
+        #   method - the method to be used. Minimum volume ellipsoid
+        #       "mve", minimum covariance determinant "mcd", or 
+        #       classical product-moment. 
+        #   labels - a logical flag. Should default labels be printed?
+        
+        # FUNCTION:
+        
+        # Settings:
+        x = as.matrix(x)
+     
+        # Upper Plot Function:
+        cortestPanel =
+        function(x, y, cex, ...)
+        {
+            usr = par("usr"); on.exit(par(usr))
+            par(usr = c(0, 1, 0, 1))
+            r = abs(cor(x, y))
+            txt = format(c(r, 0.123456789), digits = 3)[1]
+            test = cor.test(x, y)
+            Signif = symnum(test$p.value, corr = FALSE, na = FALSE,
+                cutpoints = c(0, 0.001, 0.01, 0.05, 0.1, 1),
+                symbols = c("*** ", "** ", "* ", ". ", "  "))
+            text(0.5, 0.5, txt, cex = cex)
+            text(0.8, 0.8, Signif, cex = cex, col = "steelblue")
+        }
+        
+        # Lower Plot Function:
+        lowessPanel = 
+        function (x, y, ...) 
+        {
+            points(x, y, pch = 19, col = "steelblue", ...)
+            ok <- is.finite(x) & is.finite(y)
+            if (any(ok)) lines(lowess(x[ok], y[ok]), col = "brown")
+        }
+    
+        # Plot:
+        pairs(x, lower.panel = lowessPanel, upper.panel = cortestPanel , 
+            cex.labels = 2*scale, cex = 2*scale, cex.axis = 1.5*scale,
+            ...)
+            
+        # Control:
+        control = list(fun = assetsCorTestPlot, x = x, scale = scale)
+            
+        # Return Value:
+        invisible(control)
+    }
 
 
 ################################################################################
@@ -355,13 +583,12 @@ function(x, which = "ask", ...)
     
     # FUNCTION:
     
-    # Transform to a A4 object of class "fMV":
-    object = new("fMV", call = x@call, method = x@method, 
+    # Transform to a S4 object of class "fASSETS":
+    object = new("fASSETS", call = x@call, method = x@method, 
         model = x@model, data = x@data, fit = x@fit, title = x@title, 
-        description = x@description)  
-        
+        description = x@description)         
     # Use plot method for objects of class "fmV"
-    plot(object, which = which, ...)
+    plot(object, which = which, xlab = "Time", ylab = "Value", ...)
     
     # Return value:
     invisible(x)
@@ -506,8 +733,8 @@ function(x)
 
 
 assetsMeanCov = 
-function(x, method = c("cov", "shrink", "bagged"), check = TRUE,
-force = TRUE, baggedR = 100, ...)
+function(x, method = c("cov", "mve", "mcd", "nnve", "shrink", "bagged"), 
+check = TRUE, force = TRUE, baggedR = 100, ...)
 {   # A function implemented by Diethelm Wuertz
     
     # Description:
@@ -531,29 +758,40 @@ force = TRUE, baggedR = 100, ...)
     
     # Transform Input:
     x.mat = as.matrix(x)
+    method = match.arg(method)
     N = dim(x)[1]
        
     # Attribute Control List:
     control = c(method = method[1])
     
-    # Compute Mean:
-    mu = colMeans(x)
-    
     # Compute Covariance:
     method = match.arg(method)
     if (method == "cov") {
+        # Classical Covariance Estimation:
+        mu = colMeans(x.mat)
         Sigma = cov(x.mat)
+        return(list(mu = mu, Sigma = Sigma))
+    } else if (method == "mve") {
+        # require(MASS)
+        return(.assetsRobustCov(x, method = "mve"))
+    } else if (method == "mcd") {
+        # require(MASS)
+        return(.assetsRobustCov(x, method = "mcd"))    
     } else if (method == "shrink") {
         fit = cov.shrink(x = x.mat, ...)
+        mu = colMeans(x.mat)
         Sigma = fit 
     } else if (method == "bagged") {
         fit = cov.bagged(x = x.mat, R = baggedR, ...)
+        mu = colMeans(x.mat)
         Sigma = fit 
         control = c(control, R = as.character(baggedR))
     } else if (method == "nnve") {
         # Nearest Neighbour Variance Estimation:
-        fit = cov.nnve(datamat = x.mat, ...)
+        fit = .cov.nnve(datamat = x.mat, ...)
+        mu = colMeans(x.mat)
         Sigma = fit$cov
+        return(list(mu = mu, Sigma = Sigma))
     }
        
     # Add Size to Control List:
@@ -565,7 +803,7 @@ force = TRUE, baggedR = 100, ...)
     
     # Check Positive Definiteness:
     if (check) {
-        result = .isPD(Sigma)
+        result = .isPositiveDefinite(Sigma)
         if(result) {
             control = c(control, posdef = "TRUE")
         } else {
@@ -592,7 +830,421 @@ force = TRUE, baggedR = 100, ...)
 # ------------------------------------------------------------------------------
 
 
-.isPD =
+.assetsRobustCov =
+function(x, method = c("mve", "mcd")) 
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Resistant Estimation of Multivariate Location and Scatter
+    
+    # Arguments:
+    #   x - a timeSeries object or any other rectangular object
+    #       which can be transformed by the function as. matrix
+    #       into a numeric matrix.
+    #   method - the method to be used. Minimum volume ellipsoid
+    #       "mve", minimum covariance determinant "mcd", or 
+    #       classical product-moment. 
+    
+    # FUNCTION:
+    
+    # Settings:
+    x = as.matrix(x)
+    method = match.arg(method)
+    covRob = cov.rob(x, method = method)
+    
+    # Result:
+    ans = list(mu = covRob$center, Omega = covRob$cov)
+    attr(ans, "control") = c(control = method)
+    
+    # Return Value:
+    ans
+
+}
+
+
+# ******************************************************************************
+
+
+.cov.nnve =
+function(datamat, k = 12, pnoise = 0.05, emconv = 0.001, bound = 1.5, 
+extension = TRUE, devsm = 0.01)
+{   # A (modified) copy from coontributed R package covRobust
+
+    # Description:
+    #   Function to perform Nearest Neighbor Variance Estimation
+    
+    # Arguments:
+    #   cov - robust covariance estimate
+    #   mu - mean
+    #   postprob - posterior probability
+    #   classification - classification (0 = noise,  
+    #       otherwise 1) (obtained by rounding postprob)
+    #   innc - list of initial nearest-neighbor results (components 
+    #       are the same as above)     
+    
+    # Details:
+    #   Package: covRobust
+    #   Title: Robust Covariance Estimation via Nearest Neighbor Cleaning
+    #   Version: 1.0
+    #   Author: Naisyin Wang <nwang@stat.tamu.edu> and
+    #       Adrian Raftery <raftery@stat.washington.edu>
+    #       with contributions from Chris Fraley <fraley@stat.washington.edu>
+    #   Description: The cov.nnve() function for robust covariance estimation
+    #       by the nearest neighbor variance estimation (NNVE) method
+    #       of Wang and Raftery (2002,JASA)
+    #   Maintainer: Naisyin Wang <nwang@stat.tamu.edu>
+    #   License: GPL version 2 or newer
+    #   Notes:
+    #       Wang and Raftery(2002), "Nearest neighbor variance estimation (NNVE):
+    #           Robust covariance estimation via nearest neighbor cleaning
+    #           (with discussion)", 
+    #           Journal of the American Statistical Association 97:994-1019
+    #       Available as Technical Report 368 (2000) from
+    #           http://www.stat.washington.edu/www/research/report
+    
+    # FUNCTION:
+    
+    # Settings:
+    datamat = as.matrix(datamat)
+    d = dim(datamat)[2]
+    n = dim(datamat)[1]
+    pd = dim(datamat)[2]
+    S.mean = apply(datamat, 2, median)
+    S.sd = apply(datamat, 2, mad)
+
+    #  NNC based on original data
+    orgNNC = .cov.nne.nclean.sub(datamat, k, convergence = 0.001, 
+        S.mean = S.mean, S.sd = S.sd)
+    nnoise = min(c(sum(1 - orgNNC$z), round(pnoise * n)))
+    knnd = orgNNC$kthNND
+    ord = (n + 1) - rank(knnd)
+    muT = orgNNC$mu1
+    SigT = orgNNC$Sig1
+    SigT = (SigT + t(SigT))/2.
+    SigTN = diag(orgNNC$sd1^2)
+    if (nnoise > 6) {
+        ncho = nnoise
+        ncho1 = floor(ncho/2)
+        ncho2 = ncho - ncho1
+        cho = (1:n)[ord <= ncho1]
+        xcho = datamat[cho, ]
+        ev = eigen(SigT)
+        evv = ev$values
+        minv = max((1:d)[evv > 9.9999999999999998e-13])
+        if (minv > 2) {
+            vv1 = ev$vectors[, (minv - 1)]
+            vv2 = ev$vectors[, minv]
+        } else {
+            vv1 = ev$vectors[, 1]
+            vv2 = ev$vectors[, 2]
+        }
+        ot = acos(sum(vv1 * vv2)/(sum(vv1^2) * sum(vv2^2))^0.5)
+        for (kk1 in 1:(ncho2)) {
+            pseg = 1/(ncho2 + 1) * kk1 * ot
+            xcho = rbind(xcho, (sin(pseg) * vv1 + cos(pseg) * vv2 + muT))
+        }
+    } else {
+        nnoise = 3
+        cho = (1:n)[ord <= nnoise]
+        xcho = datamat[cho, ]
+    }
+    
+    n2 = (dim(xcho))[1]
+    schox = mahalanobis(xcho, muT, SigTN)
+    Nc = matrix(rep(muT, n2), nrow = n2, byrow = TRUE)
+    Ndir = (xcho - Nc)/(schox^0.5)
+
+    # initial set up
+    ch1 = c(qchisq(0.99, pd), qchisq(1 - 10^(-4), pd))
+    Xa = seq(ch1[1], ch1[2], length = 6)
+    gap = Xa[2] - Xa[1]
+    initv = diag(orgNNC$Sig1)
+    xa = Xa[1]
+    SaveM = c(xa, orgNNC$mu1, .cov.nne.Mtovec(orgNNC$Sig1))
+    OldP = orgNNC$probs
+    SaveP = OldP
+    Np = Nc - Ndir * (xa^0.5)
+    updNNC = .cov.nne.nclean.sub(rbind(datamat, Np), k, convergence = 0.001, 
+        S.mean = S.mean, S.sd = S.sd)
+    SaveM = rbind(SaveM, c(xa, updNNC$mu1, .cov.nne.Mtovec(updNNC$Sig1)))
+    SaveP = rbind(SaveP, (updNNC$probs)[1:n])
+    
+    # sda <- .cov.nne.Mtovec(orgNNC$Sig1)  
+    # sda save the results corresponding to xa = qchisq(.99, pd)
+    stopv = diag(updNNC$Sig1)
+    time1 = 2
+
+    while ((time1 <= 6) && (all(stopv < (1 + bound) * initv))) {
+        xa = Xa[time1]
+        Np = Nc - Ndir * (xa^0.5)
+        updNNC = .cov.nne.nclean.sub(rbind(datamat, Np), k, convergence = 0.001, 
+            S.mean =  S.mean, S.sd = S.sd)
+        SaveM = rbind(SaveM, c(xa, updNNC$mu1, .cov.nne.Mtovec(updNNC$Sig1)))
+        SaveP = rbind(SaveP[2, ], (updNNC$probs)[1:n])
+        time1 = time1 + 1
+        stopv = diag(updNNC$Sig1)
+        NULL
+    }
+
+    # Procedure stop if the added noise cause a "surge" within 
+    # the range sdb save the results within the given "range"
+    if (all(stopv < (1 + bound) * initv)) {
+        dSaveM = dim(SaveM)[1]
+        ans = SaveM[dSaveM, ]
+        sdb = SaveM[dSaveM, ]
+        NewP = SaveP[2, ]
+
+        #  adding extension
+        if (extension) {
+            time2 = 1
+            Fstop = FALSE
+            tpv = stopv
+            while ((time2 < 2) && (all(stopv < (1 + bound) * initv))
+                ) {
+                xa = xa + gap
+                startv = stopv
+                Np = Nc - Ndir * (xa^0.5)
+                updNNC = .cov.nne.nclean.sub(rbind(datamat, Np), k, convergence = 
+                    0.001, S.mean = S.mean, S.sd = S.sd)
+                SaveM = rbind(SaveM, c(xa, updNNC$mu1, .cov.nne.Mtovec(
+                    updNNC$Sig1)))
+                SaveP = rbind(SaveP[2, ], (updNNC$probs)[
+                    1:n])
+                stopv = apply(rbind((startv * 2 - tpv), diag(
+                    updNNC$Sig1)), 2, mean)
+                tpv = diag(updNNC$Sig1)
+                Fstop = all((abs(stopv - startv) <= ((1+abs(startv)) *
+                    devsm)))
+                if (Fstop)
+                    time2 = time2 + 1
+                else time2 = 1
+                NULL
+            }
+            
+            # Checking the stop criterior at the end of extension
+            if (all(stopv < (1 + bound) * initv)) {
+                dSaveM = dim(SaveM)[1]
+                ans = SaveM[dSaveM, ]
+                NewP = SaveP[2, ]
+            } else {
+                dSaveM = dim(SaveM)[1]
+                ans = SaveM[dSaveM - 1, ]
+                NewP = SaveP[1, ]
+            }
+        }
+    } else {
+        dSaveM = dim(SaveM)[1]
+        ans = SaveM[dSaveM - 1, ]
+        sdb = ans[-1]
+        NewP = SaveP[1, ]
+    }
+    nncvar = .cov.nne.vectoM(ans[ - (1:(1 + pd))], pd)
+    mu = ans[2:(1 + pd)]
+    
+    # Return Value:
+    list(cov = nncvar, mu = mu, postprob = NewP, classification = round(NewP), 
+        innc = list(cov = orgNNC$Sig1, mu = orgNNC$mu1, postprob = OldP, 
+        classification = round(OldP)))
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+ 
+.cov.nne.nclean.sub = 
+function(datamat, k, distances = NULL, convergence = 0.001, S.mean = NULL, 
+S.sd = NULL) 
+{   # A (modified) copy from coontributed R package covRobust
+
+    # Description:
+    #   Internal Function called by .cov.nne()
+    
+    # FUNCTION:
+    
+    #  The Re-scale NNC function:
+    d = dim(datamat)[2]
+    n = dim(datamat)[1]
+    kthNND = .cov.nne.splusNN(t((t(datamat) - S.mean)/S.sd), k = k)
+    alpha.d = (2 * pi^(d/2))/(d * gamma(d/2))
+    
+    # Now use kthNND in E-M algorithm, first get starting guesses.
+    delta = rep(0, n)
+    delta[kthNND > (min(kthNND) + diff(range(kthNND))/3)] = 1
+    p = 0.5
+    lambda1 = k/(alpha.d * mean((kthNND[delta == 0])^d))
+    lambda2 = k/(alpha.d * mean((kthNND[delta == 1])^d))
+    loglik.old = 0
+    loglik.new = 1
+    
+    # Iterator starts here ...
+    while (abs(loglik.new - loglik.old)/(1+abs(loglik.new)) > convergence) 
+    {
+        # E - step
+        delta = (p * .cov.nne.dDk(kthNND, lambda1, k = k, d = d, 
+            alpha.d = alpha.d)) / (p * .cov.nne.dDk(kthNND, lambda1,
+            k = k, d = d, alpha.d = alpha.d) + (1 - p) *
+            .cov.nne.dDk(kthNND, lambda2, k = k, d = d, alpha.d = alpha.d))
+        # M - step
+        p = sum(delta) / n
+        lambda1 = (k * sum(delta))/(alpha.d * sum((kthNND^d) * delta))
+        lambda2 = (k * sum((1 - delta)))/(alpha.d * 
+            sum((kthNND^d) * (1 - delta)))
+        loglik.old = loglik.new
+        loglik.new = sum( - p * lambda1 * alpha.d * ((kthNND^d) * delta) - 
+            (1 - p) * lambda2 * alpha.d * ((kthNND^d) * (1 - delta)) + 
+            delta * k * log(lambda1 * alpha.d) + (1 - delta) * k * 
+            log(lambda2 * alpha.d))
+    }
+
+    # z will be the classifications. 1 = in cluster. 0 = in noise.
+    probs = .cov.nne.dDk(kthNND, lambda1, k = k, d = d, alpha.d = alpha.d) /
+        (.cov.nne.dDk(kthNND, lambda1, k = k, d = d, alpha.d = alpha.d) +
+        .cov.nne.dDk(kthNND, lambda2, k = k, d = d, alpha.d = alpha.d))
+    mprob = 1. - probs
+    mu1 = apply((probs * datamat), 2, sum)/sum(probs)
+    mu2 = apply((mprob * datamat), 2, sum)/sum(mprob)
+    tpsig1 = t(datamat) - mu1
+    tpsig2 = t(datamat) - mu2
+    Sig1 = tpsig1 %*% (probs * t(tpsig1))/sum(probs)
+    Sig2 = tpsig2 %*% (mprob * t(tpsig2))/sum(mprob)
+    sd1 = sqrt(diag(Sig1))
+    sd2 = sqrt(diag(Sig2))
+    ans = rbind(mu1, sd1, mu2, sd2)
+    
+    zz = list(z = round(probs), kthNND = kthNND, probs = probs,
+        p = p, mu1 = mu1, mu2 = mu2, sd1 = sd1, sd2 = sd2,
+        lambda1 = lambda1, lambda2 = lambda2, Sig1 = Sig1,
+        Sig2 = Sig2, ans = ans)
+     
+    # Return Value:   
+    return(zz)
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.cov.nne.dDk = 
+function(x, lambda, k, d, alpha.d) 
+{   # A (modified) copy from coontributed R package covRobust
+
+    # Description:
+    #   Internal Function called by .cov.nne()
+    
+    # FUNCTION:
+    
+    # Function to perform the Nearest Neighbour cleaning of
+    # find the density of D_k
+    ans = (exp( - lambda * alpha.d * x^d + log(2) + k * log(
+        lambda * alpha.d) + log(x) * (d * k - 1) - log(
+        gamma(k))))
+     
+    # Return Value:    
+    ans
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.cov.nne.splusNN = 
+function(datamat, k)
+{   # A (modified) copy from coontributed R package covRobust
+
+    # Description:
+    #   Internal Function called by .cov.nne()
+    
+    # FUNCTION:
+    
+    # Nearest-neighbor in S-PLUS
+    n = nrow(datamat)
+    distances = dist(datamat)
+    
+    #  This next part sorts through the Splus distance object 
+    #  and forms kNNd, kth nearest neighbour distance, for each 
+    #  point.
+    kNNd = rep(0, n)
+    N = (n - 1):0
+    I = c(0, cumsum(N[-1]))
+    J = c(0, I + n - 1)
+    a = z = NULL
+    for (j in 1:n) {
+        if (j > 1)
+            a = i + I[1:i]
+        if (j < n)
+            z = J[j] + 1:N[j]
+        kNNd[j] = sort(distances[c(a, z)])[k]
+        i = j
+    }
+    
+    # Return Value: 
+    kNNd
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+
+.cov.nne.Mtovec = 
+function(M) 
+{   # A (modified) copy from coontributed R package covRobust
+
+    # Description:
+    #   Internal Function called by .cov.nne()
+    
+    # FUNCTION:
+    
+    # Two procedures to link between a symmetric matrix and its vec(.)
+    n = dim(M)[1]
+    d = dim(M)[2]
+    if (abs(n - d) > 0.01) {
+        cat ("The input has to be a square matrix")
+    } else {
+        vec = rep(0, 0)
+        for (i in (1:n)) {
+            for (j in (i:d)) {
+                vec = c(vec, M[i, j])
+            }
+        }
+        vec
+    }
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.cov.nne.vectoM = 
+function(vec, d) 
+{   # A (modified) copy from coontributed R package covRobust
+
+    # Description:
+    #   Internal Function called by .cov.nne()
+    
+    # FUNCTION:
+    
+    n = length(vec)
+    M = matrix(rep(0, d * d), d, d)
+    L = 1
+    for (i in 1:d) {
+        for (j in i:d) {
+            M[i, j] = vec[L]
+            L = L + 1
+            M[j, i] = M[i, j]
+        }
+    }
+    
+    # Return Value: 
+    M
+}
+
+
+# ******************************************************************************
+
+
+.isPositiveDefinite =
 function(x)
 {   # A function implemented by Diethelm Wuertz
 
@@ -620,7 +1272,7 @@ function(x)
 # ------------------------------------------------------------------------------
 
 
-.makePD =
+.makePositiveDefinite =
 function(x)
 {   # A function implemented by Diethelm Wuertz
 

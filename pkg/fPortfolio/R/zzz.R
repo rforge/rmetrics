@@ -38,6 +38,17 @@
 
 ################################################################################
  
+
+corpcorBuiltin =
+function(builtin = "/fPortfolio/demo/funCorpcor.R") 
+{
+    Builtin = paste(.Library, builtin, sep = "")
+    source(Builtin)
+}
+
+
+# ------------------------------------------------------------------------------
+
     
 .First.lib =  
 function(lib, pkg)
