@@ -31,9 +31,8 @@
 # FUNCTION:                    DESCRIPTION
 # log                           log has become a generic function
 # log.default
-
 # round
-# round.default           
+# round.default        
 # sample
 # sample.default
 # sort                          sort has become a generic function
@@ -56,7 +55,7 @@
 
 sort = 
 function(x, partial = NULL, na.last = NA, decreasing = FALSE, 
-method = c("shell", "quick"), index.return = FALSE)
+method = c("shell", "quick"), index.return = FALSE, ...)
 {
     UseMethod("sort")
 }
@@ -67,7 +66,7 @@ method = c("shell", "quick"), index.return = FALSE)
 
 sort.default =
 function (x, partial = NULL, na.last = NA, decreasing = FALSE, 
-method = c("shell", "quick"), index.return = FALSE) 
+method = c("shell", "quick"), index.return = FALSE, ...) 
 {   # A copy of the sort() function from R's base package
     
     # Sort:
@@ -145,7 +144,7 @@ method = c("shell", "quick"), index.return = FALSE)
 
 
 sample = 
-function(...)
+function(x, ...)
 {
     UseMethod("sample")
 }  
@@ -173,7 +172,7 @@ function (x, size, replace = FALSE, prob = NULL, ...)
 
 
 round =
-function(x, digits = 0, ...)
+function(x, ...)
 {
     UseMethod("round")
 }
