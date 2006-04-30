@@ -474,6 +474,7 @@ Szekely G.J. (1989);
 
 
 \examples{
+\dontrun{
 ## SOURCE("fPortfolio.101A-AssetsModelling")
 
 ## berndtInvest -
@@ -525,6 +526,7 @@ Szekely G.J. (1989);
      par(mfrow = c(2, 2), cex = 0.7)
      plot(fit, which = !c(TRUE, FALSE, FALSE, FALSE, FALSE))
    }
+}
 }
 
 
