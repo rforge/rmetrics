@@ -43,18 +43,18 @@
 
 
 \usage{
-sort(x, partial = NULL, na.last = NA, decreasing = FALSE, 
-    method = c("shell", "quick"), index.return = FALSE) 
+sort.default(x, partial = NULL, na.last = NA, decreasing = FALSE, 
+    method = c("shell", "quick"), index.return = FALSE, \dots) 
 
-sample.default(x, size, replace = FALSE, prob = NULL, ...) 
+sample.default(x, size, replace = FALSE, prob = NULL, \dots) 
 
-round(x, digits = 0, \dots)
+round.default(x, digits, \dots)
 
-log(x, base = exp(1))
+log.default(x, base = exp(1))
 
-outlier(x, sd = 5, complement = TRUE, ...)
+outlier.default(x, sd = 5, complement = TRUE, \dots)
 
-var(x, y = NULL, na.rm = FALSE, use)
+var.default(x, y = NULL, na.rm = FALSE, use)
     
 rownames(x) <- value
 colnames(x) <- value
