@@ -46,7 +46,7 @@
 #  .sleap.year         Returns TRUE/FALSE if dates belong to leap years or not
 #  .print.sdate        Print method for objects of class ".sdate"
 # FUNCTION:           DESCRIPTION:
-#  .fjulian             Transform formatted dates to julian day numbers
+#  fjulian             Transform formatted dates to julian day numbers
 # FUNCTION:           DESCRIPTION:
 #  .julian             Implements SPlus like 'julian'
 #  month.day.year      Implements SPlus like 'month.day.year'
@@ -740,7 +740,7 @@ function(x, ...)
 # ******************************************************************************
 
 
-.fjulian = 
+fjulian = 
 function(fdates, origin = 19600101, order = 'mdy', cc = NULL, swap = 20)
 {   # # A function implemented by Diethelm Wuertz
 

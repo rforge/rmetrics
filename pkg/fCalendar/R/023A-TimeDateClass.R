@@ -39,16 +39,6 @@
 #  timeSequence           Creates a regularly spaced 'timeDate' object
 #  Sys.timeDate           Returns system time as an object of class 'timeDate'  
 #
-# FUNCTION:              SPECIAL TIMEDATE OPERATIONS:
-#  timeLastDayInMonth     Computes the last day in a given month and year
-#  timeFirstDayInMonth    Computes the first day in a given month and year
-#  timeLastDayInQuarter   Computes the last day in a given quarter and year
-#  timeFirstDayInQuarter  Computes the first day in a given quarter and year
-#  timeNdayOnOrAfter      Computes date in month that is a n-day ON OR AFTER  
-#  timeNdayOnOrBefore     Computes date in month that is a n-day ON OR BEFORE  
-#  timeNthNdayInMonth     Computes n-th ocurrance of a n-day in year/month
-#  timeLastNdayInMonth    Computes the last n-day in year/month
-#
 # S3 METHODS:            REPRESENTATION OF TIMEDATE OBJECTS:
 #  print.timeDate         Prints 'timeDate' Object
 #  summary.timeDate       Summarizes details of a 'timeDate' object
@@ -77,7 +67,7 @@
 #  -.timeDate             Performs arithmetic - operation on 'timeDate' objects
 #  diff.timeDate          Returns suitably lagged and iterated differences
 #  difftimeDate           Returns a difference of two 'timeDate' objects
-#  round.tinmeDate        Rounds objects of class 'timeDate'
+#  round.timeDate         Rounds objects of class 'timeDate'
 #  trunc.timeDate         Truncates objects of class 'timeDate' 
 #
 # S3 MEHOD:              CONCATENATION, ORDERING AND SORTING:
@@ -259,6 +249,9 @@ function(pattern = "*")
 
 
 require(methods)
+
+
+# ------------------------------------------------------------------------------
 
 
 setClass("timeDate", 
@@ -765,7 +758,7 @@ s = NULL, zone = myFinCenter, FinCenter = myFinCenter)
 
 timeSequence = 
 function(from = "2004-01-01", to = format(Sys.time(), "%Y-%m-%d"), 
-by = c("day", "year", "quarters", "month", "week", "hour", "min", "sec"), 
+by = c("day", "year", "quarter", "month", "week", "hour", "min", "sec"), 
 length.out = NULL, format = NULL, zone = myFinCenter, FinCenter = myFinCenter)
 {   # A function implemented by Diethelm Wuertz
 
@@ -813,7 +806,7 @@ length.out = NULL, format = NULL, zone = myFinCenter, FinCenter = myFinCenter)
     if (!is.null(length.out)) to = from 
     if (FinCenter == "") FinCenter = "GMT"
     by = match.arg(by)
-    if (by == "quarters") by = "3 months"
+    if (by == "quarter") by = "3 months"
     
     # Auto-detect Input Format:
     format.from = format.to = format
@@ -891,354 +884,6 @@ function(FinCenter = myFinCenter)
     Sys.putenv(TZ = myTZ)
     ans
     
-}
-
- 
-################################################################################
-# FUNCTION:              SPECIAL TIMEDATE OPERATIONS:
-#  timeLastDayInMonth     Computes the last day in a given month and year
-#  timeFirstDayInMonth    Computes the first day in a given month and year
-#  timeLastDayInQuarter   Computes the last day in a given quarter and year
-#  timeFirstDayInQuarter  Computes the first day in a given quarter and year
-#  timeNdayOnOrAfter      Computes date in month that is a n-day ON OR AFTER  
-#  timeNdayOnOrBefore     Computes date in month that is a n-day ON OR BEFORE  
-#  timeNthNdayInMonth     Computes n-th ocurrance of a n-day in year/month
-#  timeLastNdayInMonth    Computes the last n-day in year/month
-
-
-timeLastDayInMonth = 
-function(charvec, format = "%Y-%m-%d", FinCenter = "GMT")
-{   # A function implemented by Diethelm Wuertz
-    
-    # Description:
-    #   Computes the last day in a given month and year
-    
-    # Arguments:
-    #   charvec - a character vector of dates and times.
-    #   format - the format specification of the input character vector.
-    #   FinCenter - a character string with the the location of the  
-    #       financial center named as "continent/city". 
-    
-    # Value:
-    #   Returns the last day in a given month and year as a
-    #   'timeDate' object.
-    
-    # FUNCTION:
-    
-    # Set Timezone to GMT:
-    myTZ = Sys.getenv("TZ")  
-    Sys.putenv(TZ = "GMT")
-    if (FinCenter == "") FinCenter = "GMT"
-    
-    # Last day of month:
-    last.day = c(31,28,31, 30,31,30, 31,31,30, 31,30,31)
-    lt = strptime(charvec, format)
-    y = 1900 + lt$year
-    leap.year = (y%%4 == 0 & (y%%100 != 0 | y%%400 == 0))
-    leap.day = as.integer(leap.year)*as.integer(lt$mon == 1)
-    lt$mday = last.day[1 + lt$mon] + leap.day
-    
-    # Return Value:
-    Sys.putenv(TZ = myTZ)
-    timeDate(lt, format = "%Y-%m-%d", zone = FinCenter, 
-        FinCenter = FinCenter)
-}
-
-
-# ------------------------------------------------------------------------------
-
-    
-timeFirstDayInMonth = 
-function(charvec, format = "%Y-%m-%d", FinCenter = "GMT") 
-{   # A function implemented by Diethelm Wuertz
-    
-    # Description:
-    #   Computes the last day in a given month and year
-    
-    # FUNCTION:
-    
-    # Set Timezone to GMT:
-    myTZ = Sys.getenv("TZ")  
-    Sys.putenv(TZ = "GMT")
-    if (FinCenter == "") FinCenter = "GMT"
-    
-    # First Day In Month:
-    lt = strptime(charvec, format)
-    lt$mday = 1
-
-    # Return Value:
-    Sys.putenv(TZ = myTZ)
-    timeDate(lt, format = "%Y-%m-%d", zone = FinCenter, FinCenter = FinCenter)
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-timeLastDayInQuarter = 
-function(charvec, format = "%Y-%m-%d", FinCenter = "GMT") 
-{   # A function implemented by Diethelm Wuertz
-    
-    # Description:
-    #   Computes the last day in a given month and year
-    
-    # FUNCTION:
-    
-    # First Day in Month:
-    charvec = timeFirstDayInMonth(charvec = charvec, format = format, 
-        FinCenter = FinCenter)
-    
-    # Set Timezone to GMT:
-    myTZ = Sys.getenv("TZ")  
-    Sys.putenv(TZ = "GMT")
-    if (FinCenter == "") FinCenter = "GMT"
-    
-    # Last Day in Quarter:
-    lt = strptime(charvec, format)
-    last.quarter = rep(c(3,6,9,12), each = 3) - 1
-    lt$mon = last.quarter[1 + lt$mon] 
-    Sys.putenv(TZ = myTZ)
-    charvec = timeDate(lt, format = "%Y-%m-%d", zone = FinCenter, 
-        FinCenter = FinCenter)
-        
-    # Return Value:
-    Sys.putenv(TZ = myTZ)
-    timeLastDayInMonth(charvec = charvec, format = format, 
-        FinCenter = FinCenter)
-}
-
-
-# ------------------------------------------------------------------------------
-    
-    
-timeFirstDayInQuarter = 
-function(charvec, format = "%Y-%m-%d", FinCenter = "GMT") 
-{   # A function implemented by Diethelm Wuertz
-    
-    # Description:
-    #   Computes the last day in a given month and year
-    
-    # FUNCTION:
-    
-    # First Day in Month:
-    charvec = timeFirstDayInMonth(charvec =charvec, format = format, 
-        FinCenter = FinCenter)
-    
-    # Set Timezone to GMT:
-    myTZ = Sys.getenv("TZ")  
-    Sys.putenv(TZ = "GMT")
-    if (FinCenter == "") FinCenter = "GMT"
-    
-    # First Day in Quarter:
-    lt = strptime(charvec, format)
-    first.quarter = rep(c(1,4,7,10), each = 3) - 1
-    lt$mon = first.quarter[1 + lt$mon] 
-
-    # Return Value:
-    Sys.putenv(TZ = myTZ)
-    timeDate(lt, format = "%Y-%m-%d", zone = FinCenter, FinCenter = FinCenter)
-}
-
-    
-# ------------------------------------------------------------------------------
-
-
-timeNdayOnOrAfter = 
-function(charvec, nday = 1, format = "%Y-%m-%d", FinCenter = "GMT")
-{   # A function implemented by Diethelm Wuertz
-    
-    # Description:
-    #   Computes date in month that is a n-day ON OR AFTER 
-    
-    # Arguments:
-    #   charvec - a character vector of dates and times.
-    #   nday - an integer vector with entries ranging from 
-    #       0 (Sunday) to 6 (Saturday).
-    #   format - the format specification of the input character 
-    #       vector.
-    #   FinCenter - a character string with the the location of the  
-    #       financial center named as "continent/city". 
-    
-    # Value:
-    #   Returns the date in month that is a n-day ON OR AFTER as
-    #   a 'timeDate' object.
-    
-    # Details:
-    #   nday = 1 is a Monday
-    
-    # Example: 
-    #   What date has the first Monday on or after March 15, 1986?
-    #   timeNdayOnOrAfter("1986-03-15", 1)
-    
-    # FUNCTION:
-    
-    # Set Timezone to GMT:
-    myTZ = Sys.getenv("TZ")  
-    Sys.putenv(TZ = "GMT")
-    if (FinCenter == "") FinCenter = "GMT"
-    
-    # timeDate:
-    lt = strptime(charvec, format)
-    
-    # On or after:
-    ct = 24*3600*(as.integer(julian.POSIXt(lt)) + (nday-lt$wday)%%7)
-    class(ct) = "POSIXct"
-    
-    # Return Value:
-    Sys.putenv(TZ = myTZ)
-    timeDate(format(ct), format = format, zone = FinCenter, 
-        FinCenter = FinCenter)
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-timeNdayOnOrBefore = 
-function(charvec, nday = 1, format = "%Y-%m-%d", FinCenter = "GMT")
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Computes date in month that is a n-day ON OR BEFORE 
-
-    # Arguments:
-    #   charvec - a character vector of dates and times.
-    #   nday - an integer vector with entries ranging from 
-    #       0 (Sunday) to 6 (Saturday).
-    #   format - the format specification of the input character 
-    #       vector.
-    #   FinCenter - a character string with the the location of the  
-    #       financial center named as "continent/city". 
-    
-    # Value:
-    #   Returns the date in month that is a n-day ON OR BEFORE
-    #   as a 'timeDate' object.
-    
-    # Example: 
-    #   What date has Friday on or before April 22, 1977?
-    
-    # FUNCTION: 
-    
-    # Set Timezone to GMT:
-    myTZ = Sys.getenv("TZ")  
-    Sys.putenv(TZ = "GMT")
-    if (FinCenter == "") FinCenter = "GMT"
-    
-    # timeDate:
-    lt = strptime(charvec, format)
-    
-    # On or after:
-    ct = 24*3600*(as.integer(julian.POSIXt(lt)) - (-(nday-lt$wday))%%7)
-    class(ct) = "POSIXct"
-    
-    # Return Value:
-    Sys.putenv(TZ = myTZ)
-    timeDate(format(ct), format = format, zone = FinCenter, 
-        FinCenter = FinCenter)
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-timeNthNdayInMonth = 
-function(charvec, nday = 1, nth = 1, format = "%Y-%m-%d", FinCenter = "GMT")
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Computes "nth" ocurrance of a "nday" (nth = 1,...,5) 
-    #   in "year,month"
- 
-    # Arguments:
-    #   charvec - a character vector of dates and times.
-    #   nday - an integer vector with entries ranging from 
-    #       0 (Sunday) to 6 (Saturday).
-    #   nth - an integer vector numbering the n-th occurence.
-    #   format - the format specification of the input character 
-    #       vector.
-    #   FinCenter - a character string with the the location of the  
-    #       financial center named as "continent/city". 
-    
-    # Value:
-    #   Returns the "nth" ocurrance of a "nday" (nth = 1,...,5) 
-    #   in "year,month" as a 'timeDate' object.
-    
-    # Example: 
-    #   What date is the second Monday in April 2004?
-    #   timeNthNdayInMonth("2004-04-01", 1, 2)
-    
-    # FUNCTION: 
-    
-    # Set Timezone to GMT:
-    myTZ = Sys.getenv("TZ")  
-    Sys.putenv(TZ = "GMT")
-    if (FinCenter == "") FinCenter = "GMT"
-    
-    # timeDate:
-    lt = strptime(charvec, format)
-    
-    # On or after:
-    lt1 = lt
-    lt1$mday = 1
-    ct = 24*3600*(as.integer(julian.POSIXt(lt)) + (nth-1)*7 + 
-        (nday-lt1$wday)%%7)
-    class(ct) = "POSIXct"
-
-    # Return Value:
-    Sys.putenv(TZ = myTZ)
-    timeDate(format(ct), format = format, zone = FinCenter, 
-        FinCenter = FinCenter)
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-timeLastNdayInMonth = 
-function(charvec, nday = 1, format = "%Y-%m-%d", FinCenter = "GMT")
-{   # A function implemented by Diethelm Wuertz
-    
-    # Description:
-    #   Computes the last "nday" in "year/month"
-    
-    # Arguments:
-    #   charvec - a character vector of dates and times.
-    #   nday - an integer vector with entries ranging from 
-    #       0 (Sunday) to 6 (Saturday).
-    #   format - the format specification of the input character 
-    #       vector.
-    #   FinCenter - a character string with the the location of the  
-    #       financial center named as "continent/city". 
-    
-    # Value:
-    #   Returns the last "nday" in "year/month" as a 'timeDate' 
-    #   object.
-    
-    # Example: 
-    #   What date has the last Tuesday in May, 1996?
-    #   timeLastNdayInMonth("1996-05-01", 2)
-    
-    # FUNCTION:
-    
-    # Set Timezone to GMT:
-    myTZ = Sys.getenv("TZ")  
-    Sys.putenv(TZ = "GMT")
-    if (FinCenter == "") FinCenter = "GMT"
-    
-    # Last Day:
-    last.day = c(31,28,31, 30,31,30, 31,31,30, 31,30,31)
-    lt = strptime(charvec, format)
-    y = 1900 + lt$year
-    leap.year = (y%%4 == 0 & (y%%100 != 0 | y%%400 == 0))
-    leap.day = as.integer(leap.year)*as.integer(lt$mon == 1)
-    lt$mday = last.day[1 + lt$mon] + leap.day
-    ct = 24*3600*(as.integer(julian.POSIXt(lt)) - (-(nday-lt$wday))%%7)
-    class(ct) = "POSIXct"
-
-    # Return Value:
-    Sys.putenv(TZ = myTZ)
-    timeDate(format(ct), format = format, zone = FinCenter,
-        FinCenter = FinCenter)
 }
 
 
@@ -1562,10 +1207,10 @@ function(x)
 
 ################################################################################
 # S3 MEHOD:              SUBSETTING TIMEDATE OBJECTS:
-#  [.timeDate             Extracts or replaces subsets from 'timeDate' Objects
-#  cut.timeDate
-#  start.timeDate         Extracts the first object of a 'timeDate' vector
-#  end.timeDate           Extracts the last object of a 'timeDate' vector
+#  [.timeDate             Extracts or replaces subsets from 'timeDate' objects
+#  cut.timeDate           Extracts a piece from a 'timeDate' object
+#  start.timeDate         Extracts the first object of a 'timeDate' object
+#  end.timeDate           Extracts the last object of a 'timeDate' object
 #  blockStart             Creates start dates for equally sized blocks
 #  blockEnd               Creates end dates for equally sized blocks
 
@@ -1751,7 +1396,7 @@ function(x, block = 20)
 #  -.timeDate             Performs arithmetic - operation on 'timeDate' objects
 #  diff.timeDate          Returns suitably lagged and iterated differences
 #  difftimeDate           Returns a difference of two 'timeDate' objects
-#  round.tinmeDate        Rounds objects of class 'timeDate'
+#  round.timeDate         Rounds objects of class 'timeDate'
 #  trunc.timeDate         Truncates objects of class 'timeDate'
 
 
