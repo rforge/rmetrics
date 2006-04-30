@@ -30,7 +30,7 @@
 ################################################################################
 # METHOS               MODIFICATION METHODS:
 #  seriesPositions      Extracts positions slot from 'timeSeries' object
-#  newPositions         Modifies positions of a 'timeSeries' object
+#  newPositions<-       Modifies positions of a 'timeSeries' object
 #
 #  sample.timeSeries    S3: Resamples a 'timeSeries' object in time
 #  sort.timeSeries      S3: Sorts reverts a 'timeSeries' object in time

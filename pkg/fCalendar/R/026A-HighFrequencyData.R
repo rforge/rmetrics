@@ -138,7 +138,7 @@ function(xdates)
     # FUNCTION:
     
     # Return Value:
-    ..sday.of.week(xdates %/% 10000)
+    .sday.of.week(xdates %/% 10000)
 }
 
 
@@ -156,7 +156,7 @@ function(xdates)
     # FUNCTION:
     
     # Return Value:
-    ..sleap.year(xdates %/% 10000)
+    .sleap.year(xdates %/% 10000)
 }
 
 
