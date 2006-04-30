@@ -1,0 +1,597 @@
+<html><head><title>Modelling of Multivariate Asset Sets</title>
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>AssetsModelling(fPortfolio)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   AssetsModelling">
+<param name="keyword" value="R:   fASSETS">
+<param name="keyword" value="R:   fASSETS-class">
+<param name="keyword" value="R:   assetsSim">
+<param name="keyword" value="R:   assetsFit">
+<param name="keyword" value="R:   assetsSelect">
+<param name="keyword" value="R:   assetsStats">
+<param name="keyword" value="R:   assetsMeanCov">
+<param name="keyword" value="R:   assetsTest">
+<param name="keyword" value="R:   print.fASSETS">
+<param name="keyword" value="R:   plot.fASSETS">
+<param name="keyword" value="R:   summary.fASSETS">
+<param name="keyword" value=" Modelling of Multivariate Asset Sets">
+</object>
+
+
+<h2>Modelling of Multivariate Asset Sets</h2>
+
+
+<h3>Description</h3>
+
+<p>
+A collection and description of functions which 
+generate multivariate artificial data sets of assets, 
+which fit the parameters to a multivariate normal, 
+skew normal, or (skew) Student-t distribution and 
+which compute some benchmark statistics. In addition 
+a function is provided which allows for the selection 
+and clustering of individual assets from portfolios 
+using hierarchical and k-means clustering approaches.
+<br>
+</p>
+<p>
+The functions are:
+</p>
+
+<table summary="Rd table">
+<tr>
+  <td align="left"><code>assetsSim</code> </td>  <td align="left"> Simulates a data set of assets, </td>
+</tr>
+<tr>
+  <td align="left"> <code>assetsSelect</code> </td>  <td align="left"> Asset Selection from Portfolios, </td>
+</tr>
+<tr>
+  <td align="left"> <code>assetsFit</code> </td>  <td align="left"> Fits the parameter of a data set of assets, </td>
+</tr>
+<tr>
+  <td align="left"> <code>assetsStats</code> </td>  <td align="left"> Computes benchmark statistics of asset sets, </td>
+</tr>
+<tr>
+  <td align="left"> <code>assetsMeanCov</code> </td>  <td align="left"> Computes mean and covariance matri, </td>
+</tr>
+<tr>
+  <td align="left"> <code>assetsTest</code> </td>  <td align="left"> Test for multivariate Normal distribution, </td>
+</tr>
+<tr>
+  <td align="left"> <code>print</code> </td>  <td align="left"> S3 print method for an object of class 'fASSETS', </td>
+</tr>
+<tr>
+  <td align="left"> <code>plot</code> </td>  <td align="left"> S3 Plot method for an object of class 'fASSETS", </td>
+</tr>
+<tr>
+  <td align="left"> <code>summary</code> </td>  <td align="left"> S3 summary method for an object of class 'fASSETS'. </td>
+</tr>
+</table>
+
+
+<h3>Usage</h3>
+
+<pre>
+assetsSim(n, dim = 2, model = list(mu = rep(0, dim), Omega = diag(dim), 
+    alpha = rep(0, dim), df = Inf), assetNames = NULL) 
+assetsSelect(x, method = c("hclust", "kmeans"), 
+    kmeans.centers = 5, kmeans.maxiter = 10, doplot = TRUE, ...)
+    
+assetsFit(x, method = c("st", "snorm", "norm"), title = NULL, 
+    description = NULL, fixed.df = NA, ...)
+
+assetsMeanCov(x, method = c("cov", "shrink", "bagged"), check = TRUE,
+    force = TRUE, baggedR = 100, ...)
+assetsStats(x)
+assetsTest(x, method = c("shapiro", "energy"), Replicates = 100, 
+    title = NULL, description = NULL)
+
+## S3 method for class 'fASSETS':
+print(x, ...)
+## S3 method for class 'fASSETS':
+plot(x, which = "ask", ...)
+## S3 method for class 'fASSETS':
+summary(object, which = "all", ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>assetNames</code></td>
+<td>
+[assetsSim] - <br>
+a vector of character strings of length <code>dim</code> allowing
+for modifying the names of the individual assets.
+</td></tr>
+<tr valign="top"><td><code>baggedR</code></td>
+<td>
+[assetsMeanCov] - <br>
+an integer value, the number of bootstrap replicates, by
+default 100. This value is only used if <code>method="bagged"</code>.
+</td></tr>
+<tr valign="top"><td><code>check</code></td>
+<td>
+[assetsMeanCov] - <br>
+a logical flag. Should the covariance matrix be tested to be
+positive definite? By default <code>TRUE</code>.
+</td></tr>
+<tr valign="top"><td><code>description</code></td>
+<td>
+[assetsFit] - <br>
+a character string, assigning a brief description to an 
+<code>"fASSETS"</code> object.
+</td></tr>
+<tr valign="top"><td><code>doplot</code></td>
+<td>
+[assetsSelect] - <br>
+a logical, should a plot be displayed?
+</td></tr>
+<tr valign="top"><td><code>fixed.df</code></td>
+<td>
+[assetsFit] - <br>
+either <code>NA</code>, the default, or a numeric value assigning the
+number of degrees of freedom to the model. In the case that 
+<code>fixed.df=NA</code> the value of <code>df</code> will be included in the
+optimization process, otherwise not.
+</td></tr>
+<tr valign="top"><td><code>force</code></td>
+<td>
+[assetsMeanCov] - <br>
+a logical flag. Should the covariance matrix be forced to be
+positive definite? By default <code>TRUE</code>.
+</td></tr>
+<tr valign="top"><td><code>kmeans.centers</code></td>
+<td>
+[assetsSelect] - <br>
+either the number of clusters or a set of initial cluster centers. 
+If the first, a random set of rows in <code>x</code> are chosen as the 
+initial centers.   
+</td></tr>
+<tr valign="top"><td><code>kmeans.maxiter</code></td>
+<td>
+[assetsSelect] - <br>
+the maximum number of iterations allowed.
+</td></tr>
+<tr valign="top"><td><code>method</code></td>
+<td>
+[assetsFit] - <br>
+a character string, which type of distribution should be fitted?
+<code>method="st"</code> denotes a multivariate skew-Student-t distribution,
+<code>method="snorm"</code> a multivariate skew-Normal distribution, and
+<code>method="norm"</code> a multivariate Normel distribution.  
+By default a multivariate normal distribution will be fitted to the
+empirical market data.<br>
+[assetsMeanVar] - <br>
+a character string, whicht determines how to compute the covariance
+matix. If <code>method="cov"</code> is selected then the standard 
+covariance will be computed by R's base function <code>cov</code>, if 
+<code>method="shrink"</code> is selected then the covariance will be
+computed using the shrinkage approach as suggested in Schaefer and
+Strimmer [2005], if <code>method="bagged"</code> is selected then the 
+covariance will be calculated from the bootstrap aggregated (bagged)
+version of the covariance estimator.<br>
+[assetsSelect] - <br>
+a character string, which clustering method should be applied? 
+Either <code>hclust</code> for hierarchical clustering of dissimilarities,
+or <code>kmeans</code> for k-means clustering.<br>
+[assetsTest] - <br>
+a character string, which the selects which test should be applied.
+If <code>method="shapiro"</code> then Shapiro's multivariate Normality 
+test will be applied as implemented in R's contributed package
+<code>mvnormtest</code>. If <code>method="energy"</code> then the E-statistic 
+(energy) for testing multivariate Normality will be used as proposed 
+and implemented by Szekely and Rizzo [2005] using parametric 
+bootstrap.
+</td></tr>
+<tr valign="top"><td><code>model</code></td>
+<td>
+[assetsSim] - <br>
+a list of model parameters: <br>
+<code>mu</code> a vector of mean values, one for each asset series, <br>
+<code>Omega</code> the covariance matrix of assets, <br>
+<code>alpha</code> the skewness vector, and <br>
+<code>df</code> the number of degrees of freedom which is a measure for
+the fatness of the tails (excess kurtosis). <br>
+For a symmetric distribution <code>alpha</code> is a vector of zeros.
+For the normal distributions <code>df</code> is not used and set to 
+infinity, <code>Inf</code>. Note that all assets have the same value 
+for <code>df</code>.
+</td></tr>
+<tr valign="top"><td><code>n, dim</code></td>
+<td>
+[assetsSim] - <br>
+integer values giving the number of data records to be simulated, 
+and the dimension of the assets set.
+</td></tr>
+<tr valign="top"><td><code>object</code></td>
+<td>
+[summary] - <br>
+An object of class <code>fASSETS</code>.
+</td></tr>
+<tr valign="top"><td><code>Replicates</code></td>
+<td>
+[assetsTest] - <br>
+an integer value, the number of bootstrap replicates, by
+default 100. This value is only used if <code>method="energy"</code>.
+</td></tr>
+<tr valign="top"><td><code>title</code></td>
+<td>
+[assetsFit] - <br>
+a character string, assigning a title to an 
+<code>"fASSETS"</code> object.
+</td></tr>
+<tr valign="top"><td><code>which</code></td>
+<td>
+which of the five plots should be displayed? <code>which</code> can 
+be either a character string, <code>"all"</code> (displays all plots) 
+or <code>"ask"</code> (interactively asks which one to display), or a 
+vector of 5 logical values, for those elements which are set 
+<code>TRUE</code> the correponding plot will be displayed.
+</td></tr>
+<tr valign="top"><td><code>x</code></td>
+<td>
+[assetsFit][assetsStats][assetsMeanVar] - <br>
+a numeric matrix of returns or any other rectangular object like
+a data.frame or a multivariate time series object which can be 
+transformed by the function <code>as.matrix</code> to an object of 
+class <code>matrix</code>.
+<br>
+[plot][print] - <br>
+An object of class <code>fASSETS</code>.
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+optional arguments to be passed.
+</td></tr>
+</table>
+
+<h3>Details</h3>
+
+<p>
+Data sets of assets <code>x</code> can be expressed as multivariate 
+'timeSeries' objects, as 'data.frame' objects, or any other rectangular 
+object which can be transformed into an object of class 'matrix'.
+<br>
+</p>
+<p>
+<B>Parameter Estimation:</B>
+<br><br>
+The function <code>assetsFit</code> for the parameter estimation and 
+<code>assetsSim</code> for the simulation of assets sets use code based on 
+functions from the contributed packages <code>"mtvnorm"</code> and <code>"sn"</code>. 
+The required functionality for fitting data to a multivariate Normal, 
+skew-Normal, or skew-Student-t is available from builtin functions, so 
+it is not necessary to load the packages <code>"mtvnorm"</code> and <code>"sn"</code>. 
+<br>
+</p>
+<p>
+<B>Assets Mean and Covariance:</B>
+<br><br>   
+The function <code>assetsMeanCov</code> computes the mean vector and covariance
+matrix of an assets set. For the covariance matrix one can select from
+three choicdes: The standard covariance computation through R's base
+function <code>cov</code> and a shrinked and bagged version for the covariance.
+The latter two choices implement the covariance computation from the
+functions <code>cov.shrink()</code> and <code>cov.bagged()</code> which are part
+of the contributed R package <code>corpcov</code>.
+<br>
+</p>
+<p>
+<B>Assets Statistics:</B>
+<br><br>   
+The function <code>assetsStats</code> implements benchmark formulas and
+statistics as reported in the help page of the hedge fund software 
+from <EM>www.AlternativeSoft.com</EM>. The computed statistics are listed
+in the 'Value' section below. Note, that the functions were written for
+monthly recorded data sets. Be aware of this when you use or generate 
+asset sets on different time scales, then you have to scale them
+properly.
+<br>
+</p>
+<p>
+<B>Assets Selection:</B>
+<br><br>   
+The function <code>assetsSelect</code> calls the functions <code>hclust</code>
+or <code>kmeans</code> from R's <code>"stats"</code> package. <code>hclust</code>
+performs a hierarchical cluster analysis on the set of dissimilarities 
+<code>hclust(dist(t(x)))</code> and <code>kmeans</code> performs a k-means
+clustering on the data matrix itself. 
+<br>
+</p>
+<p>
+<B>Assets Tests:</B>
+<br><br>   
+The function <code>assetsTest</code> performs two tests for multivariate
+Normality of an assets Set.
+</p>
+
+
+<h3>Value</h3>
+
+<p>
+<code>assetsFit</code> 
+<br>
+returns a S4 object class of class <code>"fASSETS"</code>, with the following 
+slots:
+</p>
+<table summary="R argblock">
+<tr valign="top"><td><code>@call</code></td>
+<td>
+the matched function call.
+</td></tr>
+<tr valign="top"><td><code>@data</code></td>
+<td>
+the input data in form of a data.frame.
+</td></tr>
+<tr valign="top"><td><code>@description</code></td>
+<td>
+allows for a brief project description.
+</td></tr>
+<tr valign="top"><td><code>@fit</code></td>
+<td>
+the results as a list returned from the underlying
+fitting function. 
+</td></tr>
+<tr valign="top"><td><code>@method</code></td>
+<td>
+the selected method to fit the distribution, one 
+of <code>"norm"</code>, <code>"snorm"</code>, <code>"st"</code>.
+</td></tr>
+<tr valign="top"><td><code>@model</code></td>
+<td>
+the model parameters describing the fitted parameters in 
+form of a list, <code>model=list(mu, Omega, alpha, df</code>.
+</td></tr>
+<tr valign="top"><td><code>@title</code></td>
+<td>
+a title string.
+</td></tr>
+<tr valign="top"><td><code>@fit$dp</code></td>
+<td>
+a list containing the direct parameters beta, Omega, alpha. 
+Here, beta is a matrix of regression coefficients with 
+<code>dim(beta)=c(nrow(X), ncol(y))</code>, <code>Omega</code> is a 
+covariance matrix of order <code>dim</code>, <code>alpha</code> is 
+a vector of shape parameters of length <code>dim</code>.  
+</td></tr>
+<tr valign="top"><td><code>@fit$se</code></td>
+<td>
+a list containing the components beta, alpha, info. Here, 
+beta and alpha are the standard errors for the corresponding 
+point estimates; info is the observed information matrix 
+for the working parameter, as explained below.
+</td></tr>
+<tr valign="top"><td><code>fit@optim</code></td>
+<td>
+the list returned by the optimizer <code>optim</code>; see the 
+documentation of this function for explanation of its 
+components.  
+</td></tr>
+</table>
+<p>
+
+<br>
+Note that the <code>@fit$model</code> slot can be used as input to the 
+function <code>assetsSim</code> for simulating a similar portfolio of 
+assets compared with the original portfolio data, usually market
+assets.
+<br>
+<br>
+<code>assetsMeanCov</code>
+<br>
+returns a list with two entries named <code>mu</code> and Sigma{Sigma}.
+The first denotes the vector of assets means, and the second the 
+covariance matrix. Note, that the output of this function can be
+used as data input for the portfolio functions to compute the
+efficient frontier.
+<br>
+<br>
+<code>assetsSelect</code>
+<br>
+if <code>method="hclust"</code> was selected then the function returns a
+S3 object of class "hclust", otherwise if <code>method="kmeans"</code> was 
+selected then the function returns an obkject of class list. For
+details we refer to the help pages of <code>hclust</code> and <code>kmeans</code>.
+<br>
+<br>
+<code>assetsSim</code> 
+<br>
+returns a matrix, the artifical data records represent the assets 
+of the portfolio. Row names and column names are not created, they
+have to be added afterwards.
+<br>
+<br>
+<code>assetsStats</code>
+<br>
+returns a data frame with the following entries per column and asset: 
+<br>
+<code>Records</code> - number of records (length of time series), <br>
+<code>paMean</code> - annualized (pa, per annum) Mean of Returns, <br>
+<code>paAve</code> - annualized Average of Returns, <br>
+<code>paVola</code> - annualized Volatility (standard Deviation), <br>
+<code>paSkew</code> - Skewness of Returns, <br>
+<code>paKurt</code> - Kurtosis of Returns, <br>
+<code>maxDD</code> - maximum Drawdown, <br>
+<code>TUW</code> - Time under Water, <br>
+<code>mMaxLoss</code> - Monthly maximum Loss, <br>
+<code>mVaR</code> - Monthly 99
+<code>mModVaR</code> - Monthly 99
+<code>mSharpe</code> - Monthly Sharpe Ratio, <br>
+<code>mModSharpe</code> - Monthly Modified Sharpe Ratio, and <br>
+<code>skPrice</code> - Skewness/Kurtosis Price.
+<br>
+<br>
+<code>assetsTest</code>
+<br>
+returns an object of class <code>fHTEST</code>.</p>
+
+<h3>Author(s)</h3>
+
+<p>
+Adelchi Azzalini for R's <code>sn</code> package, <br>
+Torsten Hothorn for R's <code>mtvnorm</code> package, <br>
+Juliane Schaefer and Korbinian Strimmer for R's <code>corpcov</code> package, <br>
+Alan Ganz and Frank Bretz for the underlying Fortran Code, <br>
+Maria Rizzoand Gabor Szekely for R's <code>energy</code> package, <br>
+Diethelm Wuertz for the Rmetrics port.
+</p>
+
+
+<h3>References</h3>
+
+<p>
+Azzalini A. (1985);
+<EM>A Class of Distributions Which Includes the Normal Ones</EM>,
+Scandinavian Journal of Statistics 12, 171&ndash;178. 
+</p>
+<p>
+Azzalini A. (1986);
+<EM>Further Results on a Class of Distributions Which Includes 
+the Normal Ones</EM>,
+Statistica 46, 199&ndash;208. 
+</p>
+<p>
+Azzalini A., Dalla Valle A. (1996);
+<EM>The Multivariate Skew-normal Distribution</EM>,
+Biometrika 83, 715&ndash;726. 
+</p>
+<p>
+Azzalini A., Capitanio A. (1999);
+<EM>Statistical Applications of the Multivariate Skew-normal 
+Distribution</EM>,
+Journal Roy. Statist. Soc. B61, 579&ndash;602. 
+</p>
+<p>
+Azzalini A., Capitanio A. (2003);
+<EM>Distributions Generated by Perturbation of Symmetry with 
+Emphasis on a Multivariate Skew-t Distribution</EM>,
+Journal Roy. Statist. Soc. B65, 367&ndash;389. 
+</p>
+<p>
+Breiman L. (1996); 
+<EM>Bagging Predictors</EM>,
+Machine Learning 24, 123&ndash;140.
+</p>
+<p>
+Genz A., Bretz F. (1999);
+<EM>Numerical Computation of Multivariate t-Probabilities
+with Application to Power Calculation of Multiple Contrasts</EM>, 
+Journal of Statistical Computation and Simulation 63, 361&ndash;378.
+</p>
+<p>
+Genz A. (1992);
+<EM>Numerical Computation of Multivariate Normal Probabilities</EM>,
+Journal of Computational and Graphical Statistics 1, 141&ndash;149.
+</p>
+<p>
+Genz A. (1993); 
+<EM>Comparison of Methods for the Computation of Multivariate
+Normal Probabilities</EM>,
+Computing Science and Statistics 25, 400&ndash;405.
+</p>
+<p>
+Hothorn T., Bretz F., Genz A. (2001);
+<EM>On Multivariate t and Gauss Probabilities in R</EM>,
+R News 1/2, 27&ndash;29.
+</p>
+<p>
+Ledoit O., Wolf. M. (2003);
+<EM>ImprovedEestimation of the Covariance Matrix of Stock Returns 
+with an Application to Portfolio Selection</EM>,
+Journal of Empirical Finance 10, 503&ndash;621. 
+</p>
+<p>
+Rizzo M.L. (2002);
+<EM>A New Rotation Invariant Goodness-of-Fit Test</EM>, 
+PhD dissertation, Bowling Green State University.
+</p>
+<p>
+Schaefer J., Strimmer K. (2005);  
+<EM>A Shrinkage Approach to
+Large-Scale Covariance Estimation and Implications for Functional Genomics</EM>,
+Statist. Appl. Genet. Mol. Biol. 4, 32.
+</p>
+<p>
+Szekely G.J., Rizzo, M.L. (2005); 
+<EM>A New Test for Multivariate Normality</EM>,
+Journal of Multivariate Analysis 93, 58&ndash;80.
+</p>
+<p>
+Szekely G.J. (1989); 
+<EM>Potential and Kinetic Energy in Statistics</EM>,
+Lecture Notes, Budapest Institute of Technology, TechnicalUniversity.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>
+<code>MultivariateDistribution</code>, <br>
+<code>hclust</code> and <code>kmeans</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+## SOURCE("fPortfolio.101A-AssetsModelling")
+
+## berndtInvest -
+   xmpPortfolio("\nStart: Load monthly data set of returns &gt; ")
+   data(berndtInvest)
+   # Exclude Date, Market and Interest Rate columns from data frame,
+   # then multiply by 100 for percentual returns ...
+   berndtAssets = berndtInvest[, -c(1, 11, 18)]
+   rownames(berndtAssets) = berndtInvest[, 1]
+   head(berndtAssets)
+    
+## assetsSelect -
+   xmpPortfolio("\nNext: Select 4 most dissimilar assets from hclust &gt; ")
+   clustered = assetsSelect(berndtAssets, doplot = FALSE)
+   myAssets = berndtAssets[, c(clustered$order[1:4])]
+   colnames(myAssets)
+   # Scatter and time series plot:
+   par(mfrow = c(2, 1), cex = 0.7)
+   plot(clustered)  
+   myPrices = apply(myAssets, 2, cumsum)
+   ts.plot(myPrices, main = "Selected Assets", 
+     xlab = "Months starting 1978", ylab = "Price", col = 1:4)
+   legend(0, 3, legend = colnames(myAssets), pch = "----", col = 1:4, cex = 1)
+   
+## assetsStats -
+   if (require(fBasics)) assetsStats(myAssets)
+   
+## assetsSim -
+   xmpPortfolio("\nNext: Fit a Skew Student-t &gt; ")
+   fit = assetsFit(myAssets)
+   # Show Model Slot:
+   fit @model
+   # Simulate set with same properties:
+   set.seed(1953)
+   simAssets = assetsSim(n = 120, dim = 4, model = fit@model)
+   head(simAssets)
+   simPrices = apply(simAssets, 2, cumsum)
+   ts.plot(simPrices, main = "Simulated Assets", 
+     xlab = "Number of Months", ylab = "Simulated Price", col = 1:4)
+   legend(0, 3, legend = colnames(simAssets), pch = "----", col = 1:4, cex = 1)
+   
+## plot -
+   xmpPortfolio("\nNext: Show Simulated Assets Plots &gt; ")
+   if (require(fExtremes)) {
+     # Show Scatterplot:
+     par(mfrow = c(1, 1), cex = 0.7)
+     plot(fit, which = c(TRUE, FALSE, FALSE, FALSE, FALSE))
+     # Show  QQ and PP Plots:
+     par(mfrow = c(2, 2), cex = 0.7)
+     plot(fit, which = !c(TRUE, FALSE, FALSE, FALSE, FALSE))
+   }
+</pre>
+
+
+
+<hr><div align="center">[Package <em>fPortfolio</em> version 221.10065 <a href="00Index.html">Index]</a></div>
+
+</body></html>

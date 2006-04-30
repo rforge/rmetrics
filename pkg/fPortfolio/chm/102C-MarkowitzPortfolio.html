@@ -1,0 +1,334 @@
+<html><head><title>Markowitz Portfolio</title>
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>MarkowitzPortfolio(fPortfolio)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   MarkowitzPortfolio">
+<param name="keyword" value="R:   fPFOLIO">
+<param name="keyword" value="R:   fPFOLIO-class">
+<param name="keyword" value="R:   portfolioMarkowitz">
+<param name="keyword" value="R:   frontierMarkowitz">
+<param name="keyword" value="R:   montecarloMarkowitz">
+<param name="keyword" value="R:   print.fPFOLIO">
+<param name="keyword" value="R:   plot.fPFOLIO">
+<param name="keyword" value="R:   summary.fPFOLIO">
+<param name="keyword" value=" Markowitz Portfolio">
+</object>
+
+
+<h2>Markowitz Portfolio</h2>
+
+
+<h3>Description</h3>
+
+<p>
+A collection and description of functions to 
+investigate the efficient frontier for a 
+Markowitz portfolio from a given return 
+series in the mean-variance sense when short 
+selling is forbidden. Tangency, equal weigths, 
+and Monte Carlo portfolios can also be evaluated.
+<br>
+</p>
+<p>
+The functions are:
+</p>
+
+<table summary="Rd table">
+<tr>
+  <td align="left"><code>portfolioMarkowitz</code> </td>  <td align="left"> Optimize mean variance Markowitz portfolio, </td>
+</tr>
+<tr>
+  <td align="left"> <code>frontierMarkowitz</code> </td>  <td align="left"> computes efficient frontier of portfolio, </td>
+</tr>
+<tr>
+  <td align="left"> <code>montecarloMarkowitz</code> </td>  <td align="left"> creates randomly created portfolios. </td>
+</tr>
+</table>
+
+
+<h3>Usage</h3>
+
+<pre>
+portfolioMarkowitz(x, targetReturn, title = NULL, description = NULL)
+frontierMarkowitz(data, Rf = 0, short = FALSE, length = 300, r.range = NULL, 
+    s.range = NULL, title = NULL, description = NULL, ...)
+montecarloMarkowitz(object, mc = 5000, doplot = FALSE, add = TRUE, ...)
+
+## S3 method for class 'fPFOLIO':
+print(x, ...)
+## S3 method for class 'fPFOLIO':
+plot(x, alpha = 0.05, mc = 500, which = "ask", ...)
+## S3 method for class 'fPFOLIO':
+summary(object, ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>alpha</code></td>
+<td>
+a numeric value, the confidence interval, by default 0.05.
+</td></tr>
+<tr valign="top"><td><code>data</code></td>
+<td>
+[frontierMarkowitz] - <br>
+either a rectangular time series object which can be
+transformed into a matrix, or a list with two named entries,
+<code>mu</code>, the returns of the multivariate series, and
+<code>Sigma</code>, the covariance matrix of the multivariate series.
+</td></tr>
+<tr valign="top"><td><code>description</code></td>
+<td>
+[portfolioMarkowitz][frontierMarkowitz] - <br>
+a character string, assigning a brief description to an 
+<code>"fPFOLIO"</code> object.
+</td></tr>
+<tr valign="top"><td><code>doplot, add</code></td>
+<td>
+[frontierMarkowitz] - <br>
+logical values. Should the results be plotted and/or added to
+the frontier plot?
+</td></tr>
+<tr valign="top"><td><code>length</code></td>
+<td>
+[frontierMarkowitz] - <br>
+the number of equidistand return points on the efficient 
+frontier.
+</td></tr>
+<tr valign="top"><td><code>mc</code></td>
+<td>
+the number of Monte Carlo portfolios.
+</td></tr>
+<tr valign="top"><td><code>method</code></td>
+<td>
+[portfolioMarkowitz] - <br>
+the optimization method.
+</td></tr>
+<tr valign="top"><td><code>object</code></td>
+<td>
+a object of class <code>"fPFOLIO"</code> representing a portfolio. 
+A list with with elemets listed in the "Value" section.
+</td></tr>
+<tr valign="top"><td><code>r.range, s.range</code></td>
+<td>
+[frontierMarkowitz] - <br>
+the range of returns and standardard deviations on the 
+efficient frontier. If set to <code>NULL</code>, the default
+value, then the whole efficient frontier will be investigated.
+</td></tr>
+<tr valign="top"><td><code>Rf</code></td>
+<td>
+[frontierMarkowitz] - <br>
+the number of random portfolios to be generated.
+</td></tr>
+<tr valign="top"><td><code>short</code></td>
+<td>
+[frontierMarkowitz] - <br>
+a logical flag, if set to TRUE short selling would be allowed 
+otherwise not wich is the default setting.
+</td></tr>
+<tr valign="top"><td><code>targetReturn</code></td>
+<td>
+[portfolioMarkowitz] - <br>
+the target return, a numeric value.
+</td></tr>
+<tr valign="top"><td><code>title</code></td>
+<td>
+[portfolioMarkowitz][frontierMarkowitz] - <br>
+a character string, assigning a title to an <code>"fPFOLIO"</code> 
+object.
+</td></tr>
+<tr valign="top"><td><code>which</code></td>
+<td>
+which of the five plots should be displayed? <code>which</code> can 
+be either a character string, <code>"all"</code> (displays all plots) 
+or <code>"ask"</code> (interactively asks which one to display), or a 
+vector of 6 logical values, for those elements which are set 
+<code>TRUE</code> the correponding plot will be displayed.
+</td></tr>
+<tr valign="top"><td><code>x</code></td>
+<td>
+[frontierMarkowitz] - <br>
+a numeric matrix or multivariate time series consisting of a
+series of returns. <br>
+[print][plot] - <br>
+an object of class <code>"fPFOLIO"</code> representing a portfolio. 
+A list with with elemets listed in the "Value" section.
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+parameters to be passed.
+</td></tr>
+</table>
+
+<h3>Value</h3>
+
+<p>
+<code>portfolioMarkowitz</code><br>
+<code>frontierMarkowitz</code><br> 
+<br>
+return a S4 object class of class <code>"fPFOLIO"</code>, with the following 
+slots:
+</p>
+<table summary="R argblock">
+<tr valign="top"><td><code>@call</code></td>
+<td>
+the matched function call.
+</td></tr>
+<tr valign="top"><td><code>@data</code></td>
+<td>
+the input data in form of a data.frame.
+</td></tr>
+<tr valign="top"><td><code>@description</code></td>
+<td>
+allows for a brief project description.
+</td></tr>
+<tr valign="top"><td><code>@pfolio</code></td>
+<td>
+the results as a list returned from the underlying
+optimization process. 
+</td></tr>
+<tr valign="top"><td><code>@method</code></td>
+<td>
+the selected method used by the optimization algorithm,
+here "Quadratic Programming".
+</td></tr>
+<tr valign="top"><td><code>@model</code></td>
+<td>
+the model used for the optimization, here "Mean variance
+Portfolio Optimization".
+</td></tr>
+<tr valign="top"><td><code>@title</code></td>
+<td>
+a title string.</td></tr>
+<tr valign="top"><td><code>pm, ps</code></td>
+<td>
+the portfolios mean (the return) and standard deviation (the
+risk) values .
+</td></tr>
+<tr valign="top"><td><code>returns, cov</code></td>
+<td>
+the returns vector and the covariance matrix of the assets.
+</td></tr>
+<tr valign="top"><td><code>r.range, s.range</code></td>
+<td>
+the range of returns and of the standard deviations on the 
+efficient frontier.
+</td></tr>
+<tr valign="top"><td><code>Rf</code></td>
+<td>
+the risk free rate.
+</td></tr>
+<tr valign="top"><td><code>Rm, Sm</code></td>
+<td>
+return and standard deviation of the tangency portfolio.
+</td></tr>
+<tr valign="top"><td><code>t.weights</code></td>
+<td>
+the weights of the tangency portfolio.
+</td></tr>
+<tr valign="top"><td><code>Rew, Sew</code></td>
+<td>
+Return and standard deviation of the equal weights portfolio.
+</td></tr>
+<tr valign="top"><td><code>diversification</code></td>
+<td>
+the number of assets contributing with more than one percent to 
+the efficient frontier portfolio as function of expected returns.
+</td></tr>
+</table>
+<p>
+
+<br>
+<code>montecarloMarkowitz</code>
+<br>
+is a functions which adds random generated portfolios to frontier
+plot.
+<br>
+<code>print</code> 
+<br>
+is the S3 print method for objects of class <code>"fPFOLIO"</code> returned
+from the function <code>mvFit</code>. If shows a summary report of
+the optimization results.
+<br>
+<code>plot</code> 
+<br>
+is the S3 plot method for objects of class <code>"fPFOLIO"</code>. Six plots 
+are produced.<br>
+The first plot produces a Risk-Return-Graph with the individual assets,
+the efficient frontier, the market line, tangency portfolio and the
+equal weights portfolio.<br>
+The second plot is the same as the first, however, the risk and return
+values for random generated portfolios are added.
+The third plot generates a pie chart of weights for the tangency
+portfolio.<br>
+The third plot generates a pie chart of weights for the tangency
+portfolio.<br>
+The fourth plot shows the effect of diversification.<br>
+The fivth plot shows the cumulated returns for the tangency 
+portfolio.<br>
+The sixth plot shows a histogram of the tangency portfolio returns
+together with the maximum loss, the condition Value-at-Risk and the
+upper CVaR.
+<br>   
+<br>
+<code>summary</code>
+<br>
+is the S3 summary method for objects of class <code>"fPFOLIO"</code>. The 
+summary method prints and plots in one step the results as done by 
+the <code>print</code> and <code>plot</code> methods.</p>
+
+<h3>Author(s)</h3>
+
+<p>
+Diethelm Wuertz for the Rmetrics port.
+</p>
+
+
+<h3>References</h3>
+
+<p>
+Elton E.J., Gruber M.J. (1991); 
+<EM>Modern Portfolio Theory and Investment Analysis</EM>, 
+4th Edition, Wiley, NY, pp. 65&ndash;93.
+</p>
+<p>
+Huang C.J., Litzenberger R.H. (1988); 
+<EM>Foundations for Financial Economics</EM>, 
+Elsevier, NY, pp. 59&ndash;82.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+## SOURCE("fPortfolio.102C-MarkowitzPortfolio")
+
+## Not run: 
+## berndtInvest -
+   data(berndtInvest)
+   # Exclude Date, Market and Interest Rate columns from data frame,
+   # then multiply by 100 for percentual returns ...
+   berndtAssets = berndtInvest[, -c(1, 11, 18)]
+   rownames(berndtAssets) = berndtInvest[, 1]
+   head(berndtAssets)
+   
+## portfolioMarkowitz - 
+   myPortfolio = portfolioMarkowitz(x = berndtAssets, targetReturn = 20/100/12)
+   print(myPortfolio)
+   
+## pfolioTargetReturn -
+## pfolioTargetRisk -
+   pfolioTargetReturn(x = berndtAssets, weights = myPortfolio@pfolio$pw)
+   pfolioTargetRisk(x = berndtAssets, weights = myPortfolio@pfolio$pw)
+## End(Not run) 
+</pre>
+
+
+
+<hr><div align="center">[Package <em>fPortfolio</em> version 221.10065 <a href="00Index.html">Index]</a></div>
+
+</body></html>

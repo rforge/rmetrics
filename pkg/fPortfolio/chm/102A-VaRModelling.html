@@ -1,0 +1,284 @@
+<html><head><title>Value-at-Risk Measures for Portfolios</title>
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>VaRModelling(fPortfolio)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   VaRModelling">
+<param name="keyword" value="R:   VaR">
+<param name="keyword" value="R:   CVaR">
+<param name="keyword" value="R:   CVaRplus">
+<param name="keyword" value="R:   lambdaCVaR">
+<param name="keyword" value="R:   pfolioMaxLoss">
+<param name="keyword" value="R:   pfolioReturn">
+<param name="keyword" value="R:   pfolioTargetReturn">
+<param name="keyword" value="R:   pfolioTargetRisk">
+<param name="keyword" value="R:   pfolioSigma">
+<param name="keyword" value="R:   pfolioHist">
+<param name="keyword" value=" Value-at-Risk Measures for Portfolios">
+</object>
+
+
+<h2>Value-at-Risk Measures for Portfolios</h2>
+
+
+<h3>Description</h3>
+
+<p>
+A collection and description of functions to 
+compute Value-at-Risk and related risk measures 
+for a portfolio of assets. In addition utility 
+functions are available to compute the maximum 
+loss, to calculate the total return, and to 
+plot a histogram of the total return.
+<br>
+</p>
+<p>
+The functions are:
+</p>
+
+<table summary="Rd table">
+<tr>
+  <td align="left"><code>VaR</code> </td>  <td align="left"> computes Value-at-Risk for a portfolio of assets, </td>
+</tr>
+<tr>
+  <td align="left"> <code>CVaRplus</code> </td>  <td align="left"> computes Value-at-Risk+ for a portfolio of assets, </td>
+</tr>
+<tr>
+  <td align="left"> <code>CVaR</code> </td>  <td align="left"> computes Conditional Value-at-Risk for a PF of assets, </td>
+</tr>
+<tr>
+  <td align="left"> <code>lambdaCVaR</code> </td>  <td align="left"> computes CVaR's atomic split value lambda, </td>
+</tr>
+<tr>
+  <td align="left"> <code>pfolioMaxLoss</code> </td>  <td align="left"> computes Maximum Loss for a portfolio of assets, </td>
+</tr>
+<tr>
+  <td align="left"> <code>pfolioReturn</code> </td>  <td align="left"> computes return values of a portfolio, </td>
+</tr>
+<tr>
+  <td align="left"> <code>pfolioTargetReturn</code> </td>  <td align="left"> computes the target return of a portfolio, </td>
+</tr>
+<tr>
+  <td align="left"> <code>pfolioTargetRisk</code> </td>  <td align="left"> computes the target risk of a portfolio, </td>
+</tr>
+<tr>
+  <td align="left"> <code>pfolioHist</code> </td>  <td align="left"> plots a histogram of the returns of a portfolio. </td>
+</tr>
+</table>
+
+
+<h3>Usage</h3>
+
+<pre>
+VaR(x, weights = NULL, alpha = 0.05) 
+CVaRplus(x, weights = NULL, alpha = 0.05) 
+CVaR(x, weights = NULL, alpha = 0.05) 
+lambdaCVaR(n, alpha = 0.05) 
+
+pfolioMaxLoss(x, weights = NULL)
+pfolioReturn(x, weights = NULL) 
+pfolioTargetReturn(x, weights = NULL)
+pfolioTargetRisk(x, weights = NULL)
+pfolioHist(x, weights = NULL, alpha = 0.05, range = NULL, details = TRUE, ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>alpha</code></td>
+<td>
+a numeric value, the confidence interval, by default 0.05.
+</td></tr>
+<tr valign="top"><td><code>details</code></td>
+<td>
+a logical value, should details be printed?
+</td></tr>
+<tr valign="top"><td><code>n</code></td>
+<td>
+the number of observation from which the CVaR's atomic split 
+value <code>lambda=1-floor(alpha*n)/(alpha*n)</code> will be 
+evaluated.
+</td></tr>
+<tr valign="top"><td><code>weights</code></td>
+<td>
+usually a numeric vector which has the length of the number of 
+assets. The weights measures the normalized weights of the 
+individual assets. By default <code>NULL</code>, then an equally 
+weighted set of assets is assumed. 
+</td></tr>
+<tr valign="top"><td><code>range</code></td>
+<td>
+a numeric vector of two elements limiting the plot range of
+the histogram. This is quite useful if one likes to compare
+several plots on the same scale. If <code>range=NULL</code>, the
+default value, then the range will be selected automatically.
+</td></tr>
+<tr valign="top"><td><code>x</code></td>
+<td>
+a 'timeSeries' object, data frame or any other rectangular
+object which can be expressed as a matrix. The first 
+dimension is the number of observations, we call it <code>n</code>,
+and the second is the number of assets in the data set,
+we call it <code>dim</code>.
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+optional arguments to be passet to the function <code>hist</code>.
+</td></tr>
+</table>
+
+<h3>Details</h3>
+
+<p>
+The percentile measures of loss (or reward) are defined in the 
+following way: Let <i>f(x ,y)</i> be a loss functions depending 
+upon a decision vector <i>x = (x_1, ..., x_n )</i> and a random 
+vector <i>y = (y_1, ..., y_m)</i>, then 
+</p>
+<p>
+<EM>VaR</EM> is the alpha-percentile of the loss distribution, a 
+smallest value such that the probability that losses exceed or 
+are equal to this value is greater or equal to alpha.
+</p>
+<p>
+<EM>CVaRplus</EM> or "CVaR+" or the "upper CVaR" are the expected  
+losses strictly exceeding VaR. This is also also called "Mean 
+Excess Loss" and "Expected Shortfall".
+</p>
+<p>
+<EM>CVaR</EM> is a weighted average of VaR and CVaRplus defined as
+<i>CVaR = lambda*VaR + (1-lambda)</i> CVaRplus, for 
+<i>0 &lt;= lambda &lt;= 1</i>.
+</p>
+<p>
+Note, CVaR is convex, but VaR and CVaRplus may be non-convex. The 
+following inequalities are valid: <i>VaR &lt;= CVaR &lt;= CVaRplus</i>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>
+<code>VaR</code>
+<br>
+returns the value of risk, VaR,  for a portfolio of assets, a
+numeric value.
+<br>
+<br>
+<code>CVaRplus</code>
+<br>
+returns the conditional value of risk plus, CVaRplus, for a 
+portfolio of assets, a numeric value.
+<br>
+<br>
+<code>CVaR</code>
+<br>
+returns the conditional value of risk, CVaR, for a portfolio
+of assets, a numeric value.
+<br>
+<br>
+<code>lambdaCVaR</code>
+<br>
+returns CVaR's atomic split value <code>lambda</code>, a numeric value.
+<br>
+<br>
+<code>pfolioMaxLoss</code>
+<br>
+returns the maximum loss value of the portfolio, a numeric value.
+<br>
+<br>
+<code>pfolioReturn</code>
+<br>
+returns the total portfolio return computed from the set of
+assets <code>x</code>, a numeric vector.
+<br>
+<br>
+<code>pfolioTargetReturn</code>
+<br>
+returns the total return or target return computed from the set of
+assets <code>x</code> and weights <code>weights</code>, a numeric value.
+<br>
+<br>
+<code>pfolioTargetRisk</code>
+<br>
+returns the total risk (Sigma) or target risk computed from the set 
+of assets <code>x</code> and <code>weights</code> via the formual
+<code>sqrt(weights %*% cov(x) %*% weights)</code>, a numeric value.
+<br>
+<br>
+<code>pfolioHist</code>
+<br>
+plots a histogram of portfolio returns and adds the values
+for the VaR (blue), for the CVaRplus (red), and for the 
+maximum loss (green) to the histogram plot. The function 
+invisibly returns a list with the following elements: VaR,
+VaRplus, maxLoss, mean, and sd. If <code>details</code> is <code>TRUE</code>, 
+then the result is printed.</p>
+
+<h3>Author(s)</h3>
+
+<p>
+Diethelm Wuertz for the Rmetrics port.
+</p>
+
+
+<h3>References</h3>
+
+<p>
+Uryasev S. (2000);
+<EM>Conditional Value-at-Risk (CVaR): Algorithms and Applications</EM>,
+Risk Management and Financial Engineering Lab, University of Florida
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+## SOURCE("fPortfolio.102A-VaRModelling")
+
+## assetsSim -
+   xmpPortfolio("\nStart: Artificial Mean Variance Portfolio &gt; ")
+   myAssets = 100/12 * assetsSim(n = 120, dim = 4)
+   # Plot Cumulated Returns of the Assets:
+   prices = apply(myAssets, 2, FUN = cumsum)
+   par(mfrow = c(2, 1), cex = 0.7)
+   ts.plot(prices, col = 1:4, ylim = c(-300, 300))
+   legend(0, 300, legend = colnames(myAssets), pch = "----", col = 1:4)
+   title(main = "Cumulated Returns", ylab = "Cumulated Returns")
+   abline(h = 0, lty = 3)
+    
+## CVaR -
+   xmpPortfolio("\nNext: Value-at-Risk and related measures &gt; ")
+   equalWeights = rep(1/4, 4)
+   alpha = 0.10
+   # Value at Risk:
+   VaR(myAssets, equalWeights, alpha)
+   # Conditional Value at Risk Plus:
+   CVaRplus(myAssets, equalWeights, alpha)
+   # Conditional Value at Risk Plus:
+   CVaR(myAssets, equalWeights, alpha)
+   # Lambda - Atomic Split Value:
+   lambdaCVaR(120, alpha) 
+
+## pfolioHist - 
+   xmpPortfolio("\nNext: Plot risk measures of portfolio &gt; ")
+   # :
+   # Maximum Loss Value of the Portfolio
+   pfolioMaxLoss(myAssets, equalWeights)
+   # Compute Portfolio Returns:
+   r = pfolioReturn(myAssets, equalWeights) 
+   head(r)
+   # Target Return and Target Risk:
+   pfolioTargetReturn(myAssets, equalWeights)
+   pfolioTargetRisk(myAssets, equalWeights)
+   # Plot:
+   pfolioHist(myAssets, equalWeights, alpha, n = 20)    
+</pre>
+
+
+
+<hr><div align="center">[Package <em>fPortfolio</em> version 221.10065 <a href="00Index.html">Index]</a></div>
+
+</body></html>
