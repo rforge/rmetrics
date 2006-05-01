@@ -2,20 +2,6 @@
 
 \alias{GevModelling}
 
-\alias{dgev}
-\alias{pgev}
-\alias{qgev}
-\alias{rgev}
-\alias{gevMoments}
-
-\alias{devd}
-\alias{pevd}
-\alias{qevd}
-\alias{revd}
-\alias{evdMoments}
-
-\alias{gevMoments}
-
 \alias{fGEVFIT}
 \alias{fGEVFIT-class}
 
@@ -44,12 +30,8 @@
 
 \description{
   
-    A collection and description functions to compute
-    the generalized extreme value distribution and to
-    estimate it parameters. The functions compute 
-    density, distribution function, quantile function 
-    and generate random deviates for the GEV, for the 
-    Frechet, Gumbel, and Weibull distributions. To model
+    A collection and description functions to estimate 
+    the parameters of the GEV distribution. To model
     the GEV three types of approaches for parameter 
     estimation are provided: Maximum likelihood
     estimation, probability weighted moment method,
@@ -58,20 +40,6 @@
     and Hill estimators together with several plot 
     variants.
     \cr
-    
-    The GEV distribution functions are:
-    
-    \tabular{ll}{
-    \code{dgev} \tab density of the GEV Distribution, \cr
-    \code{pgev} \tab probability function of the GEV Distribution, \cr
-    \code{qgev} \tab quantile function of the GEV Distribution, \cr
-    \code{rgev} \tab random variates from the GEV Distribution. \cr
-    \code{[dpqr]frechet} \tab Frechet Distribution, \cr
-    \code{[dpqr]gumbel} \tab Gumbel Distribution, \cr
-    \code{[dpqr]weibull} \tab Weibull Distribution, \cr
-    \code{[dpqr]evd} \tab an alternative call for the GEV Distribution, \cr
-    \code{gevMoments} \tab computes true mean and variance, \cr
-    \code{evdMoments} \tab yet another function to compute moments. }
     
     The GEV modelling functions are:
     
@@ -95,18 +63,6 @@
 
 
 \usage{
-dgev(x, xi = 1, mu = 0, sigma = 1, log = FALSE)
-pgev(q, xi = 1, mu = 0, sigma = 1, lower.tail = TRUE)
-qgev(p, xi = 1, mu = 0, sigma = 1, lower.tail = TRUE)
-rgev(n, xi = 1, mu = 0, sigma = 1)
-gevMoments(xi = 0, mu = 0, sigma = 1)
-
-devd(x, location = 0, scale = 1, shape = 0, log = FALSE)
-pevd(q, location = 0, scale = 1, shape = 0, lower.tail = TRUE)
-qevd(p, location = 0, scale = 1, shape = 0, lower.tail = TRUE)
-revd(n, location = 0, scale = 1, shape = 0)
-evdMoments(location = 0, scale = 1, shape = 0) 
-
 gevSim(model = list(shape = -0.25, location = 0, scale = 1), n = 1000, seed = NULL)
 gumbelSim(model = list(location = 0, scale = 1), n = 1000, seed = NULL)
 
@@ -296,13 +252,6 @@ shaparmDEHaan(x, p = 0.05, xiRange = NULL,
 
 
 \value{
-    
-    \code{d*} returns the density, \cr
-    \code{p*} returns the probability, \cr
-    \code{q*} returns the quantiles, and \cr
-    \code{r*} generates random variates. \cr
-    All values are numeric vectors.
-    \cr
 
     \code{gevSim}
     \cr
@@ -349,14 +298,6 @@ shaparmDEHaan(x, p = 0.05, xiRange = NULL,
 
 
 \details{
-
-    \bold{Generalized Extreme Value Distribution:}
-    \cr\cr
-    Computes density, distribution function, quantile function and 
-    generates random variates for the Generalized Extreme Value 
-    Distribution, GEV, for the Frechet, Gumbel, and Weibull 
-    distributions.
-    \cr
         
     \bold{Parameter Estimation:}
     \cr\cr
@@ -412,35 +353,8 @@ shaparmDEHaan(x, p = 0.05, xiRange = NULL,
   
 
 \note{
-
-    \bold{Generalized Extreme Value Distribution:}
-    \cr\cr
-    Here we implemented the notation for the arguments as used
-    by the GEV functions in the EVIS package or SPlus/FinMetrics 
-    module. Additional arguments to these packages are the \code{log} 
-    and the \code{lower.tail} arguments, underlying the code
-    from R's \code{evd} package.
-    \cr
-    An alternative usage is proposed by the \code{evd} package.
-    There the following arguments are used:
-    \cr
-    \code{*gev(x, loc = 0, scale = 1, shape = 0, ...)}
-    \cr   
-    What you prefer is a matter of taste. The GEV functions from
-    the \code{evd} package are renamed from \code{*gev} to \code{*evd}
-    so that both versions are available. 
-    \cr   
-    In addition functions for the density, probability, quantiles, 
-    and the generation of random variates for the 
-    Frechet \code{[dpqr]frechet},
-    Gumbel \code{[dpqr]gumbel}, and
-    Weibull \code{[dpqr]weibull} are also available.
-    \cr   
-    If you stay with both versions you can access the help page for 
-    \code{evds}'s function \code{dgev} by \code{help(dgev, package="evd")}.
-    \cr
     
-    \bold{Generalized Extreme Value Distribution:}
+    \bold{GEV Parameter Estimation:}
     \cr\cr
     If method \code{"mle"} is selected the parameter fitting in \code{gevFit} 
     is passed to the internal function \code{gev.mle} or \code{gumbel.mle}
@@ -477,65 +391,6 @@ Embrechts, P., Klueppelberg, C., Mikosch, T. (1997);
 \examples{
 \dontrun{
 ## SOURCE("fExtremes.052A-GevModelling")
-
-## *gev  -
-   xmpExtremes("\nStart: GEV Frechet >")
-   # Create and plot 1000 GEV/Frechet distributed rdv:
-   par(mfrow = c(3, 3))
-   r = rgev(n = 1000, xi = 1)
-   plot(r, type = "l", main = "GEV/Frechet Series")
-   ## Plot empirical density and compare with true density:
-   ## Omit values greater than 500 from plot
-   hist(r[r<10], n = 25, probability = TRUE, xlab = "r", 
-     xlim = c(-5, 5), ylim = c(0, 1.1), main = "Density")
-   x = seq(-5, 5, by=0.01)
-   lines(x, dgev(x, xi = 1), col = 2)
-   ## Plot df and compare with true df:
-   plot(sort(r), (1:length(r)/length(r)), 
-     xlim = c(-3, 6), ylim = c(0, 1.1),
-     cex = 0.5, ylab = "p", xlab = "q", main = "Probability")
-   q = seq(-5,5, by=0.1)
-   lines(q, pgev(q, xi=1), col=2)
-## Compute quantiles, a test:
-   qgev(pgev(seq(-5, 5, 0.25), xi = 1), xi = 1) 
-   
-## *gev -
-   xmpExtremes("\nNext: GEV Gumbel >")
-   # Create and plot 1000 Gumbel distributed rdv:
-   ##> r = rgev(n = 1000, xi = 0)
-   ##> plot(r, type = "l", main = "Gumbel Series")
-   ## Plot empirical density and compare with true density:
-   ##>hist(r[abs(r)<10], nclass = 25, freq = FALSE, xlab = "r", 
-   ##>   xlim = c(-5,5), ylim = c(0,1.1), main = "Density")
-   ##>x = seq(-5, 5, by = 0.01)
-   ##>lines(x, dgev(x, xi = 0), col=2)
-   ## Plot df and compare with true df:
-   ##>plot(sort(r), (1:length(r)/length(r)), 
-   ##>  xlim = c(-3, 6), ylim = c(0, 1.1),
-   ##>   cex=0.5, ylab = "p", xlab="q", main="Probability")
-   ##>q = seq(-5, 5, by = 0.1)
-   ##>lines(q, pgev(q, xi = 0), col = 2)
-   ## Compute quantiles, a test:
-   ##>qgev(pgev(seq(-5, 5, 0.25), xi = 0), xi = 0)   
-
-## *gev -
-   xmpExtremes("\nNext: GEV Weibull >")
-   # Create and plot 1000 Weibull distributed rdv:
-   r = rgev(n = 1000, xi = -1)
-   plot(r, type = "l", main = "Weibull Series")
-   ## Plot empirical density and compare with true density:
-   hist(r[abs(r)<10], nclass = 25, freq = FALSE, xlab = "r", 
-     xlim=c(-5,5), ylim=c(0,1.1), main="Density")
-   x = seq(-5, 5, by=0.01)
-   lines(x, dgev(x, xi = -1), col = 2)
-   ## Plot df and compare with true df:
-   plot(sort(r), (1:length(r)/length(r)), 
-     xlim = c(-3, 6), ylim = c(0, 1.1),
-     cex = 0.5, ylab = "p", xlab = "q", main = "Probability")
-   q=seq(-5, 5, by = 0.1)
-   lines(q, pgev(q, xi = -1), col = 2)
-   ## Compute quantiles, a test:
-   qgev(pgev(seq(-5, 5, 0.25), xi = -1), xi = -1)   
 
 ## gevSim -
 ## gevFit -
