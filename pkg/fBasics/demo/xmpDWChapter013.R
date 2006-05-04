@@ -114,6 +114,10 @@
     USDCHF.RET = returnSeries(usdchf.ts)
     ###
     
+    # Graph Frame:
+    par(mfrow = c(2, 2), cex = 0.7)
+    ###
+    
     # Log Density Plot:
     x = as.vector(USDCHF.RET)
     hist(x = x, probability = TRUE, nclass = 100,
@@ -351,9 +355,10 @@
 ### 1.3.4  Example: The Central Limit Theorem
 
     # Create an artificial time series with t-distributed
-    # innovations: You can think of this as artificial daily
-    # return values, on the aggregation level of 20, this
-    # will coincide approximately with monthly return values:
+    # innovations: You can think of this as an artificial daily
+    # series of return values. Then aggregate the series on an
+    # aggregation level of 20, this will coincide approximately 
+    # with monthly return values:
     set.seed(1985)
     df = 4
     r = rt(2500, df)

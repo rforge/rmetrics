@@ -65,10 +65,9 @@
 ### 1.4.1  Example: Short-Term Autocorrelations
 
     # Plot the autocorrelation function for USDDEM FX BID returns 
-    # for  30 min lags. The demo data file "usddem30u" contains the 
+    # for 30 min lags. The demo data file "usddem30u" contains the 
     # FX BID and ASK Rates. 
-    
-    
+     
     # Graph Frame:
     par(mfrow = c(2, 2), cex = 0.7)
     ###
@@ -131,7 +130,7 @@
     # Daily NYSE Composite Index Series:
     NYSE.RET = returnSeries(as.timeSeries(data(nyse)))
     # Remove Return Value from Index Redefinition:
-    NYSE.RET = outlierSeries(NYSE.RET)
+    NYSE.RET = outlier(NYSE.RET)
     lmacfPlot(NYSE.RET, lag.max = 63, main = "NYSE 3 Month")
     grid()
     # Output:
@@ -228,7 +227,7 @@
     
     # Taylor Effect - NYSE Data:
     NYSE = as.timeSeries(data(nyse))
-    NYSE.RET = outlierSeries(returnSeries(NYSE))
+    NYSE.RET = outlier(returnSeries(NYSE))
     teffectPlot(NYSE.RET, deltas = seq(from = 0.2, to = 3, by = 0.1))
     title(main = "\n\nNYSE Composite Index", cex = 0.5)
     ### 
