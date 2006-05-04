@@ -29,8 +29,7 @@
 
 ### Load Packages:
 
-    require(fBasics)
-    help(
+    # require(fBasics)
     ###
     
     
