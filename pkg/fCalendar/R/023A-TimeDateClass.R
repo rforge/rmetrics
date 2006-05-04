@@ -328,6 +328,9 @@ FinCenter = myFinCenter)
     recFinCenter = zone      # Time zone where the data were recorded
     useFinCenter = FinCenter # Time zone where the data will be used
     
+    # ISO Date/Time Format 
+    iso.format = "%Y-%m-%d %H:%M:%S"
+    
     # Trace Input:
     if (trace) { 
         cat("\nInput: ")
@@ -338,9 +341,7 @@ FinCenter = myFinCenter)
     # Convert:    
     DEBUG = FALSE
     
-    # ISO Format:
-    iso.format = "%Y-%m-%d %H:%M:%S"
-    
+
     # GMT -> GMT:
     if (recFinCenter == "GMT" && useFinCenter == "GMT") {       
         if (DEBUG) print("if - 1:")
@@ -350,9 +351,9 @@ FinCenter = myFinCenter)
             print(charvec)
             cat("\n") 
         }
-        lt = strptime(charvec, iso.format)
+        lt = strptime(charvec, format)
         timeTest = sum(lt$hour) + sum(lt$min) + sum(lt$sec) 
-        if (timeTest == 0) iso.format = "%Y-%m-%d"
+        if (timeTest == 0) stop("Problem with Format Specification")
         # Return Value:
         Sys.putenv(TZ = myTZ)
         return(new("timeDate", 
@@ -372,9 +373,9 @@ FinCenter = myFinCenter)
             print(charvec)
             cat("\n") 
         }
-        lt = strptime(charvec, iso.format)
+        lt = strptime(charvec, format)
         timeTest = sum(lt$hour) + sum(lt$min) + sum(lt$sec) 
-        if (timeTest == 0) iso.format = "%Y-%m-%d"
+        if (timeTest == 0) stop("Problem with Format Specification")
         # Return Value:
         Sys.putenv(TZ = myTZ)
         return(new("timeDate", 
@@ -394,9 +395,9 @@ FinCenter = myFinCenter)
             print(charvec)
             cat("\n") 
         }
-        lt = strptime(charvec, iso.format)
+        lt = strptime(charvec, format)
         timeTest = sum(lt$hour) + sum(lt$min) + sum(lt$sec) 
-        if (timeTest == 0) iso.format = "%Y-%m-%d"
+        if (timeTest == 0) stop("Problem with Format Specification")
         # Return Value:
         Sys.putenv(TZ = myTZ)
         return(new("timeDate", 
@@ -415,9 +416,9 @@ FinCenter = myFinCenter)
             print(charvec)
             cat("\n") 
         }
-        lt = strptime(charvec, iso.format)
+        lt = strptime(charvec, format)
         timeTest = sum(lt$hour) + sum(lt$min) + sum(lt$sec) 
-        if (timeTest == 0) iso.format = "%Y-%m-%d"
+        if (timeTest == 0) stop("Problem with Format Specification")
         # Return Value:
         Sys.putenv(TZ = myTZ)
         return(new("timeDate", 
@@ -438,9 +439,9 @@ FinCenter = myFinCenter)
             print(charvec)
             cat("\n") 
         }
-        lt = strptime(charvec, iso.format)
+        lt = strptime(charvec, format)
         timeTest = sum(lt$hour) + sum(lt$min) + sum(lt$sec) 
-        if (timeTest == 0) iso.format = "%Y-%m-%d"
+        if (timeTest == 0) stop("Problem with Format Specification")
         # Return Value:
         Sys.putenv(TZ = myTZ)
         return(new("timeDate", 

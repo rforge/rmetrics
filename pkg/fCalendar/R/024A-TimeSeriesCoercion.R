@@ -132,18 +132,7 @@ function(x, ...)
     
     # Check if the first column has a valid ISO-format:
     charvec = as.character(as.vector(x[, 1]))
-    isoFormat = c("%Y%m%d", "%Y-%m-%d", "%Y%m%d%H%M", "%Y-%m-%d %H:%M",
-        "%Y%m%d%H%M%S", "%Y-%m-%d %H:%M:%S")
-    isoCheck = 0
-    for (i in 1:4) {
-        Test = !is.na(strptime(charvec, isoFormat[i])) 
-        if (Test[1]) isoCheck = i
-    }
-    if (isoCheck == 0) {
-        stop("Could not identify format type") 
-    } else {
-        format = isoFormat[isoCheck]
-    }
+    format = .whichFormat(charvec)
     
     # Transform to Matrix:
     if (dim(x)[2] == 2) {
@@ -164,6 +153,8 @@ function(x, ...)
         if (length(Numeric) != length(X[1, ])) {
             recordIDs = data.frame(X[, -Numeric])
             colnames(recordIDs) = colnames(X)[-Numeric]
+        } else {
+            recordIDs = data.frame()
         }
     }
      
