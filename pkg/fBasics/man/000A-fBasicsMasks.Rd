@@ -105,8 +105,7 @@ colnames(x) <- value
         [var] - \cr
         additional arguments to the \code{var} function.
         }
-    \item{...}{
-        [] - \cr
+    \item{\dots}{
         arguments to be passed
     }
  
@@ -124,6 +123,7 @@ colnames(x) <- value
 \author{
 
     Diethelm Wuertz for the Rmetrics \R-port.
+    
 }
 
 
