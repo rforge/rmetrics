@@ -30,6 +30,7 @@
 ################################################################################
 # FUNCTION:           DESCRIPTION:    
 #  fDFIT               Class Representation
+#                      Normal Distribution ...
 #  tFit                Fits parameters of a Student-t Density
 #  ghFit               Fits parameters of a generalized hyperbolic Density
 #  hypFit              Fits parameters of a hyperbolic Density
