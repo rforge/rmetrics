@@ -233,7 +233,6 @@ greyPal(n = 64, start = 255-n, end = 255)
 \examples{
 ## SOURCE("fBasics.012B-PlotFunctions")
 
-\dontrun{
 ## tsPlot -
    xmpBasics("\nStart: European Stock Markets > ")
    # Show multiple plot:
@@ -283,7 +282,6 @@ greyPal(n = 64, start = 255-n, end = 255)
 ## plotcharacter Table - 
    xmpBasics("\nNext: Display Table of Plot Characters > ")
    plotcharacterTable()
-}
 }
 
 

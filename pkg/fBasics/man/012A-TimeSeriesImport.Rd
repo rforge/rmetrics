@@ -42,14 +42,6 @@
     \code{fredImport} \tab time series from St. Louis FRED Web site, \cr
     \code{forecastsImport} \tab monthly data from the Financial Forecast Center. }
     
-    %Functions added to Splus Version:
-    %
-    %\tabular{ll}{
-    %\code{as.Date} \tab Converts date represenatation, \cr
-    %\code{data} \tab Loads or lists specified data sets, \cr
-    %\code{download.file} \tab downloads files from Internet using "lynx" or "wget", \cr
-    %\code{strsplit} \tab splits elements of a character vector into substrings. }
-
 }
 
 
