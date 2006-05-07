@@ -1,3 +1,11 @@
+
+
+********************************************************************************
+* Fortran source from contributed R-package akima
+* used by *HypothesisTesting
+********************************************************************************
+
+
       SUBROUTINE SDBI3P(MD,NDP,XD,YD,ZD,NIP,XI,YI, ZI,IER, WK,IWK,
      +                  EXTRPI,NEAR,NEXT,DIST)
 *
