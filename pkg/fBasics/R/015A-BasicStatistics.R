@@ -16,7 +16,7 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2004, Diethelm Wuertz, GPL
+#   1999 - 2006, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
 #   www.rmetrics.org
@@ -185,7 +185,7 @@ function (x, na.rm = FALSE, method = c("moment", "fisher"), ...)
     # FUNCTION:
     
     # Method:
-    method = method[1]
+    method = match.arg(method)
     
     # Warnings:
     if (!is.numeric(x) && !is.complex(x) && !is.logical(x)) {
@@ -199,7 +199,7 @@ function (x, na.rm = FALSE, method = c("moment", "fisher"), ...)
     n = length(x)
     if (is.integer(x)) x = as.numeric(x) 
     
-     
+    # Selected Method:
     if (method == "moment") {
         skewness = sum((x-mean(x))^3/sqrt(var(x))^3)/length(x)
     } 
@@ -340,7 +340,7 @@ function(x, ci = 0.95, column = 1)
 }
 
 
-# ******************************************************************************
+################################################################################
 
 
 rowStats = 
@@ -391,6 +391,8 @@ function(x, na.rm = FALSE, ...)
     } else {
         result = apply(x, MARGIN = 1, FUN = mean, ...) 
     }
+    result = t(t(result))
+    colnames(result) = "Mean"
         
     # Return Value:
     result
@@ -418,6 +420,8 @@ function(x, na.rm = FALSE, ...)
     } else {
         result = apply(x, MARGIN = 1, FUN = var, ...) 
     }
+    result = t(t(result))
+    colnames(result) = "Variance"
         
     # Return Value:
     result
@@ -445,6 +449,8 @@ function(x, na.rm = FALSE, ...)
     } else {
         result = sqrt(apply(x, MARGIN = 1, FUN = var, ...))
     }
+    result = t(t(result))
+    colnames(result) = "StDev"
         
     # Return Value:
     result
@@ -472,6 +478,8 @@ function(x, na.rm = FALSE, ...)
     } else {
         result = apply(x, MARGIN = 1, FUN = skewness, ...) 
     }
+    result = t(t(result))
+    colnames(result) = "Skewness"
         
     # Return Value:
     result
@@ -499,6 +507,8 @@ function(x, na.rm = FALSE, ...)
     } else {
         result = apply(x, MARGIN = 1, FUN = kurtosis, ...) 
     }
+    result = t(t(result))
+    colnames(result) = "Kurtosis"
         
     # Return Value:
     result 
@@ -526,13 +536,14 @@ function(x, na.rm = FALSE, ...)
     } else {
         result = apply(x, MARGIN = 2, FUN = cumsum, ...) 
     }
+    colnames(result) = paste(1:ncol(x))
         
     # Return Value:
-    result 
+    result
 }
 
 
-# ******************************************************************************
+################################################################################
 
 
 colStats = 

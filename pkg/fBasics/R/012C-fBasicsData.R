@@ -16,7 +16,7 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2004, Diethelm Wuertz, GPL
+#   1999 - 2006, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
 #   www.rmetrics.org
@@ -30,5 +30,20 @@
 ################################################################################
 # FUNCTION:             DESCRIPTION:
 #  fBasicsDataSets       Are located in the fBasics/data directory
+################################################################################
+
+
+##  plot -
+    data(nyseres)
+    x = as.ts(nyseres)
+    par(mfrow = c(2, 1), cex = 0.75)
+    plot(100*x, type = "l", col = "steelblue4",
+      main = "NYSE Composite Index")
+    grid()
+    plot(cumsum(x), type = "l", col = "steelblue4",
+      main = "Cumulated NYSE Index")
+    grid()
+    
+    
 ################################################################################
 

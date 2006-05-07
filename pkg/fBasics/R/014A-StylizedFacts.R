@@ -12,11 +12,11 @@
 # You should have received a copy of the GNU Library General 
 # Public License along with this library; if not, write to the 
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
-# MA 02111-1307 USA
+# MA  02111-1307  USA
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2004, Diethelm Wuertz, GPL
+#   1999 - 2006, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
 #   www.rmetrics.org
@@ -35,7 +35,6 @@
 #  teffectPlot           Estimates and plots the Taylor effect
 #  lmacfPlot             Estimates and plots the long memory ACF
 #  lacfPlot              Plots lagged autocorrelations
-# FUNCTION:             DESCRIPTION:
 #  logpdfPlot            Returns a pdf plot on logarithmic scale(s)
 #  qqgaussPlot           Returns a Gaussian quantile-quantile plot
 #  scalinglawPlot        Evaluates and plots scaling law behavior
@@ -43,7 +42,7 @@
 
 
 acfPlot = 
-function(x, ...)
+function(x, labels = TRUE, ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -52,14 +51,23 @@ function(x, ...)
     # FUNCTION:
     
     # Convert Type:
+    if (class(x) == "timeSeries") stopifnot(isUnivariate(x))
     x = as.vector(x)
     
-    # Result:
-    ans = acf(x = x, ...)
+    # Labels:
+    if (labels) {
+        main = "Autocorrelation Function"
+        xlab = "lag"
+        ylab = "ACF"
+    } else {
+        main = xlab = ylab = ""
+    }
+    
+    # ACF:
+    ans = acf(x = x, main = main, xlab = xlab, ylab = ylab, ...)
     
     # Return Value:
-    invisible(ans)
-    
+    invisible(ans) 
 }
 
 
@@ -67,7 +75,7 @@ function(x, ...)
 
 
 pacfPlot = 
-function(x, ...)
+function(x, labels = TRUE, ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -76,13 +84,25 @@ function(x, ...)
     # FUNCTION:
     
     # Convert Type:
+    if (class(x) == "timeSeries") stopifnot(isUnivariate(x))
     x = as.vector(x)
+    
+    # Labels:
+    if (labels) {
+        main = "Partial ACF"
+        xlab = "lag"
+        ylab = "PACF"
+    } else {
+        main = xlab = ylab = ""
+    }
     
     # For S-Plus compatibility:
     if (exists("pacf")) {
-        ans = pacf(x = x, ...)
+        ans = pacf(x = x, 
+            main = main, xlab = xlab, ylab = ylab, ...)
     } else {
-        ans = acf(x = x, type = "partial", ...)
+        ans = acf(x = x, type = "partial", 
+            main = main, xlab = xlab, ylab = ylab, ...)
     }
     
     # Return Value:
@@ -95,7 +115,7 @@ function(x, ...)
 
 ccfPlot = 
 function(x, y, lag.max = max(2, floor(10*log10(length(x)))), 
-type = c("correlation", "covariance", "partial"), ...)
+type = c("correlation", "covariance", "partial"), labels = TRUE, ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -104,8 +124,19 @@ type = c("correlation", "covariance", "partial"), ...)
     # FUNCTION:
     
     # Convert Type:
+    if (class(x) == "timeSeries") stopifnot(isUnivariate(x))
+    if (class(y) == "timeSeries") stopifnot(isUnivariate(y))
     x = as.vector(x)
     y = as.vector(y)
+    
+    # Labels:
+    if (labels) {
+        main = "Crosscorrelation Function"
+        xlab = "lag"
+        ylab = "CCF"
+    } else {
+        main = xlab = ylab = ""
+    }
     
     # Result:
     # A copy from R's ccf - So you can use it also under SPlus:
@@ -116,7 +147,7 @@ type = c("correlation", "covariance", "partial"), ...)
     acf.out$acf = array(y, dim = c(length(y), 1, 1))
     acf.out$lag = array(lag, dim = c(length(y), 1, 1))
     acf.out$snames = paste(acf.out$snames, collapse = " & ")
-    plot(acf.out, ...)
+    plot(acf.out, main = main, xlab = xlab, ylab = ylab, ...)
     
     # Return Value:
     invisible(acf.out)  
@@ -129,7 +160,7 @@ type = c("correlation", "covariance", "partial"), ...)
 
 teffectPlot =
 function (x, deltas = seq(from = 0.2, to = 3.0, by = 0.2), lag.max = 10, 
-ymax = NA, standardize = TRUE)
+ymax = NA, standardize = TRUE, labels = TRUE, ...)
 {   # A function implemented by Diethelm Wuertz
     
     # Description:
@@ -138,7 +169,17 @@ ymax = NA, standardize = TRUE)
     # FUNCTION:
     
     # Convert Type:
+    if (class(x) == "timeSeries") stopifnot(isUnivariate(x))
     x = as.vector(x)
+    
+    # Labels:
+    if (labels) {
+        main = "Taylor Effect"
+        xlab = "Exponent Delta"
+        ylab = "Autocorrelation"
+    } else {
+        main = xlab = ylab = ""
+    }
     
     # Standardize:
     if(standardize) x = (x-mean(x))/sqrt(var(x))
@@ -151,16 +192,18 @@ ymax = NA, standardize = TRUE)
     
     # Plot:
     plot(deltas, data[1,], ylim = c(0, ymax), type = "n", 
-        xlab = "Exponent Delta", ylab = "autocorrelation",
-        main = "Taylor Effect")
+        main = main, xlab = xlab, ylab = ylab, ...)
     xl = 1:length(deltas)
     for (il in 1:(lag.max)){
-        yp = max(data[il,])
-        yl = xl[data[il,] == yp]
-        lines(deltas, data[il,], col = il)
-        points(deltas[yl],yp)
+        yp = max(data[il, ])
+        yl = xl[data[il, ] == yp]
+        lines(deltas, data[il, ], col = il)
+        points(deltas[yl], yp, pch = 19)
         lines (c(1, 1), c(0, ymax))
     }
+    
+    # Grid:
+    if (labels) grid()
             
     # Return Value:
     invisible(data)
@@ -172,7 +215,7 @@ ymax = NA, standardize = TRUE)
 
 lmacfPlot = 
 function(x, lag.max = max(2, floor(10*log10(length(x)))), 
-ci = 0.95, main = "ACF", doprint = TRUE)
+ci = 0.95, labels = TRUE, details = TRUE, ...)
 {   # A function implemented by Diethelm Wuertz
     
     # Description:
@@ -181,7 +224,17 @@ ci = 0.95, main = "ACF", doprint = TRUE)
     # FUNCTION:
     
     # Convert Type:
+    if (class(x) == "timeSeries") stopifnot(isUnivariate(x))
     x = as.vector(x)
+    
+    # Labels:
+    if (labels) {
+        main = "ACF"
+        xlab = "lag"
+        ylab = "ACF"
+    } else {
+        main = xlab = ylab = ""
+    }
     
     # Transform:
     x.ret = x
@@ -197,10 +250,10 @@ ci = 0.95, main = "ACF", doprint = TRUE)
     x = seq(0, lag.max, by = 1)
     y = z$acf 
     plot(x = x[-1], y = y[-1], type = "l", main = main, 
-        col = "steelblue4", xlab = "lag", ylab = "ACF", 
-        xlim = c(0, lag.max), ylim = c(-2*cl, max(y[-1])) )
+        col = "steelblue4", xlab = xlab, ylab = ylab, 
+        xlim = c(0, lag.max), ylim = c(-2*cl, max(y[-1])), ...)
     # abline(h = 0, lty = 3)
-    if (doprint) {
+    if (details) {
         cat ('\nLong Memory Autocorrelation Function:\n')
             paste (cat ('\n  Maximum Lag        '), cat(lag.max))
             paste (cat ('\n  Cut-Off ConfLevel  '), cat(cl))
@@ -217,16 +270,16 @@ ci = 0.95, main = "ACF", doprint = TRUE)
     if (length(x) < 10) {
         Fit = c(NA, NA)
         hurst = NA
-        cat("\n  The time series exhibits no long memory! \n") }
-    else {
+        cat("\n  The time series exhibits no long memory! \n") 
+    } else {
         plot(x = log(x), y = log(y), type = "l", xlab = "log(lag)", 
-            ylab = "log(ACF)", main = "log-log", col = "steelblue4")
+            ylab = "log(ACF)", main = "log-log", col = "steelblue4", ...)
         Fit = lsfit(log(x), log(y))
         fit = unlist(Fit)[1:2]
         ### fit = l1fit(log(x), log(y))$coefficients
         abline(fit[1], fit[2], col = 1)
         hurst = 1 + fit[2]/2 
-        if (doprint) {
+        if (details) {
             paste (cat ('\n  Plot-Intercept     '), cat(fit[1]))
             paste (cat ('\n  Plot-Slope         '), cat(fit[2]))
             paste (cat ('\n  Hurst Exponent     '), cat(hurst), cat("\n")) 
@@ -242,7 +295,7 @@ ci = 0.95, main = "ACF", doprint = TRUE)
 
 
 lacfPlot = 
-function(x, n = 12, lag.max = 20)
+function(x, n = 12, lag.max = 20, labels = TRUE, ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -254,7 +307,17 @@ function(x, n = 12, lag.max = 20)
     # FUNCTION:
     
     # Convert Type:
+    if (class(x) == "timeSeries") stopifnot(isUnivariate(x))
     x = as.vector(x)
+    
+    # Labels:
+    if (labels) {
+        main = "Lagged Correlations"
+        xlab = "tau"
+        ylab = "Correlation"
+    } else {
+        main = xlab = ylab = ""
+    }
     
     # Truncate to multiple of n:
     N = trunc(length(x)/n)
@@ -273,7 +336,7 @@ function(x, n = 12, lag.max = 20)
     # Zero Tau:
     L = length(u)
     RhoZero = cor(u, v)
-    print(RhoZero)
+    # print(RhoZero)
     
     # Positive Tau:
     RhoPos = NULL
@@ -312,9 +375,9 @@ function(x, n = 12, lag.max = 20)
     Rho = c(rev(RhoNeg), RhoZero, RhoPos)
     
     # Plot:
-    plot(x = (-lag.max):(lag.max), y = Rho, type = "l", xlab = "tau", 
-        ylab = "Correlation", ylim = c(min(Lagged), max(Rho)),
-        main = "Lagged Correlations")
+    plot(x = (-lag.max):(lag.max), y = Rho, type = "l", xlab = xlab, 
+        ylab = ylab, ylim = c(min(Lagged), max(Rho)),
+        main = main, ...)
     points(-lag.max:lag.max, Rho, pch = 19, cex = 0.7)
     lines(0:lag.max, c(0, Lagged), col = "red")
     points(0:lag.max, c(0, Lagged), pch = 19, cex = 0.7, col = "red")
@@ -322,10 +385,10 @@ function(x, n = 12, lag.max = 20)
     ci = 1/sqrt(length(u))
     abline(h = +ci, col = "blue")
     abline(h = -ci, col = "blue")
-    grid()
+    if (labels) grid()
     
     # Return Value:
-    list(Rho = Rho, Lagged = Lagged)
+    invisible(list(Rho = Rho, Lagged = Lagged))
 }
 
 
@@ -333,11 +396,10 @@ function(x, n = 12, lag.max = 20)
 
 
 .histpdf =
-function(x, cells = "FD", include.lowest = FALSE) 
+function(x, cells = "FD") 
 { 
     # Internal Function:
-    result = hist(x, nclass = cells, include.lowest = include.lowest, 
-        plot = FALSE)
+    result = hist(x, nclass = cells, plot = FALSE)
     prob.counts = result$counts/sum(result$counts) / diff(result$breaks)[1]
     
     # Return Value:
@@ -350,10 +412,10 @@ function(x, cells = "FD", include.lowest = FALSE)
 
 
 .loglogpdfPlot = 
-function(x, n = 50, cells = "FD", include.lowest = FALSE, doplot = TRUE, ...) 
+function(x, n = 50, cells = "FD", doplot = TRUE, ...) 
 {
     # Histogram Count & Breaks:
-    histogram = .histpdf(x, cells = cells, include.lowest = include.lowest)
+    histogram = .histpdf(x, cells = cells)
     yh = histogram$counts
     xh = histogram$breaks
     xh = xh[1:(length(xh)-1)] + diff(xh)/2
@@ -384,15 +446,18 @@ function(x, n = 50, cells = "FD", include.lowest = FALSE, doplot = TRUE, ...)
 }
 
 
+# ------------------------------------------------------------------------------
+
+
 .logpdfPlot = 
 function(x, n = 50, doplot = TRUE, ...) 
 {
     # Histogram Count & Break-Midpoints:
-    histogram = .histpdf(x, cells = "FD", include.lowest = FALSE)
+    histogram = .histpdf(x, cells = "FD")
     yh = histogram$counts
     xh = histogram$breaks
     xh = xh[1:(length(xh)-1)] + diff(xh)/2
-    xh = xh[yh>0]
+    xh = xh[yh > 0]
     yh = log(yh[yh > 0])
     if (doplot) {
         par(err = -1)
@@ -411,8 +476,12 @@ function(x, n = 50, doplot = TRUE, ...)
 }
 
 
+# ------------------------------------------------------------------------------
+
+
 logpdfPlot = 
-function(x, n = 50, doplot = TRUE, type = c("lin-log", "log-log"), ...)
+function(x, n = 50, type = c("lin-log", "log-log"), 
+doplot = TRUE, labels = TRUE, ...)
 {   # A function implemented by Diethelm Wuertz
     
     # Description:
@@ -425,23 +494,41 @@ function(x, n = 50, doplot = TRUE, type = c("lin-log", "log-log"), ...)
     # FUNCTION:
     
     # Convert Type:
+    if (class(x) == "timeSeries") stopifnot(isUnivariate(x))
     x = as.vector(x)
     
-    # Settings:
-    # if (SPLUSLIKE) splusLikePlot(TRUE)
-    
     # Select Type:
-    type = type[1]
+    type = match.arg(type)
+    
+    # Labels:
+    if (labels) {
+        if (type == "lin-log") {
+            main = "log PDF"
+            xlab = "x"
+            ylab = "log PDF"
+        } else if (type == "log-log") {
+            main = "log PDF"
+            xlab = "log x"
+            ylab = "log PDF"
+        }    
+    } else {
+        main = xlab = ylab = ""
+    }
+    
 
     # Lin-Log Plot:
     if (type == "lin-log") {
-        result = .logpdfPlot(x = x, n = n, doplot = doplot, ...)
+        result = .logpdfPlot(x = x, n = n, doplot = doplot, 
+            main = main, xlab = xlab, ylab = ylab, ...)
     }
     
     # Log-Log Plot:
     if (type == "log-log") {
-        result = .loglogpdfPlot(x = x, n = n, doplot = doplot, ...) 
+        result = .loglogpdfPlot(x = x, n = n, doplot = doplot, 
+            main = main, xlab = xlab, ylab = ylab, ...) 
     }
+    
+    if (labels) grid()
     
     # Return Value:
     invisible(result)
@@ -452,7 +539,7 @@ function(x, n = 50, doplot = TRUE, type = c("lin-log", "log-log"), ...)
 
 
 qqgaussPlot = 
-function(x, span = 5, col = "steelblue4", main = "Normal Q-Q Plot", ...)
+function(x, span = 5, col = "steelblue4", labels = TRUE, ...)
 {   # A function implemented by Diethelm Wuertz
     
     # Description:
@@ -464,7 +551,17 @@ function(x, span = 5, col = "steelblue4", main = "Normal Q-Q Plot", ...)
     # if (SPLUSLIKE) splusLikePlot(TRUE)
     
     # Convert Type:
+    if (class(x) == "timeSeries") stopifnot(isUnivariate(x))
     x = as.vector(x)
+    
+    # Labels:
+    if (labels) {
+        main = "Normal QQ Plot"
+        xlab = "Theoretical Quantiles"
+        ylab = "Sample Quantiles"
+    } else {
+        main = xlab = ylab = ""
+    }
     
     # Standardized qqnorm():
     y = (x-mean(x)) / sqrt(var(x))
@@ -474,7 +571,8 @@ function(x, span = 5, col = "steelblue4", main = "Normal Q-Q Plot", ...)
     lim = c(-span, span)
     
     # Plot qqnorm:
-    qqnorm(y, main = main, xlim = lim, ylim = lim, col = col, ...) 
+    qqnorm(y, main = main, xlab = xlab, ylab = ylab, 
+        xlim = lim, ylim = lim, col = col, ...) 
 
     # Add Line:
     qqline(y, ...)
@@ -488,7 +586,8 @@ function(x, span = 5, col = "steelblue4", main = "Normal Q-Q Plot", ...)
 
 
 scalinglawPlot =
-function(x, span = ceiling(log(length(x)/252)/log(2)), doplot = TRUE, ...)
+function(x, span = ceiling(log(length(x)/252)/log(2)), doplot = TRUE, 
+labels = TRUE, details = TRUE, ...)
 {   # A function implemented by Diethelm Wuertz
   
     # Description:
@@ -498,10 +597,19 @@ function(x, span = ceiling(log(length(x)/252)/log(2)), doplot = TRUE, ...)
     # FUNCTION: 
     
     # Convert Type:
+    if (class(x) == "timeSeries") stopifnot(isUnivariate(x))
     x = as.vector(x)
     
+    # Labels:
+    if (labels) {
+        main = "Scaling Law Plot"
+        xlab = "log-time"
+        ylab = "log-volatility"
+    } else {
+        main = xlab = ylab = ""
+    }
+    
     # Settings:
-    # if (SPLUSLIKE) splusLikePlot(TRUE)
     logtimesteps = span
     xmean = mean(x)
     
@@ -511,16 +619,19 @@ function(x, span = ceiling(log(length(x)/252)/log(2)), doplot = TRUE, ...)
     
     # Scaling Power Low:
     scale = function (nx, logprices) {
-        sum(abs(diff(logprices, lag = (2^nx))))}
-        
+        sum(abs(diff(logprices, lag = (2^nx))))}     
     nx = 0:logtimesteps; x = nx*log(2)
     y = log(apply(matrix(nx), 1, scale, logprices))
     # fit = lsfit(x, y)$coefficients
+    
     # Runs in both environments, R and SPlus:
     fit = lsfit(x, y)
-    Fit = unlist(fit)[1:2]
+    
     # Robust Fit:       
-    # fit = l1fit(x, y)$coefficients
+    # fit = l1fit(x, y) 
+    
+    # Fit Result:
+    Fit = unlist(fit)[1:2]
     alpha = 1.0/Fit[2]
     if (doplot) { 
         plot(x, y, xlab = "log-time", ylab = "log-volatility", ...)
@@ -529,6 +640,15 @@ function(x, span = ceiling(log(length(x)/252)/log(2)), doplot = TRUE, ...)
         abline(Fit[1], Fit[2], col = 2)
         abline(Fit[1], 0.5, col = 3) 
     }
+    
+    # Details:
+    if (details) {
+        cat ("\nScaling Law:")
+        cat ("\n  Plot Intercept     ", fit$coefficients[1])
+        cat ("\n  Plot Slope         ", fit$coefficients[2])
+        cat ("\n  Plot Inverse Slope ", 1/fit$coefficients[2])
+        cat ("\n\n") 
+    } 
     
     # Return Value:
     invisible(list(exponent = as.numeric(alpha), fit = fit))

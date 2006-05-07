@@ -16,7 +16,7 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2004, Diethelm Wuertz, GPL
+#   1999 - 2006, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
 #   www.rmetrics.org
@@ -29,15 +29,15 @@
 
 ################################################################################
 # FUNCTION:           DESCRIPTION:    
-#  fDFIT               Class Representation
-#                      Normal Distribution ...
+#  fDISTFIT            Class Representation
+#  normFit             Fits Parameters of a Normal Density
 #  tFit                Fits parameters of a Student-t Density
 #  ghFit               Fits parameters of a generalized hyperbolic Density
 #  hypFit              Fits parameters of a hyperbolic Density
 #  nigFit              Fits parameters of a normal inverse Gaussian Density
 #  ssdFit              Fits probability densities using smoothing spline ANOVA
 #   print.ssd           S3 Print Method
-# INTERNAL FUNCTIONS: USED BY SMOOTHED SPLINE DISTRIBUTION:         
+# IFUNCTION:          INTERNAL USED BY SMOOTHED SPLINE DISTRIBUTION:         
 #  .ssden              ... Internal functions which are required by ssdFit
 #  .mkterm.cubic1
 #  .mkphi.cubic
@@ -45,6 +45,10 @@
 #  .gauss.quad
 #  .sspdsty
 #  .nlm0
+# FUNCTION:           FUNCTIONS FOR SPLUS VERSION:
+#  much.fun
+#  which.min
+#  which.max
 ################################################################################
 
 
@@ -60,22 +64,18 @@ setClass("fDISTFIT",
 )
 
 
-# ******************************************************************************
-# normFit ...
+################################################################################
+# Normal Distribution Fit
 
 
-# ******************************************************************************
-# Student-t Fit
-
-
-tFit = 
-function(x, df = 4, doplot = TRUE, span = "auto", title = NULL, 
+normFit = 
+function(x, doplot = TRUE, span = "auto", title = NULL, 
 description = NULL, ...)
 {   # A function implemented by Diethelm Wuertz
     
     # Description:
     #   Return Maximum log-likelihood estimated
-    #   Paramters for Student-t Distribution:
+    #   Paramters for Normal Distribution
       
     # Notes:
     #   Function Calls: nlminb(), density() 
@@ -88,6 +88,77 @@ description = NULL, ...)
     
     # Settings:
     CALL = match.call()
+    
+    # MLE:
+    mean = mean(x)
+    sd = sd(x) 
+
+    # Optional Plot:
+    if (doplot) {
+        if (span == "auto") {
+            span.min = qnorm(0.001, mean, sd)
+            span.max = qnorm(0.999, mean, sd)
+            span = seq(span.min, span.max, length = 100)  
+        }
+        par(err = -1)
+        z = density(x, n = 100, ...)
+        x = z$x[z$y > 0]
+        y = z$y[z$y > 0]
+        y.points = dnorm(span, mean, sd)
+        ylim = log(c(min(y.points), max(y.points)))
+        plot(x, log(y), xlim = c(span[1], span[length(span)]),  
+            ylim = ylim, type = "p", xlab = "x", ylab = "log f(x)", ...)
+        title("NORMAL: Parameter Estimation")
+        lines(x = span, y = log(y.points), col = "steelblue4") 
+        if (exists("grid")) grid()  
+    }
+    
+    # Add Title and Description:
+    if (is.null(title)) title = "Student-t Parameter Estimation"
+    if (is.null(description)) description = as.character(date())
+        
+    # Fit:
+    fit = list(estimate = c(mean = mean, sd = sd)) 
+        
+    # Return Value:
+    new("fDISTFIT",     
+        call = as.call(CALL),
+        model = "Student-t Distribution",
+        data = as.data.frame(x.orig),
+        fit = fit,
+        title = as.character(title), 
+        description = as.character(description) )
+}
+
+
+################################################################################
+# Student-t Fit
+
+
+tFit = 
+function(x, df = 4, doplot = TRUE, span = "auto", trace = FALSE, 
+title = NULL, description = NULL, ...)
+{   # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   Return Maximum log-likelihood estimated
+    #   Paramters for Student-t Distribution:
+      
+    # Note:
+    #   Function Calls: nlminb(), density() 
+    
+    # Example:
+    #   tFit(rt(1000, df=4))
+    
+    # FUNCTION:
+    
+    # Transform:
+    x.orig = x
+    x = as.vector(x)
+    
+    # Settings:
+    CALL = match.call()
+    .trace <<- trace
     steps <<- 0
     
     # Log-likelihood Function:
@@ -97,9 +168,11 @@ description = NULL, ...)
         f = -sum(log(dt(y, x[1])))
         # Print Iteration Path:
         steps <<- steps + 1
-        cat("\n Optimization Step:         ", steps)
-        cat("\n Objective Function Value:  ", -f)
-        cat("\n Students df Estimate:      ", x[1], "\n") 
+        if (.trace) {
+            cat("\n Optimization Step:         ", steps)
+            cat("\n Objective Function Value:  ", -f)
+            cat("\n Students df Estimate:      ", x[1], "\n") 
+        }
         x.save <<- x[1]
         f 
     }
@@ -147,12 +220,8 @@ description = NULL, ...)
 }
 
 
-# ******************************************************************************
-# Stable Distribution
-
-
-# ******************************************************************************
-# Stable Parameter Fit - delta=1 and gamma=0 fixed!
+################################################################################
+# Stable Distribution - delta=1 and gamma=0 fixed!
 
 
 .phiStable =
@@ -320,7 +389,7 @@ function(x, doplot = TRUE, title = NULL, description = NULL)
 
 .mleStableFit = 
 function(x, alpha = 1.75, beta = 0, gamma = 1, delta = 0, doplot = TRUE, 
-title = NULL, description = NULL)
+trace = FALSE, title = NULL, description = NULL)
 {   # A function implemented by Diethelm Wuertz
     
     # Description:
@@ -349,9 +418,12 @@ title = NULL, description = NULL)
             gamma = gamma, delta = delta)))
         # Print Iteration Path:
         steps <<- steps + 1
-        cat("\n Optimization Step:         ", steps)
-        cat("\n Objective Function Value:  ", -f)
-        cat("\n Stable Estimate:           ", alpha, beta, gamma, delta, "\n") 
+        if (.trace) {
+            cat("\n Optimization Step:         ", steps)
+            cat("\n Objective Function Value:  ", -f)
+            cat("\n Stable Estimate:           ", alpha, beta, gamma, delta)
+            cat("\n") 
+        }
         f 
     }
         
@@ -406,7 +478,8 @@ title = NULL, description = NULL)
 
 stableFit = 
 function(x, alpha = 1.75, beta = 0, gamma = 1, delta = 0, 
-type = c("q", "mle"), doplot = TRUE, title = NULL, description = NULL)
+type = c("q", "mle"), doplot = TRUE, trace = FALSE, 
+title = NULL, description = NULL)
 {   # A function implemented by Diethelm Wuertz 
 
     # Description 
@@ -428,7 +501,7 @@ type = c("q", "mle"), doplot = TRUE, title = NULL, description = NULL)
         if (is.na(Gamma)) Gamma = gamma
         if (is.na(Delta)) Delta = delta
         ans = .mleStableFit(x, Alpha, Beta, Gamma, Delta, doplot, 
-            title, description)
+            trace, title, description)
     }
             
     # Return Value:
@@ -436,13 +509,13 @@ type = c("q", "mle"), doplot = TRUE, title = NULL, description = NULL)
 }
 
 
-# ******************************************************************************
+################################################################################
 # Hyperbolic Distribution:
 
 
 ghFit = 
 function(x, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1, doplot = TRUE, 
-span = "auto", title = NULL, description = NULL, ...)
+span = "auto", trace = FALSE, title = NULL, description = NULL, ...)
 {   # A function implemented by Diethelm Wuertz
     
     # Description:
@@ -460,8 +533,8 @@ span = "auto", title = NULL, description = NULL, ...)
     
     # Settings:
     CALL = match.call()
+    .trace <<- trace
     steps <<- 0
-    trace <<- TRUE
 
     # Log-likelihood Function:
     eghmle = function(x, y = x){ 
@@ -477,7 +550,7 @@ span = "auto", title = NULL, description = NULL, ...)
         f = -sum(log(dgh(y, alpha, beta, delta, mu, lambda)))
         # Print Iteration Path:
         steps <<- steps + 1
-        if (trace) {
+        if (.trace) {
             cat("\n Optimization Step:         ", steps)
             cat("\n Objective Function Value:  ", -f)
             cat("\n Parameter Estimates:       ", 
@@ -549,7 +622,7 @@ span = "auto", title = NULL, description = NULL, ...)
 
 hypFit = 
 function(x, alpha = 1, beta = 0, delta = 1, mu = 0, doplot = TRUE, 
-span = "auto", title = NULL, description = NULL, ...)
+span = "auto", trace = FALSE, title = NULL, description = NULL, ...)
 {   # A function implemented by Diethelm Wuertz
     
     # Description:
@@ -567,8 +640,8 @@ span = "auto", title = NULL, description = NULL, ...)
     
     # Settings:
     CALL = match.call()
+    .trace <<- TRUE
     steps <<- 0
-    trace <<- TRUE
     
     # Log-likelihood Function:
     ehypmle = function(x, y = x){ 
@@ -584,7 +657,7 @@ span = "auto", title = NULL, description = NULL, ...)
         f = -sum(log(dhyp(y, alpha, beta, delta, mu)))
         # Print Iteration Path:
         steps <<- steps + 1
-        if (trace) {
+        if (.trace) {
             cat("\n Optimization Step:         ", steps)
             cat("\n Objective Function Value:  ", -f)
             cat("\n Parameter Estimates:       ", alpha, beta, delta, mu, "\n") 
@@ -652,7 +725,7 @@ span = "auto", title = NULL, description = NULL, ...)
 
 nigFit = 
 function(x, alpha = 1, beta = 0, delta = 1, mu = 0, doplot = TRUE, 
-span = "auto", title = NULL, description = NULL, ...)
+span = "auto", trace = FALSE, title = NULL, description = NULL, ...)
 {   # A function implemented by Diethelm Wuertz
     
     # Description:
@@ -667,6 +740,7 @@ span = "auto", title = NULL, description = NULL, ...)
     
     # Settings:
     CALL = match.call()
+    .trace <<- trace
     steps <<- 0
     
     # Log-likelihood Function:
@@ -677,9 +751,11 @@ span = "auto", title = NULL, description = NULL, ...)
         f = -sum(log(dnig(y, x[1], x[2], x[3], x[4])))
         # Print Iteration Path:
         steps <<- steps + 1
-        cat("\n Optimization Step:         ", steps)
-        cat("\n Objective Function Value:  ", -f)
-        cat("\n Parameter Estimates:       ", x[1], x[2], x[3], x[4], "\n") 
+        if (.trace) {
+            cat("\n Optimization Step:         ", steps)
+            cat("\n Objective Function Value:  ", -f)
+            cat("\n Parameter Estimates:       ", x[1], x[2], x[3], x[4], "\n")
+        } 
         f 
     }
         
@@ -735,7 +811,8 @@ span = "auto", title = NULL, description = NULL, ...)
 }
 
 
-# ------------------------------------------------------------------------------
+################################################################################
+# Print Method
 
 
 print.fDISTFIT =
@@ -751,23 +828,23 @@ function(x, ...)
     object = x@fit
     
     # Title:
-    cat("\nTitle:\n")
+    cat("\nTitle:\n ")
     cat(x@title, "\n")
     
     # Call:
-    cat("\nCall:\n")
+    cat("\nCall:\n ")
     cat(paste(deparse(x@call), sep = "\n", collapse = "\n"), 
         "\n", sep = "")
       
     # Model: 
-    cat("\nModel:\n", x@model, "\n", sep = "")
+    cat("\nModel:\n ", x@model, "\n", sep = "")
     
     # Estimate:
     cat("\nEstimated Parameter(s):\n")
     print(x@fit$estimate)
         
     # Description:
-    cat("\nDescription:\n")
+    cat("\nDescription:\n ")
     cat(x@description, "\n\n")
         
     # Return Value:
@@ -776,7 +853,7 @@ function(x, ...)
 
 
 
-# ******************************************************************************
+################################################################################
 # ssdFit  
 
 
@@ -807,7 +884,8 @@ function (x, alpha = 1.4, seed = NULL, title = NULL, description = NULL)
 }
 
 
-# ------------------------------------------------------------------------------
+################################################################################
+# Print Method
 
 
 print.ssd = 

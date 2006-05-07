@@ -16,7 +16,7 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2004, Diethelm Wuertz, GPL
+#   1999 - 2006, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
 #   www.rmetrics.org
@@ -151,7 +151,8 @@ function(n, param)
 
 .dssden = 
 function (object, x) 
-{
+{   # A copy from contributed R package gss
+ 
     # Description:
     #   Evaluate density estimate
     
@@ -199,7 +200,8 @@ function (object, x)
 
 .pssden = 
 function(object, q) 
-{
+{   # A copy from contributed R package gss
+
     # Description
     #   Compute cdf for univariate density estimate
     
@@ -244,7 +246,8 @@ function(object, q)
 
 .qssden = 
 function(object, p) 
-{   
+{   # A copy from contributed R package gss
+ 
     # Description:
     #   Compute quantiles for univariate density estimate
     

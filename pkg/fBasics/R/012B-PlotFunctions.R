@@ -16,7 +16,7 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2004, Diethelm Wuertz, GPL
+#   1999 - 2006, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
 #   www.rmetrics.org
@@ -59,9 +59,7 @@ function(x, ...)
   
     # FUNCTION:
     
-    # Settings:
-    # if (SPLUSLIKE) .splusLikePlot(TRUE)
-    
+    # Plot:
     plot(x, ylab = "", ...)
          
     # Return Value:
@@ -84,7 +82,6 @@ main = x@units, add.fit = TRUE, ...)
     # FUNCTION:
     
     # Settings:
-    # if (SPLUSLIKE) .splusLikePlot(TRUE)
     xlim = NULL
     
     # Transform 'timeSeries':
@@ -153,12 +150,13 @@ function(x, col = "steelblue4", main = x@units, add.fit = TRUE, ...)
         plot(x = Density, xlim = xlim, col = col, type = "l", 
             main = main[i], ...)  
         ans[[i]] = Density  
-    }
-    
-    # Add Fit:
-    if (add.fit) {
-        s = seq(xlim[1], xlim[2], length = 201)
-        lines(s, dnorm(s, mean, sd), col = "brown")
+        # Add Fit:
+        if (add.fit) {
+            s = seq(xlim[1], xlim[2], length = 201)
+            lines(s, dnorm(s, mean, sd), col = "brown")
+        }
+        # Grid:
+        grid()
     }
 
     # Names:
@@ -221,14 +219,16 @@ function(x, y, size = 1, ...)
     # FUNCTION:
     
     # Settings:
-    # if (SPLUSLIKE) .splusLikePlot(TRUE)
+    stopifnot(length(x) == length(x))
+    if (length(size) != length(x))
+    size = rep(size[1], times = length(x))
     
     # Circle Plot:
     plot(x, y, type = "n", ...)
     symbols(x, y, add = TRUE, circles = sqrt(size), inches = 0.25, ...)
     
     # Return Value:
-    invisible()
+    invisible(data.frame(x = x, y = y, size = size))
 }
 
 
@@ -287,7 +287,7 @@ function(x, y, z, ...)
     # Settings:
     # if (SPLUSLIKE) .splusLikePlot(TRUE)
     
-    # Perspective Plot:
+    # Contour Plot:
     if (class(version) == "Sversion") {
         # we assume SPlus:
         ans = contour(x = x, y = y, z = z, ...) 

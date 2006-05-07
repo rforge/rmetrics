@@ -16,7 +16,7 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2004, Diethelm Wuertz, GPL
+#   1999 - 2006, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
 #   www.rmetrics.org
@@ -35,6 +35,9 @@
 #  rnorm.lcg                 Normal linear congruational generator
 #  rt.lcg                    Student-t linear congruational generator
 ################################################################################
+
+
+################################################################################
 # DESCRIPTION:
 #  A Simple Portable Random Number Generator for Use in R and Splus
 #  Use this generator only for comparisons of Programs in R and Splus !!!
@@ -49,7 +52,6 @@
 #  Example:
 #    set.lcgseed(4711)
 #    cbind(runif.lcg(100), rnorm.lcg(100), rt.lcg(100, df=4))
-################################################################################
  
    
 set.lcgseed = 

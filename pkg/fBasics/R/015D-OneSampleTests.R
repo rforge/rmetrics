@@ -16,7 +16,7 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2004, Diethelm Wuertz, GPL
+#   1999 - 2006, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
 #   www.rmetrics.org
@@ -50,7 +50,7 @@
 #  jbTable               Table of finite sample p values for the JB test
 #  pjb                   Computes probabilities for the Jarque Bera Test
 #  qjb                   Computes quantiles for the Jarque Bera Test
-#  .jb.test               S3 version type finite sample adjusted JB test                
+#  .jb.test               S3 version type finite sample adjusted JB test
 #  jbTest                Performs finite sample adjusted JB LM and ALM test
 ################################################################################
 
@@ -733,8 +733,8 @@ function(x, title = NULL, description = NULL)
     K = max(Dplus, Dminus)
     if (n <= 100) {
         Kd = K
-        nd = n }
-    else {
+        nd = n 
+    } else {
         Kd = K * ((n/100)^0.49)
         nd = 100 }
         
@@ -754,8 +754,7 @@ function(x, title = NULL, description = NULL)
         } else if (KK <= 1.31) {
             PVAL = 6.198765 - 19.558097 * KK + 23.186922 * 
                 KK^2 - 12.234627 * KK^3 + 2.423045 * KK^4 
-        }
-        else {
+        } else {
             PVAL = 0 
         } 
     }

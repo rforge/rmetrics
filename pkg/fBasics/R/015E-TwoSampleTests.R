@@ -16,7 +16,7 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2004, Diethelm Wuertz, GPL
+#   1999 - 2006, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
 #   www.rmetrics.org
@@ -1327,6 +1327,7 @@ function(x, y, title = NULL, description = NULL)
     # Convert Type:
     x = as.vector(x)
     y = as.vector(y)
+    stopifnot(length(x) == length(y))
     
     # Test:
     two.sided = cor.test(x = x, y = y, alternative = "two.sided",  
@@ -1423,6 +1424,7 @@ function(x, y, title = NULL, description = NULL)
     # Convert Type:
     x = as.vector(x)
     y = as.vector(y)
+    stopifnot(length(x) == length(y))
     
     # Test:
     two.sided = cor.test(x = x, y = y, alternative = "two.sided",  
@@ -1547,6 +1549,7 @@ function(x, y, title = NULL, description = NULL)
     # Convert Type:
     x = as.vector(x)
     y = as.vector(y)
+    stopifnot(length(x) == length(y))
     
     # Test:
     two.sided = cor.test(x = x, y = y, alternative = "two.sided",  

@@ -1,13 +1,4 @@
 
-#*******************************************************************************
-# fBasics - A SOFTWARE COLLECTION FOR FINANCIAL ENGINEERS
-# Markets and Basic Statistics
-#
-# collected by Diethelm Wuertz
-# Version 0.9
-#*******************************************************************************
-
-
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
 # License as published by the Free Software Foundation; either
@@ -25,7 +16,7 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2005, Diethelm Wuertz, GPL
+#   1999 - 2006, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
 #   www.rmetrics.org
@@ -33,9 +24,14 @@
 #   see R's copyright and license files
 # for the code accessed (or partly included) from contributed R-ports
 # and other sources
-#   see Rmetrics's copyright file  
+#   see Rmetrics's copyright file 
 
 
+################################################################################
+# fBasics - A SOFTWARE COLLECTION FOR FINANCIAL ENGINEERS
+# Markets and Basic Statistics
+#
+# collected by Diethelm Wuertz
 ################################################################################
  
     

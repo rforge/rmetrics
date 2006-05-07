@@ -12,11 +12,11 @@
 # You should have received a copy of the GNU Library General 
 # Public License along with this library; if not, write to the 
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
-# MA 02111-1307 USA
+# MA  02111-1307  USA
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2004, Diethelm Wuertz, GPL
+#   1999 - 2006, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
 #   www.rmetrics.org
