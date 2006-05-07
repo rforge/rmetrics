@@ -32,18 +32,3 @@
 #  fBasicsDataSets       Are located in the fBasics/data directory
 ################################################################################
 
-
-##  plot -
-    data(nyseres)
-    x = as.ts(nyseres)
-    par(mfrow = c(2, 1), cex = 0.75)
-    plot(100*x, type = "l", col = "steelblue4",
-      main = "NYSE Composite Index")
-    grid()
-    plot(cumsum(x), type = "l", col = "steelblue4",
-      main = "Cumulated NYSE Index")
-    grid()
-    
-    
-################################################################################
-
