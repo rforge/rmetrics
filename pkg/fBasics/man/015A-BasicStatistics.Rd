@@ -71,9 +71,7 @@
     
     \tabular{ll}{
     \code{stdev} \tab Returns the standard deviation of a vector or matrix. }
-    
-    
-    
+
 }
 
 
@@ -92,7 +90,7 @@ kurtosis(x, \dots)
 \method{kurtosis}{POSIXct}(x, \dots)
 \method{kurtosis}{POSIXlt}(x, \dots)
 
-basicStats(x, ci = 0.95, column = 1)
+basicStats(x, ci = 0.95)
 
 rowStats(x, FUN, na.rm = FALSE, \dots) 
 rowAvgs(x, na.rm = FALSE, \dots)
@@ -118,17 +116,11 @@ colCumsums(x, na.rm = FALSE, \dots)
         confidence interval, a numeric value, by default 0.95, 
         i.e. 95 percent.
         }
-    \item{column}{
-        [basicStats] - \cr
-        which column should be selected from the input matrix,
-        data frame or timeSeries object. By default an integer
-        value set to 1.
-        }
     \item{FUN}{
         [colStats][rowStats - \cr
         the statistical function to be applied.
         }
-        \item{na.rm}{
+    \item{na.rm}{
         a logical. Should missing values be removed?
         }
     \item{method}{

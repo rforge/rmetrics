@@ -208,7 +208,6 @@
 
 
 \examples{
-\dontrun{
 ## SOURCE("fBasics.012C-fBasicsData")
 
 ##  plot -
@@ -221,7 +220,6 @@
     plot(cumsum(x), type = "l", col = "steelblue4",
       main = "Cumulated NYSE Index")
     grid()
-}
 }
 
 

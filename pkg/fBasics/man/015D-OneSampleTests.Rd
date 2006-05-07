@@ -39,7 +39,6 @@
     The functions for testing normality are:
 
     \tabular{ll}{
-    \code{normalTest} \tab test suite for some normality tests, \cr
     \code{ksnormTest} \tab Kolmogorov-Smirnov normality test, \cr
     \code{shapiroTest} \tab Shapiro-Wilk's test for normality, \cr
     \code{jarqueberaTest} \tab Jarque--Bera test for normality, \cr
@@ -60,7 +59,13 @@
     \code{cvmTest} \tab Cramer--von Mises normality test, \cr
     \code{lillieTest} \tab Lilliefors (Kolmogorov-Smirnov) normality test, \cr
     \code{pchiTest} \tab Pearson chi--square normality test, \cr
-    \code{sfTest} \tab Shapiro--Francia normality test. }       
+    \code{sfTest} \tab Shapiro--Francia normality test. }  
+    
+    
+    For SPlus/Finmetrics Compatibility:
+    
+    \tabular{ll}{
+    \code{normalTest} \tab test suite for some normality tests. }     
     
     More tests ...
     
@@ -71,9 +76,7 @@
 }
 
 
-\usage{
-normalTest(x, method = c("ks", "sw", "jb", "da"))
- 
+\usage{ 
 ksnormTest(x, title = NULL, description = NULL)
 shapiroTest(x, title = NULL, description = NULL)
 jarqueberaTest(x, title = NULL, description = NULL)
@@ -88,7 +91,9 @@ adTest(x, title = NULL, description = NULL)
 cvmTest(x, title = NULL, description = NULL)      
 lillieTest(x, title = NULL, description = NULL) 
 pchiTest(x, title = NULL, description = NULL)    
-sfTest(x, title = NULL, description = NULL)  
+sfTest(x, title = NULL, description = NULL) 
+
+normalTest(x, method = c("sw", "jb"), na.rm = FALSE) 
 
 runsTest(x)
 gofnorm(x, doprint = TRUE)
@@ -115,7 +120,12 @@ gofnorm(x, doprint = TRUE)
         } 
     \item{N}{ 
         an integer value specifying the sample size. 
-        }  
+        } 
+    \item{na.rm}{ 
+        [normalTest] - \cr
+        a logical value. Should missing values removed before computing
+        the tests? The default value is \code{FALSE}. 
+        }   
     \item{p}{ 
         a numeric vector of probabilities. Missing values are not
         allowed. 
@@ -249,7 +259,6 @@ gofnorm(x, doprint = TRUE)
     \code{sfTest} 
     \cr
     returns the value for the 'W' statistic and the p-value.  
-    \cr
     
 }
 
@@ -420,52 +429,23 @@ Wuertz D., Katzgraber H.G. (2005);
 ## SOURCE("fBasics.015D-OneSampleTests")
 
 ## Series:
-   xmpBasics("\nStart: Create Series > ")
    x = rnorm(100)
    
 ## ksnormTests - 
-   xmpBasics("\nNext: Kolmogorov - Smirnov One-Sampel Test > ")
+   # Kolmogorov - Smirnov One-Sampel Test
    ksnormTest(x)
 
-## shapiroTest - 
-   xmpBasics("\nNext: Shapiro - Wilk Test > ")
+## shapiroTest - Shapiro-Wilk Test
    shapiroTest(x)
 
-## jarqueberaTest -
-   xmpBasics("\nNext: Jarque - Bera Test > ")
+## jarqueberaTest - 
+## jbTest - Jarque-Bera Test
    jarqueberaTest(x)
    jbTest(x)
-   
-## dagoTest -
-   xmpBasics("\nNext: D'Agostino Test > ")
-   dagoTest(x)
-
-## adTest -
-   xmpBasics("\nNext: Anderson - Darling Test > ")
-   adTest(x)            
-
-## cvmTest -
-   xmpBasics("\nNext: Cramer - von Mises Test > ")
-   cvmTest(x)      
-
-## lillieTest -
-   xmpBasics("\nNext: Lillifors (KS) Test > ")
-   lillieTest(x) 
-
-## pchiTest - 
-   xmpBasics("\nNext: Pearson Chi-Squared Test > ")
-   pchiTest(x)    
-
-## sfTest - 
-   xmpBasics("\nNext: Shapiro - Franca Test > ")
-   sfTest(x)  
-
-## gofnorm -
-   xmpBasics("\nNext: Goodness-of-Fit Test for Normality > ")  
+  ## gofnorm - Goodness-of-Fit Test Suite for Normality 
    gofnorm(x, doprint = TRUE)
    
 ## runsTest -
-   xmpBasics("\nNext: Runs Test > ")
    runsTest(x)
 }
 

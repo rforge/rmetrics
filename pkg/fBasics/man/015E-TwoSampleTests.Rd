@@ -45,7 +45,7 @@
     Distributional Equivalence:
     
     \tabular{ll}{
-    \code{ks2Test} \tab Two sample Kolmogorov-Smirnov test.}
+    \code{ks2Test} \tab Two sample Kolmogorov--Smirnov test.}
     
     Difference in Locations:
     
@@ -85,24 +85,16 @@
 \usage{
 ks2Test(x, y, title = NULL, description = NULL)
 
-%.locationTest(x, y, method =  c("t", "kruskal2"), 
-%   title = NULL, description = NULL)
 tTest(x, y, title = NULL, description = NULL) 
 kw2Test(x, y, title = NULL, description = NULL)
 
-%.varianceTest(x, y,  method = c("varf", "bartlett2", "fligner2"), 
-%   title = NULL, description = NULL)
 varfTest(x, y, title = NULL, description = NULL)
 bartlett2Test(x, y, title = NULL, description = NULL)
 fligner2Test(x, y, title = NULL, description = NULL)
 
-%.scaleTest(x, y,  method = c("ansari", "mood"), 
-%   title = NULL, description = NULL)
 ansariTest(x, y, title = NULL, description = NULL)
 moodTest(x, y, title = NULL, description = NULL)
 
-%.correlationTest(x, y, method = c("pearson", "kendall", "spearman"), 
-%   title = NULL, description = NULL)
 pearsonTest(x, y, title = NULL, description = NULL)
 kendallTest(x, y, title = NULL, description = NULL)
 spearmanTest(x, y, title = NULL, description = NULL)
@@ -120,13 +112,7 @@ qansariw(p, m, n = m)
         }
     \item{m, n}{
         [*ansariw] - \cr
-        }
-    %\item{method}{
-    %    [corTest] - \cr
-    %    indicates the three different methods for the correlation
-    %    test; must be one of the entries specified by the input 
-    %    vector \code{c("pearson", "kendall", "spearman")}.
-    %    }   
+        } 
     \item{p}{
         [qansariw] - \cr
         a numeric vector of quantiles.

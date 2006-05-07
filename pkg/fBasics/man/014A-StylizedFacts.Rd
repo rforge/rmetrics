@@ -45,13 +45,11 @@
 \usage{
 acfPlot(x, labels = TRUE, \dots)
 pacfPlot(x, labels = TRUE, \dots)
-
 ccfPlot(x, y, lag.max = max(2, floor(10*log10(length(x)))), type = 
     c("correlation", "covariance", "partial"), labels = TRUE, \dots) 
 lacfPlot(x, n = 12, lag.max = 20, labels = TRUE, \dots)
 lmacfPlot(x, lag.max = max(2, floor(10*log10(length(x)))), ci = 0.95, 
-    labels = TRUE, details = TRUE, \dots)
-    
+    type = c("both", "acf", "hurst"), labels = TRUE, details = TRUE, \dots) 
 logpdfPlot(x, n = 50, type = c("lin-log", "log-log"), doplot = TRUE, 
     labels = TRUE, \dots)
 qqgaussPlot(x, span = 5, col = "steelblue4", labels = TRUE, \dots)
@@ -65,7 +63,7 @@ teffectPlot(x, deltas = seq(from = 0.2, to = 3, by = 0.2), lag.max = 10,
 \arguments{
 
     \item{ci}{
-        [lmacf] - \cr
+        [lmacfPlot] - \cr
         the confidence interval, by default 95 percent, i.e. 0.95.
         }
     \item{col}{
@@ -85,7 +83,7 @@ teffectPlot(x, deltas = seq(from = 0.2, to = 3, by = 0.2), lag.max = 10,
         }
     \item{labels}{
         a logical value. Whether or not x- and y-axes should be automatically 
-        labelled and a default main title should be added to the plot.
+        labeled and a default main title should be added to the plot.
         By default \code{TRUE}.
         }
     \item{lag.max}{
@@ -94,10 +92,9 @@ teffectPlot(x, deltas = seq(from = 0.2, to = 3, by = 0.2), lag.max = 10,
         }
     \item{n}{
         [lacfPlot] - \cr
-        an integer, the number of lags.
-        \cr
+        an integer value, the number of lags.\cr
         [logpdfPlot] - \cr
-        an integer, the number of break and count points.
+        an integer value, the number of break and count points.
         }
     \item{span}{
         [scalinglawPlot] - \cr
@@ -108,28 +105,35 @@ teffectPlot(x, deltas = seq(from = 0.2, to = 3, by = 0.2), lag.max = 10,
         assumed.
         }
     \item{standardize}{
-        a logical. Should the vector \code{x} be standardized?
+        [teffectPlot] - \cr
+        a logical value. Should the vector \code{x} be standardized?
         }
     \item{type}{
-        a character, either \code{e} for "exceedences", \code{d} 
-        for "distances", or by default \code{b} for "both", 
-        selecting which plot should be displayed.
+        [ccfPlot] - \cr
+        a character string, either \code{"correlation"}, \code{"covariance"}, 
+        or \code{"partial"} denoting which type of correlation should be 
+        plotted,\cr
+        [lmacf] - \cr
+        a character string, either \code{"both"}, \code{"acf"}, or 
+        \code{"hurst"} denoting which type of plot should be generated: 
+        an autocorrelation plot, a hurst plot, or both,\cr
+        [logpdf] - \cr
+        a character string, either \code{"lin-log"}, or \code{"log-log"} 
+        denoting on which scale the plot will produced: on a linear vs. 
+        log scale, or on a double logarithmic scale.
         }
     \item{x, y}{
-        numeric vectors, 
-        \cr
-        [acfPlot][pacfPlot][ccfPlot] - \cr
-        a numeric vector or matrix or a univariate or 
-        multivariate (not \code{ccf}) time series object.
+        numeric vectors, univariate time series objects, or any
+        other object which can be transformed by the function
+        \code{as.vector} into a numeric vector.
         }
     \item{ymax}{
         [teffectPlot] - \cr
-        maximum y-axis value on plot, is.na(ymax) TRUE the 
-        value is selected automatically.
+        maximum y-axis value on plot, \code{is.na(ymax)} TRUE, then
+        the value is selected automatically.
         }
     \item{\dots}{
-        for \code{tsPlot} one or more univariate or multivariate time 
-        series, else other arguments to be passed.
+        arguments to be passed.
         }
 
 }
@@ -165,7 +169,7 @@ teffectPlot(x, deltas = seq(from = 0.2, to = 3, by = 0.2), lag.max = 10,
 
     \code{lmacfPlot}
     \cr
-    returns a  list with the following elements: \code{fit}, a list 
+    returns a list with the following elements: \code{fit}, a list 
     by itself with elements \code{Intercept} and slope \code{X},
     \code{hurst}, the Hurst exponent, both are numeric values.
     \cr
@@ -268,7 +272,7 @@ Taylor S.J. (1986);
     John Wiley and Sons, Chichester.
 
 Ding Z., Granger C.W.J., Engle R.F. (1993); 
-    \emph{A long memory proerty of stock market returns and a new model},
+    \emph{A long memory property of stock market returns and a new model},
     Journal of Empirical Finance 1, 83.
     
 }

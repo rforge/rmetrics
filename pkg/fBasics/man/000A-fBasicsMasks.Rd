@@ -25,6 +25,9 @@
 
 \alias{colnames<-}
 \alias{colnames<-.default}
+
+\alias{as.matrix.ts}
+\alias{as.matrix.mts}
             
 
 \title{Masked Objects and Additional Generic Functions}
@@ -57,6 +60,9 @@ var.default(x, y = NULL, na.rm = FALSE, use)
     
 rownames(x) <- value
 colnames(x) <- value
+
+as.matrix.ts(x)
+as.matrix.mts(x)
 }
 
 
@@ -99,13 +105,19 @@ colnames(x) <- value
     \item{x}{
         [log][sort][var] - \cr
         first argument.
+        \cr
+        [as.matrix.ts][as.matrix.mts] - \cr
+        an univariate or multivariate time series object
+        of class \code{"ts"} or \code{"mts"} which will be
+        transformed into an one-column or multi-column rectangular 
+        object of class \code{"matrix"}.
         }
     \item{y, na.rm, use}{
         [var] - \cr
         additional arguments to the \code{var} function.
         }
     \item{\dots}{
-        arguments to be passed
+        arguments to be passed.
     }
  
 }

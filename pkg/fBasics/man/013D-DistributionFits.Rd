@@ -138,6 +138,11 @@ ssdFit(x, alpha = 1.4, seed = NULL, title = NULL, description = NULL)
     \item{title}{
         a character string which allows for a project title.
         }
+    \item{trace}{
+        [*Fit] - \cr
+        a logical flag. Should the parameter estimation process be
+        traced?
+        }
     \item{type}{
         a character string which allows to select the method for
         parameter estimation: \code{"mle"}, the maximum log likelihood
