@@ -35,6 +35,9 @@
 # FUNCTION:              GENERATION OF TIMEDATE OBJECTS:
 #  'timeDate'             S4 Class representation for timeDate objects
 #  timeDate               Creates a 'timeDate' object from given dates
+#  .whichFormat
+#  .midnightStandard
+#  .formatFinCenter
 #  timeCalendar           Creates a 'timeDate' object from calendar atoms
 #  timeSequence           Creates a regularly spaced 'timeDate' object
 #  Sys.timeDate           Returns system time as an object of class 'timeDate' 
@@ -465,6 +468,9 @@ function(charvec)
 {   # A function implemented by Diethelm Wuertz
 
     # FUNCTION:
+    
+    # Format:
+    format = "unknown"
     
     # Specifications:
     NCHAR = mean(nchar(charvec[1]))

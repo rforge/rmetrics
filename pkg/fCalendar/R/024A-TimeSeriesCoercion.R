@@ -131,16 +131,31 @@ function(x, ...)
     # FUNCTION:
     
     # Check if the first column has a valid ISO-format:
+    firstColumn = TRUE
     charvec = as.character(as.vector(x[, 1]))
     format = .whichFormat(charvec)
+    if (format == "unknown") {
+        charvec = rownames(x)
+        format = .whichFormat(charvec)
+        if (format == "unknown") {
+            warning("Could not identify timeDate Format")
+            N = length(as.vector(x[, 1]))
+            charvec = as.character(timeSequence(from = "1970-01-01", length.out = 
+                N, format = "%Y-%m-%d", zone = "GMT", FinCenter = "GMT"))
+            format = .whichFormat(charvec)
+        }
+        firstColumn = FALSE
+    }
     
     # Transform to Matrix:
-    if (dim(x)[2] == 2) {
-        X = matrix(x[, -1], ncol = dim(x)[2] - 1) 
-    } else {
+    if (firstColumn) {
         X = x[, -1]
+    } else {
+        X = x
     }
-    colNames = colnames(X) = colnames(x)[-1]
+    colNames = colnames(X) 
+    rownames(X) = charvec
+    
     Numeric = NULL
     for (i in 1:length(X[1, ])) {
         if (is.numeric(X[1, i])) Numeric = c(Numeric, i)
@@ -161,7 +176,7 @@ function(x, ...)
     # Create Time Series Object:                          
     ans = timeSeries(data = data, charvec = charvec, 
         units = colnames(data), format = format, zone = "GMT", 
-        FinCenter = "GMT", recordsIDs = recordIDs)  
+        FinCenter = "GMT", recordIDs = recordIDs)  
         
     # Return Value:    
     ans
@@ -245,10 +260,7 @@ function(x, mode = "any")
     # FUNCTION:
         
     # Check:
-    if (class(x) != "timeSeries") 
-        stop("x is not a timeSeries object!")
-    if (dim(as.matrix(x))[[2]] != 1) 
-        stop("x is not a univariate timeSeries object!")
+    stopifnot(isUnivariate(x))
         
     # Convert:
     rownames = dimnames(x)[[1]]
