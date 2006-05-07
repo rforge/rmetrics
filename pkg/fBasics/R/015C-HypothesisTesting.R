@@ -31,6 +31,8 @@
 # FUNCTION:             NORMALITY TESTS:
 #  fHTEST                Class Representation
 #  show.fHTEST           S4 Print Method
+# FUNCTION:             DESCRIPTION:
+#  jbTable               Finite sample p values for the Jarque Bera test
 # FUNCTION:             PVALUE AND STATISTICS TABLES:
 #  pPlot                 General finite sample probability plot
 #  pTable                Interpolated probabilities from finite sample table
@@ -202,7 +204,7 @@ function(type = c("LM", "ALM"), size = c("all", "small"))
 }
 
 
-# ******************************************************************************
+################################################################################
 
 
 pPlot = 
@@ -428,9 +430,9 @@ function(X, Stat, N, digits = 4)
     #   digits - the number of digits used for the output.
     
     # Examples:
-    # .pTable(X = cADF, N = 100, Stat = -2.89, lower.tail = TRUE)    
-    # .pTable(X = jbLM, N = 100, Stat = 5.43, lower.tail = FALSE) 
-    # .pTable(X = jbLM, N = 1400, Stat = 0.7003, lower.tail = FALSE) 
+    #   pTable(X = cADF, N = 100, Stat = -2.89)    
+    #   pTable(X = jbLM, N = 100, Stat = 5.43) 
+    #   pTable(X = jbLM, N = 1400, Stat = 0.7003) 
     
     # FUNCTION:
     
@@ -444,7 +446,6 @@ function(X, Stat, N, digits = 4)
         
     # Return Value
     p
-
 }
 
 
@@ -548,8 +549,8 @@ dupfun = NULL)
             y <- y[ord]
             n <- length(x)
         } else {
-            ord <- (hist(i, plot = FALSE, freq = TRUE, breaks = seq(0.5, 
-                max(i) + 0.5, 1))$counts == 1)
+            ord <- (hist(i, plot = FALSE, freq = TRUE, breaks = 
+                seq(0.5, max(i) + 0.5, 1))$counts == 1)
             x <- x[ord]
             y <- y[ord]
             z <- z[ord]
@@ -588,8 +589,7 @@ function (x, y, z, xo = seq(min(x), max(x), length = 40), yo = seq(min(y),
     if (!is.null(ncp)) {
         if (ncp != 0) {
             cat("ncp not supported, it is automatically choosen by Fortran code\n")
-        }
-        else {
+        } else {
             cat("linear interpolation not yet implemented with interp.new().\n")
             stop("use interp.old().")
         }

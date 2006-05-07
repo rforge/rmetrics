@@ -28,22 +28,25 @@
 
 
 ################################################################################
-# FUNCTION:                    DESCRIPTION
-# log                           log has become a generic function
-# log.default
-# round
-# round.default        
-# sample
-# sample.default
-# sort                          sort has become a generic function
-# sort.default
-# var                           var has become a generic function
-# var.default
-#
-# "rownames<-"                  rownames<- has become a generic function
-# "rownames<-.default"
-# "colnames<-"                  colnames<- has become a generic function
-# "colnames<-.default"
+# FUNCTION:                     DESCRIPTION:
+#  log                           log has become a generic function
+#  log.default                   log default method
+#  round                         round has become a generic function
+#  round.default                 round default method
+#  sample                        sample has become a generic function
+#  sample.default                sample default method
+#  sort                          sort has become a generic function
+#  sort.default                  sort default method
+#  var                           var has become a generic function
+#  var.default                   var default method
+# FUNCTION:                     DESCRIPTION:
+#  "rownames<-"                  rownames<- has become a generic function
+#  "rownames<-.default"          rownames<- default method
+#  "colnames<-"                  colnames<- has become a generic function
+#  "colnames<-.default"          colnames<- default method
+# FUNCTION:                     DESCRIPTION:
+#  as.matrix.ts                  univariate ts to 1-column matrix
+#  as.matrix.mts                 multivariate ts to matrix
 ################################################################################
 
 
@@ -354,4 +357,37 @@ function(x, value)
 
 
 ################################################################################
+
+
+as.matrix.ts = 
+function(x) 
+{   # A function implemented by Diethelm Wuertz
+
+    # Transform: 
+    ans = as.matrix.default(unclass(x)) 
+    attr(ans, "tsp")<-NULL
+    rownames(ans)<-NULL
+    colnames(ans)<-NULL
+    
+    # Return Value:
+    ans
+}
+
+as.matrix.mts = 
+function(x) 
+{   # A function implemented by Diethelm Wuertz
+
+    # Transform: 
+    ans = as.matrix.default(unclass(x)) 
+    attr(ans, "tsp")<-NULL
+    rownames(ans)<-NULL
+    colnames(ans)<-NULL
+    
+    # Return Value:
+    ans
+}
+
+
+################################################################################
+
 

@@ -28,12 +28,12 @@
 
 
 ################################################################################
-# FUNCTIONS:
+# FUNCTIONS:        DESCRIPTION:
 #   dssd             Returns smoothed spline density estimate
 #   pssd             Returns smoothed spline probability estimate
 #   qssd             Returns smoothed spline quantiles estimate
 #   rssd             Returns smoothed spline random variates 
-# INTERNAL FUNCTIONS:          
+# INTERNAL:         DESCRIPTION:         
 #  .dssden           Computes density function
 #  .pssden           Computes probability function
 #  .qssden           Computes quantile function

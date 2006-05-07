@@ -257,44 +257,16 @@ function (x, ...)
 # ******************************************************************************
 
 
-basicStats = 
-function(x, ci = 0.95, column = 1) 
+.basicStatsUnivariate = 
+function(x, ci = 0.95) 
 {   # A function implemented by Diethelm Wuertz
     
     # Description:
     #   Calculates Basic Statistics
-    
-    # Arguments:
-    #   x - a numeric vector, or a rectangular data object. If 'x' 
-    #       is a matrix, a data.frame, or a timeSeries object then 
-    #       the first column is used by default, or alternatively
-    #       the one specified by the argument 'column'.
-    #   ci - a numeric value setting the confidence interval.
-    
-    # Value:
-    #   a two-column data frame, where the first column takes the 
-    #   value of the statistics, and the second its name, e.g.
-    #   "nobs", "NAs",  "Minimum", "Maximum", "1. Quartile",  
-    #   "3. Quartile",  "Mean", "Median", "Sum",  "SE Mean", 
-    #   "LCL Mean", "UCL Mean", "Variance", "Stdev", "Skewness", 
-    #   "Kurtosis")
      
     # FUNCTION:
     
-    # DW 2005.05.02
-    if (class(x) == "matrix") {
-        x = x[, column]
-        warning("Column ", column, " of matrix used")
-    }
-    if (class(x) == "data.frame") {
-        x = x[, column]
-        warning("Column ", column, " of data.frame used")
-        if (!is.numeric(x)) stop("The selected column is not numeric")
-    }
-    if (class(x) == "timeSeries") {
-        x = x@Data[, column]
-        warning("Column ", column, " of timeSeries used")
-    }
+    # Transform:
     x = as.vector(x)  
     
     # CL Levels:    
@@ -319,7 +291,7 @@ function(x, ci = 0.95, column = 1)
     z = c(
         x.length, x.na, min(x), max(x),
         as.numeric(quantile(x, prob = 0.25, na.rm = TRUE)), 
-          as.numeric(quantile(x, prob = 0.75, na.rm = TRUE)), 
+        as.numeric(quantile(x, prob = 0.75, na.rm = TRUE)), 
         mean(x), median(x), sum(x), sqrt(var(x)/length(x)), 
         cl.vals(x, ci)[1], cl.vals(x, ci)[2], var(x), 
         sqrt(var(x)), skewness(x), kurtosis(x) )    
@@ -332,11 +304,54 @@ function(x, ci = 0.95, column = 1)
         "Variance", "Stdev", "Skewness", "Kurtosis")
         
     # Output as data.frame
-    ans = data.frame(Value = z, row.names = znames)
+    ans = matrix(z, ncol = 1)
+    row.names(ans) = znames
     
     # Return Value:
-    ans
+    ans  
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+basicStats = 
+function(x, ci = 0.95) 
+{   # A function implemented by Diethelm Wuertz
     
+    # Description:
+    #   Calculates Basic Statistics
+    
+    # Arguments:
+    #   x - an object which can be transformed by the function
+    #       as.matrix() into an object of class matrix. 
+    #   ci - a numeric value setting the confidence interval.
+    
+    # Value:
+    #   a two-column data frame, where the first column takes the 
+    #   value of the statistics, and the second its name, e.g.
+    #   "nobs", "NAs",  "Minimum", "Maximum", "1. Quartile",  
+    #   "3. Quartile",  "Mean", "Median", "Sum",  "SE Mean", 
+    #   "LCL Mean", "UCL Mean", "Variance", "Stdev", "Skewness", 
+    #   "Kurtosis")
+     
+    # FUNCTION:
+    
+    # Univariate/Multivariate:
+    x = as.matrix(x)
+    
+    # basic Statistics:
+    nColumns = dim(x)[2]
+    ans = NULL
+    for (i in 1:nColumns) {
+        ans = cbind(ans, .basicStatsUnivariate(x[, i], ci))
+    }
+    colNames = colnames(x)
+    if (!is.null(colNames)) 
+    colnames(ans) = colNames  
+
+    # Return Value:
+    data.frame(round(ans, digits = 6))
 }
 
 

@@ -56,7 +56,7 @@
 
 
 normalTest =
-function(x, method = c("ks", "sw", "jb", "da")) 
+function(x, method = c("sw", "jb"), na.rm = FALSE) 
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -69,22 +69,16 @@ function(x, method = c("ks", "sw", "jb", "da"))
     
     # Convert Type:
     x = as.vector(x)
+    if (na.rm) x = x[!is.na(x)]
+    
+    # Method:
+    method = match.arg(method)
     
     # Test:
-    if (method[1] == "ks") {
-        ans = ksnormTest(x) 
-    }
-    if (method[1] == "sw") {
+    if (method == "sw") {
         ans = shapiroTest(x) 
-    }  
-    if (method[1] == "jb") {
+    } else if (method == "jb") {
        ans = jarqueberaTest(x)
-    }
-    if (method[1] == "da") {
-       ans = dagoTest(x)
-    }
-    if (method[1] == "ad") {
-       ans = adTest(x)
     }
         
     # Return Value:

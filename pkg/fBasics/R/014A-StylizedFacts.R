@@ -183,7 +183,7 @@ ymax = NA, standardize = TRUE, labels = TRUE, ...)
     
     # Standardize:
     if(standardize) x = (x-mean(x))/sqrt(var(x))
-        data = matrix(data=rep(0,times=lag.max*length(deltas)),
+        data = matrix(data = rep(0, times = lag.max*length(deltas)),
         nrow = lag.max, byrow = TRUE)
     for (id in 1:length(deltas))
         data[,id] = as.double(acf(abs(x)^deltas[id], 
@@ -215,7 +215,8 @@ ymax = NA, standardize = TRUE, labels = TRUE, ...)
 
 lmacfPlot = 
 function(x, lag.max = max(2, floor(10*log10(length(x)))), 
-ci = 0.95, labels = TRUE, details = TRUE, ...)
+ci = 0.95, type = c("both", "acf", "hurst"), labels = TRUE, 
+details = TRUE, ...)
 {   # A function implemented by Diethelm Wuertz
     
     # Description:
@@ -227,13 +228,20 @@ ci = 0.95, labels = TRUE, details = TRUE, ...)
     if (class(x) == "timeSeries") stopifnot(isUnivariate(x))
     x = as.vector(x)
     
+    # Plot Type:
+    type = match.arg(type)
+    
     # Labels:
     if (labels) {
-        main = "ACF"
-        xlab = "lag"
-        ylab = "ACF"
+        main1 = "ACF"
+        xlab1 = "lag"
+        ylab1 = "ACF"
+        main2 = "log-log ACF"
+        xlab2 = "log lag"
+        ylab2 = "log ACF"
     } else {
-        main = xlab = ylab = ""
+        main1 = xlab1 = ylab1 = ""
+        main2 = xlab2 = ylab2 = ""
     }
     
     # Transform:
@@ -249,14 +257,16 @@ ci = 0.95, labels = TRUE, details = TRUE, ...)
     # lin-lin plot excluding one:
     x = seq(0, lag.max, by = 1)
     y = z$acf 
-    plot(x = x[-1], y = y[-1], type = "l", main = main, 
-        col = "steelblue4", xlab = xlab, ylab = ylab, 
-        xlim = c(0, lag.max), ylim = c(-2*cl, max(y[-1])), ...)
-    # abline(h = 0, lty = 3)
+    if (type == "both" | type == "acf") {
+        plot(x = x[-1], y = y[-1], type = "l", main = main1, 
+            col = "steelblue4", xlab = xlab1, ylab = ylab1, 
+            xlim = c(0, lag.max), ylim = c(-2*cl, max(y[-1])), ...)
+        # abline(h = 0, lty = 3)
+    }
     if (details) {
-        cat ('\nLong Memory Autocorrelation Function:\n')
-            paste (cat ('\n  Maximum Lag        '), cat(lag.max))
-            paste (cat ('\n  Cut-Off ConfLevel  '), cat(cl))
+        cat ("\nLong Memory Autocorrelation Function:")
+            paste (cat ("\n  Maximum Lag        "), cat(lag.max))
+            paste (cat ("\n  Cut-Off ConfLevel  "), cat(cl))
     }
     ACF = acf(x.ret, lag.max = lag.max, plot = FALSE)$acf[,,1]
     lines(x = 1:lag.max, y = ACF[-1], type = "l", col = "steelblue4")
@@ -272,8 +282,12 @@ ci = 0.95, labels = TRUE, details = TRUE, ...)
         hurst = NA
         cat("\n  The time series exhibits no long memory! \n") 
     } else {
-        plot(x = log(x), y = log(y), type = "l", xlab = "log(lag)", 
-            ylab = "log(ACF)", main = "log-log", col = "steelblue4", ...)
+        if (type == "both" | type == "hurst") {
+            plot(x = log(x), y = log(y), type = "l", xlab = xlab2, 
+                ylab = ylab2, main = main2, col = "steelblue4", ...)
+            # Grid:
+            if (labels) grid()
+        }
         Fit = lsfit(log(x), log(y))
         fit = unlist(Fit)[1:2]
         ### fit = l1fit(log(x), log(y))$coefficients
@@ -387,6 +401,9 @@ function(x, n = 12, lag.max = 20, labels = TRUE, ...)
     abline(h = -ci, col = "blue")
     if (labels) grid()
     
+    # Grid:
+    if (labels) grid()
+    
     # Return Value:
     invisible(list(Rho = Rho, Lagged = Lagged))
 }
@@ -430,6 +447,7 @@ function(x, n = 50, cells = "FD", doplot = TRUE, ...)
         par(err = -1)
         points(log(xh2), log(yh2), col = 2) 
     }
+    
     # Compare with a Gaussian plot:
     xg = seq(from = min(xh1[1], xh[2]), 
         to = max(xh1[length(xh1)], xh2[length(xh2)]), length = n)
@@ -439,6 +457,7 @@ function(x, n = 50, cells = "FD", doplot = TRUE, ...)
         par(err = -1)
         lines(log(xg), yg, col = 3)
     }
+    
     # Return Value:
     invisible(list(breaks = c(xh1, xh2), counts = c(yh1, yh2), 
         fbreaks = c(-rev(xg), xg), fcounts = c(-rev(yg), yg))) 
@@ -463,6 +482,7 @@ function(x, n = 50, doplot = TRUE, ...)
         par(err = -1)
         plot(xh, yh, type = "p", ...)
     } 
+    
     # Compare with a Gaussian Plot:
     xg = seq(from = xh[1], to = xh[length(xh)], length = n)
     yg = log(dnorm(xg, mean(x), sqrt(var(x))))
@@ -470,6 +490,7 @@ function(x, n = 50, doplot = TRUE, ...)
         par(err = -1)
         lines(xg, yg, col = 2)
     }
+    
     # Return Value:
     result = invisible(list(breaks = xh, counts = yh, 
         fbreaks = xg, fcounts = yg))
@@ -528,6 +549,7 @@ doplot = TRUE, labels = TRUE, ...)
             main = main, xlab = xlab, ylab = ylab, ...) 
     }
     
+    # Grid:
     if (labels) grid()
     
     # Return Value:
@@ -576,6 +598,9 @@ function(x, span = 5, col = "steelblue4", labels = TRUE, ...)
 
     # Add Line:
     qqline(y, ...)
+    
+    # Grid:
+    if (labels) grid()
     
     # Return Value:
     invisible(x)
@@ -634,12 +659,11 @@ labels = TRUE, details = TRUE, ...)
     Fit = unlist(fit)[1:2]
     alpha = 1.0/Fit[2]
     if (doplot) { 
-        plot(x, y, xlab = "log-time", ylab = "log-volatility", ...)
-        title(main = "Scaling Law Plot", ...)
-        if (exists("grid")) grid()
+        plot(x, y, main = main, xlab = xlab, ylab = ylab, ...)
         abline(Fit[1], Fit[2], col = 2)
         abline(Fit[1], 0.5, col = 3) 
     }
+    if (labels) grid()
     
     # Details:
     if (details) {
