@@ -58,7 +58,8 @@
 # FUNCTION:             SPLUS FUNCTIONALITY:
 #  stdev                 Returns the standard deviation of a vector
 # FUNCTION:             DESCRIPTION:
-#  .distCheck            Distribution Check
+#  .distCheck            Checks consistency of distributions
+#  .bootMean             Boottraps the population mean
 ################################################################################
 
 
@@ -777,6 +778,9 @@ function(x, na.rm = FALSE)
 function(fun = "norm", ...)
 {   # A function implemented by Diethelm Wuertz
 
+    # Description:
+    #   Checks consistency of distributions
+    
     # Examples:
     #   .distCheck("norm", mean = 1, sd = 1)
     #   .distCheck("t", df = 4)
@@ -837,6 +841,48 @@ function(fun = "norm", ...)
     
     # Done:
     invisible()
+}
+
+
+################################################################################
+
+
+.bootMean =
+function(x, B = 1000, ci = 0.95, na.rm = TRUE, reps = FALSE)
+{   # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   Boottraps the population mean
+    
+    # Details:
+    #   A very fast implementation of the basic nonparametric 
+    #   bootstrap for obtaining confidence limits for the population 
+    #   mean without assuming normality.       
+    
+    # Arguments:
+    #   B - number of bootstrap resamples, by default 1000.
+    #   ci - specifies the confidence level (0-1) for interval 
+    #       estimation of the population mean. 
+    #   na.rm - a logical flag, should NAs be removed?
+    #   reps - set to TRUE to have bootMean return the vector 
+    #       of bootstrapped means as the reps attribute of 
+    #       the returned object .
+    
+    # Notes:
+    #   The function calls "smean.cl.boot" from the "HMisc" package
+    #   Requirements: require(Hmisc)       
+    
+    # FUNCTION:       
+    
+    # Requirements:
+    sink("@sink@") # Skip Loading Comments ...
+    library(Design, warn.conflicts = FALSE)
+    library(Hmisc, warn.conflicts = FALSE)
+    sink()
+    unlink("@sink@") 
+           
+    # Return Value:
+    smean.cl.boot(x = x, conf.int = ci, B = B, na.rm = na.rm, reps = reps)
 }
 
 
