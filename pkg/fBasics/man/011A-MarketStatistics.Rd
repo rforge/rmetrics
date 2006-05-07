@@ -152,7 +152,6 @@ WFE, 2004,
 }
     
     
-
 \examples{
 ## SOURCE("fBasics.011A-MarketStatistics")
 

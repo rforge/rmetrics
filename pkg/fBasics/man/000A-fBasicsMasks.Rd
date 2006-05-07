@@ -2,21 +2,20 @@
 
 \alias{fBasicsMasks}
 
-\alias{sort}
-\alias{sort.default}
-
-\alias{sample}
-\alias{sample.default}
-
-\alias{round}
-\alias{round.default}
-
-
 \alias{log}
 \alias{log.default}
 
 \alias{outlier}
 \alias{outlier.default}
+
+\alias{round}
+\alias{round.default}
+
+\alias{sample}
+\alias{sample.default}
+
+\alias{sort}
+\alias{sort.default}
 
 \alias{var}
 \alias{var.default}
@@ -43,16 +42,16 @@
 
 
 \usage{
-sort.default(x, partial = NULL, na.last = NA, decreasing = FALSE, 
-    method = c("shell", "quick"), index.return = FALSE, \dots) 
-
-sample.default(x, size, replace = FALSE, prob = NULL, \dots) 
-
-round.default(x, digits, \dots)
-
 log.default(x, base = exp(1))
 
 outlier.default(x, sd = 5, complement = TRUE, \dots)
+
+round.default(x, digits, \dots)
+
+sample.default(x, size, replace = FALSE, prob = NULL, \dots)
+
+sort.default(x, partial = NULL, na.last = NA, decreasing = FALSE, 
+    method = c("shell", "quick"), index.return = FALSE, \dots) 
 
 var.default(x, y = NULL, na.rm = FALSE, use)
     

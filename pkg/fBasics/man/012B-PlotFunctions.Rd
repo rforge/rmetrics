@@ -42,8 +42,7 @@
     \code{characterTable} \tab Table of Numerical Equivalents to Latin Characters, \cr
     \code{plotcharacterTable} \tab Table of plot characters, plot symbols, \cr
     \code{colorTable} \tab Table of Color Codes and Plot Colors itself, \cr
-    \code{greyPal} \tab Creates a grey palette like rainbow does for colors, \cr
-    \code{splusLikePlot} \tab Scales plotting and symbols.}
+    \code{greyPal} \tab Creates a grey palette like rainbow does for colors.}
     
 }
 
@@ -179,23 +178,20 @@ greyPal(n = 64, start = 255-n, end = 255)
 
 \details{
 
-    \bold{Series Plots:}
+    \bold{Easy to use time series and return plots:}
     \cr\cr
-    \code{tsPlot} plots time series on a common plot. Unlike \code{plot.ts} 
-    the series can have a different time bases, but they should have the 
-    same frequency. \code{tsPlot} is a synonyme function call for R's 
-    \code{ts.plot} from the the \code{ts} package.
+    The functions \code{tsPlot}, \code{histPlot}, and \code{densityPlot}
+    are easy to use functions to plot multivariate time series either 
+    given as an object of class \code{"timeSeries"} or as an object of
+    class \code{"data.frame"}. In the latter case it is expected, that the 
+    first column of the data frame can be transformed into an object of
+    class \code{"timedate"}.
+    The function \code{tsPlot} can especially be used to plot return
+    series and the functions \code{histPlot} and \code{densityPlot} can
+    be used to plot the associated return distribution.
+    Note, that the Rmetrics package \code{"fCalendar"} is required.
     \cr
     
-    \bold{Histogram and Density Plots:}
-    \cr\cr
-    \code{histPlot} and \code{densityPlot} show (return) distributions in form 
-    of a  histogram and density plots. The first is a synonyme function call 
-    for R's histogram plot, calling the function \code{hist}. The outlook 
-    of the plot is more SPlus like. The second creates a density Plot 
-    with underlying kernel density estimation. It is a function call to  
-    R's \code{density} function.
-    \cr
     
     \bold{Three Dimensional Plots:}
     \cr\cr
@@ -205,7 +201,7 @@ greyPal(n = 64, start = 255-n, end = 255)
     whose size indexes a third variable. The second aloows to create
     a perspective 3 dimensional plot. It is a function call to R's
     \code{persp} plot, but the parameters are setted to produce a
-    more SPlis like outlook of the plot. \code{contour} is the call
+    more SPlus like outlook of the plot. \code{contour} is the call
     to R's contour plot from the \code{base} package.
     \cr
 
@@ -225,7 +221,7 @@ greyPal(n = 64, start = 255-n, end = 255)
  
     Gordon Smyth for the circlesPlot, \cr
     Pierre Joyet for the characterTable, and \cr
-    Diethelm Wuertz for the Rmetrics \R-port.
+    Diethelm Wuertz for the Rmetrics port.
     
 }
 
@@ -233,9 +229,11 @@ greyPal(n = 64, start = 255-n, end = 255)
 \examples{
 ## SOURCE("fBasics.012B-PlotFunctions")
 
+\dontrun{
+## fCalendar -
+   require(fCalendar)
+   
 ## tsPlot -
-   xmpBasics("\nStart: European Stock Markets > ")
-   # Show multiple plot:
    par(mfrow = c(1, 1), cex = 0.7)
    data(DowJones30)
    DowJones.ts = as.timeSeries(DowJones30)[, c("CAT", "GE", "IBM", "JPM", )]
@@ -243,23 +241,20 @@ greyPal(n = 64, start = 255-n, end = 255)
    title(main = "CAT - GE - IBM - JPM")
    
 ## histPlot -
-   xmpBasics("\nNext: Histogram Plot of Normal Random Numbers > ")
    DowJones.ret = returnSeries(DowJones.ts)
    par(mfrow = c(2, 2), cex = 0.7)
    histPlot(x = DowJones.ret)
    
 ## densityPlot -
-   xmpBasics("\nNext: Density Plot of Normal Random Numbers > ")
    densityPlot(x = DowJones.ret)
-   
+} 
+
 ## circlesPlot -
-   xmpBasics("\nNext: 3D Circles Plot of Normal Random Numbers > ")
    par(mfrow = c(1, 1), cex = 0.7)
    circlesPlot(x = rnorm(50), y = rnorm(50), size = abs(rnorm(50)),
      main = "Circles Plot")
 
 ## perspPlot -
-   xmpBasics("\nNext: Perspective Plot > ")
    par(mfrow = c(1, 1))
    x = y = seq(-10, 10, length = 51)
    f = function(x, y) { r = sqrt(x^2+y^2); 10 * sin(r)/r }
@@ -268,19 +263,13 @@ greyPal(n = 64, start = 255-n, end = 255)
    title(main = "Perspective Plot", line = -3)
    
 ## characterTable - 
-   xmpBasics("\nNext: Print the Copyright Sign > ")
    cat("\251 \n")
-
-## characterTable - 
-   xmpBasics("\nNext: Display Character Table for Symbol Font > ")
    characterTable(5)
    
 ## colorTable - 
-   xmpBasics("\nNext: Display Table of Plot Colors > ")
    colorTable()
    
 ## plotcharacter Table - 
-   xmpBasics("\nNext: Display Table of Plot Characters > ")
    plotcharacterTable()
 }
 

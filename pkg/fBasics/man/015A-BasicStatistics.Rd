@@ -228,23 +228,23 @@ colCumsums(x, na.rm = FALSE, \dots)
 ## SOURCE("fBasics.015A-BasicStatistics")
 
 ## basicStats -
-   xmpBasics("\nStart: Basic Statistics of log-Returns > ")
    # Data NYSE Composite Index:
-   data(nyseres)
-   basicStats(nyseres)  
+   data(DowJones30)
+   # ... must be univariate:
+   basicStats(DowJones30[, "IBM"])  
      
 ## mean -
 ## var -
 ## skewness -
 ## kurtosis -
-   xmpBasics("\nNext: Moments, Skewness and Kurtosis > ")
+   IBM = DowJones30[, "IBM"]
    # Mean, Variance:
-   mean(nyseres)
-   var(nyseres)
+   mean(IBM)
+   var(IBM)
    # Skewness, Kurtosis:
-   class(nyseres)
-   skewness(nyseres[, 1])
-   kurtosis(nyseres[, 1])   
+   class(IBM)
+   skewness(IBM)
+   kurtosis(IBM)   
 }
 
 

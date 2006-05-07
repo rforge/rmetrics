@@ -5,6 +5,7 @@
 \alias{fDISTFIT}
 \alias{fDISTFIT-class}
 
+\alias{normFit}
 \alias{tFit}
 
 \alias{stableFit}
@@ -33,6 +34,7 @@
     The functions are:
     
     \tabular{ll}{
+    \code{normFit} \tab MLE parameter fit for a normal distribution, \cr
     \code{tFit} \tab MLE parameter fit for a Student t-distribution, \cr
     \code{stableFit} \tab MLE and Quantile Method stable parameter fit, \cr
     \code{ghFit} \tab MLE parameter fit for a generalized hyperbolic distribution, \cr
@@ -45,18 +47,21 @@
 
 
 \usage{
-tFit(x, df = 4, doplot = TRUE, span = "auto", title = NULL, 
+normFit(x, doplot = TRUE, span = "auto", title = NULL, description = NULL, \dots)
+
+tFit(x, df = 4, doplot = TRUE, span = "auto", trace = FALSE, title = NULL, 
     description = NULL, \dots)
     
 stableFit(x, alpha = 1.75, beta = 0, gamma = 1, delta = 0, 
-    type = c("q", "mle"), doplot = TRUE, title = NULL, description = NULL)
+    type = c("q", "mle"), doplot = TRUE, trace = FALSE, title = NULL, 
+    description = NULL)
     
 ghFit(x, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1, doplot = TRUE, 
-    span = "auto", title = NULL, description = NULL, \dots) 
+    span = "auto", trace = FALSE, title = NULL, description = NULL, \dots) 
 hypFit(x, alpha = 1, beta = 0, delta = 1, mu = 0, doplot = TRUE, 
-    span = "auto", title = NULL, description = NULL, \dots)
+    span = "auto", trace = FALSE, title = NULL, description = NULL, \dots)
 nigFit(x, alpha = 1, beta = 0, delta = 1, mu = 0, doplot = TRUE, 
-    span = "auto", title = NULL, description = NULL, \dots)
+    span = "auto", trace = FALSE, title = NULL, description = NULL, \dots)
    
 \method{print}{fDISTFIT}(x, \dots)
  
@@ -240,45 +245,17 @@ ssdFit(x, alpha = 1.4, seed = NULL, title = NULL, description = NULL)
 
 \examples{
 ## SOURCE("fBasics.013D-DistributionFits")
-
-## tFit -
-   xmpBasics("\nStart: MLE Fit to Student's t Density > ")
-   par(mfrow = c(2,2), cex = 0.7, err = -1)
-   options(warn = -1)
-   # Simulated random variates t(4):
-   set.seed(1953)
-   s = rt(n = 1000, df = 4) 
-   # Note, this may take some time.
-   # Starting vector:
-   df.startvalue = 2*var(s)/(var(s)-1)
-   tFit(s, df.startvalue, doplot = TRUE)
-   
-## ghFit -
-
-## hypFit -
-   xmpBasics("\nNext: MLE Fit to Hyperbolic Density > ")
-   # Simulated random variates HYP(1, 0.3, 1, -1):
-   set.seed(1953)
-   s = rhyp(n = 1000, alpha = 1.5, beta = 0.3, delta = 0.5, mu = -1) 
-   # Note, this may take some time.
-   # Starting vector (1, 0, 1, mean(s)):
-   hypFit(s, alpha = 1, beta = 0, delta = 1, mu = mean(s), 
-     doplot = TRUE, width = 0.5)
    
 ## nigFit -
-   xmpBasics("\nNext: MLE Fit to Normal Inverse Gaussian Density > ")
-   # Simulated random variates HYP(1.5, 0.3, 0.5, -1.0):
+   
+   # Simulate random variates HYP(1.5, 0.3, 0.5, -1.0):
    set.seed(1953)
    s = rnig(n = 1000, alpha = 1.5, beta = 0.3, delta = 0.5, mu = -1.0) 
+   
+   # Fit Parameters:
    # Note, this may take some time.
    # Starting vector (1, 0, 1, mean(s)):
-   nigFit(s, alpha = 1, beta = 0, delta = 1, mu = mean(s), doplot = TRUE)
-   
-## ssdFit -
-   xmpBasics("\nNext: Smoothed Spline Density > ")
-   set.seed(1953)
-   x = rnorm(1000)
-   ssdFit(x)
+   nigFit(s, alpha = 1, beta = 0, delta = 1, mu = mean(s), doplot = TRUE) 
 }
 
 

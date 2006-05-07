@@ -192,55 +192,33 @@ Weron, A., Weron R. (1999);
 
 \examples{  
 ## SOURCE("fBasics.013A-StableDistribution")
-
-## rsymstb -
-   xmpBasics("\nStart: Symmetric Stable Distribuion:  > ")
-   par(mfcol = c(3, 2), cex = 0.7)
-   set.seed(1953)
-   r = rsymstb(n = 1000, alpha = 1.9)
-   plot(r, type = "l", main = "symstb: alpha = 1.9")
-   # Plot empirical density and compare with true density:
-   hist(r, n = 25, probability = TRUE, border = "white", col = "steelblue4")
-   x = seq(-5, 5, 0.1)
-   lines(x, dsymstb(x = x, alpha = 1.9))
-   # Plot df and compare with true df:
-   plot(sort(r), (1:1000/1000), main = "Probability", col = "steelblue4")
-   lines(x, psymstb(x, alpha = 1.9))
-   # Compute quantiles:
-   qsymstb(psymstb(q = seq(-10, 10, 1), alpha = 1.9), alpha = 1.9)
   
 ## stable - 
-   xmpBasics("\nNext: Skew Stable Distribuion:  > ")
-   # Compared to R, this might be quite slow under S-Plus ...
+   # Plot rvs Series
    set.seed(1953)
    r = rstable(n = 1000, alpha = 1.9, beta = 0.3)
-   plot(r, type = "l", main = "stable: alpha=1.9 beta=0.3")
+   plot(r, type = "l", main = "stable: alpha=1.9 beta=0.3", 
+     col = "steelblue4")
+   grid()
+ 
+## stable -  
    # Plot empirical density and compare with true density:
-   hist(r, n = 25, probability = TRUE, border = "white", col = "steelblue4")
+   hist(r, n = 25, probability = TRUE, border = "white", 
+     col = "steelblue4")
    x = seq(-5, 5, 0.4)
    lines(x, dstable(x = x, alpha = 1.9, beta = 0.3))
+   
+## stable -   
    # Plot df and compare with true df:
-   plot(sort(r), (1:1000/1000), main = "Probability", col = "steelblue4")
+   plot(sort(r), (1:1000/1000), main = "Probability", pch = 19, 
+     col = "steelblue4")
    lines(x, pstable(q = x, alpha = 1.9, beta = 0.3))
+   grid()
+   
+## stable -
    # Compute quantiles:
    qstable(pstable(seq(-4, 4, 1), alpha = 1.9, beta = 0.3), 
-     alpha = 1.9, beta = 0.3)
-     
-## stable -
-   xmpBasics("\nNext: Paramterization S1:  > ")
-   set.seed(1953)
-   r = rstable(n = 1000, alpha = 1.9, beta = 0.3, pm = 1)
-   plot(r, type = "l", main = "S1 stable: alpha=1.9 beta=0.3")
-   # Plot empirical density and compare with true density:
-   hist(r, n = 25, probability = TRUE, border = "white", col = "steelblue4")
-   x = seq(-5, 5, 0.4)
-   lines(x, dstable(x = x, alpha = 1.9, beta = 0.3))
-   # Plot df and compare with true df:
-   plot(sort(r), (1:1000/1000), main = "Probability", col = "steelblue4")
-   lines(x, pstable(q = x, alpha = 1.9, beta = 0.3, pm = 1))
-   # Compute quantiles:
-   qstable(pstable(seq(-4, 4, 1), alpha = 1.9, beta = 0.3, pm = 1), 
-     alpha = 1.9, beta = 0.3, pm = 1)  
+     alpha = 1.9, beta = 0.3) 
 }
 
 

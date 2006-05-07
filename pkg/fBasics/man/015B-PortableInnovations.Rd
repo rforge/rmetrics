@@ -108,15 +108,12 @@ Altman, N.S. (1988);
 ## SOURCE("fSeries.015B-PortableRandomInnovations")
 
 ## set.lcgseed -
-   xmpBasics("\nStart: Set Initial Seed >")
    set.lcgseed(seed = 65890)
  
 ## runif.lcg - rnorm.lcg - rt.lcg -
-   xmpBasics("\nNext: Create Random Numbers >")
    cbind(runif.lcg(10), rnorm.lcg(10), rt.lcg(10, df = 4))
 
 ## get.lcgseed -
-   xmpBasics("\nNext: What is the current value of the seed? >")
    get.lcgseed()  
    
 ## Note, to overwrite rnorm, use

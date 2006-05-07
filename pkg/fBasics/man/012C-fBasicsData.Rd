@@ -208,19 +208,20 @@
 
 
 \examples{
+\dontrun{
 ## SOURCE("fBasics.012C-fBasicsData")
 
 ##  plot -
-    xmpBasics("\nStart: Plot Residuals NYSE Composite Index > ")
     data(nyseres)
     x = as.ts(nyseres)
-    par(mfrow = c(2, 1), cex = 0.75)
+    par(mfrow = c(2, 1), cex = 0.7)
     plot(100*x, type = "l", col = "steelblue4",
       main = "NYSE Composite Index")
     grid()
     plot(cumsum(x), type = "l", col = "steelblue4",
       main = "Cumulated NYSE Index")
     grid()
+}
 }
 
 

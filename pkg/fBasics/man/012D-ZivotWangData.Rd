@@ -182,7 +182,7 @@
 
 \dontrun{
 ## DowJones30 - 
-   xmpBasics("\nStart: Dow Jones Industrial Average > ")
+   require(fCalendar)
    data(DowJones30)
    class(DowJones30)
    DowJones30.ts = as.timeSeries(DowJones30)

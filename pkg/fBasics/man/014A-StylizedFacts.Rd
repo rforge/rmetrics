@@ -8,7 +8,6 @@
 \alias{teffectPlot}
 \alias{lmacfPlot}
 \alias{lacfPlot}
-
 \alias{logpdfPlot}
 \alias{qqgaussPlot}
 \alias{scalinglawPlot}
@@ -30,32 +29,36 @@
     The functions to display stylized facts are:
     
     \tabular{ll}{
-    \code{logpdfPlot} \tab logarithmic density plots, \cr
-    \code{qqgaussPlot} \tab Gaussian quantile quantile plot, \cr
-    \code{scalinglawPlot} \tab scaling behavior plot, \cr
     \code{acfPlot} \tab autocorrelation function plot, \cr
     \code{pacfPlot} \tab partial autocorrelation function plot, \cr
     \code{ccfPlot} \tab cross correlation function plot, \cr
-    \code{lmacfPlot} \tab long memory autocorrelation function plot, \cr
     \code{lacfPlot} \tab lagged autocorrelation function plot, \cr
-    \code{teffectPlot} \tab Taylor effect plot.}
+    \code{lmacfPlot} \tab long memory autocorrelation function plot, \cr
+    \code{logpdfPlot} \tab logarithmic density plots, \cr
+    \code{qqgaussPlot} \tab Gaussian quantile quantile plot, \cr
+    \code{scalinglawPlot} \tab scaling behavior plot, \cr
+    \code{teffectPlot} \tab Taylor effect plot. }
     
 }
 
 
 \usage{
-logpdfPlot(x, n = 50, doplot = TRUE, type = c("lin-log", "log-log"), \dots)
-qqgaussPlot(x, span = 5, col = "steelblue4", main = "Normal Q-Q Plot", \dots)
-scalinglawPlot(x, span = ceiling(log(length(x)/252)/log(2)), doplot = TRUE, \dots)
-acfPlot(x, \dots)
-pacfPlot(x, \dots)
-ccfPlot(x, y, lag.max = max(2, floor(10*log10(length(x)))), 
-    type = c("correlation", "covariance", "partial"), \dots)    
-lacfPlot(x, n = 12, lag.max)
+acfPlot(x, labels = TRUE, \dots)
+pacfPlot(x, labels = TRUE, \dots)
+
+ccfPlot(x, y, lag.max = max(2, floor(10*log10(length(x)))), type = 
+    c("correlation", "covariance", "partial"), labels = TRUE, \dots) 
+lacfPlot(x, n = 12, lag.max = 20, labels = TRUE, \dots)
 lmacfPlot(x, lag.max = max(2, floor(10*log10(length(x)))), ci = 0.95, 
-    main = "ACF", doprint = TRUE)
+    labels = TRUE, details = TRUE, \dots)
+    
+logpdfPlot(x, n = 50, type = c("lin-log", "log-log"), doplot = TRUE, 
+    labels = TRUE, \dots)
+qqgaussPlot(x, span = 5, col = "steelblue4", labels = TRUE, \dots)
+scalinglawPlot(x, span = ceiling(log(length(x)/252)/log(2)), doplot = TRUE, 
+    labels = TRUE, details = TRUE, \dots)
 teffectPlot(x, deltas = seq(from = 0.2, to = 3, by = 0.2), lag.max = 10, 
-    ymax = NA, standardize = TRUE)
+    ymax = NA, standardize = TRUE, labels = TRUE, \dots)
 }
 
 
@@ -75,17 +78,19 @@ teffectPlot(x, deltas = seq(from = 0.2, to = 3, by = 0.2), lag.max = 10,
         from 0.2 to 3.0 in steps of 0.2.
         }
     \item{doplot}{
-        a logical. Should a plot be displayed?
+        a logical value. Should a plot be displayed?
         }
-    \item{doprint}{
-        a logical, should the results be printed?
+    \item{details}{
+        a logical value. Should the results be printed?
+        }
+    \item{labels}{
+        a logical value. Whether or not x- and y-axes should be automatically 
+        labelled and a default main title should be added to the plot.
+        By default \code{TRUE}.
         }
     \item{lag.max}{
         maximum lag for which the autocorrelation should be 
         calculated, an integer.
-        }
-    \item{main}{
-        a character string, the title of the plot.
         }
     \item{n}{
         [lacfPlot] - \cr
@@ -279,58 +284,25 @@ Ding Z., Granger C.W.J., Engle R.F. (1993);
 \examples{
 ## SOURCE("fBasics.014A-StylizedFacts")
 
-## logpdfPlot -
-   xmpBasics("\nStart: log PDF Plot > ")
-   # Plot the log-returns of the NYSE Composite Index
-   # and compare with the Gaussian Distribution:  
-   par(mfrow = c(2, 2))
-   data(nyseres)
-   # Extract from data.frame:
-   x = nyseres[, 1]
-   logpdfPlot(x, main = "log PDF Plot")
-   # loglogpdfPlot -
-   # Plot the log-returns of the NYSE Composite Index
-   # and compare with the Gaussian Distribution:
-   logpdfPlot(x, type = "log-log", main = "log-log PDF Plot")
+## data - 
+   data(DowJones30)
+   IBM = DowJones30[, "IBM"]
+   JPM = DowJones30[, "JPM"]
+   IBM.RET = diff(log(DowJones30[, "IBM"]))
+   JPM.RET = diff(log(DowJones30[, "JPM"]))
    
-## qqgaussPlot -
-   xmpBasics("\nNext: QQ Normal Plot > ")
-   # Create a Gaussian Quantile-Quantile plot
-   # for the NYSE Composite Index log-returns:
-   qqgaussPlot(x)
-   
-## scalinglawPlot -
-   xmpBasics("\nNext: Scaling Law  Plot > ")
-   # Investigate and Plot the Scaling Law
-   # for the NYSE Composite Index log-returns:
-   scalinglawPlot(x)
-    
-## acfPlot -
-   xmpBasics("\nNext: Auto-Correlation Function Plot > ")
-   data(EuStockMarkets)
-   par(mfrow = c(2, 1))
-   returns.ftse = diff(log(EuStockMarkets[,"FTSE"]))
-   returns.dax = diff(log(EuStockMarkets[,"DAX"]))
-   acfPlot(x = returns.ftse, main = "FTSE Autocorrelation")
-   
+## lacfPlot -
+   # Lagged Correlations:
+   par(mfrow = c(2, 2), cex = 0.7)
+   lacfPlot(IBM)
+     
 ## ccfPlot -
-   xmpBasics("\nNext: Cross-Correlation Function Plot > ")
-   ccfPlot(x = returns.ftse, y = returns.dax,
-     main="FTSE - DAX Crosscorrelation")
+   # Crosscorrelations:
+   ccfPlot(x = IBM.RET, y = JPM.RET)
 
-## lmacfPlot -
-   xmpBasics("\nNext: Long-Memory ACF Plot > ")
-   # Estimate and plot the Long Memory ACF of the DAX volatilities
-   # and evaluate the Hurst exponent of a time series:
-   par(mfrow = c(2, 1))
-   lmacfPlot(abs(returns.dax), main = "DAX")
-   
 ## teffectPlot -
-   xmpBasics("\nNext: Taylor Effect Plot > ")
-   # Estimate and plot the Taylor Effect for the
-   # log returns of the NYSE Compositie Index.
-   teffectPlot(returns.dax)
-   teffectPlot(returns.ftse)
+   # Taylor Effect:
+   teffectPlot(x = IBM.RET)
 }
 
 

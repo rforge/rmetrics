@@ -125,22 +125,24 @@ Gu C. (2002);
 ## SOURCE("fBasics.013C-SmoothedSplineDistribution")
 
 ## ssd -
-\dontrun{
-   xmpBasics("\nStart: Spline Smoothed Distribution > ")
-   par(mfcol = c(2, 1), cex = 0.5)
+
+   # Fit Parameters:
    set.seed(1953)
    x = rnorm(1000)
    param = ssdFit(x)
+   
    # Plot empirical density and compare with fitted density:
    hist(x, n = 25, probability = TRUE, border = "white", col = "steelblue4") 
    s = seq(min(x), max(x), 0.1)
-   lines(s, dssd(s, param), lwd = 2)
+   lines(s, dssd(s, param), lwd = 2, col = "brown")
+   
    # Plot df and compare with true df:
    plot(sort(x), (1:1000/1000), main = "Probability", col = "steelblue4")
-   lines(s, pssd(s, param), lwd = 2)
+   lines(s, pssd(s, param), lwd = 2, col = "brown")
+   grid()
+   
    # Compute quantiles:
    qssd(pssd(seq(-3, 3, 1), param), param) 
-}
 }
 
 
