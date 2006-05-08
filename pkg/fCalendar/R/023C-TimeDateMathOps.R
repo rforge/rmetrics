@@ -36,7 +36,6 @@
 #  difftimeDate           Returns a difference of two 'timeDate' objects
 #  round.timeDate         Rounds objects of class 'timeDate'
 #  trunc.timeDate         Truncates objects of class 'timeDate' 
-#
 # S3 MEHOD:              CONCATENATION, ORDERING AND SORTING:
 #  c.timeDate             Concatenates 'timeDate' objects
 #  rep.timeDate           Replicates a 'timeDate' object

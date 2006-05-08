@@ -30,14 +30,14 @@
 ################################################################################
 
 
-#
+################################################################################
 # The following DST Rules were extracted from Libical library and 
 # integrated into R functions. 
 # Libical is an Open Source implementation of the iCalendar protocols
 # and protocol data units.
 # The code and datafiles are licensed under the terms of the GNU 
 # Library General Public License. 
-#
+################################################################################
 
 
 # AFRICA -----------------------------------------------------------------------

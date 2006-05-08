@@ -28,7 +28,7 @@
 
 
 ################################################################################
-# METHODS              CREATE A TIMESERIES FROM OTHER OBJECTS:
+# METHODS:             CREATE A TIMESERIES FROM OTHER OBJECTS:
 #  is.timeSeries        S3: Tests for a 'timeSeries' object
 #  as.timeSeries        S3: Defines method for a 'timeSeries' object
 #  as.timeS*.default    S3: Returns the input
@@ -38,18 +38,15 @@
 #  as.timeS*.ts         S3: Transforms a 'ts' object into a 'timeSeries'
 #  as.timeS*.character  S3: Loads and transformas from a demo file
 #  as.timeS*.zoo        S3: Transforms a 'zoo' object into a 'timeSeries'
-#
-# METHODS              TRANSFORM A TIMESERIES INTO OTHER OBJECTS:
+# METHODS:             TRANSFORM A TIMESERIES INTO OTHER OBJECTS:
 #  as.vector.timeS*     S3: Converts a univariate 'timeSeries' to a vector
 #  as.matrix.timeS*     S3: Converts a 'timeSeries' to a 'matrix'
 #  as.data.frame.t*     S3: Converts a 'timeSeries' to a 'data.frame'
-#  as.ts.timeSeries     S3: Converts a 'timeSeries' to a 'ts'
-#      
-# NEW METHODS 
+#  as.ts.timeSeries     S3: Converts a 'timeSeries' to a 'ts'     
+# NEW METHODS:
 #  .as.vector.zoo
 #  .as.matrix.zoo
 #  .quantile.zoo
-#
 #  .t.timeSeries
 #  .mergeSeries
 ################################################################################

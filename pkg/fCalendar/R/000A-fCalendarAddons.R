@@ -29,7 +29,7 @@
 
 ################################################################################
 # FUNCTION:                    DESCRIPTION
-# data                          data can handle timeSeries objects
+#  datax                        Loads timeSeries objects from demo files
 ################################################################################
 
 

@@ -35,18 +35,15 @@
 #  returnSeries         Computes returns from a 'timeSeries' object  
 #  applySeries          Applies a function to blocks of a 'timeSeries'
 #  orderStatistics      Compute order statistic of a 'timeSeries'
-#
 # FUNCTION:            DATA SLOT AND CLASSIFICATION OF TIME SERIES OBJECTS:
 #  seriesData           Extracts data slot from 'timeSeries' object
 #  isUnivariate         Tests if an object of class 'timeSeries' is univariate
 #  isMultivariate       Tests if an object of class 'timeSeries' is multivariate
-#
 # METHODS:             PRINT AND PLOT FUNCTIONS:
 #  print.timeSeries     S3: Print method for a 'timeSeries' object
 #  plot.timeSeries      S3: Plot method for a 'timeSeries' object
 #  lines.timeSeries     S3: Lines method for a 'timeSeries' object
-#  points.timeSeries    S3: Lines method for a 'timeSeries' object
-#
+#  points.timeSeries    S3: Points method for a 'timeSeries' object
 # FUNCTION:            FOR DAILY OPERATIONS:
 #  dummyDailySeries     Creates a dummy daily 'timeSeries' object
 #  alignDailySeries     Aligns a 'timeSeries' object to new positions 

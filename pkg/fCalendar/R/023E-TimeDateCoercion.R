@@ -33,9 +33,7 @@
 #  as.character.timeDate  Returns a 'timeDate' object as character string
 #  as.data.frame.timeDate Returns a 'timeDate' object as data frame
 #  as.POSIXct.timeDate    Returns a 'timeDate' object as POSIXct object
-#
 #  julian.timeDate        Returns Julian day counts since 1970-01-01
-#
 #  atoms.timeDate         Returns date/time atoms from a 'timeDate' object
 #  months.timeDate        Extract months atom from a 'timeDate' object
 ################################################################################

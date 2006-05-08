@@ -35,7 +35,6 @@
 #  isHoliday              Tests if a date is a non-business day or not
 #  getDayOfWeek           Returns the day of the week to a 'timeDate' object
 #  getDayOfYear           Returns the day of the year to a 'timeDate' object
-#
 # S3 MEHOD:              SUBSETTING TIMEDATE OBJECTS:
 #  [.timeDate             Extracts or replaces subsets from 'timeDate' objects
 #  cut.timeDate           Extracts a piece from a 'timeDate' object

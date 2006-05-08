@@ -35,7 +35,6 @@
 #  scale.timeSeries     S3: Centers and/or scales a 'timeSeries' object
 #  summary.timeSeries   S3: Summarizes a 'timeDate' object
 #  var.timeSeries       S3: Returns variance for a 'timeSeries' object
-#
 # METHODS              MATHEMATICAL OPERATIONS ON DATA:
 #  Ops.timeSeries       S3: Arith method for a 'timeSeries' object
 #  abs.timeSeries       S3: Returns abolute values of a 'timeSeries' object
@@ -43,14 +42,12 @@
 #  exp.timeSeries       S3: Returns exponentials of a 'timeSeries' object
 #  log.timeSeries       S3: Returns logarithms of a 'timeSeries' object
 #  quantile.timeSeries  S3: produces sample quantiles of a 'timeSeries' object
-#
 # METHODS              SUBSETTING METHODS ON DATA:
 #  [.timeSeries         S3: subsets of a 'timeSeries' object
 #  cut.timeSeries       S3: cuts a block from a 'timeSeries' object
 #  head.timeSeries      S3: returns the head of a 'timeSeries' object
 #  tail.timeSeries      S3: returns the tail of a 'timeSeries' object
 #  outlier.timeSeries   S3: Removes outliers from a 'timeSeries' object  
-#
 # METHODS              DIM OPERATIONS ON DATA: 
 #  dim                  Returns the dimension of a 'timeSeries' object
 #  dimnames             Returns the dimension names of a 'timeSeries' object

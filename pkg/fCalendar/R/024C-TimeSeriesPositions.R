@@ -28,14 +28,13 @@
 
 
 ################################################################################
-# METHOS               MODIFICATION METHODS:
+# METHOS:              POSITIONS:
 #  seriesPositions      Extracts positions slot from 'timeSeries' object
 #  newPositions<-       Modifies positions of a 'timeSeries' object
-#
+# METHODS:             ORDERING:
 #  sample.timeSeries    S3: Resamples a 'timeSeries' object in time
 #  sort.timeSeries      S3: Sorts reverts a 'timeSeries' object in time
 #  rev.timeSeries       S3: Reverts a 'timeSeries' object in time 
-#
 #  start.timeSeries     S3: Extracts start date of a 'timeSeries' object 
 #  end.timeSeries       S3: Extracts end date of a 'timeSeries' object
 ################################################################################
@@ -76,7 +75,7 @@ function(object, value)
 }
 
 
-# ------------------------------------------------------------------------------
+################################################################################
 
 
 sample.timeSeries =
@@ -97,7 +96,7 @@ function(x, ...)
     # Data:
     nPOS = length(x@positions)
     index = sample(1:nPOS)
-    x[index, ]
+    x = x[index, ]
     
     # recordIDs:
     DF = x@recordIDs
@@ -137,7 +136,7 @@ function(x, ...)
     # Data:
     POS = x@positions
     index = sort(POS, index.return = TRUE)$ix
-    x[index, ]
+    x = x[index, ]
     
     # recordIDs:
     DF = x@recordIDs
@@ -177,7 +176,7 @@ function(x)
     # Data:
     nPOS = length(x@positions)
     index = nPOS:1
-    x[index, ]
+    x = x[index, ]
     
     # IDs:
     DF = x@recordIDs

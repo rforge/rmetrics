@@ -31,7 +31,6 @@
 # FUNCTION:              FINANCIAL CENTERS:
 #  rulesFinCenter         Returns DST rules for a financial center
 #  listFinCenter          Lists all supported financial centers
-#
 # FUNCTION:              GENERATION OF TIMEDATE OBJECTS:
 #  'timeDate'             S4 Class representation for timeDate objects
 #  timeDate               Creates a 'timeDate' object from given dates
@@ -42,7 +41,6 @@
 #  timeSequence           Creates a regularly spaced 'timeDate' object
 #  Sys.timeDate           Returns system time as an object of class 'timeDate' 
 #  is.timeDate            Tests if the object is of class 'timeDate' 
-#
 # S3 METHODS:            REPRESENTATION OF TIMEDATE OBJECTS:
 #  print.timeDate         Prints 'timeDate' Object
 #  summary.timeDate       Summarizes details of a 'timeDate' object
