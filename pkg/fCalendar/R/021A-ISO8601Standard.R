@@ -28,18 +28,22 @@
 
 
 ################################################################################
+# FUNCTION:                    DESCRIPTION
+#  isISO8601                    Checks if the date/time is ISO8601 formatted
+################################################################################
 
 
 isISO8601 =
 function(x)
 {   # A function written by Diethelm Wuertz
 
+    # Description:
+    #   Checks if the date/time is ISO8601 formatted
+    
     # FUNCTION:
     
     # Check:
-    if (class(x) != "timeDate") {
-        stop("x is not a timeDate object")
-    } 
+    stopifnot(class(x) == "timeDate")
     
     # Test: 
     ans = FALSE
@@ -51,3 +55,7 @@ function(x)
     # Return Value:
     ans
 }
+
+
+################################################################################
+

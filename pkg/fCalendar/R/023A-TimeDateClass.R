@@ -34,14 +34,14 @@
 # FUNCTION:              GENERATION OF TIMEDATE OBJECTS:
 #  'timeDate'             S4 Class representation for timeDate objects
 #  timeDate               Creates a 'timeDate' object from given dates
-#  .whichFormat
-#  .midnightStandard
-#  .formatFinCenter
+#  .whichFormat            Returns format string called by timeDate
+#  .midnightStandard       Corrects for midnight standard called by timeDate
+#  .formatFinCenter        Internal called by timeDate
 #  timeCalendar           Creates a 'timeDate' object from calendar atoms
 #  timeSequence           Creates a regularly spaced 'timeDate' object
 #  Sys.timeDate           Returns system time as an object of class 'timeDate' 
 #  is.timeDate            Tests if the object is of class 'timeDate' 
-# S3 METHODS:            REPRESENTATION OF TIMEDATE OBJECTS:
+# METHODS:               REPRESENTATION OF TIMEDATE OBJECTS:
 #  print.timeDate         Prints 'timeDate' Object
 #  summary.timeDate       Summarizes details of a 'timeDate' object
 #  format.timeDate        Formats 'timeDate' as ISO conform character string
@@ -200,9 +200,9 @@ function(pattern = "*")
 # FUNCTION:              GENERATION OF TIMEDATE OBJECTS:
 #  'timeDate'             S4 Class representation for timeDate objects
 #  timeDate               Creates a 'timeDate' object from given dates
-#  .whichFormat
-#  .midnightStandard
-#  .formatFinCenter
+#  .whichFormat            Returns format string called by timeDate
+#  .midnightStandard       Corrects for midnight standard called by timeDate
+#  .formatFinCenter        Internal called by timeDate
 #  timeCalendar           Creates a 'timeDate' object from calendar atoms
 #  timeSequence           Creates a regularly spaced 'timeDate' object
 #  Sys.timeDate           Returns system time as an object of class 'timeDate'
@@ -278,59 +278,69 @@ FinCenter = myFinCenter)
     # Set Timezone to GMT:
     myTZ = Sys.getenv("TZ")  
     Sys.putenv(TZ = "GMT")
-  
-    # If charvec is not a chracter string, then try:
-    if (inherits(charvec, "timeDate")) {
-        charvec = charvec@Data   
+    
+    # ISO Date/Time Format:
+    iso.format = "%Y-%m-%d %H:%M:%S"
+    
+    # Transform to POSIX
+    if (inherits(charvec, "character")) {
+        if (is.null(format)) {
+            format = .whichFormat(charvec)
+            if (format == "unknown") stop("Unknown Format Specification")
+        }
+        posix = strptime(charvec, format)
     }
-    if (inherits(charvec, "POSIXt")) {
-        charvec = format(charvec, "%Y-%m-%d %H:%M:%S") 
+    if (inherits(charvec, "timeDate")) {
+        posix = charvec@Data 
     }
     if (inherits(charvec, "Date")) {
-        charvec = as.character(charvec) 
+        posix = as.POSIXlt(charvec) 
     }
-    stopifnot(is.character(charvec))
+    if (inherits(charvec, "POSIXt")) {
+        posix = charvec
+    }
+    charvec = format(posix, "%Y-%m-%d %H:%M:%S") 
     
     # Get Dimension:
     Dim = length(charvec)
         
     # ISO Format - Automatic Format Detection:
-    CHARVEC = is.character(charvec)
-    if (CHARVEC & is.null(format)) format = .whichFormat(charvec) 
+    format = .whichFormat(charvec) 
     
-    if (format == "%Y-%m-%d" | format == "%Y%m%d") {
-        zone = FinCenter
-        lt = strptime(charvec, format)
-        # Return Value:
-        Sys.putenv(TZ = myTZ)
-        return(new("timeDate", 
-            Data = lt, 
-            Dim = as.integer(Dim),
-            format = format,
-            FinCenter = FinCenter)) 
+    if (zone == FinCenter) {
+        if (format == "%Y-%m-%d" | format == "%Y%m%d") {
+            lt = strptime(charvec, format)
+            # Return Value:
+            Sys.putenv(TZ = myTZ)
+            ans = new("timeDate", 
+                Data = lt, 
+                Dim = as.integer(Dim),
+                format = "%Y-%m-%d",
+                FinCenter = FinCenter)
+            ans@format = .whichFormat(format(ans))
+            return(ans)
+        }
+        
+        if (format == "%m/%d/%Y") {
+            lt = strptime(charvec, format)
+            # Return Value:
+            Sys.putenv(TZ = myTZ)
+            ans = new("timeDate", 
+                Data = lt, 
+                Dim = as.integer(Dim),
+                format = "%Y-%m-%d",
+                FinCenter = FinCenter)
+            ans@format = .whichFormat(format(ans))
+            return(ans)
+        }
     }
-    
-    if (format == "%m/%d/%Y") {
-        zone = FinCenter
-        lt = strptime(charvec, format)
-        # Return Value:
-        Sys.putenv(TZ = myTZ)
-        return(new("timeDate", 
-            Data = lt, 
-            Dim = as.integer(Dim),
-            format = format,
-            FinCenter = FinCenter)) 
-    }
-    
+ 
     # Midnight Standard:
     charvec = .midnightStandard(charvec, format)
     
     # Financial Centers:
     recFinCenter = zone      # Time zone where the data were recorded
     useFinCenter = FinCenter # Time zone where the data will be used
-    
-    # ISO Date/Time Format 
-    iso.format = "%Y-%m-%d %H:%M:%S"
     
     # Trace Input:
     if (trace) { 
@@ -342,7 +352,6 @@ FinCenter = myFinCenter)
     # Convert:    
     DEBUG = FALSE
     
-
     # GMT -> GMT:
     if (recFinCenter == "GMT" && useFinCenter == "GMT") {       
         if (DEBUG) print("if - 1:")
@@ -353,15 +362,17 @@ FinCenter = myFinCenter)
             cat("\n") 
         }
         lt = strptime(charvec, format)
-        timeTest = sum(lt$hour) + sum(lt$min) + sum(lt$sec) 
-        if (timeTest == 0) stop("Problem with Format Specification")
+        # timeTest = sum(lt$hour) + sum(lt$min) + sum(lt$sec) 
+        # if (timeTest == 0) stop("Problem with Format Specification")
         # Return Value:
         Sys.putenv(TZ = myTZ)
-        return(new("timeDate", 
+        ans = new("timeDate", 
             Data = lt, 
             Dim = as.integer(Dim),
             format = iso.format,
-            FinCenter = useFinCenter)) 
+            FinCenter = useFinCenter)
+        ans@format = .whichFormat(format(ans))
+        return(ans)
     }  
         
     # GMT -> nonGMT     
@@ -375,15 +386,17 @@ FinCenter = myFinCenter)
             cat("\n") 
         }
         lt = strptime(charvec, format)
-        timeTest = sum(lt$hour) + sum(lt$min) + sum(lt$sec) 
-        if (timeTest == 0) stop("Problem with Format Specification")
+        # timeTest = sum(lt$hour) + sum(lt$min) + sum(lt$sec) 
+        # if (timeTest == 0) stop("Problem with Format Specification")
         # Return Value:
         Sys.putenv(TZ = myTZ)
-        return(new("timeDate", 
+        ans = new("timeDate", 
             Data = lt, 
             Dim = as.integer(Dim),
             format = iso.format,
-            FinCenter = useFinCenter)) 
+            FinCenter = useFinCenter)
+        ans@format = .whichFormat(format(ans))
+        return(ans)
     }    
          
     # nonGMT -> GMT       
@@ -397,15 +410,17 @@ FinCenter = myFinCenter)
             cat("\n") 
         }
         lt = strptime(charvec, format)
-        timeTest = sum(lt$hour) + sum(lt$min) + sum(lt$sec) 
-        if (timeTest == 0) stop("Problem with Format Specification")
+        # timeTest = sum(lt$hour) + sum(lt$min) + sum(lt$sec) 
+        # if (timeTest == 0) stop("Problem with Format Specification")
         # Return Value:
         Sys.putenv(TZ = myTZ)
-        return(new("timeDate", 
+        ans = new("timeDate", 
             Data = lt, 
             Dim = as.integer(Dim),
             format = iso.format,
-            FinCenter = useFinCenter)) 
+            FinCenter = useFinCenter)
+        ans@format = .whichFormat(format(ans))
+        return(ans)
     }      
           
     # nonGMT -> equal nonGMT   
@@ -418,15 +433,17 @@ FinCenter = myFinCenter)
             cat("\n") 
         }
         lt = strptime(charvec, format)
-        timeTest = sum(lt$hour) + sum(lt$min) + sum(lt$sec) 
-        if (timeTest == 0) stop("Problem with Format Specification")
+        # timeTest = sum(lt$hour) + sum(lt$min) + sum(lt$sec) 
+        # if (timeTest == 0) stop("Problem with Format Specification")
         # Return Value:
         Sys.putenv(TZ = myTZ)
-        return(new("timeDate", 
+        ans = new("timeDate", 
             Data = lt,
             Dim = as.integer(Dim),
             format = iso.format ,
-            FinCenter = useFinCenter)) 
+            FinCenter = useFinCenter)
+        ans@format = .whichFormat(format(ans))
+        return(ans)
     }    
             
     # nonGMT -> other nonGMT 
@@ -441,15 +458,17 @@ FinCenter = myFinCenter)
             cat("\n") 
         }
         lt = strptime(charvec, format)
-        timeTest = sum(lt$hour) + sum(lt$min) + sum(lt$sec) 
-        if (timeTest == 0) stop("Problem with Format Specification")
+        # timeTest = sum(lt$hour) + sum(lt$min) + sum(lt$sec) 
+        # if (timeTest == 0) stop("Problem with Format Specification")
         # Return Value:
         Sys.putenv(TZ = myTZ)
-        return(new("timeDate", 
+        ans = new("timeDate", 
             Data = lt, 
             Dim = as.integer(Dim),
             format = iso.format,
-            FinCenter = useFinCenter)) 
+            FinCenter = useFinCenter)
+        ans@format = .whichFormat(format(ans))
+        return(ans)
     }    
             
     # Return Value:
@@ -529,7 +548,7 @@ function(charvec, format)
         charvec = paste(charvec.date, charvec.time, sep = "")
         # Convert "charvec" to standard ISO format:
         charvec = format(strptime(charvec, format)+s, iso.format)
-    }    
+    }   
     
     # Return Value:
     charvec 
@@ -711,9 +730,9 @@ s = NULL, zone = myFinCenter, FinCenter = myFinCenter)
     # Reset TimeZone:  
     Sys.putenv(TZ = myTZ)
     
-    # return Value:
-    timeDate(charvec = charvec, format = format,  zone = zone, 
-        FinCenter = FinCenter) 
+    # Return Value:
+    timeDate(charvec = charvec, format = NULL,  
+        zone = zone, FinCenter = FinCenter) 
 }
 
 
@@ -769,7 +788,6 @@ length.out = NULL, format = NULL, zone = myFinCenter, FinCenter = myFinCenter)
     if (FinCenter == "") FinCenter = "GMT"
     by = match.arg(by)
     if (by == "quarter") by = "3 months"
-    
    
     # Auto-detect Input Format:
     format.from = format.to = format
@@ -792,12 +810,12 @@ length.out = NULL, format = NULL, zone = myFinCenter, FinCenter = myFinCenter)
             to = to, by = by), format) 
     } else  {
         # The end date is missing and has to be specified
-        charvec = format(seq.POSIXt(from = from, 
-            by = by, length.out = length.out), format) 
+        charvec = format(seq.POSIXt(from = from, by = by, 
+            length.out = length.out))
     }
             
     # Create timeDate Object:  
-    ans = timeDate(charvec = charvec, format = NULL, 
+    ans = timeDate(charvec = charvec, format = .whichFormat(charvec[1]), 
         zone = zone, FinCenter = FinCenter) 
         
     # Return Value:
