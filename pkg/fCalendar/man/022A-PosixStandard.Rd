@@ -57,5 +57,11 @@
 }
 
 
+\examples{
+## SOURCE("fCalendar.022A-PosixStandard")
+
+}
+
+
 \keyword{programming}
 

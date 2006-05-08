@@ -55,5 +55,11 @@ isISO8601(x)
 }
 
 
+\examples{
+## SOURCE("fCalendar.021A-ISO8601Standard")
+
+}
+
+
 \keyword{programming}
 

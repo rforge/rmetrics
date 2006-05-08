@@ -49,7 +49,16 @@ datax(\dots, list = character(0), package = NULL, lib.loc = NULL,
     original help page.
     
 }
-    
+  
+
+\examples{
+## SOURCE("fCalendar.000A-CalendarAddons")
+
+## datax -
+   datax(DowJones30)
+   class(DowJones30)
+   print(head(DowJones30))
+}
 
 
 \author{

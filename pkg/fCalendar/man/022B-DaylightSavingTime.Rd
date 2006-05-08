@@ -1,6 +1,6 @@
-\name{DaylightSavingTimeRules}
+\name{DaylightSavingTime}
 
-\alias{DaylightSavingTimeRules}
+\alias{DaylightSavingTime}
 
 \alias{Adelaide}
 \alias{Algiers}
@@ -146,8 +146,7 @@
 \examples{
 ## SOURCE("fCalendar.023B-DaylightSavingTime")
 
-## data - 
-   xmpCalendar("\nStart: DST Rules for Zurich > ")
+## data - DST Rules for Zurich:
    Zurich()
 }
 
