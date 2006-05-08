@@ -57,7 +57,7 @@ datax(\dots, list = character(0), package = NULL, lib.loc = NULL,
 ## datax -
    datax(DowJones30)
    class(DowJones30)
-   print(head(DowJones30))
+   head(DowJones30)
 }
 
 

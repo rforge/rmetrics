@@ -391,16 +391,15 @@ Zivot, E., Wang J. (2003);
 
 
 \examples{
+\dontrun{
 ## SOURCE("fCalendar.023A-TimeDateClass")
 
 ## - Character Vecor Strings:
-   xmpCalendar("\nStart: Create Character Vectors > ") 
    dts = c("1989-09-28", "2001-01-15", "2004-08-30", "1990-02-09")
    tms = c(  "23:12:55",   "10:34:02",   "08:30:00",   "11:18:23")
    dts; tms
    
 ## timeDate -
-   xmpCalendar("\nNext: Construct timeDate Object from Character Vector > ") 
    timeDate(dts, format = "\%Y-\%m-\%d", FinCenter = "GMT" )
    timeDate(dts, format = "\%Y-\%m-\%d", FinCenter = "Europe/Zurich") 
    timeDate(paste(dts, tms), format = "\%Y-\%m-\%d \%H:\%M:\%S", 
@@ -411,7 +410,6 @@ Zivot, E., Wang J. (2003);
      zone = "GMT", FinCenter = "Europe/Zurich") 
     
 ## timeCalendar - 
-   xmpCalendar("\nNext: Create a timeDate Object From Calendar Atoms > ")
    timeCalendar( m = c(9, 1, 8, 2), d = c(28, 15, 30, 9), 
      y = c(1989, 2001, 2004, 1990), FinCenter = "GMT") 
    timeCalendar(m = c(9, 1, 8, 2), d = c(28, 15, 30, 9), 
@@ -419,14 +417,13 @@ Zivot, E., Wang J. (2003);
    timeCalendar(h = c(9, 14), min = c(15, 23)) 
   
 ## timeSequence - 
-   xmpCalendar("\nNext: Create a Regularly Spaced timeDate Objects > ")
    timeSequence(from = "2004-03-12", to = "2004-04-11", 
         format = "\%Y-\%m-\%d", FinCenter = "GMT")  
    timeSequence(from = "2004-03-12", to = "2004-04-11", 
         format = "\%Y-\%m-\%d", FinCenter = "Europe/Zurich")
    
 ## timeDate - 
-   xmpCalendar("\nNext: Note, ISO and American Formats are Auto-Detected > ")
+   # Note, ISO and American Formats are Auto-Detected
    timeDate("2004-12-11", FinCenter = "GMT")    
    timeDate("12/11/2004", FinCenter = "GMT")   
    
@@ -435,6 +432,7 @@ Zivot, E., Wang J. (2003);
    print(tC)
    summary(tC)
    format(tC)   
+}
 }
 
 
