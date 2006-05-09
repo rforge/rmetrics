@@ -53,7 +53,7 @@
 ### Example: List all Inticators in the CIA World Factbook
 
     # Show Argument List:
-    args(ciaIndiactors)
+    args(ciaIndicators)
     ###
     
     # List Indicators and their Code Number:
