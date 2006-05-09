@@ -223,6 +223,7 @@ rseed = NULL, ...)
     Names = names(control)
     control = as.character(c(control, substitute(rand.gen)))
     names(control) = c(Names, "rand.gen")
+    if (!is.null(rseed)) control = c(control, rseed = rseed)
     attr(ans, "control") = control
         
     # Return Value:
