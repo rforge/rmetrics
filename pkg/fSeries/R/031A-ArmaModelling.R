@@ -50,6 +50,7 @@
 #  summary.fARMA           S3: Summarizes a fitted ARMA time series object
 # S3 METHOD:              ADDON:
 #  fitted.fARMA            S3: Returns fitted values from a fitted ARMA object
+#  coef.fARMA              S3: Returns coefficidents from a fitted ARMA object
 #  residuals.fARMA         S3: Returns residuals from a fitted ARMA object
 # FUNCTION:               DESCRIPTION:
 #  armaTrueacf             Returns True ARMA autocorrelation function
@@ -153,7 +154,7 @@ rseed = NULL, ...)
         stop("model must be a list")
         
     # Simulate:
-    if (is.integer(rseed)) 
+    if (!is.null(rseed))  
         set.seed(rseed)
     if (is.null(innov)) 
         innov = rand.gen(n, ...)
@@ -209,9 +210,11 @@ rseed = NULL, ...)
         mu = 0
         # Use Fortran Routine from R's contributed fracdiff package:
         # This is a BUILTIN function ...
+        if (!is.null(rseed)) set.seed(rseed)
+        eps = rnorm(n + q)
         x = .Fortran("fdsim", as.integer(n), as.integer(p), as.integer(q), 
             as.double(model$ar), as.double(model$ma), as.double(model$d), 
-            as.double(mu), as.double(rnorm(n + q)), x = double(n + q), 
+            as.double(mu), as.double(eps), x = double(n + q), 
             as.double(.Machine$double.xmin), as.double(.Machine$double.xmax), 
             as.double(.Machine$double.neg.eps), as.double(.Machine$double.eps), 
             PACKAGE = "fSeries")$x[1:n] 
@@ -354,7 +357,7 @@ title = NULL, description = NULL, ...)
        
     # Add title and desription:
     if (is.null(title)) title = "ARIMA Modelling"
-    if (is.null(description)) description = as.character(date())
+    if (is.null(description)) description = .description()
        
     # Return Value:
     new("fARMA",     
@@ -660,6 +663,13 @@ function (object, n.ahead = 10, n.back = 50, conf = c(80, 95), ...)
     #   predict(object)
   
     # FUNCTION:
+    
+    # OX Arfima:
+    if (object@call[[1]] == "arfimaOxFit") {
+        # .arfimaOxPredict(object, n.ahead = 10, n.back = 50, trace = FALSE)
+        ans = .arfimaOxPredict(object, n.ahead, n.back, ...)
+        return(ans)
+    }
     
     # Predict "ar":
     if (object@fit$tsmodel == "ar") {
@@ -1058,7 +1068,7 @@ function(object, ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Returns Fitted Values from a Fitted ARMA Object
+    #   Returns fitted values from a fitted ARMA object
     
     # FUNCTION:
     
@@ -1066,6 +1076,27 @@ function(object, ...)
     ans = object@fitted.values
     classAns = class(object@data$x)
     if (classAns == "ts") ans = as.ts(ans)
+    
+    # Return Value:
+    ans
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+coef.fARMA =
+function(object, ...)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Returns coefficients from a fitted ARMA object
+    
+    # Note:
+    #   Alternatively you can use coefficient().
+    
+    # Coefficients:
+    ans = object@fit$coef
     
     # Return Value:
     ans
