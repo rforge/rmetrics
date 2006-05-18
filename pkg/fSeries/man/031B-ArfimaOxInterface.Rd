@@ -66,8 +66,8 @@ arfimaOxFit(formula = x ~ arfima(1, 1), method = c("mle", "nls", "mplik"),
 
     \bold{Ox Interface:}
     \cr 
-    The function \code{garchOxFit} interfaces a subset of the functionality 
-    of the ARFIMA 1.01 Package written in Ox. 
+    The function \code{garchOxFit} interfaces a subset of the 
+    functionality of the ARFIMA 1.01 Package written in Ox. 
     ARFIMA is one of the most sophisticated packages for modelling 
     univariate ARFIMA processes.
     \cr
@@ -89,8 +89,7 @@ arfimaOxFit(formula = x ~ arfima(1, 1), method = c("mle", "nls", "mplik"),
     If you are not qualified for a free license, order your copy from 
     Timberlake Consultants. We recommend to install the "Setup.exe" 
     for "Ox3" under the path "C:\\Ox\\Ox3" and to unzip the "Arfima" Package 
-    in the directory "C:\\Ox\\Ox3\\Packages". The functions are also 
-    running under the newer version "Ox4".
+    in the directory "C:\\Ox\\Ox3\\Packages". 
     \cr
     
     \bold{Distribution:}
@@ -105,7 +104,7 @@ arfimaOxFit(formula = x ~ arfima(1, 1), method = c("mle", "nls", "mplik"),
     In addition you have to copy the files "ArfimaOxFit.ox" and
     "ArfimaOxPredict.ox" (which is the interface written especially 
     for Rmetrics) from the "fSeries/data/" directory to the Ox library 
-    directory "C:\\Ox\\Ox\\lib".
+    directory "C:\\Ox\\Ox3\\lib".
     \cr
     
     \bold{Ox Citation and Copyright Rules:}
@@ -129,7 +128,7 @@ arfimaOxFit(formula = x ~ arfima(1, 1), method = c("mle", "nls", "mplik"),
     Note, only a small part of the functionalities are interfaced until
     now to Rmetrics. But, principally it would be possible to interface 
     also other functionalities offered by the Ox Arfima Package. This 
-    work is left to the Ox/Rmetrics user.
+    work is left to the Rmetrics/Ox user.
     
 }
 
@@ -194,7 +193,8 @@ Koopman J.S., Shepard N., Doornik J.A. (1999),
     
 Laurent S., Peters J.P., [2005], 
     G@RCH 4.0, Estimating and Forecasting ARCH Models, 
-    Timberlake Consultants, www.timberlake.co.uk    
+    Timberlake Consultants, www.timberlake.co.uk 
+       
 }
 
 
@@ -207,10 +207,25 @@ Laurent S., Peters J.P., [2005],
 }
 
 
+\note{
+
+    The R functions were tested only under MS Windows XP. Please report
+    your experience with other operating systems to \emph{info@metrics.org}.
+    The functions should also run under the newer version "Ox4".
+
+}
+    
+
+\seealso{
+
+    \code{ArmaModelling}.
+    
+}
+
 \examples{
+\dontrun{
 ## SOURCE("fSeries1.031B-ArfimaOxInterface")
 
-\dontrun{
 ## arfimaOxFit -
    x = armaSim(model = list(ar = c(0.5, - 0.5), d = 0.3, ma = 0.1), n = 500)
    x

@@ -17,6 +17,7 @@
 \alias{summary.fARMA}
 
 \alias{fitted.fARMA}
+\alias{coef.fARMA}
 \alias{residuals.fARMA}
 
 \alias{armaRoots}
@@ -48,6 +49,7 @@
     \code{plot} \tab S3 Plot Method, \cr
     \code{summary} \tab S3 Summary Method, \cr
     \code{fitted} \tab S3 Method, returns fitted values, \cr
+    \code{coef|coefficients} \tab S3 Method, returns coefficients, \cr
     \code{residuals} \tab S3 Method, returns residuals. }
     
     The function \code{armaFit} allows for the following formula arguments:
@@ -132,6 +134,7 @@ armaFit(formula = x ~ arima(2, 0, 1),
 \method{summary}{fARMA}(object, doplot = TRUE, \dots)
 
 \method{fitted}{fARMA}(object, \dots)
+\method{coef}{fARMA}(object, \dots)
 \method{residuals}{fARMA}(object, \dots)
 
 armaRoots(coefficients, n.plot = 400, digits = 4, \dots) 
@@ -603,42 +606,33 @@ Haslett J. and Raftery A.E. (1989);
 ## SOURCE("fSeries.031A-ArmaModelling")
 
 ## armaSim/armaFit -
-   xmpSeries("\nStart: Simulate an ARMA(2, 1) process > ")
    x = armaSim(model = list(ar = c(0.5, -0.5), ma = 0.1), n = 1000)
-   Continue = xmpSeries("Press any key > ")
    # Estimate the parameters:
    fit = armaFit(x ~ arma(2, 1))
    print(fit)
-   Continue = xmpSeries("Press any key > ") 
    # Diagnostic Analysis:
    par(mfrow = c(3, 2), cex = 0.7)
    summary(fit)
-   Continue = xmpSeries("Press any key > ")
    # 5 Steps ahead Forecasts:
    predict(fit, 5)
      
 ## armaFit -
-   xmpSeries("\nNext: Estimate the parameters > ")
    # Now use the arima fitting method with d=0:
    fit = armaFit(x ~ arima(2, 0, 1))
    print(fit)
-   Continue = xmpSeries("Press any key > ") 
    # Diagnostic Analysis:
    par(mfrow = c(3, 2), cex = 0.7)
    summary(fit)
-   Continue = xmpSeries("Press any key > ") 
    # 5 Step ahead Forecasts:
    predict(fit, n.ahead = 5)
    
 ## armaRoots -
-   xmpSeries("\nNext: Roots of the Characteristic Polynomial > ")
    # Calculate and plot the  of an ARMA process:
    par(mfrow = c(2, 2), cex = 0.7)
    coefficients = c(-0.5, 0.9, -0.1, -0.5)
    armaRoots(coefficients)
    
 ## armaTrueacf -
-   xmpSeries("\nNext: True ACF of an ARMA Process > ")
    model = list(ar = c(0.3, +0.3), ma = 0.1)
    armaTrueacf(model)
    model = list(ar = c(0.3, -0.3), ma = 0.1)

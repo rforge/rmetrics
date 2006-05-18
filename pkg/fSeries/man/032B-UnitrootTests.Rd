@@ -54,16 +54,18 @@
 \note{
 
     The \code{ur*Test} wrapper functions fullfill the naming conventions 
-    of Rmetrics, return a S4 object named \code{fHTEST} as any other 
+    of Rmetrics, return an S4 object named \code{fHTEST} as any other 
     hypothesis test from Rmetrics, and allow for \code{timeSeries} objects 
     as input. These are the only differences. The Rmetrics wrappers 
     were tested with \code{urca} version 0.7.9.
     
     If you are running Rmetrics under an operating system where the
-    R-package \code{urca} is not available you can load the required
+    R-package \code{urca} or one of the other packages from the 
+    dependency tree is not available you can load the required
     functions through the command xmpfSeries() and select 
-    \emph{funUrca} from the menu. A copy of urca and required dependent
-    functions are saved in the demo file \code{funUrca.R}.
+    \emph{funUrca} from the menu. A minimalist copy of \code{"urca"}
+    and required dependent functions are saved in the demo 
+    file \code{funUrca.R}.
     
     Fur further details we refer to the manual pages of the 
     \code{"urca"} package.
