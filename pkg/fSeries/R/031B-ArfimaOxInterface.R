@@ -72,7 +72,7 @@ trace = TRUE, title = NULL, description = NULL)
     # Example:
     #   require(fracdiff)
     #   x = as.vector(fracdiff.sim(n=500, ar=0.2, ma=-0.4, d=0.3)$series)
-    #   object = armaOxFit(x ~ arfima(2, 1))
+    #   object = arfimaOxFit(x ~ arfima(2, 1))
        
     # FUNCTION:
     
@@ -154,8 +154,11 @@ trace = TRUE, title = NULL, description = NULL)
        
     # Add title and desription:
     if (is.null(title)) title = "ARFIMA Ox Modelling"
-    if (is.null(description)) description = as.character(date())
-       
+    if (is.null(description)) {
+        description = paste(as.character(date()), "by user:", 
+            Sys.getenv("USERNAME"))
+    }
+      
     # Result:
     ans = new("fARMA",     
         call = call,
@@ -185,6 +188,9 @@ function(object, n.ahead = 10, n.back = 50, trace = FALSE)
     # Description:
     #   Predicts from an ARMA Time Series Process
     
+    # Note:
+    #   This function is called by predict.fARMA()
+    
     # FUNCTION:
     
     # Object:
@@ -205,7 +211,7 @@ function(object, n.ahead = 10, n.back = 50, trace = FALSE)
     for (i in 1:length(fit$coef)) {
         write(x = fit$coef[i], file = "OxArguments.csv", append = TRUE) 
     }
-   
+
     # Write data to file - OxSeries:
     write(x, file = "OxSeries.csv", ncolumns = 1)   
     
