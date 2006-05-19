@@ -132,12 +132,12 @@ Gu C. (2002);
    param = ssdFit(x)
    
    # Plot empirical density and compare with fitted density:
-   hist(x, n = 25, probability = TRUE, border = "white", col = "steelblue4") 
+   hist(x, n = 25, probability = TRUE, border = "white", col = "steelblue") 
    s = seq(min(x), max(x), 0.1)
    lines(s, dssd(s, param), lwd = 2, col = "brown")
    
    # Plot df and compare with true df:
-   plot(sort(x), (1:1000/1000), main = "Probability", col = "steelblue4")
+   plot(sort(x), (1:1000/1000), main = "Probability", col = "steelblue")
    lines(s, pssd(s, param), lwd = 2, col = "brown")
    grid()
    
