@@ -443,7 +443,7 @@ function(x, ...)
 
 
 ciaByCountry = 
-function(code = "CH", from = FALSE, names = FALSE, details = TRUE)
+function(code = "CH", from = FALSE, names = FALSE, details = FALSE)
 {   # A Function Implemented by Diethelm Wuertz
 
     # Description:
@@ -533,7 +533,7 @@ function()
 
 
 ciaByIndicator = 
-function(code = 2001, from = FALSE, details = TRUE)
+function(code = 2001, from = FALSE, details = FALSE)
 {   # A Function Implemented by Diethelm Wuertz
 
     # Description:

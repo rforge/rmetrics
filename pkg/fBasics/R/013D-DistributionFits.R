@@ -30,7 +30,7 @@
 ################################################################################
 # FUNCTION:           DESCRIPTION:    
 #  fDISTFIT            Class Representation
-#  normFit             Fits Parameters of a Normal Density
+#  .normFit            Fits Parameters of a Normal Density
 #  tFit                Fits parameters of a Student-t Density
 #  ghFit               Fits parameters of a generalized hyperbolic Density
 #  hypFit              Fits parameters of a hyperbolic Density
@@ -68,7 +68,7 @@ setClass("fDISTFIT",
 # Normal Distribution Fit
 
 
-normFit = 
+.normFit = 
 function(x, doplot = TRUE, span = "auto", title = NULL, 
 description = NULL, ...)
 {   # A function implemented by Diethelm Wuertz
@@ -79,6 +79,8 @@ description = NULL, ...)
       
     # Notes:
     #   Function Calls: nlminb(), density() 
+    #   The function normFit() can be found in the Rmetrics
+    #       chapter GarchDistributions.
     
     # FUNCTION:
     
@@ -544,9 +546,9 @@ span = "auto", trace = FALSE, title = NULL, description = NULL, ...)
         delta = exp(-x[3])            # delta >= 0
         mu = x[4]
         lambda = x[5]
-        # if (alpha <= 0) return(Inf)  
-        # if (delta <= 0) return(Inf)
-        # if (abs(beta) >= alpha) return(Inf)
+        if (alpha <= 0) return(Inf)  
+        if (delta <= 0) return(Inf)
+        if (abs(beta) >= alpha) return(Inf)
         f = -sum(log(dgh(y, alpha, beta, delta, mu, lambda)))
         # Print Iteration Path:
         steps <<- steps + 1
@@ -771,8 +773,6 @@ span = "auto", trace = FALSE, title = NULL, description = NULL, ...)
             mu = r$estimate[4]
             span.min = qnig(0.001, alpha, beta, delta, mu)
             span.max = qnig(0.999, alpha, beta, delta, mu)
-            print(span.min)
-            print(span.max)
             span = seq(span.min, span.max, length = 100)   
         }
         par(err=-1)

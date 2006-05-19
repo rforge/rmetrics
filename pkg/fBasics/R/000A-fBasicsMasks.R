@@ -47,6 +47,8 @@
 # FUNCTION:                     DESCRIPTION:
 #  as.matrix.ts                  univariate ts to 1-column matrix
 #  as.matrix.mts                 multivariate ts to matrix
+# FUNCTION:                     DESCRIPTION:
+#  .description                  sets default description string
 ################################################################################
 
 
@@ -60,6 +62,8 @@ sort =
 function(x, partial = NULL, na.last = NA, decreasing = FALSE, 
 method = c("shell", "quick"), index.return = FALSE, ...)
 {
+    # FUNCTION:
+    
     UseMethod("sort")
 }
 
@@ -71,6 +75,8 @@ sort.default =
 function (x, partial = NULL, na.last = NA, decreasing = FALSE, 
 method = c("shell", "quick"), index.return = FALSE, ...) 
 {   # A copy of the sort() function from R's base package
+    
+    # FUNCTION:
     
     # Sort:
     if (isfact <- is.factor(x)) {
@@ -149,6 +155,8 @@ method = c("shell", "quick"), index.return = FALSE, ...)
 sample = 
 function(x, ...)
 {
+    # FUNCTION:
+    
     UseMethod("sample")
 }  
 
@@ -159,6 +167,8 @@ function(x, ...)
 sample.default =
 function (x, size, replace = FALSE, prob = NULL, ...) 
 {
+    # FUNCTION:
+    
     if (length(x) == 1 && x >= 1) {
         if (missing(size)) 
             size <- x
@@ -187,6 +197,8 @@ function(x, ...)
 round.default =
 function (x, digits = 0, ...) 
 {
+    # FUNCTION:
+    
     .Internal(round(x, digits, ...))
 }       
             
@@ -197,6 +209,8 @@ function (x, digits = 0, ...)
 log = 
 function(x, base = exp(1)) 
 {
+    # FUNCTION:
+    
     UseMethod("log")
 }
 
@@ -208,6 +222,8 @@ log.default =
 function(x, base = exp(1))
 {   # A copy of the log() function from R's base package
 
+    # FUNCTION:
+    
     # Log:
     if (missing(base)) .Internal(log(x)) else .Internal(log(x, base))
 }
@@ -219,6 +235,8 @@ function(x, base = exp(1))
 outlier = 
 function(x, sd = 5, complement = TRUE, ...) 
 {
+    # FUNCTION:
+    
     UseMethod("outlier")
 }
 
@@ -264,6 +282,8 @@ function(x, sd = 5, complement = TRUE, ...)
 var = 
 function(x, y = NULL, na.rm = FALSE, use) 
 {
+    # FUNCTION:
+    
     UseMethod("var")
 }
 
@@ -275,6 +295,8 @@ var.default =
 function(x, y = NULL, na.rm = FALSE, use) 
 {   # A copy of the var() function from R's base package
 
+    # FUNCTION:
+    
     # var:
     if (missing(use)) 
         use <- if (na.rm) "complete.obs" else "all.obs"
@@ -296,6 +318,8 @@ function(x, y = NULL, na.rm = FALSE, use)
 "rownames<-" = 
 function(x, value)
 {
+    # FUNCTION:
+    
     UseMethod("rownames<-")
 }
 
@@ -307,6 +331,8 @@ function(x, value)
 function(x, value)
 {   # A modfied copy from R's base package
 
+    # FUNCTION:
+    
     # rownames<-:
     dn <- dimnames(x)
     if(is.null(dn)) {
@@ -329,6 +355,8 @@ function(x, value)
 "colnames<-" = 
 function(x, value)
 {
+    # FUNCTION:
+    
     UseMethod("colnames<-")
 }
 
@@ -340,6 +368,8 @@ function(x, value)
 function(x, value)
 {   # A modfied copy from R's base package
 
+    # FUNCTION:
+    
     # colnames<-:
     dn <- dimnames(x)
     if(is.null(dn)) {
@@ -363,6 +393,8 @@ as.matrix.ts =
 function(x) 
 {   # A function implemented by Diethelm Wuertz
 
+    # FUNCTION:
+    
     # Transform: 
     ans = as.matrix.default(unclass(x)) 
     attr(ans, "tsp")<-NULL
@@ -377,6 +409,8 @@ as.matrix.mts =
 function(x) 
 {   # A function implemented by Diethelm Wuertz
 
+    # FUNCTION:
+    
     # Transform: 
     ans = as.matrix.default(unclass(x)) 
     attr(ans, "tsp")<-NULL
@@ -391,3 +425,21 @@ function(x)
 ################################################################################
 
 
+.description =
+function()
+{   # A function implemented by Diethelm Wuertz
+
+    # Descriptions:
+    #   Sets default description string:
+    
+    # FUNCTION:
+    
+    # Description String:
+    ans = paste(as.character(date()), "by user:", Sys.getenv("USERNAME"))
+    
+    # Return Value:
+    ans
+}
+
+
+################################################################################

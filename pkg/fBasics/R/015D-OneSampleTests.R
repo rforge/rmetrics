@@ -72,7 +72,8 @@ function(x, method = c("sw", "jb"), na.rm = FALSE)
     if (na.rm) x = x[!is.na(x)]
     
     # Method:
-    method = match.arg(method)
+    # Don't use: method = match.arg(method)
+    method = method[1]
     
     # Test:
     if (method == "sw") {
@@ -80,7 +81,18 @@ function(x, method = c("sw", "jb"), na.rm = FALSE)
     } else if (method == "jb") {
        ans = jarqueberaTest(x)
     }
-        
+    
+    # Additional Tests:
+    if (method == "ks") {
+        ans = ksnormTest(x)
+    }
+    if (method == "da") {
+        ans = dagoTest(x)
+    }
+    if (method == "ad") {
+        ans = adTest(x)
+    }
+ 
     # Return Value:
     ans
 }
