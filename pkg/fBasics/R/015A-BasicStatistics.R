@@ -775,7 +775,7 @@ function(x, na.rm = FALSE)
 
 
 .distCheck = 
-function(fun = "norm", ...)
+function(fun = "norm", s, ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -805,7 +805,7 @@ function(fun = "norm", ...)
     
     # Check 1:
     NORM = integrate(dfun, lower = -Inf, upper = Inf, 
-        subdivisions = 5000, ...)
+        subdivisions = 5000, stop.on.error = FALSE, ...)
     cat("\n1. Normalization Check:\nNORM ")
     print(NORM)
     
@@ -827,11 +827,11 @@ function(fun = "norm", ...)
     fun1 = function(x, ...) { x * dfun(x, ...) }
     fun2 = function(x, M, ...) { x^2 * dfun(x, ...) }   
     MEAN = integrate(fun1, lower = -Inf, upper = Inf, 
-        subdivisions = 5000, ...)
+        subdivisions = 5000, stop.on.error = FALSE,...)
     cat("   X   ")
     print(MEAN)
     VAR = integrate(fun2, lower = -Inf, upper = Inf, 
-        subdivisions = 5000, ...)  
+        subdivisions = 5000, stop.on.error = FALSE, ...)  
     cat("   X^2 ")
     print(VAR)
     EXACT = data.frame(t(c(MEAN = MEAN[[1]], "VAR" = VAR[[1]] - MEAN[[1]]^2)),
