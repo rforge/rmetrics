@@ -92,8 +92,9 @@ description = NULL, ...)
     CALL = match.call()
     
     # MLE:
-    mean = mean(x)
-    sd = sd(x) 
+    N = length(x)
+    mean = sum(x)/N
+    sd = sqrt(sum((x-mean)^2)/N) 
 
     # Optional Plot:
     if (doplot) {
