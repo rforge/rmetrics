@@ -1,7 +1,7 @@
 
 #
 # Example:
-# 	A Compendium for R and Rmetrics users to the book 
+#   A Compendium for R and Rmetrics users to the book 
 #     "Modeling Financial Time Series with S-Plus" 
 #     written by E. Zivot and J. Wang
 #   ISBN 0-387-95549-6
@@ -13,13 +13,13 @@
 #   This is not a COPY of the S-Plus "example.ssc" files accompanying the
 #     book of Zivot and Wang. It is worth to note that this file contents a 
 #     new implementation of the examples tailored to Rmetrics based on R.
-# 	Diethelm Wuertz
-# 	  www.rmetrics.org
-# 	  www.itp.phys.ethz.ch
-# 	  www.finance.ch
+#   Diethelm Wuertz
+#     www.rmetrics.org
+#     www.itp.phys.ethz.ch
+#     www.finance.ch
 #
 # Author:
-#	(C) 2002-2004, Diethelm Wuertz, GPL
+#   (C) 2002-2004, Diethelm Wuertz, GPL
 #
 
 
@@ -30,7 +30,7 @@
 # Section 1.2.1 - Assignment
 
     
-	# Integer:
+    # Integer:
     a = 3
     a
     ###
@@ -173,8 +173,9 @@
     # stack.ts = timeSeries(stack.df)
     # For a dummy 'timeSeries' use:
     stack.ts = as.timeSeries(stack.df)
+    attr(stack.ts, "control")
     class(stack.ts)
-    # Wouldn't work neither in R nor in Splus:
+    # Wouldn't work in Splus:
     test = try(lm(Loss ~ Air.Flow + Water.Temp, data = stack.ts),
         silent = TRUE)
     test
@@ -244,7 +245,7 @@
     #     http://www.sinsightful.com/support/splusbooks/.asp
     # For the R web page
     #     http://www.r-project.org
-	# For the Rmetrics web page
+    # For the Rmetrics web page
     #     http://www.rmetrics.org
     ###
     

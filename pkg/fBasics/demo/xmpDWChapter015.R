@@ -41,8 +41,8 @@
 
 ### Example: Compute Summary of a Random Vector x
 
-	# Generate random vector an compute summary
-	set.seed(1953)
+    # Generate random vector an compute summary
+    set.seed(1953)
     x = rnorm(1000)
     summary(x)
     #            Min.   1st Qu.    Median      Mean   3rd Qu.      Max.
@@ -55,35 +55,35 @@
 
 ### Example: Basic Statistics of a Vector x
     
-	# Generate random vector and compute basic statistics
+    # Generate random vector and compute basic statistics
     set.seed(1953)
     x = rnorm(100)
     basicStats(x)
     #                    Value
-	# nobs        100.00000000
-	# NAs           0.00000000
-	# Minimum      -2.54920919
-	# Maximum       2.50495921
-	# 1. Quartile  -0.55454175
-	# 3. Quartile   0.49634607
-	# Mean         -0.08870588
-	# Median        0.15574755
-	# Sum          -8.87058793
-	# SE Mean       0.09622708
-	# LCL Mean     -0.27964129
-	# UCL Mean      0.10222953
-	# Variance      0.92596517
-	# Stdev         0.96227084
-	# Skewness     -0.33775532
-	# Kurtosis      0.02421936
-	###
+    # nobs        100.00000000
+    # NAs           0.00000000
+    # Minimum      -2.54920919
+    # Maximum       2.50495921
+    # 1. Quartile  -0.55454175
+    # 3. Quartile   0.49634607
+    # Mean         -0.08870588
+    # Median        0.15574755
+    # Sum          -8.87058793
+    # SE Mean       0.09622708
+    # LCL Mean     -0.27964129
+    # UCL Mean      0.10222953
+    # Variance      0.92596517
+    # Stdev         0.96227084
+    # Skewness     -0.33775532
+    # Kurtosis      0.02421936
+    ###
 
 # ------------------------------------------------------------------------------
    
 
 ### Example: Generate Portable Random Numbers
     
-	# Set the Seed in R environment:
+    # Set the Seed in R environment:
     set.lcgseed(seed = 65890)
     ###
     
@@ -106,7 +106,7 @@
 
 ### Code Snippet: 'runif.lcg' Function
     
-	# Function:
+    # Function:
     .runif.lcg = function(n)
     {
         # Generate:
@@ -130,11 +130,11 @@
     #   [1] 0.412525167 0.400869636 0.692256716 0.391545769 0.332864333
     #   [6] 0.360958518 0.087276699 0.435218890 0.517975170 0.176166115
     #  ...
-	#  [91] 0.034661501 0.023883587 0.114830256 0.892798551 0.676522341
+    #  [91] 0.034661501 0.023883587 0.114830256 0.892798551 0.676522341
     #  [96] 0.842873946 0.440200731 0.498826918 0.727911956 0.776254895
-	###
-	
-	# SPlus 2000:
+    ###
+    
+    # SPlus 2000:
     #   [1] 0.412525167 0.400869636 0.692256716 0.391545769 0.332864333
     #   [6] 0.360958518 0.087276699 0.435218890 0.517975170 0.176166115
     #   ...
@@ -269,7 +269,7 @@
 ### 1.5.3 Example: 
 
     # Load the Series:
-    NYSE.RET = outlierSeries(returnSeries(as.timeSeries(data(nyse))))
+    NYSE.RET = outlier(returnSeries(as.timeSeries(data(nyse))))
     nyse.ret = as.vector(NYSE.RET) 
     L = length(nyse.ret)
     ###
@@ -344,7 +344,7 @@
         "p CvM", "p AD", "p SW", "p dAgo", "p JB")
     rownames(ans) = levelNames
     print(ans)
-	###
+    ###
     
 #         Length Kurtosis Skewness    p CvM      p AD     p SW   p dAgo     p JB
 # Hour     31247    9.622   -0.138       NA        NA       NA        0        0
@@ -360,508 +360,508 @@
 
 ### Example: Jarque Bera Test 
 
-	#	Precise finite sample quantiles of the Jarque-Bera adjusted
-	#	Lagrange multiplier test
-	#
-	# Description:
-	#	This is a collection of functions used to produce tables and
-	#	fugures presented in the paper "Precise finite sample quantiles 
-	#	of the Jarque-Bera adjusted Lagrange multiplier test" written
-	#	by Diethelm Wuertz and Helmut G. Katzgraber (2005).
-	#
-	# Details:
-	#   1 Table 1 for the JB and adjusted JB Lagrange multiplier test
-	#   2 Figure 1 showing finite sample probability vs. statistic values 
-	#   3 Figure 2 showing 1/N Expansion in comparison with Lawford's results
-	#	4 Figure 3 Response Surface	
-	#   5 Jarque Bera Test Example
-	###
-	
-	#   Load Data:
+    #   Precise finite sample quantiles of the Jarque-Bera adjusted
+    #   Lagrange multiplier test
+    #
+    # Description:
+    #   This is a collection of functions used to produce tables and
+    #   fugures presented in the paper "Precise finite sample quantiles 
+    #   of the Jarque-Bera adjusted Lagrange multiplier test" written
+    #   by Diethelm Wuertz and Helmut G. Katzgraber (2005).
+    #
+    # Details:
+    #   1 Table 1 for the JB and adjusted JB Lagrange multiplier test
+    #   2 Figure 1 showing finite sample probability vs. statistic values 
+    #   3 Figure 2 showing 1/N Expansion in comparison with Lawford's results
+    #   4 Figure 3 Response Surface 
+    #   5 Jarque Bera Test Example
+    ###
+    
+    #   Load Data:
     require(fBasics)
-    ###	
-		
-	# 1 
-	# Create Table 1 for the JB and adjusted JB Lagrange multiplier test
-	# p Values for Excel Table:
-	P = c(0.01, 0.05, 0.1, 0.5, 1, 5, 10, 15, 20, 30, 40)
-	P = c(P, 50, 100-rev(P))/100
-	# LM Data:
-	jbLM = jbTable("LM")
-	p = as.numeric(rownames(jbLM))
-	N = as.integer(colnames(jbLM))	
-	# Select for Excel Table:
-	select = NULL
-	for ( i in 1:length(P) ) select = c(select, which(abs(p-P[i]) < 1e-15))
-	p[select]
-	ans = round(jbLM[rev(select), -c(1:3, 16) ], digits = 4)
-	Names = as.character(P+0.00001)
-	rownames(ans) = paste(substr(Names, 3, 4), ".", 
-		substr(Names, 5, 6), "%", sep = "")
-	ans	
-	# ALM Data:
-	jbALM = jbTable("ALM")
-	p = as.numeric(rownames(jbALM))
-	N = as.integer(colnames(jbALM))
-	# Select for Excel Table:
-	select = NULL
-	for ( i in 1:length(P) ) select = c(select, which(abs(p-P[i]) < 1e-15))
-	p[select]
-	ans = round(jbALM[rev(select), -c(1:3, 16) ], digits = 4)
-	Names = as.character(P+0.00001)
-	rownames(ans) = paste(substr(Names, 3, 4), ".", 
-		substr(Names, 5, 6), "%", sep = "")
-	ans
-	###
-	
-	# 2 
-	# Create Figure 1 showing finite sample probability vs. statistic values 
-	# Graph Settings:
-	par(mfrow = c(2, 2), cex = 0.7)
-	xmax = 20	
-	# Plot LM - Start with N = 10:
-	jbLM = jbTable("LM")[, -(1:3)]
-	p = as.numeric(rownames(jbLM))
-	N = as.integer(colnames(jbLM))
-	L = length(N)
-	X = as.matrix(jbLM)
-	plot(rev(X[, L]), p, type = "n", xlim = c(0, xmax),
-		xlab = "LM Statistic", 
-		ylab = "Asymptotic Difference                p Value             ")
-	for (i in 2:L) lines(X[, i], p)
-	lines(qchisq(p, 2), p, lwd = 2)	
-	for (i in 2:L) lines(x = qchisq(p, 2), y = -(pchisq(X[, i], 2) - p))	
-	abline(v = qchisq(0.99, 2), lty = 3)
-	abline(v = qchisq(0.95, 2), lty = 3)
-	abline(v = qchisq(0.90, 2), lty = 3)
-	abline(h = 0)
-	title(main = "Jarque Bera LM Statistic")	
-	# Plot Adjusted LM - Start with N = 10::
-	jbALM = jbTable("ALM")[, -(1:3)]
-	p = as.numeric(rownames(jbALM))
-	N = as.integer(colnames(jbALM))
-	L = length(N)
-	Y = as.matrix(jbALM)
-	plot(rev(Y[, L]), p, type = "n", , xlim = c(0, xmax),
-		xlab = "ALM Statistic", 
-		ylab = "Asymptotic Difference                p Value             ")
-	for (i in 2:L) lines(Y[, i], p)
-	lines(qchisq(p, 2), p, lwd = 2)	
-	for (i in 2:L) lines(x = qchisq(p, 2), y = -(pchisq(Y[, i], 2) - p))	
-	abline(v = qchisq(0.99, 2), lty = 3)
-	abline(v = qchisq(0.95, 2), lty = 3)
-	abline(v = qchisq(0.90, 2), lty = 3)
-	abline(h = 0)
-	title(main = "Jarque Bera ALM Statistic")
-	###
-	
-	# 3 
-	# Create Figure 2 showing 1/N Expansion in comparison with Lawford's results
-	# Write Function:
-	jbLawford = function(n) 
-	{   
-		# Computes the quantile response surface for alpha = 90% 
-	    # 	(10%) and 95% (5%) as parameterized by Steve Lawford.	   
-	    # 90% Confidence Level:
-	    qinf90 = 4.605049
-	    beta90 = c(-145.1860602, 7276.233799, -275153.9753, 6437304.253, 
-	        -92456006.82, 814503598.1, -4276230401, 12243649840, -14677406860)	        
-	    # 95% Confidence Level:
-	    qinf95 = 5.9913104
-	    beta95 = c(-67.00449919, 1719.108744, -74443.10488, 1962801.944, 
-	        -30095541.45, 275285058.6, -1479198621, 4299485882, -5206421393)	        
-	    # Compute:
-	    ans90 = ans95 = NULL
-	    for (N in n) {
-	        sampleSize = N^(-(1:9))
-	        ans90 = c(ans90, qinf90 + sum(beta90*sampleSize))
-	        ans95 = c(ans95, qinf95 + sum(beta95*sampleSize)) }	    
-	    # Return Value:
-	    ans = t(cbind(ans95, ans90))
-	    colnames(ans) = as.character(n)
-	    rownames(ans) = c("L-05", "L-10")
-	    ans
-	}
-	# Write Function:
-	statisticsPlot = function(X, degree = 6, col = "steelblue4")
-	{
-		# Settings:
-		p = as.numeric(rownames(X))
-		N = as.integer(colnames(X))
-		X = as.matrix(X)
-		rownames(X) = as.character(as.integer(p*10^7))
-		# Indexes and Quantiles:
-		selectedIndexes = sort(c(10^(3:5), 5*10^(3:5), (1:5)*10^6))
-		selectedIndexes = c(selectedIndexes, 10^7-rev(selectedIndexes)[-1])
-		selectedIndexes = as.character(as.integer(selectedIndexes))
-		X = X[selectedIndexes, ]		
-		# Plot:
-		for ( k in selectedIndexes ) {
-			i = as.integer(k)
-			statistic = X[k, ]
-			if (k == selectedIndexes[1]) 
-				plot(log10(N), log10(statistic), type = "n", 
-				xlab = "log10 N", ylab = "log10 Statistic", 
-				xlim = c(0.5, 4.5), ylim = c(-4, 2) )
-			points(log10(N), log10(statistic), pch = 19, col = col)	
-			# Fitting:
-			x = rep(1, times = length(statistic))
-			for ( j in 1:degree ) x = cbind(x, log10(N)^j)
-			coef = lm.fit(x, y = log10(statistic))$coef
-			print(coef, 4)			
-			# Add LM Fit:
-			n = 1:2800
-			s = rep(0, times = length(n))
-			for ( l in n )
-				for ( j in 0:degree ) 
-					s[l] = s[l] + coef[j+1]*log10(l)^j
-			lines(log10(n[n>4]), s[n>4], col = col, lty = 3) }		
-		# Add Level Legend:
-		levels = paste(as.character(as.numeric(selectedIndexes)/10^5), 
-			"%", sep = "")
-		y = 2.13 - 0.28*(1:length(levels))
-		for ( i in 1:length(levels) ) text(x = 4.3, y = y[i], levels[i]) 		
-		# Return Value:
-		invisible()
-	}
-	# Figure 2 - Graph Settings:
-	par(mfrow = c(2, 2), cex = 0.7)
-	p = sort(c(10^(3:5), 5*10^(3:5), (1:5)*10^6))
-	p = c(p, 10^7-rev(p)[-1])/10^7	
-	# Plot LM Data - Neglect N = 6, 8, and 10'000
-	X = jbTable("LM")[, -c(2, 3, 19)] 
-	statisticsPlot(X = X, degree = 6, col = 1)
-	title(main = "Jarque Bera LM Test")
-	# Add Lawford's Series Expansion:	
-	n = 1:2400
-	lines(log10(n[n > 4]), log10((jbLawford(n)[2,])[n > 4]), lwd = 2) 
+    ### 
+        
+    # 1 
+    # Create Table 1 for the JB and adjusted JB Lagrange multiplier test
+    # p Values for Excel Table:
+    P = c(0.01, 0.05, 0.1, 0.5, 1, 5, 10, 15, 20, 30, 40)
+    P = c(P, 50, 100-rev(P))/100
+    # LM Data:
+    jbLM = jbTable("LM")
+    p = as.numeric(rownames(jbLM))
+    N = as.integer(colnames(jbLM))  
+    # Select for Excel Table:
+    select = NULL
+    for ( i in 1:length(P) ) select = c(select, which(abs(p-P[i]) < 1e-15))
+    p[select]
+    ans = round(jbLM[rev(select), -c(1:3, 16) ], digits = 4)
+    Names = as.character(P+0.00001)
+    rownames(ans) = paste(substr(Names, 3, 4), ".", 
+        substr(Names, 5, 6), "%", sep = "")
+    ans 
+    # ALM Data:
+    jbALM = jbTable("ALM")
+    p = as.numeric(rownames(jbALM))
+    N = as.integer(colnames(jbALM))
+    # Select for Excel Table:
+    select = NULL
+    for ( i in 1:length(P) ) select = c(select, which(abs(p-P[i]) < 1e-15))
+    p[select]
+    ans = round(jbALM[rev(select), -c(1:3, 16) ], digits = 4)
+    Names = as.character(P+0.00001)
+    rownames(ans) = paste(substr(Names, 3, 4), ".", 
+        substr(Names, 5, 6), "%", sep = "")
+    ans
+    ###
+    
+    # 2 
+    # Create Figure 1 showing finite sample probability vs. statistic values 
+    # Graph Settings:
+    par(mfrow = c(2, 2), cex = 0.7)
+    xmax = 20   
+    # Plot LM - Start with N = 10:
+    jbLM = jbTable("LM")[, -(1:3)]
+    p = as.numeric(rownames(jbLM))
+    N = as.integer(colnames(jbLM))
+    L = length(N)
+    X = as.matrix(jbLM)
+    plot(rev(X[, L]), p, type = "n", xlim = c(0, xmax),
+        xlab = "LM Statistic", 
+        ylab = "Asymptotic Difference                p Value             ")
+    for (i in 2:L) lines(X[, i], p)
+    lines(qchisq(p, 2), p, lwd = 2) 
+    for (i in 2:L) lines(x = qchisq(p, 2), y = -(pchisq(X[, i], 2) - p))    
+    abline(v = qchisq(0.99, 2), lty = 3)
+    abline(v = qchisq(0.95, 2), lty = 3)
+    abline(v = qchisq(0.90, 2), lty = 3)
+    abline(h = 0)
+    title(main = "Jarque Bera LM Statistic")    
+    # Plot Adjusted LM - Start with N = 10::
+    jbALM = jbTable("ALM")[, -(1:3)]
+    p = as.numeric(rownames(jbALM))
+    N = as.integer(colnames(jbALM))
+    L = length(N)
+    Y = as.matrix(jbALM)
+    plot(rev(Y[, L]), p, type = "n", , xlim = c(0, xmax),
+        xlab = "ALM Statistic", 
+        ylab = "Asymptotic Difference                p Value             ")
+    for (i in 2:L) lines(Y[, i], p)
+    lines(qchisq(p, 2), p, lwd = 2) 
+    for (i in 2:L) lines(x = qchisq(p, 2), y = -(pchisq(Y[, i], 2) - p))    
+    abline(v = qchisq(0.99, 2), lty = 3)
+    abline(v = qchisq(0.95, 2), lty = 3)
+    abline(v = qchisq(0.90, 2), lty = 3)
+    abline(h = 0)
+    title(main = "Jarque Bera ALM Statistic")
+    ###
+    
+    # 3 
+    # Create Figure 2 showing 1/N Expansion in comparison with Lawford's results
+    # Write Function:
+    jbLawford = function(n) 
+    {   
+        # Computes the quantile response surface for alpha = 90% 
+        #   (10%) and 95% (5%) as parameterized by Steve Lawford.      
+        # 90% Confidence Level:
+        qinf90 = 4.605049
+        beta90 = c(-145.1860602, 7276.233799, -275153.9753, 6437304.253, 
+            -92456006.82, 814503598.1, -4276230401, 12243649840, -14677406860)          
+        # 95% Confidence Level:
+        qinf95 = 5.9913104
+        beta95 = c(-67.00449919, 1719.108744, -74443.10488, 1962801.944, 
+            -30095541.45, 275285058.6, -1479198621, 4299485882, -5206421393)            
+        # Compute:
+        ans90 = ans95 = NULL
+        for (N in n) {
+            sampleSize = N^(-(1:9))
+            ans90 = c(ans90, qinf90 + sum(beta90*sampleSize))
+            ans95 = c(ans95, qinf95 + sum(beta95*sampleSize)) }     
+        # Return Value:
+        ans = t(cbind(ans95, ans90))
+        colnames(ans) = as.character(n)
+        rownames(ans) = c("L-05", "L-10")
+        ans
+    }
+    # Write Function:
+    statisticsPlot = function(X, degree = 6, col = "steelblue4")
+    {
+        # Settings:
+        p = as.numeric(rownames(X))
+        N = as.integer(colnames(X))
+        X = as.matrix(X)
+        rownames(X) = as.character(as.integer(p*10^7))
+        # Indexes and Quantiles:
+        selectedIndexes = sort(c(10^(3:5), 5*10^(3:5), (1:5)*10^6))
+        selectedIndexes = c(selectedIndexes, 10^7-rev(selectedIndexes)[-1])
+        selectedIndexes = as.character(as.integer(selectedIndexes))
+        X = X[selectedIndexes, ]        
+        # Plot:
+        for ( k in selectedIndexes ) {
+            i = as.integer(k)
+            statistic = X[k, ]
+            if (k == selectedIndexes[1]) 
+                plot(log10(N), log10(statistic), type = "n", 
+                xlab = "log10 N", ylab = "log10 Statistic", 
+                xlim = c(0.5, 4.5), ylim = c(-4, 2) )
+            points(log10(N), log10(statistic), pch = 19, col = col) 
+            # Fitting:
+            x = rep(1, times = length(statistic))
+            for ( j in 1:degree ) x = cbind(x, log10(N)^j)
+            coef = lm.fit(x, y = log10(statistic))$coef
+            print(coef, 4)          
+            # Add LM Fit:
+            n = 1:2800
+            s = rep(0, times = length(n))
+            for ( l in n )
+                for ( j in 0:degree ) 
+                    s[l] = s[l] + coef[j+1]*log10(l)^j
+            lines(log10(n[n>4]), s[n>4], col = col, lty = 3) }      
+        # Add Level Legend:
+        levels = paste(as.character(as.numeric(selectedIndexes)/10^5), 
+            "%", sep = "")
+        y = 2.13 - 0.28*(1:length(levels))
+        for ( i in 1:length(levels) ) text(x = 4.3, y = y[i], levels[i])        
+        # Return Value:
+        invisible()
+    }
+    # Figure 2 - Graph Settings:
+    par(mfrow = c(2, 2), cex = 0.7)
+    p = sort(c(10^(3:5), 5*10^(3:5), (1:5)*10^6))
+    p = c(p, 10^7-rev(p)[-1])/10^7  
+    # Plot LM Data - Neglect N = 6, 8, and 10'000
+    X = jbTable("LM")[, -c(2, 3, 19)] 
+    statisticsPlot(X = X, degree = 6, col = 1)
+    title(main = "Jarque Bera LM Test")
+    # Add Lawford's Series Expansion:   
+    n = 1:2400
+    lines(log10(n[n > 4]), log10((jbLawford(n)[2,])[n > 4]), lwd = 2) 
     lines(log10(n[n > 4]), log10((jbLawford(n)[1,])[n > 4]), lwd = 2)   
     # Add Asymptotic Values:
-	points(rep(3.7, length(p)), log10(qchisq(1-p, 2)), cex = 0.7)	
+    points(rep(3.7, length(p)), log10(qchisq(1-p, 2)), cex = 0.7)   
     # Plot ALM Data - neglect N = 6, 8, and 10'000
-	X = jbTable("ALM")[, -c(2, 3, 19)]
-	# Plot:
-	statisticsPlot(X = X, degree = 6, col = 1)	
-	# Add Title:
-	title(main = "Jarque Bera ALM Test")
-	# Add Asymptotic Value:
-	points(rep(3.7, length(p)), log10(qchisq(1-p, 2)), cex = 0.7)
-	###   
-	
-	# 4 
-	# Create Figure 3 Response Surface
-	# The small table plot, fast ...
-	par(mfrow = c(1, 1), cex = 0.5)
-	# LM:
-	pPlot(X = jbTable(type = "LM", size = "small"), nN = 100, nStat = 100, 
-		logN = TRUE, logStat = TRUE, fill = TRUE, linear = FALSE, digits = 8, 
-		doplot = TRUE) 
-	# ALM:
-	pPlot(X = jbTable(type = "ALM", size = "small"), nN = 100, nStat = 100, 
-		logN = TRUE, logStat = TRUE, fill = TRUE, linear = FALSE, digits = 8, 
-		doplot = TRUE) 
-	# If you have some more time, run the "all" data sized version ...
-	###
+    X = jbTable("ALM")[, -c(2, 3, 19)]
+    # Plot:
+    statisticsPlot(X = X, degree = 6, col = 1)  
+    # Add Title:
+    title(main = "Jarque Bera ALM Test")
+    # Add Asymptotic Value:
+    points(rep(3.7, length(p)), log10(qchisq(1-p, 2)), cex = 0.7)
+    ###   
+    
+    # 4 
+    # Create Figure 3 Response Surface
+    # The small table plot, fast ...
+    par(mfrow = c(1, 1), cex = 0.5)
+    # LM:
+    pPlot(X = jbTable(type = "LM", size = "small"), nN = 100, nStat = 100, 
+        logN = TRUE, logStat = TRUE, fill = TRUE, linear = FALSE, digits = 8, 
+        doplot = TRUE) 
+    # ALM:
+    pPlot(X = jbTable(type = "ALM", size = "small"), nN = 100, nStat = 100, 
+        logN = TRUE, logStat = TRUE, fill = TRUE, linear = FALSE, digits = 8, 
+        doplot = TRUE) 
+    # If you have some more time, run the "all" data sized version ...
+    ###
 
-	# 5 
-	# Test Example
-	# Normal Distribution:
-	set.seed(1953)
-	x = rnorm(125)
-	jbTest(x)
-	# Student-t Distribution:
-	set.seed(1953)
-	x = rt(125, 3)
-	jbTest(x)
-	###
-	
-	
+    # 5 
+    # Test Example
+    # Normal Distribution:
+    set.seed(1953)
+    x = rnorm(125)
+    jbTest(x)
+    # Student-t Distribution:
+    set.seed(1953)
+    x = rt(125, 3)
+    jbTest(x)
+    ###
+    
+    
 # ------------------------------------------------------------------------------
 
 
-###	Example: Correlation Tests
+### Example: Correlation Tests
  
-	#	This example investigates correlations between yesterdays and
-	#  	todays volatilities of the NYSE stock market index. It compares 
-	#	the results with those obtained from a resampled time series.
+    #   This example investigates correlations between yesterdays and
+    #   todays volatilities of the NYSE stock market index. It compares 
+    #   the results with those obtained from a resampled time series.
 
-	# Investigate Correlations in Time Series
-	# Data: NYSE Composite Index log Returns
-	data(nyseres)
-	###
-	
-	# Correlation Tests:
-	x = nyseres[6000:7000, 1]
-	# Standardize:
-	x = (x-mean(x))/sqrt(var(x)) 
-	lag = 1
-	print(cor.test(x[1:(length(x)-lag)], x[(1+lag):length(x)], 
-		alternative = "two.sided", method = "spearman"))
-	print(cor.test(x[1:(length(x)-lag)], x[(1+lag):length(x)], 
-		alternative = "two.sided", method = "kendall"))
-	###
-	
-	# Compare with Resampled Series:	
-	# Resampled Empirical Time Series
-	x = sample(x)
-	print(cor.test(x[1:(length(x)-lag)], x[(1+lag):length(x)], 
-		alternative = "two.sided", method = "spearman"))
-	print(cor.test(x[1:(length(x)-lag)], x[(1+lag):length(x)], 
-		alternative = "two.sided", method = "kendall"))
-	###
-	
+    # Investigate Correlations in Time Series
+    # Data: NYSE Composite Index log Returns
+    data(nyseres)
+    ###
+    
+    # Correlation Tests:
+    x = nyseres[6000:7000, 1]
+    # Standardize:
+    x = (x-mean(x))/sqrt(var(x)) 
+    lag = 1
+    print(cor.test(x[1:(length(x)-lag)], x[(1+lag):length(x)], 
+        alternative = "two.sided", method = "spearman"))
+    print(cor.test(x[1:(length(x)-lag)], x[(1+lag):length(x)], 
+        alternative = "two.sided", method = "kendall"))
+    ###
+    
+    # Compare with Resampled Series:    
+    # Resampled Empirical Time Series
+    x = sample(x)
+    print(cor.test(x[1:(length(x)-lag)], x[(1+lag):length(x)], 
+        alternative = "two.sided", method = "spearman"))
+    print(cor.test(x[1:(length(x)-lag)], x[(1+lag):length(x)], 
+        alternative = "two.sided", method = "kendall"))
+    ###
+    
 
 # ------------------------------------------------------------------------------
 
-		 
-###	Example: Goodness-Of-Fit Tests for Testing Normality
+         
+### Example: Goodness-Of-Fit Tests for Testing Normality
 
-	#	Test random deviates if they ar normally
-	#  	distributed. This testsuite includes the foloowing 
-	#  	test procedures:
-	#	  01  Omnibus Moments Test for Normality
-	#	  02  Geary's Test of Normality
-	#	  03  Studentized Range for Testing Normality
-	#	  04  D'Agostino's D-Statistic Test of Normality
-	#	  05  Kuiper V-Statistic Modified to Test Normality
-	#	  06  Watson U^2-Statistic Modified to Test Normality
-	#	  07  Durbin's Exact Test (Normal Distribution
-	#	  08  Anderson-Darling Statistic Modified to Test Normality
-	#	  09  Cramer-Von Mises W^2-Statistic to Test Normality
-	#	  10  Kolmogorov-Smirnov D-Statistic to Test Normality 
-	#	  11  Kolmogorov-Smirnov D-Statistic (Lilliefors Critical Values)
-	#	  12  Chi-Square Test of Normality (Equal Probability Classes)
-	#	  13  Shapiro-Francia W-Test of Normality for Large Samples
-	###
-	
-	# Goodness-Of-Fit Suite for Testing Normality
-	data(nyseres)
-	###
-	
-	# GoF Testing financial market log-returns:
-	x = nyseres[4001:5000, 1]
-	x = (x-mean(x))/sqrt(var(x))
-  	r = gofnorm(x, doprint = TRUE)
-	###
+    #   Test random deviates if they ar normally
+    #   distributed. This testsuite includes the foloowing 
+    #   test procedures:
+    #     01  Omnibus Moments Test for Normality
+    #     02  Geary's Test of Normality
+    #     03  Studentized Range for Testing Normality
+    #     04  D'Agostino's D-Statistic Test of Normality
+    #     05  Kuiper V-Statistic Modified to Test Normality
+    #     06  Watson U^2-Statistic Modified to Test Normality
+    #     07  Durbin's Exact Test (Normal Distribution
+    #     08  Anderson-Darling Statistic Modified to Test Normality
+    #     09  Cramer-Von Mises W^2-Statistic to Test Normality
+    #     10  Kolmogorov-Smirnov D-Statistic to Test Normality 
+    #     11  Kolmogorov-Smirnov D-Statistic (Lilliefors Critical Values)
+    #     12  Chi-Square Test of Normality (Equal Probability Classes)
+    #     13  Shapiro-Francia W-Test of Normality for Large Samples
+    ###
+    
+    # Goodness-Of-Fit Suite for Testing Normality
+    data(nyseres)
+    ###
+    
+    # GoF Testing financial market log-returns:
+    x = nyseres[4001:5000, 1]
+    x = (x-mean(x))/sqrt(var(x))
+    r = gofnorm(x, doprint = TRUE)
+    ###
 
-	# GoF Testing normal innovations:
-  	x = rnorm(length(x))
-  	r = gofnorm(x, doprint = TRUE)
-  	###
-  	
-	# GoF Testing t-distributed innovations:
-	x = rt(length(x), df = 2)
-  	r = gofnorm(x, doprint = TRUE)
-	###
-	
+    # GoF Testing normal innovations:
+    x = rnorm(length(x))
+    r = gofnorm(x, doprint = TRUE)
+    ###
+    
+    # GoF Testing t-distributed innovations:
+    x = rt(length(x), df = 2)
+    r = gofnorm(x, doprint = TRUE)
+    ###
+    
  
 # ------------------------------------------------------------------------------
 
- 	
-###	Example: Aggregation of NYSE Residuals to the Gaussian Limit
-	
-	#  	This example investigated by calculation of the value of the kurtosis 
-	#  	and the KS statistic together with its p.value how the distribution 
-	#  	functions of the NYSE residuals converge to a normal distribution 
-	#  	by aggregating the original times series in powers of two.
+    
+### Example: Aggregation of NYSE Residuals to the Gaussian Limit
+    
+    #   This example investigated by calculation of the value of the kurtosis 
+    #   and the KS statistic together with its p.value how the distribution 
+    #   functions of the NYSE residuals converge to a normal distribution 
+    #   by aggregating the original times series in powers of two.
 
 
-	# Investigate the Convergence to a Gaussian by Aggregation
-	# Data: NYSE Composite Index log Returns
-	data(nyseres)
-	###
-	
-	# Aggregate in powers of two:
-	x = nyseres[, 1]
-	AggregationLevels = 8
-	x = x[1:2^13]
-	###
-	
-	# Further Settings:
-	x.length = x.kurtosis = x.statistic = x.pvalue = rep(NA, times = 8)	
-	statistic.gof = function(x, ...) ksgof.test(x, ...)$statistic	
-	pvalue.gof = function(x, ...) ksgof.test(x, ...)$p.value
-	###
-		
-	# Investigate for all data subsets:		
-	for ( i in 1:AggregationLevels){ 
-		cat("  ",i)
-	  	ncol = 2^(i-1)
-		x.length[i] = length(x)/ncol
-		if(i == 1) {
-			x.aggregated = x
-		} else {
-			x.aggregated = apply(matrix(x, byrow = TRUE, ncol = ncol), 
-				MARGIN = 1, FUN = sum)
-		}
-		# Remove Ties:
-		x.aggregated = unique(x.aggregated)
-		x.kurtosis[i] = kurtosis(x.aggregated)
-		x.mean = mean(x.aggregated)
-		x.sdev = sqrt(var(x.aggregated))
-		ksgof = ks.test(x = x.aggregated, y = "pnorm", x.mean, 
-			x.sdev, alternative = "two.sided")
-		x.statistic[i] = ksgof$statistic
-		x.pvalue[i] = ksgof$p.value 
-	}
-	###
-	
-	# Output as data.frame:
-	cbind.data.frame(x.length, x.kurtosis, x.statistic, x.pvalue)
-	###
-	
-		
+    # Investigate the Convergence to a Gaussian by Aggregation
+    # Data: NYSE Composite Index log Returns
+    data(nyseres)
+    ###
+    
+    # Aggregate in powers of two:
+    x = nyseres[, 1]
+    AggregationLevels = 8
+    x = x[1:2^13]
+    ###
+    
+    # Further Settings:
+    x.length = x.kurtosis = x.statistic = x.pvalue = rep(NA, times = 8) 
+    statistic.gof = function(x, ...) ksgof.test(x, ...)$statistic   
+    pvalue.gof = function(x, ...) ksgof.test(x, ...)$p.value
+    ###
+        
+    # Investigate for all data subsets:     
+    for ( i in 1:AggregationLevels){ 
+        cat("  ",i)
+        ncol = 2^(i-1)
+        x.length[i] = length(x)/ncol
+        if(i == 1) {
+            x.aggregated = x
+        } else {
+            x.aggregated = apply(matrix(x, byrow = TRUE, ncol = ncol), 
+                MARGIN = 1, FUN = sum)
+        }
+        # Remove Ties:
+        x.aggregated = unique(x.aggregated)
+        x.kurtosis[i] = kurtosis(x.aggregated)
+        x.mean = mean(x.aggregated)
+        x.sdev = sqrt(var(x.aggregated))
+        ksgof = ks.test(x = x.aggregated, y = "pnorm", x.mean, 
+            x.sdev, alternative = "two.sided")
+        x.statistic[i] = ksgof$statistic
+        x.pvalue[i] = ksgof$p.value 
+    }
+    ###
+    
+    # Output as data.frame:
+    cbind.data.frame(x.length, x.kurtosis, x.statistic, x.pvalue)
+    ###
+    
+        
 # ------------------------------------------------------------------------------
 
 
-###	Example: Aggregation of Student's-t rvs to the Gaussian Limit
+### Example: Aggregation of Student's-t rvs to the Gaussian Limit
 
-	# This example investigates by the Kolmogrov-Smirnov Test
-	# how random variables from Student's t distribution approach 
-	# the Gaussian distribution with increasing degree of freedom df.
-	###
-	
-	# How approach t-distributed random variables the Gaussian limit?"
-	# Data: Sequence of 1000 t-distributed Random Variates
-  	options(warn = -1)
-  	par(mfrow = c(3, 2), cex = 0.7)
-  	###
+    # This example investigates by the Kolmogrov-Smirnov Test
+    # how random variables from Student's t distribution approach 
+    # the Gaussian distribution with increasing degree of freedom df.
+    ###
+    
+    # How approach t-distributed random variables the Gaussian limit?"
+    # Data: Sequence of 1000 t-distributed Random Variates
+    options(warn = -1)
+    par(mfrow = c(3, 2), cex = 0.7)
+    ###
 
-	# Execute Tests:
-	x = seq(-4, 4, length = 1000)
-   	DegreesOfFreedom = c(2, 4, 8, 16, 32, 64)
-	statistic = p.value = c(0, 0, 0, 0, 0, 0)
-  	for (i in 1:length(DegreesOfFreedom)) { 
-	 	plot(dnorm(x), type = "l")
-    		lines(dt(x, df = DegreesOfFreedom[i]), col = 6)
-    		result = ks.test(x = rt(10000, df = DegreesOfFreedom[i]), 
-    			y = "pnorm", 0, 1, alternative = "two.sided")
-		statistic[i] = result$statistic
-		p.value[i] = result$p.value}	
-	cbind.data.frame(DegreesOfFreedom, statistic, p.value)
-	###
-	
+    # Execute Tests:
+    x = seq(-4, 4, length = 1000)
+    DegreesOfFreedom = c(2, 4, 8, 16, 32, 64)
+    statistic = p.value = c(0, 0, 0, 0, 0, 0)
+    for (i in 1:length(DegreesOfFreedom)) { 
+        plot(dnorm(x), type = "l")
+            lines(dt(x, df = DegreesOfFreedom[i]), col = 6)
+            result = ks.test(x = rt(10000, df = DegreesOfFreedom[i]), 
+                y = "pnorm", 0, 1, alternative = "two.sided")
+        statistic[i] = result$statistic
+        p.value[i] = result$p.value}    
+    cbind.data.frame(DegreesOfFreedom, statistic, p.value)
+    ###
+    
 
 # ------------------------------------------------------------------------------
 
 
-###	Example: Compare Subsamples of Time Series by the KS Test
+### Example: Compare Subsamples of Time Series by the KS Test
 
-	# This example cuts the NYSE log-Return time series into 4 parts and 
-	# compare the distributons of the individual time series by applying 
-	# the two-sample Kolmogoroff-Smirnov Test.
-	###
-	
-  	# Cut a log-Return Series into Parts and Compare the Distributions
-	# Data: NYSE Composite Index log Returns
-	options(digits = 5)
-	data(nyseres)
-	###
+    # This example cuts the NYSE log-Return time series into 4 parts and 
+    # compare the distributons of the individual time series by applying 
+    # the two-sample Kolmogoroff-Smirnov Test.
+    ###
+    
+    # Cut a log-Return Series into Parts and Compare the Distributions
+    # Data: NYSE Composite Index log Returns
+    options(digits = 5)
+    data(nyseres)
+    ###
 
-	# Data Manipulations:
-	x = unique(nyseres[, 1])
-	x = matrix(x[1:(4*trunc(length(x)/4))], ncol = 4)
-	x.resampled = matrix(sample(x)[1:(4*trunc(length(x)/4))], 
-		ncol = 4) # resampled
-	NumberOfSubsets = 4
-	###
-	
-	# Write a "compare" function:
-	compare = function(x, n) 
-	{  
-		k = 0
-		i = j = statistic = p.value = rep(NA,time=n*(n-1)/2)
-  		for ( ii in 1:(n-1) ) {  
-    		for ( jj in (ii+1):n ) { 
-			k = k + 1 
-        		ksgof = ks.test(x=x[,ii], y=x[,jj])
-        		i[k] = ii
-			j[k] = jj
-			statistic[k] = ksgof$statistic
-			p.value[k] = ksgof$p.value }}
-   		cbind.data.frame(i, j, statistic, p.value)
-	}
-	###
+    # Data Manipulations:
+    x = unique(nyseres[, 1])
+    x = matrix(x[1:(4*trunc(length(x)/4))], ncol = 4)
+    x.resampled = matrix(sample(x)[1:(4*trunc(length(x)/4))], 
+        ncol = 4) # resampled
+    NumberOfSubsets = 4
+    ###
+    
+    # Write a "compare" function:
+    compare = function(x, n) 
+    {  
+        k = 0
+        i = j = statistic = p.value = rep(NA,time=n*(n-1)/2)
+        for ( ii in 1:(n-1) ) {  
+            for ( jj in (ii+1):n ) { 
+            k = k + 1 
+                ksgof = ks.test(x=x[,ii], y=x[,jj])
+                i[k] = ii
+            j[k] = jj
+            statistic[k] = ksgof$statistic
+            p.value[k] = ksgof$p.value }}
+        cbind.data.frame(i, j, statistic, p.value)
+    }
+    ###
    
-	# Compare subsets of the NYSE time series:
-	compare(x = x, NumberOfSubsets)
-	###
-	
-	# Compare subsets of the resampled NYSE time series:
-  	compare(x = x.resampled, NumberOfSubsets)
-  	###
-  	
+    # Compare subsets of the NYSE time series:
+    compare(x = x, NumberOfSubsets)
+    ###
+    
+    # Compare subsets of the resampled NYSE time series:
+    compare(x = x.resampled, NumberOfSubsets)
+    ###
+    
   
 # ------------------------------------------------------------------------------
 
 
-###	Example: Runs Test 
+### Example: Runs Test 
 
-	# This example shows how to perform a Runs Test using Traplettis
-	# function implemented from his 'tseries' R-package.
-	###
+    # This example shows how to perform a Runs Test using Traplettis
+    # function implemented from his 'tseries' R-package.
+    ###
 
-	# Perform a Runs Test
-	# Data: NYSE Composite Index log Returns
-	data(nyseres)
-	###
-	
-	# Runs Test:
-	runsTest(nyseres[, 1])
-	###
-	
-	# Re-sampled NYSE log-Returns:
-	runsTest(sample(nyseres[, 1]))
-	###
+    # Perform a Runs Test
+    # Data: NYSE Composite Index log Returns
+    data(nyseres)
+    ###
+    
+    # Runs Test:
+    runsTest(nyseres[, 1])
+    ###
+    
+    # Re-sampled NYSE log-Returns:
+    runsTest(sample(nyseres[, 1]))
+    ###
 
-	#	This example shows how to perform an extended Runs Test using 
-	#	Fillibens runs test procedure.
-	data(nyseres)
-	###
-	
-	# Runs Test:
-	runsTest(nyseres[, 1])
-	###
-	
-	
+    #   This example shows how to perform an extended Runs Test using 
+    #   Fillibens runs test procedure.
+    data(nyseres)
+    ###
+    
+    # Runs Test:
+    runsTest(nyseres[, 1])
+    ###
+    
+    
 # ------------------------------------------------------------------------------
 
 
 ### Example: Bootstrapped Mean
 
-   	# Write Function:
-   	bootMean =
-	function(x, B = 1000, ci = 0.95, na.rm = TRUE, reps = FALSE)
-	{    # A function implemented by Diethelm Wuertz
-		# Description:
-	    #   A very fast implementation of the basic nonparametric 
-	    #   bootstrap for obtaining confidence limits for the population 
-	    #   mean without assuming normality.       
-	    # Arguments:
-	    #   B - number of bootstrap resamples, by default 1000.
-	    #   ci - specifies the confidence level (0-1) for interval 
-	    #       estimation of the population mean. 
-	    #   na.rm - a logical flag, should NAs be removed?
-	    #   reps - set to TRUE to have bootMean return the vector 
-	    #       of bootstrapped means as the reps attribute of 
-	    #       the returned object .
-	    # Notes:
-	    #   The function calls "smean.cl.boot" from the "Hisc" package
-	    #   Requirements: require(Hmisc)       
-	    # FUNCTION:       
-	    # Requirements:
-	    sink("@sink@") # Don't print loading ...
-	    library(Design, warn.conflicts = FALSE)
-	    library(Hmisc, warn.conflicts = FALSE)
-	    sink()
-	    unlink("@sink@")        
-	    # Return Value:
-	    ans = smean.cl.boot(x = x, conf.int = ci, B = B, na.rm = na.rm, 
-	    	reps = reps)
-	    ans
-	}
-	###
-	
+    # Write Function:
+    bootMean =
+    function(x, B = 1000, ci = 0.95, na.rm = TRUE, reps = FALSE)
+    {    # A function implemented by Diethelm Wuertz
+        # Description:
+        #   A very fast implementation of the basic nonparametric 
+        #   bootstrap for obtaining confidence limits for the population 
+        #   mean without assuming normality.       
+        # Arguments:
+        #   B - number of bootstrap resamples, by default 1000.
+        #   ci - specifies the confidence level (0-1) for interval 
+        #       estimation of the population mean. 
+        #   na.rm - a logical flag, should NAs be removed?
+        #   reps - set to TRUE to have bootMean return the vector 
+        #       of bootstrapped means as the reps attribute of 
+        #       the returned object .
+        # Notes:
+        #   The function calls "smean.cl.boot" from the "Hisc" package
+        #   Requirements: require(Hmisc)       
+        # FUNCTION:       
+        # Requirements:
+        sink("@sink@") # Don't print loading ...
+        library(Design, warn.conflicts = FALSE)
+        library(Hmisc, warn.conflicts = FALSE)
+        sink()
+        unlink("@sink@")        
+        # Return Value:
+        ans = smean.cl.boot(x = x, conf.int = ci, B = B, na.rm = na.rm, 
+            reps = reps)
+        ans
+    }
+    ###
+    
     # Bootstrapped Mean:
     data(nyseres)
     print(bootMean(nyseres[, 1]))
@@ -870,4 +870,4 @@
     
 ################################################################################
 
-	
+    

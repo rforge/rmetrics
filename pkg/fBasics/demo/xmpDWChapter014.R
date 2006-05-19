@@ -78,8 +78,9 @@
     
     # Plot the ACF of the Return Series:
     acfPlot(USDDEM.RET[, "BID"], lag.max = 8, ylim = c(-0.05, 0.20),
-        main = "Short Term ACF", xlab = "30 min Lags")
-    title(main = "\n\n30 Minutes USDDEM")
+        labels = FALSE)
+    title(main = "Short Term ACF\n30 Minutes USDDEM", 
+        xlab = "30 min Lags", ylab = "ACF")
     ###
     
     
@@ -90,8 +91,9 @@
     
     # Plot the PACF of the Return Series:
     pacfPlot(USDDEM.RET[, "BID"], lag.max = 8, ylim = c(-0.05, 0.20),
-        main = "Short Term PACF", xlab = "30 min Lags")
-    title(main = "\n\n30 Minutes USDDEM")
+        labels = FALSE)
+    title(main = "Short Term PACF\n30 Minutes USDDEM", xlab = "30 min Lags",
+        ylab = "ACF")
     ###
     
     # Show the range of the data
@@ -116,8 +118,7 @@
     USDDEM.RET = returnSeries(as.timeSeries(data(usddem30u)))
     # Volatility Series of Bid Prices:
     USDDEM.RET = USDDEM.RET[, "BID"]
-    lmacfPlot(USDDEM.RET, lag.max = 48*14, main = "USDCHF 2 Weeks")
-    grid()
+    lmacfPlot(USDDEM.RET, lag.max = 48*14)
     # Output:
     # Long Memory Autocorrelation Function:
     # Maximum Lag        672
@@ -131,7 +132,11 @@
     NYSE.RET = returnSeries(as.timeSeries(data(nyse)))
     # Remove Return Value from Index Redefinition:
     NYSE.RET = outlier(NYSE.RET)
-    lmacfPlot(NYSE.RET, lag.max = 63, main = "NYSE 3 Month")
+    lmacfPlot(NYSE.RET, lag.max = 63, type = "acf")
+    title(main = "\n\nNYSE INDEX")
+    grid()
+    lmacfPlot(NYSE.RET, lag.max = 63, type = "hurst")
+    title(main = "\n\nNYSE INDEX")
     grid()
     # Output:
     # Long Memory Autocorrelation Function:
@@ -168,7 +173,7 @@
     # Load NYSE Data and Convert to timeSeries Object:
     NYSE = as.timeSeries(data(nyse))
     # Use only Data Before the Index Definition was Changed: 
-    NYSE = cutSeries(NYSE, "1966-01-01", "2002-12-31")
+    NYSE = cut(NYSE, "1966-01-01", "2002-12-31")
     ###
     
     # Plot Lagged Correlations:
@@ -191,7 +196,7 @@
     # Load NYSE Data and Convert to timeSeries Object:
     NYSE = as.timeSeries(data(nyse))
     # Use only Data Before the Index Definition was Changed: 
-    NYSE = cutSeries(NYSE, "1966-01-01", "2002-12-31")
+    NYSE = cut(NYSE, "1966-01-01", "2002-12-31")
     ###
     
     # Simulate Index by Normal Series:
@@ -265,7 +270,7 @@
 ### 1.4.6 Example: Absolute Value Scaling
 
     # Absolute Value Scaling of daily NYSE Index:
-    NYSE = outlierSeries(returnSeries(as.timeSeries(data(nyse))))
+    NYSE = outlier(returnSeries(as.timeSeries(data(nyse))))
     scalinglawPlot(NYSE, span = 6)$fit$coefficients
     title(main = "\n\nNYSE")
     # Output:

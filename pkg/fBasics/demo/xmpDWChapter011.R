@@ -29,7 +29,7 @@
 
 ### Load Packages:
 
-    # require(fBasics)
+    require(fBasics)
     ###
     
     
@@ -68,7 +68,7 @@
 
     # Show Argument List:
     args(ciaByCountry)
-    # function (code = "CH", from = FALSE, names = FALSE, details = TRUE)
+    # function (code = "CH", from = FALSE, names = FALSE)
     ###
     
     # List Switzerland:
@@ -90,7 +90,7 @@
     #    Code Rank        Value    From Indicator
     # 1  2001   37 251900000000 2004est       GDP
     # ...
-    ciaByCountry("CH", details = FALSE)
+    ciaByCountry("CH")
     ###
     
     
@@ -101,7 +101,7 @@
 
     # Show Argument List:
     args(ciaByIndicator)
-    # function (code = 2001, from = FALSE, details = TRUE)
+    # function (code = 2001, from = FALSE)
     ###
     
     # List Ranked GDP:
@@ -131,7 +131,8 @@
     ###
     
     # Pie Chart:
-    OilProduction = as.integer(as.vector(ciaByIndicator(2173)[2:11, 2]))
+    OilProduction = as.integer(as.vector(
+        ciaByIndicator(2173)[2:11, 2]))
     names(OilProduction) = as.vector(ciaByIndicator(2173)[2:11,1])
     OilProduction 
     pie(OilProduction,col = rainbow(10))

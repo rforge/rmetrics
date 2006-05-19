@@ -377,7 +377,7 @@
     ###
 
     # Convert to ISO-8601 formatted timeSeries Object:
-    IP = as.timeSeries(IP.dat, format = "%d-%b-%Y")
+    IP = as.timeSeries(IP.dat)
     class(IP)
     head(IP)
     #               IP
