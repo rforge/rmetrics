@@ -52,8 +52,8 @@
 ciaCountries()
 ciaIndicators()
 
-ciaByCountry(code = "CH", from = FALSE, names = FALSE, details = TRUE)
-ciaByIndicator(code = 2001, from = FALSE, details = TRUE)
+ciaByCountry(code = "CH", from = FALSE, names = FALSE, details = FALSE)
+ciaByIndicator(code = 2001, from = FALSE, details = FALSE)
 
 \method{print}{ciaCountries}(x, \dots)
 \method{print}{ciaIndicators}(x, \dots)
@@ -71,7 +71,7 @@ ciaByIndicator(code = 2001, from = FALSE, details = TRUE)
         }
     \item{details}{
         a logical flag. Should details be printed? By default 
-        \code{TRUE}.
+        \code{FALSE}.
         }
     \item{from}{
         a logical flag. If set to \code{TRUE} an additional column
