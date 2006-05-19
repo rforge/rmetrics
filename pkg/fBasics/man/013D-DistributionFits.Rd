@@ -5,7 +5,7 @@
 \alias{fDISTFIT}
 \alias{fDISTFIT-class}
 
-\alias{normFit}
+%\alias{normFit}
 \alias{tFit}
 
 \alias{stableFit}
@@ -34,7 +34,7 @@
     The functions are:
     
     \tabular{ll}{
-    \code{normFit} \tab MLE parameter fit for a normal distribution, \cr
+    %\code{normFit} \tab MLE parameter fit for a normal distribution, \cr
     \code{tFit} \tab MLE parameter fit for a Student t-distribution, \cr
     \code{stableFit} \tab MLE and Quantile Method stable parameter fit, \cr
     \code{ghFit} \tab MLE parameter fit for a generalized hyperbolic distribution, \cr
@@ -47,8 +47,8 @@
 
 
 \usage{
-normFit(x, doplot = TRUE, span = "auto", title = NULL, description = NULL, \dots)
-
+%normFit(x, doplot = TRUE, span = "auto", title = NULL, description = NULL, \dots)
+%
 tFit(x, df = 4, doplot = TRUE, span = "auto", trace = FALSE, title = NULL, 
     description = NULL, \dots)
     
