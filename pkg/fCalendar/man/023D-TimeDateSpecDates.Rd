@@ -1,6 +1,6 @@
-\name{timeDateSpecDates}
+\name{TimeDateSpecDates}
 
-\alias{timeDateSpecDates}
+\alias{TimeDateSpecDates}
 
 
 \alias{timeLastDayInMonth}
@@ -130,7 +130,7 @@ timeLastNdayInMonth(charvec, nday = 1, format = "\%Y-\%m-\%d", FinCenter = "GMT"
 
 
 \examples{
-## SOURCE("fCalendar.023A-TimeDateSpecDates")
+## SOURCE("fCalendar.023D-TimeDateSpecDates")
 
    # Date as character String:
    charvec = "2006-04-16"

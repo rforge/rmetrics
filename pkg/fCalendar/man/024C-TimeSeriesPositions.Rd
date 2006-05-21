@@ -1,6 +1,6 @@
-\name{TimeSeriesPosition}
+\name{TimeSeriesPositions}
 
-\alias{TimeSeriesPosition}
+\alias{TimeSeriesPositions}
 
 
 \alias{seriesPositions}
@@ -147,10 +147,9 @@ newPositions(object) <- value
 
 
 \examples{
-## SOURCE("fCalendar.024A-TimeSeriesClass")
+## SOURCE("fCalendar.024C-TimeSeriesPositions")
     
 ## Create dummy timeSeries:     
-   xmpCalendar("\nNext: Align with NA > ")
    X = timeSeries(matrix(rnorm(24), 12), timeCalendar())
    
 ## seriesPositions -

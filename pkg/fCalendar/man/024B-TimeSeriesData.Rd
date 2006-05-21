@@ -349,35 +349,35 @@ rownames<-.timeSeries(x) <- value
 
 
 \examples{
-## SOURCE("fCalendar.024A-TimeSeriesClass")
+## SOURCE("fCalendar.024B-TimeSeriesData")
 
 ## data - 
-   xmpCalendar("\nStart: Load Microsoft Data > ")
+   # Load Microsoft Data:
    MSFT = as.timeSeries(data(msft.dat))[1:12, c("Open", "Close")]
    head(MSFT)
 
 ## diff | scale - 
-   xmpCalendar("\nNext: Difference and scale the timeSeries Object > ")
+   # Difference and scale the timeSeries Object:
    scale(diff(MSFT, lag = 2, trim = TRUE))
 
 ## lag -
-   xmpCalendar("\nNext: Lag the timeSeries Object > ")
+   # Lag the timeSeries Object:
    lag(MSFT, k = -1:1)
     
 ## merge -    
-   xmpCalendar("\nNext: Merge two timeSeries Object > ")
+   # Merge two timeSeries Object:
    merge(MSFT[, 1], diff(log(MSFT[, 1]), units = c("Price", "Return")))
 
 ## summary -  
-   xmpCalendar("\nNext: MSFT Summary > ")
+   # MSFT Summary:
    summary(returnSeries(MSFT))
 
 ## var -    
-   xmpCalendar("\nNext: Variance of a timeSeries Object > ")
+   # Variance of a timeSeries Object:
    var(returnSeries(MSFT, percentage = TRUE))
    
 ## Ops | +/- * ^ ...
-   xmpCalendar("\nNext: Mathematical Operations > ")
+   # Mathematical Operations:
    MSFT^2
    MSFT[, 2] - MSFT[, 1]
    OPEN.RET = returnSeries(MSFT[, 1])

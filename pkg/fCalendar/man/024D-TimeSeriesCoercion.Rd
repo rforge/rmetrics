@@ -124,7 +124,7 @@ is.timeSeries(object)
 ## SOURCE("fCalendar.024A-TimeSeriesCoercion")
 
 ## data - timeSeries:
-   xmpCalendar("\nStart: Load Microsoft Data > ")
+   # Load Microsoft Data:
    data(msft.dat)
    myFinCenter = "GMT"
    MSFT = as.timeSeries(msft.dat)[1:12, c(1,5)]

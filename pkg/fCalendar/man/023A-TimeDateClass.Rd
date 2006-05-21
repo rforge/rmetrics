@@ -12,9 +12,13 @@
 
 \alias{timeCalendar}
 \alias{timeSequence}
+\alias{seq.timeDate}
 \alias{Sys.timeDate}
 
 \alias{print.timeDate}
+\alias{plot.timeDate}
+\alias{points.timeDate}
+\alias{lines.timeDate}
 \alias{summary.timeDate}
 \alias{format.timeDate}
 
@@ -45,13 +49,17 @@
     \tabular{ll}{
     \code{timeDate} \tab S4: Creates 'timeDate' object from a character vector, \cr
     \code{is.timeDate} \tab Tests if the object is of class 'timeDate', \cr
-    \code{timeCalendar} \tab S4: Creates 'timeDate' object from calendar atoms, \cr
-    \code{timeSequence} \tab S4: Creates regularly spaced object of class 'timeDate', \cr
+    \code{timeCalendar} \tab Creates 'timeDate' object from calendar atoms, \cr
+    \code{timeSequence} \tab Creates regularly spaced object of class 'timeDate', \cr
+    \code{seq} \tab A synonyme function for timeSequence, \cr
     \code{Sys.timeDate} \tab Returns system time as an object of class 'timeDate'. }         
 
     The functions to represent 'timeDate' objects:
     \tabular{ll}{
     \code{print.timeDate} \tab Prints 'timeDate' Object, \cr
+    \code{plot.timeDate} \tab Plots with GMT 'timeDate' x-axis, \cr
+    \code{points.timeDate} \tab Adds points to a 'timeDate' plot, \cr
+    \code{lines.timeDate} \tab Adds lines to a 'timeDate' plot, \cr
     \code{summary.timeDate} \tab Summarizes details of a 'timeDate' object, \cr
     \code{format.timeDate} \tab Formats 'timeDate' as ISO conform character string, }
        
@@ -72,9 +80,13 @@ timeSequence(from = "2004-01-01", to = format(Sys.time(), "\%Y-\%m-\%d"),
 Sys.timeDate(FinCenter = myFinCenter) 
 
 
+\method{seq}{timeDate}(from, to, by = c("day", "year", "quarter", "month", 
+    "week", "hour", "min", "sec"), length.out = NULL, \dots)
+
 is.timeDate(object)
 
 \method{print}{timeDate}(x, \dots)
+\method{plot}{timeDate}(x, y, \dots)
 \method{summary}{timeDate}(object, \dots)
 \method{format}{timeDate}(x, \dots) 
 }
@@ -99,8 +111,12 @@ is.timeDate(object)
         the format specification of the input character vector.
         }
     \item{from, to}{
-        starting date, required, and end date, ptional. If supplied 
-        \code{to} must be after \code{from}.
+        [timeSequence] - \cr
+        starting date, required, and end date, optional. If supplied 
+        \code{to} must be after \code{from}, \cr
+        [seq] - cr
+        in this case the \code{from} and \code{to} dates must be objects 
+        of class \code{timeDate}.
         }
     \item{h, min, s}{
         hours of the days (0-23), defaults are 0,
@@ -128,13 +144,16 @@ is.timeDate(object)
         [isWeekday][isWeekend][isBizday][weekDay] - \cr
         an object of class \code{timeDate}.
         \cr
-        [format][print] - \cr
+        [format][print][plot] - \cr
         an object of class \code{timeDate}.
         }
     \item{y, m, d}{
+        [timeCalendar] - \cr
         calendar years (e.g. 1997), defaults are 1960,
         calendar months (1-12), defaults are 1, and 
-        calendar days (1-31), defaults are 1. 
+        calendar days (1-31), defaults are 1, \cr
+        [plot] - \cr
+        a numeric vector.
         }
     \item{zone}{
         the time zone or financial center where the data were recorded.

@@ -31,16 +31,8 @@
 \description{
     
     A collection and description of functions and 
-    methods dealing with holiday calendars. Included 
-    are functions for the computation of the date of 
-    easter and related feasts. These functions allow 
-    the generation of holiday calendars. Included are 
-    some utility functions to compute special dates 
-    from n-dates, and to manage dates formatted in 
-    the ISO-8601 integer CCYYMMDD calendar format. 
-    Furthermore, functions are available to convert 
-    Julian counts to formatted calendar dates and  
-    vice versa. These are SPlus like functions.
+    methods dealing with holiday dates and holiday
+    calendars. 
     \cr
     
     The functions for the generation of holiday calendars are: 
@@ -50,23 +42,6 @@
     \code{holiday} \tab Returns a holiday date of G7 and CH as 'sdate', \cr
     \code{holiday.NYSE} \tab Computes 'timeDate' object for full-day NYSE holidays. }       
         
-    The N-Day functions are: 
-      
-    \tabular{ll}{       
-    \code{on.or.after} \tab Date in month that is a "n-day" on-or-after a "date", \cr
-    \code{on.or.before} \tab Date in month that is a "n-day" on-or-before a "date", \cr
-    \code{nth.of.nday} \tab The "n-th" ocurrance of a "n"day in year/month, \cr
-    \code{last.of.nday} \tab The last "n"day in a given year/month. }
-            
-    The ISO-8601 day functions and methods are: 
-      
-    \tabular{ll}{          
-    \code{sjulian} \tab Julian day counts from ISO formatted dates, \cr
-    \code{sdate} \tab ISO-8601 formatted dates from Julian day counts, \cr
-    \code{sday.of.week} \tab day of week from \code{CCYYMMDD} formatted dates, \cr
-    \code{sleap.year} \tab Decides if \code{CCYYMMDD} is a leap year or not, \cr
-    \code{print} \tab S3 Print method for objects of class \code{sdate}. }           
-            
     SPlus like Functions are:    
     
     \tabular{ll}{   
@@ -83,18 +58,6 @@
 easter(year, shift = 0)
 holiday(year, Holiday = Easter)
 holiday.NYSE(y = currentYear)
-
-%on.or.after(year, month, day, nday)
-%on.or.before(year, month, day, nday)
-%nth.of.nday(year, month, nday, nth) 
-%last.of.nday(year, month, lastday, nday)
-
-%sjulian(sdates, origin = 19600101)
-%sdate(julians, origin = 19600101)
-%sday.of.week(sdates)
-%sleap.year(sdates)
-
-%\method{print}{sdate}(x, \dots)
 
 fjulian(fdates, origin = 19600101, order = 'mdy', cc = NULL, swap = 20)
 .julian(m, d, y, origin = c(month = 1, day = 1, year = 1960))
@@ -176,28 +139,6 @@ day.of.week(month, day, year)
     return an ISO-8601 formatted calendar date \code{CCYYMMDD}, an
     object of class \code{"sdate"} which represents an integer
     value or vector.
-    \cr
-
-    \code{on.or.after}\cr
-    \code{on.or.before}\cr
-    \code{nth.of.nday}\cr
-    \code{last.of.nday}
-    \cr
-    return like the holiday functions an ISO-8601 formatted calendar 
-    date integer value or vector.
-    \cr
-    
-    \code{sjulian}\cr
-    \code{sdates}\cr
-    \code{sday.of.week}\cr
-    \code{sleap.year}
-    \cr
-    the Julian day counter returns a numeric vector of Julian day counts,
-    \code{sdates} returns a numeric vector of ISO-8601 formatted dates, 
-    i.e [CCYYMMDD], the day of the week function returns a numeric vector 
-    with entries  between \code{0} (Sunday) and \code{6} (Saturday) and
-    the leap year function returns a logical vector with entries TRUE or 
-    FALSE, weather the date falls in a leap year or not.
     \cr
     
     \code{fjulian} 
@@ -318,37 +259,6 @@ day.of.week(month, day, year)
     All the holiday functions are listed in the data file \code{holidays.R}.
     Additional holidays, which are not yet available there, can be added
     to this data base file.
-    \cr\cr
-
-    
-    \bold{n-Day Functions:}
-    \cr\cr
-    The function \code{on.or.after}
-    calculates the date in a given month and year that is a n-day 
-    ON OR AFTER a given date.
-        
-    The function \code{on.or.before}
-    calculates the date in a given month and year that is a n-day 
-    ON OR BEFORE a given date. 
-      
-    The function \code{nth.of.nday}
-    calculates the n-th ocurrance of a n-day in a given month and 
-    year. 
-       
-    The function code{last.of.nday}
-    calculates the last n-day in a given month and year.
-    \cr\cr
-       
-    \bold{sdate Class:}
-    \cr\cr   
-    \code{"sdates"} represents a class of integer formatted \code{CCYYMMDD}
-    ISO-8601 calendar dates.
-    Note, that the \code{s*} indicates "standard" or "simple" ISO-8601 
-    date format where \code{CC} denotes the century, \code{YY} the year, 
-    \code{MM} the month, and \code{DD} the day, e.g 20031213. This
-    formated was included to the \code{fbasics} library already some
-    years ago. It is likely that this date format will be replaced 
-    in the near future by the new R objects of class. \code{"Date"}.
 
 }
 
@@ -381,7 +291,6 @@ Therneau T. (1991);
 ## SOURCE("fCalendar.025B-HolidayCalendars")
 
 ## easter -
-   xmpCalendar("\nStart: Easter and Easter Related Feasts > ")
    # Dates for Easter and Pentecost from 2000 until 2010:
    easter(2000:2010)
    easter(2000:2010, -2) # This is Good Friday
@@ -389,51 +298,22 @@ Therneau T. (1991);
    holiday(2000:2010, GoodFriday)  
    
 ## holidays -   
-   xmpCalendar("\nNext: Alternatively You can use > ")
    Easter(2000:2010)
    GoodFriday(2000:2010)
   
 ## holiday.NYSE -
-   xmpCalendar("\nNext: Holiday Calendar for the New York Stock Exchange > ")
    holiday.NYSE(currentYear)
    
-## on.or.after -
-   xmpCalendar("\nStart: on.or.after > ")
-   # What date had the first advent 2001?
-   # The first advent is the Sunday on or after November 27th.
-   .on.or.after(year = 2001, month = 11, day = 27, nday = 0)
-   
-## on.or.before -
-   xmpCalendar("\nNext: on.or.before > ")
-   # What date had Monday on or after April, 1st, 2001?
-   .on.or.before(year = 2001, month = 11, day = 27, nday = 1)
-   
-## nth.of.nday -
-   xmpCalendar("\nNext: nth.of.nday > ")
-   # What date had the second Sunday in October 1980?
-   .nth.of.nday(year = 1980, month = 10, nday = 0, nth = 2)
-  
-## last.of.nday -
-   xmpCalendar("\nNext: last.of.nday > ")   
-   # What date had the last Monday in September, 2002?
-   .last.of.nday(year = 1996, month = 9, lastday = 31, nday = 1)  
-   
-## fdates - 
 ## fjulian -
-   xmpCalendar("\nStart: Convert Formatted Gregorian Dates > ")
    fdates = c("8/11/73", "08-11-73", "August 11 1973", "Aug11/73")
-   fdates
    fjulian(fdates) 
    
-## fdates - 
 ## fjulian -
-   xmpCalendar("\nNext: Convert with 'dmy' Order > ")
    fdates = c("11/8/73", "11-08-73", "11 August 1973", "11Aug73")
    fjulian(fdates, order = 'dmy')
    
 ## .julian - 
 ## day.of.week -
-   xmpCalendar("\nNext: Day of Week > ")
    # The number of days from January 1, 1990 to each of:
    # January 15, 1990, February 15, 1991, March 15, 1992, etc.
    .julian(1:12, rep(15,12), 1990+(0:11), origin = c(1, 1, 1990))

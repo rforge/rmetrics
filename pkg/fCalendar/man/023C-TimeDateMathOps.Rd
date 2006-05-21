@@ -179,35 +179,38 @@ difftimeDate(time1, time2,
 
 
 \examples{
-## SOURCE("fCalendar.023A-TimeDateClass")   
+## SOURCE("fCalendar.023C-TimeDateMathOps")   
 
 ## c -
-   xmpCalendar("\nStart: Create Character Vectors > ") 
+   # Create Character Vectors:
    dts = c("1989-09-28", "2001-01-15", "2004-08-30", "1990-02-09")
+   dts
    tms = c(  "23:12:55",   "10:34:02",   "08:30:00",   "11:18:23")
-   dts; tms
+   tms
    
 ## "+/-" - 
-   xmpCalendar("\nStart: Add One Day to a Given timeDate Object > ")
-   GMT = timeDate(dts, FinCenter = "GMT")
-   ZUR = timeDate(dts, FinCenter = "Europe/Zurich")
+   # Add One Day to a Given timeDate Object:
+   GMT = timeDate(dts, zone = "GMT", FinCenter = "GMT")
+   GMT
+   ZUR = timeDate(dts, zone = "GMT", FinCenter = "Europe/Zurich")
+   ZUR
    GMT + 24*3600
    ZUR[2] - ZUR[1]
   
 ## "[" - 
-   xmpCalendar("\nNext: Subsets from and Lops for timeDate Objects > ")
+   # Subsets from and Lops for timeDate Objects:
    GMT[GMT < GMT[2]]
    ZUR[ZUR < ZUR[3]] == ZUR[1:3]
 
 ## diff - 
-   xmpCalendar("\nNext: Suitably Lagged and Iterated Differences > ")
+   # Suitably Lagged and Iterated Differences:
    diff(GMT)
    diff(GMT, lag = 2)
    diff(GMT, lag = 1, diff = 2)
    difftimeDate(GMT[1:2], GMT[-(1:2)])
    
 ## c | rep - 
-   xmpCalendar("\nNext: Concatenate and Replicate timeDate Objects > ") 
+   # Concatenate and Replicate timeDate Objects:
    c(GMT[1:2], ZUR[1:2])
    c(ZUR[1:2], GMT[1:2])
    rep(ZUR[2], times = 3)

@@ -2,11 +2,20 @@
 
 \alias{TimeDateCoercion}
 
+\alias{as.timeDate}
+\alias{as.timeDate.POSIXt}
+\alias{as.timeDate.Date}
+
 \alias{as.character.timeDate}
+\alias{as.double.timeDate}
 \alias{as.data.frame.timeDate}
 \alias{as.POSIXct.timeDate}
+\alias{as.POSIXlt.timeDate}
+\alias{as.Date.timeDate}
 
-\alias{julian.POSIXt}
+
+%\alias{julian.POSIXt}
+
 \alias{julian.timeDate}
 \alias{atoms.timeDate}
 \alias{months.timeDate}
@@ -25,6 +34,8 @@
     The functions are:
     
     \tabular{ll}{
+    \code{as.timeDate.POSIXt} \tab Returns a 'POSIX' object as 'timeDate' object, \cr
+    \code{as.timeDate.Date} \tab Returns a 'POSIX' object as 'timeDate' object, \cr
     \code{as.character.timeDate} \tab Returns a 'timeDate' object as character string, \cr
     \code{as.data.frame.timeDate} \tab Returns a 'timeDate' object as data frame, \cr
     \code{as.POSIXct.timeDate} \tab Returns a 'timeDate' object as POSIXct object, \cr
@@ -35,9 +46,15 @@
 
 
 \usage{
+\method{as.timeDate}{POSIXt}(x, zone = NULL, FinCenter = NULL)
+\method{as.timeDate}{Date}(x, zone = "GMT", FinCenter = "GMT") 
+
 \method{as.character}{timeDate}(x, \dots)
+\method{as.double}{timeDate}(x, units = c("auto", "secs", "mins", "hours", "days", "weeks"), ...)
 \method{as.data.frame}{timeDate}(x, \dots)
 \method{as.POSIXct}{timeDate}(x, tz = "")
+\method{as.POSIXlt}{timeDate}(x, tz = "")
+\method{as.Date}{timeDate}(x, method = c("trunc", "round", "next"), \dots)
 
 \method{julian}{timeDate}(x, FinCenter = myFinCenter, \dots)
 \method{atoms}{timeDate}(x, \dots)
@@ -56,12 +73,23 @@
         \code{zone}, or financial center string, \code{FinCenter}, 
         as used by \code{timeDate} objects.
         }
-    \item{x}{
-        an object of class \code{timeDate}.
-        }
     \item{FinCenter}{
         a character with the the location of the  
         financial center named as "continent/city". 
+        }
+    \item{method}{
+        a character string denoting the method how to determine the
+        dates.
+        }
+    \item{units}{
+        a character string denoting the date/time units in which the 
+        results are desired.
+        }
+    \item{x}{
+        an object of class \code{timeDate}.
+        }
+    \item{zone}{
+        the time zone or financial center where the data were recorded.
         }
     \item{\dots}{
         arguments passed to other methods.
@@ -107,7 +135,7 @@
 
 
 \examples{
-## SOURCE("fCalendar.023A-TimeDateCoercion")
+## SOURCE("fCalendar.023E-TimeDateCoercion")
 
    tD = timeDate()
    as.character(tD)

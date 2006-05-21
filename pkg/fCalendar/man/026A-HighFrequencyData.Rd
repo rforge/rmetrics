@@ -459,7 +459,7 @@ Guillaume D.M., Dacorogna M.M., Dave R.R., Mueller U.A., Olsen R.B.,
 ## SOURCE("fCalendar.026A-HighFrequencyData")
 
 ## xjulian - 
-   xmpCalendar("\nStart: Julian Counts > ")
+   # Julian Counts:
    # Return the number of minute counts for the last day in every 
    # month for year 2000 beginning January 1st, 2001 at 16:00:
    xjulian(c(
@@ -474,7 +474,7 @@ Guillaume D.M., Dacorogna M.M., Dave R.R., Mueller U.A., Olsen R.B.,
      200011301600, 200012311600), origin = 20000101)
      
 ## xdate - 
-   xmpCalendar("\nNext: Convert Julian Counts to Dates > ")
+   # Convert Julian Counts to Dates:
    # Return the number of minute counts for th
    # Manage Date/Time in Extended Date/Time Format, ISO-8601
    # Date: 1973-01-01 15:30
@@ -483,16 +483,16 @@ Guillaume D.M., Dacorogna M.M., Dave R.R., Mueller U.A., Olsen R.B.,
   
 ## xday.of.week -
    # Calculate the day of week for 1973-01-01 16:15
-   xmpCalendar("\nNext: Compute Day of Week > ")
+   # Compute Day of Week:
    xday.of.week(197301011615)
         
 ## xleap.year -
-   xmpCalendar("\nNext: Check for Leap Years > ")
+   # Check for Leap Years:
    # Falls Februar 1st, 2000 16:15 in a leap year?
    xleap.year(200002011615)    
    
 ## fxdata.contributors - 
-   xmpCalendar("\nStart: Filter Contributors > ")
+   # Filter Contributors:
    # Print contributor list:
    data(usdthb)
    usdthb[1:25, ]
@@ -500,15 +500,14 @@ Guillaume D.M., Dacorogna M.M., Dave R.R., Mueller U.A., Olsen R.B.,
    fxdata.contributors(usdthb, include = 5)
    
 ## fxdata.parser - 
-   xmpCalendar("\nNext: Parse Records > ")
-   # Parse data:
+   # Parse Data:
    # Create a contributor list and mark the first 5 market makers:
    parser.table = fxdata.contributors(usdthb, include = 5)
    # Parse the market makers and print the first 25 entries:
    fxdata.parser(usdthb, parser.table)[1:25, ]
    
 ## fxdata.filter - 
-   xmpCalendar("\nNext: Filter Records > ")
+   # Filter Records:
    # Filter data and plot unfiltered data:
    par(mfrow = c(2, 1))
    NumberOfRecords = length(usdthb[,1])
@@ -537,13 +536,13 @@ Guillaume D.M., Dacorogna M.M., Dave R.R., Mueller U.A., Olsen R.B.,
    lines(x = c(1, NumberOfRecords), y = c(0, 0), col = "steelblue")
    
 ## fxdata.varmin - 
-   xmpCalendar("\nNext: Variable Minute Records > ")
+   # Variable Minute Records:
    # Variable Minute Records from filter accepted Data,
    # create a varmin file and print the first 25 entries:
    fxdata.varmin(usdthb$accepted, digits = 5)[1:25, ]  
    
 ## xts.log - 
-   xmpCalendar("\nStart: Log Prices of FX Data > ")
+   # Log Prices of FX Data:
    # Calculate log-prices from AUDUSD bid prices
    options(digits = 10)
    data(audusd)
@@ -553,14 +552,14 @@ Guillaume D.M., Dacorogna M.M., Dave R.R., Mueller U.A., Olsen R.B.,
    data.frame(log.prices)[1:25, ]
    
 ## xts.diff - 
-   xmpCalendar("\nNext: Returns of FX Data > ")
+   # Returns of FX Data:
    # Calculate one hourly AUDUSD log-returns
    prices = list(t = audusd[,"XDATE"], x = audusd[,"BID"])
    # Calculate the returns and print the first 25 entries:
    data.frame(xts.diff(xts.log(prices)))[1:25, ]
    
 ## xts.cut - 
-   xmpCalendar("\nNext: Cut out a Piece From a FX File > ")
+   # Cut out a Piece From a FX File:
    # Retrieve the AUDUSD bid quotes for October 21, 1997, 16:00 
    prices = list(t = audusd[,"XDATE"], x = audusd[,"BID"])
    # Retrieve prices and print the first 25 entries:
@@ -568,7 +567,7 @@ Guillaume D.M., Dacorogna M.M., Dave R.R., Mueller U.A., Olsen R.B.,
      to.date = 19971021))[1:25, ]
 
 ## xts.interp - 
-   xmpCalendar("\nNext: Interpolate of FX Data > ")
+   # Interpolate of FX Data:
    # Interpolate AUDUSD bid prices 
    # on a 15 minutes  time scale for October 21, 1997:
    prices = list(t = audusd[,"XDATE"], x = audusd[,"BID"])
@@ -576,7 +575,7 @@ Guillaume D.M., Dacorogna M.M., Dave R.R., Mueller U.A., Olsen R.B.,
    data.frame(xts.interp(prices, deltat = 15))[1:25, ]
    
 ## xts.map - 
-   xmpCalendar("\nNext: Create Business Time Map > ")
+   # Create Business Time Map:
    options(object.size = 5e8)
    par(mfrow = c(2, 1))
    # Load and plot prices:
@@ -592,7 +591,7 @@ Guillaume D.M., Dacorogna M.M., Dave R.R., Mueller U.A., Olsen R.B.,
    tmap 
    
 ## xts.upsilon -  
-   xmpCalendar("\nNext: De-seasonalize in Upsilon Time > ")
+   # De-seasonalize in Upsilon Time:
    index = list(t = fdax9710[,"XDATE"], x = fdax9710[,"FDAX"])  
    # Start on Monday - end on Sunday, 3 weeks:
    index = xts.cut(index, from.date = 19971006, to.date = 19971026)
@@ -604,7 +603,7 @@ Guillaume D.M., Dacorogna M.M., Dave R.R., Mueller U.A., Olsen R.B.,
      main="Prices in Upsilon time")
     
 ## xts.dvs - 
-   xmpCalendar("\nNext: De-volatilize Time Series > ")
+   # De-volatilize Time Series:
    index = list(t=fdax9710[,"XDATE"], x=fdax9710[,"FDAX"])  
    # Start on Monday - end on Sunday, 3 weeks:
    index = xts.cut(index, from.date=19971006, to.date=19971026)
@@ -614,7 +613,7 @@ Guillaume D.M., Dacorogna M.M., Dave R.R., Mueller U.A., Olsen R.B.,
      volatility = 13.15*var(diff(log(index$x))), main = "Prices from dv-series") 
 
 ## xts.dws -
-   xmpCalendar("\nNext: Plot daily/weekly Charts > ")
+   # Plot daily/weekly Charts:
    # NOTE:
    # The file \code{fdax97m.csv} is too large and therefore not part 
    # of  this distribution. Please contact \emph{inf@rmetrics.org}.

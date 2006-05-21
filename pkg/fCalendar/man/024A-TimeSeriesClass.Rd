@@ -338,15 +338,14 @@ ohlcDailyPlot(x, volume = TRUE, colOrder = c(1:5), units = 1e6,
 ## SOURCE("fCalendar.024A-TimeSeriesClass")
 
 ## data - Data Frame:
-   xmpCalendar("\nStart: Load Microsoft Data > ")
+   # Load Microsoft Data:
    data(msft.dat)
    myFinCenter = "GMT"
    dfMSFT = msft.dat
    head(dfMSFT)
 
 ## timeSeries - Conversion:
-   xmpCalendar("\nNext: Create a timeSeries Object > ")
-   # The Direct Way ...
+   # Create a timeSeries Objec - The Direct Way ...
    Close = as.timeSeries(dfMSFT[, 5])
    head(Close)
    # From Scratch ...
@@ -357,12 +356,11 @@ ohlcDailyPlot(x, volume = TRUE, colOrder = c(1:5), units = 1e6,
    c(start(Close), end(Close))
     
 ## cutSeries -    
-   xmpCalendar("\nNext: Cut out April Data from 2001 > ")
+   # Cut out April Data from 2001:
    tsApril01 = cut(Close, "2001-04-01", "2001-04-30") 
    tsApril01
 
 ## returnSeries -  
-   xmpCalendar("\nNext: Compute Returns > ")
    # Compute Returns:
    args(returnSeries)
    # Continuous Returns:
@@ -376,7 +374,7 @@ ohlcDailyPlot(x, volume = TRUE, colOrder = c(1:5), units = 1e6,
 
     
 ## alignDailySeries -     
-   xmpCalendar("\nNext: Align with NA > ")
+   # Align with NA:
    args(alignDailySeries)
    tsRet = returnSeries(tsApril01, trim = TRUE)
    GoodFriday(2001)   
@@ -385,13 +383,13 @@ ohlcDailyPlot(x, volume = TRUE, colOrder = c(1:5), units = 1e6,
    alignDailySeries(tsRet, method = "fillNA", include.weekends = TRUE)
     
 ## alignDailySeries - 
-   xmpCalendar("\nNext: Interpolate > ")
+   # Interpolate:
    tsRet
    alignDailySeries(tsRet, method = "interp", include.weekend = FALSE)
    alignDailySeries(tsRet, method = "interp", include.weekend = TRUE)
 
 ## applySeries -   
-   xmpCalendar("\nNext: Aggregate weekly > ")
+   # Aggregate weekly:
    GoodFriday(2001)
    to = timeSequence(from = "2001-04-11", length.out = 3, by = "week") 
    from = to - 6*24*3600

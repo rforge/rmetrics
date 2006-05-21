@@ -13,6 +13,8 @@
 \alias{cut.timeDate}
 \alias{start.timeDate}
 \alias{end.timeDate}
+\alias{length.timeDate}
+
 \alias{blockStart}
 \alias{blockEnd}
 
@@ -47,6 +49,7 @@
     \code{cut.timeDate} \tab Extracts a piece from a 'timeDate' object, \cr
     \code{start.timeDate} \tab Extracts the first entry of a 'timeDate' object, \cr
     \code{end.timeDate} \tab Extracts the last entry of a 'timeDate' object, \cr
+    \code{length.timeDate} \tab Gets the length of a 'timeDate' object, \cr
     \code{blockStart} \tab Creates start dates for equally sized blocks, \cr
     \code{blockEnd} \tab Creates end dates for equally sized blocks. }
        
@@ -66,6 +69,7 @@ getDayOfYear(x)
 \method{cut}{timeDate}(x, from , to, \dots)
 \method{start}{timeDate}(x, \dots)
 \method{end}{timeDate}(x, \dots)
+\method{length}{timeDate}(x)
 
 blockStart(x, block = 20)
 blockEnd(x, block = 20)
@@ -162,7 +166,7 @@ blockEnd(x, block = 20)
 
 
 \examples{
-## SOURCE("fCalendar.023A-TimeDateClass")
+## SOURCE("fCalendar.023B-TimeDateSubsets")
 
 ## Easter -
    Easter(currentYear)
