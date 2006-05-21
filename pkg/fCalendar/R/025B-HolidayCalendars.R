@@ -321,25 +321,27 @@ function(y = currentYear)
     ans = timeDate(holidays)
     
     # Move Sunday Holidays to Monday:
-    ans = ans + as.integer(as.POSIXlt(as.POSIXct(ans))$wday==0) * 24 * 3600
+    ans = ans + as.integer(as.POSIXlt(ans@Data)$wday==0) * 24 * 3600
    
     # After July 3, 1959, move Saturday holidays to Friday
     # ... except if at the end of monthly/yearly accounting period 
     # this is the last business day of a month.
-    posix = as.POSIXlt(as.POSIXct(ans))
+    posix = as.POSIXlt(ans@Data)
     y = posix$year + 1900
     m = posix$mon + 1
-    lastday = as.POSIXlt(as.POSIXct(timeCalendar(y = y+(m+1)%/%13, 
-        m = m+1-(m+1)%/%13*12, d = 1)-24*3600))$mday
+    lastday = as.POSIXlt((timeCalendar(y = y+(m+1)%/%13, 
+        m = m+1-(m+1)%/%13*12, d = 1)-24*3600)@Data)$mday
     ExceptOnLastFriday = timeDate(as.character(
         .last.of.nday(year = y, month = m, lastday = lastday, nday = 5)))
-    ans = ans - as.integer(ans >= timeDate("1959-07-03") &
-        as.POSIXlt(as.POSIXct(ans))$wday == 0  &
+    ans = ans - as.integer(
+        ans >= timeDate("1959-07-03") &
+        as.POSIXlt(ans@Data)$wday == 0  &
         ans != ExceptOnLastFriday ) * 24 * 3600 
     
     # Remove Remaining Weekend Dates:
-    ans = ans[!(as.POSIXlt(as.POSIXct(ans))$wday == 0 | 
-        as.POSIXlt(as.POSIXct(ans))$wday == 6)]
+    ans = ans[
+        !(as.POSIXlt(ans@Data)$wday == 0 | 
+        as.POSIXlt(ans@Data)$wday == 6)]
     ans@FinCenter = "NewYork"
     
     # Return Value:

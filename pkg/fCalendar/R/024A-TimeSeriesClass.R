@@ -129,7 +129,11 @@ documentation = NULL, ...)
     trace = FALSE
     
     # Missing charvec:
-    if (missing(charvec)) return(dummyDailySeries(data))
+    if (missing(charvec)) {
+        N = dim(as.matrix(data))[1]
+        charvec = timeSequence(from = "1970-01-01", length.out = N, 
+            FinCenter = "GMT")
+    }
     
     # charvector | Time Positions:
     if (is.timeDate(charvec)) {
@@ -143,11 +147,11 @@ documentation = NULL, ...)
     if (is.timeSeries(data)) {
         recordIDs = data@recordIDs
         data = data@Data
-        rownames(data) = format.POSIXlt(timeDates@Data)
+        rownames(data) = format.POSIXct(timeDates@Data)
         units = colnames(data)  
     } else { 
         data = as.matrix(data)
-        rownames(data) = format.POSIXlt(timeDates@Data)
+        rownames(data) = format.POSIXct(timeDates@Data)
         if (is.null(units)) {
             if (is.null(colnames(data))) {
                 units = paste("TS.", 1:dim(data)[2], sep = "")
@@ -159,7 +163,7 @@ documentation = NULL, ...)
     }
     
     # Record IDs:
-    if (sum(dim(recordIDs)) > 0) rownames(recordIDs) = charvec
+    if (sum(dim(recordIDs)) > 0) rownames(recordIDs) = as.character(charvec)
     
     # Add title and Documentation:
     if (is.null(title)) title = "Time Series Object"

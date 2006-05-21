@@ -27,16 +27,89 @@
 #   see Rmetrics's copyright file
 
 
-
 ################################################################################
 # S3 MEHOD:              COERCION AND OBJECT TRANSFORMATIONS:
-#  as.character.timeDate  Returns a 'timeDate' object as character string
-#  as.data.frame.timeDate Returns a 'timeDate' object as data frame
-#  as.POSIXct.timeDate    Returns a 'timeDate' object as POSIXct object
+#  as.timeDate            Use Method
+#  as.timeDate.POSIXt     Returns a 'POSIX' object as 'timeDate' object
+#  as.timeDate.Date       Returns a 'POSIX' object as 'timeDate' object
+# S3 METHOD:             DESCRIPTION:
+#  as.character.timeDate  Returns a 'timeDate' object as 'character' string
+#  as.double.timeDate     Returns a 'timeDate' object as 'numeric' object
+#  as.data.frame.timeDate Returns a 'timeDate' object as 'data.frame' object
+#  as.POSIXct.timeDate    Returns a 'timeDate' object as 'POSIXct' object
+#  as.POSIXlt.timeDate    Returns a 'timeDate' object as 'POSIXlt' object
+#  as.Date.timeDate       Returns a 'timeDate' object as 'Date' object
+# S3 METHOD:             DESCRIPTION:
 #  julian.timeDate        Returns Julian day counts since 1970-01-01
 #  atoms.timeDate         Returns date/time atoms from a 'timeDate' object
 #  months.timeDate        Extract months atom from a 'timeDate' object
 ################################################################################
+
+
+as.timeDate = 
+function(x, zone = NULL, FinCenter = NULL) 
+{
+    UseMethod("as.timeDate")
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+as.timeDate.POSIXt = 
+function(x, zone = NULL, FinCenter = NULL) 
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Returns a 'POSIXt' object as 'timeDate' object
+    
+    # Arguments:
+    #   x - a 'timeDate' object
+    #   ... - arguments passed to other methods.
+    
+    # Value:
+    #   Returns 'x' as a character vector. 
+
+    # FUNCTION:
+    
+    # as timeDate:
+    ans = timeDate(charvec = x, zone = zone, FinCenter = FinCenter)
+    
+    # Return Value:
+    ans
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+ 
+as.timeDate.Date = 
+function(x, zone = "GMT", FinCenter = "GMT") 
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Returns a 'Date' object as 'timeDate' object
+    
+    # Arguments:
+    #   x - a 'timeDate' object
+    #   ... - arguments passed to other methods.
+    
+    # Value:
+    #   Returns 'x' as a character vector. 
+
+    # FUNCTION:
+    
+    # as timeDate:
+    ans = timeDate(charvec = x, zone = zone, FinCenter = FinCenter)
+    
+    # Return Value:
+    ans
+}
+
+
+
+# ------------------------------------------------------------------------------
 
 
 as.character.timeDate =
@@ -63,7 +136,7 @@ function(x, ...)
     if (!inherits(x, "timeDate")) stop("Wrong class type")
     
     # Format:
-    ans = format.POSIXlt(x@Data)
+    ans = format.POSIXct(x@Data)
     attr(ans, "control") = c(FinCenter = x@FinCenter)
     
     # Reset Time Zone: 
@@ -71,6 +144,53 @@ function(x, ...)
     
     # Return Value: 
     ans
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+as.double.timeDate = 
+function(x, units = c("auto", "secs", "mins", "hours", "days", "weeks"), ...)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Returns a 'timeDate' object as 'numeric' vector
+    
+    # Arguments:
+    #   x - a 'timeDate' object
+    #   units - a character string denoting in which units the
+    #       elements of the numeric vector are measured
+    
+    # Value:
+    #   Returns 'x' as a numeric vector. 
+
+    # FUNCTION:
+    
+    # Set time zone to GMT:
+    myTZ = Sys.getenv("TZ")
+    Sys.putenv(TZ = "GMT")
+    
+    # as double:
+    ct = timeDate(x, zone = x@FinCenter, FinCenter = "GMT")@Data
+    origin = as.POSIXct("1970-01-01", tz = "GMT")
+    dt = difftime(ct, origin, units = units)
+    units = attr(dt, "units")
+    ans = as.double(difftime(ct, origin, units = units))
+    attr(ans, "FinCenter")<-"GMT"
+    attr(ans, "units")<-units
+    if (units == "secs") 
+        attr(ans, "origin")<-"1970-01-01 00:00:00 GMT"
+    if (units == "mins" | units == "hours") 
+        attr(ans, "origin")<-"1970-01-01 00:00 GMT"
+    if (units == "days" | units == "weeks") 
+        attr(ans, "origin")<-"1970-01-01 GMT"
+    
+    # Reset Time Zone:
+    Sys.putenv(TZ = myTZ)
+    
+    # Return Value:
+    ans   
 }
 
 
@@ -117,7 +237,7 @@ function(x, ...)
 
 as.POSIXct.timeDate =
 function(x, tz = "")
-{# A function implemented by Diethelm Wuertz
+{   # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Returns a 'timeDate' object as POSIXct object
@@ -140,13 +260,79 @@ function(x, tz = "")
     if (!inherits(x, "timeDate")) stop("Wrong class type")
     
     # POSIXlt:
-    ans = as.POSIXct.POSIXlt(x@Data)
+    ans = x@Data
     attr(ans, "control") = c(FinCenter = x@FinCenter)
     
     # Reset Time Zone: 
     Sys.putenv(TZ = myTZ)
     
     # Return Value: 
+    ans
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+as.POSIXlt.timeDate =
+function(x, tz = "")
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Returns a 'timeDate' object as 'POSIXlt' object
+    
+    # Arguments:
+    #   x - a 'timeDate' object
+    #   tz - a timezone specification to be used for the conversion.
+    #       (Not needed when used for 'timeDate' conversions.)
+    
+    # Value:
+    #   Returns 'x' as an object of class 'POSIXct'.
+    
+    # FUNCTION:
+    
+    # Set Timezone to GMT:
+    ans = as.POSIXlt(as.POSIXct(x = x, tz = tz))
+    
+    # Return Value: 
+    ans
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+as.Date.timeDate =
+function(x, method = c("trunc", "round", "next"), ...)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Returns a 'timeDate' object as 'Date' object
+    
+    # Arguments:
+    #   x - a 'timeDate' object
+    #   method - a character string denoting the method how to 
+    #       compute the 'Date' object.
+    
+    # Value:
+    #   Returns 'x' as an object of class 'POSIXct'.
+    
+    # FUNCTION:
+    
+    # as Date:
+    method = match.arg(method) 
+    if (method == "trunc") {
+        ans = as.Date(as.POSIXct(trunc(x)), ...)
+    } else if (method == "round") {
+        ans = as.Date(as.POSIXct(round(x)), ...)
+    } else if (method  == "next") {
+        ans = as.Date(as.POSIXct(trunc(x)), ...) + 1
+    }
+
+    # Add Attribute:
+    attr(ans, "control")<-c(method = method, FinCenter = x@FinCenter)
+    
+    # Return Value:
     ans
 }
 
@@ -186,11 +372,11 @@ function(x, FinCenter = myFinCenter, ...)
     if (!exists("myUnits")) units = "secs" else units = myUnits
     
     # POSIX:
-    lt = timeDate(x, zone = x@FinCenter, FinCenter = FinCenter)@Data
+    ct = timeDate(x, zone = x@FinCenter, FinCenter = FinCenter)@Data
 
     # Difftime:  
     origin = as.POSIXlt("1970-01-02", tz = "GMT") - 24 * 3600
-    res = difftime(as.POSIXct(lt), origin, units = units[1])
+    res = difftime(ct, origin, units = units[1])
     ans = structure(res, origin = origin)
         
     # Reset Time Zone: 
@@ -229,7 +415,7 @@ function(x, ...)
     if (!inherits(x, "timeDate")) stop("Wrong class type")
     
     # mdy:
-    X = x@Data
+    X = as.POSIXlt(x@Data)
     Y = X$year + 1900
     m = X$mon + 1
     d = X$mday
@@ -278,7 +464,7 @@ function(x, abbreviate = NULL)
     if (!inherits(x, "timeDate")) stop("Wrong class type")
     
     # Month:
-    ans = x@Data$mon+1
+    ans = as.POSIXlt(x@Data)$mon+1
     attr(ans, "control") = c(FinCenter = x@FinCenter)
     
     # Reset Time Zone: 

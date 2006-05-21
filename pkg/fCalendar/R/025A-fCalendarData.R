@@ -29,6 +29,6 @@
 
 ################################################################################
 # FUNCTION:             DESCRIPTION:
-#  fCalendarData         Are located in the fBasics/data directory
+#  fCalendarData         Are located in the fCalendar/data directory
 ################################################################################
 

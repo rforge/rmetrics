@@ -70,7 +70,7 @@ function(x, lag = 1, diff = 1, trim = FALSE, pad = NA, ...)
     #       By default 1.
     #   diff - an integer indicating the order of the difference.
     #       By default 1.
-    #   trim - a logical. Should NAs at the befinning of the
+    #   trim - a logical. Should NAs at the beginning of the
     #       series be removed?
     #   pad - a umeric value with which NAs should be replaced
     #       at the beginning of the series.
@@ -88,7 +88,7 @@ function(x, lag = 1, diff = 1, trim = FALSE, pad = NA, ...)
         
     # Difference:
     z = diff(y, lag = lag, difference = diff)
-        
+
     # Trim:
     if (!trim) {
         diffNums = dim(y)[1] - dim(z)[1]
@@ -96,12 +96,12 @@ function(x, lag = 1, diff = 1, trim = FALSE, pad = NA, ...)
         rownames(zpad) = rownames(y)[1:diffNums] 
         z = rbind(zpad, z)
     }
-    
+      
     # Record IDs:
     df = x@recordIDs
     if (trim) {
         if (sum(dim(df)) > 0) {
-            TRIM = dim(df)[1] - dim(x)[1]
+            TRIM = dim(df)[1] - dim(z)[1]
             df = df[-(1:TRIM), ]
         }
     }

@@ -43,6 +43,9 @@
 #  is.timeDate            Tests if the object is of class 'timeDate' 
 # METHODS:               REPRESENTATION OF TIMEDATE OBJECTS:
 #  print.timeDate         Prints 'timeDate' Object
+#  plot.timeDate          Plots on 'timeDate' axis
+#  points.timeDate        Adds points on a timedate plot
+#  lines.timeDate         Adds lines on a timedate plot
 #  summary.timeDate       Summarizes details of a 'timeDate' object
 #  format.timeDate        Formats 'timeDate' as ISO conform character string
 ################################################################################
@@ -223,7 +226,7 @@ setClass("timeDate",
     # CLASS:
     
     representation(
-        Data = "POSIXlt",
+        Data = "POSIXct",
         Dim = "numeric",
         format = "character",
         FinCenter = "character"
@@ -273,7 +276,8 @@ FinCenter = myFinCenter)
 
     # Settings and Checks:
     trace = FALSE
-    if (FinCenter == "") FinCenter = "GMT"
+    if (FinCenter == "" || is.null(FinCenter)) FinCenter = "GMT"
+    if (is.null(zone)) zone = "GMT"
          
     # Set Timezone to GMT:
     myTZ = Sys.getenv("TZ")  
@@ -282,61 +286,33 @@ FinCenter = myFinCenter)
     # ISO Date/Time Format:
     iso.format = "%Y-%m-%d %H:%M:%S"
     
-    # Transform to POSIX
+    # Autodetect Format:
     if (inherits(charvec, "character")) {
-        if (is.null(format)) {
-            format = .whichFormat(charvec)
-            if (format == "unknown") stop("Unknown Format Specification")
-        }
-        posix = strptime(charvec, format)
+        if (is.null(format)) format = .whichFormat(charvec)
     }
+    
+    # Crae for Other Formats:
     if (inherits(charvec, "timeDate")) {
         posix = charvec@Data 
+        charvec = format(posix, iso.format) 
+        format = iso.format
     }
     if (inherits(charvec, "Date")) {
-        posix = as.POSIXlt(charvec) 
+        charvec = format(charvec) 
+        zone = FinCenter
     }
     if (inherits(charvec, "POSIXt")) {
-        posix = charvec
+        charvec = format(charvec, iso.format) 
+        format = iso.format
     }
-    charvec = format(posix, "%Y-%m-%d %H:%M:%S") 
     
     # Get Dimension:
     Dim = length(charvec)
-        
-    # ISO Format - Automatic Format Detection:
-    format = .whichFormat(charvec) 
-    
-    if (zone == FinCenter) {
-        if (format == "%Y-%m-%d" | format == "%Y%m%d") {
-            lt = strptime(charvec, format)
-            # Return Value:
-            Sys.putenv(TZ = myTZ)
-            ans = new("timeDate", 
-                Data = lt, 
-                Dim = as.integer(Dim),
-                format = "%Y-%m-%d",
-                FinCenter = FinCenter)
-            ans@format = .whichFormat(format(ans))
-            return(ans)
-        }
-        
-        if (format == "%m/%d/%Y") {
-            lt = strptime(charvec, format)
-            # Return Value:
-            Sys.putenv(TZ = myTZ)
-            ans = new("timeDate", 
-                Data = lt, 
-                Dim = as.integer(Dim),
-                format = "%Y-%m-%d",
-                FinCenter = FinCenter)
-            ans@format = .whichFormat(format(ans))
-            return(ans)
-        }
-    }
  
     # Midnight Standard:
     charvec = .midnightStandard(charvec, format)
+    charvec = format(strptime(charvec, .whichFormat(charvec)), iso.format)
+    format = iso.format
     
     # Financial Centers:
     recFinCenter = zone      # Time zone where the data were recorded
@@ -362,16 +338,14 @@ FinCenter = myFinCenter)
             cat("\n") 
         }
         lt = strptime(charvec, format)
-        # timeTest = sum(lt$hour) + sum(lt$min) + sum(lt$sec) 
-        # if (timeTest == 0) stop("Problem with Format Specification")
+        if (sum(lt$sec+lt$min+lt$hour) == 0) iso.format = "%Y-%m-%d"
         # Return Value:
-        Sys.putenv(TZ = myTZ)
         ans = new("timeDate", 
-            Data = lt, 
+            Data = as.POSIXct(lt), 
             Dim = as.integer(Dim),
             format = iso.format,
             FinCenter = useFinCenter)
-        ans@format = .whichFormat(format(ans))
+        Sys.putenv(TZ = myTZ)
         return(ans)
     }  
         
@@ -385,17 +359,15 @@ FinCenter = myFinCenter)
             print(charvec)
             cat("\n") 
         }
-        lt = strptime(charvec, format)
-        # timeTest = sum(lt$hour) + sum(lt$min) + sum(lt$sec) 
-        # if (timeTest == 0) stop("Problem with Format Specification")
+        lt = strptime(charvec, iso.format)
+        if (sum(lt$sec+lt$min+lt$hour) == 0) iso.format = "%Y-%m-%d"
         # Return Value:
-        Sys.putenv(TZ = myTZ)
         ans = new("timeDate", 
-            Data = lt, 
+            Data = as.POSIXct(lt), 
             Dim = as.integer(Dim),
             format = iso.format,
             FinCenter = useFinCenter)
-        ans@format = .whichFormat(format(ans))
+        Sys.putenv(TZ = myTZ)
         return(ans)
     }    
          
@@ -410,16 +382,14 @@ FinCenter = myFinCenter)
             cat("\n") 
         }
         lt = strptime(charvec, format)
-        # timeTest = sum(lt$hour) + sum(lt$min) + sum(lt$sec) 
-        # if (timeTest == 0) stop("Problem with Format Specification")
+        if (sum(lt$sec+lt$min+lt$hour) == 0) iso.format = "%Y-%m-%d"
         # Return Value:
-        Sys.putenv(TZ = myTZ)
         ans = new("timeDate", 
-            Data = lt, 
+            Data = as.POSIXct(lt), 
             Dim = as.integer(Dim),
             format = iso.format,
             FinCenter = useFinCenter)
-        ans@format = .whichFormat(format(ans))
+        Sys.putenv(TZ = myTZ)
         return(ans)
     }      
           
@@ -433,16 +403,14 @@ FinCenter = myFinCenter)
             cat("\n") 
         }
         lt = strptime(charvec, format)
-        # timeTest = sum(lt$hour) + sum(lt$min) + sum(lt$sec) 
-        # if (timeTest == 0) stop("Problem with Format Specification")
+        if (sum(lt$sec+lt$min+lt$hour) == 0) iso.format = "%Y-%m-%d"
         # Return Value:
-        Sys.putenv(TZ = myTZ)
         ans = new("timeDate", 
-            Data = lt,
+            Data = as.POSIXct(lt),
             Dim = as.integer(Dim),
             format = iso.format ,
             FinCenter = useFinCenter)
-        ans@format = .whichFormat(format(ans))
+        Sys.putenv(TZ = myTZ)
         return(ans)
     }    
             
@@ -458,21 +426,18 @@ FinCenter = myFinCenter)
             cat("\n") 
         }
         lt = strptime(charvec, format)
-        # timeTest = sum(lt$hour) + sum(lt$min) + sum(lt$sec) 
-        # if (timeTest == 0) stop("Problem with Format Specification")
+        if (sum(lt$sec+lt$min+lt$hour) == 0) iso.format = "%Y-%m-%d"
         # Return Value:
-        Sys.putenv(TZ = myTZ)
         ans = new("timeDate", 
-            Data = lt, 
+            Data = as.POSIXct(lt), 
             Dim = as.integer(Dim),
             format = iso.format,
             FinCenter = useFinCenter)
-        ans@format = .whichFormat(format(ans))
+        Sys.putenv(TZ = myTZ)
         return(ans)
     }    
             
     # Return Value:
-    Sys.putenv(TZ = myTZ)
     invisible()         
 }
 
@@ -493,24 +458,28 @@ function(charvec)
     NCHAR = mean(nchar(charvec[1]))
     SUBSTR = (substring(charvec[1], 5, 5) == "-")
     
+    # American Format:
+    if (regexpr("/....", charvec[1])[[1]] > 0) return("%m/%d/%Y")
+    if (regexpr("-...-....", charvec[1])[[1]] > 0) return("%d-%b-%Y")
+    
     # Human readable ISO:
-    if (NCHAR ==  4 & !SUBSTR) format = "%Y" 
-    if (NCHAR ==  7 &  SUBSTR) format = "%Y-%m"
-    if (NCHAR == 10 &  SUBSTR) format = "%Y-%m-%d" 
-    if (NCHAR == 13 &  SUBSTR) format = "%Y-%m-%d %H"
-    if (NCHAR == 16 &  SUBSTR) format = "%Y-%m-%d %H:%M" 
-    if (NCHAR == 19 &  SUBSTR) format = "%Y-%m-%d %H:%M:%S"
+    if (NCHAR ==  4 & !SUBSTR) return("%Y")
+    if (NCHAR ==  7 &  SUBSTR) return("%Y-%m")
+    if (NCHAR == 10 &  SUBSTR) return("%Y-%m-%d")
+    if (NCHAR == 13 &  SUBSTR) return("%Y-%m-%d %H")
+    if (NCHAR == 16 &  SUBSTR) return("%Y-%m-%d %H:%M")
+    if (NCHAR == 19 &  SUBSTR) return("%Y-%m-%d %H:%M:%S")
     
     # Short ISO:
-    if (NCHAR ==  6 & !SUBSTR) format = "%Y%m"
-    if (NCHAR ==  8 & !SUBSTR) format = "%Y%m%d"
-    if (NCHAR == 10 & !SUBSTR) format = "%Y%m%d%H"
-    if (NCHAR == 12 & !SUBSTR) format = "%Y%m%d%H%M"
-    if (NCHAR == 14 & !SUBSTR) format = "%Y%m%d%H%M%S"
+    if (NCHAR ==  6 & !SUBSTR) return("%Y%m")
+    if (NCHAR ==  8 & !SUBSTR) return("%Y%m%d")
+    if (NCHAR == 10 & !SUBSTR) return("%Y%m%d%H")
+    if (NCHAR == 12 & !SUBSTR) return("%Y%m%d%H%M")
+    if (NCHAR == 14 & !SUBSTR) return("%Y%m%d%H%M%S")
     
-    # American Format:
-    if (regexpr("/", charvec[1])[[1]] > 0) format = "%m/%d/%Y" 
-    
+    # STOP:
+    if (format == "unknown") warning("Unknown Format Specification")
+     
     # Return Value:
     format
 }
@@ -719,12 +688,10 @@ s = NULL, zone = myFinCenter, FinCenter = myFinCenter)
         chartime = substr(as.character(xhhmmss), 2, 7)
         charvec = as.vector(chardate)
         format = "%Y%m%d"
-        zone = FinCenter
     } else {
         chartime = substr(as.character(xhhmmss), 2, 7)
         charvec = paste(as.vector(chardate), as.vector(chartime), sep = "")
         format = "%Y%m%d%H%M%S"
-        zone = zone
     }
     
     # Reset TimeZone:  
@@ -820,6 +787,38 @@ length.out = NULL, format = NULL, zone = myFinCenter, FinCenter = myFinCenter)
         
     # Return Value:
     Sys.putenv(TZ = myTZ)
+    ans
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+seq.timeDate = 
+function(from, to, 
+by = c("day", "year", "quarter", "month", "week", "hour", "min", "sec"), 
+length.out = NULL, ...)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   A synonyme function for timeSequence.
+    
+    # Arguments:
+    #   from, to - two 'timeDate' objects
+    
+    # FUNCTION:
+    
+    # Check:
+    stopifnot(class(from) == "timeDate")
+    stopifnot(class(to) == "timeDate")
+    
+    # Sequence:
+    by = match.arg(by)
+    to = timeDate(to, zone = to@FinCenter, FinCenter = from@FinCenter) 
+    ans = timeSequence(from = from, to = to, by = by, length.out = length.out, 
+        format = NULL, zone = from@Fincenter, FinCenter = from@FinCenter)  
+        
+    # Return Value:
     ans
 }
 
@@ -926,7 +925,39 @@ function(x, ...)
     Sys.putenv(TZ = myTZ)
     print(layout, quote = FALSE, ...)
     invisible(x)
-     
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+plot.timeDate = 
+function(x, y, ...) 
+{
+    plot(as.POSIXct(x), y, ...)
+    invisible()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+points.timeDate = 
+function(x, y, ...) 
+{
+    points(as.POSIXct(x), y, ...)
+    invisible()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+lines.timeDate = 
+function(x, y, ...) 
+{
+    lines(as.POSIXct(x), y, ...)
+    invisible()
 }
     
 
@@ -992,7 +1023,7 @@ function(x, ...)
     Sys.putenv(TZ = "GMT")
     
     # Format - format.POSIXlt(x, format = "", usetz = FALSE, ...) 
-    ans = format.POSIXlt(x@Data, ...)
+    ans = format.POSIXct(x@Data, ...)
     # print(x@FinCenter)    
     
     # Return Value:

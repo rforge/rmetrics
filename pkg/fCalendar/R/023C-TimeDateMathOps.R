@@ -90,8 +90,8 @@ function(e1, e2)
     e2GMT = timeDate(e2, zone = e2@FinCenter, FinCenter = "GMT")@Data
     
     # Convert to Julian:
-    if (inherits(e1GMT, "POSIXlt")) e1 <- as.POSIXct(e1GMT)
-    if (inherits(e2GMT, "POSIXlt")) e2 <- as.POSIXct(e2GMT)
+    if (inherits(e1GMT, "POSIXct")) e1 <- as.POSIXct(e1GMT)
+    if (inherits(e2GMT, "POSIXct")) e2 <- as.POSIXct(e2GMT)
     
     # Return Value:
     Sys.putenv(TZ = myTZ)
@@ -356,6 +356,9 @@ function(..., recursive = FALSE)
     # Value:
     #   Returns all arguments to be coerced to a 'timeDate' object  
     #   which is the type of the returned value.
+    
+    # Example:
+    #   timeCalendar()[0]; c(timeCalendar()[0], timeCalendar())
 
     # Details:
     #   This is a generic function which combines its arguments.
@@ -372,9 +375,12 @@ function(..., recursive = FALSE)
     # Convert to GMT character vectors:
     all = NULL
     for (i in 1:length(z)) {
-        new = format(timeDate(z[[i]], zone = z[[i]]@FinCenter, 
-            FinCenter = "GMT")@Data, "%Y-%m-%d %H:%M:%S")
-        all = c(all, new) 
+        # DW added if:
+        if (z[[i]]@Dim > 0) {
+            new = format(timeDate(z[[i]], zone = z[[i]]@FinCenter, 
+                FinCenter = "GMT")@Data, "%Y-%m-%d %H:%M:%S")
+            all = c(all, new)
+        }
     }
     
     # Convert to Financial Center of the first element:
@@ -384,7 +390,7 @@ function(..., recursive = FALSE)
     Sys.putenv(TZ = myTZ)
     ans
 }
-  
+
     
 # ------------------------------------------------------------------------------
 
@@ -496,10 +502,9 @@ function(x)
     GMT = timeDate(x, zone = x@FinCenter, FinCenter = "GMT")
     charvec = rev(as.character(GMT@Data))
     ans = timeDate(charvec, zone = "GMT", FinCenter = x@FinCenter)
-    ans
     
     # Return Value:
-    x
+    ans
 }
 
     

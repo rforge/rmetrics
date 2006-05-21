@@ -40,6 +40,7 @@
 #  cut.timeDate           Extracts a piece from a 'timeDate' object
 #  start.timeDate         Extracts the first entry of a 'timeDate' object
 #  end.timeDate           Extracts the last entry of a 'timeDate' object
+#  length.timeDate        Gets the length of a 'timeDate' object
 #  blockStart             Creates start dates for equally sized blocks
 #  blockEnd               Creates end dates for equally sized blocks
 ################################################################################
@@ -75,7 +76,7 @@ function(x)
     # FUNCTION:
     
     # Test for Weekdays:
-    wday = (x@Data)$wday
+    wday = as.POSIXlt(x@Data)$wday
     ans = (!(wday == 0 | wday == 6)) 
     names(ans) = x@Data
     
@@ -250,8 +251,10 @@ function(x, ..., drop = TRUE)
     Sys.putenv(TZ = "GMT")
     
     # Subsets:
-    val <- lapply(x@Data, "[", ..., drop = drop)
-    attributes(val) <- attributes(x@Data) 
+    z = as.POSIXlt(x@Data)
+    val <- lapply(z, "[", ..., drop = drop)
+    attributes(val) <- attributes(z) 
+    val = as.POSIXct(val)
     
     # Return Value:
     Sys.putenv(TZ = myTZ)
@@ -355,6 +358,32 @@ function(x, ...)
     # Return Value:
     Sys.putenv(TZ = myTZ)
     x[n]
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+length.timeDate = 
+function(x) 
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Gets the length of a 'timeDate' vector
+
+    # Arguments:
+    #   x - a 'timeDate' object
+    
+    # Value:
+    #   Returns the lengths of an object of class 'timeDate'.
+    
+    # FUNCTION:
+    
+    # Length:
+    ans = length(x@Data)
+    
+    # Return Value:
+    ans
 }
 
 

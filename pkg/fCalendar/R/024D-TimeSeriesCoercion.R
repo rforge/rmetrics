@@ -128,6 +128,7 @@ function(x, ...)
     # FUNCTION:
     
     # Check if the first column has a valid ISO-format:
+    dummyDates = FALSE
     firstColumn = TRUE
     charvec = as.character(as.vector(x[, 1]))
     format = .whichFormat(charvec)
@@ -135,10 +136,12 @@ function(x, ...)
         charvec = rownames(x)
         format = .whichFormat(charvec)
         if (format == "unknown") {
-            warning("Could not identify timeDate Format")
+            # warning("Could not identify timeDate Format")
+            dummyDates = TRUE
             N = length(as.vector(x[, 1]))
-            charvec = as.character(timeSequence(from = "1970-01-01", length.out = 
-                N, format = "%Y-%m-%d", zone = "GMT", FinCenter = "GMT"))
+            charvec = as.character(timeSequence(from = "1970-01-01", 
+                length.out = N, format = "%Y-%m-%d", zone = "GMT", 
+                FinCenter = "GMT"))
             format = .whichFormat(charvec)
         }
         firstColumn = FALSE
@@ -146,7 +149,7 @@ function(x, ...)
     
     # Transform to Matrix:
     if (firstColumn) {
-        X = x[, -1]
+        X = as.matrix(x[, -1])
     } else {
         X = x
     }
@@ -173,7 +176,8 @@ function(x, ...)
     # Create Time Series Object:                          
     ans = timeSeries(data = data, charvec = charvec, 
         units = colnames(data), format = format, zone = "GMT", 
-        FinCenter = "GMT", recordIDs = recordIDs)  
+        FinCenter = "GMT", recordIDs = recordIDs) 
+    if (dummyDates) attr(ans, "control")<-"Dummy Dates Used" 
         
     # Return Value:    
     ans
