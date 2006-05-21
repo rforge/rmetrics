@@ -26,6 +26,9 @@
 \alias{colnames<-}
 \alias{colnames<-.default}
 
+\alias{as.POSIXlt}
+\alias{as.POSIXlt.default}
+
 \alias{as.matrix.ts}
 \alias{as.matrix.mts}
             
@@ -60,6 +63,8 @@ var.default(x, y = NULL, na.rm = FALSE, use)
     
 rownames(x) <- value
 colnames(x) <- value
+
+as.POSIXlt(x, tz = "")
 
 as.matrix.ts(x)
 as.matrix.mts(x)
@@ -97,6 +102,10 @@ as.matrix.mts(x)
         prob -  a vector of probability weights for obtaining the 
             elements of the vector being sampled.
         }
+    \item{tz}{
+        [as.POSIXlt] - \cr
+        time zone specification.
+        }
     \item{value}{
         [colnames][rownames] - \cr
         additional arguments to the \code{colnames} and \code{rownames}
@@ -110,7 +119,9 @@ as.matrix.mts(x)
         an univariate or multivariate time series object
         of class \code{"ts"} or \code{"mts"} which will be
         transformed into an one-column or multi-column rectangular 
-        object of class \code{"matrix"}.
+        object of class \code{"matrix"}.\cr
+        [as.POSIXlt] - \cr
+        an object to be converted.
         }
     \item{y, na.rm, use}{
         [var] - \cr
