@@ -134,10 +134,11 @@ gridVector(x, y)
         a confidence level. By default 0.95, i.e. 95\%.
         }
     \item{doplot}{
-        a logical. Should the results be plotted? By default \code{TRUE}.
+        a logical value. Should the results be plotted? By 
+        default \code{TRUE}.
         }
     \item{labels}{
-        a logical. Whether or not x- and y-axes should be automatically 
+        a logical value. Whether or not x- and y-axes should be automatically 
         labelled and a default main title should be added to the plot.
         By default \code{TRUE}.
         }
