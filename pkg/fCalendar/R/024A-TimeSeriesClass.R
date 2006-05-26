@@ -32,7 +32,7 @@
 #  'timeSeries'         S4 Class definition for a 'timeSeries' object
 #  timeSeries           Creates a 'timeSeries' object from scratch
 #  readSeries           Reads from a spreadsheet and creates a 'timeSeries'
-#  returnSeries         Computes returns from a 'timeSeries' object  
+#  returnSeries         Computes returns from a 'timetimehhhhh' object  
 #  applySeries          Applies a function to blocks of a 'timeSeries'
 #  orderStatistics      Compute order statistic of a 'timeSeries'
 # FUNCTION:            DATA SLOT AND CLASSIFICATION OF TIME SERIES OBJECTS:
@@ -132,26 +132,26 @@ documentation = NULL, ...)
     if (missing(charvec)) {
         N = dim(as.matrix(data))[1]
         charvec = timeSequence(from = "1970-01-01", length.out = N, 
-            FinCenter = "GMT")
+            zone = "GMT", FinCenter = "GMT")
     }
     
     # charvector | Time Positions:
-    if (is.timeDate(charvec)) {
+    if (is.timeDate(charvec)) { 
         timeDates = charvec 
-    } else {         
-        timeDates = timeDate(charvec = as.character(charvec), 
-            format = format, zone = zone, FinCenter = FinCenter) 
-    }
+    } else {       
+        timeDates = timeDate(charvec = charvec, 
+            format = NULL, zone = zone, FinCenter = FinCenter) 
+    }       
         
     # Data | Dimension Names:
     if (is.timeSeries(data)) {
         recordIDs = data@recordIDs
         data = data@Data
-        rownames(data) = format.POSIXct(timeDates@Data)
+        rownames(data) = as.character(timeDates)
         units = colnames(data)  
     } else { 
         data = as.matrix(data)
-        rownames(data) = format.POSIXct(timeDates@Data)
+        rownames(data) = as.character(timeDates)
         if (is.null(units)) {
             if (is.null(colnames(data))) {
                 units = paste("TS.", 1:dim(data)[2], sep = "")

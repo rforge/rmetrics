@@ -222,8 +222,16 @@ function(x, ...)
     # Example:
     #   as.timeSeries(data(nyse))
     
+    # FUNCTION:
+    
+    # Load Demo File - Returns a data frame:
     x = eval(parse(text = eval(x)))
-    as.timeSeries(x)
+    
+    # timeSeries:
+    ans = as.timeSeries(x)
+    
+    # Return Value:
+    ans
 }
 
 
@@ -235,9 +243,15 @@ as.timeSeries.zoo =
 function(x, ...)
 {   # A function implemented by Diethelm Wuertz
 
-    timeSeries(data = as.matrix(x), charvec = attr(x, "index"), 
+    # FUNCTION:
+    
+    # as. timeSeries:
+    ans = timeSeries(data = as.matrix(x), charvec = attr(x, "index"), 
         units = colnames(x), , format = format, , zone = "GMT",
         FinCenter = "GMT")
+        
+    # Return Value:
+    ans
 
 }
 
