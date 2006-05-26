@@ -676,8 +676,8 @@ function(x, labels = TRUE, ...)
 
     # Labels:
     if (labels) {
-        xlab = "1-F(x) [log scale]"
-        ylab = "x [log scale]"
+        xlab = "x [log scale]"
+        ylab = "1-F(x) [log scale]"
         main = "Tail of Underlying Distribution"
     } else {
         xlab = ylab = main = ""

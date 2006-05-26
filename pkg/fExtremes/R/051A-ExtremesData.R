@@ -29,12 +29,12 @@
 
 ################################################################################
 # FUNCTION          EXPLORATIVE DATA ANALYSIS:
-#  emdPlot           Plots empirical distribution function
-#  qqPlot            Creates a quantile-quantile plot
-#  qqbayesPlot       Creates qq-Plot with 95 percent intervals
+#  emdPlot           Creates ans empirical distribution plot
+#  qqPlot            Creates a normal quantile-quantile plot
+#  qqbayesPlot       Creates a norma qq-Plot with confidence intervals
 #  qPlot             Creates exploratory QQ plot for EV analysis
 #  mePlot            Creates a sample mean excess plot
-#   mxfPlot           Plots the mean excess function
+#   mxfPlot           Creates another view of a sample mean excess plot
 #   mrlPlot           Returns a mean residual life plot with confidence levels
 #  recordsPlot       Plots records development
 #   ssrecordsPlot     Plots records development of data subsamples
