@@ -108,8 +108,8 @@ function(x, lag = 1, diff = 1, trim = FALSE, pad = NA, ...)
             
     # Return Value:
     timeSeries(data = z, charvec = rownames(z), units = colnames(z),
-        format = x@format, FinCenter = x@FinCenter, recordIDs = df,
-        title = x@title, documentation = x@documentation)
+        format = x@format, zone = x@FinCenter, FinCenter = x@FinCenter, 
+        recordIDs = df, title = x@title, documentation = x@documentation)
 }
 
 
@@ -205,6 +205,7 @@ function(x, k = 1, trim = FALSE, units = NULL, ...)
 
 # ------------------------------------------------------------------------------
 
+
 merge.timeSeries =
 function(x, y, units = NULL, ...)
 {   # A function implemented by Diethelm Wuertz
@@ -220,9 +221,6 @@ function(x, y, units = NULL, ...)
     #   Returns a S4 object of class 'timeSeries'.
     
     # FUNCTION:
-    
-    # Execute old version if y is a matrix:
-    if (is.matrix(y)) return(.mergeSeries(x, y, units))
     
     # Manipulate in matrix form:
     positions = as.character(c(x@positions, y@positions))
@@ -245,8 +243,8 @@ function(x, y, units = NULL, ...)
     Z = Z[!Z[, NC], -NC]
     
     # Create time series:
-    ans = timeSeries(data = Z, charvec = rownames(Z), FinCenter =
-        "GMT", units = c(x@units, y@units))
+    ans = timeSeries(data = Z, charvec = rownames(Z), zone =
+        x@FinCenter, FinCenter = x@FinCenter, units = c(x@units, y@units))
     
     # Optionally add user specified units:
     if (!is.null(units)) {
