@@ -51,6 +51,7 @@
 # S3 METHOD:              ADDON:
 #  fitted.fARMA            S3: Returns fitted values from a fitted ARMA object
 #  coef.fARMA              S3: Returns coefficidents from a fitted ARMA object
+#  coefficients.fARMA      S3: Synonyme for coef.fARMA
 #  residuals.fARMA         S3: Returns residuals from a fitted ARMA object
 # FUNCTION:               DESCRIPTION:
 #  armaTrueacf             Returns True ARMA autocorrelation function
