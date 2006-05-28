@@ -388,7 +388,11 @@ function(X, p, N, digits = 4)
     # Positions:
     z = as.matrix(X)
     x = Ps = as.numeric(rownames(X))
+    if (p > max(Ps)) return(NA)
+    if (p < min(Ps)) return(NA) 
     y = Ns = as.numeric(colnames(X))
+    if (N > max(Ns)) return(NA)
+    if (N < min(Ns)) return(NA)
     w = which(Ps == p)
     if ( length(w) == 0 ) {
         xo = p
