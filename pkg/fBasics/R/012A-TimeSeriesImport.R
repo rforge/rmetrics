@@ -725,7 +725,7 @@ getReturns = FALSE, ...)
     if (getReturns) X = returnSeries(X, ...)  
     
     # As zoo | ts  Object ?
-    if (returnClass == "atrix") {
+    if (returnClass == "matrix") {
         X = X@data
     } else if (returnClass == "data.frame") {
         X = data.frame(X@Data)
