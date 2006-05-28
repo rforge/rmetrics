@@ -192,7 +192,9 @@ Mills, T.C. (1999);
 
 ## RS.txt - 
    data(RS)
-   plot(as.ts(RS))
+   class(RS)
+   plot(ts(RS))
+   plot.ts(RS)
 }
 
 

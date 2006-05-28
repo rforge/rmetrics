@@ -253,24 +253,22 @@ Fernandez C., Steel M.F.J. (2000);
 ## SOURCE("fSeries.034A-GarchDistributions")
 
 ## snorm -
-   xmpSeries("\nStart: Skew Normal Distribuion:  > ")
    par(mfrow = c(2, 2), cex = 0.75)
    set.seed(1953)
    r = rsnorm(n = 1000, mean = 1, sd = 0.5, xi = 1.5)
    plot(r, type = "l", main = "snorm: xi = 1.5")
    # Plot empirical density and compare with true density:
-   hist(r, n = 25, probability = TRUE, border = "white", col = "steelblue4")
+   hist(r, n = 25, probability = TRUE, border = "white", col = "steelblue")
    x = seq(-4, 6, 0.1)
    lines(x, dsnorm(x = x, mean = 1, sd = 0.5, xi = 1.5))
    # Plot df and compare with true df:
-   plot(sort(r), (1:1000/1000), main = "Probability", col = "steelblue4")
+   plot(sort(r), (1:1000/1000), main = "Probability", col = "steelblue")
    lines(x, psnorm(x, mean = 1, sd = 0.5, xi = 1.5))
    # Compute quantiles:
    qsnorm(psnorm(q = -4:6, mean = 1, sd = 0.5, xi = 1.5), 
      mean = 1, sd = 0.5, xi = 1.5) 
      
 ## sstd -
-   xmpSeries("\nStart: Skew Student-t Distribution:  > ")
    par(mfrow = c(2, 2), cex = 0.75)
    set.seed(1953)
    r = rsstd(n = 1000, nu = 4, xi = 1.5)
@@ -279,44 +277,40 @@ Fernandez C., Steel M.F.J. (2000);
    plot(r, type = "l", main = "sstd: xi = 1.5")
    # Plot empirical density and compare with true density:
    hist(r, n = 30, xlim = c(-5, 5), probability = TRUE, 
-     border = "white", col = "steelblue4")
+     border = "white", col = "steelblue")
    x = seq(-5, 5, 0.1)
    lines(x, dsnorm(x = x, xi = 1.5))
    # Plot df and compare with true df:
-   plot(sort(r), (1:1000/1000), main = "Probability", col = "steelblue4")
+   plot(sort(r), (1:1000/1000), main = "Probability", col = "steelblue")
    lines(x, psstd(x, xi = 1.5))
    # Compute quantiles:
    qsstd(psstd(q = -5:5, xi = 1.5), xi = 1.5) 
    
 ## sged -
-   xmpSeries("\nStart: Skew Generalized Error Distribuion:  > ")
    par(mfrow = c(2, 2), cex = 0.75)
    set.seed(1953)
    r = rsged(n = 1000, mean = 1, sd = 0.5, xi = 1.5)
    plot(r, type = "l", main = "sged: xi = 1.5")
    # Plot empirical density and compare with true density:
-   hist(r, n = 25, probability = TRUE, border = "white", col = "steelblue4")
+   hist(r, n = 25, probability = TRUE, border = "white", col = "steelblue")
    x = seq(-1, 5, 0.1)
    lines(x, dsged(x = x, mean = 1, sd = 0.5, xi = 1.5))
    # Plot df and compare with true df:
-   plot(sort(r), (1:1000/1000), main = "Probability", col = "steelblue4")
+   plot(sort(r), (1:1000/1000), main = "Probability", col = "steelblue")
    lines(x, psged(x, mean = 1, sd = 0.5, xi = 1.5))
    # Compute quantiles:
    qsged(psged(q = -1:5, mean = 1, sd = 0.5, xi = 1.5), 
      mean = 1, sd = 0.5, xi = 1.5) 
 
 ## snormFit -
-   xmpSeries("\nStart: MLE Fit to skew Normal Density > ")
    options(warn = -1) # suppress negative logs from nlm
    normFit(rnorm(1000))
    snormFit(rnorm(1000))
    
 ## sstdFit -
-   xmpSeries("\nNext: MLE Fit to skew Student-t Density > ")
    sstdFit(rsstd(1000, mean = 1, sd = 1.5, nu = 7, xi = 2/3))
    
 ## sgedFit -
-   xmpSeries("\nNext: MLE Fit to skew Generalized Error Density > ")
    sgedFit(rsged(1000, mean = -1, sd = 0.5, nu = 3, xi = 3/2),
      print.level = 2)
 }

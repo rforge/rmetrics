@@ -379,31 +379,23 @@ Schwert G.W. (1989);
 \examples{
 ## SOURCE("fSeries.032B-UnitrootTests")
 
-\dontrun{
 ## adfTest - 
-   xmpSeries("\nStart: Augmented Dickey-Fuller Test for Unit Roots >")
    # A time series which contains no unit-root:
    x = rnorm(1000)  
-   adfTest(x)
    # A time series which contains a unit-root:
    y = cumsum(c(0, x))
+   # Test:
+   adfTest(x)
    adfTest(y)
    
 ## unitrootTest - 
-   xmpSeries("\nNext: ADF Test using McKinnon's Tables >")
-   # A time series which contains no unit-root:
-   x = rnorm(1000)  
    unitrootTest(x)
-   # A time series which contains a unit-root:
-   y = cumsum(c(0, x))
    unitrootTest(y)    
  
 ## Unit Root Tests build on Bernhard Pfaff's Implementation:
     
 ## ur*Test - 
    # Examples can be found in the demo file "xmpTestUnitRoots".  
-}
-
 }
 
 \keyword{htest}
