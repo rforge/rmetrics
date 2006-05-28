@@ -108,16 +108,16 @@ doplot = FALSE)
         # Time Series Plot:
         # plot(x = x, type = "l", xlab = "n", ylab = "x[n]", 
         #   main = paste("Tent Map \n a =", as.character(a)),
-        #   col = "steelblue4")
+        #   col = "steelblue")
         # abline(h = 0.5, col = "grey", lty = 3)
         # Delay Plot:
         plot(x[-n], x[-1], xlab = "x[n]", ylab = "x[n+1]",
             main = paste("Tent Map\n a =", as.character(a)), 
-            cex = 0.25, col = "steelblue4")
+            cex = 0.25, col = "steelblue")
     }
     
     # Return Value:
-    data.frame(x)   
+    ts(x)   
 }
 
 
@@ -168,11 +168,11 @@ start = runif(2), doplot = FALSE)
         plot(x = x, y = y, type = "n", xlab = "x[n]", ylab = "y[n]", 
             main = paste("Henon Map \n a =", as.character(a),
                 " b =", as.character(b)) )
-        points(x = x, y = y, col = "steelblue4", cex = 0.25) 
+        points(x = x, y = y, col = "steelblue", cex = 0.25) 
     }
     
     # Return Value:
-    data.frame(x, y)    
+    ts(cbind(x, y))    
 }
 
 
@@ -222,16 +222,16 @@ start = runif(2), doplot = FALSE)
         plot(x, y, type = "n", xlab = "x[n]", ylab = "y[n]", 
             main = paste("Ikeda Map \n", "a =", as.character(A),
             " b =", as.character(B), " c =", as.character(C)) )
-        points(x, y, col = "steelblue4", cex = 0.25)
+        points(x, y, col = "steelblue", cex = 0.25)
         x = Re(z)[1:(length(z)-1)]
         y = Re(z)[2:length(z)]
         plot(x, y, type = "n", xlab = "x[n]", ylab = "x[n+1]", 
             main = paste("Ikeda Map \n", "a =", as.character(A),
             " b =", as.character(B), " c =", as.character(C)) )
-        points(x, y, col = "steelblue4", cex = 0.25) }
+        points(x, y, col = "steelblue", cex = 0.25) }
     
     # Return Value:
-    data.frame(Re(z), Im(z))   
+    ts(cbind(Re = Re(z), Im = Im(z)))  
 }
  
 
@@ -271,10 +271,10 @@ doplot = FALSE)
         plot(x = x[1:(n-1)], y = x[2:n], type = "n", xlab = "x[n-1]", 
             ylab = "x[n]", main = paste("Logistic Map \n r =",
             as.character(r)) )
-        points(x = x[1:(n-1)], y = x[2:n], col = "steelblue4", cex = 0.25) }
+        points(x = x[1:(n-1)], y = x[2:n], col = "steelblue", cex = 0.25) }
     
     # Return Value:
-    data.frame(x)   
+    ts(x)   
 }
     
                        
@@ -323,12 +323,12 @@ start = c(-14, -13, 47), doplot = TRUE, ...)
         xylab = c("x", "y", "z", "x")
         for (i in 2:4) 
             plot(s[, 1], s[, i], type = "l", 
-                xlab = "t", ylab = xylab[i-1], col = "steelblue4", 
+                xlab = "t", ylab = xylab[i-1], col = "steelblue", 
                 main = paste("Lorentz \n", "sigma =", as.character(sigma), 
                 " r =", as.character(r), " b =", as.character(b)), ...)
         k = c(3, 4, 2)
         for (i in 2:4) plot(s[, i], s[, k[i-1]], type = "l", 
-            xlab = xylab[i-1], ylab = xylab[i], col = "steelblue4",
+            xlab = xylab[i-1], ylab = xylab[i], col = "steelblue",
             main = paste("Lorentz \n", "sigma =", as.character(sigma), 
             " r =", as.character(r), " b =", as.character(b)), ...)
     }
@@ -337,7 +337,7 @@ start = c(-14, -13, 47), doplot = TRUE, ...)
     colnames(s) = c("t", "x", "y", "z")
         
     # Return Value:
-    data.frame(s)
+    ts(s)
 }
 
 
@@ -345,7 +345,7 @@ start = c(-14, -13, 47), doplot = TRUE, ...)
 
 
 roesslerSim = 
-function(times = seq(0, 100, by = 0.01), parms = c(a = 0.2, b = 0.2, c = 8.0),
+function(times = seq(0, 100, by = 0.1), parms = c(a = 0.2, b = 0.2, c = 8.0),
 start = c(-1.894, -9.920, 0.0250), doplot = TRUE, ...)
 {   # A function written by Diethelm Wuertz
     
@@ -378,12 +378,12 @@ start = c(-1.894, -9.920, 0.0250), doplot = TRUE, ...)
     if (doplot) {
         xylab = c("x", "y", "z", "x")
         for (i in 2:4) plot(s[, 1], s[, i], type = "l", 
-            xlab = "t", ylab = xylab[i-1], col = "steelblue4",
+            xlab = "t", ylab = xylab[i-1], col = "steelblue",
             main = paste("Roessler \n", "a = ", as.character(a),
                 " b = ", as.character(b), " c = ", as.character(c)), ...)
         k = c(3, 4, 2)
         for (i in 2:4) plot(s[, i], s[, k[i-1]], type = "l", 
-            xlab = xylab[i-1], ylab = xylab[i], col = "steelblue4",
+            xlab = xylab[i-1], ylab = xylab[i], col = "steelblue",
             main = paste("Roessler \n", "a = ", as.character(a),
                 " b = ", as.character(b), " c = ", as.character(c)), ...)
     }
@@ -392,7 +392,7 @@ start = c(-1.894, -9.920, 0.0250), doplot = TRUE, ...)
     colnames(s) = c("t", "x", "y", "z")
         
     # Return Value:
-    data.frame(s)
+    ts(s)
 }
 
 
@@ -458,16 +458,23 @@ function(y, times, func, parms)
     }
 
     nm = c("time", 
-        if (!is.null(attr(y, "names"))) names(y) 
-        else as.character(1:n))
+        if (!is.null(attr(y, "names"))) {
+            names(y) 
+        } else {
+            as.character(1:n))
+        }
     if (Nglobal > 0) {
         out2 = matrix(nrow=nrow(out), ncol = Nglobal)
-        for (i in 1:nrow(out2))
+        for (i in 1:nrow(out2)) {
             out2[i,] = func(out[i,1], out[i,-1], parms)[[2]]
+        }
         out = cbind(out, out2)
         nm = c(nm,
-            if (!is.null(attr(tmp[[2]],"names"))) names(tmp[[2]])
-            else as.character((n+1) : (n + Nglobal)))
+            if (!is.null(attr(tmp[[2]],"names"))) {
+                names(tmp[[2]])
+            } else {
+                as.character((n+1) : (n + Nglobal)))
+            }
     }
     dimnames(out) = list(NULL, nm)
     
@@ -618,7 +625,7 @@ function(x, partitions = 16, lag.max = 20, doplot = TRUE, ...)
     # Plot:
     if (doplot) {
         plot(0:lag.max, corr, xlab = "Lag", type = "b", pch = 19, cex = 0.25,
-            col = "steelblue4", main = "Mutual Information", ...) 
+            col = "steelblue", main = "Mutual Information", ...) 
     }
 
     # Return Value:
@@ -703,7 +710,7 @@ function(x, m, d, t, rt = 10, eps = NULL, doplot = TRUE, ...)
     
     # Plot:
     if (doplot) {
-        plot(res[1, ], type = "b", col = "steelblue4", pch = 19,
+        plot(res[1, ], type = "b", col = "steelblue", pch = 19,
             cex = 0.25, xlab = "Dimension", ylab = "Fraction of ffn",
             main = "False Nearest Neigbours", ...)
     }
@@ -856,7 +863,7 @@ function(x, m, d, mdt, idt = 1, doplot = TRUE, ...)
             main = "Space-time Separation Plot")
         x = seq(1/frequency(series), mdt*idt/frequency(series), 
             by = idt/frequency(series))
-        for(i in 1:10) lines(x, stp[i, ], col = "steelblue4")
+        for(i in 1:10) lines(x, stp[i, ], col = "steelblue")
     }
     
     # Return Value:
@@ -939,7 +946,7 @@ function(x, m, d, t, ref, s, eps, k = 1, doplot = TRUE, ...)
     
     # Plot:
     if (doplot) {
-        plot(ans, col = "steelblue4", main = "Max Lyapunov Exponents", ...)
+        plot(ans, col = "steelblue", main = "Max Lyapunov Exponents", ...)
     }
     
     

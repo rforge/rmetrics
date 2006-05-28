@@ -28,14 +28,15 @@
 
 
 ################################################################################
-# FUNCTION:                PART I:
+# FUNCTION:                TEST SUITE:
 #  urTest                   Unit Root Test Suite
+# FUNCTION:                ADF TESTS:
 #  adfTest                  Augmented Dickey - Fuller Unit Root Test
 #  unitrootTest             ADF Unit Root Test using McKinnons Test Statistics
-# FUNCTION:                PART II: TSERIES UNIT ROOT / COINTEGRATION TESTS
+# FUNCTION:                TSERIES [TRAPLETTI] UNIT ROOT TESTS:
 #  .tsppTest                Phillips - Perron Unit Root Test
 #  .tskpssTest              KPSS - Unit Root Test for Stationarity
-# FUNCTION:                PART III: URCA UNIT ROOT 
+# FUNCTION:                URCA [PFAGFF] UNIT ROOT TESTS:
 #  urdfTest                 Augmented Dickey-Fuller test for unit roots
 #  urersTest                Elliott-Rothenberg-Stock test for unit roots
 #  urkpssTest               KPSS unit root test for stationarity
@@ -43,15 +44,12 @@
 #  urspTest                 Schmidt-Phillips test for unit roots
 #  urzaTest                 Zivot-Andrews test for unit roots
 # REQUIREMENTS:            DESCRIPTION:
-#  embed                    Required from fBasics.A0-SPlusCompatibility
+#  embed                    Part of R-base 'stats'
 ################################################################################
 
 
 ################################################################################
-
-
-################################################################################
-# PART I:
+# TEST SUITE:
 
 
 urTest = 
@@ -77,7 +75,8 @@ function(x, method = c("unitroot", "adf", "urers", "urkpss", "urpp",
 }
         
 
-# ------------------------------------------------------------------------------
+################################################################################
+# ADF TESTS:
 
 
 adfTest = 
@@ -375,7 +374,7 @@ description = NULL)
     
 
 ################################################################################
-# PART II:
+# TSERIES [TRAPLETTI] UNIT ROOT TESTS:
 
 
 # PACKAGE DESCRIPTION:
@@ -622,7 +621,7 @@ description = NULL)
 
 
 ################################################################################
-# PART III:
+# URCA [PFAGFF] UNIT ROOT TESTS:
 
 
 # PACKAGE DESCRIPTION:
