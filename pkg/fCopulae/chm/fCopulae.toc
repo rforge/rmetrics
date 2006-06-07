@@ -1,0 +1,223 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<HEAD></HEAD><HTML><BODY>
+<UL>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Package fCopulae:  Contents">
+<param name="Local" value="00Index.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Package fCopulae:  R objects">
+</OBJECT>
+<UL>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="AFirstDer">
+<param name="Local" value="064A-ExtremeValueCopulae.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Afunc">
+<param name="Local" value="064A-ExtremeValueCopulae.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="ArchimedeanCopulae">
+<param name="Local" value="063A-ArchimedeanCopulae.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="archmRho">
+<param name="Local" value="063A-ArchimedeanCopulae.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="archmTau">
+<param name="Local" value="063A-ArchimedeanCopulae.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="ASecondDer">
+<param name="Local" value="064A-ExtremeValueCopulae.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="ASlider">
+<param name="Local" value="064A-ExtremeValueCopulae.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="CopulaeClass">
+<param name="Local" value="061A-CopulaeClass.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="CopulaeTools">
+<param name="Local" value="069A-CopulaeTools.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="dellipticalCopula">
+<param name="Local" value="062A-EllipticalCopulae.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="dellipticalSlider">
+<param name="Local" value="062A-EllipticalCopulae.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="dempiricalCopula">
+<param name="Local" value="064A-ExtremeValueCopulae.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="devCopula">
+<param name="Local" value="064A-ExtremeValueCopulae.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="devSlider">
+<param name="Local" value="064A-ExtremeValueCopulae.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="EllipticalCopulae">
+<param name="Local" value="062A-EllipticalCopulae.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="ellipticalCopulaFit">
+<param name="Local" value="062A-EllipticalCopulae.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="ellipticalCopulaSim">
+<param name="Local" value="062A-EllipticalCopulae.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="ellipticalRho">
+<param name="Local" value="062A-EllipticalCopulae.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="ellipticalTailCoeff">
+<param name="Local" value="062A-EllipticalCopulae.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="ellipticalTailPlot">
+<param name="Local" value="062A-EllipticalCopulae.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="ellipticalTau">
+<param name="Local" value="062A-EllipticalCopulae.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="ExtremeValueCopulae">
+<param name="Local" value="064A-ExtremeValueCopulae.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="fCOPULA">
+<param name="Local" value="061A-CopulaeClass.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="fCOPULA-class">
+<param name="Local" value="061A-CopulaeClass.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="gfunc">
+<param name="Local" value="062A-EllipticalCopulae.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="gfuncSlider">
+<param name="Local" value="062A-EllipticalCopulae.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Kfunc">
+<param name="Local" value="063A-ArchimedeanCopulae.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="KfuncSlider">
+<param name="Local" value="063A-ArchimedeanCopulae.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="parchmCopula">
+<param name="Local" value="063A-ArchimedeanCopulae.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="parchmSlider">
+<param name="Local" value="063A-ArchimedeanCopulae.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="pellipticalCopula">
+<param name="Local" value="062A-EllipticalCopulae.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="pellipticalSlider">
+<param name="Local" value="062A-EllipticalCopulae.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="pempiricalCopula">
+<param name="Local" value="064A-ExtremeValueCopulae.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="pevCopula">
+<param name="Local" value="064A-ExtremeValueCopulae.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="pevSlider">
+<param name="Local" value="064A-ExtremeValueCopulae.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="pfrechetCopula">
+<param name="Local" value="061A-CopulaeClass.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Phi">
+<param name="Local" value="063A-ArchimedeanCopulae.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="PhiSlider">
+<param name="Local" value="063A-ArchimedeanCopulae.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="qlogisticTable">
+<param name="Local" value="064A-ExtremeValueCopulae.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="rarchmCopula">
+<param name="Local" value="063A-ArchimedeanCopulae.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="rellipticalCopula">
+<param name="Local" value="062A-EllipticalCopulae.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="rellipticalSlider">
+<param name="Local" value="062A-EllipticalCopulae.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="show,fCOPULA-method">
+<param name="Local" value="061A-CopulaeClass.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="show.fCOPULA">
+<param name="Local" value="061A-CopulaeClass.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="xmpCopulae">
+<param name="Local" value="069A-CopulaeTools.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="xmpfCopulae">
+<param name="Local" value="069A-CopulaeTools.html">
+</OBJECT>
+</UL>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Package fCopulae:  Titles">
+</OBJECT>
+<UL>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Bivariate Archimedean Copulae">
+<param name="Local" value="063A-ArchimedeanCopulae.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Bivariate Copulae Class">
+<param name="Local" value="061A-CopulaeClass.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Bivariate Elliptical Copulae">
+<param name="Local" value="062A-EllipticalCopulae.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Bivariate Extreme Value Copulae">
+<param name="Local" value="064A-ExtremeValueCopulae.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="fCopulae Tools">
+<param name="Local" value="069A-CopulaeTools.html">
+</OBJECT>
+</UL>
+</UL>
+</BODY></HTML>

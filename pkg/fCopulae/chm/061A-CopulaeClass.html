@@ -1,0 +1,175 @@
+<html><head><title>Bivariate Copulae Class</title>
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>CopulaeClass(fCopulae)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   CopulaeClass">
+<param name="keyword" value="R:   fCOPULA">
+<param name="keyword" value="R:   fCOPULA-class">
+<param name="keyword" value="R:   show.fCOPULA">
+<param name="keyword" value="R:   show,fCOPULA-method">
+<param name="keyword" value="R:   pfrechetCopula">
+<param name="keyword" value=" Bivariate Copulae Class">
+</object>
+
+
+<h2>Bivariate Copulae Class</h2>
+
+
+<h3>Description</h3>
+
+<p>
+A collection and description of functions to investigate 
+bivariate copulae. 
+<br>
+</p>
+<p>
+The class representation and methods are:
+</p>
+
+<table summary="Rd table">
+<tr>
+  <td align="left"><code>fCOPULA</code> </td>  <td align="left"> representation for an S4 object of class "fCOPULA", </td>
+</tr>
+<tr>
+  <td align="left"> <code>show</code> </td>  <td align="left"> S4 print method. </td>
+</tr>
+</table>
+
+<p>
+Frechet Copulae:
+</p>
+
+<table summary="Rd table">
+<tr>
+  <td align="left"><code>pfrechetCopula</code> </td>  <td align="left"> computes Frechet copula probability. </td>
+</tr>
+</table>
+
+
+<h3>Usage</h3>
+
+<pre>
+show.fCOPULA(object)
+
+pfrechetCopula(u = 0.5, v = u, type = c("m", "pi", "w"), 
+    output = c("vector", "list"))
+    
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>object</code></td>
+<td>
+[show] - <br>
+an S4 object of class <code>"fCOPULA"</code>.
+</td></tr>
+<tr valign="top"><td><code>output</code></td>
+<td>
+[*frechetCopula] - <br>
+output - a character string specifying how the output should
+be formatted. By default a vector of the same length as <code>u</code> 
+and <code>v</code>. If specified as <code>"list"</code> then <code>u</code> and 
+<code>v</code> are expected to span a two-dimensional grid as outputted 
+by the function <code>grid2d</code> and the function returns a list with
+elements <code>$x</code>, <code>y</code>, and <code>z</code> which can be directly 
+used for example by 2D plotting functions.
+</td></tr>
+<tr valign="top"><td><code>type</code></td>
+<td>
+[*frechetCopula] - <br>
+the type of the Frechet copula. A character
+string selected from: <code>"m"</code>, <code>"pi"</code>, or <code>"w"</code>.
+</td></tr>
+<tr valign="top"><td><code>u, v</code></td>
+<td>
+two numeric values or vectors of the same length at which
+the copula will be computed. If <code>u</code> is a list then the
+the <code>$x</code> and <code>$y</code> elements will be used as <code>u</code> 
+and <code>v</code>. If <code>u</code> is a two column matrix then the 
+first column will be used as <code>u</code> and the the second 
+as <code>v</code>.
+</td></tr>
+</table>
+
+<h3>Value</h3>
+
+<p>
+Th function <code>*Copula</code> returns an S4 object of 
+class <code>"fCOPULA"</code>. The object contains the following slots:
+</p>
+<table summary="R argblock">
+<tr valign="top"><td><code>@call</code></td>
+<td>
+the function call.  
+</td></tr>
+<tr valign="top"><td><code>@copula</code></td>
+<td>
+the name of the copula.
+</td></tr>
+<tr valign="top"><td><code>@param</code></td>
+<td>
+a list whose elements specify the model parameters.
+</td></tr>
+<tr valign="top"><td><code>@title</code></td>
+<td>
+a character string with the name of the copula. This can be 
+overwritten specifying a user defined input argument.
+</td></tr>
+<tr valign="top"><td><code>@description</code></td>
+<td>
+a character string with an optional user defined description. 
+By default just the current date will be returned.
+</td></tr>
+</table>
+<p>
+
+<br>
+The function <code>pcopula</code> returns a numeric matrix of probabilities 
+computed at grid positions <code>x</code>|<code>y</code>.
+<br>
+<br>
+The function <code>parchmCopula</code> returns a numeric matrix with values
+computed for the Archemedean copula.
+<br>
+<br>
+The function <code>darchmCopula</code> returns a numeric matrix with values
+computed for thedensity of the Archemedean copula.
+<br>
+<br>
+The functions <code>Phi*</code> return a numeric vector with the values
+computed from the Archemedean generator, its derivatives, or its
+inverse.
+<br>
+<br>
+The functions <code>cK</code> and {cKInv} return a numeric vector with the 
+values of the density and inverse for Archimedian copulae.</p>
+
+<h3>Author(s)</h3>
+
+<p>
+Diethelm Wuertz for the Rmetrics <font face="Courier New,Courier" color="#666666"><b>R</b></font>-port.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+## SOURCE("fCopulae.E1-CopulaeClass")
+
+## fCOPULA -
+   # getClass("fCOPULA")
+   
+## pcopula -
+   # The default Normal Copula:
+   # contour(pcopula())
+</pre>
+
+
+
+<hr><div align="center">[Package <em>fCopulae</em> version 221.10065 <a href="00Index.html">Index]</a></div>
+
+</body></html>

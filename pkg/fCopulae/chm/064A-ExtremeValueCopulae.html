@@ -1,0 +1,260 @@
+<html><head><title>Bivariate Extreme Value Copulae</title>
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>ExtremeValueCopulae(fCopulae)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   ExtremeValueCopulae">
+<param name="keyword" value="R:   pevCopula">
+<param name="keyword" value="R:   devCopula">
+<param name="keyword" value="R:   Afunc">
+<param name="keyword" value="R:   AFirstDer">
+<param name="keyword" value="R:   ASecondDer">
+<param name="keyword" value="R:   ASlider">
+<param name="keyword" value="R:   pevSlider">
+<param name="keyword" value="R:   devSlider">
+<param name="keyword" value="R:   pempiricalCopula">
+<param name="keyword" value="R:   dempiricalCopula">
+<param name="keyword" value="R:   qlogisticTable">
+<param name="keyword" value=" Bivariate Extreme Value Copulae">
+</object>
+
+
+<h2>Bivariate Extreme Value Copulae</h2>
+
+
+<h3>Description</h3>
+
+<p>
+A collection and description of functions to investigate 
+bivariate extreme value copulae. 
+<br>
+</p>
+<p>
+Extreme Value Copulae:
+</p>
+
+<table summary="Rd table">
+<tr>
+  <td align="left"><code>pevCopula</code> </td>  <td align="left"> computes extreme value copula probability,</td>
+</tr>
+<tr>
+  <td align="left"> <code>devCopula</code> </td>  <td align="left"> computes extreme value copula density,</td>
+</tr>
+<tr>
+  <td align="left"> </p> <p> <code>Afunc</code> </td>  <td align="left"> computes dependence function, </td>
+</tr>
+<tr>
+  <td align="left"> <code>AFirstDer</code> </td>  <td align="left"> computes derivative of dependence function, </td>
+</tr>
+<tr>
+  <td align="left"> <code>ASecondDer</code> </td>  <td align="left"> computes 2nd derivative of dependence function, </td>
+</tr>
+<tr>
+  <td align="left"> <code>ASlider</code> </td>  <td align="left"> displays interactively dependence function, </td>
+</tr>
+<tr>
+  <td align="left"> </p> <p> <code>pevSlider</code> </td>  <td align="left"> displays interactive plots of probability,</td>
+</tr>
+<tr>
+  <td align="left"> <code>devSlider</code> </td>  <td align="left"> displays interactive plots of density. </td>
+</tr>
+</table>
+
+<p>
+Empirical Copulae:
+</p>
+
+<table summary="Rd table">
+<tr>
+  <td align="left"><code>pempiricalCopula</code> </td>  <td align="left"> computes empirical copula probability,</td>
+</tr>
+<tr>
+  <td align="left"> <code>dempiricalCopula</code> </td>  <td align="left"> computes empirical copula density. </td>
+</tr>
+</table>
+
+
+<h3>Usage</h3>
+
+<pre>
+
+pevCopula(u = 0.5, v = u, param = NULL, type = c("gumbel", "galambos", 
+    "husler.reiss", "tawn", "bb5"), output = c("vector", "list"), 
+    alternative = FALSE )
+devCopula(u = 0.5, v = u, param = NULL, type = c("gumbel", "galambos", 
+    "husler.reiss", "tawn", "bb5"), output = c("vector", "list"), 
+    alternative = FALSE )   
+
+pevSlider(type = c("persp", "contour"), B = 10)
+devSlider(type = c("persp", "contour"), B = 10)
+
+Afunc(x, param = NULL, type = c("gumbel", "galambos", "husler.reiss", 
+    "tawn", "bb5") )
+AFirstDer(x, param = NULL, type = c("gumbel", "galambos", "husler.reiss", 
+    "tawn", "bb5"), eps = 1.0e-6 )
+ASecondDer(x, param = NULL, type = c("gumbel", "galambos", "husler.reiss", 
+    "tawn", "bb5") )
+ASlider()
+
+pempiricalCopula(u, v, N = 10)
+dempiricalCopula(u, v, N = 10)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>alternative</code></td>
+<td>
+[*evCopula] - <br>
+Should the probability be computed alternatively in a
+direct way from the probability formula or by default 
+via the dependency function?  
+</td></tr>
+<tr valign="top"><td><code>B</code></td>
+<td>
+[*Slider] - <br>
+the maximum slider menu value when the boundary value is 
+infinite. By default this is set to 10.
+</td></tr>
+<tr valign="top"><td><code>eps</code></td>
+<td>
+[AFirstDer] - <br>
+data below <code>eps</code> and above <code>1-eps</code> will be set to
+the border limits.
+</td></tr>
+<tr valign="top"><td><code>N</code></td>
+<td>
+[empiricalCopula] - <br>
+... .
+</td></tr>
+<tr valign="top"><td><code>output</code></td>
+<td>
+[*evCopula] - <br>
+output - a character string specifying how the output should
+be formatted. By default a vector of the same length as 
+<code>u</code> and <code>v</code>. If specified as <code>"list"</code> 
+then <code>u</code> and <code>v</code> are
+expected to span a two-dimensional grid as outputted by the 
+function <code>grid2d</code> and the function returns a list with
+elements <code>$x</code>, <code>y</code>, and <code>z</code> which can be directly 
+used for example by 2D plotting functions.
+</td></tr>
+<tr valign="top"><td><code>param</code></td>
+<td>
+[*ev*][A*] - <br>
+distribution and copulae parameters.
+A numeric value or vector of named parameters as required by 
+the copula specified by the variable <code>type</code>.
+If set to <code>NULL</code>, then the default parameters will be taken.
+</td></tr>
+<tr valign="top"><td><code>type</code></td>
+<td>
+[*ev*][Afunc] - <br>
+the type of the maximum extreme value copula. A character
+string selected from: "gumbel", "galambos", "husler.reiss", 
+"tawn", or "bb5".
+<br>
+[evSlider] - <br>
+a character string specifying the plot type. Either a 
+perspective plot which is the default or a contour plot 
+with an underlying image plot will be created.
+</td></tr>
+<tr valign="top"><td><code>u, v</code></td>
+<td>
+[*evCopula][*archmCopula] - <br>
+two numeric values or vectors of the same length at which
+the copula will be computed. If <code>u</code> is a list then the
+the <code>$x</code> and <code>$y</code> elements will be used as <code>u</code> 
+and <code>v</code>. If <code>u</code> is a two column matrix then the 
+first column will be used as <code>u</code> and the the second 
+as <code>v</code>.
+</td></tr>
+<tr valign="top"><td><code>x</code></td>
+<td>
+[A*] - <br>
+a numeric value or vector ranging between zero and one.
+<br>
+</td></tr>
+</table>
+
+<h3>Value</h3>
+
+<p>
+Th functions <code>*Spec</code> return an S4 object 
+of class <code>"fCOPULA"</code>. The object contains the following slots:
+</p>
+<table summary="R argblock">
+<tr valign="top"><td><code>@call</code></td>
+<td>
+the function call.  
+</td></tr>
+<tr valign="top"><td><code>@copula</code></td>
+<td>
+the name of the copula.
+</td></tr>
+<tr valign="top"><td><code>@param</code></td>
+<td>
+a list whose elements specify the model parameters.
+</td></tr>
+<tr valign="top"><td><code>@title</code></td>
+<td>
+a character string with the name of the copula. This can be 
+overwritten specifying a user defined input argument.
+</td></tr>
+<tr valign="top"><td><code>@description</code></td>
+<td>
+a character string with an optional user defined description. 
+By default just the current date when the test was applied will
+be returned.
+</td></tr>
+</table>
+<p>
+
+<br>
+The function <code>pcopula</code> returns a numeric matrix of probabilities 
+computed at grid positions <code>x</code>|<code>y</code>.
+<br>
+<br>
+The function <code>parchmCopula</code> returns a numeric matrix with values
+computed for the Archemedean copula.
+<br>
+<br>
+The function <code>darchmCopula</code> returns a numeric matrix with values
+computed for thedensity of the Archemedean copula.
+<br>
+<br>
+The functions <code>Phi*</code> return a numeric vector with the values
+computed from the Archemedean generator, its derivatives, or its
+inverse.
+<br>
+<br>
+The functions <code>cK</code> and {cKInv} return a numeric vector with the 
+values of the density and inverse for Archimedian copulae.</p>
+
+<h3>Author(s)</h3>
+
+<p>
+Diethelm Wuertz for the Rmetrics <font face="Courier New,Courier" color="#666666"><b>R</b></font>-port.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+## SOURCE("fCopulae.E4-ExtremeValueCopulae")
+
+## fCOPULA -
+   # getClass("fCOPULA")
+   
+## pcopula -
+   # The default Normal Copula:
+   # contour(pcopula())
+</pre>
+
+
+
+<hr><div align="center">[Package <em>fCopulae</em> version 221.10065 <a href="00Index.html">Index]</a></div>
+
+</body></html>

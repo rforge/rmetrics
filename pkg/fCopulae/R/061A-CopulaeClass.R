@@ -1,0 +1,172 @@
+
+# This library is free software; you can redistribute it and/or
+# modify it under the terms of the GNU Library General Public
+# License as published by the Free Software Foundation; either
+# version 2 of the License, or (at your option) any later version.
+#
+# This library is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
+# GNU Library General Public License for more details.
+#
+# You should have received a copy of the GNU Library General 
+# Public License along with this library; if not, write to the 
+# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+# MA  02111-1307  USA
+
+
+
+################################################################################
+# FUNCTION:                 SPECIFICATION:
+#  fCOPULA                   S4 class representation          
+#  show                      S4 print method for copula specification
+# FUNCTION:                 FRECHET COPULAE:
+#  pfrechetCopula            Computes Frechet copula probability
+################################################################################
+
+
+################################################################################
+# Specifying and creating copula objects
+
+
+setClass("fCOPULA", 
+    # Copula Representation:
+    representation(
+        call = "call",
+        copula = "character",       
+        param = "list",
+        title = "character",
+        description = "character")  
+)
+    
+ 
+# ------------------------------------------------------------------------------
+
+
+show.fCOPULA = 
+function(object)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Print and Summary method for fCOPULA
+    
+    # Source:
+    #   This function copies code from base:print.htest
+    
+    # FUNCTION:
+       
+    # Unlike print the argument for show is 'object'.
+    x = object
+    
+    # Title:
+    cat("\nTitle:\n ", x@title, "\n", sep = "")
+    
+    # Call:
+    cat("\nCall:\n ")
+    cat(paste(deparse(x@call), sep = "\n", collapse = "\n"), "\n", sep = "")
+
+    # Copula Type:
+    cat("\nCopula:\n ", x@copula, "\n", sep = "")
+    
+    # Model Parameter:
+    if (length(x@param) != 0) {
+        cat("\nModel Parameter(s):\n ")
+        print(unlist(x@param), quote = FALSE)
+    }
+     
+    # Description:
+    cat("\nDescription:\n ", x@description, sep = "")   
+    cat("\n\n")
+    
+    # Return Value:
+    invisible(object)
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+setMethod("show", "fCOPULA", show.fCOPULA)
+
+
+################################################################################
+# Frechet Copulae:
+
+
+pfrechetCopula =
+function(u = 0.5, v = u, type = c("m", "pi", "w"), output = c("vector", "list"))
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Computes extreme value copula probability
+    
+    # Arguments:
+    #   u, v - two numeric values or vectors of the same length at
+    #       which the copula will be computed. If 'u' is a list then the
+    #       the '$x' and '$y' elements will be used as 'u' and 'v'.
+    #       If 'u' is a two column matrix then the first column will
+    #       be used as 'u' and the the second as 'v'.
+    #   type - the type of the Frechet copula. A character
+    #       string selected from: "m", "pi", or "w".
+    #   output - a character string specifying how the output should
+    #       be formatted. By default a vector of the same length as 
+    #       'u' and 'v'. If specified as "list" then 'u' and 'v' are
+    #       expected to span a two-dimensional grid as outputted by the 
+    #       function 'grid2d' and the function returns a list with
+    #       elements '$x', 'y', and 'z' which can be directly used 
+    #       for example by 2D plotting functions.
+    
+    # Examples:
+    #   persp(pfrechetCopula(u=grid2d(), output="list", type = "m"))
+    #   persp(pfrechetCopula(u=grid2d(), output="list", type = "pi"))
+    #   persp(pfrechetCopula(u=grid2d(), output="list", type = "w"))
+    
+    # FUNCTION:
+    
+    # Settings:
+    type = type[1]
+    if (is.list(u)) {
+        v = u$y
+        u = u$x
+    }
+    if (is.matrix(u)) {
+        v = u[,1]
+        u = u[,2]
+    }
+    
+    # Compute Copula Probability:
+    if (type == "m") {  
+        # C(u,v) = min(u,v)
+        C.uv = apply(cbind(u, v), 1, min)
+    }
+    if (type == "pi") { 
+        # C(u, v) = u * v
+        C.uv = u * v
+    }
+    if (type == "w") {   
+        # C(u,v) = max(u+v-1, 0)
+        C.uv = apply(cbind(X = u+v-1, Y = rep(0, length = length(u))), 1, max) 
+    }
+    if (type == "psp") {
+        # C(u,v) = u*v/(u+v-u*v)
+        C.uv = u*v/(u+v-u*v)
+    }
+    
+    # Add Control:
+    attr(C.uv, "control") <- unlist(list(type = type))
+    
+    # As List ?
+    if (output[1] == "list") {
+        N = sqrt(length(u))
+        x = u[1:N]
+        y = matrix(v, ncol = N)[1, ]
+        C.uv = list(x = x, y = y,  z = matrix(C.uv, ncol = N))
+    }
+    
+    # Return Value:
+    C.uv
+}
+
+
+################################################################################
+
