@@ -39,6 +39,7 @@
 #   qgev                  Quantiles for the GEV Distribution
 #   rgev                  Random variates for the GEV Distribution
 # FUNCTION:             MOMENTS:
+#  evdMoments            Computes true statistics for GEV distribution
 #  gevMoments            Computes true statistics for GEV distribution
 ################################################################################
 
