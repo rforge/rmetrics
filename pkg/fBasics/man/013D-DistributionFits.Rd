@@ -120,7 +120,7 @@ ssdFit(x, alpha = 1.4, seed = NULL, title = NULL, description = NULL)
         }
     \item{doplot}{
         [tFit][hypFit][nigFit] - \cr
-        a logical. Should a plot be displayed?
+        a logical flag. Should a plot be displayed?
         }
     \item{seed}{
         [ssdFit] - \cr
