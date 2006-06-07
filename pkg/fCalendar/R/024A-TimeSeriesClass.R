@@ -351,7 +351,8 @@ FUN = colAvgs, units = NULL, ...)
     #   x - a 'timeSeries' object to be aggregated
     #   from, to - two 'timeDate' position vectors which size the 
     #       blocks
-    #   blocks - only active when both from and to are NULL
+    #   by - calendarical block, only active when both 'from' 
+    #       and 'to' are NULL
     #   FUN - function to be applied, by default 'colAvgs'
     #   units - a character vector with column names, allows to 
     #       overwrite the column names of the input 'timeSeries'
@@ -864,7 +865,7 @@ include.weekends = FALSE, units = NULL)
         for ( i in 2:DimX ) {
             ans.add = alignDailySeries.OneColumn(x = x[, i], 
                 method = method, include.weekends = include.weekends)
-            ans = mergeSeries(ans, ans.add@Data) }  
+            ans = merge(ans, ans.add) }  
     }
          
     # Add New Units:

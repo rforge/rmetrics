@@ -29,9 +29,9 @@
 
 ################################################################################
 # FUNCTION:           HOLIDAY CALENDAR FUNCTIONS:
-#  easter              Returns date of easter or related feasts as '.sdate'
+#  easter              Returns date of easter or related feasts 
 #  .easter.sunday       Easter Algorithm
-#  holiday             Returns a holiday date of G7 and CH as '.sdate'
+#  holiday             Returns a holiday date of G7 and CH 
 # FUNCTION:           TIME DATE HOLIDAY CALENDARS:
 #  holiday.NYSE        Returns 'timeDate' object for full-day NYSE holidays
 # FUNCTION:           DESCRIPTION:
@@ -235,11 +235,15 @@ function(year = currentYear, Holiday = "Easter")
         
     # Determine Function:
     # Modified for SPlus Compatibility:
-    FUN = match.fun(Holiday)
-    ans = FUN(year)
+    nHolidays = length(Holiday)
+    ans = NULL
+    for (i in 1:nHolidays) {
+        FUN = match.fun(Holiday[i])
+        ans = c(ans, as.character(FUN(year)))
+    }
     
     # Classify as simple integer ISO date format CCYYMMDD
-    ans = timeDate(as.character(ans))
+    ans = timeDate(ans)
     
     # Return Value:
     ans
