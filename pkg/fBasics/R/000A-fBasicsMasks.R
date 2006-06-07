@@ -927,7 +927,7 @@ duplicate = "error", dupfun = NULL)
     i = match(xy, xy)
     if (duplicate=="user" && !is.function(dupfun))
         stop("duplicate=\"user\" requires dupfun to be set to a function")
-    if (duplicate! = "error") {
+    if (duplicate != "error") {
         centre = function(x) {
             switch(duplicate,
                mean = mean(x),
@@ -942,7 +942,8 @@ duplicate = "error", dupfun = NULL)
             y = y[ord]
             n = length(x)
         } else {
-            ord = (hist(i,plot=FALSE,freq=TRUE,breaks=seq(0.5,max(i)+0.5,1))$counts==1)
+            ord = (hist(i, plot = FALSE, freq = TRUE, 
+                breaks = seq(0.5, max(i)+0.5,1))$counts == 1)
             x = x[ord]
             y = y[ord]
             z = z[ord]
