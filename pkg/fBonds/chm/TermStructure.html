@@ -1,0 +1,92 @@
+<html><head><title>Term Structure Modelling</title>
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>TermStructure(fBonds)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   TermStructure">
+<param name="keyword" value="R:   NelsonSiegel">
+<param name="keyword" value="R:   Svensson">
+<param name="keyword" value=" Term Structure Modelling">
+</object>
+
+
+<h2>Term Structure Modelling</h2>
+
+
+<h3>Description</h3>
+
+<p>
+A collection and description of functions
+for term structure modelling.
+<br>
+</p>
+<p>
+The functions are:
+</p>
+
+<table summary="Rd table">
+<tr>
+  <td align="left"><code>NelsonSiegel</code> </td>  <td align="left"> Nelson-Siegel Term Structure, </td>
+</tr>
+<tr>
+  <td align="left"> <code>Svensson</code> </td>  <td align="left"> Nelson-Siegel-Svensson Term Structure. </td>
+</tr>
+</table>
+
+
+<h3>Usage</h3>
+
+<pre>
+NelsonSiegel(rate, maturity, doplot = TRUE)
+Svensson(rate, maturity, doplot = TRUE)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>doplot</code></td>
+<td>
+a logical. Should a plot be displayed?
+</td></tr>
+<tr valign="top"><td><code>maturity</code></td>
+<td>
+a numeric vector maturities on an annual scale.
+</td></tr>
+<tr valign="top"><td><code>rate</code></td>
+<td>
+a numeric vectore of forward rates.
+</td></tr>
+</table>
+
+<h3>Value</h3>
+
+<p>
+a list object with entries returned from the optimization function
+<code>nlminb</code>.</p>
+
+<h3>References</h3>
+
+<p>
+McCulloch J. H. (1990);
+<EM>US Term Structure Data: 1946-87</EM>, 
+Handbook of Monetary Economics, Friedman B.M. and Hahn F.H. (eds.), 
+Elsevier Science.  
+</p>
+<p>
+McCulloch J. H. and Kwon, H.C. (1993);
+<EM>US Term Structure Data: 1947-1991</EM>, 
+Working Paper No. 93-6, Department of Economics, 
+Ohio State University.
+</p>
+<p>
+Zivot E., Wang J.;
+<EM>Modeling Financial Time Series with S-Plus</EM>.
+</p>
+
+
+
+<hr><div align="center">[Package <em>fBonds</em> version 221.10065 <a href="00Index.html">Index]</a></div>
+
+</body></html>
