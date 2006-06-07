@@ -49,6 +49,7 @@
 #  as.matrix.mts                 multivariate ts to matrix
 # FUNCTION:                     DESCRIPTION:
 #  .description                  sets default description string
+#  .unirootNA                    
 ################################################################################
 
 
@@ -505,3 +506,55 @@ function()
 
 
 ################################################################################
+
+
+.unirootNA = 
+function(f, interval, lower = min(interval), upper = max(interval), 
+tol = .Machine$double.eps^0.25, ...) 
+{   # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   Searches the interval from lower to upper for a 
+    #   root (i.e., zero) of the function f with respect 
+    #   to its first argument. 
+    
+    # Arguments:
+    #   see 'uniroot'
+    
+    # Value:
+    #   Returns the x value of f where the root is located. If
+    #   now root exists NA will be returned. In the last case
+    #   the function doesn't terminate with an error like in the
+    #   case of the standard function uniroot.
+
+    # Details:
+    #   R:
+    #   uniroot(f, interval, lower = min(interval), upper = max(interval),
+    #       tol = .Machine$double.eps^0.25, 
+    #       maxiter = 1000, ...)
+    #   uniroot(f, interval, lower = min(interval), upper = max(interval), 
+    #       tol = .Machine$double.eps^.25, 
+    #       keep.xy = F, f.lower = NA,  f.upper = NA, ...) 
+
+    # Example:
+    #   .unirootNA(sin, c(1, 2)); .unirootNA(sin, c(-1, 1))
+        
+    # There is no Root:  
+    if (is.null(args(f))) {  
+        if (f(lower) * f(upper) >=0) return(NA)  
+    } else {
+        if (f(lower, ...) * f(upper, ...) >= 0) return(NA)
+    } 
+      
+    # There is a Root:  
+    ans = uniroot(f = f, interval = interval, lower = lower, 
+        upper = upper, tol = tol, ...)
+    
+    # Return Value:
+    ans$root
+}  
+
+
+################################################################################
+
+
