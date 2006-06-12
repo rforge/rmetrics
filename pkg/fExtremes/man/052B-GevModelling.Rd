@@ -389,7 +389,6 @@ Embrechts, P., Klueppelberg, C., Mikosch, T. (1997);
 
   
 \examples{
-\dontrun{
 ## SOURCE("fExtremes.052A-GevModelling")
 
 ## gevSim -
@@ -427,7 +426,6 @@ Embrechts, P., Klueppelberg, C., Mikosch, T. (1997);
    ##> summary(fit)  
    
 ## Fit Gumbel Data by Max Log Likelihood Method:
-   xmpExtremes("\nNext: Estimate Parameters >")
    ##> fit = gevFit(x, type = "mle", gumbel = TRUE) 
    ##> print(fit)
    # Summarize Results:
@@ -445,7 +443,6 @@ Embrechts, P., Klueppelberg, C., Mikosch, T. (1997);
    gevrlevelPlot(fit, k.block = 40, main = "BMW: Return Levels")   
    
 ## Return levels based on GEV Fit:
-   xmpExtremes("\nNext: Compute SIEMENS Return Levels >")
    # Siemens Stock Data:
    data(siemens)
    # Fit GEV to monthly Block Maxima:
@@ -454,11 +451,10 @@ Embrechts, P., Klueppelberg, C., Mikosch, T. (1997);
    gevrlevelPlot(fit, k.block = 40, main = "SIEMENS: Return Levels")
    
 ## Interactive Plot:
-   ##> par(mfrow = c(1, 1), ask = TRUE)
-   ##> plot(fit)
+   ## par(mfrow = c(1, 1), ask = TRUE)
+   ## plot(fit)
    
 ## hillPlot -
-   xmpExtremes("\nStart: Hill Estimator >")
    # Hill plot of heavy-tailed Danish fire insurance data 
    # and BMW stock data for estimated 0.999 quantile
    par(mfrow = c(2, 2))
@@ -470,19 +466,16 @@ Embrechts, P., Klueppelberg, C., Mikosch, T. (1997);
    hillPlot(danish, option = "quantile", end = 500, p = 0.999)
    
 ## shaparmPlot -
-   xmpExtremes("\nNext: Shape Parameter Plots >")
    par(mfcol = c(3, 2), cex = 0.6)
    data(bmw)
    shaparmPlot(bmw)
 
 ## shaparmPlot -
-   xmpExtremes("\nNext: Simulated Frechet Data >")
    par(mfcol = c(3, 2), cex = 0.6)
    set.seed(4711)
    x = rgev(10000, xi = 1/4)
    shaparmPlot(x, revert = TRUE, both.tails = FALSE)
-   lines(c(0.01, 0.1), c(4, 4), col = "steelblue3") # True Value
-}
+   lines(c(0.01, 0.1), c(4, 4), col = "steelblue")  
 }
 
 
