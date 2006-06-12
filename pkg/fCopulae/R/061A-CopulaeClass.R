@@ -14,6 +14,17 @@
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
 # MA  02111-1307  USA
 
+# Copyrights (C)
+# for this R-port: 
+#   1999 - 2006, Diethelm Wuertz, GPL
+#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
+#   info@rmetrics.org
+#   www.rmetrics.org
+# for the code accessed (or partly included) from other R-ports:
+#   see R's copyright and license files
+# for the code accessed (or partly included) from contributed R-ports
+# and other sources
+#   see Rmetrics's copyright file
 
 
 ################################################################################
@@ -123,15 +134,18 @@ function(u = 0.5, v = u, type = c("m", "pi", "w"), output = c("vector", "list"))
     
     # FUNCTION:
     
-    # Settings:
-    type = type[1]
+    # Match Arguments:
+    type = match.arg(type)
+    output = match.arg(output)
+
+    # Settings:  
     if (is.list(u)) {
-        v = u$y
-        u = u$x
+        v = u[[2]]
+        u = u[[1]]
     }
     if (is.matrix(u)) {
-        v = u[,1]
-        u = u[,2]
+        v = u[, 1]
+        u = u[, 2]
     }
     
     # Compute Copula Probability:
@@ -156,7 +170,7 @@ function(u = 0.5, v = u, type = c("m", "pi", "w"), output = c("vector", "list"))
     attr(C.uv, "control") <- unlist(list(type = type))
     
     # As List ?
-    if (output[1] == "list") {
+    if (output == "list") {
         N = sqrt(length(u))
         x = u[1:N]
         y = matrix(v, ncol = N)[1, ]

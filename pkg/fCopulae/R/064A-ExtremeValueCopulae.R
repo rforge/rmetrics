@@ -14,30 +14,43 @@
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
 # MA  02111-1307  USA
 
+# Copyrights (C)
+# for this R-port: 
+#   1999 - 2006, Diethelm Wuertz, GPL
+#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
+#   info@rmetrics.org
+#   www.rmetrics.org
+# for the code accessed (or partly included) from other R-ports:
+#   see R's copyright and license files
+# for the code accessed (or partly included) from contributed R-ports
+# and other sources
+#   see Rmetrics's copyright file
 
 
 ################################################################################
-# FUNCTION:                 MAXIMUM EXTREME VALUE COPULAE:
+# FUNCTION:                 EXTREME VALUE COPULAE PARAMETER:
 #  .evParam                  Sets parameters for an extreme value copula
+# FUNCTION:                 EXTREME VALUE COPULAE DEPENDENCE FUNCTION:
 #  Afunc                     Computes Dependence function
-#  AFirstDer                 Computes Derivative of dependence function
-#  ASecondDer                Computes 2nd Derivative of dependence function
-#  ASlider                   Displays interactively dependence function
-# FUNCTION:                 EXTREME VALUE PROBABILIY:
+#  AfuncFirstDer              Computes Derivative of dependence function
+#  AfuncSecondDer             Computes 2nd Derivative of dependence function
+#  AfuncSlider                Displays interactively dependence function
+# FUNCTION                  KENDALL'S TAU AND SPEARMAN'S RHO:
+#  ... still missing
+# FUNCTION:                 EXTREME VALUE COPULAE RANDOM VARIATES:
+#  ... still missing
+# FUNCTION:                 EXTREME VALUE COPULAE PROBABILIY:
 #  pevCopula                 Computes extreme value copula probability
-#  .pevCopula                 EV copula probability via dependence function
+#  .pev1Copula                EV copula probability via dependence function
 #  .pev2Copula                EV copula probability direct computation
 #  .pevContourSlider          Interactive contour plots of EV probability
 #  .pevPerspSlider            Interactive perspective plots of EV probability
-
-# FUNCTION:                 ARCHIMAX COPULAE:
-
-# FUNCTION:                 EMPIRICAL COPULAE:
-#  pempiricalCopula
-#  dempiricalCopula
-# FUNCTION:                 UTILITY DESCRIPTION:
-#  .Debye                    Returns the value of the Debye function of order k
-#  .Debye1                   Debye utility function 
+# FUNCTION:                 EXTREME VALUE COPULAE DENSITY:
+#  devCopula                 Computes extreme value copula density
+#  .dev1Copula                EV copula density via dependence function
+#  .dev2Copula                EV copula density direct computation
+#  .devContourSlider          Interactive contour plots of EV density
+#  .devPerspSlider            Interactive perspective plots of EV density
 ################################################################################
 
 
@@ -65,7 +78,7 @@ function(type = c("gumbel", "galambos", "husler.reiss", "tawn", "bb5"))
     # FUNCTION:
     
     # Settings:
-    type = type[1]
+    type = match.arg(type)
     ans = list(copula = type)
     
     # Select:
@@ -105,7 +118,8 @@ function(type = c("gumbel", "galambos", "husler.reiss", "tawn", "bb5"))
 
 
     
-# ------------------------------------------------------------------------------
+################################################################################
+# DEPENDENCE FUNCTION:
 
 
 Afunc = 
@@ -229,7 +243,7 @@ function(x, param = NULL, type = c("gumbel", "galambos",
 # ------------------------------------------------------------------------------
 
 
-AFirstDer = 
+AfuncFirstDer = 
 function(x, param = NULL, type = c("gumbel", "galambos", "husler.reiss", 
 "tawn", "bb5"), eps = 1.0e-6 )
 {   # A function implemented by Diethelm Wuertz
@@ -338,7 +352,7 @@ function(x, param = NULL, type = c("gumbel", "galambos", "husler.reiss",
         delta = param[1]
         theta = param[2]    
         # Maple Generated Output:
-        if (theta == 1) return(AFirstDer(x, param, "galambos")) else
+        if (theta == 1) return(AfuncFirstDer(x, param, "galambos")) else
         A1 = 
         (x^theta+(1-x)^theta-(x^(-delta*theta)+(1-x)^(-delta*theta))^(-1/
         delta))^(1/theta)/theta*(x^theta*theta/x-(1-x)^theta*theta/(1-x)+(x
@@ -383,7 +397,7 @@ function(x, param = NULL, type = c("gumbel", "galambos", "husler.reiss",
 # ------------------------------------------------------------------------------
 
 
-ASecondDer = 
+AfuncSecondDer = 
 function(x, param = NULL, type = c("gumbel", "galambos", "husler.reiss", 
 "tawn", "bb5") )
 {   # A function implemented by Diethelm Wuertz
@@ -506,7 +520,7 @@ function(x, param = NULL, type = c("gumbel", "galambos", "husler.reiss",
         delta = param[1]
         theta = param[2]    
         # Maple Generated Output:
-        if (theta == 1) return(ASecondDer(x, param, "galambos")) else
+        if (theta == 1) return(AfuncSecondDer(x, param, "galambos")) else
         A2 = 
         (x^theta+(1-x)^theta-(x^(-delta*theta)+(1-x)^(-delta*theta))^(-1/
         delta))^(1/theta)/theta^2*(x^theta*theta/x-(1-x)^theta*theta/(1-x)+
@@ -563,7 +577,7 @@ function(x, param = NULL, type = c("gumbel", "galambos", "husler.reiss",
 # ------------------------------------------------------------------------------
 
 
-ASlider =
+AfuncSlider =
 function()
 {   # A function implemented by Diethelm Wuertz
        
@@ -602,15 +616,15 @@ function()
         points(x = c(0, 1), Afunc(x = c(0, 1), param = param, type = type), 
             col = "red")
         # Plot A':           
-        plot(x = (0:N)/N, AFirstDer(x = (0:N)/N, param = param, type = type), 
+        plot(x = (0:N)/N, AfuncFirstDer(x = (0:N)/N, param = param, type = type), 
             type = "l", xlab = "x", ylab = "A'", main = Title) 
         points(x = c(0, 1),
-            AFirstDer(x = c(0, 1), param = param, type = type), col = "red")
+            AfuncFirstDer(x = c(0, 1), param = param, type = type), col = "red")
         # Plot A'':         
-        plot(x = (0:N)/N, ASecondDer(x = (0:N)/N, param = param, type = type), 
+        plot(x = (0:N)/N, AfuncSecondDer(x = (0:N)/N, param = param, type = type), 
             type = "l", xlab = "x", ylab = "A''", main = Title) 
         points(x = c(0, 1),
-            ASecondDer(x = c(0, 1), param = param, type = type), col = "red")
+            AfuncSecondDer(x = c(0, 1), param = param, type = type), col = "red")
                            
         # Reset Frame:
         par(mfrow = c(2, 2), cex = 0.7)
@@ -628,7 +642,16 @@ function()
 }
 
 
-# ******************************************************************************
+################################################################################
+# KENDALL'S TAU AND SPEARMAN'S RHO:
+
+
+################################################################################
+# EXTREME VALUE COPULAE RANDOM VARIATES:
+
+
+################################################################################
+# EXTREME VALUE COPULAE PROBABILITY:
 
 
 pevCopula = 
@@ -674,11 +697,14 @@ output = c("vector", "list"), alternative = FALSE )
     
     # FUNCTION:
     
-    # Copula:
+    # Select Type:
+    type = match.arg(type)
+    
+    # Compute Copula:
     if (alternative) {
         ans = .pev2Copula(u, v, param, type, output)
     } else {
-        ans = .pevCopula(u, v, param, type, output)
+        ans = .pev1Copula(u, v, param, type, output)
     }
     
     # Return Value:
@@ -689,7 +715,7 @@ output = c("vector", "list"), alternative = FALSE )
 # ------------------------------------------------------------------------------
 
 
-.pevCopula = 
+.pev1Copula = 
 function(u = 0.5, v = u, param = NULL, 
 type = c("gumbel", "galambos", "husler.reiss", "tawn", "bb5"),
 output = c("vector", "list") )
@@ -700,8 +726,11 @@ output = c("vector", "list") )
     
     # FUNCTION:
     
+    # Match Arguments:
+    type = match.arg(type)
+    output = match.arg(output)
+    
     # Settings:
-    type = type[1]
     if (is.null(param)) {
         param = .evParam(type)$param
     }
@@ -710,8 +739,8 @@ output = c("vector", "list") )
         u = u$x
     }
     if (is.matrix(u)) {
-        v = u[,1]
-        u = u[,2]
+        v = u[, 2]
+        u = u[, 1]
     }
       
     # Settings:
@@ -740,7 +769,7 @@ output = c("vector", "list") )
     attr(C, "control") <- unlist(list(param = param, type = type))
     
     # As List ?
-    if (output[1] == "list") {
+    if (output == "list") {
         N = sqrt(length(u))
         x = u[1:N]
         y = matrix(v, ncol = N)[1, ]
@@ -766,8 +795,11 @@ output = c("vector", "list") )
   
     # FUNCTION:
     
+    # Match Arguments:
+    type = match.arg(type)
+    output = match.arg(output)
+    
     # Settings:
-    type = type[1]
     if (is.null(param)) {
         param = .evParam(type)$param
     }
@@ -776,8 +808,8 @@ output = c("vector", "list") )
         u = u$x
     }
     if (is.matrix(u)) {
-        v = u[,1]
-        u = u[,2]
+        v = u[, 2]
+        u = u[, 1]
     }
        
     # Compute Probability:
@@ -852,7 +884,7 @@ output = c("vector", "list") )
     attr(C, "control") <- unlist(list(param = param, type = type))
     
     # As List ?
-    if (output[1] == "list") {
+    if (output == "list") {
         N = sqrt(length(u))
         x = u[1:N]
         y = matrix(v, ncol = N)[1, ]
@@ -881,6 +913,9 @@ function(type = c("persp", "contour"), B = 10)
     #       be created.
     #   B - the maximum slider menu value when the boundary
     #       value is infinite. By default this is set to 10.
+    
+    # Match Arguments:
+    type = match.arg(type)
     
     # Plot:
     if (type == "persp")
@@ -932,7 +967,7 @@ function(B = 10)
         
         # Plot:   
         uv = grid2d(x = (0:N)/N)
-        D = .pevCopula(u = uv, type = type, param = param, output = "list")
+        D = .pev1Copula(u = uv, type = type, param = param, output = "list")
         image(D, col = heat.colors(ncol) )
         contour(D, nlevels = nlev, add = TRUE)
         title(main = Title)
@@ -947,10 +982,10 @@ function(B = 10)
           "Plot - levels", "... colors")
     .sliderMenu(refresh.code,
         names = c("Copula","N", C), #gal   hr   tawn          bb5    nlev  ncol
-        minima =      c(1,  10,   1,   0,   0,   0,   0,  1,  0,  1,  10,   12),
+        minima =      c(1,  10,   1,   0,   0,   0,   0,  1,  0,  1,   5,   12),
         maxima =      c(5, 100,   B,   B,   B,   1,   1,  B,  B,  B, 100,  256),
-        resolutions = c(1,   1, .05, .05, .05, .01, .01, .1, .1, .1,  10,    1),
-        starts =      c(1,  25,   2,   1,   1,  .5,  .5,  2,  1,  2,   1,   12))
+        resolutions = c(1,   1, .05, .05, .05, .01, .01, .1, .1, .1,   5,    1),
+        starts =      c(1,  25,   2,   1,   1,  .5,  .5,  2,  1,  2,  10,   12))
 }
 
 
@@ -993,7 +1028,7 @@ function(B = 10)
         
         # Plot:   
         uv = grid2d(x = (0:N)/N)
-        D =  .pevCopula(u = uv, type = type, param = param, output = "list")
+        D =  .pev1Copula(u = uv, type = type, param = param, output = "list")
         #D2 = .pev2Copula(u = uv, type = type, param = param, output = "list")
         persp(D, theta = theta, phi = phi, col = "steelblue", shade = 0.5,
             ticktype = "detailed", cex = 0.5)
@@ -1016,7 +1051,8 @@ function(B = 10)
 }
 
 
-# ******************************************************************************
+################################################################################
+# EXTREME VALUE COPULAE DENSITY:
 
 
 devCopula =
@@ -1062,12 +1098,15 @@ output = c("vector", "list"), alternative = FALSE )
     
     # FUNCTION:
     
+    # Match Arguments:
+    type = match.arg(type)
+    output = match.arg(output)
+    
     # Copula Density:
     if (alternative) {
         ans = .dev2Copula(u, v, param, type, output)
-    }
-    else {
-        ans = .devCopula(u, v, param, type, output)
+    } else {
+        ans = .dev1Copula(u, v, param, type, output)
     }
     
     # Return Value:
@@ -1078,7 +1117,7 @@ output = c("vector", "list"), alternative = FALSE )
 # ------------------------------------------------------------------------------
 
 
-.devCopula =
+.dev1Copula =
 function(u = 0.5, v = u, param = NULL, 
 type = c("gumbel", "galambos", "husler.reiss", "tawn", "bb5"),
 output = c("vector", "list") )
@@ -1093,8 +1132,11 @@ output = c("vector", "list") )
     
     # FUNCTION:
     
+    # Match Arguments:
+    type = match.arg(type)
+    output = match.arg(output)
+    
     # Settings:
-    type = type[1]
     if (is.null(param)) {
         param = .evParam(type)$param
     }
@@ -1103,8 +1145,8 @@ output = c("vector", "list") )
         u = u$x
     }
     if (is.matrix(u)) {
-        v = u[, 1]
-        u = u[, 2]
+        v = u[, 2]
+        u = u[, 1]
     }
     
     # Settings for Maple Output:
@@ -1120,8 +1162,8 @@ output = c("vector", "list") )
     
     # Copula Probability:
     A = Afunc(x, param = param, type = type)
-    A1 = AFirstDer(x, param = param, type = type)
-    A2 = ASecondDer(x, param = param, type = type)
+    A1 = AfuncFirstDer(x, param = param, type = type)
+    A2 = AfuncSecondDer(x, param = param, type = type)
     
     # Prefactor:
     P = pevCopula(u, v, param = param, type = type) / (u*v)
@@ -1132,7 +1174,7 @@ output = c("vector", "list") )
     attr(c.uv, "control") <- unlist(list(param = param, type = type))
     
     # As List ?
-    if (output[1] == "list") {
+    if (output == "list") {
         N = sqrt(length(u))
         x = u[1:N]
         y = matrix(v, ncol = N)[1, ]
@@ -1166,8 +1208,11 @@ output = c("vector", "list") )
     
     # FUNCTION:
     
+    # Match Arguments:
+    type = match.arg(type)
+    output = match.arg(output)
+    
     # Settings:
-    type = type[1]
     if (is.null(param)) {
         param = .evParam(type)$param
     }
@@ -1176,8 +1221,8 @@ output = c("vector", "list") )
         u = u$x
     }
     if (is.matrix(u)) {
-        v = u[, 1]
-        u = u[, 2]
+        v = u[, 2]
+        u = u[, 1]
     }
     
     # Settings:
@@ -1366,6 +1411,9 @@ function(type = c("persp", "contour"), B = 10)
     #   B - the maximum slider menu value when the boundary
     #       value is infinite. By default this is set to 10.
     
+    # Match Arguments:
+    type = match.arg(type)
+    
     # Plot:
     if (type == "persp")
         .devPerspSlider(B = B)
@@ -1381,13 +1429,13 @@ function(type = c("persp", "contour"), B = 10)
 
 
 .devContourSlider =
-function()
+function(B = 10)
 {   # A function implemented by Diethelm Wuertz
     
     # Description:
     #   Displays interactively contour plots of density
     
-    #FUNCTION:
+    # FUNCTION:
     
     # Internal Function:
     refresh.code = function(...)
@@ -1417,7 +1465,7 @@ function()
         x = 0.5*F^(1:n)
         x = c(rev(x), 0.5, 1-x)
         uv = grid2d(x = (1:(N-1))/N)
-        D = .devCopula(u = uv, type = type, param = param, output = "list")
+        D = .dev1Copula(u = uv, type = type, param = param, output = "list")
         image(D, col = heat.colors(ncol) )
         contour(D, nlevels = nlev, add = TRUE)
         title(main = Title)
@@ -1432,10 +1480,10 @@ function()
           "Plot - levels", "... colors")
     .sliderMenu(refresh.code,
         names = c("Copula","N", C), #gal   hr   tawn          bb5    nlev  ncol
-        minima =      c(1,  10,   1,   0,   0,   0,   0,  1,  0,  1,  10,   12),
-        maxima =      c(5, 100,  10,  10,  10,   1,   1, 10, 10, 10, 100,  256),
-        resolutions = c(1,   1, .05, .05, .05, .01, .01, .1, .1, .1,  10,    1),
-        starts =      c(1,  25,   2,   1,   1,  .5,  .5,  2,  1,  2,   1,   12))
+        minima =      c(1,  10,   1,   0,   0,   0,   0,  1,  0,  1,   5,   12),
+        maxima =      c(5, 100,   B,   B,   B,   1,   1,  B,  B,  B, 100,  256),
+        resolutions = c(1,   1, .05, .05, .05, .01, .01, .1, .1, .1,   5,    1),
+        starts =      c(1,  25,   2,   1,   1,  .5,  .5,  2,  1,  2,  10,   12))
 }
 
 
@@ -1443,7 +1491,7 @@ function()
 
 
 .devPerspSlider =
-function()
+function(B = 10)
 {   # A function implemented by Diethelm Wuertz
     
     # Description:
@@ -1479,7 +1527,7 @@ function()
         x = 0.5*F^(1:n)
         x = c(rev(x), 0.5, 1-x)    
         uv = grid2d(x = x)
-        D = .devCopula(u = uv, type = type, param = param, output = "list")
+        D = .dev1Copula(u = uv, type = type, param = param, output = "list")
         persp(D, theta = theta, phi = phi, col = "steelblue", shade = 0.5, 
             ticktype = "detailed", cex = 0.5)
         title(main = Title)
@@ -1493,195 +1541,12 @@ function()
           "4 Tawn: alpha", "... beta", "... r", "5 BB5: delta", "... theta", 
           "Plot - theta", "... phi")
     .sliderMenu(refresh.code,
-        names = c("Copula","N", C), #gal   hr    tawn         bb5    theta  phi
-        minima =      c(1,  10,   1,   0,   0,   0,   0,  1,  0,  1,-180,   0),
-        maxima =      c(5, 100,  10,  10,  10,   1,   1, 10, 10, 10, 180, 360),
-        resolutions = c(1,   1, .05, .05, .05, .01, .01, .1, .1, .1,   1,   1),
-        starts =      c(1,  25,   2,   1,   1,  .5,  .5,  2,  1,  2, -40,  30))
+        names = c("Copula", "N", C), #gal  hr  tawn          bb5    theta  phi
+        minima =      c(1,  10,   1,   0,   0,   0,   0,  1,  0,  1, -180,   0),
+        maxima =      c(5, 100,   B,   B,   B,   1,   1,  B,  B,  B,  180, 360),
+        resolutions = c(1,   1, .05, .05, .05, .01, .01, .1, .1, .1,    1,   1),
+        starts =      c(1,  25,   2,   1,   1,  .5,  .5,  2,  1,  2,  -40,  30))
 }
-
-
-################################################################################
-# EMPIRICAL COPULAE:
-
-
-pempiricalCopula =
-function(u, v, N = 10)
-{   # A function implemented by Diethelm Wuertz
-
-    # Description
-    #   Computes the empirical copula probability
-    
-    # Source:
-    #   bouye02a.pdf
-    
-    # FUNCTION:
-    
-    # Settings:
-    if (is.list(u)) {
-        v = u$y
-        u = u$x
-    }
-    if (is.matrix(u)) {
-        v = u[,1]
-        u = u[,2]
-    }
-    
-    # Probability:
-    p = q = (0:N)/N
-    h = matrix(rep(0, times = (N+1)^2), N+1)
-    for ( i in (0:N) ) {
-        for ( j in (0:N) ) {
-            z = H(u, p[i+1]) + H(v, q[j+1])
-            h[j+1, i+1] = length(z[z == 0])
-        }
-    }
-    h = h/length(u)
-    
-    # Return Value:
-    list(x = p, y = q, z = h)
-}
-
-
-# ------------------------------------------------------------------------------    
-
-
-dempiricalCopula =
-function(u, v, N = 10)
-{   # A function implemented by Diethelm Wuertz
-
-    # Description
-    #   Computes the empirical copula probability
-    
-    # Source:
-    #   bouye02a.pdf
-    
-    # FUNCTION:
-    
-    # Settings:
-    if (is.list(u)) {
-        v = u$y
-        u = u$x
-    }
-    if (is.matrix(u)) {
-        v = u[,1]
-        u = u[,2]
-    }
-    
-    # Probability:
-    ans = pempiricalCopula(u, v, N)
-    X = ans$x
-    Y = ans$y
-    C = ans$z
-    
-    # Density:
-    M = N+1
-    x = X[-1] - diff(X)/2
-    y = Y[-1] - diff(Y)/2
-    c = C[-1,-1]+C[-M,-M]-C[-1,-M]-C[-M,-1]
-    
-    # Return Value:
-    list(x = x, y = y, z = c)
-}
-
-
-################################################################################
-
-
-.Debye =
-function(x, k = 1) 
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Returns the value of the Debye function of order k
-    
-    # Arguments:
-    #   x - a numeric value or vector
-    #   k - the order of the Debye function, a positive integer value   
-    
-    # FUNCTION:
-    
-    # Check:
-    if (!is.integer(k) | k <= 0) 
-        stop("k must be a positive integer")
-    
-    # Loop:
-    D = NULL
-    error = NULL
-    for ( i in 1:length(x) ) {
-        nextD = .Debye1(x[i],k) 
-        D = c(D, nextD[[1]])
-        error = c(error, nextD[[2]])
-    }
-    
-    # Add error attribute:
-    attr(D, "error") = error
-    
-    # Return Value:
-    D
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.Debye1 = 
-function(x, k = 1)
-{   # A function implemented by Diethelm Wuertz
-
-    # FUNCTION:
-    
-    # Function to be integrated:
-    d = function(x, lambda) { x^lambda / ( exp(x) - 1 ) }   
-    
-    # Integrate:
-    u = abs(x)
-    if (x == 0) {
-        D = 1
-        error = 0   
-    } else {
-        ans = integrate(f = d, lower = 0, upper  = u, lambda = k)
-        D = k * ans[[1]] / u^k
-        error = ans[[2]]
-    }
-    if (x < 0) {
-        D = D + k*u/(k+1)
-    }
-    
-    # Return Value:
-    list(D = D, error = error)
-}
-
-
-################################################################################
-
-
-.pmoCopula = 
-function(u = 0.5, v = u, alpha = NULL)
-{
-    if (is.null(alpha)) alpha = c(0.5, 0.5)
-    alpha1 = alpha[1]
-    alpha2 = alpha[2]
-    
-    U = u^(1-alpha1) * v
-    V = u * v^(1-alpha2)
-    UV = cbind(U,V)
-    apply(UV, 1, max)
-}   
-
-
-.dmoCopula = 
-function(u = 0.5, v = u, alpha = NULL)
-{
-    if (is.null(alpha)) alpha = c(0.5, 0.5)
-    alpha1 = alpha[1]
-    alpha2 = alpha[2]
-    
-    U = u^(1-alpha1) * v
-    V = u * v^(1-alpha2)
-    UV = cbind(U,V)
-    apply(UV, 1, max)
-}   
 
 
 ################################################################################

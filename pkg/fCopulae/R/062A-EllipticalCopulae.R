@@ -14,6 +14,17 @@
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
 # MA  02111-1307  USA
 
+# Copyrights (C)
+# for this R-port: 
+#   1999 - 2006, Diethelm Wuertz, GPL
+#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
+#   info@rmetrics.org
+#   www.rmetrics.org
+# for the code accessed (or partly included) from other R-ports:
+#   see R's copyright and license files
+# for the code accessed (or partly included) from contributed R-ports
+# and other sources
+#   see Rmetrics's copyright file
 
 
 ################################################################################
@@ -21,7 +32,7 @@
 #  .ellipticalParam           Sets Default parameters for an elliptical copula
 #  .ellipticalRange           Returns the range of valid rho values
 #  .ellipticalCheck           Checks if rho is in the valid range
-# FUNCTION:                  GENERATOR AND RELATED FUNCTIONS:
+# FUNCTION:                  ELLIPTICAL GENERATOR AND RELATED FUNCTIONS:
 #  gfunc                      Generator function for elliptical distributions
 #  gfuncSlider                Slider for generator, density and probability
 #  .pelliptical               Univariate elliptical distribution probability
@@ -29,7 +40,9 @@
 #  .qelliptical               Univariate elliptical distribution quantiles
 #  .qlogistic                 Fast tabulated logistic quantile function
 #  .qlogisticData             Table generator for logistic quantiles
-# FUNCTION:                  NORMAL, CAUCHY AND STUDENT-T COPULAE:
+# FUNCTION:                  ELLIPTICAL COPULAE RANDOM DEVIATES:
+#  rellipticalCopula          Generates elliptical copula variates
+#  rellipticalSlider          Interactive plots of random variates
 #  .rnormCopula               Generates normal copula random variate
 #  .pnormCopula               Computes normal copula probability
 #  .dnormCopula               Computes normal copula density
@@ -39,29 +52,27 @@
 #  .rtCopula                  Generates Student-t copula random variate
 #  .ptCopula                  Computes Student-t copula probability
 #  .dtCopula                  Computes Student-t copula density
-# FUNCTION:                  COPULA RANDOM DEVIATES:
-#  rellipticalCopula          Generates elliptical copula variates
-#  rellipticalSlider          Interactive plots of random variates
-# FUNCTION:                  COPULA PROBABILITY:
+# FUNCTION:                  ELLIPTICAL COPULAE PROBABILITY:
 #  pellipticalCopula          Computes elliptical copula probability
+#  pellipticalSlider          Interactive plots of probability
 #  .pellipticalCopulaGrid     Fast equidistant grid version
 #  .pellipticalCopulaDiag     Fast diagonal cross section version
-#  pellipticalSlider          Interactive plots of probability
 #  .pellipticalPerspSlider    Interactive perspective plots of probability
 #  .pellipticalContourSlider  Interactive contour plots of probability
-# FUNCTION:                  COPULA DENSITY:
+# FUNCTION:                  ELLIPTICAL COPULAE DENSITY:
 #  dellipticalCopula          Computes elliptical copula density 
+#  dellipticalSlider          Interactive plots of density
 #  .dellipticalCopulaGrid     Fast grid version for elliptical copula density
 #  .dellipticalCopula.RUnit   R Unit test for elliptical copula density
-#  dellipticalSlider          Interactive plots of density
 #  .dellipticalPerspSlider    Interactive perspective plots of density
 #  .dellipticalContourSlider  Interactive contour plots of density
-# FUNCTION:                  DEPENDENCE MASURES:
+# FUNCTION:                  ELLIPTICAL DEPENDENCE MASURES:
 #  ellipticalTau              Computes Kendall's tau for elliptical copulae
 #  ellipticalRho              Computes Spearman's rho for elliptical copulae
+# FUNCTION:                  ELLIPTICAL TAIL COEFFICIENT:
 #  ellipticalTailCoeff        Computes tail dependence for elliptical copulae
 #  ellipticalTailPlot         Plots tail dependence function
-# FUNCTION:                  PARAMETER FITTING:
+# FUNCTION:                  ELLIPTICAL COPULAE PARAMETER FITTING:
 #  ellipticalCopulaSim        Simulates bivariate elliptical copula
 #  ellipticalCopulaFit        Fits the paramter of an elliptical copula
 ################################################################################
@@ -101,7 +112,7 @@ function(type = c("norm", "cauchy", "t", "logistic", "laplace", "kotz",
     # FUNCTION:
     
     # Settings:
-    type = type[1]
+    type = match.arg(type)
     
     # Parameter Values:
     #       "norm", "cauchy",  "t", "logistic", "laplace", "kotz", "epower"
@@ -168,7 +179,7 @@ function(type = c("norm", "cauchy", "t", "logistic", "laplace", "kotz",
     # FUNCTION:
     
     # Type:
-    type = type[1]
+    type = match.arg(type)
     
     # Range:
     ans = .ellipticalParam(type)$range
@@ -208,20 +219,10 @@ function(rho = 0.75, param = NULL, type = c("norm", "cauchy", "t",
     
     # FUNCTION:
     
-    # Type"
-    type = type[1]
-    
-    # Check:
-    check = FALSE
-    if (type == "norm") check = TRUE
-    if (type == "cauchy") check = TRUE
-    if (type == "t") check = TRUE
-    if (type == "logistic") check = TRUE
-    if (type == "laplace") check = TRUE
-    if (type == "kotz") check = TRUE
-    if (type == "epower") check = TRUE
-    if (!check) stop("wrong type argument")
+    # Type:
+    type = match.arg(type)
 
+    # Range:
     range = as.vector(.ellipticalRange(type))
     if (rho < range[1] | rho > range[2]) {
         print(c(rho = rho))
@@ -266,6 +267,9 @@ function(x, param = NULL, type = c("norm", "cauchy", "t", "logistic",
     #   the normalizing constant "lambda" will be returned.
     
     # FUNCTION:
+    
+    # Type:
+    type = match.arg(type)
     
     # Handle Missing x:
     if (missing(x)) {
@@ -370,42 +374,6 @@ function(x, param = NULL, type = c("norm", "cauchy", "t", "logistic",
 # ------------------------------------------------------------------------------
 
 
-.gfunc.RUnit = 
-function()
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   RUnit test
-
-    # TEST:
-    
-    # Lambda:
-    gfunc(type = "norm")
-    gfunc(type = "cauchy")
-    gfunc(type = "t")
-        gfunc(param = 2, type = "t")
-    gfunc(type = "logistic")
-    gfunc(type = "laplace")
-    gfunc(type = "kotz")
-        gfunc(param = 2, type = "kotz")
-    gfunc(type = "epower")  
-        gfunc(param = c(2, 1), type = "epower")
-    
-    # Generator:
-    gfunc(0:10, NULL, "norm")
-        as.vector(gfunc(0:10, NULL, "norm"))
-    gfunc(0:10, type = "cauchy")
-    gfunc(0:10, type = "t") 
-    gfunc(0:10, type = "logistic")
-    gfunc(0:10, type = "laplace")
-    gfunc(0:10, type = "kotz") 
-    gfunc(0:10, type = "epower") 
-}
-
-
-# ------------------------------------------------------------------------------
-
-
 gfuncSlider = 
 function()
 {   # A function implemented by Diethelm Wuertz
@@ -487,7 +455,7 @@ function()
         mtext(paste("Normalization Test:", Y, " |  Variance Test:", V), 
             side = 4, col = "grey", cex = 0.7)
         if (type == "t") {
-            title(main = paste(Type, "Probability\n nu =", Nu))
+            title(main = paste(Type, "Density\n nu =", Nu))
         } else if (type == "kotz") {
             title(main = paste(Type, "Density\n r =", R))
         } else if (type == "epower") {
@@ -570,7 +538,7 @@ function(q, param = NULL, type = c("norm", "cauchy", "t", "logistic",
     # FUNCTION:
     
     # Type:
-    type = type[1]
+    type = match.arg(type)
     
     # Alternative Available?
     if (type == "logistic") alternative = FALSE
@@ -703,7 +671,7 @@ function(x, param = NULL, type = c("norm", "cauchy", "t", "logistic",
     # FUNCTION:
     
     # Type:
-    type = type[1]
+    type = match.arg(type)
     
     # Alternative Available?
     if (type == "logistic") alternative = FALSE
@@ -829,7 +797,7 @@ function(p, param = NULL, type = c("norm", "cauchy", "t", "logistic",
     # FUNCTION:
     
     # Type:
-    type = type[1]
+    type = match.arg(type)
     
     # Alternative Available?
     if (type == "laplace") alternative = FALSE
@@ -867,7 +835,7 @@ function(p, param = NULL, type = c("norm", "cauchy", "t", "logistic",
                 counter = 0
                 iteration = NA
                 while (is.na(iteration)) {
-                    iteration = unirootNA(f = froot, interval = c(lower, 
+                    iteration = .unirootNA(f = froot, interval = c(lower, 
                         upper), param = param, type = type, p = pp)
                     counter = counter + 1
                     lower = lower - 2^counter
@@ -928,7 +896,7 @@ function (dump = FALSE )
         counter = 0
         iteration = NA
         while (is.na(iteration)) {
-            iteration = unirootNA(f = froot, interval = c(lower, upper), p = P)
+            iteration = .unirootNA(f = froot, interval = c(lower, upper), p = P)
             counter = counter + 1
             lower = lower - 2^counter
             upper = upper + 2^counter
@@ -1030,15 +998,18 @@ function(u = 0.5, v = u, rho = 0.75, output = c("vector", "list") )
     
     # FUNCTION:
     
+    # Type:
+    output = match.arg(output)
+    
     # Settings:
     type = "norm"
     if (is.list(u)) {
-        v = u$y
-        u = u$x
+        v = u[[2]]
+        u = u[[1]]
     }
     if (is.matrix(u)) {
-        v = u[, 1]
-        u = u[, 2]
+        v = u[, 2]
+        u = u[, 1]
     }
     
     # Copula Probability:
@@ -1061,7 +1032,7 @@ function(u = 0.5, v = u, rho = 0.75, output = c("vector", "list") )
     attr(C.uv, "control") <- c(rho = rho)
     
     # As List ?
-    if (output[1] == "list") {
+    if (output == "list") {
         N = sqrt(length(u))
         x = u[1:N]
         y = matrix(v, ncol = N)[1, ]
@@ -1088,15 +1059,18 @@ function(u = 0.5, v = u, rho = 0.75, output = c("vector", "list") )
     
     # FUNCTION:
     
+    # Type:
+    output = match.arg(output)
+    
     # Settings:
     type = "norm"
     if (is.list(u)) {
-        v = u$y
-        u = u$x
+        v = u[[2]]
+        u = u[[1]]
     }
     if (is.matrix(u)) {
-        v = u[, 1]
-        u = u[, 2]
+        v = u[, 2]
+        u = u[, 1]
     }
     
     # Copula Density:
@@ -1109,7 +1083,7 @@ function(u = 0.5, v = u, rho = 0.75, output = c("vector", "list") )
     attr(c.uv, "control") <- c(rho = rho)
     
     # As List ?
-    if (output[1] == "list") {
+    if (output == "list") {
         N = sqrt(length(u))
         x = u[1:N]
         y = matrix(v, ncol = N)[1, ]
@@ -1163,15 +1137,18 @@ function(u = 0.5, v = u, rho = 0.75, nu = 4, output = c("vector", "list") )
     
     # FUNCTION:
     
+    # Match Arguments:
+    output = match.arg(output)
+    
     # Settings:
     type = "t"
     if (is.list(u)) {
-        v = u$y
-        u = u$x
+        v = u[[2]]
+        u = u[[1]]
     }
     if (is.matrix(u)) {
-        v = u[, 1]
-        u = u[, 2]
+        v = u[, 2]
+        u = u[, 1]
     }
     
     # Copula Probability:
@@ -1194,7 +1171,7 @@ function(u = 0.5, v = u, rho = 0.75, nu = 4, output = c("vector", "list") )
     attr(C.uv, "control") <- c(rho = rho, nu = nu)
     
     # As List ?
-    if (output[1] == "list") {
+    if (output == "list") {
         N = sqrt(length(u))
         x = u[1:N]
         y = matrix(v, ncol = N)[1, ]
@@ -1221,15 +1198,18 @@ function(u = 0.5, v = u, rho = 0.75, nu = 4, output = c("vector", "list") )
     
     # FUNCTION:
     
+    # Match Arguments:
+    output = match.arg(output)
+    
     # Settings:
     type = "t"
     if (is.list(u)) {
-        v = u$y
-        u = u$x
+        v = u[[2]]
+        u = u[[1]]
     }
     if (is.matrix(u)) {
-        v = u[, 1]
-        u = u[, 2]
+        v = u[, 2]
+        u = u[, 1]
     }
     
     # Copula Probability:
@@ -1242,83 +1222,12 @@ function(u = 0.5, v = u, rho = 0.75, nu = 4, output = c("vector", "list") )
     attr(c.uv, "control") <- c(rho = rho, nu = nu)
     
     # As List ?
-    if (output[1] == "list") {
+    if (output == "list") {
         N = sqrt(length(u))
         x = u[1:N]
         y = matrix(v, ncol = N)[1, ]
         c.uv = list(x = x, y = y,  z = matrix(c.uv, ncol = N))
     }
-    
-    # Return Value:
-    c.uv
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.rcauchyCopula =
-function(n, rho = 0.75)
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Generates Student-t copula random variate
-    
-    # Example:
-    #   UV = rtCopula(n = 10000); plot(UV[,1], UV[,2], cex = 0.25)
-
-    # FUNCTION:
-    
-    # Cauchy Deviates:
-    Z = .rtCopula(n = n, rho = rho, nu = 1)
-    
-    # Return Value:
-    Z
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.pcauchyCopula = 
-function(u = 0.5, v = u, rho = 0.75, output = c("vector", "list") )
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Computes Student-t copula probability
-    
-    # Arguments:
-    #   see function 'pellipticalCopula'
-    
-    # FUNCTION:
-    
-    # Cauchy Probability:
-    C.uv = .ptCopula(u = u, v = v, rho = NULL, nu = 1, output = output)
-    attr(C.uv, "control") <- c(rho = rho)
-    
-    # Return Value:
-    C.uv
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.dcauchyCopula = 
-function(u = 0.5, v = u, rho = 0.75, nu = 4, output = c("vector", "list") )
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Computes Student-t copula density
-    
-    # Arguments:
-    #   see function 'dellipticalCopula'
-    
-    # FUNCTION:
-    
-    # Cauchy Density:
-    c.uv = .dtCopula(u = u, v = v, rho = NULL, nu = 1, output = output)
-    attr(c.uv, "control") <- c(rho = rho)
     
     # Return Value:
     c.uv
@@ -1363,10 +1272,17 @@ function(n, rho = 0.75, param = NULL, type = c("norm", "cauchy", "t"))
     # FUNCTION:
     
     # Settings:
-    type = type[1]
+    type = match.arg(type)
     
     # Parameters:
-    if (type == "t") if(is.null(param)) param = c(nu = 4)
+    if (type == "t") {
+        if(is.null(param)) {
+            param = c(nu = 4)
+        } else {
+            param = c(nu = param)
+        }
+        names(param) = "nu"
+    }
     
     # Copula:
     if (type == "norm") 
@@ -1375,6 +1291,10 @@ function(n, rho = 0.75, param = NULL, type = c("norm", "cauchy", "t"))
         ans = .rcauchyCopula(n = n, rho = rho)
     if (type == "t") 
         ans = .rtCopula(n = n, rho = rho, nu = param)
+    
+    # Add Control Attribute:
+    control = list(rho = rho, param = param, type = type)
+    attr(ans, "control")<-unlist(control)
         
     # Return Value:
     ans
@@ -1425,7 +1345,7 @@ function(B = 100)
             "Kendall = ", as.character(round(Tau, digits = 3)), "|",
             "Spearman = ", as.character(round(Rho, digits = 3)) )       
         set.seed(seed)
-        R = rellipticalCopula(n = N, rho = rho, nu = nu, type = Type[Copula])
+        R = rellipticalCopula(n = N, rho = rho, param = nu, type = Type[Copula])
         plot(x = R[, 1], y = R[, 2], xlim = c(0, 1), ylim = c(0, 1), 
             xlab = "u", ylab = "v", pch = 19, col = col, cex = size)
         title(main = Title)
@@ -1445,8 +1365,79 @@ function(B = 100)
 }
 
 
+# ------------------------------------------------------------------------------
+
+
+.rcauchyCopula =
+function(n, rho = 0.75)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Generates Student-t copula random variate
+    
+    # Example:
+    #   UV = rtCopula(n = 10000); plot(UV[,1], UV[,2], cex = 0.25)
+
+    # FUNCTION:
+    
+    # Cauchy Deviates:
+    Z = .rtCopula(n = n, rho = rho, nu = 1)
+    
+    # Return Value:
+    Z
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.pcauchyCopula = 
+function(u = 0.5, v = u, rho = 0.75, output = c("vector", "list") )
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Computes Student-t copula probability
+    
+    # Arguments:
+    #   see function 'pellipticalCopula'
+    
+    # FUNCTION:
+    
+    # Cauchy Probability:
+    C.uv = .ptCopula(u = u, v = v, rho = rho, nu = 1, output = output)
+    attr(C.uv, "control") <- c(rho = rho)
+    
+    # Return Value:
+    C.uv
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.dcauchyCopula = 
+function(u = 0.5, v = u, rho = 0.75, nu = 4, output = c("vector", "list") )
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Computes Student-t copula density
+    
+    # Arguments:
+    #   see function 'dellipticalCopula'
+    
+    # FUNCTION:
+    
+    # Cauchy Density:
+    c.uv = .dtCopula(u = u, v = v, rho = rho, nu = 1, output = output)
+    attr(c.uv, "control") <- c(rho = rho)
+    
+    # Return Value:
+    c.uv
+}
+
+
 ################################################################################
-# COPULA PROBABILIY:
+# ELLIPTICAL COPULAE PROBABILIY:
 
 
 pellipticalCopula =
@@ -1484,17 +1475,19 @@ border = TRUE)
     
     # FUNCTION:
 
+    # Match Arguments:
+    type = match.arg(type)
+    output = match.arg(output)
+    
     # Settings:
     subdivisions = 100
-    type = type[1]
-    output = output[1]
     if (is.list(u)) {
-        v = u$y
-        u = u$x
+        v = u[[2]]
+        u = u[[1]]
     }
     if (is.matrix(u)) {
-        v = u[, 1]
-        u = u[, 2]
+        v = u[, 2]
+        u = u[, 1]
     }
     if (length(u) == 1 & u[1] > 1) {
         return(.pellipticalCopulaGrid(N = u, rho, param, type, border = border))
@@ -1585,6 +1578,43 @@ border = TRUE)
     
     # Return Value:
     C.uv 
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+pellipticalSlider =
+function(type = c("persp", "contour"), B = 20)
+{   # A function implemented by Diethelm Wuertz
+        
+    # Description:
+    #   Displays interactively plots of probability
+    
+    # Description:
+    #   Displays interactively plots of probability
+    
+    # Arguments:
+    #   type - a character string specifying the plot type.
+    #       Either a perspective plot which is the default or
+    #       a contour plot with an underlying image plot will
+    #       be created.
+    #   B - the maximum slider menu value when the boundary
+    #       value is infinite. By default this is set to 10.
+    
+    # FUNCTION:
+    
+    # Settings:
+    type = type[1]
+    
+    # Plot:
+    if (type == "persp")
+        .pellipticalPerspSlider(B = B)
+    if (type == "contour")
+        .pellipticalContourSlider(B = B)
+        
+    # Return Value:
+    invisible()
 }
 
 
@@ -1698,43 +1728,6 @@ function(N, rho = 0.75, param = NULL, type = c("norm", "cauchy",
 # ------------------------------------------------------------------------------
 
 
-pellipticalSlider =
-function(type = c("persp", "contour"), B = 20)
-{   # A function implemented by Diethelm Wuertz
-        
-    # Description:
-    #   Displays interactively plots of probability
-    
-    # Description:
-    #   Displays interactively plots of probability
-    
-    # Arguments:
-    #   type - a character string specifying the plot type.
-    #       Either a perspective plot which is the default or
-    #       a contour plot with an underlying image plot will
-    #       be created.
-    #   B - the maximum slider menu value when the boundary
-    #       value is infinite. By default this is set to 10.
-    
-    # FUNCTION:
-    
-    # Settings:
-    type = type[1]
-    
-    # Plot:
-    if (type == "persp")
-        .pellipticalPerspSlider(B = B)
-    if (type == "contour")
-        .pellipticalContourSlider(B = B)
-        
-    # Return Value:
-    invisible()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
 .pellipticalPerspSlider =
 function(B = 20)
 {   # A function implemented by Diethelm Wuertz
@@ -1780,7 +1773,7 @@ function(B = 20)
             type = Type[Copula], border = TRUE)
         persp(P, theta = theta, phi = phi, col = "steelblue", shade = 0.5,
             ticktype = "detailed", cex = 0.5, xlab = "u", ylab = "v",
-            zlab = "C(u,v)", xlim = c(0, 1), ylim = c(0, 1), zlim = c(0, 1) )
+            zlab = "C(u, v)", xlim = c(0, 1), ylim = c(0, 1), zlim = c(0, 1) )
         title(main = Title)
         Tau = as.character(round(2*asin(rho)/pi, 2))
         mTitle = paste("Tau", Tau)
@@ -1869,15 +1862,15 @@ function(B = 20)
     plot.names = c("Plot - levels", "... colors")
     .sliderMenu(refresh.code,
         names = c("Copula", "N", "rho", "2: nu", "4: s", plot.names),
-        minima      = c( 1,  10, -0.95,       1,    0.1,    10,   12),
+        minima      = c( 1,  10, -0.95,       1,    0.1,     5,   12),
         maxima      = c( 4, 100,  0.95,       B,      5,   100,  256),
-        resolutions = c( 1,  10,  0.05,     0.1,    0.1,    10,    4),
-        starts      = c( 1,  20,  0.50,       4,      1,     1,    20,   32)) 
+        resolutions = c( 1,  10,  0.05,     0.1,    0.1,     5,    4),
+        starts      = c( 1,  20,  0.50,       4,      1,    10,   32)) 
 }
 
 
 ################################################################################
-# COPULA DENSITY:
+# ELLIPTICAL COPULA DENSITY:
 
 
 dellipticalCopula = 
@@ -1927,16 +1920,18 @@ border = TRUE)
         }
     }
 
+    # Match Arguments:
+    type = match.arg(type)
+    output = match.arg(output)
+    
     # Settings:
-    type = type[1]
-    output = output[1]
     if (is.list(u)) {
-        v = u$y
-        u = u$x
+        v = u[[2]]
+        u = u[[1]]
     }
     if (is.matrix(u)) {
-        v = u[, 1]
-        u = u[, 2]
+        v = u[, 2]
+        u = u[, 1]
     }
     if (length(u) == 1 & u[1] > 1) {
         return(.pellipticalCopulaGrid(N = u, rho, param, type, border = border))
@@ -1956,7 +1951,7 @@ border = TRUE)
     if (rho == 0 & type == "norm") c.uv[!is.na(c.uv)] = 1
     names(c.uv) = NULL
     attr(c.uv, "control") <- c(rho = rho)
-    if (output[1] == "list") {
+    if (output == "list") {
         N = sqrt(length(u))
         x = u[1:N]
         y = matrix(v, ncol = N)[1, ]
@@ -1965,6 +1960,43 @@ border = TRUE)
     
     # Return Value:
     c.uv
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+dellipticalSlider =
+function(type = c("persp", "contour"), B = 20)
+{   # A function implemented by Diethelm Wuertz
+        
+    # Description:
+    #   Displays interactively plots of density
+    
+    # Description:
+    #   Displays interactively plots of density
+    
+    # Arguments:
+    #   type - a character string specifying the plot type.
+    #       Either a perspective plot which is the default or
+    #       a contour plot with an underlying image plot will
+    #       be created.
+    #   B - the maximum slider menu value when the boundary
+    #       value is infinite. By default this is set to 10.
+    
+    # FUNCTION:
+    
+    # Settings:
+    type = type[1]
+    
+    # Plot:
+    if (type == "persp")
+        .dellipticalPerspSlider(B = B)
+    if (type == "contour")
+        .dellipticalContourSlider(B = B)
+        
+    # Return Value:
+    invisible()
 }
 
 
@@ -2154,43 +2186,6 @@ function()
 # ------------------------------------------------------------------------------
 
 
-dellipticalSlider =
-function(type = c("persp", "contour"), B = 20)
-{   # A function implemented by Diethelm Wuertz
-        
-    # Description:
-    #   Displays interactively plots of density
-    
-    # Description:
-    #   Displays interactively plots of density
-    
-    # Arguments:
-    #   type - a character string specifying the plot type.
-    #       Either a perspective plot which is the default or
-    #       a contour plot with an underlying image plot will
-    #       be created.
-    #   B - the maximum slider menu value when the boundary
-    #       value is infinite. By default this is set to 10.
-    
-    # FUNCTION:
-    
-    # Settings:
-    type = type[1]
-    
-    # Plot:
-    if (type == "persp")
-        .dellipticalPerspSlider(B = B)
-    if (type == "contour")
-        .dellipticalContourSlider(B = B)
-        
-    # Return Value:
-    invisible()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
 .dellipticalPerspSlider =
 function(B = 20)
 {   # A function implemented by Diethelm Wuertz
@@ -2341,10 +2336,10 @@ function(B = 20)
     plot.names = c("Plot - levels", "... colors")
     .sliderMenu(refresh.code,
         names = c("Copula", "N", "rho", "2: nu", "4: s", plot.names),
-        minima      = c( 1,  10, -0.95,       1,    0.1,    10,   12),
+        minima      = c( 1,  10, -0.95,       1,    0.1,     5,   12),
         maxima      = c( 4, 100,  0.95,       B,      5,   100,  256),
-        resolutions = c( 1,  10,  0.05,     0.1,    0.1,    10,    4),
-        starts      = c( 1,  20,  0.50,       4,      1,    20,   32)) 
+        resolutions = c( 1,  10,  0.05,     0.1,    0.1,     5,    4),
+        starts      = c( 1,  20,  0.50,       4,      1,    10,   32)) 
 }
 
 
@@ -2409,11 +2404,11 @@ function(rho, param = NULL, type = c("norm", "cauchy", "t", "logistic",
     D = .dellipticalCopulaGrid(N = N, rho = rho, param = param, 
         type = type, border = FALSE)
     ans = round(12*mean(Pi$z*D$z)-3, 2)
-    names(ans) = paste("Spearman Rho:", Type)
+    names(ans) = NULL
     
     # Add Control Attribute:
-    attr(ans, "control") <- round(
-        c(rho = rho, param = param, norm = ans.norm, tau = 2*asin(rho)/pi), 2)
+    control = c(rho = rho, param = param, type = type, tau = 2*asin(rho)/pi)
+    attr(ans, "control")<-unlist(control)
     
     # Return Value:
     ans
@@ -2437,6 +2432,12 @@ function(rho, param = NULL, type = c("norm", "cauchy", "t", "logistic",
     #       between minus one and one.
 
     # FUNCTION:
+    
+    # Match Arguments:
+    type = match.arg(type)
+    
+    # Check:
+    stopifnot(length(rho) == 1)
     
     # Compute Tail Dependence:
     lambda = 0
@@ -2484,8 +2485,11 @@ function(param = NULL, type = c("norm", "cauchy", "t", "logistic",
 
     # FUNCTION:
     
+    # Match Arguments:
+    type = match.arg(type)
+    tail = match.arg(tail)
+    
     # Settings:
-    type = type[1]
     Title = c("Normal", "Cauchy", "Student-t", "Logistic", "Laplace",
         "Kotz", "Exponential Power")
     Title = paste(Title, "Copula")
@@ -2569,10 +2573,10 @@ function(param = NULL, type = c("norm", "cauchy", "t", "logistic",
         # Cauchy and Student-t Tail Dependence:
         if (type == "t") {
             if (tail == "Upper") 
-                lines(u[u<0.99], lambdaTail[u<0.99], lty = linetype, 
+                lines(u[u < 0.99], lambdaTail[u<0.99], lty = linetype, 
                     col = color)
             if (tail == "Lower") 
-                lines(u[u>0.01], lambdaTail[u>0.01], lty = linetype, 
+                lines(u[u > 0.01], lambdaTail[u>0.01], lty = linetype, 
                     col = color)
         }
         
@@ -2629,26 +2633,48 @@ function (n, rho = 0.75, param = NULL, type = c("norm", "cauchy", "t"))
     # Description:
     #   Simulates bivariate elliptical Copula
     
-    # Settings:
-    type = type[1]
+    # Match Arguments:
+    type = match.arg(type)
       
-    # Random Deviates:  
+    # "norm" Random Deviates:  
     if (type == "norm") {
         ans = .rnormCopula(n = n, rho = rho)
-        return(ans)
     }
+    
+    # "cauchy" Random Deviates:
     if (type == "cauchy") {
         ans = .rcauchyCopula(n = n, rho = rho)
-        return(ans)
     }
+    
+    # "t" Random Deviates:
     if (type == "t") {
-        if (is.null(param)) param = c(nu = 4)
+        if (is.null(param)) {
+            param = c(nu = 4)
+        } else {
+            param = c(nu = param[1])
+        }
         ans = .rtCopula(n = n, rho = rho, nu = param)
-        return(ans)
     }
+     
+    # "logistic" Random Deviates:
+    # NOT YET IMPLEMENTED ...
+    
+    # "laplace" Random Deviates:
+    # NOT YET IMPLEMENTED ...
+
+    
+    # "kotz" Random Deviates:
+    # NOT YET IMPLEMENTED ...
+
+    # "epower" Random Deviates:
+    # NOT YET IMPLEMENTED ...
+ 
+    # Control:
+    control = list(rho = rho, param = param, type = type)
+    attr(ans, "control") = unlist(control)
         
     # Return Value:
-    invisible()
+    ans
 }
 
 
@@ -2656,7 +2682,7 @@ function (n, rho = 0.75, param = NULL, type = c("norm", "cauchy", "t"))
 
     
 ellipticalCopulaFit =
-function(u, v, type = c("norm", "cauchy", "t"))
+function(u, v = NULL, type = c("norm", "cauchy", "t"), ...)
 {   # A function implemented by Diethelm Wuertz
     
     # Description:
@@ -2667,74 +2693,98 @@ function(u, v, type = c("norm", "cauchy", "t"))
     
     # FUNCTION:
     
+    # Match Arguments:
+    type = match.arg(type)
+    
     # Settings:
+    U = u
+    V = v
     if (is.list(u)) {
-        v = u$y
-        u = u$x
+        u = u[[1]]
+        v = u[[2]]
     }
     if (is.matrix(u)) {
-        v = u[, 1]
-        u = u[, 2]
+        U = u[, 1]
+        V = u[, 2]
     }
+    U <<- u
+    V <<- v
 
     # Estimate Rho from Kendall's tau for all types of Copula:
-    tau = cor(x = u, y = v, method = "kendall")
-    est = rho = c(rho = sin((pi*tau/2)))
-    
-    # Estimate rho via LLH:
+    tau = cor(x = U, y = V, method = "kendall") #[1, 2]
+    Rho = rho = sin((pi*tau/2))
+     
+    # Estimate "norm" Copula:
     if (type == "norm") {
-        fun = function(x, u, v) {
-            -sum( log(.dnormCopula(u = u, v = v, rho = tanh(x))) ) 
+        fun = function(x) {
+            -mean( log(.dnormCopula(u = U, v = V, rho = x)) )
         }
-        mle = nlm(f = fun, p = atanh(est), u = u, v = v)$estimate
-        est = c(rho = est[[1]], mle = c(rho = tanh(mle)))
+        fit = nlminb(start = rho, objective = fun, lower = -1, upper = 1, ...)
     }
     
-    # Estimate Nu:
+    # Estimate "cauchy" Copula:
+    if (type == "cauchy") {
+        fun = function(x) {
+            -mean( log(.dcauchyCopula(u = U, v = V, rho = x)) ) 
+        }
+        fit = nlminb(start = rho, objective = fun, lower = -1, upper = 1, ...)
+    }
+    
+    # Estimate "t" Copula:
     if (type == "t") {
-        fun1 = function(x, u, v, rho) {
-            sum( log(.dtCopula(u = u, v = v, rho = rho, nu = x)) ) 
+        fun = function(x) {
+            -mean( log(.dtCopula(u = U, v = V, rho = x[1], nu = x[2])) ) 
         }
-        nu = optimize(fun1, lower = 1, upper = 100, maximum = TRUE, 
-            u = u, v = v, rho = rho)$maximum
-        # Have we reached the upper limit for nu?
-        if (nu > 99) {
-            nu = 100
-            warning("upper limit of 100 reached for nu")
-        }
-        est = c(rho = est[[1]], nu = nu)
-        
-        fun2 = function(x, u, v) {
-            if (x[2] > 100 | x[2] < 1) 
-                llh = 1e99
-            else llh = -sum( log(.dtCopula(u = u, v = v, 
-                rho = tanh(x[1]), nu = x[2] ) ))
-            llh
-        }
-        par = c( atanh(est[[1]]), est[[2]] ) 
-        mle = nlm(f = fun2, p = par, u = u, v = v)$estimate
-        # Have we reached the upper limit for nu?
-        if (mle[2] > 99) {
-            mle[2] = 100
-            warning("upper limit of 100 reached for nu")
-        }
-        est = c( rho = est[[1]], nu = est[[2]], 
-            mle = c(rho = tanh(mle[1]), nu = mle[2]) )
+        fit = nlminb(start = c(rho = rho, nu = 4), objective = fun, 
+             lower = c(-1, 1), upper = c(1, Inf), ...)
+        fit$Nu = 4
     }
     
-    # Estimate Nu - quite slow in execution time:
-    if (type == "epower") {
-        fun = function(x, u, v, rho) {  
-            sum( log(dellipticalCopula(u = u, v = v, rho = rho, 
-                param = c(r = 1, s = x), type = "epower")) ) 
+    # Estimate "logistic" Copula:
+    if (type == "logistic") {
+        # NOT YET IMPLEMENTED ...
+        fun = function(x) {
+            -mean( log(dellipticalCopula(u = U, v = V, ...)) ) 
         }
-        s = optimize(fun, lower = 0.01, upper = 10, maximum = TRUE, 
-            u = u, v = v, rho = rho)$maximum
-        est = c(rho = est[[1]], s = s)
+        fit = nlminb(start = c(), objective = fun, 
+             lower = c(rho = -1, NA), upper = c(rho = 1, NA), ...)
     }
+    
+    # Estimate "laplace" Copula:
+    if (type == "laplace") {
+        # NOT YET IMPLEMENTED ...
+        fun = function(x) {
+            -mean( log(dellipticalCopula(u = U, v = V, ...)) ) 
+        }
+        fit = nlminb(start = c(), objective = fun, 
+             lower = c(rho = -1, NA), upper = c(rho = 1, NA), ...)
+    }
+    
+    # Estimate "kotz" Copula:
+    if (type == "kotz") {
+        # NOT YET IMPLEMENTED ...
+        fun = function(x) {
+            -mean( log(dellipticalCopula(u = U, v = V, ...)) ) 
+        }
+        fit = nlminb(start = c(), objective = fun, 
+             lower = c(rho = -1, NA), upper = c(rho = 1, NA), ...)
+    }
+    
+    # Estimate "epower" Copula:
+    if (type == "epower") {
+        # NOT YET IMPLEMENTED ...
+        fun = function(x) {
+            -mean( log(dellipticalCopula(u = U, v = V, ...)) ) 
+        }
+        fit = nlminb(start = c(), objective = fun, 
+             lower = c(rho = -1, NA), upper = c(rho = 1, NA), ...)
+    }
+    
+    # Keep Start Value:
+    # fit$Rho = Rho
     
     # Return Value:
-    est
+    fit
 }
 
 

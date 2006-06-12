@@ -14,56 +14,71 @@
 # Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
 # MA  02111-1307  USA
 
+# Copyrights (C)
+# for this R-port: 
+#   1999 - 2006, Diethelm Wuertz, GPL
+#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
+#   info@rmetrics.org
+#   www.rmetrics.org
+# for the code accessed (or partly included) from other R-ports:
+#   see R's copyright and license files
+# for the code accessed (or partly included) from contributed R-ports
+# and other sources
+#   see Rmetrics's copyright file
 
 
 ################################################################################
-# FUNCTION:                 ARCHIMEDEAN COPULAE:
+# FUNCTION:                 ARCHIMEDEAN COPULAE PARAMETER:
 #  .archmParam               Sets Default parameters for an Archimedean copula
 #  .archmCheck               Checks if alpha is in the valid range
 #  .archmRange               Returns the range of valid alpha values
 # FUNCTION:                 ARCHIMEDEAN GENERATOR:
 #  Phi                       Computes Archimedean Phi, inverse and derivatives
+#  PhiSlider                 Displays interactively generator function
 #  .Phi                      Computes Archimedean generator Phi
+#  .Phi0                     Utility Function
 #  .PhiFirstDer              Computes first derivative of Phi
 #  .PhiSecondDer             Computes second derivative of Phi
 #  .invPhi                   Computes inverse of Archimedean generator
 #  .invPhiFirstDer           Computes first derivative of inverse Phi
 #  .invPhiSecondDer          Computes second derivative of inverse Phi
-#  PhiSlider                 Displays interactively generator function
 # FUNCTION:                 ARCHIMEDEAN DENSITY:
-#  Kfunc                     Computes Density and its Inverse
+#  Kfunc                     Computes Archimedean Density Kc and its Inverse
+#  KfuncSlider               Displays interactively the density and concordance
 #  .Kfunc                    Computes Density for Archimedean Copulae
 #  .invK                     Computes Inverse of Density
-#  .invK2
-#  .ALPHA
-#  .TAU
-#  .RHO
-#  KfuncSlider               Displays interactively the density and concordance
+#  .invK2                    Utility Function
+#  .ALPHA                    Utility Function
+#  .TAU                      Utility Function
+#  .RHO                      Utility Function
 # FUNCTION                  KENDALL'S TAU AND SPEARMAN'S RHO:
 #  archmTau                  Returns Kendall's tau for Archemedean copulae
 #  archmRho                  Returns Spearman's rho for Archemedean copulae
 #  .archmTauRange             Returns range for Kendall's tau
 #  .archm2Tau                 Alternative way to compute Kendall's tau
 #  .archmGamma               Returns Gini's gamma for Archimedean copulae
-#  .archmTail
-# FUNCTION:                 ARCHIMEDEAN RANDOM VARIATES:
+#  .archmTail                 Utility Function
+# FUNCTION:                 ARCHIMEDEAN COPULA RANDOM VARIATES:
 #  rarchmCopula              Generates Archimedean copula random variates 
 #  .r1Copula                 Generates rv's for copulae No 1
 #  .r2Copula                 Generates rv's for copulae No 2
-# FUNCTION:                 ARCHIMEDEAN PROBABILITY:
+# FUNCTION:                 ARCHIMEDEAN COPULA PROBABILITY:
 #  parchmCopula              Computes Archimedean copula probability 
-#  .parchm1Copula
-#  .parchm2Copula
-#  parchmSlider              
-#  .parchmPerspSlider
-#  .parchmContourSlider
-# FUNCTION:                 ARCHIMEDEAN DENSITY:
+#  parchmSlider              Displays interactively archimedean probability 
+#  .parchm1Copula             Utility Function
+#  .parchm2Copula             Utility Function
+#  .parchmPerspSlider         Utility Function
+#  .parchmContourSlider       Utility Function
+# FUNCTION:                 ARCHIMEDEAN COPULA DENSITY:
 #  darchmCopula              Computes Archimedean copula density 
-#  .darchm1Copula
-#  .darchm2Copula
-#  darchmSlider
-#  .darchmPerspSlider
-#  .darchmContourSlider
+#  darchmSlider               Displays interactively archimedean density 
+#  .darchm1Copula             Utility Function
+#  .darchm2Copula             Utility Function
+#  .darchmPerspSlider         Utility Function
+#  .darchmContourSlider       Utility Function
+# FUNCTION:                 ARCHIMEDEAN COPULA PARAMETER FITTING:
+#  archmCopulaSim            Simulates bivariate elliptical copula
+#  archmCopulaFit            Fits the paramter of an elliptical copula
 ################################################################################
 
 
@@ -191,37 +206,163 @@ function(x, alpha = NULL, type = 1:22, inv = FALSE, deriv = c(0, 1, 2))
 # ------------------------------------------------------------------------------
 
 
-.Phi.0 =
-function(alpha, type)
-{
-    # Phi(0):
-    phi.0 = c(
-        phi01.0 = if (alpha < 0) -1/alpha else Inf,
-        phi02.0 = 1,
-        phi03.0 = Inf,
-        phi04.0 = Inf,
-        phi05.0 = Inf,
-        phi06.0 = Inf,
-        phi07.0 = if (alpha == 0) 1 else -log(1 - alpha),
-        phi08.0 = 1,
-        phi09.0 = Inf,
-        phi10.0 = Inf,
-        phi11.0 = if (alpha == 0) Inf else log(2),
-        phi12.0 = Inf,
-        phi13.0 = Inf,
-        phi14.0 = Inf,
-        phi15.0 = 1,
-        phi16.0 = if (alpha == 0) 1 else Inf,
-        phi17.0 = Inf,
-        phi18.0 = exp(-alpha),
-        phi19.0 = Inf,
-        phi20.0 = Inf,
-        phi21.0 = 1,
-        phi22.0 = if (alpha == 0) Inf else pi/2 
-    )
+PhiSlider =
+function()
+{   # A function implemented by Diethelm Wuertz
+       
+    # Description:
+    #   Displays interactively the dependence function
     
-    # Return Value:
-    phi.0[type]
+    # FUNCTION:
+    
+    # Graphic Frame:
+    par(mfcol = c(2, 2), cex = 0.7)
+    
+    # Internal Function:
+    refresh.code = function(...)
+    {
+        # Sliders:
+        Copula = as.integer(.sliderMenu(no = 1))
+        Counter = c(1,2,3,2,4,2,5,2,5,5,6,2,7,2,2,7,4,8,7,7,2,5)
+        No = Counter[Copula]
+        N = .sliderMenu(no = 2)
+        alpha = .sliderMenu(no = No+2)
+        
+        # Skip:
+        if (Copula == 13 & alpha == 0) return(invisible())
+        
+        # Do we have a strict Copula?
+        strict = c(
+            "Yes","No","Yes","Yes","Yes","Yes","No","No","Yes","Yes",
+            "No","Yes","Yes","Yes","No","Yes","Yes","No","Yes","Yes", 
+            "No","Yes")[Copula]
+        if (alpha < 0 & Copula == 1) strict[1] = "No"
+        if (alpha == 0 & Copula == 16) strict[16] = "No"
+        
+        # What is the Range?
+        RANGE = c(
+            "-1|Inf", "1|Inf", "-1|1", "-Inf|inf", "0|1", "0|0.5", 
+            "0|Inf", "2|Inf")[No]
+                 
+        # Which one is the Limit Copula?
+        limitTitle = rep("NA", times = 22)
+        if (alpha == -1) 
+            limitTitle = c(
+                "W ", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA",
+                "NA", "NA", "NA", "NA", "NA", "NA", "Pi", "NA", "NA", "NA",
+                "NA", "NA")   
+        if (alpha == 0) 
+            limitTitle = c(
+                "Pi", "NA", "Pi", "NA", "Pi", "NA", "W ", "NA", "Pi", "Pi",
+                "Pi", "NA", "NA", "NA", "NA", "W ", "NA", "NA", "L ", "Pi",
+                "NA", "Pi")    
+        if (alpha == 1) 
+            limitTitle = c(
+                "L ", "W ", "L ", "Pi", "NA", "Pi", "Pi", "W ", "NA", "NA",
+                "NA", "L ", "Pi", "L ", "W ", "NA", "NA", "NA", "NA", "NA",
+                "W ", "NA")
+        limitTitle = limitTitle[Copula]
+        if (limitTitle == "NA") {
+            limitTitle = " "
+        } else {
+            limitTitle = paste("  Copula = ", limitTitle[1])
+        }
+        
+        # Plot phi:
+        x = (0:N)/N
+        Title = paste("Generator Phi - Copula No:", as.character(Copula), 
+            "\nalpha = ", as.character(alpha), "  Strict = ", strict, 
+            limitTitle)
+        phi.0 = .Phi(x = 0, alpha = alpha, type = Copula)
+        y = .Phi(x = x, alpha = alpha, type = Copula)
+        x = x[y < 1e6]
+        y = y[y < 1e6]
+        if (is.finite(y[1])) ylim = c(0, y[1]) else ylim = c(0, y[2])
+        plot(x = x, y = y, type = "l", ylim = ylim, main = Title[1], 
+            xlab = "t", ylab = paste("Phi |", RANGE))
+        if (N < 100) points(x = x, y = y, pch = 19, cex = 0.5)
+        y.inv = .invPhi(x = y, alpha = alpha, type = Copula)
+        lines(x = y.inv, y = y, col = "red", lty = 3)
+        abline(h = 0, lty = 3)
+        points(0, phi.0, col = "red", pch = 19) 
+        
+        # Plot phi first and second Derivative:
+        y1 = .PhiFirstDer(x = x, alpha = alpha, type = Copula)
+        y2 = .PhiSecondDer(x = x, alpha = alpha, type = Copula)
+        r1 = max(abs(y1[is.finite(y1)]))
+        r2 = max(abs(y2[is.finite(y2)]))
+        if (r2 == 0) r2 = 1
+        plot(x = x, y = y1/r1, ylim = c(-1, 1), type = "l", xlab = "t",
+            ylab = "Derivatives", main = "Phi first and second Derivative", 
+            col = "blue")
+        if (N < 100) points(x = x, y = y1/r1, pch = 19, cex = 0.5)
+        lines(x = x, y = y2/r2, col = "red")
+        if (N < 100) points(x = x, y = y2/r2, pch = 19, cex = 0.5)
+        abline(h = 0, lty = 3)
+        mtext("First                  ", 4, col = "blue", cex = 0.75)
+        mtext("                 Second", 4, col = "red ", cex = 0.75)
+        mtext(paste("x", as.character(round(r1, digits = 2))), 1, 
+            line = -2, col = "blue", cex = 0.75)
+        mtext(paste("x", as.character(round(r2, digits = 2))), 3, 
+            line = -2, col = "red", cex = 0.75)
+        
+        # Plot invPhi:
+        Title = paste( "Inverse Phi\n Phi(0) =", 
+            as.character(round(phi.0, digits = 3)))
+        plot(x = y, y = y.inv, type = "l", main = Title,
+            xlab = paste("Phi |", RANGE), ylab = "t")
+        if (N < 100) points(x = y, y = y.inv, pch = 19, cex = 0.5)      
+        abline(h = 0, lty = 3)
+        points(phi.0, 0, col = "red", pch = 19) 
+        
+        # Plot invPhi first & second Derivative:
+        y = y[y < .Phi0(alpha, Copula)]
+        Title = "Inverse Phi 1st Derivative"
+        y1.inv = .invPhiFirstDer(x = y, alpha = alpha, type = Copula)
+        y2.inv = .invPhiSecondDer(x = y, alpha = alpha, type = Copula)
+        r1 = max(abs(y1.inv[is.finite(y1.inv)]))
+        r2 = max(abs(y2.inv[is.finite(y2.inv)]))
+        if (r2 == 0) r2 = 1
+        plot(x = y, y = y1.inv/r1, ylim = c(-1, 1), 
+            type = "l", xlim = range(y), xlab = paste("Phi |", RANGE), 
+            ylab = "dewrivatives", 
+            main = "Inv Phi first and second Derivative", col = "blue")
+        if (N < 100) points(x = y, y = y1.inv/r1, pch = 19, cex = 0.5)
+        lines(x = y, y = y2.inv/r2, col = "red")
+        if (N < 100) points(x = y, y = y2.inv/r2, pch = 19, cex = 0.5)
+        abline(h = 0, lty = 3)
+        mtext("First                  ", 4, col = "blue", cex = 0.75)
+        mtext("                 Second", 4, col = "red ", cex = 0.75)
+        mtext(paste("x", as.character(round(r1, digits = 2))), 1, 
+            line = -2, col = "blue", cex = 0.75)
+        mtext(paste("x", as.character(round(r2, digits = 2))), 3, 
+            line = -2, col = "red", cex = 0.75)
+                         
+        # Reset Frame:
+        par(mfcol = c(2, 2), cex = 0.7)
+    }
+  
+    # Open Slider Menu:
+    B = 5
+    C1 = "1: [-1,Inf]"
+    C2 = "2-4-6-8-12-14-15-21: [1,Inf)"
+    C3 = "3: [-1,1)"
+    C4 = "5-17: (-Inf,Inf)\{0}"
+    C5 = "7-9-10-22: (0,1]"
+    C6 = "11: (0, 1/2]"
+    C7 = "13-16-19-20: (0,Inf)"
+    C8 = "18: [2, Inf)" 
+    C = c(   C1, C2,   C3,   C4,   C5,   C6,   C7,  C8 )  
+    L = c(   -1,  1,   -1,   -B,    0,    0,    0,   2 )
+    U = c(3*B/5,  B,    1,    B,    1,  0.5,  B/2, 2*B )
+    A = c(  0.5,  2,  0.5,    1,  0.5,  0.2,    1,   3 ) 
+    V = rep(0.01, 20)
+    .sliderMenu(refresh.code,
+        names       = c("Copula",  "N", C),
+        minima      = c(       1,   10, L),
+        maxima      = c(      22, 1000, U),
+        resolutions = c(       1,   10, V),
+        starts      = c(       1,  100, A)) 
 }
 
 
@@ -325,10 +466,48 @@ function(x, alpha = NULL, type = 1:22)
     if (Type == "W") f = 1-x
     if (Type == "L") f = 1/x - 1
     
-    f[x == 0] = .Phi.0(alpha, type)
+    f[x == 0] = .Phi0(alpha, type)
     
     # Return Value:
     f
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.Phi0 =
+function(alpha, type)
+{   # A function implemented by Diethelm Wuertz
+
+    # Phi(0):
+    phi.0 = c(
+        phi01.0 = if (alpha < 0) -1/alpha else Inf,
+        phi02.0 = 1,
+        phi03.0 = Inf,
+        phi04.0 = Inf,
+        phi05.0 = Inf,
+        phi06.0 = Inf,
+        phi07.0 = if (alpha == 0) 1 else -log(1 - alpha),
+        phi08.0 = 1,
+        phi09.0 = Inf,
+        phi10.0 = Inf,
+        phi11.0 = if (alpha == 0) Inf else log(2),
+        phi12.0 = Inf,
+        phi13.0 = Inf,
+        phi14.0 = Inf,
+        phi15.0 = 1,
+        phi16.0 = if (alpha == 0) 1 else Inf,
+        phi17.0 = Inf,
+        phi18.0 = exp(-alpha),
+        phi19.0 = Inf,
+        phi20.0 = Inf,
+        phi21.0 = 1,
+        phi22.0 = if (alpha == 0) Inf else pi/2 
+    )
+    
+    # Return Value:
+    phi.0[type]
 }
 
 
@@ -660,7 +839,7 @@ function(x, alpha = NULL, type = 1:22)
     if (Type == "L") finv = 1 / (x+1)   
      
     # Large x Limit:
-    finv[which(x>=.Phi.0(alpha, type))] = 0
+    finv[which(x>=.Phi0(alpha, type))] = 0
     
     # Return Value:
     finv
@@ -773,7 +952,7 @@ function(x, alpha = NULL, type = 1:22)
     if (Type == "L") finv1 = -1 / (x+1)^2
     
     # Large x Limit:
-    finv1[which(x>=.Phi.0(a, type))] = 0
+    finv1[which(x>=.Phi0(a, type))] = 0
         
     # Return Value:
     finv1
@@ -905,178 +1084,15 @@ function(x, alpha = NULL, type = 1:22)
     if (Type == "L") finv2 = 2 / (x+1)^3
     
     # Large x Limit:
-    finv2[which(x>=.Phi.0(a, type))] = 0
+    finv2[which(x>=.Phi0(a, type))] = 0
     
     # Return Value:
     finv2
 }
 
 
-# ------------------------------------------------------------------------------
-
-
-PhiSlider =
-function()
-{   # A function implemented by Diethelm Wuertz
-       
-    # Description:
-    #   Displays interactively the dependence function
-    
-    # FUNCTION:
-    
-    # Graphic Frame:
-    par(mfcol = c(2, 2), cex = 0.7)
-    
-    # Internal Function:
-    refresh.code = function(...)
-    {
-        # Sliders:
-        Copula = as.integer(.sliderMenu(no = 1))
-        Counter = c(1,2,3,2,4,2,5,2,5,5,6,2,7,2,2,7,4,8,7,7,2,5)
-        No = Counter[Copula]
-        N = .sliderMenu(no = 2)
-        alpha = .sliderMenu(no = No+2)
-        
-        # Skip:
-        if (Copula == 13 & alpha == 0) return(invisible())
-        
-        # Do we have a strict Copula?
-        strict = c(
-            "Yes","No","Yes","Yes","Yes","Yes","No","No","Yes","Yes",
-            "No","Yes","Yes","Yes","No","Yes","Yes","No","Yes","Yes", 
-            "No","Yes")[Copula]
-        if (alpha < 0 & Copula == 1) strict[1] = "No"
-        if (alpha == 0 & Copula == 16) strict[16] = "No"
-        
-        # What is the Range?
-        RANGE = c(
-            "-1|Inf", "1|Inf", "-1|1", "-Inf|inf", "0|1", "0|0.5", 
-            "0|Inf", "2|Inf")[No]
-                 
-        # Which one is the Limit Copula?
-        limitTitle = rep("NA", times = 22)
-        if (alpha == -1) 
-            limitTitle = c(
-                "W ", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA", "NA",
-                "NA", "NA", "NA", "NA", "NA", "NA", "Pi", "NA", "NA", "NA",
-                "NA", "NA")   
-        if (alpha == 0) 
-            limitTitle = c(
-                "Pi", "NA", "Pi", "NA", "Pi", "NA", "W ", "NA", "Pi", "Pi",
-                "Pi", "NA", "NA", "NA", "NA", "W ", "NA", "NA", "L ", "Pi",
-                "NA", "Pi")    
-        if (alpha == 1) 
-            limitTitle = c(
-                "L ", "W ", "L ", "Pi", "NA", "Pi", "Pi", "W ", "NA", "NA",
-                "NA", "L ", "Pi", "L ", "W ", "NA", "NA", "NA", "NA", "NA",
-                "W ", "NA")
-        limitTitle = limitTitle[Copula]
-        if (limitTitle == "NA") {
-            limitTitle = " "
-        } else {
-            limitTitle = paste("  Copula = ", limitTitle[1])
-        }
-        
-        # Plot phi:
-        x = (0:N)/N
-        Title = paste("Generator Phi - Copula No:", as.character(Copula), 
-            "\nalpha = ", as.character(alpha), "  Strict = ", strict, 
-            limitTitle)
-        phi.0 = .Phi(x = 0, alpha = alpha, type = Copula)
-        y = .Phi(x = x, alpha = alpha, type = Copula)
-        x = x[y < 1e6]
-        y = y[y < 1e6]
-        if (is.finite(y[1])) ylim = c(0, y[1]) else ylim = c(0, y[2])
-        plot(x = x, y = y, type = "l", ylim = ylim, main = Title[1], 
-            xlab = "t", ylab = paste("Phi |", RANGE))
-        if (N < 100) points(x = x, y = y, pch = 19, cex = 0.5)
-        y.inv = .invPhi(x = y, alpha = alpha, type = Copula)
-        lines(x = y.inv, y = y, col = "red", lty = 3)
-        abline(h = 0, lty = 3)
-        points(0, phi.0, col = "red", pch = 19) 
-        
-        # Plot phi first and second Derivative:
-        y1 = .PhiFirstDer(x = x, alpha = alpha, type = Copula)
-        y2 = .PhiSecondDer(x = x, alpha = alpha, type = Copula)
-        r1 = max(abs(y1[is.finite(y1)]))
-        r2 = max(abs(y2[is.finite(y2)]))
-        if (r2 == 0) r2 = 1
-        plot(x = x, y = y1/r1, ylim = c(-1, 1), type = "l", xlab = "t",
-            ylab = "Derivatives", main = "Phi first and second Derivative", 
-            col = "blue")
-        if (N < 100) points(x = x, y = y1/r1, pch = 19, cex = 0.5)
-        lines(x = x, y = y2/r2, col = "red")
-        if (N < 100) points(x = x, y = y2/r2, pch = 19, cex = 0.5)
-        abline(h = 0, lty = 3)
-        mtext("First                  ", 4, col = "blue", cex = 0.75)
-        mtext("                 Second", 4, col = "red ", cex = 0.75)
-        mtext(paste("x", as.character(round(r1, digits = 2))), 1, 
-            line = -2, col = "blue", cex = 0.75)
-        mtext(paste("x", as.character(round(r2, digits = 2))), 3, 
-            line = -2, col = "red", cex = 0.75)
-        
-        # Plot invPhi:
-        Title = paste( "Inverse Phi\n Phi(0) =", 
-            as.character(round(phi.0, digits = 3)))
-        plot(x = y, y = y.inv, type = "l", main = Title,
-            xlab = paste("Phi |", RANGE), ylab = "t")
-        if (N < 100) points(x = y, y = y.inv, pch = 19, cex = 0.5)      
-        abline(h = 0, lty = 3)
-        points(phi.0, 0, col = "red", pch = 19) 
-        
-        # Plot invPhi first & second Derivative:
-        y = y[y < .Phi.0(alpha, Copula)]
-        Title = "Inverse Phi 1st Derivative"
-        y1.inv = .invPhiFirstDer(x = y, alpha = alpha, type = Copula)
-        y2.inv = .invPhiSecondDer(x = y, alpha = alpha, type = Copula)
-        r1 = max(abs(y1.inv[is.finite(y1.inv)]))
-        r2 = max(abs(y2.inv[is.finite(y2.inv)]))
-        if (r2 == 0) r2 = 1
-        plot(x = y, y = y1.inv/r1, ylim = c(-1, 1), 
-            type = "l", xlim = range(y), xlab = paste("Phi |", RANGE), 
-            ylab = "dewrivatives", 
-            main = "Inv Phi first and second Derivative", col = "blue")
-        if (N < 100) points(x = y, y = y1.inv/r1, pch = 19, cex = 0.5)
-        lines(x = y, y = y2.inv/r2, col = "red")
-        if (N < 100) points(x = y, y = y2.inv/r2, pch = 19, cex = 0.5)
-        abline(h = 0, lty = 3)
-        mtext("First                  ", 4, col = "blue", cex = 0.75)
-        mtext("                 Second", 4, col = "red ", cex = 0.75)
-        mtext(paste("x", as.character(round(r1, digits = 2))), 1, 
-            line = -2, col = "blue", cex = 0.75)
-        mtext(paste("x", as.character(round(r2, digits = 2))), 3, 
-            line = -2, col = "red", cex = 0.75)
-                         
-        # Reset Frame:
-        par(mfcol = c(2, 2), cex = 0.7)
-    }
-  
-    # Open Slider Menu:
-    B = 5
-    C1 = "1: [-1,Inf]"
-    C2 = "2-4-6-8-12-14-15-21: [1,Inf)"
-    C3 = "3: [-1,1)"
-    C4 = "5-17: (-Inf,Inf)\{0}"
-    C5 = "7-9-10-22: (0,1]"
-    C6 = "11: (0, 1/2]"
-    C7 = "13-16-19-20: (0,Inf)"
-    C8 = "18: [2, Inf)" 
-    C = c(   C1, C2,   C3,   C4,   C5,   C6,   C7,  C8 )  
-    L = c(   -1,  1,   -1,   -B,    0,    0,    0,   2 )
-    U = c(3*B/5,  B,    1,    B,    1,  0.5,  B/2, 2*B )
-    A = c(  0.5,  2,  0.5,    1,  0.5,  0.2,    1,   3 ) 
-    V = rep(0.01, 20)
-    .sliderMenu(refresh.code,
-        names       = c("Copula",  "N", C),
-        minima      = c(       1,   10, L),
-        maxima      = c(      22, 1000, U),
-        resolutions = c(       1,   10, V),
-        starts      = c(       1,  100, A)) 
-}
-
-
-# ******************************************************************************
-
+################################################################################
+# ARCHIMEDEAN DENSITY:
 
 Kfunc =
 function(x, alpha = NULL, type = 1:22, inv = FALSE, lower = 1.0e-8)
@@ -1097,112 +1113,6 @@ function(x, alpha = NULL, type = 1:22, inv = FALSE, lower = 1.0e-8)
     # Return Value:
     ans
 }
-
-
-# ------------------------------------------------------------------------------
-
-
-.Kfunc =
-function(x, alpha = NULL, type = 1:22)
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Computes Density for Archimedean Copulae
-    
-    # Arguments:
-    #   x - a numeric vector 
-    
-    # FUNCTION:
-    
-    # Type:
-    type = as.integer(type[1])
-    
-    # Missing x:
-    if (missing(x)) x = (0:10)/10
-    
-    # Alpha:
-    if (is.null(alpha)) alpha = .archmParam(type)$param
-    
-    # Check alpha:
-    check = .archmCheck(alpha, type)
-    
-    # Density:
-    Kfunc = x - .Phi(x, alpha, type) / .PhiFirstDer(x, alpha, type)
-    
-    # Take care from divergencies:
-    Kfunc[is.na(Kfunc)] = 0
-    Kfunc[x == 1] = 1
-    
-    # Return Value:   
-    Kfunc
-}    
-
-
-# ------------------------------------------------------------------------------
-
-
-.invK = 
-function(x, alpha = NULL, type = 1:22, lower = 1.0e-8)
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Computes Inverse of Density for Archimedean Copulae
-    
-    # FUNCTION:
-    
-    # Type:
-    type = type[1]
-    
-    # Alpha:
-    if (is.null(alpha)) alpha = .archmParam(type)$param
-    
-    # Check alpha:
-    check = .archmCheck(alpha, type)
-    
-    # Compute Inverse:
-    .fKC = function(x, p, alpha, type) { .Kfunc (x, alpha, type) - p }
-    p = x
-    z = NULL
-    for (P in p) {
-        if (P > 1 -lower/2) {
-            res = 1    
-        } else if (P < .Kfunc(0, alpha, type) + lower/2 ) {
-            res = 0 
-        } else {
-            res = uniroot(.fKC, c(lower, 1), 
-                p = P, alpha = alpha, type = type)$root
-        }
-        z = c(z, res)
-    }
-    
-    # Return Value: 
-    z
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.invK2 =
-function(x, alpha, type)
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Compute from tabulated values
-    
-    # FUNCTION:
-   
-    # Tabulated Values:
-    iK = NULL
-    for (i in 1:length(x)) {
-        Ord = order(abs(.Kfunc((0:1000)/1000, alpha, type)-x[i]))[1]/1000
-        iK = c(iK, Ord)
-    }
-    
-    # Return Value:
-    iK
-}
-
 
 # ------------------------------------------------------------------------------
 
@@ -1349,6 +1259,111 @@ function()
         maxima      = c(      22, 1000, U),
         resolutions = c(       1,   10, V),
         starts      = c(       1,  100, A)) 
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.Kfunc =
+function(x, alpha = NULL, type = 1:22)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Computes Density for Archimedean Copulae
+    
+    # Arguments:
+    #   x - a numeric vector 
+    
+    # FUNCTION:
+    
+    # Type:
+    type = as.integer(type[1])
+    
+    # Missing x:
+    if (missing(x)) x = (0:10)/10
+    
+    # Alpha:
+    if (is.null(alpha)) alpha = .archmParam(type)$param
+    
+    # Check alpha:
+    check = .archmCheck(alpha, type)
+    
+    # Density:
+    Kfunc = x - .Phi(x, alpha, type) / .PhiFirstDer(x, alpha, type)
+    
+    # Take care from divergencies:
+    Kfunc[is.na(Kfunc)] = 0
+    Kfunc[x == 1] = 1
+    
+    # Return Value:   
+    Kfunc
+}    
+
+
+# ------------------------------------------------------------------------------
+
+
+.invK = 
+function(x, alpha = NULL, type = 1:22, lower = 1.0e-8)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Computes Inverse of Density for Archimedean Copulae
+    
+    # FUNCTION:
+    
+    # Type:
+    type = type[1]
+    
+    # Alpha:
+    if (is.null(alpha)) alpha = .archmParam(type)$param
+    
+    # Check alpha:
+    check = .archmCheck(alpha, type)
+    
+    # Compute Inverse:
+    .fKC = function(x, p, alpha, type) { .Kfunc (x, alpha, type) - p }
+    p = x
+    z = NULL
+    for (P in p) {
+        if (P > 1 -lower/2) {
+            res = 1    
+        } else if (P < .Kfunc(0, alpha, type) + lower/2 ) {
+            res = 0 
+        } else {
+            res = uniroot(.fKC, c(lower, 1), 
+                p = P, alpha = alpha, type = type)$root
+        }
+        z = c(z, res)
+    }
+    
+    # Return Value: 
+    z
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.invK2 =
+function(x, alpha, type)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Compute from tabulated values
+    
+    # FUNCTION:
+   
+    # Tabulated Values:
+    iK = NULL
+    for (i in 1:length(x)) {
+        Ord = order(abs(.Kfunc((0:1000)/1000, alpha, type)-x[i]))[1]/1000
+        iK = c(iK, Ord)
+    }
+    
+    # Return Value:
+    iK
 }
 
 
@@ -1870,6 +1885,11 @@ function(alpha = NULL, type = 1:22, lower = 1.0e-10)
             ans = c(ans, .archmTau(alpha[i], type, lower)[1])    
     }
     
+    # Add Control Attribute:
+    control = list(alpha = alpha[[1]], type = type[1])
+    attr(ans, "control")<-unlist(control)
+    names(ans) = NULL
+    
     # Return Value:
     ans
 }
@@ -1896,6 +1916,7 @@ function(alpha = NULL, type = 1:22, lower = 1.0e-10)
     # Check alpha:
     check = .archmCheck(alpha, type)
     
+    # Select Type:
     if (type == 1) {
         if (alpha == -1) return(-1)
         if (alpha == 0) return(0)
@@ -1991,7 +2012,8 @@ function(alpha = NULL, type = 1:22, lower = 1.0e-10)
 
 .archmTauRange =
 function(type = 1:22)
-{
+{   # A function implemented by Diethelm Wuertz
+
     # Type:
     type = as.integer(type[1])
         
@@ -2028,10 +2050,10 @@ function(type = 1:22)
 # ------------------------------------------------------------------------------
 
 
-
 .archm2Tau = 
 function (alpha = NULL, type = 1:22, lower = 1e-6) 
-{
+{   # A function implemented by Diethelm Wuertz
+
     # Joe's [1997] alternative expression:
     
     # Type:
@@ -2096,6 +2118,9 @@ error = 1.0e-5)
     
     # FUNCTION:
     
+    # Match Arguments:
+    method = match.arg(method)
+    
     # Type:
     type = type[1]
     
@@ -2105,24 +2130,33 @@ error = 1.0e-5)
     # Check alpha:
     check = .archmCheck(alpha, type)
     
-    # Internal Function :
-    fun = function(x, y, spec) { 
-        12 * (.parchm1Copula(x, y, alpha, type) - x*y )
-    }
+    # Global Parameters:
+    alpha <<- alpha
+    type <<- type
 
     # 2D Integration:
-    if (method[1] == "integrate2d" ) {
+    if (method == "integrate2d" ) {
+        # Internal Function :
+        fun = function(x, y) { 
+            12 * (.parchm1Copula(x, y, alpha = alpha, type = type) - x*y )
+        }
         ans = integrate2d(fun, error = error)
-    }
-    if (method[1] == "adapt") {
+    } else if (method == "adapt") {
         # This runs only under R not SPlus
         require(adapt)
-        ans = adapt(2, lo = c(0, 0), up = c(1, 1), functn = fun, spec = spec)
+        fun = function(z) { 
+            x = z[1]
+            y = z[2]
+            12 * (.parchm1Copula(x, y, alpha = alpha, type = type) - x*y)
+        }
+        ans = adapt(ndim = 2, lower = c(0, 0), upper = c(1, 1), 
+            minpts = 100, maxpts = NULL, functn = fun, eps = 0.01)
     }
+    rho = ans$value
     
     # Result:
-    rho = ans$value
-    attr(rho, "control") <- unlist(ans[-1])
+    control = list(alpha = alpha[[1]])
+    attr(rho, "control") <- unlist(control)
     
     # Return Value:
     rho
@@ -2133,13 +2167,16 @@ error = 1.0e-5)
 
 
 .archmGamma =
-function(alpha = 0.5, type = 1)
+function(alpha = 0.5, type = 1:22)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Gini's gamma by integration for Archimedean copulae
     
     # FUNCTION:
+    
+    # Type:
+    type = type[1]
     
     # Check alpha:
     check = .archmCheck(alpha, type)
@@ -2209,8 +2246,9 @@ function(alpha = NULL, type = 1:22)
 
 
 
-# ******************************************************************************
-
+################################################################################
+# ARCHIMEDEAN COPULAE RANDOM VARIATES:
+ 
 
 .r1Copula =
 function(n, alpha = NULL, alternative = FALSE, doplot = FALSE)
@@ -2218,6 +2256,9 @@ function(n, alpha = NULL, alternative = FALSE, doplot = FALSE)
 
     # Description:
     #   Generates rv's for copulae No 1
+    
+    # Default Parameter:
+    if (is.null(alpha)) alpha = .archmParam(1)$param
     
     # Clayton Random Variate:
     if (alternative) {
@@ -2238,11 +2279,17 @@ function(n, alpha = NULL, alternative = FALSE, doplot = FALSE)
     }   
     
     # Optional Plot:
-    if (doplot)
-        plot(U, V, cex = 0.25, main = "Clayton Copula")
+    if (doplot) {
+        plot(U, V, cex = 0.25, main = "Copula No. 1")
+    }
+    
+    # Add Attribute:
+    colnames(ans) = NULL
+    control = list(alpha = alpha[[1]], copula = "archm", type = "1")
+    attr(ans, "control")<-unlist(control)
     
     # Return Value:
-    invisible(ans)
+    ans
 }
 
 
@@ -2250,13 +2297,18 @@ function(n, alpha = NULL, alternative = FALSE, doplot = FALSE)
 
 
 .r2Copula = 
-function(n, alpha = NULL)
+function(n, alpha = NULL, doplot = FALSE)
 {   # A function implemented by Diethelm Wuertz
 
+    # HERE IS SOMETHING WRONG !!!!
+    
     # Description:
-    #   Generates rv's for copulae No 1
+    #   Generates rv's for copulae No 2
     
     # Source: armstrong03.pdf
+    
+    # Default Parameter:
+    if (is.null(alpha)) alpha = .archmParam(2)$param
     
     # Random Variates:
     U = runif(n)
@@ -2266,12 +2318,22 @@ function(n, alpha = NULL)
     V = 1 - ( (1-U)^alpha * (W^(alpha/(1-alpha)) - 1 ) + 1 ) ^ (1/alpha)
     ans = cbind(U, V)
     
+    # Optional Plot:
+    if (doplot) {
+        plot(U, V, cex = 0.25, main = "Copula No. 2")
+    }
+    
+    # Add Attribute:
+    colnames(ans) = NULL
+    control = list(alpha = alpha[[1]], copula = "archm", type = "2")
+    attr(ans, "control")<-unlist(control)
+    
     # Return Value:
     ans
 }
 
 
-# ******************************************************************************
+# ------------------------------------------------------------------------------
 
 
 rarchmCopula =
@@ -2294,13 +2356,22 @@ function(n, alpha = NULL, type = 1:22)
     # Check alpha:
     check = .archmCheck(alpha, type)
     
-    # Generate rv's:
-    X = runif(n)
-    Y = runif(n)
-    t = .invK(Y, alpha, type)
-    U = .invPhi(X*.Phi(t))
-    V = .invPhi((1-X)*.Phi(t))
-    ans = cbind(U, V)
+    if (type == 1) {
+        # Use faster Algorithm:
+        ans = .r1Copula(n, alpha)
+    } else {
+        # Generate rv's for the remaining Copulae:
+        X = runif(n)
+        Y = runif(n)
+        t = .invK(Y, alpha, type)
+        U = .invPhi(X*.Phi(t))
+        V = .invPhi((1-X)*.Phi(t))
+        ans = cbind(U, V)
+        # Add Control Attribute:
+        colnames(ans) = NULL
+        control = list(alpha = alpha[[1]], copula = "archm", type = type)
+        attr(ans, "control")<-unlist(control)
+    }
     
     # Return Value:
     ans
@@ -2310,7 +2381,7 @@ function(n, alpha = NULL, type = 1:22)
 # ------------------------------------------------------------------------------
 
 
-.rarchmSlider =
+rarchmSlider =
 function(B = 10)
 {   # A function implemented by Diethelm Wuertz
         
@@ -2350,7 +2421,8 @@ function(B = 10)
         
         # Plot: 
         R = rarchmCopula(n = N, alpha = alpha, type = Copula)
-        plot(R)
+        plot(R, xlab = "U", ylab = "V", pch = 19, col = "steelblue")
+        grid()
         title(main = Title)
                            
         # Reset Frame:
@@ -2364,17 +2436,17 @@ function(B = 10)
     U = c(  B,  B,   1,      B,           1,  0.5,            B,   B )
     A = c(0.5,  2, 0.5,      1,         0.5,  0.2,            1,   3 ) 
     V = rep(0.1, 8)
-    plot.names = c("Plot - theta", "... phi")
     .sliderMenu(refresh.code,
-        names       = c("Copula",  "N", C, plot.names),
-        minima      = c(       1,  100, L, -180,    0),
-        maxima      = c(      22, 1000, U,  180,  360),
-        resolutions = c(       1,  100, V,    1,    1),
-        starts      = c(       1,  100, A,  -40,   30)) 
+        names       = c("Copula",  "N", C),
+        minima      = c(       1,  100, L),
+        maxima      = c(      22, 1000, U),
+        resolutions = c(       1,  100, V),
+        starts      = c(       1,  100, A)) 
 }
 
 
-# ******************************************************************************
+################################################################################
+# ARCHIMEDEAN COPULAE PROBABILITY
 
 
 parchmCopula = 
@@ -2433,6 +2505,40 @@ output = c("vector", "list"), alternative = FALSE )
 # ------------------------------------------------------------------------------
 
 
+parchmSlider =
+function(type = c("persp", "contour"))
+{   # A function implemented by Diethelm Wuertz
+        
+    # Description:
+    #   Displays interactively plots of probability
+    
+    # Description:
+    #   Displays interactively plots of probability
+    
+    # Arguments:
+    #   type - a character string specifying the plot type.
+    #       Either a perspective plot which is the default or
+    #       a contour plot with an underlying image plot will
+    #       be created.
+    #   B - the maximum slider menu value when the boundary
+    #       value is infinite. By default this is set to 10.
+    
+    # FUNCTION:
+    
+    # Plot:
+    if (type[1] == "persp")
+        .parchmPerspSlider(B = 5)
+    if (type[1] == "contour")
+        .parchmContourSlider(B = 5)
+        
+    # Return Value:
+    invisible()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
 .parchm1Copula =
 function(u = 0.5, v = u, alpha = NULL, type = 1:22, 
 output = c("vector", "list") )
@@ -2450,14 +2556,17 @@ output = c("vector", "list") )
     
     # FUNCTION:
     
+    # Match Arguments:
+    output = match.arg(output)
+    
     # Settings:
     type = as.integer(type[1])
     if (is.null(alpha)) {
         alpha = .archmParam(type)$param
     }
     if (is.list(u)) {
-        v = u$y
-        u = u$x
+        v = u[[2]]
+        u = u[[1]]
     }
     if (is.matrix(u)) {
         v = u[,1]
@@ -2508,11 +2617,12 @@ output = c("vector", "list") )
     C.uv[which(u*v == 1)] = 1
     C.uv[which(u+v == 0)] = 0
     
-    # Result:
-    attr(C.uv, "control") <- unlist(list(alpha = alpha, type = type))
+    # Add Control Attribute:
+    control = list(alpha = alpha[[1]], copula = "archm", type = type)
+    attr(C.uv, "control")<-unlist(control)
     
     # As List ?
-    if (output[1] == "list") {
+    if (output == "list") {
         N = sqrt(length(u))
         x = u[1:N]
         y = matrix(v, ncol = N)[1, ]
@@ -2543,20 +2653,22 @@ output = c("vector", "list") )
     
     # FUNCTION:
     
+    # Match Arguments:
+    output = match.arg(output)
+    
     # Settings:
     type = as.integer(type[1])
     if (is.null(alpha)) {
         alpha = .archmParam(type)$param
     }
     if (is.list(u)) {
-        v = u$y
-        u = u$x
+        v = u[[2]]
+        u = u[[1]]
     }
     if (is.matrix(u)) {
         v = u[,1]
         u = u[,2]
     }
-    alpha = param
     
     # Copula:
     if (alpha == 0 & type == 1) {
@@ -2613,7 +2725,7 @@ output = c("vector", "list") )
             C.uv = u*v*exp(-alpha*log(u)*log(v)) 
         }   
         if (type == 10) {
-            C = u*v/(1+(1-u^alpha)*(1-v^alpha))^(1/alpha) 
+            C.uv = u*v/(1+(1-u^alpha)*(1-v^alpha))^(1/alpha) 
         }  
         if (type == 11) {
             X = (u^alpha*v^alpha-2*(1-u^alpha)*(1-v^alpha))^(1/alpha)
@@ -2661,10 +2773,22 @@ output = c("vector", "list") )
             C.uv = C.uv + (1-sign(C.uv)) * pfrechetCopula(u, v, type = "m")
         }  
         if (type == 21) {
+            # NOT YET IMPLEMENTED
+            warning("No. 21 alternative not active")
             C.uv = NA
+            # USE:
+            C.uv = .parchm1Copula(u = u, v = v, alpha = alpha, type = type, 
+                output = output )
+            return(C.uv)
         }
         if (type == 22) {
+            # NOT YET IMPLEMENTED
+            warning("No. 22 alternative not active")
             C.uv = NA
+            # USE:
+            C.uv = .parchm1Copula(u = u, v = v, alpha = alpha, type = type, 
+                output = output )
+            return(C.uv)
         }
     }
         
@@ -2680,11 +2804,12 @@ output = c("vector", "list") )
     C.uv[which(u*v == 1)] = 1
     C.uv[which(u+v == 0)] = 0
     
-    # Result:
-    attr(C.uv, "control") <- unlist(list(alpha = alpha, type = type))
+    # Add Control Attribute:
+    control = list(alpha = alpha[[1]], copula = "archm", type = type)
+    attr(C.uv, "control")<-unlist(control)
     
     # As List ?
-    if (output[1] == "list") {
+    if (output == "list") {
         N = sqrt(length(u))
         x = u[1:N]
         y = matrix(v, ncol = N)[1, ]
@@ -2699,43 +2824,8 @@ output = c("vector", "list") )
 # ------------------------------------------------------------------------------
 
 
-parchmSlider =
-function(type = c("persp", "contour"))
-{   # A function implemented by Diethelm Wuertz
-        
-    # Description:
-    #   Displays interactively plots of probability
-    
-    # Description:
-    #   Displays interactively plots of probability
-    
-    # Arguments:
-    #   type - a character string specifying the plot type.
-    #       Either a perspective plot which is the default or
-    #       a contour plot with an underlying image plot will
-    #       be created.
-    #   B - the maximum slider menu value when the boundary
-    #       value is infinite. By default this is set to 10.
-    
-    # FUNCTION:
-    
-    # Plot:
-    if (type[1] == "persp")
-        .parchmPerspSlider()
-    if (type[1] == "contour")
-        .parchmContourSlider()
-        
-    # Return Value:
-    invisible()
-}
-
-
-
-# ------------------------------------------------------------------------------
-
-
 .parchmPerspSlider =
-function()
+function(B = 5)
 {   # A function implemented by Diethelm Wuertz
         
     # Description:
@@ -2950,7 +3040,6 @@ function(B = 5)
     }
   
     # Open Slider Menu:
-    B = 5
     C1 = "1: [-1,Inf]"
     C2 = "2-4-6-8-12-14-15-21: [1,Inf)"
     C3 = "3: [-1,1)"
@@ -2967,17 +3056,18 @@ function(B = 5)
     plot.names = c("Plot - levels", "... colors")
     .sliderMenu(refresh.code,
         names       = c("Copula", "N", C, plot.names),
-        minima      = c(       1,  10, L,   10,   12),
+        minima      = c(       1,  10, L,    5,   12),
         maxima      = c(      20, 100, U,  100,  256),
-        resolutions = c(       1,  10, V,   10,    1),
+        resolutions = c(       1,  10, V,    5,    1),
         starts      = c(       1,  10, A,   10,   12)) 
 }
 
 
-# ------------------------------------------------------------------------------
+################################################################################
+# ARCHIMEDEAN DENSITY:
 
 
-.darchmCopula = 
+darchmCopula = 
 function(u = 0.5, v = u, alpha = NULL, type = 1:22,
 output = c("vector", "list"), alternative = FALSE )
 {   # A function implemented by Diethelm Wuertz
@@ -3033,6 +3123,37 @@ output = c("vector", "list"), alternative = FALSE )
 # ------------------------------------------------------------------------------
 
 
+darchmSlider =
+function(type = c("persp", "contour"))
+{   # A function implemented by Diethelm Wuertz
+        
+    # Description:
+    #   Displays interactively plots of density
+    
+    # Arguments:
+    #   type - a character string specifying the plot type.
+    #       Either a perspective plot which is the default or
+    #       a contour plot with an underlying image plot will
+    #       be created.
+    #   B - the maximum slider menu value when the boundary
+    #       value is infinite. By default this is set to 10.
+    
+    # FUNCTION:
+    
+    # Plot:
+    if (type == "persp")
+        .darchmPerspSlider()
+    if (type == "contour")
+        .darchmContourSlider()
+        
+    # Return Value:
+    invisible()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
 .darchm1Copula = 
 function(u = 0.5, v = u, alpha = NULL, type = 1:22, output = 
 c("vector", "list")) 
@@ -3048,14 +3169,17 @@ c("vector", "list"))
     
     # FUNCTION:
     
+    # Match Arguments:
+    output = match.arg(output)
+    
     # Settings:
-    type = type[1]
+    type = as.integer(type[1])
     if (is.null(alpha)) {
-        alpha = NA
+        alpha = .archmParam(type)$param
     }
     if (is.list(u)) {
-        v = u$y
-        u = u$x
+        v = u[[2]]
+        u = u[[1]]
     }
     if (is.matrix(u)) {
         v = u[, 1]
@@ -3069,11 +3193,15 @@ c("vector", "list"))
         .invPhiFirstDer(.Phi(v, alpha, type), alpha, type) ) 
     # c.uv[which(u*v == 0 | u*v == 1)] = 0
     
-    # Result:
-    attr(c.uv, "control") <- unlist(list(alpha = alpha, type = type))
+    # Replace NAs:
+    # c.uv[is.na(c.uv)] = 0
+    
+    # Add Control Attribute:
+    control = list(alpha = alpha[[1]], copula = "archm", type = type)
+    attr(c.uv, "control")<-unlist(control)
     
     # As List ?
-    if (output[1] == "list") {
+    if (output == "list") {
         N = sqrt(length(u))
         x = u[1:N]
         y = matrix(v, ncol = N)[1, ]
@@ -3089,7 +3217,8 @@ c("vector", "list"))
 
 
 .darchm2Copula = 
-function(u = 0.5, v = u, alpha = NULL, type = "1") 
+function(u = 0.5, v = u, alpha = NULL, type = 1:22, output = 
+c("vector", "list")) 
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -3104,24 +3233,26 @@ function(u = 0.5, v = u, alpha = NULL, type = "1")
     
     # Example:
     #   persp(z = matrix(.darchm1Copula(.gridCoord()$x, .gridCoord()$y, 1.1, "4"), 101))
-
-    
+   
     # FUNCTION:
     
+    # Match Arguments:
+    output = match.arg(output)
+    
     # Settings:
-    type = type[1]
+    type = as.integer(type[1])
     if (is.null(alpha)) {
-        alpha = evParam(type)$param
+        alpha = .archmParam(type)$param
     }
+    a = alpha
     if (is.list(u)) {
-        v = u$y
-        u = u$x
+        v = u[[2]]
+        u = u[[1]]
     }
     if (is.matrix(u)) {
         v = u[, 1]
         u = u[, 2]
     }
-    a = alpha
     
     # Density:
     if (type == 1) { 
@@ -3129,7 +3260,13 @@ function(u = 0.5, v = u, alpha = NULL, type = "1")
             (-1 + u^(-a) + v^(-a))^(-2 - a^(-1)) 
     }
     if (type == 2) { 
+        # NOT YET IMPLEMENTED!
         c.uv = NA 
+        # USE:
+        warning("No 2 alternative not available")
+        c.uv = .darchm1Copula(u = u, v = v, alpha = alpha, type = type,
+            output = output)  
+        return(c.uv)
     }
     if (type == 3) { 
         c.uv = (-1 + a^2*(-1 + u + v - u*v) - 
@@ -3138,7 +3275,7 @@ function(u = 0.5, v = u, alpha = NULL, type = "1")
     }
     if (type == 4) { 
         # Matteis yields wrong results
-        # duv = ((-log(u))^(-1 + a)*(-1 + a + ((-log(u))^a + 
+        # c.uv = ((-log(u))^(-1 + a)*(-1 + a + ((-log(u))^a + 
         #    (-log(v))^a)^a^(-1))*((-log(u))^a + 
         #    (-log(v))^a)^(-2 + a^(-1))*(-log(v))^(-1 + a))/
         #    (exp((-log(u))^a + (-log(v))^a)^a^(-1)*u*v) 
@@ -3166,10 +3303,22 @@ function(u = 0.5, v = u, alpha = NULL, type = "1")
             (1 - v)^a)^(-2 + a^(-1)) * (1 - v)^(-1 + a) 
     }
     if (type == 7) { 
+        # NOT YET IMPLEMENTED!
         c.uv = NA 
+        # USE:
+        warning("No 7 alternative not available")
+        c.uv = .darchm1Copula(u = u, v = v, alpha = alpha, type = type,
+            output = output) 
+        return(c.uv)
     }
     if (type == 8) { 
+        # NOT YET IMPLEMENTED!
         c.uv = NA 
+        # USE:
+        warning("No 8 alternative not available")
+        c.uv = .darchm1Copula(u = u, v = v, alpha = alpha, type = type,
+            output = output)  
+        return(c.uv)
     }
     if (type == 9) { 
         c.uv = (1 - a - a*log(v) + a*log(u)*(-1 + a*log(v))) /
@@ -3180,7 +3329,13 @@ function(u = 0.5, v = u, alpha = NULL, type = "1")
             (4 - 2*v^a + u^a*(-2 - (-1 + a)*v^a)) 
     }
     if (type == 11) {
-        duv = NA 
+        # NOT YET IMPLEMENTED!
+        c.uv = NA 
+        # USE:
+        warning("No 11 alternative not available")
+        c.uv = .darchm1Copula(u = u, v = v, alpha = alpha, type = type,
+            output = output)  
+        return(c.uv) 
     }
     if (type == 12) {
         c.uv = ((-1+u^(-1))^a*(-1+a+((-1+u^(-1))^a + 
@@ -3210,7 +3365,13 @@ function(u = 0.5, v = u, alpha = NULL, type = "1")
             (a*u*(-1+u^a^(-1))*v*(-1+v^a^(-1))) 
     }
     if (type == 15) {
+        # NOT YET IMPLEMENTED!
         c.uv = NA 
+        # USE:
+        warning("No 15 alternative not available")
+        c.uv = .darchm1Copula(u = u, v = v, alpha = alpha, type = type,
+            output = output) 
+        return(c.uv)
     }
     if (type == 16) {
         c.uv = (2*a*(a^2 + u^2*v^2 + a*(u^2 + v^2))) /
@@ -3226,7 +3387,13 @@ function(u = 0.5, v = u, alpha = NULL, type = "1")
             (-1 + 2^(-a)))^a^(-1)) 
     }
     if (type == 18) {
+        # NOT YET IMPLEMENTED!
         c.uv = NA 
+        # USE:
+        warning("No 18 alternative not available")
+        c.uv = .darchm1Copula(u = u, v = v, alpha = alpha, type = type,
+            output = output) 
+        return(c.uv) 
     }
     if (type == 19) {
         c.uv = (a^3*exp(a*(u^(-1) + v^(-1)))*(2 + log(-exp(a) + 
@@ -3239,15 +3406,34 @@ function(u = 0.5, v = u, alpha = NULL, type = "1")
             (1 + a + a*log(-exp(1) + exp(u^(-a)) + exp(v^(-a))))) /
             (-exp(1) + exp(u^(-a)) + exp(v^(-a)))^2 
     }
+    if (type == 21) {
+        # NOT YET IMPLEMENTED!
+        c.uv = NA 
+        # USE:
+        warning("No 21 alternative not available")
+        c.uv = .darchm1Copula(u = u, v = v, alpha = alpha, type = type,
+            output = output) 
+        return(c.uv) 
+    }
+    if (type == 22) {
+        # NOT YET IMPLEMENTED!
+        c.uv = NA 
+        # USE:
+        warning("No 22 alternative not available")
+        c.uv = .darchm1Copula(u = u, v = v, alpha = alpha, type = type,
+            output = output)  
+        return(c.uv)
+    }
     
     # Replace NAs:
-    c.uv[is.na(c.uv)] = 0
+    # c.uv[is.na(c.uv)] = 0
     
-    # Result:
-    attr(c.uv, "control") <- unlist(list(alpha = alpha, type = type))
+    # Add Control Attribute:
+    control = list(alpha = alpha[[1]], copula = "archm", type = type)
+    attr(c.uv, "control")<-unlist(control)
     
     # As List ?
-    if (output[1] == "list") {
+    if (output == "list") {
         N = sqrt(length(u))
         x = u[1:N]
         y = matrix(v, ncol = N)[1, ]
@@ -3257,37 +3443,6 @@ function(u = 0.5, v = u, alpha = NULL, type = "1")
     # Return Value:
     c.uv
 }
-
-# ------------------------------------------------------------------------------
-
-
-.darchmSlider =
-function(type = c("persp", "contour"))
-{   # A function implemented by Diethelm Wuertz
-        
-    # Description:
-    #   Displays interactively plots of density
-    
-    # Arguments:
-    #   type - a character string specifying the plot type.
-    #       Either a perspective plot which is the default or
-    #       a contour plot with an underlying image plot will
-    #       be created.
-    #   B - the maximum slider menu value when the boundary
-    #       value is infinite. By default this is set to 10.
-    
-    # FUNCTION:
-    
-    # Plot:
-    if (type == "persp")
-        .darchmPerspSlider()
-    if (type == "contour")
-        .darchmContourSlider()
-        
-    # Return Value:
-    invisible()
-}
-
 
 
 # ------------------------------------------------------------------------------
@@ -3528,6 +3683,83 @@ function(B = 5)
         maxima      = c(      22, 100, U,  100,  256),
         resolutions = c(       1,  10, V,   10,    1),
         starts      = c(       1,  30, A,   30,   64)) 
+}
+
+
+################################################################################
+
+
+archmCopulaSim = 
+function (n, alpha = NULL, type = 1:22) 
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Simulates bivariate elliptical Copula
+    
+    # Match Arguments:
+    type = as.integer(type[1])
+      
+    # Settings:
+    if (is.null(alpha)) alpha = .archmParam(type)$param
+    
+    # Random Variates:
+    ans = rarchmCopula(n = n, alpha = alpha, type = type) 
+
+    # Control:
+    control = list(alpha = alpha[[1]], copula = "archm", type = type)
+    attr(ans, "control")<-unlist(control)
+        
+    # Return Value:
+    ans
+}
+
+
+# ------------------------------------------------------------------------------
+
+    
+archmCopulaFit =
+function(u, v = NULL, type = 1:22, ...)
+{   # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   Fits the paramter of an elliptical copula
+    
+    # Note:
+    #   The upper limit for nu is 100
+    
+    # FUNCTION:
+    
+    # Match Arguments:
+    type = as.integer(type[1])
+    
+    # Settings:
+    U = u
+    V = v
+    if (is.list(u)) {
+        u = u[[1]]
+        v = u[[2]]
+    }
+    if (is.matrix(u)) {
+        U = u[, 1]
+        V = u[, 2]
+    }
+    U <<- u
+    V <<- v
+
+    # Estimate Rho from Kendall's tau for all types of Copula:
+    alpha = .archmParam(type)$param
+     
+    # Estimate Copula:
+    fun = function(x, type) {
+        -mean( log(darchmCopula(u = U, v = V, alpha = x, type = type)) )
+    }
+    range = .archmRange(type)
+
+    fit = nlminb(start = alpha, objective = fun, 
+        lower = range[1], upper = range[2],  type = type, ...)
+      
+    # Return Value:
+    fit
 }
 
 
