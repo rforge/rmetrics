@@ -63,7 +63,7 @@ Elliptical Copula Functions:
   <td align="left"> <code>ellipticalRho</code> </td>  <td align="left"> computes Spearman's rho for elliptical copulae, </td>
 </tr>
 <tr>
-  <td align="left"> <code>ellipticalTailCoeff</code> </td>  <td align="left"> computes tail dependence for elliptical copulae, </td>
+  <td align="left"> </p> <p> <code>ellipticalTailCoeff</code> </td>  <td align="left"> computes tail dependence for elliptical copulae, </td>
 </tr>
 <tr>
   <td align="left"> <code>ellipticalTailPlot</code> </td>  <td align="left"> plots tail dependence for elliptical copulae, </td>
@@ -78,7 +78,7 @@ Elliptical Copula Functions:
   <td align="left">  </p> <p> <code>ellipticalCopulaSim</code> </td>  <td align="left"> simulates an elliptical copula, </td>
 </tr>
 <tr>
-  <td align="left"> <code>ellipticalCopulaSim</code> </td>  <td align="left"> fits the parameters of an elliptical copula. </td>
+  <td align="left"> <code>ellipticalCopulaFit</code> </td>  <td align="left"> fits the parameters of an elliptical copula. </td>
 </tr>
 </table>
 
@@ -102,6 +102,7 @@ dellipticalSlider(type = c("persp", "contour"), B = 20)
 ellipticalTau(rho)
 ellipticalRho(rho, param = NULL, type = c("norm", "cauchy", "t", "logistic", 
     "laplace", "kotz", "epower"), subdivisions = 500)
+    
 ellipticalTailCoeff(rho, param = NULL, type = c("norm", "cauchy", "t",
     "logistic", "laplace", "kotz", "epower"))
 ellipticalTailPlot(param = NULL, type = c("norm", "cauchy", "t", "logistic", 
@@ -112,7 +113,7 @@ gfunc(x, param = NULL, type = c("norm", "cauchy", "t", "logistic", "laplace",
 gfuncSlider()
 
 ellipticalCopulaSim(n, rho = 0.75, param = NULL, type = c("norm", "cauchy", "t"))
-ellipticalCopulaFit(u, v, type = c("norm", "cauchy", "t"))
+ellipticalCopulaFit(u, v, type = c("norm", "cauchy", "t"), ...)
 </pre>
 
 
@@ -214,30 +215,71 @@ say <code>N</code>, than the values for all points on the
 a numeric value or vector out of the range <code>[0,Inf)</code> at
 which the generator will be computed.
 </td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+[ellipticalCopulaFit] - <br>
+arguments passed to the optimization function <code>nlminb</code>.
+</td></tr>
 </table>
 
 <h3>Value</h3>
 
 <p>
-The function <code>pcopula</code> returns a numeric matrix of probabilities 
-computed at grid positions <code>x</code>|<code>y</code>.
+<B>Copula Functions:</B>
+<br><br>
+<br>
+The functions <code>[rpd]ellipticalCopula</code> return a numeric vector
+of random variates, probabilities, or densities for the specified 
+copula computed at grid coordinates <code>u</code>|<code>v</code>.
 <br>
 <br>
-The function <code>parchmCopula</code> returns a numeric matrix with values
-computed for the Archemedean copula.
+The functions <code>[rpd]ellipticalSlider</code> display an interactive
+graph of an perspective copula plot either for random variates,
+probabilities or densities. Alternatively, an image underlayed
+contour plot can be shown.
 <br>
 <br>
-The function <code>darchmCopula</code> returns a numeric matrix with values
-computed for thedensity of the Archemedean copula.
+<B>Copula Dependence Measures:</B>
+<br><br>
+<br>
+The functions <code>ellipticalTau</code> and <code>ellipticalRho</code> return
+a numericc value for Kendall's Tau and Spearman's Rho.
 <br>
 <br>
-The functions <code>Phi*</code> return a numeric vector with the values
-computed from the Archemedean generator, its derivatives, or its
-inverse.
+<B>Copula Tail Coefficient:</B>
+<br><br>
+<br>
+The function <code>ellipticalTailCoeff</code> returns the coefficient of
+tail dependence for a specified copula. The function 
+<code>ellipticalTailPlot</code> displays a whole plot for the upper or
+alternatively for the lower tail dependence as a function of 
+<code>u</code> for a set of nine <code>rho</code> values.
 <br>
 <br>
-The functions <code>cK</code> and {cKInv} return a numeric vector with the 
-values of the density and inverse for Archimedian copulae.</p>
+<B>Copula Generator Function:</B>
+<br><br>
+<br>
+The function <code>gfunc</code> computes the generator function for the
+specified copula, by default the normal copula. If the argument
+<code>x</code> is missing, then the normalization constand lambda will
+be returned, otherwise if <code>x</code> is specified the values for the
+function <EM>g(x)</EM> will be freturned. The selected type of copula
+is added to the output as an attribute named <code>"control"</code>. 
+The function <code>gfuncSlider</code> allows to display interactively 
+the generator function, the marginal density, the marginal 
+probability, and the contours of the the bivariate density.
+<br>
+<br>
+<B>Copula Simulation and Parameter Fitting:</B>
+<br><br>
+<br>
+The function <code>ellipticalCopulaSim</code> returns a numeric two-column
+matrix with randomly generated variates for the specified copula.
+<br>
+<br>
+The function <code>ellipticalCopulaFit</code> returns a fit to empirical
+data for the specified copula. The returned object is a list with
+elements from the function <code>nlminb</code>.</p>
 
 <h3>Author(s)</h3>
 
@@ -249,11 +291,42 @@ Diethelm Wuertz for the Rmetrics <font face="Courier New,Courier" color="#666666
 <h3>Examples</h3>
 
 <pre>
-## SOURCE("fCopulae.E2-EllipticalCopulae")
+## SOURCE("fCopulae.062A-EllipticalCopulae")
    
-## pelliptical -
-   # The default Normal Copula:
-   # contour(pcopula())
+## [rp]ellipticalCopula -
+   # Default Normal Copula:
+   rellipticalCopula(10)
+   pellipticalCopula(10)
+
+## [rp]ellipticalCopula -   
+   # Student-t Copula Probability and Density:
+   u = grid2d(x = (0:25)/25)
+   pellipticalCopula(u, rho = 0.75, param = 4, 
+     type = "t", output = "list")
+   d = dellipticalCopula(u, rho = 0.75, param = 4, 
+     type = "t", output = "list")   
+   persp(d, theta = -40, phi = 30, col = "steelblue")
+   
+## ellipticalTau -
+## ellipticalRho -
+   # Dependence Measures:
+   ellipticalTau(rho = -0.5)
+   ellipticalRho(rho = 0.75, type = "logistic", subdivisions = 100)
+   
+## ellipticalTailCoeff -
+   # Student-t Tail Coefficient:
+   ellipticalTailCoeff(rho = 0.25, param = 3, type = "t")
+
+## gfunc -
+   # Generator Function:
+   plot(gfunc(x = 0:10), main = "Generator Function")
+   
+## ellipticalCopulaSim -
+## ellipticalCopulaSim -
+   # Simualtion and Parameter Fitting:
+   rv = ellipticalCopulaSim(n = 100, rho = 0.75)
+   ellipticalCopulaFit(rv)
+   
 </pre>
 
 

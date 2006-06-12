@@ -20,8 +20,8 @@
 <h3>Description</h3>
 
 <p>
-A collection and description of functions to investigate 
-bivariate copulae. 
+A collection and description of functions to specify the 
+copula class and to investigate bivariate Frechet copulae. 
 <br>
 </p>
 <p>
@@ -95,10 +95,24 @@ as <code>v</code>.
 </td></tr>
 </table>
 
+<h3>Details</h3>
+
+<p>
+The function <code>pfrechetCopula</code> returns a numeric matrix of 
+probabilities computed at grid positions <code>u</code>|<code>v</code>. The
+arguments <code>u</code> and <code>v</code> are two single values or two 
+numeric vectors of the same length. If <code>v</code> is not specified
+then the same values are taken as for <code>u</code>. Alternatively,
+<code>u</code> may be given as a two column vector or as a list with
+two entries as vectors. The first column or entry is taken as
+<code>u</code> and the second as <code>v</code>.
+</p>
+
+
 <h3>Value</h3>
 
 <p>
-Th function <code>*Copula</code> returns an S4 object of 
+The print method <code>show</code> returns an S4 object of 
 class <code>"fCOPULA"</code>. The object contains the following slots:
 </p>
 <table summary="R argblock">
@@ -112,7 +126,8 @@ the name of the copula.
 </td></tr>
 <tr valign="top"><td><code>@param</code></td>
 <td>
-a list whose elements specify the model parameters.
+a list whose elements specify the model parameters of the
+copula.
 </td></tr>
 <tr valign="top"><td><code>@title</code></td>
 <td>
@@ -128,25 +143,9 @@ By default just the current date will be returned.
 <p>
 
 <br>
-The function <code>pcopula</code> returns a numeric matrix of probabilities 
-computed at grid positions <code>x</code>|<code>y</code>.
-<br>
-<br>
-The function <code>parchmCopula</code> returns a numeric matrix with values
-computed for the Archemedean copula.
-<br>
-<br>
-The function <code>darchmCopula</code> returns a numeric matrix with values
-computed for thedensity of the Archemedean copula.
-<br>
-<br>
-The functions <code>Phi*</code> return a numeric vector with the values
-computed from the Archemedean generator, its derivatives, or its
-inverse.
-<br>
-<br>
-The functions <code>cK</code> and {cKInv} return a numeric vector with the 
-values of the density and inverse for Archimedian copulae.</p>
+The function <code>pfrechetCopula</code> returns a numeric vector of 
+probabilities. An attribute named <code>"control"</code> is added
+which returns the name of the Frechet copula.</p>
 
 <h3>Author(s)</h3>
 
@@ -158,14 +157,17 @@ Diethelm Wuertz for the Rmetrics <font face="Courier New,Courier" color="#666666
 <h3>Examples</h3>
 
 <pre>
-## SOURCE("fCopulae.E1-CopulaeClass")
+## SOURCE("fCopulae.061A-CopulaeClass")
 
 ## fCOPULA -
    # getClass("fCOPULA")
    
 ## pcopula -
-   # The default Normal Copula:
-   # contour(pcopula())
+   # The Frechet Copula - m:
+   pfrechetCopula(0.5)
+   pfrechetCopula(0.25, 0.75)
+   pfrechetCopula(runif(5))
+   pfrechetCopula(grid2d())
 </pre>
 
 

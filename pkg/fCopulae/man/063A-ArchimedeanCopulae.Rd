@@ -5,11 +5,23 @@
 
 \alias{rarchmCopula}
 \alias{parchmCopula}
+\alias{darchmCopula}      
 
+\alias{rarchmSlider}     
 \alias{parchmSlider}
+\alias{darchmSlider}       
+
+%alias{archmTau}          MISSING
+%alias{archmRho}          MISSING
+
+%alias{archmTailCoeff}    MISSING
+%alias{archmTailPlot}     MISSING
 
 \alias{Phi}
 \alias{PhiSlider}
+
+\alias{Kfunc}
+\alias{KfuncSlider}
 
 \alias{archmTau}
 \alias{archmRho}
@@ -17,8 +29,11 @@
 \alias{Kfunc}
 \alias{KfuncSlider}
 
+%alias{archmCopulaSim}    MISSING
+%alias{archmCopulaFit}    MISSING
 
-
+\alias{archmCopulaSim}
+\alias{archmCopulaFit}
 
 \title{Bivariate Archimedean Copulae}
 
@@ -54,6 +69,8 @@
 rarchmCopula(n, alpha = NULL, type = 1:22)
 parchmCopula(u = 0.5, v = u, alpha = NULL, type = 1:22, output = 
     c("vector", "list"), alternative = FALSE )
+darchmCopula(u = 0.5, v = u, alpha = NULL, type = 1:22, output = 
+    c("vector", "list"), alternative = FALSE )
     
 parchmSlider(type = c("persp", "contour"))
     
@@ -66,6 +83,9 @@ PhiSlider()
 
 Kfunc(x, alpha = NULL, type = 1:22, inv = FALSE, lower = 1.0e-8)
 KfuncSlider()
+
+archmCopulaSim(n, alpha = NULL, type = 1:22)
+archmCopulaFit(u, v = NULL, type = 1:22, \dots)
 
 }
 
@@ -143,11 +163,15 @@ KfuncSlider()
         as \code{v}.
        }
     \item{x}{
-        [A*] - \cr
+        [Kfunc] - \cr
         a numeric value or vector ranging between zero and one.
         \cr
         [Phi] - \cr
         a numeric value or vector.
+        }
+    \item{\dots}{
+        [archmCopulaFit] - \cr
+        arguments passed to the optimization function \code{nlminb}.
         }
     
 }

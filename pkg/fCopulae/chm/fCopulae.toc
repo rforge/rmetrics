@@ -10,15 +10,31 @@
 </OBJECT>
 <UL>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="AFirstDer">
-<param name="Local" value="064A-ExtremeValueCopulae.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Afunc">
 <param name="Local" value="064A-ExtremeValueCopulae.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
+<param name="Name" value="AfuncFirstDer">
+<param name="Local" value="064A-ExtremeValueCopulae.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="AfuncSecondDer">
+<param name="Local" value="064A-ExtremeValueCopulae.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="AfuncSlider">
+<param name="Local" value="064A-ExtremeValueCopulae.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="ArchimedeanCopulae">
+<param name="Local" value="063A-ArchimedeanCopulae.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="archmCopulaFit">
+<param name="Local" value="063A-ArchimedeanCopulae.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="archmCopulaSim">
 <param name="Local" value="063A-ArchimedeanCopulae.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
@@ -30,20 +46,20 @@
 <param name="Local" value="063A-ArchimedeanCopulae.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="ASecondDer">
-<param name="Local" value="064A-ExtremeValueCopulae.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="ASlider">
-<param name="Local" value="064A-ExtremeValueCopulae.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="CopulaeClass">
 <param name="Local" value="061A-CopulaeClass.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="CopulaeTools">
 <param name="Local" value="069A-CopulaeTools.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="darchmCopula">
+<param name="Local" value="063A-ArchimedeanCopulae.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="darchmSlider">
+<param name="Local" value="063A-ArchimedeanCopulae.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="dellipticalCopula">
@@ -167,6 +183,10 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="rarchmCopula">
+<param name="Local" value="063A-ArchimedeanCopulae.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="rarchmSlider">
 <param name="Local" value="063A-ArchimedeanCopulae.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">

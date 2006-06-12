@@ -7,13 +7,20 @@
 <param name="keyword" value="R:   ArchimedeanCopulae">
 <param name="keyword" value="R:   rarchmCopula">
 <param name="keyword" value="R:   parchmCopula">
+<param name="keyword" value="R:   darchmCopula">
+<param name="keyword" value="R:   rarchmSlider">
 <param name="keyword" value="R:   parchmSlider">
+<param name="keyword" value="R:   darchmSlider">
 <param name="keyword" value="R:   Phi">
 <param name="keyword" value="R:   PhiSlider">
+<param name="keyword" value="R:   Kfunc">
+<param name="keyword" value="R:   KfuncSlider">
 <param name="keyword" value="R:   archmTau">
 <param name="keyword" value="R:   archmRho">
 <param name="keyword" value="R:   Kfunc">
 <param name="keyword" value="R:   KfuncSlider">
+<param name="keyword" value="R:   archmCopulaSim">
+<param name="keyword" value="R:   archmCopulaFit">
 <param name="keyword" value=" Bivariate Archimedean Copulae">
 </object>
 
@@ -73,6 +80,8 @@ Archimedean Copula Functions:
 rarchmCopula(n, alpha = NULL, type = 1:22)
 parchmCopula(u = 0.5, v = u, alpha = NULL, type = 1:22, output = 
     c("vector", "list"), alternative = FALSE )
+darchmCopula(u = 0.5, v = u, alpha = NULL, type = 1:22, output = 
+    c("vector", "list"), alternative = FALSE )
     
 parchmSlider(type = c("persp", "contour"))
     
@@ -85,6 +94,9 @@ PhiSlider()
 
 Kfunc(x, alpha = NULL, type = 1:22, inv = FALSE, lower = 1.0e-8)
 KfuncSlider()
+
+archmCopulaSim(n, alpha = NULL, type = 1:22)
+archmCopulaFit(u, v = NULL, type = 1:22, ...)
 
 </pre>
 
@@ -175,11 +187,16 @@ as <code>v</code>.
 </td></tr>
 <tr valign="top"><td><code>x</code></td>
 <td>
-[A*] - <br>
+[Kfunc] - <br>
 a numeric value or vector ranging between zero and one.
 <br>
 [Phi] - <br>
 a numeric value or vector.
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+[archmCopulaFit] - <br>
+arguments passed to the optimization function <code>nlminb</code>.
 </td></tr>
 </table>
 

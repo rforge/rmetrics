@@ -6,9 +6,9 @@
 \alias{devCopula}
 
 \alias{Afunc}
-\alias{AFirstDer}
-\alias{ASecondDer}
-\alias{ASlider}
+\alias{AfuncFirstDer}
+\alias{AfuncSecondDer}
+\alias{AfuncSlider}
 
 \alias{pevSlider}
 \alias{devSlider}
@@ -66,11 +66,11 @@ devSlider(type = c("persp", "contour"), B = 10)
 
 Afunc(x, param = NULL, type = c("gumbel", "galambos", "husler.reiss", 
     "tawn", "bb5") )
-AFirstDer(x, param = NULL, type = c("gumbel", "galambos", "husler.reiss", 
+AfuncFirstDer(x, param = NULL, type = c("gumbel", "galambos", "husler.reiss", 
     "tawn", "bb5"), eps = 1.0e-6 )
-ASecondDer(x, param = NULL, type = c("gumbel", "galambos", "husler.reiss", 
+AfuncSecondDer(x, param = NULL, type = c("gumbel", "galambos", "husler.reiss", 
     "tawn", "bb5") )
-ASlider()
+AfuncSlider()
 
 pempiricalCopula(u, v, N = 10)
 dempiricalCopula(u, v, N = 10)

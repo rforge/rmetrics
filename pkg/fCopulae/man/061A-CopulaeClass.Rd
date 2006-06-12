@@ -16,8 +16,8 @@
 
 \description{
     
-    A collection and description of functions to investigate 
-    bivariate copulae. 
+    A collection and description of functions to specify the 
+    copula class and to investigate bivariate Frechet copulae. 
     \cr
     
     The class representation and methods are:
@@ -78,7 +78,7 @@ pfrechetCopula(u = 0.5, v = u, type = c("m", "pi", "w"),
 
 \value{
     
-    Th function \code{*Copula} returns an S4 object of 
+    The print method \code{show} returns an S4 object of 
     class \code{"fCOPULA"}. The object contains the following slots:
     
     \item{@call}{
@@ -88,7 +88,8 @@ pfrechetCopula(u = 0.5, v = u, type = c("m", "pi", "w"),
         the name of the copula.
         }
     \item{@param}{
-        a list whose elements specify the model parameters.
+        a list whose elements specify the model parameters of the
+        copula.
         }
     \item{@title}{
         a character string with the name of the copula. This can be 
@@ -99,26 +100,24 @@ pfrechetCopula(u = 0.5, v = u, type = c("m", "pi", "w"),
         By default just the current date will be returned.
         }
         
-    The function \code{pcopula} returns a numeric matrix of probabilities 
-    computed at grid positions \code{x}|\code{y}.
-    \cr
+    The function \code{pfrechetCopula} returns a numeric vector of 
+    probabilities. An attribute named \code{"control"} is added
+    which returns the name of the Frechet copula.
     
-    The function \code{parchmCopula} returns a numeric matrix with values
-    computed for the Archemedean copula.
-    \cr
-    
-    The function \code{darchmCopula} returns a numeric matrix with values
-    computed for thedensity of the Archemedean copula.
-    \cr
-    
-    The functions \code{Phi*} return a numeric vector with the values
-    computed from the Archemedean generator, its derivatives, or its
-    inverse.
-    \cr
-    
-    The functions \code{cK} and {cKInv} return a numeric vector with the 
-    values of the density and inverse for Archimedian copulae.
-        
+}
+
+
+\details{
+
+    The function \code{pfrechetCopula} returns a numeric matrix of 
+    probabilities computed at grid positions \code{u}|\code{v}. The
+    arguments \code{u} and \code{v} are two single values or two 
+    numeric vectors of the same length. If \code{v} is not specified
+    then the same values are taken as for \code{u}. Alternatively,
+    \code{u} may be given as a two column vector or as a list with
+    two entries as vectors. The first column or entry is taken as
+    \code{u} and the second as \code{v}. 
+
 }
 
 
@@ -130,14 +129,17 @@ pfrechetCopula(u = 0.5, v = u, type = c("m", "pi", "w"),
 
 
 \examples{
-## SOURCE("fCopulae.E1-CopulaeClass")
+## SOURCE("fCopulae.061A-CopulaeClass")
 
 ## fCOPULA -
    # getClass("fCOPULA")
    
 ## pcopula -
-   # The default Normal Copula:
-   # contour(pcopula())
+   # The Frechet Copula - m:
+   pfrechetCopula(0.5)
+   pfrechetCopula(0.25, 0.75)
+   pfrechetCopula(runif(5))
+   pfrechetCopula(grid2d())
 }
 
 
