@@ -28,57 +28,61 @@
 
 
 ################################################################################
-# FUNCTION:                 ARCHIMEDEAN COPULAE PARAMETER:
-#  .archmParam               Sets Default parameters for an Archimedean copula
-#  .archmCheck               Checks if alpha is in the valid range
-#  .archmRange               Returns the range of valid alpha values
-# FUNCTION:                 ARCHIMEDEAN GENERATOR:
-#  Phi                       Computes Archimedean Phi, inverse and derivatives
-#  PhiSlider                 Displays interactively generator function
-#  .Phi                      Computes Archimedean generator Phi
-#  .Phi0                     Utility Function
-#  .PhiFirstDer              Computes first derivative of Phi
-#  .PhiSecondDer             Computes second derivative of Phi
-#  .invPhi                   Computes inverse of Archimedean generator
-#  .invPhiFirstDer           Computes first derivative of inverse Phi
-#  .invPhiSecondDer          Computes second derivative of inverse Phi
-# FUNCTION:                 ARCHIMEDEAN DENSITY:
-#  Kfunc                     Computes Archimedean Density Kc and its Inverse
-#  KfuncSlider               Displays interactively the density and concordance
-#  .Kfunc                    Computes Density for Archimedean Copulae
-#  .invK                     Computes Inverse of Density
-#  .invK2                    Utility Function
-#  .ALPHA                    Utility Function
-#  .TAU                      Utility Function
-#  .RHO                      Utility Function
-# FUNCTION                  KENDALL'S TAU AND SPEARMAN'S RHO:
-#  archmTau                  Returns Kendall's tau for Archemedean copulae
-#  archmRho                  Returns Spearman's rho for Archemedean copulae
-#  .archmTauRange             Returns range for Kendall's tau
-#  .archm2Tau                 Alternative way to compute Kendall's tau
-#  .archmGamma               Returns Gini's gamma for Archimedean copulae
-#  .archmTail                 Utility Function
-# FUNCTION:                 ARCHIMEDEAN COPULA RANDOM VARIATES:
-#  rarchmCopula              Generates Archimedean copula random variates 
-#  .r1Copula                 Generates rv's for copulae No 1
-#  .r2Copula                 Generates rv's for copulae No 2
-# FUNCTION:                 ARCHIMEDEAN COPULA PROBABILITY:
-#  parchmCopula              Computes Archimedean copula probability 
-#  parchmSlider              Displays interactively archimedean probability 
-#  .parchm1Copula             Utility Function
-#  .parchm2Copula             Utility Function
-#  .parchmPerspSlider         Utility Function
-#  .parchmContourSlider       Utility Function
-# FUNCTION:                 ARCHIMEDEAN COPULA DENSITY:
-#  darchmCopula              Computes Archimedean copula density 
-#  darchmSlider               Displays interactively archimedean density 
-#  .darchm1Copula             Utility Function
-#  .darchm2Copula             Utility Function
-#  .darchmPerspSlider         Utility Function
-#  .darchmContourSlider       Utility Function
-# FUNCTION:                 ARCHIMEDEAN COPULA PARAMETER FITTING:
-#  archmCopulaSim            Simulates bivariate elliptical copula
-#  archmCopulaFit            Fits the paramter of an elliptical copula
+#                       X     NOT YET IMPEMENTED
+# FUNCTION:                  ARCHIMEDEAN COPULA PARAMETER:
+#  .archmParam                Sets Default parameters for an Archimedean copula
+#  .archmCheck                Checks if alpha is in the valid range
+#  .archmRange                Returns the range of valid alpha values
+# FUNCTION:                  ARCHIMEDEAN COPULA GENERATOR:
+#  Phi                        Computes Archimedean Phi, inverse and derivatives
+#  PhiSlider                  Displays interactively generator function
+#  .Phi                       Computes Archimedean generator Phi
+#  .Phi0                      Utility Function
+#  .PhiFirstDer               Computes first derivative of Phi
+#  .PhiSecondDer              Computes second derivative of Phi
+#  .invPhi                    Computes inverse of Archimedean generator
+#  .invPhiFirstDer            Computes first derivative of inverse Phi
+#  .invPhiSecondDer           Computes second derivative of inverse Phi
+# FUNCTION:                  ARCHIMEDEAN COPULA DENSITY:
+#  Kfunc                      Computes Archimedean Density Kc and its Inverse
+#  KfuncSlider                Displays interactively the density and concordance
+#  .Kfunc                     Computes Density for Archimedean Copulae
+#  .invK                      Computes Inverse of Density
+#  .invK2                     Utility Function
+#  .ALPHA                     Utility Function
+#  .TAU                       Utility Function
+#  .RHO                       Utility Function
+# FUNCTION                   KENDALL'S TAU AND SPEARMAN'S RHO:
+#  archmTau                   Returns Kendall's tau for Archemedean copulae
+#  archmRho                   Returns Spearman's rho for Archemedean copulae
+#  .archmTauRange              Returns range for Kendall's tau
+#  .archm2Tau                  Alternative way to compute Kendall's tau
+#  .archmGamma                Returns Gini's gamma for Archimedean copulae
+#  .archmTail                  Utility Function
+# FUNCTION:                  ARCHIMEDEAN TAIL COEFFICIENT:
+#  archmTailCoeff       X     Computes tail dependence for Archimedean copulae
+#  archmTailPlot        X     Plots Archimedean tail dependence function
+# FUNCTION:                  ARCHIMEDEAN COPULA RANDOM VARIATES:
+#  rarchmCopula               Generates Archimedean copula random variates 
+#  .r1Copula                  Generates rv's for copulae No 1
+#  .r2Copula                  Generates rv's for copulae No 2
+# FUNCTION:                  ARCHIMEDEAN COPULA PROBABILITY:
+#  parchmCopula               Computes Archimedean copula probability 
+#  parchmSlider               Displays interactively archimedean probability 
+#  .parchm1Copula              Utility Function
+#  .parchm2Copula              Utility Function
+#  .parchmPerspSlider          Utility Function
+#  .parchmContourSlider        Utility Function
+# FUNCTION:                  ARCHIMEDEAN COPULA DENSITY:
+#  darchmCopula               Computes Archimedean copula density 
+#  darchmSlider                Displays interactively archimedean density 
+#  .darchm1Copula              Utility Function
+#  .darchm2Copula              Utility Function
+#  .darchmPerspSlider          Utility Function
+#  .darchmContourSlider        Utility Function
+# FUNCTION:                  ARCHIMEDEAN COPULA PARAMETER FITTING:
+#  archmCopulaSim             Simulates bivariate elliptical copula
+#  archmCopulaFit             Fits the paramter of an elliptical copula
 ################################################################################
 
 

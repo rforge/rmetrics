@@ -28,29 +28,37 @@
 
 
 ################################################################################
-# FUNCTION:                 EXTREME VALUE COPULAE PARAMETER:
-#  .evParam                  Sets parameters for an extreme value copula
-# FUNCTION:                 EXTREME VALUE COPULAE DEPENDENCE FUNCTION:
-#  Afunc                     Computes Dependence function
-#  AfuncFirstDer              Computes Derivative of dependence function
-#  AfuncSecondDer             Computes 2nd Derivative of dependence function
-#  AfuncSlider                Displays interactively dependence function
-# FUNCTION                  KENDALL'S TAU AND SPEARMAN'S RHO:
-#  ... still missing
-# FUNCTION:                 EXTREME VALUE COPULAE RANDOM VARIATES:
-#  ... still missing
-# FUNCTION:                 EXTREME VALUE COPULAE PROBABILIY:
-#  pevCopula                 Computes extreme value copula probability
-#  .pev1Copula                EV copula probability via dependence function
-#  .pev2Copula                EV copula probability direct computation
-#  .pevContourSlider          Interactive contour plots of EV probability
-#  .pevPerspSlider            Interactive perspective plots of EV probability
-# FUNCTION:                 EXTREME VALUE COPULAE DENSITY:
-#  devCopula                 Computes extreme value copula density
-#  .dev1Copula                EV copula density via dependence function
-#  .dev2Copula                EV copula density direct computation
-#  .devContourSlider          Interactive contour plots of EV density
-#  .devPerspSlider            Interactive perspective plots of EV density
+#                       X     NOT YET IMPEMENTED
+# FUNCTION:                  EXTREME VALUE COPULAE PARAMETER:
+#  .evParam                   Sets parameters for an extreme value copula
+# FUNCTION:                  EXTREME VALUE COPULAE DEPENDENCE FUNCTION:
+#  Afunc                      Computes Dependence function
+#  AfuncFirstDer               Computes Derivative of dependence function
+#  AfuncSecondDer              Computes 2nd Derivative of dependence function
+#  AfuncSlider                 Displays interactively dependence function
+# FUNCTION                   KENDALL'S TAU AND SPEARMAN'S RHO:
+#  evTau                X      Returns Kendall's tau for extreme value copulae
+#  evRho                X      Returns Spearman's rho for extreme value copulae
+# FUNCTION:                  EXTREME VALUE COPULAE RANDOM VARIATES:
+#  evTailCoeff          X     Computes tail dependence for extreme value copulae
+#  evTailPlot           X     Plots extreme value tail dependence function
+# FUNCTION:                  EXTREME VALUE COPULAE RANDOM VARIATES:
+#  revCopula            X     Generates extreme value copula random variates 
+# FUNCTION:                  EXTREME VALUE COPULAE PROBABILIY:
+#  pevCopula                  Computes extreme value copula probability
+#  .pev1Copula                 EV copula probability via dependence function
+#  .pev2Copula                 EV copula probability direct computation
+#  .pevContourSlider           Interactive contour plots of EV probability
+#  .pevPerspSlider             Interactive perspective plots of EV probability
+# FUNCTION:                  EXTREME VALUE COPULAE DENSITY:
+#  devCopula                  Computes extreme value copula density
+#  .dev1Copula                 EV copula density via dependence function
+#  .dev2Copula                 EV copula density direct computation
+#  .devContourSlider           Interactive contour plots of EV density
+#  .devPerspSlider             Interactive perspective plots of EV density
+# FUNCTION:                  ARCHIMEDEAN COPULA PARAMETER FITTING:
+#  evCopulaSim          X      Simulates bivariate extreme value copula
+#  evCopulaFit          X      Fits the paramter of an extreme value copula
 ################################################################################
 
 

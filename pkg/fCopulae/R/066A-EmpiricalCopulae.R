@@ -28,8 +28,10 @@
 
 
 ################################################################################
-# FUNCTION:                 EMPIRICAL COPULAE:
+#                       X     NOT YET IMPEMENTED
+# FUNCTION:                  EMPIRICAL COPULAE PROBABILIY:
 #  pempiricalCopula
+# FUNCTION:                  EMPIRICAL COPULAE DENSITY:
 #  dempiricalCopula
 ################################################################################
 

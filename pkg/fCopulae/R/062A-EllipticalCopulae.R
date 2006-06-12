@@ -28,6 +28,7 @@
 
 
 ################################################################################
+#                       X     NOT YET IMPEMENTED
 # FUNCTION:                  UTILITY FUNCTIONS:
 #  .ellipticalParam           Sets Default parameters for an elliptical copula
 #  .ellipticalRange           Returns the range of valid rho values
@@ -40,6 +41,12 @@
 #  .qelliptical               Univariate elliptical distribution quantiles
 #  .qlogistic                 Fast tabulated logistic quantile function
 #  .qlogisticData             Table generator for logistic quantiles
+# FUNCTION:                  ELLIPTICAL DEPENDENCE MASURES:
+#  ellipticalTau              Computes Kendall's tau for elliptical copulae
+#  ellipticalRho              Computes Spearman's rho for elliptical copulae
+# FUNCTION:                  ELLIPTICAL TAIL COEFFICIENT:
+#  ellipticalTailCoeff        Computes tail dependence for elliptical copulae
+#  ellipticalTailPlot         Plots tail dependence function
 # FUNCTION:                  ELLIPTICAL COPULAE RANDOM DEVIATES:
 #  rellipticalCopula          Generates elliptical copula variates
 #  rellipticalSlider          Interactive plots of random variates
@@ -66,12 +73,6 @@
 #  .dellipticalCopula.RUnit   R Unit test for elliptical copula density
 #  .dellipticalPerspSlider    Interactive perspective plots of density
 #  .dellipticalContourSlider  Interactive contour plots of density
-# FUNCTION:                  ELLIPTICAL DEPENDENCE MASURES:
-#  ellipticalTau              Computes Kendall's tau for elliptical copulae
-#  ellipticalRho              Computes Spearman's rho for elliptical copulae
-# FUNCTION:                  ELLIPTICAL TAIL COEFFICIENT:
-#  ellipticalTailCoeff        Computes tail dependence for elliptical copulae
-#  ellipticalTailPlot         Plots tail dependence function
 # FUNCTION:                  ELLIPTICAL COPULAE PARAMETER FITTING:
 #  ellipticalCopulaSim        Simulates bivariate elliptical copula
 #  ellipticalCopulaFit        Fits the paramter of an elliptical copula
@@ -1235,7 +1236,287 @@ function(u = 0.5, v = u, rho = 0.75, nu = 4, output = c("vector", "list") )
 
 
 ################################################################################
-# COPULA RANDOM DEVIATES:
+# COPULA DEPENDENCE MEASURES:
+
+
+ellipticalTau =
+function(rho)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Computes Kendall's tau for elliptical copulae
+    
+    # Arguments:
+    #   rho - a numeric value setting the coorelation strength, ranging
+    #       between minus one and one.
+
+    # FUNCTION:
+    
+    # Compute Kendall's Tau:
+    ans = 2 * asin(rho) / pi
+    attr(ans, "control") = c(rho = rho)
+    
+    # Return Value:
+    ans
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+ellipticalRho =
+function(rho, param = NULL, type = c("norm", "cauchy", "t", "logistic", 
+"laplace", "kotz", "epower"), subdivisions = 500)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Computes Spearman's rho for elliptical copulae
+    
+    # Arguments:
+    #   rho - a numeric value setting the coorelation strength, ranging
+    #       between minus one and one.
+
+    # FUNCTION:
+    
+    # Settings:
+    Type = c("Normal Copula", "Cauchy Copula", "Student-t Copula", 
+        "Logistic Copula", "Laplace Copula", "Kotz Copula", 
+        "Exponential Power Copula")
+    names(Type) = c("norm", "cauchy", "t", "logistic", "laplace", 
+        "kotz", "epower")
+    type = type[1]
+    Type = Type[type]
+    
+    # Compute Spearman's Rho:
+    ans.norm = round(6 * asin(rho/2) / pi, 2)
+    
+    # Spearman's Rho:
+    N = subdivisions
+    Pi = pfrechetCopula(u = grid2d((1:(N-1))/N), type = "pi", output = "list")
+    D = .dellipticalCopulaGrid(N = N, rho = rho, param = param, 
+        type = type, border = FALSE)
+    ans = round(12*mean(Pi$z*D$z)-3, 2)
+    names(ans) = NULL
+    
+    # Add Control Attribute:
+    control = c(rho = rho, param = param, type = type, tau = 2*asin(rho)/pi)
+    attr(ans, "control")<-unlist(control)
+    
+    # Return Value:
+    ans
+}
+
+
+
+# ------------------------------------------------------------------------------
+
+
+ellipticalTailCoeff =
+function(rho, param = NULL, type = c("norm", "cauchy", "t", "logistic",
+"laplace", "kotz", "epower"))
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Computes tail dependence for elliptical copulae
+    
+    # Arguments:
+    #   rho - a numeric value setting the coorelation strength, ranging
+    #       between minus one and one.
+
+    # FUNCTION:
+    
+    # Match Arguments:
+    type = match.arg(type)
+    
+    # Check:
+    stopifnot(length(rho) == 1)
+    
+    # Compute Tail Dependence:
+    lambda = 0
+    if (type == "cauchy") {
+        nu = 1 
+        arg = sqrt(nu+1) * sqrt(1-rho) / sqrt(1+rho)
+        lambda = 2 * (1 - pt(arg, df = nu+1))
+    }
+    if (type == "t") {
+        nu = param
+        if (is.null(nu)) nu = 4
+        arg = sqrt(nu+1) * sqrt(1-rho) / sqrt(1+rho)
+        lambda = 2 * (1 - pt(arg, df = nu+1))
+    }
+    if (type == "kotz" & is.null(param)) {
+        param = c(r = 1)
+    }
+    if (type == "epower" & is.null(param)) {
+        param = c(r = 1, s = 1)
+    }
+    
+    # Result:
+    ans = lambda
+    attr(ans, "control") = c(rho = rho, type = type)
+    
+    # Return Value:
+    ans
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+ellipticalTailPlot =
+function(param = NULL, type = c("norm", "cauchy", "t", "logistic", 
+"laplace", "kotz", "epower"), tail = c("Upper", "Lower"))
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Plots tail dependence for elliptical copulae
+    
+    # Arguments:
+    #   rho - a numeric value setting the coorelation strength, ranging
+    #       between minus one and one.
+
+    # FUNCTION:
+    
+    # Match Arguments:
+    type = match.arg(type)
+    tail = match.arg(tail)
+    
+    # Settings:
+    Title = c("Normal", "Cauchy", "Student-t", "Logistic", "Laplace",
+        "Kotz", "Exponential Power")
+    Title = paste(Title, "Copula")
+    names(Title) = c("norm", "cauchy", "t", "logistic", "laplace", 
+        "kotz", "epower")
+    Title = Title[type]
+    tail = tail[1]
+    N = 1000; Points = 20 # don't change these values!
+    u = (0:N)/N
+    SHOW = N+1
+    
+    # Parameters:
+    if (type == "t" & is.null(param)) {
+        param = c(nu = 4)
+    }
+    if (type == "kotz" & is.null(param)) {
+        param = c(r = 1)
+    }
+    if (type == "epower" & is.null(param)) {
+        param = c(r = 1, s = 1)
+    }
+    
+    # Plot Frame:
+    if (type == "t") 
+        Title = paste(Title, "| nu =", as.character(param))
+    if (type == "t") 
+        Title = paste(Title, "| r =", as.character(param))
+    if (type == "epower") 
+        Title = paste(Title, "| r =", as.character(param[1]), 
+            " s =", as.character(param[2]))
+    plot(c(0,1), c(0,1), type = "n", main = Title, xlab = "u", 
+        ylab = paste(tail, "Tail Dependence"))
+        
+    # Cauchy Tail dependence:
+    if (type == "cauchy") {
+        type = "t"
+        param = c(nu = 1)
+    }
+    
+    # Iterate rho:
+    Rho = c(-0.99, seq(-0.9, 0.9, by = 0.3), 0.99)
+    for (rho in Rho) {
+        
+        # Compute Tail Coefficient:
+        lambda = ellipticalTailCoeff(rho = rho, param = param, type = type)
+        
+        # Compute Copula Cross Section C(u,u)"
+        if (type == "norm") 
+            C.uu = pellipticalCopula(u, rho = rho, type = type)
+        if (type == "t") 
+            C.uu = .ptCopula(u = u, v = u, rho = rho, nu = param)
+        if (type == "logistic" | type == "laplace" | type == "kotz" | 
+            type == "epower")
+            C.uu = .pellipticalCopulaDiag(N, rho = rho, param = param, 
+                type = type)$y
+        
+        # Compute Copula Tail dependence lambda:
+        if (tail == "Upper") {
+            lambdaTail = (1-2*u+C.uu)/(1-u)
+        } else if (tail == "Lower") {
+            lambdaTail = C.uu/u
+        }
+        
+        # Define Plot Elements:
+        if (abs(rho) < 0.05) {
+            color = "black"
+            linetype = 1
+        } else if (abs(rho) > 0.95) {
+            color = "blue" 
+            linetype = 1
+        } else {
+            color = "black"
+            linetype = 3
+        }
+        
+        # Normal Tail Dependence:
+        if (type == "norm") { 
+            lines(u, lambdaTail, type = "l", lty = linetype, col = color) 
+        }
+        
+        # Cauchy and Student-t Tail Dependence:
+        if (type == "t") {
+            if (tail == "Upper") 
+                lines(u[u < 0.99], lambdaTail[u<0.99], lty = linetype, 
+                    col = color)
+            if (tail == "Lower") 
+                lines(u[u > 0.01], lambdaTail[u>0.01], lty = linetype, 
+                    col = color)
+        }
+        
+        # Logistic Tail dependence:
+        if (type == "logistic" | type == "laplace" | type == "kotz") {
+            if (tail == "Lower") {
+                SHOW = which.min(lambdaTail[-1])
+                lines(u[SHOW:(N+1)], lambdaL[SHOW:(N+1)], type = "l", 
+                    lty = linetype, col = color)
+            }       
+            if (tail == "Upper") {
+                SHOW = which.min(lambdaTail[-(N+1)])
+                lines(u[1:SHOW], lambdaTail[1:SHOW], type = "l", 
+                    lty = linetype, col = color)    
+            }
+        }
+        
+        # Add rho Labels
+        text(x = 0.5, y = lambdaTail[floor(N/2)]+0.05, col = "red", cex = 0.7,
+            labels = as.character(round(rho, 2)))
+            
+        # Add Points to Curves: 
+        if (tail == "Upper") {
+            M = min(SHOW, N)
+            Index = seq(1, M, by = Points)
+            X = 1
+        } else if (tail == "Lower") {
+            M = max(51, SHOW)
+            Index = rev(seq(N+1, M, by = -Points))
+            X = 0
+        }
+        points(u[Index], lambdaTail[Index], pch = 19, cex = 0.7)
+        
+        # Add Tail Coefficient:
+        points(x = X, y = lambda[1], pch = 19, col = "red")
+        
+    }
+    points(1, 0, pch = 19, col = "red")
+    abline(h = 0, lty = 3, col = "grey")
+    abline(v = X, lty = 3, col = "grey")
+    
+    # Return Value:
+    invisible()
+}
+
+
+################################################################################
+# ELLIPTICAL COPULA RANDOM DEVIATES:
 
 
 rellipticalCopula =
@@ -2344,286 +2625,7 @@ function(B = 20)
 
 
 ################################################################################
-# COPULA DEPENDENCE MEASURES:
-
-
-ellipticalTau =
-function(rho)
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Computes Kendall's tau for elliptical copulae
-    
-    # Arguments:
-    #   rho - a numeric value setting the coorelation strength, ranging
-    #       between minus one and one.
-
-    # FUNCTION:
-    
-    # Compute Kendall's Tau:
-    ans = 2 * asin(rho) / pi
-    attr(ans, "control") = c(rho = rho)
-    
-    # Return Value:
-    ans
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-ellipticalRho =
-function(rho, param = NULL, type = c("norm", "cauchy", "t", "logistic", 
-"laplace", "kotz", "epower"), subdivisions = 500)
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Computes Spearman's rho for elliptical copulae
-    
-    # Arguments:
-    #   rho - a numeric value setting the coorelation strength, ranging
-    #       between minus one and one.
-
-    # FUNCTION:
-    
-    # Settings:
-    Type = c("Normal Copula", "Cauchy Copula", "Student-t Copula", 
-        "Logistic Copula", "Laplace Copula", "Kotz Copula", 
-        "Exponential Power Copula")
-    names(Type) = c("norm", "cauchy", "t", "logistic", "laplace", 
-        "kotz", "epower")
-    type = type[1]
-    Type = Type[type]
-    
-    # Compute Spearman's Rho:
-    ans.norm = round(6 * asin(rho/2) / pi, 2)
-    
-    # Spearman's Rho:
-    N = subdivisions
-    Pi = pfrechetCopula(u = grid2d((1:(N-1))/N), type = "pi", output = "list")
-    D = .dellipticalCopulaGrid(N = N, rho = rho, param = param, 
-        type = type, border = FALSE)
-    ans = round(12*mean(Pi$z*D$z)-3, 2)
-    names(ans) = NULL
-    
-    # Add Control Attribute:
-    control = c(rho = rho, param = param, type = type, tau = 2*asin(rho)/pi)
-    attr(ans, "control")<-unlist(control)
-    
-    # Return Value:
-    ans
-}
-
-
-
-# ------------------------------------------------------------------------------
-
-
-ellipticalTailCoeff =
-function(rho, param = NULL, type = c("norm", "cauchy", "t", "logistic",
-"laplace", "kotz", "epower"))
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Computes tail dependence for elliptical copulae
-    
-    # Arguments:
-    #   rho - a numeric value setting the coorelation strength, ranging
-    #       between minus one and one.
-
-    # FUNCTION:
-    
-    # Match Arguments:
-    type = match.arg(type)
-    
-    # Check:
-    stopifnot(length(rho) == 1)
-    
-    # Compute Tail Dependence:
-    lambda = 0
-    if (type == "cauchy") {
-        nu = 1 
-        arg = sqrt(nu+1) * sqrt(1-rho) / sqrt(1+rho)
-        lambda = 2 * (1 - pt(arg, df = nu+1))
-    }
-    if (type == "t") {
-        nu = param
-        if (is.null(nu)) nu = 4
-        arg = sqrt(nu+1) * sqrt(1-rho) / sqrt(1+rho)
-        lambda = 2 * (1 - pt(arg, df = nu+1))
-    }
-    if (type == "kotz" & is.null(param)) {
-        param = c(r = 1)
-    }
-    if (type == "epower" & is.null(param)) {
-        param = c(r = 1, s = 1)
-    }
-    
-    # Result:
-    ans = lambda
-    attr(ans, "control") = c(rho = rho, type = type)
-    
-    # Return Value:
-    ans
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-ellipticalTailPlot =
-function(param = NULL, type = c("norm", "cauchy", "t", "logistic", 
-"laplace", "kotz", "epower"), tail = c("Upper", "Lower"))
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Plots tail dependence for elliptical copulae
-    
-    # Arguments:
-    #   rho - a numeric value setting the coorelation strength, ranging
-    #       between minus one and one.
-
-    # FUNCTION:
-    
-    # Match Arguments:
-    type = match.arg(type)
-    tail = match.arg(tail)
-    
-    # Settings:
-    Title = c("Normal", "Cauchy", "Student-t", "Logistic", "Laplace",
-        "Kotz", "Exponential Power")
-    Title = paste(Title, "Copula")
-    names(Title) = c("norm", "cauchy", "t", "logistic", "laplace", 
-        "kotz", "epower")
-    Title = Title[type]
-    tail = tail[1]
-    N = 1000; Points = 20 # don't change these values!
-    u = (0:N)/N
-    SHOW = N+1
-    
-    # Parameters:
-    if (type == "t" & is.null(param)) {
-        param = c(nu = 4)
-    }
-    if (type == "kotz" & is.null(param)) {
-        param = c(r = 1)
-    }
-    if (type == "epower" & is.null(param)) {
-        param = c(r = 1, s = 1)
-    }
-    
-    # Plot Frame:
-    if (type == "t") 
-        Title = paste(Title, "| nu =", as.character(param))
-    if (type == "t") 
-        Title = paste(Title, "| r =", as.character(param))
-    if (type == "epower") 
-        Title = paste(Title, "| r =", as.character(param[1]), 
-            " s =", as.character(param[2]))
-    plot(c(0,1), c(0,1), type = "n", main = Title, xlab = "u", 
-        ylab = paste(tail, "Tail Dependence"))
-        
-    # Cauchy Tail dependence:
-    if (type == "cauchy") {
-        type = "t"
-        param = c(nu = 1)
-    }
-    
-    # Iterate rho:
-    Rho = c(-0.99, seq(-0.9, 0.9, by = 0.3), 0.99)
-    for (rho in Rho) {
-        
-        # Compute Tail Coefficient:
-        lambda = ellipticalTailCoeff(rho = rho, param = param, type = type)
-        
-        # Compute Copula Cross Section C(u,u)"
-        if (type == "norm") 
-            C.uu = pellipticalCopula(u, rho = rho, type = type)
-        if (type == "t") 
-            C.uu = .ptCopula(u = u, v = u, rho = rho, nu = param)
-        if (type == "logistic" | type == "laplace" | type == "kotz" | 
-            type == "epower")
-            C.uu = .pellipticalCopulaDiag(N, rho = rho, param = param, 
-                type = type)$y
-        
-        # Compute Copula Tail dependence lambda:
-        if (tail == "Upper") {
-            lambdaTail = (1-2*u+C.uu)/(1-u)
-        } else if (tail == "Lower") {
-            lambdaTail = C.uu/u
-        }
-        
-        # Define Plot Elements:
-        if (abs(rho) < 0.05) {
-            color = "black"
-            linetype = 1
-        } else if (abs(rho) > 0.95) {
-            color = "blue" 
-            linetype = 1
-        } else {
-            color = "black"
-            linetype = 3
-        }
-        
-        # Normal Tail Dependence:
-        if (type == "norm") { 
-            lines(u, lambdaTail, type = "l", lty = linetype, col = color) 
-        }
-        
-        # Cauchy and Student-t Tail Dependence:
-        if (type == "t") {
-            if (tail == "Upper") 
-                lines(u[u < 0.99], lambdaTail[u<0.99], lty = linetype, 
-                    col = color)
-            if (tail == "Lower") 
-                lines(u[u > 0.01], lambdaTail[u>0.01], lty = linetype, 
-                    col = color)
-        }
-        
-        # Logistic Tail dependence:
-        if (type == "logistic" | type == "laplace" | type == "kotz") {
-            if (tail == "Lower") {
-                SHOW = which.min(lambdaTail[-1])
-                lines(u[SHOW:(N+1)], lambdaL[SHOW:(N+1)], type = "l", 
-                    lty = linetype, col = color)
-            }       
-            if (tail == "Upper") {
-                SHOW = which.min(lambdaTail[-(N+1)])
-                lines(u[1:SHOW], lambdaTail[1:SHOW], type = "l", 
-                    lty = linetype, col = color)    
-            }
-        }
-        
-        # Add rho Labels
-        text(x = 0.5, y = lambdaTail[floor(N/2)]+0.05, col = "red", cex = 0.7,
-            labels = as.character(round(rho, 2)))
-            
-        # Add Points to Curves: 
-        if (tail == "Upper") {
-            M = min(SHOW, N)
-            Index = seq(1, M, by = Points)
-            X = 1
-        } else if (tail == "Lower") {
-            M = max(51, SHOW)
-            Index = rev(seq(N+1, M, by = -Points))
-            X = 0
-        }
-        points(u[Index], lambdaTail[Index], pch = 19, cex = 0.7)
-        
-        # Add Tail Coefficient:
-        points(x = X, y = lambda[1], pch = 19, col = "red")
-        
-    }
-    points(1, 0, pch = 19, col = "red")
-    abline(h = 0, lty = 3, col = "grey")
-    abline(v = X, lty = 3, col = "grey")
-    
-    # Return Value:
-    invisible()
-}
-
-
-################################################################################
+# ELLIPTICAL COPULA SIMULATION AND PARAMETER FITTING:
 
 
 ellipticalCopulaSim = 
