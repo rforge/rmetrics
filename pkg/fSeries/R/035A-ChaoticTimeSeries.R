@@ -458,29 +458,23 @@ function(y, times, func, parms)
     }
 
     nm = c("time", 
-        if (!is.null(attr(y, "names"))) {
-            names(y) 
-        } else {
-            as.character(1:n))
-        }
+        if (!is.null(attr(y, "names"))) names(y) 
+        else as.character(1:n))
     if (Nglobal > 0) {
         out2 = matrix(nrow=nrow(out), ncol = Nglobal)
-        for (i in 1:nrow(out2)) {
+        for (i in 1:nrow(out2))
             out2[i,] = func(out[i,1], out[i,-1], parms)[[2]]
-        }
         out = cbind(out, out2)
         nm = c(nm,
-            if (!is.null(attr(tmp[[2]],"names"))) {
-                names(tmp[[2]])
-            } else {
-                as.character((n+1) : (n + Nglobal)))
-            }
+            if (!is.null(attr(tmp[[2]],"names"))) names(tmp[[2]])
+            else as.character((n+1) : (n + Nglobal)))
     }
     dimnames(out) = list(NULL, nm)
     
     # Return Value:
     out
 }
+
 
 
 ################################################################################
