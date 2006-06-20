@@ -1,6 +1,6 @@
 
 #*******************************************************************************
-# fMultivar - A SOFTWARE COLLECTION FOR FINANCIAL ENGINEERS
+# fSeries - A SOFTWARE COLLECTION FOR FINANCIAL ENGINEERS
 # The Dynamical Process Behind Financial Markets
 #
 # collected by Diethelm Wuertz

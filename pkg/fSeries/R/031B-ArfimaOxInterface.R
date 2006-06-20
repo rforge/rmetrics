@@ -31,7 +31,7 @@
 #  *                       Asterisked Functions are in ArmaModelling.R
 # FUNCTION:               DESCRIPTION:
 #  *fARMA                  Class representation for "fARMA" objects
-#  *armaSim                Simulates an ARIMA time series process
+#  *armaSim                Simulates a time series process from the ARIMA family
 #  arfimaOxFit             Fits parameters for AR(FI)MA time series processes
 # S3 METHOD:              PREDICTION:
 #  *predict.fARMA          S3: Predicts from an ARMA time series prrocess 
@@ -71,6 +71,7 @@ trace = TRUE, title = NULL, description = NULL)
     
     # Example:
     #   require(fracdiff)
+    #   OXPATH <<- "C:\\Ox\\Ox3"
     #   x = as.vector(fracdiff.sim(n=500, ar=0.2, ma=-0.4, d=0.3)$series)
     #   object = arfimaOxFit(x ~ arfima(2, 1))
        
