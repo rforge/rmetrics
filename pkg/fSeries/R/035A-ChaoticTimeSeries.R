@@ -345,7 +345,7 @@ start = c(-14, -13, 47), doplot = TRUE, ...)
 
 
 roesslerSim = 
-function(times = seq(0, 100, by = 0.1), parms = c(a = 0.2, b = 0.2, c = 8.0),
+function(times = seq(0, 100, by = 0.01), parms = c(a = 0.2, b = 0.2, c = 8.0),
 start = c(-1.894, -9.920, 0.0250), doplot = TRUE, ...)
 {   # A function written by Diethelm Wuertz
     
