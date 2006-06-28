@@ -48,9 +48,9 @@
 #  as.matrix.ts                  univariate ts to 1-column matrix
 #  as.matrix.mts                 multivariate ts to matrix
 # FUNCTION:                     DESCRIPTION:
-#  .description                  sets default description string
-#  .unirootNA   
-#  .interp                       Akima Interpolation
+#  .description                  Sets default description string
+#  .unirootNA                    Computes zero without error exit    
+#  .interp                       Does Akima Interpolation
 ################################################################################
 
 
