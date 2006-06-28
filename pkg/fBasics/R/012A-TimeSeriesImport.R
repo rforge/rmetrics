@@ -35,7 +35,7 @@
 #  economagicImport      Downloads market data from EconoMagic's web site
 #  yahooImport           Downloads market data from Yahoo's web site 
 #  .yahooImport          ... the old download function 
-#  keystatsImport        Downloads key statistics from Yahoo's web site  
+#  .keystatsImport       Downloads key statistics from Yahoo's web site  
 #  fredImport            Downloads market data from St. Louis FED web site
 #  forecastsImport       Downloads monthly data from www.forecasts.org
 # FUNCTION              EASY TO USE ROUTINES:
@@ -329,7 +329,7 @@ swap = 20, try = TRUE)
 # ------------------------------------------------------------------------------
 
     
-keystatsImport = 
+.keystatsImport = 
 function(query, file = "tempfile", source = "http://finance.yahoo.com/q/ks?s=", 
 save = FALSE, try = TRUE) 
 {   # A function implemented by Diethelm Wuertz
@@ -421,7 +421,7 @@ save = FALSE, try = TRUE)
 # ------------------------------------------------------------------------------
 
 
-print.keystats = 
+.print.keystats = 
 function(x, ...)
 {
     # Title:
