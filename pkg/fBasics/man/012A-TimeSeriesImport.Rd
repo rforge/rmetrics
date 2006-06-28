@@ -15,8 +15,8 @@
 
 \alias{yahooSeries}
 
-\alias{keystatsImport}
-\alias{print.keystats}
+%\alias{keystatsImport}
+%\alias{print.keystats}
 
 
 \title{Import Market Data from the Internet}
@@ -38,7 +38,7 @@
     \code{economagicImport} \tab Economic series from Economagic's Web site, \cr
     \code{yahooImport} \tab daily stock market data from Yahoo's Web site, \cr
     \code{yahooSeries} \tab easy to use download from Yahoo, \cr
-    \code{keystatsImport} \tab key statistics from Yahoo's Web site, \cr
+    %\code{keystatsImport} \tab key statistics from Yahoo's Web site, \cr
     \code{fredImport} \tab time series from St. Louis FRED Web site, \cr
     \code{forecastsImport} \tab monthly data from the Financial Forecast Center. }
     
@@ -53,9 +53,9 @@ economagicImport(query, file = "tempfile",
 yahooImport(query, file = "tempfile", 
     source = "http://chart.yahoo.com/table.csv?", save = FALSE,
     sep = ";", swap = 20, try = TRUE)
-keystatsImport(query, file = "tempfile", 
-    source = "http://finance.yahoo.com/q/ks?s=", save = FALSE, 
-    try = TRUE) 
+%keystatsImport(query, file = "tempfile", 
+%    source = "http://finance.yahoo.com/q/ks?s=", save = FALSE, 
+%    try = TRUE) 
 fredImport(query, file = "tempfile", 
     source = "http://research.stlouisfed.org/fred2/series/", 
     frequency = "daily", save = FALSE, sep = ";", try = TRUE) 
@@ -69,7 +69,7 @@ yahooSeries(symbols = c("^DJI", "IBM"), from = NULL, to = NULL,
     getReturns = FALSE, ...)
         
 show.fWEBDATA(object)
-\method{print}{keystats}(x, \dots)
+%\method{print}{keystats}(x, \dots)
 }
 
 
@@ -157,14 +157,14 @@ show.fWEBDATA(object)
         a logical value, if set to TRUE the Internet access will be
         checked.
         }
-    \item{x}{
-        [print.keystats] - \cr
-        an object of class \code{keystats} as returned by the function
-        \code{keystatsImport}.
-        }
-    \item{\dots}{
-        optional arguments passed to the \code{print.keystats} function.
-        }        
+%    \item{x}{
+%        [print.keystats] - \cr
+%        an object of class \code{keystats} as returned by the function
+%        \code{keystatsImport}.
+%        }
+%    \item{\dots}{
+%        optional arguments passed to the \code{print.keystats} function.
+%        }        
 }
 
 
@@ -197,10 +197,10 @@ show.fWEBDATA(object)
     class  \code{timeSeries} or alternatively an object specified by
     the function argument \code{returnClass}.
     
-    The function \code{keystatsImport} returns an S3 object of class 
-    \code{keystsats} with two entries: \code{$query} holds the query
-    name, and \code{keystats} holds the dataframe with the statistical
-    values. 
+    %The function \code{keystatsImport} returns an S3 object of class 
+    %\code{keystsats} with two entries: \code{$query} holds the query
+    %name, and \code{keystats} holds the dataframe with the statistical
+    %values. 
     
 }
 
@@ -274,15 +274,15 @@ show.fWEBDATA(object)
     \cr
     
     
-    \bold{Key statistics data from finance.yahoo.com:}
-    \cr\cr
-    The functions downloads the key statistics for the specified
-    equity query and returns the result as a two column data frame. 
-    The key names included are: "Market Cap", "Enterprise Value",
-    "Trailing P/E", "Forward P/E", "PEG Ratio", "Price/Sales",
-    "Price/Book", "Enterprise Value/Revenue", "Enterprise Value/EBITDA",
-    "Annual Dividend", "Dividend Yield", "Beta",
-    "52-Week Change", "52-Week High", and "52-Week Low".
+    %\bold{Key statistics data from finance.yahoo.com:}
+    %\cr\cr
+    %The functions downloads the key statistics for the specified
+    %equity query and returns the result as a two column data frame. 
+    %The key names included are: "Market Cap", "Enterprise Value",
+    %"Trailing P/E", "Forward P/E", "PEG Ratio", "Price/Sales",
+    %"Price/Book", "Enterprise Value/Revenue", "Enterprise Value/EBITDA",
+    %"Annual Dividend", "Dividend Yield", "Beta",
+    %"52-Week Change", "52-Week High", and "52-Week Low".
             
 }
 
@@ -313,37 +313,28 @@ show.fWEBDATA(object)
 ## SOURCE("fBasics.012A-TimeSeriesData")
 
 ## economagicImport -
-   xmpBasics("\nStart: Daily Foreign Exchange Rates > ")
    USDEUR = economagicImport(query = "fedny/day-fxus2eu", 
      frequency = "daily", colname = "USDEUR")
    # Print Data Slot if Internet Download was Successful:
    if (!is.null(USDEUR)) print(USDEUR@data[1:20, ])
 
 ## economagicImport -
-   xmpBasics("\nNext: USFEDFUNDS Monthly US FedFunds Rates > ")
    USFEDFUNDS = economagicImport(query = "fedstl/fedfunds+2", 
      frequency = "monthly", colname = "USFEDFUNDS")
    if (!is.null(USFEDFUNDS)) print(USFEDFUNDS@data[1:20, ])
    
 ## economagicImport -
-   xmpBasics("\nNext: USDGNP Quarterly GNP Data Records > ")
    USGNP = economagicImport(query = "fedstl/gnp", 
      frequency = "quarterly", colname = "USGNP")
    if(!is.null(USGNP)) print(USGNP@data[1:20, ])  
      
 ## yahooImport -
-   xmpBasics("\nNext: IBM Shares from Yahoo > ")
    # [test 19/20 century change 01-12-1999 -- 31-01-2000]
    query = "s=IBM&a=11&b=1&c=1999&d=0&q=31&f=2000&z=IBM&x=.csv"
    IBM = yahooImport(query)  
-   if (!is.null(IBM)) print(IBM@data[1:20, ])
-   
-## keystatsImport -
-   xmpBasics("\nNext: Key Statistics IBM Shares from Yahoo > ")  
-   keystatsImport("IBM")  
+   if (!is.null(IBM)) print(IBM@data[1:20, ]) 
    
 ## fredImport -
-   xmpBasics("\nNext: DPRIME Daily Bank Prime Load Rate Records > ")
    DPRIME = fredImport("DPRIME")
    if (!is.null(DPRIME)) print(DPRIME@data[1:20, ])       
 }
