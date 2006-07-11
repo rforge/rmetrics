@@ -3,6 +3,9 @@
 
 \alias{CalendarTools}
 
+
+\alias{datax}
+
 \alias{myFinCenter}
 \alias{myUnits}
 \alias{currentYear}
@@ -30,6 +33,9 @@
 
 
 \usage{
+datax(\dots, list = character(0), package = NULL, lib.loc = NULL,
+    verbose = getOption("verbose"), envir = .GlobalEnv)
+
 myFinCenter
 currentYear
 myUnits
@@ -45,6 +51,10 @@ xmpCalendar(prompt = "")
     \item{currentYear}{
         the current year, formatted as \code{CCYY}.
         }
+    \item{list, package, lib.loc, verbose, envir}{
+        [datax] - \cr
+        additional arguments to the \code{datax} function.
+        }
     \itam{myFinCenter}{
         a character string denoting my financial center settings,
         by default \code{"Zurich"}.
@@ -55,7 +65,12 @@ xmpCalendar(prompt = "")
         }
     \item{prompt}{
         the string printed when prompting the user for input. 
-        }   
+        } 
+    \item{\dots}{
+        [datax] - \cr
+        a sequence of names or literal character strings.
+        }
+          
 }
 
 
@@ -72,6 +87,23 @@ xmpCalendar(prompt = "")
     \code{xmpCalendar = readline} on the command prompt. 
     
 }
+
+
+
+
+\details{
+
+    The function \code{datax} is an extended version of R's
+    function \code{data}. It comes with the same functionality
+    beside the fact, that data files loaded from the demo
+    directories are transformed into S4 \code{"timeSeries"}
+    objects if the data structure allows this.
+    
+    For details for the function \code{data} we refer to the 
+    original help page.
+    
+}
+  
 
 
 \note{
@@ -92,6 +124,11 @@ xmpCalendar(prompt = "")
 
 \examples{
 ## SOURCE("fCalendar.027A-CalendarTools")
+
+## datax -
+   # datax(DowJones30)
+   # class(DowJones30)
+   # head(DowJones30)
 
 ## myFinCenter -
    myFinCenter
