@@ -28,6 +28,7 @@
 
 
 ################################################################################
+# FUNCTION             DESCRIPTION:
 #  strptime             Turns charater representations into POSIXlt
 #  as.POSIXlt           Converts into POSIXlt
 #  ISOdatetime          Returns an object of class POSIXct
@@ -45,7 +46,7 @@
 #  time1                lop time2 Logical Operation into PSOIXlt
 #  time1 - time2        Returns an obejct of class difftime
 #  difftime             Takes a difference
-#  as.difftieme         Converts into difftime
+#  as.difftime          Converts into difftime
 #  round                Rounds difftime, generic function
 #  as integer           Converts POSIXt into integer
 #  as.numeric           Converts POSIXt into numeric
