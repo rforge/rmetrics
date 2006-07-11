@@ -40,7 +40,14 @@
 
 .holidayList = 
 function() 
-{
+{   # A function implemented by Diethelm Wuertz
+
+    # Changes:
+    #
+    
+    # FUNCTION:
+    
+    # List:
     myList = c(
         "Septuagesima",
         "Quinquagesima",

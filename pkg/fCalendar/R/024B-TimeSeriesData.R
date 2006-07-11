@@ -28,33 +28,42 @@
 
 
 ################################################################################
-# METHOS               MODIFICATION METHODS:
-#  diff.timeSeries      S3: Differences a 'timeSeries' object
-#  lag.timeSeries       S3: Lags a 'timeSeries' object
-#  merge.timeSeries     S3: Merges two 'timeSeries' objects
-#  scale.timeSeries     S3: Centers and/or scales a 'timeSeries' object
-#  summary.timeSeries   S3: Summarizes a 'timeDate' object
-#  var.timeSeries       S3: Returns variance for a 'timeSeries' object
-# METHODS              MATHEMATICAL OPERATIONS ON DATA:
-#  Ops.timeSeries       S3: Arith method for a 'timeSeries' object
-#  abs.timeSeries       S3: Returns abolute values of a 'timeSeries' object
-#  sqrt.timeSeries      S3: Returns sqrt values of a 'timeSeries' object
-#  exp.timeSeries       S3: Returns exponentials of a 'timeSeries' object
-#  log.timeSeries       S3: Returns logarithms of a 'timeSeries' object
-#  quantile.timeSeries  S3: produces sample quantiles of a 'timeSeries' object
-# METHODS              SUBSETTING METHODS ON DATA:
-#  [.timeSeries         S3: subsets of a 'timeSeries' object
-#  cut.timeSeries       S3: cuts a block from a 'timeSeries' object
-#  head.timeSeries      S3: returns the head of a 'timeSeries' object
-#  tail.timeSeries      S3: returns the tail of a 'timeSeries' object
-#  outlier.timeSeries   S3: Removes outliers from a 'timeSeries' object  
-# METHODS              DIM OPERATIONS ON DATA: 
-#  dim                  Returns the dimension of a 'timeSeries' object
-#  dimnames             Returns the dimension names of a 'timeSeries' object
-#  colnames<-.timeS*    Assigns column names to a 'timeSeries' object
-#  rownames<-.timeS*    Assigns row names to a 'timeSeries' object
-#  is.array.timeSeries  Allows that NCOL and NROW work properly
+# METHOS                 MODIFICATION METHODS:
+#  diff.timeSeries        Differences a 'timeSeries' object
+#  lag.timeSeries         Lags a 'timeSeries' object
+#  merge.timeSeries       Merges two 'timeSeries' objects
+#  scale.timeSeries       Centers and/or scales a 'timeSeries' object
+#  summary.timeSeries     Summarizes a 'timeDate' object
+#  var.timeSeries         Returns variance for a 'timeSeries' object
+# METHODS                MATHEMATICAL OPERATIONS ON DATA:
+#  Ops.timeSeries         Returns group 'Ops' for a 'timeSeries' object
+#  abs.timeSeries         Returns abolute values of a 'timeSeries' object
+#  sqrt.timeSeries        Returns sqrt values of a 'timeSeries' object
+#  exp.timeSeries         Returns exponentials of a 'timeSeries' object
+#  log.timeSeries         Returns logarithms of a 'timeSeries' object
+#  quantile.timeSeries    Produces sample quantiles of a 'timeSeries' object
+# METHODS                SUBSETTING METHODS ON DATA:
+#  [.timeSeries           Subsets of a 'timeSeries' object
+#  cut.timeSeries         Cuts a block from a 'timeSeries' object
+#  head.timeSeries        Returns the head of a 'timeSeries' object
+#  tail.timeSeries        Returns the tail of a 'timeSeries' object
+#  outlier.timeSeries     Removes outliers from a 'timeSeries' object  
+# METHODS                DIM OPERATIONS ON DATA: 
+#  dim.timeSeries         Returns dimension of a 'timeSeries' object
+#  dimnames.timeDSeries   Returns dimension names of a 'timeSeries' object
+#  colnames<-.timeSeries  Assigns column names to a 'timeSeries' object
+#  rownames<-.timeSeries  Assigns row names to a 'timeSeries' object
+#  is.array.timeSeries    Allows that NCOL and NROW work properly
 ################################################################################
+
+
+################################################################################
+#  diff.timeSeries      Differences a 'timeSeries' object
+#  lag.timeSeries       Lags a 'timeSeries' object
+#  merge.timeSeries     Merges two 'timeSeries' objects
+#  scale.timeSeries     Centers and/or scales a 'timeSeries' object
+#  summary.timeSeries   Summarizes a 'timeDate' object
+#  var.timeSeries       Returns variance for a 'timeSeries' object
 
 
 diff.timeSeries = 
@@ -77,6 +86,9 @@ function(x, lag = 1, diff = 1, trim = FALSE, pad = NA, ...)
 
     # Value:
     #   Returns a differenced object of class 'timeSeries'.
+    
+    # Changes:
+    #
     
     # FUNCTION:
         
@@ -133,6 +145,9 @@ function(x, k = 1, trim = FALSE, units = NULL, ...)
     # Value:
     #   Returns a lagged object of class 'timeSeries'.
  
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Column Names:
@@ -220,6 +235,9 @@ function(x, y, units = NULL, ...)
     # Value:
     #   Returns a S4 object of class 'timeSeries'.
     
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Manipulate in matrix form:
@@ -273,6 +291,9 @@ function(x, ...)
     # Value:
     #   Returns a reverted object of class 'timeSeries'.
     
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Revert:
@@ -306,6 +327,9 @@ function(x, center = TRUE, scale = TRUE)
     # Description:
     #   Centers and/or scales a 'timeSeries' object.
 
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Scale:
@@ -325,6 +349,9 @@ function(object, ...)
 
     # Description:
     #   Summarizes a 'timeDate' object
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -373,6 +400,12 @@ function (x, y = NULL, na.rm = FALSE, use)
 
 
 ################################################################################
+#  Ops.timeSeries         Returns group 'Ops' for a 'timeSeries' object
+#  abs.timeSeries         Returns abolute values of a 'timeSeries' object
+#  sqrt.timeSeries        Returns sqrt values of a 'timeSeries' object
+#  exp.timeSeries         Returns exponentials of a 'timeSeries' object
+#  log.timeSeries         Returns logarithms of a 'timeSeries' object
+#  quantile.timeSeries    Produces sample quantiles of a 'timeSeries' object
 
 
 Ops.timeSeries = 
@@ -388,6 +421,9 @@ function(e1, e2 = 1)
     # Value:
     #   Returns an object of class 'timeSeries'.
 
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Save:
@@ -454,6 +490,9 @@ function(x)
     # Arguments:
     #   x - a 'timeSeries' object.
     
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Absolute Values:
@@ -476,6 +515,9 @@ function(x)
     
     # Arguments:
     #   x - a 'timeSeries' object.
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -500,6 +542,9 @@ function(x)
     # Arguments:
     #   x - a 'timeSeries' object.
     
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Absolute Values:
@@ -522,6 +567,9 @@ function(x, base = exp(1))
     
     # Arguments:
     #   x - a 'timeSeries' object.
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -564,6 +612,11 @@ function(x, probs = 0.95, ...)
 
 
 ################################################################################
+#  [.timeSeries           Subsets of a 'timeSeries' object
+#  cut.timeSeries         Cuts a block from a 'timeSeries' object
+#  head.timeSeries        Returns the head of a 'timeSeries' object
+#  tail.timeSeries        Returns the tail of a 'timeSeries' object
+#  outlier.timeSeries     Removes outliers from a 'timeSeries' object 
 
 
 "[.timeSeries" =
@@ -580,6 +633,9 @@ j = min(1, ncol(x@Data)):ncol(x@Data))
     
     # Value:
     #   Returns a subset from an object 'timeSeries'.
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -632,6 +688,9 @@ function(x, from, to, ...)
     # Value:
     #   Returns a S4 object of class 'timeSeries'.
     
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Cut:
@@ -680,6 +739,9 @@ function(x, n = 6, ...)
     # Value:
     #   Returns the head of an object of class 'timeSeries'.
  
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Head:
@@ -706,6 +768,9 @@ function(x, n = 6, ...)
     # Value:
     #   Returns the tail of an object of class 'timeSeries'.
  
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Tail:
@@ -736,6 +801,9 @@ function(x, sd = 10, complement = TRUE, ...)
     #   complement - a logical flag, should the outler series
     #       or its complement be returns.
     
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Check if univariate Series:
@@ -756,7 +824,11 @@ function(x, sd = 10, complement = TRUE, ...)
 
 
 ################################################################################
-# ADDONS:
+#  dim.timeSeries         Returns dimension of a 'timeSeries' object
+#  dimnames.timeDSeries   Returns dimension names of a 'timeSeries' object
+#  colnames<-.timeSeries  Assigns column names to a 'timeSeries' object
+#  rownames<-.timeSeries  Assigns row names to a 'timeSeries' object
+#  is.array.timeSeries    Allows that NCOL and NROW work properly
 
 
 dim.timeSeries =
@@ -765,6 +837,9 @@ function(x)
 
     # Description:
     #   Returns the dimension of a 'timeSeries' object
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -786,6 +861,9 @@ function(x)
     # Description:
     #   Returns the dimension names of a 'timeSeries' object
    
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Dimension Names:
@@ -805,6 +883,9 @@ function(x, value)
 
     # Description:
     #   Assigns column names to a 'timeSeries' object
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -838,6 +919,9 @@ function(x, value)
 
     # Description:
     #   Assigns row names to a 'timeSeries' object
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -874,6 +958,8 @@ function(x)
     # Description:
     #   Allows that NCOL and NROW work properly
    
+    # Changes:
+    #
     
     # FUNCTION:
     

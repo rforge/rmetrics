@@ -33,16 +33,21 @@
 # FUNCTION:                 DESCRIPTION:
 #  myFinCenter               Sets my financial center
 #  currentYear               Sets date of the current year
+#  .currentYear              Sets date of the current year
 #  myUnits                   Sets date units
 #  xmpCalendar               Sets prompt
 #  xmpfCalendar              Popups the example menu
-#  .read.fCalendar.00Index
+#  .read.fCalendar.00Index   Reads fCalendar Index 
 # FUNCTION:                 DESCRIPTION:
-#  modify                    Modify a 'timeSeries' object
-#  modify.default            S3 Default Method
-#  atoms                     Extract atoms from 'timeSeries' object
-#  atoms.default             S3 Default Method
+#  modify                    Modifies a 'timeSeries' object
+#  modify.default            Default Method
+#  atoms                     Extracts atoms from 'timeSeries' object
+#  atoms.default             Default Method
 ################################################################################
+
+
+################################################################################
+#  datax                     Loads timeSeries objects from demo files
 
 
 datax = 
@@ -50,6 +55,11 @@ function(..., list = character(0), package = NULL, lib.loc = NULL,
 verbose = getOption("verbose"), envir = .GlobalEnv)
 {   # An extended copy of the var() function from R's base package
 
+    # Changes:
+    #
+    
+    # FUNCTION:
+    
     # data:
     fileExt = function(x) sub(".*\\.", "", x)
     names = c(as.character(substitute(list(...))[-1]), list)
@@ -217,12 +227,36 @@ verbose = getOption("verbose"), envir = .GlobalEnv)
   
 
 ################################################################################  
-# Default Parameters:
+#  myFinCenter               Sets my financial center
+#  currentYear               Sets date of the current year
+#  .currentYear              Sets date of the current year
+#  myUnits                   Sets date units
+#  xmpCalendar               Sets prompt
+#  xmpfCalendar              Popups the example menu
+#  .read.fCalendar.00Index 
  
-   
+    
+myFinCenter = "Zurich"
+
+
+# ------------------------------------------------------------------------------
+
+
+currentYear = .currentYear()  
+
+
+# ------------------------------------------------------------------------------
+
+
 .currentYear = 
 function()    
-{
+{   # A function implemented by Diethelm Wuertz
+
+    # Changes:
+    #
+    
+    # FUNCTION:
+    
     # Check Time Zone:
     TZ = Sys.getenv("TZ")  
     if (TZ[[1]] != "GMT") {
@@ -248,17 +282,8 @@ function()
 
 # ------------------------------------------------------------------------------
 
-    
-myFinCenter = "Zurich"
-
-
-# ------------------------------------------------------------------------------
-
 
 myUnits = "days"
-
-
-currentYear = .currentYear()  
 
 
 # ------------------------------------------------------------------------------
@@ -291,6 +316,9 @@ function(prompt = "")
     # Description:
     #   Sets prompt
     
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Return Value:
@@ -307,6 +335,9 @@ function()
 
     # Description:
     #   Popups the example menu
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -339,7 +370,14 @@ function()
 
 .read.fCalendar.00Index = 
 function (file) 
-{
+{   # A function implemented by Diethelm WUertz
+
+    # Description:
+    #   Reads fCalendar Index 
+    
+    # FUNCTION:
+    
+    # Read fCalendar Index:
     if (is.character(file)) {
         if (file == "") {
             file <- stdin()
@@ -374,13 +412,20 @@ function (file)
 }
 
 
-# ******************************************************************************
-# R - Modifications and Problems:
+################################################################################
+#  modify                    Modifies a 'timeSeries' object
+#  modify.default            Default Method
+#  atoms                     Extracts atoms from 'timeSeries' object
+#  atoms.default             Default Method
 
 
 modify =
 function(x, method, units) 
-{
+{   # A function implemented by Diethelm WUertz
+
+    # FUNCTION:
+    
+    # Return Value:
     UseMethod("modify") 
 }
 
@@ -390,7 +435,13 @@ function(x, method, units)
 
 modify.default =
 function(x, method = c("sort", "round", "trunc"), units = NULL )
-{   
+{   # A function implemented by Diethelm WUertz
+
+    # Changes:
+    #
+    
+    # FUNCTION:
+    
     # Modify:
     ans = NA
     if (method[1] == "sort") return(sort(x))
@@ -407,7 +458,14 @@ function(x, method = c("sort", "round", "trunc"), units = NULL )
 
 atoms = 
 function(x, ...) 
-{
+{   # A function implemented by Diethelm WUertz
+
+    # Changes:
+    #
+    
+    # FUNCTION:
+    
+    # Return Value:
     UseMethod("atoms")
 }
 
@@ -417,7 +475,14 @@ function(x, ...)
 
 atoms.default = 
 function(x, ...) 
-{
+{   # A function implemented by Diethelm WUertz
+    
+    # Changes:
+    #
+    
+    # FUNCTION:
+    
+    # Return Value:
     invisible(x)
 }
 

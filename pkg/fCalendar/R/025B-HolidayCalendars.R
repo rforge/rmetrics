@@ -70,6 +70,11 @@
 .easter.sunday =
 function(year) 
 {
+    # Changes:
+    #
+    
+    # FUNCTION:
+    
     # This algorithm holds for any year in the Gregorian Calendar, 
     # which (of course) means years including and after 1583
     a = year%%19
@@ -131,6 +136,9 @@ function(year = currentYear, shift = 0)
     # Notes:
     #   The variable currentYear is set in ".FirstLib"
     #   Calls "month.day.year" and ".sjulian"
+    
+    # Changes:
+    #
     
     # FUNCTION:
         
@@ -231,6 +239,9 @@ function(year = currentYear, Holiday = "Easter")
     #   Additional holidays, which are not yet available there, can be added
     #   to this data base file.
     
+    # Changes:
+    #
+    
     # FUNCTION:
         
     # Determine Function:
@@ -280,7 +291,10 @@ function(y = currentYear)
     #   [1] [2004-01-01] [2004-01-19] [2004-02-16] [2004-04-09]
     #   [5] [2004-05-31] [2004-07-05] [2004-09-06] [2004-11-25]
     
-    # FORMULA:
+    # Changes:
+    #
+    
+    # FUNCTION:
     
     #  Settings:
     years = y
@@ -382,6 +396,9 @@ function(year, month, day, nday)
     #   What date has the first Monday on or after March 15, 1986?
     #   .on.or.after(1986, 3, 15, 1)
     
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # .sdate:
@@ -418,6 +435,9 @@ function(year, month, day, nday)
     # Example: 
     #   What date has Friday on or before April 22, 1977?
     #   .on.or.before(1977, 4, 22, 5) 
+    
+    # Changes:
+    #
     
     # FUNCTION: 
     
@@ -457,6 +477,9 @@ function(year, month, nday, nth)
     #   What date is the second Sunday in October 1980?
     #   .nth.of.nday(1980, 10, 0, 2)
     
+    # Changes:
+    #
+    
     # FUNCTION: 
     
     # .sdate:
@@ -494,6 +517,9 @@ function(year, month, lastday, nday)
     # Example: 
     #   What date has the last Monday in May, 1996?
     #   .last.of.nday(1996, 5, 31, 1)
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -538,6 +564,9 @@ function (julians, origin = 19600101)
     # Value:
     #   Returns a vector of dates formatted as ".sdates", i.e.
     #   CCYYMMDD integer values.
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -598,8 +627,12 @@ function (.sdates, origin = 19600101)
     # Value:
     #   Returns Julian time as days since some origin.  
         
+    # Changes:
+    #
+    
     # FUNCTION:
     
+    # Convert:
     if (class(.sdates) == ".sdate") .sdates = as.vector(.sdates)
     
     # Internal Function:
@@ -658,7 +691,10 @@ function(.sdates)
     #   Returns a number between 0 and 6 to specify the day of
     #   the week-0 refers to Sunday.
     
-    # FUNCTION::fBasic  
+    # Changes:
+    #
+    
+    # FUNCTION:
     
     # Convert:
     if (class(.sdates) == ".sdate") .sdates = as.vector(.sdates)
@@ -699,6 +735,9 @@ function(.sdates)
     #   Returns a logical vector indicating whether the corresponding 
     #   year is a leap year or not.
     
+    # Changes:
+    #
+    
     # FUNCTION:
       
     # Convert:
@@ -727,6 +766,9 @@ function(x, ...)
     
     # Arguments:
     #   x - anobject of class ".sdate"
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -766,6 +808,9 @@ function(fdates, origin = 19600101, order = 'mdy', cc = NULL, swap = 20)
     
     # Function Calls:
     #   C: char_date()
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -826,6 +871,9 @@ function(m, d, y, origin = c(month = 1, day = 1, year = 1960))
     # Note:
     #   SPlus like function.
 
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Selection:
@@ -878,6 +926,9 @@ function(jul, origin = c(month = 1, day = 1, year = 1960))
     # Note:
     #   Splus like function.
     
+    # Changes:
+    #
+    
     # FUNCTION: 
     
     # Selection:
@@ -927,6 +978,9 @@ function(y)
     # Example:
     #   leap.year(1980:2005)
     
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Result:
@@ -950,6 +1004,9 @@ function(month, day, year)
     # Note:
     #   SPlus like.
 
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Result:

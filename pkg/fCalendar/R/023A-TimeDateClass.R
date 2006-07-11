@@ -39,13 +39,14 @@
 #  .formatFinCenter        Internal called by timeDate
 #  timeCalendar           Creates a 'timeDate' object from calendar atoms
 #  timeSequence           Creates a regularly spaced 'timeDate' object
+#   seq.timeDate           A synonyme function for timeSequence
 #  Sys.timeDate           Returns system time as an object of class 'timeDate' 
 #  is.timeDate            Tests if the object is of class 'timeDate' 
 # METHODS:               REPRESENTATION OF TIMEDATE OBJECTS:
-#  print.timeDate         Prints 'timeDate' Object
-#  plot.timeDate          Plots on 'timeDate' axis
-#  points.timeDate        Adds points on a timedate plot
-#  lines.timeDate         Adds lines on a timedate plot
+#  print.timeDate         Prints 'timeDate' object
+#  plot.timeDate          Plots 'timeDate' object
+#  points.timeDate        Adds points to a 'timeDate' plot
+#  lines.timeDate         Adds lines to a 'timeDate' plot
 #  summary.timeDate       Summarizes details of a 'timeDate' object
 #  format.timeDate        Formats 'timeDate' as ISO conform character string
 ################################################################################
@@ -67,6 +68,9 @@ function(FinCenter = myFinCenter)
     # Arguments:
     #   FinCenter - a character string with the the location of the  
     #       financial center named as "continent/city". 
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -178,6 +182,9 @@ function(pattern = "*")
     # Note:
     #   The timezone database is required.
     
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Set Timezone to GMT:
@@ -208,8 +215,10 @@ function(pattern = "*")
 #  .formatFinCenter        Internal called by timeDate
 #  timeCalendar           Creates a 'timeDate' object from calendar atoms
 #  timeSequence           Creates a regularly spaced 'timeDate' object
+#   seq.timeDate           A synonyme function for timeSequence           
 #  Sys.timeDate           Returns system time as an object of class 'timeDate'
 #  is.timeDate            Tests if the object is of class 'timeDate'
+
 
 require(methods)
 
@@ -272,6 +281,9 @@ FinCenter = myFinCenter)
     #   td = timeDate("2004-01-01", FinCenter = "GMT"); timeDate(td)
     #   td = timeDate("20040101", FinCenter = "GMT"); timeDate(td)
      
+    # Changes:
+    #
+    
     # FUNCTION:
 
     # Settings and Checks:
@@ -449,6 +461,9 @@ FinCenter = myFinCenter)
 function(charvec)
 {   # A function implemented by Diethelm Wuertz
 
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Format:
@@ -492,6 +507,9 @@ function(charvec)
 function(charvec, format)
 {   # A function implemented by Diethelm Wuertz
 
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Format:
@@ -533,6 +551,9 @@ function(charvec, FinCenter, type = c("gmt2any", "any2gmt"))
 
     # Description:
     #   Internasl function used by function timeDate()
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -635,6 +656,9 @@ s = NULL, zone = myFinCenter, FinCenter = myFinCenter)
     #   x = timeCalendar(m = c(3,4,5), d = c(12,15,7), y = c(1998,1997,2004)) 
     #   x = timeCalendar(h = c(9,14), min = c(15,23)) 
   
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Settings and Check:
@@ -744,6 +768,9 @@ length.out = NULL, format = NULL, zone = myFinCenter, FinCenter = myFinCenter)
     #   x = timeSequence("2004-01-28 18:00:00", "2004-01-29 05:00:00", by = "hour")
     #   x = timeSequence("2004-01-28 18:00:00", by = "hour", length.out = 12)
         
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Set Timezone to GMT:
@@ -806,6 +833,9 @@ length.out = NULL, ...)
     # Arguments:
     #   from, to - two 'timeDate' objects
     
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Check:
@@ -839,6 +869,9 @@ function(FinCenter = myFinCenter)
     
     # Value:
     #   Returns the system time as an object of class 'timeDate'.
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -875,6 +908,9 @@ function(object)
     #   Returns 'TRUE' or 'FALSE' depending on whether its
     #   argument is of 'timeDate' type or not.
  
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Set Timezone to GMT:
@@ -892,7 +928,10 @@ function(object)
 
 ################################################################################
 # S3 METHODS:            REPRESENTATION OF TIMEDATE OBJECTS:
-#  print.timeDate         Prints 'timeDate' Object
+#  print.timeDate         Prints 'timeDate' object
+#  plot.timeDate          Plots 'timeDate' object
+#  points.timeDate        Adds points to a 'timeDate' plot
+#  lines.timeDate         Adds lines to a 'timeDate' plot
 #  summary.timeDate       Summarizes details of a 'timeDate' object
 #  format.timeDate        Formats 'timeDate' as ISO conform character string
 
@@ -910,6 +949,9 @@ function(x, ...)
     
     # Value:
     #   Returns a printed report on 'timeDate' objects.
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -933,8 +975,17 @@ function(x, ...)
 
 plot.timeDate = 
 function(x, y, ...) 
-{
+{   # A function implemented by Diethelm Wuertz
+
+    # Changes:
+    #
+    
+    # FUNCTION:
+    
+    # Plot:
     plot(as.POSIXct(x), y, ...)
+    
+    # return Value:
     invisible()
 }
 
@@ -944,8 +995,17 @@ function(x, y, ...)
 
 points.timeDate = 
 function(x, y, ...) 
-{
+{   # A function implemented by Diethelm Wuertz
+
+    # Changes:
+    #
+    
+    # FUNCTION:
+    
+    # Add Points:
     points(as.POSIXct(x), y, ...)
+    
+    # Return Value:
     invisible()
 }
 
@@ -955,8 +1015,17 @@ function(x, y, ...)
 
 lines.timeDate = 
 function(x, y, ...) 
-{
+{   # A function implemented by Diethelm Wuertz
+
+    # Changes:
+    #
+    
+    # FUNCTION:
+    
+    # Add Lines:
     lines(as.POSIXct(x), y, ...)
+    
+    # Return Value:
     invisible()
 }
     
@@ -977,6 +1046,9 @@ function(object, ...)
     # Value:
     #   Returns a summary report of the details of a 'timeDate'
     #   object.
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -1015,6 +1087,9 @@ function(x, ...)
     
     # Value:
     #   Returns an ISO conform formatted character string.
+    
+    # Changes:
+    #
     
     # FUNCTION:
     

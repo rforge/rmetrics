@@ -41,8 +41,8 @@
 #  rep.timeDate           Replicates a 'timeDate' object
 #  sort.timeDate          Sorts a 'timeDate' object
 #  sample.timeDate        Resamples a 'timeDate' object
-#  unique.timeDate        NMakes a 'timeDate' object unique
-#  rev.timeDate           Reverts  a 'timeDate' object
+#  unique.timeDate        Makes a 'timeDate' object unique
+#  rev.timeDate           Reverts a 'timeDate' object
 ################################################################################
 
 
@@ -70,6 +70,9 @@ function(e1, e2)
     
     # Value:
     #   Returns the 'Ops' grouped object.
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -117,6 +120,9 @@ function(e1, e2)
     #   Returns a 'timeDate' object "e2" seconds later than the
     #   'timeDate' object "e1". 
     
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Set Timezone to GMT:
@@ -163,6 +169,9 @@ function(e1, e2)
     # Example:
     #   charvec = c("2004-01-01 16:00:00", "2004-01-01 18:00:00")
     #   x = timeDate(charvec, zone = "GMT", FinCenter = "Europe/Zurich")
+    
+    # Changes:
+    #
     
     # FUNCTION:
      
@@ -219,6 +228,9 @@ function (x, lag = 1, differences = 1, ...)
     #   recursively to 'x'. Note that the returned value is a vector 
     #   which is shorter than 'x'.
 
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Set Timezone to GMT:
@@ -260,6 +272,9 @@ units = c("auto", "secs", "mins", "hours", "days", "weeks"))
     #   objects and returns an object of class 'difftime' with
     #   an attribute indicating the units. 
 
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Set Timezone to GMT:
@@ -285,6 +300,9 @@ round.timeDate =
 function(x, units = c("days", "hours", "mins"), ...)     
 {   # A function implemented by Diethelm Wuertz
 
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Get Units:
@@ -311,6 +329,9 @@ trunc.timeDate =
 function(x, units = c("days", "hours", "mins"), ...) 
 {   # A function implemented by Diethelm Wuertz
 
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Get Units:
@@ -363,6 +384,9 @@ function(..., recursive = FALSE)
     # Details:
     #   This is a generic function which combines its arguments.
 
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Set Timezone to GMT:
@@ -412,6 +436,9 @@ function(x, ...)
     #   Returns a vector of repeated elements belonging to the same 
     #   class as 'x'.
     
+    # Changes:
+    #
+    
     # FUNCTION:
 
     # Replicate: 
@@ -429,7 +456,14 @@ function(x, ...)
 
 sample.timeDate =
 function(x, ...)
-{
+{   # A function implemented by Diethelm Wuertz
+
+    # Changes:
+    #
+    
+    # FUNCTION:
+    
+    # Sample:
     GMT = timeDate(x, zone = x@FinCenter, FinCenter = "GMT")
     charvec = sample(as.character(GMT@Data), ...)
     ans = timeDate(charvec, zone = "GMT", FinCenter = x@FinCenter)
@@ -444,7 +478,14 @@ function(x, ...)
 
 sort.timeDate =
 function(x, ...)
-{
+{   # A function implemented by Diethelm Wuertz
+
+    # Changes:
+    #
+    
+    # FUNCTION:
+    
+    # Sort:
     GMT = timeDate(x, zone = x@FinCenter, FinCenter = "GMT")
     charvec = sort(as.character(GMT@Data), ...)
     ans = timeDate(charvec, zone = "GMT", FinCenter = x@FinCenter)
@@ -467,6 +508,9 @@ function(x, ...)
     # Arguments:
     #   x - an object of class timeDate
     #   incomparables - not used
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -495,6 +539,9 @@ function(x)
     
     # Value:
     #   Returns 'x' as a 'timeDate' object in reversed order.
+    
+    # Changes:
+    #
     
     # FUNCTION:
     

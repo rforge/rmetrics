@@ -32,12 +32,18 @@
 #  seriesPositions      Extracts positions slot from 'timeSeries' object
 #  newPositions<-       Modifies positions of a 'timeSeries' object
 # METHODS:             ORDERING:
-#  sample.timeSeries    S3: Resamples a 'timeSeries' object in time
-#  sort.timeSeries      S3: Sorts reverts a 'timeSeries' object in time
-#  rev.timeSeries       S3: Reverts a 'timeSeries' object in time 
-#  start.timeSeries     S3: Extracts start date of a 'timeSeries' object 
-#  end.timeSeries       S3: Extracts end date of a 'timeSeries' object
+#  sample.timeSeries    Resamples a 'timeSeries' object in time
+#  sort.timeSeries      Sorts reverts a 'timeSeries' object in time
+#  rev.timeSeries       Reverts a 'timeSeries' object in time 
+#  start.timeSeries     Extracts start date of a 'timeSeries' object 
+#  end.timeSeries       Extracts end date of a 'timeSeries' object
 ################################################################################
+
+
+################################################################################
+# METHOS:              POSITIONS:
+#  seriesPositions      Extracts positions slot from 'timeSeries' object
+#  newPositions<-       Modifies positions of a 'timeSeries' object
 
 
 seriesPositions =
@@ -70,12 +76,22 @@ function(object)
 
 "newPositions<-" =
 function(object, value)
-{
-    timeSeries(object, value)
+{   # A function implemented by Diethelm Wuertz
+
+    # FUNCTION:
+    ans = timeSeries(object, value)
+    
+    # Return Value:
+    ans
 }
 
 
 ################################################################################
+#  sample.timeSeries    Resamples a 'timeSeries' object in time
+#  sort.timeSeries      Sorts reverts a 'timeSeries' object in time
+#  rev.timeSeries       Reverts a 'timeSeries' object in time 
+#  start.timeSeries     Extracts start date of a 'timeSeries' object 
+#  end.timeSeries       Extracts end date of a 'timeSeries' object
 
 
 sample.timeSeries =
@@ -90,6 +106,9 @@ function(x, ...)
     
     # Value:
     #   Returns a time resampled object of class 'timeSeries'.
+    
+    # Changes:
+    #
     
     # FUNCTION:
      
@@ -131,6 +150,9 @@ function(x, ...)
     # Value:
     #   Returns a time sorted object of class 'timeSeries'.
     
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Data:
@@ -170,6 +192,9 @@ function(x)
     
     # Value:
     #   Returns a time reverted object of class 'timeSeries'.
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -212,6 +237,9 @@ function(x, ...)
     # Value:
     #   Returns the first time/date as an object of class 'timeDate'.
   
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # S3 Method:
@@ -238,6 +266,9 @@ function(x, ...)
     
     # Value:
     #   Returns the last time/date as an object of class 'timeDate'.
+    
+    # Changes:
+    #
     
     # FUNCTION:
     

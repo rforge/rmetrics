@@ -61,6 +61,9 @@ function (xdates, origin = 19600101)
     # Arguments: 
     #   XDATES: CCYYMMDDhhmm format expected
     
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Date/Time:
@@ -100,6 +103,9 @@ function (xjulians, origin = 19600101)
     # Arguments: 
     #   ORIGIN: CCYYMMDD expected
     
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Julians:
@@ -135,6 +141,9 @@ function(xdates)
     #   Calculates the day of the week from ISO-8601 Gregorian
     #   dates/times
     
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Return Value:
@@ -153,6 +162,9 @@ function(xdates)
     #   Decides whether ISO 8601 Gregorian dates/times are leap
     #   years or not.
     
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Return Value:
@@ -166,7 +178,7 @@ function(xdates)
 
 fxdata.contributors = 
 function(x, include = 10)
-{   # A function implemented by D. Wuertz
+{   # A function implemented by Diethelm Wuertz
     #
     # Description:
     #   Create a table with contributor names 
@@ -205,6 +217,9 @@ function(x, include = 10)
     #   include How many contributors should be included? By default
     #           the first 10 market makers
     
+    # Changes:
+    #
+    
     # FUNCTION:
         
     # Parser Table:
@@ -228,7 +243,7 @@ function(x, include = 10)
 
 fxdata.parser = 
 function(x, parser.table)
-{   # A function implemented by D. Wuertz
+{   # A function implemented by Diethelm Wuertz
     
     # Description:
     #   Create or read a table with contributor names and parse the
@@ -241,19 +256,22 @@ function(x, parser.table)
     #       timestamp, contributor, bid, ask, tag", in the same 
     #       format as specified in "xts.fxread".
     
+    # Changes:
+    #
+    
     # FUNCTIOM:
     
     # Parse Contributor List:   
     index = NA
-    contributors <<- levels(parser.table[,1])[parser.table[,4]=="T"]
+    contributors <<- levels(parser.table[,1])[parser.table[,4] == "T"]
     for (contributor in contributors)  { 
-        new.index = grep(contributor, as.character(x[,3]))
+        new.index = grep(contributor, as.character(x[, 3]))
         index = c(index, new.index)
         }
     index = sort(index[2:length(index)])
     
     # Return Values:
-    x[index,]   
+    x[index, ]   
 }
 
 
@@ -262,7 +280,7 @@ function(x, parser.table)
 
 fxdata.filter = 
 function(x, parameter = "strong", doprint = TRUE)
-{   # A function implemented by D. Wuertz
+{   # A function implemented by Diethelm Wuertz
     
     # Description:
     #   Filter a FX time series
@@ -270,6 +288,9 @@ function(x, parameter = "strong", doprint = TRUE)
     # Note:
     #   Function Calls:
     #   Fortran: SUBROUTINE FXFILTER()
+    
+    # Changes:
+    #
     
     # FUNCTION:
         
@@ -329,7 +350,7 @@ function(x, parameter = "strong", doprint = TRUE)
 
 fxdata.varmin = 
 function(x, digits = 4)
-{   # A function implemented by D. Wuertz
+{   # A function implemented by Diethelm Wuertz
     
     # Description:
     #   Creates from a standardized FX high frequency data file
@@ -343,6 +364,9 @@ function(x, digits = 4)
     #   xjulian, 
     #   Fortran: fxvarmin
 
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Settings:
@@ -383,7 +407,7 @@ function(x, digits = 4)
 
 xts.log = 
 function(xts)
-{   # A function implemented by D. Wuertz
+{   # A function implemented by Diethelm Wuertz
         
     # Description:
     #   Calculate logarithms for xts time series values;
@@ -391,6 +415,9 @@ function(xts)
     # Details:
     #   This function is mainly used for calculating 
     #   log-prices from prices.
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -404,7 +431,7 @@ function(xts)
 
 xts.diff = 
 function(xts)
-{   # A function implemented by D. Wuertz
+{   # A function implemented by Diethelm Wuertz
         
     # Description:
     #   Differnetiate xts time series values with lag=1
@@ -412,6 +439,9 @@ function(xts)
     #   differentiated time series has the same length
     #   as the original time series; mainly used to 
     #   calculate log-returns from log-prices.
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -425,7 +455,7 @@ function(xts)
 
 xts.cut =  
 function(xts, from.date, to.date)
-{   # A function implemented by D. Wuertz
+{   # A function implemented by Diethelm Wuertz
         
     # Description:
     #   Cut a piece out of a xts time series:
@@ -441,6 +471,9 @@ function(xts, from.date, to.date)
     #   record from the previous month and the first
     #   record from the following month.) 
 
+    # Changes:
+    #
+    
     # FUNCTION: 
         
     # Date/time:
@@ -467,7 +500,7 @@ function(xts, from.date, to.date)
 
 xts.interp = 
 function(xts, deltat = 1, method = "constant")
-{   # A function implemented by D. Wuertz
+{   # A function implemented by Diethelm Wuertz
         
     # Description:
     #   Create time-steps "equidistant in physical time"
@@ -484,6 +517,9 @@ function(xts, deltat = 1, method = "constant")
     # Note:
     #   ceiling(), floor(), approx(), xjulian(), xdate()
 
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Date/time - Fill the current day:
@@ -525,7 +561,7 @@ function(xts, deltat = 1, method = "constant")
 
 xts.map = 
 function(xts, mean.deltat, alpha) 
-{   # A function implemented by D. Wuertz
+{   # A function implemented by Diethelm Wuertz
         
     # Description:
     #   Create a volatility adjusted time-mapping for a later 
@@ -540,6 +576,9 @@ function(xts, mean.deltat, alpha)
     #   Function Calls:
     #   matrix(), apply(), approx()
      
+    # Changes:
+    #
+    
     # FUNCTION:
  
     # Interpolate prices:
@@ -587,7 +626,7 @@ function(xts, mean.deltat, alpha)
 xts.upsilon = 
 function(xts, weekly.map = seq(from = 59, by = 60, length = 168), 
 method = "constant", doplot = TRUE, ...)
-{   # A function implemented by D. Wuertz
+{   # A function implemented by Diethelm Wuertz
     
     # Description:
     #   Interpolate data (prices, returns, etc. on a weekly.
@@ -597,6 +636,9 @@ method = "constant", doplot = TRUE, ...)
     #   the length of the vector is 168. 
     #   "seq(from=59, by=60, length=168)
     #   creates such a map.
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -621,7 +663,7 @@ method = "constant", doplot = TRUE, ...)
 
 xts.dvs = 
 function(xts, k, volatility, doplot = TRUE, ...) 
-{   # A function implemented by D. Wuertz
+{   # A function implemented by Diethelm Wuertz
     
     # Description:
     #   Create a de-volatilizised time series according
@@ -637,6 +679,9 @@ function(xts, k, volatility, doplot = TRUE, ...)
     #   nt      their lengths
     #   ns
     #   k       length of averaging interval
+    
+    # Changes:
+    #
     
     # FUNCTION: 
     
@@ -674,7 +719,7 @@ function(xts, k, volatility, doplot = TRUE, ...)
 xts.dwh = 
 function(xts, deltat = 60, period = "weekly", dolog = TRUE, dodiff = TRUE, 
 doplot = TRUE)
-{   # A function implemented by D. Wuertz
+{   # A function implemented by Diethelm Wuertz
     
     # Description:
     #   Plot intra-daily/weekly histogram of volatility. 
@@ -689,6 +734,9 @@ doplot = TRUE)
     #   plot also starts on Monday.
     #   "deltat" is the width of the bins in minutes. 
     #   "period" may be one of "daily", "weekly" or "both"
+    
+    # Changes:
+    #
     
     # FUNCTION:
     

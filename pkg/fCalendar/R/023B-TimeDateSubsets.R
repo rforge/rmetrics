@@ -73,6 +73,9 @@ function(x)
     #   isWeekday(timeDate("2004-07-01"))
     #   isWeekday(Sys.timeDate())
     
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Test for Weekdays:
@@ -80,6 +83,7 @@ function(x)
     ans = (!(wday == 0 | wday == 6)) 
     names(ans) = x@Data
     
+    # Return Value:
     ans
 }
 
@@ -103,6 +107,9 @@ function(x)
     # Example:
     #   isWeekend(timeDate("2004-07-01"))
     #   isWeekend(Sys.timeDate())
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -132,6 +139,9 @@ function(x, holidays = holiday.NYSE())
     #   x = timeSequence(from = "2005-05-15", to = "2005-07-15")
     #   h = holiday.NYSE(2005)
     #   cbind(as.character(x), is.bizday(x, h))
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -167,6 +177,9 @@ function(x, holidays = holiday.NYSE())
     # Value:
     #   Returns a logical or a vector of logicals
 
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Return Value:
@@ -188,6 +201,9 @@ function(x)
     #   weekDay(Sys.timeDate())
     #   weekDay(timeSequence("2005-05-15", "2005-07-15"))
     
+    # FUNCTION:
+    
+    # Get Day of Week:
     wd = c("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat")
     n = as.POSIXlt(x@Data)$wday + 1
     wdays = wd[n]
@@ -207,6 +223,9 @@ function(x)
 
     # Description:
     #   Returns day of week for time date objects
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -244,6 +263,9 @@ function(x, ..., drop = TRUE)
     # Value:
     #   Returns a subset from a 'timeDate' object.
     
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Set Timezone to GMT:
@@ -273,8 +295,12 @@ cut.timeDate =
 function(x, from , to, ...)
 {   # A function implemented by Diethelm Wuertz
 
+    # Changes:
+    #
+    
     # FUNCTION:
     
+    # Cut:
     X = timeDate(x, zone = x@FinCenter, FinCenter = "GMT")
     FROM = timeDate(from, zone = x@FinCenter, FinCenter = "GMT")
     TO = timeDate(to, zone = x@FinCenter, FinCenter = "GMT")
@@ -302,6 +328,9 @@ function(x, ...)
     # Value:
     #   Returns from 'x' the earliest entry as an object of class 
     #   'timeDate'.
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -340,6 +369,9 @@ function(x, ...)
     # Value:
     #   Returns an object of class 'timeDate'.
     
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Set Timezone to GMT:
@@ -377,6 +409,9 @@ function(x)
     # Value:
     #   Returns the lengths of an object of class 'timeDate'.
     
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Length:
@@ -400,6 +435,11 @@ function(x, block = 20)
     # Example:
     #   blockEnd(timeSequence(), block = 30)
     
+    # Changes:
+    #
+    
+    # FUNCTION:
+    
     # Start Dates of Blocks:
     nx = length(as.character(x))
     fromIdx = seq(1, nx, by = block)
@@ -421,6 +461,11 @@ function(x, block = 20)
     
     # Example:
     #   blockEnd(timeSequence(), block = 30)
+    
+    # Changes:
+    #
+    
+    # FUNCTION:
     
     # End Dates of Blocks:
     nx = length(as.character(x))

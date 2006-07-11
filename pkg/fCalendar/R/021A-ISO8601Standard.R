@@ -28,9 +28,14 @@
 
 
 ################################################################################
-# FUNCTION:                    DESCRIPTION
-#  isISO8601                    Checks if the date/time is ISO8601 formatted
+# FUNCTION:              DESCRIPTION
+#  isISO8601              Checks if the date/time is ISO8601 formatted
 ################################################################################
+
+
+################################################################################
+# FUNCTION:              DESCRIPTION
+#  isISO8601              Checks if the date/time is ISO8601 formatted
 
 
 isISO8601 =
@@ -39,6 +44,9 @@ function(x)
 
     # Description:
     #   Checks if the date/time is ISO8601 formatted
+    
+    # Changes:
+    #
     
     # FUNCTION:
     

@@ -57,6 +57,9 @@ function(charvec, format = "%Y-%m-%d", FinCenter = "GMT")
     #   Returns the last day in a given month and year as a
     #   'timeDate' object.
     
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Set Timezone to GMT:
@@ -89,6 +92,9 @@ function(charvec, format = "%Y-%m-%d", FinCenter = "GMT")
     # Description:
     #   Computes the last day in a given month and year
     
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Set Timezone to GMT:
@@ -115,6 +121,9 @@ function(charvec, format = "%Y-%m-%d", FinCenter = "GMT")
     
     # Description:
     #   Computes the last day in a given month and year
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -151,6 +160,9 @@ function(charvec, format = "%Y-%m-%d", FinCenter = "GMT")
     
     # Description:
     #   Computes the last day in a given month and year
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -204,6 +216,9 @@ function(charvec, nday = 1, format = "%Y-%m-%d", FinCenter = "GMT")
     #   What date has the first Monday on or after March 15, 1986?
     #   timeNdayOnOrAfter("1986-03-15", 1)
     
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Set Timezone to GMT:
@@ -250,6 +265,9 @@ function(charvec, nday = 1, format = "%Y-%m-%d", FinCenter = "GMT")
     
     # Example: 
     #   What date has Friday on or before April 22, 1977?
+    
+    # Changes:
+    #
     
     # FUNCTION: 
     
@@ -301,6 +319,9 @@ function(charvec, nday = 1, nth = 1, format = "%Y-%m-%d", FinCenter = "GMT")
     #   What date is the second Monday in April 2004?
     #   timeNthNdayInMonth("2004-04-01", 1, 2)
     
+    # Changes:
+    #
+    
     # FUNCTION: 
     
     # Set Timezone to GMT:
@@ -351,6 +372,9 @@ function(charvec, nday = 1, format = "%Y-%m-%d", FinCenter = "GMT")
     # Example: 
     #   What date has the last Tuesday in May, 1996?
     #   timeLastNdayInMonth("1996-05-01", 2)
+    
+    # Changes:
+    #
     
     # FUNCTION:
     

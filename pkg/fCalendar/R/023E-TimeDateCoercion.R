@@ -46,6 +46,12 @@
 ################################################################################
 
 
+################################################################################
+#  as.timeDate            Use Method
+#  as.timeDate.POSIXt     Returns a 'POSIX' object as 'timeDate' object
+#  as.timeDate.Date       Returns a 'POSIX' object as 'timeDate' object
+
+
 as.timeDate = 
 function(x, zone = NULL, FinCenter = NULL) 
 {
@@ -70,6 +76,9 @@ function(x, zone = NULL, FinCenter = NULL)
     # Value:
     #   Returns 'x' as a character vector. 
 
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # as timeDate:
@@ -98,6 +107,9 @@ function(x, zone = "GMT", FinCenter = "GMT")
     # Value:
     #   Returns 'x' as a character vector. 
 
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # as timeDate:
@@ -108,8 +120,13 @@ function(x, zone = "GMT", FinCenter = "GMT")
 }
 
 
-
-# ------------------------------------------------------------------------------
+################################################################################
+#  as.character.timeDate  Returns a 'timeDate' object as 'character' string
+#  as.double.timeDate     Returns a 'timeDate' object as 'numeric' object
+#  as.data.frame.timeDate Returns a 'timeDate' object as 'data.frame' object
+#  as.POSIXct.timeDate    Returns a 'timeDate' object as 'POSIXct' object
+#  as.POSIXlt.timeDate    Returns a 'timeDate' object as 'POSIXlt' object
+#  as.Date.timeDate       Returns a 'timeDate' object as 'Date' object
 
 
 as.character.timeDate =
@@ -125,6 +142,9 @@ function(x, ...)
     
     # Value:
     #   Returns 'x' as a character vector. 
+    
+    # Changes:
+    #
 
     # FUNCTION:
     
@@ -165,6 +185,9 @@ function(x, units = c("auto", "secs", "mins", "hours", "days", "weeks"), ...)
     # Value:
     #   Returns 'x' as a numeric vector. 
 
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Set time zone to GMT:
@@ -210,6 +233,9 @@ function(x, ...)
     # Value:
     #   Returns 'x' as a data frame.
     
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Set Timezone to GMT:
@@ -250,6 +276,9 @@ function(x, tz = "")
     # Value:
     #   Returns 'x' as an object of class 'POSIXct'.
     
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Set Timezone to GMT:
@@ -289,6 +318,9 @@ function(x, tz = "")
     # Value:
     #   Returns 'x' as an object of class 'POSIXct'.
     
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Set Timezone to GMT:
@@ -317,6 +349,9 @@ function(x, method = c("trunc", "round", "next"), ...)
     # Value:
     #   Returns 'x' as an object of class 'POSIXct'.
     
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # as Date:
@@ -337,7 +372,10 @@ function(x, method = c("trunc", "round", "next"), ...)
 }
 
 
-# ------------------------------------------------------------------------------
+################################################################################
+#  julian.timeDate        Returns Julian day counts since 1970-01-01
+#  atoms.timeDate         Returns date/time atoms from a 'timeDate' object
+#  months.timeDate        Extract months atom from a 'timeDate' object
 
  
 julian.timeDate = 
@@ -359,6 +397,9 @@ function(x, FinCenter = myFinCenter, ...)
     # Details:
     #   The origin is "1970-01-01 00:00:00 GMT"
 
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Set Timezone to GMT:
@@ -404,6 +445,9 @@ function(x, ...)
     # Value:
     #   Returns a data.frame with the following calendar atoms:
     #   Y(ear), m(onth), d(ay), H(our), M(inutes), S(econds).
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -453,6 +497,9 @@ function(x, abbreviate = NULL)
     #   Returns the month from a 'timeDate' object as an integer
     #   value or vector with elements ranging between 1 and 12,
     #   numbering the months from January to December.
+    
+    # Changes:
+    #
     
     # FUNCTION:
     

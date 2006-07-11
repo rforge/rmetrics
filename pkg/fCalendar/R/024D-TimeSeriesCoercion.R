@@ -28,22 +28,22 @@
 
 
 ################################################################################
-# METHODS:             CREATE A TIMESERIES FROM OTHER OBJECTS:
-#  is.timeSeries        S3: Tests for a 'timeSeries' object
-#  as.timeSeries        S3: Defines method for a 'timeSeries' object
-#  as.timeS*.default    S3: Returns the input
-#  as.timeS*.numeric    S3: Transforms a numeric vector into a 'timeSeries'
-#  as.timeS*.data.frame S3: Transformas a 'data.frame' into a 'timeSeries'
-#  as.timeS*.matrix     S3: Transformas a 'matrix' into a 'timeSeries'
-#  as.timeS*.ts         S3: Transforms a 'ts' object into a 'timeSeries'
-#  as.timeS*.character  S3: Loads and transformas from a demo file
-#  as.timeS*.zoo        S3: Transforms a 'zoo' object into a 'timeSeries'
-# METHODS:             TRANSFORM A TIMESERIES INTO OTHER OBJECTS:
-#  as.vector.timeS*     S3: Converts a univariate 'timeSeries' to a vector
-#  as.matrix.timeS*     S3: Converts a 'timeSeries' to a 'matrix'
-#  as.data.frame.t*     S3: Converts a 'timeSeries' to a 'data.frame'
-#  as.ts.timeSeries     S3: Converts a 'timeSeries' to a 'ts'     
-# NEW METHODS:
+# METHODS:                  CREATE A TIMESERIES FROM OTHER OBJECTS:
+#  is.timeSeries             Tests for a 'timeSeries' object
+#  as.timeSeries             Defines method for a 'timeSeries' object
+#  as.timeSerie.default      Returns the input
+#  as.timeSeries.numeric     Transforms a numeric vector into a 'timeSeries'
+#  as.timeSeries.data.frame  Transformas a 'data.frame' into a 'timeSeries'
+#  as.timeSeries.matrix      Transformas a 'matrix' into a 'timeSeries'
+#  as.timeSeries.ts          Transforms a 'ts' object into a 'timeSeries'
+#  as.timeSeries.character   Loads and transformas from a demo file
+#  as.timeSeries.zoo         Transforms a 'zoo' object into a 'timeSeries'
+# METHODS:                  TRANSFORM A TIMESERIES INTO OTHER OBJECTS:
+#  as.vector.timeSeries      Converts a univariate 'timeSeries' to a vector
+#  as.matrix.timeSeries      Converts a 'timeSeries' to a 'matrix'
+#  as.data.frame.teries      Converts a 'timeSeries' to a 'data.frame'
+#  as.ts.timeSeries          Converts a 'timeSeries' to a 'ts'     
+# NEW METHODS:              TESTING - FOR THE FUTURE:
 #  .as.vector.zoo
 #  .as.matrix.zoo
 #  .quantile.zoo
@@ -51,6 +51,17 @@
 #  .mergeSeries
 ################################################################################
 
+
+################################################################################
+#  is.timeSeries             Tests for a 'timeSeries' object
+#  as.timeSeries             Defines method for a 'timeSeries' object
+#  as.timeSerie.default      Returns the input
+#  as.timeSeries.numeric     Transforms a numeric vector into a 'timeSeries'
+#  as.timeSeries.data.frame  Transformas a 'data.frame' into a 'timeSeries'
+#  as.timeSeries.matrix      Transformas a 'matrix' into a 'timeSeries'
+#  as.timeSeries.ts          Transforms a 'ts' object into a 'timeSeries'
+#  as.timeSeries.character   Loads and transformas from a demo file
+#  as.timeSeries.zoo         Transforms a 'zoo' object into a 'timeSeries'
 
 is.timeSeries = 
 function (object) 
@@ -66,6 +77,9 @@ function (object)
     #   Returns 'TRUE' or 'FALSE' depending on whether its
     #   argument is of 'timeSeries' type or not.
         
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Check:
@@ -94,6 +108,11 @@ as.timeSeries.default =
 function(x, ...)
 {   # A function implemented by Diethelm Wuertz
 
+    # Changes:
+    #
+    
+    # FUNCTION:
+    
     # Return Value:
     x
 }
@@ -106,7 +125,11 @@ as.timeSeries.numeric =
 function(x, ...)
 {   # A function implemented by Diethelm Wuertz
 
-
+    # Changes:
+    #
+    
+    # FUNCTION:
+    
     # Create a dummay daily 'timeSeries' object:
     ans = dummyDailySeries(x)
     
@@ -125,6 +148,9 @@ function(x, ...)
     # Examples:
     #   data(bmwRet); head(as.timeSeries(data(bmwRet)))
 
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Check if the first column has a valid ISO-format:
@@ -191,8 +217,17 @@ as.timeSeries.matrix =
 function(x, ...)
 {   # A function implemented by Diethelm Wuertz
 
+    # Changes:
+    #
+    
+    # FUNCTION:
+    
+    # As timeSeries:
     x = as.data.frame(x)
-    as.timeSeries(x)
+    ans = as.timeSeries(x)
+    
+    # Return Value:
+    ans
 }
    
     
@@ -203,7 +238,11 @@ as.timeSeries.ts =
 function(x, ...)
 {   # A function implemented by Diethelm Wuertz
 
-
+    # Changes:
+    #
+    
+    # Function:
+    
     # Create a dummay daily 'timeSeries' object:
     ans = dummyDailySeries(as.vector(x))
     
@@ -221,6 +260,9 @@ function(x, ...)
 
     # Example:
     #   as.timeSeries(data(nyse))
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -243,6 +285,9 @@ as.timeSeries.zoo =
 function(x, ...)
 {   # A function implemented by Diethelm Wuertz
 
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # as. timeSeries:
@@ -257,6 +302,10 @@ function(x, ...)
 
 
 ################################################################################ 
+#  as.vector.timeSeries      Converts a univariate 'timeSeries' to a vector
+#  as.matrix.timeSeries      Converts a 'timeSeries' to a 'matrix'
+#  as.data.frame.teries      Converts a 'timeSeries' to a 'data.frame'
+#  as.ts.timeSeries          Converts a 'timeSeries' to a 'ts' 
 
 
 as.vector.timeSeries =
@@ -272,6 +321,9 @@ function(x, mode = "any")
     # Value:
     #   Returns the data slot of 'timesSeries' object as a vector.
         
+    # Changes:
+    #
+    
     # FUNCTION:
         
     # Check:
@@ -305,6 +357,9 @@ function(x)
     # Value:
     #   Returns the data slot of a 'timesSeries' object as a vector.
     
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Check:
@@ -334,6 +389,9 @@ function(x, row.names = NULL, optional = NULL)
     
     # Value:
     #   Returns the data slot of a 'timesSeries' object as a data frame.
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -365,6 +423,11 @@ function(x, ...)
     # Example:
     #   x = as.timeSeries(data(daxRet)); as.ts(x[1:50, ])
     
+    # Changes:
+    #
+    
+    # FUNCTION:
+    
     # Transform:
     if (isUnivariate(x)) {
         ans = as.ts(as.vector(x@Data[, 1]), ...)
@@ -381,7 +444,13 @@ function(x, ...)
     
 
 ################################################################################
-# FOR THE FUTURE:
+# NEW METHODS:              TESTING - FOR THE FUTURE:
+#  .as.vector.zoo
+#  .as.matrix.zoo
+#  .quantile.zoo
+#  .t.timeSeries
+#  .mergeSeries
+
 
 .as.vector.zoo =
 function(x, mode = "any") 
@@ -399,6 +468,9 @@ function(x, mode = "any")
     # Value:
     #   Returns the data of an 'zoo' object as a named vector.
         
+    # Changes:
+    #
+    
     # FUNCTION:
         
     # Check:
@@ -437,6 +509,9 @@ function(x)
     # Example:
     #   require(tseries); as.matrix(get.hist.quote("IBM"))
     
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Check:
@@ -472,6 +547,9 @@ function(x, probs = 0.95, ...)
     # Examples:
     #   quantile(as.timeSeries(data(daxRet)))
     
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Convert to timeSeries:
@@ -489,6 +567,9 @@ function(x, probs = 0.95, ...)
 function(x)
 {   # A function implemented by Diethelm Wuertz
 
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Transpose:
@@ -499,8 +580,7 @@ function(x)
 }
 
 
-################################################################################ 
-# OLD:
+# ------------------------------------------------------------------------------
 
 
 .mergeSeries = 
@@ -520,6 +600,9 @@ function(x, y, units = NULL)
     
     # Value:
     #   Returns a S4 object of class 'timeSeries'.
+    
+    # Changes:
+    #
     
     # FUNCTION:
     

@@ -37,13 +37,13 @@
 #  orderStatistics      Compute order statistic of a 'timeSeries'
 # FUNCTION:            DATA SLOT AND CLASSIFICATION OF TIME SERIES OBJECTS:
 #  seriesData           Extracts data slot from 'timeSeries' object
-#  isUnivariate         Tests if an object of class 'timeSeries' is univariate
-#  isMultivariate       Tests if an object of class 'timeSeries' is multivariate
+#  isUnivariate         Tests if object of class 'timeSeries' is univariate
+#  isMultivariate       Tests if object of class 'timeSeries' is multivariate
 # METHODS:             PRINT AND PLOT FUNCTIONS:
-#  print.timeSeries     S3: Print method for a 'timeSeries' object
-#  plot.timeSeries      S3: Plot method for a 'timeSeries' object
-#  lines.timeSeries     S3: Lines method for a 'timeSeries' object
-#  points.timeSeries    S3: Points method for a 'timeSeries' object
+#  print.timeSeries     Prints a 'timeSeries' object
+#  plot.timeSeries      Plots a 'timeSeries' object
+#  points.timeSeries    Adds points to a 'timeSeries' plot
+#  lines.timeSeries     Adds lines to a 'timeSeries' plot
 # FUNCTION:            FOR DAILY OPERATIONS:
 #  dummyDailySeries     Creates a dummy daily 'timeSeries' object
 #  alignDailySeries     Aligns a 'timeSeries' object to new positions 
@@ -54,7 +54,14 @@
 require(methods)
 
 
-# ------------------------------------------------------------------------------
+################################################################################
+# FUNCTION:            GENERATION OF TIME SERIES OBJECTS:
+#  'timeSeries'         S4 Class definition for a 'timeSeries' object
+#  timeSeries           Creates a 'timeSeries' object from scratch
+#  readSeries           Reads from a spreadsheet and creates a 'timeSeries'
+#  returnSeries         Computes returns from a 'timetimehhhhh' object  
+#  applySeries          Applies a function to blocks of a 'timeSeries'
+#  orderStatistics      Compute order statistic of a 'timeSeries'
 
 
 setClass("timeSeries", 
@@ -122,6 +129,9 @@ documentation = NULL, ...)
     #   charvec =  paste("2004-01-", c(paste("0", 1:9, sep=""), 10:30), sep="")
     #   timeSeries(data.mat, charvec)
    
+    # Changes:
+    #
+    
     # FUNCTION:
 
     # Trace:
@@ -219,6 +229,9 @@ FinCenter = myFinCenter, title = NULL, documentation = NULL, ...)
     #   Note we expect that the header of the spreadsheet file in
     #   the first cell holds the time/date format specification! 
     
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Read Data:
@@ -268,6 +281,9 @@ trim = TRUE, digits = 4, units = NULL)
 
     # Value:
     #   Returns a S4 object of class 'timeSeries'.
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -366,6 +382,9 @@ FUN = colAvgs, units = NULL, ...)
     #   'adj'-acent endpoint are not needed, all the information
     #   is kept in the 'from' and 'to' position vectors.
   
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Check object:
@@ -437,7 +456,10 @@ function(x)
     #   A named list with the order statistics for each column of
     #   the inputted series.
     
-    # Function:
+    # Changes:
+    #
+    
+    # FUNCTION:
     
     # Order Statistics
     Units = x@units
@@ -461,7 +483,9 @@ function(x)
 
 
 ################################################################################
-
+#  seriesData           Extracts data slot from 'timeSeries' object
+#  isUnivariate         Tests if an object of class 'timeSeries' is univariate
+#  isMultivariate       Tests if an object of class 'timeSeries' is multivariate
 
 seriesData =
 function(object)
@@ -475,6 +499,9 @@ function(object)
     
     # Value:
     #    Returns an object of class 'matrix'.
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -499,9 +526,12 @@ function(x)
     # Description:
     #   Tests if an object of class timeSeries is univariate
     
+    # Changes:
+    #
+       
     # FUNCTION:
     
-    # is univariate ?
+    # Is univariate ?
     if (class(x) == "timeSeries") {
         # timeSeries Object ?
         DIM = dim(x@Data)[2]
@@ -532,6 +562,9 @@ function(x)
     # Examples:
     #   isMultivariate(as.timeSeries(data(daxRet)))
     
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Test:
@@ -543,6 +576,10 @@ function(x)
 
 
 ################################################################################
+#  print.timeSeries     Prints a 'timeSeries' object
+#  plot.timeSeries      Plots a 'timeSeries' object
+#  points.timeSeries    Adds points to a 'timeSeries' plot
+#  lines.timeSeries     Adds lines to a 'timeSeries' plot
 
 
 print.timeSeries =
@@ -558,6 +595,9 @@ function(x, ...)
     # Value:
     #   Prints a 'timeSeries' object.
         
+    # Changes:
+    #
+    
     # FUNCTION:
         
     # Return Value:
@@ -682,6 +722,9 @@ function(x, ...)
     # Value:
     #   Plots a 'timeSeries' object.
     
+    # Changes:
+    #
+    
     # FUNCTION:
    
     # Add to Plot:
@@ -708,6 +751,9 @@ function(x, ...)
     # Value:
     #   Plots a 'timeSeries' object.
     
+    # Changes:
+    #
+    
     # FUNCTION:
    
     # Add to Plot:
@@ -719,6 +765,9 @@ function(x, ...)
 
 
 ################################################################################
+#  dummyDailySeries     Creates a dummy daily 'timeSeries' object
+#  alignDailySeries     Aligns a 'timeSeries' object to new positions 
+#  ohlcDailyPlot        Plots open–high–low–close bar chart 
 
 
 dummyDailySeries =
@@ -734,6 +783,9 @@ function(x)
     
     # Example:
     #   dummyDailySeries(rnorm(100))
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -774,6 +826,9 @@ include.weekends = FALSE, units = NULL)
     #       "fillNA" - fill missing days with NA values
     #   include.weekends - a logical value. Should weekend dates be 
     #       included or removed?
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -896,10 +951,12 @@ grid.nx = 7, grid.lty = "solid", ...)
     #   Build on top of Adrian Trapletti's plotOHLC()
     #   function from his R-package "tseries".
     
+    # Changes:
+    #    
+    
     # FUNCTION:
     
     # Units:
-    # myUnits <<- "days"
     myUnits <<- "days"
     
     # Internal Function:

@@ -28,7 +28,7 @@
 
 
 ################################################################################
-# FUNCTION             DESCRIPTION:
+# FUNCTION:            DESCRIPTION OF R's BASE FUNCTION:
 #  strptime             Turns charater representations into POSIXlt
 #  as.POSIXlt           Converts into POSIXlt
 #  ISOdatetime          Returns an object of class POSIXct
@@ -60,5 +60,35 @@
 #  format               Turns Date into character representations
 #  print                Prints POSIXt objects, generic function
 #  seq                  Creates sequence of class Date
+# FUNCTION ADDON:      DESCRIPTION:
+#  isPOSIX              Checks for an object of class POSIX
+################################################################################
+
+
+################################################################################
+# FUNCTION ADDON:      DESCRIPTION:
+#  isPOSIX              Checks for an object of class POSIX
+
+
+isPOSIX =
+function(x)
+{   # A function written by Diethelm Wuertz
+
+    # Description:
+    #   Checks for an object of class POSIX
+    
+    # Changes:
+    #
+    
+    # FUNCTION:
+    
+    # Check:
+    ans = inherits(x, "POSIXt")
+    
+    # Return Value:
+    ans
+}
+
+
 ################################################################################
 
