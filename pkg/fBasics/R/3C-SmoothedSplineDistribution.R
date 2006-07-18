@@ -258,10 +258,10 @@ function(object, q)
             next
         }
         nqd.l = max(20,ceiling((q[i]-mn)/(mx-mn)*200))
-        qd.l = .gauss.quad(nqd.l, c(mn, q[i]))
+        qd.l = .ssden.gauss.quad(nqd.l, c(mn, q[i]))
         p.l = sum(.dssden(object,qd.l$pt) * qd.l$wt)
         nqd.u = max(20,ceiling((mx-q[i]) / (mx-mn)*200))
-        qd.u = .gauss.quad(nqd.u, c(q[i],mx))
+        qd.u = .ssden.gauss.quad(nqd.u, c(q[i],mx))
         p.u = sum(.dssden(object, qd.u$pt)*qd.u$wt)
         p[i] = p.dup = p.l / (p.l+p.u)
     }
