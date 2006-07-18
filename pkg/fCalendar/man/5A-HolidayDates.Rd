@@ -1,6 +1,6 @@
-\name{HolidayDatabase}
+\name{HolidayDates}
 
-\alias{HolidayDatabase}
+\alias{HolidayDates}
 
 
 \alias{Septuagesima}
