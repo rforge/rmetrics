@@ -1,0 +1,545 @@
+<html><head><title>timeDate Class</title>
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>TimeDateClass(fCalendar)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   TimeDateClass">
+<param name="keyword" value="R:   myFinCenter">
+<param name="keyword" value="R:   rulesFinCenter">
+<param name="keyword" value="R:   listFinCenter">
+<param name="keyword" value="R:   timeDate">
+<param name="keyword" value="R:   timeDate-class">
+<param name="keyword" value="R:   is.timeDate">
+<param name="keyword" value="R:   timeCalendar">
+<param name="keyword" value="R:   timeSequence">
+<param name="keyword" value="R:   seq.timeDate">
+<param name="keyword" value="R:   Sys.timeDate">
+<param name="keyword" value="R:   print.timeDate">
+<param name="keyword" value="R:   plot.timeDate">
+<param name="keyword" value="R:   points.timeDate">
+<param name="keyword" value="R:   lines.timeDate">
+<param name="keyword" value="R:   summary.timeDate">
+<param name="keyword" value="R:   format.timeDate">
+<param name="keyword" value=" timeDate Class">
+</object>
+
+
+<h2>timeDate Class</h2>
+
+
+<h3>Description</h3>
+
+<p>
+A collection and description of functions and methods
+for managing date and time around the globe for any 
+financial center. The concept allows for dealing
+with several time zones at the same time, day light 
+saving time and holiday calendars independently of the 
+date and time specifications of the operating system 
+implemented on a specific computer. 
+<br>
+</p>
+<p>
+The functions for Financial Centers are:
+</p>
+
+<table summary="Rd table">
+<tr>
+  <td align="left"><code>rulesFinCenter</code> </td>  <td align="left"> Returns DST rules for a financial center, </td>
+</tr>
+<tr>
+  <td align="left"> <code>listFinCenter</code> </td>  <td align="left"> Lists all supported financial centers. </td>
+</tr>
+</table>
+
+<p>
+The functions for the Generation of 'timeDate' objects are:
+</p>
+
+<table summary="Rd table">
+<tr>
+  <td align="left"><code>timeDate</code> </td>  <td align="left"> S4: Creates 'timeDate' object from a character vector, </td>
+</tr>
+<tr>
+  <td align="left"> <code>is.timeDate</code> </td>  <td align="left"> Tests if the object is of class 'timeDate', </td>
+</tr>
+<tr>
+  <td align="left"> <code>timeCalendar</code> </td>  <td align="left"> Creates 'timeDate' object from calendar atoms, </td>
+</tr>
+<tr>
+  <td align="left"> <code>timeSequence</code> </td>  <td align="left"> Creates regularly spaced object of class 'timeDate', </td>
+</tr>
+<tr>
+  <td align="left"> <code>seq</code> </td>  <td align="left"> A synonyme function for timeSequence, </td>
+</tr>
+<tr>
+  <td align="left"> <code>Sys.timeDate</code> </td>  <td align="left"> Returns system time as an object of class 'timeDate'. </td>
+</tr>
+</table>
+         
+</p>
+<p>
+The functions to represent 'timeDate' objects:
+<table summary="Rd table">
+<tr>
+  <td align="left"><code>print.timeDate</code> </td>  <td align="left"> Prints 'timeDate' Object, </td>
+</tr>
+<tr>
+  <td align="left"> <code>plot.timeDate</code> </td>  <td align="left"> Plots with GMT 'timeDate' x-axis, </td>
+</tr>
+<tr>
+  <td align="left"> <code>points.timeDate</code> </td>  <td align="left"> Adds points to a 'timeDate' plot, </td>
+</tr>
+<tr>
+  <td align="left"> <code>lines.timeDate</code> </td>  <td align="left"> Adds lines to a 'timeDate' plot, </td>
+</tr>
+<tr>
+  <td align="left"> <code>summary.timeDate</code> </td>  <td align="left"> Summarizes details of a 'timeDate' object, </td>
+</tr>
+<tr>
+  <td align="left"> <code>format.timeDate</code> </td>  <td align="left"> Formats 'timeDate' as ISO conform character string, </td>
+</tr>
+</table>
+
+
+<h3>Usage</h3>
+
+<pre>
+myFinCenter
+rulesFinCenter(FinCenter = myFinCenter)
+listFinCenter(pattern = "*")
+
+timeDate(charvec = Sys.timeDate(), format = NULL, zone = myFinCenter, 
+    FinCenter = myFinCenter) 
+timeCalendar(y = currentYear, m = 1:12, d = 1, h = NULL, min = NULL, 
+    s = NULL, zone = myFinCenter, FinCenter = myFinCenter)
+timeSequence(from = "2004-01-01", to = format(Sys.time(), "%Y-%m-%d"), 
+    by = c("day", "year", "quarter", "month", "week", "hour", "min", "sec"),
+    length.out = NULL, format = "", zone = myFinCenter, FinCenter = myFinCenter)
+Sys.timeDate(FinCenter = myFinCenter) 
+
+## S3 method for class 'timeDate':
+seq(from, to, by = c("day", "year", "quarter", "month", 
+    "week", "hour", "min", "sec"), length.out = NULL, ...)
+
+is.timeDate(object)
+
+## S3 method for class 'timeDate':
+print(x, ...)
+## S3 method for class 'timeDate':
+plot(x, y, ...)
+## S3 method for class 'timeDate':
+summary(object, ...)
+## S3 method for class 'timeDate':
+format(x, ...) 
+
+currentYear
+myUnits
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>by</code></td>
+<td>
+a character string, containing one of "sec", "min",
+"hour", "day", "week", "month" or "year".
+This can optionally be preceded by an integer and a
+space, or followed by "s". 
+</td></tr>
+<tr valign="top"><td><code>charvec</code></td>
+<td>
+a character vector of dates and times.
+</td></tr>
+<tr valign="top"><td><code>FinCenter</code></td>
+<td>
+a character with the the location of the  
+financial center named as "continent/city". 
+</td></tr>
+<tr valign="top"><td><code>format</code></td>
+<td>
+the format specification of the input character vector.
+</td></tr>
+<tr valign="top"><td><code>from, to</code></td>
+<td>
+[timeSequence] - <br>
+starting date, required, and end date, optional. If supplied 
+<code>to</code> must be after <code>from</code>, <br>
+[seq] - cr
+in this case the <code>from</code> and <code>to</code> dates must be objects 
+of class <code>timeDate</code>.
+</td></tr>
+<tr valign="top"><td><code>h, min, s</code></td>
+<td>
+hours of the days (0-23), defaults are 0,
+minutes of the days (0-59), defaults are 0, and 
+seconds of the days (0-59), defaults are 0. 
+</td></tr>
+<tr valign="top"><td><code>length.out</code></td>
+<td>
+length.out integer, optional. Desired length  
+of the sequence, if specified "to" will be ignored.
+</td></tr>
+<tr valign="top"><td><code>method</code></td>
+<td>
+[modify] - <br>
+a character string defining the modification method, one of
+<code>"sort"</code>, <code>"round"</code>, or <code>"trunc"</code>. 
+</td></tr>
+<tr valign="top"><td><code>object</code></td>
+<td>
+[is.timeData][summary] - <br>
+an object of class <code>timeDate</code>.
+</td></tr>
+<tr valign="top"><td><code>pattern</code></td>
+<td>
+a pattern character string which can be recognized
+by the <code>grep</code> function. Wild cards are allowed.
+</td></tr>
+<tr valign="top"><td><code>x</code></td>
+<td>
+[isWeekday][isWeekend][isBizday][weekDay] - <br>
+an object of class <code>timeDate</code>.
+<br>
+[format][print][plot] - <br>
+an object of class <code>timeDate</code>.
+</td></tr>
+<tr valign="top"><td><code>y, m, d</code></td>
+<td>
+[timeCalendar] - <br>
+calendar years (e.g. 1997), defaults are 1960,
+calendar months (1-12), defaults are 1, and 
+calendar days (1-31), defaults are 1, <br>
+[plot] - <br>
+a numeric vector.
+</td></tr>
+<tr valign="top"><td><code>zone</code></td>
+<td>
+the time zone or financial center where the data were recorded.
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+arguments passed to other methods.
+</td></tr>
+</table>
+
+<h3>Details</h3>
+
+<p>
+For the management of chronological objects under R three concepts 
+are available: The first is the implementation of date and time in R's 
+<code>chron</code> package neglecting locals, time zones and day light saving 
+times. This approach is appropriate for economic time series. The second 
+approach, available in R's base package implements the POSIX standard 
+to date and time objects, named <code>"POSIXt"</code>. Unfortunately, the 
+representation of these objects is operating system dependent and 
+especially under MS Windows several problems appear in the management 
+of time zones and day light saving times. Here we present a solution
+to overcome these difficulties with POSIX objects and introduce a 
+new S4 class of 'timeDate' objects which allow for powerful methods 
+to represent dates and times in different financial centers around 
+the world. Many of the basic functionalities of these objects are in 
+common with S-Plus' <code>timeDate</code> objects and thus many of your 
+privately written functions for <code>FinMetrics</code> may also be used 
+within R's environment.
+</p>
+<p>
+A major difference is the time zone concept which is replaced by the
+"Financial Center" concept. The <code>FinCenter</code> character variable
+specifies where you are living and at which financial center you are
+working. With the variable <code>myFinCenter</code> you can overwrite the
+default setting with your personal settings.  
+With the specification of the <code>FinCenter</code> your system knows what
+rules rules for day light saving times should be applied, what is your
+holiday calendar, what are your interest rate conventions. (Not all
+specifications are already implemented.) Many other 
+aspects can be easily accessed when a financial center is named. So we 
+can distinguish between Frankfurt and Zurich, which both belong to the 
+same time zone, but differed in DST changes in the eighties and have
+different holiday calendars. Futhermore, since the underlying time 
+refers to "GMT" and DST rules and all other information is available 
+in local (ASCII) databases, we are sure, that R delivers with such a 
+date/time concept on every computer independent of the operating system 
+in use, identical results. 
+</p>
+<p>
+Another important feature of the <code>"timeDate"</code> concept used here is 
+the fact that we don't rely on American or European ways to write dates.
+We use consequently the ISO-8601 standard for date and time notations.
+<br>
+</p>
+<p>
+<B>Financial Centers</B>
+<br><br>
+There are two functions concerned with the financial centers. The 
+first, <code>rulesFinCenter</code>, lists the daylight saving rules for a 
+selected financial center, and the second, <code>listFinCenter</code>, 
+lists all centers available in the database. There is no dependency 
+on the POSIX implementation of your operating system because all 
+time zone and day light saving time information is stored locally 
+in ASCII files. It is important to say, that the <code>TZ</code> environment 
+variable must set to <code>"GMT"</code> in your system environment that 
+there are no conflicts with the POSIX time zone management.
+</p>
+<p>
+Through the definition of financial centers it becomes possible to 
+introduce in the future a specification structure for financial
+centers, which includes further information for a center like
+holiday calendars, currency and interest rate conventions or many
+others.
+<br>
+</p>
+<p>
+<B>Generation of timeDate Objects</B>
+<br><br>
+We have defined a 'timeDate' class which is in many aspects similar
+to the S-Plus class with the same name, but has also some important
+advantageous differeneces. The S4 class has four Slots, the <code>Data</code> 
+slot which holds date and time as 'POSIXlt' objects in the standard
+ISO-8601 format, the <code>Dim</code> slot which gives the dimension
+of the data object, the <code>format</code> specification slot and the
+<code>FinCenter</code> slot which holds the name of the financial center. 
+</p>
+<p>
+Three functions allow to cgenerate date/time objects: <code>timeDate</code> 
+from character vectors, <code>timeCalendar</code> from date and time atoms, 
+and <code>timeSequence</code> from a "from/to" or from a "from/length" sequence 
+specification. Note, time zone transformations are easily handled by
+by the <code>timeDate</code> functions which can also take <code>timeDate</code> 
+and <code>POSIXt</code> objects as inputs, while transforming them between 
+financial centers and/or time zones specified by the arguments <code>zone</code> 
+and <code>FinCenter</code>. Finally the function <code>Sys.timeDate</code> returns 
+current system time in form of a <code>timeDate</code> object.
+<br>
+</p>
+<p>
+<B>Tests and Representation of timeDate Objects:</B>
+<br><br>
+We have implemented four methods to test and represent
+<code>timeDate</code> objects. The method <code>is.timeDate</code> checks if 
+a given object is of class <code>"timeDate"</code>. The print method 
+returns the date/time in square <code>"[]"</code> brackets to dsitinguish
+the output from other date and time objects. On top of the date and
+time output the name of the <code>FinCenter</code> is printed. The summary 
+method returns a printed report with information about the 
+<code>"timeDate"</code> object. Finally, the format methods allows to 
+transform objects into a ISO conform formatted character strings.
+</p>
+<p>
+<B>Mathematical Operations:</B>
+<br><br>
+This is a collection of S3 methods for objects of class <code>timeDate</code>
+to perform mathematical operations. Included are methods to extracts 
+or replace subsets from <code>timeDate</code> objects, to perform arithmetic 
+<code>"+"</code> and <code>"-"</code> operations, to group 'Ops' generic functions, 
+to return suitably lagged and iterated differences, to return differences 
+of two <code>timeDate</code> objects, to concatenate objects, to replicate 
+objects, to rounds objects, to truncates objects, to extract the first 
+or last entry of a vector, to sort the objects of the elements of a 
+date/time vector, and to revert <code>timeDate</code> vector objects.
+<br>
+</p>
+<p>
+<B>Transformation of Objects:</B>
+<br><br>
+This is a collection of S3 methods for objects of class <code>timeDate</code>
+to transform those objects between different representations.
+Included are methods to transform <code>timeDate</code> objects to character 
+strings, to data frames, to POSIXct or POSIXlt objects, to Julian
+counts, to extract date/time atoms from calendar dates, and to 
+extract the months atom from a <code>timeDate</code> object.
+</p>
+
+
+<h3>Value</h3>
+
+<p>
+<code>rulesFinCenter</code><br>
+<code>listFinCenter</code>
+<br>
+the first function returns a printed list of DST rules, the second
+lists time zones available in the database.
+<br>
+<br>
+<code>timedate</code><br>
+<code>timeCalendar</code><br>
+<code>timeSequence</code>
+<br>
+return a S4 object of class 'timeDate'.
+<br>
+<br>
+<code>Sys.timeDate</code>
+<br>
+returns the system time as an object of class 'timeDate'.
+<br>
+<br>
+<code>is.timeDate</code>
+<br>
+returns <code>TRUE</code> or <code>FALSE</code> depending on whether its
+argument is of <code>timeDate</code> type or not.
+<br>
+<br>
+<EM>print</EM>
+<br>
+prints the financial center and date and time vector for a 
+<code>timeDate</code> object.
+<br>
+<br>
+<EM>summary</EM>
+<br>
+returns a summary report of the details of a <code>timeDate</code> 
+object. This includes the starting and end date, the number of 
+dates the format and financial center in use.
+<br>
+<br>
+<EM>format</EM>
+<br>
+returns an ISO conform formatted character string.
+<br></p>
+
+<h3>Note</h3>
+
+<p>
+originally, these functions were written for Rmetrics users using R and 
+Rmetrics under Microsoft's Windows XP operating system where time zones, 
+daylight saving times and holiday calendars are not or insuffeciently 
+supported. The functions are untested for other system environments, 
+but may be used.
+</p>
+<p>
+The usage of the Ical Library and the introduction of the FinCenter
+concept was originally develloped for R Version 1.5. The 
+<code>timeDate</code> and <code>timeSeries</code> objects were added for 
+R Version 1.8.1. Minor changes were made to adapt the functions 
+for R Version 1.9.1. As a consequence, newer concepts like the 
+<code>Date</code> objects were not yet considered and included in this 
+collection of date and time concepts. With R Version 2.3.0 a major
+update has been made adding many new generic functions and renaming 
+a few already existing functions, please be aware of this. 
+</p>
+<p>
+Note, the date/time conversion from an arbitry timezone to GMT cannot
+be unique, since date/time objects appear twice during the hour
+when DST changes. A bookkeeping which takes care if DST is effective 
+or not is not yet included. However, in most applications this is 
+not necessary since the markets are closed on weekends, especially 
+at times when DST usually changes. It is planned for the future to
+implement the DST change properly.
+</p>
+<p>
+The ISO-8601 midnight standard has been implemented. Note, that for
+example "2005-01-01 24:00:00" is a valid date/time string.
+</p>
+<p>
+Beside the examples given in the manual pages additional demo and
+test files are available with much more examples including also those
+from the book of Zivot and Wang (2003).
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>
+Diethelm Wuertz for the Rmetrics <font face="Courier New,Courier" color="#666666"><b>R</b></font>-port.
+</p>
+
+
+<h3>References</h3>
+
+<p>
+Bateman R., (2000);
+<EM>Time Functionality in the Standard C Library</EM>,
+Novell AppNotes, September 2000 Issue, 73&ndash;85.
+</p>
+<p>
+ISO-8601, (1988);
+<EM>Data Elements and Interchange Formats -
+Information Interchange, Representation of Dates and Time</EM>,
+International Organization for Standardization,
+Reference Number ISO 8601, 14 pages.
+</p>
+<p>
+James D.A., Pregibon D. (1992),
+<EM>Chronological Objects for Data Analysis</EM>,
+Reprint.
+</p>
+<p>
+Ripley B.D., Hornik K. (2001);
+<EM>Date-Time Classes</EM>,
+R-News, Vol. 1/2 June 2001, 8&ndash;12.
+</p>
+<p>
+Zivot, E., Wang J. (2003);
+<EM>Modeling Financial Time Series with S-Plus</EM>,
+Springer, New-York.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>
+<code>timeDateCoercion</code>, <code>timeDateSpecDates</code>
+</p>
+<p>
+We also recommend to inspect the help pages for the POSIX time and date 
+class, <code>?Dates</code>, and the help pages from the contributed R packages
+<code>chron</code> and <code>date</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+## SOURCE("fCalendar.3A-TimeDateClass")
+
+## myFinCenter -
+   myFinCenter
+
+## - Character Vecor Strings:
+   dts = c("1989-09-28", "2001-01-15", "2004-08-30", "1990-02-09")
+   dts
+   tms = c(  "23:12:55",   "10:34:02",   "08:30:00",   "11:18:23")
+   tms
+   
+## timeDate -
+   timeDate(dts, format = "%Y-%m-%d", FinCenter = "GMT" )
+   timeDate(dts, format = "%Y-%m-%d", FinCenter = "Europe/Zurich") 
+   timeDate(paste(dts, tms), format = "%Y-%m-%d %H:%M:%S", 
+     zone = "GMT", FinCenter = "GMT")
+   timeDate(paste(dts, tms), format = "%Y-%m-%d %H:%M:%S", 
+     zone = "Europe/Zurich", FinCenter = "Europe/Zurich")
+   timeDate(paste(dts, tms), format = "%Y-%m-%d %H:%M:%S", 
+     zone = "GMT", FinCenter = "Europe/Zurich") 
+    
+## timeCalendar - 
+   timeCalendar( m = c(9, 1, 8, 2), d = c(28, 15, 30, 9), 
+     y = c(1989, 2001, 2004, 1990), FinCenter = "GMT") 
+   timeCalendar(m = c(9, 1, 8, 2), d = c(28, 15, 30, 9), 
+     y = c(1989, 2001, 2004, 1990), FinCenter = "Europe/Zurich")
+   timeCalendar(h = c(9, 14), min = c(15, 23)) 
+  
+## timeSequence - 
+   timeSequence(from = "2004-03-12", to = "2004-04-11", 
+        format = "%Y-%m-%d", FinCenter = "GMT")  
+   timeSequence(from = "2004-03-12", to = "2004-04-11", 
+        format = "%Y-%m-%d", FinCenter = "Europe/Zurich")
+   
+## timeDate - 
+   # Note, ISO and American Formats are Auto-Detected
+   timeDate("2004-12-11", FinCenter = "GMT")    
+   timeDate("12/11/2004", FinCenter = "GMT")   
+   
+## print | summary | format -
+   tC = timeCalendar()
+   print(tC)
+   summary(tC)
+   format(tC)   
+</pre>
+
+
+
+<hr><div align="center">[Package <em>fCalendar</em> version 231.10066 <a href="00Index.html">Index]</a></div>
+
+</body></html>

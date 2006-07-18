@@ -1,0 +1,31 @@
+[OPTIONS]
+Auto Index=Yes
+Contents file=fCalendar.toc
+Compatibility=1.1 or later
+Compiled file=fCalendar.chm
+Default topic=00Index.html
+Display compile progress=No
+Full-text search=Yes
+Full text search stop list file=..\..\..\gnuwin32\help\R.stp
+
+
+[FILES]
+00Index.html
+0A-RmetricsUtilities.html
+1A-ISO8601Standard.html
+2A-PosixStandard.html
+2B-DaylightSavingTime.html
+3A-TimeDateClass.html
+3B-TimeDateSubsets.html
+3C-TimeDateMathOps.html
+3D-TimeDateSpecDates.html
+3E-TimeDateCoercion.html
+4A-TimeSeriesClass.html
+4B-TimeSeriesData.html
+4C-TimeSeriesPositions.html
+4D-TimeSeriesCoercion.html
+5A-fCalendarData.html
+5B-HolidayCalendars.html
+5C-HolidayDates.html
+6A-HighFrequencyData.html
+7A-CalendarTools.html
