@@ -48,7 +48,7 @@ function(lib, pkg)
     cat("\nfCalendar: Time, Date and Calendar Tools\n")
 
     # Load dll:
-    library.dynam("fCalendar", pkg, lib)
+    # library.dynam("fCalendar", pkg, lib)
     
     # Time Zone Environment:
     # Sys.getenv("TZ")[[1]]   
