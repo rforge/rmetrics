@@ -40,7 +40,8 @@
 \description{
 
     A collection and description of functions to compute 
-    basic statistical properties. Missing functions in 
+    basic statistical properties of financial and
+    economic time series data. Missing functions in 
     R to calculate skewness and kurtosis are added, a 
     function which creates a summary statistics, and 
     functions to calculate column and row statistics.

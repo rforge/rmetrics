@@ -22,8 +22,8 @@
     investigate and to plot several stylized facts 
     of economic and financial time series. This 
     includes fat tails, autocorrelations, 
-    crosscorrelations, long memory behavior, and the
-    Taylor effect.
+    crosscorrelations, long memory behavior, 
+    and the Taylor effect.
     \cr
 
     The functions to display stylized facts are:

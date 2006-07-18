@@ -25,11 +25,11 @@
 \description{
     
     A collection and description of functions to import 
-    financial and economic market from the Internet.
+    financial and economic market data from the Internet.
     Download functions are available for economic and
-    financial market data form Economagic's, from 
-    Yahoo's, and from the Federal Reserve's Internet
-    sites.
+    financial market data from Economagic's, from 
+    Yahoo's, from the Federal Reserve's, and from the
+    the forecasts.org Internet sites.
     \cr
     
     The functions are:
@@ -162,9 +162,9 @@ show.fWEBDATA(object)
 %        an object of class \code{keystats} as returned by the function
 %        \code{keystatsImport}.
 %        }
-%    \item{\dots}{
-%        optional arguments passed to the \code{print.keystats} function.
-%        }        
+     \item{\dots}{
+         optional arguments to be passed.
+         }        
 }
 
 
