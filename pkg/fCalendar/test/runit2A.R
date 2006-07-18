@@ -81,7 +81,7 @@ function()
 
 
 if (FALSE) {
-    testResult <- runTestFile("C:/Rmetrics/trunk/fCalendar/test/runit022A.R")
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fCalendar/test/runit2A.R")
     printTextProtocol(testResult)
 }
 

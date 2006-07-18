@@ -64,8 +64,32 @@ function()
 # ------------------------------------------------------------------------------
 
 
+test.Ops =
+function()
+{
+    myFinCenter <<- "NewYork"
+    NY = timeCalendar()
+    
+    myFinCenter <<- "Zurich"
+    ZH = timeCalendar()
+    
+    NY > ZH
+    NY == ZH + 6*3600
+    
+    # Return Value:
+    return()  
+}
+
+
+    unique(sort(sample(c(NY, NY))))
+
+
+
+# ------------------------------------------------------------------------------
+
+
 if (FALSE) {
-    testResult <- runTestFile("C:/Rmetrics/trunk/fCalendar/test/runit023C.R")
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fCalendar/test/runit3B.R")
     printTextProtocol(testResult)
 }
 

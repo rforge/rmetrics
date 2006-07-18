@@ -168,15 +168,21 @@ function()
     timeDate(c("2001-01-01 16:00:00", "2001-01-01 16:00:00"))
     
     
-    timeDate("20010101", zone = "GMT", FinCenter = "Zurich")
-    timeDate("200101010000", zone = "GMT", FinCenter = "Zurich")
-    timeDate("20010101000000", zone = "GMT", FinCenter = "Zurich")     
-    timeDate("200101011600", zone = "GMT", FinCenter = "Zurich")
-    timeDate("20010101160000", zone = "GMT", FinCenter = "Zurich")     
-    timeDate(c("2001-01-01 00:00", "2001-01-01 16:00"), zone = "GMT", FinCenter = "Zurich")
-    timeDate(c("2001-01-01 16:00:00", "2001-01-01 16:00:00"), zone = "GMT", FinCenter = "Zurich")
- 
- 
+    timeDate("20010101", 
+        zone = "GMT", FinCenter = "Zurich")
+    timeDate("200101010000", 
+        zone = "GMT", FinCenter = "Zurich")
+    timeDate("20010101000000", 
+        zone = "GMT", FinCenter = "Zurich")     
+    timeDate("200101011600", 
+        zone = "GMT", FinCenter = "Zurich")
+    timeDate("20010101160000", 
+        zone = "GMT", FinCenter = "Zurich")     
+    timeDate(c("2001-01-01 00:00", "2001-01-01 16:00"), 
+        zone = "GMT", FinCenter = "Zurich")
+    timeDate(c("2001-01-01 16:00:00", "2001-01-01 16:00:00"), 
+        zone = "GMT", FinCenter = "Zurich")
+
        
     # Format: "%d-%b-%Y"
     Months = c("Mar", "Jun", "Sep", "Dec")
@@ -390,7 +396,7 @@ function()
 
 
 if (FALSE) {
-    testResult <- runTestFile("C:/Rmetrics/trunk/fCalendar/test/runit023A.R")
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fCalendar/test/runit3A.R")
     printTextProtocol(testResult)
 }
 

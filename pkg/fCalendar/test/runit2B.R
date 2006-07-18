@@ -59,7 +59,7 @@ function()
 
 
 if (FALSE) {
-    testResult <- runTestFile("C:/Rmetrics/trunk/fCalendar/test/runit022B.R")
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fCalendar/test/runit2B.R")
     printTextProtocol(testResult)
 }
 

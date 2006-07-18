@@ -81,7 +81,7 @@ function()
     #  blockEnd               Creates end dates for equally sized blocks
     
     
-    ## Easter -
+    ## Easter:
     myFinCenter
     Easter(2006)
     target = timeSequence(from = Easter(currentYear)-7*24*3600, length.out = 8) 
@@ -98,11 +98,11 @@ function()
     getDayOfWeek(tS)
     
     ## Business Days and Holidays:
-    holiday.NYSE()
+    holidayNYSE()
     getDayOfWeek(tS)
     Easter(2006)
-    isBizday(tS, holiday.NYSE())
-    isHoliday(tS, holiday.NYSE())
+    isBizday(tS, holidayNYSE())
+    isHoliday(tS, holidayNYSE())
     
     ## [ - Subsetting:
     tS[c(1, 6:8)]   
@@ -151,7 +151,7 @@ function()
 
 
 if (FALSE) {
-    testResult <- runTestFile("C:/Rmetrics/trunk/fCalendar/test/runit023B.R")
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fCalendar/test/runit3B.R")
     printTextProtocol(testResult)
 }
 
