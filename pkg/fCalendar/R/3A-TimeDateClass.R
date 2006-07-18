@@ -29,6 +29,7 @@
 
 ################################################################################
 # FUNCTION:              FINANCIAL CENTERS:
+#  myFinCenter            Sets my financial center
 #  rulesFinCenter         Returns DST rules for a financial center
 #  listFinCenter          Lists all supported financial centers
 # FUNCTION:              GENERATION OF TIMEDATE OBJECTS:
@@ -54,8 +55,15 @@
 
 ################################################################################
 # FUNCTION:              FINANCIAL CENTERS:
+#  myFinCenter            Sets my financial center
 #  rulesFinCenter         Returns DST rules for a financial center
 #  listFinCenter          Lists all supported financial centers 
+
+
+myFinCenter = "Zurich"
+
+
+# ------------------------------------------------------------------------------
 
   
 rulesFinCenter =

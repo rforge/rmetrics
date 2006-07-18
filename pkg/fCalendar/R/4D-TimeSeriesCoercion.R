@@ -224,7 +224,7 @@ function(x, ...)
     
     # As timeSeries:
     x = as.data.frame(x)
-    ans = as.timeSeries(x)
+    ans = as.timeSeries(x, ...)
     
     # Return Value:
     ans
