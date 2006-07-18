@@ -63,7 +63,7 @@
 #  .currentYear                  Sets date of the current year
 #  myUnits                       Sets date units
 # DATA:                         DATA:
-#  MSFT
+#  MSFT                          Microsoft data set from Yahoo
 # FUNCTION:                     DESCRIPTION [REQUIRES DATE]:
 #  .fjulian                      Transform formatted dates to julian day numbers
 #  .julian                       Implements SPlus like 'julian'
@@ -804,7 +804,7 @@ dupfun = NULL)
         near = integer(n),
         nxt = integer(n),
         dist = double(n),
-        PACKAGE = "fBasics")
+        PACKAGE = "fCalendar")
     temp = ans[c("x", "y", "z", "extrap")]
     if (miss) temp$z[temp$extrap] = NA
      
@@ -894,7 +894,7 @@ ncp = 0, extrap = FALSE, duplicate = "error", dupfun = NULL)
           integer((31 + ncp) * n + nx * ny),
           double(5 * n),
           misso = as.logical(misso),
-          PACKAGE = "fBasics")
+          PACKAGE = "fCalendar")
     temp = ans[c("x", "y", "z", "misso")]
     temp$z[temp$misso] = NA
     
@@ -1012,7 +1012,7 @@ duplicate = "error", dupfun = NULL)
         near = integer(n),
         net = integer(n),
         dist = double(n),
-        PACKAGE = "fBasics")
+        PACKAGE = "fCalendar")
     temp = ans[c("x", "y", "z", "extrap")]
     if (miss) temp$z[temp$extrap] = NA
     
@@ -1106,7 +1106,7 @@ duplicate = "error", dupfun = NULL)
         integer((31 + ncp) * n + np),
         double(8 * n),
         misso = as.logical(misso),
-        PACKAGE = "fBasics")
+        PACKAGE = "fCalendar")
     temp = ans[c("x", "y", "z", "misso")]
     temp$z[temp$misso] = NA
     
