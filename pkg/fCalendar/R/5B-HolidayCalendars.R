@@ -146,7 +146,7 @@ function(year = currentYear, Holiday = "Easter")
 
 
 holidayNYSE = 
-function(y = currentYear)
+function(year = currentYear)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -177,7 +177,7 @@ function(y = currentYear)
     # FUNCTION:
     
     #  Settings:
-    years = y
+    years = year
     holidays = NULL
     
     # Iterate years:
