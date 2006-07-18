@@ -122,7 +122,7 @@ function(x)
 
     
 isBizday = 
-function(x, holidays = holiday.NYSE()) 
+function(x, holidays = holidayNYSE()) 
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -164,7 +164,7 @@ function(x, holidays = holiday.NYSE())
 
 
 isHoliday = 
-function(x, holidays = holiday.NYSE()) 
+function(x, holidays = holidayNYSE()) 
 {   # A function implemented by Diethelm Wuertz
 
     # Description:

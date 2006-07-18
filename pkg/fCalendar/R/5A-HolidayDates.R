@@ -948,9 +948,9 @@ function(year, month, day, nday)
     
     # .sdate:
     ## "year*10000 + month*100 + day" +
-    ##  (nday-day.of.week(month, day, year))%%7
+    ##  (nday-.day.of.week(month, day, year))%%7
     .sdate = year*10000+month*100+day
-    ans = .sdate(.sjulian(.sdate)+(nday-day.of.week(month, day, year))%%7)
+    ans = .sdate(.sjulian(.sdate)+(nday-.day.of.week(month, day, year))%%7)
     
     # Return Value:
     ans
@@ -988,9 +988,9 @@ function(year, month, day, nday)
     
     # .sdate:
     ## "year*10000 + month*100 + day" -
-    ##  (-(nday-day.of.week(month,day,year)))%%7
+    ##  (-(nday-.day.of.week(month,day,year)))%%7
     .sdate = year*10000+month*100+day
-    ans = .sdate(.sjulian(.sdate)-(-(nday-day.of.week(month,day,year)))%%7)
+    ans = .sdate(.sjulian(.sdate)-(-(nday-.day.of.week(month,day,year)))%%7)
     
     # Return Value:
     ans
@@ -1029,9 +1029,9 @@ function(year, month, nday, nth)
     
     # .sdate:
     ## "year*10000 + month*100" + 7*nth - 6 +
-    ##  (nday-day.of.week(year,month,7*nth-6))%%7
+    ##  (nday-.day.of.week(year,month,7*nth-6))%%7
     .sdate = year*10000+month*100+1
-    ans = .sdate(.sjulian(.sdate)+(nth-1)*7+(nday-day.of.week(month,1,year))%%7) 
+    ans = .sdate(.sjulian(.sdate)+(nth-1)*7+(nday-.day.of.week(month,1,year))%%7) 
     
     # Return Value:
     ans  
@@ -1070,9 +1070,9 @@ function(year, month, lastday, nday)
     
     # .sdate:
     ## "year*10000 + month*100 + lastday" -
-    ##  (day.of.week(year,month,lastday)-nday)%%7
+    ##  (.day.of.week(year,month,lastday)-nday)%%7
     .sdate = year*10000 + month*100 + lastday
-    ans = .sdate(.sjulian(.sdate)-(-(nday-day.of.week(month,lastday,year)))%%7)
+    ans = .sdate(.sjulian(.sdate)-(-(nday-.day.of.week(month,lastday,year)))%%7)
     
     # Return Value:
     ans
@@ -1257,6 +1257,18 @@ function(.sdates)
     ans = (day + y + y%/%4 - y%/%100 + y%/%400 + (31*m)%/%12)%%7
     
     # Return Value:
+    ans
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.day.of.week = 
+function (month, day, year) 
+{   # A function implemented by Diethelm Wuertz
+
+    ans = .sday.of.week(year * 10000 + month * 100 + day)
     ans
 }
 
