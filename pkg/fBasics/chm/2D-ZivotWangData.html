@@ -1,0 +1,234 @@
+<html><head><title>fBasics Data Sets from MoFiTS</title>
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>ZivotWangData(fBasics)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   ZivotWangData">
+<param name="keyword" value="R:   CPI.dat">
+<param name="keyword" value="R:   DowJones30">
+<param name="keyword" value="R:   ford.s">
+<param name="keyword" value="R:   highFreq3M.df">
+<param name="keyword" value="R:   hp.s">
+<param name="keyword" value="R:   IP.dat">
+<param name="keyword" value="R:   lexrates.dat">
+<param name="keyword" value="R:   msft.dat">
+<param name="keyword" value="R:   shiller.annual">
+<param name="keyword" value="R:   shiller.dat">
+<param name="keyword" value="R:   singleIndex.dat">
+<param name="keyword" value="R:   varex.ts">
+<param name="keyword" value="R:   yhoo.df">
+<param name="keyword" value=" fBasics Data Sets from MoFiTS">
+</object>
+
+
+<h2>fBasics Data Sets from MoFiTS</h2>
+
+
+<h3>Description</h3>
+
+<p>
+A collection and description of public data sets 
+used in the examples of the book 'Modeling Financial 
+Time Series with S-Plus' written by E. Zivot and 
+J. Wang.
+<br>
+</p>
+<p>
+The data sets are:
+</p>
+
+<table summary="Rd table">
+<tr>
+  <td align="left"><code>CPI.dat</code> </td>  <td align="left"> Seasonally adjusted US Consumer Price Index, </td>
+</tr>
+<tr>
+  <td align="left">  <code>DowJones30.csv</code> </td>  <td align="left"> Dow Jones Industrial Average Index, </td>
+</tr>
+<tr>
+  <td align="left">  <code>ford.s.csv</code> </td>  <td align="left"> Daily returns of the Ford stock, </td>
+</tr>
+<tr>
+  <td align="left">  <code>highFreq3M.df</code> </td>  <td align="left"> 3M High Frequency Stock Market Data, </td>
+</tr>
+<tr>
+  <td align="left"> <code>hp.s.csv</code> </td>  <td align="left"> Daily returns of the HP stock, </td>
+</tr>
+<tr>
+  <td align="left">  <code>IP.dat</code> </td>  <td align="left"> Seasonally Adjusted US Industrial Production Index, </td>
+</tr>
+<tr>
+  <td align="left">               <code>lexrates.dat</code> </td>  <td align="left"> Spot and Forward Exchange Rate Data, </td>
+</tr>
+<tr>
+  <td align="left"> <code>msft.dat</code> </td>  <td align="left"> Open, High, Low, Close of Microsoft Stocks, </td>
+</tr>
+<tr>
+  <td align="left"> <code>shiller.dat</code> </td>  <td align="left"> Robert Shiller's Monthly Economic Data Set, </td>
+</tr>
+<tr>
+  <td align="left">  <code>shiller.annual</code> </td>  <td align="left"> Robert Shiller's Monthly Economic Data Set, </td>
+</tr>
+<tr>
+  <td align="left"> <code>singleIndex.dat.csv</code> </td>  <td align="left"> Microsoft Stocks and SP500 Index Data, </td>
+</tr>
+<tr>
+  <td align="left">  <code>varex.ts.csv</code> </td>  <td align="left"> Real Stock Returns and Output Growth Data, </td>
+</tr>
+<tr>
+  <td align="left"> <code>yhoo.df</code> </td>  <td align="left"> Yahoo Stock Information. </td>
+</tr>
+</table>
+
+
+<h3>Details</h3>
+
+<p>
+<B>Dow Jones Industrial Average:</B>
+<br><br>
+The file <code>DowJones30.csv</code> contains closing prices for the 
+30 stocks represented in the Dow Jones Industrial Average Index. 
+<br>
+Data are downloadable and can be updated from Yahoo's web site. 
+<br>
+</p>
+<p>
+<B>Microsoft Stocks and SP500 Index Data:</B>
+<br><br>
+The file <code>singleIndex.dat.csv</code> contains the monthly closing 
+prices for Microsoft Corporation and the SP 500 index.
+<br>
+</p>
+<p>
+<B>Open, High, Low, Close of Microsoft Stocks:</B>
+<br><br>
+The file <code>msft.dat.csv</code> contains data representing the open, 
+high, low, close and volume information for Microsoft stocks. 
+<br>
+Data are downloadable and can be updated from Yahoo's web site.
+<br>
+</p>
+<p>
+<B>IP and CPI Index Data:</B>
+<br><br>
+The file <code>IP.dat.csv</code> contains data representing seasonally 
+adjusted US Industrial Production Index and the file 
+<code>CPI.dat.csv</code> contains data representing seasonally 
+adjusted US Consumer Price Index. 
+<br>
+Data are downloadable and can be updated from Economagics's web site. 
+<br>
+</p>
+<p>
+<B>Ford and HP Stock Returns:</B>
+<br><br>
+The files <code>ford.s.csv</code> and <code>hp.s.csv</code> contain data 
+representing 2000 daily stock returns for the Ford and HP shares 
+traded at NYSE. The time series span the period from Feburary 2, 
+1984, to December 31, 1991. 
+<br>
+Data are downloadable and can be updated from Yahoo's web site.
+<br>
+</p>
+<p>
+<B>3M high Frequency Data:</B>
+<br><br>
+The file <code>highFreq3M.df.csv</code> holds Tsay's data for 3M. Date 
+information is expressed as the day of the month and the number of 
+seconds from midnight Data is for December 1999. Columns are: day - 
+integer representing the trading day of the month, sec - trade.time 
+integer representing the trading time recorded as the number of 
+seconds from midnight, price transaction price in dollars. Downloadable
+from:
+<br>
+<EM>http://www.gsb.uchicago.edu/fac/ruey.tsay/teaching/fts</EM>
+<br>
+</p>
+<p>
+<B>Spot and Forward Exchange Rate Data:</B>
+<br><br>
+The file <code>lexrates.dat.csv</code> holds log spot exchange and 
+forward exchange rates between 
+<code>USCNS, USCNF</code> -  USD and CAD, Canadian Dollar,
+<code>USDMS, USDMF</code> -  USD and DEM, Deutsche Mark,
+<code>USFRS, USFRF</code> -  USD and FFR, French Franc,
+<code>USILS, USJYF</code> -  USD and JPY, Italian Lira, and 
+<code>USUKS, USUKF</code> -  USD and GBP, Japanese Yen.
+<br>
+<EM>Source: Thompson Financial, formerly Datastream</EM>, see also:
+<EM>Zivot, E. (2000) Cointegration and forward and spot exchange 
+rate regressions, Journal of International Money and Finance, 
+19, 387&ndash;401 and 785&ndash;812.</EM>
+<br>
+</p>
+<p>
+<B>Robert Shillers Monthlly and Annual Economic Data:</B>
+<br><br>
+The files <code>shiller.dat.csv</code> and <code>shiller.annual.csv</code> hold
+data used in the book "Irrational Exuberance" by Robert Shiller. The 
+data are 
+<code>price</code> - monthly nominal US SP stock market prices,
+<code>dividend</code> - nominal SP Composite Index dividends,
+<code>earnings</code> - nominal SP Composite Index earnings,
+<code>cpi</code> - US Consumer Price Indexes,
+<code>real.price</code> - real US stock market prices,
+<code>real.dividend</code> - real SP Composite Index dividends,
+<code>real.earnings</code> - real SP Composite Index earnings,
+<code>pe.10</code> - price-earnings ratios,
+<code>dp.ratio</code> - dividend-price ratios,
+<code>dp.yield</code> - dividend-price yield. The last two are only 
+listed in <code>shiller.annual</code>.
+The series start January 1871 and end on March 2001.
+Data are available from:
+<br>
+<EM>Shiller, R.J. (1989) Market Volatility, MIT Press.</EM><br>
+<EM>Shiller, R.J. (2001) Irrational Exuberance, Broadway Books.</EM>
+<br>
+</p>
+<p>
+<B>Yahoo Stock Information:</B>
+<br><br>  
+The file <code>yhoo.df.csv</code> contains data representing daily 
+transaction information of Yahoo stock, with the following 
+six columns: Date, Open, High, Low, Close, Volume.
+<br>
+Data are downloadable and can be updated from Yahoo's web site.
+<br>
+</p>
+<p>
+<B>Real Stock Returns and Output Growth Data:</B>
+<br><br>  
+The file <code>varex.ts.csv</code> contains real stock returns and output 
+growth data. The column MARKET.REAL lists continuously compounded 
+real returns on the SP500 index, the column RF.REAL lists real 
+interest rates of 30-day US Treasury Bills, the column INF lists
+continuously compounded growth rate of US CPI, and the column
+IPG lists continuously compounded growth rate of US industrial 
+production. The data are monthly starting December 1959 and 
+ending December 2000.
+<br>
+Data are downloadable and can be updated from Economagic's web site.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+## SOURCE("fBasics.2D-ZivotWangData")
+
+## Not run: 
+## DowJones30 - 
+   require(fCalendar)
+   data(DowJones30)
+   class(DowJones30)
+   DowJones30.ts = as.timeSeries(DowJones30)
+   class(DowJones30.ts)
+   head(DowJones30.ts)
+## End(Not run)
+</pre>
+
+
+
+<hr><div align="center">[Package <em>fBasics</em> version 221.10066 <a href="00Index.html">Index]</a></div>
+
+</body></html>

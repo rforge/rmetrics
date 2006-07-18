@@ -1,0 +1,370 @@
+<html><head><title>Stylized Facts</title>
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>StylizedFacts(fBasics)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   StylizedFacts">
+<param name="keyword" value="R:   acfPlot">
+<param name="keyword" value="R:   pacfPlot">
+<param name="keyword" value="R:   ccfPlot">
+<param name="keyword" value="R:   teffectPlot">
+<param name="keyword" value="R:   lmacfPlot">
+<param name="keyword" value="R:   lacfPlot">
+<param name="keyword" value="R:   logpdfPlot">
+<param name="keyword" value="R:   qqgaussPlot">
+<param name="keyword" value="R:   scalinglawPlot">
+<param name="keyword" value=" Stylized Facts">
+</object>
+
+
+<h2>Stylized Facts</h2>
+
+
+<h3>Description</h3>
+
+<p>
+A collection and description of functions to 
+investigate and to plot several stylized facts 
+of economic and financial time series. This 
+includes fat tails, autocorrelations, 
+crosscorrelations, long memory behavior, 
+and the Taylor effect.
+<br>
+</p>
+<p>
+The functions to display stylized facts are:
+</p>
+
+<table summary="Rd table">
+<tr>
+  <td align="left"><code>acfPlot</code> </td>  <td align="left"> autocorrelation function plot, </td>
+</tr>
+<tr>
+  <td align="left"> <code>pacfPlot</code> </td>  <td align="left"> partial autocorrelation function plot, </td>
+</tr>
+<tr>
+  <td align="left"> <code>ccfPlot</code> </td>  <td align="left"> cross correlation function plot, </td>
+</tr>
+<tr>
+  <td align="left"> <code>lacfPlot</code> </td>  <td align="left"> lagged autocorrelation function plot, </td>
+</tr>
+<tr>
+  <td align="left"> <code>lmacfPlot</code> </td>  <td align="left"> long memory autocorrelation function plot, </td>
+</tr>
+<tr>
+  <td align="left"> <code>logpdfPlot</code> </td>  <td align="left"> logarithmic density plots, </td>
+</tr>
+<tr>
+  <td align="left"> <code>qqgaussPlot</code> </td>  <td align="left"> Gaussian quantile quantile plot, </td>
+</tr>
+<tr>
+  <td align="left"> <code>scalinglawPlot</code> </td>  <td align="left"> scaling behavior plot, </td>
+</tr>
+<tr>
+  <td align="left"> <code>teffectPlot</code> </td>  <td align="left"> Taylor effect plot. </td>
+</tr>
+</table>
+
+
+<h3>Usage</h3>
+
+<pre>
+acfPlot(x, labels = TRUE, ...)
+pacfPlot(x, labels = TRUE, ...)
+ccfPlot(x, y, lag.max = max(2, floor(10*log10(length(x)))), type = 
+    c("correlation", "covariance", "partial"), labels = TRUE, ...) 
+lacfPlot(x, n = 12, lag.max = 20, labels = TRUE, ...)
+lmacfPlot(x, lag.max = max(2, floor(10*log10(length(x)))), ci = 0.95, 
+    type = c("both", "acf", "hurst"), labels = TRUE, details = TRUE, ...) 
+logpdfPlot(x, n = 50, type = c("lin-log", "log-log"), doplot = TRUE, 
+    labels = TRUE, ...)
+qqgaussPlot(x, span = 5, col = "steelblue4", labels = TRUE, ...)
+scalinglawPlot(x, span = ceiling(log(length(x)/252)/log(2)), doplot = TRUE, 
+    labels = TRUE, details = TRUE, ...)
+teffectPlot(x, deltas = seq(from = 0.2, to = 3, by = 0.2), lag.max = 10, 
+    ymax = NA, standardize = TRUE, labels = TRUE, ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>ci</code></td>
+<td>
+[lmacfPlot] - <br>
+the confidence interval, by default 95 percent, i.e. 0.95.
+</td></tr>
+<tr valign="top"><td><code>col</code></td>
+<td>
+a character string denoting the plot color, by default
+<code>"steelblue"</code>.
+</td></tr>
+<tr valign="top"><td><code>deltas</code></td>
+<td>
+[teffectPlot] - <br>
+the exponents, a numeric vector, by default ranging 
+from 0.2 to 3.0 in steps of 0.2.
+</td></tr>
+<tr valign="top"><td><code>doplot</code></td>
+<td>
+a logical value. Should a plot be displayed?
+</td></tr>
+<tr valign="top"><td><code>details</code></td>
+<td>
+a logical value. Should the results be printed?
+</td></tr>
+<tr valign="top"><td><code>labels</code></td>
+<td>
+a logical value. Whether or not x- and y-axes should be automatically 
+labeled and a default main title should be added to the plot.
+By default <code>TRUE</code>.
+</td></tr>
+<tr valign="top"><td><code>lag.max</code></td>
+<td>
+maximum lag for which the autocorrelation should be 
+calculated, an integer.
+</td></tr>
+<tr valign="top"><td><code>n</code></td>
+<td>
+[lacfPlot] - <br>
+an integer value, the number of lags.<br>
+[logpdfPlot] - <br>
+an integer value, the number of break and count points.
+</td></tr>
+<tr valign="top"><td><code>span</code></td>
+<td>
+[scalinglawPlot] - <br>
+an integer value, determines for the <code>qqgaussPlot</code> the 
+plot range, by default 5, and for the <code>scalingPlot</code> a
+reasonable number of of points for the scaling range, by
+default daily data with 252 business days per year are
+assumed.
+</td></tr>
+<tr valign="top"><td><code>standardize</code></td>
+<td>
+[teffectPlot] - <br>
+a logical value. Should the vector <code>x</code> be standardized?
+</td></tr>
+<tr valign="top"><td><code>type</code></td>
+<td>
+[ccfPlot] - <br>
+a character string, either <code>"correlation"</code>, <code>"covariance"</code>, 
+or <code>"partial"</code> denoting which type of correlation should be 
+plotted,<br>
+[lmacf] - <br>
+a character string, either <code>"both"</code>, <code>"acf"</code>, or 
+<code>"hurst"</code> denoting which type of plot should be generated: 
+an autocorrelation plot, a hurst plot, or both,<br>
+[logpdf] - <br>
+a character string, either <code>"lin-log"</code>, or <code>"log-log"</code> 
+denoting on which scale the plot will produced: on a linear vs. 
+log scale, or on a double logarithmic scale.
+</td></tr>
+<tr valign="top"><td><code>x, y</code></td>
+<td>
+numeric vectors, univariate time series objects, or any
+other object which can be transformed by the function
+<code>as.vector</code> into a numeric vector.
+</td></tr>
+<tr valign="top"><td><code>ymax</code></td>
+<td>
+[teffectPlot] - <br>
+maximum y-axis value on plot, <code>is.na(ymax)</code> TRUE, then
+the value is selected automatically.
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+arguments to be passed.
+</td></tr>
+</table>
+
+<h3>Details</h3>
+
+<p>
+<B>Tail Behavior:</B>
+<br><br>
+<code>logpdfPlot</code> and <code>qqgaussPlot</code> are two simple functions
+which allow a quick view on the tails of a distribution.
+The first creates a logarithmic or 
+double-logarithmic density plot and returns breaks and counts.
+For the double logarithmic plot, the negative side of the distribution 
+is reflected onto the positive axis.<br>
+The second creates a Gaussian Quantile-Quantile plot.
+<br>
+</p>
+<p>
+<B>Scaling Behavior:</B>
+<br><br>
+The function <code>scalingPlot</code> plots the scaling law of financial 
+time series under aggregation and returns an estimate for the scaling 
+exponent. The scaling behavior is a very striking effect of the 
+foreign exchange market and also other markets expressing a regular
+structure for the volatility. Considering the average absolute
+return over individual data periods one finds a scaling power law
+which relates the mean volatility over given time intervals
+to the size of these intervals. The power law is in many cases 
+valid over several orders of magnitude in time. Its exponent  
+usually deviates significantly from a Gaussian random walk model 
+which implies 1/2. 
+<br>
+</p>
+<p>
+<B>Autocorrelation Functions:</B>
+<br><br>
+The functions <code>acfPlot</code>, <code>pacfPlot</code>, and <code>ccfPlot</code>
+plots and estimate autocorrelation, ACF, partial autocorrelation, 
+PACF, and cross-covariance and cross-correlation functions, CCF. 
+The functions allow to get a first view on correlations in and 
+between time series. The functions are synonyme function 
+calls for R's <code>acf</code>, <code>pacf</code>, and <code>ccf</code> from the 
+the <code>ts</code> package.
+<br>
+</p>
+<p>
+<B>Long Memory Autocorrelation Function:</B>
+<br><br>
+The function <code>lmacfPlot</code> plots and estimates the 
+long memory autocorrelation function and computes from the 
+plot the  Hurst exponent of a time series. The volatility of  
+financial time series exhibits (in contrast to
+the logarithmic returns) in almost every financial market a slow
+ecaying autocorrelation function, ACF. We talk of a long memory 
+if the decay in the ACF is slower than exponential, i.e. the 
+correlation function decreases algebraically with increasing 
+(integer) lag. 
+Thus it makes sense to investigate the decay on a double-logarithmic 
+scale and to estimate the decay exponent. The function
+<code>lmacf</code> calculates and plots the autocorrelation function of 
+the vector <code>x</code>. If the time series exhibits long memory 
+behaviour, it can easily be seen as a stright line in the plot. 
+This double-logarithmic plot is displayed and a linear regression 
+fit is done from which the intercept and slope ar calculated. 
+From the slope the Hurst exponent is derived.
+<br>
+</p>
+<p>
+<B>Taylor Effect:</B>
+<br><br>
+The "Taylor Effect" describes the fact that absolute returns of
+speculative assets have significant serial correlation over long
+lags. Even more, autocorrelations of absolute returns are
+typically greater than those of squared returns. From these 
+observations the Taylor effect states, that that the autocorrelations
+of absolute returns to the the power of <code>delta</code>, 
+<code>abs(x-mean(x))^delta</code> reach their maximum at <code>delta=1</code>.
+The function <code>teffect</code> explores this behaviour. A plot is
+created which shows for each lag (from 1 to <code>max.lag</code>) the 
+autocorrelations as a function of the exponent <code>delta</code>. 
+In the case that the above formulated hypothesis is supported,
+all the curves should peak at the same value around <code>delta=1</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>
+<code>logpdfPlot</code>
+<br>
+returns a list with the following components: <code>breaks</code>, 
+histogram mid-point breaks; <code>counts</code>, histogram counts;
+<code>fbreaks</code>, fitted Gaussian breaks; <code>fcounts</code>, fitted 
+Gaussian counts.
+<br>
+<br>
+<code>qqgaussPlot</code>
+<br>
+returns a Gaussian Quantile-Quantile Plot.
+<br>
+<br>
+<code>scalingPlot</code>
+<br>
+returns a list with the following components: <code>exponent</code>,
+the scaling exponent, a numeric value; <code>fit</code>, a list with 
+the coefficients returned by <code>lsfit</code>, i.e. <code>intercept</code> 
+and <code>X</code>.
+<br>
+<br>
+<code>acfPlot</code>, <code>pacfplot</code>, <code>ccfPlot</code>
+<br>
+return an object of class <code>"acf"</code>, see <code><a onclick="findlink('stats', 'acf.html')" style="text-decoration: underline; color: blue; cursor: hand">acf</a></code>.
+<br>
+<br>
+<code>lmacfPlot</code>
+<br>
+returns a list with the following elements: <code>fit</code>, a list 
+by itself with elements <code>Intercept</code> and slope <code>X</code>,
+<code>hurst</code>, the Hurst exponent, both are numeric values.
+<br>
+<br>
+<code>lacfPlot</code>
+returns a list with the following two elements: <code>Rho</code>, the
+autocorrelation function, <code>lagged</code>, the lagged correlations.
+<br>
+<br>
+<code>teffectPlot</code>
+<br>
+returns a numeric matrix of order <code>deltas</code> by <code>max.lag</code> 
+with the values of the autocorrelations.</p>
+
+<h3>Author(s)</h3>
+
+<p>
+Diethelm Wuertz for the Rmetrics <font face="Courier New,Courier" color="#666666"><b>R</b></font>-port.
+</p>
+
+
+<h3>References</h3>
+
+<p>
+Taylor S.J. (1986); 
+<EM>Modeling Financial Time Series</EM>,
+John Wiley and Sons, Chichester.
+</p>
+<p>
+Ding Z., Granger C.W.J., Engle R.F. (1993); 
+<EM>A long memory property of stock market returns and a new model</EM>,
+Journal of Empirical Finance 1, 83.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+## SOURCE("fBasics.4A-StylizedFacts")
+
+## data - 
+   data(DowJones30)
+   IBM = DowJones30[, "IBM"]
+   JPM = DowJones30[, "JPM"]
+   IBM.RET = diff(log(DowJones30[, "IBM"]))
+   JPM.RET = diff(log(DowJones30[, "JPM"]))
+   
+## lacfPlot -
+   # Lagged Correlations:
+   par(mfrow = c(2, 2), cex = 0.7)
+   lacfPlot(IBM)
+     
+## ccfPlot -
+   # Crosscorrelations:
+   ccfPlot(x = IBM.RET, y = JPM.RET)
+
+## teffectPlot -
+   # Taylor Effect:
+   teffectPlot(x = IBM.RET)
+</pre>
+
+<script Language="JScript">
+function findlink(pkg, fn) {
+var Y, link;
+Y = location.href.lastIndexOf("\\") + 1;
+link = location.href.substring(0, Y);
+link = link + "../../" + pkg + "/chtml/" + pkg + ".chm::/" + fn;
+location.href = link;
+}
+</script>
+
+
+<hr><div align="center">[Package <em>fBasics</em> version 221.10066 <a href="00Index.html">Index]</a></div>
+
+</body></html>

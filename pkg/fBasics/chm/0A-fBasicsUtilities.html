@@ -1,0 +1,168 @@
+<html><head><title>Masked Objects and Additional Generic Functions</title>
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>fBasicsUtilities(fBasics)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   fBasicsUtilities">
+<param name="keyword" value="R:   log">
+<param name="keyword" value="R:   log.default">
+<param name="keyword" value="R:   outlier">
+<param name="keyword" value="R:   outlier.default">
+<param name="keyword" value="R:   round">
+<param name="keyword" value="R:   round.default">
+<param name="keyword" value="R:   sample">
+<param name="keyword" value="R:   sample.default">
+<param name="keyword" value="R:   sort">
+<param name="keyword" value="R:   sort.default">
+<param name="keyword" value="R:   var">
+<param name="keyword" value="R:   var.default">
+<param name="keyword" value="R:   rownames<-">
+<param name="keyword" value="R:   rownames<-.default">
+<param name="keyword" value="R:   colnames<-">
+<param name="keyword" value="R:   colnames<-.default">
+<param name="keyword" value="R:   as.POSIXlt">
+<param name="keyword" value="R:   as.POSIXlt.default">
+<param name="keyword" value="R:   as.matrix.ts">
+<param name="keyword" value="R:   as.matrix.mts">
+<param name="keyword" value=" Masked Objects and Additional Generic Functions">
+</object>
+
+
+<h2>Masked Objects and Additional Generic Functions</h2>
+
+
+<h3>Description</h3>
+
+<p>
+A collection and description of functions which
+mask function from R's base installation to generate
+generic functions and some additional generic
+functions which may be useful.
+<br>
+</p>
+
+
+<h3>Usage</h3>
+
+<pre>
+log.default(x, base = exp(1))
+
+outlier.default(x, sd = 5, complement = TRUE, ...)
+
+round.default(x, digits, ...)
+
+sample.default(x, size, replace = FALSE, prob = NULL, ...)
+
+sort.default(x, partial = NULL, na.last = NA, decreasing = FALSE, 
+    method = c("shell", "quick"), index.return = FALSE, ...) 
+
+var.default(x, y = NULL, na.rm = FALSE, use)
+    
+rownames(x) &lt;- value
+colnames(x) &lt;- value
+
+as.POSIXlt(x, tz = "")
+
+as.matrix.ts(x)
+as.matrix.mts(x)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>base</code></td>
+<td>
+[log] - <br>
+additional argument to the <code>log</code> function.
+</td></tr>
+<tr valign="top"><td><code>digits</code></td>
+<td>
+[round] - <br>
+an integer indicating the precision to be used.
+</td></tr>
+<tr valign="top"><td><code>partial, na.last, decreasing, method, index.return</code></td>
+<td>
+[sort] - <br>
+additional arguments to the <code>sort</code> function.
+</td></tr>
+<tr valign="top"><td><code>sd, complement</code></td>
+<td>
+[outlier] - <br>
+sd - a numeric value of standard deviations, e.g. 5 means that 
+values larger or smaller tahn five times the standard 
+deviation of the series will detected.
+complement - a logical flag, should the outlier series
+or its complements be returned ?
+</td></tr>
+<tr valign="top"><td><code>size, replace, prob</code></td>
+<td>
+[sample] - <br>
+size - is a non-negative integer giving the number of items 
+to choose, <br>
+replace - a logical flag. Should sampling be with 
+replacement? <br>
+prob -  a vector of probability weights for obtaining the 
+elements of the vector being sampled.
+</td></tr>
+<tr valign="top"><td><code>tz</code></td>
+<td>
+[as.POSIXlt] - <br>
+time zone specification.
+</td></tr>
+<tr valign="top"><td><code>value</code></td>
+<td>
+[colnames][rownames] - <br>
+additional arguments to the <code>colnames</code> and <code>rownames</code>
+functions.
+</td></tr>
+<tr valign="top"><td><code>x</code></td>
+<td>
+[log][sort][var] - <br>
+first argument.
+<br>
+[as.matrix.ts][as.matrix.mts] - <br>
+an univariate or multivariate time series object
+of class <code>"ts"</code> or <code>"mts"</code> which will be
+transformed into an one-column or multi-column rectangular 
+object of class <code>"matrix"</code>.<br>
+[as.POSIXlt] - <br>
+an object to be converted.
+</td></tr>
+<tr valign="top"><td><code>y, na.rm, use</code></td>
+<td>
+[var] - <br>
+additional arguments to the <code>var</code> function.
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+arguments to be passed.
+</td></tr>
+</table>
+
+<h3>Details</h3>
+
+<p>
+For details we refer to the original help pages.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>
+Diethelm Wuertz for the Rmetrics <font face="Courier New,Courier" color="#666666"><b>R</b></font>-port.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+## SOURCE("fBasics.0A-BasicsUtilities")
+</pre>
+
+
+
+<hr><div align="center">[Package <em>fBasics</em> version 221.10066 <a href="00Index.html">Index]</a></div>
+
+</body></html>

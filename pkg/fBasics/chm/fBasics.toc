@@ -1,0 +1,943 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<HEAD></HEAD><HTML><BODY>
+<UL>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Package fBasics:  Contents">
+<param name="Local" value="00Index.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Package fBasics:  R objects">
+</OBJECT>
+<UL>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value=".PhiStable">
+<param name="Local" value="2C-fBasicsData.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="acfPlot">
+<param name="Local" value="4A-StylizedFacts.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="adTest">
+<param name="Local" value="5D-OneSampleTests.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="ansariTest">
+<param name="Local" value="5E-TwoSampleTests.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="as.matrix.mts">
+<param name="Local" value="0A-fBasicsUtilities.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="as.matrix.ts">
+<param name="Local" value="0A-fBasicsUtilities.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="as.POSIXlt">
+<param name="Local" value="0A-fBasicsUtilities.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="as.POSIXlt.default">
+<param name="Local" value="0A-fBasicsUtilities.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="audusd">
+<param name="Local" value="2C-fBasicsData.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="bartlett2Test">
+<param name="Local" value="5E-TwoSampleTests.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="BasicStatistics">
+<param name="Local" value="5A-BasicStatistics.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="basicStats">
+<param name="Local" value="5A-BasicStatistics.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="bmwres">
+<param name="Local" value="2C-fBasicsData.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="ccfPlot">
+<param name="Local" value="4A-StylizedFacts.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="characterTable">
+<param name="Local" value="2B-PlotFunctions.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="ciaByCountry">
+<param name="Local" value="1A-MarketStatistics.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="ciaByIndicator">
+<param name="Local" value="1A-MarketStatistics.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="ciaCountries">
+<param name="Local" value="1A-MarketStatistics.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="ciaFactbook">
+<param name="Local" value="2C-fBasicsData.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="ciaIndicators">
+<param name="Local" value="1A-MarketStatistics.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="circlesPlot">
+<param name="Local" value="2B-PlotFunctions.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="colAvgs">
+<param name="Local" value="5A-BasicStatistics.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="colCumsums">
+<param name="Local" value="5A-BasicStatistics.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="colKurtosis">
+<param name="Local" value="5A-BasicStatistics.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="colnames<-">
+<param name="Local" value="0A-fBasicsUtilities.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="colnames<-.default">
+<param name="Local" value="0A-fBasicsUtilities.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="colorTable">
+<param name="Local" value="2B-PlotFunctions.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="colSkewness">
+<param name="Local" value="5A-BasicStatistics.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="colStats">
+<param name="Local" value="5A-BasicStatistics.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="colStdevs">
+<param name="Local" value="5A-BasicStatistics.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="colVars">
+<param name="Local" value="5A-BasicStatistics.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="contourPlot">
+<param name="Local" value="2B-PlotFunctions.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="CPI.dat">
+<param name="Local" value="2D-ZivotWangData.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="cvmTest">
+<param name="Local" value="5D-OneSampleTests.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="dagoTest">
+<param name="Local" value="5D-OneSampleTests.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="dansariw">
+<param name="Local" value="5E-TwoSampleTests.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="densityPlot">
+<param name="Local" value="2B-PlotFunctions.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="dgh">
+<param name="Local" value="3B-HyperbolicDistribution.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="dhyp">
+<param name="Local" value="3B-HyperbolicDistribution.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="DistributionFits">
+<param name="Local" value="3D-DistributionFits.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="dnig">
+<param name="Local" value="3B-HyperbolicDistribution.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="DowJones30">
+<param name="Local" value="2D-ZivotWangData.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="dssd">
+<param name="Local" value="3C-SmoothedSplineDistribution.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="dstable">
+<param name="Local" value="3A-StableDistribution.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="dsymstb">
+<param name="Local" value="3A-StableDistribution.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="economagicImport">
+<param name="Local" value="2A-TimeSeriesImport.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="fBasicsData">
+<param name="Local" value="2C-fBasicsData.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="fBasicsTools">
+<param name="Local" value="6A-BasicsTools.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="fBasicsUtilities">
+<param name="Local" value="0A-fBasicsUtilities.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="fdax9710">
+<param name="Local" value="2C-fBasicsData.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="fdax97m">
+<param name="Local" value="2C-fBasicsData.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="fDISTFIT">
+<param name="Local" value="3D-DistributionFits.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="fDISTFIT-class">
+<param name="Local" value="3D-DistributionFits.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="fHTEST">
+<param name="Local" value="5C-HypothesisTesting.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="fHTEST-class">
+<param name="Local" value="5C-HypothesisTesting.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="fligner2Test">
+<param name="Local" value="5E-TwoSampleTests.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="ford.s">
+<param name="Local" value="2D-ZivotWangData.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="forecastsImport">
+<param name="Local" value="2A-TimeSeriesImport.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="fredImport">
+<param name="Local" value="2A-TimeSeriesImport.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="fWEBDATA">
+<param name="Local" value="2A-TimeSeriesImport.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="fWEBDATA-class">
+<param name="Local" value="2A-TimeSeriesImport.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="get.lcgseed">
+<param name="Local" value="5B-PortableInnovations.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="ghFit">
+<param name="Local" value="3D-DistributionFits.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="gofnorm">
+<param name="Local" value="5D-OneSampleTests.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="greyPal">
+<param name="Local" value="2B-PlotFunctions.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="highFreq3M.df">
+<param name="Local" value="2D-ZivotWangData.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="histPlot">
+<param name="Local" value="2B-PlotFunctions.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="hp.s">
+<param name="Local" value="2D-ZivotWangData.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="HyperbolicDistribution">
+<param name="Local" value="3B-HyperbolicDistribution.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="hypFit">
+<param name="Local" value="3D-DistributionFits.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="hypMode">
+<param name="Local" value="3B-HyperbolicDistribution.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="HypothesisTesting">
+<param name="Local" value="5C-HypothesisTesting.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="hypSlider">
+<param name="Local" value="3B-HyperbolicDistribution.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="IP.dat">
+<param name="Local" value="2D-ZivotWangData.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="jarqueberaTest">
+<param name="Local" value="5D-OneSampleTests.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="jbALM">
+<param name="Local" value="2C-fBasicsData.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="jbLM">
+<param name="Local" value="2C-fBasicsData.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="jbTable">
+<param name="Local" value="5D-OneSampleTests.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="jbTest">
+<param name="Local" value="5D-OneSampleTests.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="kendallTest">
+<param name="Local" value="5E-TwoSampleTests.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="ks2Test">
+<param name="Local" value="5E-TwoSampleTests.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="ksnormTest">
+<param name="Local" value="5D-OneSampleTests.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="kurtosis">
+<param name="Local" value="5A-BasicStatistics.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="kurtosis.data.frame">
+<param name="Local" value="5A-BasicStatistics.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="kurtosis.default">
+<param name="Local" value="5A-BasicStatistics.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="kurtosis.POSIXct">
+<param name="Local" value="5A-BasicStatistics.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="kurtosis.POSIXlt">
+<param name="Local" value="5A-BasicStatistics.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="kw2Test">
+<param name="Local" value="5E-TwoSampleTests.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="lacfPlot">
+<param name="Local" value="4A-StylizedFacts.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="lexrates.dat">
+<param name="Local" value="2D-ZivotWangData.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="lillieTest">
+<param name="Local" value="5D-OneSampleTests.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="lmacfPlot">
+<param name="Local" value="4A-StylizedFacts.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="log">
+<param name="Local" value="0A-fBasicsUtilities.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="log.default">
+<param name="Local" value="0A-fBasicsUtilities.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="logpdfPlot">
+<param name="Local" value="4A-StylizedFacts.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="MarketStatistics">
+<param name="Local" value="1A-MarketStatistics.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="moodTest">
+<param name="Local" value="5E-TwoSampleTests.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="msft.dat">
+<param name="Local" value="2D-ZivotWangData.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="nigFit">
+<param name="Local" value="3D-DistributionFits.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="nigSlider">
+<param name="Local" value="3B-HyperbolicDistribution.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="normalTest">
+<param name="Local" value="5D-OneSampleTests.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="nyse">
+<param name="Local" value="2C-fBasicsData.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="nyseres">
+<param name="Local" value="2C-fBasicsData.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="OneSampleTests">
+<param name="Local" value="5D-OneSampleTests.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="outlier">
+<param name="Local" value="0A-fBasicsUtilities.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="outlier.default">
+<param name="Local" value="0A-fBasicsUtilities.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="pacfPlot">
+<param name="Local" value="4A-StylizedFacts.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="pansariw">
+<param name="Local" value="5E-TwoSampleTests.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="pchiTest">
+<param name="Local" value="5D-OneSampleTests.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="pearsonTest">
+<param name="Local" value="5E-TwoSampleTests.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="perspPlot">
+<param name="Local" value="2B-PlotFunctions.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="pgh">
+<param name="Local" value="3B-HyperbolicDistribution.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="phyp">
+<param name="Local" value="3B-HyperbolicDistribution.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="pjb">
+<param name="Local" value="5D-OneSampleTests.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="plotcharacterTable">
+<param name="Local" value="2B-PlotFunctions.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="PlotFunctions">
+<param name="Local" value="2B-PlotFunctions.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="pnig">
+<param name="Local" value="3B-HyperbolicDistribution.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="PortableRandomInnovations">
+<param name="Local" value="5B-PortableInnovations.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="pPlot">
+<param name="Local" value="5C-HypothesisTesting.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="print.ciaCountries">
+<param name="Local" value="1A-MarketStatistics.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="print.ciaIndicators">
+<param name="Local" value="1A-MarketStatistics.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="print.fDISTFIT">
+<param name="Local" value="3D-DistributionFits.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="print.ssd">
+<param name="Local" value="3D-DistributionFits.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="pssd">
+<param name="Local" value="3C-SmoothedSplineDistribution.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="pstable">
+<param name="Local" value="3A-StableDistribution.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="psymstb">
+<param name="Local" value="3A-StableDistribution.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="pTable">
+<param name="Local" value="5C-HypothesisTesting.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="qansariw">
+<param name="Local" value="5E-TwoSampleTests.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="qgh">
+<param name="Local" value="3B-HyperbolicDistribution.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="qhyp">
+<param name="Local" value="3B-HyperbolicDistribution.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="qjb">
+<param name="Local" value="5D-OneSampleTests.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="qnig">
+<param name="Local" value="3B-HyperbolicDistribution.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="qqgaussPlot">
+<param name="Local" value="4A-StylizedFacts.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="qssd">
+<param name="Local" value="3C-SmoothedSplineDistribution.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="qstable">
+<param name="Local" value="3A-StableDistribution.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="qsymstb">
+<param name="Local" value="3A-StableDistribution.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="qTable">
+<param name="Local" value="5C-HypothesisTesting.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="rgh">
+<param name="Local" value="3B-HyperbolicDistribution.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="rhyp">
+<param name="Local" value="3B-HyperbolicDistribution.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="rnig">
+<param name="Local" value="3B-HyperbolicDistribution.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="rnorm.lcg">
+<param name="Local" value="5B-PortableInnovations.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="round">
+<param name="Local" value="0A-fBasicsUtilities.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="round.default">
+<param name="Local" value="0A-fBasicsUtilities.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="rowAvgs">
+<param name="Local" value="5A-BasicStatistics.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="rowCumsums">
+<param name="Local" value="5A-BasicStatistics.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="rowKurtosis">
+<param name="Local" value="5A-BasicStatistics.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="rownames<-">
+<param name="Local" value="0A-fBasicsUtilities.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="rownames<-.default">
+<param name="Local" value="0A-fBasicsUtilities.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="rowSkewness">
+<param name="Local" value="5A-BasicStatistics.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="rowStats">
+<param name="Local" value="5A-BasicStatistics.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="rowStdevs">
+<param name="Local" value="5A-BasicStatistics.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="rowVars">
+<param name="Local" value="5A-BasicStatistics.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="rssd">
+<param name="Local" value="3C-SmoothedSplineDistribution.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="rstable">
+<param name="Local" value="3A-StableDistribution.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="rsymstb">
+<param name="Local" value="3A-StableDistribution.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="rt.lcg">
+<param name="Local" value="5B-PortableInnovations.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="runif.lcg">
+<param name="Local" value="5B-PortableInnovations.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="runsTest">
+<param name="Local" value="5D-OneSampleTests.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="sample">
+<param name="Local" value="0A-fBasicsUtilities.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="sample.default">
+<param name="Local" value="0A-fBasicsUtilities.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="scalinglawPlot">
+<param name="Local" value="4A-StylizedFacts.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="set.lcgseed">
+<param name="Local" value="5B-PortableInnovations.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="sfTest">
+<param name="Local" value="5D-OneSampleTests.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="shapiroTest">
+<param name="Local" value="5D-OneSampleTests.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="shiller.annual">
+<param name="Local" value="2D-ZivotWangData.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="shiller.dat">
+<param name="Local" value="2D-ZivotWangData.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="show,fHTEST-method">
+<param name="Local" value="5C-HypothesisTesting.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="show,fWEBDATA-method">
+<param name="Local" value="2A-TimeSeriesImport.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="show.fHTEST">
+<param name="Local" value="5C-HypothesisTesting.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="show.fWEBDATA">
+<param name="Local" value="2A-TimeSeriesImport.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="singleIndex.dat">
+<param name="Local" value="2D-ZivotWangData.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="skewness">
+<param name="Local" value="5A-BasicStatistics.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="skewness.data.frame">
+<param name="Local" value="5A-BasicStatistics.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="skewness.default">
+<param name="Local" value="5A-BasicStatistics.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="skewness.POSIXct">
+<param name="Local" value="5A-BasicStatistics.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="skewness.POSIXlt">
+<param name="Local" value="5A-BasicStatistics.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="SmoothedSplineDistribution">
+<param name="Local" value="3C-SmoothedSplineDistribution.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="sort">
+<param name="Local" value="0A-fBasicsUtilities.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="sort.default">
+<param name="Local" value="0A-fBasicsUtilities.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="spearmanTest">
+<param name="Local" value="5E-TwoSampleTests.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="splusLikePlot">
+<param name="Local" value="2B-PlotFunctions.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="ssdFit">
+<param name="Local" value="3D-DistributionFits.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="StableDistribution">
+<param name="Local" value="3A-StableDistribution.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="stableFit">
+<param name="Local" value="3D-DistributionFits.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="stableMode">
+<param name="Local" value="3A-StableDistribution.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="stableSlider">
+<param name="Local" value="3A-StableDistribution.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="stdev">
+<param name="Local" value="5A-BasicStatistics.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="StylizedFacts">
+<param name="Local" value="4A-StylizedFacts.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="symstbSlider">
+<param name="Local" value="3A-StableDistribution.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="teffectPlot">
+<param name="Local" value="4A-StylizedFacts.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="tFit">
+<param name="Local" value="3D-DistributionFits.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="TimeSeriesImport">
+<param name="Local" value="2A-TimeSeriesImport.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="tsPlot">
+<param name="Local" value="2B-PlotFunctions.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="tTest">
+<param name="Local" value="5E-TwoSampleTests.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="TwoSampleTests">
+<param name="Local" value="5E-TwoSampleTests.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="usdchf">
+<param name="Local" value="2C-fBasicsData.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="usddem30u">
+<param name="Local" value="2C-fBasicsData.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="usdthb">
+<param name="Local" value="2C-fBasicsData.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="var">
+<param name="Local" value="0A-fBasicsUtilities.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="var.default">
+<param name="Local" value="0A-fBasicsUtilities.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="varex.ts">
+<param name="Local" value="2D-ZivotWangData.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="varfTest">
+<param name="Local" value="5E-TwoSampleTests.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="wfe1">
+<param name="Local" value="2C-fBasicsData.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="wfe2">
+<param name="Local" value="2C-fBasicsData.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="wfe3">
+<param name="Local" value="2C-fBasicsData.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="wfe4">
+<param name="Local" value="2C-fBasicsData.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="wfe5">
+<param name="Local" value="2C-fBasicsData.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="wfe6">
+<param name="Local" value="2C-fBasicsData.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="xmpBasics">
+<param name="Local" value="6A-BasicsTools.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="xmpfBasics">
+<param name="Local" value="6A-BasicsTools.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="yahooImport">
+<param name="Local" value="2A-TimeSeriesImport.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="yahooSeries">
+<param name="Local" value="2A-TimeSeriesImport.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="yhoo.df">
+<param name="Local" value="2D-ZivotWangData.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="ZivotWangData">
+<param name="Local" value="2D-ZivotWangData.html">
+</OBJECT>
+</UL>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Package fBasics:  Titles">
+</OBJECT>
+<UL>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Basic Plot Functions and Utilities">
+<param name="Local" value="2B-PlotFunctions.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Basic Statistics Summary">
+<param name="Local" value="5A-BasicStatistics.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="CIA Factbook">
+<param name="Local" value="1A-MarketStatistics.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="fBasics Data Sets">
+<param name="Local" value="2C-fBasicsData.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="fBasics Data Sets from MoFiTS">
+<param name="Local" value="2D-ZivotWangData.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="fBasics Tools">
+<param name="Local" value="6A-BasicsTools.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Generalized Hyperbolic Distribution">
+<param name="Local" value="3B-HyperbolicDistribution.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Generator for Portable Random Innovations">
+<param name="Local" value="5B-PortableInnovations.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Import Market Data from the Internet">
+<param name="Local" value="2A-TimeSeriesImport.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Masked Objects and Additional Generic Functions">
+<param name="Local" value="0A-fBasicsUtilities.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="One Sample Tests">
+<param name="Local" value="5D-OneSampleTests.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Parameter Fit of a Distribution">
+<param name="Local" value="3D-DistributionFits.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Smoothed Spline Distribution">
+<param name="Local" value="3C-SmoothedSplineDistribution.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Stable Distribution Function">
+<param name="Local" value="3A-StableDistribution.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Stylized Facts">
+<param name="Local" value="4A-StylizedFacts.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Tests Class Representation and Utilities">
+<param name="Local" value="5C-HypothesisTesting.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Two Sample Tests">
+<param name="Local" value="5E-TwoSampleTests.html">
+</OBJECT>
+</UL>
+</UL>
+</BODY></HTML>

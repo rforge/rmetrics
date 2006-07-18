@@ -1,0 +1,254 @@
+<html><head><title>Stable Distribution Function</title>
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>StableDistribution(fBasics)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   StableDistribution">
+<param name="keyword" value="R:   dsymstb">
+<param name="keyword" value="R:   psymstb">
+<param name="keyword" value="R:   qsymstb">
+<param name="keyword" value="R:   rsymstb">
+<param name="keyword" value="R:   stableMode">
+<param name="keyword" value="R:   dstable">
+<param name="keyword" value="R:   pstable">
+<param name="keyword" value="R:   qstable">
+<param name="keyword" value="R:   rstable">
+<param name="keyword" value="R:   symstbSlider">
+<param name="keyword" value="R:   stableSlider">
+<param name="keyword" value=" Stable Distribution Function">
+</object>
+
+
+<h2>Stable Distribution Function</h2>
+
+
+<h3>Description</h3>
+
+<p>
+A collection and description of functions to compute 
+density, distribution function, quantile function and 
+to generate random variates, the stable distribution,
+and the stable mode. Two different cases are considered,
+the first for the symmetric and the second for the 
+skewed distribution.
+<br>
+</p>
+<p>
+The functions are:
+</p>
+
+<table summary="Rd table">
+<tr>
+  <td align="left"><code>[dpqr]symstb</code> </td>  <td align="left"> The symmetric stable distribution, </td>
+</tr>
+<tr>
+  <td align="left"> <code>[dpqr]stable</code> </td>  <td align="left"> the skewed stable distribution, </td>
+</tr>
+<tr>
+  <td align="left"> <code>symstbSlider</code> </td>  <td align="left"> interactive symmetric distribution display, </td>
+</tr>
+<tr>
+  <td align="left"> <code>stableSlider</code> </td>  <td align="left"> interactive stable distribution display. </td>
+</tr>
+</table>
+
+
+<h3>Usage</h3>
+
+<pre>
+dsymstb(x, alpha)
+psymstb(q, alpha)
+qsymstb(p, alpha)
+rsymstb(n, alpha)
+
+stableMode(alpha, beta)
+
+dstable(x, alpha, beta, gamma = 1, delta = 0, pm = c(0, 1, 2))
+pstable(q, alpha, beta, gamma = 1, delta = 0, pm = c(0, 1, 2))
+qstable(p, alpha, beta, gamma = 1, delta = 0, pm = c(0, 1, 2))
+rstable(n, alpha, beta, gamma = 1, delta = 0, pm = c(0, 1, 2))
+
+symstbSlider()
+stableSlider()
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>alpha, beta, gamma, delta</code></td>
+<td>
+value of the index parameter <code>alpha</code> with <code>alpha = (0,2]</code>;
+skewness parameter <code>beta</code>, in the range [-1, 1];
+scale parameter <code>gamma</code>; and
+shift parameter <code>delta</code>.
+</td></tr>
+<tr valign="top"><td><code>n</code></td>
+<td>
+number of observations, an integer value.
+</td></tr>
+<tr valign="top"><td><code>p</code></td>
+<td>
+a numeric vector of probabilities.
+</td></tr>
+<tr valign="top"><td><code>pm</code></td>
+<td>
+parameterization, an integer value by default <code>pm=0</code>, 
+the 'S0' parameterization.
+</td></tr>
+<tr valign="top"><td><code>x, q</code></td>
+<td>
+a numeric vector of quantiles.
+</td></tr>
+</table>
+
+<h3>Details</h3>
+
+<p>
+<B>Symmetric Stable Distribution:</B>
+<br><br>
+For the density and probability the approach of McCulloch is 
+implemented. Note, that McCulloch's approach has a density 
+precision of 0.000066 and a distribution precision of 0.000022 
+for <code>alpha</code> in the  range [0.84, 2.00]. 
+Quantiles are evaluated from a root finding process via the
+probability function. Thus, this leads to nonnegligible 
+errors for small quantiles, since the quantile evaluation 
+depends on the quality of the probability function.To achieve 
+higher precisions use the function <code>stable</code> with argument 
+<code>beta=0</code>. <br>
+For generation of random deviates the results of Chambers, 
+Mallows, and Stuck are used.
+<br>
+</p>
+<p>
+<B>Skew Stable Distribution:</B>
+<br><br>
+The function uses the approach of J.P. Nolan for general 
+stable distributions. Nolan derived expressions in form of 
+integrals based on the charcteristic function for standardized 
+stable random variables. These integrals are numerically 
+evaluated using R's function <code>integrate</code>. 
+<br>
+"S0" parameterization [pm=0]: based on the (M) representation
+of Zolotarev for an alpha stable distribution with skewness
+beta. Unlike the Zolotarev (M) parameterization, gamma and 
+delta are straightforward scale and shift parameters. This
+representation is continuous in all 4 parameters, and gives 
+an intuitive meaning to gamma and delta that is lacking in 
+other parameterizations.
+<br>
+"S" or "S1" parameterization [pm=1]: the parameterization used 
+by Samorodnitsky and Taqqu in the book Stable Non-Gaussian 
+Random Processes. It is a slight modification of Zolotarev's 
+(A) parameterization.
+<br>
+"S*" or "S2" parameterization [pm=2]: a modification of the S0 
+parameterization which is defined so that (i) the scale gamma 
+agrees with the Gaussian scale (standard dev.) when alpha=2 
+and the Cauchy scale when alpha=1, (ii) the mode is exactly at 
+delta.
+<br>
+"S3" parameterization [pm=3]: an internal parameterization. The 
+scale is the same as the S2 parameterization, the shift is 
+<i>-beta*g(alpha)</i>, where <i>g(alpha)</i> is defined in 
+Nolan [1999].
+</p>
+
+
+<h3>Value</h3>
+
+<p>
+All values for the <code>*symstb</code> and <code>*stable</code> functions
+are numeric vectors: 
+<code>d*</code> returns the density, 
+<code>p*</code> returns the distribution function, 
+<code>q*</code> returns the quantile function, and
+<code>r*</code> generates random deviates.
+<br>
+The function <code>stableMode</code> returns a numeric value, the
+location of the stable mode.
+<br>
+The functions <code>symstbSlider</code> and <code>stableSlider</code> 
+display for educational purposes the densities and probabilities
+of the symmetric and skew stable distributions.</p>
+
+<h3>Author(s)</h3>
+
+<p>
+McCulloch for the 'symstb' Fortran program, and <br>
+Diethelm Wuertz for the Rmetrics <font face="Courier New,Courier" color="#666666"><b>R</b></font>-port.
+</p>
+
+
+<h3>References</h3>
+
+<p>
+Chambers J.M., Mallows, C.L. and Stuck, B.W. (1976);
+<EM>A Method for Simulating Stable Random Variables</EM>,
+J. Amer. Statist. Assoc. 71, 340&ndash;344.
+</p>
+<p>
+Nolan J.P. (1999);
+<EM>Stable Distributions</EM>,
+Preprint, University Washington DC, 30 pages.
+</p>
+<p>
+Nolan J.P. (1999);
+<EM>Numerical Calculation of Stable Densities and Distribution
+Functions</EM>,
+Preprint, University Washington DC, 16 pages.
+</p>
+<p>
+Samoridnitsky G., Taqqu M.S. (1994);
+<EM>Stable Non-Gaussian Random Processes, Stochastic Models
+with Infinite Variance</EM>,
+Chapman and Hall, New York, 632 pages.
+</p>
+<p>
+Weron, A., Weron R. (1999);
+<EM>Computer Simulation of Levy alpha-Stable Variables and
+Processes</EM>,
+Preprint Technical Univeristy of Wroclaw, 13 pages.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>  
+## SOURCE("fBasics.3A-StableDistribution")
+  
+## stable - 
+   # Plot rvs Series
+   set.seed(1953)
+   r = rstable(n = 1000, alpha = 1.9, beta = 0.3)
+   plot(r, type = "l", main = "stable: alpha=1.9 beta=0.3", 
+     col = "steelblue4")
+   grid()
+ 
+## stable -  
+   # Plot empirical density and compare with true density:
+   hist(r, n = 25, probability = TRUE, border = "white", 
+     col = "steelblue4")
+   x = seq(-5, 5, 0.4)
+   lines(x, dstable(x = x, alpha = 1.9, beta = 0.3))
+   
+## stable -   
+   # Plot df and compare with true df:
+   plot(sort(r), (1:1000/1000), main = "Probability", pch = 19, 
+     col = "steelblue4")
+   lines(x, pstable(q = x, alpha = 1.9, beta = 0.3))
+   grid()
+   
+## stable -
+   # Compute quantiles:
+   qstable(pstable(seq(-4, 4, 1), alpha = 1.9, beta = 0.3), 
+     alpha = 1.9, beta = 0.3) 
+</pre>
+
+
+
+<hr><div align="center">[Package <em>fBasics</em> version 221.10066 <a href="00Index.html">Index]</a></div>
+
+</body></html>
