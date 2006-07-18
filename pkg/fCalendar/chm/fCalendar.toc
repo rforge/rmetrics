@@ -311,7 +311,7 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="CalendarTools">
-<param name="Local" value="7A-CalendarTools.html">
+<param name="Local" value="9X-CalendarTools.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Caracas">
@@ -554,22 +554,6 @@
 <param name="Local" value="5C-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="fxdata.contributors">
-<param name="Local" value="6A-HighFrequencyData.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="fxdata.filter">
-<param name="Local" value="6A-HighFrequencyData.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="fxdata.parser">
-<param name="Local" value="6A-HighFrequencyData.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="fxdata.varmin">
-<param name="Local" value="6A-HighFrequencyData.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="GBBankHoliday">
 <param name="Local" value="5C-HolidayDates.html">
 </OBJECT>
@@ -604,10 +588,6 @@
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Helsinki">
 <param name="Local" value="2B-DaylightSavingTime.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="HighFrequencyDataTools">
-<param name="Local" value="6A-HighFrequencyData.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="holiday">
@@ -1530,60 +1510,12 @@
 <param name="Local" value="2B-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="xdate">
-<param name="Local" value="6A-HighFrequencyData.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="xday.of.week">
-<param name="Local" value="6A-HighFrequencyData.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="xjulian">
-<param name="Local" value="6A-HighFrequencyData.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="xleap.year">
-<param name="Local" value="6A-HighFrequencyData.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="xmpCalendar">
-<param name="Local" value="7A-CalendarTools.html">
+<param name="Local" value="9X-CalendarTools.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="xmpfCalendar">
-<param name="Local" value="7A-CalendarTools.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="xts.cut">
-<param name="Local" value="6A-HighFrequencyData.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="xts.diff">
-<param name="Local" value="6A-HighFrequencyData.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="xts.dvs">
-<param name="Local" value="6A-HighFrequencyData.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="xts.dwh">
-<param name="Local" value="6A-HighFrequencyData.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="xts.interp">
-<param name="Local" value="6A-HighFrequencyData.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="xts.log">
-<param name="Local" value="6A-HighFrequencyData.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="xts.map">
-<param name="Local" value="6A-HighFrequencyData.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="xts.upsilon">
-<param name="Local" value="6A-HighFrequencyData.html">
+<param name="Local" value="9X-CalendarTools.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Zagreb">
@@ -1620,7 +1552,7 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="fCalendar Tools">
-<param name="Local" value="7A-CalendarTools.html">
+<param name="Local" value="9X-CalendarTools.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Holiday Calendars and Utilities">
@@ -1657,10 +1589,6 @@
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="timeSeries Class and Methods">
 <param name="Local" value="4C-TimeSeriesPositions.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="Tools for FX High Frequency Data">
-<param name="Local" value="6A-HighFrequencyData.html">
 </OBJECT>
 </UL>
 </UL>
