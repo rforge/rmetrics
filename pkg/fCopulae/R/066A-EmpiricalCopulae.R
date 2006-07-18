@@ -30,9 +30,9 @@
 ################################################################################
 #                       X     NOT YET IMPEMENTED
 # FUNCTION:                  EMPIRICAL COPULAE PROBABILIY:
-#  pempiricalCopula
+#  pempiricalCopula           Computes empirical copula probability
 # FUNCTION:                  EMPIRICAL COPULAE DENSITY:
-#  dempiricalCopula
+#  dempiricalCopula           Computes empirical copula density
 ################################################################################
 
 
@@ -54,12 +54,12 @@ function(u, v, N = 10)
     
     # Settings:
     if (is.list(u)) {
-        v = u$y
-        u = u$x
+        v = u[[2]]
+        u = u[[1]]
     }
     if (is.matrix(u)) {
-        v = u[,1]
-        u = u[,2]
+        v = u[, 1]
+        u = u[, 2]
     }
     
     # Probability:
@@ -96,12 +96,12 @@ function(u, v, N = 10)
     
     # Settings:
     if (is.list(u)) {
-        v = u$y
-        u = u$x
+        v = u[[2]]
+        u = u[[1]]
     }
     if (is.matrix(u)) {
-        v = u[,1]
-        u = u[,2]
+        v = u[, 1]
+        u = u[, 2]
     }
     
     # Probability:

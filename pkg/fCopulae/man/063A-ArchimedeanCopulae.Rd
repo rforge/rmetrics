@@ -11,26 +11,17 @@
 \alias{parchmSlider}
 \alias{darchmSlider}       
 
-%alias{archmTau}          MISSING
-%alias{archmRho}          MISSING
+\alias{archmTau}         
+\alias{archmRho}         
 
-%alias{archmTailCoeff}    MISSING
-%alias{archmTailPlot}     MISSING
+\alias{archmTailCoeff}     
+\alias{archmTailPlot}      
 
 \alias{Phi}
 \alias{PhiSlider}
 
 \alias{Kfunc}
 \alias{KfuncSlider}
-
-\alias{archmTau}
-\alias{archmRho}
-
-\alias{Kfunc}
-\alias{KfuncSlider}
-
-%alias{archmCopulaSim}    MISSING
-%alias{archmCopulaFit}    MISSING
 
 \alias{archmCopulaSim}
 \alias{archmCopulaFit}
@@ -44,22 +35,31 @@
     bivariate Archimedean copulae. 
     \cr
     
-    Archimedean Copula Functions:
+    Archimedean Copulae Functions:
     
     \tabular{ll}{
     \code{rarchmCopula} \tab Generates Archimedean copula variates, \cr
     \code{parchmCopula} \tab computes Archimedean copula probability, \cr
+    \code{parchmCopula} \tab computes Archimedean copula density, \cr
+    
+    \code{rarchmSlider} \tab displays interactive plots of variates, \cr
+    \code{parchmSlider} \tab displays interactive plots of probability, \cr
+    \code{darchmSlider} \tab displays interactive plots of density, \cr
+    
+    \code{archmTau} \tab computes Kendall's tau for Archimedean copulae, \cr
+    \code{archmRho} \tab computes Spearman's rho for Archimedean copulae, \cr
+    
+    \code{archmTailCoeff} \tab computes tail dependence for Archimedean copulae, \cr
+    \code{archmTailPlot} \tab plots tail dependence for Archimedean copulae, \cr
     
     \code{Phi} \tab Computes generator Phi, inverse and derivatives, \cr
     \code{PhiSlider} \tab displays interactively generator function, \cr
     
     \code{Kfunc} \tab computes copula density and its inverse, \cr
-    \code{archmTau} \tab computes Kendall's tau for Archimedean copulae, \cr
-    \code{archmRho} \tab computes Spearman's rho for Archimedean copulae, \cr
     \code{KfuncSlider} \tab displays interactively density function, \cr
     
-    \code{parchmSlider} \tab displays interactive plots of probability, \cr
-    \code{darchmSlider} \tab displays interactive plots of density. }
+    \code{archmCopulaSim} \tab simulates an Archimedean copula, \cr
+    \code{archmCopulaFit} \tab fits the parameters of an Archimedean copula. }
     
 }
 
@@ -71,13 +71,17 @@ parchmCopula(u = 0.5, v = u, alpha = NULL, type = 1:22, output =
     c("vector", "list"), alternative = FALSE )
 darchmCopula(u = 0.5, v = u, alpha = NULL, type = 1:22, output = 
     c("vector", "list"), alternative = FALSE )
-    
-parchmSlider(type = c("persp", "contour"))
+   
+rarchmSlider(B = 10) 
+parchmSlider(type = c("persp", "contour"), B = 10)
+darchmSlider(type = c("persp", "contour"), B = 10)
     
 archmTau(alpha = NULL, type = 1:22, lower = 1.0e-10)
-archmRho(alpha = NULL, type = 1:22, method = c("integrate2d", "adapt"),
-    error = 1.0e-5)
+archmRho(alpha = NULL, type = 1:22, method = c("integrate2d", "adapt"), error = 1.0e-5)
     
+archmTailCoeff(alpha = NULL, type = 1:22)
+archmTailPlot(alpha = NULL, type = 1:22, tail = c("Upper", "Lower"))
+   
 Phi(x, alpha = NULL, type = 1:22, inv = FALSE, deriv = c(0,1,2))
 PhiSlider()
 
@@ -99,6 +103,11 @@ archmCopulaFit(u, v = NULL, type = 1:22, \dots)
     \item{alternative}{
         [*Copula] - \cr
         Should the probability be computed alternatively ...
+        }
+    \item{B}{
+        [*Slider] - \cr
+        the maximum slider menu value when the boundary value is infinite. 
+        By default this is set to 10.
         }
     \item{deriv}{
         [Phi] - \cr
@@ -145,6 +154,12 @@ archmCopulaFit(u, v = NULL, type = 1:22, \dots)
         function \code{grid2d} and the function returns a list with
         elements \code{$x}, \code{y}, and \code{z} which can be directly 
         used for example by 2D plotting functions.
+        }
+    \item{tail}{
+        [archmTailPlot] - \cr
+        a character string, either \code{"Upper"} or \code{"Lower"} denoting 
+        which of the two tails should be displayed. By default the upper
+        tail dependence will be considered.
         }
     \item{type}{
         [*archmCopula][Phi][Kfunc] - \cr
@@ -232,14 +247,15 @@ archmCopulaFit(u, v = NULL, type = 1:22, \dots)
 
 
 \examples{
-## SOURCE("fCopulae.E3-ArchimedeanCopulae")
-
+## SOURCE("fCopulae.063A-ArchimedeanCopulae")
+\dontrun{
 ## fCOPULA -
    # getClass("fCOPULA")
    
 ## pcopula -
    # The default Normal Copula:
    # contour(pcopula())
+}
 }
 
 

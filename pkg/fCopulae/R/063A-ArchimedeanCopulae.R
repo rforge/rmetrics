@@ -29,11 +29,11 @@
 
 ################################################################################
 #                       X     NOT YET IMPEMENTED
-# FUNCTION:                  ARCHIMEDEAN COPULA PARAMETER:
+# FUNCTION:                  ARCHIMEDEAN COPULAE PARAMETER:
 #  .archmParam                Sets Default parameters for an Archimedean copula
 #  .archmCheck                Checks if alpha is in the valid range
 #  .archmRange                Returns the range of valid alpha values
-# FUNCTION:                  ARCHIMEDEAN COPULA GENERATOR:
+# FUNCTION:                  ARCHIMEDEAN COPULAE PHI GENERATOR:
 #  Phi                        Computes Archimedean Phi, inverse and derivatives
 #  PhiSlider                  Displays interactively generator function
 #  .Phi                       Computes Archimedean generator Phi
@@ -43,7 +43,7 @@
 #  .invPhi                    Computes inverse of Archimedean generator
 #  .invPhiFirstDer            Computes first derivative of inverse Phi
 #  .invPhiSecondDer           Computes second derivative of inverse Phi
-# FUNCTION:                  ARCHIMEDEAN COPULA DENSITY:
+# FUNCTION:                  ARCHIMEDEAN COPULAE K FUNCTION:
 #  Kfunc                      Computes Archimedean Density Kc and its Inverse
 #  KfuncSlider                Displays interactively the density and concordance
 #  .Kfunc                     Computes Density for Archimedean Copulae
@@ -59,28 +59,28 @@
 #  .archm2Tau                  Alternative way to compute Kendall's tau
 #  .archmGamma                Returns Gini's gamma for Archimedean copulae
 #  .archmTail                  Utility Function
-# FUNCTION:                  ARCHIMEDEAN TAIL COEFFICIENT:
+# FUNCTION:                  ARCHIMEDEAN COPULAE TAIL COEFFICIENT:
 #  archmTailCoeff       X     Computes tail dependence for Archimedean copulae
 #  archmTailPlot        X     Plots Archimedean tail dependence function
-# FUNCTION:                  ARCHIMEDEAN COPULA RANDOM VARIATES:
+# FUNCTION:                  ARCHIMEDEAN COPULAE RANDOM VARIATES:
 #  rarchmCopula               Generates Archimedean copula random variates 
 #  .r1Copula                  Generates rv's for copulae No 1
 #  .r2Copula                  Generates rv's for copulae No 2
-# FUNCTION:                  ARCHIMEDEAN COPULA PROBABILITY:
+# FUNCTION:                  ARCHIMEDEAN COPULAE PROBABILITY:
 #  parchmCopula               Computes Archimedean copula probability 
 #  parchmSlider               Displays interactively archimedean probability 
 #  .parchm1Copula              Utility Function
 #  .parchm2Copula              Utility Function
 #  .parchmPerspSlider          Utility Function
 #  .parchmContourSlider        Utility Function
-# FUNCTION:                  ARCHIMEDEAN COPULA DENSITY:
+# FUNCTION:                  ARCHIMEDEAN COPULAE DENSITY:
 #  darchmCopula               Computes Archimedean copula density 
 #  darchmSlider                Displays interactively archimedean density 
 #  .darchm1Copula              Utility Function
 #  .darchm2Copula              Utility Function
 #  .darchmPerspSlider          Utility Function
 #  .darchmContourSlider        Utility Function
-# FUNCTION:                  ARCHIMEDEAN COPULA PARAMETER FITTING:
+# FUNCTION:                  ARCHIMEDEAN COPULAE PARAMETER FITTING:
 #  archmCopulaSim             Simulates bivariate elliptical copula
 #  archmCopulaFit             Fits the paramter of an elliptical copula
 ################################################################################
@@ -165,6 +165,7 @@ function(alpha = 0.5, type = 1:22)
     
     # Type"
     type = type[1]
+    type = as.integer(type)
     
     # Check:
     ans = TRUE
@@ -485,33 +486,31 @@ function(alpha, type)
 {   # A function implemented by Diethelm Wuertz
 
     # Phi(0):
-    phi.0 = c(
-        phi01.0 = if (alpha < 0) -1/alpha else Inf,
-        phi02.0 = 1,
-        phi03.0 = Inf,
-        phi04.0 = Inf,
-        phi05.0 = Inf,
-        phi06.0 = Inf,
-        phi07.0 = if (alpha == 0) 1 else -log(1 - alpha),
-        phi08.0 = 1,
-        phi09.0 = Inf,
-        phi10.0 = Inf,
-        phi11.0 = if (alpha == 0) Inf else log(2),
-        phi12.0 = Inf,
-        phi13.0 = Inf,
-        phi14.0 = Inf,
-        phi15.0 = 1,
-        phi16.0 = if (alpha == 0) 1 else Inf,
-        phi17.0 = Inf,
-        phi18.0 = exp(-alpha),
-        phi19.0 = Inf,
-        phi20.0 = Inf,
-        phi21.0 = 1,
-        phi22.0 = if (alpha == 0) Inf else pi/2 
-    )
+    if (type == 1) phi0 = if (alpha < 0) -1/alpha else Inf
+    else if (type == 2) phi0 = 1
+    else if (type == 3) phi0 = Inf
+    else if (type == 4) phi0 = Inf
+    else if (type == 5) phi0 = Inf
+    else if (type == 6) phi0 = Inf
+    else if (type == 7) phi0 = if (alpha == 0) 1 else -log(1 - alpha)
+    else if (type == 8) phi0 = 1
+    else if (type == 9) phi0 = Inf
+    else if (type == 10) phi0 = Inf
+    else if (type == 11) phi0 = if (alpha == 0) Inf else log(2)
+    else if (type == 12) phi0 = Inf
+    else if (type == 13) phi0 = Inf
+    else if (type == 14) phi0 = Inf
+    else if (type == 15) phi0 = 1
+    else if (type == 16) phi0 = if (alpha == 0) 1 else Inf
+    else if (type == 17) phi0 = Inf
+    else if (type == 18) phi0 = exp(-alpha)
+    else if (type == 19) phi0 = Inf
+    else if (type == 20) phi0 = Inf
+    else if (type == 21) phi0 = 1
+    else if (type == 22) phi0 = if (alpha == 0) Inf else pi/2 
     
     # Return Value:
-    phi.0[type]
+    phi0
 }
 
 
@@ -2002,7 +2001,7 @@ function(alpha = NULL, type = 1:22, lower = 1.0e-10)
             f = .Kfunc, lower = lower, upper = 1, alpha = alpha, type = type,
             stop.on.error = FALSE, rel.tol = .Machine$double.eps^0.5)
         tau = 3 - 4 * ans[[1]]
-        attr(tau, "control") <- unlist(c(alpha, type = type, ans[2:4]))
+        attr(tau, "control")<-unlist(c(alpha, type = type, ans[2:4]))
         return(tau)
     }
     
@@ -2207,10 +2206,10 @@ function(alpha = 0.5, type = 1:22)
 }
 
 
-# ------------------------------------------------------------------------------
+################################################################################
 
 
-.archmTail =
+archmTailCoeff =
 function(alpha = NULL, type = 1:22)
 {   # A function implemented by Diethelm Wuertz
 
@@ -2244,17 +2243,202 @@ function(alpha = NULL, type = 1:22)
 }
 
 
-# eps = 1.0e-6; alpha = 2; type = 4
-# parchmCopula(eps, eps, alpha, type)/eps
-# (1 - 2*(1-eps) + parchmCopula(1-eps, 1-eps, alpha, type) ) / eps
+# ------------------------------------------------------------------------------
 
+
+archmTailPlot =
+function(alpha = NULL, type = 1:22, tail = c("Upper", "Lower"))
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Plots tail dependence for elliptical copulae
+    
+    # Arguments:
+    #   rho - a numeric value setting the coorelation strength, ranging
+    #       between minus one and one.
+
+    # FUNCTION:
+    
+    # Match Arguments:
+    type = type[1]
+    tail = match.arg(tail)
+    
+    # Settings:
+    Title = paste("Archimedean Copula No.", 1:22)
+    names(Title) = paste(1:22)
+    Title = Title[type]
+    N = 1000; Points = 20 # don't change these values!
+    u = (0:N)/N
+    SHOW = N+1
+    
+    # Plot Frame:
+    plot(c(0,1), c(0,1), type = "n", main = Title, xlab = "u", 
+        ylab = paste(tail, "Tail Dependence"))
+    
+    # Iterate rho:
+    B = 10
+    lower = max(.archmRange(type)[1], -B)
+    upper = min(.archmRange(type)[2], B)
+    Alpha = seq(lower, upper, length = 5)
+    for (alpha in Alpha) {
+        # Compute Copula Tail dependence lambda:
+        C.uu = parchmCopula(u, alpha = alpha, type = type)
+        if (tail == "Upper") {
+            lambdaTail = (1-2*u+C.uu)/(1-u)
+        } else if (tail == "Lower") {
+            lambdaTail = C.uu/u
+        }
+        # Add Parameter Labels:
+        text(x = 0.52, y = lambdaTail[floor(N/2)]+0.025, col = "red", cex = 0.7,
+            labels = as.character(round(alpha, 2)))
+        # Add Lines:
+        lines(u, lambdaTail, lty = 3, col = "black")     
+        # Add Points to Curves: 
+        if (tail == "Upper") {
+            M = min(SHOW, N)
+            Index = seq(1, M, by = Points)
+            X = 1
+        } else if (tail == "Lower") {
+            M = max(51, SHOW)
+            Index = rev(seq(N+1, M, by = -Points))
+            X = 0
+        }
+        points(u[Index], lambdaTail[Index], pch = 19, cex = 0.7)
+        # Add Tail Coefficient:
+        # points(x = X, y = lambda[1], pch = 19, col = "red")
+        
+    }
+    
+    # points(1, 0, pch = 19, col = "red")
+    abline(h = 0, lty = 3, col = "grey")
+    abline(v = X, lty = 3, col = "grey")
+    
+    # Return Value:
+    invisible()
+}
 
 
 ################################################################################
 # ARCHIMEDEAN COPULAE RANDOM VARIATES:
  
 
-.r1Copula =
+rarchmCopula =
+function(n, alpha = NULL, type = 1:22)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Generates Archimedean copula random variate
+    
+    # FUNCTION:
+    
+    # Type:
+    type = as.integer(type[1])
+    
+    # Alpha:
+    if (is.null(alpha)) alpha = .archmParam(type)$param
+    
+    # Check alpha:
+    check = .archmCheck(alpha, type)
+    
+    if (type == 1) {
+        # Use faster Algorithm:
+        ans = .rNo1Copula(n, alpha)
+    } else {
+        # Generate rv's for the remaining Copulae:
+        X = runif(n)
+        Y = runif(n)
+        t = .invK(Y, alpha, type)
+        U = .invPhi(X*.Phi(t))
+        V = .invPhi((1-X)*.Phi(t))
+        ans = cbind(U, V)
+        # Add Control Attribute:
+        colnames(ans) = NULL
+    }
+    
+    # Add Control List:
+    control = list(alpha = alpha[[1]], copula = "archm", type = type)
+    attr(ans, "control")<-unlist(control)
+    
+    # Return Value:
+    ans
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+rarchmSlider =
+function(B = 10)
+{   # A function implemented by Diethelm Wuertz
+        
+    # Description:
+    #   Displays interactively perspective plots of probability
+    
+    # FUNCTION:
+    
+    # Graphic Frame:
+    par(mfrow = c(1, 1), cex = 0.7)
+    
+    # Internal Function:
+    refresh.code = function(...)
+    {
+        # Sliders:
+        #           1       5        10        15        20
+        Counter = c(1,2,3,2,4,2,5,2,5,5,6,2,7,2,2,7,4,8,7,7,2,5)
+        Copula = as.integer(.sliderMenu(no = 1))
+        No = Counter[Copula]
+        N = .sliderMenu(no = 2)
+        alpha = .sliderMenu(no = No+2)
+        theta = .sliderMenu(no = 11)
+        phi = .sliderMenu(no = 12)
+                     
+        # There is no known Copula for the following bounds:
+        eps = 1.0e-6
+        if (Copula == 11) if (alpha == 0.5) alpha = 0.5 - eps
+        if (Copula == 13) if (alpha == 0.0) alpha = eps
+        
+        # Title:
+        Names = c(
+            "- Clayton", "", 
+            "- Ali-Mikhail-Hag", 
+            "- Gumbel-Hougard", 
+            "- Frank",
+            "- Joe-Frank", "", "", 
+            "- Gumbel-Barnett", "", "", "", "", "", 
+            "- Genest-Ghoudi", "", "", "", "", "", "", "")      
+        Title = paste("Archimedean Copula No:", as.character(Copula), 
+            Names[Copula], "\nalpha = ", as.character(alpha)) 
+        
+        # Plot: 
+        R = rarchmCopula(n = N, alpha = alpha, type = Copula)
+        plot(R, xlab = "U", ylab = "V", pch = 19, col = "steelblue")
+        grid()
+        title(main = Title)
+                           
+        # Reset Frame:
+        par(mfrow = c(1, 1), cex = 0.7)
+    }
+  
+    # Open Slider Menu:
+    C2 = "2-4-6-8-12-14-15-21"
+    C = c("1", C2, "3", "5-17", "7-9-10-22", "11", "13-16-19-20","18")                                           
+    L = c( -1,  1,  -1,     -B,           0,    0,            0,   2 )
+    U = c(  B,  B,   1,      B,           1,  0.5,            B,   B )
+    A = c(0.5,  2, 0.5,      1,         0.5,  0.2,            1,   3 ) 
+    V = rep(0.1, 8)
+    .sliderMenu(refresh.code,
+        names       = c("Copula",  "N", C),
+        minima      = c(       1,  100, L),
+        maxima      = c(      22, 1000, U),
+        resolutions = c(       1,  100, V),
+        starts      = c(       1,  100, A)) 
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.rNo1Copula =
 function(n, alpha = NULL, alternative = FALSE, doplot = FALSE)
 {   # A function implemented by Diethelm Wuertz
 
@@ -2300,7 +2484,7 @@ function(n, alpha = NULL, alternative = FALSE, doplot = FALSE)
 # ------------------------------------------------------------------------------
 
 
-.r2Copula = 
+.rNo2Copula = 
 function(n, alpha = NULL, doplot = FALSE)
 {   # A function implemented by Diethelm Wuertz
 
@@ -2334,118 +2518,6 @@ function(n, alpha = NULL, doplot = FALSE)
     
     # Return Value:
     ans
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-rarchmCopula =
-function(n, alpha = NULL, type = 1:22)
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Generates Archimedean copula random variate
-    
-    # FUNCTION:
-    
-    # Type:
-    type = as.integer(type[1])
-    
-    # Alpha:
-    if (is.null(alpha)) {
-        alpha = .archmParam(type)$param
-    }
-    
-    # Check alpha:
-    check = .archmCheck(alpha, type)
-    
-    if (type == 1) {
-        # Use faster Algorithm:
-        ans = .r1Copula(n, alpha)
-    } else {
-        # Generate rv's for the remaining Copulae:
-        X = runif(n)
-        Y = runif(n)
-        t = .invK(Y, alpha, type)
-        U = .invPhi(X*.Phi(t))
-        V = .invPhi((1-X)*.Phi(t))
-        ans = cbind(U, V)
-        # Add Control Attribute:
-        colnames(ans) = NULL
-        control = list(alpha = alpha[[1]], copula = "archm", type = type)
-        attr(ans, "control")<-unlist(control)
-    }
-    
-    # Return Value:
-    ans
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-rarchmSlider =
-function(B = 10)
-{   # A function implemented by Diethelm Wuertz
-        
-    # Description:
-    #   Displays interactively perspective plots of probability
-    
-    # FUNCTION:
-    
-    # Graphic Frame:
-    par(mfrow = c(1, 1), cex = 0.7)
-    
-    # Internal Function:
-    refresh.code = function(...)
-    {
-        # Sliders:
-        #           1       5        10        15        20
-        Counter = c(1,2,3,2,4,2,5,2,5,5,6,2,7,2,2,7,4,8,7,7,2,5)
-        Copula = as.integer(.sliderMenu(no = 1))
-        No = Counter[Copula]
-        N = .sliderMenu(no = 2)
-        alpha = .sliderMenu(no = No+2)
-        theta = .sliderMenu(no = 11)
-        phi = .sliderMenu(no = 12)
-                     
-        # Ther is no known Copula for the following bounds:
-        eps = 1.0e-6
-        if (Copula == 11) if (alpha == 0.5) alpha = 0.5 - eps
-        if (Copula == 13) if (alpha == 0.0) alpha = eps
-        
-        # Title:
-        Names = c(
-            "- Clayton", "", "- Ali-Mikhail-Hag", "- Gumbel-Hougard", "- Frank",
-            "- Joe-Frank", "", "", "- Gumbel-Barnett", "",
-            "", "", "", "", "- Genest-Ghoudi", "", "", "", "", "", "", "")      
-        Title = paste("Archimedean Copula No:", as.character(Copula), 
-            Names[Copula], "\nalpha = ", as.character(alpha)) 
-        
-        # Plot: 
-        R = rarchmCopula(n = N, alpha = alpha, type = Copula)
-        plot(R, xlab = "U", ylab = "V", pch = 19, col = "steelblue")
-        grid()
-        title(main = Title)
-                           
-        # Reset Frame:
-        par(mfrow = c(1, 1), cex = 0.7)
-    }
-  
-    # Open Slider Menu:
-    C2 = "2-4-6-8-12-14-15-21"
-    C = c("1", C2, "3", "5-17", "7-9-10-22", "11", "13-16-19-20","18")                                           
-    L = c( -1,  1,  -1,     -B,           0,    0,            0,   2 )
-    U = c(  B,  B,   1,      B,           1,  0.5,            B,   B )
-    A = c(0.5,  2, 0.5,      1,         0.5,  0.2,            1,   3 ) 
-    V = rep(0.1, 8)
-    .sliderMenu(refresh.code,
-        names       = c("Copula",  "N", C),
-        minima      = c(       1,  100, L),
-        maxima      = c(      22, 1000, U),
-        resolutions = c(       1,  100, V),
-        starts      = c(       1,  100, A)) 
 }
 
 
@@ -2510,7 +2582,7 @@ output = c("vector", "list"), alternative = FALSE )
 
 
 parchmSlider =
-function(type = c("persp", "contour"))
+function(type = c("persp", "contour"), B = 10)
 {   # A function implemented by Diethelm Wuertz
         
     # Description:
@@ -2531,9 +2603,9 @@ function(type = c("persp", "contour"))
     
     # Plot:
     if (type[1] == "persp")
-        .parchmPerspSlider(B = 5)
+        .parchmPerspSlider(B = B)
     if (type[1] == "contour")
-        .parchmContourSlider(B = 5)
+        .parchmContourSlider(B = B)
         
     # Return Value:
     invisible()
@@ -3128,7 +3200,7 @@ output = c("vector", "list"), alternative = FALSE )
 
 
 darchmSlider =
-function(type = c("persp", "contour"))
+function(type = c("persp", "contour"), B = 10)
 {   # A function implemented by Diethelm Wuertz
         
     # Description:
@@ -3146,9 +3218,9 @@ function(type = c("persp", "contour"))
     
     # Plot:
     if (type == "persp")
-        .darchmPerspSlider()
+        .darchmPerspSlider(B = B)
     if (type == "contour")
-        .darchmContourSlider()
+        .darchmContourSlider(B = B)
         
     # Return Value:
     invisible()
@@ -3453,7 +3525,7 @@ c("vector", "list"))
 
 
 .darchmPerspSlider =
-function()
+function(B = 10)
 {   # A function implemented by Diethelm Wuertz
         
     # Description:
@@ -3574,7 +3646,7 @@ function()
 
 
 .darchmContourSlider =
-function(B = 5)
+function(B = 10)
 {   # A function implemented by Diethelm Wuertz
         
     # Description:

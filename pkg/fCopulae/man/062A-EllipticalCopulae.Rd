@@ -33,7 +33,7 @@
     bivariate elliptical copulae. 
     \cr
     
-    Elliptical Copula Functions:
+    Elliptical Copulae Functions:
     
     \tabular{ll}{
     \code{rellipticalCopula} \tab Generates elliptical copula variates, \cr
@@ -106,7 +106,7 @@ ellipticalCopulaFit(u, v, type = c("norm", "cauchy", "t"), \dots)
         from the returned value, by default this is not the case.
         }
     \item{n}{
-        [rellipticalCopula] - \cr         
+        [rellipticalCopula][ellipticalCopulaSim] - \cr         
         the number of random deviates to be generated, an integer value.
         }
     \item{output}{
@@ -255,7 +255,7 @@ ellipticalCopulaFit(u, v, type = c("norm", "cauchy", "t"), \dots)
 
 \examples{
 ## SOURCE("fCopulae.062A-EllipticalCopulae")
-   
+\dontrun{
 ## [rp]ellipticalCopula -
    # Default Normal Copula:
    rellipticalCopula(10)
@@ -289,11 +289,8 @@ ellipticalCopulaFit(u, v, type = c("norm", "cauchy", "t"), \dots)
    # Simualtion and Parameter Fitting:
    rv = ellipticalCopulaSim(n = 100, rho = 0.75)
    ellipticalCopulaFit(rv)
-   
+}  
 }
-
-    
-
 
 
 \keyword{models}

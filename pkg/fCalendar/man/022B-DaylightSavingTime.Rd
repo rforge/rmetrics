@@ -99,9 +99,9 @@
 
 \description{
 
-    A collection and description of functions for about 
-    100 cities and regions, which return the daylight 
-    saving time tables. 
+    A collection and description of functions for 92 
+    cities and regions, which return time zone offsets
+    and daylight saving time rules. 
     \cr
     
     The functions are:

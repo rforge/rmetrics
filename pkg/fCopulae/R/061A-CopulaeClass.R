@@ -184,3 +184,84 @@ function(u = 0.5, v = u, type = c("m", "pi", "w"), output = c("vector", "list"))
 
 ################################################################################
 
+
+.copulaRho =
+function(rho = NULL, alpha = NULL, param = NULL, 
+family = c("elliptical", "archm", "ev", "archmax"), 
+type = NULL, error = 1e-3, ...)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Spearman's rho by integration for "ANY" copula
+    
+    # Notes:
+    #   pellipticalCopula(u, v, rho,   param, type, output, border)
+    #   parchmCopula     (u, v, alpha,        type, output, alternative)
+    #   pevCopula        (u, v,        param, type, output, alternative)
+    #   parchmaxCopula   (u, v,        param, type, output )
+    
+    # Examples:
+    #   .copulaRho(rho = 0.5, family = "elliptical", type = "norm")
+    #   .copulaRho(alpha = 1, family = "archm", type = "1")
+    #   .copulaRho(param = 2, family = "ev", type = "galambos")
+    
+    # FUNCTION:
+    
+    # Match Arguments:
+    family = match.arg(family)
+    
+    # Type:
+    if (is.null(type)) {
+        family = "elliptical" 
+        type = "norm"
+    } else {
+        type = as.character(type)
+    }
+    
+    # 2D Function to be integrated:
+    rho <<- rho
+    alpha <<- alpha
+    param <<- param
+    type <<- type
+    if (family == "elliptical") {
+        dCopulaRho <- function(x, y) {
+            C = pellipticalCopula(x, y, rho = rho, param = param, type = type)
+            12 * (C - x*y )
+        }
+    } else if (family == "archm") {
+        if (is.null(alpha)) alpha <<- .archmParam(type)$param
+        check = .archmCheck(alpha, type)
+        dCopulaRho <- function(x, y) {
+            C = parchmCopula(x, y, alpha = alpha, type = type)
+            12 * (C - x*y )
+        }
+    } else if (family == "ev") {
+        dCopulaRho <- function(x, y) {
+            C = pevCopula(x, y, param = param, type = type)
+            12 * (C - x*y ) 
+        }
+    } else if (family == "archmax") {
+        dCopulaRho <- function(x, y) {
+            C = parchmaxCopula(x, y, param = param, type = type)
+            12 * (C - x*y )
+        }
+    }
+        
+    # Integrate:
+    ans = integrate2d(dCopulaRho, error = error) 
+    Rho = ans$value
+    error = ans$error
+    
+    # Result:
+    control = list(rho = rho, alpha = alpha, param = param, 
+        family = family, type = type, error = signif(error, 3))
+    attr(Rho, "control") <- unlist(control)
+    
+    # Return Value:
+    Rho
+}
+
+
+
+################################################################################
+

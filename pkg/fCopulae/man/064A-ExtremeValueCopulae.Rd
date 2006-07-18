@@ -2,21 +2,26 @@
 
 \alias{ExtremeValueCopulae}
 
+
+\alias{revCopula}
 \alias{pevCopula}
 \alias{devCopula}
 
-\alias{Afunc}
-\alias{AfuncFirstDer}
-\alias{AfuncSecondDer}
-\alias{AfuncSlider}
-
+\alias{revSlider}
 \alias{pevSlider}
 \alias{devSlider}
 
+\alias{evTau}         
+\alias{evRho}        
 
-\alias{pempiricalCopula}
-\alias{dempiricalCopula}
-\alias{qlogisticTable}
+\alias{evTailCoeff}     
+\alias{evTailPlot}  
+
+\alias{Afunc}
+\alias{AfuncSlider}
+
+\alias{evCopulaSim}
+\alias{evCopulaFit}
 
 
 \title{Bivariate Extreme Value Copulae}
@@ -29,31 +34,36 @@
     \cr
     
      
-    Extreme Value Copulae:
+    Extreme Value Copulae Functions:
     
     \tabular{ll}{
-    \code{pevCopula} \tab computes extreme value copula probability,\cr
-    \code{devCopula} \tab computes extreme value copula density,\cr
+    \code{revCopula} \tab Generates extreme value copula random variates, \cr
+    \code{pevCopula} \tab computes extreme value copula probability, \cr
+    \code{devCopula} \tab computes extreme value copula density, \cr
+    
+    \code{revSlider} \tab displays interactive plots of extreme value random variates, \cr
+    \code{pevSlider} \tab displays interactive plots of extreme value probability, \cr
+    \code{devSlider} \tab displays interactive plots of extreme value density, \cr
     
     \code{Afunc} \tab computes dependence function, \cr
-    \code{AFirstDer} \tab computes derivative of dependence function, \cr
-    \code{ASecondDer} \tab computes 2nd derivative of dependence function, \cr
-    \code{ASlider} \tab displays interactively dependence function, \cr
-
-    \code{pevSlider} \tab displays interactive plots of probability,\cr
-    \code{devSlider} \tab displays interactive plots of density. }
+    \code{AfuncSlider} \tab displays interactively dependence function, \cr
     
-    Empirical Copulae:
+    \code{evTau} \tab computes Kendall's tau for extreme value copulae, \cr
+    \code{evRho} \tab computes Spearman's rho for extreme value copulae, \cr
     
-    \tabular{ll}{
-    \code{pempiricalCopula} \tab computes empirical copula probability,\cr
-    \code{dempiricalCopula} \tab computes empirical copula density. }
+    \code{evTailCoeff} \tab computes tail dependence for extreme value copulae, \cr
+    \code{evTailPlot} \tab plots tail dependence for extreme value copulae, \cr
+    
+    \code{evCopulaSim} \tab simulates an extreme value copula, \cr
+    \code{evCopulaFit} \tab fits the parameters of an extreme value copula. }
     
 }
 
 
 \usage{
 
+revCopula(n, param = NULL, type = c("gumbel", "galambos", "husler.reiss", 
+    "tawn", "bb5"))
 pevCopula(u = 0.5, v = u, param = NULL, type = c("gumbel", "galambos", 
     "husler.reiss", "tawn", "bb5"), output = c("vector", "list"), 
     alternative = FALSE )
@@ -61,19 +71,23 @@ devCopula(u = 0.5, v = u, param = NULL, type = c("gumbel", "galambos",
     "husler.reiss", "tawn", "bb5"), output = c("vector", "list"), 
     alternative = FALSE )   
 
+revSlider(B = 10)
 pevSlider(type = c("persp", "contour"), B = 10)
 devSlider(type = c("persp", "contour"), B = 10)
 
-Afunc(x, param = NULL, type = c("gumbel", "galambos", "husler.reiss", 
-    "tawn", "bb5") )
-AfuncFirstDer(x, param = NULL, type = c("gumbel", "galambos", "husler.reiss", 
-    "tawn", "bb5"), eps = 1.0e-6 )
-AfuncSecondDer(x, param = NULL, type = c("gumbel", "galambos", "husler.reiss", 
-    "tawn", "bb5") )
+evTau(param = NULL, type = 1:22, lower = 1.0e-10)
+evRho(param = NULL, type = 1:22, method = c("integrate2d", "adapt"), error = 1.0e-5)
+    
+evTailCoeff(param = NULL, type = 1:22)
+evTailPlot(param = NULL, type = 1:22, tail = c("Upper", "Lower"))
+
+Afunc(x, param = NULL, type = c("gumbel", "galambos", "husler.reiss", "tawn", "bb5") )
 AfuncSlider()
 
-pempiricalCopula(u, v, N = 10)
-dempiricalCopula(u, v, N = 10)
+evCopulaSim(n, param = NULL,  type = c("gumbel", "galambos", "husler.reiss", 
+    "tawn", "bb5"))
+evCopulaFit(u, v = NULL, type = c("gumbel", "galambos", "husler.reiss", 
+    "tawn", "bb5"), \dots)
 }
 
 
@@ -90,14 +104,26 @@ dempiricalCopula(u, v, N = 10)
         the maximum slider menu value when the boundary value is 
         infinite. By default this is set to 10.
         }
-    \item{eps}{
-        [AFirstDer] - \cr
-        data below \code{eps} and above \code{1-eps} will be set to
-        the border limits.
+    \item{error}{
+        [evRho] - \cr
+        the error bound to be achieved by the \code{integrate2d} 
+        integration formula. A numeric value, by default \code{error=1.0e-5}.
         }
-    \item{N}{
-        [empiricalCopula] - \cr
-        ... .
+    \item{lower}{
+        [evTau] - \cr
+        a numeric value setting the lower bound for the internal integration
+        function \code{integrate}.
+        }
+    \item{n}{
+        [revCopula][evCopulaSim] - \cr         
+        the number of random deviates to be generated, an integer value.
+        }
+    \item{method}{
+        [evRho] - \cr         
+        a character string that determines which integration should be 
+        used, either \code{"integrate2d"} or \code{"adapt"}. If the second
+        method is selected the condtributed R package \code{"adapt"} is 
+        required.
         }
     \item{output}{
         [*evCopula] - \cr
@@ -116,6 +142,12 @@ dempiricalCopula(u, v, N = 10)
         A numeric value or vector of named parameters as required by 
         the copula specified by the variable \code{type}.
         If set to \code{NULL}, then the default parameters will be taken.
+        }
+    \item{tail}{
+        [evTailPlot] - \cr
+        a character string, either \code{"Upper"} or \code{"Lower"} denoting 
+        which of the two tails should be displayed. By default the upper
+        tail dependence will be considered.
         }
     \item{type}{
         [*ev*][Afunc] - \cr
@@ -142,7 +174,11 @@ dempiricalCopula(u, v, N = 10)
         a numeric value or vector ranging between zero and one.
         \cr
         }
-    
+    \item{\dots}{
+        [evCopulaFit] - \cr
+        arguments passed to the optimization function \code{nlminb}.
+        }
+            
 }
 
 
@@ -200,14 +236,15 @@ dempiricalCopula(u, v, N = 10)
 }
 
 \examples{
-## SOURCE("fCopulae.E4-ExtremeValueCopulae")
-
+## SOURCE("fCopulae.064A-ExtremeValueCopulae")
+\dontrun{
 ## fCOPULA -
    # getClass("fCOPULA")
    
 ## pcopula -
    # The default Normal Copula:
    # contour(pcopula())
+}
 }
 
 

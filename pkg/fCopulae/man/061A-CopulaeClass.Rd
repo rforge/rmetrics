@@ -130,7 +130,7 @@ pfrechetCopula(u = 0.5, v = u, type = c("m", "pi", "w"),
 
 \examples{
 ## SOURCE("fCopulae.061A-CopulaeClass")
-
+\dontrun{
 ## fCOPULA -
    # getClass("fCOPULA")
    
@@ -140,6 +140,7 @@ pfrechetCopula(u = 0.5, v = u, type = c("m", "pi", "w"),
    pfrechetCopula(0.25, 0.75)
    pfrechetCopula(runif(5))
    pfrechetCopula(grid2d())
+}
 }
 
 

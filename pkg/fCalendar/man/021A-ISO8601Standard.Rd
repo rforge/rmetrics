@@ -28,7 +28,7 @@ isISO8601(x)
 \arguments{
   
     \item{x}{
-        an object of class \code{timeDate}.
+        an argument to be checked.
         }
         
 }

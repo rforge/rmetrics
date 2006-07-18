@@ -34,7 +34,7 @@ bivariate elliptical copulae.
 <br>
 </p>
 <p>
-Elliptical Copula Functions:
+Elliptical Copulae Functions:
 </p>
 
 <table summary="Rd table">
@@ -136,7 +136,7 @@ from the returned value, by default this is not the case.
 </td></tr>
 <tr valign="top"><td><code>n</code></td>
 <td>
-[rellipticalCopula] - <br>         
+[rellipticalCopula][ellipticalCopulaSim] - <br>         
 the number of random deviates to be generated, an integer value.
 </td></tr>
 <tr valign="top"><td><code>output</code></td>
@@ -292,7 +292,7 @@ Diethelm Wuertz for the Rmetrics <font face="Courier New,Courier" color="#666666
 
 <pre>
 ## SOURCE("fCopulae.062A-EllipticalCopulae")
-   
+## Not run: 
 ## [rp]ellipticalCopula -
    # Default Normal Copula:
    rellipticalCopula(10)
@@ -326,7 +326,7 @@ Diethelm Wuertz for the Rmetrics <font face="Courier New,Courier" color="#666666
    # Simualtion and Parameter Fitting:
    rv = ellipticalCopulaSim(n = 100, rho = 0.75)
    ellipticalCopulaFit(rv)
-   
+## End(Not run)  
 </pre>
 
 

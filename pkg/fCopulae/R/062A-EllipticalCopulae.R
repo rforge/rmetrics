@@ -28,7 +28,6 @@
 
 
 ################################################################################
-#                       X     NOT YET IMPEMENTED
 # FUNCTION:                  UTILITY FUNCTIONS:
 #  .ellipticalParam           Sets Default parameters for an elliptical copula
 #  .ellipticalRange           Returns the range of valid rho values
@@ -41,15 +40,15 @@
 #  .qelliptical               Univariate elliptical distribution quantiles
 #  .qlogistic                 Fast tabulated logistic quantile function
 #  .qlogisticData             Table generator for logistic quantiles
-# FUNCTION:                  ELLIPTICAL DEPENDENCE MASURES:
+# FUNCTION:                  ELLIPTICAL COPULAE DEPENDENCE MASURES:
 #  ellipticalTau              Computes Kendall's tau for elliptical copulae
 #  ellipticalRho              Computes Spearman's rho for elliptical copulae
-# FUNCTION:                  ELLIPTICAL TAIL COEFFICIENT:
+# FUNCTION:                  ELLIPTICAL COPULAE TAIL COEFFICIENT:
 #  ellipticalTailCoeff        Computes tail dependence for elliptical copulae
 #  ellipticalTailPlot         Plots tail dependence function
 # FUNCTION:                  ELLIPTICAL COPULAE RANDOM DEVIATES:
 #  rellipticalCopula          Generates elliptical copula variates
-#  rellipticalSlider          Interactive plots of random variates
+#  rellipticalSlider          Generates interactive plots of random variates
 #  .rnormCopula               Generates normal copula random variate
 #  .pnormCopula               Computes normal copula probability
 #  .dnormCopula               Computes normal copula density
@@ -61,14 +60,14 @@
 #  .dtCopula                  Computes Student-t copula density
 # FUNCTION:                  ELLIPTICAL COPULAE PROBABILITY:
 #  pellipticalCopula          Computes elliptical copula probability
-#  pellipticalSlider          Interactive plots of probability
+#  pellipticalSlider          Generates interactive plots of probability
 #  .pellipticalCopulaGrid     Fast equidistant grid version
 #  .pellipticalCopulaDiag     Fast diagonal cross section version
 #  .pellipticalPerspSlider    Interactive perspective plots of probability
 #  .pellipticalContourSlider  Interactive contour plots of probability
 # FUNCTION:                  ELLIPTICAL COPULAE DENSITY:
 #  dellipticalCopula          Computes elliptical copula density 
-#  dellipticalSlider          Interactive plots of density
+#  dellipticalSlider          Generates interactive plots of density
 #  .dellipticalCopulaGrid     Fast grid version for elliptical copula density
 #  .dellipticalCopula.RUnit   R Unit test for elliptical copula density
 #  .dellipticalPerspSlider    Interactive perspective plots of density
@@ -1459,16 +1458,16 @@ function(param = NULL, type = c("norm", "cauchy", "t", "logistic",
         
         # Normal Tail Dependence:
         if (type == "norm") { 
-            lines(u, lambdaTail, type = "l", lty = linetype, col = color) 
+            lines(u, lambdaTail, lty = linetype, col = color) 
         }
         
         # Cauchy and Student-t Tail Dependence:
         if (type == "t") {
             if (tail == "Upper") 
-                lines(u[u < 0.99], lambdaTail[u<0.99], lty = linetype, 
+                lines(u[u < 0.99], lambdaTail[u < 0.99], lty = linetype, 
                     col = color)
             if (tail == "Lower") 
-                lines(u[u > 0.01], lambdaTail[u>0.01], lty = linetype, 
+                lines(u[u > 0.01], lambdaTail[u > 0.01], lty = linetype, 
                     col = color)
         }
         

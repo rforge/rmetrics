@@ -33,8 +33,8 @@
     for managing date and time around the globe for any 
     financial center. The concept allows for dealing
     with several time zones at the same time, day light 
-    saving time and  holiday calendars independent of the d
-    ate and time specifications of the operating system 
+    saving time and holiday calendars independently of the 
+    date and time specifications of the operating system 
     implemented on a specific computer. 
     \cr
     

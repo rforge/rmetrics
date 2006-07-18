@@ -14,20 +14,40 @@
 <param name="Local" value="064A-ExtremeValueCopulae.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="AfuncFirstDer">
-<param name="Local" value="064A-ExtremeValueCopulae.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="AfuncSecondDer">
-<param name="Local" value="064A-ExtremeValueCopulae.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="AfuncSlider">
 <param name="Local" value="064A-ExtremeValueCopulae.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="ArchimedeanCopulae">
 <param name="Local" value="063A-ArchimedeanCopulae.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="ArchmaxCopulae">
+<param name="Local" value="065A-ArchmaxCopulae.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="archmaxCopulaFit">
+<param name="Local" value="065A-ArchmaxCopulae.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="archmaxCopulaSim">
+<param name="Local" value="065A-ArchmaxCopulae.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="archmaxRho">
+<param name="Local" value="065A-ArchmaxCopulae.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="archmaxTailCoeff">
+<param name="Local" value="065A-ArchmaxCopulae.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="archmaxTailPlot">
+<param name="Local" value="065A-ArchmaxCopulae.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="archmaxTau">
+<param name="Local" value="065A-ArchmaxCopulae.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="archmCopulaFit">
@@ -42,6 +62,14 @@
 <param name="Local" value="063A-ArchimedeanCopulae.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
+<param name="Name" value="archmTailCoeff">
+<param name="Local" value="063A-ArchimedeanCopulae.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="archmTailPlot">
+<param name="Local" value="063A-ArchimedeanCopulae.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="archmTau">
 <param name="Local" value="063A-ArchimedeanCopulae.html">
 </OBJECT>
@@ -52,6 +80,14 @@
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="CopulaeTools">
 <param name="Local" value="069A-CopulaeTools.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="darchmaxCopula">
+<param name="Local" value="065A-ArchmaxCopulae.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="darchmaxSlider">
+<param name="Local" value="065A-ArchmaxCopulae.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="darchmCopula">
@@ -71,7 +107,7 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="dempiricalCopula">
-<param name="Local" value="064A-ExtremeValueCopulae.html">
+<param name="Local" value="066A-EmpiricalCopulae.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="devCopula">
@@ -110,6 +146,34 @@
 <param name="Local" value="062A-EllipticalCopulae.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
+<param name="Name" value="EmpiricalCopulae">
+<param name="Local" value="066A-EmpiricalCopulae.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="evCopulaFit">
+<param name="Local" value="064A-ExtremeValueCopulae.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="evCopulaSim">
+<param name="Local" value="064A-ExtremeValueCopulae.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="evRho">
+<param name="Local" value="064A-ExtremeValueCopulae.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="evTailCoeff">
+<param name="Local" value="064A-ExtremeValueCopulae.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="evTailPlot">
+<param name="Local" value="064A-ExtremeValueCopulae.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="evTau">
+<param name="Local" value="064A-ExtremeValueCopulae.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="ExtremeValueCopulae">
 <param name="Local" value="064A-ExtremeValueCopulae.html">
 </OBJECT>
@@ -138,6 +202,14 @@
 <param name="Local" value="063A-ArchimedeanCopulae.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
+<param name="Name" value="parchmaxCopula">
+<param name="Local" value="065A-ArchmaxCopulae.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="parchmaxSlider">
+<param name="Local" value="065A-ArchmaxCopulae.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="parchmCopula">
 <param name="Local" value="063A-ArchimedeanCopulae.html">
 </OBJECT>
@@ -155,7 +227,7 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="pempiricalCopula">
-<param name="Local" value="064A-ExtremeValueCopulae.html">
+<param name="Local" value="066A-EmpiricalCopulae.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="pevCopula">
@@ -179,7 +251,15 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="qlogisticTable">
-<param name="Local" value="064A-ExtremeValueCopulae.html">
+<param name="Local" value="069A-CopulaeTools.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="rarchmaxCopula">
+<param name="Local" value="065A-ArchmaxCopulae.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="rarchmaxSlider">
+<param name="Local" value="065A-ArchmaxCopulae.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="rarchmCopula">
@@ -196,6 +276,14 @@
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="rellipticalSlider">
 <param name="Local" value="062A-EllipticalCopulae.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="revCopula">
+<param name="Local" value="064A-ExtremeValueCopulae.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="revSlider">
+<param name="Local" value="064A-ExtremeValueCopulae.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="show,fCOPULA-method">
@@ -223,12 +311,20 @@
 <param name="Local" value="063A-ArchimedeanCopulae.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Bivariate Archimedean Extreme Value Copulae">
+<param name="Local" value="065A-ArchmaxCopulae.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Bivariate Copulae Class">
 <param name="Local" value="061A-CopulaeClass.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Bivariate Elliptical Copulae">
 <param name="Local" value="062A-EllipticalCopulae.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Bivariate Empirical Copulae">
+<param name="Local" value="066A-EmpiricalCopulae.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Bivariate Extreme Value Copulae">

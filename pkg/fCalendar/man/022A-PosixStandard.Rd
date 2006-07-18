@@ -8,11 +8,11 @@
 
 \description{
         
-    A summary and description of R's base functions 
-    implementing the Posix Standard.
+    A summary and description how Rmetrics uses the
+    POSIX standard.
     \cr
     
-    The functions are:
+    The functions from R's base Package are:
      
     \tabular{ll}{
     \code{strptime} \tab Turns charater representations into POSIXlt, \cr
@@ -46,9 +46,27 @@
     \code{format} \tab Turns Date into character representations, \cr
     \code{print} \tab Prints POSIXt objects, generic function, \cr
     \code{seq} \tab Creates sequence of class Date. }
-                        
+     
+    The function addons are:
+     
+    \tabular{ll}{
+    \code{isPOSIX} \tab Checks for an object of class POSIX. }
+                      
 }
 
+
+\usage{
+isPOSIX(x)
+}
+
+
+\arguments{
+  
+    \item{x}{
+        an argument to be checked.
+        }
+        
+}
 
 \author{
 
