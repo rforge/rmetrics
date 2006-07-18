@@ -59,8 +59,8 @@
 \usage{
 isWeekday(x)
 isWeekend(x)
-isBizday(x, holidays = holiday.NYSE())
-isHoliday(x, holidays = holiday.NYSE())
+isBizday(x, holidays = holidayNYSE())
+isHoliday(x, holidays = holidayNYSE())
 
 getDayOfWeek(x)
 getDayOfYear(x)
