@@ -335,6 +335,7 @@ ohlcDailyPlot(x, volume = TRUE, colOrder = c(1:5), units = 1e6,
 
 
 \examples{
+\dontrun{
 ## SOURCE("fCalendar.4A-TimeSeriesClass")
 
 ## data - Data Frame:
@@ -396,6 +397,7 @@ ohlcDailyPlot(x, volume = TRUE, colOrder = c(1:5), units = 1e6,
    from
    to
    applySeries(tsRet, from, to, FUN = sum)
+}
 }
 
 

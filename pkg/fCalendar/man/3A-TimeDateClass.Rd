@@ -2,6 +2,7 @@
 
 \alias{TimeDateClass}
 
+\alias{myFinCenter}
 \alias{rulesFinCenter}
 \alias{listFinCenter}
 
@@ -21,7 +22,6 @@
 \alias{lines.timeDate}
 \alias{summary.timeDate}
 \alias{format.timeDate}
-
 
 
 \title{timeDate Class}
@@ -67,6 +67,7 @@
 
 
 \usage{
+myFinCenter
 rulesFinCenter(FinCenter = myFinCenter)
 listFinCenter(pattern = "*")
 
@@ -89,6 +90,9 @@ is.timeDate(object)
 \method{plot}{timeDate}(x, y, \dots)
 \method{summary}{timeDate}(object, \dots)
 \method{format}{timeDate}(x, \dots) 
+
+currentYear
+myUnits
 }
 
 
@@ -412,6 +416,9 @@ Zivot, E., Wang J. (2003);
 \examples{
 \dontrun{
 ## SOURCE("fCalendar.3A-TimeDateClass")
+
+## myFinCenter -
+   myFinCenter
 
 ## - Character Vecor Strings:
    dts = c("1989-09-28", "2001-01-15", "2004-08-30", "1990-02-09")

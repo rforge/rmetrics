@@ -457,7 +457,7 @@ Guillaume D.M., Dacorogna M.M., Dave R.R., Mueller U.A., Olsen R.B.,
 
 \examples{
 ## SOURCE("fCalendar.6A-HighFrequencyData")
-
+\dontrun{
 ## xjulian - 
    # Julian Counts:
    # Return the number of minute counts for the last day in every 
@@ -624,6 +624,7 @@ Guillaume D.M., Dacorogna M.M., Dave R.R., Mueller U.A., Olsen R.B.,
    # Create Daily and Weekly Histograms:
    result = xts.dwh (xts, period = "both", dolog = TRUE, 
      dodiff = TRUE, deltat = 30, doplot = TRUE)     
+}
 }
 
 

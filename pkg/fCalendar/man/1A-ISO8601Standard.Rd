@@ -57,7 +57,6 @@ isISO8601(x)
 
 \examples{
 ## SOURCE("fCalendar.1A-ISO8601Standard")
-
 }
 
 

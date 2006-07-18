@@ -121,31 +121,28 @@ is.timeSeries(object)
 
 
 \examples{
-## SOURCE("fCalendar.4A-TimeSeriesCoercion")
-
+## SOURCE("fCalendar.4D-TimeSeriesCoercion")
+\dontrun{
 ## data - timeSeries:
    # Load Microsoft Data:
-   data(msft.dat)
    myFinCenter = "GMT"
-   MSFT = as.timeSeries(msft.dat)[1:12, c(1,5)]
-   MSFT
+   msft = MSFT[1:12, c(1,5)]
+   msft
 
 ## Test for timeSeries:
-   is.timeSeries(MSFT)
-   
-## Get data from a demo data frame:
-   as.timeSeries(data(msft.dat))[1:12, c(1, 5)]
+   is.timeSeries(msft)
    
 ## As Vector:
-   as.vector(MSFT[, "Volume"])
+   as.vector(msft[, "Volume"])
    
 ## As Matrix or Data Frame:
-   as.matrix(MSFT)
-   as.data.frame(MSFT)
+   as.matrix(msft)
+   as.data.frame(msft)
    
 ## As Univariate or Multivariate Object of Class 'ts':
-   as.ts(MSFT[, "Open"])
-   as.ts(MSFT)
+   as.ts(msft[, "Open"])
+   as.ts(msft)
+}
 }
    
 

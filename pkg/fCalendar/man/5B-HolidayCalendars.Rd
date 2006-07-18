@@ -289,7 +289,7 @@ Therneau T. (1991);
 
 \examples{
 ## SOURCE("fCalendar.5B-HolidayCalendars")
-
+\dontrun{
 ## easter -
    # Dates for Easter and Pentecost from 2000 until 2010:
    easter(2000:2010)
@@ -319,6 +319,7 @@ Therneau T. (1991);
    .julian(1:12, rep(15,12), 1990+(0:11), origin = c(1, 1, 1990))
    # November 12, 98, was a Wednesday.
    day.of.week(m = 11, d = 12, y = 98)
+}
 }
 
 

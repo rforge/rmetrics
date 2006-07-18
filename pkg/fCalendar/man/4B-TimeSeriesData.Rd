@@ -350,41 +350,43 @@ rownames<-.timeSeries(x) <- value
 
 \examples{
 ## SOURCE("fCalendar.4B-TimeSeriesData")
-
+\dontrun{
 ## data - 
    # Load Microsoft Data:
-   MSFT = as.timeSeries(data(msft.dat))[1:12, c("Open", "Close")]
    head(MSFT)
+   class(MSFT)
+   msft = as.timeSeries(MSFT)[1:12, c("Open", "Close")]
+   head(msft, 4)
 
 ## diff | scale - 
    # Difference and scale the timeSeries Object:
-   scale(diff(MSFT, lag = 2, trim = TRUE))
+   scale(diff(msft, lag = 2, trim = TRUE))
 
 ## lag -
    # Lag the timeSeries Object:
-   lag(MSFT, k = -1:1)
+   lag(msft, k = -1:1)
     
 ## merge -    
    # Merge two timeSeries Object:
-   merge(MSFT[, 1], diff(log(MSFT[, 1]), units = c("Price", "Return")))
+   merge(msft[, 1], diff(log(msft[, 1]), units = c("Price", "Return")))
 
 ## summary -  
    # MSFT Summary:
-   summary(returnSeries(MSFT))
+   summary(returnSeries(msft))
 
 ## var -    
    # Variance of a timeSeries Object:
-   var(returnSeries(MSFT, percentage = TRUE))
+   var(returnSeries(msft, percentage = TRUE))
    
 ## Ops | +/- * ^ ...
    # Mathematical Operations:
-   MSFT^2
-   MSFT[, 2] - MSFT[, 1]
-   OPEN.RET = returnSeries(MSFT[, 1])
-   OPEN.RET > 0
-   quantile(OPEN.RET, probs = c(0.9, 0.95))
+   msft^2
+   msft[, 2] - msft[, 1]
+   openRet = returnSeries(msft[, 1])
+   openRet > 0
+   quantile(openRet, probs = c(0.90, 0.95))
 }
-
+}
 
 \author{
 

@@ -2,6 +2,8 @@
 
 \alias{PosixStandard}
 
+\alias{isPOSIX}
+
 
 \title{Summary of Posix Standard}
 
@@ -77,7 +79,6 @@ isPOSIX(x)
 
 \examples{
 ## SOURCE("fCalendar.2A-PosixStandard")
-
 }
 
 
