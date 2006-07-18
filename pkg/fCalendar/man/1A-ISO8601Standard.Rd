@@ -57,6 +57,14 @@ isISO8601(x)
 
 \examples{
 ## SOURCE("fCalendar.1A-ISO8601Standard")
+
+## isISO8601 -
+    isISO8601(c("2007-01-01", "2007-12-31" ))
+    # Don't print control attribute:
+    isISO8601(c("2007-01-01", "2007-12-31" ))[[1]]
+    # Nin-ISO8601 %b Format:
+    isISO8601("2007-Jan-01")[[1]]
+    isISO8601("2007-01-01 15:00:000")[[1]]
 }
 
 

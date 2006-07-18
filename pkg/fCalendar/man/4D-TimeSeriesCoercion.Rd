@@ -122,11 +122,11 @@ is.timeSeries(object)
 
 \examples{
 ## SOURCE("fCalendar.4D-TimeSeriesCoercion")
-\dontrun{
+
 ## data - timeSeries:
    # Load Microsoft Data:
    myFinCenter = "GMT"
-   msft = MSFT[1:12, c(1,5)]
+   msft = as.timeSeries(MSFT)[1:12, c(1, 5)]
    msft
 
 ## Test for timeSeries:
@@ -142,7 +142,6 @@ is.timeSeries(object)
 ## As Univariate or Multivariate Object of Class 'ts':
    as.ts(msft[, "Open"])
    as.ts(msft)
-}
 }
    
 

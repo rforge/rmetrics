@@ -18,7 +18,7 @@
 %\alias{sleap.year}
 %\alias{print.sdate}
 
-\alias{fjulian}
+%\alias{fjulian}
 \alias{.julian}
 \alias{month.day.year}
 \alias{leap.year}
@@ -45,7 +45,7 @@
     SPlus like Functions are:    
     
     \tabular{ll}{   
-    \code{fjulian} \tab Calculates Julian counts from different formats, \cr
+    %\code{fjulian} \tab Calculates Julian counts from different formats, \cr
     \code{.julian} \tab Converts formatted calendar dates to Julian counts, \cr
     \code{month.day.year} \tab Returns months, days, and years from Julian counts, \cr
     \code{leap.year} \tab Deciding if a year is a leap year or not, \cr
@@ -59,9 +59,7 @@ easter(year, shift = 0)
 holiday(year, Holiday = Easter)
 holiday.NYSE(y = currentYear)
 
-fjulian(fdates, origin = 19600101, order = 'mdy', cc = NULL, swap = 20)
 .julian(m, d, y, origin = c(month = 1, day = 1, year = 1960))
-
 month.day.year(jul, origin = c(month = 1, day = 1, year = 1960))
 leap.year(y) 
 day.of.week(month, day, year)
@@ -70,21 +68,10 @@ day.of.week(month, day, year)
 
 \arguments{
 
-    \item{cc, swap}{
-        [fjulian] - \cr
-        originally a numeric value denoting the century. Is now 
-        obsolete with the introduction of \code{swap}. \code{swap}
-        is an integer value which determines when we swap from the
-        19th to 20th century, by default 20, i.e. we swap 1920.
-        }
     \item{day}{ 
         an integer vector of day numbers, [DD].
         [day.of.week] - cr
         vector of integer day numbers.
-        }
-    \item{fdates}{
-        [fjulian] - \cr
-        a character vector of formatted Gregorian dates.
         }
     \item{Holiday}{
         the unquoted function name of an ecclestial or public holiday 
@@ -105,11 +92,6 @@ day.of.week(month, day, year)
         [day.of.week] - cr
         vector of integer month numbers.
         }
-    \item{order}{
-        [fjulian] - \cr
-        a character string, indicating the order of year, month 
-        and day.
-        }
     \item{origin}{
         the origin date of the counter, in ISO-8601 date format,
         [CCYYMMDD]. By default Januar 1st, 1960.
@@ -122,9 +104,6 @@ day.of.week(month, day, year)
         an integer vector of years, [CCYY].
         [day.of.week] - cr
         vector of integer year numbers.
-        }
-    \item{\dots}{
-        additional optional arguments to be passed.     
         }
         
 }
@@ -139,15 +118,6 @@ day.of.week(month, day, year)
     return an ISO-8601 formatted calendar date \code{CCYYMMDD}, an
     object of class \code{"sdate"} which represents an integer
     value or vector.
-    \cr
-    
-    \code{fjulian} 
-    \cr
-    returns a numeric vector of Julian Day Counts.
-    When \code{julian} is called, a vector of Julian counts corresponding 
-    to the input values is returned. If \code{month.day.year} is called, 
-    a list with members \code{month}, \code{day}, and \code{year} is 
-    returned for the given Julian dates. 
     \cr
     
     \code{leap.year} 
@@ -279,53 +249,32 @@ ISO-8601 (1988);
     Information Interchange, Representation of Dates and Time},
     International Organization for Standardization,
     Reference Number ISO 8601, 14 pages.
-    
-Therneau T. (1991); 
-    \emph{S-plus Date Routines}, 
-    www.statlib.org
 
 }
 
 
 \examples{
 ## SOURCE("fCalendar.5B-HolidayCalendars")
-\dontrun{
+
 ## easter -
    # Dates for Easter and Pentecost from 2000 until 2010:
    easter(2000:2010)
    easter(2000:2010, -2) # This is Good Friday
-   holiday(2000:2010, Easter)
-   holiday(2000:2010, GoodFriday)  
+   holiday(2000:2010, "Easter")                      
+   holiday(2000:2010, "GoodFriday")                  
    
 ## holidays -   
-   Easter(2000:2010)
+   Easter(2000:2010)                                
    GoodFriday(2000:2010)
   
 ## holiday.NYSE -
    holiday.NYSE(currentYear)
    
-## fjulian -
-   fdates = c("8/11/73", "08-11-73", "August 11 1973", "Aug11/73")
-   fjulian(fdates) 
-   
-## fjulian -
-   fdates = c("11/8/73", "11-08-73", "11 August 1973", "11Aug73")
-   fjulian(fdates, order = 'dmy')
-   
-## .julian - 
-## day.of.week -
-   # The number of days from January 1, 1990 to each of:
-   # January 15, 1990, February 15, 1991, March 15, 1992, etc.
-   .julian(1:12, rep(15,12), 1990+(0:11), origin = c(1, 1, 1990))
-   # November 12, 98, was a Wednesday.
-   day.of.week(m = 11, d = 12, y = 98)
-}
 }
 
 
 \author{
 
-    Therry Therneau for the C program used by \code{fjulian},\cr
     Diethelm Wuertz for the Rmetrics \R-port.
     
 }

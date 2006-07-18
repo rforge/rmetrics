@@ -87,13 +87,7 @@ xmpCalendar(prompt = "")
 
 
 \examples{
-## SOURCE("fCalendar.7A-CalendarTools")
-
-## datax -
-   # datax(DowJones30)
-   # class(DowJones30)
-   # head(DowJones30)
-   
+## SOURCE("fCalendar.7A-CalendarTools")   
 }
 
 

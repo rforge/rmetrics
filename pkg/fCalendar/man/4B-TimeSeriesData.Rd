@@ -350,7 +350,7 @@ rownames<-.timeSeries(x) <- value
 
 \examples{
 ## SOURCE("fCalendar.4B-TimeSeriesData")
-\dontrun{
+
 ## data - 
    # Load Microsoft Data:
    head(MSFT)
@@ -386,7 +386,7 @@ rownames<-.timeSeries(x) <- value
    openRet > 0
    quantile(openRet, probs = c(0.90, 0.95))
 }
-}
+
 
 \author{
 

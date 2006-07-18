@@ -79,6 +79,10 @@ isPOSIX(x)
 
 \examples{
 ## SOURCE("fCalendar.2A-PosixStandard")
+
+## isPOSIX -
+   isPOSIX(Sys.time())
+   isPOSIX(Sys.timeDate())
 }
 
 

@@ -335,23 +335,21 @@ ohlcDailyPlot(x, volume = TRUE, colOrder = c(1:5), units = 1e6,
 
 
 \examples{
-\dontrun{
 ## SOURCE("fCalendar.4A-TimeSeriesClass")
 
 ## data - Data Frame:
    # Load Microsoft Data:
-   data(msft.dat)
    myFinCenter = "GMT"
-   dfMSFT = msft.dat
+   dfMSFT = as.timeSeries(MSFT)
    head(dfMSFT)
 
 ## timeSeries - Conversion:
    # Create a timeSeries Objec - The Direct Way ...
-   Close = as.timeSeries(dfMSFT[, 5])
+   Close = dfMSFT[, 5]
    head(Close)
    # From Scratch ...
-   data = as.matrix(dfMSFT[, 5])
-   charvec = as.vector(dfMSFT[, 1])
+   data = as.matrix(dfMSFT[, 4])
+   charvec = rownames(dfMSFT)
    Close = timeSeries(data, charvec, units = "Close")
    head(Close)
    c(start(Close), end(Close))
@@ -372,7 +370,6 @@ ohlcDailyPlot(x, volume = TRUE, colOrder = c(1:5), units = 1e6,
    returnSeries(tsApril01, trim = FALSE)
    # Use Percentage Values:
    returnSeries(tsApril01, percentage = TRUE, trim = FALSE)
-
     
 ## alignDailySeries -     
    # Align with NA:
@@ -397,7 +394,6 @@ ohlcDailyPlot(x, volume = TRUE, colOrder = c(1:5), units = 1e6,
    from
    to
    applySeries(tsRet, from, to, FUN = sum)
-}
 }
 
 

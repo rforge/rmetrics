@@ -414,7 +414,6 @@ Zivot, E., Wang J. (2003);
 
 
 \examples{
-\dontrun{
 ## SOURCE("fCalendar.3A-TimeDateClass")
 
 ## myFinCenter -
@@ -422,8 +421,9 @@ Zivot, E., Wang J. (2003);
 
 ## - Character Vecor Strings:
    dts = c("1989-09-28", "2001-01-15", "2004-08-30", "1990-02-09")
+   dts
    tms = c(  "23:12:55",   "10:34:02",   "08:30:00",   "11:18:23")
-   dts; tms
+   tms
    
 ## timeDate -
    timeDate(dts, format = "\%Y-\%m-\%d", FinCenter = "GMT" )
@@ -458,7 +458,6 @@ Zivot, E., Wang J. (2003);
    print(tC)
    summary(tC)
    format(tC)   
-}
 }
 
 

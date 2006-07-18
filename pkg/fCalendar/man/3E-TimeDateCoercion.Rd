@@ -137,16 +137,25 @@
 \examples{
 ## SOURCE("fCalendar.3E-TimeDateCoercion")
 
+## as.character 
    tD = timeDate()
    as.character(tD)
+   
+## as.data.frame -
    as.data.frame(tD)
+   
+## as.POSIXct -  
    as.POSIXct(tD)
 
+## julian -
    tC = timeCalendar()
    julian(tC)[1:3]
+   
+## atoms -
    atoms(tC)
+   
+## months -
    months(tC)
-
 }
 
 

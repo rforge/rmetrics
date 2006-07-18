@@ -169,6 +169,9 @@ blockEnd(x, block = 20)
 ## SOURCE("fCalendar.3B-TimeDateSubsets")
 
 ## Easter -
+   currentYear
+   
+## Easter -
    Easter(currentYear)
    tS = timeSequence(from = Easter(currentYear)-7*24*3600, length.out = 8) 
    tS
@@ -180,8 +183,6 @@ blockEnd(x, block = 20)
    
 ## Business Days and Holidays:
    holiday.NYSE()
-   getDayOfWeek(tS)
-   Easter(currentYear)
    isBizday(tS, holiday.NYSE())
    isHoliday(tS, holiday.NYSE())
 
