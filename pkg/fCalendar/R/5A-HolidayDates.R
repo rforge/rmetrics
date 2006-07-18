@@ -863,7 +863,7 @@ function(year = currentYear, shift = 0)
     
     # Notes:
     #   The variable currentYear is set in ".FirstLib"
-    #   Calls "month.day.year" and ".sjulian"
+    #   Calls ".month.day.year" and ".sjulian"
     
     # Changes:
     #
@@ -871,7 +871,7 @@ function(year = currentYear, shift = 0)
     # FUNCTION:
 
     # Shift and Compute Easter:
-    mdy = month.day.year(.sjulian(.easterSunday(year))+shift)
+    mdy = .month.day.year(.sjulian(.easterSunday(year))+shift)
     ans = as.integer(mdy$year*10000 + mdy$month*100 + mdy$day)
     
     # Classify as simple integer ISO date format CCYYMMDD
@@ -1109,33 +1109,13 @@ function (julians, origin = 19600101)
     
     # FUNCTION:
     
-    # Internal Function:
-    month.day.year = function(jul, origin = c(1, 1, 1960)) {
-        # shift = .julian(1, 1, 1960, 0)    
-        shift = 2436935
-        j = jul + shift
-        j = j - 1721119
-        y = (4 * j - 1) %/% 146097
-        j = 4 * j - 1 - 146097 * y
-        d = j %/% 4
-        j = (4 * d + 3) %/% 1461
-        d = 4 * d + 3 - 1461 * j
-        d = (d + 4) %/% 4
-        m = (5 * d - 3) %/% 153
-        d = 5 * d - 3 - 153 * m
-        d = (d + 5) %/% 5
-        y = 100 * y + j
-        y = y + ifelse(m < 10, 0, 1)
-        m = m + ifelse(m < 10, 3, -9)
-        return(list(month = m, day = d, year = y)) }
-    
     # Julian Day Numbers to ISO-8601 Gregorian Dates:
     year0 = origin%/%10000
     month0 = (origin-10000*year0)%/%100
     day0 = origin-10000*year0-100*month0
     
     # Month - Day - Year Function:
-    mdylist = month.day.year(julians, origin = c(month0, day0, year0))
+    mdylist = .month.day.year(julians, origin = c(month0, day0, year0))
  
     # In '.sdate' Format:
     ans = mdylist$year*10000 + mdylist$month*100 + mdylist$day
@@ -1145,6 +1125,32 @@ function (julians, origin = 19600101)
     ans
 } 
 
+
+# ------------------------------------------------------------------------------
+
+
+.month.day.year = 
+function(jul, origin = c(1, 1, 1960)) 
+{
+    # shift = .julian(1, 1, 1960, 0)    
+    shift = 2436935
+    j = jul + shift
+    j = j - 1721119
+    y = (4 * j - 1) %/% 146097
+    j = 4 * j - 1 - 146097 * y
+    d = j %/% 4
+    j = (4 * d + 3) %/% 1461
+    d = 4 * d + 3 - 1461 * j
+    d = (d + 4) %/% 4
+    m = (5 * d - 3) %/% 153
+    d = 5 * d - 3 - 153 * m
+    d = (d + 5) %/% 5
+    y = 100 * y + j
+    y = y + ifelse(m < 10, 0, 1)
+    m = m + ifelse(m < 10, 3, -9)
+    return(list(month = m, day = d, year = y)) 
+}
+    
 
 # ------------------------------------------------------------------------------
 
