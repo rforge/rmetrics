@@ -24,7 +24,5 @@ Full text search stop list file=..\..\..\gnuwin32\help\R.stp
 4B-TimeSeriesData.html
 4C-TimeSeriesPositions.html
 4D-TimeSeriesCoercion.html
-5A-fCalendarData.html
+5A-HolidayDates.html
 5B-HolidayCalendars.html
-5C-HolidayDates.html
-9X-CalendarTools.html

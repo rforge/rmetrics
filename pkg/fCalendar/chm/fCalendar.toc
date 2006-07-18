@@ -18,10 +18,6 @@
 <param name="Local" value="3C-TimeDateMathOps.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value=".julian">
-<param name="Local" value="5B-HolidayCalendars.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="abs.timeSeries">
 <param name="Local" value="4B-TimeSeriesData.html">
 </OBJECT>
@@ -31,19 +27,19 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Advent1st">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Advent2nd">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Advent3rd">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Advent4th">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Algiers">
@@ -55,11 +51,11 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="AllSaints">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="AllSouls">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Amsterdam">
@@ -75,7 +71,7 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Annunciation">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="applySeries">
@@ -183,15 +179,15 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Ascension">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="AshWednesday">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="AssumptionOfMary">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Athens">
@@ -239,7 +235,7 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="BirthOfVirginMary">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="blockEnd">
@@ -255,7 +251,7 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="BoxingDay">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Bratislava">
@@ -287,11 +283,11 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="CACanadaDay">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="CACivicProvincialHoliday">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Cairo">
@@ -299,19 +295,11 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="CALabourDay">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Calcutta">
 <param name="Local" value="2B-DaylightSavingTime.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="CalendarData">
-<param name="Local" value="5A-fCalendarData.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="CalendarTools">
-<param name="Local" value="9X-CalendarTools.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Caracas">
@@ -319,7 +307,7 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="CaRemembranceDay">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Casablanca">
@@ -327,11 +315,11 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="CAThanksgivingDay">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="CAVictoriaDay">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Cayman">
@@ -339,19 +327,19 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="CelebrationOfHolyCross">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="CHAscension">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="CHBerchtoldsDay">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="CHConfederationDay">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Chicago">
@@ -359,23 +347,23 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="CHKnabenschiessen">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="ChristmasDay">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="ChristmasEve">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="ChristTheKing">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="CHSechselaeuten">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="colnames<-">
@@ -395,7 +383,7 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="CorpusChristi">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="currentYear">
@@ -414,32 +402,28 @@
 <param name="Local" value="2B-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="day.of.week">
-<param name="Local" value="5B-HolidayCalendars.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="DaylightSavingTime">
 <param name="Local" value="2B-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="DEAscension">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="DEChristmasEve">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="DECorpusChristi">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="DEGermanUnity">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="DENewYearsEve">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Denver">
@@ -483,15 +467,11 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Easter">
-<param name="Local" value="5C-HolidayDates.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="easter">
-<param name="Local" value="5B-HolidayCalendars.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="EasterMonday">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Eastern">
@@ -499,7 +479,7 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="EasterSunday">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Edmonton">
@@ -515,7 +495,7 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Epiphany">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="exp.timeSeries">
@@ -527,7 +507,7 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="FRAllSaints">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Frankfurt">
@@ -535,39 +515,39 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="FRArmisticeDay">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="FRAscension">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="FRAssumptionVirginMary">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="FRBastilleDay">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="FRFetDeLaVictoire1945">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="GBBankHoliday">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="GBMayDay">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="GBMilleniumDay">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="GBSummerBankHoliday">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="getDayOfWeek">
@@ -579,7 +559,7 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="GoodFriday">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="head.timeSeries">
@@ -594,16 +574,16 @@
 <param name="Local" value="5B-HolidayCalendars.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="holiday.NYSE">
-<param name="Local" value="5B-HolidayCalendars.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="HolidayCalendars">
 <param name="Local" value="5B-HolidayCalendars.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="HolidayDatabase">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Name" value="HolidayDates">
+<param name="Local" value="5A-HolidayDates.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="holidayNYSE">
+<param name="Local" value="5B-HolidayCalendars.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="HongKong">
@@ -671,27 +651,27 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="ITAllSaints">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="ITAssumptionOfVirginMary">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="ITEpiphany">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="ITImmaculateConception">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="ITLiberationDay">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="ITStAmrose">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Jakarta">
@@ -707,127 +687,127 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="JPAutumnalEquinox">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="JPBankHolidayDec31">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="JPBankHolidayJan2">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="JPBankHolidayJan3">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="JPBunkaNoHi">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="JPChildrensDay">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="JPComingOfAgeDay">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="JPConstitutionDay">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="JPEmperorsBirthday">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="JPGantan">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="JPGreeneryDay">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="JPHealthandSportsDay">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="JPKeirouNOhi">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="JPKenkokuKinenNoHi">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="JPKenpouKinenBi">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="JPKinrouKanshaNoHi">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="JPKodomoNoHi">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="JPKokuminNoKyujitu">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="JPMarineDay">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="JPMidoriNoHi">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="JPNatFoundationDay">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="JPNationalCultureDay">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="JPNationHoliday">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="JPNewYearsDay">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="JPRespectForTheAgedDay">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="JPSeijinNoHi">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="JPShuubunNoHi">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="JPTaiikuNoHi">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="JPTennouTanjyouBi">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="JPThanksgivingDay">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="JPUmiNoHi">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="julian.timeDate">
@@ -847,7 +827,7 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="LaborDay">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="lag.timeSeries">
@@ -856,10 +836,6 @@
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Lagos">
 <param name="Local" value="2B-DaylightSavingTime.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="leap.year">
-<param name="Local" value="5B-HolidayCalendars.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="length.timeDate">
@@ -919,7 +895,7 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="MassOfArchangels">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Melbourne">
@@ -944,10 +920,6 @@
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Monaco">
 <param name="Local" value="2B-DaylightSavingTime.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="month.day.year">
-<param name="Local" value="5B-HolidayCalendars.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="months.timeDate">
@@ -987,7 +959,7 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="NewYearsDay">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="NewYork">
@@ -1035,7 +1007,7 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="PalmSunday">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Paris">
@@ -1043,11 +1015,11 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Pentecost">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="PentecostMonday">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Perth">
@@ -1079,7 +1051,7 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="PresentationOfLord">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="print.timeDate">
@@ -1095,7 +1067,7 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Quinquagesima">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="readSeries">
@@ -1131,7 +1103,7 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="RogationSunday">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Rome">
@@ -1191,7 +1163,7 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Septuagesima">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="seq.timeDate">
@@ -1219,7 +1191,7 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="SolemnityOfMary">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="sort">
@@ -1378,20 +1350,16 @@
 <param name="Local" value="4C-TimeSeriesPositions.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="timezones.db">
-<param name="Local" value="5A-fCalendarData.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Tokyo">
 <param name="Local" value="2B-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="TransfigurationOfLord">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="TrinitySunday">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="trunc.timeDate">
@@ -1407,71 +1375,71 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="USChristmasDay">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="USColumbusDay">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="USCPulaskisBirthday">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="USDecorationMemorialDay">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="USElectionDay">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="USGoodFriday">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="USInaugurationDay">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="USIndependenceDay">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="USLaborDay">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="USLincolnsBirthday">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="USMemorialDay">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="USMLKingsBirthday">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="USNewYearsDay">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="USPresidentsDay">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="USThanksgivingDay">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="USVeteransDay">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="USWashingtonsBirthday">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Vaduz">
@@ -1510,14 +1478,6 @@
 <param name="Local" value="2B-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="xmpCalendar">
-<param name="Local" value="9X-CalendarTools.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="xmpfCalendar">
-<param name="Local" value="9X-CalendarTools.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Zagreb">
 <param name="Local" value="2B-DaylightSavingTime.html">
 </OBJECT>
@@ -1547,16 +1507,8 @@
 <param name="Local" value="2B-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="fCalendar Data Sets">
-<param name="Local" value="5A-fCalendarData.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="fCalendar Tools">
-<param name="Local" value="9X-CalendarTools.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Holiday Calendars and Utilities">
-<param name="Local" value="5C-HolidayDates.html">
+<param name="Local" value="5B-HolidayCalendars.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Masked Objects and Additional Generic Functions">
