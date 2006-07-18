@@ -183,8 +183,8 @@ blockEnd(x, block = 20)
    
 ## Business Days and Holidays:
    holiday.NYSE()
-   isBizday(tS, holiday.NYSE())
-   isHoliday(tS, holiday.NYSE())
+   isBizday(tS, holidayNYSE())
+   isHoliday(tS, holidayNYSE())
 
 ## [ - Subsetting:
    tS[c(1, 6:8)]   
