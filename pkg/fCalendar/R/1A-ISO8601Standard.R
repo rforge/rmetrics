@@ -43,7 +43,13 @@ function(x)
 {   # A function written by Diethelm Wuertz
 
     # Description:
-    #   Checks if the date/time is ISO8601 formatted
+    #   Checks if the date/time string is ISO8601 formatted
+    
+    # Example:
+    #   isISO8601(c("2007-01-01", "2007-12-31" ))
+    #   isISO8601(c("2007-01-01", "2007-12-31" ))[[1]]
+    #   isISO8601("2007-Jan-01")[[1]]
+    #   isISO8601("2007-01-01 15:00:000")[[1]]
     
     # Changes:
     #
@@ -51,14 +57,17 @@ function(x)
     # FUNCTION:
     
     # Check:
-    stopifnot(class(x) == "timeDate")
+    stopifnot(class(x) == "character")
     
     # Test: 
+    options(warn = -1)
+    format = .whichFormat(x)
     ans = FALSE
-    if (x@format == "%Y-%m-%d %H:%M:%S") ans = TRUE
-    if (x@format == "%Y-%m-%d") ans = TRUE
-    if (x@format == "%Y%m%d%H%M%S") ans = TRUE
-    if (x@format == "%Y%m%d") ans = TRUE
+    if (format == "%Y-%m-%d %H:%M:%S") ans = TRUE
+    if (format == "%Y-%m-%d") ans = TRUE
+    if (format == "%Y%m%d%H%M%S") ans = TRUE
+    if (format == "%Y%m%d") ans = TRUE
+    attr(ans, "control")<- format
     
     # Return Value:
     ans

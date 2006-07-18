@@ -46,7 +46,7 @@
 #  .sleap.year         Returns TRUE/FALSE if dates belong to leap years or not
 #  .print.sdate        Print method for objects of class ".sdate"
 # FUNCTION:           DESCRIPTION:
-#  fjulian             Transform formatted dates to julian day numbers
+#  .fjulian            Transform formatted dates to julian day numbers
 # FUNCTION:           DESCRIPTION:
 #  .julian             Implements SPlus like 'julian'
 #  month.day.year      Implements SPlus like 'month.day.year'
@@ -69,7 +69,8 @@
 
 .easter.sunday =
 function(year) 
-{
+{   # A function implemented by Diethelm Wuertz
+
     # Changes:
     #
     
@@ -141,7 +142,6 @@ function(year = currentYear, shift = 0)
     #
     
     # FUNCTION:
-        
 
     # Shift and Compute Easter:
     mdy = month.day.year(.sjulian(.easter.sunday(year))+shift)
@@ -788,7 +788,7 @@ function(x, ...)
 # ******************************************************************************
 
 
-fjulian = 
+.fjulian = 
 function(fdates, origin = 19600101, order = 'mdy', cc = NULL, swap = 20)
 {   # # A function implemented by Diethelm Wuertz
 
@@ -801,7 +801,13 @@ function(fdates, origin = 19600101, order = 'mdy', cc = NULL, swap = 20)
     # Notes:
     #   cc - Century, becoming obsolete with the introduction of
     #       swap.
- 
+    
+    # Example:
+    #   fdates = c("8/11/73", "08-11-73", "August 11 1973", "Aug11/73")
+    #   .fjulian(fdates) 
+    #   fdates = c("11/8/73", "11-08-73", "11 August 1973", "11Aug73")
+    #   .fjulian(fdates, order = 'dmy')
+    
     # Requirements:
     #   R-package "date"
     #   Splus Like Function .julian
@@ -814,6 +820,9 @@ function(fdates, origin = 19600101, order = 'mdy', cc = NULL, swap = 20)
     
     # FUNCTION:
     
+    # Requires
+    require(date)
+    
     # Formats:
     order.vec = switch(order,
         'ymd'= c(1,2,3),
@@ -823,7 +832,7 @@ function(fdates, origin = 19600101, order = 'mdy', cc = NULL, swap = 20)
         'dym'= c(3,1,2),
         'dmy'= c(3,2,1),
         stop("Invalid value for 'order' option"), 
-        PACKAGE = "fCalendar")
+        PACKAGE = "date")
     nn = length(fdates)
     temp = .C("char_date", 
         as.integer(nn),
@@ -832,7 +841,7 @@ function(fdates, origin = 19600101, order = 'mdy', cc = NULL, swap = 20)
         month = integer(nn),
         day = integer(nn),
         year = integer(nn),
-        PACKAGE = "fCalendar")
+        PACKAGE = "date")
     month = temp[[4]]
     day = temp[[5]]
     year = temp[[6]]

@@ -202,7 +202,7 @@ function(year = currentYear) {
     
 Easter = 
 function(year = currentYear) {
-    ans = easter(year = currentYear)    
+    ans = easter(year)    
     timeDate(as.character(ans)) } 
     
 EasterSunday = 
