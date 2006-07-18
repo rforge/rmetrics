@@ -33,23 +33,26 @@
 #  pgh                   Returns probability for generalized hyperbolic DF
 #  qgh                   Returns quantiles for generalized hyperbolic DF
 #  rgh                   Returns random variates for generalized hyperbolic DF
-#  .rghyp                ... Internal functions for the evaluation
-#  .rgigjd                   of random variates for the generalized
-#  .rgigjd1                  hyperbolic distribution function ...
-# FUNCTION:             DESCRIPTION:
-#  .BesselK1             Internal Function  
+#  .rghyp                 Internal functions called by 'rgh'
+#  .rgigjd                Internal functions called by 'rghyp'
+#  .rgigjd1               Internal functions called by 'rghyp'
+# FUNCTION:             DESCRIPTION: 
 #  dhyp                  Returns density for hyperbolic DF
 #  phyp                  Returns probability for hyperbolic DF
 #  qhyp                  Returns quantiles for hyperbolic DF
 #  rhyp                  Returns random variates for hyperbolic DF
-#  .*hyp[1234]             [1], ..., [4] first to fourth parameterization
 #  hypMode               Computes the hyperbolic mode
-#  .hyp[1234]Mode          [1], ..., [4] first to fourth parameterization
+#  .[dpqr]hyp[1234]       Internal functions called by '*hyp'
+#  .hyp[1234]Mode         Internal functions called by 'hypMode'
+#  .BesselK1              Internal function called by 'dhyp1'
 # FUNCTION:             DESCRIPTION:
 #  dnig                  Returns density for inverse Gaussian DF
 #  pnig                  Returns probability for for inverse Gaussian DF
 #  qnig                  Returns quantiles for for inverse Gaussian DF 
 #  rnig                  Returns random variates for inverse Gaussian DF
+#  .dnig1                 Internal function, alternative call
+#  .pnig1                 Internal function, alternative call
+#  .qnig1                 Internal function, alternative call
 # FUNCTION:             DESCRIPTION:
 #  hypSlider             Displays hyperbolic distribution function
 #  nigSlider             Displays normal inverse Gausssian distribution function
@@ -57,7 +60,13 @@
 
 
 ################################################################################
-# gh
+#  dgh                   Returns density for generalized hyperbolic DF
+#  pgh                   Returns probability for generalized hyperbolic DF
+#  qgh                   Returns quantiles for generalized hyperbolic DF
+#  rgh                   Returns random variates for generalized hyperbolic DF
+#  .rghyp                ... Internal functions for the evaluation
+#  .rgigjd                   of random variates for the generalized
+#  .rgigjd1                  hyperbolic distribution function ...
 
 
 dgh = 
@@ -66,6 +75,9 @@ function(x, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1)
     
     # Description:
     #   Returns density for the generalized hyperbolic distribution
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -102,6 +114,9 @@ function(q, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1)
     # Description:
     #   Returns probability for the generalized hyperbolic distribution
     
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Checks:
@@ -132,6 +147,9 @@ function (p, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1)
 
     # Description:
     #   Returns quantiles for the generalized hyperbolic distribution
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -179,6 +197,9 @@ function (n, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1)
     # Description:
     #   Returns random variates for the generalized hyperbolic distribution
     
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Checks:
@@ -201,7 +222,187 @@ function (n, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1)
 }
 
 
-# ******************************************************************************
+################################################################################
+#  dhyp                  Returns density for hyperbolic DF
+#  phyp                  Returns probability for hyperbolic DF
+#  qhyp                  Returns quantiles for hyperbolic DF
+#  rhyp                  Returns random variates for hyperbolic DF
+#  hypMode               Computes the hyperbolic mode
+#  .[dpqr]hyp[1234]       Internal functions called by '*hyp'
+#  .hyp[1234]Mode         Internal functions called by 'hypMode'
+#  .BesselK1              Internal function called by 'dhyp1'
+
+
+dhyp = 
+function(x, alpha = 1, beta = 0, delta = 1, mu = 0, pm = c(1, 2, 3, 4))
+{   # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   Returns Hyperbolic Density Function PDF
+       
+    # Arguments:
+    #   alpha, beta - Shape Parameter, |beta| <= alpha
+    #   delta  - Scale Parameter, 0 <= delta
+    #   mu - Location Parameter
+     
+    # Changes:
+    #
+    
+    # FUNCTION:
+    
+    # Settings:
+    pm = pm[1]
+    
+    # Return Value:
+    ans = NA
+    if (pm == 1) return(.dhyp1(x, alpha, beta, delta, mu))
+    if (pm == 2) return(.dhyp2(x, alpha, beta, delta, mu))
+    if (pm == 3) return(.dhyp3(x, alpha, beta, delta, mu))
+    if (pm == 4) return(.dhyp4(x, alpha, beta, delta, mu))
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+phyp = 
+function(q, alpha = 1, beta = 0, delta = 1, mu = 0, pm = c(1, 2, 3, 4), ...)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Return cumulative probability of Hyperbolic PDF
+     
+    # Arguments:
+    #   alpha, beta - Shape Parameter, |beta| <= alpha
+    #   delta  - Scale Parameter, 0 <= delta
+    #   mu - Location Parameter
+
+    # Changes:
+    #
+    
+    # FUNCTION:
+    
+    # Settings:
+    pm = pm[1]
+    
+    # Return Value:
+    ans = NA
+    if (pm == 1) return(.phyp1(q, alpha, beta, delta, mu, ...))
+    if (pm == 2) return(.phyp2(q, alpha, beta, delta, mu, ...))
+    if (pm == 3) return(.phyp3(q, alpha, beta, delta, mu, ...))
+    if (pm == 4) return(.phyp4(q, alpha, beta, delta, mu, ...))
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+qhyp = 
+function(p, alpha = 1, beta = 0, delta = 1, mu = 0, pm = c(1, 2, 3, 4), ...)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Returns quantiles of Hyperbolic PDF
+    
+    # Arguments:
+    #   alpha, beta - Shape Parameter, |beta| <= alpha
+    #   delta  - Scale Parameter, 0 <= delta
+    #   mu - Location Parameter
+
+    # Note:
+    #   This procedure will not run under Splus.
+
+    # Changes:
+    #
+    
+    # FUNCTION:
+    
+    # Settings:
+    pm = pm[1]
+    
+    # Return Value:
+    ans = NA
+    if (pm == 1) return(.qhyp1(p, alpha, beta, delta, mu, ...))
+    if (pm == 2) return(.qhyp2(p, alpha, beta, delta, mu, ...))
+    if (pm == 3) return(.qhyp3(p, alpha, beta, delta, mu, ...))
+    if (pm == 4) return(.qhyp4(p, alpha, beta, delta, mu, ...))   
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+rhyp = 
+function (n, alpha = 1, beta = 0, delta = 1, mu = 0, pm = c(1, 2, 3, 4))
+{   # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   Returns random deviates of Hyperbolic PDF
+    
+    # Arguments:
+    #   n - number of random deviates to be generated
+    #   alpha, beta - Shape Parameter, |beta| <= alpha
+    #   delta  - Scale Parameter, 0 <= delta
+    #   mu - Location Parameter
+    
+    # Notes:
+    #   I have removed my original Fortran program and replaced it by
+    #   the dhyperb() function from the HyperbolicDist Package, written
+    #   by David Scott, Ai-Wei Lee, Jennifer Tso, Richard Trendall.
+    #   License: GPL
+    
+    # Changes:
+    #
+    
+    # FUNCTION:
+    
+    # Settings:
+    pm = pm[1]
+    
+    # Result:
+    ans = NA
+    if (pm == 1) ans = .rhyp1(n, alpha, beta, delta, mu)
+    if (pm == 2) ans = .rhyp2(n, alpha, beta, delta, mu)
+    if (pm == 3) ans = .rhyp3(n, alpha, beta, delta, mu)
+    if (pm == 4) ans = .rhyp4(n, alpha, beta, delta, mu)
+    
+    # Attributes:
+    attr(ans, "control") = c(dist = "hyp", alpha = alpha, beta = beta, 
+    delta = delta, mu = mu)
+    
+    # Return Value:
+    ans
+}   
+
+
+# ------------------------------------------------------------------------------
+
+
+hypMode =
+function(alpha = 1, beta = 0, delta = 1, mu = 0, pm = c(1, 2, 3, 4))
+{   # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   Computes the mode of the Hyperbolic PDF
+    
+    # Changes:
+    #
+    
+    # FUNCTION:
+    
+    # Settings:
+    pm = pm[1]
+    
+    # Return Value:
+    ans = NA
+    if (pm == 1) return(.hyp1Mode(alpha, beta, delta, mu))
+    if (pm == 2) return(.hyp2Mode(alpha, beta, delta, mu))
+    if (pm == 3) return(.hyp3Mode(alpha, beta, delta, mu))
+    if (pm == 4) return(.hyp4Mode(alpha, beta, delta, mu))  
+}
+  
+
+# ------------------------------------------------------------------------------
 
 
 .rghyp = 
@@ -210,6 +411,9 @@ function(n, theta)
 
     # Author:
     #   Original Version by David Scott
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -253,6 +457,9 @@ function(n, theta)
 
     # Author:
     #   Original Version by David Scott
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -325,6 +532,9 @@ function(n, theta)
     # Author:
     #   Original Version by David Scott
 
+    # Changes:
+    #
+    
     # FUNCTION:
     
     if (length(theta) == 2) theta = c(1, theta)
@@ -379,8 +589,7 @@ function(n, theta)
 }
 
 
-################################################################################
-# Hyperbolic Distribution
+# ------------------------------------------------------------------------------
 
 
 .BesselK1 = 
@@ -389,6 +598,9 @@ function(X)
                                             
     # Description:
     #   Internal Function - Modified Bessel Function K1
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -482,35 +694,6 @@ function(X)
 # ------------------------------------------------------------------------------
 
 
-dhyp = 
-function(x, alpha = 1, beta = 0, delta = 1, mu = 0, pm = c(1, 2, 3, 4))
-{   # A function implemented by Diethelm Wuertz
-    
-    # Description:
-    #   Returns Hyperbolic Density Function PDF
-       
-    # Arguments:
-    #   alpha, beta - Shape Parameter, |beta| <= alpha
-    #   delta  - Scale Parameter, 0 <= delta
-    #   mu - Location Parameter
-     
-    # FUNCTION:
-    
-    # Settings:
-    pm = pm[1]
-    
-    # Return Value:
-    ans = NA
-    if (pm == 1) return(.dhyp1(x, alpha, beta, delta, mu))
-    if (pm == 2) return(.dhyp2(x, alpha, beta, delta, mu))
-    if (pm == 3) return(.dhyp3(x, alpha, beta, delta, mu))
-    if (pm == 4) return(.dhyp4(x, alpha, beta, delta, mu))
-}
-
-
-# ------------------------------------------------------------------------------
-
-
 .dhyp1 = 
 function(x, alpha = 1, beta = 0, delta = 1, mu = 0)
 {   # A function implemented by Diethelm Wuertz
@@ -523,6 +706,9 @@ function(x, alpha = 1, beta = 0, delta = 1, mu = 0)
     #   delta  - Scale Parameter, 0 <= delta
     #   mu - Location Parameter
      
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Density:
@@ -551,6 +737,9 @@ function(x, zeta = 1, rho = 0, delta = 1, mu = 0)
     
     # Description:
     #   Returns Hyperbolic density in the 2nd parameterization
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -584,6 +773,9 @@ function(x, xi = 1/sqrt(2), chi = 0, delta = 1, mu = 0)
     #   delta  - Scale Parameter, 0 <= delta
     #   mu - Location Parameter
     
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Parameter Change:
@@ -614,6 +806,9 @@ function(x, a.bar = 1, b.bar = 0, delta = 1, mu = 0)
     #   delta  - Scale Parameter, 0 <= delta
     #   mu - Location Parameter
     
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Parameter Change:
@@ -626,37 +821,6 @@ function(x, a.bar = 1, b.bar = 0, delta = 1, mu = 0)
 }
 
   
-# ******************************************************************************
-
-
-phyp = 
-function(q, alpha = 1, beta = 0, delta = 1, mu = 0, pm = c(1, 2, 3, 4), ...)
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Return cumulative probability of Hyperbolic PDF
-     
-    # Arguments:
-    #   alpha, beta - Shape Parameter, |beta| <= alpha
-    #   delta  - Scale Parameter, 0 <= delta
-    #   mu - Location Parameter
-
-    # FUNCTION:
-    
-    # FUNCTION:
-    
-    # Settings:
-    pm = pm[1]
-    
-    # Return Value:
-    ans = NA
-    if (pm == 1) return(.phyp1(q, alpha, beta, delta, mu, ...))
-    if (pm == 2) return(.phyp2(q, alpha, beta, delta, mu, ...))
-    if (pm == 3) return(.phyp3(q, alpha, beta, delta, mu, ...))
-    if (pm == 4) return(.phyp4(q, alpha, beta, delta, mu, ...))
-}
-
-
 # ------------------------------------------------------------------------------
 
 
@@ -672,6 +836,9 @@ function(q, alpha = 1, beta = 0, delta = 1, mu = 0, ...)
     #   delta  - Scale Parameter, 0 <= delta
     #   mu - Location Parameter
 
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Cumulative Probability:
@@ -703,6 +870,9 @@ function(q, zeta = 1, rho = 0, delta = 1, mu = 0, ...)
     #   delta  - Scale Parameter, 0 <= delta
     #   mu - Location Parameter
     
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Parameter Change:
@@ -729,6 +899,9 @@ function(q, xi = 1/sqrt(2), chi = 0, delta = 1, mu = 0, ...)
     #   xi, xhi - Shape Parameter, resulting |beta| <= alpha
     #   delta  - Scale Parameter, 0 <= delta
     #   mu - Location Parameter
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -759,6 +932,9 @@ function(q, a.bar = 1, b.bar = 0, delta = 1, mu = 0, ...)
     #   delta  - Scale Parameter, 0 <= delta
     #   mu - Location Parameter
     
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Parameter Change:
@@ -768,38 +944,6 @@ function(q, a.bar = 1, b.bar = 0, delta = 1, mu = 0, ...)
     # Return Value:
     ans = phyp(q, alpha, beta, delta, mu, ...)
     ans
-}
-
-
-# ******************************************************************************
-
-
-qhyp = 
-function(p, alpha = 1, beta = 0, delta = 1, mu = 0, pm = c(1, 2, 3, 4), ...)
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Returns quantiles of Hyperbolic PDF
-    
-    # Arguments:
-    #   alpha, beta - Shape Parameter, |beta| <= alpha
-    #   delta  - Scale Parameter, 0 <= delta
-    #   mu - Location Parameter
-
-    # Note:
-    #   This procedure will not run under Splus.
-
-    # FUNCTION:
-    
-    # Settings:
-    pm = pm[1]
-    
-    # Return Value:
-    ans = NA
-    if (pm == 1) return(.qhyp1(p, alpha, beta, delta, mu, ...))
-    if (pm == 2) return(.qhyp2(p, alpha, beta, delta, mu, ...))
-    if (pm == 3) return(.qhyp3(p, alpha, beta, delta, mu, ...))
-    if (pm == 4) return(.qhyp4(p, alpha, beta, delta, mu, ...))   
 }
 
 
@@ -821,6 +965,9 @@ function(p, alpha = 1, beta = 0, delta = 1, mu = 0, ...)
     # Note:
     #   This procedure will not run under Splus.
 
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Internal Functions:
@@ -866,6 +1013,9 @@ function(p, zeta = 1, rho = 0, delta = 1, mu = 0, ...)
     #   delta  - Scale Parameter, 0 <= delta
     #   mu - Location Parameter
     
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Parameter Change:
@@ -892,6 +1042,9 @@ function(p, xi = 1/sqrt(2), chi = 0, delta = 1, mu = 0, ...)
     #   zeta, chi - Shape Parameter, resulting |beta| <= alpha
     #   delta  - Scale Parameter, 0 <= delta
     #   mu - Location Parameter
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -922,6 +1075,9 @@ function(p, a.bar = 1, b.bar = 0, delta = 1, mu = 0, ...)
     #   delta  - Scale Parameter, 0 <= delta
     #   mu - Location Parameter
     
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Parameter Change:
@@ -933,49 +1089,6 @@ function(p, a.bar = 1, b.bar = 0, delta = 1, mu = 0, ...)
     ans
 }   
 
-
-# ******************************************************************************
-
-
-rhyp = 
-function (n, alpha = 1, beta = 0, delta = 1, mu = 0, pm = c(1, 2, 3, 4))
-{   # A function implemented by Diethelm Wuertz
-    
-    # Description:
-    #   Returns random deviates of Hyperbolic PDF
-    
-    # Arguments:
-    #   n - number of random deviates to be generated
-    #   alpha, beta - Shape Parameter, |beta| <= alpha
-    #   delta  - Scale Parameter, 0 <= delta
-    #   mu - Location Parameter
-    
-    # Notes:
-    #   I have removed my original Fortran program and replaced it by
-    #   the dhyperb() function from the HyperbolicDist Package, written
-    #   by David Scott, Ai-Wei Lee, Jennifer Tso, Richard Trendall.
-    #   License: GPL
-    
-    # FUNCTION:
-    
-    # Settings:
-    pm = pm[1]
-    
-    # Result:
-    ans = NA
-    if (pm == 1) ans = .rhyp1(n, alpha, beta, delta, mu)
-    if (pm == 2) ans = .rhyp2(n, alpha, beta, delta, mu)
-    if (pm == 3) ans = .rhyp3(n, alpha, beta, delta, mu)
-    if (pm == 4) ans = .rhyp4(n, alpha, beta, delta, mu)
-    
-    # Attributes:
-    attr(ans, "control") = c(dist = "hyp", alpha = alpha, beta = beta, 
-    delta = delta, mu = mu)
-    
-    # Return Value:
-    ans
-}   
-    
 
 # ------------------------------------------------------------------------------
 
@@ -998,6 +1111,9 @@ function (n, alpha = 1, beta = 0, delta = 1, mu = 0)
     #   the dhyperb() function from the HyperbolicDist Package, written
     #   by David Scott, Ai-Wei Lee, Jennifer Tso, Richard Trendall.
     #   License: GPL
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -1094,6 +1210,9 @@ function(n, zeta = 1, rho = 0, delta = 1, mu = 0)
     #   delta  - Scale Parameter, 0 <= delta
     #   mu - Location Parameter
     
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Parameter Change:
@@ -1120,6 +1239,9 @@ function(n, xi = 1/sqrt(2), chi = 0, delta = 1, mu = 0)
     #   zeta, chi - Shape Parameter, resulting |beta| <= alpha
     #   delta  - Scale Parameter, 0 <= delta
     #   mu - Location Parameter
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -1150,6 +1272,9 @@ function(n, a.bar = 1, b.bar = 0, delta  = 1, mu = 0)
     #   delta  - Scale Parameter, 0 <= delta
     #   mu - Location Parameter
     
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Parameter Change:
@@ -1165,36 +1290,15 @@ function(n, a.bar = 1, b.bar = 0, delta  = 1, mu = 0)
 # ------------------------------------------------------------------------------
 
 
-hypMode =
-function(alpha = 1, beta = 0, delta = 1, mu = 0, pm = c(1, 2, 3, 4))
-{   # A function implemented by Diethelm Wuertz
-    
-    # Description:
-    #   Computes the mode of the Hyperbolic PDF
-    
-    # FUNCTION:
-    
-    # Settings:
-    pm = pm[1]
-    
-    # Return Value:
-    ans = NA
-    if (pm == 1) return(.hyp1Mode(alpha, beta, delta, mu))
-    if (pm == 2) return(.hyp2Mode(alpha, beta, delta, mu))
-    if (pm == 3) return(.hyp3Mode(alpha, beta, delta, mu))
-    if (pm == 4) return(.hyp4Mode(alpha, beta, delta, mu))  
-}
-
-
-# ------------------------------------------------------------------------------
-
-
 .hyp1Mode =
 function(alpha = 1, beta = 0, delta = 1, mu = 0)
 {   # A function implemented by Diethelm Wuertz
     
     # Description:
     #   Computes the mode of the Hyperbolic PDF
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -1215,6 +1319,12 @@ function(zeta = 1, rho = 0, delta = 1, mu = 0)
     
     # Description:
     #   Computes the hyperbolic mode in the 2nd parameterization
+    
+    # Changes:
+    #
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -1237,6 +1347,9 @@ function(xi = 1/sqrt(2), chi = 0, delta = 1, mu = 0)
     
     # Description:
     #   Computes the hyperbolic mode in the 3rd parameterization
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -1262,6 +1375,9 @@ function(a.bar = 1, b.bar = 0, delta  = 1, mu = 0)
     # Description:
     #   Computes the hyperbolic mode in the 4th parameterization
     
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Parameter Change:
@@ -1275,61 +1391,27 @@ function(a.bar = 1, b.bar = 0, delta  = 1, mu = 0)
 
 
 ################################################################################
-# Normal Inverse Gaussian Distribution
+#  dnig                  Returns density for inverse Gaussian DF
+#  pnig                  Returns probability for for inverse Gaussian DF
+#  qnig                  Returns quantiles for for inverse Gaussian DF 
+#  rnig                  Returns random variates for inverse Gaussian DF
+#  .dnig1                 Internal function, alternative call
+#  .pnig1                 Internal function, alternative call
+#  .qnig1                 Internal function, alternative call
 
 
 dnig = 
 function(x, alpha = 1, beta = 0, delta = 1, mu = 0)
 {   # A function implemented by Diethelm Wuertz
 
-    dgh(x = x, alpha = alpha, beta = beta, delta = delta, mu = mu, 
-        lambda = -0.5)
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.dnig1 = 
-function (x, alpha = 1, beta = 0, delta = 1, mu = 0)
-{   # A function implemented by Diethelm Wuertz
+    # Changes:
+    #
     
-    # Description:
-    #   Return Normal Inverse Gaussian Density Function PDF
-    
-    # Arguments:
-    #   alpha, beta - Shape Parameter, |beta| <= alpha
-    #   delta  - Scale Parameter, 0 <= delta
-    #   mu - Location Parameter
-    
-    # Notes:
-    #   Function Calls:
-    #   Splus: 
-    #       Needs: xK1, x * Modified Bessel Function K1  
-    #   Fortran:
-    #       DLL/OBJ: rarm.dll rarm.obj
-    #       SUBROUTINE DNIG(density, x, n, alpha, beta, delta, mu)
-    #           density - density
-    #           x       - x-vector
-    #           n       - number of points
-    #           alpha, beta, delta, mu
-    #               - parameters of the density function
-
     # FUNCTION:
     
-    # Compute:
-    result = .Fortran("dnig",
-        as.double(1:length(x)),
-        as.double(x),
-        as.integer(length(x)),
-        as.double(alpha),
-        as.double(beta),
-        as.double(delta),
-        as.double(mu),
-        PACKAGE = "fBasics")[[1]]
-        
-    # Return Value:
-    result
+    # Density:
+    dgh(x = x, alpha = alpha, beta = beta, delta = delta, mu = mu, 
+        lambda = -0.5)
 }
 
 
@@ -1340,48 +1422,14 @@ pnig =
 function(q, alpha = 1, beta = 0, delta = 1, mu = 0)
 {   # A function implemented by Diethelm Wuertz
 
+    # Changes:
+    #
+    
+    # Function:
+    
+    # Probability:
     pgh(q = q, alpha = alpha, beta = beta, delta = delta, mu = mu, 
         lambda = -0.5)
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.pnig1 = 
-function (q, alpha = 1, beta = 0, delta = 1, mu = 0)
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Return cumulative probability of inverse Gaussian PDF:
-
-    # Arguments:
-    #   alpha, beta - Shape Parameter, |beta| <= alpha
-    #   delta  - Scale Parameter, 0 <= delta
-    #   mu - Location Parameter
-    
-    # Notes:
-    #   Function Calls:
-    #   SUBROUTINE PNIG(c, x, n, alpha, beta, delta, mu)
-    #       c - cumulative probability
-    #       q - q-vector
-    #       n - number of points
-    #       alpha, beta, delta, mu
-    #         - parameters of the density function
-
-    # FUNCTION:
-    result = .Fortran("pnig",
-        as.double(1:length(q)),
-        as.double(q),
-        as.integer(length(q)),
-        as.double(alpha),
-        as.double(beta),
-        as.double(delta),
-        as.double(mu),
-        PACKAGE = "fBasics")
-    
-    # Return Value:
-    result[[1]]
 }
 
 
@@ -1392,55 +1440,18 @@ qnig =
 function(p, alpha = 1, beta = 0, delta = 1, mu = 0)
 {   # A function implemented by Diethelm Wuertz
 
+    # Changes:
+    #
+    
+    # FUNCTION:
+    
+    # Quantiles
     qgh(p = p, alpha = alpha, beta = beta, delta = delta, mu = mu, 
         lambda = -0.5)
 }
 
 
 # ------------------------------------------------------------------------------
-
-
-.qnig1 = 
-function(p, alpha = 1, beta = 0, delta = 1, mu = 0)
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-
-    # Arguments:
-    #   alpha, beta - Shape Parameter, |beta| <= alpha
-    #   delta  - Scale Parameter, 0 <= delta
-    #   mu - Location Parameter
- 
-    # FUNCTIONS:
-    
-    # Internal Functions:
-    froot <<- function(x, alpha, beta, delta, mu = mu, p) {
-        pnig(q = x, alpha = alpha, beta = beta, delta = delta, mu = mu) - p 
-    }
-    
-    # Loop over all p's             
-    result = NULL   
-    for (pp in p) {
-        lower = -1
-        upper = +1          
-        counter = 0
-        iteration = NA
-        while (is.na(iteration)) {
-            iteration = .unirootNA13(f = froot, interval = c(lower, upper), 
-                alpha = alpha, beta = beta, delta = delta, mu = mu, p = pp)
-            counter = counter + 1
-            lower = lower-2^counter
-            upper = upper+2^counter
-        }       
-        result = c(result, iteration) 
-    }   
-    
-    # Return Value:
-    result 
-}   
-
-
-# ******************************************************************************
 
 
 rnig = 
@@ -1456,6 +1467,9 @@ function(n, alpha = 1, beta = 0, delta = 1, mu = 0)
     #   delta  - Scale Parameter, 0 <= delta
     #   mu - Location Parameter
 
+    # Changes:
+    #
+    
     # FUNCTION: 
     
     # Settings:
@@ -1497,8 +1511,149 @@ function(n, alpha = 1, beta = 0, delta = 1, mu = 0)
 }
 
 
+# ------------------------------------------------------------------------------
+
+
+.dnig1 = 
+function (x, alpha = 1, beta = 0, delta = 1, mu = 0)
+{   # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   Return Normal Inverse Gaussian Density Function PDF
+    
+    # Arguments:
+    #   alpha, beta - Shape Parameter, |beta| <= alpha
+    #   delta  - Scale Parameter, 0 <= delta
+    #   mu - Location Parameter
+    
+    # Notes:
+    #   Function Calls:
+    #   Splus: 
+    #       Needs: xK1, x * Modified Bessel Function K1  
+    #   Fortran:
+    #       DLL/OBJ: rarm.dll rarm.obj
+    #       SUBROUTINE DNIG(density, x, n, alpha, beta, delta, mu)
+    #           density - density
+    #           x       - x-vector
+    #           n       - number of points
+    #           alpha, beta, delta, mu
+    #               - parameters of the density function
+
+    # Changes:
+    #
+    
+    # FUNCTION:
+    
+    # Compute:
+    result = .Fortran("dnig",
+        as.double(1:length(x)),
+        as.double(x),
+        as.integer(length(x)),
+        as.double(alpha),
+        as.double(beta),
+        as.double(delta),
+        as.double(mu),
+        PACKAGE = "fBasics")[[1]]
+        
+    # Return Value:
+    result
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.pnig1 = 
+function (q, alpha = 1, beta = 0, delta = 1, mu = 0)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Return cumulative probability of inverse Gaussian PDF
+
+    # Arguments:
+    #   alpha, beta - Shape Parameter, |beta| <= alpha
+    #   delta  - Scale Parameter, 0 <= delta
+    #   mu - Location Parameter
+    
+    # Notes:
+    #   Function Calls:
+    #   SUBROUTINE PNIG(c, x, n, alpha, beta, delta, mu)
+    #       c - cumulative probability
+    #       q - q-vector
+    #       n - number of points
+    #       alpha, beta, delta, mu
+    #         - parameters of the density function
+
+    # Changes:
+    #
+    
+    # FUNCTION:
+    
+    # Probability:
+    result = .Fortran("pnig",
+        as.double(1:length(q)),
+        as.double(q),
+        as.integer(length(q)),
+        as.double(alpha),
+        as.double(beta),
+        as.double(delta),
+        as.double(mu),
+        PACKAGE = "fBasics")
+    
+    # Return Value:
+    result[[1]]
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.qnig1 = 
+function(p, alpha = 1, beta = 0, delta = 1, mu = 0)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+
+    # Arguments:
+    #   alpha, beta - Shape Parameter, |beta| <= alpha
+    #   delta  - Scale Parameter, 0 <= delta
+    #   mu - Location Parameter
+ 
+    # Changes:
+    #
+    
+    # FUNCTIONS:
+    
+    # Internal Functions:
+    froot <<- function(x, alpha, beta, delta, mu = mu, p) {
+        pnig(q = x, alpha = alpha, beta = beta, delta = delta, mu = mu) - p 
+    }
+    
+    # Loop over all p's             
+    result = NULL   
+    for (pp in p) {
+        lower = -1
+        upper = +1          
+        counter = 0
+        iteration = NA
+        while (is.na(iteration)) {
+            iteration = .unirootNA13(f = froot, interval = c(lower, upper), 
+                alpha = alpha, beta = beta, delta = delta, mu = mu, p = pp)
+            counter = counter + 1
+            lower = lower-2^counter
+            upper = upper+2^counter
+        }       
+        result = c(result, iteration) 
+    }   
+    
+    # Return Value:
+    result 
+}   
+
+
 ################################################################################
-# Distribution Sliders
+#  hypSlider             Displays hyperbolic distribution function
+#  nigSlider             Displays normal inverse Gausssian distribution function
 
 
 hypSlider = 
@@ -1508,6 +1663,9 @@ function()
     # Hyperbolic Distribution:
     #   dhyp(x, alpha = 1, beta = 0, delta = 1, mu = 0, pm = c(1, 2, 3, 4))
         
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Internal Function:
@@ -1578,6 +1736,9 @@ function()
     # Normal Inverse Gaussian Distribution:
     #   dnig(x, alpha = 1, beta = 0, delta = 1, mu = 0) 
 
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Internal Function:

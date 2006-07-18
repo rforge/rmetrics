@@ -33,12 +33,14 @@
 #  psymstb               Returns probabilities for symmetric stable DF
 #  qsymstb               Returns quantiles for symmetric stable DF
 #  rsymstb               Returns random variates for symmetric stable DF
+#  .unirootNA13           Searches internal function *symstb 
 # FUNCTIONS:            DESCRIPTION:
-#  stableMode            Computes stable mode
 #  dstable               Returns density for stable DF
 #  pstable               Returns probabilities for stable DF
 #  qstable               Returns quantiles for stable DF
 #  rstable               Returns random variates for stable DF
+#  stableMode            Computes stable mode
+#  .integrateStable       Integrates internal functions for *stable
 # FUNCTION:             DESCRIPTION:
 #  symstbSlider          Displays symmetric stable distribution function
 #  stableSlider          Displays stable distribution function
@@ -46,7 +48,10 @@
 
 
 ################################################################################
-# symstb
+#  dsymstb               Returns density for symmetric stable DF
+#  psymstb               Returns probabilities for symmetric stable DF
+#  qsymstb               Returns quantiles for symmetric stable DF
+#  rsymstb               Returns random variates for symmetric stable DF
 
 
 dsymstb = 
@@ -65,6 +70,9 @@ function (x, alpha)
     #   approximation to calculate the tail density and probability.
     #   This has still to be improved!
 
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Density:
@@ -102,6 +110,9 @@ function (q, alpha)
     #   approximation to calculate the tail density and probability.
     #   This has still to be improved!
     
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Return Value:
@@ -125,6 +136,9 @@ qsymstb =
 function(p, alpha)
 {   # A function implemented by Diethelm Wuertz
 
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Parameter Check:
@@ -186,6 +200,9 @@ function(n, alpha)
     #   of probability distributions. The results of 
     #   Chambers, Mallows, and Stuck is used.
 
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Calculate uniform and exponential distributed random numbers:
@@ -242,6 +259,11 @@ tol = .Machine$double.eps^0.25, ...)
     # Example:
     #   .unirootNA13(sin, c(1, 2)); .unirootNA13(sin, c(-1, 1))
         
+    # Changes:
+    #
+    
+    # FUNCTION:
+    
     # There is no Root:  
     if (is.null(args(f))) {  
         if (f(lower) * f(upper) >=0) return(NA)  
@@ -258,89 +280,13 @@ tol = .Machine$double.eps^0.25, ...)
 }  
 
 
-#*******************************************************************************
-# stable
-
-
-.integrateStable = 
-function (f, lower, upper, subdivisions, rel.tol, abs.tol, ...) 
-{   
-    # Integrate:
-    if (class(version) != "Sversion") {
-        # R:
-        f = match.fun(f)
-        ff = function(x) f(x, ...)
-        wk = .External("call_dqags", ff, 
-            rho = environment(), as.double(lower), 
-            as.double(upper), as.double(abs.tol), 
-            as.double(rel.tol), limit = as.integer(subdivisions), 
-            PACKAGE = "base")
-        ans = wk[c("value", "abs.error", "subdivisions")] 
-    } else {
-        # SPlus:
-        ans = integrate(f, lower, upper, subdivisions, rel.tol, abs.tol, ...) 
-    }
-    # Return Value:
-    ans
-
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-stableMode = 
-function(alpha, beta) 
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Compute the mode of the stable distribution function
-    
-    # Notes:
-    #   # Test for values close to beta = 1
-    #   alpha = seq(0, 2, by = 0.1)
-    #   ans = NULL
-    #   for ( i in 1:length(alpha) ) {
-    #     ans = rbind(ans, c(alpha[i], 
-    #       stableMode(alpha = alpha[i], beta = 0.99 ),
-    #       stableMode(alpha = alpha[i], beta = 0.99999 ),
-    #       stableMode(alpha = alpha[i], beta = 0.99999999 ),
-    #       stableMode(alpha = alpha[i], beta = 0.99999999999 ) ) ) }
-    #   ans
-    #
-    #   alpha          0.99       0.99999    0.99999999 0.99999999999
-    #   0.0    0.000000e+00  0.000000e+00  0.000000e+00  0.000000e+00
-    #   0.2   -3.214142e-01 -3.246759e-01 -3.246787e-01 -3.246788e-01
-    #   0.4   -6.105318e-01 -6.158562e-01 -6.158616e-01 -6.158616e-01
-    #   0.6   -6.550106e-01 -6.594746e-01 -6.594790e-01 -6.594790e-01
-    #   0.8   -5.558811e-01 -5.590032e-01 -5.590063e-01 -5.590063e-01
-    #   1.0   -4.271033e-01 -4.293078e-01 -4.293099e-01 -4.293099e-01
-    #   1.2   -3.074015e-01 -3.090820e-01 -3.090804e-01 -3.090804e-01
-    #   1.4   -2.050956e-01 -2.063979e-01 -2.063951e-01 -2.063951e-01
-    #   1.6   -1.199623e-01 -1.208875e-01 -1.208853e-01 -1.208853e-01
-    #   1.8   -5.098617e-02 -5.145758e-02 -5.145639e-02 -5.145639e-02
-    #   2.0   -7.487432e-05 -7.487432e-05 -7.487432e-05 -7.487432e-05
-
-    # FUNCTION:
-    
-    if (beta > 0.99999999999) beta = 0.99999999999
-    if (beta == 0) {
-        ans = 0 
-    } else {
-        if (alpha == 0) {
-            ans = 0
-        } else {
-            ans = optimize(f = dstable, interval = c(-0.7, 0), 
-                maximum = TRUE, alpha = alpha, beta = beta)$maximum
-        }
-    }
-    
-    # Return Value:
-    ans
-}
-    
-
-# ------------------------------------------------------------------------------
+################################################################################
+#  dstable               Returns density for stable DF
+#  pstable               Returns probabilities for stable DF
+#  qstable               Returns quantiles for stable DF
+#  rstable               Returns random variates for stable DF
+#  stableMode            Computes stable mode
+#  .integrateStable      Integrates internal functions for *stable
 
 
 dstable = 
@@ -369,6 +315,9 @@ function(x, alpha, beta, gamma = 1, delta = 0, pm = c(0, 1, 2))
     #       integrate()$value and integrate()$integral.
     #   optimize() works in both R and SPlus.
 
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Settings:
@@ -524,6 +473,9 @@ pstable =
 function(q, alpha, beta, gamma = 1, delta = 0, pm = c(0, 1, 2))
 {   # A function implemented by Diethelm Wuertz
 
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Settings:
@@ -671,6 +623,9 @@ qstable =
 function(p, alpha, beta, gamma = 1, delta = 0, pm = c(0, 1, 2))
 {   # A function implemented by Diethelm Wuertz
 
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Settings:
@@ -779,6 +734,9 @@ function(n, alpha, beta, gamma = 1, delta = 0, pm = c(0, 1, 2))
     #   Return random deviates from the stable family 
     #   of probability distributions.
 
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Parameter Check:
@@ -830,10 +788,103 @@ function(n, alpha, beta, gamma = 1, delta = 0, pm = c(0, 1, 2))
     # Return Value:
     ans
 }
+
+
+# ------------------------------------------------------------------------------
+
+
+stableMode = 
+function(alpha, beta) 
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Compute the mode of the stable distribution function
+    
+    # Notes:
+    #   # Test for values close to beta = 1
+    #   alpha = seq(0, 2, by = 0.1)
+    #   ans = NULL
+    #   for ( i in 1:length(alpha) ) {
+    #     ans = rbind(ans, c(alpha[i], 
+    #       stableMode(alpha = alpha[i], beta = 0.99 ),
+    #       stableMode(alpha = alpha[i], beta = 0.99999 ),
+    #       stableMode(alpha = alpha[i], beta = 0.99999999 ),
+    #       stableMode(alpha = alpha[i], beta = 0.99999999999 ) ) ) }
+    #   ans
+    #
+    #   alpha          0.99       0.99999    0.99999999 0.99999999999
+    #   0.0    0.000000e+00  0.000000e+00  0.000000e+00  0.000000e+00
+    #   0.2   -3.214142e-01 -3.246759e-01 -3.246787e-01 -3.246788e-01
+    #   0.4   -6.105318e-01 -6.158562e-01 -6.158616e-01 -6.158616e-01
+    #   0.6   -6.550106e-01 -6.594746e-01 -6.594790e-01 -6.594790e-01
+    #   0.8   -5.558811e-01 -5.590032e-01 -5.590063e-01 -5.590063e-01
+    #   1.0   -4.271033e-01 -4.293078e-01 -4.293099e-01 -4.293099e-01
+    #   1.2   -3.074015e-01 -3.090820e-01 -3.090804e-01 -3.090804e-01
+    #   1.4   -2.050956e-01 -2.063979e-01 -2.063951e-01 -2.063951e-01
+    #   1.6   -1.199623e-01 -1.208875e-01 -1.208853e-01 -1.208853e-01
+    #   1.8   -5.098617e-02 -5.145758e-02 -5.145639e-02 -5.145639e-02
+    #   2.0   -7.487432e-05 -7.487432e-05 -7.487432e-05 -7.487432e-05
+
+    # Changes:
+    #
+    
+    # FUNCTION:
+    
+    # Stable Mode:
+    if (beta > 0.99999999999) beta = 0.99999999999
+    if (beta == 0) {
+        ans = 0 
+    } else {
+        if (alpha == 0) {
+            ans = 0
+        } else {
+            ans = optimize(f = dstable, interval = c(-0.7, 0), 
+                maximum = TRUE, alpha = alpha, beta = beta)$maximum
+        }
+    }
+    
+    # Return Value:
+    ans
+}
     
 
+# ------------------------------------------------------------------------------
+
+
+.integrateStable = 
+function (f, lower, upper, subdivisions, rel.tol, abs.tol, ...) 
+{   # A function implemented by Diethelm Wuertz
+
+    # Changes:
+    #
+    
+    # FUNCTION:
+    
+    # Integrate:
+    if (class(version) != "Sversion") {
+        # R:
+        f = match.fun(f)
+        ff = function(x) f(x, ...)
+        wk = .External("call_dqags", ff, 
+            rho = environment(), as.double(lower), 
+            as.double(upper), as.double(abs.tol), 
+            as.double(rel.tol), limit = as.integer(subdivisions), 
+            PACKAGE = "base")
+        ans = wk[c("value", "abs.error", "subdivisions")] 
+    } else {
+        # SPlus:
+        ans = integrate(f, lower, upper, subdivisions, rel.tol, abs.tol, ...) 
+    }
+    # Return Value:
+    ans
+
+}
+
+
+
 ################################################################################
-# Distribution Sliders
+#  symstbSlider          Displays symmetric stable distribution function
+#  stableSlider          Displays stable distribution function
 
 
 symstbSlider = 
@@ -842,6 +893,9 @@ function()
 
     # Description
     #   Displays the symmetric stable distribution
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -902,6 +956,9 @@ function()
     # Description:
     #   Displays the stable distribution
 
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Internal Function:

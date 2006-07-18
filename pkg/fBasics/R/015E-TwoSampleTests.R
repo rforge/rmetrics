@@ -71,6 +71,9 @@ function(x, y, title = NULL, description = NULL)
     # Note:
     #   A function partly copied from "stats"
     
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Call:
@@ -150,6 +153,9 @@ title = NULL, description = NULL)
     # Description:
     #   Correlation Tests
        
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Test:
@@ -184,6 +190,9 @@ function(x, y, title = NULL, description = NULL)
     #   The function 't.test' comes in R and SPlus with the same
     #   arguments, so this function 'tTest' can be used also under 
     #   SPlus.
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -310,6 +319,9 @@ function(x, y, title = NULL, description = NULL)
     # Note:
     #   A function linked to "stats"
     
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Call:
@@ -390,6 +402,9 @@ title = NULL, description = NULL)
     # Description:
     #   Correlation Tests
        
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Test:
@@ -427,6 +442,9 @@ function(x, y, title = NULL, description = NULL)
     
     # Notes:
     #   A modified copy originally from R's ctest package Version 1.8.1
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -525,6 +543,9 @@ function(x, y, title = NULL, description = NULL)
     # Note:
     #   # A function linked to "stats"
 
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Call:
@@ -590,6 +611,9 @@ function(x, y, title = NULL, description = NULL)
     # Note:
     #   A function linked to "stats"
     
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Call:
@@ -653,6 +677,9 @@ title = NULL, description = NULL)
     # Description:
     #   Correlation Tests
        
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Test:
@@ -686,6 +713,9 @@ function(x, y, title = NULL, description = NULL)
     
     # Note:
     #   A function copied from "stats" for SPlus compatibility
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -788,6 +818,9 @@ function(x = NULL, m, n = m)
     # Example:
     #   dansariw(m = 3, n = 4)
     
+    # Changes:
+    #
+    
     # FUNCTION:
     
     astart = 0
@@ -835,6 +868,11 @@ if (class(version) != "Sversion") {
 function(p, m, n) 
 {   # A function Implemented by Diethelm Wuertz
 
+    # Changes:
+    #
+    
+    # FUNCTION:
+    
     # Internal R Function:
     .C("pansari", as.integer(length(q)), p = as.double(q),
         as.integer(m), as.integer(n), PACKAGE = "stats")$p 
@@ -861,6 +899,8 @@ function(q = NULL, m, n = m)
     #       .C("pansari", as.integer(length(q)), p = as.double(q),
     #           as.integer(m), as.integer(n), PACKAGE = "stats")$p }
     
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -910,6 +950,11 @@ if (class(version) != "Sversion") {
 function(p, m, n) 
 {   # A function Implemented by Diethelm Wuertz
 
+    # Changes:
+    #
+    
+    # FUNCTION:
+    
     # Internal R Function:
     .C("qansari", as.integer(length(p)), q = as.double(p),
         as.integer(m), as.integer(n), PACKAGE = "stats")$q 
@@ -922,8 +967,6 @@ function(p, m, n)
 qansariw =
 function(p, m, n = m)
 {   # A function Implemented by Diethelm Wuertz
-
-    # FUNCTION:
     
     # Arguments:
     #   p - if p is null, then all available quantiles are returned, 
@@ -939,6 +982,10 @@ function(p, m, n = m)
     #       .C("qansari", as.integer(length(p)), q = as.double(p),
     #           as.integer(m), as.integer(n), PACKAGE = "stats")$q }
     
+    # Changes:
+    #
+    
+    # FUNCTION:
     
     # Settings:
     P = pansariw(q = NULL, m = m, n = n)
@@ -964,6 +1011,11 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
 exact = TRUE, conf.int = FALSE, conf.level = 0.95, ...)
 {
     # A modifed copy from R 1.9.1
+    
+    # Changes:
+    #
+    
+    # FUNCTION:
     
     # Data Set Name:
     DNAME = paste(deparse(substitute(x)), "and", deparse(substitute(y)))
@@ -1206,6 +1258,9 @@ function(x, y, title = NULL, description = NULL)
     # Notes:
     #   A modified copy originally from R's ctest package Version 1.8.1
     
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Call:
@@ -1275,6 +1330,9 @@ title = NULL, description = NULL)
     # Description:
     #   Correlation Tests
        
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Test:
@@ -1310,7 +1368,10 @@ function(x, y, title = NULL, description = NULL)
     #   title - a character string which allows for a project title.
     
     # Note:
-    #   # A function linked to "stats"
+    #   A function linked to "stats"
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -1407,7 +1468,10 @@ function(x, y, title = NULL, description = NULL)
     #   title - a character string which allows for a project title.
     
     # Note:
-    #   # A function linked to "stats"
+    #   A function linked to "stats"
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -1533,14 +1597,16 @@ function(x, y, title = NULL, description = NULL)
     # Note:
     #   # A function linked to "stats"
     
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Call:
     call = match.call()
     
     # Test:
-    test = list()
-    
+    test = list()  
         
     # Data Set Name:
     DNAME = paste(deparse(substitute(x)), "and", deparse(substitute(y)))

@@ -29,8 +29,9 @@
 
 # ##############################################################################
 # FUNCTION:                 PORTABLE INNOVATIONS:
-#  set.lcgseed               Set initial random seed
-#  get.lcgseed               Get the current valus of the random seed
+#  set.lcgseed               Sets initial random seed
+#  get.lcgseed               Gets the current valus of the random seed
+# FUNCTION:                 DISTRIBUTIONS:
 #  runif.lcg                 Uniform linear congruational generator
 #  rnorm.lcg                 Normal linear congruational generator
 #  rt.lcg                    Student-t linear congruational generator
@@ -52,7 +53,12 @@
 #  Example:
 #    set.lcgseed(4711)
 #    cbind(runif.lcg(100), rnorm.lcg(100), rt.lcg(100, df=4))
- 
+
+
+################################################################################
+#  set.lcgseed               Sets initial random seed
+#  get.lcgseed               Gets the current valus of the random seed
+
    
 set.lcgseed = 
 function(seed = 4711) 
@@ -62,7 +68,10 @@ function(seed = 4711)
     #   Sets the random seed for the linear congruential 
     #   random number generator
     
-    # FUNCTION
+    # Changes:
+    #
+    
+    # FUNCTION:
     
     # Return Value:
     lcg.seed <<- seed
@@ -87,7 +96,10 @@ function()
 }
      
 
-# ------------------------------------------------------------------------------
+# ##############################################################################
+#  runif.lcg                 Uniform linear congruational generator
+#  rnorm.lcg                 Normal linear congruational generator
+#  rt.lcg                    Student-t linear congruational generator
 
      
 runif.lcg = 
@@ -112,7 +124,10 @@ function(n, min = 0, max = 1)
     #    N. S. Altman. ``Bitwise Behavior of Random Number Generators,'' 
     #    SIAM J. Sci. Stat. Comput., 9(5), September, pps. 941-949, 1988
     
-    # FUNCTION
+    # Changes:
+    #
+    
+    # FUNCTION:
     
     # Initialize:
     if(!exists("lcg.seed")) lcg.seed <<- 4711
@@ -143,7 +158,10 @@ function(n, mean = 0, sd = 1)
     #    A linear congruential generator for normal distributed
     #    random numbers
    
-    # FUNCTION
+    # Changes:
+    #
+    
+    # FUNCTION:
     
     # This is slow, but portable between R and SPlus
     (qnorm(runif.lcg(n = n, min = 0, max = 1)) - mean)/sd^2
@@ -161,7 +179,10 @@ function(n, df)
     #    A linear congruential generator for Sudent-t distributed
     #    random numbers
     
-    # FUNCTION
+    # Changes:
+    #
+    
+    # FUNCTION:
     
     # This is slow, but portable between R and SPlus
     qt(runif.lcg(n = n, min = 0, max = 1), df = df)

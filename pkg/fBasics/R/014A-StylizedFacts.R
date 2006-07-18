@@ -31,14 +31,32 @@
 # FUNCTION:             DESCRIPTION:
 #  acfPlot               Displays autocorrelations function plot
 #  pacfPlot              Displays partial autocorrelation function plot
-#  ccfPlot               Cross correlation function plot
+#  ccfPlot               Displays cross correlation function plot
 #  teffectPlot           Estimates and plots the Taylor effect
 #  lmacfPlot             Estimates and plots the long memory ACF
 #  lacfPlot              Plots lagged autocorrelations
 #  logpdfPlot            Returns a pdf plot on logarithmic scale(s)
+#  .logpdfPlot            Internal function called by 'logpdf'
+#  .loglogpdfPlot         Internal function called by 'logpdf'
+#  .histpdf               Internal function called by '.log[log]pdf'
 #  qqgaussPlot           Returns a Gaussian quantile-quantile plot
 #  scalinglawPlot        Evaluates and plots scaling law behavior
 ################################################################################
+
+
+################################################################################
+#  acfPlot               Displays autocorrelations function plot
+#  pacfPlot              Displays partial autocorrelation function plot
+#  ccfPlot               Displays cross correlation function plot
+#  teffectPlot           Estimates and plots the Taylor effect
+#  lmacfPlot             Estimates and plots the long memory ACF
+#  lacfPlot              Plots lagged autocorrelations
+#  logpdfPlot            Returns a pdf plot on logarithmic scale(s)
+#  .logpdfPlot            Internal function called by 'logpdf'
+#  .loglogpdfPlot         Internal function called by 'logpdf'
+#  .histpdf               Internal function called by '.log[log]pdf'
+#  qqgaussPlot           Returns a Gaussian quantile-quantile plot
+#  scalinglawPlot        Evaluates and plots scaling law behavior
 
 
 acfPlot = 
@@ -47,6 +65,9 @@ function(x, labels = TRUE, ...)
 
     # Description:
     #   Autocorrelations function plot
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -80,6 +101,9 @@ function(x, labels = TRUE, ...)
 
     # Description:
     #   Partial autocorrelation function plot
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -120,6 +144,9 @@ type = c("correlation", "covariance", "partial"), labels = TRUE, ...)
 
     # Description:
     #   Cross correlation function plot
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -166,6 +193,9 @@ ymax = NA, standardize = TRUE, labels = TRUE, ...)
     # Description:
     #   Evaluate and Display Taylor Effect
 
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Convert Type:
@@ -222,6 +252,9 @@ details = TRUE, ...)
     # Description:
     #   Evaluate and display long memory autocorrelation Function.
 
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Convert Type:
@@ -318,6 +351,9 @@ function(x, n = 12, lag.max = 20, labels = TRUE, ...)
     # Arguments:
     #   x - numeric vector of prices or Index Values:
     
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Convert Type:
@@ -409,94 +445,6 @@ function(x, n = 12, lag.max = 20, labels = TRUE, ...)
 }
 
 
-# ******************************************************************************
-
-
-.histpdf =
-function(x, cells = "FD") 
-{ 
-    # Internal Function:
-    result = hist(x, nclass = cells, plot = FALSE)
-    prob.counts = result$counts/sum(result$counts) / diff(result$breaks)[1]
-    
-    # Return Value:
-    list(breaks = result$breaks, counts = prob.counts) 
-}
-
-
-
-# ------------------------------------------------------------------------------
-
-
-.loglogpdfPlot = 
-function(x, n = 50, cells = "FD", doplot = TRUE, ...) 
-{
-    # Histogram Count & Breaks:
-    histogram = .histpdf(x, cells = cells)
-    yh = histogram$counts
-    xh = histogram$breaks
-    xh = xh[1:(length(xh)-1)] + diff(xh)/2
-    xh = xh[yh > 0]
-    yh = yh[yh > 0]
-    yh1 = yh[xh < 0]
-    xh1 = abs(xh[xh < 0])
-    yh2 = yh[xh > 0]
-    xh2 = xh[xh > 0]
-    if (doplot) {
-        plot(log(xh1), log(yh1), type = "p", ...) 
-        par(err = -1)
-        points(log(xh2), log(yh2), col = 2) 
-    }
-    
-    # Compare with a Gaussian plot:
-    xg = seq(from = min(xh1[1], xh[2]), 
-        to = max(xh1[length(xh1)], xh2[length(xh2)]), length = n)
-    xg = xg[xg > 0]
-    yg = log(dnorm(xg, mean(x), sqrt(var(x))))
-    if (doplot) {
-        par(err = -1)
-        lines(log(xg), yg, col = 3)
-    }
-    
-    # Return Value:
-    invisible(list(breaks = c(xh1, xh2), counts = c(yh1, yh2), 
-        fbreaks = c(-rev(xg), xg), fcounts = c(-rev(yg), yg))) 
-        
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.logpdfPlot = 
-function(x, n = 50, doplot = TRUE, ...) 
-{
-    # Histogram Count & Break-Midpoints:
-    histogram = .histpdf(x, cells = "FD")
-    yh = histogram$counts
-    xh = histogram$breaks
-    xh = xh[1:(length(xh)-1)] + diff(xh)/2
-    xh = xh[yh > 0]
-    yh = log(yh[yh > 0])
-    if (doplot) {
-        par(err = -1)
-        plot(xh, yh, type = "p", ...)
-    } 
-    
-    # Compare with a Gaussian Plot:
-    xg = seq(from = xh[1], to = xh[length(xh)], length = n)
-    yg = log(dnorm(xg, mean(x), sqrt(var(x))))
-    if (doplot) { 
-        par(err = -1)
-        lines(xg, yg, col = 2)
-    }
-    
-    # Return Value:
-    result = invisible(list(breaks = xh, counts = yh, 
-        fbreaks = xg, fcounts = yg))
-}
-
-
 # ------------------------------------------------------------------------------
 
 
@@ -511,6 +459,9 @@ doplot = TRUE, labels = TRUE, ...)
     #   and return the break-midpoints and the
     #   counts obtained from the histogram of
     #   the empirical data.
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -560,6 +511,112 @@ doplot = TRUE, labels = TRUE, ...)
 # ------------------------------------------------------------------------------
 
 
+.histpdf =
+function(x, cells = "FD") 
+{   # A function implemented by Diethelm Wuertz
+
+    # Changes:
+    #
+    
+    # FUNCTION:
+    
+    # Internal Function:
+    result = hist(x, nclass = cells, plot = FALSE)
+    prob.counts = result$counts/sum(result$counts) / diff(result$breaks)[1]
+    
+    # Return Value:
+    list(breaks = result$breaks, counts = prob.counts) 
+}
+
+
+
+# ------------------------------------------------------------------------------
+
+
+.loglogpdfPlot = 
+function(x, n = 50, cells = "FD", doplot = TRUE, ...) 
+{   # A function implemented by Diethelm Wuertz
+
+    # Changes:
+    #
+    
+    # FUNCTION:
+    
+    # Histogram Count & Breaks:
+    histogram = .histpdf(x, cells = cells)
+    yh = histogram$counts
+    xh = histogram$breaks
+    xh = xh[1:(length(xh)-1)] + diff(xh)/2
+    xh = xh[yh > 0]
+    yh = yh[yh > 0]
+    yh1 = yh[xh < 0]
+    xh1 = abs(xh[xh < 0])
+    yh2 = yh[xh > 0]
+    xh2 = xh[xh > 0]
+    if (doplot) {
+        plot(log(xh1), log(yh1), type = "p", ...) 
+        par(err = -1)
+        points(log(xh2), log(yh2), col = 2) 
+    }
+    
+    # Compare with a Gaussian plot:
+    xg = seq(from = min(xh1[1], xh[2]), 
+        to = max(xh1[length(xh1)], xh2[length(xh2)]), length = n)
+    xg = xg[xg > 0]
+    yg = log(dnorm(xg, mean(x), sqrt(var(x))))
+    if (doplot) {
+        par(err = -1)
+        lines(log(xg), yg, col = 3)
+    }
+    
+    # Return Value:
+    invisible(list(breaks = c(xh1, xh2), counts = c(yh1, yh2), 
+        fbreaks = c(-rev(xg), xg), fcounts = c(-rev(yg), yg))) 
+        
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.logpdfPlot = 
+function(x, n = 50, doplot = TRUE, ...) 
+{   # A function implemented by Diethelm Wuertz
+
+    # Changes:
+    #
+    
+    # FUNCTION:
+    
+    # Histogram Count & Break-Midpoints:
+    histogram = .histpdf(x, cells = "FD")
+    yh = histogram$counts
+    xh = histogram$breaks
+    xh = xh[1:(length(xh)-1)] + diff(xh)/2
+    xh = xh[yh > 0]
+    yh = log(yh[yh > 0])
+    if (doplot) {
+        par(err = -1)
+        plot(xh, yh, type = "p", ...)
+    } 
+    
+    # Compare with a Gaussian Plot:
+    xg = seq(from = xh[1], to = xh[length(xh)], length = n)
+    yg = log(dnorm(xg, mean(x), sqrt(var(x))))
+    if (doplot) { 
+        par(err = -1)
+        lines(xg, yg, col = 2)
+    }
+    
+    # Return Value:
+    result = invisible(list(breaks = xh, counts = yh, 
+        fbreaks = xg, fcounts = yg))
+}
+
+
+# ------------------------------------------------------------------------------
+
+
 qqgaussPlot = 
 function(x, span = 5, col = "steelblue4", labels = TRUE, ...)
 {   # A function implemented by Diethelm Wuertz
@@ -567,6 +624,9 @@ function(x, span = 5, col = "steelblue4", labels = TRUE, ...)
     # Description:
     #   Returns a Quantile-Quantile plot.
 
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Settings:
@@ -619,6 +679,9 @@ labels = TRUE, details = TRUE, ...)
     #   Investigates the scaling law.
     #   The input "x" requires log-returns.
 
+    # Changes:
+    #
+    
     # FUNCTION: 
     
     # Convert Type:

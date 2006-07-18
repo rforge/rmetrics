@@ -28,28 +28,42 @@
 
 
 ################################################################################
-# FUNCTION:           DESCRIPTION:    
-#  fDISTFIT            Class Representation
-#  .normFit            Fits Parameters of a Normal Density
-#  tFit                Fits parameters of a Student-t Density
-#  ghFit               Fits parameters of a generalized hyperbolic Density
-#  hypFit              Fits parameters of a hyperbolic Density
-#  nigFit              Fits parameters of a normal inverse Gaussian Density
-#  ssdFit              Fits probability densities using smoothing spline ANOVA
-#   print.ssd           S3 Print Method
-# IFUNCTION:          INTERNAL USED BY SMOOTHED SPLINE DISTRIBUTION:         
-#  .ssden              ... Internal functions which are required by ssdFit
-#  .mkterm.cubic1
-#  .mkphi.cubic
-#  .mkrk.cubic
-#  .gauss.quad
-#  .sspdsty
-#  .nlm0
-# FUNCTION:           FUNCTIONS FOR SPLUS VERSION:
-#  much.fun
-#  which.min
-#  which.max
+# FUNCTION:            DESCRIPTION:    
+#  'fDISTFIT'           S4 Class representation
+#  print.fDISTFIT       Prints Results from a Fitted Distribution
+# FUNCTION:            NORMAL DISTRIBUTION:
+#  .normFit             Fits parameters of a Normal density
+# FUNCTION:            STUDENT DISTRIBUTION:
+#  tFit                 Fits parameters of a Student-t density
+# FUNCTION:            STABLE DISTRIBUTION:
+#  stableFit            Fits parameters of a stable density
+#  .phiStable            Creates contour table for McCulloch estimators
+#  .qStableFit           Estimates stable parameters by McCulloch approach
+#  .mleStableFit         Estimates stable parameters by MLE approach
+# FUNCTION:            GENERALIZED DISTRIBUTION:
+#  ghFit                Fits parameters of a generalized hyperbolic density
+#  hypFit               Fits parameters of a hyperbolic density
+#  nigFit               Fits parameters of a normal inverse Gaussian density
+# FUNCTION:            SMOOTHING SPLINE ANOVA:
+#  ssdFit               Fits probability densities using smoothing spline ANOVA
+#   print.ssd           S3 Print Method        
+#  .ssden               Internal function required by ssdFit
+#  .ssden.mkterm.cubic1 Internal function required by ssdFit
+#  .ssden.mkphi.cubic   Internal function required by ssdFit
+#  .ssden.mkrk.cubic    Internal function required by ssdFit
+#  .ssden.gauss.quad    Internal function required by ssdFit 
+#  .ssden.sspdsty       Internal function required by ssdFit
+#  .ssden.nlm0          Internal function required by ssdFit
+# FUNCTION:            FUNCTIONS FOR SPLUS VERSION:
+#  much.fun             S-PLUS: R substitute for 'much.fun'
+#  which.min            S-PLUS: R substitute for 'which.min'
+#  which.max            S-PLUS: R substitute for 'which.max'
 ################################################################################
+
+
+################################################################################   
+#  'fDISTFIT'           S4 Class Representation
+#  print.fDISTFIT       Prints Results from a Fitted Distribution
 
 
 setClass("fDISTFIT", 
@@ -64,8 +78,53 @@ setClass("fDISTFIT",
 )
 
 
+# ------------------------------------------------------------------------------
+
+
+print.fDISTFIT =
+function(x, ...)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Prints Results from a Fitted Distribution
+    
+    # Changes:
+    #
+    
+    # FUNCTION:
+    
+    # Fit:
+    object = x@fit
+    
+    # Title:
+    cat("\nTitle:\n ")
+    cat(x@title, "\n")
+    
+    # Call:
+    cat("\nCall:\n ")
+    cat(paste(deparse(x@call), sep = "\n", collapse = "\n"), 
+        "\n", sep = "")
+      
+    # Model: 
+    cat("\nModel:\n ", x@model, "\n", sep = "")
+    
+    # Estimate:
+    cat("\nEstimated Parameter(s):\n")
+    print(x@fit$estimate)
+        
+    # Description:
+    cat("\nDescription:\n ")
+    cat(x@description, "\n\n")
+        
+    # Return Value:
+    invisible()
+}
+
+
+
+
 ################################################################################
-# Normal Distribution Fit
+#  .normFit             Fits parameters of a Normal density
 
 
 .normFit = 
@@ -81,6 +140,9 @@ description = NULL, ...)
     #   Function Calls: nlminb(), density() 
     #   The function normFit() can be found in the Rmetrics
     #       chapter GarchDistributions.
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -135,7 +197,7 @@ description = NULL, ...)
 
 
 ################################################################################
-# Student-t Fit
+#  tFit                 Fits parameters of a Student-t density
 
 
 tFit = 
@@ -152,6 +214,9 @@ title = NULL, description = NULL, ...)
     
     # Example:
     #   tFit(rt(1000, df=4))
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -224,7 +289,49 @@ title = NULL, description = NULL, ...)
 
 
 ################################################################################
-# Stable Distribution - delta=1 and gamma=0 fixed!
+#  stableFit            Fits parameters of a stable density
+#  .phiStable            Creates contour table for McCulloch estimators
+#  .qStableFit           Estimates stable parameters by McCulloch approach
+#  .mleStableFit         Estimates stable parameters by MLE approach
+
+
+stableFit = 
+function(x, alpha = 1.75, beta = 0, gamma = 1, delta = 0, 
+type = c("q", "mle"), doplot = TRUE, trace = FALSE, 
+title = NULL, description = NULL)
+{   # A function implemented by Diethelm Wuertz 
+
+    # Description 
+    #   Stable Parameter Estimation
+    
+    # Changes:
+    #
+    
+    # FUNCTION:
+
+    # Start Values: Use Quantile Method:
+    ans = .qStableFit(x, doplot, title, description)
+    
+    # Continue with MLE Approach:
+    if (type[1] == "mle") {
+        Alpha = ans@fit$estimate[1]
+        Beta  = ans@fit$estimate[2]
+        Gamma = ans@fit$estimate[3]
+        Delta = ans@fit$estimate[4]
+        if (is.na(Alpha)) Alpha = alpha
+        if (is.na(Beta)) Beta = beta
+        if (is.na(Gamma)) Gamma = gamma
+        if (is.na(Delta)) Delta = delta
+        ans = .mleStableFit(x, Alpha, Beta, Gamma, Delta, doplot, 
+            trace, title, description)
+    }
+            
+    # Return Value:
+    ans
+}
+
+
+# ------------------------------------------------------------------------------
 
 
 .phiStable =
@@ -232,7 +339,13 @@ function()
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Create Contour Table for McCulloch Estimators
+    #   Creates contour table for McCulloch estimators
+    
+    # Note:
+    #   Stable Distribution - delta=1 and gamma=0 fixed!
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -292,10 +405,13 @@ function(x, doplot = TRUE, title = NULL, description = NULL)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Estimate Stable Parameters by McCulloch Approach
+    #   Estimates stable parameters by McCulloch approach
     
     # Note:
     #   This implementation assumes delta=1 and gamma=0
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -396,10 +512,13 @@ trace = FALSE, title = NULL, description = NULL)
 {   # A function implemented by Diethelm Wuertz
     
     # Description:
-    #   Estimates Stable Parameters by MLE approach
+    #   Estimates stable parameters by MLE approach
     
     # Note:
     #   This implementation assumes delta=1 and gamma=0
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -476,44 +595,10 @@ trace = FALSE, title = NULL, description = NULL)
 }
 
 
-# ------------------------------------------------------------------------------
-
-
-stableFit = 
-function(x, alpha = 1.75, beta = 0, gamma = 1, delta = 0, 
-type = c("q", "mle"), doplot = TRUE, trace = FALSE, 
-title = NULL, description = NULL)
-{   # A function implemented by Diethelm Wuertz 
-
-    # Description 
-    #   Stable Parameter Estimation
-    
-    # FUNCTION:
-
-    # Start Values: Use Quantile Method:
-    ans = .qStableFit(x, doplot, title, description)
-    
-    # Continue with MLE Approach:
-    if (type[1] == "mle") {
-        Alpha = ans@fit$estimate[1]
-        Beta  = ans@fit$estimate[2]
-        Gamma = ans@fit$estimate[3]
-        Delta = ans@fit$estimate[4]
-        if (is.na(Alpha)) Alpha = alpha
-        if (is.na(Beta)) Beta = beta
-        if (is.na(Gamma)) Gamma = gamma
-        if (is.na(Delta)) Delta = delta
-        ans = .mleStableFit(x, Alpha, Beta, Gamma, Delta, doplot, 
-            trace, title, description)
-    }
-            
-    # Return Value:
-    ans
-}
-
-
 ################################################################################
-# Hyperbolic Distribution:
+#  ghFit                Fits parameters of a generalized hyperbolic density
+#  hypFit               Fits parameters of a hyperbolic density
+#  nigFit               Fits parameters of a normal inverse Gaussian density
 
 
 ghFit = 
@@ -522,12 +607,11 @@ span = "auto", trace = FALSE, title = NULL, description = NULL, ...)
 {   # A function implemented by Diethelm Wuertz
     
     # Description:
-    #   Return Maximum log-likelihood estimated
-    #   Paramters for Hyperbolic Distribution:
-       
-    # Notes:
-    #   Function Calls: density() 
+    #   Fits parameters of a generalized hyperbolic density
 
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Transform:
@@ -629,12 +713,11 @@ span = "auto", trace = FALSE, title = NULL, description = NULL, ...)
 {   # A function implemented by Diethelm Wuertz
     
     # Description:
-    #   Return Maximum log-likelihood estimated
-    #   Paramters for Hyperbolic Distribution:
-       
-    # Notes:
-    #   Function Calls: density() 
+    #   Fits parameters of a hyperbolic density 
 
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Transform:
@@ -732,8 +815,10 @@ span = "auto", trace = FALSE, title = NULL, description = NULL, ...)
 {   # A function implemented by Diethelm Wuertz
     
     # Description:
-    #   Return Maximum log-likelihood estimated
-    #   Paramters for Inverse Gaussian Distribution:
+    #   Fits parameters of a normal inverse Gaussian density
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -813,58 +898,40 @@ span = "auto", trace = FALSE, title = NULL, description = NULL, ...)
 
 
 ################################################################################
-# Print Method
-
-
-print.fDISTFIT =
-function(x, ...)
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Prints Results from a Fitted Distribution
-    
-    # FUNCTION:
-    
-    # Fit:
-    object = x@fit
-    
-    # Title:
-    cat("\nTitle:\n ")
-    cat(x@title, "\n")
-    
-    # Call:
-    cat("\nCall:\n ")
-    cat(paste(deparse(x@call), sep = "\n", collapse = "\n"), 
-        "\n", sep = "")
-      
-    # Model: 
-    cat("\nModel:\n ", x@model, "\n", sep = "")
-    
-    # Estimate:
-    cat("\nEstimated Parameter(s):\n")
-    print(x@fit$estimate)
-        
-    # Description:
-    cat("\nDescription:\n ")
-    cat(x@description, "\n\n")
-        
-    # Return Value:
-    invisible()
-}
-
-
-
-################################################################################
-# ssdFit  
+#  ssdFit               Fits probability densities using smoothing spline ANOVA
+#   print.ssd           S3 Print Method        
+#  .ssden               Internal function required by ssdFit
+#  .ssden.mkterm.cubic1 Internal function required by ssdFit
+#  .ssden.mkphi.cubic   Internal function required by ssdFit
+#  .ssden.mkrk.cubic    Internal function required by ssdFit
+#  .ssden.gauss.quad    Internal function required by ssdFit 
+#  .ssden.sspdsty       Internal function required by ssdFit
+#  .ssden.nlm0          Internal function required by ssdFit
+# ------------------------------------------------------------------------------
+# Code Copied from:
+#   Package: gss
+#   Version: 0.9-3
+#   Depends: R (>= 1.7.0)
+#   Title: General Smoothing Splines
+#   Author: Chong Gu <chong@stat.purdue.edu>
+#   Maintainer: Chong Gu <chong@stat.purdue.edu>
+#   Description: A comprehensive package for structural multivariate
+#           function estimation using smoothing splines.
+#   License: GPL
+#   Packaged: Thu Sep 23 16:28:03 2004
 
 
 ssdFit = 
 function (x, alpha = 1.4, seed = NULL, title = NULL, description = NULL) 
-{
+{   # A function implemented by Diethelm Wuertz
+
     # Description:
     #   Estimate probability densities using smoothing spline ANOVA 
     #   models with cubic spline, linear spline, or thin-plate spline 
     #   marginals for numerical variables.
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -885,13 +952,16 @@ function (x, alpha = 1.4, seed = NULL, title = NULL, description = NULL)
 }
 
 
-################################################################################
-# Print Method
+# ------------------------------------------------------------------------------
 
 
 print.ssd = 
 function(x, ...)
-{
+{   # A function implemented by Diethelm Wuertz
+
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # call
@@ -919,38 +989,21 @@ function(x, ...)
 }
 
 
-################################################################################
-# INTERNAL FUNCTIONS:          
-#  .ssden
-#  .mkterm.cubic1
-#  .mkphi.cubic
-#  .mkrk.cubic
-#  .gauss.quad
-#  .sspdsty
-#  .nlm0
-################################################################################
-# Code Copied from:
-#   Package: gss
-#   Version: 0.9-3
-#   Depends: R (>= 1.7.0)
-#   Title: General Smoothing Splines
-#   Author: Chong Gu <chong@stat.purdue.edu>
-#   Maintainer: Chong Gu <chong@stat.purdue.edu>
-#   Description: A comprehensive package for structural multivariate
-#           function estimation using smoothing splines.
-#   License: GPL
-#   Packaged: Thu Sep 23 16:28:03 2004
-################################################################################
+# ------------------------------------------------------------------------------
 
 
 .ssden = 
 function (formula, data = list(), alpha = 1.4, weights = NULL, subset, 
 nbasis = NULL, seed = NULL, domain = as.list(NULL), ext = 0.05, 
 prec = 1.0e-07, maxiter = 30) 
-{
+{   # An adapted copy from contributed R package gss
+
     # Description:
     #   Fit density model
      
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Obtain model frame and model terms:
@@ -984,7 +1037,7 @@ prec = 1.0e-07, maxiter = 30)
     id.basis = sample(nobs, nbasis, prob = cnt2)
     
     # Generate terms:
-    term = .mkterm.cubic1(mf, domain)
+    term = .ssden.mkterm.cubic1(mf, domain)
     term$labels = term$labels[term$labels != "1"]
     
     # Generate default quadrature:
@@ -993,7 +1046,7 @@ prec = 1.0e-07, maxiter = 30)
     mx = apply(domain, 2, max)
     
     # Gauss-Legendre quadrature:
-    quad = .gauss.quad(200, c(mn, mx))
+    quad = .ssden.gauss.quad(200, c(mn, mx))
     quad$pt = data.frame(quad$pt)
     # colIds(quad$pt) = Name # colIds(mf)
     colnames(quad$pt) = Name
@@ -1033,7 +1086,7 @@ prec = 1.0e-07, maxiter = 30)
     r = r[, , 1]
     qd.r = qd.r[, , 1]
     q = q[, , 1]
-    z = .sspdsty(s, r, q, cnt, qd.s, qd.r, qd.wt, prec, maxiter, alpha)
+    z = .ssden.sspdsty(s, r, q, cnt, qd.s, qd.r, qd.wt, prec, maxiter, alpha)
     
     # Result:
     obj = c(list(call = match.call(), mf = mf, cnt = cnt, terms = term,
@@ -1049,12 +1102,16 @@ prec = 1.0e-07, maxiter = 30)
 # ------------------------------------------------------------------------------
 
 
-.mkterm.cubic1 = 
+.ssden.mkterm.cubic1 = 
 function(mf, range)
-{
+{   # An adapted copy from contributed R package gss
+
     # Description:
     #   Make phi and rk for cubic spline model terms
 
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Obtain model terms:
@@ -1095,14 +1152,14 @@ function(mf, range)
                 mn = min(lmt)
                 mx = max(lmt)
                 # phi:
-                phi.env = .mkphi.cubic(c(mn, mx))
+                phi.env = .ssden.mkphi.cubic(c(mn, mx))
                 phi.fun <<- function(x, nu = 1, env) env$fun(x, env$env)
                 nphi = 1
                 iphi = iphi.wk
                 iphi.wk = iphi.wk + nphi
                 phi = list(fun = phi.fun, env = phi.env)
                 # rk:
-                rk.env = .mkrk.cubic(c(mn,mx))
+                rk.env = .ssden.mkrk.cubic(c(mn,mx))
                 rk.fun <<- function(x, y, nu = 1, env, outer.prod = FALSE) {
                     env$fun(x, y, env$env, outer.prod)
                 }
@@ -1146,8 +1203,8 @@ function(mf, range)
                     # Numeric variable:
                     mn = min(lmt[[i]])
                     mx = max(lmt[[i]])
-                    phi.wk = .mkphi.cubic(c(mn, mx))
-                    rk.wk = .mkrk.cubic(c(mn, mx))
+                    phi.wk = .ssden.mkphi.cubic(c(mn, mx))
+                    rk.wk = .ssden.mkrk.cubic(c(mn, mx))
                     n.phi = c(n.phi, 1)
                     bin.fac = c(bin.fac, 0)
                 } else {
@@ -1228,11 +1285,15 @@ function(mf, range)
 # ------------------------------------------------------------------------------
 
 
-.mkphi.cubic = 
+.ssden.mkphi.cubic = 
 function(range)
-{
+{   # An adapted copy from contributed R package gss
+
     # Description:
     #   Make phi function for cubic splines
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -1260,11 +1321,15 @@ function(range)
 # ------------------------------------------------------------------------------
 
 
-.mkrk.cubic = 
+.ssden.mkrk.cubic = 
 function(range)
-{
+{   # An adapted copy from contributed R package gss
+
     # Description:
     #   Make RK for cubic splines
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -1305,16 +1370,20 @@ function(range)
 
 # ------------------------------------------------------------------------------
 
-.gauss.quad = 
+.ssden.gauss.quad = 
 function(size, interval) 
-{
+{   # An adapted copy from contributed R package gss
+
     # Description:
     #   Generate Gauss-Legendre quadrature
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
     if (interval[1] >= interval[2])
-        warning("warning in .gauss.quad: interval limits swapped")
+        warning("warning in .ssden.gauss.quad: interval limits swapped")
     z = .Fortran("gaussq",
           as.integer(1),
           as.integer(size),
@@ -1340,14 +1409,18 @@ function(size, interval)
 # ------------------------------------------------------------------------------
 
 
-.sspdsty = 
+.ssden.sspdsty = 
 function(s, r, q, cnt, qd.s, qd.r, qd.wt, prec, maxiter, alpha)
-{
+{   # An adapted copy from contributed R package gss
+
     # Description:
     #   Fit single smoothing parameter density
     
     # Note:
     #   Global variables introduced for SPlus compatibility
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -1434,7 +1507,7 @@ function(s, r, q, cnt, qd.s, qd.r, qd.wt, prec, maxiter, alpha)
     repeat {
         mn = la-1
         mx = la+1
-        zz = .nlm0(cv, c(mn, mx))
+        zz = .ssden.nlm0(cv, c(mn, mx))
         if (min(zz$est-mn, mx-zz$est) >= 1.0e-3) break
         else la = zz$est
     }
@@ -1456,13 +1529,17 @@ function(s, r, q, cnt, qd.s, qd.r, qd.wt, prec, maxiter, alpha)
 # ------------------------------------------------------------------------------
 
 
-.nlm0 = 
+.ssden.nlm0 = 
 function(fun, range, prec = 1.0e-7)
-{
+{   # An adapted copy from contributed R package gss
+
     # Description:
     #   minimization of univariate function on finite intervals
     #   using 3-point quadratic fit with golden-section safe-guard
 
+    # Changes:
+    #
+    
     # FUNCTION:
     
     ratio = 2 / (sqrt(5)+1)
@@ -1576,6 +1653,9 @@ match.fun =
 function(FUN)
 {   # A function implemented by Diethelm Wuertz
 
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # For S-Plus Compatibility:
@@ -1599,6 +1679,9 @@ which.min =
 function(x)
 {   # A function implemented by Diethelm Wuertz
 
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # For S-Plus Compatibility:
@@ -1618,6 +1701,9 @@ which.max =
 function(x)
 {   # A function implemented by Diethelm Wuertz
 
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # For S-Plus Compatibility:

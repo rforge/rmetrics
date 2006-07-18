@@ -30,20 +30,26 @@
 ################################################################################
 # FINCTIONS:                     WORLD FACTBOOK FROM CIA:
 #  ciaCountries                   Returns a list of CIA country codes
-#  print.ciaCountries             S3 print method for 'ciaIndicators'
+#  print.ciaCountries             Print method for 'ciaIndicators'
 #  ciaIndicators                  Returns a list of CIA indicator codes
-#  print.ciaIndicators            S3 print method for 'ciaIndicators'
+#  print.ciaIndicators            Print method for 'ciaIndicators'
 #  ciaByCountry                   Returns all Indicators by country 
 #  ciaByIndicator                 Returns for all countries indicator ranking
-# FUNCTIONS:                     FOR RUNIT TESTING:
-#  .ciaByCountry.RUnit            R Unit test for 'ciaByCountry' 
-#  .ciaByIndicator.RUnit          R Unit test for 'ciaByIndicator' 
 # FUNCTIONS:                     FOR INTERNAL USE, ONLY - DO NOT RUN:
 #  .createFactbook                Creates CIA Data for use with Rmetrics
 #  .createIndicators              List of indicator for use with  Rmetrics
 ################################################################################
 
-     
+
+################################################################################
+#  ciaCountries                   Returns a list of CIA country codes
+#  print.ciaCountries             Print method for 'ciaIndicators'
+#  ciaIndicators                  Returns a list of CIA indicator codes
+#  print.ciaIndicators            Print method for 'ciaIndicators'
+#  ciaByCountry                   Returns all Indicators by country 
+#  ciaByIndicator                 Returns for all countries indicator ranking
+
+   
 ciaCountries = 
 function()
 {   # A Function Implemented by Diethelm Wuertz
@@ -53,6 +59,9 @@ function()
     
     # Arguments:
     #   - none -
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -324,6 +333,9 @@ function(x, ...)
     # Arguments:
     #   x - an S3 object of class 'ciaCountries'
     
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Print:
@@ -349,6 +361,9 @@ function()
     
     # Arguments:
     #   - none -
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -426,6 +441,9 @@ function(x, ...)
     # Arguments:
     #   x - an S3 object of class 'ciaIndicators'
     
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Print:
@@ -457,6 +475,9 @@ function(code = "CH", from = FALSE, names = FALSE, details = FALSE)
     #       names willl be a added
     #   details - a logical flag, if TRUE then details will 
     #       be printed
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -506,32 +527,6 @@ function(code = "CH", from = FALSE, names = FALSE, details = FALSE)
 # ------------------------------------------------------------------------------
 
 
-.ciaByCountry.RUnit =
-function()
-{   # A Function Implemented by Diethelm Wuertz
-
-    # Description:
-    #   Unit Testing
-    
-    # Arguments:
-    #   - none -
-    
-    # FUNCTION:
-    
-    # Print:
-    print(ciaByCountry(code = "CH"))
-    print(ciaByCountry(code = "CH", from = TRUE))
-    print(ciaByCountry(code = "CH", names = TRUE))
-    print(ciaByCountry(code = "CH", from = TRUE, names = TRUE))
-    
-    # Return Value:
-    invisible()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
 ciaByIndicator = 
 function(code = 2001, from = FALSE, details = FALSE)
 {   # A Function Implemented by Diethelm Wuertz
@@ -545,6 +540,9 @@ function(code = 2001, from = FALSE, details = FALSE)
     #       data registration will be given
     #   details - a logical flag, if TRUE then details will 
     #       be printed
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -570,33 +568,12 @@ function(code = 2001, from = FALSE, details = FALSE)
     data.frame(Z)
 }
 
-
-# ------------------------------------------------------------------------------
-
-
-.ciaByIndicator.RUnit =
-function()
-{   # A Function Implemented by Diethelm Wuertz
-
-    # Description:
-    #   R Unit Testing
-    
-    # Arguments:
-    #   - none -
-    
-    # FUNCTION:
-    
-    # Print
-    print(ciaByIndicator(code = "2001"))
-    
-    # Return Value:
-    invisible()
-}
-
     
 ################################################################################
-
-    
+#  .createFactbook                Creates CIA Data for use with Rmetrics
+#  .createIndicators              List of indicator for use with  Rmetrics
+   
+ 
 .createFactbook = 
 function()
 {   # A Function Implemented by Diethelm Wuertz
@@ -609,6 +586,9 @@ function()
     
     # Note:
     #   For internal use only.
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -660,6 +640,9 @@ function()
     
     # Note:
     #   For internal use only.
+    
+    # Changes:
+    #
     
     # FUNCTION:
     

@@ -65,6 +65,9 @@ function(object)
     # Source:
     #   This function copies code from base:print.htest
     
+    # Changes:
+    #
+    
     # FUNCTION:
        
     # Unlike print the argument for show is 'object'.
@@ -180,6 +183,9 @@ function(type = c("LM", "ALM"), size = c("all", "small"))
 
     # Description:
     #   Finite sample p values for the Jarque Bera test
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -350,6 +356,9 @@ function(X, p, N, digits = 4)
     #   qTable(X = adfcTable(), p = 0.075, N = 175,  digits = 2)
     #   qTable(jblmTable(), N = 100, p = (1:99)/100, lower.tail = FALSE)
     
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Check:
@@ -382,6 +391,9 @@ function(X, p, N, digits = 4)
     #   p - a numeric p value to be interpolated.
     #   N - an integer size value to be interpolated.
     #   digits - the number of digits used for the output.
+    
+    # Changes:
+    #
     
     # FUNCTION:
         
@@ -438,6 +450,9 @@ function(X, Stat, N, digits = 4)
     #   pTable(X = jbLM, N = 100, Stat = 5.43) 
     #   pTable(X = jbLM, N = 1400, Stat = 0.7003) 
     
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Check:
@@ -473,6 +488,9 @@ function(X, Stat, N, digits = 4)
     
     # Value:
     #   Interpolated probabilities for size 'N' and quantiles 'Stat'.
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -523,6 +541,11 @@ function (x, y, z, xo = seq(min(x), max(x), length = 40), yo = seq(min(y),
 max(y), length = 40), ncp = 0, extrap = FALSE, duplicate = "error", 
 dupfun = NULL) 
 {   #  A copy from contributed package akima
+    
+    # Changes:
+    #
+    
+    # FUNCTION:
     
     if (!(all(is.finite(x)) && all(is.finite(y)) && all(is.finite(z)))) 
         stop("missing values and Infs not allowed")
@@ -588,6 +611,11 @@ function (x, y, z, xo = seq(min(x), max(x), length = 40), yo = seq(min(y),
     duplicate = "error", dupfun = NULL) 
 {   #  A copy from contributed package akima
 
+    # Changes:
+    #
+    
+    # FUNCTION:
+    
     if (!(all(is.finite(x)) && all(is.finite(y)) && all(is.finite(z)))) 
         stop("missing values and Infs not allowed")
     if (!is.null(ncp)) {

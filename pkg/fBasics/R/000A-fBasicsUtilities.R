@@ -45,39 +45,42 @@
 #  "colnames<-"                  colnames<- has become a generic function
 #  "colnames<-.default"          colnames<- default method
 # FUNCTION:                     DESCRIPTION:
-#  as.matrix.ts                  univariate ts to 1-column matrix
-#  as.matrix.mts                 multivariate ts to matrix
+#  as.matrix.ts                  Converts univariate ts to 1-column matrix
+#  as.matrix.mts                 Converts multivariate ts to matrix
 # FUNCTION:                     DESCRIPTION:
 #  .description                  Sets default description string
 #  .unirootNA                    Computes zero without error exit    
-#  .interp                       Does Akima Interpolation
+#  .interp                       Does Akima Spline Interpolation
 ################################################################################
 
-
-# Package: akima
-# Version: 0.3-4
-# Title: Interpolation of irregularly spaced data
-# Author: Fortran code by H. Akima
-#   R port by Albrecht Gebhardt <albrecht.gebhardt@uni-klu.ac.at>
-# Maintainer: Albrecht Gebhardt <albrecht.gebhardt@uni-klu.ac.at>
-# Description: Linear or cubic spline interpolation for irregular gridded data
-# License: Fortran code: ACM, free for non-commercial use, R functions GPL
-
-
-################################################################################
 
 .conflicts.OK = TRUE
 
 
 ################################################################################
+# FUNCTION:                     DESCRIPTION:
+#  log                           log has become a generic function
+#  log.default                   log default method
+#  round                         round has become a generic function
+#  round.default                 round default method
+#  sample                        sample has become a generic function
+#  sample.default                sample default method
+#  sort                          sort has become a generic function
+#  sort.default                  sort default method
+#  var                           var has become a generic function
+#  var.default                   var default method
 
 
 sort = 
 function(x, partial = NULL, na.last = NA, decreasing = FALSE, 
 method = c("shell", "quick"), index.return = FALSE, ...)
 {
+    # Changes:
+    #
+    
     # FUNCTION:
     
+    # Return Value:
     UseMethod("sort")
 }
 
@@ -89,6 +92,9 @@ sort.default =
 function (x, partial = NULL, na.last = NA, decreasing = FALSE, 
 method = c("shell", "quick"), index.return = FALSE, ...) 
 {   # A copy of the sort() function from R's base package
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -163,14 +169,18 @@ method = c("shell", "quick"), index.return = FALSE, ...)
 }
 
 
-################################################################################
+# ------------------------------------------------------------------------------
 
 
 sample = 
 function(x, ...)
 {
+    # Changes:
+    #
+    
     # FUNCTION:
     
+    # Return Value:
     UseMethod("sample")
 }  
 
@@ -181,6 +191,9 @@ function(x, ...)
 sample.default =
 function (x, size, replace = FALSE, prob = NULL, ...) 
 {
+    # Changes:
+    #
+    
     # FUNCTION:
     
     if (length(x) == 1 && x >= 1) {
@@ -195,12 +208,18 @@ function (x, size, replace = FALSE, prob = NULL, ...)
 }
 
 
-################################################################################
+# ------------------------------------------------------------------------------
 
 
 round =
 function(x, ...)
 {
+    # Changes:
+    #
+    
+    # FUNCTION:
+    
+    # Return Value:
     UseMethod("round")
 }
 
@@ -211,20 +230,27 @@ function(x, ...)
 round.default =
 function (x, digits = 0, ...) 
 {
+    # Changes:
+    #
+    
     # FUNCTION:
     
     .Internal(round(x, digits, ...))
 }       
             
             
-################################################################################
+# ------------------------------------------------------------------------------
 
 
 log = 
 function(x, base = exp(1)) 
 {
+    # Changes:
+    #
+    
     # FUNCTION:
     
+    # Return Value:
     UseMethod("log")
 }
 
@@ -236,6 +262,9 @@ log.default =
 function(x, base = exp(1))
 {   # A copy of the log() function from R's base package
 
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Log:
@@ -243,7 +272,7 @@ function(x, base = exp(1))
 }
 
 
-################################################################################
+# ------------------------------------------------------------------------------
 
 
 outlier = 
@@ -274,6 +303,9 @@ function(x, sd = 5, complement = TRUE, ...)
     #   complement - a logical flag, should the outlier series
     #       or its complements be returned.
     
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Find Outliers:
@@ -289,15 +321,18 @@ function(x, sd = 5, complement = TRUE, ...)
 }
 
 
-
-################################################################################
+# ------------------------------------------------------------------------------
 
 
 var = 
 function(x, y = NULL, na.rm = FALSE, use) 
 {
+    # Changes:
+    #
+    
     # FUNCTION:
     
+    # Return Value:
     UseMethod("var")
 }
 
@@ -309,6 +344,9 @@ var.default =
 function(x, y = NULL, na.rm = FALSE, use) 
 {   # A copy of the var() function from R's base package
 
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # var:
@@ -327,13 +365,21 @@ function(x, y = NULL, na.rm = FALSE, use)
 
 
 ################################################################################
+#  "rownames<-"                  rownames<- has become a generic function
+#  "rownames<-.default"          rownames<- default method
+#  "colnames<-"                  colnames<- has become a generic function
+#  "colnames<-.default"          colnames<- default method
 
 
 "rownames<-" = 
 function(x, value)
 {
+    # Changes:
+    #
+    
     # FUNCTION:
     
+    # Return Value:
     UseMethod("rownames<-")
 }
 
@@ -345,6 +391,9 @@ function(x, value)
 function(x, value)
 {   # A modfied copy from R's base package
 
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # rownames<-:
@@ -369,8 +418,12 @@ function(x, value)
 "colnames<-" = 
 function(x, value)
 {
+    # Changes:
+    #
+    
     # FUNCTION:
     
+    # Return Value:
     UseMethod("colnames<-")
 }
 
@@ -382,6 +435,9 @@ function(x, value)
 function(x, value)
 {   # A modfied copy from R's base package
 
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # colnames<-:
@@ -406,6 +462,12 @@ function(x, value)
 as.POSIXlt = 
 function(x, tz = "")
 {
+    # Changes:
+    #
+    
+    # FUNCTION:
+    
+    # Return Value:
     UseMethod("as.POSIXlt")
 }
 
@@ -416,6 +478,12 @@ function(x, tz = "")
 as.POSIXlt.default =
 function (x, tz = "") 
 {
+    # Changes:
+    #
+    
+    # FUNCTION:
+    
+    # As Posix:
     fromchar <- function(x) {
         xx <- x[1]
         if (is.na(xx)) {
@@ -465,6 +533,9 @@ as.matrix.ts =
 function(x) 
 {   # A function implemented by Diethelm Wuertz
 
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Transform: 
@@ -485,6 +556,9 @@ as.matrix.mts =
 function(x) 
 {   # A function implemented by Diethelm Wuertz
 
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Transform: 
@@ -507,6 +581,9 @@ function()
 
     # Descriptions:
     #   Sets default description string:
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -552,6 +629,11 @@ tol = .Machine$double.eps^0.25, ...)
     # Example:
     #   .unirootNA(sin, c(1, 2)); .unirootNA(sin, c(-1, 1))
         
+    # Changes:
+    #
+    
+    # FUNCTION:
+    
     # There is no Root:  
     if (is.null(args(f))) {  
         if (f(lower) * f(upper) >=0) return(NA)  
@@ -589,6 +671,11 @@ function(x, y, z, xo = seq(min(x), max(x), length = 40),
 yo = seq(min(y), max(y), length = 40), 
 ncp = 0, extrap = FALSE, duplicate = "error", dupfun = NULL)
 {
+    # Changes:
+    #
+    
+    # FUNCTION:
+    
     # Interpolate:
     if (ncp == 0) {
         # use the old version for linear interpolation
@@ -611,6 +698,12 @@ yo = seq(min(y), max(y), length = 40), linear=FALSE,
 ncp = NULL, extrap = FALSE, duplicate = "error", 
 dupfun = NULL)
 {
+    # Changes:
+    #
+    
+    # FUNCTION:
+    
+    # Interpolation:
     if (!(all(is.finite(x)) && all(is.finite(y)) && all(is.finite(z))))
         stop("missing values and Infs not allowed")
     if (!is.null(ncp)){
@@ -712,6 +805,12 @@ function(x, y, z, xo = seq(min(x), max(x), length = 40),
 yo = seq(min(y), max(y), length = 40), 
 ncp = 0, extrap = FALSE, duplicate = "error", dupfun = NULL)
 {
+    # Changes:
+    #
+    
+    # FUNCTION:
+    
+    # Interpolation:
     if (!(all(is.finite(x)) && all(is.finite(y)) && all(is.finite(z))))
         stop("missing values and Infs not allowed")
     if (ncp>25){
@@ -795,6 +894,12 @@ ncp = 0, extrap = FALSE, duplicate = "error", dupfun = NULL)
 function(x, y, z, xo, yo, ncp = 0, extrap = FALSE,
 duplicate = "error", dupfun = NULL)
 {
+    # Changes:
+    #
+    
+    # FUNCTION:
+    
+    # Interpolation:
     # interpp.new has some bugs at the moment (segfaults), so use
     # the old Akima code:
     ans = interpp.old(x, y, z, xo, yo, ncp, extrap, duplicate, dupfun)
@@ -811,6 +916,12 @@ duplicate = "error", dupfun = NULL)
 function(x, y, z, xo, yo, ncp = 0, extrap = FALSE,
 duplicate = "error", dupfun = NULL)
 {
+    # Changes:
+    #
+    
+    # FUNCTION:
+    
+    # Interpolation:
     if (!(all(is.finite(x)) && all(is.finite(y)) && all(is.finite(z))))
         stop("missing values and Infs not allowed")
     if (is.null(xo))
@@ -901,6 +1012,12 @@ duplicate = "error", dupfun = NULL)
 function(x, y, z, xo, yo, ncp = 0, extrap = FALSE,
 duplicate = "error", dupfun = NULL)
 {
+    # Changes:
+    #
+    
+    # FUNCTION:
+    
+    # Interpolation:
     if (!(all(is.finite(x)) && all(is.finite(y)) && all(is.finite(z))))
         stop("missing values and Infs not allowed")
     if (is.null(xo))

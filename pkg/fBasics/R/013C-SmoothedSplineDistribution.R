@@ -34,10 +34,25 @@
 #   qssd             Returns smoothed spline quantiles estimate
 #   rssd             Returns smoothed spline random variates 
 # INTERNAL:         DESCRIPTION:         
-#  .dssden           Computes density function
-#  .pssden           Computes probability function
-#  .qssden           Computes quantile function
+#  .dssden           Internal function called by dssd
+#  .pssden           Internal function called by pssd
+#  .qssden           Internal function called by qssd
 ################################################################################
+
+
+################################################################################
+# IMPORTANT NOTE:
+# The required contributed R-package is not available as Debian package,
+# see http://packages.debian.org/unstable/math, therefore we have implemented
+# here the required functionality ftrom this package
+# Last Check: 2006-07-13 DW
+
+
+################################################################################
+#   dssd             Returns smoothed spline density estimate
+#   pssd             Returns smoothed spline probability estimate
+#   qssd             Returns smoothed spline quantiles estimate
+#   rssd             Returns smoothed spline random variates 
 
 
 dssd = 
@@ -50,6 +65,9 @@ function(x, param)
     # Arguments:
     #   param - an S3 object of class "ssd" as returned from the
     #       function 'ssdFit'.
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -73,6 +91,9 @@ function(q, param)
     #   param - an S3 object of class "ssd" as returned from the
     #       function 'ssdFit'.
     
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Return Value:
@@ -94,6 +115,9 @@ function(p, param)
     # Arguments:
     #   param - an S3 object of class "ssd" as returned from the
     #       function 'ssdFit'.
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -117,6 +141,9 @@ function(n, param)
     #   param - an S3 object of class "ssd" as returned from the
     #       function 'ssdFit'.
     
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Return Value:
@@ -126,11 +153,9 @@ function(n, param)
 
 
 ################################################################################
-# INTERNAL FUNCTIONS:          
-#  .dssden
-#  .pssden
-#  .qssden
-################################################################################
+#  .dssden           Internal function called by dssd
+#  .pssden           Internal function called by pssd
+#  .qssden           Internal function called by qssd
 
 
 # Code Copied from:
@@ -146,9 +171,6 @@ function(n, param)
 #   Packaged: Thu Sep 23 16:28:03 2004
 
 
-# ******************************************************************************
-
-
 .dssden = 
 function (object, x) 
 {   # A copy from contributed R package gss
@@ -156,8 +178,12 @@ function (object, x)
     # Description:
     #   Evaluate density estimate
     
+    # Changes:
+    #
+    
     # FUNCTION:
     
+    # Density:
     if (class(object) != "ssden") {
         stop("error in .dssden: not a ssden object")
     }
@@ -205,8 +231,12 @@ function(object, q)
     # Description
     #   Compute cdf for univariate density estimate
     
+    # Changes:
+    #
+    
     # FUNCTION:
     
+    # Probability:
     if (class(object) != "ssden") {
         stop("error in .pssden: not a ssden object")
     }
@@ -251,8 +281,12 @@ function(object, p)
     # Description:
     #   Compute quantiles for univariate density estimate
     
+    # Changes:
+    #
+    
     # FUNCTION:
     
+    # Quantiles:
     if (class(object) != "ssden") {
         stop("error in .qssden: not a ssden object")
     }

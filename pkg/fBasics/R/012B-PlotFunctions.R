@@ -32,22 +32,28 @@
 #  tsPlot                Returns a time series plot
 #  histPlot              Returns a histogram plot
 #  densityPlot           Returns a kernel density estimate plot
-#  .splusLikePlot        Sets parameters that plots look more Splus like
 # FUNCTION:             3-DIMENSIONAL PLOTS:
-#  circlesPlot           Returns a scatterplot of circles indexing 3rd variable
+#  circlesPlot           Returns a circles plot indexing 3rd variable
 #  perspPlot             Returns a perspective plot in 2 dimensions
 #  contourPlot           Returns a contour plot in 2 dimensions
 # FUNCTION:             TABLES AND PALETTES:
-#  characterTable        Shows a table of character's numerical equivalents 
-#  plotcharacterTable    Shows a table of plot characters and symbols
+#  characterTable        Shows a table of character's codes 
+#  plotcharacterTable    Shows a table of characters and symbols
 #  colorTable            Shows a table of plot color codes
 #  .chcode               Changes from one to another number system
 #  .hex.to.dec           Converts heximal numbers do decimal numbers
 #  .dec.to.hex           Converts decimal numbers do heximal numbers
-#  grey.pal              Creates a grey palette like rainbow does for colors
+#  grey.pal              Creates a grey palette
 # FUNCTION:             SLIDER MENU:
 #  .sliderMenu           Starts a slider menu
 ################################################################################
+
+
+
+################################################################################  
+#  tsPlot                Returns a time series plot
+#  histPlot              Returns a histogram plot
+#  densityPlot           Returns a kernel density estimate plot
 
 
 tsPlot = 
@@ -57,6 +63,9 @@ function(x, ...)
     # Description:
     #   Returns time series graphs in a common plot
   
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Plot:
@@ -78,6 +87,9 @@ main = x@units, add.fit = TRUE, ...)
     # Description:
     #   Returns a probability histogram plot for each column of a 
     #   timeSeries object
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -127,6 +139,9 @@ function(x, col = "steelblue4", main = x@units, add.fit = TRUE, ...)
     #   Returns density plots for each column of a 
     #   timeSeries object
 
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Transform 'timeSeries':
@@ -167,42 +182,10 @@ function(x, col = "steelblue4", main = x@units, add.fit = TRUE, ...)
 }
 
 
-# ------------------------------------------------------------------------------
-
-
-.splusLikePlot = 
-function(scale = 0.8)
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Sets parameters that plots look more Splus like
-    
-    # Arguments:
-    #   cex.axis - The magnification to be used for axis annotation
-    #       relative to the current.
-    #   cex.lab - The magnification to be used for x and y labels relative
-    #       to the current.
-    #   cex.main - The magnification to be used for main titles relative
-    #       to the current.
-    #   cex.sub - The magnification to be used for sub-titles relative to
-    #       the current.
-    
-    # Note: 
-    #   * Scales plotting text and symbols relative to the default
-    #     so that plots look more SplusLike.    
-    #   * Further parameters will be added in the future.
-
-    # FUNCTION:
-    
-    # Set par:
-    par(cex.axis = scale, cex.lab = scale, cex.main = scale, cex.sub = scale)
-    
-    # Return value:
-    invisible()
-}
-
-
 ################################################################################
+#  circlesPlot           Returns a scatterplot of circles indexing 3rd variable
+#  perspPlot             Returns a perspective plot in 2 dimensions
+#  contourPlot           Returns a contour plot in 2 dimensions
 
 
 circlesPlot = 
@@ -216,6 +199,9 @@ function(x, y, size = 1, ...)
     # Example:
     #   circlesPlot(x = rnorm(50), y = rnorm(50), size = abs(rnorm(50)))
 
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Settings:
@@ -245,10 +231,10 @@ function(x, y, z, theta = -40, phi = 30, col = "steelblue4", ps = 9, ...)
     # Notes:
     #   A synonyme call for function 'persp'
     
-    # FUNCTION:   
+    # Changes:
+    #
     
-    # Settings:
-    # if (SPLUSLIKE) .splusLikePlot(TRUE)
+    # FUNCTION:   
     
     # Perspective Plot:
     if (class(version) == "Sversion") {
@@ -282,10 +268,10 @@ function(x, y, z, ...)
     # Notes:
     #   A synonyme call for function 'contour'
     
-    # FUNCTION:   
+    # Changes:
+    #
     
-    # Settings:
-    # if (SPLUSLIKE) .splusLikePlot(TRUE)
+    # FUNCTION:   
     
     # Contour Plot:
     if (class(version) == "Sversion") {
@@ -302,7 +288,13 @@ function(x, y, z, ...)
 
                         
 ################################################################################
-
+#  characterTable        Shows a table of character's numerical equivalents 
+#  plotcharacterTable    Shows a table of plot characters and symbols
+#  colorTable            Shows a table of plot color codes
+#  .chcode               Changes from one to another number system
+#  .hex.to.dec           Converts heximal numbers do decimal numbers
+#  .dec.to.hex           Converts decimal numbers do heximal numbers
+#  grey.pal              Creates a grey palette like rainbow does for colors 
 
 characterTable = 
 function(font = 1, cex = 0.7) 
@@ -330,6 +322,9 @@ function(font = 1, cex = 0.7)
     # Example:
     #   for (i in 1:20) characterTable(font = i)
 
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Table:
@@ -370,6 +365,9 @@ function(font = par('font'), cex = 0.7)
     # Author:
     #   Unknown, code found on the internet.
 
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Table:
@@ -405,6 +403,9 @@ function(cex = 0.7)
     # Example:
     #   colorTable()
 
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Plot:
@@ -422,8 +423,7 @@ function(cex = 0.7)
 }
 
 
-################################################################################
-    
+# ------------------------------------------------------------------------------  
 
 .chcode = 
 function(b, base.in = 2, base.out = 10, digits="0123456789ABCDEF")
@@ -444,6 +444,9 @@ function(b, base.in = 2, base.out = 10, digits="0123456789ABCDEF")
     # Author:
     #   Peter Wolf Universitaet Bielefeld  
     #   from: http://tolstoy.newcastle.edu.au/R/help/05/04/2085.html 
+    
+    # Changes:
+    #
     
     # FUNCTION:
      
@@ -493,6 +496,9 @@ function(b)
     # Value:
     #   returns a heximal numbers as decimal numbers
     
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Hex to Bin:
@@ -518,6 +524,9 @@ function(b)
 
     # Value:
     #   returns a decimal numbers as heximal numbers
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -547,6 +556,11 @@ function(n = 64, start = 255-n, end = 255)
     #   returns a grey palette like rainbow does
     #   for color palettes
     
+    # Changes:
+    #
+    
+    # FUNCTION:
+    
     # Check Consistency:
     if (start < 0) stop("start must be greater or equal to 0")
     if (end > 255) stop("end must be smaller or equal to 255")
@@ -563,7 +577,8 @@ function(n = 64, start = 255-n, end = 255)
 }
 
 
-# ******************************************************************************
+################################################################################
+#  .sliderMenu           Starts a slider menu
 
 
 .sliderMenu =   
@@ -576,6 +591,9 @@ title = "Slider", no = 0, set.no.value = 0)
     
     # Source:
     #   Built on code written by Peter Wolf
+    
+    # Changes:
+    #
     
     # FUNCTION:
     

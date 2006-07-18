@@ -35,18 +35,25 @@
 #  economagicImport      Downloads market data from EconoMagic's web site
 #  yahooImport           Downloads market data from Yahoo's web site 
 #  .yahooImport          ... the old download function 
-#  .keystatsImport       Downloads key statistics from Yahoo's web site  
 #  fredImport            Downloads market data from St. Louis FED web site
 #  forecastsImport       Downloads monthly data from www.forecasts.org
-# FUNCTION              EASY TO USE ROUTINES:
+# FUNCTION:             IMPORT STATISTICS - EXPERIMENTELL:
+#  .keystatsImport       Downloads key statistics from Yahoo's web site  
+#  .print.keystats       Print Method for internal function .keystatsImport
+# FUNCTION:             EASY TO USE ROUTINES:
 #  yahooSeries           Easy to use download from Yahoo
 #  .yahooSeries          Utility function  called by 'yahooSeries'
 # FUNCTION:             ONLY FOR SPLUS VERSION:
-#  as.Date               Converts date represenatation
-#  data                  Loads or lists specified data sets
-#  download.file         Downloads files from Internet using "lynx" or "wget"
-#  strsplit              Splits elements of a character vector into substrings
+#  as.Date               S-PLUS: Converts date represenatation
+#  data                  S-PLUS: Loads or lists specified data sets
+#  download.file         S-PLUS: Downloads using "lynx" or "wget"
+#  strsplit              S-PLUS: Splits character vector into substrings
 ################################################################################
+
+
+################################################################################
+#  fWEBDATA              Class Representation
+#  show.fWEBDATA         S4 Show Method
 
 
 setClass("fWEBDATA", 
@@ -66,6 +73,9 @@ show.fWEBDATA =
 function(object)
 {   # A function implemented by Diethelm Wuertz
 
+    # Changes:
+    #
+    
     # FUNCTION:
        
     # Unlike print the argument for show is 'object'.
@@ -93,7 +103,12 @@ setMethod("show", "fWEBDATA", show.fWEBDATA)
 
 
 ################################################################################
-# IMPORT DATA FUNCTIONS
+#  economagicImport      Downloads market data from EconoMagic's web site
+#  yahooImport           Downloads market data from Yahoo's web site 
+#  .yahooImport          ... the old download function 
+#  .keystatsImport       Downloads key statistics from Yahoo's web site  
+#  fredImport            Downloads market data from St. Louis FED web site
+#  forecastsImport       Downloads monthly data from www.forecasts.org
 
 
 economagicImport =
@@ -121,6 +136,9 @@ save = FALSE, colname = "VALUE", try = TRUE)
     #    economagicImport("fedstl/gnp", "USGNP.CSV", 
     #       frequency = "monthly", colname = "USGNP")
 
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Frequency:
@@ -246,6 +264,9 @@ swap = 20, try = TRUE)
     #   r     Aggregation Level
     #   z     Selected Ticker-Symbol [optional]
 
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Download:
@@ -327,123 +348,6 @@ swap = 20, try = TRUE)
     
 
 # ------------------------------------------------------------------------------
-
-    
-.keystatsImport = 
-function(query, file = "tempfile", source = "http://finance.yahoo.com/q/ks?s=", 
-save = FALSE, try = TRUE) 
-{   # A function implemented by Diethelm Wuertz
-
-    # Description 
-    #   Downloads Key Statistics on shares from Yahoo's Internet site
-    # 
-    # Example:
-    #   keystatsImport("YHOO")
-    
-    # FUNCTION:
-    
-    # Download:
-    if (try) {
-        # First try if the Internet can be accessed:
-        z = try(keystatsImport(file = file, source = source, 
-            query = query, save = save, try = FALSE))
-        if (class(z) == "try-error" || class(z) == "Error") {
-            return("No Internet Access")
-        } else {
-            return(z) 
-        } 
-    } else {                 
-        offset = 2
-        url = paste(source, query, sep = "")
-        
-        # For S-Plus Compatibility:
-        if (class(version) != "Sversion") {
-            # R:
-            method = NULL
-        } else { 
-            # SPlus
-            method = "wget"
-        }
-        
-        # Download:
-        download.file(url = url, destfile = file, method = method)
-        .warn = options()$warn
-        options(warn = -1)
-        x = scan(file, what = "", sep = ">")
-        options(warn = .warn)
-        keynames = c(
-            "Market Cap ", 
-            "Enterprise Value ",
-            "Trailing P/E ",
-            "Forward P/E ",
-            "PEG Ratio ",
-            "Price/Sales ",
-            "Price/Book ",
-            "Enterprise Value/Revenue ",
-            "Enterprise Value/EBITDA ",
-            "Annual Dividend:",
-            "Dividend Yield:",
-            "Beta:",
-            "52-Week Change:",
-            "52-Week High ",
-            "52-Week Low " )
-        if (class(version) != "Sversion") {
-            # R:
-            stats = as.character(Sys.Date())
-        } else {
-            # SPlus:
-            currentDate = timeDate(date(), in.format="%w %m %d %H:%M:%S %Z %Y")
-            mdy = month.day.year(currentDate)
-            stats = as.character(mdy$year*10000+mdy$month*100+mdy$day)
-        }
-        for (s in keynames) {
-            grepped = paste(gsub("</td", "", x[grep(s, x) + offset]))
-            # DW 2005-05-30
-            if (length(grepped) == 0) grepped = "NA"
-            if (grepped == "") grepped = "NA"
-            ### DW
-            stats = c(stats, grepped)
-        }
-        for (i in 1:length(keynames)) {
-            keynames[i] = substring(keynames[i], 1, nchar(keynames[i])-1)
-        }
-        keynames = c("Date", keynames)  
-             
-        # Return Value:
-        ans = list(query = query, 
-            keystats = data.frame(cbind(Keyname = keynames, Statistic = stats)))   
-        class(ans) = "keystats"
-        ans    
-    }
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.print.keystats = 
-function(x, ...)
-{
-    # Title:
-    cat("\nTitle:\n")
-    cat("Yahoo Key Statistics\n", sep = "")
-    
-    # Key Statistics:
-    cat("\nKey Statistics for", x$query, "\n")
-    print(x$keystats)
-    
-    # Description:
-    cat("\nDescription:\n")   
-    cat(date())
-    cat("\n\n")
-    
-    # Return Value:
-    invisible()
-}
-
-    
-    
-# ------------------------------------------------------------------------------
   
 
 fredImport = 
@@ -473,6 +377,9 @@ frequency = "daily", save = FALSE, sep = ";", try = TRUE)
     #     DPRIME    Bank Prime Loan Rate
     #      
 
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Check:
@@ -590,6 +497,9 @@ source = "http://www.forecasts.org/data/data/", save = FALSE, try = TRUE)
     #     EXJPUS        
     #     GS3M
 
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Download:
@@ -651,7 +561,134 @@ source = "http://www.forecasts.org/data/data/", save = FALSE, try = TRUE)
 
 
 ################################################################################
-# Easy to use Routines
+#  .keystatsImport       Downloads key statistics from Yahoo's web site  
+#  .print.keystats       Print Method for internal function .keystatsImport
+
+
+.keystatsImport = 
+function(query, file = "tempfile", source = "http://finance.yahoo.com/q/ks?s=", 
+save = FALSE, try = TRUE) 
+{   # A function implemented by Diethelm Wuertz
+
+    # Description 
+    #   Downloads Key Statistics on shares from Yahoo's Internet site
+    # 
+    # Example:
+    #   keystatsImport("YHOO")
+    
+    # Changes:
+    #
+    
+    # FUNCTION:
+    
+    # Download:
+    if (try) {
+        # First try if the Internet can be accessed:
+        z = try(keystatsImport(file = file, source = source, 
+            query = query, save = save, try = FALSE))
+        if (class(z) == "try-error" || class(z) == "Error") {
+            return("No Internet Access")
+        } else {
+            return(z) 
+        } 
+    } else {                 
+        offset = 2
+        url = paste(source, query, sep = "")
+        
+        # For S-Plus Compatibility:
+        if (class(version) != "Sversion") {
+            # R:
+            method = NULL
+        } else { 
+            # SPlus
+            method = "wget"
+        }
+        
+        # Download:
+        download.file(url = url, destfile = file, method = method)
+        .warn = options()$warn
+        options(warn = -1)
+        x = scan(file, what = "", sep = ">")
+        options(warn = .warn)
+        keynames = c(
+            "Market Cap ", 
+            "Enterprise Value ",
+            "Trailing P/E ",
+            "Forward P/E ",
+            "PEG Ratio ",
+            "Price/Sales ",
+            "Price/Book ",
+            "Enterprise Value/Revenue ",
+            "Enterprise Value/EBITDA ",
+            "Annual Dividend:",
+            "Dividend Yield:",
+            "Beta:",
+            "52-Week Change:",
+            "52-Week High ",
+            "52-Week Low " )
+        if (class(version) != "Sversion") {
+            # R:
+            stats = as.character(Sys.Date())
+        } else {
+            # SPlus:
+            currentDate = timeDate(date(), in.format="%w %m %d %H:%M:%S %Z %Y")
+            mdy = month.day.year(currentDate)
+            stats = as.character(mdy$year*10000+mdy$month*100+mdy$day)
+        }
+        for (s in keynames) {
+            grepped = paste(gsub("</td", "", x[grep(s, x) + offset]))
+            # DW 2005-05-30
+            if (length(grepped) == 0) grepped = "NA"
+            if (grepped == "") grepped = "NA"
+            ### DW
+            stats = c(stats, grepped)
+        }
+        for (i in 1:length(keynames)) {
+            keynames[i] = substring(keynames[i], 1, nchar(keynames[i])-1)
+        }
+        keynames = c("Date", keynames)  
+             
+        # Return Value:
+        ans = list(query = query, 
+            keystats = data.frame(cbind(Keyname = keynames, Statistic = stats)))   
+        class(ans) = "keystats"
+        ans    
+    }
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.print.keystats = 
+function(x, ...)
+{
+    # Changes:
+    #
+    
+    # FUNCTION:
+    
+    # Title:
+    cat("\nTitle:\n")
+    cat("Yahoo Key Statistics\n", sep = "")
+    
+    # Key Statistics:
+    cat("\nKey Statistics for", x$query, "\n")
+    print(x$keystats)
+    
+    # Description:
+    cat("\nDescription:\n")   
+    cat(date())
+    cat("\n\n")
+    
+    # Return Value:
+    invisible()
+}
+
+
+################################################################################
+#  yahooSeries           Easy to use download from Yahoo
+#  .yahooSeries          Utility function  called by 'yahooSeries'
 
 
 yahooSeries = 
@@ -690,6 +727,9 @@ getReturns = FALSE, ...)
     #   yahooSeries(aggregation = "w")
     #   yahooSeries(aggregation = "m", nDaysBack = 10*366)
     #   yahooSeries(returnSeries = TRUE)
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -773,6 +813,9 @@ returnClass = c("timeSeries", "zoo", "ts"))
     #   yahooSeries(aggregation = "w")
     #   yahooSeries(aggregation = "m", nDaysBack = 10*366)
     
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Automatic Selection of From / To: 
@@ -808,7 +851,10 @@ returnClass = c("timeSeries", "zoo", "ts"))
  
 
 ################################################################################
-# Only for SPlus Version
+#  as.Date               S-PLUS: Converts date represenatation
+#  data                  S-PLUS: Loads or lists specified data sets
+#  download.file         S-PLUS: Downloads from Internet using "lynx" or "wget"
+#  strsplit              S-PLUS: Splits character vector into substrings
 
 
 if (!exists("as.Date")) 
@@ -820,13 +866,17 @@ function(x, format = "%d-%m-%y")
     # Description:
     #   Mimics R's as.Date function
     
+    # Changes:
+    #
+    
+    # FUNCTION:
+    
     # Used by yahooImport ...
     ans = timeDate(s, in.format = format, format = "%Y-%02m-%02d")  
     
     # Return Value:
     ans 
-}
-}
+}}
 
 
 # ------------------------------------------------------------------------------
@@ -837,6 +887,9 @@ data =
 function(x)
 {   # A function implemented by Diethelm Wuertz
 
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # For S-Plus Compatibility:
@@ -852,6 +905,9 @@ download.file =
 function(url, destfile, method, ...)
 {   # A function implemented by Diethelm Wuertz
     
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Download:
@@ -864,8 +920,7 @@ function(url, destfile, method, ...)
         command = paste("wget.exe", url, "-O", destfile, sep = " ")
         system(command, minimized = TRUE, ...)
         return(invisible())
-    } 
-        
+    }       
 }}
 
 
@@ -877,6 +932,9 @@ strsplit =
 function(x, split = " ") 
 {   # A function implemented by Diethelm Wuertz
 
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # For S-Plus Compatibility:

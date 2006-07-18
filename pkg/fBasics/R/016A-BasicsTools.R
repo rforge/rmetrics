@@ -41,6 +41,9 @@ function(prompt = "")
     # Description:
     #   Sets prompt
     
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Return Value:
@@ -57,6 +60,9 @@ function()
 
     # Description:
     #   Popups the example menu
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -89,7 +95,13 @@ function()
 
 .read.fBasics.00Index = 
 function (file) 
-{
+{   # A function implemented by Diethelm WUertz
+
+    # Changes:
+    #
+    
+    # FUNCTION:
+    
     if (is.character(file)) {
         if (file == "") {
             file <- stdin()
