@@ -182,7 +182,7 @@ blockEnd(x, block = 20)
    getDayOfWeek(tS)
    
 ## Business Days and Holidays:
-   holiday.NYSE()
+   holidayNYSE()
    isBizday(tS, holidayNYSE())
    isHoliday(tS, holidayNYSE())
 
