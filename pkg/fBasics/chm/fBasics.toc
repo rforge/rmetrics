@@ -26,22 +26,6 @@
 <param name="Local" value="5E-TwoSampleTests.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="as.matrix.mts">
-<param name="Local" value="0A-fBasicsUtilities.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="as.matrix.ts">
-<param name="Local" value="0A-fBasicsUtilities.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="as.POSIXlt">
-<param name="Local" value="0A-fBasicsUtilities.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="as.POSIXlt.default">
-<param name="Local" value="0A-fBasicsUtilities.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="audusd">
 <param name="Local" value="2C-fBasicsData.html">
 </OBJECT>
@@ -104,14 +88,6 @@
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="colKurtosis">
 <param name="Local" value="5A-BasicStatistics.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="colnames<-">
-<param name="Local" value="0A-fBasicsUtilities.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="colnames<-.default">
-<param name="Local" value="0A-fBasicsUtilities.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="colorTable">
@@ -196,14 +172,6 @@
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="fBasicsData">
 <param name="Local" value="2C-fBasicsData.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="fBasicsTools">
-<param name="Local" value="6A-BasicsTools.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="fBasicsUtilities">
-<param name="Local" value="0A-fBasicsUtilities.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="fdax9710">
@@ -378,14 +346,6 @@
 <param name="Local" value="4A-StylizedFacts.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="log">
-<param name="Local" value="0A-fBasicsUtilities.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="log.default">
-<param name="Local" value="0A-fBasicsUtilities.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="logpdfPlot">
 <param name="Local" value="4A-StylizedFacts.html">
 </OBJECT>
@@ -424,14 +384,6 @@
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="OneSampleTests">
 <param name="Local" value="5D-OneSampleTests.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="outlier">
-<param name="Local" value="0A-fBasicsUtilities.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="outlier.default">
-<param name="Local" value="0A-fBasicsUtilities.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="pacfPlot">
@@ -574,14 +526,6 @@
 <param name="Local" value="5B-PortableInnovations.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="round">
-<param name="Local" value="0A-fBasicsUtilities.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="round.default">
-<param name="Local" value="0A-fBasicsUtilities.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="rowAvgs">
 <param name="Local" value="5A-BasicStatistics.html">
 </OBJECT>
@@ -592,14 +536,6 @@
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="rowKurtosis">
 <param name="Local" value="5A-BasicStatistics.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="rownames<-">
-<param name="Local" value="0A-fBasicsUtilities.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="rownames<-.default">
-<param name="Local" value="0A-fBasicsUtilities.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="rowSkewness">
@@ -640,14 +576,6 @@
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="runsTest">
 <param name="Local" value="5D-OneSampleTests.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="sample">
-<param name="Local" value="0A-fBasicsUtilities.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="sample.default">
-<param name="Local" value="0A-fBasicsUtilities.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="scalinglawPlot">
@@ -716,14 +644,6 @@
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="SmoothedSplineDistribution">
 <param name="Local" value="3C-SmoothedSplineDistribution.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="sort">
-<param name="Local" value="0A-fBasicsUtilities.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="sort.default">
-<param name="Local" value="0A-fBasicsUtilities.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="spearmanTest">
@@ -802,14 +722,6 @@
 <param name="Local" value="2C-fBasicsData.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="var">
-<param name="Local" value="0A-fBasicsUtilities.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="var.default">
-<param name="Local" value="0A-fBasicsUtilities.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="varex.ts">
 <param name="Local" value="2D-ZivotWangData.html">
 </OBJECT>
@@ -840,14 +752,6 @@
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="wfe6">
 <param name="Local" value="2C-fBasicsData.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="xmpBasics">
-<param name="Local" value="6A-BasicsTools.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="xmpfBasics">
-<param name="Local" value="6A-BasicsTools.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="yahooImport">
@@ -891,10 +795,6 @@
 <param name="Local" value="2D-ZivotWangData.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="fBasics Tools">
-<param name="Local" value="6A-BasicsTools.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Generalized Hyperbolic Distribution">
 <param name="Local" value="3B-HyperbolicDistribution.html">
 </OBJECT>
@@ -905,10 +805,6 @@
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Import Market Data from the Internet">
 <param name="Local" value="2A-TimeSeriesImport.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="Masked Objects and Additional Generic Functions">
-<param name="Local" value="0A-fBasicsUtilities.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="One Sample Tests">

@@ -11,7 +11,6 @@ Full text search stop list file=..\..\..\gnuwin32\help\R.stp
 
 [FILES]
 00Index.html
-0A-fBasicsUtilities.html
 1A-MarketStatistics.html
 2A-TimeSeriesImport.html
 2B-PlotFunctions.html
@@ -27,4 +26,3 @@ Full text search stop list file=..\..\..\gnuwin32\help\R.stp
 5C-HypothesisTesting.html
 5D-OneSampleTests.html
 5E-TwoSampleTests.html
-6A-BasicsTools.html
