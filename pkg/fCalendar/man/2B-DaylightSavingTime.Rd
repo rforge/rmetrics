@@ -146,7 +146,8 @@
 \examples{
 ## SOURCE("fCalendar.3B-DaylightSavingTime")
 
-## data - DST Rules for Zurich:
+## ...
+   # DST Rules for Zurich:
    Zurich() 
 }
 
