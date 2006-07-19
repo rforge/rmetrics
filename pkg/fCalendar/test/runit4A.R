@@ -143,17 +143,17 @@ function()
     #  isMultivariate   Tests if an object of class 'timeSeries' is multivariate
 
     # Data:
-    X = readSeries("library/fBasics/data/msft.dat.csv")  
+    X = as.timeSeries(MSFT)
     X = X[1:12, ]
     class(X)
     
     # Return Series:
-    OPEN = X[,1]
+    OPEN = X[, 1]
     OPEN
     returnSeries(OPEN)
     
     # Volatility Series:
-    # ...
+    abs(returnSeries(OPEN))
     
     # Data Matrix:
     seriesData(OPEN)
@@ -162,16 +162,20 @@ function()
     class(Y)
     
     # Position Vector:
-    seriesPositions(OPEN)
-    Y = seriesPositions(X)
-    Y
-    class(Y)
+    PO = seriesPositions(OPEN)
+    PO
+    PX = seriesPositions(X)
+    PX
+    class(PX)
+    checkEquals(
+        target = sum(as.integer(PO - PX)),
+        current = 0)
 
     # Univariate / Multivariate:
-    isUnivariate(X)
-    isMultivariate(X)
-    isUnivariate(OPEN)
-    isMultivariate(OPEN)
+    checkTrue(!isUnivariate(X))
+    checkTrue(isMultivariate(X))
+    checkTrue(isUnivariate(OPEN))
+    checkTrue(!isMultivariate(OPEN))
     
     # Return Value:
     return()    
@@ -190,9 +194,9 @@ function()
     #  points.timeSeries    Points method for a 'timeSeries' object
 
     # Data:
-    X = readSeries("library/fBasics/data/msft.dat.csv")  
+    X = as.timeSeries(MSFT)
     X = X[1:12, ]
-    OPEN = X[,1]
+    OPEN = X[, 1]
     
     # Print:
     print(X)
@@ -201,11 +205,11 @@ function()
     # Plot:
     par(mfrow = c(1, 1))
     plot(OPEN)
-    plot(X)
+    plot(X[, 1:4])
     
     # Next Plot:
     # plot(X)                               # xlim | ylim cannot be specified
-    # lines(uTS2, col = "red", lty = 3)
+    # lines (uTS2, col = "red",  lty = 3)
     # points(uTS2, col = "blue", pch = 19)
     
     # Return Value:

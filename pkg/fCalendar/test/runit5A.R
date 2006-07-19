@@ -29,7 +29,21 @@
 
 ################################################################################
 # FUNCTION:             DESCRIPTION:
-#  fCalendarData         Are located in the fCalendar/data directory
+#  ...                   Holiday Functions
+# FUNCTION:             DESCRIPTION:
+#  .holidayList          Prints all public and ecclestical holidays
+#  .easter               Returns date of easter or related feasts 
+#  .easterSunday         Easter Algorithm 
+# FUNCTION:             DESCRIPTION:
+#  .on.or.after          Computes date in month that is a nday ON OR AFTER date
+#  .on.or.before         Computes date in month that is a nday ON OR BEFORE date
+#  .nth.of.nday          Computes nth ocurrance of a nday in year/month
+#  .last.of.nday         Computes the last nday in year/month
+# FUNCTION:             DESCRIPTION:
+#  .sdate                Computes ISO-8601 dates from Julian day numbers
+#  .sjulian              Computes Julian day numbers from ISO-8601 dates
+#  .sday.of.week         Computes day of the week for ISO-8601 dates 
+#  .sleap.year           Returns TRUE/FALSE if dates belong to leap years or not
 ################################################################################
 
 
@@ -51,8 +65,26 @@ function()
 # ------------------------------------------------------------------------------
 
 
+test.holidays =
+function()
+{
+    holidays = as.vector(.holidayList()[,1])
+    for (holiday in holidays) {
+        Holiday = match.fun(holiday)
+        cat(as.character(Holiday(currentYear)), holiday, "\n")
+    }
+    
+    # Return Value:
+    return()  
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+
 if (FALSE) {
-    testResult <- runTestFile("C:/Rmetrics/trunk/fCalendar/test/runit025A.R")
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fCalendar/test/runit5A.R")
     printTextProtocol(testResult)
 }
 

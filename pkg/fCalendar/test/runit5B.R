@@ -80,19 +80,22 @@ function()
     # easter -
     # easter(year = currentYear, shift = 0)
     # Dates for Easter and Good Friday from 2000 until 2010:
-    easter()
-    easter = easter(2000:2010)
-    easter
-    checkTrue(inherits(easter, "timeDate"))
+    .easter()
+    Easter = .easter(2000:2010)
+    Easter
+    checkTrue(inherits(Easter, "timeDate"))
     
-    goodfriday = easter(2000:2010, -2) 
-    goodfriday
-    checkIdentical(easter, goodfriday + 2*24*3600)
+    GoodFriday = .easter(2000:2010, -2) 
+    GoodFriday
+    checkIdentical(
+        target = Easter, 
+        current = GoodFriday + 2*24*3600)
     
-    HD = holiday(2000:2010, Easter)     
+    HD = holiday(2000:2010, "Easter")     
     HD
-    checkTrue(inherits(HD, "timeDate"))      
-    HD = holiday(2000:2010, GoodFriday)  
+    checkTrue(inherits(HD, "timeDate")) 
+         
+    HD = holiday(2000:2010, "GoodFriday")  
     HD
     checkTrue(inherits(HD, "timeDate"))
    
@@ -101,28 +104,9 @@ function()
     GoodFriday(2000:2010)
   
     # holiday.NYSE -
-    HD = holiday.NYSE(currentYear)
+    HD = holidayNYSE(currentYear)
     HD
     checkTrue(inherits(HD, "timeDate"))
-   
-    # fjulian -
-    fdates = c("8/11/73", "08-11-73", "August 11 1973", "Aug11/73")
-    FJ = fjulian(fdates) 
-    FJ
-    checkIdentical(class(FJ), "numeric")
-   
-    # fjulian -
-    fdates = c("11/8/73", "11-08-73", "11 August 1973", "11Aug73")
-    FJ = fjulian(fdates, order = 'dmy')
-    FJ 
-    
-    # .julian - 
-    # day.of.week -
-    # The number of days from January 1, 1990 to each of:
-    # January 15, 1990, February 15, 1991, March 15, 1992, etc.
-    .julian(1:12, rep(15,12), 1990+(0:11), origin = c(1, 1, 1990))
-    # November 12, 98, was a Wednesday.
-    day.of.week(m = 11, d = 12, y = 98)
    
     # Return Value:
     return()
@@ -134,7 +118,7 @@ function()
    
 
 if (FALSE) {
-    testResult <- runTestFile("C:/Rmetrics/trunk/fCalendar/test/runit025B.R")
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fCalendar/test/runit5B.R")
     printTextProtocol(testResult)
 }
 

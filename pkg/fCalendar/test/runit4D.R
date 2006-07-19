@@ -117,6 +117,7 @@ test.asTimeSeriesDJ1 =
 function()
 {   
     # Load Data:
+    require(fBasics)
     data(DowJones30) 
     
     # Taking Dates from First Column:
@@ -134,6 +135,7 @@ function()
     # Missing Dates - Using Dummy Dates:
     DJ = DowJones30[21:30, c(11:15)]
     DJ
+    class(DJ)
     as.timeSeries(DJ)
    
     # With recordIDs:  
@@ -170,13 +172,13 @@ function()
 test.fromTimeSeriesUV = 
 function()
 {     
-    # as.vector.timeS*     Converts a univariate 'timeSeries' to a vector
-    # as.matrix.timeS*     Converts a 'timeSeries' to a 'matrix'
-    # as.data.frame.t*     Converts a 'timeSeries' to a 'data.frame'
-    # as.ts.timeSeries     Converts a 'timeSeries' to a 'ts'
+    # as.vector.timeSeries      Converts a univariate 'timeSeries' to a vector
+    # as.matrix.timeSeries      Converts a 'timeSeries' to a 'matrix'
+    # as.data.frame.timeSeries  Converts a 'timeSeries' to a 'data.frame'
+    # as.ts.timeSeries          Converts a 'timeSeries' to a 'ts'
     
    
-    # UNIVARIATE CASE:
+    # Univariate Case:
     set.seed(4711)
     data = round(rnorm(12), 3)
     charvec = timeCalendar(2006)
@@ -231,7 +233,7 @@ function()
     # as.ts.timeSeries     Converts a 'timeSeries' to a 'ts'
     
    
-    # MULTIVARIATE CASE:
+    # Multivariate Case:
     set.seed(4711)
     data = matrix(round(rnorm(24), 3), ncol = 2)
     charvec = timeCalendar(2006)
@@ -242,20 +244,28 @@ function()
     MAT = as.matrix(mTS)  
     head(MAT)
     class(MAT)
-    checkIdentical(class(MAT), "matrix")
-    checkIdentical(target = MAT[,1], current = VEC)
+    checkIdentical(
+        target = class(MAT), 
+        current = "matrix")
+    checkIdentical(
+        target = as.vector(MAT[, 1]), 
+        current = as.numeric(MAT)[1:12])
     
     # Data Frame:
     DF = as.data.frame(mTS)  
     head(DF)
     class(DF)
-    checkIdentical(class(DF), "data.frame")
+    checkIdentical(
+        target = class(DF), 
+        current = "data.frame")
     
     # Time Series:
     TS = as.ts(mTS)
     head(TS)
     class(TS)
-    checkIdentical(class(TS), c("mts", "ts"))
+    checkIdentical(
+        target = class(TS), 
+        current = c("mts", "ts"))
     
     # Return Value:
     return()    
@@ -266,7 +276,7 @@ function()
 
 
 if (FALSE) {
-    testResult <- runTestFile("C:/Rmetrics/trunk/fCalendar/test/runit024D.R")
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fCalendar/test/runit4D.R")
     printTextProtocol(testResult)
 }
 

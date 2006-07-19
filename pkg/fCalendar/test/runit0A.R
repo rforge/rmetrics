@@ -138,6 +138,39 @@ function()
 # ------------------------------------------------------------------------------
 
 
+test.julian =
+function()
+{
+    # Requirement:
+    require(date)
+
+    # .fjulian -
+    fdates = c("8/11/73", "08-11-73", "August 11 1973", "Aug11/73")
+    FJ = .fjulian(fdates) 
+    FJ
+    checkIdentical(class(FJ), "numeric")
+   
+    # .fjulian -
+    fdates = c("11/8/73", "11-08-73", "11 August 1973", "11Aug73")
+    FJ = .fjulian(fdates, order = 'dmy')
+    FJ 
+    
+    # .julian - 
+    # day.of.week -
+    # The number of days from January 1, 1990 to each of:
+    # January 15, 1990, February 15, 1991, March 15, 1992, etc.
+    .julian(1:12, rep(15,12), 1990+(0:11), origin = c(1, 1, 1990))
+    # November 12, 98, was a Wednesday.
+    .day.of.week(m = 11, d = 12, y = 98)
+   
+    # Return Value:
+    return() 
+}
+
+
+# ------------------------------------------------------------------------------
+
+
 if (FALSE) {
     testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fCalendar/test/runit0A.R")
     printTextProtocol(testResult)
