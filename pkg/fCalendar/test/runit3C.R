@@ -68,28 +68,50 @@ test.Ops =
 function()
 {
     myFinCenter <<- "NewYork"
-    NY = timeCalendar()
+    NY = timeCalendar(h=10) 
     
     myFinCenter <<- "Zurich"
-    ZH = timeCalendar()
+    ZH = timeCalendar(h=16)
     
-    NY > ZH
-    NY == ZH + 6*3600
+    NY - ZH 
+    
+    TEST = (NY > ZH)
+    checkTrue(!TEST[1])
+    checkTrue(TEST[4])
+    
+    TEST = (NY - 24*3600 == ZH)
     
     # Return Value:
     return()  
 }
 
 
-    unique(sort(sample(c(NY, NY))))
+# ------------------------------------------------------------------------------
 
+
+test.methods =
+function()
+{
+    myFinCenter <<- "NewYork"
+    NY = timeCalendar(h=10) 
+    
+    myFinCenter <<- "Zurich"
+    ZH = timeCalendar(h=16)
+    
+    c(NY, ZH)
+    c(ZH, NY)
+    
+    rep(NY[1:3], times = 3)
+    rep(NY[1:3], each = 3)
+}
 
 
 # ------------------------------------------------------------------------------
 
 
 if (FALSE) {
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fCalendar/test/runit3B.R")
+    require(RUnit)
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fCalendar/test/runit3C.R")
     printTextProtocol(testResult)
 }
 

@@ -29,6 +29,7 @@
 
 ################################################################################
 # FUNCTION:              FINANCIAL CENTERS:
+#  myFinCenter            Sets my financial center
 #  rulesFinCenter         Returns DST rules for a financial center
 #  listFinCenter          Lists all supported financial centers
 # FUNCTION:              GENERATION OF TIMEDATE OBJECTS:
@@ -39,10 +40,14 @@
 #  .formatFinCenter        Internal called by timeDate
 #  timeCalendar           Creates a 'timeDate' object from calendar atoms
 #  timeSequence           Creates a regularly spaced 'timeDate' object
+#   seq.timeDate           A synonyme function for timeSequence
 #  Sys.timeDate           Returns system time as an object of class 'timeDate' 
 #  is.timeDate            Tests if the object is of class 'timeDate' 
 # METHODS:               REPRESENTATION OF TIMEDATE OBJECTS:
-#  print.timeDate         Prints 'timeDate' Object
+#  print.timeDate         Prints 'timeDate' object
+#  plot.timeDate          Plots 'timeDate' object
+#  points.timeDate        Adds points to a 'timeDate' plot
+#  lines.timeDate         Adds lines to a 'timeDate' plot
 #  summary.timeDate       Summarizes details of a 'timeDate' object
 #  format.timeDate        Formats 'timeDate' as ISO conform character string
 ################################################################################
@@ -66,32 +71,79 @@ function()
 # ------------------------------------------------------------------------------
  
 
+test.finCenter =
+function()
+{
+}
+
+
+# ------------------------------------------------------------------------------
+
+
 test.midnightStandard = 
 function()
 {   
     # Midnight Standard:
-    .midnightStandard("20010101",       .whichFormat("20010101"))
-    .midnightStandard("200101010000",   .whichFormat("200101010000"))
-    .midnightStandard("20010101000000", .whichFormat("20010101000000"))
-    .midnightStandard("200101011600",   .whichFormat("200101011600"))
-    .midnightStandard("20010101160000", .whichFormat("20010101160000"))
+    MS = .midnightStandard("20010101",       
+        .whichFormat("20010101"))
+    print(MS)
+    checkIdentical(MS, "20010101")
+    MS = .midnightStandard("200101010000",   
+        .whichFormat("200101010000"))
+    print(MS)
+    checkIdentical(MS, "200101010000")
+    MS = .midnightStandard("20010101000000", 
+        .whichFormat("20010101000000"))
+    print(MS)
+    checkIdentical(MS, "2001-01-01 00:00:00")
+    MS = .midnightStandard("200101011600",   
+        .whichFormat("200101011600"))
+    print(MS)
+    checkIdentical(MS, "200101011600")
+    MS = .midnightStandard("20010101160000", 
+        .whichFormat("20010101160000"))
+    print(MS)
+    checkIdentical(MS, "2001-01-01 16:00:00")
     
     # Midnight Standard:
-    .midnightStandard("2001-01-01",          .whichFormat("2001-01-01"))
-    .midnightStandard("2001-01-01 00:00",    .whichFormat("2001-01-01 00:00"))
-    .midnightStandard("2001-01-01 00:00:00", .whichFormat("2001-01-01 00:00:00"))
-    .midnightStandard("2001-01-01 16:00",    .whichFormat("2001-01-01 16:00"))
-    .midnightStandard("2001-01-01 16:00:00", .whichFormat("2001-01-01 16:00:00"))
+    MS = .midnightStandard("2001-01-01",          
+        .whichFormat("2001-01-01"))
+    print(MS)
+    checkIdentical(MS, "2001-01-01")
+    MS = .midnightStandard("2001-01-01 00:00",    
+        .whichFormat("2001-01-01 00:00"))
+    print(MS)
+    checkIdentical(MS, "2001-01-01 00:00")
+    MS = .midnightStandard("2001-01-01 00:00:00", 
+        .whichFormat("2001-01-01 00:00:00"))
+    print(MS)
+    checkIdentical(MS, "2001-01-01 00:00:00")
+    MS = .midnightStandard("2001-01-01 16:00",    
+        .whichFormat("2001-01-01 16:00"))
+    print(MS)
+    checkIdentical(MS, "2001-01-01 16:00")
+    MS = .midnightStandard("2001-01-01 16:00:00", 
+        .whichFormat("2001-01-01 16:00:00"))
+    print(MS)
+    checkIdentical(MS, "2001-01-01 16:00:00")
     
     # Midnight Standard:
     .midnightStandard("2006-01-01 24:00:00", format = "%Y-%m-%d %H:%M:%S")
+    print(MS)
+    checkIdentical(MS, "2001-01-01 16:00:00")
     .midnightStandard("2006-01-01", format = "%Y-%m-%d")
-    
+    print(MS)
+    checkIdentical(MS, "2001-01-01 16:00:00")
     .midnightStandard("20060101240000", format = "%Y%m%d%H%M%S")
+    print(MS)
+    checkIdentical(MS, "2001-01-01 16:00:00")
     .midnightStandard("20060101", format = "%Y%m%d")
-    
+    print(MS)
+    checkIdentical(MS, "2001-01-01 16:00:00")
     .midnightStandard("1/1/2006", format = "%m/%d/%Y")
-
+    print(MS)
+    checkIdentical(MS, "2001-01-01 16:00:00")
+    
     # Return Value:
     return()    
 }
@@ -105,43 +157,74 @@ function()
 {
     # FORMAT:
     
-    .whichFormat("20010101")
-    .whichFormat("200101010000")
-    .whichFormat("20010101000000")
-    .whichFormat("200101011600")
-    .whichFormat("20010101160000")
+    WF = .whichFormat("20010101")
+    print(WF)
+    checkIdentical(WF, "%Y%m%d")
+    WF = .whichFormat("200101010000")
+    print(WF)
+    checkIdentical(WF, "%Y%m%d%H%M")
+    WF = .whichFormat("20010101000000")
+    print(WF)
+    checkIdentical(WF, "%Y%m%d%H%M%S")
+    WF = .whichFormat("200101011600")
+    print(WF)
+    checkIdentical(WF, "%Y%m%d%H%M")
+    WF = .whichFormat("20010101160000")
+    print(WF)
+    checkIdentical(WF, "%Y%m%d%H%M%S")
     
-    .whichFormat("2001-01-01")
-    .whichFormat("2001-01-01 00:00")
-    .whichFormat("2001-01-01 00:00:00")
-    .whichFormat("2001-01-01 16:00")
-    .whichFormat("2001-01-01 16:00:00")
+    WF = .whichFormat("2001-01-01")
+    print(WF)
+    checkIdentical(WF, "%Y-%m-%d")
+    WF = .whichFormat("2001-01-01 00:00")
+    print(WF)
+    checkIdentical(WF, "%Y-%m-%d %H:%M")
+    WF = .whichFormat("2001-01-01 00:00:00")
+    print(WF)
+    checkIdentical(WF, "%Y-%m-%d %H:%M:%S")
+    WF = .whichFormat("2001-01-01 16:00")
+    print(WF)
+    checkIdentical(WF, "%Y-%m-%d %H:%M")
+    WF = .whichFormat("2001-01-01 16:00:00")
+    print(WF)
+    checkIdentical(WF, "%Y-%m-%d %H:%M:%S")
     
-    .whichFormat("01/01/2001")
-    .whichFormat("01-Jan-2001")
-    
+    WF = .whichFormat("01/01/2001")
+    print(WF)
+    checkIdentical(WF, "%m/%d/%Y")
+    WF = .whichFormat("01-Jan-2001")
+    print(WF)
+    checkIdentical(WF, "%d-%b-%Y")
     
     # CHARACTER:
     
-    myFinCenter = "GMT"
+    myFinCenter <<- "GMT"
+    print(myFinCenter)
     
     charvec = paste("2006-01-", c(10, 20, 30), sep = "")
-    charvec
-    timeDate(charvec)
+    print(charvec)
+    TD = timeDate(charvec)
+    print(TD)
+    CHARVEC = as.character(TD)
+    attr(CHARVEC, "control")<-NULL
+    checkIdentical(charvec, CHARVEC)
     
     charvec = paste(charvec, "00")
-    charvec
-    timeDate(charvec)
+    print(charvec)
+    TD = timeDate(charvec)
+    print(TD)
     
     charvec = paste(charvec, ":00", sep = "")
-    charvec
-    timeDate(charvec)
+    print(charvec)
+    TD = timeDate(charvec)
+    print(TD)
     
     charvec = paste(charvec, ":00", sep = "")
-    charvec
-    timeDate(charvec)
+    print(charvec)
+    TD = timeDate(charvec)
+    print(TD)
 
-    #         YYYYMMDDhhmmss
+    # YYYYMMDDhhmmss
     timeDate("20010101")
     timeDate("200101010000")
     timeDate("20010101000000")     
@@ -396,6 +479,7 @@ function()
 
 
 if (FALSE) {
+    require(RUnit)
     testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fCalendar/test/runit3A.R")
     printTextProtocol(testResult)
 }

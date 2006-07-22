@@ -91,8 +91,15 @@ function()
 test.genfun =
 function()
 {
-    tS = as.timeSeries(MSFT)
-    head(log(tS))
+    # Time Series:
+    MSFT.TS = as.timeSeries(MSFT)
+    print(head(log(MSFT.TS)))
+    print(tail(log(MSFT.TS)))
+    MEAN = mean(MSFT.TS@Data)
+    checkEquals(
+        target = MEAN, 
+        current = 8628750, 
+        tolerance = 1)
     
     # Return Value:
     return() 
@@ -125,8 +132,16 @@ function()
     13.62,  6.43, 12.57,  8.74, 13.71, 12.00, 10.25, 15.74, 14.81, 21.60, 
     19.31, 26.50, 12.11, 53.10, 49.43,  3.25,  0.60, 28.63,  5.52, 44.08))
 
-    akima.lin <- .interp(akima$x, akima$y, akima$z)
-    image  (akima.lin, add = TRUE)
+    # Interpolation:
+    akima.lin = .interp(akima$x, akima$y, akima$z)
+    Z = mean(akima.lin$z)
+    checkEquals(
+        target = Z, 
+        current = 21.70316, 
+        tolerance = 0.00001)
+    
+    # Plots:
+    image  (akima.lin, add = FALSE)
     contour(akima.lin, add = TRUE)
     points (akima, pch = 19)
     
@@ -147,21 +162,42 @@ function()
     # .fjulian -
     fdates = c("8/11/73", "08-11-73", "August 11 1973", "Aug11/73")
     FJ = .fjulian(fdates) 
-    FJ
-    checkIdentical(class(FJ), "numeric")
-   
+    print(FJ)
+    checkIdentical(
+        target = class(FJ), 
+        current = "numeric")
+    checkIdentical(
+        target = FJ, 
+        current = c(4971, 4971, 4971, 4971))
+    
     # .fjulian -
     fdates = c("11/8/73", "11-08-73", "11 August 1973", "11Aug73")
     FJ = .fjulian(fdates, order = 'dmy')
-    FJ 
+    print(FJ) 
+    checkIdentical(
+        target = class(FJ), 
+        current = "numeric")
+    checkIdentical(
+        target = FJ, 
+        current = c(4971, 4971, 4971, 4971))
     
     # .julian - 
     # day.of.week -
     # The number of days from January 1, 1990 to each of:
     # January 15, 1990, February 15, 1991, March 15, 1992, etc.
-    .julian(1:12, rep(15,12), 1990+(0:11), origin = c(1, 1, 1990))
+    JULIAN = .julian(1:12, rep(15,12), 1990+(0:11), origin = c(1, 1, 1990))
+    print(JULIAN)
+    COUNTS = c(14,410,804,1200,1595,1991,2387,2783,3179,3574,3971,4366)
+    checkIdentical(
+        target = JULIAN, 
+        current = COUNTS)
     # November 12, 98, was a Wednesday.
-    .day.of.week(m = 11, d = 12, y = 98)
+    DOW = .day.of.week(m = 11, d = 12, y = 98)
+    print(DOW)
+    COUNT = 3
+    checkIdentical(
+        target = DOW, 
+        current = COUNT)
    
     # Return Value:
     return() 
@@ -172,6 +208,7 @@ function()
 
 
 if (FALSE) {
+    require(RUnit)
     testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fCalendar/test/runit0A.R")
     printTextProtocol(testResult)
 }

@@ -59,7 +59,8 @@ function()
 
 
 if (FALSE) {
-    testResult <- runTestFile("C:/Rmetrics/trunk/fCalendar/test/runit023D.R")
+    require(RUnit)
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fCalendar/test/runit3D.R")
     printTextProtocol(testResult)
 }
 

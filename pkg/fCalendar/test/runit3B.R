@@ -85,11 +85,13 @@ function()
     myFinCenter
     Easter(2006)
     target = timeSequence(from = Easter(currentYear)-7*24*3600, length.out = 8) 
-    target
+    print(target)
     charvec = c("2006-04-09", paste("2006-04-1", 0:6, sep = ""))
     current = timeDate(charvec)
-    current
-    checkIdentical(target, current)
+    print(current)
+    checkIdentical(
+        target, 
+        current)
     
     ## Weekdays and Weekend Days: 
     tS = timeSequence(from = Easter(currentYear)-7*24*3600, length.out = 8)
@@ -111,36 +113,45 @@ function()
     
     ## cut - 
     GF = GoodFriday(2006)
-    GF
+    print(GF)
     EM = EasterMonday(2006)
-    EM
+    print(EM)
     target = cut(tS, from = GF, to = EM)
-    target
+    print(target)
     charvec = paste("2006-04-1", 4:6, sep = "")
     current = timeDate(charvec)
-    current
-    checkIdentical(target, current)
+    print(current)
+    checkIdentical(
+        target, 
+        current)
     
     ## start - 
-    ts = timeCalendar()
+    tS = timeCalendar()
     target = start(tS)
-    target
-    # current = sort(tS)[1]
-    # current
-    # checkIdentical(target, current)
+    print(target)
+    checkIdentical(
+        format(target), 
+        current = format(timeDate("2006-01-01")))
     
-    ## end - 
+    ## end -
+    tS = timeCalendar() 
     target = end(tS)
-    target
-    # current = rev(sort(tS))[1]
-    # current
-    # checkIdentical(target@Data, current@Data)
+    print(target)
+    checkIdentical(
+        format(target), 
+        current = format(timeDate("2006-12-01")))
     
     ## head | tail -
-    # not yet available
+    tS = timeCalendar()
+    head(tS)
+    tail(tS)
     
     ## order | sample | uniq -
-    # not yet available
+    tS = timeCalendar()
+    # order.timeDate - not yet available
+    sample(tS)
+    unique(tS)
+    # unique(sort(c(tS, tS)))
    
     # Return Value:
     return()
@@ -151,6 +162,7 @@ function()
 
 
 if (FALSE) {
+    require(RUnit)
     testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fCalendar/test/runit3B.R")
     printTextProtocol(testResult)
 }
