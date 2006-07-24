@@ -5,6 +5,7 @@
 \alias{holiday}
 
 \alias{holidayNYSE}
+\alias{holidayZURICH}
 
 
 \title{Holiday Calendars and Utilities}
