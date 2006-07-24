@@ -16,6 +16,7 @@
 \alias{isMultivariate}
 
 \alias{print.timeSeries}
+\alias{summary.timeSeries}
 \alias{plot.timeSeries}
 \alias{lines.timeSeries}
 \alias{points.timeSeries}
@@ -59,6 +60,7 @@
     
     \tabular{ll}{   
     \code{print.timeSeries} \tab S3: Print method for a 'timeSeries' object, \cr
+    \code{summary.timeSeries} \tab S3: Summary method for a 'timeSeries' object, \cr
     \code{plot.timeSeries} \tab S3: Plot method for a 'timeSeries' object, \cr
     \code{lines.timeSeries} \tab S3: Lines method for a 'timeSeries' object, \cr
     \code{points.timeSeries} \tab S3: Points method for a 'timeSeries' object. }
@@ -91,6 +93,7 @@ isUnivariate(x)
 isMultivariate(x)
 
 \method{print}{timeSeries}(x, \dots)
+\method{summary}{timeSeries}(object, \dots)
 \method{plot}{timeSeries}(x, reference.grid = TRUE, lty = 1, \dots) 
 \method{lines}{timeSeries}(x, \dots)
 \method{points}{timeSeries}(x, \dots)
