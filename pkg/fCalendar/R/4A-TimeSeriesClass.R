@@ -41,6 +41,7 @@
 #  isMultivariate       Tests if object of class 'timeSeries' is multivariate
 # METHODS:             PRINT AND PLOT FUNCTIONS:
 #  print.timeSeries     Prints a 'timeSeries' object
+#  summary.timeSeries   Summarizes a 'timeSeries' object
 #  plot.timeSeries      Plots a 'timeSeries' object
 #  points.timeSeries    Adds points to a 'timeSeries' plot
 #  lines.timeSeries     Adds lines to a 'timeSeries' plot
@@ -577,6 +578,7 @@ function(x)
 
 ################################################################################
 #  print.timeSeries     Prints a 'timeSeries' object
+#  summary.timeSeries   Summarizes a 'timeSeries' object
 #  plot.timeSeries      Plots a 'timeSeries' object
 #  points.timeSeries    Adds points to a 'timeSeries' plot
 #  lines.timeSeries     Adds lines to a 'timeSeries' plot
@@ -605,6 +607,49 @@ function(x, ...)
 }
 
   
+# ------------------------------------------------------------------------------
+
+
+summary.timeSeries = 
+function(object, ...) 
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   S3 Summary method for objects of class "timeDate"
+    
+    # Arguments
+    #   x - an object of class "timeDate"
+    
+    # FUNCTION: 
+
+    # Series Name:
+    x = object
+    cat("\nTime Series:        ")
+    cat("\n Name:              ", substitute(x))    
+    # Data Matrix:
+    Dim = dim(x@Data)
+    cat("\nData Matrix:        ")
+    cat("\n Dimension:         ", Dim)
+    cat("\n Column Names:      ", colnames(x@Data) )
+    firstName = rownames(x@Data)[1]
+    lastName = rownames(x@Data)[Dim[1]]
+    cat("\n Row Names:         ", firstName, " ... ", lastName)
+    # Date/Time Positions:
+    positions = seriesPositions(x)
+    cat("\nPositions:          ")
+    cat("\n Start:             ", as.character(start(positions)))
+    cat("\n End:               ", as.character(end(positions)))
+    # Other Attributes:
+    cat("\nAttributes:         ")
+    cat("\n Format:            ", x@format)
+    cat("\n FinCenter:         ", x@FinCenter)
+    cat("\n Units:             ", x@units)
+    cat("\n Title:             ", x@title)
+    cat("\n Documentation:     ", x@documentation)
+    cat("\n") 
+}  
+
+
 # ------------------------------------------------------------------------------
 
 
