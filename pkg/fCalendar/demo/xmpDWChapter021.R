@@ -29,7 +29,6 @@
 
 ### Load Packages:
 
-    require(fBasics)
     require(fCalendar)
     ###
     
@@ -72,7 +71,8 @@
     .JulianToDate = function(JD)
     {
         # To ISO Date:
-        y <- (4 * (JD - 1721119) - 1) %/% 146097
+        j = JD - 1721119
+        y <- (4 * j - 1) %/% 146097
         j <- 4 * j - 1 - 146097 * y
         d <- j %/% 4
         j <- (4 * d + 3) %/% 1461
@@ -111,7 +111,7 @@
     
         
     # Test - Returns a Vector of zeros:
-    YYYY*10000+MM*100+DD - julian2date(date2julian(YYYY, MM, DD))
+    YYYY*10000+MM*100+DD - .JulianToDate(.DateToJulian(YYYY*10000+MM*100+DD))
     ###
     
     

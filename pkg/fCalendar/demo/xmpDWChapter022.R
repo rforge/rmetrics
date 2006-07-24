@@ -59,7 +59,6 @@
 
 ### Load Packages:
 
-    require(fBasics)
     require(fCalendar)
     ###
     
@@ -69,13 +68,14 @@
 
 ### Example: 1 Introduction
   
-   # Note, POSIX is part of the base package!
-   Sys.time()
-   if (Sys.timezone() != "GMT") stop("Set timezone to GMT!")
-   # In the following we use only "GMT" time zone settings. 
-   # For other time zone settings use the new 'timeDate'
-   # objects which also work properly under the Windows OS.
-   ###
+    # Note, POSIX is part of the base package!
+    Sys.time()
+    # In the following we use only "GMT" time zone settings. 
+    Sys.putenv(TZ = "GMT")
+    Sys.time()
+    # For other time zone settings use the new 'timeDate'
+    # objects which also work properly under the Windows OS.
+    ###
     
 
 # ------------------------------------------------------------------------------

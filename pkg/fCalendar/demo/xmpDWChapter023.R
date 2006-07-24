@@ -49,7 +49,6 @@
 
 ### Load Packages:
 
-    require(fBasics)
     require(fCalendar)
     ###
     
@@ -91,7 +90,6 @@
     # [3] [2004-08-30 10:30:00] [1990-02-09 12:18:23]
     ###
    
-  
     # timeDate - Display the Internal Representation:
     # What class?
     class(ZURICH)
@@ -350,10 +348,9 @@
     # Print:
     ZURICH
     # Sort:
-    modify(ZURICH, "sort")
+    sort(ZURICH)
     # Sort reverted:
-    n = length(format(ZURICH))
-    modify(ZURICH, "sort")[n:1] 
+    rev(sort(ZURICH)) 
     ###
 
 
@@ -377,13 +374,11 @@
     julian(ZURICH)   
     as.integer(julian(ZURICH))
     # Day Units:
-    julian(ZURICH, "days")   
-    as.integer(julian(ZURICH, "days"))
-    ## > as.integer(round(julian(ZURICH, "days")))
+    julian(ZURICH, myUnits = "days")   
+    as.integer(julian(ZURICH, myUnits = "days"))
     ###
         
-    ## atoms.timeDate - Returns "Atoms" From a 'timeDate' Object:
-    
+    # atoms.timeDate - Returns "Atoms" From a 'timeDate' Object:
     # Extract Calendar Atoms:
     ZURICH
     atoms(ZURICH)

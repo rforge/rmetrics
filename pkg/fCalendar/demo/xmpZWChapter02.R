@@ -73,10 +73,10 @@
     ###
      
     
-    # The function 'read.timeSeries' allows you to read data from a
+    # The function 'readSeries' allows you to read data from a
     # spreadsheet file and transforms it ditrectly to a 'timeSeries'
     # object.
-    args(read.timeSeries)
+    args(readSeries)
     # Where are the Data?
     dataPath = "library/fBasics/data/"
     ###
@@ -85,7 +85,8 @@
     # The file "singleIndex.dat.csv" contains the monthly closing 
     # prices for Microsoft Corporation and the S&P 500 index.
     # Data are downloadable and can be updated from Yahoo's web site.
-    singleIndex.dat = read.timeSeries(
+    require(fBasics)
+    singleIndex.dat = readSeries(
         paste(dataPath, "singleIndex.dat.csv", sep = ""))
     singleIndex.dat[1,]
     end(singleIndex.dat)
@@ -141,9 +142,9 @@
     singleIndex.dat[smpl, ]
     class(singleIndex.dat)
     # Alternatively use in R cutSeries():
-    cutSeries(singleIndex.dat, timeDate("3/01/1992"), timeDate("1/31/1993"))
+    cut(singleIndex.dat, timeDate("3/01/1992"), timeDate("1/31/1993"))
     # Or with ISO dates ...
-    cutSeries(singleIndex.dat, timeDate("1992-03-01"), timeDate("1993-01-31"))
+    cut(singleIndex.dat, timeDate("1992-03-01"), timeDate("1993-01-31"))
     # Note, American and ISO format specifications are automatically recognized
     ###
     
@@ -222,19 +223,19 @@
     # ... or
     args(julian.timeDate)
     julian(td)
-    julian(td, "days")
+    julian(td, myUnits = "days")
     # Yields: Time difference of 11688.33 days
     # From where comes 1/3 day?
     # Julians have their origin 1960-01-01 00:00:00 GMT!
     # Confirm it:
-    julian(tdGMT, "days")
+    julian(tdGMT, myUnits = "days")
     # Test the Origin:
     tdORIGIN = timeDate(
         charvec = "1970-01-01", 
         format = "%Y-%m-%d",
         FinCenter = "GMT")
     tdORIGIN
-    julian(tdORIGIN, "days")
+    julian(tdORIGIN, myUnits = "days")
     ###
     
     
@@ -261,12 +262,11 @@
     
     # Format date/time in Pacific Time Zone:
     tdPACIFIC = timeDate("Mar 02, 1963 08:00 PM",
-        format = "%b %d, %Y %I:%M %p",
+        format = "%b %d, %Y %H:%M %p",
         zone = "America/Pacific",
         FinCenter = "America/Pacific" )
     tdPACIFIC
     ###
-    
     
     # Convert date/time to Eastern Time Zone:
     # p. 21
@@ -368,7 +368,7 @@
     # > as.numeric(td1)
     # ... use julian, that's more definite!
     td1
-    julian(td1, "days")
+    julian(td1, myUnits = "days")
     # Add one day -  we use seconds!
     # ... these are 24 hours each with 3600 seconds
     td1 + 24*3600
@@ -408,7 +408,7 @@
         m = NULL)
     class(td)[1]
     td
-    julian(td, "days")
+    julian(td, myUnits = "days")
     ###
 
     
@@ -418,7 +418,7 @@
     td = timeSequence(
         from = "1/1/1900", 
         to = "1/1/1910", 
-        by = "years", 
+        by = "year", 
         format = "%m/%d/%Y")
     class(td)[1]
     td
@@ -433,22 +433,16 @@
     timeSequence(
         from = "1/1/1900", 
         to = "10/1/1902", 
-        by = "quarters",
-        format = "%m/%d/%Y")
-    # ... or
-    timeSequence(
-        from = "1/1/1900", 
-        to = "10/1/1902", 
-        by = "3 months",
+        by = "quarter",
         format = "%m/%d/%Y")
     # Rmetrics prefers ISO-8601 Input:
     # ... jump to the next century
     timeSequence(from = "2000-01-01", to = "2002-10-01", 
-        by = "quarters", format = "%Y-%m-%d")
+        by = "quarter", format = "%Y-%m-%d")
     timeSequence(from = "20000101", to = "20021001", 
-        by = "quarters", format = "%Y%m%d")
+        by = "quarter", format = "%Y%m%d")
     timeSequence(from = "2000-01-01 16:15:00", to = "2002-10-01 16:15:00", 
-        by = "quarters", format = "%Y-%m-%d %H:%M:%S")
+        by = "quarter", format = "%Y-%m-%d %H:%M:%S")
     ###
     
     
@@ -473,7 +467,7 @@
     timeSequence(
         from = "1/1/1900",
         to = "3/1/1901",
-        by = "months",
+        by = "month",
         format = "%m/%d/%Y")
     ###
     
@@ -483,7 +477,7 @@
     timeSequence(
         from = "1/1/1900", 
         to = "3/1/1901",
-        by = "months",
+        by = "month",
         format = "%m/%d/%Y") - 24*3600
     ###
     
@@ -498,7 +492,7 @@
     #  timeLastNdayInMonth  the last n-day in year/month
     # Create dates with the first day in month ...
     td = timeSequence(from = "1900-01-01", to = "1901-03-01", 
-        by = "months", format = "%Y-%m-%d")
+        by = "month", format = "%Y-%m-%d")
     # ... now look for the first Monday in Month:
     # Nore, "n"-day is a "Mon"-day, nth=1 for the 1st occurrence.
     timeNthNdayInMonth(charvec = as.character(td), nday = 1, nth = 1)
@@ -523,7 +517,7 @@
         by = "weeks", format = "%Y-%m-%d")
     td
     # Starts on?
-    td@Data[1]$wday
+    getDayOfWeek(td[1])
     # Returns 6, a Saturday
     # ... start on Monday
     td + 24*3600
@@ -559,66 +553,19 @@
     td = timeCalendar(2004, 1, 1:31)
     td
     # ... exclude weekends, i.e. Saturdays and Sundays
-    td[is.weekday(td)]
+    td[isWeekday(td)]
     # ... list weekends
-    td[is.weekend(td)]
+    td[isWeekend(td)]
     ###
     
         
     # Print - New York Stock Exchange - Holiday Calendar for 2000
     # p. 26
-    NYSE2000 = holiday.NYSE(2000)
+    NYSE2000 = holidayNYSE(2000)
     NYSE2000
+    NYSE2000@FinCenter = "America/NewYork"
     ###
-    
-    
-    # Create a holiday Calendar for Zurich in Switzerland:
-    # Rmetrics
-    # Inspect the holiday database in "data/holiday.db.R"
-    # ... You can add there additional holidays!
-    #   NewYearsDay         Jan, 1st
-    #   GoodFriday          2 days before Easter
-    #   EasterMonday        1 day after Easter
-    #   LaborDay            May, 1st  
-    #   PentecostMonday     50 days after Easter
-    #   ChristmasDay        Dec, 25 
-    #   BoxingDay           Dec, 26  
-    #   CHBerchtoldsDay     Jan, 2nd
-    #   CHSechselaeuten     3rd Monday in April 
-    #                       1 week later if it coincides with Easter Monday
-    #   CHAscension         39 days after Easter
-    #   CHConfederationDay  Aug, 1st
-    #   CHKnabenschiessen   2nd Saturday to Monday in Sep
-    holiday.ZURICH = function(y = currentYear) {
-        years = y
-        holidays = NULL
-        # Iterate Years:
-        for (y in years ) { 
-            holidays = c(holidays, NewYearsDay(y))
-            holidays = c(holidays, GoodFriday(y))   
-            holidays = c(holidays, EasterMonday(y)) 
-            holidays = c(holidays, LaborDay(y))
-            holidays = c(holidays, PentecostMonday(y))  
-            holidays = c(holidays, ChristmasDay(y)) 
-            holidays = c(holidays, BoxingDay(y)) 
-            holidays = c(holidays, CHBerchtoldsDay(y))
-            holidays = c(holidays, CHSechselaeuten(y))
-            holidays = c(holidays, CHAscension(y))
-            holidays = c(holidays, CHConfederationDay(y))
-            holidays = c(holidays, CHKnabenschiessen(y)) }
-        # Sort and Convert to 'timeDate':
-        holidays = as.character(sort(holidays))
-        ans = timeDate(holidays, format = "%Y%m%d", FinCenter = "GMT")
-        # Remove Remaining Weekend Dates:
-        ans = ans[!( (ans@Data)$wday == 0 | (ans@Data)$wday == 6 )]
-        # Set Financial Center:
-        ans@FinCenter = "Europe/Zurich"
-        # Return Value:
-        ans }
-    # Zurich Holidays:
-    holiday.ZURICH(2004:2005)
-    ###
-    
+ 
 
     # Extract Business Days in January 2000 - New York
     # Note, the 'timeSequence' function cannot exclude directly holidays,
@@ -627,18 +574,12 @@
     td = timeSequence(
         from = "2000-01-01", 
         to = "2000-01-31",
-        by = "days",
+        by = "day",
         format = "%Y-%m-%d", 
         FinCenter = "America/NewYork")
     td
-    # There are no functions for is.bizday()
-    # Let us write one:
-    is.bizday = function(x, holidays) { 
-        if (x@FinCenter != holidays@FinCenter) stop("Different FinCenters")
-        x = is.weekday(modify(x, "trunc", "days"))
-        return(x[!(as.character(x) %in% as.character(holidays))]) }
     # Remove NYSE Holidays ...
-    td = td[is.bizday(td, NYSE2000)]
+    td = td[isBizday(td, NYSE2000)]
     td
     ###
     
@@ -666,8 +607,19 @@
         m = 1,
         d = rep(3:4, each = 7), 
         h = rep(9:15, 2), 
+        min = rep(0, times = 14),
+        s = rep(0, times = 14),
         FinCenter = "America/NewYork" )
     tdNY 
+    
+    y = 2000
+    m = 1
+    d = rep(3:4, each = 7)
+    h = rep(9:15, 2)
+    min = rep(0, times = 14)
+    s = rep(0, times = 14)
+    FinCenter = "America/NewYork"
+    
     # What time was it in Zurich ?
     tdZUR = timeDate(tdNY, zone = tdNY@FinCenter)
     tdZUR

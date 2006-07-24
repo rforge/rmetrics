@@ -39,7 +39,6 @@
 
 ### Load Packages:
 
-    require(fBasics)
     require(fCalendar)
     ###
     
@@ -82,22 +81,22 @@
     c(start(ts), end(ts))
     from = timeCalendar(y = 1960:1980, m = 1)
     to = timeCalendar(y = 1960:1980, m = 12, d = 31)
-    data.frame(from, to)[1:3, ]
+    merge(from, to)[1:3, ]
     applySeries(ts, from, to, FUN = sum)
     ###
        
     # Merge 'timeSeries' with matrix:
-    args(mergeSeries)
-    ts2 = mergeSeries(x = ts, y = round(log(ts@Data), 4))
+    args(merge)
+    ts2 = merge(x = ts, y = log(ts))
     ts2@units = c("JJ", "logJJ")
     colnames(ts2@Data) = ts2@units
     ts2[1:3, ]
     ###
      
     # Cut Out a Piece from a 'timeSeries':
-    args(cutSeries)
-    # The Last five years:
-    cutSeries(ts2, from = "1976-03-31", to = "1980-12-31")
+    args(cut)
+    # The Last 2 years:
+    cut(ts2, from = "1979-01-31", to = "2001-12-31")
     ###
     
   
@@ -106,51 +105,48 @@
 
 ### Example: Daily Data
     
-    # Load SP 500 Data:
-    require(fExtremes)
-    data(sp.raw)
-    class(sp.raw)
-    ### 
     
     # Create a 'timeSeries' Object:
-    ts = timeSeries(data = sp.raw, charvec = attr(sp.raw, "times"), 
-    	units = "SP500", tz = "GMT", FinCenter = "")
+    MSFT.OPEN = MSFT[,"Open"]
+    CHARVEC = as.character(MSFT[, 1])
+    ts = timeSeries(data = MSFT.OPEN, charvec = CHARVEC, 
+        units = "MSFT.OPEN", tz = "GMT", FinCenter = "GMT")
     class(ts)
     ts[1:3, ]
     c(start(ts), end(ts))
     ###
         
-    # Cut out April Data from 1980:
-    ts.Apr80 = cutSeries(ts, "1980-04-01", "1980-04-30") 
-    ts.Apr80
+    # Cut out April Data from 2001:
+    ts.Apr01 = cut(ts, "2001-04-01", "2001-04-30") 
+    ts.Apr01
     ###
         
     # Compute Returns:
     args(returnSeries)
     # Continuous Returns:
-    returnSeries(ts.Apr80)
+    returnSeries(ts.Apr01)
     # Discrete Returns:
-    returnSeries(ts.Apr80, type = "discrete")
+    returnSeries(ts.Apr01, type = "discrete")
     # Don't trim:
-    returnSeries(ts.Apr80, trim = FALSE)
+    returnSeries(ts.Apr01, trim = FALSE)
     # Use Percentage Values:
-    returnSeries(ts.Apr80, percentage = TRUE, trim = FALSE)
+    returnSeries(ts.Apr01, percentage = TRUE, trim = FALSE)
     ###
     
     # Merge Series with Returns:
     # Include last Day from March:
-    ts.APR80 = cutSeries(ts, "1980-03-31", "1980-04-30") 
-    ts.merged = mergeSeries(x = ts.APR80, 
-        y = returnSeries(ts.APR80, trim = FALSE)@Data,
-        units = c("SP500", "Returns"))
+    ts.Apr01 = cut(ts, "2001-03-31", "2001-04-30") 
+    ts.merged = merge(x = ts.Apr01, 
+        y = returnSeries(ts.Apr01, trim = FALSE),
+        units = c("MSFT.PRICE", "MSF.RETURN"))
     ts.merged
     ###
         
     # Align with NA:
     args(alignDailySeries)
-    ts.ret = returnSeries(ts.APR80, trim = TRUE)
-    GoodFriday(1980)   # is a holiday
-    EasterMonday(1980) # is not a holiday !?
+    ts.ret = returnSeries(ts.Apr01, trim = TRUE)
+    GoodFriday(2001)   # is a holiday
+    EasterMonday(2001) # is not a holiday !?
     alignDailySeries(ts.ret, method = "fillNA")
     alignDailySeries(ts.ret, method = "fillNA", include.weekends = TRUE)
     ###
@@ -158,22 +154,18 @@
     # Interpolate:
     ts.ret
     alignDailySeries(ts.ret, method = "interp")
-    alignDailySeries(ts.ret, method = "interp", include.weekend = FALSE)
+    alignDailySeries(ts.ret, method = "interp", include.weekend = TRUE)
     ###
         
     # Aggregate weekly:
-    GoodFriday(1980)
-    to = timeSequence(from = "1980-04-11", length.out = 3, 
-        by = "weeks") 
+    GoodFriday(2001)
+    to = timeSequence(from = "2001-04-06", length.out = 3, by = "week") 
     from = to - 6*24*3600
-    data.frame(from, to)
-    applySeries(ts.ret, from, to, sum)
+    applySeries(ts.ret, from, to, FUN = sum)
     ###
         
     # Plot:
-    plot(ts, col = "steelblue4", xlab = "Year", ylab = "Index",
-        main = "SP500")
-    grid(lty = "solid")
+    plot(ts, col = "steelblue", xlab = "Year", ylab = "Index", main = "MSFT")
     ###
     
     
