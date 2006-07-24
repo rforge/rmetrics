@@ -7,7 +7,6 @@
 \alias{merge.timeSeries} 
 \alias{scale.timeSeries}
 
-\alias{summary.timeSeries}
 \alias{var.timeSeries}
 
 \alias{Ops.timeSeries}
@@ -55,7 +54,6 @@
     Functions and methods for classifying 'timeSeries' objects:
     
     \tabular{ll}{
-    \code{summary} \tab Summarizes a 'timeSeries' object, \cr
     \code{var} \tab Computes Variance from a 'timeSeries' object.}
     
     Functions and methods for mathematical operations on 'timeSeries' objects:         
@@ -94,8 +92,6 @@
 \method{lag}{timeSeries}(x, k = 1, trim = FALSE, units = NULL, \dots)
 \method{merge}{timeSeries}(x, y, units = NULL, \dots)
 \method{scale}{timeSeries}(x, center = TRUE, scale = TRUE)
-
-\method{summary}{timeSeries}(object, \dots)
 \method{var}{timeSeries}(x, y = NULL, na.rm = FALSE, use)
 
 \method{Ops}{timeSeries}(e1, e2)
@@ -186,10 +182,6 @@ rownames<-.timeSeries(x) <- value
         a logical flag. Should missing values be removed?
         By default \code{FALSE}.
         }     
-    \item{object}{
-        [is][seriesData][seriesPositions][summary] -    
-        an object of class \code{timeSeries}.
-        }
     \item{pad}{
         [diffSeries] - \cr
         which value should get the padded values? By default \code{NA}.
@@ -369,10 +361,6 @@ rownames<-.timeSeries(x) <- value
 ## merge -    
    # Merge two timeSeries Object:
    merge(msft[, 1], diff(log(msft[, 1]), units = c("Price", "Return")))
-
-## summary -  
-   # MSFT Summary:
-   summary(returnSeries(msft))
 
 ## var -    
    # Variance of a timeSeries Object:
