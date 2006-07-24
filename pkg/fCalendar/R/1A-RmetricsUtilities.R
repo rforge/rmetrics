@@ -67,6 +67,10 @@
 # FUNCTION:                     DESCRIPTION [REQUIRES DATE]:
 #  .fjulian                      Transform formatted dates to julian day numbers
 #  .julian                       Implements SPlus like 'julian'
+# FUNCTION:                     DESCRIPTION
+#  .isISO8601                    Checks if the date/time is ISO8601 formatted
+# FUNCTION:                     DESCRIPTION:
+#  .isPOSIX                      Checks for an object of class POSIX
 ################################################################################
 
 
@@ -1814,6 +1818,72 @@ function(m, d, y, origin = c(month = 1, day = 1, year = 1960))
 
     # Return Value:
     result
+}
+
+
+################################################################################
+# FUNCTION:              DESCRIPTION
+#  .isISO8601             Checks if the date/time is ISO8601 formatted
+
+
+.isISO8601 =
+function(x)
+{   # A function written by Diethelm Wuertz
+
+    # Description:
+    #   Checks if the date/time string is ISO8601 formatted
+    
+    # Example:
+    #   isISO8601(c("2007-01-01", "2007-12-31" ))
+    #   isISO8601(c("2007-01-01", "2007-12-31" ))[[1]]
+    #   isISO8601("2007-Jan-01")[[1]]
+    #   isISO8601("2007-01-01 15:00:000")[[1]]
+    
+    # Changes:
+    #
+    
+    # FUNCTION:
+    
+    # Check:
+    stopifnot(class(x) == "character")
+    
+    # Test: 
+    options(warn = -1)
+    format = .whichFormat(x)
+    ans = FALSE
+    if (format == "%Y-%m-%d %H:%M:%S") ans = TRUE
+    if (format == "%Y-%m-%d") ans = TRUE
+    if (format == "%Y%m%d%H%M%S") ans = TRUE
+    if (format == "%Y%m%d") ans = TRUE
+    attr(ans, "control")<- format
+    
+    # Return Value:
+    ans
+}
+
+
+################################################################################
+# FUNCTION ADDON:      DESCRIPTION:
+#  .isPOSIX             Checks for an object of class POSIX
+
+
+isPOSIX =
+function(x)
+{   # A function written by Diethelm Wuertz
+
+    # Description:
+    #   Checks for an object of class POSIX
+    
+    # Changes:
+    #
+    
+    # FUNCTION:
+    
+    # Check:
+    ans = inherits(x, "POSIXt")
+    
+    # Return Value:
+    ans
 }
 
 
