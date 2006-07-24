@@ -21,7 +21,8 @@
       
     \tabular{ll}{   
     \code{holiday} \tab Returns a holiday date of G7 and CH as 'sdate', \cr
-    \code{holidayNYSE} \tab Computes 'timeDate' object for full-day NYSE holidays. }       
+    \code{holidayNYSE} \tab Computes 'timeDate' object for full-day NYSE holidays, \cr
+    \code{holidayZURICH} \tab Computes 'timeDate' object for Zurich holidays. }       
                 
 }
 
@@ -29,6 +30,7 @@
 \usage{
 holiday(year, Holiday = Easter)
 holidayNYSE(year = currentYear)
+holidayZURICH(year = currentYear)
 }
 
 
@@ -51,6 +53,7 @@ holidayNYSE(year = currentYear)
 
     \code{holiday}\cr
     \code{holidayNYSE}
+    \code{holidayZURICH}
     \cr
     return an ISO-8601 formatted calendar date \code{CCYYMMDD}, an
     object of class \code{"sdate"} which represents an integer

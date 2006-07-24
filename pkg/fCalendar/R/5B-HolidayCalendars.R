@@ -30,13 +30,15 @@
 ################################################################################
 # FUNCTION:           HOLIDAY CALENDAR FUNCTIONS:
 #  holiday             Returns a holiday date of G7 and CH 
-#  holiday.NYSE        Returns 'timeDate' object for full-day NYSE holidays
+#  holidayNYSE         Returns 'timeDate' object for full-day NYSE holidays
+#  holidayZURICH       Returns 'timeDate' object for ZURICH holidays
 ################################################################################
 
 
 ################################################################################
 #  holiday             Returns a holiday date of G7 and CH 
 #  holidayNYSE         Returns 'timeDate' object for full-day NYSE holidays
+#  holidayZURICH       Returns 'timeDate' object for ZURICH holidays
 
 
 holiday = 
@@ -247,5 +249,68 @@ function(year = currentYear)
 }
 
 
+# ------------------------------------------------------------------------------
+     
+    
+holidayZURICH = 
+function(year = currentYear) 
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Returns a holiday Calendar for Zurich in Switzerland
+
+    # Details:
+    #   Inspect the holiday database in "data/holiday.db.R"
+    #   ... You can add there additional holidays!
+    #       NewYearsDay         Jan, 1st
+    #       GoodFriday          2 days before Easter
+    #       EasterMonday        1 day after Easter
+    #       LaborDay            May, 1st  
+    #       PentecostMonday     50 days after Easter
+    #       ChristmasDay        Dec, 25 
+    #       BoxingDay           Dec, 26  
+    #       CHBerchtoldsDay     Jan, 2nd
+    #       CHSechselaeuten     3rd Monday in April 
+    #                           1 week later if it coincides with Easter Monday
+    #       CHAscension         39 days after Easter
+    #       CHConfederationDay  Aug, 1st
+    #       CHKnabenschiessen   2nd Saturday to Monday in Sep
+    
+    # FUNCTION:
+    
+    # Calendar:
+    years = y = year
+    holidays = NULL
+    # Iterate Years:
+    for (y in years ) { 
+        holidays = c(holidays, NewYearsDay(y))
+        holidays = c(holidays, GoodFriday(y))   
+        holidays = c(holidays, EasterMonday(y)) 
+        holidays = c(holidays, LaborDay(y))
+        holidays = c(holidays, PentecostMonday(y))  
+        holidays = c(holidays, ChristmasDay(y)) 
+        holidays = c(holidays, BoxingDay(y)) 
+        holidays = c(holidays, CHBerchtoldsDay(y))
+        holidays = c(holidays, CHSechselaeuten(y))
+        holidays = c(holidays, CHAscension(y))
+        holidays = c(holidays, CHConfederationDay(y))
+        holidays = c(holidays, CHKnabenschiessen(y)) }
+    
+    # Sort and Convert to 'timeDate':
+    holidays = as.character(sort(holidays))
+    ans = timeDate(holidays, format = "%Y%m%d", FinCenter = "GMT")
+
+    # Remove Remaining Weekend Dates:
+    ans = ans[!( (ans@Data)$wday == 0 | (ans@Data)$wday == 6 )]
+
+    # Set Financial Center:
+    ans@FinCenter = "Europe/Zurich"
+
+    # Return Value:
+    ans 
+}
+
+
 ################################################################################
+
 
