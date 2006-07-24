@@ -23,7 +23,7 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Adelaide">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Advent1st">
@@ -43,7 +43,7 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Algiers">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="alignDailySeries">
@@ -59,15 +59,15 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Amsterdam">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Anchorage">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Andorra">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Annunciation">
@@ -99,7 +99,7 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="as.matrix.mts">
-<param name="Local" value="0A-RmetricsUtilities.html">
+<param name="Local" value="1A-RmetricsUtilities.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="as.matrix.timeSeries">
@@ -107,7 +107,7 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="as.matrix.ts">
-<param name="Local" value="0A-RmetricsUtilities.html">
+<param name="Local" value="1A-RmetricsUtilities.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="as.POSIXct.timeDate">
@@ -115,11 +115,11 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="as.POSIXlt">
-<param name="Local" value="0A-RmetricsUtilities.html">
+<param name="Local" value="1A-RmetricsUtilities.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="as.POSIXlt.default">
-<param name="Local" value="0A-RmetricsUtilities.html">
+<param name="Local" value="1A-RmetricsUtilities.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="as.POSIXlt.timeDate">
@@ -191,15 +191,15 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Athens">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="atoms">
-<param name="Local" value="0A-RmetricsUtilities.html">
+<param name="Local" value="1A-RmetricsUtilities.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="atoms.default">
-<param name="Local" value="0A-RmetricsUtilities.html">
+<param name="Local" value="1A-RmetricsUtilities.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="atoms.timeDate">
@@ -207,31 +207,31 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Auckland">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Bahrain">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Bangkok">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Beirut">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Belfast">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Belgrade">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Berlin">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="BirthOfVirginMary">
@@ -247,7 +247,7 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Bogota">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="BoxingDay">
@@ -255,27 +255,27 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Bratislava">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Brisbane">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Brussels">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Bucharest">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Budapest">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="BuenosAires">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="c.timeDate">
@@ -291,7 +291,7 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Cairo">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="CALabourDay">
@@ -299,11 +299,11 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Calcutta">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Caracas">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="CaRemembranceDay">
@@ -311,7 +311,7 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Casablanca">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="CAThanksgivingDay">
@@ -323,7 +323,7 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Cayman">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="CelebrationOfHolyCross">
@@ -343,7 +343,7 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Chicago">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="CHKnabenschiessen">
@@ -367,11 +367,11 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="colnames<-">
-<param name="Local" value="0A-RmetricsUtilities.html">
+<param name="Local" value="1A-RmetricsUtilities.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="colnames<-.default">
-<param name="Local" value="0A-RmetricsUtilities.html">
+<param name="Local" value="1A-RmetricsUtilities.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="colnames<-.timeSeries">
@@ -379,7 +379,7 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Copenhagen">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="CorpusChristi">
@@ -387,7 +387,7 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="currentYear">
-<param name="Local" value="0A-RmetricsUtilities.html">
+<param name="Local" value="1A-RmetricsUtilities.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="cut.timeDate">
@@ -399,11 +399,11 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Darwin">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="DaylightSavingTime">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="DEAscension">
@@ -427,11 +427,11 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Denver">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Detroit">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="diff.timeDate">
@@ -455,11 +455,11 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Dubai">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Dublin">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="dummyDailySeries">
@@ -475,7 +475,7 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Eastern">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="EasterSunday">
@@ -483,7 +483,7 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Edmonton">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="end.timeDate">
@@ -511,7 +511,7 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Frankfurt">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="FRArmisticeDay">
@@ -567,7 +567,7 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Helsinki">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="holiday">
@@ -587,15 +587,15 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="HongKong">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Honolulu">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Indianapolis">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="is.array.timeSeries">
@@ -618,24 +618,12 @@
 <param name="Local" value="3B-TimeDateSubsets.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="isISO8601">
-<param name="Local" value="1A-ISO8601Standard.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="isMultivariate">
 <param name="Local" value="4A-TimeSeriesClass.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="ISO8601Standard">
-<param name="Local" value="1A-ISO8601Standard.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="isPOSIX">
-<param name="Local" value="2A-PosixStandard.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Istanbul">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="isUnivariate">
@@ -675,15 +663,15 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Jakarta">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Jerusalem">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Johannesburg">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="JPAutumnalEquinox">
@@ -815,15 +803,15 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Kiev">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="KualaLumpur">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Kuwait">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="LaborDay">
@@ -835,7 +823,7 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Lagos">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="length.timeDate">
@@ -851,7 +839,7 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Lisbon">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="listFinCenter">
@@ -859,15 +847,15 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Ljubljana">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="log">
-<param name="Local" value="0A-RmetricsUtilities.html">
+<param name="Local" value="1A-RmetricsUtilities.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="log.default">
-<param name="Local" value="0A-RmetricsUtilities.html">
+<param name="Local" value="1A-RmetricsUtilities.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="log.timeSeries">
@@ -875,23 +863,23 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="London">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="LosAngeles">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Luxembourg">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Madrid">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Manila">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="MassOfArchangels">
@@ -899,7 +887,7 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Melbourne">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="merge.timeSeries">
@@ -907,19 +895,19 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="MexicoCity">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="modify">
-<param name="Local" value="0A-RmetricsUtilities.html">
+<param name="Local" value="1A-RmetricsUtilities.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="modify.default">
-<param name="Local" value="0A-RmetricsUtilities.html">
+<param name="Local" value="1A-RmetricsUtilities.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Monaco">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="months.timeDate">
@@ -927,15 +915,15 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Montreal">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Moscow">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="MSFT">
-<param name="Local" value="0A-RmetricsUtilities.html">
+<param name="Local" value="1A-RmetricsUtilities.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="myFinCenter">
@@ -943,15 +931,15 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="myUnits">
-<param name="Local" value="0A-RmetricsUtilities.html">
+<param name="Local" value="1A-RmetricsUtilities.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Nairobi">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Nassau">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="newPositions<-">
@@ -963,11 +951,11 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="NewYork">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Nicosia">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="ohlcDailyPlot">
@@ -987,15 +975,15 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Oslo">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="outlier">
-<param name="Local" value="0A-RmetricsUtilities.html">
+<param name="Local" value="1A-RmetricsUtilities.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="outlier.default">
-<param name="Local" value="0A-RmetricsUtilities.html">
+<param name="Local" value="1A-RmetricsUtilities.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="outlier.timeSeries">
@@ -1003,7 +991,7 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Pacific">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="PalmSunday">
@@ -1011,7 +999,7 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Paris">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Pentecost">
@@ -1023,7 +1011,7 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Perth">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="plot.timeDate">
@@ -1042,12 +1030,8 @@
 <param name="Local" value="4A-TimeSeriesClass.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="PosixStandard">
-<param name="Local" value="2A-PosixStandard.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Prague">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="PresentationOfLord">
@@ -1091,15 +1075,15 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Riga">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Riyadh">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="RmetricsUtilities">
-<param name="Local" value="0A-RmetricsUtilities.html">
+<param name="Local" value="1A-RmetricsUtilities.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="RogationSunday">
@@ -1107,15 +1091,15 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Rome">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="round">
-<param name="Local" value="0A-RmetricsUtilities.html">
+<param name="Local" value="1A-RmetricsUtilities.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="round.default">
-<param name="Local" value="0A-RmetricsUtilities.html">
+<param name="Local" value="1A-RmetricsUtilities.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="round.timeDate">
@@ -1123,11 +1107,11 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="rownames<-">
-<param name="Local" value="0A-RmetricsUtilities.html">
+<param name="Local" value="1A-RmetricsUtilities.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="rownames<-.default">
-<param name="Local" value="0A-RmetricsUtilities.html">
+<param name="Local" value="1A-RmetricsUtilities.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="rownames<-.timeSeries">
@@ -1139,11 +1123,11 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="sample">
-<param name="Local" value="0A-RmetricsUtilities.html">
+<param name="Local" value="1A-RmetricsUtilities.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="sample.default">
-<param name="Local" value="0A-RmetricsUtilities.html">
+<param name="Local" value="1A-RmetricsUtilities.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="sample.timeDate">
@@ -1159,7 +1143,7 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Seoul">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Septuagesima">
@@ -1179,15 +1163,15 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Shanghai">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Singapore">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Sofia">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="SolemnityOfMary">
@@ -1195,11 +1179,11 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="sort">
-<param name="Local" value="0A-RmetricsUtilities.html">
+<param name="Local" value="1A-RmetricsUtilities.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="sort.default">
-<param name="Local" value="0A-RmetricsUtilities.html">
+<param name="Local" value="1A-RmetricsUtilities.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="sort.timeDate">
@@ -1223,7 +1207,7 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Stockholm">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="summary.timeDate">
@@ -1231,11 +1215,11 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="summary.timeSeries">
-<param name="Local" value="4B-TimeSeriesData.html">
+<param name="Local" value="4A-TimeSeriesClass.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Sydney">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Sys.timeDate">
@@ -1247,15 +1231,15 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Taipei">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Tallinn">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Tehran">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="timeCalendar">
@@ -1351,7 +1335,7 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Tokyo">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="TransfigurationOfLord">
@@ -1367,7 +1351,7 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Tunis">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="unique.timeDate">
@@ -1443,19 +1427,19 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Vaduz">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Vancouver">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="var">
-<param name="Local" value="0A-RmetricsUtilities.html">
+<param name="Local" value="1A-RmetricsUtilities.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="var.default">
-<param name="Local" value="0A-RmetricsUtilities.html">
+<param name="Local" value="1A-RmetricsUtilities.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="var.timeSeries">
@@ -1463,27 +1447,27 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Vienna">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Vilnius">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Warsaw">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Winnipeg">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Zagreb">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Zurich">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="[.timeDate">
@@ -1504,7 +1488,7 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Daylight Saving Time Rules">
-<param name="Local" value="2B-DaylightSavingTime.html">
+<param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Holiday Calendars and Utilities">
@@ -1512,19 +1496,11 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Masked Objects and Additional Generic Functions">
-<param name="Local" value="0A-RmetricsUtilities.html">
+<param name="Local" value="1A-RmetricsUtilities.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Special Date Functions">
 <param name="Local" value="3D-TimeDateSpecDates.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="Summary of ISO8601 Standard">
-<param name="Local" value="1A-ISO8601Standard.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="Summary of Posix Standard">
-<param name="Local" value="2A-PosixStandard.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="timeDate Class">

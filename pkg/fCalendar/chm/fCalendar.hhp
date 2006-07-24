@@ -11,10 +11,8 @@ Full text search stop list file=..\..\..\gnuwin32\help\R.stp
 
 [FILES]
 00Index.html
-0A-RmetricsUtilities.html
-1A-ISO8601Standard.html
-2A-PosixStandard.html
-2B-DaylightSavingTime.html
+1A-RmetricsUtilities.html
+2A-DaylightSavingTime.html
 3A-TimeDateClass.html
 3B-TimeDateSubsets.html
 3C-TimeDateMathOps.html

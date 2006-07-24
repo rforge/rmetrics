@@ -15,6 +15,7 @@
 <param name="keyword" value="R:   isUnivariate">
 <param name="keyword" value="R:   isMultivariate">
 <param name="keyword" value="R:   print.timeSeries">
+<param name="keyword" value="R:   summary.timeSeries">
 <param name="keyword" value="R:   plot.timeSeries">
 <param name="keyword" value="R:   lines.timeSeries">
 <param name="keyword" value="R:   points.timeSeries">
@@ -87,6 +88,9 @@ Functions to print and plot 'timeSeries' objects:
   <td align="left"><code>print.timeSeries</code> </td>  <td align="left"> S3: Print method for a 'timeSeries' object, </td>
 </tr>
 <tr>
+  <td align="left"> <code>summary.timeSeries</code> </td>  <td align="left"> S3: Summary method for a 'timeSeries' object, </td>
+</tr>
+<tr>
   <td align="left"> <code>plot.timeSeries</code> </td>  <td align="left"> S3: Plot method for a 'timeSeries' object, </td>
 </tr>
 <tr>
@@ -135,6 +139,8 @@ isMultivariate(x)
 
 ## S3 method for class 'timeSeries':
 print(x, ...)
+## S3 method for class 'timeSeries':
+summary(object, ...)
 ## S3 method for class 'timeSeries':
 plot(x, reference.grid = TRUE, lty = 1, ...) 
 ## S3 method for class 'timeSeries':
