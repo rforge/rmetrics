@@ -1867,7 +1867,7 @@ function(x)
 #  .isPOSIX             Checks for an object of class POSIX
 
 
-isPOSIX =
+.isPOSIX =
 function(x)
 {   # A function written by Diethelm Wuertz
 

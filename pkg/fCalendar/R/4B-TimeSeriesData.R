@@ -33,7 +33,6 @@
 #  lag.timeSeries         Lags a 'timeSeries' object
 #  merge.timeSeries       Merges two 'timeSeries' objects
 #  scale.timeSeries       Centers and/or scales a 'timeSeries' object
-#  summary.timeSeries     Summarizes a 'timeDate' object
 #  var.timeSeries         Returns variance for a 'timeSeries' object
 # METHODS                MATHEMATICAL OPERATIONS ON DATA:
 #  Ops.timeSeries         Returns group 'Ops' for a 'timeSeries' object
@@ -62,7 +61,6 @@
 #  lag.timeSeries       Lags a 'timeSeries' object
 #  merge.timeSeries     Merges two 'timeSeries' objects
 #  scale.timeSeries     Centers and/or scales a 'timeSeries' object
-#  summary.timeSeries   Summarizes a 'timeDate' object
 #  var.timeSeries       Returns variance for a 'timeSeries' object
 
 
@@ -337,29 +335,6 @@ function(x, center = TRUE, scale = TRUE)
     
     # Return Value:
     x
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-summary.timeSeries =
-function(object, ...)
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Summarizes a 'timeDate' object
-    
-    # Changes:
-    #
-    
-    # FUNCTION:
-    
-    # Summary:
-    ans = summary(as.matrix(object), ...)
-        
-    # Return Value:
-    ans
 }
 
 
