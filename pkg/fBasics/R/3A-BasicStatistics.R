@@ -878,11 +878,15 @@ function(x, na.rm = FALSE, ...)
 
 
 .distCheck = 
-function(fun = "norm", s, ...)
+function(fun = "norm", n = 10000, ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Checks consistency of distributions
+    
+    # Arguments:
+    #   fun - name of distribution
+    #   ... - distyributional parameters
     
     # Examples:
     #   .distCheck("norm", mean = 1, sd = 1)
@@ -921,9 +925,8 @@ function(fun = "norm", s, ...)
     print(c(RMSE = RMSE))
     
     # Check 3:
-    cat("\n3. r(10'000) Check:\n")
-    n = 10000
-    r = rfun(n = 10000, ...)
+    cat("\n3. r(", n, ") Check:\n", sep = "")
+    r = rfun(n = n, ...)
     SAMPLE = data.frame(t(c(MEAN = mean(r), "VAR" = var(r))), 
         row.names = "SAMPLE")
     print(signif(SAMPLE, 3))

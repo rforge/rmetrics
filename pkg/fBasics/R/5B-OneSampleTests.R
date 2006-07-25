@@ -45,7 +45,6 @@
 #  sfTest                Shapiro-Francia normality test     
 # FUNCTION:             MORE TESTS ...
 #  runsTest              Runs test for detecting non-randomness [tseries]
-#  gofnorm               Reports on several tests of normality
 # FUNCTION ADDON:       AUGMENTED FINITE SAMPLE JB TEST:
 #  jbTable               Table of finite sample p values for the JB ALM test
 #  pjb                   Computes probabilities for the JB ALMTest
@@ -1070,102 +1069,6 @@ function(x)
 }
 
 
-# ------------------------------------------------------------------------------
-
-
-gofnorm = 
-function(x, doprint = TRUE) 
-{   # A function implemented by Diethelm Wuertz
-    
-    # Description:
-    #   Distribution: GoF-Tests
-    #    1     Omnibus Moments Test for Normality
-    #    2     Geary's Test of Normality
-    #    3     Studentized Range for Testing Normality
-    #    4     D'Agostino's D-Statistic Test of Normality
-    #    5     Kuiper V-Statistic Modified to Test Normality
-    #    6     Watson U^2-Statistic Modified to Test Normality
-    #    7     Durbin's Exact Test (Normal Distribution)
-    #    8     Anderson-Darling Statistic Modified to Test Normality
-    #    9     Cramer-Von Mises W^2-Statistic to Test Normality
-    #   10     Kolmogorov-Smirnov D-Statistic to Test Normality 
-    #   11     Kolmogorov-Smirnov D-Statistic (Lilliefors Critical Values)
-    #   12     Chi-Square Test of Normality (Equal Probability Classes)
-    #   13     Shapiro-Francia W-Test of Normality for Large Samples
-    
-    # Arguments:
-    #   x - a numeric vector of data values.
-    
-    # Note:
-    #   Function Calls:
-    #   Fortran:
-    #   SUBROUTINE GOFS(x,n,y1,y2,z1,z2,z3,z4,z5,z6,z7)
-    #
-    
-    # Changes:
-    #
-    
-    # FUNCTION:
-    
-    # Convert Type:
-    x = as.vector(x)
-    
-    # Settings:
-    lp1 = length(x)+1
-        result = .Fortran("gofs",
-            as.double(x),
-            as.integer(length(x)),
-            as.double(rep(0,times=13)),
-            as.double(rep(0,times=13)),
-            as.double(rep(0,times=lp1)),
-            as.double(rep(0,times=lp1)),
-            as.double(rep(0,times=lp1)),
-            as.double(rep(0,times=lp1)),
-            as.double(rep(0,times=lp1)),
-            as.double(rep(0,times=lp1)),
-            as.double(rep(0,times=lp1)),
-            PACKAGE = "fBasics")
-        statistics1 = result[[3]]
-        statistics2 = rep(NA,times=13)
-        statistics2[1] = result[[4]][1]
-        statistics2[2] = result[[4]][2]
-        statistics2[12] = result[[4]][12] 
-            
-    # Printing:
-    if (doprint) { 
-        paste (cat ('\n Omnibus Moments Test               '),
-                    cat(c(statistics1[1],statistics2[1])))
-        paste (cat ('\n Geary Test                         '),
-                    cat(c(statistics1[2],statistics2[2])))
-        paste (cat ('\n Studentized Range Test             '),
-                    cat(statistics1[3]))
-        paste (cat ('\n D\'Agostino D-Statistic Test       '),
-                    cat(statistics1[4]))
-        paste (cat ('\n Kuiper V-Statistic, Modified       '),
-                    cat(statistics1[5]))
-        paste (cat ('\n Watson U^2-Statistic, Modified     '),
-                    cat(statistics1[6]))
-        paste (cat ('\n Durbin Exact Test                  '),
-                    cat(statistics1[7]))
-        paste (cat ('\n Anderson-Darling Statistic         '),
-                    cat(statistics1[8]))
-        paste (cat ('\n Cramer-Von Mises W^2-Statistic     '),
-                    cat(statistics1[9]))
-        paste (cat ('\n Kolmogorov-Smirnov D-Statistic     '),
-                    cat(statistics1[10]))
-        paste (cat ('\n KS, Lilliefors Critical Values     '),
-                    cat(statistics1[11]))
-        paste (cat ('\n Chi-Square, Equal Prob. Classes    '),
-                    cat(c(statistics1[12],statistics2[12])))
-        paste (cat ('\n Shapiro-Francia W-Test             '),
-                    cat(statistics1[13]))
-        cat("\n\n")}    
-    
-    # Return Value:
-    invisible(list(s1 = statistics1, s2 = statistics2))
-}
-
-
 # ******************************************************************************
 
 
@@ -1332,9 +1235,10 @@ function(x)
     METHOD = "Jarque Bera Test"
     
     # Result:
-    RVAL = list(statistic = round(STATISTIC, 2), parameter = 
-        round(PARAMETER, 2), p.value = round(PVAL, 2), method = 
-        METHOD, data.name = DNAME)
+    Digits = 3
+    RVAL = list(statistic = round(STATISTIC, digits = Digits), parameter = 
+        round(PARAMETER, digits = Digits), p.value = round(PVAL, 
+        digits = Digits), method = METHOD, data.name = DNAME)
         
     # Return Value:
     class(RVAL) = "htest"

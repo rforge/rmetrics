@@ -71,9 +71,17 @@ function(x, param)
     
     # FUNCTION:
     
-    # Return Value:
+    # Density:
     class(param) = "ssden"
-    .dssden(object = param, x = x) 
+    y = rep(0, times = length(x))
+    X = x[x > param$domain[1,] & x < param$domain[2,]]
+    if (length(X) > 0) {
+        y[x > param$domain[1,] & x < param$domain[2,]] = 
+            .dssden(object = param, x = X) 
+    }
+    
+    # Return Value:
+    y  
 }   
 
 

@@ -62,49 +62,45 @@ function()
 test.plotLabels = 
 function()
 {
-    # data - 
-    data(DowJones30)
-    IBM = DowJones30[, "IBM"]
-    JPM = DowJones30[, "JPM"]
-    IBM.RET = diff(log(IBM))
-    JPM.RET = diff(log(JPM))
-    checkIdentical(
-        target = class(IBM),
-        current = "numeric")
+    # MSFT Data Frame:
+    # Opening Prices:
+    msft = as.timeSeries(MSFT)[, 1]
+    # Volume in Million Units:
+    msft.vol = as.timeSeries(MSFT)[, 5]/10^6
+    # Opening Returns:
+    msft.ret = returnSeries(msft)
     
     # LABELS = TRUE
     
     # acfPlot -
-    par(mfrow = c(4, 3), cex = 0.5)
-    acfPlot(x = IBM.RET)
+    acfPlot(x = msft.ret)
     
     # pacfPlot -
-    pacfPlot(x = IBM.RET)
+    pacfPlot(x = msft.ret)
     
     # ccfPlot -
-    ccfPlot(x = IBM.RET, y = JPM.RET)
+    ccfPlot(x = msft.ret, y = msft.vol[-1])
     
     # teffectPlot -
-    teffectPlot(x = IBM.RET)
+    teffectPlot(x = msft.ret)
     
     # lmacfPlot -
-    lmacfPlot(x = abs(IBM.RET))
-    # ... CHECK ACF OF RETURNS
+    lmacfPlot(x = abs(msft.ret))
     
     # lmacfPlot -
-    lacfPlot(x = IBM)
+    lacfPlot(x = msft, n = 4)
 
     # logpdfPlot -
-    logpdfPlot(x = IBM.RET)
-    logpdfPlot(x = IBM.RET, type = "log-log")
+    logpdfPlot(x = msft.ret)
+    logpdfPlot(x = msft.ret, type = "log-log")
     # ... CHECK WARNINGS
     # ... CHECK COLORS
     
     # qqgaussPlot -
-    qqgaussPlot(x = IBM.RET)
+    qqgaussPlot(x = msft.ret)
     
     # scalinglawPlot -
-    scalinglawPlot(x = IBM.RET)
+    scalinglawPlot(x = msft.ret, span = 4)
     # ... CHECK COLORS
     
     # Return Value:
@@ -118,50 +114,47 @@ function()
 test.plotNoLabels = 
 function()
 {
-    # data - 
-    data(DowJones30)
-    IBM = DowJones30[, "IBM"]
-    JPM = DowJones30[, "JPM"]
-    IBM.RET = diff(log(IBM))
-    JPM.RET = diff(log(JPM))
-    checkIdentical(
-        target = class(IBM),
-        current = "numeric")
+    # MSFT Data Frame:
+    # Opening Prices:
+    msft = as.timeSeries(MSFT)[, 1]
+    # Volume in Million Units:
+    msft.vol = as.timeSeries(MSFT)[, 5]/10^6
+    # Opening Returns:
+    msft.ret = returnSeries(msft)
     
     # LABELS = FALSE
     
     # acfPlot -
-    par(mfrow = c(4, 3), cex = 0.5)
-    acfPlot(x = IBM.RET, labels = FALSE)
+    acfPlot(x = msft.ret, labels = FALSE)
     
     # pacfPlot -
-    pacfPlot(x = IBM.RET, labels = FALSE)
+    pacfPlot(x = msft.ret, labels = FALSE)
     
     # ccfPlot -
-    ccfPlot(x = IBM.RET, y = JPM.RET, labels = FALSE)
+    ccfPlot(x = msft.ret, y = msft.vol, labels = FALSE)
     
     # teffectPlot -
-    teffectPlot(x = IBM.RET, labels = FALSE)
+    teffectPlot(x = msft.ret, labels = FALSE)
     
     # lmacfPlot -
-    lmacfPlot(x = abs(IBM.RET), type = "acf", labels = FALSE)
-    lmacfPlot(x = abs(IBM.RET), type = "hurst", labels = FALSE)
+    lmacfPlot(x = abs(msft.ret), type = "acf", labels = FALSE)
+    lmacfPlot(x = abs(msft.ret), type = "hurst", labels = FALSE)
     # ... CHECK ACF OF RETURNS
     
     # lmacfPlot -
-    lacfPlot(x = IBM, labels = FALSE)
+    lacfPlot(x = msft, labels = FALSE)
 
     # logpdfPlot -
-    logpdfPlot(x = IBM.RET, labels = FALSE)
-    logpdfPlot(x = IBM.RET, type = "log-log", labels = FALSE)
+    logpdfPlot(x = msft.ret, labels = FALSE)
+    logpdfPlot(x = msft.ret, type = "log-log", labels = FALSE)
     # ... CHECK WARNINGS
     # ... CHECK COLORS
     
     # qqgaussPlot -
-    qqgaussPlot(x = IBM.RET, labels = FALSE)
+    qqgaussPlot(x = msft.ret, labels = FALSE)
     
     # scalinglawPlot -
-    scalinglawPlot(x = IBM.RET, labels = FALSE)
+    scalinglawPlot(x = msft.ret, labels = FALSE)
     # ... CHECK COLORS
     
     # Return Value:

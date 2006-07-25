@@ -62,12 +62,17 @@ test.ssd =
 function()
 {
     # nig() Distribution:
+    set.seed(4711)
     X = rnorm(100)     
     fit = ssdFit(x = X, alpha = 1.4, seed = 4711)
+    .distCheck("ssd", n = 100, param = fit)
     
-    s = seq(min(X), max(X), length = 100)
-    dssd(x = s, param = fit) 
-    
+    # Histogram Plot:
+    hist(rssd(100, fit), probability = TRUE, breaks = "FD",
+        col = "steelblue", border = "white")
+    s = seq(-3, 3, length = 201)
+    lines(s, dnorm(s), col = "orange")
+
     # Return Value:
     return()    
 }

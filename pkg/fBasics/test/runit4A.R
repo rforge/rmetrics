@@ -58,39 +58,26 @@ function()
 test.portableInnovations = 
 function()
 {
-    cat("\nRmetrics -Unit Testing:")
-    cat("\n015B - Portable Innovations\n")
-    
     # set.lcgseed -
     seed = set.lcgseed(seed = 65890)
-    cat("\n")
-    print(seed)
-    checkIdentical(
-        target = seed,
-        current = 65890)
     
     # runif.lcg - rnorm.lcg - rt.lcg -
     DF = cbind(runif.lcg(10), rnorm.lcg(10), rt.lcg(10, df = 4))
-    cat("\n")
     print(DF)
-    checkEqualsNumeric(
-        target = sum(DF),
-        current = 3.31641255259955 )
+    checkEqualsNumeric(target = round(sum(DF), 4), current = 3.3164 )
     
     # get.lcgseed -
     seed = get.lcgseed()
-    cat("\n")
     print(seed)
-    checkIdentical(
-        target = seed,
-        current = 1743389204 ) 
+    checkIdentical(target = seed, current = 1743389204 ) 
     
     # Note, to overwrite rnorm, use
     # rnorm = rnorm.lcg
     # Going back to rnorm
     # rm(rnorm) 
     
-    cat("\n")
+    # Return Value:
+    return()  
 }
 
 
@@ -98,7 +85,8 @@ function()
 
 
 if (FALSE) {
-    testResult <- runTestFile("C:/Rmetrics/trunk/fBasics/test/runit015B.R")
+    require(RUnit)
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fBasics/test/runit4A.R")
     printTextProtocol(testResult)
 }
 
