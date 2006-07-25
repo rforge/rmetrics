@@ -51,27 +51,6 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.genfun =
-function()
-{
-    # Time Series:
-    MSFT.TS = as.timeSeries(MSFT)
-    print(head(log(MSFT.TS)))
-    print(tail(log(MSFT.TS)))
-    MEAN = mean(MSFT.TS@Data)
-    checkEquals(
-        target = MEAN, 
-        current = 8628750, 
-        tolerance = 1)
-    
-    # Return Value:
-    return() 
-}
-
-
-# ------------------------------------------------------------------------------
-
-
 test.interp = 
 function()
 {

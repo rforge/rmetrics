@@ -58,6 +58,24 @@ function()
 # ------------------------------------------------------------------------------
 
 
+test.ssd = 
+function()
+{
+    # nig() Distribution:
+    X = rnorm(100)     
+    fit = ssdFit(x = X, alpha = 1.4, seed = 4711)
+    
+    s = seq(min(X), max(X), length = 100)
+    dssd(x = s, param = fit) 
+    
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
 if (FALSE) {
     testResult <- runTestFile("C:/Rmetrics/trunk/fBasics/test/runit013C.R")
     printTextProtocol(testResult)

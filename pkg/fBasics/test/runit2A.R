@@ -67,9 +67,7 @@ test.symstb =
 function()
 {
     # rsymstb -
-    ans = .distCheck("symstb", alpha = 1.9)
-    print(ans)
-    cat("\n")
+    .distCheck("symstb", alpha = 1.9)
     
     # Return Value:
     return()    
@@ -82,10 +80,8 @@ function()
 test.stable = 
 function()
 {
-    # stable -
-    ans = .distCheck("stable", alpha = 1.9, beta = 0.3)
-    print(ans)
-    cat("\n")
+    # stable - Parameterization S0:
+    .distCheck("stable", alpha = 1.9, beta = 0.3)
     
     # Return Value:
     return()    
@@ -98,10 +94,8 @@ function()
 test.stableS1 = 
 function()
 {
-    # stable - S1:
-    ans = .distCheck("stable", alpha = 1.9, beta = 0.3, pm = 1)
-    print(ans)
-    cat("\n")
+    # stable - Parameterization S1:
+    .distCheck("stable", alpha = 1.9, beta = 0.3, pm = 1)
     
     # Return Value:
     return()    
@@ -111,8 +105,24 @@ function()
 # ------------------------------------------------------------------------------
 
 
+test.stableS2 = 
+function()
+{
+    # stable - Parameterization S2:
+    .distCheck("stable", alpha = 1.9, beta = 0.3, pm = 2)
+    
+    # Return Value:
+    return()    
+}
+
+
+
+# ------------------------------------------------------------------------------
+
+
 if (FALSE) {
-    testResult <- runTestFile("C:/Rmetrics/trunk/fBasics/test/runit013A.R")
+    require(RUnit)
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fBasics/test/runit2A.R")
     printTextProtocol(testResult)
 }
 
