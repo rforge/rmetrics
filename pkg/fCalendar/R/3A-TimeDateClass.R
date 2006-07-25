@@ -304,7 +304,7 @@ FinCenter = myFinCenter)
     Sys.putenv(TZ = "GMT")
     
     # ISO Date/Time Format:
-    iso.format = "%Y-%m-%d %H:%M:%S"
+    isoFormat = "%Y-%m-%d %H:%M:%S"
     
     # Autodetect Format:
     if (inherits(charvec, "character")) {
@@ -314,16 +314,16 @@ FinCenter = myFinCenter)
     # Crae for Other Formats:
     if (inherits(charvec, "timeDate")) {
         posix = charvec@Data 
-        charvec = format(posix, iso.format) 
-        format = iso.format
+        charvec = format(posix, isoFormat) 
+        format = isoFormat
     }
     if (inherits(charvec, "Date")) {
         charvec = format(charvec) 
         zone = FinCenter
     }
     if (inherits(charvec, "POSIXt")) {
-        charvec = format(charvec, iso.format) 
-        format = iso.format
+        charvec = format(charvec, isoFormat) 
+        format = isoFormat
     }
     
     # Get Dimension:
@@ -331,8 +331,8 @@ FinCenter = myFinCenter)
  
     # Midnight Standard:
     charvec = .midnightStandard(charvec, format)
-    charvec = format(strptime(charvec, .whichFormat(charvec)), iso.format)
-    format = iso.format
+    charvec = format(strptime(charvec, .whichFormat(charvec)), isoFormat)
+    format = isoFormat
     
     # Financial Centers:
     recFinCenter = zone      # Time zone where the data were recorded
@@ -358,12 +358,12 @@ FinCenter = myFinCenter)
             cat("\n") 
         }
         lt = strptime(charvec, format)
-        if (sum(lt$sec+lt$min+lt$hour) == 0) iso.format = "%Y-%m-%d"
+        if (sum(lt$sec+lt$min+lt$hour) == 0) isoFormat = "%Y-%m-%d"
         # Return Value:
         ans = new("timeDate", 
             Data = as.POSIXct(lt), 
             Dim = as.integer(Dim),
-            format = iso.format,
+            format = isoFormat,
             FinCenter = useFinCenter)
         Sys.putenv(TZ = myTZ)
         return(ans)
@@ -379,13 +379,13 @@ FinCenter = myFinCenter)
             print(charvec)
             cat("\n") 
         }
-        lt = strptime(charvec, iso.format)
-        if (sum(lt$sec+lt$min+lt$hour) == 0) iso.format = "%Y-%m-%d"
+        lt = strptime(charvec, format)
+        if (sum(lt$sec+lt$min+lt$hour) == 0) isoFormat = "%Y-%m-%d"
         # Return Value:
         ans = new("timeDate", 
             Data = as.POSIXct(lt), 
             Dim = as.integer(Dim),
-            format = iso.format,
+            format = isoFormat,
             FinCenter = useFinCenter)
         Sys.putenv(TZ = myTZ)
         return(ans)
@@ -402,12 +402,12 @@ FinCenter = myFinCenter)
             cat("\n") 
         }
         lt = strptime(charvec, format)
-        if (sum(lt$sec+lt$min+lt$hour) == 0) iso.format = "%Y-%m-%d"
+        if (sum(lt$sec+lt$min+lt$hour) == 0) isoFormat = "%Y-%m-%d"
         # Return Value:
         ans = new("timeDate", 
             Data = as.POSIXct(lt), 
             Dim = as.integer(Dim),
-            format = iso.format,
+            format = isoFormat,
             FinCenter = useFinCenter)
         Sys.putenv(TZ = myTZ)
         return(ans)
@@ -423,12 +423,12 @@ FinCenter = myFinCenter)
             cat("\n") 
         }
         lt = strptime(charvec, format)
-        if (sum(lt$sec+lt$min+lt$hour) == 0) iso.format = "%Y-%m-%d"
+        if (sum(lt$sec+lt$min+lt$hour) == 0) isoFormat = "%Y-%m-%d"
         # Return Value:
         ans = new("timeDate", 
             Data = as.POSIXct(lt),
             Dim = as.integer(Dim),
-            format = iso.format ,
+            format = isoFormat ,
             FinCenter = useFinCenter)
         Sys.putenv(TZ = myTZ)
         return(ans)
@@ -446,12 +446,12 @@ FinCenter = myFinCenter)
             cat("\n") 
         }
         lt = strptime(charvec, format)
-        if (sum(lt$sec+lt$min+lt$hour) == 0) iso.format = "%Y-%m-%d"
+        if (sum(lt$sec+lt$min+lt$hour) == 0) isoFormat = "%Y-%m-%d"
         # Return Value:
         ans = new("timeDate", 
             Data = as.POSIXct(lt), 
             Dim = as.integer(Dim),
-            format = iso.format,
+            format = isoFormat,
             FinCenter = useFinCenter)
         Sys.putenv(TZ = myTZ)
         return(ans)
@@ -522,7 +522,7 @@ function(charvec, format)
     
     # Format:
     nchar.iso = mean(nchar(charvec))
-    iso.format = "%Y-%m-%d %H:%M:%S"
+    isoFormat = "%Y-%m-%d %H:%M:%S"
     
     # ISO-8601 Midnight Standard:
     s = rep(0, length(charvec))
@@ -530,7 +530,7 @@ function(charvec, format)
         s[grep("24:00:00", charvec)] = 1
         charvec = gsub("24:00:00", "23:59:59", charvec) 
         # Convert "charvec" to standard ISO format:
-        charvec = format(strptime(charvec, format)+s, iso.format)
+        charvec = format(strptime(charvec, format)+s, isoFormat)
     }
     if (nchar.iso == 14) {
         # Fixed DW 2006-03-13
@@ -542,7 +542,7 @@ function(charvec, format)
         charvec.time = gsub("240000", "235959", charvec.time) 
         charvec = paste(charvec.date, charvec.time, sep = "")
         # Convert "charvec" to standard ISO format:
-        charvec = format(strptime(charvec, format)+s, iso.format)
+        charvec = format(strptime(charvec, format)+s, isoFormat)
     }   
     
     # Return Value:
@@ -728,6 +728,12 @@ s = NULL, zone = myFinCenter, FinCenter = myFinCenter)
     
     # Reset TimeZone:  
     Sys.putenv(TZ = myTZ)
+    
+    
+    print(charvec)
+    print(format)
+    print(zone)
+    print(FinCenter)
     
     # Return Value:
     timeDate(charvec = charvec, format = NULL,  
