@@ -310,7 +310,7 @@ show.fWEBDATA(object)
 
 \examples{
 \dontrun{
-## SOURCE("fBasics.2A-TimeSeriesData")
+## SOURCE("fcALENDAR.6A-TimeSeriesImport")
 
 ## economagicImport -
    USDEUR = economagicImport(query = "fedny/day-fxus2eu", 
