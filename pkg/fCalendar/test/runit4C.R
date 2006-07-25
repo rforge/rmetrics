@@ -130,7 +130,8 @@ function()
 
 
 if (FALSE) {
-    testResult <- runTestFile("C:/Rmetrics/trunk/fCalendar/test/runit024C.R")
+    require(RUnit)
+    testResult <- runTestFile("C:/Rmetrics/trunk/fCalendar/test/runit4C.R")
     printTextProtocol(testResult)
 }
 
