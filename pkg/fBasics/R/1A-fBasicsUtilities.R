@@ -28,18 +28,19 @@
 
 
 ################################################################################
-# FUNCTION:                 DESCRIPTION:    
+# FUNCTION:                 TWO-DIMENSIONAL PLOT UTILITIES:    
 #  .tsPlot                   Returns a time series plot
 #  .histPlot                 Returns a histogram plot
 #  .densityPlot              Returns a kernel density estimate plot
-# FUNCTION:                 THREE-DIMENSIONAL PLOTS:
+# FUNCTION:                 THREE-DIMENSIONAL PLOT UTILITIES:
 #  .circlesPlot              Returns a circles plot indexing 3rd variable
 #  .perspPlot                Returns a perspective plot in 2 dimensions
 #  .contourPlot              Returns a contour plot in 2 dimensions
-# FUNCTION:                 TABLES AND PALETTES:
+# FUNCTION:                 CHARACTER, SYMBOL AND COLOR TABLES:
 #  characterTable            Shows a table of character's codes 
 #  symbolTable               Shows a table of plot symbols
 #  colorTable                Shows a table of plot color codes
+# FUNCTION:                 COLOR PALETTES:
 #  greyPalette               Creates a grey palette
 #  .chcode                   Changes from one to another number system
 #  .hex.to.dec               Converts heximal numbers do decimal numbers
@@ -47,11 +48,11 @@
 # FUNCTION:                 SLIDER MENU:
 #  .sliderMenu               Starts a slider menu
 ################################################################################
-# FUNCTION:                 DESCRIPTION:
+# FUNCTION:                 NUMERIC UTILITIES:
 #  .akimaInterpolation       Does Akima Spline Interpolation
 #  .interp                   Does Akima Spline Interpolation
 ################################################################################
-# FUNCTION:                 DESCRIPTION:
+# FUNCTION:                 DATA TABLES:
 # .jbLM
 # .jbALM
 ################################################################################

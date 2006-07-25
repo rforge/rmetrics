@@ -54,7 +54,7 @@
 #  .ssden.gauss.quad    Internal function required by ssdFit 
 #  .ssden.sspdsty       Internal function required by ssdFit
 #  .ssden.nlm0          Internal function required by ssdFit
-# FUNCTION:            FUNCTIONS FOR SPLUS VERSION:
+# FUNCTION:            UTILITY FUNCTIONS FOR SPLUS VERSION:
 #  much.fun             S-PLUS: R substitute for 'much.fun'
 #  which.min            S-PLUS: R substitute for 'which.min'
 #  which.max            S-PLUS: R substitute for 'which.max'
