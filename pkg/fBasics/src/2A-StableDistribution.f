@@ -1,5 +1,11 @@
-C 
-C Summary:
+
+CONTENT:
+
+C Numerical approximation to the Symmetric Stable Distribution
+ 
+C###############################################################################
+
+
 C
 C SYMSTB
 C  Fortran program to compute a fast numerical approximation to the Symmetric 

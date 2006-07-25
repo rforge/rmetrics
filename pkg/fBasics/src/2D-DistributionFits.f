@@ -1,3 +1,10 @@
+
+CONTENT:
+
+C Gaussian-Type Quadrature
+
+C###############################################################################
+
 c  To get dgamma,  "send dgamma from fnlib".
 c  To get d1mach, mail netlib
 c       send d1mach from core
@@ -721,21 +728,21 @@ C ==============================================================================
       double precision x(npar)
 c
 c Purpose: permute the elements of the array x according to the index 
-c	vector jpvt (either forward or backward permutation).
+c   vector jpvt (either forward or backward permutation).
 c
 c On Entry:
-c   x(npar)		array to be permuted
-c   npar		size of x (and jpvt)
-c   jpvt		indices of the permutation
-c   job			indicator of forward or backward permutation
-c			if job = 0 forward permutation  
-c				x(jpvt(i)) moved to x(i)
-c			if job is nonzero backward permutation 
-c				x(i) moved to x(jpvt(i))
+c   x(npar)     array to be permuted
+c   npar        size of x (and jpvt)
+c   jpvt        indices of the permutation
+c   job         indicator of forward or backward permutation
+c           if job = 0 forward permutation  
+c               x(jpvt(i)) moved to x(i)
+c           if job is nonzero backward permutation 
+c               x(i) moved to x(jpvt(i))
 c On Exit:
-c   x(npar)		array with permuted entries
+c   x(npar)     array with permuted entries
 c
-c   Written:	Yin Ling	U. of Maryland, August,1978
+c   Written:    Yin Ling    U. of Maryland, August,1978
 c
 c $Header: dprmut.f,v 2.1 86/04/08 14:05:53 lindstrom Exp $
 c
@@ -749,7 +756,7 @@ c
          jpvt(j) = -jpvt(j)
    10 continue
       if (job .eq. 0) then
-c		forward permutation
+c       forward permutation
          do 30 i = 1,npar 
             if (jpvt(i) .gt. 0) then
                goto 30
@@ -771,7 +778,7 @@ c           endwhile
    30    continue
       endif
       if (job .ne. 0 ) then
-c			backward permutation
+c           backward permutation
          do 50 i = 1,npar 
             if (jpvt(i) .gt. 0) then
                goto 50
@@ -802,15 +809,15 @@ C ==============================================================================
       double precision da,dx(*)
 c
 c Purpose : set vector dx to constant da. Unrolled loops are used for 
-c	increment equal to one.
+c   increment equal to one.
 c
 c On Entry:
-c   n			length of dx
-c   da			any constant
-c   incx		increment for dx
+c   n           length of dx
+c   da          any constant
+c   incx        increment for dx
 c
 c On Exit:
-c   dx(n)		vector with all n entries set to da
+c   dx(n)       vector with all n entries set to da
 c
 c $Header: dset.f,v 2.1 86/04/08 14:06:25 lindstrom Exp $
 c

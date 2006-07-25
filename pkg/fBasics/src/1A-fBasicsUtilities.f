@@ -1,4 +1,9 @@
 
+CONTENT:
+
+C Interpolation of Irregularly Spaced Data
+
+C###############################################################################
 
 C Package: akima
 C Version: 0.3-4
@@ -13,7 +18,7 @@ C DW:
 C Added - No Debian Package available
 
 
-CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+C
 
 
       SUBROUTINE SDBI3P(MD,NDP,XD,YD,ZD,NIP,XI,YI, ZI,IER, WK,IWK,

@@ -3,14 +3,14 @@ CONTENT:
 
 C  Ansari Test Statistic
 
-C ##############################################################################
+C###############################################################################
 
 c Routine AS 93 returns frequencies. The following short routine calculates
 c the distribution function from these frequencies (overwriting them).
 c The calling arguments are as for AS 93. The distribution function is
 c returned in array A1. The first element in A1 is F(ASTART).  N.B. ASTART
 c is a real variable.
-c
+
       subroutine wprob(test, other, astart, a1, l1, a2, a3, ifault)
       
       integer test, other, l1, ifault
