@@ -1,18 +1,6 @@
-\name{PlotFunctions}
 
-\alias{PlotFunctions}
 
-\alias{tsPlot}
-\alias{histPlot}
-\alias{densityPlot}
-\alias{circlesPlot}
-\alias{perspPlot}
-\alias{contourPlot}
 
-\alias{characterTable}
-\alias{plotcharacterTable}
-\alias{colorTable}
-\alias{greyPal}
 
 \alias{splusLikePlot}
 
