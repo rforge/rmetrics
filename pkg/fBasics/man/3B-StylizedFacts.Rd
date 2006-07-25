@@ -289,7 +289,7 @@ Ding Z., Granger C.W.J., Engle R.F. (1993);
 ## SOURCE("fBasics.3B-StylizedFacts")
 
 ## data - 
-   Opening Prices:
+   # Opening Prices:
    msft = as.timeSeries(MSFT)[, 1]
    # Volume in Million Units:
    msft.vol = as.timeSeries(MSFT)[, 5]/10^6
