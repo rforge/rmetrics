@@ -1086,11 +1086,9 @@ function(type = c("LM", "ALM"), size = c("all", "small"))
     
     # Select Table:
     if (type[1] == "LM") {
-        data(jbLM)
-        table = jbLM
+        table = .jbLM()
     } else if (type[1] == "ALM") {
-        data(jbALM)
-        table = jbALM
+        table = .jbALM()
     }
     
     # Downsize Data:
