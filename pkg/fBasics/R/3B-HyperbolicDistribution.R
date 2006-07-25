@@ -169,7 +169,7 @@ function (p, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1)
         counter = 0
         iteration = NA
         while (is.na(iteration)) {
-            iteration = .unirootNA13(f = froot, interval = c(lower, 
+            iteration = .unirootNA(f = froot, interval = c(lower, 
                 upper), alpha = alpha, beta = beta, delta = delta, 
                 mu = mu, lambda = lambda, p = pp)
             counter = counter + 1
@@ -980,7 +980,7 @@ function(p, alpha = 1, beta = 0, delta = 1, mu = 0, ...)
         counter = 0
         iteration = NA
         while (is.na(iteration)) {
-            iteration = .unirootNA13(f = froot, interval = c(lower, upper), 
+            iteration = .unirootNA(f = froot, interval = c(lower, upper), 
                 alpha = alpha, beta = beta, delta = delta, p = pp)
             counter = counter + 1
             lower = lower-2^counter

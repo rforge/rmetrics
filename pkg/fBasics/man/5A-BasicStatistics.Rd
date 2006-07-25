@@ -219,6 +219,7 @@ colCumsums(x, na.rm = FALSE, \dots)
 
 \examples{
 ## SOURCE("fBasics.5A-BasicStatistics")
+\dontrun{
 
 ## basicStats -
    # Data NYSE Composite Index:
@@ -238,6 +239,7 @@ colCumsums(x, na.rm = FALSE, \dots)
    class(IBM)
    skewness(IBM)
    kurtosis(IBM)   
+}
 }
 
 

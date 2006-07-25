@@ -287,7 +287,7 @@ Ding Z., Granger C.W.J., Engle R.F. (1993);
 
 \examples{
 ## SOURCE("fBasics.4A-StylizedFacts")
-
+\dontrun{
 ## data - 
    data(DowJones30)
    IBM = DowJones30[, "IBM"]
@@ -307,6 +307,7 @@ Ding Z., Granger C.W.J., Engle R.F. (1993);
 ## teffectPlot -
    # Taylor Effect:
    teffectPlot(x = IBM.RET)
+}
 }
 
 
