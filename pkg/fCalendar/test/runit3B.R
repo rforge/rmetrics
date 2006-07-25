@@ -63,7 +63,10 @@ function()
 # ------------------------------------------------------------------------------
       
  
-test.subsets = 
+# ------------------------------------------------------------------------------
+
+
+test.subsetTests = 
 function()
 {   
     #  isWeekday              Tests if a date is a weekday or not
@@ -73,6 +76,76 @@ function()
     #  getDayOfWeek           Returns the day of the week to a 'timeDate' object
     #  getDayOfYear           Returns the day of the year to a 'timeDate' object
     
+    # Easter() Function:
+    myFinCenter = "Zurich"
+    target = timeSequence(from = Easter(2006)-7*24*3600, length.out = 8) 
+    print(target)
+    charvec = c(
+        "2006-04-09", "2006-04-10", "2006-04-11", "2006-04-12", "2006-04-13", 
+        "2006-04-14", "2006-04-15", "2006-04-16")
+    current = timeDate(charvec)
+    print(current)
+    checkIdentical(target, current)
+    
+    # Weekdays:
+    tS = timeSequence(from = Easter(currentYear)-7*24*3600, length.out = 8)
+    WD = isWeekday(tS)
+    current = c(FALSE, TRUE, TRUE, TRUE, TRUE, TRUE, FALSE, FALSE) 
+    checkIdentical(as.logical(WD), current)
+    
+    # Weekends:
+    tS = timeSequence(from = Easter(currentYear)-7*24*3600, length.out = 8)
+    WE = isWeekend(tS)
+    current = !c(FALSE, TRUE, TRUE, TRUE, TRUE, TRUE, FALSE, FALSE) 
+    checkIdentical(as.logical(WE), current)
+    
+    # Day of Week:
+    tS = timeSequence(from = Easter(currentYear)-7*24*3600, length.out = 8)
+    DOW = getDayOfWeek(tS)
+    current = c("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun")
+    checkIdentical(as.character(DOW), current)
+    
+    # NYSE Business Days - Dates:
+    NYSE = holidayNYSE(2006)
+    charvec = c(
+        "2006-01-02", "2006-01-16", "2006-02-20", "2006-04-14", "2006-05-29", 
+        "2006-07-04", "2006-09-04", "2006-11-23", "2006-12-25")
+    checkIdentical(format(NYSE), charvec)
+    
+    # NYSE Business Days - Day-of-Week:
+    DOW = getDayOfWeek(NYSE)
+    current = c("Mon", "Mon", "Mon", "Fri", "Mon", "Tue", "Mon", "Thu", "Mon")
+    checkIdentical(as.character(DOW), current)
+    
+    # Holidays:
+    TD = Easter(2006)
+    checkIdentical(format(TD), "2006-04-16")
+
+    # Bizdays:
+    tS = timeSequence(from = Easter(2006)-7*24*3600, length.out = 8)
+    target = isBizday(tS, holidayNYSE(2006))
+    current = c(FALSE, TRUE, TRUE, TRUE, TRUE, FALSE, FALSE, FALSE)
+    names(current) = names(target)
+    checkIdentical(target, current)
+    
+    # Holidays:
+    tS = timeSequence(from = Easter(2006)-7*24*3600, length.out = 8)
+    target = isHoliday(tS, holidayNYSE(2006))
+    current = !c(FALSE, TRUE, TRUE, TRUE, TRUE, FALSE, FALSE, FALSE)
+    names(current) = names(target)
+    checkIdentical(target, current)
+    
+    # Return Value:
+    return()
+}
+ 
+
+# ------------------------------------------------------------------------------
+
+
+test.subsetExtracts = 
+function()
+{   
     #  [.timeDate             Extracts or replaces subsets from 'timeDate' objects
     #  cut.timeDate           Extracts a piece from a 'timeDate' object
     #  start.timeDate         Extracts the first entry of a 'timeDate' object
@@ -80,38 +153,12 @@ function()
     #  blockStart             Creates start dates for equally sized blocks
     #  blockEnd               Creates end dates for equally sized blocks
     
-    
-    ## Easter:
-    myFinCenter
-    Easter(2006)
-    target = timeSequence(from = Easter(currentYear)-7*24*3600, length.out = 8) 
-    print(target)
-    charvec = c("2006-04-09", paste("2006-04-1", 0:6, sep = ""))
-    current = timeDate(charvec)
-    print(current)
-    checkIdentical(
-        target, 
-        current)
-    
-    ## Weekdays and Weekend Days: 
-    tS = timeSequence(from = Easter(currentYear)-7*24*3600, length.out = 8)
-    isWeekday(tS)
-    isWeekend(tS)
-    getDayOfWeek(tS)
-    
-    ## Business Days and Holidays:
-    holidayNYSE()
-    getDayOfWeek(tS)
-    Easter(2006)
-    isBizday(tS, holidayNYSE())
-    isHoliday(tS, holidayNYSE())
-    
-    ## [ - Subsetting:
+    # [ - Subsetting:
     tS[c(1, 6:8)]   
     tS[isBizday(tS)]
     tS[isHoliday(tS)]
     
-    ## cut - 
+    # cut - 
     GF = GoodFriday(2006)
     print(GF)
     EM = EasterMonday(2006)
@@ -125,7 +172,7 @@ function()
         target, 
         current)
     
-    ## start - 
+    # start - 
     tS = timeCalendar()
     target = start(tS)
     print(target)
@@ -133,7 +180,7 @@ function()
         format(target), 
         current = format(timeDate("2006-01-01")))
     
-    ## end -
+    # end -
     tS = timeCalendar() 
     target = end(tS)
     print(target)
@@ -141,12 +188,12 @@ function()
         format(target), 
         current = format(timeDate("2006-12-01")))
     
-    ## head | tail -
+    # head | tail -
     tS = timeCalendar()
     head(tS)
     tail(tS)
     
-    ## order | sample | uniq -
+    # order | sample | uniq -
     tS = timeCalendar()
     # order.timeDate - not yet available
     sample(tS)

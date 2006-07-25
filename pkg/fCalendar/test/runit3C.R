@@ -64,23 +64,60 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.Ops =
+test.mathOps =
 function()
 {
-    myFinCenter <<- "NewYork"
-    NY = timeCalendar(h=10) 
+    #  Ops.timeDate           Group 'Ops' generic functions for 'timeDate' objects
+    #  +.timeDate             Performs arithmetic + operation on 'timeDate' objects
+    #  -.timeDate             Performs arithmetic - operation on 'timeDate' objects
+    #  diff.timeDate          Returns suitably lagged and iterated differences
+    #  difftimeDate           Returns a difference of two 'timeDate' objects
+    #  round.timeDate         Rounds objects of class 'timeDate'
+    #  trunc.timeDate         Truncates objects of class 'timeDate' 
+
+    # New York:
+    myFinCenter = "NewYork"
+    NY = timeCalendar(h = 10) 
     
-    myFinCenter <<- "Zurich"
-    ZH = timeCalendar(h=16)
+    # Back to Zurich:
+    myFinCenter = "Zurich"
+    ZH = timeCalendar(h = 16)
     
-    NY - ZH 
-    
+    # Group Ops:
     TEST = (NY > ZH)
     checkTrue(!TEST[1])
     checkTrue(TEST[4])
-    
     TEST = (NY - 24*3600 == ZH)
     
+    # + Operation:
+    
+    # - Operation:
+    NY - ZH 
+    
+    # diff.timeDate() Function:
+    
+    
+    # difftimeDate() Function:
+    
+    
+    # round() Function:
+    set.seed(4711)
+    TC = timeCalendar(
+        h = runif(12, 0, 23), 
+        min = runif(12, 0, 59), 
+        s = runif(12, 0, 59))
+    print(TC)
+    
+    
+    # trunc() Function:
+    set.seed(4711)
+    TC = timeCalendar(
+        h = runif(12, 0, 23), 
+        min = runif(12, 0, 59), 
+        s = runif(12, 0, 59))
+    print(TC)
+    
+
     # Return Value:
     return()  
 }
@@ -89,20 +126,67 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.methods =
+test.Ordering =
 function()
 {
-    myFinCenter <<- "NewYork"
-    NY = timeCalendar(h=10) 
+    #  c.timeDate             Concatenates 'timeDate' objects
+    #  rep.timeDate           Replicates a 'timeDate' object
+    #  sort.timeDate          Sorts a 'timeDate' object
+    #  sample.timeDate        Resamples a 'timeDate' object
+    #  unique.timeDate        NMakes a 'timeDate' object unique
+    #  rev.timeDate           Reverts  a 'timeDate' object
+
+    # NewYork:
+    myFinCenter = "NewYork"
+    NY = timeCalendar(h = 10) 
+    current = c(
+        "2006-01-01 10:00:00", "2006-02-01 10:00:00", "2006-03-01 10:00:00",
+        "2006-04-01 10:00:00", "2006-05-01 10:00:00", "2006-06-01 10:00:00",
+        "2006-07-01 10:00:00", "2006-08-01 10:00:00", "2006-09-01 10:00:00",
+        "2006-10-01 10:00:00", "2006-11-01 10:00:00", "2006-12-01 10:00:00")
+    checkIdentical(format(NY), current)
     
-    myFinCenter <<- "Zurich"
-    ZH = timeCalendar(h=16)
+    # Back to Zurich:
+    myFinCenter = "Zurich"
+    ZH = timeCalendar(h = 16)
+    current = c(
+        "2006-01-01 16:00:00", "2006-02-01 16:00:00", "2006-03-01 16:00:00",
+        "2006-04-01 16:00:00", "2006-05-01 16:00:00", "2006-06-01 16:00:00",
+        "2006-07-01 16:00:00", "2006-08-01 16:00:00", "2006-09-01 16:00:00",
+        "2006-10-01 16:00:00", "2006-11-01 16:00:00", "2006-12-01 16:00:00")
+    checkIdentical(format(ZH), current)
     
-    c(NY, ZH)
-    c(ZH, NY)
+    # NY-ZH Concatenate:
+    NYC = c(NY, ZH)[13]
+    print(NYC)
+    current = "2006-01-01 10:00:00"
+    checkIdentical(format(NYC), current)
     
-    rep(NY[1:3], times = 3)
-    rep(NY[1:3], each = 3)
+    # ZH-NY Concatenate:
+    ZRH = c(ZH, NY)[13]
+    print(ZRH)
+    current = "2006-01-01 16:00:00"
+    checkIdentical(format(ZRH), current)
+    
+    # Replicate:
+    DIFF = rep(NY[1:3], times = 3)-rep(NY[1:3], each = 3)
+    target = as.numeric(DIFF[c(1, 5, 9)])
+    checkIdentical(target, c(0, 0, 0))
+    
+    # Sort | Sample:
+    TC = timeCalendar()
+    print(TC)
+    set.dseed = 4711
+    SAMPLE = sample(TC)
+    print(SAMPLE)
+    checkIdentical(TC, sort(SAMPLE))
+    
+    # Revert:
+    TS = timeSequence()
+    print(TS)
+    REV = rev(TS)
+    print(head(REV))
+    checkIdentical(TS, rev(REV))
 }
 
 

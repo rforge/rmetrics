@@ -68,6 +68,7 @@ function()
 test.toTimeDate = 
 function()
 {
+    #  as.timeDate            Use Method
     #  as.timeDate.POSIXt     Returns a 'POSIX' object as 'timeDate' object
     #  as.timeDate.Date       Returns a 'POSIX' object as 'timeDate' object
     

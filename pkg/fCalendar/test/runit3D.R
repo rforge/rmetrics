@@ -58,6 +58,27 @@ function()
 # ------------------------------------------------------------------------------
 
 
+test.specDates =
+function()
+{
+    #  timeLastDayInMonth     Computes the last day in a given month and year
+    #  timeFirstDayInMonth    Computes the first day in a given month and year
+    #  timeLastDayInQuarter   Computes the last day in a given quarter and year
+    #  timeFirstDayInQuarter  Computes the first day in a given quarter and year
+    #  timeNdayOnOrAfter      Computes date in month that is a n-day ON OR AFTER  
+    #  timeNdayOnOrBefore     Computes date in month that is a n-day ON OR BEFORE  
+    #  timeNthNdayInMonth     Computes n-th ocurrance of a n-day in year/month
+    #  timeLastNdayInMonth    Computes the last n-day in year/month
+    
+    # Return Value:
+    return()  
+}
+
+
+
+# ------------------------------------------------------------------------------
+
+
 if (FALSE) {
     require(RUnit)
     testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fCalendar/test/runit3D.R")
