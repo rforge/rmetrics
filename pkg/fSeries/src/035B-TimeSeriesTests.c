@@ -1,3 +1,5 @@
+
+
 /*  
 
     Blake LeBaron
@@ -35,70 +37,70 @@
 
 #define NBITS 15 
 #define ALLBITS 0xffff
-#define PREC	double	
+#define PREC    double  
 #define TABLEN 32767
 
 
 /* ----------- grid macro: turn bits on --------------------------- */
 
 #define GRIDON(x,y) \
-	if(x!=y) {    \
-		if(x>y) {  \
-			ix = y; \
-			iy = x; \
-		}              \
-		else {      \
-			ix = x; \
-			iy = y; \
-		} \
-		iy = iy-ix-1;  \
-		ipos = iy / NBITS;  \
-		ibit = NBITS - 1 - (iy % NBITS); \
-		*(*(start+ix)+ipos) |= bits[ibit];\
-	}
-
+    if(x!=y) {    \
+        if(x>y) {  \
+            ix = y; \
+            iy = x; \
+        }              \
+        else {      \
+            ix = x; \
+            iy = y; \
+        } \
+        iy = iy-ix-1;  \
+        ipos = iy / NBITS;  \
+        ibit = NBITS - 1 - (iy % NBITS); \
+        *(*(start+ix)+ipos) |= bits[ibit];\
+    }
+ 
 /* define struct */
 
 struct position {
-	PREC value;
-	int pos;
+    PREC value;
+    int pos;
 };
 
 /* globals */
 
-static  int		bits[NBITS],
-		*mask;
+static  int     bits[NBITS],
+        *mask;
 
 static short int    *grid,
                     **start;
 
-static int	*lookup,first=1;
+static int  *lookup,first=1;
 
-static	struct position *postab,*postlast;
+static  struct position *postab,*postlast;
 
 /*
-	free all memory allocations
+    free all memory allocations
 */
 
 
 static void
 freeall()
 {
-	free(grid);
-	free(mask);
-	free(postab);
-	free(start);
-	free(lookup);
+    free(grid);
+    free(mask);
+    free(postab);
+    free(start);
+    free(lookup);
 }
 
 
 /* module function definitions */
 
 /*
-	generate mask 
-	mask pattern for row l, nbits: number of bits used
-				omit:  number of bits omitted
-				mask:  mask[0],mask[1] two word mask
+    generate mask 
+    mask pattern for row l, nbits: number of bits used
+                omit:  number of bits omitted
+                mask:  mask[0],mask[1] two word mask
 
 */
 
@@ -106,23 +108,23 @@ static void
 genmask(l,n,nbits,omit,mask)
 int l,n,nbits,omit,mask[];
 {
-	int i,k,j,last,itrue;
+    int i,k,j,last,itrue;
 
-	mask[0] = mask[1] = ALLBITS;
-	last = (n-l-1)/nbits;
-	for(i=n-omit;i<n;i++) {
-		itrue = i - l -1;
-		j = itrue/nbits;
-		k = nbits-1-(itrue % nbits);
-		j = last-j ;
-		mask[j] = mask[j] ^ bits[k];
-	}
+    mask[0] = mask[1] = ALLBITS;
+    last = (n-l-1)/nbits;
+    for(i=n-omit;i<n;i++) {
+        itrue = i - l -1;
+        j = itrue/nbits;
+        k = nbits-1-(itrue % nbits);
+        j = last-j ;
+        mask[j] = mask[j] ^ bits[k];
+    }
 }
 
 /*
-	embed bitmap grid to next higher dimension 
+    embed bitmap grid to next higher dimension 
 
-	g(i,j) = g(i,j) & g(i+1,j+1)
+    g(i,j) = g(i,j) & g(i+1,j+1)
 
 
 */
@@ -131,23 +133,23 @@ static void
 embed(n,dim)
 int n,dim;
 {
-	int j;
-	register short int *i,*i2;
+    int j;
+    register short int *i,*i2;
 
-	for(j=0;j<n-dim;j++) {
-		i = *(start+j);
-		for(i2= *(start+j+1);i2<= *(start+j+2)-1;i2++) {
-			*i = (*i) & (*i2);
-			i++;
-		}
-		if(i!= *(start+j+1))
-			*i = 0;
-	}
+    for(j=0;j<n-dim;j++) {
+        i = *(start+j);
+        for(i2= *(start+j+1);i2<= *(start+j+2)-1;i2++) {
+            *i = (*i) & (*i2);
+            i++;
+        }
+        if(i!= *(start+j+1))
+            *i = 0;
+    }
 }
 
 /*
-	count c stats for grid - zero out parts not counted using mask
-	returns c
+    count c stats for grid - zero out parts not counted using mask
+    returns c
 */
 
 static
@@ -156,37 +158,37 @@ evalc(n)
 int n;
 {
 
-	register long int count;
-	int j;
-	register short int *i;
-	double nd;
+    register long int count;
+    int j;
+    register short int *i;
+    double nd;
 
-	count = 0;
-	nd = (double)n;
+    count = 0;
+    nd = (double)n;
 
-	for(j=0;j<n;j++) {
+    for(j=0;j<n;j++) {
 
-		if( (*(start+j+1)-*(start+j)) > 2 ) {
+        if( (*(start+j+1)-*(start+j)) > 2 ) {
 
-			for (i = *(start+j);i< *(start+j+1)-2;i++) {
-				count += lookup[*i];
-				/*
-				if(lookup[*i]>15)
-					Rprintf("%d %d %d\n", (int)(i-grid),*i,lookup[*i]);
-				*/
-			}
-			for(i = *(start+j+1)-2;i< *(start+j+1);i++) {
-				count += lookup[ (*i) & mask[j*2+ *(start+j+1)-i-1]];
-			}
-		}
-		else {
-			for(i = *(start+j);i<*(start+j+1);i++) {
-				count += lookup[ (*i) & mask[j*2+ *(start+j+1)-i-1]];
-			}
-		}
-	}
+            for (i = *(start+j);i< *(start+j+1)-2;i++) {
+                count += lookup[*i];
+                /*
+                if(lookup[*i]>15)
+                    Rprintf("%d %d %d\n", (int)(i-grid),*i,lookup[*i]);
+                */
+            }
+            for(i = *(start+j+1)-2;i< *(start+j+1);i++) {
+                count += lookup[ (*i) & mask[j*2+ *(start+j+1)-i-1]];
+            }
+        }
+        else {
+            for(i = *(start+j);i<*(start+j+1);i++) {
+                count += lookup[ (*i) & mask[j*2+ *(start+j+1)-i-1]];
+            }
+        }
+    }
 
-	return ( 2*((double)count)/ (nd*(nd-1)));
+    return ( 2*((double)count)/ (nd*(nd-1)));
 }
 
 static
@@ -195,15 +197,15 @@ ipow(x,m)
 double x;
 int m;
 {
-	int j;
-	double y;
+    int j;
+    double y;
 
-	y = 1;
+    y = 1;
 
-	for(j=0;j<m;j++)
-		y *= x;
+    for(j=0;j<m;j++)
+        y *= x;
 
-	return(y);
+    return(y);
 }
 
 /*
@@ -223,36 +225,36 @@ double c,cm,k;
 int m,n;
 {
 
-	double sigma,
-		stat,
-		std,
-		sqrt();
-	int j;
+    double sigma,
+        stat,
+        std,
+        sqrt();
+    int j;
 
-	sigma = 0;
-	for(j=1;j<=m-1;j++) {
-		sigma += 2.*ipow(k,m-j)*ipow(c,2*j);
-	}
-	sigma += ipow(k,m) + (m-1)*(m-1)*ipow(c,2*m)
+    sigma = 0;
+    for(j=1;j<=m-1;j++) {
+        sigma += 2.*ipow(k,m-j)*ipow(c,2*j);
+    }
+    sigma += ipow(k,m) + (m-1)*(m-1)*ipow(c,2*m)
                  -m*m*k*ipow(c,2*m-2);
-	sigma *= (double)4;
+    sigma *= (double)4;
 
-	std = sqrt(sigma/((double)n));
+    std = sqrt(sigma/((double)n));
 
-	stat = (cm - ipow(c,m))/std;
-	return(stat);
+    stat = (cm - ipow(c,m))/std;
+    return(stat);
 }
 
 static int
 comp(a,b)
 struct position *a,*b;
 {
-	if(a->value>b->value)
-		return(1);
-	else if(a->value<b->value)
-		return(-1);
-	else
-		return(0);
+    if(a->value>b->value)
+        return(1);
+    else if(a->value<b->value)
+        return(-1);
+    else
+        return(0);
 }
 
 static void
@@ -263,160 +265,160 @@ double *k,c[];
 {
 
 
-	/* junk integers */
-	int i,j;
-	short int *ip;
-	int memsize;
+    /* junk integers */
+    int i,j;
+    short int *ip;
+    int memsize;
 
-	int nobs;
+    int nobs;
 
-	/* pointers */
-	register struct position *pt;
-	struct position *p;
+    /* pointers */
+    register struct position *pt;
+    struct position *p;
 
-	/* long counts */
-	long 	count,tcount;
-	/* double length */
-	double dlength;
-	double phi;
+    /* long counts */
+    long    count,tcount;
+    /* double length */
+    double dlength;
+    double phi;
 
-	register int ix,iy,ibit,ipos;
-
-
-	nobs = n-remove;
-	dlength = (double)nobs;
-
-	/* allocate memory */
-	if(first ) {
-		/* mask = Calloc(2*n,int); */
-		mask = (int *)calloc(2*n,sizeof(int));
-		
-		/* lookup = Calloc(TABLEN+1,int); */
-		lookup = (int *)calloc(TABLEN+1,sizeof(int));
-
-		/* postab = Calloc(n,struct position); */
-		postab = (struct position *)calloc(n,sizeof(struct position));
+    register int ix,iy,ibit,ipos;
 
 
-		/* build start : grid pointers */
-		/*start = Calloc(n+1,short int *);*/
-		start = (short int **)calloc(n+1,sizeof(short int *));
-		
-		/* find out how big grid has to be */
-		memsize = 0;
-		for(i=0;i<=n;i++) 
-			memsize += (n-i)/NBITS + 1;
+    nobs = n-remove;
+    dlength = (double)nobs;
 
-		/* grid is defined as short (2 byte integers) */
-		/* grid =  Calloc(memsize,short); */
-		grid =  (short int *)calloc(memsize,sizeof(short));
-		
-	
-		if(grid==NULL) {
-			/* error("Out of memory\n"); */
-			exit(-1);
-		}
-	
+    /* allocate memory */
+    if(first ) {
+        /* mask = Calloc(2*n,int); */
+        mask = (int *)calloc(2*n,sizeof(int));
+        
+        /* lookup = Calloc(TABLEN+1,int); */
+        lookup = (int *)calloc(TABLEN+1,sizeof(int));
 
-		start[0] = grid;
-		for(i=1;i<=n;i++) 
-			start[i] = start[i-1] + (n-i)/NBITS + 1;
-
-		/* bit vector */
-		bits[0] = 1;
-		for(i=1;i<15;i++)
-			bits[i] = (bits[i-1] << 1);
-
-		/* table for bit countining */
-
-		for(i=0;i<=TABLEN;i++){
-			*(lookup+i) = 0;
-			for(j=0;j<NBITS;j++)
-				if( (i & bits[j])!=0)
-					(*(lookup+i))++;
-		}
-	}
-	/* end initialization */
-
-	/* clear grid */
-	for(ip=grid;ip<=start[n];ip++)
-		*ip = 0;
+        /* postab = Calloc(n,struct position); */
+        postab = (struct position *)calloc(n,sizeof(struct position));
 
 
+        /* build start : grid pointers */
+        /*start = Calloc(n+1,short int *);*/
+        start = (short int **)calloc(n+1,sizeof(short int *));
+        
+        /* find out how big grid has to be */
+        memsize = 0;
+        for(i=0;i<=n;i++) 
+            memsize += (n-i)/NBITS + 1;
 
-	/* perform thieler sort */
-	for(i=0;i<n;i++){
-		(postab+i)->value = x[i];
-		(postab+i)->pos   = i;
-	}
+        /* grid is defined as short (2 byte integers) */
+        /* grid =  Calloc(memsize,short); */
+        grid =  (short int *)calloc(memsize,sizeof(short));
+        
+    
+        if(grid==NULL) {
+            /* error("Out of memory\n"); */
+            exit(-1);
+        }
+    
+
+        start[0] = grid;
+        for(i=1;i<=n;i++) 
+            start[i] = start[i-1] + (n-i)/NBITS + 1;
+
+        /* bit vector */
+        bits[0] = 1;
+        for(i=1;i<15;i++)
+            bits[i] = (bits[i-1] << 1);
+
+        /* table for bit countining */
+
+        for(i=0;i<=TABLEN;i++){
+            *(lookup+i) = 0;
+            for(j=0;j<NBITS;j++)
+                if( (i & bits[j])!=0)
+                    (*(lookup+i))++;
+        }
+    }
+    /* end initialization */
+
+    /* clear grid */
+    for(ip=grid;ip<=start[n];ip++)
+        *ip = 0;
 
 
-	qsort((char *)postab,n,sizeof(struct position),comp);
-	postlast = postab+n-1;
 
-	/* start row by row construction */
-	/* use theiler method */
+    /* perform thieler sort */
+    for(i=0;i<n;i++){
+        (postab+i)->value = x[i];
+        (postab+i)->pos   = i;
+    }
 
 
-	count = 0;
-	phi   = 0;
-	for(p=postab;p<=postlast;p++) {
-		tcount = 0;
-		pt = p ;
-		/* count to right */
-		while( (pt->value - p->value)<=eps) {
-			GRIDON(p->pos,pt->pos);
-			if( (p->pos<nobs)&&(pt->pos<nobs) )
-				tcount++;
-			if(pt==postlast)
-				break;
-			else
-				pt++;
-		}
-		if(p!=postab){
-			/* count to left : note - This is not
-			necessary for building the grid, but
-			it is needed to get the Dechert k */
-			pt = p-1;
-			while( (p->value - pt->value)<=eps) {
-				if( (p->pos<nobs)&&(pt->pos<nobs) )
-					tcount++;
-				if(pt==postab)
-					break;
-				else
-					pt--;
-			}
-		}
-		count += tcount;
-		/* Dechert speed up K */
-		phi   += tcount*tcount;
-	}
-	/* adjust k and c to u statistic */
-	count = count - nobs;
-	phi   = phi - nobs - 3*count;
+    qsort((char *)postab,n,sizeof(struct position),comp);
+    postlast = postab+n-1;
 
-	*k    = ((double)phi)/(dlength*(dlength-1)*(dlength-2));
-	c[1]  = ((double)count)/(dlength*(dlength-1));
+    /* start row by row construction */
+    /* use theiler method */
 
-	/* build mask */
-	for(i=0;i<nobs;i++)
-		genmask(i,n,NBITS,remove,mask+2*i);
 
-	for(i=2;i<=m;i++) {
-		embed(n,i);
-		c[i] = evalc(nobs);
-	}
-	/*
-	free(grid);
-	free(mask);
-	free(postab);
-	free(start);
-	*/
+    count = 0;
+    phi   = 0;
+    for(p=postab;p<=postlast;p++) {
+        tcount = 0;
+        pt = p ;
+        /* count to right */
+        while( (pt->value - p->value)<=eps) {
+            GRIDON(p->pos,pt->pos);
+            if( (p->pos<nobs)&&(pt->pos<nobs) )
+                tcount++;
+            if(pt==postlast)
+                break;
+            else
+                pt++;
+        }
+        if(p!=postab){
+            /* count to left : note - This is not
+            necessary for building the grid, but
+            it is needed to get the Dechert k */
+            pt = p-1;
+            while( (p->value - pt->value)<=eps) {
+                if( (p->pos<nobs)&&(pt->pos<nobs) )
+                    tcount++;
+                if(pt==postab)
+                    break;
+                else
+                    pt--;
+            }
+        }
+        count += tcount;
+        /* Dechert speed up K */
+        phi   += tcount*tcount;
+    }
+    /* adjust k and c to u statistic */
+    count = count - nobs;
+    phi   = phi - nobs - 3*count;
+
+    *k    = ((double)phi)/(dlength*(dlength-1)*(dlength-2));
+    c[1]  = ((double)count)/(dlength*(dlength-1));
+
+    /* build mask */
+    for(i=0;i<nobs;i++)
+        genmask(i,n,NBITS,remove,mask+2*i);
+
+    for(i=2;i<=m;i++) {
+        embed(n,i);
+        c[i] = evalc(nobs);
+    }
+    /*
+    free(grid);
+    free(mask);
+    free(postab);
+    free(start);
+    */
 }
 
 /*
-	function version of gridon - this has been replaced
-	with a macro for enhanced speed
+    function version of gridon - this has been replaced
+    with a macro for enhanced speed
 */
 
 /*
@@ -424,22 +426,22 @@ void
 gridon(ix,iy)
 int ix,iy;
 {
-	int temp;
-	int ipos,ibit;
+    int temp;
+    int ipos,ibit;
 
-	if(ix==iy)
-		return;
-	if(ix>iy){
-		temp = ix;
-		ix = iy;
-		iy = temp;
-	}
-	iy = iy-ix-1;
-	ipos = iy / NBITS;
-	ibit = NBITS - 1 - (iy % NBITS);
-	*(*(start+ix)+ipos) |= bits[ibit];
-	if( *(*(start+ix)+ipos)<0)
-		Rprintf("%d %d %d %d\n",ipos,ibit,ix,iy);
+    if(ix==iy)
+        return;
+    if(ix>iy){
+        temp = ix;
+        ix = iy;
+        iy = temp;
+    }
+    iy = iy-ix-1;
+    ipos = iy / NBITS;
+    ibit = NBITS - 1 - (iy % NBITS);
+    *(*(start+ix)+ipos) |= bits[ibit];
+    if( *(*(start+ix)+ipos)<0)
+        Rprintf("%d %d %d %d\n",ipos,ibit,ix,iy);
 }
 
 */
@@ -530,26 +532,26 @@ arguments are exactly the same.
 
 void bdstest_main (int *N, int *M, double *x, double *c, double *cstan, double *EPS, int *TRACE)
 {
-	int i;
-	double k;
-	
-	int n, m;
-	double eps;
+    int i;
+    double k;
+    
+    int n, m;
+    double eps;
 
-	n = (*N);  
-	m = (*M);
-	eps = (*EPS);
-	
-	/* calculate raw c and k statistics : This is the hard part */
-	fkc(x,n,&k,c,m,m-1,eps);
+    n = (*N);  
+    m = (*M);
+    eps = (*EPS);
+    
+    /* calculate raw c and k statistics : This is the hard part */
+    fkc(x,n,&k,c,m,m-1,eps);
 
-	/* calculate normalized stats:  This is the easy part */
-	for(i=2; i<=m;i++) { 
-		cstan[i] = cstat(c[1],c[i],k,i,n-m+1);
-	}
-	
-	/* free allocated memory: This must be done when finished */
-	freeall();
+    /* calculate normalized stats:  This is the easy part */
+    for(i=2; i<=m;i++) { 
+        cstan[i] = cstat(c[1],c[i],k,i,n-m+1);
+    }
+    
+    /* free allocated memory: This must be done when finished */
+    freeall();
 }
 
 /* end front end ------------------------------------------*/
