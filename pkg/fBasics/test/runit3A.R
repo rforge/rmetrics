@@ -84,23 +84,25 @@ function()
 test.moments = 
 function()
 {
-    # mean -
-    # var -
-    # skewness -
-    # kurtosis -
-    data(DowJones30)
-    IBM = DowJones30[, "IBM"]
-    checkIdentical(
-        target = class(IBM),
-        current = "numeric")
+    # Data:
+    require(fCalendar)
+    msft = as.timeSeries(MSFT)[, 1]
+    X = returnSeries(msft)
     
     # Mean, Variance:
-    mean(IBM)
-    var(IBM)
+    mean(X)
+    var(X)
      
-    # Skewness, Kurtosis:
-    skewness(IBM)
-    kurtosis(IBM)
+    # Skewness:
+    skewness(X)
+    skewness(X, method = "moment")
+    skewness(X, method = "fisher")
+    
+    # Kurtosis:
+    kurtosis(X)
+    kurtosis(X, method = "excess")
+    kurtosis(X, method = "moment")
+    kurtosis(X, method = "fisher")
     
     # Return Value:
     return()
@@ -163,15 +165,6 @@ function()
     checkEqualsNumeric(
         target = DF,
         current = NUM)
-        
-    # Time Series ...
-    require(fCalendar)
-    data(DowJones30)
-    DowJones30 = as.timeSeries(DowJones30)
-    DJ = DowJones30[, c("IBM", "JPM")]
-    IBM = DowJones30[, "IBM"]
-    basicStats(DJ)
-    basicStats(IBM)  
     
     # Return Value:
     return()
@@ -185,56 +178,42 @@ test.rowcolStats =
 function()
 {
     # Data Frame:
-    data(DowJones30)
-    DJ = DowJones30[10:20, c("IBM", "JPM")]
-    checkIdentical(
-        target = class(DJ),
-        current = "data.frame")
+    checkIdentical(target = class(MSFT), current = "data.frame")
     
     # Returns - Matrix:
-    DJ = diff(log(as.matrix(DJ)))
-    class(DJ)
+    msft.mat = diff(log(as.matrix(MSFT)))[1:11, ]
     
-    rowAvgs(DJ)
-    rowVars(DJ)
-    rowStdevs(DJ)
-    rowSkewness(DJ)
-    rowKurtosis(DJ)
-    rowCumsums(DJ)
+    rowAvgs(msft.mat)
+    rowVars(msft.mat)
+    rowStdevs(msft.mat)
+    rowSkewness(msft.mat)
+    rowKurtosis(msft.mat)
+    rowCumsums(msft.mat)
     
-    colAvgs(DJ)
-    colVars(DJ)
-    colStdevs(DJ)
-    colSkewness(DJ)
-    colKurtosis(DJ)
-    colCumsums(DJ)
+    colAvgs(msft.mat)
+    colVars(msft.mat)
+    colStdevs(msft.mat)
+    colSkewness(msft.mat)
+    colKurtosis(msft.mat)
+    colCumsums(msft.mat)
     
     
     # Time Series:
-    require(fCalendar)
-    data(DowJones30)
-    DJ = as.timeSeries(DowJones30)[10:20, c("IBM", "JPM")]
-    # checkIdentical(
-    #    target = class(DJ),
-    #    current = "timeSeries")
+    msft.ret = returnSeries(as.timeSeries(MSFT))[1:11, ]
     
-    # Returns - Time Series:
-    DJ = returnSeries(DJ)
-    class(DJ)
+    rowAvgs(msft.ret)
+    rowVars(msft.ret)
+    rowStdevs(msft.ret)
+    rowSkewness(msft.ret)
+    rowKurtosis(msft.ret)
+    rowCumsums(msft.ret)
     
-    rowAvgs(DJ)
-    rowVars(DJ)
-    rowStdevs(DJ)
-    rowSkewness(DJ)
-    rowKurtosis(DJ)
-    rowCumsums(DJ)
-    
-    colAvgs(DJ)
-    colVars(DJ)
-    colStdevs(DJ)
-    colSkewness(DJ)
-    colKurtosis(DJ)
-    colCumsums(DJ)
+    colAvgs(msft.ret)
+    colVars(msft.ret)
+    colStdevs(msft.ret)
+    colSkewness(msft.ret)
+    colKurtosis(msft.ret)
+    colCumsums(msft.ret)
     
     # Return Value:
     return()
@@ -245,7 +224,8 @@ function()
 
 
 if (FALSE) {
-    testResult <- runTestFile("C:/Rmetrics/trunk/fBasics/test/runit015A.R")
+    require(RUnit)
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fBasics/test/runit3A.R")
     printTextProtocol(testResult)
 }   
     

@@ -70,7 +70,7 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.distfit = 
+test.distFit = 
 function()
 { 
     # Graph Frame:
@@ -82,7 +82,6 @@ function()
     s = rnorm(n = 1000) 
     ans = .normFit(x = s)
     print(ans)
-    cat("\n")
 
     # tFit -
     # Simulated random variates t(4):
@@ -90,38 +89,36 @@ function()
     s = rt(n = 1000, df = 4) 
     ans = tFit(x = s, df = 2*var(s)/(var(s)-1), trace = FALSE)
     print(ans)
-    cat("\n")
     
     # ghFit -
     set.seed(1953)
-    s = rgh(n = 1000, alpha = 0.8, beta = 0.2, delta = 1.5, 
-        mu = 1, lambda = 0.5) 
+    s = rgh(n = 1000, alpha = 0.8, beta = 0.2, delta = 1.5, mu = 1, lambda = 2) 
     ans = ghFit(x = s, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1,
         trace = FALSE) 
-    # ERROR
     print(ans)
-    cat("\n")
+    # CHECK WARNINGS!
     
     # hypFit -
     set.seed(1953)
     s = rhyp(n = 1000, alpha = 1.5, beta = 0.3, delta = 0.5, mu = -1) 
     ans = hypFit(s, alpha = 1, beta = 0, delta = 1, mu = mean(s), trace = FALSE)
     print(ans)
-    cat("\n")
+    # CHECK WARNINGS!
     
     # nigFit -
     set.seed(1953)
     s = rnig(n = 1000, alpha = 1.5, beta = 0.3, delta = 0.5, mu = -1.0) 
     ans = nigFit(s, alpha = 1, beta = 0, delta = 1, mu = mean(s), trace = FALSE)
     print(ans)
-    cat("\n")
+    print(class(ans))
+    # CHECK WARNINGS!
     
     # ssdFit -
     set.seed(1953)
     s = rnorm(1000)
     ans = ssdFit(x = s)
     print(ans)
-    cat("\n")
+    print(class(ans))
     
     # Return Value:
     return()
@@ -132,7 +129,8 @@ function()
 
 
 if (FALSE) {
-    testResult <- runTestFile("C:/Rmetrics/trunk/fBasics/test/runit013D.R")
+    require(RUnits)
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fBasics/test/runit2D.R")
     printTextProtocol(testResult)
 }
    

@@ -76,52 +76,55 @@ function()
 test.normalTests = 
 function()
 {   
+    
+    # Normal Data:
     set.seed(1953)
     X = rnorm(50)
     
-    checkIdentical(
-        target = as.character(class(try(ksnormTest(X)))),
-        current = "fHTEST")
-        
-    checkIdentical(
-        target = as.character(class(try(shapiroTest(X)))),
-        current = "fHTEST")
-        
-    checkIdentical(
-        target = as.character(class(try(jarqueberaTest(X)))),
-        current = "fHTEST")
-        
-    checkIdentical(
-        target = as.character(class(try(jbTest(X)))),
-        current = "fHTEST")
-        
-    checkIdentical(
-        target = as.character(class(try(dagoTest(X)))),
-        current = "fHTEST")
-        
-    checkIdentical(
-        target = as.character(class(try(adTest(X)))),
-        current = "fHTEST")
-        
-    checkIdentical(
-        target = as.character(class(try(cvmTest(X)))),
-        current = "fHTEST")
-        
-    checkIdentical(
-        target = as.character(class(try(lillieTest(X)))),
-        current = "fHTEST")
-        
-    checkIdentical(
-        target = as.character(class(try(pchiTest(X)))),
-        current = "fHTEST")
-        
-    checkIdentical(
-        target = as.character(class(try(sfTest(X)))),
-        current = "fHTEST")
-
-    runsTest(X)
+    TEST = ksnormTest(X)
+    print(TEST)
+    checkIdentical(as.character(class(TEST)), "fHTEST")
+      
+    TEST = shapiroTest(X)
+    print(TEST)
+    checkIdentical(as.character(class(TEST)), "fHTEST")
     
-    gofnorm(X)
+    TEST = jarqueberaTest(X)
+    print(TEST)
+    checkIdentical(as.character(class(TEST)), "fHTEST")
+     
+    TEST = jbTest(X)
+    print(TEST)
+    checkIdentical(as.character(class(TEST)), "fHTEST")
+    
+    TEST = dagoTest(X)
+    print(TEST)
+    checkIdentical(as.character(class(TEST)), "fHTEST")
+    
+    TEST = adTest(X)
+    print(TEST)
+    checkIdentical(as.character(class(TEST)), "fHTEST")
+    
+    TEST = cvmTest(X)
+    print(TEST)
+    checkIdentical(as.character(class(TEST)), "fHTEST")
+    
+    TEST = lillieTest(X)
+    print(TEST)
+    checkIdentical(as.character(class(TEST)), "fHTEST")
+    
+    TEST = pchiTest(X)
+    print(TEST)
+    checkIdentical(as.character(class(TEST)), "fHTEST")
+    
+    TEST = sfTest(X)
+    print(TEST)
+    checkIdentical(as.character(class(TEST)), "fHTEST")
+    
+    TEST = runsTest(X)
+    print(TEST)
+    checkIdentical(as.character(class(TEST)), "htest")
+    
 }  
 
 
@@ -132,53 +135,52 @@ test.normalTestsTS =
 function()
 {      
     require(fCalendar)
-    data(DowJones30)
-    DJ = as.timeSeries(DowJones30)
-    X = returnSeries(DJ[, "IBM"])
+    msft = as.timeSeries(MSFT)[, 1]
+    X = returnSeries(msft)
     
-    checkIdentical(
-        target = as.character(class(try(ksnormTest(X)))),
-        current = "fHTEST")
-        
-    checkIdentical(
-        target = as.character(class(try(shapiroTest(X)))),
-        current = "fHTEST")
-        
-    checkIdentical(
-        target = as.character(class(try(jarqueberaTest(X)))),
-        current = "fHTEST")
-        
-    checkIdentical(
-        target = as.character(class(try(jbTest(X)))),
-        current = "fHTEST")
-        
-    checkIdentical(
-        target = as.character(class(try(dagoTest(X)))),
-        current = "fHTEST")
-        
-    checkIdentical(
-        target = as.character(class(try(adTest(X)))),
-        current = "fHTEST")
-        
-    checkIdentical(
-        target = as.character(class(try(cvmTest(X)))),
-        current = "fHTEST")
-        
-    checkIdentical(
-        target = as.character(class(try(lillieTest(X)))),
-        current = "fHTEST")
-        
-    checkIdentical(
-        target = as.character(class(try(pchiTest(X)))),
-        current = "fHTEST")
-        
-    checkIdentical(
-        target = as.character(class(try(sfTest(X)))),
-        current = "fHTEST")
-
-    runsTest(X)
+    TEST = ksnormTest(X)
+    print(TEST)
+    checkIdentical(as.character(class(TEST)), "fHTEST")
+      
+    TEST = shapiroTest(X)
+    print(TEST)
+    checkIdentical(as.character(class(TEST)), "fHTEST")
     
-    gofnorm(X)
+    TEST = jarqueberaTest(X)
+    print(TEST)
+    checkIdentical(as.character(class(TEST)), "fHTEST")
+     
+    TEST = jbTest(X)
+    print(TEST)
+    checkIdentical(as.character(class(TEST)), "fHTEST")
+    
+    TEST = dagoTest(X)
+    print(TEST)
+    checkIdentical(as.character(class(TEST)), "fHTEST")
+    
+    TEST = adTest(X)
+    print(TEST)
+    checkIdentical(as.character(class(TEST)), "fHTEST")
+    
+    TEST = cvmTest(X)
+    print(TEST)
+    checkIdentical(as.character(class(TEST)), "fHTEST")
+    
+    TEST = lillieTest(X)
+    print(TEST)
+    checkIdentical(as.character(class(TEST)), "fHTEST")
+    
+    TEST = pchiTest(X)
+    print(TEST)
+    checkIdentical(as.character(class(TEST)), "fHTEST")
+    
+    TEST = sfTest(X)
+    print(TEST)
+    checkIdentical(as.character(class(TEST)), "fHTEST")
+    
+    TEST = runsTest(X)
+    print(TEST)
+    checkIdentical(as.character(class(TEST)), "htest")
 }
 
 
@@ -186,7 +188,8 @@ function()
     
 
 if (FALSE) {
-    testResult <- runTestFile("C:/Rmetrics/trunk/fBasics/test/runit015D.R")
+    require(RUnit)
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fBasics/test/runit5B.R")
     printTextProtocol(testResult)
 }
     

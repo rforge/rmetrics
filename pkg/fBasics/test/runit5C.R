@@ -69,7 +69,7 @@ function()
 # ------------------------------------------------------------------------------
   
 
-test.twoSampleTests = 
+test.distributionTest = 
 function()
 {
     # Data:
@@ -77,37 +77,93 @@ function()
     X = rnorm(100)
     Y = rt(50, df = 3)
     
-    # Two sample Kolmogorov-Smirnov test
-    checkIdentical(
-        target = as.character(class(try(ks2Test(X, Y)))),
-        current = "fHTEST")
+    # Two Sample Kolmogorov-Smirnov Test:
+    TEST = ks2Test(X, Y)
+    print(TEST)
+    checkIdentical(as.character(class(TEST)), "fHTEST")
     
-    # Location:
-    checkIdentical(
-        target = as.character(class(try(tTest(X, Y)))),
-        current = "fHTEST")
-    checkIdentical(
-        target = as.character(class(try(kw2Test(X, Y)))),
-        current = "fHTEST")
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+  
+
+test.locationTests = 
+function()
+{
+    # Data:
+    set.seed(1953)
+    X = rnorm(100)
+    Y = rt(50, df = 3)    
+ 
+    # Location t-Test:
+    TEST = tTest(X, Y)
+    print(TEST)
+    checkIdentical(as.character(class(TEST)), "fHTEST")
     
-    # Variance:
-    checkIdentical(
-        target = as.character(class(try(varfTest(X, Y)))),
-        current = "fHTEST")
-    checkIdentical(
-        target = as.character(class(try(bartlett2Test(X, Y)))),
-        current = "fHTEST")
-    checkIdentical(
-        target = as.character(class(try(fligner2Test(X, Y)))),
-        current = "fHTEST")
+    # Location kw2-Test:
+    TEST = kw2Test(X, Y)
+    print(TEST)
+    checkIdentical(as.character(class(TEST)), "fHTEST")
     
-    # Scale:
-    checkIdentical(
-        target = as.character(class(try(ansariTest(X, Y)))),
-        current = "fHTEST")
-    checkIdentical(
-        target = as.character(class(try(moodTest(X, Y)))),
-        current = "fHTEST")
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+  
+
+test.varianceTests = 
+function()
+{
+    # Data:
+    set.seed(1953)
+    X = rnorm(100)
+    Y = rt(50, df = 3)              
+        
+    # Variance F-Test:
+    TEST = varfTest(X, Y)
+    print(TEST)
+    checkIdentical(as.character(class(TEST)), "fHTEST")
+    
+    # Variance Bartlett-Test:
+    TEST = bartlett2Test(X, Y)
+    print(TEST)
+    checkIdentical(as.character(class(TEST)), "fHTEST")
+    
+    # Variance Fligner-Test:
+    TEST = fligner2Test(X, Y)
+    print(TEST)
+    checkIdentical(as.character(class(TEST)), "fHTEST")
+    
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+  
+
+test.scaleTests = 
+function()
+{
+    # Data:
+    set.seed(1953)
+    X = rnorm(100)
+    Y = rt(50, df = 3)           
+        
+    # Scale Ansari-Test:
+    TEST = varfTest(X, Y)
+    print(TEST)
+    checkIdentical(as.character(class(TEST)), "fHTEST")
+    
+    # Scale Mood-Test:
+    TEST = moodTest(X, Y)
+    print(TEST)
+    checkIdentical(as.character(class(TEST)), "fHTEST")
     
     # Return Value:
     return()
@@ -125,17 +181,21 @@ function()
     X = rnorm(100)
     Y = rt(100, df = 3)
     
-    # Correlation - must have the same length:
-    checkIdentical(
-        target = as.character(class(try(pearsonTest(X, Y)))),
-        current = "fHTEST")
-    checkIdentical(
-        target = as.character(class(try(kendallTest(X, Y)))),
-        current = "fHTEST")
-    checkIdentical(
-        target = as.character(class(try(spearmanTest(X, Y)))),
-        current = "fHTEST")
-       
+    # Correlation Pearson-Test:
+    TEST = pearsonTest(X, Y)
+    print(TEST)
+    checkIdentical(as.character(class(TEST)), "fHTEST")
+    
+    # Correlation Kendall-Test:
+    TEST = kendallTest(X, Y)
+    print(TEST)
+    checkIdentical(as.character(class(TEST)), "fHTEST")
+    
+    # Correlation Spearman-Test:
+    TEST = spearmanTest(X, Y)
+    print(TEST)
+    checkIdentical(as.character(class(TEST)), "fHTEST")
+    
     # Return Value:
     return()
 }
@@ -145,7 +205,8 @@ function()
  
 
 if (FALSE) {
-    testResult <- runTestFile("C:/Rmetrics/trunk/fBasics/test/runit015E.R")
+    require(RUnit)
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fBasics/test/runit5C.R")
     printTextProtocol(testResult)
 }
    

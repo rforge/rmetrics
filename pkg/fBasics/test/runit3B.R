@@ -142,7 +142,7 @@ function()
     # ... CHECK ACF OF RETURNS
     
     # lmacfPlot -
-    lacfPlot(x = msft, labels = FALSE)
+    lacfPlot(x = msft, n = 4, labels = FALSE)
 
     # logpdfPlot -
     logpdfPlot(x = msft.ret, labels = FALSE)
@@ -154,7 +154,7 @@ function()
     qqgaussPlot(x = msft.ret, labels = FALSE)
     
     # scalinglawPlot -
-    scalinglawPlot(x = msft.ret, labels = FALSE)
+    scalinglawPlot(x = msft.ret, span = 4, labels = FALSE)
     # ... CHECK COLORS
     
     # Return Value:
@@ -166,7 +166,8 @@ function()
     
 
 if (FALSE) {
-    testResult <- runTestFile("C:/Rmetrics/trunk/fBasics/test/runit014A.R")
+    require(RUnits)
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fBasics/test/runit3B.R")
     printTextProtocol(testResult)
 }
 

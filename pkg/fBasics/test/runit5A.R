@@ -49,7 +49,6 @@ function()
         cex = 0.5)
     pPlot(X, linear = FALSE, logStat = TRUE, 
         fill = TRUE, cex = 0.5)
-    ###
         
     # [pq]Table -
     # jbTable - 
@@ -59,7 +58,9 @@ function()
     plot(qTable(X, p, N = 100), p, type = "b")
     Stat = seq(0.01, 15, length = 100)
     plot(Stat, pTable(X, Stat, N = 100), type = "b")  
-    ###
+    
+    # Return Value:
+    return()  
 }
 
 
@@ -80,9 +81,6 @@ function()
     colnames(adfTable) = c(25, 50, 100, 250, 500, 100000)
     rownames(adfTable) = c(0.01, 0.025, 0.05, 0.1, 0.9, 0.95, 0.975, 0.99)
     print(adfTable)
-    ###
-    
-        # > adfTable
         #          25    50   100   250   500 1e+05
         # 0.01  -2.66 -2.62 -2.60 -2.58 -2.58 -2.58
         # 0.025 -2.26 -2.25 -2.24 -2.23 -2.23 -2.23
@@ -92,25 +90,26 @@ function()
         # 0.95   1.33  1.31  1.29  1.29  1.28  1.28
         # 0.975  1.70  1.66  1.64  1.63  1.62  1.62
         # 0.99   2.16  2.08  2.03  2.01  2.00  2.00
-
     pPlot(adfTable)
-    ###
-    
+
+    # Probabilities:
     Stat = c(-3, -1.5, 0, 1.5, 3)
     N = 400
     p = pTable(X = adfTable, Stat, N) 
     names(p) = paste("q=", Stat, sep = "")
     attr(p, "N")<-N
     p
-    ###
     
+    # Quantiles:
     p = c(0.001, 0.01, 0.02, 0.06, 0.11)
     N = 400
     q = qTable(X = adfTable, p, N)
     names(q) = paste("p=", p, sep = "")
     attr(q, "N")<-N
     q
-    ###
+    
+    # Return Value:
+    return()
 }
 
    
@@ -118,7 +117,8 @@ function()
 
 
 if (FALSE) {
-    testResult <- runTestFile("C:/Rmetrics/trunk/fBasics/test/runit015C.R")
+    require(RUnit)
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fBasics/test/runit5A.R")
     printTextProtocol(testResult)
 }
 
