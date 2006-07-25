@@ -33,7 +33,6 @@
 #  psymstb               Returns probabilities for symmetric stable DF
 #  qsymstb               Returns quantiles for symmetric stable DF
 #  rsymstb               Returns random variates for symmetric stable DF
-#  .unirootNA13           Searches internal function *symstb 
 # FUNCTIONS:            DESCRIPTION:
 #  dstable               Returns density for stable DF
 #  pstable               Returns probabilities for stable DF
@@ -173,7 +172,7 @@ function(p, alpha)
             iteration = NA
             counter = 0
             while (is.na(iteration)) {
-                iteration = .unirootNA13(f = .froot, interval = c(xmin, xmax), 
+                iteration = .unirootNA(f = .froot, interval = c(xmin, xmax), 
                     alpha = alpha, p = pp)
                 counter = counter + 1
                 xmin = xmin - 2^counter
@@ -223,61 +222,6 @@ function(n, alpha)
     # Return Value:
     result
 }
-
-
-# ------------------------------------------------------------------------------
-
-
-.unirootNA13 = 
-function(f, interval, lower = min(interval), upper = max(interval), 
-tol = .Machine$double.eps^0.25, ...) 
-{   # A function implemented by Diethelm Wuertz
-    
-    # Description:
-    #   Searches the interval from lower to upper for a 
-    #   root (i.e., zero) of the function f with respect 
-    #   to its first argument. 
-    
-    # Arguments:
-    #   see 'uniroot'
-    
-    # Value:
-    #   Returns the x value of f where the root is located. If
-    #   now root exists NA will be returned. In the last case
-    #   the function doesn't terminate with an error like in the
-    #   case of the standard function uniroot.
-
-    # Details:
-    #   R:
-    #   uniroot(f, interval, lower = min(interval), upper = max(interval),
-    #       tol = .Machine$double.eps^0.25, 
-    #       maxiter = 1000, ...)
-    #   uniroot(f, interval, lower = min(interval), upper = max(interval), 
-    #       tol = .Machine$double.eps^.25, 
-    #       keep.xy = F, f.lower = NA,  f.upper = NA, ...) 
-
-    # Example:
-    #   .unirootNA13(sin, c(1, 2)); .unirootNA13(sin, c(-1, 1))
-        
-    # Changes:
-    #
-    
-    # FUNCTION:
-    
-    # There is no Root:  
-    if (is.null(args(f))) {  
-        if (f(lower) * f(upper) >=0) return(NA)  
-    } else {
-        if (f(lower, ...) * f(upper, ...) >= 0) return(NA)
-    } 
-      
-    # There is a Root:  
-    ans = uniroot(f = f, interval = interval, lower = lower, 
-        upper = upper, tol = tol, ...)
-    
-    # Return Value:
-    ans$root
-}  
 
 
 ################################################################################
@@ -704,7 +648,7 @@ function(p, alpha, beta, gamma = 1, delta = 0, pm = c(0, 1, 2))
             iteration = NA
             counter = 0
             while (is.na(iteration)) {
-                iteration = .unirootNA13(f = .froot, interval = c(xmin, xmax), 
+                iteration = .unirootNA(f = .froot, interval = c(xmin, xmax), 
                     alpha = alpha, beta = beta,  p = pp, subdivisions =
                     subdivisions)
                 counter = counter + 1
