@@ -384,6 +384,9 @@ title = NULL, description = NULL, ...)
 function(x, order, include.mean, fixed = NULL,
 method = c("yw", "burg1", "burg2", "ols", "mle"), M = NULL, h = NULL, ...) 
 {
+    # Note:
+    #   Calls ar() from R-stats.
+    
     # FUNCTION:
     
     # Fit:
@@ -454,8 +457,8 @@ method = c("yw", "burg1", "burg2", "ols", "mle"), M = NULL, h = NULL, ...)
 function (x, order, include.mean, fixed,  
 method = c("CSS-ML", "ML", "CSS"), M = NULL, h = NULL, ...) 
 {
-    # Internal Function: arima
-    # Use: stats ...
+    # Note:
+    #   Calls arima() from R-stats.
 
     # FUNCTION:
     
@@ -484,6 +487,9 @@ method = c("CSS-ML", "ML", "CSS"), M = NULL, h = NULL, ...)
 .fracdiffFit =
 function (x, order, include.mean, fixed, method = "FRACDIFF", M = 100, h = -1) 
 {
+    # Note:
+    #   Calls fracdiff() from R-fracdiff
+    
     # FUNCTION:
     
     # Settings:
