@@ -50,9 +50,6 @@
 #  pnig                  Returns probability for for inverse Gaussian DF
 #  qnig                  Returns quantiles for for inverse Gaussian DF 
 #  rnig                  Returns random variates for inverse Gaussian DF
-#  .dnig1                 Internal function, alternative call
-#  .pnig1                 Internal function, alternative call
-#  .qnig1                 Internal function, alternative call
 # FUNCTION:             DESCRIPTION:
 #  hypSlider             Displays hyperbolic distribution function
 #  nigSlider             Displays normal inverse Gausssian distribution function
@@ -1395,9 +1392,6 @@ function(a.bar = 1, b.bar = 0, delta  = 1, mu = 0)
 #  pnig                  Returns probability for for inverse Gaussian DF
 #  qnig                  Returns quantiles for for inverse Gaussian DF 
 #  rnig                  Returns random variates for inverse Gaussian DF
-#  .dnig1                 Internal function, alternative call
-#  .pnig1                 Internal function, alternative call
-#  .qnig1                 Internal function, alternative call
 
 
 dnig = 
@@ -1509,146 +1503,6 @@ function(n, alpha = 1, beta = 0, delta = 1, mu = 0)
     # Return Value:
     X
 }
-
-
-# ------------------------------------------------------------------------------
-
-
-.dnig1 = 
-function (x, alpha = 1, beta = 0, delta = 1, mu = 0)
-{   # A function implemented by Diethelm Wuertz
-    
-    # Description:
-    #   Return Normal Inverse Gaussian Density Function PDF
-    
-    # Arguments:
-    #   alpha, beta - Shape Parameter, |beta| <= alpha
-    #   delta  - Scale Parameter, 0 <= delta
-    #   mu - Location Parameter
-    
-    # Notes:
-    #   Function Calls:
-    #   Splus: 
-    #       Needs: xK1, x * Modified Bessel Function K1  
-    #   Fortran:
-    #       DLL/OBJ: rarm.dll rarm.obj
-    #       SUBROUTINE DNIG(density, x, n, alpha, beta, delta, mu)
-    #           density - density
-    #           x       - x-vector
-    #           n       - number of points
-    #           alpha, beta, delta, mu
-    #               - parameters of the density function
-
-    # Changes:
-    #
-    
-    # FUNCTION:
-    
-    # Compute:
-    result = .Fortran("dnig",
-        as.double(1:length(x)),
-        as.double(x),
-        as.integer(length(x)),
-        as.double(alpha),
-        as.double(beta),
-        as.double(delta),
-        as.double(mu),
-        PACKAGE = "fBasics")[[1]]
-        
-    # Return Value:
-    result
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.pnig1 = 
-function (q, alpha = 1, beta = 0, delta = 1, mu = 0)
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Return cumulative probability of inverse Gaussian PDF
-
-    # Arguments:
-    #   alpha, beta - Shape Parameter, |beta| <= alpha
-    #   delta  - Scale Parameter, 0 <= delta
-    #   mu - Location Parameter
-    
-    # Notes:
-    #   Function Calls:
-    #   SUBROUTINE PNIG(c, x, n, alpha, beta, delta, mu)
-    #       c - cumulative probability
-    #       q - q-vector
-    #       n - number of points
-    #       alpha, beta, delta, mu
-    #         - parameters of the density function
-
-    # Changes:
-    #
-    
-    # FUNCTION:
-    
-    # Probability:
-    result = .Fortran("pnig",
-        as.double(1:length(q)),
-        as.double(q),
-        as.integer(length(q)),
-        as.double(alpha),
-        as.double(beta),
-        as.double(delta),
-        as.double(mu),
-        PACKAGE = "fBasics")
-    
-    # Return Value:
-    result[[1]]
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.qnig1 = 
-function(p, alpha = 1, beta = 0, delta = 1, mu = 0)
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-
-    # Arguments:
-    #   alpha, beta - Shape Parameter, |beta| <= alpha
-    #   delta  - Scale Parameter, 0 <= delta
-    #   mu - Location Parameter
- 
-    # Changes:
-    #
-    
-    # FUNCTIONS:
-    
-    # Internal Functions:
-    froot <<- function(x, alpha, beta, delta, mu = mu, p) {
-        pnig(q = x, alpha = alpha, beta = beta, delta = delta, mu = mu) - p 
-    }
-    
-    # Loop over all p's             
-    result = NULL   
-    for (pp in p) {
-        lower = -1
-        upper = +1          
-        counter = 0
-        iteration = NA
-        while (is.na(iteration)) {
-            iteration = .unirootNA13(f = froot, interval = c(lower, upper), 
-                alpha = alpha, beta = beta, delta = delta, mu = mu, p = pp)
-            counter = counter + 1
-            lower = lower-2^counter
-            upper = upper+2^counter
-        }       
-        result = c(result, iteration) 
-    }   
-    
-    # Return Value:
-    result 
-}   
 
 
 ################################################################################
