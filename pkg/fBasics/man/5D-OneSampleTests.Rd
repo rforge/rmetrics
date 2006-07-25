@@ -427,7 +427,7 @@ Wuertz D., Katzgraber H.G. (2005);
 
 \examples{
 ## SOURCE("fBasics.5D-OneSampleTests")
-
+\dontrun{
 ## Series:
    x = rnorm(100)
    
@@ -442,11 +442,13 @@ Wuertz D., Katzgraber H.G. (2005);
 ## jbTest - Jarque-Bera Test
    jarqueberaTest(x)
    jbTest(x)
-  ## gofnorm - Goodness-of-Fit Test Suite for Normality 
+  
+## gofnorm - Goodness-of-Fit Test Suite for Normality 
    gofnorm(x, doprint = TRUE)
    
 ## runsTest -
    runsTest(x)
+}
 }
 
 
