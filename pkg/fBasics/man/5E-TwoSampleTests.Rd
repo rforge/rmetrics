@@ -339,32 +339,26 @@ Moore, D.S. (1986);
 ## SOURCE("fBasics.5E-TwoSampleTests")
 
 ## x, y -
-   xmpBasics("\nStart: Create two Samples > ")
    x = rnorm(50)
    y = rnorm(50)
   
 ## ks2Test - 
-   xmpBasics("\nNext: Distributional Tests > ")
    ks2Test(x, y)
    
 ## tTest | kw2Test - 
-   xmpBasics("\nNext: Location Tests > ")
    tTest(x, y)
    kw2Test(x, y)
    
 ## varfTest, bartlett2Test | fligner2Test -
-   xmpBasics("\nNext: Variance Tests > ")
    varfTest(x, y)
    bartlett2Test(x, y)
    fligner2Test(x, y)
 
 ## ansariTest | moodTest -
-   xmpBasics("\nNext: Scale Tests > ")
    ansariTest(x, y)
    moodTest(x, y)
    
 ## pearsonTest | kendallTest | spearmanTest -
-   xmpBasics("\nNext: Correlation Tests > ")
    pearsonTest(x, y)
    kendallTest(x, y)
    spearmanTest(x, y)
