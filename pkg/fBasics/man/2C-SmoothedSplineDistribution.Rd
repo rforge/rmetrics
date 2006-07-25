@@ -122,7 +122,7 @@ Gu C. (2002);
 
 
 \examples{
-## SOURCE("fBasics.3C-SmoothedSplineDistribution")
+## SOURCE("fBasics.2C-SmoothedSplineDistribution")
 
 ## ssd -
 

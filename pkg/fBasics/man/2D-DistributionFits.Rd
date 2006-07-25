@@ -249,7 +249,7 @@ ssdFit(x, alpha = 1.4, seed = NULL, title = NULL, description = NULL)
 
 
 \examples{
-## SOURCE("fBasics.3D-DistributionFits")
+## SOURCE("fBasics.2D-DistributionFits")
    
 ## nigFit -
    

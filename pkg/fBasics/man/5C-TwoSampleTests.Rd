@@ -336,7 +336,7 @@ Moore, D.S. (1986);
 
 
 \examples{
-## SOURCE("fBasics.5E-TwoSampleTests")
+## SOURCE("fBasics.5C-TwoSampleTests")
 
 ## x, y -
    x = rnorm(50)

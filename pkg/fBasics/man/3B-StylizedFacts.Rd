@@ -286,7 +286,7 @@ Ding Z., Granger C.W.J., Engle R.F. (1993);
 
 
 \examples{
-## SOURCE("fBasics.4A-StylizedFacts")
+## SOURCE("fBasics.3B-StylizedFacts")
 \dontrun{
 ## data - 
    data(DowJones30)

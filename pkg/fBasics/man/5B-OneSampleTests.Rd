@@ -426,7 +426,7 @@ Wuertz D., Katzgraber H.G. (2005);
 
 
 \examples{
-## SOURCE("fBasics.5D-OneSampleTests")
+## SOURCE("fBasics.5B-OneSampleTests")
 \dontrun{
 ## Series:
    x = rnorm(100)

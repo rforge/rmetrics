@@ -201,7 +201,7 @@ Raible S. (2000);
 
 
 \examples{
-## SOURCE("fBasics.3B-HyperbolicDistribution")
+## SOURCE("fBasics.2B-HyperbolicDistribution")
      
 ## nig -
    set.seed(1953)

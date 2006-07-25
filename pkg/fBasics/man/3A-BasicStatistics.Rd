@@ -218,7 +218,7 @@ colCumsums(x, na.rm = FALSE, \dots)
 
 
 \examples{
-## SOURCE("fBasics.5A-BasicStatistics")
+## SOURCE("fBasics.3A-BasicStatistics")
 \dontrun{
 
 ## basicStats -

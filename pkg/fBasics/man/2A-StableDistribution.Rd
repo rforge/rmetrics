@@ -191,7 +191,7 @@ Weron, A., Weron R. (1999);
 }
 
 \examples{  
-## SOURCE("fBasics.3A-StableDistribution")
+## SOURCE("fBasics.2A-StableDistribution")
   
 ## stable - 
    # Plot rvs Series

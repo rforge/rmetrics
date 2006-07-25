@@ -105,7 +105,7 @@ Altman, N.S. (1988);
 
 
 \examples{
-## SOURCE("fSeries.5B-PortableRandomInnovations")
+## SOURCE("fSeries.4A-PortableRandomInnovations")
 
 ## set.lcgseed -
    set.lcgseed(seed = 65890)

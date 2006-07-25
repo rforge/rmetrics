@@ -170,7 +170,7 @@ qTable(X, p, N, digits = 4)
 
 
 \examples{
-## SOURCE("fBasics.5C-HypothesisTesting")
+## SOURCE("fBasics.5A-HypothesisTesting")
 \dontrun{
 ## fHTEST -
    getClass("fHTEST")
