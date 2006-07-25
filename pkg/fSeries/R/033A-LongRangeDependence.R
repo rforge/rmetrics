@@ -114,7 +114,7 @@
 #  .beranTest          Not yet ready for usage ...
 #  .rsTest             Not yet ready for usage ...
 #  .vsTest             Not yet ready for usage ...
-# FUNCTION:			  SLIDER:
+# FUNCTION:           SLIDER:
 #  hurstSlider         Hurst Slider
 ################################################################################
 
@@ -125,7 +125,7 @@
 
 # ******************************************************************************
 # Fractional Brownian Motion
-
+ 
 
 fbmSim = 
 function(n = 100, H = 0.7, method = c("mvn", "chol", "lev", "circ", "wave"),
