@@ -287,27 +287,26 @@ Ding Z., Granger C.W.J., Engle R.F. (1993);
 
 \examples{
 ## SOURCE("fBasics.3B-StylizedFacts")
-\dontrun{
+
 ## data - 
-   data(DowJones30)
-   IBM = DowJones30[, "IBM"]
-   JPM = DowJones30[, "JPM"]
-   IBM.RET = diff(log(DowJones30[, "IBM"]))
-   JPM.RET = diff(log(DowJones30[, "JPM"]))
+   Opening Prices:
+   msft = as.timeSeries(MSFT)[, 1]
+   # Volume in Million Units:
+   msft.vol = as.timeSeries(MSFT)[, 5]/10^6
+   # Opening Returns:
+   msft.ret = returnSeries(msft)
    
 ## lacfPlot -
    # Lagged Correlations:
-   par(mfrow = c(2, 2), cex = 0.7)
-   lacfPlot(IBM)
+   lacfPlot(msft, n = 4)
      
 ## ccfPlot -
    # Crosscorrelations:
-   ccfPlot(x = IBM.RET, y = JPM.RET)
+   ccfPlot(x = msft.ret, y = msft.vol[-1])
 
 ## teffectPlot -
    # Taylor Effect:
-   teffectPlot(x = IBM.RET)
-}
+   teffectPlot(x = msft.ret)
 }
 
 

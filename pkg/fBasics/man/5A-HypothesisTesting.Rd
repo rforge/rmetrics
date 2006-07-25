@@ -171,7 +171,7 @@ qTable(X, p, N, digits = 4)
 
 \examples{
 ## SOURCE("fBasics.5A-HypothesisTesting")
-\dontrun{
+
 ## fHTEST -
    getClass("fHTEST")
 
@@ -192,7 +192,6 @@ qTable(X, p, N, digits = 4)
    plot(qTable(X, p, N = 100), p, type = "b")
    Stat = seq(0.01, 15, length = 100)
    plot(Stat, pTable(X, Stat, N = 100), type = "b")  
-}
 }
 
 

@@ -23,7 +23,6 @@
 \alias{sfTest}
 
 \alias{runsTest}
-\alias{gofnorm}
 
 
 \title{One Sample Tests}
@@ -70,8 +69,7 @@
     More tests ...
     
     \tabular{ll}{
-    \code{runsTest} \tab Runs test for detecting non-randomness, \cr 
-    \code{gofnorm} \tab Prints a report on 13 different tests of normality. }
+    \code{runsTest} \tab Runs test for detecting non-randomness.}
  
 }
 
@@ -96,8 +94,6 @@ sfTest(x, title = NULL, description = NULL)
 normalTest(x, method = c("sw", "jb"), na.rm = FALSE) 
 
 runsTest(x)
-gofnorm(x, doprint = TRUE)
-
 }
 
 
@@ -105,9 +101,6 @@ gofnorm(x, doprint = TRUE)
   
     \item{description}{
         optional description string, or a vector of character strings.
-        }
-    \item{doprint}{
-        if TRUE, an exhaustive report is printed.
         }
     \item{method}{
         [normalTest] - \cr
@@ -309,31 +302,6 @@ gofnorm(x, doprint = TRUE)
     that the \emph{(i+1)-th} value is larger or smaller than the \emph{i-th} 
     value follows a binomial distribution, which forms the basis of the 
     runs test. 
-    \cr
-    
-    
-    \bold{Report from gofnorm Tests:}
-    \cr\cr
-    The function reports about the following goodness-of-fit tests
-    for normality:
-
-    \tabular{rl}{
-     1  \tab   Omnibus Moments Test for Normality \cr
-     2  \tab   Geary's Test of Normality \cr
-     3  \tab   Studentized Range for Testing Normality \cr
-     4  \tab   D'Agostino's D-Statistic Test of Normality \cr
-     5  \tab   Kuiper V-Statistic Modified to Test Normality \cr
-     6  \tab   Watson U-Squared-Statistic Modified to Test Normality \cr
-     7  \tab   Durbin's Exact Test (Normal Distribution \cr
-     8  \tab   Anderson-Darling Statistic Modified to Test Normality \cr
-     9  \tab   Cramer-Von Mises W-Squared-Statistic to Test Normality \cr
-    10  \tab   Kolmogorov-Smirnov D-Statistic to Test Normality \cr
-    11  \tab   Kolmogorov-Smirnov D-Statistic (Lilliefors Critical Values) \cr
-    12  \tab   Chi-Square Test of Normality (Equal Probability Classes) \cr
-    13  \tab   Shapiro-Francia W-Test of Normality for Large Samples }
-    
-    The functions are implemented from the GRASS GIS software package
-    an Open Source project avalaible under the GNU GPL license.
 
 }
 
@@ -418,7 +386,6 @@ Wuertz D., Katzgraber H.G. (2005);
     Adrian Trapletti for the runs test from \R's tseries package,\cr
     Juergen Gross for the normal tests from \R's nortest package,\cr
     James Filliben for the Fortran program producing the runs report,\cr
-    Paul Johnson for the Fortran program producing the gofnorm report, \cr
     Diethelm Wuertz and Helmut Katzgraber for the finite sample JB tests, \cr
     Diethelm Wuertz for the Rmetrics \R-port.
     
@@ -427,7 +394,7 @@ Wuertz D., Katzgraber H.G. (2005);
 
 \examples{
 ## SOURCE("fBasics.5B-OneSampleTests")
-\dontrun{
+
 ## Series:
    x = rnorm(100)
    
@@ -442,13 +409,10 @@ Wuertz D., Katzgraber H.G. (2005);
 ## jbTest - Jarque-Bera Test
    jarqueberaTest(x)
    jbTest(x)
-  
-## gofnorm - Goodness-of-Fit Test Suite for Normality 
-   gofnorm(x, doprint = TRUE)
    
 ## runsTest -
    runsTest(x)
-}
+
 }
 
 
