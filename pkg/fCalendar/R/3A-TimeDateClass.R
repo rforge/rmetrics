@@ -729,12 +729,6 @@ s = NULL, zone = myFinCenter, FinCenter = myFinCenter)
     # Reset TimeZone:  
     Sys.putenv(TZ = myTZ)
     
-    
-    print(charvec)
-    print(format)
-    print(zone)
-    print(FinCenter)
-    
     # Return Value:
     timeDate(charvec = charvec, format = NULL,  
         zone = zone, FinCenter = FinCenter) 
