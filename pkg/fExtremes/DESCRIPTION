@@ -3,11 +3,8 @@ Version: 221.10065
 Date: 1996 - 2006
 Title: Rmetrics - Extreme Financial Market Data
 Author: Diethelm Wuertz and many others, see the SOURCE file
-Depends: R (>= 1.9.0), methods, fBasics, fCalendar, fSeries, fMultivar
+Depends: R (>= 1.9.0), methods, fCalendar, fBasics, fSeries, fMultivar
 Maintainer: Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-Description: fExtremes from Rmetrics -
-    Rmetrics is an Environment and 
-    Software Collection for teaching
-    "Financial Engineering and Computational Finance"
+Description: Environment for teaching "Financial Engineering and Computational Finance"
 License: GPL Version 2 or later
 URL: http://www.rmetrics.org
