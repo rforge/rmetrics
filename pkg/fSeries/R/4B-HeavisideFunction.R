@@ -29,7 +29,7 @@
 
 ################################################################################
 # FUNCTION:             HEAVISIDE AND RELATED FUNCTIONS:
-#  H                     Computes Heaviside unit step function
+#  Heaviside             Computes Heaviside unit step function
 #  Sign                  Another signum function
 #  Delta                 Computes delta function
 #  Boxcar                Computes boxcar function
@@ -43,7 +43,7 @@
 # Note: sign(x) is part of R's base package
 
 
-H = 
+Heaviside = 
 function(x, a = 0) 
 {   # A function implemented by Diethelm Wuertz
 
@@ -111,7 +111,7 @@ function(x, a = 0)
     #   a - the location of the break.
     
     # Details:
-    #   The delta function is defined as: delta(x) = d/dx H(x-a)
+    #   The delta function is defined as: delta(x) = d/dx Heaviside(x-a)
     
     # FUNCTION:
     
@@ -138,12 +138,12 @@ function(x, a = 0.5)
     #   a - the location of the break.
     
     # Details:
-    #   The boxcar function is defined as: Pi(x) = H(x+a) - H(x-a)
+    #   The boxcar function is defined as: Pi(x) = Heaviside(x+a) - Heaviside(x-a)
     
     # FUNCTION:
     
     # Compute boxcar:
-    result = H(x-a) - H(x+a)
+    result = Heaviside(x-a) - Heaviside(x+a)
     
     # Return Value:
     result
@@ -165,12 +165,12 @@ function(x, a = 0)
     #   a - the location of the break.
     
     # Details:
-    #   The ramp function is defined as: R(x)= (x-a)*H(x-a)
+    #   The ramp function is defined as: R(x)= (x-a)*Heaviside(x-a)
     
     # FUNCTION:
     
     # Compute ramp:
-    result = (x-a) * H(x-a)
+    result = (x-a) * Heaviside(x-a)
     
     # Return Value:
     result

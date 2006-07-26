@@ -40,6 +40,8 @@
 #  urppTest                 Phillips-Perron test for unit roots
 #  urspTest                 Schmidt-Phillips test for unit roots
 #  urzaTest                 Zivot-Andrews test for unit roots
+# FUNCTION:
+#
 ################################################################################
 
 
@@ -675,3 +677,23 @@ function(x, model = c("intercept", "trend", "both"), lag = 2, doplot = TRUE)
 
 ################################################################################
 
+
+.builtinUrca =
+function() 
+{   # A function implemented by Diethelm WUertz
+
+    # Description:
+    #   Builtin for contributed urca package
+    
+    # FUNCTION:
+    
+    # Popup:    
+    path = paste(.Library,"/fSeries", sep = "") 
+    source(paste(path, "/demo/", "funUrca.R", sep = ""))
+    
+    # Return Value:
+    invisible()
+}
+
+
+################################################################################

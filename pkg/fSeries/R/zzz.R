@@ -48,6 +48,11 @@ function(lib, pkg)
     cat("\nfSeries: The Dynamical Process Behind Financial Markets\n")
 
     # Load dll:
+    sink("@sink@")
+    library(mgcv) # gam
+    library(nnet) # nnet
+    sink()
+    unlink("@sink@")
     library.dynam("fSeries", pkg, lib)
 }
 

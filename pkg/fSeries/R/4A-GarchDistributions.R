@@ -172,7 +172,7 @@ function(q, xi)
     # Compute:  
       Xi = xi^sign(z)
       g = 2  / (xi + 1/xi)  
-      Probability = H(z) - sign(z) * g * Xi * pnorm(q = -abs(z)/Xi)
+      Probability = Heaviside(z) - sign(z) * g * Xi * pnorm(q = -abs(z)/Xi)
     # Return Value:
       Probability 
 }
@@ -224,7 +224,7 @@ function(p, xi)
       g = 2  / (xi + 1/xi)
       sig = sign(p-1/2) 
       Xi = xi^sig         
-      p = (H(p-1/2)-sig*p) / (g*Xi)
+      p = (Heaviside(p-1/2)-sig*p) / (g*Xi)
       Quantile = (-sig*qnorm(p = p, sd = Xi) - mu ) / sigma
     # Return Value:
       Quantile 
@@ -497,7 +497,7 @@ function(q, nu, xi)
     # Compute:  
     Xi = xi^sign(z)
     g = 2 / (xi + 1/xi) 
-    Probability = H(z) - sign(z) * g * Xi * pstd(q = -abs(z)/Xi, nu = nu)
+    Probability = Heaviside(z) - sign(z) * g * Xi * pstd(q = -abs(z)/Xi, nu = nu)
     
     # Return Value:
     Probability 
@@ -550,7 +550,7 @@ function(p, nu, xi)
     g = 2  / (xi + 1/xi)
     sig = sign(p-1/2) 
     Xi = xi^sig       
-    p = (H(p-1/2)-sig*p) / (g*Xi)
+    p = (Heaviside(p-1/2)-sig*p) / (g*Xi)
     Quantile = (-sig*qstd(p = p, sd = Xi, nu = nu) - mu ) / sigma
     
     # Return Value:
@@ -816,7 +816,7 @@ function(x, mean = 0, sd = 1, nu = 2, xi = 1.5)
     # Compute:  
     Xi = xi^sign(z)
     g = 2  / (xi + 1/xi)    
-    Probability = H(z) - sign(z) * g * Xi * pged(q = -abs(z)/Xi, nu=nu)
+    Probability = Heaviside(z) - sign(z) * g * Xi * pged(q = -abs(z)/Xi, nu=nu)
     
     # Return Value:
     Probability 
@@ -864,7 +864,7 @@ function(p, nu, xi)
     g = 2  / (xi + 1/xi)
     sig = sign(p-1/2) 
     Xi = xi^sig       
-    p = (H(p-1/2)-sig*p) / (g*Xi)
+    p = (Heaviside(p-1/2)-sig*p) / (g*Xi)
     Quantile = (-sig*qged(p=p, sd=Xi, nu=nu) - mu ) / sigma
     
     # Return Value:
