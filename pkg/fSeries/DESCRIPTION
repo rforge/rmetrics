@@ -7,4 +7,4 @@ Depends: R (>= 1.9.0), methods, fCalendar, fBasics
 Maintainer: Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 Description: Environment for teaching "Financial Engineering and Computational Finance"
 License: GPL Version 2 or later
-URL: http://www.itp.phys.ethz.ch/econophysics/R 
+URL: http://www.rmetrics.org 
