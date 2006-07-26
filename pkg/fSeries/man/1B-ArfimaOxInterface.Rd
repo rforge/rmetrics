@@ -224,7 +224,7 @@ Laurent S., Peters J.P., [2005],
 
 \examples{
 \dontrun{
-## SOURCE("fSeries1.031B-ArfimaOxInterface")
+## SOURCE("fSeries1.1B-ArfimaOxInterface")
 
 ## arfimaOxFit -
    x = armaSim(model = list(ar = c(0.5, - 0.5), d = 0.3, ma = 0.1), n = 500)

@@ -603,7 +603,7 @@ Haslett J. and Raftery A.E. (1989);
 
 
 \examples{
-## SOURCE("fSeries.031A-ArmaModelling")
+## SOURCE("fSeries.1A-ArmaModelling")
 
 ## armaSim/armaFit -
    x = armaSim(model = list(ar = c(0.5, -0.5), ma = 0.1), n = 1000)

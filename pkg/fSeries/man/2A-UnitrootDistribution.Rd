@@ -147,7 +147,7 @@ Phillips, P.C.B., Perron, P. (1988);
 
 
 \examples{ 
-## SOURCE("fSeries.032A-UnitrootDistribution")
+## SOURCE("fSeries.2A-UnitrootDistribution")
 
 ## qunitroot -
    # Asymptotic quantile of t-statistic

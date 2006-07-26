@@ -188,7 +188,7 @@ Mills, T.C. (1999);
 
 
 \examples{
-## SOURCE("fSeries.036B-Data")
+## SOURCE("fSeries.6B-Data")
 
 ## RS.txt - 
    data(RS)

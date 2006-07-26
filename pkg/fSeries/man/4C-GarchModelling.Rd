@@ -456,14 +456,14 @@ Nocedal J., Wright S.J. (1999);
 
 
 \examples{
-## SOURCE("fSeries1.034C-GarchModelling")
-\dontrun{
-#   garchSpec -
-#   garchSim - 
-#   garchFit -
+## SOURCE("fSeries1.4C-GarchModelling")
+
+    # garchSpec -
+    # garchSim - 
+    # garchFit -
 
     # For examples we refer to: demo/xmpDWChapter34.R ...
-}
+    
 }
 
 

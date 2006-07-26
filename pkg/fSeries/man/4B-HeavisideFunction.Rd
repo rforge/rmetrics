@@ -2,7 +2,7 @@
 
 \alias{HeavisideFunction}
 
-\alias{H}
+\alias{Heaviside}
 \alias{Sign}
 \alias{Delta}
 \alias{Boxcar}
@@ -24,7 +24,7 @@
     The functions are:
     
     \tabular{ll}{
-    \code{H} \tab Computes Heaviside unit step function, \cr
+    \code{Heaviside} \tab Computes Heaviside unit step function, \cr
     \code{Sign} \tab Just another signum function, \cr
     \code{Delta} \tab Computes delta function, \cr
     \code{Boxcar} \tab Computes boxcar function, \cr
@@ -34,7 +34,7 @@
 
 
 \usage{
-H(x, a = 0)
+Heaviside(x, a = 0)
 Sign(x, a = 0)
 Delta(x, a = 0)
 Boxcar(x, a = 0.5)
@@ -55,7 +55,7 @@ Ramp(x, a = 0)
 
 \details{
   
-    The Heaviside step function \code{H} is 1 for \code{x>a}, 
+    The Heaviside step function \code{Heaviside} is 1 for \code{x>a}, 
     \code{1/2} for \code{x=a}, and \code{0} for \code{x<a}.
     \cr
     
@@ -118,11 +118,11 @@ Weisstein W. (2004);
 
 
 \examples{
-## SOURCE("fSeries1.034B-HeavisideFunction")
+## SOURCE("fSeries1.4B-HeavisideFunction")
 
-## H -
+## Heaviside -
    x = sort(round(c(-1, -0.5, 0, 0.5, 1, 5*rnorm(5)), 2))
-   h = H(x)
+   h = Heaviside(x)
     
 ## Sign -
    s = Sign(x)

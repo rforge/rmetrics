@@ -622,17 +622,20 @@ Taqqu M., et al.
 
 
 \examples{
-## SOURCE("fSeries.033A-LongRangeDependence")
+## SOURCE("fSeries.3A-LongRangeDependence")
 
 ## fgnSim -
    par(mfrow = c(3, 1), cex = 0.75)  
+   
    # Beran's Method:
    plot(fgnSim(n = 200, H = 0.75), type = "l",  
      ylim = c(-3, 3), xlab = "time", ylab = "x(t)", main = "Beran")
-   # Durbin's Method:
+   
+     # Durbin's Method:
    plot(fgnSim(n = 200, H = 0.75, method = "durbin"), type = "l",
      ylim = c(-3, 3), xlab = "time", ylab = "x(t)", main = "Durbin")
-   # Paxson's Method:
+   
+     # Paxson's Method:
    plot(fgnSim(n = 200, H = 0.75, method = "paxson"), type = "l",
      ylim = c(-3, 3), xlab = "time", ylab = "x(t)", main = "Paxson")
 }

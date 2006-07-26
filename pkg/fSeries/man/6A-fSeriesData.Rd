@@ -285,7 +285,7 @@ Zivot E. (2000);
 
 
 \examples{
-## SOURCE("fSeries.036A-fSeriesData")
+## SOURCE("fSeries.6A-fSeriesData")
 
 ## NYSE Residuals:
    data(nyseres)

@@ -377,7 +377,7 @@ Schwert G.W. (1989);
 
 
 \examples{
-## SOURCE("fSeries.032B-UnitrootTests")
+## SOURCE("fSeries.2B-UnitrootTests")
 
 ## adfTest - 
    # A time series which contains no unit-root:

@@ -236,7 +236,7 @@ Teraesvirta T., Lin C.F., Granger C.W.J. (1993);
 
 
 \examples{
-## SOURCE("fSeries.035B-TimeSeriesTests")
+## SOURCE("fSeries.5B-TimeSeriesTests")
 
 ## bdsTest -
    xmpSeries("\nNext: Brock-Dechert-Sheinkman Test for iid Series >")
