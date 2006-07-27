@@ -878,7 +878,7 @@ function(x, na.rm = FALSE, ...)
 
 
 .distCheck = 
-function(fun = "norm", n = 10000, ...)
+function(fun = "norm", n = 1000, seed = 4711, ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -886,7 +886,7 @@ function(fun = "norm", n = 10000, ...)
     
     # Arguments:
     #   fun - name of distribution
-    #   ... - distyributional parameters
+    #   ... - distributional parameters
     
     # Examples:
     #   .distCheck("norm", mean = 1, sd = 1)
@@ -897,7 +897,7 @@ function(fun = "norm", n = 10000, ...)
     # FUNCTION:
     
     # Distribution Functions:
-    cat("\nDistribution Check for:", fun, "\n")
+    cat("\nDistribution Check for:", fun, "\n ")
     CALL = match.call()
     cat("Call: ")
     cat(paste(deparse(CALL), sep = "\n", collapse = "\n"), "\n", sep = "") 
@@ -913,20 +913,21 @@ function(fun = "norm", n = 10000, ...)
     # Check 1:
     NORM = integrate(dfun, lower = -Inf, upper = Inf, 
         subdivisions = 5000, stop.on.error = FALSE, ...)
-    cat("\n1. Normalization Check:\nNORM ")
+    cat("\n1. Normalization Check:\n NORM ")
     print(NORM)
-    normCheck = (abs(NORM-1) < 0.001)
+    normCheck = (abs(NORM[[1]]-1) < 0.01)
     
     # Check 2:
-    cat("\n2. [p-pfun(qfun(p))]^2 Check:\n")
+    cat("\n2. [p-pfun(qfun(p))]^2 Check:\n ")
     p = c(0.001, 0.01, 0.1, 0.5, 0.9, 0.99, 0.999)
     P = pfun(qfun(p, ...), ...)
     cat("PROB = 0.001, 0.01, 0.1, 0.5, 0.9, 0.99, 0.999\n")
     RMSE = sd(p-P)
     print(c(RMSE = RMSE))
-    rmseCheck = abs(RMSE < 1.0e-6)
+    rmseCheck = (abs(RMSE) < 0.0001)
     
     # Check 3:
+    set.seed(seed)
     cat("\n3. r(", n, ") Check:\n", sep = "")
     r = rfun(n = n, ...)
     SAMPLE.MEAN = mean(r)
@@ -947,13 +948,13 @@ function(fun = "norm", n = 10000, ...)
     EXACT = data.frame(t(c(MEAN = MEAN[[1]], "VAR" = VAR[[1]] - MEAN[[1]]^2)),
         row.names = "EXACT ")
     print(signif(EXACT, 3))
-    checkVar = (abs(SAMPLE.VAR-VAR)/VAR < 0.1)
+    meanvarCheck = (abs(SAMPLE.VAR-EXACT$VAR)/EXACT$VAR < 0.1)
     cat("\n")
     
     # Done:
     ans = list(
-        normCheck = normCheck, rmseCheck = rmseCheck, varCheck = varCheck)
-    invisible(ans)
+        normCheck = normCheck, rmseCheck = rmseCheck, meanvarCheck = meanvarCheck)
+    unlist(ans)
 }
 
 
