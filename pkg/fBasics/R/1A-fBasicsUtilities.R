@@ -53,8 +53,8 @@
 #  .interp                   Does Akima Spline Interpolation
 ################################################################################
 # FUNCTION:                 DATA TABLES:
-# .jbLM
-# .jbALM
+# .jbLM                      Jarque-Bera Lagrange Multiplier Test Data
+# .jbALM                     JB Augmented Lagrange Multiplier Test Data
 ################################################################################
 
 
