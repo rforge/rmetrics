@@ -915,6 +915,7 @@ function(fun = "norm", n = 10000, ...)
         subdivisions = 5000, stop.on.error = FALSE, ...)
     cat("\n1. Normalization Check:\nNORM ")
     print(NORM)
+    normCheck = (abs(NORM-1) < 0.001)
     
     # Check 2:
     cat("\n2. [p-pfun(qfun(p))]^2 Check:\n")
@@ -923,11 +924,14 @@ function(fun = "norm", n = 10000, ...)
     cat("PROB = 0.001, 0.01, 0.1, 0.5, 0.9, 0.99, 0.999\n")
     RMSE = sd(p-P)
     print(c(RMSE = RMSE))
+    rmseCheck = abs(RMSE < 1.0e-6)
     
     # Check 3:
     cat("\n3. r(", n, ") Check:\n", sep = "")
     r = rfun(n = n, ...)
-    SAMPLE = data.frame(t(c(MEAN = mean(r), "VAR" = var(r))), 
+    SAMPLE.MEAN = mean(r)
+    SAMPLE.VAR = var(r)
+    SAMPLE = data.frame(t(c(MEAN = SAMPLE.MEAN, "VAR" = SAMPLE.VAR)), 
         row.names = "SAMPLE")
     print(signif(SAMPLE, 3))
     fun1 = function(x, ...) { x * dfun(x, ...) }
@@ -943,10 +947,13 @@ function(fun = "norm", n = 10000, ...)
     EXACT = data.frame(t(c(MEAN = MEAN[[1]], "VAR" = VAR[[1]] - MEAN[[1]]^2)),
         row.names = "EXACT ")
     print(signif(EXACT, 3))
+    checkVar = (abs(SAMPLE.VAR-VAR)/VAR < 0.1)
     cat("\n")
     
     # Done:
-    invisible()
+    ans = list(
+        normCheck = normCheck, rmseCheck = rmseCheck, varCheck = varCheck)
+    invisible(ans)
 }
 
 
