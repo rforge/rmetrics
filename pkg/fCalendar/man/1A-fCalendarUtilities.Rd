@@ -1,6 +1,6 @@
-\name{RmetricsUtilities}
+\name{fCalendarUtilities}
 
-\alias{RmetricsUtilities}
+\alias{fCalendarUtilities}
 
 \alias{log}
 \alias{log.default}
@@ -166,7 +166,7 @@ MSFT
 
 
 \examples{
-## SOURCE("fBasics.0A-RmetricsUtilities")
+## SOURCE("fCalendar.1A-fCalendarUtilities")
 }
 
 
