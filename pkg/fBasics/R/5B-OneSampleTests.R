@@ -34,9 +34,9 @@
 #  shapiroTest           Shapiro-Wilk normality test
 #  jarqueberaTest        Jarque-Bera normality test
 #  dagoTest              D'Agostino normality test
-#   .skewness.test        ... internal function
-#   .kurtosis.test        ... internal function
-#   .omnibus.test         ... internal function
+#   .skewness.test        ... internal function called by dagoTest
+#   .kurtosis.test        ... internal function called by dagoTest
+#   .omnibus.test         ... internal function called by dagoTest
 # FUNCTION:             FROM NORTEST PACKAGE:
 #  adTest                Anderson-Darling normality test
 #  cvmTest               Cramer-von Mises normality test
