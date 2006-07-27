@@ -61,18 +61,20 @@ function()
 test.ssd = 
 function()
 {
-    # nig() Distribution:
-    set.seed(4711)
+    # ssdFit Distribution:
+    set.seed(1953)
     X = rnorm(100)     
     fit = ssdFit(x = X, alpha = 1.4, seed = 4711)
-    .distCheck("ssd", n = 100, param = fit)
+    test = .distCheck("ssd", n = 100, param = fit)
+    # Add Unit Test ...
     
     # Histogram Plot:
     hist(rssd(100, fit), probability = TRUE, breaks = "FD",
         col = "steelblue", border = "white")
     s = seq(-3, 3, length = 201)
     lines(s, dnorm(s), col = "orange")
-
+    # Add Unit Test ...
+    
     # Return Value:
     return()    
 }
@@ -82,8 +84,9 @@ function()
 
 
 if (FALSE) {
-    testResult <- runTestFile("C:/Rmetrics/trunk/fBasics/test/runit013C.R")
-    printTextProtocol(testResult)
+    require(RUnit)
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fBasics/test/runit2C.R")
+    printTextProtocol(testData = testResult, fileName = "")
 }
 
 

@@ -66,8 +66,15 @@ function()
 test.symstb = 
 function()
 {
-    # rsymstb -
-    .distCheck("symstb", alpha = 1.9)
+    # rsymstb, alpha=1.8
+    test = .distCheck("symstb", alpha = 1.8)
+    print(test)
+    checkTrue(mean(test) == 1)
+    
+    # rsymstb, alpha=1.2
+    test = .distCheck("symstb", alpha = 1.2)
+    print(test)
+    checkTrue(mean(test) == 1)
     
     # Return Value:
     return()    
@@ -81,7 +88,19 @@ test.stable =
 function()
 {
     # stable - Parameterization S0:
-    .distCheck("stable", alpha = 1.9, beta = 0.3)
+    test = .distCheck("stable", alpha = 1.8, beta = 0.3)
+    print(test)
+    checkTrue(mean(test[1:2]) == 1)
+    
+    # stable - Parameterization S0:
+    test = .distCheck("stable", alpha = 1.2, beta = -0.3)
+    print(test)
+    checkTrue(mean(test[1:2]) == 1)
+    
+    # stable - Parameterization S0:
+    test = .distCheck("stable", alpha = 0.6, beta = 0)
+    print(test)
+    checkTrue(mean(test[1:2]) == 1)
     
     # Return Value:
     return()    
@@ -95,7 +114,19 @@ test.stableS1 =
 function()
 {
     # stable - Parameterization S1:
-    .distCheck("stable", alpha = 1.9, beta = 0.3, pm = 1)
+    test = .distCheck("stable", alpha = 1.8, beta = 0.3, pm = 1)
+    print(test)
+    checkTrue(mean(test[1:2]) == 1)
+    
+    # stable - Parameterization S1:
+    test = .distCheck("stable", alpha = 1.2, beta = -0.3, pm = 1)
+    print(test)
+    checkTrue(mean(test[1:2]) == 1)
+    
+    # stable - Parameterization S1:
+    test = .distCheck("stable", alpha = 0.6, beta = 0, pm = 1)
+    print(test)
+    checkTrue(mean(test[1:2]) == 1)
     
     # Return Value:
     return()    
@@ -109,7 +140,19 @@ test.stableS2 =
 function()
 {
     # stable - Parameterization S2:
-    .distCheck("stable", alpha = 1.9, beta = 0.3, pm = 2)
+    test = .distCheck("stable", alpha = 1.8, beta = 0.3, pm = 2)
+    print(test)
+    checkTrue(mean(test[1:2]) == 1)
+    
+    # stable - Parameterization S2:
+    test = .distCheck("stable", alpha = 1.2, beta = -0.3, pm = 2)
+    print(test)
+    checkTrue(mean(test[1:2]) == 1)
+    
+    # stable - Parameterization S2:
+    test = .distCheck("stable", alpha = 0.6, beta = 0, pm = 2)
+    print(test)
+    checkTrue(mean(test[1:2]) == 1)
     
     # Return Value:
     return()    
@@ -123,7 +166,7 @@ function()
 if (FALSE) {
     require(RUnit)
     testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fBasics/test/runit2A.R")
-    printTextProtocol(testResult)
+    printTextProtocol(testData = testResult, fileName = "")
 }
 
        

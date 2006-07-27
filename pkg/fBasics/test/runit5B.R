@@ -190,7 +190,7 @@ function()
 if (FALSE) {
     require(RUnit)
     testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fBasics/test/runit5B.R")
-    printTextProtocol(testResult)
+    printTextProtocol(testData = testResult, fileName = "")
 }
     
 

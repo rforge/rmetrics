@@ -183,19 +183,55 @@ function()
     # Returns - Matrix:
     msft.mat = diff(log(as.matrix(MSFT)))[1:11, ]
     
-    rowAvgs(msft.mat)
-    rowVars(msft.mat)
-    rowStdevs(msft.mat)
-    rowSkewness(msft.mat)
-    rowKurtosis(msft.mat)
-    rowCumsums(msft.mat)
+    test = rowAvgs(msft.mat)
+    print(test)
+    target = round(sum(test), 4)
+    target
+    checkSum = -0.1012
+    checkEqualsNumeric(target, checkSum)
     
-    colAvgs(msft.mat)
-    colVars(msft.mat)
-    colStdevs(msft.mat)
-    colSkewness(msft.mat)
-    colKurtosis(msft.mat)
-    colCumsums(msft.mat)
+    test = rowVars(msft.mat)
+    print(test)
+    target = round(sum(test), 4)
+    target
+    checkSum = 0.2811
+    checkEqualsNumeric(target, checkSum)
+    
+    test = rowStdevs(msft.mat)
+    print(test)
+    target = round(sum(test), 4)
+    target
+    checkSum = 1.5185
+    checkEqualsNumeric(target, checkSum)
+    
+    test = rowSkewness(msft.mat)
+    print(test)
+    target = round(sum(test), 4)
+    target
+    checkSum =  -0.7531
+    checkEqualsNumeric(target, checkSum)
+    
+    test = rowKurtosis(msft.mat)
+    print(test)
+    target = round(sum(test), 4)
+    target
+    checkSum = -4.0053
+    checkEqualsNumeric(target, checkSum)
+    
+    test = rowCumsums(msft.mat)
+    print(test)
+    target = round(sum(test), 4)
+    target
+    checkSum = -7.471
+    checkEqualsNumeric(target, checkSum)
+    
+    # Columnwise:
+    test = colAvgs(msft.mat)
+    test = colVars(msft.mat)
+    test = colStdevs(msft.mat)
+    test = colSkewness(msft.mat)
+    test = colKurtosis(msft.mat)
+    test = colCumsums(msft.mat)
     
     
     # Time Series:
@@ -226,7 +262,7 @@ function()
 if (FALSE) {
     require(RUnit)
     testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fBasics/test/runit3A.R")
-    printTextProtocol(testResult)
+    printTextProtocol(testData = testResult, fileName = "")
 }   
     
 

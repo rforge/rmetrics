@@ -79,46 +79,69 @@ function()
     # normFit -
     # Simulated normal random variates:
     set.seed(1953)
-    s = rnorm(n = 1000) 
+    s = rnorm(n = 2000, mean = 1, sd = 0.5) 
     ans = .normFit(x = s)
+    relErrorTest =  c(
+        ( (ans@fit$estimate[1] - 1.0)/1.0 < 0.10 ), 
+        ( (ans@fit$estimate[2] - 0.5)/0.5 < 0.10 ))
     print(ans)
+    print(relErrorTest)
+    checkTrue(mean(relErrorTest) == 1)
 
     # tFit -
     # Simulated random variates t(4):
     set.seed(1953)
-    s = rt(n = 1000, df = 4) 
-    ans = tFit(x = s, df = 2*var(s)/(var(s)-1), trace = FALSE)
+    s = rt(n = 2000, df = 4) 
+    ans = tFit(x = s, df = 2*var(s)/(var(s)-1), 
+        trace = FALSE)
+    relErrorTest =  c(
+        ( (ans@fit$estimate[1] - 4.0)/4.0 < 0.10 ))
     print(ans)
+    print(relErrorTest)
+    checkTrue(mean(relErrorTest) == 1)
     
     # ghFit -
     set.seed(1953)
-    s = rgh(n = 1000, alpha = 0.8, beta = 0.2, delta = 1.5, mu = 1, lambda = 2) 
+    s = rgh(n = 2000, alpha = 0.8, beta = 0.2, delta = 2, mu = -0.4, lambda = 1) 
     ans = ghFit(x = s, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1,
         trace = FALSE) 
+    relErrorTest =  c(
+        ( (ans@fit$estimate[1] - 0.8)/( 0.8) < 0.10 ), 
+        ( (ans@fit$estimate[2] - 0.2)/( 0.2) < 0.10 ),
+        ( (ans@fit$estimate[3] - 2.0)/( 2.0) < 0.10 ),
+        ( (ans@fit$estimate[4] + 0.4)/(-0.4) < 0.10 ),
+        ( (ans@fit$estimate[5] - 2.0)/( 2.0) < 0.10 ))
     print(ans)
-    # CHECK WARNINGS!
+    print(relErrorTest)
+    checkTrue(mean(relErrorTest) == 1)
     
     # hypFit -
     set.seed(1953)
-    s = rhyp(n = 1000, alpha = 1.5, beta = 0.3, delta = 0.5, mu = -1) 
-    ans = hypFit(s, alpha = 1, beta = 0, delta = 1, mu = mean(s), trace = FALSE)
+    s = rhyp(n = 2000, alpha = 1.5, beta = 0.8, delta = 0.5, mu = -1) 
+    ans = hypFit(s, alpha = 1, beta = 0, delta = 1, mu = mean(s), 
+        trace = FALSE)
+    relErrorTest =  c(
+        ( (ans@fit$estimate[1] - 1.5)/( 1.5) < 0.10 ), 
+        ( (ans@fit$estimate[2] - 0.8)/( 0.8) < 0.10 ),
+        ( (ans@fit$estimate[3] - 0.5)/( 0.5) < 0.10 ),
+        ( (ans@fit$estimate[4] + 1.0)/(-1.0) < 0.10 ))
     print(ans)
-    # CHECK WARNINGS!
+    print(relErrorTest)
+    checkTrue(mean(relErrorTest) == 1)
     
     # nigFit -
     set.seed(1953)
-    s = rnig(n = 1000, alpha = 1.5, beta = 0.3, delta = 0.5, mu = -1.0) 
-    ans = nigFit(s, alpha = 1, beta = 0, delta = 1, mu = mean(s), trace = FALSE)
+    s = rnig(n = 2000, alpha = 1.5, beta = -0.7, delta = 0.5, mu = -1.0) 
+    ans = nigFit(s, alpha = 1, beta = 0, delta = 1, mu = mean(s), 
+        trace = FALSE)
+    relErrorTest =  c(
+        ( (ans@fit$estimate[1] - 1.5)/( 1.5) < 0.10 ), 
+        ( (ans@fit$estimate[2] + 0.7)/(-0.7) < 0.10 ),
+        ( (ans@fit$estimate[3] - 0.5)/( 0.5) < 0.10 ),
+        ( (ans@fit$estimate[4] + 1.0)/(-1.0) < 0.10 ))
     print(ans)
-    print(class(ans))
-    # CHECK WARNINGS!
-    
-    # ssdFit -
-    set.seed(1953)
-    s = rnorm(1000)
-    ans = ssdFit(x = s)
-    print(ans)
-    print(class(ans))
+    print(relErrorTest)
+    checkTrue(mean(relErrorTest) == 1)
     
     # Return Value:
     return()
@@ -131,7 +154,7 @@ function()
 if (FALSE) {
     require(RUnits)
     testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fBasics/test/runit2D.R")
-    printTextProtocol(testResult)
+    printTextProtocol(testData = testResult, fileName = "")
 }
    
    

@@ -77,10 +77,8 @@ function()
     # Interpolation:
     akima.lin = .interp(akima$x, akima$y, akima$z)
     Z = mean(akima.lin$z)
-    checkEquals(
-        target = Z, 
-        current = 21.70316, 
-        tolerance = 0.00001)
+    checkSun = 21.70316
+    checkEquals(target = Z, current = checkSum, tolerance = 0.00001)
     
     # Plots:
     image  (akima.lin, add = FALSE)
@@ -97,8 +95,8 @@ function()
 
 if (FALSE) {
     require(RUnit)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fCalendar/test/runit0A.R")
-    printTextProtocol(testResult)
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fCalendar/test/runit1A.R")
+    printTextProtocol(testDate = testResult, fileName = "")
 }
 
 

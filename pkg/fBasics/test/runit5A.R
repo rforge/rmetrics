@@ -40,24 +40,29 @@ function()
 {
     # Interpolated plot of Small Jarque Bera Table:
     X = jbTable(type = "LM", size = "small")
+    
+    # List of finite Sizes:
+    colnames(X) 
+    
+    # List of Probabilities:
+    rownames(X)
+    
+    # 3D-Plot Probability Table:
     par(mfrow = c(2, 2), cex = 0.7)
-    pPlot(X, linear = TRUE, logStat = TRUE, 
-        cex = 0.5)
-    pPlot(X, linear = TRUE, logStat = TRUE, 
-        fill = TRUE, main = "JB LM", cex = 0.5)
-    pPlot(X, linear = FALSE, logStat = TRUE, 
-        cex = 0.5)
-    pPlot(X, linear = FALSE, logStat = TRUE, 
-        fill = TRUE, cex = 0.5)
-        
-    # [pq]Table -
-    # jbTable - 
-    # Jarque Bera B q and p Table:
-    X = jbTable(type = "LM", size = "small")
+    pPlot(X, linear = TRUE,  logStat = TRUE, main = "JB LM", cex = 0.5)
+    pPlot(X, linear = TRUE,  logStat = TRUE, fill = TRUE,    cex = 0.5)
+    pPlot(X, linear = FALSE, logStat = TRUE,                 cex = 0.5)
+    pPlot(X, linear = FALSE, logStat = TRUE, fill = TRUE,    cex = 0.5)
+    
+    # 2D-Plot Probability for Fixed Size:
     p = (1:99)/100
     plot(qTable(X, p, N = 100), p, type = "b")
+    grid()
+    
+    # 2D-Plot Statistics for Fixed Size:
     Stat = seq(0.01, 15, length = 100)
     plot(Stat, pTable(X, Stat, N = 100), type = "b")  
+    grid()
     
     # Return Value:
     return()  
@@ -90,7 +95,19 @@ function()
         # 0.95   1.33  1.31  1.29  1.29  1.28  1.28
         # 0.975  1.70  1.66  1.64  1.63  1.62  1.62
         # 0.99   2.16  2.08  2.03  2.01  2.00  2.00
-    pPlot(adfTable)
+    
+    # Table:
+    X = adfTable
+    
+    # List of finite Sizes:
+    colnames(X) 
+    
+    # List of Probabilities:
+    rownames(X)     
+       
+    # 3D Probability Plot
+    pPlot(X)
+    ans = pPlot(X, 10, 10, fill = TRUE)$z
 
     # Probabilities:
     Stat = c(-3, -1.5, 0, 1.5, 3)
@@ -119,7 +136,7 @@ function()
 if (FALSE) {
     require(RUnit)
     testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fBasics/test/runit5A.R")
-    printTextProtocol(testResult)
+    printTextProtocol(testData = testResult, fileName = "")
 }
 
 

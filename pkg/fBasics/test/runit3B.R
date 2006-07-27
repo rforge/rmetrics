@@ -62,45 +62,64 @@ function()
 test.plotLabels = 
 function()
 {
-    # MSFT Data Frame:
-    # Opening Prices:
+    # MSFT Opening Prices:
     msft = as.timeSeries(MSFT)[, 1]
-    # Volume in Million Units:
+    checkSum = 15349.9344
+    checkEqualsNumeric(sum(msft@Data), checkSum)
+    
+    # MSFT Volume in Million Units:
     msft.vol = as.timeSeries(MSFT)[, 5]/10^6
-    # Opening Returns:
+    checkSum = 10742.7319
+    checkEqualsNumeric(sum(msft.vol@Data), checkSum)
+    
+    # MSFT Opening Returns:
     msft.ret = returnSeries(msft)
+    checkSum = -0.2359905
+    checkEqualsNumeric(sum(msft.ret@Data), checkSum)
     
     # LABELS = TRUE
     
     # acfPlot -
-    acfPlot(x = msft.ret)
+    ans = acfPlot(x = msft.ret)
+    checkSum = 0.804693678 
+    checkEqualsNumeric(sum(ans$acf), checkSum)
     
     # pacfPlot -
     pacfPlot(x = msft.ret)
     
     # ccfPlot -
-    ccfPlot(x = msft.ret, y = msft.vol[-1])
+    ans = ccfPlot(x = msft.ret, y = msft.vol[-1])
+    checkSum = 0.7826573745 
+    checkEqualsNumeric(sum(ans$acf), checkSum)
     
     # teffectPlot -
-    teffectPlot(x = msft.ret)
+    ans = teffectPlot(x = msft.ret)
+    checkSum = 11.90143235
+    checkEqualsNumeric(sum(ans), checkSum)
     
     # lmacfPlot -
-    lmacfPlot(x = abs(msft.ret))
+    ans = lmacfPlot(x = abs(msft.ret))
+    ans
     
     # lmacfPlot -
-    lacfPlot(x = msft, n = 4)
+    ans = lacfPlot(x = msft, n = 4)
+    ans
 
     # logpdfPlot -
-    logpdfPlot(x = msft.ret)
-    logpdfPlot(x = msft.ret, type = "log-log")
+    ans = logpdfPlot(x = msft.ret)
+    ans
+    ans = logpdfPlot(x = msft.ret, type = "log-log")
+    ans
     # ... CHECK WARNINGS
     # ... CHECK COLORS
     
     # qqgaussPlot -
-    qqgaussPlot(x = msft.ret)
+    ans = qqgaussPlot(x = msft.ret)
+    ans
     
     # scalinglawPlot -
-    scalinglawPlot(x = msft.ret, span = 4)
+    ans = scalinglawPlot(x = msft.ret, span = 4)
+    ans
     # ... CHECK COLORS
     
     # Return Value:
@@ -114,13 +133,21 @@ function()
 test.plotNoLabels = 
 function()
 {
-    # MSFT Data Frame:
-    # Opening Prices:
+    
+    # MSFT Opening Prices:
     msft = as.timeSeries(MSFT)[, 1]
-    # Volume in Million Units:
+    checkSum = 15349.9344
+    checkEqualsNumeric(sum(msft@Data), checkSum)
+    
+    # MSFT Volume in Million Units:
     msft.vol = as.timeSeries(MSFT)[, 5]/10^6
-    # Opening Returns:
+    checkSum = 10742.7319
+    checkEqualsNumeric(sum(msft.vol@Data), checkSum)
+    
+    # MSFT Opening Returns:
     msft.ret = returnSeries(msft)
+    checkSum = -0.2359905
+    checkEqualsNumeric(sum(msft.ret@Data), checkSum)
     
     # LABELS = FALSE
     
@@ -168,7 +195,7 @@ function()
 if (FALSE) {
     require(RUnits)
     testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fBasics/test/runit3B.R")
-    printTextProtocol(testResult)
+    printTextProtocol(testData = testResult, fileName = "")
 }
 
 

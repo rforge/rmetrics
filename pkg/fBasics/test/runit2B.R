@@ -78,20 +78,28 @@ test.gh =
 function()
 {
     # gh() Distribution:
-    set.seed(4711)
-    .distCheck("gh", alpha = 1, beta = 0.3, delta = 1, mu = 0, lambda = 1)
+    test = .distCheck("gh", 
+        alpha = 1.3, beta = 0.3, delta = 1, mu = 0, lambda = 1)
+    print(test)
+    checkTrue(mean(test) == 1)
     
     # gh() Distribution, continued:
-    set.seed(4711)
-    .distCheck("gh", alpha = 1, beta = 0.3, delta = 1, mu = 0, lambda = 0.8)
+    test = .distCheck("gh", 
+        alpha = 1.3, beta = 0.3, delta = 1, mu = 0, lambda = 0.8)
+    print(test)
+    checkTrue(mean(test) == 1)
     
     # gh() Distribution, continued:
-    set.seed(4711)
-    .distCheck("gh", alpha = 1, beta = 0.3, delta = 1, mu = 0.5, lambda = 0.8)
+    test = .distCheck("gh", 
+        alpha = 1.3, beta = 0.3, delta = 1.7, mu = 0.5, lambda = 0.8)
+    print(test)
+    checkTrue(mean(test) == 1)
     
     # gh() Distribution, continued:
-    set.seed(4711)
-    .distCheck("gh", alpha = 1, beta = 0.3, delta = 1.7, mu = 0.5, lambda = 0.8)
+    test = .distCheck("gh", 
+        alpha = 1.3, beta = 0.3, delta = 1.7, mu = 0.5, lambda = 0.8)
+    print(test)
+    checkTrue(mean(test) == 1)
     
     # Return Value:
     return()    
@@ -105,20 +113,28 @@ test.hyp =
 function()
 {
     # hyp() Distribution - Parameterization 1:
-    set.seed(4711)
-    .distCheck("hyp", alpha = 1, beta = 0.3, delta = 1)
+    test = .distCheck("hyp", alpha = 1, beta = 0.3, delta = 1)
+    print(test)
+    checkTrue(mean(test) == 1)
     
     # hyp() Distribution - Parameterization 2:
-    set.seed(4711)
-    .distCheck("hyp", alpha = 1, beta = 0.3, delta = 1, pm = 2)
+    test = .distCheck("hyp", alpha = 1, beta = 0.3, delta = 1, pm = 2)
+    print(test)
+    checkTrue(mean(test) == 1)
     
-    # hyp() Distribution - Parameterization 2:
-    set.seed(4711)
+    # hyp() Distribution - Parameterization 3:
     # .distCheck("hyp", alpha = 1, beta = 0.3, delta = 1, pm = 3)
+    # hyp() Distribution - Parameterization 1:
+    # test = .distCheck("hyp", alpha = 1, beta = 0.3, delta = 1)
+    # print(test)
+    # checkTrue(mean(test) == 1)
     
-    # hyp() Distribution - Parameterization 2:
-    set.seed(4711)
+    # hyp() Distribution - Parameterization 4:
     # .distCheck("hyp", alpha = 1, beta = 0.3, delta = 1, pm = 4)
+    # hyp() Distribution - Parameterization 1:
+    # test = .distCheck("hyp", alpha = 1, beta = 0.3, delta = 1)
+    # print(test)
+    # checkTrue(mean(test) == 1)
     
     # Return Value:
     return()    
@@ -132,8 +148,9 @@ test.nig =
 function()
 {
     # nig() Distribution:
-    set.seed(4711)
-    .distCheck("nig", alpha = 1, beta = 0.3, delta = 1)
+    test = .distCheck("nig", alpha = 1, beta = 0.1, delta = 1)
+    print(test)
+    checkTrue(mean(test) == 1)
     
     # Return Value:
     return()    
@@ -146,7 +163,7 @@ function()
 if (FALSE) {
     require(RUnit)
     testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fBasics/test/runit2B.R")
-    printTextProtocol(testResult)
+    printTextProtocol(testData = testResult, fileName = "")
 }
 
      
