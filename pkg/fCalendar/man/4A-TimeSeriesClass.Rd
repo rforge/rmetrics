@@ -94,7 +94,7 @@ isMultivariate(x)
 
 \method{print}{timeSeries}(x, \dots)
 \method{summary}{timeSeries}(object, \dots)
-\method{plot}{timeSeries}(x, reference.grid = TRUE, lty = 1, \dots) 
+\method{plot}{timeSeries}(x, \dots) 
 \method{lines}{timeSeries}(x, \dots)
 \method{points}{timeSeries}(x, \dots)
 
@@ -176,10 +176,6 @@ ohlcDailyPlot(x, volume = TRUE, colOrder = c(1:5), units = 1e6,
         a logical value. Should weekend dates be included or removed
         from the series.
         }
-    \item{lty}{
-        [plot] - \cr
-        an integer value selecting the type of the line plot.
-        }
     \item{main}{
         [ohlcDailyPlot] - \cr
         a character string to title the price and volume plot.
@@ -204,10 +200,6 @@ ohlcDailyPlot(x, volume = TRUE, colOrder = c(1:5), units = 1e6,
         }
     \item{recordIDs}{
         a data frame which can be used for record identification.
-        }
-    \item{reference.grid}{
-        [plot] - \cr
-        a logical value. Should a reference grid be added to the plot?.
         }
     \item{sep}{
         [readSeries] - \cr

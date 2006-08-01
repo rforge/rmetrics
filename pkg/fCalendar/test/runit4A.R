@@ -207,10 +207,25 @@ function()
     plot(OPEN)
     plot(X[, 1:4])
     
-    # Next Plot:
-    # plot(X)                               # xlim | ylim cannot be specified
-    # lines (uTS2, col = "red",  lty = 3)
-    # points(uTS2, col = "blue", pch = 19)
+    # GMT - Plot:
+    tC = timeCalendar(2006, 1, 1, 0:23, 0, 0, zone = "GMT", FinCenter = "GMT")
+    tS = timeSeries(data = matrix(rnorm(24), ncol = 1), charvec = tC)
+    plot(tS)
+    
+    # Zurich - Plot:
+    tC = timeCalendar(2006, 1, 1, 0:23, 0, 0, zone = "GMT", FinCenter = "Zurich")
+    tS = timeSeries(data = matrix(rnorm(24), ncol = 1), charvec = tC,
+        zone = "GMT", FinCenter = "Zurich")
+    plot(tS)
+    
+    # New York - Plot:
+    tC = timeCalendar(2006, 1, 1, 0:23, 0, 0, zone = "GMT", FinCenter = "NewYork")
+    tS = timeSeries(data = matrix(rnorm(24), ncol = 1), charvec = tC,
+        zone = "GMT", FinCenter = "NewYork")
+    plot(tS, type = "h")
+    lines (tS, col = "red",  lty = 3)
+    points(tS, col = "blue", pch = 19)
+    abline(h=0, col = "grey")
     
     # Return Value:
     return()    
