@@ -241,7 +241,7 @@ function(x, ...)
     # Changes:
     #
     
-    # Function:
+    # FUNCTION:
     
     # Create a dummay daily 'timeSeries' object:
     ans = dummyDailySeries(as.vector(x))

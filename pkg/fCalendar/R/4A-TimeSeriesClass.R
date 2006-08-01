@@ -654,98 +654,20 @@ function(object, ...)
 
 
 plot.timeSeries =
-function(x, reference.grid = TRUE, lty = 1, ...) 
+function(x, ...) 
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Plot method for an object of class "timeSeries"
-        
+    #   NEW Plot method for an object of class "timeSeries"
+   
     # Arguments:
-    #   x - a "timeSeries" object
-    #   reference.grid - a logical value. Should a grid be
-    #       added to the plot?
-    
-    # Example:
-    #   data(DowJones30); x = as.timeSeries(DowJones30)
-    #   par(mfrow = c(2, 1)); plot(x[,1:3]); plot(x[,3])
-    
-    # Value:
-    #   Plots a 'timeSeries' object.
+    #   x - a "timeSeries" object 
     
     # FUNCTION:
     
-    # Internal Functions:
-    # Partial Copy from "its" Package
-    # Makes "its" and "Hmisc" obsolete
-    # ... these internal functions will be replaced in a future version!
-    setClass("its", 
-        representation("matrix", dates = "POSIXt"))
-    # Time Series:
-    .its <<-  
-    function(x, dates = as.POSIXct(x = strptime(dimnames(x)[[1]], format = 
-    "%Y-%m-%d")), names=dimnames(x)[[2]], format = "%Y-%m-%d",...) {
-        if(!is(dates, "POSIXt")) stop("dates should be in POSIX format")
-        dates = as.POSIXct(dates)
-        if(is.null(dim(x))){dim(x) = c(length(x),1)}
-        # addDimnames:
-        if(is.null(dimnames(x))) {dimnames(x) = list(NULL,NULL)}
-        if(is.null(dimnames(x)[[1]])&(nrow(x)>0)) dimnames(x)[[1]] = 1:nrow(x)
-        if(is.null(dimnames(x)[[2]])&(ncol(x)>0)) dimnames(x)[[2]] = 1:ncol(x) 
-        # Continue:
-        if(!(nrow(x) == length(dates))) 
-            {stop("dates length must match matrix nrows")}
-        if(!(ncol(x) == length(names))) 
-            {stop("names length must match matrix ncols")}
-        dimnames(x)[[1]] = format(dates,format=format,...)
-        dimnames(x)[[2]] = names
-        return(new("its" ,x, dates = dates)) }
-    # Time Series Plot:
-    .itsPlot <<- 
-    function(x, y, colvec = 1:ncol(x), type = "l", ltypvec = 1, lwdvec = 1, 
-    yrange, format, at, reference.grid, ...) {
-        if (missing(yrange)){ylim = range(x, na.rm = TRUE)} else {ylim = yrange}
-        firstp = TRUE
-        xdates = x@dates
-        n = dim(x)[1]
-        m = dim(x)[2]
-        # Make line control parameters correct length
-        colveclong = rep(colvec, length.out = m)
-        ltypveclong = rep(ltypvec, length.out = m)
-        lwdveclong = rep(lwdvec, length.out = m)
-        for (i in 1:m){
-            vpoints = c(1,which(!is.na(x[,i])),n)
-            xxx = x[,i] 
-            for (j in 1:ncol(xxx)) {
-                if(!firstp){par(new = TRUE)} else {firstp = FALSE}
-                plot(x = xdates[vpoints], y = xxx[vpoints, j], type = type,
-                    col = colveclong[i], ylim = ylim, lty = ltypveclong[i],
-                    lwd = lwdveclong[i], xaxt = "n", ...) } }
-        if (reference.grid) grid()
-        axis.POSIXct(x = xdates[vpoints], side = 1, at = at, format = format) }
-    # "[" Method:   
-    "[.its" <<- function(x, i, j, drop, ...) {
-        if (match("dates", names(list(...)),0) > 0) {
-            dates = list(...)[["dates"]]
-            if (!missing(i)) stop("cannot specify both dates and i")
-            if (!is(dates, "POSIXt")) stop("dates should be in POSIX format")
-            dates = as.POSIXct(dates)
-            i = match(dates, dates(x))
-            if (any(is.na(i))) stop("some dates are not found") }
-        if (missing(drop)) {drop = FALSE}
-        if (missing(i)) {i = min(1,nrow(x)):nrow(x)}
-        if (missing(j)) {j = min(1,ncol(x)):ncol(x)}
-          subx <- x@.Data[i, j, drop = drop]
-          dates <- x@dates[i]
-          ans <- new("its", subx, dates = dates)
-        return(ans) }
-        
-    # Transform:
-    x.its = .its(x@Data, dates = as.POSIXct(seriesPositions(x)), 
-        format = x@format)
-            
     # Plot:
-    .itsPlot(x.its, ltypvec = lty, reference.grid = reference.grid, ...)
-   
+    plot(x = seriesPositions(x), y = seriesData(x), ...)
+    
     # Return Value:
     invisible(x)
 }
@@ -759,22 +681,19 @@ function(x, ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Plot method for an object of class "timeSeries"
-        
+    #   NEW Lines method for an object of class "timeSeries"
+   
     # Arguments:
-    #   x - a "timeSeries" object
-        
-    # Value:
-    #   Plots a 'timeSeries' object.
+    #   x - a "timeSeries" object 
     
-    # Changes:
-    #
+    # Example:
+    #   plot(MSFT[,1]); lines(MSFT[,1], col = "red")
     
     # FUNCTION:
-   
-    # Add to Plot:
-    lines(x = as.POSIXct(seriesPositions(x)), y = x@Data, ...)
-            
+    
+    # Plot:
+    lines(x = seriesPositions(x), y = seriesData(x), ...)
+    
     # Return Value:
     invisible(x)
 }
@@ -802,7 +721,7 @@ function(x, ...)
     # FUNCTION:
    
     # Add to Plot:
-    points(x = as.POSIXct(seriesPositions(x)), y = x@Data, ...)
+    points(x = seriesPositions(x), y = seriesData(x), ...)
             
     # Return Value:
     invisible(x)
@@ -839,9 +758,9 @@ function(x)
     
     # Time Series:
     positions = timeSequence(from = "1970-01-01", length.out = length(x),
-        FinCenter = "GMT")
+        zone = "GMT", FinCenter = "GMT")
     ans = timeSeries(data = matrix(x, ncol = 1), charvec = positions,
-        units = "TS", FinCenter = "GMT")
+        units = "TS", zone = "GMT", FinCenter = "GMT")
         
     # Return Value:
     ans
