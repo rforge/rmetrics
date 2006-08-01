@@ -75,6 +75,8 @@ function()
 test.adfTable = 
 function()
 {  
+    # Dickey-Fuller Tables:
+    
     # type = "ns" 
     adfTable = cbind(
         c(-2.66, -2.26, -1.95, -1.60, +0.92, +1.33, +1.70, +2.16),
