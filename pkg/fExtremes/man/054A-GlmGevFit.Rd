@@ -266,8 +266,9 @@ Coles S. (2001);
 
   
 \examples{
-## SOURCE("fExtremes.054A-ExtremesGlm")
 \dontrun{
+## SOURCE("fExtremes.054A-ExtremesGlm")
+
 ## Simulated GEV Data:
    xmpExtremes("\nStart: Simulte GEV Sample >")
    x = gevSim(model = list(shape = 0.25, location = 0, scale = 1), n = 1000)
