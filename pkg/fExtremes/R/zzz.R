@@ -25,7 +25,7 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2004, Diethelm Wuertz, GPL
+#   1999 - 2006, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
 #   www.rmetrics.org
@@ -41,7 +41,7 @@
 
 .First.lib = 
 function(lib, pkg)
-{   # A function implemted by D. Wuertz
+{   # A function implemted by Diethelm Wuertz
 
     # Package:
     cat("\nRmetrics, (C) 1999-2004, Diethelm Wuertz, GPL")
@@ -49,6 +49,14 @@ function(lib, pkg)
     
     # Load dll:
     # library.dynam("fExtremes", pkg, lib)
+    
+    # Load Data:
+    data(danishClaims)
+    danishClaims <<- as.timeSeries(danishClaims)
+    data(bmwRet)
+    bmwRet <<- as.timeSeries(bmwRet)
+    data(daxRet)
+    daxRet <<- as.timeSeries(daxRet)
     
 }
 

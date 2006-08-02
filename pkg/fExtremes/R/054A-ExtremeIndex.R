@@ -16,7 +16,7 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2004, Diethelm Wuertz, GPL
+#   1999 - 2006, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
 #   www.rmetrics.org
@@ -29,15 +29,15 @@
 
 ################################################################################
 # FUNCTION:                 DESCRIPTION:
-#  fTHETA                    Class representation
+#  'fTHETA'                  Class representation
 #  show.fTHETA               S4: Print Method
 #  thetaSim                  Simulates a time series with known theta
-#
+# FUNCTION:                 DESCRIPTION:
 #  blockTheta                Computes theta from Block Method
 #  clusterTheta              Computes theta from Reciprocal Cluster Method
 #  runTheta                  Computes theta from Run Method
 #  ferrosegersTheta          Computes Theta according to Ferro and Seegers
-#
+# FUNCTION:                 DESCRIPTION:
 #  exindexesPlot             Computes and Plot Theta(1,2,3)
 #  exindexPlot               Computes Theta(1,2) and Plot Theta(1)
 ################################################################################
@@ -69,7 +69,7 @@ function(object)
     cat("\nTitle:\n ", x@title, "\n", sep = "")
     
     # Call:
-    cat("\nCall:\n", deparse(x@call), "\n", sep = "") 
+    cat("\nCall:\n ", deparse(x@call), "\n", sep = "") 
     
     # Extremal Index:
     cat("\nExtremal Index:\n")
@@ -103,8 +103,11 @@ function(model = c("max", "pair"), n = 1000, theta = 0.5)
     
     # Arguments:
     #   model - a character string denoting the model
-    #       "max" - Max Frechet Series
+    #       "max"  - Max Frechet Series
     #       "pair" - Paired Exponential Series
+    
+    # Arguments:
+    model = match.arg(model)
     
     # Simulate:
     model = model[1]
@@ -189,7 +192,7 @@ title = NULL, description = NULL)
         
     # Add title and description:
     if (is.null(title)) title = "Extremal Index from Block Method"
-    if (is.null(description)) description = as.character(date())
+    if (is.null(description)) description = .description()
         
     # Return Value:
     new("fTHETA",
@@ -258,7 +261,7 @@ title = NULL, description = NULL)
     # Add title and description:
     if (is.null(title)) 
         title = "Extremal Index from Reciprocal Cluster Method"
-    if (is.null(description)) description = as.character(date())
+    if (is.null(description)) description = .description()
         
     # Return Value:
     new("fTHETA",
@@ -328,7 +331,7 @@ title = NULL, description = NULL)
     # Add title and description:
     if (is.null(title)) 
         title = "Extremal Index from Run Method"
-    if (is.null(description)) description = as.character(date())
+    if (is.null(description)) description = .description()
         
     # Return Value:
     new("fTHETA",
@@ -418,7 +421,7 @@ title = NULL, description = NULL)
     # Add title and description:
     if (is.null(title)) 
         title = "Extremal Index from Ferro-Segers Method"
-    if (is.null(description)) description = as.character(date())
+    if (is.null(description)) description = .description()
         
     # Return Value:
     new("fTHETA",
@@ -547,7 +550,7 @@ doplot = TRUE, plottype = c("thresh", "K"), labels = TRUE, ...)
     #   exindexPlot(as.vector(as.timeSeries(data(bmwRet))), 20)
     
     # Settings:
-    plottype = plottype[1]
+    plottype = match.arg(plottype)
     reverse = FALSE
     if (plottype == "K") reverse = TRUE
     
@@ -575,7 +578,7 @@ doplot = TRUE, plottype = c("thresh", "K"), labels = TRUE, ...)
     
     # Plot:
     if (doplot) {
-        plot(index, theta, ylim = yrange, type = "l", xlab = "", ylab = "",
+        plot(index, theta, ylim = yrange, type = "b", xlab = "", ylab = "",
             axes = FALSE, ...)
         IDX = round(seq(1, length(index), length = 10))
         axis(1, at = index[IDX], lab = paste(K)[IDX])

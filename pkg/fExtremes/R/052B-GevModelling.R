@@ -30,17 +30,16 @@
 ################################################################################
 # FUNCTION:             MLE AND PWM ESTIMATORS:
 #  gevSim                Simulates GEV including Gumbel rvs [EVIS/EVIR]
-#  fGEVFIT               S4 class representation
+#  'fGEVFIT'             S4 class representation
 #  gevFit                Fits Parameters of GEV distribution
-#   .gumpwmFit             Gumbel with probability weighted moments
-#   .gevpwmFit             GEV with probability weighted moments
-#   .sam.pwm                Computes sample weights
-#   .gummleFit             Gumbel with max log-likelihood approach
-#   .gumLLH                Gumbel log-likelihood function
-#   .gevmleFit             GEV with max log-likelihood approach
-#   .gevLLH                GEV log-likelihood function
-#  print.fGEVFIT            Print Method for object of class "gevFit"
-#  plot.fGEVFIT             Plot Method for object of class "gevFit"
+#   .gumpwmFit             Fits Gumbel with probability weighted moments
+#   .gevpwmFit             Fits GEV with probability weighted moments
+#   .gummleFit             Fits Gumbel with max log-likelihood approach
+#    .gumLLH                Computes Gumbel log-likelihood function
+#   .gevmleFit             Fits GEV with max log-likelihood approach
+#    .gevLLH                Computes GEV log-likelihood function
+#  print.fGEVFIT           Print Method for object of class "gevFit"
+#  plot.fGEVFIT            Plot Method for object of class "gevFit"
 #   .gev1Plot
 #   .gev2Plot
 #   .gev3Plot
@@ -49,18 +48,10 @@
 #  gevrlevelPlot         Calculates Return Levels Based on GEV Fit
 #  .rlevel.gev.evir       Internal Function
 ################################################################################
-# FUNCTION:             MDA ESTIMATORS:
-#  hillPlot              Plot Hill's estimator
-#  shaparmPlot           Pickands, Hill & Decker-Einmahl-deHaan Estimator
-#   shaparmPickands      Auxiliary function called by shaparmPlot
-#   shaparmHill           ... called by shaparmPlot
-#   shaparmDehaan         ... called by shaparmPlot
-################################################################################
 
 
 gevSim = 
-function(model = list(shape = -0.25, location = 0, scale = 1), 
-n = 1000, seed = NULL)
+function(model = list(xi = -0.25, mu = 0, beta = 1), n = 1000, seed = NULL)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -69,7 +60,7 @@ n = 1000, seed = NULL)
     # Examples:
     #   gevSim(n = 100)
     #   gevSim(n = 100, seed = 4711)
-    #   gevSim(model = list(shape = -0.15, location = 0, scale = 0.02))
+    #   gevSim(model = list(xi = -0.15, mu = 0, beta = 0.02))
     
     # FUNCTION:
     
@@ -77,8 +68,7 @@ n = 1000, seed = NULL)
     if (is.null(seed)) seed = NA else set.seed(seed)
     
     # Simulate:
-    ans = rgev(n = n, xi = model$shape, mu = model$location, 
-        sigma = model$scale)
+    ans = rgev(n = n, xi = model$xi, mu = model$mu, beta = model$beta)
     ans = as.ts(ans)
     
     # Control:
@@ -94,30 +84,21 @@ n = 1000, seed = NULL)
 
 
 gumbelSim = 
-function(model = list(location = 0, scale = 1), 
-n = 1000, seed = NULL)
+function(model = list(mu = 0, beta = 1), n = 1000, seed = NULL)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Generates random variates from a GEV distribution
     
     # Examples:
-    #   .gumbelSim(n = 100)
-    #   .gumbelSim(n = 100, seed = 4711)
+    #   gumbelSim(n = 100)
+    #   gumbelSim(n = 100, seed = 4711)
     
     # FUNCTION:
     
-    # Seed:
-    if (is.null(seed)) seed = NA else set.seed(seed)
-    
     # Simulate:
-    ans = rgev(n = n, xi = 0, mu = model$location, 
-        sigma = model$scale)
-    ans = as.ts(ans)
-    
-    # Control:
-    attr(ans, "control") = 
-        data.frame(t(unlist(model)), seed = seed, row.names = "control")
+    ans = gevSim(model = list(xi = 0, mu = model$mu, beta = model$beta), 
+        n = n, seed = seed)
         
     # Return Value:
     ans 
@@ -148,12 +129,17 @@ setClass("fGEVFIT",
 gevFit =
 function(x, block = 1, type = c("mle", "pwm"), 
 title = NULL, description = NULL, ...)
-{
+{   # A function implemented by Diethelm Wuertz
+
     # Call:
     call = match.call()
     
+    # Arguments:
+    type = match.arg(type)
+    
     # Fit:
-    ans = .gevFit(x, block, type, gumbel = FALSE, title, description, ...)
+    ans = .gevFit(x = x, block = block, type = type, gumbel = FALSE, 
+        title = title, description = description, ...)
     ans@call = call
     
     # Return Value:
@@ -167,12 +153,17 @@ title = NULL, description = NULL, ...)
 gumbelFit =
 function(x, block = 1, type = c("mle", "pwm"), 
 title = NULL, description = NULL, ...)
-{
+{   # A function implemented by Diethelm Wuertz
+
     # Call:
     call = match.call()
     
+    # Arguments:
+    type = match.arg(type)
+    
     # Fit:
-    ans = .gevFit(x, block, type, gumbel = TRUE, title, description, ...)
+    ans = .gevFit(x = x, block = block, type = type, gumbel = TRUE, 
+        title = title, description = description, ...)
     ans@call =  call
     
     # Return Value:
@@ -213,6 +204,8 @@ gumbel = FALSE, title = NULL, description = NULL, ...)
     
     # Settings:
     call = match.call()
+    
+    # Arguments:
     type = match.arg(type)
     
     # Check Type and Convert:
@@ -277,15 +270,15 @@ gumbel = FALSE, title = NULL, description = NULL, ...)
     if (gumbel) {
         # GUMBEL:
         xi = 0
-        sigma = fit$par.ests[1]
-        mu = fit$par.ests[2] 
-        residuals = exp( - exp( - (x - mu)/sigma)) 
+        beta = fit$par.ests["xi"]
+        mu = fit$par.ests["mu"] 
+        residuals = exp( - exp( - (x - mu)/beta)) 
     } else {
         # GEV:
-        xi = fit$par.ests[1]
-        sigma = fit$par.ests[2]
-        mu = fit$par.ests[3]
-        residuals = (1 + (xi * (x - mu))/sigma)^(-1/xi) 
+        xi = fit$par.ests["xi"]
+        beta = fit$par.ests["beta"]
+        mu = fit$par.ests["mu"]
+        residuals = (1 + (xi * (x - mu))/beta)^(-1/xi) 
     }  
         
     # Make Unique:
@@ -325,7 +318,7 @@ gumbel = FALSE, title = NULL, description = NULL, ...)
 function(data, ...) 
 {   # A function implemented by Diethelm Wuertz
 
-    # FUNCTION:
+    # Description # FUNCTION:
     
     # "Probability Weighted Moment" method.
     data = as.numeric(data)
@@ -341,16 +334,20 @@ function(data, ...)
         
     # Calculate Parameters:
     xi = 0
-    sigma = beta = lambda[2]/log(2)
+    beta = lambda[2]/log(2)
     mu = lambda[1] - 0.5772*beta
     
     # Output:
-    fit = list(n = n, data = data, 
-        par.ests = c(sigma, mu), par.ses = rep(NA, 2),
-        varcov = matrix(rep(NA, 4), 2, 2), converged = NA, 
-        nllh.final = NA, call = match.call(), selected = "pwm")
-    names(fit$par.ests) = c("sigma", "mu")
-    names(fit$par.ses) = c("sigma", "mu")
+    fit = list(
+        n = n, 
+        data = data, 
+        par.ests = c(mu = mu, beta = beta), 
+        par.ses = c(mu = NA, beta = NA),
+        varcov = matrix(rep(NA, 4), 2, 2), 
+        converged = NA, 
+        nllh.final = NA, 
+        call = match.call(), 
+        selected = "pwm")
     class(fit) = "gev" # not gumbel!
     
     # Return Value:
@@ -375,45 +372,10 @@ function(data, block = NA, ...)
     y = function(x, w0, w1, w2) { 
         (3^x-1)/(2^x-1) - (3*w2 - w0)/(2*w1 - w0) 
     }       
-    
-    # Calculate:
-    w = .sam.pwm(data, nmom = 3)
-    w0 = w[1]
-    w1 = w[2]
-    w2 = w[3]      
-    xi = uniroot(f = y, interval = c(-5,+5), 
-        w0 = w[1], w1 = w[2], w2 = w[3])$root
-    sigma = beta = (2*w1-w0)*xi / gamma(1-xi) / (2^xi-1)
-    mu = w0 + beta*(1-gamma(1-xi))/xi
-    
-    # Output:
-    fit = list(n = n, data = data, 
-        par.ests = c(xi, sigma, mu), par.ses = rep(NA, 3),
-        varcov = matrix(rep(NA, 9), 3, 3), converged = NA, 
-        nllh.final = NA, call=match.call(), selected = "pwm")
-    names(fit$par.ests) = c("xi", "sigma", "mu")
-    names(fit$par.ses) = c("xi", "sigma", "mu")
-    class(fit) = "gev"  
-    
-    # Return Value:
-    fit 
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.sam.pwm = 
-function(x, nmom) 
-{   # A function implemented by Diethelm Wuertz
-
-    # Description
-    #   Computes sample probability weighted moments
-    
-    # FUNCTION:
-    
-    # a = 0, b = 0, kind = 1
-    x = rev(sort(x))
+   
+    # Moments:
+    nmom = 3
+    x = rev(sort(data))
     moments = rep(0, nmom)
     moments[1] = mean(x)
     n = length(x)
@@ -424,11 +386,33 @@ function(x, nmom)
             moments[j] = moments[j] + weight*x[i] 
         } 
     }
+    w0 = moments[1]
+    w1 = moments[2]
+    w2 = moments[3]
+    
+    # Parameters:      
+    xi = uniroot(f = y, interval = c(-5,+5), 
+        w0 = w0, w1 = w1, w2 = w2)$root
+    beta = (2*w1-w0)*xi / gamma(1-xi) / (2^xi-1)
+    mu = w0 + beta*(1-gamma(1-xi))/xi
+    
+    # Output:
+    fit = list(
+        n = n, 
+        data = data, 
+        par.ests = c(xi = xi, mu = mu, beta = beta), 
+        par.ses = c(xi = NA, mu = NA, beta = NA),
+        varcov = matrix(rep(NA, 9), 3, 3), 
+        converged = NA, 
+        nllh.final = NA, 
+        call = match.call(), 
+        selected = "pwm")
+    class(fit) = "gev"  
     
     # Return Value:
-    return(moments) 
+    fit 
 }
-    
+
     
 # ------------------------------------------------------------------------------
 
@@ -437,28 +421,38 @@ function(x, nmom)
 function(data, block = NA, ...)
 {   # A copy from evir
 
+    # Data:
     data = as.numeric(data)
     n = length(data)
-    sigma0 = sqrt(6 * var(data))/pi
-    mu0 = mean(data) - 0.57722 * sigma0
-    theta = c(sigma0, mu0)
     
+    # EVIR Start Values:
+    # beta0 = sqrt(6 * var(data))/pi
+    # mu0 = mean(data) - 0.57722 * beta0
+    # theta = c(mu = mu0, beta = beta0)
+    
+    # We use PWM Start Values:
+    theta = .gumpwmFit(data)$par.ests
+    
+    # Fit:
     fit = optim(theta, .gumLLH, hessian = TRUE, ..., tmp = data)
-    if( fit$convergence) {
-        warning("optimization may not have succeeded")
-    }
+    if( fit$convergence) warning("optimization may not have succeeded")
     par.ests = fit$par
     varcov = solve(fit$hessian)
     par.ses = sqrt(diag(varcov))
-    out = list(n = n, data = data,  
-        par.ests = par.ests, par.ses = par.ses, varcov = varcov, 
-        converged = fit$convergence, nllh.final = fit$value)
-    names(out$par.ests) = c("sigma", "mu")
-    names(out$par.ses) = c("sigma", "mu")
-    class(out) = "gev"
+    
+    # Result:
+    ans = list(
+        n = n, 
+        data = data,  
+        par.ests = par.ests, 
+        par.ses = par.ses, 
+        varcov = varcov, 
+        converged = fit$convergence, 
+        nllh.final = fit$value)
+    class(ans) = "gev"
     
     # Return Value:
-    out
+    ans
 }
 
 
@@ -469,19 +463,21 @@ function(data, block = NA, ...)
 function(theta, tmp)
 {   # A copy from evir
 
-    y = (tmp - theta[2])/theta[1]
-    if(theta[1] < 0) {
-        out = 1.0e+6
+    # Gumbel Log-Likelihood:
+    y = (tmp - theta[1])/theta[2]
+    if(theta[2] < 0) {
+        ans = 1.0e+6
     } else {
-        term1 = length(tmp) * logb(theta[1])
+        term1 = length(tmp) * logb(theta[2])
         term2 = sum(y)
         term3 = sum(exp( - y))
-        out = term1 + term2 + term3
+        ans = term1 + term2 + term3
     }
     
     # Return Value:
-    out
+    ans
 }
+
 
 # ------------------------------------------------------------------------------
 
@@ -490,29 +486,40 @@ function(theta, tmp)
 function(data, block = NA, ...)
 {   # A copy from evir
 
+    # Data:
     data = as.numeric(data)
     n = length(data)
-    sigma0 = sqrt(6 * var(data))/pi
-    mu0 = mean(data) - 0.57722 * sigma0
+    
+    # EVIR Start Values:
+    beta0 = sqrt(6 * var(data))/pi
+    mu0 = mean(data) - 0.57722 * beta0
     xi0 = 0.1
-    theta = c(xi0, sigma0, mu0)
+    
+    # We use PWM Start Values:
+    theta = .gevpwmFit(data)$par.ests
+    
+    # Fit:
     fit = optim(theta, .gevLLH, hessian = TRUE, ..., tmp = data)
-    if (fit$convergence) {
-        warning("optimization may not have succeeded")
-    }
+    if (fit$convergence) warning("optimization may not have succeeded")
     par.ests = fit$par
     varcov = solve(fit$hessian)
     par.ses = sqrt(diag(varcov))
-    out = list(n = n, data = data,
-        par.ests = par.ests, par.ses = par.ses, varcov = varcov, 
-        converged = fit$convergence, nllh.final = fit$value)
-    names(out$par.ests) = c("xi", "sigma", "mu")
-    names(out$par.ses) = c("xi", "sigma", "mu")
-    class(out) = "gev"
+    
+    # Result:
+    ans = list(
+        n = n, 
+        data = data,
+        par.ests = par.ests, 
+        par.ses = par.ses, 
+        varcov = varcov, 
+        converged = fit$convergence, 
+        nllh.final = fit$value)
+    class(ans) = "gev"
     
     # Return Value:
-    out
+    ans
 }
+
 
 # ------------------------------------------------------------------------------
 
@@ -521,18 +528,19 @@ function(data, block = NA, ...)
 function(theta, tmp)
 {   # A copy from evir
 
-    y = 1 + (theta[1] * (tmp - theta[3]))/theta[2]
-    if((theta[2] < 0) || (min(y) < 0)) {
-        out = 1e+06
+    # GEV Log-likelihood:
+    y = 1 + (theta[1] * (tmp - theta[2]))/theta[3]
+    if((theta[3] < 0) || (min(y) < 0)) {
+        ans = 1e+06
     } else {
-        term1 = length(tmp) * logb(theta[2])
+        term1 = length(tmp) * logb(theta[3])
         term2 = sum((1 + 1/theta[1]) * logb(y))
         term3 = sum(y^(-1/theta[1]))
-        out = term1 + term2 + term3
+        ans = term1 + term2 + term3
     }
     
     # Return Value:
-    out
+    ans
 }
     
 
@@ -648,16 +656,11 @@ function(x, labels = TRUE, ...)
     }
         
     # Plot:
-    if (is.timeSeries(data)) {
-        index = as.numeric(names(data))
-        plot(index, as.vector(data), type = "h", 
-            main = main, xlab = xlab, ylab = ylab,
-            col = "steelblue", ...) 
-    } else {
-        plot(data, type = "h", 
-            main = main, xlab = xlab, ylab = ylab,
-            col = "steelblue", ...) 
-    }
+    plot(data, type = "h", 
+        main = main, xlab = xlab, ylab = ylab,
+        col = "steelblue", ...) 
+        
+    # Add Grid:
     if (labels) grid()
         
     # Return Value:
@@ -694,6 +697,8 @@ function(x, labels = TRUE, ...)
         main = main, xlab = xlab, ylab = ylab,
         pch = 19, col = "steelblue", ...) 
     lines(lowess(1:length(residuals), residuals), col = "brown")
+    
+    # Add Grid:
     if (labels) grid()
     
     # Return Value:
@@ -771,6 +776,8 @@ function(x, labels = TRUE, ...)
         main = main, xlab = xlab, ylab = ylab,
         pch = 19, col = "steelblue", ...) 
     abline(lsfit(sorted, y))  
+    
+    # Add Grid:
     if (labels) grid()
     
     # Return Value:
@@ -876,16 +883,17 @@ plottype = c("plot", "add"), labels = TRUE,...)
     # Data:
     par.ests = out$par.ests
     mu = par.ests["mu"]
-    sigma = par.ests["sigma"]
+    beta = par.ests["beta"]
     xi = par.ests["xi"]
     pp = 1/kBlocks
-    v = qgev((1 - pp), xi, mu, sigma)
+    v = qgev((1 - pp), xi, mu, beta)
     if (plottype[1] == "add") abline(h = v)
     data = out$data
     overallmax = out$llh # DW: out$nllh.final
-    sigma0 = sqrt(6 * var(data))/pi
+    
+    beta0 = sqrt(6 * var(data))/pi
     xi0 = 0.01
-    theta = c(xi0, sigma0)
+    theta = c(xi0, beta0)
     
     # Return Levels:
     parmax = NULL
@@ -989,522 +997,6 @@ function(theta, tmp, pp, rli)
     
     # Return Value:
     ans
-}
-
-
-################################################################################
-# MDA ESTIMATORS:
-
-
-hillPlot = 
-function(x, start = 15, ci = 0.95, 
-doplot = TRUE, plottype = c("alpha", "xi"), labels = TRUE, ...)
-{   # A function implemented by Diethelm Wuertz
- 
-    # Description:
-    #   Plots the results from the Hill Estimator.
-    
-    # Note:
-    #   Code partly adapted from R package evir
-    
-    # Examples:
-    #   par(mfrow = c(2, 2))
-    #   hillPlot(gevSim(n=1000), "alpha")
-    #   hillPlot(gevSim(n=1000), "xi")
-    #   hillPlot(gevSim(n=1000), "alpha", reverse = TRUE)
-    #   hillPlot(gevSim(n=1000), "xi", reverse = TRUE)
-    #   hillPlot(gevSim(n=1000), "alpha", doplot = FALSE)
-    #   hillPlot(gevSim(n=1000), "xi", doplot = FALSE)
-    
-    # Check Type:
-    if (class(x) == "zoo") x = as.timeSeries(x)
-    if (class(x) == "timeSeries") stopifnot(isUnivariate(x))
-    x = as.vector(x)
-    
-    # Settings:
-    reverse = FALSE
-    option = match.arg(plottype)
-    data = x
-    
-    # MDA:
-    ordered = rev(sort(data))
-    ordered = ordered[ordered > 0]
-    n = length(ordered)
-    k = 1:n
-    loggs = log(ordered)
-    avesumlog = cumsum(loggs)/(1:n)
-    xihat = c(NA, (avesumlog - loggs)[2:n])
-    y = switch(option, 
-        alpha = 1/xihat, 
-        xi = xihat,
-        quantile = ordered * ((n * (1-p))/k)^(-xihat))
-    ses = y / sqrt(k)
-    x = trunc(seq(from = min(n, length(data)), to = start))
-    y = y[x]
-    qq <- qnorm(1 - (1 - ci)/2)
-    u <- y + ses[x] * qq
-    l <- y - ses[x] * qq
-    yrange <- range(u, l)
-    if (reverse) index = -x else index = x
-
-    # Plot:
-    if (doplot) {
-        plot(index, y, ylim = yrange, type = "l", xlab = "", ylab = "",
-            axes = FALSE, ...)
-        pos = floor(seq(1, length(index), length = 10))
-        axis(1, at = index[pos], lab = paste(x[pos]), tick = TRUE)
-        axis(2)
-        threshold = signif(findThreshold(data, x), 3)
-        axis(3, at = index[pos], lab = paste(format(threshold[pos])), 
-            tick = TRUE)
-        box()
-        lines(index, u, lty = 2, col = "steelblue")
-        lines(index, l, lty = 2, col = "steelblue")
-        if (labels) {
-            title(xlab = "Order Statistics", ylab = option)
-            mtext("Threshold", side = 3, line = 3)
-        }
-    }
-    
-    # Result:
-    ans = list(x = index, y = y)
-    control = data.frame(plottype = option[1], start = start, ci = ci, 
-        reverse = FALSE, row.names = "control")
-    attr(ans, "control") = control
-    
-    # Return Value:
-    if (doplot) return(invisible(ans)) else ans
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-shaparmPlot = 
-function(x, p = 0.01*(1:10), xiRange = NULL, alphaRange = NULL,
-doplot = TRUE, plottype = c("both", "upper"))
-{   # A function written by Diethelm Wuertz 
-    
-    # Description:
-    #   Displays Pickands, Einmal-Decker-deHaan, and Hill estimators
-    
-    # Example:
-    #   par(mfcol=c(3,2)); shaparmPlot(as.timeSeries(data(daxRet)))
-    #   shaparmPlot(as.timeSeries(data(daxRet)), doplot = FALSE)
-    #   shaparmPlot(as.timeSeries(data(daxRet)), 0.005*(1:20))
-    
-    # FUNCTION:
-    
-    # Settings:
-    x = as.vector(x)
-    tails = p
-    if (is.null(xiRange)) xiRange = c(-0.5, 1.5)
-    if (is.null(alphaRange)) alphaRange = c(0, 10)
-    plottype = match.arg(plottype)
-    if (plottype == "both") bothTails = TRUE else bothTails = FALSE
-    
-    # Median Plot:
-    index = which.min(abs(tails-median(tails)))
-    DOPLOT = rep(FALSE, length(tails))
-    DOPLOT[index] = TRUE
-    selected.tail = tails[index]
-    if (!doplot) DOPLOT[index] = FALSE
-    
-    # Which estimator ?
-    which = c(TRUE, TRUE, TRUE)
-  
-    # Settings:
-    select.doplot = which
-    ylim1 = xiRange
-    ylim2 = alphaRange
-    z = rep(mean(ylim2), length(tails))
-    ylim1 = xiRange
-    ylim2 = alphaRange
-    
-    # Estimates:
-    p1 = p2 = h1 = h2 = d1 = d2 = m1 = m2 = rep(0, length(tails))
-    for ( i in (1:length(tails)) ) {
-        tail = tails[i]
-        # Plotting Staff:
-        if (select.doplot[1]) {
-            xi = shaparmPickands(x, tail, ylim1, doplot = FALSE, 
-                plottype = plottype) 
-            p1[i] = xi$xi[1]
-            p2[i] = xi$xi[3] 
-        }
-        if (select.doplot[2]) { 
-            xi = shaparmHill(x, tail, ylim1, doplot = FALSE, 
-                plottype = plottype)  
-            h1[i] = xi$xi[1]
-            h2[i] = xi$xi[3] 
-        }
-        if (select.doplot[3]) {
-            xi = shaparmDEHaan(x, tail, ylim1, doplot = FALSE, 
-                plottype = plottype) 
-            d1[i] = xi$xi[1]
-            d2[i] = xi$xi[3] 
-        }      
-    } 
-    
-    # Plot Pickands' Summary:
-    if (select.doplot[1] & doplot) { 
-        plot (tails, z, type = "n", xlab = "tail depth", ylab = "alpha",
-            ylim = ylim2, main = "Pickands Summary")
-        grid()
-        abline(v = selected.tail, lty = 3)
-        y1 = 1/p1
-        x1 = tails [y1 > ylim2[1] & y1 < ylim2[2]]
-        y1 = y1[y1 > ylim2[1] & y1 < ylim2[2]]
-        points (x1, y1, col = "steelblue")
-        lines(x1, y1, col = "steelblue")
-        if (bothTails) { 
-            y1 = 1/p2
-            x1 = tails [y1 > ylim2[1] & y1 < ylim2[2]]
-            y1 = y1 [y1 > ylim2[1] & y1 < ylim2[2]]
-            points (x1, y1, col = "brown")
-            lines(x1, y1, col = "brown")
-        } 
-    }
-    
-    # Plot Hill Summary:
-    if (select.doplot[2] & doplot) { 
-        plot (tails, z, type = "n", xlab = "tail depth", ylab = "alpha", 
-            ylim = ylim2, main = "Hill Summary")
-        grid()
-        abline(v = selected.tail, lty = 3)
-        y1 = 1/h1
-        x1 = tails [y1 > ylim2[1] & y1 < ylim2[2]]
-        y1 = y1 [y1 > ylim2[1] & y1 < ylim2[2]]
-        points (x1, y1, col = "steelblue")
-        lines(x1, y1, col = "steelblue")
-        if (bothTails) { 
-            y1 = 1/h2
-            x1 = tails [y1 > ylim2[1] & y1 < ylim2[2]]
-            y1 = y1 [y1 > ylim2[1] & y1 < ylim2[2]]
-            points (x1, y1, col = "brown")
-            lines(x1, y1, col = "brown")
-        } 
-    }
-    
-    # Plot Deckers-Einmahl-deHaan Summary
-    if (select.doplot[3] & doplot) { 
-        plot (tails, z, type = "n", xlab = "tail depth", ylab = "alpha", 
-            ylim = ylim2, main = "Deckers-Einmahl-deHaan Summary")
-        grid()
-        abline(v = selected.tail, lty = 3)
-        y1 = 1/d1
-        x1 = tails [y1>ylim2[1] & y1<ylim2[2]]
-        y1 = y1 [y1>ylim2[1] & y1<ylim2[2]]
-        points (x1, y1, col = "steelblue")
-        lines(x1, y1, col = "steelblue") 
-        if (bothTails) { 
-            y1 = 1/d2
-            x1 = tails [y1 > ylim2[1] & y1 < ylim2[2]]
-            y1 = y1 [y1 > ylim2[1] & y1 < ylim2[2]]
-            points (x1, y1, col = "brown")
-            lines(x1, y1, col = "brown")
-        } 
-    }
-    
-    # Plot Estimates:
-    resultUpper = resultLower = NULL
-    for ( i in (1:length(tails)) ) {
-        tail = tails[i]
-        # Plotting Staff:
-        if (select.doplot[1]) {
-            xi = shaparmPickands(x, tail, ylim1, doplot = DOPLOT[i], 
-                plottype = plottype)  
-            p1[i] = xi$xi[1]
-            p2[i] = xi$xi[3] 
-        }
-        if (select.doplot[2]) { 
-            xi = shaparmHill(x, tail, ylim1, doplot = DOPLOT[i], 
-                plottype = plottype)  
-            h1[i] = xi$xi[1]
-            h2[i] = xi$xi[3] 
-        }
-        if (select.doplot[3]) {
-            xi = shaparmDEHaan(x, tail, ylim1, doplot = DOPLOT[i], 
-                plottype = plottype) 
-            d1[i] = xi$xi[1]
-            d2[i] = xi$xi[3] 
-        }      
-        resultUpper = rbind(resultUpper, c(tails[i], p1[i], h1[i], d1[i]))
-        if (bothTails) 
-            resultLower = rbind(resultLower, c(tails[i], p2[i], h2[i], d2[i]))
-    } 
-    colnames(resultUpper) = c("Upper", "Pickands", "Hill", "DEHaan")
-    resultUpper = data.frame(resultUpper)
-    if (bothTails) {
-        colnames(resultLower) = c("Lower", "Pickands", "Hill", "DEHaan")
-        resultLower = data.frame(resultLower)
-    }
-    
-    # Result:
-    ans = list(Upper = resultUpper)
-    if (bothTails) ans$Lower = resultLower
-        
-    # Return Value:
-    if (doplot) return(invisible(ans)) else ans
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-shaparmPickands = 
-function(x, p = 0.05, xiRange = NULL,  
-doplot = TRUE, plottype = c("both", "upper"), labels = TRUE, ...)     
-{   # A function written by Diethelm Wuertz
-    
-    # FUNCTION:
-    
-    # Order Residuals:
-    x = as.vector(x)
-    tail = p
-    if (is.null(xiRange)) xiRange = c(-0.5, 1.5)
-    yrange = xiRange
-    plottype = match.arg(plottype)
-    if (plottype == "both") bothTails = TRUE else bothTails = FALSE
-    ordered1 = rev(sort(abs(x[x < 0])))
-    if (bothTails) ordered2 = rev(sort(abs(x[x > 0])))
-    n1 = length(ordered1)
-    if (bothTails) n2 = length(ordered2) 
-    ordered1 = ordered1[1:floor(tail*n1)]    
-    if (bothTails) ordered2 = ordered2[1:floor(tail*n2)]
-    n1 = length(ordered1)
-    if (bothTails) n2 = length(ordered2)
-    
-    # Pickands Estimate:    
-    k1 = 1:(n1%/%4)
-    if (bothTails) k2 = 1:(n2%/%4) 
-    pickands1 = log ((c(ordered1[k1])-c(ordered1[2*k1])) /
-        (c(ordered1[2*k1])-c(ordered1[4*k1]))) / log(2)
-    if (bothTails) pickands2 = log ((c(ordered2[k2])-c(ordered2[2*k2])) /
-        (c(ordered2[2*k2])-c(ordered2[4*k2]))) / log(2)
-    
-    # Prepare Plot:
-    y1 = pickands1[pickands1 > yrange[1] & pickands1 < yrange[2]]
-    x1 = log10(1:length(pickands1))[pickands1 > yrange[1] & 
-        pickands1 < yrange[2]]
-    if (bothTails) {
-        y2 = pickands2[pickands2 > yrange[1] & pickands2 < yrange[2]]
-        x2 = log10(1:length(pickands2))[pickands2 > yrange[1] & 
-            pickands2 < yrange[2]]
-    }
-    # Labels:
-    if (labels) {
-        main = "Pickands Estimator"
-        xlab = "log scale"
-        ylab = "xi"
-    } else {
-        main = xlab = ylab = ""
-    }
-    
-    # Plot:
-    if (doplot) { 
-        par(err = -1)
-        plot (x1, y1, xlab = xlab, ylab = ylab, ylim = yrange, 
-            main = main, type = "n")  
-        title(sub = paste("tail depth:", as.character(tail)))
-            lines(x1, y1, type = "p", pch = 2, col = "steelblue")
-        if (bothTails) lines(x2, y2, type = "p", pch = 6, col = "brown") 
-        if (labels) grid()
-    }
-    
-    # Calculate invers "xi":
-    my1 = mean(y1, na.rm = TRUE)
-    if (bothTails) my2 = mean(y2, na.rm = TRUE)
-    sy1 = sqrt(var(y1, na.rm = TRUE))
-    if (bothTails) sy2 = sqrt(var(y2, na.rm = TRUE))
-    
-    # Plot:
-    if (doplot) {
-        par(err = -1)
-        lines(c(x1[1], x1[length(x1)]), c(my1,my1), type = "l", 
-            lty = 1, col = "steelblue")
-        if (bothTails) lines(c(x2[1], x2[length(x2)]), c(my2, my2), 
-            type = "l", lty = 1, col = "brown") 
-    }
-    
-    # Result: 
-    result = list(xi = c(my1, sy1))   
-    if (bothTails) result = list(xi = c(my1, sy1, my2, sy2))
-    
-    # Return Result:
-    result
-}
- 
-
-# ------------------------------------------------------------------------------
-
-   
-shaparmHill = 
-function(x, p = 0.05, xiRange = NULL, 
-doplot = TRUE, plottype = c("both", "upper"), labels = TRUE, ...)     
-{   # A Function written by Diethelm Wuertz
-    
-    # ORDER RESIDUALS:
-    x = as.vector(x)
-    tail = p
-    if (is.null(xiRange)) xiRange = c(-0.5, 1.5)
-    yrange = xiRange
-    plottype = match.arg(plottype)
-    if (plottype == "both") bothTails = TRUE else bothTails = FALSE
-    ordered1 = rev(sort(abs(x[x < 0])))
-    if (bothTails) ordered2 = rev(sort(abs(x[x > 0])))
-    n1 = length(ordered1)
-    if (bothTails) n2 = length(ordered2) 
-    ordered1 = ordered1[1:floor(tail*n1)]    
-    if (bothTails) ordered2 = ordered2[1:floor(tail*n2)]
-    n1 = length(ordered1)
-    if (bothTails) n2 = length(ordered2)
-    
-    # HILLS ESTIMATE:
-    hills1 = c((cumsum(log(ordered1))/(1:n1)-log(ordered1))[2:n1])     
-    if (bothTails) hills2 = c((cumsum(log(ordered2))/(1:n2) -
-        log(ordered2))[2:n2])
-        
-    # PREPARE PLOT:
-    y1 = hills1[hills1 > yrange[1] & hills1 < yrange[2]]
-    x1 = log10(1:length(hills1))[hills1 > yrange[1] & hills1 < yrange[2]]
-    if (bothTails) {
-        y2 = hills2[hills2 > yrange[1] & hills2 < yrange[2]]
-        x2 = log10(1:length(hills2))[hills2 > yrange[1] & hills2 < yrange[2]]
-    }
-    
-    # Labels:
-    if (labels) {
-        main = "Hill Estimator"
-        xlab = "log scale"
-        ylab = "xi"
-    } else {
-        main = xlab = ylab = ""
-    }
-    
-    # Plot:
-    if (doplot) {
-        par(err = -1)
-        plot (x1, y1, xlab = xlab, ylab = ylab, ylim = yrange, 
-            main = main, type="n")
-        if (labels) title(sub = paste("tail depth:", as.character(tail)))
-        lines(x1, y1, type = "p", pch = 2, col = "steelblue")
-        if (bothTails) lines(x2, y2, type = "p", pch = 6, col = "brown") 
-        if (labels) grid()
-    }
-    
-    # CALCULATE INVERSE XI:
-    my1 = mean(y1, na.rm = TRUE)
-    if (bothTails) my2 = mean(y2, na.rm = TRUE)
-    sy1 = sqrt(var(y1, na.rm = TRUE))
-    if (bothTails) sy2 = sqrt(var(y2, na.rm = TRUE))
-    if (doplot) {
-        par(err=-1)
-        lines(c(x1[1], x1[length(x1)]), c(my1,my1), type="l",
-            lty = 1, col = "steelblue")
-        if (bothTails) lines(c(x2[1], x2[length(x2)]), c(my2,my2), 
-            type = "l",lty = 1, col = "brown") 
-    }
-    
-    # Result:
-    result = list(xi = c(my1, sy1))   
-    if (bothTails) result = list(xi = c(my1, sy1, my2, sy2))
-    
-    # Return Result:
-    result       
-}
-       
-
-# ------------------------------------------------------------------------------
-
-
-shaparmDEHaan = 
-function(x, p = 0.05, xiRange = NULL,  
-doplot = TRUE, plottype = c("both", "upper"), labels = TRUE, ...)     
-{   # A function written by Diethelm Wuertz
-    
-    # ORDER RESIDUALS:
-    x = as.vector(x)
-    tail = p
-    if (is.null(xiRange)) xiRange = c(-0.5, 1.5)
-    yrange = xiRange
-    plottype = match.arg(plottype)
-    if (plottype == "both") bothTails = TRUE else bothTails = FALSE
-    ordered1 = rev(sort(abs(x[x < 0])))
-    if (bothTails) ordered2 = rev(sort(abs(x[x > 0])))
-    n1 = length(ordered1)
-    if (bothTails) n2 = length(ordered2) 
-    ordered1 = ordered1[1:floor(tail*n1)]    
-    if (bothTails) ordered2 = ordered2[1:floor(tail*n2)]
-    n1 = length(ordered1)
-    if (bothTails) n2 = length(ordered2)
-    
-    # DECKERS-EINMAHL-deHAAN ESTIMATE:
-    ns0 = 1
-    n1m = n1-1; ns1 = ns0; ns1p = ns1+1
-    bod1 = c( cumsum(log(ordered1))[ns1:n1m]/(ns1:n1m) -
-            log(ordered1)[ns1p:n1] ) 
-    bid1 = c( cumsum((log(ordered1))^2)[ns1:n1m]/(ns1:n1m) -
-            2*cumsum(log(ordered1))[ns1:n1m]*log(ordered1)[ns1p:n1]/(ns1:n1m) +
-            ((log(ordered1))^2)[ns1p:n1] )
-    dehaan1 = ( 1.0 + bod1 + ( 0.5 / (  bod1^2/bid1 - 1 ) ))
-    if (bothTails) {
-    n2m = n2-1; ns2 = ns0; ns2p = ns2+1
-    bod2 = c( cumsum(log(ordered2))[ns2:n2m]/(ns2:n2m) -
-            log(ordered2)[ns2p:n2] ) 
-    bid2 = c(  cumsum((log(ordered2))^2)[ns2:n2m]/(ns2:n2m) -
-            2*cumsum(log(ordered2))[ns2:n2m]*log(ordered2)[ns2p:n2]/(ns2:n2m) +
-            ((log(ordered2))^2)[ns2p:n2] )
-    dehaan2 = ( 1.0 + bod2 + ( 0.5 / (  bod2^2/bid2 - 1 ) )) }
-    
-    # PREPARE PLOT:
-    y1 = dehaan1[dehaan1 > yrange[1] & dehaan1 < yrange[2]]
-    x1 = log10(1:length(dehaan1))[dehaan1 > yrange[1] & dehaan1 < yrange[2]]
-    if (bothTails) {
-        y2 = dehaan2[dehaan2 > yrange[1] & dehaan2 < yrange[2]]
-        x2 = log10(1:length(dehaan2))[dehaan2 > yrange[1] & 
-            dehaan2 < yrange[2]] 
-    }
-    
-    # Labels:
-    if (labels) {
-        main = "Deckers - Einmahl - de Haan Estimator"
-        xlab = "log scale"
-        ylab = "xi"
-    } else {
-        main = xlab = ylab = ""
-    }
-    
-    # Plot:
-    if (doplot) { 
-        par(err = -1)
-        plot (x1, y1, xlab = xlab, ylab = ylab, ylim = yrange,
-            main = main, type = "n")
-        if (labels) title(sub = paste("tail depth:", as.character(tail)))
-        lines(x1, y1, type = "p", pch = 2, col = "steelblue")
-        if (bothTails) lines(x2, y2, type = "p", pch = 6, col = "brown") 
-        if (labels) grid()
-    }
-            
-    # CALCULATE INVERSE XI:
-    my1 = mean(y1, na.rm = TRUE)
-    if (bothTails) my2 = mean(y2, na.rm = TRUE)
-    sy1 = sqrt(var(y1, na.rm = TRUE))
-    if (bothTails) sy2 = sqrt(var(y2, na.rm = TRUE))
-    if (doplot) {
-        par(err = -1)
-        lines(c(x1[1], x1[length(x1)]), c(my1,my1), type = "l", 
-            lty = 1, col = "steelblue")
-        if (bothTails) lines(c(x2[1], x2[length(x2)]), c(my2, my2), 
-            type = "l", lty = 1, col = "brown") 
-    }
-        
-    # Result:
-    result = list(xi = c(my1, sy1))   
-    if (bothTails) result = list(xi = c(my1, sy1, my2, sy2))
-    
-    # Return Result:
-    result
 }
 
 

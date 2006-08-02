@@ -691,6 +691,7 @@ function (x, p = 1:4, doplot = TRUE, labels = TRUE, ...)
     x = as.vector(x)
     
     # Settings:
+    P = length(p)
     plottype = "autoscale"
     
     # Convert x to a vector, if the input is a data.frame.
@@ -718,19 +719,16 @@ function (x, p = 1:4, doplot = TRUE, labels = TRUE, ...)
         if (labels) grid()
     }
     
-    # Line Types / Color numbering:
-    i = 1
-    
     # Suppress warnings for points outside the frame:
-    ratios = matrix(rep(0, times = length(x)*length(p)), byrow = TRUE, 
-        ncol = length(p))
+    ratios = matrix(rep(0, times = length(x)*P), byrow = TRUE, ncol = P)
     if (doplot) par(err = -1)
-    
+
     # Loop over all exponents p:
+    i = 1
     for (q in p) {
         rnp = cummax(abs(x)^q) / cumsum(abs(x)^q)
+        ratios[, i] = rnp
         i = i + 1
-        ratios[,q] = rnp
         if (doplot) lines (rnp, col = i, lty = i) 
     }
 
@@ -1063,13 +1061,11 @@ function (x, block = c("monthly", "quarterly"), doplot = FALSE)
     # FUNCTION:
     
     # Check Type:
-    if (class(x) == "zoo") {
-        x = as.timeSeries(x)
-    }
     if (class(x) == "timeSeries") {
         if (dim(x)[2] > 1) stop("x must be an univariate time series")
     } else {
         x = as.vector(x)
+        stopifnot(is.numeric( block[1])) 
     }
     
     # Maxima:
@@ -1109,7 +1105,8 @@ function (x, block = c("monthly", "quarterly"), doplot = FALSE)
             nblocks = (length(data) %/% block) + 1
             grouping = rep(1:nblocks, rep(block, nblocks))[1:length(data)]
             maxValue = as.vector(tapply(data, grouping, FUN = max))
-            maxValue = as.ts(maxValue)
+            maxIndex = as.vector(tapply(as.vector(data), grouping, FUN = which.max))
+            names(maxValue) = paste(maxIndex)    
         } else {
             stop("For non-timeSeries Objects blocks must be numeric")
         }
@@ -1128,7 +1125,7 @@ function (x, block = c("monthly", "quarterly"), doplot = FALSE)
 
 
 findThreshold =
-function(x, n = floor(0.05*length(as.vector(x))))
+function(x, n = floor(0.05*length(as.vector(x))), doplot = FALSE)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -1146,23 +1143,26 @@ function(x, n = floor(0.05*length(as.vector(x))))
     # FUNCTION:
     
     # Check Type:
-    if (class(x) == "zoo") {
-        x = as.timeSeries(x)
-    }
     if (class(x) == "timeSeries") {
         if (dim(x)[2] > 1) stop("x must be an univariate time series")
-        x = as.vector(x)
     }
-    
-    # Continue:
-    x = rev(sort(x))
-    thresholds = unique(x)
-    indices = match(x[n], thresholds)
+   
+    # Threshold:
+    X = rev(sort(as.vector(x)))
+    thresholds = unique(X)
+    indices = match(X[n], thresholds)
     indices = pmin(indices + 1, length(thresholds)) 
     
     # Result:
     ans = thresholds[indices]
     names(ans) = paste("n=", as.character(n), sep = "")
+    
+    # Plot:
+    if (doplot) {
+        plot(x, type = "h", col = "steelblue", main = "Threshold Value")
+        grid()
+        for (u in ans) abline (h = u, lty = 3, col = "red")   
+    }
     
     # Return Value:
     ans
@@ -1173,7 +1173,7 @@ function(x, n = floor(0.05*length(as.vector(x))))
 
 
 pointProcess = 
-function(x, u = quantile(x, 0.95))
+function(x, u = quantile(x, 0.95), doplot = FALSE)
 {   # A function implemented by Diethelm Wuertz
 
     # Arguments:
@@ -1186,20 +1186,30 @@ function(x, u = quantile(x, 0.95))
     #   pointProcess(as.timeSeries(data(daxRet)))
     
     # Point Process:
-    if (class(x) == "zoo") {
-        x = as.timeSeries(x)
-    }
-    if (class(x) == "timeSeries") {
+    CLASS = class(x)
+    if (CLASS == "timeSeries") {
         if (dim(x)[[2]] > 1) stop("x must be a univariate time series")
         X = x[, 1][x@Data[, 1] > u]
-    } else if (class(x) == "numeric") {
-        X = x[x > u]
+    } else {
+        X = as.vector(x)
+        X = X[X > u]
         N = length(x)
         IDX = (1:N)[x > u]
         attr(X, "index") <- IDX
-        X = as.ts(X)
-    } else {
-        stop("x is not a timeSeries or numeric vector")    
+    } 
+    
+    # Plot:
+    if (doplot) {
+        if (CLASS == "timeSeries") {
+            plot(X, type = "h", xlab = "Series")
+        } else {
+            plot(IDX, X, type = "h", xlab = "Series")
+        }
+        mText = paste("Threshold =", u, "| N =", length(as.vector(X)))
+        mtext(mText, side = 4, cex = 0.7, col = "grey")
+        abline(h = u, lty = 3, col = "red")
+        title(main = "Point Process")
+        grid()
     }
     
     # Return Value:
@@ -1211,22 +1221,20 @@ function(x, u = quantile(x, 0.95))
 
 
 deCluster = 
-function(x, run = 20)
+function(x, run = 20, doplot = TRUE)
 {   # A function implemented by Diethelm Wuertz
 
-    # Examples:
-    #   deCluster(pointProcess(as.timeSeries(data(daxRet))))
+    # Description:
+    #   Decluster a Point Process.
+    
+    # Example:
+    #   deCluster(pointProcess(as.timeSeries(daxRet)))
     
     # FUNCTION:
 
     # Check:
-    if (class(x) == "zoo") {
-        x = as.timeSeries(x)
-    }
-    if (class(x) != "timeSeries") {
-        stop("x must be a time series object")
-    }
-       
+    stopifnot(class(x) == "timeSeries")
+   
     # Decluster time Series:
     positions = seriesPositions(x)
     data = seriesData(x) 
@@ -1237,11 +1245,13 @@ function(x, run = 20)
     toIndex = c(fromIndex[-1]-1, N)
     from = positions[fromIndex]
     to = positions[toIndex]
+    
     # Maximum Values:
     maxValue = applySeries(x, from, to, FUN = max)
     maxIndex = applySeries(x, from, to, FUN = which.max)@Data
     lengthIndex = applySeries(x, from, to, FUN = length)@Data
     maxPosition = rownames(x@Data)[cumsum(lengthIndex)-lengthIndex+maxIndex]
+    
     # Add Attributes: Update rownames, colnames and recordIDs
     maxValue@positions = rownames(maxValue@Data) = 
         as.character(maxPosition)  
@@ -1249,10 +1259,18 @@ function(x, run = 20)
         paste("max.", x@units, sep = "")  
     maxValue@recordIDs = data.frame(
         from = as.character(from), 
-        to = as.character(to) )
+        to = as.character(to) )   
         
-    # Decluster Numeric Vector:
- 
+    # Plot:
+    if (doplot) {
+        plot(maxValue, type = "h", xlab = "Series")
+        title(main = "Declustered Point Process")
+        mText = paste("Run Length =", run, "| N =", length(as.vector(maxValue)))
+        mtext(mText, side = 4, cex = 0.7, col = "grey")
+        abline(h = min(as.vector(maxValue)), lty = 3, col = "red")
+        grid()
+    }
+       
     # Return Value:
     maxValue
 }
