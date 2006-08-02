@@ -57,9 +57,9 @@ xmpExtremes(prompt = "")
 
 
 \examples{
+\dontrun{
 ## SOURCE("fExtremes.057A-ExtremesTools")
 
-\dontrun{
 ## xmpfExtremes -
    # Popup the examples menu:
    xmpfExtremes()

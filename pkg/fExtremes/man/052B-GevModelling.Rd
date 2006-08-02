@@ -389,6 +389,7 @@ Embrechts, P., Klueppelberg, C., Mikosch, T. (1997);
 
   
 \examples{
+\dontrun{
 ## SOURCE("fExtremes.052A-GevModelling")
 
 ## gevSim -
@@ -476,6 +477,7 @@ Embrechts, P., Klueppelberg, C., Mikosch, T. (1997);
    x = rgev(10000, xi = 1/4)
    shaparmPlot(x, revert = TRUE, both.tails = FALSE)
    lines(c(0.01, 0.1), c(4, 4), col = "steelblue")  
+}
 }
 
 

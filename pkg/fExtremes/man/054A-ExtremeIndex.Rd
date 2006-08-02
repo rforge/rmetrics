@@ -189,8 +189,9 @@ Embrechts, P., Klueppelberg, C., Mikosch, T. (1997);
 
 
 \examples{
-## SOURCE("fExtremes.055A-ExtremeIndex")
 \dontrun{
+## SOURCE("fExtremes.055A-ExtremeIndex")
+
 ## Extremal Index for the right and left tails 
 ## of the BMW log returns:
    xmpExtremes("\nStart: Plot the Extremal Index >")

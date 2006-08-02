@@ -403,8 +403,9 @@ Embrechts, P., Klueppelberg, C., Mikosch, T. (1997);
 
 
 \examples{ 
-## SOURCE("fExtremes.051A-ExtremesData")
 \dontrun{
+## SOURCE("fExtremes.051A-ExtremesData")
+
 ## emdPlot -
    xmpExtremes("\nStart: Empirical Distribution Function >")
    # Danish fire insurance data show Pareto tail behaviour:
