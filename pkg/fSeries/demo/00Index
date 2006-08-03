@@ -1,6 +1,7 @@
 funSeries                   fSeries Function Addon
-funUrca                     Builtin Functions from Package urca
-funUroot                    Builtin Functions from Package uroot
+
+urcaBuiltin                 Builtin Functions from Package urca
+urootBuiltin                Builtin Functions from Package uroot
 
 xmpDWChapter031             ARMA Time Series Modelling
 xmpDWChapter032             Time Series with Trends: Unit Roots
