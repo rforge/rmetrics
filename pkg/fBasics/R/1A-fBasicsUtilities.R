@@ -30,8 +30,10 @@
 ################################################################################
 # FUNCTION:                 TWO-DIMENSIONAL PLOT UTILITIES:    
 #  .tsPlot                   Returns a time series plot
+#  .residualsPlot            Returns a residual series plot
 #  .histPlot                 Returns a histogram plot
 #  .densityPlot              Returns a kernel density estimate plot
+#  .firePlot                 Returns a fitted values vs.residuals plot
 # FUNCTION:                 THREE-DIMENSIONAL PLOT UTILITIES:
 #  .circlesPlot              Returns a circles plot indexing 3rd variable
 #  .perspPlot                Returns a perspective plot in 2 dimensions
@@ -62,9 +64,11 @@
 
 
 ################################################################################  
-#  .tsPlot                Returns a time series plot
-#  .histPlot              Returns a histogram plot
-#  .densityPlot           Returns a kernel density estimate plot
+#  .tsPlot                   Returns a time series plot
+#  .residualsPlot            Returns a residual series plot
+#  .histPlot                 Returns a histogram plot
+#  .densityPlot              Returns a kernel density estimate plot
+#  .firePlot                 Returns a fitted values vs.residuals plot
 
 
 .tsPlot = 
@@ -74,16 +78,92 @@ function(x, ...)
     # Description:
     #   Returns time series graphs in a common plot
   
+    # Arguments:
+    #   x - an univariate time series
+    
     # Changes:
     #
     
     # FUNCTION:
     
     # Plot:
-    plot(x, ylab = "", ...)
+    plot(x = x, ...)
+    grid()
+    abline(h = 0, col = "grey")
          
     # Return Value:
     invisible(x)
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.responsesPlot = 
+function(x, y = NULL, ...) 
+{   # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   Returns time series graph of responses and fitted values
+    
+    # Arguments:
+    #   x - an univariate time series of responses
+    #   y - an univariate time series of fitted values
+  
+    # Changes:
+    #
+    
+    # FUNCTION:
+    
+    # Get Data:
+    x = as.vector(x)
+    y = as.vector(y)
+    
+    # Responses Plot:
+    plot(x, type = "l", ylab = "Responses", 
+        main = "Responses & Fitted Values", col = "steelblue", ...)
+    rug(x, ticksize = 0.01, side = 4)
+    grid()
+    abline(h = 0, col = "grey")
+    
+    # Add fitted values:
+    if (!is.null(y)) points(y, pch = 19, col = "red")
+           
+    # Return Value:
+    invisible()
+}
+     
+   
+# ------------------------------------------------------------------------------
+
+
+.residualsPlot = 
+function(x, ...) 
+{   # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   Returns time series graph of residuals
+    
+    # Arguments:
+    #   x - an univariate time series of residuals
+  
+    # Changes:
+    #
+    
+    # FUNCTION:
+    
+    # Get Data:
+    x = as.vector(x)
+    
+    # Plot:
+    plot(x, type = "l", ylab = "Residuals", 
+        main = "Residual Series", col = "steelblue", ...)
+    rug(x, ticksize = 0.01, side = 4)
+    grid()
+    abline(h = 0, col = "grey")
+         
+    # Return Value:
+    invisible()
 }
      
    
@@ -91,7 +171,7 @@ function(x, ...)
 
 
 .histPlot = 
-function(x, col = "steelblue4", border = "white", 
+function(x, col = "steelblue", border = "white", 
 main = x@units, add.fit = TRUE, ...) 
 {   # A function implemented by Diethelm Wuertz
 
@@ -108,6 +188,7 @@ main = x@units, add.fit = TRUE, ...)
     xlim = NULL
     
     # Transform 'timeSeries':
+    x = as.timeSeries(x)
     units = x@units
     DIM = dim(x@Data)[2]
       
@@ -118,19 +199,36 @@ main = x@units, add.fit = TRUE, ...)
     
     # Histogram Plots:
     for (i in 1:DIM) {
+        
+        # Histogram:
         Values = as.vector(x@Data[, i])
         mean = mean(Values)
+        median = median(Values)
         sd = sd(Values)
         if (is.null(xlim)) 
             xlim = c(qnorm(0.001, mean, sd), qnorm(0.999, mean, sd)) 
         result = hist(x = Values, col = col, border = border, 
             breaks = "FD", main = main[i], xlim = xlim, probability = TRUE,
-            ...)  
+            ...) 
+             
+        # Add Fit:  
         if (add.fit) {
             s = seq(xlim[1], xlim[2], length = 201)
-            lines(s, dnorm(s, mean, sd), col = "brown")
+            lines(s, dnorm(s, mean, sd), lwd = 2, col = "brown")
         }
         ans[[i]] = result  
+        
+        # Add Mean/Median:
+        abline(v = mean, lwd = 2, col = "orange")
+        abline(v = median(Values), lwd = 2, col = "darkgreen")
+        Text = paste("Median:", round(median, 2), "| Mean:", round(mean, 2))
+        mtext(Text, side = 4, adj = 0, col = "darkgrey")
+  
+        # Add Zero Line:
+        abline(h = 0, col = "grey")
+        
+        # Add Rug Plot:
+        rug(Values)
     }
     names(ans) = units
     
@@ -143,7 +241,7 @@ main = x@units, add.fit = TRUE, ...)
 
 
 .densityPlot = 
-function(x, col = "steelblue4", main = x@units, add.fit = TRUE, ...)
+function(x, col = "steelblue", main = x@units, add.fit = TRUE, ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -156,6 +254,7 @@ function(x, col = "steelblue4", main = x@units, add.fit = TRUE, ...)
     # FUNCTION:
     
     # Transform 'timeSeries':
+    x = as.timeSeries(x)
     units = x@units
     DIM = dim(x@Data)[2]
     xlim = NULL
@@ -167,22 +266,43 @@ function(x, col = "steelblue4", main = x@units, add.fit = TRUE, ...)
     
     # Histogram Plots:
     for (i in 1:DIM) {
+        
+        # Density:
         Values = as.vector(x@Data[, i])
         mean = mean(Values)
+        median = median(Values)
         sd = sd(Values)
         if (is.null(xlim)) 
             xlim = c(qnorm(0.001, mean, sd), qnorm(0.999, mean, sd)) 
         Density = density(Values, ...)
         plot(x = Density, xlim = xlim, col = col, type = "l", 
-            main = main[i], ...)  
+            lwd = 2, main = main[i], ...)  
         ans[[i]] = Density  
+        
+        # Grid:
+        grid()
+        
         # Add Fit:
         if (add.fit) {
             s = seq(xlim[1], xlim[2], length = 201)
-            lines(s, dnorm(s, mean, sd), col = "brown")
+            lines(s, dnorm(s, mean, sd), lwd = 2, col = "brown")
         }
-        # Grid:
-        grid()
+        
+        # Add Mean/Median:
+        abline(v = mean, lwd = 2, col = "orange")
+        abline(v = median(Values), lwd = 2, col = "darkgreen")
+        Text = paste(
+            "Median:", round(median, 2), 
+            "| Mean:", round(mean, 2),
+            "| Bandwidth:", round(Density$bw, 3) )
+        mtext(Text, side = 4, adj = 0, col = "darkgrey")
+  
+        # Add Zero Line:
+        abline(h = 0, col = "grey")
+        
+        # Add Rug Plot:
+        rug(Values)
+        
     }
 
     # Names:
@@ -191,6 +311,180 @@ function(x, col = "steelblue4", main = x@units, add.fit = TRUE, ...)
     # Return Value:
     invisible(ans)
 }
+
+
+# ------------------------------------------------------------------------------
+
+
+.firePlot = 
+function(x, y, method = c("scatter", "hist"), ...) 
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Returns fitted values vs. residuals plots
+
+    # Arguments:
+    #   x - univariate time series (residuals)
+    #   y - univariate time series (fitted)
+     
+    # Changes:
+    #
+    
+    # FUNCTION:  
+    
+    # Check Arguments:
+    method = match.arg(method)
+    
+    # Get Data:
+    x = as.vector(x)
+    y = as.vector(y)
+    
+    
+    if (method == "scatter") {
+        
+        # Scatter Plot:
+        plot(x, y, 
+            xlab = "Fitted Values", ylab = "Residuals", 
+            main = "Residuals vs Fitted",
+            pch = 19, col = "steelblue")
+        panel.smooth(x, y)
+        abline(h = 0, lty = 3, col = "grey")
+        rug(x, ticksize = 0.01, side = 3)
+        rug(y, ticksize = 0.01, side = 4)
+        
+    } else if (method == "hist") {
+       
+        # Histogram Plot:
+        
+        # Save default, for resetting ... 
+        def.par = par(no.readonly = TRUE) 
+    
+        # Layout:
+        nf = layout(matrix(c(2, 0, 1, 3), 2, 2, byrow = TRUE), c(3, 1), 
+            c(1, 3), TRUE)
+        
+        # Scatterplot:
+        par(mar = c(3 ,3, 1, 1))
+        plot(x, y, xlim = range(x), ylim = range(y), 
+            xlab = "", ylab = "", pch = 19, col = "steelblue")
+        panel.smooth(x, y)
+        abline(h = 0, lty = 3, col = "grey")
+        rug(x, side = 3)
+        rug(y, side = 4)
+        
+        # Histogram:
+        xhist = hist(x, nclass = 15, plot = FALSE)
+        yhist = hist(y, nclass = 15, plot = FALSE)
+        top = max(c(xhist$counts, yhist$counts))
+        
+        # X-Side:
+        par(mar = c(0, 3, 1, 1))
+        Main = "\n                            Fitted"
+        barplot(xhist$counts, axes = FALSE, ylim = c(0, top), 
+            space = 0, col = "steelblue", border = "white",
+            main = Main)
+        abline(h = 0, lwd = 2, col = "grey")
+        
+        # Y-Side:
+        par(mar = c(3, 0, 1, 1))
+        barplot(yhist$counts, axes = FALSE, xlim = c(0, top), 
+            space = 0, col = "steelblue", , border = "white", 
+            horiz = TRUE, main = "Residuals")
+        abline(v = 0, lwd = 2, col = "grey")
+        
+        # Reset:
+        par(def.par)
+        
+    }
+    
+    # Return Value:
+    invisible() 
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.qqbayesPlot = 
+function(x, labels = TRUE, ...) 
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Example of a Normal quantile plot of data x to provide a visual
+    #   assessment of its conformity with a normal (data is standardised    
+    #   first).
+
+    # Details:
+    #   The ordered data values are posterior point estimates of the 
+    #   underlying quantile function. So, if you plot the ordered data 
+    #   values (y-axis) against the exact theoretical quantiles (x-axis),   
+    #   you get a scatter that should be close to a straight line if the 
+    #   data look like a random sample from the theoretical distribution. 
+    #   This function chooses the normal as the theory, to provide a 
+    #   graphical/visual assessment of how normal the data appear.
+    #   To help with assessing the relevance of sampling variability on 
+    #   just "how close" to the normal the data appears, we add (very) 
+    #   approximate posterior 95% intervals for the uncertain quantile 
+    #   function at each point (Based on approximate theory) .
+
+    # Author:
+    #   Prof. Mike West, mw@stat.duke.edu 
+    
+    # Note:
+    #   Source from
+    #   http://www.stat.duke.edu/courses/Fall99/sta290/Notes/
+
+    # FUNCTION:
+    
+    # Convert Type:
+    x = as.vector(x)
+    
+    # Settings:
+    mydata = x
+    n = length(mydata) 
+    p = (1:n)/(n+1)
+    x = (mydata-mean(mydata))/sqrt(var(mydata))
+    x = sort(x)
+    z = qnorm(p)
+ 
+    # Plot:
+    if (labels) {
+        xlab = "Standard Normal Quantiles"
+        ylab = "Ordered Data"
+        main = "Normal QQ-Plot with 95% Intervals"  
+    } else {
+        main = xlab = ylab = ""
+    }
+    if (labels) {
+        plot(z, x, pch = 19, col = "steelblue", 
+            xlab = xlab, ylab = ylab, main = main, ...)
+        abline(0, 1, col = "grey")
+        grid() 
+    } else {
+        plot(z, x, 
+            xlab = xlab, ylab = ylab, main = main, ...)
+        abline(0, 1, col = "grey")
+    }
+    rug(z, ticksize = 0.01, side = 3)
+    rug(x, ticksize = 0.01, side = 4)
+  
+    # 95% Intervals:
+    s = 1.96*sqrt(p*(1-p)/n)
+    pl = p-s
+    i = pl<1&pl>0
+    lower = quantile(x, probs = pl[i])
+    lines(z[i], lower, col = "red")
+    pl = p+s
+    i = pl < 1 & pl > 0
+    upper = quantile(x, probs = pl[i])
+    lines(z[i], upper, col = "red")
+    
+    # Result:
+    result = data.frame(lower, upper)
+    
+    # Return Value:
+    invisible(x)
+}     
 
 
 ################################################################################
