@@ -411,7 +411,7 @@ function(e1, e2 = 1)
     
     # Match positions and FinCenter?
     if (i1 && i2) {
-        if (!identical(e1@positions, e2@positions)) 
+        if (!identical(as.vector(e1@positions), as.vector(e2@positions))) 
             stop("positions slot must match")
         if (!identical(e1@FinCenter, e2@FinCenter)) 
             stop("FinCenter slot must match") 
