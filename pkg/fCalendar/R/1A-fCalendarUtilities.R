@@ -70,6 +70,10 @@
 #  .isISO8601                    Checks if the date/time is ISO8601 formatted
 # FUNCTION:                     DESCRIPTION:
 #  .isPOSIX                      Checks for an object of class POSIX
+# GENERAL UTILITIES:            DESCRIPTION:
+#  .print                        Internal print method
+#  .plot                         Internal plot method
+#  .summary                      Internal summary method
 ################################################################################
 
 
@@ -1440,6 +1444,40 @@ function(x)
     
     # Return Value:
     ans
+}
+
+
+################################################################################
+# GENERAL UTILITIES:            DESCRIPTION:
+#  .print                        Internal print method
+#  .plot                         Internal plot method
+#  .summary                      Internal summary method
+
+
+.print =
+function(x, ...)
+{
+    UseMethod(".print")
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.plot =
+function(x, ...)
+{
+    UseMethod(".plot")
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.summary =
+function(object, ...)
+{
+    UseMethod(".summary")
 }
 
 
