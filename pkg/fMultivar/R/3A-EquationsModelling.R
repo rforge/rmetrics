@@ -28,8 +28,11 @@
 
 
 ################################################################################
-# FUNCTION:             REGRESSION MODELLING:
-#  eqnsFit               Wrapper Function for "systemfit" and "sem" Models:
+# REQUIRED PACKAGE:     
+#  systemfit
+# FUNCTION:             SYSTEMFIT WRAPPER:
+#  'fSYSTEM'             S4 Class Representation
+#  systemFit             Wrapper Function for "systemfit" and "sem" Models:
 #  * OLS                  Ordinary Least Squares
 #  * WLS                  Weighted Least Squares
 #  * SUR                  Seemingly Unrelated Regressions
@@ -38,20 +41,23 @@
 #  * 3SLS                 Three-Stage Least Squares
 #  * W3SLS                Weighted Three-Stage Least Squares
 # S3-METHODS:           DESCRIPTION:
-#  print.fEQNS           S3: Print method for an object of class fEQNS  
-#  summary.fEQNS         S3: Summary method for an object of class fEQNS
+#  print.fSYSTEM         S3: Print method for an object of class fSYSTEM  
+#  ? plot 
+#  summary.fSYSTEM       S3: Summary method for an object of class fSYSTEM
 # S3-METHODS:           DESCRIPTION:
-#  coef.fEQNS            S3: Method for coefficients
-#  fitted.fEQNS          S3: Method for fitted values
-#  residuals.fEQNS       S3: Method for residual values
-#  vcov.fEQNS            S3: Method for variance-covariance Matrix
+#  coef.fSYSTEM          S3: Method for coefficients
+#  coefficients.fSYSTEM  S3: Synonyme for coef.fSYSTEM
+#  fitted.fSYSTEM        S3: Method for fitted values
+#  residuals.fSYSTEM     S3: Method for residual values
 # S3-METHODS:           DESCRIPTION:
-#  predict.fEQNS         S3: Prediction method for an object of class fEQNS
-# S-PLUS LIKE:          WRAPPER:
-#  systemfitBuiltin      Builtin contributed R package "systemfit"
+#  predict.fSYSTEM       S3: Prediction method for an object of class fSYSTEM
+# FINMETRICS LIKE:      WRAPPER:
 #  SUR                   SUR Wrapper
 ################################################################################
-# REQUIRED PACLKAGE - PACKAGE DESCRIPTION:
+
+
+################################################################################
+# REQUIRED PACKAGE - PACKAGE DESCRIPTION:
 # Package: systemfit
 # Version: 0.7-2
 # Date: 2004/08/19
@@ -72,23 +78,28 @@
 ################################################################################
 
 
-setClass("fEQNS", 
+setClass("fSYSTEM", 
     representation(
         call = "call",
-        formulas = "list",
-        data = "data.frame",
+        formula = "list",
         method = "character",
+        parameter = "list",
+        data = "list",
         fit = "list", 
-        predicted.values = "list",  
+        residuals = "data.frame",
+        fitted.values = "data.frame",
+        predicted.values = "data.frame",  
         title = "character",
-        description = "character"))
-        
+        description = "character"
+    )
+)
+       
       
 # ------------------------------------------------------------------------------
 
    
-eqnsFit = 
-function(formulas, data = list(), 
+systemFit = 
+function(formula, data = list(), 
 method = c("OLS", "WLS", "SUR", "2SLS", "W2SLS", "3SLS", "W3SLS"), 
 title = NULL, description = NULL, ...)
 {   # A function implemented by Diethelm Wuertz
@@ -97,7 +108,7 @@ title = NULL, description = NULL, ...)
     #   Common function call for several system equation models.
     
     # Arguments:
-    #   formulas - the list of formulas describing the system of 
+    #   formula - the list of formulae describing the system of 
     #       equations
     #   data - the input data set in form of a 'data.frame' or 
     #       'timeSeries' object
@@ -111,7 +122,7 @@ title = NULL, description = NULL, ...)
     #       underlying function 'systemfit' 
     
     # Value:
-    # The function 'eqnsFit' returns an object of class "fEQNS"
+    # The function 'systemFit' returns an object of class "fSYSTEM"
     # with the following slots:
     #   @call - the matched function call
     #   @data - the input data in form of a 'data.frame' or a 
@@ -119,7 +130,7 @@ title = NULL, description = NULL, ...)
     #   @description - a character string which allows for a brief 
     #       project description
     #   @method - the character string describing the desired method
-    #   @formulas - the list of formulas describing the system of 
+    #   @formula - the list of formulae describing the system of 
     #       equations
     #   @title - a character string which allows for a project title
     #   @fit - a summary of the  results as a list returned from the 
@@ -127,31 +138,33 @@ title = NULL, description = NULL, ...)
 
     # FUNCTION:
     
-    # Fit:
-    ans = systemfit(method = method[1], eqns = formulas, 
-        data = as.data.frame(data), ...) 
+    # Match Arguments:
+    method = match.arg(method)  
     
-    # Rmetrics Conform Output:
-    fit = list()
-    fit$fit = ans   
+    # Fit:
+    fit = systemfit(method = method, eqns = formula, 
+        data = as.data.frame(data), ...) 
+    class(fit) = c("list", "systemfit")
+    
+    # Add Rmetrics Conform Output: 
     fit$name = "systemfit"
-    fit$coef = coef(ans)
-    fit$fitted = fitted(ans)
-    fit$residuals = residuals(ans)
-    fit$vcov = vcov(ans)
+    fit$coef = coef(fit)
         
     # Add Title and Description:
     if (is.null(title)) title = paste(method[1], "Estimation")
-    if (is.null(description)) description = as.character(date())
+    if (is.null(description)) description = .description()
     
     # Return Value:
-    new("fEQNS",     
+    new("fSYSTEM",     
         call = match.call(),
-        formulas = formulas, 
-        data = as.data.frame(data),
-        method = as.character(method[1]), 
+        formula = formula, 
+        method = as.character(method), 
+        parameter = list(),
+        data = list(data = data),
         fit = fit,
-        predicted.values = list(),
+        residuals = data.frame(residuals(fit)),
+        fitted.values = data.frame(fitted(fit)), 
+        predicted.values = data.frame(),
         title = as.character(title), 
         description = as.character(description) )
 }
@@ -160,27 +173,33 @@ title = NULL, description = NULL, ...)
 # ------------------------------------------------------------------------------    
 
 
-print.fEQNS =
+print.fSYSTEM =
 function(x, ...)
 {   # A function implemented by Diethelm Wuertz
 
     # FUNCTION:
     
-    cat("\nTitle:\n")
+    # Title:
+    cat("\nTitle:\n ")
     cat(paste(x@method, "Equations Fit\n"))
     
+    # Formulas:
     cat("\nFormulas:\n")
-    form = t(matrix(capture.output(x@formulas), ncol = 2))
-    cat(form[, 2], sep = "\n")
+    form = t(matrix(capture.output(x@formula), ncol = 2))
+    cat(paste("", form[, 2]), sep = "\n")
     
-    cat("\nFit Results:\n")
-    output = capture.output(summary(x@fit$fit)) [-(1:3)]
-    for (i in 1:length(output)) output[i] = paste(" ", output[i])
+    # Coefficidents:
+    cat("\nCoefficients:\n")
+    output = capture.output(data.frame(coef(x)))  
+    for (i in 1:length(output)) output[i] = paste("", output[i])
     cat(output, fill = FALSE, sep = "\n")
+    cat("\n")
     
-    cat("Description:\n")
+    # Description:
+    cat("Description:\n ")
     cat(x@description, "\n\n")
     
+    # Return Value:
     invisible(x)
 }  
 
@@ -188,30 +207,53 @@ function(x, ...)
 # ------------------------------------------------------------------------------
 
 
-summary.fEQNS = 
+# plot.fSYSTEM = 
+
+
+# ------------------------------------------------------------------------------
+
+
+summary.fSYSTEM = 
 function(object, ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   S3 Summary Method for an object of class "fEQNS"
+    #   S3 Summary Method for an object of class "fSYSTEM"
     
     # Arguments:
-    #   object - an object of class "fEQNS"
+    #   object - an object of class "fSYSTEM"
     
     # FUNCTION:
     
-    # Print:
-    print(object, ...)
+    # Title:
+    cat("\nTitle:\n ")
+    cat(paste(object@method, "Equations Fit\n"))
+    
+    # Formulas:
+    cat("\nFormulas:\n")
+    form = t(matrix(capture.output(object@formula), ncol = 2))
+    cat(paste("", form[, 2]), sep = "\n")
+    
+    # Coefficidents:
+    cat("\nFitted Results:\n")
+    output = capture.output(summary(object@fit))[-(1:3)]  
+    for (i in 1:length(output)) output[i] = paste("", output[i])
+    cat(output, fill = FALSE, sep = "\n")
+    cat("\n")
+    
+    # Description:
+    cat("Description:\n ")
+    cat(object@description, "\n\n")
     
     # Return Value:
     invisible(object)  
 }
 
 
-# ******************************************************************************
+# ------------------------------------------------------------------------------
 
 
-coef.fEQNS = 
+coef.fSYSTEM = 
 function(object, ...) 
 {   # A function implemented by Diethelm Wuertz
 
@@ -221,7 +263,7 @@ function(object, ...)
     # FUNCTION:
     
     # From Slot:
-    coef = object@fit$fit$b
+    coef = object@fit$b
     coef = as.data.frame(coef)
    
     # Return Value:
@@ -232,7 +274,7 @@ function(object, ...)
 # ------------------------------------------------------------------------------
 
 
-fitted.fEQNS = 
+fitted.fSYSTEM = 
 function(object, ...) 
 {   # A function implemented by Diethelm Wuertz
 
@@ -242,7 +284,7 @@ function(object, ...)
     # FUNCTION:
     
     # From Slot:
-    x = object@fit$fit
+    x = object@fit
     
     # Fitted values:
     fitted = array(NA, c(length(x$eq[[1]]$fitted), x$g))
@@ -251,16 +293,17 @@ function(object, ...)
         fitted[, i] = x$eq[[i]]$fitted
         colnames(fitted)[i] = paste("eq", as.character(i), sep = "")
     }
+    ans = data.frame(fitted)
     
     # Return Value:
-    fitted
+    ans
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-residuals.fEQNS = 
+residuals.fSYSTEM = 
 function(object, ...) 
 {   # A function implemented by Diethelm Wuertz
 
@@ -270,7 +313,7 @@ function(object, ...)
     # FUNCTION:
     
     # From Slot:
-    x = object@fit$fit
+    x = object@fit
     
     # Residuals:
     residuals = data.frame(eq1 = x$eq[[1]]$residuals)
@@ -280,59 +323,33 @@ function(object, ...)
                 names(residuals)[i] = paste("eq", as.character(i), sep = "")
         }
     }
-    
-    # Return Value:
-    residuals
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-vcov.fEQNS = 
-function(object, ...) 
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Returns the variance-covariance matrix of the coefficients
-    
-    # FUNCTION:
-    
-    # Return Value:
-    object@fit$fit$bcov
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-predict.fEQNS = 
-function (object, newdata = object@data, se.fit = FALSE, se.pred = FALSE, 
-interval = "none", ci = 0.95, ...) 
-{   # A function implemented by Diethelm Wuertz
-
-    # Predict:
-    ans = predict.systemfit(object = object@fit$fit, data = newdata,
-        se.fit = se.fit, se.pred = se.pred, interval = interval, 
-        level = ci, ...)
+    ans = data.frame(residuals)
     
     # Return Value:
     ans
 }
 
 
-# ******************************************************************************
+# ------------------------------------------------------------------------------
 
 
-systemfitBuiltin = 
-function(builtin = "/fMultivar/demo/funSystemfit.R") 
+predict.fSYSTEM = 
+function (object, newdata = object@data, se.fit = FALSE, se.pred = FALSE, 
+interval = "none", ci = 0.95, ...) 
 {   # A function implemented by Diethelm Wuertz
-
-    # Builtin:
-    Builtin = paste(.Library, builtin, sep = "") 
+   
+    # FUNCTION:
+    
+    # Predict - Don't print conflicts:
+    sink("@sink@")
+    ans = predict.systemfit(object = object@fit, data = newdata,
+        se.fit = se.fit, se.pred = se.pred, interval = interval, 
+        level = ci, ...)
+    sink()
+    unlink("@sink@")
     
     # Return Value:
-    source(Builtin) 
+    ans
 }
 
 
@@ -340,11 +357,13 @@ function(builtin = "/fMultivar/demo/funSystemfit.R")
 
 
 SUR = 
-function(formulas, data = list(), ...)
+function(formula, data = list(), ...)
 {   # A function implemented by Diethelm Wuertz
 
+    # FUNCTION:
+    
     # Fit:
-    ans = eqnsFit(formulas = formulas, data = data, method = "SUR", ...)
+    ans = systemFit(formula = formula, data = data, method = "SUR", ...)
         
     # Return Value:
     ans
@@ -352,4 +371,84 @@ function(formulas, data = list(), ...)
 
 
 ################################################################################
+
+
+nlsystemFit = 
+function(formula, data = list(), method = c("OLS", "SUR", "2SLS", "3SLS"), 
+start = NULL, title = NULL, description = NULL, ...)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Common function call for several system equation models.
+    
+    # Arguments:
+    #   formula - the list of formulae describing the system of 
+    #       equations
+    #   data - the input data set in form of a 'data.frame' or 
+    #       'timeSeries' object
+    #   method - a character string describing the desired method, 
+    #       one of: "OLS", "WLS", "SUR", "2SLS", "W2SLS", "3SLS", 
+    #       or "W3SLS".
+    #   title - a character string which allows for a project title
+    #   description - a character string which allows for a brief 
+    #       description
+    #   ... - additional optional arguments to be passed to the 
+    #       underlying function 'systemfit' 
+    
+    # Value:
+    #   The function 'systemFit' returns an object of class "fSYSTEM"
+    #   with the following slots:
+    #       @call - the matched function call
+    #       @data - the input data in form of a 'data.frame' or a 
+    #           'timeSeries' object
+    #       @description - a character string which allows for a brief 
+    #           project description
+    #       @method - the character string describing the desired method
+    #       @formula - the list of formula describing the system of 
+    #           equations
+    #       @title - a character string which allows for a project title
+    #       @fit - a summary of the  results as a list returned from the 
+    #           underlying functions from the 'systemfit' package.  
+
+    # FUNCTION:
+    
+    # nlsystemfit(method="OLS", eqns, startvals,
+    #     eqnlabels = c(as.character(1:length(eqns))), inst = NULL,
+    #     data = list(), solvtol = .Machine$double.eps,
+    #     maxiter = 1000, ... )
+    
+    # Match Arguments:
+    method = match.arg(method)  
+    
+    # Fit:
+    fit = nlsystemfit(method = method, eqns = formula, 
+        startvals = start, data = as.data.frame(data), ...) 
+    class(fit) = c("list", "nlsystemfit.system")
+    
+    # Add Rmetrics Conform Output: 
+    fit$name = "systemfit"
+    fit$coef = coef(fit)
+        
+    # Add Title and Description:
+    if (is.null(title)) title = paste(method[1], "Estimation")
+    if (is.null(description)) description = .description()
+    
+    # Return Value:
+    new("fSYSTEM",     
+        call = match.call(),
+        formula = formula, 
+        method = as.character(method), 
+        parameter = list(),
+        data = list(data = data),
+        fit = fit,
+        residuals = data.frame(residuals(fit)),
+        fitted.values = data.frame(fitted(fit)), 
+        predicted.values = data.frame(),
+        title = as.character(title), 
+        description = as.character(description) )
+}
+
+
+# ------------------------------------------------------------------------------
+
 
