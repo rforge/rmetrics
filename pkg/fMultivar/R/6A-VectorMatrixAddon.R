@@ -88,21 +88,31 @@
 #  .tslag1                 Internal Function used by tslag
 #  pdl                  R  Regressor matrix for polynomial distributed lags  
 ################################################################################
+
+
+################################################################################
 # NOTES:
 #  WHERE YOU FIND THE FUCTIONS?
 #   R  Basic R Package
 #   B  Rmetrics fBasics Package
 #   M  This Rmetrics fMultivar Package
-#  REQUIREMENTS:
-#   fBasics
-#   fSeries
-#   EMV
 ################################################################################
-# NAMESPACE:
-# export(triang, Triang, pascal, colVec, rowVec, colIds, rowIds)
-# export("colIds<-", "rowIds<-")
-# export(inv, norm, rk, tr, kron)
+
+
 ################################################################################
+#  matrix               R  Creates a matrix from the given set of values
+#   diag                R  Creates a diagonal matrix or extracts diagonals
+#   triang              M  Extracs the lower tridiagonal part from a matrix
+#   Triang              M  Extracs the upper tridiagonal part from a matrix
+#   pascal              M  Creates a Pascal matrix
+#   colVec              M  Creates a column vector from a vector
+#   rowVec              M  Creates a row vector from a vector
+#  as.matrix            R  Attempts to turn its argument into a matrix     
+#  is.matrix            R  Tests if its argument is a (strict) matrix
+#  dimnames             R  Retrieves or sets the dimnames of an object
+#  colnames|rownames    R  Retrieves or sets the row or column names 
+#  colIds|rowIds        M  ... use alternatively
+#  colIds<-|rowIds<-    M  ... for assignments
 
 
 triang = 
@@ -327,10 +337,32 @@ function(x, value)
     x
 }
 
- 
-# ------------------------------------------------------------------------------
 
-            
+################################################################################
+#  dim                  R  Returns the dimension of a matrix object
+#  ncol|nrow            R  Counts columns|rows of a matrix object
+#  length               R  Counts elements of a matrix object
+#   "["|"[["            R  Subsets a matrix object
+#   (Arith)             R  Elementwise Arithmetic: + - * /
+#   (Lops)              R  Elementwise logical Ops: > < >= <= == !=
+#  cbind|rbind          R  Augments a matrix object by columns|rows
+#  na.omit              R  Removes NA from a matrix object
+
+
+################################################################################
+#  t                    R  returns the transposed matrix
+#  det                  R  returns the determinant of a matrix
+#  inv|chol2inv       M|R  returns the inverse of a matrix
+#  norm                 M  returns the norm of a matrix
+#  rk                   M  returns the rank of a matrix
+#  tr                   M  returns the trace of a matrix
+#  %*%                  R  returns the product of two matrices
+#  %x%|kron           R|S  returns the Kronecker product
+#  mexp                 M  computes the exponential of a square matrix
+#  vec                  M  is the operator that stacks a matrix
+#  vech                 M  is the operator that stacks the lower triangle
+
+
 inv = 
 function(x) 
 {   # A function implemented by Diethelm Wuertz
@@ -347,8 +379,8 @@ function(x)
     
     # Return Value:
     ans 
-}
-        
+}  
+
 
 # ------------------------------------------------------------------------------
 
@@ -443,7 +475,8 @@ function(x)
         
     # Return Value:
     invisible()
-}            
+}          
+
 
 # ------------------------------------------------------------------------------
 
@@ -528,34 +561,6 @@ function(x, order = 8, method = c("pade", "taylor"))
 }
 
 
-################################################################################
-# FUNCTION:
-#  vech             Stack the lower triange of a matrix as vector
-#  vec              Stack a matrix as a column vector
-#  %x%              Kronecker Product, is part of R's base package
-################################################################################
-
-
-vech = 
-function(x)
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   vech is the operator that stacks the lower triangle
-    #   of a NxN matrix as an N(N+1)/2x1 vector:
-    #   vech(X) =(X11, X21, X22, X31, ..., XNN)'
-    
-    # Note:
-    #   Example for a 3x3 Matrix:
-    #   X11, X21, X22, X31, X32, X33
-    
-    # FUNCTION:
-    
-    # Return Value:
-    t(x[!upper.tri(x)])
-}
-
-
 # ------------------------------------------------------------------------------
 
 
@@ -579,7 +584,43 @@ function(x)
 }
 
 
+# ------------------------------------------------------------------------------
+
+vech = 
+function(x)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   vech is the operator that stacks the lower triangle
+    #   of a NxN matrix as an N(N+1)/2x1 vector:
+    #   vech(X) =(X11, X21, X22, X31, ..., XNN)'
+    
+    # Note:
+    #   Example for a 3x3 Matrix:
+    #   X11, X21, X22, X31, X32, X33
+    
+    # FUNCTION:
+    
+    # Return Value:
+    t(x[!upper.tri(x)])
+}
+
+
 ################################################################################
+#  chol                 R  returns the Cholesky factor matrix
+#  eigen                R  returns eigenvalues and eigenvectors
+#  svd                  R  returns the singular value decomposition
+#  kappa                R  returns the condition number of a matrix
+#  qr                   R  returns the QR decomposition of a matrix
+#  solve                R  solves a system of linear equations
+#  backsolve            R  ... use when the matrix is upper triangular
+#  forwardsolve         R  ... use when the matrix is lower triangular
+
+
+################################################################################
+#  tslag                R  Lagged or leading vector/matrix of selected order(s)
+#  .tslag1                 Internal Function used by tslag
+#  pdl                  R  Regressor matrix for polynomial distributed lags
 
 
 .tslag1 = 
@@ -588,8 +629,7 @@ function(x, k)
 
     # Description:
     #   Internal Function used by function tslag.
-        
-    
+          
     # FUNCTION:
     y = x
     if (k > 0) y = c(rep(NA, times = k), x[1:(length(x)-k)])
@@ -678,6 +718,9 @@ function(x, d = 2, q = 3, trim = FALSE)
     #   pdl(stack.loss)
     
     # FUNCTION:
+    
+    # Check:
+    stopifnot(q > d)
 
     # Polynomial distributed lags:
     M = tslag(x, 1:q, FALSE)

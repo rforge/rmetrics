@@ -30,14 +30,17 @@
 ################################################################################
 # FUNCTION:                 TIME SERIES TESTS
 #  lmTest                   Linear Modelling Test, select from:
-#   * bg                      Breusch-Godfrey Test
-#   * bp                      Breusch-Pagan Test
-#   * dw                      Durbin-Watson Test
-#   * gq                      Goldfeld-Quandt Test
-#   * harv                    Harvey-Collier Test
-#   * hmc                     Harrison-McCabe Test
-#   * rain                    Rainbow Test
-#   * reset                   Ramsey's RESET Test
+#   bgTest                   Breusch-Godfrey Test
+#   bpTest                   Breusch-Pagan Test
+#   dwTest                   Durbin-Watson Test
+#   gqTest                   Goldfeld-Quandt Test
+#   harvTest                 Harvey-Collier Test
+#   hmcTest                  Harrison-McCabe Test
+#   rainTest                 Rainbow Test
+#   resetTest                Ramsey's RESET Test
+################################################################################
+
+
 ################################################################################
 # BUILTIN - PACKAGE DESCRIPTION:
 #  Package: lmtest
@@ -67,7 +70,7 @@ data = list(), ...)
     #   require(lmtest)
     
     # Settings:
-    method = method[1] 
+    method = match.arg(method)
 
     # DW:
     if (method == "dw") 
@@ -115,6 +118,9 @@ iterations = 15, exact = NULL, tol = 1.0e-10, data = list())
 {   
     .dwtest(formula, alternative, iterations, exact, tol, data)
 }
+
+
+# ------------------------------------------------------------------------------
     
     
 bpTest = 
@@ -122,13 +128,19 @@ function(formula, varformula = NULL, studentize = TRUE, data = list())
 {
     .bptest(formula, varformula, studentize, data)
 }
-    
+  
+
+# ------------------------------------------------------------------------------
+  
     
 gqTest = 
 function(formula, point=0.5, order.by = NULL, data = list())
 {
     .gqtest(formula, point, order.by, data)
 }
+
+
+# ------------------------------------------------------------------------------
 
     
 hmcTest = 
@@ -139,11 +151,17 @@ nsim = 1000, plot = FALSE, data = list())
 }
             
 
+# ------------------------------------------------------------------------------
+
+
 harvTest = 
 function(formula, order.by = NULL, data = list())
 {
     .harvtest(formula, order.by, data)
 }
+
+
+# ------------------------------------------------------------------------------
 
     
 rainTest = 
@@ -153,6 +171,9 @@ data = list())
     .raintest(formula, fraction, order.by, center, data)
 }
     
+
+# ------------------------------------------------------------------------------
+
     
 resetTest = 
 function(formula, power = 2:3, type = c("fitted", "regressor", "princomp"), 
@@ -160,6 +181,9 @@ data = list())
 {
     .reset(formula, power, type, data)
 }
+
+
+# ------------------------------------------------------------------------------
 
     
 bgTest = function(formula, order = 1, type = c("Chisq", "F"), data = list())

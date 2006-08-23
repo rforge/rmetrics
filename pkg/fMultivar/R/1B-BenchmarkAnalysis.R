@@ -28,10 +28,6 @@
 
 
 ################################################################################
-# Copyright (C)             Adrian Trapletti
-# Copyright (C) 1998-2003    Diethelm Wuertz for this R-port
-# Topic                      fSeries - TRADING INDICATORS AND TECHNICAL ANALYSIS
-# ------------------------------------------------------------------------------
 # FUNCTION:                 BENCHMARK ANALYSIS FUNCTIONS:
 #  getReturns                Computes return series given a price series
 #  maxDrawDown               Computes the maximum drawdown
@@ -41,38 +37,44 @@
 ################################################################################
 
 
-# Example SP500 Index:
-#   require(fBasics)
-#   x = as.timeSeries(singleIndex.dat, format = "%d-%b-%Y")[, 2]
-
-    
-# ------------------------------------------------------------------------------
-
-
 getReturns = 
 function(x, type = c("continuous", "discrete"), percentage = FALSE, 
-trim = TRUE, digits = 4)
+trim = TRUE)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Computes return series given a financial price series.
     
+    # Arguments:
+    #   type - a character string specifying the type of returns to be 
+    #       computed. Valid choices are: "continuous" and "discrete". 
+    #       If type="continuous", the returns are calculated as the 
+    #       logarithm differences; if type="discrete", the returns are 
+    #       calculated as percentage changes. The default is "continuous" 
+    #   percentage - a logical flag. If TRUE, the return series will be 
+    #       expressed in percentage points. The default is FALSE. 
+    #   trim - a logical flag. If TRUE, the first missing observation 
+    #       in the return series will be removed. The default is TRUE. 
+
     # Note:
     #   Function for S-Plus Compatibility
-    #   Call: 
-    #       returnSeries(x, type = c("continuous", "discrete"), 
-    #       percentage = FALSE, trim = TRUE, digits = 4) 
+    #   getReturns(x, type = "continuous", percentage = FALSE, trim = TRUE) 
     
     # FUNCTION:
     
+    # Check Type:
+    type = match.arg(type)
+    
+    # Return Series:
+    ans = returnSeries(x = x, type = type, percentage = percentage, 
+        trim = trim, digits = 12)
+        
     # Return Value:
-    returnSeries(x = x, type = type[1], percentage = percentage, 
-        trim = trim, digits = digits)
- 
+    ans
 }
 
 
-# ******************************************************************************
+# ------------------------------------------------------------------------------
 
 
 maxDrawDown = 

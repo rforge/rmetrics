@@ -198,8 +198,8 @@ function(x, y = NULL, n = c(20, 20))
     index.x = cut(x, x.cuts, include.lowest = TRUE)
     index.y = cut(y, y.cuts, include.lowest = TRUE)
     m = matrix(0, nrow=nbins[1], ncol = nbins[2],
-                dimnames = list( levels(index.x), levels(index.y) ) )
-    for( i in 1:length(index.x) ) {
+        dimnames = list( levels(index.x), levels(index.y) ) )
+    for ( i in 1:length(index.x) ) {
         m[index.x[i], index.y[i] ] = m[index.x[i], index.y[i] ] + 1
     }
     xvals = x.cuts[1:nbins[1]]
@@ -439,7 +439,7 @@ function (h, a, jmax = 50, cut.point = 6)
 
 dnorm2d =
 function(x, y = x, rho = 0)
-{	# A function implemented by Diethelm Wuertz
+{   # A function implemented by Diethelm Wuertz
 
     # Arguments:
     #   x,y - two numeric vectors
@@ -449,14 +449,14 @@ function(x, y = x, rho = 0)
     # FUNCTION:
     
     # Argument:
-	xoy = (x^2 - 2*rho*x*y + y^2)/ (2*(1 - rho^2))
+    xoy = (x^2 - 2*rho*x*y + y^2)/ (2*(1 - rho^2))
     
-	# Density:
-	density = exp(-xoy) / ( 2*pi*sqrt(1-rho^2))
-	attr(density, "control") = c(rho = rho)
-	
-	# Return Value:
-	density
+    # Density:
+    density = exp(-xoy) / ( 2*pi*sqrt(1-rho^2))
+    attr(density, "control") = c(rho = rho)
+    
+    # Return Value:
+    density
 }
 
 
@@ -849,15 +849,15 @@ function(x, y = x, rho = 0, param = NULL, type = c("norm", "cauchy", "t",
     xoy = ( x^2 - 2*rho*x*y + y^2 ) / (1-rho^2)
     lambda = .gfunc2d(param = param, type = type)[[1]]
     density = lambda * .gfunc2d(x = xoy, param = param, type = type) /
-    	sqrt(1 - rho^2)
+        sqrt(1 - rho^2)
         
     # Add attributes:
     if (is.null(param)) {
-	    attr(density, "control") = unlist(list(type = type, rho = rho))
-	} else {
-    	attr(density, "control") = unlist(list(type = type, rho = rho, 
-    		param = param))
-	}
+        attr(density, "control") = unlist(list(type = type, rho = rho))
+    } else {
+        attr(density, "control") = unlist(list(type = type, rho = rho, 
+            param = param))
+    }
     
     # As List ?
     if (output[1] == "list") {
@@ -1039,7 +1039,7 @@ function(B = 10, eps = 1.e-3)
         
         # Title:
         Names = c("- Normal", "- Cauchy", "- Student t", "- Logistic",
-        	"- Laplace", "- Kotz", "- Exponential Power")      
+            "- Laplace", "- Kotz", "- Exponential Power")      
         Title = paste("Elliptical Density No:", as.character(Distribution), 
             Names[Distribution], "\nrho = ", as.character(rho)) 
         if (Distribution == 3) Title = paste(Title, "nu =", as.character(nu))
@@ -1054,7 +1054,7 @@ function(B = 10, eps = 1.e-3)
         if (Distribution == 6) param = r
         if (Distribution == 7) param = c(r, s)
         D = delliptical2d(x = xy, rho = rho, param = param, 
-        	type = Type[Distribution], output = "list")
+            type = Type[Distribution], output = "list")
         image(D, col = heat.colors(ncol), xlab = "x", ylab = "y" )
         contour(D, nlevels = nlev, add = TRUE)
         title(main = Title)
@@ -1079,7 +1079,7 @@ function(B = 10, eps = 1.e-3)
 
 .delliptical2d.RUnit = 
 function()
-{	# A function implemented by Diethelm Wuertz
+{   # A function implemented by Diethelm Wuertz
 
     # Description:
     #   RUnit test for elliptical distributions
