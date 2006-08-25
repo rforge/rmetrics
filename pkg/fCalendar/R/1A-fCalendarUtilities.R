@@ -74,6 +74,7 @@
 #  .print                        Internal print method
 #  .plot                         Internal plot method
 #  .summary                      Internal summary method
+#  .predict                      Internal predict method
 ################################################################################
 
 
@@ -983,7 +984,7 @@ myUnits = "days"
 ################################################################################
 
 
-.MSFT = 
+MSFT = 
 as.data.frame(matrix(c(
     20000927,63.4375,63.5625,59.8125,60.625,53077800,
     20000928,60.8125,61.875,60.625,61.3125,26180200,
@@ -1244,7 +1245,7 @@ as.data.frame(matrix(c(
 # ------------------------------------------------------------------------------
 
 
-MSFT = as.timeSeries(.MSFT, zone = "GMT", FinCenter = "GMT")
+# MSFT = as.timeSeries(.MSFT, zone = "GMT", FinCenter = "GMT")
     
 
 ################################################################################
@@ -1478,6 +1479,16 @@ function(x, ...)
 function(object, ...)
 {
     UseMethod(".summary")
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.predict =
+function(object, ...)
+{
+    UseMethod(".predict")
 }
 
 
