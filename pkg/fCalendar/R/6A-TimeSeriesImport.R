@@ -38,8 +38,8 @@
 #  fredImport            Downloads market data from St. Louis FED web site
 #  forecastsImport       Downloads monthly data from www.forecasts.org
 # FUNCTION:             IMPORT STATISTICS - EXPERIMENTELL:
-#  .keystatsImport       Downloads key statistics from Yahoo's web site  
-#  .print.keystats       Print Method for internal function .keystatsImport
+#  keystatsImport        Downloads key statistics from Yahoo's web site  
+#  print.keystats        Print Method for internal function .keystatsImport
 # FUNCTION:             EASY TO USE ROUTINES:
 #  yahooSeries           Easy to use download from Yahoo
 #  .yahooSeries          Utility function  called by 'yahooSeries'
@@ -577,6 +577,9 @@ save = FALSE, try = TRUE)
     # Example:
     #   keystatsImport("YHOO")
     
+    # Changes:
+    #   2006-08-26 update by MCK
+    
     # FUNCTION:
     
     # Download:
@@ -754,14 +757,18 @@ save = FALSE, try = TRUE)
 
 print.keystats = 
 function(x, ...)
-{
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Print Method for an object of class 'keystats'
+    
     # Changes:
-    #
+    #   2006-08-26 DW description modified
     
     # FUNCTION:
     
     # Title:
-    cat("\nTitle:\n")
+    cat("\nTitle:\n ")
     cat("Yahoo Key Statistics\n", sep = "")
     
     # Key Statistics:
