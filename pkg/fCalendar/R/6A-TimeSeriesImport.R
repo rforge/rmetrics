@@ -561,20 +561,113 @@ source = "http://www.forecasts.org/data/data/", save = FALSE, try = TRUE)
 
 
 ################################################################################
-#  .keystatsImport       Downloads key statistics from Yahoo's web site  
-#  .print.keystats       Print Method for internal function .keystatsImport
+#  keystatsImport       Downloads key statistics from Yahoo's web site 
+#  .keystatsImport      Downloads key statistics from Yahoo's web site  
+#  print.keystats       Print Method for internal function .keystatsImpor
 
+
+keystatsImport =  
+function (query, file = "tempfile", source = "http://finance.yahoo.com/q/ks?s=", 
+save = FALSE, try = TRUE) 
+{   # A function implemented by Diethelm Wuertz and Matthew C.Keller
+
+    # Description:
+    #   Downloads Key Statistics on shares from Yahoo's Internet site
+    
+    # Example:
+    #   keystatsImport("YHOO")
+    
+    # FUNCTION:
+    
+    # Download:
+    if (try) {
+        # First try if the Internet can be accessed:
+        z = try(keystatsImport(file = file, source = source, 
+            query = query, save = save, try = FALSE))
+        if (class(z) == "try-error" || class(z) == "Error") {
+            return("No Internet Access")
+        }
+        else {
+            return(z)
+        }
+    } else {
+        # offset = 2
+        url = paste(source, query, sep = "")
+        # For S-Plus Compatibility:
+        if (class(version) != "Sversion") {
+            method = NULL
+        } else {
+            method = "wget"
+        }
+        # Download:
+        download.file(url = url, destfile = file, method = method)
+        .warn = options()$warn
+        options(warn = -1)
+        x = scan(file, what = "", sep = ">")
+        options(warn = .warn)
+        keynames <- c(
+            "Market Cap ", "Enterprise Value ", "Trailing P/E ",
+            "Forward P/E ", "PEG Ratio ", "Price/Sales ", "Price/Book ", 
+            "Enterprise Value/Revenue ", "Enterprise Value/EBITDA ",
+            "Forward Annual Dividend Rate ", "Forward Annual Dividend Yield ",
+            "Beta: ", "52-Week Change ", 
+            "P500 52-Week Change ", "52-Week High ", "52-Week Low ")
+
+        #
+        if (class(version) != "Sversion") {
+            stats = as.character(Sys.Date())
+        } else {
+            currentDate = timeDate(date(), in.format = "%w %m %d %H:%M:%S %Z %Y")
+            mdy = month.day.year(currentDate)
+            stats = as.character(mdy$year * 10000 + mdy$month * 
+                100 + mdy$day)
+        }
+
+        #
+        offset <- c(2,6,2,7,2,2,2,6,6,6,6,2,6,6,6,6)
+        fff <- 0
+        for (s in keynames) {
+            fff <- fff+1
+            grepped <- paste(gsub("</td", "", x[grep(s, x) + offset[fff]]))
+                    if (length(grepped) > 1)
+                    grepped <- grepped[1]
+                if (length(grepped) == 0) 
+                        grepped <- "NA"
+                    if (grepped == "") 
+                        grepped <- "NA"
+            stats <- c(stats, grepped)
+        }
+
+        #
+        for (i in 1:length(keynames)) {
+            keynames[i] = substring(keynames[i], 1, nchar(keynames[i]) -  1)
+        }
+        keynames = c("Date", keynames)
+        ans = list(
+            query = query, 
+            keystats = data.frame(cbind(Keyname = keynames, Statistic = stats)))
+        class(ans) = "keystats"
+        ans
+    }
+}
+
+
+# ------------------------------------------------------------------------------
+ 
 
 .keystatsImport = 
 function(query, file = "tempfile", source = "http://finance.yahoo.com/q/ks?s=", 
 save = FALSE, try = TRUE) 
 {   # A function implemented by Diethelm Wuertz
 
-    # Description 
+    # Description:
     #   Downloads Key Statistics on shares from Yahoo's Internet site
-    # 
+     
     # Example:
     #   keystatsImport("YHOO")
+    
+    # Note:
+    #   Old Version, no longer used ...
     
     # Changes:
     #
@@ -594,7 +687,6 @@ save = FALSE, try = TRUE)
     } else {                 
         offset = 2
         url = paste(source, query, sep = "")
-        
         # For S-Plus Compatibility:
         if (class(version) != "Sversion") {
             # R:
@@ -603,7 +695,6 @@ save = FALSE, try = TRUE)
             # SPlus
             method = "wget"
         }
-        
         # Download:
         download.file(url = url, destfile = file, method = method)
         .warn = options()$warn
@@ -649,7 +740,8 @@ save = FALSE, try = TRUE)
         keynames = c("Date", keynames)  
              
         # Return Value:
-        ans = list(query = query, 
+        ans = list(
+            query = query, 
             keystats = data.frame(cbind(Keyname = keynames, Statistic = stats)))   
         class(ans) = "keystats"
         ans    
@@ -660,7 +752,7 @@ save = FALSE, try = TRUE)
 # ------------------------------------------------------------------------------
 
 
-.print.keystats = 
+print.keystats = 
 function(x, ...)
 {
     # Changes:
@@ -677,8 +769,8 @@ function(x, ...)
     print(x$keystats)
     
     # Description:
-    cat("\nDescription:\n")   
-    cat(date())
+    cat("\nDescription:\n ")   
+    cat(.description())
     cat("\n\n")
     
     # Return Value:
