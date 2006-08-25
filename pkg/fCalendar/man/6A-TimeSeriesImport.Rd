@@ -15,8 +15,8 @@
 
 \alias{yahooSeries}
 
-%\alias{keystatsImport}
-%\alias{print.keystats}
+\alias{keystatsImport}
+\alias{print.keystats}
 
 
 \title{Import Market Data from the Internet}
@@ -38,7 +38,7 @@
     \code{economagicImport} \tab Economic series from Economagic's Web site, \cr
     \code{yahooImport} \tab daily stock market data from Yahoo's Web site, \cr
     \code{yahooSeries} \tab easy to use download from Yahoo, \cr
-    %\code{keystatsImport} \tab key statistics from Yahoo's Web site, \cr
+    \code{keystatsImport} \tab key statistics from Yahoo's Web site, \cr
     \code{fredImport} \tab time series from St. Louis FRED Web site, \cr
     \code{forecastsImport} \tab monthly data from the Financial Forecast Center. }
     
@@ -53,9 +53,9 @@ economagicImport(query, file = "tempfile",
 yahooImport(query, file = "tempfile", 
     source = "http://chart.yahoo.com/table.csv?", save = FALSE,
     sep = ";", swap = 20, try = TRUE)
-%keystatsImport(query, file = "tempfile", 
-%    source = "http://finance.yahoo.com/q/ks?s=", save = FALSE, 
-%    try = TRUE) 
+keystatsImport(query, file = "tempfile", 
+    source = "http://finance.yahoo.com/q/ks?s=", save = FALSE, 
+    try = TRUE) 
 fredImport(query, file = "tempfile", 
     source = "http://research.stlouisfed.org/fred2/series/", 
     frequency = "daily", save = FALSE, sep = ";", try = TRUE) 
@@ -69,7 +69,7 @@ yahooSeries(symbols = c("^DJI", "IBM"), from = NULL, to = NULL,
     getReturns = FALSE, ...)
         
 show.fWEBDATA(object)
-%\method{print}{keystats}(x, \dots)
+\method{print}{keystats}(x, \dots)
 }
 
 
@@ -157,11 +157,11 @@ show.fWEBDATA(object)
         a logical value, if set to TRUE the Internet access will be
         checked.
         }
-%    \item{x}{
-%        [print.keystats] - \cr
-%        an object of class \code{keystats} as returned by the function
-%        \code{keystatsImport}.
-%        }
+    \item{x}{
+        [print.keystats] - \cr
+        an object of class \code{keystats} as returned by the function
+        \code{keystatsImport}.
+        }
      \item{\dots}{
          optional arguments to be passed.
          }        
@@ -299,11 +299,11 @@ show.fWEBDATA(object)
     from Yahoo's Internet site.
     %\cr
     
-    %\bold{Functions added to Splus Version:}
-    %\cr\cr
-    %These functions are only used when running Rmetrics under SPlus. 
-    %Note, that only part of the functionality is supported which is 
-    %required running these R functions for Rmetrics under Splus.
+    \bold{Functions added to Splus Version:}
+    \cr\cr
+    These functions are only used when running Rmetrics under SPlus. 
+    Note, that only part of the functionality is supported which is 
+    required running these R functions for Rmetrics under Splus.
   
 }
 
