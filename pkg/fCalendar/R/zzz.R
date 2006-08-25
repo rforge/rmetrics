@@ -46,7 +46,7 @@ function(lib, pkg)
     # Package:
     cat("\nRmetrics, (C) 1999-2006, Diethelm Wuertz, GPL")
     cat("\nfCalendar: Time, Date and Calendar Tools\n")
-
+    
     # Load dll:
     # library.dynam("fCalendar", pkg, lib) 
 }
