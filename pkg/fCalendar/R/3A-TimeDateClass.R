@@ -60,7 +60,7 @@
 #  listFinCenter          Lists all supported financial centers 
 
 
-myFinCenter = "Zurich"
+myFinCenter = "GMT"
 
 
 # ------------------------------------------------------------------------------
