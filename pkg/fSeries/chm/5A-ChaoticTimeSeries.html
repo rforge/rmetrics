@@ -1,0 +1,400 @@
+<html><head><title>Chaotic Time Series Modelling</title>
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>ChaoticTimeSeries(fSeries)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   ChaoticTimeSeries">
+<param name="keyword" value="R:   tentSim">
+<param name="keyword" value="R:   henonSim">
+<param name="keyword" value="R:   ikedaSim">
+<param name="keyword" value="R:   logisticSim">
+<param name="keyword" value="R:   lorentzSim">
+<param name="keyword" value="R:   roesslerSim">
+<param name="keyword" value="R:   mutualPlot">
+<param name="keyword" value="R:   falsennPlot">
+<param name="keyword" value="R:   recurrencePlot">
+<param name="keyword" value="R:   separationPlot">
+<param name="keyword" value="R:   lyapunovPlot">
+<param name="keyword" value=" Chaotic Time Series Modelling">
+</object>
+
+
+<h2>Chaotic Time Series Modelling</h2>
+
+
+<h3>Description</h3>
+
+<p>
+A collection and description of functions to 
+investigate the chaotic behavior of time series 
+processes. Included are functions to simulate 
+different types of chaotic time series maps.
+<br>
+</p>
+<p>
+Chaotic Time Series Maps:
+</p>
+
+<table summary="Rd table">
+<tr>
+  <td align="left"><code>tentSim</code> </td>  <td align="left"> Simulates data from the Tent Map, </td>
+</tr>
+<tr>
+  <td align="left"> <code>henonSim</code> </td>  <td align="left"> simulates data from the Henon Map, </td>
+</tr>
+<tr>
+  <td align="left"> <code>ikedaSim</code> </td>  <td align="left"> simulates data from the Ikeda Map, </td>
+</tr>
+<tr>
+  <td align="left"> <code>logisticSim</code> </td>  <td align="left"> simulates data from the Logistic Map, </td>
+</tr>
+<tr>
+  <td align="left"> <code>lorentzSim</code> </td>  <td align="left"> simulates data from the Lorentz Map, </td>
+</tr>
+<tr>
+  <td align="left"> <code>roesslerSim</code> </td>  <td align="left"> simulates data from the Roessler Map. </td>
+</tr>
+</table>
+  
+</p>
+<p>
+Functions to Analyse Chaotic Time Series:
+</p>
+
+<table summary="Rd table">
+<tr>
+  <td align="left"><code>mutualPlot</code> </td>  <td align="left"> Returns mutual information, </td>
+</tr>
+<tr>
+  <td align="left"> <code>falsennPlot</code> </td>  <td align="left"> returns false nearest neigbours, </td>
+</tr>
+<tr>
+  <td align="left"> <code>recurrencePlot</code> </td>  <td align="left"> returns a recurrence plot, </td>
+</tr>
+<tr>
+  <td align="left"> <code>separationPlot</code> </td>  <td align="left"> returns a space-time separation plot, </td>
+</tr>
+<tr>
+  <td align="left"> <code>lyapunovPlot</code> </td>  <td align="left"> computes maximum lyapunov exponent. </td>
+</tr>
+</table>
+
+
+<h3>Usage</h3>
+
+<pre>
+tentSim(n = 1000, n.skip = 100, parms = c(a = 2), start = runif(1), 
+    doplot = FALSE)
+henonSim(n = 1000, n.skip = 100, parms = c(a = 1.4, b = 0.3), 
+    start = runif(2), doplot = FALSE)
+ikedaSim(n = 1000, n.skip = 100, parms = c(a = 0.4, b = 6.0, c = 0.9), 
+    start = runif(2), doplot = FALSE)
+logisticSim(n = 1000, n.skip = 100, parms = c(r = 4), start = runif(1), 
+    doplot = FALSE)
+lorentzSim(times = seq(0, 40, by = 0.01), parms = c(sigma = 16, r = 45.92, 
+    b = 4), start = c(-14, -13, 47), doplot = TRUE, ...)
+roesslerSim(times = seq(0, 100, by = 0.01), parms = c(a = 0.2, b = 0.2, c = 8.0),
+    start = c(-1.894, -9.920, 0.0250), doplot = TRUE, ...)
+    
+mutualPlot(x, partitions = 16, lag.max = 20, doplot = TRUE, ...)  
+falsennPlot(x, m, d, t, rt = 10, eps = NULL, doplot = TRUE, ...) 
+recurrencePlot(x, m, d, end.time, eps, nt = 10, ...)
+separationPlot(x, m, d, mdt, idt = 1, doplot = TRUE, ...)
+lyapunovPlot(x, m, d, t, ref, s, eps, k = 1, doplot = TRUE, ...) 
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>d</code></td>
+<td>
+[*Plot] - <br>
+an integer value setting the value of the time delay.
+</td></tr>
+<tr valign="top"><td><code>eps</code></td>
+<td>
+[falsennPlot] - <br>
+a numeric value setting the value of the neighbour diameter.
+If NULL, which is the default value, then the value will be
+automatically setted to <code>eps=sd(x)/10</code>.
+<br>
+[lyapunovPlot] - <br>
+the radius where to find nearest neighbours.
+<br>
+[recurrencePlot] - <br>
+the neighbourhood threshold.
+</td></tr>
+<tr valign="top"><td><code>doplot</code></td>
+<td>
+a logical flag. Should a plot be displayed?
+[*Plot] - <br>
+By default TRUE.
+<br>
+[*Sim] - <br>
+By default TRUE.
+</td></tr>
+<tr valign="top"><td><code>end.time</code></td>
+<td>
+[recurrencePlot] - <br>
+ending time as number of observations.
+</td></tr>
+<tr valign="top"><td><code>idt</code></td>
+<td>
+[separationPlot] - <br>
+an integer value setting the number of observation steps in
+each iterations. By default 1.
+</td></tr>
+<tr valign="top"><td><code>k</code></td>
+<td>
+[lyapunovPlot] - <br>
+an integer setting th enumber of considered neighbours.
+By default 1.
+</td></tr>
+<tr valign="top"><td><code>lag.max</code></td>
+<td>
+[mutualPlot] - <br>
+an integer value setting the number of maximum lags, by 
+default 20.
+</td></tr>
+<tr valign="top"><td><code>m</code></td>
+<td>
+[*Plot] - <br>
+an integer value setting the value of the maximum embedding 
+dimension.
+</td></tr>
+<tr valign="top"><td><code>mdt</code></td>
+<td>
+[separationPlot] - <br>
+an integer value setting the number of iterations.
+</td></tr>
+<tr valign="top"><td><code>n, n.skip</code></td>
+<td>
+[henonSim][ikedaSim][logisticSim] - <br>
+the number of chaotic time series points to be generated and the 
+number of initial values to be skipped from the series. 
+</td></tr>
+<tr valign="top"><td><code>nt</code></td>
+<td>
+[recurrencePlot] - <br>
+observations in each step which will be plotted, by default 10.
+Increasing <code>nt</code> reduces number of points plotted which
+is usefule especially with highly sampled data.
+</td></tr>
+<tr valign="top"><td><code>parms</code></td>
+<td>
+the named parameter vector characterizing the chaotic map.
+</td></tr>
+<tr valign="top"><td><code>rt</code></td>
+<td>
+[falsennPlot] - <br>
+an integer value setting the value for the escape factor. By
+default 10.
+</td></tr>
+<tr valign="top"><td><code>partitions</code></td>
+<td>
+[mutualPlot] - <br>
+an integer value setting the number of bins, by default 16.
+</td></tr>
+<tr valign="top"><td><code>ref</code></td>
+<td>
+[lyapunovPlot] - <br>
+the number of points to take into account.
+</td></tr>
+<tr valign="top"><td><code>s</code></td>
+<td>
+[lyapunovPlot] - <br>
+the iterations along which follow the neighbours of each point.
+</td></tr>
+<tr valign="top"><td><code>start</code></td>
+<td>
+the vector of start values to initiate the chaotic map.
+</td></tr>
+<tr valign="top"><td><code>t</code></td>
+<td>
+[*Plot] - <br>
+an integer value setting the value for the Theiler window.
+</td></tr>
+<tr valign="top"><td><code>times</code></td>
+<td>
+[lorentzSim][roesslerSim] - <br>
+the sequence of time series points at which to generate the map. 
+</td></tr>
+<tr valign="top"><td><code>x</code></td>
+<td>
+[*Plot] - <br>
+a numeric vector, or an object either of class 'ts' or
+of class 'timeSeries'.
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+arguments to be passed.
+</td></tr>
+</table>
+
+<h3>Details</h3>
+
+<p>
+<B>Phase Space Representation:</B>
+<br><br>  
+The function <code>mutualPlot</code> estimates and plots the mutual 
+information index of a given time series for a specified number 
+of lags. The joint probability distribution function is estimated 
+with a simple bi-dimensional density histogram.
+<br> 
+The function <code>falsennPlot</code> uses the Method of false nearest 
+neighbours to help deciding the optimal embedding dimension.
+<br>
+</p>
+<p>
+<B>Non-Stationarity:</B>
+<br><br>
+The funcdtion <code>recurrencePlot</code> creates a recurrence plot as 
+proposed by Eckmann et al. [1987]. 
+<br>
+The function <code>separationPlot</code> creates a space-time separation
+plot qs introduced by Provenzale et al. [1992]. It plots the 
+probability that two points in the reconstructed phase-space have 
+distance smaller than epsilon in function of epsilon and of the 
+time between the points, as iso-lines at levels 10, 20, ..., 100
+percent levels. The plot can be used to decide the Theiler time 
+window.
+<br>
+</p>
+<p>
+<B>Lyapunov Exponents:</B>
+<br><br>
+The function <code>lyapunovPlot</code> evaluates and plots the largest 
+Lyapunov exponent of a dynamic system from a univariate time series.
+The estimate of the Lyapunov exponent uses the algorithm of Kantz.
+In addition, the function computes the regression coefficients of 
+a user specified segment of the sequence given as input. 
+<br>
+</p>
+<p>
+<B>Dimensions and Entropies:</B>
+<br><br>
+The function <code>C2</code> computes the sample correlation integral on 
+the provided time series for the specified length scale and 
+Theiler window. It uses a naiv algorithm: simply returns the 
+fraction of points pairs nearer than eps. It is prefarable to use 
+the function <code>d2</code>, which takes roughly the same time, but 
+computes the correlation sum for multiple length scales and 
+embedding dimensions at once.
+<br>
+The function <code>d2</code> computes the sample correlation integral 
+over given length scales <code>neps</code> for embedding dimensions 
+<code>1:m</code> for a given Theiler window. The slope of the linear 
+segment in the log-log plot gives an estimate of the correlation 
+dimension.
+</p>
+
+
+<h3>Value</h3>
+
+<p>
+[*Sim] - <br>
+All functions return invisible a vector of time series data.</p>
+
+<h3>Author(s)</h3>
+
+<p>
+Diethelm Wuertz for the Rmetrics <font face="Courier New,Courier" color="#666666"><b>R</b></font>-port.
+</p>
+
+
+<h3>References</h3>
+
+<p>
+Brock, W.A., Dechert W.D., Sheinkman J.A. (1987); 
+<EM>A Test of Independence Based on the Correlation 
+Dimension</EM>, 
+SSRI no. 8702, Department of Economics, University of 
+Wisconsin, Madison.
+</p>
+<p>
+Eckmann J.P., Oliffson Kamphorst S., Ruelle D. (1987), 
+<EM>Recurrence plots of dynamical systems</EM>, 
+Europhys. Letters 4, 973.
+</p>
+<p>
+Hegger R., Kantz H., Schreiber T. (1999);
+<EM>Practical implementation of nonlinear time series 
+methods: The TISEAN package</EM>,
+CHAOS 9, 413&ndash;435.
+</p>
+<p>
+Kennel M.B., Brown R., Abarbanel H.D.I. (1992); 
+<EM>Determining embedding dimension for phase-space 
+reconstruction using a geometrical construction</EM>, 
+Phys. Rev. A45, 3403. 
+</p>
+<p>
+Rosenstein M.T., Collins J.J., De Luca C.J. (1993);
+<EM>A practical method for calculating largest Lyapunov 
+exponents from small data sets</EM>, 
+Physica D 65, 117.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>
+<code>RandomInnovations</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+## SOURCE("fSeries.035A-ChaoticTimeSeries")
+
+## bdsTest -
+   # iid Time Series:
+   par(mfrow = c(3, 1))
+   x = rnorm(100)
+   plot(x, type = "l", main = "iid Time Series")
+   bdsTest(x, m = 3)
+   # Non Identically Distributed Time Series:
+   x = c(rnorm(50), runif(50))
+   plot(x, type = "l", main = "Non-iid Time Series")
+   bdsTest(x, m = 3)  
+   # Non Independent Innovations from Quadratic Map:
+   x = rep(0.2, 100)
+   for (i in 2:100) x[i] = 4*(1-x[i-1])*x[i-1]
+   plot(x, type = "l", main = "Quadratic Map")
+   bdsTest(x, m = 3)
+   
+## tnnTest -
+   # Time Series Non-linear in "mean" regression 
+   par(mfrow = c(2, 1))
+   n = 1000
+   x = runif(1000, -1, 1)  
+   tnnTest(x)
+   # Generate time series which is nonlinear in "mean"
+   x[1] = 0.0
+   for (i in (2:n)) {
+     x[i] = 0.4*x[i-1] + tanh(x[i-1]) + rnorm (1, sd = 0.5) }
+   plot(x, main = "Teraesvirta Test", type = "l")
+   tnnTest(x)
+   
+## wnnTest -
+   # Time Series Non-Linear in "mean" Regression
+   par(mfrow = c(2, 1))
+   n = 1000
+   x = runif(1000, -1, 1)
+   wnnTest(x)
+   # Generate time series which is nonlinear in "mean"
+   x[1] = 0.0
+   for (i in (2:n)) {
+     x[i] = 0.4*x[i-1] + tanh(x[i-1]) + rnorm (1, sd = 0.5) }
+   plot(x, main = "White Test", type = "l")
+   wnnTest(x)                     
+</pre>
+
+
+
+<hr><div align="center">[Package <em>fSeries</em> version 231.10066 <a href="00Index.html">Index]</a></div>
+
+</body></html>

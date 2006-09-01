@@ -1,0 +1,206 @@
+<html><head><title>Unit Root Distributions</title>
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>UnitrootDistribution(fSeries)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   UnitrootDistribution">
+<param name="keyword" value="R:   punitroot">
+<param name="keyword" value="R:   qunitroot">
+<param name="keyword" value="R:   pdftest">
+<param name="keyword" value="R:   qdftest">
+<param name="keyword" value="R:   dfTable">
+<param name="keyword" value=" Unit Root Distributions">
+</object>
+
+
+<h2>Unit Root Distributions</h2>
+
+
+<h3>Description</h3>
+
+<p>
+A collection and description of functions 
+to compute the distribution and and quantile 
+function for the unit root test statistics. 
+<br>
+</p>
+<p>
+The functions are:
+</p>
+
+<table summary="Rd table">
+<tr>
+  <td align="left"><code>punitroot</code> </td>  <td align="left"> the cumulative probability, </td>
+</tr>
+<tr>
+  <td align="left"> <code>qunitroot</code> </td>  <td align="left"> the quantiles of the unit root test statistics, </td>
+</tr>
+<tr>
+  <td align="left"> <code>dfTable</code> </td>  <td align="left"> the table of cumulative probabilities, </td>
+</tr>
+<tr>
+  <td align="left"> <code>pdftest</code> </td>  <td align="left"> the cumulative probability for the ADF test, </td>
+</tr>
+<tr>
+  <td align="left"> <code>qdftest</code> </td>  <td align="left"> the quantiles for the ADF test. </td>
+</tr>
+</table>
+
+
+<h3>Usage</h3>
+
+<pre>
+punitroot(q, n.sample = 0, trend = c("c", "nc", "ct", "ctt"), 
+    statistic = c("t", "n"), na.rm = FALSE)
+qunitroot(p, n.sample = 0, trend = c("c", "nc", "ct", "ctt"), 
+    statistic = c("t", "n"), na.rm = FALSE)
+ 
+dfTable(trend = c("nc", "c", "ct"), statistic = c("t", "n"))
+   
+pdftest(q, n.sample, trend = c("nc", "c", "ct"), statistic = c("t", "n")) 
+qdftest(p, n.sample, trend = c("nc", "c", "ct"), statistic = c("t", "n"))
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>n.sample</code></td>
+<td>
+the number of observations in the sample from which the 
+quantiles are to be computed.<br>
+[*unitroot] - <br>
+Specify <code>n.sample=0</code> for asymptotic quantiles. The 
+default is 0. 
+</td></tr>
+<tr valign="top"><td><code>na.rm</code></td>
+<td>
+a logical value. If set to <code>TRUE</code>, missing values will 
+be removed otherwise not, the default is <code>FALSE</code>. 
+</td></tr>
+<tr valign="top"><td><code>p</code></td>
+<td>
+a numeric vector of probabilities. Missing values are 
+allowed. 
+</td></tr>
+<tr valign="top"><td><code>q</code></td>
+<td>
+vector of quantiles or test statistics. Missing values 
+are allowed. 
+</td></tr>
+<tr valign="top"><td><code>statistic</code></td>
+<td>
+a character string describing the type of test statistic. 
+Valid choices are <code>"t"</code> for t-statistic, and <code>"n"</code> 
+for normalized statistic, sometimes referred to as the 
+rho-statistic. The default is <code>"t"</code>. 
+</td></tr>
+<tr valign="top"><td><code>trend</code></td>
+<td>
+a character string describing the regression from which the 
+quantiles are to be computed. Valid choices are: <code>"nc"</code> 
+for a regression with no intercept (constant) nor time trend, 
+and <code>"c"</code> for a regression with an intercept (constant) 
+but no time trend, <code>"ct"</code> for a regression with an intercept 
+(constant) and a time trend. The default is <code>"c"</code>. 
+</td></tr>
+</table>
+
+<h3>Value</h3>
+
+<p>
+The function <code>padf</code> returns the cumulative probability of 
+the finite sample distribution of the unit root test statistics. 
+<br>
+The function <code>qadf</code> returns the quantiles of the finite sample 
+distribution of the unit root test statistics, given the probabilities. 
+<br>
+The function <code>punitroot</code> returns the cumulative probability 
+of the asymptotic or finite sample distribution of the unit root 
+test statistics. 
+<br>
+The function <code>qunitroot</code> returns the quantiles of the 
+asymptotic or finite sample distribution of the unit root test 
+statistics, given the probabilities.</p>
+
+<h3>Note</h3>
+
+<p>
+The programs <code>padf</code> and <code>qadf</code> use the tables from 
+A. Banerjee et al. (1993).
+</p>
+<p>
+The programs <code>punitroot</code> and <code>qunitroot</code> use Fortran 
+routines and the tables from J.G. McKinnon (1988). Many thanks 
+to J.G. McKinnon putting his code and tables under the GPL license,
+which made this implementation possible.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>
+J.G. McKinnon for the underlying Fortran routine and the tables, <br>
+Diethelm Wuertz for the Rmetrics <font face="Courier New,Courier" color="#666666"><b>R</b></font>-port.
+</p>
+
+
+<h3>References</h3>
+
+<p>
+Banerjee A., Dolado J.J., Galbraith J.W., Hendry D.F. (1993);
+<EM>Cointegration, Error Correction, and the Econometric 
+Analysis of Non-Stationary Data</EM>,
+Oxford University Press, Oxford. 
+</p>
+<p>
+Dickey, D.A., Fuller, W.A. (1979);
+<EM>Distribution of the estimators for autoregressive time 
+series with a unit root</EM>, 
+Journal of the American Statistical Association 74, 427&ndash;431. 
+</p>
+<p>
+MacKinnon, J.G. (1996);
+<EM>Numerical distribution functions for unit root and 
+cointegration tests</EM>,
+Journal of Applied Econometrics 11, 601&ndash;618.
+</p>
+<p>
+Phillips, P.C.B., Perron, P. (1988);
+<EM>Testing for a unit root in time series regression</EM>, 
+Biometrika 75, 335&ndash;346.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre> 
+## SOURCE("fSeries.2A-UnitrootDistribution")
+
+## qunitroot -
+   # Asymptotic quantile of t-statistic
+   qunitroot(0.95, trend = "nc", statistic = "t")
+
+## qunitroot -
+   # Finite sample quantile of n-statistic
+   qunitroot(0.95, n.sample = 100, trend = "nc", statistic = "n") 
+   
+## punitroot -
+   # Asymptotic cumulative probability of t-statistic
+   punitroot(1.2836, trend = "nc", statistic = "t")
+
+## punitroot -
+   # Finite sample cumulative probability of n-statistic
+   punitroot(1.2836, n.sample = 100, trend = "nc", statistic = "n")
+   
+## dfTable -
+   # Dickey-Fuller Table:
+   dfTable(trend = "nc", statistic = "t")
+</pre>
+
+
+
+<hr><div align="center">[Package <em>fSeries</em> version 231.10066 <a href="00Index.html">Index]</a></div>
+
+</body></html>

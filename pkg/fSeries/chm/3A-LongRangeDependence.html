@@ -1,0 +1,739 @@
+<html><head><title>Long Range Dependence Modelling</title>
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>LongRangeDependence(fSeries)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   LongRangeDependence">
+<param name="keyword" value="R:   fbmSim">
+<param name="keyword" value="R:   fgnSim">
+<param name="keyword" value="R:   farimaSim">
+<param name="keyword" value="R:   fgnTrueacf">
+<param name="keyword" value="R:   fgnTruefft">
+<param name="keyword" value="R:   farimaTrueacf">
+<param name="keyword" value="R:   farimaTruefft">
+<param name="keyword" value="R:   fHURST">
+<param name="keyword" value="R:   fHURST-class">
+<param name="keyword" value="R:   show.fHURST">
+<param name="keyword" value="R:   show,fHURST-method">
+<param name="keyword" value="R:   aggvarFit">
+<param name="keyword" value="R:   diffvarFit">
+<param name="keyword" value="R:   absvalFit">
+<param name="keyword" value="R:   higuchiFit">
+<param name="keyword" value="R:   pengFit">
+<param name="keyword" value="R:   rsFit">
+<param name="keyword" value="R:   perFit">
+<param name="keyword" value="R:   boxperFit">
+<param name="keyword" value="R:   whittleFit">
+<param name="keyword" value="R:   waveletFit">
+<param name="keyword" value="R:   hurstSlider">
+<param name="keyword" value=" Long Range Dependence Modelling">
+</object>
+
+
+<h2>Long Range Dependence Modelling</h2>
+
+
+<h3>Description</h3>
+
+<p>
+A collection and description of functions 
+to investigate the long range dependence or 
+long memory behavior of an univariate time 
+series process. Included are functions to 
+simulate fractional Gaussian noise and 
+fractional ARMA processes, functions to model 
+the true autocorrelations and the spectrum of 
+these processes, and functions to compute the 
+Hurst exponent by several different methods.
+<br>
+</p>
+<p>
+The Functions and methods are:
+</p>
+<p>
+Functions to simulate long memory time series processes:
+</p>
+
+<table summary="Rd table">
+<tr>
+  <td align="left"><code>fnmSim</code> </td>  <td align="left"> Simulates fractio nal Brownian motion, </td>
+</tr>
+<tr>
+  <td align="left"> <code>- mvn</code> </td>  <td align="left"> from the numerical approximation of the stochastic integral, </td>
+</tr>
+<tr>
+  <td align="left"> <code>- chol</code> </td>  <td align="left"> from the Choleski's decomposition of the covariance matrix, </td>
+</tr>
+<tr>
+  <td align="left"> <code>- lev</code> </td>  <td align="left"> using the method of Levinson, </td>
+</tr>
+<tr>
+  <td align="left"> <code>- circ</code> </td>  <td align="left"> using the method of Wood and Chan, </td>
+</tr>
+<tr>
+  <td align="left"> <code>- wave</code> </td>  <td align="left"> using the wavelet synthesis, </td>
+</tr>
+<tr>
+  <td align="left"> <code>fgnSim</code> </td>  <td align="left"> Simulates fractional Gaussian noise, </td>
+</tr>
+<tr>
+  <td align="left"> <code>- beran</code> </td>  <td align="left"> using the method of Beran, </td>
+</tr>
+<tr>
+  <td align="left"> <code>- durbin</code> </td>  <td align="left"> using the method Durbin and Levinson, </td>
+</tr>
+<tr>
+  <td align="left"> <code>- paxson</code> </td>  <td align="left"> using the method of Paxson, </td>
+</tr>
+<tr>
+  <td align="left"> <code>farimaSim</code> </td>  <td align="left"> simulates FARIMA time series processes. </td>
+</tr>
+</table>
+
+<p>
+Functions to model the true autocorrelation function and spectrum:
+</p>
+
+<table summary="Rd table">
+<tr>
+  <td align="left"><code>fgnTrueacf</code> </td>  <td align="left"> Returns true FGN covariances, </td>
+</tr>
+<tr>
+  <td align="left"> <code>fgnTruefft</code> </td>  <td align="left"> returns true FGN fast Fourier transform, </td>
+</tr>
+<tr>
+  <td align="left">   <code>farimaTrueacf</code> </td>  <td align="left"> returns true FARIMA covariances, </td>
+</tr>
+<tr>
+  <td align="left"> <code>farimaTruefft</code> </td>  <td align="left"> returns true FARIMA fast Fourier transform. </td>
+</tr>
+</table>
+
+<p>
+Functions to estimate the Hurst exponent:
+</p>
+
+<table summary="Rd table">
+<tr>
+  <td align="left"><code>aggvarFit</code> </td>  <td align="left"> Aggregated variance method, </td>
+</tr>
+<tr>
+  <td align="left"> <code>diffvarFit</code> </td>  <td align="left"> Differenced aggregated variance method, </td>
+</tr>
+<tr>
+  <td align="left"> <code>absvalFit</code> </td>  <td align="left"> aggregated absolute value (moment) method, </td>
+</tr>
+<tr>
+  <td align="left"> <code>higuchiFit</code> </td>  <td align="left"> Higuchi's or fractal dimension method, </td>
+</tr>
+<tr>
+  <td align="left"> <code>pengFit</code> </td>  <td align="left"> Peng's or variance of residuals method, </td>
+</tr>
+<tr>
+  <td align="left"> <code>rsFit</code> </td>  <td align="left"> R/S Rescaled Range Statistic method, </td>
+</tr>
+<tr>
+  <td align="left"> <code>perFit</code> </td>  <td align="left"> periodogram method, </td>
+</tr>
+<tr>
+  <td align="left"> <code>boxperFit</code> </td>  <td align="left"> boxed (modified) periodogram method, </td>
+</tr>
+<tr>
+  <td align="left"> <code>whittleFit</code> </td>  <td align="left"> Whittle estimator, </td>
+</tr>
+<tr>
+  <td align="left"> <code>hurstSlider</code> </td>  <td align="left"> Interactive Display of Hurst Estimates. </td>
+</tr>
+</table>
+
+<p>
+Function for the wavelet estimator:
+<table summary="Rd table">
+<tr>
+  <td align="left"><code>waveletFit</code> </td>  <td align="left"> wavelet estimator. </td>
+</tr>
+</table>
+
+
+<h3>Usage</h3>
+
+<pre>
+fbmSim(n = 100, H = 0.7, method = c("mvn", "chol", "lev", "circ", "wave"),
+    waveJ = 7, seed = NULL, doplot = TRUE, fgn = FALSE)
+fgnSim(n = 1000, H = 0.7, method = c("beran", "durbin", "paxson"))
+farimaSim(n = 1000, model = list(ar = c(0.5, -0.5), d = 0.3, ma = 0.1),
+    method = c("freq", "time"), ...) 
+    
+fgnTrueacf(n, H) 
+fgnTruefft(n, H) 
+farimaTrueacf(n, H) 
+farimaTruefft(n, H)
+   
+aggvarFit(x, levels = 50, minnpts = 3, cut.off = 10^c(0.7, 2.5), 
+    doplot = FALSE, trace = FALSE, title = NULL, description = NULL)    
+diffvarFit(x, levels = 50, minnpts = 3, cut.off = 10^c(0.7, 2.5), 
+    doplot = FALSE, trace = FALSE, title = NULL, description = NULL) 
+absvalFit(x, levels = 50, minnpts = 3, cut.off = 10^c(0.7, 2.5), moment = 1, 
+    doplot = FALSE, trace = FALSE, title = NULL, description = NULL) 
+higuchiFit(x, levels = 50, minnpts = 2, cut.off = 10^c(0.7, 2.5), 
+    doplot = FALSE, trace = FALSE, title = NULL, description = NULL)
+pengFit(x, levels = 50, minnpts = 3, cut.off = 10^c(0.7, 2.5), 
+    method = c("mean", "median"), 
+    doplot = FALSE, trace = FALSE, title = NULL, description = NULL)
+rsFit(x, levels = 50, minnpts = 3, cut.off = 10^c(0.7, 2.5), 
+    doplot = FALSE, trace = FALSE, title = NULL, description = NULL)
+perFit(x, cut.off = 0.1, method = c("per", "cumper"), 
+    doplot = FALSE, title = NULL, description = NULL)
+boxperFit(x, nbox = 100, cut.off = 0.10, 
+    doplot = FALSE, trace = FALSE, title = NULL, description = NULL)      
+whittleFit(x, order = c(1, 1), subseries = 1, method = c("fgn", "farma"), 
+    trace = FALSE, spec = FALSE, title = NULL, description = NULL)
+hurstSlider(x = fgnSim())
+  
+waveletFit(x, length = NULL, order = 2, octave = c(2, 8), 
+    doplot = FALSE, title = NULL, description = NULL)
+        
+show.fHURST(object)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>cut.off</code></td>
+<td>
+[*Fit] - <br>
+a numeric vector with the lower and upper cut-off 
+points for the estimation. They should be chosen 
+to define a linear range. The default values are 
+c(0.7, 2.5), i.e. 10^0.7 and 10^2.5, respectively.
+</td></tr>
+<tr valign="top"><td><code>description</code></td>
+<td>
+[*Fit] - <br>
+a character string which allows for a brief description.
+</td></tr>
+<tr valign="top"><td><code>doplot</code></td>
+<td>
+[*Fit] - <br>
+a logical flag, by default FALSE. Should a plot be displayed?
+</td></tr>
+<tr valign="top"><td><code>fgn</code></td>
+<td>
+[fbmSim] - <br>
+a logical flag, if <code>FALSE</code>, the functions returns a FBM 
+series otherwise a FGN series.
+</td></tr>
+<tr valign="top"><td><code>H</code></td>
+<td>
+[fgnSim] - <br>
+the Hurst exponent, a numeric value between 0.5 and 1,
+by default 0.7.
+</td></tr>
+<tr valign="top"><td><code>length</code></td>
+<td>
+[waveletFit] - <br>
+the length of data to be used, must be power of 2.
+If set to <code>NULL</code>, the previous power will be used.
+</td></tr>
+<tr valign="top"><td><code>levels</code></td>
+<td>
+[*Fit] - <br>
+the number of aggregation levels or number of blocks from 
+which the variances or moments are computed.
+</td></tr>
+<tr valign="top"><td><code>method</code></td>
+<td>
+[fbmSim] - <br>
+the method how to generate the FBM time series sequence, one
+of the following five character strings: <code>"mvn"</code>, 
+<code>"chol"</code>, <code>"lev"</code>, <code>"circ"</code>, or <code>"wave"</code>.
+[fgnSim] - <br>
+the method how to generate the FGN time series sequence, one
+of the following three character strings: <code>"beran"</code>, 
+<code>"durbin"</code>, or <code>"paxson"</code>.
+<br>
+[farimaSim] - <br>
+the method how to generate the time series sequence, one
+of the following tow character strings: <code>"freq"</code>, or
+<code>"time"</code>.
+<br>
+[pengFit] - <br>
+a string naming the method how to do the averaging, either
+calculating the <code>"mean"</code> or the <code>"median"</code>. 
+<br>
+[perFit] - <br>
+a string naming the method how to fit the data, either
+using the peridogram itself <code>"per"</code>, or using the
+cumulated periodogram <code>"cumper"</code>. 
+<br>
+[whittleFit] - <br>
+a string naming the underlying time series process to 
+be estimated, either <code>"fgn"</code> for FGN processes, or
+<code>"farima"</code>for FARIMA models.
+</td></tr>
+<tr valign="top"><td><code>minnpts</code></td>
+<td>
+[*Fit] - <br>
+the minimum number of points or blocksize to be used to 
+estimate the variance or moments at any aggregation level.
+</td></tr>
+<tr valign="top"><td><code>model</code></td>
+<td>
+a list with model parameters <code>ar</code>, <code>ma</code> and <code>d</code>.
+<code>ar</code> is a numeric vector giving the AR coefficients, 
+<code>d</code> is an integer value giving the degree of differencing,
+and <code>ma</code> is a numeric vector giving the MA coefficients.
+Thus the order of the time series process is FARMA(p, d, q)
+with <code>p=length(ar)</code> and <code>q=length(ma)</code>. <code>d</code> is
+a fractional value for FARMA models. By default an 
+FARMA(2, d, 1) model with coefficients <code>ar=c(0.5, -0.5)</code>,
+<code>ma=0.1</code>, and <code>d=0.3</code> will be generated.
+</td></tr>
+<tr valign="top"><td><code>moment</code></td>
+<td>
+[absvalHurst] - <br>
+an integer value, by default 1 which denotes absolute values. 
+For values larger than one this argument determines what 
+absolute moment should be calculated.
+</td></tr>
+<tr valign="top"><td><code>n</code></td>
+<td>
+[fgnSim][farimaSim] - <br>
+number of data points to be simulated, a numeric value, 
+by default 1000.
+</td></tr>
+<tr valign="top"><td><code>nbox</code></td>
+<td>
+[boxperFit] - <br>
+is the number of boxes to divide the data into. A numeric value,
+by default 100.
+</td></tr>
+<tr valign="top"><td><code>object</code></td>
+<td>
+an object of class <code>fHurst</code>.
+</td></tr>
+<tr valign="top"><td><code>octave</code></td>
+<td>
+[waveletFit] - <br>
+beginning and ending octave for estimation. An integer
+vector with two elements. By default <code>c(2, 8)</code>. If the
+upper value is too large, it will be replaced by the maximum
+allowed value.
+</td></tr>
+<tr valign="top"><td><code>order</code></td>
+<td>
+[waveletFit] - <br>
+the order of the wavelet. An integer value, by default 
+<code>2</code>.
+</td></tr>
+<tr valign="top"><td><code>seed</code></td>
+<td>
+[fbmSim] - <br>
+an integer value setting the seed for the random number generation.
+</td></tr>
+<tr valign="top"><td><code>spec</code></td>
+<td>
+[whittleFit] - <br>
+Should the periodogram be returned? A logical flag, by default 
+FALSE.
+</td></tr>
+<tr valign="top"><td><code>subseries</code></td>
+<td>
+[whittleFit] - <br>
+allows optionally to subdivide the series into subseries. A
+numeric value, by default 1.
+</td></tr>
+<tr valign="top"><td><code>title</code></td>
+<td>
+a character string which allows for a project title.
+</td></tr>
+<tr valign="top"><td><code>trace</code></td>
+<td>
+a logical value, by defaul FALSE. Should the estimation 
+process be traced?
+</td></tr>
+<tr valign="top"><td><code>waveJ</code></td>
+<td>
+[fbmSim] - <br>
+an integer parameter for the simulation of FBM using the wavelet 
+method.
+</td></tr>
+<tr valign="top"><td><code>x</code></td>
+<td>
+[*Fit] - <br>
+the numeric vector of data, an object of class <code>timeSeries</code>,
+or any other object which can be transofrmed into a numeric
+vector by the function <code>as.vector</code>.
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+arguments to be passed.
+</td></tr>
+</table>
+
+<h3>Details</h3>
+
+<p>
+<B>I: Functions to Simulate Long Memory Processes:</B>
+<br>
+</p>
+<p>
+<EM>Fractional Gaussian Noise:</EM>
+<br>
+The function <code>fgnSim</code> simulates a series of fractional
+Gaussian noise, FGN. FGN provides a parsimonious model for 
+stationary increments of a self-similar process parameterised 
+by the Hurst exponent H and variance. Fractional Gaussian noise 
+with H &lt; 0.5 demonstrates negatively autocorrelated or 
+anti-persistent behaviour, and FGN with H &gt; 0.5 demonstrates 
+1/f , long memory or persistent behaviour, and the special 
+case. The case H = 0.5 corresponds to the classical Gaussian 
+white noise. One can select from three different 
+methods. The first generator named <code>"beran"</code> uses
+the fast Fourier transform to generate the series based on 
+SPLUS code written originally by J. Beran [1994]. The second
+generator named <code>"durbin"</code> produces a FGN series by 
+using the Durbin-Levinson coefficients. The algorithm was
+reimplemented in pure S based on the C source code written by
+V. Teverovsky [199x]. The third generator named 
+<code>"paxson"</code> was proposed by V. Paxson [199x], this
+approaximate method is a very fast and requires low storage. 
+However, the algorithm reveals some weakness in the method
+which was discussed by D.A. Rolls [2001].
+<br>
+</p>
+<p>
+<EM>Fractional ARIMA Processes:</EM>
+<br>
+The function <code>farimaSim</code> is a generator for fractional
+ARIMA time series processes. A Gaussian FARIMA(0,d,0) series
+can be created, where <EM>d </EM> is related to the the Hurst 
+exponent <EM>H</EM> through <EM>d=H-0.5</EM>. This is a particular 
+case of the more general Gaussian FARIMA(p,d,q) process which 
+follows the same asymptotic relations for their autocovariance 
+and the spectral density as do the Gaussian FARIMA(0,d,0) 
+processes. Two different generators are implement in S. The 
+first named <code>"freq"</code> works in the frequence domain and 
+generates the series from the fast Fourier transform based on 
+SPLUS code written originally by J. Beran [1994]. The second 
+method creates the series in the time domain, therefore named 
+<code>"time"</code>. The algorithm was reimplemented in pure S based 
+on the Fortran source code from the R's <code>fracdiff</code> package 
+originally written by C. Fraley [1991]. Details for the algorithm 
+are given in J Haslett and A.E. Raftery [1989]. 
+<br>
+</p>
+<p>
+<B>II: Functions to Model True Correlations and Spectrum:</B>
+<br>
+</p>
+<p>
+The functions <code>fgnTrueacf</code> and <code>farimaTrueacf</code> return the
+true covariances of an FGN and Gaussian FARIMA(0,d,0) time 
+series process.
+The functions <code>fgnTruefft</code> and <code>farimaTruefft</code> return the
+true fast Fourier transform of an FGN and Gaussian FARIMA(0,d,0) 
+time series process.
+The R functions are implemented from SPlus code written by
+J. Beran [1994].
+<br>
+</p>
+<p>
+<B>III: Functions to Estimate the Hurst Exponent:</B>
+<br>
+</p>
+<p>
+These are 9 functions as described by M.S. Taqqu, V. Teverovsky,
+and W. Willinger [1995] to estimate the self similarity parameter 
+and/or the intensity of long-range dependence in a time series.
+<br>
+</p>
+<p>
+<EM>Aggregated Variance Method:</EM>
+<br>
+The function <code>aggvarFit</code> computes the Hurst exponent from 
+the variance of an aggregated FGN or FARIMA time series process. 
+The original time series is divided into blocks of size <code>m</code>. 
+Then the sample variance within each block is computed. The slope 
+<code>beta=2*H-2</code> from the least square fit of the logarithm of 
+the sample variances versus the logarithm of the block sizes 
+provides an estimate for the Hurst exponent <code>H</code>. 
+<br>
+</p>
+<p>
+<EM>Differenced Aggregated Variance Method:</EM>
+<br>
+To distinguish jumps and slowly decaying trends which are two
+types of non-stationary, from long-range dependence, the function 
+<code>diffvarFit</code> differences the sample variances of successive 
+blocks. The slope <code>beta=2*H-2</code> from the least square fit of 
+the logarithm of the differenced sample variances versus the 
+logarithm of the block sizes provides an estimate for the Hurst 
+exponent <code>H</code>. 
+<br>
+</p>
+<p>
+<EM>Aggregated Absolute Value/Moment Method:</EM>
+<br>
+The function <code>absvalFit</code> computes the Hurst exponent from
+the moments <code>moment=M</code> of absolute values of an aggregated 
+FGN or FARIMA time series process. The first moment <code>M=1</code>
+coincides with the absolute value method, and the second moment 
+<code>M=2</code> with the aggregated variance method. Again, the slope 
+<code>beta=M*(H-1)</code> of the regression line of the logarithm of 
+the statistic versus the logarithm of the block sizes provides 
+an estimate for the Hurst exponent <code>H</code>. 
+<br>
+</p>
+<p>
+<EM>Higuchi or Fractal Dimension Method:</EM>
+<br>
+The function <code>higuchiFit</code> implements a technique which is 
+very similar to the absolute value method. Instead of blocks a 
+sliding window is used to compute the aggregated series. The 
+function involves the calculation the calculation of the length 
+of a path and, in principle, finding its fractal Dimension <code>D</code>. 
+The slope <code>D=2-H</code> from the least square fit of the logarithm 
+of the expected path lengths versus the logarithm of the block 
+(window) sizes provides an estimate for the Hurst exponent <code>H</code>. 
+<br>
+</p>
+<p>
+<EM>Peng or Variance of Residuals Method:</EM>
+<br>
+The function <code>pengFit</code> uses the method described by peng.
+In Peng's variance of residuals method the series is also divided
+into blocks of size <code>m</code>. Within each block the cumulated
+sums are computed up to <code>t</code> and a least-squares line 
+<code>a+b*t</code> is fitted to the cumulated sums. Then the sample 
+variance of the residuals is computed which is proportional to
+<code>m^(2*H)</code>. The <code>"mean"</code> or <code>"median"</code> are
+computed over the blocks. The slope <code>beta=2*H</code> from the 
+least square provides an estimate for the Hurst exponent <code>H</code>. 
+<br>
+</p>
+<p>
+<EM>The R/S Method:</EM>
+<br>
+The function <code>rsFit</code> implements the algorithm named 
+<EM>rescaled range analysis</EM> which is dicussed for example 
+in detail by B. Mandelbrot and Wallis [199x], B. Mandelbrot [199x] 
+and B. Mandelbrot and M.S. Taqqu [199x].
+<br>
+</p>
+<p>
+<EM>The Periodogram Method:</EM>
+<br>
+The function <code>perFit</code> estimates the Hurst exponent from the
+periodogram. In the finite variance case, the periodogram is an
+estimator of the spectral density of the time series. A series
+with long range dependence will show a spectral density with a
+lower law behavior in the frequency. Thus, we expect that a
+log-log plot of the periodogram versus frequency will display
+a straight line, and the slopw can be computed as <EM>1-2H</EM>.
+In practice one uses only the lowest 10% of the frequencies, 
+since the power law behavior holds only for frequencies close to
+zero. Varying this cut off may provide additional information.
+Plotting <EM>H</EM> versus the cut off, one should select that
+cut off where the curve flattens out to estimate <code>H</code>.
+This approach can be selected by the argument <code>method="per"</code>.
+Alternatively we can select <code>method="cumper"</code>. In this case,
+instead of using the periodgram itself, the cmulative periodgram
+will be investigated. The slope of the double logarithmic fit
+is given by <EM>2-2H</EM>. More details can be found in the work
+of J. Geweke and S. Porter-Hudak [1983] and in Taqqu [?].
+<br>
+</p>
+<p>
+<EM>The Boxed or Modified Periodogram Method:</EM>
+<br>
+The function <code>boxperFit</code> is a modification of the periodogram
+method. The algorithm devides the frequency axis into logarithmically
+equally spaced boxes and averages the periodogram values corresponding 
+to the frequencies inside the box.
+<br>
+</p>
+<p>
+<EM>The Whittle Estimator:</EM>
+<br>
+The function <code>whittleFit</code> performs also a periodogram analysis.
+The algorithm is based on the minimization of a likelihood function
+defined in the frequency domain. For FGN and FARIMA(0,d,0) processes
+the parameter <EM>H</EM> or <EM>d</EM> is the unknown parameter which
+minimizes the function. This approach also allows to compute confidence
+intervals. Unlike the previous eight estimators the Whittle estimator
+is not a graphical method, it just returns the values of <EM>H</EM>
+or <EM>d</EM> together with their confidence intervals. The function
+allows also to investigate FARIMA(p,d,q) models, then the parameter
+set to be optimized is enlarged by the AR and MA coefficients. It
+is worth to remark, that the empirical series is required to be a 
+Gaussian process and that the underlying form must be specified. 
+<br>
+</p>
+<p>
+The original functions were written by V. Teverovsky and W. Willinger
+for SPLUS calling internal functions written in C. The software can 
+be found on M. Taqqu's home page:<br>
+<EM>http://math.bu.edu/people/murad/</EM> 
+<br>
+In addition the Whittle estimator uses SPlus functions written 
+by J. Beran. They can be found in the appendix of his book or on 
+the StatLib server:<br>
+<EM>http://lib.stat.cmu.edu/S/</EM>
+<br>
+Note, all nine R functions and internal utility functions are 
+reimplemented entirely in S.
+<br>
+</p>
+<p>
+<B>IV: Functions to perform a Wavelet Analysis:</B>
+<br>
+</p>
+<p>
+The function <code>waveletFit</code> computes the Discrete Wavelet 
+Transform, averages the squares of the coefficients of the transform, 
+and then performs a linear regression on the logarithm of the 
+average, versus the log of the scale parameter of the transform. 
+The result should be directly proportional to <code>H</code> providing
+an estimate for the Hurst exponent.
+</p>
+
+
+<h3>Value</h3>
+
+<p>
+<code>fgnSim</code> and <code>farimaSim</code> return a numeric vector of length 
+<code>n</code>, the FGN or FARIMA series.
+<br>
+<br>
+<code>fgnTrueacf(n, H)</code>,
+<code>fgnTruefft(n, H)</code>, 
+<code>farimaTrueacf(n, H)</code>, and
+<code>farimaTruefft(n, H)</code>
+return the true covariance and the true spectrum of the FGN
+or FARIMA time series process.
+<br>
+<br>
+<code>*Fit</code> returns an S4 object of class <code>fHURST</code> with the
+following slots:
+</p>
+<table summary="R argblock">
+<tr valign="top"><td><code>@call</code></td>
+<td>
+the function call.      
+</td></tr>
+<tr valign="top"><td><code>@method</code></td>
+<td>
+a character string with the selected method string.      
+</td></tr>
+<tr valign="top"><td><code>@hurst</code></td>
+<td>
+a list with at least one element, the Hurst exponent named
+<code>H</code>. Optional values may be the value of the fitted 
+slope <code>beta</code>, or information from the fit.      
+</td></tr>
+<tr valign="top"><td><code>@parameters</code></td>
+<td>
+a list with a varying number of elements describing
+the input parameters from the argument list.      
+</td></tr>
+<tr valign="top"><td><code>@data</code></td>
+<td>
+a list holding the input data.
+</td></tr>
+<tr valign="top"><td><code>@fit</code></td>
+<td>
+a list object with all information of the fit.
+</td></tr>
+<tr valign="top"><td><code>@plot</code></td>
+<td>
+a list object which holds information to create a plot
+of the fit.
+</td></tr>
+<tr valign="top"><td><code>@title</code></td>
+<td>
+a character string with the name of the test.
+</td></tr>
+<tr valign="top"><td><code>@description</code></td>
+<td>
+a character string with a brief description of the test.
+</td></tr>
+</table>
+<p>
+
+<br>
+<code>waveletFit</code>
+<br></p>
+
+<h3>Author(s)</h3>
+
+<p>
+V. Paxson, code as listed in the Appendix of his paper 1995, <br>
+J. Beran, ported by Maechler, code as listed in the Appendix of his Book, <br>
+M.S. Taqqu et al. for the S-Plus and C code concerned with the Hurst exponent, <br>
+C. Fraley for the FARIMA simulation code, <br>
+Guy Nason for the functions from the R package 'wavethresh', <br>
+Diethelm Wuertz for the Rmetrics <font face="Courier New,Courier" color="#666666"><b>R</b></font>-port.
+</p>
+
+
+<h3>References</h3>
+
+<p>
+Beran J. (1992);
+<EM>Statistics for Long-Memory Processes</EM>,
+Chapman and Hall, New York, 1994.
+</p>
+<p>
+Haslett J., Raftery A.E. (1989);
+<EM>Space-Time Modelling with Long-Memory Dependence: 
+Assessing Ireland's Wind Power Resource</EM>,
+Applied Statistics 38, pp. 1&ndash;50.
+</p>
+<p>
+Paxson V. (1995); 
+<EM>Fast Approximation of Self-Similar Network Traffic</EM>,
+Technical report, LBL-36750/UC-405, Berkeley, and
+Computer Communcation Review27, p.5&ndash;18, 1997.
+</p>
+<p>
+Rolls D.A. (2001);
+<EM>Improved Fast Approximate Synthesis of Fractional Gaussian Noise</EM>,
+Thesis, Department of Mathematics and Statistics,
+Queen's University at Kingston, Kingston, Ontario, Canada, 5 pages.
+</p>
+<p>
+Taqqu M., et al.
+<EM>Hurst Exponent</EM>,
+Several Preprints.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+## SOURCE("fSeries.3A-LongRangeDependence")
+
+## fgnSim -
+   par(mfrow = c(3, 1), cex = 0.75)  
+   
+   # Beran's Method:
+   plot(fgnSim(n = 200, H = 0.75), type = "l",  
+     ylim = c(-3, 3), xlab = "time", ylab = "x(t)", main = "Beran")
+   
+     # Durbin's Method:
+   plot(fgnSim(n = 200, H = 0.75, method = "durbin"), type = "l",
+     ylim = c(-3, 3), xlab = "time", ylab = "x(t)", main = "Durbin")
+   
+     # Paxson's Method:
+   plot(fgnSim(n = 200, H = 0.75, method = "paxson"), type = "l",
+     ylim = c(-3, 3), xlab = "time", ylab = "x(t)", main = "Paxson")
+</pre>
+
+
+
+<hr><div align="center">[Package <em>fSeries</em> version 231.10066 <a href="00Index.html">Index]</a></div>
+
+</body></html>
