@@ -8,18 +8,18 @@
 # Date: 2004/11/26
 # Title: Simultaneous Equation Estimation Package
 # Author: Jeff D. Hamann <jeff.hamann@forestinformatics.com> and
-#	Arne Henningsen <ahenningsen@agric-econ.uni-kiel.de>
+#   Arne Henningsen <ahenningsen@agric-econ.uni-kiel.de>
 # Maintainer: Jeff D. Hamann <jeff.hamann@forestinformatics.com>
 # Depends: R (>= 1.8.0)
 # Description: This package contains functions for fitting simultaneous
-# 	systems of linear and nonlinear equations using Ordinary Least
-#	Squares (OLS), Weighted Least Squares (WLS), Seemingly Unrelated
-#	Regressions (SUR), Two-Stage Least Squares (2SLS), Weighted
-#	Two-Stage Least Squares (W2SLS), Three-Stage Least Squares (3SLS),
-#	and Weighted Three-Stage Least Squares (W3SLS).
+#   systems of linear and nonlinear equations using Ordinary Least
+#   Squares (OLS), Weighted Least Squares (WLS), Seemingly Unrelated
+#   Regressions (SUR), Two-Stage Least Squares (2SLS), Weighted
+#   Two-Stage Least Squares (W2SLS), Three-Stage Least Squares (3SLS),
+#   and Weighted Three-Stage Least Squares (W3SLS).
 # License: GPL version 2 or newer
 # URL: http://www.r-project.org, http://www.forestinformatics.com, 
-#	http://www.arne-henningsen.de
+#   http://www.arne-henningsen.de
 # Packaged: Fri Nov 26 10:38:49 2004; suapm095
 
 
@@ -48,25 +48,25 @@
 ### License along with this program; if not, write to the Free
 ### Software Foundation, Inc., 59 Temple Place - Suite 330, Boston,
 ### MA 02111-1307, USA
-
+ 
 
 systemfit <- function( method,
-	eqns,
-	eqnlabels=c(as.character(1:length(eqns))),
-	inst=NULL,
-	data=list(),
-	R.restr=NULL,
-	q.restr=matrix(0,max(nrow(R.restr),0),1),
-	TX=NULL,
-	maxiter=1,
-	tol=1e-5,
-	rcovformula=1,
-	formula3sls="GLS",
-	probdfsys=!(is.null(R.restr) & is.null(TX)),
-	single.eq.sigma=(is.null(R.restr) & is.null(TX)),
-	solvetol=.Machine$double.eps,
-	saveMemory = ( nrow( data ) * length( eqns ) > 1000 &&
-	   length( data ) > 0 ) )
+    eqns,
+    eqnlabels=c(as.character(1:length(eqns))),
+    inst=NULL,
+    data=list(),
+    R.restr=NULL,
+    q.restr=matrix(0,max(nrow(R.restr),0),1),
+    TX=NULL,
+    maxiter=1,
+    tol=1e-5,
+    rcovformula=1,
+    formula3sls="GLS",
+    probdfsys=!(is.null(R.restr) & is.null(TX)),
+    single.eq.sigma=(is.null(R.restr) & is.null(TX)),
+    solvetol=.Machine$double.eps,
+    saveMemory = ( nrow( data ) * length( eqns ) > 1000 &&
+       length( data ) > 0 ) )
 {
 
    ## some tests

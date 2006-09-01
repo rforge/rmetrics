@@ -2,22 +2,23 @@
 
 \alias{EquationsModelling}
 
-\alias{fEQNS}
-\alias{fEQNS-class}
+\alias{fSYSTEM}
+\alias{fSYSTEM-class}
 
-\alias{eqnsFit}
+\alias{systemFit}
+\alias{nlsystemFit}
 \alias{SUR}
 
-\alias{predict.fEQNS}
+\alias{predict.fSYSTEM}
 
-\alias{print.fEQNS}
-\alias{plot.fEQNS}
-\alias{summary.fEQNS}
+\alias{print.fSYSTEM}
+%\alias{plot.fSYSTEM}
+\alias{summary.fSYSTEM}
 
-\alias{coef.fEQNS}
-\alias{fitted.fEQNS}
-\alias{residuals.fEQNS}
-\alias{vcov.fEQNS}
+\alias{coef.fSYSTEM}
+\alias{fitted.fSYSTEM}
+\alias{residuals.fSYSTEM}
+%\alias{vcov.fSYSTEM}
 
 \alias{systemfitBuiltin}
 
@@ -42,7 +43,7 @@
     \cr
     
     The wrapper fullfills the naming conventions of Rmetrics, returns a 
-    S4 object named \code{fEQNS}, and allows for \code{timeSeries} objects 
+    S4 object named \code{fSYSTEM}, and allows for \code{timeSeries} objects 
     as input. In addition a S-Plus like FinMetrics function \code{SUR} 
     is made available.
     \cr
@@ -60,9 +61,9 @@
     Further Functions and Methods are:
     
     \tabular{ll}{
-    \code{print} \tab S3 Print method for objects of class 'fEQNS', \cr
-    \code{summary} \tab S3 Summary method for objects of class 'fEQNS', \cr
-    \code{predict} \tab S3 Predict method for objects of class 'fEQNS'. }
+    \code{print} \tab S3 Print method for objects of class 'fSYSTEM', \cr
+    \code{summary} \tab S3 Summary method for objects of class 'fSYSTEM', \cr
+    \code{predict} \tab S3 Predict method for objects of class 'fSYSTEM'. }
                 
     S-Plus like Finmetrics Function:
     
@@ -79,23 +80,26 @@
     
 
 \usage{
-eqnsFit(formulas, data = list(), method = c("OLS", "WLS", "SUR", "2SLS", 
+systemFit(formula, data = list(), method = c("OLS", "WLS", "SUR", "2SLS", 
     "W2SLS", "3SLS", "W3SLS"), title = NULL, description = NULL, \dots)
+    
+nlsystemFit(formula, data = list(), method = c("OLS", "SUR", "2SLS", "3SLS"), 
+    start = NULL, title = NULL, description = NULL, \dots)
 
-\method{predict}{fEQNS}(object, newdata = object@data, se.fit = FALSE, 
+\method{predict}{fSYSTEM}(object, newdata = object@data, se.fit = FALSE, 
     se.pred = FALSE, interval = "none", ci = 0.95, \dots)
 
-\method{print}{fEQNS}(x, \dots)
-\method{summary}{fEQNS}(object, \dots)
+\method{print}{fSYSTEM}(x, \dots)
+\method{summary}{fSYSTEM}(object, \dots)
 
-\method{coef}{fEQNS}(object, \dots)
-\method{fitted}{fEQNS}(object, \dots)
-\method{residuals}{fEQNS}(object, \dots)
-\method{vcov}{fEQNS}(object, \dots)
+\method{coef}{fSYSTEM}(object, \dots)
+\method{fitted}{fSYSTEM}(object, \dots)
+\method{residuals}{fSYSTEM}(object, \dots)
+%\method{vcov}{fSYSTEM}(object, \dots)
 
-SUR(formulas, data = list(), \dots)
+SUR(formula, data = list(), \dots)
 
-systemfitBuiltin(builtin = "/fMultivar/demo/funSystemfit.R")
+%systemfitBuiltin(builtin = "/fMultivar/demo/funSystemfit.R")
 } 
 
 
@@ -232,25 +236,21 @@ systemfitBuiltin(builtin = "/fMultivar/demo/funSystemfit.R")
  
 \arguments{
     
-    \item{builtin}{
-        a character string giving the path and name of the \code{systemfit}
-        builtin package. By default \code{"/fMultivar/demo/funSystemfit.R"}.
-        }
     \item{ci}{
         [predict] - \cr
         the confidence interval, by default 0.95.
         }
-    \item{formulas}{
-        [eqnsFit] - \cr
+    \item{formula}{
+        [systemFit] - \cr
         the list of formulas describing the system of equations.
         }
     \item{data}{
-        [eqnsFit] - \cr
+        [systemFit] - \cr
         the input data set in form of a \code{data.frame} or 
         \code{timeSeries} object.
         }
     \item{description}{
-        [eqnsFit] - \cr
+        [systemFit] - \cr
         a character string which allows for a brief description.
         }   
     \item{interval}{
@@ -259,7 +259,7 @@ systemfitBuiltin(builtin = "/fMultivar/demo/funSystemfit.R")
         \code{"confidence"}, or \code{"prediction"}.
         }
     \item{method}{
-        [eqnsFit] - \cr
+        [systemFit] - \cr
         a character string describing the desired method, one of:
         \code{"OLS"}, \code{"WLS"}, \code{"SUR"}, \code{"2SLS"}, 
         \code{"W2SLS"}, \code{"3SLS"}, or \code{"W3SLS"}.
@@ -272,7 +272,7 @@ systemfitBuiltin(builtin = "/fMultivar/demo/funSystemfit.R")
     \item{object}{
         [predict][summary] - \cr
         [coef][fitted][residuals][vcov] - \cr
-        an object of class \code{fEQNS}.
+        an object of class \code{fSYSTEM}.
         }
     \item{se.fit}{
         [predict] - \cr
@@ -284,13 +284,16 @@ systemfitBuiltin(builtin = "/fMultivar/demo/funSystemfit.R")
         a logical, should the standard error of the prediction
         be returned?
         }
+    \item{start}{
+        start values.
+        }
     \item{title}{
-        [eqnsFit] - \cr
+        [systemFit] - \cr
         a character string which allows for a project title.
         }   
     \item{x}{
         [plot][print] - \cr
-        an object of class \code{fEQNS}.
+        an object of class \code{fSYSTEM}.
         }
     \item{\dots}{
         [systemFit] - \cr
@@ -371,7 +374,7 @@ systemfitBuiltin(builtin = "/fMultivar/demo/funSystemfit.R")
     \bold{Fit: Parameter Estimation}
     \cr
     
-    The function \code{eqnsFit} returns an object of class \code{"fEQNS"} 
+    The function \code{systemFit} returns an object of class \code{"fSYSTEM"} 
     with the following slots:
     
     \item{@call}{
@@ -414,23 +417,23 @@ systemfitBuiltin(builtin = "/fMultivar/demo/funSystemfit.R")
     The major elements of the list are:
     
     \item{coef}{
-        the coefficients from an object of class \code{fEQNS}. A 
+        the coefficients from an object of class \code{fSYSTEM}. A 
         one-column data frame of all estimated coefficients.
         }
     \item{confint}{
         the confidence intervals of the coefficients of one equation 
-        from an object of class \code{fEQNS}. 
+        from an object of class \code{fSYSTEM}. 
         }
     \item{fitted}{
         the fitted values of all equations from an object of class 
-        \code{fEQNS}. 
+        \code{fSYSTEM}. 
         }
     \item{residuals}{
-         the residuals from an object of class \code{fEQNS}. 
+         the residuals from an object of class \code{fSYSTEM}. 
          }
     \item{vcov}{
         the variance covariance matrix of all coefficients from an 
-        object of class \code{fEQNS}. 
+        object of class \code{fSYSTEM}. 
         }
            
     The remaining elements of the slot \code{@fit$fit} are:
@@ -639,7 +642,7 @@ systemfitBuiltin(builtin = "/fMultivar/demo/funSystemfit.R")
     in form of a detailed report together with optional plots. 
     \cr
     The output from the S3 \code{print} method prints on object
-    of class \code{fEQNS}. 
+    of class \code{fSYSTEM}. 
     \cr
     The output from the S3 \code{plot} method returns some diagnostic
     plots.
@@ -649,8 +652,8 @@ systemfitBuiltin(builtin = "/fMultivar/demo/funSystemfit.R")
     \bold{S-Plus like SUR Function:}
     \cr
     
-    The function \code{SUR} returns an object of class \code{"fEQNS"} 
-    with the same slots returned by the function \code{eqnsFit} for
+    The function \code{SUR} returns an object of class \code{"fSYSTEM"} 
+    with the same slots returned by the function \code{systemFit} for
     method \code{"SUR"}.
          
 }
@@ -695,7 +698,7 @@ Theil H., (1971);
 
 
 \examples{
-## SOURCE("fMultivar.043A-EquationsModelling")
+## SOURCE("fMultivar.3A-EquationsModelling")
 
 ## Note, "systemfit" is required:
    SYSTEMFIT = require(systemfit)
@@ -706,7 +709,7 @@ Theil H., (1971);
    
 ## OLS Estimations:   
    formulas = list(demand = q ~ p + d, supply = q ~ p + f + a )
-   FITOLS = eqnsFit(formulas, data = kmenta)
+   FITOLS = systemFit(formulas, data = kmenta)
    FITOLS
    
 ## OLS Estimation with 2 Restrictions:
@@ -717,39 +720,37 @@ Theil H., (1971);
    Rrestr[2,2] = -1
    Rrestr[2,5] =  1
    qrestr[2,1] =  0.5
-   FITOLS2 = eqnsFit(formulas, data = kmenta, R.restr = Rrestr, 
+   FITOLS2 = systemFit(formulas, data = kmenta, R.restr = Rrestr, 
      q.restr = qrestr)
    FITOLS2
    
 ## Iterated SUR Estimation:
-   FITSUR = eqnsFit(formulas, data = kmenta, method = "SUR", maxit = 100)
+   FITSUR = systemFit(formulas, data = kmenta, method = "SUR", maxit = 100)
    FITSUR
    # Coefficients, Fitted Values, Residuals and Variance-Covariance Matrix:
    # Call by Method:
    coef(FITSUR)
    fitted(FITSUR)
    residuals(FITSUR)
-   vcov(FITSUR)
 
 ## 2SLS Estimation:
    inst = ~ d + f + a
-   FIT2SLS = eqnsFit(formulas, data = kmenta, method = "2SLS", inst = inst)
+   FIT2SLS = systemFit(formulas, data = kmenta, method = "2SLS", inst = inst)
    FIT2SLS
    # Coefficients, Fitted Values, Residuals and Variance-Covariance Matrix:
    # Call by Slot:
    FIT2SLS@fit$coef
-   FIT2SLS@fit$fitted
-   FIT2SLS@fit$residuals
-   FIT2SLS@fit$vcov
+   FIT2SLS@fitted.values
+   FIT2SLS@residuals
 
 ## 2SLS Estimation with Different Instruments in Each Equation:
    insts = list( ~ d + f, ~ d + f + a)
-   FIT2SLS2 = eqnsFit(formulas, data = kmenta, method = "2SLS", inst = insts)
+   FIT2SLS2 = systemFit(formulas, data = kmenta, method = "2SLS", inst = insts)
    FIT2SLS2
 
 ## 3SLS Estimation with GMM-3SLS Formula:
    instruments = ~ d + f + a
-   FIT3SLS = eqnsFit(formulas, data = kmenta, method = "3SLS", 
+   FIT3SLS = systemFit(formulas, data = kmenta, method = "3SLS", 
      inst = instruments, formula3sls = "GMM")
    FIT3SLS
    

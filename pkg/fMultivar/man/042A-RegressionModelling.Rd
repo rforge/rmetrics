@@ -5,7 +5,9 @@
 \alias{fREG}
 \alias{fREG-class}
 
+\alias{regSim}
 \alias{regFit}
+\alias{gregFit}
 
 \alias{predict.fREG}
 
@@ -13,8 +15,10 @@
 \alias{plot.fREG}
 \alias{summary.fREG}
 
-\alias{fitted.values.fREG}
+\alias{coef.fREG}
+\alias{fitted.fREG}
 \alias{residuals.fREG}
+\alias{vcov.fREG}
 
 \alias{OLS}
 \alias{print.OLS}
@@ -117,18 +121,23 @@
 
 
 \usage{
-regFit(formula, family = gaussian(), data = list(), 
-    method = c("LM", "GLM", "GAM", "PPR", "MARS", "POLYMARS", "NNET"), 
-    nterms = NA, size = NA, title = NULL, description = NULL, \dots) 
+regSim(model = c("LM3", "LOGIT3", "GAM3"), n = 100)
 
-\method{predict}{fREG}(object, newdata, type = "response", \dots)
+regFit(formula, data, use = c("lm", "rlm", "am", "ppr", "mars", "polymars", 
+    "nnet"), title = NULL, description = NULL, \dots)
+gregFit(formula, family, data, use = c("glm", "gam"), 
+    title = NULL, description = NULL, \dots)
+    
+\method{predict}{fREG}(object, newdata, se.fit = FALSE, \dots)
 
 \method{print}{fREG}(x, \dots)
-\method{plot}{fREG}(x, y, \dots)
+\method{plot}{fREG}(x, \dots)
 \method{summary}{fREG}(object, \dots)
 
-\method{fitted.values}{fREG}(object, \dots)
+\method{coef}{fREG}(object, \dots)
+\method{fitted}{fREG}(object, \dots)
 \method{residuals}{fREG}(object, \dots)
+\method{vcov}{fREG}(object, \dots)
 
 OLS(formula, data, \dots)
 
@@ -169,7 +178,7 @@ OLS(formula, data, \dots)
         formula. See \code{gam.side.conditions} for details and 
         examples.
         }  
-    \item{method}{
+    \item{use}{
         denotes the regression method by a character string used to fit 
         the model.
         \code{method} must be one of the strings in the default argument.\cr
@@ -181,13 +190,18 @@ OLS(formula, data, \dots)
         \code{"POLYMARS"} for molytochomous MARS, and\cr
         \code{"NNET"} for feedforward neural network modelling.
         }
-    \item{nterms}{
-        [pprFit] - \cr
-        the number of terms to include in the final projection pursuit 
-        regression model. For further settings consult the 
-        \code{ppr} help page.
+    \item{model}{
+        [regSim] - \cr
+        a character string selecting one from three two-dimensional
+        benchnmark models: \code{"LM2"}, \code{"LOGIT2"}, or
+        \code{"GAM2"}.
         }
-    \item{object, x, y}{
+    \item{n}{
+        [regSim] - \cr
+        an integer value setting the length of the series to be simulated. 
+        The default value is 100.
+        }
+    \item{object, x}{
         [regFit] - \cr
         is an object returned by the regression function \code{regFit} 
         and serves as input for the  \code{predict}, \code{print}, 
@@ -198,21 +212,18 @@ OLS(formula, data, \dots)
         is an object returned by the 'OLS' function \code{OLS} 
         and serves as input for the  \code{print}, \code{plot}, 
         and \code{summary} methods.
-        }     
-   \item{size}{
-        [nnetFit] - \cr
-        the number of units in the hidden layer of the feedforward
-        neural network model. For further settings consult the
-        \code{nnet} help page.
-        }
+        } 
+   \item{se.fit}{
+        [predict] - \cr
+        ...
+        }    
     \item{title}{
         a character string which allows for a project title.
         }
-    \item{type}{
-        [predict] - \cr
-        a string denoting the type of input data. By default set to
-        \code{"response"}.
-        }
+    %\item{weights}{
+    %    a vector of weights. If set to \code{NULL} all weights are
+    %    set to unity, the default value.
+    %    }
     \item{\dots}{
         additional optional arguments to be passed to the underlying 
         functions. For details we refer to inspect the following help 
@@ -692,7 +703,7 @@ Wood (2001);
 
 \examples{
 ## SOURCE("fMultivar.042A-RegressionModelling")
-
+\dontrun{
 ## regFit -
    xmpMultivar("\nStart: Load US Recession Modelling Data Set > ")
    data(recession) 
@@ -731,6 +742,7 @@ Wood (2001);
    fit = regFit(formula = recession ~ tbills3m + tbonds10y,
      family = gaussian(), data = recession, method = "POLYMARS")
    fit
+}
 }
 
 

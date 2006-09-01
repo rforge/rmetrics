@@ -293,9 +293,11 @@ title = NULL, description = NULL, ...)
     fit <- eval(cmd, parent.frame()) 
       
     # Add to Fit:
+    if (is.null(fit$xlevels)) fit$xlevels = list()
     fit$residuals = as.vector(fit$residuals)    
     fit$fitted.values = as.vector(fit$fitted.values)
     fit$parameters = fit$coef
+    if (use == "am") fit$fake.formula = interpret.gam(formula)$fake.formula
     noFitModels = c("ppr", "mars", "nnet")
     FitModelTest = as.logical(match(use, noFitModels, 0))
     if (FitModelTest) {
@@ -307,7 +309,9 @@ title = NULL, description = NULL, ...)
         fit$model <- eval(mf, parent.frame())
     }
     class(fit) = c("list", class(fit))
-    
+    if (!inherits(fit, "lm")) class(fit) = c(class(fit), "lm")
+
+    AM
     # Add Units to timeSeries:
     resUnits = paste(as.character(formula)[2], "RES", sep = ".")
     fittedUnits = paste(as.character(formula)[2], "FITTED", sep = ".")
@@ -940,13 +944,14 @@ function(object, ...)
 }
 
 
-# ******************************************************************************
+# ------------------------------------------------------------------------------
 
 
-.predict.lm = predict 
-.predict.glm = predict 
-.predict.ppr = predict 
-.predict.nnet = predict
+.predict.lm = predict.lm
+.predict.gam = predict.gam
+.predict.glm = predict.glm 
+.predict.ppr = function(object, ...) { predict(object, ...) }
+.predict.nnet = function(object, ...) { predict(object, ...) }
 
 
 # ------------------------------------------------------------------------------
@@ -963,13 +968,14 @@ function(object, newdata, se.fit = FALSE, ...)
     
     # Fit:
     fit = object@fit
-    
+      
     # Data:
     if (missing(newdata)) newdata = object@data
     newdata = as.data.frame(newdata)
-    
+     
     # Predict:
-    ans = .predict(object = fit, newdata = newdata, se.fit = se.fit, ...) 
+    ans = .predict(object = fit, newdata = newdata, se.fit = se.fit, 
+        type = type, ...) 
     
     # Make the output from 'predict' unique:
     if (se.fit) {
@@ -1076,7 +1082,6 @@ function(object, ...)
 #  .mars.default
 #  .predict.mars
 #  .showcuts.mars
-################################################################################
 
 
 .mars = 
@@ -1236,7 +1241,9 @@ trace.mars = FALSE, forward.step = TRUE, prevfit = NULL, ...)
         gcv = junk$bestgcv, factor = dir, cuts = cutss, 
         residuals = residuals, 
         fitted.values = fitted.values, lenb = junk$lenb, 
-        coefficients = coefficients, x = x), 
+        coefficients = coefficients, 
+        #x = x
+        ), 
         class = "mars")
 }
 
@@ -1338,7 +1345,6 @@ function(object)
 #  .polymars
 #  .polymars.default
 #  .predict.polymars
-################################################################################
 # Contributed package "polspline" is required!
 
 
@@ -1726,5 +1732,5 @@ function(object, formula = Y ~ X1 + X2, N = 10, fun = mean)
 }
 
 
-# ------------------------------------------------------------------------------
+################################################################################
 

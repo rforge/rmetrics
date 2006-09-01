@@ -27,6 +27,20 @@
 \alias{wprTA}
 \alias{rsiTA}
 
+\alias{accelTA}
+\alias{adiTA}
+\alias{adoscillatorTA}
+\alias{bollingerTA}
+\alias{chaikinoTA}
+\alias{chaikinvTA}
+\alias{garmanklassTA}
+\alias{nviTA}
+\alias{obvTA}
+\alias{pviTA}
+\alias{pvtrendTA}
+\alias{williamsadTA}
+\alias{williamsrTA}
+
 \alias{SMA}
 \alias{EWMA}
 
@@ -79,11 +93,11 @@
 emaTA(x, lambda, startup = 0)
 biasTA(x, lag)
 rocTA(x, lag)
-oscTA(x, lag1, lag2)
+oscTA(x, lag = c(25, 65))
 momTA(x, lag)
 macdTA(x, lag1, lag2)
-cdsTA(x, lag1, lag2, lag3)
-cdoTA(x, lag1, lag2, lag3)
+cdsTA(x, lag = c(12, 26, 9))
+cdoTA(x, lag = c(12, 26, 9))
 vohlTA(high, low)
 vorTA(high, low)
 stochasticTA(close, high, low, lag1, lag2, type = c("fast", "slow")) 

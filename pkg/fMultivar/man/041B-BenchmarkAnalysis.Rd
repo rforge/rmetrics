@@ -38,7 +38,7 @@
 
 \usage{
 getReturns(x, type = c("continuous", "discrete"), percentage = FALSE, 
-    trim = TRUE, digits = 4)
+    trim = TRUE)
     
 ohlcPlot(x, xlim = NULL, ylim = NULL, xlab = "Time", ylab, col = par("col"),
     bg = par("bg"), axes = TRUE, frame.plot = axes, ann = par("ann"),
@@ -66,10 +66,6 @@ maxDrawDown(x)
         dates if \code{date == "calendar"}. Defaults to 1899-12-30 
         (Popular spreadsheet programs internally also use Julian dates 
         with this origin).
-        }
-    \item{digits}{
-        [getReturns] - \cr
-        number of digits to be printed. By default 4.
         }
     \item{percentage}{
         [getReturns] - \cr
