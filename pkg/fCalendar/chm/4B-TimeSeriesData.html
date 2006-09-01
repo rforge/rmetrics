@@ -1,0 +1,494 @@
+<html><head><title>timeSeries Class and Methods</title>
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>TimeSeriesData(fCalendar)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   TimeSeriesData">
+<param name="keyword" value="R:   diff.timeSeries">
+<param name="keyword" value="R:   lag.timeSeries">
+<param name="keyword" value="R:   merge.timeSeries">
+<param name="keyword" value="R:   scale.timeSeries">
+<param name="keyword" value="R:   var.timeSeries">
+<param name="keyword" value="R:   Ops.timeSeries">
+<param name="keyword" value="R:   abs.timeSeries">
+<param name="keyword" value="R:   sqrt.timeSeries">
+<param name="keyword" value="R:   exp.timeSeries">
+<param name="keyword" value="R:   log.timeSeries">
+<param name="keyword" value="R:   quantile.timeSeries">
+<param name="keyword" value="R:   [.timeSeries">
+<param name="keyword" value="R:   cut.timeSeries">
+<param name="keyword" value="R:   head.timeSeries">
+<param name="keyword" value="R:   tail.timeSeries">
+<param name="keyword" value="R:   outlier.timeSeries">
+<param name="keyword" value="R:   dim.timeSeries">
+<param name="keyword" value="R:   dimnames.timeSeries">
+<param name="keyword" value="R:   colnames<-.timeSeries">
+<param name="keyword" value="R:   rownames<-.timeSeries">
+<param name="keyword" value="R:   is.array.timeSeries">
+<param name="keyword" value=" timeSeries Class and Methods">
+</object>
+
+
+<h2>timeSeries Class and Methods</h2>
+
+
+<h3>Description</h3>
+
+<p>
+A collection and description of functions 
+and methods dealing with regular and irregular 
+'timeSeries' objects. Dates and times are 
+implemented as 'timeDate' objects. Included 
+are functions and methods for the generation 
+and representation of 'timeSeries' objects, 
+and for mathematical operations.          
+<br>
+</p>
+<p>
+Functions and methods to modify 'timeSeries' objects:         
+</p>
+
+<table summary="Rd table">
+<tr>
+  <td align="left"><code>diff</code> </td>  <td align="left"> Takes differences from a 'timeSeries' object, </td>
+</tr>
+<tr>
+  <td align="left"> <code>lag</code> </td>  <td align="left"> Lags a 'timeSeries' object, </td>
+</tr>
+<tr>
+  <td align="left"> <code>merge</code> </td>  <td align="left"> Merges a 'timeSeries' object with a 'matrix', </td>
+</tr>
+<tr>
+  <td align="left"> <code>lag</code> </td>  <td align="left"> Scales and centers a 'timeSeries' object. </td>
+</tr>
+</table>
+
+<p>
+Functions and methods for classifying 'timeSeries' objects:
+</p>
+
+<table summary="Rd table">
+<tr>
+  <td align="left"><code>var</code> </td>  <td align="left"> Computes Variance from a 'timeSeries' object.</td>
+</tr>
+</table>
+
+<p>
+Functions and methods for mathematical operations on 'timeSeries' objects:         
+</p>
+
+<table summary="Rd table">
+<tr>
+  <td align="left"><code>Ops.timeSeries</code> </td>  <td align="left"> S3: Arith method for a 'timeSeries' object, </td>
+</tr>
+<tr>
+  <td align="left"> <code>abs</code> </td>  <td align="left"> Returns absolute values of a 'timeSeries' object, </td>
+</tr>
+<tr>
+  <td align="left"> <code>sqrt</code> </td>  <td align="left"> Returns square root of a 'timeSeries' object, </td>
+</tr>
+<tr>
+  <td align="left"> <code>exp</code> </td>  <td align="left"> Returns the exponential values of a 'timeSeries' object, </td>
+</tr>
+<tr>
+  <td align="left"> <code>log</code> </td>  <td align="left"> Returns the logarithm of  a 'timeSeries' object, </td>
+</tr>
+<tr>
+  <td align="left"> <code>quantile.timeSeries</code> </td>  <td align="left"> Computes quantiles of a 'timeSeries' object. </td>
+</tr>
+</table>
+ 
+</p>
+<p>
+Functions and methods for subsetting 'timeSeries' objects: 
+</p>
+
+<table summary="Rd table">
+<tr>
+  <td align="left"><code>"["</code> </td>  <td align="left"> "[" method for a 'timeSeries' object, </td>
+</tr>
+<tr>
+  <td align="left"> <code>cut</code> </td>  <td align="left"> Cuts a block from a 'timeSeries' object, </td>
+</tr>
+<tr>
+  <td align="left"> <code>head</code> </td>  <td align="left"> Returns the head of a 'timeSeries' object, </td>
+</tr>
+<tr>
+  <td align="left"> <code>tail</code> </td>  <td align="left"> Returns the tail of a 'timeSeries' object, </td>
+</tr>
+<tr>
+  <td align="left"> <code>outliers</code> </td>  <td align="left"> Removes outliers from a 'timeSeries' object. </td>
+</tr>
+</table>
+
+<p>
+Functions and methods for dimensional operations on 'timeSeries' objects: 
+</p>
+
+<table summary="Rd table">
+<tr>
+  <td align="left"><code>dim</code> </td>  <td align="left"> Returns the dimension of a 'timeSeries' object, </td>
+</tr>
+<tr>
+  <td align="left"> <code>dimnames</code> </td>  <td align="left"> Returns the dimension names of a 'timeSeries' object, </td>
+</tr>
+<tr>
+  <td align="left"> <code>colnames&lt;-</code> </td>  <td align="left"> Assigns column names to a 'timeSeries' object, </td>
+</tr>
+<tr>
+  <td align="left"> <code>rownames&lt;-</code> </td>  <td align="left"> Assigns row names to a 'timeSeries' object, </td>
+</tr>
+<tr>
+  <td align="left"> <code>is.array</code> </td>  <td align="left"> Allows that NCOL and NROW work properly. </td>
+</tr>
+</table>
+
+
+<h3>Usage</h3>
+
+<pre>
+## S3 method for class 'timeSeries':
+diff(x, lag = 1, diff = 1, trim = FALSE, pad = NA, ...)
+## S3 method for class 'timeSeries':
+lag(x, k = 1, trim = FALSE, units = NULL, ...)
+## S3 method for class 'timeSeries':
+merge(x, y, units = NULL, ...)
+## S3 method for class 'timeSeries':
+scale(x, center = TRUE, scale = TRUE)
+## S3 method for class 'timeSeries':
+var(x, y = NULL, na.rm = FALSE, use)
+
+## S3 method for class 'timeSeries':
+Ops(e1, e2)
+## S3 method for class 'timeSeries':
+abs(x)
+## S3 method for class 'timeSeries':
+sqrt(x)
+## S3 method for class 'timeSeries':
+exp(x)
+## S3 method for class 'timeSeries':
+log(x, base = exp(1))
+## S3 method for class 'timeSeries':
+quantile(x, probs = 0.95, ...)
+
+## S3 method for class 'timeSeries':
+x[i = min(1, nrow(x@Data]):nrow(x@Data), 
+    j = min(1, ncol(x@Data)):ncol(x@Data))
+## S3 method for class 'timeSeries':
+cut(x, from, to, ...)
+## S3 method for class 'timeSeries':
+head(x, n = 6, ...)
+## S3 method for class 'timeSeries':
+tail(x, n = 6, ...)
+## S3 method for class 'timeSeries':
+outlier(x, sd = 10, complement = TRUE, ...)
+
+## S3 method for class 'timeSeries':
+dim(x)
+## S3 method for class 'timeSeries':
+dimnames(x)
+colnames&lt;-.timeSeries(x) &lt;- value
+rownames&lt;-.timeSeries(x) &lt;- value
+## S3 method for class 'timeSeries':
+is.array(x)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>base</code></td>
+<td>
+[log] - <br>
+a positive number. The base with respect to which logarithms
+are computed. Defaults to <code>e=exp(1)</code>.
+</td></tr>
+<tr valign="top"><td><code>center, scale</code></td>
+<td>
+[scale] - <br>
+either a logical value or a numeric vector of length equal to
+the number of columns of <code>x</code>.
+</td></tr>
+<tr valign="top"><td><code>complement</code></td>
+<td>
+[outlierSeries] - <br>
+a logical flag, should the outler series
+or its complement be returns, by default <code>TRUE</code>
+which returns the series free of outliers.
+</td></tr>
+<tr valign="top"><td><code>diff</code></td>
+<td>
+[diffSeries] - <br>
+an integer indicating the order of the difference. By default 1.
+</td></tr>
+<tr valign="top"><td><code>dimnames</code></td>
+<td>
+[as.timeSeries] - <br>
+a logical, if <code>TRUE</code> the dimension names of the
+matrix are assigned to the time series object.
+</td></tr>
+<tr valign="top"><td><code>e1, e2</code></td>
+<td>
+[Ops] - <br>   
+two objects of class <code>timeSeries</code>.
+</td></tr>
+<tr valign="top"><td><code>from, to</code></td>
+<td>
+starting date and end date, <code>to</code> must be after <code>from</code>.
+</td></tr>
+<tr valign="top"><td><code>i, j</code></td>
+<td>
+["["] - <br> 
+index arguments used for subsettings.
+</td></tr>
+<tr valign="top"><td><code>k</code></td>
+<td>
+[lagSeries] - <br>   
+an integer value. The number of lags (in units of observations).
+By default 1.
+</td></tr>
+<tr valign="top"><td><code>lag</code></td>
+<td>
+[diffSeries] - <br>
+an integer indicating which lag to use. By default 1.
+</td></tr>
+<tr valign="top"><td><code>method</code></td>
+<td>
+[alignDailySeries] - <br>
+the method to be used for the alignment. A character string, one
+of <code>"before"</code>, use the data from the row whose position is
+just before the unmatched position, or <code>"after"</code>, use the 
+data from the row whose position is just after the unmatched 
+position, or <code>"linear"</code>, interpolate linearly between 
+<code>"before"</code> and <code>"after"</code>. 
+</td></tr>
+<tr valign="top"><td><code>n</code></td>
+<td>
+[head][tail] - <br>
+an integer specifying the number of lines to be returned. 
+By default <code>n=6</code>.
+</td></tr>
+<tr valign="top"><td><code>na.rm</code></td>
+<td>
+[var] - <br>
+a logical flag. Should missing values be removed?
+By default <code>FALSE</code>.
+</td></tr>
+<tr valign="top"><td><code>pad</code></td>
+<td>
+[diffSeries] - <br>
+which value should get the padded values? By default <code>NA</code>.
+Another choice often used would be zero.
+</td></tr>
+<tr valign="top"><td><code>probs</code></td>
+<td>
+a numeric value or numeric vector of probabilities with values 
+in <code>[0,1]</code>.
+</td></tr>
+<tr valign="top"><td><code>sd</code></td>
+<td>
+[outlierSeries] - <br>
+a numeric value of standard deviations, e.g. 10
+means that values larger or smaller tahn ten 
+times the standard deviation will be removed from
+the series.
+</td></tr>
+<tr valign="top"><td><code>trim</code></td>
+<td>
+[diffSeries][returnSeries] - <br>
+a logical value. By default <code>TRUE</code>, the first missing 
+observation in the return series will be removed. 
+</td></tr>
+<tr valign="top"><td><code>units</code></td>
+<td>
+[applySeries][lag][allignDailySeries][returnSeries][mergeSeries] - <br>
+an optional character string, which allows to overwrite the 
+current column names of a <code>timeSeries</code> object. By default 
+<code>NULL</code> which means that the column names are selected
+automatically.
+<br>
+[ohlcDailyPlot] - <br>
+a numeric value, specifying in which multiples the volume should
+be referenced on the plot labels. By default 1e6, i.e. in units
+of 1 Million.
+</td></tr>
+<tr valign="top"><td><code>use</code></td>
+<td>
+[var] - <br>
+an optional character string giving a method for computing
+covariances in the presence of missing values. This must 
+be (an abbreviation of) one of the strings <code>"all.obs"</code>,
+<code>"complete.obs"</code> or <code>"pairwise.complete.obs"</code>.
+</td></tr>
+<tr valign="top"><td><code>value</code></td>
+<td>
+[colnames&lt;-][rownames&lt;-] - <br>
+a valid value for column names component of <code>dimnames(x)</code>. 
+For a <code>"timeSeries"</code> object this is either <code>NULL</code> or a 
+character vector of length the column dimension. Not, row names
+cannot be assigne for a <code>"timeSeries"</code> object, the function
+<code>rownames()</code> will stop and return an error message.
+</td></tr>
+<tr valign="top"><td><code>x</code></td>
+<td>
+[as] - <br>   
+a <code>matrix</code> type object to be converted.<br>
+[as.vector][as.matrix][as.data.frame] -<br>
+[applySeries] - <br>
+[cut][end][mergeSeries][plot][print][rev][start] - <br>
+an object of class <code>timeSeries</code>.
+</td></tr>
+<tr valign="top"><td><code>y</code></td>
+<td>
+[mergeSeries][var] - <br>   
+a <code>matrix</code> type object to be merged with an object of
+class <code>timeSeries</code>. Must have the same number of rows.
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+arguments passed to other methods.
+</td></tr>
+</table>
+
+<h3>Details</h3>
+
+<p>
+<B>Generation of Time Series Objects:</B>
+<br>
+</p>
+<p>
+We have defined a <code>timeSeries</code> class which is in many aspects similar
+to the S-Plus class with the same name, but has also some important
+differences. The class has seven Slots, the 'Data' slot which holds 
+the time series data in matrix form, the 'position' slot which holds
+the time/date as a character vector, the 'format' and 'FinCenter'
+slots which are the same as for the 'timeDate' object, the 'units'
+slot which holds the column names of the data matrix, and a 'title'
+and a 'documentation' slot which hold descriptive character strings.
+Date and time is managed in the same way as for <code>timeDate</code> objects.
+</p>
+
+
+<h3>Value</h3>
+
+<p>
+<code>timeSeries</code><br>
+<code>read.timeSeries</code><br>
+<code>as.timeSeries</code>
+<br>
+return a S4 object of class <code>timeSeries</code>.
+<br>
+<br>
+<code>seriesData</code><br>
+<code>seriesPositions</code>
+<br>
+extract the <code>@Data</code> and <code>@position</code> slots from a 
+<code>timeSeries</code> object. Thus, <code>seriesData</code> returns an 
+object of class <code>matrix</code>, and <code>seriesPositions</code>
+returns an object of class <code>timeDate</code>.
+<br>
+<br>
+<code>is.timeSeries</code>
+<br>
+returns <code>TRUE</code> or <code>FALSE</code> depending on whether its
+argument is of <code>timeSeries</code> type or not.
+<br>
+<br>
+<code>aggregateSeries</code><br>
+<code>applySeries</code><br>
+<code>cutSeries</code><br>
+<code>mergeSeries</code><br>
+<code>returnSeries</code><br>
+<code>revSeries</code>
+<br>
+return a S4 object of class <code>timeSeries</code>.
+<br>
+<br>
+<code>end, start</code>
+<br>
+return a S4 object of class <code>timedate</code>. These are the 
+start and end dates of a <code>timeSeries</code> object.
+<br>
+<br>
+<code>as.vector</code><br>
+<code>as.matrix</code><br>
+<code>as.data.frame</code>
+<br>
+these are methods which convert a S4 object of class <code>timeSeries</code>
+either to a vector, a matrix or to a data frame.
+<br>
+<br>
+<code>plot</code><br>
+<code>lines</code><br>
+<code>points</code><br>
+<code>print</code>
+<br>
+plot and print methods for an object of class <code>timeSeries</code>.
+Note that the plot function requires the packages <code>its</code> and
+<code>Hmisc</code>.
+<br></p>
+
+<h3>Note</h3>
+
+<p>
+These functions were written for Rmetrics users using R and Rmetrics
+under Microsoft's Windows operating system where timze zones, 
+daylight saving times and holiday calendars are insuffeciently 
+supported.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>
+Diethelm Wuertz for the Rmetrics <font face="Courier New,Courier" color="#666666"><b>R</b></font>-port.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+## SOURCE("fCalendar.4B-TimeSeriesData")
+
+## data - 
+   # Create an artificial timeSeries object:
+   myFinCenter &lt;&lt;- "GMT"
+   charvec = timeCalendar()
+   set.seed(4711)
+   data = matrix(exp(cumsum(rnorm(12, sd = 0.1))))
+   TS = timeSeries(data, charvec, units = "TS")
+   TS
+   plot(TS, type = "o", pch = 19)
+
+## diff | scale - 
+   # Difference and scale the timeSeries Object:
+   scale(diff(TS, lag = 2, trim = TRUE))
+
+## lag -
+   # Lag the timeSeries Object:
+   lag(TS, k = -1:1)
+    
+## merge -    
+   # Merge two timeSeries Object:
+   merge(TS, diff(log(TS), units = c("ts", "diffLog")))
+
+## var -    
+   # Variance of a timeSeries Object:
+   var(returnSeries(TS, percentage = TRUE))
+   
+## Ops | +/- * ^ ...
+   # Mathematical Operations:
+   TS^2
+   TS[2:4]
+   OR = returnSeries(TS)
+   OR
+   OR &gt; 0
+   quantile(OR, probs = c(0.90, 0.95))
+</pre>
+
+
+
+<hr><div align="center">[Package <em>fCalendar</em> version 231.10066 <a href="00Index.html">Index]</a></div>
+
+</body></html>

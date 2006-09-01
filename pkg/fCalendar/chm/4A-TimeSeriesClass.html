@@ -1,0 +1,520 @@
+<html><head><title>timeSeries Class and Methods</title>
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>TimeSeriesClass(fCalendar)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   TimeSeriesClass">
+<param name="keyword" value="R:   timeSeries">
+<param name="keyword" value="R:   timeSeries-class">
+<param name="keyword" value="R:   readSeries">
+<param name="keyword" value="R:   returnSeries">
+<param name="keyword" value="R:   applySeries">
+<param name="keyword" value="R:   orderStatistics">
+<param name="keyword" value="R:   seriesData">
+<param name="keyword" value="R:   isUnivariate">
+<param name="keyword" value="R:   isMultivariate">
+<param name="keyword" value="R:   print.timeSeries">
+<param name="keyword" value="R:   summary.timeSeries">
+<param name="keyword" value="R:   plot.timeSeries">
+<param name="keyword" value="R:   lines.timeSeries">
+<param name="keyword" value="R:   points.timeSeries">
+<param name="keyword" value="R:   dummyDailySeries">
+<param name="keyword" value="R:   alignDailySeries">
+<param name="keyword" value="R:   ohlcDailyPlot">
+<param name="keyword" value=" timeSeries Class and Methods">
+</object>
+
+
+<h2>timeSeries Class and Methods</h2>
+
+
+<h3>Description</h3>
+
+<p>
+A collection and description of functions 
+and methods dealing with regular and irregular 
+'timeSeries' objects. Dates and times are 
+implemented as 'timeDate' objects. Included 
+are functions and methods for the generation 
+and representation of 'timeSeries' objects, 
+and for mathematical operations.          
+<br>
+</p>
+<p>
+Functions to generate and modify 'timeSeries' objects:         
+</p>
+
+<table summary="Rd table">
+<tr>
+  <td align="left"><code>timeSeries</code> </td>  <td align="left"> Creates a 'timeSeries' object from scratch, </td>
+</tr>
+<tr>
+  <td align="left"> <code>readSeries</code> </td>  <td align="left"> Reads a 'timeSeries' from a spreadsheet file, </td>
+</tr>
+<tr>
+  <td align="left"> <code>returnSeries</code> </td>  <td align="left"> Computes returns from a 'timeSeries' object, </td>
+</tr>
+<tr>
+  <td align="left"> <code>applySeries</code> </td>  <td align="left"> Applies a function to margins of a 'timeSeries', </td>
+</tr>
+<tr>
+  <td align="left"> <code>orderStatistics</code> </td>  <td align="left"> Computes order statistic of a 'timeSeries'. </td>
+</tr>
+</table>
+
+<p>
+Data Slot and classification of 'timeSeries' objects: 
+</p>
+
+<table summary="Rd table">
+<tr>
+  <td align="left"><code>seriesData</code> </td>  <td align="left"> Extracts data slot from a 'timeSeries', </td>
+</tr>
+<tr>
+  <td align="left"> <code>isUnivariate</code> </td>  <td align="left"> Tests if a 'timeSeries' object is univariate, </td>
+</tr>
+<tr>
+  <td align="left"> <code>isMultivariate</code> </td>  <td align="left"> Tests if a 'timeSeries' object is multivariate. </td>
+</tr>
+</table>
+
+<p>
+Functions to print and plot 'timeSeries' objects:      
+</p>
+
+<table summary="Rd table">
+<tr>
+  <td align="left"><code>print.timeSeries</code> </td>  <td align="left"> S3: Print method for a 'timeSeries' object, </td>
+</tr>
+<tr>
+  <td align="left"> <code>summary.timeSeries</code> </td>  <td align="left"> S3: Summary method for a 'timeSeries' object, </td>
+</tr>
+<tr>
+  <td align="left"> <code>plot.timeSeries</code> </td>  <td align="left"> S3: Plot method for a 'timeSeries' object, </td>
+</tr>
+<tr>
+  <td align="left"> <code>lines.timeSeries</code> </td>  <td align="left"> S3: Lines method for a 'timeSeries' object, </td>
+</tr>
+<tr>
+  <td align="left"> <code>points.timeSeries</code> </td>  <td align="left"> S3: Points method for a 'timeSeries' object. </td>
+</tr>
+</table>
+
+<p>
+Special Functions for daily 'timeSeries' objects:  
+</p>
+
+<table summary="Rd table">
+<tr>
+  <td align="left"><code>dummyDailySeries</code> </td>  <td align="left"> Creates a dummy daily 'timeSeries' object, </td>
+</tr>
+<tr>
+  <td align="left">         <code>alignDailySeries</code> </td>  <td align="left"> Aligns a daily 'timeSeries' to new positions, </td>
+</tr>
+<tr>
+  <td align="left">       <code>ohlcDailyPlot</code> </td>  <td align="left"> Plots open high low close bar chart. </td>
+</tr>
+</table>
+
+
+<h3>Usage</h3>
+
+<pre>
+timeSeries(data, charvec, units = NULL, format = NULL, zone = myFinCenter, 
+    FinCenter = myFinCenter, recordIDs = data.frame(), title = NULL, 
+    documentation = NULL, ...)   
+readSeries(file, header = TRUE, sep = ";", zone = myFinCenter, 
+    FinCenter = myFinCenter, title = NULL, documentation = NULL, ...)
+returnSeries(x, type = c("continuous", "discrete"), percentage = FALSE, 
+    trim = TRUE, digits = 4, units = NULL)    
+applySeries(x, from = NULL, to = NULL, by = c("monthly", "quarterly"), 
+    FUN = colAvgs, units = NULL, ...)
+    
+orderStatistics(x)
+
+seriesData(object)
+isUnivariate(x)
+isMultivariate(x)
+
+## S3 method for class 'timeSeries':
+print(x, ...)
+## S3 method for class 'timeSeries':
+summary(object, ...)
+## S3 method for class 'timeSeries':
+plot(x, ...) 
+## S3 method for class 'timeSeries':
+lines(x, ...)
+## S3 method for class 'timeSeries':
+points(x, ...)
+
+dummyDailySeries(x)
+alignDailySeries(x, method = c("before", "after", "interp", "fillNA"), 
+    include.weekends = FALSE, units = NULL)
+ohlcDailyPlot(x, volume = TRUE, colOrder = c(1:5), units = 1e6, 
+    xlab = c("Date", "Date"), ylab = c("Price", "Volume"), 
+    main = c("O-H-L-C", "Volume"), grid.nx = 7, grid.lty = "solid", ...) 
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>by</code></td>
+<td>
+[applySeries] - <br>
+a character either <code>"monthly"</code> or <code>"quarterly"</code>. The
+default value is <code>"monthly"</code>. Only operative when both arguments
+<code>from</code> and <code>to</code> have ther default values <code>NULL</code>.
+In this case the function <code>FUN</code> will be applied to monthly or
+quarterly periods.
+</td></tr>
+<tr valign="top"><td><code>charvec</code></td>
+<td>
+a character vector of dates and times.
+</td></tr>
+<tr valign="top"><td><code>colOrder</code></td>
+<td>
+[ohlcDailyPlot] - <br> 
+an integer vector which gives the order of the prices and the
+volume in the input object. By default the following order of
+columns from 1 to 5 is assumed: Open, high, low, close, and volume.
+</td></tr>
+<tr valign="top"><td><code>data</code></td>
+<td>
+a <code>data.frame</code> or a <code>matrix</code> object of numeric data.
+</td></tr>
+<tr valign="top"><td><code>digits</code></td>
+<td>
+[returnSeries] - <br>
+an integer value. The number of digits to be printed in the 
+output.
+</td></tr>
+<tr valign="top"><td><code>documentation</code></td>
+<td>
+optional documentation string, or a vector of character strings.
+</td></tr>
+<tr valign="top"><td><code>file</code></td>
+<td>
+the filename of a spreadsheet data set from which
+to import the data records.
+</td></tr>
+<tr valign="top"><td><code>FinCenter</code></td>
+<td>
+a character with the the location of the  financial center named 
+as "continent/city". 
+</td></tr>
+<tr valign="top"><td><code>header</code></td>
+<td>
+a logical value indicating whether the file contains the
+names of the variables as its first line.  If missing, the
+value is determined from the file format: 'header' is set to
+'TRUE' if and only if the first row contains one fewer field
+than the number of columns.
+</td></tr>
+<tr valign="top"><td><code>format</code></td>
+<td>
+the format specification of the input character vector,
+<br>
+[as.timeSeries] - <br>
+a character string with the format in POSIX notation to be passed 
+to the time series object.
+</td></tr>
+<tr valign="top"><td><code>from, to</code></td>
+<td>
+starting date and end date, <code>to</code> must be after <code>from</code>.
+</td></tr>
+<tr valign="top"><td><code>FUN</code></td>
+<td>
+[applySeries] - <br>
+a function to use for aggregation, by default <code>colAvgs</code>.
+</td></tr>
+<tr valign="top"><td><code>grid.lty, grid.nx</code></td>
+<td>
+[ohlcDailyPlot] - <br>
+The type of grid line and the number of grid lines used in the
+plot.
+</td></tr>
+<tr valign="top"><td><code>include.weekends</code></td>
+<td>
+[alignDailySeries] - <br>
+a logical value. Should weekend dates be included or removed
+from the series.
+</td></tr>
+<tr valign="top"><td><code>main</code></td>
+<td>
+[ohlcDailyPlot] - <br>
+a character string to title the price and volume plot.
+</td></tr>
+<tr valign="top"><td><code>method</code></td>
+<td>
+[alignDailySeries] - <br>
+the method to be used for the alignment. A character string, one
+of <code>"before"</code>, use the data from the row whose position is
+just before the unmatched position, or <code>"after"</code>, use the 
+data from the row whose position is just after the unmatched 
+position, or <code>"linear"</code>, interpolate linearly between 
+<code>"before"</code> and <code>"after"</code>. 
+</td></tr>
+<tr valign="top"><td><code>object</code></td>
+<td>
+[is][seriesData][seriesPositions][summary] -    
+an object of class <code>timeSeries</code>.
+</td></tr>
+<tr valign="top"><td><code>percentage</code></td>
+<td>
+[returnSeries] - <br>
+a logical value. By default <code>FALSE</code>, if <code>TRUE</code> the 
+series will be expressed in percentage changes.
+</td></tr>
+<tr valign="top"><td><code>recordIDs</code></td>
+<td>
+a data frame which can be used for record identification.
+</td></tr>
+<tr valign="top"><td><code>sep</code></td>
+<td>
+[readSeries] - <br>
+the field seperator used in the spreadsheet file to separate 
+columns.
+</td></tr>
+<tr valign="top"><td><code>title</code></td>
+<td>
+an optional title string, if not specified the inputs data 
+name is deparsed.
+</td></tr>
+<tr valign="top"><td><code>trim</code></td>
+<td>
+[diffSeries][returnSeries] - <br>
+a logical value. By default <code>TRUE</code>, the first missing 
+observation in the return series will be removed. 
+</td></tr>
+<tr valign="top"><td><code>type</code></td>
+<td>
+[returnSeries] - <br>
+a character string specifying how to compute the returns. Valid 
+choices are: <code>continuous</code> and <code>discrete</code>. For the 
+default <code>type="continuous"</code>, the returns are calculated as 
+the logarithmic differences, otherwise if <code>type="discrete"</code>, 
+the returns are calculated as percentage changes. 
+</td></tr>
+<tr valign="top"><td><code>units</code></td>
+<td>
+[applySeries][lag][allignDailySeries][returnSeries][mergeSeries] - <br>
+an optional character string, which allows to overwrite the 
+current column names of a <code>timeSeries</code> object. By default 
+<code>NULL</code> which means that the column names are selected
+automatically.
+<br>
+[ohlcDailyPlot] - <br>
+a numeric value, specifying in which multiples the volume should
+be referenced on the plot labels. By default 1e6, i.e. in units
+of 1 Million.
+</td></tr>
+<tr valign="top"><td><code>volume</code></td>
+<td>
+[ohlcDailyPlot] - <br>
+a logigical value. Should a volume plot added to the OHLC Plot.
+By default <code>TRUE</code>.
+</td></tr>
+<tr valign="top"><td><code>x</code></td>
+<td>
+[as] - <br>   
+a <code>matrix</code> type object to be converted.<br>
+[as.vector][as.matrix][as.data.frame] -<br>
+[applySeries] - <br>
+[cut][end][mergeSeries][plot][print][rev][start] - <br>
+an object of class <code>timeSeries</code>.
+</td></tr>
+<tr valign="top"><td><code>xlab, ylab</code></td>
+<td>
+[ohlcDailyPlot] - <br>
+two string vectors to name the x and y axis of the price and
+volume plot.
+</td></tr>
+<tr valign="top"><td><code>zone</code></td>
+<td>
+the time zone or financial center where the data were recorded.
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+arguments passed to other methods.
+</td></tr>
+</table>
+
+<h3>Details</h3>
+
+<p>
+<B>Generation of Time Series Objects:</B>
+<br>
+</p>
+<p>
+We have defined a <code>timeSeries</code> class which is in many aspects similar
+to the S-Plus class with the same name, but has also some important
+differences. The class has seven Slots, the 'Data' slot which holds 
+the time series data in matrix form, the 'position' slot which holds
+the time/date as a character vector, the 'format' and 'FinCenter'
+slots which are the same as for the 'timeDate' object, the 'units'
+slot which holds the column names of the data matrix, and a 'title'
+and a 'documentation' slot which hold descriptive character strings.
+Date and time is managed in the same way as for <code>timeDate</code> objects.
+</p>
+
+
+<h3>Value</h3>
+
+<p>
+<code>timeSeries</code><br>
+<code>readSeries</code><br>
+<code>returnSeries</code><br>
+<code>applySeries</code>
+<br>
+return a S4 object of class <code>timeSeries</code>.
+<br>
+<br>
+<code>orderStatistics</code>
+<br>
+returns ...
+<br>
+<br>
+<code>seriesData</code><br>
+<br>
+extracts the <code>@Data</code> slot from a <code>timeSeries</code> object. 
+Thus, <code>seriesData</code> returns an object of class <code>matrix</code>.
+<br>
+<br>
+<code>isUnivariate</code><br>
+<code>isMultivariate</code><br>
+<br>
+returns ...
+<br>
+<br>
+<code>plot</code><br>
+<code>lines</code><br>
+<code>points</code><br>
+<code>print</code>
+<br>
+plot and print methods for an object of class <code>timeSeries</code>.
+<br></p>
+
+<h3>Note</h3>
+
+<p>
+These functions were written for Rmetrics users using R and Rmetrics
+under Microsoft's Windows operating system where timze zones, 
+daylight saving times and holiday calendars are insuffeciently 
+supported.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>
+Diethelm Wuertz for the Rmetrics <font face="Courier New,Courier" color="#666666"><b>R</b></font>-port.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+## SOURCE("fCalendar.4A-TimeSeriesClass")
+
+## data - Data Frame:
+   
+   # Microsoft Data:
+   MSFT.df = data.frame(matrix(c(
+   20010326, 57.1250, 57.5000, 55.5625, 56.0625,  31559300,
+   20010327, 56.0625, 58.5625, 55.8750, 58.2500,  47567800,
+   20010328, 57.3750, 57.9375, 55.3750, 55.5625,  39340800,
+   20010329, 55.3750, 57.1875, 54.5625, 55.3750,  43492500,
+   20010330, 55.7500, 56.1875, 53.8750, 54.6875,  45600800,
+   20010402, 54.8125, 56.9375, 54.6250, 55.8125,  37962000,
+   20010403, 55.3125, 55.3125, 52.7500, 53.3750,  47093800,
+   20010404, 53.3750, 55.0000, 51.0625, 51.9375,  52023300,
+   20010405, 53.7500, 57.3750, 53.5000, 56.7500,  56682000,
+   20010406, 56.3750, 57.1875, 55.0625, 56.1875,  46311000,
+   20010409, 56.5700, 57.4200, 55.6600, 57.1500,  28147800,
+   20010410, 57.9500, 60.0900, 57.7800, 59.6800,  54599700,
+   20010411, 60.6500, 61.5000, 59.7000, 60.0400,  54939800,
+   20010412, 59.5600, 62.3100, 59.3500, 62.1800,  43760000,
+   20010416, 61.4000, 61.5800, 60.1200, 60.7900,  32928700,
+   20010417, 60.5200, 62.1100, 60.0400, 61.4800,  42574600,
+   20010418, 63.3900, 66.3100, 63.0000, 65.4300,  78348200,
+   20010419, 65.8100, 69.0000, 65.7500, 68.0400,  79687800,
+   20010420, 70.3000, 71.1000, 68.5000, 69.0000,  96459800,
+   20010423, 68.1100, 68.4700, 66.9000, 68.2500,  46085600,
+   20010424, 68.2000, 69.9300, 67.1400, 67.5500,  44588300,
+   20010425, 67.5700, 69.7900, 67.2500, 69.6900,  38372000,
+   20010426, 70.0700, 71.0000, 68.2500, 69.1300,  59368800,
+   20010427, 69.5300, 69.6800, 66.2100, 67.1200,  60786200,
+   20010430, 68.5300, 69.0600, 67.6800, 67.7500,  37184100,
+   20010501, 67.6600, 70.3000, 67.6000, 70.1700,  41851400,
+   20010502, 71.0000, 71.1500, 69.3500, 69.7600,  46432200,
+   20010503, 69.2500, 70.1800, 68.1400, 68.5300,  33136700,
+   20010504, 68.0000, 71.0500, 67.9600, 70.7500,  59769200,
+   20010507, 70.8300, 72.1500, 70.7000, 71.3800,  54678100), 
+   byrow = TRUE, ncol = 6))
+   colnames(MSFT.df) = c("YYMMDD", "Open", "High", "Low", "Close", "Volume")
+
+   # Load Microsoft Data:
+   myFinCenter &lt;&lt;- "GMT"
+   MSFT = as.timeSeries(MSFT.df)
+   head(MSFT)
+
+## timeSeries - Conversion:
+   # Create a timeSeries Objec - The Direct Way ...
+   Close = MSFT[, 5]
+   head(Close)
+   # From Scratch ...
+   data = as.matrix(MSFT[, 4])
+   charvec = rownames(MSFT)
+   Close = timeSeries(data, charvec, units = "Close")
+   head(Close)
+   c(start(Close), end(Close))
+    
+## Cut Series -    
+   # Cut out April Data from 2001:
+   tsApril01 = cut(Close, "2001-04-01", "2001-04-30") 
+   tsApril01
+
+## Return Series -  
+   # Compute Returns:
+   args(returnSeries)
+   # Continuous Returns:
+   returnSeries(tsApril01)
+   # Discrete Returns:
+   returnSeries(tsApril01, type = "discrete")
+   # Don't trim:
+   returnSeries(tsApril01, trim = FALSE)
+   # Use Percentage Values:
+   returnSeries(tsApril01, percentage = TRUE, trim = FALSE)
+    
+## Align Daily Series -     
+   # Align with NA:
+   args(alignDailySeries)
+   tsRet = returnSeries(tsApril01, trim = TRUE)
+   GoodFriday(2001)   
+   EasterMonday(2001) 
+   alignDailySeries(tsRet, method = "fillNA", include.weekends = FALSE)
+   alignDailySeries(tsRet, method = "fillNA", include.weekends = TRUE)
+    
+## alignDailySeries - 
+   # Interpolate:
+   tsRet
+   alignDailySeries(tsRet, method = "interp", include.weekend = FALSE)
+   alignDailySeries(tsRet, method = "interp", include.weekend = TRUE)
+
+## applySeries -   
+   # Aggregate weekly:
+   GoodFriday(2001)
+   to = timeSequence(from = "2001-04-11", length.out = 3, by = "week") 
+   from = to - 6*24*3600
+   from
+   to
+   applySeries(tsRet, from, to, FUN = sum)
+</pre>
+
+
+
+<hr><div align="center">[Package <em>fCalendar</em> version 231.10066 <a href="00Index.html">Index]</a></div>
+
+</body></html>

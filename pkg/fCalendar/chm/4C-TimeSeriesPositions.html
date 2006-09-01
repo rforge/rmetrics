@@ -1,0 +1,199 @@
+<html><head><title>timeSeries Class and Methods</title>
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>TimeSeriesPositions(fCalendar)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   TimeSeriesPositions">
+<param name="keyword" value="R:   seriesPositions">
+<param name="keyword" value="R:   newPositions<-">
+<param name="keyword" value="R:   sample.timeSeries">
+<param name="keyword" value="R:   sort.timeSeries">
+<param name="keyword" value="R:   rev.timeSeries">
+<param name="keyword" value="R:   start.timeSeries">
+<param name="keyword" value="R:   end.timeSeries">
+<param name="keyword" value=" timeSeries Class and Methods">
+</object>
+
+
+<h2>timeSeries Class and Methods</h2>
+
+
+<h3>Description</h3>
+
+<p>
+A collection and description of functions 
+and methods extracting and modifying positions 
+on 'timeSeries' objects.       
+<br>
+</p>
+<p>
+The functions and methods for the Generation of 'timeSeries' Objects are:         
+</p>
+
+<table summary="Rd table">
+<tr>
+  <td align="left"><code>seriesPositions</code> </td>  <td align="left"> Extracts positions slot from a 'timeSeries', </td>
+</tr>
+<tr>
+  <td align="left"> <code>newPositions&lt;-</code> </td>  <td align="left"> Modifies positions of a 'timeSeries' object, </td>
+</tr>
+<tr>
+  <td align="left"> <code>sample.timeSeries</code> </td>  <td align="left"> Resamples a 'timeSeries' object in time, </td>
+</tr>
+<tr>
+  <td align="left"> <code>sort.timeSeries</code> </td>  <td align="left"> Sorts reverts a 'timeSeries' object in time, </td>
+</tr>
+<tr>
+  <td align="left"> <code>rev.timeSeries</code> </td>  <td align="left"> Reverts a 'timeSeries' object in time, </td>
+</tr>
+<tr>
+  <td align="left">  <code>start.timeSeries</code> </td>  <td align="left"> Extracts start date of a 'timeSeries' object, </td>
+</tr>
+<tr>
+  <td align="left">  <code>end.timeSeries</code> </td>  <td align="left"> Extracts end date of a 'timeSeries' object. </td>
+</tr>
+</table>
+
+
+<h3>Usage</h3>
+
+<pre>
+seriesPositions(object)
+newPositions(object) &lt;- value
+
+## S3 method for class 'timeSeries':
+start(x, ...)
+## S3 method for class 'timeSeries':
+end(x, ...)
+
+## S3 method for class 'timeSeries':
+sample(x, ...)
+## S3 method for class 'timeSeries':
+sort(x, ...)
+## S3 method for class 'timeSeries':
+rev(x)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>method</code></td>
+<td>
+[alignDailySeries] - <br>
+the method to be used for the alignment. A character string, one
+of <code>"before"</code>, use the data from the row whose position is
+just before the unmatched position, or <code>"after"</code>, use the 
+data from the row whose position is just after the unmatched 
+position, or <code>"linear"</code>, interpolate linearly between 
+<code>"before"</code> and <code>"after"</code>. 
+</td></tr>
+<tr valign="top"><td><code>object</code></td>
+<td>
+[is][seriesData][seriesPositions][summary] -    
+an object of class <code>timeSeries</code>.
+</td></tr>
+<tr valign="top"><td><code>value</code></td>
+<td>
+a valid value for that component of <code>newPositions(x)</code>, i.e.
+an object of class <code>"timeDate"</code> with appropriate length.
+</td></tr>
+<tr valign="top"><td><code>x</code></td>
+<td>
+[as] - <br>   
+a <code>matrix</code> type object to be converted.<br>
+[as.vector][as.matrix][as.data.frame] -<br>
+[applySeries] - <br>
+[cut][end][mergeSeries][plot][print][rev][start] - <br>
+an object of class <code>timeSeries</code>.
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+arguments passed to other methods.
+</td></tr>
+</table>
+
+<h3>Value</h3>
+
+<p>
+<code>timeSeries</code><br>
+<code>read.timeSeries</code><br>
+<code>as.timeSeries</code>
+<br>
+return a S4 object of class <code>timeSeries</code>.
+<br>
+<br>
+<code>seriesData</code><br>
+<code>seriesPositions</code>
+<br>
+extract the <code>@Data</code> and <code>@position</code> slots from a 
+<code>timeSeries</code> object. Thus, <code>seriesData</code> returns an 
+object of class <code>matrix</code>, and <code>seriesPositions</code>
+returns an object of class <code>timeDate</code>.
+<br>
+<br>
+<code>is.timeSeries</code>
+<br>
+returns <code>TRUE</code> or <code>FALSE</code> depending on whether its
+argument is of <code>timeSeries</code> type or not.
+<br>
+<br>
+<code>aggregateSeries</code><br>
+<code>applySeries</code><br>
+<code>cutSeries</code><br>
+<code>mergeSeries</code><br>
+<code>returnSeries</code><br>
+<code>revSeries</code>
+<br>
+return a S4 object of class <code>timeSeries</code>.
+<br>
+<br>
+<code>end, start</code>
+<br>
+return a S4 object of class <code>timedate</code>. These are the 
+start and end dates of a <code>timeSeries</code> object.
+<br>
+<br>
+<code>as.vector</code><br>
+<code>as.matrix</code><br>
+<code>as.data.frame</code>
+<br>
+these are methods which convert a S4 object of class <code>timeSeries</code>
+either to a vector, a matrix or to a data frame.
+<br>
+<br>
+<code>plot</code><br>
+<code>lines</code><br>
+<code>points</code><br>
+<code>print</code>
+<br>
+plot and print methods for an object of class <code>timeSeries</code>.
+Note that the plot function requires the packages <code>its</code> and
+<code>Hmisc</code>.
+<br></p>
+
+<h3>Author(s)</h3>
+
+<p>
+Diethelm Wuertz for the Rmetrics <font face="Courier New,Courier" color="#666666"><b>R</b></font>-port.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+## SOURCE("fCalendar.4C-TimeSeriesPositions")
+    
+## Create dummy timeSeries:     
+   X = timeSeries(matrix(rnorm(24), 12), timeCalendar())
+   
+## seriesPositions -
+   seriesPositions(X)
+</pre>
+
+
+
+<hr><div align="center">[Package <em>fCalendar</em> version 231.10066 <a href="00Index.html">Index]</a></div>
+
+</body></html>
