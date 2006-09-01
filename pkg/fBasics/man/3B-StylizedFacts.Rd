@@ -289,24 +289,17 @@ Ding Z., Granger C.W.J., Engle R.F. (1993);
 ## SOURCE("fBasics.3B-StylizedFacts")
 
 ## data - 
-   # Opening Prices:
-   msft = as.timeSeries(MSFT)[, 1]
-   # Volume in Million Units:
-   msft.vol = as.timeSeries(MSFT)[, 5]/10^6
-   # Opening Returns:
-   msft.ret = returnSeries(msft)
+   require(MASS)
+   plot(SP500, type = "l", col = "steelblue", main = "SP500")
+   abline(h = 0, col = "grey")
    
-## lacfPlot -
+## qqgaussPlot -
    # Lagged Correlations:
-   lacfPlot(msft, n = 4)
-     
-## ccfPlot -
-   # Crosscorrelations:
-   ccfPlot(x = msft.ret, y = msft.vol[-1])
+   qqgaussPlot(SP500)
 
 ## teffectPlot -
    # Taylor Effect:
-   teffectPlot(x = msft.ret)
+   teffectPlot(SP500)
 }
 
 
