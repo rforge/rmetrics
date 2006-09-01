@@ -35,8 +35,6 @@
 # FUNCTION:                 NONLINEARITY TESTS:
 #  wnnTest                   White Neural Network Test for Nonlinearity
 #  tnnTest                   Teraesvirta Neural Network Test for Nonlinearity
-# REQUIREMENTS:            DESCRIPTION:
-#  embed                    Required from fBasics.A0-SPlusCompatibility
 ################################################################################
 
 
@@ -59,6 +57,12 @@
 ################################################################################
 
 
+################################################################################
+# REQUIREMENTS:             DESCRIPTION:
+#  embed                     Required from fBasics.A0-SPlusCompatibility
+################################################################################
+
+
 tsTest = 
 function(x, 
 method = c("bds", "tnn", "wnn"), ...)
@@ -68,16 +72,13 @@ method = c("bds", "tnn", "wnn"), ...)
     # require(tseries)
     
     # Check Type:
-    if (class(x) == "zoo") {
-        x = as.timeSeries(x)
-    }
     if (class(x) == "timeSeries") {
         if (dim(x)[2] > 1) stop("x must be an univariate time series")
-        x = as.vector(x)
     }
+    x = as.vector(x)
     
     # Settings:
-    method = method[1] 
+    method = match.arg(method)
     test = paste(method, "Test", sep = "")
     fun = match.fun(test)  
         
@@ -117,13 +118,10 @@ function(x, m = 3, eps = NULL, title = NULL, description = NULL)
     test$data.name = DNAME   
     
     # Check Type:
-    if (class(x) == "zoo") {
-        x = as.timeSeries(x)
-    }
     if (class(x) == "timeSeries") {
         if (dim(x)[2] > 1) stop("x must be an univariate time series")
-        x = as.vector(x)
     }
+    x = as.vector(x)
     
     # Test:
     if (is.null(eps)) eps = seq(0.5*sd(x), 2*sd(x), length = 4)
@@ -170,7 +168,7 @@ function(x, m = 3, eps = NULL, title = NULL, description = NULL)
     
     # Add:
     if (is.null(title)) title = "BDS Test"
-    if (is.null(description)) description = date()
+    if (is.null(description)) description = .description()
     
     # Return Value:
     new("fHTEST",     
@@ -210,13 +208,10 @@ title = NULL, description = NULL)
     test$data.name = DNAME   
     
     # Check Type:
-    if (class(x) == "zoo") {
-        x = as.timeSeries(x)
-    }
     if (class(x) == "timeSeries") {
         if (dim(x)[2] > 1) stop("x must be an univariate time series")
-        x = as.vector(x)
     }
+    x = as.vector(x)
          
     # Test - This part comes from A. Trapletti's Code:
     if (lag < 1) stop("minimum lag is 1")
@@ -262,7 +257,7 @@ title = NULL, description = NULL)
           
     # Add:
     if (is.null(title)) title = "White Neural Network Test"
-    if (is.null(description)) description = date()
+    if (is.null(description)) description = .description()
     
     # Return Value:
     new("fHTEST",     
@@ -301,14 +296,11 @@ function(x, lag = 1, title = NULL, description = NULL)
     test$data.name = DNAME   
     
     # Check Type:
-    if (class(x) == "zoo") {
-        x = as.timeSeries(x)
-    }
     if (class(x) == "timeSeries") {
         if (dim(x)[2] > 1) stop("x must be an univariate time series")
-        x = as.vector(x)
     }
-    
+    x = as.vector(x)
+        
     # Test - This part comes from A. Trapletti's Code:
     if (lag < 1) stop("minimum lag is 1")
     t = length(x)
@@ -365,7 +357,7 @@ function(x, lag = 1, title = NULL, description = NULL)
 
     # Add:
     if (is.null(title)) title = "Teraesvirta Neural Network Test"
-    if (is.null(description)) description = date()
+    if (is.null(description)) description = .description()
     
     # Return Value:
     new("fHTEST",     

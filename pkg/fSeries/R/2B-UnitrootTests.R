@@ -34,14 +34,13 @@
 #  adfTest                  Augmented Dickey - Fuller Unit Root Test
 #  unitrootTest             ADF Unit Root Test using McKinnons Test Statistics
 # FUNCTION:                URCA [PFAGFF] UNIT ROOT TESTS:
+#  .urcaBuiltin             Builtin functions from urca Package
 #  urdfTest                 Augmented Dickey-Fuller test for unit roots
 #  urersTest                Elliott-Rothenberg-Stock test for unit roots
 #  urkpssTest               KPSS unit root test for stationarity
 #  urppTest                 Phillips-Perron test for unit roots
 #  urspTest                 Schmidt-Phillips test for unit roots
 #  urzaTest                 Zivot-Andrews test for unit roots
-# FUNCTION:
-#
 ################################################################################
 
 
@@ -385,6 +384,7 @@ description = NULL)
 
 ################################################################################
 # FUNCTION:            DESCRIPTOION:
+#  .urcaBuiltin         Builtin functions from urca Package
 #  urdfTest             Augmented Dickey-Fuller test for unit roots
 #  urersTest            Elliott-Rothenberg-Stock test for unit roots
 #  urkpssTest           KPSS unit root test for stationarity
@@ -392,6 +392,20 @@ description = NULL)
 #  urspTest             Schmidt-Phillips test for unit roots
 #  urzaTest             Zivot-Andrews test for unit roots
 ################################################################################
+
+
+.urcaBuiltin =
+function(builtin = "/fSeries/demo/funUrca.R") 
+{
+    sink("@sink@")
+    Builtin = paste(.Library, builtin, sep = "")
+    source(Builtin)
+    sink()
+    unlink("@sink@")
+}
+    
+
+# ------------------------------------------------------------------------------
 
 
 urdfTest =

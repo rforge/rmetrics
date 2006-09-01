@@ -39,32 +39,23 @@
 #  .rk4                  Internal Funtion - Runge-Kutta Solver
 ################################################################################
 
+
 ################################################################################
 # FUNCTION:             PHASE SPACE REPRESENTATION:
+#  mutualPlot            Creates mutual information plot
 #  .embeddPSR
 #  .checkEmbParams
-#  mutualPlot            Creates mutual information plot
-#  .mutual.RUnit
-#  fnnPlot               Creates false nearest neigbours plot
-#  .fnn.RUnit
+#  falsennPlot           Creates false nearest neigbours plot
 # FUNCTION:             NON STATIONARITY:
 #  recurrencePlot        Creates recurrence plot
-#  .recurrence.RUnit
 #  separationPlot        Creates space-time separation plot
-#  .separation.RUnit
 # FUNCTION:             LYAPUNOV EXPONENTS:
 #  lyapunovPlot          Maximum Lyapunov plot    
 #  .find.nearest
 #  .follow.points
 #  .lyapunovFit            
-#  .lyapunov.RUnit
 # FUNCTION:             DIMENSIONS AND ENTROPY:
 #
-################################################################################
-
-################################################################################
-# FUNCTION:             TIME SERIES TESTS:
-#                        -> B1-TimeSeriesTests
 ################################################################################
 
 
@@ -499,8 +490,69 @@ function(y, times, func, parms)
 ################################################################################
 
 
-# ******************************************************************************
+################################################################################
 # 1. PHASE SPACE REPRESENTATION:
+
+
+mutualPlot = 
+function(x, partitions = 16, lag.max = 20, doplot = TRUE, ...) 
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Estimate the mutual information index of a given time 
+    #   series for a specified number of lags   
+    
+    # Arguments:
+    #   x - a numeric vector, or an object either of class 'ts' or
+    #       of class 'timeSeries'.
+    #   partitions - an integer value setting the number of bins, by
+    #       default 16.
+    #   lag.max - an integer value setting the number of
+    #       maximum lags, by default 20/
+    #   doplot - a logical flag. Should a plot be displayed?
+
+    # Author:
+    #   Antonio, Fabio Di Narzo 
+    #   of the original function from the 'tseriesChaos' package
+    
+    # FUNCTION:
+    
+    # Settings:
+    if (class(x) == "timeSeries") x = as.vector(x)
+    x = as.ts(x)
+    series = (x-min(x))/(diff(range(x)))
+    corr = numeric(lag.max+1)
+    
+    # Mutual Information:
+    for(i in 0:lag.max) {
+        hist = matrix(0, partitions, partitions)
+        hist = .C("mutual", 
+            series = as.double(series), 
+            length = as.integer(length(series)), 
+            lag = as.integer(i), 
+            partitions = as.integer(partitions), 
+            hist = as.double(hist), 
+            PACKAGE = "fSeries")[["hist"]]
+        hist = matrix(hist, partitions, partitions)/sum(hist)
+        histx = apply(hist, 1, sum)
+        hist = hist[hist != 0]
+        histx<- histx[histx != 0]
+        corr[i+1] = sum(hist*log(hist)) - 2*sum(histx*log(histx))
+    }
+    names(corr) = paste(0:lag.max)
+    
+    # Plot:
+    if (doplot) {
+        plot(0:lag.max, corr, xlab = "Lag", type = "b", pch = 19, cex = 0.25,
+            col = "steelblue", main = "Mutual Information", ...) 
+    }
+
+    # Return Value:
+    corr
+}
+
+
+# ------------------------------------------------------------------------------
 
 
 .embeddPSR = 
@@ -566,86 +618,7 @@ function(series, m, d, t = 0, s = 1, ref = NULL)
 }
 
 
-# ------------------------------------------------------------------------------
-
-
-mutualPlot = 
-function(x, partitions = 16, lag.max = 20, doplot = TRUE, ...) 
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Estimate the mutual information index of a given time 
-    #   series for a specified number of lags   
-    
-    # Arguments:
-    #   x - a numeric vector, or an object either of class 'ts' or
-    #       of class 'timeSeries'.
-    #   partitions - an integer value setting the number of bins, by
-    #       default 16.
-    #   lag.max - an integer value setting the number of
-    #       maximum lags, by default 20/
-    #   doplot - a logical flag. Should a plot be displayed?
-
-    # Author:
-    #   Antonio, Fabio Di Narzo 
-    #   of the original function from the 'tseriesChaos' package
-    
-    # FUNCTION:
-    
-    # Settings:
-    if (class(x) == "timeSeries") x = as.vector(x)
-    x = as.ts(x)
-    series = (x-min(x))/(diff(range(x)))
-    corr = numeric(lag.max+1)
-    
-    # Mutual Information:
-    for(i in 0:lag.max) {
-        hist = matrix(0, partitions, partitions)
-        hist = .C("mutual", 
-            series = as.double(series), 
-            length = as.integer(length(series)), 
-            lag = as.integer(i), 
-            partitions = as.integer(partitions), 
-            hist = as.double(hist), 
-            PACKAGE = "fSeries")[["hist"]]
-        hist = matrix(hist, partitions, partitions)/sum(hist)
-        histx = apply(hist, 1, sum)
-        hist = hist[hist != 0]
-        histx<- histx[histx != 0]
-        corr[i+1] = sum(hist*log(hist)) - 2*sum(histx*log(histx))
-    }
-    names(corr) = paste(0:lag.max)
-    
-    # Plot:
-    if (doplot) {
-        plot(0:lag.max, corr, xlab = "Lag", type = "b", pch = 19, cex = 0.25,
-            col = "steelblue", main = "Mutual Information", ...) 
-    }
-
-    # Return Value:
-    corr
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.mutual.RUnit =
-function()
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   RUnit test function
-    
-    # FUNCTION:
-    
-    plot(0:20, mutual(lorenz.ts), type = "b", xlab = "lag", ylab = "I", 
-        main = "Mutual information Index", 
-        sub = "Lorenz simulated time series")
-}
-
-
-# ------------------------------------------------------------------------------
+# ******************************************************************************
 
 
 falsennPlot = 
@@ -653,7 +626,7 @@ function(x, m, d, t, rt = 10, eps = NULL, doplot = TRUE, ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Use the Method of false nearest neighbours to help deciding 
+    #   Use the method of false nearest neighbours to help deciding 
     #   the optimal embedding dimension 
     
     # Arguments:
@@ -714,26 +687,12 @@ function(x, m, d, t, rt = 10, eps = NULL, doplot = TRUE, ...)
 }
 
 
-# ------------------------------------------------------------------------------
-
-
-.fnn.RUnit = 
-function()
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   RUnit test function
-    
-    fnnPlot(x = rossler.ts, m = 6, d = 8, t = 180, eps = 1, rt = 3)
-}
-
-
-# ******************************************************************************
-# NON STATIONARITY:
+################################################################################
+# 2. NON STATIONARITY:
 
 
 recurrencePlot = 
-function(x, m, d, end.time, eps, nt = 10, ...) 
+function(x, m, d, end.time, eps, nt = 10, doplot = TRUE, ...) 
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -771,7 +730,7 @@ function(x, m, d, end.time, eps, nt = 10, ...)
     xyz = .embeddPSR(series, m = m, d = d)[1:end.time, ]
     
     # Plot:
-    if (TRUE) {
+    if (doplot) {
         plot(0, xlim = c(0, end.time), ylim = c(0, end.time), type = "n", 
             main = "Recurrence Plot", xlab = "i", ylab = "j")
         for(i in seq(1, end.time, by = nt)) 
@@ -784,24 +743,7 @@ function(x, m, d, end.time, eps, nt = 10, ...)
 }
 
 
-# ------------------------------------------------------------------------------
-
-
-.recurrence.RUnit = 
-function()
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   RUnit test function
-    
-    # FUNCTION:
-    
-    recurrencePlot(lorenz.ts, m = 3, d = 2, end.time = 800, eps = 3, 
-        nt = 5, pch = '.', cex = 2)
-}
-
-
-# ------------------------------------------------------------------------------
+# ******************************************************************************
 
 
 separationPlot = 
@@ -865,25 +807,8 @@ function(x, m, d, mdt, idt = 1, doplot = TRUE, ...)
 }
 
 
-# ------------------------------------------------------------------------------
-
-
-.separation.RUnit =
-function()
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   RUnit test function
-    
-    # FUNCTION:
-    
-    # Return Value:
-    separationPlot(rossler.ts, m = 3, d = 8, idt = 1, mdt = 250)    
-}
-
-
-# ******************************************************************************
-# LYAPUNOV EXPONENTS
+################################################################################
+# 3. LYAPUNOV EXPONENTS
 
 
 lyapunovPlot = 
@@ -965,6 +890,7 @@ function(series, m, d, t, eps, ref, k, s)
     
     # FUNCTION:
     
+    # Find Nearest:
     res = numeric(ref*k)
     res = .C("find_nearest", 
         series = as.double(series), 
@@ -980,6 +906,7 @@ function(series, m, d, t, eps, ref, k, s)
         PACKAGE = "fSeries")[["res"]]
     res[res == -1] = NA
     
+    # Return Value:
     matrix(res, ref, k)
 }
 
@@ -1000,6 +927,7 @@ function(series, m, d, ref, k, s, nearest)
     
     # FUNCTION:
     
+    # Follow Points:
     res = numeric(s)
     nearest[is.na(nearest)] = -1
     ans = .C("follow_points",
@@ -1075,7 +1003,7 @@ function()
 }
 
 
-# ******************************************************************************
+################################################################################
 # DIMENSIONS AND ENTROPY:
 
 

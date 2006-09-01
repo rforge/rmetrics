@@ -28,30 +28,34 @@
 
 
 ################################################################################
-#  *                       Asterisked Functions are in ArmaModelling.R
+#  *                      Asterisked Functions are in ArmaModelling.R
 # FUNCTION:               DESCRIPTION:
-#  *fARMA                  Class representation for "fARMA" objects
-#  *armaSim                Simulates a time series process from the ARIMA family
-#  arfimaOxFit             Fits parameters for AR(FI)MA time series processes
+#  * fARMA                 Class representation for "fARMA" objects
+#  * armaSim               Simulates a time series process from the ARIMA family
+#    arfimaOxFit           Fits parameters for AR(FI)MA time series processes
 # S3 METHOD:              PREDICTION:
-#  *predict.fARMA          S3: Predicts from an ARMA time series prrocess 
-#  .arfimaOxPredict            Internal function called by predict.fARMA
-#  *predictPlot            S3: Use method
-#  *predictPlot.fARMA      S3: Plots from an ARMA time series prediction
-# S3 METHOD:              PRINT - SUMMARY - PLOT:
-#  *print.fARMA            S3: Prints a fitted ARMA time series object
-#  *plot.fARMA             S3: Plots stylized facts of a fitted ARMA object
-#  *summary.fARMA          S3: Summarizes a fitted ARMA time series object
-#  *fitted.fARMA           S3: Returns fitted values from a fitted ARMA object
-#  *residuals.fARMA        S3: Returns residuals from a fitted ARMA object
+#  * predict.fARMA         S3: Predicts from an ARMA time series prrocess 
+#    .arfimaOxPredict          Internal function called by predict.fARMA
+# S3 METHOD:              RINT - PLOT - SUMMARY METHODS:
+#  * print.fARMA           S3: Prints a fitted ARMA time series object
+#  * plot.fARMA            S3: Plots stylized facts of a fitted ARMA object
+#  * summary.fARMA         S3: Summarizes a fitted ARMA time series object
+# S3 METHOD:              ADDON METHODS:
+#  * coef.fARMA            S3: Returns coefficidents from a fitted ARMA object
+#  * coefficients.fARMA    S3: Synonyme for coef.fARMA
+#  * fitted.fARMA          S3: Returns fitted values from a fitted ARMA object
+#  * residuals.fARMA       S3: Returns residuals from a fitted ARMA object
 ################################################################################
 
 
 OXPATH <<- "C:\\Ox\\Ox3"
 
 
+# ------------------------------------------------------------------------------
+
+
 arfimaOxFit = 
-function(formula = x ~ arfima(1, 1), method = c("mle", "nls", "mplik"),
+function(formula = x ~ arfima(1, 1), method = c("mle", "nls", "mpl"),
 trace = TRUE, title = NULL, description = NULL)
 {   # A function implemented by Diethelm Wuertz
 
@@ -59,12 +63,12 @@ trace = TRUE, title = NULL, description = NULL)
     #   Fits Model Parameters for an ARFIMA Time Series Process
     
     # Argumewnts:
-    #   formula - 
+    #   formula - defines the model to be fitted
     #       x ~ arma(2, 1)
     #       x ~ arima(2, 1, 1)
     #       x ~ arfima(2, 1)
-    #   method - 
-    #   trace - 
+    #   method - defines the parameter fitting method
+    #   trace - should the estimation be traced ?
     
     # Notes:
     #   This is an interface to the Arfime Ox Software Package
@@ -91,27 +95,23 @@ trace = TRUE, title = NULL, description = NULL)
     # Which Model - Valid?
     tsmodel =  all.names(formula)[3]
     valid = FALSE
-    if (tsmodel == "arma") valid = TRUE
-    if (tsmodel == "arima") valid = TRUE
-    if (tsmodel == "arfima") valid = TRUE
+    if (tsmodel == "arfima") {
+        tsmodel = "arfimaOX"
+        valid = TRUE
+    }
     if (!valid) stop("Invalid Formula Specification")
     
     # Which Order?
     order = c(0, 0, 0)
-    if (tsmodel == "arima") {
-        order[1] = as.numeric(as.character(formula[[3]])[2])
-        order[2] = as.numeric(as.character(formula[[3]])[3])
-        order[3] = as.numeric(as.character(formula[[3]])[4])
-    } else {
-        order[1] = as.numeric(as.character(formula[[3]])[2])
-        order[2] = 0
-        order[3] = as.numeric(as.character(formula[[3]])[3])
-    }
+    order[1] = as.numeric(as.character(formula[[3]])[2])
+    order[2] = 0
+    order[3] = as.numeric(as.character(formula[[3]])[3])
     
     # Which method ?
-    method = 1
-    if (method[1] == "nls") method = 2
-    if (method[1] == "mplik") method = 3
+    method = match.arg(method)
+    Methods = 1:3
+    names(Methods) = c("mle", "nls", "mpl")
+    method = Methods[method]
                                             
     # Write parameters to file - OxArguments.csv:
     parameters = c(
@@ -135,6 +135,7 @@ trace = TRUE, title = NULL, description = NULL)
     fit = list()
     fit$call = match.call()
     fit$residuals = scan("OxResiduals.csv", skip = 1, quiet = TRUE)
+    fit$fitted = ts - as.vector(fit$residuals)
     fit.parameters = scan("OxParameters.csv", quiet = TRUE)
     nPar = order[1]+1+order[3]
     Names = "d"
@@ -155,10 +156,7 @@ trace = TRUE, title = NULL, description = NULL)
        
     # Add title and desription:
     if (is.null(title)) title = "ARFIMA Ox Modelling"
-    if (is.null(description)) {
-        description = paste(as.character(date()), "by user:", 
-            Sys.getenv("USERNAME"))
-    }
+    if (is.null(description)) description = .description()
       
     # Result:
     ans = new("fARMA",     
@@ -169,7 +167,7 @@ trace = TRUE, title = NULL, description = NULL)
         data = list(x = x),
         fit = fit,
         residuals = as.vector(fit$residuals),
-        fitted.values = as.vector(fit$residuals),
+        fitted.values = as.vector(fit$fitted),
         predicted.values = list(),
         title = as.character(title), 
         description = as.character(description) )

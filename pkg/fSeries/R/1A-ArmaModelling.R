@@ -28,36 +28,35 @@
 
 
 ################################################################################
-# FUNCTION:               DESCRIPTION:
-#  fARMA                   Class representation for "fARMA" objects
+# FUNCTION:               SIMULATION AND FITTING:
+#  'fARMA'                 S4 Class representation for "fARMA" objects
 #  armaSim                 Simulates an ARIMA time series process
 #  armaFit                 Fits parameters for ARMA Time Series process
 #  .arFit                   Internal function called by armaFit
 #  .arimaFit                Internal function called by armaFit
-#  .fracdiffFit             Internal function called by armaFit
-#   .fracdiffBuiltinFit     Internal function called by .fracdiffFit
-#   .fracdiffBuitlinRes     Internal function called by .fracdiffFit
+#  .arfimaFit               Internal function called by armaFit
 # S3 METHOD:              PREDICTION:
 #  predict.fARMA           S3: Predicts from an ARMA time series prrocess 
 #  .arPpredict             Internal function called by predict.fARMA
 #  .arimaPpredict          Internal function called by predict.fARMA
-#  .fracdiffPredict        Not yet implemented
-#  predictPlot             S3: Use method
-#  predictPlot.fARMA       S3: Plots from an ARMA time series prediction
-# S3 METHOD:              PRINT - SUMMARY - PLOT:
+#  .arfimaPredict          Not yet implemented
+# S3 METHOD:              PRINT - PLOT - SUMMARY METHODS:
 #  print.fARMA             S3: Prints a fitted ARMA time series object
 #  plot.fARMA              S3: Plots stylized facts of a fitted ARMA object
 #  summary.fARMA           S3: Summarizes a fitted ARMA time series object
-# S3 METHOD:              ADDON:
-#  fitted.fARMA            S3: Returns fitted values from a fitted ARMA object
+# S3 METHOD:              ADDON METHODS:
 #  coef.fARMA              S3: Returns coefficidents from a fitted ARMA object
 #  coefficients.fARMA      S3: Synonyme for coef.fARMA
+#  fitted.fARMA            S3: Returns fitted values from a fitted ARMA object
 #  residuals.fARMA         S3: Returns residuals from a fitted ARMA object
-# FUNCTION:               DESCRIPTION:
+################################################################################
+
+################################################################################
+# FUNCTION:               TRUE STATISTICS:
 #  armaTrueacf             Returns True ARMA autocorrelation function
 #  armaRoots               Returns Roots of the ARMA characteristic polynomial
-#  armaToeplitz            Returns Toeplitz matrix from an ARMA process
-#  armaFischer             Returns ARMA Fischer information matrix
+#  .armaToeplitz           Returns Toeplitz matrix from an ARMA process
+#  .armaFischer            Returns ARMA Fischer information matrix
 #  .schurTest               Tests invertibility
 #  .toeplitzARMA            Computes Toeplitz matrix
 #  .iARMA                   Information matrix ARMA
@@ -66,16 +65,6 @@
 #  .tacvfARMA               True acvf ARMA
 #  .tccfAR                  Cross covariances between ARs
 ################################################################################
-
-
-# ------------------------------------------------------------------------------
-# Rmetrics/SPlus Notation:
-#   armaSim(model = list(ar = c(0.5, -0.5), d = 0, ma = 0.1), n = 100,
-#       innov = NULL, n.start = 100, start.innov = NULL, 
-#       rand.gen = rnorm, rseed = NULL, ...) 
-#   arima.sim (model, n = 100, 
-#       innov = rand.gen(n, ...), n.start = 100, start.innov = NULL, 
-#       rand.gen = rnorm, xreg = NULL, reg.coef = NULL, ...)
 
        
 ################################################################################
@@ -96,21 +85,6 @@
 ################################################################################
 
 
-################################################################################
-# BUILTIN - PACKAGE DESCRIPTION:
-#  Package: tseries
-#  Version: 0.9-21
-#  Date: 2004-04-23
-#  Title: Time series analysis and computational finance
-#  Author: Compiled by Adrian Trapletti <a.trapletti@bluewin.ch>
-#  Maintainer: Kurt Hornik <Kurt.Hornik@R-project.org>
-#  Description: Package for time series analysis and computational finance
-#  Depends: R (>= 1.9.0), quadprog
-#  License: GPL (see file COPYING)
-#  Packaged: Thu Apr 22 16:32:16 2004; hornik
-################################################################################
-
-
 setClass("fARMA", 
     representation(
         call = "call",
@@ -123,7 +97,8 @@ setClass("fARMA",
         fitted.values = "numeric",
         predicted.values = "list",
         title = "character",
-        description = "character")  
+        description = "character"
+    )  
 )
 
 
@@ -139,14 +114,25 @@ rseed = NULL, ...)
     # Description:
     #   Simulates an ARIMA Time Series Process
     
-    # Note:
-    #   Splus-Like argument list
+    # Details:
+    #   Splus-Like argument list ...
+    #   Rmetrics Notation:
+    #     armaSim(model = list(ar = c(0.5, -0.5), d = 0, ma = 0.1), n = 100,
+    #       innov = NULL, n.start = 100, start.innov = NULL, 
+    #       rand.gen = rnorm, rseed = NULL, ...) 
+    # SPlus Notation:
+    #     arima.sim (model, n = 100, 
+    #       innov = rand.gen(n, ...), n.start = 100, start.innov = NULL, 
+    #       rand.gen = rnorm, xreg = NULL, reg.coef = NULL, ...)
     
     # Example:
     #   armaSim(model = list(ar = c(0.5, -0.5), d = 0, ma = 0.1))
     #   armaSim(model = list(ar = c(0.5, -0.5), d = 0.2, ma = 0.1))
     #   armaSim(model = list(ar = 0, d = 0.2, ma = 0))
     #   armaSim(model = list(d = 0.2))
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -170,7 +156,7 @@ rseed = NULL, ...)
         p = 0
     if (p) { 
         minroots = min(Mod(polyroot(c(1, -model$ar))))
-        if (minroots <= 1) warning("ar part of model is not stationary") 
+        if (minroots <= 1) warning(" AR part of model is not stationary") 
     }
     
     # MA PART:
@@ -184,10 +170,10 @@ rseed = NULL, ...)
     ## if (model$d < 0) stop("d must be positive ") 
     dd = length(model$d)    
     if (dd) { 
-        # FRACDIFF if "dd" is a non-integer value:
+        # ARFIMA|FRACDIFF if "dd" is a non-integer value:
         d = model$d
         if (d != round(d) ) { 
-            TSMODEL = "FRACDIFF" 
+            TSMODEL = "ARFIMA" 
         } else { 
             TSMODEL = "ARIMA" 
         } 
@@ -205,7 +191,7 @@ rseed = NULL, ...)
         if (d > 0) x = diffinv(x, differences = d) 
     }
         
-    if (TSMODEL == "FRACDIFF") {
+    if (TSMODEL == "ARFIMA") {
         if (p == 0) model$ar = 0
         if (q == 0) model$ma = 0
         mu = 0
@@ -240,8 +226,7 @@ rseed = NULL, ...)
 
 armaFit = 
 function(
-formula = x ~ arima(2, 0, 1),  
-method = c("CSS-ML", "ML", "CSS", "yw", "burg1", "burg2", "ols", "mle"), 
+formula = x ~ arima(2, 0, 1), method = c("mle", "ols"), 
 include.mean = TRUE, fixed = NULL, fracdiff.M = 100, fracdiff.h = -1, 
 title = NULL, description = NULL, ...)
 {   # A function implemented by Diethelm Wuertz
@@ -249,14 +234,54 @@ title = NULL, description = NULL, ...)
     # Description:
     #   Fits Model Parameters for an ARMA Time Series Process
     
+    # Arguments:
+    #   method - "CSS-ML", "ML", "CSS", "yw", "burg1", "burg2", "ols", "mle"
+    
     # Notes:
     #   Valid formulas are:
-    #       "ar", "arma", "arima", "fracdiff"
+    #       "ar" 
+    #       "arma"
+    #       "arima"
+    #       "fracdiff"
+    #   "arma(p,q)" uses arima(p,0,q)
     
+    # Details:
+    #   R-base:
+    #       arima(
+    #           x, 
+    #           order = c(0, 0, 0), 
+    #           seasonal = list(order = c(0, 0, 0), period = NA), 
+    #           xreg = NULL, 
+    #           include.mean = TRUE, 
+    #           transform.pars = TRUE, 
+    #           fixed = NULL, 
+    #           init = NULL, 
+    #           method = c("CSS-ML", "ML", "CSS"), 
+    #           n.cond, 
+    #           optim.control = list(), 
+    #           kappa = 1e+06) 
+    #   SPlus:
+    #       arima.mle(
+    #           x, 
+    #           model, 
+    #           n.cond, 
+    #           xreg=NULL,  
+    #           ...) 
+
     # Example:
     #   x = armaSim(); fit = armaFit(x ~ arima(2, 0, 1)); fit
     
+    # Changes:
+    #
+    
     # FUNCTION:
+    
+    # Check for Method:
+    # ar.method       = c("yw", "burg1", "burg2", "ols", "mle")
+    # arma.method     = c("CSS")
+    # arima.method    = c("CSS-ML", "ML", "CSS")    
+    # fracdiff.method = NA
+    method = method[1]  # Don't use match.arg(methods)
     
     # Call:
     fit = NULL
@@ -277,13 +302,6 @@ title = NULL, description = NULL, ...)
     # Allow for univariate 'timeSeries' Objects:
     # Added 2004-09-04 DW
     if (class(ts) == "timeSeries") ts = as.vector(ts)
-
-    # Check for Method:
-    # ar.method       = c("yw", "burg1", "burg2", "ols", "mle")
-    # arma.method     = c("CSS")
-    # arima.method    = c("CSS-ML", "ML", "CSS")    
-    # fracdiff.method = NA
-    method = method[1]
     
     # Which Model?
     # DW 2006-02-21
@@ -294,8 +312,10 @@ title = NULL, description = NULL, ...)
     # Valid Model?
     valid = FALSE
     if (tsmodel == "ar" ) valid = TRUE
+    if (tsmodel == "ma" ) valid = TRUE
     if (tsmodel == "arma") valid = TRUE
     if (tsmodel == "arima") valid = TRUE
+    if (tsmodel == "arfima") valid = TRUE
     if (tsmodel == "fracdiff") valid = TRUE
     if (!valid) stop("Invalid Formula Specification")
     
@@ -304,7 +324,17 @@ title = NULL, description = NULL, ...)
     end   = regexpr("\\)", as.character(formula[3]))-1
     order = substr(as.character(formula[3]), start, end)
     
+    if (tsmodel == "arfima" || tsmodel == "fracdiff") {
+        # method will be ignored ...
+        pos = regexpr(",", order)
+        p = as.integer(substr(order, 1, pos-1))
+        q = as.integer(substr(order, pos+1, nchar(order)))
+        order = c(p, q)
+        tsmodel = "arfima"
+    } 
+    
     if (tsmodel == "arima") {
+        if (method == "mle") method = "CSS-ML"
         pos = regexpr(",", order)   
         p = as.integer(substr(order, 1, pos-1))
         order = substr(order, pos+2, nchar(order))
@@ -314,6 +344,8 @@ title = NULL, description = NULL, ...)
     }
     
     if (tsmodel == "arma") {
+        if (method == "mle") method = "CSS-ML"
+        # "arma" uses "arima"
         pos = regexpr(",", order)
         p = as.integer(substr(order, 1, pos-1))
         q = as.integer(substr(order, pos+1, nchar(order)))
@@ -322,19 +354,22 @@ title = NULL, description = NULL, ...)
     }
     
     if (tsmodel == "ar") {
+        # if method is CSS-ML, CSS, or ML, then "ar" uses "arima":
         order = as.integer(order) 
-        if (method[1] == "CSS-ML" | method[1] == "CSS" | method[1] == "ML") {
+        if (method == "mle") method = "CSS-ML"
+        if (method == "CSS-ML" | method == "CSS" | method == "ML") {
             p = order
             order = c(p = p , d = 0, q = 0)
             tsmodel = "arima"
         }
     }
-     
-    if (tsmodel == "fracdiff") {
-        pos = regexpr(",", order)
-        p = as.integer(substr(order, 1, pos-1))
-        q = as.integer(substr(order, pos+1, nchar(order)))
-        order = c(p, q)
+    
+    if (tsmodel == "ma") {
+        # if method is CSS-ML, CSS, or ML, then "ma" uses "arima":
+        if (method == "mle") method = "CSS-ML"
+        order = as.integer(order) 
+        order = c(p = 0 , d = 0, q = order)
+        tsmodel = "arima"
     }
     
     # Which Function?
@@ -343,7 +378,7 @@ title = NULL, description = NULL, ...)
     # Fit:
     fit = fun(x = ts, order = order, include.mean = include.mean, 
         method = method[1], fixed = fixed, M = M, h = h, ...)  
-        
+     
     # "ols" specific:
     if (method == "ols") {
         se.coef = unlist(fit$se.coef)
@@ -383,9 +418,16 @@ title = NULL, description = NULL, ...)
 .arFit =
 function(x, order, include.mean, fixed = NULL,
 method = c("yw", "burg1", "burg2", "ols", "mle"), M = NULL, h = NULL, ...) 
-{
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Fits an AR time series model
+    
     # Note:
     #   Calls ar() from R-stats.
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -443,6 +485,8 @@ method = c("yw", "burg1", "burg2", "ols", "mle"), M = NULL, h = NULL, ...)
             fit$se.coef = c(fit$se.coef, NA) 
         } 
     }
+    
+    # Add Data:
     fit$x = x
     
     # Return Value:
@@ -456,24 +500,39 @@ method = c("yw", "burg1", "burg2", "ols", "mle"), M = NULL, h = NULL, ...)
 .arimaFit =
 function (x, order, include.mean, fixed,  
 method = c("CSS-ML", "ML", "CSS"), M = NULL, h = NULL, ...) 
-{
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Fits an ARIMA time series model
+    
     # Note:
     #   Calls arima() from R-stats.
 
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Fit:
     call = match.call()
-    fit = arima(x = x, order = order, method=  method[1], 
+    fit = arima(x = x, order = order, method =  method[1], 
         include.mean = include.mean, fixed = fixed, ...) 
     
-    # Added:
+    # Add Title:
     fit$tstitle = paste("ARIMA(", 
         as.character(order[1]), ",", as.character(order[2]), ",",
         as.character(order[3]), ") with method: ", method[1], sep = "")
-    fit$x = x   
+        
+    # Add Data:
+    fit$x = x  
+    
+    # Add Fitted Values: 
     fit$fitted.values = fit$x - fit$residuals
+    
+    # Add Standard Errors:
     fit$se.coef = sqrt(diag(fit$var.coef))  
+    
+    # Add Call:
     fit$call = call
     
     # Return Value:
@@ -484,78 +543,47 @@ method = c("CSS-ML", "ML", "CSS"), M = NULL, h = NULL, ...)
 # ------------------------------------------------------------------------------
   
 
-.fracdiffFit =
-function (x, order, include.mean, fixed, method = "FRACDIFF", M = 100, h = -1) 
-{
+.arfimaFit =
+function (x, order, include.mean, fixed, method = "arfima", M = 100, h = -1) 
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Fits an ARFIMA (FRACDIFF) time series model
+    
+    # Arguments:
+    #   x - time series for the ARIMA model
+    #   nar - number of autoregressive parameters
+    #   nma - number of moving average parameters
+    #   ar - initial autoregressive parameters
+    #   ma - initial moving average parameters
+    #   dtol - desired accurcay for d, by default (and if 
+    #       negative), (4th root of machine precision)
+    #       is used.  dtol will be changed internally if 
+    #       necessary
+    #   drange - interval over which the likelihood function is 
+    #       to be maximized as a function of d
+    #   h - finite difference interval
+    #   M - number of terms in the likelihood approximation
+    #       (see Haslett and Raftery 1989) 
+    
     # Note:
+    #   A Builtin Copy from R's fracdiff Package 
     #   Calls fracdiff() from R-fracdiff
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
     # Settings:
     call = match.call()
-    
-    # Fit:
-    # DW 2006-02-21
-    # M = filter
-    fit = .fracdiffBuiltinFit(x = x, nar = order[1], nma = order[2], 
-        ar = rep(NA, max(order[1], 1)), ma = rep(NA, max(order[2], 1)), 
-        drange = c(0, 0.5), M = M)
-        
-    # Added:
-    fit$tstitle = paste("FRACDIFF(", as.character(order[1]), ",", 
-        as.character(order[2]), ") with method: ", method[1], sep = "")
-    fit$x = x   
-        fit$coef = c(fit$d, fit$ar, fit$ma)
-    namesCoef = "d"
-    if (order[1] > 0) {
-        names.ar = c(paste("ar", 1:order[1], sep=""))
-        namesCoef = c(namesCoef, names.ar) }
-    if (order[2] > 0) {
-        names.ma = c(paste("ma", 1:order[2], sep=""))
-        namesCoef = c(namesCoef, names.ma) }
-    names(fit$coef) = namesCoef
-    fit$var.coef = fit$correlation.dpq  
-    fit$fitted.values = .fracdiffBuitlinRes(fit)
-    fit$residuals = x - fit$fitted.values
-    fit$se.coef = fit$stderror.dpq    
-    fit$fracdiff = c(M, h) 
-    fit$call = call 
-    
-    # Return Value:
-    fit 
-}
+    nar = order[1]
+    nma = order[2]
+    ar = rep(NA, max(order[1], 1))
+    ma = rep(NA, max(order[2], 1))
+    dtol = .Machine$double.eps^0.25 # ~ 1.22e-4
+    drange = c(0, 0.5)  
 
-
-# ------------------------------------------------------------------------------ 
-
-
-.fracdiffBuiltinFit = 
-function(x, nar = 0, nma = 0, ar = rep(NA, max(nar, 1)), 
-ma = rep(NA, max(nma, 1)), dtol = NULL, drange = c(0, 0.5), h = -1, M = 100) 
-{     
-    # Internal Function: 
-    # Use: fracdiff ...
-
-    # A Builtin Copy from R's fracdiff Package 
-    # Arguments:
-    #   x      - time series for the ARIMA model
-    #   nar    - number of autoregressive parameters
-    #   nma    - number of moving average parameters
-    #   ar     - initial autoregressive parameters
-    #   ma     - initial moving average parameters
-    #   dtol   - desired accurcay for d, by default (and if 
-    #            negative), (4th root of machine precision)
-    #            is used.  dtol will be changed internally if 
-    #            necessary
-    #   drange - interval over which the likelihood function is 
-    #            to be maximized as a function of d
-    #   h      - finite difference interval
-    #   M      - number of terms in the likelihood approximation
-    #           (see Haslett and Raftery 1989) 
-    
-    # FUNCTION:
-    
     # fracdiff:
     if (any(is.na(x)))
         stop("missing values not allowed in time series")
@@ -564,13 +592,11 @@ ma = rep(NA, max(nma, 1)), dtol = NULL, drange = c(0, 0.5), h = -1, M = 100)
     n = length(x)
     npq = nar + nma
     npq1 = npq + 1
-    lwork = max(npq + 2 * (n + M), 3 * n + (n + 6) * npq + 
-        npq %/% 2 + 1, (3 + 2 * npq1) * npq1 + 1)
+    lwork = max(npq+2*(n+M), 3*n+(n+6)*npq+npq%/%2+1, (3+2*npq1)*npq1+1)
     ar[is.na(ar)] = 0
     ma[is.na(ma)] = 0
-    if (is.null(dtol)) dtol = .Machine$double.eps^0.25 # ~ 1.22e-4
     
-    ## if dtol < 0: the fortran code will choose defaults
+    # if dtol < 0: the fortran code will choose defaults
     result = .Fortran("fracdf", as.double(x), as.integer(n), 
         as.integer(M), as.integer(nar), as.integer(nma), 
         dtol = as.double(dtol), drange = as.double(drange),
@@ -583,9 +609,9 @@ ma = rep(NA, max(nma, 1)), dtol = NULL, drange = c(0, 0.5), h = -1, M = 100)
         stop("insufficient workspace"),
         stop("error in gamma function"),
         stop("invalid MINPACK input"),
-        warning("warning in gamma function"),
-        warning("optimization failure"),
-        warning("optimization limit reached"))
+        warning(" Warning in gamma function"),
+        warning(" Optimization failure"),
+        warning(" Optimization limit reached"))
     hess = .Fortran("fdhpq",
          as.double(x), hess = double(npq1 * npq1), as.integer(npq1),
          result$w, PACKAGE = "fSeries")$hess
@@ -595,9 +621,9 @@ ma = rep(NA, max(nma, 1)), dtol = NULL, drange = c(0, 0.5), h = -1, M = 100)
          se = double(npq1), result$w, info = integer(1), 
          PACKAGE = "fSeries")
     if (temp$info) switch(temp$info,
-         warning("warning in gamma function"),
-         warning("singular Hessian"),
-         warning("unable to compute correlation matrix"),
+         warning(" Warning in gamma function"),
+         warning(" Singular Hessian matrix"),
+         warning(" Unable to compute correlation matrix"),
          stop("error in gamma function"))
     if (npq == 0) {
         result$ar = NULL
@@ -605,41 +631,59 @@ ma = rep(NA, max(nma, 1)), dtol = NULL, drange = c(0, 0.5), h = -1, M = 100)
     nam = "d"
     if (nar) nam = c(nam, paste("ar", 1:nar, sep = ""))
     if (nma) nam = c(nam, paste("ma", 1:nma, sep = ""))
-    hess = matrix(hess, nrow = npq1, ncol = npq1, 
-        dimnames = list(nam, nam))
+    hess = matrix(hess, nrow = npq1, ncol = npq1, dimnames = list(nam, nam))
     hess[1, ] = temp$hd
     hess[row(hess) > col(hess)] = hess[row(hess) < col(hess)]
     se.ok = temp$info != 0 || temp$info < 3
     
-    # Result:
-    ans = list(log.likelihood = result$hood,
-        d = result$d, ar = result$ar, ma = result$ma,
-        covariance.dpq = array(temp$cov, c(npq1, npq1), 
-        list(nam, nam)), stderror.dpq = if (se.ok) temp$se, # else NULL
-        correlation.dpq = 
-            if (se.ok) array(temp$cor, c(npq1, npq1)), # else NULL
+    # Fitting Result:
+    fit = list(
+        log.likelihood = result$hood,
+        d = result$d, 
+        ar = result$ar, ma = result$ma,
+        covariance.dpq = array(temp$cov, c(npq1, npq1), list(nam, nam)), 
+        stderror.dpq = if (se.ok) temp$se, # else NULL
+        correlation.dpq = if (se.ok) array(temp$cor, c(npq1, npq1)), # else NULL
         h = temp$h, d.tol = result$dtol, M = M, hessian.dpq = hess)
-        
-    # Return Value:
-    ans
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.fracdiffBuitlinRes =
-function (object) 
-{
-    # FUNCTION:
+       
+    # Add ts Title:
+    fit$tstitle = paste("FRACDIFF(", as.character(order[1]), ",", 
+        as.character(order[2]), ") with method: ", method[1], sep = "")
     
-    # Filter:
-    n = 0:object$M
-    w = gamma(-object$d+n)/(gamma(-object$d)*gamma(n+1)) 
-    ans = filter(object$x, w, sides = 1) 
+    # Add Series:
+    fit$x = x  
+    
+    # Add Coefficients: 
+    fit$coef = c(fit$d, fit$ar, fit$ma)
+    namesCoef = "d"
+    if (order[1] > 0) {
+        names.ar = c(paste("ar", 1:order[1], sep=""))
+        namesCoef = c(namesCoef, names.ar) }
+    if (order[2] > 0) {
+        names.ma = c(paste("ma", 1:order[2], sep=""))
+        namesCoef = c(namesCoef, names.ma) }
+    names(fit$coef) = namesCoef
+    fit$var.coef = fit$correlation.dpq  
+    
+    # Add Fitted Values:
+    n = 0:fit$M
+    w = gamma(-fit$d+n)/(gamma(-fit$d)*gamma(n+1)) 
+    fit$fitted.values = filter(fit$x, w, sides = 1) 
+    
+    # Add Residuals:
+    fit$residuals = x - fit$fitted.values
+    
+    # Add Standard Errors:
+    fit$se.coef = fit$stderror.dpq    
+    
+    # Add fracdiff Parameters:
+    fit$fracdiff = c(M, h) 
+    
+    # Add Call:
+    fit$call = call 
     
     # Return Value:
-    ans
+    fit 
 }
 
 
@@ -647,18 +691,9 @@ function (object)
 # PREDICT
 
 
-predictPlot = 
-function(object, ...)
-{
-    UseMethod("predictPlot")
-}
-
-
-# ------------------------------------------------------------------------------
-
-
 predict.fARMA = 
-function (object, n.ahead = 10, n.back = 50, conf = c(80, 95), ...) 
+function (object, n.ahead = 10, n.back = 50, conf = c(80, 95), 
+doplot = TRUE, ...) 
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -669,6 +704,9 @@ function (object, n.ahead = 10, n.back = 50, conf = c(80, 95), ...)
     #   object = armaFit(formula = x ~ arima(2, 0, 1))
     #   predict(object)
   
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # OX Arfima:
@@ -688,19 +726,97 @@ function (object, n.ahead = 10, n.back = 50, conf = c(80, 95), ...)
         pred = .arimaPredict(object, n.ahead, se.fit = TRUE, ...)
     }
         
-    # Predict "fracdiff":
-    if (object@fit$tsmodel == "fracdiff") {
-        stop("Prediction for FRACDIFF not yet implemented")
+    # Predict "arfima":
+    if (object@fit$tsmodel == "arfima") {
+        warning(" Prediction for ARFIMA not yet implemented")
+        return()
     }
 
     # Predict "arfima" from Ox:
-    if (object@fit$tsmodel == "arfima") {
+    if (object@fit$tsmodel == "arfimaOX") {
         pred = .arfimaOxPredict(object, n.ahead, ...)
     }
     
     # Prediction:
+    names(pred$pred) = names(pred$se) = NULL
     ans = list(pred = pred$pred, se = pred$se)
     
+    # Plot:
+    if (doplot) {
+         
+        # Data:
+        data = as.ts(object@data$x) 
+        freq = frequency(data)
+        start = start(data)
+        n = length(data)   
+        
+        # Fit Slot:
+        options(warn = -1)
+        fit = object@fit
+        class(fit) = fit$class
+    
+        # Upper and Lower Bands:
+        nint = length(conf)
+        upper = lower = matrix(NA, ncol = nint, nrow = length(pred$pred))
+        for (i in 1:nint) {
+            qq = qnorm(0.5 * (1 + conf[i]/100))
+            lower[, i] = pred$pred - qq * pred$se
+            upper[, i] = pred$pred + qq * pred$se}    
+        colnames(lower) = colnames(upper) = paste(conf, "%", sep = "")
+            
+        # Colors:
+        shadecols = switch(1 + (length(conf) > 1), 7, length(conf):1)
+        shadepalette = heat.colors(length(conf))
+        col = 1
+        
+        # Plot History:  
+        npred = length(pred$pred) 
+        ylim = range(c(data[(n-n.back+1):n], pred$pred), na.rm = TRUE)
+        ylim = range(ylim, lower, upper, na.rm = TRUE)   
+        ylab = paste("Series: ", fit$series)
+        vTS = ts(c(data[(n-n.back+1):n], pred$pred[1], rep(NA, npred-1)), 
+            end = tsp(data)[2] + npred/freq, f = freq)
+        plot(vTS, type = "o", pch = 19, ylim = ylim, ylab = ylab)
+        title(main = paste(fit$tstitle)) 
+             
+        # Confidence Intervals:
+        xx = tsp(data)[2] + (1:npred)/freq
+        idx = rev(order(conf))
+        if (nint > 1) palette(shadepalette)     
+        for (i in 1:nint) { polygon(c(xx, rev(xx)), c(lower[, idx[i]], 
+            rev(upper[, idx[i]])), col = shadecols[i], border = FALSE) }
+        palette("default")
+        
+        # Mean:
+        vTS = ts(pred$pred, start = tsp(data)[2]+1/freq, f = freq)
+        lines(vTS, lty = 1, col = 4)
+        points(vTS, pch = 19)
+       
+        # Printout:
+        nconf = length(conf)
+        out = pred$pred
+        upper = as.matrix(upper)
+        lower = as.matrix(lower)
+        names = "Forecast"
+        for (i in nconf:1) {
+            out = cbind(out, lower[, i])
+            names = c(names, paste("Low", conf[i])) }
+        out = cbind(out, pred$pred)
+        names = c(names, "Forecast")
+        for (i in 1:nconf) {
+            out = cbind(out, upper[, i])
+            names = c(names, paste("High", conf[i])) }
+        out = round(out, digits = 4)[,2:(2*nconf+2)]
+        colnames(out) = names[2:(2*nconf+2)]
+        
+        # Grid:
+        grid()
+        options(warn = 0)  
+        
+        # Add to Output:
+        ans$out = out
+    }
+ 
     # Return Value:
     ans
 }
@@ -710,9 +826,12 @@ function (object, n.ahead = 10, n.back = 50, conf = c(80, 95), ...)
 
 
 .arPredict = 
-function (object, n.ahead, se.fit = TRUE, ...) 
+function (object, n.ahead = 10, se.fit = TRUE, ...) 
 {   # A function implemented by Diethelm Wuertz
 
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Predict - object@fit$tsmodel = "ar":
@@ -730,9 +849,12 @@ function (object, n.ahead, se.fit = TRUE, ...)
 
 
 .arimaPredict = 
-function (object, n.ahead, se.fit = TRUE, ...) 
+function (object, n.ahead = 10, se.fit = TRUE, ...) 
 {   # A function implemented by Diethelm Wuertz
 
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Predict - object@fit$tsmodel = "arima":
@@ -748,100 +870,6 @@ function (object, n.ahead, se.fit = TRUE, ...)
     ans 
 }
 
-
-# ------------------------------------------------------------------------------
-
-    
-predictPlot.fARMA = 
-function (object, n.ahead = 10, n.back = 50, conf = c(80, 95), ...) 
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Predicts from an ARMA Time Series Process
-    
-    # Example:
-    #   x = armaSim(n = 500)
-    #   object = armaFit(formula = x ~ arima(2, 0, 1))
-    #   predictPlot(object)
-    
-    # FUNCTION:
-    
-    # Prediction:
-    pred = predict(object, n.ahead, n.back) 
-    
-    # Data:
-    data = as.ts(object@data$x) 
-    freq = frequency(data)
-    start = start(data)
-    n = length(data)   
-    
-    # Fit Slot:
-    options(warn = -1)
-    fit = object@fit
-    class(fit) = fit$class
-
-    # Upper and Lower Bands:
-    nint = length(conf)
-    upper = lower = matrix(NA, ncol = nint, nrow = length(pred$pred))
-    for (i in 1:nint) {
-        qq = qnorm(0.5 * (1 + conf[i]/100))
-        lower[, i] = pred$pred - qq * pred$se
-        upper[, i] = pred$pred + qq * pred$se}    
-    colnames(lower) = colnames(upper) = paste(conf, "%", sep = "")
-        
-    # Colors:
-    shadecols = switch(1 + (length(conf) > 1), 7, length(conf):1)
-    shadepalette = heat.colors(length(conf))
-    col = 1
-    
-    # Plot History:  
-    npred = length(pred$pred) 
-    ylim = range( c(data[(n-n.back+1):n], pred$pred), na.rm = TRUE)
-    ylim = range(ylim, lower, upper, na.rm = TRUE)   
-    ylab = paste("Series: ", fit$series)
-    vTS = ts(c(data[(n-n.back+1):n], pred$pred[1], rep(NA, npred-1)), 
-        end = tsp(data)[2] + npred/freq, f = freq)
-    plot(vTS, type = "o", pch = 19, ylim = ylim, ylab = ylab)
-    title(main = paste(fit$tstitle)) 
-         
-    # Confidence Intervals:
-    xx = tsp(data)[2] + (1:npred)/freq
-    idx = rev(order(conf))
-    if (nint > 1) palette(shadepalette)     
-    for (i in 1:nint) { polygon(c(xx, rev(xx)), c(lower[, idx[i]], 
-        rev(upper[, idx[i]])), col = shadecols[i], border = FALSE) }
-    palette("default")
-    
-    # Mean:
-    vTS = ts(pred$pred, start = tsp(data)[2]+1/freq, f = freq)
-    lines(vTS, lty = 1, col = 4)
-    points(vTS, pch = 19)
-   
-    # Printout:
-    nconf = length(conf)
-    out = pred$pred
-    upper = as.matrix(upper)
-    lower = as.matrix(lower)
-    names = "Forecast"
-    for (i in nconf:1) {
-        out = cbind(out, lower[, i])
-        names = c(names, paste("Low", conf[i])) }
-    out = cbind(out, pred$pred)
-    names = c(names, "Forecast")
-    for (i in 1:nconf) {
-        out = cbind(out, upper[, i])
-        names = c(names, paste("High", conf[i])) }
-    out = round(out, digits=4)[,2:(2*nconf+2)]
-    colnames(out) = names[2:(2*nconf+2)]
-    
-    # Grid:
-    grid()
-    options(warn = 0)
-    
-    # Return Value:
-    out
-}  
-
     
 ################################################################################
 # PRINT - SUMMARY - PLOT:
@@ -853,6 +881,9 @@ function(x, ...)
 
     # Description:
     #   Prints a Fitted ARMA Time Series Object
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -890,15 +921,22 @@ function(x, ...)
 
 
 summary.fARMA = 
-function (object, doplot = TRUE, ...) 
+function (object, doplot = TRUE, which = "all", ...) 
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Analyzes a Fitted ARMA Time Series Object
     
+    # Changes:
+    #
+    
     # FUNCTION:
         
     # Initialize:
+    if (object@fit$tsmodel == "arfima" & doplot) {
+        warning(" Plot Method for arfima Models not yet implemented")
+        doplot = FALSE
+    }
     ans = NULL
     
     # Fit Call and Model:
@@ -1010,10 +1048,10 @@ function (object, doplot = TRUE, ...)
             "\n", sep = "") }
        
     # Doplot:
-    if (doplot) plot.fARMA(x, ...)
+    if (doplot) plot.fARMA(x, which = which, ...)
     
     # Description:
-    cat("\nDescription:\n ")
+    cat("Description:\n ")
     cat(x@description, "\n\n")
     
     # Return Value:
@@ -1024,72 +1062,90 @@ function (object, doplot = TRUE, ...)
 # ------------------------------------------------------------------------------
 
 
-plot.fARMA = 
-function(x, gof.lag = 10, reference.grid = TRUE, col = "steelblue", ...)
+plot.fARMA =
+function(x, which = "ask", gof.lag = 10, ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Plots stylized facts of a fitted ARMA object
+    #   Plot method for an object of class 'fARMA'
+    
+    # Changes:
+    #
     
     # FUNCTION:
-    
-    # Standardized Residuals:
-    object = x@fit
-    rs = as.vector(na.omit(object$residuals))
-    stdres = rs/sqrt(object$sigma2)
-    plot(stdres, type = "h", main = "Standardized Residuals", 
-        ylab = "Residuals", col = col)
-    if (reference.grid) grid()
-    abline(h = 0, col = "grey")
-    
-    # Plot ACF:
-    acf(object$residuals, plot = TRUE, main = "ACF of Residuals", 
-        na.action = na.pass)
-    if (reference.grid) grid()
-    
-    # QQ Plot of Residuals:
-    qqnorm(stdres, xlab = "Normal Quantiles", ylab = "Residual Quantiles", 
-        main = "QQ-Plot of Residuals", col = col)
-    qqline(stdres, col = "grey")
-    if (reference.grid) grid()
-    
-    # LB Statistic:
-    nlag = gof.lag
-    pval = numeric(nlag)
-    for (i in 1:nlag) pval[i] = Box.test(rs, i, type = "Ljung-Box")$p.value
-    plot(1:nlag, pval, xlab = "lag", ylab = "p value", ylim = c(0, 1), 
-        main = "Ljung-Box p-values")
-    abline(h = 0.05, lty = 2, col = "grey")
-    if (reference.grid) grid()
 
+    # Check:
+    if (x@fit$tsmodel == "arfima") {
+        warning(" Plot method for ARFIMA models not yet implemented")
+        return()
+    }
+    
+    # 1. Standardized Residuals Plot:
+    plot.1 <<- function(x, ...) {
+        object = x@fit
+        rs = as.vector(na.omit(object$residuals))
+        stdres = rs/sqrt(object$sigma2)
+        plot(stdres, type = "h", 
+            main = "Standardized Residuals", 
+            ylab = "Residuals", col = "steelblue", ...)
+        grid()
+        abline(h = 0, col = "grey")
+    }   
+        
+    # 2. ACF of Residuals:
+    plot.2 <<- function(x, ...) {
+        object = x@fit
+        acf(object$residuals, plot = TRUE, main = "ACF of Residuals", 
+            na.action = na.pass, ...)
+        grid()    
+    }   
+    
+    # 3. QQ Plot of Residuals:
+    plot.3 <<- function(x, ...) {           
+        object = x@fit
+        rs = as.vector(na.omit(object$residuals))
+        stdres = rs/sqrt(object$sigma2)
+        qqnorm(stdres, 
+            xlab = "Normal Quantiles", 
+            ylab = "Residual Quantiles", 
+            main = "QQ-Plot of Residuals", 
+            pch = 19, col = "steelblue", ...)
+        qqline(stdres, col = "grey")
+        grid()
+    }  
+             
+    # 4. Ljung-Box p Values:
+    plot.4 <<- function(x, ...) {        
+        object = x@fit
+        rs = as.vector(na.omit(object$residuals))
+        nlag = gof.lag
+        pval = numeric(nlag)
+        for (i in 1:nlag) 
+            pval[i] = Box.test(rs, i, type = "Ljung-Box")$p.value
+        plot(1:nlag, pval, xlab = "lag", ylab = "p value", ylim = c(0, 1), 
+            pch = 19, col = "steelblue", main = "Ljung-Box p-values", ...)
+        abline(h = 0.05, lty = 2, col = "grey")
+        grid()
+    }   
+    
+    # Plot:
+    .interactiveGarchPlot(
+        x,
+        choices = c(
+            "Standardized Residuals",
+            "ACF of Residuals",
+            "QQ Plot of Residuals",
+            "Ljung-Box p Values"),
+        plotFUN = c(
+            "plot.1",  "plot.2",  "plot.3", "plot.4"),
+        which = which) 
+            
     # Return Value:
-    invisible()
+    invisible(x)
 }
 
 
 ################################################################################
-
-
-fitted.fARMA = 
-function(object, ...)
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Returns fitted values from a fitted ARMA object
-    
-    # FUNCTION:
-    
-    # Fitted Values:
-    ans = object@fitted.values
-    classAns = class(object@data$x)
-    if (classAns == "ts") ans = as.ts(ans)
-    
-    # Return Value:
-    ans
-}
-
-
-# ------------------------------------------------------------------------------
 
 
 coef.fARMA =
@@ -1102,8 +1158,44 @@ function(object, ...)
     # Note:
     #   Alternatively you can use coefficient().
     
+    # Changes:
+    #
+    
+    # FUNCTION:
+    
     # Coefficients:
     ans = object@fit$coef
+    
+    # Return Value:
+    ans
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+fitted.fARMA = 
+function(object, ...)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Returns fitted values from a fitted ARMA object
+    
+    # Changes:
+    #
+    
+    # FUNCTION:
+    
+    # Check:
+    if (object@fit$tsmodel == "arfima") {
+        warning (" Fitted method for ARFIMA models not yet implemented")
+        return()
+    }
+        
+    # Fitted Values:
+    ans = object@fitted.values
+    classAns = class(object@data$x)
+    if (classAns == "ts") ans = as.ts(ans)
     
     # Return Value:
     ans
@@ -1120,8 +1212,17 @@ function(object, ...)
     # Description:
     #   Returns Residuals from a Fitted ARMA Object
     
+    # Changes:
+    #
+    
     # FUNCTION:
     
+    # Check:
+    if (object@fit$tsmodel == "arfima") {
+        warning (" Residuals method for ARFIMA models not yet implemented")
+        return()
+    }
+       
     # Residual Values:
     ans = object@fit$residuals
     classAns = class(object@data$x)
@@ -1140,7 +1241,8 @@ function(object, ...)
 
 
 armaTrueacf = 
-function(model, lag.max = 20, type = "correlation", doplot = TRUE)
+function(model, lag.max = 20, type = c("correlation", "partial", "both"), 
+doplot = TRUE)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -1150,35 +1252,44 @@ function(model, lag.max = 20, type = "correlation", doplot = TRUE)
     #   A synonyme for arma.tacf under R. See R's .First.lib.
     #   Implemented from ARMAacf
     
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Settings:
     lag = 0:lag.max
     result = NA
-    if (type=="partial" || type=="p" || type=="both" || type=="b") {
+    
+    # Partial:
+    if (type == "partial" || type == "both") {
         main = ylab = "True PACF"
         lag = 1:lag.max
-        pacf = ARMAacf(model$ar, model$ma, lag.max=lag.max, 
-            pacf=TRUE)
+        pacf = ARMAacf(model$ar, model$ma, lag.max = lag.max, pacf = TRUE)
         result = data.frame(cbind(lag, pacf))
         if (doplot) {
-            plot(x=lag, y=pacf, type = "n", xlab = "Lag", 
+            plot(x = lag, y = pacf, type = "n", xlab = "Lag", 
                 ylab = ylab, main = main, 
                 ylim = c(min(c(pacf, 0)), 1) )
             lines(x = lag, y = pacf, type = "h")
-            abline(h = 0)}}
-    if (type == "correlation" || type == "c" || type == "both" || type=="b") {
+            abline(h = 0)
+        }
+    }
+            
+    # Correlation
+    if (type == "correlation" || type == "both") {
         main = ylab = "True ACF"
         lag = 0:lag.max
-        acf = ARMAacf(model$ar, model$ma, lag.max=lag.max, 
-            pacf=FALSE)
+        acf = ARMAacf(model$ar, model$ma, lag.max = lag.max, pacf = FALSE)
         result = data.frame(cbind(lag, acf))
         if (doplot) {
             plot(x=lag, y = acf, type = "n", xlab = "Lag", 
                 ylab = ylab, main = main, 
                 ylim = c(min(c(acf, 0)), 1) )
-            lines(x=lag, y=acf, type = "h")
-            abline(h = 0) } }   
+            lines(x = lag, y = acf, type = "h")
+            abline(h = 0) 
+        } 
+    }   
             
     # Return Value:
     result
@@ -1195,6 +1306,9 @@ function(coefficients, n.plot = 400, digits = 4, ...)
     # Description:
     #   Calculates the roots of a characteristc polynomial
 
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Algorithm:
@@ -1207,20 +1321,21 @@ function(coefficients, n.plot = 400, digits = 4, ...)
     xplot = seq(xrange[1], xrange[2], length = n.plot)
     fpoly = 1
     for(i in 1:length(coefficients)) {
-        fpoly = fpoly - xplot^i * coefficients[i] }
-    plot(xplot, fpoly, type = "l", xlab = "B", ylab = "Function", ...)
+        fpoly = fpoly - xplot^i * coefficients[i] 
+    }
+    plot(xplot, fpoly, type = "l", xlab = "B", ylab = "Function", 
+        col = "steelblue", pch = 19, ...)
     title(main = "Polynomial Function vs. B")
     abline(h = 0)
     distance = sqrt(real.root^2 + im.root^2)
     root.mat = cbind(round(real.root, digits = digits),
         round(im.root, digits = digits), 
         round(distance, digits = digits))
-    dimnames(root.mat) = list(1:nrow(root.mat), 
-        c("re", "im", "dist"))
+    dimnames(root.mat) = list(1:nrow(root.mat), c("re", "im", "dist"))
     size.limit = max(abs(real.root), 1.5, abs(im.root))
     plot(root, xlim = c( - size.limit, size.limit),
-        ylim = c( - size.limit, size.limit), 
-        xlab = "", ylab = "", ...)
+        ylim = c( - size.limit, size.limit), xlab = "", ylab = "", 
+        col = "steelblue", pch = 19, ...)
     x = (2*pi/360)*(0:360)
     # symbols(0, 0, circles = 1, add = TRUE, inches = FALSE, col = 6)
     lines(sin(x), cos(x))
@@ -1237,9 +1352,9 @@ function(coefficients, n.plot = 400, digits = 4, ...)
 
 ################################################################################
 # FUNCTION:          DESCRIPTION:
-#  armaToeplitz       Toeplitz Matrix
-#  armaFischer        ARMA Fischer Information matrix
-# INTERNAL FUNCTION  DESCRIPTION:
+#  .armaToeplitz      Toeplitz Matrix
+#  .armaFischer       ARMA Fischer Information matrix
+# INTERNAL FUNCTION: DESCRIPTION:
 #  .schurTest          Test for invertibility
 #  .toeplitzARMA       Toeplitz matrix
 #  .iARMA              Information matrix ARMA
@@ -1250,10 +1365,19 @@ function(coefficients, n.plot = 400, digits = 4, ...)
 ################################################################################
 
 
-armaToeplitz =
+.armaToeplitz =
 function(x)
 {   # A function implemented by Diethelm Wuertz
 
+    # Arguments:
+    #   x - a vector of autocovariances. The returned Toeplitz matrix is  
+    #       the corresponding covariance matrix of the observatons.
+        
+    # Changes:
+    #
+    
+    # FUNCTION:
+    
     # Wraps:
     .toeplitzARMA(x)
 }
@@ -1262,10 +1386,15 @@ function(x)
 # ------------------------------------------------------------------------------
 
 
-armaFischer = 
+.armaFischer = 
 function(model = list(ar = c(0.5, -0.5), ma = 0.1))
 {   # A function implemented by Diethelm Wuertz
 
+    # Changes:
+    #
+    
+    # FUNCTION:
+    
     # Wraps:
     .iARMA(phi = model$ar, theta = model$ma)
 }
@@ -1298,6 +1427,9 @@ function(phi)
     
     # Author:
     #   Original Version from "iarma" R library: A.I. McLeod, July 1998
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -1351,6 +1483,9 @@ function(x)
     # Author:
     #   Original Version from "iarma" R library: A.I. McLeod, July 1998
     
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Compute:
@@ -1374,6 +1509,9 @@ function(phi = numeric(0), theta = numeric(0))
     
     # Author:
     #   Original Version from "iarma" R library: A.I. McLeod, July 1998
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -1437,6 +1575,9 @@ function(phi = numeric(0), theta = numeric(0), maxlag = 128)
     
     # Author:
     #   Original Version from "iarma" R library: A.I. McLeod, July 1998
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -1505,6 +1646,9 @@ function(phi = numeric(0), theta = numeric(0), maxlag = 20)
     # Author:
     #   Original Version from "iarma" R library: A.I. McLeod, July 1998
     
+    # Changes:
+    #
+    
     # FUNCTION:
     
     # Compute:
@@ -1551,6 +1695,9 @@ function(phi = numeric(0), theta = numeric(0), maxlag = 20)
     
     # Author:
     #   Original Version from "iarma" R library: A.I. McLeod, July 1998
+    
+    # Changes:
+    #
     
     # FUNCTION:
     
@@ -1639,6 +1786,9 @@ function(phi, theta)
     
     # Author:
     #   Original Version from "iarma" R library: A.I. McLeod, July 1998
+    
+    # Changes:
+    #
     
     # FUNCTION:
     

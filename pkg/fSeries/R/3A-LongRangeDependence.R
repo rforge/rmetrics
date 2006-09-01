@@ -28,40 +28,45 @@
 
 ################################################################################
 # PART I: 
-# FUNCTIONS:          FRACTIONAL BROWNIAN MOTION:
-#  fbmSim              Generates fractional Brownian motion
-#  .fbmSim.mvn          Numerical approximation of the stochastic integral
-#  .fbmSim.chol         Choleki's decomposition of the covariance matrix
-#  .fbmSim.lev          Method of Levinson
-#  .fbmSim.circ         method of Wood and Chan
-#  .fbmSim.wave         Wavelet synthesis
-#  .convol              Internal Convolution
-# FUNCTIONS:          FRACTIONAL GAUSSIAN NOISE:
-#  fgnSim              Generates fractional Gaussian noise
-#  .fgnSim.durbin       Durbin's Method
-#  .fgnSim.paxson       Paxson's Method
-#  .fgnSim.beran        Beran's Method
-#  farimaSim           Generates FARIMA time series process
+# FUNCTIONS:            FRACTIONAL BROWNIAN MOTION:
+#  fbmSim                Generates fractional Brownian motion
+#  .fbmSimSlider          Displays fbm simulated time Series
+#  .fbmSim.mvn            Numerical approximation of the stochastic integral
+#  .fbmSim.chol           Choleki's decomposition of the covariance matrix
+#  .fbmSim.lev            Method of Levinson
+#  .fbmSim.circ           method of Wood and Chan
+#  .fbmSim.wave           Wavelet synthesis
+#  .convol                Internal Convolution
+# FUNCTIONS:            FRACTIONAL GAUSSIAN NOISE:
+#  fgnSim                Generates fractional Gaussian noise
+#  .fgnSimSlider          Displays fgn simulated time Series
+#  .fgnSim.durbin         Durbin's Method
+#  .fgnSim.paxson         Paxson's Method
+#  .fgnSim.beran          Beran's Method
+# FUNCTIONS:            FARIMA PROCESS:
+#  farimaSim             Generates FARIMA time series process
 ################################################################################
 
 
 ################################################################################
-# PART II: Reimplemented functions from
-#   Beran's SPlus Scripts
-# FUNCTIONS:          DESCRIPTION:
-#  farimaTrueacf       Returns FARMA true autocorrelation function
-#  farimaTruefft       Returns FARMA true fast Fourier transform
-#  .ckFARIMA0           Returns FARMA true autocorrelation function
-#  .gkFARIMA0           Returns FARMA true fast Fourier transform
-#  .simFARIMA0          Simulates Time Series
-#  fgnTrueacf          Returns FGN true autocorrelation function
-#  fgnTruefft          Returns FGN true fast Fourier transform
-#  .ckFGN0              Returns FGN true autocorrelation function
-#  .gkFGN0              Returns FGN true fast Fourier Transform
-#  .simFGN0             Simulates time series
-# WHITTLE:
-#  whittleFit         Whittle Estimator
-#  .CetaFGN             Internal Functions ...
+# PART II: Reimplemented functions from Beran's SPlus Scripts
+# FUNCTIONS:            DESCRIPTION:
+#  farimaTrueacf         Returns FARMA true autocorrelation function
+#  farimaTruefft         Returns FARMA true fast Fourier transform
+#  .farimaStatsSlider     Displays farima true statistics 
+#  .ckFARIMA0             Returns FARMA true autocorrelation function
+#  .gkFARIMA0             Returns FARMA true fast Fourier transform
+#  .simFARIMA0            Simulates Time Series
+# FUNCTIONS:            DESCRIPTION:
+#  fgnTrueacf            Returns FGN true autocorrelation function
+#  fgnTruefft            Returns FGN true fast Fourier transform
+#  .fgnStatsSlider        Displays fgn true statistics
+#  .ckFGN0                Returns FGN true autocorrelation function
+#  .gkFGN0               Returns FGN true fast Fourier Transform
+#  .simFGN0              Simulates time series
+# FUNCTIONS:            WHITTLE ESTIMATOR:
+#  whittleFit            Whittle Estimator
+#  .CetaFGN               Internal Functions ...
 #  .CetaARIMA 
 #  .Qeta 
 #  .fspecFGN 
@@ -82,7 +87,7 @@
 #   Estimators for Long-Range Dependence: An Empirical Study
 #   Fractals, Vol 3, No. 4, 785-788, 1995
 # FUNCTIONS:          HURST EXPONENT:
-#  fHURST              S4 Class Representation
+#  'fHURST'            S4 Class Representation
 #   print.fHURST        S3 Print Method
 #   plot.fHURST         S3 Plot Method
 #  aggvarFit           3.1 Aggregated variance method
@@ -94,6 +99,7 @@
 #  perFit              3.7 Periodogram and cumulated periodogram method
 #  boxperFit           3.8 Boxed (modified) peridogram method
 #  whittleFit          3.9 Whittle estimator -> PART II
+#  hurstSlider         Hurst Slider
 ################################################################################
 
 
@@ -115,7 +121,6 @@
 #  .rsTest             Not yet ready for usage ...
 #  .vsTest             Not yet ready for usage ...
 # FUNCTION:           SLIDER:
-#  hurstSlider         Hurst Slider
 ################################################################################
 
 
@@ -129,7 +134,7 @@
 
 fbmSim = 
 function(n = 100, H = 0.7, method = c("mvn", "chol", "lev", "circ", "wave"),
-waveJ = 7, doplot = TRUE, fgn = FALSE)
+waveJ = 7, seed = NULL, doplot = TRUE, fgn = FALSE)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -157,11 +162,14 @@ waveJ = 7, doplot = TRUE, fgn = FALSE)
     # FUNCTION:
     
     # Initialization:
-    method = method[1]
+    method = match.arg(method)
+    
+    # Match Function:
     fun = paste(".fbmSim.", method, sep = "")
     funFBM = match.fun(fun)
     
     # Simulate:
+    if (!is.null(seed)) set.seed(seed)
     if (method == "wave") {
         ans = funFBM(n, H, waveJ, doplot, fgn)
     } else {
@@ -716,6 +724,56 @@ function(n = 100, H = 0.7, doplot = TRUE, fgn = FALSE)
 }
 
 
+# ------------------------------------------------------------------------------
+
+
+.fbmSimSlider =
+function()
+{   # A function implemented by Diethelm Wuertz
+
+    # Description
+    #   Displays fbm simulated time Series
+    
+    # Changes:
+    #
+    
+    # FUNCTION:
+    
+    # Internal Function:
+    refresh.code = function(...)
+    {
+        # Sliders:
+        n      = .sliderMenu(no = 1)
+        H      = .sliderMenu(no = 2)
+        method = .sliderMenu(no = 3)
+        
+        # Select Method:
+        Method = c("mvn", "chol", "lev", "circ", "wave")
+        Method = Method[method]
+        
+        # Frame:
+        par(mfrow = c(2, 1), cex = 0.7)
+        
+        # FBM TimeSeries:
+        fbmSim(n = n, H = H, method = Method, doplot = TRUE)
+        
+        # FGN TimeSeries:
+        fbmSim(n = n, H = H, method = Method, doplot = TRUE, fgn = TRUE)
+        
+        # Reset Frame:
+        par(mfrow = c(1, 1), cex = 0.7)
+    }
+  
+    # Open Slider Menu:
+    .sliderMenu(refresh.code,
+       names =       c(  "n",    "H", "method"),
+       minima =      c(   10,   0.01,       1),
+       maxima =      c(  200,   0.99,       5),
+       resolutions = c(   10,   0.01,       1),
+       starts =      c(  100,   0.70,       1))
+}
+
+
 # ******************************************************************************
 # Fractional Gaussian Noise
 
@@ -742,7 +800,7 @@ function(n = 1000, H = 0.7, method = c("beran", "durbin", "paxson"))
     # Settings:
     mean = 0 
     std = 1
-    method = method[1]
+    method = match.arg(method)
     ans = NA
     
     # Generate Sequence:
@@ -950,6 +1008,57 @@ function(n, H = 0.7, mean = 0, std = 1)
 }
 
 
+# ------------------------------------------------------------------------------
+
+
+.fgnSimSlider =
+function()
+{   # A function implemented by Diethelm Wuertz
+
+    # Description
+    #   Displays fgn simulated time Series
+    
+    # Changes:
+    #
+    
+    # FUNCTION:
+    
+    # Internal Function:
+    refresh.code = function(...)
+    {
+        # Sliders:
+        n      = .sliderMenu(no = 1)
+        H      = .sliderMenu(no = 2)
+        method = .sliderMenu(no = 3)
+        
+        # Select Method:
+        Method = c("beran", "durbin", "paxson")
+        Method = Method[method]
+        
+        # Frame:
+        par(mfrow = c(1, 1), cex = 0.7)
+        
+        # FGN TimeSeries:
+        x = fgnSim(n = n, H = H, method = Method)
+        plot(x, type = "l", col = "steelblue")
+        grid()
+        abline(h = 0, col = "grey")
+        title(main = paste(Method, "FGN | H =", H))
+        
+        # Reset Frame:
+        par(mfrow = c(1, 1), cex = 0.7)
+    }
+  
+    # Open Slider Menu:
+    .sliderMenu(refresh.code,
+       names =       c(  "n",    "H", "method"),
+       minima =      c(   10,   0.01,       1),
+       maxima =      c(  200,   0.99,       3),
+       resolutions = c(   10,   0.01,       1),
+       starts =      c(  100,   0.70,       1))
+}
+
+
 # ******************************************************************************
 
 
@@ -1042,7 +1151,7 @@ method = c("freq", "time"), ...)
     attr(ans, "control") <- c(method = method, model = unlist(model))
     ans
 }
-  
+
 
 ################################################################################
 # PART II:
@@ -1138,6 +1247,62 @@ fgnTruefft =
 function(n, H)
 {
     .gkFGN0(n = n, H = H)
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.fgnStatsSlider =
+function()
+{   # A function implemented by Diethelm Wuertz
+
+    # Description
+    #   Displays fgn true Statistics: ACF and FFT
+    
+    # Example:
+    #   .fgnStatsSlider()
+    
+    # Changes:
+    #
+    
+    # FUNCTION:
+    
+    # Internal Function:
+    refresh.code = function(...)
+    {
+        # Sliders:
+        n = .sliderMenu(no = 1)
+        H = .sliderMenu(no = 2)
+        
+        # Frame:
+        par(mfrow = c(2, 1), cex = 0.7)
+        
+        # FGN ACF:
+        ans = fgnTrueacf(n = n, H = H)
+        plot(ans, type = "h", col = "steelblue")
+        title(main = "FGN True ACF")
+        grid()
+        abline(h = 0, col = "grey")
+        
+        # FGN FFT:
+        ans = fgnTruefft(n = n, H = H)
+        plot(Re(ans), type = "h", col = "steelblue")
+        title(main = "FGN True FFT")
+        grid()
+        abline(h=0, col = "grey")
+        
+        # Reset Frame:
+        par(mfrow = c(1, 1), cex = 0.7)
+    }
+  
+    # Open Slider Menu:
+    .sliderMenu(refresh.code,
+       names =       c(  "n",    "H"),
+       minima =      c(   10,   0.01),
+       maxima =      c(  200,   0.99),
+       resolutions = c(   10,   0.01),
+       starts =      c(  100,   0.70))
 }
 
 
@@ -1252,6 +1417,72 @@ function(n, H)
 # ------------------------------------------------------------------------------
 
 
+farimaTruefft = 
+function(n, H)
+{
+    .gkFARIMA0(n = n, H = H)
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.farimaStatsSlider =
+function()
+{   # A function implemented by Diethelm Wuertz
+
+    # Description
+    #   Displays farima true Statistics: ACF and FFT
+    
+    # Example:
+    #   .farimaStatsSlider()
+    
+    # Changes:
+    #
+    
+    # FUNCTION:
+    
+    # Internal Function:
+    refresh.code = function(...)
+    {
+        # Sliders:
+        n = .sliderMenu(no = 1)
+        H = .sliderMenu(no = 2)
+        
+        # Frame:
+        par(mfrow = c(2, 1), cex = 0.7)
+        
+        # FGN ACF:
+        ans = farimaTrueacf(n = n, H = H)
+        plot(ans, type = "h", col = "steelblue")
+        title(main = "FARIMA True ACF")
+        grid()
+        abline(h = 0, col = "grey")
+        
+        # FGN FFT:
+        ans = farimaTruefft(n = n, H = H)
+        plot(Re(ans), type = "h", col = "steelblue")
+        title(main = "FARIMA True FFT")
+        grid()
+        abline(h=0, col = "grey")
+        
+        # Reset Frame:
+        par(mfrow = c(1, 1), cex = 0.7)
+    }
+  
+    # Open Slider Menu:
+    .sliderMenu(refresh.code,
+       names =       c(  "n",    "H"),
+       minima =      c(   10,   0.01),
+       maxima =      c(  200,   0.99),
+       resolutions = c(   10,   0.01),
+       starts =      c(  100,   0.70))
+}
+
+
+# ------------------------------------------------------------------------------
+
+
 .gkFARIMA0 = 
 function(n, H) 
 {
@@ -1280,16 +1511,6 @@ function(n, H)
     
     # Return Value:
     ans
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-farimaTruefft = 
-function(n, H)
-{
-    .gkFARIMA0(n = n, H = H)
 }
 
 
@@ -1393,6 +1614,8 @@ trace = FALSE, spec = FALSE, title = NULL, description = NULL)
     result = .whittle(xinput = x, nsub = subseries, model = method[1], 
         pp = order[1], qq = order[2], h = h, ar = ar, ma = ma, out = trace, 
         spec = spec)[[1]]
+    result$H = result$par
+    result$par = NULL
         
     # Add:
     if (is.null(title)) title = "Hurst Exponent from Whittle Estimator"
@@ -1969,7 +2192,7 @@ qq = 1, h = 0.5, ar = c(0.5), ma = c(0.5), out = TRUE, spec = FALSE)
     remove("q", pos = 1)
     remove("imodel", pos = 1)
     remove("out", pos = 1)
-    if(spec == FALSE) remove("yper", pos = 1) 
+    if (spec == FALSE) remove("yper", pos = 1) 
 }
 
 
