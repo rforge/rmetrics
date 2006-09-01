@@ -227,8 +227,7 @@ rseed = NULL, ...)
 armaFit = 
 function(
 formula = x ~ arima(2, 0, 1), method = c("mle", "ols"), 
-include.mean = TRUE, fixed = NULL, fracdiff.M = 100, fracdiff.h = -1, 
-title = NULL, description = NULL, ...)
+include.mean = TRUE, fixed = NULL, title = NULL, description = NULL, ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -286,8 +285,13 @@ title = NULL, description = NULL, ...)
     # Call:
     fit = NULL
     call = match.call()
-    M = fracdiff.M
-    h = fracdiff.h
+    
+    # Add to Fracdiff: h and M default Settings
+    mf <- match.call(expand.dots = TRUE)
+    m <- match("h", names(mf), 0)
+    if (m == 0) h = -1 else y = eval(mf[[m]])
+    m <- match("M", names(mf), 0)
+    if (m == 0) M = 100 else M = eval(mf[[m]])
     
     # Check for Formula length:
     formula = as.formula(formula)
