@@ -344,35 +344,39 @@ rownames<-.timeSeries(x) <- value
 ## SOURCE("fCalendar.4B-TimeSeriesData")
 
 ## data - 
-   # Load Microsoft Data:
-   head(MSFT)
-   class(MSFT)
-   msft = as.timeSeries(MSFT)[1:12, c("Open", "Close")]
-   head(msft, 4)
+   # Create an artificial timeSeries object:
+   myFinCenter <<- "GMT"
+   charvec = timeCalendar()
+   set.seed(4711)
+   data = matrix(exp(cumsum(rnorm(12, sd = 0.1))))
+   TS = timeSeries(data, charvec, units = "TS")
+   TS
+   plot(TS, type = "o", pch = 19)
 
 ## diff | scale - 
    # Difference and scale the timeSeries Object:
-   scale(diff(msft, lag = 2, trim = TRUE))
+   scale(diff(TS, lag = 2, trim = TRUE))
 
 ## lag -
    # Lag the timeSeries Object:
-   lag(msft, k = -1:1)
+   lag(TS, k = -1:1)
     
 ## merge -    
    # Merge two timeSeries Object:
-   merge(msft[, 1], diff(log(msft[, 1]), units = c("Price", "Return")))
+   merge(TS, diff(log(TS), units = c("ts", "diffLog")))
 
 ## var -    
    # Variance of a timeSeries Object:
-   var(returnSeries(msft, percentage = TRUE))
+   var(returnSeries(TS, percentage = TRUE))
    
 ## Ops | +/- * ^ ...
    # Mathematical Operations:
-   msft^2
-   msft[, 2] - msft[, 1]
-   openRet = returnSeries(msft[, 1])
-   openRet > 0
-   quantile(openRet, probs = c(0.90, 0.95))
+   TS^2
+   TS[2:4]
+   OR = returnSeries(TS)
+   OR
+   OR > 0
+   quantile(OR, probs = c(0.90, 0.95))
 }
 
 

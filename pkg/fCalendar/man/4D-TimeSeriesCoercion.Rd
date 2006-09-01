@@ -124,24 +124,25 @@ is.timeSeries(object)
 ## SOURCE("fCalendar.4D-TimeSeriesCoercion")
 
 ## data - timeSeries:
-   # Load Microsoft Data:
-   myFinCenter = "GMT"
-   msft = as.timeSeries(MSFT)[1:12, c(1, 5)]
-   msft
+   # Create an artificial timeSeries object:
+   myFinCenter <<- "GMT"
+   charvec = timeCalendar()
+   data = matrix(rnorm(12))
+   TS = timeSeries(data, charvec, units = "RAND")
+   TS
 
 ## Test for timeSeries:
-   is.timeSeries(msft)
+   is.timeSeries(TS)
    
 ## As Vector:
-   as.vector(msft[, "Volume"])
+   as.vector(TS)
    
 ## As Matrix or Data Frame:
-   as.matrix(msft)
-   as.data.frame(msft)
+   as.matrix(TS)
+   as.data.frame(TS)
    
-## As Univariate or Multivariate Object of Class 'ts':
-   as.ts(msft[, "Open"])
-   as.ts(msft)
+## As Univariate Object of Class 'ts':
+   as.ts(TS)
 }
    
 

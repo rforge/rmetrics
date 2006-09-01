@@ -41,8 +41,6 @@
 \alias{currentYear}
 \alias{myUnits}
 
-\alias{MSFT}
-            
 
 \title{Masked Objects and Additional Generic Functions}
 
@@ -82,8 +80,6 @@ as.matrix.mts(x)
 
 currentYear
 myUnits
-
-MSFT
 }
 
 
