@@ -70,6 +70,7 @@ function(x, method = c("sw", "jb"), na.rm = FALSE)
     # FUNCTION:
     
     # Convert Type:
+    if (class(x) == "fREG") x = residuals(x)
     x = as.vector(x)
     if (na.rm) x = x[!is.na(x)]
     
@@ -122,6 +123,7 @@ function(x, title = NULL, description = NULL)
     # FUNCTION:
     
     # Convert Type:
+    if (class(x) == "fREG") x = residuals(x)
     x = as.vector(x)
     
     # Call:
@@ -231,6 +233,7 @@ function(x, title = NULL, description = NULL)
     # FUNCTION:
 
     # Convert Type:
+    if (class(x) == "fREG") x = residuals(x)
     x = as.vector(x)
     
     # Call:
@@ -283,6 +286,7 @@ function(x, title = NULL, description = NULL)
     DNAME = deparse(substitute(x))
         
     # Convert Type:
+    if (class(x) == "fREG") x = residuals(x)
     x = as.vector(x)
     
     # Call:
@@ -514,6 +518,7 @@ function(x, title = NULL, description = NULL)
     DNAME = deparse(substitute(x))
     
     # Convert Type:
+    if (class(x) == "fREG") x = residuals(x)
     x = as.vector(x)
     
     # Call:
@@ -588,6 +593,7 @@ function (x, title = NULL, description = NULL)
     DNAME = deparse(substitute(x))
     
     # Convert Type:
+    if (class(x) == "fREG") x = residuals(x)
     x = as.vector(x)
     
     # Call:
@@ -680,6 +686,7 @@ function(x, title = NULL, description = NULL)
     DNAME = deparse(substitute(x))
     
     # Convert Type:
+    if (class(x) == "fREG") x = residuals(x)
     x = as.vector(x)
     
     # Call:
@@ -767,6 +774,7 @@ function(x, title = NULL, description = NULL)
     DNAME = deparse(substitute(x))
     
     # Convert Type:
+    if (class(x) == "fREG") x = residuals(x)
     x = as.vector(x)
     
     # Call:
@@ -873,6 +881,7 @@ function (x, title = NULL, description = NULL)
     DNAME = deparse(substitute(x))
     
     # Convert Type:
+    if (class(x) == "fREG") x = residuals(x)
     x = as.vector(x)
     
     # Call:
@@ -957,6 +966,7 @@ function(x, title = NULL, description = NULL)
     DNAME = deparse(substitute(x))
     
     # Convert Type:
+    if (class(x) == "fREG") x = residuals(x)
     x = as.vector(x)
     
     # Call:
@@ -1022,6 +1032,7 @@ function(x)
     # FUNCTION:
     
     # Convert Type:
+    if (class(x) == "fREG") x = residuals(x)
     x = as.vector(x)
     
     # runs.test() copied from A. Traplettis tseries package
@@ -1272,6 +1283,7 @@ function(x, title = NULL, description = NULL)
     call = match.call()
     
     # Convert Type:
+    if (class(x) == "fREG") x = residuals(x)
     x = as.vector(x)
     
     # Test:

@@ -28,13 +28,18 @@
 
 
 ################################################################################
-# FUNCTION:                 TWO-DIMENSIONAL PLOT UTILITIES:    
+# FUNCTION:                 INTERNAL TWO-DIMENSIONAL PLOT UTILITIES:    
 #  .tsPlot                   Returns a time series plot
+#  .responsesPlot            Returns a response series plot
 #  .residualsPlot            Returns a residual series plot
 #  .histPlot                 Returns a histogram plot
 #  .densityPlot              Returns a kernel density estimate plot
 #  .firePlot                 Returns a fitted values vs.residuals plot
-# FUNCTION:                 THREE-DIMENSIONAL PLOT UTILITIES:
+#  .qqbayesPlot              Returns a quantile-quantile plot
+#  .acfPlot                  Returns a autocorrelation function plot
+#  .pacfPlot                 Returns a partial ACF plot
+#  .mrlPlot                  Returns a mean residual life plot
+# FUNCTION:                 INTERNAL THREE-DIMENSIONAL PLOT UTILITIES:
 #  .circlesPlot              Returns a circles plot indexing 3rd variable
 #  .perspPlot                Returns a perspective plot in 2 dimensions
 #  .contourPlot              Returns a contour plot in 2 dimensions
@@ -65,10 +70,15 @@
 
 ################################################################################  
 #  .tsPlot                   Returns a time series plot
+#  .responsesPlot            Returns a response series plot
 #  .residualsPlot            Returns a residual series plot
 #  .histPlot                 Returns a histogram plot
 #  .densityPlot              Returns a kernel density estimate plot
 #  .firePlot                 Returns a fitted values vs.residuals plot
+#  .qqbayesPlot              Returns a quantile-quantile plot
+#  .acfPlot                  Returns a autocorrelation function plot
+#  .pacfPlot                 Returns a partial ACF plot
+#  .mrlPlot                  Returns a mean residual life plot
 
 
 .tsPlot = 
@@ -484,7 +494,118 @@ function(x, labels = TRUE, ...)
     
     # Return Value:
     invisible(x)
-}     
+} 
+
+
+# ------------------------------------------------------------------------------
+
+
+.acfPlot =
+function(x, ...)
+{
+    # FUNCTION:
+    
+    # Convert Type:
+    x = as.vector(x)
+    
+    # ACF:
+    acf(x, ...)
+    
+    # Return Value:
+    invisible()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.pacfPlot =
+function(x, ...)
+{
+    # FUNCTION:
+    
+    # Convert Type:
+    x = as.vector(x)
+    
+    # ACF:
+    pacf(x, ...)
+    
+    # Return Value:
+    invisible()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.mrlPlot = 
+function(x, ci = 0.95, umin = mean(x), umax = max(x), nint = 100, 
+doplot = TRUE, plottype = c("autoscale", ""), labels = TRUE, ...)
+{   # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   Create a mean residual life plot with
+    #   confidence intervals.
+    
+    # References:
+    #   A function originally written by S. Coles
+    
+    # FUNCTION:
+    
+    # Convert Type:
+    x = as.vector(x)
+    
+    # Settings:
+    plottype = plottype[1]
+    
+    # Convert x to a vector, if the input is a data.frame.
+    if (is.data.frame(x)) x = x[,1] 
+    sx = xu = xl = rep(NA, nint)
+    u = seq(umin, umax, length = nint)
+    for (i in 1:nint) {
+        x = x[x >= u[i]]
+        sx[i] = mean(x - u[i])
+        sdev = sqrt(var(x))
+        n = length(x)
+        xu[i] = sx[i] + (qnorm((1 + ci)/2) * sdev) / sqrt(n)
+        xl[i] = sx[i] - (qnorm((1 + ci)/2) * sdev) / sqrt(n) 
+    }
+    
+    # Plot:
+    if (doplot) {
+        if (labels) {
+            xlab = "Threshold: u"
+            ylab = "Mean Excess: e"
+            main = "Mean Residual Live Plot" 
+        } else {
+            main = xlab = ylab = ""
+        }
+        if (plottype == "autoscale") {
+            ylim = c(min(xl[!is.na(xl)]), max(xu[!is.na(xu)]))
+            plot(u, sx, type = "o", pch = 19, col = "steelblue",
+                xlab = xlab, ylab = ylab, ylim = ylim, main = main, ...) 
+        } else {
+            plot(u[!is.na(xl)], sx[!is.na(xl)], type = "o", 
+                pch = 19, col = "steelblue",
+                xlab = xlab, ylab = ylab, main = main, ...) 
+        } 
+        lines(u[!is.na(xl)], xl[!is.na(xl)], col = "brown")
+        lines(u[!is.na(xu)], xu[!is.na(xu)], col = "brown")
+        if (labels) {
+            grid()
+            text = paste("ci =", as.character(round(ci, 3))) 
+            mtext(text, side = 4, adj = 0, cex = 0.7)
+        } 
+    }
+    
+    # Result
+    result = data.frame(threshold = u, mrl = sx)
+    
+    # Return Value:
+    if (doplot) return(invisible(result)) else return(result)
+}
+
+    
 
 
 ################################################################################
