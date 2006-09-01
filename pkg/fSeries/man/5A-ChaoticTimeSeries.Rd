@@ -66,7 +66,7 @@ roesslerSim(times = seq(0, 100, by = 0.01), parms = c(a = 0.2, b = 0.2, c = 8.0)
     
 mutualPlot(x, partitions = 16, lag.max = 20, doplot = TRUE, \dots)  
 falsennPlot(x, m, d, t, rt = 10, eps = NULL, doplot = TRUE, \dots) 
-recurrencePlot(x, m, d, end.time, eps, nt = 10, \dots)
+recurrencePlot(x, m, d, end.time, eps, nt = 10, doplot = TRUE, \dots)
 separationPlot(x, m, d, mdt, idt = 1, doplot = TRUE, \dots)
 lyapunovPlot(x, m, d, t, ref, s, eps, k = 1, doplot = TRUE, \dots) 
 }
