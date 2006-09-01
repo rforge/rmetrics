@@ -1,0 +1,157 @@
+
+# This library is free software; you can redistribute it and/or
+# modify it under the terms of the GNU Library General Public
+# License as published by the Free Software Foundation; either
+# version 2 of the License, or (at your option) any later version.
+#
+# This library is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU Library General Public License for more details.
+#
+# You should have received a copy of the GNU Library General
+# Public License along with this library; if not, write to the
+# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
+# MA  02111-1307  USA
+
+# Copyrights (C)
+# for this R-port: 
+#   1999 - 2004, Diethelm Wuertz, GPL
+#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
+#   info@rmetrics.org
+#   www.rmetrics.org
+# for the code accessed (or partly included) from other R-ports:
+#   see R's copyright and license files
+# for the code accessed (or partly included) from contributed R-ports
+# and other sources
+#   see Rmetrics's copyright file
+
+
+################################################################################
+# FUNCTION:             CHAOTIC TIME SERIES MAPS:
+#  tentSim               Simulates series from Tent map
+#  henonSim              Simulates series from Henon map 
+#  ikedaSim              Simulates series from Ikeda map
+#  logisticSim           Simulates series from Logistic map
+#  lorentzSim            Simulates series from Lorentz map
+#  roesslerSim           Simulates series from Roessler map
+#  .rk4                  Internal Funtion - Runge-Kutta Solver
+################################################################################
+
+################################################################################
+# FUNCTION:             PHASE SPACE REPRESENTATION:
+#  mutualPlot            Creates mutual information plot
+#  .embeddPSR
+#  .checkEmbParams
+#  .mutual.RUnit
+#  fnnPlot               Creates false nearest neigbours plot
+#  .fnn.RUnit
+# FUNCTION:             NON STATIONARITY:
+#  recurrencePlot        Creates recurrence plot
+#  .recurrence.RUnit
+#  separationPlot        Creates space-time separation plot
+#  .separation.RUnit
+# FUNCTION:             LYAPUNOV EXPONENTS:
+#  lyapunovPlot          Maximum Lyapunov plot    
+#  .find.nearest
+#  .follow.points
+#  .lyapunovFit            
+#  .lyapunov.RUnit
+# FUNCTION:             DIMENSIONS AND ENTROPY:
+#
+################################################################################
+
+################################################################################
+# FUNCTION:             TIME SERIES TESTS:
+#                        -> B1-TimeSeriesTests
+################################################################################
+
+
+test.helpFile = 
+function()
+{
+    # Help File:
+    helpFile = function() { 
+        example(ChaoticTimeSeries); return() }
+    checkIdentical(
+        target = class(try(helpFile())),
+        current = "NULL")
+
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.phaseSpace = 
+function()
+{  
+    # Mutual Information Index:
+    lorentz = lorentzSim(
+        times = seq(0, 40, by = 0.01), 
+        parms = c(sigma = 16, r = 45.92, b = 4), 
+        start = c(-14, -13, 47), 
+        doplot = FALSE) 
+    mutualPlot(x = lorentz[, 2], partitions = 16, lag.max = 20, doplot = TRUE) 
+   
+    # False Nearest Neighbours:
+    roessler = roesslerSim(
+        times = seq(0, 100, by = 0.01), 
+        parms = c(a = 0.2, b = 0.2, c = 8), 
+        start = c(-1.894, -9.92, 0.025), 
+        doplot = FALSE)
+    falsennPlot(x = roessler[, 2], m = 6, d = 8, t = 180, eps = 1, rt = 3)
+
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.nonStationarity = 
+function()
+{  
+
+    # Recurrence Plot:
+    lorentz = lorentzSim(
+        times = seq(0, 40, by = 0.01), 
+        parms = c(sigma = 16, r = 45.92, b = 4), 
+        start = c(-14, -13, 47), 
+        doplot = FALSE) 
+    recurrencePlot(lorentz[, 2], m = 3, d = 2, end.time = 800, eps = 3, 
+        nt = 5, pch = '.', cex = 2)
+    recurrencePlot(lorentz[, 3], m = 3, d = 2, end.time = 800, eps = 3, 
+        nt = 5, pch = '.', cex = 2)
+    recurrencePlot(lorentz[, 4], m = 3, d = 2, end.time = 800, eps = 3, 
+        nt = 5, pch = '.', cex = 2)
+        
+
+    # Separation Plot:
+    roessler = roesslerSim(
+        times = seq(0, 100, by = 0.01), 
+        parms = c(a = 0.2, b = 0.2, c = 8), 
+        start = c(-1.894, -9.92, 0.025), 
+        doplot = FALSE)
+    separationPlot(roessler[, 2], m = 3, d = 8, idt = 1, mdt = 250)    
+
+    # Return Value:
+    return()    
+}
+
+
+
+# ------------------------------------------------------------------------------
+
+
+if (FALSE) {
+    testResult <- runTestFile("C:/Rmetrics/trunk/fSeries/test/runitXXX.R")
+    printTextProtocol(testResult)
+}
+   
+
+################################################################################
+    
