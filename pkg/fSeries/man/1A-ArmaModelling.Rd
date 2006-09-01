@@ -116,8 +116,7 @@ armaSim(model = list(ar = c(0.5, -0.5), d = 0, ma = 0.1), n = 100,
     rseed = NULL, \dots) 
 
 armaFit(formula = x ~ arima(2, 0, 1), method = c("mle", "ols"), 
-    include.mean = TRUE, fixed = NULL, fracdiff.M = 100, fracdiff.h = -1, 
-    title = NULL, description = NULL, \dots)
+    include.mean = TRUE, fixed = NULL, title = NULL, description = NULL, \dots)
 
 \method{print}{fARMA}(x, \dots)
 \method{plot}{fARMA}(x, which = "ask", gof.lag = 10, \dots)
@@ -194,16 +193,6 @@ armaTrueacf(model, lag.max = 20, type = c("correlation", "partial", "both"),
         using \code{arima(q=0, d=0, p)}. (Exogenous variables are also 
         allowed and can be passed through the \code{\dots} argument.)
         }
-    \item{fracdiff.M, fracdiff.h}{
-        two numeric parameter values for the \code{"fracdiff"} 
-        estimator. \code{M} is the number of terms in the likelihood 
-        approximation. \code{h} is the size of the finite difference 
-        interval for numerical derivatives. By default, or if negative, 
-        \code{h=min(0.1,eps.5*(1+ abs(cllf)))}, where 
-        \code{clff:=log.max.likelihood}, as returned, and 
-        \code{eps.5:=sqrt(.Machine$double.neg.eps)}, typically 
-        \code{1.05e-8}.
-        } 
     \item{gof.lag}{
         [print][plot][summary][predict] - \cr
         the maximum number of lags for a goodness-of-fit test.
