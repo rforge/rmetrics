@@ -1,0 +1,318 @@
+<html><head><title>Parameter Fit of a Distribution</title>
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>DistributionFits(fBasics)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   DistributionFits">
+<param name="keyword" value="R:   fDISTFIT">
+<param name="keyword" value="R:   fDISTFIT-class">
+<param name="keyword" value="R:   tFit">
+<param name="keyword" value="R:   stableFit">
+<param name="keyword" value="R:   ghFit">
+<param name="keyword" value="R:   hypFit">
+<param name="keyword" value="R:   nigFit">
+<param name="keyword" value="R:   print.fDISTFIT">
+<param name="keyword" value="R:   ssdFit">
+<param name="keyword" value="R:   print.ssd">
+<param name="keyword" value=" Parameter Fit of a Distribution">
+</object>
+
+
+<h2>Parameter Fit of a Distribution</h2>
+
+
+<h3>Description</h3>
+
+<p>
+A collection and description of moment and maximum 
+likelihood estimators to fit the parameters of a 
+distribution. Included are estimators for the Student-t, 
+for the stable, for the generalized hyperbolic hyperbolic, 
+for the normal inverse Gaussian, and for empirical 
+distributions. 
+<br>
+</p>
+<p>
+The functions are:
+</p>
+
+<table summary="Rd table">
+<tr>
+  <td align="left"><code>tFit</code> </td>  <td align="left"> MLE parameter fit for a Student t-distribution, </td>
+</tr>
+<tr>
+  <td align="left"> <code>stableFit</code> </td>  <td align="left"> MLE and Quantile Method stable parameter fit, </td>
+</tr>
+<tr>
+  <td align="left"> <code>ghFit</code> </td>  <td align="left"> MLE parameter fit for a generalized hyperbolic distribution, </td>
+</tr>
+<tr>
+  <td align="left"> <code>hypFit</code> </td>  <td align="left"> MLE parameter fit for a hyperbolic distribution, </td>
+</tr>
+<tr>
+  <td align="left"> <code>nigFit</code> </td>  <td align="left"> MLE parameter fit for a normal inverse Gaussian distribution, </td>
+</tr>
+<tr>
+  <td align="left"> <code>ssdFit</code> </td>  <td align="left"> smoothing spline estimation , </td>
+</tr>
+<tr>
+  <td align="left"> <code>print.ssd</code> </td>  <td align="left"> S3 print method for objects returned from 'ssdFit'. </td>
+</tr>
+</table>
+
+
+<h3>Usage</h3>
+
+<pre>
+tFit(x, df = 4, doplot = TRUE, span = "auto", trace = FALSE, title = NULL, 
+    description = NULL, ...)
+    
+stableFit(x, alpha = 1.75, beta = 0, gamma = 1, delta = 0, 
+    type = c("q", "mle"), doplot = TRUE, trace = FALSE, title = NULL, 
+    description = NULL)
+    
+ghFit(x, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1, doplot = TRUE, 
+    span = "auto", trace = FALSE, title = NULL, description = NULL, ...) 
+hypFit(x, alpha = 1, beta = 0, delta = 1, mu = 0, doplot = TRUE, 
+    span = "auto", trace = FALSE, title = NULL, description = NULL, ...)
+nigFit(x, alpha = 1, beta = 0, delta = 1, mu = 0, doplot = TRUE, 
+    span = "auto", trace = FALSE, title = NULL, description = NULL, ...)
+   
+## S3 method for class 'fDISTFIT':
+print(x, ...)
+ 
+ssdFit(x, alpha = 1.4, seed = NULL, title = NULL, description = NULL)
+
+## S3 method for class 'ssd':
+print(x, ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>alpha, beta, gamma, delta, mu, lambda</code></td>
+<td>
+[ssdFit] - <br>
+alpha is the parameter defining cross-validation score for 
+smoothing parameter selection.
+<br>
+[stable] - <br>
+The parameters are <code>alpha</code>, <code>beta</code>, <code>gamma</code>, 
+and <code>delta</code>:<br>
+value of the index parameter <code>alpha</code> with <code>alpha = (0,2]</code>;
+skewness parameter <code>beta</code>, in the range [-1, 1];
+scale parameter <code>gamma</code>; and
+shift parameter <code>delta</code>.
+<br>
+[hyp] - <br>
+The parameters are <code>alpha</code>, <code>beta</code>, <code>delta</code>, 
+<code>mu</code>, and and <code>lambda</code>:<br>
+shape parameter <code>alpha</code>;
+skewness parameter <code>beta</code>, <code>abs(beta)</code> is in the 
+range (0, alpha);
+scale parameter <code>delta</code>, <code>delta</code> must be zero or 
+positive; 
+location parameter <code>mu</code>, by default 0;
+and lambda parameter <code>lambda</code>, by default 1.
+These is the meaning of the parameters in the first 
+parameterization <code>pm=1</code> which is the default 
+parameterization selection.
+In the second parameterization, <code>pm=2</code> <code>alpha</code>
+and <code>beta</code> take the meaning of the shape parameters
+(usually named) <code>zeta</code> and <code>rho</code>.
+In the third parameterization, <code>pm=3</code> <code>alpha</code>
+and <code>beta</code> take the meaning of the shape parameters
+(usually named) <code>xi</code> and <code>chi</code>.
+In the fourth parameterization, <code>pm=4</code> <code>alpha</code>
+and <code>beta</code> take the meaning of the shape parameters
+(usually named) <code>a.bar</code> and <code>b.bar</code>.
+</td></tr>
+<tr valign="top"><td><code>description</code></td>
+<td>
+a character string which allows for a brief description.
+</td></tr>
+<tr valign="top"><td><code>df</code></td>
+<td>
+[tFit] - <br>
+the number of degrees of freedom for the Student distribution, 
+<code>df &gt; 2</code>, maybe non-integer. By default a value of 4 is
+assumed.
+</td></tr>
+<tr valign="top"><td><code>doplot</code></td>
+<td>
+[tFit][hypFit][nigFit] - <br>
+a logical flag. Should a plot be displayed?
+</td></tr>
+<tr valign="top"><td><code>seed</code></td>
+<td>
+[ssdFit] - <br>
+Seed to be used for the random generation of "knots." 
+</td></tr>
+<tr valign="top"><td><code>span</code></td>
+<td>
+x-coordinates for the plot, by default 100 values 
+automatically selected and ranging between the 0.001, 
+and 0.999 quantiles. Alternatively, you can specify
+the range by an expression like <code>span=seq(min, max,
+        times = n)</code>, where, <code>min</code> and <code>max</code> are the 
+left and right endpoints of the range, and <code>n</code> gives 
+the number of the intermediate points.
+</td></tr>
+<tr valign="top"><td><code>title</code></td>
+<td>
+a character string which allows for a project title.
+</td></tr>
+<tr valign="top"><td><code>trace</code></td>
+<td>
+[*Fit] - <br>
+a logical flag. Should the parameter estimation process be
+traced?
+</td></tr>
+<tr valign="top"><td><code>type</code></td>
+<td>
+a character string which allows to select the method for
+parameter estimation: <code>"mle"</code>, the maximum log likelihood
+approach, or <code>"qm"</code>, McCulloch's quantile method.
+</td></tr>
+<tr valign="top"><td><code>x</code></td>
+<td>
+[*Fit] - <br>
+a numeric vector.
+<br>
+[print.ssd] - <br>
+an S3 object of class <code>"ssd"</code> as returned from the
+function <code>ssdFit</code>. 
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+parameters parsed to the function <code>density</code> and
+to the <code>print.ssd</code> function.
+</td></tr>
+</table>
+
+<h3>Details</h3>
+
+<p>
+<B>Maximum Likelihood Estimation:</B>
+<br>
+The function <code><a onclick="findlink('stats', 'nlm.html')" style="text-decoration: underline; color: blue; cursor: hand">nlm</a></code> is used to minimize the "negative" 
+maximum log-likelihood function. <code>nlm</code> carries out a minimization 
+using a Newton-type algorithm.
+<br><br>
+</p>
+<p>
+<B>Spline Smoothed Distribution:</B>
+<br>
+Estimates are done using smoothing spline ANOVA models with cubic 
+spline marginals for numerical variables.
+</p>
+
+
+<h3>Value</h3>
+
+<p>
+The functions <code>tFit</code>, <code>hypFit</code> and <code>nigFit</code> return 
+a list with the following components:
+</p>
+<table summary="R argblock">
+<tr valign="top"><td><code>estimate</code></td>
+<td>
+the point at which the maximum value of the log liklihood 
+function is obtained.
+</td></tr>
+<tr valign="top"><td><code>minimum</code></td>
+<td>
+the value of the estimated maximum, i.e. the value of the
+log liklihood function.
+</td></tr>
+<tr valign="top"><td><code>code</code></td>
+<td>
+an integer indicating why the optimization process terminated.<br>
+1: relative gradient is close to zero, current iterate is probably 
+solution; <br>
+2: successive iterates within tolerance, current iterate is probably 
+solution; <br>
+3: last global step failed to locate a point lower than <code>estimate</code>. 
+Either <code>estimate</code> is an approximate local minimum of the 
+function or <code>steptol</code> is too small; <br>
+4: iteration limit exceeded; <br>
+5: maximum step size <code>stepmax</code> exceeded five consecutive times. 
+Either the function is unbounded below, becomes asymptotic to a 
+finite value from above in some direction or <code>stepmax</code> 
+is too small.
+</td></tr>
+<tr valign="top"><td><code>gradient</code></td>
+<td>
+the gradient at the estimated maximum.
+</td></tr>
+<tr valign="top"><td><code>steps</code></td>
+<td>
+number of function calls.
+</td></tr>
+</table>
+<p>
+
+<br>
+The function <code>ssdFit</code> returns an S3 object of class <code>"ssd"</code>
+which contains as information the parameters to compute density,
+probability, quantiles, and random deviates for the functions
+<code>[dpqr]ssd</code>.</p>
+
+<h3>Note</h3>
+
+<p>
+The function <code>ssdFit</code> does not implement the full functionality 
+provided by R's contributed package "gss". Only the "cubic" spline 
+method is provided and most of the optional arguments are set to 
+default values. Since the original "gss" package does not interfere 
+with Rmetrics you can load it in parallel, and use the function
+<code>ssden</code> in place of <code>ssdFit</code>.
+</p>
+<p>
+It's worth to note that the "gss" package does not work under SPlus,
+but the modified and adapted functions <code>ssdFit</code> and <code>*ssd</code>
+can be used.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>
+Chong Gu for the code from R's contributed package 'gss', <br>
+Diethelm Wuertz for the Rmetrics <font face="Courier New,Courier" color="#666666"><b>R</b></font>-port.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+## SOURCE("fBasics.2D-DistributionFits")
+   
+## nigFit -
+   
+   # Simulate random variates HYP(1.5, 0.3, 0.5, -1.0):
+   set.seed(1953)
+   s = rnig(n = 1000, alpha = 1.5, beta = 0.3, delta = 0.5, mu = -1.0) 
+   
+   # Fit Parameters:
+   # Note, this may take some time.
+   # Starting vector (1, 0, 1, mean(s)):
+   nigFit(s, alpha = 1, beta = 0, delta = 1, mu = mean(s), doplot = TRUE) 
+</pre>
+
+<script Language="JScript">
+function findlink(pkg, fn) {
+var Y, link;
+Y = location.href.lastIndexOf("\\") + 1;
+link = location.href.substring(0, Y);
+link = link + "../../" + pkg + "/chtml/" + pkg + ".chm::/" + fn;
+location.href = link;
+}
+</script>
+
+
+<hr><div align="center">[Package <em>fBasics</em> version 231.10066 <a href="00Index.html">Index]</a></div>
+
+</body></html>

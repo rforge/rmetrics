@@ -1,0 +1,307 @@
+<html><head><title>Basic Statistics Summary</title>
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>BasicStatistics(fBasics)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   BasicStatistics">
+<param name="keyword" value="R:   basicStats">
+<param name="keyword" value="R:   skewness">
+<param name="keyword" value="R:   skewness.default">
+<param name="keyword" value="R:   skewness.data.frame">
+<param name="keyword" value="R:   skewness.POSIXct">
+<param name="keyword" value="R:   skewness.POSIXlt">
+<param name="keyword" value="R:   kurtosis">
+<param name="keyword" value="R:   kurtosis.default">
+<param name="keyword" value="R:   kurtosis.data.frame">
+<param name="keyword" value="R:   kurtosis.POSIXct">
+<param name="keyword" value="R:   kurtosis.POSIXlt">
+<param name="keyword" value="R:   rowStats">
+<param name="keyword" value="R:   rowAvgs">
+<param name="keyword" value="R:   rowVars">
+<param name="keyword" value="R:   rowStdevs">
+<param name="keyword" value="R:   rowSkewness">
+<param name="keyword" value="R:   rowKurtosis">
+<param name="keyword" value="R:   rowCumsums">
+<param name="keyword" value="R:   colStats">
+<param name="keyword" value="R:   colAvgs">
+<param name="keyword" value="R:   colVars">
+<param name="keyword" value="R:   colStdevs">
+<param name="keyword" value="R:   colSkewness">
+<param name="keyword" value="R:   colKurtosis">
+<param name="keyword" value="R:   colCumsums">
+<param name="keyword" value="R:   stdev">
+<param name="keyword" value=" Basic Statistics Summary">
+</object>
+
+
+<h2>Basic Statistics Summary</h2>
+
+
+<h3>Description</h3>
+
+<p>
+A collection and description of functions to compute 
+basic statistical properties of financial and
+economic time series data. Missing functions in 
+R to calculate skewness and kurtosis are added, a 
+function which creates a summary statistics, and 
+functions to calculate column and row statistics.
+<br>
+</p>
+<p>
+The functions are:
+</p>
+
+<table summary="Rd table">
+<tr>
+  <td align="left"><code>skewness</code> </td>  <td align="left"> returns value of skewness, </td>
+</tr>
+<tr>
+  <td align="left"> <code>kurtosis</code> </td>  <td align="left"> returns value of kurtosis, </td>
+</tr>
+<tr>
+  <td align="left">  <code>basicStats</code> </td>  <td align="left"> computes an overview of basic statistical values, </td>
+</tr>
+<tr>
+  <td align="left">     <code>rowStats</code></td>  <td align="left"> calculates row statistics, </td>
+</tr>
+<tr>
+  <td align="left"> <code>colStats</code> </td>  <td align="left"> calculates column statistics, </td>
+</tr>
+<tr>
+  <td align="left"> <code>rowAvgs</code> </td>  <td align="left"> calculates row means, </td>
+</tr>
+<tr>
+  <td align="left"> <code>colAvgs</code> </td>  <td align="left"> calculates column means, </td>
+</tr>
+<tr>
+  <td align="left"> <code>rowVars</code> </td>  <td align="left"> calculates row variances, </td>
+</tr>
+<tr>
+  <td align="left"> <code>colVars</code> </td>  <td align="left"> calculates column variances, </td>
+</tr>
+<tr>
+  <td align="left"> <code>rowStdevs</code> </td>  <td align="left"> calculates row standard deviations, </td>
+</tr>
+<tr>
+  <td align="left"> <code>colStdevs</code> </td>  <td align="left"> calculates column standard deviations, </td>
+</tr>
+<tr>
+  <td align="left"> <code>rowSkewness</code> </td>  <td align="left"> calculates row skewness, </td>
+</tr>
+<tr>
+  <td align="left"> <code>colSkewness</code> </td>  <td align="left"> calculates column skewness, </td>
+</tr>
+<tr>
+  <td align="left"> <code>rowKurtosis</code> </td>  <td align="left"> calculates row kurtosis, </td>
+</tr>
+<tr>
+  <td align="left"> <code>colKurtosis</code> </td>  <td align="left"> calculates column kurtosis, </td>
+</tr>
+<tr>
+  <td align="left"> <code>rowCumsums</code> </td>  <td align="left"> calculates row cumulated Sums, </td>
+</tr>
+<tr>
+  <td align="left"> <code>colCumsums</code> </td>  <td align="left"> calculates column cumulated Sums. </td>
+</tr>
+</table>
+
+<p>
+For SPLUS Compatibility:
+</p>
+
+<table summary="Rd table">
+<tr>
+  <td align="left"><code>stdev</code> </td>  <td align="left"> Returns the standard deviation of a vector or matrix. </td>
+</tr>
+</table>
+
+
+<h3>Usage</h3>
+
+<pre>
+stdev(x, na.rm = FALSE)
+
+skewness(x, ...)
+## Default S3 method:
+skewness(x, na.rm = FALSE, method = c("moment", "fisher"), ...)
+## S3 method for class 'data.frame':
+skewness(x, ...)
+## S3 method for class 'POSIXct':
+skewness(x, ...)
+## S3 method for class 'POSIXlt':
+skewness(x, ...)
+
+kurtosis(x, ...)
+## Default S3 method:
+kurtosis(x, na.rm = FALSE, method = c("excess", "moment", "fisher"), ...)
+## S3 method for class 'data.frame':
+kurtosis(x, ...)
+## S3 method for class 'POSIXct':
+kurtosis(x, ...)
+## S3 method for class 'POSIXlt':
+kurtosis(x, ...)
+
+basicStats(x, ci = 0.95)
+
+rowStats(x, FUN, na.rm = FALSE, ...) 
+rowAvgs(x, na.rm = FALSE, ...)
+rowVars(x, na.rm = FALSE, ...)
+rowStdevs(x, na.rm = FALSE, ...)
+rowSkewness(x, na.rm = FALSE, ...)
+rowKurtosis(x, na.rm = FALSE, ...)
+rowCumsums(x, na.rm = FALSE, ...)
+
+colStats(x, FUN, na.rm = FALSE, ...) 
+colAvgs(x, na.rm = FALSE, ...)
+colVars(x, na.rm = FALSE, ...)
+colStdevs(x, na.rm = FALSE, ...)
+colSkewness(x, na.rm = FALSE, ...)
+colKurtosis(x, na.rm = FALSE, ...)
+colCumsums(x, na.rm = FALSE, ...)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>ci</code></td>
+<td>
+confidence interval, a numeric value, by default 0.95, 
+i.e. 95 percent.
+</td></tr>
+<tr valign="top"><td><code>FUN</code></td>
+<td>
+[colStats][rowStats - <br>
+the statistical function to be applied.
+</td></tr>
+<tr valign="top"><td><code>na.rm</code></td>
+<td>
+a logical. Should missing values be removed?
+</td></tr>
+<tr valign="top"><td><code>method</code></td>
+<td>
+[kurtosis][skewness] - <br>
+a character string which specifies the method of computation. 
+These are either <code>"moment"</code> or <code>"fisher"</code>, kurtosis 
+allows in addition for <code>"excess"</code>. If <code>"excess"</code> is 
+selected, then the value of the kurtosis is computed  by the
+<code>"moment"</code> method and a value of 3 will be subtracted.
+The <code>"moment"</code> method is based on the definitions of 
+skewness and kurtosis for distributions; these forms should 
+be used when resampling (bootstrap or jackknife). The 
+<code>"fisher"</code> method correspond to the usual "unbiased" 
+definition of sample variance, although in the case of skewness 
+and kurtosis exact unbiasedness is not possible. 
+</td></tr>
+<tr valign="top"><td><code>x</code></td>
+<td>
+a numeric vector, or a matrix for column statistics.
+<br>
+[basicStats] - <br>
+allows also a matrix, data.frame or timeSeries as input.
+In this case only the first column of data will be considered
+and a a warning will be printed.        
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+arguments to be passed.
+</td></tr>
+</table>
+
+<h3>Value</h3>
+
+<p>
+<code>skewness</code><br>
+<code>kurtosis</code>
+<br>
+return the value of the statistics, a numeric value. An 
+attribute which reports the used method is added.
+<br>
+<br>
+<code>basicsStats</code>
+<br>
+returns data frame with the following entries and row names:
+nobs, NAs, Minimum, Maximum , 1. Quartile, 3. Quartile,
+Mean, Median, Sum, SE Mean, LCL Mean, UCL Mean, Variance,
+Stdev, Skewness, Kurtosis.
+<br>
+<br>
+<code>rowStats</code><br>
+<code>rowAvgs</code><br>
+<code>rowVars</code><br>
+<code>rowStdevs</code><br>
+<code>rowSkewness</code><br>
+<code>rowKurtosis</code><br>
+<code>rowCumsum</code>
+<br> 
+compute sample statistics by column. Missing values can be
+handled.
+<br>
+<br>
+<code>colStats</code><br>
+<code>colAvgs</code><br>
+<code>colVars</code><br>
+<code>colStdevs</code>,<br>
+<code>colSkewness</code><br>
+<code>colKurtosis</code><br>
+<code>colCumsum</code>
+<br> 
+compute sample statistics by column. Missing values can be
+handled.</p>
+
+<h3>Note</h3>
+
+<p>
+R's-base package contains a function <code>colMeans</code> with an
+additional argument <code>dim=1</code>. Therefore, the function used 
+here to compute column means (averages) is named <code>colAvgs</code>.
+<br>
+</p>
+<p>
+The function <code>stdev</code> computes the standard deviation for a
+vector or matrix and was introduced for SPlus compatibility.
+Under R use the function <code>sd</code>.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>
+Diethelm Wuertz for the Rmetrics <font face="Courier New,Courier" color="#666666"><b>R</b></font>-port.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+## SOURCE("fBasics.3A-BasicStatistics")
+## Not run: 
+
+## basicStats -
+   # Data NYSE Composite Index:
+   data(DowJones30)
+   # ... must be univariate:
+   basicStats(DowJones30[, "IBM"])  
+     
+## mean -
+## var -
+## skewness -
+## kurtosis -
+   IBM = DowJones30[, "IBM"]
+   # Mean, Variance:
+   mean(IBM)
+   var(IBM)
+   # Skewness, Kurtosis:
+   class(IBM)
+   skewness(IBM)
+   kurtosis(IBM)   
+## End(Not run)
+</pre>
+
+
+
+<hr><div align="center">[Package <em>fBasics</em> version 231.10066 <a href="00Index.html">Index]</a></div>
+
+</body></html>

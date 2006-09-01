@@ -1,0 +1,426 @@
+<html><head><title>Two Sample Tests</title>
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>TwoSampleTests(fBasics)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   TwoSampleTests">
+<param name="keyword" value="R:   ks2Test">
+<param name="keyword" value="R:   tTest">
+<param name="keyword" value="R:   kw2Test">
+<param name="keyword" value="R:   varfTest">
+<param name="keyword" value="R:   bartlett2Test">
+<param name="keyword" value="R:   fligner2Test">
+<param name="keyword" value="R:   ansariTest">
+<param name="keyword" value="R:   moodTest">
+<param name="keyword" value="R:   pearsonTest">
+<param name="keyword" value="R:   kendallTest">
+<param name="keyword" value="R:   spearmanTest">
+<param name="keyword" value="R:   dansariw">
+<param name="keyword" value="R:   pansariw">
+<param name="keyword" value="R:   qansariw">
+<param name="keyword" value=" Two Sample Tests">
+</object>
+
+
+<h2>Two Sample Tests</h2>
+
+
+<h3>Description</h3>
+
+<p>
+A collection and description of functions for 
+two sample statistical tests. The functions allow 
+to test for distributional equivalence, for difference
+in location, variance and scale, and for correlations.
+<br>
+</p>
+<p>
+Distributional Equivalence:
+</p>
+
+<table summary="Rd table">
+<tr>
+  <td align="left"><code>ks2Test</code> </td>  <td align="left"> Two sample Kolmogorov&ndash;Smirnov test.</td>
+</tr>
+</table>
+
+<p>
+Difference in Locations:
+</p>
+
+<table summary="Rd table">
+<tr>
+  <td align="left"><code>tTest</code> </td>  <td align="left"> The t test, </td>
+</tr>
+<tr>
+  <td align="left"> <code>kw2Test</code> </td>  <td align="left"> the Kruskal&ndash;Wallis test. </td>
+</tr>
+</table>
+ 
+</p>
+<p>
+Difference in Variance:
+</p>
+
+<table summary="Rd table">
+<tr>
+  <td align="left"><code>varfTest</code> </td>  <td align="left"> The variance F test, </td>
+</tr>
+<tr>
+  <td align="left"> <code>bartlett2Test</code> </td>  <td align="left"> the Bartlett test, </td>
+</tr>
+<tr>
+  <td align="left"> <code>fligner2Test</code> </td>  <td align="left"> the Fligner&ndash;Killeen test.</td>
+</tr>
+</table>
+
+<p>
+Difference in Scale:
+</p>
+
+<table summary="Rd table">
+<tr>
+  <td align="left"><code>ansariTest</code> </td>  <td align="left">  The Ansari&ndash;Bradley test, </td>
+</tr>
+<tr>
+  <td align="left"> <code>moodTest</code> </td>  <td align="left"> the Mood test.</td>
+</tr>
+</table>
+
+<p>
+Correlations:
+</p>
+
+<table summary="Rd table">
+<tr>
+  <td align="left"><code>pearsonTest</code> </td>  <td align="left"> Pearson's coefficient, </td>
+</tr>
+<tr>
+  <td align="left"> <code>kendallTest</code> </td>  <td align="left"> Kendall's rho, </td>
+</tr>
+<tr>
+  <td align="left"> <code>spearmanTest</code> </td>  <td align="left"> Spearman's rho.</td>
+</tr>
+</table>
+
+<p>
+Test Distributions:
+</p>
+
+<table summary="Rd table">
+<tr>
+  <td align="left"><code>[dpq]ansariw</code> </td>  <td align="left"> Distribution of the Ansari W statistic. </td>
+</tr>
+</table>
+
+
+<h3>Usage</h3>
+
+<pre>
+ks2Test(x, y, title = NULL, description = NULL)
+
+tTest(x, y, title = NULL, description = NULL) 
+kw2Test(x, y, title = NULL, description = NULL)
+
+varfTest(x, y, title = NULL, description = NULL)
+bartlett2Test(x, y, title = NULL, description = NULL)
+fligner2Test(x, y, title = NULL, description = NULL)
+
+ansariTest(x, y, title = NULL, description = NULL)
+moodTest(x, y, title = NULL, description = NULL)
+
+pearsonTest(x, y, title = NULL, description = NULL)
+kendallTest(x, y, title = NULL, description = NULL)
+spearmanTest(x, y, title = NULL, description = NULL)
+
+dansariw(x = NULL, m, n = m)
+pansariw(q = NULL, m, n = m)
+qansariw(p, m, n = m)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>description</code></td>
+<td>
+optional description string, or a vector of character strings.
+</td></tr>
+<tr valign="top"><td><code>m, n</code></td>
+<td>
+[*ansariw] - <br>
+</td></tr>
+<tr valign="top"><td><code>p</code></td>
+<td>
+[qansariw] - <br>
+a numeric vector of quantiles.
+</td></tr>
+<tr valign="top"><td><code>q</code></td>
+<td>
+[pansariw] - <br>
+a numeric vector of quantiles.
+</td></tr>
+<tr valign="top"><td><code>title</code></td>
+<td>
+an optional title string, if not specified the inputs data 
+name is deparsed.
+</td></tr>
+<tr valign="top"><td><code>x, y</code></td>
+<td>
+a numeric vector of data values.
+<br>
+[bartlett2Test][fligner2Test][kw2Test] - <br>
+here <code>x</code> is a list, where each element is either a vector
+or an object of class <code>timeSeries</code>. <code>y</code> is only used
+for the two&ndash;sample test situation, where <code>x</code> and <code>y</code>
+are two vectors or objects of class <code>timeSeries</code>.
+<br>
+[dansariw] - <br>
+a numeric vector of quantiles.
+</td></tr>
+</table>
+
+<h3>Details</h3>
+
+<p>
+The tests may be of interest for many financial 
+and economic applications, especially for the 
+comparison of two time series. The tests are grouped 
+according to their functionalities.
+<br>
+</p>
+<p>
+<B>Distributional Equivalence:</B>
+<br><br>  
+The test <code>ks2Test</code> performs a Kolmogorov&ndash;Smirnov two sample test 
+that the two data samples <code>x</code> and <code>y</code> come from the same 
+distribution, not necessarily a normal distribution. That means that 
+it is not specified what that common distribution is. 
+<br>
+</p>
+<p>
+<B>Differences in Location:</B>
+<br><br>  
+The function <code>tTest</code> can be used to determine if the two sample 
+means are equal for unpaired data sets. Two variants are used,
+assuming equal or unequal variances. 
+</p>
+<p>
+The function <code>kw2Test</code> performs a Kruskal-Wallis rank sum 
+test of the null hypothesis that the central tendencies or medians of 
+two samples are the same. The alternative is that they differ. 
+Note, that it is not assumed that the two samples are drawn from the 
+same distribution. It is also worth to know that the test assumes 
+that the variables under consideration have underlying continuous 
+distributions.
+<br>
+</p>
+<p>
+<B>Differences in Variances:</B>
+<br><br>    
+The function <code>varfTest</code> can be used to compare variances of two 
+normal samples performing an F test. The null hypothesis is that 
+the ratio of the variances of the populations from which they were 
+drawn is equal to one. 
+</p>
+<p>
+The function <code>bartlett2Test</code> performs the Bartlett's test of the 
+null hypothesis that the variances in each of the samples are the 
+same. This fact of equal variances across samples is also called 
+<EM>homogeneity of variances</EM>. Note, that Bartlett's test is 
+sensitive to departures from normality. That is, if the samples 
+come from non-normal distributions, then Bartlett's test may simply 
+be testing for non-normality. The Levene test (not yet implemented)
+is an alternative to the Bartlett test that is less sensitive to 
+departures from normality. 
+</p>
+<p>
+The function <code>fligner2Test</code> performs the Fligner-Killeen test of 
+the null that the variances in each of the two samples are the same. 
+<br>
+</p>
+<p>
+<B>Differences in Scale:</B>
+<br><br>  
+The function <code>ansariTest</code> performs the Ansari&ndash;Bradley two&ndash;sample 
+test for a difference in scale parameters. Note, that we have completely 
+reimplemented this test based on the statistcs and p-values computed 
+from algorithm AS 93. The test returns for any sizes of the series 
+<code>x</code> and <code>y</code> the exact p value together with its asymptotic 
+limit. The test procedure is not limited to sizes shorter of length 50 
+as this is the case for the function <code>ansari.Test</code> implemented in 
+R's <code>stats</code> package. For the test statistics the following
+functions are available: <code>dansariw</code>, <code>pansariw</code>, and 
+<code>qansariw</code>.
+</p>
+<p>
+The function code{moodTest}, is another test which performs a 
+two&ndash;sample test for a difference in scale parameters. The underlying 
+model is that the two samples are drawn from <EM>f(x-l)</EM> and 
+<EM>f((x-l)/s)/s</EM>, respectively, where <EM>l</EM> is a common 
+location parameter and <EM>s</EM> is a scale parameter. The null 
+hypothesis is <EM>s=1</EM>. 
+<br>
+</p>
+<p>
+<B>Correlations:</B>
+<br><br>  
+The function <code>correlationTest</code> tests for association 
+between paired samples, using Pearson's product moment 
+correlation coefficient, 
+</p>
+<p>
+The function <code>kendallTest</code> performs Kendall's tau test
+</p>
+<p>
+The function <code>spearmanTest</code> performs Spearman's rho test.
+</p>
+
+
+<h3>Value</h3>
+
+<p>
+In contrast to R's output report from S3 objects of class <code>"htest"</code>
+a different output report is produced. The classical tests presented
+here return an S4 object of class <code>"fHTEST"</code>. The object contains
+the following slots:
+</p>
+<table summary="R argblock">
+<tr valign="top"><td><code>@call</code></td>
+<td>
+the function call.  
+</td></tr>
+<tr valign="top"><td><code>@data</code></td>
+<td>
+the data as specified by the input argument(s).
+</td></tr>
+<tr valign="top"><td><code>@test</code></td>
+<td>
+a list whose elements contail the results from the statistical
+test. The information provided is similar to a list object of
+class{"htest"}.
+</td></tr>
+<tr valign="top"><td><code>@title</code></td>
+<td>
+a character string with the name of the test. This can be 
+overwritten specifying a user defined input argument.
+</td></tr>
+<tr valign="top"><td><code>@description</code></td>
+<td>
+a character string with an optional user defined description. 
+By default just the current date when the test was applied will
+be returned.
+</td></tr>
+<tr valign="top"><td><code>statistic</code></td>
+<td>
+the value(s) of the test statistic.
+</td></tr>
+<tr valign="top"><td><code>p.value</code></td>
+<td>
+the p-value(s) of the test.
+</td></tr>
+<tr valign="top"><td><code>parameters</code></td>
+<td>
+a numeric value or vector of parameters.
+</td></tr>
+<tr valign="top"><td><code>estimate</code></td>
+<td>
+a numeric value or vector of sample estimates.
+</td></tr>
+<tr valign="top"><td><code>conf.int</code></td>
+<td>
+a numeric two row vector or matrix of 95
+</td></tr>
+<tr valign="top"><td><code>method</code></td>
+<td>
+a character string indicating what type of test was performed.
+</td></tr>
+<tr valign="top"><td><code>data.name</code></td>
+<td>
+a character string giving the name(s) of the data.
+</td></tr>
+</table>
+
+<h3>Note</h3>
+
+<p>
+Some of the test implementations are selected from <font face="Courier New,Courier" color="#666666"><b>R</b></font>'s <code>ctest</code> 
+package.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>
+R-core team for the tests from <font face="Courier New,Courier" color="#666666"><b>R</b></font>'s ctest package,<br>
+Diethelm Wuertz for the Rmetrics <font face="Courier New,Courier" color="#666666"><b>R</b></font>-port.
+</p>
+
+
+<h3>References</h3>
+
+<p>
+Conover, W. J. (1971);
+<EM>Practical nonparametric statistics</EM>,
+New York: John Wiley &amp; Sons.
+</p>
+<p>
+Durbin J. (1961); 
+<EM>Some Methods of Constructing Exact Tests</EM>,
+Biometrika 48, 41&ndash;55. 
+</p>
+<p>
+Durbin,J. (1973);
+<EM>Distribution Theory Based on the Sample Distribution Function</EM>,
+SIAM, Philadelphia.
+</p>
+<p>
+Lehmann E.L. (1986); 
+<EM>Testing Statistical Hypotheses</EM>, 
+John Wiley and Sons, New York.
+</p>
+<p>
+Moore, D.S. (1986);
+<EM>Tests of the chi-squared type</EM>, 
+In: D'Agostino, R.B. and Stephens, M.A., eds., 
+Goodness-of-Fit Techniques, Marcel Dekker, New York.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+## SOURCE("fBasics.5C-TwoSampleTests")
+
+## x, y -
+   x = rnorm(50)
+   y = rnorm(50)
+  
+## ks2Test - 
+   ks2Test(x, y)
+   
+## tTest | kw2Test - 
+   tTest(x, y)
+   kw2Test(x, y)
+   
+## varfTest, bartlett2Test | fligner2Test -
+   varfTest(x, y)
+   bartlett2Test(x, y)
+   fligner2Test(x, y)
+
+## ansariTest | moodTest -
+   ansariTest(x, y)
+   moodTest(x, y)
+   
+## pearsonTest | kendallTest | spearmanTest -
+   pearsonTest(x, y)
+   kendallTest(x, y)
+   spearmanTest(x, y)
+</pre>
+
+
+
+<hr><div align="center">[Package <em>fBasics</em> version 231.10066 <a href="00Index.html">Index]</a></div>
+
+</body></html>

@@ -1,0 +1,241 @@
+<html><head><title>Tests Class Representation and Utilities</title>
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>HypothesisTesting(fBasics)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   HypothesisTesting">
+<param name="keyword" value="R:   fHTEST">
+<param name="keyword" value="R:   fHTEST-class">
+<param name="keyword" value="R:   show.fHTEST">
+<param name="keyword" value="R:   show,fHTEST-method">
+<param name="keyword" value="R:   pPlot">
+<param name="keyword" value="R:   pTable">
+<param name="keyword" value="R:   qTable">
+<param name="keyword" value=" Tests Class Representation and Utilities">
+</object>
+
+
+<h2>Tests Class Representation and Utilities</h2>
+
+
+<h3>Description</h3>
+
+<p>
+Class representation, methods and utility 
+functions for objects of class 'fHTEST'.
+<br>
+</p>
+<p>
+The class representation and methods are:
+</p>
+
+<table summary="Rd table">
+<tr>
+  <td align="left"><code>fHTEST</code> </td>  <td align="left"> Representation for an S4 object of class "fHTEST", </td>
+</tr>
+<tr>
+  <td align="left"> <code>show</code> </td>  <td align="left"> S4 print method. </td>
+</tr>
+</table>
+
+<p>
+Utility Functions:
+<table summary="Rd table">
+<tr>
+  <td align="left"><code>pPlot</code> </td>  <td align="left">  General finite sample probability plot, </td>
+</tr>
+<tr>
+  <td align="left"> <code>pTable</code> </td>  <td align="left"> interpolated probabilities from finite sample table, </td>
+</tr>
+<tr>
+  <td align="left"> <code>qTable</code> </td>  <td align="left"> interpolated quantiles from finite sample table. </td>
+</tr>
+</table>
+
+
+<h3>Usage</h3>
+
+<pre>
+show.fHTEST(object)
+
+pPlot(X, nN = 100, nStat = 100, logN = TRUE, logStat = FALSE, 
+    fill = FALSE, linear = TRUE, digits = 8, doplot = TRUE, ...)
+pTable(X, Stat, N, digits = 4)
+qTable(X, p, N, digits = 4)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>digits</code></td>
+<td>
+an integer value with the number of rounding digits.
+</td></tr>
+<tr valign="top"><td><code>doplot</code></td>
+<td>
+a logical flag. Should a plot be displayed?
+</td></tr>
+<tr valign="top"><td><code>fill</code></td>
+<td>
+[pPlot] - <br>
+a logical flag deciding if missing data should be filled
+with asymptotic values zero and one.
+</td></tr>
+<tr valign="top"><td><code>linear</code></td>
+<td>
+[pPlot] - <br>
+a logical flag indicating the type of interpolation.
+</td></tr>
+<tr valign="top"><td><code>logN, logStat</code></td>
+<td>
+[pPlot] - <br>
+two logical flags deciding if the data should be on a 
+logarithmic scale or not.
+</td></tr>
+<tr valign="top"><td><code>N</code></td>
+<td>
+an integer value or vector of sample sizes.
+</td></tr>
+<tr valign="top"><td><code>nN, nStat</code></td>
+<td>
+[pPlot] - <br>
+two integer values with the size of the table.
+</td></tr>
+<tr valign="top"><td><code>object</code></td>
+<td>
+[show] - <br>
+an S4 object of class <code>"fHTEST"</code>.
+</td></tr>
+<tr valign="top"><td><code>p</code></td>
+<td>
+a numeric value or vector of probabilities.
+</td></tr>
+<tr valign="top"><td><code>Stat</code></td>
+<td>
+a numeric value or vector of quantiles or statistic values.
+</td></tr>
+<tr valign="top"><td><code>X</code></td>
+<td>
+[pPlot][*Table] - <br>
+a data frame or matrix of a finite sample test table.
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+[pPlot] - <br>
+additional arguments to be passed.
+</td></tr>
+</table>
+
+<h3>Value</h3>
+
+<p>
+In contrast to R's output report from S3 objects of class <code>"htest"</code>
+a different output report is produced. The tests return an S4 object 
+of class <code>"fHTEST"</code>. The object contains the following slots:
+</p>
+<table summary="R argblock">
+<tr valign="top"><td><code>@call</code></td>
+<td>
+the function call.  
+</td></tr>
+<tr valign="top"><td><code>@data</code></td>
+<td>
+the data as specified by the input argument(s).
+</td></tr>
+<tr valign="top"><td><code>@test</code></td>
+<td>
+a list whose elements contail the results from the statistical
+test. The information provided is similar to a list object of
+class{"htest"}.
+</td></tr>
+<tr valign="top"><td><code>@title</code></td>
+<td>
+a character string with the name of the test. This can be 
+overwritten specifying a user defined input argument.
+</td></tr>
+<tr valign="top"><td><code>@description</code></td>
+<td>
+a character string with an optional user defined description. 
+By default just the current date when the test was applied will
+be returned.</td></tr>
+<tr valign="top"><td><code>statistic</code></td>
+<td>
+the value(s) of the test statistic.
+</td></tr>
+<tr valign="top"><td><code>p.value</code></td>
+<td>
+the p-value(s) of the test.
+</td></tr>
+<tr valign="top"><td><code>parameters</code></td>
+<td>
+a numeric value or vector of parameters.
+</td></tr>
+<tr valign="top"><td><code>estimate</code></td>
+<td>
+a numeric value or vector of sample estimates.
+</td></tr>
+<tr valign="top"><td><code>conf.int</code></td>
+<td>
+a numeric two row vector or matrix of 95
+</td></tr>
+<tr valign="top"><td><code>method</code></td>
+<td>
+a character string indicating what type of test was performed.
+</td></tr>
+<tr valign="top"><td><code>data.name</code></td>
+<td>
+a character string giving the name(s) of the data.
+</td></tr>
+</table>
+<p>
+
+<br>
+The functions <code>pPlot</code>, <code>pTable</code>, and <code>qTable</code>
+plot and iterpolate finite sample test statistic data from a 
+table. The table is a data frame or a matrix where columns
+denote the size and rows the probabilities. The column and 
+row names must hold the sizes and probabilities as character
+strings. The values of the matrix hold the statistic values.
+<br></p>
+
+<h3>Author(s)</h3>
+
+<p>
+Diethelm Wuertz for the Rmetrics <font face="Courier New,Courier" color="#666666"><b>R</b></font>-port.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+## SOURCE("fBasics.5A-HypothesisTesting")
+
+## fHTEST -
+   getClass("fHTEST")
+
+## pPlot -
+## jbTable -
+   # Interpolated plot of Small Jarque Bera Table:
+   X = jbTable(type = "LM", size = "small")
+   pPlot(X, linear = TRUE, logStat = TRUE)
+   pPlot(X, linear = TRUE, logStat = TRUE, fill = TRUE, main = "JB LM")
+   pPlot(X, linear = FALSE, logStat = TRUE)
+   pPlot(X, linear = FALSE, logStat = TRUE, fill = TRUE)
+    
+## [pq]Table -
+## jbTable - 
+   # Jarque Bera B q and p Table:
+   X = jbTable(type = "LM", size = "small")
+   p = (1:99)/100
+   plot(qTable(X, p, N = 100), p, type = "b")
+   Stat = seq(0.01, 15, length = 100)
+   plot(Stat, pTable(X, Stat, N = 100), type = "b")  
+</pre>
+
+
+
+<hr><div align="center">[Package <em>fBasics</em> version 231.10066 <a href="00Index.html">Index]</a></div>
+
+</body></html>

@@ -1,0 +1,511 @@
+<html><head><title>One Sample Tests</title>
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>OneSampleTests(fBasics)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   OneSampleTests">
+<param name="keyword" value="R:   normalTest">
+<param name="keyword" value="R:   ksnormTest">
+<param name="keyword" value="R:   shapiroTest">
+<param name="keyword" value="R:   jarqueberaTest">
+<param name="keyword" value="R:   dagoTest">
+<param name="keyword" value="R:   jbTable">
+<param name="keyword" value="R:   pjb">
+<param name="keyword" value="R:   qjb">
+<param name="keyword" value="R:   jbTest">
+<param name="keyword" value="R:   adTest">
+<param name="keyword" value="R:   cvmTest">
+<param name="keyword" value="R:   lillieTest">
+<param name="keyword" value="R:   pchiTest">
+<param name="keyword" value="R:   sfTest">
+<param name="keyword" value="R:   runsTest">
+<param name="keyword" value=" One Sample Tests">
+</object>
+
+
+<h2>One Sample Tests</h2>
+
+
+<h3>Description</h3>
+
+<p>
+A collection and description of functions of one
+sample tests for testing normality of for detecting 
+non-randomness in observations.
+<br>
+</p>
+<p>
+The functions for testing normality are:
+</p>
+
+<table summary="Rd table">
+<tr>
+  <td align="left"><code>ksnormTest</code> </td>  <td align="left"> Kolmogorov-Smirnov normality test, </td>
+</tr>
+<tr>
+  <td align="left"> <code>shapiroTest</code> </td>  <td align="left"> Shapiro-Wilk's test for normality, </td>
+</tr>
+<tr>
+  <td align="left"> <code>jarqueberaTest</code> </td>  <td align="left"> Jarque&ndash;Bera test for normality, </td>
+</tr>
+<tr>
+  <td align="left"> <code>dagoTest</code> </td>  <td align="left"> D'Agostino normality test. </td>
+</tr>
+</table>
+
+<p>
+Functions for high precision Jarque Bera LM and ALM tests:
+</p>
+
+<table summary="Rd table">
+<tr>
+  <td align="left"><code>jbTable</code> </td>  <td align="left"> Table of finite sample p values for the JB test, </td>
+</tr>
+<tr>
+  <td align="left"> <code>pjb</code> </td>  <td align="left"> Computes probabilities for the Jarque Bera Test, </td>
+</tr>
+<tr>
+  <td align="left"> <code>qjb</code> </td>  <td align="left"> Computes quantiles for the Jarque Bera Test, </td>
+</tr>
+<tr>
+  <td align="left"> <code>jbTest</code> </td>  <td align="left"> Performs finite sample adjusted JB LM and ALM test. </td>
+</tr>
+</table>
+       
+</p>
+<p>
+Additional functions for testing normality from the 'nortest' package:
+</p>
+
+<table summary="Rd table">
+<tr>
+  <td align="left"><code>adTest</code> </td>  <td align="left"> Anderson&ndash;Darling normality test, </td>
+</tr>
+<tr>
+  <td align="left"> <code>cvmTest</code> </td>  <td align="left"> Cramer&ndash;von Mises normality test, </td>
+</tr>
+<tr>
+  <td align="left"> <code>lillieTest</code> </td>  <td align="left"> Lilliefors (Kolmogorov-Smirnov) normality test, </td>
+</tr>
+<tr>
+  <td align="left"> <code>pchiTest</code> </td>  <td align="left"> Pearson chi&ndash;square normality test, </td>
+</tr>
+<tr>
+  <td align="left"> <code>sfTest</code> </td>  <td align="left"> Shapiro&ndash;Francia normality test. </td>
+</tr>
+</table>
+  
+</p>
+<p>
+For SPlus/Finmetrics Compatibility:
+</p>
+
+<table summary="Rd table">
+<tr>
+  <td align="left"><code>normalTest</code> </td>  <td align="left"> test suite for some normality tests. </td>
+</tr>
+</table>
+     
+</p>
+<p>
+More tests ...
+</p>
+
+<table summary="Rd table">
+<tr>
+  <td align="left"><code>runsTest</code> </td>  <td align="left"> Runs test for detecting non-randomness.</td>
+</tr>
+</table>
+
+
+<h3>Usage</h3>
+
+<pre> 
+ksnormTest(x, title = NULL, description = NULL)
+shapiroTest(x, title = NULL, description = NULL)
+jarqueberaTest(x, title = NULL, description = NULL)
+dagoTest(x, title = NULL, description = NULL)
+
+jbTable(type = c("LM", "ALM"), size = c("all", "small"))
+pjb(q, N = Inf, type = c("LM", "ALM")) 
+qjb(p, N = Inf, type = c("LM", "ALM"))
+jbTest(x, title = NULL, description = NULL)
+
+adTest(x, title = NULL, description = NULL)            
+cvmTest(x, title = NULL, description = NULL)      
+lillieTest(x, title = NULL, description = NULL) 
+pchiTest(x, title = NULL, description = NULL)    
+sfTest(x, title = NULL, description = NULL) 
+
+normalTest(x, method = c("sw", "jb"), na.rm = FALSE) 
+
+runsTest(x)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>description</code></td>
+<td>
+optional description string, or a vector of character strings.
+</td></tr>
+<tr valign="top"><td><code>method</code></td>
+<td>
+[normalTest] - <br>
+indicates four different methods for the normality test, 
+<code>"ks"</code> for the Kolmogorov-Smirnov one&ndash;sample test, 
+<code>"sw"</code> for the Shapiro-Wilk test,
+<code>"jb"</code> for the Jarque-Bera Test, and
+<code>"da"</code> for the D'Agostino Test. 
+The default value is <code>"ks"</code>.
+</td></tr>
+<tr valign="top"><td><code>N</code></td>
+<td>
+an integer value specifying the sample size. 
+</td></tr>
+<tr valign="top"><td><code>na.rm</code></td>
+<td>
+[normalTest] - <br>
+a logical value. Should missing values removed before computing
+the tests? The default value is <code>FALSE</code>. 
+</td></tr>
+<tr valign="top"><td><code>p</code></td>
+<td>
+a numeric vector of probabilities. Missing values are not
+allowed. 
+</td></tr>
+<tr valign="top"><td><code>q</code></td>
+<td>
+vector of quantiles or test statistics. Missing values are not
+allowed. 
+</td></tr>
+<tr valign="top"><td><code>size</code></td>
+<td>
+[jbTable] - <br>
+a character string denoting the size of the table. If set
+to <code>"all"</code> then all data are used from the table, if
+set to <code>"small"</code> then only a small part of the data
+will be returned.
+</td></tr>
+<tr valign="top"><td><code>title</code></td>
+<td>
+an optional title string, if not specified the inputs data 
+name is deparsed.
+</td></tr>
+<tr valign="top"><td><code>type</code></td>
+<td>
+[jbTest][pjb][qjb] - <br>
+the same for the Jarque Bera test statistic. <code>"LM"</code>
+denotes the Lagrange multiplier test, and <code>"ALM"</code> the
+adjusted Lagrange multiplier test. 
+</td></tr>
+<tr valign="top"><td><code>x</code></td>
+<td>
+a numeric vector of data values or a S4 object of class 
+<code>timeSeries</code>.
+</td></tr>
+</table>
+
+<h3>Details</h3>
+
+<p>
+The hypothesis tests may be of interest for many financial
+and economic applications, especially for the investigation 
+of univariate time series returns. 
+<br>
+</p>
+<p>
+<B>Normal Tests:</B>
+<br><br>
+Several tests for testing if the records from a data set are normally
+distributed are available. The input to all these functions may be
+just a vector <code>x</code> or a univariate time series object <code>x</code> 
+of class <code>timeSeries</code>. 
+</p>
+<p>
+First there exists a wrapper function which allows to call one from 
+two normal tests either the Shapiro&ndash;Wilks test or the Jarque&ndash;Bera 
+test. This wrapper was introduced for compatibility with S-Plus' 
+FinMetrics package. 
+</p>
+<p>
+Also available are the Kolmogorov&ndash;Smirnov one sample test and the 
+D'Agostino normality test. 
+</p>
+<p>
+The remaining five normal tests are the Anderson&ndash;Darling test, 
+the Cramer&ndash;von Mises test, the Lilliefors (Kolmogorov&ndash;Smirnov) 
+test, the Pearson chi&ndash;square test, and the Shapiro&ndash;Francia test. 
+They are calling functions from R's contributed package <code>nortest</code>.   
+The difference to the original test functions implemented in R and 
+from contributed R packages is that the Rmetrics functions accept
+time series objects as input and give a more detailed output report.
+</p>
+<p>
+The Anderson-Darling test is used to test if a sample of data came 
+from a population with a specific distribution, here the normal 
+distribution. The <code>adTest</code> goodness-of-fit test can be
+considered as a modification of the Kolmogorov&ndash;Smirnov test which 
+gives more weight to the tails than does the <code>ksnormTest</code>. 
+<br>
+</p>
+<p>
+<B>Runs Test:</B>
+<br><br>
+The runs test can be used to decide if a data set is from a random 
+process. A run is defined as a series of increasing values or a 
+series of decreasing values. The number of increasing, or decreasing, 
+values is the length of the run. In a random data set, the probability 
+that the <EM>(i+1)-th</EM> value is larger or smaller than the <EM>i-th</EM> 
+value follows a binomial distribution, which forms the basis of the 
+runs test.
+</p>
+
+
+<h3>Value</h3>
+
+<p>
+In contrast to R's output report from S3 objects of class <code>"htest"</code>
+a different output report is produced. The tests here return an S4 
+object of class <code>"fHTEST"</code>. The object contains the following slots:
+</p>
+<table summary="R argblock">
+<tr valign="top"><td><code>@call</code></td>
+<td>
+the function call.  
+</td></tr>
+<tr valign="top"><td><code>@data</code></td>
+<td>
+the data as specified by the input argument(s).
+</td></tr>
+<tr valign="top"><td><code>@test</code></td>
+<td>
+a list whose elements contail the results from the statistical
+test. The information provided is similar to a list object of
+class{"htest"}.
+</td></tr>
+<tr valign="top"><td><code>@title</code></td>
+<td>
+a character string with the name of the test. This can be 
+overwritten specifying a user defined input argument.
+</td></tr>
+<tr valign="top"><td><code>@description</code></td>
+<td>
+a character string with an optional user defined description. 
+By default just the current date when the test was applied will
+be returned.
+</td></tr>
+<tr valign="top"><td><code>statistic</code></td>
+<td>
+the value(s) of the test statistic.
+</td></tr>
+<tr valign="top"><td><code>p.value</code></td>
+<td>
+the p-value(s) of the test.
+</td></tr>
+<tr valign="top"><td><code>parameters</code></td>
+<td>
+a numeric value or vector of parameters.
+</td></tr>
+<tr valign="top"><td><code>estimate</code></td>
+<td>
+a numeric value or vector of sample estimates.
+</td></tr>
+<tr valign="top"><td><code>conf.int</code></td>
+<td>
+a numeric two row vector or matrix of 95
+</td></tr>
+<tr valign="top"><td><code>method</code></td>
+<td>
+a character string indicating what type of test was performed.
+</td></tr>
+<tr valign="top"><td><code>data.name</code></td>
+<td>
+a character string giving the name(s) of the data.
+</td></tr>
+</table>
+<p>
+
+<br>
+The meaning of the elements of the <code>@test</code> slot is the following:
+<br>
+<code>ksnormTest</code> 
+<br>
+returns the values for the 'D' statistic and p-values for the three 
+alternatives 'two-sided, 'less' and 'greater'. 
+<br>
+<code>shapiroTest</code> 
+<br>
+returns the values for the 'W' statistic and the p-value.  
+<br>
+<code>jarqueberaTest</code><br>
+<code>jbTest</code>
+<br>
+returns the values for the 'Chi-squared' statistic with 2 degrees of
+freedom, and the asymptotic p-value. <code>jbTest</code> is the finite sample
+version of the Jarque Bera Lagrange multiplier, LM, and adjusted
+Lagrange multiplier test, ALM.
+<br>
+<code>dagoTest</code> 
+<br>
+returns the values for the 'Chi-squared', the 'Z3' (Skewness) and 'Z4'
+(Kurtosis) statistic together with the corresponding p values.
+<br>
+<code>adTest</code> 
+<br>
+returns the value for the 'A' statistic and the p-value. 
+<br>
+<code>cvmTest</code> 
+<br>
+returns the value for the 'W' statistic and the p-value.  
+<br>
+<code>lillieTest</code> 
+<br>
+returns the value for the 'D' statistic and the p-value.  
+<br>
+<code>pchiTest</code> 
+<br>
+returns the value for the 'P' statistic and the p-values for the
+adjusted and not adjusted test cases.  In addition the number of 
+classes is printed, taking the default value due to Moore (1986)
+computed from the expression <code>n.classes = ceiling(2 * (n^(2/5)))</code>,
+where <code>n</code> is the number of observations.
+<br>
+<code>sfTest</code> 
+<br>
+returns the value for the 'W' statistic and the p-value.</p>
+
+<h3>Note</h3>
+
+<p>
+Some of the test implementations are selected from R's <code>ctest</code> 
+and <code>nortest</code> packages.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>
+R-core team for the tests from <font face="Courier New,Courier" color="#666666"><b>R</b></font>'s ctest package,<br>
+Adrian Trapletti for the runs test from <font face="Courier New,Courier" color="#666666"><b>R</b></font>'s tseries package,<br>
+Juergen Gross for the normal tests from <font face="Courier New,Courier" color="#666666"><b>R</b></font>'s nortest package,<br>
+James Filliben for the Fortran program producing the runs report,<br>
+Diethelm Wuertz and Helmut Katzgraber for the finite sample JB tests, <br>
+Diethelm Wuertz for the Rmetrics <font face="Courier New,Courier" color="#666666"><b>R</b></font>-port.
+</p>
+
+
+<h3>References</h3>
+
+<p>
+Anderson T.W., Darling D.A. (1954); 
+<EM>A Test of Goodness of Fit</EM>,
+JASA 49:765&ndash;69.
+</p>
+<p>
+Conover, W. J. (1971);
+<EM>Practical nonparametric statistics</EM>,
+New York: John Wiley &amp; Sons.
+</p>
+<p>
+D'Agostino R.B., Pearson E.S. (1973); 
+<EM>Tests for Departure from Normality</EM>,
+Biometrika 60, 613&ndash;22.
+</p>
+<p>
+D'Agostino R.B., Rosman B. (1974); 
+<EM>The Power of Geary's Test of Normality</EM>,
+Biometrika 61, 181&ndash;84.
+</p>
+<p>
+Durbin J. (1961); 
+<EM>Some Methods of Constructing Exact Tests</EM>,
+Biometrika 48, 41&ndash;55. 
+</p>
+<p>
+Durbin,J. (1973);
+<EM>Distribution Theory Based on the Sample Distribution Function</EM>,
+SIAM, Philadelphia.
+</p>
+<p>
+Geary R.C. (1947); 
+<EM>Testing for Normality</EM>; 
+Biometrika 36, 68&ndash;97.
+</p>
+<p>
+Lehmann E.L. (1986); 
+<EM>Testing Statistical Hypotheses</EM>, 
+John Wiley and Sons, New York.
+</p>
+<p>
+Linnet K. (1988); 
+<EM>Testing Normality of Transformed Data</EM>,
+Applied Statistics 32, 180&ndash;186. 
+</p>
+<p>
+Moore, D.S. (1986);
+<EM>Tests of the chi-squared type</EM>, 
+In: D'Agostino, R.B. and Stephens, M.A., eds., 
+Goodness-of-Fit Techniques, Marcel Dekker, New York. 
+</p>
+<p>
+Shapiro S.S., Francia R.S. (1972); 
+<EM>An Approximate Analysis of Variance Test for Normality</EM>,
+JASA 67, 215&ndash;216.
+</p>
+<p>
+Shapiro S.S., Wilk M.B., Chen V. (1968); 
+<EM>A Comparative Study of Various Tests for Normality</EM>,
+JASA 63, 1343&ndash;72.
+</p>
+<p>
+Thode H.C. (2002);
+<EM>Testing for Normality</EM>, 
+Marcel Dekker, New York. 
+</p>
+<p>
+Weiss M.S. (1978); 
+<EM>Modification of the Kolmogorov-Smirnov 
+Statistic for Use with Correlated Data</EM>, 
+JASA 73, 872&ndash;75.
+</p>
+<p>
+Wuertz D., Katzgraber H.G. (2005);
+<EM>Precise finite-sample quantiles of the
+Jarque-Bera adjusted Lagrange multiplier test</EM>,
+ETHZ Preprint.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+## SOURCE("fBasics.5B-OneSampleTests")
+
+## Series:
+   x = rnorm(100)
+   
+## ksnormTests - 
+   # Kolmogorov - Smirnov One-Sampel Test
+   ksnormTest(x)
+
+## shapiroTest - Shapiro-Wilk Test
+   shapiroTest(x)
+
+## jarqueberaTest - 
+## jbTest - Jarque-Bera Test
+   jarqueberaTest(x)
+   jbTest(x)
+   
+## runsTest -
+   runsTest(x)
+
+</pre>
+
+
+
+<hr><div align="center">[Package <em>fBasics</em> version 231.10066 <a href="00Index.html">Index]</a></div>
+
+</body></html>

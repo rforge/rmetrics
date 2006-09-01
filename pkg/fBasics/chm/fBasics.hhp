@@ -1,0 +1,24 @@
+[OPTIONS]
+Auto Index=Yes
+Contents file=fBasics.toc
+Compatibility=1.1 or later
+Compiled file=fBasics.chm
+Default topic=00Index.html
+Display compile progress=No
+Full-text search=Yes
+Full text search stop list file=..\..\..\gnuwin32\help\R.stp
+
+
+[FILES]
+00Index.html
+1A-fBasicsUtilities.html
+2A-StableDistribution.html
+2B-HyperbolicDistribution.html
+2C-SmoothedSplineDistribution.html
+2D-DistributionFits.html
+3A-BasicStatistics.html
+3B-StylizedFacts.html
+4A-PortableInnovations.html
+5A-HypothesisTesting.html
+5B-OneSampleTests.html
+5C-TwoSampleTests.html
