@@ -8,13 +8,11 @@
 \alias{armaSim}
 \alias{armaFit}
 
-\alias{predict.fARMA}
-\alias{predictPlot}
-\alias{predictPlot.fARMA}
-
 \alias{print.fARMA}
 \alias{plot.fARMA}
 \alias{summary.fARMA}
+
+\alias{predict.fARMA}
 
 \alias{fitted.fARMA}
 \alias{coef.fARMA}
@@ -22,8 +20,6 @@
 
 \alias{armaRoots}
 \alias{armaTrueacf}
-\alias{armaToeplitz}
-\alias{armaFischer}
 
 
 \title{Integrated ARMA Time Series Modelling}
@@ -44,52 +40,19 @@
     \tabular{ll}{
     \code{armaSim} \tab Simulates an artificial ARMA time series process, \cr
     \code{armaFit} \tab Fits the parameters of an ARMA time series process,\cr
-    \code{predict} \tab Forecasts an ARMA time series process, \cr
     \code{print} \tab S3 Print Method, \cr
     \code{plot} \tab S3 Plot Method, \cr
     \code{summary} \tab S3 Summary Method, \cr
+    \code{predict} \tab Forecasts and optionally plots an ARMA process, \cr
     \code{fitted} \tab S3 Method, returns fitted values, \cr
     \code{coef|coefficients} \tab S3 Method, returns coefficients, \cr
     \code{residuals} \tab S3 Method, returns residuals. }
-    
-    The function \code{armaFit} allows for the following formula arguments:
-    
-    \tabular{ll}{
-    \code{x ~ ar()} \tab autoregressive time series processes, \cr
-    \code{x ~ arma()} \tab autoregressive moving average processes,\cr
-    \code{x ~ arima()} \tab autoregressive integrated moving average processes, and \cr
-    \code{x ~ fracdiff()} \tab fractionally integrated ARMA processes. }
-    
-    For the first and third selection \code{x ~ ar()} or \code{x ~ arima()}
-    the function uses the AR and ARIMA modelling as implemented in 
-    \R's \code{ts} package, for the second selection \code{x~arma()} 
-    the function uses the ARMA modelling implemented in \R's 
-    contributed \code{tseries} package, and for the last selection 
-    \code{x~fracdiff()} the function uses fractional ARIMA modelling 
-    from \R's contributed \code{fracdiff} package. Note that AR, MA,
-    and ARMA processes can all be modelled by the same algorithm
-    specifying the formula \code{x~arima(p,d,q)} in the proper way, 
-    i.e. setting \code{d=0} and choosing the orders of \code{p} and 
-    \code{q} as zero in agreement with the desired model specification.
-    
-    Alternatively, one can use the functions from R's \code{"stats"}
-    package:
-    
-    \tabular{ll}{
-    \code{arima.sim} \tab Simulates from an ARIMA time series model, \cr
-    \code{ar, arima, arima0} \tab Fits an AR, ARIMA model to a univariate time series,\cr
-    \code{predict} \tab Forecast from models fitted by "arima", \cr
-    \code{tsdiag} \tab Plots time-series diagnostics. }
-    
-    In addition there are two functions for the analysis of the true  
-    ARMA process. The first investigates the characteristic polynomial
-    and the second the true autocorrelation function:
+
+    The functions for the analysis of an true ARMA process are:
         
     \tabular{ll}{
     \code{armaRoots} \tab Roots of the characteristic ARMA polynomial, \cr
-    \code{armaTrueacf} \tab True autocorrelation function of an ARMA process, \cr
-    \code{armaToeplitz} \tab True Toeplitz matrix of a vector, \cr
-    \code{armaFischer} \tab Fischer Information Matrix of an ARMA Process. }
+    \code{armaTrueacf} \tab True autocorrelation function of an ARMA process.}  
     
 }
     
@@ -103,15 +66,46 @@
     users who have already modeled GARCH processes with SPlus, this 
     approach will be quite natural.
     
-    On the other hand, the user can still use the underlying functions 
-    from the \code{ts}, \code{tseries}, or \code{fracdiff} packages. No 
-    function from these packages is masked or overwritten.
+    The function \code{armaFit} allows for the following formula arguments:
     
-    The output of the \code{predict}, \code{print} and \code{summary}
-    methods have all the same style of format with some additional 
-    algorithm specific printing. This makes it easier to interpret 
-    the results obtained from different algorithms implemented in 
-    different functions.
+    \tabular{ll}{
+    \code{x ~ ar()} \tab autoregressive time series processes, \cr
+    \code{x ~ ma()} \tab moving average time series processes, \cr
+    \code{x ~ arma()} \tab autoregressive moving average processes,\cr
+    \code{x ~ arima()} \tab autoregressive integrated moving average processes, and \cr
+    \code{x ~ arfima()} \tab fractionally integrated ARMA processes. }
+    
+    For the first selection \code{x~ar()} the function \code{armaFit()} 
+    uses the AR modelling algorithm as implemented in \R's \code{stats} 
+    package. 
+    For the second \code{x~ma()}, third \code{x~arma()}, and fourth 
+    selection \code{x~arima()} the function \code{armaFit()} uses the 
+    ARMA modelling algorithm also as implemented in \R's \code{stats} 
+    package.
+    For the last selection \code{x~fracdiff()} the function \code{armaFit()}
+    uses the fractional ARIMA modelling algorithm from \R's contributed 
+    \code{fracdiff} package. Note, that the AR, MA, and ARMA processes 
+    can all be modelled by the same algorithm specifying the formula 
+    \code{x~arima(p,d,q)} in the proper way, i.e. setting \code{d=0} and 
+    choosing the orders of \code{p} and \code{q} as zero in agreement with 
+    the desired model specification.
+    
+    Alternatively, one can still use the functions from R's \code{"stats"}
+    package: \code{arima.sim} that simulates from an ARIMA time series 
+    model, \code{ar, arima, arima0} that fit an AR, ARIMA model to an 
+    univariate time series, \code{predict} that forecasts from a fitted 
+    model, and \code{tsdiag} that plots time-series diagnostics. 
+    No function from these packages is masked, modified or overwritten.
+    
+    The output of the \code{print}, \code{summary}, and \code{predict}
+    methods have all the same style of format for each time series
+    model with some additional algorithm specific printing. This makes 
+    it easier to interpret the results obtained from different algorithms 
+    implemented in different functions.
+    
+    For \code{fracdiff} models the following methods are not yet
+    implemented: \code{plot}, \code{fitted}, \code{residuals}, 
+    \code{predict}, and \code{predictPlot}.
     
 }
 
@@ -121,26 +115,24 @@ armaSim(model = list(ar = c(0.5, -0.5), d = 0, ma = 0.1), n = 100,
     innov = NULL, n.start = 100, start.innov = NULL, rand.gen = rnorm, 
     rseed = NULL, \dots) 
 
-armaFit(formula = x ~ arima(2, 0, 1), 
-    method = c("CSS-ML", "ML", "CSS", "yw", "burg1", "burg2", "ols", "mle"), 
+armaFit(formula = x ~ arima(2, 0, 1), method = c("mle", "ols"), 
     include.mean = TRUE, fixed = NULL, fracdiff.M = 100, fracdiff.h = -1, 
     title = NULL, description = NULL, \dots)
 
-\method{predict}{fARMA}(object, n.ahead = 10, n.back = 50, conf = c(80, 95), \dots)
-\method{predictPlot}{fARMA}(object, n.ahead = 10, n.back = 50, conf = c(80, 95), \dots)
-    
 \method{print}{fARMA}(x, \dots)
-\method{plot}{fARMA}(x, gof.lag = 10, reference.grid = TRUE, col = "steelblue", \dots)
-\method{summary}{fARMA}(object, doplot = TRUE, \dots)
+\method{plot}{fARMA}(x, which = "ask", gof.lag = 10, \dots)
+\method{summary}{fARMA}(object, doplot = TRUE, which = "all", \dots)
 
+\method{predict}{fARMA}(object, n.ahead = 10, n.back = 50, conf = c(80, 95), 
+    doplot = TRUE, \dots)
+    
 \method{fitted}{fARMA}(object, \dots)
 \method{coef}{fARMA}(object, \dots)
 \method{residuals}{fARMA}(object, \dots)
 
 armaRoots(coefficients, n.plot = 400, digits = 4, \dots) 
-armaTrueacf(model, lag.max = 20, type = "correlation", doplot = TRUE) 
-armaToeplitz(x)
-armaFischer(model = list(ar = c(0.5, -0.5), ma = 0.1))
+armaTrueacf(model, lag.max = 20, type = c("correlation", "partial", "both"), 
+    doplot = TRUE) 
 }
 
 
@@ -150,12 +142,6 @@ armaFischer(model = list(ar = c(0.5, -0.5), ma = 0.1))
         [armaRoots] - \cr
         a numeric vector with the coefficients of the characterisitic 
         polynomial.
-        }
-    \item{col, reference.grid}{
-        [plot] - \cr
-        a character string to set the plot color, by default 
-        \code{"steelblue4"}; and a logical flag, by default \code{TRUE},
-        to draw a reference grid on the plot or not.
         } 
     \item{description}{
         a character string which allows for a brief description.
@@ -190,6 +176,7 @@ armaFischer(model = list(ar = c(0.5, -0.5), ma = 0.1))
         a formula specifying the general structure of the ARMA form. 
         Can have one of the forms  
         \code{x ~ ar(q)}, 
+        \code{x ~ ma(p)}, 
         \code{x ~ arma(p, q)}, 
         \code{x ~ arima(p, d, q)}, or
         \code{x ~ fracdiff(p, q)}.
@@ -242,21 +229,11 @@ armaFischer(model = list(ar = c(0.5, -0.5), ma = 0.1))
         }
     \item{method}{
         [armaFit] - \cr
-        denotes the method used to fit the model by a character string.
-        \code{method} must be one of the strings in the default argument.
-        For ARIMA models a valid selection is one of \code{"CSS-ML"}, 
-        \code{"ML"}, \code{"CSS"}, 
-        for ARMA models only one valid selection is possible \code{"CSS"},
-        for AR models a valid selection is one of \code{"yw"}, \code{"burg1"}, 
-        \code{"burg2"}, \code{"ols"}, \code{"mle"}, and 
-        for FRACDIFF models only one valid selection is possible 
-        \code{"FRACDIFF"}. If no \code{method} argument specified the
-        following default settings are used: \code{"CSS-ML"} for ARIMA,
-        \code{"FRACDIFF"} for FRACDIFF, \code{"CSS"} for ARMA, and
-        \code{"yw"} for AR modelling. 
-        \cr
-        Additional arguments required by the optimization algorithm have 
-        to be passed through the \code{dots} argument.
+        a character string denoting the method used to fit the model.
+        The default method for all models is the log-likelihood parameter 
+        estimation approach, \code{method="mle"}. In the case of an AR
+        model the parameter estimation can also be done by ordinary least
+        square estimation, \code{"ols"}. 
         } 
     \item{model}{
         [armaSim] - \cr
@@ -278,8 +255,8 @@ armaFischer(model = list(ar = c(0.5, -0.5), ma = 0.1))
         }
     \item{n}{
         [armaSim] - \cr
-        is the length of the series to be simulated (optional 
-        if \code{innov} is provided). The default value is 100.
+        an integer value setting the length of the series to be simulated 
+        (optional if \code{innov} is provided). The default value is 100.
         }
     \item{n.ahead, n.back, conf}{[print][plot][summary][predict] - \cr
         are presetted arguments for the \code{predict} method. \code{n.ahead}
@@ -338,16 +315,23 @@ armaFischer(model = list(ar = c(0.5, -0.5), ma = 0.1))
         functions are desired. The start of one of the strings 
         will suffice.
         } 
+    \item{which}{
+        [plot][summary] - \cr
+        if \code{which} is set to \code{"ask"} the function will 
+        interactively ask which plot should be displayed. This is
+        the default value for the \code{plot} method. If 
+        \code{which="all"} is specified all plots will be displayed.
+        This is the default setting for the \code{summary} method.
+        On the other hand, if a vector of logicals is specified,
+        then those plots will be displayed for which the elements 
+        of the vector are set to \code{TRUE}.
+        }
     \item{x}{
         [print][plot] - \cr
-        is an object of class \code{fARMA} returned by the
-        fitting function \code{armaFit} and serves as input for the 
-        \code{predict}, \code{print}, \code{print.summary},
-        and \code{plot} methods. Some methods allow for additional 
-        arguments. \cr
-        [armaToeplitz] - \cr
-        a vector of autocovariances. The returned Toeplitz matrix is  
-        the corresponding covariance matrix of the observatons.
+        is an object of class \code{fARMA} returned by the fitting 
+        function \code{armaFit} and serves as input for the \code{predict}, 
+        \code{print}, \code{print.summary}, and \code{plot} methods. 
+        Some methods allow for additional arguments.
         }
     \item{\dots}{
         additional arguments to be passed.
@@ -400,19 +384,6 @@ armaFischer(model = list(ar = c(0.5, -0.5), ma = 0.1))
     returns a two column data frame with the lag and the correlation 
     function. 
     
-    \code{armaToeplitz}
-    \cr
-    returns the Toeplitz matrix of a given vector \code{x}. The 
-    Toeplitz matrix is a square matrix of order length(x) and with 
-    \code{[i,j]} entries given by \code{x[abs(i-j)]}. Note, if 
-    \code{x} is a vector of autocovariances, the Toeplitz matrix is  
-    the corresponding covariance matrix of the observatons.
-    
-    \code{armaFischer}
-    \cr
-    returns the Fischer information matrix for an ARMA time series
-    process.
-
 }
                 
 
@@ -420,7 +391,7 @@ armaFischer(model = list(ar = c(0.5, -0.5), ma = 0.1))
   
     \bold{AR - Auto-Regressive Modelling:}
     \cr\cr
-    The argument \code{x ~ar()} calls the underlying functions 
+    The argument \code{x~ar(p)} calls the underlying functions 
     \code{ar.yw}, \code{ar.burg1}, \code{ar.burg2}, code{\link{ar.ols}} 
     or \code{ar.mle}. 
     For definiteness, the AR models are defined through
@@ -444,20 +415,27 @@ armaFischer(model = list(ar = c(0.5, -0.5), ma = 0.1))
     the forward and backward prediction errors (as in Brockwell and Davis, 
     1996). Percival and Walden (1998) discuss both. 
     \cr
-    \code{[ts:ar]}
+    \code{[stats:ar]}
+    \cr
+    
+    
+    \bold{MA - Moving-Average Modelling:}
+    \cr\cr   
+    The argument \code{x~ma(q)} maps the call to the
+    argument \code{x ~ arima(0, 0, q)}.
     \cr
     
     
     \bold{ARMA - Auto-Regressive Moving-Average Modelling:}
     \cr\cr   
-    The argument \code{x ~ arma(p,q)} maps the call to the
-    argument \code{x ~ arima(p, 0, q)}.
+    The argument \code{x~arma(p,q)} maps the call to the
+    argument \code{x~arima(p, 0, q)}.
     \cr
     
         
     \bold{ARIMA - Integrated ARMA Modelling:}
     \cr\cr
-    The argument \code{x ~ arima()} calls the underlying function 
+    The argument \code{x~arima()} calls the underlying function 
     \code{arima} from \R's \code{ts} package. For definiteness, the AR 
     models are defined through
 
@@ -519,12 +497,13 @@ armaFischer(model = list(ar = c(0.5, -0.5), ma = 0.1))
     not include a mean in the model.  Further, the convention used by
     \code{arima.mle} reverses the signs of the MA coefficients.
     \cr
-    \code{[ts:arima]}
+    \code{[stats:arima]}
     \cr
         
+    
     \bold{FRACDIFF Modelling:}
     \cr\cr      
-    The argument \code{x ~ fracdiff()} calls the underlying functions from
+    The argument \code{x~fracdiff()} calls the underlying functions from
     \R's \code{fracdiff} package. The estimator calculates the maximum 
     likelihood estimators of the parameters of a fractionally-differenced 
     ARIMA (p,d,q) model, together (if possible) with their estimated 
@@ -604,7 +583,7 @@ Haslett J. and Raftery A.E. (1989);
 
 \examples{
 ## SOURCE("fSeries.1A-ArmaModelling")
-
+\dontrun{
 ## armaSim/armaFit -
    x = armaSim(model = list(ar = c(0.5, -0.5), ma = 0.1), n = 1000)
    # Estimate the parameters:
@@ -615,19 +594,9 @@ Haslett J. and Raftery A.E. (1989);
    summary(fit)
    # 5 Steps ahead Forecasts:
    predict(fit, 5)
-     
-## armaFit -
-   # Now use the arima fitting method with d=0:
-   fit = armaFit(x ~ arima(2, 0, 1))
-   print(fit)
-   # Diagnostic Analysis:
-   par(mfrow = c(3, 2), cex = 0.7)
-   summary(fit)
-   # 5 Step ahead Forecasts:
-   predict(fit, n.ahead = 5)
    
 ## armaRoots -
-   # Calculate and plot the  of an ARMA process:
+   # Calculate and plot the roots of an ARMA process:
    par(mfrow = c(2, 2), cex = 0.7)
    coefficients = c(-0.5, 0.9, -0.1, -0.5)
    armaRoots(coefficients)
@@ -638,7 +607,7 @@ Haslett J. and Raftery A.E. (1989);
    model = list(ar = c(0.3, -0.3), ma = 0.1)
    armaTrueacf(model)
 }
-
+}
 
 \keyword{models}
 

@@ -290,7 +290,6 @@ Rosenstein M.T., Collins J.J., De Luca C.J. (1993);
 ## SOURCE("fSeries.035A-ChaoticTimeSeries")
 
 ## bdsTest -
-   xmpSeries("\nNext: Brock-Dechert-Sheinkman Test for iid Series >")
    # iid Time Series:
    par(mfrow = c(3, 1))
    x = rnorm(100)
@@ -307,7 +306,6 @@ Rosenstein M.T., Collins J.J., De Luca C.J. (1993);
    bdsTest(x, m = 3)
    
 ## tnnTest -
-   xmpSeries("\nNext: Teraesvirta NN test for Neglected Nonlinearity >")
    # Time Series Non-linear in "mean" regression 
    par(mfrow = c(2, 1))
    n = 1000
@@ -321,7 +319,6 @@ Rosenstein M.T., Collins J.J., De Luca C.J. (1993);
    tnnTest(x)
    
 ## wnnTest -
-   xmpSeries("\nNext: White NN test for Neglected Nonlinearity >")
    # Time Series Non-Linear in "mean" Regression
    par(mfrow = c(2, 1))
    n = 1000

@@ -391,12 +391,12 @@ Schwert G.W. (1989);
 ## unitrootTest - 
    unitrootTest(x)
    unitrootTest(y)    
- 
-## Unit Root Tests build on Bernhard Pfaff's Implementation:
     
 ## ur*Test - 
+   # Unit Root Tests build on Bernhard Pfaff's Implementation:
    # Examples can be found in the demo file "xmpTestUnitRoots".  
 }
+
 
 \keyword{htest}
 

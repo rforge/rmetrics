@@ -25,7 +25,7 @@
     \tabular{ll}{
     \code{punitroot} \tab the cumulative probability, \cr
     \code{qunitroot} \tab the quantiles of the unit root test statistics, \cr
-    \code{adfTable} \tab the table of cumulative probabilities, \cr
+    \code{dfTable} \tab the table of cumulative probabilities, \cr
     \code{pdftest} \tab the cumulative probability for the ADF test, \cr
     \code{qdftest} \tab the quantiles for the ADF test. }
     
@@ -37,10 +37,11 @@ punitroot(q, n.sample = 0, trend = c("c", "nc", "ct", "ctt"),
     statistic = c("t", "n"), na.rm = FALSE)
 qunitroot(p, n.sample = 0, trend = c("c", "nc", "ct", "ctt"), 
     statistic = c("t", "n"), na.rm = FALSE)
-    
+ 
+dfTable(trend = c("nc", "c", "ct"), statistic = c("t", "n"))
+   
 pdftest(q, n.sample, trend = c("nc", "c", "ct"), statistic = c("t", "n")) 
 qdftest(p, n.sample, trend = c("nc", "c", "ct"), statistic = c("t", "n"))
-dfTable(trend = c("nc", "c", "ct"), statistic = c("t", "n"))
 }
 
 
@@ -164,6 +165,10 @@ Phillips, P.C.B., Perron, P. (1988);
 ## punitroot -
    # Finite sample cumulative probability of n-statistic
    punitroot(1.2836, n.sample = 100, trend = "nc", statistic = "n")
+   
+## dfTable -
+   # Dickey-Fuller Table:
+   dfTable(trend = "nc", statistic = "t")
 }
 
 

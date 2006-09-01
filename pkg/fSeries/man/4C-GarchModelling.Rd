@@ -88,8 +88,8 @@ garchKappa(cond.dist = c("dnorm", "dged", "dstd", "dsnorm", "dsged", "dsstd"),
     gamma = 0, delta = 2, skew = NA, shape = NA)
 
 \method{print}{fGARCH}(x, \dots)
-\method{summary}{fGARCH}(object, \dots)
 \method{plot}{fGARCH}(x, which = "ask", \dots)
+\method{summary}{fGARCH}(object, \dots)
 \method{residuals}{fGARCH}(object, \dots)
 \method{fitted}{fGARCH}(object, \dots)
 \method{predict}{fGARCH}(object, n.ahead = 10, trace = FALSE, \dots)
@@ -226,6 +226,7 @@ garchKappa(cond.dist = c("dnorm", "dged", "dstd", "dsnorm", "dsged", "dsstd"),
         default \code{trace=FALSE}.
         }  
     \item{which}{
+        [plot] - \cr
         if \code{which} is set to \code{"ask"} the function will 
         interactively ask which plot should be displayed. This is
         the default value and then those plots will

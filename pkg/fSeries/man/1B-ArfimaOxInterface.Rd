@@ -33,14 +33,13 @@
 
 
 \usage{
-arfimaOxFit(formula = x ~ arfima(1, 1), method = c("mle", "nls", "mplik"),
+arfimaOxFit(formula = x ~ arfima(1, 1), method = c("mle", "nls", "mpl"),
     trace = TRUE, title = NULL, description = NULL)
 }
 
 
 \arguments{
-
-    
+   
     \item{description}{
         a character string which allows for a brief description.
         }
@@ -154,7 +153,11 @@ arfimaOxFit(formula = x ~ arfima(1, 1), method = c("mle", "nls", "mplik"),
         time series model function. 
         }
     \item{method}{
-        the selected time series model naming the applied method.
+        a character string naming the selected ARFIMA model. 
+        Implemented are 
+        the exact max-likelihood estimation method, \code{"mle"},
+        the non-linear least-square method, \code{"nls"}, and
+        the \code{"mplik"}
         }
     \item{formula}{
         the formula expression describing the model.
@@ -166,7 +169,7 @@ arfimaOxFit(formula = x ~ arfima(1, 1), method = c("mle", "nls", "mplik"),
         a title string.
         }
         
-    For details please consult \code{help(ArmaModelling)}.
+    For further details please consult \code{help(ArmaModelling)}.
 
 }
 
@@ -228,19 +231,16 @@ Laurent S., Peters J.P., [2005],
 
 ## arfimaOxFit -
    x = armaSim(model = list(ar = c(0.5, - 0.5), d = 0.3, ma = 0.1), n = 500)
-   x
-   object = armaOxFit(formula = x ~ arfima(2,1))
-   object
+   fit = arfimaOxFit(formula = x ~ arfima(2,1))
     
-   print(object)
-   plot(object)
-   summary(object)
+   print(fit)
+   plot(fit, which = "all:)
+   summary(fit, doplot = FALSE)
     
-   fitted(object)
-   residuals(object)
+   fitted(fit)[1:10]
+   residuals(fit)[1:10]
     
    predict(object)
-   predictPlot(object)
 }
 }
 
