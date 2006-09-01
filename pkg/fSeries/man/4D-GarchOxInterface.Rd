@@ -147,7 +147,7 @@ garchOxFit(formula.mean = ~ arma(0, 0), formula.var = ~ garch(1, 1),
     \cr
     In addition you have to copy the file "GarchOxModelling.ox" (which 
     is the interface written especially for Rmetrics) from 
-    the "fSeries/data/" directory to the Ox library directory 
+    the "fSeries/demo/" directory to the Ox library directory 
     "C:\\Ox\\lib".
     \cr
     
