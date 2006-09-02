@@ -92,8 +92,7 @@ armaSim(model = list(ar = c(0.5, -0.5), d = 0, ma = 0.1), n = 100,
     rseed = NULL, ...) 
 
 armaFit(formula = x ~ arima(2, 0, 1), method = c("mle", "ols"), 
-    include.mean = TRUE, fixed = NULL, fracdiff.M = 100, fracdiff.h = -1, 
-    title = NULL, description = NULL, ...)
+    include.mean = TRUE, fixed = NULL, title = NULL, description = NULL, ...)
 
 ## S3 method for class 'fARMA':
 print(x, ...)
@@ -183,17 +182,6 @@ allows also to fit ARMA models using <code>arima(p, d=0, q)</code>, and
 AR models using <code>arima(q, d=0, q=0)</code>, or pure MA models
 using <code>arima(q=0, d=0, p)</code>. (Exogenous variables are also 
 allowed and can be passed through the <code>...</code> argument.)
-</td></tr>
-<tr valign="top"><td><code>fracdiff.M, fracdiff.h</code></td>
-<td>
-two numeric parameter values for the <code>"fracdiff"</code> 
-estimator. <code>M</code> is the number of terms in the likelihood 
-approximation. <code>h</code> is the size of the finite difference 
-interval for numerical derivatives. By default, or if negative, 
-<code>h=min(0.1,eps.5*(1+ abs(cllf)))</code>, where 
-<code>clff:=log.max.likelihood</code>, as returned, and 
-<code>eps.5:=sqrt(.Machine$double.neg.eps)</code>, typically 
-<code>1.05e-8</code>.
 </td></tr>
 <tr valign="top"><td><code>gof.lag</code></td>
 <td>
