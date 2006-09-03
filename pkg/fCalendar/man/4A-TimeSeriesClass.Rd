@@ -98,7 +98,7 @@ isMultivariate(x)
 \method{lines}{timeSeries}(x, \dots)
 \method{points}{timeSeries}(x, \dots)
 
-dummyDailySeries(x)
+dummyDailySeries(x = rnorm(365), units = "X", zone = "GMT", FinCenter = "GMT")
 alignDailySeries(x, method = c("before", "after", "interp", "fillNA"), 
     include.weekends = FALSE, units = NULL)
 ohlcDailyPlot(x, volume = TRUE, colOrder = c(1:5), units = 1e6, 

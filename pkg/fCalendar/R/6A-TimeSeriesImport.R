@@ -855,7 +855,7 @@ getReturns = FALSE, ...)
             # print(head(Y))
             UNITS = paste(symbols[i], ".", quote, sep = "")
             if (aggregation == "d") Y = alignDailySeries(Y, ...)
-            X = mergeSeries(X, Y@Data, units = c(X@units, UNITS))
+            X = .mergeSeries(X, Y@Data, units = c(X@units, UNITS))
             # print(head(X))
         }
     }

@@ -48,7 +48,9 @@
 # FUNCTION:            FOR DAILY OPERATIONS:
 #  dummyDailySeries     Creates a dummy daily 'timeSeries' object
 #  alignDailySeries     Aligns a 'timeSeries' object to new positions 
-#  ohlcDailyPlot        Plots open–high–low–close bar chart         
+#  ohlcDailyPlot        Plots open–high–low–close bar chart    
+# FUNCTION:
+#  .modelSeries     
 ################################################################################
 
 
@@ -735,7 +737,7 @@ function(x, ...)
 
 
 dummyDailySeries =
-function(x)
+function(x = rnorm(365), units = "X", zone = "GMT", FinCenter = "GMT")
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -744,9 +746,6 @@ function(x)
     # Arguments:
     #   x - a numeric vector 
     #   origin - the first date in the series
-    
-    # Example:
-    #   dummyDailySeries(rnorm(100))
     
     # Changes:
     #
@@ -757,10 +756,12 @@ function(x)
     stopifnot(is.numeric(x))
     
     # Time Series:
-    positions = timeSequence(from = "1970-01-01", length.out = length(x),
-        zone = "GMT", FinCenter = "GMT")
-    ans = timeSeries(data = matrix(x, ncol = 1), charvec = positions,
-        units = "TS", zone = "GMT", FinCenter = "GMT")
+    if (is.vector(x)) data = matrix(x, ncol = 1)
+    if (is.matrix(x)) data = x
+    positions = timeSequence(from = "1970-01-01", length.out = length(x[, 1]),
+        zone = zone, FinCenter = FinCenter)
+    ans = timeSeries(data = data, charvec = positions, units = units, 
+        zone = zone, FinCenter = FinCenter)
         
     # Return Value:
     ans
@@ -1004,6 +1005,67 @@ grid.nx = 7, grid.lty = "solid", ...)
     invisible()  
 }   
 
+
+################################################################################
+
+
+.modelSeries = 
+function(formula, data, fake = FALSE, lhs = FALSE)
+{   # A function implemented by Diethelm Wuertz
+
+    # Arguments:
+    #   data - a timeSeries, a data.frame or a numeric vector
+    
+    # Details:
+    #   Time Series Modelling
+    #   Regression Modelling
+    #   Data Management
+    
+    
+    # If no respnonse is pecified:
+    if (length(formula) == 2) {
+        formula = as.formula(paste("x", formula[1], formula[2], collapse = ""))
+        stopifnot(!missing(data))
+    }
+
+    # Isf data is missing, take the first data set from the search path:
+    if (missing(data)) {
+        data = eval(parse(text = search()[2]), parent.frame())
+    }
+    
+    if (is.numeric(data)) {
+        data = data.frame(data)
+        colnames(data) = all.vars(formula)[1]
+        lhs = TRUE
+    }
+    
+    # If we consider a faked formula:
+    if (fake) {
+        response = as.character(formula)[2]
+        Call = as.character(match.call()[[2]][[3]])
+        method = Call[1]
+        predictors = Call[2]
+        formula = as.formula(paste(response, "~", predictors))
+    }
+    
+    # If only left hand side is required:
+    if (lhs) {
+        response = as.character(formula)[2]
+        formula = as.formula(paste(response, "~", 1))
+    } 
+    
+    # Create Model Data:
+    x = model.frame(formula, data)
+    
+    # Convert:
+    if (class(data) == "timeSeries") x = timeSeries(x)
+    if (fake) attr(x, "control") <- method
+    
+    # Return value:
+    x
+    
+}
+    
 
 ################################################################################
 

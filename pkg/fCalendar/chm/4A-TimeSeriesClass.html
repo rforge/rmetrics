@@ -148,7 +148,7 @@ lines(x, ...)
 ## S3 method for class 'timeSeries':
 points(x, ...)
 
-dummyDailySeries(x)
+dummyDailySeries(x = rnorm(365), units = "X", zone = "GMT", FinCenter = "GMT")
 alignDailySeries(x, method = c("before", "after", "interp", "fillNA"), 
     include.weekends = FALSE, units = NULL)
 ohlcDailyPlot(x, volume = TRUE, colOrder = c(1:5), units = 1e6, 
