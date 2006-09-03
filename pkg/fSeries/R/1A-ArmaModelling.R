@@ -93,9 +93,8 @@ setClass("fARMA",
         parameter = "list",
         data = "list",
         fit = "list",
-        residuals = "numeric",
-        fitted.values = "numeric",
-        predicted.values = "list",
+        residuals = "list",
+        fitted = "list",
         title = "character",
         description = "character"
     )  
@@ -222,11 +221,11 @@ rseed = NULL, ...)
 
 
 # ------------------------------------------------------------------------------
-
+ 
 
 armaFit = 
 function(
-formula = x ~ arima(2, 0, 1), method = c("mle", "ols"), 
+formula, data, method = c("mle", "ols"), 
 include.mean = TRUE, fixed = NULL, title = NULL, description = NULL, ...)
 {   # A function implemented by Diethelm Wuertz
 
@@ -238,11 +237,8 @@ include.mean = TRUE, fixed = NULL, title = NULL, description = NULL, ...)
     
     # Notes:
     #   Valid formulas are:
-    #       "ar" 
-    #       "arma"
-    #       "arima"
-    #       "fracdiff"
-    #   "arma(p,q)" uses arima(p,0,q)
+    #       "ar" "ma" "arma" "arima" "arfima" "fracdiff"
+    #       "arma(p,q)" uses arima(p,0,q)
     
     # Details:
     #   R-base:
@@ -266,10 +262,7 @@ include.mean = TRUE, fixed = NULL, title = NULL, description = NULL, ...)
     #           n.cond, 
     #           xreg=NULL,  
     #           ...) 
-
-    # Example:
-    #   x = armaSim(); fit = armaFit(x ~ arima(2, 0, 1)); fit
-    
+ 
     # Changes:
     #
     
@@ -287,31 +280,38 @@ include.mean = TRUE, fixed = NULL, title = NULL, description = NULL, ...)
     call = match.call()
     
     # Add to Fracdiff: h and M default Settings
-    mf <- match.call(expand.dots = TRUE)
-    m <- match("h", names(mf), 0)
-    if (m == 0) h = -1 else y = eval(mf[[m]])
-    m <- match("M", names(mf), 0)
-    if (m == 0) M = 100 else M = eval(mf[[m]])
-    
-    # Check for Formula length:
-    formula = as.formula(formula)
-    m = length(formula)
-    if (m != 3) stop("Formula misspecified")
+    if (FALSE) {
+        mf = match.call(expand.dots = TRUE)
+        m = match("h", names(mf), 0)
+        if (m == 0) h = -1 else h = eval(mf[[m]])
+        fracdiff.h = h
+        m = match("M", names(mf), 0)
+        if (m == 0) M = 100 else M = eval(mf[[m]])
+        fracdiff.M = M
+    }
     
     # Get Series:
-    # ts = eval(formula[[2]], + sys.parent())
-    # DW 2005-02-04
-    x = ts = eval(formula[[2]], + sys.parent())
-    
+    # DW 2005-09-03
+    mf = match.call(expand.dots = FALSE)
+    m = match(c("formula", "data"), names(mf), 0)
+    mf = mf[c(1, m)]
+    mf[[1]] = as.name(".modelSeries")
+    mf$fake = FALSE
+    mf$lhs = TRUE
+    if (missing(data)) data = eval(parse(text = search()[2]), parent.frame())
+    mf$data = data
+    x = eval(mf, parent.frame())
+    x = ts = as.vector(x[, 1])
+
     # Allow for univariate 'timeSeries' Objects:
     # Added 2004-09-04 DW
     if (class(ts) == "timeSeries") ts = as.vector(ts)
     
     # Which Model?
     # DW 2006-02-21
-    # regexpr("\\(", as.character(formula[3]))
-    end = regexpr("\\(", as.character(formula[3]))-1
-    tsmodel =  substr(as.character(formula[3]), 1, end)
+    K = length(formula)
+    end = regexpr("\\(", as.character(formula[K]))-1
+    tsmodel =  substr(as.character(formula[K]), 1, end)
     
     # Valid Model?
     valid = FALSE
@@ -324,9 +324,9 @@ include.mean = TRUE, fixed = NULL, title = NULL, description = NULL, ...)
     if (!valid) stop("Invalid Formula Specification")
     
     # Which Order?
-    start = regexpr("\\(", as.character(formula[3]))+1
-    end   = regexpr("\\)", as.character(formula[3]))-1
-    order = substr(as.character(formula[3]), start, end)
+    start = regexpr("\\(", as.character(formula[K]))+1
+    end   = regexpr("\\)", as.character(formula[K]))-1
+    order = substr(as.character(formula[K]), start, end)
     
     if (tsmodel == "arfima" || tsmodel == "fracdiff") {
         # method will be ignored ...
@@ -398,19 +398,25 @@ include.mean = TRUE, fixed = NULL, title = NULL, description = NULL, ...)
     # Add title and desription:
     if (is.null(title)) title = "ARIMA Modelling"
     if (is.null(description)) description = .description()
+    
+    
+    # Parameters:
+    parameter = list(include.mean = include.mean, fixed = fixed)
+    if (tsmodel == "arfima" || tsmodel == "fracdiff") { 
+        parameter$fracdiff.M = fracdiff.M
+        parameter$fracdiff.h = fracdiff.h
+    }
        
     # Return Value:
     new("fARMA",     
         call = as.call(match.call()),
         formula = as.formula(formula), 
         method = as.character(method),
-        parameter = list(include.mean = include.mean, fixed = fixed, 
-            fracdiff.M = fracdiff.M, fracdiff.h = fracdiff.h),
+        parameter = parameter,
         data = list(x = x),
         fit = fit,
-        residuals = as.vector(fit$residuals),
-        fitted.values = as.vector(fit$fitted.values),
-        predicted.values = list(),
+        residuals = list(residuals = fit$residuals),
+        fitted = list(fitted = fit$fitted.values),
         title = as.character(title), 
         description = as.character(description) )
 }
