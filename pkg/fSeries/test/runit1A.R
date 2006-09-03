@@ -93,8 +93,7 @@ function()
         "data",             
         "fit",     
         "residuals",  
-        "fitted.values",   
-        "predicted.values", 
+        "fitted",   
         "title",   
         "description")
     checkIdentical(target, current)
