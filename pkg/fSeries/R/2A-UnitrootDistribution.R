@@ -117,7 +117,8 @@ function(trend = c("nc", "c", "ct"), statistic = c("t", "n"))
     # Description:     
     #   Critical Values for the ADF test.
     
-    
+    # FUNCTION:
+      
     # Select Type:
     type = trend[1]
     statistic = statistic[1]
