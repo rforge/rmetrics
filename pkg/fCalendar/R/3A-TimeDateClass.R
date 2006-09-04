@@ -971,9 +971,15 @@ function(x, ...)
     cat(x@FinCenter, "\n", sep = "")
     layout = paste("[", as.character(x@Data), "]", sep = "")
     
-    # Return Value:
+    # timeDate:
     Sys.putenv(TZ = myTZ)
     print(layout, quote = FALSE, ...)
+    
+    # Control:
+    control = attr(x, "control")
+    if (!is.null(control)) print(control)
+    
+    # Return Value:
     invisible(x)
 }
 

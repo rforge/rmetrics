@@ -792,9 +792,9 @@ function(x, ...)
 
 yahooSeries = 
 function(symbols = c("^DJI", "IBM"), from = NULL, to = NULL, 
-nDaysBack = 365, quote = "Close", aggregation = c("d", "w", "m"), 
-returnClass = c("timeSeries", "ts", "matrix", "data.frame"), 
-getReturns = FALSE, ...)
+nDaysBack = 365, quote = c("Open", "High", "Low", "Close", "Volume"), 
+aggregation = c("d", "w", "m"), returnClass = c("timeSeries", "ts", 
+"matrix", "data.frame"), getReturns = FALSE, ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:

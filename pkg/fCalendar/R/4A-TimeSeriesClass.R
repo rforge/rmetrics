@@ -50,7 +50,7 @@
 #  alignDailySeries     Aligns a 'timeSeries' object to new positions 
 #  ohlcDailyPlot        Plots open–high–low–close bar chart    
 # FUNCTION:
-#  .modelSeries     
+#  .modelSeries         Models a timeSeries object to use formulas
 ################################################################################
 
 
@@ -604,8 +604,15 @@ function(x, ...)
     
     # FUNCTION:
         
-    # Return Value:
+    # Series:
     print.default(x@Data)
+    
+    # Control:
+    control = attr(x, "control")
+    if (!is.null(control)) print(control)
+    
+    # Return Value:
+    invisible()
 }
 
   
@@ -1007,6 +1014,8 @@ grid.nx = 7, grid.lty = "solid", ...)
 
 
 ################################################################################
+# FUNCTION:
+#  .modelSeries         Models a timeSeries object to use formulas
 
 
 .modelSeries = 
@@ -1065,7 +1074,7 @@ function(formula, data, fake = FALSE, lhs = FALSE)
     x
     
 }
-    
+
 
 ################################################################################
 
