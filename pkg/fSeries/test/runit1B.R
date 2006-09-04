@@ -81,7 +81,7 @@ function()
     x = armaSim(model = list(ar = c(0.5, - 0.5), d = 0.3, ma = 0.1), n = 1000)
     
     # MLE Fit - method="mle":
-    object = arfimaOxFit(formula = x ~ arfima(2, 1))
+    object = arfimaOxFit(formula = ~arfima(2,1), data = x)
     print(object)
     target = as.vector(round(coef(object), 1))
     print(target)
@@ -89,7 +89,7 @@ function()
     checkEqualsNumeric(target, current)
     
     # MLE Fit - method="nls":
-    object = arfimaOxFit(formula = x ~ arfima(2, 1), method = "nls")
+    object = arfimaOxFit(formula = ~ arfima(2, 1), data = x, method = "nls")
     print(object)
     target = as.vector(round(coef(object), 1))
     print(target)
@@ -97,7 +97,7 @@ function()
     checkEqualsNumeric(target, current)
     
     # MLE Fit - method="mpl":
-    object = arfimaOxFit(formula = x ~ arfima(2, 1), method = "mpl")
+    object = arfimaOxFit(formula = ~ arfima(2, 1), data = x, method = "mpl")
     print(object)
     target = as.vector(round(coef(object), 1))
     print(target)
@@ -123,14 +123,14 @@ function()
     x = armaSim(model = list(ar = c(0.5, - 0.5), d = 0.3, ma = 0.1), n = 1000)
     
     # Fit:
-    object = arfimaOxFit(formula = x ~ arfima(2, 1))
+    object = arfimaOxFit(formula = ~ arfima(2, 1), data = x)
     
     # Report:
     print(object)
     
     # Plot:
-    par(mfrow = c(2,2), cex = 0.7)
-    plot(object, which = "all")
+    # par(mfrow = c(2,2), cex = 0.7)
+    # plot(object, which = "all")           # Not yet implemented
     
     # Summary:
     summary(object)
@@ -139,7 +139,7 @@ function()
     coefficients(object)
     coef(object)
     fitted(object)[1:10]      
-    residuals(object)[1:10]        
+    residuals(object)[1:10]       
       
     # Return Value:
     return()    
@@ -161,7 +161,7 @@ function()
     x = armaSim(model = list(ar = 0.1, d = 0.2, ma = c(0.5, -0.5)), n = 1000)
     
     # Fit:
-    object = arfimaOxFit(formula = x ~ arfima(1, 2))
+    object = arfimaOxFit(formula = ~ arfima(1, 2), data = x)
     print(object)
    
     # Predict:
@@ -169,7 +169,7 @@ function()
     #   doplot = TRUE, ...) 
     # plot for predict method ignored, not yet available
     predict(object)[1:10]   
-    predict(object, doplot = FALSE)[1:10]       
+    predict(object, doplot = FALSE)[1:10]                                # CHECK     
     
     
     # Return Value:
@@ -189,19 +189,19 @@ function()
     # Simulate and Fit:
     set.seed(1985)
     x = armaSim(model = list(ar = 0.5, d = 0.3, ma = 0.5), n = 1000)
-    object = arfimaOxFit(formula = x ~ arfima(1, 1), trace = FALSE)      
+    object = arfimaOxFit(formula = ~ arfima(1, 1), data = x, trace = FALSE)      
     object
     
     # Simulate and Fit:
     set.seed(1985)
     x = armaSim(model = list(ar = 0, d = 0.3, ma = 0), n = 1000)
-    object = arfimaOxFit(formula = x ~ arfima(1, 1))      
+    object = arfimaOxFit(formula = ~ arfima(1, 1), data = x)      
     object
     
     # Simulate and Fit:
     set.seed(1985)
     x = armaSim(model = list(ar = 0, d = 0.3, ma = 0), n = 1000)
-    object = arfimaOxFit(formula = x ~ arfima(0, 0))      
+    object = arfimaOxFit(formula = ~ arfima(0, 0), data = x)      
     object
     
     

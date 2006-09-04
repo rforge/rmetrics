@@ -33,13 +33,21 @@
 
 
 \usage{
-arfimaOxFit(formula = x ~ arfima(1, 1), method = c("mle", "nls", "mpl"),
+arfimaOxFit(formula, data, method = c("mle", "nls", "mpl"),
     trace = TRUE, title = NULL, description = NULL)
 }
 
 
 \arguments{
    
+    \item{data}{
+        an optional timeSeries or data frame object containing the variables 
+        in the model. If not found in \code{data}, the variables are taken 
+        from \code{environment(formula)}, typically the environment from which
+        \code{armaFit} is called. If \code{data} is an univariate series, then
+        the series is converted into a numeric vector and the name of the
+        response in the formula will be neglected.
+        }
     \item{description}{
         a character string which allows for a brief description.
         }

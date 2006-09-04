@@ -31,8 +31,7 @@
 
 
 \usage{
-garchOxFit(formula.mean = ~ arma(0, 0), formula.var = ~ garch(1, 1), 
-    series = x, cond.dist = c("gaussian", "t", "ged", "skewed-t"), 
+garchOxFit(formula, data, cond.dist = c("gaussian", "t", "ged", "skewed-t"), 
     include.mean = TRUE, trace = TRUE, control = list(), title = NULL,
     description = NULL)
     
@@ -58,19 +57,26 @@ garchOxFit(formula.mean = ~ arma(0, 0), formula.var = ~ garch(1, 1),
         \code{xscale} - should the time series be scaled by the
             standard deviation ?
         }   
+    \item{data}{
+        an optional timeSeries or data frame object containing the variables 
+        in the model. If not found in \code{data}, the variables are taken 
+        from \code{environment(formula)}, typically the environment from which
+        \code{armaFit} is called. If \code{data} is an univariate series, then
+        the series is converted into a numeric vector and the name of the
+        response in the formula will be neglected.
+        }
     \item{description}{
         a character string which allows for a brief description.
         }
     \item{digits}{
         the number of digits to be printed.
         }
-    \item{formula.mean}{
-        formula object which specifies the mean. Pure AR and MA models 
-        can be specified as ARMA(0,q) and ARMA(p,0) respectively.
-        }
-    \item{formula.var}{
-        formula object which specifies the variance. Use \code{~garch(p,q)}
-        to specify GARCH(p,q) models.
+    \item{formula}{ 
+        [garchFit] - \cr
+        formula object describing the mean and variance equation of the 
+        ARMA-GARCH/APARCH model. A pure GARCH(1,1) model is selected 
+        when e.g. \code{formula=~garch(1,1)}. To specify for example an 
+        ARMA(2,1)-APARCH(1,1) use \code{formula = ~arma(2,1)+apaarch(1,1)}.
         }
     \item{include.mean}{
         should the mean be included? By default TRUE.
@@ -78,10 +84,6 @@ garchOxFit(formula.mean = ~ arma(0, 0), formula.var = ~ garch(1, 1),
     \item{object}{
         an object of class \code{garchOx} as returned from the function
         code{garchOxFit}.
-        }
-    \item{series}{
-        the time series to be modeled. The time series can be scaled
-        settting \code{control$xcale=TRUE}.
         }
     \item{title}{
         a character string which allows for a project title.

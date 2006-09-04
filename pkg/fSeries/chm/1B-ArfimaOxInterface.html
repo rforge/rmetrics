@@ -58,7 +58,7 @@ functiona:
 <h3>Usage</h3>
 
 <pre>
-arfimaOxFit(formula = x ~ arfima(1, 1), method = c("mle", "nls", "mpl"),
+arfimaOxFit(formula, data, method = c("mle", "nls", "mpl"),
     trace = TRUE, title = NULL, description = NULL)
 </pre>
 
@@ -66,6 +66,15 @@ arfimaOxFit(formula = x ~ arfima(1, 1), method = c("mle", "nls", "mpl"),
 <h3>Arguments</h3>
 
 <table summary="R argblock">
+<tr valign="top"><td><code>data</code></td>
+<td>
+an optional timeSeries or data frame object containing the variables 
+in the model. If not found in <code>data</code>, the variables are taken 
+from <code>environment(formula)</code>, typically the environment from which
+<code>armaFit</code> is called. If <code>data</code> is an univariate series, then
+the series is converted into a numeric vector and the name of the
+response in the formula will be neglected.
+</td></tr>
 <tr valign="top"><td><code>description</code></td>
 <td>
 a character string which allows for a brief description.

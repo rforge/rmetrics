@@ -42,6 +42,7 @@
 # PART III - FUNCTION:    PARAMETER ESTIMATION: 
 #  setClass[fGARCH]        S4: fGARCH Class representation   
 #  garchFit                Fits GARCH and APARCH processes
+#  .garchFit               ... old Version
 #  .garchInitSeries        Initializes Series
 #  .garchInitParameters    Initializes Parameters
 #  .garchSetCondDist       Selects conditional density function
@@ -756,6 +757,7 @@ function()
 # PART III - FUNCTION:    PARAMETER ESTIMATION: 
 #  setClass[fGARCH]        S4: fGARCH Class representation   
 #  garchFit                Fits GARCH and APARCH processes
+#  .garchFit               ... old Version
 #  .garchInitSeries        Initializes Series
 #  .garchInitParameters    Initializes Parameters
 #  .garchSetCondDist       Selects conditional density function
@@ -779,7 +781,7 @@ setClass("fGARCH",
         data = "list",
         fit = "list",
         residuals = "numeric",
-        fitted.values = "numeric",
+        fitted = "numeric",
         h.t = "numeric",
         sigma.t = "numeric",
         title = "character",
@@ -790,7 +792,62 @@ setClass("fGARCH",
 # ------------------------------------------------------------------------------
       
 
-garchFit =
+garchFit = 
+function(formula, data, init.rec = c("mci", "uev"), delta = 2, skew = 1, 
+shape = 4, cond.dist = c("dnorm", "dsnorm", "dged", "dsged", "dstd", "dsstd"), 
+include.mean = TRUE, include.delta = NULL, include.skew = NULL, 
+include.shape = NULL, leverage = NULL, trace = TRUE, 
+algorithm = c("sqp", "nlminb", "lbfgsb", "nlminb+nm", "lbfgsb+nm"), 
+control = list(), title = NULL, description = NULL, ...)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description
+    #   Fit parameters to a ARMA-GARCH model
+    
+    # Call:
+    CALL = match.call()
+    
+    # Get Data:
+    mf = match.call(expand.dots = FALSE)
+    m = match(c("formula", "data"), names(mf), 0)
+    mf = mf[c(1, m)]
+    mf[[1]] = as.name(".modelSeries")
+    mf$fake = FALSE
+    mf$lhs = TRUE
+    x = eval(mf, parent.frame())
+    x = as.vector(x[, 1])
+    if (class(mf$data) == "timeSeries") names(x) = rownames(data)
+    # print(head(x))
+    
+    # Compose Mean and variance Formula:
+    allLabels = attr(terms(formula), "term.labels")
+    print(allLabels)
+    if (length(allLabels) == 2) {
+        formula.mean = as.formula(paste("~", allLabels[1]))
+        formula.var = as.formula(paste("~", allLabels[2]))
+    } else if (length(allLabels) == 1) {
+        formula.mean = as.formula("~ arma(0, 0)")
+        formula.var = as.formula(paste("~", allLabels[1]))
+    }
+    # print(formula.mean)
+    # print(formula.var)
+    
+    # Fit:
+    ans = .garchFit(formula.mean, formula.var, series = x, init.rec, delta, 
+        skew, shape, cond.dist, include.mean, include.delta, include.skew, 
+        include.shape, leverage, trace, algorithm, control, title, 
+        description, ...)
+    ans@call = CALL
+    
+    # Return Value:
+    ans
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.garchFit =
 function(formula.mean = ~arma(0, 0), formula.var = ~garch(1, 1), 
 series = x, init.rec = c("mci", "uev"), delta = 2, skew = 1, shape = 4,
 cond.dist = c("dnorm", "dsnorm", "dged", "dsged", "dstd", "dsstd"), 
@@ -938,7 +995,7 @@ control = list(), title = NULL, description = NULL, ...)
     
     # Add Title and Description:
     if (is.null(title)) title = "GARCH Modelling"
-    if (is.null(description)) description = as.character(date())
+    if (is.null(description)) description = .description()
         
     # Return Value:
     new("fGARCH",     
@@ -948,7 +1005,7 @@ control = list(), title = NULL, description = NULL, ...)
         data = list(x = series),
         fit = fit,        
         residuals = residuals,
-        fitted.values = fitted.values,
+        fitted = fitted.values,
         h.t = h.t,
         sigma.t = as.vector(sigma.t),
         title = as.character(title),
@@ -1999,7 +2056,7 @@ title = NULL, description = NULL, ...)
         data = list(x = series),
         fit = fit,        
         residuals = fit$residuals,
-        fitted.values = series - fit$residuals,
+        fitted = series - fit$residuals,
         h = numeric(),
         sigma.t = numeric(),
         title = as.character(title),

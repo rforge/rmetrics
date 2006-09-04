@@ -106,8 +106,8 @@ setClass("fARMA",
 
 armaSim = 
 function(model = list(ar = c(0.5, -0.5), d = 0, ma = 0.1), n = 100,
-innov = NULL, n.start = 100, start.innov = NULL, rand.gen = rnorm, 
-rseed = NULL, ...) 
+positions = NULL, innov = NULL, n.start = 100, start.innov = NULL, 
+rand.gen = rnorm, rseed = NULL, addControl = FALSE, ...) 
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -207,14 +207,24 @@ rseed = NULL, ...)
     }
                
     # Time Series:
-    ans = as.ts(x)
-    control = c(ar = model$ar, d = model$d, ma = model$ma)
-    Names = names(control)
-    control = as.character(c(control, substitute(rand.gen)))
-    names(control) = c(Names, "rand.gen")
-    if (!is.null(rseed)) control = c(control, rseed = rseed)
-    attr(ans, "control") = control
-        
+    if (is.null(positions)) {
+        ans = as.ts(x)
+    } else {
+        stopifnot(class(positions) == "timeDate")
+        stopifnot(n == length(positions))
+        ans = timeSeries(data = matrix(x, ncol = 1), charvec = positions, ...)
+    }
+    
+    # Add Control:
+    if (addControl) {
+        control = c(ar = model$ar, d = model$d, ma = model$ma)
+        Names = names(control)
+        control = as.character(c(control, substitute(rand.gen)))
+        names(control) = c(Names, "rand.gen")
+        if (!is.null(rseed)) control = c(control, rseed = rseed)
+        attr(ans, "control") = control
+    }
+    
     # Return Value:
     ans
 }
@@ -280,15 +290,13 @@ include.mean = TRUE, fixed = NULL, title = NULL, description = NULL, ...)
     call = match.call()
     
     # Add to Fracdiff: h and M default Settings
-    if (FALSE) {
-        mf = match.call(expand.dots = TRUE)
-        m = match("h", names(mf), 0)
-        if (m == 0) h = -1 else h = eval(mf[[m]])
-        fracdiff.h = h
-        m = match("M", names(mf), 0)
-        if (m == 0) M = 100 else M = eval(mf[[m]])
-        fracdiff.M = M
-    }
+    mf = match.call(expand.dots = TRUE)
+    m = match("h", names(mf), 0)
+    if (m == 0) h = -1 else h = eval(mf[[m]])
+    fracdiff.h = h
+    m = match("M", names(mf), 0)
+    if (m == 0) M = 100 else M = eval(mf[[m]])
+    fracdiff.M = M
     
     # Get Series:
     # DW 2005-09-03
@@ -381,7 +389,7 @@ include.mean = TRUE, fixed = NULL, title = NULL, description = NULL, ...)
    
     # Fit:
     fit = fun(x = ts, order = order, include.mean = include.mean, 
-        method = method[1], fixed = fixed, M = M, h = h, ...)  
+        method = method[1], fixed = fixed, ...)  
      
     # "ols" specific:
     if (method == "ols") {
@@ -403,8 +411,8 @@ include.mean = TRUE, fixed = NULL, title = NULL, description = NULL, ...)
     # Parameters:
     parameter = list(include.mean = include.mean, fixed = fixed)
     if (tsmodel == "arfima" || tsmodel == "fracdiff") { 
-        parameter$fracdiff.M = fracdiff.M
-        parameter$fracdiff.h = fracdiff.h
+        parameter$M = fracdiff.M
+        parameter$h = fracdiff.h
     }
        
     # Return Value:
@@ -554,7 +562,8 @@ method = c("CSS-ML", "ML", "CSS"), M = NULL, h = NULL, ...)
   
 
 .arfimaFit =
-function (x, order, include.mean, fixed, method = "arfima", M = 100, h = -1) 
+function (x, order, include.mean, fixed, method = "arfima", 
+M = 100, h = -1, ...) 
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -677,7 +686,8 @@ function (x, order, include.mean, fixed, method = "arfima", M = 100, h = -1)
     
     # Add Fitted Values:
     n = 0:fit$M
-    w = gamma(-fit$d+n)/(gamma(-fit$d)*gamma(n+1)) 
+    w = lgamma(-fit$d+n) - (lgamma(-fit$d)+lgamma(n+1)) 
+    w = exp(w)
     fit$fitted.values = filter(fit$x, w, sides = 1) 
     
     # Add Residuals:
@@ -1061,7 +1071,7 @@ function (object, doplot = TRUE, which = "all", ...)
     if (doplot) plot.fARMA(x, which = which, ...)
     
     # Description:
-    cat("Description:\n ")
+    cat("\nDescription:\n ")
     cat(x@description, "\n\n")
     
     # Return Value:
@@ -1195,15 +1205,9 @@ function(object, ...)
     #
     
     # FUNCTION:
-    
-    # Check:
-    if (object@fit$tsmodel == "arfima") {
-        warning (" Fitted method for ARFIMA models not yet implemented")
-        return()
-    }
         
     # Fitted Values:
-    ans = object@fitted.values
+    ans = object@fitted$fitted
     classAns = class(object@data$x)
     if (classAns == "ts") ans = as.ts(ans)
     
@@ -1228,13 +1232,9 @@ function(object, ...)
     # FUNCTION:
     
     # Check:
-    if (object@fit$tsmodel == "arfima") {
-        warning (" Residuals method for ARFIMA models not yet implemented")
-        return()
-    }
        
     # Residual Values:
-    ans = object@fit$residuals
+    ans = object@residuals$residuals
     classAns = class(object@data$x)
     if (classAns == "ts") ans = as.ts(ans)
     

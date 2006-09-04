@@ -55,8 +55,8 @@ OXPATH <<- "C:\\Ox\\Ox3"
 
 
 arfimaOxFit = 
-function(formula = x ~ arfima(1, 1), method = c("mle", "nls", "mpl"),
-trace = TRUE, title = NULL, description = NULL)
+function(formula, data, method = c("mle", "nls", "mpl"), trace = TRUE, 
+title = NULL, description = NULL)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -81,37 +81,55 @@ trace = TRUE, title = NULL, description = NULL)
        
     # FUNCTION:
     
+    # Debug Mode:
+    DEBUG = FALSE
+    
     # Call:
     call = match.call()
     
-    # Check for Formula length:
-    formula = as.formula(formula)
-    if (length(formula) != 3) stop("Formula misspecified")
-    
     # Get Series:
-    x = eval(formula[[2]], + sys.parent())
-    ts = as.vector(x)
+    # DW 2005-09-03
+    mf = match.call(expand.dots = FALSE)
+    m = match(c("formula", "data"), names(mf), 0)
+    mf = mf[c(1, m)]
+    mf[[1]] = as.name(".modelSeries")
+    mf$fake = FALSE
+    mf$lhs = TRUE
+    if (missing(data)) data = eval(parse(text = search()[2]), parent.frame())
+    mf$data = data
+    x = eval(mf, parent.frame())
+    x = ts = as.vector(x[, 1])
+    if (DEBUG) print(head(x))
+
+    # Allow for univariate 'timeSeries' Objects:
+    # Added 2004-09-04 DW
+    if (class(ts) == "timeSeries") ts = as.vector(ts)
 
     # Which Model - Valid?
-    tsmodel =  all.names(formula)[3]
+    K = length(formula)
+    end = regexpr("\\(", as.character(formula[K]))-1
+    tsmodel =  substr(as.character(formula[K]), 1, end)
     valid = FALSE
     if (tsmodel == "arfima") {
         tsmodel = "arfimaOX"
         valid = TRUE
     }
     if (!valid) stop("Invalid Formula Specification")
+    if (DEBUG) print(tsmodel)
     
     # Which Order?
     order = c(0, 0, 0)
-    order[1] = as.numeric(as.character(formula[[3]])[2])
+    order[1] = as.numeric(as.character(formula[[K]])[2])
     order[2] = 0
-    order[3] = as.numeric(as.character(formula[[3]])[3])
+    order[3] = as.numeric(as.character(formula[[K]])[3])
+    if (DEBUG) print(order)
     
     # Which method ?
     method = match.arg(method)
     Methods = 1:3
     names(Methods) = c("mle", "nls", "mpl")
     method = Methods[method]
+    if (DEBUG) print(method)
                                             
     # Write parameters to file - OxArguments.csv:
     parameters = c(
@@ -166,15 +184,15 @@ trace = TRUE, title = NULL, description = NULL)
         parameter = list(include.mean = NA, fixed = NA, order = order),
         data = list(x = x),
         fit = fit,
-        residuals = as.vector(fit$residuals),
-        fitted.values = as.vector(fit$fitted),
-        predicted.values = list(),
+        residuals = list(residuals = fit$residuals),
+        fitted = list(fitted = fit$fitted),
         title = as.character(title), 
         description = as.character(description) )
         
     # Return Value:
     ans
 } 
+arfimaOxFit(formula = ~arfima(2,1), data = x)
 
 
 # ------------------------------------------------------------------------------

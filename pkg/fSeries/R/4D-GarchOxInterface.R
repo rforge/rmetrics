@@ -33,6 +33,56 @@ OXPATH <<- "C:\\Ox\\Ox3"
 
 
 garchOxFit = 
+function(formula, data, cond.dist = c("gaussian", "t", "ged", "skewed-t"), 
+include.mean = TRUE, trace = TRUE, control = list(), title = NULL, 
+description = NULL)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description
+    #   Fit parameters to a ARMA-GARCH model
+    
+    # Call:
+    CALL = match.call()
+    
+    # Get Data:
+    mf = match.call(expand.dots = FALSE)
+    m = match(c("formula", "data"), names(mf), 0)
+    mf = mf[c(1, m)]
+    mf[[1]] = as.name(".modelSeries")
+    mf$fake = FALSE
+    mf$lhs = TRUE
+    x = eval(mf, parent.frame())
+    x = as.vector(x[, 1])
+    if (class(mf$data) == "timeSeries") names(x) = rownames(data)
+    # print(head(x))
+    
+    # Compose Mean and variance Formula:
+    allLabels = attr(terms(formula), "term.labels")
+    print(allLabels)
+    if (length(allLabels) == 2) {
+        formula.mean = as.formula(paste("~", allLabels[1]))
+        formula.var = as.formula(paste("~", allLabels[2]))
+    } else if (length(allLabels) == 1) {
+        formula.mean = as.formula("~ arma(0, 0)")
+        formula.var = as.formula(paste("~", allLabels[1]))
+    }
+    # print(formula.mean)
+    # print(formula.var)
+    
+    # Fit:
+    ans = .garchOxFit(formula.mean, formula.var, series = x, cond.dist,
+        include.mean, trace, control, title, description)
+    ans@call = CALL
+    
+    # Return Value:
+    ans
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.garchOxFit = 
 function(formula.mean = ~ arma(0, 0), formula.var = ~ garch(1, 1), 
 series = x, cond.dist = c("gaussian", "t", "ged", "skewed-t"), 
 include.mean = TRUE, trace = TRUE, control = list(), title = NULL, 
@@ -182,7 +232,7 @@ description = NULL)
     fit$title = title
     if (is.null(title)) fit$title = "GARCH Ox Modelling"
     fit$description = description
-    if (is.null(description)) fit$description = as.character(date())
+    if (is.null(description)) fit$description = .descrption()
         
     # Execution Time:
     Time = Sys.time() - Start

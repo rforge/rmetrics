@@ -88,11 +88,11 @@ The functions for the analysis of an true ARMA process are:
 
 <pre>
 armaSim(model = list(ar = c(0.5, -0.5), d = 0, ma = 0.1), n = 100, 
-    innov = NULL, n.start = 100, start.innov = NULL, rand.gen = rnorm, 
-    rseed = NULL, ...) 
+    positions = NULL, innov = NULL, n.start = 100, start.innov = NULL, 
+    rand.gen = rnorm, rseed = NULL, addControl = FALSE, ...) 
 
-armaFit(formula = x ~ arima(2, 0, 1), method = c("mle", "ols"), 
-    include.mean = TRUE, fixed = NULL, title = NULL, description = NULL, ...)
+armaFit(formula, data, method = c("mle", "ols"), include.mean = TRUE, 
+    fixed = NULL, title = NULL, description = NULL, ...)
 
 ## S3 method for class 'fARMA':
 print(x, ...)
@@ -121,11 +121,26 @@ armaTrueacf(model, lag.max = 20, type = c("correlation", "partial", "both"),
 <h3>Arguments</h3>
 
 <table summary="R argblock">
+<tr valign="top"><td><code>addControl</code></td>
+<td>
+[armaSim] - <br>
+a logical value. Should control parameters added to the returned
+series as a control attribute?
+</td></tr>
 <tr valign="top"><td><code>coefficients</code></td>
 <td>
 [armaRoots] - <br>
 a numeric vector with the coefficients of the characterisitic 
 polynomial.
+</td></tr>
+<tr valign="top"><td><code>data</code></td>
+<td>
+an optional timeSeries or data frame object containing the variables 
+in the model. If not found in <code>data</code>, the variables are taken 
+from <code>environment(formula)</code>, typically the environment from which
+<code>armaFit</code> is called. If <code>data</code> is an univariate series, then
+the series is converted into a numeric vector and the name of the
+response in the formula will be neglected.
 </td></tr>
 <tr valign="top"><td><code>description</code></td>
 <td>
@@ -274,6 +289,15 @@ is an object of class <code>fARMA</code> returned by the fitting function
 <code>armaFit</code> and serves as input for the <code>summary</code>, and 
 <code>predict</code> methods. Some methods allow for additional 
 arguments.
+</td></tr>
+<tr valign="top"><td><code>positions</code></td>
+<td>
+[armaSim] - <br>
+determines the class of the returned time series. If set to
+<code>NULL</code>, the default value, then an object of class <code>"ts"</code>
+will be returned. If <code>positions</code> is a <code>timeDate</code> vector
+of length <code>n</code> then an object of class <code>"timeSeries"</code>
+will be returned.
 </td></tr>
 <tr valign="top"><td><code>rand.gen</code></td>
 <td>

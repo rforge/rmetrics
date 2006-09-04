@@ -76,9 +76,8 @@ garchSim(model = list(omega = 1.0e-6, alpha = 0.1, beta = 0.8), n = 100,
     n.start = 100, presample = NULL, cond.dist = c("rnorm", "rged", "rstd", 
     "rsnorm", "rsged", "rsstd"), rseed = NULL)
     
-garchFit(formula.mean = ~arma(0, 0), formula.var = ~garch(1, 1), 
-    series = x, init.rec = c("mci", "uev"), delta = 2, skew = 1, shape = 4,
-    cond.dist = c("dnorm", "dsnorm", "dged", "dsged", "dstd", "dsstd"), 
+garchFit(formula, data, init.rec = c("mci", "uev"), delta = 2, skew = 1, 
+    shape = 4, cond.dist = c("dnorm", "dsnorm", "dged", "dsged", "dstd", "dsstd"), 
     include.mean = TRUE, include.delta = NULL, include.skew = NULL,
     include.shape = NULL, leverage = NULL, trace = TRUE,  
     algorithm = c("sqp", "nlminb", "lbfgsb", "nlminb+nm", "lbfgsb+nm"), 
@@ -117,6 +116,14 @@ garchKappa(cond.dist = c("dnorm", "dged", "dstd", "dsnorm", "dsged", "dsstd"),
         control parameters, the same as used for the functions from
         \code{nlminb}, and 'bfgs' and 'Nelder-Mead' from \code{optim}.
         }
+    \item{data}{
+        an optional timeSeries or data frame object containing the variables 
+        in the model. If not found in \code{data}, the variables are taken 
+        from \code{environment(formula)}, typically the environment from which
+        \code{armaFit} is called. If \code{data} is an univariate series, then
+        the series is converted into a numeric vector and the name of the
+        response in the formula will be neglected.
+        }
     \item{delta, include.delta}{
         [garchFit][kappa] - \cr
         the exponent \code{delta} of the variance recursion. By default,
@@ -127,13 +134,12 @@ garchKappa(cond.dist = c("dnorm", "dged", "dstd", "dsnorm", "dsged", "dsstd"),
         [garchFit] - \cr
         a character string which allows for a brief description. 
         }
-    \item{formula.mean, formula.var}{ 
+    \item{formula}{ 
         [garchFit] - \cr
-        two formula objects describing the mean and variance equation
-        of the ARMA-GARCH/APARCH model. By default a pure GARCH(1,1)
-        mode is selected, this means: \code{formula.mean=~arma(0,0)}, 
-        and \code{formula.var=~garch(1,1)}. To specify for example an 
-        APARCH(1,1) use: \code{formula.var=~apaarch(1,1)}
+        formula object describing the mean and variance equation of the 
+        ARMA-GARCH/APARCH model. A pure GARCH(1,1) model is selected 
+        when e.g. \code{formula=~garch(1,1)}. To specify for example an 
+        ARMA(2,1)-APARCH(1,1) use \code{formula = ~arma(2,1)+apaarch(1,1)}.
         }
     \item{gamma}{
         [kappa] - \cr
@@ -203,11 +209,6 @@ garchKappa(cond.dist = c("dnorm", "dged", "dstd", "dsnorm", "dsged", "dsstd"),
         [garchSpec][garchSpec] - \cr
         single integer argument, the seed for the intitialization of
         the random number generator for the innovations.
-        }
-    \item{series}{
-        [garchFit] - \cr
-        a numeric vector or univariate \code{timeSeries} object to be 
-        fitted. By default \code{series=x}.
         }
     \item{skew, shape}{
         [garchFit][kappa] - \cr

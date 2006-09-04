@@ -112,11 +112,11 @@
 
 \usage{
 armaSim(model = list(ar = c(0.5, -0.5), d = 0, ma = 0.1), n = 100, 
-    innov = NULL, n.start = 100, start.innov = NULL, rand.gen = rnorm, 
-    rseed = NULL, \dots) 
+    positions = NULL, innov = NULL, n.start = 100, start.innov = NULL, 
+    rand.gen = rnorm, rseed = NULL, addControl = FALSE, \dots) 
 
-armaFit(formula = x ~ arima(2, 0, 1), method = c("mle", "ols"), 
-    include.mean = TRUE, fixed = NULL, title = NULL, description = NULL, \dots)
+armaFit(formula, data, method = c("mle", "ols"), include.mean = TRUE, 
+    fixed = NULL, title = NULL, description = NULL, \dots)
 
 \method{print}{fARMA}(x, \dots)
 \method{plot}{fARMA}(x, which = "ask", gof.lag = 10, \dots)
@@ -137,11 +137,24 @@ armaTrueacf(model, lag.max = 20, type = c("correlation", "partial", "both"),
 
 \arguments{
  
+    \item{addControl}{    
+        [armaSim] - \cr
+        a logical value. Should control parameters added to the returned
+        series as a control attribute?
+        } 
     \item{coefficients}{    
         [armaRoots] - \cr
         a numeric vector with the coefficients of the characterisitic 
         polynomial.
         } 
+    \item{data}{
+        an optional timeSeries or data frame object containing the variables 
+        in the model. If not found in \code{data}, the variables are taken 
+        from \code{environment(formula)}, typically the environment from which
+        \code{armaFit} is called. If \code{data} is an univariate series, then
+        the series is converted into a numeric vector and the name of the
+        response in the formula will be neglected.
+        }
     \item{description}{
         a character string which allows for a brief description.
         }
@@ -273,6 +286,14 @@ armaTrueacf(model, lag.max = 20, type = c("correlation", "partial", "both"),
         \code{predict} methods. Some methods allow for additional 
         arguments.
         }
+    \item{positions}{    
+        [armaSim] - \cr
+        determines the class of the returned time series. If set to
+        \code{NULL}, the default value, then an object of class \code{"ts"}
+        will be returned. If \code{positions} is a \code{timeDate} vector
+        of length \code{n} then an object of class \code{"timeSeries"}
+        will be returned.
+        } 
     \item{rand.gen}{
         [armaSim] - \cr
         is the function which is called to generate the innovations. 
