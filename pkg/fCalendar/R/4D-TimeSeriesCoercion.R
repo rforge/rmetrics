@@ -31,7 +31,7 @@
 # METHODS:                  CREATE A TIMESERIES FROM OTHER OBJECTS:
 #  is.timeSeries             Tests for a 'timeSeries' object
 #  as.timeSeries             Defines method for a 'timeSeries' object
-#  as.timeSerie.default      Returns the input
+#  as.timeSeries.default     Returns the input
 #  as.timeSeries.numeric     Transforms a numeric vector into a 'timeSeries'
 #  as.timeSeries.data.frame  Transformas a 'data.frame' into a 'timeSeries'
 #  as.timeSeries.matrix      Transformas a 'matrix' into a 'timeSeries'
