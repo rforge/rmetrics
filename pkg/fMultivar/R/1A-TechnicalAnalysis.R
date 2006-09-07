@@ -250,10 +250,13 @@ function(x, lag = 5)
     # FUNCTION:
     
     # Rate of Change:
-    roc = diff(x, lag = lag) 
-    if (is.numeric(x)) roc = c(rep(NA, times = lag), roc)
-    roc = roc/x
-    if (is.timeSeries(roc)) colnames(roc)<-"ROC"
+    if (is.timeSeries(x)) {
+        roc = diff(x, lag = lag, pad = 0) / x
+        colnames(roc)<-"ROC"
+    } else { 
+        roc = diff(x, lag = lag)
+        roc = c(rep(0, times = lag), roc) / x
+    }
     
     # Return Value:
     roc
@@ -264,7 +267,7 @@ function(x, lag = 5)
 
 
 oscTA = 
-function(x, lag = c(25, 65))
+function(x, lag1 = 25, lag2 = 65)
 {   # A function written by Diethelm Wuertz
     #
     # Description:
@@ -281,8 +284,8 @@ function(x, lag = c(25, 65))
     # FUNCTION:
     
     # Oscillator:
-    xema1 = emaTA(x, lag[1])
-    xema2 = emaTA(x, lag[2])
+    xema1 = emaTA(x, lag1)
+    xema2 = emaTA(x, lag2)
     osc = (xema1 - xema2) / xema2
     if (is.timeSeries(osc)) colnames(osc)<-"OSC"
 
@@ -312,9 +315,13 @@ function(x, lag = 25)
     # FUNCTION:
     
     # Momentum:
-    mom = diff(x, lag = lag) 
-    if (is.numeric(x)) mom = c(rep(NA, times = lag), mom)
-    if (is.timeSeries(mom)) colnames(mom)<-"mom"
+    if (is.timeSeries(mom)) {
+        mom = diff(x, lag = lag, pad = 0)
+        colnames(mom)<-"mom"
+    } else {
+        mom = diff(x, lag = lag) 
+        mom = c(rep(0, times = lag), mom)
+    }
     
     # Return Value:
     mom
@@ -325,7 +332,7 @@ function(x, lag = 25)
 
 
 macdTA = 
-function(x, lag1, lag2)
+function(x, lag1 = 12, lag2 = 26)
 {   # A function written by Diethelm Wuertz
 
     # Description:
@@ -339,9 +346,9 @@ function(x, lag1, lag2)
     # FUNCTION:
     
     # MACD:
-    x = as.vector(x)
     macd = emaTA(x, lag1) - emaTA(x, lag2)
-    
+    if (is.timeSeries(x)) colnames(macd)<-"macd"
+  
     # Return Result:
     macd
 }
@@ -351,7 +358,7 @@ function(x, lag1, lag2)
 
 
 cdsTA = 
-function(x, lag = c(12, 26, 9))
+function(x, lag1 = 12, lag2 = 26, lag3 = 9)
 {   # A function written by Diethelm Wuertz
 
     # Description:
@@ -364,8 +371,8 @@ function(x, lag = c(12, 26, 9))
     # FUNCTION:
     
     # CDS:
-    x = as.vector(x)
-    cds = emaTA(macdTA(x, lag[1:2]), lag[3])
+    cds = emaTA(macdTA(x, lag1, lag2), lag3)
+    if (is.timeSeries(x)) colnames(cds)<-"cds"
     
     # Return Result:
     cds
@@ -376,7 +383,7 @@ function(x, lag = c(12, 26, 9))
 
 
 cdoTA = 
-function(x, lag = c(12, 26, 9))
+function(x, lag1 = 12, lag2 = 26, lag3 = 9)
 {   # A function written by Diethelm Wuertz
 
     # Description:
@@ -389,8 +396,8 @@ function(x, lag = c(12, 26, 9))
     # FUNCTION:
     
     # CDO:
-    x = as.vector(x)
-    cdo = macdTA(x, lag[1:2]) - cdsTA(x, lag)
+    cdo = macdTA(x, lag1, lag2) - cdsTA(x, lag3)
+    if(is.timeSeries(x)) colnames(cdo)<-"cdo"
     
     # Return Value:
     cdo
@@ -415,6 +422,7 @@ function(high, low)
     
     # VOHL:
     vohl = high - low
+    if(is.timeSeries(x)) colnames(vohl)<-"vohl"
     
     # Return Value:
     vohl
@@ -439,6 +447,7 @@ function(high, low)
     
     # VOR:
     vor = (high - low) / low
+    if(is.timeSeries(x)) colnames(vor)<-"vor"
     
     # Return Value:
     vor
@@ -554,6 +563,7 @@ function(close, high, low, lag1, lag2)
     
     # FPD:
     fpd = emaTA(fpkTA(close, high, low, lag1), lag2)
+    if(timeSeries(close)) colnames(fpd)<-"fpd"
     
     # Return Value:
     fpd 
@@ -578,6 +588,7 @@ function(close, high, low, lag1, lag2, lag3)
     
     # SPD:
     spd = emaTA(fpdTA(close, high, low, lag1, lag2), lag3)
+    if(timeSeries(close)) colnames(spd)<-"spd"
     
     # Return Value:
     spd 
@@ -601,6 +612,7 @@ function(close, high, low, lag1, lag2, lag3, lag4)
     
     # APD:
     apd = emaTA(spdTA(close, high, low, lag1, lag2, lag3), lag4)
+    if(timeSeries(close)) colnames(apd)<-"apd"
     
     # Return Value:
     apd 

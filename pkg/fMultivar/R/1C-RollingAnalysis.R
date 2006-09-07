@@ -34,7 +34,6 @@
 #   rollVar                   Compute Rolling Variance
 #   rollMin                   Compute Rolling Minimum
 #   rollMax                   Compute Rolling Maximum
-#   .roll.RUnit               Unit Testing
 ################################################################################
 
 

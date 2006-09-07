@@ -157,7 +157,7 @@ setClass("fREG",
         data = "timeSeries",
         fit = "list",
         residuals = "timeSeries",
-        fitted.values = "timeSeries",
+        fitted = "timeSeries",
         title = "character",
         description = "character"
     )  
@@ -329,7 +329,7 @@ title = NULL, description = NULL, ...)
         data = data,
         fit = fit,
         residuals = residualsTS,
-        fitted.values = fittedTS,
+        fitted = fittedTS,
         title = as.character(title), 
         description = as.character(description) 
     )
@@ -390,7 +390,7 @@ title = NULL, description = NULL, ...)
         data = timeSeries(data, rownames(data)),
         fit = fit,
         residuals = timeSeries(fit$residuals, rownames(data)),
-        fitted.values = timeSeries(fit$fitted.values, rownames(data)),
+        fitted = timeSeries(fit$fitted.values, rownames(data)),
         title = as.character(title), 
         description = as.character(description) 
     )
@@ -1029,7 +1029,7 @@ function(object, ...)
     # FUNCTION:
     
     # Fitted Values:
-    ans = object@fitted.values
+    ans = object@fitted
             
     # Return Value:
     ans
