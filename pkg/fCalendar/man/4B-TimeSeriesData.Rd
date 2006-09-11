@@ -5,6 +5,7 @@
 \alias{diff.timeSeries} 
 \alias{lag.timeSeries} 
 \alias{merge.timeSeries} 
+\alias{cumsum.timeSeries}
 \alias{scale.timeSeries}
 
 \alias{var.timeSeries}
@@ -14,6 +15,7 @@
 \alias{sqrt.timeSeries}
 \alias{exp.timeSeries}
 \alias{log.timeSeries}
+\alias{sign.timeSeries}
 \alias{quantile.timeSeries}
 
 \alias{[.timeSeries} 
@@ -49,6 +51,7 @@
     \code{diff} \tab Takes differences from a 'timeSeries' object, \cr
     \code{lag} \tab Lags a 'timeSeries' object, \cr
     \code{merge} \tab Merges a 'timeSeries' object with a 'matrix', \cr
+    \code{cumsum} \tab returns the cumulated sum of a 'timeSeries' object, \cr
     \code{lag} \tab Scales and centers a 'timeSeries' object. }
     
     Functions and methods for classifying 'timeSeries' objects:
@@ -64,6 +67,7 @@
     \code{sqrt} \tab Returns square root of a 'timeSeries' object, \cr
     \code{exp} \tab Returns the exponential values of a 'timeSeries' object, \cr
     \code{log} \tab Returns the logarithm of  a 'timeSeries' object, \cr
+    \code{sign} \tab returns the signs of a 'timeSeries' object, \cr
     \code{quantile.timeSeries} \tab Computes quantiles of a 'timeSeries' object. } 
     
     Functions and methods for subsetting 'timeSeries' objects: 
@@ -91,6 +95,7 @@
 \method{diff}{timeSeries}(x, lag = 1, diff = 1, trim = FALSE, pad = NA, \dots)
 \method{lag}{timeSeries}(x, k = 1, trim = FALSE, units = NULL, \dots)
 \method{merge}{timeSeries}(x, y, units = NULL, \dots)
+\method{cumsum}{timeSeries}(x)
 \method{scale}{timeSeries}(x, center = TRUE, scale = TRUE)
 \method{var}{timeSeries}(x, y = NULL, na.rm = FALSE, use)
 
@@ -99,6 +104,7 @@
 \method{sqrt}{timeSeries}(x)
 \method{exp}{timeSeries}(x)
 \method{log}{timeSeries}(x, base = exp(1))
+\method{sign}{timeSeries}(x)
 \method{quantile}{timeSeries}(x, probs = 0.95, \dots)
 
 \method{[}{timeSeries}(x, i = min(1, nrow(x@Data)):nrow(x@Data), 
