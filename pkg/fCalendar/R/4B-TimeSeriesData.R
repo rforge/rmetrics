@@ -32,6 +32,7 @@
 #  diff.timeSeries        Differences a 'timeSeries' object
 #  lag.timeSeries         Lags a 'timeSeries' object
 #  merge.timeSeries       Merges two 'timeSeries' objects
+#  cumsum.timeSeries      Returns cumulated sums of 'timeSeries' objects
 #  scale.timeSeries       Centers and/or scales a 'timeSeries' object
 #  var.timeSeries         Returns variance for a 'timeSeries' object
 # METHODS                MATHEMATICAL OPERATIONS ON DATA:
@@ -40,6 +41,7 @@
 #  sqrt.timeSeries        Returns sqrt values of a 'timeSeries' object
 #  exp.timeSeries         Returns exponentials of a 'timeSeries' object
 #  log.timeSeries         Returns logarithms of a 'timeSeries' object
+#  sign.timeSeries        Returns the signs of a 'timeSeries' object
 #  quantile.timeSeries    Produces sample quantiles of a 'timeSeries' object
 # METHODS                SUBSETTING METHODS ON DATA:
 #  [.timeSeries           Subsets of a 'timeSeries' object
@@ -270,6 +272,29 @@ function(x, y, units = NULL, ...)
     
     # Return Value:
     ans
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+cumsum.timeSeries = 
+function (x) 
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Returns cumulated sums of 'timeSeries' objects
+    
+    # Changes:
+    #
+    
+    # FUNCTION:
+    
+    # Cumulate:
+    x@Data = colCumsums(x@Data)
+    
+    # Return Value:
+    x    
 }
 
 
@@ -554,6 +579,30 @@ function(x, base = exp(1))
     # Return Value:
     x
 }
+
+
+# ------------------------------------------------------------------------------
+
+
+sign.timeSeries = 
+function(x)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Returns the signs of a 'timeSeries' object
+    
+    # Changes:
+    #
+    
+    # FUNCTION:
+    
+    # Which sign ?
+    x@Data = sign(x@Data)
+    
+    # Return Value;
+    x 
+}
+    
 
 
 # ------------------------------------------------------------------------------
