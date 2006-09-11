@@ -1,0 +1,486 @@
+<HTML>
+ <HEAD>
+  <!-- $MVD$:app("MicroVision WebExpress","769") -->
+  <!-- $MVD$:template("","0","0") -->
+  <!-- $MVD$:color("17","c0c0c0","Lt Grey","0") -->
+  <!-- $MVD$:fontset("Sans Serif","Arial","Helvetica","Monaco") -->
+  <TITLE>Untitled</TITLE>
+ </HEAD>
+ <BODY BGCOLOR="WHITE">
+  <P>
+   <B><FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="7"><FONT COLOR="#7F0000">Rmetrics</FONT></FONT></FONT></B> <FONT FACE="Arial,Helvetica,Monaco"><B><FONT SIZE="3"><FONT COLOR="#7F0000">FAQ</FONT></FONT></B></FONT></P>
+  <P ALIGN=CENTER>
+   <HR ALIGN=CENTER WIDTH="100%" SIZE="2">
+   </P>
+  <P>
+   <B><FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2">
+   2005-11-02 Built 220.10063</FONT></FONT></B></P>
+  <P>
+   <B><FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2"><!-- $MVD$:spaceretainer() -->&nbsp;</FONT></FONT></B></P>
+  <P>
+   <FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2"><B><FONT COLOR="#7F0000">Table
+    of Content:</FONT></B></FONT></FONT></P>
+  <BLOCKQUOTE>
+   <P>
+    <FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2">1. Introduction</FONT></FONT><BR>
+    <FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2">&nbsp; 1.1 Legalese</FONT></FONT><BR>
+    <FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2">&nbsp; 1.2 
+    Obtaining this Documents</FONT></FONT></P>
+   <P>
+    <FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2">2. The Basics of Rmetrics</FONT></FONT><BR>
+    <FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2">&nbsp; 2.1 What is Rmetrics?</FONT></FONT><BR>
+    <FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2">&nbsp; 2.2 What 
+    machines does run Rmetrics on?</FONT></FONT><BR>
+    <FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2">&nbsp; 2.3 What is 
+    the Current Version of Rmetrics?</FONT></FONT><BR>
+    <FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2">&nbsp; 2.4 How can 
+    Rmetrics be obtained and installed?</FONT></FONT><BR>
+    <FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2">&nbsp; 2.5 What 
+    documentation exists for Rmetrics?</FONT></FONT><BR>
+    <FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2">&nbsp; 2.6 How to 
+    cite Rmetrics?</FONT></FONT><BR>
+    <FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2">&nbsp; 2.7 What 
+    mailing lists exist for Rmetrics?</FONT></FONT></P>
+   <P>
+    <FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2">3. Rmetrics 
+    Programming Issues</FONT></FONT><BR>
+    <FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2">&nbsp; 3.1 Is 
+    Rmetrics Open Source Software?</FONT></FONT><BR>
+    <FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2">&nbsp; 3.2 Why 
+    uses Rmetrics Builtin-Functions?</FONT></FONT><BR>
+    <FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2">&nbsp; 3.3 Can I 
+    use R and Rmetrics for commercial purposes?</FONT></FONT><BR>
+    <FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2">&nbsp; 3.4 
+    Rmetrics and Finmetrics</FONT></FONT></P>
+   </BLOCKQUOTE>
+  <P ALIGN=CENTER>
+   <HR ALIGN=CENTER WIDTH="100%" SIZE="2" NOSHADE COLOR="#7F0000">
+   </P>
+  <P>
+   <FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2"><B><FONT COLOR="#7F0000">1.
+    Introduction</FONT></B></FONT></FONT></P>
+  <BLOCKQUOTE>
+   <P>
+    <FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2">This document 
+    contains answers to some of the most frequently asked questions about 
+    Rmetrics. For R itself we highly recommend to consult Kurt Hornik's 
+    FAQ on R, availalble fromthe CRANServer. Additionally there are two 
+    platform-specific FAQs about R: The R Windows FAQfor all users of 
+    Microsoft operating systems, and the R MacOS X FAQfor all users of 
+    Apple operating systems. Note that the latter two are complementary 
+    to the general R FAQ, i.e., you should read both the general FAQ and 
+    your platform-specific one.</FONT></FONT></P>
+   </BLOCKQUOTE>
+  <P>
+   <FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2"><B><FONT COLOR="#7F0000">1.1
+    Legalese</FONT></B></FONT></FONT></P>
+  <BLOCKQUOTE>
+   <P>
+    <FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2">This document is 
+    copyright &copy; 2001&#150;2004 by Diethelm W&uuml;rtz. The document 
+    is free software; you can redistribute it and/or modify it under the 
+    terms of the GNU General Public License as published by the Free 
+    Software Foundation; either version 2, or (at your option) any later 
+    version. The document is distributed in the hope that it will be 
+    useful, but WITHOUT ANY WARRANTY; without even the implied warranty 
+    of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU 
+    General Public License for more details. A copy of the GNU General 
+    Public License is available via WWW at: http://www.gnu.org . You can 
+    also obtain it by writing to the Free Software Foundation, Inc., 59 
+    Temple Place &#151; Suite 330, Boston, MA 02111-1307, USA.</FONT></FONT></P>
+   </BLOCKQUOTE>
+  <P>
+   <FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2"><B><FONT COLOR="#7F0000">1.2
+    Obtaining this Document</FONT></B></FONT></FONT></P>
+  <BLOCKQUOTE>
+   <P>
+    <FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2">The latest version 
+    of this document is always available from: http://www.rmetrics.org , 
+    the latest version of the R FAQ is available from: 
+    http://www.ci.tuwien.ac.at .</FONT></FONT></P>
+   </BLOCKQUOTE>
+  <P ALIGN=CENTER>
+   <HR ALIGN=CENTER WIDTH="100%" SIZE="2" NOSHADE COLOR="#7F0000">
+   </P>
+  <P>
+   <FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2"><B><FONT COLOR="#7F0000">2
+    The Basics of Rmetrics</FONT></B></FONT></FONT></P>
+  <BLOCKQUOTE>
+   <P>
+    <FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2">Rmetrics is a 
+    collection of several hundreds of functions which may be useful for 
+    teaching &quot;Financial Engineering&quot; and &quot;Computational 
+    Finance&quot;. These functions are available for R, &#147;GNU&#146;s 
+    S&#148;. This is a freely available language and environment for 
+    statistical computing and graphics which provides a wide variety of 
+    statistical and graphical techniques.</FONT></FONT></P>
+   </BLOCKQUOTE>
+  <P>
+   <FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2"><B><FONT COLOR="#7F0000">2.1
+    What is Rmetrics?</FONT></B></FONT></FONT></P>
+  <BLOCKQUOTE>
+   <P>
+    <FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2">The functions 
+    availalbel through Rmetrics have their source in algorithms and 
+    functions written by myself, my students, and many other authors. A 
+    major aim is to bring financial algorithms and concepts together 
+    under a common software platform and to make it public available 
+    mainly for teaching financial engineering and computational finance. 
+    Rmetrics is not part of CRAN, Rmetrics is an initiative by its own. 
+    Rmetrics has some aims similar like Bioconductor. Rmetrics is an open 
+    source and open development software project. The basic R port from 
+    which Rmetrics originated was already initiated in 1999 as an outcome 
+    of lectures held by Diethelm W&uuml;rtz on topics in econophysics at 
+    ETH Z&uuml;rich. Meanwhile, the family of the Rmetrics packages 
+    includes four members dealing with the following subjects: fBasics - 
+    Markets, Basic Statistics, Date and Time, fSeries - The Dynamical 
+    Process Behind Financial Markets, fExtremes - Beyond the Sample, 
+    Dealing with Extreme Values, and fOptions - The Valuation of Options. 
+    Two other packages are under current development, fBonds and fPortfolio.</FONT></FONT></P>
+   <P>
+    <FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2"><I>What is 
+    included in the fBasics Package?</I> The package fBasics covers the 
+    management of economic and financial market data. Included are 
+    functions to download economic indicators and financial market data 
+    from the Internet. Distribution functions relevant in finance are 
+    added like the asymmetric stable, the hyperbolic and the inverse 
+    normal gaussian distribution function to compute densities, 
+    probabilities, quantiles and random deviates. Estimators to fit the 
+    distributional parameters are also available. Some additional 
+    hypothesis tests for the investigation of correlations, dependencies 
+    and other stylized facts of financial time series can also be found 
+    in this package.</FONT></FONT></P>
+   <P>
+    <FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2"><I>What is 
+    included in the </I></FONT></FONT><I><FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2">fCalendar</FONT></FONT></I><FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2"><I> Package?</I> 
+    The package fCalendar covers the managment of dates, time, and 
+    calendars. The package makes available very powerful 'timeDate' and 
+    'timeSeries' S4 classes. A holiday database for all ecclestial and 
+    public holidays in the G7 countries and Switzerland is provided 
+    together with a database of daylight saving times for financial 
+    centers around the world. Special calendar management functions were 
+    implemented to create easily business calendars for exchanges. A 
+    collection of functions for filtering and outlier detection of high 
+    frequency foreign exchange data records collected from Reuters' data 
+    feed can also be found together with functions for de-volatilization 
+    and de-seasonalization of the data.</FONT></FONT></P>
+   <P>
+    <FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2"><I>What is 
+    included in the fSeries Package?</I> The package fSeries covers 
+    topics from the field of financial time series analysis including 
+    ARIMA, GARCH, long memory modelling, and chaotic time series analysis 
+    . This library tries to bring together the content of existing 
+    R-packages with additional new functionality on a common platform. 
+    The collection comes with functions for simulations, parameter 
+    estimation, diagnostic analysis and hypothesis testing of financial 
+    time series. The tests include methods for testing unit roots, 
+    independence, normality of the distribution, trend stationary, and 
+    neglected non-linearities. In addition functions for testing for 
+    higher serial correlations, for heteroskedasticity, for 
+    autocorrelations of disturbances, for linearity, and functional 
+    relations are provided. Furthermore, distribution functions for GARCH 
+    modelling like the normalized Student-t and the GED together with 
+    their skewed versions have been added which require for their 
+    computation Heaviside and related functions. The demonstration 
+    directory includes also a R-interface for the GarchOx software package.</FONT></FONT></P>
+   <P>
+    <FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2"><I>What is 
+    included in the </I></FONT></FONT><I><FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2">fMultivar</FONT></FONT></I><FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2"><I> Package?</I> 
+    The package fMultivar deals mainly with multivariate aspects of time 
+    series analysis. Offered are algorithms for regression analysis 
+    including neural network modelling with feedforward networks. 
+    Furthermore functions for sytem equation modelling are available. 
+    Technical analysis and benchmarking is another major issue of this 
+    package. The collection offers a set of the most common technical 
+    indicators together with functions for charting and benchmark 
+    measurements. For the technical analysis of markets several trading 
+    functions are implemented and also tools are availalble for a rolling 
+    market analysis. A matrix addon with many functions which allow an 
+    easy use of matrix manipulations is also part of this package. This 
+    addon includes functions to generate several kind of standard 
+    matrixes, to extract subsets of a matrix, and some function from 
+    linear algebra. This matrix addon is thought to be used to manipulate 
+    easily the data of multivariate time series objects.</FONT></FONT></P>
+   <P>
+    <FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2"><I>What is 
+    included in the fExtremes Package?</I> The package fExtremes covers 
+    topics from the field what is known as extreme value theory. The 
+    package has functions for the exploratory data analysis of extreme 
+    values in insurance, economics, and finance applications. Included 
+    are plot functions for empirical distributions, quantile plots, 
+    graphs exploring the properties of exceedences over a threshold, 
+    plots for mean/sum ratio and for the development of records. 
+    Furthermore functions for preprocessing data for extreme value 
+    analysis are available offering tools to separate data beyond a 
+    threshold value, to compute blockwise data like block maxima, and to 
+    de-cluster point process data. One major aspect of this package is to 
+    bring together the content of already existing R-packages with 
+    additional new functionality for financial engineers on a common 
+    platform investigating fluctuations of maxima, extremes via point 
+    processes, and the extremal index. A new additional chapter on risk 
+    measures, stress testing and copulae is planned to be added in the 
+    near future.</FONT></FONT></P>
+   <P>
+    <FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2"><I>What is 
+    included in the fOptions Package?</I> The package fOptions covers the 
+    valuation of options including topics like the basics of option 
+    pricing in the framework of Black and Scholes, including almost 100 
+    functions for exotic options pricing, including the Heston-Nandi 
+    option pricing approach mastering stochastic volatility, and Monte 
+    Carlo simulations together with generators for low discrepancy 
+    sequences. Beside the Black and Scholes option pricing formulas, 
+    functions to valuate other plain vanilla options on commodities and 
+    futures, and function to approximate American options are also 
+    available. Some binomial tree models are implemented. The exotic 
+    options part comes with a large number of functions to valuate 
+    multiple exercise options, multiple asset options, lookback options, 
+    barrier options, binary options, Asian options, and currency 
+    translated options. Some functions for the investigation of 
+    exponential Brownian motion in the context of Asian option valuation 
+    have been recently added.</FONT></FONT></P>
+   <P>
+    <FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2"><I>What is 
+    included in the </I></FONT></FONT><I><FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2">fPortfolio</FONT></FONT></I><FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2"><I> Package?</I> 
+    The package fPortfolio covers multivariate distributions, assets 
+    modelling, drawdown statistics, value-at-risk modelling, Markowitz 
+    portfolios, two assets. The multivariate distribution functions allow 
+    to compute multivariate densities and probabilities from skew normal 
+    and skew Student-t distribution functions. Furthermore, multivariate 
+    random daviates can be generated, and for multivariate data, the 
+    parameters of the underlying distribution can be estimated by the 
+    maximum log-likelihood estimation. The functions for assets modelling 
+    can be used togenerate multivariate artficial data sets of assets, 
+    which fit the parameters to a multivariate normal, skew normal, or 
+    (skew) Student-t distribution. Included in the library are also 
+    functions to compute some benchmark statistics. In addition a 
+    function is provided which allows for the selection and clustering of 
+    individual assets from portfolios using hierarchical and k-means 
+    clustering approaches. Tools are provided to evaluate dtawdown 
+    statistics. Availalble are functions for the density, distribution 
+    function, and random number generation for the maximum drawdown 
+    distribution. In addition the expectation of drawdowns for Brownian 
+    motion can be computed. Value-at-Risk Modelling is another topic 
+    which is consider in this library. Value-at-Risk and related risk 
+    measures for a portfolio of assets can be evaluated. A group of 
+    functions is dedicated to the Markowitz portfolio optimization 
+    problem. Functions for the computation of the efficient frontier, for 
+    the market line, for the tangency portfolio and for Monte Carlo 
+    simulations are part of the library. Analytical formulas for the 
+    Markowitz and for the Condition VaR Portfolio approach are implemented.</FONT></FONT></P>
+   <P>
+    <FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2"><I>Who are the 
+    devellopers behind Rmetrics?</I> The writing of the functions which 
+    are now available in Rmetrics started originally as assignments in my 
+    lectures on &quot;Econophysics&quot; at the Institute of Theoretical 
+    Physics at ETH Z&uuml;rich. Since in the financial community and also 
+    in my lectures MS Windows is the mostly used operating system, 
+    special emphasis is given to the Microsofts OS. Thus, to teach 
+    financial engineers it became quite natural for me to work under 
+    Windows. For a broad distribution and acceptance of Rmetrics I 
+    decided to continue the devellopment primarily under Windows 2000/XP. 
+    There are no many people behind Rmetrics, currently it's only me. I 
+    have my job as a lecturer at the Institute of Theoretical Physics at 
+    ETH Zurich, and I'm the senior partner of an ETH spin-off software 
+    company, Finance Online. So I have several responsibilities to take, 
+    and as a consequence things might go slow ... The growing Rmetrics 
+    collection is based on many statistical and financial functions which 
+    were contributed by myself, my students, or were ported from many 
+    other sources during the last seven years since I started my lectures 
+    in &quot;Econophysics&quot; at ETH. I'm aware that the work is by far 
+    not complete. Parts of the software are still untested, and may 
+    contain some bugs. Contributions are welcome!</FONT></FONT></P>
+   </BLOCKQUOTE>
+  <P>
+   <FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2"><B><FONT COLOR="#7F0000">2.2
+    What machines does run Rmetrics on?</FONT></B></FONT></FONT></P>
+  <BLOCKQUOTE>
+   <P>
+    <FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2">Starting with 
+    Version 1.7.1 Rmetrics is expected to run under the some platforms as 
+    R. R is being developed for the Unix, Windows and Mac families of 
+    operating systems. Support for Mac OS Classic ended with the 1.7 
+    series. The current version of R will configure and build under a 
+    number of common Unix platforms, for details we refer to the R FAQ. 
+    Rmetrics is primarily build and maintained under MS Windows XP.</FONT></FONT></P>
+   </BLOCKQUOTE>
+  <P>
+   <FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2"><B><FONT COLOR="#7F0000">2.3
+    What is the Current Version of Rmetrics?</FONT></B></FONT></FONT></P>
+  <BLOCKQUOTE>
+   <P>
+    <FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2">The current 
+    productive Version is 191.10057. The latest source packages are 
+    located in the source directory on the Rmetrics Server, and the 
+    latest binary files for the Windows OS are located in the download 
+    directory themselves. The DESCRIPTION files hold the most recent 
+    version number, please check. The most recent productive built for 
+    Rmetrics is available from the CRAN Server.</FONT></FONT></P>
+   </BLOCKQUOTE>
+  <P>
+   <FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2"><B><FONT COLOR="#7F0000">2.4
+    How can Rmetrics be obtained and installed?</FONT></B></FONT></FONT></P>
+  <BLOCKQUOTE>
+   <P>
+    <FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2">The source code of 
+    the productive packages Version 191.10057 can be downloaded from the 
+    CRAN Server, also the binary packages for Windows, Mac OSX and Linux 
+    operated computers. Rmetrics is also availalble in form of (compiled) 
+    Debian Packages and part of the Knoppix Quantian CD. The current 
+    Version of the included packages is 190.10055, beside fBasics which 
+    is Version 190.10056. First of all, an R environment must be 
+    installed on your sytem. Please follow the instructions as described 
+    in R's FAQ. Then the Rmetrics packages can be installed in the usual 
+    way as an ordinary R package. Nothing is special.</FONT></FONT></P>
+   </BLOCKQUOTE>
+  <P>
+   <FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2"><B><FONT COLOR="#7F0000">2.</FONT></B></FONT></FONT><B><FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2"><FONT COLOR="#7F0000">5</FONT></FONT></FONT></B><FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2"><B><FONT COLOR="#7F0000"> 
+   What documentation exists for Rmetrics?</FONT></B></FONT></FONT></P>
+  <BLOCKQUOTE>
+   <P>
+    <FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2">Online 
+    documentation for most of the functions and variables in Rmetrics 
+    exists lik in R, and can be printed on-screen by typing help(name) 
+    (or ?name) at the R prompt, where name is the name of the topic help 
+    is sought for. This documentation can also be made available as one 
+    reference manual for on-line reading in HTML and PDF formats, and as 
+    hardcopy via LaTeX. The Rmetrics distribution also comes with the 
+    following manuals.</FONT></FONT></P>
+   <P>
+    <FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2">1. General 
+    Information: A Flyer, a Fact Sheet, and a Reference Card</FONT></FONT><BR>
+    <FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2">2. Rmetrics 
+    &quot;Reference Guides&quot; for the following packages: fBasics, 
+    fSeries, fExtremes, and fOptions.</FONT></FONT><BR>
+    <FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2">3. Rmetrics &quot; 
+    Lecture Scripts&quot;, which can serve as User Guides. (Unfortunately 
+    these Scripts are not always up to date.)</FONT></FONT></P>
+   </BLOCKQUOTE>
+  <P>
+   <FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2"><B><FONT COLOR="#7F0000">2.</FONT></B></FONT></FONT><B><FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2"><FONT COLOR="#7F0000">6</FONT></FONT></FONT></B><FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2"><B><FONT COLOR="#7F0000"> </FONT></B></FONT></FONT><B><FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2"><FONT COLOR="#7F0000">How
+    to cite</FONT></FONT></FONT></B><FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2"><B><FONT COLOR="#7F0000"> Rmetrics</FONT></B></FONT></FONT><B><FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2"><FONT COLOR="#7F0000">?</FONT></FONT></FONT></B></P>
+  <BLOCKQUOTE>
+   <P>
+    <FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2">To cite Rmetrics 
+    in publications, use</FONT></FONT></P>
+   <BLOCKQUOTE>
+    <P>
+     <FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2">@Manual{,</FONT></FONT><BR>
+     <FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2">title = {Rmetrics: 
+     An Environment for Teaching Financial Engineering and Computational 
+     Finance with R},</FONT></FONT><BR>
+     <FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2">author = {Diethelm W&uuml;rtz},</FONT></FONT><BR>
+     <FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2">organization = 
+     {Rmetrics, ITP, ETH Z&uuml;rich},</FONT></FONT><BR>
+     <FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2">address = 
+     {Z&uuml;rich, Switzerland},</FONT></FONT><BR>
+     <FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2">year = {2004},</FONT></FONT><BR>
+     <FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2">url = 
+     {http://www.rmetrics.org} }</FONT></FONT></P>
+    </BLOCKQUOTE>
+   </BLOCKQUOTE>
+  <P>
+   <FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2"><B><FONT COLOR="#7F0000">2.</FONT></B></FONT></FONT><B><FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2"><FONT COLOR="#7F0000">7</FONT></FONT></FONT></B><FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2"><B><FONT COLOR="#7F0000"> 
+   What mailing lists exist for Rmetrics?</FONT></B></FONT></FONT></P>
+  <BLOCKQUOTE>
+   <P>
+    <FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2">There is no 
+    special mailing list dedicated to Rmetrics. However, for topics 
+    concerned with R and in relation to financial applications we 
+    recommend the following lists: R-announce A moderated list for major 
+    announcements about the development of R and the availability of new 
+    code. R-packages A moderated list for announcements on the 
+    availability of new or enhanced contributed packages. R-help The 
+    &quot;main'&quot; R mailing list, for discussion about problems and 
+    solutions using R, about the development of R and the availability of 
+    new code, enhancements and patches to the source code and 
+    documentation of R, comparison and compatibility with S and S-Plus, 
+    and for the posting of nice examples and benchmarks. R-devel This 
+    list is for discussions about the future of R, proposals of new 
+    functionality, and pre-testing of new versions. It is meant for those 
+    who maintain an active position in the development of R. 
+    R-sig-finance This is the special interest group for 'R in Finance'.</FONT></FONT></P>
+   </BLOCKQUOTE>
+  <P ALIGN=CENTER>
+   <HR ALIGN=CENTER WIDTH="100%" SIZE="2" NOSHADE COLOR="#7F0000">
+   </P>
+  <P>
+   <FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2"><B><FONT COLOR="#7F0000">3
+    Rmetrics Programming Issues</FONT></B></FONT></FONT></P>
+  <BLOCKQUOTE>
+   <P>
+    <FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2">R and Rmetrics 
+    give you many functions and tools at your fingertips to model, to 
+    analyze and to visualize financial market data. This is the origin 
+    for creating powerful rapid protopype systems for valuating and 
+    judging your models.</FONT></FONT></P>
+   </BLOCKQUOTE>
+  <P>
+   <FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2"><B><FONT COLOR="#7F0000">3.1
+    Is Rmetrics Open Source Software?</FONT></B></FONT></FONT></P>
+  <BLOCKQUOTE>
+   <P>
+    <FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2">Rmetrics has a 
+    commitment to full open source code development and distribution. All 
+    contributions included in the Rmetrics packages are expected to exist 
+    under an open source license such as GPL2. The reasons for this 
+    commitment are the ability to test, to extend and to improve the 
+    software in a convenient way, to encourage excellent scientific 
+    computing and statistical practice in financial engineering and 
+    computational finance, and to provide a workbench of tools that allow 
+    to explore and expand the methods used to analyze financial market 
+    data and to valuate financial instruments.</FONT></FONT></P>
+   </BLOCKQUOTE>
+  <P>
+   <FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2"><B><FONT COLOR="#7F0000">3.</FONT></B></FONT></FONT><B><FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2"><FONT COLOR="#7F0000">2</FONT></FONT></FONT></B><FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2"><B><FONT COLOR="#7F0000"> 
+   Why uses Rmetrics Builtin-Functions?</FONT></B></FONT></FONT></P>
+  <BLOCKQUOTE>
+   <P>
+    <FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2">All functions used 
+    by Rmetrics and becoming part of the Rmetrics packages must be 
+    available under a Debian conform license. R packages must be 
+    availalble on the CRAN Server in Source and also in Binary form for 
+    the Windows and Mac OSX operating systems. Furthermore, they must be 
+    part of the (compiled) Debian distribution and the Knoppix Quantian 
+    CD. For functions and packages which are not fulfilling these 
+    conditions or are in conflict with other functions used in the 
+    Rmetrics packages their functionality will be made available in form 
+    of Builtin-Functions. These Builtin-Functions are GNU licensed 
+    functions which were modified and copied to Rmetrics packages to 
+    fullfill the required specifications. This is the only reason why we 
+    have added Builtin functionality.</FONT></FONT></P>
+   </BLOCKQUOTE>
+  <P>
+   <FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2"><B><FONT COLOR="#7F0000">3.</FONT></B></FONT></FONT><B><FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2"><FONT COLOR="#7F0000">3</FONT></FONT></FONT></B><FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2"><B><FONT COLOR="#7F0000"> 
+   Can I use R and Rmetrics for commercial purposes?</FONT></B></FONT></FONT></P>
+  <BLOCKQUOTE>
+   <P>
+    <FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2">R and Rmetrics are 
+    released under the GNU General Public License (GPL). If you have any 
+    questions regarding the legality of using R and/or Rmetrics in any 
+    particular situation you should bring it up with your legal counsel. 
+    We are in no position to offer legal advice. More information on the 
+    opinion of the R Core team about commercial usage can be found in the 
+    R FAQ.</FONT></FONT></P>
+   </BLOCKQUOTE>
+  <P>
+   <FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2"><B><FONT COLOR="#7F0000">3.</FONT></B></FONT></FONT><B><FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2"><FONT COLOR="#7F0000">4</FONT></FONT></FONT></B><FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2"><B><FONT COLOR="#7F0000"> 
+   Rmetrics and Finmetrics</FONT></B></FONT></FONT></P>
+  <BLOCKQUOTE>
+   <P>
+    <FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2">Rmetrics and 
+    Finmetrics are packages for modeling, analyzing, and visualizing 
+    financial market data. Both packages offer a modern and flexible 
+    environment for reliable and robust, predictive econometric modeling 
+    and for valuation and pricing of financial instruments. What Rmetrics 
+    is for R, is Finmetrics for S-Plus.</FONT></FONT></P>
+   </BLOCKQUOTE>
+  <P ALIGN=CENTER>
+   <HR ALIGN=CENTER WIDTH="100%" SIZE="2" NOSHADE COLOR="#7F0000">
+   </P>
+  <P>
+   <!-- $MVD$:spaceretainer() -->&nbsp;</P>
+  <P>
+   <FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2">Diethelm W&uuml;rtz</FONT></FONT><BR>
+   <FONT FACE="Arial,Helvetica,Monaco"><FONT SIZE="2">Z&uuml;rich, April 2005</FONT></FONT>
+ </BODY>
+</HTML>
