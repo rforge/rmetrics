@@ -775,8 +775,18 @@ function (x, from, to, ...)
 {
     # From - to - Positions -- Only one Interval!
     Positions = as.POSIXct(x@positions)
-    if (missing(from)) from = Positions[1] else from = from@Data[1]
-    if (missing(to)) to = rev(Positions)[1] else to = to@Data[1]
+    if (missing(from)) {
+        from = Positions[1] 
+    } else {
+        from = timeDate(from)
+        from = from@Data[1]
+    }
+    if (missing(to)) {
+        to = rev(Positions)[1] 
+    } else {
+        to = timeDate(to)
+        to = to@Data[1]
+    }
     
     # Note, Test is fastest with POSIXct:
     test = (Positions >= from & Positions <= to)
