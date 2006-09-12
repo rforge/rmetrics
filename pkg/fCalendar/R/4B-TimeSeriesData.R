@@ -771,7 +771,7 @@ function(x, from, to, ...)
 
 
 cut.timeSeries = 
-function (x, from, to) 
+function (x, from, to, ...) 
 {
     # From - to - Positions -- Only one Interval!
     Positions = as.POSIXct(x@positions)
