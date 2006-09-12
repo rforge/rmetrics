@@ -94,7 +94,7 @@ function(object, value)
 #  end.timeSeries       Extracts end date of a 'timeSeries' object
 
 
-sample.timeSeries =
+.sample.timeSeries =
 function(x, ...)
 {   # A function implemented by Diethelm Wuertz
 
@@ -134,10 +134,28 @@ function(x, ...)
 }
 
 
+sample.timeSeries = 
+function (x, ...) 
+{ 
+    # Index:
+    Index = sample(1:length(x@positions))
+
+    # Compose Series:
+    x@positions = x@positions[Index] 
+    x@Data = as.matrix(x@Data[Index, ])  
+    colnames(x@Data) = x@units
+    x@recordIDs = as.data.frame(x@recordIDs[Index, ])
+    
+    # Return value:
+    x
+}
+
+
+
 # ------------------------------------------------------------------------------
 
     
-sort.timeSeries =
+.sort.timeSeries =
 function(x, ...)
 {   # A function implemented by Diethelm Wuertz
 
@@ -173,6 +191,23 @@ function(x, ...)
     }
     
     # Return Value:
+    x
+}
+
+
+sort.timeSeries = 
+function (x, ...) 
+{
+    # Index:
+    Index = sort(as.POSIXct(x@positions), index.return = TRUE)$ix
+    
+    # Compose Series:
+    x@positions = x@positions[Index] 
+    x@Data = as.matrix(x@Data[Index, ])  
+    colnames(x@Data) = x@units
+    x@recordIDs = as.data.frame(x@recordIDs[Index, ])
+    
+    # Return value:
     x
 }
 

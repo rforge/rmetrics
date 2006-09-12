@@ -8,6 +8,8 @@
 <param name="keyword" value="R:   diff.timeSeries">
 <param name="keyword" value="R:   lag.timeSeries">
 <param name="keyword" value="R:   merge.timeSeries">
+<param name="keyword" value="R:   rbind.timeSeries">
+<param name="keyword" value="R:   cumsum.timeSeries">
 <param name="keyword" value="R:   scale.timeSeries">
 <param name="keyword" value="R:   var.timeSeries">
 <param name="keyword" value="R:   Ops.timeSeries">
@@ -15,6 +17,7 @@
 <param name="keyword" value="R:   sqrt.timeSeries">
 <param name="keyword" value="R:   exp.timeSeries">
 <param name="keyword" value="R:   log.timeSeries">
+<param name="keyword" value="R:   sign.timeSeries">
 <param name="keyword" value="R:   quantile.timeSeries">
 <param name="keyword" value="R:   [.timeSeries">
 <param name="keyword" value="R:   cut.timeSeries">
@@ -57,7 +60,13 @@ Functions and methods to modify 'timeSeries' objects:
   <td align="left"> <code>lag</code> </td>  <td align="left"> Lags a 'timeSeries' object, </td>
 </tr>
 <tr>
-  <td align="left"> <code>merge</code> </td>  <td align="left"> Merges a 'timeSeries' object with a 'matrix', </td>
+  <td align="left"> <code>merge</code> </td>  <td align="left"> Merges two 'timeSeries' objects, </td>
+</tr>
+<tr>
+  <td align="left"> <code>rbinds</code> </td>  <td align="left"> Binds rows of two 'timeSeries' objects, </td>
+</tr>
+<tr>
+  <td align="left"> <code>cumsum</code> </td>  <td align="left"> Returns the cumulated sum of a 'timeSeries' object, </td>
 </tr>
 <tr>
   <td align="left"> <code>lag</code> </td>  <td align="left"> Scales and centers a 'timeSeries' object. </td>
@@ -93,6 +102,9 @@ Functions and methods for mathematical operations on 'timeSeries' objects:
 </tr>
 <tr>
   <td align="left"> <code>log</code> </td>  <td align="left"> Returns the logarithm of  a 'timeSeries' object, </td>
+</tr>
+<tr>
+  <td align="left"> <code>sign</code> </td>  <td align="left"> returns the signs of a 'timeSeries' object, </td>
 </tr>
 <tr>
   <td align="left"> <code>quantile.timeSeries</code> </td>  <td align="left"> Computes quantiles of a 'timeSeries' object. </td>
@@ -155,6 +167,10 @@ lag(x, k = 1, trim = FALSE, units = NULL, ...)
 ## S3 method for class 'timeSeries':
 merge(x, y, units = NULL, ...)
 ## S3 method for class 'timeSeries':
+rbind(x, y)
+## S3 method for class 'timeSeries':
+cumsum(x)
+## S3 method for class 'timeSeries':
 scale(x, center = TRUE, scale = TRUE)
 ## S3 method for class 'timeSeries':
 var(x, y = NULL, na.rm = FALSE, use)
@@ -169,6 +185,8 @@ sqrt(x)
 exp(x)
 ## S3 method for class 'timeSeries':
 log(x, base = exp(1))
+## S3 method for class 'timeSeries':
+sign(x)
 ## S3 method for class 'timeSeries':
 quantile(x, probs = 0.95, ...)
 

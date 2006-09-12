@@ -32,6 +32,7 @@
 #  diff.timeSeries        Differences a 'timeSeries' object
 #  lag.timeSeries         Lags a 'timeSeries' object
 #  merge.timeSeries       Merges two 'timeSeries' objects
+#  rbind.timeSeries       Binds rows of two 'timeSeries' objects
 #  cumsum.timeSeries      Returns cumulated sums of 'timeSeries' objects
 #  scale.timeSeries       Centers and/or scales a 'timeSeries' object
 #  var.timeSeries         Returns variance for a 'timeSeries' object
@@ -273,6 +274,28 @@ function(x, y, units = NULL, ...)
     # Return Value:
     ans
 }
+
+
+# ------------------------------------------------------------------------------ 
+ 
+   
+rbind.timeSeries =
+function(x, y)
+{   # A function implemented by Diethelm Wuertz
+
+    # Check Arguments:
+    stopifnot(is.timeSeries(x) & is.timeSeries(y))
+    stopifnot(dim(x)[2] == dim(y)[2])
+    
+    # Bind:
+    x@positions = c(x@positions, y@positions)   
+    x@Data = as.matrix(rbind(x@Data, y@Data))
+    x@recordIDs = as.data.frame(rbind(x@recordIDs, y@recordIDs))
+    
+    # Return Value
+    x
+}  
+
 
 
 # ------------------------------------------------------------------------------
@@ -697,7 +720,7 @@ j = min(1, ncol(x@Data)):ncol(x@Data))
 # ------------------------------------------------------------------------------
 
 
-cut.timeSeries = 
+.cut.timeSeries = 
 function(x, from, to, ...)
 {   # A function implemented by Diethelm Wuertz
 
@@ -743,6 +766,30 @@ function(x, from, to, ...)
     colnames(x@Data) = colNames
     
     # Return Value:
+    x
+}
+
+
+cut.timeSeries = 
+function (x, from, to) 
+{
+    # From - to - Positions -- Only one Interval!
+    Positions = as.POSIXct(x@positions)
+    if (missing(from)) from = Positions[1] else from = from@Data[1]
+    if (missing(to)) to = rev(Positions)[1] else to = to@Data[1]
+    
+    # Note, Test is fastest with POSIXct:
+    test = (Positions >= from & Positions <= to)
+    Index = (1:length(test))[test] 
+    if (length(Index) == 0) return()
+    
+    # Compose Series:
+    x@positions = x@positions[Index] 
+    x@Data = as.matrix(x@Data[Index, ])  
+    colnames(x@Data) = x@units
+    x@recordIDs = as.data.frame(x@recordIDs[Index, ])
+    
+    # Return value:
     x
 }
 

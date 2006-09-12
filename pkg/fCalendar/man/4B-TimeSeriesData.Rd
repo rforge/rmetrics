@@ -5,6 +5,7 @@
 \alias{diff.timeSeries} 
 \alias{lag.timeSeries} 
 \alias{merge.timeSeries} 
+\alias{rbind.timeSeries}
 \alias{cumsum.timeSeries}
 \alias{scale.timeSeries}
 
@@ -50,8 +51,9 @@
     \tabular{ll}{  
     \code{diff} \tab Takes differences from a 'timeSeries' object, \cr
     \code{lag} \tab Lags a 'timeSeries' object, \cr
-    \code{merge} \tab Merges a 'timeSeries' object with a 'matrix', \cr
-    \code{cumsum} \tab returns the cumulated sum of a 'timeSeries' object, \cr
+    \code{merge} \tab Merges two 'timeSeries' objects, \cr
+    \code{rbinds} \tab Binds rows of two 'timeSeries' objects, \cr
+    \code{cumsum} \tab Returns the cumulated sum of a 'timeSeries' object, \cr
     \code{lag} \tab Scales and centers a 'timeSeries' object. }
     
     Functions and methods for classifying 'timeSeries' objects:
@@ -95,6 +97,7 @@
 \method{diff}{timeSeries}(x, lag = 1, diff = 1, trim = FALSE, pad = NA, \dots)
 \method{lag}{timeSeries}(x, k = 1, trim = FALSE, units = NULL, \dots)
 \method{merge}{timeSeries}(x, y, units = NULL, \dots)
+\method{rbind}{timeSeries}(x, y)
 \method{cumsum}{timeSeries}(x)
 \method{scale}{timeSeries}(x, center = TRUE, scale = TRUE)
 \method{var}{timeSeries}(x, y = NULL, na.rm = FALSE, use)

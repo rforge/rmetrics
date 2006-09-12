@@ -386,6 +386,10 @@
 <param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
+<param name="Name" value="cumsum.timeSeries">
+<param name="Local" value="4B-TimeSeriesData.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="currentYear">
 <param name="Local" value="1A-fCalendarUtilities.html">
 </OBJECT>
@@ -463,6 +467,10 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="dummyDailySeries">
+<param name="Local" value="4A-TimeSeriesClass.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="durationSeries">
 <param name="Local" value="4A-TimeSeriesClass.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
@@ -930,6 +938,10 @@
 <param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
+<param name="Name" value="midquoteSeries">
+<param name="Local" value="4A-TimeSeriesClass.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="modify">
 <param name="Local" value="1A-fCalendarUtilities.html">
 </OBJECT>
@@ -1086,6 +1098,10 @@
 <param name="Local" value="5A-HolidayDates.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
+<param name="Name" value="rbind.timeSeries">
+<param name="Local" value="4B-TimeSeriesData.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="readSeries">
 <param name="Local" value="4A-TimeSeriesClass.html">
 </OBJECT>
@@ -1202,6 +1218,10 @@
 <param name="Local" value="6A-TimeSeriesImport.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
+<param name="Name" value="sign.timeSeries">
+<param name="Local" value="4B-TimeSeriesData.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Singapore">
 <param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
@@ -1228,6 +1248,10 @@
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="sort.timeSeries">
 <param name="Local" value="4C-TimeSeriesPositions.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="spreadSeries">
+<param name="Local" value="4A-TimeSeriesClass.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="sqrt.timeSeries">

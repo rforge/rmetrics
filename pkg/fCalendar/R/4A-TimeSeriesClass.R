@@ -32,7 +32,10 @@
 #  'timeSeries'         S4 Class definition for a 'timeSeries' object
 #  timeSeries           Creates a 'timeSeries' object from scratch
 #  readSeries           Reads from a spreadsheet and creates a 'timeSeries'
-#  returnSeries         Computes returns from a 'timetimehhhhh' object  
+#  returnSeries         Computes returns from a 'timeSeries' object  
+#  durationSeries       Computes durations from a 'timeSeries' object
+#  midquoteSeries       Computes mid quotes from a 'timeSeries' object
+#  spreadSeries         Computes spreads from a 'timeSeries' object
 #  applySeries          Applies a function to blocks of a 'timeSeries'
 #  orderStatistics      Compute order statistic of a 'timeSeries'
 # FUNCTION:            DATA SLOT AND CLASSIFICATION OF TIME SERIES OBJECTS:
@@ -176,7 +179,10 @@ documentation = NULL, ...)
     }
     
     # Record IDs:
-    if (sum(dim(recordIDs)) > 0) rownames(recordIDs) = as.character(charvec)
+    # DW:
+    # No double row Names in data.frames - this generates problems!
+    # if (sum(dim(recordIDs)) > 0) 
+        # rownames(recordIDs) = as.character(charvec)
     
     # Add title and Documentation:
     if (is.null(title)) title = "Time Series Object"
@@ -354,7 +360,81 @@ trim = TRUE, digits = 4, units = NULL)
 # ------------------------------------------------------------------------------
 
 
-applySeries =
+durationSeries = 
+function(x, trim = FALSE, units = c("secs", "mins", "hours"))
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Computes durations from a financial price series
+    
+    # Arguments:    
+    #   x - a univariate or multivariate 'timeSeries' object or a  
+    #       numeric vector or matrix.
+    #   trim - a logical flag, by default TRUE, the first missing 
+    #       observation in the return series will be removed. 
+    #   units - a character value or vector which allows to set the 
+    #       units in which the durations are measured
+
+    # Value:
+    #   Returns a S4 object of class 'timeSeries'.
+    
+    # Changes:
+    #
+    
+    # FUNCTION:
+    
+    # Positions and Durations:
+    pos = seriesPositions(x)
+    dur = c(NA, diff(as.integer(difftime(pos, pos[1], units = units[1]))))
+    
+    # Data Matrix:
+    x@Data = matrix(dur, dimnames = list(x@positions, "Duration"))
+    if (trim) x = x[-1, ]
+    
+    # Return Series:
+    x
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+midquoteSeries = 
+function(x, units = c("Bid", "Ask"))
+{
+    # Check Type Argument:
+    type = match.arg(type)
+    
+    # Compute Mid Quotes:
+    midQuotes = 0.5 * ( x[, units[1]] + x[, units[2]] ) 
+    
+    # Return Value:
+    midQuotes
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+spreadSeries = 
+function(x, units = c("Bid", "Ask"), inTicksOfSize = NULL)
+{
+    # Check Type Argument:
+    type = match.arg(type)
+    
+    # Compute Spread:
+    Spread = x[, units[2]] - x[, units[1]] 
+    if (!is.null(inTicksOfSize)) Spread = round(Spread/inTicksOfSize)
+    
+    # Return Value:
+    Spread
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.applySeries =
 function(x, from = NULL, to = NULL, by = c("monthly", "quarterly"), 
 FUN = colAvgs, units = NULL, ...)
 {   # A function implemented by Diethelm Wuertz
@@ -393,7 +473,7 @@ FUN = colAvgs, units = NULL, ...)
     # Check object:
     if (class(x) != "timeSeries") stop("s is not a timeSeries object")
     
-    # Monthly from and to:
+    # Monthly and Quarterly from and to:
     if (is.null(from) & is.null(to)) {
         if (by[1] == "monthly") {
             # Use monthly blocks:
@@ -443,6 +523,59 @@ FUN = colAvgs, units = NULL, ...)
         format = x@format, zone = x@FinCenter, , FinCenter = x@FinCenter, 
         title = x@title, documentation = x@documentation, ...)       
 } 
+
+
+applySeries = 
+function (x, from = NULL, to = NULL, by = c("monthly", "quarterly"), 
+FUN = colAvgs, units = NULL, ...) 
+{
+    # Chreck for 'timeSeries' Object:
+    stopifnot(class(x) == "timeSeries") 
+    
+    # Allow for colMeans:
+    if (substitute(FUN) == "colMeans") FUN = "colAvgs"
+    
+    # Monthly and Quarterly from and to:
+    if (is.null(from) & is.null(to)) {
+        by = match.arg(by)
+        if (by == "monthly") {
+            from = unique(timeFirstDayInMonth(seriesPositions(x)))
+            to = unique(timeLastDayInMonth(seriesPositions(x)))
+        }
+        else if (by == "quarterly") {
+            from = unique(timeFirstDayInQuarter(seriesPositions(x)))
+            to = unique(timeLastDayInQuarter(seriesPositions(x)))
+        }
+        from@FinCenter = to@FinCenter = x@FinCenter
+    }
+    
+    # Start Cutting Process:
+    fun = match.fun(FUN)
+    cutted = NULL
+    i = 1
+    
+    # Find First Interval which is not empty:
+    while (is.null(cutted)) {
+        cutted = cut(x, from[i], to[i])
+        if (!is.null(cutted)) {
+            # Non empty Interval:
+            ans = fun(cutted, ...)
+        }
+        i = i + 1
+    }
+    # Continue up to the end:
+    for (j in i:from@Dim) {
+        cutted = cut(x, from[j], to[j])
+        if (!is.null(cutted)) {
+            # Non empty Interval:
+            newAns = fun(cutted, ...)
+            ans = rbind(ans, newAns)
+        }
+    }
+    
+    # Return Value:
+    ans
+}
 
 
 # ------------------------------------------------------------------------------

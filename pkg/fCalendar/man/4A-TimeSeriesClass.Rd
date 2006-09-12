@@ -7,6 +7,10 @@
 
 \alias{readSeries}
 \alias{returnSeries}
+\alias{durationSeries}
+\alias{midquoteSeries}
+\alias{spreadSeries}
+
 \alias{applySeries}
 
 \alias{orderStatistics}
@@ -46,6 +50,9 @@
     \code{timeSeries} \tab Creates a 'timeSeries' object from scratch, \cr
     \code{readSeries} \tab Reads a 'timeSeries' from a spreadsheet file, \cr
     \code{returnSeries} \tab Computes returns from a 'timeSeries' object, \cr
+    \code{durationSeries} \tab Computes durations from a 'timeSeries' object, \cr
+    \code{midquoteSeries} \tab Computes mid quotes from a 'timeSeries' object, \cr
+    \code{spreadSeries} \tab Computes spreads from a 'timeSeries' object, \cr
     \code{applySeries} \tab Applies a function to margins of a 'timeSeries', \cr
     \code{orderStatistics} \tab Computes order statistic of a 'timeSeries'. }
     
@@ -82,7 +89,11 @@ timeSeries(data, charvec, units = NULL, format = NULL, zone = myFinCenter,
 readSeries(file, header = TRUE, sep = ";", zone = myFinCenter, 
     FinCenter = myFinCenter, title = NULL, documentation = NULL, \dots)
 returnSeries(x, type = c("continuous", "discrete"), percentage = FALSE, 
-    trim = TRUE, digits = 4, units = NULL)    
+    trim = TRUE, digits = 4, units = NULL)  
+durationSeries(x, trim = FALSE, units = c("secs", "mins", "hours"))   
+midquoteSeries(x, units = c("Bid", "Ask"))
+spreadSeries(x, units = c("Bid", "Ask"), inTicksOfSize = NULL)
+ 
 applySeries(x, from = NULL, to = NULL, by = c("monthly", "quarterly"), 
     FUN = colAvgs, units = NULL, \dots)
     
@@ -176,6 +187,12 @@ ohlcDailyPlot(x, volume = TRUE, colOrder = c(1:5), units = 1e6,
         a logical value. Should weekend dates be included or removed
         from the series.
         }
+    \item{inTicksOfSize}{
+        [spreadSeries] - \cr
+        the default is NULL to simply compute price changes in original 
+        price levels. If ticksize is supplied, the price changes will be 
+        divided by the value of \code{inTicksOfSize} to compute
+        price changes in ticks.
     \item{main}{
         [ohlcDailyPlot] - \cr
         a character string to title the price and volume plot.
@@ -229,6 +246,17 @@ ohlcDailyPlot(x, volume = TRUE, colOrder = c(1:5), units = 1e6,
         current column names of a \code{timeSeries} object. By default 
         \code{NULL} which means that the column names are selected
         automatically.
+        \cr
+        [durationSeries] - \cr
+        a character value or vector which allows to set the 
+        units in which the durations are measured. By default durations
+        are measured in seconds. 
+        \cr
+        [midquoteSeries][spreadSeries] - \cr
+        a vector with two character strings naming the column names of
+        the time series from which to compute the mid quotes and spreads.
+        By default these are bid and ask prices with column names
+        \code{c("Bid", "Ask")}.
         \cr
         [ohlcDailyPlot] - \cr
         a numeric value, specifying in which multiples the volume should
