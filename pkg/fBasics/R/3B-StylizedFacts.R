@@ -554,7 +554,7 @@ function(x, n = 50, cells = "FD", doplot = TRUE, ...)
     yh2 = yh[xh > 0]
     xh2 = xh[xh > 0]
     if (doplot) {
-        plot(log(xh1), log(yh1), type = "p", ...) 
+        plot(log(xh1), log(yh1), type = "p", pch = 19, col = "steelblue", ...) 
         par(err = -1)
         points(log(xh2), log(yh2), col = 2) 
     }
@@ -566,7 +566,7 @@ function(x, n = 50, cells = "FD", doplot = TRUE, ...)
     yg = log(dnorm(xg, mean(x), sqrt(var(x))))
     if (doplot) {
         par(err = -1)
-        lines(log(xg), yg, col = 3)
+        lines(log(xg), yg, col = "brown")
     }
     
     # Return Value:
@@ -597,7 +597,7 @@ function(x, n = 50, doplot = TRUE, ...)
     yh = log(yh[yh > 0])
     if (doplot) {
         par(err = -1)
-        plot(xh, yh, type = "p", ...)
+        plot(xh, yh, type = "p", pch = 19, col = "steelblue", ...)
     } 
     
     # Compare with a Gaussian Plot:
@@ -605,7 +605,7 @@ function(x, n = 50, doplot = TRUE, ...)
     yg = log(dnorm(xg, mean(x), sqrt(var(x))))
     if (doplot) { 
         par(err = -1)
-        lines(xg, yg, col = 2)
+        lines(xg, yg, col = "brown")
     }
     
     # Return Value:

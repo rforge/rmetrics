@@ -483,11 +483,11 @@ function(x, labels = TRUE, ...)
     pl = p-s
     i = pl<1&pl>0
     lower = quantile(x, probs = pl[i])
-    lines(z[i], lower, col = "red")
+    lines(z[i], lower, col = "brown")
     pl = p+s
     i = pl < 1 & pl > 0
     upper = quantile(x, probs = pl[i])
-    lines(z[i], upper, col = "red")
+    lines(z[i], upper, col = "brown")
     
     # Result:
     result = data.frame(lower, upper)
