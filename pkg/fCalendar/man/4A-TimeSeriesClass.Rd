@@ -193,6 +193,7 @@ ohlcDailyPlot(x, volume = TRUE, colOrder = c(1:5), units = 1e6,
         price levels. If ticksize is supplied, the price changes will be 
         divided by the value of \code{inTicksOfSize} to compute
         price changes in ticks.
+        }
     \item{main}{
         [ohlcDailyPlot] - \cr
         a character string to title the price and volume plot.
