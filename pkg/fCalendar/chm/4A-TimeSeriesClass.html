@@ -173,6 +173,209 @@ ohlcDailyPlot(x, volume = TRUE, colOrder = c(1:5), units = 1e6,
 </pre>
 
 
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>by</code></td>
+<td>
+[applySeries] - <br>
+a character either <code>"monthly"</code> or <code>"quarterly"</code>. The
+default value is <code>"monthly"</code>. Only operative when both arguments
+<code>from</code> and <code>to</code> have ther default values <code>NULL</code>.
+In this case the function <code>FUN</code> will be applied to monthly or
+quarterly periods.
+</td></tr>
+<tr valign="top"><td><code>charvec</code></td>
+<td>
+a character vector of dates and times.
+</td></tr>
+<tr valign="top"><td><code>colOrder</code></td>
+<td>
+[ohlcDailyPlot] - <br> 
+an integer vector which gives the order of the prices and the
+volume in the input object. By default the following order of
+columns from 1 to 5 is assumed: Open, high, low, close, and volume.
+</td></tr>
+<tr valign="top"><td><code>data</code></td>
+<td>
+a <code>data.frame</code> or a <code>matrix</code> object of numeric data.
+</td></tr>
+<tr valign="top"><td><code>digits</code></td>
+<td>
+[returnSeries] - <br>
+an integer value. The number of digits to be printed in the 
+output.
+</td></tr>
+<tr valign="top"><td><code>documentation</code></td>
+<td>
+optional documentation string, or a vector of character strings.
+</td></tr>
+<tr valign="top"><td><code>file</code></td>
+<td>
+the filename of a spreadsheet data set from which
+to import the data records.
+</td></tr>
+<tr valign="top"><td><code>FinCenter</code></td>
+<td>
+a character with the the location of the  financial center named 
+as "continent/city". 
+</td></tr>
+<tr valign="top"><td><code>header</code></td>
+<td>
+a logical value indicating whether the file contains the
+names of the variables as its first line.  If missing, the
+value is determined from the file format: 'header' is set to
+'TRUE' if and only if the first row contains one fewer field
+than the number of columns.
+</td></tr>
+<tr valign="top"><td><code>format</code></td>
+<td>
+the format specification of the input character vector,
+<br>
+[as.timeSeries] - <br>
+a character string with the format in POSIX notation to be passed 
+to the time series object.
+</td></tr>
+<tr valign="top"><td><code>from, to</code></td>
+<td>
+starting date and end date, <code>to</code> must be after <code>from</code>.
+</td></tr>
+<tr valign="top"><td><code>FUN</code></td>
+<td>
+[applySeries] - <br>
+a function to use for aggregation, by default <code>colAvgs</code>.
+</td></tr>
+<tr valign="top"><td><code>grid.lty, grid.nx</code></td>
+<td>
+[ohlcDailyPlot] - <br>
+The type of grid line and the number of grid lines used in the
+plot.
+</td></tr>
+<tr valign="top"><td><code>include.weekends</code></td>
+<td>
+[alignDailySeries] - <br>
+a logical value. Should weekend dates be included or removed
+from the series.
+</td></tr>
+<tr valign="top"><td><code>inTicksOfSize</code></td>
+<td>
+[spreadSeries] - <br>
+the default is NULL to simply compute price changes in original 
+price levels. If ticksize is supplied, the price changes will be 
+divided by the value of <code>inTicksOfSize</code> to compute
+price changes in ticks.
+</td></tr>
+<tr valign="top"><td><code>main</code></td>
+<td>
+[ohlcDailyPlot] - <br>
+a character string to title the price and volume plot.
+</td></tr>
+<tr valign="top"><td><code>method</code></td>
+<td>
+[alignDailySeries] - <br>
+the method to be used for the alignment. A character string, one
+of <code>"before"</code>, use the data from the row whose position is
+just before the unmatched position, or <code>"after"</code>, use the 
+data from the row whose position is just after the unmatched 
+position, or <code>"linear"</code>, interpolate linearly between 
+<code>"before"</code> and <code>"after"</code>. 
+</td></tr>
+<tr valign="top"><td><code>object</code></td>
+<td>
+[is][seriesData][seriesPositions][summary] -    
+an object of class <code>timeSeries</code>.
+</td></tr>
+<tr valign="top"><td><code>percentage</code></td>
+<td>
+[returnSeries] - <br>
+a logical value. By default <code>FALSE</code>, if <code>TRUE</code> the 
+series will be expressed in percentage changes.
+</td></tr>
+<tr valign="top"><td><code>recordIDs</code></td>
+<td>
+a data frame which can be used for record identification.
+</td></tr>
+<tr valign="top"><td><code>sep</code></td>
+<td>
+[readSeries] - <br>
+the field seperator used in the spreadsheet file to separate 
+columns.
+</td></tr>
+<tr valign="top"><td><code>title</code></td>
+<td>
+an optional title string, if not specified the inputs data 
+name is deparsed.
+</td></tr>
+<tr valign="top"><td><code>trim</code></td>
+<td>
+[diffSeries][returnSeries] - <br>
+a logical value. By default <code>TRUE</code>, the first missing 
+observation in the return series will be removed. 
+</td></tr>
+<tr valign="top"><td><code>type</code></td>
+<td>
+[returnSeries] - <br>
+a character string specifying how to compute the returns. Valid 
+choices are: <code>continuous</code> and <code>discrete</code>. For the 
+default <code>type="continuous"</code>, the returns are calculated as 
+the logarithmic differences, otherwise if <code>type="discrete"</code>, 
+the returns are calculated as percentage changes. 
+</td></tr>
+<tr valign="top"><td><code>units</code></td>
+<td>
+[applySeries][lag][allignDailySeries][returnSeries][mergeSeries] - <br>
+an optional character string, which allows to overwrite the 
+current column names of a <code>timeSeries</code> object. By default 
+<code>NULL</code> which means that the column names are selected
+automatically.
+<br>
+[durationSeries] - <br>
+a character value or vector which allows to set the 
+units in which the durations are measured. By default durations
+are measured in seconds. 
+<br>
+[midquoteSeries][spreadSeries] - <br>
+a vector with two character strings naming the column names of
+the time series from which to compute the mid quotes and spreads.
+By default these are bid and ask prices with column names
+<code>c("Bid", "Ask")</code>.
+<br>
+[ohlcDailyPlot] - <br>
+a numeric value, specifying in which multiples the volume should
+be referenced on the plot labels. By default 1e6, i.e. in units
+of 1 Million.
+</td></tr>
+<tr valign="top"><td><code>volume</code></td>
+<td>
+[ohlcDailyPlot] - <br>
+a logigical value. Should a volume plot added to the OHLC Plot.
+By default <code>TRUE</code>.
+</td></tr>
+<tr valign="top"><td><code>x</code></td>
+<td>
+[as] - <br>   
+a <code>matrix</code> type object to be converted.<br>
+[as.vector][as.matrix][as.data.frame] -<br>
+[applySeries] - <br>
+[cut][end][mergeSeries][plot][print][rev][start] - <br>
+an object of class <code>timeSeries</code>.
+</td></tr>
+<tr valign="top"><td><code>xlab, ylab</code></td>
+<td>
+[ohlcDailyPlot] - <br>
+two string vectors to name the x and y axis of the price and
+volume plot.
+</td></tr>
+<tr valign="top"><td><code>zone</code></td>
+<td>
+the time zone or financial center where the data were recorded.
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+arguments passed to other methods.
+</td></tr>
+</table>
+
 <h3>Details</h3>
 
 <p>
