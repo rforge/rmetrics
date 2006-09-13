@@ -85,19 +85,19 @@ function()
     checkIdentical(target, current)
     
     # Weekdays:
-    tS = timeSequence(from = Easter(currentYear)-7*24*3600, length.out = 8)
+    tS = timeSequence(from = Easter(2006)-7*24*3600, length.out = 8)
     WD = isWeekday(tS)
     current = c(FALSE, TRUE, TRUE, TRUE, TRUE, TRUE, FALSE, FALSE) 
     checkIdentical(as.logical(WD), current)
     
     # Weekends:
-    tS = timeSequence(from = Easter(currentYear)-7*24*3600, length.out = 8)
+    tS = timeSequence(from = Easter(2006)-7*24*3600, length.out = 8)
     WE = isWeekend(tS)
     current = !c(FALSE, TRUE, TRUE, TRUE, TRUE, TRUE, FALSE, FALSE) 
     checkIdentical(as.logical(WE), current)
     
     # Day of Week:
-    tS = timeSequence(from = Easter(currentYear)-7*24*3600, length.out = 8)
+    tS = timeSequence(from = Easter(2006)-7*24*3600, length.out = 8)
     DOW = getDayOfWeek(tS)
     current = c("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun")
     checkIdentical(as.character(DOW), current)
