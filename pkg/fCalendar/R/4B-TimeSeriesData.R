@@ -794,10 +794,9 @@ function (x, from, to, ...)
     if (length(Index) == 0) return()
     
     # Compose Series:
-    x@positions = x@positions[Index] 
-    x@Data = as.matrix(x@Data[Index, ])  
-    colnames(x@Data) = x@units
-    x@recordIDs = as.data.frame(x@recordIDs[Index, ])
+    x = timeSeries(as.matrix(x@Data[Index, ]), x@positions[Index],
+        zone = x@FinCenter, FinCenter = x@FinCenter, recordIDs =
+        as.data.frame(x@recordIDs[Index, ]))
     
     # Return value:
     x

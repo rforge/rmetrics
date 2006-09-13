@@ -418,13 +418,10 @@ function(x, units = c("Bid", "Ask"))
 
 spreadSeries = 
 function(x, units = c("Bid", "Ask"), inTicksOfSize = NULL)
-{
-    # Check Type Argument:
-    type = match.arg(type)
-    
+{   
     # Compute Spread:
     Spread = x[, units[2]] - x[, units[1]] 
-    if (!is.null(inTicksOfSize)) Spread = round(Spread/inTicksOfSize)
+    if (!is.null(inTicksOfSize)) Spread@Data = round(Spread@Data/inTicksOfSize)
     
     # Return Value:
     Spread
