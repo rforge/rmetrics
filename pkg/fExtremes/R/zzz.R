@@ -51,12 +51,12 @@ function(lib, pkg)
     # library.dynam("fExtremes", pkg, lib)
     
     # Load Data:
-    data(danishClaims)
-    danishClaims <<- as.timeSeries(danishClaims)
-    data(bmwRet)
-    bmwRet <<- as.timeSeries(bmwRet)
-    data(daxRet)
-    daxRet <<- as.timeSeries(daxRet)
+    # data(danishClaims)
+    # danishClaims <<- as.timeSeries(danishClaims)
+    # data(bmwRet)
+    # bmwRet <<- as.timeSeries(bmwRet)
+    # data(daxRet)
+    # daxRet <<- as.timeSeries(daxRet)
     
 }
 
