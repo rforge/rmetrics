@@ -10,7 +10,7 @@
 %\alias{.tTest}
 %\alias{.kw2Test}
 
-\alias.varianceTest}
+\alias{varianceTest}
 %\alias{.varfTest}
 %\alias{.bartlett2Test}
 %\alias{.fligner2Test}
@@ -126,6 +126,9 @@ qansariw(p, m, n = m)
         }
     \item{m, n}{
         [*ansariw] - \cr
+        } 
+    \item{method}{
+        a character string naming which test should be applied.
         } 
     \item{p}{
         [qansariw] - \cr
