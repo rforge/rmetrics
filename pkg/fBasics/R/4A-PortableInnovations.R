@@ -28,13 +28,13 @@
 
 
 # ##############################################################################
-# FUNCTION:                 PORTABLE INNOVATIONS:
-#  set.lcgseed               Sets initial random seed
-#  get.lcgseed               Gets the current valus of the random seed
-# FUNCTION:                 DISTRIBUTIONS:
-#  runif.lcg                 Uniform linear congruational generator
-#  rnorm.lcg                 Normal linear congruational generator
-#  rt.lcg                    Student-t linear congruational generator
+# FUNCTION:            PORTABLE INNOVATIONS:
+#  set.lcgseed          Sets initial random seed
+#  get.lcgseed          Gets the current valus of the random seed
+# FUNCTION:            DISTRIBUTIONS:
+# runif.lcg             Generates portable uniform linear congruational rvs
+# rnorm.lcg             Generates portable normal linear congruational rvs
+# rt.lcg                Generates portable Student-t linear congruational rvs
 ################################################################################
 
 

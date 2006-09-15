@@ -29,18 +29,18 @@
 
 ################################################################################
 # FUNCTION:             DESCRIPTION:
-#  acfPlot               Displays autocorrelations function plot
-#  pacfPlot              Displays partial autocorrelation function plot
-#  ccfPlot               Displays cross correlation function plot
-#  teffectPlot           Estimates and plots the Taylor effect
-#  lmacfPlot             Estimates and plots the long memory ACF
-#  lacfPlot              Plots lagged autocorrelations
-#  logpdfPlot            Returns a pdf plot on logarithmic scale(s)
+#  acfPlot               Displays tailored autocorrelations function plot
+#  pacfPlot              Displays tailored partial autocorrelation function plot
+#  ccfPlot               Displays tailored cross correlation function plot
+#  teffectPlot           Estimates and displays the Taylor effect
+#  lmacfPlot             Estimates and displays the long memory ACF
+#  lacfPlot              Displays lagged autocorrelations
+#  logpdfPlot            Displays a pdf plot on logarithmic scale(s)
 #  .logpdfPlot            Internal function called by 'logpdf'
 #  .loglogpdfPlot         Internal function called by 'logpdf'
 #  .histpdf               Internal function called by '.log[log]pdf'
-#  qqgaussPlot           Returns a Gaussian quantile-quantile plot
-#  scalinglawPlot        Evaluates and plots scaling law behavior
+#  qqgaussPlot           Displays a tailored Gaussian quantile-quantile plot
+#  scalinglawPlot        Evaluates and displays scaling law behavior
 ################################################################################
 
 

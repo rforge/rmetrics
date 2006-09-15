@@ -29,25 +29,28 @@
 
 ################################################################################
 # FUNCTION:             DISTRIBUTIONAL TESTS:
-#  ks2Test               Two sample Kolmogorov-Smirnov test
+#  ks2Test               Performs a two sample Kolmogorov-Smirnov test
 # FUNCTION:             LOCATION TESTS:
-#  .locationTest         Location test suite
-#  tTest                 Unpaired t test for differences in mean
-#  kw2Test               Kruskal-Wallis test for differences in locations  
+#  locationTest          Performs locations tests on two samples
+#  .tTest                Unpaired t test for differences in mean
+#  .kw2Test              Kruskal-Wallis test for differences in locations  
 # FUNCTION:             VARIANCE TESTS:
-#  .varianceTest         Variance test suite
-#  varfTest              F test for differences in variances
-#  bartlett2Test         Bartlett's test for differences in variances
-#  fligner2Test          Fligner-Killeen test for differences in variances
+#  varianceTest          Performs variance tests on two samples
+#  .varfTest             F test for differences in variances
+#  .bartlett2Test        Bartlett's test for differences in variances
+#  .fligner2Test         Fligner-Killeen test for differences in variances
 # FUNCTION:             SCALE TESTS:
-#  .scaleTest            Scale test suite
-#  ansariTest            Ansari-Bradley test for differences in scale
-#  moodTest              Mood test for differences in scale
+#  scaleTest             Performs scale tests on two samples
+#  .ansariTest           Ansari-Bradley test for differences in scale
+#  .moodTest             Mood test for differences in scale
+#  dansariw              Returns density of the Ansari W statistic
+#  pansariw              Returns probabilities of the Ansari W statistic
+#  qansariw              Returns quantiles of the Ansari W statistic
 # FUNCTION:             CORRELATION TESTS:
-#  .correlationTest      Correlation test suite
-#  pearsonTest           Pearson product moment correlation coefficient
-#  kendallTest           Kendall's tau correlation test
-#  spearmanTest          Spearman's rho correlation test
+#  correlationTest       Performs correlation tests on two samples
+#  .pearsonTest          Pearson product moment correlation coefficient
+#  .kendallTest          Kendall's tau correlation test
+#  .spearmanTest         Spearman's rho correlation test
 ################################################################################
 
 
@@ -144,8 +147,8 @@ function(x, y, title = NULL, description = NULL)
 ################################################################################
 
 
-.locationTest =
-function(x, y, method = c("t", "kruskal2"), 
+locationTest =
+function(x, y, method = c("t", "kw2"), 
 title = NULL, description = NULL) 
 {   # A function implemented by Diethelm Wuertz
 
@@ -158,11 +161,12 @@ title = NULL, description = NULL)
     # FUNCTION:
     
     # Test:
-    if (method[1] == "t") {
-        ans = tTest(x, y, title = title, description = description) 
+    method = match.arg(method)
+    if (method == "t") {
+        ans = .tTest(x, y, title = title, description = description) 
     }
-    if (method[1] == "kruskal2Test") {
-        ans = kw2Test(x, y, title = title, description = description) 
+    if (method == "kw2") {
+        ans = .kw2Test(x, y, title = title, description = description) 
     }  
         
     # Return Value:
@@ -173,7 +177,7 @@ title = NULL, description = NULL)
 # ------------------------------------------------------------------------------
 
 
-tTest = 
+.tTest = 
 function(x, y, title = NULL, description = NULL)
 {   # A function implemented by Diethelm Wuertz
 
@@ -300,7 +304,7 @@ function(x, y, title = NULL, description = NULL)
 # ------------------------------------------------------------------------------ 
 
 
-kw2Test = 
+.kw2Test = 
 function(x, y, title = NULL, description = NULL)
 {   # A function implemented by Diethelm Wuertz
 
@@ -392,8 +396,8 @@ function(x, y, title = NULL, description = NULL)
 ################################################################################
 
 
-.varianceTest =
-function(x, y, method = c("varf", "bartlett2", "fligner2"), 
+varianceTest =
+function(x, y, method = c("varf", "bartlett", "fligner"), 
 title = NULL, description = NULL) 
 {   # A function implemented by Diethelm Wuertz
 
@@ -406,14 +410,15 @@ title = NULL, description = NULL)
     # FUNCTION:
     
     # Test:
-    if (method[1] == "varf") {
-        ans = varfTest(x, y, title = title, description = description) 
+    method = match.arg(method)
+    if (method == "varf") {
+        ans = .varfTest(x, y, title = title, description = description) 
     }
-    if (method[1] == "bartlett2") {
-        ans = bartlett2Test(x, y, title = title, description = description) 
+    if (method == "bartlett") {
+        ans = .bartlett2Test(x, y, title = title, description = description) 
     }  
-    if (method[1] == "fligner2") {
-        ans = fligner2Test(x, y, title = title, description = description) 
+    if (method == "fligner") {
+        ans = .fligner2Test(x, y, title = title, description = description) 
     } 
         
     # Return Value:
@@ -424,7 +429,7 @@ title = NULL, description = NULL)
 # ------------------------------------------------------------------------------
 
 
-varfTest = 
+.varfTest = 
 function(x, y, title = NULL, description = NULL)
 {   # A function implemented by Diethelm Wuertz
 
@@ -528,7 +533,7 @@ function(x, y, title = NULL, description = NULL)
 # ------------------------------------------------------------------------------
 
 
-bartlett2Test = 
+.bartlett2Test = 
 function(x, y, title = NULL, description = NULL)
 {   # A function implemented by Diethelm Wuertz
 
@@ -596,7 +601,7 @@ function(x, y, title = NULL, description = NULL)
 ################################################################################
    
 
-fligner2Test = 
+.fligner2Test = 
 function(x, y, title = NULL, description = NULL)
 {   # A function implemented by Diethelm Wuertz
 
@@ -666,7 +671,7 @@ function(x, y, title = NULL, description = NULL)
 ################################################################################
 
 
-.scaleTest =
+scaleTest =
 function(x, y, method = c("ansari", "mood"), 
 title = NULL, description = NULL) 
 {   # A function implemented by Diethelm Wuertz
@@ -680,11 +685,12 @@ title = NULL, description = NULL)
     # FUNCTION:
     
     # Test:
-    if (method[1] == "ansari") {
-        ans = ansariTest(x, y, title = title, description = description) 
+    method = match.arg(method)
+    if (method == "ansari") {
+        ans = .ansariTest(x, y, title = title, description = description) 
     }
-    if (method[1] == "mood") {
-        ans = moodTest(x, y, title = title, description = description) 
+    if (method == "mood") {
+        ans = .moodTest(x, y, title = title, description = description) 
     }  
         
     # Return Value:
@@ -695,7 +701,7 @@ title = NULL, description = NULL)
 # ------------------------------------------------------------------------------
 
 
-ansariTest = 
+.ansariTest = 
 function(x, y, title = NULL, description = NULL)
 {   # A function implemented by Diethelm Wuertz
 
@@ -731,18 +737,18 @@ function(x, y, title = NULL, description = NULL)
     y = as.vector(y)
     
     # Test:
-    two.sided = .ansariTest(x = x, y = y, alternative = "two.sided",
+    two.sided = .ansari2Test(x = x, y = y, alternative = "two.sided",
         exact = FALSE, conf.int = TRUE, conf.level = 0.95)
-    less = .ansariTest(x = x, y = y, alternative = "less",
+    less = .ansari2Test(x = x, y = y, alternative = "less",
         exact = FALSE, conf.int = TRUE, conf.level = 0.95)
-    greater = .ansariTest(x = x, y = y, alternative = "greater",
+    greater = .ansari2Test(x = x, y = y, alternative = "greater",
         exact = FALSE, conf.int = TRUE, conf.level = 0.95)
         
     two.sided.exact = .ansariTest(x = x, y = y, alternative = "two.sided",
         exact = TRUE, conf.int = TRUE, conf.level = 0.95)
-    less.exact = .ansariTest(x = x, y = y, alternative = "less",
+    less.exact = .ansari2Test(x = x, y = y, alternative = "less",
         exact = TRUE, conf.int = TRUE, conf.level = 0.95)
-    greater.exact = .ansariTest(x = x, y = y, alternative = "greater",
+    greater.exact = .ansari2Test(x = x, y = y, alternative = "greater",
         exact = TRUE, conf.int = TRUE, conf.level = 0.95)
 
     # Statistic:
@@ -806,6 +812,8 @@ function(x, y, title = NULL, description = NULL)
 dansariw = 
 function(x = NULL, m, n = m)
 {   # A function Implemented by Diethelm Wuertz
+    
+    # Description:
     
     # Arguments:
     #   x - if x is null, then all available density-values are
@@ -1003,7 +1011,7 @@ function(p, m, n = m)
 # ------------------------------------------------------------------------------
 
 
-.ansariTest =
+.ansari2Test =
 function(x, y, alternative = c("two.sided", "less", "greater"),
 exact = TRUE, conf.int = FALSE, conf.level = 0.95, ...)
 {
@@ -1238,7 +1246,7 @@ exact = TRUE, conf.int = FALSE, conf.level = 0.95, ...)
 # ------------------------------------------------------------------------------
 
 
-moodTest = 
+.moodTest = 
 function(x, y, title = NULL, description = NULL)
 {   # A function implemented by Diethelm Wuertz
 
@@ -1318,7 +1326,7 @@ function(x, y, title = NULL, description = NULL)
 ################################################################################
 
 
-.correlationTest =
+correlationTest =
 function(x, y, method = c("pearson", "kendall", "spearman"), 
 title = NULL, description = NULL) 
 {   # A function implemented by Diethelm Wuertz
@@ -1332,14 +1340,15 @@ title = NULL, description = NULL)
     # FUNCTION:
     
     # Test:
+    method = match.arg(method)
     if (method[1] == "pearson") {
-        ans = pearsonTest(x, y, title = title, description = description) 
+        ans = .pearsonTest(x, y, title = title, description = description) 
     }
     if (method[1] == "kendall") {
-        ans = kendallTest(x, y, title = title, description = description) 
+        ans = .kendallTest(x, y, title = title, description = description) 
     }  
     if (method[1] == "spearman") {
-       ans = spearmanTest(x, y, title = title, description = description)
+       ans = .spearmanTest(x, y, title = title, description = description)
     }
         
     # Return Value:
@@ -1350,7 +1359,7 @@ title = NULL, description = NULL)
 # ------------------------------------------------------------------------------
 
 
-pearsonTest = 
+.pearsonTest = 
 function(x, y, title = NULL, description = NULL)
 {   # A function implemented by Diethelm Wuertz
 
@@ -1450,7 +1459,7 @@ function(x, y, title = NULL, description = NULL)
 # ------------------------------------------------------------------------------
 
 
-kendallTest = 
+.kendallTest = 
 function(x, y, title = NULL, description = NULL)
 {   # A function implemented by Diethelm Wuertz
 
@@ -1577,7 +1586,7 @@ function(x, y, title = NULL, description = NULL)
 # ------------------------------------------------------------------------------
 
 
-spearmanTest = 
+.spearmanTest = 
 function(x, y, title = NULL, description = NULL)
 {   # A function implemented by Diethelm Wuertz
 

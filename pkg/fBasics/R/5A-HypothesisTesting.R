@@ -34,10 +34,10 @@
 # FUNCTION:             DESCRIPTION:
 #  jbTable               Finite sample p values for the Jarque Bera test
 # FUNCTION:             PVALUE AND STATISTICS TABLES:
-#  pPlot                 General finite sample probability plot
-#  pTable                Interpolated probabilities from finite sample table
+#  pPlot                 Displays a general finite sample probability plot
+#  pTable                Interpolates probabilities from a finite sample table
 #  .pTable                Utility function called by the function 'pTable'
-#  qTable                Interpolated quantiles from finite sample table
+#  qTable                Interpolates quantiles from a finite sample table
 #  .qTable                Utility function called by the function 'qTable'
 # FUNCTION:             INTERNAL FUNCTIONS:
 #  .interpTable.old       Akima spline interpolation utility function
