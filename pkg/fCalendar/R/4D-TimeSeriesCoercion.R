@@ -175,12 +175,12 @@ function(x, ...)
     
     # Transform to Matrix:
     if (firstColumn) {
-        X = as.matrix(x[, -1])
+        X = x[, -1]
     } else {
         X = x
     }
     colNames = colnames(X) 
-    rownames(X) = charvec
+    # rownames(X) = charvec
     
     Numeric = NULL
     for (i in 1:length(X[1, ])) {
