@@ -10,20 +10,24 @@
 </OBJECT>
 <UL>
 <LI> <OBJECT type="text/sitemap">
+<param name="Name" value=".kendallTest">
+<param name="Local" value="5C-TwoSampleTests.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value=".pearsonTest">
+<param name="Local" value="5C-TwoSampleTests.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value=".spearmanTest">
+<param name="Local" value="5C-TwoSampleTests.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="acfPlot">
 <param name="Local" value="3B-StylizedFacts.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="adTest">
 <param name="Local" value="5B-OneSampleTests.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="ansariTest">
-<param name="Local" value="5C-TwoSampleTests.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="bartlett2Test">
-<param name="Local" value="5C-TwoSampleTests.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="BasicStatistics">
@@ -72,6 +76,10 @@
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="colVars">
 <param name="Local" value="3A-BasicStatistics.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="correlationTest">
+<param name="Local" value="5C-TwoSampleTests.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="cvmTest">
@@ -134,10 +142,6 @@
 <param name="Local" value="5A-HypothesisTesting.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="fligner2Test">
-<param name="Local" value="5C-TwoSampleTests.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="get.lcgseed">
 <param name="Local" value="4A-PortableInnovations.html">
 </OBJECT>
@@ -182,10 +186,6 @@
 <param name="Local" value="5B-OneSampleTests.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="kendallTest">
-<param name="Local" value="5C-TwoSampleTests.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="ks2Test">
 <param name="Local" value="5C-TwoSampleTests.html">
 </OBJECT>
@@ -214,10 +214,6 @@
 <param name="Local" value="3A-BasicStatistics.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="kw2Test">
-<param name="Local" value="5C-TwoSampleTests.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="lacfPlot">
 <param name="Local" value="3B-StylizedFacts.html">
 </OBJECT>
@@ -230,12 +226,12 @@
 <param name="Local" value="3B-StylizedFacts.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="logpdfPlot">
-<param name="Local" value="3B-StylizedFacts.html">
+<param name="Name" value="locationTest">
+<param name="Local" value="5C-TwoSampleTests.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="moodTest">
-<param name="Local" value="5C-TwoSampleTests.html">
+<param name="Name" value="logpdfPlot">
+<param name="Local" value="3B-StylizedFacts.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="nigFit">
@@ -264,10 +260,6 @@
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="pchiTest">
 <param name="Local" value="5B-OneSampleTests.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="pearsonTest">
-<param name="Local" value="5C-TwoSampleTests.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="pgh">
@@ -426,6 +418,10 @@
 <param name="Local" value="5B-OneSampleTests.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
+<param name="Name" value="scaleTest">
+<param name="Local" value="5C-TwoSampleTests.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="scalinglawPlot">
 <param name="Local" value="3B-StylizedFacts.html">
 </OBJECT>
@@ -474,10 +470,6 @@
 <param name="Local" value="2C-SmoothedSplineDistribution.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="spearmanTest">
-<param name="Local" value="5C-TwoSampleTests.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="ssdFit">
 <param name="Local" value="2D-DistributionFits.html">
 </OBJECT>
@@ -522,15 +514,11 @@
 <param name="Local" value="2D-DistributionFits.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="tTest">
-<param name="Local" value="5C-TwoSampleTests.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="TwoSampleTests">
 <param name="Local" value="5C-TwoSampleTests.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="varfTest">
+<param name="Name" value="varianceTest">
 <param name="Local" value="5C-TwoSampleTests.html">
 </OBJECT>
 </UL>
