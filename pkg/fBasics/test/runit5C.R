@@ -29,25 +29,28 @@
 
 ################################################################################
 # FUNCTION:             DISTRIBUTIONAL TESTS:
-#  ks2Test               Two sample Kolmogorov-Smirnov test
+#  ks2Test               Performs a two sample Kolmogorov-Smirnov test
 # FUNCTION:             LOCATION TESTS:
-#  .locationTest         Location test suite
-#  tTest                 Unpaired t test for differences in mean
-#  kw2Test               Kruskal-Wallis test for differences in locations  
+#  locationTest          Performs locations tests on two samples
+#  .tTest                Unpaired t test for differences in mean
+#  .kw2Test              Kruskal-Wallis test for differences in locations  
 # FUNCTION:             VARIANCE TESTS:
-#  .varianceTest         Variance test suite
-#  varfTest              F test for differences in variances
-#  bartlett2Test         Bartlett's test for differences in variances
-#  fligner2Test          Fligner-Killeen test for differences in variances
+#  varianceTest          Performs variance tests on two samples
+#  .varfTest             F test for differences in variances
+#  .bartlett2Test        Bartlett's test for differences in variances
+#  .fligner2Test         Fligner-Killeen test for differences in variances
 # FUNCTION:             SCALE TESTS:
-#  .scaleTest            Scale test suite
-#  ansariTest            Ansari-Bradley test for differences in scale
-#  moodTest              Mood test for differences in scale
+#  scaleTest             Performs scale tests on two samples
+#  .ansariTest           Ansari-Bradley test for differences in scale
+#  .moodTest             Mood test for differences in scale
+#  dansariw              Returns density of the Ansari W statistic
+#  pansariw              Returns probabilities of the Ansari W statistic
+#  qansariw              Returns quantiles of the Ansari W statistic
 # FUNCTION:             CORRELATION TESTS:
-#  .correlationTest      Correlation test suite
-#  pearsonTest           Pearson product moment correlation coefficient
-#  kendallTest           Kendall's tau correlation test
-#  spearmanTest          Spearman's rho correlation test
+#  correlationTest       Performs correlation tests on two samples
+#  .pearsonTest          Pearson product moment correlation coefficient
+#  .kendallTest          Kendall's tau correlation test
+#  .spearmanTest         Spearman's rho correlation test
 ################################################################################
 
 
@@ -78,7 +81,7 @@ function()
     Y = rt(50, df = 3)
     
     # Two Sample Kolmogorov-Smirnov Test:
-    TEST = ks2Test(X, Y)
+    TEST = .ks2Test(X, Y)
     print(TEST)
     checkIdentical(as.character(class(TEST)), "fHTEST")
     
@@ -99,12 +102,12 @@ function()
     Y = rt(50, df = 3)    
  
     # Location t-Test:
-    TEST = tTest(X, Y)
+    TEST = .tTest(X, Y)
     print(TEST)
     checkIdentical(as.character(class(TEST)), "fHTEST")
     
     # Location kw2-Test:
-    TEST = kw2Test(X, Y)
+    TEST = .kw2Test(X, Y)
     print(TEST)
     checkIdentical(as.character(class(TEST)), "fHTEST")
     
@@ -125,17 +128,17 @@ function()
     Y = rt(50, df = 3)              
         
     # Variance F-Test:
-    TEST = varfTest(X, Y)
+    TEST = .varfTest(X, Y)
     print(TEST)
     checkIdentical(as.character(class(TEST)), "fHTEST")
     
     # Variance Bartlett-Test:
-    TEST = bartlett2Test(X, Y)
+    TEST = .bartlett2Test(X, Y)
     print(TEST)
     checkIdentical(as.character(class(TEST)), "fHTEST")
     
     # Variance Fligner-Test:
-    TEST = fligner2Test(X, Y)
+    TEST = .fligner2Test(X, Y)
     print(TEST)
     checkIdentical(as.character(class(TEST)), "fHTEST")
     
@@ -156,12 +159,12 @@ function()
     Y = rt(50, df = 3)           
         
     # Scale Ansari-Test:
-    TEST = varfTest(X, Y)
+    TEST = .ansariTest(X, Y)
     print(TEST)
     checkIdentical(as.character(class(TEST)), "fHTEST")
     
     # Scale Mood-Test:
-    TEST = moodTest(X, Y)
+    TEST = .moodTest(X, Y)
     print(TEST)
     checkIdentical(as.character(class(TEST)), "fHTEST")
     
@@ -182,17 +185,17 @@ function()
     Y = rt(100, df = 3)
     
     # Correlation Pearson-Test:
-    TEST = pearsonTest(X, Y)
+    TEST = .pearsonTest(X, Y)
     print(TEST)
     checkIdentical(as.character(class(TEST)), "fHTEST")
     
     # Correlation Kendall-Test:
-    TEST = kendallTest(X, Y)
+    TEST = .kendallTest(X, Y)
     print(TEST)
     checkIdentical(as.character(class(TEST)), "fHTEST")
     
     # Correlation Spearman-Test:
-    TEST = spearmanTest(X, Y)
+    TEST = .spearmanTest(X, Y)
     print(TEST)
     checkIdentical(as.character(class(TEST)), "fHTEST")
     

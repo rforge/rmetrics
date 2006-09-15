@@ -359,23 +359,17 @@ Moore, D.S. (1986);
 ## ks2Test - 
    ks2Test(x, y)
    
-## tTest | kw2Test - 
-   tTest(x, y)
-   kw2Test(x, y)
+## locationTest | .tTest | .kw2Test - 
+   locationTest(x, y)
    
-## varfTest, bartlett2Test | fligner2Test -
-   varfTest(x, y)
-   bartlett2Test(x, y)
-   fligner2Test(x, y)
+## varianceTest | .varfTest, .bartlett2Test | .fligner2Test -
+   varianceTest(x, y)
 
-## ansariTest | moodTest -
-   ansariTest(x, y)
-   moodTest(x, y)
+## scaleTest | .ansariTest | .moodTest -
+   scaleTest(x, y)
    
-## pearsonTest | kendallTest | spearmanTest -
-   pearsonTest(x, y)
-   kendallTest(x, y)
-   spearmanTest(x, y)
+## correlationTest | .pearsonTest | .kendallTest | .spearmanTest -
+   correlationTest(x, y)
 }
 
 
