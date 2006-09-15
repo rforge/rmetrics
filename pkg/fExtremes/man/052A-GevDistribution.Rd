@@ -29,7 +29,7 @@
     \code{pgev} \tab probability function of the GEV distribution, \cr
     \code{qgev} \tab quantile function of the GEV distribution, \cr
     \code{rgev} \tab random variates from the GEV distribution, \cr
-    \code{gevMoments} \tab computes true mean and variance, \cr}
+    \code{gevMoments} \tab computes true mean and variance, \cr
     \code{gevSlider} \tab displays density or rvs from a GEV.}
     
 }
@@ -58,7 +58,7 @@ gevSlider(method = c("density", "rvs"))
     \item{method}{
         [gevSlider] - \cr        
         a character sgtring denoting what should be displayed. Either
-        the density and \code{"density"}
+        the density and \code{"density"}.
         } 
     \item{n}{
         [rgev] - \cr        
