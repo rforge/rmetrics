@@ -29,7 +29,7 @@
 
 ################################################################################
 # S3 MEHOD:              COERCION AND OBJECT TRANSFORMATIONS:
-#  as.timeDate            Use Method
+#  as.timeDate            Implements Use Method
 #  as.timeDate.POSIXt     Returns a 'POSIX' object as 'timeDate' object
 #  as.timeDate.Date       Returns a 'POSIX' object as 'timeDate' object
 # S3 METHOD:             DESCRIPTION:
@@ -42,7 +42,7 @@
 # S3 METHOD:             DESCRIPTION:
 #  julian.timeDate        Returns Julian day counts since 1970-01-01
 #  atoms.timeDate         Returns date/time atoms from a 'timeDate' object
-#  months.timeDate        Extract months atom from a 'timeDate' object
+#  months.timeDate        Extracts months atom from a 'timeDate' object
 ################################################################################
 
 
