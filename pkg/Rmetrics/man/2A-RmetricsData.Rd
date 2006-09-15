@@ -214,7 +214,7 @@ Zivot E. (2000);
 
 
 \examples{
-## SOURCE("Rmetrics.RmetricsData")
+## SOURCE("Rmetrics.2A-RmetricsData")
 
 ## NYSE Residuals:
    data(nyse)
