@@ -744,7 +744,7 @@ function(x, y, title = NULL, description = NULL)
     greater = .ansari2Test(x = x, y = y, alternative = "greater",
         exact = FALSE, conf.int = TRUE, conf.level = 0.95)
         
-    two.sided.exact = .ansariTest(x = x, y = y, alternative = "two.sided",
+    two.sided.exact = .ansari2Test(x = x, y = y, alternative = "two.sided",
         exact = TRUE, conf.int = TRUE, conf.level = 0.95)
     less.exact = .ansari2Test(x = x, y = y, alternative = "less",
         exact = TRUE, conf.int = TRUE, conf.level = 0.95)
