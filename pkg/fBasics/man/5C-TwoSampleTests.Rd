@@ -6,23 +6,23 @@
 
 \alias{ks2Test}
 
-%\alias{.locationTest}
-\alias{tTest}
-\alias{kw2Test}
+\alias{locationTest}
+%\alias{.tTest}
+%\alias{.kw2Test}
 
-%\alias{.varianceTest}
-\alias{varfTest}
-\alias{bartlett2Test}
-\alias{fligner2Test}
+\alias.varianceTest}
+%\alias{.varfTest}
+%\alias{.bartlett2Test}
+%\alias{.fligner2Test}
 
-%\alias{.scaleTest}
-\alias{ansariTest}
-\alias{moodTest}
+\alias{scaleTest}
+%\alias{.ansariTest}
+%\alias{.moodTest}
 
-%\alias{.correlationTest}
-\alias{pearsonTest}
-\alias{kendallTest}
-\alias{spearmanTest}
+\alias{correlationTest}
+\alias{.pearsonTest}
+\alias{.kendallTest}
+\alias{.spearmanTest}
 
 % Distribution
 
@@ -50,34 +50,40 @@
     Difference in Locations:
     
     \tabular{ll}{ 
-    \code{tTest} \tab The t test, \cr
-    \code{kw2Test} \tab the Kruskal--Wallis test. } 
+    \code{locationTest} \tab The location test suite, \cr
+    \code{.tTest} \tab The t test, \cr
+    \code{.kw2Test} \tab the Kruskal--Wallis test. } 
     
     Difference in Variance:
     
     \tabular{ll}{ 
-    \code{varfTest} \tab The variance F test, \cr
-    \code{bartlett2Test} \tab the Bartlett test, \cr
-    \code{fligner2Test} \tab the Fligner--Killeen test.}
+    \code{varianceTest} \tab The variance test suite, \cr
+    \code{.varfTest} \tab The variance F test, \cr
+    \code{.bartlett2Test} \tab the Bartlett test, \cr
+    \code{.fligner2Test} \tab the Fligner--Killeen test.}
      
     Difference in Scale:
     
     \tabular{ll}{
-    \code{ansariTest} \tab  The Ansari--Bradley test, \cr
-    \code{moodTest} \tab the Mood test.}
+    \code{scaleTest} \tab The scale test suite, \cr
+    \code{.ansariTest} \tab  The Ansari--Bradley test, \cr
+    \code{.moodTest} \tab the Mood test.}
     
     Correlations:
     
     \tabular{ll}{
-    \code{pearsonTest} \tab Pearson's coefficient, \cr
-    \code{kendallTest} \tab Kendall's rho, \cr
-    \code{spearmanTest} \tab Spearman's rho.}
+    \code{correlationTest} \tab The correlation test suite, \cr
+    \code{.pearsonTest} \tab Pearson's coefficient, \cr
+    \code{.kendallTest} \tab Kendall's rho, \cr
+    \code{.spearmanTest} \tab Spearman's rho.}
    
     
     Test Distributions:
     
     \tabular{ll}{       
-    \code{[dpq]ansariw} \tab Distribution of the Ansari W statistic. }
+    \code{dansariw} \tab Returns density of the Ansari W statistic, \cr
+    \code{pansariw} \tab Returns probabilities of the Ansari W statistic, \cr
+    \code{qansariw} \tab Returns quantiles of the Ansari W statistic. } 
      
 }
 
@@ -85,19 +91,27 @@
 \usage{
 ks2Test(x, y, title = NULL, description = NULL)
 
-tTest(x, y, title = NULL, description = NULL) 
-kw2Test(x, y, title = NULL, description = NULL)
+locationTest(x, y, method = c("t", "kw2"), title = NULL, 
+    description = NULL) 
+%tTest(x, y, title = NULL, description = NULL) 
+%kw2Test(x, y, title = NULL, description = NULL)
 
-varfTest(x, y, title = NULL, description = NULL)
-bartlett2Test(x, y, title = NULL, description = NULL)
-fligner2Test(x, y, title = NULL, description = NULL)
+varianceTest(x, y, method = c("varf", "bartlett", "fligner"), title = NULL, 
+    description = NULL)
+%varfTest(x, y, title = NULL, description = NULL)
+%bartlett2Test(x, y, title = NULL, description = NULL)
+%fligner2Test(x, y, title = NULL, description = NULL)
 
-ansariTest(x, y, title = NULL, description = NULL)
-moodTest(x, y, title = NULL, description = NULL)
+scaleTest(x, y, method = c("ansari", "mood"), title = NULL, 
+    description = NULL)
+%ansariTest(x, y, title = NULL, description = NULL)
+%moodTest(x, y, title = NULL, description = NULL)
 
-pearsonTest(x, y, title = NULL, description = NULL)
-kendallTest(x, y, title = NULL, description = NULL)
-spearmanTest(x, y, title = NULL, description = NULL)
+correlationTest(x, y, method = c("pearson", "kendall", "spearman"), title = NULL, 
+    description = NULL)
+%pearsonTest(x, y, title = NULL, description = NULL)
+%kendallTest(x, y, title = NULL, description = NULL)
+%spearmanTest(x, y, title = NULL, description = NULL)
 
 dansariw(x = NULL, m, n = m)
 pansariw(q = NULL, m, n = m)
