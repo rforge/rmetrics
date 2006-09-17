@@ -175,7 +175,7 @@ function(x, ...)
     
     # Transform to Matrix:
     if (firstColumn) {
-        X = x[, -1]
+        X = cbind(x[, -1])
     } else {
         X = x
     }
