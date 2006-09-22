@@ -519,7 +519,7 @@ FUN = colAvgs, units = NULL, ...)
 } 
 
 
-.applyNewSeries = 
+.applySeries = 
 function (x, from = NULL, to = NULL, by = c("monthly", "quarterly"), 
 FUN = colAvgs, units = NULL, ...) 
 {

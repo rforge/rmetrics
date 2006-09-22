@@ -30,6 +30,7 @@
 ################################################################################
 # S3 MEHOD:              COERCION AND OBJECT TRANSFORMATIONS:
 #  as.timeDate            Implements Use Method
+#  .as.timeDate.default    Default Method
 #  as.timeDate.POSIXt     Returns a 'POSIX' object as 'timeDate' object
 #  as.timeDate.Date       Returns a 'POSIX' object as 'timeDate' object
 # S3 METHOD:             DESCRIPTION:
@@ -62,6 +63,36 @@ function(x, zone = NULL, FinCenter = NULL)
 # ------------------------------------------------------------------------------
 
 
+.as.timeDate.default = 
+function(x, zone = NULL, FinCenter = NULL) 
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Returns default object as 'timeDate' object
+    
+    # Arguments:
+    #   x - a 'timeDate' object
+    
+    # Value:
+    #   Returns 'x' as a 'timeDate' object. 
+
+    # Changes:
+    #
+    
+    # FUNCTION:
+    
+    # as timeDate:
+    ans = timeDate(charvec = as.character(x), 
+        zone = zone, FinCenter = FinCenter)
+    
+    # Return Value:
+    ans
+}
+
+
+# ------------------------------------------------------------------------------
+
+
 as.timeDate.POSIXt = 
 function(x, zone = NULL, FinCenter = NULL) 
 {   # A function implemented by Diethelm Wuertz
@@ -71,10 +102,9 @@ function(x, zone = NULL, FinCenter = NULL)
     
     # Arguments:
     #   x - a 'timeDate' object
-    #   ... - arguments passed to other methods.
     
     # Value:
-    #   Returns 'x' as a character vector. 
+    #   Returns 'x' as a 'timeDate' object. 
 
     # Changes:
     #

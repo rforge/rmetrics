@@ -784,6 +784,45 @@ j = min(1, ncol(x@Data)):ncol(x@Data))
 
 
 cut.timeSeries = 
+function (x, from, to, ...) 
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Cuts out a piece from a 'timeSeries' object.
+    
+    # Arguments:
+    #   x - a 'timeSeries' object
+    #   from, to - two 'timeDate' position vectors which size the 
+    #       blocks
+    
+    # Value:
+    #   Returns a S4 object of class 'timeSeries'.
+    
+    # Changes:
+    #
+    
+    # FUNCTION:
+    
+    from = timeDate(from)
+    to = timeDate(to)
+    Positions = seriesPositions(x)
+    Units = x@units
+    colNames = colnames(x@Data)
+    test = (Positions >= from & Positions <= to)
+    Data = as.matrix(x@Data)[test, ]
+    Data = as.matrix(Data)
+    x@Data = Data
+    x@positions = x@positions[test]
+    x@units = Units
+    x@recordIDs = data.frame()
+    colnames(x@Data) = colNames
+    
+    # Return value:
+    x
+}
+
+
+.cut.timeSeries = 
 function(x, from, to, ...)
 {   # A function implemented by Diethelm Wuertz
 
@@ -805,8 +844,10 @@ function(x, from, to, ...)
     
     # Check:
     stopifnot(is.timeSeries(x))
-    stopifnot(is.timeDate(from))
-    stopifnot(is.timeDate(to))
+    if (!is.timeDate(from)) 
+        from = as.timeDate(x, zone = x@FinCenter, FinCenter = x@FinCenter)
+    if (!is.timeDate(to)) 
+        to = as.timeDate(x, zone = x@FinCenter, FinCenter = x@FinCenter)
     
     Positions = seriesPositions(x)   
     if (missing(from)) from = Positions[1]
