@@ -400,13 +400,10 @@ function(x, trim = FALSE, units = c("secs", "mins", "hours"))
 
 
 midquoteSeries = 
-function(x, units = c("Bid", "Ask"))
-{
-    # Check Type Argument:
-    type = match.arg(type)
-    
+function(x, which = c("Bid", "Ask"))
+{   
     # Compute Mid Quotes:
-    midQuotes = 0.5 * ( x[, units[1]] + x[, units[2]] ) 
+    midQuotes = 0.5 * ( x[, which[1]] + x[, which[2]] ) 
     
     # Return Value:
     midQuotes
@@ -417,11 +414,11 @@ function(x, units = c("Bid", "Ask"))
 
 
 spreadSeries = 
-function(x, units = c("Bid", "Ask"), inTicksOfSize = NULL)
+function(x, which = c("Bid", "Ask"), tickSize = NULL)
 {   
     # Compute Spread:
-    Spread = x[, units[2]] - x[, units[1]] 
-    if (!is.null(inTicksOfSize)) Spread@Data = round(Spread@Data/inTicksOfSize)
+    Spread = x[, which[2]] - x[, which[1]] 
+    if (!is.null(tickSize)) Spread@Data = round(Spread@Data/tickSize)
     
     # Return Value:
     Spread
@@ -431,7 +428,7 @@ function(x, units = c("Bid", "Ask"), inTicksOfSize = NULL)
 # ------------------------------------------------------------------------------
 
 
-.applySeries =
+applySeries =
 function(x, from = NULL, to = NULL, by = c("monthly", "quarterly"), 
 FUN = colAvgs, units = NULL, ...)
 {   # A function implemented by Diethelm Wuertz
@@ -522,12 +519,14 @@ FUN = colAvgs, units = NULL, ...)
 } 
 
 
-applySeries = 
+.applyNewSeries = 
 function (x, from = NULL, to = NULL, by = c("monthly", "quarterly"), 
 FUN = colAvgs, units = NULL, ...) 
 {
     # Chreck for 'timeSeries' Object:
-    stopifnot(class(x) == "timeSeries") 
+    stopifnot(is.timeSeries(x))
+    stopifnot(is.timeDate(from) | is.null(from))
+    stopifnot(is.timeDate(to) | is.null(to))
     
     # Allow for colMeans:
     if (substitute(FUN) == "colMeans") FUN = "colAvgs"
@@ -717,7 +716,7 @@ function(x)
 
 
 print.timeSeries =
-function(x, ...)
+function(x, recordIDs = FALSE, ...)
 {   # A function implemented by Diethelm Wuertz
     
     # Description:
@@ -735,14 +734,22 @@ function(x, ...)
     # FUNCTION:
         
     # Series:
-    print.default(x@Data)
+    if (recordIDs) {
+        if (dim(x@Data)[1] == dim(x@recordIDs)[1]) {
+            print(cbind(x@Data, as.matrix(x@recordIDs)), quote = FALSE, ...)
+        } else {
+            print(x@Data, ...)
+        }  
+    } else {
+        print(x@Data, ...)
+    }
     
     # Control:
     control = attr(x, "control")
     if (!is.null(control)) print(control)
     
     # Return Value:
-    invisible()
+    invisible(x)
 }
 
   
@@ -805,7 +812,7 @@ function(x, ...)
     # FUNCTION:
     
     # Plot:
-    plot(x = seriesPositions(x), y = seriesData(x), ...)
+    plot(x = as.POSIXct(x@positions), y = x@Data, ...)
     
     # Return Value:
     invisible(x)

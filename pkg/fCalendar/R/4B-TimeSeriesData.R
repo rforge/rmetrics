@@ -29,6 +29,7 @@
 
 ################################################################################
 # METHOS                 MODIFICATION METHODS:
+#  .align.timeSeries      Aligns a timeSeries object
 #  diff.timeSeries        Differences a 'timeSeries' object
 #  lag.timeSeries         Lags a 'timeSeries' object
 #  merge.timeSeries       Merges two 'timeSeries' objects
@@ -60,11 +61,73 @@
 
 
 ################################################################################
+#  .align.timeSeries    Aligns a 'timeSeries' object
 #  diff.timeSeries      Differences a 'timeSeries' object
 #  lag.timeSeries       Lags a 'timeSeries' object
 #  merge.timeSeries     Merges two 'timeSeries' objects
 #  scale.timeSeries     Centers and/or scales a 'timeSeries' object
 #  var.timeSeries       Returns variance for a 'timeSeries' object
+
+
+.align.timeSeries = 
+function(x, method = c("before", "after", "interp"), startOn = "hours",
+by = "30 m")
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Aligns a 'timeSeries' object
+    
+    # FUNCTION:
+ 
+    # Settings:
+    method = match.arg(method)
+    numberOfColumns = dim(x)[2]
+    typeMethod = c(interp = "linear", before = "constant", after = "constant")
+    fMethod = c(interp = 0.5, before = 0, after = 1)
+    by = .by2seconds(by)
+    
+    # Convert to GMT:
+    tD = timeDate(x@positions, zone = x@FinCenter, FinCenter = "GMT")
+
+    # Convert to POSIX:
+    Positions = as.POSIXct(tD, tz = "GMT")
+    N = length(Positions)
+    Start = as.POSIXct(trunc(Positions[1], startOn), tz = "GMT")  
+    End   = as.POSIXct(trunc(Positions[N], startOn), tz = "GMT") + 24*3600
+    print(Start)
+    print(End)
+    
+    # Compute Positions:
+    X = as.integer(difftime(Positions, Start, units = "sec"))
+    
+    # Compute New Positions:
+    timeDiff = as.integer(difftime(End, Start, units = "secs"))
+    lengthOut = trunc(timeDiff/by) + 1
+    posix = seq(from = Start, by = paste(by, "sec"), length.out = lengthOut)
+    newX = as.integer(difftime(posix, Start, units = "secs"))  
+    
+    # Align:  
+    matY = NULL
+    for (i in 1:numberOfColumns) {
+        Y = as.vector(x[, i])
+        newY = approx(X, Y, xout = newX, method = typeMethod[method], 
+            f = fMethod[method])$y
+        matY = cbind(matY, newY)
+        
+    }
+
+    # Create Series in local time:
+    print(head(as.character(posix)))
+    ans = timeSeries(matY, as.character(posix), 
+        units = x@units, zone = "GMT", FinCenter = x@FinCenter,
+        recordIDs = data.frame())
+    
+    # Return Value:
+    ans       
+}
+
+
+# ------------------------------------------------------------------------------
 
 
 diff.timeSeries = 
@@ -97,7 +160,7 @@ function(x, lag = 1, diff = 1, trim = FALSE, pad = NA, ...)
     y = as.matrix(x)
         
     # Check NAs:
-    if (any(is.na(y))) stop("NAs are not allowed in time series")
+    # if (any(is.na(y))) stop("NAs are not allowed in time series")
         
     # Difference:
     z = diff(y, lag = lag, difference = diff)
@@ -720,7 +783,7 @@ j = min(1, ncol(x@Data)):ncol(x@Data))
 # ------------------------------------------------------------------------------
 
 
-.cut.timeSeries = 
+cut.timeSeries = 
 function(x, from, to, ...)
 {   # A function implemented by Diethelm Wuertz
 
@@ -740,66 +803,25 @@ function(x, from, to, ...)
     
     # FUNCTION:
     
+    # Check:
+    stopifnot(is.timeSeries(x))
+    stopifnot(is.timeDate(from))
+    stopifnot(is.timeDate(to))
+    
+    Positions = seriesPositions(x)   
+    if (missing(from)) from = Positions[1]
+    if (missing(to)) to = rev(Positions)[1]
+    Positions = as.POSIXct(Positions, tz = "GMT")
+    from = as.POSIXct(from, tz = "GMT")
+    to = as.POSIXct(to, tz = "GMT")
+    
     # Cut:
-    Positions = seriesPositions(x)
-    if (missing(from)) {
-        from = Positions[1]
-    } else {
-        from = timeDate(from)
-    }
-    if (missing(to)) {
-        to = rev(Positions)[1]
-    } else {
-        to = timeDate(to)
-    }
-    Units = x@units
-    colNames = colnames(x@Data)
     test = (Positions >= from & Positions <= to)
-    Data = as.matrix(x@Data)[test, ]
-    Data = as.matrix(Data)
-    
-    # Replace Data Slot:
-    x@Data = Data
-    x@positions = x@positions[test]
-    x@units = Units
-    x@recordIDs = data.frame()
-    colnames(x@Data) = colNames
-    
-    # Return Value:
-    x
-}
-
-
-cut.timeSeries = 
-function (x, from, to, ...) 
-{
-    # From - to - Positions -- Only one Interval!
-    Positions = as.POSIXct(x@positions)
-    if (missing(from)) {
-        from = Positions[1] 
-    } else {
-        from = timeDate(from)
-        from = from@Data[1]
-    }
-    if (missing(to)) {
-        to = rev(Positions)[1] 
-    } else {
-        to = timeDate(to)
-        to = to@Data[1]
-    }
-    
-    # Note, Test is fastest with POSIXct:
-    test = (Positions >= from & Positions <= to)
-    Index = (1:length(test))[test] 
+    Index = (1:length(test))[test]
     if (length(Index) == 0) return()
     
-    # Compose Series:
-    x = timeSeries(as.matrix(x@Data[Index, ]), x@positions[Index],
-        zone = x@FinCenter, FinCenter = x@FinCenter, recordIDs =
-        as.data.frame(x@recordIDs[Index, ]))
-    
     # Return value:
-    x
+    x[Index, ]
 }
 
 
@@ -807,11 +829,11 @@ function (x, from, to, ...)
 
 
 head.timeSeries = 
-function(x, n = 6, ...)
+function(x, n = 6, recordIDs = FALSE, ...)
 {   # A function implemented by Diethelm Wuertz
     
     # Description:
-    #   Returns the head of a 'timeSeries' objects
+    #   Returns the head of a 'timeSeries' object
     
     # Arguments:
     #   x - a 'timeSeries' object.
@@ -825,10 +847,18 @@ function(x, n = 6, ...)
     # FUNCTION:
     
     # Head:
-    ans = x[1:n, ]
+    if (recordIDs) {
+        if (dim(x@Data)[1] == dim(x@recordIDs)[1]) {
+            Head = head(cbind(x@Data, as.matrix(x@recordIDs)), n = n, ...)
+        } else {
+            Head = head(x@Data, n = n, ...)
+        }  
+    } else {
+        Head = head(x@Data, n = n, ...)
+    }
     
     # Return Value:
-    ans
+    Head
 }
 
 
@@ -836,7 +866,7 @@ function(x, n = 6, ...)
 
 
 tail.timeSeries = 
-function(x, n = 6, ...)
+function(x, n = 6, recordIDs = FALSE, ...)
 {   # A function implemented by Diethelm Wuertz
     
     # Description:
@@ -854,11 +884,18 @@ function(x, n = 6, ...)
     # FUNCTION:
     
     # Tail:
-    N = dim(x)[1]
-    ans = x[(N-n+1):N, ]
+    if (recordIDs) {
+        if (dim(x@Data)[1] == dim(x@recordIDs)[1]) {
+            Tail = tail(cbind(x@Data, as.matrix(x@recordIDs)), n = n, ...)
+        } else {
+            Tail = tail(x@Data, n = n, ...)
+        }  
+    } else {
+        Tail = tail(x@Data, n = n, ...)
+    }
     
     # Return Value:
-    ans
+    Tail
 }
 
 
