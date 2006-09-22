@@ -10,6 +10,7 @@
 \alias{nelsonplosser}
 \alias{nyse}
 \alias{recession}
+\alias{singleIndex.dat}
 \alias{sp500dge}
 \alias{sp500index}
 \alias{usdchf}
@@ -137,6 +138,13 @@
     the 3 Month Tbills data from US FED,
     the 10 Year Tbonds data from US FED, and also the 
     Stock-Watson experimental recession index.
+    \cr 
+    
+    \code{singleIndex.dat}
+    \cr
+    The file \code{"recession.csv"} holds monthly index and price data 
+    records from January 1990 to January 2001. Included are monthly closing 
+    prices for Microsoft Corporation (MSFT) and SP500 Index (SP500).
     \cr 
         
     \code{sp500index}\cr
