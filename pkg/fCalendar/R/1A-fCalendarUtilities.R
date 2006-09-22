@@ -29,6 +29,8 @@
 
 ################################################################################
 # FUNCTION:                     DESCRIPTION:
+#  align                         aligns time series objects by approximation
+#  align.default                 align default method
 #  log                           log has become a generic function
 #  log.default                   log default method
 #  round                         round has become a generic function
@@ -69,6 +71,7 @@
 # FUNCTION:                     DESCRIPTION:
 #  .isPOSIX                      Checks for an object of class POSIX
 # GENERAL UTILITIES:            DESCRIPTION:
+#  .by2seconds
 #  .print                        Internal print method
 #  .plot                         Internal plot method
 #  .summary                      Internal summary method
@@ -91,6 +94,39 @@
 #  sort.default                  sort default method
 #  var                           var has become a generic function
 #  var.default                   var default method
+
+
+
+align = 
+function(x, y, xout, ...)
+{   # A function implemented by Diethelm Wuertz
+
+    # FUNCTION:
+ 
+    # Return Value:
+    UseMethod("align")
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+align.default =
+function(x, y, xout, method = "linear", n = 50, rule = 1, f = 0, 
+ties = mean, ...) 
+{   # A function implemented by Diethelm Wuertz
+
+    # FUNCTION:
+ 
+    # Align by Approximation:
+    ans = approx(x = x, y = y, xout = xout, method = method, n = n, 
+        rule = rule, f = f, ties = ties, ...) 
+        
+    # Return Value:
+}
+
+
+# ------------------------------------------------------------------------------
 
 
 sort = 
@@ -1184,6 +1220,22 @@ function(x)
 #  .print                        Internal print method
 #  .plot                         Internal plot method
 #  .summary                      Internal summary method
+
+
+.by2seconds =
+function(by = "1 h")
+{
+    by = strsplit(by, " ")[[1]]
+    byTime = as.integer(by[1])
+    byUnits = substr(by[2], 1, 1)
+    timeUnits = c(1, 60, 3600)
+    names(timeUnits) = c("s", "m", "h")
+    bySeconds = byTime * timeUnits[byUnits]
+    bySeconds
+}
+
+
+# ------------------------------------------------------------------------------
 
 
 .print =
