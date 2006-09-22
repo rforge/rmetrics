@@ -91,8 +91,8 @@ readSeries(file, header = TRUE, sep = ";", zone = myFinCenter,
 returnSeries(x, type = c("continuous", "discrete"), percentage = FALSE, 
     trim = TRUE, digits = 4, units = NULL)  
 durationSeries(x, trim = FALSE, units = c("secs", "mins", "hours"))   
-midquoteSeries(x, units = c("Bid", "Ask"))
-spreadSeries(x, units = c("Bid", "Ask"), inTicksOfSize = NULL)
+midquoteSeries(x, which = c("Bid", "Ask"))
+spreadSeries(x, which = c("Bid", "Ask"), tickSize = NULL)
  
 applySeries(x, from = NULL, to = NULL, by = c("monthly", "quarterly"), 
     FUN = colAvgs, units = NULL, \dots)
@@ -103,7 +103,7 @@ seriesData(object)
 isUnivariate(x)
 isMultivariate(x)
 
-\method{print}{timeSeries}(x, \dots)
+\method{print}{timeSeries}(x, recordIDs = FALSE, \dots)
 \method{summary}{timeSeries}(object, \dots)
 \method{plot}{timeSeries}(x, \dots) 
 \method{lines}{timeSeries}(x, \dots)
@@ -187,7 +187,7 @@ ohlcDailyPlot(x, volume = TRUE, colOrder = c(1:5), units = 1e6,
         a logical value. Should weekend dates be included or removed
         from the series.
         }
-    \item{inTicksOfSize}{
+    \item{tickSize}{
         [spreadSeries] - \cr
         the default is NULL to simply compute price changes in original 
         price levels. If ticksize is supplied, the price changes will be 
@@ -217,7 +217,11 @@ ohlcDailyPlot(x, volume = TRUE, colOrder = c(1:5), units = 1e6,
         series will be expressed in percentage changes.
         }
     \item{recordIDs}{
-        a data frame which can be used for record identification.
+        a data frame which can be used for record identification
+        information. \cr
+        [print] - \cr
+        a logical value. Should the \code{recordIDs} printed together
+        with the data matrix and time series positions?
         }
     \item{sep}{
         [readSeries] - \cr
@@ -253,12 +257,6 @@ ohlcDailyPlot(x, volume = TRUE, colOrder = c(1:5), units = 1e6,
         units in which the durations are measured. By default durations
         are measured in seconds. 
         \cr
-        [midquoteSeries][spreadSeries] - \cr
-        a vector with two character strings naming the column names of
-        the time series from which to compute the mid quotes and spreads.
-        By default these are bid and ask prices with column names
-        \code{c("Bid", "Ask")}.
-        \cr
         [ohlcDailyPlot] - \cr
         a numeric value, specifying in which multiples the volume should
         be referenced on the plot labels. By default 1e6, i.e. in units
@@ -268,6 +266,13 @@ ohlcDailyPlot(x, volume = TRUE, colOrder = c(1:5), units = 1e6,
         [ohlcDailyPlot] - \cr
         a logigical value. Should a volume plot added to the OHLC Plot.
         By default \code{TRUE}.
+        }
+    \item{which}{
+        [midquoteSeries][spreadSeries] - \cr
+        a vector with two character strings naming the column names of
+        the time series from which to compute the mid quotes and spreads.
+        By default these are bid and ask prices with column names
+        \code{c("Bid", "Ask")}.
         }
     \item{x}{
         [as] - \cr   

@@ -113,8 +113,8 @@
 \method{[}{timeSeries}(x, i = min(1, nrow(x@Data)):nrow(x@Data), 
     j = min(1, ncol(x@Data)):ncol(x@Data))
 \method{cut}{timeSeries}(x, from, to, \dots)
-\method{head}{timeSeries}(x, n = 6, \dots)
-\method{tail}{timeSeries}(x, n = 6, \dots)
+\method{head}{timeSeries}(x, n = 6, recordIDs = FALSE, \dots)
+\method{tail}{timeSeries}(x, n = 6, recordIDs = FALSE, \dots)
 \method{outlier}{timeSeries}(x, sd = 10, complement = TRUE, \dots)
 
 \method{dim}{timeSeries}(x)
@@ -200,6 +200,11 @@ rownames<-.timeSeries(x) <- value
         a numeric value or numeric vector of probabilities with values 
         in \code{[0,1]}.
         }
+    \item{recordIDs}{
+        [head][tail] - \cr
+        a logical value. Should the \code{recordIDs} returned together
+        with the data matrix and time series positions?
+        }
     \item{sd}{
         [outlierSeries] - \cr
         a numeric value of standard deviations, e.g. 10
@@ -213,7 +218,7 @@ rownames<-.timeSeries(x) <- value
         observation in the return series will be removed. 
         }
     \item{units}{
-        [applySeries][lag][allignDailySeries][returnSeries][mergeSeries] - \cr
+        [applySeries][lag][alignDailySeries][returnSeries][mergeSeries] - \cr
         an optional character string, which allows to overwrite the 
         current column names of a \code{timeSeries} object. By default 
         \code{NULL} which means that the column names are selected
