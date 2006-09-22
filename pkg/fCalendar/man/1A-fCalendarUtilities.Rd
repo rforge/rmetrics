@@ -2,6 +2,9 @@
 
 \alias{fCalendarUtilities}
 
+\alias{align}
+\alias{align.default}
+
 \alias{log}
 \alias{log.default}
 
@@ -57,6 +60,9 @@
 
 
 \usage{
+align.default(x, y, xout, method = "linear", n = 50, rule = 1, f = 0, 
+    ties = mean, \dots)
+
 log.default(x, base = exp(1))
 
 outlier.default(x, sd = 5, complement = TRUE, \dots)
@@ -93,9 +99,35 @@ myUnits
         [round] - \cr
         an integer indicating the precision to be used.
         }
-    \item{partial, na.last, decreasing, method, index.return}{
+    \item{f}{
+        [align] - \cr
+        for \code{method="constant"} the value of \code{f} takes a 
+        number between 0 and 1 inclusive, indicating a compromise between 
+        left- and right-continuous step functions. If \code{y0} and 
+        \code{y1} are the values to the left and right of the point then 
+        the value is \code{y0*(1-f)+y1*f} so that \code{f=0} is 
+        right-continuous and \code{f=1} is left-continuous.
+        }
+    \item{method}{
+        [align] - \cr
+        a character string which specifies the alignment method to be used.  
+        Choices are \code{"linear"} or \code{"constant"}.
+        }
+    \item{n}{
+        [align] - \cr
+        if \code{xout} is not specified, alignment takes place at \code{n}
+        equally spaced points spanning the interval \code{range(x)}.
+        }
+    \item{partial, na.last, decreasing, index.return}{
         [sort] - \cr
         additional arguments to the \code{sort} function.
+        }
+    \item{rule}{
+        [align] - \cr
+        an integer describing how alignment is to take place
+        outside the interval \code{range(x)}. If \code{rule=1}
+        then \code{NA}'s are returned for such points and if
+        is \code{rule=2}, the value at the closest data extreme is used.
         }
     \item{sd, complement}{
         [outlier] - \cr
@@ -114,6 +146,12 @@ myUnits
         prob -  a vector of probability weights for obtaining the 
             elements of the vector being sampled.
         }
+    \item{ties}{
+        [align] - \cr
+        handles tied \code{x} values. Either a function with a single
+        vector argument returning a single number result or the
+        string \code{"ordered"}.
+        }
     \item{tz}{
         [as.POSIXlt] - \cr
         time zone specification.
@@ -124,6 +162,8 @@ myUnits
         functions.
         }
     \item{x}{
+        [align] - \cr
+        x-coordinates of the points to be aligned.\cr
         [log][sort][var] - \cr
         first argument.
         \cr
@@ -135,7 +175,12 @@ myUnits
         [as.POSIXlt] - \cr
         an object to be converted.
         }
+    \item{xout}{
+        [align] - \cr
+        a set of values specifying where interpolation is to take place.}
     \item{y, na.rm, use}{
+        [align] - \cr
+        y-coordinates of the points to be aligned.\cr
         [var] - \cr
         additional arguments to the \code{var} function.
         }
