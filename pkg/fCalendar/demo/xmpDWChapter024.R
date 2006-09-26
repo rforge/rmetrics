@@ -107,14 +107,18 @@
     
     
     # Create a 'timeSeries' Object:
-    MSFT.OPEN = MSFT[,"Open"]
-    CHARVEC = as.character(MSFT[, 1])
+    data(msftdat)
+    MSFT.OPEN = msftdat[,"Open"]
+    CHARVEC = as.character(msftdat[, 1])
     ts = timeSeries(data = MSFT.OPEN, charvec = CHARVEC, 
         units = "MSFT.OPEN", tz = "GMT", FinCenter = "GMT")
     class(ts)
     ts[1:3, ]
     c(start(ts), end(ts))
     ###
+    
+    # You can also use:
+    ts = as.timeSeries(msftdat)
         
     # Cut out April Data from 2001:
     ts.Apr01 = cut(ts, "2001-04-01", "2001-04-30") 
@@ -136,8 +140,8 @@
     # Merge Series with Returns:
     # Include last Day from March:
     ts.Apr01 = cut(ts, "2001-03-31", "2001-04-30") 
-    ts.merged = merge(x = ts.Apr01, 
-        y = returnSeries(ts.Apr01, trim = FALSE),
+    ts.merged = merge(x = ts.Apr01[, "Open"],
+        y = returnSeries(ts.Apr01[, "Open"], trim = FALSE),
         units = c("MSFT.PRICE", "MSF.RETURN"))
     ts.merged
     ###
@@ -161,11 +165,13 @@
     GoodFriday(2001)
     to = timeSequence(from = "2001-04-06", length.out = 3, by = "week") 
     from = to - 6*24*3600
-    applySeries(ts.ret, from, to, FUN = sum)
+    applySeries(ts.ret, from, to, FUN = colSums)
     ###
         
     # Plot:
-    plot(ts, col = "steelblue", xlab = "Year", ylab = "Index", main = "MSFT")
+    plot(ts[, "Open"], col = "steelblue", type = "o", pch = 19,
+        xlab = "Year", ylab = "Index", main = "MSFT")
+    grid()
     ###
     
     

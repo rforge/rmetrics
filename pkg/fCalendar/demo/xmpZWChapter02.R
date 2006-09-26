@@ -78,7 +78,7 @@
     # object.
     args(readSeries)
     # Where are the Data?
-    dataPath = "library/fBasics/data/"
+    dataPath = paste(.Library, "/Rmetrics/data/", sep = "")
     ###
     
     
@@ -87,7 +87,7 @@
     # Data are downloadable and can be updated from Yahoo's web site.
     require(fBasics)
     singleIndex.dat = readSeries(
-        paste(dataPath, "singleIndex.dat.csv", sep = ""))
+        file = paste(dataPath, "singleIndex.dat.csv", sep = ""))
     singleIndex.dat[1,]
     end(singleIndex.dat)
     ###
@@ -208,8 +208,9 @@
     # p. 20
     # > ?class.timeDate
     # in Rmetrics use:
-    help(timeDate)
-    help(timeSeries)
+    # ... please uncomment the next two lines
+    # help(timeDate)
+    # help(timeSeries)
     ###
     
     
@@ -261,8 +262,14 @@
     
     
     # Format date/time in Pacific Time Zone:
-    tdPACIFIC = timeDate("Mar 02, 1963 08:00 PM",
-        format = "%b %d, %Y %H:%M %p",
+    # tdPACIFIC = timeDate("Mar 02, 1963 08:00 PM",
+    #    format = "%b %d, %Y %H:%M %p",
+    #     zone = "America/Pacific",
+    #     FinCenter = "America/Pacific" )
+    # ... makes some problems - please  check source code
+    # Workaround:
+    tdPACIFIC = timeDate(
+        strptime("Mar 02, 1963 08:00 PM", format = "%b %d, %Y %H:%M %p"),
         zone = "America/Pacific",
         FinCenter = "America/Pacific" )
     tdPACIFIC
