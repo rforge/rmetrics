@@ -102,12 +102,26 @@ function()
     
     # round() Function:
     set.seed(4711)
+    myFinCenter = "GMT"
     TC = timeCalendar(
+        m = 1:12,
+        d = rep(1, 12),
         h = runif(12, 0, 23), 
         min = runif(12, 0, 59), 
         s = runif(12, 0, 59))
     print(TC)
+   
     
+        currentYear = 2006
+        m = 1:12
+        d = rep(1, 12)
+        h = runif(12, 0, 23)
+        min = runif(12, 0, 59)
+        s = runif(12, 0, 59)
+        
+        
+        
+         
     
     # trunc() Function:
     set.seed(4711)

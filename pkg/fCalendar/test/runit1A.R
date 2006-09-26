@@ -92,7 +92,8 @@ test.genfun =
 function()
 {
     # Time Series:
-    MSFT.TS = as.timeSeries(MSFT)
+    data(msftdat)
+    MSFT.TS = as.timeSeries(msftdat)
     print(head(log(MSFT.TS)))
     print(tail(log(MSFT.TS)))
     MEAN = mean(MSFT.TS@Data)
@@ -165,7 +166,7 @@ function()
 
 if (FALSE) {
     require(RUnit)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fCalendar/test/runit0A.R")
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fCalendar/test/runit1A.R")
     printTextProtocol(testResult)
 }
 
