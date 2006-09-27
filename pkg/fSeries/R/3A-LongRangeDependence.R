@@ -1,3 +1,4 @@
+
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 2, or (at your option)
@@ -1619,7 +1620,7 @@ trace = FALSE, spec = FALSE, title = NULL, description = NULL)
         
     # Add:
     if (is.null(title)) title = "Hurst Exponent from Whittle Estimator"
-    if (is.null(description)) description = as.character(date())
+    if (is.null(description)) description = .description())
         
     # Return Value:
     new("fHURST", 
@@ -2381,7 +2382,7 @@ doplot = FALSE, trace = FALSE, title = NULL, description = NULL)
     if (is.null(title)) 
         title = "Hurst Exponent from Aggregated Variances"
     if (is.null(description)) 
-        description = as.character(date())
+        description = .description())
     
     # Return Value:
     new("fHURST", 
@@ -2472,7 +2473,7 @@ doplot = FALSE, trace = FALSE, title = NULL, description = NULL)
     if (is.null(title)) 
         title = "Hurst Exponent from Differenced Aggregated Variances"
     if (is.null(description)) 
-        description = as.character(date())
+        description = .description())
     
     # Return Value:
     new("fHURST", 
@@ -2557,7 +2558,7 @@ doplot = FALSE, trace = FALSE, title = NULL, description = NULL)
     if (is.null(title)) 
         title = "Hurst Exponent from Absolute Values"
     if (is.null(description)) 
-        description = as.character(date())  
+        description = .description())  
         
     # Return Value:
     new("fHURST", 
@@ -2647,7 +2648,7 @@ doplot = FALSE, trace = FALSE, title = NULL, description = NULL)
     if (is.null(title)) 
         title = "Hurst Exponent from Higuchi Method"
     if (is.null(description)) 
-        description = as.character(date())  
+        description = .description())  
         
     # Return Value:
     new("fHURST", 
@@ -2755,7 +2756,7 @@ doplot = FALSE, trace = FALSE, title = NULL, description = NULL)
     if (is.null(title)) 
         title = "Hurst Exponent from Peng Method"
     if (is.null(description)) 
-        description = as.character(date())  
+        description = .description())  
         
     # Return Value:
     new("fHURST", 
@@ -2840,7 +2841,7 @@ doplot = FALSE, trace = FALSE, title = NULL, description = NULL)
     if (is.null(title)) 
         title = "Hurst Exponent from R/S Method"
     if (is.null(description)) 
-        description = as.character(date())  
+        description = .description())  
         
     # Return Value:
     new("fHURST", 
@@ -2935,7 +2936,7 @@ method = c("per", "cumper"), doplot = FALSE, title = NULL, description = NULL)
     if (is.null(title)) 
         title = "Hurst Exponent from Periodgram Method"
     if (is.null(description)) 
-        description = as.character(date())  
+        description = .description())  
         
     # Return Value:
     new("fHURST", 
@@ -3023,7 +3024,7 @@ doplot = FALSE, trace = FALSE, title = NULL, description = NULL)
     if (is.null(title)) 
         title = "Hurst Exponent from Boxed Periodgram Method"
     if (is.null(description)) 
-        description = as.character(date())  
+        description = .description())  
         
     # Return Value:
     new("fHURST", 
@@ -3132,7 +3133,7 @@ doplot = FALSE, title = NULL, description = NULL)
     
     # Add:
     if (is.null(title)) title = "Hurst Exponent from Wavelet Estimator"
-    if (is.null(description)) description = as.character(date())
+    if (is.null(description)) description = .description())
     
     # Return Value:
     new("fHURST", 
@@ -3700,7 +3701,7 @@ function(x = fgnSim())
         range = .sliderMenu(no = 5)
         
         # Plot:
-        description = paste("Method", method, as.character(date()))
+        description = paste("Method", method, .description()))
         if (method == 1) ans = aggvarFit(x = .xHurst, levels = levels, 
             minnpts = minnpts, cut.off = 10^c(lower, lower+range), 
             doplot = TRUE, description = description)

@@ -395,7 +395,7 @@ description = NULL)
 
 
 .urcaBuiltin =
-function(builtin = "/fSeries/demo/funUrca.R") 
+function(builtin = "/fSeries/demo/urcaBuiltin.R") 
 {
     sink("@sink@")
     Builtin = paste(.Library, builtin, sep = "")
@@ -449,7 +449,7 @@ function(x, lags = 1, type = c("nc", "c", "ct"), doplot = TRUE)
         data = list(x = x),
         test = ans,
         title = "Augmented Dickey-Fuller Unit Root Test",
-        description = as.character(date())
+        description = .description())
     )
 }
     
@@ -497,7 +497,7 @@ lag.max = 4, doplot = TRUE)
         data = list(x = x),
         test = ans,
         title = "Elliott-Rothenberg-Stock Unit Root Test",
-        description = as.character(date())
+        description = .description())
     )
 }
     
@@ -544,7 +544,7 @@ use.lag = NULL, doplot = TRUE)
         data = list(x = x),
         test = ans,
         title = "KPSS Unit Root Test",
-        description = as.character(date())
+        description = .description())
     )
 }   
 
@@ -592,7 +592,7 @@ lags = c("short", "long"), use.lag = NULL, doplot = TRUE)
         data = list(x = x),
         test = ans,
         title = "Phillips-Perron Unit Root Test",
-        description = as.character(date())
+        description = .description())
     )
 }   
     
@@ -639,7 +639,7 @@ signif = c(0.01, 0.05, 0.10), doplot = TRUE)
         data = list(x = x),
         test = ans,
         title = "Schmidt-Phillips Unit Root Test",
-        description = as.character(date())
+        description = .description())
     )
 }   
 
@@ -684,30 +684,10 @@ function(x, model = c("intercept", "trend", "both"), lag = 2, doplot = TRUE)
         data = list(x = x),
         test = ans,
         title = "Zivot & Andrews Unit Root Test",
-        description = as.character(date())
+        description = .description())
     )
 }   
 
 
 ################################################################################
 
-
-.builtinUrca =
-function() 
-{   # A function implemented by Diethelm WUertz
-
-    # Description:
-    #   Builtin for contributed urca package
-    
-    # FUNCTION:
-    
-    # Popup:    
-    path = paste(.Library,"/fSeries", sep = "") 
-    source(paste(path, "/demo/", "funUrca.R", sep = ""))
-    
-    # Return Value:
-    invisible()
-}
-
-
-################################################################################

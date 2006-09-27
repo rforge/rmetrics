@@ -192,7 +192,6 @@ title = NULL, description = NULL)
     # Return Value:
     ans
 } 
-arfimaOxFit(formula = ~arfima(2,1), data = x)
 
 
 # ------------------------------------------------------------------------------

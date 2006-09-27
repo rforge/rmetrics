@@ -31,7 +31,7 @@
 # FUNCTION:          DICKEY FULLER TEST:
 #  pdftest            Returns probabilities for the ADF Test
 #  qdftest            Returns quantiles for the ADF Test
-#  dfTable            Augmented Dickey-Fuller finite sample test table
+#  .dfTable           Augmented Dickey-Fuller finite sample test table
 # FUNCTION:          PROBABILIY AND QUANTILES:
 #  punitroot          Returns cumulative probability for unit root distributions
 #  qunitroot          Returns quantiles for unit root distributions
@@ -76,7 +76,7 @@ function(q, n.sample, trend = c("nc", "c", "ct"), statistic = c("t", "n"))
     # FUNCTION:
     
     # Compute Probabilities:
-    X = dfTable(trend = trend[1], statistic = statistic[1])
+    X = .dfTable(trend = trend[1], statistic = statistic[1])
     ans = pTable(t(X), q, n.sample)
     
     # Return Value:
@@ -99,7 +99,7 @@ function(p, n.sample, trend = c("nc", "c", "ct"), statistic = c("t", "n"))
     # FUNCTION:
     
     # Compute Quantiles:
-    X = dfTable(trend = trend[1], statistic = statistic[1])
+    X = .dfTable(trend = trend[1], statistic = statistic[1])
     ans = qTable(X = t(X), p, n.sample)
     
     # Return Value:
@@ -110,7 +110,7 @@ function(p, n.sample, trend = c("nc", "c", "ct"), statistic = c("t", "n"))
 # ------------------------------------------------------------------------------
 
 
-dfTable =
+.dfTable =
 function(trend = c("nc", "c", "ct"), statistic = c("t", "n"))
 {   # A function implemented by Diethelm Wuertz
 
