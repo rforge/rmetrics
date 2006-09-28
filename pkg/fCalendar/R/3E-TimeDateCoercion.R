@@ -30,7 +30,7 @@
 ################################################################################
 # S3 MEHOD:              COERCION AND OBJECT TRANSFORMATIONS:
 #  as.timeDate            Implements Use Method
-#  .as.timeDate.default    Default Method
+#  as.timeDate.default    Default Method
 #  as.timeDate.POSIXt     Returns a 'POSIX' object as 'timeDate' object
 #  as.timeDate.Date       Returns a 'POSIX' object as 'timeDate' object
 # S3 METHOD:             DESCRIPTION:
@@ -63,8 +63,8 @@ function(x, zone = NULL, FinCenter = NULL)
 # ------------------------------------------------------------------------------
 
 
-.as.timeDate.default = 
-function(x, zone = NULL, FinCenter = NULL) 
+as.timeDate.default = 
+function(x, zone = myFinCenter, FinCenter = myFinCenter) 
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -94,7 +94,7 @@ function(x, zone = NULL, FinCenter = NULL)
 
 
 as.timeDate.POSIXt = 
-function(x, zone = NULL, FinCenter = NULL) 
+function(x, zone = myFinCenter, FinCenter = myFinCenter) 
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -124,7 +124,7 @@ function(x, zone = NULL, FinCenter = NULL)
 
  
 as.timeDate.Date = 
-function(x, zone = "GMT", FinCenter = "GMT") 
+function(x, zone = myFinCenter, FinCenter = myFinCenter) 
 {   # A function implemented by Diethelm Wuertz
 
     # Description:

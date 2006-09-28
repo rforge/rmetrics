@@ -41,7 +41,8 @@
 
 
 timeLastDayInMonth = 
-function(charvec, format = "%Y-%m-%d", FinCenter = "GMT")
+function(charvec, format = "%Y-%m-%d", zone = myFinCenter, 
+FinCenter = myFinCenter)
 {   # A function implemented by Diethelm Wuertz
     
     # Description:
@@ -77,8 +78,7 @@ function(charvec, format = "%Y-%m-%d", FinCenter = "GMT")
     
     # Return Value:
     Sys.putenv(TZ = myTZ)
-    timeDate(lt, format = "%Y-%m-%d", zone = FinCenter, 
-        FinCenter = FinCenter)
+    timeDate(lt, format = "%Y-%m-%d", zone = zone, FinCenter = FinCenter)
 }
 
 
@@ -86,7 +86,8 @@ function(charvec, format = "%Y-%m-%d", FinCenter = "GMT")
 
     
 timeFirstDayInMonth = 
-function(charvec, format = "%Y-%m-%d", FinCenter = "GMT") 
+function(charvec, format = "%Y-%m-%d", zone = myFinCenter,
+FinCenter = myFinCenter) 
 {   # A function implemented by Diethelm Wuertz
     
     # Description:
@@ -108,7 +109,7 @@ function(charvec, format = "%Y-%m-%d", FinCenter = "GMT")
 
     # Return Value:
     Sys.putenv(TZ = myTZ)
-    timeDate(lt, format = "%Y-%m-%d", zone = FinCenter, FinCenter = FinCenter)
+    timeDate(lt, format = "%Y-%m-%d", zone = zone, FinCenter = FinCenter)
 }
 
 
@@ -116,7 +117,8 @@ function(charvec, format = "%Y-%m-%d", FinCenter = "GMT")
 
 
 timeLastDayInQuarter = 
-function(charvec, format = "%Y-%m-%d", FinCenter = "GMT") 
+function(charvec, format = "%Y-%m-%d", zone = myFinCenter,
+FinCenter = myFinCenter) 
 {   # A function implemented by Diethelm Wuertz
     
     # Description:
@@ -141,13 +143,13 @@ function(charvec, format = "%Y-%m-%d", FinCenter = "GMT")
     last.quarter = rep(c(3,6,9,12), each = 3) - 1
     lt$mon = last.quarter[1 + lt$mon] 
     Sys.putenv(TZ = myTZ)
-    charvec = timeDate(lt, format = "%Y-%m-%d", zone = FinCenter, 
+    charvec = timeDate(lt, format = "%Y-%m-%d", zone = zone, 
         FinCenter = FinCenter)
         
     # Return Value:
     Sys.putenv(TZ = myTZ)
     timeLastDayInMonth(charvec = charvec, format = format, 
-        FinCenter = FinCenter)
+        zone = zone, FinCenter = FinCenter)
 }
 
 
@@ -155,7 +157,8 @@ function(charvec, format = "%Y-%m-%d", FinCenter = "GMT")
     
     
 timeFirstDayInQuarter = 
-function(charvec, format = "%Y-%m-%d", FinCenter = "GMT") 
+function(charvec, format = "%Y-%m-%d", zone = myFinCenter,
+FinCenter = myFinCenter) 
 {   # A function implemented by Diethelm Wuertz
     
     # Description:
@@ -182,7 +185,7 @@ function(charvec, format = "%Y-%m-%d", FinCenter = "GMT")
 
     # Return Value:
     Sys.putenv(TZ = myTZ)
-    timeDate(lt, format = "%Y-%m-%d", zone = FinCenter, FinCenter = FinCenter)
+    timeDate(lt, format = "%Y-%m-%d", zone = zone, FinCenter = FinCenter)
 }
 
     
@@ -190,7 +193,8 @@ function(charvec, format = "%Y-%m-%d", FinCenter = "GMT")
 
 
 timeNdayOnOrAfter = 
-function(charvec, nday = 1, format = "%Y-%m-%d", FinCenter = "GMT")
+function(charvec, nday = 1, format = "%Y-%m-%d", zone = myFinCenter,
+FinCenter = myFinCenter)
 {   # A function implemented by Diethelm Wuertz
     
     # Description:
@@ -235,7 +239,7 @@ function(charvec, nday = 1, format = "%Y-%m-%d", FinCenter = "GMT")
     
     # Return Value:
     Sys.putenv(TZ = myTZ)
-    timeDate(format(ct), format = format, zone = FinCenter, 
+    timeDate(format(ct), format = format, zone = zone, 
         FinCenter = FinCenter)
 }
 
@@ -244,7 +248,8 @@ function(charvec, nday = 1, format = "%Y-%m-%d", FinCenter = "GMT")
 
 
 timeNdayOnOrBefore = 
-function(charvec, nday = 1, format = "%Y-%m-%d", FinCenter = "GMT")
+function(charvec, nday = 1, format = "%Y-%m-%d", zone = myFinCenter,
+FinCenter = myFinCenter)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -285,7 +290,7 @@ function(charvec, nday = 1, format = "%Y-%m-%d", FinCenter = "GMT")
     
     # Return Value:
     Sys.putenv(TZ = myTZ)
-    timeDate(format(ct), format = format, zone = FinCenter, 
+    timeDate(format(ct), format = format, zone = zone, 
         FinCenter = FinCenter)
 }
 
@@ -294,7 +299,8 @@ function(charvec, nday = 1, format = "%Y-%m-%d", FinCenter = "GMT")
 
 
 timeNthNdayInMonth = 
-function(charvec, nday = 1, nth = 1, format = "%Y-%m-%d", FinCenter = "GMT")
+function(charvec, nday = 1, nth = 1, format = "%Y-%m-%d", zone = myFinCenter,
+FinCenter = myFinCenter)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -341,7 +347,7 @@ function(charvec, nday = 1, nth = 1, format = "%Y-%m-%d", FinCenter = "GMT")
 
     # Return Value:
     Sys.putenv(TZ = myTZ)
-    timeDate(format(ct), format = format, zone = FinCenter, 
+    timeDate(format(ct), format = format, zone = zone, 
         FinCenter = FinCenter)
 }
 
@@ -350,7 +356,8 @@ function(charvec, nday = 1, nth = 1, format = "%Y-%m-%d", FinCenter = "GMT")
 
 
 timeLastNdayInMonth = 
-function(charvec, nday = 1, format = "%Y-%m-%d", FinCenter = "GMT")
+function(charvec, nday = 1, format = "%Y-%m-%d", zone = myFinCenter,
+FinCenter = myFinCenter)
 {   # A function implemented by Diethelm Wuertz
     
     # Description:
@@ -395,7 +402,7 @@ function(charvec, nday = 1, format = "%Y-%m-%d", FinCenter = "GMT")
 
     # Return Value:
     Sys.putenv(TZ = myTZ)
-    timeDate(format(ct), format = format, zone = FinCenter,
+    timeDate(format(ct), format = format, zone = zone,
         FinCenter = FinCenter)
 }
 

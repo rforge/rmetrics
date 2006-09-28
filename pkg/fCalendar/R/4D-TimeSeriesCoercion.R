@@ -41,7 +41,7 @@
 # METHODS:                  TRANSFORM A TIMESERIES INTO OTHER OBJECTS:
 #  as.vector.timeSeries      Converts a univariate 'timeSeries' to a vector
 #  as.matrix.timeSeries      Converts a 'timeSeries' to a 'matrix'
-#  as.data.frame.teries      Converts a 'timeSeries' to a 'data.frame'
+#  as.data.frame.timeSeries  Converts a 'timeSeries' to a 'data.frame'
 #  as.ts.timeSeries          Converts a 'timeSeries' to a 'ts'     
 # NEW METHODS:              TESTING - FOR THE FUTURE:
 #  .as.vector.zoo
@@ -131,6 +131,7 @@ function(x, ...)
     # FUNCTION:
     
     # Create a dummay daily 'timeSeries' object:
+    if (is.null(dim(x))) x = matrix(x)
     ans = dummyDailySeries(x)
     
     # Return Value:
@@ -377,7 +378,7 @@ function(x)
 
 
 as.data.frame.timeSeries =
-function(x, row.names = NULL, optional = NULL) 
+function(x, row.names = NULL, optional = NULL, ...) 
 {   # A function implemented by Diethelm Wuertz
 
     # Description:

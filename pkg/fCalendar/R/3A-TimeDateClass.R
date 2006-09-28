@@ -477,6 +477,9 @@ function(charvec)
     # Format:
     format = "unknown"
     
+    # Charvec String:
+    charvec = as.character(charvec)
+    
     # Specifications:
     NCHAR = mean(nchar(charvec[1]))
     SUBSTR = (substring(charvec[1], 5, 5) == "-")

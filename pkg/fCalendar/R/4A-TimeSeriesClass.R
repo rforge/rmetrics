@@ -430,7 +430,9 @@ function(x, which = c("Bid", "Ask"), tickSize = NULL)
 
 applySeries =
 function(x, from = NULL, to = NULL, by = c("monthly", "quarterly"), 
-FUN = colAvgs, units = NULL, ...)
+FUN = colAvgs, units = NULL, format = x@format, zone = x@FinCenter, 
+FinCenter = x@FinCenter, recordIDs = data.frame(), title = x@title,
+documentation = x@documentation, ...)
 {   # A function implemented by Diethelm Wuertz
     
     # Description:
@@ -479,7 +481,7 @@ FUN = colAvgs, units = NULL, ...)
         } else {
             stop("by must be eiter monthly or quarterly")
         } 
-        from@FinCenter = to@FinCenter = x@FinCenter
+        from@FinCenter = to@FinCenter = FinCenter
     }
     
     # Column Names:
@@ -514,8 +516,8 @@ FUN = colAvgs, units = NULL, ...)
     
     # Return Value:
     timeSeries(data = rowBind, charvec = as.character(to), units = units, 
-        format = x@format, zone = x@FinCenter, , FinCenter = x@FinCenter, 
-        title = x@title, documentation = x@documentation, ...)       
+        format = format, zone = zone, FinCenter = FinCenter, recordIDs = 
+        recordIDs, title = title, documentation = documentation, ...)       
 } 
 
 
@@ -523,6 +525,8 @@ FUN = colAvgs, units = NULL, ...)
 function (x, from = NULL, to = NULL, by = c("monthly", "quarterly"), 
 FUN = colAvgs, units = NULL, ...) 
 {
+    # Old/Alternative Version
+    
     # Chreck for 'timeSeries' Object:
     stopifnot(is.timeSeries(x))
     stopifnot(is.timeDate(from) | is.null(from))
@@ -838,7 +842,7 @@ function(x, ...)
     # FUNCTION:
     
     # Plot:
-    lines(x = seriesPositions(x), y = seriesData(x), ...)
+    lines(x = as.POSIXct(x@positions), y = x@Data, ...)
     
     # Return Value:
     invisible(x)
@@ -867,7 +871,7 @@ function(x, ...)
     # FUNCTION:
    
     # Add to Plot:
-    points(x = seriesPositions(x), y = seriesData(x), ...)
+    points(x = as.POSIXct(x@positions), y = x@Data, ...)
             
     # Return Value:
     invisible(x)
@@ -881,7 +885,8 @@ function(x, ...)
 
 
 dummyDailySeries =
-function(x = rnorm(365), units = "X", zone = "GMT", FinCenter = "GMT")
+function(x = rnorm(365), units = "X", 
+zone = myFinCenter, FinCenter = myFinCenter)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -917,7 +922,8 @@ function(x = rnorm(365), units = "X", zone = "GMT", FinCenter = "GMT")
 
 alignDailySeries = 
 function (x, method = c("before", "after", "interp", "fillNA"), 
-include.weekends = FALSE, units = NULL) 
+include.weekends = FALSE, units = NULL, zone = myFinCenter, 
+FinCenter = myFinCenter) 
 {   # A function implemented by Diethelm Wuertz
     
     # Description:
@@ -947,10 +953,9 @@ include.weekends = FALSE, units = NULL)
     # Internal Function
     # Univariate Time Series Alignment:
     alignDailySeries.OneColumn = 
-    function (x, method = method, include.weekends = include.weekends) {
+    function (x, method, include.weekends, zone, FinCenter) {
         # Settings:
         units = x@units
-        FinCenter = x@FinCenter
         # Units:
         # myUnits <<- "days"
         myUnits <- "days"
@@ -968,7 +973,7 @@ include.weekends = FALSE, units = NULL)
             class(newPos) = "POSIXct"
             newPos = as.POSIXlt(newPos)
             td = timeSeries(newX, newPos, units = colnames(newX), 
-                zone = x@FinCenter, FinCenter = x@FinCenter)
+                zone = zone, FinCenter = FinCenter)
         } else {
             # Interpolate with real Values:
             # Wich method ?
@@ -1021,14 +1026,16 @@ include.weekends = FALSE, units = NULL)
         
     # First Column:
     ans = alignDailySeries.OneColumn(x = x[, 1], method = method, 
-        include.weekends = include.weekends)
+        include.weekends = include.weekends, zone = zone, 
+        FinCenter = FinCenter)
         
     # Next Columns:
     DimX = dim(x@Data)[2]
     if ( DimX > 1 ) {
         for ( i in 2:DimX ) {
             ans.add = alignDailySeries.OneColumn(x = x[, i], 
-                method = method, include.weekends = include.weekends)
+                method = method, include.weekends = include.weekends,
+                zone = zone, FinCenter = FinCenter)
             ans = merge(ans, ans.add) }  
     }
          
