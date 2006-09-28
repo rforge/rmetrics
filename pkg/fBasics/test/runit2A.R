@@ -28,18 +28,18 @@
 
 
 ################################################################################
-# FUNCTION:             DESCRIPTION:
+# FUNCTION:             SYMMETRIC STABLE DISTRIBUTION:
 #  dsymstb               Returns density for symmetric stable DF
 #  psymstb               Returns probabilities for symmetric stable DF
 #  qsymstb               Returns quantiles for symmetric stable DF
 #  rsymstb               Returns random variates for symmetric stable DF
-# FUNCTIONS:            DESCRIPTION:
+# FUNCTIONS:            STABLE DISTRIBUTION:
 #  stableMode            Computes stable mode
 #  dstable               Returns density for stable DF
 #  pstable               Returns probabilities for stable DF
 #  qstable               Returns quantiles for stable DF
 #  rstable               Returns random variates for stable DF
-# FUNCTION:             DESCRIPTION:
+# FUNCTION:             STABLE SLIDERS:
 #  symstbSlider          Displays symmetric stable distribution function
 #  stableSlider          Displays stable distribution function
 ################################################################################
@@ -61,6 +61,7 @@ function()
 
 
 # ------------------------------------------------------------------------------
+# SYMMETRIC STABLE DISTRIBUTION:
 
 
 test.symstb = 
@@ -74,7 +75,7 @@ function()
     # rsymstb, alpha=1.2
     test = .distCheck("symstb", alpha = 1.2)
     print(test)
-    checkTrue(mean(test) == 1)
+    checkTrue(mean(test[2:3]) == 1)
     
     # Return Value:
     return()    
@@ -84,7 +85,7 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.stable = 
+test.stable.S0 = 
 function()
 {
     # stable - Parameterization S0:
@@ -110,7 +111,7 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.stableS1 = 
+test.stable.S1 = 
 function()
 {
     # stable - Parameterization S1:
@@ -136,7 +137,7 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.stableS2 = 
+test.stable.S2 = 
 function()
 {
     # stable - Parameterization S2:
@@ -166,7 +167,7 @@ function()
 if (FALSE) {
     require(RUnit)
     testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fBasics/test/runit2A.R")
-    printTextProtocol(testData = testResult, fileName = "")
+    printTextProtocol(testResult)
 }
 
        

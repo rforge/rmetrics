@@ -54,12 +54,10 @@
 #  .dec.to.hex               Converts decimal numbers do heximal numbers
 # FUNCTION:                 SLIDER MENU:
 #  .sliderMenu               Starts a slider menu
-################################################################################
-# FUNCTION:                 NUMERIC UTILITIES:
+# FUNCTION:                 SPLINE INTERPOLATION:
 #  .akimaInterpolation       Does Akima Spline Interpolation
 #  .interp                   Does Akima Spline Interpolation
-################################################################################
-# FUNCTION:                 DATA TABLES:
+# FUNCTION:                 JARQUE-BERA DATA TABLES:
 # .jbLM                      Jarque-Bera Lagrange Multiplier Test Data
 # .jbALM                     JB Augmented Lagrange Multiplier Test Data
 ################################################################################
@@ -1127,6 +1125,7 @@ ncp = 0, extrap = FALSE, duplicate = "error", dupfun = NULL)
 
 # ------------------------------------------------------------------------------
 
+
 .interp = 
 function(x, y, z, xo = seq(min(x), max(x), length = 40),
 yo = seq(min(y), max(y), length = 40), 
@@ -1249,7 +1248,7 @@ dupfun = NULL)
         near = integer(n),
         nxt = integer(n),
         dist = double(n),
-        PACKAGE = "fCalendar")
+        PACKAGE = "fBasics")
     temp = ans[c("x", "y", "z", "extrap")]
     if (miss) temp$z[temp$extrap] = NA
      
@@ -1339,7 +1338,7 @@ ncp = 0, extrap = FALSE, duplicate = "error", dupfun = NULL)
           integer((31 + ncp) * n + nx * ny),
           double(5 * n),
           misso = as.logical(misso),
-          PACKAGE = "fCalendar")
+          PACKAGE = "fBasics")
     temp = ans[c("x", "y", "z", "misso")]
     temp$z[temp$misso] = NA
     
@@ -1457,7 +1456,7 @@ duplicate = "error", dupfun = NULL)
         near = integer(n),
         net = integer(n),
         dist = double(n),
-        PACKAGE = "fCalendar")
+        PACKAGE = "fBasics")
     temp = ans[c("x", "y", "z", "extrap")]
     if (miss) temp$z[temp$extrap] = NA
     
@@ -1551,7 +1550,7 @@ duplicate = "error", dupfun = NULL)
         integer((31 + ncp) * n + np),
         double(8 * n),
         misso = as.logical(misso),
-        PACKAGE = "fCalendar")
+        PACKAGE = "fBasics")
     temp = ans[c("x", "y", "z", "misso")]
     temp$z[temp$misso] = NA
     

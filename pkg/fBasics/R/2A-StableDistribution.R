@@ -28,19 +28,18 @@
 
 
 ################################################################################
-# FUNCTION:             DESCRIPTION:
+# FUNCTION:             SYMMETRIC STABLE DISTRIBUTION:
 #  dsymstb               Returns density for symmetric stable DF
 #  psymstb               Returns probabilities for symmetric stable DF
 #  qsymstb               Returns quantiles for symmetric stable DF
 #  rsymstb               Returns random variates for symmetric stable DF
-# FUNCTIONS:            DESCRIPTION:
+# FUNCTIONS:            STABLE DISTRIBUTION:
+#  stableMode            Computes stable mode
 #  dstable               Returns density for stable DF
 #  pstable               Returns probabilities for stable DF
 #  qstable               Returns quantiles for stable DF
 #  rstable               Returns random variates for stable DF
-#  stableMode            Computes stable mode
-#  .integrateStable       Integrates internal functions for *stable
-# FUNCTION:             DESCRIPTION:
+# FUNCTION:             STABLE SLIDERS:
 #  symstbSlider          Displays symmetric stable distribution function
 #  stableSlider          Displays stable distribution function
 ################################################################################

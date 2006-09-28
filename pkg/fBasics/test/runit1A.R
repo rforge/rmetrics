@@ -28,8 +28,38 @@
 
 
 ################################################################################
-# FUNCTION:                     DESCRIPTION:   
-#  .interp                       Does Akima Spline Interpolation
+# FUNCTION:                 INTERNAL TWO-DIMENSIONAL PLOT UTILITIES:    
+#  .tsPlot                   Returns a time series plot
+#  .responsesPlot            Returns a response series plot
+#  .residualsPlot            Returns a residual series plot
+#  .histPlot                 Returns a histogram plot
+#  .densityPlot              Returns a kernel density estimate plot
+#  .firePlot                 Returns a fitted values vs.residuals plot
+#  .qqbayesPlot              Returns a quantile-quantile plot
+#  .acfPlot                  Returns a autocorrelation function plot
+#  .pacfPlot                 Returns a partial ACF plot
+#  .mrlPlot                  Returns a mean residual life plot
+# FUNCTION:                 INTERNAL THREE-DIMENSIONAL PLOT UTILITIES:
+#  .circlesPlot              Returns a circles plot indexing 3rd variable
+#  .perspPlot                Returns a perspective plot in 2 dimensions
+#  .contourPlot              Returns a contour plot in 2 dimensions
+# FUNCTION:                 CHARACTER, SYMBOL AND COLOR TABLES:
+#  characterTable            Shows a table of character's codes 
+#  symbolTable               Shows a table of plot symbols
+#  colorTable                Shows a table of plot color codes
+# FUNCTION:                 COLOR PALETTES:
+#  greyPalette               Creates a grey palette
+#  .chcode                   Changes from one to another number system
+#  .hex.to.dec               Converts heximal numbers do decimal numbers
+#  .dec.to.hex               Converts decimal numbers do heximal numbers
+# FUNCTION:                 SLIDER MENU:
+#  .sliderMenu               Starts a slider menu
+# FUNCTION:                 AKIMA SPLINE INTERPOLATION:
+#  .akimaInterpolation       Does Akima Spline Interpolation
+#  .interp                   Does Akima Spline Interpolation
+# FUNCTION:                 JARQUE-BERA DATA TABLES:
+# .jbLM                      Jarque-Bera Lagrange Multiplier Test Data
+# .jbALM                     JB Augmented Lagrange Multiplier Test Data
 ################################################################################
 
 
@@ -38,7 +68,7 @@ function()
 {
     # Help File:
     helpFile = function() { 
-        example(ISO8601Standard); return() }
+        example(fBasicsUtilities); return() }
     checkIdentical(
         target = class(try(helpFile())),
         current = "NULL")
@@ -49,11 +79,38 @@ function()
 
 
 # ------------------------------------------------------------------------------
+# CHARACTER, SYMBOL AND COLOR TABLES:
+
+
+test.tables = 
+function()
+{
+    #  characterTable            Shows a table of character's codes 
+    #  symbolTable               Shows a table of plot symbols
+    #  colorTable                Shows a table of plot color codes
+    
+    # Shows a table of character's codes
+    characterTable()
+    
+    # Shows a table of plot symbols
+    symbolTable()
+    
+    # Shows a table of plot color codes
+    colorTable()   
+    
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+# AKIMA SPLINE INTERPOLATION:
 
 
 test.interp = 
 function()
 {
+    # Data:
     akima = list(
     x = c(
     11.16, 24.20, 12.85, 19.85, 10.35, 24.65, 19.72, 15.91,  0.00, 20.87, 
@@ -77,7 +134,7 @@ function()
     # Interpolation:
     akima.lin = .interp(akima$x, akima$y, akima$z)
     Z = mean(akima.lin$z)
-    checkSun = 21.70316
+    checkSum = 21.70316
     checkEquals(target = Z, current = checkSum, tolerance = 0.00001)
     
     # Plots:
@@ -95,8 +152,8 @@ function()
 
 if (FALSE) {
     require(RUnit)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fCalendar/test/runit1A.R")
-    printTextProtocol(testDate = testResult, fileName = "")
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fBasics/test/runit1A.R")
+    printTextProtocol(testResult)
 }
 
 
