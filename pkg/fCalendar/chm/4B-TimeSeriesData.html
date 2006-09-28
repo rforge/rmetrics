@@ -196,9 +196,9 @@ x[i = min(1, nrow(x@Data]):nrow(x@Data),
 ## S3 method for class 'timeSeries':
 cut(x, from, to, ...)
 ## S3 method for class 'timeSeries':
-head(x, n = 6, ...)
+head(x, n = 6, recordIDs = FALSE, ...)
 ## S3 method for class 'timeSeries':
-tail(x, n = 6, ...)
+tail(x, n = 6, recordIDs = FALSE, ...)
 ## S3 method for class 'timeSeries':
 outlier(x, sd = 10, complement = TRUE, ...)
 
@@ -304,6 +304,12 @@ Another choice often used would be zero.
 a numeric value or numeric vector of probabilities with values 
 in <code>[0,1]</code>.
 </td></tr>
+<tr valign="top"><td><code>recordIDs</code></td>
+<td>
+[head][tail] - <br>
+a logical value. Should the <code>recordIDs</code> returned together
+with the data matrix and time series positions?
+</td></tr>
 <tr valign="top"><td><code>sd</code></td>
 <td>
 [outlierSeries] - <br>
@@ -320,7 +326,7 @@ observation in the return series will be removed.
 </td></tr>
 <tr valign="top"><td><code>units</code></td>
 <td>
-[applySeries][lag][allignDailySeries][returnSeries][mergeSeries] - <br>
+[applySeries][lag][alignDailySeries][returnSeries][mergeSeries] - <br>
 an optional character string, which allows to overwrite the 
 current column names of a <code>timeSeries</code> object. By default 
 <code>NULL</code> which means that the column names are selected
@@ -477,6 +483,7 @@ Diethelm Wuertz for the Rmetrics <font face="Courier New,Courier" color="#666666
    data = matrix(exp(cumsum(rnorm(12, sd = 0.1))))
    TS = timeSeries(data, charvec, units = "TS")
    TS
+   par(ask = FALSE)
    plot(TS, type = "o", pch = 19)
 
 ## diff | scale - 

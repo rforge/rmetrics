@@ -105,9 +105,15 @@
 
 ### Example: Daily Data
     
+    # Download Data:
+    URL = "http://www.itp.phys.ethz.ch/econophysics/R/data/textbooks/"
+    SRC = "ZivotWang/data/msft.dat.csv"
+    DATA = paste(URL, SRC, sep = "") 
+    download.file(DATA, destfile = "msft.dat.csv")
+    msftdat = read.table("msft.dat.csv", header = TRUE, sep = ";")
+    ###
     
     # Create a 'timeSeries' Object:
-    data(msftdat)
     MSFT.OPEN = msftdat[,"Open"]
     CHARVEC = as.character(msftdat[, 1])
     ts = timeSeries(data = MSFT.OPEN, charvec = CHARVEC, 

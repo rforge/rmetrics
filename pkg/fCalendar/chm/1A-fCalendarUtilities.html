@@ -5,6 +5,8 @@
 
 <table width="100%"><tr><td>fCalendarUtilities(fCalendar)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
 <param name="keyword" value="R:   fCalendarUtilities">
+<param name="keyword" value="R:   align">
+<param name="keyword" value="R:   align.default">
 <param name="keyword" value="R:   log">
 <param name="keyword" value="R:   log.default">
 <param name="keyword" value="R:   outlier">
@@ -52,6 +54,9 @@ functions which may be useful.
 <h3>Usage</h3>
 
 <pre>
+align.default(x, y, xout, method = "linear", n = 50, rule = 1, f = 0, 
+    ties = mean, ...)
+
 log.default(x, base = exp(1))
 
 outlier.default(x, sd = 5, complement = TRUE, ...)
@@ -91,10 +96,40 @@ additional argument to the <code>log</code> function.
 [round] - <br>
 an integer indicating the precision to be used.
 </td></tr>
-<tr valign="top"><td><code>partial, na.last, decreasing, method, index.return</code></td>
+<tr valign="top"><td><code>f</code></td>
+<td>
+[align] - <br>
+for <code>method="constant"</code> the value of <code>f</code> takes a 
+number between 0 and 1 inclusive, indicating a compromise between 
+left- and right-continuous step functions. If <code>y0</code> and 
+<code>y1</code> are the values to the left and right of the point then 
+the value is <code>y0*(1-f)+y1*f</code> so that <code>f=0</code> is 
+right-continuous and <code>f=1</code> is left-continuous.
+</td></tr>
+<tr valign="top"><td><code>method</code></td>
+<td>
+[align] - <br>
+a character string which specifies the alignment method to be used.  
+Choices are <code>"linear"</code> or <code>"constant"</code>.
+</td></tr>
+<tr valign="top"><td><code>n</code></td>
+<td>
+[align] - <br>
+if <code>xout</code> is not specified, alignment takes place at <code>n</code>
+equally spaced points spanning the interval <code>range(x)</code>.
+</td></tr>
+<tr valign="top"><td><code>partial, na.last, decreasing, index.return</code></td>
 <td>
 [sort] - <br>
 additional arguments to the <code>sort</code> function.
+</td></tr>
+<tr valign="top"><td><code>rule</code></td>
+<td>
+[align] - <br>
+an integer describing how alignment is to take place
+outside the interval <code>range(x)</code>. If <code>rule=1</code>
+then <code>NA</code>'s are returned for such points and if
+is <code>rule=2</code>, the value at the closest data extreme is used.
 </td></tr>
 <tr valign="top"><td><code>sd, complement</code></td>
 <td>
@@ -115,6 +150,13 @@ replacement? <br>
 prob -  a vector of probability weights for obtaining the 
 elements of the vector being sampled.
 </td></tr>
+<tr valign="top"><td><code>ties</code></td>
+<td>
+[align] - <br>
+handles tied <code>x</code> values. Either a function with a single
+vector argument returning a single number result or the
+string <code>"ordered"</code>.
+</td></tr>
 <tr valign="top"><td><code>tz</code></td>
 <td>
 [as.POSIXlt] - <br>
@@ -128,6 +170,8 @@ functions.
 </td></tr>
 <tr valign="top"><td><code>x</code></td>
 <td>
+[align] - <br>
+x-coordinates of the points to be aligned.<br>
 [log][sort][var] - <br>
 first argument.
 <br>
@@ -139,8 +183,14 @@ object of class <code>"matrix"</code>.<br>
 [as.POSIXlt] - <br>
 an object to be converted.
 </td></tr>
+<tr valign="top"><td><code>xout</code></td>
+<td>
+[align] - <br>
+a set of values specifying where interpolation is to take place.</td></tr>
 <tr valign="top"><td><code>y, na.rm, use</code></td>
 <td>
+[align] - <br>
+y-coordinates of the points to be aligned.<br>
 [var] - <br>
 additional arguments to the <code>var</code> function.
 </td></tr>

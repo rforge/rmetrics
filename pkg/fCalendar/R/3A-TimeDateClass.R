@@ -32,6 +32,7 @@
 #  myFinCenter            Sets my financial center
 #  rulesFinCenter         Returns DST rules for a financial center
 #  listFinCenter          Lists all supported financial centers
+#  .FinCenterList          The list with FinCenter names
 # FUNCTION:              GENERATION OF TIMEDATE OBJECTS:
 #  'timeDate'             S4 Class representation for timeDate objects
 #  timeDate               Creates a 'timeDate' object from given dates
@@ -81,6 +82,10 @@ function(FinCenter = myFinCenter)
     #
     
     # FUNCTION:
+    
+    # Check:
+    if (FinCenter == "GMT" | FinCenter == "")
+        stop("There are no DST rules for GMT FinCenter!")
     
     # Internal Function for Conversion from Ical Tables:
     if (FALSE) {
@@ -199,10 +204,11 @@ function(pattern = "*")
     myTZ = Sys.getenv("TZ")  
     Sys.putenv(TZ = "GMT")
     
+    # Time Zones DB:
+    
+    
     # Load Database:
-    # require(fBasics)
-    data(timezones.db)
-    tz = as.character(unclass(timezones.db)$TIMEZONES)
+    tz = .FinCenterList
     
     # Financial Centers:
     if (pattern == "*") pattern = "\\\\*"
@@ -212,6 +218,43 @@ function(pattern = "*")
     Sys.putenv(TZ = myTZ)
     result
 }
+
+
+# ------------------------------------------------------------------------------
+
+
+.FinCenterList = c( 
+    "Africa/Algiers", "Africa/Cairo", "Africa/Casablanca", 
+    "Africa/Johannesburg", "Africa/Lagos", "Africa/Nairobi", 
+    "Africa/Tunis", "America/Anchorage", "America/Bogota", 
+    "America/BuenosAires", "America/Caracas", "America/Cayman", 
+    "America/Chicago", "America/Denver", "America/Detroit", 
+    "America/Eastern", "America/Edmonton", "America/Indianapolis", 
+    "America/LosAngeles", "America/MexicoCity", "America/Montreal", 
+    "America/Nassau", "America/NewYork", "America/Pacific", 
+    "America/Vancouver", "America/Winnipeg", "Asia/Bahrain", 
+    "Asia/Bangkok", "Asia/Beirut", "Asia/Calcutta", 
+    "Asia/Dubai", "Asia/HongKong", "Asia/Istanbul", 
+    "Asia/Jakarta", "Asia/Jerusalem", "Asia/KualaLumpur", 
+    "Asia/Kuwait", "Asia/Manila", "Asia/Riyadh", 
+    "Asia/Seoul", "Asia/Shanghai", "Asia/Singapore", 
+    "Asia/Taipei", "Asia/Tehran", "Asia/Tokyo", 
+    "Australia/Adelaide", "Australia/Brisbane", "Australia/Darwin", 
+    "Australia/Melbourne", "Australia/Perth", "Australia/Sydney", 
+    "Europe/Amsterdam", "Europe/Andorra", "Europe/Athens", 
+    "Europe/Belfast", "Europe/Belgrade", "Europe/Berlin", 
+    "Europe/Bratislava", "Europe/Brussels", "Europe/Bucharest", 
+    "Europe/Budapest", "Europe/Copenhagen", "Europe/Dublin", 
+    "Europe/Frankfurt", "Europe/Helsinki", "Europe/Istanbul", 
+    "Europe/Kiev", "Europe/Lisbon", "Europe/Ljubljana", 
+    "Europe/London", "Europe/Luxembourg", "Europe/Madrid", 
+    "Europe/Monaco", "Europe/Moscow", "Europe/Nicosia", 
+    "Europe/Oslo", "Europe/Paris", "Europe/Prague", 
+    "Europe/Riga", "Europe/Rome", "Europe/Sofia", 
+    "Europe/Stockholm", "Europe/Tallinn", "Europe/Tirane", 
+    "Europe/Vaduz", "Europe/Vienna", "Europe/Vilnius", 
+    "Europe/Warsaw", "Europe/Zagreb", "Europe/Zurich", 
+    "Pacific/Auckland", "Pacific/Honolulu")
     
 
 ################################################################################
@@ -263,13 +306,17 @@ FinCenter = myFinCenter)
     #   Creates a "timeDate' object from a character vector
     
     # Arguments:
-    #   charvec - a character vector of dates and times.
+    #   charvec - a character vector of dates and times. Alternatively
+    #       it may be a 'timeDate', a 'Date', or a 'POSIXt' object. In
+    #       these cases the argument will be coerced into a character
+    #       string or character vector.
     #   format - the format specification of the input character 
-    #       vector.
+    #       vector. If set to NULL autodetection will be tried.
     #   zone - the time zone or financial center where the data  
     #       were recorded.
     #   FinCenter - a character string with the the location of   
-    #       the financial center named as "continent/city". 
+    #       the financial center named as "continent/city" where the
+    #       data will be used.
     
     # Value:
     #   Returns a S4 object of class 'timeDate'.

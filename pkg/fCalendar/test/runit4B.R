@@ -61,6 +61,7 @@ test.helpFile =
 function()
 {
     # Help File:
+    par(ask = FALSE)
     helpFile = function() { 
         example(TimeSeriesData); return() }
     checkIdentical(
@@ -93,7 +94,6 @@ function()
     uTS
     uTS@recordIDs
    
-
     # Differencing over 1 lag
     X = diff(x = uTS, lag = 1, diff = 1, trim = FALSE, pad = NA)
     X
@@ -170,8 +170,8 @@ function()
     scale(mTS)
     
     # Summary
-    summary(uTS)
-    summary(mTS)
+    # summary(uTS)
+    # summary(mTS)
     
     # Covariance Matrix:
     var(x = uTS, y = NULL, na.rm = FALSE)

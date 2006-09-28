@@ -365,6 +365,7 @@ rownames<-.timeSeries(x) <- value
    data = matrix(exp(cumsum(rnorm(12, sd = 0.1))))
    TS = timeSeries(data, charvec, units = "TS")
    TS
+   par(ask = FALSE)
    plot(TS, type = "o", pch = 19)
 
 ## diff | scale - 

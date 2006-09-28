@@ -141,11 +141,13 @@ readSeries(file, header = TRUE, sep = ";", zone = myFinCenter,
 returnSeries(x, type = c("continuous", "discrete"), percentage = FALSE, 
     trim = TRUE, digits = 4, units = NULL)  
 durationSeries(x, trim = FALSE, units = c("secs", "mins", "hours"))   
-midquoteSeries(x, units = c("Bid", "Ask"))
-spreadSeries(x, units = c("Bid", "Ask"), inTicksOfSize = NULL)
+midquoteSeries(x, which = c("Bid", "Ask"))
+spreadSeries(x, which = c("Bid", "Ask"), tickSize = NULL)
  
 applySeries(x, from = NULL, to = NULL, by = c("monthly", "quarterly"), 
-    FUN = colAvgs, units = NULL, ...)
+    FUN = colAvgs, units = NULL, format = x@format, zone = x@FinCenter, 
+    FinCenter = x@FinCenter, recordIDs = data.frame(), title = x@title,
+    documentation = x@documentation, ...)
     
 orderStatistics(x)
 
@@ -154,7 +156,7 @@ isUnivariate(x)
 isMultivariate(x)
 
 ## S3 method for class 'timeSeries':
-print(x, ...)
+print(x, recordIDs = FALSE, ...)
 ## S3 method for class 'timeSeries':
 summary(object, ...)
 ## S3 method for class 'timeSeries':
@@ -164,9 +166,11 @@ lines(x, ...)
 ## S3 method for class 'timeSeries':
 points(x, ...)
 
-dummyDailySeries(x = rnorm(365), units = "X", zone = "GMT", FinCenter = "GMT")
+dummyDailySeries(x = rnorm(365), units = "X", zone = myFinCenter, 
+    FinCenter = myFinCenter)
 alignDailySeries(x, method = c("before", "after", "interp", "fillNA"), 
-    include.weekends = FALSE, units = NULL)
+    include.weekends = FALSE, units = NULL, zone = myFinCenter, 
+    FinCenter = myFinCenter)
 ohlcDailyPlot(x, volume = TRUE, colOrder = c(1:5), units = 1e6, 
     xlab = c("Date", "Date"), ylab = c("Price", "Volume"), 
     main = c("O-H-L-C", "Volume"), grid.nx = 7, grid.lty = "solid", ...) 
@@ -257,7 +261,7 @@ plot.
 a logical value. Should weekend dates be included or removed
 from the series.
 </td></tr>
-<tr valign="top"><td><code>inTicksOfSize</code></td>
+<tr valign="top"><td><code>tickSize</code></td>
 <td>
 [spreadSeries] - <br>
 the default is NULL to simply compute price changes in original 
@@ -293,7 +297,11 @@ series will be expressed in percentage changes.
 </td></tr>
 <tr valign="top"><td><code>recordIDs</code></td>
 <td>
-a data frame which can be used for record identification.
+a data frame which can be used for record identification
+information. <br>
+[print] - <br>
+a logical value. Should the <code>recordIDs</code> printed together
+with the data matrix and time series positions?
 </td></tr>
 <tr valign="top"><td><code>sep</code></td>
 <td>
@@ -334,12 +342,6 @@ a character value or vector which allows to set the
 units in which the durations are measured. By default durations
 are measured in seconds. 
 <br>
-[midquoteSeries][spreadSeries] - <br>
-a vector with two character strings naming the column names of
-the time series from which to compute the mid quotes and spreads.
-By default these are bid and ask prices with column names
-<code>c("Bid", "Ask")</code>.
-<br>
 [ohlcDailyPlot] - <br>
 a numeric value, specifying in which multiples the volume should
 be referenced on the plot labels. By default 1e6, i.e. in units
@@ -350,6 +352,14 @@ of 1 Million.
 [ohlcDailyPlot] - <br>
 a logigical value. Should a volume plot added to the OHLC Plot.
 By default <code>TRUE</code>.
+</td></tr>
+<tr valign="top"><td><code>which</code></td>
+<td>
+[midquoteSeries][spreadSeries] - <br>
+a vector with two character strings naming the column names of
+the time series from which to compute the mid quotes and spreads.
+By default these are bid and ask prices with column names
+<code>c("Bid", "Ask")</code>.
 </td></tr>
 <tr valign="top"><td><code>x</code></td>
 <td>
@@ -454,7 +464,6 @@ Diethelm Wuertz for the Rmetrics <font face="Courier New,Courier" color="#666666
 ## SOURCE("fCalendar.4A-TimeSeriesClass")
 
 ## data - Data Frame:
-   
    # Microsoft Data:
    MSFT.df = data.frame(matrix(c(
    20010326, 57.1250, 57.5000, 55.5625, 56.0625,  31559300,

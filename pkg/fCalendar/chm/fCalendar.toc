@@ -46,6 +46,14 @@
 <param name="Local" value="2A-DaylightSavingTime.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
+<param name="Name" value="align">
+<param name="Local" value="1A-fCalendarUtilities.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="align.default">
+<param name="Local" value="1A-fCalendarUtilities.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="alignDailySeries">
 <param name="Local" value="4A-TimeSeriesClass.html">
 </OBJECT>
@@ -131,6 +139,10 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="as.timeDate.Date">
+<param name="Local" value="3E-TimeDateCoercion.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="as.timeDate.default">
 <param name="Local" value="3E-TimeDateCoercion.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">

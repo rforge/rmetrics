@@ -6,6 +6,7 @@
 <table width="100%"><tr><td>TimeDateCoercion(fCalendar)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
 <param name="keyword" value="R:   TimeDateCoercion">
 <param name="keyword" value="R:   as.timeDate">
+<param name="keyword" value="R:   as.timeDate.default">
 <param name="keyword" value="R:   as.timeDate.POSIXt">
 <param name="keyword" value="R:   as.timeDate.Date">
 <param name="keyword" value="R:   as.character.timeDate">
@@ -67,10 +68,12 @@ The functions are:
 <h3>Usage</h3>
 
 <pre>
+## Default S3 method:
+as.timeDate(x, zone = myFinCenter, FinCenter = myFinCenter)
 ## S3 method for class 'POSIXt':
-as.timeDate(x, zone = NULL, FinCenter = NULL)
+as.timeDate(x, zone = myFinCenter, FinCenter = myFinCenter)
 ## S3 method for class 'Date':
-as.timeDate(x, zone = "GMT", FinCenter = "GMT") 
+as.timeDate(x, zone = myFinCenter, FinCenter = myFinCenter) 
 
 ## S3 method for class 'timeDate':
 as.character(x, ...)

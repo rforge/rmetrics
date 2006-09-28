@@ -133,23 +133,23 @@ function()
     20010504, 68.0000, 71.0500, 67.9600, 70.7500,  59769200,
     20010507, 70.8300, 72.1500, 70.7000, 71.3800,  54678100), 
     byrow = TRUE, ncol = 6))
-    colnames(MSFT.df) = c("YYMMDD", "Open", "High", "Low", "Close", "Volume")
+    colnames(MSFT.df) = c("%Y-%m-%d", "Open", "High", "Low", "Close", "Volume")
     X = as.timeSeries(MSFT.df)
+    X
     
     # Read Data Frame:
-    # read.table("library/fBasics/data/msft.dat.csv", sep = ";") 
+    write.table(MSFT.df, file = "msft.dat.csv", sep = ";")
+    read.table("msft.dat.csv", sep = ";") 
     
     # Read Time Series:
-    # X = readSeries("library/fBasics/data/msft.dat.csv")  
+    X = readSeries("msft.dat.csv")  
     X = X[1:12, ]
     class(X)
     
     # Read Series:
-    x = readSeries("src/library/fBasics/data/DowJones30.csv")
-    head(x)[,1:5]
-    head(x[,1:5])
-    head(x[,1:5], 8)
-    class(x)
+    head(X)[, 1:5]
+    head(X[, 1:5])
+    head(X[, 1:5], 2)
     
     # returnSeries:
     OPEN = X[,1]
@@ -214,7 +214,7 @@ function()
     colnames(MSFT.df) = c("YYMMDD", "Open", "High", "Low", "Close", "Volume")
    
     # Data:
-    X = as.timeSeries(MSFT)
+    X = as.timeSeries(MSFT.df)
     X = X[1:12, ]
     class(X)
     
@@ -300,7 +300,7 @@ function()
     colnames(MSFT.df) = c("YYMMDD", "Open", "High", "Low", "Close", "Volume")
    
     # Data:
-    X = as.timeSeries(MSFT)
+    X = as.timeSeries(MSFT.df)
     X = X[1:12, ]
     OPEN = X[, 1]
     
@@ -310,8 +310,7 @@ function()
     
     # Plot:
     par(mfrow = c(1, 1))
-    plot(OPEN)
-    plot(X[, 1:4])
+    plot(OPEN, type = "l")
     
     # GMT - Plot:
     tC = timeCalendar(2006, 1, 1, 0:23, 0, 0, zone = "GMT", FinCenter = "GMT")
@@ -350,7 +349,7 @@ function()
 
     # Create Dummy Time Series:
     myFinCenter = "GMT"
-    dummyDailySeries(rnorm(12))
+    dummyDailySeries(matrix(rnorm(12)))
 
     # alignDailySeries()
     

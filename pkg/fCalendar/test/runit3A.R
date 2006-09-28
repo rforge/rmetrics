@@ -71,15 +71,25 @@ function()
 # ------------------------------------------------------------------------------
  
 
-test.myFinCenter =
+test.FinCenter =
 function()
 {
     # Default Financial Center:
-    myFinCenter = "Moscow"
+    # "GMT"
+    
+    # Financial Center:
+    myFinCenter = "Zurich"
     print(myFinCenter)
-    current = "Moscow"
+    current = "Zurich"
     print(current)
     checkIdentical(myFinCenter, current)
+    
+    # DST Rules for a given Financial Center:
+    rulesFinCenter("Zurich")[59:60, ]
+    
+    # List of all Financial Centers:
+    listFinCenter()
+    listFinCenter("Europe") 
     
     # Return Value:
     return() 
@@ -89,7 +99,7 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.midnightStandard = 
+test.timeDate.midnightStandard = 
 function()
 {   
     # Midnight Standard - Short Form:
@@ -161,7 +171,7 @@ function()
 # ------------------------------------------------------------------------------
  
   
-test.whichFormat = 
+test.timeDate.whichFormat = 
 function()
 {
     # Which Format:
@@ -338,7 +348,7 @@ function()
 # ------------------------------------------------------------------------------
 
     
-test.timeDatePOSIX = 
+test.timeDate.POSIX = 
 function()
 {  
     # POSIX:

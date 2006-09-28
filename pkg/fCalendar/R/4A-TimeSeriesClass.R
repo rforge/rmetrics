@@ -907,8 +907,8 @@ zone = myFinCenter, FinCenter = myFinCenter)
     # Time Series:
     if (is.vector(x)) data = matrix(x, ncol = 1)
     if (is.matrix(x)) data = x
-    positions = timeSequence(from = "1970-01-01", length.out = length(x[, 1]),
-        zone = zone, FinCenter = FinCenter)
+    positions = timeSequence(from = "1970-01-01", length.out = 
+        length(data[, 1]), zone = zone, FinCenter = FinCenter)
     ans = timeSeries(data = data, charvec = positions, units = units, 
         zone = zone, FinCenter = FinCenter)
         

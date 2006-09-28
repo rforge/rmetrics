@@ -1031,8 +1031,7 @@ function(fdates, origin = 19600101, order = 'mdy', cc = NULL, swap = 20)
     #   Terry Therneau
     
     # Notes:
-    #   cc - Century, becoming obsolete with the introduction of
-    #       swap.
+    #   cc - Century, becoming obsolete with the introduction of swap.
     
     # Example:
     #   fdates = c("8/11/73", "08-11-73", "August 11 1973", "Aug11/73")
