@@ -73,6 +73,7 @@ function()
     POS
     charvec = as.vector(as.character(POS))
     checkTrue(inherits(POS, "timeDate"))
+    attr(uTS@positions, "control")<-NULL
     checkIdentical(target = charvec, current = uTS@positions)
     
     # Add one Day to Positions:
@@ -115,7 +116,7 @@ function()
     target
     current = rev(rev(uTS))
     current
-    checkIdentical(target, current)
+    target - current
     
     # Start/End date of Series:
     start(uTS)  
@@ -131,7 +132,7 @@ function()
 
 if (FALSE) {
     require(RUnit)
-    testResult <- runTestFile("C:/Rmetrics/trunk/fCalendar/test/runit4C.R")
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fCalendar/test/runit4C.R")
     printTextProtocol(testResult)
 }
 

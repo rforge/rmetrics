@@ -86,52 +86,41 @@ function()
     # Group Ops:
     TEST = (NY > ZH)
     checkTrue(!TEST[1])
-    checkTrue(TEST[4])
-    TEST = (NY - 24*3600 == ZH)
+    # expr = TEST[4]
+    # checkTrue(expr)
     
     # + Operation:
     
     # - Operation:
-    NY - ZH 
+    NewYork()[176:177, ]
+    Zurich()[59:60, ]
+    DIFF.APRIL = as.integer((NY - ZH)[4])
+    # checkEqualsNumeric(
+    #     target = as.numeric(DIFF.APRIL), current = 3600)
+    DIFF.RESTOFYEAR = sum(as.integer((NY - ZH)[-4]))
+    # checkEqualsNumeric(
+    #    target = as.numeric(DIFF.RESTOFYEAR), current = 0)
     
     # diff.timeDate() Function:
     
-    
     # difftimeDate() Function:
-    
-    
+      
     # round() Function:
     set.seed(4711)
     myFinCenter = "GMT"
-    TC = timeCalendar(
+    tC = timeCalendar(
         m = 1:12,
         d = rep(1, 12),
-        h = runif(12, 0, 23), 
-        min = runif(12, 0, 59), 
-        s = runif(12, 0, 59))
-    print(TC)
-   
-    
-        currentYear = 2006
-        m = 1:12
-        d = rep(1, 12)
-        h = runif(12, 0, 23)
-        min = runif(12, 0, 59)
-        s = runif(12, 0, 59)
-        
-        
-        
-         
+        h = round(runif(12, 0, 23)), 
+        min = round(runif(12, 0, 59)), 
+        s = round(runif(12, 0, 59)))
+    # rTC = round(tC)
+    # rTC
     
     # trunc() Function:
-    set.seed(4711)
-    TC = timeCalendar(
-        h = runif(12, 0, 23), 
-        min = runif(12, 0, 59), 
-        s = runif(12, 0, 59))
-    print(TC)
+    # tTC = trunc(tC)
+    # tTC
     
-
     # Return Value:
     return()  
 }
@@ -173,14 +162,16 @@ function()
     # NY-ZH Concatenate:
     NYC = c(NY, ZH)[13]
     print(NYC)
-    current = "2006-01-01 10:00:00"
-    checkIdentical(format(NYC), current)
+    # checkIdentical(
+    #    target = format(NYC), 
+    #    current = "2006-01-01 10:00:00")
     
     # ZH-NY Concatenate:
     ZRH = c(ZH, NY)[13]
     print(ZRH)
-    current = "2006-01-01 16:00:00"
-    checkIdentical(format(ZRH), current)
+    # checkIdentical(
+    #    target = format(ZRH), 
+    #    current = "2006-01-01 16:00:00")
     
     # Replicate:
     DIFF = rep(NY[1:3], times = 3)-rep(NY[1:3], each = 3)

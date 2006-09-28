@@ -90,20 +90,47 @@ function()
     checkTrue(inherits(uTS, "timeSeries"))
     checkTrue(is.timeSeries(uTS))
 
+    positions = timeCalendar()
+    class(positions)
+    .whichFormat(positions)
+    .whichFormat(format(positions))
+    .whichFormat(as.character(positions))
+
+    # Data Input is a Vector:
     x = rnorm(12)
-    as.timeSeries(x)
-    timeSeries(x)
+    as.timeSeries(x, positions)
+    as.timeSeries(x, format(positions))
+    as.timeSeries(x, as.character(positions))
+    timeSeries(x, positions)
+    timeSeries(x, format(positions))
+    timeSeries(x, as.character(positions))
     
+    # Data Input is a Data Frame:
     x = data.frame(rnorm(12))
-    as.timeSeries(x)
+    as.timeSeries(x, positions)
+    as.timeSeries(x, format(positions))
+    as.timeSeries(x, as.character(positions))
+    timeSeries(x, positions)
+    timeSeries(x, format(positions))
+    timeSeries(x, as.character(positions))
     
+    # Data Input is a Matrix:
     x = matrix(rnorm(12))
-    as.timeSeries(x)
-    timeSeries(x)
-      
+    as.timeSeries(x, positions)
+    as.timeSeries(x, format(positions))
+    as.timeSeries(x, as.character(positions))
+    timeSeries(x, positions)
+    timeSeries(x, format(positions))
+    timeSeries(x, as.character(positions))
+     
+    # Data Input is an Univariate timeSeries: 
     x = as.ts(rnorm(12))
-    as.timeSeries(x)
-    timeSeries(x)
+    as.timeSeries(x, positions)
+    as.timeSeries(x, format(positions))
+    as.timeSeries(x, as.character(positions))
+    timeSeries(x, positions)
+    timeSeries(x, format(positions))
+    timeSeries(x, as.character(positions))
     
     # Return Value:
     return()    
@@ -117,11 +144,15 @@ test.asTimeSeriesDJ1 =
 function()
 {   
     # Load Data:
-    require(fBasics)
-    data(DowJones30) 
+    # require(rmetrics)
+    # data(DowJones30) 
+    # use instead dummy data set just for testing ...
+    Data = matrix(exp(cumsum(rnorm(30*100, sd = 0.1))), ncol = 30) 
+    Positions = format(timeSequence("2006-01-01", length.out = 100))
+    DowJones30 = data.frame(Positions, Data)
     
     # Taking Dates from First Column:
-    DJ = DowJones30[21:30, c(1,11:15)]
+    DJ = DowJones30[21:30, c(1, 11:15)]
     DJ
     class(DJ) 
     as.timeSeries(DJ)
