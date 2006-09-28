@@ -3,6 +3,7 @@
 \alias{TimeDateCoercion}
 
 \alias{as.timeDate}
+\alias{as.timeDate.default}
 \alias{as.timeDate.POSIXt}
 \alias{as.timeDate.Date}
 
@@ -46,8 +47,9 @@
 
 
 \usage{
-\method{as.timeDate}{POSIXt}(x, zone = NULL, FinCenter = NULL)
-\method{as.timeDate}{Date}(x, zone = "GMT", FinCenter = "GMT") 
+\method{as.timeDate}{default}(x, zone = myFinCenter, FinCenter = myFinCenter)
+\method{as.timeDate}{POSIXt}(x, zone = myFinCenter, FinCenter = myFinCenter)
+\method{as.timeDate}{Date}(x, zone = myFinCenter, FinCenter = myFinCenter) 
 
 \method{as.character}{timeDate}(x, \dots)
 \method{as.double}{timeDate}(x, units = c("auto", "secs", "mins", "hours", "days", "weeks"), ...)

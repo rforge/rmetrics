@@ -95,7 +95,9 @@ midquoteSeries(x, which = c("Bid", "Ask"))
 spreadSeries(x, which = c("Bid", "Ask"), tickSize = NULL)
  
 applySeries(x, from = NULL, to = NULL, by = c("monthly", "quarterly"), 
-    FUN = colAvgs, units = NULL, \dots)
+    FUN = colAvgs, units = NULL, format = x@format, zone = x@FinCenter, 
+    FinCenter = x@FinCenter, recordIDs = data.frame(), title = x@title,
+    documentation = x@documentation, \dots)
     
 orderStatistics(x)
 
@@ -109,9 +111,11 @@ isMultivariate(x)
 \method{lines}{timeSeries}(x, \dots)
 \method{points}{timeSeries}(x, \dots)
 
-dummyDailySeries(x = rnorm(365), units = "X", zone = "GMT", FinCenter = "GMT")
+dummyDailySeries(x = rnorm(365), units = "X", zone = myFinCenter, 
+    FinCenter = myFinCenter)
 alignDailySeries(x, method = c("before", "after", "interp", "fillNA"), 
-    include.weekends = FALSE, units = NULL)
+    include.weekends = FALSE, units = NULL, zone = myFinCenter, 
+    FinCenter = myFinCenter)
 ohlcDailyPlot(x, volume = TRUE, colOrder = c(1:5), units = 1e6, 
     xlab = c("Date", "Date"), ylab = c("Price", "Volume"), 
     main = c("O-H-L-C", "Volume"), grid.nx = 7, grid.lty = "solid", \dots) 
@@ -367,7 +371,6 @@ ohlcDailyPlot(x, volume = TRUE, colOrder = c(1:5), units = 1e6,
 ## SOURCE("fCalendar.4A-TimeSeriesClass")
 
 ## data - Data Frame:
-   
    # Microsoft Data:
    MSFT.df = data.frame(matrix(c(
    20010326, 57.1250, 57.5000, 55.5625, 56.0625,  31559300,

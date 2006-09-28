@@ -64,7 +64,7 @@ is.timeSeries(object)
  
 \method{as.vector}{timeSeries}(x, mode = "any")
 \method{as.matrix}{timeSeries}(x)
-\method{as.data.frame}{timeSeries}(x, row.names = NULL, optional = NULL)
+\method{as.data.frame}{timeSeries}(x, row.names = NULL, optional = NULL, \dots)
 \method{as.ts}{timeSeries}(x, \dots)
 }
 

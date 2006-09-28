@@ -42,17 +42,25 @@
 
 
 \usage{
-timeFirstDayInMonth(charvec, format = "\%Y-\%m-\%d", FinCenter = "GMT")
-timeLastDayInMonth(charvec, format = "\%Y-\%m-\%d", FinCenter = "GMT")
+timeFirstDayInMonth(charvec, format = "\%Y-\%m-\%d", zone = myFinCenter, 
+    FinCenter = myFinCenter)
+timeLastDayInMonth(charvec, format = "\%Y-\%m-\%d", zone = myFinCenter, 
+    FinCenter = myFinCenter)
 
-timeFirstDayInQuarter(charvec, format = "\%Y-\%m-\%d", FinCenter = "GMT")
-timeLastDayInQuarter(charvec, format = "\%Y-\%m-\%d", FinCenter = "GMT")
+timeFirstDayInQuarter(charvec, format = "\%Y-\%m-\%d", zone = myFinCenter, 
+    FinCenter = myFinCenter)
+timeLastDayInQuarter(charvec, format = "\%Y-\%m-\%d", zone = myFinCenter, 
+    FinCenter = myFinCenter)
 
-timeNdayOnOrAfter(charvec, nday = 1, format = "\%Y-\%m-\%d", FinCenter = "GMT")
-timeNdayOnOrBefore(charvec, nday = 1, format = "\%Y-\%m-\%d", FinCenter = "GMT")
+timeNdayOnOrAfter(charvec, nday = 1, format = "\%Y-\%m-\%d", 
+    zone = myFinCenter, FinCenter = myFinCenter)
+timeNdayOnOrBefore(charvec, nday = 1, format = "\%Y-\%m-\%d", 
+    zone = myFinCenter, FinCenter = myFinCenter)
 
-timeNthNdayInMonth(charvec, nday = 1, nth = 1, format = "\%Y-\%m-\%d", FinCenter = "GMT")
-timeLastNdayInMonth(charvec, nday = 1, format = "\%Y-\%m-\%d", FinCenter = "GMT")
+timeNthNdayInMonth(charvec, nday = 1, nth = 1, format = "\%Y-\%m-\%d", 
+    zone = myFinCenter, FinCenter = myFinCenter)
+timeLastNdayInMonth(charvec, nday = 1, format = "\%Y-\%m-\%d", 
+    zone = myFinCenter, FinCenter = myFinCenter)
 }
 
 
@@ -74,7 +82,10 @@ timeLastNdayInMonth(charvec, nday = 1, format = "\%Y-\%m-\%d", FinCenter = "GMT"
         }
     \item{nth}{
         an integer vector numbering the n-th occurence.
-        }     
+        } 
+    \item{zone}{
+        the time zone or financial center where the data were recorded.
+        }      
        
 }
 
@@ -137,7 +148,7 @@ timeLastNdayInMonth(charvec, nday = 1, format = "\%Y-\%m-\%d", FinCenter = "GMT"
     
 ## timeLastDayInMonth-
    # What date has the last day in a month for a given date ?
-   timeLastDayInMonth(charvec, format = "\%Y-\%m-\%d", FinCenter = "GMT")
+   timeLastDayInMonth(charvec, format = "\%Y-\%m-\%d", zone = myFinCenter, FinCenter = myFinCenter)
    timeLastDayInMonth(charvec)
    timeLastDayInMonth(charvec, FinCenter = "Zurich")
    
