@@ -25,7 +25,6 @@
     \tabular{ll}{
     \code{punitroot} \tab the cumulative probability, \cr
     \code{qunitroot} \tab the quantiles of the unit root test statistics, \cr
-    \code{dfTable} \tab the table of cumulative probabilities, \cr
     \code{pdftest} \tab the cumulative probability for the ADF test, \cr
     \code{qdftest} \tab the quantiles for the ADF test. }
     
@@ -37,8 +36,6 @@ punitroot(q, n.sample = 0, trend = c("c", "nc", "ct", "ctt"),
     statistic = c("t", "n"), na.rm = FALSE)
 qunitroot(p, n.sample = 0, trend = c("c", "nc", "ct", "ctt"), 
     statistic = c("t", "n"), na.rm = FALSE)
- 
-dfTable(trend = c("nc", "c", "ct"), statistic = c("t", "n"))
    
 pdftest(q, n.sample, trend = c("nc", "c", "ct"), statistic = c("t", "n")) 
 qdftest(p, n.sample, trend = c("nc", "c", "ct"), statistic = c("t", "n"))
@@ -85,10 +82,10 @@ qdftest(p, n.sample, trend = c("nc", "c", "ct"), statistic = c("t", "n"))
 
 \value{ 
     
-    The function \code{padf} returns the cumulative probability of 
+    The function \code{padftest} returns the cumulative probability of 
     the finite sample distribution of the unit root test statistics. 
     
-    The function \code{qadf} returns the quantiles of the finite sample 
+    The function \code{qadftest} returns the quantiles of the finite sample 
     distribution of the unit root test statistics, given the probabilities. 
     
     The function \code{punitroot} returns the cumulative probability 
@@ -167,8 +164,22 @@ Phillips, P.C.B., Perron, P. (1988);
    punitroot(1.2836, n.sample = 100, trend = "nc", statistic = "n")
    
 ## dfTable -
-   # Dickey-Fuller Table:
-   dfTable(trend = "nc", statistic = "t")
+   # Dickey-Fuller Internal Table:
+   .dfTable(trend = "nc", statistic = "t")
+   # Interpolate q and p-values
+   p = 0.984
+   n.sample = 78
+   Trend = Statistic = Q = P = NULL
+   for (trend in c("nc", "c", "ct")) {
+     for (statistic in c("t", "n")) {
+       Trend = c(Trend, trend)
+       Statistic = c(Statistic, statistic)
+       q = qdftest(p, n.sample, trend, statistic)
+       Q = c(Q, q)
+       P = c(P, pdftest(q, n.sample, trend, statistic))
+     }
+   }
+   data.frame(Trend, Statistic, Q, P)
 }
 
 

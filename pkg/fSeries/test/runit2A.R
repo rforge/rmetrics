@@ -31,7 +31,7 @@
 # FUNCTION:          DICKEY FULLER TEST:
 #  pdftest            Returns probabilities for the ADF Test
 #  qdftest            Returns quantiles for the ADF Test
-#  dfTable            Augmented Dickey-Fuller finite sample test table
+#  .dfTable           Augmented Dickey-Fuller finite sample test table
 # FUNCTION:          PROBABILIY AND QUANTILES:
 #  punitroot          Returns cumulative probability for unit root distributions
 #  qunitroot          Returns quantiles for unit root distributions
@@ -65,38 +65,38 @@ test.dfTable =
 function()
 { 
     # Dickey-Fuller Test Tables:
-    #   dfTable(trend = c("nc", "c", "ct"), statistic = c("t", "n"))
+    #   .dfTable(trend = c("nc", "c", "ct"), statistic = c("t", "n"))
     
-    Table = dfTable("nc", "t")
+    Table = .dfTable("nc", "t")
     print(Table)
     checkSum = -15.11
     checkEqualsNumeric(target = sum(Table), current = checkSum)
     
-    Table = dfTable("c", "t")
+    Table = .dfTable("c", "t")
     print(Table)
     sum(Table) 
     checkSum = -70.55
     checkEqualsNumeric(target = sum(Table), current = checkSum)
     
-    Table = dfTable("ct", "t")
+    Table = .dfTable("ct", "t")
     print(Table)
     sum(Table)
     checkSum = -104.68
     checkEqualsNumeric(target = sum(Table), current = checkSum)  
     
-    Table = dfTable("nc", "n")
+    Table = .dfTable("nc", "n")
     print(Table)
     sum(Table)
     checkSum = -184.07
     checkEqualsNumeric(target = sum(Table), current = checkSum) 
     
-    Table = dfTable("c", "n")
+    Table = .dfTable("c", "n")
     print(Table)
     sum(Table)
     checkSum = -357.11 
     checkEqualsNumeric(target = sum(Table), current = checkSum)
     
-    Table = dfTable("ct", "n")
+    Table = .dfTable("ct", "n")
     print(Table)
     sum(Table)
     checkSum = -582.60
@@ -139,7 +139,7 @@ test.extrapolationQuantiles =
 function()
 {      
     # Extrapolation: Quantiles
-    dfTable()
+    .dfTable()
     check = c(NA, NA, NA, -2.66, NA, 2.16, NA, NA)
     ans = NULL
     for (p in c(0.005, 0.010, 0.990, 0.995)) {

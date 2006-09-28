@@ -167,7 +167,7 @@ function()
     
     # Tests:
     urdfTest(x, lags = 1, type = c("nc", "c", "ct"), 
-        doplot = TRUE)
+        doplot = TRUE)                                                   
         
     urersTest(x, type = "DF-GLS", model = c("constant", "trend"),
         lag.max = 4, doplot = TRUE)
@@ -184,7 +184,7 @@ function()
     urppTest(x, type = "Z-tau", model = c("constant", "trend"),
         lags = c("short", "long"), use.lag = NULL, doplot = TRUE)
         
-    urspTest(x, type = tau", pol.deg = c(1, 2, 3, 4),
+    urspTest(x, type = "tau", pol.deg = c(1, 2, 3, 4),
         signif = c(0.01, 0.05, 0.1), doplot = TRUE)
     urspTest(x, type = "rho", pol.deg = c(1, 2, 3, 4),
         signif = c(0.01, 0.05, 0.1), doplot = TRUE)
