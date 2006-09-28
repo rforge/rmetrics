@@ -699,7 +699,7 @@ Theil H., (1971);
 
 \examples{
 ## SOURCE("fMultivar.3A-EquationsModelling")
-
+\dontrun{
 ## Note, "systemfit" is required:
    SYSTEMFIT = require(systemfit)
    if (SYSTEMFIT) {
@@ -759,6 +759,7 @@ Theil H., (1971);
 ## SEE ALSO:
    # Demo File: xmpEqnsGrunfeld.R
    # Estimation of Grunfeld's Model Data with OLS and SUR
+}
 }
 
 

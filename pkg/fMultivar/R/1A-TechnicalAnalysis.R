@@ -68,8 +68,12 @@
 # FUNCTION:                 SPLUS LIKE MOVING AVERAGES:
 #  SMA                       Computes Simple Moving Average           
 #  EWMA                      Computes Exponentially Weighted  Moving Average
-# FUNCTION:
+# FUNCTION:                 DESCRIPTION:
 #  .dailyTA
+# FUNCTION:                 DESCRIPTION:
+#  .tradeSignals
+#  .tradeLengths
+#  .hitRate
 ################################################################################
 
 
@@ -636,16 +640,20 @@ function(close, high, low, lag)
         xm = x
         for (i in 1:lag){
             x1 = c(x[1],x[1:(length(x)-1)])
-            xm = pmin(xm,x1)
-            x = x1}
-            xm}
+            xm = pmin(xm, x1)
+            x = x1
+        }
+        xm
+    }
     maxlag = function(x, lag){
         xm = x
         for (i in 1:lag){
             x1 = c(x[1],x[1:(length(x)-1)])
-            xm = pmax(xm,x1)
-            x = x1}
-            xm}
+            xm = pmax(xm, x1)
+            x = x1
+        }
+        xm
+    }
     xmin = minlag(low, lag)
     xmax = maxlag(high, lag)
     wpr = (close - xmin) / (xmax -xmin)   
@@ -668,17 +676,20 @@ function(close, lag)
     # FUNCTION:
     
     # RSI:
-    sumlag = function(x, lag){
+    sumlag = 
+    function(x, lag){
         xs = x
         for (i in 1:lag){
             x1 = c(x[1],x[1:(length(x)-1)])
             xs = xs + x1
-            x = x1}
-        xs}
+            x = x1
+        }
+        xs
+    }
     close1 = c(close[1],close[1:(length(close)-1)])
     x = abs(close - close1)
     x[close<close1] = 0
-    rsi = sumlag(x,lag)/sumlag (abs(close-close1),lag)
+    rsi = sumlag(x, lag)/sumlag (abs(close-close1), lag)
     rsi[1] = rsi[2]
      
     # Return Result:
@@ -1157,4 +1168,64 @@ function(X, indicator = "ema", select = "Close", lag = 9)
 
 
 ################################################################################
+
+
+.tradeSignals = 
+function(Positions) 
+{   # A function implemented by Diethelm Wuertz
+
+    # FUNCTION:
+    
+    # Get Signals from Positions:
+    stopifnot(is.timeSeries(Positions))
+    Signals = diff(Positions, pad = 0)/2
+    Signals = Signals[abs(Signals@Data) == 1]
+    
+    # Return Value:
+    Signals
+}
+
+
+# ------------------------------------------------------------------------------
+  
+  
+.tradeLengths = 
+function(tradeSignals) 
+{   # A function implemented by Diethelm Wuertz
+
+    # FUNCTION:
+    
+    # Get Lengths from Signals:
+    stopifnot(is.timeSeries(tradeSignals))
+    data = diff(seriesPositions(tradeSignals))
+    charvec = .tradeSignals@positions[-1]
+    tradeLengths = timeSeries(data, charvec)
+    
+    # Return Value:
+    tradeLengths
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.hitRate = 
+function(Returns, Positions) 
+{   # A function implemented by Diethelm Wuertz
+
+    # FUNCTION:
+    
+    # Compute hit rate:
+    Indicator = (Positions * sign(Returns) + 1) / 2
+    Rate = mean ( as.vector(Indicator), na.rm = TRUE )  
+    
+    # Return Value:
+    Rate
+}
+
+
+################################################################################
+
+    
+
 

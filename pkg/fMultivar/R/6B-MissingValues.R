@@ -70,7 +70,7 @@ function (x, ...)
     # timeSeries:
     if (TS) {
         ans = timeSeries(data = ans, charvec = rownames(ans), 
-            units = units, FinCenter = FinCenter)
+            units = units, zone = FinCenter, FinCenter = FinCenter)
     }
        
     # Return Value:
@@ -126,7 +126,7 @@ function(x, type = c("zeros", "mean", "median"), ...)
     # timeSeries:
     if (TS) {
         ans = timeSeries(data = ans, charvec = positions, units = units, 
-            FinCenter = FinCenter)
+            zone = FinCenter, FinCenter = FinCenter)
     }
     
     # Return Value:
@@ -199,7 +199,7 @@ function(x, method = c("linear", "before", "after"), ...)
     # timeSeries:
     if (TS) {
         x = timeSeries(data = x, charvec = positions, units = units, 
-            FinCenter = FinCenter)
+            zone = FinCenter, FinCenter = FinCenter)
     }
     
     # Return Value:
@@ -256,7 +256,7 @@ function(x, k = max(dim(as.matrix(x))[1]*0.01,2), correlation = FALSE, ...)
     # timeSeries
     if (TS) {
         ans = timeSeries(data = ans, charvec = positions, units = units, 
-            FinCenter = FinCenter)
+            zone = FinCenter, FinCenter = FinCenter)
     }
     
     # Return Value:

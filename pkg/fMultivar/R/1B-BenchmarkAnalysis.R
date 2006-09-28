@@ -92,6 +92,7 @@ function(x)
         TS = TRUE
         positions = x@positions
         x = seriesData(x)
+        x = removeNA(x)
     }
 
     # Check for Univariate Series:
@@ -136,6 +137,8 @@ function(x, r = 0, scale = sqrt(250))
     # Check for timeSeries Object:
     if (is.timeSeries(x)) { 
         x = seriesData(x)
+        x = removeNA(x)
+        
     }
     
     # Check for Univariate Series:
@@ -177,6 +180,7 @@ function(x)
         TS = TRUE
         Unit = x@units
         x = seriesData(x)
+        x = removeNA(x)
     }
         
     # Check for Univariate Series:
