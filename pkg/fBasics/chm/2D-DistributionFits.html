@@ -13,8 +13,6 @@
 <param name="keyword" value="R:   hypFit">
 <param name="keyword" value="R:   nigFit">
 <param name="keyword" value="R:   print.fDISTFIT">
-<param name="keyword" value="R:   ssdFit">
-<param name="keyword" value="R:   print.ssd">
 <param name="keyword" value=" Parameter Fit of a Distribution">
 </object>
 
@@ -51,13 +49,7 @@ The functions are:
   <td align="left"> <code>hypFit</code> </td>  <td align="left"> MLE parameter fit for a hyperbolic distribution, </td>
 </tr>
 <tr>
-  <td align="left"> <code>nigFit</code> </td>  <td align="left"> MLE parameter fit for a normal inverse Gaussian distribution, </td>
-</tr>
-<tr>
-  <td align="left"> <code>ssdFit</code> </td>  <td align="left"> smoothing spline estimation , </td>
-</tr>
-<tr>
-  <td align="left"> <code>print.ssd</code> </td>  <td align="left"> S3 print method for objects returned from 'ssdFit'. </td>
+  <td align="left"> <code>nigFit</code> </td>  <td align="left"> MLE parameter fit for a normal inverse Gaussian distribution. </td>
 </tr>
 </table>
 
@@ -81,11 +73,6 @@ nigFit(x, alpha = 1, beta = 0, delta = 1, mu = 0, doplot = TRUE,
    
 ## S3 method for class 'fDISTFIT':
 print(x, ...)
- 
-ssdFit(x, alpha = 1.4, seed = NULL, title = NULL, description = NULL)
-
-## S3 method for class 'ssd':
-print(x, ...)
 </pre>
 
 
@@ -94,10 +81,6 @@ print(x, ...)
 <table summary="R argblock">
 <tr valign="top"><td><code>alpha, beta, gamma, delta, mu, lambda</code></td>
 <td>
-[ssdFit] - <br>
-alpha is the parameter defining cross-validation score for 
-smoothing parameter selection.
-<br>
 [stable] - <br>
 The parameters are <code>alpha</code>, <code>beta</code>, <code>gamma</code>, 
 and <code>delta</code>:<br>
@@ -145,11 +128,6 @@ assumed.
 [tFit][hypFit][nigFit] - <br>
 a logical flag. Should a plot be displayed?
 </td></tr>
-<tr valign="top"><td><code>seed</code></td>
-<td>
-[ssdFit] - <br>
-Seed to be used for the random generation of "knots." 
-</td></tr>
 <tr valign="top"><td><code>span</code></td>
 <td>
 x-coordinates for the plot, by default 100 values 
@@ -179,16 +157,11 @@ approach, or <code>"qm"</code>, McCulloch's quantile method.
 <tr valign="top"><td><code>x</code></td>
 <td>
 [*Fit] - <br>
-a numeric vector.
-<br>
-[print.ssd] - <br>
-an S3 object of class <code>"ssd"</code> as returned from the
-function <code>ssdFit</code>. 
+a numeric vector. 
 </td></tr>
 <tr valign="top"><td><code>...</code></td>
 <td>
-parameters parsed to the function <code>density</code> and
-to the <code>print.ssd</code> function.
+parameters to be parsed.
 </td></tr>
 </table>
 
@@ -252,35 +225,10 @@ the gradient at the estimated maximum.
 number of function calls.
 </td></tr>
 </table>
-<p>
-
-<br>
-The function <code>ssdFit</code> returns an S3 object of class <code>"ssd"</code>
-which contains as information the parameters to compute density,
-probability, quantiles, and random deviates for the functions
-<code>[dpqr]ssd</code>.</p>
-
-<h3>Note</h3>
-
-<p>
-The function <code>ssdFit</code> does not implement the full functionality 
-provided by R's contributed package "gss". Only the "cubic" spline 
-method is provided and most of the optional arguments are set to 
-default values. Since the original "gss" package does not interfere 
-with Rmetrics you can load it in parallel, and use the function
-<code>ssden</code> in place of <code>ssdFit</code>.
-</p>
-<p>
-It's worth to note that the "gss" package does not work under SPlus,
-but the modified and adapted functions <code>ssdFit</code> and <code>*ssd</code>
-can be used.
-</p>
-
 
 <h3>Author(s)</h3>
 
 <p>
-Chong Gu for the code from R's contributed package 'gss', <br>
 Diethelm Wuertz for the Rmetrics <font face="Courier New,Courier" color="#666666"><b>R</b></font>-port.
 </p>
 

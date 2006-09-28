@@ -540,6 +540,7 @@ function(X, Stat, N, digits = 4)
 #  .interpTable.old       Akima spline interpolation utility function
 #  .interpTable.new       Akima spline interpolation utility function
 
+
 .interpTable.old = 
 function (x, y, z, xo = seq(min(x), max(x), length = 40), yo = seq(min(y), 
 max(y), length = 40), ncp = 0, extrap = FALSE, duplicate = "error", 

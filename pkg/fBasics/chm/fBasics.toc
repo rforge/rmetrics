@@ -110,10 +110,6 @@
 <param name="Local" value="2B-HyperbolicDistribution.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="dssd">
-<param name="Local" value="2C-SmoothedSplineDistribution.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="dstable">
 <param name="Local" value="2A-StableDistribution.html">
 </OBJECT>
@@ -290,14 +286,6 @@
 <param name="Local" value="2D-DistributionFits.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
-<param name="Name" value="print.ssd">
-<param name="Local" value="2D-DistributionFits.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="pssd">
-<param name="Local" value="2C-SmoothedSplineDistribution.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
 <param name="Name" value="pstable">
 <param name="Local" value="2A-StableDistribution.html">
 </OBJECT>
@@ -332,10 +320,6 @@
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="qqgaussPlot">
 <param name="Local" value="3B-StylizedFacts.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="qssd">
-<param name="Local" value="2C-SmoothedSplineDistribution.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="qstable">
@@ -392,10 +376,6 @@
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="rowVars">
 <param name="Local" value="3A-BasicStatistics.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="rssd">
-<param name="Local" value="2C-SmoothedSplineDistribution.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="rstable">
@@ -464,14 +444,6 @@
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="skewness.POSIXlt">
 <param name="Local" value="3A-BasicStatistics.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="SmoothedSplineDistribution">
-<param name="Local" value="2C-SmoothedSplineDistribution.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="ssdFit">
-<param name="Local" value="2D-DistributionFits.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="StableDistribution">
@@ -549,10 +521,6 @@
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Parameter Fit of a Distribution">
 <param name="Local" value="2D-DistributionFits.html">
-</OBJECT>
-<LI> <OBJECT type="text/sitemap">
-<param name="Name" value="Smoothed Spline Distribution">
-<param name="Local" value="2C-SmoothedSplineDistribution.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Stable Distribution Function">

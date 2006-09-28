@@ -35,7 +35,7 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.jbTable = 
+test.jbTable.LM = 
 function()
 {
     # Interpolated plot of Small Jarque Bera Table:
@@ -48,13 +48,55 @@ function()
     rownames(X)
     
     # 3D-Plot Probability Table:
-    par(mfrow = c(2, 2), cex = 0.7)
+    par(ask = FALSE)
+    par(mfrow = c(1, 1))
     pPlot(X, linear = TRUE,  logStat = TRUE, main = "JB LM", cex = 0.5)
     pPlot(X, linear = TRUE,  logStat = TRUE, fill = TRUE,    cex = 0.5)
     pPlot(X, linear = FALSE, logStat = TRUE,                 cex = 0.5)
     pPlot(X, linear = FALSE, logStat = TRUE, fill = TRUE,    cex = 0.5)
     
     # 2D-Plot Probability for Fixed Size:
+    par(mfrow = c(2, 2), cex = 0.7)
+    p = (1:99)/100
+    plot(qTable(X, p, N = 100), p, type = "b")
+    grid()
+    
+    # 2D-Plot Statistics for Fixed Size:
+    Stat = seq(0.01, 15, length = 100)
+    plot(Stat, pTable(X, Stat, N = 100), type = "b")  
+    grid()
+    
+    # Return Value:
+    return()  
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.jbTable.ALM = 
+function()
+{
+    # Interpolated plot of Small Jarque Bera Table:
+    X = jbTable(type = "ALM", size = "small")
+    
+    # List of finite Sizes:
+    colnames(X) 
+    
+    # List of Probabilities:
+    rownames(X)
+    
+    # 3D-Plot Probability Table:
+    par(ask = FALSE)
+    par(mfrow = c(1, 1))
+    pPlot(X, linear = TRUE,  logStat = TRUE, main = "JB ALM", cex = 0.5)
+    pPlot(X, linear = TRUE,  logStat = TRUE, fill = TRUE,     cex = 0.5)
+    pPlot(X, linear = FALSE, logStat = TRUE,                  cex = 0.5)
+    pPlot(X, linear = FALSE, logStat = TRUE, fill = TRUE,     cex = 0.5)
+    
+    # 2D-Plot Probability for Fixed Size:
+    par(ask = FALSE)
+    par(mfrow = c(2, 2), cex = 0.7)
     p = (1:99)/100
     plot(qTable(X, p, N = 100), p, type = "b")
     grid()
@@ -107,7 +149,9 @@ function()
     # List of Probabilities:
     rownames(X)     
        
-    # 3D Probability Plot
+    # 3D Probability Plot:
+    par(ask = FALSE)
+    par(mfrow = c(1, 1))
     pPlot(X)
     ans = pPlot(X, 10, 10, fill = TRUE)$z
 

@@ -7,6 +7,7 @@ Default topic=00Index.html
 Display compile progress=No
 Full-text search=Yes
 Full text search stop list file=..\..\..\gnuwin32\help\R.stp
+Title=R Help for package fBasics
 
 
 [FILES]
@@ -14,7 +15,6 @@ Full text search stop list file=..\..\..\gnuwin32\help\R.stp
 1A-fBasicsUtilities.html
 2A-StableDistribution.html
 2B-HyperbolicDistribution.html
-2C-SmoothedSplineDistribution.html
 2D-DistributionFits.html
 3A-BasicStatistics.html
 3B-StylizedFacts.html
