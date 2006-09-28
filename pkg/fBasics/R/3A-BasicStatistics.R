@@ -960,7 +960,7 @@ function(fun = "norm", n = 1000, seed = 4711, ...)
 
 # ------------------------------------------------------------------------------
 
-
+ 
 .bootMean =
 function(x, B = 1000, ci = 0.95, na.rm = TRUE, reps = FALSE)
 {   # A function implemented by Diethelm Wuertz
@@ -992,11 +992,11 @@ function(x, B = 1000, ci = 0.95, na.rm = TRUE, reps = FALSE)
     # FUNCTION:       
     
     # Requirements:
-    sink("@sink@") # Skip Loading Comments ...
-    library(Design, warn.conflicts = FALSE)
-    library(Hmisc, warn.conflicts = FALSE)
-    sink()
-    unlink("@sink@") 
+    ## sink("@sink@") # Skip Loading Comments ...
+    ## library(Design, warn.conflicts = FALSE)
+    ## library(Hmisc, warn.conflicts = FALSE)
+    ## sink()
+    ## unlink("@sink@") 
            
     # Return Value:
     smean.cl.boot(x = x, conf.int = ci, B = B, na.rm = na.rm, reps = reps)

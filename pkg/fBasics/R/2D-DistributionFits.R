@@ -1370,6 +1370,7 @@ function(range)
 
 # ------------------------------------------------------------------------------
 
+
 .ssden.gauss.quad = 
 function(size, interval) 
 {   # An adapted copy from contributed R package gss

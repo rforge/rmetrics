@@ -123,7 +123,7 @@ Gu C. (2002);
 
 \examples{
 ## SOURCE("fBasics.2C-SmoothedSplineDistribution")
-
+\dontrun{
 ## ssd -
 
    # Fit Parameters:
@@ -143,6 +143,7 @@ Gu C. (2002);
    
    # Compute quantiles:
    qssd(pssd(seq(-3, 3, 1), param), param) 
+}
 }
 
 
