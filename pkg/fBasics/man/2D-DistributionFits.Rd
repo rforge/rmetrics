@@ -15,9 +15,6 @@
 \alias{nigFit}
 \alias{print.fDISTFIT}
 
-\alias{ssdFit}
-\alias{print.ssd}
-
 \title{Parameter Fit of a Distribution}
 
 
@@ -39,9 +36,7 @@
     \code{stableFit} \tab MLE and Quantile Method stable parameter fit, \cr
     \code{ghFit} \tab MLE parameter fit for a generalized hyperbolic distribution, \cr
     \code{hypFit} \tab MLE parameter fit for a hyperbolic distribution, \cr
-    \code{nigFit} \tab MLE parameter fit for a normal inverse Gaussian distribution, \cr
-    \code{ssdFit} \tab smoothing spline estimation , \cr
-    \code{print.ssd} \tab S3 print method for objects returned from 'ssdFit'. }
+    \code{nigFit} \tab MLE parameter fit for a normal inverse Gaussian distribution. }
 
 }
 
@@ -64,20 +59,12 @@ nigFit(x, alpha = 1, beta = 0, delta = 1, mu = 0, doplot = TRUE,
     span = "auto", trace = FALSE, title = NULL, description = NULL, \dots)
    
 \method{print}{fDISTFIT}(x, \dots)
- 
-ssdFit(x, alpha = 1.4, seed = NULL, title = NULL, description = NULL)
-
-\method{print}{ssd}(x, \dots)
 }
 
 
 \arguments{
   
     \item{alpha, beta, gamma, delta, mu, lambda}{
-        [ssdFit] - \cr
-        alpha is the parameter defining cross-validation score for 
-        smoothing parameter selection.
-        \cr
         [stable] - \cr
         The parameters are \code{alpha}, \code{beta}, \code{gamma}, 
         and \code{delta}:\cr
@@ -122,10 +109,6 @@ ssdFit(x, alpha = 1.4, seed = NULL, title = NULL, description = NULL)
         [tFit][hypFit][nigFit] - \cr
         a logical flag. Should a plot be displayed?
         }
-    \item{seed}{
-        [ssdFit] - \cr
-        Seed to be used for the random generation of "knots." 
-        }
     \item{span}{
         x-coordinates for the plot, by default 100 values 
         automatically selected and ranging between the 0.001, 
@@ -150,15 +133,10 @@ ssdFit(x, alpha = 1.4, seed = NULL, title = NULL, description = NULL)
         }
     \item{x}{
         [*Fit] - \cr
-        a numeric vector.
-        \cr
-        [print.ssd] - \cr
-        an S3 object of class \code{"ssd"} as returned from the
-        function \code{ssdFit}. 
+        a numeric vector. 
         }
     \item{\dots}{
-        parameters parsed to the function \code{density} and
-        to the \code{print.ssd} function.
+        parameters to be parsed.
         }
 
 }
@@ -198,11 +176,6 @@ ssdFit(x, alpha = 1.4, seed = NULL, title = NULL, description = NULL)
     \item{steps}{
         number of function calls.
         }
-        
-    The function \code{ssdFit} returns an S3 object of class \code{"ssd"}
-    which contains as information the parameters to compute density,
-    probability, quantiles, and random deviates for the functions
-    \code{[dpqr]ssd}. 
               
 }
 
@@ -224,25 +197,8 @@ ssdFit(x, alpha = 1.4, seed = NULL, title = NULL, description = NULL)
 }
 
 
-\note{
-
-    The function \code{ssdFit} does not implement the full functionality 
-    provided by R's contributed package "gss". Only the "cubic" spline 
-    method is provided and most of the optional arguments are set to 
-    default values. Since the original "gss" package does not interfere 
-    with Rmetrics you can load it in parallel, and use the function
-    \code{ssden} in place of \code{ssdFit}.
-    
-    It's worth to note that the "gss" package does not work under SPlus,
-    but the modified and adapted functions \code{ssdFit} and \code{*ssd}
-    can be used.  
-        
-}
-
-
 \author{
 
-    Chong Gu for the code from R's contributed package 'gss', \cr
     Diethelm Wuertz for the Rmetrics \R-port.
     
 }
