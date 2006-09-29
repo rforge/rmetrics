@@ -1,11 +1,11 @@
 
 #
 # Example:
-# 	fSeries Functions Addons
+#   fSeries Functions Addons
 #
 # Description:
-#	This is a collection of frunctions which support the following
-#	tasks:
+#   This is a collection of frunctions which support the following
+#   tasks:
 #    1 Aparch Time Series Simulation
 #    2 Chaotic Time Series Maps
 #    3 Absolute Moment Statistics
@@ -1269,53 +1269,52 @@ function(high, low, close, n = 20, trim = TRUE, na.rm = FALSE)
 
 tslag = 
 function(x, k = 1, trim = FALSE)
-{	# A function implemented by Diethelm Wuertz
+{   # A function implemented by Diethelm Wuertz
 
-	# Description:
-	#	Creates a lagged or leading vector/matrix of selected order(s).
-	
-	# Arguments:
-	#	x - a vector of data, missing values (NA) are allowed. 
-	#	k - the number of positions the new series is to lag 
-	#		or to lead the input series. 
-	#	trim - a logical flag, if TRUE, the missing values at the 
-	#		beginning or end of the returned series will be 
-	#		trimmed. The default value is FALSE. 
-	
-	# Details:
-	#	With a positive value of "k" we get a lagged series and with
-	#	a negative value we get a leading series. 
-	
-	# Examples:
-	#	tslag(rnorm(10), 2)
-	#	tslag(rnorm(10), -2:2)
+    # Description:
+    #   Creates a lagged or leading vector/matrix of selected order(s).
+    
+    # Arguments:
+    #   x - a vector of data, missing values (NA) are allowed. 
+    #   k - the number of positions the new series is to lag 
+    #       or to lead the input series. 
+    #   trim - a logical flag, if TRUE, the missing values at the 
+    #       beginning or end of the returned series will be 
+    #       trimmed. The default value is FALSE. 
+    
+    # Details:
+    #   With a positive value of "k" we get a lagged series and with
+    #   a negative value we get a leading series. 
+    
+    # Examples:
+    #   tslag(rnorm(10), 2)
+    #   tslag(rnorm(10), -2:2)
 
-	# FUNCTION:
-	
-	# Internal Function:
-	tslag1 = function(x, k) {
-		y = x
-		if (k > 0) y = c(rep(NA, times = k), x[1:(length(x)-k)])
-		if (k < 0) y = c(x[(-k+1):length(x)], rep(NA, times = -k))
-		y }
-		
-	# Bind:
-	ans = NULL
-	for ( i in k) {
-		ans = cbind(ans, tslag1(x, i)) }
-		
-	# Trim:
-	if (trim) {
-		indexes = (1:length(ans[,1]))[!is.na(apply(ans, 1, sum))]
-		ans = ans[indexes, ] }
-		
-	# As Vector:
-	if (length(k) == 1) ans = as.vector(ans)
-	
-	# Return Value:
-	ans
+    # FUNCTION:
+    
+    # Internal Function:
+    tslag1 = function(x, k) {
+        y = x
+        if (k > 0) y = c(rep(NA, times = k), x[1:(length(x)-k)])
+        if (k < 0) y = c(x[(-k+1):length(x)], rep(NA, times = -k))
+        y }
+        
+    # Bind:
+    ans = NULL
+    for ( i in k) {
+        ans = cbind(ans, tslag1(x, i)) }
+        
+    # Trim:
+    if (trim) {
+        indexes = (1:length(ans[,1]))[!is.na(apply(ans, 1, sum))]
+        ans = ans[indexes, ] }
+        
+    # As Vector:
+    if (length(k) == 1) ans = as.vector(ans)
+    
+    # Return Value:
+    ans
 }
-
 
 
 ################################################################################    
@@ -1330,41 +1329,41 @@ function(x, k = 1, trim = FALSE)
 
 pdl = 
 function(x, d = 2, q = 3, trim = FALSE)
-{	# A function implemented by Diethelm Wuertz
+{   # A function implemented by Diethelm Wuertz
 
-	# Description:
-	#	Creates regressor matrix for polynomial distributed lags.
-	
-	# Arguments:
-	#	x - a numeric vector.
-	#	d - an integer specifying the order of the polynomial. 
-	# 	q - an integer specifying the number of lags to use in 
-	#		creating polynomial distributed lags. This must be 
-	#		greater than d. 
-	#	trim - a logical flag; if TRUE, the missing values at 
-	#		the beginning of the returned matrix will be trimmed. 
+    # Description:
+    #   Creates regressor matrix for polynomial distributed lags.
+    
+    # Arguments:
+    #   x - a numeric vector.
+    #   d - an integer specifying the order of the polynomial. 
+    #   q - an integer specifying the number of lags to use in 
+    #       creating polynomial distributed lags. This must be 
+    #       greater than d. 
+    #   trim - a logical flag; if TRUE, the missing values at 
+    #       the beginning of the returned matrix will be trimmed. 
 
-	# Value:
-	#	Returns a matrix representing the regressor matrix. 
+    # Value:
+    #   Returns a matrix representing the regressor matrix. 
 
-	
-	# FUNCTION:
+    
+    # FUNCTION:
 
-	# Polynomial distributed lags:
-	M = tslag(x, 1:q, FALSE)
-	C = NULL
-	for (i in 0:d) { C = rbind(C, (1:q)^i) }
-	Z = NULL
-	for (i in 1:(d+1)) { Z = cbind(Z, apply(t(C[i,]*t(M)), 1, sum)) }
-	Z[, 1] = Z[, 1] + x
-	
-	# Trim:
-	if (trim) {
-		indexes = (1:length(Z[,1]))[!is.na(apply(Z, 1, sum))]
-		Z = Z[indexes, ] }
+    # Polynomial distributed lags:
+    M = tslag(x, 1:q, FALSE)
+    C = NULL
+    for (i in 0:d) { C = rbind(C, (1:q)^i) }
+    Z = NULL
+    for (i in 1:(d+1)) { Z = cbind(Z, apply(t(C[i,]*t(M)), 1, sum)) }
+    Z[, 1] = Z[, 1] + x
+    
+    # Trim:
+    if (trim) {
+        indexes = (1:length(Z[,1]))[!is.na(apply(Z, 1, sum))]
+        Z = Z[indexes, ] }
 
-	# Return Value:
-	Z
+    # Return Value:
+    Z
 }
 
 
@@ -1382,47 +1381,47 @@ disaggregate =
 function(data, k, 
 method = c("linear", "constant", "fmm", "spline", "natural", "periodic"), 
 how = NA, x = NA, out.positions = NA, ...)
-{	# A function implemented by Diethelm Wuertz
+{   # A function implemented by Diethelm Wuertz
 
-	# Description:
-	#	Time series disaggregation/distribution from low frequency
-	# 	to high frequency.
-	
-	# Arguments:
-	#	data - a vector, or a matrix, or a "timeSeries" object 
-	#	 	that represents the low frequency time series to 
-	#		be disaggregated. 
-	# 	k - a positive integer specifying the number of time 
-	#		periods to distribute data into. For example, to 
-	#	   	disaggregate an annual series into a quarterly 
-	#     	series, you set k to 4. 
+    # Description:
+    #   Time series disaggregation/distribution from low frequency
+    #   to high frequency.
+    
+    # Arguments:
+    #   data - a vector, or a matrix, or a "timeSeries" object 
+    #       that represents the low frequency time series to 
+    #       be disaggregated. 
+    #   k - a positive integer specifying the number of time 
+    #       periods to distribute data into. For example, to 
+    #       disaggregate an annual series into a quarterly 
+    #       series, you set k to 4. 
 
-	# Value:
-	#	Returns a vector, or a matrix, or a "timeSeries" object that 
-	#	represents the disaggregated high frequency time series. 
+    # Value:
+    #   Returns a vector, or a matrix, or a "timeSeries" object that 
+    #   represents the disaggregated high frequency time series. 
 
-	# FUNCTION:
-	
-	# Method:
-	method = method[1]
-	
-	# Data
-	x = 1:length(data)
-	y = as.vector(data)
-	xout = seq(1, length(data), length=k*length(data))
-	
-	# "linear" / "constant" Interpolation:	
-	if (method == "linear" || method == "constant") 
-		ans = approx(x = x, y = y, xout, method = "linear")
-	
-	# "fmm" / "natural" / "periodic" Spline interpolation:
-	if (method == "spline") method = "fmm"
-	if (method == "fmm" | method == "natural" | method == "periodic") 
-		ans = spline(x = x, y = y, n = k*length(x), method = "fmm",
-            xmin = min(x), xmax = max(x))	
-	
-	# Return Value:
-	ans
+    # FUNCTION:
+    
+    # Method:
+    method = method[1]
+    
+    # Data
+    x = 1:length(data)
+    y = as.vector(data)
+    xout = seq(1, length(data), length=k*length(data))
+    
+    # "linear" / "constant" Interpolation:  
+    if (method == "linear" || method == "constant") 
+        ans = approx(x = x, y = y, xout, method = "linear")
+    
+    # "fmm" / "natural" / "periodic" Spline interpolation:
+    if (method == "spline") method = "fmm"
+    if (method == "fmm" | method == "natural" | method == "periodic") 
+        ans = spline(x = x, y = y, n = k*length(x), method = "fmm",
+            xmin = min(x), xmax = max(x))   
+    
+    # Return Value:
+    ans
 }
 
 

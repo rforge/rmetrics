@@ -87,7 +87,8 @@ alpha = rep(0, dim))
     #   Multivariate Skew Normal Density Function
     
     # FUNCTION:
-        # Settings:
+        
+    # Settings:
     xi = mu 
     ans = NA
     

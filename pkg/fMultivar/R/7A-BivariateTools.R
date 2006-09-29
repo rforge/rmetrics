@@ -29,7 +29,7 @@
 
 ################################################################################
 # FUNCTION:             DESCRIPTION:
-#  grid2d                Creates from two vectors x-y grid coordinates
+#  grid2d                Returns from two vectors x-y grid coordinates
 #  density2d             Returns 2D Kernel Density Estimates
 #  hist2d                Returns 2D Histogram Counts
 #  integrate2d           Integrates over a two dimensional unit square
