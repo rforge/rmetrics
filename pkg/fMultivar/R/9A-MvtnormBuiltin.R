@@ -18,14 +18,24 @@
 
 
 ################################################################################
-# mvnorm
+# FUNCTION:
+#  .rmvnorm
+#  .dmvnorm
+#  .checkmvArgs
+#  .pmvnorm
+#  .pmvt
+#  .mvt
+#  .rmvt
+#  .qmvnorm
+#  .qmvt
+################################################################################
 
-
-# $Id: mvnorm.R,v 1.4 2004/01/22 14:30:50 hothorn Exp $
 
 .rmvnorm = 
 function(n, mean = rep(0, nrow(sigma)), sigma = diag(length(mean)))
 {
+    # $Id: mvnorm.R,v 1.4 2004/01/22 14:30:50 hothorn Exp $
+    
     if(nrow(sigma) != ncol(sigma)) {
         stop("sigma must be a square matrix")
     }
@@ -82,11 +92,11 @@ function (x, mean, sigma, log = FALSE)
 # ******************************************************************************
 
 
-# $Id: mvt.R,v 1.30 2004/09/08 07:38:43 hothorn Exp $ 
-
 .checkmvArgs = 
 function(lower, upper, mean, corr, sigma) 
 {
+    # $Id: mvt.R,v 1.30 2004/09/08 07:38:43 hothorn Exp $ 
+    
     UNI = FALSE
     if (is.null(lower) || any(is.na(lower)))
         stop(sQuote("lower"), " not specified or contains NA")
@@ -323,7 +333,7 @@ abseps = 0.001, releps = 0)
 .rmvt = 
 function(n, sigma = diag(2), df = 1) 
 {
-  .rmvnorm(n,sigma=sigma)/sqrt(rchisq(n,df)/df)
+  .rmvnorm(n,sigma = sigma)/sqrt(rchisq(n,df)/df)
 }
 
 
