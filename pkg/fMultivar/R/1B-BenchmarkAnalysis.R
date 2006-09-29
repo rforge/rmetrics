@@ -43,7 +43,7 @@ trim = TRUE)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Computes return series given a financial price series.
+    #   Computes returns given a price series, for SPlus compatibility.
     
     # Arguments:
     #   type - a character string specifying the type of returns to be 
