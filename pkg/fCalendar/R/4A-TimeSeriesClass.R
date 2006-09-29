@@ -773,30 +773,32 @@ function(object, ...)
     # FUNCTION: 
 
     # Series Name:
-    x = object
-    cat("\nTime Series:        ")
-    cat("\n Name:              ", substitute(x))    
+    cat("Time Series:          ")
+    cat("\n Name:              ", substitute(object))    
     # Data Matrix:
-    Dim = dim(x@Data)
+    Dim = dim(object@Data)
     cat("\nData Matrix:        ")
     cat("\n Dimension:         ", Dim)
-    cat("\n Column Names:      ", colnames(x@Data) )
-    firstName = rownames(x@Data)[1]
-    lastName = rownames(x@Data)[Dim[1]]
+    cat("\n Column Names:      ", colnames(object@Data) )
+    firstName = rownames(object@Data)[1]
+    lastName = rownames(object@Data)[Dim[1]]
     cat("\n Row Names:         ", firstName, " ... ", lastName)
     # Date/Time Positions:
-    positions = seriesPositions(x)
+    positions = seriesPositions(object)
     cat("\nPositions:          ")
     cat("\n Start:             ", as.character(start(positions)))
     cat("\n End:               ", as.character(end(positions)))
     # Other Attributes:
     cat("\nAttributes:         ")
-    cat("\n Format:            ", x@format)
-    cat("\n FinCenter:         ", x@FinCenter)
-    cat("\n Units:             ", x@units)
-    cat("\n Title:             ", x@title)
-    cat("\n Documentation:     ", x@documentation)
+    cat("\n Format:            ", object@format)
+    cat("\n FinCenter:         ", object@FinCenter)
+    cat("\n Units:             ", object@units)
+    cat("\n Title:             ", object@title)
+    cat("\n Documentation:     ", object@documentation)
     cat("\n") 
+    
+    # Return Value:
+    invisible()
 }  
 
 
