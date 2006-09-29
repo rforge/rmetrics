@@ -11,67 +11,67 @@
 <UL>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="ciaByCountry">
-<param name="Local" value="MarketStatistics.html">
+<param name="Local" value="1A-MarketStatistics.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="ciaByIndicator">
-<param name="Local" value="MarketStatistics.html">
+<param name="Local" value="1A-MarketStatistics.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="ciaCountries">
-<param name="Local" value="MarketStatistics.html">
+<param name="Local" value="1A-MarketStatistics.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="ciaFactbook">
-<param name="Local" value="MarketStatistics.html">
+<param name="Local" value="1A-MarketStatistics.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="ciaIndicators">
-<param name="Local" value="MarketStatistics.html">
+<param name="Local" value="1A-MarketStatistics.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="dem2gbp">
-<param name="Local" value="RmetricsData.html">
+<param name="Local" value="2A-RmetricsData.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="dowjones30">
-<param name="Local" value="RmetricsData.html">
+<param name="Local" value="2A-RmetricsData.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="klein">
-<param name="Local" value="RmetricsData.html">
+<param name="Local" value="2A-RmetricsData.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="kmenta">
-<param name="Local" value="RmetricsData.html">
+<param name="Local" value="2A-RmetricsData.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="MarketStatistics">
-<param name="Local" value="MarketStatistics.html">
+<param name="Local" value="1A-MarketStatistics.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="msftdat">
-<param name="Local" value="RmetricsData.html">
+<param name="Local" value="2A-RmetricsData.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="nelsonplosser">
-<param name="Local" value="RmetricsData.html">
+<param name="Local" value="2A-RmetricsData.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="nyse">
-<param name="Local" value="RmetricsData.html">
+<param name="Local" value="2A-RmetricsData.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="print.ciaCountries">
-<param name="Local" value="MarketStatistics.html">
+<param name="Local" value="1A-MarketStatistics.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="print.ciaIndicators">
-<param name="Local" value="MarketStatistics.html">
+<param name="Local" value="1A-MarketStatistics.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="recession">
-<param name="Local" value="RmetricsData.html">
+<param name="Local" value="2A-RmetricsData.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Rmetrics">
@@ -79,47 +79,51 @@
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="RmetricsData">
-<param name="Local" value="RmetricsData.html">
+<param name="Local" value="2A-RmetricsData.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="singleIndex.dat">
+<param name="Local" value="2A-RmetricsData.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="sp500dge">
-<param name="Local" value="RmetricsData.html">
+<param name="Local" value="2A-RmetricsData.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="sp500index">
-<param name="Local" value="RmetricsData.html">
+<param name="Local" value="2A-RmetricsData.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="usdchf">
-<param name="Local" value="RmetricsData.html">
+<param name="Local" value="2A-RmetricsData.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="usdthb">
-<param name="Local" value="RmetricsData.html">
+<param name="Local" value="2A-RmetricsData.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="wfe1">
-<param name="Local" value="MarketStatistics.html">
+<param name="Local" value="1A-MarketStatistics.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="wfe2">
-<param name="Local" value="MarketStatistics.html">
+<param name="Local" value="1A-MarketStatistics.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="wfe3">
-<param name="Local" value="MarketStatistics.html">
+<param name="Local" value="1A-MarketStatistics.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="wfe4">
-<param name="Local" value="MarketStatistics.html">
+<param name="Local" value="1A-MarketStatistics.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="wfe5">
-<param name="Local" value="MarketStatistics.html">
+<param name="Local" value="1A-MarketStatistics.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="wfe6">
-<param name="Local" value="MarketStatistics.html">
+<param name="Local" value="1A-MarketStatistics.html">
 </OBJECT>
 </UL>
 <LI> <OBJECT type="text/sitemap">
@@ -128,11 +132,11 @@
 <UL>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="CIA Factbook">
-<param name="Local" value="MarketStatistics.html">
+<param name="Local" value="1A-MarketStatistics.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Rmetrics Data Sets">
-<param name="Local" value="RmetricsData.html">
+<param name="Local" value="2A-RmetricsData.html">
 </OBJECT>
 <LI> <OBJECT type="text/sitemap">
 <param name="Name" value="Rmetrics Software Collection">

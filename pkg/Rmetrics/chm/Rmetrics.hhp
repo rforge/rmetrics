@@ -11,6 +11,6 @@ Full text search stop list file=..\..\..\gnuwin32\help\R.stp
 
 [FILES]
 00Index.html
-MarketStatistics.html
+1A-MarketStatistics.html
+2A-RmetricsData.html
 Rmetrics.html
-RmetricsData.html
