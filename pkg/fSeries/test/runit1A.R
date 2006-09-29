@@ -114,17 +114,22 @@ function()
     #   rand.gen = rnorm, rseed = NULL, addControl = FALSE, ...) 
     
     # ts: ARMA(2,1):
-    armaSim(n = 25)
-    armaSim(n = 25, addControl = TRUE)
+    ts = armaSim(n = 25)
+    print(ts)
+    ts = armaSim(n = 25, addControl = TRUE)
+    print(ts)
     
     # timeSeries: ARMA(2,1):
-    armaSim(n = 12, positions = timeCalendar()) 
-    armaSim(n = 12, positions = timeCalendar(), addControl = TRUE) 
+    tS = armaSim(n = 12, positions = timeCalendar()) 
+    print(tS)
+    tS = armaSim(n = 12, positions = timeCalendar(), addControl = TRUE) 
+    print(tS)
     
     # ts: t-ARMA(2,1):
-    armaSim(n = 25, rand.gen = rt, df = 4, rseed = 4711)
+    ts = armaSim(n = 25, rand.gen = rt, df = 4, rseed = 4711)
+    print(ts)
     
-# Return Value:
+    # Return Value:
     return()    
 }    
     
@@ -562,8 +567,11 @@ function()
 {
     armaFit(~arma(2,1), armaSim(n = 10000))
 
-    data(msftzw)
-    TS = as.timeSeries(msftzw)
+    URL = "http://www.itp.phys.ethz.ch/econophysics/R/data/organisations/YAHOO/data/MSFT.CSV"
+    download.file(URL, "MSFT.CSV")
+    TS = readSeries("MSFT.CSV")
+    print(TS)
+    
     head(TS)
     class(TS)
     colnames(TS)
@@ -578,8 +586,8 @@ function()
     armaFit(~ ar(5), as.vector(TS.RET[, "Close"]))
     armaFit(~ ar(5), as.ts(TS.RET)[, "Close"])
     
-    attach(TS.RET)
-    armaFit(formula = Close ~ ar(5))
+    # attach(TS.RET)
+    # armaFit(formula = Close ~ ar(5))
 
     # Return Value:
     return()    
