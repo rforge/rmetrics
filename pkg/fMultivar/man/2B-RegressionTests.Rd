@@ -438,10 +438,9 @@ Utts J.M. (1982);
 
 
 \examples{
-## SOURCE("fMultivar.042B-RegressionTests")
+## SOURCE("fMultivar.2B-RegressionTests")
 
 ## bg -
-   xmpMultivar("\nStart: Breusch-Godfrey Test > ")
    # Generate a Stationary and an AR(1) Series:
    x = rep(c(1, -1), 50)
    y1 = 1 + x + rnorm(100)
@@ -455,7 +454,6 @@ Utts J.M. (1982);
    lmTest(y2 ~ x, "bg") 
    
 ## bp -
-   xmpMultivar("\nStart: Breusch-Pagan Test > ")
    # Generate a Regressor:
    x = rep(c(-1, 1), 50)
    # Generate heteroskedastic and homoskedastic Disturbances
@@ -472,7 +470,6 @@ Utts J.M. (1982);
    lmTest(y2 ~ x, "bp")
    
 ## dw -
-   xmpMultivar("\nNext: Durban-Watson Test > ")
    # Generate two AR(1) Error Terms 
    # with parameter rho = 0 (white noise) 
    # and rho = 0.9 respectively
@@ -487,7 +484,6 @@ Utts J.M. (1982);
    lmTest(y2 ~ x, "dw")
    
 ## gq -
-   xmpMultivar("\nNext: Goldfeld-Quandt Test > ")
    # Generate a Regressor:
    x = rep(c(-1, 1), 50)
    # Generate Heteroskedastic and Homoskedastic Disturbances:
@@ -501,7 +497,6 @@ Utts J.M. (1982);
    lmTest(y2 ~ x, "gq")
    
 ## harv -
-   xmpMultivar("\nNext: Harvey-Collier Test > ")
    # Generate a Regressor and Dependent Variable:
    x = 1:50
    y1 = 1 + x + rnorm(50)
@@ -514,7 +509,6 @@ Utts J.M. (1982);
    lmTest(y2 ~ x, "harv")
    
 ## hmc -
-   xmpMultivar("\nNext: Harrison-McCabe Test > ")
    # Generate a Regressor:
    x = rep(c(-1, 1), 50)
    # Generate Heteroskedastic and Homoskedastic Disturbances:
@@ -528,7 +522,6 @@ Utts J.M. (1982);
    lmTest(y2 ~ x, "hmc")
    
 ## rain -
-   xmpMultivar("\nNext: Rainbow Test > ")
    # Generate Series:
    x = c(1:30)
    y = x^2 + rnorm(30, 0, 2)
@@ -539,7 +532,6 @@ Utts J.M. (1982);
    qf(0.95, rain$parameter[1], rain$parameter[2]) 
    
 ## reset -
-   xmpMultivar("\nNext: Reset Test > ")
    # Generate Series:
    x = c(1:30)
    y1 = 1 + x + x^2 + rnorm(30)

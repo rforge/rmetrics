@@ -702,14 +702,12 @@ Wood (2001);
 
 
 \examples{
-## SOURCE("fMultivar.042A-RegressionModelling")
+## SOURCE("fMultivar.2A-RegressionModelling")
 \dontrun{
 ## regFit -
-   xmpMultivar("\nStart: Load US Recession Modelling Data Set > ")
    data(recession) 
    
 ## myPlot -
-   xmpMultivar("\nNext: Write Internal Plot Function > ")
    myPlot = function(recession, in.sample) {
      Date = recession[, "date"]
      Date = trunc(Date/100) + (Date-100*trunc(Date/100))/12
@@ -721,7 +719,6 @@ Wood (2001);
      lines(Date, inSample) }
    
 ## Generalized Additive Modelling:
-   xmpMultivar("\nNext: Generalized Additive Modelling > ")
    require(mgcv)
    par(mfrow = c(2, 2))
    fit = regFit(formula = recession ~ s(tbills3m) + s(tbonds10y),
@@ -737,7 +734,6 @@ Wood (2001);
    plot(gam.fit)
     
 ## POLYMARS Modelling:
-   xmpMultivar("\nNext: Polymars Modelling - Mode Parameters> ")
    par(mfrow = c(3, 2), ask = FALSE)
    fit = regFit(formula = recession ~ tbills3m + tbonds10y,
      family = gaussian(), data = recession, method = "POLYMARS")

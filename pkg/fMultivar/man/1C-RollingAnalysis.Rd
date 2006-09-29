@@ -107,7 +107,7 @@ rollVar(x, n = 9, trim = TRUE, unbiased = TRUE, na.rm = FALSE)
 
 
 \examples{
-## SOURCE("fMultivar.041C-RollingAnalysis")
+## SOURCE("fMultivar.1C-RollingAnalysis")
 
 ## Rolling Analysis:
 \dontrun{

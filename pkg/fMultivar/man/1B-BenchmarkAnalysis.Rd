@@ -199,7 +199,7 @@ maxDrawDown(x)
 
 
 \examples{
-## SOURCE("fMultivar.014B-BenchmarkAnalysis")
+## SOURCE("fMultivar.1B-BenchmarkAnalysis")
 
 \dontrun{
 ## ohlcPlot -

@@ -191,7 +191,7 @@ EWMA(x, lambda, startup = 0)
 
 
 \examples{
-## SOURCE("fMultivar.014A-TechnicalAnalysis")
+## SOURCE("fMultivar.1A-TechnicalAnalysis")
 
 ## -
 }

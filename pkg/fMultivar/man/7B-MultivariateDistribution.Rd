@@ -343,10 +343,9 @@ Hothorn T., Bretz F., Genz A. (2001);
 
 
 \examples{
-## SOURCE("fMultivar.047B-MultivariateDistribution")
+## SOURCE("fMultivar.7B-MultivariateDistribution")
 
 ## rmvst - 
-   xmpMultivar("\nStart: Student-t with Random Deviates > ")
    par(mfcol = c(3, 1), cex = 0.7)
    r1 = rmvst(200, dim = 1)
    ts.plot(as.ts(r1), xlab = "r", main = "Student-t 1d")
@@ -356,7 +355,6 @@ Hothorn T., Bretz F., Genz A. (2001);
    ts.plot(as.ts(r3), xlab = "r", col = 2:4, main = "Skew Student-t 3d")    
    
 ## mvFit - 
-   xmpMultivar("\nNext: Fit Distribution > ")
    # Generate Grid Points:
    n = 51
    x = seq(-3, 3, length = n)
