@@ -50,6 +50,9 @@
 ################################################################################
 
 
+### Uncomplete - Under Development ###
+
+
 test.helpFile = 
 function()
 {
@@ -67,9 +70,17 @@ function()
 
 # ------------------------------------------------------------------------------
 
-test.xxx =
+
+test.mvsnorm =
 function()
 {
+    # Bivariate Density:
+    x = y = (-40:40)/10
+    G = grid2d(x)
+    X = cbind(G$x, G$y)
+    z = dmvsnorm(X, 2, mu = rep(0, 2), Omega = diag(2), alpha = rep(0, 2))
+    Z = list(x = x, y = x, z = matrix(z, ncol = length(x)))
+    .perspPlot(Z)
     
     # Return Value:
     return()    

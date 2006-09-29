@@ -29,7 +29,7 @@
 
 ################################################################################
 # FUNCTION:             DESCRIPTION:
-#  grid2d                Creates from two vectors x-y grid coordinates
+#  grid2d                Returns from two vectors x-y grid coordinates
 #  density2d             Returns 2D Kernel Density Estimates
 #  hist2d                Returns 2D Histogram Counts
 #  integrate2d           Integrates over a two dimensional unit square
@@ -51,6 +51,9 @@
 ################################################################################
 
 
+### Uncomplete - Under Development ###
+
+
 test.helpFile = 
 function()
 {
@@ -68,9 +71,28 @@ function()
 
 # ------------------------------------------------------------------------------
 
-test.xxx =
+
+test.density =
 function()
 {
+    # Data:
+    z = rnorm2d(1000)
+    
+    # Density:
+    D = density2d(x = z[, 1], y = z[, 2])
+    .perspPlot(D)
+    .contourPlot(D)
+    
+    # Histogram:
+    H = hist2d(x = z[, 1], y = z[, 2])
+    .perspPlot(H)
+    .contourPlot(H)
+    
+    # Probability:
+    # P = integrate2d(fun = *)
+    # .perspPlot(P)
+    # .contourPlot(P)
+    
     
     # Return Value:
     return()    
@@ -78,6 +100,112 @@ function()
 
 
 # ------------------------------------------------------------------------------
+
+
+test.bivariate.norm =
+function()
+{
+    #  pnorm2d               Computes bivariate Normal probability function
+    #  dnorm2d               Computes bivariate Normal density function
+    #  rnorm2d               Generates bivariate normal random deviates
+    
+    # Normal Density:
+    x = (-40:40)/10
+    X = grid2d(x)
+    z = dnorm2d(X$x, X$y)
+    Z = list(x = x, y = x, z = matrix(z, ncol = length(x)))
+    .perspPlot(Z)
+    .contourPlot(Z)
+    
+    # Normal Density, rho = 0.5:
+    x = (-40:40)/10
+    X = grid2d(x)
+    z = dnorm2d(X$x, X$y, rho = 0.5)
+    Z = list(x = x, y = x, z = matrix(z, ncol = length(x)))
+    .perspPlot(Z)
+    .contourPlot(Z)
+ 
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.bivariate.cauchy =
+function()
+{
+    #  pcauchy2d             Computes bivariate Cauchy probability function
+    #  dcauchy2d             Computes bivariate Cauchy density function
+    #  rcauchy2d             Generates bivariate Cauchy random deviates
+    
+    # Cauchy Density:
+    x = (-40:40)/10
+    X = grid2d(x)
+    z = dcauchy2d(X$x, X$y)
+    Z = list(x = x, y = x, z = matrix(z, ncol = length(x)))
+    .perspPlot(Z)
+    .contourPlot(Z)
+    
+    # Cauchy Density, rho = 0.5:
+    x = (-40:40)/10
+    X = grid2d(x)
+    z = dcauchy2d(X$x, X$y, rho = 0.5)
+    Z = list(x = x, y = x, z = matrix(z, ncol = length(x)))
+    .perspPlot(Z)
+    .contourPlot(Z)
+ 
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.bivariate.t =
+function()
+{
+    #  pt2d                  Computes bivariate Student-t probability function
+    #  dt2d                  Computes bivariate Student-t density function
+    #  rt2d                  Generates bivariate Student-t random deviates
+    
+    # Student Density:
+    x = (-40:40)/10
+    X = grid2d(x)
+    z = dt2d(X$x, X$y, nu = 4)
+    Z = list(x = x, y = x, z = matrix(z, ncol = length(x)))
+    .perspPlot(Z)
+    .contourPlot(Z)
+    
+    # Student Density, rho = 0.5:
+    x = (-40:40)/10
+    X = grid2d(x)
+    z = dt2d(X$x, X$y, rho = 0.5, nu = 4)
+    Z = list(x = x, y = x, z = matrix(z, ncol = length(x)))
+    .perspPlot(Z)
+    .contourPlot(Z)
+ 
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.elliptical =
+function()
+{
+    # Return Value:
+    return()    
+}
+
+
+
+# ------------------------------------------------------------------------------
+
 
 if (FALSE) {
     require(RUnit)

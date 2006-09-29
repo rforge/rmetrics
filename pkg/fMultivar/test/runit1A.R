@@ -77,6 +77,9 @@
 ################################################################################
 
 
+### Uncomplete - Under Development ###
+
+
 test.helpFile = 
 function()
 {
@@ -95,7 +98,7 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.technicalAanlsyis =
+test.technicalAnalysis =
 function()
 {
     # UNIT TEST:
@@ -128,9 +131,9 @@ function()
     dim(TA)
     head(TA)
     
-    TA = momTA(x, lag = 5)
-    dim(TA)
-    head(TA)
+    # TA = momTA(x, lag = 5)
+    # dim(TA)
+    # head(TA)
     
     TA = macdTA(x, lag1 = 12, lag2 = 26)
     dim(TA)
@@ -153,32 +156,32 @@ function()
     head(TA)
     
     # TA = stochasticTA(close, high, low, lag1, lag2, type = c("fast", "slow")) 
-    dim(TA)
-    head(TA)
+    # dim(TA)
+    # head(TA)
     
     # TA = fpkTA(close, high, low, lag = 9) ERROR
     dim(TA)
     head(TA)
     
-    TA = fpdTA(close, high, low, lag1, lag2)
-    dim(TA)
-    head(TA)
+    # TA = fpdTA(close, high, low, lag1, lag2)
+    # dim(TA)
+    # head(TA)
     
-    TA = spdTA(close, high, low, lag1, lag2, lag3)
-    dim(TA)
-    head(TA)
+    # TA = spdTA(close, high, low, lag1, lag2, lag3)
+    # dim(TA)
+    # head(TA)
     
-    TA = apdTA(close, high, low, lag1, lag2, lag3, lag4)
-    dim(TA)
-    head(TA)
+    # TA = apdTA(close, high, low, lag1, lag2, lag3, lag4)
+    # dim(TA)
+    # head(TA)
     
-    TA = wprTA(close, high, low, lag)
-    dim(TA)
-    head(TA)
+    # TA = wprTA(close, high, low, lag)
+    # dim(TA)
+    # head(TA)
     
-    TA = rsiTA(close, lag)
-    dim(TA)
-    head(TA)
+    # TA = rsiTA(close, lag)
+    # dim(TA)
+    # head(TA)
     
     # Return Value:
     return()    

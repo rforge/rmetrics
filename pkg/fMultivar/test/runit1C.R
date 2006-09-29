@@ -37,6 +37,9 @@
 ################################################################################
 
 
+### Uncomplete - Under Development ###
+
+
 test.helpFile = 
 function()
 {
@@ -58,49 +61,100 @@ function()
 test.rollingVector =
 function()
 {
-    # Vector:
-    x = 1:10
-    
     # .roll.RUnit()
     n = 3
+        
+    # TRIM = TRUE | na.rm = TRUE
+    trim = TRUE
+    na.rm = TRUE
+    x = 1:10
+    x[6] = NA
+    cat("\ntrim: ", trim, "\n")  
+    cat("\n\nna.rm: ", na.rm, "\n")
+    # Sum:
+    ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = sum)
+    print(ans) 
+    # Mean:
+    ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = mean)
+    print(ans)
+    # Var:
+    ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = var)
+    print(ans)
+    # Min:
+    ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = min)
+    print(ans)   
+    # Max:
+    ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = max)
+    print(ans)   
     
-    for (na.rm in c(TRUE, FALSE)) {
-        
-        if (na.rm) x[6] = NA
-        cat("\n\nna.rm: ", na.rm)
-        cat("\nx: ", x, "\n")
-        
-        for (trim in c(TRUE, FALSE)) {
-        
-            cat("\ntrim: ", trim, "\n\n")
-            
-            # Sum:
-            ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = sum)
-            print(ans)
-            # 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90
-            
-            # Mean:
-            ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = mean)
-            #  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18
-            print(ans)
-            
-            # Var:
-            ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = var)
-            #  2.5 2.5 2.5 2.5 2.5 2.5 2.5 2.5 2.5 2.5 2.5 2.5 2.5 2.5 2.5 2.5
-            print(ans)
-            
-            # Min:
-            ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = min)
-            #  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16
-            print(ans)
-            
-            # Max:
-            ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = max)
-            #  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20
-            print(ans)
-            
-        }
-    }
+    # TRIM = TRUE | na.rm = FALSE
+    trim = TRUE
+    na.rm = FALSE
+    x = 1:10
+    x[6] = NA
+    cat("\ntrim: ", trim, "\n")  
+    cat("\n\nna.rm: ", na.rm, "\n")
+    # Sum:
+    ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = sum)
+    print(ans)
+    # Mean:
+    ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = mean)
+    print(ans)
+    # Var:
+    # ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = var)
+    # print(ans)
+    # Min:
+    ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = min)
+    print(ans)   
+    # Max:
+    ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = max)
+    print(ans)
+     
+    # TRIM = FALSE | na.rm = TRUE
+    trim = FALSE
+    na.rm = TRUE
+    x = 1:10
+    x[6] = NA
+    cat("\ntrim: ", trim, "\n")
+    cat("\n\nna.rm: ", na.rm, "\n")
+    # Sum:
+    ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = sum)
+    print(ans) 
+    # Mean:
+    ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = mean)
+    print(ans)
+    # Var:
+    ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = var)
+    print(ans)
+    # Min:
+    ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = min)
+    print(ans)
+    # Max:
+    ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = max)
+    print(ans)  
+    
+    # TRIM = FALSE | na.rm = FALSE
+    trim = FALSE
+    na.rm = FALSE
+    x = 1:10
+    x[6] = NA
+    cat("\ntrim: ", trim, "\n")
+    cat("\n\nna.rm: ", na.rm, "\n")
+    # Sum:
+    ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = sum)
+    print(ans)
+    # Mean:
+    ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = mean)
+    print(ans)
+    # Var:
+    # ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = var)
+    # print(ans)
+    # Min:
+    ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = min)
+    print(ans)
+    # Max:
+    ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = max)
+    print(ans)
     
     # Return Value:
     return()    
@@ -115,50 +169,105 @@ function()
 {  
     # Time Series:
     charvec = paste("1999", 10, 11:20, sep = "-")
+    print(charvec)
     ts = timeSeries(data = 1:10, charvec, units = "SERIES", zone = "GMT",
         FinCenter = "GMT") 
+    print(ts)
     
     # .roll.RUnit()
     n = 3
     
-    for (na.rm in c(TRUE, FALSE)) {
-        
-        x = ts
-        if (na.rm) x@Data[6, ] = NA
-        cat("\n\nna.rm: ", na.rm)
-        print(x)
-        
-        for (trim in c(TRUE, FALSE)) {
-        
-            cat("\ntrim: ", trim, "\n\n")
-            
-            # Sum:
-            ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = sum)
-            print(ans)
-            # 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90
-            
-            # Mean:
-            ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = mean)
-            #  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18
-            print(ans)
-            
-            # Var:
-            ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = var)
-            #  2.5 2.5 2.5 2.5 2.5 2.5 2.5 2.5 2.5 2.5 2.5 2.5 2.5 2.5 2.5 2.5
-            print(ans)
-            
-            # Min:
-            ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = min)
-            #  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16
-            print(ans)
-            
-            # Max:
-            ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = max)
-            #  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20
-            print(ans)
-            
-        }
-    }
+    # TRIM = TRUE | na.rm = TRUE
+    trim = TRUE
+    na.rm = TRUE
+    x = ts
+    x@Data[6] = NA
+    cat("\ntrim: ", trim, "\n")  
+    cat("\n\nna.rm: ", na.rm, "\n")
+    # Sum:
+    ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = sum)
+    print(ans) 
+    # Mean:
+    ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = mean)
+    print(ans)
+    # Var:
+    ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = var)
+    print(ans)
+    # Min:
+    ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = min)
+    print(ans)   
+    # Max:
+    ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = max)
+    print(ans)   
+    
+    # TRIM = TRUE | na.rm = FALSE
+    trim = TRUE
+    na.rm = FALSE
+    x = ts
+    x@Data[6] = NA
+    cat("\ntrim: ", trim, "\n")  
+    cat("\n\nna.rm: ", na.rm, "\n")
+    # Sum:
+    ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = sum)
+    print(ans)
+    # Mean:
+    ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = mean)
+    print(ans)
+    # Var:
+    # ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = var)
+    # print(ans)
+    # Min:
+    ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = min)
+    print(ans)   
+    # Max:
+    ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = max)
+    print(ans)
+     
+    # TRIM = FALSE | na.rm = TRUE
+    trim = FALSE
+    na.rm = TRUE
+    x = ts
+    x@Data[6] = NA
+    cat("\ntrim: ", trim, "\n")
+    cat("\n\nna.rm: ", na.rm, "\n")
+    # Sum:
+    ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = sum)
+    print(ans) 
+    # Mean:
+    ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = mean)
+    print(ans)
+    # Var:
+    ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = var)
+    print(ans)
+    # Min:
+    ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = min)
+    print(ans)
+    # Max:
+    ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = max)
+    print(ans)  
+    
+    # TRIM = FALSE | na.rm = FALSE
+    trim = FALSE
+    na.rm = FALSE
+    x = ts
+    x@Data[6] = NA
+    cat("\ntrim: ", trim, "\n")
+    cat("\n\nna.rm: ", na.rm, "\n")
+    # Sum:
+    ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = sum)
+    print(ans)
+    # Mean:
+    ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = mean)
+    print(ans)
+    # Var:
+    # ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = var)
+    # print(ans)
+    # Min:
+    ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = min)
+    print(ans)
+    # Max:
+    ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = max)
+    print(ans)
         
     # Return Value:
     return()  

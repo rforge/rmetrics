@@ -40,6 +40,9 @@
 ################################################################################
 
 
+### Uncomplete - Under Development ###
+
+
 test.helpFile = 
 function()
 {
@@ -61,9 +64,17 @@ function()
 test.getReturns =
 function()
 {
-    X = as.timeSeries(MSFT)    
+    URL = "http://www.itp.phys.ethz.ch/econophysics/R/data/organisations/YAHOO/data/MSFT.CSV"
+    download.file(URL, "MSFT.CSV")
+    X = readSeries("MSFT.CSV")
+    print(X)    
     
     R = getReturns(X)
+    print(R)
+    print(R@units)
+    
+    # Return Value:
+    return()
 }
 
 
@@ -73,13 +84,21 @@ function()
 test.maxDrawDown =
 function()
 {
-    Close = as.timeSeries(MSFT)[,"Close"]
+    URL = "http://www.itp.phys.ethz.ch/econophysics/R/data/organisations/YAHOO/data/MSFT.CSV"
+    download.file(URL, "MSFT.CSV")
+    X = readSeries("MSFT.CSV")
+    print(X)
+    
+    Close = as.timeSeries(X)[,"Close"]
     
     maxDrawDown(Close)  
     
     plot(Close, type = "l")
     abline(v = as.POSIXct("2000-11-09"), lty = 3, col = "red")
     abline(v = as.POSIXct("2000-12-20"), lty = 3, col = "red")
+    
+    # Return Value:
+    return()
 }
 
 
@@ -89,11 +108,18 @@ function()
 test.Ratio =
 function()
 {
-    X = as.timeSeries(MSFT)    
+    URL = "http://www.itp.phys.ethz.ch/econophysics/R/data/organisations/YAHOO/data/MSFT.CSV"
+    download.file(URL, "MSFT.CSV")
+    X = readSeries("MSFT.CSV")
+    print(X)    
+    
     R = getReturns(X)
     
     sharpeRatio(R[, "Close"])
     sterlingRatio(R[, "Close"])
+    
+    # Return Value:
+    return()
 }
 
 
@@ -103,10 +129,20 @@ function()
 test.ohlcPlot =
 function()
 {
-    X = as.timeSeries(MSFT)    
+    # Data:
+    URL = "http://www.itp.phys.ethz.ch/econophysics/R/data/organisations/YAHOO/data/MSFT.CSV"
+    download.file(URL, "MSFT.CSV")
+    X = readSeries("MSFT.CSV")
+    print(X)
+        
+    # Returns:
     R = getReturns(X)[1:10,-5]
     
-    ohlcPlot(as.ts(R))  # CHECK
+    # Plot:
+    # ohlcPlot(as.ts(R))  # CHECK
+    
+    # Return Value:
+    return()
 }
 
 

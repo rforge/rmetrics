@@ -6,12 +6,12 @@
 #
 # This library is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
 # GNU Library General Public License for more details.
 #
-# You should have received a copy of the GNU Library General
-# Public License along with this library; if not, write to the
-# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
+# You should have received A copy of the GNU Library General 
+# Public License along with this library; if not, write to the 
+# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
 # MA  02111-1307  USA
 
 # Copyrights (C)
@@ -28,47 +28,28 @@
 
 
 ################################################################################
-#
-################################################################################
 
-
-### Uncomplete - Under Development ###
-
-
-test.helpFile = 
-function()
-{
-    # Help File:
-    helpFile = function() { 
-        example(EquationsTests); return() }
-    checkIdentical(
-        target = class(try(helpFile())),
-        current = "NULL")
-
-    # Return Value:
-    return()    
-}
-
-
-# ------------------------------------------------------------------------------
-
-test.xxx =
-function()
-{
-    
-    # Return Value:
-    return()    
-}
-
-
-# ------------------------------------------------------------------------------
 
 if (FALSE) {
     require(RUnit)
-    testResult = runTestFile("C:/Rmetrics/SVN/trunk/fMultivar/test/runit3B.R")
-    printTextProtocol(testResult)
+    testIndex = c("1A", "1B", "1C", "2A", "2B", "2C", "3A", "3B", "6A",
+        "6C", "7A", "7B")#, "Demo")
+    File = "C:/Rmetrics/SVN/trunk/fMultivar/test/runit"
+    Protocol = "runitMultivar.txt"
+    write("fCalendar:", file = Protocol)
+    for (Index in testIndex) {
+        file = paste(File, Index, ".R", sep = "")
+        write("", file = Protocol, append = TRUE)
+        testResult <- runTestFile(file)
+        textProtocol = capture.output(printTextProtocol(testResult))
+        write(textProtocol[-c(2, 6:14, 18:20)], 
+            file = Protocol, append = TRUE)
+    } 
+     
+    TXT = scan(Protocol, character(), blank.lines.skip = FALSE, sep = "\n")
+    cat(TXT, sep = "\n")
 }
-   
 
-################################################################################
-    
+
+# ------------------------------------------------------------------------------
+
