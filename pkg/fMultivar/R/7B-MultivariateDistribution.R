@@ -1081,10 +1081,11 @@ function(x, location = 0, scale = 1, shape = 0, log = FALSE)
     
     z = (x - location) / scale
     
-    if(!log)
+    if(!log) {
         y = 2 * dnorm(z) * pnorm(z * shape) / scale
-    else
+    } else {
         y = (-0.9189385332046727-logb(scale)-z^2/2+zeta(0,shape*z))
+    }
     
     # Return Value:
     replace(y, scale <= 0, NaN)

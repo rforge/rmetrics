@@ -26,11 +26,11 @@
 .rmvnorm = 
 function(n, mean = rep(0, nrow(sigma)), sigma = diag(length(mean)))
 {
-    if(nrow(sigma) != ncol(sigma)){
+    if(nrow(sigma) != ncol(sigma)) {
         stop("sigma must be a square matrix")
     }
 
-    if(length(mean) != nrow(sigma)){
+    if(length(mean) != nrow(sigma)) {
         stop("mean and sigma have non-conforming size")
     }
 
