@@ -44,7 +44,7 @@ function(lib, pkg)
 {   # A function implemented by Diethelm Wuertz
     
     # Package:
-    cat("\nRmetrics, (C) 1999-2005, Diethelm Wuertz, GPL")
+    cat("\nRmetrics, (C) 1999-2006, Diethelm Wuertz, GPL")
     cat("\nfSeries: The Dynamical Process Behind Financial Markets\n")
 
     # Load dll:
