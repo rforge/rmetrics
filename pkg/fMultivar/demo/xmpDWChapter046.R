@@ -1,6 +1,6 @@
 #
 # Examples from the forthcoming Monograph:
-# 	Rmetrics - Financial Engineering and Computational Finance
+#   Rmetrics - Financial Engineering and Computational Finance
 #   written by Diethelm Wuertz
 #   ISBN to be published
 #
@@ -9,12 +9,12 @@
 #   Matrix and Linear Algebra Addon:
 #
 # List of Examples, Exercises and Code Snippets:
-#	    
-# 	Example: 1 Overview of Acvailable Functions
-#	Example: 2 Generation of Matrices
-#	Example: 3 Matrices and Linear Algebra
+#       
+#   Example: 1 Overview of Acvailable Functions
+#   Example: 2 Generation of Matrices
+#   Example: 3 Matrices and Linear Algebra
 #   Example: 4 Basic Statistics
-#	Example: 5 Column and Row Vectors
+#   Example: 5 Column and Row Vectors
 #   Example: 6 Stack Operations and Matrix Products
 #   Example: 7 Missing Values in a Data Matrix 
 #
@@ -22,10 +22,10 @@
 #
 #
 # Author:
-#	(C) 2002-2005, Diethelm Wuertz, GPL
-# 	  www.rmetrics.org
-# 	  www.itp.phys.ethz.ch
-# 	  www.finance.ch
+#   (C) 2002-2005, Diethelm Wuertz, GPL
+#     www.rmetrics.org
+#     www.itp.phys.ethz.ch
+#     www.finance.ch
 #
 
 
@@ -94,8 +94,8 @@
     #  solve                R  solves a system of linear equations
     #  backsolve            R  ... use when the matrix is upper triangular
     #  forwardsolve         R  ... use when the matrix is lower triangular
-	###
-	
+    ###
+    
 
 # ------------------------------------------------------------------------------
 
@@ -265,63 +265,63 @@
 
 ### Example: 6 Stack Operations and Matrix Products
 
-	# Show, that the following relation holds:
-	# vec ( A %*% B %*% C ) = ( t(C) %x% A ) %*% vec(B)
-	###
-	
-	# Three random Matrixes:
-	A = matrix(rnorm(9), 3)
-	B = matrix(rnorm(9), 3)
-	C = matrix(rnorm(9), 3)
-	###
-	
-	# Print vech:
-	A
-	vech(A)
-	###
-	
-	# Print vec:
-	B
-	vec(B)
-	###
-	
-	# Vector Product:
-	A %*% B
-	###
-	
-	# Kronecker Product:
-	A %x% B
-	# Left Hand Side:
-	LHS = vec ( A %*% B %*% C )
-	# Right Hand Side:
-	# %x# denotes the Kronecker Product
-	RHS = ( t(C) %x% A ) %*% vec(B)
-	# Test the Difference:
-	data.frame(LHS, RHS, LHS-RHS)
-	###
+    # Show, that the following relation holds:
+    # vec ( A %*% B %*% C ) = ( t(C) %x% A ) %*% vec(B)
+    ###
+    
+    # Three random Matrixes:
+    A = matrix(rnorm(9), 3)
+    B = matrix(rnorm(9), 3)
+    C = matrix(rnorm(9), 3)
+    ###
+    
+    # Print vech:
+    A
+    vech(A)
+    ###
+    
+    # Print vec:
+    B
+    vec(B)
+    ###
+    
+    # Vector Product:
+    A %*% B
+    ###
+    
+    # Kronecker Product:
+    A %x% B
+    # Left Hand Side:
+    LHS = vec ( A %*% B %*% C )
+    # Right Hand Side:
+    # %x# denotes the Kronecker Product
+    RHS = ( t(C) %x% A ) %*% vec(B)
+    # Test the Difference:
+    data.frame(LHS, RHS, LHS-RHS)
+    ###
 
-	
+    
 
 # ------------------------------------------------------------------------------
 
 
 ### Example: 7 Missing Values in a Data Matrix 
 
-	# Write R functions which remove, substitute, interpolate and
-	# impute missing values in a matrix object:
-	#   1. removeNA        removes NAs from a matrix 
-	#                      object
-	#   2. subtituteNA     substitutes NAs by zeroes, the column 
-	#                      mean or column median
-	#   3. interpNA        interpolate NAs using R's "approx" 
-	#                      function
-	#   4. knnNA           imputes NAs by the knn-Algorithm using R's
-	#                      contributed function "knn" from the "EMV" Package
-	# Notes:
-	#   We didn't take care, that NAs at the border of a matrix are
-	#   properly considered. That has still to be done!
-	#   The R functions can be found in "funSeries.R"
-	###
+    # Write R functions which remove, substitute, interpolate and
+    # impute missing values in a matrix object:
+    #   1. removeNA        removes NAs from a matrix 
+    #                      object
+    #   2. subtituteNA     substitutes NAs by zeroes, the column 
+    #                      mean or column median
+    #   3. interpNA        interpolate NAs using R's "approx" 
+    #                      function
+    #   4. knnNA           imputes NAs by the knn-Algorithm using R's
+    #                      contributed function "knn" from the "EMV" Package
+    # Notes:
+    #   We didn't take care, that NAs at the border of a matrix are
+    #   properly considered. That has still to be done!
+    #   The R functions can be found in "funSeries.R"
+    ###
 
     # Generate a matrix with missing values:
     M = matrix(round(rnorm(40), 2), ncol = 5)

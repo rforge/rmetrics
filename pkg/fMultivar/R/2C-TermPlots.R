@@ -39,6 +39,8 @@
 function(object, terms = NULL)
 {   # A function Implemented by Diethelm Wuertz
 
+    # FUNCTION:
+    
     # Settings:
     data = object@fit$model
     colNames = all.vars(object@formula)
@@ -92,6 +94,8 @@ function(object, terms = NULL)
 function(object, terms = NULL, gridPoints = 25)
 {   # A function Implemented by Diethelm Wuertz
 
+    # FUNCTION:
+    
     # Settings:
     data = object@fit$model
     colNames = all.vars(object@formula)
@@ -100,13 +104,13 @@ function(object, terms = NULL, gridPoints = 25)
     Y = data[, 1]
     if (is.null(terms)) namesX = colNames[-1] else namesX = terms
     namesY = colnames(data)[1]
+    Mx = My = gridPoints 
     meanX = matrix(sapply(X, mean), nrow = Mx*My, ncol = ncol(X), 
         byrow = TRUE)
     colnames(meanX) <- colNames[-1]
     
     # Terms:
     N = length(namesX)
-    Mx = My = gridPoints 
     for (i in 1:(N-1)) {    
         xrange = range(X[, namesX[i]])
         x = seq(xrange[1], xrange[2], length = Mx)
@@ -144,6 +148,8 @@ function(object, terms = NULL, gridPoints = 25)
 function(object, terms = NULL, gridPoints = 25)
 {   # A function Implemented by Diethelm Wuertz
 
+    # FUNCTION:
+    
     # Settings:
     data = object@fit$model
     colNames = all.vars(object@formula)
@@ -152,13 +158,13 @@ function(object, terms = NULL, gridPoints = 25)
     Y = data[, 1]
     if (is.null(terms)) namesX = colNames[-1] else namesX = terms
     namesY = colnames(data)[1]
+    Mx = My = gridPoints 
     meanX = matrix(sapply(X, mean), nrow = Mx*My, ncol = ncol(X), 
         byrow = TRUE)
     colnames(meanX) <- colNames[-1]
     
     # Terms:
     N = length(namesX)
-    Mx = My = gridPoints 
     for (i in 1:(N-1)) {    
         xrange = range(X[, namesX[i]])
         x = seq(xrange[1], xrange[2], length = Mx)

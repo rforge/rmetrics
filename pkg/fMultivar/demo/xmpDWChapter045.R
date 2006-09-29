@@ -1,6 +1,6 @@
 #
 # Examples from the forthcoming Monograph:
-# 	Rmetrics - Financial Engineering and Computational Finance
+#   Rmetrics - Financial Engineering and Computational Finance
 #   written by Diethelm Wuertz
 #   ISBN to be published
 #
@@ -10,20 +10,20 @@
 #
 # List of Examples, Exercises and Code Snippets:
 #    
-#	Example: 
+#   Example: 
 #
 #   #   *** This list is not yet complete ***
 #
 # Author:
-#	(C) 2002-2005, Diethelm Wuertz, GPL
-# 	  www.rmetrics.org
-# 	  www.itp.phys.ethz.ch
-# 	  www.finance.ch
+#   (C) 2002-2005, Diethelm Wuertz, GPL
+#     www.rmetrics.org
+#     www.itp.phys.ethz.ch
+#     www.finance.ch
 #
 
 
 ################################################################################
-	
-	
+    
+    
 ################################################################################
 
