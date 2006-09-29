@@ -30,9 +30,12 @@
 ################################################################################
 # FUNCTION:                 BENCHMARK ANALYSIS FUNCTIONS:
 #  getReturns                Computes return series given a price series
+# FUNCTION:                 DRAWDOWNS:
 #  maxDrawDown               Computes the maximum drawdown
+# FUNCTION:                 PERFORMANCE RATIOS:
 #  sharpeRatio               Calculates the Sharpe Ratio
 #  sterlingRatio             Calculates the Sterling Ratio
+# FUNCTION:                 OHLC PLOT:
 #  ohlcPlot                  Creates a Open-High-Low-Close plot
 ################################################################################
 

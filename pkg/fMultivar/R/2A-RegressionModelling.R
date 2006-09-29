@@ -44,14 +44,14 @@
 # S3-METHODS:           DESCRIPTION:
 #  print.fREG            Prints results from a regression model fit     
 #  plot.fREG             Plots fit and diagnostics for a regression model
-#  .plot.lm
-#  .plot.rlm
-#  .plot.glm
-#  .plot.gam
-#  .plot.ppr
-#  .plot.mars
-#  .plot.polymars
-#  .plot.nnet
+#  .plot.lm               Linear Regression Model internal plot        
+#  .plot.rlm              Robust Linear Regression Model internal plot
+#  .plot.glm              Generalized Linear Model internal plot
+#  .plot.gam              Generalized Additive Model internal plot
+#  .plot.ppr              Projection Pursuit Regression Model internal plot
+#  .plot.mars             Multivariate Adaptive Regression Spline Model plot
+#  .plot.polymars         Polytochomous MARS Model internal plot
+#  .plot.nnet             Feedforward Neural Network Model internal plot
 #  summary               Summarizes fit and diagnostics for a regression model
 # S3-METHODS:           DESCRIPTION:
 #  predict.fREG          Predicts values from a fitted regression model
@@ -261,6 +261,9 @@ title = NULL, description = NULL, ...)
     
     # FUNCTION:
     
+    # Trace:
+    trace = FALSE
+    
     # Get Method:
     if (!(class(data) == "timeSeries")) data = as.timeSeries(data)
     fun = use = match.arg(use)
@@ -290,7 +293,9 @@ title = NULL, description = NULL, ...)
     if (use == "nnet" & !match("trace",  names(cmd), 0) ) cmd$trace = FALSE
     if (use == "nnet" & !match("size",   names(cmd), 0) ) cmd$size = 2
     if (use == "nnet" & !match("linout", names(cmd), 0) ) cmd$linout = TRUE
+    if (trace) print(cmd)
     fit <- eval(cmd, parent.frame()) 
+    if (trace) print(fit)
       
     # Add to Fit:
     if (is.null(fit$xlevels)) fit$xlevels = list()
@@ -311,7 +316,6 @@ title = NULL, description = NULL, ...)
     class(fit) = c("list", class(fit))
     if (!inherits(fit, "lm")) class(fit) = c(class(fit), "lm")
 
-    AM
     # Add Units to timeSeries:
     resUnits = paste(as.character(formula)[2], "RES", sep = ".")
     fittedUnits = paste(as.character(formula)[2], "FITTED", sep = ".")
@@ -958,7 +962,7 @@ function(object, ...)
 
 
 predict.fREG =
-function(object, newdata, se.fit = FALSE, ...)
+function(object, newdata, se.fit = FALSE, type = "response", ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -974,6 +978,7 @@ function(object, newdata, se.fit = FALSE, ...)
     newdata = as.data.frame(newdata)
      
     # Predict:
+    if (object@method == "nnet" & type == "response") type = "raw"
     ans = .predict(object = fit, newdata = newdata, se.fit = se.fit, 
         type = type, ...) 
     
@@ -1241,7 +1246,7 @@ trace.mars = FALSE, forward.step = TRUE, prevfit = NULL, ...)
         gcv = junk$bestgcv, factor = dir, cuts = cutss, 
         residuals = residuals, 
         fitted.values = fitted.values, lenb = junk$lenb, 
-        coefficients = coefficients, 
+        coefficients = coefficients
         #x = x
         ), 
         class = "mars")

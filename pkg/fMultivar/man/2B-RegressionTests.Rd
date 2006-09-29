@@ -539,7 +539,6 @@ Utts J.M. (1982);
    # Perform RESET Test:
    lmTest(y1 ~ x , "reset", power = 2, type = "regressor")
    lmTest(y2 ~ x , "reset", power = 2, type = "regressor")          
-    
 }
 
 

@@ -58,17 +58,6 @@ function()
 
 # ------------------------------------------------------------------------------
 
-test.xxx =
-function()
-{
-    
-    # Return Value:
-    return()    
-}
-
-
-# ------------------------------------------------------------------------------
-
 if (FALSE) {
     require(RUnit)
     testResult = runTestFile("C:/Rmetrics/SVN/trunk/fMultivar/test/runit2B.R")

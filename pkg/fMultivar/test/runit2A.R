@@ -28,11 +28,13 @@
 
 
 ################################################################################
-# FUNCTION:             REGRESSION MODELLING:
+# FUNCTION:             REGRESSION MODELLING DESCRIPTION:
 #  'fREG'                S4 Class Representation
 #  regSim                Returns a regression example data set
 #  regFit                Wrapper Function for Regression Models
+#  gregFit                Wrapper Function for Generalized Regression Models
 #  .lmFit                 Linear Regression Model
+#  .rlmFit                Robust Linear Regression Model
 #  .glmFit                Generalized Linear Model
 #  .gamFit                Generalized Additive Model
 #  .pprFit                Projection Pursuit Regression Model
@@ -40,13 +42,23 @@
 #  .polymarsFit           Polytochomous MARS Model
 #  .nnetFit               Feedforward Neural Network Model
 # S3-METHODS:           DESCRIPTION:
-#  print                 Prints results from a regression model fit     
-#  plot                  Plots fit and diagnostics for a regression model
+#  print.fREG            Prints results from a regression model fit     
+#  plot.fREG             Plots fit and diagnostics for a regression model
+#  .plot.lm               Linear Regression Model internal plot        
+#  .plot.rlm              Robust Linear Regression Model internal plot
+#  .plot.glm              Generalized Linear Model internal plot
+#  .plot.gam              Generalized Additive Model internal plot
+#  .plot.ppr              Projection Pursuit Regression Model internal plot
+#  .plot.mars             Multivariate Adaptive Regression Spline Model plot
+#  .plot.polymars         Polytochomous MARS Model internal plot
+#  .plot.nnet             Feedforward Neural Network Model internal plot
 #  summary               Summarizes fit and diagnostics for a regression model
 # S3-METHODS:           DESCRIPTION:
-#  predict               Predicts values from a fitted regression model
-#  fitted.values         Returns fitted values from a fitted regression model
-#  residulals            Returns residuals from a fitted regression model
+#  predict.fREG          Predicts values from a fitted regression model
+#  coefficients.fREG     Returns coefficients from a fitted regression model
+#  fitted.fREG           Returns fitted values from a fitted regression model
+#  residulals.fREG       Returns residuals from a fitted regression model
+#  vcov.fREG             Returns variance-covariance matrix from a fitted model
 ################################################################################
 
 
@@ -95,9 +107,11 @@ function()
 test.regSimulate =
 function()
 {
-    # Simulate:
-    par(mfrow = c(2, 2), cex = 0.7)
+    # Plot Parameters:
+    par(ask = FALSE)
+    par(mfrow = c(1, 1))
     
+    # Simulate:
     X = regSim(model = "LM3", n = 100)
     head(X)
     plot(X[, "Y"], type = "l", main = "LM3")
@@ -121,6 +135,10 @@ function()
 test.regFit = 
 function()
 {
+    # Plot Parameters:
+    par(ask = FALSE)
+    par(mfrow = c(1, 1))
+    
     # Requirements:
     require(MASS)
     require(polspline)
@@ -128,10 +146,10 @@ function()
     # Simulate Data:
     DATA = regSim(model = "GAM3", n = 100)
     DATATS = as.timeSeries(DATA)
+    print(DATATS)
     
-    # 
-    require(MASS)
-    LM    = regFit(Y ~ X1 + X2, data = DATATS, use = "lm") 
+    # Fit:
+    LM    = regFit(formula = Y ~ X1 + X2, data = DATATS, use = "lm") 
     RLM   = regFit(Y ~ X1 + X2, data = DATATS, use = "rlm") 
     AM    = regFit(Y ~ s(X1) + s(X2),  DATATS, use = "am") 
     PPR   = regFit(Y ~ X1 + X2, data = DATATS, use = "ppr") 
@@ -177,6 +195,10 @@ function()
 test.regPredict = 
 function()
 {    
+    # Plot Parameters:
+    par(ask = FALSE)
+    par(mfrow = c(1, 1))
+    
     # Requirements:
     require(MASS)
     require(polspline)
@@ -184,6 +206,7 @@ function()
     # Simulate Data:
     DATA = regSim(model = "GAM3", n = 100)
     DATATS = as.timeSeries(DATA)
+    print(DATATS)
     
     # 
     require(MASS)
@@ -204,13 +227,13 @@ function()
     N
     
     # Predict response:
-    predict(LM,    DATATS[N, ])
+    predict(LM,    DATATS[N, ])   
     predict(RLM,   DATATS[N, ])
-    predict(AM,    DATATS[N, ])       
+    predict(AM,    DATATS[N, ])     
     predict(PPR,   DATATS[N, ])
     predict(MARS,  DATATS[N, ])
     predict(PMARS, DATATS[N, ])
-    predict(NNET,  DATATS[N, ])
+    predict(NNET,  DATATS[N, ])   
     
     # Predict response:
     predict(LM,    DATATS[N, ], type = "response")
@@ -242,6 +265,10 @@ function()
 test.regSlots = 
 function()
 {    
+    # Plot Parameters:
+    par(ask = FALSE)
+    par(mfrow = c(1, 1))
+    
     # Requirements:
     require(MASS)
     require(polspline)
@@ -249,6 +276,7 @@ function()
     # Simulate Data:
     DATA = regSim(model = "GAM3", n = 100)
     DATATS = as.timeSeries(DATA)
+    print(DATATS)
     
     # 
     LM    = regFit(Y ~ X1 + X2, data = DATATS, use = "lm") 
@@ -304,21 +332,21 @@ function()
     PMARS@method
     NNET@method
     
-    LM@residuals[c(1,100)]
-    RLM@residuals[c(1,100)]
-    AM@residuals[c(1,100)]
-    PPR@residuals[c(1,100)]
-    MARS@residuals[c(1,100)]
-    PMARS@residuals[c(1,100)]
-    NNET@residuals[c(1,100)]
+    print(LM@residuals[c(1,100)])
+    print(RLM@residuals[c(1,100)])
+    print(AM@residuals[c(1,100)])
+    print(PPR@residuals[c(1,100)])
+    print(MARS@residuals[c(1,100)])
+    print(PMARS@residuals[c(1,100)])
+    print(NNET@residuals[c(1,100)])
     
-    LM@fitted.values[c(1,100)]
-    RLM@fitted.values[c(1,100)]
-    AM@fitted.values[c(1,100)]
-    PPR@fitted.values[c(1,100)]
-    MARS@fitted.values[c(1,100)]
-    PMARS@fitted.values[c(1,100)]
-    NNET@fitted.values[c(1,100)]
+    print(LM@fitted[c(1,100)])
+    print(RLM@fitted[c(1,100)])
+    print(AM@fitted[c(1,100)])
+    print(PPR@fitted[c(1,100)])
+    print(MARS@fitted[c(1,100)])
+    print(PMARS@fitted[c(1,100)])
+    print(NNET@fitted[c(1,100)])
     
     LM@title
     RLM@title
@@ -367,7 +395,7 @@ function()
     NNET6 = regFit(Y ~ X1 + X2 + X3,     data = DATATS, use = "nnet", size = 6)    
     
     #   
-    par(mfcol = c(3, 7), cex = 0.7)
+    par(mfrow = c(4, 4), cex = 0.7)
     .termPlot(LM)
     .termPlot(RLM)
     .termPlot(AM)
@@ -487,7 +515,6 @@ function()
 {
     # Generalized * Models:
     
-
     M1 = matrix(c(
        1, 0.80, 0.83, 0.66, 1.9, 1.100, 0.996,
        1, 0.90, 0.36, 0.32, 1.4, 0.740, 0.992,
@@ -554,7 +581,7 @@ function()
     lines(U, V, lty = 3, col = "grey")
     
     fit.glm = glm(Y ~ X1 + X2, data = D2, family = binomial("logit"))
-    fit
+    fit.glm
     
     # Return Value:
     return()

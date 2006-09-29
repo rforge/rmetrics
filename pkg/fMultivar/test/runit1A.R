@@ -98,6 +98,8 @@ function()
 test.technicalAanlsyis =
 function()
 {
+    # UNIT TEST:
+    
     # Data:
     URL = "http://www.itp.phys.ethz.ch/econophysics/R/data/organisations/YAHOO/data/MSFT.CSV"
     download.file(URL, "MSFT.CSV")
@@ -178,6 +180,22 @@ function()
     dim(TA)
     head(TA)
     
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.splusLike.MA =
+function()
+{    
+    #  SMA                       Computes Simple Moving Average           
+    #  EWMA                      Computes Exponentially Weighted  Moving Average
+
+    # UNIT TEST:
+    
     TA = SMA(x, n = 5)
     dim(TA) # !!!
     head(TA)
@@ -189,6 +207,42 @@ function()
     TA = EWMA(x, 2/(25+1))
     dim(TA)  
     head(TA)
+    
+    # Return Value:
+    return()  
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.dailyTA =
+function()
+{    
+    #  .dailyTA                  Computes an indicator for technical analysis
+    
+    # UNIT TEST:
+    
+    # Return Value:
+    return()  
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.trading =
+function()
+{    
+
+    #  .tradeSignals             Computes trade signals from trading positions
+    #  .tradeLengths             Computes trade length from trading signals
+    #  .hitRate                  Computes hit rates from returns and positions 
+    
+    # UNIT TEST:
+    
+    # Return Value:
+    return()  
 }
 
 

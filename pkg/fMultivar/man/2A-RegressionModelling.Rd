@@ -48,6 +48,8 @@
     \code{"MARS"} \tab Multivariate Adaptive Regression Splines, \cr
     \code{"POLYMARS"} \tab Polytochomous MARS, and \cr
     \code{"NNET"} \tab Feedforward Neural Network Modelling. }
+    
+    Note, \code{"POLYMARS"} requires contributed package \code{"polspline"}
             
     Available methods are:
     
