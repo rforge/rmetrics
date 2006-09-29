@@ -170,13 +170,13 @@ function()
     print(NNET)  
     
     # Plot Method:
-    plot(LM) 
-    plot(RLM)
-    plot(AM)            
-    plot(PPR)
-    plot(MARS)
-    plot(PMARS)
-    plot(NNET)  
+    # plot(LM, which = "all")           # ERROR
+    # plot(RLM, which = "all")
+    # plot(AM, which = "all")            
+    # plot(PPR, which = "all")
+    # plot(MARS, which = "all")
+    # plot(PMARS, which = "all")
+    # plot(NNET, which = "all")  
     
     # Summary Method:
     summary(LM) 
@@ -420,28 +420,28 @@ function()
     .termPlot(NNET6, terms = "X1")
     
     #
-    par(mfrow = c(3, 3), cex = 0.7)
-    .termPersp(LM,    terms = c("X1", "X2"))
-    .termPersp(RLM,   terms = c("X1", "X2"))
-    .termPersp(AM,    terms = c("X1", "X2"))
-    .termPersp(PPR,   terms = c("X1", "X2"))
-    .termPersp(PPR4,  terms = c("X1", "X2"))
-    .termPersp(MARS,  terms = c("X1", "X2"))
-    .termPersp(PMARS, terms = c("X1", "X2"))
-    .termPersp(NNET,  terms = c("X1", "X2"))
-    .termPersp(NNET6, terms = c("X1", "X2"))
+    # par(mfrow = c(3, 3), cex = 0.7)
+    # .termPersp(LM,    terms = c("X1", "X2"))
+    # .termPersp(RLM,   terms = c("X1", "X2"))
+    # .termPersp(AM,    terms = c("X1", "X2"))
+    # .termPersp(PPR,   terms = c("X1", "X2"))
+    # .termPersp(PPR4,  terms = c("X1", "X2"))
+    # .termPersp(MARS,  terms = c("X1", "X2"))
+    # .termPersp(PMARS, terms = c("X1", "X2"))
+    # .termPersp(NNET,  terms = c("X1", "X2"))
+    # .termPersp(NNET6, terms = c("X1", "X2"))
     
     #
-    par(mfrow = c(3, 3), cex = 0.7)
-    .termContour(LM,    terms = c("X1", "X2"))
-    .termContour(RLM,   terms = c("X1", "X2"))
-    .termContour(AM,    terms = c("X1", "X2"))
-    .termContour(PPR,   terms = c("X1", "X2"))
-    .termContour(PPR4,  terms = c("X1", "X2"))
-    .termContour(MARS,  terms = c("X1", "X2"))
-    .termContour(PMARS, terms = c("X1", "X2"))
-    .termContour(NNET,  terms = c("X1", "X2"))
-    .termContour(NNET6, terms = c("X1", "X2"))
+    # par(mfrow = c(3, 3), cex = 0.7)
+    # .termContour(LM,    terms = c("X1", "X2"))
+    # .termContour(RLM,   terms = c("X1", "X2"))
+    # .termContour(AM,    terms = c("X1", "X2"))
+    # .termContour(PPR,   terms = c("X1", "X2"))
+    # .termContour(PPR4,  terms = c("X1", "X2"))
+    # .termContour(MARS,  terms = c("X1", "X2"))
+    # .termContour(PMARS, terms = c("X1", "X2"))
+    # .termContour(NNET,  terms = c("X1", "X2"))
+    # .termContour(NNET6, terms = c("X1", "X2"))
     
     #
     # Comparison:
@@ -476,14 +476,20 @@ function()
     DATATS = as.timeSeries(DATA)
     
     # LM:
-    regFit(Y ~ X1 + X2,      DATATS, use = "lm") 
-    regFit(Y ~ 1 + X1 + X2,  DATATS, "lm")
-    regFit(Y ~ -1 + X1 + X2, DATATS, "lm")
-    regFit(Y ~ X1 + log(X2), DATATS, "lm")
+    LM1 = regFit(Y ~ X1 + X2,      DATATS, use = "lm") 
+    print(LM1)
+    LM2 = regFit(Y ~ 1 + X1 + X2,  DATATS, "lm")
+    print(LM2)
+    LM3 = regFit(Y ~ -1 + X1 + X2, DATATS, "lm")
+    print(LM3)
+    LM4 = regFit(Y ~ X1 + log(X2), DATATS, "lm")
+    print(LM4)
     
     # AM:
-    regFit(Y ~ s(X1) + s(X2), data = DATATS, use = "am")
-    regFit(Y ~ s(X1) + s(X2), DATATS, "am", method = gam.method(pearson = TRUE))
+    AM1 = regFit(Y ~ s(X1) + s(X2), data = DATATS, use = "am")
+    print(AM1)
+    # AM2 = regFit(Y ~ s(X1) + s(X2), DATATS, "am", method = gam.method(pearson = TRUE))
+    # print(AM2)
     
     # PPR:
     par(mfrow = c(3,2))
@@ -508,6 +514,7 @@ function()
     
     # Return Value:
     return()
+}
 
     
 # ------------------------------------------------------------------------------
@@ -551,10 +558,10 @@ function()
     D1 = data.frame(M1)
     D1
 
-    fit.glm = glm(Y ~ X1 + X2 + X3 + X4 + X5 + X6, data = D1, 
-        family = binomial("logit"))
-    fit.gam = gam(Y ~ s(X1) + s(X2) + s(X3) + s(X4) + s(X5) + s(X6), 
-        data = D1, family = binomial("logit"))
+    # fit.glm = glm(Y ~ X1 + X2 + X3 + X4 + X5 + X6, data = D1, 
+    #     family = binomial("logit"))
+    # fit.gam = gam(Y ~ s(X1) + s(X2) + s(X3) + s(X4) + s(X5) + s(X6), 
+    #     data = D1, family = binomial("logit"))
 
 
     M2 = matrix(c(
@@ -584,7 +591,7 @@ function()
     lines(U, V, lty = 3, col = "grey")
     
     fit.glm = glm(Y ~ X1 + X2, data = D2, family = binomial("logit"))
-    fit.glm
+    print(fit.glm)
     
     # Return Value:
     return()

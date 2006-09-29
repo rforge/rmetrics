@@ -38,6 +38,16 @@
 ### Uncomplete - Under Development ###
 
 
+test.NA = 
+function()
+{
+    NA
+    
+    # Return Value:
+    return()
+}
+
+
 # ------------------------------------------------------------------------------
 
 

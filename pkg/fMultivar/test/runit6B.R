@@ -61,6 +61,7 @@ function()
 test.remove =
 function()
 {
+    NA
     
     # Return Value:
     return()    
@@ -73,6 +74,7 @@ function()
 test.substitute =
 function()
 {
+    NA 
     
     # Return Value:
     return()    
@@ -85,6 +87,7 @@ function()
 test.interp =
 function()
 {
+    NA
     
     # Return Value:
     return()    
@@ -97,6 +100,7 @@ function()
 test.knn =
 function()
 {
+    NA
     
     # Return Value:
     return()    
@@ -104,6 +108,7 @@ function()
 
 
 # ------------------------------------------------------------------------------
+
 
 if (FALSE) {
     require(RUnit)

@@ -33,10 +33,10 @@
 if (FALSE) {
     require(RUnit)
     testIndex = c("1A", "1B", "1C", "2A", "2B", "2C", "3A", "3B", "6A",
-        "6C", "7A", "7B")#, "Demo")
+        "6C", "7A", "7B")   #, "Demo")
     File = "C:/Rmetrics/SVN/trunk/fMultivar/test/runit"
     Protocol = "runitMultivar.txt"
-    write("fCalendar:", file = Protocol)
+    write("fMultivar:", file = Protocol)
     for (Index in testIndex) {
         file = paste(File, Index, ".R", sep = "")
         write("", file = Protocol, append = TRUE)

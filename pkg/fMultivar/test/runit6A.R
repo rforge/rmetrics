@@ -110,12 +110,14 @@ function()
 
 # ------------------------------------------------------------------------------
 
-test.xxx =
+
+test.NA = 
 function()
 {
+    NA
     
     # Return Value:
-    return()    
+    return()
 }
 
 

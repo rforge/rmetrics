@@ -44,7 +44,7 @@ function()
 {
     # Help File:
     demoFile = paste(.Library, 
-        "\\fCalendar\\Demo\\xmpDWChapter041.R", sep = "")
+        "\\fMultivar\\Demo\\xmpDWChapter041.R", sep = "")
     source(demoFile)
 
     # Return Value:
@@ -60,7 +60,7 @@ function()
 {
     # Help File:
     demoFile = paste(.Library, 
-        "\\fCalendar\\Demo\\xmpDWChapter042.R", sep = "")
+        "\\fMultivar\\Demo\\xmpDWChapter042.R", sep = "")
     source(demoFile)
 
     # Return Value:
@@ -76,7 +76,7 @@ function()
 {
     # Help File:
     demoFile = paste(.Library, 
-        "\\fCalendar\\Demo\\xmpDWChapter043.R", sep = "")
+        "\\fMultivar\\Demo\\xmpDWChapter043.R", sep = "")
     source(demoFile)
 
     # Return Value:
@@ -91,7 +91,7 @@ function()
 {
     # Help File:
     demoFile = paste(.Library, 
-        "\\fCalendar\\Demo\\xmpDWChapter044.R", sep = "")
+        "\\fMultivar\\Demo\\xmpDWChapter044.R", sep = "")
     source(demoFile)
 
     # Return Value:
@@ -107,7 +107,7 @@ function()
 {
     # Help File:
     demoFile = paste(.Library, 
-        "\\fCalendar\\Demo\\xmpDWChapter045.R", sep = "")
+        "\\fMultivar\\Demo\\xmpDWChapter045.R", sep = "")
     source(demoFile)
 
     # Return Value:
@@ -123,7 +123,7 @@ function()
 {
     # Help File:
     demoFile = paste(.Library, 
-        "\\fCalendar\\Demo\\xmpDWChapter046.R", sep = "")
+        "\\fMultivar\\Demo\\xmpDWChapter046.R", sep = "")
     source(demoFile)
 
     # Return Value:
@@ -139,7 +139,7 @@ function()
 {
     # Help File:
     demoFile = paste(.Library, 
-        "\\fCalendar\\Demo\\xmpZWChapter10.R", sep = "")
+        "\\fMultivar\\Demo\\xmpZWChapter10.R", sep = "")
     source(demoFile)
 
     # Return Value:
@@ -152,7 +152,7 @@ function()
 
 if (FALSE) {
     require(RUnit)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fCalendar/test/runitDemo.R")
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fMultivar/test/runitDemo.R")
     printTextProtocol(testResult)
 }
 
