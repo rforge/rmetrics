@@ -369,7 +369,7 @@ description = NULL)
 
 
 ################################################################################
-# URCA [PFAGFF] UNIT ROOT TESTS:
+# URCA [B. PFAFF] UNIT ROOT TESTS:
 
 
 # PACKAGE DESCRIPTION:
@@ -437,7 +437,7 @@ function(x, lags = 1, type = c("nc", "c", "ct"), doplot = TRUE)
     ans = list(
         name = "ur.df", 
         test = urca,
-        output = output,
+        output = output
     )   
     
     # Plot:
@@ -485,7 +485,7 @@ lag.max = 4, doplot = TRUE)
     ans = list(
         name = "ur.ers", 
         test = urca,
-        output = output,
+        output = output
     )   
     
     # Plot:
@@ -532,7 +532,7 @@ use.lag = NULL, doplot = TRUE)
     ans = list(
         name = "ur.kpss", 
         test = urca,
-        output = output,
+        output = output
     )   
     
     # Plot:
@@ -627,7 +627,7 @@ signif = c(0.01, 0.05, 0.10), doplot = TRUE)
     ans = list(
         name = "ur.pp", 
         test = urca,
-        output = output,
+        output = output
     )   
     
     # Plot:
@@ -672,7 +672,7 @@ function(x, model = c("intercept", "trend", "both"), lag = 2, doplot = TRUE)
     ans = list(
         name = "ur.pp", 
         test = urca,
-        output = output,
+        output = output
     )   
     
     # Plot:
