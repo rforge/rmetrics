@@ -69,11 +69,11 @@
 #  SMA                       Computes Simple Moving Average           
 #  EWMA                      Computes Exponentially Weighted  Moving Average
 # FUNCTION:                 DESCRIPTION:
-#  .dailyTA
+#  .dailyTA                  Computes an indicator for technical analysis
 # FUNCTION:                 DESCRIPTION:
-#  .tradeSignals
-#  .tradeLengths
-#  .hitRate
+#  .tradeSignals             Computes trade signals from trading positions
+#  .tradeLengths             Computes trade length from trading signals
+#  .hitRate                  Computes hit rates from returns and positions
 ################################################################################
 
 
@@ -1174,6 +1174,9 @@ function(X, indicator = "ema", select = "Close", lag = 9)
 function(Positions) 
 {   # A function implemented by Diethelm Wuertz
 
+    # Description:
+    #   Computes trade signals from trading positions
+    
     # FUNCTION:
     
     # Get Signals from Positions:
@@ -1193,6 +1196,9 @@ function(Positions)
 function(tradeSignals) 
 {   # A function implemented by Diethelm Wuertz
 
+    # Description:
+    #   Computes trade length from trading signals
+    
     # FUNCTION:
     
     # Get Lengths from Signals:
@@ -1213,6 +1219,9 @@ function(tradeSignals)
 function(Returns, Positions) 
 {   # A function implemented by Diethelm Wuertz
 
+    # Description:
+    #   Computes hit rates from returns and positions
+    
     # FUNCTION:
     
     # Compute hit rate:
