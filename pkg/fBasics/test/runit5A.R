@@ -38,6 +38,10 @@ function()
 test.jbTable.LM = 
 function()
 {
+    # Plot Parameters:
+    par(ask = FALSE)
+    par(mfrow = c(1, 1))
+    
     # Interpolated plot of Small Jarque Bera Table:
     X = jbTable(type = "LM", size = "small")
     
@@ -48,15 +52,12 @@ function()
     rownames(X)
     
     # 3D-Plot Probability Table:
-    par(ask = FALSE)
-    par(mfrow = c(1, 1))
     pPlot(X, linear = TRUE,  logStat = TRUE, main = "JB LM", cex = 0.5)
     pPlot(X, linear = TRUE,  logStat = TRUE, fill = TRUE,    cex = 0.5)
     pPlot(X, linear = FALSE, logStat = TRUE,                 cex = 0.5)
     pPlot(X, linear = FALSE, logStat = TRUE, fill = TRUE,    cex = 0.5)
     
     # 2D-Plot Probability for Fixed Size:
-    par(mfrow = c(2, 2), cex = 0.7)
     p = (1:99)/100
     plot(qTable(X, p, N = 100), p, type = "b")
     grid()
@@ -77,6 +78,10 @@ function()
 test.jbTable.ALM = 
 function()
 {
+    # Plot Parameters:
+    par(ask = FALSE)
+    par(mfrow = c(1, 1))
+    
     # Interpolated plot of Small Jarque Bera Table:
     X = jbTable(type = "ALM", size = "small")
     
@@ -87,16 +92,12 @@ function()
     rownames(X)
     
     # 3D-Plot Probability Table:
-    par(ask = FALSE)
-    par(mfrow = c(1, 1))
     pPlot(X, linear = TRUE,  logStat = TRUE, main = "JB ALM", cex = 0.5)
     pPlot(X, linear = TRUE,  logStat = TRUE, fill = TRUE,     cex = 0.5)
     pPlot(X, linear = FALSE, logStat = TRUE,                  cex = 0.5)
     pPlot(X, linear = FALSE, logStat = TRUE, fill = TRUE,     cex = 0.5)
     
     # 2D-Plot Probability for Fixed Size:
-    par(ask = FALSE)
-    par(mfrow = c(2, 2), cex = 0.7)
     p = (1:99)/100
     plot(qTable(X, p, N = 100), p, type = "b")
     grid()
@@ -117,6 +118,10 @@ function()
 test.adfTable = 
 function()
 {  
+    # Plot Parameters:
+    par(ask = FALSE)
+    par(mfrow = c(1, 1))
+    
     # Dickey-Fuller Tables:
     
     # type = "ns" 
@@ -150,8 +155,6 @@ function()
     rownames(X)     
        
     # 3D Probability Plot:
-    par(ask = FALSE)
-    par(mfrow = c(1, 1))
     pPlot(X)
     ans = pPlot(X, 10, 10, fill = TRUE)$z
 

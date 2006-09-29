@@ -85,9 +85,10 @@ test.moments =
 function()
 {
     # Data:
-    require(fCalendar)
-    msft = as.timeSeries(MSFT)[, 1]
-    X = returnSeries(msft)
+    set.seed(4711)
+    X = as.timeSeries(matrix(rnorm(12)), timeCalendar())
+    X = as.vector(X@Data)
+    # .timeSeries methods required !
     
     # Mean, Variance:
     mean(X)
@@ -116,8 +117,8 @@ test.basicStats =
 function()
 {
     # methods(as.matrix)
-    # as.matrix.data.frame as.matrix.default    as.matrix.dist*     
-    # as.matrix.noquote    as.matrix.POSIXlt  
+    # as.matrix.data.frame    as.matrix.default    as.matrix.dist*     
+    # as.matrix.noquote       as.matrix.POSIXlt  
 
     # Univariate Data:
     set.seed(1953)
@@ -139,15 +140,15 @@ function()
     TS = basicStats(tsX)
     class(dfX)
     DF = basicStats(dfX)
-    checkEqualsNumeric(
-        target = NUM,
-        current = TS)
-    checkEqualsNumeric(
-        target = TS,
-        current = DF)
-    checkEqualsNumeric(
-        target = DF,
-        current = NUM)
+    checkIdentical(
+        target = sum(NUM),
+        current = sum(TS))
+    checkIdentical(
+        target = sum(TS),
+        current = sum(DF))
+    checkIdentical(
+        target = sum(DF),
+        current = sum(NUM))
     
     # Multivariate Data:
     class(Z)
@@ -156,15 +157,15 @@ function()
     TS = basicStats(tsZ)
     class(dfZ)
     DF = basicStats(dfZ)
-    checkEqualsNumeric(
-        target = NUM,
-        current = TS)
-    checkEqualsNumeric(
-        target = TS,
-        current = DF)
-    checkEqualsNumeric(
-        target = DF,
-        current = NUM)
+    checkIdentical(
+        target = sum(NUM),
+        current = sum(TS))
+    checkIdentical(
+        target = sum(TS),
+        current = sum(DF))
+    checkIdentical(
+        target = sum(DF),
+        current = sum(NUM))
     
     # Return Value:
     return()
@@ -177,79 +178,69 @@ function()
 test.rowcolStats = 
 function()
 {
+    # Data:
+    X = data.frame( 1:12, 12:1 )
+     
     # Data Frame:
-    checkIdentical(target = class(MSFT), current = "data.frame")
+    checkIdentical(target = class(X)[1], current = "data.frame")
     
-    # Returns - Matrix:
-    msft.mat = diff(log(as.matrix(MSFT)))[1:11, ]
-    
-    test = rowAvgs(msft.mat)
+    test = rowAvgs(X)
     print(test)
-    target = round(sum(test), 4)
+    target = sum(test)
     target
-    checkSum = -0.1012
+    checkSum = 78
     checkEqualsNumeric(target, checkSum)
     
-    test = rowVars(msft.mat)
+    test = rowVars(X)
     print(test)
-    target = round(sum(test), 4)
+    target = sum(test)
     target
-    checkSum = 0.2811
+    checkSum = 286
     checkEqualsNumeric(target, checkSum)
     
-    test = rowStdevs(msft.mat)
+    test = rowStdevs(X)
     print(test)
-    target = round(sum(test), 4)
+    target = round(sum(test), 2)
     target
-    checkSum = 1.5185
+    checkSum = 50.91
     checkEqualsNumeric(target, checkSum)
     
-    test = rowSkewness(msft.mat)
+    test = rowSkewness(X)
     print(test)
-    target = round(sum(test), 4)
+    target = sum(test)
     target
-    checkSum =  -0.7531
+    checkSum = 0
     checkEqualsNumeric(target, checkSum)
     
-    test = rowKurtosis(msft.mat)
+    test = rowKurtosis(X)
     print(test)
-    target = round(sum(test), 4)
+    target = sum(test)
     target
-    checkSum = -4.0053
+    checkSum = -33
     checkEqualsNumeric(target, checkSum)
     
-    test = rowCumsums(msft.mat)
+    test = rowCumsums(X)
     print(test)
-    target = round(sum(test), 4)
+    target = sum(test)
     target
-    checkSum = -7.471
+    checkSum = 1014
     checkEqualsNumeric(target, checkSum)
     
     # Columnwise:
-    test = colAvgs(msft.mat)
-    test = colVars(msft.mat)
-    test = colStdevs(msft.mat)
-    test = colSkewness(msft.mat)
-    test = colKurtosis(msft.mat)
-    test = colCumsums(msft.mat)
+    colAvgs(X)
+    colVars(X)
+    colStdevs(X)
+    colSkewness(X)
+    colKurtosis(X)
+    colCumsums(X)
     
-    
-    # Time Series:
-    msft.ret = returnSeries(as.timeSeries(MSFT))[1:11, ]
-    
-    rowAvgs(msft.ret)
-    rowVars(msft.ret)
-    rowStdevs(msft.ret)
-    rowSkewness(msft.ret)
-    rowKurtosis(msft.ret)
-    rowCumsums(msft.ret)
-    
-    colAvgs(msft.ret)
-    colVars(msft.ret)
-    colStdevs(msft.ret)
-    colSkewness(msft.ret)
-    colKurtosis(msft.ret)
-    colCumsums(msft.ret)
+    # Rowwise    
+    rowAvgs(X)
+    rowVars(X)
+    rowStdevs(X)
+    rowSkewness(X)
+    rowKurtosis(X)
+    rowCumsums(X)
     
     # Return Value:
     return()

@@ -62,64 +62,75 @@ function()
 test.plotLabels = 
 function()
 {
-    # MSFT Opening Prices:
-    msft = as.timeSeries(MSFT)[, 1]
-    checkSum = 15349.9344
-    checkEqualsNumeric(sum(msft@Data), checkSum)
+    # Artificial Data Set:
+    set.seed(4711)
+    S = sample(1:12)
+    V = sample(rep(1:3, 4)) * 10000
+    matX = cbind(Open = S, High = S+1, Low = S-1, Close = S, Volume = V )
+    X = timeSeries(matX, timeCalendar())
+    print(X)
     
-    # MSFT Volume in Million Units:
-    msft.vol = as.timeSeries(MSFT)[, 5]/10^6
-    checkSum = 10742.7319
-    checkEqualsNumeric(sum(msft.vol@Data), checkSum)
+    # X Opening Prices:
+    x = X[, 1]
+    sum(x@Data)
+    checkSum = 78
+    checkEqualsNumeric(sum(x@Data), checksum)
+    
+    # X Volume in Thousand Units:
+    volX = X[, 5]/1000
+    sum(volX@Data)
+    checkSum = 240
+    checkEqualsNumeric(sum(volX@Data), checkSum)
     
     # MSFT Opening Returns:
-    msft.ret = returnSeries(msft)
-    checkSum = -0.2359905
-    checkEqualsNumeric(sum(msft.ret@Data), checkSum)
+    retX = returnSeries(X[, 1])
+    sum(retX@Data)
+    checkSum = -1.099
+    checkEqualsNumeric(sum(retX@Data), checkSum)
     
     # LABELS = TRUE
     
     # acfPlot -
-    ans = acfPlot(x = msft.ret)
-    checkSum = 0.804693678 
+    ans = acfPlot(x = retX)
+    checkSum = 0.5 
     checkEqualsNumeric(sum(ans$acf), checkSum)
     
     # pacfPlot -
-    pacfPlot(x = msft.ret)
+    pacfPlot(x = retX)
     
     # ccfPlot -
-    ans = ccfPlot(x = msft.ret, y = msft.vol[-1])
-    checkSum = 0.7826573745 
+    ans = ccfPlot(x = retX, y = volX[-1])
+    checkSum = 0 
     checkEqualsNumeric(sum(ans$acf), checkSum)
     
     # teffectPlot -
-    ans = teffectPlot(x = msft.ret)
-    checkSum = 11.90143235
+    ans = teffectPlot(x = retX)
+    checkSum = -7.5
     checkEqualsNumeric(sum(ans), checkSum)
     
     # lmacfPlot -
-    ans = lmacfPlot(x = abs(msft.ret))
-    ans
+    # ans = lmacfPlot(x = abs(retX))
+    # ans
     
     # lmacfPlot -
-    ans = lacfPlot(x = msft, n = 4)
-    ans
+    # ans = lacfPlot(x = retX, n = 4)
+    # ans
 
     # logpdfPlot -
-    ans = logpdfPlot(x = msft.ret)
-    ans
-    ans = logpdfPlot(x = msft.ret, type = "log-log")
-    ans
+    # ans = logpdfPlot(x = retX)
+    # ans
+    # ans = logpdfPlot(x = retX, type = "log-log")
+    # ans
     # ... CHECK WARNINGS
     # ... CHECK COLORS
     
     # qqgaussPlot -
-    ans = qqgaussPlot(x = msft.ret)
+    ans = qqgaussPlot(x = retX)
     ans
     
     # scalinglawPlot -
-    ans = scalinglawPlot(x = msft.ret, span = 4)
-    ans
+    # ans = scalinglawPlot(x = retX, span = 4)
+    # ans
     # ... CHECK COLORS
     
     # Return Value:
