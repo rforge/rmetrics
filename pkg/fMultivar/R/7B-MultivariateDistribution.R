@@ -36,30 +36,27 @@
 #  dmvst               Multivariate Skew Sudent-t Density Function
 #  pmvst               Multivariate Skew Sudent-t Probability Function
 #  rmvst               Multivariate Skew Sudent-t Random Deviates
-# FUNCTION:           DESCRIPTION:
+# FUNCTION:           PARAMETER ESTIMATION:
 #  fMV                 S4 Object of class 'fMV'
 #  mvFit               Fits a MV Normal or Student-t Distribution
 #  print.fMV           S3: Print method for objects of class 'fMV'
 #  plot.fMV            S3: Plot method for objects of class 'fMV'
 #  summary.fMV         S3: Summary method for objects of class 'fMV'
-# INTERNAL:           DESCRIPTION:
 #  .mvsnormFit         Fits a Multivariate Normal Distribution
 #  .mvstFit            Fits a Multivariate Student-t Distribution
 #  .mvsnormPlot        Plots for Multivariate Normal Distribution
 #  .mvstPlot           Plots for Multivariate Student-t Distribution
-################################################################################
-
-
-################################################################################
 # REQUIREMENTS:       FOR:
-#  fExtremes           interactivePlot Function
+#  fExtremes           InteractivePlot Function
 # MVTNORM BUILTIN:    DESCRIPTION:
 #  .checkmvArgs        Internal Function
 #  .pmvnorm            Internal Function
 #  .pmvt               Internal Function
 #  .mvt                Internal Function
 #  .rmvt               Internal Function
-# SN BUILTIN:
+#  .qmvnorm            Internal Function
+#  .qmvt               Internal Function
+# SN BUILTIN:         DESCRIPTION:
 #  .rsn                Internal Function
 #  .rst                Internal Function
 #  .rmst               Internal Function
@@ -1023,7 +1020,7 @@ releps = 0)
         MAXPTS = as.integer(maxpts), ABSEPS = as.double(abseps), 
         RELEPS = as.double(releps), TOL = as.double(tol),
         error = as.double(error), value = as.double(value),
-        inform = as.integer(inform), PACKAGE = "fPortfolio")
+        inform = as.integer(inform), PACKAGE = "fMultivar")
     
     error = ret$error
     value = ret$value
@@ -1063,6 +1060,101 @@ function(n, sigma = diag(2), df = 1)
     
     # Return Value:
     ans
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.qmvnorm = 
+function(p, interval = c(-10, 10),  tail = c("lower.tail", "upper.tail", 
+"both.tails"), mean = 0, corr = NULL, sigma = NULL, maxpts = 25000, 
+abseps = 0.001, releps = 0, ...) 
+{
+    if (length(p) != 1 || (p <= 0 || p >= 1)) 
+        stop(sQuote("p"), " is not a double between zero and one")
+
+    tail = match.arg(tail)
+    dim = length(mean)
+    if (is.matrix(corr)) dim = nrow(corr)
+    if (is.matrix(sigma)) dim = nrow(sigma)
+    lower = rep(0, dim)
+    upper = rep(0, dim)
+    args = .checkmvArgs(lower, upper, mean, corr, sigma)
+    dim = length(args$mean)
+
+    pfct = function(q) {
+        switch(tail, "both.tails" = {
+                  low = rep(-abs(q), dim)
+                  upp = rep( abs(q), dim)
+           }, "upper.tail" = {
+                  low = rep(      q, dim)
+                  upp = rep(    Inf, dim)
+           }, "lower.tail" = {
+                  low = rep(   -Inf, dim)
+                  upp = rep(      q, dim)
+           },)
+           .pmvnorm(lower = low, upper = upp, mean = args$mean,
+                   corr = args$corr, sigma = args$sigma,
+                   abseps = abseps, maxpts = maxpts, releps = releps) - p
+    }
+
+    if (tail == "both.tails") {
+        interval[1] = 0
+        interval = abs(interval)
+    }
+
+    qroot = uniroot(pfct, interval = interval, ...)
+    names(qroot)[1:2] = c("quantile", "f.quantile")
+    qroot
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.qmvt = 
+function(p, interval = c(-10, 10), tail = c("lower.tail", "upper.tail", 
+"both.tails"), df = 1, delta = 0, corr = NULL, sigma = NULL, maxpts = 25000, 
+abseps = 0.001, releps = 0, ...) 
+{
+
+    if (length(p) != 1 || (p <= 0 || p >= 1)) 
+        stop(sQuote("p"), " is not a double between zero and one")
+
+    tail = match.arg(tail)
+    dim = length(mean)
+    if (is.matrix(corr)) dim = nrow(corr)
+    if (is.matrix(sigma)) dim = nrow(sigma)
+    lower = rep(0, dim)
+    upper = rep(0, dim)
+    args = .checkmvArgs(lower, upper, delta, corr, sigma)
+    dim = length(args$mean)
+
+    pfct = function(q) {
+        switch(tail, "both.tails" = {
+                  low = rep(-abs(q), dim)
+                  upp = rep( abs(q), dim)
+           }, "upper.tail" = {
+                  low = rep(      q, dim)
+                  upp = rep(    Inf, dim)
+           }, "lower.tail" = {
+                  low = rep(   -Inf, dim)
+                  upp = rep(      q, dim)
+           },)
+           .pmvt(lower = low, upper = upp, df = df, delta = args$mean,
+                corr = args$corr, sigma = args$sigma,
+                abseps = abseps, maxpts = maxpts, releps = releps) - p
+    }
+
+    if (tail == "both.tails") {
+        interval[1] = 0
+        interval = abs(interval)
+    }
+
+    qroot = uniroot(pfct, interval = interval, ...)
+    names(qroot)[1:2] = c("quantile", "f.quantile")
+    qroot
 }
 
 
