@@ -104,6 +104,21 @@ function()
 
 
 # ------------------------------------------------------------------------------
+# COLOR PALETTES:
+
+
+test.palette = 
+function()
+{
+    #  Creates a grey palette 
+    greyPalette()   
+    
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
 # AKIMA SPLINE INTERPOLATION:
 
 
@@ -138,6 +153,8 @@ function()
     checkEquals(target = Z, current = checkSum, tolerance = 0.00001)
     
     # Plots:
+    par(ask = FALSE)
+    par(mfrow = c(1, 1)_
     image  (akima.lin, add = FALSE)
     contour(akima.lin, add = TRUE)
     points (akima, pch = 19)

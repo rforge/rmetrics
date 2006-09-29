@@ -30,7 +30,7 @@
 ################################################################################
 # FUNCTION:           DESCRIPTION:    
 #  fDISTFIT            Class Representation
-#  normFit             Fits Parameters of a Normal Density
+#  .normFit            Fits Parameters of a Normal Density
 #  tFit                Fits parameters of a Student-t Density
 #  ghFit               Fits parameters of a generalized hyperbolic Density
 #  hypFit              Fits parameters of a hyperbolic Density

@@ -67,6 +67,9 @@ function()
 test.symstb = 
 function()
 {
+    par(ask = FALSE)
+    par(mfrow = c(1, 1))
+    
     # rsymstb, alpha=1.8
     test = .distCheck("symstb", alpha = 1.8)
     print(test)
@@ -88,6 +91,9 @@ function()
 test.stable.S0 = 
 function()
 {
+    par(ask = FALSE)
+    par(mfrow = c(1, 1))
+    
     # stable - Parameterization S0:
     test = .distCheck("stable", alpha = 1.8, beta = 0.3)
     print(test)
@@ -114,6 +120,9 @@ function()
 test.stable.S1 = 
 function()
 {
+    par(ask = FALSE)
+    par(mfrow = c(1, 1))
+    
     # stable - Parameterization S1:
     test = .distCheck("stable", alpha = 1.8, beta = 0.3, pm = 1)
     print(test)
@@ -140,6 +149,9 @@ function()
 test.stable.S2 = 
 function()
 {
+    par(ask = FALSE)
+    par(mfrow = c(1, 1))
+    
     # stable - Parameterization S2:
     test = .distCheck("stable", alpha = 1.8, beta = 0.3, pm = 2)
     print(test)

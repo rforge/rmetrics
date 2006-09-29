@@ -77,6 +77,9 @@ function()
 test.gh = 
 function()
 {
+    par(ask = FALSE)
+    par(mfrow = c(1, 1))
+    
     # gh() Distribution:
     test = .distCheck("gh", 
         alpha = 1.3, beta = 0.3, delta = 1, mu = 0, lambda = 1)
@@ -112,6 +115,9 @@ function()
 test.hyp = 
 function()
 {
+    par(ask = FALSE)
+    par(mfrow = c(1, 1))
+    
     # hyp() Distribution - Parameterization 1:
     test = .distCheck("hyp", alpha = 1, beta = 0.3, delta = 1)
     print(test)
@@ -147,6 +153,9 @@ function()
 test.nig = 
 function()
 {
+    par(ask = FALSE)
+    par(mfrow = c(1, 1))
+    
     # nig() Distribution:
     test = .distCheck("nig", alpha = 1, beta = 0.1, delta = 1)
     print(test)
