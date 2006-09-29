@@ -181,35 +181,35 @@ function()
     target = round(var(x), 2)
     print(target)
     checkSum = 0
-    checkEqualsNumeric(target, checkSum)
+    checkEquals(target, checkSum)
     
     x = fbmSim(n = 50, method = "chol", seed = 4711, fgn = TRUE)
     print(x)
     target = round(var(x), 2)
     print(target)
     checkSum = +0.31
-    checkEqualsNumeric(target, checkSum)
+    checkEquals(target, checkSum)
     
     x = fbmSim(n = 50, method = "lev",  seed = 4711, fgn = TRUE)
     print(x)
     target = round(var(x), 2)
     print(target)
     checkSum = -0.01
-    checkEqualsNumeric(target, checkSum)
+    checkEquals(target, checkSum)
     
     x = fbmSim(n = 50, method = "circ", seed = 4711, fgn = TRUE)
     print(x)
     target = round(var(x), 2)
     print(target)
     checkSum = +0.94
-    checkEqualsNumeric(target, checkSum)
+    checkEquals(target, checkSum)
     
     x = fbmSim(n = 50, method = "wave", seed = 4711, fgn = TRUE)
     print(x)
     target = round(var(x), 2)
     print(target)
     checkSum = -0.32
-    checkEqualsNumeric(target, checkSum)
+    checkEquals(target, checkSum)
     
     # Return Value:
     return()       
@@ -240,7 +240,7 @@ function()
     target = round(var(x), 2)
     print(target)
     checkSum = 1.11
-    checkEqualsNumeric(target, checkSum)
+    checkEquals(target, current = checkSum)
     
     # Time Methhod:
     set.seed(4711)
@@ -249,7 +249,7 @@ function()
     target = round(var(x), 2)
     print(target)
     checkSum = 1.11
-    checkEqualsNumeric(target, checkSum)
+    checkEquals(target, current = checkSum)
     
     # Return Value:
     return()   
@@ -278,7 +278,7 @@ function()
     target = round(sum(ans), 2)
     print(target)
     checkSum = 1.78
-    checkEqualsNumeric(target, checkSum)
+    checkEquals(target, checkSum)
     
     # FGN True FFT:
     ans = fgnTruefft(n = 1000, H = 0.7)[1:3]
@@ -286,7 +286,7 @@ function()
     target = round(sum(ans), 2)
     print(target)
     checkSum = 1.78
-    checkEqualsNumeric(target, checkSum)
+    checkEquals(target, checkSum)
     
     # Time Methhod:
     set.seed(4711)
@@ -295,7 +295,7 @@ function()
     target = round(var(x), 2)
     print(target)
     checkSum = 1.11
-    checkEqualsNumeric(target, checkSum)
+    checkEquals(target, checkSum)
     
     # Return Value:
     return()   
@@ -454,7 +454,7 @@ function()
     target = round(Hurst, 1)
     print(target)
     checkValue = 0.7
-    checkEqualsNumeric(target, checkValue, tol = 0.2)
+    checkEquals(target, checkValue, tol = 0.2)
     
     # Return Value:
     return()   
