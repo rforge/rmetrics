@@ -218,26 +218,29 @@ Preprint Technical Univeristy of Wroclaw, 13 pages.
 
 <pre>  
 ## SOURCE("fBasics.2A-StableDistribution")
-  
+
+## Plot:
+   par(ask = FALSE)
+   
 ## stable - 
    # Plot rvs Series
    set.seed(1953)
    r = rstable(n = 1000, alpha = 1.9, beta = 0.3)
    plot(r, type = "l", main = "stable: alpha=1.9 beta=0.3", 
-     col = "steelblue4")
+     col = "steelblue")
    grid()
  
 ## stable -  
    # Plot empirical density and compare with true density:
    hist(r, n = 25, probability = TRUE, border = "white", 
-     col = "steelblue4")
+     col = "steelblue")
    x = seq(-5, 5, 0.4)
    lines(x, dstable(x = x, alpha = 1.9, beta = 0.3))
    
 ## stable -   
    # Plot df and compare with true df:
    plot(sort(r), (1:1000/1000), main = "Probability", pch = 19, 
-     col = "steelblue4")
+     col = "steelblue")
    lines(x, pstable(q = x, alpha = 1.9, beta = 0.3))
    grid()
    

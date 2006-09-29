@@ -179,6 +179,7 @@ qTable(X, p, N, digits = 4)
 ## jbTable -
    # Interpolated plot of Small Jarque Bera Table:
    X = jbTable(type = "LM", size = "small")
+   par(ask = FALSE)
    pPlot(X, linear = TRUE, logStat = TRUE)
    pPlot(X, linear = TRUE, logStat = TRUE, fill = TRUE, main = "JB LM")
    pPlot(X, linear = FALSE, logStat = TRUE)

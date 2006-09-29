@@ -202,11 +202,14 @@ Raible S. (2000);
 
 \examples{
 ## SOURCE("fBasics.2B-HyperbolicDistribution")
-     
+
+## Plot:
+   par(ask = FALSE)
+    
 ## nig -
    set.seed(1953)
    r = rnig(5000, alpha = 1, beta = 0.3, delta = 1)
-   plot(r, type = "l", col = "steelblue4",
+   plot(r, type = "l", col = "steelblue",
      main = "nig: alpha=1 beta=0.3 delta=1")
  
 ## nig - 

@@ -219,27 +219,24 @@ colCumsums(x, na.rm = FALSE, \dots)
 
 \examples{
 ## SOURCE("fBasics.3A-BasicStatistics")
-\dontrun{
 
 ## basicStats -
-   # Data NYSE Composite Index:
-   data(DowJones30)
+   # Simulated Monthly Return Data:
+   tS = timeSeries(matrix(rnorm(12)), timeCalendar())
    # ... must be univariate:
-   basicStats(DowJones30[, "IBM"])  
+   basicStats(tS)  
      
 ## mean -
 ## var -
 ## skewness -
 ## kurtosis -
-   IBM = DowJones30[, "IBM"]
    # Mean, Variance:
-   mean(IBM)
-   var(IBM)
+   mean(tS)
+   var(tS)
    # Skewness, Kurtosis:
-   class(IBM)
-   skewness(IBM)
-   kurtosis(IBM)   
-}
+   class(tS)
+   skewness(tS)
+   kurtosis(tS)   
 }
 
 
