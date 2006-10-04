@@ -130,7 +130,7 @@ regFit(formula, data, use = c("lm", "rlm", "am", "ppr", "mars", "polymars",
 gregFit(formula, family, data, use = c("glm", "gam"), 
     title = NULL, description = NULL, \dots)
     
-\method{predict}{fREG}(object, newdata, se.fit = FALSE, \dots)
+\method{predict}{fREG}(object, newdata, se.fit = FALSE, type = "response", \dots)
 
 \method{print}{fREG}(x, \dots)
 \method{plot}{fREG}(x, \dots)
@@ -221,6 +221,9 @@ OLS(formula, data, \dots)
         }    
     \item{title}{
         a character string which allows for a project title.
+        }
+    \item{type}{
+        a character string, the type of prediction.
         }
     %\item{weights}{
     %    a vector of weights. If set to \code{NULL} all weights are

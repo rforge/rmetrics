@@ -90,9 +90,8 @@ function(x)
     # FUNCTION:
     
     # Check for timeSeries Object:
-    TS = FALSE
-    if (is.timeSeries(x)) {
-        TS = TRUE
+    TS = is.timeSeries(x)
+    if (TS) {
         positions = x@positions
         x = seriesData(x)
         x = removeNA(x)
@@ -114,14 +113,18 @@ function(x)
     from = double(NROW(to))
     for (i in 1:NROW(to))
         from[i] = max(which(cmaxx[1:to[i]] == 0))   
-        
+     
+    # For time Series objects:   
     if (TS) {
         from = positions[from]
         to = positions[to]
     }
+    
+    # Result:
+    ans = list(maxdrawdown = mdd, from = from, to = to)
         
     # Return Value:
-    list(maxdrawdown = mdd, from = from, to = to)
+    ans
 }
 
 
@@ -138,22 +141,16 @@ function(x, r = 0, scale = sqrt(250))
     # FUNCTION:
     
     # Check for timeSeries Object:
-    if (is.timeSeries(x)) { 
-        x = seriesData(x)
-        x = removeNA(x)
-        
-    }
+    if (is.timeSeries(x)) x = removeNA(seriesData(x))
     
     # Check for Univariate Series:
-    if(NCOL(x) > 1)
-        stop("x is not a vector or univariate time series")
+    if (NCOL(x) > 1) stop("x is not a vector or univariate time series")
         
     # Check for NAs:
-    if(any(is.na(x)))
-        stop("NAs in x")
+    if(any(is.na(x))) stop("NAs in x")
      
     # Sharpe Ratio:
-    if(NROW(x) == 1) {
+    if (NROW(x) == 1) {
         return(NA)
     } else {
         y = diff(x)
@@ -178,21 +175,18 @@ function(x)
     # FUNCTION:
     
     # Check for timeSeries Object:
-    TS = FALSE
-    if (is.timeSeries(x)) {
-        TS = TRUE
+    TS = is.timeSeries(x)
+    if (TS) {
         Unit = x@units
         x = seriesData(x)
         x = removeNA(x)
     }
         
     # Check for Univariate Series:
-    if(NCOL(x) > 1)
-        stop("x is not a vector or univariate time series")
+    if(NCOL(x) > 1) stop("x is not a vector or univariate time series")
         
     # Check for NAs:
-    if(any(is.na(x)))
-        stop("NAs in x")
+    if(any(is.na(x))) stop("NAs in x")
         
     # Sterling Ratio:
     if (NROW(x) == 1) {
@@ -223,26 +217,19 @@ origin = "1899-12-30", ...)
     
     # FUNCTION:
     
-    if ((!is.mts(x)) ||
-        (colnames(x)[1] != "Open") ||
-        (colnames(x)[2] != "High") ||
-        (colnames(x)[3] != "Low") ||
+    # Checks:
+    if ((!is.mts(x)) || (colnames(x)[1] != "Open") ||
+        (colnames(x)[2] != "High") || (colnames(x)[3] != "Low") ||
         (colnames(x)[4] != "Close"))
         stop("x is not a open/high/low/close time series")
-    xlabel = if (!missing(x)) 
-        deparse(substitute(x))
-    else NULL
-    if (missing(ylab)) {
-        ylab = xlabel
-    }
+    xlabel = if (!missing(x)) deparse(substitute(x)) else NULL
+    if (missing(ylab)) ylab = xlabel
     date = match.arg(date)
     time.x = time(x)
     dt = min(lag(time.x)-time.x)/3
     ylim = c(min(x, na.rm = TRUE), max(x, na.rm = TRUE))
-    if (is.null(xlim)) 
-        xlim = range(time.x)
-    if (is.null(ylim)) 
-        ylim = range(x[is.finite(x)])
+    if (is.null(xlim)) xlim = range(time.x)
+    if (is.null(ylim)) ylim = range(x[is.finite(x)])
     plot.new()
     plot.window(xlim, ylim, ...)
     for (i in 1:NROW(x)) {
@@ -253,8 +240,7 @@ origin = "1899-12-30", ...)
         segments(time.x[i], x[i,"Close"], time.x[i] + dt, x[i,"Close"],
             col = col[1], bg = bg)
     }
-    if (ann) 
-        title(main = main, xlab = xlab, ylab = ylab, ...)  
+    if (ann) title(main = main, xlab = xlab, ylab = ylab, ...)  
     if (axes) {
         if (date == "julian") {
             axis(1, ...)
@@ -269,9 +255,7 @@ origin = "1899-12-30", ...)
             axis(2, ...)
         }
     }
-    if (frame.plot) {
-        box(...)
-    }
+    if (frame.plot) box(...)
 }
 
 

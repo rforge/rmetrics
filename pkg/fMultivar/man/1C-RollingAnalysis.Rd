@@ -64,7 +64,7 @@ rollVar(x, n = 9, trim = TRUE, unbiased = TRUE, na.rm = FALSE)
         will be returned. The default is TRUE.
         }
     \item{x}{
-        a univariate \code{timeSeries} object or a numeric vector.
+        an univariate \code{timeSeries} object or a numeric vector.
         }
     \item{\dots}{
         additional arguments to be passed.

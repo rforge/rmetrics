@@ -1350,7 +1350,7 @@ function(object)
 #  .polymars
 #  .polymars.default
 #  .predict.polymars
-# Contributed package "polspline" is required!
+#  Contributed package "polspline" is required!
 
 
 .polymars =

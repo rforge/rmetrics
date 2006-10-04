@@ -107,7 +107,7 @@ function(x, lambda = 0.1, startup = 0)
     TS = is.timeSeries(x)
     y = as.vector(x)
     
-    # EMA
+    # EMA:
     if (lambda >= 1) lambda = 2/(lambda+1)
     if (startup == 0) startup = floor(2/lambda)
     if (lambda == 0){
@@ -120,12 +120,16 @@ function(x, lambda = 0.1, startup = 0)
     
     # Convert to timeSeries object:
     if (TS) {
-        ema = timeSeries(matrix(ema, ncol = 1), seriesPositions(x),
-            units = paste(x@units, "EMA", sep = ""))
+        ema = matrix(ema)
+        colnames(ema) = "EMA"
+        rownames(ema) = rownames(x)
+        x@Data = ema
+    } else {
+        x = ema
     }
         
     # Return Value:
-    ema
+    x
 }
 
 
@@ -273,7 +277,7 @@ function(x, lag = 5)
 oscTA = 
 function(x, lag1 = 25, lag2 = 65)
 {   # A function written by Diethelm Wuertz
-    #
+     
     # Description:
     #   Returns EMA Oscillator Indicator
     
@@ -319,9 +323,9 @@ function(x, lag = 25)
     # FUNCTION:
     
     # Momentum:
-    if (is.timeSeries(mom)) {
+    if (is.timeSeries(x)) {
         mom = diff(x, lag = lag, pad = 0)
-        colnames(mom)<-"mom"
+        colnames(mom)<-"MOM"
     } else {
         mom = diff(x, lag = lag) 
         mom = c(rep(0, times = lag), mom)
@@ -351,7 +355,7 @@ function(x, lag1 = 12, lag2 = 26)
     
     # MACD:
     macd = emaTA(x, lag1) - emaTA(x, lag2)
-    if (is.timeSeries(x)) colnames(macd)<-"macd"
+    if (is.timeSeries(x)) colnames(macd)<-"MACD"
   
     # Return Result:
     macd
@@ -376,7 +380,7 @@ function(x, lag1 = 12, lag2 = 26, lag3 = 9)
     
     # CDS:
     cds = emaTA(macdTA(x, lag1, lag2), lag3)
-    if (is.timeSeries(x)) colnames(cds)<-"cds"
+    if (is.timeSeries(x)) colnames(cds)<-"CDS"
     
     # Return Result:
     cds
@@ -401,7 +405,7 @@ function(x, lag1 = 12, lag2 = 26, lag3 = 9)
     
     # CDO:
     cdo = macdTA(x, lag1, lag2) - cdsTA(x, lag3)
-    if(is.timeSeries(x)) colnames(cdo)<-"cdo"
+    if(is.timeSeries(x)) colnames(cdo)<-"CDO"
     
     # Return Value:
     cdo
@@ -426,7 +430,7 @@ function(high, low)
     
     # VOHL:
     vohl = high - low
-    if(is.timeSeries(x)) colnames(vohl)<-"vohl"
+    if(is.timeSeries(x)) colnames(vohl)<-"VOHL"
     
     # Return Value:
     vohl
@@ -451,7 +455,7 @@ function(high, low)
     
     # VOR:
     vor = (high - low) / low
-    if(is.timeSeries(x)) colnames(vor)<-"vor"
+    if(is.timeSeries(x)) colnames(vor)<-"VOR"
     
     # Return Value:
     vor
@@ -462,44 +466,44 @@ function(high, low)
 
 
 stochasticTA = 
-function (close, high, low, lag1, lag2, type = c("fast", "slow")) 
+function (close, high, low, lag1 = 5, lag2 = 3, type = c("fast", "slow")) 
 {   # A function written by Diethelm Wuertz
 
     # Description:
     #   Returns Stochastic Indicators
     
     # Example:
-    #   stochasticTA(high, low, close, lag1 = 10, lag2 = 3, "fast") 
-    #   stochasticTA(high, low, close, lag1 = 10, lag2 = 3, "slow")   
+    #   stochasticTA(high, low, close, lag1 = 5, lag2 = 3, "fast") 
+    #   stochasticTA(high, low, close, lag1 = 5, lag2 = 3, "slow")   
 
     # FUNCTION:
     
     # Settings:
-    trim = FALSE
-    na.rm = FALSE
-    rollHigh = rollMax(high, lag1, trim = trim, na.rm = na.rm)
-    rollLow = rollMin(low, lag1, trim = trim, na.rm = na.rm)
+    TS = is.timeSeries(close)
+    if (TS) {
+        stopifnot(isUnivariate(close))
+        stopifnot(isUnivariate(high))
+    }
+    type = match.arg(type)
     
     # Fast:
-    if (type[1] == "fast") {
-        K = (close - rollLow)/(rollHigh - rollLow) * 100
-        D = rollMean(K, lag2, trim = trim, na.rm = na.rm)
-        K[1:lag1] = K[lag1]
-        D[1:(lag1+lag2-1)] = D[lag1+lag2-1]
-    }
+    K = fpkTA(close, high, low, lag = lag1) 
+    D = fpdTA(close, high, low, lag1 = lag1, lag2 = lag2)
     
     # Slow:
-    if (type[1] == "slow") {
-        K = (close - rollLow)/(rollHigh - rollLow) * 100
-        D = rollMean(K, lag2, trim = trim, na.rm = na.rm)
-        K = rollMean(K, lag2, trim = trim, na.rm = na.rm)
-        D = rollMean(D, lag2, trim = trim, na.rm = na.rm)
-        K[1:(lag1+lag2-1)] = K[lag1+lag2-1]
-        D[1:(lag1+2*lag2-2)] = D[lag1+2*lag2-2]
+    if (type == "slow") {
+        K = emaTA(K, lag3)
+        D = emaTA(D, lag3)
     }
     
     # Indicator:
-    stochastic = cbind(K, D)
+    if (TS) {
+        stochastic = merge(K, D)
+        units = c(paste(type, "K", sep = ""), paste(type, "D", sep = ""))
+        colnames(stochastic)<-units
+    } else {
+        stochastic = cbind(K, D)
+    }
     
     # Return Value:
     stochastic
@@ -510,7 +514,7 @@ function (close, high, low, lag1, lag2, type = c("fast", "slow"))
 
 
 fpkTA = 
-function(close, high, low, lag)
+function(close, high, low, lag = 5)
 {   # A function written by Diethelm Wuertz
 
     # Description:
@@ -518,11 +522,20 @@ function(close, high, low, lag)
     
     # FUNCTION:
     
+    # Settings:
+    TS = is.timeSeries(close)
+    if (TS) {
+        X = close
+        close = as.vector(close)
+        high = as.vector(high)
+        low = as.vector(low)
+    }
+    
     # Minimum:
     minlag = function(x, lag) {
         xm = x
         for (i in 1:lag) {
-            x1 = c(x[1],x[1:(length(x)-1)])
+            x1 = c(x[1], x[1:(length(x)-1)])
             xm = pmin(xm,x1)
             x = x1
         }
@@ -533,7 +546,7 @@ function(close, high, low, lag)
     maxlag = function(x, lag) {
         xm = x
         for (i in 1:lag) {
-            x1 = c(x[1],x[1:(length(x)-1)])
+            x1 = c(x[1], x[1:(length(x)-1)])
             xm = pmax(xm,x1)
             x = x1 
        }
@@ -545,8 +558,18 @@ function(close, high, low, lag)
     xmax = maxlag(high, lag)
     fpk = (close - xmin ) / (xmax -xmin)
     
+    # to timeSeries:
+    if (TS) {
+        fpk = matrix(fpk)
+        rownames(fpk) = rownames(X@Data)
+        colnames(fpk) = "FPK"
+        X@Data = fpk
+    } else {
+        X = fpk
+    }
+    
     # Return Value:
-    fpk
+    X
 }
 
 
@@ -554,7 +577,7 @@ function(close, high, low, lag)
 
 
 fpdTA = 
-function(close, high, low, lag1, lag2)
+function(close, high, low, lag1 = 5, lag2 = 3)
 {   # A function written by Diethelm Wuertz
 
     # Description:
@@ -566,8 +589,9 @@ function(close, high, low, lag1, lag2)
     # FUNCTION:
     
     # FPD:
+    TS = is.timeSeries(close)
     fpd = emaTA(fpkTA(close, high, low, lag1), lag2)
-    if(timeSeries(close)) colnames(fpd)<-"fpd"
+    if (TS) colnames(fpd)<-"FPD"
     
     # Return Value:
     fpd 
@@ -578,7 +602,7 @@ function(close, high, low, lag1, lag2)
 
 
 spdTA = 
-function(close, high, low, lag1, lag2, lag3)
+function(close, high, low, lag1 = 5, lag2 = 3, lag3 = 9)
 {   # A function written by Diethelm Wuertz
 
     # Description:
@@ -591,8 +615,9 @@ function(close, high, low, lag1, lag2, lag3)
     # FUNCTION:
     
     # SPD:
+    TS = is.timeSeries(close)
     spd = emaTA(fpdTA(close, high, low, lag1, lag2), lag3)
-    if(timeSeries(close)) colnames(spd)<-"spd"
+    if (TS) colnames(spd)<-"SPD"
     
     # Return Value:
     spd 
@@ -603,11 +628,11 @@ function(close, high, low, lag1, lag2, lag3)
 
 
 apdTA = 
-function(close, high, low, lag1, lag2, lag3, lag4)
+function(close, high, low, lag1 = 5, lag2 = 3, lag3 = 9, lag4 = 9)
 {   # A function written by Diethelm Wuertz
 
     # Description:
-    #   Returns A veraged %D Indicator
+    #   Returns Averaged %D Indicator
     
     # Details:
     #   AVERAGED %D INDICATOR: EMA OF SLOW %D
@@ -615,8 +640,9 @@ function(close, high, low, lag1, lag2, lag3, lag4)
     # FUNCTION:
     
     # APD:
+    TS = is.timeSeries(close)
     apd = emaTA(spdTA(close, high, low, lag1, lag2, lag3), lag4)
-    if(timeSeries(close)) colnames(apd)<-"apd"
+    if (TS) colnames(apd)<-"APD"
     
     # Return Value:
     apd 
@@ -627,19 +653,33 @@ function(close, high, low, lag1, lag2, lag3, lag4)
 
 
 wprTA = 
-function(close, high, low, lag)
+function(close, high, low, lag = 50)
 {   # A function written by Diethelm Wuertz
 
     # Description:
     #   Returns Williams %R Indicator
     
+    # Details:
+    #   Short Term: 5 to 49 days
+    #   Intermediate Term: 50 to 100 day
+    #   Long Term: More than 100 days
+    
     # FUNCTION:
+    
+    # Check:
+    TS = is.timeSeries(x)
+    if (TS) {
+        X = close
+        close = as.vector(close)
+        high = as.vector(high)
+        low = as.vector(low)
+    } 
     
     # %R:
     minlag = function(x, lag){
         xm = x
         for (i in 1:lag){
-            x1 = c(x[1],x[1:(length(x)-1)])
+            x1 = c(x[1], x[1:(length(x)-1)])
             xm = pmin(xm, x1)
             x = x1
         }
@@ -648,7 +688,7 @@ function(close, high, low, lag)
     maxlag = function(x, lag){
         xm = x
         for (i in 1:lag){
-            x1 = c(x[1],x[1:(length(x)-1)])
+            x1 = c(x[1], x[1:(length(x)-1)])
             xm = pmax(xm, x1)
             x = x1
         }
@@ -657,9 +697,20 @@ function(close, high, low, lag)
     xmin = minlag(low, lag)
     xmax = maxlag(high, lag)
     wpr = (close - xmin) / (xmax -xmin)   
-        
+      
+    # to timeSeries:
+    if (TS) {
+        wpr = matrix(wpr)
+        rownames(wpr) = rownames(X@Data)
+        colnames(wpr) = "WPR"
+        X@Data = wpr
+    } else {
+        X = wpr
+    }
+    
+      
     # Return Result:
-    wpr
+    X
 }
 
 
@@ -667,13 +718,20 @@ function(close, high, low, lag)
 
 
 rsiTA = 
-function(close, lag)
+function(close, lag = 14)
 {   # A function written by Diethelm Wuertz
 
     # Description:
     #   Returns Relative Strength Index Indicator
         
     # FUNCTION:
+    
+    # Check:
+    TS = is.timeSeries(close)
+    if (TS) {
+        X = close
+        close = as.vector(close)
+    } 
     
     # RSI:
     sumlag = 
@@ -691,9 +749,19 @@ function(close, lag)
     x[close<close1] = 0
     rsi = sumlag(x, lag)/sumlag (abs(close-close1), lag)
     rsi[1] = rsi[2]
-     
+    
+    # to timeSeries:
+    if (TS) {
+        rsi = matrix(rsi)
+        rownames(rsi) = rownames(X@Data)
+        colnames(rsi) = "RSI"
+        X@Data = rsi
+    } else {
+        X = rsi
+    }
+    
     # Return Result:
-    rsi
+    X
 }
 
 
@@ -706,17 +774,32 @@ function(x, n = 12)
 {   # A function written by Diethelm Wuertz
 
     # Description:
-    #
+    #   Returns the technical Indicator Acceleration
     
     # FUNCTION:
     
-    # Indicator:
-    x = as.vector(x)
+    # Check:
+    TS = is.timeSeries(x)
+    if (TS) {
+        stopifnot(isUnivariate(x))
+        X = x
+        x = as.vector(x)
+    }
+    
+    # Indicator: 
     accel = diff( x[(n+1):length(x)]-x[1:(length(x)-n)] )  
     accel = c(rep(NA, n+1), accel)
+    if (TS) {
+        accel = matrix(accel)
+        rownames(accel) = rownames(X@Data)
+        colnames(accel) = "ACCEL"
+        X@Data = accel
+    } else {
+        X = accel
+    }
     
     # Return Value:
-    accel 
+    X 
 }   
 
 
@@ -728,15 +811,27 @@ function(high, low, close, volume)
 {   # A function written by Diethelm Wuertz
 
     # Description:
-    #
+    #   Returns the technical indicator accumulation/distribution 
     
     # FUNCTION:
     
     # Indicator:
-    adi = cumsum((2 * close - high - low) / (high - low) * volume) 
+    adi = (2 * close - high - low) / (high - low) * volume
+    ADI = cumsum(as.vector(adi))
+    
+    # Time Series ?
+    if (is.timeSeries(adi)) {
+        ADI = matrix(ADI)
+        colnames(ADI) = "ADI"
+        rownames(ADI) = rownames(high@Data)
+        X = high
+        X@Data = ADI
+    } else {
+        X = ADI
+    }
     
     # Return Value:
-    adi 
+    X 
 }
     
 
@@ -748,15 +843,18 @@ function(open, high, low, close)
 {   # A function written by Diethelm Wuertz
 
     # Description:
-    #
+    #   Returns the technical indicator Accumulation/Distribution Oscillator
     
     # FUNCTION:
     
     # Indicator:
-    adoscillator = (high - open + close - low) / (high - low) * 50 
+    X = (high - open + close - low) / (high - low) * 50 
+    
+    # Time Series ?
+    if (is.timeSeries(open)) colnames(X)<-"ADO"
     
     # Return Value:
-    adoscillator 
+    X 
 }
     
 
@@ -764,22 +862,38 @@ function(open, high, low, close)
 
     
 bollingerTA = 
-function(x, n = 20, n.sd = 2) 
+function(x, lag = 20, n.sd = 2) 
 {   # A function written by Diethelm Wuertz
 
     # Description:
-    #
+    #   Returns the technical Indicator Bollinger Band
     
     # FUNCTION:
     
+    # Check:
+    TS = is.timeSeries(x)
+    if (TS) {
+        X = x
+        stopifnot(isUnivariate(x))
+        x = as.vector(x)
+    }
+    
     # Indicator:
+    n = lag
     mean = c(rep(NA, n-1), SMA(x = x, n = n))
     std = c(rep(NA, n-1), n.sd*sqrt(rollVar(x = x, n = n)))
-    bollinger = as.matrix(cbind(upper = mean+std, price = x, lower = mean-std))
-    rownames(bollinger) = as.character(1:length(x)) 
+    bollinger = cbind(UPPER = mean+std, BOLLINGER = x, LOWER = mean-std)
+    
+    if (TS) {
+        rownames(bollinger) = rownames(X@Data)
+        X@Data = bollinger
+    } else {
+        rownames(bollinger) = as.character(1:length(x)) 
+        X = bollinger
+    }
     
     # Return Value:
-    bollinger 
+    X 
 }
     
 
@@ -787,19 +901,22 @@ function(x, n = 20, n.sd = 2)
 
 
 chaikinoTA = 
-function(high, low, close, volume, n.long = 10, n.short = 3, 
-start = "average", na.rm = NULL) 
+function(high, low, close, volume, lag1 = 10, lag2 = 3) 
 {   # A function written by Diethelm Wuertz
 
     # Description:
-    #
+    #   Returns the technical indicator Chaikin's oscillator 
     
     # FUNCTION:
     
     # Indicator:
-    adi = TA.adi(high, low, close, volume)
-    chaikino = EWMA(adi, n.short, start = start, na.rm = na.rm) - 
-        EWMA(adi, n.long, start=start, na.rm = na.rm) 
+    adi = adiTA(high, low, close, volume)
+    
+    chaikino = 
+        emaTA(adi, lambda = 2/(lag1+1), startup = 0) - 
+        emaTA(adi, lambda = 2/(lag2+1), startup = 0 ) 
+        
+    if(is.timeSeries(chaikino)) colnames(chaikino)<-"CHAIKINO"
     
     # Return Value:
     chaikino 
@@ -810,21 +927,34 @@ start = "average", na.rm = NULL)
 
     
 chaikinvTA = 
-function(high, low, n.range = 10, n.change = 10, start = "average") 
+function(high, low, lag1 = 10, lag2 = 10) 
 {   # A function written by Diethelm Wuertz
 
     # Description:
-    #
+    #   Returns the technical indicator Chaikin's volatility
+    
+    # Arguments:
+    #   lag1 - length of EMA range
+    #   lag2 - length of change
     
     # FUNCTION:
     
     # Indicator:
-    rt = EWMA(high-low, n.range, start = start)
-    chaikinv = (rt[-(1:n.change)]/rt[1:(length(rt)-n.change)]-1)*100
-    chaikinv = c(rep(NA, n), chaikinv)
+    RT = emaTA(high-low, 2/(lag1+1), startup = 0)
+    if (is.timeSeries(RT)) rt = as.vector(RT)
+    chaikinv = (rt[-(1:lag2)]/rt[1:(length(rt)-lag2)]-1)*100
+    chaikinv = c(rep(NA, lag2), chaikinv)
+    
+    if (is.timeSeries(RT)) {
+        x = matrix(chaikinv)
+        rownames(x) = rownames(RT@Data)
+        colnames(x) = "CHAIKINV"
+    } else {
+        x = chaikinv
+    }
     
     # Return Value:
-    chaikinv 
+    x 
 }   
     
 
@@ -836,21 +966,44 @@ function(open, high, low, close)
 {   # A function written by Diethelm Wuertz
 
     # Description:
-    #
+    #   Returns the Garman-Klass estimate of volatility 
     
     # FUNCTION:
     
+    # Check:
+    TS = is.timeSeries(open)
+    if (TS) {
+        x = open
+        open = as.vector(open)
+        high = as.vector(high)
+        low = as.vector(low)
+        close = as.vector(close)
+    }   
+    
     # Indicator:
     prices = log(cbind(open, high, low, close))
-    n = nrow(prices); alpha = 0.12; f = 0.192
-    u = high-open; d = low-open; cc = close - open
+    n = nrow(prices)
+    alpha = 0.12
+    f = 0.192
+    u = high-open
+    d = low-open
+    cc = close - open
     oc = (prices[2:n, 1] - prices[1:(n - 1), 4])^2
     garmanklass = 0.511*(u-d)^2 - 0.019*(cc*(u+d) - 2*u*d) - 0.383*cc^2
     garmanklass = sqrt(((1 - alpha)*garmanklass[2:n])/(1-f) + (alpha*oc)/f)
     garmanklass = c(NA, garmanklass)
     
+    if (TS) {
+        garmanklass = matrix(garmanklass)
+        colnames(garmanklass) = "GK"
+        rownames(garmanklass) = rownames(x@Data)
+        x@Data = garmanklass
+    } else {
+        x = garmanklass
+    }
+    
     # Return Value:
-    garmanklass 
+    x 
 }
     
     
@@ -862,18 +1015,36 @@ function(close, volume)
 {   # A function written by Diethelm Wuertz
 
     # Description:
-    #
+    #   Reurns the technical indicator negative volume index
     
     # FUNCTION:
+    
+    # Check:
+    TS = is.timeSeries(close)
+    if (TS) {
+        x = close
+        close = as.vector(close)
+        volume = as.vector(volume)
+    }   
     
     # Indicator:
     ind = rep(0, length(close)-1)
     ind[diff(volume) < 0] = 1
-    ch = c(0, TA.roc(close, n = 1)/100) 
+    ch = rocTA(close, lag = 1) / 100
     nvi = cumsum(ch * c(0, ind)) 
     
+    # Time Series Output ?
+    if (TS) {
+        nvi = matrix(nvi)
+        colnames(nvi) = "NVI"
+        rownames(nvi) = rownames(x@Data)
+        x@Data = nvi
+    } else {
+        x = nvi
+    }
+    
     # Return Value:
-    nvi 
+    x 
 }
     
     
@@ -886,15 +1057,33 @@ function(close, volume)
 {   # A function written by Diethelm Wuertz
 
     # Description:
-    #
+    #   Returns the technical indicator on balance volume
     
     # FUNCTION:
+    
+    # Check:
+    TS = is.timeSeries(close)
+    if (TS) {
+        x = close
+        close = as.vector(close)
+        volume = as.vector(volume)
+    }   
     
     # Indicator:
     obv = cumsum(volume * c(0, sign(diff(close))))
     
+    # Time Series Output ?
+    if (TS) {
+        obv = matrix(obv)
+        colnames(obv) = "OBV"
+        rownames(obv) = rownames(x@Data)
+        x@Data = obv
+    } else {
+        x = obv
+    }
+    
     # Return Value:
-    obv 
+    x 
 }
     
 
@@ -907,18 +1096,36 @@ function(close, volume)
 {   # A function written by Diethelm Wuertz
 
     # Description:
-    #
+    #   Returns the technical indicator positive volume
     
     # FUNCTION:
+    
+    # Check:
+    TS = is.timeSeries(close)
+    if (TS) {
+        x = close
+        close = as.vector(close)
+        volume = as.vector(volume)
+    }  
     
     # Indicator:
     ind = rep(0, length(close)-1)
     ind[diff(volume) > 0] = 1
-    ch = c(0, TA.roc(close, n = 1)/100)
+    ch = rocTA(close, lag = 1)/100
     pvi = cumsum(ch * c(0, ind))
+
+    # Time Series Output ?
+    if (TS) {
+        pvi = matrix(pvi)
+        colnames(pvi) = "PVI"
+        rownames(pvi) = rownames(x@Data)
+        x@Data = pvi
+    } else {
+        x = pvi
+    }
     
     # Return Value:
-    pvi 
+    x  
 }
     
 
@@ -930,16 +1137,34 @@ function(close, volume)
 {   # A function written by Diethelm Wuertz
 
     # Description:
-    #
+    #   Returns the technical indicator price-volume trend
     
     # FUNCTION:
+    
+    # Check:
+    TS = is.timeSeries(close)
+    if (TS) {
+        x = close
+        close = as.vector(close)
+        volume = as.vector(volume)
+    }  
     
     # Indicator:
     m = length(close)   
     ch = cumsum( volume * c(0, (close[2:m]/close[1:(m-1)]-1)*100)) 
     
+    # Time Series Output ?
+    if (TS) {
+        ch = matrix(ch)
+        colnames(ch) = "PVTREND"
+        rownames(ch) = rownames(x@Data)
+        x@Data = ch
+    } else {
+        x = ch
+    }
+    
     # Return Value:
-    ch 
+    x   
 }
      
 
@@ -955,6 +1180,15 @@ function(high, low, close)
     
     # FUNCTION:
     
+    # Check:
+    TS = is.timeSeries(high)
+    if (TS) {
+        x = high
+        high = as.vector(high)
+        low = as.vector(low)
+        close = as.vector(close)
+    }  
+    
     # Indicator:
     ind = c(0, sign(diff(close)))
     williamsad = vector("numeric", length(close))
@@ -965,8 +1199,18 @@ function(high, low, close)
     williamsad = cumsum(williamsad) 
     names(williamsad) = as.character(1:length(x))
     
+    # Time Series Output ?
+    if (TS) {
+        williamsad = matrix(williamsad)
+        colnames(williamsad) = "WAD"
+        rownames(williamsad) = rownames(x@Data)
+        x@Data = williamsad
+    } else {
+        x = williamsad
+    }
+    
     # Return Value:
-    williamsad 
+    x 
 }
     
 
@@ -975,19 +1219,39 @@ function(high, low, close)
 
     
 williamsrTA = 
-function(high, low, close, n = 20) 
+function(high, low, close, lag = 20) 
 {   # A function written by Diethelm Wuertz
 
     # Description:
-    #
+    #   Returns the technical indicator Willimas' accumulation/distribution
     
     # FUNCTION:
     
+    # Check:
+    TS = is.timeSeries(high)
+    if (TS) {
+        x = high
+        high = as.vector(high)
+        low = as.vector(low)
+        close = as.vector(close)
+    }  
+    
     # Indicator:
+    n = lag
     hh = rollMax(high, n, trim = FALSE)
     ll = rollMin(low, n, trim = FALSE)
     williamsr = (hh-close)/(hh-ll)*100 
     names(williamsr) = as.character(1:length(x))
+    
+    # Time Series Output ?
+    if (TS) {
+        williamsr = matrix(williamsr)
+        colnames(williamsr) = "WR"
+        rownames(williamsr) = rownames(x@Data)
+        x@Data = williamsr
+    } else {
+        x = williamsr
+    }
     
     # Return Value:
     williamsr 
@@ -1004,10 +1268,16 @@ function(x, n = 5)
     # Description:
     #   Computes a Simple Moving Average
     
+    # Arguments:
+    #   x - an univariate object of class "timeSeries" or a numeric vector
+    
     # FUNCTION:
     
+    # Rolling Mean:
+    ans = rollFun(x = x, n = n, FUN = mean) 
+    
     # Return Value:
-    rollFun(x = x, n = n, FUN = mean) 
+    ans 
 }
 
 
@@ -1021,18 +1291,16 @@ function(x, lambda, startup = 0)
     # Description:
     #   Computes an Exponentially Weighted Moving Average
     
+    # Arguments:
+    #   x - an univariate object of class "timeSeries" or a numeric vector
+    
     # FUNCTION:
     
     # EWMA:
-    if (lambda >= 1) lambda <- 2/(lambda + 1)
-    if (startup == 0) startup <- floor(2/lambda)
-    if (lambda == 0) xema <- rep(mean(x), length(x))
-    if (lambda > 0) {
-        xlam <- x * lambda; xlam[1] <- mean(x[1:startup])
-        xema <- filter(xlam, filter = (1 - lambda), method = "rec")}
+    ans = emaTA(x = x, lambda = lambda, startup = startup)
         
     # Return Value:
-    xema
+    ans
 }
 
 

@@ -47,7 +47,6 @@
 #  delliptical2d         Computes density for elliptical distributions
 #  .gfunc2d              Generator Function for elliptical distributions
 #  .delliptical2dSlider  Slider for bivariate densities
-#  .delliptical2d.RUnit  RUnit Test for elliptical distributions
 ################################################################################
 
 
@@ -1071,41 +1070,6 @@ function(B = 10, eps = 1.e-3)
         maxima      = c(       7, 100,    +1,       B,   B,   B,  100,  256),
         resolutions = c(       1,  10,   0.1,     0.1, 0.1, 0.1,   10,    1),
         starts      = c(       1,  10,     0,       4,   1,   1,   10,   12)) 
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.delliptical2d.RUnit = 
-function()
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   RUnit test for elliptical distributions
-    
-    # FUNCTION:
-    
-    # Settings:
-    xy = grid2d((-50:50)/10)
-    
-    # Contour Plots:
-    par(mfrow = c(3, 2), cex = 0.7)
-    contour(delliptical2d(xy, rho = 0.75, param = NULL, 
-        type = "norm", output = "list"))
-    contour(delliptical2d(xy, rho = 0.75, param = NULL, 
-        type = "cauchy", output = "list"))
-    contour(delliptical2d(xy, rho = 0.75, param = 4, 
-        type = "t", output = "list"))
-    contour(delliptical2d(xy, rho = 0.75, param = NULL, 
-        type = "laplace", output = "list"))
-    contour(delliptical2d(xy, rho = 0.75, param = NULL, 
-        type = "kotz", output = "list"))
-    contour(delliptical2d(xy, rho = 0.75, param = NULL, 
-        type = "epower", output = "list"))
-        
-    # Return Value:
-    invisible()
 }
 
 

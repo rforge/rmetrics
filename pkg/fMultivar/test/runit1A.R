@@ -83,6 +83,8 @@
 test.helpFile = 
 function()
 {
+    # UNIT TEST:
+    
     # Help File:
     helpFile = function() { 
         example(TechnicalAnalysis); return() }
@@ -98,13 +100,233 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.technicalAnalysis =
+test.utility =
 function()
 {
+    #  emaTA                     Exponential Moving Average
+    #  biasTA                    EMA-Bias
+    #  medpriceTA                Median Price                   
+    #  typicalpriceTA            Typical Price
+    #  wcloseTA                  Weighted Close Price
+    #  rocTA                     Rate of Change
+    #  oscTA                     EMA-Oscillator
+    
     # UNIT TEST:
     
     # Data:
-    URL = "http://www.itp.phys.ethz.ch/econophysics/R/data/organisations/YAHOO/data/MSFT.CSV"
+    URL = "http://localhost/econophysics/R/data/organisations/YAHOO/data/MSFT.CSV"
+    download.file(URL, "MSFT.CSV")
+    X = readSeries("MSFT.CSV")
+    print(head(X))
+    
+    # Data Records:
+    x = close = X[, "Close"]
+    high   = X[, "High"]
+    low    = X[, "Low"]
+    open   = X[, "Open"]
+    volume = X[, "Volume"]
+    
+    # Exponential Moving Average
+    TA = emaTA(x, lambda = 0.1, startup = 0)
+    dim(TA)
+    head(TA)
+
+    # EMA-Bias
+    TA = biasTA(x, lag = 5)
+    dim(TA)
+    head(TA)
+    
+    # Median Price
+    TA = medpriceTA(high, low)
+    dim(TA)
+    head(TA)
+
+    # Typical Price
+    TA = typicalpriceTA(high, low, close)
+    dim(TA)
+    head(TA)
+    
+    # Weighted Close Price
+    TA = wcloseTA(high, low, close)
+    dim(TA)
+    head(TA)
+    
+    # Rate of Change
+    TA = rocTA(x, lag = 5)
+    dim(TA)
+    head(TA)
+    
+    # EMA-Oscillator
+    TA = oscTA(x, lag1 = 25, lag2 = 65)
+    dim(TA)
+    head(TA)
+    
+    # Return Value
+    return()
+}
+
+
+# ------------------------------------------------------------------------------
+    
+
+test.oscillator =
+function()
+{
+    #  momTA                     Momentum
+    #  macdTA                    MACD
+    #  cdsTA                     MACD Signal Line
+    #  cdoTA                     MACD Oscillator
+    #  vohlTA                    High/Low Volatility
+    #  vorTA                     Volatility Ratio
+    
+    # UNIT TEST:
+    
+    # Data:
+    URL = "http://localhost/econophysics/R/data/organisations/YAHOO/data/MSFT.CSV"
+    download.file(URL, "MSFT.CSV")
+    X = readSeries("MSFT.CSV")
+    print(head(X))
+    
+    # Data Records:
+    x = close = X[, "Close"]
+    high   = X[, "High"]
+    low    = X[, "Low"]
+    open   = X[, "Open"]
+    volume = X[, "Volume"]
+
+    # Momentum
+    TA = momTA(x, lag = 5)
+    dim(TA)
+    head(TA)
+    
+    # MACD
+    TA = macdTA(x, lag1 = 12, lag2 = 26)
+    dim(TA)
+    head(TA)
+    
+    # MACD Signal Line
+    TA = cdsTA(x, lag1 = 12, lag2 = 26, lag3 = 9)
+    dim(TA)
+    head(TA)
+    
+    # MACD Oscillator
+    TA = cdoTA(x, lag1 = 12, lag2 = 26, lag3 = 9)
+    dim(TA)
+    head(TA)
+    
+    # High/Low Volatility
+    TA = vohlTA(high, low)
+    dim(TA)
+    head(TA)
+    
+    # Volatility Ratio
+    TA = vorTA(high, low)
+    dim(TA)
+    head(TA)
+    
+    # Return Value:
+    return()    
+} 
+
+
+# ------------------------------------------------------------------------------
+
+
+test.stochastics =
+function()
+{
+    #  stochasticTA              Stochastics %K/%D, fast/slow
+    #  fpkTA                     Fast Percent %K
+    #  fpdTA                     Fast Percent %D
+    #  spdTA                     Slow Percent %D
+    #  apdTA                     Averaged Percent %D
+    #  wprTA                     Williams Percent %R
+    #  rsiTA                     Relative Strength Index
+
+    # UNIT TEST:
+    
+    # Data:
+    URL = "http://localhost/econophysics/R/data/organisations/YAHOO/data/MSFT.CSV"
+    download.file(URL, "MSFT.CSV")
+    X = readSeries("MSFT.CSV")
+    print(head(X))
+    
+    # Data Records:
+    x = close = X[, "Close"]
+    high   = X[, "High"]
+    low    = X[, "Low"]
+    open   = X[, "Open"]
+    volume = X[, "Volume"]
+
+    # Fast Stochstic
+    TA = stochasticTA(close, high, low, lag1 = 5, lag2 = 3, type = "fast") 
+    dim(TA)
+    head(TA, 10)
+    
+    # Slow Stochstic
+    TA = stochasticTA(close, high, low, lag1 = 5, lag2 = 3, lag3 = 5, type = "slow") 
+    dim(TA)
+    head(TA, 10)
+
+    # Fast Percent K:
+    TA = fpkTA(close, high, low, lag = 5)  
+    dim(TA)
+    head(TA,10)
+    
+    # Fast Percent D:
+    TA = fpdTA(close, high, low, lag1 = 5, lag2 = 3)
+    dim(TA)
+    head(TA, 10)
+    
+    # Slow Percent %D
+    TA = spdTA(close, high, low, lag1 = 5, lag2 = 3, lag3 = 9)
+    dim(TA)
+    head(TA, 10)
+    
+    # Averaged Percent %D
+    TA = apdTA(close, high, low, lag1 = 5, lag2 = 3, lag3 = 9, lag4 = 9)
+    dim(TA)
+    head(TA, 10)
+    
+    # Williams Percent %R
+    TA = wprTA(close, high, low, lag = 5)
+    dim(TA)
+    head(TA, 10)
+    
+    # Relative Strength Index
+    TA = rsiTA(close, lag = 14)
+    dim(TA)
+    head(TA, 10)
+    
+    # Return Value:
+    return()       
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.addons =
+function()
+{
+    #  accelTA                   Acceleration
+    #  adiTA                     AD Indicator      
+    #  adoscillatorTA            AD Oscillator
+    #  bollingerTA               Bollinger Bands
+    #  chaikinoTA                Chaikin Oscillator
+    #  chaikinvTA                Chaikin Volatility
+    #  garmanklassTA             Garman-Klass Volatility
+    #  nviTA                     Negative Volume Index
+    #  obvTA                     On Balance Volume
+    #  pviTA                     Positive Volume Index
+    #  pvtrendTA                 Price-Volume Trend
+    #  williamsadTA              Williams AD
+    #  williamsrTA               Williams R%
+    
+    # UNIT TEST:
+    
+    # Data:
+    URL = "http://localhost/econophysics/R/data/organisations/YAHOO/data/MSFT.CSV"
     download.file(URL, "MSFT.CSV")
     X = readSeries("MSFT.CSV")
     print(X)
@@ -115,76 +337,73 @@ function()
     open   = X[, "Open"]
     volume = X[, "Volume"]
     
-    TA = emaTA(x, lambda = 0.1, startup = 0)
+    # Acceleration
+    TA = accelTA(x, n = 3)
     dim(TA)
-    head(TA)
+    head(TA, 10)
 
-    TA = biasTA(x, lag = 5)
+    # AD Indicator  
+    TA = adiTA(high, low, close, volume)
     dim(TA)
-    head(TA)
+    head(TA, 10)
     
-    TA = rocTA(x, lag = 5)
+    # AD Oscillator
+    TA = adoscillatorTA(open, high, low, close)
     dim(TA)
-    head(TA)
+    head(TA, 10)
     
-    TA = oscTA(x, lag1 = 25, lag2 = 65)
+    # Bollinger Bands
+    TA = bollingerTA(x, lag = 5, n.sd = 2)
     dim(TA)
-    head(TA)
-    
-    # TA = momTA(x, lag = 5)
-    # dim(TA)
-    # head(TA)
-    
-    TA = macdTA(x, lag1 = 12, lag2 = 26)
+    head(TA, 10)
+     
+    # Chaikin Oscillator
+    TA = chaikinoTA(high, low, close, volume, lag1 = 10, lag2 = 3)
     dim(TA)
-    head(TA)
-    
-    TA = cdsTA(x, lag1 = 12, lag2 = 26, lag3 = 9)
+    head(TA, 10)
+     
+    # Chaikin Volatility
+    TA = chaikinvTA(high, low, lag1 = 5, lag2 = 5) 
     dim(TA)
-    head(TA)
-    
-    TA = cdoTA(x, lag1 = 12, lag2 = 26, lag3 = 9)
+    head(TA, 10)
+     
+    # Garman-Klass Volatility
+    TA = garmanklassTA(open, high, low, close)
     dim(TA)
-    head(TA)
-    
-    TA = vohlTA(high, low)
+    head(TA, 10)
+     
+    # Negative Volume Index
+    TA = nviTA(close, volume) 
     dim(TA)
-    head(TA)
-    
-    TA = vorTA(high, low)
+    head(TA, 10)        
+        
+    # On Balance Volume
+    TA = obvTA(close, volume) 
     dim(TA)
-    head(TA)
-    
-    # TA = stochasticTA(close, high, low, lag1, lag2, type = c("fast", "slow")) 
-    # dim(TA)
-    # head(TA)
-    
-    # TA = fpkTA(close, high, low, lag = 9) ERROR
+    head(TA, 10)
+     
+    # Positive Volume Index
+    TA = pviTA(close, volume)
     dim(TA)
-    head(TA)
+    head(TA, 10)
+     
+    # Price-Volume Trend
+    TA = pvtrendTA(close, volume)
+    dim(TA)
+    head(TA, 10)
+     
+    # Williams AD
+    TA = williamsadTA(high, low, close)
+    dim(TA)
+    head(TA, 10)
     
-    # TA = fpdTA(close, high, low, lag1, lag2)
-    # dim(TA)
-    # head(TA)
-    
-    # TA = spdTA(close, high, low, lag1, lag2, lag3)
-    # dim(TA)
-    # head(TA)
-    
-    # TA = apdTA(close, high, low, lag1, lag2, lag3, lag4)
-    # dim(TA)
-    # head(TA)
-    
-    # TA = wprTA(close, high, low, lag)
-    # dim(TA)
-    # head(TA)
-    
-    # TA = rsiTA(close, lag)
-    # dim(TA)
-    # head(TA)
+    # Williams R%
+    TA = williamsrTA(high, low, close, lag = 5) 
+    dim(TA)
+    head(TA, 10)     
     
     # Return Value:
-    return()    
+    return()       
 }
 
 
@@ -199,14 +418,29 @@ function()
 
     # UNIT TEST:
     
+    # Data:
+    URL = "http://localhost/econophysics/R/data/organisations/YAHOO/data/MSFT.CSV"
+    download.file(URL, "MSFT.CSV")
+    X = readSeries("MSFT.CSV")
+    print(X)
+    
+    x = close = X[, "Close"]
+    high   = X[, "High"]
+    low    = X[, "Low"]
+    open   = X[, "Open"]
+    volume = X[, "Volume"]
+    
+    # SMA:
     TA = SMA(x, n = 5)
-    dim(TA) # !!!
+    dim(TA) 
     head(TA)
     
+    # EMA:
     TA = EWMA(x, 25)
     dim(TA)  
     head(TA)
     
+    # EMA:
     TA = EWMA(x, 2/(25+1))
     dim(TA)  
     head(TA)

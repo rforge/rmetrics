@@ -47,7 +47,6 @@
 #  delliptical2d         Computes density for elliptical distributions
 #  .gfunc2d              Generator Function for elliptical distributions
 #  .delliptical2dSlider  Slider for bivariate densities
-#  .delliptical2d.RUnit  RUnit Test for elliptical distributions
 ################################################################################
 
 
@@ -198,7 +197,26 @@ function()
 test.elliptical =
 function()
 {
-    # Return Value:
+    
+    # Settings:
+    xy = grid2d((-50:50)/10)
+    
+    # Contour Plots:
+    par(mfrow = c(3, 2), cex = 0.7)
+    contour(delliptical2d(xy, rho = 0.75, param = NULL, 
+        type = "norm", output = "list"), main = "norm")
+    contour(delliptical2d(xy, rho = 0.75, param = NULL, 
+        type = "cauchy", output = "list"), main = "cauchy")
+    contour(delliptical2d(xy, rho = 0.75, param = 4, 
+        type = "t", output = "list"), main = "t")
+    contour(delliptical2d(xy, rho = 0.75, param = NULL, 
+        type = "laplace", output = "list"), main = "laplace")
+    contour(delliptical2d(xy, rho = 0.75, param = NULL, 
+        type = "kotz", output = "list"), main = "kotz")
+    contour(delliptical2d(xy, rho = 0.75, param = NULL, 
+        type = "epower", output = "list"), main = "epower")
+        
+# Return Value:
     return()    
 }
 

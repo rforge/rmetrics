@@ -28,8 +28,8 @@
 
 
 ################################################################################
-# REQUIRED PACKAGE:     
-#  systemfit
+# REQUIRED PACKAGE:     DESCRIPTION:  
+#  .systemfitBuiltin     
 # FUNCTION:             SYSTEMFIT WRAPPER:
 #  'fSYSTEM'             S4 Class Representation
 #  systemFit             Wrapper Function for "systemfit" and "sem" Models:
@@ -76,6 +76,20 @@
 # URL: http://www.r-project.org, http://www.forestinformatics.com, 
 #   http://www.arne-henningsen.de
 ################################################################################
+
+
+.systemBuiltin =
+function(builtin = "/fMultivar/demo/systemfitBuiltin.R") 
+{
+    sink("@sink@")
+    Builtin = paste(.Library, builtin, sep = "")
+    source(Builtin)
+    sink()
+    unlink("@sink@")
+}
+
+
+# ------------------------------------------------------------------------------
 
 
 setClass("fSYSTEM", 

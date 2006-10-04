@@ -43,12 +43,29 @@ function(x, n, trim = TRUE, na.rm = FALSE, FUN, ...)
 
     # Description:
     #   Compute rolling function value
-
+    
+    # Arguments:
+    #   x - an univariate "timeSeries" object or a numeric vector.
+    #   n - an integer specifying the number of periods or 
+    #       terms to use in each rolling/moving sample.
+    #   trim - a logical flag: if TRUE, the first n-1 missing values in 
+    #       the returned object will be removed; if FALSE, they will 
+    #       be saved in the returned object. The default is TRUE.
+    #   na.rm - a logical flag: if TRUE, missing values in x will be  
+    #       removed before computation. The default is FALSE.
+    #   FUN - the rolling function, arguments to this function can be
+    #       passed through the \code{\dots} argument.
+    
     # FUNCTION:
     
     # Transform:
     x.orig = x
-    if (is.timeSeries(x)) TS = TRUE else TS = FALSE
+    if (is.timeSeries(x)) {
+        stopifnot(isUnivariate(x))
+        TS = TRUE 
+    } else {
+        TS = FALSE
+    }
     if (TS) {
         positions = x.orig@positions
         x = x.orig@Data[, 1]
@@ -68,10 +85,15 @@ function(x, n, trim = TRUE, na.rm = FALSE, FUN, ...)
     start = 1
     end = length(x)-n+1
     m = x[start:end]
-    for (i in 2:n) {
-        start = start + 1
-        end = end + 1
-        m = cbind(m, x[start:end])}
+    if (n > 1) {
+        for (i in 2:n) {
+            start = start + 1
+            end = end + 1
+            m = cbind(m, x[start:end])
+        }
+    } else {
+        m = matrix(m)
+    }
     
     # Result:
     ans = apply(m, MARGIN = 1, FUN = FUN, ...)
@@ -84,8 +106,8 @@ function(x, n, trim = TRUE, na.rm = FALSE, FUN, ...)
         
     # Back to timeSeries:
     if (TS) {
-        ans = timeSeries(as.matrix(ans), positions, units = x.orig@units,
-            FinCenter = x.orig@FinCenter)
+        ans = timeSeries(as.matrix(ans), positions, recordIDs = data.frame(),
+            units = x.orig@units, FinCenter = x.orig@FinCenter)
     }
     
     # Return value:
