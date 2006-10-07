@@ -45,7 +45,7 @@
 \alias{myUnits}
 
 
-\title{Masked Objects and Additional Generic Functions}
+\title{Some Rmetrics Utilities}
 
 
 \description{
