@@ -77,8 +77,6 @@
     # spreadsheet file and transforms it ditrectly to a 'timeSeries'
     # object.
     args(readSeries)
-    # Where are the Data?
-    # dataPath = paste(.Library, "/Rmetrics/data/", sep = "")
     ###
     
     
@@ -89,10 +87,7 @@
     SRC = "ZivotWang/data/singleIndex.dat.csv"
     DATA = paste(URL, SRC, sep = "") 
     download.file(DATA, destfile = "singleIndex.dat.csv")
-    singleIndex.dat = as.timeSeries(
-        read.table("singleIndex.dat.csv", header = TRUE, sep = ";"))
-    ###
-    
+    singleIndex.dat = readSeries("singleIndex.dat.csv")
     print(singleIndex.dat[1,])
     print(end(singleIndex.dat))
     ###
@@ -540,7 +535,7 @@
     tS = timeSequence(
         from = "1/1/1990", 
         to = "3/1/1990", 
-        by = "weeks",
+        by = "week",
         format = "%m/%d/%Y")
     print(tS)
     ###
@@ -548,7 +543,7 @@
     
     # ... another weekly sequence using "timeSequence"
     tD = timeSequence("2000-01-01", "2000-12-31", 
-        by = "weeks", format = "%Y-%m-%d")
+        by = "week", format = "%Y-%m-%d")
     print(tD)
     # Starts on?
     getDayOfWeek(tD[1])
@@ -710,10 +705,9 @@
 # Section 2.2.5 - Creating 'timeSeries' Objects
 
 
-    # The function 'read.timeSeries' allows you to read data from a
-    # spreadsheet file and transforms it ditrectly to a 'timeSeries'
-    # object.
-    args(read.timeSeries)
+    # The function 'readSeries' allows you to read data from a
+    # spreadsheet file and transforms it directly to a 'timeSeries' object.
+    args(readSeries)
     ###
 
 
@@ -795,10 +789,13 @@
     # transaction information of Yahoo stock, with the following 
     # six columns: Date, Open, High, Low, Close, Volume.
     # Data are downloadable and can be updated from Yahoo's web site.
-    yhoo.df = read.timeSeries(
-        paste(dataPath, "yhoo.df.csv", sep = ""))
-    yhoo.df[1,]
-    end(yhoo.df)
+    URL = "http://www.itp.phys.ethz.ch/econophysics/R/data/textbooks/"
+    SRC = "ZivotWang/data/yhoo.df.csv"
+    DATA = paste(URL, SRC, sep = "") 
+    download.file(DATA, destfile = "yhoo.df.csv")
+    yhoo.df = readSeries("yhoo.df.csv")
+    print(yhoo.df[1,])
+    print(end(yhoo.df))
     ###
     
     
@@ -879,10 +876,9 @@
     # The file "singleIndex.dat.csv" contains the monthly closing 
     # prices for Microsoft Corporation and the S&P 500 index.
     # Data are downloadable and can be updated from Yahoo's web site.
-    singleIndex.dat = read.timeSeries(
-        paste(dataPath, "singleIndex.dat.csv", sep = ""))
-    singleIndex.dat[1,]
-    end(singleIndex.dat)
+    singleIndex.dat = readSeries("singleIndex.dat.csv")
+    print(singleIndex.dat[1,])
+    print(end(singleIndex.dat))
     ###
     
     
@@ -917,10 +913,13 @@
     # The file "msft.dat.csv" contains data representing the open, 
     # high, low, close and volume information for Microsoft stocks. 
     # Data are downloadable and can be updated from Yahoo's web site.
-    msft.dat = read.timeSeries(
-        paste(dataPath, "msft.dat.csv", sep = ""))
-    msft.dat[1, ]
-    end(msft.dat)
+    URL = "http://www.itp.phys.ethz.ch/econophysics/R/data/textbooks/"
+    SRC = "ZivotWang/data/msft.dat.csv"
+    DATA = paste(URL, SRC, sep = "") 
+    download.file(DATA, destfile = "msft.dat.csv")
+    msft.dat = readSeries("msft.dat.csv")
+    print(msft.dat[1,])
+    print(end(msft.dat))
     ###
     
     
@@ -974,15 +973,21 @@
     # adjusted U.S. Consumer Price Index (CPI). 
     # Data are downloadable from Economagics's web site.
     # Start with IP:
-    IP.dat = read.timeSeries(
-        paste(dataPath, "IP.dat.csv", sep = ""))
-    IP.dat[1,]
-    end(IP.dat)
-    # Next CPI
-    CPI.dat = read.timeSeries(
-        paste(dataPath, "CPI.dat.csv", sep = ""))
-    CPI.dat[1,]
-    end(CPI.dat)
+    URL = "http://www.itp.phys.ethz.ch/econophysics/R/data/textbooks/"
+    SRC = "ZivotWang/data/IP.dat.csv"
+    DATA = paste(URL, SRC, sep = "") 
+    download.file(DATA, destfile = "IP.dat.csv")
+    IP.dat = readSeries("IP.dat.csv")
+    print(IP.dat[1,])
+    print(end(IP.dat))
+    # Next CPI:
+    URL = "http://www.itp.phys.ethz.ch/econophysics/R/data/textbooks/"
+    SRC = "ZivotWang/data/CPI.dat.csv"
+    DATA = paste(URL, SRC, sep = "") 
+    download.file(DATA, destfile = "CPI.dat.csv")
+    CPI.dat = readSeries("CPI.dat.csv")
+    print(CPI.dat[1,])
+    print(end(CPI.dat))
     ###
     
     
@@ -999,12 +1004,14 @@
     
     # The file "DowJones30.csv" contains closing prices for 30 stocks
     # represented in the Dow Jones Industrial Average Index. 
-    # Data are downloadable from Yahoo's web site.  
-    DowJones30 = read.timeSeries(
-        paste(dataPath, "DowJones30.csv", sep = ""))
-    DowJones30[1,]
-    head(DowJones30)
-    tail(DowJones30)
+    # Data are downloadable from Yahoo's web site.
+    URL = "http://www.itp.phys.ethz.ch/econophysics/R/data/textbooks/"
+    SRC = "ZivotWang/data/DowJones30.csv"
+    DATA = paste(URL, SRC, sep = "") 
+    download.file(DATA, destfile = "DowJones30.csv")
+    DowJones30 = readSeries("DowJones30.csv")
+    print(DowJones30[1,])
+    print(end(DowJones30))
     ###
     
     
@@ -1078,10 +1085,13 @@
     
     # The file "shiller.annual.csv" holds Robert Shiller's financial
     # and economic data.
-    shiller.annual = read.timeSeries(
-        paste(dataPath, "shiller.annual.csv", sep = ""))
-    shiller.annual[1, ]
-    tail(shiller.annual, 1)
+    URL = "http://www.itp.phys.ethz.ch/econophysics/R/data/textbooks/"
+    SRC = "ZivotWang/data/shiller.annual.csv"
+    DATA = paste(URL, SRC, sep = "") 
+    download.file(DATA, destfile = "shiller.annual.csv")
+    shiller.annual = readSeries("shiller.annual.csv")
+    print(shiller.annual[1,])
+    print(end(shiller.annual))
     ###
     
     
@@ -1169,14 +1179,12 @@
     # adjusted U.S. Consumer Price Index (CPI). 
     # Data are downloadable and can be updated from Economagics's web site. 
     # Rmetrics
-    IP.dat = read.timeSeries(
-        paste(dataPath, "IP.dat.csv", sep = ""))
-    IP.dat[1, ]
-    end(IP.dat)
-    CPI.dat = read.timeSeries(
-        paste(dataPath, "CPI.dat.csv", sep = ""))
-    CPI.dat[1, ]
-    end(CPI.dat)
+    IP.dat = readSeries("IP.dat.csv")
+    print(IP.dat[1, ])
+    print(end(IP.dat))
+    CPI.dat = readSeries("CPI.dat.csv")
+    print(CPI.dat[1, ])
+    print(end(CPI.dat))
     ###
     
     
@@ -1270,10 +1278,10 @@
     ###
     
     
-    # The function 'read.timeSeries' allows you to read data from a
+    # The function 'readSeries' allows you to read data from a
     # spreadsheet file and transforms it ditrectly to a 'timeSeries'
     # object.
-    args(read.timeSeries)
+    args(readSeries)
     ### 
       
       
@@ -1284,8 +1292,6 @@
     # The file "singleIndex.dat.csv" contains the monthly closing 
     # prices for Microsoft Corporation and the S&P 500 index.
     # Data are downloadable and can be updated from Yahoo's web site.
-    singleIndex.dat = read.timeSeries(
-        paste(dataPath, "singleIndex.dat.csv", sep = ""))
     singleIndex.dat[1,]
     end(singleIndex.dat)
     ###
@@ -1540,10 +1546,10 @@
     ###
     
     
-    # The function 'read.timeSeries' allows you to read data from a
+    # The function 'readSeries' allows you to read data from a
     # spreadsheet file and transforms it ditrectly to a 'timeSeries'
     # object.
-    args(read.timeSeries)
+    args(readSeries)
     ###
     
 
@@ -1555,10 +1561,9 @@
     # prices for Microsoft Corporation and the S&P 500 index.
     # Data are downloadable and can be updated from Yahoo's web site.
     # Rmetrics
-    singleIndex.dat = read.timeSeries(
-        paste(dataPath, "singleIndex.dat.csv", sep = ""))
-    singleIndex.dat[1, ]
-    end(singleIndex.dat)
+    singleIndex.dat = readSeries("singleIndex.dat.csv")
+    print(singleIndex.dat[1, ])
+    print(end(singleIndex.dat))
     ###
     
     
@@ -1611,10 +1616,9 @@
     # The file "msft.dat.csv" contains data representing the open, 
     # high, low, close and volume information for Microsoft stocks. 
     # Data are downloadable and can be updated from Yahoo's web site.
-    msft.dat = read.timeSeries(
-        paste(dataPath, "msft.dat.csv", sep = ""))
-    msft.dat[1, ]
-    end(msft.dat)
+    msft.dat = readSeries("msft.dat.csv")
+    print(msft.dat[1, ])
+    print(end(msft.dat))
     ###
        
     
@@ -1641,10 +1645,9 @@
     # The file "DowJones30.csv" contains closing prices for 30 stocks
     # represented in the Dow Jones Industrial Average Index. 
     # Data are downloadable and can be updated from Yahoo's web site.   
-    DowJones30 = read.timeSeries(
-        paste(dataPath, "DowJones30.csv", sep = ""))
-    DowJones30[1,]
-    end(DowJones30)
+    DowJones30 = readSeries("DowJones30.csv")
+    print(DowJones30[1,])
+    print(end(DowJones30))
     ###
     
       

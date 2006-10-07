@@ -154,9 +154,10 @@ documentation = NULL, ...)
     # charvector | Time Positions:
     if (is.timeDate(charvec)) { 
         timeDates = charvec 
-    } else {       
+    } else {   
+        if (is.null(format)) format = .whichFormat(charvec)    
         timeDates = timeDate(charvec = charvec, 
-            format = NULL, zone = zone, FinCenter = FinCenter) 
+            format = format, zone = zone, FinCenter = FinCenter) 
     }       
         
     # Data | Dimension Names:
@@ -246,7 +247,6 @@ FinCenter = myFinCenter, title = NULL, documentation = NULL, ...)
     # Read Data:
     df = read.table(file = file, header = header, sep = ";", ...)
 
-    
     # Create Time Series:
     ans = as.timeSeries(df)
         
