@@ -1,14 +1,14 @@
 DaylightSavingTime      Daylight Saving Time Rules
-fCalendarUtilities      Masked Objects and Additional Generic Functions
+fCalendarUtilities      Some Rmetrics Utilities
 HolidayCalendars        Holiday Calendars and Utilities
-HolidayDates            Holiday Calendars and Utilities
+HolidayDates            Public and Ecclesiastical Holidays
 TimeDateClass           timeDate Class
 TimeDateCoercion        timeDate Class, Coercion and Transformation
 TimeDateMathOps         timeDate Class, Functions and Methods
-TimeDateSpecDates       Special Date Functions
-TimeDateSubsets         timeDate Class
-TimeSeriesClass         timeSeries Class and Methods
-TimeSeriesCoercion      Coercion of timeSeries Object
-TimeSeriesData          timeSeries Class and Methods
+TimeDateSpecDates       timeDate Class, Special Date Functions
+TimeDateSubsets         timeDate Class, Subsetting
+TimeSeriesClass         timeSeries Class
+TimeSeriesCoercion      timeDate Class, Coercion and Transformation
+TimeSeriesData          timeDate Class, Functions and Methods
 TimeSeriesImport        Import Market Data from the Internet
-TimeSeriesPositions     timeSeries Class and Methods
+TimeSeriesPositions     timeSeries, Positions

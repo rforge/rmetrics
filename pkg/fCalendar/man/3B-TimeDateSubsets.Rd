@@ -19,7 +19,7 @@
 \alias{blockEnd}
 
 
-\title{timeDate Class}
+\title{timeDate Class, Subsetting}
 
 
 \description{

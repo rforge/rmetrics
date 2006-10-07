@@ -14,7 +14,7 @@
 \alias{end.timeSeries}
 
 
-\title{timeSeries Class and Methods}
+\title{timeSeries, Positions}
 
 
 \description{

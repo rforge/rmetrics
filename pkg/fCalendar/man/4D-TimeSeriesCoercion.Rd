@@ -20,7 +20,7 @@
 \alias{as.ts.timeSeries}
 
 
-\title{Coercion of timeSeries Object}
+\title{timeDate Class, Coercion and Transformation}
 
 
 \description{

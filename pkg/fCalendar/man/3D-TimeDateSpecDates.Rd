@@ -15,7 +15,7 @@
 \alias{timeLastNdayInMonth}
 
 
-\title{Special Date Functions}
+\title{timeDate Class, Special Date Functions}
 
 
 \description{

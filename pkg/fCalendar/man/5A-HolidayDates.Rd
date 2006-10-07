@@ -120,7 +120,7 @@
 \alias{JPBankHolidayDec31}
 
 
-\title{Holiday Calendars and Utilities}
+\title{Public and Ecclesiastical Holidays}
 
 
 \description{

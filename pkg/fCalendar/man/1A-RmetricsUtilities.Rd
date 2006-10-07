@@ -1,6 +1,6 @@
-\name{fCalendarUtilities}
+\name{RmetricsUtilities}
 
-\alias{fCalendarUtilities}
+\alias{RmetricsUtilities}
 
 \alias{align}
 \alias{align.default}
@@ -207,7 +207,7 @@ myUnits
 
 
 \examples{
-## SOURCE("fCalendar.1A-fCalendarUtilities")
+## SOURCE("fCalendar.1A-RmetricsUtilities")
 }
 
 

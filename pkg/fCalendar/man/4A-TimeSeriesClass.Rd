@@ -30,7 +30,7 @@
 \alias{ohlcDailyPlot}
 
 
-\title{timeSeries Class and Methods}
+\title{timeSeries Class}
 
 
 \description{
