@@ -32,7 +32,7 @@
 \alias{is.array.timeSeries}
   
 
-\title{timeDate Class, Functions and Methods}
+\title{timeSeries Class, Functions and Methods}
 
 
 \description{
