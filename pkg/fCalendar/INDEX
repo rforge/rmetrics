@@ -1,7 +1,7 @@
 DaylightSavingTime      Daylight Saving Time Rules
-fCalendarUtilities      Some Rmetrics Utilities
 HolidayCalendars        Holiday Calendars and Utilities
 HolidayDates            Public and Ecclesiastical Holidays
+RmetricsUtilities       Some Rmetrics Utilities
 TimeDateClass           timeDate Class
 TimeDateCoercion        timeDate Class, Coercion and Transformation
 TimeDateMathOps         timeDate Class, Functions and Methods
