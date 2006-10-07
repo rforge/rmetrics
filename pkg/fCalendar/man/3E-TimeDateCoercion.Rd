@@ -58,7 +58,8 @@
 \method{as.POSIXlt}{timeDate}(x, tz = "")
 \method{as.Date}{timeDate}(x, method = c("trunc", "round", "next"), \dots)
 
-\method{julian}{timeDate}(x, FinCenter = myFinCenter, \dots)
+\method{julian}{timeDate}(x, origin = timeDate("1970-01-01"), units = c("auto", 
+    "secs", "mins", "hours", "days", "weeks"), zone = NULL, FinCenter = NULL, \dots)
 \method{atoms}{timeDate}(x, \dots)
 \method{months}{timeDate}(x, abbreviate = NULL)
 }
@@ -82,6 +83,10 @@
     \item{method}{
         a character string denoting the method how to determine the
         dates.
+        }
+    \item{origin}{
+        a length-one object inheriting from class \code{"timeDate"}
+        setting the origin for the julian counter.
         }
     \item{units}{
         a character string denoting the date/time units in which the 

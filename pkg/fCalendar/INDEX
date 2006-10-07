@@ -8,7 +8,7 @@ TimeDateMathOps         timeDate Class, Functions and Methods
 TimeDateSpecDates       timeDate Class, Special Date Functions
 TimeDateSubsets         timeDate Class, Subsetting
 TimeSeriesClass         timeSeries Class
-TimeSeriesCoercion      timeDate Class, Coercion and Transformation
-TimeSeriesData          timeDate Class, Functions and Methods
+TimeSeriesCoercion      timeSeries Class, Coercion and Transformation
+TimeSeriesData          timeSeries Class, Functions and Methods
 TimeSeriesImport        Import Market Data from the Internet
 TimeSeriesPositions     timeSeries, Positions

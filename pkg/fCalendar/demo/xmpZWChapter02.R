@@ -141,7 +141,7 @@
         seriesPositions(singleIndex.dat) <= timeDate("1/31/1993") )
     print(singleIndex.dat[smpl, ])
     class(singleIndex.dat)
-    # Alternatively use in R cutSeries():
+    # Alternatively use in R cut():
     tS = cut(singleIndex.dat, timeDate("3/01/1992"), timeDate("1/31/1993"))
     print(tS)
     # Or with ISO dates ...
@@ -226,19 +226,19 @@
     # ... or
     args(julian.timeDate)
     julian(td)
-    julian(td, myUnits = "days")
+    julian(td, units = "days")
     # Yields: Time difference of 11688.33 days
     # From where comes 1/3 day?
     # Julians have their origin 1960-01-01 00:00:00 GMT!
     # Confirm it:
-    julian(tdGMT, myUnits = "days")
+    julian(tdGMT, units = "days")
     # Test the Origin:
     tdORIGIN = timeDate(
         charvec = "1970-01-01", 
         format = "%Y-%m-%d",
         FinCenter = "GMT")
     tdORIGIN
-    julian(tdORIGIN, myUnits = "days")
+    julian(tdORIGIN, units = "days")
     ###
     
     
@@ -381,7 +381,7 @@
     # > as.numeric(td1)
     # ... use julian, that's more definite!
     print(td1)
-    tJ = julian(td1, myUnits = "days")
+    tJ = julian(td1, units = "days")
     print(tJ)
     # Add one day -  we use seconds!
     # ... these are 24 hours each with 3600 seconds
@@ -425,7 +425,7 @@
         m = NULL)
     class(td)[1]
     print(td)
-    tJ = julian(td, myUnits = "days")
+    tJ = julian(td, units = "days")
     print(tJ)
     ###
 
@@ -689,9 +689,9 @@
     print(tdLA[1:10])
     print(julian(tdLA)[1:10])
     # Return Julian Counts as 'difftime' in Days:
-    print(julian(tdLA, "days")[1:10])
+    print(julian(tdLA, units = "days")[1:10])
     # Return 'timeDate' s integer counts:
-    as.integer(julian(tdLA))[1:10]
+    print(as.integer(julian(tdLA, units = "secs"))[1:10])
     ###
     
     
@@ -834,9 +834,11 @@
     # recorded as the number of seconds from midnight, price transaction 
     # price in dollars. 
     # Downloaded from: http://www.gsb.uchicago.edu/fac/ruey.tsay/teaching/fts/
-    file = paste(dataPath, "highFreq3M.df.csv", sep = "")
-    zfile = zip.file.extract(file, "Rdata.zip")
-    highFreq3M.df = read.table(zfile, header = TRUE, sep = ";")
+    URL = "http://www.itp.phys.ethz.ch/econophysics/R/data/textbooks/"
+    SRC = "ZivotWang/data/highFreq3M.df.csv"
+    DATA = paste(URL, SRC, sep = "") 
+    download.file(DATA, destfile = "highFreq3M.df.csv")
+    highFreq3M.df = read.table("highFreq3M.df.csv", header = TRUE, sep = ";")
     ###
     
     
@@ -886,7 +888,7 @@
     # p. 31/32
     dec.vals = ("12" == months(seriesPositions(singleIndex.dat)))
     annual.p = singleIndex.dat[dec.vals, ]
-    annual.p
+    print(annual.p)
     # To my opinion the year 2001 has no end-of-year entry, 
     #   it shouldn't appear!
     # Here, I see no reason for using the function pickClose ...
@@ -902,7 +904,7 @@
     # Extract Year from calendar atoms:
     ninetyone.vals = ("1991" == atoms(seriesPositions(singleIndex.dat))[,"Y"])
     monthly.p = singleIndex.dat[ninetyone.vals, "MSFT"]
-    monthly.p
+    print(monthly.p)
     # Add title:
     monthly.p@title = "Subsetted End-of-Month Data"
     # Summary:
@@ -933,40 +935,52 @@
     #   are two logicals, which determine if the start and end date/time
     #   points of the investigation should be included or not? By default,
     #   the starting point is included, the endpoint not.
-    # Preprocess Data: Use Rmetrics cutSeries() function:
-    args(cutSeries)
-    msft.dat.smpl = cutSeries(
-        msft.dat, from = timeDate("2000-10-01"), to = timeDate("2001-08-31" ))
-    msft.dat.smpl[1:5, ]
+    # Preprocess Data: Use Rmetrics cut() generic function:
+    args(cut.timeSeries)
+    msft.dat.smpl = cut(msft.dat, 
+        from = timeDate("2000-10-01"), to = timeDate("2001-08-31" ))
+    print(msft.dat.smpl[1:5, ])
     nRow = nrow(msft.dat.smpl@Data)
-    msft.dat.smpl[(nRow-5):nRow, ]
+    print(msft.dat.smpl[(nRow-5):nRow, ])
     # Create from-to Calendar Blocks:
     y = c(rep(2000, 3), rep(2001, 9))
     m = c(10:12, 1:9)
     from = timeCalendar(y, m)[-12]
     to = timeCalendar(y, m)[-1] - 24*3600
-    data.frame(from, to)
+    head(merge(from, to))
     # Aggregate to Monthly Means:
-    applySeries(x = msft.dat.smpl, from = from, to = to, FUN = colMeans)
+    monthlyMeans = 
+        applySeries(x = msft.dat.smpl, from = from, to = to, FUN = colMeans)
+    print(monthlyMeans)
+    # or:
+    monthlyMeans = 
+        applySeries(x = msft.dat.smpl, by = "monthly", FUN = colMeans)
+    print(monthlyMeans)
     # Now Volume Weighted: Write vol.wtd.avg.price() function:
     vol.wtd.avg.price = function(x) {
-        VolumeSum = as.double(sum(x[, "Volume"]))
-        nrowx = length(x[1, ])
-        Open = x[1, "Open"]
-        High = max(x[, "High"])
-        Low = min(x[, "Low"])
-        Close = x[nrowx, "Close"]
-        vwap.Open = sum(  x[, "Open"] * x[, "Volume"] ) / VolumeSum
-        vwap.Close = sum(  x[, "Close"] * x[, "Volume"] ) / VolumeSum
-        c(Open, High, Low, Close, vwap.Open, vwap.Close, VolumeSum) }   
+        X = as.matrix(x)
+        VolumeSum = sum(X[, "Volume"])
+        nrowx = length(X[1, ])
+        Open = X[1, "Open"]
+        High = max(X[, "High"])
+        Low = min(X[, "Low"])
+        Close = X[nrowx, "Close"]
+        vwap.Open = sum( X[, "Open"] * X[, "Volume"] ) / VolumeSum
+        vwap.Close = sum( X[, "Close"] * X[, "Volume"] ) / VolumeSum
+        ans = cbind(Open, High, Low, Close, vwap.Open, vwap.Close, VolumeSum) 
+        ans
+    }   
     # Aggregate to Volume Weighted Monthly Means:
-    msft.vwap.dat = applySeries(x = msft.dat.smpl, from = from, 
-        to = to, FUN = vol.wtd.avg.price, colNames = c("Open", "High", 
-        "Low", "Close", "vwap.Open", "vwap.Close", "Volume") )
-    msft.vwap.dat[, -7]
+    Units = c("Open", "High", "Low", "Close", 
+        "vwapOpen", "vwapClose", "volumeSum")
+    msft.vwap.dat = 
+        applySeries(x = msft.dat.smpl, by = "monthly", 
+        units = Units, FUN = vol.wtd.avg.price)
+    head(msft.vwap.dat)
+    print(msft.vwap.dat[, -7])
     ###
     
-    
+
     # The file "IP.dat.csv" contains data representing seasonally 
     # adjusted U.S. Industrial Production Index. 
     # The file "CPI.dat.csv" contains data representing seasonally 
@@ -995,7 +1009,7 @@
     # p. 35
     # CPI Data is monthly - thus we have to disaggregate ...
     c(start(CPI.dat), end(CPI.dat))
-    cpi = cutSeries(CPI.dat, from = "1990-12-01", to = "2001-02-01")
+    cpi = cut(CPI.dat, from = "1990-12-01", to = "2001-02-01")
     # Return head and tail of the series:
     head(cpi)
     tail(cpi)
@@ -1046,7 +1060,7 @@
     # ... that we miss no days according to different holiday rules
     # Cut nicely:
     cpi.daily.interp = 
-        cutSeries(cpi.daily.interp, "1991-01-01", "2000-12-31")
+        cut(cpi.daily.interp, "1991-01-01", "2000-12-31")
     cpi.daily.interp[c(1:3, 21:23)]
     # ... note weekends are excluded
     #
@@ -1056,11 +1070,11 @@
         alignDailySeries(msft.daily.p, method = "interp", 
             include.weekends = TRUE)
     c(start(msft.daily.interp), end(msft.daily.interp)) 
-    msft.daily.interp = cutSeries(msft.daily.interp, 
+    msft.daily.interp = cut(msft.daily.interp, 
         from = start(cpi.daily.interp), to = end(cpi.daily.interp))
     # Cut nicely:
     msft.daily.interp = 
-        cutSeries(msft.daily.interp, "1991-01-01", "2000-12-31")
+        cut(msft.daily.interp, "1991-01-01", "2000-12-31")
     msft.daily.interp[c(1:3, 21:23)]
     # Ceck Dimensions:
     dim(cpi.daily.interp@Data)
@@ -1074,12 +1088,13 @@
     #
     # Finally we compute the real prices:
     msft.daily.rp = 100*(msft.daily.interp/cpi.daily.interp)
-    msft.daily.rp[c(1:3, 21:23)]
+    print(msft.daily.rp[c(1:3, 21:23)])
     # Plot:
     par(mfrow = c(1, 1))
     msft.daily.interp@title = "MSFT - Real and Nominal Prices"
     plot(msft.daily.interp, type = "l", ylab = "Price")
     lines(msft.daily.rp, col = "red")
+    grid()
     ###
 
     
@@ -1127,7 +1142,7 @@
     div.monthly = disaggregateAnnualSeries(
         data = div.annual, k = 12, out.positions = monthly.dates )
     # Print:
-    div.monthly[1:24, ]
+    print(div.monthly[1:24, ])
     # ... Note, there are smaller differences for the first year
     # which is extrapolated from the spline fit. 
     ###
@@ -1191,22 +1206,21 @@
     # Merge a 'timeSeries' with a 'mtrix' using the "mergeSeries" function:
     # p.39 
     # Rmetrics
-    #   has a function named "mergeSeries" which can be used for 
-    #   S-Plus' function "seriesMerge". The "mergeSeries" function  
-    #   merges a 'timeSeries' object with a 'matrix' object having  
-    #   the same number of rows.
-    # Show the arguments of the "mergeSeries" function:
-    args(mergeSeries)   
+    #   has a generic function named "merge" which can be used for 
+    #   S-Plus' function "seriesMerge". The "merge" function  
+    #   merges two 'timeSeries' objects.
+    # Show the arguments of the "merge" function:
+    args(merge.timeSeries)   
     # make notations consistent and unique ...
-    CPI.dat[c(1:2, length(CPI.dat@positions))]
-    IP.dat[c(1:2, length(IP.dat@positions))]
-    c(start(IP.dat), end(IP.dat))
-    c(start(CPI.dat), end(CPI.dat))
-    # Write CPI as matrix:
-    CPI.mat = as.matrix(CPI.dat[-(1:72),])
+    print(CPI.dat[c(1:5, length(CPI.dat@positions))])
+    print(IP.dat[c(1:5, length(IP.dat@positions))])
+    print(c(start(IP.dat), end(IP.dat)))
+    print(c(start(CPI.dat), end(CPI.dat)))
+    CPI.dat = CPI.dat[-(1:72), ]
+    newPositions(IP.dat)<-CPI.dat@positions
     # Merge:
-    IP.CPI.dat = mergeSeries(IP.dat, CPI.mat)
-    IP.CPI.dat[1:2, ]
+    IP.CPI.dat = merge(IP.dat, CPI.dat)
+    print(IP.CPI.dat[1:10, ])
     ###
     
     
@@ -1214,10 +1228,14 @@
     # Rmetrics
     par(mfrow = c(1, 1), cex = 0.7)
     IP.CPI.dat@title = "IP and CPI"
-    plot(IP.CPI.dat, type = "l", ylab = "Index")
+    plot(IP.CPI.dat[, 2], type = "l", ylab = "Index")
+    lines(IP.CPI.dat[, 1], col = "red")
     abline(h = 0, lty = 3)
+    grid()
     title(main = IP.CPI.dat@title)
     ### 
+    
+
 
 
 # ------------------------------------------------------------------------------
@@ -1259,12 +1277,12 @@
     djia.close = 
         timeSeries(close, dates, format = "%m/%d/%Y", FinCenter = "GMT",
         units = "djia.close")
-    djia.close[10:12]
+    print(djia.close[10:12])
     dimNames = dimnames(djia.close@Data)
     # Use linear interpolation scheme:
     djia.close@Data <- interpNA(x = seriesData(djia.close))
     dimnames(djia.close@Data) <- dimNames
-    djia.close[10:12]
+    print(djia.close[10:12])
     # ... Try to implement spline interpolation
     ###
 
@@ -1292,8 +1310,8 @@
     # The file "singleIndex.dat.csv" contains the monthly closing 
     # prices for Microsoft Corporation and the S&P 500 index.
     # Data are downloadable and can be updated from Yahoo's web site.
-    singleIndex.dat[1,]
-    end(singleIndex.dat)
+    print(singleIndex.dat[1,])
+    print(end(singleIndex.dat))
     ###
     
     
@@ -1303,58 +1321,63 @@
     #   has a method named "lag" which can be used for S-Plus' function 
     #   "tslag". The "lag" method computes lagged or leading values for 
     #   a 'timeSeries' object.
-    # Show the arguments of the "lagSeries" method:
-    args(lagSeries)
+    # Show the arguments of the generic function "lag"
+    args(lag.timeSeries)
     ###
     
     
     # Print the head of the 'timeSeries' object:
     # p. 41
-    singleIndex.dat[1:5, ]
+    print(singleIndex.dat[1:5, ])
     ###
     
     
     # Create lagged 'timeSeries' object:
     # p. 41
-    lagSeries(singleIndex.dat[1:5, ])
+    tS = lag(singleIndex.dat[1:5, ])
+    print(tS)
     # ... the first five from the the whole series
-    lagSeries(singleIndex.dat)[1:5, ]
+    tS = lag(singleIndex.dat)[1:5, ]
+    print(tS)
     ###
     
     
     # Create lagged 'timeSeries' object where NAs are trimmed:
     # p. 41
-    lagSeries(singleIndex.dat, trim = TRUE)[1:5, ]
+    tS = lag(singleIndex.dat, trim = TRUE)[1:5, ]
+    print(tS)
     ###
     
     
     # Create leading 'timeSeries' object:
     # p. 41/42
-    lagSeries(singleIndex.dat[1:5, ], k = -1)
+    tS = lag(singleIndex.dat[1:5, ], k = -1)
+    print(tS)
     ###
     
     
     # Create multiple lagged 'timeSeries' object
-    td.lagged = lagSeries(singleIndex.dat[1:5, ], k = c(1, 3))
-    td.lagged
+    td.lagged = lag(singleIndex.dat[1:5, ], k = c(1, 3))
+    print(td.lagged)
     # Note, that the ordering is different from S-Plus!
     # S-Plus like ordered ...
-    td.lagged[, c(1, 3, 2, 4)]
+    print(td.lagged[, c(1, 3, 2, 4)])
     ###
     
     
     # ... another multiple lagged 'timeSeries' object
-    ltd = lagSeries(singleIndex.dat[1:5, ], k = -1:1)
-    ltd
+    ltd = lag(singleIndex.dat[1:5, ], k = -1:1)
+    print(ltd)
     # S-Plus like ordered ...
-    ltd[, c(1, 4, 2, 5, 3, 6)]
+    print(ltd[, c(1, 4, 2, 5, 3, 6)])
     ###
     
     
     # Create a S-Plus synonym function call:
     # Rmetrics
-    tslag = lagSeries
-    tslag(singleIndex.dat[1:5, ])
+    tslag = lag
+    tS = tslag(singleIndex.dat[1:5, ])
+    print(tS)
     ###
     
 
@@ -1364,35 +1387,41 @@
 
     # Create Differences 'timeSeries' 
     # p. 42 
-    # Show the arguments of the "diff.timeSeries" method:
-    args(diffSeries)
+    # Show the arguments of the generic function "diff.timeSeries":
+    args(diff.timeSeries)
     ###
     
 
     # Difference time series with lag 1:
     # p. 43
-    diffSeries(singleIndex.dat[1:5,], lag = 1, trim = FALSE)
+    tS = diff(singleIndex.dat[1:5,], lag = 1, trim = FALSE)
+    print(tS)
     # You can use default settings ...
-    diffSeries(singleIndex.dat[1:5,])
+    tS = diff(singleIndex.dat[1:5,])
+    print(tS)
     ###
     
     
     # Difference time series with lag 2:
     # p. 43
     # Fill with zeros for NAs ...
-    diffSeries(singleIndex.dat[1:5,], lag = 2, trim = FALSE , pad = 0)
+    tS = diff(singleIndex.dat[1:5,], lag = 2, trim = FALSE , pad = 0)
+    print(tS)
     ###
     
     
     # Difference time series twice with lag 1:
     # p. 43
-    diffSeries(singleIndex.dat[1:5,], lag = 1, diff = 2)
+    tS = diff(singleIndex.dat[1:5,], lag = 1, diff = 2)
+    print(tS)
     # pad the series ...
     # Rmetrics
-    diffSeries(singleIndex.dat[1:5,], lag = 1, diff = 2, pad = 0)
+    tS = diff(singleIndex.dat[1:5,], lag = 1, diff = 2, pad = 0)
+    print(tS)
     # trim the series ...
     # Rmetrics
-    diffSeries(singleIndex.dat[1:5,], lag = 1, diff = 2, trim = TRUE)
+    tS = diff(singleIndex.dat[1:5,], lag = 1, diff = 2, trim = TRUE)
+    print(tS)
     ###
     
 
@@ -1426,8 +1455,8 @@
     
     # Print Series:
     # p. 46
-    singleIndex.dat[1:3, ]
-    print(singleIndex.dat[1:3, ])
+    tS = singleIndex.dat[1:3, ]
+    print(tS)
     ###
     
     
@@ -1435,7 +1464,7 @@
     # p. 46
     ret.d = returnSeries(singleIndex.dat, type = "discrete", 
         percentage = TRUE, trim = FALSE, digits = 5)
-    ret.d[1:3, ]
+    print(ret.d[1:3, ])
     ###
     
     
@@ -1443,24 +1472,24 @@
     # p. 47
     ret.d = returnSeries(singleIndex.dat, type = "discrete", 
         trim = FALSE, digits = 5)
-    ret.d[1:3, ]
+    print(ret.d[1:3, ])
     ###
     
     
     # Create a series of continuous returns:
     # p. 47
     ret.cc = returnSeries(singleIndex.dat, digits = 5)
-    ret.cc[1:3, ]
+    print(ret.cc[1:3, ])
     ###
     
     
     # Create a trimmed series of continuous percentage returns:
     # Rmetrics
     ret.cc = returnSeries(singleIndex.dat, percentage = TRUE)
-    ret.cc[1:3, ]
+    print(ret.cc[1:3, ])
     # back to returns, devide the 'timeSeries' by 100 ...
     ret.cc = ret.cc/100
-    ret.cc[1:3, ]
+    print(ret.cc[1:3, ])
     ###
     
 
@@ -1470,14 +1499,16 @@
     # p. 47
     # First Create "from" - "to" Calendar Blocks:
     ret.cc = returnSeries(singleIndex.dat, type = "continuous")
-    c(start(ret.cc), end(ret.cc))
+    print(c(start(ret.cc), end(ret.cc)))
     # Last Days in Month:
     from = timeSequence("1990-03-01", "2000-03-01", "month",
         format = "%Y-%m-%d") - 24*3600
     to   = timeSequence("1991-02-01", "2001-02-01", "month",
         format = "%Y-%m-%d") - 24*3600 
     # Annual Sum Aggregates on Monthly Scale:
-    applySeries(x = ret.cc, from, to, colSums)[1:3, ]
+    colAvgs = colSums
+    tS = applySeries(x = ret.cc, from, to, colSums)[1:3, ]
+    print(tS)
     rbind(
         colSums(seriesData(ret.cc[1:12, ])),
         colSums(seriesData(ret.cc[2:13, ])),
@@ -1493,11 +1524,12 @@
     # Next, annual returns on an annual step size (non-overlapping):
     # p. 47
     ret.cc = returnSeries(singleIndex.dat, type = "continuous")
-    c(start(ret.cc), end(ret.cc))
+    print(c(start(ret.cc), end(ret.cc)))
     # Last Days in Month:
     from = timeCalendar(y = 1990:2000, m = 2) - 24*3600
     to = timeCalendar(y = 1991:2001, m = 1) - 24*3600
-    applySeries(x = ret.cc, from = from, to = to, FUN = colSums)[1:3, ]
+    tS = applySeries(x = ret.cc, from = from, to = to, FUN = colSums)[1:3, ]
+    print(tS)
     rbind(
         colSums(seriesData(ret.cc[1:11, ])),
         colSums(seriesData(ret.cc[12:23, ])),
@@ -1515,7 +1547,8 @@
         format = "%Y-%m-%d") - 24*3600 
     colProds = function (x) { round (
         apply(x+1, MARGIN = 2, FUN = prod) - 1 , digits = 6 ) }
-    applySeries(x = ret.d, from, to, FUN = colProds)[1:3, ]
+    ts = applySeries(x = ret.d, from, to, FUN = colProds)[1:3, ]
+    print(tS)
     colProds(seriesData(ret.d)[1:12, ])
     ### 
     
@@ -1529,7 +1562,8 @@
     to = timeCalendar(y = 1991:2001, m = 1) - 24*3600
     colProds = function (x) { round (
         apply(x+1, MARGIN = 2, FUN = prod) - 1 , digits = 4 ) }
-    applySeries(x = ret.d, from, to, FUN = colProds)[1:3, ]
+    tS = applySeries(x = ret.d, from, to, FUN = colProds)[1:3, ]
+    print(tS)
     ###
     
 
@@ -1595,21 +1629,20 @@
     singleIndex.dat@title = "MSFT and SP500"
     # Multivariate Plot:
     par(mfrow = c(2, 1), cex = 0.7)
-    plot(singleIndex.dat, col = "steelblue4", main = singleIndex.dat@title)
-    # With Legend and Plot Arguments:
-    # > legend(0.1, 1400, legend = colnames(singleIndex.ts), lty = c(1, 3))
-    plot(singleIndex.dat, lty = c(1, 3), xlab = "Year", 
-        ylab = "Index - Stock Price", col = "steelblue4")
-    title(singleIndex.dat@title)
+    plot(singleIndex.dat[, 2], col = "steelblue", type = "l",
+        main = singleIndex.dat@title, ylim = c(0, 1500))
+    lines(singleIndex.dat[, 1], col = "red")
     ### 
 
     
     # Create a two panel plot [Figure 2.3]
     par(mfrow = c(2, 1), cex = 0.7)
     plot(singleIndex.dat[, "MSFT"], type = "l",
-      main = "Monthly Price on Microsoft", col = "steelblue4")
+      main = "Monthly Price on Microsoft", col = "steelblue")
+    grid()
     plot(singleIndex.dat[, "SP500"], type = "l",
-      main = "Monthly Price on S&P 500 Index", col = "steelblue4")
+      main = "Monthly Price on S&P 500 Index", col = "steelblue")
+    grid()
     ###
     
     

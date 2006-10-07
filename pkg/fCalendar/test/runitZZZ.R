@@ -35,7 +35,7 @@ if (FALSE) {
     require(RUnit)
     testIndex = c("1A", "2A", "3A", "3B", "3C", "3E", "4", "4B", "4C",
         "4D", "5A", "5B", "6A")
-    # testIndex = c(testIndex, "Demo")
+    testIndex = c(testIndex, "Demo")
     File = "C:/Rmetrics/SVN/trunk/fCalendar/test/runit"
     Protocol = "runitCalendar.txt"
     write("fCalendar:", file = Protocol)

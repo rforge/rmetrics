@@ -409,7 +409,9 @@ function(x, method = c("trunc", "round", "next"), ...)
 
  
 julian.timeDate = 
-function(x, FinCenter = myFinCenter, ...)
+function(x, origin = timeDate("1970-01-01"), 
+units = c("auto", "secs", "mins", "hours", "days", "weeks"), 
+zone = NULL, FinCenter = NULL, ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -437,17 +439,18 @@ function(x, FinCenter = myFinCenter, ...)
     Sys.putenv(TZ = "GMT")
     
     # Check Class Type:
-    if (!inherits(x, "timeDate")) stop("Wrong class type")
-    
-    # Fixed Units:
-    if (!exists("myUnits")) units = "secs" else units = myUnits
+    stopifnot(is.timeDate(x))
+    units = match.arg(units)
     
     # POSIX:
-    ct = timeDate(x, zone = x@FinCenter, FinCenter = FinCenter)@Data
+    if (is.null(zone)) zone = x@FinCenter
+    if (is.null(FinCenter)) FinCenter = x@FinCenter
+    ct = timeDate(x, zone = zone, FinCenter = FinCenter) 
 
     # Difftime:  
-    origin = as.POSIXlt("1970-01-02", tz = "GMT") - 24 * 3600
-    res = difftime(ct, origin, units = units[1])
+    if (is.null(origin))
+        origin = timeDate("1970-01-01", zone = "GMT", FinCenter = "GMT")
+    res = difftimeDate(ct, origin, units = units)
     ans = structure(res, origin = origin)
         
     # Reset Time Zone: 
