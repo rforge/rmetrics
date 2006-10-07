@@ -287,7 +287,8 @@ Ding Z., Granger C.W.J., Engle R.F. (1993);
 
 \examples{
 ## SOURCE("fBasics.3B-StylizedFacts")
-
+   par(ask = FALSE)
+   
 ## data - 
    # require(MASS)
    plot(SP500, type = "l", col = "steelblue", main = "SP500")

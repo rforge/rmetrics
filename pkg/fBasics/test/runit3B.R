@@ -62,75 +62,60 @@ function()
 test.plotLabels = 
 function()
 {
-    # Artificial Data Set:
-    set.seed(4711)
-    S = sample(1:12)
-    V = sample(rep(1:3, 4)) * 10000
-    matX = cbind(Open = S, High = S+1, Low = S-1, Close = S, Volume = V )
-    X = timeSeries(matX, timeCalendar())
-    print(X)
+    # MSFT Opening Prices:
+    URL = "http://www.itp.phys.ethz.ch/econophysics/R/data/textbooks/"
+    SRC = "ZivotWang/data/msft.dat.csv"
+    DATA = paste(URL, SRC, sep = "") 
+    download.file(DATA, destfile = "msft.dat.csv")
+    msft.dat = readSeries("msft.dat.csv")
+    msft = msft.dat[, 1]
+    checkSum = 15349.9344
+    checkEqualsNumeric(sum(msft@Data), checkSum)
     
-    # X Opening Prices:
-    x = X[, 1]
-    sum(x@Data)
-    checkSum = 78
-    checkEqualsNumeric(sum(x@Data), checksum)
-    
-    # X Volume in Thousand Units:
-    volX = X[, 5]/1000
-    sum(volX@Data)
-    checkSum = 240
-    checkEqualsNumeric(sum(volX@Data), checkSum)
+    # MSFT Volume in Million Units:
+    msft.vol = msft.dat[ , 5]/10^6
+    checkSum = 10742.7319
+    checkEqualsNumeric(sum(msft.vol@Data), checkSum)
     
     # MSFT Opening Returns:
-    retX = returnSeries(X[, 1])
-    sum(retX@Data)
-    checkSum = -1.099
-    checkEqualsNumeric(sum(retX@Data), checkSum)
+    msft.ret = returnSeries(msft)
+    checkSum = -0.2359905
+    checkEqualsNumeric(sum(msft.ret@Data), checkSum)
     
     # LABELS = TRUE
+    par(mfrow = c(4, 3), cex = 0.7)
     
     # acfPlot -
-    ans = acfPlot(x = retX)
-    checkSum = 0.5 
-    checkEqualsNumeric(sum(ans$acf), checkSum)
+    acfPlot(x = msft.ret)
     
     # pacfPlot -
-    pacfPlot(x = retX)
+    pacfPlot(x = msft.ret)
     
     # ccfPlot -
-    ans = ccfPlot(x = retX, y = volX[-1])
-    checkSum = 0 
-    checkEqualsNumeric(sum(ans$acf), checkSum)
+    ccfPlot(x = msft.ret, y = msft.vol)
     
     # teffectPlot -
-    ans = teffectPlot(x = retX)
-    checkSum = -7.5
-    checkEqualsNumeric(sum(ans), checkSum)
+    teffectPlot(x = msft.ret)
     
     # lmacfPlot -
-    # ans = lmacfPlot(x = abs(retX))
-    # ans
+    lmacfPlot(x = abs(msft.ret), type = "acf")
+    lmacfPlot(x = abs(msft.ret), type = "hurst")
+    # ... CHECK ACF OF RETURNS
     
     # lmacfPlot -
-    # ans = lacfPlot(x = retX, n = 4)
-    # ans
+    lacfPlot(x = msft, n = 4)
 
     # logpdfPlot -
-    # ans = logpdfPlot(x = retX)
-    # ans
-    # ans = logpdfPlot(x = retX, type = "log-log")
-    # ans
+    logpdfPlot(x = msft.ret, labels = FALSE)
+    logpdfPlot(x = msft.ret, type = "log-log")
     # ... CHECK WARNINGS
     # ... CHECK COLORS
     
     # qqgaussPlot -
-    ans = qqgaussPlot(x = retX)
-    ans
+    qqgaussPlot(x = msft.ret)
     
     # scalinglawPlot -
-    # ans = scalinglawPlot(x = retX, span = 4)
-    # ans
+    scalinglawPlot(x = msft.ret, span = 4)
     # ... CHECK COLORS
     
     # Return Value:
@@ -143,15 +128,19 @@ function()
 
 test.plotNoLabels = 
 function()
-{
-    
+{ 
     # MSFT Opening Prices:
-    msft = as.timeSeries(MSFT)[, 1]
+    URL = "http://www.itp.phys.ethz.ch/econophysics/R/data/textbooks/"
+    SRC = "ZivotWang/data/msft.dat.csv"
+    DATA = paste(URL, SRC, sep = "") 
+    download.file(DATA, destfile = "msft.dat.csv")
+    msft.dat = readSeries("msft.dat.csv")
+    msft = msft.dat[, 1]
     checkSum = 15349.9344
     checkEqualsNumeric(sum(msft@Data), checkSum)
     
     # MSFT Volume in Million Units:
-    msft.vol = as.timeSeries(MSFT)[, 5]/10^6
+    msft.vol = msft.dat[ , 5]/10^6
     checkSum = 10742.7319
     checkEqualsNumeric(sum(msft.vol@Data), checkSum)
     
@@ -161,6 +150,7 @@ function()
     checkEqualsNumeric(sum(msft.ret@Data), checkSum)
     
     # LABELS = FALSE
+    par(mfrow = c(4, 3), cex = 0.7)
     
     # acfPlot -
     acfPlot(x = msft.ret, labels = FALSE)

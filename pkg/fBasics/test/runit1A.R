@@ -154,7 +154,7 @@ function()
     
     # Plots:
     par(ask = FALSE)
-    par(mfrow = c(1, 1)_
+    par(mfrow = c(1, 1))
     image  (akima.lin, add = FALSE)
     contour(akima.lin, add = TRUE)
     points (akima, pch = 19)

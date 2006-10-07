@@ -81,7 +81,7 @@ function()
     Y = rt(50, df = 3)
     
     # Two Sample Kolmogorov-Smirnov Test:
-    TEST = .ks2Test(X, Y)
+    TEST = ks2Test(X, Y)
     print(TEST)
     checkIdentical(as.character(class(TEST)), "fHTEST")
     

@@ -134,9 +134,12 @@ function()
 test.normalTestsTS = 
 function()
 {      
-    require(fCalendar)
-    msft = as.timeSeries(MSFT)[, 1]
-    X = returnSeries(msft)
+    URL = "http://www.itp.phys.ethz.ch/econophysics/R/data/textbooks/"
+    SRC = "ZivotWang/data/msft.dat.csv"
+    DATA = paste(URL, SRC, sep = "") 
+    download.file(DATA, destfile = "msft.dat.csv")
+    msft.dat = readSeries("msft.dat.csv")
+    X = returnSeries(msft.dat[, 1])
     
     TEST = ksnormTest(X)
     print(TEST)

@@ -28,27 +28,22 @@
 
 
 ################################################################################
-# FUNCTION:           DESCRIPTION:    
-#  fDISTFIT            Class Representation
-#  .normFit            Fits Parameters of a Normal Density
-#  tFit                Fits parameters of a Student-t Density
-#  ghFit               Fits parameters of a generalized hyperbolic Density
-#  hypFit              Fits parameters of a hyperbolic Density
-#  nigFit              Fits parameters of a normal inverse Gaussian Density
-#  ssdFit              Fits probability densities using smoothing spline ANOVA
-#   print.ssd           S3 Print Method
-# IFUNCTION:          INTERNAL USED BY SMOOTHED SPLINE DISTRIBUTION:         
-#  .ssden              ... Internal functions which are required by ssdFit
-#  .mkterm.cubic1
-#  .mkphi.cubic
-#  .mkrk.cubic
-#  .gauss.quad
-#  .sspdsty
-#  .nlm0
-# FUNCTION:           FUNCTIONS FOR SPLUS VERSION:
-#  much.fun
-#  which.min
-#  which.max
+# FUNCTION:            DESCRIPTION:    
+#  'fDISTFIT'           S4 Class representation
+#  print.fDISTFIT       Prints Results from a Fitted Distribution
+# FUNCTION:            NORMAL DISTRIBUTION:
+#  .normFit             Fits parameters of a Normal density
+# FUNCTION:            STUDENT DISTRIBUTION:
+#  tFit                 Fits parameters of a Student-t density
+# FUNCTION:            STABLE DISTRIBUTION:
+#  stableFit            Fits parameters of a stable density
+#  .phiStable            Creates contour table for McCulloch estimators
+#  .qStableFit           Estimates stable parameters by McCulloch approach
+#  .mleStableFit         Estimates stable parameters by MLE approach
+# FUNCTION:            GENERALIZED DISTRIBUTION:
+#  ghFit                Fits parameters of a generalized hyperbolic density
+#  hypFit               Fits parameters of a hyperbolic density
+#  nigFit               Fits parameters of a normal inverse Gaussian density
 ################################################################################
     
 
