@@ -16,7 +16,7 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2004, Diethelm Wuertz, GPL
+#   1999 - 2006, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
 #   www.rmetrics.org
@@ -75,7 +75,7 @@ function()
 {
     # Help File:
     helpFile = function() { 
-        example(fCalendarUtilities); return() }
+        example(RmetricsUtilities); return() }
     checkIdentical(
         target = class(try(helpFile())),
         current = "NULL")
