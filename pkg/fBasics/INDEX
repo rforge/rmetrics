@@ -1,102 +1,12 @@
-characterTable            Shows a table of character's codes                     
-symbolTable               Shows a table of plot symbols                          
-colorTable                Shows a table of plot color codes                      
-greyPalette               Creates a grey palette                                 
-                                                                                 
-dsymstb                   Returns density for symmetric stable DF                
-psymstb                   Returns probabilities for symmetric stable DF          
-qsymstb                   Returns quantiles for symmetric stable DF              
-rsymstb                   Returns random variates for symmetric stable DF        
-symstbSlider              Displays symmetric stable distribution function        
-dstable                   Returns density for stable DF                          
-pstable                   Returns probabilities for stable DF                    
-qstable                   Returns quantiles for stable DF                        
-rstable                   Returns random variates for stable DF                  
-stableMode                Computes stable mode                                   
-stableSlider              Displays stable distribution function                  
-                                                                                 
-dgh                       Returns density for generalized hyperbolic DF          
-pgh                       Returns probability for generalized hyperbolic DF      
-qgh                       Returns quantiles for generalized hyperbolic DF        
-rgh                       Returns random variates for generalized hyperbolic DF  
-dhyp                      Returns density for hyperbolic DF                      
-phyp                      Returns probability for hyperbolic DF                  
-qhyp                      Returns quantiles for hyperbolic DF                    
-rhyp                      Returns random variates for hyperbolic DF              
-hypMode                   Computes the hyperbolic mode                           
-hypSlider                 Displays hyperbolic distribution function              
-dnig                      Returns density for inverse Gaussian DF                
-pnig                      Returns probability for for inverse Gaussian DF        
-qnig                      Returns quantiles for for inverse Gaussian DF          
-rnig                      Returns random variates for inverse Gaussian DF        
-nigSlider                 Displays normal inverse Gaussian distribution function
-                                                                                 
-tFit                      Fits parameters of a Student-t density                 
-stableFit                 Fits parameters of a stable density                    
-ghFit                     Fits parameters of a generalized hyperbolic density    
-hypFit                    Fits parameters of a hyperbolic density                
-nigFit                    Fits parameters of a normal inverse Gaussian density   
-                                                                                 
-skewness                  Returns a number which is the skewness of the data     
-kurtosis                  Returns a number which is the kurtosis of the data     
-basicStats                Returns a basic statistics summary                     
-rowStats                  Computes sample statistics by row                      
-rowAvgs                   Computes sample mean by row                            
-rowVars                   Computes sample variance by row                        
-rowStdevs                 Computes sample variance by row                        
-rowSkewness               Computes sample skewness by row                        
-rowKurtosis               Computes sample kurtosis by row                        
-rowCumsums                Computes sample cumulated sums by row                  
-colStats                  Computes sample statistics by column                   
-colAvgs                   Computes sample mean by column                         
-colVars                   Computes sample variance by column                     
-colStdevs                 Computes sample variance by column                     
-colSkewness               Computes sample skewness by column                     
-colKurtosis               Computes sample kurtosis by column                     
-colCumsums                Computes sample cumulated sums by column               
-                                                                                 
-acfPlot                   Displays tailored autocorrelations function plot       
-pacfPlot                  Displays tailoredpartial autocorrelation function plot 
-ccfPlot                   Displays tailored cross correlation function plot      
-teffectPlot               Estimates and displays the Taylor effect               
-lmacfPlot                 Estimates and displays the long memory ACF             
-lacfPlot                  Displays lagged autocorrelations                       
-logpdfPlot                Displays a pdf plot on logarithmic scale(s)            
-qqgaussPlot               Displays a tailored Gaussian quantile-quantile plot    
-scalinglawPlot            Evaluates and displays scaling law behavior            
-                                                                                 
-set.lcgseed               Sets initial random seed                               
-get.lcgseed               Gets the current valus of the random seed              
-runif.lcg                 Generates portable uniform linear congruational rvs    
-rnorm.lcg                 Generates portable normal linear congruational rvs     
-rt.lcg                    Generates portable Student-t linear congruational rvs  
-                                                                                 
-jbTable                   Finite sample p values for the Jarque Bera test        
-pPlot                     Displays a general finite sample probability plot      
-pTable                    Interpolates probabilities from a finite sample table  
-qTable                    Interpolates quantiles from a finite sample table      
-                                                                                 
-normalTest                Test suite for normality tests S-Plus compatible       
-ksnormTest                One sample Kolmogorov-Smirnov normality test           
-shapiroTest               Shapiro-Wilk normality test                            
-jarqueberaTest            Jarque-Bera normality test                             
-dagoTest                  D'Agostino normality test                              
-adTest                    Anderson-Darling normality test                        
-cvmTest                   Cramer-von Mises normality test                        
-lillieTest                Lilliefors (Kolmogorov-Smirnov) normality test         
-pchiTest                  Pearson chi-square normality test                      
-sfTest                    Shapiro-Francia normality test                         
-runsTest                  Runs test for detecting non-randomness [tseries]           
-pjb                       Computes probabilities for the JB ALMTest              
-qjb                       Computes quantiles for the JB ALM Test                 
-jbTest                    Performs finite sample adjusted JB LM and ALM test     
-                                                                                 
-ks2Test                   Performs a two sample Kolmogorov-Smirnov test          
-locationTest              Performs locations tests on two samples                
-varianceTest              Performs variance tests on two samples                 
-scaleTest                 Performs scale tests on two samples                    
-dansariw                  Returns density of the Ansari W statistic              
-pansariw                  Returns probabilities of the Ansari W statistic        
-qansariw                  Returns quantiles of the Ansari W statistic            
-correlationTest           Performs correlation tests on two samples              
-                                                                                 
+BasicStatistics         Basic Statistics Summary
+DistributionFits        Parameter Fit of a Distribution
+fBasicsUtilities        General Rmetrics Utilities
+HyperbolicDistribution
+                        Generalized Hyperbolic Distribution
+HypothesisTesting       Tests Class Representation and Utilities
+OneSampleTests          One Sample Tests
+PortableRandomInnovations
+                        Generator for Portable Random Innovations
+StableDistribution      Stable Distribution Function
+StylizedFacts           Stylized Facts
+TwoSampleTests          Two Sample Tests
