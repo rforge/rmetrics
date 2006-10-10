@@ -1,0 +1,314 @@
+<html><head><title>Rmetrics Data Sets</title>
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>RmetricsData(fEcofin)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   RmetricsData">
+<param name="keyword" value="R:   CPI.dat">
+<param name="keyword" value="R:   dem2gbp">
+<param name="keyword" value="R:   DowJones30">
+<param name="keyword" value="R:   ford.s">
+<param name="keyword" value="R:   hp.s">
+<param name="keyword" value="R:   IP.dat">
+<param name="keyword" value="R:   klein">
+<param name="keyword" value="R:   kmenta">
+<param name="keyword" value="R:   msft.dat">
+<param name="keyword" value="R:   nelsonplosser">
+<param name="keyword" value="R:   nyse">
+<param name="keyword" value="R:   recession">
+<param name="keyword" value="R:   shiller.dat">
+<param name="keyword" value="R:   shiller.annual">
+<param name="keyword" value="R:   singleIndex.dat">
+<param name="keyword" value="R:   sp500dge">
+<param name="keyword" value="R:   sp500index">
+<param name="keyword" value="R:   surex1.ts">
+<param name="keyword" value="R:   usdchf">
+<param name="keyword" value="R:   usdthb">
+<param name="keyword" value="R:   yhoo.df">
+<param name="keyword" value=" Rmetrics Data Sets">
+</object>
+
+
+<h2>Rmetrics Data Sets</h2>
+
+
+<h3>Description</h3>
+
+<p>
+A collection and description of data sets 
+used in example of the Rmetrics packages.
+<br>
+</p>
+<p>
+<code>CPI.dat</code><br>
+<code>IP.dat</code>
+<br><br>
+The file <code>"IP.dat.csv"</code> contains data representing seasonally 
+adjusted US Industrial Production Index and the file 
+<code>"CPI.dat.csv"</code> contains data representing seasonally 
+adjusted US Consumer Price Index. 
+<br>
+</p>
+<p>
+<code>dem2gbp</code>
+<br>
+The file <code>"dem2gbp.csv"</code> contains daily observations of the 
+Deutschmark / British Pound foreign exchange log returns. 
+This data set has been promoted as an informal benchmark 
+for GARCH time-series software validation. See McCullough and 
+Renfro [1991], and Brooks, Burke, and Persand (2001) for details.
+The nominal returns are expressed in percent, as published in 
+Bollerslev and Ghysels (2001). The data set is available from 
+the <EM>Journal of Business and Economic Statistics</EM>, (JBES), 
+<EM>ftp://www.amstat.org</EM>. A text file has one column of 
+data listing the percentual log-returns of the DEM/GBP exchange 
+rates. The sample period is from January 3, 1984, to December 
+31, 1991, for a total of 1975 daily observations of FX exchange 
+rates.
+<br> 
+</p>
+<p>
+<code>DowJones30</code>
+<br>
+The file <code>"DowJones30.csv"</code> contains daily observations from 
+January 2, 1991 to January 2, 2001, of the 30 constitutents of 
+the Dow Jones Index. Each of the thirty columns represents the 
+closing price of a stock in the "Dow Jones Industrial Average".
+<br> 
+</p>
+<p>
+<code>ford.s</code><br>
+<code>hp.s</code>
+<br><br>
+The files <code>"ford.s.csv"</code> and <code>"hp.s.csv"</code> contain data 
+representing 2000 daily stock returns for the Ford and HP shares 
+traded at NYSE. The time series span the period from Feburary 2, 
+1984, to December 31, 1991. 
+<br>
+</p>
+<p>
+<code>klein</code>
+<br>
+The file <code>"klein.csv"</code> contains data for Klein's (1950) simple 
+econometric model of the US economy. The Klein data frame has 
+22 rows and 10 columns: <br>
+This data frame contains the following columns: 
+<code>year</code> years 1921-1941, represented in the POSIX data format 
+%Y-%m-%d,  <br>
+<code>c</code> the consumption, <br> 
+<code>p</code> the private profits, <br>
+<code>wp</code> the private wages, <br>
+<code>i</code> the investment, <br> 
+<code>k.lag</code> the capital stock, lagged one year, <br> 
+<code>x</code> the equilibrium demand, <br> 
+<code>wg</code> the government wages, <br>
+<code>g</code> the government non-wage spending, <br> 
+<code>tax</code> indirect business taxes and net exports. <br>
+Source: Greene (1993)
+<br>
+</p>
+<p>
+<code>kmenta</code>
+<br>
+The file <code>"kmenta.csv"</code> contains partly contrived data from 
+Kmenta (1986), constructed to illustrate estimation of a 
+simultaneous-equation model. The data set has 20 rows and 6 columns, 
+where the first holds the ISO-8601 formatted date as "%Y-%m-%d": 
+The remaining columns are: <br>
+<code>q</code> food consumption per capita, <br>
+<code>p</code> ratio of food prices to general consumer prices, <br>
+<code>d</code> disposable income in constant dollars, <br>
+<code>f</code> ratio of preceding year's prices received by farmers 
+to general consumer prices, <br>
+<code>a</code> time in years (numbered from 1 to 20). <br>
+The exogenous variables <code>d</code>, <code>f</code>, and <code>a</code> are based 
+on real data; the endogenous variables <code>p</code> and <code>q</code> were 
+generated by simulation. 
+<br>
+</p>
+<p>
+<code>msft.dat</code>
+<br>
+The file <code>"msft.dat.csv"</code> contains daily stock prices and volumes for
+the the Microsoft covering the period from 2000-09-27 until 2001-09-27.
+The first column lists dates in the format code{"%Y-%m-%d"}, the 
+next four columns Open, High, Low, and Close Prices, and the final 
+column volumes.
+<br> 
+</p>
+<p>
+<code>nelsonplosser</code>
+<br>
+The file <code>"nelsonplotter.csv"</code> contains the data set listing 
+fourteen US economic time series used by Nelson and Plosser in their 
+seminal paper. The time series are: <br>
+<code>"%Y%m%d"</code> - Date index from 18601231 until 19701231, <br> 
+<code>"gnp.r"</code> - Real GNP, [Billions of 1958 Dollars], [1909 - 1970], <br> 
+<code>"gnp.n"</code> - Nominal GNP, [Millions of Current Dollars], 
+[1909 - 1970], <br> 
+<code>"gnp.pc"</code> - Real Per Capita GNP, [1958 Dollars], [1909 - 1970], <br>  
+<code>"ip"</code> - Industrial Production Index, [1967 = 100], [1860 - 1970], <br>  
+<code>"emp"</code> - Total Employment, [Thousands], [1890 - 1970], <br>  
+<code>"ur"</code> - Total Unemployment Rate, [Percent], [1890 - 1970], <br>  
+<code>"gnp.p"</code> - GNP Deflator, [1958 = 100], [1889 - 1970], <br>  
+<code>"cpi"</code> - Consumer Price Index, [1967 = 100], [1860 - 1970], <br>  
+<code>"wg.n"</code> - Nominal Wages, [current Dollars], [1900 - 1970], <br>  
+<code>"wg.r"</code> - Real Wages, [Nominal wages/CPI], [1900 - 1970], <br>  
+<code>"M"</code> - Money Stock (M2), [Billions of Dollars, annual averages], 
+[1889 - 1970], <br>  
+<code>"vel"</code> - Velocity of Money, [1869 - 1970], <br>  
+<code>"bnd"</code> - Basic Bond Yields of 30-year Corporate Bonds, 
+[Percent per annum], [1900 - 1970], <br> 
+<code>"sp"</code> - Stock Prices, [Index; 1941 - 43 = 100], [1871 - 1970].
+<br>
+</p>
+<p>
+<code>nyse</code>
+<br>
+The file <code>"nyse.csv"</code> archives a two-column dataset, the first
+contains the date in the format <code>"%Y%m-%d"</code> and the second
+daily records of the NYSE Composite Index.
+<br>
+</p>
+<p>
+<code>recession</code>
+<br>
+The file <code>"recession.csv"</code> holds the data set used in the regression 
+analysis of US recession.
+The data include short and long term interest rates from the US,
+the 3 Month Tbills data from US FED,
+the 10 Year Tbonds data from US FED, and also the 
+Stock-Watson experimental recession index.
+<br>  
+</p>
+<p>
+<code>shiller.dat</code><br>
+<code>shiller.annual</code>
+<br>
+The files <code>"shiller.dat.csv"</code> and <code>"shiller.annual.csv"</code> hold
+data used in the book "Irrational Exuberance" by Robert Shiller. The 
+data are 
+<code>price</code> - monthly nominal US SP stock market prices,
+<code>dividend</code> - nominal SP Composite Index dividends,
+<code>earnings</code> - nominal SP Composite Index earnings,
+<code>cpi</code> - US Consumer Price Indexes,
+<code>real.price</code> - real US stock market prices,
+<code>real.dividend</code> - real SP Composite Index dividends,
+<code>real.earnings</code> - real SP Composite Index earnings,
+<code>pe.10</code> - price-earnings ratios,
+<code>dp.ratio</code> - dividend-price ratios,
+<code>dp.yield</code> - dividend-price yield. The last two are only 
+listed in <code>shiller.annual</code>.
+The series start January 1871 and end on March 2001.
+<br>
+</p>
+<p>
+<code>singleIndex.dat</code>
+<br>
+The file <code>"recession.csv"</code> holds monthly index and price data 
+records from January 1990 to January 2001. Included are monthly closing 
+prices for Microsoft Corporation (MSFT) and SP500 Index (SP500).
+<br>
+</p>
+<p>
+<code>sp500dge</code><br>
+<code>sp500index</code>
+<br>
+The first file <code>"sp500index.csv"</code> lists daily SP500 index values. 
+The data cover the period January 1995 until December 1999, and 
+have 1249 observations. The first column of the file lists 
+dates, and the second column lists index values. The second file
+<code>"sp500dge.csv"</code> lists daily returns from the SP500 as used in 
+the paper of Ding, Granger and Engle.
+<br>
+</p>
+<p>
+<code>surex1.ts.dat</code>
+<br> 
+The file <code>"surex1.ts.csv"</code> contains exchange rate spot returns 
+and forward premium data as used in the article of E. Zivot (2000).
+</p>
+<p>
+<code>yhoo.df</code>
+<br> 
+The file <code>"yhoo.df.csv"</code> contains data representing daily 
+transaction information of Yahoo stock, with the following 
+six columns: Date, Open, High, Low, Close, Volume.
+</p>
+
+
+<h3>Format</h3>
+
+<p>
+All files are in CSV Excel spreadsheet format. The
+delimiter is a semicolon.
+</p>
+
+
+<h3>References</h3>
+
+<p>
+Berndt E.R. (1991);
+<EM>The Practice of Econometrics: Classic and Contemporary</EM>,
+Addison-Wesley Publishing Co. 
+</p>
+<p>
+Box G.E.P., Jenkins J.M. (1976);
+<EM>Time Series Analysis: Forecasting and Control</EM>,
+Holden Day, San Francisco.
+</p>
+<p>
+Brooks C., Burke S.P., Persand G. (2001);
+<EM>Benchmarks and the Accuracy of GARCH Model Estimation</EM>,
+International Journal of Forecasting 17, 45&ndash;56.
+</p>
+<p>
+Ding Z., Granger C.W.J., Engle R.F. (1993);
+<EM>A Long Memory Property of Stock Market Returns And a New
+Model</EM>,
+Journal of Empirical Finance 1, 83&ndash;106.
+</p>
+<p>
+McCullough B.D., Renfro C.G. (1998);
+<EM>Benchmarks and Software Standards: A Case Study of GARCH 
+Procedures</EM>,
+Journal of Economic and Social Measurement 25, 59&ndash;71. 
+</p>
+<p>
+Greene W.H. (1993);
+<EM>Econometric Analysis</EM>,
+Second Edition, Macmillan. 
+</p>
+<p>
+Klein, L. (1950);
+<EM>Economic Fluctuations in the United States 1921&ndash;1941</EM>,
+Wiley. 
+</p>
+<p>
+Kmenta J. (1997); 
+<EM>Elements of Econometrics</EM>, 
+Second Edition, University of Michigan Publishing. 
+</p>
+<p>
+Laurent S., Peters J.P. (2002); 
+<EM>G@RCH 2.2: An Ox Package for Estimating and Forecasting  
+Various ARCH Models</EM>, 
+Journal of Economic Surveys 16, 447&ndash;485. 
+</p>
+<p>
+Nelson C.R., Plosser C.I. (1982); 
+<EM>Trends and Random Walks in Macroeconomic Time Series</EM>,
+Journal of Monetary Economics, 10, 139&ndash;162. 
+</p>
+<p>
+Zivot E. (2000);
+<EM>Cointegration and forward and spot exchange rate regressions</EM>,
+Journal of International Money and Finance 19, 785&ndash;812, and 387&ndash;401.
+</p>
+
+
+
+<hr><div align="center">[Package <em>fEcofin</em> version 240.10067 <a href="00Index.html">Index]</a></div>
+
+</body></html>
