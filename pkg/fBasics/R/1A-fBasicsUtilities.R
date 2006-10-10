@@ -32,10 +32,10 @@
 #  .tsPlot                   Returns a time series plot
 #  .responsesPlot            Returns a response series plot
 #  .residualsPlot            Returns a residual series plot
-#  .histPlot                 Returns a histogram plot
-#  .densityPlot              Returns a kernel density estimate plot
+#  histPlot                  Returns a tailored histogram plot
+#  densityPlot               Returns a tailored kernel density estimate plot
 #  .firePlot                 Returns a fitted values vs.residuals plot
-#  .qqbayesPlot              Returns a quantile-quantile plot
+#  qqbayesPlot               Returns a tailored quantile-quantile plot
 #  .acfPlot                  Returns a autocorrelation function plot
 #  .pacfPlot                 Returns a partial ACF plot
 #  .mrlPlot                  Returns a mean residual life plot
@@ -70,10 +70,10 @@
 #  .tsPlot                   Returns a time series plot
 #  .responsesPlot            Returns a response series plot
 #  .residualsPlot            Returns a residual series plot
-#  .histPlot                 Returns a histogram plot
-#  .densityPlot              Returns a kernel density estimate plot
+#  histPlot                 Returns a histogram plot
+#  densityPlot              Returns a kernel density estimate plot
 #  .firePlot                 Returns a fitted values vs.residuals plot
-#  .qqbayesPlot              Returns a quantile-quantile plot
+#  qqbayesPlot              Returns a quantile-quantile plot
 #  .acfPlot                  Returns a autocorrelation function plot
 #  .pacfPlot                 Returns a partial ACF plot
 #  .mrlPlot                  Returns a mean residual life plot
@@ -178,7 +178,7 @@ function(x, ...)
 # ------------------------------------------------------------------------------
 
 
-.histPlot = 
+histPlot = 
 function(x, col = "steelblue", border = "white", 
 main = x@units, add.fit = TRUE, ...) 
 {   # A function implemented by Diethelm Wuertz
@@ -248,7 +248,7 @@ main = x@units, add.fit = TRUE, ...)
 # ------------------------------------------------------------------------------
 
 
-.densityPlot = 
+densityPlot = 
 function(x, col = "steelblue", main = x@units, add.fit = TRUE, ...)
 {   # A function implemented by Diethelm Wuertz
 
@@ -413,7 +413,7 @@ function(x, y, method = c("scatter", "hist"), ...)
 # ------------------------------------------------------------------------------
 
 
-.qqbayesPlot = 
+qqbayesPlot = 
 function(x, labels = TRUE, ...) 
 {   # A function implemented by Diethelm Wuertz
 

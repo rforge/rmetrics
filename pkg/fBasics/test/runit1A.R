@@ -32,10 +32,10 @@
 #  .tsPlot                   Returns a time series plot
 #  .responsesPlot            Returns a response series plot
 #  .residualsPlot            Returns a residual series plot
-#  .histPlot                 Returns a histogram plot
-#  .densityPlot              Returns a kernel density estimate plot
+#  histPlot                 Returns a histogram plot
+#  densityPlot              Returns a kernel density estimate plot
 #  .firePlot                 Returns a fitted values vs.residuals plot
-#  .qqbayesPlot              Returns a quantile-quantile plot
+#  qqbayesPlot              Returns a quantile-quantile plot
 #  .acfPlot                  Returns a autocorrelation function plot
 #  .pacfPlot                 Returns a partial ACF plot
 #  .mrlPlot                  Returns a mean residual life plot

@@ -1,4 +1,6 @@
 #
+# WARNING - NOT YET UPDATED TO R 2.4.0, THIS MAY RESULT IN ERRORS
+#
 # Examples from the Monograph:
 #   "Rmetrics - Financial Engineering and Computational Finance"
 #     written by Diethelm Wuertz
@@ -221,7 +223,7 @@
 ### 1.5.2 Example: Student-t Variates under Aggregation  
     
     # Set Graphics Frame:   
-    par(mfrow = c(2,2), cex = 0.7)
+    par(mfrow = c(2, 2), cex = 0.7)
     ###
     
     # Tests:
@@ -269,7 +271,7 @@
 ### 1.5.3 Example: 
 
     # Load the Series:
-    NYSE.RET = outlier(returnSeries(as.timeSeries(data(nyse))))
+    NYSE.RET = returnSeries(as.timeSeries(data(nyse)))
     nyse.ret = as.vector(NYSE.RET) 
     L = length(nyse.ret)
     ###

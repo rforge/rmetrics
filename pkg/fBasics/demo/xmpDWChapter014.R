@@ -1,4 +1,6 @@
 #
+# WARNING - NOT YET UPDATED TO R 2.4.0, THIS MAY RESULT IN ERRORS
+#
 # Examples from the Monograph:
 #   "Rmetrics - Financial Engineering and Computational Finance"
 #     written by Diethelm Wuertz
@@ -31,7 +33,7 @@
 
 ### Load Packages:
 
-    require(fBasics)
+    # require(fBasics)
     ###
     
 
@@ -158,7 +160,13 @@
     ###
         
     # Load USDDEM Data, Convert to 'timeSeries' Object
-    USDDEM = as.timeSeries(data(usddem30u))
+    URL = "http://www.itp.phys.ethz.ch/econophysics/R/data/textbooks/"
+    SRC = "Wuertz/data/usddem30u.csv"
+    DATA = paste(URL, SRC, sep = "") 
+    download.file(DATA, destfile = "usddem30u.csv")
+    USDDEM = readSeries("usddem30u.csv")
+    print(USDDEM[1,])
+    print(end(USDDEM))
     # Extract Bid Series:
     USDDEM.BID = USDDEM[, "BID"]
     ###

@@ -1,4 +1,6 @@
 #
+# WARNING - NOT YET UPDATED TO R 2.4.0, THIS MAY RESULT IN ERRORS
+#
 # Examples from the Monograph:
 #   "Rmetrics - Financial Engineering and Computational Finance"
 #     written by Diethelm Wuertz
@@ -35,7 +37,7 @@
 
 ### Load Packages:
 
-    require(fCalendar)
+    # require(fCalendar)
     ###
     
     
@@ -177,15 +179,15 @@
     units = c("USDEUR", "USDCAD")
     FinCenter = "GMT"
     series = timeSeries(cbind(x, y), dates, units, FinCenter = "GMT")   
-    series
+    print(series)
     class(series)
     ###
     
     # Time Series Slots
-    slotNames(series)
+    print(slotNames(series))
     ###
         
-    # Print some of the slots ...
+    # Print slots ...
     series@Data
     series@positions
     series@units    
@@ -194,7 +196,11 @@
     ###
         
     # Plot:
-    plot(series)
+    par(mfrow = c(2, 1), cex = 0.7)
+    plot(series[, 1], type = "b", col = "steelblue")
+    grid()
+    plot(series[, 2], type = "b", col = "steelblue")
+    grid() 
     ###
     
     
@@ -313,8 +319,8 @@
 
 ### 1.2.7 Example: Loading and Executing an Example File
 
-    # Select from the Menu:
-    xmpfBasics()
+    # Select from the Menu - Removed sin Rmetrics 2.4.0
+    # xmpfBasics()
     ###
     
     
@@ -323,13 +329,17 @@
 
 ### 1.2.8 Example: Loading Example Data Files
     
-    # Show example files:
-    require(fCalendar)
-    data(package = "fBasics")
+    # Get Data:
+    URL = "http://www.itp.phys.ethz.ch/econophysics/R/data/textbooks/"
+    SRC = "ZivotWang/data/DowJones30.csv"
+    DATA = paste(URL, SRC, sep = "") 
+    download.file(DATA, destfile = "DowJones30.csv")
+    DowJones30 = readSeries("DowJones30.csv")
+    print(DowJones30[1,])
+    print(end(DowJones30))
     ###
     
     # Load Dow Jones 30:
-    data(DowJones30)
     class(DowJones30)
     DowJones30 = as.timeSeries(DowJones30)
     class(DowJones30)
@@ -349,7 +359,7 @@
     ###
    
     # Start and End Date:
-    c(start(IBM), end(IBM))
+    print(c(start(IBM), end(IBM)))
     # [1] "Zurich"
     # [1] [1990-12-31] [2001-01-02]
     ###
@@ -361,7 +371,13 @@
 ### 1.2.9 Example: Loading Non-ISO 8601 Example Data Files
 
     # Load IP.dat:
-    data(IP.dat)
+    URL = "http://www.itp.phys.ethz.ch/econophysics/R/data/textbooks/"
+    SRC = "ZivotWang/data/IP.dat.csv"
+    DATA = paste(URL, SRC, sep = "") 
+    download.file(DATA, destfile = "IP.dat.csv")
+    IP.dat = readSeries("IP.dat.csv")
+    print(IP.dat[1,])
+    print(end(IP.dat))
     class(IP.dat)
     ###
 

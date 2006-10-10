@@ -1,4 +1,6 @@
 #
+# WARNING - NOT YET UPDATED TO R 2.4.0, THIS MAY RESULT IN ERRORS
+#
 # Examples from the Monograph:
 #   "Rmetrics - Financial Engineering and Computational Finance"
 #     written by Diethelm Wuertz
@@ -17,7 +19,6 @@
 #       * Exercise: Write a Density Plot Function
 #   1.3.3 Example: Create Log Density and Quantile Plot
 #       * Example: Compute and Plot Empirical Cumulative Distribution 
-#       * Example: Estimate Distributions Using Smooth Splines
 #   1.3.4 Example: The Central Limit Theorem
 #       * Example: Estimate Parameters of the Student-t Distribution 
 #       * Code Snippet: 'rsymstb' Function
@@ -50,9 +51,9 @@
 
 ### Load Packages:
 
-    require(fBasics)
-    require(fCalendar)
-    require(fMultivar)
+    # require(fBasics)
+    # require(fCalendar)
+    # require(fMultivar)
     ###
     
 
@@ -65,8 +66,15 @@
     ###
     
     # Load NYSE Composite Index Values:
-    data(nyse)
-    NYSE.IDX = as.timeSeries(nyse)
+    URL = "http://www.itp.phys.ethz.ch/econophysics/R/data/textbooks/"
+    SRC = "Wuertz/data/nyse.csv"
+    DATA = paste(URL, SRC, sep = "") 
+    download.file(DATA, destfile = "nyse.csv")
+    NYSE.IDX = readSeries("nyse.csv")
+    print(NYSE.IDX[1,])
+    print(end(NYSE.IDX))
+    ###
+    
     # Compute Log Returns:
     NYSE.RET = returnSeries(NYSE.IDX)
     NYSE.RET@units = "NYSE Returns"
@@ -110,9 +118,17 @@
     ###
     
     # Load USDCHF Data:
-    data(usdchf)
-    usdchf.ts = as.timeSeries(usdchf, format = "%Y%m%d%H%M")
-    USDCHF.RET = returnSeries(usdchf.ts)
+    URL = "http://www.itp.phys.ethz.ch/econophysics/R/data/textbooks/"
+    SRC = "Wuertz/data/usdchf.csv"
+    DATA = paste(URL, SRC, sep = "") 
+    download.file(DATA, destfile = "usdchf.csv")
+    usdchf = readSeries("usdchf.csv")
+    print(usdchf[1,])
+    print(end(usdchf))
+    ###
+    
+    # Return Series:
+    USDCHF.RET = returnSeries(usdchf)
     ###
     
     # Graph Frame:
@@ -178,10 +194,11 @@
     ###
    
     # Try:
-    .histPlot(x = NYSE.RET)
+    par(mfrow = c(1, 1))
+    .histPlot(x = NYSE.RET, main = "NYSE")
     ###
         
-    # Use the Rmetrics functions:
+    # Use the Rmetrics internal function:
     histPlot(NYSE.RET)
     ###
     
@@ -213,10 +230,11 @@
     ###
     
     # Try:
-    .densityPlot(x = NYSE.RET)
+    par(mfrow = c(1, 1))
+    .densityPlot(x = NYSE.RET, main = "NYSE")
     ###
     
-    # Use the Rmetrics functions:
+    # Use the Rmetrics Internal function:
     densityPlot(NYSE.RET)
     ###
    
@@ -234,7 +252,6 @@
     par(mfrow = c(1, 1))
     ###
     
-
     # Log Density Plot:
     den = density(x)
     plot(den$x, log10(den$y), type = "l", lty = 3, lwd =2,
@@ -246,14 +263,15 @@
     # Normal Quantile-Quantile Plot:
     qqnorm(x, ylim = c(-0.1, 0.1), cex = 0.4)
     qqline(x, col = "red")
+    grid()
     ###
     
     # Do the same plots for the USDCHF FX returns ...
     # Use alternatively the Rmetrics functions:
     logpdfPlot(NYSE.RET)
-    require(fExtremes)
-    qqPlot(NYSE.RET)
-    qqbayesPlot(NYSE.RET)
+    # require(fExtremes)
+    # qqPlot(NYSE.RET)
+    # qqbayesPlot(NYSE.RET)
     ###
     
     
@@ -309,46 +327,6 @@
     par(op)
     ###
 
-   
-# ------------------------------------------------------------------------------
-
-
-### Example: Estimate Distributions Using Smooth Splines:
-
-    # Estimate probability densities using smoothing spline ANOVA models 
-    ###
-    
-    # Fit: Estimate from Empirical Distribution  
-    data(nyseres)
-    par(mfcol = c(3, 2), cex = 0.7, err = -1)
-    # Take subset at random ...
-    nyseres = sample(nyseres[, 1])[1:1000]
-    e = (nyseres - mean(nyseres))/sqrt(var(nyseres))
-    # This will take some time ...
-    fit = ssdFit(e)
-    ###
-         
-    # SSD - Random Variates:    
-    r = rssd(100, fit)
-    plot(r, type = "l", main = "SSD Series")
-    mean(r)
-    var(r)
-    ###
-    
-    # SSD - Density:
-    x = seq(min(r), max(r), length = 256)   
-    d = dssd(x, fit)
-    plot(x, log(d), type = "l", main = "SSD Density")
-    density = density(r, from = -6, to = 6, n = 128)
-    points(density$x, log(density$y), col = 4)
-    ###
-    
-    # SSD - Probability:    
-    p = pssd(x, fit)
-    plot(x, p, type = "l", main = "SSD Probability")
-    points(sort(r), (1:length(r))/length(r), col = 4)
-    ###
-    
     
 # ------------------------------------------------------------------------------
 

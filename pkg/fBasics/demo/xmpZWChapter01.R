@@ -1,4 +1,5 @@
-
+#
+# WARNING - NOT YET UPDATED TO R 2.4.0, THIS MAY RESULT IN ERRORS
 #
 # Example:
 #   A Compendium for R and Rmetrics users to the book 
