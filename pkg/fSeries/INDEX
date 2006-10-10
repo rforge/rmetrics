@@ -1,0 +1,11 @@
+ArfimaOxInterface       R Interface for Garch Arfima
+ArmaModelling           Integrated ARMA Time Series Modelling
+ChaoticTimeSeries       Chaotic Time Series Modelling
+GarchDistributions      GARCH Distributions and Parameter Estimation
+GarchModelling          Univariate GARCH Time Series Modelling
+GarchOxInterface        R Interface for Garch Ox
+HeavisideFunction       Haviside and Related Functions
+LongRangeDependence     Long Range Dependence Modelling
+TimeSeriesTests         Time Series Tests
+UnitrootDistribution    Unit Root Distributions
+UnitrootTests           Unit Root Time Series Tests
