@@ -32,6 +32,9 @@
     #   work properly. 
     # References:
     #   POSIXt from R's "base" package.
+    
+    # Note, data which are downloaded from the Internet are also available
+    #   in Rmetrics package "fEcofin".
 
 
 # ------------------------------------------------------------------------------

@@ -49,6 +49,9 @@
     #   2. all times and dates are handled internally as POSIXt GMT objects
     #   3. using a 'FinCenter' where the time/Date and other objects are used
     ###
+    
+    # Note, data which are downloaded from the Internet are also available
+    #   in Rmetrics package "fEcofin".
  
     
 # ------------------------------------------------------------------------------
