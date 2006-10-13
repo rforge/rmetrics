@@ -708,12 +708,15 @@ Wood (2001);
 
 \examples{
 ## SOURCE("fMultivar.2A-RegressionModelling")
-\dontrun
+\dontrun{
 ## regFit -
    data(recession) 
+   recession[,1] = paste(recession[,1], "28", sep = "")
    
 ## myPlot -
    myPlot = function(recession, in.sample) {
+     recession = as.timeSeries(recession)[, "recession"]
+     in.sample = as.timeSeries(recession)[, "recession"]
      Date = recession[, "date"]
      Date = trunc(Date/100) + (Date-100*trunc(Date/100))/12
      Recession = recession[, "recession"]
@@ -721,13 +724,14 @@ Wood (2001);
      plot(Date, Recession, type = "n", main = "US Recession")
      grid()
      lines(Date, Recession, type = "h", col = "steelblue3")
-     lines(Date, inSample) }
+     lines(Date, inSample) 
+   }
    
 ## Generalized Additive Modelling:
    require(mgcv)
    par(mfrow = c(2, 2))
-   fit = regFit(formula = recession ~ s(tbills3m) + s(tbonds10y),
-     family = gaussian(), data = recession, method = "GAM")
+   fit = gregFit(formula = recession ~ s(tbills3m) + s(tbonds10y),
+     family = gaussian(), data = recession, use = "gam")
    # In Sample Prediction:
    in.sample = predict(fit, newdata = recession)$fit  
    myPlot(recession, in.sample)

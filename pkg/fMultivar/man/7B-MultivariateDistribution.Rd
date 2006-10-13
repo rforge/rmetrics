@@ -381,21 +381,19 @@ Hothorn T., Bretz F., Genz A. (2001);
    title(main = "Bivariate Student-t Contours")
    
 ## plot -
-   if (require(fExtremes)) {
-     # Student-t: Fixed number of degrees of freedom:
-     fit2 = mvFit(x = rmvst(100, 5), method = "st", fixed.df = NA)
-     # Show Model Slot:
-     fit2@model
-     # Show Scatterplot:
-     par(mfrow = c(1, 1), cex = 0.7)
-     plot(fit2, which = c(TRUE, FALSE, FALSE, FALSE, FALSE))
-     # Show QQ and PP Plots:
-     par(mfrow = c(2, 2), cex = 0.7)
-     plot(fit2, which = !c(TRUE, FALSE, FALSE, FALSE, FALSE))
-     # Interactive Plots:
-     # par(mfrow = c(1, 1))
-     # plot(fit2, which = "ask")
-  }
+   # Student-t: Fixed number of degrees of freedo
+   fit2 = mvFit(x = rmvst(100, 5), method = "st", fixed.df = NA)
+   # Show Model Slot:
+   fit2@model
+   # Show Scatterplot:
+   ## par(mfrow = c(1, 1), cex = 0.7)
+   ## plot(fit2, which = c(TRUE, FALSE, FALSE, FALSE, FALSE))
+   # Show QQ and PP Plots:
+   ## par(mfrow = c(2, 2), cex = 0.7)
+   ## plot(fit2, which = !c(TRUE, FALSE, FALSE, FALSE, FALSE))
+   # Interactive Plots:
+   # par(mfrow = c(1, 1))
+   # plot(fit2, which = "ask")
 }
 
 
