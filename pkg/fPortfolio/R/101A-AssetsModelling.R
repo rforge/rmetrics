@@ -185,7 +185,7 @@ kmeans.centers = 5, kmeans.maxiter = 10, doplot = TRUE, ...)
 # ------------------------------------------------------------------------------
 
     
-assetsHistPlot =
+.assetsHistPlot =
 function(x, method = c("mve", "mcd", "classical"), which = 1:dim(x)[2],
 labels = TRUE, xlim = NULL, ...) 
 {   # A function implemented by Diethelm Wuertz
@@ -255,7 +255,7 @@ labels = TRUE, xlim = NULL, ...)
 # ------------------------------------------------------------------------------
 
 
-assetsQQNormPlot =
+.assetsQQNormPlot =
 function(x, which = 1:dim(x)[2], labels = TRUE, ...)
 {   # A function implemented by Diethelm Wuertz
 
@@ -314,7 +314,7 @@ function(x, which = 1:dim(x)[2], labels = TRUE, ...)
 # ------------------------------------------------------------------------------
 
 
-assetsPairsPlot =
+.assetsPairsPlot =
 function(x, labels = TRUE)
 {   # A function implemented by Diethelm Wuertz
 
@@ -346,7 +346,7 @@ function(x, labels = TRUE)
 # ------------------------------------------------------------------------------
 
 
-assetsCorTestPlot = 
+.assetsCorTestPlot = 
     function(x, scale = 1, labels = TRUE, ...)
     {   # A function implemented by Diethelm Wuertz
     

@@ -39,7 +39,7 @@
 ################################################################################
  
 
-corpcorBuiltin =
+.corpcorBuiltin =
 function(builtin = "/fPortfolio/demo/funCorpcor.R") 
 {
     Builtin = paste(.Library, builtin, sep = "")

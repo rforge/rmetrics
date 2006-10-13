@@ -57,8 +57,8 @@ assetsSelect(x, method = c("hclust", "kmeans"),
 assetsFit(x, method = c("st", "snorm", "norm"), title = NULL, 
     description = NULL, fixed.df = NA, \dots)
 
-assetsMeanCov(x, method = c("cov", "shrink", "bagged"), check = TRUE,
-    force = TRUE, baggedR = 100, \dots)
+assetsMeanCov(x, method = c("cov", "mve", "mcd", "nnve", "shrink", "bagged"), 
+    check = TRUE, force = TRUE, baggedR = 100, \dots)
 assetsStats(x)
 assetsTest(x, method = c("shapiro", "energy"), Replicates = 100, 
     title = NULL, description = NULL)
