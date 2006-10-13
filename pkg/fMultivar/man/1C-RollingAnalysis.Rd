@@ -110,8 +110,6 @@ rollVar(x, n = 9, trim = TRUE, unbiased = TRUE, na.rm = FALSE)
 ## SOURCE("fMultivar.1C-RollingAnalysis")
 
 ## Rolling Analysis:
-\dontrun{
-   xmpMultivar("\nNext: Rolling Analysis > ")
    x = (1:10)^2
    x
    trim =  c(TRUE, TRUE, FALSE, FALSE)
@@ -124,7 +122,6 @@ rollVar(x, n = 9, trim = TRUE, unbiased = TRUE, na.rm = FALSE)
      print(rollVar(x, 5, trim[i], unbiased = TRUE, na.rm[i]))
    for (i in 1:4) 
      print(rollVar(x, 5, trim[i], unbiased = FALSE, na.rm[i]))
-}
 }
 
 
