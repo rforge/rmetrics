@@ -21,10 +21,10 @@
     The functions are:
     
     \tabular{ll}{
-	\code{HNGOption} \tab Heston-Nandi GARCH(1,1) option price, \cr
-	\code{HNGGreeks} \tab Heston-Nandi GARCH(1,1) option sensitivities, \cr
-	\code{HNGCharacteristics} \tab option prices and sensitivities. }
-	
+    \code{HNGOption} \tab Heston-Nandi GARCH(1,1) option price, \cr
+    \code{HNGGreeks} \tab Heston-Nandi GARCH(1,1) option sensitivities, \cr
+    \code{HNGCharacteristics} \tab option prices and sensitivities. }
+    
 }
 
 
@@ -129,7 +129,6 @@ Heston S.L., Nandi S. (1997);
 
 ## model -
    # Define the Model Parameters for a Heston-Nandi Option:
-   xmpOptions("\nStart: Parameter Settings > ")
    model = list(lambda = -0.5, omega = 2.3e-6, alpha = 2.9e-6, 
      beta = 0.85, gamma = 184.25) 
    S = X = 100
@@ -141,7 +140,6 @@ Heston S.L., Nandi S. (1997);
 
 ## HNGOption -
    # Compute HNG Call-Put and compare with GBS Call-Put:
-   xmpOptions("\nNext: HNG Option Prices > ")
    HNG = GBS = Diff = NULL
    for (TypeFlag in c("c", "p")) {
      HNG = c(HNG, HNGOption(TypeFlag, model = model, S = S, X = X, 
@@ -154,7 +152,6 @@ Heston S.L., Nandi S. (1997);
      
 ## HNGGreeks -
    # Compute HNG Greeks and compare with GBS Greeks:
-   xmpOptions("\nNext: HNG Delta and Gamma Sensitivities > ")
    Selection = c("Delta", "Gamma")
    HNG = GBS = NULL
    for (i in 1:2){

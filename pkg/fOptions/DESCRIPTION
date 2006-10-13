@@ -3,7 +3,7 @@ Version: 240.10067
 Date: 1996 - 2006
 Title: Rmetrics - Option Valuation
 Author: Diethelm Wuertz and many others, see the SOURCE file
-Depends: R (>= 1.9.0), methods, fBasics, fCalendar, fSeries
+Depends: R (>= 1.9.0), methods, fEcofin, fBasics, fCalendar, fSeries
 Maintainer: Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 Description: Environment for teaching "Financial Engineering and Computational Finance"
 License: GPL Version 2 or later
