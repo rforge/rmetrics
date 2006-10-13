@@ -95,12 +95,12 @@ ssrecordsPlot(x, subsamples = 10, doplot = TRUE, plottype = c("lin", "log"),
 sllnPlot(x, doplot = TRUE, labels = TRUE, ...)
 lilPlot(x, doplot = TRUE, labels = TRUE, ...)
 
-xacfPlot(x, u = quantile(x, 0.95), lag.max = 15, doplot = TRUE, labels = TRUE, \dots)
+xacfPlot(x, u = quantile(x, 0.95), lag.max = 15, \dots)
 
 blockMaxima(x, block = c("monthly", "quarterly"), doplot = FALSE)
-findThreshold(x, n = floor(0.05*length(as.vector(x))))
-pointProcess(x, u = quantile(x, 0.95))
-deCluster(x, run = 20)
+findThreshold(x, n = floor(0.05*length(as.vector(x))), doplot = FALSE)
+pointProcess(x, u = quantile(x, 0.95), doplot = FALSE)
+deCluster(x, run = 20, doplot = FALSE)
 
 interactivePlot(x, choices = paste("Plot", 1:9), 
     plotFUN = paste("plot.", 1:9, sep = ""), which = "all", \dots)
@@ -407,7 +407,6 @@ Embrechts, P., Klueppelberg, C., Mikosch, T. (1997);
 ## SOURCE("fExtremes.051A-ExtremesData")
 
 ## emdPlot -
-   xmpExtremes("\nStart: Empirical Distribution Function >")
    # Danish fire insurance data show Pareto tail behaviour:
    par(mfrow = c(2, 2))
    data(danish)
@@ -421,7 +420,6 @@ Embrechts, P., Klueppelberg, C., Mikosch, T. (1997);
    emdPlot(rt(5000, 4), plottype = "xy") 
  
 ## qqPlot -
-   xmpExtremes("\nNext: Quantile-Quantile Plot >")
    # QQ-Plot of Simulated Normal rvs:
    par(mfrow = c(2, 2))
    set.seed(4711)
@@ -436,13 +434,11 @@ Embrechts, P., Klueppelberg, C., Mikosch, T. (1997);
    text(-3.5, 0.09, pos = 4, "BMW log returns")     
    
 ## qPlot -
-   xmpExtremes("\nNext: QQ-Plot of Heavy Tails >")
    # QQ-Plot of heavy-tailed Danish fire insurance data:
    data(danish)
    qPlot(danish) 
  
 ## mePlot -
-   xmpExtremes("\nNext: Mean Excess Plot >")
    # Sample mean excess plot of heavy-tailed Danish fire 
    # insurance data 
    par(mfrow = c(3, 2))
@@ -451,14 +447,12 @@ Embrechts, P., Klueppelberg, C., Mikosch, T. (1997);
    title(xlab = "u", ylab = "e", main = "mePlot - Danish Fire Data")
    
 ## mrlPlot -
-   xmpExtremes("\nNext: mean Residual Live Plot >")
    # Sample mean residual live plot of heavy-tailed Danish Fire 
    # insurance data 
    mrlPlot(danish, labels = FALSE)
    title(xlab = "u", ylab = "e", main = "mrlPlot - Danish Fire Data")
  
 ## mxfPlot -
-   xmpExtremes("\nNext: Mean Excess Function Plot >")
    # Plot the mean excess functions for randomly distributed 
    # residuals  
    par(mfrow = c(2, 2))
@@ -482,7 +476,6 @@ Embrechts, P., Klueppelberg, C., Mikosch, T. (1997);
    abline(0, 1)  
  
 ## msratioPlot -
-   xmpExtremes("\nNext: Maximum/Sum Ratio Plot >")
    # Examples for Ratio of Maximum and Sum Plots:
    par(mfrow = c(3, 2))
    data(bmw)
@@ -499,7 +492,6 @@ Embrechts, P., Klueppelberg, C., Mikosch, T. (1997);
    title(xlab = xlab, ylab = ylab, main = "BMW Returns")
   
 ## recordsPlot -
-   xmpExtremes("\nNext: Records Plot >")
    # Record fire insurance losses in Denmark
    par(mfrow = c(2, 2))
    data(danish)
@@ -511,7 +503,6 @@ Embrechts, P., Klueppelberg, C., Mikosch, T. (1997);
    text(1, 12.8, pos = 4, "BMW Shares")
       
 ## ssrecordsPlot -
-   xmpExtremes("\nNext: Subsample Record Plot >")
    # Record fire insurance losses in Denmark
    ssrecordsPlot(danish)
    text(1, 9.2, pos = 4, "Danish Fire")
@@ -520,21 +511,18 @@ Embrechts, P., Klueppelberg, C., Mikosch, T. (1997);
    text(1, 10.5, pos = 4, "BMW Shares")  
  
 ## xacfPlot -
-   xmpExtremes("\nNext: ACF Plot of Exceedences >")
    # Plot ACF of Heights/Distances of Eceedences over threshold:
    par(mfrow = c(2, 2))
    data(bmw)
    xacfPlot(bmw)
    
 ## findThreshold -
-   xmpExtremes("\nStart: Find Thresold >")
    # Find threshold giving (at least) fifty exceedances 
    # for Danish Fire data
    data(danish)
    findThreshold(danish, n = c(10, 50, 100))    
    
 ## blockMaxima -
-   xmpExtremes("\nNext: Compute Block Maxima >")
    # Block Maxima (Minima) for the right and left tails 
    # of the BMW log returns:
    par(mfrow = c(2, 1))
@@ -542,7 +530,6 @@ Embrechts, P., Klueppelberg, C., Mikosch, T. (1997);
    blockMaxima(-as.timeSeries(data(bmwRet)), block = 65)     
  
 ## deCluster -
-   xmpExtremes("\nNext: De-Cluster Exceedences >")
    # Decluster the 200 exceedances of a particular  
    # threshold in the negative BMW log-return data
    PP = pointProcess(-as.timeSeries(data(bmwRet)), n = 300)

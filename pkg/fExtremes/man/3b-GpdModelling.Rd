@@ -72,7 +72,7 @@ pgpd(q, xi = 1, mu = 0, beta = 1)
 qgpd(p, xi = 1, mu = 0, beta = 1) 
 rgpd(n, xi = 1, mu = 0, beta = 1)
 
-gpdSim(model = list(shape = 0.25, location = 0, scale = 1), n = 1000,
+gpdSim(model = list(xi = 0.25, mu = 0, beta = 1), n = 1000,
     seed = NULL)
 gpdFit(x, u = quantile(x, 0.95), type = c("mle", "pwm"), information = 
     c("observed", "expected"), title = NULL, description = NULL, \dots)
@@ -365,21 +365,18 @@ Hosking J.R.M., Wallis J.R., (1987);
 ## SOURCE("fExtremes.053A-GpdModelling")
 
 ## *gpd  -
-   xmpExtremes("\nStart: Simulate GPD Distributed sample >")
    par(mfrow = c(2, 2))
    r = rgpd(n = 1000, xi = 1/4)
    plot(r, type = "l", main = "GPD Series")
    
 ## Plot empirical density and compare with true density:
 ## Omit values greater than 500 from plot
-   xmpExtremes("\nNext: Plot Empirical and True Density >")
    hist(r, n = 50, probability = TRUE, xlab = "r", 
      xlim = c(-5, 5), ylim = c(0, 1.1), main = "Density")
    x = seq(-5, 5, by = 0.01)
    lines(x, dgpd(x, xi = 1/4), col = "steelblue3")
    
 ## Plot df and compare with true df:
-   xmpExtremes("\nNext: Plot Empirical and True Probability >")
    plot(sort(r), (1:length(r)/length(r)), 
      xlim = c(-3, 6), ylim = c(0, 1.1),
      cex = 0.5, ylab = "p", xlab = "q", main = "Probability")
@@ -387,7 +384,6 @@ Hosking J.R.M., Wallis J.R., (1987);
    lines(q, pgpd(q, xi = 1/4), col = "steelblue3")
    
 ## Compute quantiles, a test:
-   xmpExtremes("\nNext: Compute Quantiles >")
    qgpd(pgpd(seq(-1, 5, 0.25), xi = 1/4 ), xi = 1/4) 
    
 ## Load Data:
@@ -395,31 +391,26 @@ Hosking J.R.M., Wallis J.R., (1987);
    
 ## gpdSim - 
    # Simulate GPD Data:
-   xmpExtremes("\nStart: Simulate a GPD Distributed Sample > ")
    x = gpdSim(model = list(shape = 0.25, location = 0, scale = 1), n = 1000)
    
 ## gpdFit -   
-   xmpExtremes("\nNext: Fit Simulated Data to GPD using PWM > ")
    fit = gpdFit(x, nextremes = length(x), type = "pwm") 
    print(fit)
    par(mfcol = c(4, 2), cex = 0.7)
    summary(fit)  
    
 ## gpdFit -
-   xmpExtremes("\nNext: Fit Simulated Data to GPD using MLE > ")
    fit = gpdFit(x, nextremes = length(x), type = "mle") 
    print(fit)
    summary(fit) 
 
 ## gpdFit - 
-   xmpExtremes("\nNext: Fit Danish Fire Data to Excess Losses over 10 > ")
    fit = gpdFit(danish, 10, type = "mle") 
    print(fit)
    par(mfrow = c(2, 2), cex = 0.7)
    summary(fit)  
      
 ## gpdqPlot - 
-   xmpExtremes("\nNext: 99.5th Percentiles for Danish Fire Data > ")
    fit = gpdFit(danish, threshold = 10, type = "mle")
    par(mfrow = c(1, 1))
    tail = gpdtailPlot(fit)
@@ -427,13 +418,11 @@ Hosking J.R.M., Wallis J.R., (1987);
    title(main = "Danish Data: 99.5th Percentile") 
     
 ## gpdquantPlot -   
-   xmpExtremes("\nNext: 99.9th Percentiles for Danish Fire Data > ")
    par(mfrow = c(1, 1))
    gpdquantPlot(danish, p = 0.999)
    title(sub = "Danish Fire: GPD High Quantile") 
 
 ## gpdsfallPlot - 
-   xmpExtremes("\nNext: Expected Shortfall for Danish Fire Data > ")
    fit = gpdFit(danish, nextremes = floor(length(danish)/10), type = "mle")
    par(mfrow = c(1, 1))
    tp = gpdtailPlot(fit)
@@ -441,27 +430,23 @@ Hosking J.R.M., Wallis J.R., (1987);
    title(main = "Danish Fire: Expected Shortfall")   
    
 ## gpdriskmeasures -
-   xmpExtremes("\nNext: Quantiles and Expected Shortfalls > ")
    # Give estimates of 0.999 and 0.9999 quantiles - Danish Fire Date:   
    fit = gpdFit(danish, threshold = 10, type = "mle") 
    par(mfrow = c(1, 1))
    gpdriskmeasures(fit, c(0.99, 0.995, 0.999, 0.9995, 0.9999))   
   
 ## gpdshapePlot - 
-   xmpExtremes("\nNext: Shape Plot of Heavy-Tailed Simulated Data > ")
    set.seed(4711)
    par(mfrow = c(1, 1))
    gpdshapePlot(gpdSim(n = 1000))
    title(sub = "Simulated GPD", cex.sub = 0.7)   
 
 ## gpdshapePlot - 
-   xmpExtremes("\nNext: Shape Plot of Heavy-Tailed Danish Fire Data > ")
    par(mfrow = c(1, 1))
    gpdshapePlot(danish)
    title(sub = "Danish Fire", cex.sub = 0.7)
 
 ## gpdtailPlot - 
-   xmpExtremes("\nNext: Plot Tail Estimate of Danish Fire Data >")
    fit = gpdFit(danish, threshold = 10, type = "mle")
    par(mfrow = c(1, 1))
    gpdtailPlot(fit, main = "Danish Fire: GPD Tail Estimate", col = "steelblue4")  

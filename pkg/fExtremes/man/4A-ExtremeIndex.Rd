@@ -194,7 +194,6 @@ Embrechts, P., Klueppelberg, C., Mikosch, T. (1997);
 
 ## Extremal Index for the right and left tails 
 ## of the BMW log returns:
-   xmpExtremes("\nStart: Plot the Extremal Index >")
    data(bmwRet)
    par(mfrow = c(2, 2), cex = 0.7)
    exindexPlot( as.timeSeries(bmwRet), block = "quarterly")
@@ -202,7 +201,6 @@ Embrechts, P., Klueppelberg, C., Mikosch, T. (1997);
    
 ## Extremal Index for the right and left tails 
 ## of the BMW log returns:
-   xmpExtremes("\nNext: Investigate Tail Depth Dependence >")
    exindexesPlot( as.timeSeries(bmwRet), block = 65)
    exindexesPlot(-as.timeSeries(bmwRet), block = 65)   
 }

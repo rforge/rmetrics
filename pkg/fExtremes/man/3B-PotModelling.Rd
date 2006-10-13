@@ -141,12 +141,10 @@ potFit(x, u = quantile(x, 0.95), run = 1, title = NULL, description = NULL)
    data(danish)
    
 ## Fit:
-   xmpExtremes("\nStart: POT Parameter Estimate >")
    fit = potFit(danish, threshold = 10)  
    print(fit)
    
 ## Summary with Diagnostic Plots:
-   xmpExtremes("\nNext: Diagnostic Analysis >")
    par(mfrow = c(3, 3), cex = 0.5)
    summary(fit)
 }

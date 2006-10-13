@@ -7,6 +7,7 @@
 \alias{qgev}
 \alias{rgev}
 \alias{gevMoments}
+\alias{gevSlider}
 
 
 \title{Generalized Extreme Value Distribution}
@@ -42,7 +43,7 @@ qgev(p, xi = 1, mu = 0, beta = 1, lower.tail = TRUE)
 rgev(n, xi = 1, mu = 0, beta = 1)
 
 gevMoments(xi = 0, mu = 0, beta = 1)
-gevSlider(method = c("density", "rvs"))
+gevSlider(method = c("dist", "rvs"))
 }
 
 
@@ -58,7 +59,7 @@ gevSlider(method = c("density", "rvs"))
     \item{method}{
         [gevSlider] - \cr        
         a character sgtring denoting what should be displayed. Either
-        the density and \code{"density"}.
+        the density and \code{"dist"} or random variates \code{"rvs"}.
         } 
     \item{n}{
         [rgev] - \cr        

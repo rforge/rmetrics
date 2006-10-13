@@ -63,8 +63,8 @@
 
 
 \usage{
-gevSim(model = list(shape = -0.25, location = 0, scale = 1), n = 1000, seed = NULL)
-gumbelSim(model = list(location = 0, scale = 1), n = 1000, seed = NULL)
+gevSim(model = list(xi = -0.25, mu = 0, beta = 1), n = 1000, seed = NULL)
+gumbelSim(model = list(mu = 0, beta = 1), n = 1000, seed = NULL)
 
 gevFit(x, block = 1, type = c("mle", "pwm"), title = NULL, description = NULL, \dots)
 gumbelFit(x, block = 1, type = c("mle", "pwm"), title = NULL, description = NULL, \dots)
@@ -133,13 +133,6 @@ shaparmDEHaan(x, p = 0.05, xiRange = NULL,
     \item{labels}{
         [hillPlot] - \cr
         whether or not axes should be labelled.
-        }
-    \item{location, scale, shape}{
-        \code{loc} is the location parameter, 
-        \code{scale} the scale parameter,
-        and \code{shape} is the shape parameter.
-        The default values are \code{loc=0}, \code{scale=1}, and 
-        \code{shape=0}.
         }
     \item{log}{
         a logical, if \code{TRUE}, the log density is returned.
@@ -227,11 +220,11 @@ shaparmDEHaan(x, p = 0.05, xiRange = NULL,
         [print][plot] - \cr
         a fitted object of class \code{"gevFit"}.
         }
-    \item{xi, mu, sigma}{
+    \item{xi, mu, beta}{
         [*gev] - \cr
         \code{xi} is the shape parameter, \code{mu} the location parameter,
         and \code{sigma} is the scale parameter. The default values are 
-        \code{xi=1}, \code{mu=0}, and \code{sigma=1}. Note, if \code{xi=0} 
+        \code{xi=1}, \code{mu=0}, and \code{beta=1}. Note, if \code{xi=0} 
         the distribution is of type Gumbel.
         }
     \item{\dots}{
@@ -395,7 +388,6 @@ Embrechts, P., Klueppelberg, C., Mikosch, T. (1997);
 ## gevSim -
 ## gevFit -
    # Simulate GEV Data:
-   xmpExtremes("\nStart: Simulte GEV Sample >")
    # Use default length n=1000
    x = gevSim(model = list(shape = 0.25, location =0 , scale = 1))
    # Fit GEV Data by Probability Weighted Moments:
@@ -407,7 +399,6 @@ Embrechts, P., Klueppelberg, C., Mikosch, T. (1997);
    
 ## gevFit -
    # Fit GEV Data by Max Log Likelihood Method:
-   xmpExtremes("\nNext: Estimate Parameters >")
    fit = gevFit(x, type = "mle") 
    print(fit)
    # Summarize Results:
@@ -416,7 +407,6 @@ Embrechts, P., Klueppelberg, C., Mikosch, T. (1997);
 ## gevSim -
 ## gevFit -
    # Simulate Gumbel Data:
-   xmpExtremes("\nNext: Simulte Gumbel Sample >")
    # Use default length n=1000
    ##> x = gevSim(model = list(shape = 0, location = 0, scale = 1))
    # Fit Gumbel Data by Probability Weighted Moments:
@@ -431,11 +421,9 @@ Embrechts, P., Klueppelberg, C., Mikosch, T. (1997);
    ##> print(fit)
    # Summarize Results:
    ##> summary(fit)     
-   ##> xmpExtremes("Press any key to continue >") 
    
 ## Return levels based on GEV Fit:
    # BMW Stock Data:
-   xmpExtremes("\nNext: Compute BMW Return Levels >")
    par(mfrow = c(2, 1))
    data(bmw)
    # Fit GEV to monthly Block Maxima:
