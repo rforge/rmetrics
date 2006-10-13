@@ -382,7 +382,6 @@ Hothorn T., Bretz F., Genz A. (2001);
    
 ## plot -
    if (require(fExtremes)) {
-     xmpMultivar("\nNext: Scatterplot, QQ and PP Plots > ")
      # Student-t: Fixed number of degrees of freedom:
      fit2 = mvFit(x = rmvst(100, 5), method = "st", fixed.df = NA)
      # Show Model Slot:

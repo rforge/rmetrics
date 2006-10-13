@@ -708,7 +708,7 @@ Wood (2001);
 
 \examples{
 ## SOURCE("fMultivar.2A-RegressionModelling")
-\dontrun{
+\dontrun
 ## regFit -
    data(recession) 
    
@@ -737,12 +737,6 @@ Wood (2001);
    gam.fit = fit@fit
    class(gam.fit) = "gam"
    plot(gam.fit)
-    
-## POLYMARS Modelling:
-   par(mfrow = c(3, 2), ask = FALSE)
-   fit = regFit(formula = recession ~ tbills3m + tbonds10y,
-     family = gaussian(), data = recession, method = "POLYMARS")
-   fit
 }
 }
 

@@ -207,7 +207,6 @@ maxDrawDown(x)
    # ohlcPlot(x, ylab = "price", main = instrument)
    
 ## sharpeRatio -
-   xmpMultivar("\nStart: Sharpe Ratio > ")
    # Sharpe Ratio for DAX and FTSE:
    data(EuStockMarkets)
    dax = log(EuStockMarkets[, "DAX"])
@@ -217,7 +216,6 @@ maxDrawDown(x)
    sharpeRatio(ftse)
    
 ## maxDrawDown -
-   xmpMultivar("\nNext: Max-Draw-Downs for the DAX Index >")
    par(mfrow = c(1, 1), cex = 0.7)
    data(EuStockMarkets)
    dax = log(EuStockMarkets[, "DAX"])
@@ -234,7 +232,6 @@ maxDrawDown(x)
    title(main = "DAX: Max Drawdown")
    
 ## getReturns -
-   xmpMultivar("\nNext: Returns for the DAX Index >")
    par(mfrow = c(1, 1), cex = 0.7)
    data(EuStockMarkets)
    dax = log(EuStockMarkets[, "DAX"])
