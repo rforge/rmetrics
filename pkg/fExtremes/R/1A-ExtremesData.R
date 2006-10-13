@@ -42,17 +42,9 @@
 #  sllnPlot          Verifies Kolmogorov's Strong Law of large numbers
 #  lilPlot           Verifies Hartman-Wintner's Law of the iterated logarithm
 #  xacfPlot          Plots autocorrelations of exceedences
-################################################################################
-
-
-################################################################################
 # FUNCTION:         PLOT UTILITIES:
 #  interactivePlot   Plots several graphs interactively
 #  gridVector        Creates from two vectors rectangular grid points
-################################################################################
-
-
-################################################################################
 # FUNCTION          DATA PREPROCESSING:
 #  blockMaxima       Returns block maxima from a time series
 #  findThreshold     Upper threshold for a given number of extremes 
