@@ -281,6 +281,8 @@ title = NULL, description = NULL, ...)
         if (use == "polymars") title = "Polytochomous MARS Modeling"
         if (use == "nnet") title = "Feedforward Neural Network Modelling" 
     } 
+    
+    # Description:
     if (is.null(description)) {
         description = .description()
     }
@@ -365,17 +367,22 @@ title = NULL, description = NULL, ...)
     
     # Get Method:
     if (class(data) == "data.frame") data = as.timeSeries(data)
-    fun = method = match.arg(method)
+    fun = use = match.arg(use)
 
     # Title:
     if (is.null(title)) {
-        if (method == "glm") title = "Generalized Linear Modelling"
-        if (method == "gam") title = "Generalized Additive Modelling"
+        if (use == "glm") title = "Generalized Linear Modelling"
+        if (use == "gam") title = "Generalized Additive Modelling"
+    }  
+    
+    # Description:
+    if (is.null(description)) {
+        description  = .description()
     }  
     
     # Evaluate:
     cmd = match.call()
-    if (!is.null(cmd$method)) cmd = cmd[-match("method", names(cmd), 0)]    
+    if (!is.null(cmd$use)) cmd = cmd[-match("use", names(cmd), 0)]    
     cmd[[1]] <- as.name(fun)
     fit <- eval(cmd, parent.frame()) 
         
@@ -390,7 +397,7 @@ title = NULL, description = NULL, ...)
         call = as.call(match.call()),
         formula = as.formula(formula), 
         family = as.character(gaussian()),
-        method = as.character(method),
+        method = as.character(use),
         data = timeSeries(data, rownames(data)),
         fit = fit,
         residuals = timeSeries(fit$residuals, rownames(data)),
