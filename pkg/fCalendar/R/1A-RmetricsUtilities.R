@@ -1040,7 +1040,7 @@ function(fdates, origin = 19600101, order = 'mdy', cc = NULL, swap = 20)
     #   .fjulian(fdates, order = 'dmy')
     
     # Note:
-    #   R-package "date"
+    #   Requires R-package "date"
     
     # Changes:
     #
@@ -1048,7 +1048,7 @@ function(fdates, origin = 19600101, order = 'mdy', cc = NULL, swap = 20)
     # FUNCTION:
     
     # Requires
-    require(date)
+    # require(date)
     
     # Formats:
     order.vec = switch(order,
@@ -1223,13 +1223,23 @@ function(x)
 
 .by2seconds =
 function(by = "1 h")
-{
+{   # A function written by Diethelm Wuertz
+
+    # Description:
+    #   Convert 'by' string into numeric value of seconds.
+    
+    # FUNCTION:
+    
+    # Convert:
     by = strsplit(by, " ")[[1]]
     byTime = as.integer(by[1])
     byUnits = substr(by[2], 1, 1)
     timeUnits = c(1, 60, 3600)
     names(timeUnits) = c("s", "m", "h")
     bySeconds = byTime * timeUnits[byUnits]
+    names(bySeconds) = "secs"
+    
+    # Return Value:
     bySeconds
 }
 

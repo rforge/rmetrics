@@ -608,7 +608,7 @@ function(charvec, FinCenter, type = c("gmt2any", "any2gmt"))
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Internasl function used by function timeDate()
+    #   Internal function used by function timeDate()
     
     # Changes:
     #
