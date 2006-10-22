@@ -79,7 +79,7 @@ standardization = FALSE, trace = TRUE, ...)
     if (trace) cat("\nMonte Carlo Simulation Path:\n\n")
         iteration = rep(0, length = mcLoops)
         # MC Iteration Loop:
-        cat("\Loop:\t", "No\t")
+        cat("\nLoop:\t", "No\t")
         for ( i in 1:mcLoops ) {
             if ( i > 1) init = FALSE
             # Generate Innovations:
