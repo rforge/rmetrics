@@ -20,5 +20,4 @@ MonteCarloOptions       Monte Carlo Valuation of Options
 MultipleAssetsOptions   Valuation of Mutiple Assets Options
 MultipleExercisesOptions
                         Valuation of Mutiple Exercises Options
-OptionsTools            fOptions Tools
 PlainVanillaOptions     Valuation of Plain Vanilla Options
