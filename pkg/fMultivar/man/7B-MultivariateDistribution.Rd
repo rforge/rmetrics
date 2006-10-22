@@ -364,7 +364,7 @@ Hothorn T., Bretz F., Genz A. (2001);
    # The Bivariate Normal Case:
    Z = matrix(dmvsnorm(X, dim = 2), length(x))
    par (mfrow = c(2, 2), cex = 0.7)
-   persp(x, x, Z, theta = -40, phi = 30, col = "steelblue4") 
+   persp(x, x, Z, theta = -40, phi = 30, col = "steelblue") 
    title(main = "Bivariate Normal Plot")
    image(x, x, Z)
    title(main = "Bivariate Normal Contours")
@@ -374,7 +374,7 @@ Hothorn T., Bretz F., Genz A. (2001);
    Omega = matrix(c(1, 0.5, 0.5, 1), 2)
    alpha = c(-1, 1)
    Z = matrix(dmvst(X, 2, mu, Omega, alpha, df = 3), length(x))
-   persp(x, x, Z, theta = -40, phi = 30, col = "steelblue4") 
+   persp(x, x, Z, theta = -40, phi = 30, col = "steelblue") 
    title(main = "Bivariate Student-t Plot")
    image(x, x, Z)
    contour(x, x, Z, add = TRUE)
