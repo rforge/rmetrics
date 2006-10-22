@@ -1997,6 +1997,7 @@ function(object)
 
 # ------------------------------------------------------------------------------
 
+
 .garchTsFit = 
 function(formula.var = ~garch(1, 1), series = x, 
 title = NULL, description = NULL, ...)
@@ -2008,8 +2009,13 @@ title = NULL, description = NULL, ...)
     # Example:
     #   data(dem2gbp); ans = .garchTsFit(series = dem2gbp[,1])
     
+    # Note:
+    #   Requires Contributed R-package 'tseries'
+    
+    # FUNCTION:
+    
     # Load Contributed 'tseries' Package:
-    require(tseries)
+    # require(tseries)
     
     # Check Variance Formula GARCH - Is it Valid ?
     mv = length(formula.var)
