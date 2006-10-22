@@ -28,7 +28,7 @@
 
 
 ################################################################################
-# FUNCTION:             GEV DISTRIBUTION FAMILY: [USE FROM EVIS]
+# FUNCTION:             GEV DISTRIBUTION FAMILY: [CALLING EVD]
 #  dgev                  Density for the GEV Distribution 
 #   pgev                  Probability for the GEV Distribution
 #   qgev                  Quantiles for the GEV Distribution
