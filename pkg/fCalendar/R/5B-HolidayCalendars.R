@@ -179,41 +179,40 @@ function(year = currentYear)
     # FUNCTION:
     
     #  Settings:
-    years = year
     holidays = NULL
     
     # Iterate years:
-    for (y in years ) { 
+    for (y in year ) { 
         if (y >= 1885) 
-            holidays = c(holidays, as.character(USNewYearsDay(y)))
+            holidays = c(holidays, USNewYearsDay(y))
         if (y >= 1885) 
-            holidays = c(holidays, as.character(USIndependenceDay(y)))    
+            holidays = c(holidays, USIndependenceDay(y)) 
         if (y >= 1885) 
-            holidays = c(holidays, as.character(USThanksgivingDay(y)))   
+            holidays = c(holidays, USThanksgivingDay(y)) 
         if (y >= 1885)
-            holidays = c(holidays, as.character(USChristmasDay(y)))
+            holidays = c(holidays, USChristmasDay(y))
         if (y >= 1887)
-            holidays = c(holidays, as.character(USLaborDay(y)))
+            holidays = c(holidays, USLaborDay(y))
         if (y != 1898 & y != 1906 & y != 1907)
-            holidays = c(holidays, as.character(USGoodFriday(y)))
+            holidays = c(holidays, USGoodFriday(y))
         if (y >= 1909 & y <= 1953) 
-            holidays = c(holidays, as.character(USColumbusDay(y)))       
+            holidays = c(holidays, USColumbusDay(y))   
         if (y >= 1998)
-            holidays = c(holidays, as.character(USMLKingsBirthday(y)))        
+            holidays = c(holidays, USMLKingsBirthday(y))        
         if (y >= 1896 & y <= 1953) 
-            holidays = c(holidays, as.character(USLincolnsBirthday(y)))
+            holidays = c(holidays, USLincolnsBirthday(y))
         if (y <= 1970) 
-            holidays = c(holidays, as.character(USWashingtonsBirthday(y)))
+            holidays = c(holidays, USWashingtonsBirthday(y))
         if (y >= 1970) 
-            holidays = c(holidays, as.character(USPresidentsDay(y))) 
+            holidays = c(holidays, USPresidentsDay(y)) 
         if (y == 1918 | y == 1921 | (y >= 1934 & y <= 1953)) 
-            holidays = c(holidays, as.character(USVeteransDay(y)))        
+            holidays = c(holidays, USVeteransDay(y))        
         if (y <= 1968 | y == 1972 | y == 1976 | y == 1980) 
-            holidays = c(holidays, as.character(USElectionDay(y)))       
+            holidays = c(holidays, USElectionDay(y))       
         if (y <= 1970) 
-            holidays = c(holidays, as.character(USDecorationMemorialDay(y)))     
+            holidays = c(holidays, USDecorationMemorialDay(y))   
         if (y >= 1971) 
-            holidays = c(holidays, as.character(USMemorialDay(y)))
+            holidays = c(holidays, USMemorialDay(y))
     }  
 
     # Sort and Convert to 'timeDate':
