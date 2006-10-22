@@ -215,7 +215,7 @@ Heston S.L., Nandi S. (1997);
 
 
 \examples{
-## SOURCE("fOptions.084A-HestonNandiGarchFit")
+## SOURCE("fOptions.4A-HestonNandiGarchFit")
 \dontrun{
 ## hngarchSim -
    # Simulate a Heston Nandi Garch(1,1) Process:

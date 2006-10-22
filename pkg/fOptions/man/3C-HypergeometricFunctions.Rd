@@ -122,7 +122,7 @@ Weisstein E.W. (2004);
 
 
 \examples{
-## SOURCE("fOptions.083N-HypergeometricFunctions")
+## SOURCE("fOptions.3C-HypergeometricFunctions")
 
 ## kummerM - 
    # Abramowitz-Stegun: Formula 13.6.3/13.6.21

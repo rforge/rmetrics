@@ -159,11 +159,10 @@ BinomialTreePlot(BinomialTreeValues, dx = -0.025, dy = 0.4,
 
 
 \examples{
-## SOURCE("fOptions.081C-BinomialTreeOptions")
+## SOURCE("fOptions.1C-BinomialTreeOptions")
 
 ## Cox-Ross-Rubinstein Binomial Tree Option Model:
    # Example 14.1 from Hull's Book:
-   xmpOptions("\nStart: CRR Binomial Tree > ")
    CRRBinomialTreeOption(TypeFlag = "pa", S = 50, X = 50, 
      Time = 5/12, r = 0.1, b = 0.1, sigma = 0.4, n = 5)
    # Example 3.1.1 from Haug's Book:
@@ -177,7 +176,6 @@ BinomialTreePlot(BinomialTreeValues, dx = -0.025, dy = 0.4,
      
 ## CRR - JR - TIAN Model Comparison:  
    # Hull's Example as Function of "n":
-   xmpOptions("\nNext: Convergence Behavior > ")
    par(mfrow = c(2, 1), cex = 0.7)
    steps = 50
    CRROptionValue =  JROptionValue = TIANOptionValue = 
@@ -202,7 +200,6 @@ BinomialTreePlot(BinomialTreeValues, dx = -0.025, dy = 0.4,
    
 ## Plot CRR Option Tree:
    # Again Hull's Example:
-   xmpOptions("\nNext: Plot CRR Option Tree > ")
    CRRTree = BinomialTreeOption(TypeFlag = "pa", S = 50, X = 50, 
      Time = 0.4167, r = 0.1, b = 0.1, sigma = 0.4, n = 5)
    BinomialTreePlot(CRRTree, dy = 1, cex = 0.8, ylim = c(-6, 7),

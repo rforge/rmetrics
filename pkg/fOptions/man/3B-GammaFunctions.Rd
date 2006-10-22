@@ -115,7 +115,7 @@ Weisstein E.W. (2004);
 
 
 \examples{
-## SOURCE("fOptions.083B-GammaFunctions")
+## SOURCE("fOptions.3B-GammaFunctions")
 
 ## Calculate Error, Gamma and Related Functions
 

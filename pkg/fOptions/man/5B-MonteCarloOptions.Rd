@@ -218,12 +218,11 @@ Jaeckel P. (2002);
 
 
 \examples{
-## SOURCE("fOptions.085B-MonteCarloOptions")
+## SOURCE("fOptions.5B-MonteCarloOptions")
    
 ## How to perform a Monte Carlo Simulation?
    
 ## First Step:
-   xmpOptions("\nStart: Sobol Generator > ")
    # Write a function to generate the option's innovations. 
    # Use scrambled normal Sobol numbers:
    sobolInnovations = function(mcSteps, pathLength, init, ...) {
@@ -233,7 +232,6 @@ Jaeckel P. (2002);
      innovations }
     
 ## Second Step: 
-   xmpOptions("\nNext: Wiener Path > ")
    # Write a function to generate the option's price paths.  
    # Use a Wiener path:
    wienerPath = function(eps) { 
@@ -247,7 +245,6 @@ Jaeckel P. (2002);
    # Write a function for the option's payoff
    
    # Example 1: use the payoff for a plain Vanilla Call or Put:
-   xmpOptions("\nNext: Plain Vanilla Payoff > ")
    plainVanillaPayoff = function(path) { 
      # Note, the option parameters must be globally defined!
      # Compute the Call/Put Payoff Value:
@@ -258,7 +255,6 @@ Jaeckel P. (2002);
      payoff }
    
    # Example 2: use the payoff for an arithmetic Asian Call or Put:
-   xmpOptions("\nNext: Arithmetic Asian Payoff > ")
    arithmeticAsianPayoff = function(path) { 
      # Note, the option parameters must be globally defined!
      # Compute the Call/Put Payoff Value:
@@ -269,13 +265,11 @@ Jaeckel P. (2002);
      payoff }
 
 ## Final Step: 
-   xmpOptions("\nNext: Set Option Parameters > ")
    # Set Global Parameters for the plain Vanilla / arithmetic Asian Options:
    TypeFlag <<- "c"; S <<- 100; X <<- 100
    Time <<- 1/12; sigma <<- 0.4; r <<- 0.10; b <<- 0.1
    
    # Do the Asian Simulation with scrambled random numbers:
-   xmpOptions("\nNext: Monte Carlo Simulation > ")
    mc = MonteCarloOption(delta.t = 1/360, pathLength = 30, mcSteps = 5000, 
      mcLoops = 50, init = TRUE, innovations.gen = sobolInnovations, 
      path.gen = wienerPath, payoff.calc = arithmeticAsianPayoff, 
@@ -283,7 +277,6 @@ Jaeckel P. (2002);
      scrambling = 2, seed = 4711)
    
    # Plot the MC Iteration Path:
-   xmpOptions("\nNext: Output Results > ")
    par(mfrow = c(1, 1))
    mcPrice = cumsum(mc)/(1:length(mc))
    plot(mcPrice, type = "l", main = "Arithmetic Asian Option", 

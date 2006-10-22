@@ -148,32 +148,27 @@ Joe S., Kuo F.Y. (1998);
 
 
 \examples{
-## SOURCE("fOptions.085A-LowDiscrepancy")
+## SOURCE("fOptions.5A-LowDiscrepancy")
 
 
 ## *.halton - 
-   xmpOptions("\nStart: Uniform Holton Numbers > ")
    par(mfrow = c(2, 2), cex = 0.75)
    runif.halton(n = 10, dimension = 5)
    hist(runif.halton(n = 5000, dimension = 1), main = "Uniform Halton", 
      xlab = "x", col = "steelblue3", border = "white")
-   xmpOptions("\nNext: Normal Holton Numbers > ")
    rnorm.halton(n = 10, dimension = 5)
    hist(rnorm.halton(n = 5000, dimension = 1), main = "Normal Halton", 
      xlab = "x", col = "steelblue3", border = "white")
    
 ## *.sobol - 
-   xmpOptions("\nNext: Uniform Sobol Numbers > ")
    runif.sobol(n = 10, dimension = 5, scrambling = 3)
    hist(runif.sobol(5000, 1, scrambling = 2), main = "Uniform Sobol", 
      xlab = "x", col = "steelblue3", border = "white")
-   xmpOptions("\nNext: Normal Sobol Numbers > ")
    rnorm.sobol(n = 10, dimension = 5, scrambling = 3)
    hist(rnorm.sobol(5000, 1, scrambling = 2), main = "Normal Sobol", 
      xlab = "x", col = "steelblue3", border = "white")
    
 ## *.pseudo - 
-   xmpOptions("\nNext: Uniform Pseudo Random Numbers > ")
    runif.pseudo(n = 10, dimension = 5)
    rnorm.pseudo(n = 10, dimension = 5) 
 }

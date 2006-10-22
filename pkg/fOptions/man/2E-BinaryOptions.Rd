@@ -352,22 +352,19 @@ Reiner E., Rubinstein M. (1991);
 
 
 \examples{
-## SOURCE("fOptions.082E-BinaryOptions")
+## SOURCE("fOptions.2E-BinaryOptions")
 
 ## Examples from Chapter 2.11 in E.G. Haug's Option Guide (1997)
 
 ## Gap Option [2.11.1]:
-   xmpOptions("\nStart: Gap Option > ")
    GapOption(TypeFlag = "c", S = 50, X1 = 50, X2 = 57, Time = 0.5, 
      r = 0.09, b = 0.09, sigma = 0.20)
 
 ## Cash Or Nothing Option [2.11.2]:
-   xmpOptions("\nNext: Cash or Nothing Option > ")
    CashOrNothingOption(TypeFlag = "p", S = 100, X = 80, K = 10, 
      Time = 9/12, r = 0.06, b = 0, sigma = 0.35) 
 
 ## Two Asset Cash Or Nothing Option [2.11.3]:
-   xmpOptions("\nNext: Two Asset Cash Or Nothing Option > ")
    # Type 1 - call:
    TwoAssetCashOrNothingOption(TypeFlag = "c", S1 = 100, S2 = 100, 
      X1 = 110, X2 = 90, K = 10, Time = 0.5, r = 0.10, b1 = 0.05, 
@@ -386,17 +383,14 @@ Reiner E., Rubinstein M. (1991);
      b2 = 0.06, sigma1 = 0.20, sigma2 = 0.25, rho = 0)
 
 ## Asset Or Nothing Option [2.11.4]: 
-   xmpOptions("\nNext: Asset Or Nothing Option > ")
    AssetOrNothingOption(TypeFlag = "p", S = 70, X = 65, Time = 0.5, 
      r = 0.07, b = 0.07 - 0.05, sigma = 0.27)
 
 ## Super Share Option [2.11.5]:  
-   xmpOptions("\nNext: Super Share Option > ")
    SuperShareOption(S = 100, XL = 90, XH = 110, Time = 0.25, r = 0.10, 
      b = 0, sigma = 0.20)
 
 ## Binary Barrier Option [2.11.6]: 
-   xmpOptions("\nNext: Binary Barrier Option > ")
    BinaryBarrierOption(TypeFlag = "6", S = 95, X=102, H = 100, 
      K = 15, Time = 0.5, r = 0.1, b = 0.1, sigma = 0.20)
    BinaryBarrierOption(TypeFlag = "12", S = 95, X = 98, H = 100, 

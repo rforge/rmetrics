@@ -176,7 +176,7 @@ dasymEBM(u, t = 1)
 
 
 \examples{
-## SOURCE("fOptions.083A-EBMDistribution")
+## SOURCE("fOptions.3A-EBMDistribution")
 
 ## Calculate Log-Normal Density and its Derivaties,
    x = exp(seq(-2.8, 1.2, length = 100))

@@ -213,30 +213,26 @@ Haug E.G. (1997);
 
 
 \examples{
-## SOURCE("fOptions.082G-CurrencyTranslatedOptions")
+## SOURCE("fOptions.2G-CurrencyTranslatedOptions")
 
 ## Examples from Chapter 2.13 in E.G. Haug's Option Guide (1997)
 
 ## Foreign Equity Options Struck in Domestic Currency [2.13.1]:
-   xmpOptions("\nStart: FE in Domestic Currency Option > ")
    FEInDomesticFXOption(TypeFlag = "c", S = 100, E = 1.5, 
      X = 160, Time = 0.5, r = 0.08, q = 0.05, sigmaS = 0.20, 
      sigmaE = 0.12, rho = 0.45)
 
 ## Fixed Exchange-Rate Foreign-Equity Option [2.13.2]: 
-   xmpOptions("\nNext: Quanto Option > ")
    QuantoOption(TypeFlag = "c", S = 100, Ep = 1.5, X = 105, 
      Time = 0.5, r = 0.08, rf = 0.05, q = 0.04, sigmaS= 0.2, 
      sigmaE = 0.10, rho = 0.30) 
 
 ## Equity Linked Foreign Exchange Option [2.13.3]:
-   xmpOptions("\nNext: Equity Linked FX Option > ")
    EquityLinkedFXOption(TypeFlag = "p", E = 1.5, S = 100, 
      X = 1.52, Time = 0.25, r = 0.08, rf = 0.05, q = 0.04, 
      sigmaS = 0.20, sigmaE = 0.12, rho = -0.40)
 
 ## Takeover Foreign-Exchange Option [2.13.4]:
-   xmpOptions("\nNext: Takeover FX Option > ")
    TakeoverFXOption(V = 100, B = 100, E = 1.5, X = 1.55, Time = 1, 
      r = 0.08, rf = 0.06, sigmaV = 0.20, sigmaE = 0.25, rho = 0.1)
 

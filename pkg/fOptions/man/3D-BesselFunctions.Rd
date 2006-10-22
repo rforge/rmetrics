@@ -83,7 +83,7 @@ Weisstein E.W. (2004);
 
 
 \examples{
-## SOURCE("fOptions.083D-BesselFunctions")
+## SOURCE("fOptions.3D-BesselFunctions")
 
 ## Bessel I0 and K0 - 
    # Abramowitz-Stegun: Table 9.8, p. 416-422

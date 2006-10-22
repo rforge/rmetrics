@@ -41,35 +41,35 @@
     The functions are:
 
     \tabular{ll}{
-	\code{StandardBarrierOption} \tab Standard Barrier Option, \cr
-	\code{DoubleBarrierOption} \tab Double Barrier Option, \cr
-	\code{PTSingleAssetBarrierOption} \tab Partial Time Single Asset Barrier Option, \cr
-	\code{TwoAssetBarrierOption} \tab Two Asset Barrier Option, \cr
-	\code{PTTwoAssetBarrierOption} \tab Partial Time Two Asset Barrier Option, \cr
-	\code{LookBarrierOption} \tab Lookback Barrier Option, \cr
-	\code{DiscreteBarrierOption} \tab Discrete Barrier Option \cr
-	\code{SoftBarrierOption} \tab Soft Barrier Option. }
+    \code{StandardBarrierOption} \tab Standard Barrier Option, \cr
+    \code{DoubleBarrierOption} \tab Double Barrier Option, \cr
+    \code{PTSingleAssetBarrierOption} \tab Partial Time Single Asset Barrier Option, \cr
+    \code{TwoAssetBarrierOption} \tab Two Asset Barrier Option, \cr
+    \code{PTTwoAssetBarrierOption} \tab Partial Time Two Asset Barrier Option, \cr
+    \code{LookBarrierOption} \tab Lookback Barrier Option, \cr
+    \code{DiscreteBarrierOption} \tab Discrete Barrier Option \cr
+    \code{SoftBarrierOption} \tab Soft Barrier Option. }
     
 }
 
 
 \usage{
 StandardBarrierOption(TypeFlag, S, X, H, K, Time, r, b, sigma,
-	title = NULL, description = NULL)
+    title = NULL, description = NULL)
 DoubleBarrierOption(TypeFlag, S, X, L, U, Time, r, b, sigma, 
-	delta1, delta2, title = NULL, description = NULL)
+    delta1, delta2, title = NULL, description = NULL)
 PTSingleAssetBarrierOption(TypeFlag, S, X, H, time1, Time2, r, 
-	b, sigma, title = NULL, description = NULL)
+    b, sigma, title = NULL, description = NULL)
 TwoAssetBarrierOption(TypeFlag, S1, S2, X, H, Time, r, b1, b2,
     sigma1, sigma2, rho, title = NULL, description = NULL)
 PTTwoAssetBarrierOption(TypeFlag, S1, S2, X, H, time1, Time2, r, 
-	b1, b2, sigma1, sigma2, rho, title = NULL, description = NULL)
+    b1, b2, sigma1, sigma2, rho, title = NULL, description = NULL)
 LookBarrierOption(TypeFlag, S, X, H, time1, Time2, r, b, sigma,
-	title = NULL, description = NULL)
+    title = NULL, description = NULL)
 DiscreteBarrierOption(S, H, sigma, dt, title = NULL, 
-	description = NULL)
+    description = NULL)
 SoftBarrierOption(TypeFlag, S, X, L, U, Time, r, b, sigma, 
-	title = NULL, description = NULL)
+    title = NULL, description = NULL)
 }
 
 
@@ -96,8 +96,8 @@ SoftBarrierOption(TypeFlag, S, X, L, U, Time, r, b, sigma,
         boundary and a convex upward upper boundary.
         }
     \item{description}{
-    	a character string which allows for a brief description.
-    	}
+        a character string which allows for a brief description.
+        }
     \item{dt}{
         [DiscreteBarrier*] - \cr
         time between monitoring instants, a numeric value.
@@ -165,8 +165,8 @@ SoftBarrierOption(TypeFlag, S, X, L, U, Time, r, b, sigma,
         \code{time1} before expiration time \code{Time2}.
         }
     \item{title}{
-    	a character string which allows for a project title.
-    	}
+        a character string which allows for a project title.
+        }
     \item{TypeFlag}{
         usually a character string either \code{"c"} for a call option 
         or a \code{"p"} for a put option.\cr\cr\code{ }
@@ -380,53 +380,45 @@ Haug E.G. (1997);
 
 
 \examples{
-## SOURCE("fOptions.082D-BarrierOptions")
+## SOURCE("fOptions.2D-BarrierOptions")
 
 ## Examples from Chapter 2.10 in E.G. Haug's Option Guide (1997)
 
 ## Standard Barrier Option [2.10.1]:
-   xmpOptions("\nStart: Down-and-Out Barrier Option > ")
    # down-and-out Barrier Call
    StandardBarrierOption(TypeFlag = "cdo", S = 100, X = 90, 
      H = 95, K = 3, Time = 0.5, r = 0.08, b = 0.04, sigma = 0.25)
    
 ## Double Barrier Option [2.10.2]:
-   xmpOptions("\nNext: Double Barrier Option > ")
    DoubleBarrierOption(TypeFlag = "co", S = 100, X = 100, L = 50, 
      U = 150, Time = 0.25, r = 0.10, b = 0.10, sigma = 0.15, 
      delta1 = -0.1, delta2 = 0.1)
    
 ## Partial Time Single-Asset Barrier Option [2.10.3]:
-   xmpOptions("\nNext: PT Single-Asset Barrier Option > ")
    PTSingleAssetBarrierOption(TypeFlag = "coB1", S = 95, X = 110, 
      H = 100, time1 = 0.5, Time2 = 1, r = 0.20, b = 0.20, 
      sigma = 0.25)
    
 ## Two Asset Barrier Option [2.10.4]:
-   xmpOptions("\nNext: Two Asset Barrier Option > ")
    TwoAssetBarrierOption(TypeFlag = "puo", S1 = 100, S2 = 100, 
      X = 110, H = 105, Time = 0.5, r = 0.08, b1 = 0.08, b2 = 0.08, 
      sigma1 = 0.2, sigma2 = 0.2, rho = -0.5)
    
 ## PT Two Asset Barrier Option [2.10.5]:
-   xmpOptions("\nNext: PT Two Asset Barrier Option > ")
    PTTwoAssetBarrierOption(TypeFlag = "pdo", S1 = 100, S2 = 100, 
      X = 100, H = 85, time1 = 0.5, Time2 = 1, r = 0.1, b1 = 0.1, 
      b2 = 0.1, sigma1 = 0.25, sigma2 = 0.30, rho = -0.5)
    
 ## Look Barrier Option [2.10.6]:
-   xmpOptions("\nNext: Look Barrier Option > ")
    LookBarrierOption(TypeFlag = "cuo", S = 100, X = 100, H = 130, 
      time1 = 0.25, Time2 = 1, r = 0.1, b = 0.1, sigma = 0.15)
    LookBarrierOption(TypeFlag = "cuo", S = 100, X = 100, H = 110, 
      time1 = 1, Time2 = 1, r = 0.1, b = 0.1, sigma = 0.30)
    
 ## Discrete Barrier Option [2.10.7]:  
-   xmpOptions("\nNext: Discrete Barrier Option > ")
    DiscreteBarrierOption(S = 100, H = 105, sigma = 0.25, dt = 0.1)
    
 ## Soft Barrier Option [2.10.8]:
-   xmpOptions("\nNext: Soft Barrier Option > ")
    SoftBarrierOption(TypeFlag = "cdo", S = 100, X = 100, L = 70, 
      U = 95, Time = 0.5, r = 0.1, b = 0.05, sigma = 0.20)
   
