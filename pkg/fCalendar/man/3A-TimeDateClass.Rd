@@ -285,7 +285,7 @@ myUnits
     We have defined a 'timeDate' class which is in many aspects similar
     to the S-Plus class with the same name, but has also some important
     advantageous differeneces. The S4 class has four Slots, the \code{Data} 
-    slot which holds date and time as 'POSIXlt' objects in the standard
+    slot which holds date and time as 'POSIXct' objects in the standard
     ISO-8601 format, the \code{Dim} slot which gives the dimension
     of the data object, the \code{format} specification slot and the
     \code{FinCenter} slot which holds the name of the financial center. 
