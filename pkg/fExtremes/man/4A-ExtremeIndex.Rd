@@ -23,10 +23,12 @@
 
 \description{
   
-    A collection and description of functions to compute 
-    the extremal index by three different kind of methods, 
+    A collection and description of functions to simulate
+    time series with a known extremal index, and to estimate 
+    the extremal index by four different kind of methods, 
     the blocks method, the reciprocal mean cluster size 
-    method, and the runs method. 
+    method, the runs method, and the method of Ferro and
+    Segers.
     \cr
     
     The functiona are:
