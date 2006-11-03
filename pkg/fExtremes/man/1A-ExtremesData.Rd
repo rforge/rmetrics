@@ -4,7 +4,7 @@
 
 \alias{emdPlot}
 \alias{qqPlot}
-\alias{qqbayesPlot}
+%\alias{qqbayesPlot}
 \alias{qPlot}
 \alias{mePlot}
 \alias{mrlPlot}
@@ -45,7 +45,7 @@
     \tabular{ll}{
     \code{emdPlot} \tab Plot of empirical distribution function, \cr
     \code{qqPlot} \tab Normal quantile-quantile plot, \cr
-    \code{qqbayesPlot} \tab Normal QQ-Plot with 95 percent intervals, \cr
+    \code{qqbayesPlot} \tab Normal QQ-Plot with 95\% intervals [fBasics], \cr
     \code{qPlot} \tab Exponential/Pareto quantile plot, \cr
     \code{mePlot} \tab Plot of mean excesses over a threshold, \cr
     \code{mrlPlot} \tab another variant, mean residual life plot, \cr
@@ -78,7 +78,7 @@
 emdPlot(x, doplot = TRUE, plottype = c("xy", "x", "y", ""), labels = TRUE, \dots)
 
 qqPlot(x, doplot = TRUE, labels = TRUE, \dots) 
-qqbayesPlot(x, doplot = TRUE, labels = TRUE, \dots)
+%qqbayesPlot(x, doplot = TRUE, labels = TRUE, \dots)
 qPlot(x, xi = 0, trim = NULL, threshold = NULL, doplot = TRUE, labels = TRUE, \dots)
 
 mePlot(x, doplot = TRUE, labels = TRUE, \dots)
@@ -261,7 +261,8 @@ gridVector(x, y)
     \code{qqPlot} is not a synonym function call to the \R-base function 
     \code{qqplot} which produces a quantile-quantile plot of two datasets.      
     To help with assessing the relevance of sampling variability on just
-    "how close" to the normal the data appears, \code{qqbayesPlot} adds 
+    "how close" to the normal the data appears, \code{qqbayesPlot} (part
+    of \code{fBasics}) adds 
     approximate posterior 95% intervals for the uncertain quantile 
     function at each point.
     \code{qPlot} creates a QQ-plot for threshold data. If \code{xi} is 
