@@ -7,6 +7,7 @@ Default topic=00Index.html
 Display compile progress=No
 Full-text search=Yes
 Full text search stop list file=..\..\..\gnuwin32\help\R.stp
+Title=R Help for package fCopulae
 
 
 [FILES]
