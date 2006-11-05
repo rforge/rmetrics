@@ -28,11 +28,13 @@
 
 
 ################################################################################
-# FUNCTION:                 SPECIFICATION:
+# FUNCTION:                 COPULA SPECIFICATION:
 #  fCOPULA                   S4 class representation          
 #  show                      S4 print method for copula specification
-# FUNCTION:                 FRECHET COPULAE:
+# FUNCTION:                 FRECHET COPULA:
 #  pfrechetCopula            Computes Frechet copula probability
+# FUNCTION:                 SPEARMAN'S RHO:
+#  .copulaRho                Spearman's rho by integration for "ANY" copula
 ################################################################################
 
 
