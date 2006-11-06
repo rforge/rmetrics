@@ -970,8 +970,8 @@ function(n, rho = 0.75)
 
     # FUNCTION:
     
-    # Use: X = rnorm2d(n, rho) or alternatively:
-    X = rnorm2d(n = n, rho = rho)
+    # Use: X = .rnorm2d(n, rho) or alternatively:
+    X = .rnorm2d(n = n, rho = rho)
     
     # Generate
     Z <- NULL
