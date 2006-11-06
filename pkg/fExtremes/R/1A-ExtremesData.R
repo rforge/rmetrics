@@ -31,7 +31,7 @@
 # FUNCTION          EXPLORATIVE DATA ANALYSIS:
 #  emdPlot           Creates ans empirical distribution plot
 #  qqPlot            Creates a normal quantile-quantile plot
-#  qqbayesPlot       Creates a norma qq-Plot with confidence intervals
+#  .qqbayesPlot      Creates a normal qq-Plot with confidence intervals
 #  qPlot             Creates exploratory QQ plot for EV analysis
 #  mePlot            Creates a sample mean excess plot
 #   mxfPlot           Creates another view of a sample mean excess plot
@@ -167,9 +167,9 @@ function (x, doplot = TRUE, labels = TRUE, ...)
 
 
 # ------------------------------------------------------------------------------
+# Moved to fBasics ...
 
-
-qqbayesPlot = 
+.qqbayesPlot = 
 function(x, doplot = TRUE, labels = TRUE, ...) 
 {   # A function implemented by Diethelm Wuertz
 

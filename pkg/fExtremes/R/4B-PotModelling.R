@@ -30,10 +30,11 @@
 ################################################################################
 # FUNCTION:                POT MODELLING FROM EVIS:
 #  potSim                   Peaks over a threshold from arbitrary series
-#  fPOTFIT                  S4 Class Representation
+#  'fPOTFIT'                S4 Class Representation
 #  potFit                   Fits with POT method
 #   print.fPOTFIT            Print Method for object of class "fPOT"
 #   plot.fPOTFIT             Print Method for object of class "fPOT"
+#   .pot*Plot                Internal Plot Functions
 #   summary.fPOTFIT          Summary Method for object of class "fPOT"
 ################################################################################
 
@@ -700,7 +701,7 @@ function(data, threshold = NA, nextremes = NA, run = NA, picture = TRUE, ...)
 
 .potLLH.evir = 
 function(theta, exceedances, threshold, span)
-{   # A copy from # A copy from R package evirevir
+{   # A copy from R package evir
 
     # FUNCTION:
     

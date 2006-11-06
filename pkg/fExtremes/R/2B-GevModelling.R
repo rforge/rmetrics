@@ -29,24 +29,30 @@
 
 ################################################################################
 # FUNCTION:             MLE AND PWM ESTIMATORS:
-#  gevSim                Simulates GEV including Gumbel rvs [EVIS/EVIR]
+#  gevSim                Simulates GEV Distribution
+#  gumbelSim             Simulates GumbelDistribution
+# FUNCTION:             PARAMETER ESTIMATION:
 #  'fGEVFIT'             S4 class representation
 #  gevFit                Fits Parameters of GEV distribution
+#  gumbelFit             Fits Parameters of Gumbel distribution
 #   .gumpwmFit            Fits Gumbel with probability weighted moments
 #   .gevpwmFit            Fits GEV with probability weighted moments
 #   .gummleFit            Fits Gumbel with max log-likelihood approach
 #    .gumLLH               Computes Gumbel log-likelihood function
 #   .gevmleFit            Fits GEV with max log-likelihood approach
 #    .gevLLH               Computes GEV log-likelihood function
-#  print.fGEVFIT          Print Method for object of class "gevFit"
-#  plot.fGEVFIT           Plot Method for object of class "gevFit"
+# METHODS:              SHOW, PRINT, PLOT, AND SUMMARY:
+#  show.fGEVFIT           Show method for object of class "fGEVFIT"
+#  print.fGEVFIT          Print method for object of class "fGEVFIT"
+#  plot.fGEVFIT           Plot method for object of class "fGEVFIT"
 #   .gev1Plot              Block Maxima Plot            
 #   .gev2Plot              Scatterplot of Residuals
 #   .gev3Plot              Histogram of Residuals
 #   .gev4Plot              Quantile Quantile Plot
-#  summary.fGEVFIT       Summary Method for object of class "gevFit"
+#  summary.fGEVFIT       Summary Method for object of class "fGEVFIT"
+# FUNCTION:             ADDITIONAL FUNCTIONS:
 #  gevrlevelPlot         Calculates Return Levels Based on GEV Fit
-#  .rlevel.gev.evir       Internal Function
+#  .rlevel.gev.evir       Internal Function copied from evir
 ################################################################################
 
 
@@ -543,6 +549,19 @@ function(theta, tmp)
     ans
 }
     
+
+# ------------------------------------------------------------------------------
+
+
+show.fGEVFIT = 
+function(object) 
+{
+    print.fGEVFIT(object)
+}
+    
+
+setMethod("show", "fGEVFIT", show.fGEVFIT)
+
 
 # ------------------------------------------------------------------------------
 
