@@ -38,6 +38,7 @@
 # FUNCTION:            STABLE DISTRIBUTION:
 #  stableFit            Fits parameters of a stable density
 #  .phiStable            Creates contour table for McCulloch estimators
+#  .PhiStable            Contour table created by .phiStable()
 #  .qStableFit           Estimates stable parameters by McCulloch approach
 #  .mleStableFit         Estimates stable parameters by MLE approach
 # FUNCTION:            GENERALIZED DISTRIBUTION:
@@ -277,6 +278,7 @@ title = NULL, description = NULL, ...)
 ################################################################################
 #  stableFit            Fits parameters of a stable density
 #  .phiStable            Creates contour table for McCulloch estimators
+#  .PhiStable            Contour table created by .phiStable()
 #  .qStableFit           Estimates stable parameters by McCulloch approach
 #  .mleStableFit         Estimates stable parameters by MLE approach
 
@@ -388,6 +390,7 @@ function()
 
 .PhiStable =
 structure(
+    #  Contour table created by .phiStable()
     list(
     Phi1 = structure(c(28.1355600962322, 15.7196640771722, 
     10.4340722145276, 7.72099712337154, 6.14340919629241, 5.14081963876442, 
