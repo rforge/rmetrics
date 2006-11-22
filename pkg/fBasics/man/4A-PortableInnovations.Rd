@@ -1,6 +1,6 @@
-\name{PortableRandomInnovations}
+\name{PortableInnovations}
 
-\alias{PortableRandomInnovations}
+\alias{PortableInnovations}
 
 \alias{set.lcgseed}
 \alias{get.lcgseed}
