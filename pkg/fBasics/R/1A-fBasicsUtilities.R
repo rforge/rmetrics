@@ -44,7 +44,7 @@
 #  .perspPlot                Returns a perspective plot in 2 dimensions
 #  .contourPlot              Returns a contour plot in 2 dimensions
 # FUNCTION:                 CHARACTER, SYMBOL AND COLOR TABLES:
-#  characterTable            Shows a table of character's codes 
+#  characterTable            Shows a table of character codes 
 #  symbolTable               Shows a table of plot symbols
 #  colorTable                Shows a table of plot color codes
 # FUNCTION:                 COLOR PALETTES:
@@ -712,8 +712,8 @@ function(x, y, z, ...)
 
                         
 ################################################################################
-#  characterTable        Shows a table of character's numerical equivalents 
-#  symbolTable           Shows a table of plot characters and symbols
+#  characterTable        Shows a table of character codes 
+#  symbolTable           Shows a table of plot symbols
 #  colorTable            Shows a table of plot color codes
 #  greyPalette           Creates a grey palette like rainbow does for colors
 #  .chcode               Changes from one to another number system
