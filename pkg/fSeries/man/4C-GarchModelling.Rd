@@ -12,7 +12,9 @@
 \alias{fGARCH-class}
 \alias{garchFit}
 
-\alias{print.fGARCH}
+\alias{show.fGARCH}
+\alias{show,fGARCH-method}
+
 \alias{summary.fGARCH}
 \alias{plot.fGARCH}
 \alias{residuals.fGARCH}
@@ -86,7 +88,8 @@ garchFit(formula, data, init.rec = c("mci", "uev"), delta = 2, skew = 1,
 garchKappa(cond.dist = c("dnorm", "dged", "dstd", "dsnorm", "dsged", "dsstd"), 
     gamma = 0, delta = 2, skew = NA, shape = NA)
 
-\method{print}{fGARCH}(x, \dots)
+show.fGARCH(object)
+
 \method{plot}{fGARCH}(x, which = "ask", \dots)
 \method{summary}{fGARCH}(object, \dots)
 \method{residuals}{fGARCH}(object, \dots)
