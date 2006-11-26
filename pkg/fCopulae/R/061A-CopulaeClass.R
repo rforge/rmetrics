@@ -111,7 +111,7 @@ function(u = 0.5, v = u, type = c("m", "pi", "w"), output = c("vector", "list"))
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Computes extreme value copula probability
+    #   Computes Frechet copula probability
     
     # Arguments:
     #   u, v - two numeric values or vectors of the same length at
