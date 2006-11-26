@@ -115,37 +115,43 @@ function(type = c("norm", "cauchy", "t", "logistic", "laplace", "kotz",
     type = match.arg(type)
     
     # Parameter Values:
-    #       "norm", "cauchy",  "t", "logistic", "laplace", "kotz", "epower"
+    #         ("norm", "cauchy",  "t", "logistic", "laplace", "kotz", "epower")
     lower  = c( -1,      -1,   -1,         -1,         -1,     -1,       -1)
     upper  = c( +1,      +1,   +1,         +1,         +1,     +1,       +1)
     rho    = c(3/4,     3/4,  3/4,        3/4,        3/4,    3/4,      3/4)
-    param1 = c( NA,      NA, nu=4,         NA,         NA,    r=1,      r=1)
-    param2 = c( NA,      NA,   NA,         NA,         NA,     NA,      s=1)
+    param1 = c( NA,      NA,    4,         NA,         NA,      1,        1)
+    param2 = c( NA,      NA,   NA,         NA,         NA,     NA,        1)
     
     # Parameter List:
     ans = list(type = type)
     if (type == "norm") {
         ans$param = c(rho = rho[1])
+        ans$range = c(lower = lower[1], upper = upper[1]) 
     }
     if (type == "cauchy") {
-        ans$param = c(rho = rho[1])
+        ans$param = c(rho = rho[2])
+        ans$range = c(lower = lower[2], upper = upper[2]) 
     }
     if (type == "t") {
-        ans$param = c(rho = rho[1], nu = param1[3])
+        ans$param = c(rho = rho[3], nu = param1[3])
+        ans$range = c(lower = lower[3], upper = upper[3]) 
     }
     if (type == "logistic") {
-        ans$param = c(rho = rho[1])
+        ans$param = c(rho = rho[4])
+        ans$range = c(lower = lower[4], upper = upper[4]) 
     }
     if (type == "laplace") {
-        ans$param = c(rho = rho[1])
+        ans$param = c(rho = rho[5])
+        ans$range = c(lower = lower[5], upper = upper[5]) 
     }
     if (type == "kotz") {
-        ans$param = c(rho = rho[1], r = param1[5])
+        ans$param = c(rho = rho[6], r = param1[6])
+        ans$range = c(lower = lower[6], upper = upper[6]) 
     }
     if (type == "epower") {
-        ans$param = c(rho = rho[1], r = param1[5], s = param2[6])
+        ans$param = c(rho = rho[7], r = param1[7], s = param2[7])
+        ans$range = c(lower = lower[7], upper = upper[7]) 
     }
-    ans$range = c(lower = lower[1], upper = upper[1]) 
     
     # Return Value: 
     ans
@@ -184,7 +190,7 @@ function(type = c("norm", "cauchy", "t", "logistic", "laplace", "kotz",
     # Range:
     ans = .ellipticalParam(type)$range
     
-    # ReturnVa lue:
+    # Return Value:
     ans
 }
 
@@ -1252,6 +1258,13 @@ function(rho)
     
     # Compute Kendall's Tau:
     ans = 2 * asin(rho) / pi
+    if (length(rho) ==1) {
+        names(ans) = "Tau"
+    } else {
+        names(ans) = paste("Tau", 1:length(rho), sep = "")
+    }
+    
+    # Add Control Attribute: 
     attr(ans, "control") = c(rho = rho)
     
     # Return Value:
@@ -1262,7 +1275,7 @@ function(rho)
 # ------------------------------------------------------------------------------
 
 
-ellipticalRho =
+.ellipticalRho =
 function(rho, param = NULL, type = c("norm", "cauchy", "t", "logistic", 
 "laplace", "kotz", "epower"), subdivisions = 500)
 {   # A function implemented by Diethelm Wuertz
@@ -1296,26 +1309,21 @@ function(rho, param = NULL, type = c("norm", "cauchy", "t", "logistic",
     ans = round(12*mean(Pi$z*D$z)-3, 2)
     names(ans) = NULL
     
-    # Add Control Attribute:
-    control = c(rho = rho, param = param, type = type, tau = 2*asin(rho)/pi)
-    attr(ans, "control")<-unlist(control)
-    
     # Return Value:
     ans
 }
 
 
-
 # ------------------------------------------------------------------------------
 
 
-ellipticalTailCoeff =
-function(rho, param = NULL, type = c("norm", "cauchy", "t", "logistic",
-"laplace", "kotz", "epower"))
+ellipticalRho =
+function(rho, param = NULL, type = c("norm", "cauchy", "t", "logistic", 
+"laplace", "kotz", "epower"), subdivisions = 500)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Computes tail dependence for elliptical copulae
+    #   Computes Spearman's rho for elliptical copulae
     
     # Arguments:
     #   rho - a numeric value setting the coorelation strength, ranging
@@ -1326,32 +1334,94 @@ function(rho, param = NULL, type = c("norm", "cauchy", "t", "logistic",
     # Match Arguments:
     type = match.arg(type)
     
+    # For all Values of rho:
+    ans = NULL
+    for (i in 1:length(rho)) {
+        ans = c(ans, .ellipticalRho(rho[i], param, type, subdivisions))
+    }
+   
+    # Add Control Attribute:
+    control = c(
+        rho = rho, 
+        param = param, 
+        type = type, 
+        tau = round(2*asin(rho)/pi, 4))
+    attr(ans, "control")<-unlist(control)
+    if (length(rho) == 1) {
+        names(ans) = "Rho"
+    } else {
+        names(ans) = paste("Rho", 1:length(rho), sep = "")
+    }
+    
+    # Return Value:
+    ans
+}
+
+
+################################################################################
+
+
+ellipticalTailCoeff =
+function(rho, param = NULL, type = c("norm", "cauchy", "t"))
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Computes tail dependence for elliptical copulae
+    
+    # Arguments:
+    #   rho - a numeric value setting the coorelation strength, ranging
+    #       between minus one and one.
+    
+    # Note:
+    #   type = c("logistic", "laplace", "kotz", "epower")
+    #   not yet implemented
+
+    # FUNCTION:
+    
     # Check:
     stopifnot(length(rho) == 1)
     
+    # Match Arguments:
+    type = match.arg(type)
+    
     # Compute Tail Dependence:
-    lambda = 0
+    if (type == "norm") {
+        lambda = 0
+        param = NULL
+    }
     if (type == "cauchy") {
         nu = 1 
         arg = sqrt(nu+1) * sqrt(1-rho) / sqrt(1+rho)
         lambda = 2 * (1 - pt(arg, df = nu+1))
+        param = NULL
     }
     if (type == "t") {
         nu = param
         if (is.null(nu)) nu = 4
         arg = sqrt(nu+1) * sqrt(1-rho) / sqrt(1+rho)
         lambda = 2 * (1 - pt(arg, df = nu+1))
+        param = c(nu = nu)
     }
-    if (type == "kotz" & is.null(param)) {
-        param = c(r = 1)
+    if (type == "logistic") {
+        lambda = NA
+        param = NULL
     }
-    if (type == "epower" & is.null(param)) {
-        param = c(r = 1, s = 1)
+    if (type == "laplace") {
+        lambda = NA
+        param = NULL
+    }
+    if (type == "kotz") {
+        lambda = NA
+        param = NULL
+    }
+    if (type == "epower") {
+        lambda = NA
+        param = NULL
     }
     
     # Result:
-    ans = lambda
-    attr(ans, "control") = c(rho = rho, type = type)
+    ans = c(lambda = lambda)
+    attr(ans, "control") = c(rho = rho, type = type, param = param)
     
     # Return Value:
     ans
@@ -1362,8 +1432,8 @@ function(rho, param = NULL, type = c("norm", "cauchy", "t", "logistic",
 
 
 ellipticalTailPlot =
-function(param = NULL, type = c("norm", "cauchy", "t", "logistic", 
-"laplace", "kotz", "epower"), tail = c("Upper", "Lower"))
+function(param = NULL, type = c("norm", "cauchy", "t"), 
+tail = c("Lower", "Upper"))
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -1372,6 +1442,10 @@ function(param = NULL, type = c("norm", "cauchy", "t", "logistic",
     # Arguments:
     #   rho - a numeric value setting the coorelation strength, ranging
     #       between minus one and one.
+    
+    # Note:
+    #   type = c("logistic", "laplace", "kotz", "epower")
+    #   not yet implemented
 
     # FUNCTION:
     
@@ -1852,6 +1926,7 @@ border = TRUE)
         N = sqrt(length(u))
         x = u[1:N]
         y = matrix(v, ncol = N)[1, ]
+        names(x) = names(y) = NULL
         C.uv = list(x = x, y = y,  z = matrix(C.uv, ncol = N))
     }
     
@@ -2344,121 +2419,6 @@ function(N, rho = 0.75, param = NULL, type = c("norm", "cauchy",
     
     # Return Value:
     c.uv
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.dellipticalCopulaDensityNorm.RUnit = 
-function()
-{
-    require(adapt)
-    
-    # Normal Distribution:
-    Mean = mean(.dellipticalCopulaGrid(N = 100, rho = 0.5, param = NULL, 
-        type = "norm", border = FALSE)$z)   
-    print(Mean)
-    Density = function(z, rho) 
-        dellipticalCopula(z[1], z[2], rho = rho)
-    Integrated = adapt(2, lower = c(0, 0), upper = c(1, 1), functn = Density, 
-        rho = 0.5, eps = 0.0001)$value
-    print(Integrated)
-        
-    # Student-T Distribution:
-    Mean = mean(.dellipticalCopulaGrid(N = 100, rho = 0.5, param = 4, 
-        type = "t", border = FALSE)$z)  
-    print(Mean)
-    Density = function(z, rho) 
-        dellipticalCopula(z[1], z[2], rho = rho, param = 4, type = "t")
-    Integrated = adapt(2, lower = c(0, 0), upper = c(1, 1), functn = Density, 
-        rho = 0.5, eps = 0.0001)$value
-    print(Integrated)
-    
-    # Logistic Distribution:
-    Mean = mean(.dellipticalCopulaGrid(N = 100, rho = 0.5, param = NULL, 
-        type = "logistic", border = FALSE)$z)   
-    print(Mean)
-    Density = function(z, rho) 
-        dellipticalCopula(z[1], z[2], rho = rho, param = NULL, type = "logistic")
-    Integrated = adapt(2, lower = c(0, 0), upper = c(1, 1), functn = Density, 
-        rho = 0.5, eps = 0.0001)$value
-    print(Integrated)
-    
-    # Exponential Power Distribution:
-    Mean = mean(.dellipticalCopulaGrid(N = 100, rho = 0.5, 
-        param = c(r = 1, s = 1), type = "epower", border = FALSE)$z)  
-    print(Mean)
-    Density = function(z, rho) 
-        dellipticalCopula(z[1], z[2], rho = rho, param = NULL, type = "logistic")
-    Integrated = adapt(2, lower = c(0, 0), upper = c(1, 1), functn = Density, 
-        rho = 0.5, eps = 0.0001)$value
-    print(Integrated)
-    
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.dellipticalCopula.RUnit = 
-function()
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   RUnit Test for elliptical copulae
-    
-    # FUNCTION:
-    
-    # Settings:
-    N = 10
-    uv = grid2d((1:(N-1))/N)
-    
-    # Normal Copula:
-    c.uv = dellipticalCopula(uv, rho = 0.75, type = "norm", output = "list")
-    persp(c.uv, theta = -40, phi = 30, ticktype = "detailed", col = "steelblue",
-        main = "Normal Copula | rho = 0.75", cex = 0.5)
-    
-    # Cauchy Copula:
-    c.uv = dellipticalCopula(uv, rho = 0.75, type = "cauchy", output = "list")
-    persp(c.uv, theta = -40, phi = 30, ticktype = "detailed", col = "steelblue",
-        main = "Cauchy Copula | rho = 0.75", cex = 0.5)
-    
-    # Student-t Copula:
-    c.uv = dellipticalCopula(uv, rho = 0.75, type = "t", output = "list")
-    persp(c.uv, theta = -40, phi = 30, ticktype = "detailed", col = "steelblue",
-        main = "Student-t Copula | rho = 0.75", cex = 0.5)
-    
-    # Logistic Copula:
-    c.uv = dellipticalCopula(uv, rho = 0.75, type = "logistic", output = "list")
-    persp(c.uv, theta = -40, phi = 30, ticktype = "detailed", col = "steelblue",
-        main = "Logistic Copula | rho = 0.75", cex = 0.5)
-    c.uv = .dellipticalCopulaGrid(N, rho = 0.75, 
-        type = "logistic", border = FALSE)
-    persp(c.uv, theta = -40, phi = 30, ticktype = "detailed", col = "steelblue",
-        main = "Logistic Copula | rho = 0.75", cex = 0.5)
-    
-    # Laplace Copula:
-    c.uv = dellipticalCopula(uv, rho = 0.75, type = "laplace", output = "list")
-    persp(c.uv, theta = -40, phi = 30, ticktype = "detailed", col = "steelblue",
-        main = "Laplace Copula | rho = 0.75", cex = 0.5)
-    
-    # Original Kotz Copula:
-    c.uv = dellipticalCopula(uv, rho = 0.75, type = "kotz", output = "list")
-    persp(c.uv, theta = -40, phi = 30, ticktype = "detailed", col = "steelblue",
-        main = "Kotz Copula | rho = 0.75", cex = 0.5)
-    
-    # Exponential Power Copula:
-    c.uv = dellipticalCopula(uv, rho = 0.75, type = "epower", output = "list")
-    persp(c.uv, theta = -40, phi = 30, ticktype = "detailed", col = "steelblue",
-        main = "Exponential Power Copula | rho = 0.75", cex = 0.5)
-    c.uv = .dellipticalCopulaGrid(N, rho = 0.75, param = c(2, 2), 
-        type = "epower", border = FALSE)
-    persp(c.uv, theta = -40, phi = 30, ticktype = "detailed", col = "steelblue",
-        main = "Exponential Power Copula | rho = 0.75", cex = 0.5)
-        
-    # Return value:
-    invisible()
 }
 
 

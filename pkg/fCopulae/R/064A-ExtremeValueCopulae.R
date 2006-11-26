@@ -31,7 +31,9 @@
 #                       X     NOT YET IMPEMENTED
 # FUNCTION:                  EXTREME VALUE COPULAE PARAMETER:
 #  .evParam                   Sets parameters for an extreme value copula
-# FUNCTION:                  EXTREME VALUE COPULAE DEPENDENCE FUNCTION:
+#  .evRange             X
+#  .evCheck             X
+# FUNCTION:                  EXTREME VALUE COPULAE GENERATOR FUNCTION:
 #  Afunc                      Computes Dependence function
 #  AfuncSlider                Displays interactively dependence function
 #  .AfuncFirstDer              Computes Derivative of dependence function
@@ -44,7 +46,7 @@
 #  evTailPlot           X     Plots extreme value tail dependence function
 # FUNCTION:                  EXTREME VALUE COPULAE RANDOM VARIATES:
 #  revCopula            X     Generates extreme value copula random variates 
-#  revSlider
+#  revSlider            X
 # FUNCTION:                  EXTREME VALUE COPULAE PROBABILIY:
 #  pevCopula                  Computes extreme value copula probability
 #  .pev1Copula                 EV copula probability via dependence function
@@ -57,7 +59,7 @@
 #  .dev2Copula                 EV copula density direct computation
 #  .devContourSlider           Interactive contour plots of EV density
 #  .devPerspSlider             Interactive perspective plots of EV density
-# FUNCTION:                  ARCHIMEDEAN COPULA PARAMETER FITTING:
+# FUNCTION:                  EXTREME VALUE COPULA PARAMETER FITTING:
 #  evCopulaSim          X      Simulates bivariate extreme value copula
 #  evCopulaFit          X      Fits the paramter of an extreme value copula
 ################################################################################
@@ -1625,22 +1627,23 @@ type = c("gumbel", "galambos", "husler.reiss", "tawn", "bb5"))
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Simulates bivariate elliptical Copula
+    #   Simulates bivariate extreme value Copula
+    
+    return("not yet implemented")
+    # revCopula() is missing ...
     
     # Match Arguments:
-    # type = as.integer(type[1])
+    type = match.arg(type)
       
     # Settings:
-    # if (is.null(param)) alpha = .evParam(type)$param
+    if (is.null(param)) param = .evParam(type)$param
     
     # Random Variates:
-    # ans = rarchmCopula(n = n, alpha = alpha, type = type) 
+    ans = revCopula(n = n, param = parm, type = type) 
 
     # Control:
-    # control = list(alpha = alpha[[1]], copula = "archm", type = type)
-    # attr(ans, "control")<-unlist(control)
-      
-    ans = NA
+    control = list(param = param, copula = "ev", type = type)
+    attr(ans, "control")<-unlist(control)
       
     # Return Value:
     ans
@@ -1664,7 +1667,7 @@ type = c("gumbel", "galambos", "husler.reiss", "tawn", "bb5"), ...)
     # FUNCTION:
     
     # Match Arguments:
-    type = as.integer(type[1])
+    type = match.arg(type)
     
     # Settings:
     U = u
@@ -1680,14 +1683,14 @@ type = c("gumbel", "galambos", "husler.reiss", "tawn", "bb5"), ...)
     U <<- u
     V <<- v
 
-    # Estimate Rho from Kendall's tau for all types of Copula:
-    alpha = .archmParam(type)$param
+    # Start Values:
+    param = .evParam(type)$param
      
     # Estimate Copula:
     fun = function(x, type) {
         -mean( log(evCopula(u = U, v = V, param = x, type = type)) )
     }
-    range = .archmRange(type)
+    range = .evRange(type)
 
     # fit = nlminb(start = alpha, objective = fun, 
     #     lower = range[1], upper = range[2],  type = type, ...)
