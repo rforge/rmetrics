@@ -77,10 +77,9 @@ ellipticalTau(rho)
 ellipticalRho(rho, param = NULL, type = c("norm", "cauchy", "t", "logistic", 
     "laplace", "kotz", "epower"), subdivisions = 500)
     
-ellipticalTailCoeff(rho, param = NULL, type = c("norm", "cauchy", "t",
-    "logistic", "laplace", "kotz", "epower"))
-ellipticalTailPlot(param = NULL, type = c("norm", "cauchy", "t", "logistic", 
-    "laplace", "kotz", "epower"), tail = c("Upper", "Lower"))
+ellipticalTailCoeff(rho, param = NULL, type = c("norm", "cauchy", "t")
+ellipticalTailPlot(param = NULL, type = c("norm", "cauchy", "t"), 
+    tail = c("Upper", "Lower"))
 
 gfunc(x, param = NULL, type = c("norm", "cauchy", "t", "logistic", "laplace", 
     "kotz", "epower"))
