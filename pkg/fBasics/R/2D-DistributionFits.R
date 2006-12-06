@@ -744,6 +744,7 @@ trace = FALSE, title = NULL, description = NULL)
     # Settings:
     CALL = match.call()
     steps <<- 0
+    .trace <<- trace
     
     # Log-likelihood Function:
     establemle = function(x, y = x) { 
