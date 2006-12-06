@@ -176,6 +176,9 @@ nigFit(x, alpha = 1, beta = 0, delta = 1, mu = 0, doplot = TRUE,
     \item{steps}{
         number of function calls.
         }
+        
+    Remark: The parameter estimation for the stable distribution via the 
+    maximum Log-Likelihood approach may take a quite long time.
               
 }
 
@@ -188,11 +191,6 @@ nigFit(x, alpha = 1, beta = 0, delta = 1, mu = 0, doplot = TRUE,
     maximum log-likelihood function. \code{nlm} carries out a minimization 
     using a Newton-type algorithm.
     \cr\cr
-    
-    \bold{Spline Smoothed Distribution:}
-    \cr
-    Estimates are done using smoothing spline ANOVA models with cubic 
-    spline marginals for numerical variables.
        
 }
 
