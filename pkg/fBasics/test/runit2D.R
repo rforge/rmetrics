@@ -224,6 +224,7 @@ function()
     if (FALSE) {
         # Note, this takes rather long time ...
         ans = stableFit(x = s, alpha = 1.5, type = "mle", trace = TRUE) 
+        # .mleStableFit(s, 1.75, 0, 1, 0)
         # The result would be:
         #
         relErrorTest =  c(
