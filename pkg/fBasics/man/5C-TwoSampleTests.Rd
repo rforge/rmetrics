@@ -2,34 +2,13 @@
 
 \alias{TwoSampleTests}
 
-% two sample tests:
-
 \alias{ks2Test}
 
 \alias{locationTest}
-%\alias{.tTest}
-%\alias{.kw2Test}
-
 \alias{varianceTest}
-%\alias{.varfTest}
-%\alias{.bartlett2Test}
-%\alias{.fligner2Test}
-
 \alias{scaleTest}
-%\alias{.ansariTest}
-%\alias{.moodTest}
 
 \alias{correlationTest}
-\alias{.pearsonTest}
-\alias{.kendallTest}
-\alias{.spearmanTest}
-
-% Distribution
-
-\alias{dansariw}
-\alias{pansariw}
-\alias{qansariw}
-
 
 \title{Two Sample Tests}
 
@@ -53,31 +32,31 @@
     
     \tabular{ll}{ 
     \code{locationTest} \tab The location test suite, \cr
-    \code{method="t"} \tab The t test, \cr
+    \code{method="t"} \tab the t test, \cr
     \code{method="kw"} \tab the Kruskal--Wallis test. } 
     
     Test Difference in Variance:
     
     \tabular{ll}{ 
     \code{varianceTest} \tab The variance test suite, \cr
-    \code{method="varf"} \tab The variance F test, \cr
-    \code(method="bartlett"} \tab the Bartlett test, \cr
+    \code{method="varf"} \tab the variance F test, \cr
+    \code{method="bartlett"} \tab the Bartlett test, \cr
     \code{method="fligner"} \tab the Fligner--Killeen test.}
      
     Test Difference in Scale:
     
     \tabular{ll}{
     \code{scaleTest} \tab The scale test suite, \cr
-    \code{method="ansariTest"} \tab  The Ansari--Bradley test, \cr
-    \code{method="moodTest"} \tab the Mood test.}
+    \code{method=ansari} \tab  the Ansari--Bradley test, \cr
+    \code{method=mood} \tab the Mood test.}
     
     Test for Correlations:
     
     \tabular{ll}{
     \code{correlationTest} \tab The correlation test suite, \cr
-    \code{method="pearson"} \tab Pearson's coefficient, \cr
-    \code{method="kendall"} \tab Kendall's tau, \cr
-    \code{method="spearman"} \tab Spearman's rho.}
+    \code{method=pearson} \tab Pearson's coefficient, \cr
+    \code{method=kendall} \tab Kendall's tau, \cr
+    \code{method=spearman} \tab Spearman's rho.}
 }
 
 
@@ -100,9 +79,6 @@ correlationTest(x, y, method = c("pearson", "kendall", "spearman"),
   
     \item{description}{
         optional description string, or a vector of character strings.
-        }
-    \item{m, n}{
-        [*ansariw] - \cr
         } 
     \item{method}{
         a character string naming which test should be applied.
@@ -236,9 +212,7 @@ correlationTest(x, y, method = c("pearson", "kendall", "spearman"),
     \code{x} and \code{y} the exact p value together with its asymptotic 
     limit. The test procedure is not limited to sizes shorter of length 50 
     as this is the case for the function \code{ansari.Test} implemented in 
-    R's \code{stats} package. For the test statistics the following
-    functions are available: \code{dansariw}, \code{pansariw}, and 
-    \code{qansariw}.
+    R's \code{stats} package. 
     
     The code{moodTest}, is another test which performs a 
     two--sample test for a difference in scale parameters. The underlying 

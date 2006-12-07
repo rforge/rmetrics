@@ -52,7 +52,7 @@ lmacfPlot(x, lag.max = max(2, floor(10*log10(length(x)))), ci = 0.95,
     type = c("both", "acf", "hurst"), labels = TRUE, details = TRUE, \dots) 
 logpdfPlot(x, n = 50, type = c("lin-log", "log-log"), doplot = TRUE, 
     labels = TRUE, \dots)
-qqgaussPlot(x, span = 5, col = "steelblue4", labels = TRUE, \dots)
+qqgaussPlot(x, span = 5, col = "steelblue", labels = TRUE, \dots)
 scalinglawPlot(x, span = ceiling(log(length(x)/252)/log(2)), doplot = TRUE, 
     labels = TRUE, details = TRUE, \dots)
 teffectPlot(x, deltas = seq(from = 0.2, to = 3, by = 0.2), lag.max = 10, 

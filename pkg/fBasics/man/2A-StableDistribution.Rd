@@ -7,11 +7,11 @@
 \alias{qsymstb}
 \alias{rsymstb}
 
-\alias{stableMode}
 \alias{dstable}
 \alias{pstable}
 \alias{qstable}
 \alias{rstable}
+\alias{stableMode}
 
 \alias{symstbSlider}
 \alias{stableSlider}
@@ -34,6 +34,7 @@
     \tabular{ll}{
     \code{[dpqr]symstb} \tab The symmetric stable distribution, \cr
     \code{[dpqr]stable} \tab the skewed stable distribution, \cr
+    \code{stableMode} \tab the stable mode, \cr
     \code{symstbSlider} \tab interactive symmetric distribution display, \cr
     \code{stableSlider} \tab interactive stable distribution display. }
 
@@ -46,12 +47,12 @@ psymstb(q, alpha)
 qsymstb(p, alpha)
 rsymstb(n, alpha)
 
-stableMode(alpha, beta)
-
 dstable(x, alpha, beta, gamma = 1, delta = 0, pm = c(0, 1, 2))
 pstable(q, alpha, beta, gamma = 1, delta = 0, pm = c(0, 1, 2))
 qstable(p, alpha, beta, gamma = 1, delta = 0, pm = c(0, 1, 2))
 rstable(n, alpha, beta, gamma = 1, delta = 0, pm = c(0, 1, 2))
+
+stableMode(alpha, beta)
 
 symstbSlider()
 stableSlider()
