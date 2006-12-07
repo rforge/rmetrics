@@ -43,9 +43,9 @@
 #  scaleTest             Performs scale tests on two samples
 #  .ansariTest           Ansari-Bradley test for differences in scale
 #  .moodTest             Mood test for differences in scale
-#  dansariw              Returns density of the Ansari W statistic
-#  pansariw              Returns probabilities of the Ansari W statistic
-#  qansariw              Returns quantiles of the Ansari W statistic
+#  .dansariw              Returns density of the Ansari W statistic
+#  .pansariw              Returns probabilities of the Ansari W statistic
+#  .qansariw              Returns quantiles of the Ansari W statistic
 # FUNCTION:             CORRELATION TESTS:
 #  correlationTest       Performs correlation tests on two samples
 #  .pearsonTest          Pearson product moment correlation coefficient
@@ -73,9 +73,6 @@ function(x, y, title = NULL, description = NULL)
     
     # Note:
     #   A function partly copied from "stats"
-    
-    # Changes:
-    #
     
     # FUNCTION:
     
@@ -154,10 +151,7 @@ title = NULL, description = NULL)
 
     # Description:
     #   Correlation Tests
-       
-    # Changes:
-    #
-    
+  
     # FUNCTION:
     
     # Test:
@@ -193,10 +187,7 @@ function(x, y, title = NULL, description = NULL)
     #   The function 't.test' comes in R and SPlus with the same
     #   arguments, so this function 'tTest' can be used also under 
     #   SPlus.
-    
-    # Changes:
-    #
-    
+
     # FUNCTION:
     
     # Call:
@@ -321,10 +312,7 @@ function(x, y, title = NULL, description = NULL)
     
     # Note:
     #   A function linked to "stats"
-    
-    # Changes:
-    #
-    
+
     # FUNCTION:
     
     # Call:
@@ -404,9 +392,6 @@ title = NULL, description = NULL)
     # Description:
     #   Correlation Tests
        
-    # Changes:
-    #
-    
     # FUNCTION:
     
     # Test:
@@ -445,10 +430,7 @@ function(x, y, title = NULL, description = NULL)
     
     # Notes:
     #   A modified copy originally from R's ctest package Version 1.8.1
-    
-    # Changes:
-    #
-    
+
     # FUNCTION:
     
     # Call:
@@ -546,9 +528,6 @@ function(x, y, title = NULL, description = NULL)
     # Note:
     #   # A function linked to "stats"
 
-    # Changes:
-    #
-    
     # FUNCTION:
     
     # Call:
@@ -613,10 +592,7 @@ function(x, y, title = NULL, description = NULL)
     
     # Note:
     #   A function linked to "stats"
-    
-    # Changes:
-    #
-    
+
     # FUNCTION:
     
     # Call:
@@ -677,10 +653,7 @@ title = NULL, description = NULL)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Correlation Tests
-       
-    # Changes:
-    #
+    #   Scale Tests
     
     # FUNCTION:
     
@@ -716,10 +689,7 @@ function(x, y, title = NULL, description = NULL)
     
     # Note:
     #   A function copied from "stats" for SPlus compatibility
-    
-    # Changes:
-    #
-    
+  
     # FUNCTION:
     
     # Call:
@@ -809,7 +779,7 @@ function(x, y, title = NULL, description = NULL)
 # ------------------------------------------------------------------------------
 
 
-dansariw = 
+.dansariw = 
 function(x = NULL, m, n = m)
 {   # A function Implemented by Diethelm Wuertz
     
@@ -821,10 +791,7 @@ function(x = NULL, m, n = m)
     #       allowed x values.
     
     # Example:
-    #   dansariw(m = 3, n = 4)
-    
-    # Changes:
-    #
+    #   .dansariw(m = 3, n = 4)
     
     # FUNCTION:
     
@@ -869,13 +836,10 @@ function(x = NULL, m, n = m)
 
 
 if (class(version) != "Sversion") {
-.pansariw = 
+..pansariw = 
 function(p, m, n) 
 {   # A function Implemented by Diethelm Wuertz
 
-    # Changes:
-    #
-    
     # FUNCTION:
     
     # Internal R Function:
@@ -887,7 +851,7 @@ function(p, m, n)
 # ------------------------------------------------------------------------------
 
 
-pansariw =
+.pansariw =
 function(q = NULL, m, n = m)
 {   # A function Implemented by Diethelm Wuertz
     
@@ -896,16 +860,13 @@ function(q = NULL, m, n = m)
     #       the names of the vector belong to the allowed q values
     
     # Example:
-    #   pansariw(m = 3, n = 4)
+    #   .pansariw(m = 3, n = 4)
     
     # Note:
     #   There exists an undocumented C function in R:
     #   .pansari = function(q, m, n) {
     #       .C("pansari", as.integer(length(q)), p = as.double(q),
     #           as.integer(m), as.integer(n), PACKAGE = "stats")$p }
-    
-    # Changes:
-    #
     
     # FUNCTION:
     
@@ -951,13 +912,10 @@ function(q = NULL, m, n = m)
 
 
 if (class(version) != "Sversion") {
-.qansariw = 
+..qansariw = 
 function(p, m, n) 
 {   # A function Implemented by Diethelm Wuertz
 
-    # Changes:
-    #
-    
     # FUNCTION:
     
     # Internal R Function:
@@ -969,7 +927,7 @@ function(p, m, n)
 # ------------------------------------------------------------------------------
 
 
-qansariw =
+.qansariw =
 function(p, m, n = m)
 {   # A function Implemented by Diethelm Wuertz
     
@@ -978,22 +936,19 @@ function(p, m, n = m)
     #       the names of the vector belong to the allowed p values
     
     # Example:
-    #   qansariw(pansariw(m = 3, n = 4), m = 3, n = 4)
-    #   qansariw((0:10)/10,  m = 3, n = 4)
+    #   .qansariw(.pansariw(m = 3, n = 4), m = 3, n = 4)
+    #   .qansariw((0:10)/10,  m = 3, n = 4)
     
     # Note:
     #   There exists an undocumented C function in R:
     #   .qansari = function(p, m, n) {
     #       .C("qansari", as.integer(length(p)), q = as.double(p),
     #           as.integer(m), as.integer(n), PACKAGE = "stats")$q }
-    
-    # Changes:
-    #
-    
+
     # FUNCTION:
     
     # Settings:
-    P = pansariw(q = NULL, m = m, n = n)
+    P = .pansariw(q = NULL, m = m, n = n)
     q = 0 * p 
     
     # Quantiles:
@@ -1016,9 +971,6 @@ function(x, y, alternative = c("two.sided", "less", "greater"),
 exact = TRUE, conf.int = FALSE, conf.level = 0.95, ...)
 {
     # A modifed copy from R 1.9.1
-    
-    # Changes:
-    #
     
     # FUNCTION:
     
@@ -1060,12 +1012,12 @@ exact = TRUE, conf.int = FALSE, conf.level = 0.95, ...)
         PVAL = switch(alternative,
            two.sided = {
                if (STATISTIC > ((m + 1)^2 %/% 4 + ((m * n) %/% 2) / 2))
-                   p = 1 - pansariw(STATISTIC - 1, m, n)
+                   p = 1 - .pansariw(STATISTIC - 1, m, n)
                else
-                   p = pansariw(STATISTIC, m, n)
+                   p = .pansariw(STATISTIC, m, n)
                min(2 * p, 1) },
-           less = 1 - pansariw(STATISTIC - 1, m, n),
-           greater = pansariw(STATISTIC, m, n))
+           less = 1 - .pansariw(STATISTIC - 1, m, n),
+           greater = .pansariw(STATISTIC, m, n))
         if (conf.int) {
             alpha = 1 - conf.level
             x = sort(x)
@@ -1080,8 +1032,8 @@ exact = TRUE, conf.int = FALSE, conf.level = 0.95, ...)
             sigma = sort(aratio)
 
             cci <<- function(alpha) {
-                u = absigma - qansariw(alpha/2,  m, n)
-                l = absigma - qansariw(1 - alpha/2, m, n)
+                u = absigma - .qansariw(alpha/2,  m, n)
+                l = absigma - .qansariw(1 - alpha/2, m, n)
                 # Check if the statistic exceeds both quantiles first.
                 uci = NULL
                 lci = NULL
@@ -1101,8 +1053,8 @@ exact = TRUE, conf.int = FALSE, conf.level = 0.95, ...)
                 # The process of the statistics does not need to be
                 # monotone in sigma: check this and interchange quantiles.
                 if (uci > lci) {
-                  l = absigma - qansariw(alpha/2,  m, n)
-                  u = absigma - qansariw(1 - alpha/2, m, n)
+                  l = absigma - .qansariw(alpha/2,  m, n)
+                  u = absigma - .qansariw(1 - alpha/2, m, n)
                   u[u < 0] = NA
                   uci = min(sigma[which(u == min(u, na.rm = TRUE))])
                   l[l <= 0] = NA
@@ -1124,7 +1076,7 @@ exact = TRUE, conf.int = FALSE, conf.level = 0.95, ...)
                     less= { c(0, cci(alpha*2)[2]) })
             }
             attr(cint, "conf.level") = conf.level
-            u = absigma - qansariw(0.5, m, n)
+            u = absigma - .qansariw(0.5, m, n)
             sgr = sigma[u <= 0]
             if (length(sgr) == 0) {
                 sgr = NA
@@ -1262,10 +1214,7 @@ function(x, y, title = NULL, description = NULL)
     
     # Notes:
     #   A modified copy originally from R's ctest package Version 1.8.1
-    
-    # Changes:
-    #
-    
+
     # FUNCTION:
     
     # Call:
@@ -1333,10 +1282,7 @@ title = NULL, description = NULL)
 
     # Description:
     #   Correlation Tests
-       
-    # Changes:
-    #
-    
+        
     # FUNCTION:
     
     # Test:
@@ -1374,10 +1320,7 @@ function(x, y, title = NULL, description = NULL)
     
     # Note:
     #   A function linked to "stats"
-    
-    # Changes:
-    #
-    
+  
     # FUNCTION:
     
     # Call:
@@ -1474,10 +1417,7 @@ function(x, y, title = NULL, description = NULL)
     
     # Note:
     #   A function linked to "stats"
-    
-    # Changes:
-    #
-    
+
     # FUNCTION:
     
     # Call:
@@ -1601,9 +1541,6 @@ function(x, y, title = NULL, description = NULL)
     
     # Note:
     #   # A function linked to "stats"
-    
-    # Changes:
-    #
     
     # FUNCTION:
     
