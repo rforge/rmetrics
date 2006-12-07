@@ -33,12 +33,15 @@
 #  psymstb               Returns probabilities for symmetric stable DF
 #  qsymstb               Returns quantiles for symmetric stable DF
 #  rsymstb               Returns random variates for symmetric stable DF
+#  .symstb               Returns symmetric alpha-stable pdf/cdf 
+#  .symstbPoly           Internal Function called from .symstb()
 # FUNCTIONS:            STABLE DISTRIBUTION:
-#  stableMode            Computes stable mode
 #  dstable               Returns density for stable DF
 #  pstable               Returns probabilities for stable DF
 #  qstable               Returns quantiles for stable DF
 #  rstable               Returns random variates for stable DF
+#  stableMode            Computes the mode of the stable DF
+#  .integrateStable      Integrates internal functions for *stable
 # FUNCTION:             STABLE SLIDERS:
 #  symstbSlider          Displays symmetric stable distribution function
 #  stableSlider          Displays stable distribution function
@@ -50,19 +53,25 @@
 #  psymstb               Returns probabilities for symmetric stable DF
 #  qsymstb               Returns quantiles for symmetric stable DF
 #  rsymstb               Returns random variates for symmetric stable DF
+#  .symstb               Internal function 
+#  .symstbPoly           Internal Function
 
 
 dsymstb =
 function(x, alpha = 1.8)
 {   # A function implemented by Diethelm Wuertz
 
-    # Changes:
-    #
+    # Description:
+    #   Returns density for symmetric stable DF
     
     # FUNCTION:
     
     # Density:
     ans = as.vector(.symstb(x = x, alpha = alpha)[, "d"])
+    
+    # Attributes:
+    attr(ans, "control") = 
+        cbind.data.frame(dist = "symstb", alpha = alpha, row.names = "")
       
     # Return Value:
     ans
@@ -76,13 +85,17 @@ psymstb =
 function(q, alpha = 1.8)
 {   # A function implemented by Diethelm Wuertz
 
-    # Changes:
-    #
+    # Description:
+    #   Returns probabilities for symmetric stable DF
     
     # FUNCTION:
     
     # Probability:
     ans = as.vector(.symstb(x = q, alpha = alpha)[, "p"])
+    
+    # Attributes:
+    attr(ans, "control") = 
+        cbind.data.frame(dist = "symstb", alpha = alpha, row.names = "")
     
     # Return Value:
     ans
@@ -96,8 +109,8 @@ qsymstb =
 function(p, alpha)
 {   # A function implemented by Diethelm Wuertz
 
-    # Changes:
-    #
+    # Description:
+    #   Returns quantiles for symmetric stable DF
     
     # FUNCTION:
     
@@ -143,8 +156,13 @@ function(p, alpha)
         } 
     }
     
+    # Attributes:
+    ans = result
+    attr(ans, "control") = 
+        cbind.data.frame(dist = "symstb", alpha = alpha, row.names = "")
+    
     # Return Value:
-    result
+    ans
 }
 
 
@@ -156,13 +174,13 @@ function(n, alpha)
 {   # A function implemented by Diethelm Wuertz
     
     # Description:
+    #   Returns random variates for symmetric stable DF
+    
+    # Details:
     #   Return random deviates from the stable family 
     #   of probability distributions. The results of 
     #   Chambers, Mallows, and Stuck is used.
 
-    # Changes:
-    #
-    
     # FUNCTION:
     
     # Calculate uniform and exponential distributed random numbers:
@@ -178,10 +196,12 @@ function(n, alpha)
     } 
     
     # Add Attribute:
-    attr(result, "control") = c(dist = "symstb", alpha = as.character(alpha))
+    ans = result
+    attr(ans, "control") = 
+        cbind.data.frame(dist = "symstb", alpha = alpha, row.names = "")
     
     # Return Value:
-    result
+    ans
 }
 
 
@@ -332,8 +352,8 @@ function(x, alpha)
 function(a, x, k) 
 {   # A function implemented by Diethelm Wuertz
 
-    # Changes:
-    #
+    # Description:
+    #   Internal Function called from .symstb()
     
     # FUNCTION:
     
@@ -360,8 +380,9 @@ function(x, alpha, beta, gamma = 1, delta = 0, pm = c(0, 1, 2))
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Return alpha-stable density function (pdf) in form
-    #   of parmeterization 1. 
+    #   Returns density for stable DF
+    
+    # Details:
     #   The function uses the approach of J.P. Nolan for general 
     #   stable distributions. Nolan derived expressions in form 
     #   of integrals based on the charcteristic function for
@@ -381,9 +402,6 @@ function(x, alpha, beta, gamma = 1, delta = 0, pm = c(0, 1, 2))
     #       integrate()$value and integrate()$integral.
     #   optimize() works in both R and SPlus.
 
-    # Changes:
-    #
-    
     # FUNCTION:
     
     # Settings:
@@ -527,6 +545,11 @@ function(x, alpha, beta, gamma = 1, delta = 0, pm = c(0, 1, 2))
     # Result:
     ans = result/gamma
     
+    # Attributes:
+    attr(ans, "control") = 
+        cbind.data.frame(dist = "stable", alpha = alpha, beta = beta,
+            gamma = gamma, delta = delta, pm = pm, row.names = "")
+    
     # Return Value:
     ans
 }
@@ -539,8 +562,8 @@ pstable =
 function(q, alpha, beta, gamma = 1, delta = 0, pm = c(0, 1, 2))
 {   # A function implemented by Diethelm Wuertz
 
-    # Changes:
-    #
+    # Description:
+    #   Returns probability for stable DF
     
     # FUNCTION:
     
@@ -677,8 +700,14 @@ function(q, alpha, beta, gamma = 1, delta = 0, pm = c(0, 1, 2))
         }
     }
 
+    # Attributes:
+    ans = result
+    attr(ans, "control") = 
+        cbind.data.frame(dist = "stable", alpha = alpha, beta = beta,
+            gamma = gamma, delta = delta, pm = pm, row.names = "")
+            
     # Return Value:
-    result
+    ans
 }
 
 
@@ -689,8 +718,8 @@ qstable =
 function(p, alpha, beta, gamma = 1, delta = 0, pm = c(0, 1, 2))
 {   # A function implemented by Diethelm Wuertz
 
-    # Changes:
-    #
+    # Description:
+    #   Returns quantiles for stable DF
     
     # FUNCTION:
     
@@ -784,6 +813,11 @@ function(p, alpha, beta, gamma = 1, delta = 0, pm = c(0, 1, 2))
     # Result:
     ans = result * gamma + delta
     
+    # Attributes:
+    attr(ans, "control") = 
+        cbind.data.frame(dist = "stable", alpha = alpha, beta = beta,
+            gamma = gamma, delta = delta, pm = pm, row.names = "")
+            
     # Return Value:
     ans
 }
@@ -797,12 +831,8 @@ function(n, alpha, beta, gamma = 1, delta = 0, pm = c(0, 1, 2))
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Return random deviates from the stable family 
-    #   of probability distributions.
+    #   Returns random variates for stable DF
 
-    # Changes:
-    #
-    
     # FUNCTION:
     
     # Parameter Check:
@@ -846,10 +876,10 @@ function(n, alpha, beta, gamma = 1, delta = 0, pm = c(0, 1, 2))
     # Result:
     ans = result * gamma + delta
     
-    # Add Attribute:
-    attr(ans, "control") = c(dist = "stable", alpha = as.character(alpha),
-        beta = as.character(beta), gamma = as.character(gamma),
-        delta = as.character(delta), pm = as.character(pm))
+    # Attributes:
+    attr(ans, "control") = 
+        cbind.data.frame(dist = "stable", alpha = alpha, beta = beta,
+            gamma = gamma, delta = delta, pm = pm, row.names = "")
     
     # Return Value:
     ans
@@ -864,7 +894,7 @@ function(alpha, beta)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Compute the mode of the stable distribution function
+    #   Computes the mode of the stable DF
     
     # Notes:
     #   # Test for values close to beta = 1
@@ -891,9 +921,6 @@ function(alpha, beta)
     #   1.8   -5.098617e-02 -5.145758e-02 -5.145639e-02 -5.145639e-02
     #   2.0   -7.487432e-05 -7.487432e-05 -7.487432e-05 -7.487432e-05
 
-    # Changes:
-    #
-    
     # FUNCTION:
     
     # Stable Mode:
@@ -909,6 +936,11 @@ function(alpha, beta)
         }
     }
     
+    # Attributes:
+    attr(ans, "control") = 
+        cbind.data.frame(dist = "stable", alpha = alpha, beta = beta,
+        row.names = "")
+            
     # Return Value:
     ans
 }
@@ -921,8 +953,8 @@ function(alpha, beta)
 function (f, lower, upper, subdivisions, rel.tol, abs.tol, ...) 
 {   # A function implemented by Diethelm Wuertz
 
-    # Changes:
-    #
+    # Description:
+    #   Internal Function
     
     # FUNCTION:
     
@@ -941,6 +973,7 @@ function (f, lower, upper, subdivisions, rel.tol, abs.tol, ...)
         # SPlus:
         ans = integrate(f, lower, upper, subdivisions, rel.tol, abs.tol, ...) 
     }
+    
     # Return Value:
     ans
 

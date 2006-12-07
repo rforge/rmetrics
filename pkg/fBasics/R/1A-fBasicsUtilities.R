@@ -28,14 +28,15 @@
 
 
 ################################################################################
-# FUNCTION:                 INTERNAL TWO-DIMENSIONAL PLOT UTILITIES:    
-#  .tsPlot                   Returns a time series plot
-#  .responsesPlot            Returns a response series plot
-#  .residualsPlot            Returns a residual series plot
+# FUNCTION:                 TAILORED PLOT FUNCTIONS:     
+#  seriesPlot                Returns a time series plot
 #  histPlot                  Returns a tailored histogram plot
 #  densityPlot               Returns a tailored kernel density estimate plot
-#  .firePlot                 Returns a fitted values vs.residuals plot
 #  qqbayesPlot               Returns a tailored quantile-quantile plot
+# FUNCTION:                 INTERNAL USED PLOT FUNCTIONS: 
+#  .responsesPlot            Returns a response series plot
+#  .residualsPlot            Returns a residual series plot
+#  .firePlot                 Returns a fitted values vs.residuals plot
 #  .acfPlot                  Returns a autocorrelation function plot
 #  .pacfPlot                 Returns a partial ACF plot
 #  .mrlPlot                  Returns a mean residual life plot
@@ -55,8 +56,7 @@
 # FUNCTION:                 SLIDER MENU:
 #  .sliderMenu               Starts a slider menu
 # FUNCTION:                 SPLINE INTERPOLATION:
-#  .akimaInterpolation       Does Akima Spline Interpolation
-#  .interp                   Does Akima Spline Interpolation
+#  .akima2d                  Does 2-D Akima Spline Interpolation
 # FUNCTION:                 JARQUE-BERA DATA TABLES:
 # .jbLM                      Jarque-Bera Lagrange Multiplier Test Data
 # .jbALM                     JB Augmented Lagrange Multiplier Test Data
@@ -67,20 +67,20 @@
 
 
 ################################################################################  
-#  .tsPlot                   Returns a time series plot
-#  .responsesPlot            Returns a response series plot
-#  .residualsPlot            Returns a residual series plot
+#  seriesPlot               Returns a time series plot
 #  histPlot                 Returns a histogram plot
 #  densityPlot              Returns a kernel density estimate plot
-#  .firePlot                 Returns a fitted values vs.residuals plot
 #  qqbayesPlot              Returns a quantile-quantile plot
+#  .responsesPlot            Returns a response series plot
+#  .residualsPlot            Returns a residual series plot
+#  .firePlot                 Returns a fitted values vs.residuals plot
 #  .acfPlot                  Returns a autocorrelation function plot
 #  .pacfPlot                 Returns a partial ACF plot
 #  .mrlPlot                  Returns a mean residual life plot
 
 
-.tsPlot = 
-function(x, ...) 
+seriesPlot = 
+function(x, col = "steelblue", main = x@units, ...) 
 {   # A function implemented by Diethelm Wuertz
     
     # Description:
@@ -89,18 +89,259 @@ function(x, ...)
     # Arguments:
     #   x - an univariate time series
     
+    # Example:
+    # tS=timeSeries(cbind(rnorm(12),rt(12,4)),timeCalendar(),units=c("N","T"))
+    # seriesPlot(tS)
+    
+    # FUNCTION:
+    
+    # Series Plots:
+    
+    # timeSeries:
+    stopifnot(is.timeSeries(x))
+    units = x@units
+    DIM = dim(x@Data)[2]
+    
+    # Series Plots:
+    for (i in 1:DIM) {
+        X = x[, i]
+        plot(x = X, type = "l", col = col, main = main[i], ylab = X@units, ...)
+        grid()
+        abline(h = 0, col = "grey")
+    }
+         
+    # Return Value:
+    invisible()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+histPlot = 
+function(x, col = "steelblue", main = x@units, add.fit = TRUE, ...) 
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Returns a probability histogram plot for each column of a 
+    #   timeSeries object
+    
     # Changes:
     #
     
     # FUNCTION:
     
-    # Plot:
-    plot(x = x, ...)
-    grid()
-    abline(h = 0, col = "grey")
-         
+    # Settings:
+    xlim = NULL
+    
+    # timeSeries:
+    stopifnot(is.timeSeries(x))
+    units = x@units
+    DIM = dim(x@Data)[2]
+      
+    # Construct output list:
+    ans = paste( " hist", 1:DIM, " = NULL", sep = "", collapse = ",")
+    ans = paste( "list(",  ans, ")" )
+    ans = eval(parse(text = ans))
+    
+    # Histogram Plots:
+    for (i in 1:DIM) {
+        
+        # Histogram:
+        Values = as.vector(x@Data[, i])
+        mean = mean(Values)
+        median = median(Values)
+        sd = sd(Values)
+        if (is.null(xlim)) 
+            xlim = c(qnorm(0.001, mean, sd), qnorm(0.999, mean, sd)) 
+        result = hist(x = Values, col = col, border = "white", 
+            breaks = "FD", main = main[i], xlim = xlim, probability = TRUE,
+            ...) 
+             
+        # Add Fit:  
+        if (add.fit) {
+            s = seq(xlim[1], xlim[2], length = 201)
+            lines(s, dnorm(s, mean, sd), lwd = 2, col = "brown")
+        }
+        ans[[i]] = result  
+        
+        # Add Mean/Median:
+        abline(v = mean, lwd = 2, col = "orange")
+        abline(v = median(Values), lwd = 2, col = "darkgreen")
+        Text = paste("Median:", round(median, 2), "| Mean:", round(mean, 2))
+        mtext(Text, side = 4, adj = 0, col = "darkgrey", cex = 0.7)
+  
+        # Add Zero Line:
+        abline(h = 0, col = "grey")
+        
+        # Add Rug Plot:
+        rug(Values)
+    }
+    
     # Return Value:
-    invisible(x)
+    invisible()
+}  
+
+
+# ------------------------------------------------------------------------------
+
+
+densityPlot = 
+function(x, col = "steelblue", main = x@units, add.fit = TRUE, ...)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Returns density plots for each column of a 
+    #   timeSeries object
+
+    # Changes:
+    #
+    
+    # FUNCTION:
+    
+    # Transform 'timeSeries':
+    stopifnot(is.timeSeries(x))
+    units = x@units
+    DIM = dim(x@Data)[2]
+    xlim = NULL
+      
+    # Construct output list:
+    ans = paste( " hist", 1:DIM, " = NULL", sep = "", collapse = ",")
+    ans = paste( "list(",  ans, ")" )
+    ans = eval(parse(text = ans))
+    
+    # Histogram Plots:
+    for (i in 1:DIM) {
+        
+        # Density:
+        Values = as.vector(x@Data[, i])
+        mean = mean(Values)
+        median = median(Values)
+        sd = sd(Values)
+        if (is.null(xlim)) 
+            xlim = c(qnorm(0.001, mean, sd), qnorm(0.999, mean, sd)) 
+        Density = density(Values, ...)
+        plot(x = Density, xlim = xlim, col = col, type = "l", 
+            lwd = 2, main = main[i], ...)  
+        ans[[i]] = Density  
+        
+        # Grid:
+        grid()
+        
+        # Add Fit:
+        if (add.fit) {
+            s = seq(xlim[1], xlim[2], length = 201)
+            lines(s, dnorm(s, mean, sd), lwd = 2, col = "brown")
+        }
+        
+        # Add Mean/Median:
+        abline(v = mean, lwd = 2, col = "orange")
+        abline(v = median(Values), lwd = 2, col = "darkgreen")
+        Text = paste(
+            "Median:", round(median, 2), 
+            "| Mean:", round(mean, 2),
+            "| Bandwidth:", round(Density$bw, 3) )
+        mtext(Text, side = 4, adj = 0, col = "darkgrey", cex = 0.7)
+  
+        # Add Zero Line:
+        abline(h = 0, col = "grey")
+        
+        # Add Rug Plot:
+        rug(Values)     
+    }
+    
+    # Return Value:
+    invisible()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+qqbayesPlot = 
+function(x, col = "steelblue", main = x@units, labels = TRUE, ...) 
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Example of a Normal quantile plot of data x to provide a visual
+    #   assessment of its conformity with a normal (data is standardised    
+    #   first).
+
+    # Details:
+    #   The ordered data values are posterior point estimates of the 
+    #   underlying quantile function. So, if you plot the ordered data 
+    #   values (y-axis) against the exact theoretical quantiles (x-axis),   
+    #   you get a scatter that should be close to a straight line if the 
+    #   data look like a random sample from the theoretical distribution. 
+    #   This function chooses the normal as the theory, to provide a 
+    #   graphical/visual assessment of how normal the data appear.
+    #   To help with assessing the relevance of sampling variability on 
+    #   just "how close" to the normal the data appears, we add (very) 
+    #   approximate posterior 95% intervals for the uncertain quantile 
+    #   function at each point (Based on approximate theory) .
+
+    # Author:
+    #   Based on code written by Mike West, mw@stat.duke.edu 
+    
+    # Note:
+    #   Source from
+    #   http://www.stat.duke.edu/courses/Fall99/sta290/Notes/
+
+    # FUNCTION:
+    
+    # timeSeries:
+    stopifnot(is.timeSeries(x))
+    DIM = dim(x@Data)[2]
+    Main = main
+    
+    # QQ Plots:
+    X = x
+    for (i in 1:DIM) {
+        x = X[, i]
+    
+        # Settings
+        mydata = as.vector(X[, i])
+        n = length(mydata) 
+        p = (1:n)/(n+1)
+        x = (mydata-mean(mydata))/sqrt(var(mydata))
+        x = sort(x)
+        z = qnorm(p)
+     
+        # Plot:
+        if (labels) {
+            xlab = "Standard Normal Quantiles"
+            ylab = paste(Main[i], "Ordered Data")
+            main = paste(Main[i], "with 95% CI")  
+        } else {
+            main = xlab = ylab = ""
+        }
+        if (labels) {
+            plot(z, x, pch = 19, col = col, 
+                xlab = xlab, ylab = ylab, main = main, ...)
+            abline(0, 1, col = "grey")
+            grid() 
+        } else {
+            plot(z, x, 
+                xlab = xlab, ylab = ylab, main = main, ...)
+            abline(0, 1, col = "grey")
+        }
+        rug(z, ticksize = 0.01, side = 3)
+        rug(x, ticksize = 0.01, side = 4)
+      
+        # 95% Intervals:
+        s = 1.96*sqrt(p*(1-p)/n)
+        pl = p-s
+        i = pl<1&pl>0
+        lower = quantile(x, probs = pl[i])
+        lines(z[i], lower, col = "brown")
+        pl = p+s
+        i = pl < 1 & pl > 0
+        upper = quantile(x, probs = pl[i])
+        lines(z[i], upper, col = "brown")
+    }
+    
+    # Return Value:
+    invisible()  
 }
 
 
@@ -175,152 +416,6 @@ function(x, ...)
 }
      
    
-# ------------------------------------------------------------------------------
-
-
-histPlot = 
-function(x, col = "steelblue", border = "white", 
-main = x@units, add.fit = TRUE, ...) 
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Returns a probability histogram plot for each column of a 
-    #   timeSeries object
-    
-    # Changes:
-    #
-    
-    # FUNCTION:
-    
-    # Settings:
-    xlim = NULL
-    
-    # Transform 'timeSeries':
-    x = as.timeSeries(x)
-    units = x@units
-    DIM = dim(x@Data)[2]
-      
-    # Construct output list:
-    ans = paste( " hist", 1:DIM, " = NULL", sep = "", collapse = ",")
-    ans = paste( "list(",  ans, ")" )
-    ans = eval(parse(text = ans))
-    
-    # Histogram Plots:
-    for (i in 1:DIM) {
-        
-        # Histogram:
-        Values = as.vector(x@Data[, i])
-        mean = mean(Values)
-        median = median(Values)
-        sd = sd(Values)
-        if (is.null(xlim)) 
-            xlim = c(qnorm(0.001, mean, sd), qnorm(0.999, mean, sd)) 
-        result = hist(x = Values, col = col, border = border, 
-            breaks = "FD", main = main[i], xlim = xlim, probability = TRUE,
-            ...) 
-             
-        # Add Fit:  
-        if (add.fit) {
-            s = seq(xlim[1], xlim[2], length = 201)
-            lines(s, dnorm(s, mean, sd), lwd = 2, col = "brown")
-        }
-        ans[[i]] = result  
-        
-        # Add Mean/Median:
-        abline(v = mean, lwd = 2, col = "orange")
-        abline(v = median(Values), lwd = 2, col = "darkgreen")
-        Text = paste("Median:", round(median, 2), "| Mean:", round(mean, 2))
-        mtext(Text, side = 4, adj = 0, col = "darkgrey")
-  
-        # Add Zero Line:
-        abline(h = 0, col = "grey")
-        
-        # Add Rug Plot:
-        rug(Values)
-    }
-    names(ans) = units
-    
-    # Return Value:
-    invisible(ans)
-}  
-
-
-# ------------------------------------------------------------------------------
-
-
-densityPlot = 
-function(x, col = "steelblue", main = x@units, add.fit = TRUE, ...)
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Returns density plots for each column of a 
-    #   timeSeries object
-
-    # Changes:
-    #
-    
-    # FUNCTION:
-    
-    # Transform 'timeSeries':
-    x = as.timeSeries(x)
-    units = x@units
-    DIM = dim(x@Data)[2]
-    xlim = NULL
-      
-    # Construct output list:
-    ans = paste( " hist", 1:DIM, " = NULL", sep = "", collapse = ",")
-    ans = paste( "list(",  ans, ")" )
-    ans = eval(parse(text = ans))
-    
-    # Histogram Plots:
-    for (i in 1:DIM) {
-        
-        # Density:
-        Values = as.vector(x@Data[, i])
-        mean = mean(Values)
-        median = median(Values)
-        sd = sd(Values)
-        if (is.null(xlim)) 
-            xlim = c(qnorm(0.001, mean, sd), qnorm(0.999, mean, sd)) 
-        Density = density(Values, ...)
-        plot(x = Density, xlim = xlim, col = col, type = "l", 
-            lwd = 2, main = main[i], ...)  
-        ans[[i]] = Density  
-        
-        # Grid:
-        grid()
-        
-        # Add Fit:
-        if (add.fit) {
-            s = seq(xlim[1], xlim[2], length = 201)
-            lines(s, dnorm(s, mean, sd), lwd = 2, col = "brown")
-        }
-        
-        # Add Mean/Median:
-        abline(v = mean, lwd = 2, col = "orange")
-        abline(v = median(Values), lwd = 2, col = "darkgreen")
-        Text = paste(
-            "Median:", round(median, 2), 
-            "| Mean:", round(mean, 2),
-            "| Bandwidth:", round(Density$bw, 3) )
-        mtext(Text, side = 4, adj = 0, col = "darkgrey")
-  
-        # Add Zero Line:
-        abline(h = 0, col = "grey")
-        
-        # Add Rug Plot:
-        rug(Values)
-        
-    }
-
-    # Names:
-    names(ans) = units
-    
-    # Return Value:
-    invisible(ans)
-}
-
-
 # ------------------------------------------------------------------------------
 
 
@@ -408,91 +503,6 @@ function(x, y, method = c("scatter", "hist"), ...)
     # Return Value:
     invisible() 
 }
-
-
-# ------------------------------------------------------------------------------
-
-
-qqbayesPlot = 
-function(x, labels = TRUE, ...) 
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Example of a Normal quantile plot of data x to provide a visual
-    #   assessment of its conformity with a normal (data is standardised    
-    #   first).
-
-    # Details:
-    #   The ordered data values are posterior point estimates of the 
-    #   underlying quantile function. So, if you plot the ordered data 
-    #   values (y-axis) against the exact theoretical quantiles (x-axis),   
-    #   you get a scatter that should be close to a straight line if the 
-    #   data look like a random sample from the theoretical distribution. 
-    #   This function chooses the normal as the theory, to provide a 
-    #   graphical/visual assessment of how normal the data appear.
-    #   To help with assessing the relevance of sampling variability on 
-    #   just "how close" to the normal the data appears, we add (very) 
-    #   approximate posterior 95% intervals for the uncertain quantile 
-    #   function at each point (Based on approximate theory) .
-
-    # Author:
-    #   Prof. Mike West, mw@stat.duke.edu 
-    
-    # Note:
-    #   Source from
-    #   http://www.stat.duke.edu/courses/Fall99/sta290/Notes/
-
-    # FUNCTION:
-    
-    # Convert Type:
-    x = as.vector(x)
-    
-    # Settings:
-    mydata = x
-    n = length(mydata) 
-    p = (1:n)/(n+1)
-    x = (mydata-mean(mydata))/sqrt(var(mydata))
-    x = sort(x)
-    z = qnorm(p)
- 
-    # Plot:
-    if (labels) {
-        xlab = "Standard Normal Quantiles"
-        ylab = "Ordered Data"
-        main = "Normal QQ-Plot with 95% Intervals"  
-    } else {
-        main = xlab = ylab = ""
-    }
-    if (labels) {
-        plot(z, x, pch = 19, col = "steelblue", 
-            xlab = xlab, ylab = ylab, main = main, ...)
-        abline(0, 1, col = "grey")
-        grid() 
-    } else {
-        plot(z, x, 
-            xlab = xlab, ylab = ylab, main = main, ...)
-        abline(0, 1, col = "grey")
-    }
-    rug(z, ticksize = 0.01, side = 3)
-    rug(x, ticksize = 0.01, side = 4)
-  
-    # 95% Intervals:
-    s = 1.96*sqrt(p*(1-p)/n)
-    pl = p-s
-    i = pl<1&pl>0
-    lower = quantile(x, probs = pl[i])
-    lines(z[i], lower, col = "brown")
-    pl = p+s
-    i = pl < 1 & pl > 0
-    upper = quantile(x, probs = pl[i])
-    lines(z[i], upper, col = "brown")
-    
-    # Result:
-    result = data.frame(lower, upper)
-    
-    # Return Value:
-    invisible(x)
-} 
 
 
 # ------------------------------------------------------------------------------
@@ -1097,183 +1107,24 @@ title = "Slider", no = 0, set.no.value = 0)
 # License: Fortran code: ACM, free for non-commercial use, R functions GPL
 
 
-# ------------------------------------------------------------------------------
-
-
-.akimaInterpolation = 
-function(x, y, z, xo = seq(min(x), max(x), length = 40),
+.akima2D = 
+function(x, y, z, 
+xo = seq(min(x), max(x), length = 40),
 yo = seq(min(y), max(y), length = 40), 
-ncp = 0, extrap = FALSE, duplicate = "error", dupfun = NULL)
+extrap = FALSE, duplicate = "error", dupfun = NULL)
 {
     # Changes:
     #
     
     # FUNCTION:
     
-    # Interpolate:
-    if (ncp == 0) {
-        # use the old version for linear interpolation
-        ans = .interp.old(x, y, z, xo, yo, ncp, extrap, duplicate, dupfun)
-    } else {
-        ans = .interp.new(x, y, z, xo, yo, ncp, extrap, duplicate, dupfun)
-    }
-    
-    # Return Value:
-    ans
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.interp = 
-function(x, y, z, xo = seq(min(x), max(x), length = 40),
-yo = seq(min(y), max(y), length = 40), 
-ncp = 0, extrap = FALSE, duplicate = "error", dupfun = NULL)
-{
-    # Changes:
-    #
-    
-    # FUNCTION:
-    
-    # Interpolate:
-    if (ncp == 0) {
-        # use the old version for linear interpolation
-        ans = .interp.old(x, y, z, xo, yo, ncp, extrap, duplicate, dupfun)
-    } else {
-        ans = .interp.new(x, y, z, xo, yo, ncp, extrap, duplicate, dupfun)
-    }
-    
-    # Return Value:
-    ans
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.interp.new = 
-function(x, y, z, xo = seq(min(x), max(x), length = 40),
-yo = seq(min(y), max(y), length = 40), linear=FALSE,
-ncp = NULL, extrap = FALSE, duplicate = "error", 
-dupfun = NULL)
-{
-    # Changes:
-    #
-    
-    # FUNCTION:
+    # Settings:
+    ncp = 0
     
     # Interpolation:
     if (!(all(is.finite(x)) && all(is.finite(y)) && all(is.finite(z))))
         stop("missing values and Infs not allowed")
-    if (!is.null(ncp)){
-        if (ncp != 0){
-            cat("ncp not supported, it is automatically choosen by Fortran code\n")
-        } else {
-            cat("linear interpolation not yet implemented with interp.new().\n")
-            stop("use interp.old().")
-        }
-    }
-    if (linear){
-      cat("linear interpolation not yet implemented with interp.new().\n")
-      stop("use interp.old().")
-    }
-
-    drx = diff(range(x))
-    dry = diff(range(y))
-    if (drx == 0 || dry == 0)
-        stop("all data collinear")  # other cases caught in Fortran code
-    if (drx/dry > 10000 || drx/dry < 0.0001)
-        stop("scales of x and y are too dissimilar")
-    n = length(x)
-    nx = length(xo)
-    ny = length(yo)
-    if (length(y) != n || length(z) != n)
-        stop("Lengths of x, y, and z do not match")
-    xy = paste(x, y, sep =",")
-    i = match(xy, xy)
-    if (duplicate=="user" && !is.function(dupfun))
-        stop("duplicate=\"user\" requires dupfun to be set to a function")
-    if (duplicate!="error") {
-        centre = function(x) {
-        switch(duplicate,
-               mean = mean(x),
-               median = median(x),
-               user = dupfun(x))
-        }
-        if (duplicate!="strip") {
-            z = unlist(lapply(split(z,i), centre))
-            ord = !duplicated(xy)
-            x = x[ord]
-            y = y[ord]
-            n = length(x)
-        } else{
-            ord = (hist(i, plot = FALSE, freq = TRUE,
-                breaks = seq(0.5, max(i)+0.5,1))$counts == 1)
-            x = x[ord]
-            y = y[ord]
-            z = z[ord]
-            n = length(x)
-        }
-    } else {
-        if (any(duplicated(xy)))
-            stop("duplicate data points")
-    }
-    zo = matrix(0, nx, ny)
-    storage.mode(zo) = "double"
-    miss = !extrap   #if not extrapolating use missing values
-    extrap = matrix(TRUE, nx, ny)
-    if (!is.null(ncp)){
-        if (extrap & ncp == 0)
-            warning("Cannot extrapolate with linear option")
-    } else {
-        if (extrap & linear)
-            warning("Cannot extrapolate with linear option")
-    }
-    ans = .Fortran("sdsf3p",
-        as.integer(1),
-        as.integer(n),
-        as.double(x),
-        as.double(y),
-        as.double(z),
-        as.integer(nx),
-        x = as.double(xo),
-        as.integer(ny),
-        y = as.double(yo),
-        z = zo,
-        ier = integer(1),
-        double(36 * n),
-        integer(25 * n),
-        extrap = as.logical(extrap),
-        near = integer(n),
-        nxt = integer(n),
-        dist = double(n),
-        PACKAGE = "fBasics")
-    temp = ans[c("x", "y", "z", "extrap")]
-    if (miss) temp$z[temp$extrap] = NA
-     
-    # Return Value:
-    temp[c("x", "y", "z")]
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.interp.old = 
-function(x, y, z, xo = seq(min(x), max(x), length = 40),
-yo = seq(min(y), max(y), length = 40), 
-ncp = 0, extrap = FALSE, duplicate = "error", dupfun = NULL)
-{
-    # Changes:
-    #
-    
-    # FUNCTION:
-    
-    # Interpolation:
-    if (!(all(is.finite(x)) && all(is.finite(y)) && all(is.finite(z))))
-        stop("missing values and Infs not allowed")
-    if (ncp>25){
+    if (ncp > 25){
         ncp = 25
         cat("ncp too large, using ncp=25\n")
     }
@@ -1339,218 +1190,6 @@ ncp = 0, extrap = FALSE, duplicate = "error", dupfun = NULL)
           double(5 * n),
           misso = as.logical(misso),
           PACKAGE = "fBasics")
-    temp = ans[c("x", "y", "z", "misso")]
-    temp$z[temp$misso] = NA
-    
-    # Return Value:
-    temp[c("x", "y", "z")]
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.interpp =
-function(x, y, z, xo, yo, ncp = 0, extrap = FALSE,
-duplicate = "error", dupfun = NULL)
-{
-    # Changes:
-    #
-    
-    # FUNCTION:
-    
-    # Interpolation:
-    # interpp.new has some bugs at the moment (segfaults), so use
-    # the old Akima code:
-    ans = interpp.old(x, y, z, xo, yo, ncp, extrap, duplicate, dupfun)
-    
-    # Return Value:
-    ans
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.interpp.new = 
-function(x, y, z, xo, yo, ncp = 0, extrap = FALSE,
-duplicate = "error", dupfun = NULL)
-{
-    # Changes:
-    #
-    
-    # FUNCTION:
-    
-    # Interpolation:
-    if (!(all(is.finite(x)) && all(is.finite(y)) && all(is.finite(z))))
-        stop("missing values and Infs not allowed")
-    if (is.null(xo))
-        stop("xo missing")
-    if (is.null(yo))
-        stop("yo missing")
-    if (ncp>25) {
-        ncp = 25
-        cat("ncp too large, using ncp=25\n")
-    }
-    drx = diff(range(x))
-    dry = diff(range(y))
-    if (drx == 0 || dry == 0)
-        stop("all data collinear")  # other cases caught in Fortran code
-    if (drx/dry > 10000 || drx/dry < 0.0001)
-        stop("scales of x and y are too dissimilar")
-    n = length(x)
-    np = length(xo)
-    if (length(yo)!=np)
-        stop("length of xo and yo differ")
-    if (length(y) != n || length(z) != n)
-        stop("Lengths of x, y, and z do not match")
-    xy = paste(x, y, sep =",")
-    i = match(xy, xy)
-    if (duplicate=="user" && !is.function(dupfun))
-        stop("duplicate=\"user\" requires dupfun to be set to a function")
-    if (duplicate!="error") {
-        centre = function(x) {
-            switch(duplicate,
-               mean = mean(x),
-               median = median(x),
-               user = dupfun(x)
-               )
-        }
-        if (duplicate!="strip"){
-            z = unlist(lapply(split(z,i), centre))
-            ord = !duplicated(xy)
-            x = x[ord]
-            y = y[ord]
-            n = length(x)
-        } else{
-            ord = (hist(i,plot = FALSE, freq = TRUE, 
-                breaks=seq(0.5,max(i)+0.5,1))$counts==1)
-            x = x[ord]
-            y = y[ord]
-            z = z[ord]
-            n = length(x)
-        }
-    } else {
-        if (any(duplicated(xy)))
-            stop("duplicate data points")
-    }
-    zo = rep(0, np)
-    storage.mode(zo) = "double"
-    miss = !extrap   #if not extrapolating use missing values
-    extrap = seq(TRUE, np)
-    if (extrap & ncp == 0)
-        warning("Cannot extrapolate with linear option")
-    ans = .Fortran("sdbi3p",
-        as.integer(1),
-        as.integer(n),
-        as.double(x),
-        as.double(y),
-        as.double(z),
-        as.integer(np),
-        x = as.double(xo),
-        y = as.double(yo),
-        z = zo,
-        double(17 * n),
-        integer(25 * n),
-        extrap = as.logical(extrap),
-        near = integer(n),
-        net = integer(n),
-        dist = double(n),
-        PACKAGE = "fBasics")
-    temp = ans[c("x", "y", "z", "extrap")]
-    if (miss) temp$z[temp$extrap] = NA
-    
-    # Return Value:
-    temp[c("x", "y", "z")]
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.interpp.old =
-function(x, y, z, xo, yo, ncp = 0, extrap = FALSE,
-duplicate = "error", dupfun = NULL)
-{
-    # Changes:
-    #
-    
-    # FUNCTION:
-    
-    # Interpolation:
-    if (!(all(is.finite(x)) && all(is.finite(y)) && all(is.finite(z))))
-        stop("missing values and Infs not allowed")
-    if (is.null(xo))
-        stop("xo missing")
-    if (is.null(yo))
-        stop("yo missing")
-    if (ncp > 25){
-        ncp = 25
-        cat("ncp too large, using ncp=25\n")
-    }
-    drx = diff(range(x))
-    dry = diff(range(y))
-    if (drx == 0 || dry == 0)
-        stop("all data collinear")  # other cases caught in Fortran code
-    if (drx/dry > 10000 || drx/dry < 0.0001)
-        stop("scales of x and y are too dissimilar")
-    n = length(x)
-    np = length(xo)
-    if (length(yo)!=np)
-        stop("length of xo and yo differ")
-    if (length(y) != n || length(z) != n)
-        stop("Lengths of x, y, and z do not match")
-    xy = paste(x, y, sep =",")
-    i = match(xy, xy)
-    if (duplicate=="user" && !is.function(dupfun))
-        stop("duplicate=\"user\" requires dupfun to be set to a function")
-    if (duplicate != "error") {
-        centre = function(x) {
-            switch(duplicate,
-               mean = mean(x),
-               median = median(x),
-               user = dupfun(x)
-               )
-        }
-        if (duplicate!="strip"){
-            z = unlist(lapply(split(z,i), centre))
-            ord = !duplicated(xy)
-            x = x[ord]
-            y = y[ord]
-            n = length(x)
-        } else {
-            ord = (hist(i, plot = FALSE, freq = TRUE, 
-                breaks = seq(0.5, max(i)+0.5,1))$counts == 1)
-            x = x[ord]
-            y = y[ord]
-            z = z[ord]
-            n = length(x)
-        }
-    } else {
-        if (any(duplicated(xy)))
-            stop("duplicate data points")
-    }
-    zo = rep(0, np)
-    storage.mode(zo) = "double"
-    miss = !extrap   #if not extrapolating use missing values
-    misso = seq(miss, np)
-    if (extrap & ncp == 0)
-        warning("Cannot extrapolate with linear option")
-    ans = .Fortran("idbvip",
-        as.integer(1),
-        as.integer(ncp),
-        as.integer(n),
-        as.double(x),
-        as.double(y),
-        as.double(z),
-        as.integer(np),
-        x = as.double(xo),
-        y = as.double(yo),
-        z = zo,
-        integer((31 + ncp) * n + np),
-        double(8 * n),
-        misso = as.logical(misso),
-        PACKAGE = "fBasics")
     temp = ans[c("x", "y", "z", "misso")]
     temp$z[temp$misso] = NA
     

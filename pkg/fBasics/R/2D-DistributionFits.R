@@ -31,9 +31,8 @@
 # FUNCTION:            DESCRIPTION:    
 #  'fDISTFIT'           S4 Class representation
 #  print.fDISTFIT       Prints Results from a Fitted Distribution
-# FUNCTION:            NORMAL DISTRIBUTION:
-#  .normFit             Fits parameters of a Normal density
-# FUNCTION:            STUDENT DISTRIBUTION:
+# FUNCTION:            NORMAL AND STUDENT-t DISTRIBUTION:
+#  nFit                 Fits parameters of a Normal density
 #  tFit                 Fits parameters of a Student-t density
 # FUNCTION:            STABLE DISTRIBUTION:
 #  stableFit            Fits parameters of a stable density
@@ -50,7 +49,8 @@
 
 ################################################################################   
 #  'fDISTFIT'           S4 Class Representation
-#  print.fDISTFIT       Prints Results from a Fitted Distribution
+#  .print.fDISTFIT       Prints Results from a Fitted Distribution
+#  show.fDISTFIT         Prints Results from a Fitted Distribution
 
 
 setClass("fDISTFIT", 
@@ -68,7 +68,7 @@ setClass("fDISTFIT",
 # ------------------------------------------------------------------------------
 
 
-print.fDISTFIT =
+.print.fDISTFIT =
 function(x, ...)
 {   # A function implemented by Diethelm Wuertz
 
@@ -108,13 +108,38 @@ function(x, ...)
 }
 
 
+# ------------------------------------------------------------------------------
+
+
+show.fDISTFIT = 
+function(object)
+{   # A function implemented by Diethelm Wuertz
+    
+    # Changes:
+    #
+    
+    # FUNCTION:
+    
+    # Print:
+    .print.fDISTFIT(x = object)
+    
+    # Return Value:
+    invisible()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+setMethod("show", "fDISTFIT", show.fDISTFIT)
 
 
 ################################################################################
-#  .normFit             Fits parameters of a Normal density
+#  nFit                 Fits parameters of a Normal density
+#  tFit                 Fits parameters of a Student-t density
 
 
-.normFit = 
+nFit = 
 function(x, doplot = TRUE, span = "auto", title = NULL, 
 description = NULL, ...)
 {   # A function implemented by Diethelm Wuertz
@@ -161,13 +186,13 @@ description = NULL, ...)
         plot(x, log(y), xlim = c(span[1], span[length(span)]),  
             ylim = ylim, type = "p", xlab = "x", ylab = "log f(x)", ...)
         title("NORMAL: Parameter Estimation")
-        lines(x = span, y = log(y.points), col = "steelblue4") 
+        lines(x = span, y = log(y.points), col = "steelblue") 
         if (exists("grid")) grid()  
     }
     
     # Add Title and Description:
     if (is.null(title)) title = "Student-t Parameter Estimation"
-    if (is.null(description)) description = as.character(date())
+    if (is.null(description)) description = .description()
         
     # Fit:
     fit = list(estimate = c(mean = mean, sd = sd)) 
@@ -179,12 +204,11 @@ description = NULL, ...)
         data = as.data.frame(x.orig),
         fit = fit,
         title = as.character(title), 
-        description = as.character(description) )
+        description = .description() )
 }
 
 
-################################################################################
-#  tFit                 Fits parameters of a Student-t density
+# ------------------------------------------------------------------------------
 
 
 tFit = 
@@ -252,13 +276,13 @@ title = NULL, description = NULL, ...)
         plot(x, log(y), xlim = c(span[1], span[length(span)]), 
             ylim = ylim, type = "p", xlab = "x", ylab = "log f(x)", ...)
         title("STUDENT-T: Parameter Estimation")
-        lines(x = span, y = log(y.points), col = "steelblue4") 
+        lines(x = span, y = log(y.points), col = "steelblue") 
         if (exists("grid")) grid()  
     }
     
     # Add Title and Description:
     if (is.null(title)) title = "Student-t Parameter Estimation"
-    if (is.null(description)) description = as.character(date())
+    if (is.null(description)) description = .description()
         
     # Fit:
     fit = list(estimate = c(df = r$estimate), minimum = -r$minimum, 
@@ -271,7 +295,7 @@ title = NULL, description = NULL, ...)
         data = as.data.frame(x.orig),
         fit = fit,
         title = as.character(title), 
-        description = as.character(description) )
+        description = .description() )
 }
 
 
@@ -392,6 +416,7 @@ function()
 structure(
     #  Contour table created by .phiStable()
     list(
+    
     Phi1 = structure(c(28.1355600962322, 15.7196640771722, 
     10.4340722145276, 7.72099712337154, 6.14340919629241, 5.14081963876442, 
     4.45927409495436, 3.97057677836415, 3.60450193720703, 3.31957820409758, 
@@ -483,6 +508,7 @@ structure(
     3.09091185492284, 2.9029090263133, 2.74659551412658, 2.61782756430233, 
     2.51560631141019, 2.47408801877228, 2.44525363752631), 
     .Dim = as.integer(c(17, 21))), 
+    
     Phi2 = structure(c(-0.984831521754346, -0.96178750287388, 
     -0.925815277018118, -0.877909786944587, -0.820184465666658, 
     -0.755031918545081, -0.684592921700777, -0.610570901457792, 
@@ -604,10 +630,13 @@ structure(
     0.218666685919607, 0.141143940005886, 0.0674987199592513, 
     0.0328701597273591, 0.00642990194045459), 
     .Dim = as.integer(c(17, 21))), 
+    
     alpha = c(0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2, 1.3, 1.4, 
         1.5, 1.6, 1.7, 1.8, 1.9, 1.95, 1.99), 
+        
     beta = c(-0.95, -0.9, -0.8, -0.7, -0.6, -0.5, -0.4, -0.3, -0.2, -0.1, 
         0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 0.95)), 
+        
     .Names = c("Phi1", "Phi2", "alpha", "beta")
 )
 
@@ -620,7 +649,7 @@ function(x, doplot = TRUE, title = NULL, description = NULL)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Estimates stable parameters by McCulloch approach
+    #   Estimates stable parameters by McCulloch's approach
     
     # Note:
     #   This implementation assumes delta=1 and gamma=0
@@ -688,7 +717,7 @@ function(x, doplot = TRUE, title = NULL, description = NULL)
     
     # Add Title and Description:
     if (is.null(title)) title = "Stable Parameter Estimation"
-    if (is.null(description)) description = as.character(date())
+    if (is.null(description)) description = .description()
     
     if (is.na(U) | is.na(V)) {
         GAM = NA
@@ -714,7 +743,7 @@ function(x, doplot = TRUE, title = NULL, description = NULL)
         data = as.data.frame(x),
         fit = fit,
         title = as.character(title), 
-        description = as.character(description) )
+        description = .description() )
 }
 
 
@@ -787,13 +816,13 @@ trace = FALSE, title = NULL, description = NULL)
         plot(x, log(y), xlim = c(span[1], span[length(span)]), 
             ylim = ylim, type = "p", xlab = "x", ylab = "log f(x)")
         title("STUDENT-T: Parameter Estimation")
-        lines(x = span, y = log(y.points), col = "steelblue4") 
+        lines(x = span, y = log(y.points), col = "steelblue") 
         if (exists("grid")) grid()  
     }
     
     # Add Title and Description:
     if (is.null(title)) title = "Stable Parameter Estimation"
-    if (is.null(description)) description = as.character(date())
+    if (is.null(description)) description = .description()
         
     # Fit:
     fit = list(estimate = c(alpha = alpha, beta = beta, gamma = gamma, 
@@ -807,7 +836,7 @@ trace = FALSE, title = NULL, description = NULL)
         data = as.data.frame(x.orig),
         fit = fit,
         title = as.character(title), 
-        description = as.character(description) )
+        description = .description() )
 }
 
 
@@ -895,13 +924,13 @@ span = "auto", trace = FALSE, title = NULL, description = NULL, ...)
         plot(x, log(y), xlim = c(span[1], span[length(span)]), 
             ylim = ylim, type = "p", xlab = "x", ylab = "log f(x)", ...)
         title("HYP: Parameter Estimation")    
-        lines(x = span, y = log(y.points), col = "steelblue4")
+        lines(x = span, y = log(y.points), col = "steelblue")
         if (exists("grid")) grid()  
     }
     
     # Add Title and Description:
     if (is.null(title)) title = "Generalized Hyperbolic Parameter Estimation"
-    if (is.null(description)) description = as.character(date())
+    if (is.null(description)) description = .description()
         
     # Fit:
     fit = list(estimate = c(alpha = r$estimate[1], beta = r$estimate[2],
@@ -916,7 +945,7 @@ span = "auto", trace = FALSE, title = NULL, description = NULL, ...)
         data = as.data.frame(x.orig),
         fit = fit,
         title = as.character(title), 
-        description = as.character(description) )
+        description = .description() )
 }
 
 
@@ -998,13 +1027,13 @@ span = "auto", trace = FALSE, title = NULL, description = NULL, ...)
         plot(x, log(y), xlim = c(span[1], span[length(span)]), 
             ylim = ylim, type = "p", xlab = "x", ylab = "log f(x)", ...)
         title("HYP: Parameter Estimation")    
-        lines(x = span, y = log(y.points), col = "steelblue4")
+        lines(x = span, y = log(y.points), col = "steelblue")
         if (exists("grid")) grid()  
     }
     
     # Add Title and Description:
     if (is.null(title)) title = "Hyperbolic Parameter Estimation"
-    if (is.null(description)) description = as.character(date())
+    if (is.null(description)) description = .description()
         
     # Fit:
     fit = list(estimate = c(alpha = r$estimate[1], beta = r$estimate[2],
@@ -1018,7 +1047,7 @@ span = "auto", trace = FALSE, title = NULL, description = NULL, ...)
         data = as.data.frame(x.orig),
         fit = fit,
         title = as.character(title), 
-        description = as.character(description) )
+        description = .description() )
 }
 
 
@@ -1090,13 +1119,13 @@ span = "auto", trace = FALSE, title = NULL, description = NULL, ...)
         plot(x, log(y), xlim = c(span[1], span[length(span)]), 
             ylim = ylim, type = "p", xlab = "x", ylab = "log f(x)")
         title("NIG: Parameter Estimation")
-        lines(x = span, y = log(y.points), col = "steelblue4") 
+        lines(x = span, y = log(y.points), col = "steelblue") 
         if (exists("grid")) grid() 
     }
     
     # Add Title and Description:
     if (is.null(title)) title = "Normal Inverse Gaussian Parameter Estimation"
-    if (is.null(description)) description = as.character(date())
+    if (is.null(description)) description = .description() 
     
     # Fit:
     fit = list(estimate = r$estimate, minimum = -r$minimum, code = r$code,        
@@ -1109,7 +1138,7 @@ span = "auto", trace = FALSE, title = NULL, description = NULL, ...)
         data = as.data.frame(x.orig),
         fit = fit,
         title = as.character(title), 
-        description = as.character(description) )
+        description = .description() )
 }
 
 

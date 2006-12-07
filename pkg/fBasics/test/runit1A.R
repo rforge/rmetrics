@@ -28,14 +28,15 @@
 
 
 ################################################################################
-# FUNCTION:                 INTERNAL TWO-DIMENSIONAL PLOT UTILITIES:    
-#  .tsPlot                   Returns a time series plot
+# FUNCTION:                 TAILORED PLOT FUNCTIONS:     
+#  seriesPlot                Returns a time series plot
+#  histPlot                  Returns a tailored histogram plot
+#  densityPlot               Returns a tailored kernel density estimate plot
+#  qqbayesPlot               Returns a tailored quantile-quantile plot
+# FUNCTION:                 INTERNAL USED PLOT FUNCTIONS:
 #  .responsesPlot            Returns a response series plot
 #  .residualsPlot            Returns a residual series plot
-#  histPlot                 Returns a histogram plot
-#  densityPlot              Returns a kernel density estimate plot
 #  .firePlot                 Returns a fitted values vs.residuals plot
-#  qqbayesPlot              Returns a quantile-quantile plot
 #  .acfPlot                  Returns a autocorrelation function plot
 #  .pacfPlot                 Returns a partial ACF plot
 #  .mrlPlot                  Returns a mean residual life plot
@@ -72,6 +73,30 @@ function()
     checkIdentical(
         target = class(try(helpFile())),
         current = "NULL")
+
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+# TAILORED PLOT FUNCTIONS:
+
+
+test.tailoredPlots = 
+function()
+{
+    # Series Plot:
+    tD = timeSequence(from = "2004-07-01", to = "2005-06-30")
+    nD = length(tD)
+    tS = timeSeries(cbind(N = rnorm(nD), T = rt(nD, 4)), tD)
+    
+    par(mfrow = c(2,2), cex = 0.7)
+    seriesPlot(tS)
+    histPlot(tS)
+    
+    densityPlot(tS)
+    qqbayesPlot(tS)
 
     # Return Value:
     return()    
@@ -147,7 +172,7 @@ function()
     19.31, 26.50, 12.11, 53.10, 49.43,  3.25,  0.60, 28.63,  5.52, 44.08))
 
     # Interpolation:
-    akima.lin = .interp(akima$x, akima$y, akima$z)
+    akima.lin = .akima2D(akima$x, akima$y, akima$z)
     Z = mean(akima.lin$z)
     checkSum = 21.70316
     checkEquals(target = Z, current = checkSum, tolerance = 0.00001)
