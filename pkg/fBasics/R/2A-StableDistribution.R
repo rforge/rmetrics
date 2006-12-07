@@ -34,7 +34,6 @@
 #  qsymstb               Returns quantiles for symmetric stable DF
 #  rsymstb               Returns random variates for symmetric stable DF
 #  .symstb               Returns symmetric alpha-stable pdf/cdf 
-#  .symstbPoly           Internal Function called from .symstb()
 # FUNCTIONS:            STABLE DISTRIBUTION:
 #  dstable               Returns density for stable DF
 #  pstable               Returns probabilities for stable DF
@@ -53,8 +52,7 @@
 #  psymstb               Returns probabilities for symmetric stable DF
 #  qsymstb               Returns quantiles for symmetric stable DF
 #  rsymstb               Returns random variates for symmetric stable DF
-#  .symstb               Internal function 
-#  .symstbPoly           Internal Function
+#  .symstb               Returns symmetric alpha-stable pdf/cdf  
 
 
 dsymstb =
@@ -321,9 +319,18 @@ function(x, alpha)
         x2p = 1 / (2*a2*(1+a2*x2)^(-3))
         j = floor(20 * z)
         j = min(19, j) 
-        rz = .symstbPoly(as.vector(p[(0:5)+1, j+1]), z, 5)
-        rpz = .symstbPoly(as.vector(pd[(0:4)+1, j+1]), z, 4)
-        
+        # RZ:
+        A = as.vector(p[(0:5)+1, j+1])
+        K = 5
+        poly = A[K+1]
+        for (j in K:1) poly = poly * z + A[j]
+        rz = poly
+        # RPZ:
+        A = as.vector(pd[(0:4)+1, j+1])
+        K = 4
+        poly = A[K+1]
+        for (j in K:1) poly = poly * z + A[j]
+        rpz = poly
         # Cumulated probability function:
         cfun = 0.5 - atan(x1) / pi
         gfun = 1 - pnorm(x2 / sqrt(2))
@@ -344,26 +351,6 @@ function(x, alpha)
     cbind(x = X, p = prob, d = dens)
 }  
  
-
-# ------------------------------------------------------------------------------      
-
-                                              
-.symstbPoly = 
-function(a, x, k) 
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Internal Function called from .symstb()
-    
-    # FUNCTION:
-    
-    # Compute Polynome:
-    poly = a[k+1]
-    for (j in k:1) poly = poly * x + a[j]
-    
-    # Return Value:
-    poly
-}
 
 
 ################################################################################
@@ -978,7 +965,6 @@ function (f, lower, upper, subdivisions, rel.tol, abs.tol, ...)
     ans
 
 }
-
 
 
 ################################################################################
