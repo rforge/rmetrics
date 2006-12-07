@@ -31,8 +31,8 @@
 \description{
     
     A collection and description of functions of one
-    sample tests for testing normality of for detecting 
-    non-randomness in observations.
+    sample tests for testing normality of financial
+    return series.
     \cr
     
     The functions for testing normality are:

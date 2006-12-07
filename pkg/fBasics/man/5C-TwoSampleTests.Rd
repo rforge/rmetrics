@@ -38,8 +38,10 @@
     
     A collection and description of functions for 
     two sample statistical tests. The functions allow 
-    to test for distributional equivalence, for difference
-    in location, variance and scale, and for correlations.
+    an easy use to test financial return series for 
+    distributional equivalence, for difference in 
+    location, variance and scale, and for correlations
+    and association.
     \cr
       
     Distributional Equivalence:
@@ -47,75 +49,50 @@
     \tabular{ll}{
     \code{ks2Test} \tab Two sample Kolmogorov--Smirnov test.}
     
-    Difference in Locations:
+    Test Difference in Locations:
     
     \tabular{ll}{ 
     \code{locationTest} \tab The location test suite, \cr
-    \code{.tTest} \tab The t test, \cr
-    \code{.kw2Test} \tab the Kruskal--Wallis test. } 
+    \code{method="t"} \tab The t test, \cr
+    \code{method="kw"} \tab the Kruskal--Wallis test. } 
     
-    Difference in Variance:
+    Test Difference in Variance:
     
     \tabular{ll}{ 
     \code{varianceTest} \tab The variance test suite, \cr
-    \code{.varfTest} \tab The variance F test, \cr
-    \code{.bartlett2Test} \tab the Bartlett test, \cr
-    \code{.fligner2Test} \tab the Fligner--Killeen test.}
+    \code{method="varf"} \tab The variance F test, \cr
+    \code(method="bartlett"} \tab the Bartlett test, \cr
+    \code{method="fligner"} \tab the Fligner--Killeen test.}
      
-    Difference in Scale:
+    Test Difference in Scale:
     
     \tabular{ll}{
     \code{scaleTest} \tab The scale test suite, \cr
-    \code{.ansariTest} \tab  The Ansari--Bradley test, \cr
-    \code{.moodTest} \tab the Mood test.}
+    \code{method="ansariTest"} \tab  The Ansari--Bradley test, \cr
+    \code{method="moodTest"} \tab the Mood test.}
     
-    Correlations:
+    Test for Correlations:
     
     \tabular{ll}{
     \code{correlationTest} \tab The correlation test suite, \cr
-    \code{.pearsonTest} \tab Pearson's coefficient, \cr
-    \code{.kendallTest} \tab Kendall's rho, \cr
-    \code{.spearmanTest} \tab Spearman's rho.}
-   
-    
-    Test Distributions:
-    
-    \tabular{ll}{       
-    \code{dansariw} \tab Returns density of the Ansari W statistic, \cr
-    \code{pansariw} \tab Returns probabilities of the Ansari W statistic, \cr
-    \code{qansariw} \tab Returns quantiles of the Ansari W statistic. } 
-     
+    \code{method="pearson"} \tab Pearson's coefficient, \cr
+    \code{method="kendall"} \tab Kendall's tau, \cr
+    \code{method="spearman"} \tab Spearman's rho.}
 }
 
 
 \usage{
 ks2Test(x, y, title = NULL, description = NULL)
 
-locationTest(x, y, method = c("t", "kw2"), title = NULL, 
-    description = NULL) 
-%tTest(x, y, title = NULL, description = NULL) 
-%kw2Test(x, y, title = NULL, description = NULL)
-
-varianceTest(x, y, method = c("varf", "bartlett", "fligner"), title = NULL, 
-    description = NULL)
-%varfTest(x, y, title = NULL, description = NULL)
-%bartlett2Test(x, y, title = NULL, description = NULL)
-%fligner2Test(x, y, title = NULL, description = NULL)
-
-scaleTest(x, y, method = c("ansari", "mood"), title = NULL, 
-    description = NULL)
-%ansariTest(x, y, title = NULL, description = NULL)
-%moodTest(x, y, title = NULL, description = NULL)
-
-correlationTest(x, y, method = c("pearson", "kendall", "spearman"), title = NULL, 
-    description = NULL)
-%pearsonTest(x, y, title = NULL, description = NULL)
-%kendallTest(x, y, title = NULL, description = NULL)
-%spearmanTest(x, y, title = NULL, description = NULL)
-
-dansariw(x = NULL, m, n = m)
-pansariw(q = NULL, m, n = m)
-qansariw(p, m, n = m)
+locationTest(x, y, method = c("t", "kw2"), 
+    title = NULL, description = NULL) 
+varianceTest(x, y, method = c("varf", "bartlett", "fligner"), 
+    title = NULL, description = NULL)
+scaleTest(x, y, method = c("ansari", "mood"), 
+    title = NULL, description = NULL)
+    
+correlationTest(x, y, method = c("pearson", "kendall", "spearman"), 
+    title = NULL, description = NULL)
 }
 
 
@@ -130,29 +107,12 @@ qansariw(p, m, n = m)
     \item{method}{
         a character string naming which test should be applied.
         } 
-    \item{p}{
-        [qansariw] - \cr
-        a numeric vector of quantiles.
-        }
-    \item{q}{
-        [pansariw] - \cr
-        a numeric vector of quantiles.
-        }
     \item{title}{
         an optional title string, if not specified the inputs data 
         name is deparsed.
         }
     \item{x, y}{
-        a numeric vector of data values.
-        \cr
-        [bartlett2Test][fligner2Test][kw2Test] - \cr
-        here \code{x} is a list, where each element is either a vector
-        or an object of class \code{timeSeries}. \code{y} is only used
-        for the two--sample test situation, where \code{x} and \code{y}
-        are two vectors or objects of class \code{timeSeries}.
-        \cr
-        [dansariw] - \cr
-        a numeric vector of quantiles.
+        numeric vectors of data values.
         }
        
 }
@@ -211,15 +171,6 @@ qansariw(p, m, n = m)
     \item{data.name}{
         a character string giving the name(s) of the data.
         }
-        
-    %The meaning of the elements of the \code{@test} slot is the following:
-    
-    %\code{ks2Test} 
-    %\cr
-    %returns the values for the \code{D}, \code{D^-} and \code{D^+} 
-    %statistic and the corresponding p-values for the 'two-sided', 'less' 
-    %and 'greater' alternatives.  
-    
 }
 
 
@@ -242,11 +193,11 @@ qansariw(p, m, n = m)
     
     \bold{Differences in Location:}
     \cr\cr  
-    The function \code{tTest} can be used to determine if the two sample 
+    The \code{tTest} can be used to determine if the two sample 
     means are equal for unpaired data sets. Two variants are used,
     assuming equal or unequal variances. 
   
-    The function \code{kw2Test} performs a Kruskal-Wallis rank sum 
+    The \code{kw2Test} performs a Kruskal-Wallis rank sum 
     test of the null hypothesis that the central tendencies or medians of 
     two samples are the same. The alternative is that they differ. 
     Note, that it is not assumed that the two samples are drawn from the 
@@ -257,12 +208,12 @@ qansariw(p, m, n = m)
 
     \bold{Differences in Variances:}
     \cr\cr    
-    The function \code{varfTest} can be used to compare variances of two 
+    The \code{varfTest} can be used to compare variances of two 
     normal samples performing an F test. The null hypothesis is that 
     the ratio of the variances of the populations from which they were 
     drawn is equal to one. 
     
-    The function \code{bartlett2Test} performs the Bartlett's test of the 
+    The \code{bartlett2Test} performs the Bartlett's test of the 
     null hypothesis that the variances in each of the samples are the 
     same. This fact of equal variances across samples is also called 
     \emph{homogeneity of variances}. Note, that Bartlett's test is 
@@ -272,13 +223,13 @@ qansariw(p, m, n = m)
     is an alternative to the Bartlett test that is less sensitive to 
     departures from normality. 
     
-    The function \code{fligner2Test} performs the Fligner-Killeen test of 
+    The \code{fligner2Test} performs the Fligner-Killeen test of 
     the null that the variances in each of the two samples are the same. 
     \cr
     
     \bold{Differences in Scale:}
     \cr\cr  
-    The function \code{ansariTest} performs the Ansari--Bradley two--sample 
+    The \code{ansariTest} performs the Ansari--Bradley two--sample 
     test for a difference in scale parameters. Note, that we have completely 
     reimplemented this test based on the statistcs and p-values computed 
     from algorithm AS 93. The test returns for any sizes of the series 
@@ -289,7 +240,7 @@ qansariw(p, m, n = m)
     functions are available: \code{dansariw}, \code{pansariw}, and 
     \code{qansariw}.
     
-    The function code{moodTest}, is another test which performs a 
+    The code{moodTest}, is another test which performs a 
     two--sample test for a difference in scale parameters. The underlying 
     model is that the two samples are drawn from \emph{f(x-l)} and 
     \emph{f((x-l)/s)/s}, respectively, where \emph{l} is a common 
@@ -300,13 +251,9 @@ qansariw(p, m, n = m)
     
     \bold{Correlations:}
     \cr\cr  
-    The function \code{correlationTest} tests for association 
-    between paired samples, using Pearson's product moment 
-    correlation coefficient, 
-    
-    The function \code{kendallTest} performs Kendall's tau test
-    
-    The function \code{spearmanTest} performs Spearman's rho test.
+    The \code{correlationTest} for association between paired samples, 
+    allows to compute Pearson's product moment correlation coefficient, 
+    Kendall's tau, or Spearman's rho.
     
 }
 
