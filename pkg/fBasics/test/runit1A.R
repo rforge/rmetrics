@@ -28,11 +28,6 @@
 
 
 ################################################################################
-# FUNCTION:                 TAILORED PLOT FUNCTIONS:     
-#  seriesPlot                Returns a time series plot
-#  histPlot                  Returns a tailored histogram plot
-#  densityPlot               Returns a tailored kernel density estimate plot
-#  qqbayesPlot               Returns a tailored quantile-quantile plot
 # FUNCTION:                 INTERNAL USED PLOT FUNCTIONS:
 #  .responsesPlot            Returns a response series plot
 #  .residualsPlot            Returns a residual series plot
@@ -73,30 +68,6 @@ function()
     checkIdentical(
         target = class(try(helpFile())),
         current = "NULL")
-
-    # Return Value:
-    return()    
-}
-
-
-# ------------------------------------------------------------------------------
-# TAILORED PLOT FUNCTIONS:
-
-
-test.tailoredPlots = 
-function()
-{
-    # Series Plot:
-    tD = timeSequence(from = "2004-07-01", to = "2005-06-30")
-    nD = length(tD)
-    tS = timeSeries(cbind(N = rnorm(nD), T = rt(nD, 4)), tD)
-    
-    par(mfrow = c(2,2), cex = 0.7)
-    seriesPlot(tS)
-    histPlot(tS)
-    
-    densityPlot(tS)
-    qqbayesPlot(tS)
 
     # Return Value:
     return()    

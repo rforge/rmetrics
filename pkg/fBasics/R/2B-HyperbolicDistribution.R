@@ -72,10 +72,7 @@ function(x, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1)
     
     # Description:
     #   Returns density for the generalized hyperbolic distribution
-    
-    # Changes:
-    #
-    
+
     # FUNCTION:
     
     # Checks:
@@ -110,10 +107,7 @@ function(q, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1)
 
     # Description:
     #   Returns probability for the generalized hyperbolic distribution
-    
-    # Changes:
-    #
-    
+  
     # FUNCTION:
     
     # Checks:
@@ -144,10 +138,7 @@ function (p, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1)
 
     # Description:
     #   Returns quantiles for the generalized hyperbolic distribution
-    
-    # Changes:
-    #
-    
+ 
     # FUNCTION:
     
     # Checks:
@@ -193,10 +184,7 @@ function (n, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1)
     
     # Description:
     #   Returns random variates for the generalized hyperbolic distribution
-    
-    # Changes:
-    #
-    
+
     # FUNCTION:
     
     # Checks:
@@ -241,10 +229,7 @@ function(x, alpha = 1, beta = 0, delta = 1, mu = 0, pm = c(1, 2, 3, 4))
     #   alpha, beta - Shape Parameter, |beta| <= alpha
     #   delta  - Scale Parameter, 0 <= delta
     #   mu - Location Parameter
-     
-    # Changes:
-    #
-    
+ 
     # FUNCTION:
     
     # Settings:
@@ -274,9 +259,6 @@ function(q, alpha = 1, beta = 0, delta = 1, mu = 0, pm = c(1, 2, 3, 4), ...)
     #   delta  - Scale Parameter, 0 <= delta
     #   mu - Location Parameter
 
-    # Changes:
-    #
-    
     # FUNCTION:
     
     # Settings:
@@ -308,10 +290,7 @@ function(p, alpha = 1, beta = 0, delta = 1, mu = 0, pm = c(1, 2, 3, 4), ...)
 
     # Note:
     #   This procedure will not run under Splus.
-
-    # Changes:
-    #
-    
+   
     # FUNCTION:
     
     # Settings:
@@ -347,10 +326,7 @@ function (n, alpha = 1, beta = 0, delta = 1, mu = 0, pm = c(1, 2, 3, 4))
     #   the dhyperb() function from the HyperbolicDist Package, written
     #   by David Scott, Ai-Wei Lee, Jennifer Tso, Richard Trendall.
     #   License: GPL
-    
-    # Changes:
-    #
-    
+
     # FUNCTION:
     
     # Settings:
@@ -381,10 +357,7 @@ function(alpha = 1, beta = 0, delta = 1, mu = 0, pm = c(1, 2, 3, 4))
     
     # Description:
     #   Computes the mode of the Hyperbolic PDF
-    
-    # Changes:
-    #
-    
+  
     # FUNCTION:
     
     # Settings:
@@ -408,10 +381,7 @@ function(n, theta)
 
     # Author:
     #   Original Version by David Scott
-    
-    # Changes:
-    #
-    
+
     # FUNCTION:
     
     # Settings:
@@ -454,10 +424,7 @@ function(n, theta)
 
     # Author:
     #   Original Version by David Scott
-    
-    # Changes:
-    #
-    
+
     # FUNCTION:
     
     # Settings:
@@ -528,10 +495,7 @@ function(n, theta)
     
     # Author:
     #   Original Version by David Scott
-
-    # Changes:
-    #
-    
+ 
     # FUNCTION:
     
     if (length(theta) == 2) theta = c(1, theta)
@@ -595,10 +559,7 @@ function(X)
                                             
     # Description:
     #   Internal Function - Modified Bessel Function K1
-    
-    # Changes:
-    #
-    
+
     # FUNCTION:
     
     # Compute BI and BK:
@@ -702,10 +663,7 @@ function(x, alpha = 1, beta = 0, delta = 1, mu = 0)
     #   alpha, beta - Shape Parameter, |beta| <= alpha
     #   delta  - Scale Parameter, 0 <= delta
     #   mu - Location Parameter
-     
-    # Changes:
-    #
-    
+
     # FUNCTION:
     
     # Density:
@@ -734,10 +692,7 @@ function(x, zeta = 1, rho = 0, delta = 1, mu = 0)
     
     # Description:
     #   Returns Hyperbolic density in the 2nd parameterization
-    
-    # Changes:
-    #
-    
+
     # FUNCTION:
     
     # Arguments:
@@ -769,10 +724,7 @@ function(x, xi = 1/sqrt(2), chi = 0, delta = 1, mu = 0)
     #   alpha, beta - Shape Parameter, |beta| <= alpha
     #   delta  - Scale Parameter, 0 <= delta
     #   mu - Location Parameter
-    
-    # Changes:
-    #
-    
+
     # FUNCTION:
     
     # Parameter Change:
@@ -802,10 +754,7 @@ function(x, a.bar = 1, b.bar = 0, delta = 1, mu = 0)
     #   alpha, beta - Shape Parameter, |beta| <= alpha
     #   delta  - Scale Parameter, 0 <= delta
     #   mu - Location Parameter
-    
-    # Changes:
-    #
-    
+
     # FUNCTION:
     
     # Parameter Change:
@@ -833,9 +782,6 @@ function(q, alpha = 1, beta = 0, delta = 1, mu = 0, ...)
     #   delta  - Scale Parameter, 0 <= delta
     #   mu - Location Parameter
 
-    # Changes:
-    #
-    
     # FUNCTION:
     
     # Cumulative Probability:
@@ -866,10 +812,7 @@ function(q, zeta = 1, rho = 0, delta = 1, mu = 0, ...)
     #   zeta, rho - Shape Parameter, resulting |beta| <= alpha
     #   delta  - Scale Parameter, 0 <= delta
     #   mu - Location Parameter
-    
-    # Changes:
-    #
-    
+
     # FUNCTION:
     
     # Parameter Change:
@@ -896,10 +839,7 @@ function(q, xi = 1/sqrt(2), chi = 0, delta = 1, mu = 0, ...)
     #   xi, xhi - Shape Parameter, resulting |beta| <= alpha
     #   delta  - Scale Parameter, 0 <= delta
     #   mu - Location Parameter
-    
-    # Changes:
-    #
-    
+
     # FUNCTION:
     
     # Parameter Change:
@@ -928,10 +868,7 @@ function(q, a.bar = 1, b.bar = 0, delta = 1, mu = 0, ...)
     #   a.bar, b.bar - Shape Parameter, resulting |beta| <= alpha
     #   delta  - Scale Parameter, 0 <= delta
     #   mu - Location Parameter
-    
-    # Changes:
-    #
-    
+
     # FUNCTION:
     
     # Parameter Change:
@@ -961,10 +898,7 @@ function(p, alpha = 1, beta = 0, delta = 1, mu = 0, ...)
 
     # Note:
     #   This procedure will not run under Splus.
-
-    # Changes:
-    #
-    
+  
     # FUNCTION:
     
     # Internal Functions:
@@ -1010,9 +944,6 @@ function(p, zeta = 1, rho = 0, delta = 1, mu = 0, ...)
     #   delta  - Scale Parameter, 0 <= delta
     #   mu - Location Parameter
     
-    # Changes:
-    #
-    
     # FUNCTION:
     
     # Parameter Change:
@@ -1039,10 +970,7 @@ function(p, xi = 1/sqrt(2), chi = 0, delta = 1, mu = 0, ...)
     #   zeta, chi - Shape Parameter, resulting |beta| <= alpha
     #   delta  - Scale Parameter, 0 <= delta
     #   mu - Location Parameter
-    
-    # Changes:
-    #
-    
+  
     # FUNCTION:
     
     # Parameter Change:
@@ -1071,10 +999,7 @@ function(p, a.bar = 1, b.bar = 0, delta = 1, mu = 0, ...)
     #   a.bar, b.bar - Shape Parameter, resulting |beta| <= alpha
     #   delta  - Scale Parameter, 0 <= delta
     #   mu - Location Parameter
-    
-    # Changes:
-    #
-    
+
     # FUNCTION:
     
     # Parameter Change:
@@ -1108,10 +1033,7 @@ function (n, alpha = 1, beta = 0, delta = 1, mu = 0)
     #   the dhyperb() function from the HyperbolicDist Package, written
     #   by David Scott, Ai-Wei Lee, Jennifer Tso, Richard Trendall.
     #   License: GPL
-    
-    # Changes:
-    #
-    
+
     # FUNCTION:
     
     # Internal Function:
@@ -1206,10 +1128,7 @@ function(n, zeta = 1, rho = 0, delta = 1, mu = 0)
     #   zeta, rho - Shape Parameter, resulting |beta| <= alpha
     #   delta  - Scale Parameter, 0 <= delta
     #   mu - Location Parameter
-    
-    # Changes:
-    #
-    
+
     # FUNCTION:
     
     # Parameter Change:
@@ -1236,10 +1155,7 @@ function(n, xi = 1/sqrt(2), chi = 0, delta = 1, mu = 0)
     #   zeta, chi - Shape Parameter, resulting |beta| <= alpha
     #   delta  - Scale Parameter, 0 <= delta
     #   mu - Location Parameter
-    
-    # Changes:
-    #
-    
+
     # FUNCTION:
     
     # Parameter Change:
@@ -1269,9 +1185,6 @@ function(n, a.bar = 1, b.bar = 0, delta  = 1, mu = 0)
     #   delta  - Scale Parameter, 0 <= delta
     #   mu - Location Parameter
     
-    # Changes:
-    #
-    
     # FUNCTION:
     
     # Parameter Change:
@@ -1293,10 +1206,7 @@ function(alpha = 1, beta = 0, delta = 1, mu = 0)
     
     # Description:
     #   Computes the mode of the Hyperbolic PDF
-    
-    # Changes:
-    #
-    
+
     # FUNCTION:
     
     # Mode:
@@ -1316,13 +1226,7 @@ function(zeta = 1, rho = 0, delta = 1, mu = 0)
     
     # Description:
     #   Computes the hyperbolic mode in the 2nd parameterization
-    
-    # Changes:
-    #
-    
-    # Changes:
-    #
-    
+
     # FUNCTION:
     
     # Parameter Change:
@@ -1344,10 +1248,7 @@ function(xi = 1/sqrt(2), chi = 0, delta = 1, mu = 0)
     
     # Description:
     #   Computes the hyperbolic mode in the 3rd parameterization
-    
-    # Changes:
-    #
-    
+
     # FUNCTION:
     
     # Parameter Change:
@@ -1371,10 +1272,7 @@ function(a.bar = 1, b.bar = 0, delta  = 1, mu = 0)
     
     # Description:
     #   Computes the hyperbolic mode in the 4th parameterization
-    
-    # Changes:
-    #
-    
+
     # FUNCTION:
     
     # Parameter Change:
@@ -1398,9 +1296,6 @@ dnig =
 function(x, alpha = 1, beta = 0, delta = 1, mu = 0)
 {   # A function implemented by Diethelm Wuertz
 
-    # Changes:
-    #
-    
     # FUNCTION:
     
     # Density:
@@ -1416,9 +1311,6 @@ pnig =
 function(q, alpha = 1, beta = 0, delta = 1, mu = 0)
 {   # A function implemented by Diethelm Wuertz
 
-    # Changes:
-    #
-    
     # Function:
     
     # Probability:
@@ -1434,9 +1326,6 @@ qnig =
 function(p, alpha = 1, beta = 0, delta = 1, mu = 0)
 {   # A function implemented by Diethelm Wuertz
 
-    # Changes:
-    #
-    
     # FUNCTION:
     
     # Quantiles
@@ -1461,9 +1350,6 @@ function(n, alpha = 1, beta = 0, delta = 1, mu = 0)
     #   delta  - Scale Parameter, 0 <= delta
     #   mu - Location Parameter
 
-    # Changes:
-    #
-    
     # FUNCTION: 
     
     # Settings:
@@ -1517,9 +1403,6 @@ function()
     # Hyperbolic Distribution:
     #   dhyp(x, alpha = 1, beta = 0, delta = 1, mu = 0, pm = c(1, 2, 3, 4))
         
-    # Changes:
-    #
-    
     # FUNCTION:
     
     # Internal Function:
@@ -1589,10 +1472,7 @@ function()
 
     # Normal Inverse Gaussian Distribution:
     #   dnig(x, alpha = 1, beta = 0, delta = 1, mu = 0) 
-
-    # Changes:
-    #
-    
+   
     # FUNCTION:
     
     # Internal Function:

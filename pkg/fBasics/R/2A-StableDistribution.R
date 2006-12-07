@@ -992,10 +992,7 @@ function()
 
     # Description
     #   Displays the symmetric stable distribution
-    
-    # Changes:
-    #
-    
+
     # FUNCTION:
     
     # Internal Function:
@@ -1055,9 +1052,6 @@ function()
     # Description:
     #   Displays the stable distribution
 
-    # Changes:
-    #
-    
     # FUNCTION:
     
     # Internal Function:

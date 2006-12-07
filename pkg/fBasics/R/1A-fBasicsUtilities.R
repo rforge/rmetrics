@@ -80,10 +80,7 @@ function(x, y = NULL, ...)
     # Arguments:
     #   x - an univariate time series of responses
     #   y - an univariate time series of fitted values
-  
-    # Changes:
-    #
-    
+
     # FUNCTION:
     
     # Get Data:
@@ -117,10 +114,7 @@ function(x, ...)
     
     # Arguments:
     #   x - an univariate time series of residuals
-  
-    # Changes:
-    #
-    
+   
     # FUNCTION:
     
     # Get Data:
@@ -151,10 +145,7 @@ function(x, y, method = c("scatter", "hist"), ...)
     # Arguments:
     #   x - univariate time series (residuals)
     #   y - univariate time series (fitted)
-     
-    # Changes:
-    #
-    
+
     # FUNCTION:  
     
     # Check Arguments:
@@ -354,10 +345,7 @@ function(x, y, size = 1, ...)
     
     # Example:
     #   circlesPlot(x = rnorm(50), y = rnorm(50), size = abs(rnorm(50)))
-
-    # Changes:
-    #
-    
+ 
     # FUNCTION:
     
     # Settings:
@@ -386,10 +374,7 @@ function(x, y, z, theta = -40, phi = 30, col = "steelblue4", ps = 9, ...)
     
     # Notes:
     #   A synonyme call for function 'persp'
-    
-    # Changes:
-    #
-    
+  
     # FUNCTION:   
     
     # Perspective Plot:
@@ -423,10 +408,7 @@ function(x, y, z, ...)
     
     # Notes:
     #   A synonyme call for function 'contour'
-    
-    # Changes:
-    #
-    
+ 
     # FUNCTION:   
     
     # Contour Plot:
@@ -478,9 +460,6 @@ function(font = 1, cex = 0.7)
     # Example:
     #   for (i in 1:20) characterTable(font = i)
 
-    # Changes:
-    #
-    
     # FUNCTION:
     
     # Table:
@@ -521,9 +500,6 @@ function(font = par('font'), cex = 0.7)
     # Author:
     #   Unknown, code found on the internet.
 
-    # Changes:
-    #
-    
     # FUNCTION:
     
     # Table:
@@ -558,10 +534,7 @@ function(cex = 0.7)
     
     # Example:
     #   colorTable()
-
-    # Changes:
-    #
-    
+  
     # FUNCTION:
     
     # Plot:
@@ -596,10 +569,7 @@ function(n = 64, start = 255-n, end = 255)
     # Value:
     #   returns a grey palette like rainbow does
     #   for color palettes
-    
-    # Changes:
-    #
-    
+   
     # FUNCTION:
     
     # Check Consistency:
@@ -640,10 +610,7 @@ function(b, base.in = 2, base.out = 10, digits="0123456789ABCDEF")
     # Author:
     #   Peter Wolf Universitaet Bielefeld  
     #   from: http://tolstoy.newcastle.edu.au/R/help/05/04/2085.html 
-    
-    # Changes:
-    #
-    
+  
     # FUNCTION:
      
     # Change Number System:
@@ -691,10 +658,7 @@ function(b)
     
     # Value:
     #   returns a heximal numbers as decimal numbers
-    
-    # Changes:
-    #
-    
+
     # FUNCTION:
     
     # Hex to Bin:
@@ -720,10 +684,7 @@ function(b)
 
     # Value:
     #   returns a decimal numbers as heximal numbers
-    
-    # Changes:
-    #
-    
+
     # FUNCTION:
     
     # Decimal to Hex:
@@ -748,10 +709,7 @@ title = "Slider", no = 0, set.no.value = 0)
     
     # Source:
     #   Built on code written by Peter Wolf
-    
-    # Changes:
-    #
-    
+ 
     # FUNCTION:
     
     # Requirement:
@@ -835,9 +793,7 @@ xo = seq(min(x), max(x), length = 40),
 yo = seq(min(y), max(y), length = 40), 
 extrap = FALSE, duplicate = "error", dupfun = NULL)
 {
-    # Changes:
-    #
-    
+
     # FUNCTION:
     
     # Settings:

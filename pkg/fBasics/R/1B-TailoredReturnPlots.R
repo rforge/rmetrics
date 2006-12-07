@@ -32,7 +32,7 @@
 #  seriesPlot                Returns a tailored return series plot
 #  histPlot                  Returns a tailored histogram plot
 #  densityPlot               Returns a tailored kernel density estimate plot
-#  qqbayesPlot               Returns a tailored quantile-quantile plot
+#  quantilePlot              Returns a tailored quantile-quantile plot
 ################################################################################
 
 
@@ -81,10 +81,7 @@ function(x, col = "steelblue", main = x@units, add.fit = TRUE, ...)
     # Description:
     #   Returns a probability histogram plot for each column of a 
     #   timeSeries object
-    
-    # Changes:
-    #
-    
+   
     # FUNCTION:
     
     # Settings:
@@ -150,9 +147,6 @@ function(x, col = "steelblue", main = x@units, add.fit = TRUE, ...)
     #   Returns density plots for each column of a 
     #   timeSeries object
 
-    # Changes:
-    #
-    
     # FUNCTION:
     
     # Transform 'timeSeries':

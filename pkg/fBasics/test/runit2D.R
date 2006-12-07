@@ -31,9 +31,8 @@
 # FUNCTION:            DESCRIPTION:    
 #  'fDISTFIT'           S4 Class representation
 #  print.fDISTFIT       Prints Results from a Fitted Distribution
-# FUNCTION:            NORMAL DISTRIBUTION:
-#  .normFit             Fits parameters of a Normal density
-# FUNCTION:            STUDENT DISTRIBUTION:
+# FUNCTION:            NORMAL AND T DISTRIBUTION:
+#  nFit                 Fits parameters of a Normal density
 #  tFit                 Fits parameters of a Student-t density
 # FUNCTION:            STABLE DISTRIBUTION:
 #  stableFit            Fits parameters of a stable density

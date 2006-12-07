@@ -63,10 +63,7 @@ function(x, method = c("sw", "jb"), na.rm = FALSE)
     
     # Notes:
     #   This function is also for S-Plus compatibility
-    
-    # Changes:
-    #
-    
+
     # FUNCTION:
     
     # Convert Type:
@@ -116,10 +113,7 @@ function(x, title = NULL, description = NULL)
     #   description - a brief description of the porject of type 
     #       character.
     #   title - a character string which allows for a project title.
-    
-    # Changes:
-    #
-    
+
     # FUNCTION:
     
     # Convert Type:
@@ -171,9 +165,6 @@ function(x, title = NULL, description = NULL)
 function (x) 
 {   # A copy from R:
 
-    # Changes:
-    #
-    
     # FUNCTION:
     
     DNAME <- deparse(substitute(x))
@@ -226,10 +217,7 @@ function(x, title = NULL, description = NULL)
     
     # Note:
     #   A function linked to "stats"
-    
-    # Changes:
-    #
-    
+
     # FUNCTION:
 
     # Convert Type:
@@ -276,10 +264,7 @@ function(x, title = NULL, description = NULL)
     
     # Authors:
     #   from A. Trapletti's tseries Package.
-    
-    # Changes:
-    #
-    
+
     # FUNCTION:
 
     # Data Set Name:
@@ -351,10 +336,7 @@ function(x, title = NULL, description = NULL)
 .skewness.test =
 function(x) 
 {   # Internal Function for D'Agostino Normality Test:
-    
-    # Changes:
-    #
-    
+
     # FUNCTION:
     
     DNAME = deparse(substitute(x))
@@ -397,9 +379,6 @@ function(x)
 function(x) 
 {   # Internal Function for D'Agostino Normality Test:
     
-    # Changes:
-    #
-    
     # FUNCTION:
     
     DNAME = deparse(substitute(x))
@@ -441,10 +420,7 @@ function(x)
 .omnibus.test =
 function(x) 
 {   # Internal Function for D'Agostino Normality Test:
-    
-    # Changes:
-    #
-    
+
     # FUNCTION:
     
     DNAME = deparse(substitute(x))
@@ -508,10 +484,7 @@ function(x, title = NULL, description = NULL)
     # Source:
     #   This function was inspired by ...
     #   http://adela.karlin.mff.cuni.cz/~klaster/vyuka/
-    
-    # Changes:
-    #
-    
+  
     # FUNCTION:
     
     # Data Set Name:
@@ -583,10 +556,7 @@ function (x, title = NULL, description = NULL)
     #   Description: 5 omnibus tests for the composite hypothesis of normality
     #   Maintainer: Juergen Gross <gross@statistik.uni-dortmund.de>
     #   License: GPL version 2 or newer
-    
-    # Changes:
-    #
-    
+  
     # FUNCTION:
     
     # Data Set Name:
@@ -677,9 +647,6 @@ function(x, title = NULL, description = NULL)
     #       Maintainer: Juergen Gross <gross@statistik.uni-dortmund.de>
     #       License: GPL version 2 or newer
     
-    # Changes:
-    #
-    
     # FUNCTION:
     
     # Data Set Name:
@@ -764,10 +731,7 @@ function(x, title = NULL, description = NULL)
     #       Description: 5 omnibus tests for the composite hypothesis of normality
     #       Maintainer: Juergen Gross <gross@statistik.uni-dortmund.de>
     #       License: GPL version 2 or newer
-    
-    # Changes:
-    #
-    
+  
     # FUNCTION:
    
     # Data Set Name:
@@ -872,9 +836,6 @@ function (x, title = NULL, description = NULL)
     #       Maintainer: Juergen Gross <gross@statistik.uni-dortmund.de>
     #       License: GPL version 2 or newer
     
-    # Changes:
-    #
-    
     # FUNCTION:
     
     # Data Set Name:
@@ -956,10 +917,7 @@ function(x, title = NULL, description = NULL)
     #       Description: 5 omnibus tests for the composite hypothesis of normality
     #       Maintainer: Juergen Gross <gross@statistik.uni-dortmund.de>
     #       License: GPL version 2 or newer
-    
-    # Changes:
-    #
-    
+  
     # FUNCTION:
     
     # Data Set Name:
@@ -1025,10 +983,7 @@ function(x)
     # Note:
     #   We consider the signs of x in the series, the zeros will be 
     #   discarded. In addition we have to factor the data for runs.test().
-    
-    # Changes:
-    #
-    
+
     # FUNCTION:
     
     # Convert Type:
@@ -1089,10 +1044,7 @@ function(type = c("LM", "ALM"), size = c("all", "small"))
 
     # Description:
     #   Table of finite sample p values for the Jarque Bera test
-    
-    # Changes:
-    #
-    
+   
     # FUNCTION:
     
     # Select Table:
@@ -1125,10 +1077,7 @@ function(q, N = Inf, type = c("LM", "ALM"))
     #   Computes probabilities for the Jarque Bera Test
     
     # Arguments:
-    
-    # Changes:
-    #
-    
+
     # FUNCTION:
     
     # Check Arguments:
@@ -1158,9 +1107,6 @@ function(p, N = Inf, type = c("LM", "ALM"))
     #   Computes Quantiles for the Jarque Bera Test
     
     # Arguments:
-    
-    # Changes:
-    #
     
     # FUNCTION:
     
@@ -1196,10 +1142,7 @@ function(x)
     #   S3 Version type of test.
     #   See also the Jarque-Bera test in Adrian Trapletti's
     #   contributed "tseries" R package.
-  
-    # Changes:
-    #
-    
+ 
     # FUNCTION:
       
     # Data Set Name:
@@ -1270,10 +1213,7 @@ function(x, title = NULL, description = NULL)
     
     # Notes:
     #   S3 Version type of test.  
-    
-    # Changes:
-    #
-    
+  
     # FUNCTION:
     
     # Data Set Name:

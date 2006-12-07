@@ -81,9 +81,6 @@ kurtosis =
 function (x, ...) 
 {   # A function implemented by Diethelm Wuertz
 
-    # Changes:
-    #
-    
     # FUNCTION:
     
     # Return Value:
@@ -103,9 +100,6 @@ function (x, na.rm = FALSE, method = c("excess", "moment", "fisher"), ...)
     
     # Details:
     #   Missing values can be handled.
-    
-    # Changes:
-    #
     
     # FUNCTION:
     
@@ -149,9 +143,6 @@ kurtosis.data.frame =
 function (x, ...) 
 {   # A function implemented by Diethelm Wuertz
 
-    # Changes:
-    #
-    
     # FUNCTION:
     
     # Return Value:
@@ -165,9 +156,6 @@ function (x, ...)
 kurtosis.POSIXct =
 function (x, ...) 
 {   # A function implemented by Diethelm Wuertz
-
-    # Changes:
-    #
     
     # FUNCTION:
     
@@ -182,10 +170,7 @@ function (x, ...)
 kurtosis.POSIXlt =
 function (x, ...) 
 {   # A function implemented by Diethelm Wuertz
-
-    # Changes:
-    #
-    
+ 
     # FUNCTION:
     
     # Return Value:
@@ -199,10 +184,7 @@ function (x, ...)
 skewness =
 function (x, ...) 
 {   # A function implemented by Diethelm Wuertz
-
-    # Changes:
-    #
-    
+ 
     # FUNCTION:
     
     # Return Value:
@@ -222,9 +204,6 @@ function (x, na.rm = FALSE, method = c("moment", "fisher"), ...)
     
     # Details:
     #   Missing values can be handled.
-    
-    # Changes:
-    #
     
     # FUNCTION:
     
@@ -268,9 +247,6 @@ function (x, na.rm = FALSE, method = c("moment", "fisher"), ...)
 skewness.data.frame = 
 function (x, ...) 
 {   # A function implemented by Diethelm Wuertz
-
-    # Changes:
-    #
     
     # FUNCTION:
     
@@ -285,10 +261,7 @@ function (x, ...)
 skewness.POSIXct =
 function (x, ...) 
 {   # A function implemented by Diethelm Wuertz
-
-    # Changes:
-    #
-    
+ 
     # FUNCTION:
     
     # Return Value:
@@ -302,10 +275,7 @@ function (x, ...)
 skewness.POSIXlt =
 function (x, ...) 
 {   # A function implemented by Diethelm Wuertz
-
-    # Changes:
-    #
-    
+  
     # FUNCTION:
     
     # Return Value:
@@ -322,10 +292,7 @@ function(x, ci = 0.95)
     
     # Description:
     #   Calculates Basic Statistics
-     
-    # Changes:
-    #
-    
+ 
     # FUNCTION:
     
     # Transform:
@@ -396,10 +363,7 @@ function(x, ci = 0.95)
     #   "3. Quartile",  "Mean", "Median", "Sum",  "SE Mean", 
     #   "LCL Mean", "UCL Mean", "Variance", "Stdev", "Skewness", 
     #   "Kurtosis")
-     
-    # Changes:
-    #
-    
+
     # FUNCTION:
     
     # Univariate/Multivariate:
@@ -445,9 +409,6 @@ function(x, FUN, na.rm = FALSE, ...)
     # Description:
     #   Computes sample statistics by column
     
-    # Changes:
-    #
-    
     # FUNCTION:
     
     # Transform:
@@ -477,10 +438,7 @@ function(x, na.rm = FALSE, ...)
     
     # Note:
     #   R's base package comes already with a colMeans!
-    
-    # Changes:
-    #
-    
+
     # FUNCTION:
     
     # Transform:
@@ -509,10 +467,7 @@ function(x, na.rm = FALSE, ...)
 
     # Description:
     #   Computes sample variance by column
-    
-    # Changes:
-    #
-    
+ 
     # FUNCTION:
     
     # Transform:
@@ -542,9 +497,6 @@ function(x, na.rm = FALSE, ...)
     # Description:
     #   Computes sample standard deviation by column
     
-    # Changes:
-    #
-    
     # FUNCTION:
     
     # Transform:
@@ -573,10 +525,7 @@ function(x, na.rm = FALSE, ...)
 
     # Description:
     #   Computes sample skewness by column
-    
-    # Changes:
-    #
-    
+   
     # FUNCTION:
     
     # Transform:
@@ -605,10 +554,7 @@ function(x, na.rm = FALSE, ...)
 
     # Description:
     #   Computes sample kurtosis by column
-    
-    # Changes:
-    #
-    
+
     # FUNCTION:
     
     # Transform:
@@ -637,10 +583,7 @@ function(x, na.rm = FALSE, ...)
 
     # Description:
     #   Computes sample cumulated sums by column
-    
-    # Changes:
-    #
-    
+      
     # FUNCTION:
     
     # Transform:
@@ -668,10 +611,7 @@ function(x, FUN, na.rm = FALSE, ...)
 
     # Description:
     #   Computes sample statistics by column
-    
-    # Changes:
-    #
-    
+  
     # FUNCTION:
     
     # Transform:
@@ -701,10 +641,7 @@ function(x, na.rm = FALSE, ...)
     
     # Note:
     #   R's base package comes already with a colMeans!
-    
-    # Changes:
-    #
-    
+  
     # FUNCTION:
     
     # Transform:
@@ -731,10 +668,7 @@ function(x, na.rm = FALSE, ...)
 
     # Description:
     #   Computes sample variance by column
-    
-    # Changes:
-    #
-    
+ 
     # FUNCTION:
     
     # Transform:
@@ -761,10 +695,7 @@ function(x, na.rm = FALSE, ...)
 
     # Description:
     #   Computes sample standard deviation by column
-    
-    # Changes:
-    #
-    
+
     # FUNCTION:
     
     # Transform:
@@ -791,10 +722,7 @@ function(x, na.rm = FALSE, ...)
 
     # Description:
     #   Computes sample skewness by column
-    
-    # Changes:
-    #
-    
+ 
     # FUNCTION:
     
     # Transform:
@@ -821,10 +749,7 @@ function(x, na.rm = FALSE, ...)
 
     # Description:
     #   Computes sample kurtosis by column
-    
-    # Changes:
-    #
-    
+
     # FUNCTION:
     
     # Transform:
@@ -851,9 +776,6 @@ function(x, na.rm = FALSE, ...)
 
     # Description:
     #   Computes sample cumulated sums by column
-    
-    # Changes:
-    #
     
     # FUNCTION:
     
@@ -985,10 +907,7 @@ function(x, B = 1000, ci = 0.95, na.rm = TRUE, reps = FALSE)
     # Notes:
     #   The function calls "smean.cl.boot" from the "HMisc" package
     #   Requirements: require(Hmisc)       
-    
-    # Changes:
-    #
-    
+ 
     # FUNCTION:       
     
     # Requirements:
@@ -1016,14 +935,14 @@ function(x, na.rm = FALSE)
     
     # Notes:
     #   Under use sd, this function is for SPlus compatibility.
-    
-    # Changes:
-    #
-    
+
     # FUNCTION:
     
+    # Standard Deviation:
+    ans = sd(x = x, na.rm = na.rm)
+    
     # Return Value: 
-    sd(x = x, na.rm = na.rm)
+    ans
 }
 
 

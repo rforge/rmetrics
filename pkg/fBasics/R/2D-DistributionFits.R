@@ -30,7 +30,7 @@
 ################################################################################
 # FUNCTION:            DESCRIPTION:    
 #  'fDISTFIT'           S4 Class representation
-#  print.fDISTFIT       Prints Results from a Fitted Distribution
+#  show.fDISTFIT        Prints Results from a Fitted Distribution
 # FUNCTION:            NORMAL AND STUDENT-t DISTRIBUTION:
 #  nFit                 Fits parameters of a Normal density
 #  tFit                 Fits parameters of a Student-t density
@@ -68,20 +68,17 @@ setClass("fDISTFIT",
 # ------------------------------------------------------------------------------
 
 
-.print.fDISTFIT =
-function(x, ...)
+show.fDISTFIT = 
+function(object)
 {   # A function implemented by Diethelm Wuertz
-
+    
     # Description:
     #   Prints Results from a Fitted Distribution
-    
-    # Changes:
-    #
     
     # FUNCTION:
     
     # Fit:
-    object = x@fit
+    object = object@fit
     
     # Title:
     cat("\nTitle:\n ")
@@ -102,26 +99,6 @@ function(x, ...)
     # Description:
     cat("\nDescription:\n ")
     cat(x@description, "\n\n")
-        
-    # Return Value:
-    invisible()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-show.fDISTFIT = 
-function(object)
-{   # A function implemented by Diethelm Wuertz
-    
-    # Changes:
-    #
-    
-    # FUNCTION:
-    
-    # Print:
-    .print.fDISTFIT(x = object)
     
     # Return Value:
     invisible()
@@ -152,10 +129,7 @@ description = NULL, ...)
     #   Function Calls: nlminb(), density() 
     #   The function normFit() can be found in the Rmetrics
     #       chapter GarchDistributions.
-    
-    # Changes:
-    #
-    
+   
     # FUNCTION:
     
     # Transform:
@@ -225,9 +199,6 @@ title = NULL, description = NULL, ...)
     
     # Example:
     #   tFit(rt(1000, df=4))
-    
-    # Changes:
-    #
     
     # FUNCTION:
     
@@ -315,10 +286,7 @@ title = NULL, description = NULL)
 
     # Description 
     #   Stable Parameter Estimation
-    
-    # Changes:
-    #
-    
+
     # FUNCTION:
 
     # Start Values: Use Quantile Method:
@@ -355,10 +323,7 @@ function()
     
     # Note:
     #   Stable Distribution - delta=1 and gamma=0 fixed!
-    
-    # Changes:
-    #
-    
+ 
     # FUNCTION:
     
     # Settings:
@@ -653,10 +618,7 @@ function(x, doplot = TRUE, title = NULL, description = NULL)
     
     # Note:
     #   This implementation assumes delta=1 and gamma=0
-    
-    # Changes:
-    #
-    
+       
     # FUNCTION:
     
     # Settings:
@@ -760,10 +722,7 @@ trace = FALSE, title = NULL, description = NULL)
     
     # Note:
     #   This implementation assumes delta=1 and gamma=0
-    
-    # Changes:
-    #
-    
+   
     # FUNCTION:
     
     # Transform:
@@ -853,10 +812,7 @@ span = "auto", trace = FALSE, title = NULL, description = NULL, ...)
     
     # Description:
     #   Fits parameters of a generalized hyperbolic density
-
-    # Changes:
-    #
-    
+  
     # FUNCTION:
     
     # Transform:
@@ -959,10 +915,7 @@ span = "auto", trace = FALSE, title = NULL, description = NULL, ...)
     
     # Description:
     #   Fits parameters of a hyperbolic density 
-
-    # Changes:
-    #
-    
+ 
     # FUNCTION:
     
     # Transform:
@@ -1061,9 +1014,6 @@ span = "auto", trace = FALSE, title = NULL, description = NULL, ...)
     
     # Description:
     #   Fits parameters of a normal inverse Gaussian density
-    
-    # Changes:
-    #
     
     # FUNCTION:
     
