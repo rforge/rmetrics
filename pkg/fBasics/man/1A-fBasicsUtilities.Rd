@@ -7,6 +7,7 @@
 \alias{colorTable}
 \alias{greyPalette}
 
+\alias{seriesPlot}
 \alias{histPlot}
 \alias{densityPlot}
 \alias{qqbayesPlot}
@@ -32,11 +33,11 @@
     The tailored plot functions are:
     
     \tabular{ll}{
+    \code{seriesPlot} \tab Returns a tailored time series plot, \cr
     \code{histPlot} \tab Returns a tailored histogram plot, \cr
     \code{densityPlot} \tab Returns a tailored kernel density estimate plot, \cr
     \code{qqbayesPlot} \tab Returns a tailored quantile-quantile plot.}
     
-
 }
     
     
@@ -47,9 +48,10 @@ symbolTable(font = par('font'), cex = 0.7)
 colorTable(cex = 0.7)
 greyPalette(n = 64, start = 255-n, end = 255)
 
-histPlot(x, col = "steelblue", border = "white", main = x@units, add.fit = TRUE, \dots) 
+seriesPlot(x, col = "steelblue", main = x@units, \dots) 
+histPlot(x, col = "steelblue", main = x@units, add.fit = TRUE, \dots) 
 densityPlot(x, col = "steelblue", main = x@units, add.fit = TRUE, \dots)
-qqbayesPlot(x, labels = TRUE, \dots) 
+qqbayesPlot(x, col = "steelblue", main = x@units, labels = TRUE, \dots) 
 }
 
 
@@ -59,12 +61,12 @@ qqbayesPlot(x, labels = TRUE, \dots)
         [*Plot] - \cr
         a logical, should a fit added to the Plot?
         }
-    \item{col, border, main}{
+    \item{col, main}{
         [*Plot] - \cr
-        plot parameters.
+        plot parameters, color and main title.
         }
     \item{font, cex}{
-        [*table] - \cr
+        [*Table] - \cr
         an integer value, the number of the \code{font}, by default font 
         number 1, the standard font for the \code{characterTable}
         or the current plot character font for the 

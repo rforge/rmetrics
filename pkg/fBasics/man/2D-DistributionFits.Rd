@@ -5,7 +5,10 @@
 \alias{fDISTFIT}
 \alias{fDISTFIT-class}
 
-%\alias{normFit}
+\alias{show.fDISTFIT}
+\alias{show,fDISTFIT-method}
+
+\alias{nFit}
 \alias{tFit}
 
 \alias{stableFit}
@@ -31,7 +34,7 @@
     The functions are:
     
     \tabular{ll}{
-    %\code{normFit} \tab MLE parameter fit for a normal distribution, \cr
+    \code{nFit} \tab MLE parameter fit for a normal distribution, \cr
     \code{tFit} \tab MLE parameter fit for a Student t-distribution, \cr
     \code{stableFit} \tab MLE and Quantile Method stable parameter fit, \cr
     \code{ghFit} \tab MLE parameter fit for a generalized hyperbolic distribution, \cr
@@ -42,8 +45,7 @@
 
 
 \usage{
-%normFit(x, doplot = TRUE, span = "auto", title = NULL, description = NULL, \dots)
-%
+nFit(x, doplot = TRUE, span = "auto", title = NULL, description = NULL, \dots)
 tFit(x, df = 4, doplot = TRUE, span = "auto", trace = FALSE, title = NULL, 
     description = NULL, \dots)
     
@@ -58,7 +60,7 @@ hypFit(x, alpha = 1, beta = 0, delta = 1, mu = 0, doplot = TRUE,
 nigFit(x, alpha = 1, beta = 0, delta = 1, mu = 0, doplot = TRUE, 
     span = "auto", trace = FALSE, title = NULL, description = NULL, \dots)
    
-\method{print}{fDISTFIT}(x, \dots)
+show.fDISTFIT(object)
 }
 
 
@@ -104,6 +106,10 @@ nigFit(x, alpha = 1, beta = 0, delta = 1, mu = 0, doplot = TRUE,
         the number of degrees of freedom for the Student distribution, 
         \code{df > 2}, maybe non-integer. By default a value of 4 is
         assumed.
+        }
+    \item{object}{
+        [show] - \cr
+        an S4 class object as returned from the fitting functions.
         }
     \item{doplot}{
         [tFit][hypFit][nigFit] - \cr
