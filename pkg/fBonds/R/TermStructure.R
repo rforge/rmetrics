@@ -103,7 +103,7 @@ function(rate, maturity, doplot = TRUE)
     } 
                    
     # Optimization:
-    gvec = c(0.0840, -0.0063, 0.0044, 1.7603)
+    # DW: gvec = c(0.0840, -0.0063, 0.0044, 1.7603)
     fit = nlminb(start = gvec, objective = func, 
         rate = rate, maturity = maturity, 
         control = list(eval.max = 2000, iter.max = 2000))
@@ -174,8 +174,10 @@ function(rate, maturity, doplot = TRUE)
                 fmin[i,j] = sum(abs((rate-yfit)))
                 beta0[i,j] = beta[1]
                 beta1[i,j] = beta[2]
-                beta2[i,j] = beta[3]
-                beta3[i,j] = beta[3]
+                ## DW: beta2[i,j] = beta[3]
+                ## DW: beta3[i,j] = beta[3]
+                beta2[i,j] = beta[3]/2
+                beta3[i,j] = beta[3]/2
                 if (fmin[i,j] < gmin) {
                     gmin = fmin[i,j]
                     gvec = c(beta, beta[length(beta)], tau1[i], tau2[j])
