@@ -38,6 +38,10 @@ function()
 test.jbTable.LM = 
 function()
 {
+    # Details:
+    #   The function jbTable() returns a data.frame with columns  
+    #   denoting size and rows denoting probabilities 0 < p < 1.
+    
     # Plot Parameters:
     par(ask = FALSE)
     par(mfrow = c(1, 1))

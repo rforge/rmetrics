@@ -141,9 +141,13 @@ function()
      6.31, 35.74, 51.81,  4.40, 21.70, 39.93, 58.20,  4.73, 50.55, 40.36, 
     13.62,  6.43, 12.57,  8.74, 13.71, 12.00, 10.25, 15.74, 14.81, 21.60, 
     19.31, 26.50, 12.11, 53.10, 49.43,  3.25,  0.60, 28.63,  5.52, 44.08))
+    
+    .interp.new(akima$x, akima$y, akima$z, linear = FALSE,
+        ncp = NULL, extrap = FALSE, duplicate = "median", dupfun = NULL)
 
     # Interpolation:
     akima.lin = .akima2D(akima$x, akima$y, akima$z)
+)
     Z = mean(akima.lin$z)
     checkSum = 21.70316
     checkEquals(target = Z, current = checkSum, tolerance = 0.00001)
@@ -154,11 +158,16 @@ function()
     image  (akima.lin, add = FALSE)
     contour(akima.lin, add = TRUE)
     points (akima, pch = 19)
+     
+    # Interpolation:
+    .akima2D(akima$x, akima$y, akima$z, interp = "linear", extrap = TRUE)
+    .akima2D(akima$x, akima$y, akima$z, interp = "linear", extrap = FALSE)
+    .akima2D(akima$x, akima$y, akima$z, interp = "spline", extrap = TRUE)
+    .akima2D(akima$x, akima$y, akima$z, interp = "spline", extrap = FALSE)
     
     # Return Value:
     return()    
 }
-
 
 # ------------------------------------------------------------------------------
 
@@ -171,4 +180,107 @@ if (FALSE) {
 
 
 # ------------------------------------------------------------------------------
+
+
+# spatial:
+
+    require(akima)
+    require(fBasics)
+    data(akima)
+    akima = as.data.frame(akima) 
+ 
+    
+akimaInterp <- 
+function(x, ...) 
+{
+    UseMethod("akimaInterp")   
+}
+
+
+# ------------------------------------------------------------------------------
+
+    
+akimaInterp.formula = 
+function(formula = z ~ x + y, data, grid = 40, doplot = TRUE, ...)
+{
+    # Settings:
+    mf <- match.call(expand.dots = FALSE)
+    m <- match(c("formula", "data"), names(mf), 0)
+    mf <- mf[c(1, m)]
+    mf[[1]] <- as.name("model.frame")
+    Data <- eval(mf, parent.frame())
+    x = Data[, 2]
+    y = Data[, 3]
+    z = Data[, 1]
+    
+    # Interpolate:
+    Z = akimaInterp.default(x = x, y = y, z = z, 
+        grid = grid, doplot = doplot, ...)
+    
+    # Return Value:
+    invisible(Z)
+}
+
+
+akimaInterp.default = 
+function(x, y, z, grid = 40, doplot = TRUE, ...)
+{
+    # Settings:
+    if (is.data.frame(x)) x = as.matrix.data.frame(x_)
+    if (is.matrix(x)) {
+        z = x[, 3]
+        y = x[, 2]
+        x = x[, 1]
+    }
+    
+    # Interpolate:
+    Z = interp(x = x, y = y, z = z, 
+        xo = seq(min(x), max(x), length = grid),
+        yo = seq(min(y), max(y), length = grid),
+        linear = FALSE, extrap = TRUE, duplicate = "median",
+        dupfun = NULL, ncp = NULL) 
+        
+    # Plot:
+    if (doplot) {
+        image(Z)
+        contour(Z, add = TRUE)
+    }
+    
+    # Return Value:
+    invisible(Z)
+}
+
+
+akimaInterp(z ~ x + y, data = akima, grid = 100, doplot = TRUE)
+
+
+krigeInterp.formula = 
+function(formula = z ~ x + y, data, grid = 40, doplot = TRUE, ...)
+{
+    mf <- match.call(expand.dots = FALSE)
+    m <- match(c("formula", "data"), names(mf), 0)
+    mf <- mf[c(1, m)]
+    mf[[1]] <- as.name("model.frame")
+    Data <- eval(mf, parent.frame())
+    x = Data[, 2]
+    y = Data[, 3]
+    z = Data[, 1]
+    
+    # Interpolate:
+    krige = surf.gls(np = 6, covmod = expcov, 
+        x = x, y = y, z = z, d = 0.5, alpha = 1)
+    Z = prmat(krige, xl=min(x), xu=max(x), yl=min(y), yu=max(y), n = grid)
+    
+    # Plot:
+    if (doplot) {
+        image(Z)
+        contour(Z, add = TRUE)
+    }
+    
+    # Return Value:
+    invisible(Z)
+}
+
+krigeInterp(z ~ x + y, data = akima, grid = 100, doplot = TRUE)
+    
 
