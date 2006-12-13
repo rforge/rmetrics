@@ -5,8 +5,8 @@ HyperbolicDistribution
                         Generalized Hyperbolic Distribution
 HypothesisTesting       Tests Class Representation and Utilities
 OneSampleTests          One Sample Tests
-PortableRandomInnovations
-                        Generator for Portable Random Innovations
+PortableInnovations     Generator for Portable Random Innovations
 StableDistribution      Stable Distribution Function
 StylizedFacts           Stylized Facts
+TailoredReturnPlots     Tailored Return Plots
 TwoSampleTests          Two Sample Tests
