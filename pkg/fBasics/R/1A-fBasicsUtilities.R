@@ -39,6 +39,7 @@
 #  .circlesPlot              Returns a circles plot indexing 3rd variable
 #  .perspPlot                Returns a perspective plot in 2 dimensions
 #  .contourPlot              Returns a contour plot in 2 dimensions
+#  .histStack             Returns a stacked histogram plot
 # FUNCTION:                 CHARACTER, SYMBOL AND COLOR TABLES:
 #  characterTable            Shows a table of character codes 
 #  symbolTable               Shows a table of plot symbols
@@ -333,6 +334,7 @@ doplot = TRUE, plottype = c("autoscale", ""), labels = TRUE, ...)
 #  .circlesPlot           Returns a scatterplot of circles indexing 3rd variable
 #  .perspPlot             Returns a perspective plot in 2 dimensions
 #  .contourPlot           Returns a contour plot in 2 dimensions
+#  .histStack             Returns a stacked histogram plot
 
 
 .circlesPlot = 
@@ -366,7 +368,7 @@ function(x, y, size = 1, ...)
 
 
 .perspPlot = 
-function(x, y, z, theta = -40, phi = 30, col = "steelblue4", ps = 9, ...) 
+function(x, y, z, theta = -40, phi = 30, col = "steelblue", ps = 9, ...) 
 {   # A function implemented by Diethelm Wuertz
     
     # Description:
@@ -423,6 +425,37 @@ function(x, y, z, ...)
     # Return Value:
     invisible(ans)
 }
+
+
+# ------------------------------------------------------------------------------
+
+
+.histStack =
+function(x, y = NULL, space = 0, ylab = "frequency", ...) 
+{   # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   Returns a stacked histogram Plot
+    
+    # FUNCTION:
+    
+    # Compute Histograms:
+    breaks = hist(c(x, y))$breaks
+    bars = rbind(
+        hist(x, breaks = breaks, plot = FALSE)$counts, 
+        hist(y, breaks = breaks, plot = FALSE)$counts)
+    
+    # Plot:
+    barplot(bars, space = space, ylab = ylab, ...)
+    at = seq(along = breaks) - 1
+    modulo = ceiling(length(at)/10)
+    sel = (at%%modulo == 0)
+    axis(side = 1, at = at[sel], labels = paste(breaks)[sel])
+    
+    # Return Value:
+    invisible()
+}
+
 
                         
 ################################################################################
@@ -787,22 +820,190 @@ title = "Slider", no = 0, set.no.value = 0)
 # License: Fortran code: ACM, free for non-commercial use, R functions GPL
 
 
-.akima2D = 
-function(x, y, z, 
-xo = seq(min(x), max(x), length = 40),
-yo = seq(min(y), max(y), length = 40), 
-extrap = FALSE, duplicate = "error", dupfun = NULL)
-{
 
+.akima2D = 
+function(x, y, z, xo = seq(min(x), max(x), length = 40),
+yo = seq(min(y), max(y), length = 40), interp = c("spline", "linear"),
+extrap = TRUE)
+{   
     # FUNCTION:
     
-    # Settings:
-    ncp = 0
+    # Match Arguments:
+    interp = match.arg(interp)
+    
+    # Method:
+    if (interp == "linear") {
+        linear = TRUE
+        extrap = FALSE
+    } else if (interp == "spline") {
+        linear = FALSE
+    }
+    
+    # Interpolate:
+    ans = .interp(x = x, y = y, z = z, xo = xo, yo = yo, 
+    linear = linear, extrap = extrap, duplicate = "median", 
+        dupfun = NULL, ncp = NULL) 
+    
+    # Return Value:
+    ans
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.interp = 
+function (x, y, z, 
+xo = seq(min(x), max(x), length = 40), 
+yo = seq(min(y), max(y), length = 40), 
+linear = TRUE, extrap = FALSE, 
+duplicate = "error", 
+dupfun = NULL, ncp = NULL) 
+{
+    if (!is.null(ncp)) {
+        warning("use of 'ncp' parameter is deprecated!")
+        if (ncp == 0) {
+            linear <- TRUE
+        } else if (ncp > 0) {
+            linear <- FALSE
+        } else {
+            stop("ncp < 0 ?") 
+        }
+    }
+    if (linear) {
+        ans = .interp.old(x, y, z, xo = xo, yo = yo, ncp = 0, extrap = extrap, 
+            duplicate = duplicate, dupfun = dupfun)
+    } else {
+        ans = .interp.new(x, y, z, xo = xo, yo = yo, linear = FALSE, 
+            ncp = NULL, extrap = extrap, duplicate = duplicate, 
+            dupfun = dupfun)
+    }
+    
+    # Return Value:
+    ans
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.interp.new = 
+function(x, y, z, xo = seq(min(x), max(x), length = 40),
+yo = seq(min(y), max(y), length = 40), linear=FALSE,
+ncp = NULL, extrap = FALSE, duplicate = "error", 
+dupfun = NULL)
+{  
+    # FUNCTION:
     
     # Interpolation:
     if (!(all(is.finite(x)) && all(is.finite(y)) && all(is.finite(z))))
         stop("missing values and Infs not allowed")
-    if (ncp > 25){
+    if (!is.null(ncp)){
+        if (ncp != 0){
+            cat("ncp not supported, it is automatically choosen by Fortran code\n")
+        } else {
+            cat("linear interpolation not yet implemented with interp.new().\n")
+            stop("use interp.old().")
+        }
+    }
+    if (linear){
+      cat("linear interpolation not yet implemented with interp.new().\n")
+      stop("use interp.old().")
+    }
+
+    drx = diff(range(x))
+    dry = diff(range(y))
+    if (drx == 0 || dry == 0)
+        stop("all data collinear")  # other cases caught in Fortran code
+    if (drx/dry > 10000 || drx/dry < 0.0001)
+        stop("scales of x and y are too dissimilar")
+    n = length(x)
+    nx = length(xo)
+    ny = length(yo)
+    if (length(y) != n || length(z) != n)
+        stop("Lengths of x, y, and z do not match")
+    xy = paste(x, y, sep =",")
+    i = match(xy, xy)
+    if (duplicate=="user" && !is.function(dupfun))
+        stop("duplicate=\"user\" requires dupfun to be set to a function")
+    if (duplicate!="error") {
+        centre = function(x) {
+        switch(duplicate,
+               mean = mean(x),
+               median = median(x),
+               user = dupfun(x))
+        }
+        if (duplicate!="strip") {
+            z = unlist(lapply(split(z,i), centre))
+            ord = !duplicated(xy)
+            x = x[ord]
+            y = y[ord]
+            n = length(x)
+        } else{
+            ord = (hist(i, plot = FALSE, freq = TRUE,
+                breaks = seq(0.5, max(i)+0.5,1))$counts == 1)
+            x = x[ord]
+            y = y[ord]
+            z = z[ord]
+            n = length(x)
+        }
+    } else {
+        if (any(duplicated(xy)))
+            stop("duplicate data points")
+    }
+    zo = matrix(0, nx, ny)
+    storage.mode(zo) = "double"
+    miss = !extrap   #if not extrapolating use missing values
+    extrap = matrix(TRUE, nx, ny)
+    if (!is.null(ncp)){
+        if (extrap & ncp == 0)
+            warning("Cannot extrapolate with linear option")
+    } else {
+        if (extrap & linear)
+            warning("Cannot extrapolate with linear option")
+    }
+    ans = .Fortran("sdsf3p",
+        as.integer(1),
+        as.integer(n),
+        as.double(x),
+        as.double(y),
+        as.double(z),
+        as.integer(nx),
+        x = as.double(xo),
+        as.integer(ny),
+        y = as.double(yo),
+        z = zo,
+        ier = integer(1),
+        double(36 * n),
+        integer(25 * n),
+        extrap = as.logical(extrap),
+        near = integer(n),
+        nxt = integer(n),
+        dist = double(n),
+        PACKAGE = "fBasics")
+    temp = ans[c("x", "y", "z", "extrap")]
+    if (miss) temp$z[temp$extrap] = NA
+     
+    # Return Value:
+    temp[c("x", "y", "z")]
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.interp.old = 
+function(x, y, z, xo = seq(min(x), max(x), length = 40),
+yo = seq(min(y), max(y), length = 40), 
+ncp = 0, extrap = FALSE, duplicate = "error", dupfun = NULL)
+{
+    
+    # FUNCTION:
+    
+    # Interpolation:
+    if (!(all(is.finite(x)) && all(is.finite(y)) && all(is.finite(z))))
+        stop("missing values and Infs not allowed")
+    if (ncp>25){
         ncp = 25
         cat("ncp too large, using ncp=25\n")
     }
@@ -874,6 +1075,7 @@ extrap = FALSE, duplicate = "error", dupfun = NULL)
     # Return Value:
     temp[c("x", "y", "z")]
 }
+
 
 
 ################################################################################

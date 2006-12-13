@@ -181,6 +181,10 @@ function(type = c("LM", "ALM"), size = c("all", "small"))
 
     # Description:
     #   Finite sample p values for the Jarque Bera test
+    
+    # Details:
+    #   The function jbTable() returns a data.frame with columns denoting 
+    #   size and rows denoting probabilities 0 < p < 1.
    
     # FUNCTION:
     
@@ -285,12 +289,12 @@ fill = FALSE, linear = TRUE, digits = 8, doplot = TRUE, ...)
     # Interpolation on Grid:
     # 'interp.new' ignores ncp and does only bicubic spline interpolation.
     if (linear) {
-        ans = .interpTable.old(x = x.vec, y = y.vec, z = z.vec, xo = xo, 
+       ans = .interpTable.old(x = x.vec, y = y.vec, z = z.vec, xo = xo, 
             yo = yo, ncp = 0, extrap = FALSE, duplicate = "median") 
     } else {
-        # There is a bug in interp.new ...
+    # There is a bug in interp.new ...
         ans = .interpTable.new(x = x.vec, y = y.vec, z = z.vec, xo = xo, 
-            yo = yo, linear = FALSE, extrap = FALSE, duplicate = "median") 
+            yo = yo, linear = FALSE, extrap = FALSE, duplicate = "median")
     }
     zo = as.matrix(ans$z)
     

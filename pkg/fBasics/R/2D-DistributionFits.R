@@ -77,28 +77,25 @@ function(object)
     
     # FUNCTION:
     
-    # Fit:
-    object = object@fit
-    
     # Title:
     cat("\nTitle:\n ")
-    cat(x@title, "\n")
+    cat(object@title, "\n")
     
     # Call:
     cat("\nCall:\n ")
-    cat(paste(deparse(x@call), sep = "\n", collapse = "\n"), 
+    cat(paste(deparse(object@call), sep = "\n", collapse = "\n"), 
         "\n", sep = "")
       
     # Model: 
-    cat("\nModel:\n ", x@model, "\n", sep = "")
+    cat("\nModel:\n ", object@model, "\n", sep = "")
     
     # Estimate:
     cat("\nEstimated Parameter(s):\n")
-    print(x@fit$estimate)
+    print(object@fit$estimate)
         
     # Description:
     cat("\nDescription:\n ")
-    cat(x@description, "\n\n")
+    cat(object@description, "\n\n")
     
     # Return Value:
     invisible()
