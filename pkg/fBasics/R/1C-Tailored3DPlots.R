@@ -203,8 +203,8 @@ function(x, y = NULL, bins = 30)
     } else {
         nbins = n
     }
-    xo = seq(min(x), max(x), length = bins[1]),
-    yo = seq(min(y), max(y), length = bins[2]))
+    xo = seq(min(x), max(x), length = bins[1])
+    yo = seq(min(y), max(y), length = bins[2])
 
     nas = is.na(x) | is.na(y)
     index.x = cut(x, xo, include.lowest = TRUE)
