@@ -95,7 +95,7 @@
 #  diffvarFit          3.2 Differenced aggregated variance method
 #  absvalFit           3.3 Absolute values (moments) method
 #  higuchiFit          3.4 Higuchi's method
-#  pengFit             3.5 peng's or Residuals of Regression method
+#  pengFit             3.5 Peng's or Residuals of Regression method
 #  rsFit               3.6 R/S method
 #  perFit              3.7 Periodogram and cumulated periodogram method
 #  boxperFit           3.8 Boxed (modified) peridogram method
