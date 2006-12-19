@@ -110,7 +110,7 @@ function(x, n, trim = TRUE, na.rm = FALSE, FUN, ...)
             units = x.orig@units, FinCenter = x.orig@FinCenter)
     }
     
-    # Return value:
+    # Return Value:
     ans
 }
 

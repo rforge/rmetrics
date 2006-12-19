@@ -34,8 +34,8 @@
 #   triang              M  Extracs the lower tridiagonal part from a matrix
 #   Triang              M  Extracs the upper tridiagonal part from a matrix
 #   pascal              M  Creates a Pascal matrix
-#   colVec              M  Creates a column vector from a vector
-#   rowVec              M  Creates a row vector from a vector
+#   colVec              M  Creates a column vector from a data vector
+#   rowVec              M  Creates a row vector from a data vector
 #  as.matrix            R  Attempts to turn its argument into a matrix     
 #  is.matrix            R  Tests if its argument is a (strict) matrix
 #  dimnames             R  Retrieves or sets the dimnames of an object
