@@ -1,5 +1,4 @@
 funMultivar                 fMultivar Function Addon
-systemfitBuiltin            Builtin functions from packages systemfit
 
 xmpDWChapter041             Technical Analysis and Regression Based Trading
 xmpDWChapter042             Forecasting with Neural Networks
@@ -7,5 +6,3 @@ xmpDWChapter043             Demand and Supply Models
 xmpDWChapter044             Vector ARMA Models and Cointegration
 xmpDWChapter045             Multivariate GARCH Models
 xmpDWChapter046             Matrix Calculus and Linear Algebra Addon
-
-xmpZWChapter10              Zivot-Wang Chapter 10 Linear SUR Modelling
