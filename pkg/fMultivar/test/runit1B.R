@@ -64,13 +64,14 @@ function()
 test.getReturns =
 function()
 {
+    
     URL = "http://www.itp.phys.ethz.ch/econophysics/R/data/organisations/YAHOO/data/MSFT.CSV"
     download.file(URL, "MSFT.CSV")
     X = readSeries("MSFT.CSV")
     print(X)    
     
     R = getReturns(X)
-    print(R)
+    head(R)
     print(R@units)
     
     # Return Value:
@@ -84,12 +85,13 @@ function()
 test.maxDrawDown =
 function()
 {
+    # Data:
     URL = "http://www.itp.phys.ethz.ch/econophysics/R/data/organisations/YAHOO/data/MSFT.CSV"
     download.file(URL, "MSFT.CSV")
     X = readSeries("MSFT.CSV")
     print(X)
     
-    Close = as.timeSeries(X)[,"Close"]
+    Close = as.timeSeries(X)[, "Close"]
     
     maxDrawDown(Close)  
     
@@ -108,11 +110,13 @@ function()
 test.Ratio =
 function()
 {
+    # Data:
     URL = "http://www.itp.phys.ethz.ch/econophysics/R/data/organisations/YAHOO/data/MSFT.CSV"
     download.file(URL, "MSFT.CSV")
     X = readSeries("MSFT.CSV")
     print(X)    
     
+    # Get Returns:
     R = getReturns(X)
     
     sharpeRatio(R[, "Close"])
@@ -135,11 +139,11 @@ function()
     X = readSeries("MSFT.CSV")
     print(X)
         
-    # Returns:
+    # Get Returns:
     R = getReturns(X)[1:10,-5]
     
     # Plot:
-    # ohlcPlot(as.ts(R))  # CHECK
+    # ohlcPlot(as.ts(R))  # CHECK !!!
     
     # Return Value:
     return()

@@ -58,10 +58,40 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.remove =
+test.removeNA =
 function()
-{
-    NA
+{  
+    # Create matrix object:
+    set.seed(1985)
+    M = 5
+    N = 20
+    x = matrix(round(rnorm(M*N), 3), ncol = M)
+    colnames(x) = 1:M
+    rownames(x) = 1:N
+    nNA = 10
+    nCol = trunc(runif(nNA, 1, M+1))
+    nRow = trunc(runif(nNA, 1, N+1))
+    for (i in 1:nNA) x[nRow[i], nCol[i]] = NA
+    print(x)
+    ans = removeNA(x)
+    print(ans)
+    
+    
+    # Create data.frame object:
+    x.df = as.data.frame(x)
+    class(x.df)
+    ans = removeNA(x.df)
+    print(ans)
+    class(ans)
+    
+    
+    # Create timeSeries object:
+    tD = timeCalendar(m = 1, d = 1:N)
+    x.tS = timeSeries(x, tD)
+    print(x.tS)
+    ans = removeNA(x.tS)
+    print(ans)
+    class(ans)
     
     # Return Value:
     return()    
@@ -71,23 +101,92 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.substitute =
+test.substituteNA =
 function()
 {
-    NA 
+    # Create matrix object:
+    set.seed(1985)
+    M = 5
+    N = 20
+    x = matrix(round(rnorm(M*N), 3), ncol = M)
+    colnames(x) = 1:M
+    rownames(x) = 1:N
+    nNA = 10
+    nCol = trunc(runif(nNA, 1, M+1))
+    nRow = trunc(runif(nNA, 1, N+1))
+    for (i in 1:nNA) x[nRow[i], nCol[i]] = NA
+    print(x)
+    
+    # Substitute:
+    ans = substituteNA(x)
+    print(ans)
+    ans = substituteNA(x, "mean")
+    print(ans)
+    ans = substituteNA(x, "median")
+    print(ans)
+    
+    
+    # Create data.frame object:
+    x.df = as.data.frame(x)
+    print(x.df)
+    class(x.df)
+    
+    # Substitute:
+    ans = substituteNA(x.df)
+    print(ans)
+    ans = substituteNA(x.df, "mean")
+    print(ans)
+    ans = substituteNA(x.df, "median")
+    print(ans)
+    
+    
+    # Create timeSeries object:
+    tD = timeCalendar(m = 1, d = 1:N)
+    x.tS = timeSeries(x, tD)
+    print(x.tS)
+    class(x.tS)
+    
+    # Substitute:
+    ans = substituteNA(x.tS)
+    print(ans)
+    ans = substituteNA(x.tS, "mean")
+    print(ans)
+    ans = substituteNA(x.tS, "median")
+    print(ans)
     
     # Return Value:
-    return()    
+    return()      
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-test.interp =
+test.interpNA =
 function()
 {
-    NA
+    # Interpolate Column-by-Column
+    
+    # Create matrix object:
+    set.seed(1985)
+    M = 5
+    N = 20
+    x = matrix(round(rnorm(M*N), 3), ncol = M)
+    colnames(x) = 1:M
+    rownames(x) = 1:N
+    nNA = 10
+    nCol = trunc(runif(nNA, 1, M+1))
+    nRow = trunc(runif(nNA, 1, N+1))
+    for (i in 1:nNA) x[nRow[i], nCol[i]] = NA
+    print(x)
+    
+    # Interpolate:
+    ans = interpNA(x, "linear")
+    print(ans)
+    ans = interpNA(x, "before")
+    print(ans)
+    ans = interpNA(x, "after")
+    print(ans)
     
     # Return Value:
     return()    

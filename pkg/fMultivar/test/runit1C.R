@@ -37,9 +37,6 @@
 ################################################################################
 
 
-### Uncomplete - Under Development ###
-
-
 test.helpFile = 
 function()
 {
@@ -61,9 +58,10 @@ function()
 test.rollingVector =
 function()
 {
-    # .roll.RUnit()
+    # Period:
     n = 3
         
+    
     # TRIM = TRUE | na.rm = TRUE
     trim = TRUE
     na.rm = TRUE
@@ -86,6 +84,7 @@ function()
     # Max:
     ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = max)
     print(ans)   
+    
     
     # TRIM = TRUE | na.rm = FALSE
     trim = TRUE
@@ -110,6 +109,7 @@ function()
     ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = max)
     print(ans)
      
+    
     # TRIM = FALSE | na.rm = TRUE
     trim = FALSE
     na.rm = TRUE
@@ -133,6 +133,7 @@ function()
     ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = max)
     print(ans)  
     
+    
     # TRIM = FALSE | na.rm = FALSE
     trim = FALSE
     na.rm = FALSE
@@ -155,6 +156,7 @@ function()
     # Max:
     ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = max)
     print(ans)
+    
     
     # Return Value:
     return()    
@@ -174,8 +176,9 @@ function()
         FinCenter = "GMT") 
     print(ts)
     
-    # .roll.RUnit()
+    # Period:
     n = 3
+    
     
     # TRIM = TRUE | na.rm = TRUE
     trim = TRUE
@@ -200,6 +203,7 @@ function()
     ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = max)
     print(ans)   
     
+    
     # TRIM = TRUE | na.rm = FALSE
     trim = TRUE
     na.rm = FALSE
@@ -223,6 +227,7 @@ function()
     ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = max)
     print(ans)
      
+    
     # TRIM = FALSE | na.rm = TRUE
     trim = FALSE
     na.rm = TRUE
@@ -245,6 +250,7 @@ function()
     # Max:
     ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = max)
     print(ans)  
+    
     
     # TRIM = FALSE | na.rm = FALSE
     trim = FALSE
@@ -269,10 +275,10 @@ function()
     ans = rollFun(x, n = n, trim = trim, na.rm = na.rm, FUN = max)
     print(ans)
         
+    
     # Return Value:
     return()  
 }
-
 
 
 # ------------------------------------------------------------------------------

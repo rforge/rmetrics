@@ -80,7 +80,9 @@ function()
     X = cbind(G$x, G$y)
     z = dmvsnorm(X, 2, mu = rep(0, 2), Omega = diag(2), alpha = rep(0, 2))
     Z = list(x = x, y = x, z = matrix(z, ncol = length(x)))
-    .perspPlot(Z)
+    persp(Z, theta = -40, phi = 30, col = "steelblue")
+    # .perspPlot(Z)
+    
     
     # Return Value:
     return()    

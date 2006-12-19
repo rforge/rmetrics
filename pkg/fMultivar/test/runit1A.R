@@ -103,6 +103,8 @@ function()
 test.utility =
 function()
 {
+    # UTILITY FUNCTIONS:
+    
     #  emaTA                     Exponential Moving Average
     #  biasTA                    EMA-Bias
     #  medpriceTA                Median Price                   
@@ -110,8 +112,6 @@ function()
     #  wcloseTA                  Weighted Close Price
     #  rocTA                     Rate of Change
     #  oscTA                     EMA-Oscillator
-    
-    # UNIT TEST:
     
     # Data:
     URL = "http://localhost/econophysics/R/data/organisations/YAHOO/data/MSFT.CSV"
@@ -126,37 +126,37 @@ function()
     open   = X[, "Open"]
     volume = X[, "Volume"]
     
-    # Exponential Moving Average
+    # Exponential Moving Average:
     TA = emaTA(x, lambda = 0.1, startup = 0)
     dim(TA)
     head(TA)
 
-    # EMA-Bias
+    # EMA-Bias:
     TA = biasTA(x, lag = 5)
     dim(TA)
     head(TA)
     
-    # Median Price
+    # Median Price:
     TA = medpriceTA(high, low)
     dim(TA)
     head(TA)
 
-    # Typical Price
+    # Typical Price:
     TA = typicalpriceTA(high, low, close)
     dim(TA)
     head(TA)
     
-    # Weighted Close Price
+    # Weighted Close Price:
     TA = wcloseTA(high, low, close)
     dim(TA)
     head(TA)
     
-    # Rate of Change
+    # Rate of Change:
     TA = rocTA(x, lag = 5)
     dim(TA)
     head(TA)
     
-    # EMA-Oscillator
+    # EMA-Oscillator:
     TA = oscTA(x, lag1 = 25, lag2 = 65)
     dim(TA)
     head(TA)
@@ -172,6 +172,8 @@ function()
 test.oscillator =
 function()
 {
+    # OSCILLATOR INDICATORS:
+    
     #  momTA                     Momentum
     #  macdTA                    MACD
     #  cdsTA                     MACD Signal Line
@@ -194,32 +196,32 @@ function()
     open   = X[, "Open"]
     volume = X[, "Volume"]
 
-    # Momentum
+    # Momentum:
     TA = momTA(x, lag = 5)
     dim(TA)
     head(TA)
     
-    # MACD
+    # MACD:
     TA = macdTA(x, lag1 = 12, lag2 = 26)
     dim(TA)
     head(TA)
     
-    # MACD Signal Line
+    # MACD Signal Line:
     TA = cdsTA(x, lag1 = 12, lag2 = 26, lag3 = 9)
     dim(TA)
     head(TA)
     
-    # MACD Oscillator
+    # MACD Oscillator:
     TA = cdoTA(x, lag1 = 12, lag2 = 26, lag3 = 9)
     dim(TA)
     head(TA)
     
-    # High/Low Volatility
+    # High/Low Volatility:
     TA = vohlTA(high, low)
     dim(TA)
     head(TA)
     
-    # Volatility Ratio
+    # Volatility Ratio:
     TA = vorTA(high, low)
     dim(TA)
     head(TA)
@@ -235,6 +237,8 @@ function()
 test.stochastics =
 function()
 {
+    # STOCHASTICS INDICATORS:
+    
     #  stochasticTA              Stochastics %K/%D, fast/slow
     #  fpkTA                     Fast Percent %K
     #  fpdTA                     Fast Percent %D
@@ -258,13 +262,14 @@ function()
     open   = X[, "Open"]
     volume = X[, "Volume"]
 
-    # Fast Stochstic
+    # Fast Stochstic:
     TA = stochasticTA(close, high, low, lag1 = 5, lag2 = 3, type = "fast") 
     dim(TA)
     head(TA, 10)
     
-    # Slow Stochstic
-    TA = stochasticTA(close, high, low, lag1 = 5, lag2 = 3, lag3 = 5, type = "slow") 
+    # Slow Stochstic:
+    TA = stochasticTA(close, high, low, lag1 = 5, lag2 = 3, lag3 = 5, 
+        type = "slow") 
     dim(TA)
     head(TA, 10)
 
@@ -309,6 +314,8 @@ function()
 test.addons =
 function()
 {
+    # MORE INDICATORS:
+    
     #  accelTA                   Acceleration
     #  adiTA                     AD Indicator      
     #  adoscillatorTA            AD Oscillator
@@ -424,6 +431,7 @@ function()
     X = readSeries("MSFT.CSV")
     print(X)
     
+    # Data Records:
     x = close = X[, "Close"]
     high   = X[, "High"]
     low    = X[, "Low"]
@@ -435,12 +443,12 @@ function()
     dim(TA) 
     head(TA)
     
-    # EMA:
+    # EMA - Using Decay Length:
     TA = EWMA(x, 25)
     dim(TA)  
     head(TA)
     
-    # EMA:
+    # EMA - Using lambda:
     TA = EWMA(x, 2/(25+1))
     dim(TA)  
     head(TA)
@@ -459,6 +467,17 @@ function()
     #  .dailyTA                  Computes an indicator for technical analysis
     
     # UNIT TEST:
+    
+    # Data:
+    URL = "http://localhost/econophysics/R/data/organisations/YAHOO/data/MSFT.CSV"
+    download.file(URL, "MSFT.CSV")
+    X = readSeries("MSFT.CSV")
+    print(X)
+   
+    
+    # Daily TA:
+    TA = .dailyTA(X, "ema", select = "Close", lag = 5)
+    head(TA)
     
     # Return Value:
     return()  
