@@ -20,7 +20,7 @@
 \alias{summary.fMV}
 
 
-\title{Multivariate Normal and Student-t Distributions}
+\title{Multivariate Skew Normal and Student-t Distributions}
 
 
 \description{
@@ -191,6 +191,9 @@ mvFit(x, method = c("snorm", "st"), fixed.df = NA, title = NULL,
     method allows for selective batch and interactive plots. The 
     argument \code{which} takes care for the desired operation.
     
+    The contributed R package \code{mvtnorm} is required, the contributed 
+    R package \code{sn} is builtin, since it is not available on the
+    Debian Software Server.   
 }
 
 
