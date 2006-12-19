@@ -1440,7 +1440,6 @@ ts.weights, classify, factors, tolerance = 1e-06, verbose = FALSE)
     # FUNCTION:
     
     # require(polspline)
-    require(polspline)
     
     # Fit:
     .Call <- match.call()
