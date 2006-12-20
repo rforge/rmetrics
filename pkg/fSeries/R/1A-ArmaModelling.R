@@ -40,8 +40,9 @@
 #  .arPpredict             Internal function called by predict.fARMA
 #  .arimaPpredict          Internal function called by predict.fARMA
 #  .arfimaPredict          Not yet implemented
-# S3 METHOD:              PRINT - PLOT - SUMMARY METHODS:
-#  print.fARMA             S3: Prints a fitted ARMA time series object
+# GENERIC METHODS:        PRINT - PLOT - SUMMARY METHODS:
+#  show.fARMA              S4: Prints a fitted ARMA time series object
+#  .print.fARMA            S3: Prints a fitted ARMA time series object
 #  plot.fARMA              S3: Plots stylized facts of a fitted ARMA object
 #  summary.fARMA           S3: Summarizes a fitted ARMA time series object
 # S3 METHOD:              ADDON METHODS:
@@ -882,14 +883,11 @@ function(object)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Prints a Fitted ARMA timeSeries Object
+    #   S4 print method for a fitted ARMA timeSeries object
  
     # FUNCTION:
        
-    # Unlike print the argument for show is 'object'.
-    x = object
-    
-    # Series:
+    # Print:
     .print.fARMA(x = object)
     
     # Return Value:
@@ -905,7 +903,7 @@ function(x, ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Prints a Fitted ARMA timeSeries Object
+    #   Old S3 print method for a fitted ARMA timeSeries object
 
     # FUNCTION:
     
