@@ -1,6 +1,6 @@
-\name{MarketStatistics}
+\name{CIAFactbook}
 
-\alias{MarketStatistics}
+\alias{CIAFactbook}
 
 \alias{ciaCountries}
 \alias{ciaIndicators}
@@ -17,13 +17,6 @@
 %DATA
 
 \alias{ciaFactbook}
-
-\alias{wfe1}
-\alias{wfe2}
-\alias{wfe3}
-\alias{wfe4}
-\alias{wfe5}
-\alias{wfe6}
             
 
 \title{CIA Factbook}
@@ -33,9 +26,7 @@
     
     A collection and description of functions to extract 
     financial and economic market statistics from the
-    data available in the CIA World Factbook and from the
-    exchange data collected by the World Federation of 
-    Stock Exchanges.
+    data available in the CIA World Factbook.
     \cr
     
     The functions are:
@@ -45,17 +36,7 @@
     \code{ciaIndicators} \tab Returns a list of CIA indicator codes, \cr
     \code{ciaByCountry} \tab Returns all Indicators by country, \cr 
     \code{ciaByIndicator} \tab Returns for all countries indicator ranking. }
-    
-    To load statistics from the WFE:
-    
-    \tabular{ll}{
-    \code{data(wfe1)} \tab Market capitalization of domestic companies, \cr
-    \code{data(wfe2)} \tab Total number of companies with shares listed, \cr
-    \code{data(wfe3)} \tab Total value of share trading, \cr 
-    \code{data(wfe4)} \tab Market value of bonds listed, \cr
-    \code{data(wfe5)} \tab Total value of bond trading, and \cr
-    \code{data(wfe6)} \tab Price earning ratio an gross dividend yield. }
-    
+ 
 }
 
 
@@ -132,7 +113,7 @@ ciaByIndicator(code = 2001, from = FALSE, details = FALSE)
 \details{
 
     Financial and economic market statistics can be found at several 
-    web pages for free. The "OECD Factbook" from the 'Organisation for
+    web pages for free. E.g. the "OECD Factbook" from the 'Organisation for
     Economic Co-operation and Development', \emph{www.oecd.org},
     "The World Factbook" from the 'Central Intelligence Agency'
     of the US, \emph{www.cia.gov}, and the "Penn World Tables" from
@@ -155,16 +136,12 @@ ciaByIndicator(code = 2001, from = FALSE, details = FALSE)
 CIA, 2004, 
     \emph{CIA Factbbook 2004},
     http://www.cia.gov/cia/publications/factbook.
-    
-WFE, 2004,
-    \emph{World Federation of Stock Exchanges, Focus 2004},
-    http://www.world-exchanges.org.
 
 }
     
     
 \examples{
-## SOURCE("fEcofin.1A-MarketStatistics")
+## SOURCE("fEcofin.1A-CIAFactbook")
 
 ## Pie Chart from CIA Oil Production Indicator (Code 2173): 
    # Search for Code:
@@ -176,22 +153,6 @@ WFE, 2004,
    pie(OilProduction,col = rainbow(10))
    title(main = "Oil Production 2004\n bbl/day")
    mtext("Source: CIA World Factbook", side = 1)
-
-## Barplot from WFE Capitalization Statistics:
-   # Extract Capitalization of/at:
-   # NYSE: 7, Tokyo: 37, London: 22, Frankfurt: 15
-   # 1991 - 2003 triannual: 3,6,9,12,15
-   data(wfe1)
-   Table =t(wfe1[c(7,37,22,15),c(3,6,9,12,15)])/1e6
-   colnames(Table) = c("NewYork", "Tokyo", "London", "Frankfurt")
-   rownames(Table) = as.character(seq(1991, 2003, by = 3))
-   Table
-   # Create Barplot:
-   barplot(Table, beside = TRUE, legend = rownames(Table),
-     col = c("lightblue", "mistyrose", "lightcyan", "lavender", "cornsilk"))
-   title(main = "Stock Market Capitalization\n 1991 - 2003")
-   mtext("Source: World Federation of Exchanges", side = 4, 
-     line = -2, cex = 0.7) 
 }
 
 
