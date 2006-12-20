@@ -28,7 +28,13 @@
 
 
 ################################################################################
-# WFE
+# FUNCTION CALL:    DESCRIPTION:
+#  data(wfe1)        Market capitalization of domestic companies 
+#  data(wfe2)        Total number of companies with shares listed 
+#  data(wfe3)        Total value of share trading 
+#  data(wfe4)        Market value of bonds listed 
+#  data(wfe5)        Total value of bond trading 
+#  data(wfe6)        Price earning ratio an gross dividend yield 
 ################################################################################
 
 
