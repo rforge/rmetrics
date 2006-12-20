@@ -16,7 +16,9 @@
 \alias{seq.timeDate}
 \alias{Sys.timeDate}
 
-\alias{print.timeDate}
+\alias{show.timeDate}
+\alias{show,timeDate-method}
+
 \alias{plot.timeDate}
 \alias{points.timeDate}
 \alias{lines.timeDate}
@@ -86,7 +88,8 @@ Sys.timeDate(FinCenter = myFinCenter)
 
 is.timeDate(object)
 
-\method{print}{timeDate}(x, \dots)
+show.timeDate(object)
+
 \method{plot}{timeDate}(x, y, \dots)
 \method{summary}{timeDate}(object, \dots)
 \method{format}{timeDate}(x, \dots) 
@@ -137,7 +140,7 @@ myUnits
         \code{"sort"}, \code{"round"}, or \code{"trunc"}. 
         }     
     \item{object}{
-        [is.timeData][summary] - \cr
+        [is.timeData][show][summary] - \cr
         an object of class \code{timeDate}.
         }
     \item{pattern}{

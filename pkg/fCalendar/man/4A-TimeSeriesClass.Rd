@@ -19,7 +19,9 @@
 \alias{isUnivariate}
 \alias{isMultivariate}
 
-\alias{print.timeSeries}
+\alias{show.timeSeries}
+\alias{show,timeSeries-method}
+
 \alias{summary.timeSeries}
 \alias{plot.timeSeries}
 \alias{lines.timeSeries}
@@ -105,7 +107,8 @@ seriesData(object)
 isUnivariate(x)
 isMultivariate(x)
 
-\method{print}{timeSeries}(x, recordIDs = FALSE, \dots)
+show.timeSeries(object)
+
 \method{summary}{timeSeries}(object, \dots)
 \method{plot}{timeSeries}(x, \dots) 
 \method{lines}{timeSeries}(x, \dots)
@@ -212,7 +215,7 @@ ohlcDailyPlot(x, volume = TRUE, colOrder = c(1:5), units = 1e6,
         \code{"before"} and \code{"after"}. 
         }
     \item{object}{
-        [is][seriesData][seriesPositions][summary] -    
+        [is][seriesData][seriesPositions][show][summary] -    
         an object of class \code{timeSeries}.
         }
     \item{percentage}{

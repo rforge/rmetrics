@@ -986,7 +986,8 @@ function(object)
 
 ################################################################################
 # S3 METHODS:            REPRESENTATION OF TIMEDATE OBJECTS:
-#  print.timeDate         Prints 'timeDate' object
+#  show.timeDate          Prints 'timeDate' object
+#  .print.timeDate         Prints 'timeDate' object
 #  plot.timeDate          Plots 'timeDate' object
 #  points.timeDate        Adds points to a 'timeDate' plot
 #  lines.timeDate         Adds lines to a 'timeDate' plot
@@ -994,7 +995,30 @@ function(object)
 #  format.timeDate        Formats 'timeDate' as ISO conform character string
 
 
-print.timeDate = 
+show.timeDate = 
+function(object)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Print method for an S4 object of class "timeDate"
+ 
+    # FUNCTION:
+       
+    # Unlike print the argument for show is 'object'.
+    x = object
+    
+    # Series:
+    .print.timeDate(x = object)
+    
+    # Return Value:
+    invisible(object)
+}
+    
+    
+setMethod("show", "timeDate", show.timeDate)
+
+
+.print.timeDate = 
 function(x, ...) 
 {   # A function implemented by Diethelm Wuertz
 

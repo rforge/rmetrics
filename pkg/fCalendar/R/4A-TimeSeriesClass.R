@@ -43,7 +43,8 @@
 #  isUnivariate         Tests if object of class 'timeSeries' is univariate
 #  isMultivariate       Tests if object of class 'timeSeries' is multivariate
 # METHODS:             PRINT AND PLOT FUNCTIONS:
-#  print.timeSeries     Prints a 'timeSeries' object
+#  show.timeSeries     Prints a 'timeSeries' object
+#  .print.timeSeries    Prints a 'timeSeries' object
 #  summary.timeSeries   Summarizes a 'timeSeries' object
 #  plot.timeSeries      Plots a 'timeSeries' object
 #  points.timeSeries    Adds points to a 'timeSeries' plot
@@ -712,14 +713,38 @@ function(x)
 
 
 ################################################################################
-#  print.timeSeries     Prints a 'timeSeries' object
+#  show.timeSeries     Prints a 'timeSeries' object
+#  .print.timeSeries    Prints a 'timeSeries' object
 #  summary.timeSeries   Summarizes a 'timeSeries' object
 #  plot.timeSeries      Plots a 'timeSeries' object
 #  points.timeSeries    Adds points to a 'timeSeries' plot
 #  lines.timeSeries     Adds lines to a 'timeSeries' plot
 
 
-print.timeSeries =
+show.timeSeries = 
+function(object)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Print method for an S4 object of class "timeSeries"
+ 
+    # FUNCTION:
+       
+    # Unlike print the argument for show is 'object'.
+    x = object
+    
+    # Series:
+    .print.timeSeries(x = object, recordIDs = FALSE)
+    
+    # Return Value:
+    invisible(object)
+}
+    
+    
+setMethod("show", "timeSeries", show.timeSeries)   
+    
+
+.print.timeSeries =
 function(x, recordIDs = FALSE, ...)
 {   # A function implemented by Diethelm Wuertz
     
