@@ -91,6 +91,18 @@ greyPalette(n = 64, start = 255-n, end = 255)
 
 \examples{
 ## SOURCE("fEcofin.1A-CodeTables")
+
+## Character Table for Font 2:
+   characterTable(font = 1)
+   
+## Default Symbol Table:
+   symbolTable()
+    
+## Color Table:
+   colorTable()
+
+## GreyPalette
+   greyPalette()
 }
 
 
