@@ -28,19 +28,15 @@
 
 
 ################################################################################
-# FINCTIONS:                     WORLD FACTBOOK FROM CIA:
-#  ciaCountries                   Returns a list of CIA country codes
-#  print.ciaCountries             S3 print method for 'ciaIndicators'
-#  ciaIndicators                  Returns a list of CIA indicator codes
-#  print.ciaIndicators            S3 print method for 'ciaIndicators'
-#  ciaByCountry                   Returns all Indicators by country 
-#  ciaByIndicator                 Returns for all countries indicator ranking
-# FUNCTIONS:                     FOR RUNIT TESTING:
-#  .ciaByCountry.RUnit            R Unit test for 'ciaByCountry' 
-#  .ciaByIndicator.RUnit          R Unit test for 'ciaByIndicator' 
-# FUNCTIONS:                     FOR INTERNAL USE, ONLY - DO NOT RUN:
-#  .createFactbook                Creates CIA Data for use with Rmetrics
-#  .createIndicators              List of indicator for use with  Rmetrics
+# FUNCTION:                 CHARACTER, SYMBOL AND COLOR TABLES:
+#  characterTable            Shows a table of character codes 
+#  symbolTable               Shows a table of plot symbols
+#  colorTable                Shows a table of plot color codes
+# FUNCTION:                 COLOR PALETTES:
+#  greyPalette               Creates a grey palette
+#  .chcode                   Changes from one to another number system
+#  .hex.to.dec               Converts heximal numbers do decimal numbers
+#  .dec.to.hex               Converts decimal numbers do heximal numbers
 ################################################################################
 
 
@@ -49,7 +45,7 @@ function()
 {
     # Help File:
     helpFile = function() { 
-        example(MarketStatistics); return() }
+        example(CodeTables); return() }
     checkIdentical(
         target = class(try(helpFile())),
         current = "NULL")
@@ -59,57 +55,10 @@ function()
 
 # ------------------------------------------------------------------------------
 
-
-test.ciaCountries = 
-function()
-{
-    # CIA Countries:
-    print(head(ciaCountries()))
-    country = ciaCountries()[212, 3]
-    checkIdentical(
-        target = country, 
-        current = "CH")
-    country = ciaCountries()[212, "Name"]
-    checkIdentical(
-        target = country, 
-        current = "Switzerland")
-    cat("\n")
-   
-    # Return Value:
-    return() 
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-test.ciaIndicators = 
-function()
-{     
-    # CIA Indicators: 
-    print(head(ciaIndicators()))
-    indicator = ciaIndicators()[19, 1]
-    checkIdentical(
-        target = indicator, 
-        current = "2095")
-    indicator = ciaIndicators()[19, "Indicator"]
-    current = "Labor force"
-    checkIdentical(
-        target = indicator, 
-        current = "Labor force")
-    cat("\n")
-    
-    # Return Value:
-    return() 
-}
-
-
-# ------------------------------------------------------------------------------
-
     
 if (FALSE) {
     require(RUnit)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/Rmetrics/test/runit1A.R")
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fEcofin/test/runit1A.R")
     printTextProtocol(testResult)
 }   
 
