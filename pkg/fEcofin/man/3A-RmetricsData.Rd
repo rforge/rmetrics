@@ -2,7 +2,7 @@
 
 \alias{RmetricsData}
 
-%\alias{ciaFactbook}
+%alias{ciaFactbook}
 \alias{CPI.dat}
 \alias{dem2gbp}
 \alias{DowJones30}
@@ -23,7 +23,7 @@
 \alias{surex1.ts}
 \alias{usdchf}
 \alias{usdthb}
-%\alias{wfe1..6}
+%alias{wfe1..6}
 \alias{yhoo.df}
 
 \title{Rmetrics Data Sets} 
