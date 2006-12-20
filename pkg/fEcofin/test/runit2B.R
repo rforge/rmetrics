@@ -24,7 +24,35 @@
 #   see R's copyright and license files
 # for the code accessed (or partly included) from contributed R-ports
 # and other sources
-#   see Rmetrics's copyright file
+#   see Rmetrics's copyright file 
+
+
+################################################################################
+# WFE
+################################################################################
+
+
+test.helpFile = 
+function()
+{
+    # Help File:
+    helpFile = function() { 
+        example(WFEStatistics); return() }
+    checkIdentical(
+        target = class(try(helpFile())),
+        current = "NULL")
+    return() 
+}
+
+
+# ------------------------------------------------------------------------------
+
+    
+if (FALSE) {
+    require(RUnit)
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fEcofin/test/runit2B.R")
+    printTextProtocol(testResult)
+}   
 
 
 ################################################################################
