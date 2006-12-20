@@ -32,12 +32,10 @@
 #  setClass[garchSpec]     S4: garchSpec Class representation 
 #  garchSpec               S4: Creates a 'garchSpec' object from scratch
 #  print.garchSpec         S3: Print method for an object of class 'garchSpec'
-#  .garchSpecRUnit         RUnit Testing
 ################################################################################
 # PART II - FUNCTION:     SIMULATION:
 #  garchSim                Simulates a GARCH/APARCH process
 #  .garchSim               Simulates a GARCH/APARCH from specification object
-#  .garchSimRUnit          RUnit Testing
 ################################################################################
 # PART III - FUNCTION:    PARAMETER ESTIMATION: 
 #  setClass[fGARCH]        S4: fGARCH Class representation   
@@ -74,7 +72,6 @@
 #  setClass[garchSpec]    S4: garchSpec Class representation 
 #  garchSpec              S4: Creates a 'garchSpec' object from scratch
 #  print.garchSpec        S3: Print method for an object of class 'garchSpec'
-#  .garchSpecRUnit        RUnit Testing
 ################################################################################
 
 
@@ -212,7 +209,7 @@ presample = NULL, cond.dist = c("rnorm", "rged", "rstd", "rsnorm",
         if (distribution == "rstd")   model$skew = c(skew = NULL)
         if (distribution == "rsnorm") model$skew = c(skew = 0.9)
         if (distribution == "rsged")  model$skew = c(skew = 0.9)
-        if (distribution == "rssdt")  model$skew = c(skew = 0.9) 
+        if (distribution == "rsstd")  model$skew = c(skew = 0.9) 
     } else { 
         names(model$skew) = "skew" 
     }
@@ -222,7 +219,7 @@ presample = NULL, cond.dist = c("rnorm", "rged", "rstd", "rsnorm",
         if (distribution == "rstd")   model$shape = c(shape = 4)
         if (distribution == "rsnorm") model$shape = c(shape = NULL)
         if (distribution == "rsged")  model$shape = c(shape = 2)
-        if (distribution == "rssdt")  model$shape = c(shape = 4) 
+        if (distribution == "rsstd")  model$shape = c(shape = 4) 
     } else { 
         names(model$shape) = "shape" 
     }
@@ -387,101 +384,11 @@ function(x, ...)
 }
 
 
-# ------------------------------------------------------------------------------
-
-
-.garchSpecRUnit = 
-function()
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   R Unit Testing
-    
-    # Arguments:
-    #   none
-    
-    # FUNCTION:
-    
-    # Internal print Function:
-    Print = function(x) {
-        cat("RUnit Test:\n ")
-        print(x@call)
-        print(x)
-        cat("\n")
-    }
-    
-    # ARCH(1) - use default omega and default alpha[1]
-    Print(garchSpec(model = list())) 
-    
-    # ARCH(1) - use default omega and specify alpha
-    Print(garchSpec(model = list(alpha = 0.2))) 
-    
-    # ARCH(1) - specify omega and alpha
-    Print(garchSpec(model = list(omega = 3.0e-6, alpha = 0.3)))
-    
-    # AR(1)-ARCH(1) - use default omega/alpha and specify alpha[1]
-    Print(garchSpec(model = list(ar = 0.5))) 
-    
-    # AR([1,5])-ARCH(1) - use default omega, specify alpha and subset ar[.]
-    Print(garchSpec(model = list(ar = c(0.5,0,0,0,0.1), alpha = 0.25)))
-    
-    # ARMA(1,2)-ARCH(1) - use default omega/alpha and specify ar[1]/ma[2]
-    Print(garchSpec(model = list(ar = 0.5, ma = c(0.3, -0.3))))
-    
-    # ARMA(2,2)-ARCH(1) use default omega/alpha and specify ar[2]/ma[2]
-    Print(garchSpec(model = list(ar = c(0.5, -0.5), ma = c(0.3,-0.3))))
-    
-    # ARCH(2) - use default omega and specify alpha[2]
-    Print(garchSpec(model = list(alpha = c(0.12, 0.04))))
-    
-    # GARCH(1,1) - use just defaults
-    Print(garchSpec())
-    
-    # GARCH(1,1) - use default omega and specify alpha/beta
-    Print(garchSpec(model = list(alpha = 0.2, beta = 0.7)))
-    
-    # GARCH(1,1) - specify omega/alpha/beta
-    Print(garchSpec(model = list(omega = 1e-6, alpha = 0.1, beta = 0.8)))
-    
-    # GARCH(1,2) - use default omega and specify alpha[1]/beta[2]
-    Print(garchSpec(model = list(alpha = 0.1, beta = c(0.4, 0.4))))
-    
-    # GARCH(2,1) - use default omega and specify alpha[2]/beta[1]
-    Print(garchSpec(model = list(alpha = c(0.12, 0.04), beta = 0.08)))
-    
-    # rsnorm-ARCH(1) - use defaults with skew Normal
-    Print(garchSpec(model = list(dist = 2), cond.dist = "rsnorm"))
-    
-    # rged-ARCH(1) using default omega and alpha[1]
-    Print(garchSpec(model = list(dist = 4), cond.dist = "rged"))
-    
-    # rsged-ARCH(1) using default omega and alpha[1]
-    Print(garchSpec(model = list(dist = c(4, 2)), cond.dist = "rsged"))
-    
-    # rstd-ARCH(1) using default omega and alpha[1]
-    Print(garchSpec(model = list(dist = 4), cond.dist = "rstd"))
-    
-    # rsstd-ARCH(1) using default omega and alpha[1]
-    Print(garchSpec(model = list(dist = c(4, 2)), cond.dist = "rsstd"))
-    
-    # TS-GARCH(1,1)
-    Print(garchSpec(model = list(delta = 1)))
-    
-    # AR(1)-t-APARCH(2, 1)
-    Print(garchSpec(model = list(mu = 1.0e-4, ar = 0.5, omega = 1.0e-6, 
-        alpha = c(0.10, 0.05), gamma = c(0, 0), beta = 0.8, delta = 1.8, 
-        dist = c(nu = 4, xi = 0.5)), cond.dist = "rsstd"))
-    
-    invisible()
-}
-
-
 ################################################################################
 # PART II:
 # SIMULATION:          DESCRIPTION:
 #  garchSim             Simulates a GARCH/APARCH process
 #  .garchSim            Simulates a GARCH/APARCH from specification object
-#  .garchSimRUnit       Unit Testing
 ################################################################################
 
 
@@ -660,99 +567,6 @@ function(n = 1000, n.start = 1000, spec = garchSpec())
 }
 
 
-# ------------------------------------------------------------------------------
-
-
-.garchSimRUnit = 
-function()
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Unit Testing
-    
-    # Arguments:
-    #   none
-    
-    # FUNCTION:
-    
-    # ARCH(1)
-    spec = garchSpec(model = list())
-    print(garchSim(n = 10, model = spec))
-    
-    # ARCH(1)
-    spec = garchSpec(model = list(alpha = 0.1))
-    print(garchSim(n = 10, model = spec))
-    
-    # ARCH(1)
-    spec = garchSpec(model = list(omega = 1e-6, alpha = 0.1))
-    print(garchSim(n = 10, model = spec))
-    
-    # AR(1)-ARCH(1)
-    spec = garchSpec(model = list(ar = 0.5)) 
-    print(garchSim(n = 10, model = spec))
-    
-    # AR([1,5])-ARCH(1)
-    spec = garchSpec(model = list(ar = c(0.5,0,0,0,0.1)))
-    print(garchSim(n = 10, model = spec))
-    
-    # ARMA(1,2)-ARCH(1)
-    spec = garchSpec(model = list(ar = 0.5, ma = c(0.3,-0.3)))
-    print(garchSim(n = 10, model = spec))
-    
-    # rsnorn-ARCH(2)
-    spec = garchSpec(model = list(alpha = c(0.12, 0.04), dist = 2/3), 
-        cond.dist = "rsnorm")
-    print(garchSim(n = 10, model = spec))
-    
-    # GARCH(1,1)
-    spec = garchSpec()
-    print(garchSim(n = 10, model = spec))
-    
-    # GARCH(1,1)
-    spec = garchSpec(model = list(alpha = 0.1, beta = 0.8))
-    print(garchSim(n = 10, model = spec))
-    
-    # GARCH(1,1)
-    spec = garchSpec(model = list(omega = 1e-6, alpha = 0.1, beta = 0.8))
-    print(garchSim(n = 10, model = spec))
-    
-    # GARCH(1,2)
-    spec = garchSpec(model = list(alpha = 0.1, beta = c(0.4, 0.4)))
-    print(garchSim(n = 10, model = spec))
-    
-    # GARCH(2,1)
-    spec = garchSpec(model = list(alpha = c(0.12, 0.04), beta = 0.08))
-    print(garchSim(n = 10, model = spec))
-    
-    # r[s]norm-GARCH(1,1)   
-    spec = garchSpec(model = list(), cond.dist = "rnorm")
-    print(garchSim(n = 10, model = spec))
-    
-    spec = garchSpec(model = list(parm = 2), cond.dist = "rsnorm")
-    print(garchSim(n = 10, model = spec))
-    
-    # r[s]ged-GARCH(1,1)
-    spec = garchSpec(model = list(parm = 4), cond.dist = "rged")
-    print(garchSim(n = 10, model = spec))
-    
-    spec = garchSpec(model = list(parm = c(4, 2)), cond.dist = "rsged")
-    print(garchSim(n = 10, model = spec))
-    
-    # r[s]std-GARCH(1,1)
-    spec = garchSpec(model = list(parm = 4), cond.dist = "rstd")
-    print(garchSim(n = 10, model = spec))
-    
-    spec = garchSpec(model = list(parm = c(4, 2)), cond.dist = "rsstd")
-    print(garchSim(n = 10, model = spec))
-    
-    # TS-GARCH(1,1)
-    spec = garchSpec(list(alpha = 0.1, delta = 1))
-    print(garchSim(n = 10, model = spec))
-    
-    invisible()
-}
-
-
 ################################################################################
 # PART III - FUNCTION:    PARAMETER ESTIMATION: 
 #  setClass[fGARCH]        S4: fGARCH Class representation   
@@ -804,24 +618,48 @@ control = list(), title = NULL, description = NULL, ...)
     # Description
     #   Fit parameters to a ARMA-GARCH model
     
+    # FUNCTION:
+    
+    # DEBUG Status:
+    .DEBUG = FALSE
+    
+    # Check formula expression dependent on data class:
+    if (class(data) == "timeSeries") {
+        formulaLength = length(formula)
+        if (formulaLength < 3) {
+            stop1 = "For timeSeries objects you must specifiy the full formula:"
+            stop2 = "e.g. formula = X ~ arma(2,1) + garch(1,1)
+            stop(paste(stop1, stop2)) 
+        }
+    }
+    if (class(data) == "data.frame") {
+        formulaLength = length(formula)
+        if (formulaLength < 3) {
+            stop1 = "For data.frame objects you must specifiy the full formula:"
+            stop2 = "e.g. formula = X ~ arma(2,1) + garch(1,1)
+            stop(paste(stop1, stop2)) 
+        }
+    }
+    
     # Call:
     CALL = match.call()
     
     # Get Data:
     mf = match.call(expand.dots = FALSE)
+    if (.DEBUG) print(mf)
     m = match(c("formula", "data"), names(mf), 0)
     mf = mf[c(1, m)]
     mf[[1]] = as.name(".modelSeries")
     mf$fake = FALSE
     mf$lhs = TRUE
+    if (.DEBUG) print(mf)
     x = eval(mf, parent.frame())
     x = as.vector(x[, 1])
     if (class(mf$data) == "timeSeries") names(x) = rownames(data)
-    # print(head(x))
-    
+    if (.DEBUG) print(head(x))
     # Compose Mean and variance Formula:
     allLabels = attr(terms(formula), "term.labels")
-    print(allLabels)
+    if (.DEBUG) print(allLabels)
     if (length(allLabels) == 2) {
         formula.mean = as.formula(paste("~", allLabels[1]))
         formula.var = as.formula(paste("~", allLabels[2]))
@@ -829,9 +667,9 @@ control = list(), title = NULL, description = NULL, ...)
         formula.mean = as.formula("~ arma(0, 0)")
         formula.var = as.formula(paste("~", allLabels[1]))
     }
-    # print(formula.mean)
-    # print(formula.var)
-    
+    if (.DEBUG) print(formula.mean)
+    if (.DEBUG) print(formula.var)
+       
     # Fit:
     ans = .garchFit(formula.mean, formula.var, series = x, init.rec, delta, 
         skew, shape, cond.dist, include.mean, include.delta, include.skew, 
@@ -2074,7 +1912,7 @@ title = NULL, description = NULL, ...)
 ################################################################################
                 
 
-print.fGARCH = 
+.print.fGARCH = 
 function(x, ...) 
 {   # A function implemented by Diethelm Wuertz
     
@@ -2133,6 +1971,16 @@ function(x, ...)
     cat("\n")
     invisible()
 }
+
+
+show.fGARCH = 
+function(object) 
+{ 
+    .print.fGARCH(object) 
+}
+
+
+setMethod("show", "fGARCH", show.fGARCH)
 
 
 # ------------------------------------------------------------------------------
