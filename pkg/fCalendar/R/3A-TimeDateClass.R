@@ -45,7 +45,8 @@
 #  Sys.timeDate           Returns system time as an object of class 'timeDate' 
 #  is.timeDate            Tests if the object is of class 'timeDate' 
 # METHODS:               REPRESENTATION OF TIMEDATE OBJECTS:
-#  print.timeDate         Prints 'timeDate' object
+#  show.timeDate          Prints 'timeDate' object
+#  .print.timeDate         Prints 'timeDate' object
 #  plot.timeDate          Plots 'timeDate' object
 #  points.timeDate        Adds points to a 'timeDate' plot
 #  lines.timeDate         Adds lines to a 'timeDate' plot
