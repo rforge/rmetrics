@@ -32,7 +32,7 @@
 #  seriesPlot                Returns a tailored return series plot
 #  histPlot                  Returns a tailored histogram plot
 #  densityPlot               Returns a tailored kernel density estimate plot
-#  quantilePlot              Returns a tailored quantile-quantile plot
+#  quantilePlot              Returns a tailored normal quantile-quantile plot
 ################################################################################
 
 
