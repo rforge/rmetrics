@@ -5,7 +5,7 @@
 \alias{seriesPlot}
 \alias{histPlot}
 \alias{densityPlot}
-\alias{quantilePlot}
+\alias{qqnormPlot}
 
 
 \title{Tailored Return Plots}
