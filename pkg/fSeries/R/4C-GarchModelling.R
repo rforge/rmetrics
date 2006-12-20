@@ -641,7 +641,7 @@ control = list(), title = NULL, description = NULL, ...)
         formulaLength = length(formula)
         if (formulaLength < 3) {
             stop1 = "For timeSeries objects you must specifiy the full formula:"
-            stop2 = "e.g. formula = X ~ arma(2,1) + garch(1,1)
+            stop2 = "e.g. formula = X ~ arma(2,1) + garch(1,1)"
             stop(paste(stop1, stop2)) 
         }
     }
@@ -649,7 +649,7 @@ control = list(), title = NULL, description = NULL, ...)
         formulaLength = length(formula)
         if (formulaLength < 3) {
             stop1 = "For data.frame objects you must specifiy the full formula:"
-            stop2 = "e.g. formula = X ~ arma(2,1) + garch(1,1)
+            stop2 = "e.g. formula = X ~ arma(2,1) + garch(1,1)"
             stop(paste(stop1, stop2)) 
         }
     }
