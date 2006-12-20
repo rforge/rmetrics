@@ -444,9 +444,6 @@ method = c("yw", "burg1", "burg2", "ols", "mle"), M = NULL, h = NULL, ...)
     # Note:
     #   Calls ar() from R-stats.
     
-    # Changes:
-    #
-    
     # FUNCTION:
     
     # Fit:
@@ -525,9 +522,6 @@ method = c("CSS-ML", "ML", "CSS"), M = NULL, h = NULL, ...)
     
     # Note:
     #   Calls arima() from R-stats.
-
-    # Changes:
-    #
     
     # FUNCTION:
     
@@ -588,9 +582,6 @@ M = 100, h = -1, ...)
     # Note:
     #   A Builtin Copy from R's fracdiff Package 
     #   Calls fracdiff() from R-fracdiff
-    
-    # Changes:
-    #
     
     # FUNCTION:
     
@@ -723,10 +714,7 @@ doplot = TRUE, ...)
     #   x = armaSim(n = 500)
     #   object = armaFit(formula = x ~ arima(2, 0, 1))
     #   predict(object)
-  
-    # Changes:
-    #
-    
+
     # FUNCTION:
     
     # OX Arfima:
@@ -849,9 +837,6 @@ doplot = TRUE, ...)
 function (object, n.ahead = 10, se.fit = TRUE, ...) 
 {   # A function implemented by Diethelm Wuertz
 
-    # Changes:
-    #
-    
     # FUNCTION:
     
     # Predict - object@fit$tsmodel = "ar":
@@ -872,9 +857,6 @@ function (object, n.ahead = 10, se.fit = TRUE, ...)
 function (object, n.ahead = 10, se.fit = TRUE, ...) 
 {   # A function implemented by Diethelm Wuertz
 
-    # Changes:
-    #
-    
     # FUNCTION:
     
     # Predict - object@fit$tsmodel = "arima":
@@ -895,16 +877,36 @@ function (object, n.ahead = 10, se.fit = TRUE, ...)
 # PRINT - SUMMARY - PLOT:
 
 
-print.fARMA = 
+show.fARMA = 
+function(object)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Prints a Fitted ARMA timeSeries Object
+ 
+    # FUNCTION:
+       
+    # Unlike print the argument for show is 'object'.
+    x = object
+    
+    # Series:
+    .print.fARMA(x = object)
+    
+    # Return Value:
+    invisible(object)
+}
+    
+    
+setMethod("show", "fARMA", show.fARMA)
+
+
+.print.fARMA = 
 function(x, ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Prints a Fitted ARMA Time Series Object
-    
-    # Changes:
-    #
-    
+    #   Prints a Fitted ARMA timeSeries Object
+
     # FUNCTION:
     
     # Fit:
@@ -945,11 +947,8 @@ function (object, doplot = TRUE, which = "all", ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Analyzes a Fitted ARMA Time Series Object
-    
-    # Changes:
-    #
-    
+    #   Analyzes a Fitted ARMA timeSeries Object
+
     # FUNCTION:
         
     # Initialize:
@@ -1088,10 +1087,7 @@ function(x, which = "ask", gof.lag = 10, ...)
 
     # Description:
     #   Plot method for an object of class 'fARMA'
-    
-    # Changes:
-    #
-    
+
     # FUNCTION:
 
     # Check:
@@ -1177,10 +1173,7 @@ function(object, ...)
     
     # Note:
     #   Alternatively you can use coefficient().
-    
-    # Changes:
-    #
-    
+
     # FUNCTION:
     
     # Coefficients:

@@ -35,7 +35,7 @@
 # FUNCTION:          PROBABILIY AND QUANTILES:
 #  punitroot          Returns cumulative probability for unit root distributions
 #  qunitroot          Returns quantiles for unit root distributions
-# INTERNAL:          UTILITY FUNCTIONS:
+# FUNCTION:          INTERNAL UTILITY FUNCTIONS:
 #  .strsplitUrcval    String split function for S-Plus compatibility
 #  .urcval            Implements unit root statists
 #  .probsUrcval       Probability values
