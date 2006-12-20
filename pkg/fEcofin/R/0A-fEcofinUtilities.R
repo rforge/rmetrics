@@ -29,17 +29,18 @@
 
 ################################################################################
 # FUNCTION:                 INTERNAL USED PLOT FUNCTIONS: 
-#  .responsesPlot            Returns a response series plot
 #  .residualsPlot            Returns a residual series plot
-#  .firePlot                 Returns a fitted values vs.residuals plot
 #  .acfPlot                  Returns a autocorrelation function plot
 #  .pacfPlot                 Returns a partial ACF plot
 #  .mrlPlot                  Returns a mean residual life plot
+# FUNCTION:                 INTERNAL USED BIVARIATE PLOT FUNCTIONS:
+#  .responsesPlot            Returns a response series plot
+#  .firePlot                 Returns a fitted values vs.residuals plot
 # FUNCTION:                 INTERNAL THREE-DIMENSIONAL PLOT UTILITIES:
 #  .circlesPlot              Returns a circles plot indexing 3rd variable
 #  .perspPlot                Returns a perspective plot in 2 dimensions
 #  .contourPlot              Returns a contour plot in 2 dimensions
-#  .histStack             Returns a stacked histogram plot
+#  .histStack                Returns a stacked histogram plot
 # FUNCTION:                 SLIDER MENU:
 #  .sliderMenu               Starts a slider menu
 # FUNCTION:                 SPLINE INTERPOLATION:
@@ -50,51 +51,11 @@
 ################################################################################
 
 
-# .conflicts.OK = TRUE
-
-
 ################################################################################
-#  .responsesPlot            Returns a response series plot
 #  .residualsPlot            Returns a residual series plot
-#  .firePlot                 Returns a fitted values vs.residuals plot
 #  .acfPlot                  Returns a autocorrelation function plot
 #  .pacfPlot                 Returns a partial ACF plot
 #  .mrlPlot                  Returns a mean residual life plot
-
-
-.responsesPlot = 
-function(x, y = NULL, ...) 
-{   # A function implemented by Diethelm Wuertz
-    
-    # Description:
-    #   Returns time series graph of responses and fitted values
-    
-    # Arguments:
-    #   x - an univariate time series of responses
-    #   y - an univariate time series of fitted values
-
-    # FUNCTION:
-    
-    # Get Data:
-    x = as.vector(x)
-    y = as.vector(y)
-    
-    # Responses Plot:
-    plot(x, type = "l", ylab = "Responses", 
-        main = "Responses & Fitted Values", col = "steelblue", ...)
-    rug(x, ticksize = 0.01, side = 4)
-    grid()
-    abline(h = 0, col = "grey")
-    
-    # Add fitted values:
-    if (!is.null(y)) points(y, pch = 19, col = "red")
-           
-    # Return Value:
-    invisible()
-}
-     
-   
-# ------------------------------------------------------------------------------
 
 
 .residualsPlot = 
@@ -124,92 +85,6 @@ function(x, ...)
 }
      
    
-# ------------------------------------------------------------------------------
-
-
-.firePlot = 
-function(x, y, method = c("scatter", "hist"), ...) 
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Returns fitted values vs. residuals plots
-
-    # Arguments:
-    #   x - univariate time series (residuals)
-    #   y - univariate time series (fitted)
-
-    # FUNCTION:  
-    
-    # Check Arguments:
-    method = match.arg(method)
-    
-    # Get Data:
-    x = as.vector(x)
-    y = as.vector(y)
-    
-    
-    if (method == "scatter") {
-        
-        # Scatter Plot:
-        plot(x, y, 
-            xlab = "Fitted Values", ylab = "Residuals", 
-            main = "Residuals vs Fitted",
-            pch = 19, col = "steelblue")
-        panel.smooth(x, y)
-        abline(h = 0, lty = 3, col = "grey")
-        rug(x, ticksize = 0.01, side = 3)
-        rug(y, ticksize = 0.01, side = 4)
-        
-    } else if (method == "hist") {
-       
-        # Histogram Plot:
-        
-        # Save default, for resetting ... 
-        def.par = par(no.readonly = TRUE) 
-    
-        # Layout:
-        nf = layout(matrix(c(2, 0, 1, 3), 2, 2, byrow = TRUE), c(3, 1), 
-            c(1, 3), TRUE)
-        
-        # Scatterplot:
-        par(mar = c(3 ,3, 1, 1))
-        plot(x, y, xlim = range(x), ylim = range(y), 
-            xlab = "", ylab = "", pch = 19, col = "steelblue")
-        panel.smooth(x, y)
-        abline(h = 0, lty = 3, col = "grey")
-        rug(x, side = 3)
-        rug(y, side = 4)
-        
-        # Histogram:
-        xhist = hist(x, nclass = 15, plot = FALSE)
-        yhist = hist(y, nclass = 15, plot = FALSE)
-        top = max(c(xhist$counts, yhist$counts))
-        
-        # X-Side:
-        par(mar = c(0, 3, 1, 1))
-        Main = "\n                            Fitted"
-        barplot(xhist$counts, axes = FALSE, ylim = c(0, top), 
-            space = 0, col = "steelblue", border = "white",
-            main = Main)
-        abline(h = 0, lwd = 2, col = "grey")
-        
-        # Y-Side:
-        par(mar = c(3, 0, 1, 1))
-        barplot(yhist$counts, axes = FALSE, xlim = c(0, top), 
-            space = 0, col = "steelblue", , border = "white", 
-            horiz = TRUE, main = "Residuals")
-        abline(v = 0, lwd = 2, col = "grey")
-        
-        # Reset:
-        par(def.par)
-        
-    }
-    
-    # Return Value:
-    invisible() 
-}
-
-
 # ------------------------------------------------------------------------------
 
 
@@ -318,7 +193,128 @@ doplot = TRUE, plottype = c("autoscale", ""), labels = TRUE, ...)
     if (doplot) return(invisible(result)) else return(result)
 }
 
+
+################################################################################
+#  .responsesPlot            Returns a response series plot
+#  .firePlot                 Returns a fitted values vs.residuals plot
+
+
+.responsesPlot = 
+function(x, y = NULL, ...) 
+{   # A function implemented by Diethelm Wuertz
     
+    # Description:
+    #   Returns time series graph of responses and fitted values
+    
+    # Arguments:
+    #   x - an univariate time series of responses
+    #   y - an univariate time series of fitted values
+
+    # FUNCTION:
+    
+    # Get Data:
+    x = as.vector(x)
+    y = as.vector(y)
+    
+    # Responses Plot:
+    plot(x, type = "l", ylab = "Responses", 
+        main = "Responses & Fitted Values", col = "steelblue", ...)
+    rug(x, ticksize = 0.01, side = 4)
+    grid()
+    abline(h = 0, col = "grey")
+    
+    # Add fitted values:
+    if (!is.null(y)) points(y, pch = 19, col = "red")
+           
+    # Return Value:
+    invisible()
+}
+     
+   
+# ------------------------------------------------------------------------------
+
+    
+.firePlot = 
+function(x, y, method = c("scatter", "hist"), ...) 
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Returns fitted values vs. residuals plots
+
+    # Arguments:
+    #   x - univariate time series (residuals)
+    #   y - univariate time series (fitted)
+
+    # FUNCTION:  
+    
+    # Check Arguments:
+    method = match.arg(method)
+    
+    # Get Data:
+    x = as.vector(x)
+    y = as.vector(y)
+    
+    
+    if (method == "scatter") {
+        
+        # Scatter Plot:
+        plot(x, y, 
+            xlab = "Fitted Values", ylab = "Residuals", 
+            main = "Residuals vs Fitted",
+            pch = 19, col = "steelblue")
+        panel.smooth(x, y)
+        abline(h = 0, lty = 3, col = "grey")
+        rug(x, ticksize = 0.01, side = 3)
+        rug(y, ticksize = 0.01, side = 4)
+        
+    } else if (method == "hist") {
+       
+        # Histogram Plot:
+        
+        # Save default, for resetting ... 
+        def.par = par(no.readonly = TRUE) 
+    
+        # Layout:
+        nf = layout(matrix(c(2, 0, 1, 3), 2, 2, byrow = TRUE), c(3, 1), 
+            c(1, 3), TRUE)
+        
+        # Scatterplot:
+        par(mar = c(3 ,3, 1, 1))
+        plot(x, y, xlim = range(x), ylim = range(y), 
+            xlab = "", ylab = "", pch = 19, col = "steelblue")
+        panel.smooth(x, y)
+        abline(h = 0, lty = 3, col = "grey")
+        rug(x, side = 3)
+        rug(y, side = 4)
+        
+        # Histogram:
+        xhist = hist(x, nclass = 15, plot = FALSE)
+        yhist = hist(y, nclass = 15, plot = FALSE)
+        top = max(c(xhist$counts, yhist$counts))
+        
+        # X-Side:
+        par(mar = c(0, 3, 1, 1))
+        Main = "\n                            Fitted"
+        barplot(xhist$counts, axes = FALSE, ylim = c(0, top), 
+            space = 0, col = "steelblue", border = "white",
+            main = Main)
+        abline(h = 0, lwd = 2, col = "grey")
+        
+        # Y-Side:
+        par(mar = c(3, 0, 1, 1))
+        barplot(yhist$counts, axes = FALSE, xlim = c(0, top), 
+            space = 0, col = "steelblue", , border = "white", 
+            horiz = TRUE, main = "Residuals")
+        abline(v = 0, lwd = 2, col = "grey")
+        
+        # Reset:
+        par(def.par)
+        
+    }
+    
+    # Return Value:
+    invisible() 
+}
 
 
 ################################################################################
