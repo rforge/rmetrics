@@ -31,7 +31,8 @@
 # PART I - FUNCTION:      SPECIFICATION: 
 #  setClass[garchSpec]     S4: garchSpec Class representation 
 #  garchSpec               S4: Creates a 'garchSpec' object from scratch
-#  print.garchSpec         S3: Print method for an object of class 'garchSpec'
+#  .print.garchSpec        S3: Print method for an object of class 'garchSpec'
+#  show.garchSpec          S4: Print method for an object of class 'garchSpec'
 ################################################################################
 # PART II - FUNCTION:     SIMULATION:
 #  garchSim                Simulates a GARCH/APARCH process
@@ -51,15 +52,16 @@
 #  .garchNames              Slot names, @fit slot, parameters and controls
 #  .garchTsFit             Wrapper for 'garch()' from 'tseries' package
 # METHODS:                DESCRIPTION:
-#  print.fGARCH            S3 Print method for an object of class fGARCH
-#  summary.fGARCH          S3 Summary method for an object of class fGARCH
-#  plot.fGARCH             S3 Plot method for an object of class fGARCH
+#  .print.fGARCH           S3 print method for an object of class fGARCH
+#  .show.fGARCH            S4 print method for an object of class fGARCH
+#  summary.fGARCH          S3 summary method for an object of class fGARCH
+#  plot.fGARCH             S3 plot method for an object of class fGARCH
 #  .interactiveGarchPlot   Utility Function
-#  residuals.fGARCH        S3 Residuals method for an object of class fGARCH
-#  fitted.fGARCH           S3 Fitted values method for an object of class fGARCH
-#  predict.fGARCH          S3 Prediction method for an object of class fGARCH
+#  residuals.fGARCH        S3 residuals method for an object of class fGARCH
+#  fitted.fGARCH           S3 fitted values method for an object of class fGARCH
+#  predict.fGARCH          S3 prediction method for an object of class fGARCH
 # STATISTICS:             Description:
-#  .truePersistence        Compute Persistence
+#  .truePersistence        Compute persistence
 ################################################################################
 # PART IV - FUNCTION:     FORECASTING: 
 #  garchKappa               Computes Expection for APARCH Models
@@ -71,7 +73,8 @@
 # FUNCTION:              SPECIFICATION: 
 #  setClass[garchSpec]    S4: garchSpec Class representation 
 #  garchSpec              S4: Creates a 'garchSpec' object from scratch
-#  print.garchSpec        S3: Print method for an object of class 'garchSpec'
+#  .print.garchSpec        S3: Print method for an object of class 'garchSpec'
+#  show.garchSpec          S4: Print method for an object of class 'garchSpec'
 ################################################################################
 
 
@@ -314,12 +317,12 @@ presample = NULL, cond.dist = c("rnorm", "rged", "rstd", "rsnorm",
 # ------------------------------------------------------------------------------
 
 
-print.garchSpec =
+.print.garchSpec =
 function(x, ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   S3 Print Method for objects of class 'garchSpec'
+    #   Old S3 Print Method for objects of class 'garchSpec'
     
     # Arguments:
     #   x - Object of class 'garchSpec'
@@ -382,6 +385,16 @@ function(x, ...)
     # Return Value:
     invisible()
 }
+
+
+show.garchSpec = 
+function(object)
+{  
+    .print.garchSpec(x = object)
+}
+    
+    
+setMethod("show", "garchSpec", show.garchSpec)
 
 
 ################################################################################
