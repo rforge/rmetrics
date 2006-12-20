@@ -90,7 +90,7 @@ greyPalette(n = 64, start = 255-n, end = 255)
 
 
 \examples{
-## SOURCE("fEcofin.1C-CodeTables")
+## SOURCE("fEcofin.1A-CodeTables")
 }
 
 
