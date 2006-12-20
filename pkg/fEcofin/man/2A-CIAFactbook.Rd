@@ -128,8 +128,8 @@ CIA, 2004,
    # Create Pie Chart:
    OilProduction = as.integer(as.vector(ciaByIndicator(2173)[2:11, 2]))
    names(OilProduction) = as.vector(ciaByIndicator(2173)[2:11,1])
-   OilProduction 
-   pie(OilProduction,col = rainbow(10))
+   print(OilProduction) 
+   pie(OilProduction, col = rainbow(10))
    title(main = "Oil Production 2004\n bbl/day")
    mtext("Source: CIA World Factbook", side = 1)
 }

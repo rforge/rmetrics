@@ -52,7 +52,7 @@ WFE, 2004,
    # NYSE: 7, Tokyo: 37, London: 22, Frankfurt: 15
    # 1991 - 2003 triannual: 3,6,9,12,15
    data(wfe1)
-   Table =t(wfe1[c(7,37,22,15),c(3,6,9,12,15)])/1e6
+   Table = t(wfe1[c(7,37,22,15),c(3,6,9,12,15)])/1e6
    colnames(Table) = c("NewYork", "Tokyo", "London", "Frankfurt")
    rownames(Table) = as.character(seq(1991, 2003, by = 3))
    Table
