@@ -5,7 +5,9 @@
 
 \alias{garchSpec-class}
 \alias{garchSpec}
-\alias{print.garchSpec}
+
+\alias{show.garchSpec}
+\alias{show,garchSpec-method}
 
 \alias{garchSim}
 
@@ -72,7 +74,8 @@
 garchSpec(model = list(omega = 1.0e-6, alpha = 0.1, beta = 0.8), 
     presample = NULL, cond.dist = c("rnorm", "rged", "rstd", "rsnorm", 
     "rsged", "rsstd"), rseed = NULL)
-\method{print}{garchSpec}(x, \dots)
+    
+show.garchSpec(object)
 
 garchSim(model = list(omega = 1.0e-6, alpha = 0.1, beta = 0.8), n = 100, 
     n.start = 100, presample = NULL, cond.dist = c("rnorm", "rged", "rstd", 
