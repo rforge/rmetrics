@@ -16,22 +16,6 @@
 \alias{kurtosis.POSIXct}
 \alias{kurtosis.POSIXlt}
 
-\alias{rowStats} 
-\alias{rowAvgs}
-\alias{rowVars}
-\alias{rowStdevs}
-\alias{rowSkewness}
-\alias{rowKurtosis}
-\alias{rowCumsums}
-
-\alias{colStats} 
-\alias{colAvgs}
-\alias{colVars}
-\alias{colStdevs}
-\alias{colSkewness}
-\alias{colKurtosis}
-\alias{colCumsums}
-
 \alias{stdev}
 
 \title{Basic Statistics Summary}
@@ -42,9 +26,8 @@
     A collection and description of functions to compute 
     basic statistical properties of financial and
     economic time series data. Missing functions in 
-    R to calculate skewness and kurtosis are added, a 
-    function which creates a summary statistics, and 
-    functions to calculate column and row statistics.
+    R to calculate skewness and kurtosis, and a function
+    which creates a summary statistics are added.
     \cr
     
     The functions are:
@@ -52,21 +35,7 @@
     \tabular{ll}{
     \code{skewness} \tab returns value of skewness, \cr
     \code{kurtosis} \tab returns value of kurtosis, \cr 
-    \code{basicStats} \tab computes an overview of basic statistical values, \cr    
-    \code{rowStats}\tab calculates row statistics, \cr
-    \code{colStats} \tab calculates column statistics, \cr
-    \code{rowAvgs} \tab calculates row means, \cr
-    \code{colAvgs} \tab calculates column means, \cr
-    \code{rowVars} \tab calculates row variances, \cr
-    \code{colVars} \tab calculates column variances, \cr
-    \code{rowStdevs} \tab calculates row standard deviations, \cr
-    \code{colStdevs} \tab calculates column standard deviations, \cr
-    \code{rowSkewness} \tab calculates row skewness, \cr
-    \code{colSkewness} \tab calculates column skewness, \cr
-    \code{rowKurtosis} \tab calculates row kurtosis, \cr
-    \code{colKurtosis} \tab calculates column kurtosis, \cr
-    \code{rowCumsums} \tab calculates row cumulated Sums, \cr
-    \code{colCumsums} \tab calculates column cumulated Sums. }
+    \code{basicStats} \tab computes an overview of basic statistical values. }
     
     For SPLUS Compatibility:
     
@@ -92,22 +61,6 @@ kurtosis(x, \dots)
 \method{kurtosis}{POSIXlt}(x, \dots)
 
 basicStats(x, ci = 0.95)
-
-rowStats(x, FUN, na.rm = FALSE, \dots) 
-rowAvgs(x, na.rm = FALSE, \dots)
-rowVars(x, na.rm = FALSE, \dots)
-rowStdevs(x, na.rm = FALSE, \dots)
-rowSkewness(x, na.rm = FALSE, \dots)
-rowKurtosis(x, na.rm = FALSE, \dots)
-rowCumsums(x, na.rm = FALSE, \dots)
-
-colStats(x, FUN, na.rm = FALSE, \dots) 
-colAvgs(x, na.rm = FALSE, \dots)
-colVars(x, na.rm = FALSE, \dots)
-colStdevs(x, na.rm = FALSE, \dots)
-colSkewness(x, na.rm = FALSE, \dots)
-colKurtosis(x, na.rm = FALSE, \dots)
-colCumsums(x, na.rm = FALSE, \dots)
 }
 
 
@@ -116,10 +69,6 @@ colCumsums(x, na.rm = FALSE, \dots)
     \item{ci}{
         confidence interval, a numeric value, by default 0.95, 
         i.e. 95 percent.
-        }
-    \item{FUN}{
-        [colStats][rowStats - \cr
-        the statistical function to be applied.
         }
     \item{na.rm}{
         a logical. Should missing values be removed?
@@ -139,10 +88,10 @@ colCumsums(x, na.rm = FALSE, \dots)
         and kurtosis exact unbiasedness is not possible. 
         }
     \item{x}{
-        a numeric vector, or a matrix for column statistics.
+        a numeric vector.
         \cr
         [basicStats] - \cr
-        allows also a matrix, data.frame or timeSeries as input.
+        allows also a matrix, data.frame or timeSeries object as input.
         In this case only the first column of data will be considered
         and a a warning will be printed.        
         }
@@ -168,41 +117,12 @@ colCumsums(x, na.rm = FALSE, \dots)
     nobs, NAs, Minimum, Maximum , 1. Quartile, 3. Quartile,
     Mean, Median, Sum, SE Mean, LCL Mean, UCL Mean, Variance,
     Stdev, Skewness, Kurtosis.
-    \cr
-    
-    \code{rowStats}\cr
-    \code{rowAvgs}\cr
-    \code{rowVars}\cr
-    \code{rowStdevs}\cr
-    \code{rowSkewness}\cr
-    \code{rowKurtosis}\cr
-    \code{rowCumsum}
-    \cr 
-    compute sample statistics by column. Missing values can be
-    handled.
-    \cr
-    
-    \code{colStats}\cr
-    \code{colAvgs}\cr
-    \code{colVars}\cr
-    \code{colStdevs},\cr
-    \code{colSkewness}\cr
-    \code{colKurtosis}\cr
-    \code{colCumsum}
-    \cr 
-    compute sample statistics by column. Missing values can be
-    handled. 
     
 }
 
 
 \note{
 
-    R's-base package contains a function \code{colMeans} with an
-    additional argument \code{dim=1}. Therefore, the function used 
-    here to compute column means (averages) is named \code{colAvgs}.
-    \cr
-    
     The function \code{stdev} computes the standard deviation for a
     vector or matrix and was introduced for SPlus compatibility.
     Under R use the function \code{sd}. 

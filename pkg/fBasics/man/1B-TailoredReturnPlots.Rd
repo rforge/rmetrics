@@ -23,7 +23,7 @@
     \code{seriesPlot} \tab Returns a tailored time series plot, \cr
     \code{histPlot} \tab Returns a tailored histogram plot, \cr
     \code{densityPlot} \tab Returns a tailored kernel density estimate plot, \cr
-    \code{quantilePlot} \tab Returns a tailored quantile-quantile plot.}
+    \code{qqnormPlot} \tab Returns a tailored quantile-quantile plot.}
     
 }
     
@@ -32,7 +32,7 @@
 seriesPlot(x, col = "steelblue", main = x@units, \dots) 
 histPlot(x, col = "steelblue", main = x@units, add.fit = TRUE, \dots) 
 densityPlot(x, col = "steelblue", main = x@units, add.fit = TRUE, \dots)
-quantilePlot(x, col = "steelblue", main = x@units, labels = TRUE, \dots) 
+qqnormPlot(x, col = "steelblue", main = x@units, labels = TRUE, \dots) 
 }
 
 

@@ -5,6 +5,7 @@
 \alias{characterTable}
 \alias{symbolTable}
 \alias{colorTable}
+
 \alias{greyPalette}
 
 
@@ -33,6 +34,7 @@
 characterTable(font = 1, cex = 0.7)
 symbolTable(font = par('font'), cex = 0.7)
 colorTable(cex = 0.7)
+
 greyPalette(n = 64, start = 255-n, end = 255)
 }
 

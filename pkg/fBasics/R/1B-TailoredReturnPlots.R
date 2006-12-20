@@ -32,7 +32,8 @@
 #  seriesPlot                Returns a tailored return series plot
 #  histPlot                  Returns a tailored histogram plot
 #  densityPlot               Returns a tailored kernel density estimate plot
-#  quantilePlot              Returns a tailored normal quantile-quantile plot
+#  qqnormPlot                Returns a tailored normal quantile-quantile plot
+#  .qqbayesPlot              Wraps function qqnormPlot
 ################################################################################
 
 
@@ -208,7 +209,7 @@ function(x, col = "steelblue", main = x@units, add.fit = TRUE, ...)
 # ------------------------------------------------------------------------------
 
 
-quantilePlot = 
+qqnormPlot = 
 function(x, col = "steelblue", main = x@units, labels = TRUE, ...) 
 {   # A function implemented by Diethelm Wuertz
 
@@ -292,6 +293,13 @@ function(x, col = "steelblue", main = x@units, labels = TRUE, ...)
     
     # Return Value:
     invisible()  
+}
+
+
+.qqbayesPlot = 
+function(x, col = "steelblue", main = x@units, labels = TRUE, ...) 
+{
+    qqnormPlot(x, col, main, labels, ...) 
 }
 
 
