@@ -28,7 +28,7 @@
 
 
 ################################################################################
-# FUNCTION:               DESCRIPTION:
+# FUNCTION:               SIMULATION AND FITTING:
 #  'fARMA'                 S4 Class representation for "fARMA" objects
 #  armaSim                 Simulates an ARIMA time series process
 #  armaFit                 Fits parameters for ARMA Time Series process
@@ -37,17 +37,18 @@
 #  .arfimaFit               Internal function called by armaFit
 # S3 METHOD:              PREDICTION:
 #  predict.fARMA           S3: Predicts from an ARMA time series prrocess 
-#  .arPpredict             Internal function called by predict.fARMA
-#  .arimaPpredict          Internal function called by predict.fARMA
-#  .arfimaPredict          Not yet implemented
-# S3 METHOD:              PRINT - SUMMARY - PLOT:
-#  print.fARMA             S3: Prints a fitted ARMA time series object
+#  .arPpredict              Internal function called by predict.fARMA
+#  .arimaPpredict           Internal function called by predict.fARMA
+#  .arfimaPredict           Internal function - Not yet implemented
+# GENERIC METHODS:        PRINT - PLOT - SUMMARY METHODS:
+#  show.fARMA              S4: Prints a fitted ARMA time series object
+#  .print.fARMA            S3: Prints a fitted ARMA time series object
 #  plot.fARMA              S3: Plots stylized facts of a fitted ARMA object
 #  summary.fARMA           S3: Summarizes a fitted ARMA time series object
-# S3 METHOD:              ADDON:
-#  fitted.fARMA            S3: Returns fitted values from a fitted ARMA object
+# S3 METHOD:              ADDON METHODS:
 #  coef.fARMA              S3: Returns coefficidents from a fitted ARMA object
 #  coefficients.fARMA      S3: Synonyme for coef.fARMA
+#  fitted.fARMA            S3: Returns fitted values from a fitted ARMA object
 #  residuals.fARMA         S3: Returns residuals from a fitted ARMA object
 ################################################################################
 
@@ -123,6 +124,7 @@ function()
     tS = armaSim(n = 12, positions = timeCalendar()) 
     print(tS)
     tS = armaSim(n = 12, positions = timeCalendar(), addControl = TRUE) 
+    colnames(tS)<-"ARMA(2,1)"
     print(tS)
     
     # ts: t-ARMA(2,1):
@@ -148,14 +150,14 @@ function()
     
     # method = c("mle", "ols")
     
-    # OLS Fit:
+    # AR(2) - OLS Fit:
     object = armaFit(formula = ~ ar(2), data = x, method = "ols")
     print(object)
     target = as.vector(round(coef(object), 1))
     current = c(0.5, -0.5, 0)
     checkEqualsNumeric(target, current)
 
-    # MLE Fit:
+    # AR(2) - MLE Fit:
     object = armaFit(formula = ~ ar(2), data = x, method = "mle")
     print(object)
     target = as.vector(round(coef(object), 1))
@@ -567,33 +569,41 @@ function()
 {
     armaFit(~arma(2,1), armaSim(n = 10000))
 
-    URL = "http://www.itp.phys.ethz.ch/econophysics/R/data/organisations/YAHOO/data/MSFT.CSV"
-    download.file(URL, "MSFT.CSV")
-    TS = readSeries("MSFT.CSV")
-    print(TS)
-    
+    # Load From Ecofin Package:
+    TS = as.timeSeries(data(msft.dat))
     head(TS)
     class(TS)
     colnames(TS)
+    
+    # Fit:
     armaFit(formula = diff(log(Close)) ~ ar(5), data = TS)
+    
+    # Fit:
     armaFit(Close ~ ar(5), data = returnSeries(TS, digits = 12))
     
+    # Fit:
     TS.RET = returnSeries(TS, digits = 12)
-    head(TS.RET)
-    class(TS.RET)
     armaFit(Close ~ ar(5), TS.RET)
+    
+    # Fit:
     armaFit(Close ~ ar(5), as.data.frame(TS.RET))
+    
+    # Fit:
     armaFit(~ ar(5), as.vector(TS.RET[, "Close"]))
+    
+    # Fit:
     armaFit(~ ar(5), as.ts(TS.RET)[, "Close"])
     
-    # attach(TS.RET)
-    # armaFit(formula = Close ~ ar(5))
+    # Fit:
+    attachSeries = function(what, ...) attach(as.data.frame(what), ...)
+    attach(TS.RET)
+    armaFit(formula = Close ~ ar(5))
 
     # Return Value:
     return()    
 }
 
-    
+
 # ------------------------------------------------------------------------------
 
 
@@ -660,4 +670,4 @@ if (FALSE) {
    
 
 ################################################################################
-    
+
