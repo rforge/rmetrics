@@ -124,7 +124,6 @@ function()
     tS = armaSim(n = 12, positions = timeCalendar()) 
     print(tS)
     tS = armaSim(n = 12, positions = timeCalendar(), addControl = TRUE) 
-    colnames(tS)<-"ARMA(2,1)"
     print(tS)
     
     # ts: t-ARMA(2,1):
@@ -595,7 +594,8 @@ function()
     # Fit:
     TS.RET = returnSeries(TS)
     colnames(TS.RET)
-    attach(TS.RET)
+    # attach(TS.RET) - doesn't work under RUnit ...
+    attach.timeSeries(TS.RET)
     head(Close)
     armaFit(Close ~ ar(5))
 

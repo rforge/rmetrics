@@ -16,7 +16,7 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2006, Diethelm Wuertz, GPL
+#   1999 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
 #   www.rmetrics.org
@@ -31,16 +31,16 @@
 # FUNCTION:                TEST SUITE:
 #  urTest                   Unit Root Test Suite
 # FUNCTION:                ADF TESTS:
-#  adfTest                  Augmented Dickey - Fuller Unit Root Test
-#  unitrootTest             ADF Unit Root Test using McKinnons Test Statistics
+#  adfTest                  ADF unit root test using Banarjee's test statistics
+#  unitrootTest             ADF unit root test using McKinnon's test statistics
 # FUNCTION:                URCA [PFAGFF] UNIT ROOT TESTS:
 #  .urcaBuiltin             Builtin functions from urca Package
-#  urdfTest                 Augmented Dickey-Fuller test for unit roots
-#  urersTest                Elliott-Rothenberg-Stock test for unit roots
-#  urkpssTest               KPSS unit root test for stationarity
-#  urppTest                 Phillips-Perron test for unit roots
-#  urspTest                 Schmidt-Phillips test for unit roots
-#  urzaTest                 Zivot-Andrews test for unit roots
+#  urdfTest                 Performs Augmented Dickey-Fuller test for unit roots
+#  urersTest                PerformsElliott-Rothenberg-Stock test for unit roots
+#  urkpssTest               Performs KPSS unit root test for stationarity
+#  urppTest                 Performs Phillips-Perron test for unit roots
+#  urspTest                 Performs Schmidt-Phillips test for unit roots
+#  urzaTest                 Performs Zivot-Andrews test for unit roots
 ################################################################################
 
 

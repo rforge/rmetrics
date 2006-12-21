@@ -44,16 +44,26 @@ function(lib, pkg)
 {   # A function implemented by Diethelm Wuertz
     
     # Package:
-    cat("\nRmetrics, (C) 1999-2006, Diethelm Wuertz, GPL")
+    cat("\nRmetrics, (C) 1999-2007, Diethelm Wuertz, GPL")
     cat("\nfSeries: The Dynamical Process Behind Financial Markets\n")
 
-    # Load dll:
+    # Load Libraries:
     sink("@sink@")
     library(mgcv) # gam
     library(nnet) # nnet
     sink()
     unlink("@sink@")
+    
+    # Load dll:
     library.dynam("fSeries", pkg, lib)
+    
+    # Load urcaBuiltin Package:
+    sinkFile <- file("@sink@", open = "wt")
+    sink(sinkFile)
+    sink(sinkFile, type = "message")
+    .urcaBuiltin()
+    sink(type = "message")
+    sink()
 }
 
 

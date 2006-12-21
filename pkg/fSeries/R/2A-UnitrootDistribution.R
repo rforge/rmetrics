@@ -28,34 +28,18 @@
 
 
 ################################################################################
-# FUNCTION:          DICKEY FULLER TEST:
+# FUNCTION:          AUGMENTED DICKEY-FULLER TEST:
 #  pdftest            Returns probabilities for the ADF Test
 #  qdftest            Returns quantiles for the ADF Test
-#  .dfTable           Augmented Dickey-Fuller finite sample test table
-# FUNCTION:          PROBABILIY AND QUANTILES:
+#  dftestTable        Returns augmented Dickey-Fuller finite sample test table
+# FUNCTION:          MC KINNON'S PROBABILIY AND QUANTILES:
 #  punitroot          Returns cumulative probability for unit root distributions
 #  qunitroot          Returns quantiles for unit root distributions
+#  unitrootTable      Returns McKinnon's unitroot finite sample test table
 # FUNCTION:          INTERNAL UTILITY FUNCTIONS:
-#  .strsplitUrcval    String split function for S-Plus compatibility
+#  .strsplitUrcval    Implements string split function for S-Plus compatibility
 #  .urcval            Implements unit root statists
-#  .probsUrcval       Probability values
-################################################################################
-
-
-################################################################################
-# Functions required from fBasics::Hypothesis Testing
-# FUNCTION:          NORMALITY TESTS:
-#  fHTEST             Class Representation
-#  show.fHTEST        S4 Print Method
-# FUNCTION:          PVALUE AND STATISTICS TABLES:
-#  pPlot              General finite sample probability plot
-#  pTable             Interpolated probabilities from finite sample table
-#  .pTable            Utility function called by the function 'pTable'
-#  qTable             Interpolated quantiles from finite sample table
-#  .qTable            Utility function called by the function 'qTable'
-# FUNCTION:          INTERNAL FUNCTIONS:
-#  .interpTable.old   'akima' interpolation utility function
-#  .interpTable.new   'akima' interpolation utility function
+#  .probsUrcval       Implements probability values
 ################################################################################
 
 
@@ -74,8 +58,12 @@ function(q, n.sample, trend = c("nc", "c", "ct"), statistic = c("t", "n"))
     
     # FUNCTION:
     
+    # Match Arguments:
+    trend = match.arg(trend)
+    statistic = match.arg(statistic)
+    
     # Compute Probabilities:
-    X = .dfTable(trend = trend[1], statistic = statistic[1])
+    X = dftestTable(trend = trend[1], statistic = statistic[1])
     ans = pTable(t(X), q, n.sample)
     
     # Return Value:
@@ -97,8 +85,12 @@ function(p, n.sample, trend = c("nc", "c", "ct"), statistic = c("t", "n"))
     
     # FUNCTION:
     
+    # Match Arguments:
+    trend = match.arg(trend)
+    statistic = match.arg(statistic)
+    
     # Compute Quantiles:
-    X = .dfTable(trend = trend[1], statistic = statistic[1])
+    X = dftestTable(trend = trend, statistic = statistic)
     ans = qTable(X = t(X), p, n.sample)
     
     # Return Value:
@@ -109,18 +101,18 @@ function(p, n.sample, trend = c("nc", "c", "ct"), statistic = c("t", "n"))
 # ------------------------------------------------------------------------------
 
 
-.dfTable =
+dftestTable =
 function(trend = c("nc", "c", "ct"), statistic = c("t", "n"))
 {   # A function implemented by Diethelm Wuertz
 
     # Description:     
-    #   Critical Values for the ADF test.
+    #   Tables critical values for augmented Dickey-Fuller test.
     
     # FUNCTION:
       
-    # Select Type:
-    type = trend[1]
-    statistic = statistic[1]
+    # Match Arguments:
+    type = trend = match.arg(trend)
+    statistic = match.arg(statistic)
     
     # Tables:
     if (statistic == "t") {
@@ -191,13 +183,17 @@ function(trend = c("nc", "c", "ct"), statistic = c("t", "n"))
         "0.950", "0.975", "0.990")
     rownames(table) = c(" 25", " 50", "100", "250", "500", "Inf")
     
+    # Add Control:
+    attr(table, "control") <-
+        c(table = "dftest", trend = trend, statistic = statistic)
+        
     # Return Value:
-    as.data.frame(table)
+    table
 } 
 
 
 ################################################################################
-# PROBABILIY AND QUANTILES:
+# MC KINNON'S PROBABILIY AND QUANTILES:
 
 
 punitroot =
@@ -233,8 +229,8 @@ statistic = c("t", "n"), na.rm = FALSE)
     # FUNCTION:
 
     # Settings:
-    trend = trend[1]
-    statistic = statistic[1]
+    trend = match.arg(trend)
+    statistic = match.arg(statistic)
     
     # Remove any NA's in q:
     if(any(is.na(q))) {
@@ -326,8 +322,51 @@ statistic = c("t", "n"), na.rm = FALSE)
 }
 
 
+# ------------------------------------------------------------------------------
+
+
+unitrootTable =
+function(trend = c("c", "nc", "ct", "ctt"), statistic = c("t", "n"))
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Returns McKinnon's unitroot finite sample test table
+    
+    # FUNCTION:
+    
+    # Match Arguments:
+    trend = match.arg(trend)
+    statistic = match.arg(statistic)
+    
+    # Set P Values and Sample Size:
+    p = c("0.010", "0.025", "0.050", "0.100", 
+          "0.900", "0.950", "0.975", "0.990")
+    N = c(" 25", " 50", "100", "250", "500", "Inf")
+    
+    # Create table:
+    table = NULL
+    for (n in N[-length(N)]) {
+        size = as.integer(n)
+        table = rbind(table, qunitroot(as.numeric(p), size, trend, statistic))
+    }
+    table = rbind(table, qunitroot(as.numeric(p), 0, trend, statistic))
+    
+    # Round and Add dimnames:
+    table = round(table, digits = 3)
+    rownames(table) = N
+    colnames(table) = p
+    
+    # Add Control:
+    attr(table, "control") <-
+        c(table = "unitroot", trend = trend, statistic = statistic)
+
+    # Return Value:
+    table 
+}
+
+
 ################################################################################
-# UTILITY FUNCTIONS:
+# INTERNAL UTILITY FUNCTIONS:
 
 
 .strsplitUrcval = 
@@ -335,7 +374,7 @@ function(x, sep = " ")
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   strsplit function for SPlus compatibility
+    #   Implements strsplit() function for SPlus compatibility
     
     # FUNCTION:
     

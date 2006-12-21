@@ -42,7 +42,7 @@
 #  *predictPlot            S3: Use method
 #  *predictPlot.fARMA      S3: Plots from an ARMA time series prediction
 # S3 METHOD:              PRINT - SUMMARY - PLOT:
-#  *print.fARMA            S3: Prints a fitted ARMA time series object
+#  *show.fARMA             S4: Prints a fitted ARMA time series object
 #  *plot.fARMA             S3: Plots stylized facts of a fitted ARMA object
 #  *summary.fARMA          S3: Summarizes a fitted ARMA time series object
 #  *fitted.fARMA           S3: Returns fitted values from a fitted ARMA object
@@ -88,6 +88,7 @@ function()
     current = c(0.3, 0.5, -0.5, -0.1)
     checkEqualsNumeric(target, current)
     
+    
     # MLE Fit - method="nls":
     object = arfimaOxFit(formula = ~ arfima(2, 1), data = x, method = "nls")
     print(object)
@@ -96,6 +97,7 @@ function()
     current = c(0.3, 0.5, -0.5, -0.1)
     checkEqualsNumeric(target, current)
     
+    
     # MLE Fit - method="mpl":
     object = arfimaOxFit(formula = ~ arfima(2, 1), data = x, method = "mpl")
     print(object)
@@ -103,6 +105,7 @@ function()
     print(target)
     current = c(0.3, 0.5, -0.5, -0.1)
     checkEqualsNumeric(target, current)
+    
     
     # Return Value:
     return()    
@@ -129,11 +132,15 @@ function()
     print(object)
     
     # Plot:
-    # par(mfrow = c(2,2), cex = 0.7)
-    # plot(object, which = "all")           # Not yet implemented
+    # 1:   Standardized Residuals
+    # 2:   ACF of Residuals
+    # 3:   QQ Plot of Residuals
+    # 4:   Ljung-Box p Values
+    par(mfrow = c(2,2), cex = 0.7)
+    plot(object, which = "all") 
     
     # Summary:
-    summary(object)
+    summary(object, doplot = FALSE)
     
     # Get Values:
     coefficients(object)
@@ -165,11 +172,10 @@ function()
     print(object)
    
     # Predict:
-    # predict.fARMA(object, n.ahead = 10, n.back = 50, conf = c(80, 95), 
-    #   doplot = TRUE, ...) 
-    # plot for predict method ignored, not yet available
-    predict(object)[1:10]   
-    predict(object, doplot = FALSE)[1:10]                                # CHECK     
+    predict(object, n.ahead = 10, n.back = 50, conf = c(80, 95), doplot = FALSE) 
+    predict(object)$pred[1:5]  
+    predict(object)$pred[1:5]   
+    predict(object, doplot = TRUE)    
     
     
     # Return Value:
@@ -183,8 +189,11 @@ function()
 test.noTrace = 
 function()
 {    
-    # Set Path:
+    # NOTE: MS Windows only!
+    
+    # Set Ox Path:
     OXPATH <<- "C:\\Ox\\Ox3"
+    
     
     # Simulate and Fit:
     set.seed(1985)
@@ -192,11 +201,13 @@ function()
     object = arfimaOxFit(formula = ~ arfima(1, 1), data = x, trace = FALSE)      
     object
     
+    
     # Simulate and Fit:
     set.seed(1985)
     x = armaSim(model = list(ar = 0, d = 0.3, ma = 0), n = 1000)
     object = arfimaOxFit(formula = ~ arfima(1, 1), data = x)      
     object
+    
     
     # Simulate and Fit:
     set.seed(1985)

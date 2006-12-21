@@ -15,9 +15,9 @@
 #
 # Author:
 #   (C) Rmetrics 1997-2005, Diethelm Wuertz, GPL
-# 	  www.rmetrics.org
-# 	  www.itp.phys.ethz.ch
-# 	  www.finance.ch
+#     www.rmetrics.org
+#     www.itp.phys.ethz.ch
+#     www.finance.ch
 #
 
 
