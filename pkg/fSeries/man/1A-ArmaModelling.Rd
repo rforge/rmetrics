@@ -18,6 +18,7 @@
 
 \alias{fitted.fARMA}
 \alias{coef.fARMA}
+\alias{coefficients.fARMA}
 \alias{residuals.fARMA}
 
 \alias{armaRoots}
@@ -195,7 +196,7 @@ armaTrueacf(model, lag.max = 20, type = c("correlation", "partial", "both"),
         \code{x ~ arma(p, q)}, 
         \code{x ~ arima(p, d, q)}, or
         \code{x ~ fracdiff(p, q)}.
-        \code{x} is the response variable and must appear in the 
+        \code{x} is the response variable optionally to appear in the 
         formula expression.
         In the first case R's function \code{ar} from the \code{ts}
         package will be used to estimate the parameters, in the second
@@ -607,6 +608,9 @@ Haslett J. and Raftery A.E. (1989);
    summary(fit)
    # 5 Steps ahead Forecasts:
    predict(fit, 5)
+   
+## Alternative Calls:
+   TS = timeSeries(data(msft.dat))
    
 ## armaRoots -
    # Calculate and plot the roots of an ARMA process:

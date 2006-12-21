@@ -37,9 +37,9 @@
 #  .arfimaFit               Internal function called by armaFit
 # S3 METHOD:              PREDICTION:
 #  predict.fARMA           S3: Predicts from an ARMA time series prrocess 
-#  .arPpredict             Internal function called by predict.fARMA
-#  .arimaPpredict          Internal function called by predict.fARMA
-#  .arfimaPredict          Not yet implemented
+#  .arPpredict              Internal function called by predict.fARMA
+#  .arimaPpredict           Internal function called by predict.fARMA
+#  .arfimaPredict           Internal function - Not yet implemented
 # GENERIC METHODS:        PRINT - PLOT - SUMMARY METHODS:
 #  show.fARMA              S4: Prints a fitted ARMA time series object
 #  .print.fARMA            S3: Prints a fitted ARMA time series object
@@ -190,7 +190,8 @@ rand.gen = rnorm, rseed = NULL, addControl = FALSE, ...)
         x = x[-(1:n.start)]
         if (d > 0) x = diffinv(x, differences = d) 
     }
-        
+     
+    # ARFIMA [FRACDIFF]:   
     if (TSMODEL == "ARFIMA") {
         if (p == 0) model$ar = 0
         if (q == 0) model$ma = 0
