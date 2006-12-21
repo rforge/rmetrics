@@ -125,21 +125,21 @@ myUnits
         if \code{xout} is not specified, alignment takes place at \code{n}
         equally spaced points spanning the interval \code{range(x)}.
         }
-    \item{name}
+    \item{name}{
         [attach] - \cr    
         alternative way to specify the database to be attached.
         See for details \code{help(attach,package=base)}.
-    }  
+        }  
     \item{partial, na.last, decreasing, index.return}{
         [sort] - \cr
         additional arguments to the \code{sort} function.
         }
-    \item{pos}
+    \item{pos}{
         [attach] - \cr    
         an integer specifying position in \code{search()} where to attach
         the database. 
         See for details \code{help(attach,package=base)}.
-    }      
+        }     
     \item{rule}{
         [align] - \cr
         an integer describing how alignment is to take place
@@ -179,7 +179,7 @@ myUnits
         additional arguments to the \code{colnames} and \code{rownames}
         functions.
         }
-    \item{warn.conflicts}
+    \item{warn.conflicts}{
         [attach] - \cr    
         a logical value. If \code{TRUE}, warnings are printed about 
         conflicts from attaching the database, unless that database 
@@ -187,8 +187,8 @@ myUnits
         function masking a function, or a non-function masking a 
         non-function. 
         See for details \code{help(attach,package=base)}.
-    }  
-    \item{what}
+        } 
+    \item{what}{
         [attach] - \cr
         database to be attached. This may currently be a timeSeries object,
         a data.frame or a list or a R data file created with save or NULL 
