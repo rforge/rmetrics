@@ -5,6 +5,9 @@
 \alias{align}
 \alias{align.default}
 
+\alias{attach}
+\alias{attach.default}
+
 \alias{log}
 \alias{log.default}
 
@@ -62,6 +65,9 @@
 \usage{
 align.default(x, y, xout, method = "linear", n = 50, rule = 1, f = 0, 
     ties = mean, \dots)
+    
+attach.default(what, pos = 2, name = deparse(substitute(what)), 
+    warn.conflicts = TRUE)
 
 log.default(x, base = exp(1))
 
@@ -94,6 +100,7 @@ myUnits
     \item{base}{
         [log] - \cr
         additional argument to the \code{log} function.
+        See for details \code{help(log,package=base)}.
         }
     \item{digits}{
         [round] - \cr
@@ -118,10 +125,21 @@ myUnits
         if \code{xout} is not specified, alignment takes place at \code{n}
         equally spaced points spanning the interval \code{range(x)}.
         }
+    \item{name}
+        [attach] - \cr    
+        alternative way to specify the database to be attached.
+        See for details \code{help(attach,package=base)}.
+    }  
     \item{partial, na.last, decreasing, index.return}{
         [sort] - \cr
         additional arguments to the \code{sort} function.
         }
+    \item{pos}
+        [attach] - \cr    
+        an integer specifying position in \code{search()} where to attach
+        the database. 
+        See for details \code{help(attach,package=base)}.
+    }      
     \item{rule}{
         [align] - \cr
         an integer describing how alignment is to take place
@@ -160,6 +178,22 @@ myUnits
         [colnames][rownames] - \cr
         additional arguments to the \code{colnames} and \code{rownames}
         functions.
+        }
+    \item{warn.conflicts}
+        [attach] - \cr    
+        a logical value. If \code{TRUE}, warnings are printed about 
+        conflicts from attaching the database, unless that database 
+        contains an object \code{.conflicts.OK}. A conflict is a 
+        function masking a function, or a non-function masking a 
+        non-function. 
+        See for details \code{help(attach,package=base)}.
+    }  
+    \item{what}
+        [attach] - \cr
+        database to be attached. This may currently be a timeSeries object,
+        a data.frame or a list or a R data file created with save or NULL 
+        or an environment. 
+        See for details \code{help(attach,package=base)}.
         }
     \item{x}{
         [align] - \cr

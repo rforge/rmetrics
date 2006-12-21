@@ -31,6 +31,8 @@
 # FUNCTION:                     DESCRIPTION:
 #  align                         aligns time series objects by approximation
 #  align.default                 align default method
+#  attach                        attach a database to the R path
+#  attach.default                attach default method
 #  log                           log has become a generic function
 #  log.default                   log default method
 #  round                         round has become a generic function
@@ -84,6 +86,10 @@
 
 ################################################################################
 # FUNCTION:                     DESCRIPTION:
+#  align                         aligns time series objects by approximation
+#  align.default                 align default method
+#  attach                        attach a database to the R path
+#  attach.default                attach default method
 #  log                           log has become a generic function
 #  log.default                   log default method
 #  round                         round has become a generic function
@@ -94,7 +100,6 @@
 #  sort.default                  sort default method
 #  var                           var has become a generic function
 #  var.default                   var default method
-
 
 
 align = 
@@ -129,13 +134,107 @@ ties = mean, ...)
 # ------------------------------------------------------------------------------
 
 
+attach = 
+function(what, pos = 2, name = deparse(substitute(what)), 
+warn.conflicts = TRUE)
+{   # A function implemented by Diethelm Wuertz
+
+    # FUNCTION:
+ 
+    # Return Value:
+    UseMethod("attach")
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+attach.default = 
+function(what, pos = 2, name = deparse(substitute(what)), 
+warn.conflicts = TRUE) 
+{
+    # FUNCTION:
+    
+    checkConflicts <- function(env) {
+        dont.mind <- c("last.dump", "last.warning", ".Last.value", 
+            ".Random.seed", ".First.lib", ".Last.lib", ".packageName", 
+            ".noGenerics", ".required", ".no_S3_generics")
+        sp <- search()
+        for (i in seq_along(sp)) {
+            if (identical(env, as.environment(i))) {
+                db.pos <- i
+                break
+            }
+        }
+        ob <- objects(db.pos, all = TRUE)
+        if (.isMethodsDispatchOn()) {
+            these <- objects(db.pos, all = TRUE)
+            these <- these[substr(these, 1, 6) == ".__M__"]
+            gen <- gsub(".__M__(.*):([^:]+)", "\\1", these)
+            from <- gsub(".__M__(.*):([^:]+)", "\\2", these)
+            gen <- gen[from != ".GlobalEnv"]
+            ob <- ob[!(ob %in% gen)]
+        }
+        ipos <- seq_along(sp)[-c(db.pos, match(c("Autoloads", 
+            "CheckExEnv"), sp, 0))]
+        for (i in ipos) {
+            obj.same <- match(objects(i, all = TRUE), ob, nomatch = 0)
+            if (any(obj.same > 0)) {
+                same <- ob[obj.same]
+                same <- same[!(same %in% dont.mind)]
+                Classobjs <- grep("^\\.__", same)
+                if (length(Classobjs)) 
+                  same <- same[-Classobjs]
+                is_fn1 <- sapply(same, function(x) exists(x, 
+                  where = i, mode = "function", inherits = FALSE))
+                is_fn2 <- sapply(same, function(x) exists(x, 
+                  where = db.pos, mode = "function", inherits = FALSE))
+                same <- same[is_fn1 == is_fn2]
+                if (length(same)) {
+                  cat("\n\tThe following object(s) are masked", 
+                    if (i < db.pos) 
+                      "_by_"
+                    else "from", sp[i], if (sum(sp == sp[i]) > 
+                      1) 
+                      paste("( position", i, ")"), ":\n\n\t", 
+                    same, "\n\n")
+                }
+            }
+        }
+    }
+    if (pos == 1) {
+        warning("*** 'pos=1' is not possible; setting 'pos=2' for now.\n", 
+            "*** Note that 'pos=1' will give an error in the future")
+        pos <- 2
+    }
+    if (is.character(what) && (length(what) == 1)) {
+        if (!file.exists(what)) 
+            stop(gettextf("file '%s' not found", what), domain = NA)
+        name <- paste("file:", what, sep = "")
+        value <- .Internal(attach(NULL, pos, name))
+        load(what, envir = as.environment(pos))
+    } else {
+        value <- .Internal(attach(what, pos, name))
+    }
+    if (warn.conflicts && !exists(".conflicts.OK", envir = value, 
+        inherits = FALSE)) {
+        checkConflicts(value)
+    }
+    if ((length(objects(envir = value, all = TRUE)) > 0) && 
+        .isMethodsDispatchOn()) 
+        methods:::cacheMetaData(value, TRUE)
+        
+    invisible(value)
+}
+
+
+# ------------------------------------------------------------------------------
+
+
 sort = 
 function(x, partial = NULL, na.last = NA, decreasing = FALSE, 
 method = c("shell", "quick"), index.return = FALSE, ...)
 {
-    # Changes:
-    #
-    
     # FUNCTION:
     
     # Return Value:
@@ -150,9 +249,6 @@ sort.default =
 function (x, partial = NULL, na.last = NA, decreasing = FALSE, 
 method = c("shell", "quick"), index.return = FALSE, ...) 
 {   # A copy of the sort() function from R's base package
-    
-    # Changes:
-    #
     
     # FUNCTION:
     
@@ -233,9 +329,6 @@ method = c("shell", "quick"), index.return = FALSE, ...)
 sample = 
 function(x, ...)
 {
-    # Changes:
-    #
-    
     # FUNCTION:
     
     # Return Value:
@@ -249,9 +342,6 @@ function(x, ...)
 sample.default =
 function (x, size, replace = FALSE, prob = NULL, ...) 
 {
-    # Changes:
-    #
-    
     # FUNCTION:
     
     if (length(x) == 1 && x >= 1) {
@@ -272,9 +362,6 @@ function (x, size, replace = FALSE, prob = NULL, ...)
 round =
 function(x, ...)
 {
-    # Changes:
-    #
-    
     # FUNCTION:
     
     # Return Value:
@@ -288,9 +375,6 @@ function(x, ...)
 round.default =
 function (x, digits = 0, ...) 
 {
-    # Changes:
-    #
-    
     # FUNCTION:
     
     .Internal(round(x, digits, ...))
@@ -303,9 +387,6 @@ function (x, digits = 0, ...)
 log = 
 function(x, base = exp(1)) 
 {
-    # Changes:
-    #
-    
     # FUNCTION:
     
     # Return Value:
@@ -320,9 +401,6 @@ log.default =
 function(x, base = exp(1))
 {   # A copy of the log() function from R's base package
 
-    # Changes:
-    #
-    
     # FUNCTION:
     
     # Log:
@@ -360,10 +438,7 @@ function(x, sd = 5, complement = TRUE, ...)
     #       be detected.
     #   complement - a logical flag, should the outlier series
     #       or its complements be returned.
-    
-    # Changes:
-    #
-    
+  
     # FUNCTION:
     
     # Find Outliers:
@@ -385,9 +460,6 @@ function(x, sd = 5, complement = TRUE, ...)
 var = 
 function(x, y = NULL, na.rm = FALSE, use) 
 {
-    # Changes:
-    #
-    
     # FUNCTION:
     
     # Return Value:
@@ -402,9 +474,6 @@ var.default =
 function(x, y = NULL, na.rm = FALSE, use) 
 {   # A copy of the var() function from R's base package
 
-    # Changes:
-    #
-    
     # FUNCTION:
     
     # var:
@@ -432,9 +501,6 @@ function(x, y = NULL, na.rm = FALSE, use)
 "rownames<-" = 
 function(x, value)
 {
-    # Changes:
-    #
-    
     # FUNCTION:
     
     # Return Value:
@@ -449,9 +515,6 @@ function(x, value)
 function(x, value)
 {   # A modfied copy from R's base package
 
-    # Changes:
-    #
-    
     # FUNCTION:
     
     # rownames<-:
@@ -476,9 +539,6 @@ function(x, value)
 "colnames<-" = 
 function(x, value)
 {
-    # Changes:
-    #
-    
     # FUNCTION:
     
     # Return Value:
@@ -493,9 +553,6 @@ function(x, value)
 function(x, value)
 {   # A modfied copy from R's base package
 
-    # Changes:
-    #
-    
     # FUNCTION:
     
     # colnames<-:
@@ -520,9 +577,6 @@ function(x, value)
 as.POSIXlt = 
 function(x, tz = "")
 {
-    # Changes:
-    #
-    
     # FUNCTION:
     
     # Return Value:
@@ -535,10 +589,7 @@ function(x, tz = "")
 
 as.POSIXlt.default =
 function (x, tz = "") 
-{
-    # Changes:
-    #
-    
+{   
     # FUNCTION:
     
     # As Posix:
@@ -591,9 +642,6 @@ as.matrix.ts =
 function(x) 
 {   # A function implemented by Diethelm Wuertz
 
-    # Changes:
-    #
-    
     # FUNCTION:
     
     # Transform: 
@@ -613,10 +661,7 @@ function(x)
 as.matrix.mts = 
 function(x) 
 {   # A function implemented by Diethelm Wuertz
-
-    # Changes:
-    #
-    
+  
     # FUNCTION:
     
     # Transform: 
@@ -639,10 +684,7 @@ function()
 
     # Descriptions:
     #   Sets default description string:
-    
-    # Changes:
-    #
-    
+   
     # FUNCTION:
     
     # Description String:
@@ -686,10 +728,7 @@ tol = .Machine$double.eps^0.25, ...)
 
     # Example:
     #   .unirootNA(sin, c(1, 2)); .unirootNA(sin, c(-1, 1))
-        
-    # Changes:
-    #
-    
+
     # FUNCTION:
     
     # There is no Root:  
@@ -734,10 +773,7 @@ function(x, method, units)
 modify.default =
 function(x, method = c("sort", "round", "trunc"), units = NULL )
 {   # A function implemented by Diethelm WUertz
-
-    # Changes:
-    #
-    
+ 
     # FUNCTION:
     
     # Modify:
@@ -757,10 +793,7 @@ function(x, method = c("sort", "round", "trunc"), units = NULL )
 atoms = 
 function(x, ...) 
 {   # A function implemented by Diethelm WUertz
-
-    # Changes:
-    #
-    
+   
     # FUNCTION:
     
     # Return Value:
@@ -774,10 +807,7 @@ function(x, ...)
 atoms.default = 
 function(x, ...) 
 {   # A function implemented by Diethelm WUertz
-    
-    # Changes:
-    #
-    
+ 
     # FUNCTION:
     
     # Return Value:
@@ -794,9 +824,6 @@ function(..., list = character(0), package = NULL, lib.loc = NULL,
 verbose = getOption("verbose"), envir = .GlobalEnv)
 {   # An extended copy of the var() function from R's base package
 
-    # Changes:
-    #
-    
     # FUNCTION:
     
     # data:
@@ -975,9 +1002,6 @@ verbose = getOption("verbose"), envir = .GlobalEnv)
 function()    
 {   # A function implemented by Diethelm Wuertz
 
-    # Changes:
-    #
-    
     # FUNCTION:
     
     # Check Time Zone:
@@ -1041,10 +1065,7 @@ function(fdates, origin = 19600101, order = 'mdy', cc = NULL, swap = 20)
     
     # Note:
     #   Requires R-package "date"
-    
-    # Changes:
-    #
-    
+  
     # FUNCTION:
     
     # Requires
@@ -1106,10 +1127,7 @@ function(m, d, y, origin = c(month = 1, day = 1, year = 1960))
     
     # Note:
     #   SPlus like function.
-
-    # Changes:
-    #
-    
+   
     # FUNCTION:
     
     # Selection:
@@ -1166,9 +1184,6 @@ function(x)
     #   isISO8601("2007-Jan-01")[[1]]
     #   isISO8601("2007-01-01 15:00:000")[[1]]
     
-    # Changes:
-    #
-    
     # FUNCTION:
     
     # Check:
@@ -1200,10 +1215,7 @@ function(x)
 
     # Description:
     #   Checks for an object of class POSIX
-    
-    # Changes:
-    #
-    
+
     # FUNCTION:
     
     # Check:
