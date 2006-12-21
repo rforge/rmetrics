@@ -28,7 +28,7 @@
 
 
 ################################################################################
-# METHOS                 MODIFICATION METHODS:
+# METHOS:                MODIFICATION METHODS:
 #  .align.timeSeries      Aligns a timeSeries object
 #  diff.timeSeries        Differences a 'timeSeries' object
 #  lag.timeSeries         Lags a 'timeSeries' object
@@ -37,7 +37,7 @@
 #  cumsum.timeSeries      Returns cumulated sums of 'timeSeries' objects
 #  scale.timeSeries       Centers and/or scales a 'timeSeries' object
 #  var.timeSeries         Returns variance for a 'timeSeries' object
-# METHODS                MATHEMATICAL OPERATIONS ON DATA:
+# METHODS:               MATHEMATICAL OPERATIONS ON DATA:
 #  Ops.timeSeries         Returns group 'Ops' for a 'timeSeries' object
 #  abs.timeSeries         Returns abolute values of a 'timeSeries' object
 #  sqrt.timeSeries        Returns sqrt values of a 'timeSeries' object
@@ -45,13 +45,15 @@
 #  log.timeSeries         Returns logarithms of a 'timeSeries' object
 #  sign.timeSeries        Returns the signs of a 'timeSeries' object
 #  quantile.timeSeries    Produces sample quantiles of a 'timeSeries' object
-# METHODS                SUBSETTING METHODS ON DATA:
+# METHODS:               DATABASE ATTACHEMENT:
+#  attach.timeSeries      Attaches a 'timeSeries' object
+# METHODS:               SUBSETTING METHODS ON DATA:
 #  [.timeSeries           Subsets of a 'timeSeries' object
 #  cut.timeSeries         Cuts a block from a 'timeSeries' object
 #  head.timeSeries        Returns the head of a 'timeSeries' object
 #  tail.timeSeries        Returns the tail of a 'timeSeries' object
 #  outlier.timeSeries     Removes outliers from a 'timeSeries' object  
-# METHODS                DIM OPERATIONS ON DATA: 
+# METHODS:               DIM OPERATIONS ON DATA: 
 #  dim.timeSeries         Returns dimension of a 'timeSeries' object
 #  dimnames.timeDSeries   Returns dimension names of a 'timeSeries' object
 #  colnames<-.timeSeries  Assigns column names to a 'timeSeries' object
@@ -718,6 +720,28 @@ function(x, probs = 0.95, ...)
     
     # Return Value:
     ans
+}
+
+
+################################################################################
+#  attach.timeSeries      Attaches a 'timeSeries' object
+
+
+attach.timeSeries = 
+function(what, pos = 2, name = deparse(substitute(what)), 
+warn.conflicts = TRUE) 
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Attaches a 'timeSeries' object   
+    
+    # FUNCTION:
+    
+    # Convert to data.frame Object:    
+    what.df = as.data.frame(what)
+    
+    # Attach:
+    return(attach.default(what.df, pos, name, warn.conflicts))
 }
 
 
