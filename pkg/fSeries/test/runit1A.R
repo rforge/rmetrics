@@ -567,8 +567,6 @@ function()
 test.armaFormula =
 function()
 {
-    armaFit(~arma(2,1), armaSim(n = 10000))
-
     # Load From Ecofin Package:
     TS = as.timeSeries(data(msft.dat))
     head(TS)
@@ -595,8 +593,22 @@ function()
     armaFit(~ ar(5), as.ts(TS.RET)[, "Close"])
     
     # Fit:
-    attachSeries = function(what, ...) attach(as.data.frame(what), ...)
+    attach.timeSeries = 
+    function(what, pos = 2, name = deparse(substitute(what)), 
+    warn.conflicts = TRUE) {
+        DF = as.data.frame(what)
+        return(attach.default(what = DF, pos, name, warn.conflicts))
+    }
+    TS.RET = returnSeries(TS)
+    colnames(TS.RET)
     attach(TS.RET)
+    head(Close)
+    
+    TS.RET = returnSeries(TS)
+    DF = as.data.frame(TS.RET)
+    attach(DF)
+    armaFit(formula = Close ~ ar(5))
+    attach(TS)
     armaFit(formula = Close ~ ar(5))
 
     # Return Value:
