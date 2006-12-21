@@ -593,23 +593,11 @@ function()
     armaFit(~ ar(5), as.ts(TS.RET)[, "Close"])
     
     # Fit:
-    attach.timeSeries = 
-    function(what, pos = 2, name = deparse(substitute(what)), 
-    warn.conflicts = TRUE) {
-        DF = as.data.frame(what)
-        return(attach.default(what = DF, pos, name, warn.conflicts))
-    }
     TS.RET = returnSeries(TS)
     colnames(TS.RET)
     attach(TS.RET)
     head(Close)
-    
-    TS.RET = returnSeries(TS)
-    DF = as.data.frame(TS.RET)
-    attach(DF)
-    armaFit(formula = Close ~ ar(5))
-    attach(TS)
-    armaFit(formula = Close ~ ar(5))
+    armaFit(Close ~ ar(5))
 
     # Return Value:
     return()    
@@ -632,9 +620,10 @@ function()
     #   fixed = NULL, init = NULL, method = c("CSS-ML", "ML", "CSS"), 
     #   n.cond, optim.control = list(), kappa = 1e+06) 
 
+    # Simulate:
     x = armaSim(model = list(ar = c(0.5, -0.5), d = 0, ma = 0.1), n = 1000)
     
-    # Iclude Mean:
+    # Include Mean:
     armaFit(~ arma(2, 1), data = x, include.mean = FALSE)
     
     # Fixed - AR(2[2]) Subset Model:
