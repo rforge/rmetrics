@@ -6,10 +6,8 @@
 \alias{symbolTable}
 \alias{colorTable}
 
-\alias{greyPalette}
 
-
-\title{General Rmetrics Utilities}
+\title{Charaqcter, Symbol and Color Tables}
 
 
 \description{
@@ -23,8 +21,7 @@
     \tabular{ll}{
     \code{characterTable} \tab Table of Numerical Equivalents to Latin Characters, \cr
     \code{symbolTable} \tab Table of plot characters, plot symbols, \cr
-    \code{colorTable} \tab Table of Color Codes and Plot Colors itself, \cr
-    \code{greyPalette} \tab Creates a grey palette like rainbow does for colors.}
+    \code{colorTable} \tab Table of Color Codes and Plot Colors itself. }
     
 }
     
@@ -34,8 +31,6 @@
 characterTable(font = 1, cex = 0.7)
 symbolTable(font = par('font'), cex = 0.7)
 colorTable(cex = 0.7)
-
-greyPalette(n = 64, start = 255-n, end = 255)
 }
 
 
@@ -49,13 +44,6 @@ greyPalette(n = 64, start = 255-n, end = 255)
         \code{plotcharacterTable}. The character size is determined by
         the numeric value \code{cex}, the default size is 0.7.
         }  
-    \item{n, start, end}{
-        [greyPal] - cr
-        \code{n} gives the number of greys to be constructed,
-        \code{start} and \code{end} span the range of the color palette.
-        By default 64 grey tones equidistant chosen from the color range 
-        (191, 191, 191) to (255, 255, 255).
-        } 
     
 }
 
@@ -100,9 +88,6 @@ greyPalette(n = 64, start = 255-n, end = 255)
     
 ## Color Table:
    colorTable()
-
-## GreyPalette
-   greyPalette()
 }
 
 
