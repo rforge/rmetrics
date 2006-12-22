@@ -1,8 +1,7 @@
-\name{RmetricsData}
+\name{TimeSeriesData}
 
-\alias{RmetricsData}
+\alias{TimeSeriesData}
 
-%alias{ciaFactbook}
 \alias{CPI.dat}
 \alias{dem2gbp}
 \alias{DowJones30}
@@ -23,10 +22,9 @@
 \alias{surex1.ts}
 \alias{usdchf}
 \alias{usdthb}
-%alias{wfe1..6}
 \alias{yhoo.df}
 
-\title{Rmetrics Data Sets} 
+\title{Time Series Data Sets} 
 
 
 \description{

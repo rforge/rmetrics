@@ -120,7 +120,7 @@ CIA, 2004,
     
     
 \examples{
-## SOURCE("fEcofin.1A-CIAFactbook")
+## SOURCE("fEcofin.2B-CIAFactbook")
 
 ## Pie Chart from CIA Oil Production Indicator (Code 2173): 
    # Search for Code:
