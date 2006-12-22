@@ -627,7 +627,6 @@ function()
     armaFit(~ arma(2, 1), data = x, include.mean = FALSE)
     
     # Fixed - AR(2[2]) Subset Model:
-    # arima(x, order = c(2,0,1), fixed = c(0.5, NA, NA, NA))
     armaFit(~ arma(2, 1), data = x, fixed = c(0.5, NA, NA, NA))
     
     # Return Value:
@@ -638,7 +637,7 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.armaUtils = 
+test.armaTrueModel = 
 function()
 { 
     # armaTrueacf: Returns True ARMA autocorrelation function

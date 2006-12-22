@@ -60,11 +60,11 @@
 #  .armaFischer            Returns ARMA Fischer information matrix
 #  .schurTest               Tests invertibility
 #  .toeplitzARMA            Computes Toeplitz matrix
-#  .iARMA                   Information matrix ARMA
-#  .iFARMA                  Information matrix FARMA
-#  .psiwtsARMA              MA expansion coefficients
-#  .tacvfARMA               True acvf ARMA
-#  .tccfAR                  Cross covariances between ARs
+#  .iARMA                   Returns Information matrix ARMA
+#  .iFARMA                  Returns Information matrix FARMA
+#  .psiwtsARMA              Returns MA expansion coefficients
+#  .tacvfARMA               Returns true acvf ARMA
+#  .tccfAR                  Returns cross covariances between ARs
 ################################################################################
 
        
@@ -267,7 +267,7 @@ include.mean = TRUE, fixed = NULL, title = NULL, description = NULL, ...)
     #           n.cond, 
     #           optim.control = list(), 
     #           kappa = 1e+06) 
-    #   SPlus:
+    #   Compare with SPlus:
     #       arima.mle(
     #           x, 
     #           model, 

@@ -597,20 +597,43 @@ Haslett J. and Raftery A.E. (1989);
 
 \examples{
 ## SOURCE("fSeries.1A-ArmaModelling")
-\dontrun{
-## armaSim/armaFit -
+
+## armaSim -
+   # Simulation:
    x = armaSim(model = list(ar = c(0.5, -0.5), ma = 0.1), n = 1000)
-   # Estimate the parameters:
-   fit = armaFit(x ~ arma(2, 1))
+   
+## armaFit -
+   # Estimate the Parameters:
+   fit = armaFit(~ arma(2, 1), data = x)
    print(fit)
+      
+## summary -
    # Diagnostic Analysis:
-   par(mfrow = c(3, 2), cex = 0.7)
-   summary(fit)
-   # 5 Steps ahead Forecasts:
+   par(mfrow = c(2, 2), cex = 0.7)
+   summary(fit, which =  "all")
+   
+## plot - 
+   # Interactive Plots:
+   # par(mfrow = c(1, 1))
+   # plot(fit)
+   
+## predict -
+   # Forecast 5 Steps ahead:
    predict(fit, 5)
    
-## Alternative Calls:
-   TS = timeSeries(data(msft.dat))
+## armaFit -
+   # Alternative Calls:
+   TS = as.timeSeries(data(msft.dat))
+   armaFit(formula = diff(log(Close)) ~ ar(5), data = TS)
+   armaFit(Close ~ ar(5), data = returnSeries(TS, digits = 12))
+   TS.RET = returnSeries(TS, digits = 12)
+   armaFit(Close ~ ar(5), TS.RET)
+   armaFit(Close ~ ar(5), as.data.frame(TS.RET))
+   armaFit(~ ar(5), as.vector(TS.RET[, "Close"]))
+   armaFit(~ ar(5), as.ts(TS.RET)[, "Close"])
+   attach(TS.RET)
+   armaFit(Close ~ ar(5))
+   detach(TS.RET)
    
 ## armaRoots -
    # Calculate and plot the roots of an ARMA process:
@@ -624,7 +647,7 @@ Haslett J. and Raftery A.E. (1989);
    model = list(ar = c(0.3, -0.3), ma = 0.1)
    armaTrueacf(model)
 }
-}
+
 
 \keyword{models}
 

@@ -28,18 +28,18 @@
 
 
 ################################################################################
-# FUNCTION:          DICKEY FULLER TEST:
+# FUNCTION:          AUGMENTED DICKEY-FULLER TEST:
 #  pdftest            Returns probabilities for the ADF Test
 #  qdftest            Returns quantiles for the ADF Test
-#  .dfTable           Augmented Dickey-Fuller finite sample test table
-# FUNCTION:          PROBABILIY AND QUANTILES:
+#  dftestTable        Returns augmented Dickey-Fuller finite sample test table
+# FUNCTION:          MC KINNON'S PROBABILIY AND QUANTILES:
 #  punitroot          Returns cumulative probability for unit root distributions
 #  qunitroot          Returns quantiles for unit root distributions
-# INTERNAL:          UTILITY FUNCTIONS:
-#  .strsplitUrcval    String split function for S-Plus compatibility
+#  unitrootTable      Returns McKinnon's unitroot finite sample test table
+# FUNCTION:          INTERNAL UTILITY FUNCTIONS:
+#  .strsplitUrcval    Implements string split function for S-Plus compatibility
 #  .urcval            Implements unit root statists
-#  .probsUrcval       Probability values
-#  .urc1 ... .urc12   Statistical values
+#  .probsUrcval       Implements probability values
 ################################################################################
 
 

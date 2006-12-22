@@ -37,7 +37,7 @@
 #  * predict.fARMA         S3: Predicts from an ARMA time series prrocess 
 #    .arfimaOxPredict          Internal function called by predict.fARMA
 # S3 METHOD:              RINT - PLOT - SUMMARY METHODS:
-#  * print.fARMA           S3: Prints a fitted ARMA time series object
+#  * show.fARMA            S4: Prints a fitted ARMA time series object
 #  * plot.fARMA            S3: Plots stylized facts of a fitted ARMA object
 #  * summary.fARMA         S3: Summarizes a fitted ARMA time series object
 # S3 METHOD:              ADDON METHODS:
@@ -62,7 +62,7 @@ title = NULL, description = NULL)
     # Description:
     #   Fits Model Parameters for an ARFIMA Time Series Process
     
-    # Argumewnts:
+    # Arguments:
     #   formula - defines the model to be fitted
     #       x ~ arma(2, 1)
     #       x ~ arima(2, 1, 1)
@@ -74,9 +74,8 @@ title = NULL, description = NULL)
     #   This is an interface to the Arfime Ox Software Package
     
     # Example:
-    #   require(fracdiff)
     #   OXPATH <<- "C:\\Ox\\Ox3"
-    #   x = as.vector(fracdiff.sim(n=500, ar=0.2, ma=-0.4, d=0.3)$series)
+    #   x = armaSim(list(ar=0.2, ma=-0.4, d=0.3), n = 500) 
     #   object = arfimaOxFit(x ~ arfima(2, 1))
        
     # FUNCTION:

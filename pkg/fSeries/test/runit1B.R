@@ -28,26 +28,25 @@
 
 
 ################################################################################
-
-
-################################################################################
-#  *                       Asterisked Functions are in ArmaModelling.R
+#  *                      Asterisked Functions are in ArmaModelling.R
 # FUNCTION:               DESCRIPTION:
-#  *'fARMA'                S4 Class representation for "fARMA" objects
-#  *armaSim                Simulates a time series process from the ARIMA family
-#  arfimaOxFit             Fits parameters for AR(FI)MA time series processes
+#  * fARMA                 Class representation for "fARMA" objects
+#  * armaSim               Simulates a time series process from the ARIMA family
+#    arfimaOxFit           Fits parameters for AR(FI)MA time series processes
 # S3 METHOD:              PREDICTION:
-#  *predict.fARMA          S3: Predicts from an ARMA time series prrocess 
-#  .arfimaOxPredict            Internal function called by predict.fARMA
-#  *predictPlot            S3: Use method
-#  *predictPlot.fARMA      S3: Plots from an ARMA time series prediction
-# S3 METHOD:              PRINT - SUMMARY - PLOT:
-#  *show.fARMA             S4: Prints a fitted ARMA time series object
-#  *plot.fARMA             S3: Plots stylized facts of a fitted ARMA object
-#  *summary.fARMA          S3: Summarizes a fitted ARMA time series object
-#  *fitted.fARMA           S3: Returns fitted values from a fitted ARMA object
-#  *residuals.fARMA        S3: Returns residuals from a fitted ARMA object
+#  * predict.fARMA         S3: Predicts from an ARMA time series prrocess 
+#    .arfimaOxPredict          Internal function called by predict.fARMA
+# S3 METHOD:              RINT - PLOT - SUMMARY METHODS:
+#  * show.fARMA            S4: Prints a fitted ARMA time series object
+#  * plot.fARMA            S3: Plots stylized facts of a fitted ARMA object
+#  * summary.fARMA         S3: Summarizes a fitted ARMA time series object
+# S3 METHOD:              ADDON METHODS:
+#  * coef.fARMA            S3: Returns coefficidents from a fitted ARMA object
+#  * coefficients.fARMA    S3: Synonyme for coef.fARMA
+#  * fitted.fARMA          S3: Returns fitted values from a fitted ARMA object
+#  * residuals.fARMA       S3: Returns residuals from a fitted ARMA object
 ################################################################################
+
 
 
 test.helpFile = 
@@ -197,23 +196,11 @@ function()
     
     # Simulate and Fit:
     set.seed(1985)
-    x = armaSim(model = list(ar = 0.5, d = 0.3, ma = 0.5), n = 1000)
-    object = arfimaOxFit(formula = ~ arfima(1, 1), data = x, trace = FALSE)      
-    object
-    
-    
-    # Simulate and Fit:
-    set.seed(1985)
-    x = armaSim(model = list(ar = 0, d = 0.3, ma = 0), n = 1000)
-    object = arfimaOxFit(formula = ~ arfima(1, 1), data = x)      
-    object
-    
-    
-    # Simulate and Fit:
-    set.seed(1985)
-    x = armaSim(model = list(ar = 0, d = 0.3, ma = 0), n = 1000)
-    object = arfimaOxFit(formula = ~ arfima(0, 0), data = x)      
-    object
+    x = armaSim(model = list(ar = 0.65, d = 0.3, ma = 0.65), n = 1000)
+    object = arfimaOxFit(formula = x ~ arfima(1, 1), data = x, trace = FALSE)      
+    print(object)
+    summary(object)
+    coef(object)
     
     
     # Return Value:
