@@ -37,7 +37,7 @@
 
 .termPlot =
 function(object, terms = NULL)
-{   # A function Implemented by Diethelm Wuertz
+{   # A function implemented by Diethelm Wuertz
 
     # FUNCTION:
     
@@ -92,7 +92,7 @@ function(object, terms = NULL)
 
 .termPersp =
 function(object, terms = NULL, gridPoints = 25)
-{   # A function Implemented by Diethelm Wuertz
+{   # A function implemented by Diethelm Wuertz
 
     # FUNCTION:
     
@@ -146,7 +146,7 @@ function(object, terms = NULL, gridPoints = 25)
 
 .termContour =
 function(object, terms = NULL, gridPoints = 25)
-{   # A function Implemented by Diethelm Wuertz
+{   # A function implemented by Diethelm Wuertz
 
     # FUNCTION:
     

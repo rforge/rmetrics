@@ -107,12 +107,12 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.regSimulate =
+test.regSim =
 function()
 {
     # Plot Parameters:
     par(ask = FALSE)
-    par(mfrow = c(1, 1))
+    par(mfrow = c(2, 2), cex = 0.7)
     
     # Simulate:
     X = regSim(model = "LM3", n = 100)
@@ -148,13 +148,14 @@ function()
     
     # Simulate Data:
     DATA = regSim(model = "GAM3", n = 100)
+    head(DATA)
     DATATS = as.timeSeries(DATA)
-    print(DATATS)
+    head(DATATS)
     
     # Fit:
     LM    = regFit(formula = Y ~ X1 + X2, data = DATATS, use = "lm") 
     RLM   = regFit(Y ~ X1 + X2, data = DATATS, use = "rlm") 
-    AM    = regFit(Y ~ s(X1) + s(X2),  DATATS, use = "am") 
+    AM    = regFit(Y ~ X1 + X2, data = DATATS, use = "am") 
     PPR   = regFit(Y ~ X1 + X2, data = DATATS, use = "ppr") 
     MARS  = regFit(Y ~ X1 + X2, data = DATATS, use = "mars") 
     PMARS = regFit(Y ~ X1 + X2, data = DATATS, use = "polymars") 
@@ -208,11 +209,13 @@ function()
     
     # Simulate Data:
     DATA = regSim(model = "GAM3", n = 100)
+    head(DATA)
     DATATS = as.timeSeries(DATA)
-    print(DATATS)
+    head(DATATS)
     
     # 
     require(MASS)
+    require(polspline)
     LM    = regFit(Y ~ X1 + X2, data = DATATS, use = "lm") 
     RLM   = regFit(Y ~ X1 + X2, data = DATATS, use = "rlm") 
     AM    = regFit(Y ~ s(X1) + s(X2),  DATATS, use = "am") 
@@ -278,8 +281,9 @@ function()
     
     # Simulate Data:
     DATA = regSim(model = "GAM3", n = 100)
+    head(DATA)
     DATATS = as.timeSeries(DATA)
-    print(DATATS)
+    head(DATATS)
     
     # 
     LM    = regFit(Y ~ X1 + X2, data = DATATS, use = "lm") 
@@ -383,8 +387,10 @@ function()
     require(polspline)
     
     # Simulate Data:
-    DATA = regSim(model = "GAM3", n = 200)
+    DATA = regSim(model = "GAM3", n = 100)
+    head(DATA)
     DATATS = as.timeSeries(DATA)
+    head(DATATS)
     
     # 
     LM    = regFit(Y ~ 1 + X1 + X2 + X3, data = DATATS, use = "lm") 
@@ -473,7 +479,9 @@ function()
     
     # Simulate Data:
     DATA = regSim(model = "GAM3", n = 100)
+    head(DATA)
     DATATS = as.timeSeries(DATA)
+    head(DATATS)
     
     # LM:
     LM1 = regFit(Y ~ X1 + X2,      DATATS, use = "lm") 

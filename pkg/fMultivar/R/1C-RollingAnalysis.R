@@ -69,7 +69,6 @@ function(x, n, trim = TRUE, na.rm = FALSE, FUN, ...)
     if (TS) {
         positions = x.orig@positions
         x = x.orig@Data[, 1]
-        
     } else {
         x = as.vector(x.orig)
         names(x) = NULL
