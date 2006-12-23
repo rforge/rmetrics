@@ -7,9 +7,6 @@
 \alias{persp.gridData}
 \alias{contour.gridData}
 
-\alias{akimaInterp}
-\alias{krigeInterp}
-
 
 \title{Bivariate Gridded Data Sets}
 
