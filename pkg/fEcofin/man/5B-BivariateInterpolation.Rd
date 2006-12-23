@@ -1,32 +1,19 @@
-\name{BivariateGridData}
+\name{BivariateInterpolation}
 
-\alias{BivariateGridData}
-
-
-\alias{gridData}
-\alias{persp.gridData}
-\alias{contour.gridData}
+\alias{BivariateInterpolation}
 
 \alias{akimaInterp}
 \alias{krigeInterp}
 
 
-\title{Bivariate Gridded Data Sets}
+\title{Bivariate Interpolation}
 
 
 \description{
     
     A collection and description of functions which
-    allow to generate bivariate gridded data sets and
-    to interpolate bivariate irregular data sets.
+    allow to interpolate bivariate irregular data sets.
     \cr
-
-    Grid Data Functions:
-    
-    \tabular{ll}{
-    \code{gridData} \tab generates a grid data set of class 'gridData', \cr
-    \code{persp} \tab generates a perspective plot from a grid data set, \cr
-    \code{contour} \tab generates a contour plot from a grid data set.}
     
     Interpolation Functions:
     
@@ -38,29 +25,18 @@
     
 
 \usage{ 
-gridData(x = (-10:10)/10, y = x, z = outer(x, y, function(x, y) (x^2+y^2)) ))
-
-\method{persp}{gridData}(x, theta = -40, phi = 30, col = "steelblue", 
-    ticktype = "detailed", \dots)
-\method{contour}{gridData}(x, addImage = TRUE, \dots)
-
 akimaInterp(x, y = NULL, z = NULL, gridPoints = 21,
     xo = seq(min(x), max(x), length = gridPoints),
     yo = seq(min(y), max(y), length = gridPoints), extrap = TRUE)
 
 krigeInterp(x, y = NULL, z = NULL, gridPoints = 21,
-xo = seq(min(x), max(x), length = gridPoints),
-yo = seq(min(y), max(y), length = gridPoints), extrap = TRUE, polDegree = 6)
+    xo = seq(min(x), max(x), length = gridPoints),
+    yo = seq(min(y), max(y), length = gridPoints), extrap = TRUE, polDegree = 6)
 }
 
 
 \arguments{
   
-    \item{addImage}{
-        [contour] - \cr
-        a logical flag indicating if an image plot should be underlayed
-        to the contour level plot.
-        }
     \item{x, y, z}{
         [griddata] - \cr
         \code{x} and \code{y} are two numeric vectors of grid pounts
@@ -79,9 +55,6 @@ yo = seq(min(y), max(y), length = gridPoints), extrap = TRUE, polDegree = 6)
         an integer value specifying the number of grid points in \code{x} 
         and \code{y} direction.
         } 
-    \item{theta, phi, col, ticktype}{
-        [persp] - \cr
-        tailored parameters passed the perspective plot function \code{persp}.
     \item{xo, yo}{
         a numeric vector of data points spanning the grid.
         }
@@ -91,11 +64,6 @@ yo = seq(min(y), max(y), length = gridPoints), extrap = TRUE, polDegree = 6)
     \item{polDegree}{
         the polynomial krige degree, an integer ranging between 1 and 6.
         }
-    \item{\dots}{
-        [contour][persp] - \cr
-        additional arguments to be passed to the perspectice and countour
-        plot functions.
-        }
     
 }
 
@@ -103,11 +71,12 @@ yo = seq(min(y), max(y), length = gridPoints), extrap = TRUE, polDegree = 6)
 
     The function \code{krigeInterp} requires loading of the R package
     \code{spatial}.
-    
+
+}
+       
     
 \value{
     
-    \code{gridData} - \cr
     \code{akimaInterp} - \cr
     \code{akimaInterp} - \cr
     A list with at least three entries, \code{x}, \code{y} and \code{z}. 
@@ -127,14 +96,8 @@ yo = seq(min(y), max(y), length = gridPoints), extrap = TRUE, polDegree = 6)
 
 
 \examples{
-## SOURCE("fEcofin.5A-BivariateInterpolation")
-
-## gridData -
-   # Grid Data Set
-   gD = gridData()
-   persp(gD)
-   contour(gD)
-   
+## SOURCE("fEcofin.5B-BivariateInterpolation")
+  
 ## akimaInterp -
    # Akima Interpolation:    
    set.seed(1953)
