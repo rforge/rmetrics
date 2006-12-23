@@ -165,8 +165,8 @@ function(x, col = heat.colors(12), addPoints = TRUE, addRug = TRUE, ...)
     
     # Add rug:
     if (addRug) {
-        rug(x, ticksize = 0.01, side = 3)
-        rug(y, ticksize = 0.01, side = 4)
+        rug(X, ticksize = 0.01, side = 3)
+        rug(Y, ticksize = 0.01, side = 4)
     }
     
     
@@ -332,8 +332,8 @@ function(x, col = heat.colors(12), addPoints = TRUE, addRug = TRUE, ...)
     
     # Add rug:
     if (addRug) {
-        rug(x, ticksize = 0.01, side = 3)
-        rug(y, ticksize = 0.01, side = 4)
+        rug(X, ticksize = 0.01, side = 3)
+        rug(Y, ticksize = 0.01, side = 4)
     }
     
     # Return Value:
