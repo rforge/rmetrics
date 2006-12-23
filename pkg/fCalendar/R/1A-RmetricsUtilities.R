@@ -29,16 +29,8 @@
 
 ################################################################################
 # FUNCTION:                     DESCRIPTION:
-#  as.matrix.ts                  Converts univariate ts to 1-column matrix
-#  as.matrix.mts                 Converts multivariate ts to matrix
-# FUNCTION:                     DESCRIPTION:
 #  .description                  Sets default description string
 #  .unirootNA                    Computes zero without error exit    
-# FUNCTION:                     DESCRIPTION:
-#  modify                        Modifies a 'timeSeries' object
-#  modify.default                Default Method
-#  atoms                         Extracts atoms from 'timeSeries' object
-#  atoms.default                 Default Method
 # FUNCTION:                     DESCRIPTION:
 #  .datax                        Loads timeSeries objects from demo files
 # FUNCTION/VALUE:               DESCRIPTION: 
@@ -238,74 +230,6 @@ tol = .Machine$double.eps^0.25, ...)
     # Return Value:
     ans$root
 }  
-
-
-################################################################################
-
-################################################################################
-#  modify                    Modifies a 'timeSeries' object
-#  modify.default            Default Method
-#  atoms                     Extracts atoms from 'timeSeries' object
-#  atoms.default             Default Method
-
-
-modify =
-function(x, method, units) 
-{   # A function implemented by Diethelm WUertz
-
-    # FUNCTION:
-    
-    # Return Value:
-    UseMethod("modify") 
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-modify.default =
-function(x, method = c("sort", "round", "trunc"), units = NULL )
-{   # A function implemented by Diethelm WUertz
- 
-    # FUNCTION:
-    
-    # Modify:
-    ans = NA
-    if (method[1] == "sort") return(sort(x))
-    if (method[1] == "round") return(round(x))
-    if (method[1] == "trunc") return(trunc(x))
-    
-    # Return Value:
-    ans
-}   
-
-
-# ------------------------------------------------------------------------------
-
-
-atoms = 
-function(x, ...) 
-{   # A function implemented by Diethelm WUertz
-   
-    # FUNCTION:
-    
-    # Return Value:
-    UseMethod("atoms")
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-atoms.default = 
-function(x, ...) 
-{   # A function implemented by Diethelm WUertz
- 
-    # FUNCTION:
-    
-    # Return Value:
-    invisible(x)
-}
 
 
 ################################################################################
