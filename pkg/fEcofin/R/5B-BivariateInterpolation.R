@@ -30,6 +30,7 @@
 # FUNCTION:           BIVARIATE INTERPOLATION:
 #  akimaInterp         Interpolates and Smoothes Irregularly Distributed Points
 #  krigeInterp         Kriges Irregularly Distributed Data Points
+# .circlesPlot         Creates a scatterplot with circle size as third variable
 ################################################################################
 
 
@@ -211,8 +212,7 @@ labels = TRUE, ...)
 {   # A function implemented by Diethelm Wuertz
     
     # Description:  
-    #   Creates a scatterplot with circle size indexing a 
-    #   third variable.
+    #   Creates a scatterplot with circle size as third variable
     
     # Example:
     #   circlesPlot(x=rnorm(50), y=rnorm(50), z=rnorm(50))
