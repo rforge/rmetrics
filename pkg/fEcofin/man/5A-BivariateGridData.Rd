@@ -28,7 +28,7 @@
     
 
 \usage{ 
-gridData(x = (-10:10)/10, y = x, z = outer(x, y, function(x, y) (x^2+y^2)) ))
+gridData(x = (-10:10)/10, y = x, z = outer(x, y, function(x, y) (x^2+y^2) ) )
 
 \method{persp}{gridData}(x, theta = -40, phi = 30, col = "steelblue", 
     ticktype = "detailed", \dots)

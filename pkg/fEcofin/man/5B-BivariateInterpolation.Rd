@@ -46,7 +46,7 @@ krigeInterp(x, y = NULL, z = NULL, gridPoints = 21,
         [akimaInterp][krigeInterp] - \cr
         either three numeric vectors of equal length or if  \code{y} 
         and \code{z} are NULL, a list with entries \code{x}, \code{y}, 
-        \code{z}, or named data frame with \codde{x} in the first, 
+        \code{z}, or named data frame with \code{x} in the first, 
         \code{y} in the second, and \code{z} in the third column. \cr
         [persp][contour] - \cr
         \code{x} is an pbject of class \code{gridData}.

@@ -4,7 +4,8 @@
 
 \alias{squareBinning}
 \alias{hexBinning}
-
+\alias{plot.squareBinning}
+\alias{plot.hexBinning}
 
 \title{Square and Hexagonal Data Binning}
 
@@ -26,21 +27,41 @@
 
 \usage{ 
 squareBinning(x, y = NULL, bins = 30)
-
 hexBinning(x, y = NULL, bins = 30)
-}
 
+\method{plot}{squareBinning}(x, col = heat.colors(12), addPoints = TRUE, 
+    addRug = TRUE, \dots)
+\method{plot}{hexBinning}(x, col = heat.colors(12), addPoints = TRUE, 
+    addRug = TRUE, \dots)
+}
 
 \arguments{
   
+    \item{addPoints}{
+        a logical flag, should the center of mass points added to the
+        plot?
+        }
+    \item{addRug}{
+        a logical flag, should a rug representation be added to the
+        plot, for details see the function \code{rug}.
+        }
     \item{bins}{
         an integer specifying the number of bins.
         } 
+    \item{col}{
+        color map like for the \code{image} function.
+        }
     \item{x, y}{
+        [squareBinning][hexBinning] - \cr
         either two numeric vectors of equal length or if  \code{y} 
         is NULL, a list with entries \code{x}, \code{y}, 
-        or named data frame with \codde{x} in the first and
-        \code{y} in the second column.
+        or named data frame with \code{x} in the first and
+        \code{y} in the second column.\cr
+        [plot] - \cr
+        an object of class \code{squareBinning} or \code{hexBinning}.
+        }
+    \item{\dots}{
+        arguments to be passed.
         }
 }
 
@@ -51,7 +72,7 @@ hexBinning(x, y = NULL, bins = 30)
     specified by an oject of class \code{squareBinning} or 
     \code{hexBinning}.
     
-    The returned value, can be directly used by the \code{persp()} 
+    Note, the returned value, can be directly used by the \code{persp()} 
     and \code{contour} 3D plotting functions.
     
 }
@@ -65,7 +86,7 @@ hexBinning(x, y = NULL, bins = 30)
 
 
 \examples{
-## SOURCE("fEcofin.5A-BivariateBinning)
+## SOURCE("fEcofin.5C-BivariateBinning)
 
 ## squareBinning -
    sB = squareBinning(x = rnorm(1000), y = rnorm(1000))
