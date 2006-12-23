@@ -43,6 +43,24 @@
 #  .histStack                Returns a stacked histogram plot
 # FUNCTION:                 SLIDER MENU:
 #  .sliderMenu               Starts a slider menu
+# FUNCTION:                 DESCRIPTION:                                        
+#  .description              Sets default description string                    
+#  .unirootNA                Computes zero without error exit                   
+# FUNCTION:                 DESCRIPTION:                                        
+#  .datax                    Loads timeSeries objects from demo files                                              
+# FUNCTION:                 DESCRIPTION [REQUIRES DATE]:                        
+#  .fjulian                  Transform formatted dates to julian day numbers    
+#  .julian                   Implements SPlus like 'julian'                     
+# FUNCTION:                 DESCRIPTION                                         
+#  .isISO8601                Checks if the date/time is ISO8601 formatted       
+# FUNCTION:                 DESCRIPTION:                                        
+#  .isPOSIX                  Checks for an object of class POSIX                
+# GENERAL UTILITIES:        DESCRIPTION:                                        
+#  .by2seconds                                                              
+#  .print                    Internal print method                              
+#  .plot                     Internal plot method                               
+#  .summary                  Internal summary method                            
+#  .predict                  Internal predict method                            
 ################################################################################
 
 
