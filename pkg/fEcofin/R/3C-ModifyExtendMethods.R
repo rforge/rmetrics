@@ -48,6 +48,11 @@
 #  "rownames<-.default"          rownames<- default method
 #  "colnames<-"                  colnames<- has become a generic function
 #  "colnames<-.default"          colnames<- default method
+# FUNCTION:                     DESCRIPTION:
+#  modify                        Modifies a 'timeSeries' object
+#  modify.default                Default Method
+#  atoms                         Extracts atoms from 'timeSeries' object
+#  atoms.default                 Default Method
 ################################################################################
 
 
@@ -538,6 +543,36 @@ function(x, value)
     if(is.null(value)) dn[2] <- list(NULL) else dn[[2]] <- value
     dimnames(x) <- dn
     x
+}
+
+
+################################################################################
+#  atoms                     Extracts atoms from 'timeSeries' object
+#  atoms.default             Default Method
+
+
+atoms = 
+function(x, ...) 
+{   # A function implemented by Diethelm WUertz
+   
+    # FUNCTION:
+    
+    # Return Value:
+    UseMethod("atoms")
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+atoms.default = 
+function(x, ...) 
+{   # A function implemented by Diethelm WUertz
+ 
+    # FUNCTION:
+    
+    # Return Value:
+    invisible(x)
 }
 
 
