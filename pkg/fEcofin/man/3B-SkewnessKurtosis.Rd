@@ -106,15 +106,15 @@ kurtosis(x, \dots)
 ## mean -
 ## var -
    # Mean, Variance:
-   mean(tS)
-   var(tS)
+   r = rnorm(100)
+   mean(r)
+   var(r)
    
 ## skewness -
 ## kurtosis -
    # Skewness, Kurtosis:
-   class(tS)
-   skewness(tS)
-   kurtosis(tS)   
+   skewness(r)
+   kurtosis(r)   
 }
 
 
