@@ -4,18 +4,6 @@
 
 \alias{basicStats}
 
-\alias{skewness}
-\alias{skewness.default}
-\alias{skewness.data.frame}
-\alias{skewness.POSIXct}
-\alias{skewness.POSIXlt}
-
-\alias{kurtosis}
-\alias{kurtosis.default}
-\alias{kurtosis.data.frame}
-\alias{kurtosis.POSIXct}
-\alias{kurtosis.POSIXlt}
-
 \alias{stdev}
 
 \title{Basic Statistics Summary}
@@ -25,16 +13,12 @@
 
     A collection and description of functions to compute 
     basic statistical properties of financial and
-    economic time series data. Missing functions in 
-    R to calculate skewness and kurtosis, and a function
-    which creates a summary statistics are added.
+    economic time series data.
     \cr
     
     The functions are:
     
     \tabular{ll}{
-    \code{skewness} \tab returns value of skewness, \cr
-    \code{kurtosis} \tab returns value of kurtosis, \cr 
     \code{basicStats} \tab computes an overview of basic statistical values. }
     
     For SPLUS Compatibility:
@@ -47,18 +31,6 @@
 
 \usage{
 stdev(x, na.rm = FALSE)
-
-skewness(x, \dots)
-\method{skewness}{default}(x, na.rm = FALSE, method = c("moment", "fisher"), \dots)
-\method{skewness}{data.frame}(x, \dots)
-\method{skewness}{POSIXct}(x, \dots)
-\method{skewness}{POSIXlt}(x, \dots)
-
-kurtosis(x, \dots)
-\method{kurtosis}{default}(x, na.rm = FALSE, method = c("excess", "moment", "fisher"), \dots)
-\method{kurtosis}{data.frame}(x, \dots)
-\method{kurtosis}{POSIXct}(x, \dots)
-\method{kurtosis}{POSIXlt}(x, \dots)
 
 basicStats(x, ci = 0.95)
 }
@@ -73,20 +45,6 @@ basicStats(x, ci = 0.95)
     \item{na.rm}{
         a logical. Should missing values be removed?
         }
-    \item{method}{
-        [kurtosis][skewness] - \cr
-        a character string which specifies the method of computation. 
-        These are either \code{"moment"} or \code{"fisher"}, kurtosis 
-        allows in addition for \code{"excess"}. If \code{"excess"} is 
-        selected, then the value of the kurtosis is computed  by the
-        \code{"moment"} method and a value of 3 will be subtracted.
-        The \code{"moment"} method is based on the definitions of 
-        skewness and kurtosis for distributions; these forms should 
-        be used when resampling (bootstrap or jackknife). The 
-        \code{"fisher"} method correspond to the usual "unbiased" 
-        definition of sample variance, although in the case of skewness 
-        and kurtosis exact unbiasedness is not possible. 
-        }
     \item{x}{
         a numeric vector.
         \cr
@@ -95,21 +53,11 @@ basicStats(x, ci = 0.95)
         In this case only the first column of data will be considered
         and a a warning will be printed.        
         }
-    \item{\dots}{
-        arguments to be passed.
-        }
         
 }
 
 
 \value{
-    
-    \code{skewness}\cr
-    \code{kurtosis}
-    \cr
-    return the value of the statistics, a numeric value. An 
-    attribute which reports the used method is added.
-    \cr
     
     \code{basicsStats}
     \cr
@@ -145,18 +93,6 @@ basicStats(x, ci = 0.95)
    tS = timeSeries(matrix(rnorm(12)), timeCalendar())
    # ... must be univariate:
    basicStats(tS)  
-     
-## mean -
-## var -
-## skewness -
-## kurtosis -
-   # Mean, Variance:
-   mean(tS)
-   var(tS)
-   # Skewness, Kurtosis:
-   class(tS)
-   skewness(tS)
-   kurtosis(tS)   
 }
 
 
