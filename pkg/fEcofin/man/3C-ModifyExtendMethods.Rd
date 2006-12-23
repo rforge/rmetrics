@@ -32,6 +32,9 @@
 \alias{colnames<-}
 \alias{colnames<-.default}
 
+\alias{atoms}
+\alias{atoms.default}
+
 \title{Modify and Extend R Methods}
 
 
@@ -66,6 +69,8 @@ var.default(x, y = NULL, na.rm = FALSE, use)
     
 rownames(x) <- value
 colnames(x) <- value
+
+atoms(x, \dots)
 }
 
 
