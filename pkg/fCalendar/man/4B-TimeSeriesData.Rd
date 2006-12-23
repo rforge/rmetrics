@@ -76,6 +76,7 @@
     
     Functions for attaching 'timeSeries' objects: 
     
+    \tabular{ll}{
     \code{attach} \tab attaches a 'timeSeries' object, \cr
     \code{detach} \tab detaches a 'timeSeries' object [see base package]. } 
     
