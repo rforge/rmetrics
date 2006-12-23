@@ -56,7 +56,7 @@
     common technical indicators.
     \cr
     
-    The functions are:
+    Utility Functions:
     
     \tabular{ll}{
     \code{emaTA} \tab Exponential Moving Average, \cr
@@ -65,13 +65,20 @@
     \code{typicalpriceTA} \tab Typical Price Indicator, \cr
     \code{wcloseTA} \tab Weighted Close Indicator, \cr
     \code{rocTA} \tab Rate of Change, \cr
-    \code{oscTA} \tab Oscillator Indicator, \cr
+    \code{oscTA} \tab Oscillator Indicator. }
+    
+    Oscillator Indicators:
+    
+    \tabular{ll}{
     \code{momTA} \tab Momentum Indicator, \cr
     \code{macdTA} \tab MACD Indicator, \cr
     \code{cdsTA} \tab MACD Signal Line, \cr
     \code{cdoTA} \tab MACD Oscillator, \cr
     \code{vohlTA} \tab High/Low Volatility, \cr
-    \code{vorTA} \tab Volatility Ratio, \cr
+    \code{vorTA} \tab Volatility Ratio. }
+    
+    
+    \tabular{ll}{
     \code{stochasticTA} \tab Stochastics Oscillator, \cr
     \code{fpkTA} \tab Fast Percent K, \cr
     \code{fpdTA} \tab Fast Percent D, \cr
@@ -92,14 +99,19 @@
 \usage{
 emaTA(x, lambda, startup = 0)
 biasTA(x, lag)
+medpriceTA(high, low)
+typicalpriceTA(high, low, close)
+wcloseTA(high, low, close)
 rocTA(x, lag)
 oscTA(x, lag1 = 25, lag2 = 65)
+
 momTA(x, lag)
 macdTA(x, lag1, lag2)
 cdsTA(x, lag1 = 12, lag2 = 26, lag3 = 9)
 cdoTA(x, lag1 = 12, lag2 = 26, lag3 = 9)
 vohlTA(high, low)
 vorTA(high, low)
+
 stochasticTA(close, high, low, lag1, lag2, type = c("fast", "slow")) 
 fpkTA(close, high, low, lag)
 fpdTA(close, high, low, lag1, lag2)
@@ -107,10 +119,6 @@ spdTA(close, high, low, lag1, lag2, lag3)
 apdTA(close, high, low, lag1, lag2, lag3, lag4)
 wprTA(close, high, low, lag)
 rsiTA(close, lag)
-
-medpriceTA(high, low)
-typicalpriceTA(high, low, close)
-wcloseTA(high, low, close)
 
 SMA(x, n = 5)
 EWMA(x, lambda, startup = 0)
@@ -160,26 +168,28 @@ EWMA(x, lambda, startup = 0)
     \cr 
     The technical Indicators return the following numeric vectors (or matrix):
 
-    \code{emaTA}  returns the Exponential Moving Average, EMA \cr
+    \code{emaTA} returns the Exponential Moving Average, EMA \cr
     \code{biasTA} returns the EMA-Bias, \cr
-    \code{rocTA}  returns the Rate of Change Indicator, \cr
-    \code{oscTA}  returns the EMA Oscillator Indicator, \cr
-    \code{momTA}  returns the Momentum Oscillator, \cr
-    \code{macdTA} returns the MACD Oscillator, \cr
-    \code{cdsTA}  returns the MACD Signal Line, \cr
-    \code{cdo}    returns the MACD Oscillator, \cr
-    \code{vohlTA} returns the High/Low Volatility Oscillator, \cr
-    \code{vorTA}  returns Volatility Ratio Oscillator, \cr
-    \code{stochasticTA} returns a 2-column matrix with percent K and D Indicator, \cr
-    \code{fpkTA}  returns the Fast Percent-K Stochastics Indicator, \cr
-    \code{fpdTA}  returns the Fast Percent-D Stochastics Indicator, \cr
-    \code{spdTA}  returns the Slow Percent-D Stochastics Indicator, \cr
-    \code{apdTA}  returns the Averaged Percent-D Stochastics Indicator, \cr
-    \code{wprTA}  returns the Williams Percent-R Stochastics Indicator, \cr
-    \code{rsiTA}  returns the Relative Strength Index Stochastics Indicator, \cr
     \code{medpriceTA} returns the Medium Price, \cr
     \code{typicalpriceTA} returns the Typical Price, \cr
-    \code{wcloseTA} returns the Weighted Closing Price. \cr
+    \code{wcloseTA} returns the Weighted Closing Price, \cr
+    \code{rocTA} returns the Rate of Change Indicator, \cr
+    \code{oscTA} returns the EMA Oscillator Indicator, \cr
+    \code{momTA} returns the Momentum Oscillator, \cr
+    
+    \code{macdTA} returns the MACD Oscillator, \cr
+    \code{cdsTA} returns the MACD Signal Line, \cr
+    \code{cdo} returns the MACD Oscillator, \cr
+    \code{vohlTA} returns the High/Low Volatility Oscillator, \cr
+    \code{vorTA} returns Volatility Ratio Oscillator, \cr
+    
+    \code{stochasticTA} returns a 2-column matrix with percent K and D Indicator, \cr
+    \code{fpkTA} returns the Fast Percent-K Stochastics Indicator, \cr
+    \code{fpdTA} returns the Fast Percent-D Stochastics Indicator, \cr
+    \code{spdTA} returns the Slow Percent-D Stochastics Indicator, \cr
+    \code{apdTA} returns the Averaged Percent-D Stochastics Indicator, \cr
+    \code{wprTA} returns the Williams Percent-R Stochastics Indicator, \cr
+    \code{rsiTA} returns the Relative Strength Index Stochastics Indicator. \cr
 
 }
 

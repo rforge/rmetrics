@@ -125,8 +125,8 @@
 \usage{
 regSim(model = c("LM3", "LOGIT3", "GAM3"), n = 100)
 
-regFit(formula, data, use = c("lm", "rlm", "am", "ppr", "mars", "polymars", 
-    "nnet"), title = NULL, description = NULL, \dots)
+regFit(formula, data, use = c("lm", "rlm", "am", "ppr", "mars", "nnet", 
+    "polymars"), title = NULL, description = NULL, \dots)
 gregFit(formula, family, data, use = c("glm", "gam"), 
     title = NULL, description = NULL, \dots)
     
