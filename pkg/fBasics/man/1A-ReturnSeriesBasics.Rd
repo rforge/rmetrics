@@ -1,29 +1,42 @@
-\name{TailoredReturnPlots}
+\name{ReturnSeriesBasics}
 
-\alias{TailoredReturnPlots}
+\alias{ReturnSeriesBasics}
 
 \alias{seriesPlot}
 \alias{histPlot}
 \alias{densityPlot}
 \alias{qqnormPlot}
 
+\alias{basicStats}
+\alias{stdev}
 
-\title{Tailored Return Plots}
+\title{Return Series Basics}
 
 
 \description{
     
     A collection and description of functions which
-    allow to create easily financial return plots.
+    allow to investigate and display the basics of 
+    financial return sderies.
     \cr
 
-    The tailored plot functions are:
+    Tailored plot functions:
     
     \tabular{ll}{
     \code{seriesPlot} \tab Returns a tailored time series plot, \cr
     \code{histPlot} \tab Returns a tailored histogram plot, \cr
     \code{densityPlot} \tab Returns a tailored kernel density estimate plot, \cr
     \code{qqnormPlot} \tab Returns a tailored quantile-quantile plot.}
+    
+    Basic Statistic functions are:
+    
+    \tabular{ll}{
+    \code{basicStats} \tab computes an overview of basic statistical values. }
+    
+    For SPLUS Compatibility:
+    
+    \tabular{ll}{
+    \code{stdev} \tab Returns the standard deviation of a vector or matrix. }
     
 }
     
@@ -33,6 +46,10 @@ seriesPlot(x, col = "steelblue", main = x@units, \dots)
 histPlot(x, col = "steelblue", main = x@units, add.fit = TRUE, \dots) 
 densityPlot(x, col = "steelblue", main = x@units, add.fit = TRUE, \dots)
 qqnormPlot(x, col = "steelblue", main = x@units, labels = TRUE, \dots) 
+
+stdev(x, na.rm = FALSE)
+
+basicStats(x, ci = 0.95)
 }
 
 
@@ -42,6 +59,10 @@ qqnormPlot(x, col = "steelblue", main = x@units, labels = TRUE, \dots)
         [*Plot] - \cr
         a logical, should a fit added to the Plot?
         }
+    \item{ci}{
+        confidence interval, a numeric value, by default 0.95, 
+        i.e. 95 percent.
+        }
     \item{col, main}{
         [*Plot] - \cr
         plot parameters, color and main title.
@@ -49,8 +70,11 @@ qqnormPlot(x, col = "steelblue", main = x@units, labels = TRUE, \dots)
     \item{labels}{
         a logical, should labels be added to the plot?
         }
-    \item{x}{
-        an object of class \code{"timeSeries"}.
+        \item{na.rm}{
+        a logical. Should missing values be removed?
+        }
+   \item{x}{
+        an object of class \code{"timeSeries"} or a numeric vector.
         }
     \item{\dots}{
         optional arguments to be passed.
@@ -61,7 +85,17 @@ qqnormPlot(x, col = "steelblue", main = x@units, labels = TRUE, \dots)
 
 \value{
     
-    Beside the plot, no other values are returned.
+    \code{*Plot}
+    \cr
+    For the \code{*Plot} functions. beside the plot, no other values are 
+    returned.\cr
+    
+    \code{basicsStats}
+    \cr
+    returns data frame with the following entries and row names:
+    nobs, NAs, Minimum, Maximum , 1. Quartile, 3. Quartile,
+    Mean, Median, Sum, SE Mean, LCL Mean, UCL Mean, Variance,
+    Stdev, Skewness, Kurtosis.
     
 }
 
@@ -74,7 +108,13 @@ qqnormPlot(x, col = "steelblue", main = x@units, labels = TRUE, \dots)
 
 
 \examples{
-## SOURCE("fBasics.1B-TailoredReturnPlots")
+## SOURCE("fBasics.1A-ReturnSeriesBasics")
+
+## basicStats -
+   # Simulated Monthly Return Data:
+   tS = timeSeries(matrix(rnorm(12)), timeCalendar())
+   # ... must be univariate:
+   basicStats(tS)
 }
 
 
