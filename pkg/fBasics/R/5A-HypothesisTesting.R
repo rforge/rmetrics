@@ -188,15 +188,19 @@ function(type = c("LM", "ALM"), size = c("all", "small"))
    
     # FUNCTION:
     
+    # Check Arguments:
+    type = match.arg(type)
+    size = match.arg(size)  
+    
     # Create Table:
-    if (type[1] == "LM") {
+    if (type == "LM") {
         table = .jbLM
-    } else if (type[1] == "ALM") { 
+    } else if (type == "ALM") { 
         table = .jbALM
     }
     
     # Downsize Data:
-    if (size[1] == "small") {
+    if (size == "small") {
         n = dim(table)[1]
         table = table[c(matrix(1:(n-2), byrow = TRUE, ncol = 22)[, 1], n), ]
         table = table[-(1:17),]
