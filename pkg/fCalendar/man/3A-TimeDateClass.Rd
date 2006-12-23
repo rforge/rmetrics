@@ -2,6 +2,9 @@
 
 \alias{TimeDateClass}
 
+\alias{currentYear}
+\alias{myUnits}
+
 \alias{myFinCenter}
 \alias{rulesFinCenter}
 \alias{listFinCenter}
@@ -69,6 +72,9 @@
 
 
 \usage{
+currentYear
+myUnits
+
 myFinCenter
 rulesFinCenter(FinCenter = myFinCenter)
 listFinCenter(pattern = "*")
