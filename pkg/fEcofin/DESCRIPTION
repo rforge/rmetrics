@@ -3,7 +3,7 @@ Version: 240.10068.1
 Date: 1996 - 2006
 Title: Ecofin - Selected Economic and Financial Data Sets
 Author: Diethelm Wuertz and many others. See the SOURCE file
-Depends: R (>= 2.0.0), methods
+Depends: R (>= 2.0.0), methods, spatial
 Maintainer: Diethelm Wuertz and Rmetrics Core Team <wuertz@itp.phys.ethz.ch>
 Description: Environment for teaching "Financial Engineering and Computational Finance"
 License: GPL Version 2 or later
