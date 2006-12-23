@@ -447,7 +447,33 @@ function()
 # ------------------------------------------------------------------------------
 
 
-currentYear = .currentYear() 
+currentYear = 
+function()    
+{   # A function implemented by Diethelm Wuertz
+
+    # FUNCTION:
+    
+    # Check Time Zone:
+    TZ = Sys.getenv("TZ")  
+    if (TZ[[1]] != "GMT") {
+        Sys.putenv(TZ = "GMT")
+        TZ.RESET = TRUE
+    } else {
+        TZ.RESET = FALSE
+    }
+    
+    # Current Year:
+    if (class(version) != "Sversion") {
+        currentYear = as.POSIXlt(Sys.time())$year + 1900
+    } else { 
+        currentDate = timeDate(date(), in.format="%w %m %d %H:%M:%S %Z %Y")
+        currentYear = as.integer(attr(years(currentDate), "levels"))
+    } 
+    
+    # Return Value:
+    if (TZ.RESET) Sys.putenv(TZ = TZ)
+    currentYear 
+} 
 
 
 # ------------------------------------------------------------------------------
