@@ -124,7 +124,7 @@ yo = seq(min(y), max(y), length = gridPoints), extrap = TRUE)
         near = integer(n),
         nxt = integer(n),
         dist = double(n),
-        PACKAGE = "fBasics")
+        PACKAGE = "fEcofin")
     temp = ans[c("x", "y", "z", "extrap")]
     if (miss) temp$z[temp$extrap] = NA
     ans = temp[c("x", "y", "z")]
