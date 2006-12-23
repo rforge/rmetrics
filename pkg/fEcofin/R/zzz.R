@@ -44,7 +44,7 @@ function(lib, pkg)
     cat("\nfEcofin: Economic and Financial Time Series Data\n")
 
     # Load dll:
-    # library.dynam("fEcofin", pkg, lib)
+    library.dynam("fEcofin", pkg, lib)
 
 }
 
