@@ -107,6 +107,9 @@ as.matrix.ts =
 function(x) 
 {   # A function implemented by Diethelm Wuertz
 
+    # Description:
+    #   Coerces a "ts" object into a matrix
+    
     # FUNCTION:
     
     # Transform: 
@@ -127,6 +130,9 @@ as.matrix.mts =
 function(x) 
 {   # A function implemented by Diethelm Wuertz
   
+    # Description:
+    #   Coerces a multivariate "ts" object into a matrix
+    
     # FUNCTION:
     
     # Transform: 
