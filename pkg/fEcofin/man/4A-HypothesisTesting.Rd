@@ -8,11 +8,6 @@
 \alias{show.fHTEST}
 \alias{show,fHTEST-method}
 
-\alias{pPlot}
-\alias{pTable}
-\alias{qTable}
-
-
 
 \title{Tests Class Representation and Utilities}
 
@@ -28,72 +23,20 @@
     \tabular{ll}{
     \code{fHTEST} \tab Representation for an S4 object of class "fHTEST", \cr
     \code{show} \tab S4 print method. }
-    
-    Utility Functions:
-    \tabular{ll}{
-    \code{pPlot} \tab  General finite sample probability plot, \cr
-    \code{pTable} \tab interpolated probabilities from finite sample table, \cr
-    \code{qTable} \tab interpolated quantiles from finite sample table. }
          
 }
 
 
 \usage{
 show.fHTEST(object)
-
-pPlot(X, nN = 100, nStat = 100, logN = TRUE, logStat = FALSE, 
-    fill = FALSE, linear = TRUE, digits = 8, doplot = TRUE, \dots)
-pTable(X, Stat, N, digits = 4)
-qTable(X, p, N, digits = 4)
 }
 
 
 \arguments{
   
-    \item{digits}{
-        an integer value with the number of rounding digits.
-        }
-    \item{doplot}{
-        a logical flag. Should a plot be displayed?
-        }
-    \item{fill}{
-        [pPlot] - \cr
-        a logical flag deciding if missing data should be filled
-        with asymptotic values zero and one.
-        }
-    \item{linear}{
-        [pPlot] - \cr
-        a logical flag indicating the type of interpolation.
-        }
-    \item{logN, logStat}{
-        [pPlot] - \cr
-        two logical flags deciding if the data should be on a 
-        logarithmic scale or not.
-        }
-    \item{N}{
-        an integer value or vector of sample sizes.
-        }
-    \item{nN, nStat}{
-        [pPlot] - \cr
-        two integer values with the size of the table.
-        }
     \item{object}{
         [show] - \cr
         an S4 object of class \code{"fHTEST"}.
-        }
-    \item{p}{
-        a numeric value or vector of probabilities.
-        }
-    \item{Stat}{
-        a numeric value or vector of quantiles or statistic values.
-        }
-    \item{X}{
-        [pPlot][*Table] - \cr
-        a data frame or matrix of a finite sample test table.
-        }
-    \item{\dots}{
-        [pPlot] - \cr
-        additional arguments to be passed.
         }
        
 }
@@ -151,13 +94,6 @@ qTable(X, p, N, digits = 4)
         a character string giving the name(s) of the data.
         }
         
-     The functions \code{pPlot}, \code{pTable}, and \code{qTable}
-     plot and iterpolate finite sample test statistic data from a 
-     table. The table is a data frame or a matrix where columns
-     denote the size and rows the probabilities. The column and 
-     row names must hold the sizes and probabilities as character
-     strings. The values of the matrix hold the statistic values.
-     \cr
 }
 
 
@@ -174,25 +110,6 @@ qTable(X, p, N, digits = 4)
 
 ## fHTEST -
    getClass("fHTEST")
-
-## pPlot -
-## jbTable -
-   # Interpolated plot of Small Jarque Bera Table:
-   X = jbTable(type = "LM", size = "small")
-   par(ask = FALSE)
-   pPlot(X, linear = TRUE, logStat = TRUE)
-   pPlot(X, linear = TRUE, logStat = TRUE, fill = TRUE, main = "JB LM")
-   pPlot(X, linear = FALSE, logStat = TRUE)
-   pPlot(X, linear = FALSE, logStat = TRUE, fill = TRUE)
-    
-## [pq]Table -
-## jbTable - 
-   # Jarque Bera B q and p Table:
-   X = jbTable(type = "LM", size = "small")
-   p = (1:99)/100
-   plot(qTable(X, p, N = 100), p, type = "b")
-   Stat = seq(0.01, 15, length = 100)
-   plot(Stat, pTable(X, Stat, N = 100), type = "b")  
 }
 
 

@@ -1,6 +1,6 @@
-\name{BivariateGridData}
+\name{BivariateGridding}
 
-\alias{BivariateGridData}
+\alias{BivariateGridding}
 
 
 \alias{gridData}
@@ -83,7 +83,7 @@ gridData(x = (-10:10)/10, y = x, z = outer(x, y, function(x, y) (x^2+y^2) ) )
 
 
 \examples{
-## SOURCE("fEcofin.5A-BivariateInterpolation")
+## SOURCE("fEcofin.5A-BivariateGridding")
 
 ## gridData -
    # Grid Data Set

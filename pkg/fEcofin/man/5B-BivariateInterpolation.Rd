@@ -2,9 +2,12 @@
 
 \alias{BivariateInterpolation}
 
+\alias{linearInterp}
 \alias{akimaInterp}
 \alias{krigeInterp}
 
+\alias{linearInterpp}
+\alias{akimaInterpp}
 
 \title{Bivariate Interpolation}
 
@@ -15,23 +18,37 @@
     allow to interpolate bivariate irregular data sets.
     \cr
     
-    Interpolation Functions:
+    Gridded Interpolation Functions:
     
     \tabular{ll}{
+    \code{linearInterp} \tab performs linear spline interpolation, \cr
     \code{akimaInterp} \tab performs Akima spline interpolation, \cr
     \code{krigeInterp} \tab performs krige interpolation.}
+    
+    Pointwise Interpolation Functions:
+    
+    \tabular{ll}{
+    \code{linearInterpp} \tab performs linear spline interpolation, \cr
+    \code{akimaInterpp} \tab performs Akima spline interpolation}
     
 }
     
 
 \usage{ 
+linearInterp(x, y = NULL, z = NULL, gridPoints = 21,
+    xo = seq(min(x), max(x), length = gridPoints),
+    yo = seq(min(y), max(y), length = gridPoints))
+linearInterpp(x, y = NULL, z = NULL, xo, yo)
+     
 akimaInterp(x, y = NULL, z = NULL, gridPoints = 21,
     xo = seq(min(x), max(x), length = gridPoints),
-    yo = seq(min(y), max(y), length = gridPoints), extrap = TRUE)
+    yo = seq(min(y), max(y), length = gridPoints), extrap = FALSE)
+akimaInterpp(x, y = NULL, z = NULL, xo, yo, extrap = FALSE)
 
 krigeInterp(x, y = NULL, z = NULL, gridPoints = 21,
     xo = seq(min(x), max(x), length = gridPoints),
-    yo = seq(min(y), max(y), length = gridPoints), extrap = TRUE, polDegree = 6)
+    yo = seq(min(y), max(y), length = gridPoints), 
+    extrap = FALSE, polDegree = 6)
 }
 
 
@@ -56,12 +73,17 @@ krigeInterp(x, y = NULL, z = NULL, gridPoints = 21,
         and \code{y} direction.
         } 
     \item{xo, yo}{
-        a numeric vector of data points spanning the grid.
+        [*Interp] - \cr
+        two numeric vectors of data points spanning the grid.\cr
+        [*Interpp] - \cr
+        two numeric vectors of data points building pairs for pointwise
+        interpolation.
         }
     \item{extrap}{
         a logical, if \code{TRUE} then the data points are extrapolated.
         }
     \item{polDegree}{
+        [krige] - \cr
         the polynomial krige degree, an integer ranging between 1 and 6.
         }
     
@@ -77,12 +99,16 @@ krigeInterp(x, y = NULL, z = NULL, gridPoints = 21,
     
 \value{
     
+    \code{linearInterp} - \cr
     \code{akimaInterp} - \cr
-    \code{akimaInterp} - \cr
+    \code{krigeInterp} - \cr
     A list with at least three entries, \code{x}, \code{y} and \code{z}. 
+    Note, that the returned values, can be directly used by the 
+    \code{persp.gridData()} and \code{contour.gridData} 3D plotting methods.
     
-    The returned values, can be directly used by the \code{persp.gridData()} 
-    and \code{contour.gridData} 3D plotting methods.
+    \code{linearInterpp} - \cr
+    \code{akimaInterpp} - \cr
+    A data.frame with columns \code{"x"}, \code{"y"}, and \code{"z"}.
     
 }
 
