@@ -121,7 +121,7 @@ function()
         current = c("1999-12-31", "2000-01-03"))
     checkIdentical(
         target = sum(X@data[, "Volume"]), 
-        current = 40312900)
+        current = 40297400)
          
     # keystatsImport() - 
     keystatsImport("IBM")  
