@@ -16,7 +16,7 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2004, Diethelm Wuertz, GPL
+#   1999 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
 #   www.rmetrics.org
@@ -35,6 +35,8 @@
 # FUNCTION:                 NONLINEARITY TESTS:
 #  wnnTest                   White Neural Network Test for Nonlinearity
 #  tnnTest                   Teraesvirta Neural Network Test for Nonlinearity
+# FUNCTION:                 MORE TESTS ...
+#  runsTest                  Runs test for detecting non-randomness [tseries]
 ################################################################################
 
 
@@ -366,6 +368,77 @@ function(x, lag = 1, title = NULL, description = NULL)
         test = test,
         title = as.character(title), 
         description = as.character(description) )  
+}
+
+
+################################################################################
+
+
+runsTest = 
+function(x)
+{   # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   Performs a runs test
+    
+    # Arguments:
+    #   x - a numeric vector of data values.
+    
+    # Notes:
+    #   Implementing Trapletti's tseries R-Package
+
+    # Note:
+    #   We consider the signs of x in the series, the zeros will be 
+    #   discarded. In addition we have to factor the data for runs.test().
+
+    # FUNCTION:
+    
+    # Convert Type:
+    if (class(x) == "fREG") x = residuals(x)
+    x = as.vector(x)
+    
+    # runs.test() copied from A. Traplettis tseries package
+    runs.test = 
+    function (x, alternative = c("two.sided", "less", "greater")) 
+    {
+        if (!is.factor(x)) stop("x is not a factor")
+        if (any(is.na(x))) stop("NAs in x")
+        if (length(levels(x)) != 2) stop("x does not contain dichotomous data")
+        alternative = match.arg(alternative)
+        DNAME = deparse(substitute(x))
+        n = length(x)
+        R = 1 + sum(as.numeric(x[-1] != x[-n]))
+        n1 = sum(levels(x)[1] == x)
+        n2 = sum(levels(x)[2] == x)
+        m = 1 + 2 * n1 * n2/(n1 + n2)
+        s = sqrt(2 * n1 * n2 * (2 * n1 * n2 - n1 - n2)/((n1 + n2)^2 * 
+            (n1 + n2 - 1)))
+        STATISTIC = (R - m)/s
+        METHOD = "Runs Test"
+        if (alternative == "two.sided") 
+            PVAL = 2 * pnorm(-abs(STATISTIC))
+        else if (alternative == "less") 
+            PVAL = pnorm(STATISTIC)
+        else if (alternative == "greater") 
+            PVAL = pnorm(STATISTIC, lower.tail = FALSE)
+        else stop("irregular alternative")
+        names(STATISTIC) = "Standard Normal"
+        structure(list(
+            statistic = STATISTIC, 
+            alternative = alternative, 
+            p.value = PVAL, 
+            method = METHOD, 
+            data.name = DNAME), 
+            class = "htest") }
+            
+    # Result:
+    x = sign(x)
+    x = x[x != 0]
+    x = factor(x)
+    ans = runs.test(x = x) 
+    
+    # Return Value:
+    ans
 }
 
 
