@@ -47,61 +47,8 @@
 # AUGMENTED DICKEY-FULLER TEST:
 
 
-pdftest = 
-function(q, n.sample, trend = c("nc", "c", "ct"), statistic = c("t", "n")) 
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Probabilities for the ADF Test
-    
-    # Arguments:
-    
-    # FUNCTION:
-    
-    # Match Arguments:
-    trend = match.arg(trend)
-    statistic = match.arg(statistic)
-    
-    # Compute Probabilities:
-    X = dftestTable(trend = trend[1], statistic = statistic[1])
-    ans = pTable(t(X), q, n.sample)
-    
-    # Return Value:
-    ans
-} 
-
-
-# ------------------------------------------------------------------------------
-
-
-qdftest = 
-function(p, n.sample, trend = c("nc", "c", "ct"), statistic = c("t", "n"))
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Quantiles for the ADF Test
-    
-    # Arguments:
-    
-    # FUNCTION:
-    
-    # Match Arguments:
-    trend = match.arg(trend)
-    statistic = match.arg(statistic)
-    
-    # Compute Quantiles:
-    X = dftestTable(trend = trend, statistic = statistic)
-    ans = qTable(X = t(X), p, n.sample)
-    
-    # Return Value:
-    ans
-} 
-
-
-# ------------------------------------------------------------------------------
-
-
-dftestTable =
+# dftestTable =
+adfTable =
 function(trend = c("nc", "c", "ct"), statistic = c("t", "n"))
 {   # A function implemented by Diethelm Wuertz
 
@@ -185,10 +132,64 @@ function(trend = c("nc", "c", "ct"), statistic = c("t", "n"))
     
     # Add Control:
     attr(table, "control") <-
-        c(table = "dftest", trend = trend, statistic = statistic)
+        c(table = "adf", trend = trend, statistic = statistic)
         
     # Return Value:
     table
+} 
+
+
+# ------------------------------------------------------------------------------
+
+
+pdftest = 
+function(q, n.sample, trend = c("nc", "c", "ct"), statistic = c("t", "n")) 
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Probabilities for the ADF Test
+    
+    # Arguments:
+    
+    # FUNCTION:
+    
+    # Match Arguments:
+    trend = match.arg(trend)
+    statistic = match.arg(statistic)
+    
+    # Compute Probabilities:
+    X = adfTable(trend = trend, statistic = statistic)
+    ans = pTable(t(X), q, n.sample)
+    
+    # Return Value:
+    ans
+} 
+
+
+# ------------------------------------------------------------------------------
+
+
+qdftest = 
+function(p, n.sample, trend = c("nc", "c", "ct"), statistic = c("t", "n"))
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Quantiles for the ADF Test
+    
+    # Arguments:
+    
+    # FUNCTION:
+    
+    # Match Arguments:
+    trend = match.arg(trend)
+    statistic = match.arg(statistic)
+    
+    # Compute Quantiles:
+    X = dftestTable(trend = trend, statistic = statistic)
+    ans = qTable(X = t(X), p, n.sample)
+    
+    # Return Value:
+    ans
 } 
 
 
