@@ -19,8 +19,6 @@
 \alias{pchiTest}    
 \alias{sfTest}
 
-\alias{runsTest}
-
 
 \title{Normality Tests}
 
@@ -58,11 +56,6 @@
     
     \tabular{ll}{
     \code{normalTest} \tab test suite for some normality tests. }     
-    
-    More tests ...
-    
-    \tabular{ll}{
-    \code{runsTest} \tab Runs test for detecting non-randomness.}
  
 }
 
@@ -82,8 +75,6 @@ cvmTest(x, title = NULL, description = NULL)
 lillieTest(x, title = NULL, description = NULL) 
 pchiTest(x, title = NULL, description = NULL)    
 sfTest(x, title = NULL, description = NULL) 
-
-runsTest(x)
 }
 
 
@@ -257,17 +248,6 @@ runsTest(x)
     distribution. The \code{adTest} goodness-of-fit test can be
     considered as a modification of the Kolmogorov--Smirnov test which 
     gives more weight to the tails than does the \code{ksnormTest}. 
-    \cr
-    
-    \bold{Runs Test:}
-    \cr\cr
-    The runs test can be used to decide if a data set is from a random 
-    process. A run is defined as a series of increasing values or a 
-    series of decreasing values. The number of increasing, or decreasing, 
-    values is the length of the run. In a random data set, the probability 
-    that the \emph{(i+1)-th} value is larger or smaller than the \emph{i-th} 
-    value follows a binomial distribution, which forms the basis of the 
-    runs test. 
 
 }
 
@@ -359,7 +339,7 @@ Wuertz D., Katzgraber H.G. (2005);
 
 
 \examples{
-## SOURCE("fBasics.5B-OneSampleTests")
+## SOURCE("fBasics.5B-NormalityTests")
 
 ## Series:
    x = rnorm(100)
@@ -375,10 +355,6 @@ Wuertz D., Katzgraber H.G. (2005);
 ## jbTest - Jarque-Bera Test
    # jarqueberaTest(x)
    # jbTest(x)
-   
-## runsTest -
-   runsTest(x)
-
 }
 
 
