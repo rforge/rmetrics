@@ -1,6 +1,6 @@
-\name{OneSampleTests}
+\name{NormalityTests}
 
-\alias{OneSampleTests}
+\alias{NormalityTests}
 
 \alias{normalTest}
 \alias{ksnormTest}
@@ -22,7 +22,7 @@
 \alias{runsTest}
 
 
-\title{One Sample Tests}
+\title{Normality Tests}
 
 
 \description{
