@@ -6,6 +6,7 @@
 \alias{bdsTest}
 \alias{tnnTest}
 \alias{wnnTest}
+\alias{runsTest}
 
 \title{Time Series Tests}
 
@@ -24,7 +25,8 @@
     \tabular{ll}{
     \code{bdsTest} \tab Brock--Dechert--Scheinkman test for iid series, \cr
     \code{tnnTest} \tab Teraesvirta NN test for neglected nonlinearity, \cr
-    \code{wnnTest} \tab White NN test for neglected nonlinearity.}
+    \code{wnnTest} \tab White NN test for neglected nonlinearity, \cr
+    \code{runsTest} \tab Runs test for detecting non-randomness.}
     
 }
 
@@ -50,6 +52,7 @@
 bdsTest(x, m = 3, eps = NULL, title = NULL, description = NULL) 
 tnnTest(x, lag = 1, title = NULL, description = NULL) 
 wnnTest(x, lag = 1, qstar = 2, q = 10, range = 4, title = NULL, description = NULL) 
+runsTest(x)
 }
 
 
@@ -141,7 +144,20 @@ wnnTest(x, lag = 1, qstar = 2, q = 10, range = 4, title = NULL, description = NU
     classical linear regression. 
     \cr
     \code{[tseries:white.test]}
+    \cr
     
+    \bold{Runs Test:}
+    \cr\cr
+    The runs test can be used to decide if a data set is from a random 
+    process. A run is defined as a series of increasing values or a 
+    series of decreasing values. The number of increasing, or decreasing, 
+    values is the length of the run. In a random data set, the probability 
+    that the \emph{(i+1)-th} value is larger or smaller than the \emph{i-th} 
+    value follows a binomial distribution, which forms the basis of the 
+    runs test. 
+    \cr
+    \code{[tseries:runs.test]}
+
 }
 
 
