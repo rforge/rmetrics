@@ -64,6 +64,7 @@ function(lib, pkg)
     .urcaBuiltin()
     sink(type = "message")
     sink()
+    unlink(sinkFile)
 }
 
 
