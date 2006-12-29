@@ -35,6 +35,12 @@
 \alias{atoms}
 \alias{atoms.default}
 
+\alias{as.POSIXlt}
+\alias{as.POSIXlt.default}
+
+\alias{as.matrix.ts}
+\alias{as.matrix.mts}
+
 \title{Modify and Extend R Methods}
 
 
@@ -71,6 +77,11 @@ rownames(x) <- value
 colnames(x) <- value
 
 atoms(x, \dots)
+
+as.POSIXlt(x, tz = "")
+
+as.matrix.ts(x)
+as.matrix.mts(x)
 }
 
 
@@ -148,6 +159,10 @@ atoms(x, \dots)
         handles tied \code{x} values. Either a function with a single
         vector argument returning a single number result or the
         string \code{"ordered"}.
+        }
+    \item{tz}{
+        [as.POSIXlt] - \cr
+        time zone specification.
         }
     \item{value}{
         [colnames][rownames] - \cr
