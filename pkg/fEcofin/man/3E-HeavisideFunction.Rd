@@ -118,8 +118,6 @@ Weisstein W. (2004);
 
 
 \examples{
-## SOURCE("fEcofin.3E-HeavisideFunction")
-
 ## Heaviside -
    x = sort(round(c(-1, -0.5, 0, 0.5, 1, 5*rnorm(5)), 2))
    h = Heaviside(x)

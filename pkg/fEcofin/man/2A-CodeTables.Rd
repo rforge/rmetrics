@@ -78,8 +78,6 @@ colorTable(cex = 0.7)
 
 
 \examples{
-## SOURCE("fEcofin.2A-CodeTables")
-
 ## Character Table for Font 2:
    characterTable(font = 1)
    

@@ -123,8 +123,6 @@ Phillips, P.C.B., Perron, P. (1988);
 
 
 \examples{ 
-## SOURCE("fEcofin.4E-McKinnonPValues")
-
 ## qunitroot -
    # Asymptotic quantile of t-statistic
    qunitroot(0.95, trend = "nc", statistic = "t")

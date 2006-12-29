@@ -100,9 +100,7 @@ kurtosis(x, \dots)
 }
 
 
-\examples{
-## SOURCE("fEcofin.3B-SkewnessKurtosis")
-     
+\examples{   
 ## mean -
 ## var -
    # Mean, Variance:

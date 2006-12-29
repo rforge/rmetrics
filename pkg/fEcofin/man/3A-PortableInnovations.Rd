@@ -105,8 +105,6 @@ Altman, N.S. (1988);
 
 
 \examples{
-## SOURCE("fEcofin.3A-PortableInnovations")
-
 ## set.lcgseed -
    set.lcgseed(seed = 65890)
  

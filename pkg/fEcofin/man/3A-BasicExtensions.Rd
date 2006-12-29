@@ -230,10 +230,5 @@ as.matrix.mts(x)
 }
 
 
-\examples{
-## SOURCE("fEcofin.3C-ModifyExtendMethods")
-}
-
-
 \keyword{programming}
 

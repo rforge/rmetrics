@@ -121,9 +121,7 @@ krigeInterp(x, y = NULL, z = NULL, gridPoints = 21,
 }
 
 
-\examples{
-## SOURCE("fEcofin.5B-BivariateInterpolation")
-  
+\examples{ 
 ## akimaInterp -
    # Akima Interpolation:    
    set.seed(1953)

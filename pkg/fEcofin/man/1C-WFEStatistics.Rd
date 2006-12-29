@@ -45,8 +45,6 @@ WFE, 2004,
     
     
 \examples{
-## SOURCE("fEcofin.1C-WFEStatistics")
-
 ## Barplot from WFE Capitalization Statistics:
    # Extract Capitalization of/at:
    # NYSE: 7, Tokyo: 37, London: 22, Frankfurt: 15

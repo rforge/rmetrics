@@ -106,8 +106,6 @@ show.fHTEST(object)
 
 
 \examples{
-## SOURCE("fEcofin.4A-HypothesisTesting")
-
 ## fHTEST -
    getClass("fHTEST")
 }

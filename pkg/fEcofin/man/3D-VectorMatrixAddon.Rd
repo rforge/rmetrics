@@ -432,8 +432,6 @@ Moler C., van Loan C., (2003);
 
 
 \examples{
-## SOURCE("fMultivar.6A-MatrixAddon")
-
 ## Create Pascal Matrix:
    P = pascal(3)
    P

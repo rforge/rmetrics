@@ -86,8 +86,6 @@ hexBinning(x, y = NULL, bins = 30)
 
 
 \examples{
-## SOURCE("fEcofin.5C-BivariateBinning)
-
 ## squareBinning -
    sB = squareBinning(x = rnorm(1000), y = rnorm(1000))
    plot(sB)
@@ -95,7 +93,6 @@ hexBinning(x, y = NULL, bins = 30)
 ## hexBinning -
    hB = hexBinning(x = rnorm(1000), y = rnorm(1000))
    plot(hB)
-
 }
 
 

@@ -22,8 +22,7 @@
     \tabular{ll}{
     \code{padf} \tab the returns cumulative probability for the ADF test, \cr
     \code{qadf} \tab the returns quantiles for the ADF test, \cr
-    \code{adfTable} \tab tables p values for ADF test. 
-    . }
+    \code{adfTable} \tab tables p values for ADF test. }
     
 }
  
@@ -113,10 +112,7 @@ Dickey, D.A., Fuller, W.A. (1979);
 }
 
 
-\examples{ 
-## SOURCE("fEcofin.4B-DickeyFullerPValues")
-
-   
+\examples{   
 ## ADF dftesTable -
    adfTable()
 }
