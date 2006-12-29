@@ -39,6 +39,10 @@ adfTable(trend = c("nc", "c", "ct"), statistic = c("t", "n"),
 
 \arguments{ 
 
+    \item{includeInf}{
+        a logical flag. Should the asymptotic value included into
+        the table?
+        }
     \item{N}{ 
         the number of observations in the sample from which the 
         quantiles are to be computed.\cr
