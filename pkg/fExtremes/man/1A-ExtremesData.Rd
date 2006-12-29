@@ -16,36 +16,25 @@
 \alias{lilPlot}
 \alias{xacfPlot}
 
-\alias{interactivePlot}
-\alias{gridVector}
-
-\alias{blockMaxima}
-\alias{findThreshold}
-\alias{pointProcess}
-\alias{deCluster}
-
 
 \title{Explorative Data Analysis}
 
 
 \description{
 
-    A collection and description of functions for explorative 
-    data analysis including data preprocessing of extreme values. 
-    The tools include plot functions for emprical distributions, 
-    quantile plots, graphs exploring the properties of exceedences 
+    A collection and description of functions for 
+    explorative data analysis. The tools include 
+    plot functions for emprical distributions, quantile 
+    plots, graphs exploring the properties of exceedences 
     over a threshold, plots for mean/sum ratio and for the development 
-    of records. The data preprocessing includes tools to 
-    separate data beyond a threshold value, to compute blockwise 
-    data like block maxima, and to decluster point process data.
+    of records.
     \cr
     
     The plot functions are:
     
     \tabular{ll}{
     \code{emdPlot} \tab Plot of empirical distribution function, \cr
-    \code{qqPlot} \tab Normal quantile-quantile plot, \cr
-    \code{qqbayesPlot} \tab Normal QQ-Plot with 95\% intervals [fBasics], \cr
+    \code{fBasics::qqnormPlot} \tab Normal quantile-quantile plot, \cr
     \code{qPlot} \tab Exponential/Pareto quantile plot, \cr
     \code{mePlot} \tab Plot of mean excesses over a threshold, \cr
     \code{mrlPlot} \tab another variant, mean residual life plot, \cr
@@ -57,28 +46,12 @@
     \code{lilPlot} \tab verifies Hartman-Wintner's law of the iterated logarithm, \cr
     \code{xacfPlot} \tab ACF of exceedences over a threshold. }  
     
-    The functions for data preprocessing are:
-    
-    \tabular{ll}{
-    \code{blockMaxima} \tab Block Maxima from a vector or a time series, \cr 
-    \code{findThreshold} \tab Upper threshold for a given number of extremes, \cr  
-    \code{pointProcess} \tab Peaks over Threshold from a vector or a time series, \cr 
-    \code{deCluster} \tab Declusters clustered point process data. }
-    
-    Utility functions are:
-    
-    \tabular{ll}{
-    \code{interactivePlot} \tab a framework for interactive plot displays, \cr
-    \code{gridVector} \tab creates from two vectors x and y all grid points. }
-    
 }
 
 
 \usage{
 emdPlot(x, doplot = TRUE, plottype = c("xy", "x", "y", ""), labels = TRUE, \dots)
 
-qqPlot(x, doplot = TRUE, labels = TRUE, \dots) 
-%qqbayesPlot(x, doplot = TRUE, labels = TRUE, \dots)
 qPlot(x, xi = 0, trim = NULL, threshold = NULL, doplot = TRUE, labels = TRUE, \dots)
 
 mePlot(x, doplot = TRUE, labels = TRUE, \dots)
@@ -97,38 +70,11 @@ lilPlot(x, doplot = TRUE, labels = TRUE, \dots)
 
 xacfPlot(x, u = quantile(x, 0.95), lag.max = 15, doplot = TRUE, labels = TRUE, \dots)
 
-blockMaxima(x, block = c("monthly", "quarterly"), doplot = FALSE)
-findThreshold(x, n = floor(0.05*length(as.vector(x))), doplot = FALSE)
-pointProcess(x, u = quantile(x, 0.95), doplot = FALSE)
-deCluster(x, run = 20, doplot = TRUE)
-
-interactivePlot(x, choices = paste("Plot", 1:9), 
-    plotFUN = paste("plot.", 1:9, sep = ""), which = "all", \dots)
-gridVector(x, y)
 }
 
 
 \arguments{
 
-    \item{block}{
-        [blockMaxima] - \cr
-        the block size. A numeric value is interpreted as the number  
-        of data values in each successive block. All the data is used,
-        so the last block may not contain \code{block} observations. 
-        If the \code{data} has a  \code{times} attribute containing (in
-        an object of class \code{"POSIXct"}, or an object that can be
-        converted to that class, see \code{\link{as.POSIXct}}) the
-        times/dates of each observation, then \code{block} may instead
-        take the character values \code{"month"}, \code{"quarter"},
-        \code{"semester"} or \code{"year"}. By default monthly blocks
-        from daily data are assumed.
-        }
-    \item{choices}{
-        [interactivePlot] - \cr
-        a vector of character strings for the
-        choice menu. By Default \code{"Plot 1"} ... \code{"Plot 9"}
-        allowing for 9 plots at maximum.
-        }
     \item{ci}{
         [recordsPlot] - \cr
         a confidence level. By default 0.95, i.e. 95\%.
@@ -147,13 +93,6 @@ gridVector(x, y)
         maximum number of lags at which to calculate the autocorrelation 
         functions. The default value is 15.
         }
-    \item{n}{
-        [findThreshold] - \cr
-        a numeric value or vector giving number of extremes above 
-        the threshold. By default, \code{n} is 
-        set to an integer representing 5\% of the data from the 
-        whole data set \code{x}.
-        }
     \item{nint}{
         [mrlPlot] - \cr
         the number of intervals, see \code{umin} and \code{umax}. The 
@@ -163,12 +102,6 @@ gridVector(x, y)
         [msratioPlot] - \cr
         the power exponents, a numeric vector. By default a sequence from  
         1 to 4 in unit integer steps.
-        }
-    \item{plotFUN}{
-        [interactivePlot] - \cr
-        a vector of character strings naming the
-        plot functions. By Default \code{"plot.1"} ... \code{"plot.9"}
-        allowing for 9 plots at maximum.
         }
     \item{plottype}{
         [emdPlot] - \cr
@@ -184,13 +117,7 @@ gridVector(x, y)
         [ssrecordsPlot] - \cr
         one from two options can be select either \code{"lin"}
         or \code{"log"}. The default creates a linear plot.
-        }
-    \item{run}{
-        [deCluster] - \cr
-        parameter to be used in the runs method; any two consecutive 
-        threshold exceedances separated by more than this number of 
-        observations/days are considered to belong to different clusters.
-        }  
+        } 
     \item{subsamples}{
         [ssrecordsPlot] - \cr
         the number of subsamples, by default 10, an integer value.
@@ -220,21 +147,7 @@ gridVector(x, y)
         named \code{"all"} all plots are displayed.
         }
     \item{x, y}{
-        numeric data vectors or in the case of x an object to be plotted. 
-        \cr
-        [finThreshold][blocks][blockMaxima][deCluster] - \cr
-        a numeric data vector from which \code{findThreshold} and 
-        \code{blockMaxima} determine the threshold values and block 
-        maxima values. 
-        For the function \code{deCluster} the argument
-        \code{x} represents a numeric vector of threshold exceedances
-        with a \code{times} attribute which should be a numeric
-        vector containing either the indices or the times/dates
-        of each exceedance (if times/dates, the attribute should
-        be an object of class \code{"POSIXct"} or an object that
-        can be converted to that class; see \code{\link{as.POSIXct}}).
-        [gridVector] - \cr
-        two numeric vector which span the two dimensional grid. 
+        numeric data vectors or in the case of x an object to be plotted.  
         }
     \item{xi}{
         the shape parameter of the generalized Pareto distribution.
@@ -317,53 +230,12 @@ gridVector(x, y)
     This function plots the autocorrelation functions of heights and 
     distances of exceedences over a threshold.
     \cr
-    
-    
-    \bold{Finding Thresholds:} 
-    \cr\cr
-    The function \code{findThreshold} finds a threshold so that a given 
-    number of extremes lie above. When the data are tied a threshold is 
-    found so that at least the specified number of extremes lie above.
-    \cr
-    
-  
-    \bold{Computing Block Maxima:} 
-    \cr\cr  
-    The function \code{blockMaxima} calculates block maxima from a vector 
-    or a time series, whereas the function
-    \code{blocks} is more general and allows for the calculation of
-    an arbitrary function \code{FUN} on blocks.
-    \cr
-    
-        
-    \bold{De-Clustering Point Processes:} 
-    \cr\cr
-    The function \code{deCluster} declusters clustered point process 
-    data so that Poisson assumption is more tenable over a high threshold.
-
 }
 
 
 \value{
   
-    \code{blockMaxima} 
-    \cr
-    returns a timeSeries object or a numeric vector of block 
-    maxima data.
-    
-    \code{findThreshold} 
-    \cr
-    returns a numeric value or vector of suitable thresholds. 
-    
-    \code{pointProcess} 
-    \cr
-    returns a timeSeries object or a numeric vector of peaks over
-    a threshold.
-    
-    \code{deCluster} 
-    \cr
-    returns a timeSeries object or a numeric vector for the 
-    declustered point process. 
+    The functions return a plot.
 
 }
 
@@ -404,9 +276,6 @@ Embrechts, P., Klueppelberg, C., Mikosch, T. (1997);
 
 
 \examples{ 
-\dontrun{
-## SOURCE("fExtremes.051A-ExtremesData")
-
 ## emdPlot -
    # Danish fire insurance data show Pareto tail behaviour:
    par(mfrow = c(2, 2))
@@ -420,18 +289,18 @@ Embrechts, P., Klueppelberg, C., Mikosch, T. (1997);
    # Simulated Student-t:
    emdPlot(rt(5000, 4), plottype = "xy") 
  
-## qqPlot -
+## fBasics::qqnormPlot -
    # QQ-Plot of Simulated Normal rvs:
    par(mfrow = c(2, 2))
    set.seed(4711)
-   qqPlot(rnorm(5000))
+   qqnormPlot(rnorm(5000))
    text(-3.5, 3, pos = 4, "Simulated Normal rvs")
    # QQ-Plot of simulated Student-t rvs:
-   qqPlot(rt(5000, 4))
+   qqnormPlot(rt(5000, 4))
    text(-3.5, 11.0, pos = 4, "Simulated Student-t rvs")
    # QQ-Plot of BMW share residuals:
    data(bmw)
-   qqPlot(bmw)
+   qqnormPlot(bmw)
    text(-3.5, 0.09, pos = 4, "BMW log returns")     
    
 ## qPlot -
@@ -516,26 +385,6 @@ Embrechts, P., Klueppelberg, C., Mikosch, T. (1997);
    par(mfrow = c(2, 2))
    data(bmw)
    xacfPlot(bmw)
-   
-## findThreshold -
-   # Find threshold giving (at least) fifty exceedances 
-   # for Danish Fire data
-   data(danish)
-   findThreshold(danish, n = c(10, 50, 100))    
-   
-## blockMaxima -
-   # Block Maxima (Minima) for the right and left tails 
-   # of the BMW log returns:
-   par(mfrow = c(2, 1))
-   blockMaxima( as.timeSeries(data(bmwRet)), block = 65)
-   blockMaxima(-as.timeSeries(data(bmwRet)), block = 65)     
- 
-## deCluster -
-   # Decluster the 200 exceedances of a particular  
-   # threshold in the negative BMW log-return data
-   PP = pointProcess(-as.timeSeries(data(bmwRet)), n = 300)
-   deCluster(x = PP, run = 15, doplot = TRUE) 
-}
 }
 
 \keyword{hplot}
