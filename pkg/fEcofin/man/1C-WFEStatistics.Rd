@@ -45,7 +45,7 @@ WFE, 2004,
     
     
 \examples{
-## SOURCE("fEcofin.2C-WFEStatistics")
+## SOURCE("fEcofin.1C-WFEStatistics")
 
 ## Barplot from WFE Capitalization Statistics:
    # Extract Capitalization of/at:

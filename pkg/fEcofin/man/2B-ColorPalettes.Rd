@@ -49,7 +49,7 @@ greyPalette(n = 64, start = 255-n, end = 255)
 
 
 \examples{
-## SOURCE("fEcofin.1B-ColorPalettes")
+## SOURCE("fEcofin.2B-ColorPalettes")
 
 ## GreyPalette
    greyPalette()
