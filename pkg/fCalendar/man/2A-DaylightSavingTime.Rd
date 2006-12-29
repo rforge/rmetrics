@@ -144,10 +144,7 @@
 
 
 \examples{
-## SOURCE("fCalendar.2B-DaylightSavingTime")
-
-## ...
-   # DST Rules for Zurich:
+## DST Rules for Zurich:
    head(Zurich())
    tail(Zurich())
 }

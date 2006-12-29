@@ -146,9 +146,7 @@ newPositions(object) <- value
 }
 
 
-\examples{
-## SOURCE("fCalendar.4C-TimeSeriesPositions")
-    
+\examples{   
 ## Create dummy timeSeries:     
    X = timeSeries(matrix(rnorm(24), 12), timeCalendar())
    

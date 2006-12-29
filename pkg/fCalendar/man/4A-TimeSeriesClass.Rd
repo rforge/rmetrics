@@ -371,8 +371,6 @@ ohlcDailyPlot(x, volume = TRUE, colOrder = c(1:5), units = 1e6,
 
 
 \examples{
-## SOURCE("fCalendar.4A-TimeSeriesClass")
-
 ## data - Data Frame:
    # Microsoft Data:
    MSFT.df = data.frame(matrix(c(

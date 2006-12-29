@@ -142,8 +142,6 @@
 
 
 \examples{
-## SOURCE("fCalendar.3E-TimeDateCoercion")
-
 ## as.character 
    tD = timeDate()
    as.character(tD)

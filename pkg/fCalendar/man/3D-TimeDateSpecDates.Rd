@@ -141,8 +141,6 @@ timeLastNdayInMonth(charvec, nday = 1, format = "\%Y-\%m-\%d",
 
 
 \examples{
-## SOURCE("fCalendar.3D-TimeDateSpecDates")
-
 ## Date as character String:
    charvec = "2006-04-16"
     

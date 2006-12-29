@@ -121,8 +121,6 @@ is.timeSeries(object)
 
 
 \examples{
-## SOURCE("fCalendar.4D-TimeSeriesCoercion")
-
 ## data - timeSeries:
    # Create an artificial timeSeries object:
    myFinCenter <<- "GMT"

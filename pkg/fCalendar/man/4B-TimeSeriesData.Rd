@@ -393,8 +393,6 @@ rownames<-.timeSeries(x) <- value
 
 
 \examples{
-## SOURCE("fCalendar.4B-TimeSeriesData")
-
 ## data - 
    # Create an artificial timeSeries object:
    myFinCenter <<- "GMT"

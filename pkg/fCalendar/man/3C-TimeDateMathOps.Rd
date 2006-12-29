@@ -179,8 +179,6 @@ difftimeDate(time1, time2,
 
 
 \examples{
-## SOURCE("fCalendar.3C-TimeDateMathOps")   
-
 ## c -
    # Create Character Vectors:
    dts = c("1989-09-28", "2001-01-15", "2004-08-30", "1990-02-09")

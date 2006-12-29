@@ -423,8 +423,6 @@ Zivot, E., Wang J. (2003);
 
 
 \examples{
-## SOURCE("fCalendar.3A-TimeDateClass")
-
 ## myFinCenter -
    myFinCenter
 

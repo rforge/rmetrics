@@ -166,8 +166,6 @@ blockEnd(x, block = 20)
 
 
 \examples{
-## SOURCE("fCalendar.3B-TimeDateSubsets")
-
 ## Easter -
    currentYear
    
