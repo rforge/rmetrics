@@ -192,8 +192,6 @@ Weron, A., Weron R. (1999);
 }
 
 \examples{  
-## SOURCE("fBasics.2A-StableDistribution")
-
 ## Plot:
    par(ask = FALSE)
    

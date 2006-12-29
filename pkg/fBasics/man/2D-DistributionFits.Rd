@@ -208,9 +208,7 @@ show.fDISTFIT(object)
 }
 
 
-\examples{
-## SOURCE("fBasics.2D-DistributionFits")
-   
+\examples{  
 ## Plot:
    par(ask = FALSE)
    

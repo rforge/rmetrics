@@ -108,8 +108,6 @@ basicStats(x, ci = 0.95)
 
 
 \examples{
-## SOURCE("fBasics.1A-ReturnSeriesBasics")
-
 ## basicStats -
    # Simulated Monthly Return Data:
    tS = timeSeries(matrix(rnorm(12)), timeCalendar())

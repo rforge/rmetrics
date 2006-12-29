@@ -339,8 +339,6 @@ Wuertz D., Katzgraber H.G. (2005);
 
 
 \examples{
-## SOURCE("fBasics.5B-NormalityTests")
-
 ## Series:
    x = rnorm(100)
    
@@ -352,7 +350,7 @@ Wuertz D., Katzgraber H.G. (2005);
    shapiroTest(x)
 
 ## jarqueberaTest - 
-## jbTest - Jarque-Bera Test
+   # Jarque - Bera Test
    # jarqueberaTest(x)
    # jbTest(x)
 }

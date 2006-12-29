@@ -201,8 +201,6 @@ Raible S. (2000);
 
 
 \examples{
-## SOURCE("fBasics.2B-HyperbolicDistribution")
-
 ## Plot:
    par(ask = FALSE)
     
