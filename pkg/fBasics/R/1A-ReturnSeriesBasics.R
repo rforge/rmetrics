@@ -321,7 +321,6 @@ function(x, col = "steelblue", main = x@units, labels = TRUE, ...)
 
 ################################################################################
 # FUNCTION:               BASIC STATISTICS:
-#  .basicStatsUnivariate   Calculates Basic Statistics
 #  basicStats              Returns a basic statistics summary
 # FUNCTION:               DESCRIPTION:
 #  .distCheck              Checks consistency of distributions
@@ -329,64 +328,6 @@ function(x, col = "steelblue", main = x@units, labels = TRUE, ...)
 # FUNCTION:               SPLUS FUNCTIONALITY:
 #  stdev                   S-PLUS: Returns the standard deviation of a vector
 ################################################################################
-
-
-.basicStatsUnivariate = 
-function(x, ci = 0.95) 
-{   # A function implemented by Diethelm Wuertz
-    
-    # Description:
-    #   Calculates Basic Statistics
- 
-    # FUNCTION:
-    
-    # Transform:
-    x = as.vector(x)  
-    
-    # CL Levels:    
-    cl.vals = function(x, ci) {
-        x = x[!is.na(x)]
-        n = length(x)
-        if(n <= 1) return(c(NA, NA))
-        se.mean = sqrt(var(x)/n)
-        t.val = qt((1 - ci)/2, n - 1)
-        mn = mean(x)
-        lcl = mn + se.mean * t.val
-        ucl = mn - se.mean * t.val
-        c(lcl, ucl)
-    }        
-    
-    # Observations:
-    x.length = length(x)
-    x = x[!is.na(x)]
-    x.na = x.length - length(x)
-    
-    # Basic Statistics:
-    z = c(
-        x.length, x.na, min(x), max(x),
-        as.numeric(quantile(x, prob = 0.25, na.rm = TRUE)), 
-        as.numeric(quantile(x, prob = 0.75, na.rm = TRUE)), 
-        mean(x), median(x), sum(x), sqrt(var(x)/length(x)), 
-        cl.vals(x, ci)[1], cl.vals(x, ci)[2], var(x), 
-        sqrt(var(x)), skewness(x), kurtosis(x) )    
-    
-    # Row Names:
-    znames = c(
-        "nobs", "NAs",  "Minimum", "Maximum", 
-        "1. Quartile",  "3. Quartile",  "Mean", "Median", 
-        "Sum",  "SE Mean", "LCL Mean", "UCL Mean", 
-        "Variance", "Stdev", "Skewness", "Kurtosis")
-        
-    # Output as data.frame
-    ans = matrix(z, ncol = 1)
-    row.names(ans) = znames
-    
-    # Return Value:
-    ans  
-}
-
-
-# ------------------------------------------------------------------------------
 
 
 basicStats = 
@@ -412,13 +353,48 @@ function(x, ci = 0.95)
     # FUNCTION:
     
     # Univariate/Multivariate:
-    x = as.matrix(x)
+    y = as.matrix(x)
     
-    # basic Statistics:
+    # CL Levels:    
+    cl.vals = function(x, ci) {
+        x = x[!is.na(x)]
+        n = length(x)
+        if(n <= 1) return(c(NA, NA))
+        se.mean = sqrt(var(x)/n)
+        t.val = qt((1 - ci)/2, n - 1)
+        mn = mean(x)
+        lcl = mn + se.mean * t.val
+        ucl = mn - se.mean * t.val
+        c(lcl, ucl)
+    }        
+    
+    # Basic Statistics:
     nColumns = dim(x)[2]
     ans = NULL
     for (i in 1:nColumns) {
-        ans = cbind(ans, .basicStatsUnivariate(x[, i], ci))
+        x = y[, i]     
+        # Observations:
+        x.length = length(x)
+        x = x[!is.na(x)]
+        x.na = x.length - length(x)
+        # Basic Statistics:
+        z = c(
+            x.length, x.na, min(x), max(x),
+            as.numeric(quantile(x, prob = 0.25, na.rm = TRUE)), 
+            as.numeric(quantile(x, prob = 0.75, na.rm = TRUE)), 
+            mean(x), median(x), sum(x), sqrt(var(x)/length(x)), 
+            cl.vals(x, ci)[1], cl.vals(x, ci)[2], var(x), 
+            sqrt(var(x)), skewness(x), kurtosis(x) )    
+        # Row Names:
+        znames = c(
+            "nobs", "NAs",  "Minimum", "Maximum", 
+            "1. Quartile",  "3. Quartile",  "Mean", "Median", 
+            "Sum",  "SE Mean", "LCL Mean", "UCL Mean", 
+            "Variance", "Stdev", "Skewness", "Kurtosis")   
+        # Output as data.frame
+        result = matrix(z, ncol = 1)
+        row.names(result) = znames    
+        ans = cbind(ans, result)
     }
     colNames = colnames(x)
     if (!is.null(colNames)) 
