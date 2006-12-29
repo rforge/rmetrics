@@ -30,8 +30,8 @@
 # FUNCTION:            AUGMENTED DICKEY FULLER DATA TABLES:
 # .ansariTable          Finite sample p values for the Dickey-Fuller test
 # .ansariPlot           Plots
-# .dansari
-# .pansari              Returns probabilities  for the ADF Test given quantiles
+# .dansari              Returns densities for the ADF Test given quantiles
+# .pansari              Returns probabilities for the ADF Test given quantiles
 # .qansari              Returns quantiles for the ADF Test given probabilities
 ################################################################################
 
