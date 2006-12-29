@@ -44,8 +44,8 @@ function(lib, pkg)
     cat("\nfBasics: Basic Statistics And Return Distributions\n")
 
     # Load dll:
-    library.dynam("fBasics", pkg, lib)
-    .Sys.timezone = function() Sys.getenv("TZ")[[1]]
+    # library.dynam("fBasics", pkg, lib)
+    # .Sys.timezone = function() Sys.getenv("TZ")[[1]]
 
 }
 
