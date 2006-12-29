@@ -30,7 +30,7 @@
 ################################################################################
 # FUNCTION:             MLE AND PWM ESTIMATORS:
 #  gevSim                Simulates GEV Distribution
-#  gumbelSim             Simulates GumbelDistribution
+#  gumbelSim             Simulates Gumbel Distribution
 # FUNCTION:             PARAMETER ESTIMATION:
 #  'fGEVFIT'             S4 class representation
 #  gevFit                Fits Parameters of GEV distribution
@@ -52,7 +52,7 @@
 #  summary.fGEVFIT       Summary Method for object of class "fGEVFIT"
 # FUNCTION:             ADDITIONAL FUNCTIONS:
 #  gevrlevelPlot         Calculates Return Levels Based on GEV Fit
-#  .rlevel.gev.evir       Internal Function copied from evir
+#  .gevrlevelLLH         Computes log-likelihood function for gevrlevelPlot
 ################################################################################
 
 
@@ -1000,6 +1000,9 @@ plottype = c("plot", "add"), labels = TRUE,...)
 function(theta, tmp, pp, rli)
 {   # A copy from evir
 
+    # Description:
+    #   Computes log-likelihood function for gevrlevelPlot
+    
     # FUNCTION:
     
     # LLH:
