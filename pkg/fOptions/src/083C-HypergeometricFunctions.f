@@ -824,7 +824,7 @@ C     ****************************************************************
 420   RETURN                                                            
       END                                                               
                                                                         
-                                                                        
+                                                                       
 C     ****************************************************************  
 C     *                                                              *  
 C     *                 SUBROUTINE ESUB                              *  
@@ -989,10 +989,10 @@ C *****************************************************************************
       A = CMPLX(ARE, AIM)
       B = CMPLX(BRE, BIM)
       DO I=1,N
-      	Z = CMPLX(ZRE(I), ZIM(I))
-      	CHF = CONHYP(A, B, Z, LNCHF, IP)
-      	CRE(I) = DREAL(CHF)
-      	CIM(I) = DIMAG(CHF)   
+        Z = CMPLX(ZRE(I), ZIM(I))
+        CHF = CONHYP(A, B, Z, LNCHF, IP)
+        CRE(I) = DREAL(CHF)
+        CIM(I) = DIMAG(CHF)   
       ENDDO
       
       RETURN
