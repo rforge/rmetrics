@@ -28,10 +28,10 @@
 
 ################################################################################
 # FUNCTION:            AUGMENTED DICKEY FULLER DATA TABLES:
-# .adfTable             Finite sample p values for the Dickey-Fuller test
-# .adfPlot              Plots
-# .padf                 Returns probabilities  for the ADF Test given quantiles
-# .qadf                 Returns quantiles for the ADF Test given probabilities
+# adfTable              Finite sample p values for the Dickey-Fuller test
+# .adfPlot              Plots sample p values for the Dickey-Fuller test
+# padf                  Returns probabilities  for the ADF Test given quantiles
+# qadf                  Returns quantiles for the ADF Test given probabilities
 ################################################################################
 
 
@@ -39,7 +39,7 @@
 # Note: x=-3:0; y=0:3; z=outer(x,y,"*"); rownames(z)=x; colnames(z)=y; z
 
 
-.adfTable =
+adfTable =
 function(trend = c("nc", "c", "ct"), statistic = c("t", "n"), includeInf = TRUE)
 {   # A function implemented by Diethelm Wuertz
 
@@ -47,7 +47,7 @@ function(trend = c("nc", "c", "ct"), statistic = c("t", "n"), includeInf = TRUE)
     #   Tables critical values for augmented Dickey-Fuller test.
     
     # Examples:
-    #   .adfTable()
+    #   adfTable()
 
     # FUNCTION:
       
@@ -157,7 +157,7 @@ function(trend = c("nc", "c", "ct"), statistic = c("t", "n"))
     statistic = match.arg(statistic)
     
     # Load Table:
-    Y = .adfTable(trend, statistic, includeInf = FALSE)
+    Y = adfTable(trend, statistic, includeInf = FALSE)
     X = cbind(expand.grid(x = Y$x, y = Y$y), z = as.vector(Y$z))
     x = X[, 1] # N
     y = X[, 3] # q-Stat
@@ -182,7 +182,7 @@ function(trend = c("nc", "c", "ct"), statistic = c("t", "n"))
 # ------------------------------------------------------------------------------
 
 
-.padf = 
+padf = 
 function(q, N = Inf, trend = c("nc", "c", "ct"), statistic = c("t", "n"))
 {   # A function implemented by Diethelm Wuertz
 
@@ -194,11 +194,11 @@ function(q, N = Inf, trend = c("nc", "c", "ct"), statistic = c("t", "n"))
     #   N = sample sizes
     
     # Example:
-    #   .padf(q = -2:2, N = 1000) 
-    #   .padf(q = -2:2, N = 100)
-    #   .padf(q = -2:2, N = 20)
-    #   .padf(-3, 100)
-    #   q=c(-2:2); for (N in c(20, 100, 1000, 5000, Inf)) print(.padf(q, N)) 
+    #   padf(q = -2:2, N = 1000) 
+    #   padf(q = -2:2, N = 100)
+    #   padf(q = -2:2, N = 20)
+    #   padf(-3, 100)
+    #   q=c(-2:2); for (N in c(20, 100, 1000, 5000, Inf)) print(padf(q, N)) 
     
     # FUNCTION:
     
@@ -210,7 +210,7 @@ function(q, N = Inf, trend = c("nc", "c", "ct"), statistic = c("t", "n"))
     stopifnot(length(N) == 1)
     
     # Grid Points:
-    X = .adfTable(trend = trend, statistic = statistic)
+    X = adfTable(trend = trend, statistic = statistic)
     if (N < 500) {
         finiteX = cbind(expand.grid(x = X$x, y = X$y), z = as.vector(X$z))
         X = finiteX[is.finite(finiteX[, 1]), ]
@@ -240,7 +240,7 @@ function(q, N = Inf, trend = c("nc", "c", "ct"), statistic = c("t", "n"))
 # ------------------------------------------------------------------------------
 
 
-.qadf = 
+qadf = 
 function(p, N = Inf, trend = c("nc", "c", "ct"), statistic = c("t", "n")) 
 {   # A function implemented by Diethelm Wuertz
 
@@ -252,11 +252,11 @@ function(p, N = Inf, trend = c("nc", "c", "ct"), statistic = c("t", "n"))
     #   N = sample sizes
     
     # Example:
-    #   .qadf(p = (1:9)/10, N = 1000) 
-    #   .qadf(p = (1:9)/10, N = 100)
-    #   .qadf(p = (1:9)/10, N = 20)
-    #   .qadf(0.001, 100)
-    #   .qadf(0.001, 1000)
+    #   qadf(p = (1:9)/10, N = 1000) 
+    #   qadf(p = (1:9)/10, N = 100)
+    #   qadf(p = (1:9)/10, N = 20)
+    #   qadf(0.001, 100)
+    #   qadf(0.001, 1000)
     
     # FUNCTION:
     
@@ -268,7 +268,7 @@ function(p, N = Inf, trend = c("nc", "c", "ct"), statistic = c("t", "n"))
     stopifnot(length(N) == 1)
     
     # Grid Points:
-    X = .adfTable(trend = trend, statistic = statistic)
+    X = adfTable(trend = trend, statistic = statistic)
     if (N < 500) {
         finiteX = cbind(expand.grid(x = X$x, y = X$y), z = as.vector(X$z))
         X = finiteX[is.finite(finiteX[, 1]), ]
