@@ -59,12 +59,10 @@ function(lib, pkg)
     
     # Load urcaBuiltin Package:
     sinkFile <- file("@sink@", open = "wt")
-    sink(sinkFile)
     sink(sinkFile, type = "message")
     .urcaBuiltin()
     sink(type = "message")
     sink()
-    unlink("@sink@")
 }
 
 
