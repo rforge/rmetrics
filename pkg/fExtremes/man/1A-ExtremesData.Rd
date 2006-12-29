@@ -92,15 +92,15 @@ recordsPlot(x, ci = 0.95, doplot = TRUE, labels = TRUE, \dots)
 ssrecordsPlot(x, subsamples = 10, doplot = TRUE, plottype = c("lin", "log"),
     labels = TRUE, \dots)
     
-sllnPlot(x, doplot = TRUE, labels = TRUE, ...)
-lilPlot(x, doplot = TRUE, labels = TRUE, ...)
+sllnPlot(x, doplot = TRUE, labels = TRUE, \dots)
+lilPlot(x, doplot = TRUE, labels = TRUE, \dots)
 
-xacfPlot(x, u = quantile(x, 0.95), lag.max = 15, \dots)
+xacfPlot(x, u = quantile(x, 0.95), lag.max = 15, doplot = TRUE, labels = TRUE, \dots)
 
 blockMaxima(x, block = c("monthly", "quarterly"), doplot = FALSE)
 findThreshold(x, n = floor(0.05*length(as.vector(x))), doplot = FALSE)
 pointProcess(x, u = quantile(x, 0.95), doplot = FALSE)
-deCluster(x, run = 20, doplot = FALSE)
+deCluster(x, run = 20, doplot = TRUE)
 
 interactivePlot(x, choices = paste("Plot", 1:9), 
     plotFUN = paste("plot.", 1:9, sep = ""), which = "all", \dots)
