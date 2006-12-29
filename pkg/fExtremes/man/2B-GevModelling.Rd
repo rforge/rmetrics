@@ -134,13 +134,6 @@ shaparmDEHaan(x, p = 0.05, xiRange = NULL,
         [hillPlot] - \cr
         whether or not axes should be labelled.
         }
-    \item{log}{
-        a logical, if \code{TRUE}, the log density is returned.
-        }
-    \item{lower.tail}{
-        a logical, if \code{TRUE}, the default, then
-        probabilities are \code{P[X <= x]}, otherwise, \code{P[X > x]}.
-        }
     \item{model}{
         [gevSim][gumbelSim] - \cr
         a list with components \code{shape}, \code{location} and 
@@ -154,7 +147,7 @@ shaparmDEHaan(x, p = 0.05, xiRange = NULL,
         [gevSim][gumbelSim] - \cr
         number of generated data points, an integer value.
         \cr
-        [rgev][revd] - \cr        
+        [rgev] - \cr        
         the number of observations.
         } 
     \item{object}{
@@ -167,15 +160,11 @@ shaparmDEHaan(x, p = 0.05, xiRange = NULL,
         \code{quantile} (a quantile estimate) should be plotted.
         }
     \item{p}{
-        [qgev][qevs] - \cr
+        [qgev] - \cr
         a numeric vector of probabilities.
         [hillPlot] - \cr
         probability required when option \code{quantile} is
         chosen.
-        }
-    \item{q}{
-        [pgev][pevs] - \cr
-        a numeric vector of quantiles.
         }
     \item{seed}{
         [gevSim] - \cr

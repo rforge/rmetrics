@@ -6,6 +6,7 @@
 \alias{pgev}
 \alias{qgev}
 \alias{rgev}
+
 \alias{gevMoments}
 \alias{gevSlider}
 
@@ -15,12 +16,15 @@
 
 \description{
   
-    A collection and description functions to compute
+    A collection and description of functions to compute
     the generalized extreme value distribution. The 
     functions compute density, distribution function, 
     quantile function and generate random deviates 
     for the GEV including the Frechet, Gumbel, and 
-    Weibull distributions. 
+    Weibull distributions. In addition functions to 
+    compute the true moments and to display the distribution
+    and random variates changing parameters interactively 
+    are available.
     \cr
     
     The GEV distribution functions are:
@@ -99,32 +103,6 @@ gevSlider(method = c("dist", "rvs"))
     \code{r*} generates random variates. \cr
     
     All values are numeric vectors.
-    
-}
-
-
-\details{
-
-    \bold{Generalized Extreme Value Distribution:}
-    \cr\cr
-    Computes density, distribution function, quantile function and 
-    generates random variates for the Generalized Extreme Value 
-    Distribution, GEV includeing the Frechet, Gumbel, and Weibull 
-    distributions.
-
-}
-  
-
-\note{
-
-    \bold{Generalized Extreme Value Distribution:}
-    \cr\cr
-    Here we implemented the notation for the arguments as used
-    by the GEV functions in the EVIS package or SPlus/FinMetrics 
-    module, \code{xi}, \code{mu}, \code{beta}. 
-    Additional arguments to these packages are the \code{log} 
-    and the \code{lower.tail} arguments. The computation underlies 
-    the code from R's \code{evd} package.
     
 }
 

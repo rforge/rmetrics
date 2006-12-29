@@ -2,11 +2,6 @@
 
 \alias{GpdModelling}
 
-\alias{dgpd}
-\alias{pgpd}
-\alias{qgpd}
-\alias{rgpd}
-
 \alias{fGPDFIT}
 \alias{fGPDFIT-class}
 
@@ -30,24 +25,16 @@
 
 \description{
 
-    A collection and description functions to compute
+    A collection and description to functions to compute
     the generalized Pareto distribution and to
-    estimate it parameters. The functions compute 
+    estimate its parameters. The functions compute 
     density, distribution function, quantile function 
     and generate random deviates for the GPD. Two 
     approaches for parameter estimation are provided: 
     Maximum likelihood estimation and the probability 
     weighted moment method.
     \cr
-    
-    The GPD distribution functions are:
-    
-    \tabular{ll}{
-    \code{dgpd} \tab Density of the GPD Distribution, \cr
-    \code{pgpd} \tab Probability function of the GPD Distribution, \cr
-    \code{qgpd} \tab Quantile function of the GPD Distribution, \cr
-    \code{rgpd} \tab Random variates from the GPD Distribution. }
-    
+
     The GPD modelling functions are:
      
     \tabular{ll}{
@@ -67,11 +54,6 @@
 
 
 \usage{
-dgpd(x, xi = 1, mu = 0, beta = 1) 
-pgpd(q, xi = 1, mu = 0, beta = 1) 
-qgpd(p, xi = 1, mu = 0, beta = 1) 
-rgpd(n, xi = 1, mu = 0, beta = 1)
-
 gpdSim(model = list(xi = 0.25, mu = 0, beta = 1), n = 1000,
     seed = NULL)
 gpdFit(x, u = quantile(x, 0.95), type = c("mle", "pwm"), information = 
@@ -162,9 +144,6 @@ gpdRiskMeasures(object, prob = c(0.99, 0.995, 0.999, 0.9995, 0.9999))
     \item{plottype}{
         a character string.
         }
-    \item{q}{
-        a numeric vector of quantiles.
-        }
     \item{start, end}{
         the lowest and maximum number of exceedances to be considered.
         }
@@ -217,12 +196,6 @@ gpdRiskMeasures(object, prob = c(0.99, 0.995, 0.999, 0.9995, 0.9999))
 
 
 \value{
-    
-    All values are numeric vectors: \cr
-    \code{d*} returns the density, \cr
-    \code{p*} returns the probability, \cr
-    \code{q*} returns the quantiles, and \cr
-    \code{r*} generates random deviates.  
     
     \code{gpdSim}
     \cr
