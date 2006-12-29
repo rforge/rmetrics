@@ -28,10 +28,11 @@
 
 
 # ##############################################################################
-# FUNCTION:              GPD MODELLING FROM EVIS:
-#  gpdSim                 Simulates GPD rvs
-#  fGPDFIT                   S4 Class Representation
-#  gpdFit                 Fits GPD Distribution
+# FUNCTION:               GPD MODELLING FROM EVIS:
+#  gpdSim                  Simulates GPD rvs
+# FUNCTION:               GPD PARAMETER ESTIMATION:
+#  'fGPDFIT'               S4 Class Representation
+#  gpdFit                  Fits GPD Distribution
 #   print.gpd              Print Method for object of class "gpd"
 #   plot.gpd               Plot Method for object of class "gpd"
 #   summary.gpd            Summary Method for object of class "gpd"
@@ -75,7 +76,7 @@ seed = NULL)
 }
 
 
-# ------------------------------------------------------------------------------
+################################################################################
 
 
 setClass("fGPDFIT", 
@@ -101,7 +102,10 @@ information = c("observed", "expected"), title = NULL, description = NULL, ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Returns an object of class `"gpd"' representing the fit of a
+    #   Fits a generalized Pareto model to excesses
+    
+    # Details:
+    #   Returns an object of class "fGPDFIT" representing the fit of a
     #   generalized Pareto model to excesses over a high threshold
     
     # Notes:
@@ -234,6 +238,9 @@ function(theta, excess)
 function(x, u = quantile(x, 0.95)) 
 {   # A function implemented by Diethelm Wuertz
 
+    # FUNCTION:
+    
+    # PWM Fit:
     x = as.vector(x)
     excess = x[x > u] - u 
     Nu = length(excess)
@@ -244,6 +251,8 @@ function(x, u = quantile(x, 0.95))
     beta = (2 * a0 * a1)/(a0 - 2 * a1)
     par.ests = c(xi = xi, beta = beta)
     par.ses = c(xi = NA, beta = NA)
+    
+    # Return Value:
     list(par.ests = par.ests, par.ses = par.ses, fit = NA, varcov = NA)
 }
 
@@ -251,8 +260,8 @@ function(x, u = quantile(x, 0.95))
 # ------------------------------------------------------------------------------
 
 
-print.fGPDFIT =
-function(x, ...)
+show.fGPDFIT =
+function(object)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -261,25 +270,26 @@ function(x, ...)
     # FUNCTION:
     
     # Title:
-    cat("\nTitle:\n ", x@title, "\n")
+    cat("\nTitle:\n ", object@title, "\n")
     
     # Function Call:
     cat("\nCall:\n ")
-    cat(paste(deparse(x@call), sep = "\n", collapse = "\n"), "\n", sep = "") 
+    cat(paste(deparse(object@call), sep = "\n", 
+        collapse = "\n"), "\n", sep = "") 
             
     # Estimation Type:
-    cat("\nEstimation Method:\n ", x@method, "\n") 
+    cat("\nEstimation Method:\n ", object@method, "\n") 
     
     # Estimated Parameters:
     cat("\nEstimated Parameters:\n")
-    print(x@fit$par.ests)
+    print(object@fit$par.ests)
     
     # Desription:
-    cat("\nDescription\n ", x@description, "\n\n")
+    cat("\nDescription\n ", object@description, "\n\n")
     
     
     # Return Value:
-    invisible(x)
+    invisible(object)
 }
 
 

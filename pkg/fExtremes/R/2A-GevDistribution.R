@@ -16,7 +16,7 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2004, Diethelm Wuertz, GPL
+#   1999 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
 #   www.rmetrics.org
@@ -193,7 +193,7 @@ function(xi = 0, mu = 0, beta = 1)
     xi0 = c(0, (beta*pi)^2 / 6, 0)
     
     # Supress warning for NaN's from Gamma Function:
-    options(warn=-1)
+    options(warn = -1)
     gevVar = (beta*xinv)^2 * (gamma(1-2*xi) - gamma(1-xi)^2 ) * 
         g[sign(2*xi-1)+2] + xi0[(sign(xi)+2)]
     options(warn = 0)     

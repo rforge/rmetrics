@@ -28,7 +28,7 @@
 
 
 ################################################################################
-# FUNCTION:             MLE AND PWM ESTIMATORS:
+# FUNCTION:             GEV SIMULATION:
 #  gevSim                Simulates GEV Distribution
 #  gumbelSim             Simulates Gumbel Distribution
 # FUNCTION:             PARAMETER ESTIMATION:
@@ -43,7 +43,6 @@
 #    .gevLLH               Computes GEV log-likelihood function
 # METHODS:              SHOW, PRINT, PLOT, AND SUMMARY:
 #  show.fGEVFIT           Show method for object of class "fGEVFIT"
-#  print.fGEVFIT          Print method for object of class "fGEVFIT"
 #  plot.fGEVFIT           Plot method for object of class "fGEVFIT"
 #   .gev1Plot              Block Maxima Plot            
 #   .gev2Plot              Scatterplot of Residuals
@@ -555,19 +554,6 @@ function(theta, tmp)
 
 show.fGEVFIT = 
 function(object) 
-{
-    print.fGEVFIT(object)
-}
-    
-
-setMethod("show", "fGEVFIT", show.fGEVFIT)
-
-
-# ------------------------------------------------------------------------------
-
-
-print.fGEVFIT =
-function(x, ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -576,25 +562,29 @@ function(x, ...)
     # FUNCTION:
     
     # Title:
-    cat("\nTitle:\n" , x@title, "\n")
+    cat("\nTitle:\n" , object@title, "\n")
     
     # Function Call:
     cat("\nCall:\n ")
-    cat(paste(deparse(x@call), sep = "\n", collapse = "\n"), "\n", sep = "")
+    cat(paste(deparse(object@call), sep = "\n", 
+        collapse = "\n"), "\n", sep = "")
             
     # Estimation Type:
-    cat("\nEstimation Type:\n ", x@method, "\n") 
+    cat("\nEstimation Type:\n ", object@method, "\n") 
     
     # Estimated Parameters:
     cat("\nEstimated Parameters:\n")
-    print(x@fit$par.ests)
+    print(object@fit$par.ests)
     
     # Desription:
-    cat("\nDescription\n ", x@description, "\n\n")
+    cat("\nDescription\n ", object@description, "\n\n")
     
     # Return Value:
-    invisible(x)
+    invisible(object)
 }
+    
+
+setMethod("show", "fGEVFIT", show.fGEVFIT)
 
 
 # ------------------------------------------------------------------------------

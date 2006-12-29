@@ -16,7 +16,7 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2004, Diethelm Wuertz, GPL
+#   1999 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
 #   www.rmetrics.org
@@ -28,28 +28,22 @@
 
 
 ################################################################################
-# FUNCTION          EXPLORATIVE DATA ANALYSIS:
-#  emdPlot           Creates ans empirical distribution plot
-#  qqPlot            Creates a normal quantile-quantile plot
-#  .qqbayesPlot      Creates a normal qq-Plot with confidence intervals
-#  qPlot             Creates exploratory QQ plot for EV analysis
-#  mePlot            Creates a sample mean excess plot
-#   mxfPlot           Creates another view of a sample mean excess plot
-#   mrlPlot           Returns a mean residual life plot with confidence levels
-#  recordsPlot       Plots records development
-#   ssrecordsPlot     Plots records development of data subsamples
-#  msratioPlot       Plots ratio of maximums and sums
-#  sllnPlot          Verifies Kolmogorov's Strong Law of large numbers
-#  lilPlot           Verifies Hartman-Wintner's Law of the iterated logarithm
-#  xacfPlot          Plots autocorrelations of exceedences
-# FUNCTION:         PLOT UTILITIES:
-#  interactivePlot   Plots several graphs interactively
-#  gridVector        Creates from two vectors rectangular grid points
-# FUNCTION          DATA PREPROCESSING:
-#  blockMaxima       Returns block maxima from a time series
-#  findThreshold     Upper threshold for a given number of extremes 
-#  pointProcess      Returns peaks over a threshold from a time series
-#  deCluster         Declusters a point process
+# FUNCTION             EXPLORATIVE DATA ANALYSIS:
+#  emdPlot              Creates an empirical distribution plot
+#  fBasics::qqnormPlot  Creates a normal qq-Plot with confidence intervals
+#  qPlot                Creates exploratory QQ plot for EV analysis
+#  mePlot               Creates a sample mean excess plot
+#   mxfPlot             Creates another view of a sample mean excess plot
+#   mrlPlot             Returns a mean residual life plot with confidence levels
+#  recordsPlot          Plots records development
+#   ssrecordsPlot       Plots records development of data subsamples
+#  msratioPlot          Plots ratio of maximums and sums
+#  sllnPlot             Verifies Kolmogorov's Strong Law of large numbers
+#  lilPlot              Verifies Hartman-Wintner's Law of the iterated logarithm
+#  xacfPlot             Plots autocorrelations of exceedences
+# FUNCTION:            PLOT UTILITIES:
+#  interactivePlot      Plots several graphs interactively
+#  gridVector           Creates from two vectors rectangular grid points
 ################################################################################
 
 
@@ -124,135 +118,6 @@ labels = TRUE, ...)
     # Return Value:
     if (doplot) return(invisible(result)) else return(result)   
 }
-
-
-# ------------------------------------------------------------------------------
-
-
-qqPlot = 
-function (x, doplot = TRUE, labels = TRUE, ...) 
-{   # A function written by Diethelm Wuertz
-    
-    # Description:
-    #   Creates Normal Quantile-Quantile Plot
-    
-    # FUNCTION:
-    
-    # Convert Type:
-    x = as.vector(x)
-    
-    # Plot:
-    if (doplot) {
-        if (labels) {
-            main = "Normal QQ-Plot" 
-            xlab = "Normal Quantiles"
-            ylab = "Empirical Quantiles"
-        } else {
-            main = xlab = ylab = ""
-        }
-        if (labels) {
-            qqnorm(x, pch = 19, col = "steelblue", 
-                xlab = xlab, ylab = ylab, main = main, ...) 
-            grid() 
-        } else {
-            qqnorm(x, 
-                xlab = xlab, ylab = ylab, main = main, ...) 
-        }
-        qqline(x) 
-    }
-    
-    # Return Value:
-    if (doplot) return(invisible(x)) else return(x)
-}
-
-
-# ------------------------------------------------------------------------------
-# Moved to fBasics ...
-
-.qqbayesPlot = 
-function(x, doplot = TRUE, labels = TRUE, ...) 
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Example of a Normal quantile plot of data x to provide a visual
-    #   assessment of its conformity with a normal (data is standardised    
-    #   first).
-
-    # Details:
-    #   The ordered data values are posterior point estimates of the 
-    #   underlying quantile function. So, if you plot the ordered data 
-    #   values (y-axis) against the exact theoretical quantiles (x-axis),   
-    #   you get a scatter that should be close to a straight line if the 
-    #   data look like a random sample from the theoretical distribution. 
-    #   This function chooses the normal as the theory, to provide a 
-    #   graphical/visual assessment of how normal the data appear.
-    #   To help with assessing the relevance of sampling variability on 
-    #   just "how close" to the normal the data appears, we add (very) 
-    #   approximate posterior 95% intervals for the uncertain quantile 
-    #   function at each point (Based on approximate theory) .
-
-    # Author:
-    #   Prof. Mike West, mw@stat.duke.edu 
-    
-    # Note:
-    #   Source from
-    #   http://www.stat.duke.edu/courses/Fall99/sta290/Notes/
-
-    # FUNCTION:
-    
-    # Convert Type:
-    x = as.vector(x)
-    
-    # Settings:
-    mydata = x
-    n = length(mydata) 
-    p = (1:n)/(n+1)
-    x = (mydata-mean(mydata))/sqrt(var(mydata))
-    x = sort(x)
-    z = qnorm(p)
- 
-    # Plot:
-    if (doplot) {
-        if (labels) {
-            xlab = "Standard Normal Quantiles"
-            ylab = "Ordered Data"
-            main = "Normal QQ-Plot with 95% Intervals"  
-        } else {
-            main = xlab = ylab = ""
-        }
-        if (labels) {
-            plot(z, x, pch = 19, col = "steelblue", 
-                xlab = xlab, ylab = ylab, main = main, ...)
-            abline(0, 1)
-            grid() 
-        } else {
-             plot(z, x, 
-                xlab = xlab, ylab = ylab, main = main, ...)
-            abline(0, 1)
-        }
-    }
-  
-    # 95% Intervals:
-    s = 1.96*sqrt(p*(1-p)/n)
-    pl = p-s
-    i = pl<1&pl>0
-    lower = quantile(x, probs = pl[i])
-    if (doplot) {
-        lines(z[i], lower, col = "brown")
-    }
-    pl = p+s
-    i = pl < 1 & pl > 0
-    upper = quantile(x, probs = pl[i])
-    if (doplot) {
-        lines(z[i], upper, col = "brown")
-    }
-    
-    # Result:
-    result = data.frame(lower, upper)
-    
-    # Return Value:
-    if (doplot) return(invisible(result)) else return(result)
-}     
 
 
 # ------------------------------------------------------------------------------
@@ -1033,240 +898,5 @@ function(x, y)
 }
 
 
-################################################################################
-# DATA PREPROCESSING:
-
-
-blockMaxima =
-function (x, block = c("monthly", "quarterly"), doplot = FALSE) 
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Compute block maxima from a time series or numeric vector
-    
-    # Example:
-    #   data(bmwRet)
-    #   blockMaxima(bmwRet, 200)
-    
-    #   data(bmwRet); x = bmwRet[5100:5280, ]; x;  block = "monthly"
-
-    # FUNCTION:
-    
-    # Check Type:
-    if (class(x) == "timeSeries") {
-        if (dim(x)[2] > 1) stop("x must be an univariate time series")
-    } else {
-        x = as.vector(x)
-        stopifnot(is.numeric( block[1])) 
-    }
-    
-    # Maxima:
-    if (is.numeric(block[1])) {
-        block = block[1]
-    } else {
-        block = match.arg(block)
-    }
-    if (class(x) == "timeSeries") {
-        if (is.numeric(block)) {
-            from = blockStart(seriesPositions(x), block = block)
-            to = blockEnd(seriesPositions(x), block = block)
-        } else if (block == "monthly") {
-            from = unique(timeFirstDayInMonth(seriesPositions(x)))
-            to = unique(timeLastDayInMonth(seriesPositions(x)))
-        } else if (block == "quarterly") {
-            from = unique(timeFirstDayInQuarter(seriesPositions(x)))
-            to = unique(timeLastDayInQuarter(seriesPositions(x)))
-        } else {
-            stop("Unknown block size for timeSeries Object")
-        }
-        maxValue = applySeries(x, from, to, FUN = max)
-        maxIndex = applySeries(x, from, to, FUN = which.max)@Data
-        toIndex = applySeries(x, from, to, FUN = length)@Data
-        # maxPosition = rownames(x@Data)[cumsum(toIndex)-toIndex+maxIndex-1]
-        maxPosition = rownames(x@Data)[cumsum(toIndex)-toIndex+maxIndex]
-        # Add Attributes: Update rownames, colnames and recordIDs
-        rownames(maxValue) <- as.character(maxPosition)  
-        colnames(maxValue) <- paste("max.", x@units, sep = "")  
-        maxValue@recordIDs = data.frame(
-            from = as.character(from), 
-            to = as.character(to),
-            cumsum(toIndex)-toIndex+maxIndex )
-    } else {
-        if (is.numeric(block)) {
-            data = as.vector(x)
-            nblocks = (length(data) %/% block) + 1
-            grouping = rep(1:nblocks, rep(block, nblocks))[1:length(data)]
-            maxValue = as.vector(tapply(data, grouping, FUN = max))
-            maxIndex = as.vector(tapply(as.vector(data), grouping, FUN = which.max))
-            names(maxValue) = paste(maxIndex)    
-        } else {
-            stop("For non-timeSeries Objects blocks must be numeric")
-        }
-    }
-    if (doplot) {
-        plot(maxValue, type = "h", col = "steelblue", main = "Block Maxima")
-        grid()
-    }
-    
-    # Return Value:
-    maxValue
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-findThreshold =
-function(x, n = floor(0.05*length(as.vector(x))), doplot = FALSE)
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Upper threshold for a given number of extremes
-    
-    # Arguments:
-    #   x - an univariate time series object or numeric vector
-    #   n - a numeric value giving number of extremes 
-    #       above the threshold, by default 5%.
-    
-    # Example:
-    #   findThreshold(x = as.timeSeries(data(bmwRet)), 
-    #      n = floor(c(0.05, 0.10)*length(as.vector(x))))
-
-    # FUNCTION:
-    
-    # Check Type:
-    if (class(x) == "timeSeries") {
-        if (dim(x)[2] > 1) stop("x must be an univariate time series")
-    }
-   
-    # Threshold:
-    X = rev(sort(as.vector(x)))
-    thresholds = unique(X)
-    indices = match(X[n], thresholds)
-    indices = pmin(indices + 1, length(thresholds)) 
-    
-    # Result:
-    ans = thresholds[indices]
-    names(ans) = paste("n=", as.character(n), sep = "")
-    
-    # Plot:
-    if (doplot) {
-        plot(x, type = "h", col = "steelblue", main = "Threshold Value")
-        grid()
-        for (u in ans) abline (h = u, lty = 3, col = "red")   
-    }
-    
-    # Return Value:
-    ans
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-pointProcess = 
-function(x, u = quantile(x, 0.95), doplot = FALSE)
-{   # A function implemented by Diethelm Wuertz
-
-    # Arguments:
-    #   x - an object of class 'timeSeries'. The quantiles will be 
-    #       computed for the selected column.
-    #   u - threshold value
-
-    
-    # Examples:
-    #   pointProcess(as.timeSeries(data(daxRet)))
-    
-    # Point Process:
-    CLASS = class(x)
-    if (CLASS == "timeSeries") {
-        if (dim(x)[[2]] > 1) stop("x must be a univariate time series")
-        X = x[, 1][x@Data[, 1] > u]
-    } else {
-        X = as.vector(x)
-        X = X[X > u]
-        N = length(x)
-        IDX = (1:N)[x > u]
-        attr(X, "index") <- IDX
-    } 
-    
-    # Plot:
-    if (doplot) {
-        if (CLASS == "timeSeries") {
-            plot(X, type = "h", xlab = "Series")
-        } else {
-            plot(IDX, X, type = "h", xlab = "Series")
-        }
-        mText = paste("Threshold =", u, "| N =", length(as.vector(X)))
-        mtext(mText, side = 4, cex = 0.7, col = "grey")
-        abline(h = u, lty = 3, col = "red")
-        title(main = "Point Process")
-        grid()
-    }
-    
-    # Return Value:
-    X
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-deCluster = 
-function(x, run = 20, doplot = TRUE)
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Decluster a Point Process.
-    
-    # Example:
-    #   deCluster(pointProcess(as.timeSeries(daxRet)))
-    
-    # FUNCTION:
-
-    # Check:
-    stopifnot(class(x) == "timeSeries")
-   
-    # Decluster time Series:
-    positions = seriesPositions(x)
-    data = seriesData(x) 
-    gapLengths = c(0, diff(positions)) # / (24*3600)
-    clusterNumbers = cumsum(gapLengths > run) + 1
-    N = length(data)
-    fromIndex = (1:N)[c(1, diff(clusterNumbers)) == 1]
-    toIndex = c(fromIndex[-1]-1, N)
-    from = positions[fromIndex]
-    to = positions[toIndex]
-    
-    # Maximum Values:
-    maxValue = applySeries(x, from, to, FUN = max)
-    maxIndex = applySeries(x, from, to, FUN = which.max)@Data
-    lengthIndex = applySeries(x, from, to, FUN = length)@Data
-    maxPosition = rownames(x@Data)[cumsum(lengthIndex)-lengthIndex+maxIndex]
-    
-    # Add Attributes: Update rownames, colnames and recordIDs
-    maxValue@positions = rownames(maxValue@Data) = 
-        as.character(maxPosition)  
-    maxValue@units = colnames(maxValue@Data) = 
-        paste("max.", x@units, sep = "")  
-    maxValue@recordIDs = data.frame(
-        from = as.character(from), 
-        to = as.character(to) )   
-        
-    # Plot:
-    if (doplot) {
-        plot(maxValue, type = "h", xlab = "Series")
-        title(main = "Declustered Point Process")
-        mText = paste("Run Length =", run, "| N =", length(as.vector(maxValue)))
-        mtext(mText, side = 4, cex = 0.7, col = "grey")
-        abline(h = min(as.vector(maxValue)), lty = 3, col = "red")
-        grid()
-    }
-       
-    # Return Value:
-    maxValue
-}
-
- 
 ################################################################################
 
