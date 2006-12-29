@@ -137,10 +137,10 @@ colCumsums(x, na.rm = FALSE, \dots)
 
 \examples{
 ## Simulated Monthly Return Data:
-   tS = timeSeries(matrix(rnorm(24), ncol = 2), timeCalendar())
+   x = matrix(rnorm(24), ncol = 2)
      
 ## colStats -
-   colStats(tS, FUN = mean)  
+   colStats(x, FUN = mean)  
 }
 
 
