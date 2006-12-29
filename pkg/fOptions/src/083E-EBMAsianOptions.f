@@ -4,10 +4,10 @@ C      THIS WORK PUBLISHED IN TRANSACTIONS ON MATHEMATICAL SOFTWARE,
 C      VOL. 18, NO. 3, SEPTEMBER, 1992, PP. 343-344.
 C
 C     USED FOR:
-C	   PROGRAM RUNPDE
-C      FOR TESTING AND DEBUGGING UNDER FORTRAN	  
-C	   CALL PDETEST()	  
-C	   END
+C      PROGRAM RUNPDE
+C      FOR TESTING AND DEBUGGING UNDER FORTRAN    
+C      CALL PDETEST()     
+C      END
 
 C     MODEL 1: VECER's PDE
 C     MODEL 2: ZHANG's PDE
@@ -16,7 +16,7 @@ C ------------------------------------------------------------------------------
 
       SUBROUTINE PDETEST()
 CC     NOT USED BY R
-CC     FOR TESTING AND DEBUGGING UNDER FORTRAN	       
+CC     FOR TESTING AND DEBUGGING UNDER FORTRAN         
       IMPLICIT REAL*8 (A-H, O-Z)
       PARAMETER(MNP=10)
       DIMENSION PRICE(MNP+1), XBYS(MNP+1)
@@ -61,8 +61,8 @@ C   DT    =  INITIAL STEP SIZE IN T
 C   EPS   =  RELATIVE TIME ERROR BOUND 
       T0   = 0.0D0
       TOUT = 1.0D0
-	  EPS  = 1.0D-08
-	  DT   = 1.0D-10
+      EPS  = 1.0D-08
+      DT   = 1.0D-10
 
 C FURTHER PARAMETERS:
 C   NINT=1000 - NUMBER OF SUBINTERVALS (XLEFT,XRIGHT) IS TO BE DIVIDED 
@@ -72,9 +72,9 @@ C   MF=12     - METHOD FLAG
 C               ADAMS METHODS - GENERALIZATIONS OF CRANK-NICOLSON AND
 C               CHORD METHOD WITH FINITE DIFFERENCES JACOBIAN
 C   INDEX     - INTEGER USED ON INPUT TO INDICATE TYPE OF CALL
-C   WORK	  - WORKING ARRAY
+C   WORK      - WORKING ARRAY
 C   IWORK     - SIZE OF WORKING ARRAY
-	
+    
 C ASIAN CALL (1) AND PUT(2) VALUE:
       Z = -1
       DO IP = 1, 2
@@ -82,8 +82,8 @@ C ASIAN CALL (1) AND PUT(2) VALUE:
 C        PDE PARAMETERS:
          MODSEL = 1
          SIGMAT = SIGMA * DSQRT(TIME)
-      	 RRT    = RR*TIME   
-      	 XM     = 5.0D0 * SIGMAT 
+         RRT    = RR*TIME   
+         XM     = 5.0D0 * SIGMAT 
          WRITE (*,*)
          WRITE (*,*) " PDE - ASIAN OPTION SETTINGS"     
          WRITE (*,*) " MF  KORD  NCC : ", MF, KORD, NCC         
@@ -99,7 +99,7 @@ C        PDE PARAMETERS:
 C        OUTPUT U - NUMERICAL SOLUTION:   
          WRITE (*,*) " XLEFT  XRIGHT : ", XBKPT(1), XBKPT(NINT+1)
          WRITE (*,*) " EPS DT MX     : ", EPS, DT, MX
-		 WRITE (*,*) " ERROR CODE:   : ", INDEX
+         WRITE (*,*) " ERROR CODE:   : ", INDEX
          WRITE(*,*)
          WRITE(*,*) " U - NUMERICAL SOLUTION FOR DIFF STRIKES:"
          WRITE(*,*) "      X          XI           PRICE     "
@@ -124,7 +124,7 @@ C ------------------------------------------------------------------------------
      &  XBYS, XBKPT, WORK, IWORK)
       
       IMPLICIT REAL*8 (A-H, O-Z)
-	  PARAMETER(MKORD=4, MDERV=0)   
+      PARAMETER(MKORD=4, MDERV=0)   
       DIMENSION WORK
      *   (KORD1+NPDE1*(4+9*NPDE1)+(KORD1+(MX1-1)*(KORD1-NCC1))*
      *   (3*KORD1+2+NPDE1*(3*(KORD1-1)*NPDE1+MAXDER1+4)))
@@ -162,7 +162,7 @@ C FOR COMMON BLOCKS:
       PI   = 4.0D0 * DATAN(1.0D0)  
 
 C CALCULATE FOR BOTH, FOR A CALL Z=+1 OR FOR A PUT Z=-1:       
-	  Z = ZZ
+      Z = ZZ
          
 C WORKSPACE SETTINGS:          
       IWORK(1) = KORD+NPDE*(4+9*NPDE)+(KORD+(MX-1)*
@@ -190,7 +190,7 @@ C SET SPACE POINTS:
 C SOLVE PDE:
       INDEX = 1
       CALL PDECOL(T0, TOUT, DT, XBKPT, EPS,  
-     &	   NX, KORD, NCC, NPDE, MF, INDEX, WORK, IWORK)
+     &     NX, KORD, NCC, NPDE, MF, INDEX, WORK, IWORK)
 
 C OUTPUT U - NUMERICAL SOLUTION:     
       DO I = 1, NP+1
@@ -212,18 +212,18 @@ C ------------------------------------------------------------------------------
       COMMON /PARAMS/ PI
       COMMON /ASIAN1/ SIGMAT, RRT, XM, Z, MODEL
       COMMON /ASIAN2/ SIGMA, TIME, RR, XS, SS, ETA, XL, XR
-	  
+      
       IF (MODEL.EQ.1) THEN
          FR = (1.0D0-DEXP(-RR*T))/RRT     
-	     FVAL(1) = (0.5D0*SIGMAT*SIGMAT) * ((X+FR)**2) * UXX(1)
-	  ENDIF
-	  
-	  IF (MODEL.EQ.2) THEN
-	     RT = (1.0D0-DEXP(-RR*T))/RR
+         FVAL(1) = (0.5D0*SIGMAT*SIGMAT) * ((X+FR)**2) * UXX(1)
+      ENDIF
+      
+      IF (MODEL.EQ.2) THEN
+         RT = (1.0D0-DEXP(-RR*T))/RR
          PF = (X*SIGMA*SIGMA)/(4.0D0*DSQRT(PI*ETA)) 
-	     FVAL(1) = (0.5D0*SIGMA*SIGMA) * ((X+RT)**2) * UXX(1)
-	     FVAL(1) = FVAL(1) + PF*DEXP(-0.25D0*X*X/ETA)*(X+2.0D0*RT)
-	  ENDIF
+         FVAL(1) = (0.5D0*SIGMA*SIGMA) * ((X+RT)**2) * UXX(1)
+         FVAL(1) = FVAL(1) + PF*DEXP(-0.25D0*X*X/ETA)*(X+2.0D0*RT)
+      ENDIF
       
       RETURN
       
@@ -346,11 +346,11 @@ C        VALUE.
       IF (MODEL.EQ.1) THEN
          RT = (1.0D0-DEXP(-RR*T))/RR 
          F1 = (X*SIGMA*SIGMA)/(4.0D0*DSQRT(PI*ETA))    
-	     F2 = DEXP(-0.25D0*X*X/ETA)
-	     F3 = (X+2.0D0*RT)	  
-	     DF1 = F1 / X
-	     DF2 = -2.0D0 * X * F2 / (4.0D0*ETA)
-	     DF3 = 1.0D0
+         F2 = DEXP(-0.25D0*X*X/ETA)
+         F3 = (X+2.0D0*RT)    
+         DF1 = F1 / X
+         DF2 = -2.0D0 * X * F2 / (4.0D0*ETA)
+         DF3 = 1.0D0
          DFDUXX(1,1) = (SIGMA**2) * ( X + RT )
          DFDUX(1,1)  = 0.0D0
          DFDU(1,1)   = DF1*F2*F3 + F1*DF2*F3 + F1*F2*DF3
@@ -2848,7 +2848,7 @@ C-----------------------------------------------------------------------
       COMMON /OPTION/ NOGAUS,MAXDER
       COMMON /GEAR1/ T,H,DUMMY(4),N,IDUMMY(2),JSTART
       DIMENSION Y0(NEQN),Y(NEQN,MAXDER+1)
-	  
+      
       DO 10 I = 1,N
    10   Y0(I) = Y(I,1)
       L = JSTART + 1
