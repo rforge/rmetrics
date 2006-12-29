@@ -36,7 +36,7 @@ C                GI --- Imaginary part of ln[â(z)] or â(z)
 C       ========================================================
 C
 
-
+ 
         IMPLICIT DOUBLE PRECISION (A-H,O-Z)
         DIMENSION A(10)
         PI=3.141592653589793D0
@@ -47,9 +47,9 @@ C
      &         1.796443723688307D-01,-1.39243221690590D+00/
      
 CC DW
-		Y1 = 0.0D0
-		X1 = 0.0D0
-		NA = 0
+        Y1 = 0.0D0
+        X1 = 0.0D0
+        NA = 0
 CC DW
         IF (Y.EQ.0.0D0.AND.X.EQ.INT(X).AND.X.LE.0.0D0) THEN
            GR=1.0D+300
@@ -128,9 +128,9 @@ C
         PI=3.141592653589793D0
         
 CC DW
-		Y1 = 0.0D0
-		X1 = 0.0D0
-		N = 0
+        Y1 = 0.0D0
+        X1 = 0.0D0
+        N = 0
 CC DW
 
         IF (Y.EQ.0.0D0.AND.X.EQ.INT(X).AND.X.LE.0.0D0) THEN
