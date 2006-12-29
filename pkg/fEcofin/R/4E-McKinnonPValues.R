@@ -46,7 +46,7 @@
 
 
 punitroot =
-function(q, n.sample = 0, trend = c("c", "nc", "ct", "ctt"), 
+function(q, N = Inf, trend = c("c", "nc", "ct", "ctt"), 
 statistic = c("t", "n"), na.rm = FALSE) 
 {   # A function implemented by Diethelm Wuertz
 
@@ -202,7 +202,7 @@ function(trend = c("c", "nc", "ct", "ctt"), statistic = c("t", "n"))
         size = as.integer(n)
         table = rbind(table, qunitroot(as.numeric(p), size, trend, statistic))
     }
-    table = rbind(table, qunitroot(as.numeric(p), 0, trend, statistic))
+    table = rbind(table, qunitroot(as.numeric(p), Inf, trend, statistic))
     
     # Round and Add dimnames:
     table = round(table, digits = 3)
