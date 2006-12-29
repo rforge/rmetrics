@@ -16,7 +16,7 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2006, Diethelm Wuertz, GPL
+#   1999 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
 #   www.rmetrics.org
@@ -28,16 +28,14 @@
 
 
 ################################################################################
-# FUNCTION:                 CHARACTER, SYMBOL AND COLOR TABLES:
-#  characterTable            Shows a table of character codes 
-#  symbolTable               Shows a table of plot symbols
-#  colorTable                Shows a table of plot color codes
-# FUNCTION:                 COLOR PALETTES:
-#  greyPalette               Creates a grey palette
-#  .chcode                   Changes from one to another number system
-#  .hex.to.dec               Converts heximal numbers do decimal numbers
-#  .dec.to.hex               Converts decimal numbers do heximal numbers
+# FUNCTION:           DESCRIPTION:
+#  squareBinning       Square binning of irregularly distributed data sets
+#  plot                S3 Method for plotting square binned data sets
+# FUNCTION:           DESCRIPTION:
+#  hexBinning          Hexagonal binning of irregularly distributed data sets
+#  plot                S3 Method for plotting hexagonal binned data sets
 ################################################################################
+
 
 
 test.helpFile = 
@@ -45,7 +43,7 @@ function()
 {
     # Help File:
     helpFile = function() { 
-        example(CodeTables); return() }
+        example(BivariateBinning); return() }
     checkIdentical(
         target = class(try(helpFile())),
         current = "NULL")
@@ -55,13 +53,56 @@ function()
 
 # ------------------------------------------------------------------------------
 
+
+test.squareBinning = 
+function()
+{
+    #  squareBinning       Square binning of irregularly distributed data sets
+    #  plot                S3 Method for plotting square binned data sets
+
+    # Generate Grid Data:
+    sB = squareBinning(x = rnorm(1000), y = rnorm(1000))
+    
+    # Plot:
+    plot(sB)
+    
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.hexBinning = 
+function()
+{
+    #  hexBinning          Hexagonal binning of irregularly distributed data sets
+    #  plot                S3 Method for plotting hexagonal binned data sets
+    
+    # Generate Grid Data:
+    set.seed(1953)
+    hB = hexBinning(x = rnorm(1000), y = rnorm(1000))
+    
+    # Plot:
+    plot(hB)
+      
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
     
 if (FALSE) {
     require(RUnit)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fEcofin/test/runit1A.R")
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fEcofin/test/runit5B.R")
     printTextProtocol(testResult)
 }   
 
 
 ################################################################################
+
+
 

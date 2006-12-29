@@ -28,4 +28,35 @@
 
 
 ################################################################################
+# FUNCTION:                 CHARACTER, SYMBOL AND COLOR TABLES:
+#  characterTable            Shows a table of character codes 
+#  symbolTable               Shows a table of plot symbols
+#  colorTable                Shows a table of plot color codes
+################################################################################
+
+
+test.helpFile = 
+function()
+{
+    # Help File:
+    helpFile = function() { 
+        example(CodeTables); return() }
+    checkIdentical(
+        target = class(try(helpFile())),
+        current = "NULL")
+    return() 
+}
+
+
+# ------------------------------------------------------------------------------
+
+    
+if (FALSE) {
+    require(RUnit)
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fEcofin/test/runit1A.R")
+    printTextProtocol(testResult)
+}   
+
+
+################################################################################
 
