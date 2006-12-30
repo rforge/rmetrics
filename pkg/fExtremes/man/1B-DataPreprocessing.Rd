@@ -89,6 +89,7 @@ deCluster(x, run = 20, doplot = TRUE)
         of each exceedance (if times/dates, the attribute should
         be an object of class \code{"POSIXct"} or an object that
         can be converted to that class; see \code{\link{as.POSIXct}}).
+        }
         
 }
 

@@ -5,13 +5,15 @@
 \alias{fGEVFIT}
 \alias{fGEVFIT-class}
 
+\alias{show.fGEVFIT}
+\alias{show,fGEVFIT-method}
+
 \alias{gevSim}
 \alias{gumbelSim}
 
 \alias{gevFit}
 \alias{gumbelFit}
 
-\alias{print.fGEVFIT}
 \alias{plot.fGEVFIT}
 \alias{summary.fGEVFIT}
 
@@ -69,7 +71,7 @@ gumbelSim(model = list(mu = 0, beta = 1), n = 1000, seed = NULL)
 gevFit(x, block = 1, type = c("mle", "pwm"), title = NULL, description = NULL, \dots)
 gumbelFit(x, block = 1, type = c("mle", "pwm"), title = NULL, description = NULL, \dots)
 
-\method{print}{fGEVFIT}(x, \dots)
+show.fGEVFIT(object)
 \method{plot}{fGEVFIT}(x, which = "ask", \dots)
 \method{summary}{fGEVFIT}(object, doplot = TRUE, which = "all", \dots)
 

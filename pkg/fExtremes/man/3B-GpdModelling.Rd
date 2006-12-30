@@ -5,10 +5,12 @@
 \alias{fGPDFIT}
 \alias{fGPDFIT-class}
 
+\alias{show.fGPDFIT}
+\alias{show,fGPDFIT-method}
+
 \alias{gpdSim}
 \alias{gpdFit}
 
-\alias{print.fGPDFIT}
 \alias{plot.fGPDFIT}
 \alias{summary.fGPDFIT}
 
@@ -59,7 +61,7 @@ gpdSim(model = list(xi = 0.25, mu = 0, beta = 1), n = 1000,
 gpdFit(x, u = quantile(x, 0.95), type = c("mle", "pwm"), information = 
     c("observed", "expected"), title = NULL, description = NULL, \dots)
 
-\method{print}{fGPDFIT}(x, \dots)
+show.fGPDFIT(object)
 \method{plot}{fGPDFIT}(x, which = "ask", \dots)
 \method{summary}{fGPDFIT}(object, doplot = TRUE, which = "all", \dots)
 
