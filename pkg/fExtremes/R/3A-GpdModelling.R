@@ -16,7 +16,7 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2004, Diethelm Wuertz, GPL
+#   1999 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
 #   www.rmetrics.org
@@ -33,17 +33,21 @@
 # FUNCTION:               GPD PARAMETER ESTIMATION:
 #  'fGPDFIT'               S4 Class Representation
 #  gpdFit                  Fits GPD Distribution
-#   print.gpd              Print Method for object of class "gpd"
-#   plot.gpd               Plot Method for object of class "gpd"
-#   summary.gpd            Summary Method for object of class "gpd"
-# FUNCTION:              ADDITIONAL PLOTS:
-#  gpdTailPlot            Plots Tail Estimate From GPD Model
-#  gpdQuantPlot           Plots of GPD Tail Estimate of a High Quantile
-#  gpdShapePlot           Plots for GPD Shape Parameter
-#  gpdQPlot               Adds Quantile Estimates to plot.gpd
-#  gpdSfallPlot           Adds Expected Shortfall Estimates to a GPD Plot
-# FUNCTION:              ADDITIONAL FUNCTION:
-#  gpdriskMeasures        Calculates Quantiles and Expected Shortfalls
+#  show.fGPDFIT            Print Method for object of class "gpd"
+#  plot.fGPDFIT            Plot Method for object of class "gpd"
+#  .gpd1Plot
+#  .gpd2Plot
+#  .gpd3Plot
+#  .gpd4Plot
+#  summary.fGPDFIT         Summary Method for object of class "gpd"
+# FUNCTION:               ADDITIONAL PLOTS:
+#  gpdTailPlot             Plots Tail Estimate From GPD Model
+#  gpdQuantPlot            Plots of GPD Tail Estimate of a High Quantile
+#  gpdShapePlot            Plots for GPD Shape Parameter
+#  gpdQPlot                Adds Quantile Estimates to plot.gpd
+#  gpdSfallPlot            Adds Expected Shortfall Estimates to a GPD Plot
+# FUNCTION:               ADDITIONAL FUNCTION:
+#  gpdriskMeasures         Calculates Quantiles and Expected Shortfalls
 ################################################################################
 
 

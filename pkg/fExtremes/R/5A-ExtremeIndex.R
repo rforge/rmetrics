@@ -29,8 +29,8 @@
 
 ################################################################################
 # FUNCTION:                 DESCRIPTION:
-#  'fTHETA'                  Class representation
-#  show.fTHETA               S4: Print Method
+#  'fTHETA'                  Class representation for extremal index
+#  show.fTHETA               S4: Print Method for extremal index
 #  thetaSim                  Simulates a time series with known theta
 # FUNCTION:                 DESCRIPTION:
 #  blockTheta                Computes theta from Block Method
