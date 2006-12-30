@@ -42,12 +42,12 @@
 #   .gevmleFit            Fits GEV with max log-likelihood approach
 #    .gevLLH               Computes GEV log-likelihood function
 # METHODS:              SHOW, PRINT, PLOT, AND SUMMARY:
-#  show.fGEVFIT           Show method for object of class "fGEVFIT"
-#  plot.fGEVFIT           Plot method for object of class "fGEVFIT"
-#   .gev1Plot              Block Maxima Plot            
-#   .gev2Plot              Scatterplot of Residuals
-#   .gev3Plot              Histogram of Residuals
-#   .gev4Plot              Quantile Quantile Plot
+#  show.fGEVFIT          Show method for object of class "fGEVFIT"
+#  plot.fGEVFIT          Plot method for object of class "fGEVFIT"
+#   .gev1Plot             Block Maxima Plot            
+#   .gev2Plot             Scatterplot of Residuals
+#   .gev3Plot             Histogram of Residuals
+#   .gev4Plot             Quantile Quantile Plot
 #  summary.fGEVFIT       Summary Method for object of class "fGEVFIT"
 # FUNCTION:             ADDITIONAL FUNCTIONS:
 #  gevrlevelPlot         Calculates Return Levels Based on GEV Fit
