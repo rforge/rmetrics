@@ -1,5 +1,4 @@
 urcaBuiltin                 Builtin Functions from Package urca
-urootBuiltin                Builtin Functions from Package uroot
 
 xmpDWChapter031             ARMA Time Series Modelling
 xmpDWChapter032             Time Series with Trends: Unit Roots
@@ -7,9 +6,3 @@ xmpDWChapter033             Longe-Range Dependent Time Series
 xmpDWChapter034             GARCH Time Series Modelling 
 xmpDWChapter035             Nonlinear and Chaotic Time Series
 xmpDWChapter036             Time Series Filters
-
-xmpRTTextbook               Ruey Tsay - Textbook
-xmpTMChapter02              Terence Mills - Textbook Chapter 2
-xmpZWChapter03              E. Zivot and J. Wang - Textbook Chapter 3
-
-xmpWCLPaper                 Wuertz, Chalabi, and Luksan Paper

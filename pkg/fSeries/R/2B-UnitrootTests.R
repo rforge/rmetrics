@@ -397,11 +397,11 @@ description = NULL)
 .urcaBuiltin =
 function(builtin = "/fSeries/demo/urcaBuiltin.R") 
 {
-    sink("@sink@")
+    sinkFile <- file("@sink@", open = "wt")
     Builtin = paste(.Library, builtin, sep = "")
     source(Builtin)
-    sink()
-    unlink("@sink@")
+    sink(type = "message")
+    sink()   
 }
     
 

@@ -56,13 +56,7 @@ function(lib, pkg)
     
     # Load dll:
     library.dynam("fSeries", pkg, lib)
-    
-    # Load urcaBuiltin Package:
-    sinkFile <- file("@sink@", open = "wt")
-    sink(sinkFile, type = "message")
-    .urcaBuiltin()
-    sink(type = "message")
-    sink()
+
 }
 
 
