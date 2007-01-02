@@ -33,7 +33,6 @@
 #  histPlot                Returns a tailored histogram plot
 #  densityPlot             Returns a tailored kernel density estimate plot
 #  qqnormPlot              Returns a tailored normal quantile-quantile plot
-#  .qqbayesPlot            Wraps function qqnormPlot
 # FUNCTION:               BASIC STATISTICS:
 #  .basicStatsUnivariate   Calculates Basic Statistics
 #  basicStats              Returns a basic statistics summary
@@ -70,7 +69,7 @@ function(x, col = "steelblue", main = x@units, ...)
     # FUNCTION:
 
     # timeSeries:
-    stopifnot(is.timeSeries(x))
+    if (!is.timeSeries(x)) x = as.timeSeries(x)
     units = x@units
     DIM = dim(x@Data)[2]
     
@@ -105,7 +104,7 @@ function(x, col = "steelblue", main = x@units, add.fit = TRUE, ...)
     xlim = NULL
     
     # timeSeries:
-    stopifnot(is.timeSeries(x))
+    if (!is.timeSeries(x)) x = as.timeSeries(x)
     units = x@units
     DIM = dim(x@Data)[2]
       
@@ -167,7 +166,7 @@ function(x, col = "steelblue", main = x@units, add.fit = TRUE, ...)
     # FUNCTION:
     
     # Transform 'timeSeries':
-    stopifnot(is.timeSeries(x))
+    if (!is.timeSeries(x)) x = as.timeSeries(x)
     units = x@units
     DIM = dim(x@Data)[2]
     xlim = NULL
@@ -257,7 +256,7 @@ function(x, col = "steelblue", main = x@units, labels = TRUE, ...)
     # FUNCTION:
     
     # timeSeries:
-    stopifnot(is.timeSeries(x))
+    if (!is.timeSeries(x)) x = as.timeSeries(x)
     DIM = dim(x@Data)[2]
     Main = main
     
@@ -309,13 +308,6 @@ function(x, col = "steelblue", main = x@units, labels = TRUE, ...)
     
     # Return Value:
     invisible()  
-}
-
-
-.qqbayesPlot = 
-function(x, col = "steelblue", main = x@units, labels = TRUE, ...) 
-{
-    qqnormPlot(x, col, main, labels, ...) 
 }
 
 
