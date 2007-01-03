@@ -16,7 +16,7 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2004, Diethelm Wuertz, GPL
+#   1999 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
 #   www.rmetrics.org
@@ -121,7 +121,7 @@ s.range = NULL, title = NULL, description = NULL, ...)
             title = title, description = description, ...))
     }
 
-    # Check Data: 
+    # Check Data - Two Choices: 
     if (is.list(data)) {
         # data is a list with entries list(mu, Sigma)
         x.mat = NA
@@ -174,13 +174,13 @@ s.range = NULL, title = NULL, description = NULL, ...)
     # Add Equal Weights Portfolio:
     pfolio = .equalweightsMarkowitz(pfolio, add = FALSE)
     
-    # Title: 
+    # Add Title: 
     if (is.null(title)) 
         title = "Mean-Variance Portfolio Optimization"
     
-    # Description:
+    # Add Description:
     if (is.null(description))
-        description = as.character(date())
+        description = .description()
     
     # Return Value:
     new ("fPFOLIO", 
@@ -208,11 +208,11 @@ function(object, mc = 5000, doplot = FALSE, add = TRUE, ...)
     #   plots a MC efficient frontier.
     
     # Arguments:
-    #   object - An object of class portfolio
+    #   object - an object of class 'fPFOLIO'
     #   mc - Number of Monte Carlo steps
     
     # Value:
-    #   An updated object of class portfolio with the following 
+    #   An updated object of class 'fPFOLIO' with the following 
     #   components added/updated:
     #   mcpm - Monte Carlo mean returns on MC efficient frontier
     #   mcps - Monte Carlo standard deviations on MC efficient forntier
@@ -422,7 +422,7 @@ function(x, ...)
        
     # Description:
     cat("\nDescription:\n ")
-        print(x@description)
+        cat(x@description)
         
     # Return Value: 
     invisible(x)
@@ -822,7 +822,7 @@ title = NULL, description = NULL, ...)
     # Settings:
     C0 = 1
     
-    # Ranges for mean and Standard Deviation:
+    # Ranges for Mean and Standard Deviation:
     if (is.null(r.range)) r.range = range(mu)
     if (is.null(s.range)) s.range = c(0, max(sqrt(diag(Sigma))))
     
@@ -892,45 +892,6 @@ title = NULL, description = NULL, ...)
     ) 
    
 }
-
-
-# ------------------------------------------------------------------------------
-
-
-.frontierShortSellingMarkowitz.RUnit =
-function()
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Performs a RUnit Test
-    
-    # FUNCTION:
-
-    # PortfolioNames:
-    Names = c("Elsevier", "Fortis", "Getronics", "Heineken", "Philips",
-        "RoyalDutch", "Unilever")
-        
-    # Mean:
-    mu = 1e-3 * c(0.266, 0.274, 0.162, 0.519, 0.394, 0.231, 0.277)
-    names(mu) = Names
-    print(mu)
-    
-    # Covariance Matrix:
-    Sigma = 1e-3 * matrix(c(
-        0.345, 0.150, 0.183, 0.088, 0.186, 0.090, 0.095,
-        0.150, 0.399, 0.204, 0.107, 0.236, 0.130, 0.127,
-        0.183, 0.204, 1.754, 0.075, 0.325, 0.110, 0.091,
-        0.088, 0.107, 0.075, 0.243, 0.096, 0.064, 0.086,
-        0.186, 0.236, 0.325, 0.096, 0.734, 0.147, 0.114,
-        0.090, 0.130, 0.110, 0.064, 0.147, 0.221, 0.093,
-        0.095, 0.127, 0.091, 0.086, 0.114, 0.093, 0.219), 
-        byrow = TRUE, ncol = 7)
-    colnames(Sigma) = rownames(Sigma) = Names     
-    print(Sigma)       
-       
-    # Return Value:
-    .frontierShortSellingMarkowitz(data = list(mu = mu, Sigma = Sigma))
-}   
 
 
 ################################################################################
