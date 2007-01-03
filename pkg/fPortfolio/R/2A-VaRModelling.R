@@ -16,7 +16,7 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2004, Diethelm Wuertz, GPL
+#   1999 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
 #   www.rmetrics.org
@@ -33,7 +33,7 @@
 #  CVaRplus             Computes value-at-risk Plus for a portfolio of assets
 #  CVaR                 Computes conditional value-at-risk for a PF of assets
 #  lambdaCVaR           Computes CVaR's atomic split value lambda
-# RETURNS:             DESCRIPTION:
+# BENCHMARKS:          DESCRIPTION:
 #  pfolioMaxLoss        Computes maximum loss for a portfolio of assets
 #  pfolioReturn         Computes return series of a portfolio
 #  pfolioTargetReturn   Computes target return of a portfolio
@@ -186,7 +186,7 @@ function(n, alpha = 0.05)
 }
         
     
-# ******************************************************************************    
+################################################################################    
 
 
 pfolioMaxLoss = 
@@ -197,7 +197,7 @@ function(x, weights = NULL)
     #   Computes maximum loss for a portfolio of assets
     
     # Arguments:
-    #   x - a time series, data.frame or any other rectangular object
+    #   x - a timeSeries, data.frame or any other rectangular object
     #       of assets which can be written as a matrix object
     #   w - the vector of weights
     #   alpha - the confidence level    
@@ -230,7 +230,7 @@ function(x, weights = NULL)
     #   Computes return value of a portfolio
     
     # Arguments:
-    #   x - a time series, data.frame or any other rectangular object
+    #   x - a timeSeries, data.frame or any other rectangular object
     #       of assets which can be written as a matrix object
     #   w - the vector of weights   
 
@@ -274,7 +274,7 @@ function(x, weights = NULL)
     #   Computes return value of a portfolio
     
     # Arguments:
-    #   x - a time series, data.frame or any other rectangular object
+    #   x - a timeSeries, data.frame or any other rectangular object
     #       of assets which can be written as a matrix object
     #   w - the vector of weights   
 
@@ -303,7 +303,7 @@ function(x, weights = NULL)
     #   Computes risk from covariance matrix of a portfolio
     
     # Arguments:
-    #   x - a time series, data.frame or any other rectangular object
+    #   x - a timeSeries, data.frame or any other rectangular object
     #       of assets which can be written as a matrix object
     #   w - the vector of weights   
 
@@ -335,7 +335,7 @@ function(x, weights = NULL, alpha = 0.05, range = NULL, details = TRUE, ...)
     #   Plots a histogram of the returns of a portfolio
     
     # Arguments:
-    #   x - a time series, data.frame or any other rectangular object
+    #   x - a timeSeries, data.frame or any other rectangular object
     #       of assets which can be written as a matrix object
     #   w - the vector of weights   
     

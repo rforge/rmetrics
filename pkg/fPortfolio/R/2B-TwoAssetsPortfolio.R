@@ -16,7 +16,7 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2004, Diethelm Wuertz, GPL
+#   1999 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
 #   www.rmetrics.org
@@ -28,9 +28,13 @@
 
 
 ################################################################################
-# FUNCTION:                      DESCRIPTION:
-#  frontierTwoAssetsMarkowitz     Computes efficient frontier for Markowitz PF
-#  frontierTwoAssetsCVaR          Computes efficient frontier for CVaR PF        
+# FUNCTION:                     DESCRIPTION:
+#  frontierTwoAssetsMarkowitz    Computes efficient frontier for Markowitz PF
+#  frontierTwoAssetsCVaR         Computes efficient frontier for CVaR PF    
+# METHODS:                      DESCRIPTION:
+#  print.fPFOLIO2                S3 Print method for a 'fPFOLIO2' object
+#  plot.fPFOLIO2                 S3 Plot method for a 'fPFOLIO2' object
+#  summary.fPFOLIO2              S3 Summary method for a 'fPFOLIO2' object
 ################################################################################
  
 
@@ -65,7 +69,7 @@ function(x, length = 100, title = NULL, description = NULL)
     #   matrix, the portfolios return vector, and the portfolios
     #   risk vector, which is the standard deviation.
     
-    # Arguments
+    # Arguments:
     #   x - a two column matrix of asset returns
     #   weights - a vector of weights, by default ranging from
     #       zero to one in 100 steps
@@ -104,7 +108,7 @@ function(x, length = 100, title = NULL, description = NULL)
     
     # Description:
     if (is.null(description))
-        description = as.character(date())
+        description = .description()
         
     # Return Value:
     new ("fPFOLIO2", 
@@ -160,7 +164,7 @@ function(x, length = 100, alpha = 0.05, title = NULL, description = NULL)
     
     # Result:
     pfolio = list(what = "twoassets", 
-        weightsA = weights[,1], pm = Rp, ps = CVaRp)
+        weightsA = weights[, 1], pm = Rp, ps = CVaRp)
         
     # Title: 
     if (is.null(title)) 
@@ -186,29 +190,28 @@ function(x, length = 100, alpha = 0.05, title = NULL, description = NULL)
 # ------------------------------------------------------------------------------
 
 
-
-print.fPFOLIO2 =
-function(x, ...) 
+show.fPFOLIO2 =
+function(object) 
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   S3 Print Method for an object of class "fPFOLIO"
+    #   S3 Print Method for a 'fPFOLIO2' object
     
     # Arguments:
-    #   x - an object of class "fPFOLIO"
+    #   object - an object of class "fPFOLIO"
     
     # FUNCTION:
     
     # Extract Portfolio:
-    pfolio = x@pfolio
+    pfolio = object@pfolio
      
     # Title:
-    cat("\nTitle:\n")
-    cat(as.character(x@title), "\n")
+    cat("\nTitle:\n ")
+    cat(as.character(object@title), "\n")
     
     # Call:
-    cat("\nCall:\n")
-    print.default(x@call)
+    cat("\nCall:\n ")
+    print.default(object@call)
     
     # Efficient Frontier:
     cat("\nEfficient Frontier - Returns:\n")
@@ -219,12 +222,15 @@ function(x, ...)
     print(round(pfolio$ps, digits = s.digits))
        
     # Description:
-    cat("\nDescription:\n")
-        print(x@description)
+    cat("\nDescription:\n ")
+        cat(object@description, "\n")
         
     # Return Value: 
-    invisible(x)
+    invisible(object)
 }
+
+
+setMethod("show", "fPFOLIO2", show.fPFOLIO2)
 
 
 # ------------------------------------------------------------------------------
@@ -232,10 +238,25 @@ function(x, ...)
 
 plot.fPFOLIO2 =
 function(x, ...)
-{
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   S3 Plot Method for a 'fPFOLIO2' object
+    
+    # Arguments:
+    #   x - an object of class 'fPFOLIO2'
+    
+    # FUNCTION:
+    
+    # Extract Portfolio:
     pfolio = x@pfolio
-    plot(pfolio$ps, pfolio$pm, xlab = "Risk", ylab = "Return",
-        main = x@title)
+    
+    # Plot:
+    plot(x = pfolio$ps, y = pfolio$pm, 
+        xlab = "Risk", ylab = "Return", main = x@title)
+        
+    # Return Value:
+    invisible(x) 
 }
 
 
@@ -244,9 +265,24 @@ function(x, ...)
 
 summary.fPFOLIO2 =
 function(object, ...)
-{
-    print(x = object, ...)
-    plot(x = object, ...)   
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   S3 Summary Method for a 'fPFOLIO2' object
+    
+    # Arguments:
+    #   object - an object of class 'fPFOLIO2'
+    
+    # FUNCTION:
+    
+    # Print:
+    print(object)
+    
+    # Plot:
+    plot(object, ...)  
+    
+    # Return Value:
+    invisible(object) 
 }
 
 

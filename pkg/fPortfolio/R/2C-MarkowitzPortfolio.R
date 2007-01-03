@@ -29,19 +29,20 @@
 
 ################################################################################
 # FUNCTION:                 EFFICIENT FRONTIER:
-#  fPFOLIO                   S4 Portfolio Class
+#  'fPFOLIO'                 S4 Portfolio Class
+#  portfolioMarkowitz        Mean-variance Markowitz (target) portfolio
 #  frontierMarkowitz         Efficient frontier of mean-var portfolio
 #  montecarloMarkowitz       Adds randomly created portfolios
-#  portfolioMarkowitz        Mean-variance Markowitz (target) portfolio
 # METHODS:                  DESCRIPTION:   
 #  print.fPFOLIO             S3: Print method for objects of class fPFOLIO
 #  plot.fPFOLIO              S3: Plot method for objects of class fPFOLIO
 #  summary.fPFOLIO           S3: Summary method for objects of class fPFOLIO
+# EXTRACTOR FUNCTION:       DESCRIPTION:
 #  .frontier.default         S3: Extract points on the efficient frontier
 # FUNCTIONS:                SPECIAL PORTFOLIOS:
 #  .tangencyMarkowitz        Adds tangency portfolio
 #  .equalweightsMarkowitz    Adds equal weights Portfolio
-#  .frontierShortSelling...  Efficient Frontier of Short Selling Markowitz
+#  .frontierShortSelling     Efficient Frontier of Short Selling Markowitz
 # FUNCTIONS:                BUILTIN FROM PACKAGE:
 #  .portfolio.optim          Function from R-package tseries
 #  .solve.QP                 Function from R-package quadprog
@@ -59,6 +60,79 @@ setClass("fPFOLIO",
         title = "character",
         description = "character")  
 )
+
+
+# ------------------------------------------------------------------------------
+
+
+portfolioMarkowitz = 
+function(data, targetReturn, title = NULL, description = NULL) 
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Optimizes a mean-var portfolio for a given desired return
+    
+    # Arguments:
+    #   x - portfolio of assets, a matrix or an object which can be 
+    #       transformed to a matrix
+    #   targetReturn - the desired return, this target value must be 
+    #       smaller than the maximum and larger than the minimum asset 
+    #       return. Short selling is not allowed.
+
+    # FUNCTION:
+    
+    # Check Data - Two Choices: 
+    if (is.list(data)) {
+        # Argument data is a list with entries list(mu, Sigma)
+        x.mat = NA
+        MU = data$mu
+        COV = data$Sigma
+        plottype = "mucov"
+    } else {
+        # Argument data is a rectangular time series object:
+        x.mat = as.matrix(data)
+        # Mean Vector  and Covariance Matrix:
+        MU = apply(x.mat, MARGIN = 2, FUN = mean)
+        COV = cov(x.mat)
+        plottype = "series"
+    }
+    stopifnot(targetReturn >= min(MU))
+    stopifnot(targetReturn <= max(MU))
+    
+    # Quadratic Programming:
+    opt = .portfolio.optim(pm = targetReturn, returns = MU, covmat = COV)
+    
+    # Compose Result in a list:
+    pfolio = list()
+    pfolio$what = "portfolio"
+    pfolio$method = "QP"
+    pfolio$pw = opt$pw
+    pfolio$pm = opt$pm
+    pfolio$ps = opt$ps  
+    # pfolio$returns = apply(x, 2, mean)
+    pfolio$cov = COV  
+    pfolio$r.range = c(min(MU), max(MU))
+    pfolio$s.range = c(0, max(sqrt(diag(COV))))
+    
+    # Add Title: 
+    if (is.null(title)) 
+        title = "Mean-Variance Portfolio Optimization"
+    
+    # Add Description:
+    if (is.null(description))
+        description = .description()
+    
+    # Return Value:
+    new ("fPFOLIO", 
+        call = as.call(match.call()),
+        method = "Quadratic Programming", 
+        model = "Markowitz Portfolio",
+        data = list(data = data), 
+        pfolio = pfolio, 
+        title = as.character(title),
+        description = as.character(description)
+    )     
+}
 
 
 # ------------------------------------------------------------------------------
@@ -116,7 +190,7 @@ s.range = NULL, title = NULL, description = NULL, ...)
     
     # Short Selling Allowed ?
     if (short) {
-        return(.frontierShortSellingMarkowitz(data = data, Rf = Rf, 
+        return(.frontierShortSelling(data = data, Rf = Rf, 
             length = length, r.range = r.range, s.range = s.range, 
             title = title, description = description, ...))
     }
@@ -295,64 +369,6 @@ function(object, mc = 5000, doplot = FALSE, add = TRUE, ...)
     
     # Return Value
     invisible(keep)
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-portfolioMarkowitz = 
-function(x, targetReturn, title = NULL, description = NULL) 
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Optimizes a mean-var portfolio for a given desired return
-    
-    # Arguments:
-    #   x - portfolio of assets, a matrix or an object which can be 
-    #       transformed to a matrix
-    #   targetReturn - the desired return, pm must be smaller than the
-    #       maximum and larger than the minimum asset return. Short 
-    #       selling is not allowed.
-
-    # FUNCTION:
-   
-    # Transform to matrix:
-    x = as.matrix(x)
-    MU = apply(x, 2, mean)
-    COV = cov(x)
-    
-    # Quadratic Programming:
-    pfolio = list()
-    pfolio$what = "portfolio"
-    pfolio$method = "QP"
-    opt = .portfolio.optim(pm = targetReturn, returns = MU, covmat = COV)
-    pfolio$pw = opt$pw
-    pfolio$pm = opt$pm
-    pfolio$ps = opt$ps  
-    pfolio$returns = apply(x, 2, mean)
-    pfolio$cov = COV  
-    pfolio$r.range = range(apply(x, 2, mean)) 
-    pfolio$s.range = c(0, max(sqrt(diag(COV))))
-    
-    # Title: 
-    if (is.null(title)) 
-        title = "Mean-Variance Portfolio Optimization"
-    
-    # Description:
-    if (is.null(description))
-        description = as.character(date())
-    
-    # Return Value:
-    new ("fPFOLIO", 
-        call = as.call(match.call()),
-        method = "Quadratic Programming", 
-        model = "Markowitz Portfolio",
-        data = list(x = x), 
-        pfolio = pfolio, 
-        title = as.character(title),
-        description = as.character(description)
-    )     
 }
 
 
@@ -777,7 +793,7 @@ function(object, add = TRUE)
 # Markowitz - Short Selling
 
 
-.frontierShortSellingMarkowitz = 
+.frontierShortSelling = 
 function(data, Rf = 0, length = 300, 
 r.range = NULL, s.range = NULL,
 title = NULL, description = NULL, ...)
