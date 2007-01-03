@@ -24,7 +24,7 @@
 #   2006-02-05 ok
 #
 # Author:
-#   (C) 2003-2006, Diethelm Wuertz, GPL
+#   (C) 2003-2007, Diethelm Wuertz, GPL
 #
 
 ################################################################################
@@ -37,7 +37,7 @@
 
     
 # ------------------------------------------------------------------------------
-# 1. Compute Efficient frontier from a simulated set of assets
+# 1. Compute Efficient Frontier from a Simulated Set of Assets
     
     # Composed Model:
     #   n - Number of data records to be simulated
@@ -52,6 +52,7 @@
     ###
     
     # Use Random Location Parameters and Covariance Matrix:
+    set.seed(4711)
     mu = 0.1*runif(n) / 100
     M1 = matrix(runif(n^2), n)
     Omega = (0.5*(M1+t(M1)) + 2 * diag(runif(n, 0.8, 1.2))) / 100^2
@@ -66,7 +67,8 @@
     
     # Simulate Asset Returns and Display a Scatterplot:
     par(mfrow = c(1, 1), cex = 0.5)
-    myAssets = round(assetsSim(n = 100, dim = 10, model = model), 4)
+    myAssets = assetsSim(n = 100, dim = 10, model = model)
+    class(myAssets)
     head(myAssets)
     plot(myAssets, cex = 0.5)
     ###
@@ -79,14 +81,14 @@
   
     # Optimize Markowitz Portfolio - Calculate Efficient Frontier:
     par(mfrow = c(1, 1))
-    myPF = frontierMarkowitz(x = myAssets)     
+    myPF = frontierMarkowitz(data = as.matrix(myAssets))     
     plot(myPF, which = 1)  
     # Add Monte Carlo Points:
     myPF = montecarloMarkowitz(myPF)
     ###
     
     # Print and add further Plots:
-    par(mfrow = c(2,2), cex = 0.7)
+    par(mfrow = c(2, 2), cex = 0.7)
     print(myPF)  
     plot(myPF, which = c(FALSE, FALSE, TRUE, TRUE, TRUE, TRUE))
     ###
@@ -128,7 +130,7 @@
     ###
     
     # Print and add further Plots:
-    par(mfrow = c(2,2), cex = 0.7)
+    par(mfrow = c(2, 2), cex = 0.7)
     print(myPF)  
     plot(myPF, which = c(FALSE, FALSE, TRUE, TRUE, TRUE, TRUE))
     ###
