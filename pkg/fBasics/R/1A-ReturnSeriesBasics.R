@@ -34,7 +34,6 @@
 #  densityPlot             Returns a tailored kernel density estimate plot
 #  qqnormPlot              Returns a tailored normal quantile-quantile plot
 # FUNCTION:               BASIC STATISTICS:
-#  .basicStatsUnivariate   Calculates Basic Statistics
 #  basicStats              Returns a basic statistics summary
 # FUNCTION:               DESCRIPTION:
 #  .distCheck              Checks consistency of distributions
@@ -49,7 +48,6 @@
 #  histPlot                Returns a tailored histogram plot
 #  densityPlot             Returns a tailored kernel density estimate plot
 #  qqnormPlot              Returns a tailored normal quantile-quantile plot
-#  .qqbayesPlot            Wraps function qqnormPlot
 
 
 seriesPlot = 
