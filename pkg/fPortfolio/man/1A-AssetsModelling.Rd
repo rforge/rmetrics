@@ -475,10 +475,8 @@ Szekely G.J. (1989);
 
 \examples{
 \dontrun{
-## SOURCE("fPortfolio.101A-AssetsModelling")
 
 ## berndtInvest -
-   xmpPortfolio("\nStart: Load monthly data set of returns > ")
    data(berndtInvest)
    # Exclude Date, Market and Interest Rate columns from data frame,
    # then multiply by 100 for percentual returns ...
@@ -487,7 +485,6 @@ Szekely G.J. (1989);
    head(berndtAssets)
     
 ## assetsSelect -
-   xmpPortfolio("\nNext: Select 4 most dissimilar assets from hclust > ")
    clustered = assetsSelect(berndtAssets, doplot = FALSE)
    myAssets = berndtAssets[, c(clustered$order[1:4])]
    colnames(myAssets)
@@ -503,7 +500,6 @@ Szekely G.J. (1989);
    if (require(fBasics)) assetsStats(myAssets)
    
 ## assetsSim -
-   xmpPortfolio("\nNext: Fit a Skew Student-t > ")
    fit = assetsFit(myAssets)
    # Show Model Slot:
    fit @model
@@ -517,7 +513,6 @@ Szekely G.J. (1989);
    legend(0, 3, legend = colnames(simAssets), pch = "----", col = 1:4, cex = 1)
    
 ## plot -
-   xmpPortfolio("\nNext: Show Simulated Assets Plots > ")
    if (require(fExtremes)) {
      # Show Scatterplot:
      par(mfrow = c(1, 1), cex = 0.7)

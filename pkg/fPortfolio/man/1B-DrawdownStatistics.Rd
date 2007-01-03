@@ -127,7 +127,6 @@ Magdon-Ismail M., Atiya A.F., Pratap A., Abu-Mostafa Y.S. (2003);
 ## SOURCE("fPortfolio.101B-DrawdownStatistics")
 
 ## rmaxdd -
-   xmpPortfolio("\nStart: Simulate maximum Drawdowns > ")
    # Set a random seed
    set.seed(1953)               
    # horizon of the investor, time T
@@ -143,13 +142,11 @@ Magdon-Ismail M., Atiya A.F., Pratap A., Abu-Mostafa Y.S. (2003);
    points(r, rep(0, samples), pch = 20, col = "orange", cex = 0.7)
    
 ## dmaxdd - 
-   xmpPortfolio("\nNext: Compare with True Density > ")
    x = seq(0, xlim[2], length = 200)
    d = dmaxdd(x = x, sd = 1, horizon = horizon, N = 1000)
    lines(x, d, lwd = 2)
     
 ## pmaxdd -
-   xmpPortfolio("\nNext: Count Frequencies > ")
    # Count Frequencies of Drawdowns Greater or Equal to "h":
    n = 50
    x = seq(0, xlim[2], length = n)
@@ -163,7 +160,7 @@ Magdon-Ismail M., Atiya A.F., Pratap A., Abu-Mostafa Y.S. (2003);
    lines(x, p, lwd = 2, col="steelblue4") 
    
 ## maxddStats -
-   xmpPortfolio("\nNext: Compute expectation Value E[D] > ")
+   # Compute expectation Value E[D]:
    maxddStats(mean = -0.5, sd = 1, horizon = 10^(1:4))
    maxddStats(mean =  0.0, sd = 1, horizon = 10^(1:4))
    maxddStats(mean =  0.5, sd = 1, horizon = 10^(1:4))

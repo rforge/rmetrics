@@ -63,17 +63,5 @@ xmpPortfolio(prompt = "")
 }
 
 
-\examples{
-## SOURCE("fPortfolio.109B-PortfolioTools")
-
-\dontrun{
-## xmpfPortfolio -
-   # Popup the examples menu:
-   xmpfPortfolio()
-}
-
-}
-
-
 \keyword{programming}
 

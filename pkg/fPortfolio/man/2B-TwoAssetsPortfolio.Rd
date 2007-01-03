@@ -145,7 +145,6 @@ Elton E.J., Gruber M.J. (1991);
 
 \dontrun{
 ## berndtInvest -
-   xmpPortfolio("\nStart: Load monthly data set of returns > ")
    data(berndtInvest)
    # Select "IBM" and "DEC"
    twoAssets = berndtInvest[, c("IBM", "DEC")]

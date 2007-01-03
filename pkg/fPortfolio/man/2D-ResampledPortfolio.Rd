@@ -123,8 +123,6 @@ Michaud, R.O. (1998);
 
 
 \examples{
-## SOURCE("fPortfolio.102D-ResampledPortfolio")
-
 \dontrun{
 ## file -
    frontierResampled()

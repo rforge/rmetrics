@@ -76,8 +76,6 @@
 
 
 \examples{
-## SOURCE("fPortfolio.109A-PortfolioData")
-
 ## -
 }
 

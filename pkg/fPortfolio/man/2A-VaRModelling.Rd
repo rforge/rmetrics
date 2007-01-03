@@ -203,7 +203,6 @@ Uryasev S. (2000);
 ## SOURCE("fPortfolio.102A-VaRModelling")
 
 ## assetsSim -
-   xmpPortfolio("\nStart: Artificial Mean Variance Portfolio > ")
    myAssets = 100/12 * assetsSim(n = 120, dim = 4)
    # Plot Cumulated Returns of the Assets:
    prices = apply(myAssets, 2, FUN = cumsum)
@@ -214,7 +213,6 @@ Uryasev S. (2000);
    abline(h = 0, lty = 3)
     
 ## CVaR -
-   xmpPortfolio("\nNext: Value-at-Risk and related measures > ")
    equalWeights = rep(1/4, 4)
    alpha = 0.10
    # Value at Risk:
@@ -227,8 +225,6 @@ Uryasev S. (2000);
    lambdaCVaR(120, alpha) 
 
 ## pfolioHist - 
-   xmpPortfolio("\nNext: Plot risk measures of portfolio > ")
-   # :
    # Maximum Loss Value of the Portfolio
    pfolioMaxLoss(myAssets, equalWeights)
    # Compute Portfolio Returns:
