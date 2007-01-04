@@ -5,6 +5,7 @@
 \alias{triang}
 \alias{Triang}
 \alias{pascal}
+\alias{hilbert}
 \alias{colVec}
 \alias{rowVec}
 \alias{colIds}
