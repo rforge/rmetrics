@@ -12,6 +12,9 @@
 \alias{colIds<-}
 \alias{rowIds<-}
 
+\alias{isPositiveDefinite}
+\alias{makePositiveDefinite}
+
 \alias{inv}
 \alias{norm}
 \alias{rk}
@@ -55,85 +58,88 @@
     
     \tabular{ll}{  
     \code{matrix} \tab Creates a matrix from the given set of values, \cr
-    \code{diag} \tab R: Creates a diagonal matrix or extracts diagonals, \cr
-    \code{triang} \tab S: Extracs the lower tridiagonal part from a matrix, \cr
-    \code{Triang} \tab S: Extracs the upper tridiagonal part from a matrix, \cr
-    \code{pascal} \tab S: Creates a Pascal matrix, \cr
-    \code{colVec} \tab S: Creates a column vector from a vector, \cr
-    \code{rowVec} \tab S: Creates a row vector from a vector, \cr
-    \code{as.matrix} \tab R: Attempts to turn its argument into a matrix, \cr
-    \code{is.matrix} \tab R: Tests if its argument is a (strict) matrix, \cr
-    \code{dimnames} \tab R: Retrieves or sets the dimnames of an object, \cr
-    \code{colnames} \tab R: Retrieves or sets the column names, \cr 
-    \code{colIds} \tab  R: ... use alternatively, \cr 
-    \code{rownames} \tab  R: Retrieves or sets the row names, \cr   
-    \code{rowIds} \tab  R: ... use alternatively. }
+    \code{diag} \tab Creates a diagonal matrix or extracts diagonals, \cr
+    \code{triang} \tab Extracs the lower tridiagonal part from a matrix, \cr
+    \code{Triang} \tab Extracs the upper tridiagonal part from a matrix, \cr
+    \code{pascal} \tab Creates a Pascal matrix, \cr
+    \code{hilbert} \tab Creates a Hilbert matrix, \cr
+    \code{colVec} \tab Creates a column vector from a vector, \cr
+    \code{rowVec} \tab Creates a row vector from a vector, \cr
+    \code{as.matrix} \tab Attempts to turn its argument into a matrix, \cr
+    \code{is.matrix} \tab Tests if its argument is a (strict) matrix, \cr
+    \code{isPositiveDefinite} \tab Checks if a matrix is positive definite, \cr
+    \code{makePositiveDefinite} \tab Forces a matrix to be positive definite, \cr
+    \code{dimnames} \tab Retrieves or sets the dimnames of an object, \cr
+    \code{colnames} \tab Retrieves or sets the column names, \cr 
+    \code{colIds} \tab ... use alternatively, \cr 
+    \code{rownames} \tab Retrieves or sets the row names, \cr   
+    \code{rowIds} \tab ... use alternatively. }
     
     Simple Matrix Operations:
             
     \tabular{ll}{ 
-    \code{dim} \tab R: Returns the dimension of a matrix object, \cr
-    \code{ncol} \tab R: Counts columns of a matrix object, \cr 
-    \code{nrow} \tab R: Counts rows of a matrix object, \cr 
-    \code{length} \tab R: Counts elements of a matrix object, \cr 
-    \code{"["} \tab R: Subsets a matrix object, \cr
-    \code{"[["} \tab R: Subsets a matrix object, \cr
-    \code{cbind} \tab R: Augments a matrix object by columns, \cr 
-    \code{rbind} \tab R: Augments a matrix object by rows. } 
+    \code{dim} \tab Returns the dimension of a matrix object, \cr
+    \code{ncol} \tab Counts columns of a matrix object, \cr 
+    \code{nrow} \tab Counts rows of a matrix object, \cr 
+    \code{length} \tab Counts elements of a matrix object, \cr 
+    \code{"["} \tab Subsets a matrix object, \cr
+    \code{"[["} \tab Subsets a matrix object, \cr
+    \code{cbind} \tab Augments a matrix object by columns, \cr 
+    \code{rbind} \tab Augments a matrix object by rows. } 
 
     Basic Statistical Functions:
             
     \tabular{ll}{
-    \code{var} \tab R: Returns the variance matrix, \cr
-    \code{cov} \tab R: Returns the covariance matrix, \cr 
-    \code{colStats} \tab B: Calculates column statistics, \cr
-    \code{rowStats} \tab B: Calculates row statistics, \cr
-    \code{colMeans} \tab B: Calculates column means, \cr 
-    \code{rowMeans} \tab B: Calculates row means, \cr 
-    \code{colAvgs} \tab B: Calculates column averages, \cr
-    \code{rowAvgs} \tab B: Calculates row averages, \cr
-    \code{colVars} \tab B: Calculates column variances, \cr 
-    \code{rowVars} \tab B: Calculates row variances, \cr 
-    \code{colStdevs} \tab B: Calculates column standard deviations, \cr
-    \code{rowStdevs} \tab B: Calculates row standard deviations, \cr
-    \code{colSkewness} \tab B: Calculates column skewness, \cr
-    \code{rowSkewness} \tab B: Calculates row skewness, \cr
-    \code{colKurtosis} \tab B: Calculates column kurtosis, \cr 
-    \code{rowKurtosis} \tab B: Calculates row kurtosis, \cr 
-    \code{colCumsums} \tab B: Calculates column cumulated sums, \cr  
-    \code{rowCumsums} \tab B: Calculates row cumulated sums. }  
+    \code{var} \tab Returns the variance matrix, \cr
+    \code{cov} \tab Returns the covariance matrix, \cr 
+    \code{colStats} \tab Calculates column statistics, \cr
+    \code{rowStats} \tab Calculates row statistics, \cr
+    \code{colMeans} \tab Calculates column means, \cr 
+    \code{rowMeans} \tab Calculates row means, \cr 
+    \code{colAvgs} \tab Calculates column averages, \cr
+    \code{rowAvgs} \tab Calculates row averages, \cr
+    \code{colVars} \tab Calculates column variances, \cr 
+    \code{rowVars} \tab Calculates row variances, \cr 
+    \code{colStdevs} \tab Calculates column standard deviations, \cr
+    \code{rowStdevs} \tab Calculates row standard deviations, \cr
+    \code{colSkewness} \tab Calculates column skewness, \cr
+    \code{rowSkewness} \tab Calculates row skewness, \cr
+    \code{colKurtosis} \tab Calculates column kurtosis, \cr 
+    \code{rowKurtosis} \tab Calculates row kurtosis, \cr 
+    \code{colCumsums} \tab Calculates column cumulated sums, \cr  
+    \code{rowCumsums} \tab Calculates row cumulated sums. }  
             
     Linear algebra:
     
     \tabular{ll}{
-    \code{\%*\%} \tab R: Returns the product of two matrices, \cr
-    \code{\%x\%}, \code{kron} \tab R: Returns the Kronecker product, \cr 
-    \code{det} \tab R: Returns the determinante of a matrix, \cr
-    \code{inv} \tab S: Returns the inverse of a matrix, \cr
-    \code{norm} \tab S: Returns the norm of a matrix, \cr 
-    \code{rk} \tab S: Returns the rank of a matrix, \cr
-    \code{tr} \tab S: Returns trace of a matrix, \cr 
-    \code{t} \tab R: Returns the transposed matrix, \cr
-    \code{vech} \tab M: Is the operator that stacks the lower triangle, \cr
-    \code{vec} \tab M: Is the operator that stacks a matrix.}
+    \code{\%*\%} \tab Returns the product of two matrices, \cr
+    \code{\%x\%}, \code{kron} \tab Returns the Kronecker product, \cr 
+    \code{det} \tab Returns the determinante of a matrix, \cr
+    \code{inv} \tab Returns the inverse of a matrix, \cr
+    \code{norm} \tab Returns the norm of a matrix, \cr 
+    \code{rk} \tab Returns the rank of a matrix, \cr
+    \code{tr} \tab Returns trace of a matrix, \cr 
+    \code{t} \tab Returns the transposed matrix, \cr
+    \code{vech} \tab Is the operator that stacks the lower triangle, \cr
+    \code{vec} \tab Is the operator that stacks a matrix.}
     
     More linear algebra:
     
     \tabular{ll}{
-    \code{chol} \tab R: Returns the Cholesky factor matrix, \cr
-    \code{eigen} \tab R: Returns eigenvalues and eigenvectors, \cr 
-    \code{svd} \tab R: Returns the singular value decomposition, \cr
-    \code{kappa} \tab R: Returns the condition number of a matrix, \cr 
-    \code{qr} \tab R: Returns the QR decomposition of a matrix, \cr
-    \code{solve} \tab R: Solves a system of linear equations, \cr
-    \code{backsolve} \tab R: ... use when the matrix is upper triangular, \cr
-    \code{forwardsolve} \tab R: ... use when the matrix is lower triangular. } 
+    \code{chol} \tab Returns the Cholesky factor matrix, \cr
+    \code{eigen} \tab Returns eigenvalues and eigenvectors, \cr 
+    \code{svd} \tab Returns the singular value decomposition, \cr
+    \code{kappa} \tab Returns the condition number of a matrix, \cr 
+    \code{qr} \tab Returns the QR decomposition of a matrix, \cr
+    \code{solve} \tab Solves a system of linear equations, \cr
+    \code{backsolve} \tab ... use when the matrix is upper triangular, \cr
+    \code{forwardsolve} \tab ... use when the matrix is lower triangular. } 
     
     Time Series Generation:
     
     \tabular{ll}{
-    \code{tslag} \tab R: Lagged or leading vector/matrix of selected order(s), \cr
-    \code{pdl} \tab R: Regressor matrix for polynomial distributed lags. } 
+    \code{tslag} \tab Lagged or leading vector/matrix of selected order(s), \cr
+    \code{pdl} \tab Regressor matrix for polynomial distributed lags. } 
      
 
 }
@@ -143,11 +149,18 @@
 triang(x)
 Triang(x)
 pascal(n)
+hilbert(n)
+
+isPositiveDefinite(x)
+makePositiveDefinite(x)
 
 colVec(x)
 rowVec(x)
 colIds(x, \dots)
 rowIds(x, \dots)
+
+isPositiveDefinite(x)
+makePositiveDefinite(x)
 
 inv(x)
 norm(x, p = 2)
@@ -259,6 +272,9 @@ tslag(x, k = 1, trim = FALSE)
     eigenvalue of the matrix. Pascal matrices are ill-conditioned. 
     \cr
     
+    The function \code{hilbert} generates a Hilbert matrix of order \code{n}.
+    \cr
+    
     The functions \code{triang} and \code{Triang} allow to transform a
     square matrix to a lower or upper triangular form. 
     A triangular matrix is either an upper triangular matrix or lower 
@@ -276,6 +292,11 @@ tslag(x, k = 1, trim = FALSE)
     two triangular matrices is a triangular matrix, the determinant of a 
     triangular matrix is the product of the diagonal elements, the 
     eigenvalues of a triangular matrix are the diagonal elements.
+    \cr
+    
+    The function \code{isPositiveDefinite} checks if a square matrix is 
+    positive definite, and the function \code{makePositiveDefinite} forces 
+    a matrix to be positive definite.
     \cr
     
     The functions \code{colVec} and \code{rowVec} transform a vector into 
