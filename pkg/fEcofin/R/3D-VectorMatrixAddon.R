@@ -34,10 +34,13 @@
 #   triang              M  Extracs the lower tridiagonal part from a matrix
 #   Triang              M  Extracs the upper tridiagonal part from a matrix
 #   pascal              M  Creates a Pascal matrix
+#   hilbert             M  Creates a Hilbert matrix
 #   colVec              M  Creates a column vector from a data vector
 #   rowVec              M  Creates a row vector from a data vector
 #  as.matrix            R  Attempts to turn its argument into a matrix     
 #  is.matrix            R  Tests if its argument is a (strict) matrix
+#  isPositiveDefinite   M  Checks if the matrix X is positive definite
+#  makePositiveDefinite M  Forces the matrix x to be positive definite
 #  dimnames             R  Retrieves or sets the dimnames of an object
 #  colnames|rownames    R  Retrieves or sets the row or column names 
 #  colIds|rowIds        M  ... use alternatively
@@ -104,10 +107,13 @@
 #   triang              M  Extracs the lower tridiagonal part from a matrix
 #   Triang              M  Extracs the upper tridiagonal part from a matrix
 #   pascal              M  Creates a Pascal matrix
+#   hilbert             M  Creates a Hilbert matrix
 #   colVec              M  Creates a column vector from a vector
 #   rowVec              M  Creates a row vector from a vector
 #  as.matrix            R  Attempts to turn its argument into a matrix     
 #  is.matrix            R  Tests if its argument is a (strict) matrix
+#  isPositiveDefinite   M  Checks if the matrix X is positive definite
+#  makePositiveDefinite M  Forces the matrix x to be positive definite
 #  dimnames             R  Retrieves or sets the dimnames of an object
 #  colnames|rownames    R  Retrieves or sets the row or column names 
 #  colIds|rowIds        M  ... use alternatively
@@ -189,7 +195,31 @@ function(n)
     # Return Value:
     X 
 }
+
+
+# ------------------------------------------------------------------------------
  
+
+hilbert = 
+function(n) 
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Creates a Hilbert matrix
+    
+    # Arguments:
+    #   n - the dimension of the square matrix
+    
+    # FUNCTION:
+    
+    # Hilbert:
+    i = 1:n
+    X = 1 / outer(i - 1, i, "+")
+        
+    # Return Value:
+    X 
+}
+
 
 # ------------------------------------------------------------------------------
 
@@ -236,6 +266,131 @@ function(x)
     
     # Return Value:
     ans
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+isPositiveDefinite =
+function(x)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Checks if the matrix x is positive definite
+    
+    # Arguments:
+    #   x - a symmetric matrix or any other rectangular object
+    #       describing a covariance matrix which can be converted into
+    #       a matrix by the function 'as.matrix'. 
+    
+    # FUNCTION:
+    
+    # Transform:
+    x = as.matrix(x)
+    
+    # Check if matrix is positive definite:
+    ans = .is.positive.definite(m = x)
+    
+    # Return Value:
+    ans
+}
+
+
+.is.positive.definite = 
+function (m, tol, method = c("eigen", "chol"))
+{
+    # Author:
+    #   Copyright 2003-05 Korbinian Strimmer
+    #   Rank, condition, and positive definiteness of a matrix
+    #   GNU General Public License, Version 2
+    
+    method = match.arg(method)
+    if (!is.matrix(m)) {
+        m = as.matrix(m)
+    }
+    if (method == "eigen") {
+        eval = eigen(m, only.values = TRUE)$values
+        if( missing(tol) ) {
+            tol = max(dim(m))*max(abs(eval))*.Machine$double.eps
+        }
+        if (sum(eval > tol) == length(eval)) {
+            return(TRUE)
+        } else {
+            return(FALSE)
+        }
+    } else if (method == "chol") {
+        val = try(chol(m), silent = TRUE)
+        if (class(val) == "try-error") {
+            return(FALSE)
+        } else {
+            return(TRUE)  
+        }  
+    }
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+makePositiveDefinite =
+function(x)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Forces the matrix x to be positive definite
+    
+    # Arguments:
+    #   x - a symmetric matrix or any other rectangular object
+    #       describing a covariance matrix which can be converted into
+    #       a matrix by the function 'as.matrix'. 
+    
+    # FUNCTION:
+    
+    # Make Positive Definite:
+    ans = .make.positive.definite(m = x)
+    
+    # Return Value:
+    ans
+}
+
+
+.make.positive.definite = 
+function(m, tol)
+{
+    # Author:
+    #   Copyright 2003-05 Korbinian Strimmer
+    #   Rank, condition, and positive definiteness of a matrix
+    #   GNU General Public License, Version 2
+    
+    # Method by Higham 1988
+    
+    if (!is.matrix(m)) {
+        m = as.matrix(m)
+    }
+
+    d = dim(m)[1] 
+    if ( dim(m)[2] != d ) {
+        stop("Input matrix is not square!")
+    }
+    
+    es = eigen(m)
+    esv = es$values
+    
+    if (missing(tol)) {
+        tol = d*max(abs(esv))*.Machine$double.eps 
+    }
+    delta =  2*tol 
+        # factor two is just to make sure the resulting
+        # matrix passes all numerical tests of positive definiteness
+    
+    tau = pmax(0, delta - esv)
+    dm = es$vectors %*% diag(tau, d) %*% t(es$vectors)    
+    
+    # print(max(DA))
+    # print(esv[1]/delta)
+      
+    return( m + dm )
 }
     
 
