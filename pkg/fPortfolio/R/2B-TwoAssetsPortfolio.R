@@ -71,10 +71,6 @@ function(x, length = 100, title = NULL, description = NULL)
     
     # Arguments:
     #   x - a two column matrix of asset returns
-    #   weights - a vector of weights, by default ranging from
-    #       zero to one in 100 steps
-    #   details - a logical flag, should details be printed?
-    #       By default TRUE.
     
     # FUNCTION:
     
