@@ -16,7 +16,7 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2004, Diethelm Wuertz, GPL
+#   1999 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
 #   www.rmetrics.org
@@ -38,7 +38,7 @@
 #  assetsPairsPlot       Displays pairs of scatterplots of individual assets
 #  assetsCorTestPlot     Displays and tests pairwise correlations of assets
 # FUNCTION:             PARAMETER ESTIMATION:
-#  fASSETS               Class representation for "fASSETS" Objects
+#  'fASSETS'             Class representation for "fASSETS" Objects
 #  assetsFit             Estimates the parameters of set of assets
 #   method = "norm"       assuming a multivariate Normal distribution
 #   method = "snorm"      assuming a multivariate skew-Normal distribution
@@ -46,18 +46,18 @@
 #  print.fASSETS         S3: Print method for an object of class fASSETS
 #  plot.fASSETS          S3: Plot method for an object of class fASSETS
 #  summary.fASSETS       S3: Summary method for an object of class fASSETS
-# FUNCTION:             STATISTICS AND TESTS:
+# FUNCTION:             ASSETS STATISTICS:
 #  assetsStats           Computes basic statistics of a set of asset  
 #  assetsMeanCov         Estimates mean and variance for a set of assets
-#   method = "cov"        using Classical Covariance Estimation
-#   method = "mve"        using
-#   method = "mcd"        using
-#   method = "nne"        using
-#   method = "shrink"     using Shrinkage
-#   method = "bagged"     using bagging
+#   method = "cov"        uses standard covariance estimation
+#   method = "mve"        uses
+#   method = "mcd"        uses
+#   method = "nne"        uses
+#   method = "shrink"     uses shrinkage
+#   method = "bagged"     uses bagging
 #  .isPositiveDefinite    Checks if the matrix x is positive definite
 #  .makePositiveDefinite  Forces the matrix x to be positive definite
-# FUNCTION:             NORMALITY TESTS:
+# FUNCTION:             ASSETS NORMALITY TESTS:
 #  assetsTest            Test for multivariate Normal Assets
 #   method = "shapiro"    calling Shapiro test
 #   method = "energy"     calling E-Statistic (energy) test
@@ -747,6 +747,9 @@ check = TRUE, force = TRUE, baggedR = 100, ...)
     #       rownames, instrument names are column names.
     #   method - Which method should be used to compute the covarinace?
     #       cov - standard covariance computation
+    #       mve -
+    #       mcd -
+    #       nnve - 
     #       shrink - estimation with shrinkage method
     #       bagged - estimation with bagging
     
@@ -1357,7 +1360,7 @@ function(x, Replicates = 99, title = NULL, description = NULL)
 }
 
 
-#*******************************************************************************
+################################################################################
 # Internal Utility Functions - mvnorm Test:
 
 
@@ -1464,7 +1467,7 @@ function(x)
     # Description:
     #   Statistic for univariate Normality
     
-    # Author: 
+    # Authors: 
     #   Maria L. Rizzo <rizzo@math.ohiou.edu> and 
     #   Gabor J. Szekely <gabors@bgnet.bgsu.edu>
     
@@ -1484,7 +1487,7 @@ function(x)
 }
 
 
-#*******************************************************************************
+################################################################################
 # Internal Utility Functions - Bootstrap:
 
 

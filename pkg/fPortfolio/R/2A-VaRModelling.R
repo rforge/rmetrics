@@ -52,7 +52,7 @@ function(x, weights = NULL, alpha = 0.05)
     # Arguments:
     #   x - a time series, data.frame or any other rectangular object
     #       of assets which can be written as a matrix object
-    #   w - the vector of weights
+    #   w - a numeric vector of weights
     #   alpha - the confidence level    
 
     # FUNCTION:
@@ -87,7 +87,7 @@ function(x, weights = NULL, alpha = 0.05)
     # Arguments:
     #   x - a time series, data.frame or any other rectangular object
     #       of assets which can be written as a matrix object
-    #   w - the vector of weights
+    #   w - a numeric vector of weights
     #   alpha - the confidence level    
     
     # FUNCTION:
@@ -123,7 +123,7 @@ function(x, weights = NULL, alpha = 0.05)
     # Arguments:
     #   x - a time series, data.frame or any other rectangular object
     #       of assets which can be written as a matrix object
-    #   w - the vector of weights
+    #   w - a numeric vector of weights
     #   alpha - the confidence level    
     #   lambda - split value
     
