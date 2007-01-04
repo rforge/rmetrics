@@ -16,7 +16,7 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2004, Diethelm Wuertz, GPL
+#   1999 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
 #   www.rmetrics.org
@@ -202,10 +202,12 @@ function(x, sd = 1, horizon = 100, N = 1000)
     result = rep(NA, times = length(h))         
     for (i in 1:length(h)) {
         if (h[i] == 0) {
-            result[i] = 0 }
-        else {
+            result[i] = 0 
+        } else {
             g = pn *  exp(-en/(h[i]^2)) / h[i]^3
-            result[i] = sum(g) } }
+            result[i] = sum(g) 
+        } 
+    }
     
     # Return Value:
     result
@@ -252,7 +254,8 @@ function(q, sd = 1, horizon = 100, N = 1000)
     result = rep(NA, times = length(h))         
     for (i in 1:length(h)) {
         g = pn * ( 1 - exp(-en/(h[i]^2)) )
-        result[i] = sum(g) }
+        result[i] = sum(g) 
+    }
     
     # Return Value:
     result
