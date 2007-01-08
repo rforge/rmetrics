@@ -42,7 +42,6 @@
 #  .arfimaPredict           Internal function - Not yet implemented
 # GENERIC METHODS:        PRINT - PLOT - SUMMARY METHODS:
 #  show.fARMA              S4: Prints a fitted ARMA time series object
-#  .print.fARMA            S3: Prints a fitted ARMA time series object
 #  plot.fARMA              S3: Plots stylized facts of a fitted ARMA object
 #  summary.fARMA           S3: Summarizes a fitted ARMA time series object
 # S3 METHOD:              ADDON METHODS:
@@ -53,7 +52,7 @@
 ################################################################################
 
 ################################################################################
-# FUNCTION:               TRUE STATISTICS:
+# FUNCTION:               TRUE ARMA STATISTICS:
 #  armaTrueacf             Returns True ARMA autocorrelation function
 #  armaRoots               Returns Roots of the ARMA characteristic polynomial
 #  .armaToeplitz           Returns Toeplitz matrix from an ARMA process
@@ -884,58 +883,38 @@ function(object)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   S4 print method for a fitted ARMA timeSeries object
- 
-    # FUNCTION:
-       
-    # Print:
-    .print.fARMA(x = object)
-    
-    # Return Value:
-    invisible(object)
-}
-    
-    
-setMethod("show", "fARMA", show.fARMA)
-
-
-.print.fARMA = 
-function(x, ...)
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
     #   Old S3 print method for a fitted ARMA timeSeries object
 
     # FUNCTION:
     
-    # Fit:
-    object = x@fit
-    
     # Title:
     cat("\nTitle:\n ")
-    cat(x@title, "\n")
+    cat(object@title, "\n")
     
     # Call:
     cat("\nCall:\n ")
-    cat(paste(deparse(x@call), sep = "\n", collapse = "\n"), 
+    cat(paste(deparse(object@call), sep = "\n", collapse = "\n"), 
         "\n", sep = "")
        
     # Model: 
-    cat("\nModel:\n ", object$tstitle, "\n", sep = "")
+    cat("\nModel:\n ", object@fit$tstitle, "\n", sep = "")
     
     # Coefficients:
     cat("\nCoefficient(s):\n")
     digits = max(4, getOption("digits") - 4) 
-    print.default(format(object$coef, digits = digits), print.gap = 2, 
+    print.default(format(object@fit$coef, digits = digits), print.gap = 2, 
         quote = FALSE)
         
     # Description:
     cat("\nDescription:\n ")
-    cat(x@description, "\n\n")
+    cat(object@description, "\n\n")
         
     # Return Value:
     invisible()
 }
+
+
+setMethod("show", "fARMA", show.fARMA)
 
 
 # ------------------------------------------------------------------------------
