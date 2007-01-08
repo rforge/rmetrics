@@ -206,7 +206,7 @@ ymax = NA, standardize = TRUE, labels = TRUE, ...)
     plot(deltas, data[1,], ylim = c(0, ymax), type = "n", 
         main = main, xlab = xlab, ylab = ylab, ...)
     xl = 1:length(deltas)
-    for (il in 1:(lag.max)){
+    for (il in 1:(lag.max)) {
         yp = max(data[il, ])
         yl = xl[data[il, ] == yp]
         lines(deltas, data[il, ], col = il)
