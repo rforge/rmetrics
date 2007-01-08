@@ -28,8 +28,7 @@
 
 
 ################################################################################
-# FUNCTION:             SIMULATION AND ASSET PICKING:
-#  assetsSim             Simulates a set of artificial assets
+# FUNCTION:             ASSETS SELECTION:
 #  assetsSelect          Selects individual assets from a set of assets
 #   method = "hclust"     hierarchical clustering of returns
 #   method = "kmeans"     k-means clustering of returns
@@ -37,8 +36,9 @@
 #  assetsQQNormPlot      Displays normal qq-plots of individual assets
 #  assetsPairsPlot       Displays pairs of scatterplots of individual assets
 #  assetsCorTestPlot     Displays and tests pairwise correlations of assets
-# FUNCTION:             PARAMETER ESTIMATION:
+# FUNCTION:             SIMULATION AND PARAMETER ESTIMATION:
 #  'fASSETS'             Class representation for "fASSETS" Objects
+#  assetsSim             Simulates a set of artificial assets
 #  assetsFit             Estimates the parameters of set of assets
 #   method = "norm"       assuming a multivariate Normal distribution
 #   method = "snorm"      assuming a multivariate skew-Normal distribution
@@ -55,8 +55,6 @@
 #   method = "nne"        uses
 #   method = "shrink"     uses shrinkage
 #   method = "bagged"     uses bagging
-#  .isPositiveDefinite    Checks if the matrix x is positive definite
-#  .makePositiveDefinite  Forces the matrix x to be positive definite
 # FUNCTION:             ASSETS NORMALITY TESTS:
 #  assetsTest            Test for multivariate Normal Assets
 #   method = "shapiro"    calling Shapiro test
@@ -806,7 +804,7 @@ check = TRUE, force = TRUE, baggedR = 100, ...)
     
     # Check Positive Definiteness:
     if (check) {
-        result = .isPositiveDefinite(Sigma)
+        result = isPositiveDefinite(Sigma)
         if(result) {
             control = c(control, posdef = "TRUE")
         } else {
@@ -818,7 +816,7 @@ check = TRUE, force = TRUE, baggedR = 100, ...)
     control = c(control, forced = "FALSE")
     if (force) {
         control = c(control, forced = "TRUE")
-        if (!result) Sigma = make.positive.definite(m = Sigma)       
+        if (!result) Sigma = makePositiveDefinite(m = Sigma)       
     }
     
     # Result:
@@ -1241,59 +1239,6 @@ function(vec, d)
     
     # Return Value: 
     M
-}
-
-
-# ******************************************************************************
-
-
-.isPositiveDefinite =
-function(x)
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Checks if the matrix x is positive definite
-    
-    # Arguments:
-    #   x - a symmetric matrix or any other rectangular object
-    #       describing a covariance matrix which can be converted into
-    #       a matrix by the function 'as.matrix'. 
-    
-    # FUNCTION:
-    
-    # Transform:
-    x = as.matrix(x)
-    
-    # Check if matrix is positive definite:
-    ans = is.positive.definite(m = x)
-    
-    # Return Value:
-    ans
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.makePositiveDefinite =
-function(x)
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Forces the matrix x to be positive definite
-    
-    # Arguments:
-    #   x - a symmetric matrix or any other rectangular object
-    #       describing a covariance matrix which can be converted into
-    #       a matrix by the function 'as.matrix'. 
-    
-    # FUNCTION:
-    
-    # Make Positive Definite:
-    ans = make.positive.definite(m = x)
-    
-    # Return Value:
-    ans
 }
         
 

@@ -73,7 +73,7 @@ function(data, targetReturn, title = NULL, description = NULL)
     #   Optimizes a mean-var portfolio for a given desired return
     
     # Arguments:
-    #   x - portfolio of assets, a matrix or an object which can be 
+    #   data - portfolio of assets, a matrix or an object which can be 
     #       transformed to a matrix
     #   targetReturn - the desired return, this target value must be 
     #       smaller than the maximum and larger than the minimum asset 
