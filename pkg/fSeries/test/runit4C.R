@@ -340,7 +340,8 @@ function()
     # ... misspecified since persistence > 1
     
     # Skew Standardized Student-t:
-    # fit = garchFit(~garch(1,1), x, cond.dist = "dsstd")     
+    # fit = garchFit(~garch(1,1), x, cond.dist = "dsstd", control = list(MET = 5, XMAX = 1))     
+    # fit = garchFit(~garch(1,1), x, cond.dist = "dsstd", algorithm = "nlminb+nm")
     # fit@fit$coef 
     # ... fails                                            
     
