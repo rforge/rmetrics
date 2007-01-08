@@ -38,9 +38,10 @@
     
 
 \usage{
-portfolioMarkowitz(x, targetReturn, title = NULL, description = NULL)
+portfolioMarkowitz(data, targetReturn, title = NULL, description = NULL)
 frontierMarkowitz(data, Rf = 0, short = FALSE, length = 300, r.range = NULL, 
     s.range = NULL, title = NULL, description = NULL, \dots)
+
 montecarloMarkowitz(object, mc = 5000, doplot = FALSE, add = TRUE, \dots)
 
 \method{print}{fPFOLIO}(x, \dots)

@@ -5,10 +5,12 @@
 \alias{fPFOLIO2}
 \alias{fPFOLIO2-class}
 
+\alias{show.fPFOLIO2}
+\alias{show,fPFOLIO2-method}
+
 \alias{frontierTwoAssetsMarkowitz}
 \alias{frontierTwoAssetsCVaR}
 
-\alias{print.fPFOLIO2}
 \alias{plot.fPFOLIO2}
 \alias{summary.fPFOLIO2}
 
@@ -39,8 +41,9 @@ frontierTwoAssetsMarkowitz(x, length = 100,
     title = NULL, description = NULL) 
 frontierTwoAssetsCVaR(x, length= 100, alpha = 0.05,
     title = NULL, description = NULL) 
-    
-\method{print}{fPFOLIO2}(x, \dots)
+ 
+show.fPFOLIO2(object) 
+  
 \method{plot}{fPFOLIO2}(x, \dots)
 \method{summary}{fPFOLIO2}(object, \dots)
 }
