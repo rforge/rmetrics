@@ -29,9 +29,8 @@
 
 ################################################################################
 # PART I - FUNCTION:      SPECIFICATION: 
-#  setClass[garchSpec]     S4: garchSpec Class representation 
+#  'garchSpec'             S4: garchSpec Class representation 
 #  garchSpec               S4: Creates a 'garchSpec' object from scratch
-#  .print.garchSpec        S3: Print method for an object of class 'garchSpec'
 #  show.garchSpec          S4: Print method for an object of class 'garchSpec'
 ################################################################################
 # PART II - FUNCTION:     SIMULATION:
@@ -39,7 +38,7 @@
 #  .garchSim               Simulates a GARCH/APARCH from specification object
 ################################################################################
 # PART III - FUNCTION:    PARAMETER ESTIMATION: 
-#  setClass[fGARCH]        S4: fGARCH Class representation   
+#  'fGARCH'                S4: fGARCH Class representation   
 #  garchFit                Fits GARCH and APARCH processes
 #  .garchFit               ... old Version
 #  .garchInitSeries        Initializes Series
@@ -52,14 +51,13 @@
 #  .garchNames              Slot names, @fit slot, parameters and controls
 #  .garchTsFit             Wrapper for 'garch()' from 'tseries' package
 # METHODS:                DESCRIPTION:
-#  .print.fGARCH           S3 print method for an object of class fGARCH
-#  .show.fGARCH            S4 print method for an object of class fGARCH
-#  summary.fGARCH          S3 summary method for an object of class fGARCH
-#  plot.fGARCH             S3 plot method for an object of class fGARCH
+#  show.fGARCH             S4 print method for an object of class 'fGARCH'
+#  summary.fGARCH          S3 summary method for an object of class 'fGARCH'
+#  plot.fGARCH             S3 plot method for an object of class 'fGARCH'
 #  .interactiveGarchPlot   Utility Function
-#  residuals.fGARCH        S3 residuals method for an object of class fGARCH
-#  fitted.fGARCH           S3 fitted values method for an object of class fGARCH
-#  predict.fGARCH          S3 prediction method for an object of class fGARCH
+#  residuals.fGARCH        S3 residuals method for an object of class 'fGARCH'
+#  fitted.fGARCH           S3 fitted values for an object of class 'fGARCH'
+#  predict.fGARCH          S3 prediction method for an object of class 'fGARCH'
 # STATISTICS:             Description:
 #  .truePersistence        Compute persistence
 ################################################################################
@@ -73,7 +71,6 @@
 # FUNCTION:              SPECIFICATION: 
 #  setClass[garchSpec]    S4: garchSpec Class representation 
 #  garchSpec              S4: Creates a 'garchSpec' object from scratch
-#  .print.garchSpec        S3: Print method for an object of class 'garchSpec'
 #  show.garchSpec          S4: Print method for an object of class 'garchSpec'
 ################################################################################
 
@@ -317,19 +314,20 @@ presample = NULL, cond.dist = c("rnorm", "rged", "rstd", "rsnorm",
 # ------------------------------------------------------------------------------
 
 
-.print.garchSpec =
-function(x, ...)
+show.garchSpec =
+function(object)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Old S3 Print Method for objects of class 'garchSpec'
+    #   S4 Print Method for objects of class 'garchSpec'
     
     # Arguments:
-    #   x - Object of class 'garchSpec'
+    #   object - Object of class 'garchSpec'
     
     # FUNCTION:
     
     # Formula:
+    x = object
     cat("\nFormula: \n ")
     cat(as.character(x@formula))
     
@@ -385,14 +383,7 @@ function(x, ...)
     # Return Value:
     invisible()
 }
-
-
-show.garchSpec = 
-function(object)
-{  
-    .print.garchSpec(x = object)
-}
-    
+   
     
 setMethod("show", "garchSpec", show.garchSpec)
 
@@ -670,7 +661,8 @@ control = list(), title = NULL, description = NULL, ...)
     x = as.vector(x[, 1])
     if (class(mf$data) == "timeSeries") names(x) = rownames(data)
     if (.DEBUG) print(head(x))
-    # Compose Mean and variance Formula:
+    
+    # Compose Mean and Variance Formula:
     allLabels = attr(terms(formula), "term.labels")
     if (.DEBUG) print(allLabels)
     if (length(allLabels) == 2) {
@@ -762,14 +754,17 @@ control = list(), title = NULL, description = NULL, ...)
     
     # Generate Control List - Define Default Settings:
     con <- list(
+    
         # In General:
         fscale = FALSE,
         xscale = FALSE,
         algorithm = algorithm,
         llh = c("filter", "internal", "testing")[1],
+        
         # BFGS - NLMINB Algorithm:
         tol1 = 1, 
         tol2 = 1, 
+        
         # SQP Algorithm:
         MIT = 200,     # maximum number of iterations (200)
         MFV = 500,     # maximum number of function evaluations (500)
@@ -1925,8 +1920,8 @@ title = NULL, description = NULL, ...)
 ################################################################################
                 
 
-.print.fGARCH = 
-function(x, ...) 
+show.fGARCH = 
+function(object) 
 {   # A function implemented by Diethelm Wuertz
     
     # Description:
@@ -1936,9 +1931,6 @@ function(x, ...)
     #   object - an object of class 'fGARCH'
     
     # FUNCTION:
-    
-    # object:
-    object = x
      
     # Title:
     cat("\nTitle:\n ")
@@ -1983,13 +1975,6 @@ function(x, ...)
     # Return Value:
     cat("\n")
     invisible()
-}
-
-
-show.fGARCH = 
-function(object) 
-{ 
-    .print.fGARCH(object) 
 }
 
 
