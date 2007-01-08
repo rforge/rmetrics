@@ -132,7 +132,7 @@ function(x, ...)
     
     # Create a dummay daily 'timeSeries' object:
     if (is.null(dim(x))) x = matrix(x)
-    ans = dummyDailySeries(x)
+    ans = dummyDailySeries(x, ...)
     
     # Return Value:
     ans
