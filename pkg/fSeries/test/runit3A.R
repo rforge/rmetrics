@@ -39,10 +39,6 @@
 ################################################################################
 # PART II: Reimplemented functions from Beran's SPlus Scripts
 # FUNCTIONS:          DESCRIPTION:
-#  farimaTrueacf       Returns FARMA true autocorrelation function
-#  farimaTruefft       Returns FARMA true fast Fourier transform
-#  fgnTrueacf          Returns FGN true autocorrelation function
-#  fgnTruefft          Returns FGN true fast Fourier transform
 #  whittleFit          Whittle estimator
 ################################################################################
 
@@ -250,52 +246,6 @@ function()
     print(target)
     checkSum = 1.11
     checkEquals(target, current = checkSum)
-    
-    # Return Value:
-    return()   
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-test.trueStatistics = 
-function()
-{  
-    # Try: 
-    #   .farimaStatsSlider()
-    #   .fgnStatsSlider()
-    
-    # farimaSim(
-    #   n = 1000, 
-    #   model = list(ar = c(0.5, -0.5), d = 0.3, ma = 0.1), 
-    #   method = c("freq", "time"), 
-    #   ...) 
-
-    # FGN True ACF:
-    ans = fgnTrueacf(n = 1000, H = 0.7)[1:5]
-    print(ans)
-    target = round(sum(ans), 2)
-    print(target)
-    checkSum = 1.78
-    checkEquals(target, checkSum)
-    
-    # FGN True FFT:
-    ans = fgnTruefft(n = 1000, H = 0.7)[1:3]
-    print(ans)
-    target = round(sum(ans), 2)
-    print(target)
-    checkSum = 1.78
-    checkEquals(target, checkSum)
-    
-    # Time Methhod:
-    set.seed(4711)
-    x = farimaSim(n = 50, method = "time")
-    print(x)
-    target = round(var(x), 2)
-    print(target)
-    checkSum = 1.11
-    checkEquals(target, checkSum)
     
     # Return Value:
     return()   
