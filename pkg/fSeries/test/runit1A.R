@@ -42,7 +42,6 @@
 #  .arfimaPredict           Internal function - Not yet implemented
 # GENERIC METHODS:        PRINT - PLOT - SUMMARY METHODS:
 #  show.fARMA              S4: Prints a fitted ARMA time series object
-#  .print.fARMA            S3: Prints a fitted ARMA time series object
 #  plot.fARMA              S3: Plots stylized facts of a fitted ARMA object
 #  summary.fARMA           S3: Summarizes a fitted ARMA time series object
 # S3 METHOD:              ADDON METHODS:
@@ -67,7 +66,7 @@ function()
 {
     # Help File:
     helpFile = function() { 
-        example(ArmaModelling); return() }
+        example(ArmaModelling, ask = FALSE); return() }
     checkIdentical(
         target = class(try(helpFile())),
         current = "NULL")
