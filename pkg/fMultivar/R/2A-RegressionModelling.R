@@ -32,7 +32,7 @@
 #  'fREG'                S4 Class Representation
 #  regSim                Returns a regression example data set
 #  regFit                Wrapper Function for Regression Models
-#  gregFit                Wrapper Function for Generalized Regression Models
+#  gregFit               Wrapper Function for Generalized Regression Models
 #  .lmFit                 Linear Regression Model
 #  .rlmFit                Robust Linear Regression Model
 #  .glmFit                Generalized Linear Model
