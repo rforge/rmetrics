@@ -43,13 +43,13 @@
     \tabular{ll}{
     \code{armaSim} \tab Simulates an artificial ARMA time series process, \cr
     \code{armaFit} \tab Fits the parameters of an ARMA time series process,\cr
-    \code{print} \tab S3 Print Method, \cr
-    \code{plot} \tab S3 Plot Method, \cr
-    \code{summary} \tab S3 Summary Method, \cr
+    \code{print} \tab Print Method, \cr
+    \code{plot} \tab Plot Method, \cr
+    \code{summary} \tab Summary Method, \cr
     \code{predict} \tab Forecasts and optionally plots an ARMA process, \cr
-    \code{fitted} \tab S3 Method, returns fitted values, \cr
-    \code{coef|coefficients} \tab S3 Method, returns coefficients, \cr
-    \code{residuals} \tab S3 Method, returns residuals. }
+    \code{fitted} \tab Method, returns fitted values, \cr
+    \code{coef|coefficients} \tab Method, returns coefficients, \cr
+    \code{residuals} \tab Method, returns residuals. }
 
     The functions for the analysis of an true ARMA process are:
         
@@ -66,8 +66,8 @@
     get with this collection is, that all functions have a common 
     argument list with a formula to specify the model and presetted 
     arguments for the specification of the algorithmic method. For 
-    users who have already modeled GARCH processes with SPlus, this 
-    approach will be quite natural.
+    users who have already modeled GARCH processes with R/Rmetrics and
+    SPlus/Finmetrics, this approach will be quite natural.
     
     The function \code{armaFit} allows for the following formula arguments:
     
@@ -80,18 +80,21 @@
     
     For the first selection \code{x~ar()} the function \code{armaFit()} 
     uses the AR modelling algorithm as implemented in \R's \code{stats} 
-    package. 
+    package.
+     
     For the second \code{x~ma()}, third \code{x~arma()}, and fourth 
     selection \code{x~arima()} the function \code{armaFit()} uses the 
     ARMA modelling algorithm also as implemented in \R's \code{stats} 
     package.
-    For the last selection \code{x~fracdiff()} the function \code{armaFit()}
+    
+    For the last selection \code{x~arfima()} the function \code{armaFit()}
     uses the fractional ARIMA modelling algorithm from \R's contributed 
-    \code{fracdiff} package. Note, that the AR, MA, and ARMA processes 
-    can all be modelled by the same algorithm specifying the formula 
-    \code{x~arima(p,d,q)} in the proper way, i.e. setting \code{d=0} and 
-    choosing the orders of \code{p} and \code{q} as zero in agreement with 
-    the desired model specification.
+    \code{fracdiff} package. 
+    
+    Note, that the AR, MA, and ARMA processes can all be modelled by the 
+    same algorithm specifying the formula \code{x~arima(p,d,q)} in the 
+    proper way, i.e. setting \code{d=0} and choosing the orders of \code{p} 
+    and \code{q} as zero in agreement with the desired model specification.
     
     Alternatively, one can still use the functions from R's \code{"stats"}
     package: \code{arima.sim} that simulates from an ARIMA time series 
@@ -106,7 +109,7 @@
     it easier to interpret the results obtained from different algorithms 
     implemented in different functions.
     
-    For \code{fracdiff} models the following methods are not yet
+    For \code{arfima} models the following methods are not yet
     implemented: \code{plot}, \code{fitted}, \code{residuals}, 
     \code{predict}, and \code{predictPlot}.
     
@@ -193,9 +196,9 @@ armaTrueacf(model, lag.max = 20, type = c("correlation", "partial", "both"),
         Can have one of the forms  
         \code{x ~ ar(q)}, 
         \code{x ~ ma(p)}, 
-        \code{x ~ arma(p, q)}, 
+        \code{x ~ arma(p, q)},
         \code{x ~ arima(p, d, q)}, or
-        \code{x ~ fracdiff(p, q)}.
+        \code{x ~ arfima(p, q)}.
         \code{x} is the response variable optionally to appear in the 
         formula expression.
         In the first case R's function \code{ar} from the \code{ts}
@@ -406,8 +409,8 @@ armaTrueacf(model, lag.max = 20, type = c("correlation", "partial", "both"),
     \bold{AR - Auto-Regressive Modelling:}
     \cr\cr
     The argument \code{x~ar(p)} calls the underlying functions 
-    \code{ar.yw}, \code{ar.burg1}, \code{ar.burg2}, code{\link{ar.ols}} 
-    or \code{ar.mle}. 
+    \code{ar.mle} or code{\link{ar.ols}} depending on the 
+    \code{method}'s choice. 
     For definiteness, the AR models are defined through
 
         \deqn{x_t - \mu = a_1(x_{t-1} - \mu) + \cdots +  a_p(x_{t-p} - \mu) + e_t}{\code{(x[t] - m) = a[1]*(x[t-1] - m) + \dots +  a[p]*(x[t-p] - m) + e[t]}}
@@ -515,9 +518,9 @@ armaTrueacf(model, lag.max = 20, type = c("correlation", "partial", "both"),
     \cr
         
     
-    \bold{FRACDIFF Modelling:}
+    \bold{ARFIMA/FRACDIFF Modelling:}
     \cr\cr      
-    The argument \code{x~fracdiff()} calls the underlying functions from
+    The argument \code{x~arfima()} calls the underlying functions from
     \R's \code{fracdiff} package. The estimator calculates the maximum 
     likelihood estimators of the parameters of a fractionally-differenced 
     ARIMA (p,d,q) model, together (if possible) with their estimated 
@@ -619,6 +622,7 @@ Haslett J. and Raftery A.E. (1989);
    
 ## predict -
    # Forecast 5 Steps ahead:
+   par(mfrow = c(1, 1))
    predict(fit, 5)
    
 ## armaFit -
