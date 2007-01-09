@@ -244,12 +244,12 @@ include.mean = TRUE, fixed = NULL, title = NULL, description = NULL, ...)
     #   Fits Model Parameters for an ARMA Time Series Process
     
     # Arguments:
-    #   method - "CSS-ML", "ML", "CSS", "yw", "burg1", "burg2", "ols", "mle"
+    #   method - "mle", "ols"
     
     # Notes:
     #   Valid formulas are:
-    #       "ar" "ma" "arma" "arima" "arfima" "fracdiff"
-    #       "arma(p,q)" uses arima(p,0,q)
+    #       "ar" "ma" "arma" "arima" "arfima" (not documented "fracdiff")
+    #       Note, "arma(p,q)" uses arima(p,0,q)
     
     # Details:
     #   R-base:
