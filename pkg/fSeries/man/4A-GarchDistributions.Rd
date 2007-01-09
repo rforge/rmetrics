@@ -250,8 +250,6 @@ Fernandez C., Steel M.F.J. (2000);
 
 
 \examples{
-## SOURCE("fSeries.4A-GarchDistributions")
-
 ## snorm -
    par(mfrow = c(2, 2), cex = 0.75)
    set.seed(1953)

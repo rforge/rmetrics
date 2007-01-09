@@ -287,8 +287,6 @@ Rosenstein M.T., Collins J.J., De Luca C.J. (1993);
 
 
 \examples{
-## SOURCE("fSeries.035A-ChaoticTimeSeries")
-
 ## bdsTest -
    # iid Time Series:
    par(mfrow = c(3, 1))

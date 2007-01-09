@@ -215,8 +215,6 @@ Laurent S., Peters J.P., [2005],
 
 
 \examples{
-## SOURCE("fSeries1.4D-GarchOxModelling")
-
 \dontrun{
 ## garchOxFit -
    
@@ -225,7 +223,7 @@ Laurent S., Peters J.P., [2005],
    x = dem2gbp[, 1]
    
    # Fit GARCH(1,1):
-   garchOxFit(formula.mean = ~arma(0,0), formula.var = ~garch(1,1))
+   garchOxFit(formula = ~arma(0,0) + ~garch(1,1))
 }
 }
 

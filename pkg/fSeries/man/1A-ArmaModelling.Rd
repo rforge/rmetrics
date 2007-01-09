@@ -21,9 +21,6 @@
 \alias{coefficients.fARMA}
 \alias{residuals.fARMA}
 
-\alias{armaRoots}
-\alias{armaTrueacf}
-
 
 \title{Integrated ARMA Time Series Modelling}
 
@@ -50,13 +47,7 @@
     \code{fitted} \tab Method, returns fitted values, \cr
     \code{coef|coefficients} \tab Method, returns coefficients, \cr
     \code{residuals} \tab Method, returns residuals. }
-
-    The functions for the analysis of an true ARMA process are:
-        
-    \tabular{ll}{
-    \code{armaRoots} \tab Roots of the characteristic ARMA polynomial, \cr
-    \code{armaTrueacf} \tab True autocorrelation function of an ARMA process.}  
-    
+  
 }
     
     
@@ -134,11 +125,7 @@ show.fARMA(object)
     
 \method{fitted}{fARMA}(object, \dots)
 \method{coef}{fARMA}(object, \dots)
-\method{residuals}{fARMA}(object, \dots)
-
-armaRoots(coefficients, n.plot = 400, digits = 4, \dots) 
-armaTrueacf(model, lag.max = 20, type = c("correlation", "partial", "both"), 
-    doplot = TRUE) 
+\method{residuals}{fARMA}(object, \dots) 
 }
 
 
@@ -148,12 +135,7 @@ armaTrueacf(model, lag.max = 20, type = c("correlation", "partial", "both"),
         [armaSim] - \cr
         a logical value. Should control parameters added to the returned
         series as a control attribute?
-        } 
-    \item{coefficients}{    
-        [armaRoots] - \cr
-        a numeric vector with the coefficients of the characterisitic 
-        polynomial.
-        } 
+        }  
     \item{data}{
         an optional timeSeries or data frame object containing the variables 
         in the model. If not found in \code{data}, the variables are taken 
@@ -164,10 +146,6 @@ armaTrueacf(model, lag.max = 20, type = c("correlation", "partial", "both"),
         }
     \item{description}{
         a character string which allows for a brief description.
-        }
-    \item{digits}{  
-        [armaRoots] - \cr
-        output precision, an integer value.
         }
     \item{doplot}{
         [armaRoots] - \cr
@@ -231,11 +209,6 @@ armaTrueacf(model, lag.max = 20, type = c("correlation", "partial", "both"),
         Missing values are not allowed. By default the normal
         random number generator will be used.
         }
-    \item{lag.max}{
-        [armaTrueacf] - \cr
-        maximum number of lags at which to calculate the acf or 
-        pacf, an integer value by default 20.
-        }
     \item{method}{
         [armaFit] - \cr
         a character string denoting the method used to fit the model.
@@ -256,11 +229,6 @@ armaTrueacf(model, lag.max = 20, type = c("correlation", "partial", "both"),
         FRACDIFF models. By default an ARIMA(2, 0, 1) model with 
         coefficients \code{ar=c(0.5, -0.5)} and \code{ma=0.1} will be 
         generated.
-        \cr
-        [armaTrueacf][armaFischer] - \cr
-        a specification of the ARMA model with two elements:
-        \code{model$ar} is the vector of the AR coefficients, and 
-        \code{model$ma} is the vector of the MA coefficients.
         }
     \item{n}{
         [armaSim] - \cr
@@ -274,11 +242,6 @@ armaTrueacf(model, lag.max = 20, type = c("correlation", "partial", "both"),
         \code{conf}. If a forecast plot is desired, which is the
         default and expressed by \code{doplot=TRUE}, then \code{n.back} 
         sets the number of time steps back displayed in the graph.
-        }
-    \item{n.plot}{  
-        [armaRoots] - \cr
-        the number of data point to plot the unit circle;
-        an integer value.
         }
     \item{n.start}{
         [armaSim] - \cr
@@ -324,14 +287,6 @@ armaTrueacf(model, lag.max = 20, type = c("correlation", "partial", "both"),
     \item{title}{
         a character string which allows for a project title.
         }
-    \item{type}{
-        [armaTrueacf] - \cr
-        a character string, "correlation" to compute the true 
-        autocorrelation function, "partial" to compute the true
-        partial autocorrelation function, or "both" if both
-        functions are desired. The start of one of the strings 
-        will suffice.
-        } 
     \item{which}{
         [plot][summary] - \cr
         if \code{which} is set to \code{"ask"} the function will 
@@ -389,17 +344,6 @@ armaTrueacf(model, lag.max = 20, type = c("correlation", "partial", "both"),
     \item{title}{
         a title string.
         }
-        
-    \code{armaRoots} 
-    \cr
-    returns a three column data frame with the real, the imaginary part 
-    and the radius of the roots. The number of rows corresponds
-    to the coefficients.
-    
-    \code{armaTrueacf}
-    \cr
-    returns a two column data frame with the lag and the correlation 
-    function. 
     
 }
                 
@@ -599,8 +543,6 @@ Haslett J. and Raftery A.E. (1989);
 
 
 \examples{
-## SOURCE("fSeries.1A-ArmaModelling")
-
 ## armaSim -
    # Simulation:
    x = armaSim(model = list(ar = c(0.5, -0.5), ma = 0.1), n = 1000)
@@ -621,7 +563,7 @@ Haslett J. and Raftery A.E. (1989);
    # plot(fit)
    
 ## predict -
-   # Forecast 5 Steps ahead:
+   # Forecast 5 Steps Ahead:
    par(mfrow = c(1, 1))
    predict(fit, 5)
    
@@ -638,18 +580,6 @@ Haslett J. and Raftery A.E. (1989);
    attach(TS.RET)
    armaFit(Close ~ ar(5))
    detach(TS.RET)
-   
-## armaRoots -
-   # Calculate and plot the roots of an ARMA process:
-   par(mfrow = c(2, 2), cex = 0.7)
-   coefficients = c(-0.5, 0.9, -0.1, -0.5)
-   armaRoots(coefficients)
-   
-## armaTrueacf -
-   model = list(ar = c(0.3, +0.3), ma = 0.1)
-   armaTrueacf(model)
-   model = list(ar = c(0.3, -0.3), ma = 0.1)
-   armaTrueacf(model)
 }
 
 

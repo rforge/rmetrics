@@ -252,8 +252,6 @@ Teraesvirta T., Lin C.F., Granger C.W.J. (1993);
 
 
 \examples{
-## SOURCE("fSeries.5B-TimeSeriesTests")
-
 ## bdsTest -
    # iid Time Series:
    par(mfrow = c(3, 1))

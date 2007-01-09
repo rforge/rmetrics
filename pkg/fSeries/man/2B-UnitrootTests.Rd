@@ -377,8 +377,6 @@ Schwert G.W. (1989);
 
 
 \examples{
-## SOURCE("fSeries.2B-UnitrootTests")
-
 ## adfTest - 
    # A time series which contains no unit-root:
    x = rnorm(1000)  
