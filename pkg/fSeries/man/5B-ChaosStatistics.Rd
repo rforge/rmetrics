@@ -1,13 +1,6 @@
-\name{ChaoticTimeSeries}
+\name{ChaosStatistics}
 
-\alias{ChaoticTimeSeries}
-
-\alias{tentSim}
-\alias{henonSim}
-\alias{ikedaSim}
-\alias{logisticSim}
-\alias{lorentzSim}
-\alias{roesslerSim}
+\alias{ChaosStatistics}
 
 
 \alias{mutualPlot}
@@ -17,26 +10,15 @@
 \alias{lyapunovPlot} 
 
 
-\title{Chaotic Time Series Modelling}
+\title{Chaotic Time Series Statistics}
 
 
 \description{
 
     A collection and description of functions to 
     investigate the chaotic behavior of time series 
-    processes. Included are functions to simulate 
-    different types of chaotic time series maps.
+    processes. 
     \cr
-    
-    Chaotic Time Series Maps:
-        
-    \tabular{ll}{
-    \code{tentSim} \tab Simulates data from the Tent Map, \cr
-    \code{henonSim} \tab simulates data from the Henon Map, \cr
-    \code{ikedaSim} \tab simulates data from the Ikeda Map, \cr
-    \code{logisticSim} \tab simulates data from the Logistic Map, \cr
-    \code{lorentzSim} \tab simulates data from the Lorentz Map, \cr
-    \code{roesslerSim} \tab simulates data from the Roessler Map. }  
     
     Functions to Analyse Chaotic Time Series:
     
@@ -50,20 +32,7 @@
 }
 
 
-\usage{
-tentSim(n = 1000, n.skip = 100, parms = c(a = 2), start = runif(1), 
-    doplot = FALSE)
-henonSim(n = 1000, n.skip = 100, parms = c(a = 1.4, b = 0.3), 
-    start = runif(2), doplot = FALSE)
-ikedaSim(n = 1000, n.skip = 100, parms = c(a = 0.4, b = 6.0, c = 0.9), 
-    start = runif(2), doplot = FALSE)
-logisticSim(n = 1000, n.skip = 100, parms = c(r = 4), start = runif(1), 
-    doplot = FALSE)
-lorentzSim(times = seq(0, 40, by = 0.01), parms = c(sigma = 16, r = 45.92, 
-    b = 4), start = c(-14, -13, 47), doplot = TRUE, \dots)
-roesslerSim(times = seq(0, 100, by = 0.01), parms = c(a = 0.2, b = 0.2, c = 8.0),
-    start = c(-1.894, -9.920, 0.0250), doplot = TRUE, \dots)
-    
+\usage{   
 mutualPlot(x, partitions = 16, lag.max = 20, doplot = TRUE, \dots)  
 falsennPlot(x, m, d, t, rt = 10, eps = NULL, doplot = TRUE, \dots) 
 recurrencePlot(x, m, d, end.time, eps, nt = 10, doplot = TRUE, \dots)
@@ -75,7 +44,6 @@ lyapunovPlot(x, m, d, t, ref, s, eps, k = 1, doplot = TRUE, \dots)
 \arguments{
   
     \item{d}{
-        [*Plot] - \cr
         an integer value setting the value of the time delay.
         }
     \item{eps}{
@@ -92,11 +60,6 @@ lyapunovPlot(x, m, d, t, ref, s, eps, k = 1, doplot = TRUE, \dots)
         }
     \item{doplot}{
         a logical flag. Should a plot be displayed?
-        [*Plot] - \cr
-        By default TRUE.
-        \cr
-        [*Sim] - \cr
-        By default TRUE.
         }
     \item{end.time}{
         [recurrencePlot] - \cr
@@ -126,19 +89,11 @@ lyapunovPlot(x, m, d, t, ref, s, eps, k = 1, doplot = TRUE, \dots)
         [separationPlot] - \cr
         an integer value setting the number of iterations.
         }
-    \item{n, n.skip}{
-        [henonSim][ikedaSim][logisticSim] - \cr
-        the number of chaotic time series points to be generated and the 
-        number of initial values to be skipped from the series. 
-        }
     \item{nt}{
         [recurrencePlot] - \cr
         observations in each step which will be plotted, by default 10.
         Increasing \code{nt} reduces number of points plotted which
         is usefule especially with highly sampled data.
-        }
-    \item{parms}{
-        the named parameter vector characterizing the chaotic map.
         }
     \item{rt}{
         [falsennPlot] - \cr
@@ -157,16 +112,9 @@ lyapunovPlot(x, m, d, t, ref, s, eps, k = 1, doplot = TRUE, \dots)
         [lyapunovPlot] - \cr
         the iterations along which follow the neighbours of each point.
         }
-    \item{start}{
-        the vector of start values to initiate the chaotic map.
-        }
     \item{t}{
         [*Plot] - \cr
         an integer value setting the value for the Theiler window.
-        }
-    \item{times}{
-        [lorentzSim][roesslerSim] - \cr
-        the sequence of time series points at which to generate the map. 
         }
     \item{x}{
         [*Plot] - \cr
@@ -233,14 +181,6 @@ lyapunovPlot(x, m, d, t, ref, s, eps, k = 1, doplot = TRUE, \dots)
     dimension.
 
 }
-    
-    
-\value{
-
-    [*Sim] - \cr
-    All functions return invisible a vector of time series data. 
-        
-}
 
 
 \references{
@@ -287,47 +227,8 @@ Rosenstein M.T., Collins J.J., De Luca C.J. (1993);
 
 
 \examples{
-## bdsTest -
-   # iid Time Series:
-   par(mfrow = c(3, 1))
-   x = rnorm(100)
-   plot(x, type = "l", main = "iid Time Series")
-   bdsTest(x, m = 3)
-   # Non Identically Distributed Time Series:
-   x = c(rnorm(50), runif(50))
-   plot(x, type = "l", main = "Non-iid Time Series")
-   bdsTest(x, m = 3)  
-   # Non Independent Innovations from Quadratic Map:
-   x = rep(0.2, 100)
-   for (i in 2:100) x[i] = 4*(1-x[i-1])*x[i-1]
-   plot(x, type = "l", main = "Quadratic Map")
-   bdsTest(x, m = 3)
+## NA -
    
-## tnnTest -
-   # Time Series Non-linear in "mean" regression 
-   par(mfrow = c(2, 1))
-   n = 1000
-   x = runif(1000, -1, 1)  
-   tnnTest(x)
-   # Generate time series which is nonlinear in "mean"
-   x[1] = 0.0
-   for (i in (2:n)) {
-     x[i] = 0.4*x[i-1] + tanh(x[i-1]) + rnorm (1, sd = 0.5) }
-   plot(x, main = "Teraesvirta Test", type = "l")
-   tnnTest(x)
-   
-## wnnTest -
-   # Time Series Non-Linear in "mean" Regression
-   par(mfrow = c(2, 1))
-   n = 1000
-   x = runif(1000, -1, 1)
-   wnnTest(x)
-   # Generate time series which is nonlinear in "mean"
-   x[1] = 0.0
-   for (i in (2:n)) {
-     x[i] = 0.4*x[i-1] + tanh(x[i-1]) + rnorm (1, sd = 0.5) }
-   plot(x, main = "White Test", type = "l")
-   wnnTest(x)                     
 }
 
 
