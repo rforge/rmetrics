@@ -1,15 +1,10 @@
-\name{LongRangeDependence}
+\name{LrdModelling}
 
-\alias{LongRangeDependence}
+\alias{LrdModelling}
 
 \alias{fbmSim}
 \alias{fgnSim}
 \alias{farimaSim}
-
-\alias{fgnTrueacf}
-\alias{fgnTruefft}
-\alias{farimaTrueacf}
-\alias{farimaTruefft}
 
 \alias{fHURST}
 \alias{fHURST-class}
@@ -40,10 +35,9 @@
     long memory behavior of an univariate time 
     series process. Included are functions to 
     simulate fractional Gaussian noise and 
-    fractional ARMA processes, functions to model 
-    the true autocorrelations and the spectrum of 
-    these processes, and functions to compute the 
-    Hurst exponent by several different methods.
+    fractional ARMA processes, and functions to 
+    estimate the Hurst exponent by several 
+    different methods.
     \cr
     
     The Functions and methods are:
@@ -62,14 +56,6 @@
     \code{- durbin} \tab using the method Durbin and Levinson, \cr
     \code{- paxson} \tab using the method of Paxson, \cr
     \code{farimaSim} \tab simulates FARIMA time series processes. }
-       
-    Functions to model the true autocorrelation function and spectrum:
-    
-    \tabular{ll}{ 
-    \code{fgnTrueacf} \tab Returns true FGN covariances, \cr
-    \code{fgnTruefft} \tab returns true FGN fast Fourier transform, \cr  
-    \code{farimaTrueacf} \tab returns true FARIMA covariances, \cr
-    \code{farimaTruefft} \tab returns true FARIMA fast Fourier transform. }
         
     Functions to estimate the Hurst exponent:
     
@@ -98,11 +84,6 @@ fbmSim(n = 100, H = 0.7, method = c("mvn", "chol", "lev", "circ", "wave"),
 fgnSim(n = 1000, H = 0.7, method = c("beran", "durbin", "paxson"))
 farimaSim(n = 1000, model = list(ar = c(0.5, -0.5), d = 0.3, ma = 0.1),
     method = c("freq", "time"), \dots) 
-    
-fgnTrueacf(n, H) 
-fgnTruefft(n, H) 
-farimaTrueacf(n, H) 
-farimaTruefft(n, H)
    
 aggvarFit(x, levels = 50, minnpts = 3, cut.off = 10^c(0.7, 2.5), 
     doplot = FALSE, trace = FALSE, title = NULL, description = NULL)    
@@ -290,14 +271,6 @@ show.fHURST(object)
     \code{n}, the FGN or FARIMA series.
     \cr
     
-    \code{fgnTrueacf(n, H)},
-    \code{fgnTruefft(n, H)}, 
-    \code{farimaTrueacf(n, H)}, and
-    \code{farimaTruefft(n, H)}
-    return the true covariance and the true spectrum of the FGN
-    or FARIMA time series process.
-    \cr
-    
     \code{*Fit} returns an S4 object of class \code{fHURST} with the
     following slots:
     
@@ -341,7 +314,7 @@ show.fHURST(object)
 
 \details{
 
-    \bold{I: Functions to Simulate Long Memory Processes:}
+    \bold{Functions to Simulate Long Memory Processes:}
     \cr
     
     \emph{Fractional Gaussian Noise:}
@@ -387,23 +360,9 @@ show.fHURST(object)
     originally written by C. Fraley [1991]. Details for the algorithm 
     are given in J Haslett and A.E. Raftery [1989]. 
     \cr
-    
-    
-    \bold{II: Functions to Model True Correlations and Spectrum:}
-    \cr
-    
-    The functions \code{fgnTrueacf} and \code{farimaTrueacf} return the
-    true covariances of an FGN and Gaussian FARIMA(0,d,0) time 
-    series process.
-    The functions \code{fgnTruefft} and \code{farimaTruefft} return the
-    true fast Fourier transform of an FGN and Gaussian FARIMA(0,d,0) 
-    time series process.
-    The R functions are implemented from SPlus code written by
-    J. Beran [1994].
-    \cr
 
     
-    \bold{III: Functions to Estimate the Hurst Exponent:}
+    \bold{Functions to Estimate the Hurst Exponent:}
     \cr
     
     These are 9 functions as described by M.S. Taqqu, V. Teverovsky,
@@ -557,7 +516,7 @@ show.fHURST(object)
     \cr
     
     
-    \bold{IV: Functions to perform a Wavelet Analysis:}
+    \bold{Functions to perform a Wavelet Analysis:}
     \cr
 
     The function \code{waveletFit} computes the Discrete Wavelet 
@@ -569,7 +528,7 @@ show.fHURST(object)
     %\cr
     
     
-    %\bold{V: Statistical Tests:}
+    %\bold{Statistical Tests:}
     %\cr
     
     %The ...

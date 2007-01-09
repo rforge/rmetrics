@@ -64,7 +64,7 @@
 
 
 fgnTrueacf = 
-function(n, H)
+function(n =100, H = 0.7)
 {   # A function implemented by Diethelm Wuertz
 
     # True ACF:
@@ -79,7 +79,7 @@ function(n, H)
 
 
 fgnTruefft = 
-function(n, H)
+function(n = 100, H = 0.7)
 {   # A function implemented by Diethelm Wuertz
 
     # True FFT:
@@ -101,11 +101,8 @@ function()
     #   Displays FGN true statistics: ACF and FFT
     
     # Example:
-    #   .fgnStatsSlider()
-    
-    # Changes:
-    #
-    
+    #   fgnStatsSlider()
+  
     # FUNCTION:
     
     # Internal Function:
@@ -265,7 +262,7 @@ function(n, H)
 
 
 farimaTrueacf = 
-function(n, H)
+function(n = 100, H = 0.7)
 {   # A function implemented by Diethelm Wuertz
     
     # ACF:
@@ -280,7 +277,7 @@ function(n, H)
 
 
 farimaTruefft = 
-function(n, H)
+function(n = 100, H = 0.7)
 {   # A function implemented by Diethelm Wuertz
 
     # FFT:
@@ -350,11 +347,8 @@ function()
     #   Displays farima true Statistics: ACF and FFT
     
     # Example:
-    #   .farimaStatsSlider()
-    
-    # Changes:
-    #
-    
+    #   farimaStatsSlider()
+ 
     # FUNCTION:
     
     # Internal Function:

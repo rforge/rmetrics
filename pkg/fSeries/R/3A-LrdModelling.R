@@ -720,10 +720,7 @@ function()
 
     # Description
     #   Displays fbm simulated time Series
-    
-    # Changes:
-    #
-    
+
     # FUNCTION:
     
     # Internal Function:
@@ -1004,10 +1001,7 @@ function()
 
     # Description
     #   Displays fgn simulated time Series
-    
-    # Changes:
-    #
-    
+
     # FUNCTION:
     
     # Internal Function:
