@@ -52,14 +52,6 @@ armaTrueacf(model, lag.max = 20, type = c("correlation", "partial", "both"),
         maximum number of lags at which to calculate the acf or 
         pacf, an integer value by default 20.
         }
-    \item{method}{
-        [armaFit] - \cr
-        a character string denoting the method used to fit the model.
-        The default method for all models is the log-likelihood parameter 
-        estimation approach, \code{method="mle"}. In the case of an AR
-        model the parameter estimation can also be done by ordinary least
-        square estimation, \code{"ols"}. 
-        } 
     \item{model}{
         [armaTrueacf] - \cr
         a specification of the ARMA model with two elements:
