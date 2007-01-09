@@ -21,13 +21,13 @@
     
     \tabular{rll}{
     1   \tab arfimaOxFit  \tab Fits parameters of ARFIMA models, \cr
-    2   \tab print \tab S3 print method for ARFIMA models, \cr
-    3   \tab plot \tab S3 plot method for ARFIMA models, \cr
-    4   \tab summary \tab S3 summary method for ARFIMA models, \cr
-    5   \tab fitted  \tab S3 method to extract the fitted values, \cr
-    6   \tab residuals  \tab S3 method to extract the resaidual values, \cr
-    7   \tab predict  \tab S3 method to predict from an ARFIMA model, \cr
-    8   \tab predictPlot \tab  S3 method to plot ARFIMA predictions. } 
+    2   \tab print \tab Print method for ARFIMA models, \cr
+    3   \tab plot \tab Plot method for ARFIMA models, \cr
+    4   \tab summary \tab Summary method for ARFIMA models, \cr
+    5   \tab fitted  \tab Method to extract the fitted values, \cr
+    6   \tab residuals  \tab Method to extract the resaidual values, \cr
+    7   \tab predict  \tab Method to predict from an ARFIMA model, \cr
+    8   \tab predictPlot \tab  Method to plot ARFIMA predictions. } 
     
 }
 
@@ -235,8 +235,6 @@ Laurent S., Peters J.P., [2005],
 
 \examples{
 \dontrun{
-## SOURCE("fSeries1.1B-ArfimaOxInterface")
-
 ## arfimaOxFit -
    x = armaSim(model = list(ar = c(0.5, - 0.5), d = 0.3, ma = 0.1), n = 500)
    fit = arfimaOxFit(formula = x ~ arfima(2,1))

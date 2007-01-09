@@ -51,7 +51,7 @@
     Functions to simulate long memory time series processes:
     
     \tabular{ll}{
-    \code{fnmSim} \tab Simulates fractio nal Brownian motion, \cr
+    \code{fnmSim} \tab Simulates fractional Brownian motion, \cr
     \code{- mvn} \tab from the numerical approximation of the stochastic integral, \cr
     \code{- chol} \tab from the Choleski's decomposition of the covariance matrix, \cr
     \code{- lev} \tab using the method of Levinson, \cr
