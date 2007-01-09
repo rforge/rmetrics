@@ -43,22 +43,17 @@
 #  mutualPlot            Creates mutual information plot
 #  .embeddPSR
 #  .checkEmbParams
-#  .mutual.RUnit
 #  fnnPlot               Creates false nearest neigbours plot
-#  .fnn.RUnit
-# FUNCTION:             NON STATIONARITY:
+# FUNCTION:             NON STATIONARITY PLOTS:
 #  recurrencePlot        Creates recurrence plot
-#  .recurrence.RUnit
 #  separationPlot        Creates space-time separation plot
-#  .separation.RUnit
 # FUNCTION:             LYAPUNOV EXPONENTS:
 #  lyapunovPlot          Maximum Lyapunov plot    
 #  .find.nearest
 #  .follow.points
 #  .lyapunovFit            
-#  .lyapunov.RUnit
 # FUNCTION:             DIMENSIONS AND ENTROPY:
-#
+#  ...
 ################################################################################
 
 ################################################################################
@@ -96,6 +91,7 @@ function()
         doplot = FALSE) 
     mutualPlot(x = lorentz[, 2], partitions = 16, lag.max = 20, doplot = TRUE) 
    
+    
     # False Nearest Neighbours:
     roessler = roesslerSim(
         times = seq(0, 100, by = 0.01), 
@@ -104,6 +100,7 @@ function()
         doplot = FALSE)
     falsennPlot(x = roessler[, 2], m = 6, d = 8, t = 180, eps = 1, rt = 3)
 
+    
     # Return Value:
     return()    
 }
@@ -115,7 +112,6 @@ function()
 test.nonStationarity = 
 function()
 {  
-
     # Recurrence Plot:
     lorentz = lorentzSim(
         times = seq(0, 40, by = 0.01), 
@@ -138,6 +134,7 @@ function()
         doplot = FALSE)
     separationPlot(roessler[, 2], m = 3, d = 8, idt = 1, mdt = 250)    
 
+    
     # Return Value:
     return()    
 }

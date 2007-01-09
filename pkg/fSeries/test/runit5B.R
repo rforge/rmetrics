@@ -73,8 +73,7 @@ function()
 
 test.bdsTest = 
 function()
-{  
-    
+{    
     # iid example:
     set.seed(4711)
     x = rnorm(100)
@@ -85,7 +84,7 @@ function()
     # Is each of the 8 p.values greater 0.1?
     checkEqualsNumeric(sum(p.value > 0.1), 8)
     
-    # Not identically distributed
+    # Not identically distributed:
     set.seed(1985)
     x = c(rnorm(50), runif(50))
     test = bdsTest(x)

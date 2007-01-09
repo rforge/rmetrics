@@ -180,21 +180,21 @@ function()
     print(x)
     target = round(var(x), 2)
     print(target)
-    checkSum = 0
+    checkSum = 0.01
     checkEquals(target, checkSum)
     
     x = fbmSim(n = 50, method = "chol", seed = 4711, fgn = TRUE)
     print(x)
     target = round(var(x), 2)
     print(target)
-    checkSum = +0.31
+    checkSum = 0.0
     checkEquals(target, checkSum)
     
     x = fbmSim(n = 50, method = "lev",  seed = 4711, fgn = TRUE)
     print(x)
     target = round(var(x), 2)
     print(target)
-    checkSum = -0.01
+    checkSum = 0.0
     checkEquals(target, checkSum)
     
     x = fbmSim(n = 50, method = "circ", seed = 4711, fgn = TRUE)
@@ -208,7 +208,7 @@ function()
     print(x)
     target = round(var(x), 2)
     print(target)
-    checkSum = -0.32
+    checkSum = 0.0
     checkEquals(target, checkSum)
     
     # Return Value:
@@ -462,6 +462,7 @@ function()
 
 
 # ------------------------------------------------------------------------------
+
 
 if (FALSE) {
     require(RUnit)
