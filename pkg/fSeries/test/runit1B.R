@@ -48,13 +48,15 @@
 ################################################################################
 
 
+# MS WINDOWS ONLY !!!
+
 
 test.helpFile = 
 function()
 {
     # Help File:
     helpFile = function() { 
-        example(ArfimaOxInterface); return() }
+        example(ArfimaOxInterface, ask = FALSE); return() }
     checkIdentical(
         target = class(try(helpFile())),
         current = "NULL")
@@ -70,7 +72,7 @@ function()
 test.arfimaFit = 
 function()
 {
-    # OX-ARFIMA(2,1) - WARNING: MA Coefficients have opposite sign!
+    # OX-ARFIMA(2,1) - IMPORTANT: MA Coefficients have opposite sign!
     
     # Set Path:
     OXPATH <<- "C:\\Ox\\Ox3"
@@ -88,7 +90,7 @@ function()
     checkEqualsNumeric(target, current)
     
     
-    # MLE Fit - method="nls":
+    # NLS Fit - method="nls":
     object = arfimaOxFit(formula = ~ arfima(2, 1), data = x, method = "nls")
     print(object)
     target = as.vector(round(coef(object), 1))
@@ -97,7 +99,7 @@ function()
     checkEqualsNumeric(target, current)
     
     
-    # MLE Fit - method="mpl":
+    # MPL Fit - method="mpl":
     object = arfimaOxFit(formula = ~ arfima(2, 1), data = x, method = "mpl")
     print(object)
     target = as.vector(round(coef(object), 1))
@@ -135,7 +137,7 @@ function()
     # 2:   ACF of Residuals
     # 3:   QQ Plot of Residuals
     # 4:   Ljung-Box p Values
-    par(mfrow = c(2,2), cex = 0.7)
+    par(mfrow = c(2, 2), cex = 0.7)
     plot(object, which = "all") 
     
     # Summary:
@@ -188,11 +190,8 @@ function()
 test.noTrace = 
 function()
 {    
-    # NOTE: MS Windows only!
-    
     # Set Ox Path:
     OXPATH <<- "C:\\Ox\\Ox3"
-    
     
     # Simulate and Fit:
     set.seed(1985)
@@ -201,8 +200,7 @@ function()
     print(object)
     summary(object)
     coef(object)
-    
-    
+      
     # Return Value:
     return()    
 }

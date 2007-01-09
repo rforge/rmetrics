@@ -122,7 +122,7 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.adf = 
+test.adfTest = 
 function()
 {  
     # A time series which contains no unit-root:
@@ -132,23 +132,45 @@ function()
     # A time series which contains a unit-root:
     y = cumsum(c(0, x))
     
-    # Test:
+    # Test x:
     A = adfTest(x)
     print(A)
     checkTrue(pvalue(A) < 0.05)
+    
+    # Test x:
     B = adfTest(y)
     print(B)
-    checkTrue(pvalue(B) > 0.30)
+    checkTrue(pvalue(B) > 0.15)
+   
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+ 
     
-    # Test:
+test.unitrootTest = 
+function()
+{     
+    # A time series which contains no unit-root:
+    set.seed(4711)
+    x = rnorm(1000)  
+    
+    # A time series which contains a unit-root:
+    y = cumsum(c(0, x))
+    
+    # Test x:
     A = unitrootTest(x)
     print(A)
     checkTrue(pvalue(A)[1] < 0.05)
     checkTrue(pvalue(A)[2] < 0.05)
+    
+    # Test x:
     B = unitrootTest(y)    
     print(B)
-    checkTrue(pvalue(B)[1] > 0.30)
-    checkTrue(pvalue(B)[2] > 0.30)
+    checkTrue(pvalue(B)[1] > 0.15)
+    checkTrue(pvalue(B)[2] > 0.15)
    
     # Return Value:
     return()    
@@ -163,35 +185,40 @@ function()
 {
     # A time series which contains no unit-root:
     set.seed(4711)
-    x = rnorm(1000)  
+    x = rnorm(100)  
     
     # A time series which contains a unit-root:
     y = cumsum(c(0, x))
     
-    # Tests:
+    # DF Test:
     urdfTest(x, lags = 1, type = c("nc", "c", "ct"), 
         doplot = TRUE)                                                   
         
+    # ERS Test:
     urersTest(x, type = "DF-GLS", model = c("constant", "trend"),
         lag.max = 4, doplot = TRUE)
     urersTest(x, type = "P-test", model = c("constant", "trend"),
-        lag.max = 4, doplot = TRUE)
-        
+        lag.max = 4) # No Plot
+     
+    # KPSS Test:   
     urkpssTest(x, type = "mu", lags = c("short", "long", "nil"),
         use.lag = NULL, doplot = TRUE)
     urkpssTest(x, type = "tau", lags = c("short", "long", "nil"),
-        use.lag = NULL, doplot = TRUE)
-        
+        use.lag = NULL) # No Plot
+      
+    # PP Test:  
     urppTest(x, type = "Z-alpha", model = c("constant", "trend"),
         lags = c("short", "long"), use.lag = NULL, doplot = TRUE)
     urppTest(x, type = "Z-tau", model = c("constant", "trend"),
         lags = c("short", "long"), use.lag = NULL, doplot = TRUE)
         
+    # SP Test:  
     urspTest(x, type = "tau", pol.deg = c(1, 2, 3, 4),
         signif = c(0.01, 0.05, 0.1), doplot = TRUE)
     urspTest(x, type = "rho", pol.deg = c(1, 2, 3, 4),
         signif = c(0.01, 0.05, 0.1), doplot = TRUE)
         
+    # ZA Test: 
     urzaTest(x, model = "intercept", lag = 2, 
         doplot = TRUE) 
     urzaTest(x, model = "trend", lag = 2, 
