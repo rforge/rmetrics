@@ -3,9 +3,7 @@
 \alias{ExtremesData}
 
 \alias{emdPlot}
-\alias{qqPlot}
-%\alias{qqbayesPlot}
-\alias{qPlot}
+\alias{qqparetoPlot}
 \alias{mePlot}
 \alias{mrlPlot}
 \alias{mxfPlot}
@@ -34,8 +32,7 @@
     
     \tabular{ll}{
     \code{emdPlot} \tab Plot of empirical distribution function, \cr
-    \code{fBasics::qqnormPlot} \tab Normal quantile-quantile plot, \cr
-    \code{qPlot} \tab Exponential/Pareto quantile plot, \cr
+    \code{qqparetoPlot} \tab Exponential/Pareto quantile plot, \cr
     \code{mePlot} \tab Plot of mean excesses over a threshold, \cr
     \code{mrlPlot} \tab another variant, mean residual life plot, \cr
     \code{mxfPlot} \tab another variant, with confidence intervals, \cr
@@ -50,9 +47,11 @@
 
 
 \usage{
-emdPlot(x, doplot = TRUE, plottype = c("xy", "x", "y", ""), labels = TRUE, \dots)
+emdPlot(x, doplot = TRUE, plottype = c("xy", "x", "y", ""), 
+    labels = TRUE, \dots)
 
-qPlot(x, xi = 0, trim = NULL, threshold = NULL, doplot = TRUE, labels = TRUE, \dots)
+qqparetoPlot(x, xi = 0, trim = NULL, threshold = NULL, doplot = TRUE, 
+    labels = TRUE, \dots)
 
 mePlot(x, doplot = TRUE, labels = TRUE, \dots)
 mrlPlot(x, ci = 0.95, umin = mean(x), umax = max(x), nint = 100, doplot = TRUE, 
@@ -68,8 +67,8 @@ ssrecordsPlot(x, subsamples = 10, doplot = TRUE, plottype = c("lin", "log"),
 sllnPlot(x, doplot = TRUE, labels = TRUE, \dots)
 lilPlot(x, doplot = TRUE, labels = TRUE, \dots)
 
-xacfPlot(x, u = quantile(x, 0.95), lag.max = 15, doplot = TRUE, labels = TRUE, \dots)
-
+xacfPlot(x, u = quantile(x, 0.95), lag.max = 15, doplot = TRUE, 
+    labels = TRUE, \dots)
 }
 
 
@@ -303,10 +302,10 @@ Embrechts, P., Klueppelberg, C., Mikosch, T. (1997);
    qqnormPlot(bmw)
    text(-3.5, 0.09, pos = 4, "BMW log returns")     
    
-## qPlot -
+## qqparetoPlot -
    # QQ-Plot of heavy-tailed Danish fire insurance data:
    data(danish)
-   qPlot(danish) 
+   qqparetoPlot(danish) 
  
 ## mePlot -
    # Sample mean excess plot of heavy-tailed Danish fire 

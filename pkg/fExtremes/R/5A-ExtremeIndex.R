@@ -144,7 +144,7 @@ title = NULL, description = NULL)
     #   Calculates theta from Block method, i.e. theta1.
     
     # Example:
-    #   .blockTheta(.thetaSim(n=10000))
+    #   blockTheta(thetaSim(n=10000))
     
     # FUNCTION:
     
@@ -216,7 +216,7 @@ title = NULL, description = NULL)
     #   Calculates theta from Reciprocal Mean Cluster Size method, i.e. theta2.
     
     # Example:
-    #   .clusterTheta(.thetaSim(n=10000))
+    #   clusterTheta(thetaSim(n=10000))
     
     # FUNCTION:
     
@@ -285,7 +285,7 @@ title = NULL, description = NULL)
     #   Calculates theta from Run method, i.e. theta3.
     
     # Example:
-    #   .runTheta(.thetaSim(n=10000))
+    #   runTheta(thetaSim(n=10000))
     
     # FUNCTION:
     

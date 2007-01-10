@@ -29,9 +29,9 @@
 
 ################################################################################
 # FUNCTION:             GEV SIMULATION:
-#  gevSim                Simulates GEV Distribution
-#  gumbelSim             Simulates Gumbel Distribution
-# FUNCTION:             PARAMETER ESTIMATION:
+#  gevSim                Simulates a GEV distributed process
+#  gumbelSim             Simulates a Gumbel distributed process
+# FUNCTION:             GEV PARAMETER ESTIMATION:
 #  'fGEVFIT'             S4 class representation
 #  gevFit                Fits Parameters of GEV distribution
 #  gumbelFit             Fits Parameters of Gumbel distribution
@@ -42,13 +42,13 @@
 #   .gevmleFit            Fits GEV with max log-likelihood approach
 #    .gevLLH               Computes GEV log-likelihood function
 # METHODS:              PRINT, PLOT, AND SUMMARY:
-#  show.fGEVFIT          Show method for object of class "fGEVFIT"
-#  plot.fGEVFIT          Plot method for object of class "fGEVFIT"
+#  show.fGEVFIT          S4 Show method for object of class "fGEVFIT"
+#  plot.fGEVFIT          S3 Plot method for object of class "fGEVFIT"
 #   .gev1Plot             Block Maxima Plot            
 #   .gev2Plot             Scatterplot of Residuals
 #   .gev3Plot             Histogram of Residuals
 #   .gev4Plot             Quantile-Quantile Plot
-#  summary.fGEVFIT       Summary Method for object of class "fGEVFIT"
+#  summary.fGEVFIT       S3 Summary Method for object of class "fGEVFIT"
 ################################################################################
 
 

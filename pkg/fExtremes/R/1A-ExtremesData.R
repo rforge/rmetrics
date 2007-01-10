@@ -30,8 +30,7 @@
 ################################################################################
 # FUNCTION             EXPLORATIVE DATA ANALYSIS:
 #  emdPlot              Creates an empirical distribution plot
-#  fBasics::qqnormPlot  Creates a normal qq-Plot with confidence intervals
-#  qPlot                Creates exploratory QQ plot for EV analysis
+#  qqparetoPlot         Creates exploratory QQ plot for EV analysis
 #  mePlot               Creates a sample mean excess plot
 #   mxfPlot             Creates another view of a sample mean excess plot
 #   mrlPlot             Returns a mean residual life plot with confidence levels
@@ -71,7 +70,7 @@ labels = TRUE, ...)
     plottype = plottype[1]
          
     # Convert x to a vector, if the input is a data.frame.
-    if (is.data.frame(x)) x = x[,1] 
+    if (is.data.frame(x)) x = x[, 1] 
     xs = x = sort(as.numeric(x))
     ys = y = 1 - ppoints(x)
     
@@ -120,7 +119,7 @@ labels = TRUE, ...)
 # ------------------------------------------------------------------------------
 
 
-qPlot = 
+qqparetoPlot = 
 function(x, xi = 0, trim = NULL, threshold = NULL, doplot = TRUE, 
 labels = TRUE, ...)
 {   # A function imported from R-package evir
@@ -137,7 +136,7 @@ labels = TRUE, ...)
     line = TRUE
     
     # Convert x to a vector, if the input is a data.frame.
-    if(is.data.frame(x)) x = x[,1] 
+    if(is.data.frame(x)) x = x[, 1] 
     
     # qPlot:
     x = as.numeric(x)

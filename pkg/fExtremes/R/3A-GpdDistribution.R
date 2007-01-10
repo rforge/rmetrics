@@ -27,7 +27,7 @@
 #   see Rmetrics's copyright file
 
 
-# ##############################################################################
+################################################################################
 # FUNCTION:              GPD DISTRIBUTION FAMILY:
 # dgpd                    Density for the Generalized Pareto DF [USE FROM EVIS]
 #  pgpd                    Probability for the Generalized Pareto DF
@@ -40,9 +40,6 @@
 #  .pepd                    Probability for the Generalized Pareto DF
 #  .qepd                    Quantiles for the Generalized Pareto DF
 #  .repd                    Random variates for the Generalized Pareto DF
-################################################################################
-
-
 ################################################################################
 
 
