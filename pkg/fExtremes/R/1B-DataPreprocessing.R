@@ -43,6 +43,11 @@ function (x, block = c("monthly", "quarterly"), doplot = FALSE)
     # Description:
     #   Compute block maxima from a time series or numeric vector
     
+    # Arguments:
+    #   x - an univariate 'timeSeries' object or any other object
+    #       which can be coerced in a numeric vector by the function
+    #       as.vector().
+    
     # Example:
     #   data(bmwRet)
     #   blockMaxima(bmwRet, 200)
@@ -53,7 +58,7 @@ function (x, block = c("monthly", "quarterly"), doplot = FALSE)
     
     # Check Type:
     if (class(x) == "timeSeries") {
-        if (dim(x)[2] > 1) stop("x must be an univariate time series")
+        stopifnot(isUnivariate(x))
     } else {
         x = as.vector(x)
         stopifnot(is.numeric( block[1])) 
@@ -123,7 +128,10 @@ function(x, n = floor(0.05*length(as.vector(x))), doplot = FALSE)
     #   Upper threshold for a given number of extremes
     
     # Arguments:
-    #   x - an univariate time series object or numeric vector
+    # Arguments:
+    #   x - an univariate 'timeSeries' object or any other object
+    #       which can be coerced in a numeric vector by the function
+    #       as.vector().
     #   n - a numeric value giving number of extremes 
     #       above the threshold, by default 5%.
     
@@ -135,7 +143,9 @@ function(x, n = floor(0.05*length(as.vector(x))), doplot = FALSE)
     
     # Check Type:
     if (class(x) == "timeSeries") {
-        if (dim(x)[2] > 1) stop("x must be an univariate time series")
+        stopifnot(isUnivariate(x))
+    } else {
+        x = as.vector(x)
     }
    
     # Threshold:
@@ -168,8 +178,9 @@ function(x, u = quantile(x, 0.95), doplot = FALSE)
 {   # A function implemented by Diethelm Wuertz
 
     # Arguments:
-    #   x - an object of class 'timeSeries'. The quantiles will be 
-    #       computed for the selected column.
+    #   x - an univariate 'timeSeries' object or any other object
+    #       which can be coerced in a numeric vector by the function
+    #       as.vector().
     #   u - threshold value
 
     
@@ -179,7 +190,7 @@ function(x, u = quantile(x, 0.95), doplot = FALSE)
     # Point Process:
     CLASS = class(x)
     if (CLASS == "timeSeries") {
-        if (dim(x)[[2]] > 1) stop("x must be a univariate time series")
+        stopifnot(isUnivariate(x))
         X = x[, 1][x@Data[, 1] > u]
     } else {
         X = as.vector(x)
@@ -218,6 +229,9 @@ function(x, run = 20, doplot = TRUE)
     # Description:
     #   Decluster a Point Process.
     
+    # Arguments:
+    #   x - an univariate 'timeSeries' object
+    
     # Example:
     #   deCluster(pointProcess(as.timeSeries(daxRet)))
     
@@ -225,6 +239,7 @@ function(x, run = 20, doplot = TRUE)
 
     # Check:
     stopifnot(class(x) == "timeSeries")
+    stopifnot(isUnivariate(x))
    
     # Decluster time Series:
     positions = seriesPositions(x)
