@@ -30,6 +30,7 @@
 ################################################################################
 # FUNCTION             EXPLORATIVE DATA ANALYSIS:
 #  emdPlot              Creates an empirical distribution plot
+#  qqnormPlot           -> fEcofin
 #  qqparetoPlot         Creates exploratory QQ plot for EV analysis
 #  mePlot               Creates a sample mean excess plot
 #   mxfPlot             Creates another view of a sample mean excess plot
@@ -56,6 +57,9 @@ labels = TRUE, ...)
     #   Plots empirical distribution function
     
     # Arguments:
+    #   x - any object which can be transformed by the function
+    #       as.vector() into a numeric vector 
+    #   doplot - a logical flag, should a pot be returned ?
     #   plottype - which axes should be on a log scale: 
     #       "x" denotes x-axis only; "y" denotes y-axis only,
     #       "xy" || "yx" both axes, "" denotes neither of the 
@@ -93,6 +97,10 @@ labels = TRUE, ...)
             xlab = "x"
             ylab = "1-F(x)"
             main = "Empirical Distribution" 
+            if (plottype == "xy") main = paste("log-log", main)
+            if (plottype ==  "x") main = paste("log-lin", main)
+            if (plottype ==  "y") main = paste("lin-log", main)
+            if (plottype ==   "") main = paste("lin-lin", main)
         } else {
             xlab = ""
             ylab = ""
@@ -127,13 +135,14 @@ labels = TRUE, ...)
     # Description:
     #   Creates an exploratory QQ-plot for Extreme Value Analysis.
 
+    #   x - any object which can be transformed by the function
+    #       as.vector() into a numeric vector 
+    #   doplot - a logical flag, should a pot be returned ?
+    
     # FUNCTION:
     
     # Convert Type:
     x = as.vector(x)
-    
-    # Settings:
-    line = TRUE
     
     # Convert x to a vector, if the input is a data.frame.
     if(is.data.frame(x)) x = x[, 1] 
@@ -166,9 +175,12 @@ labels = TRUE, ...)
             ylab = ""
             main = "" 
         }
-        plot(sort(x), y, pch = 19, col = "steelblue", xlab = xlab, 
+        z = sort(x)
+        plot(z, y, pch = 19, col = "steelblue", xlab = xlab, 
             ylab = ylab, main = main, ...)
-        if (line) abline(lsfit(sort(x), y)) 
+        rug(z, ticksize = 0.01, side = 3)
+        rug(y, ticksize = 0.01, side = 4)
+        abline(lsfit(z, y)) 
         if (labels) {
             grid()
             text = paste("xi =", as.character(round(xi, 3))) 
@@ -433,8 +445,8 @@ function(x, ci = 0.95, doplot = TRUE, labels = TRUE, ...)
         lines(trial, lower, lty = 2, col = "brown") 
         if (labels) {
             grid()
-            text = paste("ci =", as.character(round(ci, 3))) 
-            mtext(text, side = 4, adj = 0, cex = 0.7)
+            text = paste("ci =", as.character(conf.level)) 
+            mtext(text, side = 4, adj = 0, col = "grey", cex = 0.7)
         } 
     }
         
@@ -467,7 +479,10 @@ labels = TRUE,  ...)
     x = as.vector(x)
     
     # Plot type:
-    plottype = plottype[1]
+    plottype = match.arg(plottype)
+    
+    # Labels:
+    xlab = ylab = main = ""    
     
     # Records:
     save = x 
@@ -497,14 +512,18 @@ labels = TRUE,  ...)
                     if (plottype == "lin") xlab = "n"
                     if (plottype == "log") xlab = "log(n)"
                     ylab = "N(n)" 
+                    main = "Subsample Records Plot"
                 }
-                main = "Subsample Records Plot"
                 plot (nc, csmean+cssd, type = "l", ylim = c(0, ymax),
                     lty = 2, col = "brown", xlab = xlab, ylab = ylab, 
                     main = main, ...) 
-                grid() 
                 lines(nc, csmean)  
                 lines(nc, csmean-cssd, lty = 2, col = "brown") 
+                if (labels) {
+                    grid() 
+                    text = paste("subsamples =", as.character(subsamples)) 
+                    mtext(text, side = 4, adj = 0, col = "grey", cex = 0.7)
+                }
             }
         } 
         y.records = 1:length(x.records)
@@ -634,7 +653,7 @@ function(x, doplot = TRUE, labels = TRUE, ...)
         plot(y, xlab = xlab, ylab = ylab, type = "l", main = main, 
             col = "steelblue", ...)
         lines(c(0, nx), c(mean, mean), col = "brown")
-        grid()
+        if (labels) grid()
     }
     
     # Return Value:
@@ -687,7 +706,7 @@ function (x, doplot = TRUE, labels = TRUE, ...)
             main = main, col = "steelblue", ...)
         lines(c(0,lx), c(1,1), col = "brown")
         lines(c(0,lx), c(-1,-1), col = "brown")
-        grid()
+        if (labels) grid()
     }
     
     # Return Value:
@@ -699,7 +718,8 @@ function (x, doplot = TRUE, labels = TRUE, ...)
 
 
 xacfPlot = 
-function(x, u = quantile(x, 0.95), lag.max = 15, doplot = TRUE, labels = TRUE, ...)
+function(x, u = quantile(x, 0.95), lag.max = 15, doplot = TRUE, 
+which = c("all", 1, 2, 3, 4), labels = TRUE, ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -710,6 +730,8 @@ function(x, u = quantile(x, 0.95), lag.max = 15, doplot = TRUE, labels = TRUE, .
     
     # Convert Type:
     x = as.vector(x)
+    which = match.arg(which)
+    which = as.character(which)
     
     # Settings:
     if (labels) {
@@ -729,23 +751,34 @@ function(x, u = quantile(x, 0.95), lag.max = 15, doplot = TRUE, labels = TRUE, .
     
     # Plot:
     if (doplot) {
-        plot (Heights, type="h", xlab = xlab[1], ylab = ylab[1], 
+        if (which == "all" | which == "1")
+        plot (Heights, type = "h", xlab = xlab[1], ylab = ylab[1], 
             main = main[1], ...)
+        if (which == "all" | which == "2")
         plot (Distances, type = "h", xlab = xlab[1], ylab = ylab[2], 
             main = main[2], ...) 
     }
     
     # Correlations:
+    if (which == "all" | which == "3")
     Heights = as.vector(acf(Heights, lag.max=lag.max, plot = doplot, 
         xlab = xlab[2], ylab = ylab[3], main = main[3], ...)$acf)
+    if (which == "all" | which == "4")
     Distances = as.vector(acf(Distances, lag.max=lag.max, plot = doplot, 
         xlab = xlab[2], ylab = ylab[3], main = main[4], ...)$acf)
 
     # Result:
-    lag = as.vector(0:(lag.max))
-    result = data.frame(lag, Heights, Distances)
+    if (which == "all") {
+        lag = as.vector(0:(lag.max))
+        result = data.frame(lag, Heights, Distances) 
+    } else {
+        result = NULL
+    }
 
     # Return Value:
     if (doplot) return(invisible(result)) else return(result)
 }
+
+
+################################################################################
 

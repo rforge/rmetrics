@@ -90,7 +90,6 @@ function(object)
 setMethod("show", "fTHETA", show.fTHETA)
 
 
-
 # ------------------------------------------------------------------------------
 
 
@@ -149,7 +148,7 @@ title = NULL, description = NULL)
     # FUNCTION:
     
     # Check:
-    if (!is.numeric(block)) stop("Argument block must be an integer value.") 
+    stopifnot(is.numeric(block))
 
     # Number of blocks and number of data points:
     X = as.vector(x) 
@@ -221,7 +220,7 @@ title = NULL, description = NULL)
     # FUNCTION:
     
     # Check:
-    if (!is.numeric(block)) stop("Argument block must be an integer value.") 
+    stopifnot(is.numeric(block))
 
     # Number of blocks and number of data points:
     X = as.vector(x) 
@@ -290,7 +289,7 @@ title = NULL, description = NULL)
     # FUNCTION:
     
     # Check:
-    if (!is.numeric(block)) stop("Argument block must be an integer value.") 
+    stopifnot(is.numeric(block))
 
     # Number of blocks and number of data points:
     X = as.vector(x) 
@@ -361,6 +360,7 @@ title = NULL, description = NULL)
     # FUNCTION:
     
     # Settings:
+    x = as.vector(x)
     n = length(x)
     N = floor(quantiles*n)
     sorted = sort(x)
