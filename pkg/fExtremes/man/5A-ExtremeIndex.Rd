@@ -70,17 +70,16 @@ exindexesPlot(x, block = 22, quantiles = seq(0.950, 0.995, length = 10),
 \arguments{
 
     \item{block}{
-        [exindexPlot] - \cr
+        [*Theta] - \cr
+        an integer value, the block size. Currently only integer specified
+        block sizes are supported.
+        \cr
+        [exindex*Plot] - \cr
         the block size. Either \code{"monthly"}, \code{"quarterly"} or
         an integer value. An integer value is interpreted as the number 
         of data values in each successive block. The default value is
-        \code{"monthly"} which correpsond for daily data to approximately
+        \code{"monthly"} which correpsond for daily data to an approximately
         22-day periods.
-        \cr
-        [exindexesPlot] - \cr
-        An integer value with the number of data values in each successive 
-        block. By default 22-day sized blocks are used which are thought 
-        for daily data records and span approximately monthly periods.
         }
     \item{description}{
         a character string which allows for a brief description.
@@ -133,8 +132,8 @@ exindexesPlot(x, block = 22, quantiles = seq(0.950, 0.995, length = 10),
         a character string which allows for a project title.
         }
     \item{x}{
-        a 'timeSeries' object or any other object which can be transferred
-        by the function \code{as.vector} to a numeric vector. \code{"monthly"}
+        a 'timeSeries' object or any other object which can be transformed
+        by the function \code{as.vector} into a numeric vector. \code{"monthly"}
         and \code{"quarterly"} blocks require \code{x} to be an object of
         class \code{"timeSeries"}.
         }

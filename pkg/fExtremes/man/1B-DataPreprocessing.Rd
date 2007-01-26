@@ -170,6 +170,7 @@ Embrechts, P., Klueppelberg, C., Mikosch, T. (1997);
 
 
 \examples{ 
+\dontrun{
 ## findThreshold -
    # Find threshold giving (at least) fifty exceedances 
    # for Danish Fire data
@@ -189,6 +190,8 @@ Embrechts, P., Klueppelberg, C., Mikosch, T. (1997);
    PP = pointProcess(-as.timeSeries(data(bmwRet)), n = 300)
    deCluster(x = PP, run = 15, doplot = TRUE) 
 }
+}
+
 
 \keyword{programming}
 

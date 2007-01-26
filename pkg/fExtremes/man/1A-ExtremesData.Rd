@@ -4,14 +4,19 @@
 
 \alias{emdPlot}
 \alias{qqparetoPlot}
+
 \alias{mePlot}
 \alias{mrlPlot}
 \alias{mxfPlot}
+
 \alias{msratioPlot}
+
 \alias{recordsPlot}
 \alias{ssrecordsPlot}
+
 \alias{sllnPlot}
 \alias{lilPlot}
+
 \alias{xacfPlot}
 
 
@@ -24,8 +29,8 @@
     explorative data analysis. The tools include 
     plot functions for emprical distributions, quantile 
     plots, graphs exploring the properties of exceedences 
-    over a threshold, plots for mean/sum ratio and for the development 
-    of records.
+    over a threshold, plots for mean/sum ratio and for 
+    the development of records.
     \cr
     
     The plot functions are:
@@ -68,7 +73,7 @@ sllnPlot(x, doplot = TRUE, labels = TRUE, \dots)
 lilPlot(x, doplot = TRUE, labels = TRUE, \dots)
 
 xacfPlot(x, u = quantile(x, 0.95), lag.max = 15, doplot = TRUE, 
-    labels = TRUE, \dots)
+    which = c("all", 1, 2, 3, 4), labels = TRUE, \dots)
 }
 
 
@@ -139,11 +144,11 @@ xacfPlot(x, u = quantile(x, 0.95), lag.max = 15, doplot = TRUE,
         values: \code{umin=mean(x)} and \code{umax=max(x)}.
         }
     \item{which}{
-        plot selection, which graph should be displayed? If \code{"which"}
-        is a character string named "ask" the user is interactively asked 
-        which to plot, if a logical vector of length \code{N}, those plots 
-        which are set \code{TRUE} are displayed, if a character string
-        named \code{"all"} all plots are displayed.
+        [xacfPlot] - \cr
+        a numeric or character value, if \code{which="all"} then all
+        four plots are displayed, if \code{which} is an integer between
+        one and four, then the first, second, third or fourth plot will
+        be displayed.
         }
     \item{x, y}{
         numeric data vectors or in the case of x an object to be plotted.  
@@ -167,20 +172,13 @@ xacfPlot(x, u = quantile(x, 0.95), lag.max = 15, doplot = TRUE,
     \cr
     
     
-    \bold{Quantile--Quantile Plot:}
+    \bold{Quantile--Quantile Pareto Plot:}
     \cr\cr      
-    The function \code{qqPlot} produces a normal QQ-plot. Note, that 
-    \code{qqPlot} is not a synonym function call to the \R-base function 
-    \code{qqplot} which produces a quantile-quantile plot of two datasets.      
-    To help with assessing the relevance of sampling variability on just
-    "how close" to the normal the data appears, \code{qqbayesPlot} (part
-    of \code{fBasics}) adds 
-    approximate posterior 95% intervals for the uncertain quantile 
-    function at each point.
-    \code{qPlot} creates a QQ-plot for threshold data. If \code{xi} is 
-    zero the reference distribution is the exponential; if \code{xi} is 
-    non-zero the reference distribution is the generalized Pareto with 
-    that value of \code{xi}. In the case of the exponential, the plot is 
+    \code{qqparetoPlot} creates a quantile-quantile plot for threshold 
+    data. If \code{xi} is zero the reference distribution is the 
+    exponential; if \code{xi} is non-zero the reference distribution 
+    is the generalized Pareto with that parameter value expressed 
+    by \code{xi}. In the case of the exponential, the plot is 
     interpreted as follows: Concave departures from a straight line are a 
     sign of heavy-tailed behaviour, convex departures show thin-tailed 
     behaviour. 
@@ -218,11 +216,17 @@ xacfPlot(x, u = quantile(x, 0.95), lag.max = 15, doplot = TRUE,
     \cr\cr
     These are functions that investigate the development of records in 
     a dataset and calculate the expected behaviour for iid data.
-    \code{recordPlot} counts records and reports the observations 
+    \code{recordsPlot} counts records and reports the observations 
     at which they occur. In addition subsamples can be investigated
-    with the help of the function \code{ssrecords}.
+    with the help of the function \code{ssrecordsPlot}.
     \cr
     
+    \bold{Plot of Kolmogorov's and Hartman-Wintern's Laws:}
+    \cr\cr
+    The function \code{sllnPlot} verifies Kolmogorov's strong law of 
+    large numbers, and the function \code{lilPlot} verifies 
+    Hartman-Wintner's law of the iterated logarithm.
+    \cr
     
     \bold{ACF Plot of Exceedences over a Thresold:}
     \cr\cr
@@ -242,9 +246,9 @@ xacfPlot(x, u = quantile(x, 0.95), lag.max = 15, doplot = TRUE,
 \note{
 
     The plots are labeled by default with a x-label, a y-label and
-    a main title. If the argument \code{label} is set to \code{FALSE}
-    neither a x-label, a y-label nor a main title will be added to 
-    graph. To add user defined label strings "\dots" just use the 
+    a main title. If the argument \code{labels} is set to \code{FALSE}
+    neither a x-label, a y-label nor a main title will be added to the
+    graph. To add user defined label strings just use the 
     function \code{title(xlab="\dots", ylab="\dots", main="\dots")}.
     
 }
@@ -275,116 +279,28 @@ Embrechts, P., Klueppelberg, C., Mikosch, T. (1997);
 
 
 \examples{ 
+## Danish fire insurance data:
+   data(danishClaims)
+   danishClaims = as.timeSeries(danishClaims)
+   
 ## emdPlot -
-   # Danish fire insurance data show Pareto tail behaviour:
-   par(mfrow = c(2, 2))
-   data(danish)
-   emdPlot(danish, plottype = "xy", labels = FALSE)
-   title(xlab = "x", ylab = "1-F(x)", main = "Danish Fire")   
-   # BMW Stocks:
-   data(bmw)
-   emdPlot(bmw, plottype = "xy", labels = FALSE)
-   title(xlab = "x", ylab = "1-F(x)", main = "BMW Stocks")  
-   # Simulated Student-t:
-   emdPlot(rt(5000, 4), plottype = "xy") 
- 
-## fBasics::qqnormPlot -
-   # QQ-Plot of Simulated Normal rvs:
-   par(mfrow = c(2, 2))
-   set.seed(4711)
-   qqnormPlot(rnorm(5000))
-   text(-3.5, 3, pos = 4, "Simulated Normal rvs")
-   # QQ-Plot of simulated Student-t rvs:
-   qqnormPlot(rt(5000, 4))
-   text(-3.5, 11.0, pos = 4, "Simulated Student-t rvs")
-   # QQ-Plot of BMW share residuals:
-   data(bmw)
-   qqnormPlot(bmw)
-   text(-3.5, 0.09, pos = 4, "BMW log returns")     
+   # Show Pareto tail behaviour:
+   par(mfrow = c(2, 2), cex = 0.7)
+   emdPlot(danishClaims) 
    
 ## qqparetoPlot -
-   # QQ-Plot of heavy-tailed Danish fire insurance data:
-   data(danish)
-   qqparetoPlot(danish) 
+   # QQ-Plot of heavy-tailed Danish fire insurance data
+   qqparetoPlot(danishClaims, xi = 0.7) 
  
 ## mePlot -
    # Sample mean excess plot of heavy-tailed Danish fire 
-   # insurance data 
-   par(mfrow = c(3, 2))
-   data(danish)
-   mePlot(danish, labels = FALSE)
-   title(xlab = "u", ylab = "e", main = "mePlot - Danish Fire Data")
-   
-## mrlPlot -
-   # Sample mean residual live plot of heavy-tailed Danish Fire 
-   # insurance data 
-   mrlPlot(danish, labels = FALSE)
-   title(xlab = "u", ylab = "e", main = "mrlPlot - Danish Fire Data")
- 
-## mxfPlot -
-   # Plot the mean excess functions for randomly distributed 
-   # residuals  
-   par(mfrow = c(2, 2))
-   n = 10000    
-   set.seed(4711)
-   xlab = "Threshold: u"; ylab = "Mean Excess: e"
-   mxfPlot(rnorm(n), tail = 0.5, labels = FALSE)
-   title(xlab = xlab, ylab = ylab, main = "mxf Plot - Normal DF")
-   set.seed(7138)
-   mxfPlot(rexp(n, 2), tail = 0.5, labels = FALSE)
-   title(xlab = xlab, ylab = ylab, main = "mxfPlot - Exponential DF")
-   abline(1/2, 0)
-   set.seed(6952)
-   mxfPlot(rlnorm(n, 0, 2), tail = 0.5, xlim = c(0,90), 
-     ylim = c(0, 120), labels = FALSE)
-   title(xlab = xlab, ylab = ylab, main = "mxfPlot - Lognormal DF")
-   set.seed(8835)
-   mxfPlot(rgpd(n, 1/2), tail = 0.10, xlim = c(0,200), 
-     ylim=c(0,200), labels = FALSE)
-   title(xlab = xlab, ylab = ylab, main = "mxfPlot - Pareto")
-   abline(0, 1)  
- 
-## msratioPlot -
-   # Examples for Ratio of Maximum and Sum Plots:
-   par(mfrow = c(3, 2))
-   data(bmw)
-   xlab = "n"; ylab = "R(n)"
-   msratioPlot (rnorm(8000), labels = FALSE)
-   title(xlab = xlab, ylab = ylab, main = "Standard Normal")
-   msratioPlot (rexp(8000), labels = FALSE)
-   title(xlab = xlab, ylab = ylab, main = "Exponential")
-   msratioPlot (rt(8000, 4), labels = FALSE)
-   title(xlab = xlab, ylab = ylab, main = "Student-t")
-   msratioPlot (rcauchy(8000), labels = FALSE)
-   title(xlab = xlab, ylab = ylab, main = "Cauchy")
-   msratioPlot (bmw, labels = FALSE)
-   title(xlab = xlab, ylab = ylab, main = "BMW Returns")
-  
-## recordsPlot -
-   # Record fire insurance losses in Denmark
-   par(mfrow = c(2, 2))
-   data(danish)
-   recordsPlot(danish)
-   text(1, 7.9, pos = 4, "Danish Fire")
-   # BMW Stocks
-   data(bmw)
-   recordsPlot(bmw)
-   text(1, 12.8, pos = 4, "BMW Shares")
+   mePlot(danishClaims)
       
 ## ssrecordsPlot -
    # Record fire insurance losses in Denmark
-   ssrecordsPlot(danish)
-   text(1, 9.2, pos = 4, "Danish Fire")
-   # BMW Stocks
-   ssrecordsPlot(bmw)
-   text(1, 10.5, pos = 4, "BMW Shares")  
- 
-## xacfPlot -
-   # Plot ACF of Heights/Distances of Eceedences over threshold:
-   par(mfrow = c(2, 2))
-   data(bmw)
-   xacfPlot(bmw)
+   ssrecordsPlot(danishClaims, subsamples = 10) 
 }
+
 
 \keyword{hplot}
 
