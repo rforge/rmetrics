@@ -52,32 +52,32 @@ C     INIT BASE FROM PRIMES - THIS IMPLEMENTS A SIMMPLE SIEVE:
       N = 3
       NC = 2
       DO WHILE(NC.LT.DIMEN)
-	  M = N/2
-	  K = 0
-	  IF (MOD(N,2).NE.0.AND.MOD(N,3).NE.0) THEN
-	     DO I = 5, M
+      M = N/2
+      K = 0
+      IF (MOD(N,2).NE.0.AND.MOD(N,3).NE.0) THEN
+         DO I = 5, M
                IF(MOD(N,I).EQ.0) K = K + 1
          ENDDO
-	     IF (K.EQ.0) THEN
-	        NC = NC + 1
-	        BASE(NC) = N
-	     ENDIF
-	  ENDIF
-	  N = N + 1
+         IF (K.EQ.0) THEN
+            NC = NC + 1
+            BASE(NC) = N
+         ENDIF
+      ENDIF
+      N = N + 1
       ENDDO
       
 C     NOW CREATE THE FIRST QUASI RANDOM NUMBER:
       OFFSET = 0
-      DO NB = 1, DIMEN	      
-	  ITER(NB) = OFFSET
-	  QUASI(NB) = 0.0D0
-	  HALF = 1.0D0 / BASE(NB)
-	  DO WHILE (ITER(NB).NE.0)
-	     DIGIT = MOD ( ITER(NB), BASE(NB) )
-	     QUASI(NB) = QUASI(NB) + DIGIT * HALF
-	     ITER(NB) = ( ITER(NB) - DIGIT ) / BASE(NB)
-	     HALF = HALF / BASE(NB)
-	  ENDDO 
+      DO NB = 1, DIMEN        
+      ITER(NB) = OFFSET
+      QUASI(NB) = 0.0D0
+      HALF = 1.0D0 / BASE(NB)
+      DO WHILE (ITER(NB).NE.0)
+         DIGIT = MOD ( ITER(NB), BASE(NB) )
+         QUASI(NB) = QUASI(NB) + DIGIT * HALF
+         ITER(NB) = ( ITER(NB) - DIGIT ) / BASE(NB)
+         HALF = HALF / BASE(NB)
+      ENDDO 
       ENDDO
 
 C     SET THE COUNTER:
@@ -98,21 +98,21 @@ C     NOTE, THAT WE HAVE ALREADY "OFFSET" POINTS GENERATED.
       INTEGER DIMEN, BASE(DIMEN), ITER(DIMEN), OFFSET, DIGIT
       REAL*8 QUASI(DIMEN), HALF
       INTRINSIC MOD
-  	  	   
+           
       DO NB = 1, DIMEN      
-	  ITER(NB) = OFFSET
-	  QUASI(NB) = 0.0D0
-	  HALF = 1.0 / BASE(NB)
-	  DO WHILE (ITER(NB).NE.0)
-	     DIGIT = MOD ( ITER(NB), BASE(NB) )
-	     QUASI(NB) = QUASI(NB) + DIGIT * HALF
-	     ITER(NB) = ( ITER(NB) - DIGIT ) / BASE(NB)
-	     HALF = HALF / BASE(NB)
-	  ENDDO 
-      ENDDO	      
+      ITER(NB) = OFFSET
+      QUASI(NB) = 0.0D0
+      HALF = 1.0 / BASE(NB)
+      DO WHILE (ITER(NB).NE.0)
+         DIGIT = MOD ( ITER(NB), BASE(NB) )
+         QUASI(NB) = QUASI(NB) + DIGIT * HALF
+         ITER(NB) = ( ITER(NB) - DIGIT ) / BASE(NB)
+         HALF = HALF / BASE(NB)
+      ENDDO 
+      ENDDO       
 
 C     INCREASE THE COUNTER BY ONE:
-      OFFSET = OFFSET + 1	 
+      OFFSET = OFFSET + 1    
 
       RETURN
       END
@@ -140,21 +140,21 @@ C       TRANSFORM - A FLAG, 0 FOR UNIFORM, 1 FOR NORMAL DISTRIBUTION
 
 C     IF REQUESTED, INITIALIZE THE GENERATOR:
       IF (INIT.EQ.1) THEN
-	  CALL INITHALTON(DIMEN, QUASI, BASE, OFFSET)	 
+      CALL INITHALTON(DIMEN, QUASI, BASE, OFFSET)    
       ENDIF
 
 C     GENERATE THE NEXT "N" QUASI RANDOM NUMBERS:
       DO I=1, N
          CALL NEXTHALTON(DIMEN, QUASI, BASE, OFFSET)
-	  IF (TRANSFORM.EQ.1) THEN
-	     DO J = 1, DIMEN
-            QN(I, J) = HQNORM(QUASI(J))
-	     ENDDO
-	  ELSE
+      IF (TRANSFORM.EQ.1) THEN
          DO J = 1, DIMEN
-            QN(I, J) = QUASI(J)	       
-	     ENDDO
-	  ENDIF
+            QN(I, J) = HQNORM(QUASI(J))
+         ENDDO
+      ELSE
+         DO J = 1, DIMEN
+            QN(I, J) = QUASI(J)        
+         ENDDO
+      ENDIF
       ENDDO
 
       RETURN
@@ -322,20 +322,20 @@ C       TRANSFORM - FLAG, 0 FOR UNIFORM, 1 FOR NORMAL DISTRIBUTION
       INTEGER iSEED
 
       IF (INIT.EQ.1) THEN
-      CALL INITSOBOL(DIMEN, QUASI, LL, COUNT, SV, IFLAG, iSEED)	 
+      CALL INITSOBOL(DIMEN, QUASI, LL, COUNT, SV, IFLAG, iSEED)  
       ENDIF
 
       DO I=1, N
          CALL NEXTSOBOL(DIMEN, QUASI, LL, COUNT, SV)
-	  IF (TRANSFORM.EQ.1) THEN
-	    DO J = 1, DIMEN
+      IF (TRANSFORM.EQ.1) THEN
+        DO J = 1, DIMEN
                QN(I, J) = SQNORM(QUASI(J))
-	    ENDDO
-	  ELSE
+        ENDDO
+      ELSE
             DO J = 1, DIMEN
-               QN(I, J) = QUASI(J)	       
-	    ENDDO
-	  ENDIF
+               QN(I, J) = QUASI(J)         
+        ENDDO
+      ENDIF
       ENDDO
 
       RETURN
@@ -406,6 +406,8 @@ C                   3 - OWEN + FAURE-TEZUKA TYPE SCRAMBLING
 C       iSEED     - SCRAMBLING iSEED
       
       INTEGER MAXDIM,MAXDEG,MAXBIT,IFLAG
+CC      DW ADDED FOLLOWING LINE:
+      INTEGER P,PP
       PARAMETER (MAXDIM=1111,MAXDEG=13,MAXBIT=30)
       INTEGER ATMOST,DIMEN,TAUS,COUNT,MAXCOL,S
       INTEGER POLY(2:MAXDIM),VINIT(2:MAXDIM,MAXDEG)
@@ -418,7 +420,7 @@ CC      INTEGER TEMP1,TEMP2,TEMP4
       REAL*8 QUASI(DIMEN),RECIPD
       INTEGER iSEED
       LOGICAL INCLUD(MAXDEG)
-	  INTRINSIC MOD, IEOR
+      INTRINSIC MOD, IEOR
       
       DATA (POLY(I),I=2,211)/3,7,11,13,19,25,37,59,47,61,55,41,67,97,91,
      +     109,103,115,131,193,137,145,143,241,157,185,167,229,171,213,
