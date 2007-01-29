@@ -16,7 +16,7 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2004, Diethelm Wuertz, GPL
+#   1999 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
 #   www.rmetrics.org
@@ -40,18 +40,15 @@
 #  .LevyTurnbullWakemanAsianDensity    Log-Normal Approximation
 #  .MilevskyPosnerAsianDensity         Reciprocal-Gamma Approximation
 #  .PosnerMilevskyAsianDensity         Johnson Type I Approximation 
-# 
 # GRAM CHARLIER SERIES EXPANSION:    DESCRIPTION:
 #  GramCharlierAsianOption            Calculate Gram-Charlier option prices
 #  .GramCharlierAsianDensity          NA
-#
 # STATE SPACE MOMENTS:               DESCRIPTION:
 #  AsianOptionMoments                 Methods to calculate Asian Moments
 #  .DufresneAsianOptionMoments         Moments from Dufresne's Formula
 #  .AbrahamsonAsianOptionMoments       Moments from Abrahamson's Formula
 #  .TurnbullWakemanAsianOptionMoments  First 2 Moments from Turnbull-Wakeman
 #  .TolmatzAsianOptionMoments          Asymptotic Behavior after Tolmatz
-#
 # STATE SPACE DENSITIES:              DESCRIPTION:
 #  StateSpaceAsianDensity              NA
 #  .Schroeder1AsianDensity             NA
@@ -60,31 +57,25 @@
 #  .Yor2AsianDensity                   NA
 #  .TolmatzAsianDensity                NA
 #  .TolmatzAsianProbability            NA
-#
 # PARTIAL DIFFERENTIAL EQUATIONS:     DESCRIPTION:
 #  PDEAsianOption                      PDE Asian Option Pricing
 #   .ZhangAsianOption                   Asian option price by Zhang's 1D PDE
 #    ZhangApproximateAsianOption
 #   .VecerAsianOption                   Asian option price by Vecer's 1D PDE 
-#
 # LAPLACE INVERSION:                  DESCRIPTION:
 #   GemanYorAsianOption                Asian option price by Laplace Inversion
 #   gGemanYor                          Function to be Laplace inverted
-#
 # SPECTRAL EXPANSION:                 DESCRIPTION:
 #   LinetzkyAsianOption                Asian option price by Spectral Expansion
 #   gLinetzky                          Function to be integrated
-#
 # BOUNDS ON OPTION PRICES:            DESCRIPTION:
 #   BoundsOnAsianOption                 Lower and upper bonds on Asian calls
 #    CurranThompsonAsianOption          From Thompson's continuous limit
 #    RogerShiThompsonAsianOption        From Thompson's single integral formula   
 #    ThompsonAsianOption                Thompson's upper bound 
-#
 # SYMMETRY RELATIONS:                 DESCRIPTION:
 #   CallPutParityAsianOption           Call-Put parity Relation
 #   WithDividendsAsianOption           Adds dividends to Asian Option Formula
-#
 # TABULATED RESULTS:                  DESCRIPTION:
 #   FuMadanWangTable                   Table from Fu, Madan and Wang's paper
 #   FusaiTaglianiTable                 Table from Fusai und tagliani's paper
@@ -96,12 +87,15 @@
 ################################################################################
 
 
+
 test.helpFile = 
 function()
 {
     # Help File:
     helpFile = function() { 
-        example(EBMAsianOptions); return() }
+        example(EBMAsianOptions)
+        return() 
+    }
     checkIdentical(
         target = class(try(helpFile())),
         current = "NULL")

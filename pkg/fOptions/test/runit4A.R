@@ -16,7 +16,7 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2004, Diethelm Wuertz, GPL
+#   1999 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
 #   www.rmetrics.org
@@ -45,7 +45,9 @@ function()
 {
     # Help File:
     helpFile = function() { 
-        example(HestonNandiGarchFit); return() }
+        example(HestonNandiGarchFit)
+        return() 
+    }
     checkIdentical(
         target = class(try(helpFile())),
         current = "NULL")
@@ -58,10 +60,33 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.X = 
+test.hngarch = 
 function()
 {
-    ##
+    # Simulate a Heston-Nandi Garch(1,1) Process:
+    # Symmetric Model - Parameters:
+    model = list(lambda = 4, omega = 8e-5, alpha = 6e-5, 
+        beta = 0.7, gamma = 0, rf = 0)
+    ts = hngarchSim(model = model, n = 500, n.start = 100)
+    par(mfrow = c(2, 1), cex = 0.75)
+    ts.plot(ts, col = "steelblue", main = "HN Garch Symmetric Model")
+    grid()
+    
+    # Estimate Parameters:
+    # HN-GARCH log likelihood Parameter Estimation:
+    # To speed up, we start with the simulated model ...
+    mle = hngarchFit(model = model, x = ts, trace = TRUE, symmetric = TRUE)
+    mle
+    
+    mle = hngarchFit(model = model, x = ts, trace = TRUE, symmetric = FALSE)
+    mle
+           
+    # HN-GARCH Diagnostic Analysis:
+    par(mfrow = c(3, 1), cex = 0.75)
+    summary(mle)    
+    
+    # HN-GARCH Moments:
+    hngarchStats(mle$model)    
 
     # Return Value:
     return()    

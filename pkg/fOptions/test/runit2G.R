@@ -16,7 +16,7 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2004, Diethelm Wuertz, GPL
+#   1999 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
 #   www.rmetrics.org
@@ -45,7 +45,9 @@ function()
 {
     # Help File:
     helpFile = function() { 
-        example(CurrencyTranslatedOptions); return() }
+        example(CurrencyTranslatedOptions)
+        return() 
+    }
     checkIdentical(
         target = class(try(helpFile())),
         current = "NULL")
@@ -61,27 +63,26 @@ function()
 test.haug = 
 function()
 {
-    ## Examples from Chapter 2.13 in E.G. Haug's Option Guide (1997)
-
-    ## Foreign Equity Options Struck in Domestic Currency [2.13.1]:
-       FEInDomesticFXOption(TypeFlag = "c", S = 100, E = 1.5, 
-         X = 160, Time = 0.5, r = 0.08, q = 0.05, sigmaS = 0.20, 
-         sigmaE = 0.12, rho = 0.45)
+    # Examples from Chapter 2.13 in E.G. Haug's Option Guide (1997)
     
-    ## Fixed Exchange-Rate Foreign-Equity Option [2.13.2]: 
-       QuantoOption(TypeFlag = "c", S = 100, Ep = 1.5, X = 105, 
-         Time = 0.5, r = 0.08, rf = 0.05, q = 0.04, sigmaS= 0.2, 
-         sigmaE = 0.10, rho = 0.30) 
+    # Foreign Equity Options Struck in Domestic Currency [2.13.1]:
+    FEInDomesticFXOption(TypeFlag = "c", S = 100, E = 1.5, 
+        X = 160, Time = 0.5, r = 0.08, q = 0.05, sigmaS = 0.20, 
+        sigmaE = 0.12, rho = 0.45)
     
-    ## Equity Linked Foreign Exchange Option [2.13.3]:
-       EquityLinkedFXOption(TypeFlag = "p", E = 1.5, S = 100, 
-         X = 1.52, Time = 0.25, r = 0.08, rf = 0.05, q = 0.04, 
-         sigmaS = 0.20, sigmaE = 0.12, rho = -0.40)
+    # Fixed Exchange-Rate Foreign-Equity Option [2.13.2]: 
+    QuantoOption(TypeFlag = "c", S = 100, Ep = 1.5, X = 105, 
+        Time = 0.5, r = 0.08, rf = 0.05, q = 0.04, sigmaS= 0.2, 
+        sigmaE = 0.10, rho = 0.30) 
     
-    ## Takeover Foreign-Exchange Option [2.13.4]:
-       TakeoverFXOption(V = 100, B = 100, E = 1.5, X = 1.55, Time = 1, 
-         r = 0.08, rf = 0.06, sigmaV = 0.20, sigmaE = 0.25, rho = 0.1)
-
+    # Equity Linked Foreign Exchange Option [2.13.3]:
+    EquityLinkedFXOption(TypeFlag = "p", E = 1.5, S = 100, 
+        X = 1.52, Time = 0.25, r = 0.08, rf = 0.05, q = 0.04, 
+        sigmaS = 0.20, sigmaE = 0.12, rho = -0.40)
+    
+    # Takeover Foreign-Exchange Option [2.13.4]:
+    TakeoverFXOption(V = 100, B = 100, E = 1.5, X = 1.55, Time = 1, 
+        r = 0.08, rf = 0.06, sigmaV = 0.20, sigmaE = 0.25, rho = 0.1)
 
     # Return Value:
     return()    

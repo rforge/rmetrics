@@ -16,7 +16,7 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2004, Diethelm Wuertz, GPL
+#   1999 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
 #   www.rmetrics.org
@@ -57,7 +57,9 @@ function()
 {
     # Help File:
     helpFile = function() { 
-        example(GammaFunctions); return() }
+        example(GammaFunctions)
+        return() 
+    }
     checkIdentical(
         target = class(try(helpFile())),
         current = "NULL")
@@ -70,10 +72,165 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.X = 
+test.erf = 
 function()
 {
-    ##
+    # Error Function
+    
+    # erf(x) - Abramowitz-Stegun p. 310 ff
+    erf(0.0)  
+                     
+    erf(0.5) - 0.5204998788   
+    erf(1.0) - 0.8427007929
+    erf(2.0) - 0.9953222650
+    
+    erf(-0.5) + 0.5204998788   
+    erf(-1.0) + 0.8427007929
+    erf(-2.0) + 0.9953222650
+    
+    x = seq(-5, 5, length = 101)
+    y = erf(x)
+    par(mfrow = c(1,1))
+    plot(x, y, type = "b", pch = 19)
+
+    # Symmetry Relation, p. 297
+    # erf(-x) = - erf(x)
+    erf(-0.5) + erf(0.5)
+    erf(-pi)  + erf(pi)
+    
+    # Abramowitz-Stegun: Example 1, p. 304
+    erf(0.745) - 0.707928920
+  
+    # Return Value:
+    return()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.erfc = 
+function()
+{
+    # Complementary Error Function
+    
+    # Add functions:
+    erfc = function(x) { 1 - erf(x) }
+    erfc(0.5)
+    erf(0.5) + erfc(0.5)
+    
+    # Abramowitz-Stegun: Example 2, p. 304
+    1.1352e-11
+    1 - erf(4.8)
+  
+    # Return Value:
+    return()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.gamma = 
+function()
+{
+    # Gamma Function
+    
+    # Abramowitz-Stegun: Figure 6.1, p. 255
+    x = seq(-4.01, 4.01, by = 0.011)
+    
+    # Plot:
+    plot(x, gamma(x), ylim = c(-5,5), type = "l", main = "Gamma Function")
+    grid()
+    abline(h = 0, col = "red", lty = 3)
+    for (i in c(-4:0)) abline(v = i, col = "white")
+    for (i in c(-4:0)) abline(v = i, col = "red", lty = 3)
+    
+    # Add 1/Gamma:
+    lines(x, 1/gamma(x), lty = 3)
+  
+    # Return Value:
+    return()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.Psi = 
+function()
+{    
+    # Psi Function
+    
+    # Abramowitz-Stegun: Figure 6.2, p. 258
+    x = seq(-4.01, 4.01, by = 0.011)
+    plot(x, Psi(x), ylim = c(-5, 5), type = "l", main = "Psi Function")
+    grid()
+    abline(h = 0, col = "red", lty = 3)
+    for (i in c(-4:0)) abline(v = i, col = "white")
+    for (i in c(-4:0)) abline(v = i, col = "red", lty = 3)
+  
+    # Return Value:
+    return()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.incompleteGamma = 
+function()
+{        
+    # Incomplete Gamma Function
+    
+    # Abramowitz-Stegun: Figure 6.3. 
+    gammaStar = function(x, a) { igamma(x,a)/x^a }
+    # ... create Figure as an exercise.
+
+    # Abramowitz-Stegun: Formula 6.5.12
+    # Relation to Confluent Hypergeometric Functions
+    a = sqrt(2)
+    x = pi
+    Re ( (x^a/a) * kummerM(-x, a, 1+a) )
+    Re ( (x^a*exp(-x)/a) * kummerM(x, 1, 1+a) )
+    pgamma(x,a) * gamma(a)
+    igamma(x, a)                                        # CHECK!
+    
+    # Return Value:
+    return()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.complexGamma = 
+function()
+{      
+    # Complex Gamma Function
+    
+    # Abramowitz-Stegun: Tables 6.7, p. 277
+    x = 1
+    y = seq(0, 5, by = 1); x = rep(x, length = length(y))
+    z = complex(real = x, imag = y)
+    c = cgamma(z, log = TRUE)
+    cbind(x, y, "Re ln" = Re(c), "Im ln" = Im(c))
+    
+    # Abramowitz-Stegun: Tables 6.7, p.287
+    x = 2
+    y = seq(0, 5, by = 1); x = rep(x, length = length(y))
+    z = complex(real = x, imag = y)
+    c = cgamma(z, log = TRUE)
+    cbind(x, y, "Re ln" = Re(c), "Im ln" = Im(c))
+    
+    # cgamma -
+    # Abramowitz-Stegun: Examples, p. 263
+    options(digits = 10)
+    gamma(6.38); lgamma(56.38)                            # Example 1, 2
+    Psi(6.38); Psi(56.38)                                 # 3, 4
+    cgamma(complex(real = 1, imag = -1), log = TRUE )     # 5
+    cgamma(complex(real = 1/2, imag = 1/2), log = TRUE )  # 6
+    cgamma(complex(real = 3, imag = 7), log = TRUE )      # 7, 8 
 
     # Return Value:
     return()    
@@ -83,7 +240,28 @@ function()
 # ------------------------------------------------------------------------------
 
 
-if (FALSE) {
+test.Pochhammer = 
+function()
+{      
+    # Pochhammer Symbol
+    
+    # Abramowitz-Stegun: Formula 6.1.22, p. 256
+    
+    # Pochhammer(x, n)
+    Pochhammer(x = 1, n = 0) - 1
+    Pochhammer(x = 1, n = 1) - 1
+    Pochhammer(x = 2, n = 2) - gamma(2+2)/gamma(2)
+    
+    
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+   
+    if (FALSE) {
     require(RUnit)
     testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fOptions/test/runit3B.R")
     printTextProtocol(testResult)
