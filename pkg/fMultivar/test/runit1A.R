@@ -77,17 +77,14 @@
 ################################################################################
 
 
-### Uncomplete - Under Development ###
-
-
 test.helpFile = 
 function()
 {
-    # UNIT TEST:
-    
     # Help File:
     helpFile = function() { 
-        example(TechnicalAnalysis); return() }
+        example(TechnicalAnalysis)
+        return() 
+    }
     checkIdentical(
         target = class(try(helpFile())),
         current = "NULL")
@@ -98,27 +95,28 @@ function()
 
 
 # ------------------------------------------------------------------------------
-
+#  emaTA                     Exponential Moving Average
+#  biasTA                    EMA-Bias
+#  medpriceTA                Median Price                   
+#  typicalpriceTA            Typical Price
+#  wcloseTA                  Weighted Close Price
+#  rocTA                     Rate of Change
+#  oscTA                     EMA-Oscillator
 
 test.utility =
 function()
 {
-    # UTILITY FUNCTIONS:
-    
-    #  emaTA                     Exponential Moving Average
-    #  biasTA                    EMA-Bias
-    #  medpriceTA                Median Price                   
-    #  typicalpriceTA            Typical Price
-    #  wcloseTA                  Weighted Close Price
-    #  rocTA                     Rate of Change
-    #  oscTA                     EMA-Oscillator
-    
+    # Utility Functions:
+ 
     # Data:
-    URL = "http://localhost/econophysics/R/data/organisations/YAHOO/data/MSFT.CSV"
-    download.file(URL, "MSFT.CSV")
-    X = readSeries("MSFT.CSV")
-    print(head(X))
+    # URL = "http://localhost/econophysics/R/data/organisations/YAHOO/data/MSFT.CSV"
+    # download.file(URL, "MSFT.CSV")
+    # X = readSeries("MSFT.CSV")
     
+    # Alternatively from fEcofin:
+    X = as.timeSeries(data(msft.dat))
+    print(head(X))
+
     # Data Records:
     x = close = X[, "Close"]
     high   = X[, "High"]
@@ -167,26 +165,26 @@ function()
 
 
 # ------------------------------------------------------------------------------
-    
+#  momTA                     Momentum
+#  macdTA                    MACD
+#  cdsTA                     MACD Signal Line
+#  cdoTA                     MACD Oscillator
+#  vohlTA                    High/Low Volatility
+#  vorTA                     Volatility Ratio   
+
 
 test.oscillator =
 function()
 {
-    # OSCILLATOR INDICATORS:
-    
-    #  momTA                     Momentum
-    #  macdTA                    MACD
-    #  cdsTA                     MACD Signal Line
-    #  cdoTA                     MACD Oscillator
-    #  vohlTA                    High/Low Volatility
-    #  vorTA                     Volatility Ratio
-    
-    # UNIT TEST:
-    
+    # Oscillator Indicators:
+   
     # Data:
-    URL = "http://localhost/econophysics/R/data/organisations/YAHOO/data/MSFT.CSV"
-    download.file(URL, "MSFT.CSV")
-    X = readSeries("MSFT.CSV")
+    # URL = "http://localhost/econophysics/R/data/organisations/YAHOO/data/MSFT.CSV"
+    # download.file(URL, "MSFT.CSV")
+    # X = readSeries("MSFT.CSV")
+    
+    # Alternatively from fEcofin:
+    X = as.timeSeries(data(msft.dat))
     print(head(X))
     
     # Data Records:
@@ -232,27 +230,27 @@ function()
 
 
 # ------------------------------------------------------------------------------
+# stochasticTA              Stochastics %K/%D, fast/slow
+# fpkTA                     Fast Percent %K
+# fpdTA                     Fast Percent %D
+# spdTA                     Slow Percent %D
+# apdTA                     Averaged Percent %D
+# wprTA                     Williams Percent %R
+# rsiTA                     Relative Strength Index
 
 
 test.stochastics =
 function()
 {
-    # STOCHASTICS INDICATORS:
-    
-    #  stochasticTA              Stochastics %K/%D, fast/slow
-    #  fpkTA                     Fast Percent %K
-    #  fpdTA                     Fast Percent %D
-    #  spdTA                     Slow Percent %D
-    #  apdTA                     Averaged Percent %D
-    #  wprTA                     Williams Percent %R
-    #  rsiTA                     Relative Strength Index
-
-    # UNIT TEST:
+    # Stochastics Indicatords:
     
     # Data:
-    URL = "http://localhost/econophysics/R/data/organisations/YAHOO/data/MSFT.CSV"
-    download.file(URL, "MSFT.CSV")
-    X = readSeries("MSFT.CSV")
+    # URL = "http://localhost/econophysics/R/data/organisations/YAHOO/data/MSFT.CSV"
+    # download.file(URL, "MSFT.CSV")
+    # X = readSeries("MSFT.CSV")
+    
+    # Alternatively from fEcofin:
+    X = as.timeSeries(data(msft.dat))
     print(head(X))
     
     # Data Records:
@@ -309,33 +307,34 @@ function()
 
 
 # ------------------------------------------------------------------------------
+# accelTA                   Acceleration
+# adiTA                     AD Indicator      
+# adoscillatorTA            AD Oscillator
+# bollingerTA               Bollinger Bands
+# chaikinoTA                Chaikin Oscillator
+# chaikinvTA                Chaikin Volatility
+# garmanklassTA             Garman-Klass Volatility
+# nviTA                     Negative Volume Index
+# obvTA                     On Balance Volume
+# pviTA                     Positive Volume Index
+# pvtrendTA                 Price-Volume Trend
+# williamsadTA              Williams AD
+# williamsrTA               Williams R%
 
 
 test.addons =
 function()
 {
-    # MORE INDICATORS:
-    
-    #  accelTA                   Acceleration
-    #  adiTA                     AD Indicator      
-    #  adoscillatorTA            AD Oscillator
-    #  bollingerTA               Bollinger Bands
-    #  chaikinoTA                Chaikin Oscillator
-    #  chaikinvTA                Chaikin Volatility
-    #  garmanklassTA             Garman-Klass Volatility
-    #  nviTA                     Negative Volume Index
-    #  obvTA                     On Balance Volume
-    #  pviTA                     Positive Volume Index
-    #  pvtrendTA                 Price-Volume Trend
-    #  williamsadTA              Williams AD
-    #  williamsrTA               Williams R%
-    
-    # UNIT TEST:
+    # More Trading Indicators:
     
     # Data:
-    URL = "http://localhost/econophysics/R/data/organisations/YAHOO/data/MSFT.CSV"
-    download.file(URL, "MSFT.CSV")
-    X = readSeries("MSFT.CSV")
+    # URL = "http://localhost/econophysics/R/data/organisations/YAHOO/data/MSFT.CSV"
+    # download.file(URL, "MSFT.CSV")
+    # X = readSeries("MSFT.CSV")
+    
+    # Alternatively from fEcofin:
+    X = as.timeSeries(data(msft.dat))
+    print(head(X))
     print(X)
     
     x = close = X[, "Close"]
@@ -415,21 +414,23 @@ function()
 
 
 # ------------------------------------------------------------------------------
+# SMA                       Computes Simple Moving Average           
+# EWMA                      Computes Exponentially Weighted  Moving Average
 
 
 test.splusLike.MA =
 function()
 {    
-    #  SMA                       Computes Simple Moving Average           
-    #  EWMA                      Computes Exponentially Weighted  Moving Average
-
-    # UNIT TEST:
+    # SPlus like Functions:
     
     # Data:
-    URL = "http://localhost/econophysics/R/data/organisations/YAHOO/data/MSFT.CSV"
-    download.file(URL, "MSFT.CSV")
-    X = readSeries("MSFT.CSV")
-    print(X)
+    # URL = "http://localhost/econophysics/R/data/organisations/YAHOO/data/MSFT.CSV"
+    # download.file(URL, "MSFT.CSV")
+    # X = readSeries("MSFT.CSV")
+    
+    # Alternatively from fEcofin:
+    X = as.timeSeries(data(msft.dat))
+    print(head(X))
     
     # Data Records:
     x = close = X[, "Close"]
@@ -459,25 +460,33 @@ function()
 
 
 # ------------------------------------------------------------------------------
+# .dailyTA                  Computes an indicator for technical analysis
 
 
 test.dailyTA =
 function()
 {    
-    #  .dailyTA                  Computes an indicator for technical analysis
-    
-    # UNIT TEST:
+    # Daily Indicators:
     
     # Data:
-    URL = "http://localhost/econophysics/R/data/organisations/YAHOO/data/MSFT.CSV"
-    download.file(URL, "MSFT.CSV")
-    X = readSeries("MSFT.CSV")
-    print(X)
-   
+    # URL = "http://localhost/econophysics/R/data/organisations/YAHOO/data/MSFT.CSV"
+    # download.file(URL, "MSFT.CSV")
+    # X = readSeries("MSFT.CSV")
     
-    # Daily TA:
+    # Alternatively from fEcofin:
+    X = as.timeSeries(data(msft.dat))
+    print(head(X))  
+    
+    # EMA - Daily TA:
     TA = .dailyTA(X, "ema", select = "Close", lag = 5)
     head(TA)
+    
+    # MACD - Daily TA:
+    TA = .dailyTA(X, "macd", select = "Close", lag1 = 12, lag2 = 26)
+    head(TA)
+    
+    # Does it work with numeric Facors ? - NO
+    # .dailyTA(rnorm(20), "ema", select = "Close", lag = 5)
     
     # Return Value:
     return()  
@@ -485,17 +494,17 @@ function()
 
 
 # ------------------------------------------------------------------------------
-
+# .tradeSignals             Computes trade signals from trading positions
+# .tradeLengths             Computes trade length from trading signals
+# .hitRate                  Computes hit rates from returns and positions 
+    
 
 test.trading =
 function()
 {    
-
-    #  .tradeSignals             Computes trade signals from trading positions
-    #  .tradeLengths             Computes trade length from trading signals
-    #  .hitRate                  Computes hit rates from returns and positions 
+    # Trading Tools:
     
-    # UNIT TEST:
+    NA
     
     # Return Value:
     return()  
