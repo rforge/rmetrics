@@ -49,21 +49,6 @@
 ################################################################################
 
 
-################################################################################  
-# DESCRIPTION:
-#  Error, Gamma and Related Functions -
-#   Several functions are already availalble to compute the Gamma and
-#   related functions in R. We have added some missing functionality
-#   including R functions to compute the Error Function, the Psi
-#   Function, the Incomplete Gamma Function, the Gamma function for
-#   complex arguments, and the Pochhommer Symbol.
-#   These functions are required to valuate Asian Options based on
-#   the theory of Exponential Brownian Motion.  
-#  Requirements -
-#   fOptions.S2-HypergeometricFunctions
-################################################################################
-
-
 erf = 
 function(x)
 {   # A function implemented by Diethelm Wuertz

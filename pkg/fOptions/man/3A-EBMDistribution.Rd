@@ -176,13 +176,16 @@ dasymEBM(u, t = 1)
 
 
 \examples{
-## SOURCE("fOptions.3A-EBMDistribution")
+## Note, further examples can be found in the test directory
 
-## Calculate Log-Normal Density and its Derivaties,
+## dlognorm -
+   # Calculate Log-Normal Density and its Derivaties:
    x = exp(seq(-2.8, 1.2, length = 100))
    y0 = dlognorm(x, deriv = 0)
    y1 = dlognorm(x, deriv = 1)
    y2 = dlognorm(x, deriv = 2) 
+   
+## derivative -
    # Compare with Numerical Differentiation:
    par(mfrow = c(2, 2))
    xa = exp(seq(-2.5, 1.5, length = 20))
@@ -192,40 +195,6 @@ dasymEBM(u, t = 1)
    points(z$x, z$y, col = "steelblue")
    plot(x, y2, type = "l", main = "2nd Derivative")
    z = derivative(xa, dlognorm(xa, deriv = 0), deriv = 2)
-   points(z$x, z$y, col = "steelblue")
-
-## Calculate Reciprocal-Gamma Density and its Derivaties:
-   alpha = 2; beta = 1
-   x = exp(seq(-2.8, 1.2, length = 100))
-   y0 = drgam(x, alpha, beta, deriv = 0)
-   y1 = drgam(x, alpha, beta, deriv = 1)
-   y2 = drgam(x, alpha, beta, deriv = 2)
-   # Compare with Numerical Differentiation:
-   par(mfrow = c(2, 2))
-   xa = exp(seq(-2.5, 1.5, length = 20))
-   plot(x, y0, type = "l", main = "Rec-Gamma Density")
-   plot(x, y1, type = "l", main = "1st Derivative")
-   z = derivative(xa, drgam(xa, alpha, beta, deriv = 0), deriv = 1)
-   points(z$x, z$y, col = "steelblue")
-   plot(x, y2, type = "l", main = "2nd Derivative")
-   z = derivative(xa, drgam(xa, alpha, beta, deriv = 0), deriv = 2)
-   points(z$x, z$y, col = "steelblue")
-    
-## Calculate Johnson-Type-I Density and its Derivaties:
-   a = 0.3; b = 1.2; c = -0.2; d = 0.8
-   x = exp(seq(-2.8, 1.2, length = 100))
-   y0 = djohnson(x, a, b, c, d, deriv = 0)
-   y1 = djohnson(x, a, b, c, d, deriv = 1)
-   y2 = djohnson(x, a, b, c, d, deriv = 2)
-   # Compare with Numerical Differentiation:
-   par(mfrow = c(2, 2))
-   xa = exp(seq(-2.5, 1.5, length = 20))
-   plot(x, y0, type = "l", main = "Johnson Type I Density")
-   plot(x, y1, type = "l", main = "1st Derivative")
-   z = derivative(xa, djohnson(xa, a, b, c, d, deriv = 0), deriv = 1)
-   points(z$x, z$y, col = "steelblue")
-   plot(x, y2, type = "l", main = "2nd Derivative")
-   z = derivative(xa, djohnson(xa, a, b, c, d, deriv = 0), deriv = 2)
    points(z$x, z$y, col = "steelblue")
 }
 

@@ -148,9 +148,6 @@ Joe S., Kuo F.Y. (1998);
 
 
 \examples{
-## SOURCE("fOptions.5A-LowDiscrepancy")
-
-
 ## *.halton - 
    par(mfrow = c(2, 2), cex = 0.75)
    runif.halton(n = 10, dimension = 5)

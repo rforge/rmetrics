@@ -28,7 +28,7 @@
 
 
 ################################################################################
-# FUNCTION:           DENSITIES:
+# FUNCTION:           EBM DENSITY APPROXIMATIONS:
 #  dlognorm            log-Normal density an derivatives
 #  plognorm            log-Normal, synonyme for plnorm
 #  dgam                Gamma density, synonyme for dgamma
@@ -37,43 +37,30 @@
 #  prgam               Reciprocal-Gamma probability
 #  djohnson            Johnson Type I density
 #  pjohnson            Johnson Type I probability
-# FUNCTION :          MOMENTS:
+# FUNCTION :          MOMENTS FOR EBM DENSITY APPROXIMATIONS:
 #  mnorm               Moments of Normal density
 #  mlognorm            Moments of log-Normal density
 #  mrgam               Moments of reciprocal-Gamma density
+#  mjohnson            Moments of the Johnson Type-I density
 #  masian              Moments of Asian Option density
-#  .DufresneMoments     Internal Function called by 'masian'
+#  .DufresneMoments     Internal Function used by masian()
 # FUNCTION:           NUMERICAL DERIVATIVES:
 #  derivative          First and second numerical derivative
-# FUNCTION:           ASIAN DENSITY BY DOUBLE INTEGRATION:
-#  .thetaEBM
-#  .psiEBM
-#  d2EBM
-# FUNCTION:           ASIAN DENSITY BY SINGLE INTEGRATION:
-#  .gxuEBM
-#  .gxt
-#  .gxtu
-#  dEBM
-#  pEBM
-# FUNCTION:           ASYMPTOTIC EXPANSION OF ASIAN DENSITY:
-#  dasymEBM
+# FUNCTION:           ASIAN DENSITY:
+#  d2EBM               Double Integrated EBM density
+#  .thetaEBM            Internal Function used to compute *2EBM()
+#  .psiEBM              Internal Function used to compute *2EBM()
+#  dEBM                Exponential Brownian motion density
+#  pEBM                Exponential Brownian motion probability              
+#  .gxuEBM              Internal Function used to compute *EBM()
+#  .gxtEBM              Internal Function used to compute *EBM()
+#  .gxtuEBM             Internal Function used to compute *EBM()
+#  dasymEBM            Exponential Brownian motion asymptotic density
 ################################################################################
 
 
 ################################################################################
-# DESCRIPTION:
-#  Adds some distributions and related functions which are useful in the 
-#  theory of exponential Brownian motion.
-#  The functions compute densities and probabilities for the log-Normal 
-#  distribution, the Gamma distribution, the Reciprocal-Gamma distribution, 
-#  and the Johnson Type-I distribution. Functions are made available for 
-#  the compution of moments including the Normal, the log-Normal, the
-#  Reciprocal-Gamma, and the Asian-Option Density. In addition a function 
-#  is given to compute numerically first and second derivatives of a given 
-#  function.
-################################################################################
-
-
+# EBM DENSITY APPROXIMATIONS:
 
 dlognorm = 
 function(x, meanlog = 0, sdlog = 1, deriv = c(0, 1, 2))
@@ -333,7 +320,8 @@ function(q, a = 0, b = 1, c = 0, d = 1)
 }
 
 
-# ******************************************************************************
+################################################################################
+# MOMENTS FOR EBM DENSITY APPROXIMATIONS:
 
 
 mnorm = 
@@ -440,7 +428,7 @@ function(a, b, c, d)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Computes the moments for the Johnson Type-I distribution.
+    #   Computes the moments for the Johnson Type-I distribution
     
     # FUNCTION:
     
@@ -466,42 +454,12 @@ function(a, b, c, d)
 # ------------------------------------------------------------------------------
 
 
-.DufresneMoments = 
-function (M = 4, Time = 1, r = 0.045, sigma = 0.30) 
-{   
-    # Internal Function:
-    moments = 
-    function (M, tau, nu) { 
-        d = function(j, n, beta) {
-            d = 2^n
-            for (i in 0:n) if (i != j) d = d  / ( (beta+j)^2 - (beta+i)^2 )
-            d 
-        }     
-        moments = rep(0, length = M)
-        for (n in 1:M) {    
-            moments[n] = 0
-            for (j in 0:n) moments[n] = moments[n] + 
-                d(j, n, nu/2)*exp(2*(j^2+j*nu)*tau)
-            moments[n] = prod(1:n) * moments[n] / (2^(2*n)) 
-        }
-        moments 
-    }
-    
-    # Compute:
-    tau = sigma^2*Time/4
-    nu = 2*r/sigma^2-1
-    
-    # Return Value:
-    (4/sigma^2)^(1:M) * moments(M, tau, nu) 
-}
-        
-
 masian = 
 function(Time = 1, r = 0.045, sigma = 0.30)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Computes the moments for the Asian-Option distribution.
+    #   Computes the moments for the Asian-Option distribution
     
     # FUNCTION:
     
@@ -524,7 +482,50 @@ function(Time = 1, r = 0.045, sigma = 0.30)
 }
 
 
-# ******************************************************************************
+# ------------------------------------------------------------------------------
+
+
+.DufresneMoments = 
+function (M = 4, Time = 1, r = 0.045, sigma = 0.30) 
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Computes raw moments for the Asian-Option distribution.
+    
+    # Note:
+    #   Called by function masian()
+    
+    # FUNCTION:
+    
+    # Internal Function:
+    moments = 
+    function (M, tau, nu) { 
+        d = function(j, n, beta) {
+            d = 2^n
+            for (i in 0:n) if (i != j) d = d  / ( (beta+j)^2 - (beta+i)^2 )
+            d 
+        }     
+        moments = rep(0, length = M)
+        for (n in 1:M) {    
+            moments[n] = 0
+            for (j in 0:n) moments[n] = moments[n] + 
+                d(j, n, nu/2)*exp(2*(j^2+j*nu)*tau)
+            moments[n] = prod(1:n) * moments[n] / (2^(2*n)) 
+        }
+        moments 
+    }
+    
+    # Compute:
+    tau = sigma^2*Time/4
+    nu = 2*r/sigma^2-1
+    ans = (4/sigma^2)^(1:M) * moments(M, tau, nu)
+    
+    # Return Value:
+    ans 
+}
+        
+
+################################################################################
 
 
 derivative = 
@@ -562,6 +563,44 @@ function(x, y, deriv = c(1, 2))
 
 
 ################################################################################
+
+
+d2EBM =
+function(u, t = 1) 
+{   # A function written by Diethelm Wuertz
+
+    # Description:
+    #   Calculate the density integral "f_A_t(u)" given by  
+    #   equation 4.36 in: R. Gould, "The Distribution of the 
+    #   Integral of Exponential Brownian Motion".
+    
+    # Arguments:
+    #   t - numeric value
+    #   u - numeric value
+    
+    # FUNCTION:
+    
+    # Function to be integrated:
+    f = function(x, tt, uu) {
+        fx = rep(0, length=length(x))
+        for (i in 1:length(x) )
+            fx[i] = (1/uu) * exp(-(1+exp(2*x[i]))/(2*uu)) *  
+                .thetaEBM(r=exp(x[i])/uu, u=tt) 
+        fx }
+    
+    # Integrate:
+    result = rep(0, length = length(u))
+    for (i in 1:length(u)) {
+    result[i] = integrate(f, lower = -16, upper = 4, tt = t, uu = u[i], 
+        subdivisions = 100, rel.tol=.Machine$double.eps^0.25, 
+        abs.tol=.Machine$double.eps^0.25)$value }
+    
+    # Return Value:
+    result
+}
+
+
+# ------------------------------------------------------------------------------
 
 
 .thetaEBM =
@@ -630,43 +669,57 @@ function(r, u)
 # ------------------------------------------------------------------------------
 
 
-d2EBM =
-function(u, t = 1) 
+dEBM =
+function(u, t = 1)
 {   # A function written by Diethelm Wuertz
 
-    # Description:
-    #   Calculate the density integral "f_A_t(u)" given by  
-    #   equation 4.36 in: R. Gould, "The Distribution of the 
-    #   Integral of Exponential Brownian Motion".
-    
-    # Arguments:
-    #   t - numeric value
-    #   u - numeric value
+    # Arguments;
+    #   t - a numeric value
+    #   u - a vector of numeric values
     
     # FUNCTION:
     
-    # Function to be integrated:
-    f = function(x, tt, uu) {
-        fx = rep(0, length=length(x))
-        for (i in 1:length(x) )
-            fx[i] = (1/uu) * exp(-(1+exp(2*x[i]))/(2*uu)) *  
-                .thetaEBM(r=exp(x[i])/uu, u=tt) 
-        fx }
-    
-    # Integrate:
+    # Calculate Density:
     result = rep(0, length = length(u))
-    for (i in 1:length(u)) {
-    result[i] = integrate(f, lower = -16, upper = 4, tt = t, uu = u[i], 
-        subdivisions = 100, rel.tol=.Machine$double.eps^0.25, 
-        abs.tol=.Machine$double.eps^0.25)$value }
-    
+    for (i in 1:length(u) ) {
+        result[i] = integrate(.gxtuEBM, lower = 0, upper = 100, 
+            subdivisions = 100, rel.tol = .Machine$double.eps^0.25,
+            t = t, u = u[i])$value 
+        # print(c(u[i], result[i]))
+    }
+        
     # Return Value:
     result
 }
 
 
-# ******************************************************************************
-# # A new much faster Approach - Reduced to a single integral!
+# ------------------------------------------------------------------------------
+
+
+pEBM = 
+function(u, t = 1)
+{   # A function written by Diethelm Wuertz
+
+    # Arguments;
+    #   t - a numeric value
+    #   u - a vector of numeric value
+    
+    # FUNCTION:
+    
+    # Calculate Probability:
+    result = rep(0, length=length(u))
+    result[1] = integrate(fx, lower = 0, upper = u[1], t = t)$value
+    if (length(u) > 1) {
+        for (i in 2:length(u) ) {
+            result[i] = result[i-1] + 
+                integrate(dEBM, lower = u[i-1], upper = u[i], t = t)$value } }
+        
+    # Return Value:
+    result
+}
+
+
+# ------------------------------------------------------------------------------
 
 
 .gxuEBM =
@@ -736,59 +789,6 @@ function(x, t, u)
 # ------------------------------------------------------------------------------
 
 
-dEBM =
-function(u, t = 1)
-{   # A function written by Diethelm Wuertz
-
-    # Arguments;
-    #   t - a numeric value
-    #   u - a vector of numeric values
-    
-    # FUNCTION:
-    
-    # Calculate Density:
-    result = rep(0, length = length(u))
-    for (i in 1:length(u) ) {
-        result[i] = integrate(.gxtuEBM, lower = 0, upper = 100, 
-            subdivisions = 100, rel.tol = .Machine$double.eps^0.25,
-            t = t, u = u[i])$value 
-        print(c(u[i], result[i]))
-    }
-        
-    # Return Value:
-    result
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-pEBM = 
-function(u, t = 1)
-{   # A function written by Diethelm Wuertz
-
-    # Arguments;
-    #   t - a numeric value
-    #   u - a vector of numeric value
-    
-    # FUNCTION:
-    
-    # Calculate Probability:
-    result = rep(0, length=length(u))
-    result[1] = integrate(fx, lower = 0, upper = u[1], t = t)$value
-    if (length(u) > 1) {
-        for (i in 2:length(u) ) {
-            result[i] = result[i-1] + 
-                integrate(dEBM, lower = u[i-1], upper = u[i], t = t)$value } }
-        
-    # Return Value:
-    result
-}
-
-
-# ******************************************************************************
-
-
 dasymEBM = 
 function(u, t = 1)
 {   # A function written by Diethelm Wuertz
@@ -811,3 +811,4 @@ function(u, t = 1)
 
 
 ################################################################################
+

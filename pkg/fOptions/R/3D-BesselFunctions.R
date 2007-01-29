@@ -34,7 +34,6 @@
 #  BesselDI                   Derivative of BesselI
 #  BesselDK                   Derivative of BesselK
 # INTERNAL FUNCTION:         DESCRIPTION:
-#  # CFC                      Continued Fraction Constant
 #  .BesselN                   For internal use only 
 #  .Bessel01                   ...
 #  .Bessel.MSTA1               ...
@@ -142,18 +141,7 @@ function(x, nu)
 }
 
 
-# ------------------------------------------------------------------------------
-
-
-# CFC = 
-
-    # Description:
-    #   Continued Fraction Constant
-    
-#   as.numeric(BesselI(2, 1)/BesselI(2, 0))
-    
- 
-# ------------------------------------------------------------------------------ 
+################################################################################
  
             
 .BesselN = 

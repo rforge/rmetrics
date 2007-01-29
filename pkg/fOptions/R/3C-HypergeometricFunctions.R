@@ -28,39 +28,19 @@
 
 
 ################################################################################
-# FUNCTION:       DESCRIPTION:               
-#   kummerM        Computes Confluent Hypergeometric Function of the 1st Kind
-#   kummerU        Computes Confluent Hypergeometric Function of the 2nd Kind
-#   whittakerM     Computes Whittaker's M Function
-#   whittakerW     Computes Whittaker's M Function
-#   hermiteH       Computes the Hermite Polynomial
+# FUNCTION:       KUMMER DESCRIPTION:               
+#  kummerM         Computes Confluent Hypergeometric Function of the 1st Kind
+#  kummerU         Computes Confluent Hypergeometric Function of the 2nd Kind
+# FUNCTION:       WHITTAKER DESCRIPTION:
+#  whittakerM      Computes Whittaker's M Function
+#  whittakerW      Computes Whittaker's M Function
+# FUNCTION:       HERMITE POLYNOMIAL:
+#  hermiteH        Computes the Hermite Polynomial
 ################################################################################
 
 
 ################################################################################
-# DESCRIPTION:
-#  This is a collection and description of functions which compute 
-#  the Confluent Hypergeometric and Related Functions. The functions 
-#  use the TOMS707 Algorithm by MARK NARDIN, W. F. PERGER and 
-#  ATUL BHALLA Michigan Technological University, Copyright 1989.    
-#  A numerical evaluator for the confluent hypergeometric function for 
-#  complex arguments with large magnitudes using a direct summation of 
-#  the Kummer series. The method used allows an accuracy of up to thirteen      
-#  decimal places through the use of large real arrays and a single final 
-#  division. LNCHF is a variable which selects how the result should be 
-#  represented.  A '0' will return the value in standard exponential 
-#  form.  A '1' will return the LOG of the result. IP is an integer     
-#  variable that specifies how many array positions are desired (usually 
-#  10 is sufficient). Setting IP=0 causes the program to estimate the 
-#  number of array positions.                                                                 
-#  The confluent hypergeometric function is the solution to  
-#  the differential equation:                                
-# 
-#         zf"(z) + (a-z)f'(z) - bf(z) = 0    
-#
-#  These functions are required to valuate Asian Options based on
-#  the theory of Exponential Brownian Motion.    
-################################################################################ 
+# KUMMER:
 
 
 kummerM =  
@@ -141,7 +121,8 @@ function(x, a, b, ip = 0)
 }
 
 
-# ------------------------------------------------------------------------------
+################################################################################
+# WHITTAKER:
 
 
 whittakerM = 
@@ -195,7 +176,8 @@ function(x, kappa, mu, ip = 0)
 }
 
 
-# ------------------------------------------------------------------------------
+################################################################################
+# HERMITE POLYNOMIAL:
 
 
 hermiteH = 
@@ -210,12 +192,15 @@ function(x, n, ip = 0)
     
     # FUNCTION:
     
+    # Check
+    stopifnot(n - round(n, 0) == 0)
+    
     # Result:
-    ans = 2^n * Re ( kummerU(x^2, -n/2, 1/2, ip = ip) )
+    S = sign(x) + (1-sign(abs(x)))
+    ans = (S*2)^n * Re ( kummerU(x^2, -n/2, 1/2, ip = ip) )
     
     # Return Value:
-    ans
-    
+    ans   
 }
 
 
