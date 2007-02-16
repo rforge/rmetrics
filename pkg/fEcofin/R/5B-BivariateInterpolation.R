@@ -29,7 +29,7 @@
 ################################################################################
 # FUNCTION:           BIVARIATE GRIDDED INTERPOLATION:
 #  linearInterp        Interpolates Linearly Irregularly Distributed Data Points
-#  linearInterp        Interpolates Linearly pointwise
+#  linearInterpp       Interpolates Linearly pointwise
 #  akimaInterp         Interpolates and Smoothes Irregularly Distributed Points
 #  akimaInterpp        Interpolates and Smoothes pointwise
 #  krigeInterp         Kriges Irregularly Distributed Data Points
