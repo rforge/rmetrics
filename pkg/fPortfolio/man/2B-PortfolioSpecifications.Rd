@@ -109,12 +109,16 @@ portfolioStatistics(data, spec = portfolioSpec())
         [portfolioSpec] - \cr
         xxx
         }
-    \item{returnRange, riskRange}{
-        [set*Range] - \cr
+    \item{returnRange}{
+        [setReturnRange] - \cr
         xxx
         }
     \item{riskFreeRate}{
         [setRiskFreeRate] - \cr
+        xxx
+        }
+    \item{riskRange}{
+        [setRiskRange] - \cr
         xxx
         }
     \item{spec}{
@@ -155,38 +159,38 @@ portfolioStatistics(data, spec = portfolioSpec())
         }
     \item{model}{
         a list, containing with two named elements:\cr
-        \code{type="MV"} xxx \cr
-        \code{estimator=c("mean","cov")} xxx
+        \code{type="MV"} 
+            xxx \cr
+        \code{estimator=c("mean","cov")} 
+            xxx
         }     
     \item{portfolio}{
         a list, containing parameter specifications for the portfolio:\cr 
         \code{weights=NULL} a numeric vector specifying the portfolio 
-            weights. xxx
-            \cr
-        \code{targetReturn=NULL} a numeric value specifying the target return.
-            The default value set the target return xxx
-            \cr
-        \code{riskFreeRate=0} a numeric value specifying the risk free rate. 
-            \cr  
+            weights. xxx\cr
+        \code{targetReturn=NULL} a numeric value specifying the target 
+            return. The default value set the target return xxx\cr
+        \code{riskFreeRate=0} a numeric value specifying the risk free 
+            rate.\cr  
         \code{nFrontierPoints=50} a numeric calue determining the number
-            of points on the efficient frontier.
+            of points on the efficient frontier.\cr
         \code{returnRange=NULL} a numeric vector of length two, giving the
-            smallest and largest values for the range of returns.
-            \cr
+            smallest and largest values for the range of returns.\cr
         \code{riskRange=NULL} a numeric vector of length two, giving the
             smallest and largest values for the range of risks.
         }
     \item{title}{
-        a title string.
+        a title string.]\cr
         }
-    \cr
-           
+    %\cr move inside \item!
+          
+    
     \code{setType}\cr
     \code{setEstimator}\cr 
     return the model specifications from an object of class 
-    \code{fPFOLIOSPEC"}
-    xxx
+    \code{"fPFOLIOSPEC"} xxx.
     \cr
+    
     
     \code{setWeights}\cr
     \code{setTargetReturn}\cr
@@ -194,13 +198,12 @@ portfolioStatistics(data, spec = portfolioSpec())
     \code{setNFrontierPoints}\cr
     \code{setReturnRange}\cr
     \code{setRiskRange}\cr
-    return the portfolio specifications from an object of class 
-    \code{fPFOLIOSPEC"}
-    xxx
+    return the portfolio specifications from an object of class xxx.
     \cr
        
+    
     \code{portfolioStatistics}\cr
-    returns the xxx
+    returns the xxx.
 }
 
 
