@@ -34,13 +34,30 @@
 #  assetsFit             Estimates the parameters of set of assets
 #   method = "norm"       assuming a multivariate Normal distribution
 #   method = "snorm"      assuming a multivariate skew-Normal distribution
-#   method = "st"         assuming a multivariate skew-Student-t  
-#  print.fASSETS         S3: Print method for an object of class fASSETS
+#   method = "st"         assuming a multivariate skew-Student-t 
+# FUNCTION:             PRINT, PLOT AND SUMMARY METHOD: 
+#  show.fASSETS         S4: Print method for an object of class fASSETS
 #  plot.fASSETS          S3: Plot method for an object of class fASSETS
 #  summary.fASSETS       S3: Summary method for an object of class fASSETS
-#  .msn.quantities       Function from R package sn [fMultivar]      
+# FUNCTION:             REQUIRED UTILITY FUNCTION:
+#  .msn.quantities       Function from R package sn [part of fMultivar]      
 ################################################################################
 
+
+setClass("fASSETS", 
+    representation(
+        call = "call",              # call: The matched function call
+        method = "character",       # method: One of "mn", "msn", "mst"
+        model = "list",             # model: A list(mu, Omega, alpha, df)    
+        data = "data.frame",        # Data: The data records 
+        fit = "list",               # fit: Results parameter estimation     
+        title = "character",        # title: A short title string      
+        description = "character")  # description: A brief description
+)
+
+
+# ------------------------------------------------------------------------------
+                
 
 assetsSim =
 function(n, dim = 2, model = list(mu = rep(0, dim), Omega = diag(dim), 
@@ -107,21 +124,6 @@ alpha = rep(0, dim), df = Inf), assetNames = NULL)
 
 # ------------------------------------------------------------------------------
 
-
-setClass("fASSETS", 
-    representation(
-        call = "call",              # call: The matched function call
-        method = "character",       # method: One of "mn", "msn", "mst"
-        model = "list",             # model: A list(mu, Omega, alpha, df)    
-        data = "data.frame",        # Data: The data records 
-        fit = "list",               # fit: Results parameter estimation     
-        title = "character",        # title: A short title string      
-        description = "character")  # description: A brief description
-)
-
-
-# ------------------------------------------------------------------------------
-                
 
 assetsFit =
 function(x, method = c("st", "snorm", "norm"), title = NULL, 
@@ -195,17 +197,17 @@ description = NULL, fixed.df = NA, ...)
         fit = fit@fit
     }
         
-    # Add names:   
+    # Add Names:   
     names(mu) = colNames
     names(alpha) = colNames
     rownames(Omega) = colNames
     colnames(Omega) = colNames
     
-    # Title:
+    # Add Title:
     if (is.null(title)) 
         title = paste("Fitted Asset Data Model: ", method)
         
-    # Description:
+    # Add Description:
     if (is.null(description)) 
         description = .description()
         
@@ -225,20 +227,17 @@ description = NULL, fixed.df = NA, ...)
 # ------------------------------------------------------------------------------
 
 
-print.fASSETS =
-function(x, ...)
-{   # A function implemented by Diethelm Wuertz
+show.fASSETS =
+function(object)
+{   # A function implemented by Rmetrics
 
-    # Descriptions:
+    # Description:
     #   Print Method for an object of class fASSETS
     
     # Arguments:
     #   x - an object of class fASSETS
       
     # FUNCTION:
-    
-    # Print:
-    object = x
     
     # Title:
     cat("\nTitle:\n")
@@ -251,16 +250,22 @@ function(x, ...)
           
     # Model Parameters:
     cat("\nModel Parameters:\n")
-    print(x@model)
+    print(object@model)
     
     # Description:
     cat("Description:\n")
-    print(x@description)
+    print(object@description)
     cat("\n")
     
     # Return Value:
     invisible(object)
 }
+
+
+# ------------------------------------------------------------------------------
+
+
+setMethod("show", "fASSETS", show.fASSETS)
 
 
 # ------------------------------------------------------------------------------
@@ -278,16 +283,24 @@ function(x, which = "ask", ...)
     #   ... - arguments to be passed
     
     # Notes:
-    #   Library 'sn', is version  0.32-2 (2004-03-13), (C) 1998-2004 
-    #     A. Azzalini
+    #   Library 'sn', is version  0.32-2 (2004-03-13), 
+    #     (C) 1998-2004 A. Azzalini, GPL
+    #   For "fMV" objects have a look in "fMultivar".
     
     # FUNCTION:
     
-    # Transform to a S4 object of class "fASSETS":
-    object = new("fASSETS", call = x@call, method = x@method, 
-        model = x@model, data = x@data, fit = x@fit, title = x@title, 
-        description = x@description)         
-    # Use plot method for objects of class "fmV"
+    # Transform to a S4 object of class "fMV":
+    object = new("fMV", 
+        call = x@call, 
+        method = x@method, 
+        model = x@model, 
+        data = x@data, 
+        fit = x@fit, 
+        title = x@title, 
+        description = 
+        x@description)   
+              
+    # Use plot method for objects of class "fMV"
     plot(object, which = which, xlab = "Time", ylab = "Value", ...)
     
     # Return value:
