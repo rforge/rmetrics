@@ -1,6 +1,6 @@
-\name{PortfolioData}
+\name{PortfolioDataSets}
 
-\alias{PortfolioData}
+\alias{PortfolioDataSets}
 
 \alias{vanIndices}
 
@@ -9,6 +9,14 @@
 \alias{assetsCorr}
 \alias{berndtInvest}
 \alias{jobstCov}
+
+\alias{largecap.ts}
+\alias{microcap.ts}
+\alias{midcap.ts}
+\alias{smallcap.ts}
+\alias{midcapD.ts}
+\alias{returns.three.ts}
+
 
 
 \title{fPortfolio Data Sets}
@@ -76,7 +84,9 @@
 
 
 \examples{
+
 ## -
+
 }
 
 
