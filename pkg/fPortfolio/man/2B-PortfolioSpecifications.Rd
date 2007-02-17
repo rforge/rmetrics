@@ -28,7 +28,7 @@
 
 \description{
   
-    A collection and description of ...
+    A collection and description of xxx.
     \cr
     
     The functions are:
@@ -74,7 +74,7 @@ portfolioStatistics(data, spec = portfolioSpec())
 
     \bold{Portfolio Specification:}
     \cr\cr
-    Describe it  ...
+    Describe it ...
 
 }
 
@@ -83,31 +83,31 @@ portfolioStatistics(data, spec = portfolioSpec())
 
     \item{data}{
         [portfolioStatistics] - \cr
-        ...
+        xxx
         }
     \item{description}{
         [portfolioSpec] - \cr
-        ...
+        xxx
         }
     \item{estimator}{
         [setEstimator] - \cr
-        ...
+        xxx
         }
     \item{model}{
         [setModel] - \cr
-        ...
+        xxx
         }
     \item{nFrontierPoints}{
         [setNFrontierPoints] - \cr
-        ...
+        xxx
         }
     \item{object}{
         [show] - \cr
-        ...
+        xxx
         }
     \item{portfolio}{
         [portfolioSpec] - \cr
-        ...
+        xxx
         }
     \item{returnRange, riskRange}{
         [set*Range] - \cr
@@ -115,26 +115,26 @@ portfolioStatistics(data, spec = portfolioSpec())
         }
     \item{riskFreeRate}{
         [setRiskFreeRate] - \cr
-        ...
+        xxx
         }
     \item{spec}{
-        ...
+        xxx
         }
     \item{targetReturn}{
         [setTargetReturn] - \cr
-        ...
+        xxx
         }
     \item{title}{
         [portfolioSpec] - \cr
-        ...
+        xxx
         }
     \item{type}{
         [setType] - \cr
-        ...
+        xxx
         }
     \item{weights} {
         [setWeights] - \cr
-        ...
+        xxx
         }
 
 }
@@ -155,16 +155,16 @@ portfolioStatistics(data, spec = portfolioSpec())
         }
     \item{model}{
         a list, containing with two named elements:\cr
-        \code{type="MV"} ...\cr
-        \code{estimator=c("mean","cov")} ...
+        \code{type="MV"} xxx \cr
+        \code{estimator=c("mean","cov")} xxx
         }     
     \item{portfolio}{
         a list, containing parameter specifications for the portfolio:\cr 
         \code{weights=NULL} a numeric vector specifying the portfolio 
-            weights. ...
+            weights. xxx
             \cr
         \code{targetReturn=NULL} a numeric value specifying the target return.
-            The default value set the target return ...
+            The default value set the target return xxx
             \cr
         \code{riskFreeRate=0} a numeric value specifying the risk free rate. 
             \cr  
@@ -185,7 +185,7 @@ portfolioStatistics(data, spec = portfolioSpec())
     \code{setEstimator}\cr 
     return the model specifications from an object of class 
     \code{fPFOLIOSPEC"}
-    ...
+    xxx
     \cr
     
     \code{setWeights}\cr
@@ -196,11 +196,11 @@ portfolioStatistics(data, spec = portfolioSpec())
     \code{setRiskRange}\cr
     return the portfolio specifications from an object of class 
     \code{fPFOLIOSPEC"}
-    ...
+    xxx
     \cr
        
     \code{portfolioStatistics}\cr
-    returns the ...
+    returns the xxx
 }
 
 
@@ -209,7 +209,7 @@ portfolioStatistics(data, spec = portfolioSpec())
 
 \seealso{
 
-    \code{...}.
+    \code{xxx}.
 
 }
 
@@ -225,7 +225,7 @@ portfolioStatistics(data, spec = portfolioSpec())
 
 ## portfolioSpec -
    # Show Default Portfolio Specifications
-   # portfolioSpec() ... requires getTitle()
+   # portfolioSpec() # requires getTitle()
  
 }
 
