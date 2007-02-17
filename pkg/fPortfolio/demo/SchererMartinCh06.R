@@ -186,8 +186,7 @@ function(x,  columns = NULL,  method = c("lm", "lms", "lts"))
 
 ################################################################################
 # 6.11 Influence Functions for Portfolios
-
-  
+ 
    
     # Data:
     data(berndtInvest)
@@ -231,4 +230,6 @@ function(x,  columns = NULL,  method = c("lm", "lms", "lts"))
     assetsQQNormPlot(myAssets, which = 2, labels = FALSE, ylim = c(-50, 50))
     ###
 
+
+################################################################################
 
