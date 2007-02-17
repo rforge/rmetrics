@@ -11,7 +11,7 @@
 
 \description{
   
-    A collection and description of functions which ...
+    A collection and description of functions which 
     \cr
     
     The functions are:
