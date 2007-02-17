@@ -28,18 +28,18 @@
 
 
 ################################################################################
-# FUNCTION:             ASSETS SELECTION:
-#  .assetsSeriesPlot     Displays time series of individual assets
-#  .assetsHistPlot       Displays histograms of individual assets 
-
-#  .assetsQQNormPlot     Displays normal qq-plots of individual assets
-# FUNCTION:
-#  .assetsPairsPlot      Displays pairs of scatterplots of individual assets
-#  .assetsCorTestPlot    Displays and tests pairwise correlations of assets
+# FUNCTION:             TIME SERIES ASSETS PLOTS:
+#  assetsSeriesPlot      Displays time series of individual assets
+#  assetsHistPlot        Displays histograms of individual assets
+#  assetsDensityPlot     Displays density plots of individual assets 
+#  assetsQQNormPlot      Displays normal qq-plots of individual assets
+# FUNCTION:             BIVARIATE ASSETS PLOTS:
+#  assetsPairsPlot       Displays pairs of scatterplots of individual assets
+#  assetsCorTestPlot     Displays and tests pairwise correlations of assets
 ################################################################################
 
 
-.assetsSeriesPlot =
+assetsSeriesPlot =
 function(x, which = 1:dim(x)[2], ...) 
 {   # A function implemented by Diethelm Wuertz
 
@@ -54,9 +54,6 @@ function(x, which = 1:dim(x)[2], ...)
     #       of the assets which are selected to be plotted. 
     
     # FUNCTION:
-    
-    # Settings:
-    method = match.arg(method)
 
     # Plot:
     for (i in which) {
@@ -68,11 +65,10 @@ function(x, which = 1:dim(x)[2], ...)
 }
 
 
-
 # ------------------------------------------------------------------------------
 
 
-.assetsHistPlot =
+assetsHistPlot =
 function(x, method = c("cov", "mve", "mcd", "nnve", "shrink", "bagged"), 
 which = 1:dim(x)[2], xlim = NULL, ...) 
 {   # A function implemented by Diethelm Wuertz
@@ -98,6 +94,7 @@ which = 1:dim(x)[2], xlim = NULL, ...)
     
     # Settings:
     method = match.arg(method)
+    x = as.matrix(x)
     
     # Robust Estimation:
     covRob = assetsMeanCov(x, method, ...)
@@ -123,7 +120,7 @@ which = 1:dim(x)[2], xlim = NULL, ...)
 # ------------------------------------------------------------------------------
 
 
-.assetsDensityPlot =
+assetsDensityPlot =
 function(x, method = c("cov", "mve", "mcd", "nnve", "shrink", "bagged"), 
 which = 1:dim(x)[2], ...)
 {   # A function implemented by Diethelm Wuertz
@@ -173,7 +170,7 @@ which = 1:dim(x)[2], ...)
 # ------------------------------------------------------------------------------
 
 
-.assetsQQNormPlot =
+assetsQQNormPlot =
 function(x, which = 1:dim(x)[2], ...)
 {   # A function implemented by Diethelm Wuertz
 
@@ -202,7 +199,7 @@ function(x, which = 1:dim(x)[2], ...)
 ################################################################################
 
 
-.assetsPairsPlot =
+assetsPairsPlot =
 function(x, labels = TRUE)
 {   # A function implemented by Diethelm Wuertz
 
@@ -231,7 +228,7 @@ function(x, labels = TRUE)
 # ------------------------------------------------------------------------------
 
 
-.assetsCorTestPlot = 
+assetsCorTestPlot = 
 function(x, scale = 1, labels = TRUE, ...)
 {   # A function implemented by Diethelm Wuertz
 
@@ -250,7 +247,7 @@ function(x, scale = 1, labels = TRUE, ...)
     x = as.matrix(x)
  
     # Upper Plot Function:
-    cortestPanel =
+    cortestPanel <-
     function(x, y, cex, ...)
     {
         usr = par("usr"); on.exit(par(usr))
@@ -266,7 +263,7 @@ function(x, scale = 1, labels = TRUE, ...)
     }
     
     # Lower Plot Function:
-    lowessPanel = 
+    lowessPanel <-  
     function (x, y, ...) 
     {
         points(x, y, pch = 19, col = "steelblue", ...)
