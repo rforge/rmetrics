@@ -32,7 +32,6 @@
 #  'fPFOLIO'                 S4 Portfolio Class
 #  portfolioMarkowitz        Mean-variance Markowitz (target) portfolio
 #  frontierMarkowitz         Efficient frontier of mean-var portfolio
-#  montecarloMarkowitz       Adds randomly created portfolios
 # METHODS:                  DESCRIPTION:   
 #  print.fPFOLIO             S3: Print method for objects of class fPFOLIO
 #  plot.fPFOLIO              S3: Plot method for objects of class fPFOLIO
@@ -40,12 +39,13 @@
 # EXTRACTOR FUNCTION:       DESCRIPTION:
 #  .frontier.default         S3: Extract points on the efficient frontier
 # FUNCTIONS:                SPECIAL PORTFOLIOS:
+#  montecarloMarkowitz       Adds randomly created portfolios
 #  .tangencyMarkowitz        Adds tangency portfolio
 #  .equalweightsMarkowitz    Adds equal weights Portfolio
 #  .frontierShortSelling     Efficient Frontier of Short Selling Markowitz
 # FUNCTIONS:                BUILTIN FROM PACKAGE:
-#  .portfolio.optim          Function from R-package tseries
-#  .solve.QP                 Function from R-package quadprog
+#  .portfolioOptim          Function from R-package tseries
+#  .solveQP                 Function from R-package quadprog
 ################################################################################
 
 
@@ -73,8 +73,8 @@ function(data, targetReturn, title = NULL, description = NULL)
     #   Optimizes a mean-var portfolio for a given desired return
     
     # Arguments:
-    #   data - portfolio of assets, a matrix or an object which can be 
-    #       transformed to a matrix
+    #   data - portfolio of assets, a matrix or an rectangular object 
+    #       which can be transformed to a matrix
     #   targetReturn - the desired return, this target value must be 
     #       smaller than the maximum and larger than the minimum asset 
     #       return. Short selling is not allowed.
@@ -100,7 +100,7 @@ function(data, targetReturn, title = NULL, description = NULL)
     stopifnot(targetReturn <= max(MU))
     
     # Quadratic Programming:
-    opt = .portfolio.optim(pm = targetReturn, returns = MU, covmat = COV)
+    opt = .portfolioOptim(pm = targetReturn, returns = MU, covmat = COV)
     
     # Compose Result in a list:
     pfolio = list()
@@ -223,7 +223,7 @@ s.range = NULL, title = NULL, description = NULL, ...)
     k = 0
     for (PM in seq(pmmin+eps, pmmax-eps, length = length)) {
         k = k+1
-        ef = .portfolio.optim(pm = PM, returns = mu, covmat = Sigma) 
+        ef = .portfolioOptim(pm = PM, returns = mu, covmat = Sigma) 
         pm[k] = ef$pm
         ps[k] = ef$ps
         diversification[k] = length (ef$pw[ef$pw > 0.01])
@@ -741,7 +741,7 @@ function(object, Rf = 0, add = TRUE)
     # Calculate Tangency Portfolio, if it exists!
     # The test is true, when the slope could be evaluated.
     if (!is.na(slope)) {
-      tangency = .portfolio.optim(pm = ym, returns = object$returns,
+      tangency = .portfolioOptim(pm = ym, returns = object$returns,
         covmat = object$cov) 
       # Portfolio Weights in Percent:
       pw = 100 * tangency$pw   
@@ -764,7 +764,7 @@ function(object, Rf = 0, add = TRUE)
 
 
 .equalweightsMarkowitz = 
-function(object, add = TRUE)
+function(object, add = TRUE, ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -779,7 +779,7 @@ function(object, add = TRUE)
     Rew = (ew.weights %*% means)[[1,1]]
     Sew = (ew.weights %*% covmat %*% ew.weights)[[1,1]]
     if (add) {
-        points(sqrt(Sew), Rew, col = "steelblue")
+        points(sqrt(Sew), Rew, col = "steelblue", ...)
     }
     
     # Return Value:
@@ -854,25 +854,26 @@ title = NULL, description = NULL, ...)
     mu.mv = (b/c)*C0
     sigma.mv = C0/sqrt(c)
     
-    # Plot:
-    mu.p = seq(r.range[1], r.range[2], length = length)
-    sigma.p = sqrt((c*mu.p^2 - 2*b*C0*mu.p + a*C0^2)/d)
-    
     # Tangency Portfolio:
+    weights.tg = C0 * as.vector(invSigma %*% mu ) / b
     mu.tg = (a/b)*C0
     sigma.tg = (sqrt(a)/b)*C0
-    weights.tg = C0 * as.vector(invSigma %*% mu ) / b 
-    
+
     # Market Portfolio:
     mu.f = 0
     mu.mk = 0
     sigma.mk = 0
     
     # Equal Weights Portfolio:
-    ew.weights = rep(1/length(mu), times = length(mu))
     mu.ew = (ew.weights %*% mu)[[1, 1]]
     sigma.ew = (ew.weights %*% Sigma %*% ew.weights)[[1, 1]]
-         
+    weights.ew = rep(1/length(mu), times = length(mu))
+    
+    # Plot:
+    mu.p = seq(r.range[1], r.range[2], length = length)
+    sigma.p = sqrt((c*mu.p^2 - 2*b*C0*mu.p + a*C0^2)/d)
+    weights.p = NA
+            
     # Result:
     pfolio = list(
         what = "Short Selling Markowitz",
@@ -881,11 +882,11 @@ title = NULL, description = NULL, ...)
         pw = NA, pm = mu.p, ps = sigma.p, 
         returns = mu, cov = Sigma, 
         r.range = r.range, s.range = s.range, 
+        Rf = Rf, 
         # Tangency Portfolio:
-        Rf = Rf, Rm = mu.tg, Sm = sigma.tg, 
+        Rm = mu.tg, Sm = sigma.tg, Wm = weights.tg
         # Equal Weights Portfolio:
         Rew = mu.ew, Sew = sigma.ew,
-        t.weights = weights.tg,
         diversification = NA) 
         
     # Title: 
@@ -914,7 +915,7 @@ title = NULL, description = NULL, ...)
 # BUILTIN: tseries
 
 
-.portfolio.optim = 
+.portfolioOptim = 
 function(pm, returns, covmat) 
 {   # A Builtin function modified by Diethelm Wuertz
 
@@ -947,7 +948,7 @@ function(pm, returns, covmat)
     b3 = rep(0, k)
     Amat = t(rbind(a1, a2, a3))
     b0 = c(1, pm, b3)    
-    res = .solve.QP(covmat, dvec, Amat, bvec = b0, meq = 2)
+    res = .solveQP(covmat, dvec, Amat, bvec = b0, meq = 2)
     weights = res$solution
     ps = sqrt(weights %*% covmat %*% weights)
     
@@ -963,7 +964,7 @@ function(pm, returns, covmat)
 # BUILTIN: quadprog
 
     
-.solve.QP = 
+.solveQP = 
 function(Dmat, dvec, Amat, bvec, meq)
 {   # A Builtin function modified by Diethelm Wuertz
 
@@ -989,13 +990,13 @@ function(Dmat, dvec, Amat, bvec, meq)
     # Solve QP:
     n = nrow(Dmat)
     q = ncol(Amat)  
-    iact  = rep(0,q)
+    iact  = rep(0, q)
     nact  = 0
-    r = min(n,q)
-    sol = rep(0,n)
+    r = min(n, q)
+    sol = rep(0, n)
     crval = 0
-    work = rep(0,2*n+r*(r+5)/2+2*q+1)
-    iter = rep(0,2) 
+    work = rep(0, 2*n+r*(r+5)/2+2*q+1)
+    iter = rep(0, 2) 
     factorized = FALSE
     res1 = .Fortran("qpgen2",
         as.double(Dmat), dvec = as.double(dvec), as.integer(n), 
