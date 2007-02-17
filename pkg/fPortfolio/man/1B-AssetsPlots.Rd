@@ -50,10 +50,10 @@ assetsCorTestPlot(x, scale = 1, labels = TRUE, \dots)
 \arguments{
   
     \item{labels}{
-        ...
+        xxx
         }
     \item{method}{
-        ...
+        xxx
         }
     \item{scale}{
         which of the plots should be displayed? \code{which} can 
@@ -63,7 +63,7 @@ assetsCorTestPlot(x, scale = 1, labels = TRUE, \dots)
         \code{TRUE} the correponding plot will be displayed.
         }
     \item{which}{
-        ...
+        xxx
         }
     \item{x}{
         any rectangular time series which can be converted by the function
@@ -71,7 +71,7 @@ assetsCorTestPlot(x, scale = 1, labels = TRUE, \dots)
         class \code{timeSeries}, \code{data.frame}, or \code{mts}. 
         } 
     \item{xlim}{
-        ...
+        xxx
         } 
     \item{\dots}{
         optional arguments to be passed.
@@ -84,13 +84,13 @@ assetsCorTestPlot(x, scale = 1, labels = TRUE, \dots)
 
     \bold{Displaying Asset Return Plots:}
     \cr\cr
-    ... 
+    xxx 
     \cr
     
     
     \bold{Displaying Bivariate Assets Returns Plots:}
     \cr\cr   
-    The ...
+    The xxx
 
 }
 

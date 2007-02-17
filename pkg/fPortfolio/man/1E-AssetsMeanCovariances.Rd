@@ -58,7 +58,7 @@ assetsMeanCov(x, method = c("cov", "mve", "mcd", "nnve", "shrink", "bagged"),
         version of the covariance estimator.\cr
         }     
     \item{x}{
-        ...
+        xxx
         }  
     \item{\dots}{
         optional arguments to be passed.

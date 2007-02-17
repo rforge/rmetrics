@@ -54,7 +54,7 @@ assetsSelect(x, method = c("hclust", "kmeans"),
         or \code{kmeans} for k-means clustering.
         }
     \item{x}{
-        ...
+        xxx
         }  
     \item{\dots}{
         optional arguments to be passed.

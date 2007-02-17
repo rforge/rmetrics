@@ -13,7 +13,7 @@
 
 \description{
   
-    A collection and description of ...
+    A collection and description of xxx
     \cr
     
     The functions are:
@@ -36,7 +36,7 @@ getConstraints(object)
 
     \bold{How to define constraints:}
     \cr\cr
-    Describe the ...
+    Describe the xxx.
     \cr
 
 }
@@ -45,16 +45,16 @@ getConstraints(object)
 \arguments{
 
     \item{constraintsStrings}{
-        ...
+        xxx
         }
     \item{data}{
-        ...
+        xxx
         }
     \item{object}{
-        ...
+        xxx
         }
     \item{spec}{
-        ...
+        xxx
         }
 
 }
@@ -64,12 +64,12 @@ getConstraints(object)
   
     \code{setConstraints} 
     \cr
-    returns a ...
+    returns a xxx
     \cr
 
     \code{getConstraints} 
     \cr
-    returns a ...
+    returns a xxx
   
 }
 
@@ -79,7 +79,7 @@ getConstraints(object)
 
 \seealso{
 
-    \code{...}.
+    \code{xxx}.
 
 }
 
@@ -94,10 +94,10 @@ getConstraints(object)
 \examples{
 
 ## setConstraints -
-   # ...
+   # xxx
    
 ## getConstraints -
-   # ...
+   # xxx
  
 }
 

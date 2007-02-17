@@ -74,7 +74,7 @@ portfolioStatistics(data, spec = portfolioSpec())
 
     \bold{Portfolio Specification:}
     \cr\cr
-    Describe it ...
+    Describe it xxx
 
 }
 
@@ -111,7 +111,7 @@ portfolioStatistics(data, spec = portfolioSpec())
         }
     \item{returnRange, riskRange}{
         [set*Range] - \cr
-        ...
+        xxx
         }
     \item{riskFreeRate}{
         [setRiskFreeRate] - \cr

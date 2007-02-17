@@ -12,14 +12,14 @@
 
 \description{
   
-    A collection and description of ...
+    A collection and description of xxx
     \cr
     
     The data sets are:
     
     \tabular{ll}{
-    \code{dutchPortfolioData} \tab ..., \cr
-    \code{usPortfolioData} \tab ..., \cr
+    \code{dutchPortfolioData} \tab xxx, \cr
+    \code{usPortfolioData} \tab xxx, \cr
     \code{sm132PortfolioData} \tab xxx. }
     
 }
@@ -36,19 +36,19 @@ sm132PortfolioData()
 
     \bold{Dutch Portfolio Data Set:}
     \cr\cr
-    Describe the data set ...
+    Describe the data set xxx
     \cr
     
     
     \bold{US Portfolio Data Set:}
     \cr\cr
-    Describe the data set ...
+    Describe the data set xxx
     \cr
     
     
     \bold{Scherer-Martin Data Set:}
     \cr\cr   
-    Describe the data set ...
+    Describe the data set xxx
 
 }
 
@@ -57,17 +57,17 @@ sm132PortfolioData()
   
     \code{dutchPortfolioData} 
     \cr
-    returns a ...
+    returns a xxx
     \cr
 
     \code{dutchPortfolioData} 
     \cr
-    returns a ...
+    returns a xxx
     \cr
     
     \code{dutchPortfolioData} 
     \cr
-    returns a ... 
+    returns a xxx 
   
 }
 

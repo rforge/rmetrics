@@ -10,13 +10,13 @@
 \description{
   
     A collection and description of functions to 
-    ...
+    xxx
     \cr
     
     The functions are:
     
     \tabular{ll}{
-    \code{frontierResampled} \tab ... . }
+    \code{frontierResampled} \tab xxx. }
        
 }
     
@@ -44,7 +44,7 @@ frontierResampled(x = as.matrix(read.csv("nova-updated.csv", header = FALSE)),
         52 which denotes weekly data records.
         }  
     \item{control}{
-        a control list with the following entries: ...
+        a control list with the following entries: xxx
         }
     \item{confidenceLevel}{
         a logical flag, if \code{TRUE} then 95% confidence levels are 
@@ -99,7 +99,7 @@ frontierResampled(x = as.matrix(read.csv("nova-updated.csv", header = FALSE)),
 
 \value{
 
-    A list ...
+    A list xxx
     
 }
 

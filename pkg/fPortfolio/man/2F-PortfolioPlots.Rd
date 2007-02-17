@@ -16,7 +16,7 @@
 
 \description{
   
-    A collection and description of ...
+    A collection and description of xxx
     \cr
     
     The functions are:
@@ -48,19 +48,19 @@ covEllipsesPlot(x = list(), \dots)
 
     \bold{The frontier Plot:}
     \cr\cr
-    Describe the data set ...
+    Describe the data set xxx
     \cr
     
     
     \bold{Weights and Attributes Plots:}
     \cr\cr
-    Describe the data set ...
+    Describe the data set xxx
     \cr
     
     
     \bold{Covariance Ellipses Plot:}
     \cr\cr   
-    Describe the data set ...
+    Describe the data set xxx
 
 }
 
@@ -68,28 +68,28 @@ covEllipsesPlot(x = list(), \dots)
 \arguments{
 
     \item{add}{
-        ...
+        xxx
         }
     \item{box}{
-        ...
+        xxx
         }
     \item{col}{
-        ...
+        xxx
         }
     \item{frontier}{
-        ...
+        xxx
         }
     \item{legend}{
-        ...
+        xxx
         }
     \item{object}{
-        ...
+        xxx
         }
     \item{x}{
-        ...
+        xxx
         }
     \item{\dots}{
-        ...
+        xxx
         }
 
 }
@@ -97,7 +97,7 @@ covEllipsesPlot(x = list(), \dots)
 
 \value{
  
-    ...
+    xxx
   
 }
 

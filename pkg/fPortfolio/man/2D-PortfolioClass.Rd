@@ -26,7 +26,7 @@
 
 \description{
   
-    A collection and description of ...
+    A collection and description of xxx
     \cr
     
     The functions are:
@@ -68,24 +68,24 @@ frontierSlider(object, control = list(), \dots)
 
     \bold{Portfolio Class:}
     \cr\cr
-    Describe it ...
+    Describe it xxx
     \cr
     
     
     \bold{Portfolio Frontier:}
     \cr\cr
-    Describe it ...
+    Describe it xxx
     \cr
     
     
     \bold{Single Portfolios:}
     \cr\cr   
-    Describe it ...
+    Describe it xxx
     \cr
     
     \bold{Portfolio Sliders:}
     \cr\cr   
-    Describe it ...   
+    Describe it xxx   
 
 }
 
@@ -93,34 +93,34 @@ frontierSlider(object, control = list(), \dots)
 \arguments{
 
     \item{constraintsStrings}{
-        ...
+        xxx
         }
     \item{control}{
-        ...
+        xxx
         }
     \item{data}{
-        ...
+        xxx
         }
     \item{description}{
-        ...
+        xxx
         }
     \item{object}{
-        ...
+        xxx
         }
     \item{spec}{
-        ...
+        xxx
         }
     \item{title}{
-        ...
+        xxx
         }
     \item{which}{
-        ...
+        xxx
         }
     \item{x}{
-        ...
+        xxx
         }
     \item{\dots}{
-        ...
+        xxx
         }
 
 }
@@ -128,7 +128,7 @@ frontierSlider(object, control = list(), \dots)
 
 \value{
   
-    To do ...
+    To do xxx
   
 }
 

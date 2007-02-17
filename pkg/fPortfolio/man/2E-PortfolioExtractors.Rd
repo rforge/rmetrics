@@ -18,7 +18,7 @@
 
 \description{
   
-    A collection and description of ...
+    A collection and description of xxx
     \cr
     
     The data sets are:
@@ -54,7 +54,7 @@ getTargetRisk(object)
 
     \bold{Porfolio Extractor Functions:}
     \cr\cr
-    Describe the data set ...
+    Describe the data set xxx
 
 }
 
@@ -62,16 +62,16 @@ getTargetRisk(object)
 \arguments{
 
     \item{doplot}{
-        ...
+        xxx
         }
     \item{frontier}{
-        ...
+        xxx
         }
     \item{object}{
-        ...
+        xxx
         }
     \item{\dots}{
-        ...
+        xxx
         }
 
 }
@@ -88,7 +88,7 @@ getTargetRisk(object)
     \code{getWeights}\cr
     \code{getTargetReturn}\cr
     \code{getTargetRisk}\cr
-    return a ...
+    return a xxx
   
 }
 

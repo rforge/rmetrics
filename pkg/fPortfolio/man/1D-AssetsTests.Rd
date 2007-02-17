@@ -56,7 +56,7 @@ assetsTest(x, method = c("shapiro", "energy"), Replicates = 100,
         \code{"fASSETS"} object.
         }
     \item{x}{
-        ...
+        xxx
         }  
         
 }
@@ -118,7 +118,6 @@ Szekely G.J. (1989);
 ## berndtInvest -
    data(berndtInvest)
    # Exclude Date, Market and Interest Rate columns from data frame,
-   # then multiply by 100 for percentual returns ...
    berndtAssets = berndtInvest[, -c(1, 11, 18)]
    rownames(berndtAssets) = berndtInvest[, 1]
    head(berndtAssets)
