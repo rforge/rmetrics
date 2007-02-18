@@ -16,7 +16,7 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2004, Diethelm Wuertz, GPL
+#   1999 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
 #   www.rmetrics.org
@@ -28,27 +28,27 @@
 
 
 ################################################################################
-# METHOS               MODIFICATION METHODS:
+# METHODS:             MODIFICATION METHODS:
 #  diff.timeSeries      S3: Differences a 'timeSeries' object
 #  lag.timeSeries       S3: Lags a 'timeSeries' object
 #  merge.timeSeries     S3: Merges two 'timeSeries' objects
 #  scale.timeSeries     S3: Centers and/or scales a 'timeSeries' object
 #  summary.timeSeries   S3: Summarizes a 'timeDate' object
 #  var.timeSeries       S3: Returns variance for a 'timeSeries' object
-# METHODS              MATHEMATICAL OPERATIONS ON DATA:
+# METHODS:             MATHEMATICAL OPERATIONS ON DATA:
 #  Ops.timeSeries       S3: Arith method for a 'timeSeries' object
 #  abs.timeSeries       S3: Returns abolute values of a 'timeSeries' object
 #  sqrt.timeSeries      S3: Returns sqrt values of a 'timeSeries' object
 #  exp.timeSeries       S3: Returns exponentials of a 'timeSeries' object
 #  log.timeSeries       S3: Returns logarithms of a 'timeSeries' object
 #  quantile.timeSeries  S3: produces sample quantiles of a 'timeSeries' object
-# METHODS              SUBSETTING METHODS ON DATA:
+# METHODS:             SUBSETTING METHODS ON DATA:
 #  [.timeSeries         S3: subsets of a 'timeSeries' object
 #  cut.timeSeries       S3: cuts a block from a 'timeSeries' object
 #  head.timeSeries      S3: returns the head of a 'timeSeries' object
 #  tail.timeSeries      S3: returns the tail of a 'timeSeries' object
 #  outlier.timeSeries   S3: Removes outliers from a 'timeSeries' object  
-# METHODS              DIM OPERATIONS ON DATA: 
+# METHODS:             DIM OPERATIONS ON DATA: 
 #  dim                  Returns the dimension of a 'timeSeries' object
 #  dimnames             Returns the dimension names of a 'timeSeries' object
 #  colnames<-.timeS*    Assigns column names to a 'timeSeries' object
@@ -129,8 +129,7 @@ function()
     # X = diff(x = uTS, lag = 2, diff = 2, trim = TRUE, pad = NA)
     # X
     # X@recordIDs
-    
-    
+     
     # Time Series Lags:
     X = lag(x = uTS, k = 1, trim = FALSE, units = NULL)
     X 
@@ -143,8 +142,7 @@ function()
     # X@recordIDs
     X = lag(x = uTS, k = -1:1, trim = FALSE, units = LETTERS[1:3])
     X 
-    X@recordIDs
-    
+    X@recordIDs 
     
     # Multivariate Data Set:
     set.seed(4711)
@@ -169,13 +167,15 @@ function()
     scale(uTS)
     scale(mTS)
     
-    # Summary
-    # summary(uTS)
-    # summary(mTS)
+    # Summary:
+    summary(uTS)
+    summary(mTS)
     
     # Covariance Matrix:
     var(x = uTS, y = NULL, na.rm = FALSE)
     var(x = mTS, y = NULL, na.rm = FALSE)
+    # Note, using function cov() fails, since cov() requires an atomic
+    #   object as input.
 
     # Return Value:
     return()    
