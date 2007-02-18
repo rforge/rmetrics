@@ -75,15 +75,17 @@ function()
     # GBSOption(TypeFlag = c("c", "p"), S, X, Time, r, b, sigma, 
     #   title = NULL, description = NULL) 
     
-    # GBSCharacteristics
+    # GBSCharacteristics:
     
-    # BlackScholesOption
+    # BlackScholesOption:
     
-    # GBSGreeks
+    # GBSGreeks:
   
+    # Black76Option:
     # Black76Option = (TypeFlag = c("c", "p"), FT, X, Time, r, sigma, 
     #   title = NULL, description = NULL)
 
+    # MiltersenSchwartzOption:
     # MiltersenSchwartzOption(TypeFlag = c("c", "p"), Pt, FT, X, time, Time, 
     #   sigmaS, sigmaE, sigmaF, rhoSE, rhoSF, rhoEF, KappaE, KappaF, 
     #   title = NULL, description = NULL)
