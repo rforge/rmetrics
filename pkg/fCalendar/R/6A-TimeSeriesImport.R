@@ -142,8 +142,8 @@ save = FALSE, colname = "VALUE", try = TRUE)
     # FUNCTION:
     
     # Frequency:
-    freq = frequency[1]
-           
+    freq = match.arg(frequency)
+              
     # Download:
     if (try) {
         # First try if the Internet can be accessed:
@@ -263,9 +263,9 @@ swap = 20, try = TRUE)
     #   f     Last Quote ends with Year (yy): as CCYY
     #   r     Aggregation Level
     #   z     Selected Ticker-Symbol [optional]
-
+    
     # Changes:
-    #
+    #   2007-02-18 DW: Update to new %Y-%m-%d format
     
     # FUNCTION:
     
@@ -290,34 +290,21 @@ swap = 20, try = TRUE)
         }
     
         # Download the file:
-        download.file(url = paste(source, query, sep = ""), 
-            destfile = file, method = method)
+        url = paste(source, query, sep = "")
+        download.file(url = url, destfile = file, method = method)
         
-        # Read from file and revert time order:
-        x1 = rev(scan(file, what = "", skip = 1))
+        # Read data and revert:
+        x = X = read.table(file, header = TRUE, sep = ",")
+        n = dim(x)[1]
+        x = x[n:1, ]
         
-        # Extract only date lines including dates:
-        x2 = strsplit(x1[regexpr("-...-..,", x1) > 0], ",")
-        
-        # Create a matrix from the list:
-        x1 = matrix(unlist(x2), byrow = TRUE, nrow = length(x2))
-        
-        # Transfer to numeric data.frame:
-        z = matrix(as.numeric(x1[, -1]), ncol = dim(x1)[2]-1)
-        
-        # Add row (by date) and column (by instrument) names: 
-        # rowNames = as.character(sdate(fjulian(x1[, 1], order = "dmy", 
-        rowNames =  as.character(as.Date(x1[, 1], format = "%d-%b-%y"))
-
-        # DW - add hyphens:
-        # rowNames = paste(
-        #   substring(rowNames, 1, 4), "-",
-        #   substring(rowNames, 5, 6), "-",
-        #   substring(rowNames, 7, 8), sep = "")
-        colNames = scan(file = file, n = dim(x1)[2],  what = "", sep = ",")[-1]
-        dimnames(z) = list(rowNames, colNames)
-            
+        # Result:
+        colnames(x)[1] <- "%Y-%m-%d"
+        rownames(x) = 1:n
+        z = data.frame(x)
+   
         # Save Download ?
+        colNames = colnames(z)[-1]
         if (save) {
             # Header:
             write.table(t(c("%Y-%m-%d", colNames)), file, quote = FALSE, 
@@ -325,12 +312,11 @@ swap = 20, try = TRUE)
             # Data:
             write.table(z, file, quote = FALSE, append = TRUE, 
                 col.names = FALSE, sep = ";") 
+            # Check:
+            # read.table(file, header = TRUE, sep = ";")
         } else {
             unlink(file) 
         } 
-        
-        # Result:
-        z = data.frame(DATE = rowNames, z, row.names = NULL)
         
         # Return Value:
         ans = new("fWEBDATA",     
@@ -376,10 +362,7 @@ frequency = "daily", save = FALSE, sep = ";", try = TRUE)
     #     DGS1      1-Year Treasury Constant Maturity Rate 
     #     DPRIME    Bank Prime Loan Rate
     #      
-
-    # Changes:
-    #
-    
+  
     # FUNCTION:
     
     # Check:
@@ -497,9 +480,6 @@ source = "http://www.forecasts.org/data/data/", save = FALSE, try = TRUE)
     #     EXJPUS        
     #     GS3M
 
-    # Changes:
-    #
-    
     # FUNCTION:
     
     # Download:
@@ -671,10 +651,7 @@ save = FALSE, try = TRUE)
     
     # Note:
     #   Old Version, no longer used ...
-    
-    # Changes:
-    #
-    
+       
     # FUNCTION:
     
     # Download:
@@ -827,9 +804,6 @@ aggregation = c("d", "w", "m"), returnClass = c("timeSeries", "ts",
     #   yahooSeries(aggregation = "m", nDaysBack = 10*366)
     #   yahooSeries(returnSeries = TRUE)
     
-    # Changes:
-    #
-    
     # FUNCTION:
     
     # Settings:
@@ -911,10 +885,7 @@ returnClass = c("timeSeries", "zoo", "ts"))
     # Examples:
     #   yahooSeries(aggregation = "w")
     #   yahooSeries(aggregation = "m", nDaysBack = 10*366)
-    
-    # Changes:
-    #
-    
+   
     # FUNCTION:
     
     # Automatic Selection of From / To: 
@@ -965,9 +936,6 @@ function(x, format = "%d-%m-%y")
     # Description:
     #   Mimics R's as.Date function
     
-    # Changes:
-    #
-    
     # FUNCTION:
     
     # Used by yahooImport ...
@@ -986,9 +954,6 @@ data =
 function(x)
 {   # A function implemented by Diethelm Wuertz
 
-    # Changes:
-    #
-    
     # FUNCTION:
     
     # For S-Plus Compatibility:
@@ -1003,10 +968,7 @@ if (!exists("download.file")) {
 download.file =
 function(url, destfile, method, ...)
 {   # A function implemented by Diethelm Wuertz
-    
-    # Changes:
-    #
-    
+  
     # FUNCTION:
     
     # Download:
@@ -1030,10 +992,7 @@ if (!exists("strsplit")) {
 strsplit = 
 function(x, split = " ") 
 {   # A function implemented by Diethelm Wuertz
-
-    # Changes:
-    #
-    
+  
     # FUNCTION:
     
     # For S-Plus Compatibility:
@@ -1043,7 +1002,6 @@ function(x, split = " ")
     ans
 }}
  
-
 
 ################################################################################
 
