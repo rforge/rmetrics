@@ -16,7 +16,7 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2004, Diethelm Wuertz, GPL
+#   1999 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
 #   www.rmetrics.org
@@ -147,7 +147,7 @@ function()
 
     # Interpolation:
     akima.lin = .akima2D(akima$x, akima$y, akima$z)
-)
+
     Z = mean(akima.lin$z)
     checkSum = 21.70316
     checkEquals(target = Z, current = checkSum, tolerance = 0.00001)
