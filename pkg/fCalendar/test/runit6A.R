@@ -16,7 +16,7 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2006, Diethelm Wuertz, GPL
+#   1999 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
 #   www.rmetrics.org
@@ -71,7 +71,8 @@ function()
 test.economagic = 
 function()
 {  
-    # economagicImport() - Daily Rates:
+    # economagicImport() - 
+    # Daily Rates:
     X = economagicImport(query = "fedny/day-fxus2eu", 
         frequency = "daily", colname = "USDEUR")
     checkIdentical(
@@ -81,7 +82,8 @@ function()
         target = X@data[6, 2], 
         current = 1.1698)
 
-    # economagicImport() - Monthly Rates:
+    # economagicImport() - 
+    # Monthly Rates:
     X = economagicImport(query = "fedstl/fedfunds+2", 
          frequency = "monthly", colname = "USFEDFUNDS")
     checkIdentical(
@@ -91,7 +93,8 @@ function()
         target = X@data[6, 2], 
         current = 1.29)
     
-    # economagicImport() - Quarterly Rates:
+    # economagicImport() - 
+    # Quarterly Rates:
     X = economagicImport(query = "fedstl/gnp", 
         frequency = "quarterly", colname = "USGNP")
     checkIdentical(
@@ -120,12 +123,16 @@ function()
         target = as.vector(X@data[3:4, 1]), 
         current = c("1999-12-31", "2000-01-03"))
     checkIdentical(
-        target = sum(X@data[, "Volume"]), 
+        target = as.numeric(sum(X@data[, "Volume"])), 
         current = 40297400)
          
     # keystatsImport() - 
     keystatsImport("IBM")  
-    # ... html Format problems
+    # ... html Format problems, now works
+    
+    # yahooSeries() -
+    args(yahooSeries)
+    yahooSeries()
         
     # Return Value:
     return()
@@ -142,15 +149,21 @@ function()
     # fredImport(query, file = "tempfile", 
     #    source = "http://research.stlouisfed.org/fred2/series/", 
     #   frequency = "daily", save = FALSE, sep = ";", try = TRUE) 
-    X = fredImport("DPRIME")@data 
+    X = fredImport("DPRIME")@data
+    head(X) 
+    class(X)
     
     # fredSeries() -     
     fredSeries = function(symbol = "DPRIME")
     {   
         data = fredImport(query = symbol)@data
-        as.timeSeries(data)
+        data = as.timeSeries(data)
+        colnames(data) <- symbol
+        data
     }
     X = fredSeries("DPRIME")
+    head(X)
+    class(X)
     
     # Return Value:
     return()
