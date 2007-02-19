@@ -1,8 +1,17 @@
+AssetsMeanCovariances   Estimation of Mean and Covariances of Asset
+                        Sets
 AssetsModelling         Modelling of Multivariate Asset Sets
+AssetsPlots             Plots of Multivariate Asset Sets
+AssetsSelection         Selecting Assets from Multivariate Asset Sets
+AssetsTests             Testing Multivariate Asset Sets
 DrawdownStatistics      Drawdown Statistics
-fPortfolioTools         fPortfolio Tools
-MarkowitzPortfolio      Markowitz Portfolio
-PortfolioData           fPortfolio Data Sets
+PortfolioClass          Portfolio Class
+PortfolioConstraints    Portfolio Constraints
+PortfolioData           Example Portfolio Data Sets
+PortfolioDataSets       fPortfolio Data Sets
+PortfolioExtractors     Portfolio Extractor Functions
+PortfolioPlots          Portfolio Plots
+PortfolioSpecification
+                        Specification of Portfolios
 ResampledPortfolio      Resampled Portfolio Frontier
-TwoAssetsPortfolio      Two Assets Portfolio
 VaRModelling            Value-at-Risk Measures for Portfolios
