@@ -29,9 +29,10 @@
 
 ################################################################################
 # FUNCTION:             ASSETS NORMALITY TESTS:
-#  assetsTest            Tesst for multivariate Normal Assets
+#  assetsTest            Tests for multivariate Normal Assets
 #   method = "shapiro"    ... calling Shapiro test
 #   method = "energy"     ... calling E-Statistic (energy) test
+# FUNCTION:             INTERNAL UTILITY FUNCTIONS:
 #  .mvenergyTest         Multivariate Energy Test
 #   .mvnorm.etest         Internal Function used by assetsTest
 #   .mvnorm.e             Internal Function used by assetsTest
