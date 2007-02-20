@@ -139,6 +139,7 @@ information = c("observed", "expected"), title = NULL, description = NULL, ...)
         fit$convergence = NA
     }
     fit$prob = 1 - length(x[x > u]) / length(x)
+    fit$threshold = u
    
     # Compute Residuals:
     xi = fit$par.ests["xi"]
@@ -147,7 +148,7 @@ information = c("observed", "expected"), title = NULL, description = NULL, ...)
     
     # Add title and description:
     if (is.null(title)) title = "GPD Parameter Estimation"
-    if (is.null(description)) description = as.character(date())
+    if (is.null(description)) description = .description()
     
     # Compose Parameter List:
     parameter = list(u = u, type = type)
@@ -298,6 +299,9 @@ function(object)
 }
 
 
+# ------------------------------------------------------------------------------
+
+
 setMethod("show", "fGPDFIT", show.fGPDFIT)
 
 
@@ -440,7 +444,7 @@ function(x, labels = TRUE, ...)
     y = pgpd(z, xi, u, beta)   
     y = (1 - prob) * (1 - y)
     plot(x = sorted, y = ypoints, 
-        xlim = range(u, U), ylim = range(ypoints, y, na.rm = TRUE), 
+        xlim = range(u, U), ylim = range(ypoints, y[y>0], na.rm = TRUE), 
         main = main, xlab = xlab, ylab = ylab, 
         log = "xy", axes = TRUE, 
         col = "steelblue", pch = 19, ...)

@@ -27,7 +27,7 @@
 #   see Rmetrics's copyright file
 
 
-# ##############################################################################
+################################################################################
 # FUNCTION:               ADDITIONAL PLOTS:
 #  gpdTailPlot             Plots Tail Estimate From GPD Model
 #  gpdQuantPlot            Plots of GPD Tail Estimate of a High Quantile
@@ -52,7 +52,7 @@ labels = TRUE, ...)
     
     # Example:
     #   object = gpdFit(as.timeSeries(data(danishClaims)), u = 10)
-    #   gpdtailPlot(object)
+    #   gpdTailPlot(object)
     
     # FUNCTION:   
     
@@ -315,7 +315,7 @@ like.num = 50)
     #   Adds Quantile Estimates to plot.gpd
     
     # Arguments:
-    #   x - a list object returned by 'plot.gpd' or 'tailplot'
+    #   x - a list object returned by 'gpdTailPlot'
     #   p - the desired probability for quantile estimate (e.g. 
     #       0.99 for the 99th percentile)
     #   type - method for calculating a confidence interval: 
