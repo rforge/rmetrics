@@ -72,8 +72,8 @@ function(data, spec = portfolioSpec(), constraintsStrings = NULL)
     N = length(mu)
     weights = spec@portfolio$weights
     if (is.null(weights)) weights =  rep(1/N, times = N)
-    Return = as.numeric(mu %*% weights)
-    Risk = sqrt( as.numeric( t(weights) %*% Sigma %*% (weights) ) )
+    targetReturn = as.numeric(mu %*% weights)
+    targetRisk = sqrt( as.numeric( t(weights) %*% Sigma %*% (weights) ) )
     
     # Return Value:
     new("fPORTFOLIO", 
@@ -84,7 +84,8 @@ function(data, spec = portfolioSpec(), constraintsStrings = NULL)
         portfolio = list(
             weights = weights,
             targetReturn = Return,
-            targetRisk = Risk),
+            targetRisk = targetRisk,
+            targetStdev = targetRisk),
         title = "Feasible Portfolio", 
         description = .description())  
 }
@@ -136,7 +137,8 @@ function(data, spec = portfolioSpec(), constraintsStrings = NULL)
         portfolio = list(
             weights = weights,
             targetReturn = targetReturn,
-            targetRisk = targetRisk),
+            targetRisk = targetRisk,
+            targetStdev = targetRisk),
         title = "Capital Market Line", 
         description = .description())  
 }
@@ -183,7 +185,8 @@ function(data, spec = portfolioSpec(), constraintsStrings = NULL)
         portfolio = list(
             weights = weights,
             targetReturn = targetReturn,
-            targetRisk = targetRisk),
+            targetRisk = targetRisk,
+            targetStdev = targetRisk),
         title = "Tangency MV Portfolio", 
         description = .description())  
 }
@@ -230,7 +233,8 @@ function(data, spec = portfolioSpec(), constraintsStrings = NULL)
         portfolio = list(
             weights = weights,
             targetReturn = targetReturn,
-            targetRisk = targetRisk),
+            targetRisk = targetRisk,
+            targetStdev = targetRisk),
         title = "Minimum Variance MV Portfolio", 
         description = .description())  
 }
@@ -284,7 +288,8 @@ function(data, spec = portfolioSpec(), constraintsStrings = NULL)
         portfolio = list(
             weights = weights,
             targetReturn = targetReturn,
-            targetRisk = targetRisk),
+            targetRisk = targetRisk,
+            targetStdev = targetRisk),
         title = "Frontier MV Portfolio", 
         description = .description())  
 }
@@ -379,7 +384,8 @@ title = NULL, description = NULL)
         portfolio = list(
             weights = weights, 
             targetReturn = targetReturn,
-            targetRisk = targetRisk), 
+            targetRisk = targetRisk,
+            targetStdev = targetRisk), 
         title = title, 
         description = description)
 }

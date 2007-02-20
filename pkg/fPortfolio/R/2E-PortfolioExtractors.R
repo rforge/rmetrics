@@ -37,6 +37,7 @@
 #  getWeights                    Extracts weights from a fPORTFOLIO object
 #  getTargetReturn               Extracts target return from a portfolio
 #  getTargetRisk                 Extracts target riks from a portfolio
+#  getTargetStdev                Extracts target standard deviations from a PF
 ################################################################################
 
 
@@ -244,6 +245,27 @@ function(object)
     # Target MV Risk:
     ans = object@portfolio$targetRisk
     if (length(ans) == 1) names(ans) = "targetRisk"
+    
+    # Return Value:
+    ans
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+getTargetStdev =
+function(object)
+{   # A function implemented by Rmetrics
+
+    # Description:
+    #   Extracts the target standard deviation from a 'fPORTFOLIO' object
+   
+    # FUNCTION:
+    
+    # Target Standard Deviation:
+    ans = object@portfolio$targetStdev
+    if (length(ans) == 1) names(ans) = "targetStdev"
     
     # Return Value:
     ans

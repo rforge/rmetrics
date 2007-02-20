@@ -96,7 +96,8 @@ function(data, spec, constraintsStrings)
         portfolio = list(
             weights = weights,
             targetReturn = targetReturn,
-            targetRisk = targetRisk),
+            targetRisk = targetRisk,
+            targetStdev = targetRisk),
         title = "Feasible Portfolio", 
        description = .description()) 
 }
@@ -134,10 +135,10 @@ function(data, spec, constraintsStrings)
         data = data, spec = spec, constraintsStrings = constraintsStrings,
         tol = .Machine$double.eps^0.5)
            
-    cmlReturn = spec@portfolio$targetReturn = cml$maximum  
-    cmlRisk = getTargetRisk(frontierPortfolio(data = data$statistics, spec,
+    targetReturn = spec@portfolio$targetReturn = cml$maximum  
+    targetRisk = getTargetRisk(frontierPortfolio(data = data$statistics, spec,
         constraintsStrings)) 
-    cmlWeight = getWeights(frontierPortfolio(data = data$statistics,
+    weights = getWeights(frontierPortfolio(data = data$statistics,
         spec, constraintsStrings))
 
     # Return Value:
@@ -147,9 +148,10 @@ function(data, spec, constraintsStrings)
         specification = spec,
         constraints = as.character(constraintsStrings),
         portfolio = list(
-            weights = cmlWeight,
-            targetReturn = cmlReturn,
-            targetRisk = cmlRisk),
+            weights = weights,
+            targetReturn = targetReturn,
+            targetRisk = targetRisk,
+            targetStdev = targetRisk),
         title = "CML Portfolio", 
         description = .description()) 
 }
@@ -217,10 +219,10 @@ function(data, spec, constraintsStrings)
     minVar = optimize(.minVariancePortfolioFun, interval = range(mu),
         data = data, spec = spec, constraintsStrings = constraintsStrings,
         tol = .Machine$double.eps^0.5)
-    minVarReturn = spec@portfolio$targetReturn = minVar$minimum
-    minVarRisk = getTargetRisk(frontierPortfolio(data = data$statistics, spec,
+    targetReturn = spec@portfolio$targetReturn = minVar$minimum
+    targetRisk = getTargetRisk(frontierPortfolio(data = data$statistics, spec,
         constraintsStrings)) 
-    minVarWeight = getWeights(frontierPortfolio(data = data$statistics, spec,
+    weights = getWeights(frontierPortfolio(data = data$statistics, spec,
         constraintsStrings))
 
     # Return Value:
@@ -230,9 +232,10 @@ function(data, spec, constraintsStrings)
         specification = spec,
         constraints = as.character(constraintsStrings),
         portfolio = list(
-            weights = minVarWeight,
-            targetReturn = minVarReturn,
-            targetRisk = minVarRisk),
+            weights = weights,
+            targetReturn = targetReturn,
+            targetRisk = targetRisk,
+            targetStdev = targetStdev),
         title = "Minimum Variance Portfolio", 
         description = .description()) 
 }
@@ -299,7 +302,8 @@ function(data, spec, constraintsStrings)
         portfolio = list(
             weights = weights,
             targetReturn = targetReturn,
-            targetRisk = targetRisk),
+            targetRisk = targetRisk,
+            targetStdev = targetStdev),
         title = "Constrained MV Portfolio", 
         description = .description())    
 }
@@ -372,7 +376,8 @@ function(data, spec, constraintsStrings)
         portfolio = list(
             weights = weights[!error, ],
             targetReturn = targetMu[!error],
-            targetRisk = targetSigma[!error]),
+            targetRisk = targetSigma[!error],
+            targetStdev = targetSigma[!error]),
         title = "Constrained MV Frontier", 
         description = .description())       
 }

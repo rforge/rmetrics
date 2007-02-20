@@ -390,6 +390,15 @@ function(object)
     } else {
         print(targetRisk)
     }
+    
+    # Target Stdev:
+    cat("\nTarget Standard Deviation(s):\n")   
+    targetStdev = getTargetStdev(object) 
+    if (length(targetStdev) == 1) {
+        cat(" ", targetStdev, "\n")
+    } else {
+        print(targetStdev)
+    }
        
     # Description:
     cat("\nDescription:\n ")

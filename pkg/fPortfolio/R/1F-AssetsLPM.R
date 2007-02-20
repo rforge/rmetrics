@@ -96,31 +96,3 @@ function(x, tau = colMeans(x), a = 1.5, ...)
 ################################################################################
 
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    # Check Positive Definiteness:
-    control = c(control, forced = "FALSE")
-    if (force) {
-        control = c(control, forced = "TRUE")
-        if (!result) Sigma = makePositiveDefinite(m = Sigma)       
-    }
-    
-    # Result:
-    ans = list(mu = mu, Sigma = Sigma)
-    attr(ans, "control") = control
-    
-    # Return Value:
-    ans
-}
-
-
-################################################################################
-

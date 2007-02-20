@@ -62,7 +62,7 @@ setClass("fPFOLIOSPEC",
 
 portfolioSpec = 
 function( 
-model = list(type = "MV", estimator = c("mean", "cov")), 
+model = list(type = "MV", estimator = c("mean", "cov"), params = list()), 
 portfolio = list(weights = NULL, targetReturn = NULL, riskFreeRate = 0, 
     nFrontierPoints = 50, returnRange = NULL, riskRange = NULL),
     title = NULL, description = NULL)
@@ -376,8 +376,13 @@ function(data, spec = portfolioSpec())
         estimate = MASS::cov.mve(series)
         mu = estimate$center
         Sigma = estimate$cov
-    }
-    
+    } else if(meanEstimator == "lpm" | covEstimator == "lpm") {
+        stopifnot(!is.null(spec@model$params$tau))
+        stopifnot(!is.null(spec@model$params$a))
+        estimate = assetsLPM(x, tau = spec@model$params$tau, a)
+        mu = estimate$mu
+        Sigma = estimate$Sigma
+    } 
     # Classical Estimates:
     if (meanEstimator == "mean") {
         mu = apply(series, MARGIN = 2, FUN = mean)
