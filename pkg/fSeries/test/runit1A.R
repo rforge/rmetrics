@@ -49,15 +49,9 @@
 #  coefficients.fARMA      S3: Synonyme for coef.fARMA
 #  fitted.fARMA            S3: Returns fitted values from a fitted ARMA object
 #  residuals.fARMA         S3: Returns residuals from a fitted ARMA object
-################################################################################
-
-################################################################################
 # FUNCTION:               TRUE ARMA STATISTICS:
 #  armaTrueacf             Returns True ARMA autocorrelation function
 #  armaRoots               Returns Roots of the ARMA characteristic polynomial
-################################################################################
-
-
 ################################################################################
 
 
@@ -251,18 +245,21 @@ function()
     # Plot: Standardized Residuals, ACF, QQ-Plot, Ljung-Box p-Values
     par(mfrow = c(2, 2), cex = 0.7)
     plot(object, which = "all")
+    
     # Try:
     par(mfrow = c(1, 1))
     plot(object, which = 1)
     plot(object, which = 2)
     plot(object, which = 3)
     plot(object, which = 4)
+    
     # Interactive Plot:
     # plot(object)
     
     # Summary Method - No Plot:
     summary(object, doplot = FALSE)
-    # Including All Plots:
+    
+    # Summary Method - Including All Plots:
     par(mfrow = c(2, 2), cex = 0.7)
     summary(object, doplot = TRUE, which = "all")
     
@@ -275,6 +272,11 @@ function()
     residuals = residuals(object) 
     class(residuals)
     head(residuals)
+    
+    # Should we have ?
+    # getCoef
+    # getResiduals
+    # getFitted
     
     # Predict Method:
     args(predict.fARMA)
@@ -626,14 +628,15 @@ function()
     armaFit(Close ~ ar(5), TS.RET)
     
     # Fit:
-    # Note, data may be a data frame ...
+    # Note, data may be a 'data.frame' ...
     armaFit(Close ~ ar(5), as.data.frame(TS.RET))
     
     # Fit:
-    # Note, data may be a numeric vector ...
+    # Note, data may be a 'numeric' vector ...
     armaFit(~ ar(5), as.vector(TS.RET[, "Close"]))
     
     # Fit:
+    # Note, data may be an object of class 'ts' ...
     armaFit(~ ar(5), as.ts(TS.RET)[, "Close"])
     
     # Fit:
@@ -681,31 +684,6 @@ function()
     # Fixed - AR(2[2]) Subset Model:
     #                                         ar1 ar2 ma1 intercept
     armaFit(~ arma(2, 1), data = x, fixed = c(0.5, NA, NA, NA))
-    
-    # Return Value:
-    return()    
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-test.armaTrueModel = 
-function()
-{ 
-    # armaTrueacf: Returns True ARMA autocorrelation function
-    # armaRoots:   Returns Roots of the ARMA characteristic polynomial
-
-    # armaTrueacf(model, lag.max = 20, type = "correlation", doplot = TRUE)
-    model = list(ar = c(0.5, -0.5))
-    armaTrueacf(model, lag.max = 10)
-    
-    # armaRoots(coefficients, n.plot = 400, digits = 4, ...)
-    coefficients = c(-0.5, 0.9, -0.1, -0.5)
-    ans = armaRoots(coefficients)
-    target = round(sum(ans), 2)
-    checkSum = 4.58
-    checkEqualsNumeric(target, checkSum)
     
     # Return Value:
     return()    

@@ -67,7 +67,7 @@ function()
 {
     # Help File:
     helpFile = function() { 
-        example(ChaoticTimeSeries); return() }
+        example(ChaoticTimeSeries, ask = FALSE); return() }
     checkIdentical(
         target = class(try(helpFile())),
         current = "NULL")

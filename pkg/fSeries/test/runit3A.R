@@ -83,7 +83,7 @@ function()
 {
     # Help File:
     helpFile = function() { 
-        example(LongRangeDependence); return() }
+        example(LongRangeDependence, ask = FALSE); return() }
     checkIdentical(
         target = class(try(helpFile())),
         current = "NULL")

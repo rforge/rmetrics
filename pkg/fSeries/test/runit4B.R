@@ -42,7 +42,7 @@ function()
 {
     # Help File:
     helpFile = function() { 
-        example(HeavisideFunction); return() }
+        example(HeavisideFunction, ask = FALSE); return() }
     checkIdentical(
         target = class(try(helpFile())),
         current = "NULL")

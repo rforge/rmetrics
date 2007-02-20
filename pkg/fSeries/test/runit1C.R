@@ -81,7 +81,7 @@ function()
     set.seed(1985)
     x = armaSim(model = list(ar = c(0.5, - 0.5), d = 0.3, ma = 0.1), n = 1000)
     
-    # MLE Fit - method="mle":
+    # MLE Fit - Default method="mle":
     object = arfimaOxFit(formula = ~arfima(2,1), data = x)
     print(object)
     target = as.vector(round(coef(object), 1))
@@ -140,6 +140,9 @@ function()
     par(mfrow = c(2, 2), cex = 0.7)
     plot(object, which = "all") 
     
+    # Try - Interactive Plot:
+    # plot(object)
+    
     # Summary:
     summary(object, doplot = FALSE)
     
@@ -155,7 +158,6 @@ function()
 
 
 # ------------------------------------------------------------------------------
-
 
 
 test.arfimaPredict = 
@@ -193,9 +195,11 @@ function()
     # Set Ox Path:
     OXPATH <<- "C:\\Ox\\Ox3"
     
-    # Simulate and Fit:
+    # Simulate:
     set.seed(1985)
     x = armaSim(model = list(ar = 0.65, d = 0.3, ma = 0.65), n = 1000)
+    
+    # Fit:
     object = arfimaOxFit(formula = x ~ arfima(1, 1), data = x, trace = FALSE)      
     print(object)
     summary(object)
@@ -211,7 +215,7 @@ function()
 
 if (FALSE) {
     require(RUnit)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fSeries/test/runit1B.R")
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fSeries/test/runit1C.R")
     printTextProtocol(testResult)
 }
    

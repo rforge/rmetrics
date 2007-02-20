@@ -48,7 +48,7 @@ function()
 {
     # Help File:
     helpFile = function() { 
-        example(UnitrootDistribution); return() }
+        example(UnitrootDistribution, ask = FALSE); return() }
     checkIdentical(
         target = class(try(helpFile())),
         current = "NULL")

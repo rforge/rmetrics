@@ -98,7 +98,7 @@ function()
 {
     # Help File:
     helpFile = function() { 
-        example(GarchDistributions); return() }
+        example(GarchDistributions, ask = FALSE); return() }
     checkIdentical(
         target = class(try(helpFile())),
         current = "NULL")

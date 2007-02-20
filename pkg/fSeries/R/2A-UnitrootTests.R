@@ -63,7 +63,7 @@ function(x, method = c("unitroot", "adf", "urers", "urkpss", "urpp",
     
     # Add:
     if (!is.null(title)) ans@title = as.character(title)
-    if (!is.null(description)) ans@description = as.character(description)
+    if (!is.null(description)) ans@description = .description()
     
     # Return Value:
     ans
@@ -228,7 +228,7 @@ description = NULL)
         data = list(x = x),
         test = test, 
         title = as.character(title),
-        description = as.character(description)
+        description = .description()
         )   
 }
 
@@ -363,7 +363,7 @@ description = NULL)
         data = list(x = x),
         test = test, 
         title = as.character(title),
-        description = as.character(description)
+        description = .description()
         )    
 }
 
