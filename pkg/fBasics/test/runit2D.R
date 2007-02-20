@@ -52,7 +52,7 @@ function()
 {
     # Help File:
     helpFile = function() { 
-        example(DistributionFits); return() }
+        example(DistributionFits, ask = FALSE); return() }
     checkIdentical(
         target = class(try(helpFile())),
         current = "NULL")
@@ -69,13 +69,16 @@ test.normFit =
 function()
 { 
     # Graph Frame:
-    par(mfrow = c(2, 2), cex = 0.7)
+    par(mfrow = c(1, 1))
      
-    # normFit -
-    # Simulated normal random variates:
+    # Simulate normal random variates:
     set.seed(1953)
     s = rnorm(n = 2000, mean = 1, sd = 0.5) 
-    ans = .normFit(x = s)
+    
+    # Fit:
+    ans = nFit(x = s)
+    
+    # Precision within 10% ?
     relErrorTest =  c(
         ( (ans@fit$estimate[1] - 1.0)/1.0 < 0.10 ), 
         ( (ans@fit$estimate[2] - 0.5)/0.5 < 0.10 ))
@@ -95,14 +98,16 @@ test.tFit =
 function()
 { 
     # Graph Frame:
-    par(mfrow = c(2, 2), cex = 0.7)
+    par(mfrow = c(1, 1))
     
-    # tFit -
-    # Simulated random variates t(4):
+    # Simulate random variates t(4):
     set.seed(1953)
-    s = rt(n = 2000, df = 4) 
-    ans = tFit(x = s, df = 2*var(s)/(var(s)-1), 
-        trace = FALSE)
+    s = rt(n = 2000, df = 4)
+    
+    # Fit:  
+    ans = tFit(x = s, df = 2*var(s)/(var(s)-1), trace = FALSE)
+    
+    # Precision of df within 10% ?
     relErrorTest =  c(
         ( (ans@fit$estimate[1] - 4.0)/4.0 < 0.10 ))
     print(ans)
@@ -121,13 +126,17 @@ test.ghFit =
 function()
 { 
     # Graph Frame:
-    par(mfrow = c(2, 2), cex = 0.7)
+    par(mfrow = c(1, 1))
     
-    # ghFit -
+    # Simulate random variates:
     set.seed(1953)
     s = rgh(n = 2000, alpha = 0.8, beta = 0.2, delta = 2, mu = -0.4, lambda = 1) 
+    
+    # Fit:
     ans = ghFit(x = s, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1,
         trace = FALSE) 
+    
+    # Precision of parameters within 10% ?
     relErrorTest =  c(
         ( (ans@fit$estimate[1] - 0.8)/( 0.8) < 0.10 ), 
         ( (ans@fit$estimate[2] - 0.2)/( 0.2) < 0.10 ),
@@ -150,13 +159,17 @@ test.hypFit =
 function()
 { 
     # Graph Frame:
-    par(mfrow = c(2, 2), cex = 0.7)
+    par(mfrow = c(1, 1))
     
-    # hypFit -
+    # Simulate normal random variates:
     set.seed(1953)
     s = rhyp(n = 2000, alpha = 1.5, beta = 0.8, delta = 0.5, mu = -1) 
+    
+    # Fit:
     ans = hypFit(s, alpha = 1, beta = 0, delta = 1, mu = mean(s), 
         trace = FALSE)
+    
+    # Precision of parameters within 10% ?
     relErrorTest =  c(
         ( (ans@fit$estimate[1] - 1.5)/( 1.5) < 0.10 ), 
         ( (ans@fit$estimate[2] - 0.8)/( 0.8) < 0.10 ),
@@ -178,13 +191,17 @@ test.nigFit =
 function()
 { 
     # Graph Frame:
-    par(mfrow = c(2, 2), cex = 0.7)
+    par(mfrow = c(1, 1))
     
-    # nigFit -
+    # Simulate normal random variates:
     set.seed(1953)
     s = rnig(n = 2000, alpha = 1.5, beta = -0.7, delta = 0.5, mu = -1.0) 
+    
+    # Fit:
     ans = nigFit(s, alpha = 1, beta = 0, delta = 1, mu = mean(s), 
         trace = FALSE)
+    
+    # Precision of parameters within 10% ?
     relErrorTest =  c(
         ( (ans@fit$estimate[1] - 1.5)/( 1.5) < 0.10 ), 
         ( (ans@fit$estimate[2] + 0.7)/(-0.7) < 0.10 ),
@@ -205,11 +222,18 @@ function()
 test.stableFit = 
 function()
 {   
-    # stableFit -
-    # Simulated stable random variates:
+    # Graph Frame:
+    par(mfrow = c(1, 1))
+    
+    # Simulate stable random variates:
     set.seed(1953)
     s = rstable(500, alpha=1.8, beta=0.3, gamma = 1, delta = 0.1, pm = 0) 
+    
+    # Fit:
     ans = stableFit(x = s, alpha = 1.5) 
+    print(ans)  # CHECK: call
+    
+    # Precision of parameters within 10% ?
     relErrorTest =  c(
         ( (ans@fit$estimate[1] - 1.8)/( 1.8) < 0.10 ), 
         ( (ans@fit$estimate[2] - 0.3)/( 0.3) < 0.10 ),
@@ -219,19 +243,19 @@ function()
     print(relErrorTest)
     checkTrue(as.logical(mean(relErrorTest)))
     
-    # MLE:
+    # MLE Fit:
     if (FALSE) {
         # Note, this takes rather long time ...
         ans = stableFit(x = s, alpha = 1.5, type = "mle", trace = TRUE) 
         # .mleStableFit(s, 1.75, 0, 1, 0)
         # The result would be:
         #
+        # Precision of parameters within 10% ?
         relErrorTest =  c(
             ( (ans@fit$estimate[1] - 1.8)/( 1.8) < 0.10 ), 
             ( (ans@fit$estimate[2] - 0.3)/( 0.3) < 0.10 ),
             ( (ans@fit$estimate[3] - 1.0)/( 1.0) < 0.10 ),
-            ( (ans@fit$estimate[4] - 0.1)/( 0.1) < 0.10 ))
-        
+            ( (ans@fit$estimate[4] - 0.1)/( 0.1) < 0.10 ))      
         print(ans)
         print(relErrorTest)
         checkTrue(as.logical(mean(relErrorTest)))
