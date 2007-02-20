@@ -33,7 +33,7 @@
 #  akimaInterp         Interpolates and Smoothes Irregularly Distributed Points
 #  akimaInterpp        Interpolates and Smoothes pointwise
 #  krigeInterp         Kriges Irregularly Distributed Data Points
-# .circlesPlot         Creates a scatterplot with circle size as third variable
+#  .circlesPlot        Creates a scatterplot with circle size as third variable
 ################################################################################
 
 

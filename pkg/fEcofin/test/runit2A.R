@@ -50,10 +50,55 @@ function()
 
 # ------------------------------------------------------------------------------
 
+
+test.characterTable = 
+function()
+{
+    # Character Table:
+    args(characterTable)
+    par(mfrow = c(1, 1))
+    characterTable()
+    
+    # Return Value:
+    return()
+
+    
+# ------------------------------------------------------------------------------
+
+
+test.symbolTable = 
+function()
+{
+    # Symbol Table:
+    args(symbolTable)
+    par(mfrow = c(1, 1))
+    symbolTable()
+    
+    # Return Value:
+    return()
+    
+  
+# ------------------------------------------------------------------------------
+
+
+test.colorTable = 
+function()
+{
+    # Color Table:
+    args(colorTable)
+    par(mfrow = c(1, 1))
+    colorTable()
+    
+    # Return Value:
+    return()
+    
+
+# ------------------------------------------------------------------------------
+
     
 if (FALSE) {
     require(RUnit)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fEcofin/test/runit1A.R")
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fEcofin/test/runit2A.R")
     printTextProtocol(testResult)
 }   
 

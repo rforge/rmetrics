@@ -43,7 +43,7 @@ function()
 {
     # Help File:
     helpFile = function() { 
-        example(BivariateBinning); return() }
+        example(BivariateBinning, ask = FALSE); return() }
     checkIdentical(
         target = class(try(helpFile())),
         current = "NULL")
@@ -57,14 +57,17 @@ function()
 test.squareBinning = 
 function()
 {
-    #  squareBinning       Square binning of irregularly distributed data sets
-    #  plot                S3 Method for plotting square binned data sets
+    #  squareBinning    Square binning of irregularly distributed data sets
+    #  plot             S3 Method for plotting square binned data sets
 
     # Generate Grid Data:
+    set.seed(1953)
     sB = squareBinning(x = rnorm(1000), y = rnorm(1000))
     
     # Plot:
+    par(mfrow = c(1, 1))
     plot(sB)
+    title(main = "Square Binning")
     
     # Return Value:
     return()    
@@ -77,15 +80,17 @@ function()
 test.hexBinning = 
 function()
 {
-    #  hexBinning          Hexagonal binning of irregularly distributed data sets
-    #  plot                S3 Method for plotting hexagonal binned data sets
+    #  hexBinning       Hexagonal binning of irregularly distributed data sets
+    #  plot             S3 Method for plotting hexagonal binned data sets
     
     # Generate Grid Data:
     set.seed(1953)
     hB = hexBinning(x = rnorm(1000), y = rnorm(1000))
     
     # Plot:
+    par(mfrow = c(1, 1))
     plot(hB)
+    title(main = "Hexagonal Binning")
       
     # Return Value:
     return()    
@@ -97,7 +102,7 @@ function()
     
 if (FALSE) {
     require(RUnit)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fEcofin/test/runit5B.R")
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fEcofin/test/runit5C.R")
     printTextProtocol(testResult)
 }   
 
