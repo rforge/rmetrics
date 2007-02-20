@@ -65,7 +65,7 @@ function(
 model = list(type = "MV", estimator = c("mean", "cov")), 
 portfolio = list(weights = NULL, targetReturn = NULL, riskFreeRate = 0, 
     nFrontierPoints = 50, returnRange = NULL, riskRange = NULL),
-title = NULL, description = NULL)
+    title = NULL, description = NULL)
 {   # A function implemented by Rmetrics
 
     # Description:
@@ -182,7 +182,7 @@ setMethod("show", "fPFOLIOSPEC", show.fPFOLIOSPEC)
 
 
 setType =
-function(spec = portfolioSpec(), type = c("MV", "CVaR"))
+function(spec = portfolioSpec(), type = c("MV", "LPM", "CVaR"))
 {   # A function implemented by Rmetrics
 
     # Description:                
@@ -192,10 +192,11 @@ function(spec = portfolioSpec(), type = c("MV", "CVaR"))
     
     # Type ?
     type = match.arg(type)
-    ans = portfolioSpec(model = list(type = type))
+    spec@model$type = type
+    if (type == "LM") spec@model$estimator = "lpm"
 
     # Return Value:
-    ans
+    spec
 }
 
 
@@ -212,10 +213,10 @@ function(spec = portfolioSpec(), estimator = c("mean", "cov"))
     # FUNCTION:
     
     # Estimator ?
-    ans = portfolioSpec(model = list(estimator = estimator))
+    spec@model$estimator = estimator 
     
     # Return Value:
-    ans
+    spec
 }
 
 
@@ -232,13 +233,13 @@ function(spec = portfolioSpec(), weights = NULL)
     # FUNCTION:
     
     # Weights ?
-    ans = portfolioSpec(portfolio = list(weights = weights))
+    spec@portfolio$weights = weights
     if(!is.null(weights)) {
-        ans = portfolioSpec(portfolio = list(targetReturn = NULL))
+        spec@portfolio$targetReturn = NULL
     }
     
     # Return Value:
-    ans
+    spec
 }
 
 
@@ -255,13 +256,13 @@ function(spec = portfolioSpec(), targetReturn = NULL)
     # FUNCTION:
     
     # Target Return ?
-    ans = portfolioSpec(portfolio = list(targetReturn = targetReturn))
+    spec@portfolio$targetReturn = targetReturn 
     if(!is.null(targetReturn)) {
-        ans = portfolioSpec(portfolio = list(weights = NULL))
+        spec@portfolio$weights = NULL
     }
     
     # Return Value:
-    ans
+    spec
 }
 
 
@@ -278,10 +279,10 @@ function(spec = portfolioSpec(), riskFreeRate = 0)
     # FUNCTION:
     
     # Risk-Free Rate ?
-    ans = portfolioSpec(portfolio = list(riskFreeRate = riskFreeRate))
+    spec@portfolio$riskFreeRate = riskFreeRate 
     
     # Return Value:
-    ans
+    spec
 }
 
 
@@ -298,10 +299,10 @@ function(spec = portfolioSpec(), nFrontierPoints = 100)
     # FUNCTION:
     
     # Number of Frontier Points ?
-    ans = portfolioSpec(portfolio = list(nFrontierPoints = nFrontierPoints))
+    spec@portfolio$nFrontierPoints = nFrontierPoints
     
     # Return Value:
-    ans
+    spec
 }
 
 
@@ -318,10 +319,10 @@ function(spec = portfolioSpec(), returnRange = NULL)
     # FUNCTION:
     
     # Return Range ?
-    ans = portfolioSpec(portfolio = list(returnRange = returnRange))
+    spec@portfolio$returnRange = returnRange
     
     # Return Value:
-    ans
+    spec
 }
 
 
@@ -338,10 +339,10 @@ function(spec = portfolioSpec(), riskRange = NULL)
     # FUNCTION:
     
     # Risk Range ?
-    ans = portfolioSpec(portfolio = list(riskRange = riskRange))
+    spec@portfolio$riskRange = riskRange
     
     # Return Value:
-    ans
+    spec
 }
 
 

@@ -28,18 +28,13 @@
 
 ################################################################################
 # FUNCTION:                          SINGLE PORTFOLIOS:
-#  .feasibleConstrainedMVPortfolio    Returns a constrained feasible MV
-#                                      portfolio
-#  .tangencyConstrainedMVPortfolio    Returns the constrained tangency MV 
-#                                      portfolio
-#  .cmlConstrainedMVPortfolio         Returns the constrained CML portfolio
-#  .minvarianceConstrainedMVPortfolio Returns the constrained minimum variance
-#                                      portfolio
-#  .frontierConstrainedMVPortfolio    Returns a constrained frontier MV
-#                                      portfolio
+#  .feasibleConstrainedMVPortfolio    Returns a constrained feasible MV-PF
+#  .tangencyConstrainedMVPortfolio    Returns constrained tangency MV-PF
+#  .cmlConstrainedMVPortfolio         Returns constrained CML-Portfolio
+#  .minvarianceConstrainedMVPortfolio Returns constrained min-Variance-PF
+#  .frontierConstrainedMVPortfolio    Returns a constrained frontier MV-PF
 # FUNCTION:                          PORTFOLIO FRONTIER:
-#  .portfolioConstrainedMVFrontier    Returns the EF of a constrained MV
-#                                     portfolio
+#  .portfolioConstrainedMVFrontier    Returns the EF of a constrained MV-PF
 ################################################################################
 
 
@@ -268,9 +263,7 @@ function(data, spec, constraintsStrings)
     dim = length(mu)
 
     # Extracting data from spec:
-    targetReturn = spec@portfolio$targetReturn
-
-    # Compute Default Target Return:   
+    targetReturn = spec@portfolio$targetReturn  
     stopifnot(is.numeric(targetReturn)) 
 
     # Setting the constraints matrix and vector:   
@@ -285,7 +278,7 @@ function(data, spec, constraintsStrings)
         meq = 2) 
     ierr = ans$ierr
     
-    # Setting all weights zero beeing smaler than the machine precision:
+    # Setting all weights zero being smaler than the machine precision:
     for(i in 1:dim){
         if(abs(ans$solution[i]) < .Machine$double.eps){
             ans$solution[i] = 0
@@ -325,6 +318,7 @@ function(data, spec, constraintsStrings)
     #   data - portfolio of assets, a matrix or an object which can be 
     #       transformed to a matrix
     #   spec - specification of the portfolio
+    #   constraintsStrings - string of constraints
 
     # FUNCTION:
 
@@ -344,7 +338,7 @@ function(data, spec, constraintsStrings)
     sqrtSig = sqrt(diag(Sigma))
     if (is.null(riskRange)){
         riskRange = c(min(sqrtSig), max(sqrtSig))+
-        .25*c(-diff(range(sqrtSig)), diff(range(sqrtSig)))
+        0.25*c(-diff(range(sqrtSig)), diff(range(sqrtSig)))
     }
     
     # Calculate Efficient Frontier:

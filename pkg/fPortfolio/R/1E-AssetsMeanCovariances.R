@@ -27,7 +27,7 @@
 #   see Rmetrics's copyright file
 
 
-########################################
+################################################################################
 # FUNCTION:             ASSETS STATISTICS:
 #  assetsStats           Computes basic statistics of a set of assets  
 # FUNCTION:             MEAN-COVARIANCE ESTIMATION:
@@ -43,7 +43,7 @@
 #  .cov.nnve
 #  .cov.shrink
 #  .cov.bagged
-########################################
+################################################################################
 
 
 assetsStats =
