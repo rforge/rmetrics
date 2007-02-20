@@ -235,7 +235,7 @@ function(data, spec, constraintsStrings)
             weights = weights,
             targetReturn = targetReturn,
             targetRisk = targetRisk,
-            targetStdev = targetStdev),
+            targetStdev = targetRisk),
         title = "Minimum Variance Portfolio", 
         description = .description()) 
 }
@@ -303,7 +303,7 @@ function(data, spec, constraintsStrings)
             weights = weights,
             targetReturn = targetReturn,
             targetRisk = targetRisk,
-            targetStdev = targetStdev),
+            targetStdev = targetRisk),
         title = "Constrained MV Portfolio", 
         description = .description())    
 }
