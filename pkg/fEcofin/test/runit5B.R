@@ -16,7 +16,7 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2006, Diethelm Wuertz, GPL
+#   1999 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
 #   www.rmetrics.org
@@ -28,14 +28,15 @@
 
 
 ################################################################################
-# FUNCTION:           GRID DATA:
-#  gridData            Generates a grid data set
-#  persp.gridData      Generates a perspective plot from a grid data object
-#  contour.gridData    Generates a contour plot from a grid data object
-# FUNCTION:           BIVARIATE INTERPOLATION:
+# FUNCTION:           BIVARIATE GRIDDED INTERPOLATION:
+#  linearInterp        Interpolates Linearly Irregularly Distributed Data Points
+#  linearInterpp       Interpolates Linearly pointwise
 #  akimaInterp         Interpolates and Smoothes Irregularly Distributed Points
+#  akimaInterpp        Interpolates and Smoothes pointwise
 #  krigeInterp         Kriges Irregularly Distributed Data Points
+#  .circlesPlot        Creates a scatterplot with circle size as third variable
 ################################################################################
+
 
 
 test.helpFile = 
@@ -43,7 +44,7 @@ function()
 {
     # Help File:
     helpFile = function() { 
-        example(BivariateGridData, ask = FALSE)
+        example(BivariateInterpolation, ask = FALSE)
         return() 
     }
     checkIdentical(
@@ -58,22 +59,23 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.gridData = 
+test.linearInterp = 
 function()
 {
-    #  gridData            Generates a grid data set
-    #  persp.gridData      Generates a perspective plot from a grid data object
-    #  contour.gridData    Generates a contour plot from a grid data object
+    #  Interpolates Linearly Irregularly Distributed Data Points
+
+    set.seed(1953)
+    x = runif(999)-0.5
+    y = runif(999)-0.5
+    z = cos(2*pi*(x^2+y^2))
+    ans = linearInterp(x, y, z, gridPoints = 41)
+    persp(ans, theta = -50, phi = 30, col = "steelblue")
     
-    
-    # Generate Grid Data:
-    gD = gridData()
-    
-    # Perspective Plot:
-    persp(gD)
-    
-    # Contour Plot:
-    contour(gD) 
+    title(main = "Linear Interpolation")
+    mtext(text = 
+        "x=runif(999)-0.5  |  y=runif(999)-0.5  |  z=cos(2*pi*(x^2+y^2))", 
+        side = 1, line = 1)
+    mtext(text = "", side = 1, line = 0)
     
     # Return Value:
     return()    
@@ -83,38 +85,20 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.interpolation = 
+test.krigeInterp = 
 function()
 {
-    #  gridData            Generates a grid data set
-    #  persp.gridData      Generates a perspective plot from a grid data object
-    #  contour.gridData    Generates a contour plot from a grid data object
-    
-    
-    # Generate Akima interpolated Grid Data:
-    set.seed(1953)
-    x = runif(999)-0.5
-    y = runif(999)-0.5
-    z = cos(2*pi*(x^2+y^2))
-    ans = akimaInterp(x, y, z, extrap = FALSE)
-    persp(ans)
-    title(main = "Akima Interpolation") 
-    contour(ans)
-    title(main = "Akima Interpolation") 
-    
-    # Generate Akima interpolated Grid Data:
+    # Kriges Irregularly Distributed Data Points
+
     require(spatial)
+    
     set.seed(1953)
     x = runif(999)-0.5
     y = runif(999)-0.5
     z = cos(2*pi*(x^2+y^2))
     ans = krigeInterp(x, y, z, extrap = FALSE)
-    persp(ans)
-    title(main = "Kriging") 
-    contour(ans)
-    title(main = "Kriging") 
-    
-    
+    persp(ans, theta = -50, phi = 30, col = "steelblue")
+      
     # Return Value:
     return()    
 }
@@ -125,7 +109,7 @@ function()
     
 if (FALSE) {
     require(RUnit)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fEcofin/test/runit5A.R")
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fEcofin/test/runit5B.R")
     printTextProtocol(testResult)
 }   
 

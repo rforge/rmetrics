@@ -40,10 +40,14 @@ function()
 {
     # Help File:
     helpFile = function() { 
-        example(CodeTables); return() }
+        example(CodeTables, ask = FALSE)
+        return() 
+    }
     checkIdentical(
         target = class(try(helpFile())),
         current = "NULL")
+        
+    # Return Value:
     return() 
 }
 
@@ -61,6 +65,7 @@ function()
     
     # Return Value:
     return()
+}
 
     
 # ------------------------------------------------------------------------------
@@ -76,6 +81,7 @@ function()
     
     # Return Value:
     return()
+}
     
   
 # ------------------------------------------------------------------------------
@@ -91,7 +97,8 @@ function()
     
     # Return Value:
     return()
-    
+}
+   
 
 # ------------------------------------------------------------------------------
 

@@ -35,9 +35,6 @@
 #  print.ciaIndicators            S3 print method for 'ciaIndicators'
 #  ciaByCountry                   Returns all Indicators by country 
 #  ciaByIndicator                 Returns for all countries indicator ranking
-# FUNCTIONS:                     FOR RUNIT TESTING:
-#  .ciaByCountry.RUnit            R Unit test for 'ciaByCountry' 
-#  .ciaByIndicator.RUnit          R Unit test for 'ciaByIndicator' 
 # FUNCTIONS:                     FOR INTERNAL USE, ONLY - DO NOT RUN:
 #  .createFactbook                Creates CIA Data for use with Rmetrics
 #  .createIndicators              List of indicator for use with  Rmetrics
@@ -49,10 +46,14 @@ function()
 {
     # Help File:
     helpFile = function() { 
-        example(CIAFactbook); return() }
+        example(CIAFactbook, ask = FALSE)
+        return() 
+    }
     checkIdentical(
         target = class(try(helpFile())),
         current = "NULL")
+        
+    # Return Value:
     return() 
 }
 

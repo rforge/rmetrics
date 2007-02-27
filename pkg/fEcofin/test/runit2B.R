@@ -28,13 +28,11 @@
 
 
 ################################################################################
-# FUNCTION:           GRID DATA:
-#  gridData            Generates a grid data set
-#  persp.gridData      Generates a perspective plot from a grid data object
-#  contour.gridData    Generates a contour plot from a grid data object
-# FUNCTION:           BIVARIATE INTERPOLATION:
-#  akimaInterp         Interpolates and Smoothes Irregularly Distributed Points
-#  krigeInterp         Kriges Irregularly Distributed Data Points
+# FUNCTION:                 COLOR PALETTES:
+#  greyPalette               Creates a grey palette
+#  .chcode                   Changes from one to another number system
+#  .hex.to.dec               Converts heximal numbers do decimal numbers
+#  .dec.to.hex               Converts decimal numbers do heximal numbers
 ################################################################################
 
 
@@ -43,7 +41,7 @@ function()
 {
     # Help File:
     helpFile = function() { 
-        example(BivariateGridData, ask = FALSE)
+        example(ColorPalettes, ask = FALSE)
         return() 
     }
     checkIdentical(
@@ -58,79 +56,50 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.gridData = 
+test.greyPalette = 
 function()
 {
-    #  gridData            Generates a grid data set
-    #  persp.gridData      Generates a perspective plot from a grid data object
-    #  contour.gridData    Generates a contour plot from a grid data object
-    
-    
-    # Generate Grid Data:
-    gD = gridData()
-    
-    # Perspective Plot:
-    persp(gD)
-    
-    # Contour Plot:
-    contour(gD) 
+    # Grey Palette:
+    args(greyPalette)
+    greyPalette()
     
     # Return Value:
-    return()    
+    return()
 }
 
-
+    
 # ------------------------------------------------------------------------------
 
 
-test.interpolation = 
+test.hexCode = 
 function()
 {
-    #  gridData            Generates a grid data set
-    #  persp.gridData      Generates a perspective plot from a grid data object
-    #  contour.gridData    Generates a contour plot from a grid data object
+    #  .chcode                   Changes from one to another number system
+    #  .hex.to.dec               Converts heximal numbers do decimal numbers
+    #  .dec.to.hex               Converts decimal numbers do heximal numbers
     
-    
-    # Generate Akima interpolated Grid Data:
-    set.seed(1953)
-    x = runif(999)-0.5
-    y = runif(999)-0.5
-    z = cos(2*pi*(x^2+y^2))
-    ans = akimaInterp(x, y, z, extrap = FALSE)
-    persp(ans)
-    title(main = "Akima Interpolation") 
-    contour(ans)
-    title(main = "Akima Interpolation") 
-    
-    # Generate Akima interpolated Grid Data:
-    require(spatial)
-    set.seed(1953)
-    x = runif(999)-0.5
-    y = runif(999)-0.5
-    z = cos(2*pi*(x^2+y^2))
-    ans = krigeInterp(x, y, z, extrap = FALSE)
-    persp(ans)
-    title(main = "Kriging") 
-    contour(ans)
-    title(main = "Kriging") 
-    
-    
-    # Return Value:
-    return()    
-}
+    # .chcode(b, base.in = 2, base.out = 10, digits="0123456789ABCDEF")
+ 
+    # .hex.to.dec(b)
+    .hex.to.dec("AA")
 
+    # .dec.to.hex(b)
+    .dec.to.hex(170)
+
+    # Return Value:
+    return()
+}
+       
 
 # ------------------------------------------------------------------------------
 
     
 if (FALSE) {
     require(RUnit)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fEcofin/test/runit5A.R")
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fEcofin/test/runit2B.R")
     printTextProtocol(testResult)
 }   
 
 
 ################################################################################
-
-
 

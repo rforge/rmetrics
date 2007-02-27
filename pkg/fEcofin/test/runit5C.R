@@ -43,10 +43,14 @@ function()
 {
     # Help File:
     helpFile = function() { 
-        example(BivariateBinning, ask = FALSE); return() }
+        example(BivariateBinning, ask = FALSE)
+        return() 
+    }
     checkIdentical(
         target = class(try(helpFile())),
         current = "NULL")
+        
+    # Return Value:
     return() 
 }
 

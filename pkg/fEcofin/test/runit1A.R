@@ -28,13 +28,28 @@
 
 
 ################################################################################
-# FUNCTION CALL:    DESCRIPTION:
-#  data(wfe1)        Market capitalization of domestic companies 
-#  data(wfe2)        Total number of companies with shares listed 
-#  data(wfe3)        Total value of share trading 
-#  data(wfe4)        Market value of bonds listed 
-#  data(wfe5)        Total value of bond trading 
-#  data(wfe6)        Price earning ratio an gross dividend yield 
+# FUNCTIONS:                   
+#  CPI.dat
+#  dem2gbp
+#  DowJones30
+#  ford.s
+#  hp.s
+#  IP.dat
+#  klein
+#  kmenta
+#  msft.dat
+#  nelsonplosser
+#  nyse
+#  recession
+#  shiller.dat
+#  shiller.annual
+#  singleIndex.dat
+#  sp500dge
+#  sp500index
+#  surex1.ts
+#  usdchf
+#  usdthb
+#  yhoo.df
 ################################################################################
 
 
@@ -42,14 +57,33 @@ test.helpFile =
 function()
 {
     # Help File:
-    helpFile = function() { 
-        example(WFEStatistics, ask = FALSE)
-        return() 
-    }
-    checkIdentical(
-        target = class(try(helpFile())),
-        current = "NULL")
-        
+    # helpFile = function() { 
+    #     example(TimeSeriesData, ask = FALSE)
+    #     return() 
+    # }
+    # checkIdentical(
+    #     target = class(try(helpFile())),
+    #     current = "NULL")
+    #     
+    # Return Value:
+    # return() 
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.sp500dge = 
+function()
+{
+    # SP500 Ding Granger Engle:
+    data(sp500dge)
+    head(sp500dge)
+    
+    # Plot:
+    plot(sp500dge[,1], type = "l", col = "steelblue")
+    grid()
+    
     # Return Value:
     return() 
 }
@@ -60,7 +94,7 @@ function()
     
 if (FALSE) {
     require(RUnit)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fEcofin/test/runit1C.R")
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fEcofin/test/runit1A.R")
     printTextProtocol(testResult)
 }   
 

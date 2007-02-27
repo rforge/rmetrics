@@ -28,13 +28,9 @@
 
 
 ################################################################################
-# FUNCTION:           GRID DATA:
-#  gridData            Generates a grid data set
-#  persp.gridData      Generates a perspective plot from a grid data object
-#  contour.gridData    Generates a contour plot from a grid data object
-# FUNCTION:           BIVARIATE INTERPOLATION:
-#  akimaInterp         Interpolates and Smoothes Irregularly Distributed Points
-#  krigeInterp         Kriges Irregularly Distributed Data Points
+# FUNCTION:            PLOT UTILITIES:
+#  interactivePlot      Plots several graphs interactively
+#  gridVector           Creates from two vectors rectangular grid points
 ################################################################################
 
 
@@ -43,7 +39,7 @@ function()
 {
     # Help File:
     helpFile = function() { 
-        example(BivariateGridData, ask = FALSE)
+        example(InteractivePlots, ask = FALSE)
         return() 
     }
     checkIdentical(
@@ -58,79 +54,70 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.gridData = 
+test.interactivePlot = 
 function()
 {
-    #  gridData            Generates a grid data set
-    #  persp.gridData      Generates a perspective plot from a grid data object
-    #  contour.gridData    Generates a contour plot from a grid data object
+    # interactivePlot(x, choices = paste("Plot", 1:9), 
+    #   plotFUN = paste("plot.", 1:9, sep = ""), which = "all", ...)
     
+    # Test Plot Function:
+    testPlot = function(x, which = "all", ...) {   
+        # Plot Function and Addons:
+        plot.1 <<- function(x, ...) plot(x, ...)      
+        plot.2 <<- function(x, ...) acf(x, ...)
+        plot.3 <<- function(x, ...) hist(x, ...)      
+        plot.4 <<- function(x, ...) qqnorm(x, ...)
+        # Plot:
+        interactivePlot(x,
+            choices = c("Series Plot", "ACF", "Histogram", "QQ Plot"),
+            plotFUN = c("plot.1", "plot.2", "plot.3", "plot.4"),
+            which = which, ...)       
+        # Return Value:
+        invisible()
+    } 
     
-    # Generate Grid Data:
-    gD = gridData()
+    # Plot:
+    par(mfrow = c(2, 2), cex = 0.7)
+    testPlot(rnorm(500))
     
-    # Perspective Plot:
-    persp(gD)
-    
-    # Contour Plot:
-    contour(gD) 
-    
+    # Reorder 2:
+    par(mfrow = c(2, 1), cex = 0.7)
+    testPlot(rnorm(500), which = c(1, 2))
+       
+    # Try:
+    # par(mfrow = c(1,1)); testPlot(rnorm(500), which = "ask")
+        
     # Return Value:
-    return()    
+    return()
 }
 
-
+    
 # ------------------------------------------------------------------------------
 
 
-test.interpolation = 
+test.gridVector = 
 function()
 {
-    #  gridData            Generates a grid data set
-    #  persp.gridData      Generates a perspective plot from a grid data object
-    #  contour.gridData    Generates a contour plot from a grid data object
-    
-    
-    # Generate Akima interpolated Grid Data:
-    set.seed(1953)
-    x = runif(999)-0.5
-    y = runif(999)-0.5
-    z = cos(2*pi*(x^2+y^2))
-    ans = akimaInterp(x, y, z, extrap = FALSE)
-    persp(ans)
-    title(main = "Akima Interpolation") 
-    contour(ans)
-    title(main = "Akima Interpolation") 
-    
-    # Generate Akima interpolated Grid Data:
-    require(spatial)
-    set.seed(1953)
-    x = runif(999)-0.5
-    y = runif(999)-0.5
-    z = cos(2*pi*(x^2+y^2))
-    ans = krigeInterp(x, y, z, extrap = FALSE)
-    persp(ans)
-    title(main = "Kriging") 
-    contour(ans)
-    title(main = "Kriging") 
-    
-    
-    # Return Value:
-    return()    
-}
+    # Grid Vector:
+    # gridVector(x, y)
+    gridVector(1:3, 1:3)
+    as.data.frame(gridVector(1:3, 1:3))
+    as.matrix(as.data.frame(gridVector(1:3, 1:3)))
 
+    # Return Value:
+    return()
+}
+       
 
 # ------------------------------------------------------------------------------
 
     
 if (FALSE) {
     require(RUnit)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fEcofin/test/runit5A.R")
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fEcofin/test/runit2C.R")
     printTextProtocol(testResult)
 }   
 
 
 ################################################################################
-
-
 
