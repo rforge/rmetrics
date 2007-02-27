@@ -1,7 +1,6 @@
 DaylightSavingTime      Daylight Saving Time Rules
 HolidayCalendars        Holiday Calendars and Utilities
 HolidayDates            Public and Ecclesiastical Holidays
-RmetricsUtilities       Some Rmetrics Utilities
 TimeDateClass           timeDate Class
 TimeDateCoercion        timeDate Class, Coercion and Transformation
 TimeDateMathOps         timeDate Class, Functions and Methods
@@ -11,4 +10,6 @@ TimeSeriesClass         timeSeries Class
 TimeSeriesCoercion      timeSeries Class, Coercion and Transformation
 TimeSeriesData          timeSeries Class, Functions and Methods
 TimeSeriesImport        Import Market Data from the Internet
+TimeSeriesMissingValues
+                        Handling Missing Values
 TimeSeriesPositions     timeSeries, Positions
