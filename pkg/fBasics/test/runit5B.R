@@ -55,12 +55,14 @@
 ################################################################################
   
  
-test.helpFile = 
+test.aaa = 
 function()
 {
     # Help File:
     helpFile = function() { 
-        example(OneSampleTest); return() }
+        example(OneSampleTest, ask = FALSE)
+        return() 
+    }
     checkIdentical(
         target = class(try(helpFile())),
         current = "NULL")

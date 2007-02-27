@@ -47,12 +47,14 @@
 ################################################################################
     
 
-test.helpFile = 
+test.aaa = 
 function()
 {
     # Help File:
     helpFile = function() { 
-        example(DistributionFits, ask = FALSE); return() }
+        example(DistributionFits, ask = FALSE)
+        return() 
+    }
     checkIdentical(
         target = class(try(helpFile())),
         current = "NULL")
