@@ -54,6 +54,7 @@ getSlot(object, slotName)
         a character string, the name of the slot to be extracted from the 
         S4 object.
         } 
+}
 
 
 \author{
