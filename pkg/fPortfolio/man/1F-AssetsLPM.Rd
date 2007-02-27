@@ -22,8 +22,6 @@
     
 
 \usage{
-assetsStats(x)
-
 assetsLPM(x, tau, a, \dots)
 }
 

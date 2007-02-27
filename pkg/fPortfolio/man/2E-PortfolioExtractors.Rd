@@ -10,7 +10,8 @@
 \alias{getFrontier}        
 \alias{getWeights}       
 \alias{getTargetReturn}   
-\alias{getTargetRisk}      
+\alias{getTargetRisk}  
+\alias{getTargetStdev}    
 
 
 \title{Portfolio Extractor Functions}
@@ -32,7 +33,8 @@
     \code{getFrontier} \tab Extracts the efficient frontier, \cr
     \code{getWeights} \tab Extracts weights from a fPORTFOLIO object, \cr
     \code{getTargetReturn} \tab Extracts target return from a portfolio, \cr
-    \code{getTargetRisk} \tab Extracts target riks from a portfolio. }
+    \code{getTargetRisk} \tab Extracts target riks from a portfolio, \cr
+    \code{getTargetStdev} \tab Extracts target standard deviation from a portfolio. }
     
 }
     
@@ -47,6 +49,7 @@ getFrontier(object, frontier = c("both", "lower", "upper"), doplot = FALSE, \dot
 getWeights(object, doplot = FALSE, \dots)      
 getTargetReturn(object)  
 getTargetRisk(object)
+getTargetStdev(object)
 }
 
 
@@ -88,6 +91,7 @@ getTargetRisk(object)
     \code{getWeights}\cr
     \code{getTargetReturn}\cr
     \code{getTargetRisk}\cr
+    \code{getTargetStdev}\cr
     return a xxx
   
 }
