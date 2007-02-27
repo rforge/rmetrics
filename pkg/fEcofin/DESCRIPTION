@@ -1,10 +1,15 @@
 Package: fEcofin
 Version: 241.68
-Date: 1996 - 2006
+Date: 1996 - 2007
 Title: Ecofin - Selected Economic and Financial Data Sets
 Author: Diethelm Wuertz and many others. See the SOURCE file
-Depends: R (>= 2.0.0), methods, spatial
+Depends: R (>= 2.2.1), methods, spatial
 Maintainer: Diethelm Wuertz and Rmetrics Core Team <wuertz@itp.phys.ethz.ch>
 Description: Environment for teaching "Financial Engineering and Computational Finance"
+NOTE: SEVERAL PARTS ARE STILL PRELIMINARY AND MAY BE CHANGED IN THE FUTURE.
+      THIS TYPICALLY INCLUDES FUNCTION AND ARGUMENT NAMES,
+      AS WELL AS DEFAULTS FOR ARGUMENTS AND RETURN VALUES.
+LazyLoad: yes
+LazyData: yes
 License: GPL Version 2 or later
 URL: http://www.rmetrics.org
