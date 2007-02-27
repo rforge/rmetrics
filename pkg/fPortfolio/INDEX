@@ -1,3 +1,5 @@
+AssetsLPM               Estimation of Lower Partial Moments of Asset
+                        Sets
 AssetsMeanCovariances   Estimation of Mean and Covariances of Asset
                         Sets
 AssetsModelling         Modelling of Multivariate Asset Sets
