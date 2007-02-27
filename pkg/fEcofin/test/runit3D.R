@@ -28,13 +28,21 @@
 
 
 ################################################################################
-# FUNCTION:           BIVARIATE GRIDDED INTERPOLATION:
-#  linearInterp        Interpolates Linearly Irregularly Distributed Data Points
-#  linearInterpp       Interpolates Linearly pointwise
-#  akimaInterp         Interpolates and Smoothes Irregularly Distributed Points
-#  akimaInterpp        Interpolates and Smoothes pointwise
-#  krigeInterp         Kriges Irregularly Distributed Data Points
-#  .circlesPlot        Creates a scatterplot with circle size as third variable
+# FUNCTION:             ROW AND COLUMN STATISTICS:
+#  rowStats              Computes sample statistics by row
+#   rowAvgs               Computes sample mean by row
+#   rowVars               Computes sample variance by row
+#   rowStdevs             Computes sample variance by row
+#   rowSkewness           Computes sample skewness by row
+#   rowKurtosis           Computes sample kurtosis by row
+#   rowCumsums            Computes sample cumulated sums by row
+#  colStats              Computes sample statistics by column
+#   colAvgs               Computes sample mean by column
+#   colVars               Computes sample variance by column
+#   colStdevs             Computes sample variance by column
+#   colSkewness           Computes sample skewness by column
+#   colKurtosis           Computes sample kurtosis by column
+#   colCumsums            Computes sample cumulated sums by column
 ################################################################################
 
 
@@ -43,7 +51,7 @@ function()
 {
     # Help File:
     helpFile = function() { 
-        example(BivariateInterpolation, ask = FALSE)
+        example(ColumnRowStatistics, ask = FALSE)
         return() 
     }
     checkIdentical(
@@ -58,48 +66,38 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.linearInterp = 
+test.rowStats = 
 function()
 {
-    #  Interpolates Linearly Irregularly Distributed Data Points
-
-    set.seed(1953)
-    x = runif(999)-0.5
-    y = runif(999)-0.5
-    z = cos(2*pi*(x^2+y^2))
-    ans = linearInterp(x, y, z, gridPoints = 41)
-    persp(ans, theta = -50, phi = 30, col = "steelblue")
-    
-    title(main = "Linear Interpolation")
-    mtext(text = 
-        "x=runif(999)-0.5  |  y=runif(999)-0.5  |  z=cos(2*pi*(x^2+y^2))", 
-        side = 1, line = 1)
-    mtext(text = "", side = 1, line = 0)
+    #  rowStats              Computes sample statistics by row
+    #   rowAvgs               Computes sample mean by row
+    #   rowVars               Computes sample variance by row
+    #   rowStdevs             Computes sample variance by row
+    #   rowSkewness           Computes sample skewness by row
+    #   rowKurtosis           Computes sample kurtosis by row
+    #   rowCumsums            Computes sample cumulated sums by row
     
     # Return Value:
-    return()    
+    return()
 }
 
-
+    
 # ------------------------------------------------------------------------------
 
 
-test.krigeInterp = 
+test.colStats = 
 function()
 {
-    # Kriges Irregularly Distributed Data Points
-
-    require(spatial)
+    #  colStats              Computes sample statistics by column
+    #   colAvgs               Computes sample mean by column
+    #   colVars               Computes sample variance by column
+    #   colStdevs             Computes sample variance by column
+    #   colSkewness           Computes sample skewness by column
+    #   colKurtosis           Computes sample kurtosis by column
+    #   colCumsums            Computes sample cumulated sums by column
     
-    set.seed(1953)
-    x = runif(999)-0.5
-    y = runif(999)-0.5
-    z = cos(2*pi*(x^2+y^2))
-    ans = krigeInterp(x, y, z, extrap = FALSE)
-    persp(ans, theta = -50, phi = 30, col = "steelblue")
-      
     # Return Value:
-    return()    
+    return()
 }
 
 
@@ -108,12 +106,10 @@ function()
     
 if (FALSE) {
     require(RUnit)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fEcofin/test/runit5B.R")
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fEcofin/test/runit3D.R")
     printTextProtocol(testResult)
 }   
 
 
 ################################################################################
-
-
 

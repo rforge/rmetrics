@@ -28,28 +28,13 @@
 
 
 ################################################################################
-# FUNCTIONS:                   
-#  CPI.dat
-#  dem2gbp
-#  DowJones30
-#  ford.s
-#  hp.s
-#  IP.dat
-#  klein
-#  kmenta
-#  msft.dat
-#  nelsonplosser
-#  nyse
-#  recession
-#  shiller.dat
-#  shiller.annual
-#  singleIndex.dat
-#  sp500dge
-#  sp500index
-#  surex1.ts
-#  usdchf
-#  usdthb
-#  yhoo.df
+# FUNCTION:           GENERAL EXTRACTORS FOR S4:
+#  isS4                Checks if a function is a S4 object
+#  getCall             Extracts the call slot from a S4 object 
+#  getModel            Extracts the model slot from a S4 object
+#  getTitle            Extracts the title slot from a S4 object
+#  getDescription      Extracts the description slot from a S4 object
+#  getSlot             Extracts a specified slot from a S4 object
 ################################################################################
 
 
@@ -58,7 +43,7 @@ function()
 {
     # Help File:
     helpFile = function() { 
-        example(TimeSeriesData, ask = FALSE)
+        example(GeneralS4Extractors, ask = FALSE)
         return() 
     }
     checkIdentical(
@@ -72,29 +57,10 @@ function()
 
 # ------------------------------------------------------------------------------
 
-
-test.sp500dge = 
-function()
-{
-    # SP500 Ding Granger Engle:
-    data(sp500dge)
-    head(sp500dge)
-    
-    # Plot:
-    plot(sp500dge[,1], type = "l", col = "steelblue")
-    grid()
-    
-    # Return Value:
-    return() 
-}
-
-
-# ------------------------------------------------------------------------------
-
     
 if (FALSE) {
     require(RUnit)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fEcofin/test/runit1A.R")
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fEcofin/test/runit6a.R")
     printTextProtocol(testResult)
 }   
 

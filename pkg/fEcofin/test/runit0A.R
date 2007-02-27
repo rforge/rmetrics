@@ -16,7 +16,7 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2006, Diethelm Wuertz, GPL
+#   1999 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
 #   www.rmetrics.org
@@ -61,20 +61,20 @@
 ################################################################################
 
 
-test.helpFile = 
+test.aaa = 
 function()
 {
     # Help File:
-    # helpFile = function() { 
-    #     example(TimeSeriesData, ask = FALSE)
-    #     return() 
-    # }
-    # checkIdentical(
-    #     target = class(try(helpFile())),
-    #     current = "NULL")
-    #     
+    helpFile = function() { 
+        example(TimeSeriesData, ask = FALSE)
+        return() 
+    }
+    checkIdentical(
+        target = class(try(helpFile())),
+        current = "NULL")
+        
     # Return Value:
-    # return() 
+    return() 
 }
 
 
@@ -111,7 +111,7 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.3dPlots = 
+test.threeDimPlots = 
 function()
 {
     #  .circlesPlot              Returns a circles plot indexing 3rd variable

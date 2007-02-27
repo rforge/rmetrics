@@ -28,28 +28,12 @@
 
 
 ################################################################################
-# FUNCTIONS:                   
-#  CPI.dat
-#  dem2gbp
-#  DowJones30
-#  ford.s
-#  hp.s
-#  IP.dat
-#  klein
-#  kmenta
-#  msft.dat
-#  nelsonplosser
-#  nyse
-#  recession
-#  shiller.dat
-#  shiller.annual
-#  singleIndex.dat
-#  sp500dge
-#  sp500index
-#  surex1.ts
-#  usdchf
-#  usdthb
-#  yhoo.df
+# FUNCTION:            AUGMENTED DICKEY FULLER DATA TABLES:
+# .ansariTable          Finite sample p values for the Dickey-Fuller test
+# .ansariPlot           Plots
+# .dansari              Returns densities for the ADF Test given quantiles
+# .pansari              Returns probabilities for the ADF Test given quantiles
+# .qansari              Returns quantiles for the ADF Test given probabilities
 ################################################################################
 
 
@@ -58,7 +42,7 @@ function()
 {
     # Help File:
     helpFile = function() { 
-        example(TimeSeriesData, ask = FALSE)
+        example(AnsariPValues, ask = FALSE)
         return() 
     }
     checkIdentical(
@@ -72,29 +56,10 @@ function()
 
 # ------------------------------------------------------------------------------
 
-
-test.sp500dge = 
-function()
-{
-    # SP500 Ding Granger Engle:
-    data(sp500dge)
-    head(sp500dge)
-    
-    # Plot:
-    plot(sp500dge[,1], type = "l", col = "steelblue")
-    grid()
-    
-    # Return Value:
-    return() 
-}
-
-
-# ------------------------------------------------------------------------------
-
     
 if (FALSE) {
     require(RUnit)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fEcofin/test/runit1A.R")
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fEcofin/test/runit4C.R")
     printTextProtocol(testResult)
 }   
 

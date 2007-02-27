@@ -28,28 +28,9 @@
 
 
 ################################################################################
-# FUNCTIONS:                   
-#  CPI.dat
-#  dem2gbp
-#  DowJones30
-#  ford.s
-#  hp.s
-#  IP.dat
-#  klein
-#  kmenta
-#  msft.dat
-#  nelsonplosser
-#  nyse
-#  recession
-#  shiller.dat
-#  shiller.annual
-#  singleIndex.dat
-#  sp500dge
-#  sp500index
-#  surex1.ts
-#  usdchf
-#  usdthb
-#  yhoo.df
+# FUNCTION:             NORMALITY TESTS:
+#  'fHTEST'              S4 Class Representation
+#  show.fHTEST           S4 Print Method
 ################################################################################
 
 
@@ -58,7 +39,7 @@ function()
 {
     # Help File:
     helpFile = function() { 
-        example(TimeSeriesData, ask = FALSE)
+        example(HypothesisTesting, ask = FALSE)
         return() 
     }
     checkIdentical(
@@ -72,29 +53,10 @@ function()
 
 # ------------------------------------------------------------------------------
 
-
-test.sp500dge = 
-function()
-{
-    # SP500 Ding Granger Engle:
-    data(sp500dge)
-    head(sp500dge)
-    
-    # Plot:
-    plot(sp500dge[,1], type = "l", col = "steelblue")
-    grid()
-    
-    # Return Value:
-    return() 
-}
-
-
-# ------------------------------------------------------------------------------
-
     
 if (FALSE) {
     require(RUnit)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fEcofin/test/runit1A.R")
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fEcofin/test/runit4A.R")
     printTextProtocol(testResult)
 }   
 

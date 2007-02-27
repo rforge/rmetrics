@@ -28,29 +28,18 @@
 
 
 ################################################################################
-# FUNCTIONS:                   
-#  CPI.dat
-#  dem2gbp
-#  DowJones30
-#  ford.s
-#  hp.s
-#  IP.dat
-#  klein
-#  kmenta
-#  msft.dat
-#  nelsonplosser
-#  nyse
-#  recession
-#  shiller.dat
-#  shiller.annual
-#  singleIndex.dat
-#  sp500dge
-#  sp500index
-#  surex1.ts
-#  usdchf
-#  usdthb
-#  yhoo.df
+# FUNCTION:          MC KINNON'S PROBABILIY AND QUANTILES:
+#  punitroot          Returns cumulative probability for unit root distributions
+#  qunitroot          Returns quantiles for unit root distributions
+#  unitrootTable      Returns McKinnon's unitroot finite sample test table
+# FUNCTION:          INTERNAL UTILITY FUNCTIONS:
+#  .strsplitUrcval    Implements string split function for S-Plus compatibility
+#  .urcval            Implements unit root statists
+#  .probsUrcval       Implements probability values
+# FUNCTION:          INTERNAL DATA SETS:
+#  .urc1 ... .urc12   Statistical values for unitroot data
 ################################################################################
+
 
 
 test.aaa = 
@@ -58,7 +47,7 @@ function()
 {
     # Help File:
     helpFile = function() { 
-        example(TimeSeriesData, ask = FALSE)
+        example(McKinnonPValues, ask = FALSE)
         return() 
     }
     checkIdentical(
@@ -72,29 +61,10 @@ function()
 
 # ------------------------------------------------------------------------------
 
-
-test.sp500dge = 
-function()
-{
-    # SP500 Ding Granger Engle:
-    data(sp500dge)
-    head(sp500dge)
-    
-    # Plot:
-    plot(sp500dge[,1], type = "l", col = "steelblue")
-    grid()
-    
-    # Return Value:
-    return() 
-}
-
-
-# ------------------------------------------------------------------------------
-
     
 if (FALSE) {
     require(RUnit)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fEcofin/test/runit1A.R")
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fEcofin/test/runit4E.R")
     printTextProtocol(testResult)
 }   
 

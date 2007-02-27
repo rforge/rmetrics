@@ -16,7 +16,7 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2006, Diethelm Wuertz, GPL
+#   1999 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
 #   www.rmetrics.org
@@ -27,45 +27,23 @@
 #   see Rmetrics's copyright file 
 
 
-################################################################################
-# FUNCTION:                     BASIC EXTENSIONS:
-#  align                         aligns time series objects by approximation
-#  align.default                 align default method
-#  attach                        attach a database to the R path
-#  attach.default                attach default method
-#  log                           log has become a generic function
-#  log.default                   log default method
-#  round                         round has become a generic function
-#  round.default                 round default method
-#  sample                        sample has become a generic function
-#  sample.default                sample default method
-#  sort                          sort has become a generic function
-#  sort.default                  sort default method
-#  var                           var has become a generic function
-#  var.default                   var default method
-# FUNCTION:                     ROW AND COLUMN NAMES:
-#  "rownames<-"                  rownames<- has become a generic function
-#  "rownames<-.default"          rownames<- default method
-#  "colnames<-"                  colnames<- has become a generic function
-#  "colnames<-.default"          colnames<- default method
-# FUNCTION:                     DATE AND TIME SERIES FUNCTIONS:
-#  modify                        Modifies a 'timeSeries' object
-#  modify.default                Default Method
-#  atoms                         Extracts atoms from 'timeSeries' object
-#  atoms.default                 Default Method
-#  as.POSIXlt                    Converts objects of class POSIXlt
-#  as.POSIXlt.default            Default Method
-#  as.matrix.ts                  Converts univariate ts to 1-column matrix
-#  as.matrix.mts                 Converts multivariate ts to matrix
+# ##############################################################################
+# FUNCTION:            PORTABLE INNOVATIONS:
+#  set.lcgseed          Sets initial random seed
+#  get.lcgseed          Gets the current valus of the random seed
+# FUNCTION:            DISTRIBUTIONS:
+#  runif.lcg            Generates portable uniform linear congruational rvs
+#  rnorm.lcg            Generates portable normal linear congruational rvs
+#  rt.lcg               Generates portable Student-t linear congruational rvs
 ################################################################################
 
 
-test.helpFile = 
+test.aaa = 
 function()
 {
     # Help File:
     helpFile = function() { 
-        example(BasicExtensions, ask = FALSE)
+        example(PortableInnovations, ask = FALSE)
         return() 
     }
     checkIdentical(
@@ -80,23 +58,17 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.basicExtensions = 
+test.portableInnovations = 
 function()
 {
-    #  align                         aligns time series objects by approximation
-    #  align.default                 align default method
-    #  attach                        attach a database to the R path
-    #  attach.default                attach default method
-    #  log                           log has become a generic function
-    #  log.default                   log default method
-    #  round                         round has become a generic function
-    #  round.default                 round default method
-    #  sample                        sample has become a generic function
-    #  sample.default                sample default method
-    #  sort                          sort has become a generic function
-    #  sort.default                  sort default method
-    #  var                           var has become a generic function
-    #  var.default                   var default method
+    #  set.lcgseed          Sets initial random seed
+    #  get.lcgseed          Gets the current valus of the random seed
+    
+    # set.lcgseed(seed = 4711)
+    set.lcgseed()
+    
+    # get.lcgseed()
+    get.lcgseed()
     
     # Return Value:
     return()
@@ -106,50 +78,28 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.dimNames = 
+test.randomNumbers = 
 function()
 {
-    #  "rownames<-"                  rownames<- has become a generic function
-    #  "rownames<-.default"          rownames<- default method
-    #  "colnames<-"                  colnames<- has become a generic function
-    #  "colnames<-.default"          colnames<- default method
-
-    # Row and Column Names:
-    m = matrix(1:8, ncol = 2)
-    m
+    #  runif.lcg            Generates portable uniform linear congruational rvs
+    #  rnorm.lcg            Generates portable normal linear congruational rvs
+    #  rt.lcg               Generates portable Student-t linear congruational rvs
     
-    # Set Names:
-    colnames(m) = c("A", "B")
-    rownames(m) = as.character(1:4)
-    m
+    # Uniform:
+    x = runif.lcg(n = 1000, min = 0, max = 1)
+    hist(x)
     
-    # Get Names:
-    colnames(m)
-    rownames(m)
+    # Normal:
+    x = rnorm.lcg(n = 1000, mean = 0, sd = 1)
+    hist(x)
+    
+    # Student-t:
+    x = rt.lcg(n = 1000, df = 4)
+    hist(x)
     
     # Return Value:
     return()
 }
-
-
-# ------------------------------------------------------------------------------
-
-
-test.chronFunctions = 
-function()
-{
-    #  modify                        Modifies a 'timeSeries' object
-    #  modify.default                Default Method
-    #  atoms                         Extracts atoms from 'timeSeries' object
-    #  atoms.default                 Default Method
-    #  as.POSIXlt                    Converts objects of class POSIXlt
-    #  as.POSIXlt.default            Default Method
-    #  as.matrix.ts                  Converts univariate ts to 1-column matrix
-    #  as.matrix.mts                 Converts multivariate ts to matrix
-    
-    # Return Value:
-    return()
-}       
 
 
 # ------------------------------------------------------------------------------
@@ -157,7 +107,7 @@ function()
     
 if (FALSE) {
     require(RUnit)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fEcofin/test/runit3A.R")
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fEcofin/test/runit3B.R")
     printTextProtocol(testResult)
 }   
 

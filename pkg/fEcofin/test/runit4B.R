@@ -28,28 +28,14 @@
 
 
 ################################################################################
-# FUNCTIONS:                   
-#  CPI.dat
-#  dem2gbp
-#  DowJones30
-#  ford.s
-#  hp.s
-#  IP.dat
-#  klein
-#  kmenta
-#  msft.dat
-#  nelsonplosser
-#  nyse
-#  recession
-#  shiller.dat
-#  shiller.annual
-#  singleIndex.dat
-#  sp500dge
-#  sp500index
-#  surex1.ts
-#  usdchf
-#  usdthb
-#  yhoo.df
+# FUNCTION:           JARQUE-BERA DATA TABLES:
+# .jbTable             Finite sample p values for the Jarque Bera test
+# .jbPlot              Plots probabilt
+# .pjb                 Returns probabilities for the JB Test given quantiles
+# .qjb                 Returns quantiles for the ADF Test given probabilities               
+# DATA:               Description:
+# .jbLM                Jarque-Bera Lagrange Multiplier Test Data
+# .jbALM               Jarque Bera Augmented Lagrange Multiplier Test Data
 ################################################################################
 
 
@@ -58,7 +44,7 @@ function()
 {
     # Help File:
     helpFile = function() { 
-        example(TimeSeriesData, ask = FALSE)
+        example(JarqueBeraPValues, ask = FALSE)
         return() 
     }
     checkIdentical(
@@ -72,29 +58,10 @@ function()
 
 # ------------------------------------------------------------------------------
 
-
-test.sp500dge = 
-function()
-{
-    # SP500 Ding Granger Engle:
-    data(sp500dge)
-    head(sp500dge)
-    
-    # Plot:
-    plot(sp500dge[,1], type = "l", col = "steelblue")
-    grid()
-    
-    # Return Value:
-    return() 
-}
-
-
-# ------------------------------------------------------------------------------
-
     
 if (FALSE) {
     require(RUnit)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fEcofin/test/runit1A.R")
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fEcofin/test/runit4B.R")
     printTextProtocol(testResult)
 }   
 

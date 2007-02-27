@@ -28,28 +28,13 @@
 
 
 ################################################################################
-# FUNCTIONS:                   
-#  CPI.dat
-#  dem2gbp
-#  DowJones30
-#  ford.s
-#  hp.s
-#  IP.dat
-#  klein
-#  kmenta
-#  msft.dat
-#  nelsonplosser
-#  nyse
-#  recession
-#  shiller.dat
-#  shiller.annual
-#  singleIndex.dat
-#  sp500dge
-#  sp500index
-#  surex1.ts
-#  usdchf
-#  usdthb
-#  yhoo.df
+# FUNCTION:             HEAVISIDE AND RELATED FUNCTIONS:
+#  Heaviside             Computes Heaviside unit step function
+#  Sign                  Another signum function
+#  Delta                 Computes delta function
+#  Boxcar                Computes boxcar function
+#  Ramp                  Computes ramp function
+#  .heavisideSlider      Displays Heaviside and related functions
 ################################################################################
 
 
@@ -58,7 +43,7 @@ function()
 {
     # Help File:
     helpFile = function() { 
-        example(TimeSeriesData, ask = FALSE)
+        example(ColumnRowStatistics, ask = FALSE)
         return() 
     }
     checkIdentical(
@@ -72,29 +57,10 @@ function()
 
 # ------------------------------------------------------------------------------
 
-
-test.sp500dge = 
-function()
-{
-    # SP500 Ding Granger Engle:
-    data(sp500dge)
-    head(sp500dge)
-    
-    # Plot:
-    plot(sp500dge[,1], type = "l", col = "steelblue")
-    grid()
-    
-    # Return Value:
-    return() 
-}
-
-
-# ------------------------------------------------------------------------------
-
     
 if (FALSE) {
     require(RUnit)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fEcofin/test/runit1A.R")
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fEcofin/test/runit3F.R")
     printTextProtocol(testResult)
 }   
 

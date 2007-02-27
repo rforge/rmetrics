@@ -16,7 +16,7 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2006, Diethelm Wuertz, GPL
+#   1999 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
 #   www.rmetrics.org
@@ -38,7 +38,7 @@
 ################################################################################
 
 
-test.helpFile = 
+test.aaa = 
 function()
 {
     # Help File:
@@ -64,8 +64,7 @@ function()
     #  gridData            Generates a grid data set
     #  persp.gridData      Generates a perspective plot from a grid data object
     #  contour.gridData    Generates a contour plot from a grid data object
-    
-    
+     
     # Generate Grid Data:
     gD = gridData()
     
@@ -89,8 +88,7 @@ function()
     #  gridData            Generates a grid data set
     #  persp.gridData      Generates a perspective plot from a grid data object
     #  contour.gridData    Generates a contour plot from a grid data object
-    
-    
+      
     # Generate Akima interpolated Grid Data:
     set.seed(1953)
     x = runif(999)-0.5
