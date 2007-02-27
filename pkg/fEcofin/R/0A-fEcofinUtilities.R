@@ -43,20 +43,17 @@
 #  .histStack                Returns a stacked histogram plot
 # FUNCTION:                 SLIDER MENU:
 #  .sliderMenu               Starts a slider menu
-# FUNCTION:                 DESCRIPTION:                                        
-#  .description              Sets default description string                    
-#  .unirootNA                Computes zero without error exit                   
-# FUNCTION:                 DESCRIPTION:                                        
-#  .datax                    Loads timeSeries objects from demo files                                              
-# FUNCTION:                 DESCRIPTION [REQUIRES DATE]:                        
+# FUNCTION:                 SOME UTILITIES:
+#  .description              Sets default description string
+#  .unirootNA                Computes zero without error exit
+#  .datax                    Loads timeSeries objects from demo files    
+# FUNCTION:                 DATE FUNCTIONS:                   
 #  .fjulian                  Transform formatted dates to julian day numbers    
-#  .julian                   Implements SPlus like 'julian'                     
-# FUNCTION:                 DESCRIPTION                                         
-#  .isISO8601                Checks if the date/time is ISO8601 formatted       
-# FUNCTION:                 DESCRIPTION:                                        
-#  .isPOSIX                  Checks for an object of class POSIX                
-# GENERAL UTILITIES:        DESCRIPTION:                                        
-#  .by2seconds                                                              
+#  .julian                   Implements SPlus like 'julian'                                                              
+#  .isISO8601                Checks if the date/time is ISO8601 formatted                                               
+#  .isPOSIX                  Checks for an object of class POSIX                                                        
+#  .by2seconds               Converts 'by' string into numeric value of seconds
+# FUNCTION:                 SOME METHODS:
 #  .print                    Internal print method                              
 #  .plot                     Internal plot method                               
 #  .summary                  Internal summary method                            

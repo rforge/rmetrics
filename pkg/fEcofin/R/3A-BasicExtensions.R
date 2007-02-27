@@ -28,7 +28,7 @@
 
 
 ################################################################################
-# FUNCTION:                     DESCRIPTION:
+# FUNCTION:                     BASIC EXTENSIONS:
 #  align                         aligns time series objects by approximation
 #  align.default                 align default method
 #  attach                        attach a database to the R path
@@ -43,17 +43,16 @@
 #  sort.default                  sort default method
 #  var                           var has become a generic function
 #  var.default                   var default method
-# FUNCTION:                     DESCRIPTION:
+# FUNCTION:                     ROW AND COLUMN NAMES:
 #  "rownames<-"                  rownames<- has become a generic function
 #  "rownames<-.default"          rownames<- default method
 #  "colnames<-"                  colnames<- has become a generic function
 #  "colnames<-.default"          colnames<- default method
-# FUNCTION:                     DESCRIPTION:
+# FUNCTION:                     DATE AND TIME SERIES FUNCTIONS:
 #  modify                        Modifies a 'timeSeries' object
 #  modify.default                Default Method
 #  atoms                         Extracts atoms from 'timeSeries' object
 #  atoms.default                 Default Method
-# FUNCTION:                     DESCRIPTION:
 #  as.POSIXlt                    Converts objects of class POSIXlt
 #  as.POSIXlt.default            Default Method
 #  as.matrix.ts                  Converts univariate ts to 1-column matrix
@@ -108,6 +107,7 @@ ties = mean, ...)
         rule = rule, f = f, ties = ties, ...) 
         
     # Return Value:
+    ans
 }
 
 
@@ -132,9 +132,11 @@ warn.conflicts = TRUE)
 attach.default = 
 function(what, pos = 2, name = deparse(substitute(what)), 
 warn.conflicts = TRUE) 
-{
+{   # # A copy of the attach() function from R's base package
+
     # FUNCTION:
     
+    # Attach:
     checkConflicts <- function(env) {
         dont.mind <- c("last.dump", "last.warning", ".Last.value", 
             ".Random.seed", ".First.lib", ".Last.lib", ".packageName", 
@@ -214,7 +216,8 @@ warn.conflicts = TRUE)
 sort = 
 function(x, partial = NULL, na.last = NA, decreasing = FALSE, 
 method = c("shell", "quick"), index.return = FALSE, ...)
-{
+{   # A function implemented by Diethelm Wuertz
+
     # FUNCTION:
     
     # Return Value:
@@ -308,7 +311,8 @@ method = c("shell", "quick"), index.return = FALSE, ...)
 
 sample = 
 function(x, ...)
-{
+{   # A function implemented by Diethelm Wuertz
+
     # FUNCTION:
     
     # Return Value:
@@ -321,9 +325,11 @@ function(x, ...)
     
 sample.default =
 function (x, size, replace = FALSE, prob = NULL, ...) 
-{
+{   # A copy of the sample() function from R's base package
+
     # FUNCTION:
     
+    # Sample:
     if (length(x) == 1 && x >= 1) {
         if (missing(size)) 
             size <- x
@@ -341,7 +347,8 @@ function (x, size, replace = FALSE, prob = NULL, ...)
 
 round =
 function(x, ...)
-{
+{   # A function implemented by Diethelm Wuertz
+
     # FUNCTION:
     
     # Return Value:
@@ -354,9 +361,11 @@ function(x, ...)
 
 round.default =
 function (x, digits = 0, ...) 
-{
+{   # A copy of the round() function from R's base package
+
     # FUNCTION:
     
+    # Return Value:
     .Internal(round(x, digits, ...))
 }       
             
@@ -366,7 +375,8 @@ function (x, digits = 0, ...)
 
 log = 
 function(x, base = exp(1)) 
-{
+{   # A function implemented by Diethelm Wuertz
+
     # FUNCTION:
     
     # Return Value:
@@ -393,7 +403,8 @@ function(x, base = exp(1))
 
 outlier = 
 function(x, sd = 5, complement = TRUE, ...) 
-{
+{   # A function implemented by Diethelm Wuertz
+
     # FUNCTION:
     
     UseMethod("outlier")
@@ -439,7 +450,8 @@ function(x, sd = 5, complement = TRUE, ...)
 
 var = 
 function(x, y = NULL, na.rm = FALSE, use) 
-{
+{   # A function implemented by Diethelm Wuertz
+
     # FUNCTION:
     
     # Return Value:
@@ -480,7 +492,8 @@ function(x, y = NULL, na.rm = FALSE, use)
 
 "rownames<-" = 
 function(x, value)
-{
+{   # A function implemented by Diethelm Wuertz
+
     # FUNCTION:
     
     # Return Value:
@@ -518,7 +531,8 @@ function(x, value)
 
 "colnames<-" = 
 function(x, value)
-{
+{   # A function implemented by Diethelm Wuertz
+
     # FUNCTION:
     
     # Return Value:
@@ -585,7 +599,8 @@ function(x, ...)
 
 as.POSIXlt = 
 function(x, tz = "")
-{
+{   # A function implemented by Diethelm Wuertz
+
     # FUNCTION:
     
     # Return Value:
@@ -598,7 +613,8 @@ function(x, tz = "")
 
 as.POSIXlt.default =
 function (x, tz = "") 
-{   
+{   # A function implemented by Diethelm Wuertz
+
     # FUNCTION:
     
     # As Posix:

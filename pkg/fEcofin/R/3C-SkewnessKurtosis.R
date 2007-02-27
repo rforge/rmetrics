@@ -160,8 +160,6 @@ function (x, ...)
 #   kurtosis.POSIXlt      Method for objects of class POSIXlt
 
 
-
-
 kurtosis =
 function (x, ...) 
 {   # A function implemented by Diethelm Wuertz

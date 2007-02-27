@@ -28,4 +28,27 @@
 
 
 ################################################################################
+# FUNCTIONS:                   
+#  CPI.dat
+#  dem2gbp
+#  DowJones30
+#  ford.s
+#  hp.s
+#  IP.dat
+#  klein
+#  kmenta
+#  msft.dat
+#  nelsonplosser
+#  nyse
+#  recession
+#  shiller.dat
+#  shiller.annual
+#  singleIndex.dat
+#  sp500dge
+#  sp500index
+#  surex1.ts
+#  usdchf
+#  usdthb
+#  yhoo.df
+################################################################################
 
