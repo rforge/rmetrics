@@ -40,15 +40,14 @@
 ################################################################################
 
 
-### Uncomplete - Under Development ###
-
-
-test.helpFile = 
+test.aaa = 
 function()
 {
     # Help File:
     helpFile = function() { 
-        example(BenchmarkAnalysis); return() }
+        example(BenchmarkAnalysis, ask = FALSE)
+        return() 
+    }
     checkIdentical(
         target = class(try(helpFile())),
         current = "NULL")

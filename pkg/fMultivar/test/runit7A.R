@@ -50,15 +50,14 @@
 ################################################################################
 
 
-### Uncomplete - Under Development ###
-
-
-test.helpFile = 
+test.aaa = 
 function()
 {
     # Help File:
     helpFile = function() { 
-        example(BivariateTools); return() }
+        example(BivariateTools, ask = FALSE)
+        return() 
+    }
     checkIdentical(
         target = class(try(helpFile())),
         current = "NULL")

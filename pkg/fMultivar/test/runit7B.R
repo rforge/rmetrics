@@ -50,15 +50,14 @@
 ################################################################################
 
 
-### Uncomplete - Under Development ###
-
-
-test.helpFile = 
+test.aaa = 
 function()
 {
     # Help File:
     helpFile = function() { 
-        example(MultivariateDistribution); return() }
+        example(MultivariateDistribution, ask = FALSE)
+        return() 
+    }
     checkIdentical(
         target = class(try(helpFile())),
         current = "NULL")

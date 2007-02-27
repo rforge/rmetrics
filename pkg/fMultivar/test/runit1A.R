@@ -77,12 +77,12 @@
 ################################################################################
 
 
-test.helpFile = 
+test.aaa = 
 function()
 {
     # Help File:
     helpFile = function() { 
-        example(TechnicalAnalysis)
+        example(TechnicalAnalysis, ask = FALSE)
         return() 
     }
     checkIdentical(
