@@ -433,15 +433,21 @@ function(x, which = "ask", control = list(), ...)
     
     # Control Parameters:
     N = length(x@data$statistics$mu)
-    # Specifying xlim and ylim ...
+         
+    # Use default, if xlim and ylim is not specified ...
     mu = x@data$statistics$mu
-    Sigma = x@data$statistics$Sigma
-    
-    yLim =  range(mu) + .25*c(-diff(range(mu)), diff(range(mu)))
+    Sigma = x@data$statistics$Sigma      
+    yLim = range(mu) + 0.25*c(-diff(range(mu)), diff(range(mu)))
+    # First, take care that all assets appear on the plot ...
     sqrtSig = sqrt(diag(Sigma))
-    xLim = c(min(sqrtSig), max(sqrtSig))+
-        c(- 0.4*diff(range(sqrtSig)),0.1*diff(range(sqrtSig)))
+    xLimAssets = c(min(sqrtSig), max(sqrtSig))+
+         c(-0.4*diff(range(sqrtSig)), 0.1*diff(range(sqrtSig)))
+    # ... second take care that the whole frontier appears on the plot:
+    fullFrontier = getFrontier(x)
+    xLimFrontier = range(fullFrontier[, 1])
+    xLim = range(c(xLimAssets, xLimFrontier))
 
+    # Control List:
     con <<- list(
         sharpeRatio.col = "black",
         minvariance.col = "red",
@@ -552,16 +558,23 @@ function(object, control = list(), ...)
     
     # FUNCTION:
      
+    # Global Variables:
     object <<- object
     nFrontierPoints <<- length(getTargetRisk(object))
     dim = dim(getWeights(object))[2]
+        
+    # Use default, if xlim and ylim is not specified ...
     mu = object@data$statistics$mu
-    Sigma = object@data$statistics$Sigma
-    
-    yLim =  range(mu) + 0.25*c(-diff(range(mu)), diff(range(mu)))
+    Sigma = object@data$statistics$Sigma      
+    yLim = range(mu) + 0.25*c(-diff(range(mu)), diff(range(mu)))
+    # First, take care that all assets appear on the plot ...
     sqrtSig = sqrt(diag(Sigma))
-    xLim = c(min(sqrtSig), max(sqrtSig))+
-        c(-0.4*diff(range(sqrtSig)), 0.1*diff(range(sqrtSig)))
+    xLimAssets = c(min(sqrtSig), max(sqrtSig))+
+         c(-0.4*diff(range(sqrtSig)), 0.1*diff(range(sqrtSig)))
+    # ... second take care that the whole frontier appears on the plot:
+    fullFrontier = getFrontier(object)
+    xLimFrontier = range(fullFrontier[, 1])
+    xLim = range(c(xLimAssets, xLimFrontier))
 
     # Control Parameters:
     con <<- list(
@@ -597,22 +610,19 @@ function(object, control = list(), ...)
         # Reset Frame:
         par(mfrow = c(2, 2), cex = 0.7)
         
-        # Weights Plot: 
+        # Plot 1 - Weights Plot: 
         weightsPlot(object)
         title(main = "Weights", line = 3)
-
-       
         # Weights Plot Pointer:
         abline(v = N, col = "black")
         
-        # Single Weights Plot:
+        # Plot 2 - Single Weights Plot:
         .notStackedWeightsPlot(object)
-        
         # Weights Plot Pointer for not stacked:
         abline(v = N, col = "black")
         title(main = "Not Stacked Weights", line = 3)
 
-        # Frontier Plot:
+        # Plot 3 - Frontier Plot:
         frontier = getFrontier(object)
         fPoint = frontier[N, ]
         frontierPlot(object, xlim = con$xlim.frontier, ylim = con$ylim.frontier,
@@ -668,13 +678,19 @@ function(object, control = list(), ...)
     object <<- object
     nFrontierPoints <<- nrow(getWeights(object))
     dim = dim(getWeights(object))[2]
+       
+    # Use default, if xlim and ylim is not specified ...
     mu = object@data$statistics$mu
-    Sigma = object@data$statistics$Sigma
-    
-    yLim =  range(mu) + .25*c(-diff(range(mu)), diff(range(mu)))
+    Sigma = object@data$statistics$Sigma      
+    yLim = range(mu) + 0.25*c(-diff(range(mu)), diff(range(mu)))
+    # First, take care that all assets appear on the plot ...
     sqrtSig = sqrt(diag(Sigma))
-    xLim = c(min(sqrtSig), max(sqrtSig))+
-        c(- 0.4*diff(range(sqrtSig)),0.1*diff(range(sqrtSig)))
+    xLimAssets = c(min(sqrtSig), max(sqrtSig))+
+         c(-0.4*diff(range(sqrtSig)), 0.1*diff(range(sqrtSig)))
+    # ... second take care that the whole frontier appears on the plot:
+    fullFrontier = getFrontier(object)
+    xLimFrontier = range(fullFrontier[, 1])
+    xLim = range(c(xLimAssets, xLimFrontier))
 
     # Control list:
     con <<- list(

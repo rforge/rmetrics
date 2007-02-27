@@ -163,12 +163,12 @@ function(object, frontier = c("both", "lower", "upper"),
         if(frontier == "lower" | frontier == "both") {
             points(lowerFrontier, col = col[2], ...)
         }
-    } else {
+    } else if (xArg != "NULL" & yArg != "NULL"){
         #  If both xlim and ylim are not defined in argument list ...
         if(!add){
             if(frontier == "upper" | frontier == "both") {
                 plot(fullFrontier, type = "n", ...)
-                plot(upperFrontier, col = col[1], ...)
+                points(upperFrontier, col = col[1], ...)
             }
             if(frontier == "both") {
                 points(lowerFrontier, col = col[2], ...)
