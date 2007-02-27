@@ -81,10 +81,15 @@ function(object, frontier = c("both", "lower", "upper"),
         # Use default, if xlim and ylim is not specified ...
         mu = object@data$statistics$mu
         Sigma = object@data$statistics$Sigma      
-        yLim =  range(mu) + 0.25*c(-diff(range(mu)), diff(range(mu)))
+        yLim = range(mu) + 0.25*c(-diff(range(mu)), diff(range(mu)))
+        # First, take care that all assets appear on the plot ...
         sqrtSig = sqrt(diag(Sigma))
-        xLim = c(min(sqrtSig), max(sqrtSig))+
-            c(-0.4*diff(range(sqrtSig)), 0.1*diff(range(sqrtSig)))
+        xLimAssets = c(min(sqrtSig), max(sqrtSig))+
+             c(-0.4*diff(range(sqrtSig)), 0.1*diff(range(sqrtSig)))
+        # ... second take care that the whole frontier appears on the plot:
+        xLimFrontier = range(fullFrontier[, 1])
+        xLim = range(c(xLimAssets, xLimFrontier))
+        # Plot:
         if(!add){
             if(frontier == "upper" | frontier == "both") {
                 plot(upperFrontier, col = col[1], xlim = xLim, ylim = yLim, ...)
@@ -105,8 +110,61 @@ function(object, frontier = c("both", "lower", "upper"),
         if(frontier == "lower" | frontier == "both") {
             points(lowerFrontier, col = col[2], ...)
         }
+    } else if (xArg != "NULL" & yArg == "NULL") {
+        # In this only xlim is specified in the argument list 
+        mu = object@data$statistics$mu
+        Sigma = object@data$statistics$Sigma      
+        yLim = range(mu) + 0.25*c(-diff(range(mu)), diff(range(mu)))
+        # Plot:
+        if(!add){
+            if(frontier == "upper" | frontier == "both") {
+                plot(upperFrontier, col = col[1], ylim = yLim, ...)
+            } else {
+                if( frontier == "both") {
+                    points(bothFrontier, col = col[2], ylim = yLim, ...)
+                }
+                if(frontier == "lower" ) {
+                    plot(lowerFrontier, col = col[2], ylim = yLim, ...)
+                }
+            }
+        }
+        if(frontier == "upper" | frontier == "both") {
+            points(upperFrontier, col = col[1], ...)
+        }
+        if(frontier == "lower" | frontier == "both") {
+            points(lowerFrontier, col = col[2], ...)
+        }   
+    } else if(xArg == "NULL" & yArg != "NULL") {
+        # In this only ylim is specified in the argument list 
+        Sigma = object@data$statistics$Sigma      
+        # First, take care that all assets appear on the plot ...
+        sqrtSig = sqrt(diag(Sigma))
+        xLimAssets = c(min(sqrtSig), max(sqrtSig))+
+             c(-0.4*diff(range(sqrtSig)), 0.1*diff(range(sqrtSig)))
+        # ... second take care that the whole frontier appears on the plot:
+        xLimFrontier = range(fullFrontier[, 1])
+        xLim = range(c(xLimAssets, xLimFrontier))
+        # Plot:
+        if(!add){
+            if(frontier == "upper" | frontier == "both") {
+                plot(upperFrontier, col = col[1], xlim = xLim, ...)
+            } else {
+                if( frontier == "both") {
+                    points(bothFrontier, col = col[2], xlim = xLim, ...)
+                }
+                if(frontier == "lower" ) {
+                    plot(lowerFrontier, col = col[2], xlim = xLim, ...)
+                }
+            }
+        }
+        if(frontier == "upper" | frontier == "both") {
+            points(upperFrontier, col = col[1], ...)
+        }
+        if(frontier == "lower" | frontier == "both") {
+            points(lowerFrontier, col = col[2], ...)
+        }
     } else {
-        #  If xlim or ylim is defined in argument list ...
+        #  If both xlim and ylim are not defined in argument list ...
         if(!add){
             if(frontier == "upper" | frontier == "both") {
                 plot(fullFrontier, type = "n", ...)
@@ -118,7 +176,7 @@ function(object, frontier = c("both", "lower", "upper"),
             if(frontier == "lower") {
                 plot(lowerFrontier, col = col[2], ...)
             }
-        }else{    
+        } else{    
             if(frontier == "upper" | frontier == "both") {
                 points(upperFrontier, col = col[1], ...)
             }
