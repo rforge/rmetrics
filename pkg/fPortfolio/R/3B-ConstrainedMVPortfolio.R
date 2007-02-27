@@ -97,6 +97,7 @@ function(data, spec, constraintsStrings)
             weights = weights,
             targetReturn = targetReturn,
             targetRisk = targetRisk,
+            targetMean = targetReturn,
             targetStdev = targetRisk),
         title = "Feasible Portfolio", 
        description = .description()) 
@@ -151,6 +152,7 @@ function(data, spec, constraintsStrings)
             weights = weights,
             targetReturn = targetReturn,
             targetRisk = targetRisk,
+            targetMean = targetReturn,
             targetStdev = targetRisk),
         title = "CML Portfolio", 
         description = .description()) 
@@ -235,6 +237,7 @@ function(data, spec, constraintsStrings)
             weights = weights,
             targetReturn = targetReturn,
             targetRisk = targetRisk,
+            targetMean = targetReturn,
             targetStdev = targetRisk),
         title = "Minimum Variance Portfolio", 
         description = .description()) 
@@ -303,6 +306,7 @@ function(data, spec, constraintsStrings)
             weights = weights,
             targetReturn = targetReturn,
             targetRisk = targetRisk,
+            targetMean = targetReturn,
             targetStdev = targetRisk),
         title = "Constrained MV Portfolio", 
         description = .description())    
@@ -377,6 +381,7 @@ function(data, spec, constraintsStrings)
             weights = weights[!error, ],
             targetReturn = targetMu[!error],
             targetRisk = targetSigma[!error],
+            targetMean = targetMu[!error],
             targetStdev = targetSigma[!error]),
         title = "Constrained MV Frontier", 
         description = .description())       

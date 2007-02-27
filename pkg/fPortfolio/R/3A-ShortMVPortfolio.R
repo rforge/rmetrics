@@ -83,8 +83,9 @@ function(data, spec = portfolioSpec(), constraintsStrings = NULL)
         constraints = as.character(constraintsStrings),
         portfolio = list(
             weights = weights,
-            targetReturn = Return,
+            targetReturn = targetReturn,
             targetRisk = targetRisk,
+            targetMean = targetReturn,
             targetStdev = targetRisk),
         title = "Feasible Portfolio", 
         description = .description())  
@@ -138,6 +139,7 @@ function(data, spec = portfolioSpec(), constraintsStrings = NULL)
             weights = weights,
             targetReturn = targetReturn,
             targetRisk = targetRisk,
+            targetMean = targetReturn,
             targetStdev = targetRisk),
         title = "Capital Market Line", 
         description = .description())  
@@ -186,6 +188,7 @@ function(data, spec = portfolioSpec(), constraintsStrings = NULL)
             weights = weights,
             targetReturn = targetReturn,
             targetRisk = targetRisk,
+            targetMean = targetReturn,
             targetStdev = targetRisk),
         title = "Tangency MV Portfolio", 
         description = .description())  
@@ -234,6 +237,7 @@ function(data, spec = portfolioSpec(), constraintsStrings = NULL)
             weights = weights,
             targetReturn = targetReturn,
             targetRisk = targetRisk,
+            targetMean = targetReturn,
             targetStdev = targetRisk),
         title = "Minimum Variance MV Portfolio", 
         description = .description())  
@@ -289,6 +293,7 @@ function(data, spec = portfolioSpec(), constraintsStrings = NULL)
             weights = weights,
             targetReturn = targetReturn,
             targetRisk = targetRisk,
+            targetMean = targetReturn,
             targetStdev = targetRisk),
         title = "Frontier MV Portfolio", 
         description = .description())  
@@ -385,6 +390,7 @@ title = NULL, description = NULL)
             weights = weights, 
             targetReturn = targetReturn,
             targetRisk = targetRisk,
+            targetMean = targetReturn,
             targetStdev = targetRisk), 
         title = title, 
         description = description)

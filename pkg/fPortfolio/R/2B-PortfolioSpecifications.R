@@ -193,7 +193,7 @@ function(spec = portfolioSpec(), type = c("MV", "LPM", "CVaR"))
     # Type ?
     type = match.arg(type)
     spec@model$type = type
-    if (type == "LM") spec@model$estimator = "lpm"
+    if (type == "LPM") spec@model$estimator = c("lpm", "lpm")
 
     # Return Value:
     spec
@@ -269,6 +269,28 @@ function(spec = portfolioSpec(), targetReturn = NULL)
 # ------------------------------------------------------------------------------
 
 
+"setTargetReturn<-" <- function(spec, value)
+{   # A function implemented by Rmetrics
+
+    # Description:                                   
+    #   Sets target return value
+    
+    # FUNCTION:
+    
+    # Target Return ?
+    spec@portfolio$targetReturn = value
+    if(!is.null(value)) {
+        spec@portfolio$weights = NULL
+    }
+    
+    # Return Value:
+    spec
+}
+
+
+# ------------------------------------------------------------------------------
+
+
 setRiskFreeRate = 
 function(spec = portfolioSpec(), riskFreeRate = 0)
 {   # A function implemented by Rmetrics
@@ -280,6 +302,25 @@ function(spec = portfolioSpec(), riskFreeRate = 0)
     
     # Risk-Free Rate ?
     spec@portfolio$riskFreeRate = riskFreeRate 
+    
+    # Return Value:
+    spec
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+"setRiskFreeRate<-" <- function(spec, value)
+{   # A function implemented by Rmetrics
+
+    # Description:                                   
+    #   Sets risk-free rate value
+    
+    # FUNCTION:
+    
+    # Risk-Free Rate ?
+    spec@portfolio$riskFreeRate = value
     
     # Return Value:
     spec
@@ -379,7 +420,8 @@ function(data, spec = portfolioSpec())
     } else if(meanEstimator == "lpm" | covEstimator == "lpm") {
         stopifnot(!is.null(spec@model$params$tau))
         stopifnot(!is.null(spec@model$params$a))
-        estimate = assetsLPM(x, tau = spec@model$params$tau, a)
+        estimate = assetsLPM(x, 
+            tau = spec@model$params$tau, a = spec@model$params$a)
         mu = estimate$mu
         Sigma = estimate$Sigma
     } 

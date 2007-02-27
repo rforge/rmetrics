@@ -59,6 +59,9 @@ function(object, frontier = c("both", "lower", "upper"),
     
     # FUNCTION:
     
+    # Check Colors:
+    stopifnot(length(col) == 2)
+  
     # Settings:
     frontier = match.arg(frontier)
     
@@ -74,21 +77,20 @@ function(object, frontier = c("both", "lower", "upper"),
     yArg <- as.character(Arg[c(1, m)])[3]
 
     # Plot:
-    if(xArg == "NULL" & yArg == "NULL"){
-        #Use default, if xlim and ylim is not specified ...
+    if(xArg == "NULL" & yArg == "NULL") {
+        # Use default, if xlim and ylim is not specified ...
         mu = object@data$statistics$mu
-        Sigma = object@data$statistics$Sigma
-        
-        yLim =  range(mu) + .25*c(-diff(range(mu)), diff(range(mu)))
+        Sigma = object@data$statistics$Sigma      
+        yLim =  range(mu) + 0.25*c(-diff(range(mu)), diff(range(mu)))
         sqrtSig = sqrt(diag(Sigma))
         xLim = c(min(sqrtSig), max(sqrtSig))+
-            c(- 0.4*diff(range(sqrtSig)),0.1*diff(range(sqrtSig)))
+            c(-0.4*diff(range(sqrtSig)), 0.1*diff(range(sqrtSig)))
         if(!add){
             if(frontier == "upper" | frontier == "both") {
                 plot(upperFrontier, col = col[1], xlim = xLim, ylim = yLim, ...)
-            }else {
+            } else {
                 if( frontier == "both") {
-                    points(lowerFrontier, col = col[2], xlim = xLim,
+                    points(bothFrontier, col = col[2], xlim = xLim,
                         ylim = yLim, ...)
                 }
                 if(frontier == "lower" ) {
@@ -107,6 +109,7 @@ function(object, frontier = c("both", "lower", "upper"),
         #  If xlim or ylim is defined in argument list ...
         if(!add){
             if(frontier == "upper" | frontier == "both") {
+                plot(fullFrontier, type = "n", ...)
                 plot(upperFrontier, col = col[1], ...)
             }
             if(frontier == "both") {
