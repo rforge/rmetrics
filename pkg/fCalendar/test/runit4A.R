@@ -51,12 +51,14 @@
 ################################################################################
 
 
-test.helpFile = 
+test.aaa = 
 function()
 {
     # Help File:
     helpFile = function() { 
-        example(TimeSeriesClass); return() }
+        example(TimeSeriesClass, ask = FALSE)
+        return() 
+    }
     checkIdentical(
         target = class(try(helpFile())),
         current = "NULL")
@@ -349,15 +351,19 @@ function()
 
     # Create Dummy Time Series:
     myFinCenter = "GMT"
-    dummyDailySeries(matrix(rnorm(12)))
+    tS = dummyDailySeries(matrix(rnorm(12)))
+    print(tS)
 
-    # alignDailySeries()
+    # CHECK FOR ERROR
+    # alignDailySeries() 
     
-    # ohlcDailyPlot(X)
+    # CHECK FOR ERROR
+    # ohlcDailyPlot()
 
     # Return Value:
     return()    
 }
+
 
 # ------------------------------------------------------------------------------
 

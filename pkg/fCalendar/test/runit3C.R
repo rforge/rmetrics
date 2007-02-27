@@ -46,12 +46,14 @@
 ################################################################################
 
 
-test.helpFile = 
+test.aaa = 
 function()
 {
     # Help File:
     helpFile = function() { 
-        example(TimeDateMathOps); return() }
+        example(TimeDateMathOps, ask = FALSE)
+        return() 
+    }
     checkIdentical(
         target = class(try(helpFile())),
         current = "NULL")
@@ -129,7 +131,7 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.Ordering =
+test.ordering =
 function()
 {
     #  c.timeDate             Concatenates 'timeDate' objects
@@ -143,20 +145,22 @@ function()
     myFinCenter = "NewYork"
     NY = timeCalendar(h = 10) 
     current = c(
-        "2006-01-01 10:00:00", "2006-02-01 10:00:00", "2006-03-01 10:00:00",
-        "2006-04-01 10:00:00", "2006-05-01 10:00:00", "2006-06-01 10:00:00",
-        "2006-07-01 10:00:00", "2006-08-01 10:00:00", "2006-09-01 10:00:00",
-        "2006-10-01 10:00:00", "2006-11-01 10:00:00", "2006-12-01 10:00:00")
+        "2007-01-01 10:00:00", "2007-02-01 10:00:00", "2007-03-01 10:00:00",
+        "2007-04-01 10:00:00", "2007-05-01 10:00:00", "2007-06-01 10:00:00",
+        "2007-07-01 10:00:00", "2007-08-01 10:00:00", "2007-09-01 10:00:00",
+        "2007-10-01 10:00:00", "2007-11-01 10:00:00", "2007-12-01 10:00:00")
+    print(NY)
     checkIdentical(format(NY), current)
     
     # Back to Zurich:
     myFinCenter = "Zurich"
     ZH = timeCalendar(h = 16)
     current = c(
-        "2006-01-01 16:00:00", "2006-02-01 16:00:00", "2006-03-01 16:00:00",
-        "2006-04-01 16:00:00", "2006-05-01 16:00:00", "2006-06-01 16:00:00",
-        "2006-07-01 16:00:00", "2006-08-01 16:00:00", "2006-09-01 16:00:00",
-        "2006-10-01 16:00:00", "2006-11-01 16:00:00", "2006-12-01 16:00:00")
+        "2007-01-01 16:00:00", "2007-02-01 16:00:00", "2007-03-01 16:00:00",
+        "2007-04-01 16:00:00", "2007-05-01 16:00:00", "2007-06-01 16:00:00",
+        "2007-07-01 16:00:00", "2007-08-01 16:00:00", "2007-09-01 16:00:00",
+        "2007-10-01 16:00:00", "2007-11-01 16:00:00", "2007-12-01 16:00:00")
+    print(ZH)
     checkIdentical(format(ZH), current)
     
     # NY-ZH Concatenate:
@@ -164,14 +168,16 @@ function()
     print(NYC)
     # checkIdentical(
     #    target = format(NYC), 
-    #    current = "2006-01-01 10:00:00")
+    #    current = "2007-01-01 10:00:00")
+    # ... here is problem, runs outside of RUnit correctly
     
     # ZH-NY Concatenate:
     ZRH = c(ZH, NY)[13]
     print(ZRH)
     # checkIdentical(
     #    target = format(ZRH), 
-    #    current = "2006-01-01 16:00:00")
+    #    current = "2007-01-01 16:00:00")
+    # ... here is problem, runs outside of RUnit correctly
     
     # Replicate:
     DIFF = rep(NY[1:3], times = 3)-rep(NY[1:3], each = 3)
@@ -192,6 +198,9 @@ function()
     REV = rev(TS)
     print(head(REV))
     checkIdentical(TS, rev(REV))
+    
+    # Return Value:
+    return() 
 }
 
 

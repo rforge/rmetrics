@@ -52,12 +52,14 @@
 ################################################################################
 
 
-test.helpFile = 
+test.aaa = 
 function()
 {
     # Help File:
     helpFile = function() { 
-        example(timeSeriesCoercion); return() }
+        example(timeSeriesCoercion, ask = FALSE)
+        return() 
+    }
     checkIdentical(
         target = class(try(helpFile())),
         current = "NULL")
@@ -81,7 +83,6 @@ function()
     # as.timeSeries.character   Loads and transformas from a demo file
     # as.timeSeries.zoo         Transforms a 'zoo' object into a 'timeSeries'
     
-
     set.seed(4711)
     data = round(rnorm(12), 3)
     charvec = timeCalendar(2006)
@@ -231,8 +232,7 @@ function()
     # as.matrix.timeSeries      Converts a 'timeSeries' to a 'matrix'
     # as.data.frame.timeSeries  Converts a 'timeSeries' to a 'data.frame'
     # as.ts.timeSeries          Converts a 'timeSeries' to a 'ts'
-    
-   
+      
     # Univariate Case:
     set.seed(4711)
     data = round(rnorm(12), 3)
@@ -287,7 +287,6 @@ function()
     # as.data.frame.t*     Converts a 'timeSeries' to a 'data.frame'
     # as.ts.timeSeries     Converts a 'timeSeries' to a 'ts'
     
-   
     # Multivariate Case:
     set.seed(4711)
     data = matrix(round(rnorm(24), 3), ncol = 2)

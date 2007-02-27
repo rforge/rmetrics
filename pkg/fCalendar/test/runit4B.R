@@ -57,13 +57,15 @@
 ################################################################################
 
 
-test.helpFile = 
+test.aaa = 
 function()
 {
     # Help File:
     par(ask = FALSE)
     helpFile = function() { 
-        example(TimeSeriesData); return() }
+        example(TimeSeriesData, ask = FALSE)
+        return() 
+    }
     checkIdentical(
         target = class(try(helpFile())),
         current = "NULL")

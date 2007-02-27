@@ -47,12 +47,14 @@
 ################################################################################
 
 
-test.helpFile = 
+test.aaa = 
 function()
 {
     # Help File:
     helpFile = function() { 
-        example(TimeDateCoercion); return() }
+        example(TimeDateCoercion, ask = FALSE)
+        return() 
+    }
     checkIdentical(
         target = class(try(helpFile())),
         current = "NULL")
@@ -183,7 +185,7 @@ function()
     # months.timeDate = function(x, abbreviate = NULL)
     MO = months(TC) 
     MO
-    checkIdentical(as.vector(AT[,2]), as.vector(MO))    
+    checkIdentical(as.vector(AT[, 2]), as.vector(MO))    
 
         
     # Return Value:

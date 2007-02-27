@@ -45,12 +45,14 @@
 ################################################################################
 
 
-test.helpFile = 
+test.aaa = 
 function()
 {
     # Help File:
     helpFile = function() { 
-        example(TimeDateSubsets); return() }
+        example(TimeDateSubsets, ask = FALSE)
+        return() 
+    }
     checkIdentical(
         target = class(try(helpFile())),
         current = "NULL")
@@ -150,6 +152,9 @@ function()
     #  blockStart             Creates start dates for equally sized blocks
     #  blockEnd               Creates end dates for equally sized blocks
     
+    # Holidays:
+    tS = timeSequence(from = Easter(2006)-7*24*3600, length.out = 8)
+    
     # [ - Subsetting:
     tS[c(1, 6:8)]   
     tS[isBizday(tS)]
@@ -175,7 +180,7 @@ function()
     print(target)
     checkIdentical(
         format(target), 
-        current = format(timeDate("2006-01-01")))
+        current = format(timeDate("2007-01-01")))
     
     # end -
     tS = timeCalendar() 
@@ -183,7 +188,7 @@ function()
     print(target)
     checkIdentical(
         format(target), 
-        current = format(timeDate("2006-12-01")))
+        current = format(timeDate("2007-12-01")))
     
     # head | tail -
     tS = timeCalendar()
@@ -195,7 +200,7 @@ function()
     # order.timeDate - not yet available
     sample(tS)
     unique(tS)
-    # unique(sort(c(tS, tS)))
+    unique(sort(c(tS, tS)))
    
     # Return Value:
     return()
