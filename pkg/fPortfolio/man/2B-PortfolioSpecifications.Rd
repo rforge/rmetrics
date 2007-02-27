@@ -15,7 +15,9 @@
 
 \alias{setWeights}
 \alias{setTargetReturn}
+\alias{setTargetReturn<-}
 \alias{setRiskFreeRate}
+\alias{setRiskFreeRate<-}
 \alias{setNFrontierPoints}
 \alias{setReturnRange}
 \alias{setRiskRange}
@@ -50,18 +52,21 @@
 
 
 \usage{
-portfolioSpec(model = list(type = "MV", estimator = c("mean", "cov")), 
+portfolioSpec(
+    model = list(type = "MV", estimator = c("mean", "cov"), params = list()), 
     portfolio = list(weights = NULL, targetReturn = NULL, riskFreeRate = 0, 
     nFrontierPoints = 50, returnRange = NULL, riskRange = NULL),
     title = NULL, description = NULL)
 show.fPFOLIOSPEC(object)
 
-setType(spec = portfolioSpec(), type = c("MV", "CVaR"))
+setType(spec = portfolioSpec(), type = c("MV", "LPM", "CVaR"))
 setEstimator(spec = portfolioSpec(), estimator = c("mean", "cov"))
 
 setWeights(spec = portfolioSpec(), weights = NULL)
 setTargetReturn(spec = portfolioSpec(), targetReturn = NULL)
+setTargetReturn(spec) <- value
 setRiskFreeRate(spec = portfolioSpec(), riskFreeRate = 0)
+setRiskFreeRate(spec) <- value
 setNFrontierPoints(spec = portfolioSpec(), nFrontierPoints = 100)
 setReturnRange(spec = portfolioSpec(), returnRange = NULL)
 setRiskRange(spec = portfolioSpec(), riskRange = NULL)
@@ -135,6 +140,9 @@ portfolioStatistics(data, spec = portfolioSpec())
     \item{type}{
         [setType] - \cr
         xxx
+        }
+    \item{value}{
+        a valid value for that component of \code{spec} to be set.
         }
     \item{weights} {
         [setWeights] - \cr
