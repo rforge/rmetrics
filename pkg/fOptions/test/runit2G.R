@@ -40,12 +40,12 @@
 ################################################################################
 
 
-test.helpFile = 
+test.aaa = 
 function()
 {
     # Help File:
     helpFile = function() { 
-        example(CurrencyTranslatedOptions)
+        example(CurrencyTranslatedOptions, ask = FALSE)
         return() 
     }
     checkIdentical(

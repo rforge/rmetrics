@@ -41,12 +41,12 @@
 ################################################################################
 
 
-test.helpFile = 
+test.aaa = 
 function()
 {
     # Help File:
     helpFile = function() { 
-        example(LookbackOptions)
+        example(LookbackOptions, ask = FALSE)
         return() 
     }
     checkIdentical(

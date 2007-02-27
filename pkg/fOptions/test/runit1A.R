@@ -52,12 +52,12 @@
 ################################################################################
 
 
-test.helpFile = 
+test.aaa = 
 function()
 {
     # Help File:
     helpFile = function() { 
-        example(PlainVanillaOptions)
+        example(PlainVanillaOptions, ask = FALSE)
         return() 
     }
     checkIdentical(

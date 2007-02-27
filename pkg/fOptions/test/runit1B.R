@@ -38,12 +38,12 @@
 ################################################################################
 
 
-test.helpFile = 
+test.aaa = 
 function()
 {
     # Help File:
     helpFile = function() { 
-        example(BasicAmericanOptions)
+        example(BasicAmericanOptions, ask = FALSE)
         return() 
     }
     checkIdentical(

@@ -87,13 +87,12 @@
 ################################################################################
 
 
-
-test.helpFile = 
+test.aaa = 
 function()
 {
     # Help File:
     helpFile = function() { 
-        example(EBMAsianOptions)
+        example(EBMAsianOptions, ask = FALSE)
         return() 
     }
     checkIdentical(

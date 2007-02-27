@@ -45,12 +45,12 @@
 ################################################################################
 
 
-test.helpFile = 
+test.aaa = 
 function()
 {
     # Help File:
     helpFile = function() { 
-        example(BesselFunctions)
+        example(BesselFunctions, ask = FALSE)
         return() 
     }
     checkIdentical(

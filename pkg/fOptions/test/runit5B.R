@@ -36,12 +36,12 @@
 ################################################################################
 
 
-test.helpFile = 
+test.aaa = 
 function()
 {
     # Help File:
     helpFile = function() { 
-        example(MonteCarloOptions)
+        example(MonteCarloOptions, ask = FALSE)
         return() 
     }
     checkIdentical(

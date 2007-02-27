@@ -41,12 +41,12 @@
 ################################################################################
 
 
-test.helpFile = 
+test.aaa = 
 function()
 {
     # Help File:
     helpFile = function() { 
-        example(LowDiscrepancy)
+        example(LowDiscrepancy, ask = FALSE)
         return() 
     }
     checkIdentical(

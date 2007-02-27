@@ -42,12 +42,12 @@
 ################################################################################
 
 
-test.helpFile = 
+test.aaa = 
 function()
 {
     # Help File:
     helpFile = function() { 
-        example(BinaryOptions)
+        example(BinaryOptions, ask = FALSE)
         return() 
     }
     checkIdentical(

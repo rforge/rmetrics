@@ -61,12 +61,12 @@
 ################################################################################
 
 
-test.helpFile = 
+test.aaa = 
 function()
 {
     # Help File:
     helpFile = function() { 
-        example(EBMDistribution)
+        example(EBMDistribution, ask = FALSE)
         return() 
     }
     checkIdentical(

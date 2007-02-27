@@ -44,12 +44,12 @@
 ################################################################################
 
 
-test.helpFile = 
+test.aaa = 
 function()
 {
     # Help File:
     helpFile = function() { 
-        example(BarrierOptions)
+        example(BarrierOptions, ask = FALSE)
         return() 
     }
     checkIdentical(

@@ -43,12 +43,12 @@
 ################################################################################
 
 
-test.helpFile = 
+test.aaa = 
 function()
 {
     # Help File:
     helpFile = function() { 
-        example(MultipleAssetsOptions)
+        example(MultipleAssetsOptions, ask = FALSE)
         return() 
     }
     checkIdentical(

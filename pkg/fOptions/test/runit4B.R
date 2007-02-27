@@ -38,12 +38,12 @@
 ################################################################################
 
 
-test.helpFile = 
+test.aaa = 
 function()
 {
     # Help File:
     helpFile = function() { 
-        example(HestonNandiOptions)
+        example(HestonNandiOptions, ask = FALSE)
         return() 
     }
     checkIdentical(

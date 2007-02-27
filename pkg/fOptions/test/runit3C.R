@@ -42,12 +42,12 @@
 ################################################################################
 
 
-test.helpFile = 
+test.aaa = 
 function()
 {
     # Help File:
     helpFile = function() { 
-        example(HypergeometricFunctions)
+        example(HypergeometricFunctions, ask = FALSE)
         return() 
     }
     checkIdentical(

@@ -52,12 +52,12 @@
 ################################################################################
 
 
-test.helpFile = 
+test.aaa = 
 function()
 {
     # Help File:
     helpFile = function() { 
-        example(GammaFunctions)
+        example(GammaFunctions, ask = FALSE)
         return() 
     }
     checkIdentical(

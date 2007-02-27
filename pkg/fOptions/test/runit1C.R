@@ -41,12 +41,12 @@
 ################################################################################
 
 
-test.helpFile = 
+test.aaa = 
 function()
 {
     # Help File:
     helpFile = function() { 
-        example(BinomialTreeOptions)
+        example(BinomialTreeOptions, ask = FALSE)
         return() 
     }
     checkIdentical(

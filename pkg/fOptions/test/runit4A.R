@@ -40,12 +40,12 @@
 ################################################################################
 
 
-test.helpFile = 
+test.aaa = 
 function()
 {
     # Help File:
     helpFile = function() { 
-        example(HestonNandiGarchFit)
+        example(HestonNandiGarchFit, ask = FALSE)
         return() 
     }
     checkIdentical(
