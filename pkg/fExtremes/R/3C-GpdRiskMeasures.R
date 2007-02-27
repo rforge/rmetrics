@@ -32,7 +32,7 @@
 #  gpdTailPlot             Plots Tail Estimate From GPD Model
 #  gpdQuantPlot            Plots of GPD Tail Estimate of a High Quantile
 #  gpdShapePlot            Plots for GPD Shape Parameter
-#  gpdQPlot                Adds Quantile Estimates to plot.gpd
+#  gpdQPlot                Adds Quantile Estimates to gpdTailPlot()
 #  gpdSfallPlot            Adds Expected Shortfall Estimates to a GPD Plot
 # FUNCTION:               ADDITIONAL FUNCTION:
 #  gpdriskMeasures         Calculates Quantiles and Expected Shortfalls

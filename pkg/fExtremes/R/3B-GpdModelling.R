@@ -27,7 +27,7 @@
 #   see Rmetrics's copyright file
 
 
-# ##############################################################################
+################################################################################
 # FUNCTION:               GPD SIMULATION:
 #  gpdSim                  Simulates a GPD distributed process
 # FUNCTION:               GPD PARAMETER ESTIMATION:
