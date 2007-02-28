@@ -112,7 +112,8 @@ cdoTA(x, lag1 = 12, lag2 = 26, lag3 = 9)
 vohlTA(high, low)
 vorTA(high, low)
 
-stochasticTA(close, high, low, lag1, lag2, type = c("fast", "slow")) 
+stochasticTA(close, high, low, lag1 = 5, lag2 = 3, lag3 = 5, 
+    type = c("fast", "slow")) 
 fpkTA(close, high, low, lag)
 fpdTA(close, high, low, lag1, lag2)
 spdTA(close, high, low, lag1, lag2, lag3)
@@ -201,8 +202,6 @@ EWMA(x, lambda, startup = 0)
 
 
 \examples{
-## SOURCE("fMultivar.1A-TechnicalAnalysis")
-
 ## -
 }
    

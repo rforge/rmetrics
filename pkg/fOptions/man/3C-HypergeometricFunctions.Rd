@@ -122,8 +122,6 @@ Weisstein E.W. (2004);
 
 
 \examples{
-## SOURCE("fOptions.3C-HypergeometricFunctions")
-
 ## kummerM - 
    # Abramowitz-Stegun: Formula 13.6.3/13.6.21
    x = c(0.001, 0.01, 0.1, 1, 10, 100, 1000)  

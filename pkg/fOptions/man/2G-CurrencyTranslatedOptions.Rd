@@ -213,8 +213,6 @@ Haug E.G. (1997);
 
 
 \examples{
-## SOURCE("fOptions.2G-CurrencyTranslatedOptions")
-
 ## Examples from Chapter 2.13 in E.G. Haug's Option Guide (1997)
 
 ## Foreign Equity Options Struck in Domestic Currency [2.13.1]:

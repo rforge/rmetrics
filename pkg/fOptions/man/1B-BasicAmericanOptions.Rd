@@ -170,8 +170,6 @@ Roll R. (1977);
 
 
 \examples{
-## SOURCE("fOptions.1B-BasicAmericanOptions")
-
 ## All the examples are from Haug's Option Guide (1997)
 
 ## CHAPTER 1.4: ANALYTICAL MODELS FOR AMERICAN OPTIONS

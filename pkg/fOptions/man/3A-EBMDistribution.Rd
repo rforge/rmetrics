@@ -176,8 +176,6 @@ dasymEBM(u, t = 1)
 
 
 \examples{
-## Note, further examples can be found in the test directory
-
 ## dlognorm -
    # Calculate Log-Normal Density and its Derivaties:
    x = exp(seq(-2.8, 1.2, length = 100))

@@ -267,8 +267,6 @@ Heynen R.C., Kat H.M. (1994);
 
 
 \examples{
-## SOURCE("fOptions.2C-LookbackOptions")
-
 ## Examples from Chapter 2.9 in E.G. Haug's Option Guide (1997)
 
 ## Floating Strike Lookback Option [2.9.1]:

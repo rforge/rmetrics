@@ -83,8 +83,6 @@ Weisstein E.W. (2004);
 
 
 \examples{
-## SOURCE("fOptions.3D-BesselFunctions")
-
 ## Bessel I0 and K0 - 
    # Abramowitz-Stegun: Table 9.8, p. 416-422
    x = c(0.0, 0.01, 0.1, 0.2, 0.5, 1, 2, 5, 10, 20, 50)  

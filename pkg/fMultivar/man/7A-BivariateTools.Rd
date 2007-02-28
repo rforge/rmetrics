@@ -217,8 +217,6 @@ Warnes G.R., (2004);
 
 
 \examples{
-## SOURCE("fMultivar.7A-BivariateTools")
-
 ## -
 }
 

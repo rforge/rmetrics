@@ -329,8 +329,6 @@ ZhangShortTable()
 
 
 \examples{
-## SOURCE("fOptions.3E-EBMAsianOptions")
-
 ## Examples:
    # none ...
 }

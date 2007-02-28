@@ -352,8 +352,6 @@ Reiner E., Rubinstein M. (1991);
 
 
 \examples{
-## SOURCE("fOptions.2E-BinaryOptions")
-
 ## Examples from Chapter 2.11 in E.G. Haug's Option Guide (1997)
 
 ## Gap Option [2.11.1]:

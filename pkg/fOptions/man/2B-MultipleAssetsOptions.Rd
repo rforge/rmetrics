@@ -302,8 +302,6 @@ Zhang P.G. (1995);
 
 
 \examples{
-## SOURCE("fOptions.2B-MultipleAssetsOptions")
-
 ## Examples from Chapter 2.8 in E.G. Haug's Option Guide (1997)
 
 ## Two Asset Correlation Options [2.8.1]:

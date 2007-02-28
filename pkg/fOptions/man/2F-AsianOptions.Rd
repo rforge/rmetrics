@@ -142,8 +142,6 @@ Haug E.G. (1997);
 
 
 \examples{
-## SOURCE("fOptions.2F-AsianOptions")
-
 ## Examples from Chapter 2.12 in E.G. Haug's Option Guide (1997)
 
 ## Geometric Average Rate Option:

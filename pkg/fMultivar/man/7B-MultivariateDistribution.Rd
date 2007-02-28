@@ -346,8 +346,6 @@ Hothorn T., Bretz F., Genz A. (2001);
 
 
 \examples{
-## SOURCE("fMultivar.7B-MultivariateDistribution")
-
 ## rmvst - 
    par(mfcol = c(3, 1), cex = 0.7)
    r1 = rmvst(200, dim = 1)

@@ -339,8 +339,6 @@ Miltersen K., Schwartz E.S. (1998);
 
 
 \examples{
-## SOURCE("fOptions.1A-PlainVanillaOptions")
-
 ## All the examples are from Haug's Option Guide (1997)
 
 ## CHAPTER 1.1: ANALYTICAL FORMULAS FOR EUROPEAN OPTIONS:

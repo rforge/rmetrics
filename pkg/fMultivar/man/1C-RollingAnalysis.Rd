@@ -107,8 +107,6 @@ rollVar(x, n = 9, trim = TRUE, unbiased = TRUE, na.rm = FALSE)
 
 
 \examples{
-## SOURCE("fMultivar.1C-RollingAnalysis")
-
 ## Rolling Analysis:
    x = (1:10)^2
    x

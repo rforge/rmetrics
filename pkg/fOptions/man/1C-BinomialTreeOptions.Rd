@@ -159,8 +159,6 @@ BinomialTreePlot(BinomialTreeValues, dx = -0.025, dy = 0.4,
 
 
 \examples{
-## SOURCE("fOptions.1C-BinomialTreeOptions")
-
 ## Cox-Ross-Rubinstein Binomial Tree Option Model:
    # Example 14.1 from Hull's Book:
    CRRBinomialTreeOption(TypeFlag = "pa", S = 50, X = 50, 

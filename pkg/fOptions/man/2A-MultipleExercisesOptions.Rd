@@ -384,8 +384,6 @@ Rubinstein M. (1991);
 
 
 \examples{
-## SOURCE("fOptions.2A-MultipleExercisesOptions")
-
 ## Examples from Chapter 2.1 - 2.7 in E.G. Haug's Option Guide (1997)
 
 ## ExecutiveStockOption [2.1]:

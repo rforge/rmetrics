@@ -217,9 +217,7 @@ Jaeckel P. (2002);
 }
 
 
-\examples{
-## SOURCE("fOptions.5B-MonteCarloOptions")
-   
+\examples{  
 ## How to perform a Monte Carlo Simulation?
    
 ## First Step:

@@ -125,8 +125,6 @@ Heston S.L., Nandi S. (1997);
 
 
 \examples{
-## SOURCE("fOptions.4B-HestonNandiOptions")
-
 ## model -
    # Define the Model Parameters for a Heston-Nandi Option:
    model = list(lambda = -0.5, omega = 2.3e-6, alpha = 2.9e-6, 

@@ -438,8 +438,6 @@ Utts J.M. (1982);
 
 
 \examples{
-## SOURCE("fMultivar.2B-RegressionTests")
-
 ## bg | dw -
    # Generate a Stationary and an AR(1) Series:
    x = rep(c(1, -1), 50)

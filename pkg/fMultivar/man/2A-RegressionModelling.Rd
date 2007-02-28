@@ -707,7 +707,6 @@ Wood (2001);
 
 
 \examples{
-## SOURCE("fMultivar.2A-RegressionModelling")
 \dontrun{
 ## regFit -
    data(recession) 
