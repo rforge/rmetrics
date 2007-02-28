@@ -33,19 +33,14 @@
 if (FALSE) {
     
     # Settings:
-    require(fBasics)
+    require(fBonds)
     require(RUnit)
-    testIndex = c(
-        "1A", 
-        "2A", "2B", "2D", 
-        "3A", "3B", 
-        "4A", 
-        "5A", "5B", "5C")
-    File = "C:/Rmetrics/SVN/trunk/fBasics/test/runit"
-    Protocol = "runitfBasics.txt"
+    testIndex = c()
+    File = "C:/Rmetrics/SVN/trunk/fBonds/test/runit"
+    Protocol = "runitfBonds.txt"
     
     # Perform and Save all Unit Tests:
-    write("fBasics:", file = Protocol)
+    write("fBonds:", file = Protocol)
     for (Index in testIndex) {
         file = paste(File, Index, ".R", sep = "")
         write("", file = Protocol, append = TRUE)
