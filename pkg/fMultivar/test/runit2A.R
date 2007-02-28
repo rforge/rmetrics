@@ -16,7 +16,7 @@
 
 # Copyrights (C)
 # for this R-port: 
-#  1999 - 2004, Diethelm Wuertz, GPL
+#  1999 - 2007, Diethelm Wuertz, GPL
 #  Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #  info@rmetrics.org
 #  www.rmetrics.org
@@ -116,15 +116,17 @@ function()
     par(ask = FALSE)
     par(mfrow = c(2, 2), cex = 0.7)
     
-    # Simulate:
+    # Simulate LM:
     X = regSim(model = "LM3", n = 100)
     head(X)
     plot(X[, "Y"], type = "l", main = "LM3")
     
+    # Simulate LOGIT:
     X = regSim(model = "LOGIT3", n = 100)
     head(X)
     plot(X[, "Y"], type = "l", main = "LOGIT3")
     
+    # Simulate GAM:
     X = regSim(model = "GAM3", n = 100)
     head(X)
     plot(X[, "Y"], type = "l", main = "GAM3")
@@ -148,20 +150,25 @@ function()
     require(MASS)
     require(polspline)
     
-    # Simulate Data:
+    # Simulate Data - a data frame:
     DATA = regSim(model = "GAM3", n = 100)
     head(DATA)
+    class(DATA)
+    
+    # Simulate Data - a timeSeries object:
     DATATS = as.timeSeries(DATA)
     head(DATATS)
+    class(DATATS)
     
-    # Fit:
+    # Regression Fit:
     LM    = regFit(formula = Y ~ X1 + X2, data = DATATS, use = "lm") 
     RLM   = regFit(Y ~ X1 + X2, data = DATATS, use = "rlm") 
-    AM    = regFit(Y ~ X1 + X2, data = DATATS, use = "am") 
+    AM    = regFit(Y ~ X1 + X2, data = DATATS, use = "am")      # CHECK
     PPR   = regFit(Y ~ X1 + X2, data = DATATS, use = "ppr") 
     MARS  = regFit(Y ~ X1 + X2, data = DATATS, use = "mars") 
     PMARS = regFit(Y ~ X1 + X2, data = DATATS, use = "polymars") 
     NNET  = regFit(Y ~ X1 + X2, data = DATATS, use = "nnet")  
+    # ... a note on AM the smoothing functions are added by default
     
     # Print Method:
     print(LM) 
@@ -173,7 +180,7 @@ function()
     print(NNET)  
     
     # Plot Method:
-    # plot(LM, which = "all")           # ERROR
+    # plot(LM, which = "all")           # Plot 3 ERROR
     # plot(RLM, which = "all")
     # plot(AM, which = "all")            
     # plot(PPR, which = "all")
@@ -209,18 +216,22 @@ function()
     require(MASS)
     require(polspline)
     
-    # Simulate Data:
+    # Simulate Data - a data frame:
     DATA = regSim(model = "GAM3", n = 100)
     head(DATA)
+    class(DATA)
+    
+    # Simulate Data - a timeSeries object:
     DATATS = as.timeSeries(DATA)
     head(DATATS)
+    class(DATATS)
     
-    # 
+    # Regression Fit:
     require(MASS)
     require(polspline)
     LM    = regFit(Y ~ X1 + X2, data = DATATS, use = "lm") 
     RLM   = regFit(Y ~ X1 + X2, data = DATATS, use = "rlm") 
-    AM    = regFit(Y ~ s(X1) + s(X2),  DATATS, use = "am") 
+    AM    = regFit(Y ~ s(X1) + s(X2),  DATATS, use = "am")      # CHECK
     PPR   = regFit(Y ~ X1 + X2, data = DATATS, use = "ppr") 
     MARS  = regFit(Y ~ X1 + X2, data = DATATS, use = "mars") 
     PMARS = regFit(Y ~ X1 + X2, data = DATATS, use = "polymars") 
@@ -281,11 +292,15 @@ function()
     require(MASS)
     require(polspline)
     
-    # Simulate Data:
+    # Simulate Data - a data frame:
     DATA = regSim(model = "GAM3", n = 100)
     head(DATA)
+    class(DATA)
+    
+    # Simulate Data - a timeSeries object:
     DATATS = as.timeSeries(DATA)
     head(DATATS)
+    class(DATATS)
     
     # 
     LM    = regFit(Y ~ X1 + X2, data = DATATS, use = "lm") 
@@ -388,11 +403,15 @@ function()
     require(MASS)
     require(polspline)
     
-    # Simulate Data:
+    # Simulate Data - a data frame:
     DATA = regSim(model = "GAM3", n = 100)
     head(DATA)
+    class(DATA)
+    
+    # Simulate Data - a timeSeries object:
     DATATS = as.timeSeries(DATA)
     head(DATATS)
+    class(DATATS)
     
     # 
     LM    = regFit(Y ~ 1 + X1 + X2 + X3, data = DATATS, use = "lm") 
@@ -427,7 +446,6 @@ function()
     .termPlot(NNET, terms = "X1")
     .termPlot(NNET6, terms = "X1")
     
-    #
     # par(mfrow = c(3, 3), cex = 0.7)
     # .termPersp(LM,    terms = c("X1", "X2"))
     # .termPersp(RLM,   terms = c("X1", "X2"))
@@ -439,7 +457,6 @@ function()
     # .termPersp(NNET,  terms = c("X1", "X2"))
     # .termPersp(NNET6, terms = c("X1", "X2"))
     
-    #
     # par(mfrow = c(3, 3), cex = 0.7)
     # .termContour(LM,    terms = c("X1", "X2"))
     # .termContour(RLM,   terms = c("X1", "X2"))
@@ -451,7 +468,6 @@ function()
     # .termContour(NNET,  terms = c("X1", "X2"))
     # .termContour(NNET6, terms = c("X1", "X2"))
     
-    #
     # Comparison:
     par(mfcol = c(3, 2), cex = 0.7)
     .termPlot(LM)
@@ -473,17 +489,20 @@ function()
 
 test.regNonDefaults = 
 function()
-{
-    
+{   
     # Requirements:
     require(MASS)
     require(polspline)
     
-    # Simulate Data:
+    # Simulate Data - a data frame:
     DATA = regSim(model = "GAM3", n = 100)
     head(DATA)
+    class(DATA)
+    
+    # Simulate Data - a timeSeries object:
     DATATS = as.timeSeries(DATA)
     head(DATATS)
+    class(DATATS)
     
     # LM:
     LM1 = regFit(Y ~ X1 + X2,      DATATS, use = "lm") 
@@ -510,7 +529,6 @@ function()
     .termPlot(PPR2)
     .termPlot(PPR3)
     
-    #
     # MARS:
     MARS = regFit(Y ~ X1 + X2 + X3, DATATS, "mars")
     MARS = regFit(Y ~ X1 + X2 + X3, DATATS, "mars", nk = 10)

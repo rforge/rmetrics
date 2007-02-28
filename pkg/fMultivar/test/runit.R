@@ -16,7 +16,7 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2004, Diethelm Wuertz, GPL
+#   1999 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
 #   www.rmetrics.org
@@ -32,8 +32,7 @@
 
 if (FALSE) {
     require(RUnit)
-    testIndex = c("1A", "1B", "1C", "2A", "2B", "2C", "3A", "3B", "6A",
-        "6C", "7A", "7B")   #, "Demo")
+    testIndex = c("1A", "1B", "1C", "2A", "2B", "2C", "7A", "7B")
     File = "C:/Rmetrics/SVN/trunk/fMultivar/test/runit"
     Protocol = "runitMultivar.txt"
     write("fMultivar:", file = Protocol)

@@ -16,7 +16,7 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2006, Diethelm Wuertz, GPL
+#   1999 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
 #   www.rmetrics.org
@@ -95,18 +95,18 @@ function()
 
 
 # ------------------------------------------------------------------------------
-#  emaTA                     Exponential Moving Average
-#  biasTA                    EMA-Bias
-#  medpriceTA                Median Price                   
-#  typicalpriceTA            Typical Price
-#  wcloseTA                  Weighted Close Price
-#  rocTA                     Rate of Change
-#  oscTA                     EMA-Oscillator
 
-test.utility =
+
+test.utilityFunctions =
 function()
 {
-    # Utility Functions:
+    #  emaTA                     Exponential Moving Average
+    #  biasTA                    EMA-Bias
+    #  medpriceTA                Median Price                   
+    #  typicalpriceTA            Typical Price
+    #  wcloseTA                  Weighted Close Price
+    #  rocTA                     Rate of Change
+    #  oscTA                     EMA-Oscillator
  
     # Data:
     # URL = "http://localhost/econophysics/R/data/organisations/YAHOO/data/MSFT.CSV"
@@ -165,18 +165,17 @@ function()
 
 
 # ------------------------------------------------------------------------------
-#  momTA                     Momentum
-#  macdTA                    MACD
-#  cdsTA                     MACD Signal Line
-#  cdoTA                     MACD Oscillator
-#  vohlTA                    High/Low Volatility
-#  vorTA                     Volatility Ratio   
 
 
-test.oscillator =
+test.oscillatorIndicators =
 function()
 {
-    # Oscillator Indicators:
+    #  momTA                     Momentum
+    #  macdTA                    MACD
+    #  cdsTA                     MACD Signal Line
+    #  cdoTA                     MACD Oscillator
+    #  vohlTA                    High/Low Volatility
+    #  vorTA                     Volatility Ratio   
    
     # Data:
     # URL = "http://localhost/econophysics/R/data/organisations/YAHOO/data/MSFT.CSV"
@@ -230,19 +229,18 @@ function()
 
 
 # ------------------------------------------------------------------------------
-# stochasticTA              Stochastics %K/%D, fast/slow
-# fpkTA                     Fast Percent %K
-# fpdTA                     Fast Percent %D
-# spdTA                     Slow Percent %D
-# apdTA                     Averaged Percent %D
-# wprTA                     Williams Percent %R
-# rsiTA                     Relative Strength Index
 
 
-test.stochastics =
+test.stochasticsIndicators =
 function()
 {
-    # Stochastics Indicatords:
+    # stochasticTA              Stochastics %K/%D, fast/slow
+    # fpkTA                     Fast Percent %K
+    # fpdTA                     Fast Percent %D
+    # spdTA                     Slow Percent %D
+    # apdTA                     Averaged Percent %D
+    # wprTA                     Williams Percent %R
+    # rsiTA                     Relative Strength Index
     
     # Data:
     # URL = "http://localhost/econophysics/R/data/organisations/YAHOO/data/MSFT.CSV"
@@ -307,25 +305,24 @@ function()
 
 
 # ------------------------------------------------------------------------------
-# accelTA                   Acceleration
-# adiTA                     AD Indicator      
-# adoscillatorTA            AD Oscillator
-# bollingerTA               Bollinger Bands
-# chaikinoTA                Chaikin Oscillator
-# chaikinvTA                Chaikin Volatility
-# garmanklassTA             Garman-Klass Volatility
-# nviTA                     Negative Volume Index
-# obvTA                     On Balance Volume
-# pviTA                     Positive Volume Index
-# pvtrendTA                 Price-Volume Trend
-# williamsadTA              Williams AD
-# williamsrTA               Williams R%
 
 
-test.addons =
+test.moreIndicators =
 function()
 {
-    # More Trading Indicators:
+    # accelTA                   Acceleration
+    # adiTA                     AD Indicator      
+    # adoscillatorTA            AD Oscillator
+    # bollingerTA               Bollinger Bands
+    # chaikinoTA                Chaikin Oscillator
+    # chaikinvTA                Chaikin Volatility
+    # garmanklassTA             Garman-Klass Volatility
+    # nviTA                     Negative Volume Index
+    # obvTA                     On Balance Volume
+    # pviTA                     Positive Volume Index
+    # pvtrendTA                 Price-Volume Trend
+    # williamsadTA              Williams AD
+    # williamsrTA               Williams R%
     
     # Data:
     # URL = "http://localhost/econophysics/R/data/organisations/YAHOO/data/MSFT.CSV"
@@ -414,14 +411,14 @@ function()
 
 
 # ------------------------------------------------------------------------------
-# SMA                       Computes Simple Moving Average           
-# EWMA                      Computes Exponentially Weighted  Moving Average
 
 
-test.splusLike.MA =
+
+test.splusLikeIndicators =
 function()
 {    
-    # SPlus like Functions:
+    # SMA                       Computes Simple Moving Average           
+    # EWMA                      Computes Exponentially Weighted  Moving Average
     
     # Data:
     # URL = "http://localhost/econophysics/R/data/organisations/YAHOO/data/MSFT.CSV"
@@ -460,13 +457,13 @@ function()
 
 
 # ------------------------------------------------------------------------------
-# .dailyTA                  Computes an indicator for technical analysis
 
 
-test.dailyTA =
+test.dailyIndicatorFunction =
 function()
 {    
-    # Daily Indicators:
+    # .dailyTA                  Computes an indicator for technical analysis
+
     
     # Data:
     # URL = "http://localhost/econophysics/R/data/organisations/YAHOO/data/MSFT.CSV"
@@ -493,16 +490,15 @@ function()
 }
 
 
-# ------------------------------------------------------------------------------
-# .tradeSignals             Computes trade signals from trading positions
-# .tradeLengths             Computes trade length from trading signals
-# .hitRate                  Computes hit rates from returns and positions 
+# ------------------------------------------------------------------------------ 
     
 
-test.trading =
+test.tradingFunctions =
 function()
 {    
-    # Trading Tools:
+    # .tradeSignals             Computes trade signals from trading positions
+    # .tradeLengths             Computes trade length from trading signals
+    # .hitRate                  Computes hit rates from returns and positions
     
     NA
     

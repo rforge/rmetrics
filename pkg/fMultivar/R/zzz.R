@@ -25,7 +25,7 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2005, Diethelm Wuertz, GPL
+#   1999 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
 #   www.rmetrics.org
@@ -44,7 +44,7 @@ function(lib, pkg)
 {   # A function implemented by Diethelm Wuertz
     
     # Package:
-    cat("\nRmetrics, (C) 1999-2005, Diethelm Wuertz, GPL")
+    cat("\nRmetrics, (C) 1999-2007, Diethelm Wuertz, GPL")
     cat("\nfMultivariate: Multivariate Financial Markets Analysis\n")
 
     # Load dll:

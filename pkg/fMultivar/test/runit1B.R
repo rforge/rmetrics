@@ -16,7 +16,7 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2006, Diethelm Wuertz, GPL
+#   1999 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
 #   www.rmetrics.org
@@ -62,8 +62,8 @@ function()
 
 test.getReturns =
 function()
-{
-    
+{ 
+    # Data:
     URL = "http://www.itp.phys.ethz.ch/econophysics/R/data/organisations/YAHOO/data/MSFT.CSV"
     download.file(URL, "MSFT.CSV")
     X = readSeries("MSFT.CSV")
@@ -106,7 +106,7 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.Ratio =
+test.bechmarkRatios =
 function()
 {
     # Data:
