@@ -1,0 +1,283 @@
+
+# This library is free software; you can redistribute it and/or
+# modify it under the terms of the GNU Library General Public
+# License as published by the Free Software Foundation; either
+# version 2 of the License, or (at your option) any later version.
+#
+# This library is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
+# GNU Library General Public License for more details.
+#
+# You should have received a copy of the GNU Library General 
+# Public License along with this library; if not, write to the 
+# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+# MA  02111-1307  USA
+
+# Copyrights (C)
+# for this R-port: 
+#   1999 - 2004, Diethelm Wuertz, GPL
+#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
+#   info@rmetrics.org
+#   www.rmetrics.org
+# for the code accessed (or partly included) from other R-ports:
+#   see R's copyright and license files
+# for the code accessed (or partly included) from contributed R-ports
+# and other sources
+#   see Rmetrics's copyright file
+
+
+################################################################################
+# FUNCTION             EXPLORATIVE DATA ANALYSIS:
+#  emdPlot              Creates an empirical distribution plot
+#  qqparetoPlot         Creates exploratory QQ plot for EV analysis
+#  mePlot               Creates a sample mean excess function plot
+#   mxfPlot             Creates another view of a sample mean excess plot
+#   mrlPlot             Returns a mean residual life plot with confidence levels
+#  recordsPlot          Plots records development
+#   ssrecordsPlot       Plots records development of data subsamples
+#  msratioPlot          Plots ratio of maximums and sums
+#  sllnPlot             Verifies Kolmogorov's Strong Law of large numbers
+#  lilPlot              Verifies Hartman-Wintner's Law of the iterated logarithm
+#  xacfPlot             Plots autocorrelations of exceedences
+################################################################################
+
+
+
+test.aaa = 
+function()
+{
+    # Help File:
+    helpFile = function() { 
+        example(ExtremesData, ask = FALSE)
+        return() 
+    }
+    checkIdentical(
+        target = class(try(helpFile())),
+        current = "NULL")
+
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+# emdPlot              Creates an empirical distribution plot
+
+
+test.emd = 
+function()
+{
+    # Artificial Data Set:
+    x = rgpd(1000)
+    # Empirical distribution plot:
+    par(mfrow = c(2, 2), cex = 0.7)
+    emdPlot(x, plottype = "xy")
+    emdPlot(x, plottype = "x")
+    emdPlot(x, plottype = "y")
+    emdPlot(x, plottype = "")
+    
+    # Artificial Data Set:
+    x = rt(1000, df = 3) 
+    # Empirical distribution plot:
+    par(mfrow = c(2, 2), cex = 0.7)
+    emdPlot(x, plottype = "xy")
+    emdPlot(x, plottype = "x")
+    emdPlot(x, plottype = "y")
+    emdPlot(x, plottype = "")
+    
+    # Artificial Data Set:
+    x = rnorm(1000) 
+    # Empirical distribution plot:
+    par(mfrow = c(2, 2), cex = 0.7)
+    emdPlot(x, plottype = "xy")
+    emdPlot(x, plottype = "x")
+    emdPlot(x, plottype = "y")
+    emdPlot(x, plottype = "")
+      
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+# qqparetoPlot         Creates exploratory QQ plot for EV analysis
+
+
+test.qqpareto = 
+function()
+{
+    # Artificial Data Set - 
+    r0 = rgpd(n = 1000, xi = 0)
+    r1 = rgpd(n = 1000, xi = 1)
+    
+    # Empirical Distribution Plot:
+    par(mfrow = c(2, 2), cex = 0.7)
+    qqparetoPlot(x = r0, xi = 0)
+    qqparetoPlot(x = r1, xi = 1)
+    qqnormPlot(x = r0)
+    qqnormPlot(x = r1)
+    
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+# mePlot              Creates a sample mean excess function plot
+# mxfPlot             Creates another view of a sample mean excess plot
+# mrlPlot             Returns a mean residual life plot with confidence levels
+
+
+test.me = 
+function()
+{
+    # Artificial Data Set - 
+    r = rgpd(n = 1000)
+    
+    # Mean Excess Function Plot:
+    par(mfrow = c(2, 2), cex = 0.7)
+    mePlot(x = r)
+    mxfPlot(x = r)
+    mrlPlot(x = r)
+    
+    # Labels:
+    par(mfrow = c(2, 2), cex = 0.7)
+    mePlot(x = r, labels = FALSE)
+    mxfPlot(x = r, labels = FALSE)
+    mrlPlot(x = r, labels = FALSE)
+      
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+#  recordsPlot          Plots records development
+#  ssrecordsPlot        Plots records development of data subsamples
+
+
+test.records = 
+function()
+{
+    # Artificial Data Set - 
+    set.seed(1985)
+    r = rgpd(n = 1000)
+    
+    # Records Plot:
+    par(mfrow = c(2, 2), cex = 0.7)
+    recordsPlot(x = r)
+    recordsPlot(x = r, ci = 0.99)
+    recordsPlot(x = r, labels = FALSE)
+    
+    # Subrecords Plot:
+    set.seed(1985)
+    r = rgpd(n = 10000)
+    par(mfrow = c(2, 2), cex = 0.7)
+    recordsPlot(r)
+    ssrecordsPlot(r, subsamples = 1)
+    ssrecordsPlot(r, subsamples = 1, plottype = "log")
+    ssrecordsPlot(r, subsamples = 1, plottype = "lin")
+    
+    # Subrecords Plot:
+    set.seed(1985)
+    r = rgpd(n = 10000)
+    par(mfrow = c(2, 2), cex = 0.7)
+    ssrecordsPlot(r, subsamples = 10)
+    ssrecordsPlot(r, subsamples = 50)
+    ssrecordsPlot(r, subsamples = 10, plottype = "log")
+    ssrecordsPlot(r, subsamples = 50, plottype = "log", labels = FALSE)
+   
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+# msratioPlot          Plots ratio of maximums and sums
+
+
+test.msratio = 
+function()
+{
+    # Artificial Data Set - 
+    set.seed(1953)
+    r = rgpd(n = 1000)
+    
+    # Mean Excess Function Plot:
+    par(mfrow = c(2, 2), cex = 0.7)
+    msratioPlot(x = r, p = 1:4)
+    msratioPlot(x = r, p = 1:4, labels = FALSE)
+      
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+# sllnPlot             Verifies Kolmogorov's Strong Law of large numbers
+# lilPlot              Verifies Hartman-Wintner's Law of the iterated logarithm
+
+
+test.laws = 
+function()
+{
+    # Artificial Data Set - 
+    set.seed(1953)
+    r = rgpd(n = 1000)
+    
+    # Mean Excess Function Plot:
+    par(mfrow = c(2, 2), cex = 0.7)
+    sllnPlot(x = r)
+    lilPlot(x = r)
+    sllnPlot(x = r, labels = FALSE)
+    lilPlot(x = r, labels = FALSE)
+      
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+# xacfPlot             Plots autocorrelations of exceedences
+
+
+test.xacf = 
+function()
+{
+    # Artificial Data Set - 
+    set.seed(1953)
+    r = rgpd(n = 1000)
+    
+    # ACF of Exceedances Plot:
+    par(mfrow = c(2, 2), cex = 0.7)
+    xacfPlot(x = r)
+    
+    # ACF of Exceedances Plot:
+    par(mfrow = c(2, 2), cex = 0.7)
+    xacfPlot(x = r, labels = FALSE)
+    
+    # ACF of Exceedances Plot:
+    par(mfrow = c(2, 2), cex = 0.7)
+    xacfPlot(x = r, labels = FALSE, which = 1); title(main = "1")
+    xacfPlot(x = r, labels = FALSE, which = 1); title(main = "2")
+    xacfPlot(x = r, labels = FALSE, which = 1); title(main = "3")
+    xacfPlot(x = r, labels = FALSE, which = 1); title(main = "4")
+      
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+if (FALSE) {
+    require(RUnit)
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fCalendar/test/runit2A.R")
+    printTextProtocol(testResult)
+}
+
+
+################################################################################
+
