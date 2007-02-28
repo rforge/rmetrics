@@ -103,7 +103,6 @@ function()
 
 
 # ------------------------------------------------------------------------------
-# Utility Functions:
 
 
 test.utilityFunctions = 
@@ -131,10 +130,9 @@ function()
 
 
 # ------------------------------------------------------------------------------
-# Generator Function Phi:
 
 
-test.generatorFunction = 
+test.generatorFunctionPhi = 
 function()
 {
     # Arguments ?
@@ -176,10 +174,9 @@ function()
 
 
 # ------------------------------------------------------------------------------
-# K Density Function:
 
 
-test.densityFunction = 
+test.densityFunctionK = 
 function()
 {
     # Arguments ?
@@ -197,7 +194,6 @@ function()
 
 
 # ------------------------------------------------------------------------------
-# Dependence Measures:
  
     
 test.dependenceMeasures = 
@@ -249,7 +245,6 @@ function()
     
 
 # ------------------------------------------------------------------------------
-# Tail Coefficient:
  
     
 test.tailCoefficient = 
@@ -266,10 +261,9 @@ function()
 
 
 # ------------------------------------------------------------------------------  
-# Copula Random Variates:
  
     
-test.rCopula = 
+test.rCopulae = 
 function()
 {
     # Random Variates - Check all Types:
@@ -288,10 +282,9 @@ function()
 
 
 # ------------------------------------------------------------------------------  
-# Copula Probability:
     
 
-test.pCopula = 
+test.pCopulae = 
 function()
 {
     # u - single input value:
@@ -336,10 +329,9 @@ function()
 
 
 # ------------------------------------------------------------------------------  
-# Copula Density:
     
 
-test.dCopula = 
+test.dCopulae = 
 function()
 {
     # u - single input value:
@@ -385,10 +377,9 @@ function()
 
 
 # ------------------------------------------------------------------------------  
-# Parameter Fitting:
     
 
-test.dCopula = 
+test.parameterFitting = 
 function()
 {
 

@@ -81,10 +81,9 @@ function()
 
 
 # ------------------------------------------------------------------------------
-# EXTREME VALUE COPULAE PARAMETERS:
 
 
-test. = 
+test.evCopulae = 
 function()
 {
     # No. 1 - 5
@@ -101,7 +100,6 @@ function()
 
     
 # ------------------------------------------------------------------------------
-# EXTREME VALUE COPULAE DEPENDENCE FUNCTION:
 
 
 test.dependenceMeasures = 
@@ -117,12 +115,25 @@ function()
 
     
 # ------------------------------------------------------------------------------
-# KENDALL'S TAU AND SPEARMAN'S RHO:
 
 
-test. = 
+test.kendallsTau = 
 function()
 {
+    NA
+    
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.spearmansRho = 
+function()
+{
+    NA
     
     # Return Value:
     return()    
@@ -130,10 +141,9 @@ function()
 
    
 # ------------------------------------------------------------------------------
-# EXTREME VALUE COPULAE RANDOM VARIATES:
     
 
-test. = 
+test.rCopulae = 
 function()
 {
     
@@ -143,10 +153,9 @@ function()
 
        
 # ------------------------------------------------------------------------------
-# EXTREME VALUE COPULAE PROBABILITY:
 
 
-test. = 
+test.pCopulae = 
 function()
 {        
     # u - single input value:
@@ -180,9 +189,9 @@ function()
 
    
 # ------------------------------------------------------------------------------
-# EXTREME VALUE COPULA DENSITY:
 
-test. = 
+
+test.dCopulae = 
 function()
 {
     devSlider() # type = "persp" 
@@ -194,10 +203,9 @@ function()
 
    
 # ------------------------------------------------------------------------------
-# EXTREME VALUE COPULA PARAMETER FITTING:
 
     
-test. = 
+test.parameterFitting = 
 function()
 {
     

@@ -96,7 +96,6 @@ function()
 
 
 # ------------------------------------------------------------------------------
-# Utility Functions:
 
 
 test.utilityFunctions = 
@@ -125,10 +124,9 @@ function()
 
 
 # ------------------------------------------------------------------------------
-# Generator Function:
 
 
-test.generatorFunction = 
+test.generatorFunctions = 
 function()
 {
     # Arguments ?
@@ -164,7 +162,6 @@ function()
 
 
 # ------------------------------------------------------------------------------
-# Dependence Measures:
 
 
 test.dependenceMeasures = 
@@ -186,7 +183,6 @@ function()
 
 
 # ------------------------------------------------------------------------------
-# Tail Coefficient:
 
 
 test.tailCoefficient = 
@@ -216,10 +212,9 @@ function()
 
 
 # ------------------------------------------------------------------------------
-# Copulae - Random Variates
 
 
-test.rCopula = 
+test.rCopulae = 
 function()
 {
 
@@ -253,10 +248,9 @@ function()
 
 
 # ------------------------------------------------------------------------------
-# Copulae - Probability
 
 
-test.pCopula = 
+test.pCopulae = 
 function()
 {
        
@@ -286,10 +280,9 @@ function()
 
 
 # ------------------------------------------------------------------------------
-# Copulae - Density
 
 
-test.dCopula = 
+test.dCopulae = 
 function()
 {  
     # Arguments ?
@@ -311,13 +304,13 @@ function()
     
     # Try Contour Slider:
     # dellipticalSlider("contour")
+    
     # Return Value:
     return()    
 }
 
 
 # ------------------------------------------------------------------------------
-# Copulae - Simulation and Fitting
 
 
 test.copulaSimFit = 
@@ -380,25 +373,33 @@ function()
         print(c(rho, nu, fit$par))
     }
     
+    # Return Value:
+    return()
+    
     
 
 ################################################################################
-# g
 
+
+test.parameterSettings = 
+function()
+{
     # Elliptical Parameter Settings:
     for ( type in 
         c("norm", "cauchy", "t", "logistic", "laplace", "kotz",  "epower") ) {
         print(unlist(.ellipticalParam(type)))
         cat("\n")
     }
-    
-    
+      
     # Elliptical Parameter Range:
     for ( type in 
         c("norm", "cauchy", "t", "logistic", "laplace", "kotz",  "epower") ) {
         print(unlist(.ellipticalRange(type)))
         cat("\n")
     }
+    
+    # Return Value:
+    return()
     
     
 # ------------------------------------------------------------------------------
