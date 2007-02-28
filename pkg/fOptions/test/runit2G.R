@@ -28,9 +28,6 @@
 
 
 ################################################################################
-
-
-################################################################################
 # FUNCTION:                     DESCRIPTION:
 #  Currency Translated Options:
 #   FEInDomesticFXOption          FX In Domestic Currency

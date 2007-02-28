@@ -28,9 +28,6 @@
 
 
 ################################################################################
-
-
-################################################################################
 # FUNCTION:             DESCRIPTION:                      
 #  runif.pseudo           Uniform Pseudo Random number sequence
 #  rnorm.pseudo           Normal Pseudo Random number sequence

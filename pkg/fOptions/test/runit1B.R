@@ -28,9 +28,6 @@
 
 
 ################################################################################
-
-
-################################################################################
 # FUNCTION:                  DESCRIPTION:
 #  RollGeskeWhaleyOption      Roll-Geske-Whaley Calls on Dividend Paying Stocks
 #  BAWAmericanApproxOption    Barone-Adesi and Whaley Approximation

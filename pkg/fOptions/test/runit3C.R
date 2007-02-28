@@ -28,9 +28,6 @@
 
 
 ################################################################################
-
-
-################################################################################
 # FUNCTION:       KUMMER DESCRIPTION:               
 #  kummerM         Computes Confluent Hypergeometric Function of the 1st Kind
 #  kummerU         Computes Confluent Hypergeometric Function of the 2nd Kind

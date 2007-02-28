@@ -28,9 +28,6 @@
 
 
 ################################################################################
-
-
-################################################################################
 # FUNCTION:                  DESCRIPTION:
 #  BesselI                    Modified Bessel Function of first kind
 #  BesselK                    Modified Bessel Function of third kind

@@ -28,9 +28,6 @@
 
 
 ################################################################################
-
-
-################################################################################
 # FUNCTION:           DESCRIPTION:
 #  HNGOption           Computes Option Price from the HN-GARCH Formula
 #  HNGGreeks           Calculates one of the Greeks of the HN-GARCH Formula

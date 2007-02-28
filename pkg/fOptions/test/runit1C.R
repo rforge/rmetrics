@@ -28,9 +28,6 @@
 
 
 ################################################################################
-
-
-################################################################################
 # FUNCTION:                 DESCRIPTION:
 #  CRRBinomialTreeOption     Cox-Ross-Rubinstein Binomial Tree Option Model
 #  JRBinomialTreeOption      JR Modfication to the Binomial Tree Option

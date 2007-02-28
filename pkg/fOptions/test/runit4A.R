@@ -28,9 +28,6 @@
 
 
 ################################################################################
-
-
-################################################################################
 # FUNCTION:             DESCRIPTION:
 #  hngarchSim            Simulates an HN-GARCH(1,1) Time Series Process
 #  hngarchFit            Fits a HN-GARCH model by Gaussian Maximum Likelihood

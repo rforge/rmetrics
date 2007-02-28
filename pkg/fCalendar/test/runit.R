@@ -31,13 +31,20 @@
 
 
 if (FALSE) {
+    
+    # Settings:
     require(fCalendar)
     require(RUnit)
-    testIndex = c("2A", "3A", "3B", "3C", "3E", "4A", "4B", "4C",
-        "4D", "5A", "5B", "6A")
-    # testIndex = c(testIndex, "Demo")
+    testIndex = c(
+        "2A", 
+        "3A", "3B", "3C", "3E", 
+        "4A", "4B", "4C", "4D", 
+        "5A", "5B", 
+        "6A")
     File = "C:/Rmetrics/SVN/trunk/fCalendar/test/runit"
-    Protocol = "runitCalendar.txt"
+    Protocol = "runitfCalendar.txt"
+    
+    # Perform and Save all Unit Tests:
     write("fCalendar:", file = Protocol)
     for (Index in testIndex) {
         file = paste(File, Index, ".R", sep = "")
@@ -48,8 +55,10 @@ if (FALSE) {
             file = Protocol, append = TRUE)
     } 
      
+    # Show Protocol:
     TXT = scan(Protocol, character(), blank.lines.skip = FALSE, sep = "\n")
     cat(TXT, sep = "\n")
+    
 }
 
 

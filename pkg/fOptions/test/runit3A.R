@@ -28,9 +28,6 @@
 
 
 ################################################################################
-
-
-################################################################################
 # FUNCTION:           EBM DENSITY APPROXIMATIONS:
 #  dlognorm            log-Normal density an derivatives
 #  plognorm            log-Normal, synonyme for plnorm

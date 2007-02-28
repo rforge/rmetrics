@@ -16,7 +16,7 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2006, Diethelm Wuertz, GPL
+#   1999 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
 #   www.rmetrics.org
@@ -31,13 +31,17 @@
 
 
 if (FALSE) {
+    
+    # Settings:
     require(fBasics)
     require(RUnit)
-    testIndex = c("1A", "2A", "2B", "2D", "3A", "3B", "4A", "5A", "5B", "5C")
-    # testIndex = c(testIndex, "Demo")
+    testIndex = c(
+        "1A", "2A", "2B", "2D", "3A", "3B", "4A", "5A", "5B", "5C")
     File = "C:/Rmetrics/SVN/trunk/fBasics/test/runit"
-    Protocol = "runitBasics.txt"
-    write("fCalendar:", file = Protocol)
+    Protocol = "runitfBasics.txt"
+    
+    # Perform and Save all Unit Tests:
+    write("fBasics:", file = Protocol)
     for (Index in testIndex) {
         file = paste(File, Index, ".R", sep = "")
         write("", file = Protocol, append = TRUE)
@@ -47,8 +51,10 @@ if (FALSE) {
             file = Protocol, append = TRUE)
     } 
      
+    # Show Protocol:
     TXT = scan(Protocol, character(), blank.lines.skip = FALSE, sep = "\n")
     cat(TXT, sep = "\n")
+    
 }
 
 

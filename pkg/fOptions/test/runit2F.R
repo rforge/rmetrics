@@ -28,9 +28,6 @@
 
 
 ################################################################################
-
-
-################################################################################
 # FUNCTION:                         DESCRIPTION:
 # Asian Options:
 #  GeometricAverageRateOption        Geometric Average Rate Option

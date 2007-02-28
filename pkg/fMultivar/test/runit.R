@@ -31,10 +31,18 @@
 
 
 if (FALSE) {
+    
+    # Settings:
+    require(fMultivar)
     require(RUnit)
-    testIndex = c("1A", "1B", "1C", "2A", "2B", "2C", "7A", "7B")
+    testIndex = c( 
+        "1A", "1B", "1C", 
+        "2A", "2B", "2C",  
+        "7A", "7B")
     File = "C:/Rmetrics/SVN/trunk/fMultivar/test/runit"
-    Protocol = "runitMultivar.txt"
+    Protocol = "runitfMultivar.txt"
+    
+    # Perform and Save all Unit Tests:
     write("fMultivar:", file = Protocol)
     for (Index in testIndex) {
         file = paste(File, Index, ".R", sep = "")
@@ -45,8 +53,10 @@ if (FALSE) {
             file = Protocol, append = TRUE)
     } 
      
+    # Show Protocol:
     TXT = scan(Protocol, character(), blank.lines.skip = FALSE, sep = "\n")
     cat(TXT, sep = "\n")
+    
 }
 
 

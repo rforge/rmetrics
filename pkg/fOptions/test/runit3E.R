@@ -28,9 +28,6 @@
 
 
 ################################################################################
-
-
-################################################################################
 # MOMENT MATCHING:                   DESCRIPTION:
 #  MomentMatchedAsianOption           Valuate moment matched option prices
 #  .LevyTurnbullWakemanAsianOption     Log-Normal Approximation
