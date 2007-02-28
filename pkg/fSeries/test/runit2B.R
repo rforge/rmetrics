@@ -28,11 +28,6 @@
 
 
 ################################################################################
-# FUNCTION:                TEST SUITE:
-#  urTest                   Unit Root Test Suite
-# FUNCTION:                ADF TESTS:
-#  adfTest                  Augmented Dickey - Fuller Unit Root Test
-#  unitrootTest             ADF Unit Root Test using McKinnons Test Statistics
 # FUNCTION:                URCA [PFAGFF] UNIT ROOT TESTS:
 #  urdfTest                 Augmented Dickey-Fuller test for unit roots
 #  urersTest                Elliott-Rothenberg-Stock test for unit roots
@@ -43,7 +38,7 @@
 ################################################################################
 
 
-.urcaBuiltin()
+require(urca)
 
 
 pvalue = 

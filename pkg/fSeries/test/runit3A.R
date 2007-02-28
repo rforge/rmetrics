@@ -28,24 +28,13 @@
 
 
 ################################################################################
-# PART I: 
-# FUNCTIONS:          FRACTIONAL BROWNIAN MOTION:
+# FUNCTION:           FRACTIONAL BROWNIAN MOTION:
 #  fbmSim              Generates fractional Brownian motion
 #  fgnSim              Generates fractional Gaussian noise
 #  farimaSim           Generates FARIMA time series process
-################################################################################
-
-
-################################################################################
-# PART II: Reimplemented functions from Beran's SPlus Scripts
-# FUNCTIONS:          DESCRIPTION:
+# FUNCTION :          FROM BERAN'S SPLUS SCRIPTS:
 #  whittleFit          Whittle estimator
-################################################################################
-
-
-################################################################################
-# PART III: Reimplemented functions from Taqqu M.S, Teverovsky V, Willinger W.
-# FUNCTIONS:          HURST EXPONENT:
+# FUNCTION:           HURST EXPONENT A LA TAQQU ET AL:
 #  fHURST              S4 Class Representation
 #   print.fHURST        S3 Print Method
 #   plot.fHURST         S3 Plot Method
@@ -59,19 +48,9 @@
 #  boxperFit           3.8 Boxed (modified) peridogram method
 #  whittleFit          3.9 Whittle estimator -> PART II
 #  hurstSlider         Hurst Slider [1-7]
-################################################################################
-
-
-################################################################################
-# PART IV: Wavelet Estimator
-# FUNCTIONS:          DESCRIPTION:
+# FUNCTIONS:          WAVELET ESTIMATOR:
 #  waveletFit          Wavelet Estimator
-################################################################################
-
-
-################################################################################
-# PART V: Statistical Tests and Slider
-# FUNCTIONS:          DESCRIPTION:
+# FUNCTIONS:          STATISTICAL TESTS:
 #  .beranTest          Not yet ready for usage ...
 #  .rsTest             Not yet ready for usage ...
 #  .vsTest             Not yet ready for usage ...
