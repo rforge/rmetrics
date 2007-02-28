@@ -54,17 +54,19 @@ function()
 
 
 # ------------------------------------------------------------------------------
-# blockMaxima       Returns block maxima from a time series
 
 
 test.blockMaxima = 
 function()
 {
+    # blockMaxima       Returns block maxima from a time series
+    
     # blockMaxima(x, block = c("monthly", "quarterly"), doplot = FALSE)
     
     # Time Series Data:
     x = as.timeSeries(data(msft.dat))[, "Close"]
     x.ret = 100*returnSeries(x)
+    head(x.ret)
     class(x.ret)
     
     # Monthly BlockMaxima:
@@ -89,17 +91,19 @@ function()
 
 
 # ------------------------------------------------------------------------------
-# findThreshold     Upper threshold for a given number of extremes 
 
 
 test.findThreshold = 
 function()
 {
+    # findThreshold     Upper threshold for a given number of extremes 
+    
     # findThreshold(x, n = floor(0.05*length(as.vector(x))), doplot = FALSE) 
     
     # Time Series Data:
     x = as.timeSeries(data(msft.dat))[, "Close"]
     x.ret = 100*returnSeries(x) 
+    head(x.ret)
     class(x.ret)
     
     # Find 99% Threshold:
@@ -121,17 +125,19 @@ function()
 
 
 # ------------------------------------------------------------------------------
-# pointProcess      Returns peaks over a threshold from a time series
 
 
 test.pointProcess = 
 function()
 {
+    # pointProcess      Returns peaks over a threshold from a time series
+    
     # pointProcess(x, u = quantile(x, 0.95), doplot = FALSE)  
     
     # Time Series Data:
     x = as.timeSeries(data(msft.dat))[, "Close"]
-    x.ret = 100*returnSeries(x) 
+    x.ret = 100*returnSeries(x)
+    head(x.ret) 
     class(x.ret)
     
     # Plot Series:
@@ -151,17 +157,19 @@ function()
 
 
 # ------------------------------------------------------------------------------
-# deCluster         Declusters a point process
 
 
 test.deCluster = 
 function()
 {
+    # deCluster         Declusters a point process
+    
     # deCluster(x, run = 20, doplot = TRUE)  
     
     # Time Series Data:
     x = as.timeSeries(data(msft.dat))[, "Close"]
     x.ret = 100*returnSeries(x) 
+    head(x.ret)
     class(x.ret)
     
     # Decluster Time Series:
@@ -178,7 +186,7 @@ function()
 
 if (FALSE) {
     require(RUnit)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fCalendar/test/runit1B.R")
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fExtremes/test/runit1B.R")
     printTextProtocol(testResult)
 }
 

@@ -156,7 +156,7 @@ function()
 
 if (FALSE) {
     require(RUnit)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fCalendar/test/runit5A.R")
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fExtremes/test/runit5A.R")
     printTextProtocol(testResult)
 }
 

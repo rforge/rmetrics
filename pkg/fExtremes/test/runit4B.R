@@ -93,7 +93,7 @@ function()
 
 if (FALSE) {
     require(RUnit)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fCalendar/test/runit2A.R")
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fExtremes/test/runit4B.R")
     printTextProtocol(testResult)
 }
 

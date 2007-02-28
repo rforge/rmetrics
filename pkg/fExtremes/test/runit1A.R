@@ -62,12 +62,13 @@ function()
 
 
 # ------------------------------------------------------------------------------
-# emdPlot              Creates an empirical distribution plot
 
 
 test.emd = 
 function()
 {
+    # emdPlot              Creates an empirical distribution plot
+    
     # Artificial Data Set:
     x = rgpd(1000)
     # Empirical distribution plot:
@@ -101,12 +102,13 @@ function()
 
 
 # ------------------------------------------------------------------------------
-# qqparetoPlot         Creates exploratory QQ plot for EV analysis
 
 
 test.qqpareto = 
 function()
 {
+    # qqparetoPlot         Creates exploratory QQ plot for EV analysis
+
     # Artificial Data Set - 
     r0 = rgpd(n = 1000, xi = 0)
     r1 = rgpd(n = 1000, xi = 1)
@@ -124,14 +126,15 @@ function()
 
 
 # ------------------------------------------------------------------------------
-# mePlot              Creates a sample mean excess function plot
-# mxfPlot             Creates another view of a sample mean excess plot
-# mrlPlot             Returns a mean residual life plot with confidence levels
 
 
 test.me = 
 function()
 {
+    # mePlot              Creates a sample mean excess function plot
+    # mxfPlot             Creates another view of a sample mean excess plot
+    # mrlPlot             Returns a mean residual life plot with confidence levels
+    
     # Artificial Data Set - 
     r = rgpd(n = 1000)
     
@@ -153,13 +156,14 @@ function()
 
 
 # ------------------------------------------------------------------------------
-#  recordsPlot          Plots records development
-#  ssrecordsPlot        Plots records development of data subsamples
 
 
 test.records = 
 function()
 {
+    #  recordsPlot          Plots records development
+    #  ssrecordsPlot        Plots records development of data subsamples
+
     # Artificial Data Set - 
     set.seed(1985)
     r = rgpd(n = 1000)
@@ -194,12 +198,13 @@ function()
 
 
 # ------------------------------------------------------------------------------
-# msratioPlot          Plots ratio of maximums and sums
 
 
 test.msratio = 
 function()
 {
+    # msratioPlot          Plots ratio of maximums and sums
+    
     # Artificial Data Set - 
     set.seed(1953)
     r = rgpd(n = 1000)
@@ -215,13 +220,14 @@ function()
 
 
 # ------------------------------------------------------------------------------
-# sllnPlot             Verifies Kolmogorov's Strong Law of large numbers
-# lilPlot              Verifies Hartman-Wintner's Law of the iterated logarithm
 
 
 test.laws = 
 function()
 {
+    # sllnPlot             Verifies Kolmogorov's Strong Law of large numbers
+    # lilPlot              Verifies Hartman-Wintner's Law of the iterated logarithm
+
     # Artificial Data Set - 
     set.seed(1953)
     r = rgpd(n = 1000)
@@ -239,12 +245,13 @@ function()
 
 
 # ------------------------------------------------------------------------------
-# xacfPlot             Plots autocorrelations of exceedences
 
 
 test.xacf = 
 function()
 {
+    # xacfPlot             Plots autocorrelations of exceedences
+    
     # Artificial Data Set - 
     set.seed(1953)
     r = rgpd(n = 1000)
@@ -274,7 +281,7 @@ function()
 
 if (FALSE) {
     require(RUnit)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fCalendar/test/runit2A.R")
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fExtremes/test/runit1A.R")
     printTextProtocol(testResult)
 }
 
