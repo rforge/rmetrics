@@ -680,12 +680,10 @@ function(u, t = 1)
     # FUNCTION:
     
     # Calculate Density:
-    result = rep(0, length = length(u))
+    result = rep(0, times = length(u))
     for (i in 1:length(u) ) {
         result[i] = integrate(.gxtuEBM, lower = 0, upper = 100, 
-            subdivisions = 100, rel.tol = .Machine$double.eps^0.25,
             t = t, u = u[i])$value 
-        # print(c(u[i], result[i]))
     }
         
     # Return Value:
@@ -707,12 +705,14 @@ function(u, t = 1)
     # FUNCTION:
     
     # Calculate Probability:
-    result = rep(0, length=length(u))
-    result[1] = integrate(fx, lower = 0, upper = u[1], t = t)$value
+    result = rep(0, times = length(u))
+    result[1] = integrate(dEBM, lower = 0, upper = u[1], t = t)$value
     if (length(u) > 1) {
         for (i in 2:length(u) ) {
-            result[i] = result[i-1] + 
-                integrate(dEBM, lower = u[i-1], upper = u[i], t = t)$value } }
+            result[i] = result[i-1] + integrate(
+                dEBM, lower = u[i-1], upper = u[i], t = t)$value 
+        } 
+    }
         
     # Return Value:
     result
@@ -786,6 +786,7 @@ function(x, t, u)
     fx
 }
 
+
 # ------------------------------------------------------------------------------
 
 
@@ -803,7 +804,14 @@ function(u, t = 1)
     alpha = log ( 8*u*exp(-2*t) )
     beta = exp (  -((log(alpha/(4*t)))^2)/(8*t)  )
     f = sqrt(t) * exp(t/2) * exp(-alpha^2/(8*t)) * beta
-    f = f / ( u * sqrt(u) * alpha * gamma (alpha /(4*t)) )
+    
+    # Take care of gamma function ...
+    warn = options()$warn
+    options(warn = -1)  
+    # f = f / (u * sqrt(u) * alpha * gamma(alpha/(4 * t)))
+    f = f / (u * sqrt(u) * (4*t) * gamma(alpha/(4 * t)+1))
+    f[is.na(f)] = 0
+    options(warn = warn)  
     
     # Return Value:
     f

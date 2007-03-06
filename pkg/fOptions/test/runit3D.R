@@ -60,13 +60,14 @@ function()
 
 
 # ------------------------------------------------------------------------------
-# BesselI                    Modified Bessel Function of first kind
-# BesselK                    Modified Bessel Function of third kind
 
 
 test.Bessel = 
 function()
 {
+    # BesselI                    Modified Bessel Function of first kind
+    # BesselK                    Modified Bessel Function of third kind
+
     # Modified Bessel Functions I and K, Abramowitz-Stegun, Chapter 9.6, p. 374
     
     # Abramowitz-Stegun, Figure 9.7, p. 374
@@ -148,13 +149,14 @@ function()
 
 
 # ------------------------------------------------------------------------------
-# BesselDI                   Derivative of BesselI
-# BesselDK                   Derivative of BesselK
 
 
 test.BesselD = 
 function()
 {
+    # BesselDI                   Derivative of BesselI
+    # BesselDK                   Derivative of BesselK
+
     # Check:
     # I0'(x) = I1(x)
     x = c(0.01, 0.1, 0.2, 0.5, 1, 2, 5, 10, 20, 50)

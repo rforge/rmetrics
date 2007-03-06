@@ -114,18 +114,18 @@ NULL, description = NULL, ...)
     omega = model$omega
     alpha = model$alpha
     beta = model$beta
-    gamma = model$gamma
+    gam = model$gamma
      
     # Continue:
     params = c(lambda = lambda, omega = omega, alpha = alpha,
-        beta = beta, gamma = gamma, rf = rfr)
+        beta = beta, gamma = gam, rf = rfr)
     
     # Transform Parameters and Calculate Start Parameters:
     par.omega = -log((1-omega)/omega)  # for 2
     par.alpha = -log((1-alpha)/alpha)  # for 3
     par.beta = -log((1-beta)/beta)     # for 4
     par.start = c(lambda, par.omega, par.alpha, par.beta)
-    if (!symmetric) par.start = c(par.start, gamma)
+    if (!symmetric) par.start = c(par.start, gam)
     
     # Initial Log Likelihood:
     opt = list()
@@ -133,7 +133,7 @@ NULL, description = NULL, ...)
         trace = trace, symmetric = symmetric, x = x)
     opt$estimate = par.start
     if (trace) {
-        print(c(lambda, omega, alpha, beta, gamma))
+        print(c(lambda, omega, alpha, beta, gam))
         print(opt$value)
     }
      
@@ -159,18 +159,19 @@ NULL, description = NULL, ...)
     alpha = opt$estimate[3] = (1/(1+exp(-opt$estimate[3])))
     beta = opt$estimate[4] = (1/(1+exp(-opt$estimate[4])))
     if (symmetric) opt$estimate[5] = 0
-    gamma = opt$estimate[5] 
+    gam = opt$estimate[5] 
     names(opt$estimate) = c("lambda", "omega", "alpha", "beta", "gamma")
     
     # Add to Output:
     opt$model = list(lambda = lambda, omega = omega, alpha = alpha,
-        beta = beta, gamma = gamma, rf = rfr)
+        beta = beta, gamma = gam, rf = rfr)
+    opt$x = x
     opt$h = h
     opt$residuals = Z
     opt$call = match.call()
     
     # Statistics - Printing:
-    opt$persistence = beta + alpha*gamma*gamma
+    opt$persistence = beta + alpha*gam*gam
     opt$sigma2 = ( omega + alpha ) / ( 1 - opt$persistence )
     
     # Print Estimated Parameters:
@@ -179,10 +180,9 @@ NULL, description = NULL, ...)
     # Add title and description:
     if (is.null(title)) 
         title = "Heston-Nandi Garch Parameter Estimation"
-    if (is.null(description)) 
-        description = .description()
-        
     opt$title = title
+    if (is.null(description)) 
+        description = .description()     
     opt$description = description
                 
     # Return Value:
@@ -207,13 +207,13 @@ function(par, trace, symmetric, x)
     beta = 1/(1+exp(-par[4]))
     
     # Add gamma if selected:
-    if (!symmetric) gamma = par[5]    
+    if (!symmetric) gam = par[5] else gam = 0
       
     # HN Garch Filter:
-    h[1] = ( omega + alpha )/( 1 - alpha*gamma*gamma - beta)
+    h[1] = ( omega + alpha )/( 1 - alpha*gam*gam - beta)
     Z[1] = ( x[1] - rfr - lambda*h[1] ) / sqrt(h[1])
     for ( i in 2:length(Z) ) {
-        h[i] = omega + alpha * ( Z[i-1] - gamma * sqrt(h[i-1]) )^2 +
+        h[i] = omega + alpha * ( Z[i-1] - gam * sqrt(h[i-1]) )^2 +
             beta * h[i-1]
         Z[i] = ( x[i] - rfr - lambda*h[i] ) / sqrt(h[i])  
     }     
@@ -222,7 +222,7 @@ function(par, trace, symmetric, x)
     llhHNGarch = -sum(log( dnorm(Z)/sqrt(h) ))
     if (trace > 0) {
         cat("Parameter Estimate\n")
-        print(c(lambda, omega, alpha, beta, gamma)) 
+        print(c(lambda, omega, alpha, beta, gam)) 
     }
     
     Z <<- Z
@@ -337,19 +337,19 @@ function(object, ...)
     cat(object$sigma2, "\n")
         
     # Create Graphs:
-    plot(x, type = "l", xlab = "Days", ylab = "log-Returns", 
-        main="Log-Returns", ...)
+    plot(x = object$x, type = "l", xlab = "Days", ylab = "log-Returns", 
+        main = "Log-Returns", ...)
     plot(sqrt(object$h), type = "l", xlab = "Days", ylab = "sqrt(h)", 
         main = "Conditional Standard Deviations", ...)
     plot(object$residuals, type = "l", xlab = "Days", ylab = "Z", 
-        main = "Innovations", ...)
+        main = "Residuals", ...)
     
     # Return Value:
     invisible()
 }
 
 
-# ******************************************************************************
+################################################################################
 
 
 hngarchStats =  
@@ -496,7 +496,7 @@ function(model)
     
     # Return Value:             
     list(mean = uc.mean, variance = uc.variance, skewness = uc.skewness, 
-    kurtosis = uc.kurtosis, persistence = persistence, leverage = leverage,
+        kurtosis = uc.kurtosis, persistence = persistence, leverage = leverage,
         meansigma2 = meansigma2, meansigma4 = meansigma4, meansigma6 = 
         meansigma6, meansigma8 = meansigma8)
 }

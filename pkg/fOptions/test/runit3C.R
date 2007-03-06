@@ -130,9 +130,8 @@ function()
     grid()
     for (a in seq(-4, 0, by = 0.5))
         lines(x = x, y = kummerM(x, a, 0.5), type = "l")
-    abline(h = 0, lty = 3, col = "red"
+    abline(h = 0, lty = 3, col = "red")
     
-
     # Return Value:
     return()    
 }

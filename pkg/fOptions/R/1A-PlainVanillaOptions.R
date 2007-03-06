@@ -41,7 +41,6 @@
 #  GBSGreeks                  Computes one of the Greeks of the GBS formula
 # FUNCTION:                  DESCRIPTION:
 #  Black76Option              Computes Prices of Options on Futures
-# FUNCTION:                  DESCRIPTION:
 #  MiltersenSchwartzOption    Pricing a Miltersen Schwartz Option
 # S3 METHODS:                DESCRIPTION:
 #  print.option               Print Method
@@ -555,11 +554,11 @@ function(object, ...)
 }
 
 
-# ******************************************************************************
+################################################################################
 
 
-print.fOPTION = 
-function(x, ...)
+show.fOPTION = 
+function(object)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -568,8 +567,7 @@ function(x, ...)
     # FUNCTION:
     
     # Print Method:
-    object = x
-    Parameter = unlist(x@parameters)
+    Parameter = unlist(object@parameters)
     Names = names(Parameter)
     Parameter = cbind(as.character(Parameter))
     rownames(Parameter) = paste("", Names)
@@ -577,10 +575,10 @@ function(x, ...)
     
     # Title:
     cat("\nTitle:\n ")
-    cat(x@title, "\n")
+    cat(object@title, "\n")
     
     # Call:
-    cat("\nCall:", paste("", deparse(x@call)), "", sep = "\n")
+    cat("\nCall:", paste("", deparse(object@call)), "", sep = "\n")
     
     # Parameters:
     cat("Parameters:\n")
@@ -588,15 +586,21 @@ function(x, ...)
     
     # Price:
     cat("\nOption Price:\n ")
-    cat(x@price, "\n")
+    cat(object@price, "\n")
     
     # Description:
     cat("\nDescription:\n ")
-    cat(x@description, "\n\n")  
+    cat(object@description, "\n\n")  
     
     # Return Value:
     invisible()
 }
+
+
+# ------------------------------------------------------------------------------
+
+
+setMethod("show", "fOPTION", show.fOPTION)
 
 
 # ------------------------------------------------------------------------------

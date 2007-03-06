@@ -64,23 +64,23 @@ function()
     # Symmetric Model - Parameters:
     model = list(lambda = 4, omega = 8e-5, alpha = 6e-5, 
         beta = 0.7, gamma = 0, rf = 0)
-    ts = hngarchSim(model = model, n = 500, n.start = 100)
+    x = hngarchSim(model = model, n = 500, n.start = 100)
     par(mfrow = c(2, 1), cex = 0.75)
-    ts.plot(ts, col = "steelblue", main = "HN Garch Symmetric Model")
+    plot(x, type = "l", col = "steelblue", main = "HN Garch Symmetric Model")
     grid()
     
     # Estimate Parameters:
     # HN-GARCH log likelihood Parameter Estimation:
     # To speed up, we start with the simulated model ...
-    mle = hngarchFit(model = model, x = ts, trace = TRUE, symmetric = TRUE)
-    mle
+    mle = hngarchFit(x = x, model = model, trace = TRUE, symmetric = TRUE)
+    print(mle)
     
-    mle = hngarchFit(model = model, x = ts, trace = TRUE, symmetric = FALSE)
-    mle
+    mle = hngarchFit(x = ts, model = model, trace = TRUE, symmetric = FALSE)
+    print(mle)
            
     # HN-GARCH Diagnostic Analysis:
     par(mfrow = c(3, 1), cex = 0.75)
-    summary(mle)    
+    summary(mle, col = "steelblue")                                             
     
     # HN-GARCH Moments:
     hngarchStats(mle$model)    

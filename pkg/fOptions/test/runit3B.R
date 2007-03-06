@@ -190,8 +190,8 @@ function()
     x = pi
     Re ( (x^a/a) * kummerM(-x, a, 1+a) )
     Re ( (x^a*exp(-x)/a) * kummerM(x, 1, 1+a) )
-    pgamma(x,a) * gamma(a)
-    igamma(x, a)                                        # CHECK!
+    pgamma(x, a) * gamma(a)
+    igamma(x, a)                                         
     
     # Return Value:
     return()
@@ -258,7 +258,7 @@ function()
 # ------------------------------------------------------------------------------
 
    
-    if (FALSE) {
+if (FALSE) {
     require(RUnit)
     testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fOptions/test/runit3B.R")
     printTextProtocol(testResult)

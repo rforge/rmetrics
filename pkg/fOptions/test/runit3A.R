@@ -76,13 +76,14 @@ function()
 
 
 # ------------------------------------------------------------------------------
-# dlognorm            log-Normal density an derivatives
-# plognorm            log-Normal, synonyme for plnorm
 
 
 test.lognorm = 
 function()
 {
+    # dlognorm            log-Normal density an derivatives
+    # plognorm            log-Normal, synonyme for plnorm
+
     # Calculate Log-Normal Density and its Derivatives:
     x = exp(seq(-2.8, 1.2, length = 100))
     y0 = dlognorm(x, deriv = 0)
@@ -106,18 +107,28 @@ function()
    
 
 # ------------------------------------------------------------------------------
-#  dgam                Gamma density, synonyme for dgamma
-#  pgam                Gamma probability, synonyme for pgamma
+
+
+test.gam =
+function()
+{
+    #  dgam                Gamma density, synonyme for dgamma
+    #  pgam                Gamma probability, synonyme for pgamma
+
+    # Return Value:
+    return()    
+}
 
 
 # ------------------------------------------------------------------------------
-# drgam               Reciprocal-Gamma density
-# prgam               Reciprocal-Gamma probability
 
 
 test.rgam = 
 function()
 {    
+    # drgam               Reciprocal-Gamma density
+    # prgam               Reciprocal-Gamma probability
+
     # Calculate Reciprocal-Gamma Density and its Derivaties:
     alpha = 2; beta = 1
     x = exp(seq(-2.8, 1.2, length = 100))
@@ -142,13 +153,14 @@ function()
 
 
 # ------------------------------------------------------------------------------
-# djohnson            Johnson Type I density
-# pjohnson            Johnson Type I probability
 
 
 test.johnson = 
 function()
 {        
+    # djohnson            Johnson Type I density
+    # pjohnson            Johnson Type I probability
+
     # Calculate Johnson-Type-I Density and its Derivaties:
     a = 0.3; b = 1.2; c = -0.2; d = 0.8
     x = exp(seq(-2.8, 1.2, length = 100))
@@ -173,16 +185,17 @@ function()
 
 
 # ------------------------------------------------------------------------------
-# mnorm               Moments of Normal density
-# mlognorm            Moments of log-Normal density
-# mrgam               Moments of reciprocal-Gamma density
-# masian              Moments of Asian Option density
-# .DufresneMoments     Internal Function used by masian()
 
 
 test.moments = 
 function()
 {  
+    # mnorm               Moments of Normal density
+    # mlognorm            Moments of log-Normal density
+    # mrgam               Moments of reciprocal-Gamma density
+    # masian              Moments of Asian Option density
+    # .DufresneMoments     Internal Function used by masian()
+
     # mnorm(mean = 0, sd = 1)
     mnorm()
     
@@ -208,14 +221,15 @@ function()
 
     
 # ------------------------------------------------------------------------------
-# d2EBM               Double Integrated EBM density
-# .thetaEBM            Internal Function used to compute *2EBM()
-# .psiEBM              Internal Function used to compute *2EBM()
 
 
 test.d2EBM = 
 function()
 {  
+    # d2EBM               Double Integrated EBM density
+    # .thetaEBM            Internal Function used to compute *2EBM()
+    # .psiEBM              Internal Function used to compute *2EBM()
+
     #  d2EBM(u, t = 1) 
     x = c(0.1, 0.5, 1, 2)
     
@@ -236,31 +250,34 @@ function()
 
 
 # ------------------------------------------------------------------------------
-#  dEBM                Exponential Brownian motion density
-#  pEBM                Exponential Brownian motion probability              
-#  .gxuEBM              Internal Function used to compute *EBM()
-#  .gxtEBM              Internal Function used to compute *EBM()
-#  .gxtuEBM             Internal Function used to compute *EBM()
 
 
 test.dEBM = 
 function()
 {  
-    #  dEBM(u, t = 1) 
-    x = c(seq(-1, 5, length = 61), seq(0, 1, length = 51))
-    x = unique(sort(x))
+    #  dEBM                Exponential Brownian motion density
+    #  pEBM                Exponential Brownian motion probability              
+    #  .gxuEBM              Internal Function used to compute *EBM()
+    #  .gxtEBM              Internal Function used to compute *EBM()
+    #  .gxtuEBM             Internal Function used to compute *EBM()
     
     # Density:
+    x = c(
+        seq(-1.0, 0.0, length = 5), 
+        seq( 0.0, 0.5, length = 20), 
+        seq( 0.5, 5.0, length = 20))
+    x = unique(sort(x))
     d = dEBM(u = x)
     print(d)
     par(mfrow = c(1,1))
     plot(x, y = d, type = "b", pch = 19, cex = 0.7)
     
     # Probability:
-    p = pEBM(u = x)                         # CHECK!
+    x = c(-1, -0.5, 0, 0.1, 0.2, 0.5, 0.75, seq(1, 5, by = 0.5))
+    p = pEBM(u = x)                          
     print(p)
-    
-                                            
+    par(mfrow = c(1,1))
+    plot(x, y = p, type = "b", pch = 19, cex = 0.7)
     
     # Return Value:
     return()    
@@ -268,18 +285,23 @@ function()
 
 
 # ------------------------------------------------------------------------------
-#  dasymEBM            Exponential Brownian motion asymptotic density
 
 
 test.dasymEBM = 
 function()
 {  
-    #  dEBM(u, t = 1) 
-    x = seq(1, 5, length = 41) 
-    
+    #  dasymEBM            Exponential Brownian motion asymptotic density
+     
     # Density:
+    x = c(
+        seq(0.50, 1.10, length = 21),
+        seq(1.10, 1.40, length = 21),
+        seq(1.40, 5.00, length = 31))
     d = dasymEBM(u = x)
     print(d)
+    par(mfrow = c(1,1))
+    plot(x, y = d, type = "b", pch = 19, cex = 0.7)
+    abline(h =0, lty = 3, col = "grey")
     
     # Return Value:
     return()    
@@ -297,4 +319,3 @@ if (FALSE) {
 
 
 ################################################################################
-
