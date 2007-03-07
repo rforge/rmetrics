@@ -195,19 +195,6 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.knn =
-function()
-{
-    NA
-    
-    # Return Value:
-    return()    
-}
-
-
-# ------------------------------------------------------------------------------
-
-
 if (FALSE) {
     require(RUnit)
     testResult = runTestFile("C:/Rmetrics/SVN/trunk/fMultivar/test/runit6B.R")

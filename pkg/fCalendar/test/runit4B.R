@@ -241,7 +241,7 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.subsettingTimeSeries = 
+test.subsetTimeSeries = 
 function()
 {
     # [.timeSeries         subsets of a 'timeSeries' object

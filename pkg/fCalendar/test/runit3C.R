@@ -66,7 +66,7 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.mathOps =
+test.timeDateMathOps =
 function()
 {
     #  Ops.timeDate           Group 'Ops' generic functions for 'timeDate' objects
@@ -131,7 +131,7 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.ordering =
+test.timeDateOrdering =
 function()
 {
     #  c.timeDate             Concatenates 'timeDate' objects

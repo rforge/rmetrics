@@ -60,7 +60,7 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.positions = 
+test.seriesPositions = 
 function()
 {
     # Generate nivariate daily random sequence
@@ -90,7 +90,7 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.timeDateOrdering = 
+test.timeSeriesOrdering = 
 function()
 {
     #  sample.timeSeries    Resamples a 'timeSeries' object in time

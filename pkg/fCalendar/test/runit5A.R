@@ -70,6 +70,7 @@ function()
 test.holidays =
 function()
 {
+    # Holidays:
     holidays = as.vector(.holidayList()[,1])
     for (holiday in holidays) {
         Holiday = match.fun(holiday)

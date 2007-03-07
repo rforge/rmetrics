@@ -101,7 +101,7 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.timeDate.midnightStandard = 
+test.midnightStandard = 
 function()
 {   
     # Midnight Standard - Short Form:
@@ -148,23 +148,6 @@ function()
     print(MS)
     checkIdentical(MS, "2001-01-01 16:00:00")
      
-    # Midnight Standard - Continued:
-    .midnightStandard("2006-01-01 24:00:00", format = "%Y-%m-%d %H:%M:%S")
-    print(MS)
-    checkIdentical(MS, "2001-01-01 16:00:00")
-    .midnightStandard("2006-01-01", format = "%Y-%m-%d")
-    print(MS)
-    checkIdentical(MS, "2001-01-01 16:00:00")
-    .midnightStandard("20060101240000", format = "%Y%m%d%H%M%S")
-    print(MS)
-    checkIdentical(MS, "2001-01-01 16:00:00")
-    .midnightStandard("20060101", format = "%Y%m%d")
-    print(MS)
-    checkIdentical(MS, "2001-01-01 16:00:00")
-    .midnightStandard("1/1/2006", format = "%m/%d/%Y")
-    print(MS)
-    checkIdentical(MS, "2001-01-01 16:00:00")
-    
     # Return Value:
     return()    
 }
@@ -173,7 +156,7 @@ function()
 # ------------------------------------------------------------------------------
  
   
-test.timeDate.whichFormat = 
+test.whichFormat = 
 function()
 {
     # Which Format:
@@ -350,7 +333,7 @@ function()
 # ------------------------------------------------------------------------------
 
     
-test.timeDate.POSIX = 
+test.POSIX = 
 function()
 {  
     # POSIX:
@@ -443,8 +426,7 @@ function()
     
 test.asDate = 
 function()
-{   
-        
+{         
     # as.Date() Function: 
     X = as.Date(ISOdate(year = 2006, month = 1:12, day = 1, hour = 10))
     GMT = as.timeDate(X, zone = "GMT", FinCenter = "GMT")[c(6, 12)]

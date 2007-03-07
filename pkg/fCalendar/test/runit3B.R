@@ -65,7 +65,7 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.subsetTests = 
+test.timeDateSubsets = 
 function()
 {   
     #  isWeekday              Tests if a date is a weekday or not
@@ -142,7 +142,7 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.subsetExtracts = 
+test.extractSubsets = 
 function()
 {   
     #  [.timeDate             Extracts or replaces subsets from 'timeDate' objects

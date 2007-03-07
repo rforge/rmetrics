@@ -60,6 +60,21 @@ function()
 # ------------------------------------------------------------------------------
 
 
+test.zurich = 
+function()
+{
+    # DST Rules for Zurich:
+    head(Zurich())
+    tail(Zurich())
+
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
 if (FALSE) {
     require(RUnit)
     testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fCalendar/test/runit2A.R")

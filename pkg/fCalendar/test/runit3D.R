@@ -60,7 +60,7 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.specDates =
+test.specialDates =
 function()
 {
     #  timeLastDayInMonth     Computes the last day in a given month and year

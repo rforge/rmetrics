@@ -173,7 +173,7 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.classification = 
+test.classifyTimeSeries = 
 function()
 {    
     #  seriesData       Extracts data slot from 'timeSeries' object
