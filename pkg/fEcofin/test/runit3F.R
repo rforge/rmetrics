@@ -57,6 +57,20 @@ function()
 
 # ------------------------------------------------------------------------------
 
+
+test.heavisideSlider = 
+function()
+{
+    # Slider:
+    .heavisideSlider()
+        
+    # Return Value:
+    return() 
+}
+
+
+# ------------------------------------------------------------------------------
+
     
 if (FALSE) {
     require(RUnit)

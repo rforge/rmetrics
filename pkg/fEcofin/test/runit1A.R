@@ -81,7 +81,7 @@ function()
     head(sp500dge)
     
     # Plot:
-    plot(sp500dge[,1], type = "l", col = "steelblue")
+    plot(sp500dge[, 1], type = "l", col = "steelblue")
     grid()
     
     # Return Value:

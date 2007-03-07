@@ -69,8 +69,7 @@ function()
  
     # Add Control:
     ans = q
-    attr(ans, "control") <-
-        c(table = "ansari")
+    attr(ans, "control") <- c(table = "ansari")
         
     # Return Value:
     ans

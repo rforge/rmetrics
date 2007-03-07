@@ -64,10 +64,10 @@ function()
     #  set.lcgseed          Sets initial random seed
     #  get.lcgseed          Gets the current valus of the random seed
     
-    # set.lcgseed(seed = 4711)
+    # Set initial random seed - set.lcgseed(seed = 4711)
     set.lcgseed()
     
-    # get.lcgseed()
+    # Get the current valus of the random seed - get.lcgseed()
     get.lcgseed()
     
     # Return Value:

@@ -56,6 +56,21 @@ function()
 
 # ------------------------------------------------------------------------------
 
+
+test.ansariTable = 
+function()
+{
+    # Finite sample p values for the Dickey-Fuller test
+    # ... takes quite long time
+    # .ansariTable()
+        
+    # Return Value:
+    return() 
+}
+
+
+# ------------------------------------------------------------------------------
+
     
 if (FALSE) {
     require(RUnit)

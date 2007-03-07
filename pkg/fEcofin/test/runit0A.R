@@ -81,7 +81,7 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.plotFunctions = 
+test.internalPlotFunctions = 
 function()
 {
     #  .residualsPlot            Returns a residual series plot
@@ -97,7 +97,7 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.bivariatePlots = 
+test.bivariatePlotFunctions = 
 function()
 {
     #  .responsesPlot            Returns a response series plot
@@ -111,7 +111,7 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.threeDimPlots = 
+test.threeDimPlotUtilities = 
 function()
 {
     #  .circlesPlot              Returns a circles plot indexing 3rd variable
@@ -119,6 +119,22 @@ function()
     #  .contourPlot              Returns a contour plot in 2 dimensions
     #  .histStack                Returns a stacked histogram plot
     
+    # Circles Plot:
+    .circlesPlot(x = rnorm(50), y = rnorm(50), size = abs(rnorm(50)))
+    title(main = "Circles Plot")
+    
+    # Internal Perspective Plot with "Nice" Default Settings:
+    # .perspPlot(x, y, z, theta = -40, phi = 30, col = "steelblue", ps = 9, ...) 
+    x = y = seq(-10, 10, length= 30)
+    f = function(x,y) { r = sqrt(x^2+y^2); 10 * sin(r)/r } 
+    .perspPlot(x, y, z = outer(x, y, f))
+    
+    # Synonyme Contour Plot:
+    .contourPlot(x, y, z = outer(x, y, f))
+
+    # Stacked Histogram Plot:
+    .histStack(rnorm(1000, -1), rnorm(1000, 1))
+
     # Return Value:
     return() 
 }
@@ -131,6 +147,45 @@ test.sliderMenu =
 function()
 {
     #  .sliderMenu               Starts a slider menu   
+    
+    # Slider Function:
+    .normalSlider = 
+    function()
+    {   
+        # Internal Function:
+        refresh.code = function(...)
+        {
+            # Sliders:
+            mean = .sliderMenu(no = 1)
+            std  = .sliderMenu(no = 2)
+            
+            # Plot Data:      
+            xmin = round(qnorm(0.01, mean, std), digits = 2)
+            xmax = round(qnorm(0.99, mean, std), digits = 2)
+            x = seq(xmin, xmax, length = 100)
+            y = dnorm(x, mean, std)
+            main = paste("Normal Density\n", 
+                "mean = ", as.character(mean), " | mu = ", as.character(std))       
+            par(mfrow = c(1, 1))
+            
+            # Density:
+            plot(x, y, type = "l", xlim = c(xmin, xmax), col = "steelblue")
+            grid()
+            title(main = main)     
+        }
+      
+        # Open Slider Menu:
+        .sliderMenu(refresh.code,
+           names =       c( "mean",  "std"),
+           minima =      c(  -5.00,    0.1),
+           maxima =      c(   5.00,   10.0),
+           resolutions = c(   0.10,    0.1),
+           starts =      c(   0.00,    1.0))
+    }
+    
+    # Try:
+    .normalSlider()
+
     
     # Return Value:
     return() 
@@ -146,6 +201,20 @@ function()
     #  .description              Sets default description string
     #  .unirootNA                Computes zero without error exit
     #  .datax                    Loads timeSeries objects from demo files   
+    
+    # Description used by S4 Classes:
+    .description()
+    
+    # Compute zero:
+    # uniroot(sin, c(1,2))
+    #   Error in uniroot(sin, c(1, 2)) : 
+    #       f() values at end points not of opposite sign
+    # Now try:
+    .unirootNA(sin, c(1, 2)) 
+    # Try:
+    .unirootNA(sin, c(-1, 1))
+    
+    # datax
     
     # Return Value:
     return() 
@@ -163,6 +232,33 @@ function()
     #  .isISO8601                Checks if the date/time is ISO8601 formatted                                               
     #  .isPOSIX                  Checks for an object of class POSIX                                                        
     #  .by2seconds               Converts 'by' string into numeric value of seconds    
+    
+    # Transform formatted dates to julian day numbers - .fjulian()
+    require(date)
+    fdates = c("8/11/73", "08-11-73", "August 11 1973", "Aug11/73")
+    .fjulian(fdates) 
+    fdates = c("11/8/73", "11-08-73", "11 August 1973", "11Aug73")
+    .fjulian(fdates, order = 'dmy')
+    
+    # Implement SPlus like 'julian'  - .julian()
+    # .julian(m, d, y, origin = c(month = 1, day = 1, year = 1960))
+    .julian(1, 1, 1970)
+    
+    # Check if the date/time is ISO8601 formatted 
+    .isISO8601(c("2007-01-01", "2007-12-31" ))
+    .isISO8601(c("2007-01-01", "2007-12-31" ))[[1]]
+    .isISO8601("2007-Jan-01")[[1]]
+    .isISO8601("2007-01-01 15:00:000")[[1]]
+    
+    # Check for an object of class POSIX 
+    class(date())
+    .isPOSIX(date())
+    class(Sys.time())
+    .isPOSIX(Sys.time())
+    
+    # Convert 'by' string into numeric value of seconds 
+    .by2seconds("2 h")
+    .by2seconds("30 m")
     
     # Return Value:
     return() 

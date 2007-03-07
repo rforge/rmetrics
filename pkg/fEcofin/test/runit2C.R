@@ -98,8 +98,7 @@ function()
 test.gridVector = 
 function()
 {
-    # Grid Vector:
-    # gridVector(x, y)
+    # Grid Vector - gridVector(x, y)
     gridVector(1:3, 1:3)
     as.data.frame(gridVector(1:3, 1:3))
     as.matrix(as.data.frame(gridVector(1:3, 1:3)))

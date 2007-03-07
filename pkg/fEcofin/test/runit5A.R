@@ -32,9 +32,6 @@
 #  gridData            Generates a grid data set
 #  persp.gridData      Generates a perspective plot from a grid data object
 #  contour.gridData    Generates a contour plot from a grid data object
-# FUNCTION:           BIVARIATE INTERPOLATION:
-#  akimaInterp         Interpolates and Smoothes Irregularly Distributed Points
-#  krigeInterp         Kriges Irregularly Distributed Data Points
 ################################################################################
 
 
@@ -82,7 +79,7 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.interpolation = 
+test.gridDataPlot = 
 function()
 {
     #  gridData            Generates a grid data set
@@ -100,7 +97,7 @@ function()
     contour(ans)
     title(main = "Akima Interpolation") 
     
-    # Generate Akima interpolated Grid Data:
+    # Generate Kriged Grid Data:
     require(spatial)
     set.seed(1953)
     x = runif(999)-0.5

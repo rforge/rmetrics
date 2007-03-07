@@ -57,10 +57,7 @@ function(x, a = 0)
     #   Heaviside Unit Step Function and Related Functions
     #   See:  http://mathworld.wolfram.com/HeavisideStepFunction.html
     #   Note: sign(x) is part of R's base package
-    
-    # Changes:
-    #
-    
+       
     # FUNCTION:
     
     # Compute H:
@@ -88,10 +85,7 @@ function(x, a = 0)
     # Details:
     #   The Sign function is 1 for x>a, 0 for x=a,
     #   and -1 for x<a.
-    
-    # Changes:
-    #
-    
+     
     # FUNCTION:
     
     # Compute Sign:
@@ -118,10 +112,7 @@ function(x, a = 0)
     
     # Details:
     #   The delta function is defined as: delta(x) = d/dx Heaviside(x-a)
-    
-    # Changes:
-    #
-    
+
     # FUNCTION:
     
     # Compute delta:
@@ -149,10 +140,7 @@ function(x, a = 0.5)
     # Details:
     #   The boxcar function is defined as: 
     #       Pi(x) = Heaviside(x+a) - Heaviside(x-a)
-    
-    # Changes:
-    #
-    
+
     # FUNCTION:
     
     # Compute boxcar:
@@ -179,10 +167,7 @@ function(x, a = 0)
     
     # Details:
     #   The ramp function is defined as: R(x)= (x-a)*Heaviside(x-a)
-    
-    # Changes:
-    #
-    
+
     # FUNCTION:
     
     # Compute ramp:
@@ -202,10 +187,7 @@ function()
 
     # Description
     #   Displays Heaviside and related functions
-    
-    # Changes:
-    #
-    
+
     # FUNCTION:
     
     # Internal Function:

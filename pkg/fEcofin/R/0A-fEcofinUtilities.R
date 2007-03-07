@@ -343,12 +343,12 @@ function(x, y, size = 1, ...)
     #   third variable.
     
     # Example:
-    #   circlesPlot(x = rnorm(50), y = rnorm(50), size = abs(rnorm(50)))
+    #   .circlesPlot(x = rnorm(50), y = rnorm(50), size = abs(rnorm(50)))
  
     # FUNCTION:
     
     # Settings:
-    stopifnot(length(x) == length(x))
+    stopifnot(length(y) == length(x))
     if (length(size) != length(x))
     size = rep(size[1], times = length(x))
     
@@ -433,6 +433,9 @@ function(x, y = NULL, space = 0, ylab = "frequency", ...)
     
     # Description:
     #   Returns a stacked histogram Plot
+    
+    # Example:
+    #   .histStack(rnorm(1000, -1), rnorm(1000, 1))
     
     # FUNCTION:
     
@@ -801,6 +804,7 @@ function(fdates, origin = 19600101, order = 'mdy', cc = NULL, swap = 20)
     #   cc - Century, becoming obsolete with the introduction of swap.
     
     # Example:
+    #   require(date)
     #   fdates = c("8/11/73", "08-11-73", "August 11 1973", "Aug11/73")
     #   .fjulian(fdates) 
     #   fdates = c("11/8/73", "11-08-73", "11 August 1973", "11Aug73")
@@ -922,10 +926,10 @@ function(x)
     #   Checks if the date/time string is ISO8601 formatted
     
     # Example:
-    #   isISO8601(c("2007-01-01", "2007-12-31" ))
-    #   isISO8601(c("2007-01-01", "2007-12-31" ))[[1]]
-    #   isISO8601("2007-Jan-01")[[1]]
-    #   isISO8601("2007-01-01 15:00:000")[[1]]
+    #   .isISO8601(c("2007-01-01", "2007-12-31" ))
+    #   .isISO8601(c("2007-01-01", "2007-12-31" ))[[1]]
+    #   .isISO8601("2007-Jan-01")[[1]]
+    #   .isISO8601("2007-01-01 15:00:000")[[1]]
     
     # FUNCTION:
     

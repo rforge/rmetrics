@@ -30,7 +30,7 @@
 ################################################################################
 # FUNCTION:           JARQUE-BERA DATA TABLES:
 # .jbTable             Finite sample p values for the Jarque Bera test
-# .jbPlot              Plots probabilt
+# .jbPlot              Plots probability
 # .pjb                 Returns probabilities for the JB Test given quantiles
 # .qjb                 Returns quantiles for the ADF Test given probabilities               
 # DATA:               Description:
@@ -51,6 +51,47 @@ function()
         target = class(try(helpFile())),
         current = "NULL")
         
+    # Return Value:
+    return() 
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.jbTable = 
+function()
+{
+    # Jarque-Bera Table:
+    #   .jbTable(type = c("LM", "ALM"), size = c("mini", "small", "all")) 
+    table = .jbTable()
+    table
+    
+    # Perspective Plot:
+    #   .jbPlot(type = c("LM", "ALM"))
+    .jbPlot()
+        
+    # Return Value:
+    return() 
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.jbData = 
+function()
+{
+    # Jarque-Bera LM Data:
+    class(.jbLM)
+    class(.jbLM())
+    head(.jbLM())
+    
+    # Jarque-Bera ALM Data:
+    class(.jbALM)
+    class(.jbALM())
+    head(.jbALM())
+      
     # Return Value:
     return() 
 }

@@ -78,11 +78,14 @@ function()
     #  .hex.to.dec               Converts heximal numbers do decimal numbers
     #  .dec.to.hex               Converts decimal numbers do heximal numbers
     
+    # Change from one to another number system
     # .chcode(b, base.in = 2, base.out = 10, digits="0123456789ABCDEF")
  
+    # Convert heximal numbers do decimal numbers
     # .hex.to.dec(b)
     .hex.to.dec("AA")
 
+    # Convert decimal numbers do heximal numbers
     # .dec.to.hex(b)
     .dec.to.hex(170)
 
