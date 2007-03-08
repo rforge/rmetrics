@@ -61,6 +61,120 @@ function()
 
 # ------------------------------------------------------------------------------
 
+
+test.asymptoticUnitroot = 
+function()
+{
+    # n.sample = 0 | Inf
+    # trend = c("c", "nc", "ct", "ctt"), 
+    # statistic = c("t", "n")
+
+    # Asymptotic quantiles
+    tol = .Machine$double.eps^0.25
+    X = c(0.05, 0.10, 0.50, 0.90, 0.95)
+    
+    Q = qunitroot(X, trend = "c",   statistic = "t")
+    P = punitroot(Q,    trend = "c",   statistic = "t")
+    print(cbind(Q, P))
+    checkEqualsNumeric(target = X, current = P, tolerance = tol)
+    
+    Q = qunitroot(X, trend = "nc",  statistic = "t")
+    P = punitroot(Q,    trend = "nc",  statistic = "t")
+    print(cbind(Q, P))
+    checkEqualsNumeric(target = X, current = P, tolerance = tol)
+    
+    Q = qunitroot(X, trend = "ct",  statistic = "t")
+    P = punitroot(Q,    trend = "ct",  statistic = "t")
+    print(cbind(Q, P))
+    checkEqualsNumeric(target = X, current = P, tolerance = tol)
+    
+    Q = qunitroot(X, trend = "ctt", statistic = "t")
+    P = punitroot(Q,    trend = "ctt", statistic = "t")
+    print(cbind(Q, P))
+    checkEqualsNumeric(target = X, current = P, tolerance = tol) 
+    
+    Q = qunitroot(X, trend = "c",   statistic = "n")
+    P = punitroot(Q,    trend = "c",   statistic = "n")
+    print(cbind(Q, P))
+    checkEqualsNumeric(target = X, current = P, tolerance = tol)
+    
+    Q = qunitroot(X, trend = "nc",  statistic = "n")
+    P = punitroot(Q,    trend = "nc",  statistic = "n")
+    print(cbind(Q, P))
+    checkEqualsNumeric(target = X, current = P, tolerance = tol)
+    
+    Q = qunitroot(X, trend = "ct",  statistic = "n")
+    P = punitroot(Q,    trend = "ct",  statistic = "n")
+    print(cbind(Q, P))
+    checkEqualsNumeric(target = X, current = P, tolerance = tol)
+    
+    Q = qunitroot(X, trend = "ctt", statistic = "n")
+    P = punitroot(Q,    trend = "ctt", statistic = "n")   
+    print(cbind(Q, P))
+    checkEqualsNumeric(target = X, current = P, tolerance = tol)
+    
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.finiteSizeUnitroot = 
+function()
+{    
+    # Finite size quantiles - Sample Size = 100
+    tol = .Machine$double.eps^0.25
+    X = c(0.05, 0.10, 0.50, 0.90, 0.95)
+    
+    Q = qunitroot(X, 100, trend = "c",   statistic = "t")
+    P = punitroot(Q, 100, trend = "c",   statistic = "t")
+    print(cbind(Q, P))
+    checkEqualsNumeric(target = X, current = P, tolerance = tol)
+    
+    Q = qunitroot(X, 100, trend = "nc",  statistic = "t")
+    P = punitroot(Q, 100, trend = "nc",  statistic = "t")
+    print(cbind(Q, P))
+    checkEqualsNumeric(target = X, current = P, tolerance = tol)
+    
+    Q = qunitroot(X, 100, trend = "ct",  statistic = "t")
+    P = punitroot(Q, 100, trend = "ct",  statistic = "t")
+    print(cbind(Q, P))
+    checkEqualsNumeric(target = X, current = P, tolerance = tol)
+    
+    Q = qunitroot(X, 100, trend = "ctt", statistic = "t")
+    P = punitroot(Q, 100, trend = "ctt", statistic = "t")
+    print(cbind(Q, P))
+    checkEqualsNumeric(target = X, current = P, tolerance = tol)
+    
+    Q = qunitroot(X, 100, trend = "c",   statistic = "n")
+    P = punitroot(Q, 100, trend = "c",   statistic = "n")
+    print(cbind(Q, P))
+    checkEqualsNumeric(target = X, current = P, tolerance = tol)
+    
+    Q = qunitroot(X, 100, trend = "nc",  statistic = "n")
+    P = punitroot(Q, 100, trend = "nc",  statistic = "n")
+    print(cbind(Q, P))
+    checkEqualsNumeric(target = X, current = P, tolerance = tol)
+    
+    Q = qunitroot(X, 100, trend = "ct",  statistic = "n")
+    P = punitroot(Q, 100, trend = "ct",  statistic = "n")
+    print(cbind(Q, P))
+    checkEqualsNumeric(target = X, current = P, tolerance = tol) 
+    
+    Q = qunitroot(X, 100, trend = "ctt", statistic = "n")
+    P = punitroot(Q, 100, trend = "ctt", statistic = "n")
+    print(cbind(Q, P))
+    checkEqualsNumeric(target = X, current = P, tolerance = tol)
+
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
     
 if (FALSE) {
     require(RUnit)

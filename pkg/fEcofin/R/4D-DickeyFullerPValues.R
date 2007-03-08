@@ -171,7 +171,7 @@ function(trend = c("nc", "c", "ct"), statistic = c("t", "n"))
 
     # Plot:
     persp(ans, theta = 40, xlab = "N", ylab = "q", zlab = "p-Value",
-        main = paste(trend, "ADF"))
+        main = paste(trend, "|", statistic, "ADF"))
     
     # Return Value:
     invisible(NULL)
