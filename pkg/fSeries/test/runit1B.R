@@ -54,7 +54,7 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.armaTrueAcf = 
+test.armaTrueacf = 
 function()
 { 
     # armaTrueacf: Returns True ARMA autocorrelation function

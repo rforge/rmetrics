@@ -595,7 +595,7 @@ function()
     tail(residuals)          
     
     # Predict:
-    # predict(object)                      # not yet implemented
+    # predict(object)                     # not yet implemented
       
     # Return Value:
     return()    

@@ -98,36 +98,36 @@ function()
     print(x)
     target = round(mean(x), 2)
     print(target)
-    checkSum = +0.08
-    checkEqualsNumeric(target, checkSum)
+    current = +0.08
+    checkEquals(target, current)
     
     x = fbmSim(n = 50, method = "chol", seed = 4711)
     print(x)
     target = round(mean(x), 2)
     print(target)
-    checkSum = +0.31
-    checkEqualsNumeric(target, checkSum)
+    current = +0.31
+    checkEquals(target, current)
     
     x = fbmSim(n = 50, method = "lev",  seed = 4711)
     print(x)
     target = round(mean(x), 2)
     print(target)
-    checkSum = -0.01
-    checkEqualsNumeric(target, checkSum)
+    current = -0.01
+    checkEquals(target, current)
     
     x = fbmSim(n = 50, method = "circ", seed = 4711)
     print(x)
     target = round(mean(x), 2)
     print(target)
-    checkSum = +0.94
-    checkEqualsNumeric(target, checkSum)
+    current = +0.94
+    checkEquals(target, current)
     
     x = fbmSim(n = 50, method = "wave", seed = 4711)
     print(x)
     target = round(mean(x), 2)
     print(target)
-    checkSum = -0.32
-    checkEqualsNumeric(target, checkSum)
+    current = -0.32
+    checkEquals(target, current)
     
     # Return Value:
     return()    
@@ -157,36 +157,36 @@ function()
     print(x)
     target = round(var(x), 2)
     print(target)
-    checkSum = 0.01
-    checkEquals(target, checkSum)
+    current = 0.01
+    checkEquals(target, current)
     
     x = fbmSim(n = 50, method = "chol", seed = 4711, fgn = TRUE)
     print(x)
     target = round(var(x), 2)
     print(target)
-    checkSum = 0.0
-    checkEquals(target, checkSum)
+    current = 0.0
+    checkEquals(target, current)
     
     x = fbmSim(n = 50, method = "lev",  seed = 4711, fgn = TRUE)
     print(x)
     target = round(var(x), 2)
     print(target)
-    checkSum = 0.0
-    checkEquals(target, checkSum)
+    current = 0.0
+    checkEquals(target, current)
     
     x = fbmSim(n = 50, method = "circ", seed = 4711, fgn = TRUE)
     print(x)
     target = round(var(x), 2)
     print(target)
-    checkSum = +0.94
-    checkEquals(target, checkSum)
+    current = +0.94
+    checkEquals(target, current)
     
     x = fbmSim(n = 50, method = "wave", seed = 4711, fgn = TRUE)
     print(x)
     target = round(var(x), 2)
     print(target)
-    checkSum = 0.0
-    checkEquals(target, checkSum)
+    current = 0.0
+    checkEquals(target, current)
     
     # Return Value:
     return()       
@@ -211,22 +211,24 @@ function()
     #   ...) 
 
     # Frequency Method:
-    set.seed(4711)
+    set.seed(4711, kind = "Marsaglia-Multicarry")
     x = farimaSim(n = 50, method = "freq")
     print(x)
     target = round(var(x), 2)
     print(target)
-    checkSum = 1.11
-    checkEquals(target, current = checkSum)
+    current = 1.6
+    print(current)
+    checkEquals(target, current)
     
     # Time Methhod:
-    set.seed(4711)
+    set.seed(4711, kind = "Marsaglia-Multicarry")
     x = farimaSim(n = 50, method = "time")
     print(x)
     target = round(var(x), 2)
     print(target)
-    checkSum = 1.11
-    checkEquals(target, current = checkSum)
+    current = 1.6
+    print(current)
+    checkEquals(target, current)
     
     # Return Value:
     return()   
@@ -247,39 +249,39 @@ function()
 
     # Beran - Simulate:
     set.seed(1985)
-    x = fgnSim(n = 100, H = 0.7, method = "beran")
+    x = fgnSim(n = 1000, H = 0.7, method = "beran")
     
     # Fit:
     Hurst = whittleFit(x)@hurst$H
     print(Hurst)
     target = round(Hurst, 1)
     print(target)
-    checkValue = 0.7
-    checkEqualsNumeric(target, checkValue, tol = 0.2)
+    current = 0.7
+    checkEquals(target, current)
     
     # Durbin - Simulate:
     set.seed(1985)
-    x = fgnSim(n = 100, H = 0.7, method = "durbin")
+    x = fgnSim(n = 1000, H = 0.7, method = "durbin")
     
     # Fit:
     Hurst = whittleFit(x)@hurst$H
     print(Hurst)
     target = round(Hurst, 1)
     print(target)
-    checkValue = 0.7
-    checkEqualsNumeric(target, checkValue, tol = 0.2)
+    current = 0.7
+    checkEquals(target, current)
     
     # Paxson - Simulate:
     set.seed(1985)
-    x = fgnSim(n = 100, H = 0.7, method = "paxson")
+    x = fgnSim(n = 1000, H = 0.7, method = "paxson")
     
     # Fit:
     Hurst = whittleFit(x)@hurst$H
     print(Hurst)
     target = round(Hurst, 1)
     print(target)
-    checkValue = 0.7
-    checkEqualsNumeric(target, checkValue, tol = 0.2)
+    current = 0.7
+    checkEquals(target, current)
     
     # Return Value:
     return()   
@@ -306,59 +308,59 @@ function()
     
     # Simulate:
     set.seed(1953)
-    x = fbmSim(n = 1000, H = 0.7, method = "mvn", fgn = TRUE)
+    x = fbmSim(n = 500, H = 0.7, method = "circ", fgn = TRUE)
     
     Hurst = aggvarFit(x)@hurst$H
     print(Hurst)
     target = round(Hurst, 1)
     print(target)
-    checkValue = 0.7
-    checkEqualsNumeric(target, checkValue, tol = 0.2)
+    current = 0.6
+    checkEquals(target, current)
     
     Hurst = diffvarFit(x)@hurst$H
     print(Hurst)
     target = round(Hurst, 1)
     print(target)
-    checkValue = 0.7
-    checkEqualsNumeric(target, checkValue, tol = 0.2)
+    current = 0.9
+    checkEquals(target, current)
     
     Hurst = absvalFit(x)@hurst$H
     print(Hurst)
     target = round(Hurst, 1)
     print(target)
-    checkValue = 0.7
-    checkEqualsNumeric(target, checkValue, tol = 0.2)
+    current = 0.7
+    checkEquals(target, current)
     
     Hurst = higuchiFit(x)@hurst$H
     print(Hurst)
     target = round(Hurst, 1)
     print(target)
-    checkValue = 0.7
-    checkEqualsNumeric(target, checkValue, tol = 0.2)
+    current = 0.7
+    checkEquals(target, current)
     
     Hurst = pengFit(x)@hurst$H
     print(Hurst)
     target = round(Hurst, 1)
     print(target)
-    checkValue = 0.7
-    checkEqualsNumeric(target, checkValue, tol = 0.2)
+    current = 0.8
+    checkEquals(target, current)
     
     Hurst = rsFit(x)@hurst$H
     print(Hurst)
     target = round(Hurst, 1)
     print(target)
-    checkValue = 0.7
-    checkEqualsNumeric(target, checkValue, tol = 0.2)
+    current = 0.8
+    checkEquals(target, current)
     
     Hurst = perFit(x)@hurst$H
     print(Hurst)
     target = round(Hurst, 1)
     print(target)
-    checkValue = 0.7
-    checkEqualsNumeric(target, checkValue, tol = 0.2)
+    current = 0.8
+    checkEquals(target, current)
     
     # More Estimators:
-    
+    # ...
     
     # Return Value:
     return()   
@@ -377,15 +379,15 @@ function()
 
     # Simulate:
     set.seed(1953)
-    x = fbmSim(n = 1000, H = 0.7, method = "mvn", fgn = TRUE)
+    x = fbmSim(n = 1000, H = 0.7, method = "circ", fgn = TRUE)
     
     # Fit:
     Hurst = waveletFit(x)@hurst$H
     print(Hurst)
     target = round(Hurst, 1)
     print(target)
-    checkValue = 0.7
-    checkEquals(target, checkValue, tol = 0.2)
+    current = 0.7
+    checkEquals(target, current)
     
     # Return Value:
     return()   
@@ -397,7 +399,8 @@ function()
 
 if (FALSE) {
     require(RUnit)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fSeries/test/runit3A.R")
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fSeries/test/runit3A.R",
+        rngKind = "Marsaglia-Multicarry", rngNormalKind = "Inversion")
     printTextProtocol(testResult)
 }
    

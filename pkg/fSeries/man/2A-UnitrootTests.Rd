@@ -31,6 +31,7 @@
 \usage{
 unitrootTest(x, lags = 1, type = c("nc", "c", "ct"), title = NULL, 
     description = NULL)
+    
 adfTest(x, lags = 1, type = c("nc", "c", "ct"), title = NULL, 
     description = NULL)
 }

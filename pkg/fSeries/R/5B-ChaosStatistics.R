@@ -1,3 +1,4 @@
+
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 2, or (at your option)
@@ -24,8 +25,6 @@
 # for the code accessed (or partly included) from contributed R-ports
 # and other sources
 #   see Rmetrics's copyright file
-
-
 
 
 ################################################################################

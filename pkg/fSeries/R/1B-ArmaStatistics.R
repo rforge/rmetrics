@@ -16,7 +16,7 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2006, Diethelm Wuertz, GPL
+#   1999 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
 #   www.rmetrics.org
@@ -54,9 +54,6 @@ doplot = TRUE)
     # Notes:
     #   A synonyme for arma.tacf under R. See R's .First.lib.
     #   Implemented from ARMAacf
-    
-    # Changes:
-    #
     
     # FUNCTION:
     
@@ -108,9 +105,6 @@ function(coefficients, n.plot = 400, digits = 4, ...)
 
     # Description:
     #   Calculates the roots of a characteristc polynomial
-
-    # Changes:
-    #
     
     # FUNCTION:
     
@@ -175,10 +169,7 @@ function(x)
     # Arguments:
     #   x - a vector of autocovariances. The returned Toeplitz matrix is  
     #       the corresponding covariance matrix of the observatons.
-        
-    # Changes:
-    #
-    
+ 
     # FUNCTION:
     
     # Wraps:
@@ -193,9 +184,6 @@ function(x)
 function(model = list(ar = c(0.5, -0.5), ma = 0.1))
 {   # A function implemented by Diethelm Wuertz
 
-    # Changes:
-    #
-    
     # FUNCTION:
     
     # Wraps:
@@ -230,10 +218,7 @@ function(phi)
     
     # Author:
     #   Original Version from "iarma" R library: A.I. McLeod, July 1998
-    
-    # Changes:
-    #
-    
+
     # FUNCTION:
     
     # Case 1 - Return Value:
@@ -260,8 +245,7 @@ function(phi)
     if (dim(A)[1] == attr(chol(A, pivot = TRUE), "rank")) { 
         return(TRUE) 
     }
-    
-        
+          
     # Case 3 - Return Value:    
     return(FALSE)
 }
@@ -285,10 +269,7 @@ function(x)
     
     # Author:
     #   Original Version from "iarma" R library: A.I. McLeod, July 1998
-    
-    # Changes:
-    #
-    
+
     # FUNCTION:
     
     # Compute:
@@ -312,10 +293,7 @@ function(phi = numeric(0), theta = numeric(0))
     
     # Author:
     #   Original Version from "iarma" R library: A.I. McLeod, July 1998
-    
-    # Changes:
-    #
-    
+ 
     # FUNCTION:
     
     # Check:
@@ -378,10 +356,7 @@ function(phi = numeric(0), theta = numeric(0), maxlag = 128)
     
     # Author:
     #   Original Version from "iarma" R library: A.I. McLeod, July 1998
-    
-    # Changes:
-    #
-    
+
     # FUNCTION:
     
     # Internal Functions:
@@ -448,10 +423,7 @@ function(phi = numeric(0), theta = numeric(0), maxlag = 20)
     
     # Author:
     #   Original Version from "iarma" R library: A.I. McLeod, July 1998
-    
-    # Changes:
-    #
-    
+
     # FUNCTION:
     
     # Compute:
@@ -498,10 +470,7 @@ function(phi = numeric(0), theta = numeric(0), maxlag = 20)
     
     # Author:
     #   Original Version from "iarma" R library: A.I. McLeod, July 1998
-    
-    # Changes:
-    #
-    
+
     # FUNCTION:
     
     # Check:
@@ -589,10 +558,7 @@ function(phi, theta)
     
     # Author:
     #   Original Version from "iarma" R library: A.I. McLeod, July 1998
-    
-    # Changes:
-    #
-    
+
     # FUNCTION:
     
     # Compute:

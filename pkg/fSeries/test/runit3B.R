@@ -56,7 +56,7 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.trueACF = 
+test.fgnTrueacf = 
 function()
 {  
     # Try: 
@@ -68,8 +68,8 @@ function()
     print(ans)
     target = round(sum(ans), 2)
     print(target)
-    checkSum = 1.78
-    checkEquals(target, checkSum)
+    current = 1.78
+    checkEquals(target, current)
     
     # Return Value:
     return()   
@@ -79,40 +79,38 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.trueFFT = 
+test.fgnTruefft = 
 function()
 {  
     # FGN True FFT:
     ans = fgnTruefft(n = 1000, H = 0.7)[1:3]
     print(ans)
-    target = round(sum(ans), 2)
+    target = Re(round(sum(ans), 2))
     print(target)
-    checkSum = 1.78
-    checkEquals(target, checkSum)
+    current = 40.19
+    checkEquals(target, current)
     
     # Return Value:
     return()   
 }
 
 
-# ------------------------------------------------------------------------------
-
-
-test.timeMethod = 
-function()
-{      
-    # Time Method:
-    set.seed(4711)
-    x = farimaSim(n = 50, method = "time")
-    print(x)
+test.zzz = function()
+{
+    
+    set.seed(4711, kind = "Marsaglia-Multicarry")
+    x = rnorm(1000)
+    #print(x)
     target = round(var(x), 2)
     print(target)
-    checkSum = 1.11
-    checkEquals(target, checkSum)
+    current = 0.98
+    print(current)
+    checkEquals(target, current)
     
-    # Return Value:
-    return()   
-}   
+    
+    
+    return() 
+}
 
 
 # ------------------------------------------------------------------------------
@@ -120,7 +118,8 @@ function()
 
 if (FALSE) {
     require(RUnit)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fSeries/test/runit3B.R")
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fSeries/test/runit3B.R",
+        rngKind = "Marsaglia-Multicarry", rngNormalKind = "Inversion")
     printTextProtocol(testResult)
 }
    

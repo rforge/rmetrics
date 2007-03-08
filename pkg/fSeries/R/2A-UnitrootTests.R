@@ -31,7 +31,7 @@
 # FUNCTION:                ADF TESTS:
 #  unitrootTest             ADF unit root test using McKinnon's test statistics
 #  adfTest                  ADF unit root test using Banarjee's test statistics
-# FUNCTION:                TEST SUITE:
+# FUNCTION:                UNITROOT TEST SUITE:
 #  .urTest                  Unit Root Test Suite
 ################################################################################
 
