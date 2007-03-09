@@ -28,7 +28,7 @@
 
 
 ################################################################################
-# FUNCTION:                 DESCRIPTION - UTILITY FUNCTIONS:
+# FUNCTION:                 UTILITY FUNCTIONS:
 #  emaTA                     Exponential Moving Average
 #  biasTA                    EMA-Bias
 #  medpriceTA                Median Price                   
@@ -259,11 +259,13 @@ function()
     volume = X[, "Volume"]
 
     # Fast Stochstic:
+    # Note, returns a 2-colum series as output ...
     TA = stochasticTA(close, high, low, lag1 = 5, lag2 = 3, type = "fast") 
     dim(TA)
     head(TA, 10)
     
     # Slow Stochstic:
+    # Note, returns a 2-colum series as output ...
     TA = stochasticTA(close, high, low, lag1 = 5, lag2 = 3, lag3 = 5, 
         type = "slow") 
     dim(TA)
@@ -479,11 +481,10 @@ function()
     head(TA)
     
     # MACD - Daily TA:
-    TA = .dailyTA(X, "macd", select = "Close", lag1 = 12, lag2 = 26)
+    TA = .dailyTA(X, "macd", select = "Close", lag = c(lag1 = 12, lag2 = 26))
     head(TA)
     
-    # Does it work with numeric Facors ? - NO
-    # .dailyTA(rnorm(20), "ema", select = "Close", lag = 5)
+    # ...
     
     # Return Value:
     return()  
@@ -500,7 +501,25 @@ function()
     # .tradeLengths             Computes trade length from trading signals
     # .hitRate                  Computes hit rates from returns and positions
     
-    NA
+    # Positions:
+    long = +1
+    short = -1
+    neutral = 0
+    tradePositions = c(+1, +1, +1, -1, -1, +1, +1, -1, +1, +1, +1, -1)
+    tradeReturns = rnorm(12)
+    
+    # Compute Trade Signals:
+    Positions = timeSeries(tradePositions, timeCalendar(), units = "Position")
+    Positions
+    tradeSignals = .tradeSignals(Positions)
+    tradeSignals
+    
+    # Compute Trade Lengths:
+    tradeLengths = .tradeLengths(tradeSignals)
+    tradeLengths
+    
+    # Compute Hit Rates:
+    .hitRate(tradeReturns, tradePositions)
     
     # Return Value:
     return()  

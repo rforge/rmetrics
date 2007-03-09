@@ -28,7 +28,7 @@
 
 
 ################################################################################
-# FUNCTION:                 DESCRIPTION - UTILITY FUNCTIONS:
+# FUNCTION:                 UTILITY FUNCTIONS:
 #  emaTA                     Exponential Moving Average
 #  biasTA                    EMA-Bias
 #  medpriceTA                Median Price                   
@@ -715,7 +715,7 @@ function(close, high, low, lag = 50)
 }
 
 
-################################################################################
+# ------------------------------------------------------------------------------
 
 
 rsiTA = 
@@ -1473,8 +1473,8 @@ function(tradeSignals)
     # Get Lengths from Signals:
     stopifnot(is.timeSeries(tradeSignals))
     data = diff(seriesPositions(tradeSignals))
-    charvec = .tradeSignals@positions[-1]
-    tradeLengths = timeSeries(data, charvec)
+    charvec = tradeSignals@positions[-1]
+    tradeLengths = timeSeries(data, charvec, units = "tradeLengths")
     
     # Return Value:
     tradeLengths
@@ -1496,6 +1496,7 @@ function(Returns, Positions)
     # Compute hit rate:
     Indicator = (Positions * sign(Returns) + 1) / 2
     Rate = mean ( as.vector(Indicator), na.rm = TRUE )  
+    Rate = round(Rate, digits = 3)
     
     # Return Value:
     Rate

@@ -64,14 +64,22 @@ test.getReturns =
 function()
 { 
     # Data:
-    URL = "http://www.itp.phys.ethz.ch/econophysics/R/data/organisations/YAHOO/data/MSFT.CSV"
-    download.file(URL, "MSFT.CSV")
-    X = readSeries("MSFT.CSV")
-    print(X)    
+    # URL = "http://www.itp.phys.ethz.ch/econophysics/R/data/organisations/YAHOO/data/MSFT.CSV"
+    # download.file(URL, "MSFT.CSV")
+    # X = readSeries("MSFT.CSV")
+    # print(X)
     
+    # Alternatively from fEcofin:
+    X = as.timeSeries(data(msft.dat))
+    print(head(X))
+        
+    # Get Returns:
     R = getReturns(X)
     head(R)
-    print(R@units)
+    
+    # Get Returns:
+    R = getReturns(X, percentage = TRUE)
+    head(R)
     
     # Return Value:
     return()
@@ -85,15 +93,22 @@ test.maxDrawDown =
 function()
 {
     # Data:
-    URL = "http://www.itp.phys.ethz.ch/econophysics/R/data/organisations/YAHOO/data/MSFT.CSV"
-    download.file(URL, "MSFT.CSV")
-    X = readSeries("MSFT.CSV")
-    print(X)
+    # URL = "http://www.itp.phys.ethz.ch/econophysics/R/data/organisations/YAHOO/data/MSFT.CSV"
+    # download.file(URL, "MSFT.CSV")
+    # X = readSeries("MSFT.CSV")
+    # print(X)
     
+    # Alternatively from fEcofin:
+    X = as.timeSeries(data(msft.dat))
+    print(head(X))
+    
+    # Closing Prices:
     Close = as.timeSeries(X)[, "Close"]
     
+    # Maximum Draw Down:
     maxDrawDown(Close)  
     
+    # Plot:
     plot(Close, type = "l")
     abline(v = as.POSIXct("2000-11-09"), lty = 3, col = "red")
     abline(v = as.POSIXct("2000-12-20"), lty = 3, col = "red")
@@ -110,14 +125,19 @@ test.bechmarkRatios =
 function()
 {
     # Data:
-    URL = "http://www.itp.phys.ethz.ch/econophysics/R/data/organisations/YAHOO/data/MSFT.CSV"
-    download.file(URL, "MSFT.CSV")
-    X = readSeries("MSFT.CSV")
-    print(X)    
+    # URL = "http://www.itp.phys.ethz.ch/econophysics/R/data/organisations/YAHOO/data/MSFT.CSV"
+    # download.file(URL, "MSFT.CSV")
+    # X = readSeries("MSFT.CSV")
+    # print(X)   
+    
+    # Alternatively from fEcofin:
+    X = as.timeSeries(data(msft.dat))
+    print(head(X)) 
     
     # Get Returns:
     R = getReturns(X)
     
+    # Sharpe- and Sterling Ratios:
     sharpeRatio(R[, "Close"])
     sterlingRatio(R[, "Close"])
     
@@ -133,10 +153,14 @@ test.ohlcPlot =
 function()
 {
     # Data:
-    URL = "http://www.itp.phys.ethz.ch/econophysics/R/data/organisations/YAHOO/data/MSFT.CSV"
-    download.file(URL, "MSFT.CSV")
-    X = readSeries("MSFT.CSV")
-    print(X)
+    # URL = "http://www.itp.phys.ethz.ch/econophysics/R/data/organisations/YAHOO/data/MSFT.CSV"
+    # download.file(URL, "MSFT.CSV")
+    # X = readSeries("MSFT.CSV")
+    # print(X)
+    
+    # Alternatively from fEcofin:
+    X = as.timeSeries(data(msft.dat))
+    print(head(X))
         
     # Get Returns:
     R = getReturns(X)[1:10,-5]
