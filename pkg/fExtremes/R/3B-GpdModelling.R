@@ -138,8 +138,9 @@ information = c("observed", "expected"), title = NULL, description = NULL, ...)
         fit$llh = NA
         fit$convergence = NA
     }
-    fit$prob = 1 - length(x[x > u]) / length(x)
+    fit$p.less.thresh = fit$prob = 1 - length(x[x > u]) / length(x)
     fit$threshold = u
+    fit$data = x
    
     # Compute Residuals:
     xi = fit$par.ests["xi"]
