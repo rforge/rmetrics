@@ -85,6 +85,22 @@ function()
 # ------------------------------------------------------------------------------
 
 
+test.fGPDFIT =
+function()
+{
+    slotNames("fGPDFIT")
+    # [1] "call"        "method"      "parameter"   "data"        "fit"        
+    # [6] "residuals"   "title"       "description"
+
+    # Return Value:
+    return()
+}
+
+
+
+# ------------------------------------------------------------------------------
+
+
 test.gpdFit = 
 function()
 {
@@ -146,7 +162,7 @@ function()
     class(ts)   
 
     # Fit: 
-    fit = gpdFit(tS, u = min(tS), "mle") 
+    fit = gpdFit(ts, u = min(ts), type = "mle") 
     print(fit) 
     par(mfrow = c(2, 2), cex = 0.7)
     plot(fit, which = "all")

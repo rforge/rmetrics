@@ -36,13 +36,8 @@
 #  pgpd                    Probability for the Generalized Pareto DF
 #  qgpd                    Quantiles for the Generalized Pareto DF
 #  rgpd                    Random variates for the Generalized Pareto DF
-#  gpdMoments             Computes true statistics for GPD distribution
-#  gpdSlider              Displays distribution and rvs for GPD distribution
-# FUNCTION:              GPD DISTRIBUTION FAMILY:
-# .depd                    Density for the Generalized Pareto DF 
-#  .pepd                    Probability for the Generalized Pareto DF
-#  .qepd                    Quantiles for the Generalized Pareto DF
-#  .repd                    Random variates for the Generalized Pareto DF
+# gpdMoments              Computes true statistics for GPD distribution
+# gpdSlider               Displays distribution and rvs for GPD distribution
 ################################################################################
 
 
@@ -81,7 +76,7 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.moments = 
+test.gpdMoments = 
 function()
 {
     # gpdMoments(xi = 1, mu = 0, beta = 1) 
