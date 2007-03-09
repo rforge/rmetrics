@@ -155,7 +155,7 @@ function(x)
 } 
 
 
-########################################
+################################################################################
 
 
 assetsMeanCov = 
@@ -291,7 +291,7 @@ function(x, method = c("mve", "mcd"))
 }
 
 
-########################################
+################################################################################
 #   Package: covRobust
 #   Title: Robust Covariance Estimation via Nearest Neighbor Cleaning
 #   Version: 1.0
@@ -665,7 +665,7 @@ function(vec, d)
 }
         
 
-########################################
+################################################################################
 # Package: corpcor
 # Version: 1.1.2
 # Date: 2005-12-12
@@ -811,7 +811,7 @@ function(x, type = c("unbiased", "ML"), verbose = FALSE)
 }
 
 
-########################################
+################################################################################
 # cov.bagged.R  (2004-03-15)
 #   Variance reduced estimators of cov, cor, and pcor
 #       using bootstrap aggregation ("bagging")
@@ -945,7 +945,7 @@ function(data, statistic, R)
 } 
 
 
-########################################
+################################################################################
 # smtools.R  (2004-01-15)
 #   Convert symmetric matrix to vector and back
 #   Copyright 2003-04 Korbinian Strimmer
