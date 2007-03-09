@@ -31,9 +31,9 @@
 # FUNCTION:               ADDITIONAL PLOTS:
 #  gpdTailPlot             Plots Tail Estimate From GPD Model
 #  gpdQPlot                Adds Quantile Estimates to gpdTailPlot()
-#  .gpd.q
+#  .gpd.q                   Internal plot function called by gpdQPlot()
 #  gpdSfallPlot            Adds Expected Shortfall Estimates to a GPD Plot
-#  .gpd.sfall
+#  .gpd.sfall               Internal plot function called by gpdQPlot()
 #  gpdQuantPlot            Plots of GPD Tail Estimate of a High Quantile
 #  gpdShapePlot            Plots for GPD Shape Parameter
 # FUNCTION:               ADDITIONAL FUNCTION:

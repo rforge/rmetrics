@@ -112,10 +112,14 @@ function()
     r0 = rgpd(n = 1000, xi = 0)
     r1 = rgpd(n = 1000, xi = 1)
     
-    # Empirical Distribution Plot:
+    # Graph Frame:
     par(mfrow = c(2, 2), cex = 0.7)
+       
+    # Empirical Pareto Distribution Plot:
     qqparetoPlot(x = r0, xi = 0)
     qqparetoPlot(x = r1, xi = 1)
+    
+    # Empirical Normal Distribution Plot:
     qqnormPlot(x = r0)
     qqnormPlot(x = r1)
     
@@ -136,14 +140,14 @@ function()
     
     # Artificial Data Set - 
     r = rgpd(n = 1000)
-    
+     
     # Mean Excess Function Plot:
     par(mfrow = c(2, 2), cex = 0.7)
-    mePlot(x = r)
+    mePlot(x = r)           # Check, the largest point is missing ...
     mxfPlot(x = r)
     mrlPlot(x = r)
     
-    # Labels:
+    # No Labels:
     par(mfrow = c(2, 2), cex = 0.7)
     mePlot(x = r, labels = FALSE)
     mxfPlot(x = r, labels = FALSE)
@@ -171,7 +175,8 @@ function()
     par(mfrow = c(2, 2), cex = 0.7)
     recordsPlot(x = r)
     recordsPlot(x = r, ci = 0.99)
-    recordsPlot(x = r, labels = FALSE)
+    ans = recordsPlot(x = r, labels = FALSE)
+    print(ans)
     
     # Subrecords Plot:
     set.seed(1985)
@@ -180,7 +185,8 @@ function()
     recordsPlot(r)
     ssrecordsPlot(r, subsamples = 1)
     ssrecordsPlot(r, subsamples = 1, plottype = "log")
-    ssrecordsPlot(r, subsamples = 1, plottype = "lin")
+    ans = ssrecordsPlot(r, subsamples = 1, plottype = "lin")
+    print(ans)
     
     # Subrecords Plot:
     set.seed(1985)
@@ -189,8 +195,9 @@ function()
     ssrecordsPlot(r, subsamples = 10)
     ssrecordsPlot(r, subsamples = 50)
     ssrecordsPlot(r, subsamples = 10, plottype = "log")
-    ssrecordsPlot(r, subsamples = 50, plottype = "log", labels = FALSE)
-   
+    ans = ssrecordsPlot(r, subsamples = 50, plottype = "log", labels = FALSE)
+    print(ans)
+    
     # Return Value:
     return()    
 }
@@ -211,8 +218,9 @@ function()
     # Mean Excess Function Plot:
     par(mfrow = c(2, 2), cex = 0.7)
     msratioPlot(x = r, p = 1:4)
-    msratioPlot(x = r, p = 1:4, labels = FALSE)
-      
+    ans = msratioPlot(x = r, p = 1:4, labels = FALSE)
+    print(head(ans))
+     
     # Return Value:
     return()    
 }
@@ -231,13 +239,17 @@ function()
     set.seed(1953)
     r = rgpd(n = 1000)
     
-    # Mean Excess Function Plot:
+    # Strong Law of large numbers:
     par(mfrow = c(2, 2), cex = 0.7)
     sllnPlot(x = r)
+    ans = sllnPlot(x = r, labels = FALSE)
+    print(ans)
+    
+    # Law of the iterated logarithm
     lilPlot(x = r)
-    sllnPlot(x = r, labels = FALSE)
-    lilPlot(x = r, labels = FALSE)
-      
+    ans = lilPlot(x = r, labels = FALSE)
+    print(ans)
+    
     # Return Value:
     return()    
 }
@@ -257,7 +269,8 @@ function()
     
     # ACF of Exceedances Plot:
     par(mfrow = c(2, 2), cex = 0.7)
-    xacfPlot(x = r)
+    ans = xacfPlot(x = r)
+    print(ans)
     
     # ACF of Exceedances Plot:
     par(mfrow = c(2, 2), cex = 0.7)
@@ -266,9 +279,9 @@ function()
     # ACF of Exceedances Plot:
     par(mfrow = c(2, 2), cex = 0.7)
     xacfPlot(x = r, labels = FALSE, which = 1); title(main = "1")
-    xacfPlot(x = r, labels = FALSE, which = 1); title(main = "2")
-    xacfPlot(x = r, labels = FALSE, which = 1); title(main = "3")
-    xacfPlot(x = r, labels = FALSE, which = 1); title(main = "4")
+    xacfPlot(x = r, labels = FALSE, which = 2); title(main = "2")
+    xacfPlot(x = r, labels = FALSE, which = 3); title(main = "3")
+    xacfPlot(x = r, labels = FALSE, which = 4); title(main = "4")
       
     # Return Value:
     return()    

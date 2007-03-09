@@ -30,7 +30,7 @@
 ################################################################################
 # FUNCTION             EXPLORATIVE DATA ANALYSIS:
 #  emdPlot              Creates an empirical distribution plot
-#  qqnormPlot           -> fEcofin
+#  qqnormPlot           -> Has been moved to package fEcofin
 #  qqparetoPlot         Creates exploratory QQ plot for EV analysis
 #  mePlot               Creates a sample mean excess plot
 #   mxfPlot             Creates another view of a sample mean excess plot
@@ -42,10 +42,6 @@
 #  lilPlot              Verifies Hartman-Wintner's Law of the iterated logarithm
 #  xacfPlot             Plots autocorrelations of exceedences
 ################################################################################
-
-
-################################################################################
-# EXPLORATIVE DATA ANALYSIS:
 
 
 emdPlot = 

@@ -80,23 +80,26 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.moments = 
+test.gevMoments = 
 function()
 {
     # gevMoments(xi = 0, mu = 0, beta = 1) 
     
     # Compute Moments:
-    xi = seq(-5, 2, length = 351)
+    xi = seq(-4.5, 1.5, by = 0.25)
     mom = gevMoments(xi)
+    print(mom)
     
     # Plot Mean:
     par(mfrow = c(2, 1), cex = 0.7)
-    plot(xi, mom$mean, main = "Mean")
+    xi = seq(-5, 2, length = 351)
+    mom = gevMoments(xi)
+    plot(xi, mom$mean, main = "Mean", pch = 19, col = "steelblue")
     abline(v = 1, col = "red", lty = 3)
     abline(h = 0, col = "red", lty = 3)
     
     # Plot Variance:
-    plot(xi, log(mom$var), main = "log Variance")
+    plot(xi, log(mom$var), main = "log Variance", pch = 19, col = "steelblue")
     abline(v = 1/2, col = "red", lty = 3)
     abline(h = 0.0, col = "red", lty = 3)
     
@@ -108,7 +111,7 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.slider = 
+test.gevSlider = 
 function()
 {
     # Distribution Slider:

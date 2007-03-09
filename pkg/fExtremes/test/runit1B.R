@@ -75,7 +75,7 @@ function()
     # Quarterly BlockMaxima:
     blockMaxima(x.ret, block = "q", doplot = TRUE)
     
-    # Quarterly BlockMaxima
+    # 20-Days BlockMaxima:
     blockMaxima(x.ret, block = 20, doplot = TRUE)
     
     # Numerical Data Vector:
@@ -110,8 +110,11 @@ function()
     par(mfrow = c(2, 2), cex = 0.7)
     findThreshold(x.ret, n = floor(0.01*length(as.vector(x))), doplot = TRUE)
     
+    # Remark - Alternative use ...
+    quantile(x.ret, 1-0.01)
+    
     # Find 95% Threshold:
-    findThreshold(x.ret, doplot = TRUE) 
+    findThreshold(x.ret, doplot = TRUE)     # CHECK y-label
     
     # Find 90% Threshold:
     findThreshold(x.ret, n = floor(0.1*length(as.vector(x))), doplot = TRUE)
@@ -142,14 +145,18 @@ function()
     
     # Plot Series:
     par(mfrow = c(2, 1))
-    plot(x.ret, type = "l", main = "Series")
-    abline(h = 0, col = "red", lty = 3)
+    # plot(x.ret, type = "l", main = "Series")
+    # abline(h = 0, col = "red", lty = 3)
+    # or use ...
+    seriesPlot(x.ret)
     
     # Point Process:
     pp = pointProcess(x.ret, u = quantile(x.ret, 0.8))
     pp
     plot(pp, type = "b", main = "Point Process")
     abline(h = 0, col = "red", lty = 3)
+    # Try seriesPlot(pp)
+    # ... add points in graph
     
     # Return Value:
     return()  
@@ -173,7 +180,8 @@ function()
     class(x.ret)
     
     # Decluster Time Series:
-    deCluster(x = x.ret, run = 10)
+    tS = deCluster(x = x.ret, run = 3)
+    print(tS)
     
     # Return Value:
     return() 

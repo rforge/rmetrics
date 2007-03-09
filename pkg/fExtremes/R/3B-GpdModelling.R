@@ -48,8 +48,7 @@
 
 
 gpdSim = 
-function(model = list(xi = 0.25, mu = 0, beta = 1), n = 1000, 
-seed = NULL)
+function(model = list(xi = 0.25, mu = 0, beta = 1), n = 1000, seed = NULL)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -100,6 +99,8 @@ information = c("observed", "expected"), title = NULL, description = NULL, ...)
 
     # Description:
     #   Fits a generalized Pareto model to excesses
+    
+    # Arguments:
     
     # Details:
     #   Returns an object of class "fGPDFIT" representing the fit of a
@@ -172,8 +173,7 @@ information = c("observed", "expected"), title = NULL, description = NULL, ...)
 
 
 .gpdmleFit = 
-function(x, u = quantile(x, 0.95), 
-information = c("observed", "expected"), ...) 
+function(x, u = quantile(x, 0.95), information = c("observed", "expected"), ...) 
 {   # A function implemented by Diethelm Wuertz
 
     # Description:

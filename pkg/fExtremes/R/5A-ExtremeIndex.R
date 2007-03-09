@@ -105,7 +105,9 @@ function(model = c("max", "pair"), n = 1000, theta = 0.5)
     #       "max"  - Max Frechet Series
     #       "pair" - Paired Exponential Series
     
-    # Arguments:
+    # FUNCTION:
+    
+    # Model Argument:
     model = match.arg(model)
     
     # Simulate:
@@ -147,7 +149,7 @@ title = NULL, description = NULL)
     
     # FUNCTION:
     
-    # Check:
+    # Check if block is numeric:
     stopifnot(is.numeric(block))
 
     # Number of blocks and number of data points:
@@ -219,7 +221,7 @@ title = NULL, description = NULL)
     
     # FUNCTION:
     
-    # Check:
+    # Check if block is numeric:
     stopifnot(is.numeric(block))
 
     # Number of blocks and number of data points:
@@ -288,7 +290,7 @@ title = NULL, description = NULL)
     
     # FUNCTION:
     
-    # Check:
+    # Check if block is numeric:
     stopifnot(is.numeric(block))
 
     # Number of blocks and number of data points:
