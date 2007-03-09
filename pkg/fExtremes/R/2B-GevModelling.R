@@ -108,7 +108,6 @@ function(model = list(mu = 0, beta = 1), n = 1000, seed = NULL)
 
 
 ################################################################################
-# Class Representation
 
 
 setClass("fGEVFIT", 

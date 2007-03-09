@@ -40,7 +40,6 @@
 #   .pevd                 Probability for the GEV Distribution
 #   .qevd                 Quantiles for the GEV Distribution
 #   .revd                 Random variates for the GEV Distribution
-#  .evdMoments           Computes true statistics for GEV distribution
 ################################################################################
 
 
@@ -442,26 +441,6 @@ function(n, location = 0, scale = 1, shape = 0)
         
     # Return Value:
     r
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.evdMoments =
-function(location = 0, scale = 1, shape = 0) 
-{   # A function implemented by Diethelm Wuertz
-  
-    # Description:
-    #   Compute true statistics for Generalized Extreme Value distribution
-    
-    # FUNCTION:
-    
-    # Moments:
-    ans = gevMoments(xi = shape, mu = location, beta = scale)
-    
-    # Return Value:
-    ans
 }
 
 

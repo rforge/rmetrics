@@ -35,12 +35,6 @@
 #   rgev                  Random variates for the GEV Distribution
 #  gevMoments            Computes true statistics for GEV distribution
 #  gevSlider             Displays distribution and rvs for GEV distribution
-# FUNCTION:             GEV DISTRIBUTION FAMILY: [USE FROM EVD]
-#  .devd                 Density for the GEV Distribution 
-#   .pevd                 Probability for the GEV Distribution
-#   .qevd                 Quantiles for the GEV Distribution
-#   .revd                 Random variates for the GEV Distribution
-#  .evdMoments           Computes true statistics for GEV distribution
 ################################################################################
 
 
