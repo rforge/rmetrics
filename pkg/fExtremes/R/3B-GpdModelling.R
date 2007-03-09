@@ -220,6 +220,7 @@ function(theta, excess)
     
     # FUNCTION:
     
+    # LLH:
     xi = theta[1]
     beta = theta[2]
     cond = (beta <= 0) || ((xi <= 0) && (max(excess) > (-beta/xi)))
