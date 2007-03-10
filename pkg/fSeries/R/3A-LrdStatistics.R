@@ -32,16 +32,10 @@
 #  fgnTrueacf            Returns FGN true autocorrelation function
 #  fgnTruefft            Returns FGN true fast Fourier transform
 #  .fgnStatsSlider        Displays fgn true statistics
-#  .ckFGN0                Returns FGN true autocorrelation function
-#  .gkFGN0                Returns FGN true fast Fourier Transform
-#  .simFGN0               Simulates time series
 # FUNCTIONS:            DESCRIPTION:
 #  farimaTrueacf         Returns FARMA true autocorrelation function
 #  farimaTruefft         Returns FARMA true fast Fourier transform
 #  .farimaStatsSlider     Displays farima true statistics 
-#  .ckFARIMA0             Returns FARMA true autocorrelation function
-#  .gkFARIMA0             Returns FARMA true fast Fourier transform
-#  .simFARIMA0            Simulates Time Series
 ################################################################################
 
 
