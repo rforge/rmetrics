@@ -70,7 +70,8 @@ function()
 
 
 if (FALSE) {
-    testResult <- runTestFile("C:/Rmetrics/trunk/fSeries/test/runitXXX.R")
+    testResult <- runTestFile("C:/Rmetrics/trunk/fSeries/test/runit4D.R",
+        rngKind = "Marsaglia-Multicarry", rngNormalKind = "Inversion")
     printTextProtocol(testResult)
 }
    

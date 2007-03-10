@@ -120,7 +120,7 @@
 
 fbmSim = 
 function(n = 100, H = 0.7, method = c("mvn", "chol", "lev", "circ", "wave"),
-waveJ = 7, seed = NULL, doplot = TRUE, fgn = FALSE)
+waveJ = 7, doplot = TRUE, fgn = FALSE)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -155,7 +155,6 @@ waveJ = 7, seed = NULL, doplot = TRUE, fgn = FALSE)
     funFBM = match.fun(fun)
     
     # Simulate:
-    if (!is.null(seed)) set.seed(seed)
     if (method == "wave") {
         ans = funFBM(n, H, waveJ, doplot, fgn)
     } else {

@@ -29,10 +29,44 @@
 
 ################################################################################
 # FUNCTION:                ADF TESTS:
-#  unitrootTest             ADF unit root test using McKinnon's test statistics
 #  adfTest                  ADF unit root test using Banarjee's test statistics
-# FUNCTION:                UNITROOT TEST SUITE:
-#  .urTest                  Unit Root Test Suite
+#  unitrootTest             ADF unit root test using McKinnon's test statistics
+################################################################################
+
+
+pvalue = 
+function(object) 
+{   # A function implemented by Diethelm Wuertz
+
+    # FUNCTION:
+    
+    # Return Value: 
+    UseMethod("pvalue") 
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+pvalue.fHTEST = 
+function(object) 
+{   # A function implemented by Diethelm Wuertz
+
+    # FUNCTION:
+    
+    # p Value:
+    pValue = object@test$p.value 
+    pNames = names(pValue)
+    for (i in 1:length(pValue)) {
+        if (is.null(pNames[i]) || pNames[i] == "") pNames[i] = "p.value"
+    }
+    names(pValue)<-pNames
+    
+    # Return Value:
+    pValue        
+}
+
+
 ################################################################################
 
 
@@ -116,7 +150,8 @@ function()
 
 if (FALSE) {
     require(RUnit)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fSeries/test/runit2A.R")
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fSeries/test/runit2A.R",
+        rngKind = "Marsaglia-Multicarry", rngNormalKind = "Inversion")
     printTextProtocol(testResult)
 }
    

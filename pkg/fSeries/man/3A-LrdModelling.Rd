@@ -80,7 +80,7 @@
 
 \usage{
 fbmSim(n = 100, H = 0.7, method = c("mvn", "chol", "lev", "circ", "wave"),
-    waveJ = 7, seed = NULL, doplot = TRUE, fgn = FALSE)
+    waveJ = 7, doplot = TRUE, fgn = FALSE)
 fgnSim(n = 1000, H = 0.7, method = c("beran", "durbin", "paxson"))
 farimaSim(n = 1000, model = list(ar = c(0.5, -0.5), d = 0.3, ma = 0.1),
     method = c("freq", "time"), \dots) 
@@ -225,10 +225,6 @@ show.fHURST(object)
         [waveletFit] - \cr
         the order of the wavelet. An integer value, by default 
         \code{2}.
-        }
-    \item{seed}{
-        [fbmSim] - \cr
-        an integer value setting the seed for the random number generation.
         }
     \item{spec}{
         [whittleFit] - \cr

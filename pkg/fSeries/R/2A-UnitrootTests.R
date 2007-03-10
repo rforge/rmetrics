@@ -29,146 +29,12 @@
 
 ################################################################################
 # FUNCTION:                ADF TESTS:
-#  unitrootTest             ADF unit root test using McKinnon's test statistics
 #  adfTest                  ADF unit root test using Banarjee's test statistics
+#  unitrootTest             ADF unit root test using McKinnon's test statistics
 # FUNCTION:                UNITROOT TEST SUITE:
 #  .urTest                  Unit Root Test Suite
 ################################################################################
 
-
-unitrootTest =
-function(x, lags = 1, type = c("nc", "c", "ct"), title = NULL, 
-description = NULL)
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:     
-    #   Tests the null hypothesis of a unit root in x.
-
-    # Arguments:
-    #   x - numeric vector
-    #   type - specifies the regression model to be estimatied and the 
-    #       null hypothesis, "nc" no constant and no trend, "c" add 
-    #       constant, "ct" add constant and trend.
-    #   lags - specifies the number of lagged differences of x to be 
-    #       included in the regression model. If 'lags' = h, a term 
-    #       sum_{i=1}^{h-1} beta_i * diff(x)_(t-h) is added to the 
-    #       regression equation. 
-
-    # Value:      
-    #   A list with class "htest" containing the following components:
-    #   statistic - the value of the test statistic (t-statistic)
-    #   parameter - the number of lags.
-    #   p.value - the p-value of the test
-    #   method - a character string indicating what "trend" type of 
-    #       the test was performed
-    #   data.name - a character string giving the name of the data y
-
-    # Reference:   
-    #   Said S.E., Dickey D.A. (1984): Testing for Unit Roots in 
-    #   Autoregressive-Moving Average Models of Unlag.diffnown Order. 
-    #   Biometrika 71, 599–-607.
-    
-    # Source:
-    #   This function is an augmented version of Adrian Trapletti's
-    #   function adf.test() which considers trend "ct" only. We have added
-    #   the trend types "c" and "nc" together with the appropriate statistics.
-    
-    # FUNCTION:
-    
-    # Call:
-    CALL = match.call()
-    
-    # Test:
-    test = list()
-    
-    # Data Set Name:
-    DNAME = deparse(substitute(x))
-    test$data.name = DNAME   
-    
-    # Transform:
-    if (class(x) == "timeSeries") x = seriesData(x)
-    x = as.vector(x)
-    
-    # Check Arguments:
-    if (lags < 0) stop("Lags are negative")
-    
-    # Settings:
-    type = type[1]
-    lags = lags + 1
-    y = diff(x)
-    n = length(y)
-    z = embed(y, lags)
-    y.diff = z[, 1]
-    y.lag.1 = x[lags:n]
-    tt = lags:n
-   
-    # Regression:         
-    if (lags > 1) {
-        y.diff.lag = z[,2:lags]
-        if (type == "nc"){
-            res = lm(y.diff ~ y.lag.1 - 1 + y.diff.lag) }
-        if (type == "c"){
-            res = lm(y.diff ~ y.lag.1 + 1 +  y.diff.lag) }
-        if (type == "ct") {
-            res = lm(y.diff ~ y.lag.1 + 1 + tt + y.diff.lag) } 
-        if (type == "ctt") {
-            res = lm(y.diff ~ y.lag.1 + 1 + tt + tt^2 + y.diff.lag) } 
-    } else {
-        if (type == "nc") {
-            res = lm(y.diff ~ y.lag.1 - 1) }
-        if (type == "c"){
-            res = lm(y.diff ~  y.lag.1 + 1) }
-        if (type == "ct") {
-            res = lm(y.diff ~ y.lag.1 + 1  + tt)  } 
-        if (type == "ctt") {
-            res = lm(y.diff ~ y.lag.1 + 1 + tt + tt^2) } 
-    }
-    res.sum = summary(res)
-    test$regression = res.sum
-    
-    # Statistic:
-    if (type == "nc") coefNum = 1 else coefNum = 2
-    STATISTIC = 
-        res.sum$coefficients[coefNum, 1] / res.sum$coefficients[coefNum, 2]
-    names(STATISTIC) = "DF"
-    test$statistic = STATISTIC
-       
-    # P Value:
-    if (type == "nc") { itv = 1 }
-    if (type == "c")  { itv = 2 }
-    if (type == "ct") { itv = 3 }
-    if (type == "ctt"){ itv = 4 }
-    # Statistic == "t" : itt = 1
-    PVAL1 = 
-        .urcval(arg = STATISTIC, nobs = n, niv = 1, itt = 1, itv = itv, nc = 2)
-    # Statistic == "n" : itt = 2
-    PVAL2 = 
-        .urcval(arg = STATISTIC, nobs = n, niv = 1, itt = 2, itv = itv, nc = 2)
-    PVAL = c(PVAL1, PVAL2)
-    names(PVAL) = c("t", "n")
-    test$p.value = PVAL
-          
-    # Parameter:
-    PARAMETER = lags - 1
-    names(PARAMETER) = "Lag Order"
-    test$parameter = PARAMETER
-       
-    # Add:
-    if (is.null(title)) title = "Augmented Dickey-Fuller Test"
-    if (is.null(description)) description = date()
-    
-    # Return Value:
-    new("fHTEST", 
-        call = CALL,
-        data = list(x = x),
-        test = test, 
-        title = as.character(title),
-        description = .description()
-        )    
-}
-
-
-# ------------------------------------------------------------------------------
 
 
 adfTest = 
@@ -326,6 +192,141 @@ description = NULL)
         title = as.character(title),
         description = .description()
         )   
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+unitrootTest =
+function(x, lags = 1, type = c("nc", "c", "ct"), title = NULL, 
+description = NULL)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:     
+    #   Tests the null hypothesis of a unit root in x.
+
+    # Arguments:
+    #   x - numeric vector
+    #   type - specifies the regression model to be estimatied and the 
+    #       null hypothesis, "nc" no constant and no trend, "c" add 
+    #       constant, "ct" add constant and trend.
+    #   lags - specifies the number of lagged differences of x to be 
+    #       included in the regression model. If 'lags' = h, a term 
+    #       sum_{i=1}^{h-1} beta_i * diff(x)_(t-h) is added to the 
+    #       regression equation. 
+
+    # Value:      
+    #   A list with class "htest" containing the following components:
+    #   statistic - the value of the test statistic (t-statistic)
+    #   parameter - the number of lags.
+    #   p.value - the p-value of the test
+    #   method - a character string indicating what "trend" type of 
+    #       the test was performed
+    #   data.name - a character string giving the name of the data y
+
+    # Reference:   
+    #   Said S.E., Dickey D.A. (1984): Testing for Unit Roots in 
+    #   Autoregressive-Moving Average Models of Unlag.diffnown Order. 
+    #   Biometrika 71, 599–-607.
+    
+    # Source:
+    #   This function is an augmented version of Adrian Trapletti's
+    #   function adf.test() which considers trend "ct" only. We have added
+    #   the trend types "c" and "nc" together with the appropriate statistics.
+    
+    # FUNCTION:
+    
+    # Call:
+    CALL = match.call()
+    
+    # Test:
+    test = list()
+    
+    # Data Set Name:
+    DNAME = deparse(substitute(x))
+    test$data.name = DNAME   
+    
+    # Transform:
+    if (class(x) == "timeSeries") x = seriesData(x)
+    x = as.vector(x)
+    
+    # Check Arguments:
+    if (lags < 0) stop("Lags are negative")
+    
+    # Settings:
+    type = type[1]
+    lags = lags + 1
+    y = diff(x)
+    n = length(y)
+    z = embed(y, lags)
+    y.diff = z[, 1]
+    y.lag.1 = x[lags:n]
+    tt = lags:n
+   
+    # Regression:         
+    if (lags > 1) {
+        y.diff.lag = z[,2:lags]
+        if (type == "nc"){
+            res = lm(y.diff ~ y.lag.1 - 1 + y.diff.lag) }
+        if (type == "c"){
+            res = lm(y.diff ~ y.lag.1 + 1 +  y.diff.lag) }
+        if (type == "ct") {
+            res = lm(y.diff ~ y.lag.1 + 1 + tt + y.diff.lag) } 
+        if (type == "ctt") {
+            res = lm(y.diff ~ y.lag.1 + 1 + tt + tt^2 + y.diff.lag) } 
+    } else {
+        if (type == "nc") {
+            res = lm(y.diff ~ y.lag.1 - 1) }
+        if (type == "c"){
+            res = lm(y.diff ~  y.lag.1 + 1) }
+        if (type == "ct") {
+            res = lm(y.diff ~ y.lag.1 + 1  + tt)  } 
+        if (type == "ctt") {
+            res = lm(y.diff ~ y.lag.1 + 1 + tt + tt^2) } 
+    }
+    res.sum = summary(res)
+    test$regression = res.sum
+    
+    # Statistic:
+    if (type == "nc") coefNum = 1 else coefNum = 2
+    STATISTIC = 
+        res.sum$coefficients[coefNum, 1] / res.sum$coefficients[coefNum, 2]
+    names(STATISTIC) = "DF"
+    test$statistic = STATISTIC
+       
+    # P Value:
+    if (type == "nc") { itv = 1 }
+    if (type == "c")  { itv = 2 }
+    if (type == "ct") { itv = 3 }
+    if (type == "ctt"){ itv = 4 }
+    # Statistic == "t" : itt = 1
+    PVAL1 = 
+        .urcval(arg = STATISTIC, nobs = n, niv = 1, itt = 1, itv = itv, nc = 2)
+    # Statistic == "n" : itt = 2
+    PVAL2 = 
+        .urcval(arg = STATISTIC, nobs = n, niv = 1, itt = 2, itv = itv, nc = 2)
+    PVAL = c(PVAL1, PVAL2)
+    names(PVAL) = c("t", "n")
+    test$p.value = PVAL
+          
+    # Parameter:
+    PARAMETER = lags - 1
+    names(PARAMETER) = "Lag Order"
+    test$parameter = PARAMETER
+       
+    # Add:
+    if (is.null(title)) title = "Augmented Dickey-Fuller Test"
+    if (is.null(description)) description = date()
+    
+    # Return Value:
+    new("fHTEST", 
+        call = CALL,
+        data = list(x = x),
+        test = test, 
+        title = as.character(title),
+        description = .description()
+        )    
 }
 
 

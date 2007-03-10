@@ -50,10 +50,6 @@
 #  hurstSlider         Hurst Slider [1-7]
 # FUNCTIONS:          WAVELET ESTIMATOR:
 #  waveletFit          Wavelet Estimator
-# FUNCTIONS:          STATISTICAL TESTS:
-#  .beranTest          Not yet ready for usage ...
-#  .rsTest             Not yet ready for usage ...
-#  .vsTest             Not yet ready for usage ...
 ################################################################################
 
 
@@ -94,39 +90,41 @@ function()
     # Graphics Frame:
     par(mfrow = c(3, 2), cex = 0.7)
     
-    x = fbmSim(n = 50, method = "mvn",  seed = 4711)
+    set.seed(4711, kind = "Marsaglia-Multicarry")
+    
+    x = fbmSim(n = 50, method = "mvn")
     print(x)
     target = round(mean(x), 2)
     print(target)
-    current = +0.08
+    current = +0.05
     checkEquals(target, current)
     
-    x = fbmSim(n = 50, method = "chol", seed = 4711)
+    x = fbmSim(n = 50, method = "chol")
     print(x)
     target = round(mean(x), 2)
     print(target)
-    current = +0.31
+    current = +0.05
     checkEquals(target, current)
     
-    x = fbmSim(n = 50, method = "lev",  seed = 4711)
+    x = fbmSim(n = 50, method = "lev")
     print(x)
     target = round(mean(x), 2)
     print(target)
-    current = -0.01
+    current = -0.54
     checkEquals(target, current)
     
-    x = fbmSim(n = 50, method = "circ", seed = 4711)
+    x = fbmSim(n = 50, method = "circ")
     print(x)
     target = round(mean(x), 2)
     print(target)
-    current = +0.94
+    current = -1.3
     checkEquals(target, current)
     
-    x = fbmSim(n = 50, method = "wave", seed = 4711)
+    x = fbmSim(n = 50, method = "wave")
     print(x)
     target = round(mean(x), 2)
     print(target)
-    current = -0.32
+    current = -0.02
     checkEquals(target, current)
     
     # Return Value:
@@ -153,40 +151,8 @@ function()
     # Graphics Frame:
     par(mfrow = c(3, 2), cex = 0.7)
     
-    x = fbmSim(n = 50, method = "mvn",  seed = 4711, fgn = TRUE)
-    print(x)
-    target = round(var(x), 2)
-    print(target)
-    current = 0.01
-    checkEquals(target, current)
+    set.seed(4711, kind = "Marsaglia-Multicarry")
     
-    x = fbmSim(n = 50, method = "chol", seed = 4711, fgn = TRUE)
-    print(x)
-    target = round(var(x), 2)
-    print(target)
-    current = 0.0
-    checkEquals(target, current)
-    
-    x = fbmSim(n = 50, method = "lev",  seed = 4711, fgn = TRUE)
-    print(x)
-    target = round(var(x), 2)
-    print(target)
-    current = 0.0
-    checkEquals(target, current)
-    
-    x = fbmSim(n = 50, method = "circ", seed = 4711, fgn = TRUE)
-    print(x)
-    target = round(var(x), 2)
-    print(target)
-    current = +0.94
-    checkEquals(target, current)
-    
-    x = fbmSim(n = 50, method = "wave", seed = 4711, fgn = TRUE)
-    print(x)
-    target = round(var(x), 2)
-    print(target)
-    current = 0.0
-    checkEquals(target, current)
     
     # Return Value:
     return()       
@@ -248,8 +214,8 @@ function()
 
 
     # Beran - Simulate:
-    set.seed(1985)
-    x = fgnSim(n = 1000, H = 0.7, method = "beran")
+    set.seed(1985, kind = "Marsaglia-Multicarry")
+    x = fgnSim(n = 1000, H = 0.7)
     
     # Fit:
     Hurst = whittleFit(x)@hurst$H
@@ -307,14 +273,14 @@ function()
     #   method = 7: perFit 
     
     # Simulate:
-    set.seed(1953)
-    x = fbmSim(n = 500, H = 0.7, method = "circ", fgn = TRUE)
+    set.seed(1953, kind = "Marsaglia-Multicarry")
+    x = fgnSim(n = 500, H = 0.7)
     
     Hurst = aggvarFit(x)@hurst$H
     print(Hurst)
     target = round(Hurst, 1)
     print(target)
-    current = 0.6
+    current = 0.5
     checkEquals(target, current)
     
     Hurst = diffvarFit(x)@hurst$H
@@ -328,7 +294,7 @@ function()
     print(Hurst)
     target = round(Hurst, 1)
     print(target)
-    current = 0.7
+    current = 0.6
     checkEquals(target, current)
     
     Hurst = higuchiFit(x)@hurst$H
@@ -342,21 +308,21 @@ function()
     print(Hurst)
     target = round(Hurst, 1)
     print(target)
-    current = 0.8
+    current = 0.6
     checkEquals(target, current)
     
     Hurst = rsFit(x)@hurst$H
     print(Hurst)
     target = round(Hurst, 1)
     print(target)
-    current = 0.8
+    current = 0.7
     checkEquals(target, current)
     
     Hurst = perFit(x)@hurst$H
     print(Hurst)
     target = round(Hurst, 1)
     print(target)
-    current = 0.8
+    current = 0.6
     checkEquals(target, current)
     
     # More Estimators:
@@ -378,15 +344,15 @@ function()
     #   doplot = FALSE, title = NULL, description = NULL) 
 
     # Simulate:
-    set.seed(1953)
-    x = fbmSim(n = 1000, H = 0.7, method = "circ", fgn = TRUE)
+    set.seed(1953, kind = "Marsaglia-Multicarry")
+    x = fgnSim(n = 1000, H = 0.7)
     
     # Fit:
     Hurst = waveletFit(x)@hurst$H
     print(Hurst)
     target = round(Hurst, 1)
     print(target)
-    current = 0.7
+    current = 0.6
     checkEquals(target, current)
     
     # Return Value:

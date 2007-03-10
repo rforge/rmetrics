@@ -579,23 +579,23 @@ function()
     print(object)
     
     # Plot:
-    # plot(object, which = "all")         # not yet implemented       
+    # plot(object, which = "all")         # CHECK not yet implemented       
     
     # Summary:
-    summary(object, doplot = FALSE)       # use always doplot=FALSE
+    summary(object, doplot = FALSE)       # CHECK use always doplot=FALSE
     
     # Get Values:
     coefficients(object)
     coef(object)
     fitted = fitted(object) 
     class(fitted)
-    tail(fitted)                          # head yields NA's             
+    tail(fitted)                          # CHECK head yields NA's             
     residuals = residuals(object)
     class(residuals) 
     tail(residuals)          
     
     # Predict:
-    # predict(object)                     # not yet implemented
+    # predict(object)                     # CHECK not yet implemented
       
     # Return Value:
     return()    
@@ -644,7 +644,7 @@ function()
     # Fit:
     TS.RET = returnSeries(TS)
     colnames(TS.RET)
-    # attach(TS.RET) - doesn't work under RUnit ...
+    # attach(TS.RET)                    # CHECK doesn't work under RUnit ...
     attach.timeSeries(TS.RET)
     head(Close)
     armaFit(Close ~ ar(5))
@@ -697,7 +697,8 @@ function()
 
 if (FALSE) {
     require(RUnit)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fSeries/test/runit1A.R")
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fSeries/test/runit1A.R",
+        rngKind = "Marsaglia-Multicarry", rngNormalKind = "Inversion")
     printTextProtocol(testResult)
 }
    
