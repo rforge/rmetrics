@@ -1,6 +1,6 @@
-\name{ArmaModelling}
+\name{ArmaInterface}
 
-\alias{ArmaModelling}
+\alias{ArmaInterface}
 
 \alias{fARMA}
 \alias{fARMA-class}

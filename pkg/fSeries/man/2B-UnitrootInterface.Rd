@@ -1,6 +1,6 @@
-\name{UnitrootUrcaInterface}
+\name{UnitrootInterface}
 
-\alias{UnitrootUrcaInterface}
+\alias{UnitrootInterface}
 
 
 \alias{urdfTest}
@@ -19,7 +19,8 @@
     A collection and description of functions 
     for unit root testing. This is a Rmetrics
     conform interface to the unitroot tests 
-    implemented by B. Pfaff.
+    implemented by B. Pfaff available through
+    the contributed package "urca".
     \cr
     
     Added functions based on the 'urca' package include:
