@@ -41,9 +41,6 @@
 # FUNCTION:              NORMAL DISTRIBUTION SLIDER:
 #  .normSlider            Displays Normal Distribution and RVS
 ################################################################################
-
-
-################################################################################
 # FUNCTION:              VARIANCE-1 STUDENT-T DISTRIBUTION:
 #  dstd                   Density for the Student-t Distribution
 #  pstd                   Probability function for the Student-t Distribution
@@ -56,9 +53,6 @@
 #  rsstd                  Random Number Generator for the skewed STD
 # FUNCTION:              VARIANCE-1 STUDENT-T DISTRIBUTION SLIDER:
 #  .stdSlider             Displays Variance-1 Student-t Distribution and RVS
-################################################################################
-
-
 ################################################################################
 # FUNCTION:              GED DISTRIBUTION:
 #  dged                   Density for the Generalized Error Distribution
@@ -73,9 +67,6 @@
 # FUNCTION:              GED DISTRIBUTION SLIDER:
 #  .gedSlider            Displays Generalized Error Distribution and RVS
 ################################################################################
-
-
-################################################################################
 # FUNCTION:              PARAMETER ESTIMATION:
 #  normFit                Fit the parameters for a Normal distribution
 #  snormFit               Fit the parameters for a skew Normal distribution
@@ -83,9 +74,6 @@
 #  sgedFit                Fit the parameters for a skew GED distribution
 #  stdFit                 Fit the parameters for a Sudent-t distribution
 #  sstdFit                Fit the parameters for a skew Sudent-t distribution
-################################################################################
-
-
 ################################################################################
 # FUNCTION:              MOMENTS:
 #  absMoments             Compute absolute moments of a symmetric distribution

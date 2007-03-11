@@ -31,7 +31,7 @@
 # PART I: 
 # FUNCTIONS:            FRACTIONAL BROWNIAN MOTION:
 #  fbmSim                Generates fractional Brownian motion
-#  .fbmSimSlider          Displays fbm simulated time Series
+#  .fbmSlider             Displays fbm simulated time Series
 #  .fbmSim.mvn            Numerical approximation of the stochastic integral
 #  .fbmSim.chol           Choleki's decomposition of the covariance matrix
 #  .fbmSim.lev            Method of Levinson
@@ -40,7 +40,7 @@
 #  .convol                Internal Convolution
 # FUNCTIONS:            FRACTIONAL GAUSSIAN NOISE:
 #  fgnSim                Generates fractional Gaussian noise
-#  .fgnSimSlider          Displays fgn simulated time Series
+#  .fgnSlider             Displays fgn simulated time Series
 #  .fgnSim.durbin         Durbin's Method
 #  .fgnSim.paxson         Paxson's Method
 #  .fgnSim.beran          Beran's Method
@@ -649,7 +649,7 @@ function(n = 100, H = 0.7, doplot = TRUE, fgn = FALSE)
         m = 2 * m
         eigenvalC = lineC(n, H, m)
         eigenvalC = fft(c(eigenvalC), inverse = FALSE)
-        ### DW: That doesn't work on a complex vectors !
+        ### DW: That doesn't work on complex vectors !
         ### if ((all(eigenvalC > 0)) | (m > 2^17)) break
         ### We use:
         if ((all(Re(eigenvalC) > 0)) | (m > 2^17)) break
@@ -712,7 +712,7 @@ function(n = 100, H = 0.7, doplot = TRUE, fgn = FALSE)
 # ------------------------------------------------------------------------------
 
 
-.fbmSimSlider =
+.fbmSlider =
 function()
 {   # A function implemented by Diethelm Wuertz
 
@@ -734,7 +734,7 @@ function()
         Method = Method[method]
         
         # Frame:
-        par(mfrow = c(2, 1), cex = 0.7)
+        par(mfrow = c(2, 1))
         
         # FBM TimeSeries:
         fbmSim(n = n, H = H, method = Method, doplot = TRUE)
@@ -743,7 +743,7 @@ function()
         fbmSim(n = n, H = H, method = Method, doplot = TRUE, fgn = TRUE)
         
         # Reset Frame:
-        par(mfrow = c(1, 1), cex = 0.7)
+        par(mfrow = c(1, 1))
     }
   
     # Open Slider Menu:
@@ -993,7 +993,7 @@ function(n, H = 0.7, mean = 0, std = 1)
 # ------------------------------------------------------------------------------
 
 
-.fgnSimSlider =
+.fgnSlider =
 function()
 {   # A function implemented by Diethelm Wuertz
 
@@ -1010,12 +1010,12 @@ function()
         H      = .sliderMenu(no = 2)
         method = .sliderMenu(no = 3)
         
+        # Graph Frame:
+        par(mfrow = c(1, 1))
+        
         # Select Method:
         Method = c("beran", "durbin", "paxson")
         Method = Method[method]
-        
-        # Frame:
-        par(mfrow = c(1, 1), cex = 0.7)
         
         # FGN TimeSeries:
         x = fgnSim(n = n, H = H, method = Method)
@@ -1025,7 +1025,7 @@ function()
         title(main = paste(Method, "FGN | H =", H))
         
         # Reset Frame:
-        par(mfrow = c(1, 1), cex = 0.7)
+        par(mfrow = c(1, 1))
     }
   
     # Open Slider Menu:
@@ -3267,9 +3267,6 @@ function(x = fgnSim())
     # Transform and Save Series:
     .xHurst <<- as.vector(x)   
     
-    # Graphic Frame:
-    par(mfrow = c(1, 1), cex = 0.7)
-    
     # Internal Function:
     refresh.code = function(...)
     {
@@ -3279,6 +3276,9 @@ function(x = fgnSim())
         minnpts = .sliderMenu(no = 3)
         lower  = .sliderMenu(no = 4)
         range = .sliderMenu(no = 5)
+        
+        # Graph Frame:
+        par(mfrow = c(1, 1))
         
         # Plot:
         description = paste("Method", method, .description())
@@ -3328,7 +3328,7 @@ function(x = fgnSim())
             col = "steelblue")
                    
         # Reset Frame:
-        par(mfrow = c(1, 1), cex = 0.7)
+        par(mfrow = c(1, 1))
     }
   
     # Open Slider Menu:
