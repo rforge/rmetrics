@@ -87,7 +87,8 @@ function()
     #  contour.gridData    Generates a contour plot from a grid data object
       
     # Generate Akima interpolated Grid Data:
-    set.seed(1953)
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
     x = runif(999)-0.5
     y = runif(999)-0.5
     z = cos(2*pi*(x^2+y^2))
@@ -99,7 +100,8 @@ function()
     
     # Generate Kriged Grid Data:
     require(spatial)
-    set.seed(1953)
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
     x = runif(999)-0.5
     y = runif(999)-0.5
     z = cos(2*pi*(x^2+y^2))
@@ -120,7 +122,8 @@ function()
     
 if (FALSE) {
     require(RUnit)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fEcofin/test/runit5A.R")
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fEcofin/test/runit5A.R",
+        rngKind = "Marsaglia-Multicarry", rngNormalKind = "Inversion")
     printTextProtocol(testResult)
 }   
 

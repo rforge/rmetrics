@@ -63,7 +63,8 @@ function()
 {
     #  Interpolates Linearly Irregularly Distributed Data Points
 
-    set.seed(1953)
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
     x = runif(999)-0.5
     y = runif(999)-0.5
     z = cos(2*pi*(x^2+y^2))
@@ -91,7 +92,8 @@ function()
 
     require(spatial)
     
-    set.seed(1953)
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
     x = runif(999)-0.5
     y = runif(999)-0.5
     z = cos(2*pi*(x^2+y^2))
@@ -108,7 +110,8 @@ function()
     
 if (FALSE) {
     require(RUnit)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fEcofin/test/runit5B.R")
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fEcofin/test/runit5B.R",
+        rngKind = "Marsaglia-Multicarry", rngNormalKind = "Inversion")
     printTextProtocol(testResult)
 }   
 
