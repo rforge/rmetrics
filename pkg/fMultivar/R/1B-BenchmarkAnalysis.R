@@ -107,6 +107,7 @@ function(x)
         stop("NAs in x")
     }
     
+    # Maximum Drawdown:
     cmaxx = cummax(x)-x
     mdd = max(cmaxx)
     to = which(mdd == cmaxx)
