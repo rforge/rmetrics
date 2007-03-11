@@ -28,29 +28,15 @@
 
 
 ################################################################################
-# PART I - FUNCTION:      SPECIFICATION: 
-#  setClass[garchSpec]     S4: garchSpec Class representation 
+# FUNCTION:               SPECIFICATION: 
+#  'garchSpec'             S4: garchSpec Class representation 
 #  garchSpec               S4: Creates a 'garchSpec' object from scratch
-#  .print.garchSpec        S3: Print method for an object of class 'garchSpec'
 #  show.garchSpec          S4: Print method for an object of class 'garchSpec'
-################################################################################
-# PART II - FUNCTION:     SIMULATION:
+# FUNCTION:               SIMULATION:
 #  garchSim                Simulates a GARCH/APARCH process
-#  .garchSim               Simulates a GARCH/APARCH from specification object
-################################################################################
-# PART III - FUNCTION:    PARAMETER ESTIMATION: 
-#  setClass[fGARCH]        S4: fGARCH Class representation   
+# FUNCTION:               PARAMETER ESTIMATION: 
+#  'fGARCH'                S4: fGARCH Class representation   
 #  garchFit                Fits GARCH and APARCH processes
-#  .garchFit               ... old Version
-#  .garchInitSeries        Initializes Series
-#  .garchInitParameters    Initializes Parameters
-#  .garchSetCondDist       Selects conditional density function
-#   .garchDist              Defines conditional density function
-#  .garchOptimizeLLH       Opimizes log-likelihood function by 'nlminb'/'bfgs'
-#   .garchLLH               Computes log-likelihood function
-#   .garchHessian           Computes Hessian matrix numerically
-#  .garchNames              Slot names, @fit slot, parameters and controls
-#  .garchTsFit             Wrapper for 'garch()' from 'tseries' package
 # METHODS:                DESCRIPTION:
 #  .print.fGARCH           S3 print method for an object of class fGARCH
 #  .show.fGARCH            S4 print method for an object of class fGARCH
@@ -62,10 +48,9 @@
 #  predict.fGARCH          S3 prediction method for an object of class fGARCH
 # STATISTICS:             Description:
 #  .truePersistence        Compute persistence
-################################################################################
-# PART IV - FUNCTION:     FORECASTING: 
-#  garchKappa               Computes Expection for APARCH Models
-#  .funE                    Internal function used by kappa()
+# FUNCTION:               FORECASTING: 
+#  garchKappa              Computes Expection for APARCH Models
+#  .funE                   Internal function used by kappa()
 ################################################################################
 
 
