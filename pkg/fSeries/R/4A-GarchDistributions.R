@@ -38,8 +38,7 @@
 #  psnorm                 Probability function for the skew NORM
 #  qsnorm                 Quantile function for the skew NORM
 #  rsnorm                 Random Number Generator for the skew NORM
-# FUNCTION:              NORMAL DISTRIBUTION SLIDER:
-#  .normSlider            Displays Normal Distribution and RVS
+#  .snormSlider           Displays Normal Distribution and RVS
 ################################################################################
 # FUNCTION:              VARIANCE-1 STUDENT-T DISTRIBUTION:
 #  dstd                   Density for the Student-t Distribution
@@ -51,7 +50,6 @@
 #  psstd                  Probability function for the skewed STD
 #  qsstd                  Quantile function for the skewed STD
 #  rsstd                  Random Number Generator for the skewed STD
-# FUNCTION:              VARIANCE-1 STUDENT-T DISTRIBUTION SLIDER:
 #  .stdSlider             Displays Variance-1 Student-t Distribution and RVS
 ################################################################################
 # FUNCTION:              GED DISTRIBUTION:
@@ -64,8 +62,7 @@
 #  psged                  Probability function for the skewed GED
 #  qsged                  Quantile function for the skewed GED
 #  rsged                  Random Number Generator for the skewed GED
-# FUNCTION:              GED DISTRIBUTION SLIDER:
-#  .gedSlider            Displays Generalized Error Distribution and RVS
+#  .sgedSlider            Displays Generalized Error Distribution and RVS
 ################################################################################
 # FUNCTION:              PARAMETER ESTIMATION:
 #  normFit                Fit the parameters for a Normal distribution
@@ -295,7 +292,7 @@ function(n, mean = 0, sd = 1, xi = 1.5)
 # ------------------------------------------------------------------------------
 
 
-.normSlider = 
+.snormSlider = 
 function(type = c("dist", "rand"))
 {   # A function implemented by Diethelm Wuertz
     
@@ -325,7 +322,7 @@ function(type = c("dist", "rand"))
             "mean = ", as.character(mean), " | ",
             "sd = ", as.character(sd), " | ",
             "xi = ", as.character(xi) )
-        main2 = paste("Ske Normal Probability\n",
+        main2 = paste("Skew Normal Probability\n",
             "xmin [0.001] = ", as.character(xmin), " | ",
             "xmax [0.999] = ", as.character(xmax) ) 
             
@@ -696,7 +693,7 @@ function(n, mean = 0, sd = 1, nu = 5, xi = 1.5)
 # ------------------------------------------------------------------------------
 
 
-.stdSlider = 
+.sstdSlider = 
 function(type = c("dist", "rand"))
 {   # A function implemented by Diethelm Wuertz
     
@@ -728,7 +725,7 @@ function(type = c("dist", "rand"))
             "sd = ", as.character(sd), " | ",
             "nu = ", as.character(nu), " | ",
             "xi = ", as.character(xi) )
-        main2 = paste("Ske Student-t Probability\n",
+        main2 = paste("Skew Student-t Probability\n",
             "xmin [0.01] = ", as.character(xmin), " | ",
             "xmax [0.99] = ", as.character(xmax) )   
             
@@ -1086,12 +1083,12 @@ function(n, mean = 0, sd = 1, nu = 2, xi = 1.5)
 # ------------------------------------------------------------------------------
 
 
-.gedSlider = 
+.sgedSlider = 
 function(type = c("dist", "rand"))
 {   # A function implemented by Diethelm Wuertz
     
     # Description:
-    #   dsstd(x, mean = 0, sd = 1, nu = 5, xi = 1.5)
+    #   dsged(x, mean = 0, sd = 1, nu = 5, xi = 1.5)
     
     # FUNCTION:
     
@@ -1111,8 +1108,8 @@ function(type = c("dist", "rand"))
         xmin = round(qsged(0.01, mean, sd, nu, xi), digits = 2)
         xmax = round(qsged(0.99, mean, sd, nu, xi), digits = 2)
         s = seq(xmin, xmax, length = N)
-        y1 = dsstd(s, mean, sd, nu, xi)
-        y2 = psstd(s, mean, sd, nu, xi)
+        y1 = dsged(s, mean, sd, nu, xi)
+        y2 = psged(s, mean, sd, nu, xi)
         main1 = paste("Skew GED Density\n", 
             "mean = ", as.character(mean), " | ",
             "sd = ", as.character(sd), " | ",
@@ -1124,7 +1121,7 @@ function(type = c("dist", "rand"))
             
         # Random Numbers:
         if (type[1] == "rand") {
-            x = rsstd(N, mean, sd, nu, xi)
+            x = rsged(N, mean, sd, nu, xi)
         }      
         
         # Frame:    
@@ -1431,25 +1428,6 @@ function(n, density = c("dnorm", "dged", "dstd"), ...)
 
     # Return Value:
     invisible()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.absMoments.RUnit =
-function()
-{
-    absMoments(n = 0, density = "dnorm")
-    
-    absMoments(n = 1, density = "dnorm")
-    
-    absMoments(n = 2, density = "dnorm")
-    
-    absMoments(n = 4, density = "dnorm")
-    
-    absMoments(n = 0, density = "dged", nu = 4)
-    
 }
 
 
