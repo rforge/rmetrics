@@ -71,7 +71,7 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.arfimaFit = 
+test.arfimaOxFit = 
 function()
 {
     # OX-ARFIMA(2,1) - IMPORTANT: MA Coefficients have opposite sign!
@@ -87,30 +87,27 @@ function()
     # MLE Fit - Default method="mle":
     object = arfimaOxFit(formula = ~arfima(2,1), data = x)
     print(object)
-    target = as.vector(round(coef(object), 1))
+    target = as.vector(round(coef(object), 3))
     print(target)
-    current = c(0.3, 0.5, -0.5, -0.1)
+    current = c(0.293, 0.396, -0.450, 0.030)
     checkEqualsNumeric(target, current)
-    
-    
+       
     # NLS Fit - method="nls":
     object = arfimaOxFit(formula = ~ arfima(2, 1), data = x, method = "nls")
     print(object)
-    target = as.vector(round(coef(object), 1))
+    target = as.vector(round(coef(object), 3))
     print(target)
-    current = c(0.3, 0.5, -0.5, -0.1)
+    current = c(0.302, 0.402, -0.455, 0.014)
     checkEqualsNumeric(target, current)
-    
-    
+        
     # MPL Fit - method="mpl":
     object = arfimaOxFit(formula = ~ arfima(2, 1), data = x, method = "mpl")
     print(object)
-    target = as.vector(round(coef(object), 1))
+    target = as.vector(round(coef(object), 3))
     print(target)
-    current = c(0.3, 0.5, -0.5, -0.1)
+    current = c(0.293, 0.396, -0.450, 0.030)
     checkEqualsNumeric(target, current)
-    
-    
+       
     # Return Value:
     return()    
 }
@@ -119,7 +116,7 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.arfimaReport = 
+test.arfimaOxReport = 
 function()
 {    
     # Set Path:
@@ -164,7 +161,7 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.arfimaPredict = 
+test.arfimaOxPredict = 
 function()
 {    
     # Set Path:
@@ -194,7 +191,7 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.noTrace = 
+test.arfimaOxNoTrace = 
 function()
 {    
     # Set Ox Path:

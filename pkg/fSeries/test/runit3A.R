@@ -232,9 +232,9 @@ function()
     # Fit:
     Hurst = whittleFit(x)@hurst$H
     print(Hurst)
-    target = round(Hurst, 1)
+    target = round(Hurst, 3)
     print(target)
-    current = 0.7
+    current = 0.701
     checkEquals(target, current)
     
     # Durbin - Simulate:
@@ -245,9 +245,9 @@ function()
     # Fit:
     Hurst = whittleFit(x)@hurst$H
     print(Hurst)
-    target = round(Hurst, 1)
+    target = round(Hurst, 3)
     print(target)
-    current = 0.7
+    current = 0.679
     checkEquals(target, current)
     
     # Paxson - Simulate:
@@ -258,9 +258,9 @@ function()
     # Fit:
     Hurst = whittleFit(x)@hurst$H
     print(Hurst)
-    target = round(Hurst, 1)
+    target = round(Hurst, 3)
     print(target)
-    current = 0.7
+    current = 0.728
     checkEquals(target, current)
     
     # Return Value:
@@ -289,56 +289,56 @@ function()
     # Simulate:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
-    x = fgnSim(n = 500, H = 0.7)
+    x = fgnSim(n = 1000, H = 0.7)
     
     Hurst = aggvarFit(x)@hurst$H
     print(Hurst)
-    target = round(Hurst, 1)
+    target = round(Hurst, 3)
     print(target)
-    current = 0.5
-    checkEquals(target, current)
+    current = 0.731
+    checkEqualsNumeric(target, current)
     
     Hurst = diffvarFit(x)@hurst$H
     print(Hurst)
-    target = round(Hurst, 1)
+    target = round(Hurst, 3)
     print(target)
-    current = 0.9
-    checkEquals(target, current)
+    current = 0.869
+    checkEqualsNumeric(target, current)
     
     Hurst = absvalFit(x)@hurst$H
     print(Hurst)
-    target = round(Hurst, 1)
+    target = round(Hurst, 3)
     print(target)
-    current = 0.6
-    checkEquals(target, current)
+    current = 0.787
+    checkEqualsNumeric(target, current)
     
     Hurst = higuchiFit(x)@hurst$H
     print(Hurst)
-    target = round(Hurst, 1)
+    target = round(Hurst, 3)
     print(target)
-    current = 0.7
-    checkEquals(target, current)
+    current = 0.714
+    checkEqualsNumeric(target, current)
     
     Hurst = pengFit(x)@hurst$H
     print(Hurst)
-    target = round(Hurst, 1)
+    target = round(Hurst, 3)
     print(target)
-    current = 0.6
-    checkEquals(target, current)
+    current = 0.620
+    checkEqualsNumeric(target, current)
     
     Hurst = rsFit(x)@hurst$H
     print(Hurst)
-    target = round(Hurst, 1)
+    target = round(Hurst, 3)
     print(target)
-    current = 0.7
-    checkEquals(target, current)
+    current = 0.594
+    checkEqualsNumeric(target, current)
     
     Hurst = perFit(x)@hurst$H
     print(Hurst)
-    target = round(Hurst, 1)
+    target = round(Hurst, 3)
     print(target)
-    current = 0.6
-    checkEquals(target, current)
+    current = 0.602
+    checkEqualsNumeric(target, current)
     
     # More Estimators:
     # ...
@@ -366,9 +366,9 @@ function()
     # Fit:
     Hurst = waveletFit(x)@hurst$H
     print(Hurst)
-    target = round(Hurst, 1)
+    target = round(Hurst, 3)
     print(target)
-    current = 0.6
+    current = 0.696
     checkEquals(target, current)
     
     # Return Value:

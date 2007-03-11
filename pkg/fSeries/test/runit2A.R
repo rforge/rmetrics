@@ -104,12 +104,18 @@ function()
     # Test x:
     A = adfTest(x)
     print(A)
-    checkTrue(pvalue(A) < 0.05)
+    target = round(pvalue(A), 3)
+    print(target)
+    current = 0.010
+    checkEqualsNumeric(target, current)
     
     # Test x:
     B = adfTest(y)
     print(B)
-    checkTrue(pvalue(B) > 0.15)
+    target = round(pvalue(B), 3)
+    print(target)
+    current = 0.018
+    checkEqualsNumeric(target, current)
    
     # Return Value:
     return()    
@@ -133,14 +139,26 @@ function()
     # Test x:
     A = unitrootTest(x)
     print(A)
-    checkTrue(pvalue(A)[1] < 0.05)
-    checkTrue(pvalue(A)[2] < 0.05)
+    target = pvalue(A)[1]
+    print(target)
+    current = 0.001
+    checkTrue(target < current)
+    target = pvalue(A)[2]
+    print(target)
+    current = 0.001
+    checkTrue(target < current)
     
     # Test x:
     B = unitrootTest(y)    
     print(B)
-    checkTrue(pvalue(B)[1] > 0.15)
-    checkTrue(pvalue(B)[2] > 0.15)
+    target = pvalue(B)[1]
+    print(target)
+    current = 0.01
+    checkTrue(target > current)
+    target = pvalue(B)[2]
+    print(target)
+    current = 0.01
+    checkTrue(target > current)
    
     # Return Value:
     return()    
