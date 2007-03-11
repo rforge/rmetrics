@@ -80,7 +80,8 @@ function()
     OXPATH <<- "C:\\Ox\\Ox3"
     
     # Simulate:
-    set.seed(1985)
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
     x = armaSim(model = list(ar = c(0.5, - 0.5), d = 0.3, ma = 0.1), n = 1000)
     
     # MLE Fit - Default method="mle":
@@ -125,7 +126,8 @@ function()
     OXPATH <<- "C:\\Ox\\Ox3"
     
     # Simulate:
-    set.seed(1985)
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
     x = armaSim(model = list(ar = c(0.5, - 0.5), d = 0.3, ma = 0.1), n = 1000)
     
     # Fit:
@@ -169,7 +171,8 @@ function()
     OXPATH <<- "C:\\Ox\\Ox3"
     
     # Simulate:
-    set.seed(1985)
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
     x = armaSim(model = list(ar = 0.1, d = 0.2, ma = c(0.5, -0.5)), n = 1000)
     
     # Fit:
@@ -198,7 +201,8 @@ function()
     OXPATH <<- "C:\\Ox\\Ox3"
     
     # Simulate:
-    set.seed(1985)
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
     x = armaSim(model = list(ar = 0.65, d = 0.3, ma = 0.65), n = 1000)
     
     # Fit:

@@ -94,7 +94,8 @@ test.adfTest =
 function()
 {  
     # A time series which contains no unit-root:
-    set.seed(4711)
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
     x = rnorm(1000)  
     
     # A time series which contains a unit-root:
@@ -122,7 +123,8 @@ test.unitrootTest =
 function()
 {     
     # A time series which contains no unit-root:
-    set.seed(4711)
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
     x = rnorm(1000)  
     
     # A time series which contains a unit-root:

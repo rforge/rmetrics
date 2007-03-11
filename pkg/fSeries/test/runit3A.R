@@ -90,8 +90,8 @@ function()
     # Graphics Frame:
     par(mfrow = c(3, 2), cex = 0.7)
     
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
-    
     x = fbmSim(n = 50, method = "mvn")
     print(x)
     target = round(mean(x), 2)
@@ -99,32 +99,40 @@ function()
     current = +0.05
     checkEquals(target, current)
     
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
     x = fbmSim(n = 50, method = "chol")
     print(x)
     target = round(mean(x), 2)
     print(target)
-    current = +0.05
+    current = +0.45
     checkEquals(target, current)
     
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
     x = fbmSim(n = 50, method = "lev")
     print(x)
     target = round(mean(x), 2)
     print(target)
-    current = -0.54
+    current = 0.66
     checkEquals(target, current)
     
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
     x = fbmSim(n = 50, method = "circ")
     print(x)
     target = round(mean(x), 2)
     print(target)
-    current = -1.3
+    current = -0.45
     checkEquals(target, current)
     
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
     x = fbmSim(n = 50, method = "wave")
     print(x)
     target = round(mean(x), 2)
     print(target)
-    current = -0.02
+    current = 0.09
     checkEquals(target, current)
     
     # Return Value:
@@ -151,6 +159,7 @@ function()
     # Graphics Frame:
     par(mfrow = c(3, 2), cex = 0.7)
     
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
     
     
@@ -177,6 +186,7 @@ function()
     #   ...) 
 
     # Frequency Method:
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
     x = farimaSim(n = 50, method = "freq")
     print(x)
@@ -187,6 +197,7 @@ function()
     checkEquals(target, current)
     
     # Time Methhod:
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
     x = farimaSim(n = 50, method = "time")
     print(x)
@@ -214,7 +225,8 @@ function()
 
 
     # Beran - Simulate:
-    set.seed(1985, kind = "Marsaglia-Multicarry")
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
     x = fgnSim(n = 1000, H = 0.7)
     
     # Fit:
@@ -226,7 +238,8 @@ function()
     checkEquals(target, current)
     
     # Durbin - Simulate:
-    set.seed(1985)
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
     x = fgnSim(n = 1000, H = 0.7, method = "durbin")
     
     # Fit:
@@ -238,7 +251,8 @@ function()
     checkEquals(target, current)
     
     # Paxson - Simulate:
-    set.seed(1985)
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
     x = fgnSim(n = 1000, H = 0.7, method = "paxson")
     
     # Fit:
@@ -273,7 +287,8 @@ function()
     #   method = 7: perFit 
     
     # Simulate:
-    set.seed(1953, kind = "Marsaglia-Multicarry")
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
     x = fgnSim(n = 500, H = 0.7)
     
     Hurst = aggvarFit(x)@hurst$H
@@ -344,7 +359,8 @@ function()
     #   doplot = FALSE, title = NULL, description = NULL) 
 
     # Simulate:
-    set.seed(1953, kind = "Marsaglia-Multicarry")
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
     x = fgnSim(n = 1000, H = 0.7)
     
     # Fit:

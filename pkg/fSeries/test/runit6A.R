@@ -75,7 +75,8 @@ test.bdsTest =
 function()
 {    
     # iid example:
-    set.seed(4711)
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
     x = rnorm(100)
     plot(x, type = "l", col = "steelblue")
     test = bdsTest(x)
@@ -85,7 +86,8 @@ function()
     checkEqualsNumeric(sum(p.value > 0.1), 8)
     
     # Not identically distributed:
-    set.seed(1985)
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
     x = c(rnorm(50), runif(50))
     test = bdsTest(x)
     print(test)
@@ -94,7 +96,8 @@ function()
     checkEqualsNumeric(sum(p.value < 1e-3), 8)
     
     # Not independent:
-    set.seed(1953)
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
     n = 500
     x = rep(0, times = n)
     for(i in (2:n)) x[i] = 0.4*x[i-1] + tanh(x[i-1]) + rnorm(1, sd = 0.5)
@@ -120,7 +123,8 @@ function()
     # White NN Test:
 
     # See tseries Package:
-    set.seed(4711)
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
     x = runif(1000, -1, 1)   
     plot(x, type = "l", col = "steelblue")
     test = wnnTest(x)
@@ -130,7 +134,8 @@ function()
     checkTrue(as.logical(mean(p.value > 0.5)))
 
     ## Generate time series which is nonlinear in ``mean''
-    set.seed(4711)
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
     n = 1000
     x = rep(0, times = n)
     for(i in (2:n)) x[i] <- 0.4*x[i-1] + tanh(x[i-1]) + rnorm(1, sd = 0.5)
@@ -155,7 +160,8 @@ function()
     # Teraesvirta NN Test:
 
     # See example from tseries Package:
-    set.seed(4711)
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
     x = runif(1000, -1, 1)   
     plot(x, type = "l", col = "steelblue")
     test = tnnTest(x)
@@ -165,7 +171,8 @@ function()
     checkTrue(as.logical(mean(p.value > 0.5)))
    
     ## Generate time series which is nonlinear in ``mean''
-    set.seed(4711)
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
     n = 1000
     x = rep(0, times = n)
     for(i in (2:n)) x[i] <- 0.4*x[i-1] + tanh(x[i-1]) + rnorm(1, sd = 0.5)

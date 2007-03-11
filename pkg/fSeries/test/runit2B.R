@@ -123,7 +123,8 @@ test.urdfTest =
 function()
 {
     # A time series which contains no unit-root:
-    set.seed(4711)
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
     x = rnorm(100)  
     
     # A time series which contains a unit-root:
@@ -145,7 +146,8 @@ test.urersTest =
 function()
 {
     # A time series which contains no unit-root:
-    set.seed(4711)
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
     x = rnorm(100)  
     
     # A time series which contains a unit-root:
@@ -169,7 +171,8 @@ test.urkpssTest =
 function()
 {
     # A time series which contains no unit-root:
-    set.seed(4711)
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
     x = rnorm(100)  
     
     # A time series which contains a unit-root:
@@ -193,7 +196,8 @@ test.urppTest =
 function()
 {
     # A time series which contains no unit-root:
-    set.seed(4711)
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
     x = rnorm(100)  
     
     # A time series which contains a unit-root:
@@ -217,7 +221,8 @@ test.urspTest =
 function()
 {
     # A time series which contains no unit-root:
-    set.seed(4711)
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
     x = rnorm(100)  
     
     # A time series which contains a unit-root:
@@ -241,7 +246,8 @@ test.urzaTest =
 function()
 {        
     # A time series which contains no unit-root:
-    set.seed(4711)
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
     x = rnorm(100)  
     
     # A time series which contains a unit-root:

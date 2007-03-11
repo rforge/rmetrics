@@ -143,7 +143,8 @@ test.ar2Fit =
 function()
 {       
     # Simulate AR(2):
-    set.seed(1953)
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
     x = armaSim(model = list(ar = c(0.5, -0.5)), n = 1000)
     head(x)
     
@@ -234,7 +235,8 @@ test.ar2Report =
 function()
 {    
     # Simulate AR(2):
-    set.seed(1953)
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
     x = armaSim(model = list(ar = c(0.5, -0.5)), n = 1000)
     head(x)
     
@@ -296,7 +298,8 @@ test.ma2Fit =
 function()
 {   
     # Simulate MA(2):
-    set.seed(1953)
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
     x = armaSim(model = list(d = 0, ma = c(0.5, -0.5)), n = 5000)
     
     # To Fit a MA Model use ma(q), arma(0,q) or arima(0, 0, q):
@@ -341,7 +344,8 @@ test.ma2Report =
 function()
 {        
     # Simulate MA(2):
-    set.seed(1953)
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
     x = armaSim(model = list(d = 0, ma = c(0.5, -0.5)), n = 5000)
     
     # To Fit a MA Model use ma(q), arma(0,q) or arima(0, 0, q):
@@ -378,7 +382,8 @@ test.arma21Fit =
 function()
 {
     # Simulate ARMA(2,1):
-    set.seed(1985)
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
     x = armaSim(model = list(ar = c(0.5, -0.5), ma = 0.1), n = 1000)
     
     # Fit:
@@ -427,7 +432,8 @@ test.arma21Report =
 function()
 {            
     # Simulate ARMA(2, 1):
-    set.seed(1953)
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
     x = armaSim(model = list(ar = c(0.5, -0.5), ma = 0.1), n = 1000)
     
     # Fit:
@@ -464,7 +470,8 @@ test.arima211Fit =
 function()
 {
     # Simulate ARIMA(2, 1, 1):
-    set.seed(1985)
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
     x = armaSim(model = list(ar = c(0.5, -0.5), d = 1, ma = 0.1), n = 1000)
     
     # CSS-ML Fit:
@@ -503,7 +510,8 @@ test.arima211Report =
 function()
 {               
     # Simulate:
-    set.seed(4711)
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
     x = armaSim(model = list(ar = c(0.5, -0.5), d = 1, ma = 0.1), n = 1000)
     
     # mle Integrated ARMA Fit:
@@ -540,7 +548,8 @@ test.arfima00Fit =
 function()
 {
     # Simulate ARFIMA(0, 0):
-    set.seed(4711)
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
     x = armaSim(model = list(d = 0.3), n = 1000)
     
     # Fit:
@@ -569,7 +578,8 @@ test.arfima00Report =
 function()
 {               
     # Simulate:
-    set.seed(4711)
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
     x = armaSim(model = list(d = 0.3), n = 1000)
     
     # Fit:
@@ -671,7 +681,8 @@ function()
     #   n.cond, optim.control = list(), kappa = 1e+06) 
 
     # Simulate:
-    set.seed(4711)
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
     x = armaSim(model = list(ar = c(0.5, -0.5), d = 0, ma = 0.1), n = 1000)
     
     # Include Mean - by default:

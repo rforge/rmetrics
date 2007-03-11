@@ -76,37 +76,47 @@ function()
     #  lorentzSim            Simulates series from Lorentz map
     #  roesslerSim           Simulates series from Roessler map
     
-    # Seed:
-    set.seed(4711, kind = "Marsaglia-Multicarry")
     
     # Tent Map:  
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
     par (mfrow = c(1, 1))
     ts = tentSim(n = 1000, n.skip = 100, parms = c(a = 2), start = runif(1), 
         doplot = TRUE) 
         
     # Henon Map - 2D:
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
     par (mfrow = c(1, 1))
     ts = henonSim(n = 1000, n.skip = 100, parms = c(a = 1.4, b = 0.3), 
         start = runif(2), doplot = TRUE) 
     
     # Ikeda Map - 2D:
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
     par (mfrow = c(2, 2))
     ts = ikedaSim(n = 1000, n.skip = 100, parms = c(a = 0.4, b = 6, c = 0.9), 
         start = runif(2), doplot = TRUE) 
     head(ts)
   
     # Logistic Map:
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
     par (mfrow = c(1, 1))
     logisticSim(n = 1000, n.skip = 100, parms = c(r = 4), start = runif(1), 
         doplot = TRUE) 
     
     # Lorentz Map:
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
     par (mfrow = c(3, 2))
     ts = lorentzSim(times = seq(0, 20, by = 0.01), parms = c(sigma = 16, 
         r = 45.92, b = 4), start = c(-14, -13, 47), doplot = TRUE) 
     head(ts)
     
     # Roessler Map:
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
     par (mfrow = c(3, 2))
     ts = roesslerSim(times = seq(0, 80, by = 0.05), parms = c(a = 0.2, 
         b = 0.2, c = 8), start = c(-1.894, -9.92, 0.025), doplot = TRUE) 
