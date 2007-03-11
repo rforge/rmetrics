@@ -65,38 +65,45 @@ function()
     
     Table = adfTable("nc", "t")
     print(Table)
-    checkSum = -15.11
-    checkEqualsNumeric(target = sum(Table), current = checkSum)
+    target = sum(Table$z)
+    print(target)
+    current = -15.11
+    checkEqualsNumeric(target, current)
     
     Table = adfTable("c", "t")
     print(Table)
-    sum(Table) 
-    checkSum = -70.55
-    checkEqualsNumeric(target = sum(Table), current = checkSum)
+    target = sum(Table$z)
+    print(target) 
+    current = -70.55
+    checkEqualsNumeric(target, current)
     
     Table = adfTable("ct", "t")
     print(Table)
-    sum(Table)
-    checkSum = -104.68
-    checkEqualsNumeric(target = sum(Table), current = checkSum)  
+    target = sum(Table$z)
+    print(target)
+    current = -104.68
+    checkEqualsNumeric(target, current)
     
     Table = adfTable("nc", "n")
     print(Table)
-    sum(Table)
-    checkSum = -184.07
-    checkEqualsNumeric(target = sum(Table), current = checkSum) 
+    target = sum(Table$z)
+    print(target)
+    current = -184.07
+    checkEqualsNumeric(target, current)
     
     Table = adfTable("c", "n")
     print(Table)
-    sum(Table)
-    checkSum = -357.11 
-    checkEqualsNumeric(target = sum(Table), current = checkSum)
+    target = sum(Table$z)
+    print(target)
+    current = -357.11 
+    checkEqualsNumeric(target, current)
     
     Table = adfTable("ct", "n")
     print(Table)
-    sum(Table)
-    checkSum = -582.60
-    checkEqualsNumeric(target = sum(Table), current = checkSum)
+    target = sum(Table$z)
+    print(target)
+    current = -582.60
+    checkEqualsNumeric(target, current)
     
     # Return Value:
     return()    

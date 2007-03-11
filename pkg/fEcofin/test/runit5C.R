@@ -88,8 +88,7 @@ function()
     #  plot             S3 Method for plotting hexagonal binned data sets
     
     # Generate Grid Data:
-    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion",
-        rngKind = "Marsaglia-Multicarry", rngNormalKind = "Inversion")
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
     hB = hexBinning(x = rnorm(1000), y = rnorm(1000))
     
@@ -108,7 +107,8 @@ function()
     
 if (FALSE) {
     require(RUnit)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fEcofin/test/runit5C.R")
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fEcofin/test/runit5C.R",
+        rngKind = "Marsaglia-Multicarry", rngNormalKind = "Inversion")
     printTextProtocol(testResult)
 }   
 

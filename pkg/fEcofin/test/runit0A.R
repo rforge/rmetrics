@@ -120,8 +120,10 @@ function()
     #  .histStack                Returns a stacked histogram plot
     
     # Circles Plot:
-    .circlesPlot(x = rnorm(50), y = rnorm(50), size = abs(rnorm(50)))
+    .circlesPlot(x = rnorm(50), y = rnorm(50), z = rnorm(50))
     title(main = "Circles Plot")
+    # ... Note, x may be a vector, a list, a data.frame or a matrix.
+     
     
     # Internal Perspective Plot with "Nice" Default Settings:
     # .perspPlot(x, y, z, theta = -40, phi = 30, col = "steelblue", ps = 9, ...) 
@@ -245,11 +247,11 @@ function()
     .julian(1, 1, 1970)
     
     # Check if the date/time is ISO8601 formatted 
-    .isISO8601(c("2007-01-01", "2007-12-31" ))
-    .isISO8601(c("2007-01-01", "2007-12-31" ))[[1]]
-    .isISO8601("2007-Jan-01")[[1]]
-    .isISO8601("2007-01-01 15:00:000")[[1]]
-    
+    # .isISO8601(c("2007-01-01", "2007-12-31" ))
+    # .isISO8601(c("2007-01-01", "2007-12-31" ))[[1]]
+    # .isISO8601("2007-Jan-01")[[1]]
+    # .isISO8601("2007-01-01 15:00:000")[[1]]
+    # ... should go to fCalendar 
     # Check for an object of class POSIX 
     class(date())
     .isPOSIX(date())
