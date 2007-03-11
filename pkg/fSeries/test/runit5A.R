@@ -35,30 +35,14 @@
 #  logisticSim           Simulates series from Logistic map
 #  lorentzSim            Simulates series from Lorentz map
 #  roesslerSim           Simulates series from Roessler map
-#  .rk4                  Internal Funtion - Runge-Kutta Solver
-################################################################################
-
-################################################################################
 # FUNCTION:             PHASE SPACE REPRESENTATION:
 #  mutualPlot            Creates mutual information plot
-#  .embeddPSR
-#  .checkEmbParams
 #  fnnPlot               Creates false nearest neigbours plot
 # FUNCTION:             NON STATIONARITY PLOTS:
 #  recurrencePlot        Creates recurrence plot
 #  separationPlot        Creates space-time separation plot
 # FUNCTION:             LYAPUNOV EXPONENTS:
-#  lyapunovPlot          Maximum Lyapunov plot    
-#  .find.nearest
-#  .follow.points
-#  .lyapunovFit            
-# FUNCTION:             DIMENSIONS AND ENTROPY:
-#  ...
-################################################################################
-
-################################################################################
-# FUNCTION:             TIME SERIES TESTS:
-#                        -> B1-TimeSeriesTests
+#  lyapunovPlot          Maximum Lyapunov plot               
 ################################################################################
 
 
@@ -82,27 +66,122 @@ function()
 # ------------------------------------------------------------------------------
 
 
+test.chaosSim = 
+function()
+{  
+    #  tentSim               Simulates series from Tent map
+    #  henonSim              Simulates series from Henon map 
+    #  ikedaSim              Simulates series from Ikeda map
+    #  logisticSim           Simulates series from Logistic map
+    #  lorentzSim            Simulates series from Lorentz map
+    #  roesslerSim           Simulates series from Roessler map
+    
+    # Seed:
+    set.seed(4711, kind = "Marsaglia-Multicarry")
+    
+    # Tent Map:  
+    par (mfrow = c(1, 1))
+    ts = tentSim(n = 1000, n.skip = 100, parms = c(a = 2), start = runif(1), 
+        doplot = TRUE) 
+        
+    # Henon Map - 2D:
+    par (mfrow = c(1, 1))
+    ts = henonSim(n = 1000, n.skip = 100, parms = c(a = 1.4, b = 0.3), 
+        start = runif(2), doplot = TRUE) 
+    
+    # Ikeda Map - 2D:
+    par (mfrow = c(2, 2))
+    ts = ikedaSim(n = 1000, n.skip = 100, parms = c(a = 0.4, b = 6, c = 0.9), 
+        start = runif(2), doplot = TRUE) 
+    head(ts)
+  
+    # Logistic Map:
+    par (mfrow = c(1, 1))
+    logisticSim(n = 1000, n.skip = 100, parms = c(r = 4), start = runif(1), 
+        doplot = TRUE) 
+    
+    # Lorentz Map:
+    par (mfrow = c(3, 2))
+    ts = lorentzSim(times = seq(0, 20, by = 0.01), parms = c(sigma = 16, 
+        r = 45.92, b = 4), start = c(-14, -13, 47), doplot = TRUE) 
+    head(ts)
+    
+    # Roessler Map:
+    par (mfrow = c(3, 2))
+    ts = roesslerSim(times = seq(0, 80, by = 0.05), parms = c(a = 0.2, 
+        b = 0.2, c = 8), start = c(-1.894, -9.92, 0.025), doplot = TRUE) 
+    head(ts)
+    
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.henonSlider = 
+function()
+{
+    # Henon Slider:
+    henonSlider = function()
+    {  
+        refresh.code = function(...)
+        {
+            # Sliders:
+            N = .sliderMenu(no = 1)
+            a = .sliderMenu(no = 2)
+            b = .sliderMenu(no = 3)
+            
+            # Plot Henon Map:      
+            ts = henonSim(n = N, n.skip = 100, parms = c(a = a, b = b), 
+                start = c(pi/4, exp(1)/4), doplot = TRUE) 
+            
+            # Frame:
+            par(mfrow = c(1, 1), cex = 0.7)
+        }
+      
+        # Open Slider Menu:
+        .sliderMenu(refresh.code,
+           names =       c( "N",    "a",     "b"),
+           minima =      c( 100,   1.00,    0.00),
+           maxima =      c(5000,   2.00,    1.00),
+           resolutions = c( 100,   0.01,    0.01),
+           starts =      c(2000,   1.40,    0.30))
+    }
+    
+    # Try:
+    # henonSlider()
+    
+    # Return Value:
+    return() 
+}
+
+    
+# ------------------------------------------------------------------------------
+
+
 test.phaseSpace = 
 function()
 {  
     # Mutual Information Index:
+    par(mfrow = c(1, 1))
     lorentz = lorentzSim(
         times = seq(0, 40, by = 0.01), 
         parms = c(sigma = 16, r = 45.92, b = 4), 
         start = c(-14, -13, 47), 
         doplot = FALSE) 
     mutualPlot(x = lorentz[, 2], partitions = 16, lag.max = 20, doplot = TRUE) 
-   
     
     # False Nearest Neighbours:
+    par(mfrow = c(1, 1))
     roessler = roesslerSim(
         times = seq(0, 100, by = 0.01), 
         parms = c(a = 0.2, b = 0.2, c = 8), 
         start = c(-1.894, -9.92, 0.025), 
         doplot = FALSE)
     falsennPlot(x = roessler[, 2], m = 6, d = 8, t = 180, eps = 1, rt = 3)
-
-    
+   
     # Return Value:
     return()    
 }
@@ -115,6 +194,7 @@ test.nonStationarity =
 function()
 {  
     # Recurrence Plot:
+    par(mfrow = c(2, 2), cex = 0.7)
     lorentz = lorentzSim(
         times = seq(0, 40, by = 0.01), 
         parms = c(sigma = 16, r = 45.92, b = 4), 
@@ -127,8 +207,8 @@ function()
     recurrencePlot(lorentz[, 4], m = 3, d = 2, end.time = 800, eps = 3, 
         nt = 5, pch = '.', cex = 2)
         
-
     # Separation Plot:
+    par(mfrow = c(1, 1))
     roessler = roesslerSim(
         times = seq(0, 100, by = 0.01), 
         parms = c(a = 0.2, b = 0.2, c = 8), 
@@ -140,7 +220,6 @@ function()
     # Return Value:
     return()    
 }
-
 
 
 # ------------------------------------------------------------------------------

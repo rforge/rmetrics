@@ -35,8 +35,6 @@
 # FUNCTION:                 NONLINEARITY TESTS:
 #  wnnTest                   White Neural Network Test for Nonlinearity
 #  tnnTest                   Teraesvirta Neural Network Test for Nonlinearity
-# REQUIREMENTS:            DESCRIPTION:
-#  embed                    Required from fBasics.A0-SPlusCompatibility
 ################################################################################
 
 

@@ -95,24 +95,6 @@ function()
 }
 
 
-test.zzz = function()
-{
-    
-    set.seed(4711, kind = "Marsaglia-Multicarry")
-    x = rnorm(1000)
-    #print(x)
-    target = round(var(x), 2)
-    print(target)
-    current = 0.98
-    print(current)
-    checkEquals(target, current)
-    
-    
-    
-    return() 
-}
-
-
 # ------------------------------------------------------------------------------
 
 
