@@ -33,7 +33,6 @@
 #  akimaInterp         Interpolates and Smoothes Irregularly Distributed Points
 #  akimaInterpp        Interpolates and Smoothes pointwise
 #  krigeInterp         Kriges Irregularly Distributed Data Points
-#  .circlesPlot        Creates a scatterplot with circle size as third variable
 ################################################################################
 
 
@@ -344,58 +343,6 @@ yo = seq(min(y), max(y), length = gridPoints), extrap = FALSE, polDegree = 6)
     
     # Return Value:
     ans
-}
-    
-    
-################################################################################
-
-
-.circlesPlot = 
-function(x, y = NULL, z = NULL, scale = 1, points = TRUE, 
-labels = TRUE, ...)
-{   # A function implemented by Diethelm Wuertz
-    
-    # Description:  
-    #   Creates a scatterplot with circle size as third variable
-    
-    # Example:
-    #   circlesPlot(x=rnorm(50), y=rnorm(50), z=rnorm(50))
-    #   circlesPlot(x=rnorm(50), y=rnorm(50), z=rnorm(50), labels= FALSE)
- 
-    # FUNCTION:
-    
-    # Transfor Input:
-    if (is.list(x)) x = matrix(unlist(x), ncol = 3)
-    if (is.data.frame(x)) x = as.matrix.data.frame(x)
-    if (is.matrix(x)) {
-        z = x[, 3]
-        y = x[, 2]
-        x = x[, 1]
-    }
-    nX = length(x)
-    nY = length(y)
-    nZ = length(z)
-    stopifnot(nX == nY)
-    stopifnot(nX == nZ || nX*nY == nZ)
-    
-    # Create Circle Plot:
-    if (labels) {
-        plot(x, y, type = "n")
-    } else {
-        plot(x, y, xlab = "", ylab = "", type = "n")
-    }
-    symbols(x, y, add = TRUE, circles = abs(z)^scale, inches = 0.25, 
-        fg = "black", bg = "steelblue", ...) 
-    X = x[z<0]
-    Y = y[z<0]
-    Z = z[z<0]
-    symbols(X, Y, add = TRUE, circles = abs(Z)^scale, inches = 0.25, 
-        fg = "black", bg = "orange", ...)
-    if (points) points(x, y, pch = 19)
-    grid()
-    
-    # Return Value:
-    invisible(NULL)
 }
 
 
