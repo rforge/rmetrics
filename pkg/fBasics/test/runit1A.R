@@ -74,6 +74,8 @@ test.seriesPlot =
 function()
 {
     # Time Series:
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
     tD = timeSequence(from = "2004-07-01", to = "2005-06-30")
     nD = length(tD)
     tS = timeSeries(cbind(N = rnorm(nD), T = rt(nD, 4)), tD)
@@ -94,6 +96,8 @@ test.histPlot =
 function()
 {
     # Time Series:
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
     tD = timeSequence(from = "2004-07-01", to = "2005-06-30")
     nD = length(tD)
     tS = timeSeries(cbind(N = rnorm(nD), T = rt(nD, 4)), tD)
@@ -114,6 +118,8 @@ test.densityPlot =
 function()
 {    
     # Time Series:
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
     tD = timeSequence(from = "2004-07-01", to = "2005-06-30")
     nD = length(tD)
     tS = timeSeries(cbind(N = rnorm(nD), T = rt(nD, 4)), tD)
@@ -134,13 +140,15 @@ test.quantilePlot =
 function()
 {    
     # Time Series:
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
     tD = timeSequence(from = "2004-07-01", to = "2005-06-30")
     nD = length(tD)
     tS = timeSeries(cbind(N = rnorm(nD), T = rt(nD, 4)), tD)
       
     # Quantile Plot:
     par(mfrow = c(1, 1))
-    quantilePlot(tS)
+    qqnormPlot(tS)
 
     # Return Value:
     return()    
@@ -157,6 +165,8 @@ test.basicStats =
 function()
 {    
     # Time Series:
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
     tD = timeSequence(from = "2004-07-01", to = "2005-06-30")
     nD = length(tD)
     tS = timeSeries(cbind(N = rnorm(nD), T = rt(nD, 4)), tD)
@@ -186,6 +196,8 @@ test.basicStats =
 function()
 {    
     # Time Series:
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
     tD = timeSequence(from = "2004-07-01", to = "2005-06-30")
     nD = length(tD)
     tS = timeSeries(cbind(N = rnorm(nD), T = rt(nD, 4)), tD)
@@ -206,7 +218,8 @@ function()
 
 if (FALSE) {
     require(RUnit)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fBasics/test/runit1A.R")
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fBasics/test/runit1A.R",
+        rngKind = "Marsaglia-Multicarry", rngNormalKind = "Inversion")
     printTextProtocol(testResult)
 }
 
