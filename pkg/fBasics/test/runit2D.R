@@ -36,10 +36,6 @@
 #  tFit                 Fits parameters of a Student-t density
 # FUNCTION:            STABLE DISTRIBUTION:
 #  stableFit            Fits parameters of a stable density
-#  .phiStable            Creates contour table for McCulloch estimators
-#  .PhiStable            Contour table created by .phiStable()
-#  .qStableFit           Estimates stable parameters by McCulloch approach
-#  .mleStableFit         Estimates stable parameters by MLE approach
 # FUNCTION:            GENERALIZED DISTRIBUTION:
 #  ghFit                Fits parameters of a generalized hyperbolic density
 #  hypFit               Fits parameters of a hyperbolic density
@@ -67,7 +63,7 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.normFit = 
+test.nFit = 
 function()
 { 
     # Graph Frame:

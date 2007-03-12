@@ -33,18 +33,12 @@
 #  pgh                   Returns probability for generalized hyperbolic DF
 #  qgh                   Returns quantiles for generalized hyperbolic DF
 #  rgh                   Returns random variates for generalized hyperbolic DF
-#  .rghyp                  Internal functions for the evaluation
-#  .rgigjd                 of random variates for the generalized
-#  .rgigjd1                hyperbolic distribution function ...
 # FUNCTION:             DESCRIPTION:
 #  dhyp                  Returns density for hyperbolic DF
 #  phyp                  Returns probability for hyperbolic DF
 #  qhyp                  Returns quantiles for hyperbolic DF
 #  rhyp                  Returns random variates for hyperbolic DF
-#  hypMode               Computes the hyperbolic mode
-#  .*hyp[1234]             [1], ..., [4] first to fourth parameterization
-#  .hyp[1234]Mode          [1], ..., [4] first to fourth parameterization
-#  .BesselK1             Internal Function  
+#  hypMode               Computes the hyperbolic mode 
 # FUNCTION:             DESCRIPTION:
 #  dnig                  Returns density for inverse Gaussian DF
 #  pnig                  Returns probability for for inverse Gaussian DF
@@ -166,6 +160,35 @@ function()
     # Return Value:
     return()    
 }
+
+
+# ------------------------------------------------------------------------------
+
+
+test.hypSlider = 
+function()
+{
+    # Try:
+    hypSlider()
+    
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.nigSlider = 
+function()
+{
+    # Try:
+    nigSlider()
+    
+    # Return Value:
+    return()    
+}
+
 
 
 # ------------------------------------------------------------------------------
