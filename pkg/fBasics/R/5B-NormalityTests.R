@@ -1024,8 +1024,8 @@ function(x)
     names(STATISTIC) = "LM"
     
     # The rest goes as parameters ...
-    pvalLM = 1 - pjb(STATISTIC, N = n, type = "LM")
-    pvalALM = 1 - pjb(ALM, N = n, type = "ALM")
+    pvalLM = 1 - .pjb(STATISTIC, N = n, type = "LM")
+    pvalALM = 1 - .pjb(ALM, N = n, type = "ALM")
     PARAMETER = c(ALM, n, pvalLM, pvalALM)  
     names(PARAMETER) = c( "ALM", "Sample Size", "LM p-value", "ALM p-value" )
         

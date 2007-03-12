@@ -74,7 +74,6 @@ function()
 test.normalTests = 
 function()
 {   
-    
     # Normal Data:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
@@ -119,11 +118,6 @@ function()
     TEST = sfTest(X)
     print(TEST)
     checkIdentical(as.character(class(TEST)), "fHTEST")
-    
-    TEST = runsTest(X)
-    print(TEST)
-    checkIdentical(as.character(class(TEST)), "htest")
-    
 }  
 
 
@@ -133,12 +127,13 @@ function()
 test.normalTestsTS = 
 function()
 {      
-    URL = "http://www.itp.phys.ethz.ch/econophysics/R/data/textbooks/"
-    SRC = "ZivotWang/data/msft.dat.csv"
-    DATA = paste(URL, SRC, sep = "") 
-    download.file(DATA, destfile = "msft.dat.csv")
-    msft.dat = readSeries("msft.dat.csv")
-    X = returnSeries(msft.dat[, 1])
+    # URL = "http://www.itp.phys.ethz.ch/econophysics/R/data/textbooks/"
+    # SRC = "ZivotWang/data/msft.dat.csv"
+    # DATA = paste(URL, SRC, sep = "") 
+    # download.file(DATA, destfile = "msft.dat.csv")
+    # msft.dat = readSeries("msft.dat.csv")
+    # from Ecofin ...
+    X = returnSeries(as.timeSeries(data(msft.dat)))[, 1]
     
     TEST = ksnormTest(X)
     print(TEST)
@@ -179,10 +174,6 @@ function()
     TEST = sfTest(X)
     print(TEST)
     checkIdentical(as.character(class(TEST)), "fHTEST")
-    
-    TEST = runsTest(X)
-    print(TEST)
-    checkIdentical(as.character(class(TEST)), "htest")
 }
 
 
