@@ -72,29 +72,34 @@ function()
 
 test.gh = 
 function()
-{
-    par(ask = FALSE)
-    par(mfrow = c(1, 1))
-    
+{ 
     # gh() Distribution:
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
     test = .distCheck("gh", 
         alpha = 1.3, beta = 0.3, delta = 1, mu = 0, lambda = 1)
     print(test)
     checkTrue(mean(test) == 1)
     
     # gh() Distribution, continued:
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
     test = .distCheck("gh", 
         alpha = 1.3, beta = 0.3, delta = 1, mu = 0, lambda = 0.8)
     print(test)
     checkTrue(mean(test) == 1)
     
     # gh() Distribution, continued:
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
     test = .distCheck("gh", 
         alpha = 1.3, beta = 0.3, delta = 1.7, mu = 0.5, lambda = 0.8)
     print(test)
     checkTrue(mean(test) == 1)
     
     # gh() Distribution, continued:
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
     test = .distCheck("gh", 
         alpha = 1.3, beta = 0.3, delta = 1.7, mu = 0.5, lambda = 0.8)
     print(test)
@@ -111,15 +116,16 @@ function()
 test.hyp = 
 function()
 {
-    par(ask = FALSE)
-    par(mfrow = c(1, 1))
-    
     # hyp() Distribution - Parameterization 1:
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
     test = .distCheck("hyp", alpha = 1, beta = 0.3, delta = 1)
     print(test)
     checkTrue(mean(test) == 1)
     
     # hyp() Distribution - Parameterization 2:
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
     test = .distCheck("hyp", alpha = 1, beta = 0.3, delta = 1, pm = 2)
     print(test)
     checkTrue(mean(test) == 1)
@@ -148,11 +154,10 @@ function()
 
 test.nig = 
 function()
-{
-    par(ask = FALSE)
-    par(mfrow = c(1, 1))
-    
+{   
     # nig() Distribution:
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
     test = .distCheck("nig", alpha = 1, beta = 0.1, delta = 1)
     print(test)
     checkTrue(mean(test) == 1)

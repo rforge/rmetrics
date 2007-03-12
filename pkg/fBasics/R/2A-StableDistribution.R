@@ -207,7 +207,7 @@ function(n, alpha)
 # ------------------------------------------------------------------------------
 
 
-.symstb =
+.symstbR =
 function(x, alpha)
 {   # A function implemented by Diethelm Wuertz
 
@@ -351,6 +351,26 @@ function(x, alpha)
     # Return Value:
     cbind(x = X, p = prob, d = dens)
 }  
+
+
+# ------------------------------------------------------------------------------
+
+
+.symstb = 
+function (x, alpha) 
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Returns symmetric alpha-stable pdf/cdf
+    
+    # Distribution:
+    ans = .Fortran("symstb", as.double(x), as.double(1:length(x)), 
+        as.double(1:length(x)), as.integer(length(x)), as.double(alpha), 
+        PACKAGE = "fBasics")
+        
+    # Return Value:
+    cbind(x = x, p = ans[[2]], d = ans[[3]])
+}
 
 
 ################################################################################

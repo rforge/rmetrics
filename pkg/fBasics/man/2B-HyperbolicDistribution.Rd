@@ -212,13 +212,13 @@ Raible S. (2000);
  
 ## nig - 
    # Plot empirical density and compare with true density:
-   hist(r, n = 25, probability = TRUE, border = "white", col = "steelblue4")
+   hist(r, n = 25, probability = TRUE, border = "white", col = "steelblue")
    x = seq(-5, 5, 0.25)
    lines(x, dnig(x, alpha = 1, beta = 0.3, delta = 1))
  
 ## nig -  
    # Plot df and compare with true df:
-   plot(sort(r), (1:5000/5000), main = "Probability", col = "steelblue4")
+   plot(sort(r), (1:5000/5000), main = "Probability", col = "steelblue")
    lines(x, pnig(x, alpha = 1, beta = 0.3, delta = 1))
    
 ## nig -
