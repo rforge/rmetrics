@@ -34,9 +34,6 @@
 #  shapiroTest           Shapiro-Wilk normality test
 #  jarqueberaTest        Jarque-Bera normality test
 #  dagoTest              D'Agostino normality test
-#   .skewness.test        ... internal function
-#   .kurtosis.test        ... internal function
-#   .omnibus.test         ... internal function
 # FUNCTION:             FROM NORTEST PACKAGE:
 #  adTest                Anderson-Darling normality test
 #  cvmTest               Cramer-von Mises normality test
@@ -50,7 +47,6 @@
 #  jbTable               Table of finite sample p values for the JB test
 #  pjb                   Computes probabilities for the Jarque Bera Test
 #  qjb                   Computes quantiles for the Jarque Bera Test
-#  .jb.test               S3 version type finite sample adjusted JB test
 #  jbTest                Performs finite sample adjusted JB LM and ALM test
 ################################################################################
   
