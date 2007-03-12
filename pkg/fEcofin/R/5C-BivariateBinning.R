@@ -1,3 +1,4 @@
+
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
 # License as published by the Free Software Foundation; either
@@ -34,6 +35,12 @@
 #  hexBinning          Hexagonal binning of irregularly distributed data sets
 #  plot                S3 Method for plotting hexagonal binned data sets
 ################################################################################
+
+
+################################################################################
+# FUNCTION:           DESCRIPTION:
+#  squareBinning       Square binning of irregularly distributed data sets
+#  plot                S3 Method for plotting square binned data sets
 
 
 squareBinning = 
@@ -176,6 +183,9 @@ function(x, col = heat.colors(12), addPoints = TRUE, addRug = TRUE, ...)
 
 
 ################################################################################
+# FUNCTION:           DESCRIPTION:
+#  hexBinning          Hexagonal binning of irregularly distributed data sets
+#  plot                S3 Method for plotting hexagonal binned data sets
 
 
 hexBinning = 

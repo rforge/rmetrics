@@ -63,12 +63,15 @@
 
 
 ################################################################################
-#  .align.timeSeries    Aligns a 'timeSeries' object
-#  diff.timeSeries      Differences a 'timeSeries' object
-#  lag.timeSeries       Lags a 'timeSeries' object
-#  merge.timeSeries     Merges two 'timeSeries' objects
-#  scale.timeSeries     Centers and/or scales a 'timeSeries' object
-#  var.timeSeries       Returns variance for a 'timeSeries' object
+# METHOS:                MODIFICATION METHODS:
+#  .align.timeSeries      Aligns a timeSeries object
+#  diff.timeSeries        Differences a 'timeSeries' object
+#  lag.timeSeries         Lags a 'timeSeries' object
+#  merge.timeSeries       Merges two 'timeSeries' objects
+#  rbind.timeSeries       Binds rows of two 'timeSeries' objects
+#  cumsum.timeSeries      Returns cumulated sums of 'timeSeries' objects
+#  scale.timeSeries       Centers and/or scales a 'timeSeries' object
+#  var.timeSeries         Returns variance for a 'timeSeries' object
 
 
 .align.timeSeries = 
@@ -470,11 +473,13 @@ function (x, y = NULL, na.rm = FALSE, use)
 
 
 ################################################################################
+# METHODS:               MATHEMATICAL OPERATIONS ON DATA:
 #  Ops.timeSeries         Returns group 'Ops' for a 'timeSeries' object
 #  abs.timeSeries         Returns abolute values of a 'timeSeries' object
 #  sqrt.timeSeries        Returns sqrt values of a 'timeSeries' object
 #  exp.timeSeries         Returns exponentials of a 'timeSeries' object
 #  log.timeSeries         Returns logarithms of a 'timeSeries' object
+#  sign.timeSeries        Returns the signs of a 'timeSeries' object
 #  quantile.timeSeries    Produces sample quantiles of a 'timeSeries' object
 
 
@@ -688,6 +693,7 @@ function(x, probs = 0.95, ...)
 
 
 ################################################################################
+# METHODS:               DATABASE ATTACHEMENT:
 #  attach.timeSeries      Attaches a 'timeSeries' object
 
 
@@ -710,11 +716,12 @@ warn.conflicts = TRUE)
 
 
 ################################################################################
+# METHODS:               SUBSETTING METHODS ON DATA:
 #  [.timeSeries           Subsets of a 'timeSeries' object
 #  cut.timeSeries         Cuts a block from a 'timeSeries' object
 #  head.timeSeries        Returns the head of a 'timeSeries' object
 #  tail.timeSeries        Returns the tail of a 'timeSeries' object
-#  outlier.timeSeries     Removes outliers from a 'timeSeries' object 
+#  outlier.timeSeries     Removes outliers from a 'timeSeries' object  
 
 
 "[.timeSeries" =
@@ -952,11 +959,12 @@ function(x, sd = 10, complement = TRUE, ...)
 
 
 ################################################################################
+# METHODS:               DIM OPERATIONS ON DATA: 
 #  dim.timeSeries         Returns dimension of a 'timeSeries' object
 #  dimnames.timeDSeries   Returns dimension names of a 'timeSeries' object
 #  colnames<-.timeSeries  Assigns column names to a 'timeSeries' object
 #  rownames<-.timeSeries  Assigns row names to a 'timeSeries' object
-#  is.array.timeSeries    Allows that NCOL and NROW work properly
+#  is.array.timeSeries    Allows that NCOL and NROW work properly 
 
 
 dim.timeSeries =

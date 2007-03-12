@@ -34,6 +34,12 @@
 ################################################################################
 
  
+################################################################################
+# FUNCTION:            PLOT UTILITIES:
+#  interactivePlot      Plots several graphs interactively
+#  gridVector           Creates from two vectors rectangular grid points
+
+
 interactivePlot = 
 function(x, choices = paste("Plot", 1:9), 
 plotFUN = paste("plot.", 1:9, sep = ""), which = "all", ...)

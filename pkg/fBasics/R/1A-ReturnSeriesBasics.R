@@ -43,6 +43,7 @@
 
 
 ################################################################################    
+# FUNCTION:               TAILORED PLOT FUNCTIONS:
 #  seriesPlot              Returns a tailored return series plot
 #  histPlot                Returns a tailored histogram plot
 #  densityPlot             Returns a tailored kernel density estimate plot
@@ -311,12 +312,6 @@ function(x, col = "steelblue", main = x@units, labels = TRUE, ...)
 ################################################################################
 # FUNCTION:               BASIC STATISTICS:
 #  basicStats              Returns a basic statistics summary
-# FUNCTION:               DESCRIPTION:
-#  .distCheck              Checks consistency of distributions
-#  .bootMean               Boottraps the population mean
-# FUNCTION:               SPLUS FUNCTIONALITY:
-#  stdev                   S-PLUS: Returns the standard deviation of a vector
-################################################################################
 
 
 basicStats = 
@@ -394,9 +389,10 @@ function(x, ci = 0.95)
 }
 
 
-# ------------------------------------------------------------------------------
-#  .distCheck            Checks consistency of distributions
-#  .bootMean             Boottraps the population mean
+################################################################################
+# FUNCTION:               DESCRIPTION:
+#  .distCheck              Checks consistency of distributions
+#  .bootMean               Boottraps the population mean
 
 
 .distCheck = 
@@ -480,8 +476,9 @@ function(fun = "norm", n = 1000, seed = 4711, ...)
 }
 
 
-# ------------------------------------------------------------------------------
-# stdev                 S-PLUS: Returns the standard deviation of a vector
+################################################################################
+# FUNCTION:               SPLUS FUNCTIONALITY:
+#  stdev                   S-PLUS: Returns the standard deviation of a vector
 
 
 stdev = 

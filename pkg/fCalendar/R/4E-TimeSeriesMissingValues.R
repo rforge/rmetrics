@@ -35,6 +35,13 @@
 ################################################################################
 
 
+################################################################################
+# FUNCTION:      DESCRIPTION: 
+#  removeNA       Remove NAs from a matrix object
+#  substituteNA   Substitute NAs by zero, the column mean or median
+#  interpNA       Interpolate NAs using R's "approx" function
+
+
 removeNA = 
 function (x, ...) 
 {   # A function implemented by Diethelm Wuertz

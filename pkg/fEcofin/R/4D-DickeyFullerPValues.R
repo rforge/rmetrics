@@ -36,7 +36,11 @@
 
 
 ################################################################################
-# Note: x=-3:0; y=0:3; z=outer(x,y,"*"); rownames(z)=x; colnames(z)=y; z
+# FUNCTION:            AUGMENTED DICKEY FULLER DATA TABLES:
+# adfTable              Finite sample p values for the Dickey-Fuller test
+# .adfPlot              Plots sample p values for the Dickey-Fuller test
+# padf                  Returns probabilities  for the ADF Test given quantiles
+# qadf                  Returns quantiles for the ADF Test given probabilities
 
 
 adfTable =
@@ -45,6 +49,9 @@ function(trend = c("nc", "c", "ct"), statistic = c("t", "n"), includeInf = TRUE)
 
     # Description:     
     #   Tables critical values for augmented Dickey-Fuller test.
+    
+    # Note: 
+    #   x=-3:0; y=0:3; z=outer(x,y,"*"); rownames(z)=x; colnames(z)=y; z
     
     # Examples:
     #   adfTable()

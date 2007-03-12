@@ -35,6 +35,13 @@
 ################################################################################
 
 
+################################################################################
+# FUNCTION:                 CHARACTER, SYMBOL AND COLOR TABLES:
+#  characterTable            Shows a table of character codes 
+#  symbolTable               Shows a table of plot symbols
+#  colorTable                Shows a table of plot color codes
+
+
 characterTable = 
 function(font = 1, cex = 0.7) 
 {   # A function implemented by Diethelm Wuertz

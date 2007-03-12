@@ -57,6 +57,7 @@
 
 
 ################################################################################
+# FUNCTION:             DESCRIPTION:
 #  dgh                   Returns density for generalized hyperbolic DF
 #  pgh                   Returns probability for generalized hyperbolic DF
 #  qgh                   Returns quantiles for generalized hyperbolic DF
@@ -1286,6 +1287,7 @@ function(a.bar = 1, b.bar = 0, delta  = 1, mu = 0)
 
 
 ################################################################################
+# FUNCTION:             DESCRIPTION:
 #  dnig                  Returns density for inverse Gaussian DF
 #  pnig                  Returns probability for for inverse Gaussian DF
 #  qnig                  Returns quantiles for for inverse Gaussian DF 
@@ -1392,6 +1394,7 @@ function(n, alpha = 1, beta = 0, delta = 1, mu = 0)
 
 
 ################################################################################
+# FUNCTION:             DESCRIPTION:
 #  hypSlider             Displays hyperbolic distribution function
 #  nigSlider             Displays normal inverse Gausssian distribution function
 

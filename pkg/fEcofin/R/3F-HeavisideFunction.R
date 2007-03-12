@@ -34,8 +34,18 @@
 #  Delta                 Computes delta function
 #  Boxcar                Computes boxcar function
 #  Ramp                  Computes ramp function
+# FUNCTION:             HEAVISIDE SLIDER:
 #  .heavisideSlider      Displays Heaviside and related functions
 ################################################################################
+
+
+################################################################################
+# FUNCTION:             HEAVISIDE AND RELATED FUNCTIONS:
+#  Heaviside             Computes Heaviside unit step function
+#  Sign                  Another signum function
+#  Delta                 Computes delta function
+#  Boxcar                Computes boxcar function
+#  Ramp                  Computes ramp function
 
 
 Heaviside = 
@@ -178,7 +188,9 @@ function(x, a = 0)
 }
 
 
-# ------------------------------------------------------------------------------
+################################################################################
+# FUNCTION:             HEAVISIDE SLIDER:
+#  .heavisideSlider      Displays Heaviside and related functions
 
 
 .heavisideSlider =

@@ -39,23 +39,6 @@
 
 
 ################################################################################
-# DESCRIPTION:
-#  A Simple Portable Random Number Generator for Use in R and Splus
-#  Use this generator only for comparisons of Programs in R and Splus !!!
-#  Method: A linear congruential generator with
-#    LCG(a=13445, c=0, m=2^31-1, X0)
-#    Note, this is a random number generator which passes the bitwise 
-#    randomness test.
-#  Reference: 
-#    http://csep1.phy.ornl.gov/rn/node13.html 
-#    N. S. Altman. ``Bitwise Behavior of Random Number Generators,'' 
-#    SIAM J. Sci. Stat. Comput., 9(5), September, pps. 941-949, 1988
-#  Example:
-#    set.lcgseed(4711)
-#    cbind(runif.lcg(100), rnorm.lcg(100), rt.lcg(100, df=4))
-
-
-################################################################################
 #  set.lcgseed               Sets initial random seed
 #  get.lcgseed               Gets the current valus of the random seed
 
@@ -67,6 +50,22 @@ function(seed = 4711)
     # Description:
     #   Sets the random seed for the linear congruential 
     #   random number generator
+    
+    # Notes:
+    #   A Simple Portable Random Number Generator for Use in R and Splus
+    #   Use this generator only for comparisons of Programs in R and Splus !!!
+    #   Method: A linear congruential generator with
+    #       LCG(a=13445, c=0, m=2^31-1, X0)
+    #       Note, this is a random number generator which passes the bitwise 
+    #       randomness test.
+    #   Reference: 
+    #       http://csep1.phy.ornl.gov/rn/node13.html 
+    #       N. S. Altman. ``Bitwise Behavior of Random Number Generators,'' 
+    #       SIAM J. Sci. Stat. Comput., 9(5), September, pps. 941-949, 1988
+    
+    #   Example:
+    #       set.lcgseed(4711)
+    #       cbind(runif.lcg(100), rnorm.lcg(100), rt.lcg(100, df=4))
 
     # FUNCTION:
     

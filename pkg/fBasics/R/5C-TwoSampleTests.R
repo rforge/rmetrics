@@ -52,7 +52,8 @@
 
 
 ################################################################################
-# Distribution Tests:
+# FUNCTION:             DISTRIBUTIONAL TESTS:
+#  ks2Test               Performs a two sample Kolmogorov-Smirnov test
 
 
 ks2Test = 
@@ -139,6 +140,10 @@ function(x, y, title = NULL, description = NULL)
 
 
 ################################################################################
+# FUNCTION:             LOCATION TESTS:
+#  locationTest          Performs locations tests on two samples
+#  .tTest                Unpaired t test for differences in mean
+#  .kw2Test              Kruskal-Wallis test for differences in locations  
 
 
 locationTest =
@@ -379,6 +384,11 @@ function(x, y, title = NULL, description = NULL)
 
 
 ################################################################################
+# FUNCTION:             VARIANCE TESTS:
+#  varianceTest          Performs variance tests on two samples
+#  .varfTest             F test for differences in variances
+#  .bartlett2Test        Bartlett's test for differences in variances
+#  .fligner2Test         Fligner-Killeen test for differences in variances
 
 
 varianceTest =
@@ -574,8 +584,8 @@ function(x, y, title = NULL, description = NULL)
 }
 
 
-################################################################################
-   
+# ------------------------------------------------------------------------------
+  
 
 .fligner2Test = 
 function(x, y, title = NULL, description = NULL)
@@ -642,6 +652,10 @@ function(x, y, title = NULL, description = NULL)
 
 
 ################################################################################
+# FUNCTION:             SCALE TESTS:
+#  scaleTest             Performs scale tests on two samples
+#  .ansariTest           Ansari-Bradley test for differences in scale
+#  .moodTest             Mood test for differences in scale
 
 
 scaleTest =
@@ -1083,6 +1097,11 @@ function(x, y, title = NULL, description = NULL)
 
 
 ################################################################################
+# FUNCTION:             CORRELATION TESTS:
+#  correlationTest       Performs correlation tests on two samples
+#  .pearsonTest          Pearson product moment correlation coefficient
+#  .kendallTest          Kendall's tau correlation test
+#  .spearmanTest         Spearman's rho correlation test
 
 
 correlationTest =

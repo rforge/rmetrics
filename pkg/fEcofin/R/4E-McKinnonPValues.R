@@ -42,7 +42,10 @@
 
 
 ################################################################################
-# MC KINNON'S PROBABILIY AND QUANTILES:
+# FUNCTION:          MC KINNON'S PROBABILIY AND QUANTILES:
+#  punitroot          Returns cumulative probability for unit root distributions
+#  qunitroot          Returns quantiles for unit root distributions
+#  unitrootTable      Returns McKinnon's unitroot finite sample test table
 
 
 punitroot =
@@ -219,7 +222,10 @@ function(trend = c("c", "nc", "ct", "ctt"), statistic = c("t", "n"))
 
 
 ################################################################################
-# INTERNAL UTILITY FUNCTIONS:
+# FUNCTION:          INTERNAL UTILITY FUNCTIONS:
+#  .strsplitUrcval    Implements string split function for S-Plus compatibility
+#  .urcval            Implements unit root statists
+#  .probsUrcval       Implements probability values
 
 
 .strsplitUrcval = 
@@ -459,7 +465,6 @@ structure(list(
     "209", "210", "211", "212", "213", "214", "215", "216", "217", 
     "218", "219", "220", "221")
 )
-
 
 ################################################################################
 # FUNCTION:          INTERNAL DATA SETS:

@@ -48,6 +48,7 @@
 
 
 ################################################################################
+# S3 MEHOD:              COERCION AND OBJECT TRANSFORMATIONS:
 #  as.timeDate            Use Method
 #  as.timeDate.POSIXt     Returns a 'POSIX' object as 'timeDate' object
 #  as.timeDate.Date       Returns a 'POSIX' object as 'timeDate' object
@@ -151,6 +152,7 @@ function(x, zone = myFinCenter, FinCenter = myFinCenter)
 
 
 ################################################################################
+# S3 METHOD:             DESCRIPTION:
 #  as.character.timeDate  Returns a 'timeDate' object as 'character' string
 #  as.double.timeDate     Returns a 'timeDate' object as 'numeric' object
 #  as.data.frame.timeDate Returns a 'timeDate' object as 'data.frame' object
@@ -403,6 +405,7 @@ function(x, method = c("trunc", "round", "next"), ...)
 
 
 ################################################################################
+# S3 METHOD:             DESCRIPTION:
 #  julian.timeDate        Returns Julian day counts since 1970-01-01
 #  atoms.timeDate         Returns date/time atoms from a 'timeDate' object
 #  months.timeDate        Extract months atom from a 'timeDate' object

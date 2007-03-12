@@ -48,6 +48,7 @@
 
 
 ################################################################################   
+# FUNCTION:            DESCRIPTION:
 #  'fDISTFIT'           S4 Class Representation
 #  .print.fDISTFIT       Prints Results from a Fitted Distribution
 #  show.fDISTFIT         Prints Results from a Fitted Distribution
@@ -109,6 +110,7 @@ setMethod("show", "fDISTFIT", show.fDISTFIT)
 
 
 ################################################################################
+# FUNCTION:            NORMAL AND STUDENT-t DISTRIBUTION:
 #  nFit                 Fits parameters of a Normal density
 #  tFit                 Fits parameters of a Student-t density
 
@@ -268,6 +270,7 @@ title = NULL, description = NULL, ...)
 
 
 ################################################################################
+# FUNCTION:            STABLE DISTRIBUTION:
 #  stableFit            Fits parameters of a stable density
 #  .phiStable            Creates contour table for McCulloch estimators
 #  .PhiStable            Contour table created by .phiStable()
@@ -797,6 +800,7 @@ trace = FALSE, title = NULL, description = NULL)
 
 
 ################################################################################
+# FUNCTION:            GENERALIZED DISTRIBUTION:
 #  ghFit                Fits parameters of a generalized hyperbolic density
 #  hypFit               Fits parameters of a hyperbolic density
 #  nigFit               Fits parameters of a normal inverse Gaussian density

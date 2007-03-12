@@ -60,6 +60,7 @@
 
 
 ################################################################################  
+# FUNCTION:              SETTINGS:
 #  currentYear               Sets date of the current year
 #  .currentYear              Sets date of the current year
 #  myUnits                   Sets date units

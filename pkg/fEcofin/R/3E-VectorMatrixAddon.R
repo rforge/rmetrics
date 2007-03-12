@@ -89,15 +89,10 @@
 #  tslag                R  Lagged or leading vector/matrix of selected order(s)
 #  .tslag1                 Internal Function used by tslag
 #  pdl                  R  Regressor matrix for polynomial distributed lags  
-################################################################################
-
-
-################################################################################
-# NOTES:
-#  WHERE YOU FIND THE FUCTIONS?
-#   R  Basic R Package
-#   B  Rmetrics fBasics Package
-#   M  This Rmetrics fMultivar Package
+# NOTES:                WHERE YOU FIND THE FUCTIONS?
+#                       R  Basic R Package
+#                       B  Rmetrics fBasics Package
+#                       M  This Rmetrics fMultivar Package
 ################################################################################
 
 

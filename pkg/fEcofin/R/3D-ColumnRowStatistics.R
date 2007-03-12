@@ -28,7 +28,7 @@
 
 
 ################################################################################
-# FUNCTION:             ROW AND COLUMN STATISTICS:
+# FUNCTION:             ROW STATISTICS:
 #  rowStats              Computes sample statistics by row
 #   rowAvgs               Computes sample mean by row
 #   rowVars               Computes sample variance by row
@@ -36,6 +36,7 @@
 #   rowSkewness           Computes sample skewness by row
 #   rowKurtosis           Computes sample kurtosis by row
 #   rowCumsums            Computes sample cumulated sums by row
+# FUNCTION:             COLUMN STATISTICS:
 #  colStats              Computes sample statistics by column
 #   colAvgs               Computes sample mean by column
 #   colVars               Computes sample variance by column
@@ -44,6 +45,17 @@
 #   colKurtosis           Computes sample kurtosis by column
 #   colCumsums            Computes sample cumulated sums by column
 ################################################################################
+
+
+################################################################################
+# FUNCTION:             ROW STATISTICS:
+#  rowStats              Computes sample statistics by row
+#   rowAvgs               Computes sample mean by row
+#   rowVars               Computes sample variance by row
+#   rowStdevs             Computes sample variance by row
+#   rowSkewness           Computes sample skewness by row
+#   rowKurtosis           Computes sample kurtosis by row
+#   rowCumsums            Computes sample cumulated sums by row
 
 
 rowStats = 
@@ -247,6 +259,14 @@ function(x, na.rm = FALSE, ...)
 
 
 ################################################################################
+# FUNCTION:             COLUMN STATISTICS:
+#  colStats              Computes sample statistics by column
+#   colAvgs               Computes sample mean by column
+#   colVars               Computes sample variance by column
+#   colStdevs             Computes sample variance by column
+#   colSkewness           Computes sample skewness by column
+#   colKurtosis           Computes sample kurtosis by column
+#   colCumsums            Computes sample cumulated sums by column
 
 
 colStats = 

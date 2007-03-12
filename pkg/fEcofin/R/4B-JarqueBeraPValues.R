@@ -40,7 +40,11 @@
 
 
 ################################################################################
-# Note: x=-3:0; y=0:3; z=outer(x,y,"*"); rownames(z)=x; colnames(z)=y; z
+# FUNCTION:           JARQUE-BERA DATA TABLES:
+# .jbTable             Finite sample p values for the Jarque Bera test
+# .jbPlot              Plots probabilt
+# .pjb                 Returns probabilities for the JB Test given quantiles
+# .qjb                 Returns quantiles for the ADF Test given probabilities
 
 
 .jbTable = 
@@ -53,6 +57,9 @@ function(type = c("LM", "ALM"), size = c("mini", "small", "all"))
     # Details:
     #   The function jbTable() returns a data.frame with rows denoting 
     #   size and columns denoting probabilities 0 < p < 1.
+    
+    # Note:
+    #   x=-3:0; y=0:3; z=outer(x,y,"*"); rownames(z)=x; colnames(z)=y; z
     
     # Example:
     #   .jbTable()
@@ -131,7 +138,7 @@ function(type = c("LM", "ALM"))
 
 
 
-################################################################################
+# ------------------------------------------------------------------------------
 
 
 .pjb = 
@@ -250,7 +257,10 @@ function(p, N = Inf, trend = c("nc", "c", "ct"), statistic = c("t", "n"))
 } 
 
 
-################################################################################
+################################################################################              
+# DATA:               Description:
+# .jbLM                Jarque-Bera Lagrange Multiplier Test Data
+# .jbALM               Jarque Bera Augmented Lagrange Multiplier Test Data
 
 
 .jbALM =

@@ -42,6 +42,7 @@
 
 
 ################################################################################
+# FUNCTION:             DESCRIPTION:
 #  acfPlot               Displays autocorrelations function plot
 #  pacfPlot              Displays partial autocorrelation function plot
 #  ccfPlot               Displays cross correlation function plot

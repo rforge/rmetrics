@@ -1,3 +1,4 @@
+
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
 # License as published by the Free Software Foundation; either
@@ -34,6 +35,15 @@
 #  akimaInterpp        Interpolates and Smoothes pointwise
 #  krigeInterp         Kriges Irregularly Distributed Data Points
 ################################################################################
+
+
+################################################################################
+# FUNCTION:           BIVARIATE GRIDDED INTERPOLATION:
+#  linearInterp        Interpolates Linearly Irregularly Distributed Data Points
+#  linearInterpp       Interpolates Linearly pointwise
+#  akimaInterp         Interpolates and Smoothes Irregularly Distributed Points
+#  akimaInterpp        Interpolates and Smoothes pointwise
+#  krigeInterp         Kriges Irregularly Distributed Data Points
 
 
 linearInterp =   

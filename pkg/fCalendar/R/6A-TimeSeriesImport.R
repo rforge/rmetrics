@@ -38,8 +38,9 @@
 #  fredImport            Downloads market data from St. Louis FED web site
 #  forecastsImport       Downloads monthly data from www.forecasts.org
 # FUNCTION:             IMPORT STATISTICS - EXPERIMENTELL:
-#  keystatsImport        Downloads key statistics from Yahoo's web site  
-#  print.keystats        Print Method for internal function .keystatsImport
+#  keystatsImport       Downloads key statistics from Yahoo's web site 
+#  .keystatsImport      Downloads key statistics from Yahoo's web site  
+#  print.keystats       Print Method for internal function .keystatsImport
 # FUNCTION:             EASY TO USE ROUTINES:
 #  yahooSeries           Easy to use download from Yahoo
 #  .yahooSeries          Utility function  called by 'yahooSeries'
@@ -52,6 +53,7 @@
 
 
 ################################################################################
+# FUNCTION:             DESCRIPTION:
 #  fWEBDATA              Class Representation
 #  show.fWEBDATA         S4 Show Method
 
@@ -103,10 +105,10 @@ setMethod("show", "fWEBDATA", show.fWEBDATA)
 
 
 ################################################################################
+# FUNCTION:             IMPORT DATA FUNCTIONS:
 #  economagicImport      Downloads market data from EconoMagic's web site
 #  yahooImport           Downloads market data from Yahoo's web site 
 #  .yahooImport          ... the old download function 
-#  .keystatsImport       Downloads key statistics from Yahoo's web site  
 #  fredImport            Downloads market data from St. Louis FED web site
 #  forecastsImport       Downloads monthly data from www.forecasts.org
 
@@ -541,9 +543,10 @@ source = "http://www.forecasts.org/data/data/", save = FALSE, try = TRUE)
 
 
 ################################################################################
+# FUNCTION:             IMPORT STATISTICS - EXPERIMENTELL:
 #  keystatsImport       Downloads key statistics from Yahoo's web site 
 #  .keystatsImport      Downloads key statistics from Yahoo's web site  
-#  print.keystats       Print Method for internal function .keystatsImpor
+#  print.keystats       Print Method for internal function .keystatsImport
 
 
 keystatsImport =  
@@ -763,6 +766,7 @@ function(x, ...)
 
 
 ################################################################################
+# FUNCTION:             EASY TO USE ROUTINES:
 #  yahooSeries           Easy to use download from Yahoo
 #  .yahooSeries          Utility function  called by 'yahooSeries'
 
@@ -934,9 +938,13 @@ function(symbol = "DPRIME")
  
 
 ################################################################################
+# FUNCTION:             EASY TO USE ROUTINES:
+#  yahooSeries           Easy to use download from Yahoo
+#  .yahooSeries          Utility function  called by 'yahooSeries'
+# FUNCTION:             ONLY FOR SPLUS VERSION:
 #  as.Date               S-PLUS: Converts date represenatation
 #  data                  S-PLUS: Loads or lists specified data sets
-#  download.file         S-PLUS: Downloads from Internet using "lynx" or "wget"
+#  download.file         S-PLUS: Downloads using "lynx" or "wget"
 #  strsplit              S-PLUS: Splits character vector into substrings
 
 

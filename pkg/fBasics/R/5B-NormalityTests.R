@@ -49,6 +49,18 @@
 ################################################################################
 
 
+################################################################################
+# FUNCTION:             NORMALITY TESTS:
+#  normalTest            Test suite for normality tests S-Plus compatible
+#  ksnormTest            One sample Kolmogorov-Smirnov normality test
+#  shapiroTest           Shapiro-Wilk normality test
+#  jarqueberaTest        Jarque-Bera normality test
+#  dagoTest              D'Agostino normality test
+#   .skewness.test        ... internal function called by dagoTest
+#   .kurtosis.test        ... internal function called by dagoTest
+#   .omnibus.test         ... internal function called by dagoTest
+
+
 normalTest =
 function(x, method = c("sw", "jb"), na.rm = FALSE) 
 {   # A function implemented by Diethelm Wuertz
@@ -311,26 +323,22 @@ function(x, title = NULL, description = NULL)
 }
 
 
-# ******************************************************************************
-# D'Agostino Test
-
-# http://adela.karlin.mff.cuni.cz/~klaster/vyuka/
-
-# Materiály pro cvicení, která byla v labu, jsou zde: cv01.txt, 
-# cv02.txt, cv03.txt, cv05.txt, cv06.txt, data maths, police a  
-# vysky a makro dagost.r. Výber nejakých príkladu ze cvicení je 
-# tady. 
-
-# Program R lze zdarma (GNU General Public Licence) stáhnout z 
-# www.r-project.org. Alespon k letmému nahlédnutí doporucuji též 
-# minimanuál An Introduction to R, který roste tamtéž. Další 
-# materiály vcetne dvou zacátecnických prírucek najdete na 
-# stránkách Dr. Kulicha.
-
-
 .skewness.test =
 function(x) 
 {   # Internal Function for D'Agostino Normality Test:
+
+    # Note:
+    #   D'Agostino Test
+    #   http://adela.karlin.mff.cuni.cz/~klaster/vyuka/
+    #   Materiály pro cvicení, která byla v labu, jsou zde: cv01.txt, 
+    #   cv02.txt, cv03.txt, cv05.txt, cv06.txt, data maths, police a  
+    #   vysky a makro dagost.r. Výber nejakých príkladu ze cvicení je 
+    #   tady. 
+    #   Program R lze zdarma (GNU General Public Licence) stáhnout z 
+    #   www.r-project.org. Alespon k letmému nahlédnutí doporucuji též 
+    #   minimanuál An Introduction to R, který roste tamtéž. Další 
+    #   materiály vcetne dvou zacátecnických prírucek najdete na 
+    #   stránkách Dr. Kulicha.
 
     # FUNCTION:
     
@@ -526,8 +534,13 @@ function(x, title = NULL, description = NULL)
 }
 
 
-# ******************************************************************************
-# 'nortest' Tests:
+################################################################################
+# FUNCTION:             FROM NORTEST PACKAGE:
+#  adTest                Anderson-Darling normality test
+#  cvmTest               Cramer-von Mises normality test
+#  lillieTest            Lilliefors (Kolmogorov-Smirnov) normality test 
+#  pchiTest              Pearson chi-square normality test 
+#  sfTest                Shapiro-Francia normality test     
 
 
 adTest =
@@ -959,7 +972,10 @@ function(x, title = NULL, description = NULL)
 }
 
 
-# ******************************************************************************
+################################################################################    
+# FUNCTION ADDON:       AUGMENTED FINITE SAMPLE JB TEST:
+#  jbTest                Performs finite sample adjusted JB LM and ALM test
+#  .jb.test               S3 version type finite sample adjusted JB test
 
 
 .jb.test =

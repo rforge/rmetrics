@@ -53,6 +53,7 @@
 
 
 ################################################################################
+# METHODS:                  CREATE A TIMESERIES FROM OTHER OBJECTS:
 #  is.timeSeries             Tests for a 'timeSeries' object
 #  as.timeSeries             Defines method for a 'timeSeries' object
 #  as.timeSerie.default      Returns the input
@@ -283,10 +284,11 @@ function(x, ...)
 
 
 ################################################################################ 
+# METHODS:                  TRANSFORM A TIMESERIES INTO OTHER OBJECTS:
 #  as.vector.timeSeries      Converts a univariate 'timeSeries' to a vector
 #  as.matrix.timeSeries      Converts a 'timeSeries' to a 'matrix'
-#  as.data.frame.teries      Converts a 'timeSeries' to a 'data.frame'
-#  as.ts.timeSeries          Converts a 'timeSeries' to a 'ts' 
+#  as.data.frame.timeSeries  Converts a 'timeSeries' to a 'data.frame'
+#  as.ts.timeSeries          Converts a 'timeSeries' to a 'ts'     
 
 
 as.vector.timeSeries =

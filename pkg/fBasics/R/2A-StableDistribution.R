@@ -48,6 +48,7 @@
 
 
 ################################################################################
+# FUNCTION:             SYMMETRIC STABLE DISTRIBUTION:
 #  dsymstb               Returns density for symmetric stable DF
 #  psymstb               Returns probabilities for symmetric stable DF
 #  qsymstb               Returns quantiles for symmetric stable DF
@@ -353,6 +354,7 @@ function(x, alpha)
 
 
 ################################################################################
+# FUNCTIONS:            STABLE DISTRIBUTION:
 #  dstable               Returns density for stable DF
 #  pstable               Returns probabilities for stable DF
 #  qstable               Returns quantiles for stable DF
@@ -967,6 +969,7 @@ function (f, lower, upper, subdivisions, rel.tol, abs.tol, ...)
 
 
 ################################################################################
+# FUNCTION:             STABLE SLIDERS:
 #  symstbSlider          Displays symmetric stable distribution function
 #  stableSlider          Displays stable distribution function
 

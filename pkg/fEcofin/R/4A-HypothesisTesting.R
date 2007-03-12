@@ -34,6 +34,12 @@
 ################################################################################
 
 
+################################################################################
+# FUNCTION:             CLASS AND METHODS:
+#  'fHTEST'              S4 Class Representation
+#  show.fHTEST           S4 Print Method
+
+
 setClass("fHTEST", 
     representation(
         call = "call",

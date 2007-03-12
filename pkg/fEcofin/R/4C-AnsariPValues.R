@@ -1,3 +1,4 @@
+
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
 # License as published by the Free Software Foundation; either
@@ -37,7 +38,12 @@
 
 
 ################################################################################
-# Note: x=-3:0; y=0:3; z=outer(x,y,"*"); rownames(z)=x; colnames(z)=y; z
+# FUNCTION:            AUGMENTED DICKEY FULLER DATA TABLES:
+# .ansariTable          Finite sample p values for the Dickey-Fuller test
+# .ansariPlot           Plots
+# .dansari              Returns densities for the ADF Test given quantiles
+# .pansari              Returns probabilities for the ADF Test given quantiles
+# .qansari              Returns quantiles for the ADF Test given probabilities 
 
 
 .ansariTable =
@@ -46,6 +52,9 @@ function()
 
     # Description:     
     #   Tables critical values for augmented Dickey-Fuller test.
+    
+    # Note:
+    #   x=-3:0; y=0:3; z=outer(x,y,"*"); rownames(z)=x; colnames(z)=y; z
     
     # Examples:
     #   .ansariTable()

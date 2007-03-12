@@ -30,10 +30,16 @@
 ################################################################################
 # FUNCTION:                 COLOR PALETTES:
 #  greyPalette               Creates a grey palette
+# FUNCTION:                 CONVERSION HEXIMAL/DECIMAL:
 #  .chcode                   Changes from one to another number system
 #  .hex.to.dec               Converts heximal numbers do decimal numbers
 #  .dec.to.hex               Converts decimal numbers do heximal numbers
 ################################################################################
+
+
+################################################################################
+# FUNCTION:                 COLOR PALETTES:
+#  greyPalette               Creates a grey palette
 
 
 greyPalette = 
@@ -69,7 +75,11 @@ function(n = 64, start = 255-n, end = 255)
 }
 
 
-# ------------------------------------------------------------------------------  
+################################################################################
+# FUNCTION:                 CONVERSION HEXIMAL/DECIMAL:
+#  .chcode                   Changes from one to another number system
+#  .hex.to.dec               Converts heximal numbers do decimal numbers
+#  .dec.to.hex               Converts decimal numbers do heximal numbers  
 
 
 .chcode = 
