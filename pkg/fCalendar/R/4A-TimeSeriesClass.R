@@ -135,10 +135,7 @@ documentation = NULL, ...)
     #   data.mat = matrix(round(rnorm(30),2), 10)
     #   charvec =  paste("2004-01-", c(paste("0", 1:9, sep=""), 10:30), sep="")
     #   timeSeries(data.mat, charvec)
-   
-    # Changes:
-    #
-    
+  
     # FUNCTION:
 
     # Trace:
@@ -239,10 +236,7 @@ FinCenter = myFinCenter, title = NULL, documentation = NULL, ...)
     # Notes:
     #   Note we expect that the header of the spreadsheet file in
     #   the first cell holds the time/date format specification! 
-    
-    # Changes:
-    #
-    
+ 
     # FUNCTION:
     
     # Read Data:
@@ -291,10 +285,7 @@ trim = TRUE, digits = 4, units = NULL)
 
     # Value:
     #   Returns a S4 object of class 'timeSeries'.
-    
-    # Changes:
-    #
-    
+
     # FUNCTION:
     
     # Type:
@@ -378,10 +369,7 @@ function(x, trim = FALSE, units = c("secs", "mins", "hours"))
 
     # Value:
     #   Returns a S4 object of class 'timeSeries'.
-    
-    # Changes:
-    #
-    
+  
     # FUNCTION:
     
     # Positions and Durations:
@@ -462,9 +450,6 @@ documentation = x@documentation, ...)
     #   'adj'-acent endpoint are not needed, all the information
     #   is kept in the 'from' and 'to' position vectors.
   
-    # Changes:
-    #
-    
     # FUNCTION:
     
     # Check object:
@@ -592,10 +577,7 @@ function(x)
     # Value:
     #   A named list with the order statistics for each column of
     #   the inputted series.
-    
-    # Changes:
-    #
-    
+
     # FUNCTION:
     
     # Order Statistics
@@ -636,10 +618,7 @@ function(object)
     
     # Value:
     #    Returns an object of class 'matrix'.
-    
-    # Changes:
-    #
-    
+
     # FUNCTION:
     
     # Test:
@@ -662,10 +641,7 @@ function(x)
 
     # Description:
     #   Tests if an object of class timeSeries is univariate
-    
-    # Changes:
-    #
-       
+     
     # FUNCTION:
     
     # Is univariate ?
@@ -698,10 +674,7 @@ function(x)
     
     # Examples:
     #   isMultivariate(as.timeSeries(data(daxRet)))
-    
-    # Changes:
-    #
-    
+
     # FUNCTION:
     
     # Test:
@@ -756,10 +729,7 @@ function(x, recordIDs = FALSE, ...)
     
     # Value:
     #   Prints a 'timeSeries' object.
-        
-    # Changes:
-    #
-    
+   
     # FUNCTION:
         
     # Series:
@@ -891,10 +861,7 @@ function(x, ...)
         
     # Value:
     #   Plots a 'timeSeries' object.
-    
-    # Changes:
-    #
-    
+
     # FUNCTION:
    
     # Add to Plot:
@@ -922,10 +889,7 @@ zone = myFinCenter, FinCenter = myFinCenter)
     # Arguments:
     #   x - a numeric vector 
     #   origin - the first date in the series
-    
-    # Changes:
-    #
-    
+  
     # FUNCTION:
     
     # Check:

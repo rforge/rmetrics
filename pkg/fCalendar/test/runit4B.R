@@ -78,17 +78,14 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.modifyTimeSeries = 
+test.diffTimeSeries = 
 function()
 {
     # diff.timeSeries      Differences a 'timeSeries' object
-    # lag.timeSeries       Lags a 'timeSeries' object
-    # merge.timeSeries     Merges two 'timeSeries' objects
-    # scale.timeSeries     Centers and/or scales a 'timeSeries' object
-    # summary.timeSeries   Summarizes a 'timeDate' object
-    # var.timeSeries       Returns variance for a 'timeSeries' object
 
     # Univariate Series:
+    # Multivariate Data Set:
+    set.seed(4711)
     data = cbind(RNORM = round(rnorm(6), 2))
     charvec = timeCalendar()[1:6]
     recordIDs = data.frame(IDs = LETTERS[1:6])
@@ -131,7 +128,34 @@ function()
     # X = diff(x = uTS, lag = 2, diff = 2, trim = TRUE, pad = NA)
     # X
     # X@recordIDs
-     
+  
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.lagTimeSeries = 
+function()
+{
+    # lag.timeSeries       Lags a 'timeSeries' object
+         
+    # Univariate Series:
+    set.seed(4711)
+    data = cbind(RNORM = round(rnorm(6), 2))
+    charvec = timeCalendar()[1:6]
+    recordIDs = data.frame(IDs = LETTERS[1:6])
+    uTS = timeSeries(data, charvec, recordIDs = recordIDs)
+    
+    # Multivariate Data Set:
+    set.seed(4711)
+    data = cbind(round(rnorm(12), 2), round(rt(12, df = 4), 2) )
+    charvec = format(timeCalendar(2006))
+    mTS = timeSeries(data, charvec, units = c("RNORM", "RT"))
+    mTS 
+    
     # Time Series Lags:
     X = lag(x = uTS, k = 1, trim = FALSE, units = NULL)
     X 
@@ -146,17 +170,32 @@ function()
     X 
     X@recordIDs 
     
-    # Multivariate Data Set:
-    set.seed(4711)
-    data = cbind(round(rnorm(12), 2), round(rt(12, df = 4), 2) )
-    charvec = format(timeCalendar(2006))
-    mTS = timeSeries(data, charvec, units = c("RNORM", "RT"))
-    mTS 
-    mTS@recordIDs
-    
     # Multivariaye Series:
     diff(mTS, 1, 1)
     lag(mTS, 1)
+    
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.mergeTimeSeries = 
+function()
+{
+    # merge.timeSeries     Merges two 'timeSeries' objects
+    # scale.timeSeries     Centers and/or scales a 'timeSeries' object
+    # summary.timeSeries   Summarizes a 'timeDate' object
+    # var.timeSeries       Returns variance for a 'timeSeries' object
+         
+    # Univariate Series:
+    set.seed(4711)
+    data = cbind(RNORM = round(rnorm(6), 2))
+    charvec = timeCalendar()[1:6]
+    recordIDs = data.frame(IDs = LETTERS[1:6])
+    uTS = timeSeries(data, charvec, recordIDs = recordIDs)
     
     # Merge:
     X = uTS
@@ -165,17 +204,96 @@ function()
     merge(x = X[-6], y = Y[-3], units = c("RN", "logAbsRN"))      
     merge(x = X[2:5], y = Y[4:6], units = c("RN", "logAbsRN"))     
     
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.scaleTimeSeries = 
+function()
+{
+    # scale.timeSeries     Centers and/or scales a 'timeSeries' object
+     
+    # Univariate Series:
+    set.seed(4711)
+    data = cbind(RNORM = round(rnorm(6), 2))
+    charvec = timeCalendar()[1:6]
+    recordIDs = data.frame(IDs = LETTERS[1:6])
+    uTS = timeSeries(data, charvec, recordIDs = recordIDs)
+    
+    # Multivariate Data Set:
+    set.seed(4711)
+    data = cbind(round(rnorm(12), 2), round(rt(12, df = 4), 2) )
+    charvec = format(timeCalendar(2006))
+    mTS = timeSeries(data, charvec, units = c("RNORM", "RT"))
+    
     # Scale:
     scale(uTS)
     scale(mTS)
+    
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.summaryTimeSeries = 
+function()
+{
+    # summary.timeSeries   Summarizes a 'timeDate' object
+     
+    # Univariate Series:
+    set.seed(4711)
+    data = cbind(RNORM = round(rnorm(6), 2))
+    charvec = timeCalendar()[1:6]
+    recordIDs = data.frame(IDs = LETTERS[1:6])
+    uTS = timeSeries(data, charvec, recordIDs = recordIDs)
+    
+    # Multivariate Data Set:
+    set.seed(4711)
+    data = cbind(round(rnorm(12), 2), round(rt(12, df = 4), 2) )
+    charvec = format(timeCalendar(2006))
+    mTS = timeSeries(data, charvec, units = c("RNORM", "RT"))
     
     # Summary:
     summary(uTS)
     summary(mTS)
     
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.varTimeSeries = 
+function()
+{
+    # var.timeSeries       Returns variance for a 'timeSeries' object
+     
+    # Univariate Series:
+    set.seed(4711)
+    data = cbind(RNORM = round(rnorm(6), 2))
+    charvec = timeCalendar()[1:6]
+    recordIDs = data.frame(IDs = LETTERS[1:6])
+    uTS = timeSeries(data, charvec, recordIDs = recordIDs)
+    
+    # Multivariate Data Set:
+    set.seed(4711)
+    data = cbind(round(rnorm(12), 2), round(rt(12, df = 4), 2) )
+    charvec = format(timeCalendar(2006))
+    mTS = timeSeries(data, charvec, units = c("RNORM", "RT"))
+    
     # Covariance Matrix:
     var(x = uTS, y = NULL, na.rm = FALSE)
     var(x = mTS, y = NULL, na.rm = FALSE)
+    
     # Note, using function cov() fails, since cov() requires an atomic
     #   object as input.
 

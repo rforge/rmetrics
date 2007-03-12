@@ -35,12 +35,6 @@
 ################################################################################
 
 
-################################################################################
-#  holiday             Returns a holiday date of G7 and CH 
-#  holidayNYSE         Returns 'timeDate' object for full-day NYSE holidays
-#  holidayZURICH       Returns 'timeDate' object for ZURICH holidays
-
-
 holiday = 
 function(year = currentYear, Holiday = "Easter")
 {   # A function implemented by Diethelm Wuertz

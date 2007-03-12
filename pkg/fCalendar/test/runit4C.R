@@ -78,8 +78,26 @@ function()
     attr(uTS@positions, "control")<-NULL
     checkIdentical(target = charvec, current = uTS@positions)
     
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.seriesPositions = 
+function()
+{
+    # Generate nivariate daily random sequence
+    set.seed(4711)
+    data = round(rnorm(12), 2)
+    charvec = timeCalendar(2006)
+    uTS = timeSeries(data, charvec, units = "uTS")
+    uTS
+    
     # Add one Day to Positions:
-    newPositions(uTS) <- POS + 24*3600
+    newPositions(uTS) <- POS + 24*3600          # CHECK
     uTS
     
     # Return Value:

@@ -918,6 +918,19 @@ returnClass = c("timeSeries", "zoo", "ts"))
     # Return Value:
     ans
 }
+
+
+# ------------------------------------------------------------------------------
+
+
+.fredSeries = 
+function(symbol = "DPRIME")
+{   
+    data = fredImport(query = symbol)@data
+    data = as.timeSeries(data)
+    colnames(data) <- symbol
+    data
+}
  
 
 ################################################################################

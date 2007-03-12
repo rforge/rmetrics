@@ -85,6 +85,35 @@ function()
 # ------------------------------------------------------------------------------
 
 
+test.easter =
+function()
+{
+    # Easter:
+    .easter()
+    .easterSunday(2007)
+    
+    # Return Value:
+    return()  
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.holidayList =
+function()
+{
+    # Holiday List:
+    .holidayList()
+    
+    # Return Value:
+    return()  
+}
+
+
+# ------------------------------------------------------------------------------
+
+
 
 if (FALSE) {
     require(RUnit)

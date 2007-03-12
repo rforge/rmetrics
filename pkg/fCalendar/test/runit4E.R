@@ -32,8 +32,6 @@
 #  removeNA       Remove NAs from a matrix object
 #  substituteNA   Substitute NAs by zero, the column mean or median
 #  interpNA       Interpolate NAs using R's "approx" function
-#  knnNA          Impute NAs by the "knn"-Algorithm from R's EMV package
-#  .knn           Internal function from package EMV
 ################################################################################
 
 
@@ -74,16 +72,14 @@ function()
     print(x)
     ans = removeNA(x)
     print(ans)
-    
-    
+       
     # Create data.frame object:
     x.df = as.data.frame(x)
     class(x.df)
     ans = removeNA(x.df)
     print(ans)
     class(ans)
-    
-    
+       
     # Create timeSeries object:
     tD = timeCalendar(m = 1, d = 1:N)
     x.tS = timeSeries(x, tD)
@@ -123,8 +119,7 @@ function()
     print(ans)
     ans = substituteNA(x, "median")
     print(ans)
-    
-    
+       
     # Create data.frame object:
     x.df = as.data.frame(x)
     print(x.df)
@@ -137,8 +132,7 @@ function()
     print(ans)
     ans = substituteNA(x.df, "median")
     print(ans)
-    
-    
+      
     # Create timeSeries object:
     tD = timeCalendar(m = 1, d = 1:N)
     x.tS = timeSeries(x, tD)
@@ -197,7 +191,7 @@ function()
 
 if (FALSE) {
     require(RUnit)
-    testResult = runTestFile("C:/Rmetrics/SVN/trunk/fMultivar/test/runit6B.R",
+    testResult = runTestFile("C:/Rmetrics/SVN/trunk/fCalendar/test/runit4E.R",
         rngKind = "Marsaglia-Multicarry", rngNormalKind = "Inversion")
     printTextProtocol(testResult)
 }

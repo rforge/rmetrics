@@ -106,10 +106,7 @@ function(x, ...)
     
     # Value:
     #   Returns a time resampled object of class 'timeSeries'.
-    
-    # Changes:
-    #
-    
+  
     # FUNCTION:
      
     # Data:
@@ -167,10 +164,7 @@ function(x, ...)
     
     # Value:
     #   Returns a time sorted object of class 'timeSeries'.
-    
-    # Changes:
-    #
-    
+
     # FUNCTION:
     
     # Data:
@@ -227,10 +221,7 @@ function(x)
     
     # Value:
     #   Returns a time reverted object of class 'timeSeries'.
-    
-    # Changes:
-    #
-    
+
     # FUNCTION:
     
     # Data:
@@ -271,10 +262,7 @@ function(x, ...)
     
     # Value:
     #   Returns the first time/date as an object of class 'timeDate'.
-  
-    # Changes:
-    #
-    
+
     # FUNCTION:
     
     # S3 Method:
@@ -301,10 +289,7 @@ function(x, ...)
     
     # Value:
     #   Returns the last time/date as an object of class 'timeDate'.
-    
-    # Changes:
-    #
-    
+ 
     # FUNCTION:
     
     # S3 Method:

@@ -83,7 +83,9 @@ function()
     # as.timeSeries.character   Loads and transformas from a demo file
     # as.timeSeries.zoo         Transforms a 'zoo' object into a 'timeSeries'
     
-    set.seed(4711)
+    # Create timeSeries Object:
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
     data = round(rnorm(12), 3)
     charvec = timeCalendar(2006)
     uTS = timeSeries(data, charvec, units = "uTS")
@@ -91,71 +93,55 @@ function()
     checkTrue(inherits(uTS, "timeSeries"))
     checkTrue(is.timeSeries(uTS))
 
+    # Check Positions:
     positions = timeCalendar()
     class(positions)
     .whichFormat(format(positions))
     .whichFormat(as.character(positions))
 
-    # Data Input is a Vector:
+    # Data Input is a Vector - Returns a timeSeries with dummy positions:
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
     x = rnorm(12)
-    positions = timeCalendar()
-    tS = as.timeSeries(x, positions)
-    print(tS)
-    tS = as.timeSeries(x, format(positions))
-    print(tS)
-    tS = as.timeSeries(x, as.character(positions))
-    print(tS)
-    tS = timeSeries(x, positions)
-    print(tS)
-    tS = timeSeries(x, format(positions))
-    print(tS)
-    tS = timeSeries(x, as.character(positions))
-    print(tS)
+        
+    # as.numeric - add dummy dates:
+    data = as.numeric(x)
+    tS = as.timeSeries(data)
+    head(tS)
     
-    # Data Input is a Data Frame:
-    x = data.frame(rnorm(12))
-    tS = as.timeSeries(x, positions)
-    print(tS)
-    tS = as.timeSeries(x, format(positions))
-    print(tS)
-    tS = as.timeSeries(x, as.character(positions))
-    print(tS)
-    tS = timeSeries(x, positions)
-    print(tS)
-    tS = timeSeries(x, format(positions))
-    print(tS)
-    tS = timeSeries(x, as.character(positions))
-    print(tS)
+    # as. numeric [as.vector] - add dummy dates:
+    data = as.vector(x)
+    tS = as.timeSeries(data)
+    head(tS)
     
+    # Data Inpiut is a data.frame:
+    data(msft.dat)
+    x.df = msft.dat
+    head(x.df)
+    # First Column holds Positions:
+    tS = as.timeSeries(x.df)
+    head(tS)
+    # Missing Positions - add dummy dates:
+    x.df = msft.dat[, -1]
+    head(x.df)
+    tS = as.timeSeries(x.df)
+    head(tS)
+
     # Data Input is a Matrix:
-    x = matrix(rnorm(12))
-    tS = as.timeSeries(x, positions)
-    print(tS)
-    tS = as.timeSeries(x, format(positions))
-    print(tS)
-    tS = as.timeSeries(x, as.character(positions))
-    print(tS)
-    tS = timeSeries(x, positions)
-    print(tS)
-    tS = timeSeries(x, format(positions))
-    print(tS)
-    tS = timeSeries(x, as.character(positions))
-    print(tS)
-     
-    # Data Input is an Univariate timeSeries: 
-    x = as.ts(rnorm(12))
-    tS = as.timeSeries(x, positions)
-    print(tS)
-    tS = as.timeSeries(x, format(positions))
-    print(tS)
-    tS = as.timeSeries(x, as.character(positions))
-    print(tS)
-    tS = timeSeries(x, positions)
-    print(tS)
-    tS = timeSeries(x, format(positions))
-    print(tS)
-    tS = timeSeries(x, as.character(positions))
-    print(tS)
+    data(msft.dat)
+    x.mat = as.matrix(msft.dat)
+    # tS = as.timeSeries(x.mat)
+    # head(tS)                              # CHECK
+        
+    # Data Input is an Univariate/Muiltivariate timeSeries: 
+    x = as.timeSeries(msft.dat)
+    class(x)
+    tS = as.timeSeries(x)
+    head(tS)
+    
+    # Note, data is a demo file ... 
+    tS = as.timeSeries(msft.dat)
+    head(tS)
     
     # Return Value:
     return()    
@@ -169,7 +155,6 @@ test.asTimeSeriesDJ1 =
 function()
 {   
     # Load Data:
-    # require(rmetrics)
     # data(DowJones30) 
     # use instead dummy data set just for testing ...
     Data = matrix(exp(cumsum(rnorm(30*100, sd = 0.1))), ncol = 30) 
@@ -234,7 +219,8 @@ function()
     # as.ts.timeSeries          Converts a 'timeSeries' to a 'ts'
       
     # Univariate Case:
-    set.seed(4711)
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
     data = round(rnorm(12), 3)
     charvec = timeCalendar(2006)
     uTS = timeSeries(data, charvec, units = "uTS")
@@ -288,7 +274,8 @@ function()
     # as.ts.timeSeries     Converts a 'timeSeries' to a 'ts'
     
     # Multivariate Case:
-    set.seed(4711)
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
     data = matrix(round(rnorm(24), 3), ncol = 2)
     charvec = timeCalendar(2006)
     mTS = timeSeries(data, charvec)

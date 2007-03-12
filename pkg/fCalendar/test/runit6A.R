@@ -155,15 +155,8 @@ function()
     head(X) 
     class(X)
     
-    # fredSeries() -     
-    fredSeries = function(symbol = "DPRIME")
-    {   
-        data = fredImport(query = symbol)@data
-        data = as.timeSeries(data)
-        colnames(data) <- symbol
-        data
-    }
-    X = fredSeries("DPRIME")
+    # .fredSeries() -     
+    X = .fredSeries("DPRIME")
     head(X)
     class(X)
     

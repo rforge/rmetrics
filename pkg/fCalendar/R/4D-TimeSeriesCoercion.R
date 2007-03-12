@@ -63,6 +63,7 @@
 #  as.timeSeries.character   Loads and transformas from a demo file
 #  as.timeSeries.zoo         Transforms a 'zoo' object into a 'timeSeries'
 
+
 is.timeSeries = 
 function (object) 
 {   # A function implemented by Diethelm Wuertz
@@ -108,9 +109,6 @@ as.timeSeries.default =
 function(x, ...)
 {   # A function implemented by Diethelm Wuertz
 
-    # Changes:
-    #
-    
     # FUNCTION:
     
     # Return Value:
@@ -125,9 +123,6 @@ as.timeSeries.numeric =
 function(x, ...)
 {   # A function implemented by Diethelm Wuertz
 
-    # Changes:
-    #
-    
     # FUNCTION:
     
     # Create a dummay daily 'timeSeries' object:
@@ -148,10 +143,7 @@ function(x, ...)
 
     # Examples:
     #   data(bmwRet); head(as.timeSeries(data(bmwRet)))
-
-    # Changes:
-    #
-    
+ 
     # FUNCTION:
     
     # Check if the first column has a valid ISO-format:
@@ -218,9 +210,6 @@ as.timeSeries.matrix =
 function(x, ...)
 {   # A function implemented by Diethelm Wuertz
 
-    # Changes:
-    #
-    
     # FUNCTION:
     
     # As timeSeries:
@@ -239,9 +228,6 @@ as.timeSeries.ts =
 function(x, ...)
 {   # A function implemented by Diethelm Wuertz
 
-    # Changes:
-    #
-    
     # FUNCTION:
     
     # Create a dummay daily 'timeSeries' object:
@@ -261,10 +247,7 @@ function(x, ...)
 
     # Example:
     #   as.timeSeries(data(nyse))
-    
-    # Changes:
-    #
-    
+ 
     # FUNCTION:
     
     # Load Demo File - Returns a data frame:
@@ -286,9 +269,6 @@ as.timeSeries.zoo =
 function(x, ...)
 {   # A function implemented by Diethelm Wuertz
 
-    # Changes:
-    #
-    
     # FUNCTION:
     
     # as. timeSeries:
@@ -321,10 +301,7 @@ function(x, mode = "any")
     
     # Value:
     #   Returns the data slot of 'timesSeries' object as a vector.
-        
-    # Changes:
-    #
-    
+
     # FUNCTION:
         
     # Check:
@@ -357,10 +334,7 @@ function(x)
     
     # Value:
     #   Returns the data slot of a 'timesSeries' object as a vector.
-    
-    # Changes:
-    #
-    
+ 
     # FUNCTION:
     
     # Check:
@@ -390,10 +364,7 @@ function(x, row.names = NULL, optional = NULL, ...)
     
     # Value:
     #   Returns the data slot of a 'timesSeries' object as a data frame.
-    
-    # Changes:
-    #
-    
+ 
     # FUNCTION:
     
     # Check:
@@ -468,10 +439,7 @@ function(x, mode = "any")
     
     # Value:
     #   Returns the data of an 'zoo' object as a named vector.
-        
-    # Changes:
-    #
-    
+
     # FUNCTION:
         
     # Check:
@@ -509,10 +477,7 @@ function(x)
     
     # Example:
     #   require(tseries); as.matrix(get.hist.quote("IBM"))
-    
-    # Changes:
-    #
-    
+  
     # FUNCTION:
     
     # Check:
@@ -547,10 +512,7 @@ function(x, probs = 0.95, ...)
     
     # Examples:
     #   quantile(as.timeSeries(data(daxRet)))
-    
-    # Changes:
-    #
-    
+ 
     # FUNCTION:
     
     # Convert to timeSeries:
@@ -604,9 +566,7 @@ function(x, y, units = NULL)
     
     # Changes:
     #
-    
-    # FUNCTION:
-    
+
     # Test Input:
     if (class(x) != "timeSeries") stop("x must be a timeSeries")
     if (!is.matrix(y)) stop("y must be a matrix")

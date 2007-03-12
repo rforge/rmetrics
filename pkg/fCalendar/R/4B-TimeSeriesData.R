@@ -152,10 +152,7 @@ function(x, lag = 1, diff = 1, trim = FALSE, pad = NA, ...)
 
     # Value:
     #   Returns a differenced object of class 'timeSeries'.
-    
-    # Changes:
-    #
-    
+
     # FUNCTION:
         
     # Convert:
@@ -210,10 +207,7 @@ function(x, k = 1, trim = FALSE, units = NULL, ...)
     
     # Value:
     #   Returns a lagged object of class 'timeSeries'.
- 
-    # Changes:
-    #
-    
+
     # FUNCTION:
     
     # Column Names:
@@ -300,10 +294,7 @@ function(x, y, units = NULL, ...)
  
     # Value:
     #   Returns a S4 object of class 'timeSeries'.
-    
-    # Changes:
-    #
-    
+ 
     # FUNCTION:
     
     # Manipulate in matrix form:
@@ -372,10 +363,7 @@ function (x)
 
     # Description:
     #   Returns cumulated sums of 'timeSeries' objects
-    
-    # Changes:
-    #
-    
+
     # FUNCTION:
     
     # Cumulate:
@@ -401,10 +389,7 @@ function(x, ...)
     
     # Value:
     #   Returns a reverted object of class 'timeSeries'.
-    
-    # Changes:
-    #
-    
+ 
     # FUNCTION:
     
     # Revert:
@@ -438,9 +423,6 @@ function(x, center = TRUE, scale = TRUE)
     # Description:
     #   Centers and/or scales a 'timeSeries' object.
 
-    # Changes:
-    #
-    
     # FUNCTION:
     
     # Scale:
@@ -508,10 +490,7 @@ function(e1, e2 = 1)
     
     # Value:
     #   Returns an object of class 'timeSeries'.
-
-    # Changes:
-    #
-    
+  
     # FUNCTION:
     
     # Save:
@@ -577,10 +556,7 @@ function(x)
     
     # Arguments:
     #   x - a 'timeSeries' object.
-    
-    # Changes:
-    #
-    
+
     # FUNCTION:
     
     # Absolute Values:
@@ -603,10 +579,7 @@ function(x)
     
     # Arguments:
     #   x - a 'timeSeries' object.
-    
-    # Changes:
-    #
-    
+  
     # FUNCTION:
     
     # Absolute Values:
@@ -629,10 +602,7 @@ function(x)
     
     # Arguments:
     #   x - a 'timeSeries' object.
-    
-    # Changes:
-    #
-    
+
     # FUNCTION:
     
     # Absolute Values:
@@ -655,10 +625,7 @@ function(x, base = exp(1))
     
     # Arguments:
     #   x - a 'timeSeries' object.
-    
-    # Changes:
-    #
-    
+ 
     # FUNCTION:
     
     # Absolute Values:
@@ -678,10 +645,7 @@ function(x)
 
     # Description:
     #   Returns the signs of a 'timeSeries' object
-    
-    # Changes:
-    #
-    
+  
     # FUNCTION:
     
     # Which sign ?
@@ -767,10 +731,7 @@ j = min(1, ncol(x@Data)):ncol(x@Data))
     
     # Value:
     #   Returns a subset from an object 'timeSeries'.
-    
-    # Changes:
-    #
-    
+
     # FUNCTION:
     
     # Check Timezone:
@@ -821,10 +782,7 @@ function (x, from, to, ...)
     
     # Value:
     #   Returns a S4 object of class 'timeSeries'.
-    
-    # Changes:
-    #
-    
+
     # FUNCTION:
     
     from = timeDate(from)
@@ -860,10 +818,7 @@ function(x, from, to, ...)
     
     # Value:
     #   Returns a S4 object of class 'timeSeries'.
-    
-    # Changes:
-    #
-    
+
     # FUNCTION:
     
     # Check:
@@ -905,10 +860,7 @@ function(x, n = 6, recordIDs = FALSE, ...)
     
     # Value:
     #   Returns the head of an object of class 'timeSeries'.
- 
-    # Changes:
-    #
-    
+
     # FUNCTION:
     
     # Head:
@@ -943,9 +895,6 @@ function(x, n = 6, recordIDs = FALSE, ...)
     # Value:
     #   Returns the tail of an object of class 'timeSeries'.
  
-    # Changes:
-    #
-    
     # FUNCTION:
     
     # Tail:
@@ -982,10 +931,7 @@ function(x, sd = 10, complement = TRUE, ...)
     #       be removed.
     #   complement - a logical flag, should the outler series
     #       or its complement be returns.
-    
-    # Changes:
-    #
-    
+
     # FUNCTION:
     
     # Check if univariate Series:
@@ -1019,10 +965,7 @@ function(x)
 
     # Description:
     #   Returns the dimension of a 'timeSeries' object
-    
-    # Changes:
-    #
-    
+
     # FUNCTION:
     
     # Dimension:
@@ -1042,10 +985,7 @@ function(x)
 
     # Description:
     #   Returns the dimension names of a 'timeSeries' object
-   
-    # Changes:
-    #
-    
+
     # FUNCTION:
     
     # Dimension Names:
@@ -1065,10 +1005,7 @@ function(x, value)
 
     # Description:
     #   Assigns column names to a 'timeSeries' object
-    
-    # Changes:
-    #
-    
+
     # FUNCTION:
     
     # Assign Column Names:
@@ -1101,10 +1038,7 @@ function(x, value)
 
     # Description:
     #   Assigns row names to a 'timeSeries' object
-    
-    # Changes:
-    #
-    
+
     # FUNCTION:
     
     # Assign Row Names:
@@ -1139,10 +1073,7 @@ function(x)
 
     # Description:
     #   Allows that NCOL and NROW work properly
-   
-    # Changes:
-    #
-    
+  
     # FUNCTION:
     
     # Is an array:

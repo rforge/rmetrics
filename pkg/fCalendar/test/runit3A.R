@@ -73,7 +73,7 @@ function()
 # ------------------------------------------------------------------------------
  
 
-test.FinCenter =
+test.myFinCenter =
 function()
 {
     # Default Financial Center:
@@ -86,12 +86,22 @@ function()
     print(current)
     checkIdentical(myFinCenter, current)
     
+    # Return Value:
+    return() 
+}
+
+
+# ------------------------------------------------------------------------------
+ 
+
+test.rulesFinCenter =
+function()
+{
+    # Default Financial Center:
+    # "GMT"
+    
     # DST Rules for a given Financial Center:
     rulesFinCenter("Zurich")[59:60, ]
-    
-    # List of all Financial Centers:
-    listFinCenter()
-    listFinCenter("Europe") 
     
     # Return Value:
     return() 
@@ -99,106 +109,20 @@ function()
 
 
 # ------------------------------------------------------------------------------
-
-
-test.midnightStandard = 
-function()
-{   
-    # Midnight Standard - Short Form:
-    MS = .midnightStandard("20010101",       
-        .whichFormat("20010101"))
-    print(MS)
-    checkIdentical(MS, "20010101")
-    MS = .midnightStandard("200101010000",   
-        .whichFormat("200101010000"))
-    print(MS)
-    checkIdentical(MS, "200101010000")
-    MS = .midnightStandard("20010101000000", 
-        .whichFormat("20010101000000"))
-    print(MS)
-    checkIdentical(MS, "2001-01-01 00:00:00")
-    MS = .midnightStandard("200101011600",   
-        .whichFormat("200101011600"))
-    print(MS)
-    checkIdentical(MS, "200101011600")
-    MS = .midnightStandard("20010101160000", 
-        .whichFormat("20010101160000"))
-    print(MS)
-    checkIdentical(MS, "2001-01-01 16:00:00")
-    
-    # Midnight Standard - Human Readable Form:
-    MS = .midnightStandard("2001-01-01",          
-        .whichFormat("2001-01-01"))
-    print(MS)
-    checkIdentical(MS, "2001-01-01") 
-    MS = .midnightStandard("2001-01-01 00:00",    
-        .whichFormat("2001-01-01 00:00"))
-    print(MS)
-    checkIdentical(MS, "2001-01-01 00:00")
-    MS = .midnightStandard("2001-01-01 00:00:00", 
-        .whichFormat("2001-01-01 00:00:00"))
-    print(MS)
-    checkIdentical(MS, "2001-01-01 00:00:00")
-    MS = .midnightStandard("2001-01-01 16:00",    
-        .whichFormat("2001-01-01 16:00"))
-    print(MS)
-    checkIdentical(MS, "2001-01-01 16:00")
-    MS = .midnightStandard("2001-01-01 16:00:00", 
-        .whichFormat("2001-01-01 16:00:00"))
-    print(MS)
-    checkIdentical(MS, "2001-01-01 16:00:00")
-     
-    # Return Value:
-    return()    
-}
-
-
-# ------------------------------------------------------------------------------
  
-  
-test.whichFormat = 
+
+test.listFinCenter =
 function()
 {
-    # Which Format:
-    WF = .whichFormat("20010101")
-    print(WF)
-    checkIdentical(WF, "%Y%m%d") 
-    WF = .whichFormat("200101010000")
-    print(WF)
-    checkIdentical(WF, "%Y%m%d%H%M")
-    WF = .whichFormat("20010101000000")
-    print(WF)
-    checkIdentical(WF, "%Y%m%d%H%M%S")
-    WF = .whichFormat("200101011600")
-    print(WF)
-    checkIdentical(WF, "%Y%m%d%H%M")
-    WF = .whichFormat("20010101160000")
-    print(WF)
-    checkIdentical(WF, "%Y%m%d%H%M%S")
-    WF = .whichFormat("2001-01-01")
-    print(WF)
-    checkIdentical(WF, "%Y-%m-%d")
-    WF = .whichFormat("2001-01-01 00:00")
-    print(WF)
-    checkIdentical(WF, "%Y-%m-%d %H:%M") 
-    WF = .whichFormat("2001-01-01 00:00:00")
-    print(WF)
-    checkIdentical(WF, "%Y-%m-%d %H:%M:%S")
-    WF = .whichFormat("2001-01-01 16:00")
-    print(WF)
-    checkIdentical(WF, "%Y-%m-%d %H:%M")
-    WF = .whichFormat("2001-01-01 16:00:00")
-    print(WF)
-    checkIdentical(WF, "%Y-%m-%d %H:%M:%S")
-    WF = .whichFormat("01/01/2001")
-    print(WF)
-    checkIdentical(WF, "%m/%d/%Y")
-    WF = .whichFormat("01-Jan-2001")
-    print(WF)
-    checkIdentical(WF, "%d-%b-%Y")   
+    # Default Financial Center:
+    # "GMT"
+    
+    # List of all Financial Centers:
+    listFinCenter()
+    listFinCenter("Europe") 
     
     # Return Value:
-    return()    
+    return() 
 }
 
 
@@ -325,6 +249,110 @@ function()
     print(TD)
     checkIdentical(format(TD), "2006-12-15")
     
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+ 
+  
+test.whichFormat = 
+function()
+{
+    # Which Format:
+    WF = .whichFormat("20010101")
+    print(WF)
+    checkIdentical(WF, "%Y%m%d") 
+    WF = .whichFormat("200101010000")
+    print(WF)
+    checkIdentical(WF, "%Y%m%d%H%M")
+    WF = .whichFormat("20010101000000")
+    print(WF)
+    checkIdentical(WF, "%Y%m%d%H%M%S")
+    WF = .whichFormat("200101011600")
+    print(WF)
+    checkIdentical(WF, "%Y%m%d%H%M")
+    WF = .whichFormat("20010101160000")
+    print(WF)
+    checkIdentical(WF, "%Y%m%d%H%M%S")
+    WF = .whichFormat("2001-01-01")
+    print(WF)
+    checkIdentical(WF, "%Y-%m-%d")
+    WF = .whichFormat("2001-01-01 00:00")
+    print(WF)
+    checkIdentical(WF, "%Y-%m-%d %H:%M") 
+    WF = .whichFormat("2001-01-01 00:00:00")
+    print(WF)
+    checkIdentical(WF, "%Y-%m-%d %H:%M:%S")
+    WF = .whichFormat("2001-01-01 16:00")
+    print(WF)
+    checkIdentical(WF, "%Y-%m-%d %H:%M")
+    WF = .whichFormat("2001-01-01 16:00:00")
+    print(WF)
+    checkIdentical(WF, "%Y-%m-%d %H:%M:%S")
+    WF = .whichFormat("01/01/2001")
+    print(WF)
+    checkIdentical(WF, "%m/%d/%Y")
+    WF = .whichFormat("01-Jan-2001")
+    print(WF)
+    checkIdentical(WF, "%d-%b-%Y")   
+    
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.midnightStandard = 
+function()
+{   
+    # Midnight Standard - Short Form:
+    MS = .midnightStandard("20010101",       
+        .whichFormat("20010101"))
+    print(MS)
+    checkIdentical(MS, "20010101")
+    MS = .midnightStandard("200101010000",   
+        .whichFormat("200101010000"))
+    print(MS)
+    checkIdentical(MS, "200101010000")
+    MS = .midnightStandard("20010101000000", 
+        .whichFormat("20010101000000"))
+    print(MS)
+    checkIdentical(MS, "2001-01-01 00:00:00")
+    MS = .midnightStandard("200101011600",   
+        .whichFormat("200101011600"))
+    print(MS)
+    checkIdentical(MS, "200101011600")
+    MS = .midnightStandard("20010101160000", 
+        .whichFormat("20010101160000"))
+    print(MS)
+    checkIdentical(MS, "2001-01-01 16:00:00")
+    
+    # Midnight Standard - Human Readable Form:
+    MS = .midnightStandard("2001-01-01",          
+        .whichFormat("2001-01-01"))
+    print(MS)
+    checkIdentical(MS, "2001-01-01") 
+    MS = .midnightStandard("2001-01-01 00:00",    
+        .whichFormat("2001-01-01 00:00"))
+    print(MS)
+    checkIdentical(MS, "2001-01-01 00:00")
+    MS = .midnightStandard("2001-01-01 00:00:00", 
+        .whichFormat("2001-01-01 00:00:00"))
+    print(MS)
+    checkIdentical(MS, "2001-01-01 00:00:00")
+    MS = .midnightStandard("2001-01-01 16:00",    
+        .whichFormat("2001-01-01 16:00"))
+    print(MS)
+    checkIdentical(MS, "2001-01-01 16:00")
+    MS = .midnightStandard("2001-01-01 16:00:00", 
+        .whichFormat("2001-01-01 16:00:00"))
+    print(MS)
+    checkIdentical(MS, "2001-01-01 16:00:00")
+     
     # Return Value:
     return()    
 }
