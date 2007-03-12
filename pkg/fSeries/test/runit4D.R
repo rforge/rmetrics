@@ -56,10 +56,25 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test. = 
+test.garchOxFit = 
 function()
 {  
-    
+    #
+    NA
+
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.garchOxReport = 
+function()
+{  
+    #
+    NA  
 
     # Return Value:
     return()    
