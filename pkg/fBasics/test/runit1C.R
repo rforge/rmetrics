@@ -68,7 +68,8 @@ function()
 test.tailoredPlots = 
 function()
 {
-    set.seed(101)
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
     x = rnorm(10000)
     y = rnorm(10000) + X*(X+1)/4
     
@@ -99,7 +100,8 @@ function()
 
 if (FALSE) {
     require(RUnit)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fBasics/test/runit1C.R")
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fBasics/test/runit1C.R",
+        rngKind = "Marsaglia-Multicarry", rngNormalKind = "Inversion")
     printTextProtocol(testResult)
 }
 

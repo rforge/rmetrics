@@ -80,7 +80,8 @@ function()
 {   
     
     # Normal Data:
-    set.seed(1953)
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
     X = rnorm(50)
     
     TEST = ksnormTest(X)
@@ -194,7 +195,8 @@ function()
 
 if (FALSE) {
     require(RUnit)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fBasics/test/runit5B.R")
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fBasics/test/runit5B.R",
+        rngKind = "Marsaglia-Multicarry", rngNormalKind = "Inversion")
     printTextProtocol(testResult)
 }
     

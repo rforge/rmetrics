@@ -286,3 +286,5 @@ function(formula = z ~ x + y, data, grid = 40, doplot = TRUE, ...)
 krigeInterp(z ~ x + y, data = akima, grid = 100, doplot = TRUE)
     
 
+,
+        rngKind = "Marsaglia-Multicarry", rngNormalKind = "Inversion")

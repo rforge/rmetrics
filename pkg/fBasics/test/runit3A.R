@@ -87,7 +87,8 @@ test.moments =
 function()
 {
     # Data:
-    set.seed(4711)
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
     X = as.timeSeries(matrix(rnorm(12)), timeCalendar())
     X = as.vector(X@Data)
     # .timeSeries methods required !
@@ -123,7 +124,8 @@ function()
     # as.matrix.noquote       as.matrix.POSIXlt  
 
     # Univariate Data:
-    set.seed(1953)
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
     N = 10
     X = rnorm(N)
     tsX = as.ts(X)
@@ -254,7 +256,8 @@ function()
 
 if (FALSE) {
     require(RUnit)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fBasics/test/runit3A.R")
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fBasics/test/runit3A.R",
+        rngKind = "Marsaglia-Multicarry", rngNormalKind = "Inversion")
     printTextProtocol(testResult)
 }   
     

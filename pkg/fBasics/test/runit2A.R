@@ -63,7 +63,6 @@ function()
 
 
 # ------------------------------------------------------------------------------
-# SYMMETRIC STABLE DISTRIBUTION:
 
 
 test.symstb = 
@@ -180,7 +179,8 @@ function()
 
 if (FALSE) {
     require(RUnit)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fBasics/test/runit2A.R")
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fBasics/test/runit2A.R",
+        rngKind = "Marsaglia-Multicarry", rngNormalKind = "Inversion")
     printTextProtocol(testResult)
 }
 
