@@ -50,7 +50,8 @@ function()
 
 if (FALSE) {
     require(RUnit)
-    testResult = runTestFile("C:/Rmetrics/SVN/trunk/fMultivar/test/runit2C.R")
+    testResult = runTestFile("C:/Rmetrics/SVN/trunk/fMultivar/test/runit2C.R",
+        rngKind = "Marsaglia-Multicarry", rngNormalKind = "Inversion")
     printTextProtocol(testResult)
 }
    
