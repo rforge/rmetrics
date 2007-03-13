@@ -130,16 +130,16 @@ function()
     print(test)
     checkTrue(mean(test) == 1)
     
-    # hyp() Distribution - Parameterization 3:
+    # hyp() Distribution - Parameterization 3:                  # CHECK
     # .distCheck("hyp", alpha = 1, beta = 0.3, delta = 1, pm = 3)
-    # hyp() Distribution - Parameterization 1:
+    # hyp() Distribution - Parameterization 1:                  # CHECK
     # test = .distCheck("hyp", alpha = 1, beta = 0.3, delta = 1)
     # print(test)
     # checkTrue(mean(test) == 1)
     
-    # hyp() Distribution - Parameterization 4:
+    # hyp() Distribution - Parameterization 4:                  # CHECK         
     # .distCheck("hyp", alpha = 1, beta = 0.3, delta = 1, pm = 4)
-    # hyp() Distribution - Parameterization 1:
+    # hyp() Distribution - Parameterization 1:                  # CHECK
     # test = .distCheck("hyp", alpha = 1, beta = 0.3, delta = 1)
     # print(test)
     # checkTrue(mean(test) == 1)
@@ -158,7 +158,7 @@ function()
     # nig() Distribution:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
-    test = .distCheck("nig", alpha = 1, beta = 0.1, delta = 1)
+    test = .distCheck("nig", n = 2000, alpha = 1, beta = 0.1, delta = 1)
     print(test)
     checkTrue(mean(test) == 1)
     

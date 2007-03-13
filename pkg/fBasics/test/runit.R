@@ -39,7 +39,7 @@ if (FALSE) {
         "1A", 
         "2A", "2B", "2D", 
         "3A",  
-        "5B", "5C")
+        "5A", "5B")
     File = "C:/Rmetrics/SVN/trunk/fBasics/test/runit"
     Protocol = "runitfBasics.txt"
     
