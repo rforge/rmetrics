@@ -65,7 +65,6 @@ function()
 test.haug = 
 function()
 {
-
     # Examples from Chapter 2.1 - 2.7 in E.G. Haug's Option Guide (1997)
     
     # ExecutiveStockOption [2.1]:
@@ -116,7 +115,8 @@ function()
 
 if (FALSE) {
     require(RUnit)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fOptions/test/runit2A.R")
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fOptions/test/runit2A.R",
+        rngKind = "Marsaglia-Multicarry", rngNormalKind = "Inversion")
     printTextProtocol(testResult)
 }
 

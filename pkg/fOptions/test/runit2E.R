@@ -103,8 +103,7 @@ function()
         K = 15, Time = 0.5, r = 0.1, b = 0.1, sigma = 0.20)
     BinaryBarrierOption(TypeFlag = "12", S = 95, X = 98, H = 100, 
         K = 15, Time = 0.5, r = 0.1, b = 0.1, sigma = 0.20)
-     
-    
+        
     # Return Value:
     return()    
 }
@@ -115,7 +114,8 @@ function()
 
 if (FALSE) {
     require(RUnit)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fOptions/test/runit2E.R")
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fOptions/test/runit2E.R",
+        rngKind = "Marsaglia-Multicarry", rngNormalKind = "Inversion")
     printTextProtocol(testResult)
 }
 

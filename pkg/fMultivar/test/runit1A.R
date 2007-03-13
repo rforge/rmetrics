@@ -466,13 +466,7 @@ function()
 {    
     # .dailyTA                  Computes an indicator for technical analysis
 
-    
-    # Data:
-    # URL = "http://localhost/econophysics/R/data/organisations/YAHOO/data/MSFT.CSV"
-    # download.file(URL, "MSFT.CSV")
-    # X = readSeries("MSFT.CSV")
-    
-    # Alternatively from fEcofin:
+    # Data from fEcofin:
     X = as.timeSeries(data(msft.dat))
     print(head(X))  
     

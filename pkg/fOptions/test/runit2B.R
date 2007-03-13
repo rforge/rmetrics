@@ -63,7 +63,6 @@ function()
 test.haug = 
 function()
 {
-
     # Examples from Chapter 2.8 in E.G. Haug's Option Guide (1997)
     
     # Two Asset Correlation Options [2.8.1]:
@@ -109,7 +108,8 @@ function()
 
 if (FALSE) {
     require(RUnit)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fOptions/test/runit2B.R")
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fOptions/test/runit2B.R",
+        rngKind = "Marsaglia-Multicarry", rngNormalKind = "Inversion")
     printTextProtocol(testResult)
 }
 

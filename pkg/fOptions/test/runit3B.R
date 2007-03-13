@@ -248,8 +248,7 @@ function()
     Pochhammer(x = 1, n = 0) - 1
     Pochhammer(x = 1, n = 1) - 1
     Pochhammer(x = 2, n = 2) - gamma(2+2)/gamma(2)
-    
-    
+        
     # Return Value:
     return()    
 }
@@ -260,7 +259,8 @@ function()
    
 if (FALSE) {
     require(RUnit)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fOptions/test/runit3B.R")
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fOptions/test/runit3B.R",
+        rngKind = "Marsaglia-Multicarry", rngNormalKind = "Inversion")
     printTextProtocol(testResult)
 }
 

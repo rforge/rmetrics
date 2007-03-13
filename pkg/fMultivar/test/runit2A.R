@@ -522,9 +522,12 @@ function()
     
     # PPR:
     par(mfrow = c(3,2))
-    PPR1 = regFit(Y ~ sin(X1) + exp(X2), DATATS, "ppr", nterms = 4, sm.method = "supsmu")
-    PPR2 = regFit(Y ~ sin(X1) + exp(X2), DATATS, "ppr", nterms = 4, sm.method = "spline")
-    PPR3 = regFit(Y ~ sin(X1) + exp(X2), DATATS, "ppr", nterms = 3, sm.method = "gcvspline")
+    PPR1 = regFit(Y ~ sin(X1) + exp(X2), DATATS, "ppr", nterms = 4, 
+        sm.method = "supsmu")
+    PPR2 = regFit(Y ~ sin(X1) + exp(X2), DATATS, "ppr", nterms = 4, 
+        sm.method = "spline")
+    PPR3 = regFit(Y ~ sin(X1) + exp(X2), DATATS, "ppr", nterms = 3, 
+        sm.method = "gcvspline")
     .termPlot(PPR1)
     .termPlot(PPR2)
     .termPlot(PPR3)

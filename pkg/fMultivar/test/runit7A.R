@@ -195,8 +195,7 @@ function()
 
 test.elliptical =
 function()
-{
-    
+{ 
     # Settings:
     xy = grid2d((-50:50)/10)
     
@@ -215,7 +214,7 @@ function()
     contour(delliptical2d(xy, rho = 0.75, param = NULL, 
         type = "epower", output = "list"), main = "epower")
         
-# Return Value:
+    # Return Value:
     return()    
 }
 

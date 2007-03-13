@@ -180,8 +180,7 @@ function()
     
 test.GBSOptionSlider = 
 function()
-{
-      
+{  
     .GBSOptionSlider = 
     function(TypeFlag = "c", S = 100, X = 100, Time = 1, r = 0.10, b = 0.10, 
     sigma = 0.25, span = 0.25, N = 40) 
@@ -200,7 +199,6 @@ function()
             phi   = .sliderMenu(no = 8)
             
             TypeFlagText = c(c = "Call:", p = "Put:")
-    
             
             if (r != rNow | b != bNow) {
                 for (j in 1:nY)
@@ -278,8 +276,7 @@ function()
     
     # Try:
     # .GBSOptionSlider("p")
-    
-    
+ 
     # Return Value:
     return()    
 }
@@ -290,8 +287,7 @@ function()
 
 test.GBSGreeksSlider = 
 function()
-{
-          
+{         
     .GBSGreeksSlider = 
     function(TypeFlag = "c", S = 100, X = 100, Time = 1, 
     r = 0.10, b = 0.10, sigma = 0.25, span = 0.25, N = 40) 
@@ -385,8 +381,7 @@ function()
            resolutions = c(Sres, Xres,   0.10,   0.005, 0.01, 0.01,     2,   2),
            starts =      c( Son,  Xon,   1.00,   0.250, 0.10, 0.10,   -40,  30))
     }
-    
-    
+        
     # Try
     # .GBSGreeksSlider("c")
 
@@ -401,7 +396,8 @@ function()
 
 if (FALSE) {
     require(RUnit)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fOptions/test/runit1A.R")
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fOptions/test/runit1A.R",
+        rngKind = "Marsaglia-Multicarry", rngNormalKind = "Inversion")
     printTextProtocol(testResult)
 }
 

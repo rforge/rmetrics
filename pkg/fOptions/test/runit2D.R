@@ -30,14 +30,14 @@
 ################################################################################
 # FUNCTION:                     DESCRIPTION:
 # Barrier Options:
-#   StandardBarrierOption         Standard Barrier Option
-#   DoubleBarrierOption           Double Barrier Option
-#   PTSingleAssetBarrierOption    Partial Time Barrier Option
-#   TwoAssetBarrierOption         Two Asset Barrier
-#   PTTwoAssetBarrierOption       Partial Time TwoAsset Barrier Option
-#   LookBarrierOption             Look Barrier Option
-#   DiscreteBarrierOption         Discrete Adjusted Barrier Option
-#   SoftBarrierOption             Soft Barrier Option
+#  StandardBarrierOption         Standard Barrier Option
+#  DoubleBarrierOption           Double Barrier Option
+#  PTSingleAssetBarrierOption    Partial Time Barrier Option
+#  TwoAssetBarrierOption         Two Asset Barrier
+#  PTTwoAssetBarrierOption       Partial Time TwoAsset Barrier Option
+#  LookBarrierOption             Look Barrier Option
+#  DiscreteBarrierOption         Discrete Adjusted Barrier Option
+#  SoftBarrierOption             Soft Barrier Option
 ################################################################################
 
 
@@ -103,7 +103,6 @@ function()
     # Soft Barrier Option [2.10.8]:
     SoftBarrierOption(TypeFlag = "cdo", S = 100, X = 100, L = 70, 
         U = 95, Time = 0.5, r = 0.1, b = 0.05, sigma = 0.20)
-    
 
     # Return Value:
     return()    
@@ -115,7 +114,8 @@ function()
 
 if (FALSE) {
     require(RUnit)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fOptions/test/runit2D.R")
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fOptions/test/runit2D.R",
+        rngKind = "Marsaglia-Multicarry", rngNormalKind = "Inversion")
     printTextProtocol(testResult)
 }
 

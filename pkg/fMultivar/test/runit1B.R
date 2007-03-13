@@ -62,14 +62,8 @@ function()
 
 test.getReturns =
 function()
-{ 
-    # Data:
-    # URL = "http://www.itp.phys.ethz.ch/econophysics/R/data/organisations/YAHOO/data/MSFT.CSV"
-    # download.file(URL, "MSFT.CSV")
-    # X = readSeries("MSFT.CSV")
-    # print(X)
-    
-    # Alternatively from fEcofin:
+{     
+    # Data from fEcofin:
     X = as.timeSeries(data(msft.dat))
     print(head(X))
         
@@ -91,14 +85,8 @@ function()
 
 test.maxDrawDown =
 function()
-{
-    # Data:
-    # URL = "http://www.itp.phys.ethz.ch/econophysics/R/data/organisations/YAHOO/data/MSFT.CSV"
-    # download.file(URL, "MSFT.CSV")
-    # X = readSeries("MSFT.CSV")
-    # print(X)
-    
-    # Alternatively from fEcofin:
+{ 
+    # Data from fEcofin:
     X = as.timeSeries(data(msft.dat))
     print(head(X))
     
@@ -123,14 +111,8 @@ function()
 
 test.bechmarkRatios =
 function()
-{
-    # Data:
-    # URL = "http://www.itp.phys.ethz.ch/econophysics/R/data/organisations/YAHOO/data/MSFT.CSV"
-    # download.file(URL, "MSFT.CSV")
-    # X = readSeries("MSFT.CSV")
-    # print(X)   
-    
-    # Alternatively from fEcofin:
+{  
+    # Data from fEcofin:
     X = as.timeSeries(data(msft.dat))
     print(head(X)) 
     
@@ -151,14 +133,8 @@ function()
 
 test.ohlcPlot =
 function()
-{
-    # Data:
-    # URL = "http://www.itp.phys.ethz.ch/econophysics/R/data/organisations/YAHOO/data/MSFT.CSV"
-    # download.file(URL, "MSFT.CSV")
-    # X = readSeries("MSFT.CSV")
-    # print(X)
-    
-    # Alternatively from fEcofin:
+{   
+    # Data from fEcofin:
     X = as.timeSeries(data(msft.dat))
     print(head(X))
         
