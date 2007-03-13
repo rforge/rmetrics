@@ -114,7 +114,7 @@ function()
 {
     # Plot Parameters:
     par(ask = FALSE)
-    par(mfrow = c(2, 2), cex = 0.7)
+    par(mfrow = c(1, 1))
     
     # Simulate LM:
     X = regSim(model = "LM3", n = 100)
@@ -424,8 +424,9 @@ function()
     NNET  = regFit(Y ~ X1 + X2 + X3,     data = DATATS, use = "nnet") 
     NNET6 = regFit(Y ~ X1 + X2 + X3,     data = DATATS, use = "nnet", size = 6)    
     
-    #   
-    par(mfrow = c(4, 4), cex = 0.7)
+    #  
+    par(ask = FALSE) 
+    par(mfrow = c(1, 1))
     .termPlot(LM)
     .termPlot(RLM)
     .termPlot(AM)
@@ -434,8 +435,9 @@ function()
     .termPlot(PMARS)
     .termPlot(NNET)
     
-    #   
-    par(mfrow = c(3, 3), cex = 0.7)
+    #  
+    par(ask = FALSE) 
+    par(mfrow = c(1, 1))
     .termPlot(LM, terms = "X1")
     .termPlot(RLM, terms = "X1")
     .termPlot(AM, terms = "X1")
@@ -446,7 +448,8 @@ function()
     .termPlot(NNET, terms = "X1")
     .termPlot(NNET6, terms = "X1")
     
-    # par(mfrow = c(3, 3), cex = 0.7)
+    # par(ask = FALSE)
+    # par(mfrow = c(1, 1))
     # .termPersp(LM,    terms = c("X1", "X2"))
     # .termPersp(RLM,   terms = c("X1", "X2"))
     # .termPersp(AM,    terms = c("X1", "X2"))
@@ -457,7 +460,8 @@ function()
     # .termPersp(NNET,  terms = c("X1", "X2"))
     # .termPersp(NNET6, terms = c("X1", "X2"))
     
-    # par(mfrow = c(3, 3), cex = 0.7)
+    # par(ask = FALSE)
+    # par(mfrow = c(1, 1))
     # .termContour(LM,    terms = c("X1", "X2"))
     # .termContour(RLM,   terms = c("X1", "X2"))
     # .termContour(AM,    terms = c("X1", "X2"))
@@ -469,7 +473,8 @@ function()
     # .termContour(NNET6, terms = c("X1", "X2"))
     
     # Comparison:
-    par(mfcol = c(3, 2), cex = 0.7)
+    par(ask = FALSE)
+    par(mfrow = c(1, 1))
     .termPlot(LM)
     lm = lm(Y ~ X1 + X2 + X3, DATA)
     termplot(lm, rug = TRUE, partial.resid = TRUE, se = TRUE, pch = 19, 
@@ -521,7 +526,8 @@ function()
     # print(AM2)
     
     # PPR:
-    par(mfrow = c(3,2))
+    par(ask = FALSE)
+    par(mfrow = c(1, 1))
     PPR1 = regFit(Y ~ sin(X1) + exp(X2), DATATS, "ppr", nterms = 4, 
         sm.method = "supsmu")
     PPR2 = regFit(Y ~ sin(X1) + exp(X2), DATATS, "ppr", nterms = 4, 

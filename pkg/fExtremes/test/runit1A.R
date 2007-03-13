@@ -71,6 +71,7 @@ function()
     # Artificial Data Set:
     x = rgpd(1000)
     # Empirical distribution plot:
+    par(ask = FALSE)
     par(mfrow = c(2, 2), cex = 0.7)
     emdPlot(x, plottype = "xy")
     emdPlot(x, plottype = "x")
@@ -80,6 +81,7 @@ function()
     # Artificial Data Set:
     x = rt(1000, df = 3) 
     # Empirical distribution plot:
+    par(ask = FALSE)
     par(mfrow = c(2, 2), cex = 0.7)
     emdPlot(x, plottype = "xy")
     emdPlot(x, plottype = "x")
@@ -89,6 +91,7 @@ function()
     # Artificial Data Set:
     x = rnorm(1000) 
     # Empirical distribution plot:
+    par(ask = FALSE)
     par(mfrow = c(2, 2), cex = 0.7)
     emdPlot(x, plottype = "xy")
     emdPlot(x, plottype = "x")
@@ -113,6 +116,7 @@ function()
     r1 = rgpd(n = 1000, xi = 1)
     
     # Graph Frame:
+    par(ask = FALSE)
     par(mfrow = c(2, 2), cex = 0.7)
        
     # Empirical Pareto Distribution Plot:
@@ -142,12 +146,14 @@ function()
     r = rgpd(n = 1000)
      
     # Mean Excess Function Plot:
+    par(ask = FALSE)
     par(mfrow = c(2, 2), cex = 0.7)
     mePlot(x = r)           # Check, the largest point is missing ...
     mxfPlot(x = r)
     mrlPlot(x = r)
     
     # No Labels:
+    par(ask = FALSE)
     par(mfrow = c(2, 2), cex = 0.7)
     mePlot(x = r, labels = FALSE)
     mxfPlot(x = r, labels = FALSE)
@@ -172,6 +178,7 @@ function()
     r = rgpd(n = 1000)
     
     # Records Plot:
+    par(ask = FALSE)
     par(mfrow = c(2, 2), cex = 0.7)
     recordsPlot(x = r)
     recordsPlot(x = r, ci = 0.99)
@@ -181,6 +188,7 @@ function()
     # Subrecords Plot:
     set.seed(1985)
     r = rgpd(n = 10000)
+    par(ask = FALSE)
     par(mfrow = c(2, 2), cex = 0.7)
     recordsPlot(r)
     ssrecordsPlot(r, subsamples = 1)
@@ -191,6 +199,7 @@ function()
     # Subrecords Plot:
     set.seed(1985)
     r = rgpd(n = 10000)
+    par(ask = FALSE)
     par(mfrow = c(2, 2), cex = 0.7)
     ssrecordsPlot(r, subsamples = 10)
     ssrecordsPlot(r, subsamples = 50)
@@ -216,6 +225,7 @@ function()
     r = rgpd(n = 1000)
     
     # Mean Excess Function Plot:
+    par(ask = FALSE)
     par(mfrow = c(2, 2), cex = 0.7)
     msratioPlot(x = r, p = 1:4)
     ans = msratioPlot(x = r, p = 1:4, labels = FALSE)
@@ -240,6 +250,7 @@ function()
     r = rgpd(n = 1000)
     
     # Strong Law of large numbers:
+    par(ask = FALSE)
     par(mfrow = c(2, 2), cex = 0.7)
     sllnPlot(x = r)
     ans = sllnPlot(x = r, labels = FALSE)
@@ -268,15 +279,18 @@ function()
     r = rgpd(n = 1000)
     
     # ACF of Exceedances Plot:
+    par(ask = FALSE)
     par(mfrow = c(2, 2), cex = 0.7)
     ans = xacfPlot(x = r)
     print(ans)
     
     # ACF of Exceedances Plot:
+    par(ask = FALSE)
     par(mfrow = c(2, 2), cex = 0.7)
     xacfPlot(x = r, labels = FALSE)
     
     # ACF of Exceedances Plot:
+    par(ask = FALSE)
     par(mfrow = c(2, 2), cex = 0.7)
     xacfPlot(x = r, labels = FALSE, which = 1); title(main = "1")
     xacfPlot(x = r, labels = FALSE, which = 2); title(main = "2")

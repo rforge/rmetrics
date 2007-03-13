@@ -107,6 +107,7 @@ function()
     class(x.ret)
     
     # Find 99% Threshold:
+    par(ask = FALSE)
     par(mfrow = c(2, 2), cex = 0.7)
     findThreshold(x.ret, n = floor(0.01*length(as.vector(x))), doplot = TRUE)
     
@@ -144,6 +145,7 @@ function()
     class(x.ret)
     
     # Plot Series:
+    par(ask = FALSE)
     par(mfrow = c(2, 1))
     # plot(x.ret, type = "l", main = "Series")
     # abline(h = 0, col = "red", lty = 3)

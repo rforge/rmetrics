@@ -85,6 +85,7 @@ function()
     print(mom)
     
     # Plot Mean:
+    par(ask = FALSE)
     par(mfrow = c(2, 1), cex = 0.7)
     xi = seq(-5, 2, length = 351)
     mom = gevMoments(xi)

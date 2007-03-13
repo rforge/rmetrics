@@ -108,12 +108,7 @@ function()
     #  rocTA                     Rate of Change
     #  oscTA                     EMA-Oscillator
  
-    # Data:
-    # URL = "http://localhost/econophysics/R/data/organisations/YAHOO/data/MSFT.CSV"
-    # download.file(URL, "MSFT.CSV")
-    # X = readSeries("MSFT.CSV")
-    
-    # Alternatively from fEcofin:
+    # Data from fEcofin:
     X = as.timeSeries(data(msft.dat))
     print(head(X))
 
@@ -177,12 +172,7 @@ function()
     #  vohlTA                    High/Low Volatility
     #  vorTA                     Volatility Ratio   
    
-    # Data:
-    # URL = "http://localhost/econophysics/R/data/organisations/YAHOO/data/MSFT.CSV"
-    # download.file(URL, "MSFT.CSV")
-    # X = readSeries("MSFT.CSV")
-    
-    # Alternatively from fEcofin:
+    # Data from fEcofin:
     X = as.timeSeries(data(msft.dat))
     print(head(X))
     
@@ -242,12 +232,7 @@ function()
     # wprTA                     Williams Percent %R
     # rsiTA                     Relative Strength Index
     
-    # Data:
-    # URL = "http://localhost/econophysics/R/data/organisations/YAHOO/data/MSFT.CSV"
-    # download.file(URL, "MSFT.CSV")
-    # X = readSeries("MSFT.CSV")
-    
-    # Alternatively from fEcofin:
+    # Data from fEcofin:
     X = as.timeSeries(data(msft.dat))
     print(head(X))
     
@@ -326,15 +311,9 @@ function()
     # williamsadTA              Williams AD
     # williamsrTA               Williams R%
     
-    # Data:
-    # URL = "http://localhost/econophysics/R/data/organisations/YAHOO/data/MSFT.CSV"
-    # download.file(URL, "MSFT.CSV")
-    # X = readSeries("MSFT.CSV")
-    
-    # Alternatively from fEcofin:
+    # Data from fEcofin:
     X = as.timeSeries(data(msft.dat))
     print(head(X))
-    print(X)
     
     x = close = X[, "Close"]
     high   = X[, "High"]
@@ -422,12 +401,7 @@ function()
     # SMA                       Computes Simple Moving Average           
     # EWMA                      Computes Exponentially Weighted  Moving Average
     
-    # Data:
-    # URL = "http://localhost/econophysics/R/data/organisations/YAHOO/data/MSFT.CSV"
-    # download.file(URL, "MSFT.CSV")
-    # X = readSeries("MSFT.CSV")
-    
-    # Alternatively from fEcofin:
+    # Data from fEcofin:
     X = as.timeSeries(data(msft.dat))
     print(head(X))
     

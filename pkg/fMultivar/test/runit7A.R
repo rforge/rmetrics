@@ -200,7 +200,8 @@ function()
     xy = grid2d((-50:50)/10)
     
     # Contour Plots:
-    par(mfrow = c(3, 2), cex = 0.7)
+    par(ask = FALSE)
+    par(mfrow = c(1, 1))
     contour(delliptical2d(xy, rho = 0.75, param = NULL, 
         type = "norm", output = "list"), main = "norm")
     contour(delliptical2d(xy, rho = 0.75, param = NULL, 
