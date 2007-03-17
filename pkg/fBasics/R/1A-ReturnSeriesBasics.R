@@ -89,7 +89,7 @@ function(x, col = "steelblue", main = x@units, ...)
 
 
 histPlot = 
-function(x, col = "steelblue", main = x@units, add.fit = TRUE, ...) 
+function(x, labels = TRUE, main = x@units, add.fit = TRUE, ...) 
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -119,11 +119,18 @@ function(x, col = "steelblue", main = x@units, add.fit = TRUE, ...)
         mean = mean(Values)
         median = median(Values)
         sd = sd(Values)
-        if (is.null(xlim)) 
+                    
+        # Plot:
+        if (labels) {
             xlim = c(qnorm(0.001, mean, sd), qnorm(0.999, mean, sd)) 
-        result = hist(x = Values, col = col, border = "white", 
-            breaks = "FD", main = main[i], xlim = xlim, probability = TRUE,
-            ...) 
+            result = hist(x = Values, col = "steelblue", 
+            border = "white", breaks = "FD", main = main[i], 
+            xlim = xlim, probability = TRUE, ...) 
+        } else {
+            print("here")
+            result = hist(x = Values, probability = TRUE, main = "", 
+                xlab = "", ylab = "", ...)
+        }
              
         # Add Fit:  
         if (add.fit) {
@@ -140,7 +147,7 @@ function(x, col = "steelblue", main = x@units, add.fit = TRUE, ...)
   
         # Add Zero Line:
         abline(h = 0, col = "grey")
-        
+    
         # Add Rug Plot:
         rug(Values)
     }

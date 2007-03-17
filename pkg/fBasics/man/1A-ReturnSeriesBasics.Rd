@@ -43,7 +43,7 @@
 
 \usage{ 
 seriesPlot(x, col = "steelblue", main = x@units, \dots) 
-histPlot(x, col = "steelblue", main = x@units, add.fit = TRUE, \dots) 
+histPlot(x, labels = TRUE, main = x@units, add.fit = TRUE, \dots) 
 densityPlot(x, col = "steelblue", main = x@units, add.fit = TRUE, \dots)
 qqnormPlot(x, col = "steelblue", main = x@units, labels = TRUE, \dots) 
 
@@ -68,7 +68,7 @@ basicStats(x, ci = 0.95)
         plot parameters, color and main title.
         } 
     \item{labels}{
-        a logical, should labels be added to the plot?
+        a logical, should the plot be tailored?
         }
         \item{na.rm}{
         a logical. Should missing values be removed?
