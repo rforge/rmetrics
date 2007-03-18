@@ -1,6 +1,6 @@
-\name{UnitrootInterface}
+\name{UnitrootUrcaInterface}
 
-\alias{UnitrootInterface}
+\alias{UnitrootUrcaInterface}
 
 
 \alias{urdfTest}
