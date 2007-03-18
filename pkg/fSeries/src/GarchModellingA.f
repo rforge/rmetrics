@@ -65,7 +65,7 @@ C     FIND SOLUTION:
 
       call dblepr("LLH final Value:", -1, f, 1)
       call dblepr("With X:", -1, x, nf)
-      	
+       
       RETURN
       END   
       
