@@ -168,12 +168,13 @@ Said S.E., Dickey D.A. (1984);
 
 
 \examples{
-## adfTest - 
+## Time Series 
    # A time series which contains no unit-root:
    x = rnorm(1000)  
    # A time series which contains a unit-root:
    y = cumsum(c(0, x))
-   # Test:
+   
+## adfTest - 
    adfTest(x)
    adfTest(y)
    

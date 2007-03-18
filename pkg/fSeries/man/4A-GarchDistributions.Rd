@@ -250,40 +250,6 @@ Fernandez C., Steel M.F.J. (2000);
 
 
 \examples{
-## snorm -
-   par(mfrow = c(2, 2), cex = 0.75)
-   set.seed(1953)
-   r = rsnorm(n = 1000, mean = 1, sd = 0.5, xi = 1.5)
-   plot(r, type = "l", main = "snorm: xi = 1.5")
-   # Plot empirical density and compare with true density:
-   hist(r, n = 25, probability = TRUE, border = "white", col = "steelblue")
-   x = seq(-4, 6, 0.1)
-   lines(x, dsnorm(x = x, mean = 1, sd = 0.5, xi = 1.5))
-   # Plot df and compare with true df:
-   plot(sort(r), (1:1000/1000), main = "Probability", col = "steelblue")
-   lines(x, psnorm(x, mean = 1, sd = 0.5, xi = 1.5))
-   # Compute quantiles:
-   qsnorm(psnorm(q = -4:6, mean = 1, sd = 0.5, xi = 1.5), 
-     mean = 1, sd = 0.5, xi = 1.5) 
-     
-## sstd -
-   par(mfrow = c(2, 2), cex = 0.75)
-   set.seed(1953)
-   r = rsstd(n = 1000, nu = 4, xi = 1.5)
-   # Print Variance:
-   var(r)
-   plot(r, type = "l", main = "sstd: xi = 1.5")
-   # Plot empirical density and compare with true density:
-   hist(r, n = 30, xlim = c(-5, 5), probability = TRUE, 
-     border = "white", col = "steelblue")
-   x = seq(-5, 5, 0.1)
-   lines(x, dsnorm(x = x, xi = 1.5))
-   # Plot df and compare with true df:
-   plot(sort(r), (1:1000/1000), main = "Probability", col = "steelblue")
-   lines(x, psstd(x, xi = 1.5))
-   # Compute quantiles:
-   qsstd(psstd(q = -5:5, xi = 1.5), xi = 1.5) 
-   
 ## sged -
    par(mfrow = c(2, 2), cex = 0.75)
    set.seed(1953)
@@ -299,15 +265,7 @@ Fernandez C., Steel M.F.J. (2000);
    # Compute quantiles:
    qsged(psged(q = -1:5, mean = 1, sd = 0.5, xi = 1.5), 
      mean = 1, sd = 0.5, xi = 1.5) 
-
-## snormFit -
-   options(warn = -1) # suppress negative logs from nlm
-   normFit(rnorm(1000))
-   snormFit(rnorm(1000))
-   
-## sstdFit -
-   sstdFit(rsstd(1000, mean = 1, sd = 1.5, nu = 7, xi = 2/3))
-   
+       
 ## sgedFit -
    sgedFit(rsged(1000, mean = -1, sd = 0.5, nu = 3, xi = 3/2),
      print.level = 2)

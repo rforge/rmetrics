@@ -128,8 +128,10 @@ Rosenstein M.T., Collins J.J., De Luca C.J. (1993);
 
 
 \examples{
-## NA -
-                  
+## logisticSim -
+   set.seed(4711)
+   x = logisticSim(n = 100)  
+   plot(x, main = "Logistic Map")            
 }
 
 

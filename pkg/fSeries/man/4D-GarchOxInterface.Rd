@@ -216,12 +216,11 @@ Laurent S., Peters J.P., [2005],
 
 \examples{
 \dontrun{
-## garchOxFit -
-   
-   # Load Benchmark Data Set:
+## Load Benchmark Data Set:
    data(dem2gbp)
    x = dem2gbp[, 1]
    
+## garchOxFit -   
    # Fit GARCH(1,1):
    garchOxFit(formula = ~arma(0,0) + ~garch(1,1))
 }

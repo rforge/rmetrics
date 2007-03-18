@@ -464,11 +464,22 @@ Nocedal J., Wright S.J. (1999);
 
 
 \examples{
-    # garchSpec -
-    # garchSim - 
-    # garchFit -
+## garchSpec -
+   spec = garchSpec()
+   spec
 
-    # For examples we refer to: demo/xmpDWChapter34.R ...   
+## garchSim -
+   x = garchSim(model = spec@model, n = 500)
+   head(x) 
+
+## garchFit - 
+   fit = garchFit(~garch(1, 1), data = x)
+   print(fit)
+   # Interactive Plot:
+   # plot(fit)
+   # Batch Plot:
+   plot(fit, which = 3)
+   summary(fit)
 }
 
 

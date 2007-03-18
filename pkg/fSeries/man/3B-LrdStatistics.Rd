@@ -38,8 +38,8 @@
 
 
 \usage{   
-fgnTrueacf(n, H) 
-fgnTruefft(n, H) 
+fgnTrueacf(n = 100, H = 0.7) 
+fgnTruefft(n = 100, H = 0.7) 
 fgnStatsSlider()
 
 farimaTrueacf(n = 100, H = 0.7) 
@@ -123,16 +123,16 @@ Beran J. (1992);
 
 \examples{
 ## fgnTrueacf -
-   fgnTrueacf()
+   fgnTrueacf(n = 20, H = 0.8)
    
 ## fgnTruefft -
-   fgnTruefft()
+   fgnTruefft(n = 20, H = 0.8)
    
 ## farimaTrueacf -
-   farimaTrueacf()
+   farimaTrueacf(n = 20, H = 0.8)
    
 ## farimaTruefft -
-   farimaTruefft()
+   farimaTruefft(n = 20, H = 0.8)
 }
 
 
