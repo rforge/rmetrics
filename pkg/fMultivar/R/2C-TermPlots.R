@@ -39,6 +39,10 @@
 function(object, terms = NULL)
 {   # A function implemented by Diethelm Wuertz
 
+    # Description:
+    
+    # Arguments:
+
     # FUNCTION:
     
     # Settings:
@@ -94,6 +98,10 @@ function(object, terms = NULL)
 function(object, terms = NULL, gridPoints = 25)
 {   # A function implemented by Diethelm Wuertz
 
+    # Description:
+    
+    # Arguments:
+    
     # FUNCTION:
     
     # Settings:
@@ -148,6 +156,10 @@ function(object, terms = NULL, gridPoints = 25)
 function(object, terms = NULL, gridPoints = 25)
 {   # A function implemented by Diethelm Wuertz
 
+    # Description:
+    
+    # Arguments:
+    
     # FUNCTION:
     
     # Settings:
