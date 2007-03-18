@@ -127,7 +127,6 @@ function(x, labels = TRUE, main = x@units, add.fit = TRUE, ...)
             border = "white", breaks = "FD", main = main[i], 
             xlim = xlim, probability = TRUE, ...) 
         } else {
-            print("here")
             result = hist(x = Values, probability = TRUE, main = "", 
                 xlab = "", ylab = "", ...)
         }
