@@ -2,7 +2,9 @@
 
 \alias{TimeSeriesData}
 
+\alias{bmwRet}
 \alias{CPI.dat}
+\alias{danishClaims}
 \alias{dem2gbp}
 \alias{DowJones30}
 \alias{ford.s}
@@ -33,6 +35,13 @@
     used in the examples of the Rmetrics packages.
     \cr
        
+    \code{bmwRet}
+    \cr\cr
+    The file \code{"bmwRet.csv"} contains data representing daily 
+    stock returns of the german BMW shares. The data start on
+    1973-01-03 and end on 1996-07-23.
+    \cr
+    
     \code{CPI.dat}\cr
     \code{IP.dat}
     \cr\cr
@@ -40,6 +49,13 @@
     adjusted US Industrial Production Index and the file 
     \code{"CPI.dat.csv"} contains data representing seasonally 
     adjusted US Consumer Price Index. 
+    \cr
+    
+    \code{danishClaims}
+    \cr\cr
+    The file \code{"danishClaims.csv"} contains data representing daily 
+    danish fire losses in Million Danish Kronors. The data start on
+    1980-01-03 and end on 1990-12-31.
     \cr
     
     \code{dem2gbp}
