@@ -146,7 +146,8 @@ timeLastNdayInMonth(charvec, nday = 1, format = "\%Y-\%m-\%d",
     
 ## timeLastDayInMonth-
    # What date has the last day in a month for a given date ?
-   timeLastDayInMonth(charvec, format = "\%Y-\%m-\%d", zone = myFinCenter, FinCenter = myFinCenter)
+   timeLastDayInMonth(charvec, format = "\%Y-\%m-\%d", 
+     zone = myFinCenter, FinCenter = myFinCenter)
    timeLastDayInMonth(charvec)
    timeLastDayInMonth(charvec, FinCenter = "Zurich")
    

@@ -72,9 +72,6 @@
 
 
 \usage{
-currentYear
-myUnits
-
 myFinCenter
 rulesFinCenter(FinCenter = myFinCenter)
 listFinCenter(pattern = "*")

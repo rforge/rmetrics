@@ -106,8 +106,7 @@
 
 
 \value{
-
-   
+  
     \code{as.character}\cr
     \code{as.data.frame}
     \cr
