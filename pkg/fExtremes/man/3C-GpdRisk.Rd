@@ -1,18 +1,19 @@
-\name{GpdModelling}
+\name{tailRisk}
 
-\alias{GpdModelling}
+\alias{tailRisk}
 
-\alias{fGPDFIT}
-\alias{fGPDFIT-class}
 
-\alias{show.fGPDFIT}
-\alias{show,fGPDFIT-method}
+\alias{gpdQPlot}
+\alias{gpdQuantPlot}
+\alias{gpdSfallPlot}
+\alias{gpdShapePlot}
+\alias{gpdTailPlot}
 
-\alias{gpdSim}
-\alias{gpdFit}
+\alias{gpdRiskMeasures}
 
-\alias{plot.fGPDFIT}
-\alias{summary.fGPDFIT}
+\alias{tailPlot}
+\alias{tailSlider}
+\alias{tailRisk}
 
 
 \title{GPD Distributions for Extreme Value Theory}
@@ -21,36 +22,43 @@
 \description{
 
     A collection and description to functions to compute
-    the generalized Pareto distribution and to
-    estimate its parameters. The functions compute 
-    density, distribution function, quantile function 
-    and generate random deviates for the GPD. Two 
-    approaches for parameter estimation are provided: 
-    Maximum likelihood estimation and the probability 
-    weighted moment method.
+    tail risk under the GPD approach.
     \cr
 
     The GPD modelling functions are:
      
     \tabular{ll}{
-    \code{gpdSim} \tab generates data from the GPD, \cr
-    \code{gpdFit} \tab fits empirical or simulated data to the distribution, \cr 
-    \code{print} \tab print method for a fitted GPD object of class ..., \cr
-    \code{plot} \tab plot method for a fitted GPD object, \cr 
-    \code{summary} \tab summary method for a fitted GPD object. }
+    \code{gpdQPlot} \tab estimation of high quantiles, \cr
+    \code{gpdQuantPlot} \tab variation of high quantiles with threshold, \cr
+    \code{gpdRiskMeasures} \tab prescribed quantiles and expected shortfalls, \cr
+    \code{gpdSfallPlot} \tab expected shortfall with confidence intervals, \cr
+    \code{gpdShapePlot} \tab variation of shape with threshold, \cr
+    \code{gpdTailPlot} \tab plot of the tail, \cr
+    \code{tailPlot} \tab , \cr 
+    \code{tailSlider} \tab , \cr
+    \code{tailRisk} \tab . }
      
 }
 
 
 \usage{
-gpdSim(model = list(xi = 0.25, mu = 0, beta = 1), n = 1000,
-    seed = NULL)
-gpdFit(x, u = quantile(x, 0.95), type = c("mle", "pwm"), information = 
-    c("observed", "expected"), title = NULL, description = NULL, \dots)
 
-show.fGPDFIT(object)
-\method{plot}{fGPDFIT}(x, which = "ask", \dots)
-\method{summary}{fGPDFIT}(object, doplot = TRUE, which = "all", \dots)
+gpdQPlot(x, p = 0.99, ci = 0.95, type = c("likelihood", "wald"), 
+    like.num = 50)
+gpdQuantPlot(x, p = 0.99, ci = 0.95, models = 30, start = 15, end = 500,  
+    doplot = TRUE, plottype = c("normal", "reverse"), labels = TRUE, \dots)
+gpdSfallPlot(x, p = 0.99, ci = 0.95, like.num = 50)
+gpdShapePlot(x, ci = 0.95, models = 30, start = 15, end = 500, 
+    doplot = TRUE, plottype = c("normal", "reverse"), labels = TRUE, \dots)
+gpdTailPlot(object, plottype = c("xy", "x", "y", ""), extend = 1.5, 
+    labels = TRUE, \dots)
+
+gpdRiskMeasures(object, prob = c(0.99, 0.995, 0.999, 0.9995, 0.9999))
+
+tailPlot(object, plottype = c("xy", "x", "y", ""), doplot = TRUE, 
+    extend = 1.5, labels = TRUE, ...)
+tailSlider(x)
+tailRisk(object, prob = c(0.99, 0.995, 0.999, 0.9995, 0.9999), ...)
 }
 
 
