@@ -178,6 +178,8 @@ function(theta, tmp, pp, rli)
     # Description:
     #   Computes log-likelihood function for gevrlevelPlot
     
+    # Arguments:
+    
     # FUNCTION:
     
     # LLH:

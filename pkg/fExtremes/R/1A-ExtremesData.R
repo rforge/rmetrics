@@ -131,6 +131,7 @@ labels = TRUE, ...)
     # Description:
     #   Creates an exploratory QQ-plot for Extreme Value Analysis.
 
+    # Arguments:
     #   x - any object which can be transformed by the function
     #       as.vector() into a numeric vector 
     #   doplot - a logical flag, should a pot be returned ?
@@ -202,6 +203,8 @@ function (x, u = quantile(x, 0.05), doplot = TRUE, labels = TRUE, ...)
     # Description:
     #   Creates a simple mean excess function plot.
     
+    # Arguments:
+    
     # FUNCTION:
     
     # Convert Type:
@@ -251,6 +254,8 @@ doplot = TRUE, plottype = c("autoscale", ""), labels = TRUE, ...)
     # Description:
     #   Create a mean residual life plot with
     #   confidence intervals.
+    
+    # Arguments:
     
     # References:
     #   A function originally written by S. Coles
@@ -320,6 +325,8 @@ function(x, doplot = TRUE, labels = TRUE, ...)
     
     # Description:
     #   Create a Mean Excess Plot
+    
+    # Arguments:
     
     # Reference:
     #   A function imported from R-package evir
@@ -553,6 +560,8 @@ function (x, p = 1:4, doplot = TRUE, labels = TRUE, ...)
     # Description:
     #   Creates a Plot of maximum and sum ratio.
     
+    # Arguments:
+    
     # FUNCTION:
     
     # Convert Type:
@@ -721,6 +730,8 @@ which = c("all", 1, 2, 3, 4), labels = TRUE, ...)
     # Description:
     #   Creates plots of exceedences, one for the
     #   heights and one for the distances.
+    
+    # Arguments:
     
     # FUNCTION:
     
