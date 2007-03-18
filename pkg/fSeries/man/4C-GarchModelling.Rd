@@ -473,13 +473,13 @@ Nocedal J., Wright S.J. (1999);
    head(x) 
 
 ## garchFit - 
-   fit = garchFit(~garch(1, 1), data = x)
-   print(fit)
-   # Interactive Plot:
-   # plot(fit)
-   # Batch Plot:
-   plot(fit, which = 3)
-   summary(fit)
+   # fit = garchFit(~garch(1, 1), data = x)
+   # print(fit)
+   ## Interactive Plot:
+   ## plot(fit)
+   ## Batch Plot:
+   # plot(fit, which = 3)
+   # summary(fit)
 }
 
 
