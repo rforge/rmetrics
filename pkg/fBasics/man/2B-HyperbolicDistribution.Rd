@@ -41,7 +41,7 @@
     
     \tabular{ll}{
     \code{[dpqr]gh} \tab The generalized hyperbolic distribution, \cr
-    \code{[dpqr]hyp} \tab The hyperbolic distribution, \c
+    \code{[dpqr]hyp} \tab The hyperbolic distribution, \cr
     \code{[dpqr]nig} \tab The normal inverse Gaussian distribution, \cr
     \code{hypMode} \tab the hyperbolic mode, \cr
     \code{hypSlider} \tab interactive hyperbolic distribution display, \cr
