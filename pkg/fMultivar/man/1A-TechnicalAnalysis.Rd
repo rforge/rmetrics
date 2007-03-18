@@ -202,7 +202,17 @@ EWMA(x, lambda, startup = 0)
 
 
 \examples{
-## -
+## data -
+   # Load MSFT Data
+   x = as.timeSeries(data(msft.dat))
+   colnames(x)
+   x = x[, "Close"]
+   head(x)
+   
+## Exponential Moving Average:
+   y = emaTA(x, lambda = 9)   
+   seriesPlot(x)
+   lines(y, col = "red")
 }
    
 
