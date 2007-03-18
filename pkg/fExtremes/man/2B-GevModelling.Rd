@@ -17,15 +17,6 @@
 \alias{plot.fGEVFIT}
 \alias{summary.fGEVFIT}
 
-\alias{gevrlevelPlot}
-
-\alias{hillPlot}
-\alias{shaparmPlot}
-\alias{shaparmPickands}
-\alias{shaparmHill}
-\alias{shaparmDEHaan}
-
-
 
 \title{Generalized Extreme Value Modelling}
 
@@ -54,12 +45,6 @@
     \code{plot} \tab plot method for a fitted GEV object, \cr 
     \code{summary} \tab summary method for a fitted GEV object, \cr
     \code{gevrlevelPlot} \tab k-block return level with confidence intervals. }
-    
-    Maximum Domain of Attraction estimators:
-    
-    \tabular{ll}{
-    \code{hillPlot} \tab shape parameter and Hill estimate of the tail index, \cr
-    \code{shaparmPlot} \tab variation of shape parameter with tail depth. }
      
 }
 
@@ -74,21 +59,6 @@ gumbelFit(x, block = 1, type = c("mle", "pwm"), title = NULL, description = NULL
 show.fGEVFIT(object)
 \method{plot}{fGEVFIT}(x, which = "ask", \dots)
 \method{summary}{fGEVFIT}(object, doplot = TRUE, which = "all", \dots)
-
-gevrlevelPlot(object, kBlocks = 20,  ci = c(0.90, 0.95, 0.99), 
-    plottype = c("plot", "add"), labels = TRUE,...)
-
-hillPlot(x, start = 15, ci = 0.95, 
-    doplot = TRUE, plottype = c("alpha", "xi"), labels = TRUE, \dots)
-shaparmPlot(x, p = 0.01*(1:10), xiRange = NULL, alphaRange = NULL,
-    doplot = TRUE, plottype = c("both", "upper"))
-    
-shaparmPickands(x, p = 0.05, xiRange = NULL,  
-    doplot = TRUE, plottype = c("both", "upper"), labels = TRUE, \dots) 
-shaparmHill(x, p = 0.05, xiRange = NULL,  
-    doplot = TRUE, plottype = c("both", "upper"), labels = TRUE, \dots)
-shaparmDEHaan(x, p = 0.05, xiRange = NULL,  
-    doplot = TRUE, plottype = c("both", "upper"), labels = TRUE, \dots)
 }
 
 
