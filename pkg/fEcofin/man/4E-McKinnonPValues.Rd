@@ -32,8 +32,8 @@ punitroot(q, N = Inf, trend = c("c", "nc", "ct", "ctt"),
     statistic = c("t", "n"), na.rm = FALSE)
 qunitroot(p, N = Inf, trend = c("c", "nc", "ct", "ctt"), 
     statistic = c("t", "n"), na.rm = FALSE)
-unitrootTable(trend = c("c", "nc", "ct", "ctt"), statistic = c("t", "n"))
-   
+    
+unitrootTable(trend = c("c", "nc", "ct", "ctt"), statistic = c("t", "n")) 
 }
 
 

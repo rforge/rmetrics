@@ -47,7 +47,7 @@ getSlot(object, slotName)
 \arguments{
 
     \item{object}{
-        a n object of class S4.
+        an object of class S4.
         }
     \item{slotName}{
         [getSlot] - \cr

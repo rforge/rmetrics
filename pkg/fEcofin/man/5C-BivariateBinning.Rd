@@ -13,7 +13,8 @@
 \description{
     
     A collection and description of functions which
-    allow to interpolate bivariate irregular data sets
+    allow to create histograms due to sqaure and
+    hexagonal binning.
     \cr
 
     Bivariate Binning Functions:

@@ -11,7 +11,8 @@
 
 \description{
 
-    A collection and description of functions for plotting.
+    A collection and description of functions for plotting
+    with emphasis on interactive plots.
     \cr
       
     The plot utility functions are:

@@ -45,7 +45,7 @@ WFE, 2004,
     
     
 \examples{
-## Barplot from WFE Capitalization Statistics:
+   ## Barplot from WFE Capitalization Statistics:
    # Extract Capitalization of/at:
    # NYSE: 7, Tokyo: 37, London: 22, Frankfurt: 15
    # 1991 - 2003 triannual: 3,6,9,12,15

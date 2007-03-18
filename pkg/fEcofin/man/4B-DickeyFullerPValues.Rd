@@ -13,7 +13,7 @@
 \description{
     
     A collection and description of functions 
-    to compute the distribution and and quantile 
+    to compute the distribution and quantile 
     function for the ADF unit root test statistics. 
     \cr
     

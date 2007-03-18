@@ -15,7 +15,9 @@
 \description{
     
     A collection and description of functions which
-    allow to interpolate bivariate irregular data sets.
+    allow to interpolate and smooth bivariate irregular 
+    data sets including linear interpolation, Akima
+    spline interpolation, and kriging.
     \cr
     
     Gridded Interpolation Functions:

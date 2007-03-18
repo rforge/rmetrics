@@ -36,6 +36,7 @@
 \usage{
 set.lcgseed(seed = 4711)
 get.lcgseed()
+
 runif.lcg(n, min = 0, max = 1)
 rnorm.lcg(n, mean = 0, sd = 1)
 rt.lcg(n, df)   

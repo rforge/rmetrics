@@ -13,7 +13,8 @@
 \description{
     
     A collection and description of functions which
-    are useful utilities and tools used by Rmetrics.
+    are useful utilities and tools in selectings
+    characters, symbols and colors for plotting.
     \cr
 
     The plot utility functions are:
