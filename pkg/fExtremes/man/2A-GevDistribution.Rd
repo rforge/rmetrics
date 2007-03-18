@@ -47,6 +47,7 @@ qgev(p, xi = 1, mu = 0, beta = 1, lower.tail = TRUE)
 rgev(n, xi = 1, mu = 0, beta = 1)
 
 gevMoments(xi = 0, mu = 0, beta = 1)
+
 gevSlider(method = c("dist", "rvs"))
 }
 
@@ -129,51 +130,6 @@ Embrechts, P., Klueppelberg, C., Mikosch, T. (1997);
 
   
 \examples{
-## SOURCE("fExtremes.2A-GevModelling")
-
-## *gev  - 
-   # Create and plot 1000 GEV/Frechet distributed rdv:
-   par(mfrow = c(3, 3))
-   set.seed(4711)
-   r = rgev(n = 1000, xi = 1)
-   plot(r, type = "l", col = "steelblue", main = "Frechet Series")
-   grid()
-   ## Plot empirical density and compare with true density:
-   ## Omit values greater than 500 from plot
-   hist(r[r<10], n = 25, probability = TRUE, xlab = "r", 
-     xlim = c(-5, 5), ylim = c(0, 1.1), main = "Density")
-   x = seq(-5, 5, by=0.01)
-   lines(x, dgev(x, xi = 1), col = "steelblue")
-   ## Plot df and compare with true df:
-   plot(sort(r), (1:length(r)/length(r)), 
-     xlim = c(-3, 6), ylim = c(0, 1.1),
-     cex = 0.5, ylab = "p", xlab = "q", main = "Probability")
-   grid()
-   q = seq(-5,5, by = 0.1)
-   lines(q, pgev(q, xi = 1), col = "steelblue")
-   # Compute quantiles, a test:
-   qgev(pgev(seq(-5, 5, 0.25), xi = 1), xi = 1) 
-   
-## *gev -
-   # Create and plot 1000 Gumbel distributed rdv:
-   r = rgev(n = 1000, xi = 0)
-   plot(r, type = "l", col = "steelblue", main = "Gumbel Series")
-   grid()
-   # Plot empirical density and compare with true density:
-   hist(r[abs(r)<10], nclass = 25, freq = FALSE, xlab = "r", 
-      xlim = c(-5,5), ylim = c(0,1.1), main = "Density")
-   x = seq(-5, 5, by = 0.01)
-   lines(x, dgev(x, xi = 0), col = "steelblue")
-   # Plot df and compare with true df:
-   plot(sort(r), (1:length(r)/length(r)), 
-     xlim = c(-3, 6), ylim = c(0, 1.1),
-      cex = 0.5, ylab = "p", xlab="q", main="Probability")
-   grid()
-   q = seq(-5, 5, by = 0.1)
-   lines(q, pgev(q, xi = 0), col = "steelblue")
-   # Compute quantiles, a test:
-   qgev(pgev(seq(-5, 5, 0.25), xi = 0), xi = 0)   
-
 ## *gev -
    # Create and plot 1000 Weibull distributed rdv:
    r = rgev(n = 1000, xi = -1)
@@ -181,8 +137,8 @@ Embrechts, P., Klueppelberg, C., Mikosch, T. (1997);
    grid()
    # Plot empirical density and compare with true density:
    hist(r[abs(r)<10], nclass = 25, freq = FALSE, xlab = "r", 
-     xlim = c(-5,5), ylim=c(0,1.1), main="Density")
-   x = seq(-5, 5, by=0.01)
+     xlim = c(-5,5), ylim = c(0,1.1), main = "Density")
+   x = seq(-5, 5, by = 0.01)
    lines(x, dgev(x, xi = -1), col = "steelblue")
    ## Plot df and compare with true df:
    plot(sort(r), (1:length(r)/length(r)), 

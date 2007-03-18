@@ -377,86 +377,36 @@ Embrechts, P., Klueppelberg, C., Mikosch, T. (1997);
 ## SOURCE("fExtremes.052A-GevModelling")
 
 ## gevSim -
-## gevFit -
-   # Simulate GEV Data:
-   # Use default length n=1000
+   # Simulate GEV Data, use default length n=1000
    x = gevSim(model = list(shape = 0.25, location =0 , scale = 1))
+   
+## gevFit -
    # Fit GEV Data by Probability Weighted Moments:
    fit = gevFit(x, type = "pwm") 
    print(fit)
+   
+## summary
    # Summarize Results:
    par(mfcol = c(3, 2))
    summary(fit)
-   
-## gevFit -
-   # Fit GEV Data by Max Log Likelihood Method:
-   fit = gevFit(x, type = "mle") 
-   print(fit)
-   # Summarize Results:
-   summary(fit) 
     
-## gevSim -
-## gevFit -
-   # Simulate Gumbel Data:
-   # Use default length n=1000
-   ##> x = gevSim(model = list(shape = 0, location = 0, scale = 1))
-   # Fit Gumbel Data by Probability Weighted Moments:
-   ##> fit = gevFit(x, type = "pwm", gumbel = TRUE) 
-   ##> print(fit)
-   # Summarize Results:
-   ##> par(mfcol = c(3, 2))
-   ##> summary(fit)  
-   
-## Fit Gumbel Data by Max Log Likelihood Method:
-   ##> fit = gevFit(x, type = "mle", gumbel = TRUE) 
-   ##> print(fit)
-   # Summarize Results:
-   ##> summary(fit)     
-   
 ## Return levels based on GEV Fit:
-   # BMW Stock Data:
-   par(mfrow = c(2, 1))
-   data(bmw)
+   # BMW Stock Data - negative returns
+   x = -as.timeSeries(data(bmwRet))
    # Fit GEV to monthly Block Maxima:
-   fit = gevFit(-bmw, block = "month") 
+   fit = gevFit(x, block = "month") 
    # Calculate the 40 month return level
-   gevrlevelPlot(fit, k.block = 40, main = "BMW: Return Levels")   
-   
-## Return levels based on GEV Fit:
-   # Siemens Stock Data:
-   data(siemens)
-   # Fit GEV to monthly Block Maxima:
-   fit = gevFit(-siemens, block = "month") 
-   # Calculate the 40 month return level
-   gevrlevelPlot(fit, k.block = 40, main = "SIEMENS: Return Levels")
-   
+   gevrlevelPlot(fit, k.block = 40)   
+      
 ## Interactive Plot:
-   ## par(mfrow = c(1, 1), ask = TRUE)
-   ## plot(fit)
+   # plot(fit)
    
 ## hillPlot -
    # Hill plot of heavy-tailed Danish fire insurance data 
-   # and BMW stock data for estimated 0.999 quantile
-   par(mfrow = c(2, 2))
-   data(bmw)
-   hillPlot(bmw)
-   hillPlot(bmw, option = "quantile", end = 500, p = 0.999)
-   data(danish)
-   hillPlot(danish)
-   hillPlot(danish, option = "quantile", end = 500, p = 0.999)
-   
-## shaparmPlot -
-   par(mfcol = c(3, 2), cex = 0.6)
-   data(bmw)
-   shaparmPlot(bmw)
-
-## shaparmPlot -
-   par(mfcol = c(3, 2), cex = 0.6)
-   set.seed(4711)
-   x = rgev(10000, xi = 1/4)
-   shaparmPlot(x, revert = TRUE, both.tails = FALSE)
-   lines(c(0.01, 0.1), c(4, 4), col = "steelblue")  
-}
+   par(mfrow = c(1,1))
+   x = as.timeSeries(data(danishClaims))
+   hillPlot(x)
+   grid()
 }
 
 

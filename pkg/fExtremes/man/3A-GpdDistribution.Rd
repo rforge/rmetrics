@@ -119,24 +119,24 @@ Embrechts, P., Klueppelberg, C., Mikosch, T. (1997);
 
 
 \examples{
-## SOURCE("fExtremes.3A-GpdModelling")
-
 ## *gpd  -
-   par(mfrow = c(2, 2))
+   par(mfrow = c(1, 1))
    r = rgpd(n = 1000, xi = 1/4)
-   plot(r, type = "l", main = "GPD Series")
+   seriesPlot(r)
    
 ## Plot empirical density and compare with true density:
 ## Omit values greater than 500 from plot
    hist(r, n = 50, probability = TRUE, xlab = "r", 
-     xlim = c(-5, 5), ylim = c(0, 1.1), main = "Density")
+     col = "steelblue", border = "white",
+     xlim = c(-1, 5), ylim = c(0, 1.1), main = "Density")
    x = seq(-5, 5, by = 0.01)
-   lines(x, dgpd(x, xi = 1/4), col = "steelblue")
+   lines(x, dgpd(x, xi = 1/4), col = "orange")
    
 ## Plot df and compare with true df:
    plot(sort(r), (1:length(r)/length(r)), 
-     xlim = c(-3, 6), ylim = c(0, 1.1),
+     xlim = c(-3, 6), ylim = c(0, 1.1), pch = 19, 
      cex = 0.5, ylab = "p", xlab = "q", main = "Probability")
+   grid()
    q = seq(-5, 5, by = 0.1)
    lines(q, pgpd(q, xi = 1/4), col = "steelblue")
    

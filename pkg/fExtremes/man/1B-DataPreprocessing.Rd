@@ -170,26 +170,30 @@ Embrechts, P., Klueppelberg, C., Mikosch, T. (1997);
 
 
 \examples{ 
-\dontrun{
 ## findThreshold -
-   # Find threshold giving (at least) fifty exceedances 
-   # for Danish Fire data
-   data(danish)
-   findThreshold(danish, n = c(10, 50, 100))    
+   # Threshold giving (at least) fifty exceedances for Danish data
+   x = as.timeSeries(data(danishClaims))
+   findThreshold(x, n = c(10, 50, 100))    
    
 ## blockMaxima -
-   # Block Maxima (Minima) for the right and left tails 
-   # of the BMW log returns:
-   par(mfrow = c(2, 1))
-   blockMaxima( as.timeSeries(data(bmwRet)), block = 65)
-   blockMaxima(-as.timeSeries(data(bmwRet)), block = 65)     
+   # Block Maxima (Minima) for left tail of BMW log returns:
+   BMW = as.timeSeries(data(bmwRet))
+   colnames(BMW) = "BMW.RET"
+   head(BMW)
+   x = blockMaxima( BMW, block = 65)
+   head(x)
+   y = blockMaxima(-BMW, block = 65)    
+   head(y) 
  
 ## deCluster -
    # Decluster the 200 exceedances of a particular  
    # threshold in the negative BMW log-return data
-   PP = pointProcess(-as.timeSeries(data(bmwRet)), n = 300)
-   deCluster(x = PP, run = 15, doplot = TRUE) 
-}
+   PP = pointProcess(x = -BMW, u = quantile(x, 0.75))
+   PP
+   dim(PP)
+   DC = deCluster(x = PP, run = 15, doplot = TRUE) 
+   DC
+   dim(DC)
 }
 
 
