@@ -1,6 +1,6 @@
-\name{tailRisk}
+\name{gpdRisk}
 
-\alias{tailRisk}
+\alias{gpdRisk}
 
 
 \alias{gpdQPlot}

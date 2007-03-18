@@ -330,40 +330,14 @@ Embrechts, P., Klueppelberg, C., Mikosch, T. (1997);
 
   
 \examples{
-\dontrun{
-## SOURCE("fExtremes.052A-GevModelling")
-
-## gevSim -
-   # Simulate GEV Data, use default length n=1000
-   x = gevSim(model = list(shape = 0.25, location =0 , scale = 1))
-   
-## gevFit -
-   # Fit GEV Data by Probability Weighted Moments:
-   fit = gevFit(x, type = "pwm") 
-   print(fit)
-   
-## summary
-   # Summarize Results:
-   par(mfcol = c(3, 2))
-   summary(fit)
-    
-## Return levels based on GEV Fit:
-   # BMW Stock Data - negative returns
-   x = -as.timeSeries(data(bmwRet))
-   # Fit GEV to monthly Block Maxima:
-   fit = gevFit(x, block = "month") 
-   # Calculate the 40 month return level
-   gevrlevelPlot(fit, k.block = 40)   
-      
-## Interactive Plot:
-   # plot(fit)
-   
+\dontrun{   
 ## hillPlot -
    # Hill plot of heavy-tailed Danish fire insurance data 
    par(mfrow = c(1,1))
    x = as.timeSeries(data(danishClaims))
    hillPlot(x)
    grid()
+}
 }
 
 
