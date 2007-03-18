@@ -172,6 +172,7 @@ function()
 
 
 if (FALSE) {
+    require(RUnit)
     testResult <- runTestFile("C:/Rmetrics/trunk/fSeries/test/runit5A.R",
         rngKind = "Marsaglia-Multicarry", rngNormalKind = "Inversion")
     printTextProtocol(testResult)
