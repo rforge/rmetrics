@@ -30,7 +30,7 @@
 \description{
 
     A collection and description of data sets 
-    used in example of the Rmetrics packages.
+    used in the examples of the Rmetrics packages.
     \cr
        
     \code{CPI.dat}\cr
