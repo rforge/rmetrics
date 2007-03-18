@@ -35,10 +35,9 @@
 #  gpdQuantPlot            Plots of GPD Tail Estimate of a High Quantile
 #  gpdShapePlot            Plots for GPD Shape Parameter
 # FUNCTION:               NEW STYLE FUNCTION:
-#  tailPlot
-#  tailSlider
-# FUNCTION:               ADDITIONAL FUNCTION:
-#  gpdriskMeasures         Calculates Quantiles and Expected Shortfalls
+#  tailPlot                ...
+#  tailSlider              ...
+#  tailRiskMeasures        Calculates Quantiles and Expected Shortfalls
 ################################################################################
 
 
@@ -976,14 +975,7 @@ function(x)
 # ------------------------------------------------------------------------------
 
 
-tailRisk =
-function(object, ...)
-{
-    UseMethod("tailRisk")
-}
-
-
-tailRisk.fGPDFIT = 
+tailRisk = 
 function(object, prob = c(0.99, 0.995, 0.999, 0.9995, 0.9999), ...)
 {
     gpdRiskMeasures(object, prob)

@@ -67,7 +67,7 @@ labels = TRUE, ...)
     x = as.vector(x)
     
     # Settings:
-    plottype = plottype[1]
+    plottype = match.arg(plottype)
          
     # Convert x to a vector, if the input is a data.frame.
     if (is.data.frame(x)) x = x[, 1] 
