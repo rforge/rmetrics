@@ -45,7 +45,7 @@
 seriesPlot(x, col = "steelblue", main = x@units, \dots) 
 histPlot(x, labels = TRUE, main = x@units, add.fit = TRUE, \dots) 
 densityPlot(x, col = "steelblue", main = x@units, add.fit = TRUE, \dots)
-qqnormPlot(x, col = "steelblue", main = x@units, labels = TRUE, \dots) 
+qqnormPlot(x, labels = TRUE, col = "steelblue", main = x@units, \dots) 
 
 stdev(x, na.rm = FALSE)
 

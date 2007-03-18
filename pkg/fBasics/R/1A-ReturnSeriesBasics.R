@@ -229,7 +229,7 @@ function(x, col = "steelblue", main = x@units, add.fit = TRUE, ...)
 
 
 qqnormPlot = 
-function(x, col = "steelblue", main = x@units, labels = TRUE, ...) 
+function(x, labels = TRUE, col = "steelblue", main = x@units, ...) 
 {   # A function implemented by Diethelm Wuertz
 
     # Description:

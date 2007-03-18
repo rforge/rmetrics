@@ -41,9 +41,9 @@
     
     \tabular{ll}{
     \code{[dpqr]gh} \tab The generalized hyperbolic distribution, \cr
-    \code{[dpqr]hyp} \tab The hyperbolic distribution, \cr
-    \code{hypMode} \tab the hyperbolic mode, \cr
+    \code{[dpqr]hyp} \tab The hyperbolic distribution, \c
     \code{[dpqr]nig} \tab The normal inverse Gaussian distribution, \cr
+    \code{hypMode} \tab the hyperbolic mode, \cr
     \code{hypSlider} \tab interactive hyperbolic distribution display, \cr
     \code{nigSlider} \tab interactive NIG distribution display. }
     
@@ -61,12 +61,12 @@ phyp(q, alpha = 1, beta = 0, delta = 1, mu = 0, pm = c(1, 2, 3, 4), ...)
 qhyp(p, alpha = 1, beta = 0, delta = 1, mu = 0, pm = c(1, 2, 3, 4), ...)
 rhyp(n, alpha = 1, beta = 0, delta = 1, mu = 0, pm = c(1, 2, 3, 4))
 
-hypMode(alpha = 1, beta = 0, delta = 1, mu = 0, pm = c(1, 2, 3, 4))
-
 dnig(x, alpha = 1, beta = 0, delta = 1, mu = 0)
 pnig(q, alpha = 1, beta = 0, delta = 1, mu = 0)
 qnig(p, alpha = 1, beta = 0, delta = 1, mu = 0)
 rnig(n, alpha = 1, beta = 0, delta = 1, mu = 0)
+
+hypMode(alpha = 1, beta = 0, delta = 1, mu = 0, pm = c(1, 2, 3, 4))
 
 hypSlider()
 nigSlider()
@@ -200,10 +200,7 @@ Raible S. (2000);
 }
 
 
-\examples{
-## Plot:
-   par(ask = FALSE)
-    
+\examples{   
 ## nig -
    set.seed(1953)
    r = rnig(5000, alpha = 1, beta = 0.3, delta = 1)

@@ -191,10 +191,7 @@ Weron, A., Weron R. (1999);
     
 }
 
-\examples{  
-## Plot:
-   par(ask = FALSE)
-   
+\examples{    
 ## stable - 
    # Plot rvs Series
    set.seed(1953)

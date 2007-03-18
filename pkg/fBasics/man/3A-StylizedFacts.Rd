@@ -285,10 +285,7 @@ Ding Z., Granger C.W.J., Engle R.F. (1993);
 }
 
 
-\examples{
-## Plot:
-   par(ask = FALSE)
-   
+\examples{   
 ## data - 
    # require(MASS)
    plot(SP500, type = "l", col = "steelblue", main = "SP500")
