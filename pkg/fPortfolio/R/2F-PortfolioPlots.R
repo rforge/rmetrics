@@ -627,10 +627,11 @@ function(object, mcSteps, ...)
 }
 
 #-------------------------------------------------------------------------------
+
+
 .notStackedWeightsPlot =
 function(object, col = NULL)
-{
-    # A function implemented by Rmetrics
+{   # A function implemented by Rmetrics
 
     # Description:
     
@@ -645,8 +646,6 @@ function(object, col = NULL)
     targetRisk = getTargetRisk(object)
     targetReturn = getTargetReturn(object)
     nSigma = length(targetRisk)
-
-
     
     # Select Colors if not specified ...
     if (is.null(col)) col = rainbow(N)
@@ -696,17 +695,16 @@ function(object, col = NULL)
     mtext("Weight", side = 2, line = 2, cex = .7)
     
     # Return Value:
-    invisible()
-
-    
+    invisible()   
 }
+
 
 #-------------------------------------------------------------------------------
 
+
 .addlegend = 
 function(object, control = list())
-{
-    # A function implemented by Rmetrics
+{   # A function implemented by Rmetrics
 
     # Description: 
     #   Adds a perdefined legend to sliders
@@ -739,8 +737,7 @@ function(object, control = list())
         sym = c(19, control$minvariance.pch, control$tangency.pch,
             rep(control$singleAsset.pch, times = dim))
     }
-
-    
+ 
     # Adding legend:
     legend("topleft", legend = legendtext, col = color, pch = sym, cex = .8,
         bty = "n")
@@ -750,8 +747,6 @@ function(object, control = list())
 
 }
  
-
-
 
 ################################################################################
 
@@ -874,7 +869,9 @@ function(object, col = NULL, box = TRUE, ...)
     invisible()
 }
 
+
 # ------------------------------------------------------------------------------
+
 
 attributesPlot =
 function(object, col = NULL, legend = FALSE)
@@ -960,16 +957,13 @@ function(object, col = NULL, legend = FALSE)
     }
     minRisk = as.numeric(names(minRisk))
     abline(v = minRisk, col = "black", lty = 3)
-
-    
+   
     # Complete to draw box ...
     box()
     
     # Return Value:
     invisible()
 }
-
-
 
 
 ################################################################################
@@ -987,6 +981,8 @@ function(x = list(), ...)
     #   Maintainer: Kjell Konis <konis@stats.ox.ac.uk>
     #   Description: A package of robust methods.
     #   License: Insightful Robust Library License (see license.txt)
+    
+    # FUNCTION:
     
     # Settings:
     if (length(x) == 0) 

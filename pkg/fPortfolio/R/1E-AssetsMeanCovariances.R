@@ -199,15 +199,18 @@ check = TRUE, force = TRUE, baggedR = 100, ...)
         # Classical Covariance Estimation:
         mu = colMeans(x.mat)
         Sigma = cov(x.mat)
-        return(list(mu = mu, Sigma = Sigma))
     } else if (method == "mve") {
         # require(MASS)
-        return(.cov.rob(x, method = "mve"))
+        ans = .cov.rob(x, method = "mve")
+        mu = ans$mu
+        Sigma = ans$Omega
     } else if (method == "mcd") {
         # require(MASS)
-        return(.cov.rob(x, method = "mcd"))    
+        ans .cov.rob(x, method = "mcd") 
+        mu = ans$mu
+        Sigma = ans$Omega       
     } else if (method == "shrink") {
-        fit = .cov.shrink(x = x.mat, ...)
+        fit = .cov.shrink(x = as.matrix(x), ...)
         mu = colMeans(x.mat)
         Sigma = fit 
     } else if (method == "bagged") {

@@ -424,6 +424,10 @@ function(data, spec = portfolioSpec())
             tau = spec@model$params$tau, a = spec@model$params$a)
         mu = estimate$mu
         Sigma = estimate$Sigma
+    } else if(meanEstimator == "shrink" | covEstimator == "shrink") {
+        estimate = assetsMeanCov(series, method = "shrink")
+        mu = estimate$mu
+        Sigma = estimate$Sigma
     } 
     # Classical Estimates:
     if (meanEstimator == "mean") {

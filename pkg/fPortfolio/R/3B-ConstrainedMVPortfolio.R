@@ -40,7 +40,8 @@
 
 .feasibleConstrainedMVPortfolio = 
 function(data, spec, constraintsStrings)
-{
+{   # A function implemented by Rmetrics
+
     # Description:
     #   Computes Risk and Return for a feasible portfolio
     
