@@ -128,7 +128,6 @@ function(x, n = floor(0.05*length(as.vector(x))), doplot = FALSE)
     #   Upper threshold for a given number of extremes
     
     # Arguments:
-    # Arguments:
     #   x - an univariate 'timeSeries' object or any other object
     #       which can be coerced in a numeric vector by the function
     #       as.vector().
@@ -162,6 +161,7 @@ function(x, n = floor(0.05*length(as.vector(x))), doplot = FALSE)
     if (doplot) {
         plot(x, type = "h", col = "steelblue", main = "Threshold Value")
         grid()
+        rug(as.vector(x), ticksize = 0.01, side = 4)
         for (u in ans) abline (h = u, lty = 3, col = "red")   
     }
     
@@ -177,12 +177,14 @@ pointProcess =
 function(x, u = quantile(x, 0.95), doplot = FALSE)
 {   # A function implemented by Diethelm Wuertz
 
+    # Description:
+    #   Returns peaks over a threshold from a time series
+    
     # Arguments:
     #   x - an univariate 'timeSeries' object or any other object
     #       which can be coerced in a numeric vector by the function
     #       as.vector().
     #   u - threshold value
-
     
     # Examples:
     #   pointProcess(as.timeSeries(data(daxRet)))

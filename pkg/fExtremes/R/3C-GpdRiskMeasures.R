@@ -31,18 +31,19 @@
 # FUNCTION:               ADDITIONAL PLOTS:
 #  gpdTailPlot             Plots Tail Estimate From GPD Model
 #  gpdQPlot                Adds Quantile Estimates to gpdTailPlot()
-#  .gpd.q                   Internal plot function called by gpdQPlot()
 #  gpdSfallPlot            Adds Expected Shortfall Estimates to a GPD Plot
-#  .gpd.sfall               Internal plot function called by gpdQPlot()
 #  gpdQuantPlot            Plots of GPD Tail Estimate of a High Quantile
 #  gpdShapePlot            Plots for GPD Shape Parameter
+# FUNCTION:               NEW STYLE FUNCTION:
+#  tailPlot
+#  tailSlider
 # FUNCTION:               ADDITIONAL FUNCTION:
 #  gpdriskMeasures         Calculates Quantiles and Expected Shortfalls
 ################################################################################
 
 
 gpdTailPlot =
-function(object, plottype = c("xy", "x", "y", ""), extend = 1.5, 
+function(object, plottype = c("xy", "x", "y", ""), doplot = TRUE, extend = 1.5, 
 labels = TRUE, ...)
 {   # A function implemented by Diethelm Wuertz
 
@@ -82,34 +83,44 @@ labels = TRUE, ...)
     scale = beta * invProb^xi
     location = threshold - (scale*(invProb^(- xi)-1))/xi
     
-    # Plot:
-    plot(sort(data), ypoints, xlim = range(plotmin, plotmax), 
-         ylim = range(ypoints, y, na.rm = TRUE), col = "steelblue",
-         pch = 19, xlab = "", ylab = "", log = plottype[1], axes = TRUE, ...)
-    lines(z[y >= 0], y[y >= 0])
-    grid()
-    
-    # Labels:
-    alog = plottype[1]
-    if (labels) {
-        xLab = "x"
-        if (alog == "x" || alog == "xy" || alog == "yx")
-            xLab = paste(xLab, "(on log scale)")
-        yLab = "1-F(x)"
-        if (alog == "xy" || alog == "yx" || alog == "y")
-            yLab = paste(yLab, "(on log scale)")
-        title(xlab = xLab, ylab = yLab)
-        title(main = "Tail Estimate Plot")
+    # Show Plot:
+    if (doplot) {
+        # Plot
+        plot(sort(data), ypoints, xlim = range(plotmin, plotmax), 
+             ylim = range(ypoints, y, na.rm = TRUE), col = "steelblue",
+             pch = 19, xlab = "", ylab = "", log = plottype[1], axes = TRUE, ...)
+        lines(z[y >= 0], y[y >= 0])
+        grid()
+        # Labels:
+        alog = plottype[1]
+        if (labels) {
+            xLab = "x"
+            if (alog == "x" || alog == "xy" || alog == "yx")
+                xLab = paste(xLab, "(on log scale)")
+            yLab = "1-F(x)"
+            if (alog == "xy" || alog == "yx" || alog == "y")
+                yLab = paste(yLab, "(on log scale)")
+            title(xlab = xLab, ylab = yLab)
+            title(main = "Tail Estimate Plot")
+        }
     }
     
     # Object:
     object@fit$n = length(x)
     object@fit$data = fit@data$exceedances
     object@fit$n.exceed = length(object@fit$data)
-    if(fit@method[2] == "mle") object@fit$method = "ml" else object@fit$method = ""
+    if(fit@method[2] == "mle") {
+        object@fit$method = "ml" 
+    } else {
+        object@fit$method = ""
+    }
+    
+    # Last Fit:
+    lastfit = object@fit
+    class(lastfit) = "gpd"
     
     # Result:
-    ans = list(lastfit = object@fit, type = "tail", dist = "gpd",
+    ans = list(lastfit = lastfit, type = "tail", dist = "gpd",
         plotmin = plotmin, plotmax = plotmax, alog = plottype[1], 
         location = location, shape = shape, scale = scale)
     
@@ -119,6 +130,7 @@ labels = TRUE, ...)
 
 
 # ------------------------------------------------------------------------------
+
 
 gpdQPlot =
 function(x, p = 0.99, ci = 0.95, type = c("likelihood", "wald"), like.num = 50)
@@ -131,43 +143,40 @@ function(x, p = 0.99, ci = 0.95, type = c("likelihood", "wald"), like.num = 50)
     #   x  - an object of class 'gpdFit'
     #   pp - the probability level
     
-    # FUNCTION:
-
-    # Return Value:
-    .gpd.q(x = x, pp = p, ci.type = type[1], ci.p = ci, like.num = like.num)
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.gpd.q = 
-function (x, pp, ci.type = c("likelihood", "wald"), ci.p = 0.95, 
-like.num = 50) 
-{   # A copy from evir
-
-    # FUNCTION:
+    # Example:
+    #   par(mfrow=c(1,1)); x=as.timeSeries(data(danishClaims))
+    #   tp = gpdTailPlot(gpdFit(x, 10)); gpdQPlot(tp)
     
+    # FUNCTION: 
+    
+    # Check Argument:
+    par(new = TRUE)
+    ci.p = ci
+    pp = p
+    ci.type = type[1]
+
+    # A copy from evir:  
     if (x$dist != "gpd") 
         stop("This function is used only with GPD curves")
     if (length(pp) > 1) 
         stop("One probability at a time please")
+        
     threshold = x$lastfit$threshold
     par.ests = x$lastfit$par.ests
     xihat = par.ests["xi"]
     betahat = par.ests["beta"]
     varcov = x$lastfit$varcov
     p.less.thresh = x$lastfit$p.less.thresh
+    
     lambda = 1
     if (x$type == "tail") lambda = 1/(1 - p.less.thresh)
     a = lambda * (1 - pp)
     gfunc = function(a, xihat) (a^(-xihat) - 1)/xihat
     gfunc.deriv = function(a, xihat) (-(a^(-xihat) - 1)/xihat - 
         a^(-xihat) * logb(a))/xihat
-    q = threshold + betahat * gfunc(a, xihat)
-    if (q < x$plotmax) abline(v = q, lty = 2)
+    q = q.keep = threshold + betahat * gfunc(a, xihat)
+    # if (q < x$plotmax) abline(v = q, lty = 2)
     out = as.numeric(q)
-    ci.type = match.arg(ci.type)
     if (ci.type == "wald") {
         if (class(x$lastfit) != "gpd") 
             stop("Wald method requires model be fitted with gpd (not pot)")
@@ -186,10 +195,8 @@ like.num = 50)
         qq = qnorm(1 - (1 - ci.p)/2)
         upper = q + qse * qq
         lower = q - qse * qq
-        if (upper < x$plotmax) 
-            abline(v = upper, lty = 2, col = 2)
-        if (lower < x$plotmax) 
-            abline(v = lower, lty = 2, col = 2)
+        abline(v = upper, lty = 2, col = 2)
+        abline(v = lower, lty = 2, col = 2)
         out = as.numeric(c(lower, q, qse, upper))
         names(out) = c("Lower CI", "Estimate", "Std.Err", "Upper CI")
     }
@@ -225,12 +232,12 @@ like.num = 50)
         cond = parmax > crit
         xp = xp[cond]
         parmax = parmax[cond]
-        par(new = T)
+        par(new = TRUE)
         dolog = ""
         if (x$alog == "xy" || x$alog == "x") dolog = "x"
         plot(xp, parmax, type = "n", xlab = "", ylab = "", axes = F, 
-            xlim = range(x$plotmin, x$plotmax), ylim = range(overallmax, 
-                crit), log = dolog)
+            xlim = range(x$plotmin, x$plotmax), 
+            ylim = range(overallmax, crit), log = dolog)
         axis(4, at = overallmax - qchisq(c(0.95, 0.99), 1)/2, 
             labels = c("95", "99"), tick = TRUE)
         aalpha = qchisq(ci.p, 1)
@@ -239,6 +246,9 @@ like.num = 50)
         smth = spline(xp[cond], parmax[cond], n = 200)
         lines(smth, lty = 2, col = 2)
         ci = smth$x[smth$y > overallmax - aalpha/2]
+        
+        abline(v = q.keep, lty = 2)
+        
         out = c(min(ci), q, max(ci))
         names(out) = c("Lower CI", "Estimate", "Upper CI")
     }
@@ -260,47 +270,32 @@ function(x, p = 0.99, ci = 0.95, like.num = 50)
     
     # Arguments:
     #   x  - an object of class 'gpdFit'
-    #   pp - the probability level
-    
-    # FUNCTION:
-
-    # Return Value:
-    .gpd.sfall(x = x, pp = p, ci.p = ci, like.num = like.num)
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.gpd.sfall =  
-function(x, pp = 0.99, ci.p = 0.95, like.num = 50)
-{   # A copy from evir
-
-    # Arguments:
-    #   x - a list object returned by 'plot.gpd' or 'tailplot'
-    #   pp - the desired probability for expected shortfall 
+    #   p - the desired probability for expected shortfall 
     #       estimate (e.g. 0.99 for the 99th percentile)
-    #   ci.p - probability for confidence interval (must be 
+    #   ci - probability for confidence interval (must be 
     #       less than 0.999)
     #   like.num - number of times to evaluate profile likelihood
-
-    # data(danish); gpd.sfall(tailplot(gpd(danish, 10)), 0.99)
-
-    # FUNCTION:
     
+    # FUNCTION:
+
+    # Settings:
+    par(new = TRUE)
+    pp = p
+    ci.p = ci  
+    object = x
+    
+    # A copy from evir:
     if(x$dist != "gpd")
         stop("This function is used only with GPD curves")
     if(length(pp) > 1)
         stop("One probability at a time please")
-      
-    object = gpdFit(as.timeSeries(danishClaims), 10)  
-    threshold = object@fit$threshold
-    par.ests = object@fit$par.ests
+       
+    threshold = x$lastfit$threshold
+    par.ests = x$lastfit$par.ests
     xihat = par.ests["xi"]
     betahat = par.ests["beta"]
-    varcov = object@fit$varcov
-    
-    p.less.thresh = object@fit$prob
+    varcov = x$lastfit$varcov
+    p.less.thresh = x$lastfit$p.less.thresh
     lambda = 1
     
     # if (x$type == "tail") 
@@ -308,8 +303,8 @@ function(x, pp = 0.99, ci.p = 0.95, like.num = 50)
     a = lambda * (1 - pp)
     gfunc = function(a, xihat) (a^( - xihat) - 1) / xihat
     q = threshold + betahat * gfunc(a, xihat)
-    s = q + (betahat + xihat * (q - threshold))/(1 - xihat)
-    if (s < x$plotmax) abline(v = s, lty = 2)
+    s = s.keep = q + (betahat + xihat * (q - threshold))/(1 - xihat)
+    # if (s < x$plotmax) abline(v = s, lty = 2)
     out = as.numeric(s)
     
     parloglik = function(theta, tmp, a, threshold, xpi)
@@ -344,16 +339,15 @@ function(x, pp = 0.99, ci.p = 0.95, like.num = 50)
     cond = parmax > crit
     xp = xp[cond]
     parmax = parmax[cond]
-    par(new = TRUE)
+    
     dolog = ""
-    
     if(x$alog == "xy" || x$alog == "x") dolog = "x"
-    
+    par(new = TRUE)
     plot(xp, parmax, type = "n", xlab = "", ylab = "", axes = FALSE, 
-        xlim = range(x$plotmin, x$plotmax), 
-        ylim = range(overallmax, crit), log = dolog)
+         xlim = range(x$plotmin, x$plotmax), 
+         ylim = range(overallmax, crit), log = dolog)
     axis(4, at = overallmax - qchisq(c(0.95, 0.99), 1)/2,
-        labels = c("95", "99"), tick = TRUE)
+         labels = c("95", "99"), tick = TRUE)
         
     aalpha = qchisq(ci.p, 1)
     abline(h = overallmax - aalpha/2, lty = 2, col = 2)
@@ -361,6 +355,8 @@ function(x, pp = 0.99, ci.p = 0.95, like.num = 50)
     smth = spline(xp[cond], parmax[cond], n = 200)
     lines(smth, lty = 2, col = 2)
     ci = smth$x[smth$y > overallmax - aalpha/2]
+    
+    abline(v = s.keep, lty = 2)
     
     out = c(min(ci), s, max(ci))
     names(out) = c("Lower CI", "Estimate", "Upper CI")
@@ -604,4 +600,396 @@ function(object, prob = c(0.99, 0.995, 0.999, 0.9995, 0.9999))
 
 
 ################################################################################
+
+
+tailPlot = 
+function(object, ...)
+{
+    UseMethod("tailPlot")
+}
+
+
+
+# ------------------------------------------------------------------------------
+
+
+tailPlot =
+function(object, p = 0.99, ci = 0.95, nLLH = 25, extend = 1.5, labels = TRUE, ...)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Plots tail estimate from GPD model
+    
+    # Arguments:
+    #   object - an object of class 'fGPDFIT'
+    
+    # Note:
+    #   Code partly copied from R package evir
+    
+    # Example:
+    #   object = gpdFit(as.timeSeries(data(danishClaims)), u = 10)
+    #   gpdTailPlot(object)
+    
+    # FUNCTION:   
+    
+    # Settings:
+    ci.p = p
+    pp = p
+    like.num = nLLH
+    threshold = object@fit$threshold
+    x = as.vector(object@data$x)
+    data = x[x > threshold]
+    xi = as.numeric(object@fit$par.ests["xi"])
+    beta = as.numeric(object@fit$par.ests["beta"])
+    
+    # Points:
+    plotmin = threshold
+    plotmax = max(data) * max(1, extend)
+    z = qgpd(seq(from = 0, to = 1, length = 501), xi, threshold, beta)
+    z = pmax(pmin(z, plotmax), plotmin)    
+    invProb = 1 - length(data)/length(x)
+    ypoints = invProb*(1-ppoints(sort(data)))
+    y = invProb*(1-pgpd(z, xi, threshold, beta))
+
+    # Parameters:
+    shape = xi
+    scale = beta * invProb^xi
+    location = threshold - (scale*(invProb^(- xi)-1))/xi
+    
+    # Show Plot:
+    # Plot
+    plot(sort(data), ypoints, xlim = range(plotmin, plotmax), 
+         ylim = range(ypoints, y, na.rm = TRUE), col = "steelblue",
+         pch = 19, xlab = "", ylab = "", log = "xy", axes = TRUE, ...)
+    lines(z[y >= 0], y[y >= 0])
+    grid()
+    # Labels:
+    alog = "xy"
+    if (labels) {
+        xLab = "x"
+        if (alog == "x" || alog == "xy" || alog == "yx")
+            xLab = paste(xLab, "(on log scale)")
+        yLab = "1-F(x)"
+        if (alog == "xy" || alog == "yx" || alog == "y")
+            yLab = paste(yLab, "(on log scale)")
+        title(xlab = xLab, ylab = yLab)
+        title(main = "Tail Estimate Plot")
+    }
+    
+    # Object:
+    object@fit$n = length(x)
+    object@fit$data = fit@data$exceedances
+    object@fit$n.exceed = length(object@fit$data)
+   
+    # Tail Plot:
+    lastfit = object@fit
+    x = list(lastfit = lastfit, type = "tail", dist = "gpd",
+         plotmin = plotmin, plotmax = plotmax, alog = "xy", 
+         location = location, shape = shape, scale = scale)
+        
+    threshold = lastfit$threshold
+    par.ests = lastfit$par.ests
+    xihat = par.ests["xi"]
+    betahat = par.ests["beta"]
+    varcov = lastfit$varcov
+    p.less.thresh = lastfit$p.less.thresh
+    
+    par(new = TRUE)
+   
+    # GPD Quantiles:
+    a = 1/(1 - p.less.thresh) * (1 - pp)
+    gfunc = function(a, xihat) (a^(-xihat) - 1)/xihat
+    gfunc.deriv = function(a, xihat) 
+        (-(a^(-xihat)-1)/xihat - a^(-xihat)*logb(a))/xihat
+    q = q.keep = threshold + betahat * gfunc(a, xihat)
+    # if (q < x$plotmax) abline(v = q, lty = 2)
+    out1 = as.numeric(q)
+    # Log Likelihood:
+    parloglik = function(theta, tmp, a, threshold, xpi) {
+        beta = (theta * (xpi - threshold))/(a^(-theta) - 
+            1)
+        if ((beta <= 0) || ((theta <= 0) && (max(tmp) > (-beta/theta)))) 
+            f = 1e+06
+        else {
+            y = logb(1 + (theta * tmp)/beta)
+            y = y/theta
+            f = length(tmp) * logb(beta) + (1 + theta) * sum(y)
+        }
+        if(is.na(f)) f = 1e+6
+        f
+    }
+    # x Value:
+    theta = xihat
+    parmax = NULL
+    xp = exp(seq(from = logb(threshold), to = logb(x$plotmax), 
+        length = like.num))
+    # y Value:
+    excess = as.numeric(x$lastfit$data - threshold)
+    for (i in 1:length(xp)) {
+        fit2 = optim(theta, parloglik, method = "BFGS", 
+            hessian = FALSE, tmp = excess, a = a, threshold = threshold, 
+            xpi = xp[i])
+        parmax = rbind(parmax, fit2$value)
+    }
+    parmax = -parmax
+    overallmax = -parloglik(xihat, excess, a, threshold, q)
+    crit = overallmax - qchisq(0.999, 1)/2
+    cond = parmax > crit
+    xp = xp[cond]
+    parmax = parmax[cond]
+    # Plot:
+    par(new = TRUE)
+    plot(xp, parmax, type = "n", xlab = "", ylab = "", axes = F, 
+        xlim = range(x$plotmin, x$plotmax), 
+        ylim = range(overallmax, crit), log = "x")
+    axis(4, at = overallmax - qchisq(c(0.95, 0.99), 1)/2, 
+        labels = c("95", "99"), tick = TRUE)
+    aalpha = qchisq(ci.p, 1)
+    abline(h = overallmax - aalpha/2, lty = 2, col = 2)
+    cond = !is.na(xp) & !is.na(parmax)
+    smth = spline(xp[cond], parmax[cond], n = 200)
+    lines(smth, lty = 2, col = 2)
+    ci = smth$x[smth$y > overallmax - aalpha/2]
+    abline(v = q.keep, lty = 2)
+    # Result:
+    out1 = c(min(ci), q, max(ci))
+    names(out1) = c("Lower CI", "Estimate", "Upper CI")
+
+    
+    # GPD Shortfall:
+    a = 1/(1 - p.less.thresh) * (1 - pp)
+    gfunc = function(a, xihat) (a^( - xihat) - 1) / xihat
+    q = threshold + betahat * gfunc(a, xihat)
+    s = s.keep = q + (betahat + xihat * (q - threshold))/(1 - xihat)
+    out = as.numeric(s)
+    # Log Likelihood:
+    parloglik = function(theta, tmp, a, threshold, xpi)
+    {
+        beta = ((1-theta)*(xpi-threshold)) / (((a^(-theta)-1)/theta)+1)
+        if((beta <= 0) || ((theta <= 0) && (max(tmp) > ( - beta/theta)))) {
+            f = 1e+06
+        } else {
+            y = log(1 + (theta * tmp)/beta)
+            y = y/theta
+            f = length(tmp) * log(beta) + (1 + theta) * sum(y)
+        }
+        f
+    }
+    # x Values:
+    theta = xihat
+    parmax = NULL
+    xp = exp(seq(from = log(threshold), to = log(x$plotmax),
+        length = like.num))
+    excess = as.numeric(x$lastfit$data - threshold)
+    # y Values:
+    for (i in 1:length(xp)) {
+        fit2 = optim(theta, parloglik, method = "BFGS", hessian = FALSE,
+            tmp = excess, a = a, threshold = threshold, xpi = xp[i])
+        parmax = rbind(parmax, fit2$value)
+    }
+    parmax =  -parmax
+    overallmax =  -parloglik(xihat, excess, a, threshold, s)
+    crit = overallmax - qchisq(0.999, 1)/2
+    cond = parmax > crit
+    xp = xp[cond]
+    parmax = parmax[cond]
+    # Plot:
+    par(new = TRUE)
+    plot(xp, parmax, type = "n", xlab = "", ylab = "", axes = FALSE, 
+         xlim = range(x$plotmin, x$plotmax), 
+         ylim = range(overallmax, crit), log = "x")
+    axis(4, at = overallmax - qchisq(c(0.95, 0.99), 1)/2,
+         labels = c("95", "99"), tick = TRUE)   
+    aalpha = qchisq(ci.p, 1)
+    abline(h = overallmax - aalpha/2, lty = 2, col = 2)
+    cond = !is.na(xp) & !is.na(parmax)
+    smth = spline(xp[cond], parmax[cond], n = 200)
+    lines(smth, lty = 2, col = 2)
+    ci = smth$x[smth$y > overallmax - aalpha/2]    
+    abline(v = s.keep, lty = 2)
+    # Result:
+    out2 = c(min(ci), s, max(ci))
+    names(out2) = c("Lower CI", "Estimate", "Upper CI")
+
+    # Return Value:
+    ans = list(var = out1, sfall = out2)
+    invisible(ans)
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+tailSlider = 
+function(x)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description
+    #   Displays the symmetric stable distribution
+
+    # FUNCTION:
+    
+    # Exit:
+    on.exit(rm(last.Quantile))
+    on.exit(rm(last.nThresholds))
+    on.exit(rm(param))
+    on.exit(rm(conf))
+    on.exit(rm(counter))
+    on.exit(rm(x))
+    
+    # Internal Function:
+    refresh.code = function(...)
+    {
+        counter <<- counter + 1      
+        # Sliders:
+        u = thresholdStart = .sliderMenu(no = 1)
+        du = .sliderMenu(no = 2)
+        max.x = .sliderMenu(no = 3)
+        nThresholds = .sliderMenu(no = 4)
+        Quantile = .sliderMenu(no = 5)
+        pp = .sliderMenu(no = 6)
+          
+        
+        if (counter > 5) {
+            
+        # Plot data:        
+        par(mfrow = c(2, 2), cex = 0.7)
+
+        # Figure 1:
+        ans = mxfPlot(x, u = quantile(x, 1), 
+            xlim = c(min(x), max.x), labels = FALSE) 
+        grid()
+        
+        # Add thresholds:
+        U = min(c(u+du, max(x)))  
+        abline(v = u, lty = 3, col = "red")
+        abline(v = U, lty = 3, col = "red")
+ 
+        # Fit line to mean excess within thresolds:
+        X = as.vector(ans[, 1])
+        Y = as.vector(ans[, 2])
+        Y = Y[X > u & X < U]
+        X = X[X > u & X < U]
+        lineFit = lsfit(X, Y)
+        abline(lineFit, col = "red", lty = 2)
+        c = lineFit$coef[[1]]
+        m = lineFit$coef[[2]]
+
+        # Compute parameters xi and beta:
+        xi = c(xi = m/(1+m))
+        beta = c(beta = c/(1+m))
+        Xi = signif(xi, 3)
+        Beta = signif(beta, 3)
+        
+        # Add Title:
+        Main = paste("Fig 1:  xi = ", Xi, "| beta =", Beta)
+        title(main = Main, xlab = "Threshold", ylab = "Mean Excess")   
+        
+        # GPD Fit:
+        if (last.Quantile != Quantile | last.nThresholds != nThresholds) {
+            param <<- NULL
+            conf <<- NULL
+            Thresholds <<- seq(quantile(x, Quantile), quantile(x, 1-Quantile), 
+                length = nThresholds)
+            for (threshold in Thresholds) {
+                ans = gpdFit(x, threshold)@fit 
+                param <<- rbind(param, c(u = threshold, ans$par.ests))
+                conf <<- rbind(conf, c(u = threshold, ans$par.ses))
+            }
+            last.Quantile <<- Quantile
+            last.nThresholds <<- nThresholds
+        } 
+        
+        # Figure 2:
+        ymax = max(c(param[, 2] + conf[, 2]))
+        ymin = min(c(param[, 2] - conf[, 2]))
+        plot(Thresholds, param[, 2], xlab = "Threshold", ylab = "xi",
+            ylim = c(ymin, ymax), col = "steelblue", type = "l",
+            main = "xi Estimation")
+        grid()
+        points(Thresholds, param[, 2], pch = 19, col = "steelblue")
+        lines(Thresholds, param[, 2] + conf[, 2], lty = 3)
+        lines(Thresholds, param[, 2] - conf[, 2], lty = 3)
+        abline(h = xi, lty = 3, col = "red") 
+        abline(v = u, lty = 3, col = "red")
+        abline(v = U, lty = 3, col = "red")
+          
+        # Figure 3:  
+        ymax = max(c(param[, 3] + conf[, 3]))
+        ymin = min(c(param[, 3] - conf[, 3]))    
+        plot(Thresholds, param[, 3], xlab = "Threshold", ylab = "beta",
+            ylim = c(ymin, ymax), col = "steelblue", type = "l",
+            main = "beta Estimation")
+        grid()
+        points(Thresholds, param[, 3], pch = 19, col = "steelblue")
+        lines(Thresholds, param[, 3] + conf[, 3], lty = 3)
+        lines(Thresholds, param[, 3] - conf[, 3], lty = 3)
+        abline(h = beta, lty = 3, col = "red")
+        abline(v = u, lty = 3, col = "red")
+        abline(v = U, lty = 3, col = "red") 
+        
+        # Figure 4:
+        fit <<- gpdFit(x, u)
+        tailPlot(object = fit, p = pp)
+           
+        # Refresh Frame:
+        par(mfrow = c(2, 2), cex = 0.7)
+        }
+    }
+    
+    # Save x globally:
+    x <<- as.vector(x)
+    
+    # Slider Menu - x Series Settings:
+    xmax = max(x)
+    delta.x = (max(x)-min(x))/200
+    start.x = par()$usr[2]
+    
+    # Slider Menu -  Threshold/Quantiles Settings:
+    qmin = quantile(x, 0.25)
+    qmax = quantile(x, 0.995)
+    delta.q = (qmax-qmin)/200
+    start.q = (qmin+qmax)/2
+    
+    # Save Globally:
+    last.Quantile <<- 0.05*(1+1e-4)
+    last.nThresholds <<- 10+1
+    param <<- NA
+    conf <<- NA
+    counter <<- 0
+    
+    # Open Slider Menu:
+    .sliderMenu(refresh.code,
+       names =       c("1 thresholdStart",
+                                 "1 thresholdInterval",
+                                           "1 max(x)", 
+                                                      "2|3 nThresholds",
+                                                           "2|3 Quantile", 
+                                                                      "pp"),
+       minima =      c( qmin,    0,        min(x),    5,    0.005,    0.900),
+       maxima =      c( qmax,    qmax,     max(x),    50,   0.500,    0.999),
+       resolutions = c( delta.q, delta.x,  delta.x,   5,    0.005,    0.001),
+       starts =      c( start.q, start.x,  max(x),    10,   0.050,    0.990))
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+tailRisk =
+function(object, ...)
+{
+    UseMethod("tailRisk")
+}
+
+
+tailRisk.fGPDFIT = 
+function(object, prob = c(0.99, 0.995, 0.999, 0.9995, 0.9999), ...)
+{
+    gpdRiskMeasures(object, prob)
+}
+
+
+################################################################################
+
 
