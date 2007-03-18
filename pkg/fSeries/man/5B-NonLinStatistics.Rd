@@ -1,6 +1,6 @@
-\name{ChaosStatistics}
+\name{NonLinStatistics}
 
-\alias{ChaosStatistics}
+\alias{NonLinStatistics}
 
 
 \alias{mutualPlot}

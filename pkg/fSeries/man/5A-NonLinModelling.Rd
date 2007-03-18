@@ -1,6 +1,6 @@
-\name{ChaosModelling}
+\name{NonLinModelling}
 
-\alias{ChaosModelling}
+\alias{NonLinModelling}
 
 \alias{tentSim}
 \alias{henonSim}

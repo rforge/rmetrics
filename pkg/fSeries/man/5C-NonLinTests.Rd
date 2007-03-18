@@ -1,6 +1,6 @@
-\name{TimeSeriesTests}
+\name{NonLinTests}
 
-\alias{TimeSeriesTests}
+\alias{NonLinTests}
 
 \alias{tsTest}
 \alias{bdsTest}

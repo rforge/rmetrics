@@ -40,8 +40,7 @@ if (FALSE) {
         "2A", 
         "3A", "3B", 
         "4A", "4B", "4C", "4D", 
-        "5A", "5B",
-        "6A")
+        "5A", "5B", "5C")
     File = "C:/Rmetrics/SVN/trunk/fSeries/test/runit"
     Protocol = "runitfSeries.txt"
     
