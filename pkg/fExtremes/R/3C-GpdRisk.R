@@ -601,17 +601,6 @@ function(object, prob = c(0.99, 0.995, 0.999, 0.9995, 0.9999))
 ################################################################################
 
 
-tailPlot = 
-function(object, ...)
-{
-    UseMethod("tailPlot")
-}
-
-
-
-# ------------------------------------------------------------------------------
-
-
 tailPlot =
 function(object, p = 0.99, ci = 0.95, nLLH = 25, extend = 1.5, labels = TRUE, ...)
 {   # A function implemented by Diethelm Wuertz
