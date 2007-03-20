@@ -50,13 +50,13 @@ gpdQuantPlot(x, p = 0.99, ci = 0.95, models = 30, start = 15, end = 500,
 gpdSfallPlot(x, p = 0.99, ci = 0.95, like.num = 50)
 gpdShapePlot(x, ci = 0.95, models = 30, start = 15, end = 500, 
     doplot = TRUE, plottype = c("normal", "reverse"), labels = TRUE, \dots)
-gpdTailPlot(object, plottype = c("xy", "x", "y", ""), extend = 1.5, 
-    labels = TRUE, \dots)
+gpdTailPlot(object, plottype = c("xy", "x", "y", ""), doplot = TRUE, 
+    extend = 1.5, labels = TRUE, \dots)
 
 gpdRiskMeasures(object, prob = c(0.99, 0.995, 0.999, 0.9995, 0.9999))
 
-tailPlot(object, plottype = c("xy", "x", "y", ""), doplot = TRUE, 
-    extend = 1.5, labels = TRUE, ...)
+tailPlot(object, p = 0.99, ci = 0.95, nLLH = 25, extend = 1.5, 
+    labels = TRUE, ...)
 tailSlider(x)
 tailRisk(object, prob = c(0.99, 0.995, 0.999, 0.9995, 0.9999), ...)
 }
@@ -68,9 +68,6 @@ tailRisk(object, prob = c(0.99, 0.995, 0.999, 0.9995, 0.9999), ...)
         the probability for asymptotic confidence band; for no 
         confidence band set to zero.
         }
-    \item{description}{
-        a character string which allows for a brief description.
-        }
     \item{doplot}{
         a logical. Should the results be plotted?
         }
@@ -80,12 +77,6 @@ tailRisk(object, prob = c(0.99, 0.995, 0.999, 0.9995, 0.9999), ...)
         argument must take values greater than 1 and is useful for
         showing estimated quantiles beyond data.
         }
-    \item{information}{
-        whether standard errors should be calculated with
-        \code{"observed"} or \code{"expected"} information. This only applies
-        to the maximum likelihood method; for the probability-weighted moments
-        method \code{"expected"} information is used if possible.
-        }
     \item{labels}{
         optional argument for plots 1 and 2  specifying whether or not 
         axes should be labelled.
@@ -93,19 +84,12 @@ tailRisk(object, prob = c(0.99, 0.995, 0.999, 0.9995, 0.9999), ...)
     \item{like.num}{
         the number of times to evaluate profile likelihood.
         } 
-    \item{model}{
-        [gpdSim] - \cr
-        a list with components \code{shape}, \code{location} and 
-        \code{scale} giving the parameters of the GPD distribution.
-        By default the shape parameter has the value 0.25, the
-        location is zero and the scale is one.}
     \item{models}{
         the number of consecutive gpd models to be fitted.
         }
-    \item{n}{
-        [rgpd][gpdSim\ - \cr
-        the number of observations to be generated.
-        } 
+    \item{nLLH}{
+        ...
+        }
     \item{object}{
         [summary] - \cr
         a fitted object of class \code{"gpdFit"}.
@@ -118,10 +102,6 @@ tailRisk(object, prob = c(0.99, 0.995, 0.999, 0.9995, 0.9999), ...)
         should plot be by increasing threshold (\code{TRUE}) or number 
         of extremes (\code{FALSE}).
         }
-    \item{seed}{
-        [gpdSim] - \cr
-        an integer value to set the seed for the random number generator.
-        }
     \item{prob}{
         a numeric value.
         }
@@ -131,25 +111,11 @@ tailRisk(object, prob = c(0.99, 0.995, 0.999, 0.9995, 0.9999), ...)
     \item{start, end}{
         the lowest and maximum number of exceedances to be considered.
         }
-    \item{title}{
-        a character string which allows for a project title.
-        }
     \item{type}{
         a character string selecting the desired estimation mehtod, either
         \code{"mle"} for the maximum likelihood mehtod or \code{"pwm"} for 
         the probability weighted moment method. By default, the first will 
         be selected. Note, the function \code{gpd} uses \code{"ml"}.    
-        }
-    \item{u}{
-        the threshold value.    
-        }
-    \item{which}{
-        if \code{which} is set to \code{"ask"} the function will 
-        interactively ask which plot should be displayed. By default
-        this value is set to \code{FALSE} and then those plots will
-        be displayed for which the elements in the logical vector
-        \code{which} ar set to \code{TRUE}; by default all four
-        elements are set to \code{"all"}.
         }
     \item{x}{
         [dgpd] - \cr
@@ -163,11 +129,6 @@ tailRisk(object, prob = c(0.99, 0.995, 0.999, 0.9995, 0.9999), ...)
         \cr
         [print][plot] - \cr
         a fitted object of class \code{"gpdFit"}.
-        }
-    \item{xi, mu, beta}{
-        \code{xi} is the shape parameter, 
-        \code{mu} the location parameter,
-        and \code{beta} is the scale parameter.
         }
     \item{\dots}{
         control parameters and plot parameters optionally passed to the 

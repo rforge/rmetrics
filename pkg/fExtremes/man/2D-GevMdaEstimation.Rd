@@ -51,16 +51,6 @@ shaparmDEHaan(x, p = 0.05, xiRange = NULL,
 
 \arguments{
 
-    \item{add}{
-        [gevrlevelPlot] - \cr
-        whether the return level should be added graphically to a
-        time series plot; if \code{FALSE} a graph of the profile
-        likelihood curve showing the return level and its confidence
-        interval is produced.
-        }
-    \item{block}{
-        block size.
-        }
     \item{alphaRange, xiRange}{
         [saparmPlot] - \cr
         plotting ranges for \code{alpha} and \code{xi}. By default the
@@ -70,9 +60,6 @@ shaparmDEHaan(x, p = 0.05, xiRange = NULL,
         [hillPlot] - \cr
         probability for asymptotic confidence band; for no
         confidence band set \code{ci} to zero.
-        }
-    \item{description}{
-        a character string which allows for a brief description.
         }
     \item{doplot}{
         a logical. Should the results be plotted?
@@ -84,35 +71,10 @@ shaparmDEHaan(x, p = 0.05, xiRange = NULL,
         percent. By default \code{c(FALSE, FALSE, FALSE, FALSE, 
         TRUE, FALSE, FALSE, FALSE, FALSE, FALSE)}.
         }
-    \item{kBlocks}{
-        [gevrlevelPlot] - \cr
-        specifies the particular return level to be estimated; default 
-        set arbitrarily to 20.
-        }
     \item{labels}{
         [hillPlot] - \cr
         whether or not axes should be labelled.
-        }
-    \item{model}{
-        [gevSim][gumbelSim] - \cr
-        a list with components \code{shape}, \code{location} and 
-        \code{scale} giving the parameters of the GEV distribution.
-        By default the shape parameter has the value -0.25, the
-        location is zero and the scale is one.
-        To fit random deviates from a Gumbel distribution set 
-        \code{shape=0}.
-        }
-    \item{n}{
-        [gevSim][gumbelSim] - \cr
-        number of generated data points, an integer value.
-        \cr
-        [rgev] - \cr        
-        the number of observations.
         } 
-    \item{object}{
-        [summary][grlevelPlot] - \cr
-        a fitted object of class \code{"gevFit"}.
-        }
     \item{plottype}{
         [hillPlot] - \cr
         whether \code{alpha}, \code{xi} (1/alpha) or
@@ -125,31 +87,10 @@ shaparmDEHaan(x, p = 0.05, xiRange = NULL,
         probability required when option \code{quantile} is
         chosen.
         }
-    \item{seed}{
-        [gevSim] - \cr
-        an integer value to set the seed for the random number generator.
-        }
     \item{start}{
         [hillPlot] - \cr
         lowest number of order statistics at which to plot
         a point.
-        }
-    \item{title}{
-        [gevFit] - \cr
-        a character string which allows for a project title.
-        }
-    \item{type}{
-        a character string denoting the type of parameter estimation,
-        either by maximum likelihood estimation \code{"mle"}, the
-        default value, or by the probability weighted moment menthod
-        \code{"pwm"}.
-        }
-    \item{which}{
-        [plot][summary] - \cr
-        a vector of logicals, one for each plot, denoting which plot 
-        should be displayed. Alkternatively if \code{which="ask"} the
-        user will be interactively asked which of the plots should be
-        desplayed. By default \code{which="all"}.
         }
     \item{x}{
         [dgev][devd] - \cr
@@ -167,13 +108,6 @@ shaparmDEHaan(x, p = 0.05, xiRange = NULL,
         \cr
         [print][plot] - \cr
         a fitted object of class \code{"gevFit"}.
-        }
-    \item{xi, mu, beta}{
-        [*gev] - \cr
-        \code{xi} is the shape parameter, \code{mu} the location parameter,
-        and \code{sigma} is the scale parameter. The default values are 
-        \code{xi=1}, \code{mu=0}, and \code{beta=1}. Note, if \code{xi=0} 
-        the distribution is of type Gumbel.
         }
     \item{\dots}{
         [gevFit] - \cr

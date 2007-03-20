@@ -24,49 +24,14 @@
     The GEV modelling functions are:
     
     \tabular{ll}{
-    \code{gevSim} \tab generates data from the GEV distribution, \cr
-    \code{gumbelSim} \tab generates data from the Gumbel distribution, \cr
-    \code{gevFit} \tab fits data to the GEV distribution, \cr 
-    \code{gumbelFit} \tab fits data to the Gumbel distribution, \cr 
-    \code{print} \tab print method for a fitted GEV object, \cr
-    \code{plot} \tab plot method for a fitted GEV object, \cr 
-    \code{summary} \tab summary method for a fitted GEV object, \cr
     \code{gevrlevelPlot} \tab k-block return level with confidence intervals. }
-    
-    Maximum Domain of Attraction estimators:
-    
-    \tabular{ll}{
-    \code{hillPlot} \tab shape parameter and Hill estimate of the tail index, \cr
-    \code{shaparmPlot} \tab variation of shape parameter with tail depth. }
      
 }
 
 
 \usage{
-gevSim(model = list(xi = -0.25, mu = 0, beta = 1), n = 1000, seed = NULL)
-gumbelSim(model = list(mu = 0, beta = 1), n = 1000, seed = NULL)
-
-gevFit(x, block = 1, type = c("mle", "pwm"), title = NULL, description = NULL, \dots)
-gumbelFit(x, block = 1, type = c("mle", "pwm"), title = NULL, description = NULL, \dots)
-
-show.fGEVFIT(object)
-\method{plot}{fGEVFIT}(x, which = "ask", \dots)
-\method{summary}{fGEVFIT}(object, doplot = TRUE, which = "all", \dots)
-
 gevrlevelPlot(object, kBlocks = 20,  ci = c(0.90, 0.95, 0.99), 
     plottype = c("plot", "add"), labels = TRUE,...)
-
-hillPlot(x, start = 15, ci = 0.95, 
-    doplot = TRUE, plottype = c("alpha", "xi"), labels = TRUE, \dots)
-shaparmPlot(x, p = 0.01*(1:10), xiRange = NULL, alphaRange = NULL,
-    doplot = TRUE, plottype = c("both", "upper"))
-    
-shaparmPickands(x, p = 0.05, xiRange = NULL,  
-    doplot = TRUE, plottype = c("both", "upper"), labels = TRUE, \dots) 
-shaparmHill(x, p = 0.05, xiRange = NULL,  
-    doplot = TRUE, plottype = c("both", "upper"), labels = TRUE, \dots)
-shaparmDEHaan(x, p = 0.05, xiRange = NULL,  
-    doplot = TRUE, plottype = c("both", "upper"), labels = TRUE, \dots)
 }
 
 
@@ -79,31 +44,10 @@ shaparmDEHaan(x, p = 0.05, xiRange = NULL,
         likelihood curve showing the return level and its confidence
         interval is produced.
         }
-    \item{block}{
-        block size.
-        }
-    \item{alphaRange, xiRange}{
-        [saparmPlot] - \cr
-        plotting ranges for \code{alpha} and \code{xi}. By default the
-        values are automatically selected.
-        }
     \item{ci}{
         [hillPlot] - \cr
         probability for asymptotic confidence band; for no
         confidence band set \code{ci} to zero.
-        }
-    \item{description}{
-        a character string which allows for a brief description.
-        }
-    \item{doplot}{
-        a logical. Should the results be plotted?
-        \cr
-        [shaparmPlot] - \cr
-        a vector of logicals of the same lengths as tails
-        defining for wich tail depths plots should be created,
-        by default plots will be generated for a tail depth of 5
-        percent. By default \code{c(FALSE, FALSE, FALSE, FALSE, 
-        TRUE, FALSE, FALSE, FALSE, FALSE, FALSE)}.
         }
     \item{kBlocks}{
         [gevrlevelPlot] - \cr
@@ -113,22 +57,6 @@ shaparmDEHaan(x, p = 0.05, xiRange = NULL,
     \item{labels}{
         [hillPlot] - \cr
         whether or not axes should be labelled.
-        }
-    \item{model}{
-        [gevSim][gumbelSim] - \cr
-        a list with components \code{shape}, \code{location} and 
-        \code{scale} giving the parameters of the GEV distribution.
-        By default the shape parameter has the value -0.25, the
-        location is zero and the scale is one.
-        To fit random deviates from a Gumbel distribution set 
-        \code{shape=0}.
-        }
-    \item{n}{
-        [gevSim][gumbelSim] - \cr
-        number of generated data points, an integer value.
-        \cr
-        [rgev] - \cr        
-        the number of observations.
         } 
     \item{object}{
         [summary][grlevelPlot] - \cr
@@ -139,74 +67,7 @@ shaparmDEHaan(x, p = 0.05, xiRange = NULL,
         whether \code{alpha}, \code{xi} (1/alpha) or
         \code{quantile} (a quantile estimate) should be plotted.
         }
-    \item{p}{
-        [qgev] - \cr
-        a numeric vector of probabilities.
-        [hillPlot] - \cr
-        probability required when option \code{quantile} is
-        chosen.
-        }
-    \item{seed}{
-        [gevSim] - \cr
-        an integer value to set the seed for the random number generator.
-        }
-    \item{start}{
-        [hillPlot] - \cr
-        lowest number of order statistics at which to plot
-        a point.
-        }
-    \item{title}{
-        [gevFit] - \cr
-        a character string which allows for a project title.
-        }
-    \item{type}{
-        a character string denoting the type of parameter estimation,
-        either by maximum likelihood estimation \code{"mle"}, the
-        default value, or by the probability weighted moment menthod
-        \code{"pwm"}.
-        }
-    \item{which}{
-        [plot][summary] - \cr
-        a vector of logicals, one for each plot, denoting which plot 
-        should be displayed. Alkternatively if \code{which="ask"} the
-        user will be interactively asked which of the plots should be
-        desplayed. By default \code{which="all"}.
-        }
-    \item{x}{
-        [dgev][devd] - \cr
-        a numeric vector of quantiles.
-        \cr
-        [gevFit] - \cr
-        data vector. In the case of \code{method="mle"} the interpretation 
-        depends on the value of block: if no block size is specified then 
-        data are interpreted as block maxima; if block size is set, then data
-        are interpreted as raw data and block maxima are calculated. 
-        \cr
-        [hillPlot][shaparmPlot] - \cr
-        the data from which to calculate the shape parameter, a
-        numeric vector.
-        \cr
-        [print][plot] - \cr
-        a fitted object of class \code{"gevFit"}.
-        }
-    \item{xi, mu, beta}{
-        [*gev] - \cr
-        \code{xi} is the shape parameter, \code{mu} the location parameter,
-        and \code{sigma} is the scale parameter. The default values are 
-        \code{xi=1}, \code{mu=0}, and \code{beta=1}. Note, if \code{xi=0} 
-        the distribution is of type Gumbel.
-        }
     \item{\dots}{
-        [gevFit] - \cr
-        control parameters optionally passed to the 
-        optimization function. Parameters for the optimization
-        function are passed to components of the \code{control} argument of
-        \code{optim}. 
-        \cr
-        [hillPlot] - \cr
-        other graphics parameters.
-        \cr
-        [plot][summary] - \cr
         arguments passed to the plot function.
         }    
 

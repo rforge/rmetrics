@@ -56,21 +56,11 @@ show.fGPDFIT(object)
 
 \arguments{
     
-    \item{ci}{
-        the probability for asymptotic confidence band; for no 
-        confidence band set to zero.
-        }
     \item{description}{
         a character string which allows for a brief description.
         }
     \item{doplot}{
         a logical. Should the results be plotted?
-        }
-    \item{extend}{
-        optional argument for plots 1 and 2 expressing how far x-axis 
-        should extend as a multiple of the largest data value. This 
-        argument must take values greater than 1 and is useful for
-        showing estimated quantiles beyond data.
         }
     \item{information}{
         whether standard errors should be calculated with
@@ -78,22 +68,12 @@ show.fGPDFIT(object)
         to the maximum likelihood method; for the probability-weighted moments
         method \code{"expected"} information is used if possible.
         }
-    \item{labels}{
-        optional argument for plots 1 and 2  specifying whether or not 
-        axes should be labelled.
-        } 
-    \item{like.num}{
-        the number of times to evaluate profile likelihood.
-        } 
     \item{model}{
         [gpdSim] - \cr
         a list with components \code{shape}, \code{location} and 
         \code{scale} giving the parameters of the GPD distribution.
         By default the shape parameter has the value 0.25, the
         location is zero and the scale is one.}
-    \item{models}{
-        the number of consecutive gpd models to be fitted.
-        }
     \item{n}{
         [rgpd][gpdSim\ - \cr
         the number of observations to be generated.
@@ -102,26 +82,9 @@ show.fGPDFIT(object)
         [summary] - \cr
         a fitted object of class \code{"gpdFit"}.
         }
-    \item{p}{
-        a vector of probability levels, the desired probability for the 
-        quantile estimate (e.g. 0.99 for the 99th percentile).
-        } 
-    \item{reverse}{
-        should plot be by increasing threshold (\code{TRUE}) or number 
-        of extremes (\code{FALSE}).
-        }
     \item{seed}{
         [gpdSim] - \cr
         an integer value to set the seed for the random number generator.
-        }
-    \item{prob}{
-        a numeric value.
-        }
-    \item{plottype}{
-        a character string.
-        }
-    \item{start, end}{
-        the lowest and maximum number of exceedances to be considered.
         }
     \item{title}{
         a character string which allows for a project title.

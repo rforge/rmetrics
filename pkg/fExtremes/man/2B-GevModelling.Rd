@@ -64,25 +64,8 @@ show.fGEVFIT(object)
 
 \arguments{
 
-    \item{add}{
-        [gevrlevelPlot] - \cr
-        whether the return level should be added graphically to a
-        time series plot; if \code{FALSE} a graph of the profile
-        likelihood curve showing the return level and its confidence
-        interval is produced.
-        }
     \item{block}{
         block size.
-        }
-    \item{alphaRange, xiRange}{
-        [saparmPlot] - \cr
-        plotting ranges for \code{alpha} and \code{xi}. By default the
-        values are automatically selected.
-        }
-    \item{ci}{
-        [hillPlot] - \cr
-        probability for asymptotic confidence band; for no
-        confidence band set \code{ci} to zero.
         }
     \item{description}{
         a character string which allows for a brief description.
@@ -96,15 +79,6 @@ show.fGEVFIT(object)
         by default plots will be generated for a tail depth of 5
         percent. By default \code{c(FALSE, FALSE, FALSE, FALSE, 
         TRUE, FALSE, FALSE, FALSE, FALSE, FALSE)}.
-        }
-    \item{kBlocks}{
-        [gevrlevelPlot] - \cr
-        specifies the particular return level to be estimated; default 
-        set arbitrarily to 20.
-        }
-    \item{labels}{
-        [hillPlot] - \cr
-        whether or not axes should be labelled.
         }
     \item{model}{
         [gevSim][gumbelSim] - \cr
@@ -126,26 +100,9 @@ show.fGEVFIT(object)
         [summary][grlevelPlot] - \cr
         a fitted object of class \code{"gevFit"}.
         }
-    \item{plottype}{
-        [hillPlot] - \cr
-        whether \code{alpha}, \code{xi} (1/alpha) or
-        \code{quantile} (a quantile estimate) should be plotted.
-        }
-    \item{p}{
-        [qgev] - \cr
-        a numeric vector of probabilities.
-        [hillPlot] - \cr
-        probability required when option \code{quantile} is
-        chosen.
-        }
     \item{seed}{
         [gevSim] - \cr
         an integer value to set the seed for the random number generator.
-        }
-    \item{start}{
-        [hillPlot] - \cr
-        lowest number of order statistics at which to plot
-        a point.
         }
     \item{title}{
         [gevFit] - \cr
