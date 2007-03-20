@@ -1,3 +1,4 @@
+
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
 # License as published by the Free Software Foundation; either
@@ -27,7 +28,7 @@
 
 
 ################################################################################
-# FUNCTION                     EFFICIENT FRONTIER PLOT AND ADDONS:  
+# FUNCTION:                    EFFICIENT FRONTIER PLOT AND ADDONS:  
 #  frontierPlot                  Plots efficient Frontier
 #   .sharpeRatioPlot             Adds Sharpe Ratio
 #   .minvariancePlot             Adds Minimum Variance point
@@ -40,11 +41,11 @@
 #   .monteCarloPlot              Adds randomly produced feasible portfolios
 #   .notStackedWeightsPlot       Plots the not stacked weights of potfolio
 #   .addlegend                   Adds legend to sliders
-# FUNCTION                     DESCRIPTION:                  
+# FUNCTION:                    DESCRIPTION:                  
 #  weightsPlot                  Plots staggered weights
 #  weightsPie                   Plots staggered weights
 #  attributesPlot               Plots weighted means
-# FUNCTION                     DESCRIPTION:
+# FUNCTION:                    DESCRIPTION:
 #  covEllipsesPlot              Plots covariance ellipses
 ################################################################################
 

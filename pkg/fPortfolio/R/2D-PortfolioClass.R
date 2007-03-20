@@ -28,7 +28,7 @@
 
 
 ################################################################################
-# FUNCTION                      PORTFOLIO CLASS:
+# FUNCTION:                     PORTFOLIO CLASS:
 #  'fPORTFOLIO'                  S4 Portfolio Class
 # FUNCTION:                     SINGLE PORTFOLIOS:
 #  feasiblePortfolio             Returns a feasible portfolio

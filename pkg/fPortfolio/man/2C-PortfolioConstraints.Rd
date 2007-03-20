@@ -23,14 +23,13 @@
     
     \tabular{ll}{
     \code{setConstraints} \tab Transforms constraint strings into a list value, \cr
-    \code{demonstrations} \tab Transforms a constraint list value into strings. 
-    }
+    \code{getConstraints} \tab Transforms a constraint list value into strings.}
+    
 }    
 
 \usage{
 setConstraints(data, spec = portfolioSpec(), constraintsStrings = NULL) 
-demonstrations(object)
-
+getConstraints(object)
 }
 
 
@@ -82,14 +81,13 @@ demonstrations(object)
     weights sum up to the desired return. The following lines represent user
     defined constraints. For the lower bound constraints all entries have a
     minus sign in order to change the inequality relation.
-    
     \cr
 
-    \code{demonstrations} 
+    \code{getConstraints} 
     \cr
     returns the constraints from an object being the composition of constraints
     matrix \eqn{A} and exposure vector \eqn{b_0}. It has the same from output
-    by function setConstraints.\cr
+    by function setConstraints. 
   
 }
 
@@ -116,23 +114,21 @@ demonstrations(object)
 
 
 \examples{
-
 ## setConstraints -
-    # Getting Data
-    Data = dutchPortfolioData()
-    # Setting Data in Right Manner
-    Data = list(statistics = Data)
-    # Getting Specifications
-    Spec = portfolioSpec()
-    # Setting Constraints Vector
-    Constraints = c("minW[4] = 0.2", "maxW[3] = 0.4", "maxsumW[c(1,2,4)] = 0.9")
-    constMatrix = setConstraints(Data, Spec, Constraints)
-    constMatrix
+   # Getting Data
+   Data = dutchPortfolioData()
+   # Setting Data in Right Manner
+   Data = list(statistics = Data)
+   # Getting Specifications
+   Spec = portfolioSpec()
+   # Setting Constraints Vector
+   Constraints = c("minW[4] = 0.2", "maxW[3] = 0.4", "maxsumW[c(1,2,4)] = 0.9")
+   constMatrix = setConstraints(Data, Spec, Constraints)
+   constMatrix
    
-## demonstrations -
-    # Use Constraints Matrix from Example Above
-    #demonstrations(constMatrix)
- 
+## getConstraints -
+   # Use Constraints Matrix from Example Above
+   # demonstrations(constMatrix)
 }
 
 

@@ -33,7 +33,7 @@
 #  CVaRplus             Computes value-at-risk Plus for a portfolio of assets
 #  CVaR                 Computes conditional value-at-risk for a PF of assets
 #  lambdaCVaR           Computes CVaR's atomic split value lambda
-# BENCHMARKS:          DESCRIPTION:
+# FUNCTION:            BENCHMARKS:   
 #  pfolioMaxLoss        Computes maximum loss for a portfolio of assets
 #  pfolioReturn         Computes return series of a portfolio
 #  pfolioTargetReturn   Computes target return of a portfolio

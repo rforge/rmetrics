@@ -31,7 +31,7 @@
 # FUNCTION:                     EXAMPLE DATA:
 #  dutchPortfolioData            Example Data from Engel's Diploma Thesis
 #  usPortfolioData               Annual US Economics Portfolio Data
-#  sm132PortfolioData            Example from Scherer, Martin: Cheapter 1.32
+#  sm132PortfolioData            Example from Scherer, Martin: Chapter 1.32
 ################################################################################
 
 

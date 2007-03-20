@@ -186,8 +186,6 @@ frontierSlider(object, control = list(), \dots)
     one indicates the minimum variance portfolio. The number in the pie plot
     stands for the asset and the sign shows whether this asset is short or long.
     In all plots colors represent the same asset.
-        
-     
 
 }
 
@@ -241,9 +239,11 @@ frontierSlider(object, control = list(), \dots)
 
 
 \note{
-In the following all elements of argument control from functions
+
+    In the following all elements of argument control from functions
     \code{plot}, \code{weightsSlider}, \code{frontierSlider} are listed. 
-\tabular{ll}{
+
+    \tabular{ll}{
      sliderResolution\tab
         [weightsSlider, frontierSlider] - 
         a numeric, determining the numbers of slider points, by default 
@@ -284,8 +284,8 @@ In the following all elements of argument control from functions
         \cr
     singleAsset.col\tab
         a character string vector, defining color of the
-        single asset portfolios The vector must have length the number of assets,
-        by default rainbow( # Assets).
+        single asset portfolios. The vector must have length the number 
+        of assets, by default \code{rainbow}.
          \cr
     twoAssets.col\tab
         [plot, frontierSlider] - 
@@ -428,40 +428,38 @@ In the following all elements of argument control from functions
 
 
 \examples{
-
 ## minvariancePortfolio -
-    # Setting Data
-    Data = usPortfolioData()
-    # Setting Default Specifications
-    Spec = portfolioSpec()
-    # Calculation of Short Selling Minimum Variance Portfolio
-    minvariancePortfolio(Data, Spec)
+   # Setting Data
+   Data = usPortfolioData()
+   # Setting Default Specifications
+   Spec = portfolioSpec()
+   # Calculation of Short Selling Minimum Variance Portfolio
+   minvariancePortfolio(Data, Spec)
     
 ## portfolioFrontier -
-    # Setting Data
-    Data = usPortfolioData()
-    # Setting Default Specifications
-    Spec = portfolioSpec()
-    # Setting Long Only Constraints
-    Constraint = c("minW[1:8]=0")
-    # Calculation of the Efficient Frontier
-    frontier = portfolioFrontier(Data, Spec, Constraint)
+   # Setting Data
+   Data = usPortfolioData()
+   # Setting Default Specifications
+   Spec = portfolioSpec()
+   # Setting Long Only Constraints
+   Constraint = c("minW[1:8]=0")
+   # Calculation of the Efficient Frontier
+   frontier = portfolioFrontier(Data, Spec, Constraint)
     
 ## plot -
-    # Requiring S4 Object "frontier" from 2nd example
-    # Plotting the Efficient Frontier with Minimum Variance Portfolio
-    plot(frontier, which = c(1,3))
+   # Requiring S4 Object "frontier" from 2nd example
+   # Plotting the Efficient Frontier with Minimum Variance Portfolio
+   plot(frontier, which = c(1,3))
     
 ## frontierSlider -
-    # Requiring S4 Object "frontier" from 2nd example
-    # Plotting the Frontier Slider
-    # frontierSlider(frontier)
+   # Requiring S4 Object "frontier" from 2nd example
+   # Plotting the Frontier Slider
+   # frontierSlider(frontier)
 
 ## weightsSlider -
-    # Requiring S4 Object "frontier" from 2nd example
-    # Plotting the Weights Slider
-    # weightsSlider(frontier)
- 
+   # Requiring S4 Object "frontier" from 2nd example
+   # Plotting the Weights Slider
+   # weightsSlider(frontier)
 }
 
 

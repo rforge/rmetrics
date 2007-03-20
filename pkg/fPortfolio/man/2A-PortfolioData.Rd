@@ -43,7 +43,8 @@ sm132PortfolioData()
     chips. The data is a list of the covariance matrix and the return means and
     is based on daily returns over a period from January 1990 till end of
     October 2003. Companies representing the data are Elsevier, Fortis,
-    Getronics, Heineken, Philips, Shell and Unilever.\cr 
+    Getronics, Heineken, Philips, Shell and Unilever.
+    \cr 
     
     
     \bold{US Portfolio Data Set:}
@@ -52,7 +53,6 @@ sm132PortfolioData()
     The data is a time series of yearly returns from December 1973 till December
     1994. Assets are TBills3m, LongBonds, SP500, Wilshire5000, NASDAQComp,
     LehmanBonds, EAFE, Gold.
-
     \cr
     
     
@@ -113,15 +113,12 @@ Scherer, M., Martin, R.D. (2005);\cr
 
 
 \examples{
-
 ## usPortfolioData -
    usPortfolioData()
-   
-   
+      
 ## dutchPortfolioData -
    x = dutchPortfolioData()
    x
- 
 }
 
 

@@ -19,8 +19,10 @@
 
 \description{
   
-    A collection of extractors for S4 objects of class \code{fPORTFOLIO}. The aim 
-    of these functions is to get an quick access to the desired data.
+    A collection of extractors for S4 objects 
+    of class \code{fPORTFOLIO}. The aim of 
+    these functions is to get an quick access 
+    to the desired data.
     \cr
     
     The data sets are:

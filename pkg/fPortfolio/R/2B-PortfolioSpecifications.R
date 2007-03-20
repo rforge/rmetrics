@@ -28,7 +28,7 @@
 
 
 ################################################################################
-# FUNCTION                      PORTFOLIO SPECIFICATION CLASS:
+# FUNCTION:                     PORTFOLIO SPECIFICATION CLASS:
 #  'fPFOLIOSPEC'                 S4 Portfolio Specification Class
 #  portfolioSpec                 Specifies a portfolio
 #  show.fPORTFOLIO               Print method for 'fPFOLIOSPEC' objects
