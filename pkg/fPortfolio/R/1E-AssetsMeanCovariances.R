@@ -206,7 +206,7 @@ check = TRUE, force = TRUE, baggedR = 100, ...)
         Sigma = ans$Omega
     } else if (method == "mcd") {
         # require(MASS)
-        ans .cov.rob(x, method = "mcd") 
+        ans = .cov.rob(x, method = "mcd") 
         mu = ans$mu
         Sigma = ans$Omega       
     } else if (method == "shrink") {
