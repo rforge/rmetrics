@@ -4,6 +4,7 @@
 
 \alias{fPFOLIOSPEC}
 \alias{fPFOLIOSPEC-class}
+\alias{fPfoliospec}
 
 \alias{show.fPFOLIOSPEC}
 \alias{show,fPFOLIOSPEC-method}
@@ -30,14 +31,17 @@
 
 \description{
   
-    A collection and description of xxx.
+    A collection and description of functions helping to set the specifications
+    of the portfolio. Typical specifications are desired target risk, estimation
+    model of covariance matrix and type of risk measure. See Notes for a complete
+    list of specifications and Arguments for description. 
     \cr
     
     The functions are:
     
     \tabular{ll}{
     \code{portfolioSpec} \tab Specifies a portfolio, \cr
-    \code{print|show} \tab Print method for 'fPFOLIOSPEC' objects, \cr
+    \code{print|show} \tab Print method for \code{fPFOLIOSPEC} objects, \cr
     \code{setType} \tab Sets type of portfolio optimization, \cr
     \code{setEstimator} \tab Sets names of mean and covariance estimators, \cr
     \code{setWeights} \tab Sets weights vector, \cr
@@ -75,112 +79,157 @@ portfolioStatistics(data, spec = portfolioSpec())
 }
 
 
-\details{
-
-    \bold{Portfolio Specification:}
-    \cr\cr
-    Describe it xxx
-
-}
-
-
 \arguments{
 
     \item{data}{
         [portfolioStatistics] - \cr
-        xxx
+        a time series or a named list, containing either a series of returns or
+        named entries 'mu' and 'Sigma' being mean and covariance matrix.
         }
     \item{description}{
         [portfolioSpec] - \cr
-        xxx
+        a character string, allowing for a brief project description, by default
+        NULL, i.e. Date and User.
         }
     \item{estimator}{
         [setEstimator] - \cr
-        xxx
+        a character string vector, determining which estimation type should be
+        used calculating mean and covariance matrix, by default "mean" and "cov"
+        meaning functions mean() and cov(). Other estimators are "mcd", using 
+        an mcd estimator, and "shrink", using an shrinkage estimator.
+        See section details for further information.
         }
     \item{model}{
-        [setModel] - \cr
-        xxx
+        [portfolioSpec] - \cr
+        a list, containing different arguments: type, estimator, params.
+        See these arguments for further explanation.
         }
     \item{nFrontierPoints}{
         [setNFrontierPoints] - \cr
-        xxx
+        a numeric, determining the number of equidistant steps on the frontier,
+        by default 50.
         }
     \item{object}{
         [show] - \cr
-        xxx
+        an S4 object of class \code{fPFOLIOSPEC}, having slots call, model,
+        portfolio, title, description. See \code{value} for slot description.
         }
     \item{portfolio}{
         [portfolioSpec] - \cr
-        xxx
+        a list, containing different arguments: weights, targetReturn,
+        riskFreeRate, nFrontierPoints, returnRange, riskRange. See these
+        arguments for further explanation.
         }
     \item{returnRange}{
         [setReturnRange] - \cr
-        xxx
+        a numerical vector, setting return range for calculation of efficient
+        frontier, by default NULL, i.e. range of returns from input data is taken.
         }
     \item{riskFreeRate}{
         [setRiskFreeRate] - \cr
-        xxx
+        a integer value, determining the percentage of the yearly return for a
+        risk free asset.
         }
     \item{riskRange}{
         [setRiskRange] - \cr
-        xxx
+        a numerical vector, setting risk range for calculation of efficient
+        frontier, by default NULL, i.e. range of risk from input data is taken.
         }
     \item{spec}{
-        xxx
+        an S4 object of class \code{fPFOLIOSPEC}, the specification to be modified,
+        by default the default of the function \code{portfolioSpec()}.
         }
     \item{targetReturn}{
         [setTargetReturn] - \cr
-        xxx
+        a numerical value, setting the desired portfolio return,
+        by default return of the tangency portfolio.
         }
     \item{title}{
         [portfolioSpec] - \cr
-        xxx
+        a character string, containing the title for the object,
+        by default NULL, i.e. "Portfolio Specification".
         }
     \item{type}{
         [setType] - \cr
-        xxx
+        a character string, determining which risk measure should be taken,
+        by default "MV" meaning mean-variance. Other types are "CVaR" and "LPM".
         }
     \item{value}{
-        a valid value for that component of \code{spec} to be set.
+        a value for that component of \code{spec} to be set.
         }
-    \item{weights} {
+    \item{weights}{
         [setWeights] - \cr
-        xxx
+        a numerical vector, containing the weights of the desired optimal portfolio.
+        Note that the program stops if desired return and weights are set.
         }
 
+}
+
+
+\details{
+
+    \bold{Portfolio Specification:}
+    \cr\cr
+    The S4 class \code{fPFOLIOSPEC} contains all information about the
+    specifications of the portfolio. For a full slot description see \code{value}.
+    \cr
+    
+    \bold{Estimators:}
+    \cr\cr
+    The estimator for mean vector and covariance matrix are determined by the
+    argument \code{type}. Estimator are "mean" (only for mean vector), "cov"
+    (only for covariance matrix), "mcd" and "shrink". Especially for portfolios
+    with a lot of assets and minor number of data points, MCD and shrinkage
+    improve the estimation covariance matrix. The estimator effects only the
+    mean-variance/Markowitz framework.
+    \cr
+    
+    \bold{Risk Measures:}
+    \cr\cr
+    The risk measures is determined by the argument \code{type}. Available
+    measures are mean-variance/Markowitz, lower partial moments (LPM) and CVaR.
+    Markowitz framework is only useful along with multivariate normally
+    distributed assets. Where CVaR framework is independent from assets
+    distribution.
+    \cr\cr
+    
 }
 
 
 \value{
   
-    \code{portfolioSpec} 
-    \cr
-    returns an S4 object of class \code{"fPFOLIOSPEC"}, with the following 
+    \code{portfolioSpec}
+    \code{setType}\cr
+    \code{setEstimator}\cr 
+    \code{setRiskFreeRate}\cr
+    \code{setWeights}\cr
+    \code{setTargetReturn}\cr
+    \code{setReturnRange}\cr
+    \code{setRiskRange}\cr 
+    return all an S4 object of class \code{"fPFOLIOSPEC"}, with the following 
     slots:
 
     \item{call}{
         a call, returning the matched function call.
         }
     \item{description}{
-        a character string allowing for a brief project description.
+        a character string, allowing for a brief project description.
         }
     \item{model}{
-        a list, containing with two named elements:\cr
+        a list, containing two named elements being the type and the estimator\cr
         \code{type="MV"} 
-            xxx \cr
+            \cr
         \code{estimator=c("mean","cov")} 
-            xxx
-        }     
+            }     
     \item{portfolio}{
         a list, containing parameter specifications for the portfolio:\cr 
         \code{weights=NULL} a numeric vector specifying the portfolio 
-            weights. xxx\cr
+            weights.\cr
         \code{targetReturn=NULL} a numeric value specifying the target 
-            return. The default value set the target return xxx\cr
+            return. The default value set the target return.\cr
         \code{riskFreeRate=0} a numeric value specifying the risk free 
             rate.\cr  
-        \code{nFrontierPoints=50} a numeric calue determining the number
+        \code{nFrontierPoints=50} a numeric value determining the number
             of points on the efficient frontier.\cr
         \code{returnRange=NULL} a numeric vector of length two, giving the
             smallest and largest values for the range of returns.\cr
@@ -188,39 +237,30 @@ portfolioStatistics(data, spec = portfolioSpec())
             smallest and largest values for the range of risks.
         }
     \item{title}{
-        a title string.]\cr
+        a title string.\cr
         }
     %\cr move inside \item!
           
-    
-    \code{setType}\cr
-    \code{setEstimator}\cr 
-    return the model specifications from an object of class 
-    \code{"fPFOLIOSPEC"} xxx.
-    \cr
-    
-    
-    \code{setWeights}\cr
-    \code{setTargetReturn}\cr
-    \code{setRiskFreeRate}\cr
-    \code{setNFrontierPoints}\cr
-    \code{setReturnRange}\cr
-    \code{setRiskRange}\cr
-    return the portfolio specifications from an object of class xxx.
-    \cr
-       
-    
+ 
     \code{portfolioStatistics}\cr
-    returns the xxx.
+    returns a named list of estimated mu and Sigma statistics, from a time series.
 }
 
-
+\note{ 
+In the following all specification elements of the portfolio are listed.
+data, estimator, model, nFrontierPoints, returnRange, riskFreeRate, riskRange,
+targetReturn, type, weights.
+}
 %\references{}
 
 
 \seealso{
 
-    \code{xxx}.
+   \code{\link{PortfolioData}},
+   \code{\link{PortfolioConstraints}},
+   \code{\link{fPORTFOLIO}},
+   \code{\link{PortfolioExtractors}},
+   \code{\link{PortfolioPlots}}.
 
 }
 
@@ -236,8 +276,24 @@ portfolioStatistics(data, spec = portfolioSpec())
 
 ## portfolioSpec -
    # Show Default Portfolio Specifications
-   # portfolioSpec() # requires getTitle()
- 
+   portfolioSpec() # requires getTitle()
+   
+   # Modification of Specifications
+   # Setting the Number of Frontier Points
+   Spec = portfolioSpec(portfolio = list(nFrontierPoints = 150))
+   # Setting the Risk Free Rate
+   setRiskFreeRate(Spec) = 3
+   Spec
+
+## portfolioStatistics -
+    # Getting Data, i.e. a List of returns
+    Data = usPortfolioData()
+    # Estimating Mean and Covariance with mean()and cov()
+    portfolioStatistics(Data)
+    # Setting Estimators to MCD Method
+    Spec = setEstimator(estimator = c("mcd", "mcd"))
+    # Estimating Mean and Covariance MCD
+    portfolioStatistics(Data, Spec)
 }
 
 

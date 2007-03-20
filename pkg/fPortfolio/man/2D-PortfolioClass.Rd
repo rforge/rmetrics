@@ -4,6 +4,7 @@
 
 \alias{fPORTFOLIO}
 \alias{fPORTFOLIO-class}
+\alias{fPortfolio}
 
 \alias{show.fPORTFOLIO}
 \alias{show,fPORTFOLIO-method}
@@ -26,7 +27,12 @@
 
 \description{
   
-    A collection and description of xxx
+    A collection and description of functions allowing to gain information about
+    optimal portfolios. Generally optimization is done via three arguments data,
+    specification of the portfolio and constraints, while function
+    \code{portfolioFrontier} has two additional arguments for tile and
+    description. Additionally to the optimization functions there are two
+    sliders and a plot function available.
     \cr
     
     The functions are:
@@ -39,7 +45,7 @@
     \code{frontierPortfolio} \tab Returns a frontier portfolio, \cr
     \code{portfolioFrontier} \tab Returns the efficient frontier of a portfolio, \cr
     \code{show} \tab Print method for 'fPPORTFOLIO' objects, \cr   
-    \code{plot} \tab Plot method for objects of class fPFOLIO, \cr   
+    \code{plot} \tab Plot method for objects of class fPORTFOLIO, \cr   
     \code{weightsSlider} \tab Weights Slider, \cr           
     \code{frontierSlider} \tab Efficient Frontier Slider. }
     
@@ -64,81 +70,352 @@ frontierSlider(object, control = list(), \dots)
 }
 
 
+
+\arguments{
+
+    \item{constraintsStrings}{
+        a character string vector, containing the constraints of the form\cr
+        \code{"minW[asset]=percentage"} for box constraints resp. \cr
+        \code{"maxsumW[assets]=percentage} for sector constraints.
+        }
+    \item{control}{
+        [plot, *Sliders] - \cr
+        a list, defining the plotting parameters. The list modifies amongst
+        others the color, e.g. \code{minvariance.col}, type of point, e.g.
+        \code{tangency.pch}, or the dimension of the point, e.g. \code{cml.cex},
+         see Notes for a complete list of control parameters.
+        }
+    \item{data}{
+        a list, having a statistics named list, having named entries 'mu' and 
+        'Sigma', containing the information of the statistics.
+        }
+    \item{description}{
+        [portfolioFrontier] - \cr
+        a character string, allowing for a brief project description,
+        by default NULL, i.e. Date and User.
+        }
+    \item{object}{
+        [show, *Sliders] - \cr
+         an S4 object of class \code{fPORTFOLIO}, containing slots call, data,
+         specification, constraints, portfolio, title, description, see Value 
+         for a full slot description.
+        }
+    \item{spec}{
+        an S4 object of class \code{fPFOLIOSPEC}, containing slots call, model,
+        portfolio, title, description, see \code{\link{PortfolioSpecification}}
+        for a full slot description.
+        }
+    \item{title}{
+        [portfolioFrontier] - \cr
+        a character string, containing the title for the object, by default NULL.
+        }
+    \item{which}{
+        [plot] - \cr
+        which of the plots should be displayed? which can be either a character 
+        string, "all" (displays all plots) or "ask" (interactively asks which 
+        one to display), or a vector values displaying the corresponding plot.
+        Default value is "ask".
+        }
+    \item{x}{
+        [plot] - \cr
+        an S4 object of class \code{fPORTFOLIO}, containing slots call, data,
+        specification, constraints, portfolio, title, description.
+        }
+    \item{\dots}{
+        [plot, *Sliders] - \cr
+        optional arguments to be passed.\cr
+        }
+
+}
+
 \details{
 
     \bold{Portfolio Class:}
     \cr\cr
-    Describe it xxx
+    This S4 class contains all information about the portfolio. Basically this
+    are risk measure, mean and covariance estimation, target return, risk free
+    rate, number of frontier points, ranges for calculation, see Value for
+    further slot description. 
     \cr
     
     
     \bold{Portfolio Frontier:}
     \cr\cr
-    Describe it xxx
+    The function \code{portfolioFrontier} calculates the whole efficient frontier.
+    The portfolio information consists of five arguments: data, specifications,
+    constraints, title and description. The data can be either the mean vector
+    and the covariance matrix in a equivalently named list or a time series
+    table. The specifications are done by the \code{portfolioSpec} function,
+    see \code{\link{PortfolioSpecification}}. The constrains have the following
+    syntax. For bound constraints: \code{"minW[asset]=percentage"} and for
+    sector constraints \code{"maxsumW[assets]=percentage"}. The function chooses
+    from this information the right algorithm to calculate the efficient frontier.
+    The function returns an S4 object of class \code{fPortfolio} containing
+    amongst others risk, return and weights of the whole efficient frontier,
+    see Value for further details.
     \cr
     
-    
-    \bold{Single Portfolios:}
+    \bold{Single Portfolio:}
     \cr\cr   
-    Describe it xxx
+    The single portfolio functions allow a direct calculation of interesting
+    portfolio. The calculation is done with three arguments: data, specifications,
+    constraints, see above. The functions are named like the portfolio and
+    return only one portfolio on efficient frontier in an S4 object of class
+    \code{fPortfolio}.
     \cr
     
     \bold{Portfolio Sliders:}
     \cr\cr   
-    Describe it xxx   
-
-}
-
-
-\arguments{
-
-    \item{constraintsStrings}{
-        xxx
-        }
-    \item{control}{
-        xxx
-        }
-    \item{data}{
-        xxx
-        }
-    \item{description}{
-        xxx
-        }
-    \item{object}{
-        xxx
-        }
-    \item{spec}{
-        xxx
-        }
-    \item{title}{
-        xxx
-        }
-    \item{which}{
-        xxx
-        }
-    \item{x}{
-        xxx
-        }
-    \item{\dots}{
-        xxx
-        }
+    The sliders have illustrative objectives. The functions expect an S4 object
+    of class fPortfolio.\cr
+    \code{frontierSlider}: With the frontier slider it is possible to slide over
+    the efficient frontier. Risk and return of the current portfolio is plotted
+    in the title. The frontier slider has several addable plot features listed 
+    in the following. Little pies at the current portfolio showing the weights
+    (left pie) and/or the attributed weights (right pie), legend, minimum
+    variance portfolio, tangency portfolio, market portfolio with capital market
+    line (risk free rate is slidable), Sharpe ratio plot, equal weights
+    portfolio, single asset portfolios, two assets short selling efficient
+    frontier, Monte Carlo portfolios (number is sliderable in a range from 0 to
+    25000).\cr    
+    \code{weightsSlider}: The weights slider gives an overview of the weights on
+    the efficient frontier. Three weight plots \code{weightsPlot}, 
+    \code{piePlot} and the not stacked weights and a frontier plot with the
+    single assets, the tangency portfolio and a legend are provided. In the two
+    weights plots the vertical line indicates the current portfolio and a dotted
+    one indicates the minimum variance portfolio. The number in the pie plot
+    stands for the asset and the sign shows whether this asset is short or long.
+    In all plots colors represent the same asset.
+        
+     
 
 }
 
 
 \value{
-  
-    To do xxx
-  
+    
+    \code{portfolioFrontier}
+    returns an S4 object of class \code{"fPORTFOLIO"}, with the following 
+    slots:
+
+    \item{call}{
+        a call, returning the matched function call.
+        }
+    \item{data}{
+        a list, containing two named elements being 'mu' and 'Sigma'.
+         }  
+    \item{description}{
+        a character string, allowing for a brief project description.
+        }
+           
+    \item{portfolio}{
+        a list, containing parameter specifications for the portfolio:\cr 
+        \code{weights} a numeric vector specifying the portfolio 
+            weights.\cr
+        \code{targetReturn} a numeric value specifying the target 
+            return.\cr
+        \code{targetRisk} a numeric value specifying the target risk.\cr  
+        \code{targetMean} a numeric value specifying the target 
+            return determinated with function mean().\cr
+        \code{targetStdev} a numeric value specifying the target risk in 
+        standart deviation as risk measure.\cr 
+        }
+    \item{specifications}{
+        an object of class \code{fPFOLIOSPEC}, including all information about
+        the portfolio specifications, see \code{\link{PortfolioSpecification}}
+        for further details.}
+   \item{title}{
+        a title string.\cr
+        }
+    having all information about the whole efficient frontier.
+    \cr
+    
+    \code{feasiblePortfolio}\cr
+    \code{cmlPortfolio}\cr
+    \code{tangencyPortfolio}\cr
+    \code{minvariancePortfolio}\cr
+    \code{frontierPortfolio}\cr
+    return an S4 object of class \code{fPORTFOLIO} having information only about
+    one portfolio.
 }
 
+
+\note{
+In the following all elements of argument control from functions
+    \code{plot}, \code{weightsSlider}, \code{frontierSlider} are listed. 
+\tabular{ll}{
+     sliderResolution\tab
+        [weightsSlider, frontierSlider] - 
+        a numeric, determining the numbers of slider points, by default 
+        nFrontierPoints/10.
+        \cr 
+    sliderFlag\tab
+        [weightsSlider, frontierSlider] - 
+        a character string, denoting the slidertype, by default "frontier"
+        for \code{frontierSlider} and "weights" for \code{weightsSlider}.
+        \cr 
+    sharpeRatio.col\tab
+        [plot, frontierSlider] - 
+        a character string, defining color of the Sharpe
+        ratio plot, by default "black".
+        \cr
+    minvariance.col\tab
+        a character string, defining color of the minimum variance
+        portfolio, by default "red".
+        \cr
+    tangency.col\tab
+        a character string, defining color of the tangency
+        portfolio, by default "steelblue".
+        \cr
+    cml.col\tab
+        [plot, frontierSlider] - 
+        a character string, defining  color of the market
+        portfolio and the capital market line, by default "green".
+        \cr
+    equalWeights.col\tab
+        [plot, frontierSlider] - 
+        a character string, defining the color of the
+        equal weights portfolio, by default "blue".
+        \cr
+    runningPoint.col\tab
+        [weightsSlider] - 
+        a character string, defining color of the
+        point indicating the current portfolio, by default "red".
+        \cr
+    singleAsset.col\tab
+        a character string vector, defining color of the
+        single asset portfolios The vector must have length the number of assets,
+        by default rainbow( # Assets).
+         \cr
+    twoAssets.col\tab
+        [plot, frontierSlider] - 
+        a character string, defining color of the
+         two assets efficient frontier, by default "grey".
+         \cr
+    monteCarlo.col\tab
+        [plot, frontierSlider] - 
+        a character string, defining color of the
+        Monte Carlo portfolios, by default "black".
+         \cr     
+    minvariance.pch\tab
+        a number, defining symbol used for the minimum
+        variance portfolio. See \code{\link{points}} for description.
+        Default symbol is 17.
+        \cr
+    tangency.pch\tab    
+        a number, defining symbol used for the tangency portfolio.
+        See \code{\link{points}} for description.
+        Default symbol is 17.
+        \cr
+    cml.pch\tab
+        [plot, frontierSlider] - 
+        a number, defining symbol used for the market portfolio.
+        See \code{\link{points}} for description.
+        Default symbol is 17.
+        \cr
+    equalWeights.pch\tab
+        [plot, frontierSlider] - 
+        a number, defining symbol used for the equal weights portfolio.
+        See \code{\link{points}} for description.
+        Default symbol is 15.
+        \cr        
+    singleAsset.pch\tab
+        a number, defining symbol used for the single asset portfolios.
+        See \code{\link{points}} for description.
+        Default symbol is 18.
+        \cr           
+    sharpeRatio.cex\tab
+        [plot, frontierSlider] - 
+        a number, determining size (percentage) of the
+        Sharpe ratio plot, by default 0.1.
+        \cr
+    minvariance.cex\tab
+        a number, determining size (percentage) of the
+        minimum variance portfolio symbol, by default 1.
+        \cr       
+    tangency.cex\tab
+        a number, determining size (percentage) of the
+        tangency portfolio symbol, by default 1.25.
+        \cr
+    cml.cex\tab
+        [plot, frontierSlider] - 
+        a number, determining size (percentage) of the
+        market portfolio symbol, by default 1.25.
+        \cr       
+    equalWeights.cex\tab
+        [plot, frontierSlider] - 
+        a number, determining size (percentage) of the
+        equal weights portfolio symbol, by default 0.8.
+        \cr 
+    runningPoint.cex\tab
+        [weightsSlider] - 
+        a number, determining size (percentage) of the
+        point indicating the current portfolio
+        equal weights portfolio symbol, by default 0.8.
+        \cr 
+    singleAsset.cex\tab
+        a number, determining size (percentage) of the
+        singel asset portfolio symbols, by default 0.8.
+        \cr 
+    twoAssets.cex\tab
+        [plot, frontierSlider] - 
+        a number, determining size (percentage) of the
+        two assets efficient frontier plot, by default 0.01.
+        \cr 
+    monteCarlo.cex\tab
+        [plot, frontierSlider] - 
+        a number, determining size (percentage) of the
+        Monte Carol portfolio symbols, by default 0.01.
+        \cr         
+    monteCarlo.cex\tab
+        [plot, frontierSlider] - 
+        a number, determining size (percentage) of the
+        Monte Carol portfolio symbols, by default 0.01.
+        \cr
+    mcSteps\tab
+        [plot] - 
+        a number, determining number of Monte Carol portfolio, by default 5000.
+        \cr
+    pieR\tab
+        [plot, frontierSlider] - 
+        a vector, containing factors for shrinking and stretching the x- and
+        y-axis, by default NULL, i.e. c(1, 1) is used. Default pie size is 1/15
+        of the plot range.
+        \cr
+    piePos\tab
+        [plot, frontierSlider] - 
+        a number, determining the weight on the efficient frontier,
+        which is illustrated by the pie. Default is tangency portfolio
+        \cr        
+    pieOffset\tab
+        [plot, frontierSlider] - 
+        a vector, containing the pie's x- and y-axis offset from the efficient
+        frontier. Default is NULL, i.e. the pie is set one default radius left
+        of the efficient frontier.
+        \cr        
+    xlim.frontier\tab
+        [weightsSlider, frontierSlider] - 
+        a vector, containing x-axis plot limits of the efficient frontier.
+        Default setting is maximum of frontier range or single assets portfolios.
+        \cr          
+    ylim.frontier\tab
+        [weightsSlider, frontierSlider] - 
+        a vector, containing y-axis plot limits of the efficient frontier.
+        Default setting is maximum of frontier range or single assets portfolios.
+        \cr 
+      }                    
+}
 
 %\references{}
 
 
 \seealso{
 
-    \code{xxx}.
+   \code{\link{PortfolioData}},
+   \code{\link{PortfolioSpecification}},
+   \code{\link{PortfolioConstraints}},
+   \code{\link{PortfolioExtractors}},
+   \code{\link{PortfolioPlots}}.
 
 }
 
@@ -152,8 +429,38 @@ frontierSlider(object, control = list(), \dots)
 
 \examples{
 
-## fun -
-   # fun()
+## minvariancePortfolio -
+    # Setting Data
+    Data = usPortfolioData()
+    # Setting Default Specifications
+    Spec = portfolioSpec()
+    # Calculation of Short Selling Minimum Variance Portfolio
+    minvariancePortfolio(Data, Spec)
+    
+## portfolioFrontier -
+    # Setting Data
+    Data = usPortfolioData()
+    # Setting Default Specifications
+    Spec = portfolioSpec()
+    # Setting Long Only Constraints
+    Constraint = c("minW[1:8]=0")
+    # Calculation of the Efficient Frontier
+    frontier = portfolioFrontier(Data, Spec, Constraint)
+    
+## plot -
+    # Requiring S4 Object "frontier" from 2nd example
+    # Plotting the Efficient Frontier with Minimum Variance Portfolio
+    plot(frontier, which = c(1,3))
+    
+## frontierSlider -
+    # Requiring S4 Object "frontier" from 2nd example
+    # Plotting the Frontier Slider
+    # frontierSlider(frontier)
+
+## weightsSlider -
+    # Requiring S4 Object "frontier" from 2nd example
+    # Plotting the Weights Slider
+    # weightsSlider(frontier)
  
 }
 

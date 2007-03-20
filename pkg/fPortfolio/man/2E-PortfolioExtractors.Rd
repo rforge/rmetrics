@@ -19,7 +19,8 @@
 
 \description{
   
-    A collection and description of xxx
+    A collection of extractors for S4 objects of class \code{fPORTFOLIO}. The aim 
+    of these functions is to get an quick access to the desired data.
     \cr
     
     The data sets are:
@@ -33,7 +34,7 @@
     \code{getFrontier} \tab Extracts the efficient frontier, \cr
     \code{getWeights} \tab Extracts weights from a fPORTFOLIO object, \cr
     \code{getTargetReturn} \tab Extracts target return from a portfolio, \cr
-    \code{getTargetRisk} \tab Extracts target riks from a portfolio, \cr
+    \code{getTargetRisk} \tab Extracts target risk from a portfolio, \cr
     \code{getTargetStdev} \tab Extracts target standard deviation from a portfolio. }
     
 }
@@ -53,31 +54,43 @@ getTargetStdev(object)
 }
 
 
-\details{
-
-    \bold{Porfolio Extractor Functions:}
-    \cr\cr
-    Describe the data set xxx
-
-}
-
-
 \arguments{
 
     \item{doplot}{
-        xxx
+        [getPortfolio, getFrontier, getWeights] - \cr
+        a logical value, determining whether the extracted data should be plotted,
+        by default\cr
+        FALSE.
         }
     \item{frontier}{
-        xxx
+        [getFrontier] - \cr
+        a character string, determining which part of the frontier should be
+        extracted. \code{"both"} stands for the full hyperbola, \code{"lower"}
+        for all points below the minimum variance return and \code{"upper"} for
+        the actual efficient frontier, by default "both".
         }
     \item{object}{
-        xxx
+        an object of class \code{fPORTFOLIO}, containing slots call, data,
+        specification, constraints, portfolio, title, description.
         }
     \item{\dots}{
-        xxx
+        [getPortfolio, getFrontier, getWeights] - \cr
+        optional arguments to be passed.\cr
         }
 
 }
+
+
+\details{
+
+    \bold{Portfolio Extractor Functions:}
+    \cr\cr
+    The extractor functions allow an quick access to all important information 
+    of the optimization problem. The functions \code{getFrontier, getPortfolio,
+    getWeights} also provide direct plotting of the data with argument doplot.
+
+}
+
 
 
 \value{
@@ -92,7 +105,7 @@ getTargetStdev(object)
     \code{getTargetReturn}\cr
     \code{getTargetRisk}\cr
     \code{getTargetStdev}\cr
-    return a xxx
+    all functions return a list or a value of the desired information.
   
 }
 
@@ -102,7 +115,11 @@ getTargetStdev(object)
 
 \seealso{
 
-    \code{xxx}.
+   \code{\link{PortfolioData}},
+   \code{\link{PortfolioSpecification}},
+   \code{\link{PortfolioConstraints}},
+   \code{\link{fPORTFOLIO}},
+   \code{\link{PortfolioPlots}}.
 
 }
 
@@ -116,9 +133,17 @@ getTargetStdev(object)
 
 \examples{
 
-## fun -
-   # fun()
- 
+## getStatistics -
+    # Calculation of Short Selling Efficient Frontier
+    frontier = portfolioFrontier(usPortfolioData())
+    # Getting the Statistics
+    getStatistics(frontier)
+
+## getStatistics -
+    # Calculation of Short Selling Efficient Frontier
+    frontier = portfolioFrontier(usPortfolioData())
+    # Getting and Plotting the Efficient Frontier
+    getFrontier(frontier, doplot = TRUE)     
 }
 
 
