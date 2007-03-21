@@ -16,7 +16,8 @@
 
 \description{
 
-    A collection of different plot functions from the \code{fPortfolio} package.
+    A collection of different plot functions 
+    from the "fPortfolio" package.
     \cr
 
     The functions are:
@@ -39,7 +40,6 @@ weightsPie(object, col = NULL, box = TRUE, \dots)
 attributesPlot(object, col = NULL, legend = FALSE)
 
 covEllipsesPlot(x = list(), \dots)
-
 }
 
 

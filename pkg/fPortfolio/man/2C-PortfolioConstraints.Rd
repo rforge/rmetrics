@@ -13,9 +13,11 @@
 
 \description{
   
-    A collection of functions, which help to set, manipulate or view the constraints.
-    The user normally should not use this functions, since constraints setting 
-    is done within optimization program. The user must only provide constraints
+    A collection of functions, which help to set, 
+    manipulate or view the constraints. The user 
+    normally should not use this functions, since 
+    constraints setting is done within optimization 
+    program. The user must only provide constraints
     in the right manner. 
     \cr
     
@@ -43,7 +45,6 @@ getConstraints(object)
       \item{for sector constraints}{\code{"maxsumW[assets]=percentage"}.}
       \cr
     While the asset(s) "argument" can be either a number or a vector.
-    \cr
 
 }
 

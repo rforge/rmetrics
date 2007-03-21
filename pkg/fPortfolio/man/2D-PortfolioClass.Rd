@@ -27,12 +27,16 @@
 
 \description{
   
-    A collection and description of functions allowing to gain information about
-    optimal portfolios. Generally optimization is done via three arguments data,
-    specification of the portfolio and constraints, while function
-    \code{portfolioFrontier} has two additional arguments for tile and
-    description. Additionally to the optimization functions there are two
-    sliders and a plot function available.
+    A collection and description of functions 
+    allowing to gain information about optimal 
+    portfolios. Generally optimization is done 
+    via three arguments, data, specification of 
+    the portfolio, and constraints, while function
+    portfolioFrontier() has two additional 
+    arguments for title and description. 
+    Additionally to the optimization functions 
+    there are two sliders and a plot function 
+    available.
     \cr
     
     The functions are:
