@@ -43,21 +43,20 @@ covEllipsesPlot(x = list(), \dots)
 }
 
 
-
 \arguments{
 
     \item{add}{
         [frontierPlot] - \cr
-        a logical value, determining whether the frontier should be added to an
-        existing plot, by default FALSE.
+        a logical value, determining whether the frontier should be added to 
+        an existing plot, by default FALSE.
         }
     \item{box}{[weightsPie] - \cr
         a logical value, determining whether a frame (box) should be plotted
         around the pie, by default TRUE.
         }
     \item{col}{
-        a character string vector, setting the color. For \code{frontierPlot} it
-        is two dimensional a vector; first entry is the upper part of the
+        a character string vector, setting the color. For \code{frontierPlot} 
+        it is two dimensional a vector; first entry is the upper part of the
         frontier,\cr second entry the lower, by default "black" and "grey".\cr
         For the other functions the argument defines the color representation,
         by default sets the default color is the rainbow palette.
@@ -97,11 +96,11 @@ covEllipsesPlot(x = list(), \dots)
     The frontier plot provides plotting three parts of the efficient frontier.
     The part superior to the minimum variance portfolio is plotted with argument
     frontier = "upper". The part below is plotted with "lower". Both parts are
-    plotted with "both", which is default. The ranges of plots are determined by
-    maximum of the ranges of the assets or the minimum and maximum of the
+    plotted with "both", which is default. The ranges of plots are determined 
+    by maximum of the ranges of the assets or the minimum and maximum of the
     efficient frontier. Adding an efficient frontier to an existing plot is
-    possible with the argument add. The argument col determines the color of the
-    upper and lower part of the efficient frontier.
+    possible with the argument add. The argument col determines the color of 
+    the upper and lower part of the efficient frontier.
     \cr
 
 
@@ -145,26 +144,25 @@ covEllipsesPlot(x = list(), \dots)
 
 
 \examples{
-
-## frontierPlot -
-    # Calculation of Short Selling Efficient Frontier
-    frontier = portfolioFrontier(usPortfolioData())
-    # Plotting Upper Part
-    frontierPlot(frontier, frontier = "upper")
-    # Adding Lower Part to Plot
-    frontierPlot(frontier, frontier = "lower", add = TRUE)
+\dontrun{
+## portfolioFrontier -
+   # Calculation of Long Only Efficient Frontier
+   frontier = portfolioFrontier(usPortfolioData())
+   
+## frontierPlot -  
+   # Plotting Upper Part
+   frontierPlot(frontier, frontier = "upper")
+   # Adding Lower Part to Plot
+   frontierPlot(frontier, frontier = "lower", add = TRUE)
     
 ## weightsPlot -
-    # Calculation of Short Selling Efficient Frontier
-    frontier = portfolioFrontier(usPortfolioData())
-    # Weights Plot
-    weightsPlot(frontier)
+   # Calculation of Long Only Efficient Frontier
+   weightsPlot(frontier)
     
 ## attributesPlot -
-    # Calculation of Short Selling Efficient Frontier
-    frontier = portfolioFrontier(usPortfolioData())
-    # Attributes Plot with legend
-    attributesPlot(frontier, legend = TRUE)
+   # Calculation of Long Only Efficient Frontier
+   attributesPlot(frontier, legend = TRUE)
+}
 }
 
 

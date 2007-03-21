@@ -59,7 +59,8 @@
 portfolioSpec(
     model = list(type = "MV", estimator = c("mean", "cov"), params = list()), 
     portfolio = list(weights = NULL, targetReturn = NULL, riskFreeRate = 0, 
-    nFrontierPoints = 50, returnRange = NULL, riskRange = NULL),
+        nFrontierPoints = 50, returnRange = NULL, riskRange = NULL),
+    solver = list(type = c("RQuadprog", "RDonlp2")), 
     title = NULL, description = NULL)
 show.fPFOLIOSPEC(object)
 
@@ -135,6 +136,9 @@ portfolioStatistics(data, spec = portfolioSpec())
         a numerical vector, setting risk range for calculation of efficient
         frontier, by default NULL, i.e. range of risk from input data is taken.
         }
+    \item{solver}{
+        a character string denoting the type of the solver to be used.
+        }
     \item{spec}{
         an S4 object of class \code{fPFOLIOSPEC}, the specification to be modified,
         by default the default of the function \code{portfolioSpec()}.
@@ -196,6 +200,14 @@ portfolioStatistics(data, spec = portfolioSpec())
 }
 
 
+\note{
+
+    Using Spelucci's solver "donlp2" requires to load the contributed
+    R package \code{Rdonlp2}.
+    
+}
+
+
 \value{
   
     \code{portfolioSpec}
@@ -216,7 +228,8 @@ portfolioStatistics(data, spec = portfolioSpec())
         a character string, allowing for a brief project description.
         }
     \item{model}{
-        a list, containing two named elements being the type and the estimator\cr
+        a list, containing two named elements being the type and the 
+        estimator\cr
         \code{type="MV"} 
             \cr
         \code{estimator=c("mean","cov")} 
@@ -243,14 +256,16 @@ portfolioStatistics(data, spec = portfolioSpec())
           
  
     \code{portfolioStatistics}\cr
-    returns a named list of estimated mu and Sigma statistics, from a time series.
+    returns a named list of estimated mu and Sigma statistics, from a time 
+    series.\cr
+
+    Note:\cr
+    In the following all specification elements of the portfolio are listed.
+    data, estimator, model, nFrontierPoints, returnRange, riskFreeRate, 
+    riskRange, targetReturn, type, weights.
 }
 
-\note{ 
-In the following all specification elements of the portfolio are listed.
-data, estimator, model, nFrontierPoints, returnRange, riskFreeRate, riskRange,
-targetReturn, type, weights.
-}
+
 %\references{}
 
 
@@ -273,7 +288,6 @@ targetReturn, type, weights.
 
 
 \examples{
-
 ## portfolioSpec -
    # Show Default Portfolio Specifications
    portfolioSpec() # requires getTitle()
@@ -286,14 +300,14 @@ targetReturn, type, weights.
    Spec
 
 ## portfolioStatistics -
-    # Getting Data, i.e. a List of returns
-    Data = usPortfolioData()
-    # Estimating Mean and Covariance with mean()and cov()
-    portfolioStatistics(Data)
-    # Setting Estimators to MCD Method
-    Spec = setEstimator(estimator = c("mcd", "mcd"))
-    # Estimating Mean and Covariance MCD
-    portfolioStatistics(Data, Spec)
+   # Getting Data, i.e. a List of returns
+   Data = usPortfolioData()
+   # Estimating Mean and Covariance with mean()and cov()
+   portfolioStatistics(Data)
+   # Setting Estimators to MCD Method
+   Spec = setEstimator(estimator = c("mcd", "mcd"))
+   # Estimating Mean and Covariance MCD
+   portfolioStatistics(Data, Spec)
 }
 
 

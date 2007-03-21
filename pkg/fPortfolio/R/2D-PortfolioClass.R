@@ -92,7 +92,7 @@ function(data, spec = portfolioSpec(), constraints = NULL)
     if(is.null(constraints) | length(constraints) == 0) {
         Model = "Constrained"
         nAssets = length(mu)
-        constraintsString = paste("minW[1:", nAssets, "]=0", sep = "")
+        constraints = paste("minW[1:", nAssets, "]=0", sep = "")
     } else if (constraints[1] == "short") {
         Model = "Short"
     }      
@@ -144,7 +144,7 @@ function(data, spec = portfolioSpec(), constraints = NULL)
     if(is.null(constraints) | length(constraints) == 0) {
         Model = "Constrained"
         nAssets = length(mu)
-        constraintsString = paste("minW[1:", nAssets, "]=0", sep = "")
+        constraints = paste("minW[1:", nAssets, "]=0", sep = "")
     } else if (constraints[1] == "short") {
         Model = "Short"
     } else {
@@ -198,7 +198,7 @@ function(data, spec = portfolioSpec(), constraints = NULL)
     if(is.null(constraints) | length(constraints) == 0) {
         Model = "Constrained"
         nAssets = length(mu)
-        constraintsString = paste("minW[1:", nAssets, "]=0", sep = "")
+        constraints = paste("minW[1:", nAssets, "]=0", sep = "")
     } else if (constraints[1] == "short") {
         Model = "Short"
     } else {
@@ -252,7 +252,7 @@ function(data, spec = portfolioSpec(), constraints = NULL)
     if(is.null(constraints) | length(constraints) == 0) {
         Model = "Constrained"
         nAssets = length(mu)
-        constraintsString = paste("minW[1:", nAssets, "]=0", sep = "")
+        constraints = paste("minW[1:", nAssets, "]=0", sep = "")
     } else if (constraints[1] == "short") {
         Model = "Short"
     } else {
@@ -306,7 +306,7 @@ function(data, spec = portfolioSpec(), constraints = NULL)
     if(is.null(constraints) | length(constraints) == 0) {
         Model = "Constrained"
         nAssets = length(mu)
-        constraintsString = paste("minW[1:", nAssets, "]=0", sep = "")
+        constraints = paste("minW[1:", nAssets, "]=0", sep = "")
     } else if (constraints[1] == "short") {
         Model = "Short"
     } else {
@@ -361,7 +361,7 @@ title = NULL, description = NULL)
     if(is.null(constraints) | length(constraints) == 0) {
         Model = "Constrained"
         nAssets = length(mu)
-        constraintsString = paste("minW[1:", nAssets, "]=0", sep = "")
+        constraints = paste("minW[1:", nAssets, "]=0", sep = "")
     } else if (constraints[1] == "short") {
         Model = "Short"
     } else {
@@ -817,11 +817,11 @@ function(object, control = list(), ...)
             object@specification@portfolio$riskFreeRate = riskFreeRate
             data = object@data$statistics
             spec = object@specification
-            constraintsString = object@constraints
+            constraints = object@constraints
             setRiskFreeRate(spec = object@specification,
                 riskFreeRate = riskFreeRate)
             cml = cmlPortfolio(data = data, spec = spec,
-               constraintsString = constraintsString)
+               constraints = constraints)
             .cmlPlot(object = cml, 
                 col = con$cml.col, cex = con$cml.cex, pch = con$cml.pch)
         }

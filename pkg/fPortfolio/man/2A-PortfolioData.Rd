@@ -50,9 +50,9 @@ sm132PortfolioData()
     \bold{US Portfolio Data Set:}
     \cr\cr
     The data inherits eight assets being indexes, commodities and bonds.
-    The data is a time series of yearly returns from December 1973 till December
-    1994. Assets are TBills3m, LongBonds, SP500, Wilshire5000, NASDAQComp,
-    LehmanBonds, EAFE, Gold.
+    The data is a time series of yearly returns from December 1973 till 
+    December 1994. Assets are TBills3m, LongBonds, SP500, Wilshire5000, 
+    NASDAQComp, LehmanBonds, EAFE, Gold.
     \cr
     
     

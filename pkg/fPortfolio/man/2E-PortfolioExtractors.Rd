@@ -134,18 +134,17 @@ getTargetStdev(object)
 
 
 \examples{
+\dontrun{
+## getStatistics -
+   # Calculation of Long Only Efficient Frontier
+   frontier = portfolioFrontier(usPortfolioData())
+   # Getting the Statistics
+   getStatistics(frontier)
 
 ## getStatistics -
-    # Calculation of Short Selling Efficient Frontier
-    frontier = portfolioFrontier(usPortfolioData())
-    # Getting the Statistics
-    getStatistics(frontier)
-
-## getStatistics -
-    # Calculation of Short Selling Efficient Frontier
-    frontier = portfolioFrontier(usPortfolioData())
-    # Getting and Plotting the Efficient Frontier
-    getFrontier(frontier, doplot = TRUE)     
+   # Getting and Plotting the Efficient Frontier
+   getFrontier(frontier, doplot = TRUE)     
+}
 }
 
 

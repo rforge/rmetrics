@@ -52,6 +52,7 @@ setClass("fPFOLIOSPEC",
         call = "call",
         model = "list",
         portfolio = "list",
+        solver = "list",
         title = "character",
         description = "character")  
 )
@@ -66,7 +67,7 @@ model = list(type = "MV", estimator = c("mean", "cov"),
     params = list()),
 portfolio = list(weights = NULL, targetReturn = NULL, riskFreeRate = 0, 
     nFrontierPoints = 50, returnRange = NULL, riskRange = NULL),
-solver =list(type = c("quadprog", "donlp2")), 
+solver = list(type = c("RQuadprog", "RDonlp2")), 
 title = NULL, description = NULL)
 {   # A function implemented by Rmetrics
 
@@ -103,6 +104,7 @@ title = NULL, description = NULL)
     new("fPFOLIOSPEC", 
         call = match.call(),
         model = Model,
+        solver = solver,
         portfolio = Portfolio,
         title = title, 
         description = description)    

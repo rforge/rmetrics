@@ -129,7 +129,7 @@ getConstraints(object)
    
 ## getConstraints -
    # Use Constraints Matrix from Example Above
-   # demonstrations(constMatrix)
+   getConstraints(constMatrix)
 }
 
 

@@ -124,8 +124,6 @@ Magdon-Ismail M., Atiya A.F., Pratap A., Abu-Mostafa Y.S. (2003);
 
 
 \examples{
-## SOURCE("fPortfolio.101B-DrawdownStatistics")
-
 ## rmaxdd -
    # Set a random seed
    set.seed(1953)               

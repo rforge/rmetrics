@@ -117,7 +117,6 @@ assetsCorTestPlot(x, scale = 1, labels = TRUE, \dots)
 
 
 \examples{
-
 ## berndtInvest -
    data(berndtInvest)
    # Select "CONTIL" "DATGEN" "TANDY" and "DEC" Stocks:
@@ -145,8 +144,7 @@ assetsCorTestPlot(x, scale = 1, labels = TRUE, \dots)
    
 ## assetsCorTestPlot -      
    # Display and tests pairwise correlations of assets
-   assetsCorTestPlot(berndtAssets.tS)
-   
+   assetsCorTestPlot(berndtAssets.tS)   
 }
 
 

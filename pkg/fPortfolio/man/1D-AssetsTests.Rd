@@ -114,14 +114,12 @@ Szekely G.J. (1989);
 
 
 \examples{
-
 ## berndtInvest -
    data(berndtInvest)
    # Exclude Date, Market and Interest Rate columns from data frame,
    berndtAssets = berndtInvest[, -c(1, 11, 18)]
    rownames(berndtAssets) = berndtInvest[, 1]
-   head(berndtAssets)
-    
+   head(berndtAssets)  
 }
 
 

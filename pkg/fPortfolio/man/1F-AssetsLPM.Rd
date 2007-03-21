@@ -10,7 +10,8 @@
 
 \description{
   
-    A collection and description of functions which xxx
+    A collection and description of functions 
+    for the estimation of lower partial moments.
     \cr
     
     The functions are:
@@ -91,9 +92,7 @@ assetsLPM(x, tau, a, \dots)
 
 
 \examples{
-
 ## 
-
 }
 
 

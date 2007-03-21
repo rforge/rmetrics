@@ -18,7 +18,6 @@
 \alias{returns.three.ts}
 
 
-
 \title{fPortfolio Data Sets}
 
 
@@ -84,9 +83,7 @@
 
 
 \examples{
-
 ## -
-
 }
 
 

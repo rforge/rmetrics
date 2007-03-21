@@ -111,7 +111,6 @@ N. N. (1989);
 
 
 \examples{
-
 ## berndtInvest -
    data(berndtInvest)
    # Market and Interest Rate columns from data frame,
@@ -126,7 +125,6 @@ N. N. (1989);
    # Cluster Dendogram:
    par(mfrow = c(1, 1))
    plot(clustered)  
- 
 }
 
 

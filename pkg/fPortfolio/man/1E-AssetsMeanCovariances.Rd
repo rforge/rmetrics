@@ -131,7 +131,6 @@ Schaefer J., Strimmer K. (2005);
 
 
 \examples{
-
 ## berndtInvest -
    data(berndtInvest)
    # Select "CONTIL" "DATGEN" "TANDY" and "DEC" Stocks:
@@ -157,7 +156,6 @@ Schaefer J., Strimmer K. (2005);
    
 ## bagged Covariance Estimation:
    assetsMeanCov(berndtAssets.tS, method = "bagged")
-
 }
 
 

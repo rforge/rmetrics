@@ -200,8 +200,6 @@ Uryasev S. (2000);
 
 
 \examples{
-## SOURCE("fPortfolio.102A-VaRModelling")
-
 ## assetsSim -
    myAssets = 100/12 * assetsSim(n = 120, dim = 4)
    # Plot Cumulated Returns of the Assets:
