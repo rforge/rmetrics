@@ -144,7 +144,6 @@ covEllipsesPlot(x = list(), \dots)
 
 
 \examples{
-\dontrun{
 ## portfolioFrontier -
    # Calculation of Long Only Efficient Frontier
    frontier = portfolioFrontier(usPortfolioData())
@@ -162,7 +161,6 @@ covEllipsesPlot(x = list(), \dots)
 ## attributesPlot -
    # Calculation of Long Only Efficient Frontier
    attributesPlot(frontier, legend = TRUE)
-}
 }
 
 
