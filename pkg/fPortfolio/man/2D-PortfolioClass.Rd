@@ -13,7 +13,7 @@
 \alias{cmlPortfolio}
 \alias{tangencyPortfolio}
 \alias{minvariancePortfolio}
-\alias{frontierPortfolio}
+\alias{efficientPortfolio}
 \alias{portfolioFrontier}
       
 \alias{plot.fPORTFOLIO}
@@ -42,7 +42,7 @@
     \code{cmlPortfolio} \tab Returns capital market line, \cr
     \code{tangencyPortfolio} \tab Returns the tangency portfolio, \cr
     \code{minvariancePortfolio} \tab Returns the minimum variance portfolio, \cr
-    \code{frontierPortfolio} \tab Returns a frontier portfolio, \cr
+    \code{efficientPortfolio} \tab Returns a frontier portfolio, \cr
     \code{portfolioFrontier} \tab Returns the efficient frontier of a portfolio, \cr
     \code{show} \tab Print method for 'fPPORTFOLIO' objects, \cr   
     \code{plot} \tab Plot method for objects of class fPORTFOLIO, \cr   
@@ -53,14 +53,14 @@
     
 
 \usage{
-portfolioFrontier(data, spec = portfolioSpec(), constraintsStrings = NULL, 
+portfolioFrontier(data, spec = portfolioSpec(), constraints = NULL, 
     title = NULL, description = NULL)
 
-feasiblePortfolio(data, spec = portfolioSpec(), constraintsStrings = NULL)
-cmlPortfolio(data, spec = portfolioSpec(), constraintsStrings = NULL)
-tangencyPortfolio(data, spec = portfolioSpec(), constraintsStrings = NULL)
-minvariancePortfolio(data, spec = portfolioSpec(), constraintsStrings = NULL)
-frontierPortfolio(data, spec = portfolioSpec(), constraintsStrings = NULL)
+feasiblePortfolio(data, spec = portfolioSpec(), constraints = NULL)
+cmlPortfolio(data, spec = portfolioSpec(), constraints = NULL)
+tangencyPortfolio(data, spec = portfolioSpec(), constraints = NULL)
+minvariancePortfolio(data, spec = portfolioSpec(), constraints = NULL)
+efficientPortfolio(data, spec = portfolioSpec(), constraints = NULL)
 
 show.fPORTFOLIO(object)
 \method{plot}{fPORTFOLIO}(x, which = "ask", control = list(), \dots)
@@ -73,7 +73,7 @@ frontierSlider(object, control = list(), \dots)
 
 \arguments{
 
-    \item{constraintsStrings}{
+    \item{constraints}{
         a character string vector, containing the constraints of the form\cr
         \code{"minW[asset]=percentage"} for box constraints resp. \cr
         \code{"maxsumW[assets]=percentage} for sector constraints.
@@ -232,7 +232,7 @@ frontierSlider(object, control = list(), \dots)
     \code{cmlPortfolio}\cr
     \code{tangencyPortfolio}\cr
     \code{minvariancePortfolio}\cr
-    \code{frontierPortfolio}\cr
+    \code{efficientPortfolio}\cr
     return an S4 object of class \code{fPORTFOLIO} having information only about
     one portfolio.
 }
