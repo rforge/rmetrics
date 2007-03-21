@@ -89,8 +89,13 @@ function(data, spec = portfolioSpec(), constraintsStrings = NULL)
     data = list(series = series, statistics = statistics)
     
     # Compose Function:
-    if(is.null(constraintsStrings) | length(constraintsStrings) == 0) 
-        Model = "Short" else Model = "Constrained"
+    if(is.null(constraintsStrings) | length(constraintsStrings) == 0) {
+        Model = "Constrained"
+        nAssets = length(mu)
+        constraintsString = paste("minW[1:", nAssets, "]=0", sep = "")
+    } else if (constraintsStrings == "short") {
+        Model = "Short"
+    }      
     Type = spec@model$type
     fun = match.fun(paste(".feasible", Model, Type, "Portfolio", sep = ""))
     
@@ -136,8 +141,15 @@ function(data, spec = portfolioSpec(), constraintsStrings = NULL)
     data = list(series = series, statistics = statistics)
     
     # Compose Function:
-    if(is.null(constraintsStrings) | length(constraintsStrings) == 0) 
-        Model = "Short" else Model = "Constrained"
+    if(is.null(constraintsStrings) | length(constraintsStrings) == 0) {
+        Model = "Constrained"
+        nAssets = length(mu)
+        constraintsString = paste("minW[1:", nAssets, "]=0", sep = "")
+    } else if (constraintsStrings == "short") {
+        Model = "Short"
+    } else {
+        Model = "Constrained"
+    }        
     Type = spec@model$type
     fun = match.fun(paste(".cml", Model, Type, "Portfolio", sep = ""))
     
@@ -183,8 +195,15 @@ function(data, spec = portfolioSpec(), constraintsStrings = NULL)
     data = list(series = series, statistics = statistics)
     
     # Compose Function:
-    if(is.null(constraintsStrings) | length(constraintsStrings) == 0) 
-        Model = "Short" else Model = "Constrained"
+    if(is.null(constraintsStrings) | length(constraintsStrings) == 0) {
+        Model = "Constrained"
+        nAssets = length(mu)
+        constraintsString = paste("minW[1:", nAssets, "]=0", sep = "")
+    } else if (constraintsStrings == "short") {
+        Model = "Short"
+    } else {
+        Model = "Constrained"
+    }        
     Type = spec@model$type
     fun = match.fun(paste(".tangency", Model, Type, "Portfolio", sep = ""))
     
@@ -230,8 +249,15 @@ function(data, spec = portfolioSpec(), constraintsStrings = NULL)
     data = list(series = series, statistics = statistics)
     
     # Compose Function:
-    if(is.null(constraintsStrings) | length(constraintsStrings) == 0) 
-        Model = "Short" else Model = "Constrained"
+    if(is.null(constraintsStrings) | length(constraintsStrings) == 0) {
+        Model = "Constrained"
+        nAssets = length(mu)
+        constraintsString = paste("minW[1:", nAssets, "]=0", sep = "")
+    } else if (constraintsStrings == "short") {
+        Model = "Short"
+    } else {
+        Model = "Constrained"
+    }        
     Type = spec@model$type
     fun = match.fun(paste(".minvariance", Model, Type, "Portfolio", sep = ""))
     
@@ -277,8 +303,15 @@ function(data, spec = portfolioSpec(), constraintsStrings = NULL)
     data = list(series = series, statistics = statistics)
     
     # Compose Function:
-    if(is.null(constraintsStrings) | length(constraintsStrings) == 0) 
-        Model = "Short" else Model = "Constrained"
+    if(is.null(constraintsStrings) | length(constraintsStrings) == 0) {
+        Model = "Constrained"
+        nAssets = length(mu)
+        constraintsString = paste("minW[1:", nAssets, "]=0", sep = "")
+    } else if (constraintsStrings == "short") {
+        Model = "Short"
+    } else {
+        Model = "Constrained"
+    }        
     Type = spec@model$type
     fun = match.fun(paste(".frontier", Model, Type, "Portfolio", sep = ""))
     
@@ -325,8 +358,15 @@ title = NULL, description = NULL)
     data = list(series = series, statistics = statistics)
     
     # Compose Function:
-    if(is.null(constraintsStrings) | length(constraintsStrings) == 0) 
-        Model = "Short" else Model = "Constrained"
+    if(is.null(constraintsStrings) | length(constraintsStrings) == 0) {
+        Model = "Constrained"
+        nAssets = length(mu)
+        constraintsString = paste("minW[1:", nAssets, "]=0", sep = "")
+    } else if (constraintsStrings == "short") {
+        Model = "Short"
+    } else {
+        Model = "Constrained"
+    }   
     Type = spec@model$type
     fun = match.fun(paste(".portfolio", Model, Type, "Frontier", sep = ""))
     
@@ -829,6 +869,9 @@ function(object, control = list(), ...)
   
     # Open Slider Menu:
     nFP = nFrontierPoints
+    # #RF
+    maxRF = max(getTargetReturn(object))
+    resRF = maxRF/100
     .sliderMenu(refresh.code,
         names =       c(  "Select Frontier Point  ",
                           "Add Weights Pie        ",
@@ -845,12 +888,12 @@ function(object, control = list(), ...)
                           "Add Monte Carlo PFs    ",
                           "# of MC Steps          "),
                           
-              #  frontierPoints Pie Pie L mv tg cml   #RF SR EW SA TA MC   #MC 
-                      #       1   2   2 3  4  5   7     8  6  9 10 11 12    13 
-        minima =      c(      1,  0,  0,0, 0, 0,  0,    0, 0, 0, 0, 0, 0,    0),
-        maxima =      c(    nFP,  1,  1,1, 1, 1,  1,   20, 1, 1, 1, 1, 1,25000),
-        resolutions = c(      1,  1,  1,1, 1, 1,  1,.0001, 1, 1, 1, 1, 1, 1000),
-        starts =      c(      1,  1,  0,1, 1, 1,  1,    0, 0, 0, 1, 0, 0, 1000))
+            #  frontierPoints Pie Pie L mv tg cml    #RF SR EW SA TA MC   #MC 
+                    #       1   2   2 3  4  5   7      8  6  9 10 11 12    13 
+        minima =      c(    1,  0,  0,0, 0, 0,  0,     0, 0, 0, 0, 0, 0,    0),
+        maxima =      c(  nFP,  1,  1,1, 1, 1,  1, maxRF, 1, 1, 1, 1, 1,25000),
+        resolutions = c(    1,  1,  1,1, 1, 1,  1, resRF, 1, 1, 1, 1, 1, 1000),
+        starts =      c(    1,  1,  0,1, 1, 1,  1,     0, 0, 0, 1, 0, 0, 1000))
       
     # Return Value:                                                 
     invisible()
