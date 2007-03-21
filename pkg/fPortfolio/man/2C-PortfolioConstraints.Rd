@@ -4,7 +4,7 @@
 \alias{PortfolioConstraints}
 
 \alias{setConstraints}
-\alias{demonstrations} 
+\alias{getConstraints}
 \alias{getConstraints.constraintsMatrix}        
 
 

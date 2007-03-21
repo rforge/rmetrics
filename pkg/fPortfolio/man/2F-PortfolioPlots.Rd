@@ -4,7 +4,9 @@
 
 \alias{frontierPlot}
 
-\alias{weightsPlot} \alias{weightsPie} \alias{attributesPlot}
+\alias{weightsPlot} 
+\alias{weightsPie} 
+\alias{attributesPlot}
 
 \alias{covEllipsesPlot}
 
