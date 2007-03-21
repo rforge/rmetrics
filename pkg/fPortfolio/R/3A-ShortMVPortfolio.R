@@ -33,14 +33,14 @@
 #  .cmlShortMVPortfolio           Returns a capital market line
 #  .tangencyShortMVPortfolio      Returns the tangency MV portfolio
 #  .minvarianceShortMVPortfolio   Returns the minimum variance portfolio
-#  .frontierShortMVPortfolio      Returns a frontier MV portfolio
+#  .efficientShortMVPortfolio     Returns a frontier MV portfolio
 # FUNCTION:                      PORTFOLIO FRONTIER:
 #  .portfolioShortMVFrontier      Returns the EF of a short selling MV portfolio
 ################################################################################
 
 
 .feasibleShortMVPortfolio =
-function(data, spec = portfolioSpec(), constraintsStrings = NULL)
+function(data, spec = portfolioSpec(), constraints = NULL)
 {
     # Description:
     #   Computes Risk and Return for a feasible portfolio
@@ -80,7 +80,7 @@ function(data, spec = portfolioSpec(), constraintsStrings = NULL)
         call = match.call(),
         data = data,
         specification = spec, 
-        constraints = as.character(constraintsStrings),
+        constraints = as.character(constraints),
         portfolio = list(
             weights = weights,
             targetReturn = targetReturn,
@@ -96,7 +96,7 @@ function(data, spec = portfolioSpec(), constraintsStrings = NULL)
 
 
 .cmlShortMVPortfolio =
-function(data, spec = portfolioSpec(), constraintsStrings = NULL)
+function(data, spec = portfolioSpec(), constraints = NULL)
 {
     # Description:
     #   Computes capital market line
@@ -134,7 +134,7 @@ function(data, spec = portfolioSpec(), constraintsStrings = NULL)
         call = match.call(),
         data = data,
         specification = spec, 
-        constraints = as.character(constraintsStrings),
+        constraints = as.character(constraints),
         portfolio = list(
             weights = weights,
             targetReturn = targetReturn,
@@ -150,7 +150,7 @@ function(data, spec = portfolioSpec(), constraintsStrings = NULL)
 
 
 .tangencyShortMVPortfolio =
-function(data, spec = portfolioSpec(), constraintsStrings = NULL)
+function(data, spec = portfolioSpec(), constraints = NULL)
 {
     # Description:
     #   Computes target risk and weights for the tangency portfolio
@@ -183,7 +183,7 @@ function(data, spec = portfolioSpec(), constraintsStrings = NULL)
         call = match.call(),
         data = data,
         specification = spec, 
-        constraints = as.character(constraintsStrings),
+        constraints = as.character(constraints),
         portfolio = list(
             weights = weights,
             targetReturn = targetReturn,
@@ -199,7 +199,7 @@ function(data, spec = portfolioSpec(), constraintsStrings = NULL)
 
 
 .minvarianceShortMVPortfolio =
-function(data, spec = portfolioSpec(), constraintsStrings = NULL)
+function(data, spec = portfolioSpec(), constraints = NULL)
 {
     # Description:
     #   Computes target risk and weights for the minimum variance portfolio
@@ -231,7 +231,7 @@ function(data, spec = portfolioSpec(), constraintsStrings = NULL)
     new("fPORTFOLIO", 
         call = match.call(),
         specification = spec, 
-        constraints = as.character(constraintsStrings),
+        constraints = as.character(constraints),
         data = data, 
         portfolio = list(
             weights = weights,
@@ -247,14 +247,14 @@ function(data, spec = portfolioSpec(), constraintsStrings = NULL)
 # ------------------------------------------------------------------------------
 
 
-.frontierShortMVPortfolio =
-function(data, spec = portfolioSpec(), constraintsStrings = NULL)
+.efficientShortMVPortfolio =
+function(data, spec = portfolioSpec(), constraints = NULL)
 {
     # Description:
     #   Computes target risk and weights for an efficient portfolio
     
     # Example:
-    #   .frontierShortMVPortfolio(engelsPortfolioData())
+    #   .efficientShortMVPortfolio(engelsPortfolioData())
     
     # FUNCTION:
     
@@ -287,7 +287,7 @@ function(data, spec = portfolioSpec(), constraintsStrings = NULL)
     new("fPORTFOLIO", 
         call = match.call(),
         specification = spec,
-        constraints = as.character(constraintsStrings),
+        constraints = as.character(constraints),
         data = data, 
         portfolio = list(
             weights = weights,
@@ -304,7 +304,7 @@ function(data, spec = portfolioSpec(), constraintsStrings = NULL)
 
 
 .portfolioShortMVFrontier = 
-function(data, spec = portfolioSpec(), constraintsStrings = NULL,
+function(data, spec = portfolioSpec(), constraints = NULL,
 title = NULL, description = NULL)
 {   # A function implemented by Diethelm Wuertz
 
@@ -372,7 +372,7 @@ title = NULL, description = NULL)
     Spec = spec
     for (i in 1:nFrontierPoints) {
         Spec@portfolio$targetReturn = targetReturn[i]
-        nextWeight = getWeights(.frontierShortMVPortfolio(data, Spec))
+        nextWeight = getWeights(.efficientShortMVPortfolio(data, Spec))
         weights = rbind(weights, t(nextWeight))
     }
          
@@ -384,7 +384,7 @@ title = NULL, description = NULL)
     new("fPORTFOLIO",
         call = match.call(),
         specification = spec, 
-        constraints = as.character(constraintsStrings),
+        constraints = as.character(constraints),
         data = data, 
         portfolio = list(
             weights = weights, 

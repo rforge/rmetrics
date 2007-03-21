@@ -33,14 +33,14 @@
 #  .tangencyConstrainedLPMPortfolio    Returns constrained tangency MV-PF
 #  .cmlConstrainedLPMPortfolio         Returns constrained CML-Portfolio
 #  .minvarianceConstraineLPMPortfolio Returns constrained min-Variance-PF
-#  .frontierConstrainedLPMPortfolio    Returns a constrained frontier MV-PF
+#  .efficientConstrainedLPMPortfolio    Returns a constrained frontier MV-PF
 # FUNCTION:                          PORTFOLIO FRONTIER:
 #  .portfolioConstrainedLPMFrontier    Returns the EF of a constrained MV-PF
 ################################################################################
 
 
 .feasibleConstrainedLPMPortfolio = 
-function(data, spec, constraintsStrings)
+function(data, spec, constraints)
 {
     # Description:
     #   Computes Risk and Return for a feasible portfolio
@@ -73,7 +73,7 @@ function(data, spec, constraintsStrings)
 
  
 .cmlConstrainedLPMPortfolio = 
-function(data, spec, constraintsStrings)
+function(data, spec, constraints)
 {
     # Description:
     #   Computes Computes Risk, Return and Weight for CML portfolio
@@ -98,7 +98,7 @@ function(data, spec, constraintsStrings)
 
 
 .tangencyConstrainedLPMPortfolio = 
-function(data, spec, constraintsStrings)
+function(data, spec, constraints)
 {
     # Description:
     #   Computes Risk, Return and Weight for the tangency portfolio
@@ -117,7 +117,7 @@ function(data, spec, constraintsStrings)
 
    
 .minvarianceConstrainedLPMPortfolio = 
-function(data, spec, constraintsStrings)
+function(data, spec, constraints)
 {
     # Description:
     #   Computes Risk, Return and Weight for minimum variance portfolio
@@ -135,8 +135,8 @@ function(data, spec, constraintsStrings)
 #-------------------------------------------------------------------------------   
 
 
-.frontierConstrainedLPMPortfolio = 
-function(data, spec, constraintsStrings)
+.efficientConstrainedLPMPortfolio = 
+function(data, spec, constraints)
 {
     # Description:
     #   Optimizes a LPM portfolio for a given desired return and a set of
@@ -146,7 +146,7 @@ function(data, spec, constraintsStrings)
     #   data - portfolio of assets, a matrix or an object which can be 
     #       transformed to a matrix
     #   spec - specification of the portfolio
-    #   constraintsStrings - string of constraints
+    #   constraints - string of constraints
 
     # FUNCTION:
        
@@ -154,7 +154,7 @@ function(data, spec, constraintsStrings)
     # stopifnot(!is.na(data$series))
 
     # Portfolio Optimization:
-    ans = .frontierConstrainedMVPortfolio(data, spec, constraintsStrings)
+    ans = .efficientConstrainedMVPortfolio(data, spec, constraints)
     
     # Compute True Returns and Risk as Stabdard Deviation:
     weights = getWeights(ans)
@@ -173,7 +173,7 @@ function(data, spec, constraintsStrings)
 
 
 .portfolioConstrainedLPMFrontier = 
-function(data, spec, constraintsStrings)
+function(data, spec, constraints)
 {
     # Description:
     #   Evaluates the EF for a given set of box and or sector constraints
@@ -182,7 +182,7 @@ function(data, spec, constraintsStrings)
     #   data - portfolio of assets, a matrix or an object which can be 
     #       transformed to a matrix
     #   spec - specification of the portfolio
-    #   constraintsStrings - string of constraints
+    #   constraints - string of constraints
 
     # FUNCTION:
 
@@ -193,7 +193,7 @@ function(data, spec, constraintsStrings)
     Sigma = cov(x)
     
     # Compute Efficient Frontier:
-    ans = .portfolioConstrainedMVFrontier(data, spec, constraintsStrings)
+    ans = .portfolioConstrainedMVFrontier(data, spec, constraints)
     
     # Loop over Frontier:
     weights = getWeights(ans)

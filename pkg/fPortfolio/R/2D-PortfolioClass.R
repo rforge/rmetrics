@@ -35,7 +35,7 @@
 #  cmlPortfolio                  Returns capital market line
 #  tangencyPortfolio             Returns the tangency portfolio
 #  minvariancePortfolio          Returns the minimum variance portfolio
-#  frontierPortfolio             Returns a frontier portfolio
+#  efficientPortfolio            Returns a frontier portfolio
 # FUNCTION:                     PORTFOLIO FRONTIER:
 #  portfolioFrontier             Returns the efficient frontier of a portfolio
 # FUNCTION:                     PRINT AND PLOT METHODS:        
@@ -63,7 +63,7 @@ setClass("fPORTFOLIO",
 
 
 feasiblePortfolio =
-function(data, spec = portfolioSpec(), constraintsStrings = NULL)
+function(data, spec = portfolioSpec(), constraints = NULL)
 {   # A function implemented by Rmetrics
     # Description:
     #   Computes Risk and Return for a feasible portfolio
@@ -89,18 +89,18 @@ function(data, spec = portfolioSpec(), constraintsStrings = NULL)
     data = list(series = series, statistics = statistics)
     
     # Compose Function:
-    if(is.null(constraintsStrings) | length(constraintsStrings) == 0) {
+    if(is.null(constraints) | length(constraints) == 0) {
         Model = "Constrained"
         nAssets = length(mu)
         constraintsString = paste("minW[1:", nAssets, "]=0", sep = "")
-    } else if (constraintsStrings == "short") {
+    } else if (constraints[1] == "short") {
         Model = "Short"
     }      
     Type = spec@model$type
     fun = match.fun(paste(".feasible", Model, Type, "Portfolio", sep = ""))
     
     # Compute Portfolio
-    ans = fun(data, spec, constraintsStrings)
+    ans = fun(data, spec, constraints)
     
     # Reset Call:
     ans@call = match.call()
@@ -114,7 +114,7 @@ function(data, spec = portfolioSpec(), constraintsStrings = NULL)
 
 
 cmlPortfolio =
-function(data, spec = portfolioSpec(), constraintsStrings = NULL)
+function(data, spec = portfolioSpec(), constraints = NULL)
 {   # A function implemented by Rmetrics
 
     # Description:
@@ -141,11 +141,11 @@ function(data, spec = portfolioSpec(), constraintsStrings = NULL)
     data = list(series = series, statistics = statistics)
     
     # Compose Function:
-    if(is.null(constraintsStrings) | length(constraintsStrings) == 0) {
+    if(is.null(constraints) | length(constraints) == 0) {
         Model = "Constrained"
         nAssets = length(mu)
         constraintsString = paste("minW[1:", nAssets, "]=0", sep = "")
-    } else if (constraintsStrings == "short") {
+    } else if (constraints[1] == "short") {
         Model = "Short"
     } else {
         Model = "Constrained"
@@ -154,7 +154,7 @@ function(data, spec = portfolioSpec(), constraintsStrings = NULL)
     fun = match.fun(paste(".cml", Model, Type, "Portfolio", sep = ""))
     
     # Compute Portfolio
-    ans = fun(data, spec, constraintsStrings)
+    ans = fun(data, spec, constraints)
     
     # Reset Call:
     ans@call = match.call()
@@ -168,7 +168,7 @@ function(data, spec = portfolioSpec(), constraintsStrings = NULL)
 
 
 tangencyPortfolio =
-function(data, spec = portfolioSpec(), constraintsStrings = NULL)
+function(data, spec = portfolioSpec(), constraints = NULL)
 {   # A function implemented by Rmetrics
 
     # Description:
@@ -195,11 +195,11 @@ function(data, spec = portfolioSpec(), constraintsStrings = NULL)
     data = list(series = series, statistics = statistics)
     
     # Compose Function:
-    if(is.null(constraintsStrings) | length(constraintsStrings) == 0) {
+    if(is.null(constraints) | length(constraints) == 0) {
         Model = "Constrained"
         nAssets = length(mu)
         constraintsString = paste("minW[1:", nAssets, "]=0", sep = "")
-    } else if (constraintsStrings == "short") {
+    } else if (constraints[1] == "short") {
         Model = "Short"
     } else {
         Model = "Constrained"
@@ -208,7 +208,7 @@ function(data, spec = portfolioSpec(), constraintsStrings = NULL)
     fun = match.fun(paste(".tangency", Model, Type, "Portfolio", sep = ""))
     
     # Compute Portfolio:
-    ans = fun(data, spec, constraintsStrings)
+    ans = fun(data, spec, constraints)
     
     # Reset Call:
     ans@call = match.call() 
@@ -222,7 +222,7 @@ function(data, spec = portfolioSpec(), constraintsStrings = NULL)
 
 
 minvariancePortfolio =
-function(data, spec = portfolioSpec(), constraintsStrings = NULL)
+function(data, spec = portfolioSpec(), constraints = NULL)
 {   # A function implemented by Rmetrics
 
     # Description:
@@ -249,11 +249,11 @@ function(data, spec = portfolioSpec(), constraintsStrings = NULL)
     data = list(series = series, statistics = statistics)
     
     # Compose Function:
-    if(is.null(constraintsStrings) | length(constraintsStrings) == 0) {
+    if(is.null(constraints) | length(constraints) == 0) {
         Model = "Constrained"
         nAssets = length(mu)
         constraintsString = paste("minW[1:", nAssets, "]=0", sep = "")
-    } else if (constraintsStrings == "short") {
+    } else if (constraints[1] == "short") {
         Model = "Short"
     } else {
         Model = "Constrained"
@@ -262,7 +262,7 @@ function(data, spec = portfolioSpec(), constraintsStrings = NULL)
     fun = match.fun(paste(".minvariance", Model, Type, "Portfolio", sep = ""))
     
     # Compute Portfolio:
-    ans = fun(data, spec, constraintsStrings)
+    ans = fun(data, spec, constraints)
     
     # Reset Call:
     ans@call = match.call() 
@@ -275,8 +275,8 @@ function(data, spec = portfolioSpec(), constraintsStrings = NULL)
 # ------------------------------------------------------------------------------
 
 
-frontierPortfolio =
-function(data, spec = portfolioSpec(), constraintsStrings = NULL)
+efficientPortfolio =
+function(data, spec = portfolioSpec(), constraints = NULL)
 {   # A function implemented by Rmetrics
 
     # Description:
@@ -303,11 +303,11 @@ function(data, spec = portfolioSpec(), constraintsStrings = NULL)
     data = list(series = series, statistics = statistics)
     
     # Compose Function:
-    if(is.null(constraintsStrings) | length(constraintsStrings) == 0) {
+    if(is.null(constraints) | length(constraints) == 0) {
         Model = "Constrained"
         nAssets = length(mu)
         constraintsString = paste("minW[1:", nAssets, "]=0", sep = "")
-    } else if (constraintsStrings == "short") {
+    } else if (constraints[1] == "short") {
         Model = "Short"
     } else {
         Model = "Constrained"
@@ -316,7 +316,7 @@ function(data, spec = portfolioSpec(), constraintsStrings = NULL)
     fun = match.fun(paste(".frontier", Model, Type, "Portfolio", sep = ""))
     
     # Compute Portfolio:
-    ans = fun(data, spec, constraintsStrings)
+    ans = fun(data, spec, constraints)
     
     # Reset Call:
     ans@call = match.call() 
@@ -330,7 +330,7 @@ function(data, spec = portfolioSpec(), constraintsStrings = NULL)
 
 
 portfolioFrontier =
-function(data, spec = portfolioSpec(), constraintsStrings = NULL, 
+function(data, spec = portfolioSpec(), constraints = NULL, 
 title = NULL, description = NULL)
 {   # A function implemented by Rmetrics
 
@@ -358,11 +358,11 @@ title = NULL, description = NULL)
     data = list(series = series, statistics = statistics)
     
     # Compose Function:
-    if(is.null(constraintsStrings) | length(constraintsStrings) == 0) {
+    if(is.null(constraints) | length(constraints) == 0) {
         Model = "Constrained"
         nAssets = length(mu)
         constraintsString = paste("minW[1:", nAssets, "]=0", sep = "")
-    } else if (constraintsStrings == "short") {
+    } else if (constraints[1] == "short") {
         Model = "Short"
     } else {
         Model = "Constrained"
@@ -371,7 +371,7 @@ title = NULL, description = NULL)
     fun = match.fun(paste(".portfolio", Model, Type, "Frontier", sep = ""))
     
     # Compute Portfolio:
-    ans = fun(data, spec, constraintsStrings)
+    ans = fun(data, spec, constraints)
     
     # Reset Call:
     ans@call = match.call() 

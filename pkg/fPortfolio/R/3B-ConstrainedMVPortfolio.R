@@ -33,14 +33,14 @@
 #  .tangencyConstrainedMVPortfolio    Returns constrained tangency MV-PF
 #  .cmlConstrainedMVPortfolio         Returns constrained CML-Portfolio
 #  .minvarianceConstrainedMVPortfolio Returns constrained min-Variance-PF
-#  .frontierConstrainedMVPortfolio    Returns a constrained frontier MV-PF
+#  .efficientConstrainedMVPortfolio   Returns a constrained frontier MV-PF
 # FUNCTION:                          PORTFOLIO FRONTIER:
 #  .portfolioConstrainedMVFrontier    Returns the EF of a constrained MV-PF
 ################################################################################
 
 
 .feasibleConstrainedMVPortfolio = 
-function(data, spec, constraintsStrings)
+function(data, spec, constraints)
 {   # A function implemented by Rmetrics
 
     # Description:
@@ -71,7 +71,7 @@ function(data, spec, constraintsStrings)
     
     # Setting the constraints matrix and vector:
     tmp.ans = setConstraints(data = data, spec = spec,
-        constraintsStrings =  constraintsStrings)
+        constraints =  constraints)
     dim = length(mu)
     A = tmp.ans[, -(dim+1)]
     b0 = tmp.ans[, (dim+1)]
@@ -94,7 +94,7 @@ function(data, spec, constraintsStrings)
         call = match.call(),
         data = data,
         specification = spec,
-        constraints = as.character(constraintsStrings),
+        constraints = as.character(constraints),
         portfolio = list(
             weights = weights,
             targetReturn = targetReturn,
@@ -110,7 +110,7 @@ function(data, spec, constraintsStrings)
 
  
 .cmlConstrainedMVPortfolio = 
-function(data, spec, constraintsStrings)
+function(data, spec, constraints)
 {
     # Description:
     #   Computes Computes Risk, Return and Weight for CML portfolio
@@ -126,30 +126,30 @@ function(data, spec, constraintsStrings)
     
     # Function to be minimized:
     .sharpeRatioFun =
-    function(x, data, spec, constraintsStrings) {
+    function(x, data, spec, constraints) {
         spec@portfolio$targetReturn = x
-        ans = .frontierConstrainedMVPortfolio(data = data, spec = spec,
-            constraintsStrings = constraintsStrings)
+        ans = .efficientConstrainedMVPortfolio(data = data, spec = spec,
+            constraints = constraints)
         (x - spec@portfolio$riskFreeRate) / getTargetRisk(ans)      
     }
     
     # Calling optimize function
     cml = optimize(.sharpeRatioFun, interval = range(mu), maximum = TRUE,
-        data = data, spec = spec, constraintsStrings = constraintsStrings,
+        data = data, spec = spec, constraints = constraints,
         tol = .Machine$double.eps^0.5)
            
     targetReturn = spec@portfolio$targetReturn = cml$maximum  
-    targetRisk = getTargetRisk(frontierPortfolio(data = data$statistics, spec,
-        constraintsStrings)) 
-    weights = getWeights(frontierPortfolio(data = data$statistics,
-        spec, constraintsStrings))
+    targetRisk = getTargetRisk(efficientPortfolio(data = data$statistics, spec,
+        constraints)) 
+    weights = getWeights(efficientPortfolio(data = data$statistics,
+        spec, constraints))
 
     # Return Value:
     new("fPORTFOLIO", 
         call = match.call(),
         data = data,
         specification = spec,
-        constraints = as.character(constraintsStrings),
+        constraints = as.character(constraints),
         portfolio = list(
             weights = weights,
             targetReturn = targetReturn,
@@ -165,7 +165,7 @@ function(data, spec, constraintsStrings)
 
 
 .tangencyConstrainedMVPortfolio = 
-function(data, spec, constraintsStrings)
+function(data, spec, constraints)
 {
     # Description:
     #   Computes Risk, Return and Weight for the tangency portfolio
@@ -183,7 +183,7 @@ function(data, spec, constraintsStrings)
     spec@portfolio$riskFreeRate = 0
     
     # Calling cml function
-    ans = .cmlConstrainedMVPortfolio(data, spec, constraintsStrings)
+    ans = .cmlConstrainedMVPortfolio(data, spec, constraints)
     ans@call = match.call()
     ans@title = "Tangency Portfolio"
     
@@ -196,7 +196,7 @@ function(data, spec, constraintsStrings)
 
    
 .minvarianceConstrainedMVPortfolio = 
-function(data, spec, constraintsStrings)
+function(data, spec, constraints)
 {
     # Description:
     #   Computes Risk, Return and Weight for minimum variance portfolio
@@ -212,29 +212,29 @@ function(data, spec, constraintsStrings)
     
     # Function to be minimized:
     .minVariancePortfolioFun = 
-    function(x, data, spec, constraintsStrings) {
+    function(x, data, spec, constraints) {
         spec@portfolio$targetReturn = x
-        ans = .frontierConstrainedMVPortfolio(data = data, spec = spec,
-            constraintsStrings = constraintsStrings)
+        ans = .efficientConstrainedMVPortfolio(data = data, spec = spec,
+            constraints = constraints)
         getTargetRisk(ans)
     }
 
     # Calling optimize function
     minVar = optimize(.minVariancePortfolioFun, interval = range(mu),
-        data = data, spec = spec, constraintsStrings = constraintsStrings,
+        data = data, spec = spec, constraints = constraints,
         tol = .Machine$double.eps^0.5)
     targetReturn = spec@portfolio$targetReturn = minVar$minimum
-    targetRisk = getTargetRisk(frontierPortfolio(data = data$statistics, spec,
-        constraintsStrings)) 
-    weights = getWeights(frontierPortfolio(data = data$statistics, spec,
-        constraintsStrings))
+    targetRisk = getTargetRisk(efficientPortfolio(data = data$statistics, spec,
+        constraints)) 
+    weights = getWeights(efficientPortfolio(data = data$statistics, spec,
+        constraints))
 
     # Return Value:
     new("fPORTFOLIO", 
         call = match.call(),
         data = data,
         specification = spec,
-        constraints = as.character(constraintsStrings),
+        constraints = as.character(constraints),
         portfolio = list(
             weights = weights,
             targetReturn = targetReturn,
@@ -249,8 +249,8 @@ function(data, spec, constraintsStrings)
 #-------------------------------------------------------------------------------   
 
 
-.frontierConstrainedMVPortfolio = 
-function(data, spec, constraintsStrings)
+.efficientConstrainedMVPortfolio = 
+function(data, spec, constraints)
 {
     # Description:
     #   Optimizes a mean-var portfolio for a given desired return and a set of
@@ -276,7 +276,7 @@ function(data, spec, constraintsStrings)
 
     # Setting the constraints matrix and vector:   
     tmp.ans = setConstraints(data = data, spec = spec,
-        constraintsStrings = constraintsStrings)
+        constraints = constraints)
     A = tmp.ans[, -(dim+1)]
     b0 = tmp.ans[, (dim+1)]
     dvec = rep(0, dim)
@@ -303,7 +303,7 @@ function(data, spec, constraintsStrings)
         call = match.call(),
         data = data,
         specification = spec,
-        constraints = as.character(constraintsStrings),
+        constraints = as.character(constraints),
         portfolio = list(
             weights = weights,
             targetReturn = targetReturn,
@@ -319,7 +319,7 @@ function(data, spec, constraintsStrings)
 
 
 .portfolioConstrainedMVFrontier = 
-function(data, spec, constraintsStrings)
+function(data, spec, constraints)
 {
     # Description:
     #   Evaluates the EF for a given set of box and or sector constraints
@@ -328,7 +328,7 @@ function(data, spec, constraintsStrings)
     #   data - portfolio of assets, a matrix or an object which can be 
     #       transformed to a matrix
     #   spec - specification of the portfolio
-    #   constraintsStrings - string of constraints
+    #   constraints - string of constraints
 
     # FUNCTION:
 
@@ -359,13 +359,13 @@ function(data, spec, constraintsStrings)
     targetMu = targetSigma = nextWeights = rep(0, times = nFrontierPoints)
     weights = error = NULL
 
-    # Loop over .frontierConstrainedMVPortfolio
+    # Loop over .efficientConstrainedMVPortfolio
     for (nTargetReturn in seq(muMin+eps, muMax-eps, length = nFrontierPoints)) {
         k = k+1
         Spec = portfolioSpec(portfolio = list(targetReturn = nTargetReturn))       
         # spec@portfolio$targetReturn = nTargetReturn
-        tmp.object = .frontierConstrainedMVPortfolio(data = data, spec = Spec,
-            constraintsStrings = constraintsStrings)
+        tmp.object = .efficientConstrainedMVPortfolio(data = data, spec = Spec,
+            constraints = constraints)
         targetMu[k] = tmp.object@portfolio$targetReturn
         targetSigma[k] = tmp.object@portfolio$targetRisk
         nextWeight = tmp.object@portfolio$weights
@@ -378,7 +378,7 @@ function(data, spec, constraintsStrings)
         call = match.call(),
         data = data,
         specification = spec,
-        constraints = as.character(constraintsStrings),
+        constraints = as.character(constraints),
         portfolio = list(
             weights = weights[!error, ],
             targetReturn = targetMu[!error],

@@ -35,7 +35,7 @@
    
     
 setConstraints =
-function(data, spec = portfolioSpec(), constraintsStrings = NULL)
+function(data, spec = portfolioSpec(), constraints = NULL)
 {   # A function implemented by Rmetrics
 
     # Description:
@@ -80,31 +80,31 @@ function(data, spec = portfolioSpec(), constraintsStrings = NULL)
     maxW = rep(1, N)
     b0 = matrix(c(1, targetReturn, minW, -maxW), ncol = 1)
     colnames(b0) = "b0"
-    if (!is.null(constraintsStrings)) {
-        nC = length(constraintsStrings)
-        what = substr(constraintsStrings, 1, 4)
+    if (!is.null(constraints)) {
+        nC = length(constraints)
+        what = substr(constraints, 1, 4)
         for (i in 1:nC) {       
             if (what[i] == "minW" | what[i] == "maxW") {
-                eval(parse(text = constraintsStrings[i]))
+                eval(parse(text = constraints[i]))
             }
         }  
         b0 = matrix(c(1, targetReturn, minW, -maxW), ncol = 1)     
-        what = substr(constraintsStrings, 1, 7)
+        what = substr(constraints, 1, 7)
         for (i in 1:nC) {       
             if (what[i] == "minsumW")  {
                 minsumW = rep(0, times = N)
-                eval(parse(text = constraintsStrings[i]))
+                eval(parse(text = constraints[i]))
                 A = rbind(A, minsumW = sign(minsumW))          
-                b = strsplit(constraintsStrings[i], "=")[[1]][2]
+                b = strsplit(constraints[i], "=")[[1]][2]
                 b0 = rbind(b0, as.numeric(b))
             }
         }
         for (i in 1:nC) {       
             if (what[i] == "maxsumW")  {
                 maxsumW = rep(0, times = N)
-                eval(parse(text = constraintsStrings[i]))
+                eval(parse(text = constraints[i]))
                 A = rbind(A, maxsumW = -sign(maxsumW))          
-                b = strsplit(constraintsStrings[i], "=")[[1]][2]
+                b = strsplit(constraints[i], "=")[[1]][2]
                 b0 = rbind(b0, -as.numeric(b))
             }
         }
@@ -164,7 +164,7 @@ function(object)
     # Start with Box Constraints:
     const1 = paste("minW[", 1:N, "] = ", b0[3:(2+N),], sep = "")
     const2 = paste("maxW[", 1:N, "] = ", -b0[(3+N):(2+2*N),], sep = "")
-    constraintsStrings = matrix(c(const1, const2), ncol = 1)
+    constraints = matrix(c(const1, const2), ncol = 1)
     
     # Add Sector Constraints:
     if((3+2*N) <= L) {
@@ -172,16 +172,16 @@ function(object)
             index = paste ((1:N)[abs(A[i, ]) != 0], collapse = ",")
             addConstraintString = paste(rownames(A)[i], "[c(", index, ")] = ", 
                 abs(b0[i]), sep = "")
-            constraintsStrings = rbind(constraintsStrings, addConstraintString)
+            constraints = rbind(constraints, addConstraintString)
         }
     }
     
     # Add Names:
-    colnames(constraintsStrings) = "Constraints"
-    rownames(constraintsStrings) = 1:(L-2)
+    colnames(constraints) = "Constraints"
+    rownames(constraints) = 1:(L-2)
     
     # Return Value:
-    constraintsStrings
+    constraints
 }
 
 
