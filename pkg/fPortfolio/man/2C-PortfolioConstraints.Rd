@@ -28,7 +28,7 @@
 }    
 
 \usage{
-setConstraints(data, spec = portfolioSpec(), constraintsStrings = NULL) 
+setConstraints(data, spec = portfolioSpec(), constraints = NULL) 
 getConstraints(object)
 }
 
@@ -50,7 +50,7 @@ getConstraints(object)
 
 \arguments{
 
-    \item{constraintsStrings}{
+    \item{constraints}{
         a character string vector, containing the constraints. 
         }
     \item{data}{

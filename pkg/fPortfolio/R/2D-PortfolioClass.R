@@ -313,7 +313,7 @@ function(data, spec = portfolioSpec(), constraints = NULL)
         Model = "Constrained"
     }        
     Type = spec@model$type
-    fun = match.fun(paste(".frontier", Model, Type, "Portfolio", sep = ""))
+    fun = match.fun(paste(".efficient", Model, Type, "Portfolio", sep = ""))
     
     # Compute Portfolio:
     ans = fun(data, spec, constraints)
