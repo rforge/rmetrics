@@ -251,40 +251,25 @@ function(data, spec, constraints)
 
 .efficientConstrainedMVPortfolio = 
 function(data, spec, constraints)
-{
-    # Description:
-    #   Optimizes a mean-var portfolio for a given desired return and a set of
-    #   box and or sector constraints
-    
-    # Arguments:
-    #   data - portfolio of assets, a matrix or an object which can be 
-    #       transformed to a matrix
-    #   spec - specification of the portfolio
-
-    # FUNCTION:
-       
+{      
     # Get Statistics:
     mu = data$statistics$mu
     Sigma = data$statistics$Sigma
     
     # Number of Assets:
     dim = length(mu)
-
+    
     # Extracting data from spec:
     targetReturn = spec@portfolio$targetReturn  
     stopifnot(is.numeric(targetReturn)) 
-
-    # Setting the constraints matrix and vector:   
-    tmp.ans = setConstraints(data = data, spec = spec,
-        constraints = constraints)
-    A = tmp.ans[, -(dim+1)]
-    b0 = tmp.ans[, (dim+1)]
-    dvec = rep(0, dim)
-
-    # Calling QP solver:
-    ans = .solve.QP(Dmat = Sigma, dvec = dvec, Amat = t(A), bvec = t(b0),
-        meq = 2) 
-    ierr = ans$ierr
+    
+    # Calling solver:
+    solver = Spec@solver$type[1]
+    if (solver == "RQuadprog") {
+        ans = solveRQuadprog(data, spec, constraints) 
+    } else if (solver == "Rdonlp2") {
+        ans = solveRDonlp2(data, spec, constraints)
+    }
     
     # Setting all weights zero being smaler than the machine precision:
     for(i in 1:dim){
@@ -295,7 +280,7 @@ function(data, spec, constraints)
     weights = ans$solution
 
     # Attributing no solutions
-    attr(weights, "error") <- ierr
+    attr(weights, "error") <- ans$ierr
     targetRisk = sqrt(weights %*% Sigma %*% weights)
 
     # Return Value:
@@ -310,7 +295,7 @@ function(data, spec, constraints)
             targetRisk = targetRisk,
             targetMean = targetReturn,
             targetStdev = targetRisk),
-        title = "Constrained MV Portfolio", 
+        title = paste("Constrained MV Portfolio - Solver:", solver),
         description = .description())    
 }
 
@@ -387,53 +372,6 @@ function(data, spec, constraints)
             targetStdev = targetSigma[!error]),
         title = "Constrained MV Frontier", 
         description = .description())       
-}
-
-
-################################################################################
-# BUILTIN: quadprog
-
-    
-.solve.QP = 
-function(Dmat, dvec, Amat, bvec, meq)
-{   # A Builtin function modified by Diethelm Wuertz
-
-    # Description:
-    #   Solves the quadratic programming problem
-    
-    # Note:   
-    #   Package: quadprog
-    #   Version: 1.4-7
-    #   Date: 2004-01-31
-    #   Title: Functions to solve Quadratic Programming Problems.
-    #   Author: S original by Berwin A. Turlach <berwin.turlach@anu.edu.au>
-    #       R port by Andreas Weingessel <Andreas.Weingessel@ci.tuwien.ac.at>
-    #   Maintainer: Andreas Weingessel <Andreas.Weingessel@ci.tuwien.ac.at>
-    #   Description: This package contains routines and documentation for
-    #       solving quadratic programming problems.
-    #   License: GPL version 2 or later
-    #   Packaged: Sat Jan 31 13:32:53 2004; hornik
-    #   Built: R 1.9.0; i386-pc-mingw32; 2004-03-28 15:03:03
-    
-    # FUNCTION:
-    
-    # Solve QP:
-    n = nrow(Dmat)
-    q = ncol(Amat)  
-    r = min(n,q)
-    work = rep(0, 2*n+r*(r+5)/2+2*q+1)
-    res1 = .Fortran("qpgen2",
-        as.double(Dmat), dvec = as.double(dvec), as.integer(n), 
-        as.integer(n), sol = as.double(rep(0,n)), crval = as.double(0),
-        as.double(Amat), as.double(bvec), as.integer(n), as.integer(q), 
-        as.integer(meq), iact = as.integer(rep(0,q)), nact = as.integer(0),
-        iter = as.integer(rep(0,2)), work = as.double(work),
-        ierr = as.integer(0), PACKAGE = "fPortfolio")
-    
-    # Return Value:
-    list(solution = res1$sol, value = res1$crval,
-       unconstrainted.solution = res1$dvec, ierr = res1$ierr,
-       iterations = res1$iter, iact = res1$iact[1:res1$nact]) 
 }
 
 

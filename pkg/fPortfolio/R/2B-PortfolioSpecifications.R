@@ -31,7 +31,7 @@
 # FUNCTION:                     PORTFOLIO SPECIFICATION CLASS:
 #  'fPFOLIOSPEC'                 S4 Portfolio Specification Class
 #  portfolioSpec                 Specifies a portfolio
-#  show.fPORTFOLIO               Print method for 'fPFOLIOSPEC' objects
+#  show.fPFOLIOSPEC              Print method for 'fPFOLIOSPEC' objects
 # FUNCTION:                     MODEL SLOT:
 #  setType                       Sets type of portfolio Optimization
 #  setEstimator                  Sets name of mean-covariance estimator
@@ -61,11 +61,13 @@ setClass("fPFOLIOSPEC",
 
 
 portfolioSpec = 
-function( 
-model = list(type = "MV", estimator = c("mean", "cov"), params = list()), 
+function(
+model = list(type = "MV", estimator = c("mean", "cov"), 
+    params = list()),
 portfolio = list(weights = NULL, targetReturn = NULL, riskFreeRate = 0, 
     nFrontierPoints = 50, returnRange = NULL, riskRange = NULL),
-    title = NULL, description = NULL)
+solver =list(type = c("quadprog", "donlp2")), 
+title = NULL, description = NULL)
 {   # A function implemented by Rmetrics
 
     # Description:
@@ -121,7 +123,7 @@ function(object)
     #   object - an object of class "fPFOLIOSPEC"
     
     # FUNCTION:
-     
+            
     # Title:
     cat("\nTitle:\n ")
     cat(getTitle(object), "\n")
@@ -136,6 +138,9 @@ function(object)
     
     cat("\nCovariance Estimator:\n ")
     cat(object@model$estimator, "\n")
+    
+    cat("\nSolver:\n ")
+    cat(object@solver$type[1], "\n")
     
     # Portfolio:
     if (!is.null(object@portfolio$weights)) {
