@@ -121,7 +121,7 @@ function(data, spec, constraints)
     
     # Get Statistics:
     mu = data$statistics$mu
-    Sigma = data$statistics$Sigma
+    Sigma <<- data$statistics$Sigma
     
     # Number of Assets:
     dim = length(mu)
@@ -132,9 +132,10 @@ function(data, spec, constraints)
     
     # Donlp2 Settings - Variables and Function:
     par = rep(1/dim, dim)
-    fn = function(x) x %*% Cov %*% x
+    fn = function(x) x %*% Sigma %*% x
     
     # Donlp2 Settings - Box Constraints:
+    A.mat = setConstraints(data, spec, constraints)
     upperNames = paste("maxW", 1:dim, sep = "")
     par.upper = -A.mat[upperNames, "Exposure"]
     lowerNames = paste("minW", 1:dim, sep = "")
