@@ -54,8 +54,10 @@ assetsSelect(x, method = c("hclust", "kmeans"),
         or \code{kmeans} for k-means clustering.
         }
     \item{x}{
-        xxx
-        }  
+        any rectangular time series object which can be converted by the 
+        function \code{as.matrix()} into a matrix object, e.g. like an 
+        object of class \code{timeSeries}, \code{data.frame}, or \code{mts}. 
+        }   
     \item{\dots}{
         optional arguments to be passed.
         }

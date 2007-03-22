@@ -120,7 +120,7 @@ getTargetStdev(object)
    \code{\link{PortfolioData}},
    \code{\link{PortfolioSpecification}},
    \code{\link{PortfolioConstraints}},
-   \code{\link{fPORTFOLIO}},
+   \code{\link{fPORTFOLIO}},\cr
    \code{\link{PortfolioPlots}}.
 
 }
@@ -134,7 +134,6 @@ getTargetStdev(object)
 
 
 \examples{
-\dontrun{
 ## getStatistics -
    # Calculation of Long Only Efficient Frontier
    frontier = portfolioFrontier(usPortfolioData())
@@ -144,7 +143,6 @@ getTargetStdev(object)
 ## getStatistics -
    # Getting and Plotting the Efficient Frontier
    getFrontier(frontier, doplot = TRUE)     
-}
 }
 
 

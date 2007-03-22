@@ -50,10 +50,13 @@ assetsCorTestPlot(x, scale = 1, labels = TRUE, \dots)
 \arguments{
   
     \item{labels}{
-        xxx
+        a logical flag, if \code{TRUE} then default labels will be used,
+        otherwise the plots will be displayed without labels and the user
+        can add his own labels.
         }
     \item{method}{
-        xxx
+        a character string, defining the method to be used for calculating
+        the covariance.
         }
     \item{scale}{
         which of the plots should be displayed? \code{which} can 
@@ -63,15 +66,18 @@ assetsCorTestPlot(x, scale = 1, labels = TRUE, \dots)
         \code{TRUE} the correponding plot will be displayed.
         }
     \item{which}{
-        xxx
+        an integer value, defining which plot in a series of plots 
+        should be displayed.
         }
     \item{x}{
-        any rectangular time series which can be converted by the function
-        \code{as.matrix()} into a matrix object, e.g. like an object of
-        class \code{timeSeries}, \code{data.frame}, or \code{mts}. 
+        any rectangular time series object which can be converted by the 
+        function \code{as.matrix()} into a matrix object, e.g. like an 
+        object of class \code{timeSeries}, \code{data.frame}, or \code{mts}. 
         } 
     \item{xlim}{
-        xxx
+        a numeric vector with two elements defining the range of the plot.
+        If the value of \code{cxlim=NULL}, the default setting, then the
+        range will be automatically selected. 
         } 
     \item{\dots}{
         optional arguments to be passed.
@@ -80,19 +86,19 @@ assetsCorTestPlot(x, scale = 1, labels = TRUE, \dots)
 }
 
 
-\details{
-
-    \bold{Displaying Asset Return Plots:}
-    \cr\cr
-    xxx 
-    \cr
-    
-    
-    \bold{Displaying Bivariate Assets Returns Plots:}
-    \cr\cr   
-    The xxx
-
-}
+%\details{
+%
+%    \bold{Displaying Asset Return Plots:}
+%    \cr\cr
+%    xxx 
+%    \cr
+%    
+%    
+%    \bold{Displaying Bivariate Assets Returns Plots:}
+%    \cr\cr   
+%    The xxx
+%
+%}
 
 
 %\value{}

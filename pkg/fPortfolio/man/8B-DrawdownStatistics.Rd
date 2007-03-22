@@ -75,7 +75,7 @@ maxddStats(mean = 0, sd = 1, horizon = 1000)
 
 \value{
 
-    \code{dmaxdd}\cr
+    \code{dmaxdd} 
     \cr
     returns for a trendless Brownian process \code{mean=0} and
     standard deviation "sd" the density from the probability 
@@ -84,7 +84,7 @@ maxddStats(mean = 0, sd = 1, horizon = 1000)
     of the investor.
     \cr
     
-    \code{pmaxdd}\cr
+    \code{pmaxdd} 
     \cr
     returns for a trendless Brownian process \code{mean=0} and
     standard deviation "sd" the the probability 

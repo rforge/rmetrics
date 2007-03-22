@@ -264,7 +264,7 @@ function(data, spec, constraints)
     stopifnot(is.numeric(targetReturn)) 
     
     # Calling solver:
-    solver = Spec@solver$type[1]
+    solver = spec@solver$type[1]
     if (solver == "RQuadprog") {
         ans = solveRQuadprog(data, spec, constraints) 
     } else if (solver == "Rdonlp2") {
@@ -345,10 +345,10 @@ function(data, spec, constraints)
     weights = error = NULL
 
     # Loop over .efficientConstrainedMVPortfolio
+    Spec = spec
     for (nTargetReturn in seq(muMin+eps, muMax-eps, length = nFrontierPoints)) {
-        k = k+1
-        Spec = portfolioSpec(portfolio = list(targetReturn = nTargetReturn))       
-        # spec@portfolio$targetReturn = nTargetReturn
+        k = k + 1
+        setTargetReturn(Spec)<-nTargetReturn     
         tmp.object = .efficientConstrainedMVPortfolio(data = data, spec = Spec,
             constraints = constraints)
         targetMu[k] = tmp.object@portfolio$targetReturn

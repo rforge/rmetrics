@@ -196,21 +196,21 @@ frontierSlider(object, control = list(), \dots)
 
 \value{
     
-    \code{portfolioFrontier}
+    \code{portfolioFrontier()}\cr
     returns an S4 object of class \code{"fPORTFOLIO"}, with the following 
     slots:
 
-    \item{call}{
+    \item{@call}{
         a call, returning the matched function call.
         }
-    \item{data}{
+    \item{@data}{
         a list, containing two named elements being 'mu' and 'Sigma'.
          }  
-    \item{description}{
+    \item{@description}{
         a character string, allowing for a brief project description.
         }
            
-    \item{portfolio}{
+    \item{@portfolio}{
         a list, containing parameter specifications for the portfolio:\cr 
         \code{weights} a numeric vector specifying the portfolio 
             weights.\cr
@@ -222,11 +222,11 @@ frontierSlider(object, control = list(), \dots)
         \code{targetStdev} a numeric value specifying the target risk in 
         standart deviation as risk measure.\cr 
         }
-    \item{specifications}{
+    \item{@specifications}{
         an object of class \code{fPFOLIOSPEC}, including all information about
         the portfolio specifications, see \code{\link{PortfolioSpecification}}
         for further details.}
-   \item{title}{
+    \item{@title}{
         a title string.\cr
         }
     having all information about the whole efficient frontier.
@@ -242,12 +242,12 @@ frontierSlider(object, control = list(), \dots)
 }
 
 
-\note{
+\section{Control Parameters}{
 
     In the following all elements of argument control from functions
     \code{plot}, \code{weightsSlider}, \code{frontierSlider} are listed. 
 
-    
+    \describe{
     \item{sliderResolution}{
         [weightsSlider, frontierSlider] - 
         a numeric, determining the numbers of slider points, by default 
@@ -406,7 +406,8 @@ frontierSlider(object, control = list(), \dots)
         [weightsSlider, frontierSlider] - 
         a vector, containing y-axis plot limits of the efficient frontier.
         Default setting is maximum of frontier range or single assets portfolios. 
-      }                    
+    } 
+    }                 
 }
 
 %\references{}

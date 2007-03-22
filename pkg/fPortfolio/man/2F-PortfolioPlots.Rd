@@ -34,7 +34,8 @@
 
 \usage{
 frontierPlot(object, frontier = c("both", "lower", "upper"),
-    col = c("black", "grey"), add = FALSE, ...)
+    col = c("black", "grey"), add = FALSE, \dots)
+    
 weightsPlot(object, col = NULL, legend = FALSE)
 weightsPie(object, col = NULL, box = TRUE, \dots)
 attributesPlot(object, col = NULL, legend = FALSE)
@@ -91,7 +92,7 @@ covEllipsesPlot(x = list(), \dots)
 
 \details{
 
-    \bold{The frontier Plot:}
+    \bold{Frontier Plot:}
     \cr\cr
     The frontier plot provides plotting three parts of the efficient frontier.
     The part superior to the minimum variance portfolio is plotted with argument
@@ -130,7 +131,7 @@ covEllipsesPlot(x = list(), \dots)
    \code{\link{PortfolioData}},
    \code{\link{PortfolioSpecification}},
    \code{\link{PortfolioConstraints}},
-   \code{\link{fPORTFOLIO}},
+   \code{\link{fPORTFOLIO}},\cr
    \code{\link{PortfolioExtractors}}.
 
 }

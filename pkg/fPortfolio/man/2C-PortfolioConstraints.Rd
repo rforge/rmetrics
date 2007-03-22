@@ -41,9 +41,12 @@ getConstraints(object)
     \cr\cr
     The definition of the constraints is done by strings or sting vectors,
     which must have the following form:
-      \item{box constraints}{\code{"minW[asset]=percentage"},}
-      \item{for sector constraints}{\code{"maxsumW[assets]=percentage"}.}
-      \cr
+    
+    \describe{
+      \item{box constraints}{\code{"minW[asset]=percentage"}, and for }
+      \item{sector constraints}{\code{"maxsumW[assets]=percentage"}. }
+    }
+    
     While the asset(s) "argument" can be either a number or a vector.
 
 }
@@ -101,7 +104,7 @@ getConstraints(object)
    \code{\link{PortfolioData}},
    \code{\link{PortfolioSpecification}},
    \code{\link{fPORTFOLIO}},
-   \code{\link{PortfolioExtractors}},
+   \code{\link{PortfolioExtractors}},\cr
    \code{\link{PortfolioPlots}}.
 
 }

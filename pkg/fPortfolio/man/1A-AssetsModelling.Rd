@@ -155,6 +155,8 @@ show.fASSETS(object)
 
 \details{
 
+    \bold{Assets Objects:}
+    \cr\cr
     Data sets of assets \code{x} can be expressed as multivariate 
     'timeSeries' objects, as 'data.frame' objects, or any other rectangular 
     object which can be transformed into an object of class 'matrix'.
@@ -174,7 +176,7 @@ show.fASSETS(object)
 
 \value{
   
-    \code{assetsFit} 
+    \code{assetsFit()} 
     \cr
     returns a S4 object class of class \code{"fASSETS"}, with the following 
     slots:
@@ -232,7 +234,7 @@ show.fASSETS(object)
     assets.
     \cr
     
-    \code{assetsSim} 
+    \code{assetsSim()} 
     \cr
     returns a matrix, the artifical data records represent the assets 
     of the portfolio. Row names and column names are not created, they

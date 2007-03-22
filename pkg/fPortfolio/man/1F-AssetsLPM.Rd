@@ -17,7 +17,7 @@
     The functions are:
     
     \tabular{ll}{
-    \code{assetsLPM} \tab Computes LPMs and co-LPMs of a set of assets. }
+    \code{assetsStats} \tab Computes LPMs and co-LPMs of a set of assets. }
     
 }
     
@@ -30,13 +30,15 @@ assetsLPM(x, tau, a, \dots)
   
 
     \item{a}{
-        a xxx .
+        the value of the moment. 
         }
     \item{tau}{
-        a xxx .
+        the target return.
         }    
     \item{x}{
-        xxx
+        any rectangular time series object which can be converted by the 
+        function \code{as.matrix()} into a matrix object, e.g. like an 
+        object of class \code{timeSeries}, \code{data.frame}, or \code{mts}. 
         }  
     \item{\dots}{
         optional arguments to be passed.

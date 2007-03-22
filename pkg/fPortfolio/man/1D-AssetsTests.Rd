@@ -46,18 +46,18 @@ assetsTest(x, method = c("shapiro", "energy"), Replicates = 100,
         bootstrap.
         } 
     \item{Replicates}{
-        [assetsTest] - \cr
         an integer value, the number of bootstrap replicates, by
         default 100. This value is only used if \code{method="energy"}.
         }
     \item{title}{
-        [assetsFit] - \cr
         a character string, assigning a title to an 
         \code{"fASSETS"} object.
         }
     \item{x}{
-        xxx
-        }  
+        any rectangular time series object which can be converted by the 
+        function \code{as.matrix()} into a matrix object, e.g. like an 
+        object of class \code{timeSeries}, \code{data.frame}, or \code{mts}. 
+        }   
         
 }
 

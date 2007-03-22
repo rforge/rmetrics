@@ -274,7 +274,7 @@ portfolioStatistics(data, spec = portfolioSpec())
    \code{\link{PortfolioData}},
    \code{\link{PortfolioConstraints}},
    \code{\link{fPORTFOLIO}},
-   \code{\link{PortfolioExtractors}},
+   \code{\link{PortfolioExtractors}},\cr
    \code{\link{PortfolioPlots}}.
 
 }
