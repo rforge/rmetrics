@@ -17,7 +17,7 @@
     The functions are:
     
     \tabular{ll}{
-    \code{assetsStats} \tab Computes LPMs and co-LPMs of a set of assets. }
+    \code{assetsLPM} \tab Computes LPMs and co-LPMs of a set of assets. }
     
 }
     
@@ -47,13 +47,13 @@ assetsLPM(x, tau, a, \dots)
 }
 
 
-\details{
-
-    \bold{Assets Lower Partial Moments:}
-    \cr\cr   
-    The function \code{assetsLPM} computes xxx.
-  
-}
+%\details{
+%
+%    \bold{Assets Lower Partial Moments:}
+%    \cr\cr   
+%    The function \code{assetsLPM} computes xxx.
+%  
+%}
 
 
 \value{
@@ -61,7 +61,7 @@ assetsLPM(x, tau, a, \dots)
   
     \code{assetsLPM}
     \cr
-    returns a list with two entries named \code{mu} and Sigma{Sigma}.
+    returns a list with two entries named \code{$mu} and Sigma{$Sigma}.
     The first denotes the vector of lower partial moments, and the 
     second the co-LPM matrix. Note, that the output of this function 
     can be used as data input for the portfolio functions to compute 
