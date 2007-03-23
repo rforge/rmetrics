@@ -182,7 +182,7 @@ function(x, ...)
     
     # Set Timezone to GMT:
     myTZ = Sys.getenv("TZ")  
-    Sys.putenv(TZ = "GMT")
+    Sys.setenv(TZ = "GMT")
     
     # Check Class Type:
     if (!inherits(x, "timeDate")) stop("Wrong class type")
@@ -192,7 +192,7 @@ function(x, ...)
     attr(ans, "control") = c(FinCenter = x@FinCenter)
     
     # Reset Time Zone: 
-    Sys.putenv(TZ = myTZ)
+    Sys.setenv(TZ = myTZ)
     
     # Return Value: 
     ans
@@ -224,7 +224,7 @@ function(x, units = c("auto", "secs", "mins", "hours", "days", "weeks"), ...)
     
     # Set time zone to GMT:
     myTZ = Sys.getenv("TZ")
-    Sys.putenv(TZ = "GMT")
+    Sys.setenv(TZ = "GMT")
     
     # as double:
     ct = timeDate(x, zone = x@FinCenter, FinCenter = "GMT")@Data
@@ -242,7 +242,7 @@ function(x, units = c("auto", "secs", "mins", "hours", "days", "weeks"), ...)
         attr(ans, "origin")<-"1970-01-01 GMT"
     
     # Reset Time Zone:
-    Sys.putenv(TZ = myTZ)
+    Sys.setenv(TZ = myTZ)
     
     # Return Value:
     ans   
@@ -272,7 +272,7 @@ function(x, ...)
     
     # Set Timezone to GMT:
     myTZ = Sys.getenv("TZ")  
-    Sys.putenv(TZ = "GMT")
+    Sys.setenv(TZ = "GMT")
     
     # Check Class Type:
     stopifnot(inherits(x, "timeDate"))
@@ -283,7 +283,7 @@ function(x, ...)
     attr(ans, "control") = c(FinCenter = x@FinCenter)
     
     # Reset Time Zone: 
-    Sys.putenv(TZ = myTZ)
+    Sys.setenv(TZ = myTZ)
     
     # Return Value: 
     ans
@@ -315,7 +315,7 @@ function(x, tz = "")
     
     # Set Timezone to GMT:
     myTZ = Sys.getenv("TZ")  
-    Sys.putenv(TZ = "GMT")
+    Sys.setenv(TZ = "GMT")
     
     # Check Class Type:
     if (!inherits(x, "timeDate")) stop("Wrong class type")
@@ -325,7 +325,7 @@ function(x, tz = "")
     attr(ans, "control") = c(FinCenter = x@FinCenter)
     
     # Reset Time Zone: 
-    Sys.putenv(TZ = myTZ)
+    Sys.setenv(TZ = myTZ)
     
     # Return Value: 
     ans
@@ -439,7 +439,7 @@ zone = NULL, FinCenter = NULL, ...)
     
     # Set Timezone to GMT:
     myTZ = Sys.getenv("TZ")  
-    Sys.putenv(TZ = "GMT")
+    Sys.setenv(TZ = "GMT")
     
     # Check Class Type:
     stopifnot(is.timeDate(x))
@@ -457,7 +457,7 @@ zone = NULL, FinCenter = NULL, ...)
     ans = structure(res, origin = origin)
         
     # Reset Time Zone: 
-    Sys.putenv(TZ = myTZ)
+    Sys.setenv(TZ = myTZ)
     
     # Return Value: 
     ans
@@ -489,7 +489,7 @@ function(x, ...)
     
     # Set Timezone to GMT:
     myTZ = Sys.getenv("TZ")  
-    Sys.putenv(TZ = "GMT")
+    Sys.setenv(TZ = "GMT")
     
     # Check Class Type:
     if (!inherits(x, "timeDate")) stop("Wrong class type")
@@ -508,7 +508,7 @@ function(x, ...)
     attr(ans, "control") = c(FinCenter = x@FinCenter)
     
     # Reset Time Zone: 
-    Sys.putenv(TZ = myTZ)
+    Sys.setenv(TZ = myTZ)
     
     # Return Value: 
     ans
@@ -541,7 +541,7 @@ function(x, abbreviate = NULL)
     
     # Set Timezone to GMT:
     myTZ = Sys.getenv("TZ")  
-    Sys.putenv(TZ = "GMT")
+    Sys.setenv(TZ = "GMT")
     
     # Check Class Type:
     if (!inherits(x, "timeDate")) stop("Wrong class type")
@@ -551,7 +551,7 @@ function(x, abbreviate = NULL)
     attr(ans, "control") = c(FinCenter = x@FinCenter)
     
     # Reset Time Zone: 
-    Sys.putenv(TZ = myTZ)
+    Sys.setenv(TZ = myTZ)
     
     # Return Value: 
     ans

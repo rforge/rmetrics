@@ -744,7 +744,7 @@ j = min(1, ncol(x@Data)):ncol(x@Data))
     # Check Timezone:
     TZ = Sys.getenv("TZ")  
     if (TZ[[1]] != "GMT") {
-        Sys.putenv(TZ = "GMT")
+        Sys.setenv(TZ = "GMT")
         TZ.RESET = TRUE
     } else {
         TZ.RESET = FALSE
@@ -767,7 +767,7 @@ j = min(1, ncol(x@Data)):ncol(x@Data))
         
     
     # Return Value:
-    if (TZ.RESET) Sys.putenv(TZ = TZ)
+    if (TZ.RESET) Sys.setenv(TZ = TZ)
     x
 }         
 

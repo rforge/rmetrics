@@ -78,7 +78,7 @@ function(e1, e2)
     
     # Set Timezone to GMT:
     myTZ = Sys.getenv("TZ")  
-    Sys.putenv(TZ = "GMT")
+    Sys.setenv(TZ = "GMT")
     
     # Check Logical Operators:
     if (nargs() == 1)
@@ -97,7 +97,7 @@ function(e1, e2)
     if (inherits(e2GMT, "POSIXct")) e2 <- as.POSIXct(e2GMT)
     
     # Return Value:
-    Sys.putenv(TZ = myTZ)
+    Sys.setenv(TZ = myTZ)
     NextMethod(.Generic)
 }
 
@@ -127,7 +127,7 @@ function(e1, e2)
     
     # Set Timezone to GMT:
     myTZ = Sys.getenv("TZ")  
-    Sys.putenv(TZ = "GMT")
+    Sys.setenv(TZ = "GMT")
     
     # Check Class Types:
     test1 = test2 = 1
@@ -142,7 +142,7 @@ function(e1, e2)
     ans = timeDate(e1GMT+e2, zone = "GMT", FinCenter = e1@FinCenter)
     
     # Return Value:
-    Sys.putenv(TZ = myTZ)
+    Sys.setenv(TZ = myTZ)
     ans
 }
 
@@ -177,7 +177,7 @@ function(e1, e2)
      
     ## Set Timezone to GMT:
     myTZ = Sys.getenv("TZ")  
-    Sys.putenv(TZ = "GMT")
+    Sys.setenv(TZ = "GMT")
     
     # Check Class Types:
     test1 = test2 = 1
@@ -197,7 +197,7 @@ function(e1, e2)
         return(timeDate(e1GMT-e2, zone = "GMT", FinCenter = e1@FinCenter)) }
         
     # Return Value:
-    Sys.putenv(TZ = myTZ)
+    Sys.setenv(TZ = myTZ)
     invisible()         
 }
 
@@ -235,7 +235,7 @@ function (x, lag = 1, differences = 1, ...)
     
     # Set Timezone to GMT:
     myTZ = Sys.getenv("TZ")  
-    Sys.putenv(TZ = "GMT")
+    Sys.setenv(TZ = "GMT")
     
     # Convert to GMT:
     GMT = timeDate(x, zone = x@FinCenter, FinCenter = "GMT") 
@@ -243,7 +243,7 @@ function (x, lag = 1, differences = 1, ...)
         lag = lag, differences = differences, ...) 
         
     # Reset Timezone:
-    Sys.putenv(TZ = myTZ)
+    Sys.setenv(TZ = myTZ)
 
     # Return Value:
     ans
@@ -279,7 +279,7 @@ units = c("auto", "secs", "mins", "hours", "days", "weeks"))
     
     # Set Timezone to GMT:
     myTZ = Sys.getenv("TZ")  
-    Sys.putenv(TZ = "GMT")
+    Sys.setenv(TZ = "GMT")
     
     # Convert to GMT:
     time1GMT = timeDate(time1, zone = time1@FinCenter, 
@@ -288,7 +288,7 @@ units = c("auto", "secs", "mins", "hours", "days", "weeks"))
         FinCenter = "GMT") 
 
     # Return Value:
-    Sys.putenv(TZ = myTZ)
+    Sys.setenv(TZ = myTZ)
     difftime(time1GMT@Data, time2GMT@Data, tz = "GMT", units = units[1]) 
 }
 
@@ -391,7 +391,7 @@ function(..., recursive = FALSE)
     
     # Set Timezone to GMT:
     myTZ = Sys.getenv("TZ")  
-    Sys.putenv(TZ = "GMT")
+    Sys.setenv(TZ = "GMT")
         
     # List all:
     z = list(...)
@@ -411,7 +411,7 @@ function(..., recursive = FALSE)
     ans = timeDate(all, zone = "GMT", FinCenter = z[[1]]@FinCenter)
     
     # Return Value:
-    Sys.putenv(TZ = myTZ)
+    Sys.setenv(TZ = myTZ)
     ans
 }
 

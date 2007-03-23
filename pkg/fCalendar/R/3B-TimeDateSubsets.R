@@ -270,7 +270,7 @@ function(x, ..., drop = TRUE)
     
     # Set Timezone to GMT:
     myTZ = Sys.getenv("TZ")  
-    Sys.putenv(TZ = "GMT")
+    Sys.setenv(TZ = "GMT")
     
     # Subsets:
     z = as.POSIXlt(x@Data)
@@ -279,7 +279,7 @@ function(x, ..., drop = TRUE)
     val = as.POSIXct(val)
     
     # Return Value:
-    Sys.putenv(TZ = myTZ)
+    Sys.setenv(TZ = myTZ)
     new("timeDate", 
         Data = val, 
         Dim = length(as.character(val)),
@@ -336,7 +336,7 @@ function(x, ...)
     
     # Set Timezone to GMT:
     myTZ = Sys.getenv("TZ")  
-    Sys.putenv(TZ = "GMT")
+    Sys.setenv(TZ = "GMT")
     
     # Check Class Type:
     if (!inherits(x, "timeDate")) stop("Wrong class type")
@@ -348,7 +348,7 @@ function(x, ...)
     order(z)[1]
     
     # Return Value:
-    Sys.putenv(TZ = myTZ)
+    Sys.setenv(TZ = myTZ)
     x[1]
 }
 
@@ -376,7 +376,7 @@ function(x, ...)
     
     # Set Timezone to GMT:
     myTZ = Sys.getenv("TZ")  
-    Sys.putenv(TZ = "GMT")
+    Sys.setenv(TZ = "GMT")
     
     # Check Class Type:
     if (!inherits(x, "timeDate")) stop("Wrong class type")
@@ -388,7 +388,7 @@ function(x, ...)
     n = order(z)[length(z)]
     
     # Return Value:
-    Sys.putenv(TZ = myTZ)
+    Sys.setenv(TZ = myTZ)
     x[n]
 }
 
