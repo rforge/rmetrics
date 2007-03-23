@@ -63,7 +63,7 @@ is.timeSeries(object)
 \method{as.timeSeries}{zoo}(x, \dots)
  
 \method{as.vector}{timeSeries}(x, mode = "any")
-\method{as.matrix}{timeSeries}(x)
+\method{as.matrix}{timeSeries}(x, \dots)
 \method{as.data.frame}{timeSeries}(x, row.names = NULL, optional = NULL, \dots)
 \method{as.ts}{timeSeries}(x, \dots)
 }

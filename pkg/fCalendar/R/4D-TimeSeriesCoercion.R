@@ -325,7 +325,7 @@ function(x, mode = "any")
 
 
 as.matrix.timeSeries =
-function(x) 
+function(x, ...) 
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
