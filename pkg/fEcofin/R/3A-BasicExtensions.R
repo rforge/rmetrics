@@ -57,11 +57,26 @@
 #  as.POSIXlt.default            Default Method
 #  as.matrix.ts                  Converts univariate ts to 1-column matrix
 #  as.matrix.mts                 Converts multivariate ts to matrix
+#  Sys.putenv                    depreciated after 2.4.1
 ################################################################################
 
 
 .conflicts.OK = TRUE
 
+
+if (!exists("Sys.setenv")) 
+{
+    Sys.setenv = 
+    function(...) 
+    {
+        x <- list(...)
+        nm <- names(x)
+        val <- as.character(unlist(x))
+        x <- paste(nm, val, sep = "=")
+        invisible(.Internal(putenv(x)))
+    }
+}
+      
 
 ################################################################################
 # FUNCTION:                     DESCRIPTION:
@@ -664,7 +679,7 @@ function (x, tz = "")
 
 
 as.matrix.ts = 
-function(x) 
+function(x, ...) 
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -687,7 +702,7 @@ function(x)
 
 
 as.matrix.mts = 
-function(x) 
+function(x, ...) 
 {   # A function implemented by Diethelm Wuertz
   
     # Description:
