@@ -41,6 +41,8 @@
 \alias{as.matrix.ts}
 \alias{as.matrix.mts}
 
+\alias{Sys.Putenv}
+
 \title{Modify and Extend R Methods}
 
 
@@ -80,8 +82,8 @@ atoms(x, \dots)
 
 as.POSIXlt(x, tz = "")
 
-as.matrix.ts(x)
-as.matrix.mts(x)
+as.matrix.ts(x, \dots)
+as.matrix.mts(x, \dots)
 }
 
 
