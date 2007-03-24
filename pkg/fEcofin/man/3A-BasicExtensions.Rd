@@ -1,6 +1,6 @@
-\name{RmetricsUtilities}
+\name{BasicExtensions}
 
-\alias{RmetricsUtilities}
+\alias{BasicExtensions}
 
 \alias{align}
 \alias{align.default}
@@ -41,7 +41,6 @@
 \alias{as.matrix.ts}
 \alias{as.matrix.mts}
 
-\alias{Sys.Putenv}
 
 \title{Modify and Extend R Methods}
 
