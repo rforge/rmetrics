@@ -173,6 +173,13 @@ ISO-8601 (1988);
 }
 
 
+\author{
+
+    Diethelm Wuertz for the Rmetrics \R-port.
+    
+}
+
+
 \examples{
 ## easter -
    # Dates for GoodFriday from 2000 until 2010:                     
@@ -185,13 +192,6 @@ ISO-8601 (1988);
 ## holidayNYSE -
    holidayNYSE(currentYear)
    
-}
-
-
-\author{
-
-    Diethelm Wuertz for the Rmetrics \R-port.
-    
 }
 
 

@@ -91,10 +91,18 @@ interpNA(x, method = c("linear", "before", "after"), ...)
 \references{
 
 Troyanskaya O., Cantor M., Sherlock G., Brown P., Hastie T., 
-Tibshirani R., Botstein D., Altman R.B., (2001); 
+    Tibshirani R., Botstein D., Altman R.B., (2001); 
     \emph{Missing Value Estimation Methods for DNA microarrays}
     Bioinformatics 17, 520--525.
 
+}
+
+
+\author{
+
+    Raphael Gottardo for the \code{knn} function, \cr
+    Diethelm Wuertz for the Rmetrics \R-port.
+    
 }
 
 
@@ -130,14 +138,6 @@ Tibshirani R., Botstein D., Altman R.B., (2001);
    # Take previous values in a column:
    interpNA(X, method = "before")
    # Also here, the corner value is excluded
-}
-
-
-\author{
-
-    Raphael Gottardo for the \code{knn} function, \cr
-    Diethelm Wuertz for the Rmetrics \R-port.
-    
 }
 
 

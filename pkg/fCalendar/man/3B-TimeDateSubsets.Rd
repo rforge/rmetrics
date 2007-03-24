@@ -165,6 +165,13 @@ blockEnd(x, block = 20)
 }
 
 
+\author{
+
+    Diethelm Wuertz for the Rmetrics \R-port.
+    
+}
+
+
 \examples{
 ## Easter -
    currentYear
@@ -197,13 +204,6 @@ blockEnd(x, block = 20)
 ## start | end -
    start(tS)
    end(tS)
-}
-
-
-\author{
-
-    Diethelm Wuertz for the Rmetrics \R-port.
-    
 }
 
 

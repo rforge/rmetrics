@@ -391,6 +391,12 @@ rownames<-.timeSeries(x) <- value
 }
 
 
+\author{
+
+    Diethelm Wuertz for the Rmetrics \R-port.
+    
+}
+
 
 \examples{
 ## data - 
@@ -428,13 +434,6 @@ rownames<-.timeSeries(x) <- value
    OR
    OR > 0
    quantile(OR, probs = c(0.90, 0.95))
-}
-
-
-\author{
-
-    Diethelm Wuertz for the Rmetrics \R-port.
-    
 }
 
 

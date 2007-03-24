@@ -178,6 +178,13 @@ difftimeDate(time1, time2,
 }
 
 
+\author{
+
+    Diethelm Wuertz for the Rmetrics \R-port.
+    
+}
+
+
 \examples{
 ## c -
    # Create Character Vectors:
@@ -213,13 +220,6 @@ difftimeDate(time1, time2,
    c(ZUR[1:2], GMT[1:2])
    rep(ZUR[2], times = 3)
    rep(ZUR[2:3], times = 2)  
-}
-
-
-\author{
-
-    Diethelm Wuertz for the Rmetrics \R-port.
-    
 }
 
 

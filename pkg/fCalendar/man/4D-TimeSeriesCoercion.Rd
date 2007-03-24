@@ -120,6 +120,13 @@ is.timeSeries(object)
 }
 
 
+\author{
+
+    Diethelm Wuertz for the Rmetrics \R-port.
+    
+}
+
+
 \examples{
 ## data - timeSeries:
    # Create an artificial timeSeries object:
@@ -143,13 +150,6 @@ is.timeSeries(object)
    as.ts(TS)
 }
    
-
-\author{
-
-    Diethelm Wuertz for the Rmetrics \R-port.
-    
-}
-
 
 \keyword{chron}
 

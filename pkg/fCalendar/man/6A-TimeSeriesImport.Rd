@@ -308,6 +308,12 @@ show.fWEBDATA(object)
 }
 
 
+\author{
+
+    Diethelm Wuertz for the Rmetrics \R-port.
+}
+
+
 \examples{
 \dontrun{
 ## economagicImport -
@@ -336,12 +342,6 @@ show.fWEBDATA(object)
    DPRIME = fredImport("DPRIME")
    if (!is.null(DPRIME)) print(DPRIME@data[1:20, ])       
 }
-}
-
-
-\author{
-
-    Diethelm Wuertz for the Rmetrics \R-port.
 }
 
 

@@ -146,19 +146,19 @@ newPositions(object) <- value
 }
 
 
+\author{
+
+    Diethelm Wuertz for the Rmetrics \R-port.
+    
+}
+
+
 \examples{   
 ## Create dummy timeSeries:     
    X = timeSeries(matrix(rnorm(24), 12), timeCalendar())
    
 ## seriesPositions -
    seriesPositions(X)
-}
-   
-
-\author{
-
-    Diethelm Wuertz for the Rmetrics \R-port.
-    
 }
 
 

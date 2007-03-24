@@ -370,6 +370,13 @@ ohlcDailyPlot(x, volume = TRUE, colOrder = c(1:5), units = 1e6,
 }
 
 
+\author{
+
+    Diethelm Wuertz for the Rmetrics \R-port.
+    
+}
+
+
 \examples{
 ## data - Data Frame:
    # Microsoft Data: 
@@ -428,13 +435,6 @@ ohlcDailyPlot(x, volume = TRUE, colOrder = c(1:5), units = 1e6,
    from
    to
    applySeries(tsRet, from, to, FUN = sum)
-}
-
-
-\author{
-
-    Diethelm Wuertz for the Rmetrics \R-port.
-    
 }
 
 

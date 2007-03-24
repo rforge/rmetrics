@@ -272,6 +272,13 @@ JPBankHolidayDec31(year)
 }
 
 
+\author{
+
+    Diethelm Wuertz for the Rmetrics \R-port.
+    
+}
+
+
 \examples{
 ## CHSechselaeuten -
    # Sechselaeuten a half Day Bank Holiday in Switzerland
@@ -280,13 +287,6 @@ JPBankHolidayDec31(year)
    
 ## German Unification Day:
    DEGermanUnity(currentYear)
-}
-
-
-\author{
-
-    Diethelm Wuertz for the Rmetrics \R-port.
-    
 }
 
 

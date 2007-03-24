@@ -140,6 +140,13 @@
 }
 
 
+\author{
+
+    Diethelm Wuertz for the Rmetrics \R-port.
+    
+}
+
+
 \examples{
 ## as.character 
    tD = timeDate()
@@ -160,13 +167,6 @@
    
 ## months -
    months(tC)
-}
-
-
-\author{
-
-    Diethelm Wuertz for the Rmetrics \R-port.
-    
 }
 
 

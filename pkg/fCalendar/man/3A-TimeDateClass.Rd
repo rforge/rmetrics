@@ -419,6 +419,13 @@ Zivot, E., Wang J. (2003);
 }
 
 
+\author{
+
+    Diethelm Wuertz for the Rmetrics \R-port.
+    
+}
+
+
 \examples{
 ## myFinCenter -
    myFinCenter
@@ -462,13 +469,6 @@ Zivot, E., Wang J. (2003);
    print(tC)
    summary(tC)
    format(tC)   
-}
-
-
-\author{
-
-    Diethelm Wuertz for the Rmetrics \R-port.
-    
 }
 
 
