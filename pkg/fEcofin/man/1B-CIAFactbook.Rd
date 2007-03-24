@@ -117,7 +117,13 @@ CIA, 2004,
     http://www.cia.gov/cia/publications/factbook.
 
 }
-    
+ 
+
+\author{
+
+    Diethelm Wuertz for the Rmetrics \R-port.
+}
+   
     
 \examples{
 ## Pie Chart from CIA Oil Production Indicator (Code 2173): 
@@ -130,12 +136,6 @@ CIA, 2004,
    pie(OilProduction, col = rainbow(10))
    title(main = "Oil Production 2004\n bbl/day")
    mtext("Source: CIA World Factbook", side = 1)
-}
-
-
-\author{
-
-    Diethelm Wuertz for the Rmetrics \R-port.
 }
 
 

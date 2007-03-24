@@ -131,7 +131,7 @@ Weisstein W. (2004);
 ## Boxcar -
    Pi = Boxcar(x)
 
-## ramp - 
+## Ramp - 
    r = Ramp(x)
    cbind(x = x, Step = h, Signum = s, Delta = d, Pi = Pi, R = r)        
 }

@@ -70,7 +70,7 @@ gridVector(x, y)
 }
 
 
-\example{
+\examples{
 ## Test Plot Function:
    testPlot = function(x, which = "all", ...) {   
      # Plot Function and Addons:

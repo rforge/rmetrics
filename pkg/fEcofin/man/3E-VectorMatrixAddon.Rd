@@ -453,6 +453,13 @@ Moler C., van Loan C., (2003);
 }
 
 
+\author{
+
+    Diethelm Wuertz for the Rmetrics \R-port.
+    
+}
+
+
 \examples{
 ## Create Pascal Matrix:
    P = pascal(3)
@@ -545,13 +552,6 @@ Moler C., van Loan C., (2003);
    solve(Triang(X), b)                 
    forwardsolve(triang(X), b) 
    solve(triang(X), b)                                        
-}
-
-
-\author{
-
-    Diethelm Wuertz for the Rmetrics \R-port.
-    
 }
 
 

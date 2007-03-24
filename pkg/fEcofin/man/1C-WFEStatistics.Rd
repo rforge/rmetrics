@@ -43,7 +43,13 @@ WFE, 2004,
 
 }
     
-    
+ 
+\author{
+
+    Diethelm Wuertz for the Rmetrics \R-port.
+}
+
+   
 \examples{
 ## Barplot from WFE Capitalization Statistics:
    # Extract Capitalization of/at:
@@ -60,12 +66,6 @@ WFE, 2004,
    title(main = "Stock Market Capitalization\n 1991 - 2003")
    mtext("Source: World Federation of Exchanges", side = 4, 
      line = -2, cex = 0.7) 
-}
-
-
-\author{
-
-    Diethelm Wuertz for the Rmetrics \R-port.
 }
 
 

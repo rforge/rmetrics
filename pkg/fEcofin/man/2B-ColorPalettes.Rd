@@ -49,7 +49,7 @@ greyPalette(n = 64, start = 255-n, end = 255)
 
 
 \examples{
-## GreyPalette
+## GreyPalette:
    greyPalette()
 }
 

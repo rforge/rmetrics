@@ -108,6 +108,8 @@ show.fHTEST(object)
 \examples{
 ## fHTEST -
    getClass("fHTEST")
+   getSlots("fHTEST")
+
 }
 
 

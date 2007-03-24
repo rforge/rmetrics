@@ -231,5 +231,14 @@ as.matrix.mts(x, \dots)
 }
 
 
+\examples{
+## Outlier Detection:
+   # outlier -
+   set.seed(4711)
+   x = rnorm(1000)
+   outlier(x, sd = 3, complement = FALSE)
+}
+
+
 \keyword{programming}
 

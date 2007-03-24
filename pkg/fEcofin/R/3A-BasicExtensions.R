@@ -453,6 +453,7 @@ function(x, sd = 5, complement = TRUE, ...)
         ans  = x[x <= SD]
     } else {
         ans = x[x > SD]
+        names(ans) = as.character(which(x > SD))
     }
     
     # Return Value:

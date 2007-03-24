@@ -290,6 +290,13 @@ Zivot E. (2000);
     Journal of International Money and Finance 19, 785--812, and 387--401. 
 
 }
+
+
+\examples{
+## Load Example Data Set:
+   data(kmenta)
+   kmenta
+}
  
  
 \keyword{datasets}
