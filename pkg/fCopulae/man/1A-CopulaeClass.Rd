@@ -129,8 +129,6 @@ pfrechetCopula(u = 0.5, v = u, type = c("m", "pi", "w"),
 
 
 \examples{
-## SOURCE("fCopulae.1A-CopulaeClass")
-
 ## fCOPULA -
    getClass("fCOPULA")
    

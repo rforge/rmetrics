@@ -247,7 +247,6 @@ archmCopulaFit(u, v = NULL, type = 1:22, \dots)
 
 
 \examples{
-## SOURCE("fCopulae.063A-ArchimedeanCopulae")
 \dontrun{
 ## fCOPULA -
    # getClass("fCOPULA")

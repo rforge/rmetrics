@@ -236,7 +236,6 @@ evCopulaFit(u, v = NULL, type = c("gumbel", "galambos", "husler.reiss",
 }
 
 \examples{
-## SOURCE("fCopulae.064A-ExtremeValueCopulae")
 \dontrun{
 ## fCOPULA -
    # getClass("fCOPULA")

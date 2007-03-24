@@ -77,9 +77,9 @@ ellipticalTau(rho)
 ellipticalRho(rho, param = NULL, type = c("norm", "cauchy", "t", "logistic", 
     "laplace", "kotz", "epower"), subdivisions = 500)
     
-ellipticalTailCoeff(rho, param = NULL, type = c("norm", "cauchy", "t")
+ellipticalTailCoeff(rho, param = NULL, type = c("norm", "cauchy", "t"))
 ellipticalTailPlot(param = NULL, type = c("norm", "cauchy", "t"), 
-    tail = c("Upper", "Lower"))
+    tail = c("Lower", "Upper"))
 
 gfunc(x, param = NULL, type = c("norm", "cauchy", "t", "logistic", "laplace", 
     "kotz", "epower"))
@@ -253,7 +253,6 @@ ellipticalCopulaFit(u, v, type = c("norm", "cauchy", "t"), \dots)
 
 
 \examples{
-## SOURCE("fCopulae.062A-EllipticalCopulae")
 \dontrun{
 ## [rp]ellipticalCopula -
    # Default Normal Copula:

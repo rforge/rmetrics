@@ -107,7 +107,6 @@ dempiricalCopula(u, v, N = 10)
 }
 
 \examples{
-## SOURCE("fCopulae.065A-EmpiricalCopulae")
 \dontrun{
 ## fCOPULA -
    # getClass("fCOPULA")
