@@ -227,7 +227,12 @@ Warnes G.R., (2004);
 
 
 \examples{
-## -
+## Normal Density, rho = 0.5:
+   x = (-40:40)/10
+   X = grid2d(x)
+   z = dnorm2d(X$x, X$y, rho = 0.5)
+   Z = list(x = x, y = x, z = matrix(z, ncol = length(x)))
+   persp(Z, theta = -40, phi = 30, col = "steelblue")
 }
 
 
