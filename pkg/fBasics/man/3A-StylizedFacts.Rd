@@ -47,15 +47,20 @@ acfPlot(x, labels = TRUE, \dots)
 pacfPlot(x, labels = TRUE, \dots)
 ccfPlot(x, y, lag.max = max(2, floor(10*log10(length(x)))), type = 
     c("correlation", "covariance", "partial"), labels = TRUE, \dots) 
+
 lacfPlot(x, n = 12, lag.max = 20, labels = TRUE, \dots)
 lmacfPlot(x, lag.max = max(2, floor(10*log10(length(x)))), ci = 0.95, 
     type = c("both", "acf", "hurst"), labels = TRUE, details = TRUE, \dots) 
+    
 logpdfPlot(x, n = 50, type = c("lin-log", "log-log"), doplot = TRUE, 
     labels = TRUE, \dots)
+    
 qqgaussPlot(x, span = 5, col = "steelblue", labels = TRUE, \dots)
+
 scalinglawPlot(x, span = ceiling(log(length(x)/252)/log(2)), doplot = TRUE, 
     labels = TRUE, details = TRUE, \dots)
-teffectPlot(x, deltas = seq(from = 0.2, to = 3, by = 0.2), lag.max = 10, 
+
+    teffectPlot(x, deltas = seq(from = 0.2, to = 3, by = 0.2), lag.max = 10, 
     ymax = NA, standardize = TRUE, labels = TRUE, \dots)
 }
 
