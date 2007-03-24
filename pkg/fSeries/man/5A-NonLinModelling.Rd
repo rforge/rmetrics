@@ -113,16 +113,16 @@ Rosenstein M.T., Collins J.J., De Luca C.J. (1993);
 }
 
 
-\author{
+\seealso{
 
-    Diethelm Wuertz for the Rmetrics \R-port.
+    \code{RandomInnovations}.
     
 }
 
 
-\seealso{
+\author{
 
-    \code{RandomInnovations}.
+    Diethelm Wuertz for the Rmetrics \R-port.
     
 }
 

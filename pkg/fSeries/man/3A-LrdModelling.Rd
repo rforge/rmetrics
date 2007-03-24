@@ -532,18 +532,6 @@ show.fHURST(object)
 }
 
 
-\author{
-
-    V. Paxson, code as listed in the Appendix of his paper 1995, \cr
-    J. Beran, ported by Maechler, code as listed in the Appendix of his Book, \cr
-    M.S. Taqqu et al. for the S-Plus and C code concerned with the Hurst exponent, \cr
-    C. Fraley for the FARIMA simulation code, \cr
-    Guy Nason for the functions from the R package 'wavethresh', \cr
-    Diethelm Wuertz for the Rmetrics \R-port.
-    
-}
-
-
 \references{
 
 Beran J. (1992);
@@ -572,6 +560,18 @@ Rolls D.A. (2001);
 Taqqu M., et al.
     \emph{Hurst Exponent},
     Several Preprints.
+    
+}
+
+
+\author{
+
+    V. Paxson, code as listed in the Appendix of his paper 1995, \cr
+    J. Beran, ported by Maechler, code as listed in the Appendix of his Book, \cr
+    M.S. Taqqu et al. for the S-Plus and C code concerned with the Hurst exponent, \cr
+    C. Fraley for the FARIMA simulation code, \cr
+    Guy Nason for the functions from the R package 'wavethresh', \cr
+    Diethelm Wuertz for the Rmetrics \R-port.
     
 }
 

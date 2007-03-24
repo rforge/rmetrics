@@ -104,19 +104,19 @@ farimaStatsSlider()
 }
 
 
-\author{
-
-    J. Beran, ported by Maechler, code as listed in the Appendix of his Book, \cr
-    Diethelm Wuertz for the Rmetrics \R-port.
-    
-}
-
-
 \references{
 
 Beran J. (1992);
     \emph{Statistics for Long-Memory Processes},
     Chapman and Hall, New York, 1994.
+    
+}
+
+
+\author{
+
+    J. Beran, ported by Maechler, code as listed in the Appendix of his Book, \cr
+    Diethelm Wuertz for the Rmetrics \R-port.
     
 }
 

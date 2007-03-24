@@ -209,15 +209,6 @@ Laurent S., Peters J.P., [2005],
 }
 
 
-\author{
-
-    Jurgen A. Doornik for the Ox Environment, \emph{www.doornik.com}, \cr 
-    Jurgen A. Doornik and Marius Ooms for the Arfima Ox package, \emph{www.doornik.com}, \cr 
-    Diethelm Wuertz for R's Ox Arfima interface. 
-    
-}
-
-
 \note{
 
     The R functions were tested only under MS Windows XP. Please report
@@ -232,6 +223,16 @@ Laurent S., Peters J.P., [2005],
     \code{ArmaModelling}.
     
 }
+
+
+\author{
+
+    Jurgen A. Doornik for the Ox Environment, \emph{www.doornik.com}, \cr 
+    Jurgen A. Doornik and Marius Ooms for the Arfima Ox package, \emph{www.doornik.com}, \cr 
+    Diethelm Wuertz for R's Ox Arfima interface. 
+    
+}
+
 
 \examples{
 \dontrun{

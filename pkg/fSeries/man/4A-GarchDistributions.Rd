@@ -229,13 +229,6 @@ absMoments(n, density = c("dnorm", "dged", "dstd"), \dots)
 }
 
 
-\author{
-
-    Diethelm Wuertz for the Rmetrics \R-port.
-    
-}
-
-
 \references{
 
 Nelson D.B. (1991);
@@ -245,6 +238,13 @@ Nelson D.B. (1991);
 Fernandez C., Steel M.F.J. (2000); 
     \emph{On Bayesian Modelling of Fat Tails and Skewness},
     Preprint, 31 pages. 
+    
+}
+
+
+\author{
+
+    Diethelm Wuertz for the Rmetrics \R-port.
     
 }
 
