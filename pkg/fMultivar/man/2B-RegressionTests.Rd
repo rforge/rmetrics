@@ -1,6 +1,6 @@
-\name{RegressionTests}
+\name{RegressionTestsInterface}
 
-\alias{RegressionTests}
+\alias{RegressionTestsInterface}
 
 \alias{lmTest}
 

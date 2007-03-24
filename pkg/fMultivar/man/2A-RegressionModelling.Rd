@@ -1,6 +1,6 @@
-\name{RegressionModelling}
+\name{RegressionInterface}
 
-\alias{RegressionModelling}
+\alias{RegressionInterface}
 
 \alias{fREG}
 \alias{fREG-class}
@@ -593,20 +593,6 @@ OLS(formula, data, \dots)
 }
 
 
-\author{
-
-    The R core team for the \code{lm} functions from R's \code{base} package, \cr
-    B.R. Ripley for the \code{glm} functions from R's \code{base} package, \cr
-    S.N. Wood for the \code{gam} functions from R's \code{mgcv} package, \cr
-    N.N. for the \code{ppr} functions from R's \code{modreg} package, \cr
-    T. Hastie, R. Tibshirani for the \code{mars} functions from R's \code{?} package, \cr
-    M. O' Connors for the \code{polymars} functions from R's \code{?} package, \cr
-    The R core team for the \code{nnet} functions from R's \code{nnet} package, \cr
-    Diethelm Wuertz for the Rmetrics \R-port.
-
-}
-
-
 \references{
 
 Belsley D.A., Kuh E., Welsch R.E. (1980);
@@ -703,6 +689,20 @@ Wood (2001);
     at a higher mathematical level and covers much of the classical theory 
     of least squares.
     
+}
+
+
+\author{
+
+    The R core team for the \code{lm} functions from R's \code{base} package, \cr
+    B.R. Ripley for the \code{glm} functions from R's \code{base} package, \cr
+    S.N. Wood for the \code{gam} functions from R's \code{mgcv} package, \cr
+    N.N. for the \code{ppr} functions from R's \code{modreg} package, \cr
+    T. Hastie, R. Tibshirani for the \code{mars} functions from R's \code{?} package, \cr
+    M. O' Connors for the \code{polymars} functions from R's \code{?} package, \cr
+    The R core team for the \code{nnet} functions from R's \code{nnet} package, \cr
+    Diethelm Wuertz for the Rmetrics \R-port.
+
 }
 
 

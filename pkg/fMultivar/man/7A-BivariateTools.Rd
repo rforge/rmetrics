@@ -216,11 +216,6 @@ Warnes G.R., (2004);
 }
 
 
-\examples{
-## -
-}
-
-
 \author{
 
     W.N. Venables and B.D. Ripley for the underlying kde2d function, \cr
@@ -228,6 +223,11 @@ Warnes G.R., (2004);
     Gregory R. Warnes for the underlying hist2d function, \cr
     Diethelm Wuertz for the Rmetrics \R-port.
     
+}
+
+
+\examples{
+## -
 }
 
 

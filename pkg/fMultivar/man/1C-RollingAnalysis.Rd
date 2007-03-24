@@ -92,16 +92,16 @@ rollVar(x, n = 9, trim = TRUE, unbiased = TRUE, na.rm = FALSE)
 }
 
 
-\author{
+\seealso{
 
-    Diethelm Wuertz for the Rmetrics \R-port.
+    \code{\link{var}}.
     
 }
 
 
-\seealso{
+\author{
 
-    \code{\link{var}}.
+    Diethelm Wuertz for the Rmetrics \R-port.
     
 }
 
