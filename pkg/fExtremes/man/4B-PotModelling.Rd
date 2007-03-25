@@ -5,8 +5,8 @@
 \alias{fPOTFIT}
 \alias{fPOTFIT-class}
 
-\alias{show.fGPDFIT}
-\alias{show,fGPDFIT-method}
+\alias{show.fPOTFIT}
+\alias{show,fPOTFIT-method}
 
 \alias{potSim}
 \alias{potFit}

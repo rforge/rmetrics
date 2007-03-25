@@ -173,7 +173,7 @@ description = NULL)
 
 
 show.fPOTFIT =
-function(x, ...)
+function(object)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:

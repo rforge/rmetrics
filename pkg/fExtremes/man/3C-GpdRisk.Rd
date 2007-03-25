@@ -55,10 +55,9 @@ gpdTailPlot(object, plottype = c("xy", "x", "y", ""), doplot = TRUE,
 
 gpdRiskMeasures(object, prob = c(0.99, 0.995, 0.999, 0.9995, 0.9999))
 
-tailPlot(object, p = 0.99, ci = 0.95, nLLH = 25, extend = 1.5, 
-    labels = TRUE, ...)
+tailPlot(object, p = 0.99, ci = 0.95, nLLH = 25, extend = 1.5, labels = TRUE, \dots)
 tailSlider(x)
-tailRisk(object, prob = c(0.99, 0.995, 0.999, 0.9995, 0.9999), ...)
+tailRisk(object, prob = c(0.99, 0.995, 0.999, 0.9995, 0.9999), \dots)
 }
 
 
@@ -279,49 +278,19 @@ Hosking J.R.M., Wallis J.R., (1987);
 
 
 \examples{
-## Load Data 
-   danish = as.timeSeries(data(danishClaims)
-   
-## gpdqPlot -
-   fit = gpdFit(danish, u = 10, type = "mle")
-   par(mfrow = c(1, 1))
-   tail = gpdtailPlot(fit)
-   gpdqPlot(tail, 0.995)
-   title(main = "Danish Data: 99.5th Percentile") 
-    
-## gpdquantPlot -   
-   par(mfrow = c(1, 1))
-   gpdquantPlot(danish, p = 0.999)
-   title(sub = "Danish Fire: GPD High Quantile") 
+## Load Data:
+   danish = as.timeSeries(data(danishClaims))
 
-## gpdsfallPlot - 
-   fit = gpdFit(danish, nextremes = floor(length(danish)/10), type = "mle")
-   par(mfrow = c(1, 1))
-   tp = gpdtailPlot(fit)
-   gpdsfallPlot(tp, 0.999)   
-   title(main = "Danish Fire: Expected Shortfall")   
-   
-## gpdriskmeasures -
-   # Give estimates of 0.999 and 0.9999 quantiles - Danish Fire Date:   
-   fit = gpdFit(danish, threshold = 10, type = "mle") 
-   par(mfrow = c(1, 1))
-   gpdriskmeasures(fit, c(0.99, 0.995, 0.999, 0.9995, 0.9999))   
-  
-## gpdshapePlot - 
-   set.seed(4711)
-   par(mfrow = c(1, 1))
-   gpdshapePlot(gpdSim(n = 1000))
-   title(sub = "Simulated GPD", cex.sub = 0.7)   
+## Tail Plot:
+   x = as.timeSeries(data(danishClaims))
+   fit = gpdFit(x, u = 10)
+   tailPlot(fit)
 
-## gpdshapePlot - 
-   par(mfrow = c(1, 1))
-   gpdshapePlot(danish)
-   title(sub = "Danish Fire", cex.sub = 0.7)
+## Try Tail Slider:
+   # tailSlider(x)   
 
-## gpdtailPlot - 
-   fit = gpdFit(danish, threshold = 10, type = "mle")
-   par(mfrow = c(1, 1))
-   gpdtailPlot(fit, main = "Danish Fire: GPD Tail Estimate", col = "steelblue4")  
+## Tail Risk:
+   tailRisk(fit)
 }
 
 

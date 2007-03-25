@@ -34,10 +34,11 @@
 #  gpdSfallPlot            Adds Expected Shortfall Estimates to a GPD Plot
 #  gpdQuantPlot            Plots of GPD Tail Estimate of a High Quantile
 #  gpdShapePlot            Plots for GPD Shape Parameter
-# FUNCTION:               NEW STYLE FUNCTION:
-#  tailPlot                ...
-#  tailSlider              ...
-#  tailRiskMeasures        Calculates Quantiles and Expected Shortfalls
+#  gpdRiskMeasures         Calculates Quantiles and Expected Shortfalls
+# FUNCTION:               NEW STYLE FUNCTIONS:
+#  tailPlot                Plots GPD VaR and Expected Shortfall risk
+#  tailSlider              Interactive view to find proper threshold value
+#  tailRisk                Calculates VaR and Expected Shortfall risks
 ################################################################################
 
 
@@ -87,7 +88,8 @@ labels = TRUE, ...)
         # Plot
         plot(sort(data), ypoints, xlim = range(plotmin, plotmax), 
              ylim = range(ypoints, y, na.rm = TRUE), col = "steelblue",
-             pch = 19, xlab = "", ylab = "", log = plottype[1], axes = TRUE, ...)
+             pch = 19, xlab = "", ylab = "", log = plottype[1], 
+             axes = TRUE, ...)
         lines(z[y >= 0], y[y >= 0])
         grid()
         # Labels:
@@ -234,7 +236,7 @@ function(x, p = 0.99, ci = 0.95, type = c("likelihood", "wald"), like.num = 50)
         par(new = TRUE)
         dolog = ""
         if (x$alog == "xy" || x$alog == "x") dolog = "x"
-        plot(xp, parmax, type = "n", xlab = "", ylab = "", axes = F, 
+        plot(xp, parmax, type = "n", xlab = "", ylab = "", axes = FALSE, 
             xlim = range(x$plotmin, x$plotmax), 
             ylim = range(overallmax, crit), log = dolog)
         axis(4, at = overallmax - qchisq(c(0.95, 0.99), 1)/2, 
@@ -606,7 +608,7 @@ function(object, p = 0.99, ci = 0.95, nLLH = 25, extend = 1.5, labels = TRUE, ..
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Plots tail estimate from GPD model
+    #   Plots GPD VaR and Expected Shortfall risk
     
     # Arguments:
     #   object - an object of class 'fGPDFIT'
@@ -727,7 +729,7 @@ function(object, p = 0.99, ci = 0.95, nLLH = 25, extend = 1.5, labels = TRUE, ..
     parmax = parmax[cond]
     # Plot:
     par(new = TRUE)
-    plot(xp, parmax, type = "n", xlab = "", ylab = "", axes = F, 
+    plot(xp, parmax, type = "n", xlab = "", ylab = "", axes = FALSE, 
         xlim = range(x$plotmin, x$plotmax), 
         ylim = range(overallmax, crit), log = "x")
     axis(4, at = overallmax - qchisq(c(0.95, 0.99), 1)/2, 
@@ -813,9 +815,17 @@ function(x)
 {   # A function implemented by Diethelm Wuertz
 
     # Description
-    #   Displays the symmetric stable distribution
+    #   Interactive view to find proper threshold value
 
+    # Arguments:
+    #   x - an univariate timeSeries object or any other object which
+    #       can be transformed by the function as.vector() into a 
+    #       numeric vector.
+    
     # FUNCTION:
+    
+    # Transform to Vector:
+    x = as.vector(x)
     
     # Exit:
     on.exit(rm(last.Quantile))
@@ -966,9 +976,37 @@ function(x)
 
 tailRisk = 
 function(object, prob = c(0.99, 0.995, 0.999, 0.9995, 0.9999), ...)
-{
-    gpdRiskMeasures(object, prob)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Calculates Quantiles VaR and Expected Shortfall Risks
+    
+    # Arguments:
+    #   x  - an object of class 'gpdFit'
+    #   prob - a numeric value or vector of probability levels 
+    
+    # FUNCTION:
+    
+    # Settings:
+    u = object@parameter$u
+    par.ests = object@fit$par.ests
+    xi = par.ests["xi"]
+    beta = par.ests["beta"]
+    lambda = 1/(1 - object@fit$prob)
+    
+    # Quantile Risk:
+    q = u + (beta * ((lambda * (1 - prob))^( - xi) - 1))/xi 
+
+    # Shortfall Risk:  
+    es = (q * (1 + (beta - xi * u)/q)) / (1 - xi) 
+  
+    # Risk Matrix:
+    ans = data.frame(Prob = prob, VaR = q, ES = es)
+    
+    # Return Value:
+    ans
 }
+
 
 
 ################################################################################

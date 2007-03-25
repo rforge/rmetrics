@@ -34,8 +34,11 @@
 #  gpdShapePlot            Plots for GPD Shape Parameter
 #  gpdQPlot                Adds Quantile Estimates to plot.gpd
 #  gpdSfallPlot            Adds Expected Shortfall Estimates to a GPD Plot
-# FUNCTION:               ADDITIONAL FUNCTION:
-#  gpdriskMeasures         Calculates Quantiles and Expected Shortfalls
+#  gpdRiskMeasures         Calculates Quantiles and Expected Shortfalls
+# FUNCTION:               NEW STYLE FUNCTIONS:
+#  tailPlot                Plots GPD VaR and Expected Shortfall risk
+#  tailSlider              Interactive view to find proper threshold value
+#  tailRiskMeasures        Calculates VaR and Expected Shortfall risks
 ################################################################################
 
 
@@ -145,11 +148,11 @@ function()
 test.gpdSfallPlot = 
 function()
 {
-    # Artificial Data Set:                                  # CHECK
+    # Artificial Data Set:                                 
     x = gpdSim(seed = 1985)
     fit = gpdFit(x)
     tp = gpdTailPlot(fit)
-    # gpdSfallPlot(tp)
+    gpdSfallPlot(tp)
     
     # Danish Fire Claims:
     x = as.timeSeries(data(danishClaims))
@@ -164,6 +167,53 @@ function()
 
 # ------------------------------------------------------------------------------
 
+
+test.tailPlot = 
+function()
+{
+    # Danish Fire Claims:
+    x = as.timeSeries(data(danishClaims))
+    fit = gpdFit(x, u = 10)
+    tailPlot(fit)
+
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.tailSlider = 
+function()
+{
+    # Danish Fire Claims:
+    x = as.timeSeries(data(danishClaims))
+    tailSlider(x)
+
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.tailRisk = 
+function()
+{
+    # Danish Fire Claims:
+    x = as.timeSeries(data(danishClaims))
+    fit = gpdFit(x, u = 10)
+    tailRisk(fit)
+
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+    
 
 if (FALSE) {
     require(RUnit)
