@@ -104,27 +104,27 @@ AfuncSlider()
         the maximum slider menu value when the boundary value is 
         infinite. By default this is set to 10.
         }
-    \item{error}{
-        [evRho] - \cr
-        the error bound to be achieved by the \code{integrate2d} 
-        integration formula. A numeric value, by default \code{error=1.0e-5}.
-        }
-    \item{lower}{
-        [evTau] - \cr
-        a numeric value setting the lower bound for the internal integration
-        function \code{integrate}.
-        }
-    \item{n}{
-        [revCopula][evCopulaSim] - \cr         
-        the number of random deviates to be generated, an integer value.
-        }
-    \item{method}{
-        [evRho] - \cr         
-        a character string that determines which integration should be 
-        used, either \code{"integrate2d"} or \code{"adapt"}. If the second
-        method is selected the condtributed R package \code{"adapt"} is 
-        required.
-        }
+    %\item{error}{
+    %    [evRho] - \cr
+    %    the error bound to be achieved by the \code{integrate2d} 
+    %    integration formula. A numeric value, by default \code{error=1.0e-5}.
+    %    }
+    %\item{lower}{
+    %    [evTau] - \cr
+    %    a numeric value setting the lower bound for the internal integration
+    %    function \code{integrate}.
+    %    }
+    %\item{n}{
+    %    [revCopula][evCopulaSim] - \cr         
+    %    the number of random deviates to be generated, an integer value.
+    %    }
+    %\item{method}{
+    %    [evRho] - \cr         
+    %    a character string that determines which integration should be 
+    %    used, either \code{"integrate2d"} or \code{"adapt"}. If the second
+    %    method is selected the condtributed R package \code{"adapt"} is 
+    %    required.
+    %    }
     \item{output}{
         [*evCopula] - \cr
         output - a character string specifying how the output should
@@ -143,12 +143,12 @@ AfuncSlider()
         the copula specified by the variable \code{type}.
         If set to \code{NULL}, then the default parameters will be taken.
         }
-    \item{tail}{
-        [evTailPlot] - \cr
-        a character string, either \code{"Upper"} or \code{"Lower"} denoting 
-        which of the two tails should be displayed. By default the upper
-        tail dependence will be considered.
-        }
+    %\item{tail}{
+    %    [evTailPlot] - \cr
+    %    a character string, either \code{"Upper"} or \code{"Lower"} denoting 
+    %    which of the two tails should be displayed. By default the upper
+    %    tail dependence will be considered.
+    %    }
     \item{type}{
         [*ev*][Afunc] - \cr
         the type of the maximum extreme value copula. A character
