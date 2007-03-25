@@ -37,10 +37,10 @@ Svensson(rate, maturity, doplot = TRUE)
         a logical. Should a plot be displayed?
         }
     \item{maturity}{
-        a numeric vector maturities on an annual scale.
+        a numeric vector of maturities on an annual scale.
         }
     \item{rate}{
-        a numeric vectore of forward rates.
+        a numeric vector of forward rates.
         }
         
 }

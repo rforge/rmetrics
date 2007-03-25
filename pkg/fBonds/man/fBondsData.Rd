@@ -20,7 +20,7 @@
     The data sets are:
     
     \tabular{ll}{   
-    \code{bundesbankNNS} \tab Nelson-Siegel-Svensson Coefficients. }
+    \code{bundesbankNSS} \tab Nelson-Siegel-Svensson Coefficients. }
     
 }
 
