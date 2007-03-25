@@ -112,7 +112,7 @@ function(object)
     # FUNCTION:
     
     # Get Portfolio:
-    ans = object@specification
+    ans = object@specification$spec
     
     # Return Value:
     ans  

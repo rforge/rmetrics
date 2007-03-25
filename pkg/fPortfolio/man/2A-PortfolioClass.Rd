@@ -432,6 +432,7 @@ frontierSlider(object, control = list(), \dots)
 
 
 \examples{
+\dontrun{
 ## minvariancePortfolio -
    # Setting Data
    Data = usPortfolioData()
@@ -449,11 +450,13 @@ frontierSlider(object, control = list(), \dots)
    Constraint = c("minW[1:8]=0")
    # Calculation of the Efficient Frontier
    frontier = portfolioFrontier(Data, Spec, Constraint)
+   print(frontier)
     
 ## plot -
    # Requiring S4 Object "frontier" from 2nd example
    # Plotting the Efficient Frontier with Minimum Variance Portfolio
-   plot(frontier, which = c(1,3))
+   par(mfrow = c(1, 1))
+   plot(frontier, which = c(1, 3))
     
 ## frontierSlider -
    # Requiring S4 Object "frontier" from 2nd example
@@ -464,6 +467,7 @@ frontierSlider(object, control = list(), \dots)
    # Requiring S4 Object "frontier" from 2nd example
    # Plotting the Weights Slider
    # weightsSlider(frontier)
+}
 }
 
 

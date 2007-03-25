@@ -463,7 +463,7 @@ function(x, which = "ask", control = list(), ...)
 {   # A function implemented by Rmetrics
 
     # Description:
-    #   Plot method for an object of class 'fGARCH'
+    #   Plot method for an object of class 'fPORTFOLIO'
     
     # Note:
     #   This method can also be used for plotting graphs fitted by 
@@ -731,7 +731,7 @@ function(object, control = list(), ...)
     fullFrontier = getFrontier(object)
     xLimFrontier = range(fullFrontier[, 1])
     xLim = range(c(xLimAssets, xLimFrontier))
-
+    
     # Control list:
     con <<- list(
         sliderFlag = "frontier",
@@ -814,11 +814,11 @@ function(object, control = list(), ...)
                 pch = con$minvariance.pch)
         }
         if (cmlFlag) {
-            object@specification@portfolio$riskFreeRate = riskFreeRate
+            object@portfolio$riskFreeRate = riskFreeRate
             data = object@data$statistics
-            spec = object@specification
+            spec = getSpecification(object)
             constraints = object@constraints
-            setRiskFreeRate(spec = object@specification,
+            setRiskFreeRate(spec = getSpecification(object),
                 riskFreeRate = riskFreeRate)
             cml = cmlPortfolio(data = data, spec = spec,
                constraints = constraints)

@@ -206,7 +206,7 @@ function(object, ...)
     
     # Get Portfolio Slots:
     Data = object@data$statistics
-    Spec = object@specification
+    Spec = getSpecification(object)
     Constraints = object@constraints
     
     # Efficient Frontier:
@@ -259,7 +259,7 @@ function(object, ...)
      
     # Get Portfolio Slots:
     Data = object@data$statistics
-    Spec = object@specification
+    Spec = getSpecification(object)
     Constraints = object@constraints
     
     # Add Minimum Variance Point:
@@ -284,7 +284,7 @@ function(object, ...)
     
     # Get Portfolio Slots:
     Data = object@data$statistics
-    Spec = object@specification
+    Spec = getSpecification(object)
     Constraints = object@constraints
     
     # Compute Tangency Portfolio:
@@ -316,7 +316,7 @@ function(object, ...)
     
     # Get Portfolio Statistics:
     Data = object@data$statistics
-    Spec = object@specification
+    Spec = getSpecification(object)
     Constraints = object@constraints
     
     # Compute Tangency Portfolio:
@@ -326,7 +326,7 @@ function(object, ...)
     points(getFrontier(cmlPortfolio), ...)
     
     # Add Tangency Line:
-    riskFreeRate = cmlPortfolio@specification@portfolio$riskFreeRate
+    riskFreeRate = getPortfolio(cmlPortfolio)$riskFreeRate
     slope = ((getTargetReturn(cmlPortfolio) - riskFreeRate)
         /getTargetRisk(cmlPortfolio))
     abline(b = slope, a = riskFreeRate, ...)
@@ -376,7 +376,7 @@ function(object, ...)
     
     # Get Portfolio Statistics: 
     Data = object@data$statistics
-    Spec = object@specification
+    Spec = getSpecification(object)
     Constraints = object@constraints
     
     # Compute Equal Weights Portfolio:
@@ -404,13 +404,13 @@ function(object, ...)
     
     # Get Portfolio Statistics: 
     Data = object@data$statistics
-    Spec = object@specification
+    Spec = getSpecification(object)
     Constraints = object@constraints
     # Add Froniters for all Two-Assets Portfolios:
     N = length(Data$mu)
      
     # Plotting only the tenth part of the original frontier porints
-    nFP = object@specification@portfolio$nFrontierPoints
+    nFP = getPortfolio(object)$nFrontierPoints
     object@specification@portfolio$nFrontierPoints = nFP / 10
     for ( i in 1:(N-1) ) {
         for (j in (i+1):N ) {
@@ -457,7 +457,7 @@ function(object, piePos = NULL, pieR = NULL, pieOffset = NULL, ...)
     
     if(is.null(piePos)) {
         Data = object@data$statistics
-        Spec = object@specification
+        Spec = getSpecification(object)
         Constraints = object@constraints
         tg = getTargetReturn(tangencyPortfolio(Data, Spec, Constraints))
         ef = getTargetReturn(object)
@@ -534,7 +534,7 @@ function(object, piePos = NULL, pieR = NULL, pieOffset = NULL, ...)
     
     if(is.null(piePos)) {
         Data = object@data$statistics
-        Spec = object@specification
+        Spec = getSpecification(object)
         Constraints = object@constraints
         tg = getTargetReturn(tangencyPortfolio(Data, Spec, Constraints))
         ef = getTargetReturn(object)
