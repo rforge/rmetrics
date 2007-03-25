@@ -133,7 +133,7 @@ function(data, spec = portfolioSpec(), constraints = NULL)
     new("fPORTFOLIO", 
         call = match.call(),
         data = data,
-        spec), 
+        specification = list(spec),
         constraints = as.character(constraints),
         portfolio = list(
             weights = weights,
