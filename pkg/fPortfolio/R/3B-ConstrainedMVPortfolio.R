@@ -93,7 +93,7 @@ function(data, spec, constraints)
     new("fPORTFOLIO", 
         call = match.call(),
         data = data,
-        specification = spec,
+        specification = list(spec),
         constraints = as.character(constraints),
         portfolio = list(
             weights = weights,
@@ -148,7 +148,7 @@ function(data, spec, constraints)
     new("fPORTFOLIO", 
         call = match.call(),
         data = data,
-        specification = spec,
+        specification = list(spec),
         constraints = as.character(constraints),
         portfolio = list(
             weights = weights,
@@ -233,7 +233,7 @@ function(data, spec, constraints)
     new("fPORTFOLIO", 
         call = match.call(),
         data = data,
-        specification = spec,
+        specification = list(spec),
         constraints = as.character(constraints),
         portfolio = list(
             weights = weights,
@@ -287,7 +287,7 @@ function(data, spec, constraints)
     new("fPORTFOLIO", 
         call = match.call(),
         data = data,
-        specification = spec,
+        specification = list(spec),
         constraints = as.character(constraints),
         portfolio = list(
             weights = weights,
@@ -362,7 +362,7 @@ function(data, spec, constraints)
     new("fPORTFOLIO", 
         call = match.call(),
         data = data,
-        specification = spec,
+        specification = list(spec),
         constraints = as.character(constraints),
         portfolio = list(
             weights = weights[!error, ],
