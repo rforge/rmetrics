@@ -31,8 +31,8 @@
 
 \description{
     
-    A collection and description of functions to investigate 
-    bivariate Archimedean copulae. 
+    A collection and description of functions to 
+    investigate bivariate Archimedean copulae. 
     \cr
     
     Archimedean Copulae Functions:
@@ -40,7 +40,7 @@
     \tabular{ll}{
     \code{rarchmCopula} \tab Generates Archimedean copula variates, \cr
     \code{parchmCopula} \tab computes Archimedean copula probability, \cr
-    \code{parchmCopula} \tab computes Archimedean copula density, \cr
+    \code{darchmCopula} \tab computes Archimedean copula density, \cr
     
     \code{rarchmSlider} \tab displays interactive plots of variates, \cr
     \code{parchmSlider} \tab displays interactive plots of probability, \cr
@@ -77,7 +77,8 @@ parchmSlider(type = c("persp", "contour"), B = 10)
 darchmSlider(type = c("persp", "contour"), B = 10)
     
 archmTau(alpha = NULL, type = 1:22, lower = 1.0e-10)
-archmRho(alpha = NULL, type = 1:22, method = c("integrate2d", "adapt"), error = 1.0e-5)
+archmRho(alpha = NULL, type = 1:22, method = c("integrate2d", "adapt"), 
+    error = 1.0e-5)
     
 archmTailCoeff(alpha = NULL, type = 1:22)
 archmTailPlot(alpha = NULL, type = 1:22, tail = c("Upper", "Lower"))

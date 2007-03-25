@@ -28,18 +28,9 @@
 
 
 ################################################################################
-# FUNCTION:                  UTILITY FUNCTIONS:
-#  .ellipticalParam           Sets Default parameters for an elliptical copula
-#  .ellipticalRange           Returns the range of valid rho values
-#  .ellipticalCheck           Checks if rho is in the valid range
 # FUNCTION:                  ELLIPTICAL GENERATOR AND RELATED FUNCTIONS:
 #  gfunc                      Generator function for elliptical distributions
 #  gfuncSlider                Slider for generator, density and probability
-#  .pelliptical               Univariate elliptical distribution probability
-#  .delliptical               Univariate elliptical distribution density
-#  .qelliptical               Univariate elliptical distribution quantiles
-#  .qlogistic                 Fast tabulated logistic quantile function
-#  .qlogisticData             Table generator for logistic quantiles
 # FUNCTION:                  ELLIPTICAL COPULAE DEPENDENCE MASURES:
 #  ellipticalTau              Computes Kendall's tau for elliptical copulae
 #  ellipticalRho              Computes Spearman's rho for elliptical copulae
@@ -49,29 +40,12 @@
 # FUNCTION:                  ELLIPTICAL COPULAE RANDOM DEVIATES:
 #  rellipticalCopula          Generates elliptical copula variates
 #  rellipticalSlider          Interactive plots of random variates
-#  .rnormCopula               Generates normal copula random variate
-#  .pnormCopula               Computes normal copula probability
-#  .dnormCopula               Computes normal copula density
-#  .rcauchyCopula             Generates Cauchy copula random variate
-#  .pcauchyCopula             Computes Cauchy copula probability
-#  .dcauchyCopula             Computes Cauchy copula density
-#  .rtCopula                  Generates Student-t copula random variate
-#  .ptCopula                  Computes Student-t copula probability
-#  .dtCopula                  Computes Student-t copula density
 # FUNCTION:                  ELLIPTICAL COPULAE PROBABILITY:
 #  pellipticalCopula          Computes elliptical copula probability
 #  pellipticalSlider          Interactive plots of probability
-#  .pellipticalCopulaGrid     Fast equidistant grid version
-#  .pellipticalCopulaDiag     Fast diagonal cross section version
-#  .pellipticalPerspSlider    Interactive perspective plots of probability
-#  .pellipticalContourSlider  Interactive contour plots of probability
 # FUNCTION:                  ELLIPTICAL COPULAE DENSITY:
 #  dellipticalCopula          Computes elliptical copula density 
 #  dellipticalSlider          Interactive plots of density
-#  .dellipticalCopulaGrid     Fast grid version for elliptical copula density
-#  .dellipticalCopula.RUnit   R Unit test for elliptical copula density
-#  .dellipticalPerspSlider    Interactive perspective plots of density
-#  .dellipticalContourSlider  Interactive contour plots of density
 # FUNCTION:                  ELLIPTICAL COPULAE PARAMETER FITTING:
 #  ellipticalCopulaSim        Simulates bivariate elliptical copula
 #  ellipticalCopulaFit        Fits the paramter of an elliptical copula
@@ -98,35 +72,7 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.utilityFunctions = 
-function()
-{
-
-    # Arguments ?
-    args(.ellipticalParam)
-    
-    # Parameters:
-    Type = c("norm", "cauchy", "t", "logistic", "laplace", "kotz", "epower")
-    for (type in Type) {
-        cat("\n")
-        print(unlist(.ellipticalParam(type)))
-    }
-    
-    # Range:
-    for (type in Type) {
-        cat("\n")
-        print(.ellipticalRange(type))
-    }
-
-    # Return Value:
-    return()    
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-test.generatorFunctions = 
+test.gfunc = 
 function()
 {
     # Arguments ?
@@ -145,16 +91,16 @@ function()
     gfunc(type = "epower", param = c(2, 1))
       
     # Call Generator Function - With specified x:
-    gfunc(0:10, type = "norm")
-    gfunc(0:10, type = "cauchy")
-    gfunc(0:10, type = "t") 
-    gfunc(0:10, type = "logistic")
-    gfunc(0:10, type = "laplace")
-    gfunc(0:10, type = "kotz") 
-    gfunc(0:10, type = "epower") 
+    gfunc(x = 0:10, type = "norm")
+    gfunc(x = 0:10, type = "cauchy")
+    gfunc(x = 0:10, type = "t") 
+    gfunc(x = 0:10, type = "logistic")
+    gfunc(x = 0:10, type = "laplace")
+    gfunc(x = 0:10, type = "kotz") 
+    gfunc(x = 0:10, type = "epower") 
     
-    # Slider:
-    # gfuncSlider()
+    # Try Slider:
+    gfuncSlider()
     
     # Return Value:
     return()    
@@ -164,14 +110,24 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.dependenceMeasures = 
+test.ellipticalTau = 
 function()
 {
     # Computes Kendall's tau for elliptical copulae
     args(ellipticalTau)
     ellipticalTau(rho = 0.5)
     ellipticalTau(rho = c(-0.5, 0, 0.5))
-    
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.ellipticalRho = 
+function()
+{    
     # Computes Spearman's rho for elliptical copulae
     args(ellipticalRho)
     ellipticalRho(0.5)
@@ -185,7 +141,7 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.tailCoefficient = 
+test.ellipticalTailCoeff = 
 function()
 {
     # Lower - Upper ----
@@ -197,7 +153,17 @@ function()
         print(ans)
         cat("\n")
     }
-    
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.ellipticalTailPlot = 
+function()
+{    
     # Plot - Be patient, plotting takes some time ...
     Type = c("norm", "cauchy", "t") 
     for (type in Type) {
@@ -214,7 +180,7 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.rCopulae = 
+test.rellipticalCopula = 
 function()
 {
 
@@ -250,7 +216,7 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.pCopulae = 
+test.pellipticalCopula = 
 function()
 {
        
@@ -282,7 +248,7 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.dCopulae = 
+test.dellipticalCopula = 
 function()
 {  
     # Arguments ?
@@ -375,32 +341,7 @@ function()
     
     # Return Value:
     return()
-    
-    
-
-################################################################################
-
-
-test.parameterSettings = 
-function()
-{
-    # Elliptical Parameter Settings:
-    for ( type in 
-        c("norm", "cauchy", "t", "logistic", "laplace", "kotz",  "epower") ) {
-        print(unlist(.ellipticalParam(type)))
-        cat("\n")
-    }
-      
-    # Elliptical Parameter Range:
-    for ( type in 
-        c("norm", "cauchy", "t", "logistic", "laplace", "kotz",  "epower") ) {
-        print(unlist(.ellipticalRange(type)))
-        cat("\n")
-    }
-    
-    # Return Value:
-    return()
-    
+     
     
 # ------------------------------------------------------------------------------
 

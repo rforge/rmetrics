@@ -62,8 +62,8 @@
 
 \usage{
 
-revCopula(n, param = NULL, type = c("gumbel", "galambos", "husler.reiss", 
-    "tawn", "bb5"))
+%revCopula(n, param = NULL, type = c("gumbel", "galambos", "husler.reiss", 
+%    "tawn", "bb5"))
 pevCopula(u = 0.5, v = u, param = NULL, type = c("gumbel", "galambos", 
     "husler.reiss", "tawn", "bb5"), output = c("vector", "list"), 
     alternative = FALSE )
@@ -71,23 +71,23 @@ devCopula(u = 0.5, v = u, param = NULL, type = c("gumbel", "galambos",
     "husler.reiss", "tawn", "bb5"), output = c("vector", "list"), 
     alternative = FALSE )   
 
-revSlider(B = 10)
+%revSlider(B = 10)
 pevSlider(type = c("persp", "contour"), B = 10)
 devSlider(type = c("persp", "contour"), B = 10)
 
-evTau(param = NULL, type = 1:22, lower = 1.0e-10)
-evRho(param = NULL, type = 1:22, method = c("integrate2d", "adapt"), error = 1.0e-5)
+%evTau(param = NULL, type = 1:22, lower = 1.0e-10)
+%evRho(param = NULL, type = 1:22, method = c("integrate2d", "adapt"), error = 1.0e-5)
     
-evTailCoeff(param = NULL, type = 1:22)
-evTailPlot(param = NULL, type = 1:22, tail = c("Upper", "Lower"))
+%evTailCoeff(param = NULL, type = 1:22)
+%evTailPlot(param = NULL, type = 1:22, tail = c("Upper", "Lower"))
 
 Afunc(x, param = NULL, type = c("gumbel", "galambos", "husler.reiss", "tawn", "bb5") )
 AfuncSlider()
 
-evCopulaSim(n, param = NULL,  type = c("gumbel", "galambos", "husler.reiss", 
-    "tawn", "bb5"))
-evCopulaFit(u, v = NULL, type = c("gumbel", "galambos", "husler.reiss", 
-    "tawn", "bb5"), \dots)
+%evCopulaSim(n, param = NULL,  type = c("gumbel", "galambos", "husler.reiss", 
+%    "tawn", "bb5"))
+%evCopulaFit(u, v = NULL, type = c("gumbel", "galambos", "husler.reiss", 
+%    "tawn", "bb5"), \dots)
 }
 
 
@@ -236,14 +236,23 @@ evCopulaFit(u, v = NULL, type = c("gumbel", "galambos", "husler.reiss",
 }
 
 \examples{
-\dontrun{
 ## fCOPULA -
-   # getClass("fCOPULA")
+   getClass("fCOPULA")
+   getSlots("fCOPULA")
    
-## pcopula -
-   # The default Normal Copula:
-   # contour(pcopula())
-}
+## revCopula -
+   # Not yet implemented
+   # revCopula(n = 10, type = "galambos")
+   
+## pevCopula -
+   pevCopula(u = grid2d(), type = "galambos", output = "list")
+   
+## devCopula -
+   devCopula(u = grid2d(), type = "galambos", output = "list")
+   
+## AfuncSlider -
+   # Generator, try:
+   # AfuncSlider() 
 }
 
 

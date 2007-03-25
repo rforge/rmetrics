@@ -2,7 +2,6 @@
 
 \alias{EmpiricalCopulae}
 
-
 \alias{pempiricalCopula}
 \alias{dempiricalCopula}
 
