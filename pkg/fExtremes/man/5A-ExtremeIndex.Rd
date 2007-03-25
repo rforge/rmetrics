@@ -164,14 +164,6 @@ exindexesPlot(x, block = 22, quantiles = seq(0.950, 0.995, length = 10),
 }
 
 
-\author{
-
-    Alexander McNeil, for parts of the \code{exindexPlot} function, and \cr
-    Diethelm Wuertz for the \code{exindexesPlot} function.
-    
-}
-
-
 \references{
 
 Embrechts, P., Klueppelberg, C., Mikosch, T. (1997);
@@ -189,10 +181,16 @@ Embrechts, P., Klueppelberg, C., Mikosch, T. (1997);
 }
 
 
+\author{
+
+    Alexander McNeil, for parts of the \code{exindexPlot} function, and \cr
+    Diethelm Wuertz for the \code{exindexesPlot} function.
+    
+}
+
+
 \examples{
 \dontrun{
-## SOURCE("fExtremes.055A-ExtremeIndex")
-
 ## Extremal Index for the right and left tails 
 ## of the BMW log returns:
    data(bmwRet)

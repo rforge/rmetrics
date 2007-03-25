@@ -211,16 +211,16 @@ Embrechts, P., Klueppelberg, C., Mikosch, T. (1997);
 }
 
   
-\examples{
-\dontrun{   
-## Return levels based on GEV Fit:
+\examples{  
+## Load Data:
    # BMW Stock Data - negative returns
    x = -as.timeSeries(data(bmwRet))
+   colnames(x)<-"BMW"
+   head(x)
+   
+## gevFit -
    # Fit GEV to monthly Block Maxima:
-   fit = gevFit(x, block = "month") 
-   # Calculate the 40 month return level
-   gevrlevelPlot(fit, k.block = 40)   
-}
+   fit = gevFit(x, block = "month")  
 }
 
 

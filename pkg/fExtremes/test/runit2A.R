@@ -62,9 +62,14 @@ test.gev =
 function()
 {
     # Check Distribution:
-    set.seed(1985)
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
     .distCheck(fun = "gev", n = 1000, xi = 0.0, mu = 0, beta = 1)
-    .distCheck(fun = "gev", n = 1000, xi = 1/4, mu = 0, beta = 1)
+    
+    # Check Distribution:
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
+    .distCheck(fun = "gev", n = 5000, xi = 0.3, mu = 0, beta = 2)
     
     # Return Value:
     return()    

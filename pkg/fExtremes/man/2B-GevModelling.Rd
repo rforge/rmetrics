@@ -300,21 +300,19 @@ Embrechts, P., Klueppelberg, C., Mikosch, T. (1997);
 
   
 \examples{
-\dontrun{
 ## gevSim -
    # Simulate GEV Data, use default length n=1000
-   x = gevSim(model = list(shape = 0.25, location =0 , scale = 1))
+   x = gevSim(model = list(xi = 0.25, mu = 0 , beta = 1))
    
 ## gevFit -
    # Fit GEV Data by Probability Weighted Moments:
    fit = gevFit(x, type = "pwm") 
    print(fit)
    
-## summary
+## summary -
    # Summarize Results:
-   par(mfcol = c(3, 2))
+   par(mfcol = c(2, 2))
    summary(fit)
-}
 }
 
 

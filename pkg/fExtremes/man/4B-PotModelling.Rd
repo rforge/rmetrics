@@ -135,8 +135,6 @@ potFit(x, u = quantile(x, 0.95), run = 1, title = NULL, description = NULL)
   
 \examples{
 \dontrun{
-## SOURCE("fExtremes.053C-PotFit")
-
 ## Use Danish Fire Insurance Loss Data:
    data(danish)
    

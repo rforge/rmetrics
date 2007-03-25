@@ -254,18 +254,6 @@ xacfPlot(x, u = quantile(x, 0.95), lag.max = 15, doplot = TRUE,
 }
 
 
-\author{
-
-    Some of the functions were implemented from Alec Stephenson's 
-    R-package \code{evir} ported from Alexander McNeil's S library 
-    \code{EVIS}, \emph{Extreme Values in S}, some from Alec Stephenson's 
-    R-package \code{ismev} based on Stuart Coles code from his book, 
-    \emph{Introduction to Statistical Modeling of Extreme Values} and 
-    some were written by Diethelm Wuertz.
-    
-}
-
-
 \references{
 
 Coles S. (2001);
@@ -274,6 +262,18 @@ Coles S. (2001);
     
 Embrechts, P., Klueppelberg, C., Mikosch, T. (1997);
     \emph{Modelling Extremal Events}, Springer.  
+    
+}
+
+
+\author{
+
+    Some of the functions were implemented from Alec Stephenson's 
+    R-package \code{evir} ported from Alexander McNeil's S library 
+    \code{EVIS}, \emph{Extreme Values in S}, some from Alec Stephenson's 
+    R-package \code{ismev} based on Stuart Coles code from his book, 
+    \emph{Introduction to Statistical Modeling of Extreme Values} and 
+    some were written by Diethelm Wuertz.
     
 }
 

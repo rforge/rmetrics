@@ -255,16 +255,6 @@ tailRisk(object, prob = c(0.99, 0.995, 0.999, 0.9995, 0.9999), ...)
 }
 
 
-\author{
-
-    Alec Stephenson for the functions from R's \code{evd} package, \cr
-    Alec Stephenson for the functions from R's \code{evir} package, \cr
-    Alexander McNeil for the EVIS functions underlying the \code{evir} package, \cr
-    Diethelm Wuertz for this \R-port.
-    
-}
-
-
 \references{
 
 Embrechts, P., Klueppelberg, C., Mikosch, T. (1997);
@@ -278,57 +268,21 @@ Hosking J.R.M., Wallis J.R., (1987);
 }
 
 
+\author{
+
+    Alec Stephenson for the functions from R's \code{evd} package, \cr
+    Alec Stephenson for the functions from R's \code{evir} package, \cr
+    Alexander McNeil for the EVIS functions underlying the \code{evir} package, \cr
+    Diethelm Wuertz for this \R-port.
+    
+}
+
+
 \examples{
-\dontrun{
-## SOURCE("fExtremes.053A-GpdModelling")
-
-## *gpd  -
-   par(mfrow = c(2, 2))
-   r = rgpd(n = 1000, xi = 1/4)
-   plot(r, type = "l", main = "GPD Series")
+## Load Data 
+   data(danishClaims)
    
-## Plot empirical density and compare with true density:
-## Omit values greater than 500 from plot
-   hist(r, n = 50, probability = TRUE, xlab = "r", 
-     xlim = c(-5, 5), ylim = c(0, 1.1), main = "Density")
-   x = seq(-5, 5, by = 0.01)
-   lines(x, dgpd(x, xi = 1/4), col = "steelblue3")
-   
-## Plot df and compare with true df:
-   plot(sort(r), (1:length(r)/length(r)), 
-     xlim = c(-3, 6), ylim = c(0, 1.1),
-     cex = 0.5, ylab = "p", xlab = "q", main = "Probability")
-   q = seq(-5, 5, by = 0.1)
-   lines(q, pgpd(q, xi = 1/4), col = "steelblue3")
-   
-## Compute quantiles, a test:
-   qgpd(pgpd(seq(-1, 5, 0.25), xi = 1/4 ), xi = 1/4) 
-   
-## Load Data:
-   data(danish)
-   
-## gpdSim - 
-   # Simulate GPD Data:
-   x = gpdSim(model = list(shape = 0.25, location = 0, scale = 1), n = 1000)
-   
-## gpdFit -   
-   fit = gpdFit(x, nextremes = length(x), type = "pwm") 
-   print(fit)
-   par(mfcol = c(4, 2), cex = 0.7)
-   summary(fit)  
-   
-## gpdFit -
-   fit = gpdFit(x, nextremes = length(x), type = "mle") 
-   print(fit)
-   summary(fit) 
-
-## gpdFit - 
-   fit = gpdFit(danish, 10, type = "mle") 
-   print(fit)
-   par(mfrow = c(2, 2), cex = 0.7)
-   summary(fit)  
-     
-## gpdqPlot - 
+## gpdqPlot -
    fit = gpdFit(danish, threshold = 10, type = "mle")
    par(mfrow = c(1, 1))
    tail = gpdtailPlot(fit)
@@ -368,7 +322,6 @@ Hosking J.R.M., Wallis J.R., (1987);
    fit = gpdFit(danish, threshold = 10, type = "mle")
    par(mfrow = c(1, 1))
    gpdtailPlot(fit, main = "Danish Fire: GPD Tail Estimate", col = "steelblue4")  
-}
 }
 
 

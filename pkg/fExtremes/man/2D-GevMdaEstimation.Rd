@@ -263,15 +263,17 @@ Embrechts, P., Klueppelberg, C., Mikosch, T. (1997);
 }
 
   
-\examples{
-\dontrun{   
+\examples{  
+## Load Data:
+   x = as.timeSeries(data(danishClaims))
+   colnames(x) <- "Danish"
+   head(x)
+   
 ## hillPlot -
    # Hill plot of heavy-tailed Danish fire insurance data 
-   par(mfrow = c(1,1))
-   x = as.timeSeries(data(danishClaims))
-   hillPlot(x)
+   par(mfrow = c(1, 1))
+   hillPlot(x, plottype = "xi")
    grid()
-}
 }
 
 
