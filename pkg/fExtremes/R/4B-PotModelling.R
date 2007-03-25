@@ -28,11 +28,12 @@
 
 
 ################################################################################
-# FUNCTION:                POT MODELLING FROM EVIS:
+# FUNCTION:                POT SERIES SIMULATION:
 #  potSim                   Peaks over a threshold from arbitrary series
+# FUNCTION:                POT PARAMETER ESTIMATION:
 #  'fPOTFIT'                S4 Class Representation
 #  potFit                   Fits with POT method
-#   print.fPOTFIT            Print Method for object of class "fPOT"
+#   show.fPOTFIT            Print Method for object of class "fPOT"
 #   plot.fPOTFIT             Print Method for object of class "fPOT"
 #   .pot*Plot                Internal Plot Functions
 #   summary.fPOTFIT          Summary Method for object of class "fPOT"
@@ -170,7 +171,8 @@ description = NULL)
 # ------------------------------------------------------------------------------
 
 
-print.fPOTFIT =
+
+show.fPOTFIT =
 function(x, ...)
 {   # A function implemented by Diethelm Wuertz
 
@@ -589,7 +591,7 @@ function(object, doplot = TRUE, which = "all", ...)
     cat("\nEstimation Method:\n", object@method, "\n") 
     
     # Point Process and Decluster Parameters:
-    parameter = cbind(u = x@parameter$u, run = x@parameter$run)
+    parameter = cbind(u = object@parameter$u, run = object@parameter$run)
     rownames(parameter) = paste("", rownames(parameter))
     cat("\nModel Parameters:\n")
     print(parameter)

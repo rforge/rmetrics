@@ -5,10 +5,12 @@
 \alias{fPOTFIT}
 \alias{fPOTFIT-class}
 
+\alias{show.fGPDFIT}
+\alias{show,fGPDFIT-method}
+
 \alias{potSim}
 \alias{potFit}
 
-\alias{print.fPOTFIT}
 \alias{plot.fPOTFIT}
 \alias{summary.fPOTFIT}
 
@@ -39,7 +41,7 @@
 potSim(x, u = quantile(x, 0.95), run = 1)
 potFit(x, u = quantile(x, 0.95), run = 1, title = NULL, description = NULL) 
 
-\method{print}{fPOTFIT}(x, \dots)
+show.fPOTFIT(object)
 \method{plot}{fPOTFIT}(x, which = "ask", \dots)
 \method{summary}{fPOTFIT}(object, doplot = TRUE, which  = "all", \dots)
 }
@@ -100,7 +102,7 @@ potFit(x, u = quantile(x, 0.95), run = 1, title = NULL, description = NULL)
 
 \value{
   
-    Both, \code{potFit} and \code{pot} return an object of class \code{"pot"}
+    The function \code{potFit} returns an object of class \code{"fPOTFIT"}
     describing the fit including parameter estimates and standard errors. 
 
 }
@@ -110,23 +112,24 @@ potFit(x, u = quantile(x, 0.95), run = 1, title = NULL, description = NULL)
   
     \bold{Parameter Estimation:}
     \cr\cr
-    \code{potFit} uses \code{optim} for point process likelihood 
-    maximization. 
+    \code{potFit} uses the optimization function \code{optim} for point 
+    process likelihood maximization to estimate the parameters.
     \cr
   
     \bold{Methods:}
     \cr\cr
-    The plot method \code{plot.pot} provides seven different plots for 
-    assessing fitted POT model. The user selects the plot type from a 
+    The plot method \code{plot} provides seven different plots for 
+    assessing fitted POT models. The user selects the plot type from a 
     menu. Plot 1 displays the exceedance process of the chosen threshold. 
     Plots 2-4  assess the Poisson nature of the exceedance process 
     by looking at the scaled gaps between exceedances, which should
     be iid unit exponentially distributed. Plots 5-6 assess the GPD
     nature of the excesses by looking at suitably defined residuals,
     which should again be iid unit exponentially distributed. Option
-    8 allows the user to call GPD plotting functions. If plot 1 or 2 
-    from the GPD plots is selected as the final plot (i.e. option 8 is 
-    selected, followed by option 1 or 2), a list object containing 
+    8 allows the user to call GPD plotting functions. 
+    
+    If plot 1 or 2 from the GPD plots is selected as the final plot (i.e. 
+    option 8 is selected, followed by option 1 or 2), a list object containing 
     details of the plot is returned invisibly. This object should be 
     used as the first argument of \code{gpdqPlot} or \code{gpdsfallPlot} 
     to add quantile estimates or expected shortfall estimates to the plot.
@@ -134,18 +137,18 @@ potFit(x, u = quantile(x, 0.95), run = 1, title = NULL, description = NULL)
 
   
 \examples{
-\dontrun{
 ## Use Danish Fire Insurance Loss Data:
-   data(danish)
+   x = as.timeSeries(data(danishClaims))
    
-## Fit:
-   fit = potFit(danish, threshold = 10)  
+## potFit - 
+   # Fit Parameters:
+   fit = potFit(x, u = 10)  
    print(fit)
    
-## Summary with Diagnostic Plots:
+## summary -
+   # Summary with Diagnostic Plots:
    par(mfrow = c(3, 3), cex = 0.5)
    summary(fit)
-}
 }
 
 

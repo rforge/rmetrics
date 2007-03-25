@@ -221,6 +221,11 @@ Embrechts, P., Klueppelberg, C., Mikosch, T. (1997);
 ## gevFit -
    # Fit GEV to monthly Block Maxima:
    fit = gevFit(x, block = "month")  
+   print(fit)
+   
+## gevrlevelPlot -
+   # Return Level Plot:
+   gevrlevelPlot(fit)
 }
 
 

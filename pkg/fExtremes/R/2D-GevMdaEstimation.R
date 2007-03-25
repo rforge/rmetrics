@@ -37,9 +37,6 @@
 ################################################################################
 
 
-################################################################################
-
-
 hillPlot = 
 function(x, start = 15, ci = 0.95, 
 doplot = TRUE, plottype = c("alpha", "xi"), labels = TRUE, ...)
@@ -53,12 +50,12 @@ doplot = TRUE, plottype = c("alpha", "xi"), labels = TRUE, ...)
     
     # Examples:
     #   par(mfrow = c(2, 2))
-    #   hillPlot(gevSim(n=1000), "alpha")
-    #   hillPlot(gevSim(n=1000), "xi")
-    #   hillPlot(gevSim(n=1000), "alpha", reverse = TRUE)
-    #   hillPlot(gevSim(n=1000), "xi", reverse = TRUE)
-    #   hillPlot(gevSim(n=1000), "alpha", doplot = FALSE)
-    #   hillPlot(gevSim(n=1000), "xi", doplot = FALSE)
+    #   hillPlot(gevSim(n=1000), plottype = "alpha")
+    #   hillPlot(gevSim(n=1000), plottype = "xi")
+    #   NYI: hillPlot(gevSim(n=1000), plottype = "alpha", reverse = TRUE)
+    #   NYI: hillPlot(gevSim(n=1000), plottype = "xi", reverse = TRUE)
+    #   hillPlot(gevSim(n=1000), plottype = "alpha", doplot = FALSE)
+    #   hillPlot(gevSim(n=1000), plottype = "xi", doplot = FALSE)
     
     # Check Type:
     if (class(x) == "zoo") x = as.timeSeries(x)

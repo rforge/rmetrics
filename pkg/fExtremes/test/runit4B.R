@@ -28,28 +28,14 @@
 
 
 ################################################################################
-# FUNCTION          EXPLORATIVE DATA ANALYSIS:
-#  emdPlot           Creates an empirical distribution plot
-#  qqPlot            Creates a normal quantile-quantile plot
-#  qqbayesPlot       Creates a normal qq-Plot with confidence intervals
-#  qPlot             Creates exploratory QQ plot for EV analysis
-#  mePlot            Creates a sample mean excess plot
-#   mxfPlot           Creates another view of a sample mean excess plot
-#   mrlPlot           Returns a mean residual life plot with confidence levels
-#  recordsPlot       Plots records development
-#   ssrecordsPlot     Plots records development of data subsamples
-#  msratioPlot       Plots ratio of maximums and sums
-#  sllnPlot          Verifies Kolmogorov's Strong Law of large numbers
-#  lilPlot           Verifies Hartman-Wintner's Law of the iterated logarithm
-#  xacfPlot          Plots autocorrelations of exceedences
-# FUNCTION:         PLOT UTILITIES:
-#  interactivePlot   Plots several graphs interactively
-#  gridVector        Creates from two vectors rectangular grid points
-# FUNCTION          DATA PREPROCESSING:
-#  blockMaxima       Returns block maxima from a time series
-#  findThreshold     Upper threshold for a given number of extremes 
-#  pointProcess      Returns peaks over a threshold from a time series
-#  deCluster         Declusters a point process
+# FUNCTION:                POT SERIES SIMULATION:
+#  potSim                   Peaks over a threshold from arbitrary series
+# FUNCTION:                POT PARAMETER ESTIMATION:
+#  'fPOTFIT'                S4 Class Representation
+#  potFit                   Fits with POT method
+#   print.fPOTFIT            Print Method for object of class "fPOT"
+#   plot.fPOTFIT             Print Method for object of class "fPOT"
+#   summary.fPOTFIT          Summary Method for object of class "fPOT"
 ################################################################################
 
 
@@ -71,17 +57,112 @@ function()
 
 
 # ------------------------------------------------------------------------------
-# EXPLORATIVE DATA ANALYSIS:
 
 
-test.eda = 
+test.potSim = 
 function()
 {
-    # Artificial Data Set:
-    x = rt(1000, df = 3)
+    # potSim:
+    X = as.timeSeries(data(danishClaims))
+    x = potSim(X, u = quantile(x, 0.95), run = 1)
+    print(class(x))
+    par(mfrow = c(2,2), cex = 0.7)
+    seriesPlot(x)
     
-    # Empirical distribution plot:
-    emdPlot(x)
+    # Decluster the Process:
+    # ... deCluster(x, run = 20, doplot = TRUE) 
+    x = potSim(X, u = quantile(x, 0.95), run = 5)
+    
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.fPOTFIT = 
+function()
+{
+    # Slot Names:
+    slotNames("fGPDFIT")
+    # [1] "call"        "method"      "parameter"   "data"        "fit"        
+    # [6] "residuals"   "title"       "description"
+
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.potFit = 
+function()
+{
+    # Load Data:
+    x = as.timeSeries(data(danishClaims))
+    
+    # Parameter Estimation:
+    # potFit(x, u = quantile(x,0.95), run = 1, title = NULL, description = NULL)
+    fit = potFit(x)
+    print(fit)
+    
+    # Decluster:
+    fit = potFit(x, run = 10)
+    print(fit)
+    
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.plot = 
+function()
+{
+    # Load Data:
+    x = as.timeSeries(data(danishClaims))
+    
+    # Parameter Estimation with Declustering:
+    # potFit(x, u = quantile(x,0.95), run = 1, title = NULL, description = NULL)
+    fit = potFit(x, u = 10, run = 10)
+    print(fit)
+    
+    # Plot:
+    par(mfrow = c(2, 2), cex = 0.7)
+    plot(fit, which = 1:4)
+    plot(fit, which = 5:7)
+    
+    # Try Interactive:
+    # plot(fit)
+    
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.summary = 
+function()
+{
+    # Summary Report:
+    # summary(object, doplot = TRUE, which = "all", ...)
+    
+    # Load Data:
+    x = as.timeSeries(data(danishClaims))
+    
+    # Parameter Estimation with Declustering:
+    # potFit(x, u = quantile(x,0.95), run = 1, title = NULL, description = NULL)
+    fit = potFit(x, u = 10)
+    print(fit)
+    
+    # Summary:
+    summary(fit, doplot = FALSE)
     
     # Return Value:
     return()    

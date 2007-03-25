@@ -280,10 +280,10 @@ Hosking J.R.M., Wallis J.R., (1987);
 
 \examples{
 ## Load Data 
-   data(danishClaims)
+   danish = as.timeSeries(data(danishClaims)
    
 ## gpdqPlot -
-   fit = gpdFit(danish, threshold = 10, type = "mle")
+   fit = gpdFit(danish, u = 10, type = "mle")
    par(mfrow = c(1, 1))
    tail = gpdtailPlot(fit)
    gpdqPlot(tail, 0.995)

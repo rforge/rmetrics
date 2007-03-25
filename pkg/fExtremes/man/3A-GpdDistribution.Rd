@@ -119,12 +119,13 @@ Embrechts, P., Klueppelberg, C., Mikosch, T. (1997);
 
 
 \examples{
-## *gpd  -
+## rgpd  -
    par(mfrow = c(2, 2), cex = 0.7)
    r = rgpd(n = 1000, xi = 1/4)
    seriesPlot(r)
    
-## Plot empirical density and compare with true density:
+## dgpd -
+   # Plot empirical density and compare with true density:
    # Omit values greater than 500 from plot
    hist(r, n = 50, probability = TRUE, xlab = "r", 
      col = "steelblue", border = "white",
@@ -133,7 +134,8 @@ Embrechts, P., Klueppelberg, C., Mikosch, T. (1997);
    x = seq(-5, 5, by = 0.01)
    lines(x, dgpd(x, xi = 1/4), col = "orange")
    
-## Plot df and compare with true df:
+## pgpd -
+   # Plot df and compare with true df:
    plot(sort(r), (1:length(r)/length(r)), 
      xlim = c(-3, 6), ylim = c(0, 1.1), pch = 19, 
      cex = 0.5, ylab = "p", xlab = "q", main = "Probability")
@@ -141,7 +143,8 @@ Embrechts, P., Klueppelberg, C., Mikosch, T. (1997);
    q = seq(-5, 5, by = 0.1)
    lines(q, pgpd(q, xi = 1/4), col = "steelblue")
    
-## Compute quantiles, a test:
+## qgpd -
+   # Compute quantiles, a test:
    qgpd(pgpd(seq(-1, 5, 0.25), xi = 1/4 ), xi = 1/4) 
 }
 

@@ -33,16 +33,9 @@
 # FUNCTION:               GPD PARAMETER ESTIMATION:
 #  'fGPDFIT'               S4 class representation
 #  gpdFit                  Fits Parameters of GPD distribution
-#  .gpdpwmFit              Fits GPD with probability weighted moments
-#  .gpdmleFit              Fits GPD with max log-likelihood approach
-#   .gpdLLH                 Computes GPD log-likelihood function
 # METHODS:                PRINT, PLOT, AND SUMMARY:
 #  show.fGPDFIT            S4 Print Method for object of class "fGPDFIT"
 #  plot.fGPDFIT            S3 Plot Method for object of class "fGPDFIT"
-#  .gpd1Plot                Empirical Distribution Plot
-#  .gpd2Plot                Tail of Underlying Distribution
-#  .gpd3Plot                Scatterplot of GPD Residuals
-#  .gpd4Plot                Quantile-Quantile Plot of GPD Residuals
 #  summary.fGPDFIT         S3 Summary Method for object of class "fGPDFIT"
 ################################################################################
 
@@ -73,8 +66,7 @@ function()
     # Artificial Data Set:
     x = gpdSim(model = list(xi = 0.25, mu = 0, beta = 1), n = 1000, seed = 4711)
     class(x) 
-    par(ask = FALSE)
-    par(mfrow = c(2, 1))
+    par(mfrow = c(2, 1), cex = 0.7)
     seriesPlot(x)
       
 
@@ -89,6 +81,7 @@ function()
 test.fGPDFIT =
 function()
 {
+    # Slot names:
     slotNames("fGPDFIT")
     # [1] "call"        "method"      "parameter"   "data"        "fit"        
     # [6] "residuals"   "title"       "description"
@@ -144,7 +137,7 @@ function()
     print(fit)
     fit = gpdFit(tS, u = min(tS@Data), type = "mle", information = "expected") 
     print(fit)
-    # >>> Check - No difference !!!
+                                                     # CHECK - No difference !!!
     
     # Return Value:
     return()    
@@ -154,7 +147,7 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.gpdMethods = 
+test.plot = 
 function()
 {
     # Artificial Data Set:
@@ -167,8 +160,30 @@ function()
     print(fit) 
     par(ask = FALSE)
     par(mfrow = c(2, 2), cex = 0.7)
-    plot(fit, which = "all")
-    summary(fit)  
+    plot(fit, which = "all") 
+    
+    # Try:
+    plot(fit, which = "ask")
+    
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.summary = 
+function()
+{
+    # Artificial Data Set:
+    model = list(xi = -0.25, mu = 0, beta = 1)
+    ts = gpdSim(model = model, n = 5000, seed = 4711) 
+    class(ts)   
+
+    # Fit: 
+    fit = gpdFit(ts, u = min(ts), type = "mle") 
+    summary(fit, doplot = FALSE)  
     
     # Return Value:
     return()    

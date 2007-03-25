@@ -35,19 +35,9 @@
 #  'fGEVFIT'             S4 class representation
 #  gevFit                Fits Parameters of GEV distribution
 #  gumbelFit             Fits Parameters of Gumbel distribution
-#   .gumpwmFit            Fits Gumbel with probability weighted moments
-#   .gevpwmFit            Fits GEV with probability weighted moments
-#   .gummleFit            Fits Gumbel with max log-likelihood approach
-#    .gumLLH               Computes Gumbel log-likelihood function
-#   .gevmleFit            Fits GEV with max log-likelihood approach
-#    .gevLLH               Computes GEV log-likelihood function
 # METHODS:              PRINT, PLOT, AND SUMMARY:
 #  show.fGEVFIT          S4 Show method for object of class "fGEVFIT"
 #  plot.fGEVFIT          S3 Plot method for object of class "fGEVFIT"
-#   .gev1Plot             Block Maxima Plot            
-#   .gev2Plot             Scatterplot of Residuals
-#   .gev3Plot             Histogram of Residuals
-#   .gev4Plot             Quantile-Quantile Plot
 #  summary.fGEVFIT       S3 Summary Method for object of class "fGEVFIT"
 ################################################################################
 
@@ -322,6 +312,57 @@ function()
     fit
     fit = gevFit(x.tS, block = 20, type = "mle")   
     fit
+    
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.plot = 
+function()
+{
+    # Load Data:
+    x = as.timeSeries(data(danishClaims))
+    
+    # Parameter Estimation with Declustering:
+    # gevFit(x, block = 1, type = c("mle", "pwm"), 
+    #   title = NULL, description = NULL, ...) 
+    fit = gevFit(x, block = "month")
+    print(fit)
+    
+    # Plot:
+    par(mfrow = c(2, 2), cex = 0.7)
+    plot(fit, which = 1:4)
+    
+    # Try Interactive:
+    # plot(fit)
+    
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.summary = 
+function()
+{
+    # Summary Report:
+    # summary(object, doplot = TRUE, which = "all", ...)
+    
+    # Load Data:
+    x = as.timeSeries(data(danishClaims))
+    
+    # Parameter Estimation with Declustering:
+    fit = gevFit(x, block = "month")
+    print(fit)
+    
+    # Summary:
+    summary(fit, doplot = FALSE)
     
     # Return Value:
     return()    

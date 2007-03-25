@@ -63,9 +63,25 @@ function()
 # ------------------------------------------------------------------------------
 
 
+test.fTHETA = 
+function()
+{
+    # Slot Names:
+    slotNames("fTHETA")
+    # [1] "call"        "data"        "theta"       "title"       "description"
+
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
 test.thetaSim = 
 function()
 {
+    # Simulation:
     # thetaSim(model = c("max", "pair"), n = 100, theta = 0.5)
 
     # Max Frechet Series:
@@ -94,7 +110,6 @@ function()
     class(x.ts)
     
     # Parameter Estimation:
-    
     # blockTheta(x, block = 22, quantiles = seq(0.95, 0.995, length = 10), 
     #   title = NULL, description = NULL) 
     # clusterTheta(x, block = 22, quantiles = seq(0.95, 0.995, length = 10), 
@@ -103,8 +118,7 @@ function()
     #   title = NULL, description = NULL)  
     # ferrosegersTheta(x, quantiles = seq(0.95, 0.995, length = 10), 
     #   title = NULL, description = NULL) 
-    
-    
+       
     # time series ts as input:
     blockTheta(x.ts)
     clusterTheta(x.ts)
@@ -133,18 +147,41 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.exindex = 
+test.exindexesPlot = 
 function()
 {
+    # Graphics Frame:
+    par(mfrow = c(2, 2), cex = 0.7)
+    
     # Parameter Estimation:
     x = thetaSim("max", n=22000)
     exindexesPlot(x)
-    exindexPlot(x, block = 22)
     
     # Parameter Estimation:
     y = thetaSim("pair", n=22000)
     exindexesPlot(y)
-    exindexPlot(y, block = 22, ylim = c(0, 1))
+    
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.exindexPlot = 
+function()
+{
+    # Graphics Frame:
+    par(mfrow = c(2, 2), cex = 0.7)
+    
+    # Parameter Estimation:
+    x = thetaSim("max", n=22000)
+    exindexPlot(x, block = 22)
+    
+    # Parameter Estimation:
+    y = thetaSim("pair", n=22000)
+    exindexPlot(y, block = 22)
     
     # Return Value:
     return()    
