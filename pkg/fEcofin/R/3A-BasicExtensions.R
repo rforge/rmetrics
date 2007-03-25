@@ -76,7 +76,7 @@ if (!exists("Sys.setenv"))
         invisible(.Internal(putenv(x)))
     }
 }
-      
+
 
 ################################################################################
 # FUNCTION:                     DESCRIPTION:
