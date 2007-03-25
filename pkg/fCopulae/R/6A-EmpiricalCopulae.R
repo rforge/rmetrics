@@ -28,16 +28,22 @@
 
 
 ################################################################################
-#                       X     NOT YET IMPEMENTED
 # FUNCTION:                  EMPIRICAL COPULAE PROBABILIY:
 #  pempiricalCopula           Computes empirical copula probability
 # FUNCTION:                  EMPIRICAL COPULAE DENSITY:
 #  dempiricalCopula           Computes empirical copula density
+# FUNCTION:                  DEBYE FUNCTION:
+#  .Debye                     Returns the value of the Debye function of order k
+#  .Debye1
+# FUNCTION:
+#  .pmoCopula
+#  .dmoCopula
 ################################################################################
 
 
 ################################################################################
-# EMPIRICAL COPULAE PROBABILIY:
+# FUNCTION:                  EMPIRICAL COPULAE PROBABILIY:
+#  pempiricalCopula           Computes empirical copula probability
 
 
 pempiricalCopula =
@@ -79,7 +85,8 @@ function(u, v, N = 10)
 
 
 ################################################################################
-# EMPIRICAL COPULAE DENSITY:
+# FUNCTION:                  EMPIRICAL COPULAE DENSITY:
+#  dempiricalCopula           Computes empirical copula density
 
 
 dempiricalCopula =
@@ -122,7 +129,9 @@ function(u, v, N = 10)
 
 
 ################################################################################
-# DEBEYE FUNCTION:
+# FUNCTION:                  DEBYE FUNCTION:
+#  .Debye                     Returns the value of the Debye function of order k
+#  .Debye1
 
 
 .Debye =
@@ -191,6 +200,9 @@ function(x, k = 1)
 
 
 ################################################################################
+# FUNCTION:
+#  .pmoCopula
+#  .dmoCopula
 
 
 .pmoCopula = 
