@@ -61,13 +61,6 @@ BesselDK(x, nu)
 }
 
 
-\author{
-
-    Diethelm Wuertz for the Rmetrics \R-port.
-    
-}
-
-
 \references{
 
 Abramowitz M., Stegun I.A. (1972); 
@@ -79,6 +72,13 @@ Weisstein E.W. (2004);
     \emph{MathWorld -- A Wolfram Web Resource},
     http://mathworld.wolfram.com
 
+}
+
+
+\author{
+
+    Diethelm Wuertz for the Rmetrics \R-port.
+    
 }
 
 

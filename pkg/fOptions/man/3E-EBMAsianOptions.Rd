@@ -187,47 +187,48 @@ ZhangShortTable()
 \arguments{
   
     \item{calculator}{
-        [*] - \cr
-        xxx.
+        [WithDividendsAsianOption] - \cr
+        the name of the function selecting the option calculator
+        to be used.
         }
     \item{correction}{
-        [*] - \cr
+        [ZhangAsianOption] - \cr
         xxx.
         }
     \item{Dividends}{
-        [*] - \cr
+        [WithDividendsAsianOption] - \cr
         xxx.
         }
     \item{doplot}{
-        [*] - \cr
+        [gGemanYor][LinetzkyAsianOption] - \cr
         xxx.
         }
     \item{doprint}{
-        [*] - \cr
+        [GemanYorAsianOption][LinetzkyAsianOption] - \cr
         xxx.
         }
     \item{dt}{
-        [*] - \cr
+        [VecerAsianOption][ZhangAsianOption] - \cr
         xxx.
         }
     \item{eps}{
-        [*] - \cr
+        [VecerAsianOption][ZhangAsianOption] - \cr
         xxx.
         }
     \item{ip}{
-        [*] - \cr
+        [gLinetzky] - \cr
         xxx.
         }
     \item{lambda}{
-        [*] - \cr
+        [gGemanYor] - \cr
         xxx.
         }
     \item{log}{
-        [*] - \cr
+        [AsianOptionMoments][gGemanYor] - \cr
         xxx.
         }
-    \item{lower}{
-        [*] - \cr
+    \item{lower, upper}{
+        [LinetzkyAsianOption] - \cr
         xxx.
         }
     \item{M}{
@@ -251,16 +252,15 @@ ZhangShortTable()
         xxx.
         }
     \item{r}{
-        [*] - \cr
-        xxx.
+        a numeric value, the annualized rate of interest; 
+        e.g. 0.25 means 25\% pa.
         }
     \item{S}{
-        [*] - \cr
-        xxx.
+        the asset price, a numeric value.
         }
     \item{sigma}{
-        [*] - \cr
-        xxx.
+        a numeric value, the annualized volatility of the underlying 
+        security; e.g. 0.3 means 30\% volatility pa.
         }
     \item{subdivisions}{
         [*] - \cr
@@ -275,24 +275,19 @@ ZhangShortTable()
         xxx.
         }
     \item{Time}{
-        [*] - \cr
-        xxx.
+        a numeric value, the time to maturity measured in years; 
+        e.g. 0.5 means 6 months.
         }
     \item{TypeFlag}{
-        [*] - \cr
-        xxx.
-        }
-    \item{upper}{
-        [*] - \cr
-        xxx.
+        a character string either \code{"c"} for a call option or 
+        a \code{"p"} for a put option.
         }
     \item{x}{
         [*] - \cr
         xxx.
         }
     \item{X}{
-        [*] - \cr
-        xxx.
+        a numeric value, the exercise price.
         }
     \item{y}{
         [*] - \cr

@@ -62,21 +62,22 @@ LevyAsianApproxOption(TypeFlag, S, SA, X, Time, time, r, b,
         a character string which allows for a brief description.
         }
     \item{r}{
-        the annualized rate of interest, a numeric value; 
+        a numeric value, the annualized rate of interest; 
         e.g. 0.25 means 25\% pa.
         }
     \item{S, SA}{
         the asset price, a numeric value.
         }
     \item{sigma}{
-        the annualized volatility of the underlying security, 
-        a numeric value; e.g. 0.3 means 30\% volatility pa.}
+        a numeric value, the annualized volatility of the underlying 
+        security; e.g. 0.3 means 30\% volatility pa.
+        }
     \item{tau}{
         [TurnWakeAsianApprox*] - \cr
         is the time to the beginning of the average period.
         }
     \item{time, Time}{
-        the time to maturity measured in years, a numeric value; 
+        a numeric value, the time to maturity measured in years; 
         e.g. 0.5 means 6 months.
         }
     \item{title}{

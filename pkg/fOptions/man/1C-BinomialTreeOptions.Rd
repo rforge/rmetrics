@@ -158,6 +158,48 @@ BinomialTreePlot(BinomialTreeValues, dx = -0.025, dy = 0.4,
 }
 
 
+\references{
+    
+Broadie M., Detemple J. (1994);
+    \emph{American Option Evaluation: New Bounds, Approximations, 
+        and a Comparison of Existing Methods}, 
+    Working Paper, Columbia University, New York. 
+
+Cox J., Ross S.A., Rubinstein M. (1979);
+    \emph{Option Pricing: A Simplified Approach}, 
+    Journal of Financial Economics 7, 229--263. 
+
+Haug E.G. (1997); 
+    \emph{The complete Guide to Option Pricing Formulas}, 
+    McGraw-Hill, New York.
+    
+Hull J.C. (1998);
+    \emph{Introduction to Futures and Options Markets},
+    Prentice Hall, London.
+    
+Jarrow R., Rudd A. (1983); 
+    \emph{Option Pricing}, 
+    Homewood, Illinois, 183--188. 
+    
+Leisen D.P., Reimer M., (1996); 
+    \emph{Binomial Models for Option Valuation -- Examining and 
+        Improving Convergence}, 
+    Applied Mathematical Finanace 3, 319--346.
+
+Tian Y. (1993);
+    \emph{A Modified Lattice Approach to Option Pricing}, 
+    Journal of Futures Markets 13, 563--577. 
+
+}
+
+
+\author{
+
+    Diethelm Wuertz for the Rmetrics \R-port.
+    
+}
+
+
 \examples{
 ## Cox-Ross-Rubinstein Binomial Tree Option Model:
    # Example 14.1 from Hull's Book:
@@ -204,48 +246,6 @@ BinomialTreePlot(BinomialTreeValues, dx = -0.025, dy = 0.4,
      xlab = "n", ylab = "Option Value")
    title(main = "Option Tree")
 
-}
-
-
-\references{
-    
-Broadie M., Detemple J. (1994);
-    \emph{American Option Evaluation: New Bounds, Approximations, 
-        and a Comparison of Existing Methods}, 
-    Working Paper, Columbia University, New York. 
-
-Cox J., Ross S.A., Rubinstein M. (1979);
-    \emph{Option Pricing: A Simplified Approach}, 
-    Journal of Financial Economics 7, 229--263. 
-
-Haug E.G. (1997); 
-    \emph{The complete Guide to Option Pricing Formulas}, 
-    McGraw-Hill, New York.
-    
-Hull J.C. (1998);
-    \emph{Introduction to Futures and Options Markets},
-    Prentice Hall, London.
-    
-Jarrow R., Rudd A. (1983); 
-    \emph{Option Pricing}, 
-    Homewood, Illinois, 183--188. 
-    
-Leisen D.P., Reimer M., (1996); 
-    \emph{Binomial Models for Option Valuation -- Examining and 
-        Improving Convergence}, 
-    Applied Mathematical Finanace 3, 319--346.
-
-Tian Y. (1993);
-    \emph{A Modified Lattice Approach to Option Pricing}, 
-    Journal of Futures Markets 13, 563--577. 
-
-}
-
-
-\author{
-
-    Diethelm Wuertz for the Rmetrics \R-port.
-    
 }
 
 

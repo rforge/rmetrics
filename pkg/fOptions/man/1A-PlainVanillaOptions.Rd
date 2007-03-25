@@ -169,7 +169,7 @@ show.fOPTION(object)
         the object \code{x} to be printed.
         }
     \item{X}{
-        the exercise price, a numeric value.
+        a numeric value, the exercise price.
         }
     \item{\dots}{
         arguments to be passed.
