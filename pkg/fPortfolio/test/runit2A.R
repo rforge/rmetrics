@@ -35,7 +35,7 @@
 #  cmlPortfolio                  Returns capital market line
 #  tangencyPortfolio             Returns the tangency portfolio
 #  minvariancePortfolio          Returns the minimum variance portfolio
-#  frontierPortfolio             Returns a frontier portfolio
+#  efficientPortfolio            Returns a frontier portfolio
 # FUNCTION:                     PORTFOLIO FRONTIER:
 #  portfolioFrontier             Returns the efficient frontier of a portfolio
 # FUNCTION:                     PRINT AND PLOT METHODS:        
@@ -67,6 +67,19 @@ function()
 # ------------------------------------------------------------------------------
 
 
+test.fPORTFOLIO =
+function()
+{ 
+    NA
+   
+    # Return Value:
+    return()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
 test.feasiblePortfolio =
 function()
 { 
@@ -74,15 +87,22 @@ function()
     Data = usPortfolioData()
     Data
    
-    # Setting Default Specifications:
+    # Setting Default Specifications - Long Only MV Portfolio
     Spec = portfolioSpec()
-    setWeights = rep(1/8, times = 8)
+    setWeights(Spec) = rep(1/8, times = 8)
     Spec
     
     # Calculation of Long Only Minimum Variance Portfolio:
     Portfolio = feasiblePortfolio(Data, Spec)
-    Portfolio
+    Portfolio                                                             
    
+    # Try Rdonlp2:
+    require(Rdonlp2)
+    setSolver(Spec)<-"Rdonlp2"
+    Spec
+    Portfolio = feasiblePortfolio(Data, Spec)
+    Portfolio
+     
     # Return Value:
     return()
 }
@@ -98,13 +118,15 @@ function()
     Data = usPortfolioData()
     Data
    
-    # Setting Default Specifications:
+    # Setting Default Specifications - Long Only MV Portfolio
     Spec = portfolioSpec()
     Spec
     
     # Calculation of Long Only Minimum Variance Portfolio:
     Portfolio = cmlPortfolio(Data, Spec)
     Portfolio
+    
+    # Check:
     target = round(sum(getWeights(Portfolio)), 3)
     current = 1
     checkIdentical(target, current)
@@ -124,13 +146,15 @@ function()
     Data = usPortfolioData()
     Data
     
-    # Setting Default Specifications
+    # Setting Default Specifications - Long Only MV Portfolio
     Spec = portfolioSpec()
     Spec
     
     # Calculation of Long Only Minimum Variance Portfolio
     Portfolio = tangencyPortfolio(Data, Spec)
     Portfolio
+    
+    # Check:
     target = round(sum(getWeights(Portfolio)), 3)
     current = 1
     checkIdentical(target, current)
@@ -150,13 +174,15 @@ function()
     Data = usPortfolioData()
     Data
     
-    # Setting Default Specifications
+    # Setting Default Specifications - Long Only MV Portfolio
     Spec = portfolioSpec()
     Spec
     
     # Calculation of Long Only Minimum Variance Portfolio
     Portfolio = minvariancePortfolio(Data, Spec)
     Portfolio
+    
+    # Check:
     target = round(sum(getWeights(Portfolio)), 3)
     current = 1
     checkIdentical(target, current)
@@ -167,6 +193,8 @@ function()
     Spec
     Portfolio = minvariancePortfolio(Data, Spec)
     Portfolio
+    
+    # Check:
     target = round(sum(getWeights(Portfolio)), 3)
     current = 1
     checkIdentical(target, current)
@@ -187,7 +215,7 @@ function()
     Data = usPortfolioData()
     Data
    
-    # Setting Default Specifications
+    # Setting Default Specifications - Long Only MV Portfolio
     Spec = portfolioSpec()
     setTargetReturn(Spec)<-mean(seriesData(Data))
     Spec
@@ -195,6 +223,8 @@ function()
     # Calculation of Long Only Minimum Variance Portfolio
     Portfolio = efficientPortfolio(Data, Spec)
     Portfolio
+    
+    # Check:
     target = round(sum(getWeights(Portfolio)), 3)
     current = 1
     checkIdentical(target, current)
@@ -214,13 +244,15 @@ function()
     Data = usPortfolioData()
     Data
    
-    # Setting Default Specifications
+    # Setting Default Specifications - Long Only MV Portfolio
     Spec = portfolioSpec()
     Spec
    
     # Calculation of Long Only Minimum Variance Portfolio
     Frontier = portfolioFrontier(Data, Spec)
     Frontier
+    
+    # Check:
     target = round(sum(rowSums(getWeights(Frontier))))
     current = 32
     checkIdentical(target, current)
@@ -264,7 +296,7 @@ test.plot =
 function()
 { 
     # Setting Data:
-    Data = usPortfolioData()
+    Data = sm132PortfolioData()
     Data
    
     # Setting Default Specifications:
@@ -272,6 +304,12 @@ function()
     Spec
    
     # Calculation of Long Only Minimum Variance Portfolio:
+    Frontier = portfolioFrontier(Data, Spec)
+    Frontier
+    
+    # Try RDonlp2:
+    require(Rdonlp2)
+    setSolver(Spec)<-"Rdonlp2"
     Frontier = portfolioFrontier(Data, Spec)
     Frontier
     

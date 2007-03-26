@@ -63,12 +63,21 @@ setClass("fPFOLIOSPEC",
 
 portfolioSpec = 
 function(
-model = list(type = "MV", estimator = c("mean", "cov"), 
+model = list(
+    type = "MV", 
+    estimator = c("mean", "cov"), 
     params = list()),
-portfolio = list(weights = NULL, targetReturn = NULL, riskFreeRate = 0, 
-    nFrontierPoints = 50, returnRange = NULL, riskRange = NULL),
-solver = list(type = c("RQuadprog", "RDonlp2")), 
-title = NULL, description = NULL)
+portfolio = list(
+    weights = NULL, 
+    targetReturn = NULL, 
+    riskFreeRate = 0, 
+    nFrontierPoints = 50, 
+    returnRange = NULL, 
+    riskRange = NULL),
+solver = list(
+    type = c("RQuadprog", "RDonlp2")), 
+title = NULL, 
+description = NULL)
 {   # A function implemented by Rmetrics
 
     # Description:
@@ -80,12 +89,19 @@ title = NULL, description = NULL)
     # FUNCTION:
     
     # Model:
-    Model = list(type = "MV", estimator = "cov")
+    Model = list(
+        type = "MV", 
+        estimator = c("mean", "cov"))
     Model[(Names <- names(model))] <- model
     
     # Portfolio:
-    Portfolio = list(weights = NULL, targetReturn = NULL, targetRisk = NULL,
-        riskFreeRate = 0, nFrontierPoints = 100, returnRange = NULL, 
+    Portfolio = list(
+        weights = NULL, 
+        targetReturn = NULL, 
+        targetRisk = NULL,
+        riskFreeRate = 0, 
+        nFrontierPoints = 50, 
+        returnRange = NULL, 
         riskRange = NULL)
     Portfolio[(Names <- names(portfolio))] <- portfolio
     
@@ -253,6 +269,29 @@ function(spec = portfolioSpec(), weights = NULL)
 # ------------------------------------------------------------------------------
 
 
+"setWeights<-" = 
+function(spec, value)
+{   # A function implemented by Rmetrics
+
+    # Description:                    
+    #   Sets weights vector
+    
+    # FUNCTION:
+    
+    # Weights ?
+    spec@portfolio$weights = value
+    if(!is.null(value)) {
+        spec@portfolio$targetReturn = NULL
+    }
+    
+    # Return Value:
+    spec
+}
+
+
+# ------------------------------------------------------------------------------
+
+
 setTargetReturn = 
 function(spec = portfolioSpec(), targetReturn = NULL)
 {   # A function implemented by Rmetrics
@@ -276,7 +315,8 @@ function(spec = portfolioSpec(), targetReturn = NULL)
 # ------------------------------------------------------------------------------
 
 
-"setTargetReturn<-" <- function(spec, value)
+"setTargetReturn<-" <- 
+function(spec, value)
 {   # A function implemented by Rmetrics
 
     # Description:                                   
@@ -318,7 +358,8 @@ function(spec = portfolioSpec(), riskFreeRate = 0)
 # ------------------------------------------------------------------------------
 
 
-"setRiskFreeRate<-" <- function(spec, value)
+"setRiskFreeRate<-" <- 
+function(spec, value)
 {   # A function implemented by Rmetrics
 
     # Description:                                   

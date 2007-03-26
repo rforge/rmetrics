@@ -224,7 +224,8 @@ function(object, ...)
     index = index[diff(x) > 0]
     x = x[index]
     y = y[index]
-    points(x, (y/x*norm), ...)
+    y.norm = (y/x*norm)
+    points(x, y.norm, ...)
         
     # Add Tailored Labels -  2 may be a good Number ...
     x.tg = x.tg[index]
@@ -402,29 +403,29 @@ function(object, ...)
     
     # FUNCTION:
     
+    # Supported ?
+    check = rev(attr(object@constraints, "model"))[1]
+    stopifnot(check == "Short" | check == "LongOnly")
+
     # Get Portfolio Statistics: 
-    Data = object@data$statistics
-    Spec = getSpecification(object)
-    Constraints = object@constraints
+    Data = getSlot(object, "data")
+    Spec = getSpecification(object) 
+    
     # Add Froniters for all Two-Assets Portfolios:
-    N = length(Data$mu)
-     
-    # Plotting only the tenth part of the original frontier porints
-    nFP = getPortfolio(object)$nFrontierPoints
-    object@specification@portfolio$nFrontierPoints = nFP / 10
+    N = length(Data$statistics$mu)
+    
+    # Plotting frontier points
     for ( i in 1:(N-1) ) {
         for (j in (i+1):N ) {
             index = c(i, j) 
-            statistics = list(mu = Data$mu[index],
-                Sigma = Data$Sigma[index, index])
-            statistics = list(statistics = statistics)
-            ans = .portfolioShortMVFrontier(data = statistics, Spec,
-                Constraints)
+            print(index)
+            Data2 = list(
+                mu = Data$statistics$mu[index],
+                Sigma = Data$statistics$Sigma[index, index])
+            ans = portfolioFrontier(data = Data2, spec = Spec)
             lines(getFrontier(ans), ...)
         }
     }
-    # Restetting to the original # frontier points
-    object@specification@portfolio$nFrontierPoints = nFP * 10
 
     # Return Value:
     invisible()   
@@ -448,13 +449,11 @@ function(object, piePos = NULL, pieR = NULL, pieOffset = NULL, ...)
     
     # FUNCTION:
     
-
     # Extraction coordinates    
     p = par()$usr/15
     dx = p[2]-p[1]
     dy = p[4]-p[3]
-
-    
+  
     if(is.null(piePos)) {
         Data = object@data$statistics
         Spec = getSpecification(object)
@@ -524,7 +523,6 @@ function(object, piePos = NULL, pieR = NULL, pieOffset = NULL, ...)
     
     # FUNCTION:
     
-
     # Extraction coordinates    
     p = par()$usr/15
     dx = p[2]-p[1]
@@ -627,6 +625,7 @@ function(object, mcSteps, ...)
     invisible()
 }
 
+
 #-------------------------------------------------------------------------------
 
 
@@ -673,12 +672,10 @@ function(object, col = NULL)
         yaxt = "n")
         points(y = weights[minRisk, i+1], x = minRisk, col = col[i+1], pch = 19,
             xaxt = "n", yaxt = "n", cex = 2)
-
     }
     grid()
     abline(h = 0, col = "grey", lty = 3)
     abline(v = minRisk, col = "black", lty = 3)
-
 
     # Add Tailored Labels -  6 may be a good Number ...
     nLabels = 6
@@ -688,11 +685,10 @@ function(object, col = NULL)
     nPrecision = 3
     axis(1, at = M, labels = signif(targetRisk[M], nPrecision))
     axis(3, at = M, labels = signif(targetReturn[M], nPrecision))
-    
-     
+      
     # Add Axis Labels and Title:
-    mtext("Risk", side = 1, line = 2, cex = .7)
-    mtext("Return", side = 3, line = 2, cex = .7)
+    mtext("Target Risk", side = 1, line = 2, cex = .7)
+    mtext("Target Return", side = 3, line = 2, cex = .7)
     mtext("Weight", side = 2, line = 2, cex = .7)
     
     # Return Value:
@@ -739,7 +735,7 @@ function(object, control = list())
             rep(control$singleAsset.pch, times = dim))
     }
  
-    # Adding legend:
+    # Adding Legend:
     legend("topleft", legend = legendtext, col = color, pch = sym, cex = .8,
         bty = "n")
         
@@ -804,7 +800,7 @@ function(object, col = NULL, legend = FALSE)
     targetReturn = getTargetReturn(object)
     nSigma = length(targetRisk)
     nLabels = 6
-    M = c(0, ( 1: (nSigma %/% nLabels) ) ) *nLabels + 1
+    M = c(0, ( 1:(nSigma %/% nLabels) ) ) *nLabels + 1
     # Take a reasonable number of significant digits to plot, e.g. 2 ...
     nPrecision = 3
     axis(1, at = M, labels = signif(targetRisk[M], nPrecision))
@@ -828,7 +824,6 @@ function(object, col = NULL, legend = FALSE)
     minRisk = as.numeric(names(minRisk))
     abline(v = minRisk, col = "black", lty = 3)
 
-    
     # Complete to draw box ...
     box()
     

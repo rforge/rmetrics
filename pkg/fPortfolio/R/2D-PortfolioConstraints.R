@@ -55,8 +55,8 @@ function(data, spec = portfolioSpec(), constraints = NULL)
     # Get Statistics:
     mu = data$statistics$mu
     Sigma = data$statistics$Sigma
-
     N = length(mu)
+    
     # Target Return:
     targetReturn = spec@portfolio$targetReturn 
     weights = spec@portfolio$weights

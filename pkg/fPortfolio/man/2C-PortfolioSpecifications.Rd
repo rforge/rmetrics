@@ -15,6 +15,7 @@
 \alias{setEstimator}
 
 \alias{setWeights}
+\alias{setWeights<-}
 \alias{setTargetReturn}
 \alias{setTargetReturn<-}
 \alias{setRiskFreeRate}
@@ -68,6 +69,7 @@ setType(spec = portfolioSpec(), type = c("MV", "LPM", "CVaR"))
 setEstimator(spec = portfolioSpec(), estimator = c("mean", "cov"))
 
 setWeights(spec = portfolioSpec(), weights = NULL)
+setWeights(spec) <- value
 setTargetReturn(spec = portfolioSpec(), targetReturn = NULL)
 setTargetReturn(spec) <- value
 setRiskFreeRate(spec = portfolioSpec(), riskFreeRate = 0)

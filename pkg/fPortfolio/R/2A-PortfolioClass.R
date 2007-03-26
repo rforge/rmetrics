@@ -90,17 +90,21 @@ function(data, spec = portfolioSpec(), constraints = NULL)
     
     # Compose Function:
     if(is.null(constraints) | length(constraints) == 0) {
-        Model = "Constrained"
+        Model = c("Constrained", "LongOnly")
         nAssets = length(mu)
         constraints = paste("minW[1:", nAssets, "]=0", sep = "")
     } else if (constraints[1] == "short") {
         Model = "Short"
-    }      
+    } else {
+        Model = "Constrained"
+    }     
     Type = spec@model$type
-    fun = match.fun(paste(".feasible", Model, Type, "Portfolio", sep = ""))
+    fun = match.fun(paste(".feasible", Model[1], Type, "Portfolio", sep = ""))
+    attr(constraints, "model") = Model
     
-    # Compute Portfolio
+    # Compute Portfolio:
     ans = fun(data, spec, constraints)
+    attr(ans@constraints, "model") = Model
     
     # Reset Call:
     ans@call = match.call()
@@ -142,7 +146,7 @@ function(data, spec = portfolioSpec(), constraints = NULL)
     
     # Compose Function:
     if(is.null(constraints) | length(constraints) == 0) {
-        Model = "Constrained"
+        Model = c("Constrained", "LongOnly")
         nAssets = length(mu)
         constraints = paste("minW[1:", nAssets, "]=0", sep = "")
     } else if (constraints[1] == "short") {
@@ -151,10 +155,12 @@ function(data, spec = portfolioSpec(), constraints = NULL)
         Model = "Constrained"
     }        
     Type = spec@model$type
-    fun = match.fun(paste(".cml", Model, Type, "Portfolio", sep = ""))
+    fun = match.fun(paste(".cml", Model[1], Type, "Portfolio", sep = ""))
+    attr(constraints, "model") = Model
     
     # Compute Portfolio
     ans = fun(data, spec, constraints)
+    attr(ans@constraints, "model") = Model
     
     # Reset Call:
     ans@call = match.call()
@@ -196,7 +202,7 @@ function(data, spec = portfolioSpec(), constraints = NULL)
     
     # Compose Function:
     if(is.null(constraints) | length(constraints) == 0) {
-        Model = "Constrained"
+        Model = c("Constrained", "LongOnly")
         nAssets = length(mu)
         constraints = paste("minW[1:", nAssets, "]=0", sep = "")
     } else if (constraints[1] == "short") {
@@ -205,10 +211,12 @@ function(data, spec = portfolioSpec(), constraints = NULL)
         Model = "Constrained"
     }        
     Type = spec@model$type
-    fun = match.fun(paste(".tangency", Model, Type, "Portfolio", sep = ""))
+    fun = match.fun(paste(".tangency", Model[1], Type, "Portfolio", sep = ""))
+    attr(constraints, "model") = Model
     
     # Compute Portfolio:
     ans = fun(data, spec, constraints)
+    attr(ans@constraints, "model") = Model
     
     # Reset Call:
     ans@call = match.call() 
@@ -250,7 +258,7 @@ function(data, spec = portfolioSpec(), constraints = NULL)
     
     # Compose Function:
     if(is.null(constraints) | length(constraints) == 0) {
-        Model = "Constrained"
+        Model = c("Constrained", "LongOnly")
         nAssets = length(mu)
         constraints = paste("minW[1:", nAssets, "]=0", sep = "")
     } else if (constraints[1] == "short") {
@@ -259,10 +267,12 @@ function(data, spec = portfolioSpec(), constraints = NULL)
         Model = "Constrained"
     }        
     Type = spec@model$type
-    fun = match.fun(paste(".minvariance", Model, Type, "Portfolio", sep = ""))
+    fun = match.fun(paste(".minvariance", Model[1], Type, "Portfolio", sep = ""))
+    attr(constraints, "model") = Model
     
     # Compute Portfolio:
     ans = fun(data, spec, constraints)
+    attr(ans@constraints, "model") = Model
     
     # Reset Call:
     ans@call = match.call() 
@@ -304,7 +314,7 @@ function(data, spec = portfolioSpec(), constraints = NULL)
     
     # Compose Function:
     if(is.null(constraints) | length(constraints) == 0) {
-        Model = "Constrained"
+        Model = c("Constrained", "LongOnly")
         nAssets = length(mu)
         constraints = paste("minW[1:", nAssets, "]=0", sep = "")
     } else if (constraints[1] == "short") {
@@ -313,10 +323,12 @@ function(data, spec = portfolioSpec(), constraints = NULL)
         Model = "Constrained"
     }        
     Type = spec@model$type
-    fun = match.fun(paste(".efficient", Model, Type, "Portfolio", sep = ""))
+    fun = match.fun(paste(".efficient", Model[1], Type, "Portfolio", sep = ""))
+    attr(constraints, "model") = Model
     
     # Compute Portfolio:
     ans = fun(data, spec, constraints)
+    attr(ans@constraints, "model") = Model
     
     # Reset Call:
     ans@call = match.call() 
@@ -359,7 +371,7 @@ title = NULL, description = NULL)
     
     # Compose Function:
     if(is.null(constraints) | length(constraints) == 0) {
-        Model = "Constrained"
+        Model = c("Constrained", "LongOnly")
         nAssets = length(mu)
         constraints = paste("minW[1:", nAssets, "]=0", sep = "")
     } else if (constraints[1] == "short") {
@@ -368,10 +380,12 @@ title = NULL, description = NULL)
         Model = "Constrained"
     }   
     Type = spec@model$type
-    fun = match.fun(paste(".portfolio", Model, Type, "Frontier", sep = ""))
+    fun = match.fun(paste(".portfolio", Model[1], Type, "Frontier", sep = ""))
+    attr(constraints, "model") = Model
     
     # Compute Portfolio:
     ans = fun(data, spec, constraints)
+    attr(ans@constraints, "model") = Model
     
     # Reset Call:
     ans@call = match.call() 
@@ -618,7 +632,7 @@ function(object, control = list(), ...)
 
     # Control Parameters:
     con <<- list(
-        sliderResolution = ceiling(nFrontierPoints/10),
+        sliderResolution = 1,
         
         sliderFlag = "weights",
     
@@ -660,15 +674,15 @@ function(object, control = list(), ...)
         .notStackedWeightsPlot(object)
         # Weights Plot Pointer for not stacked:
         abline(v = N, col = "black")
-        title(main = "Not Stacked Weights", line = 3)
+        title(main = "Weights", line = 3)
 
         # Plot 3 - Frontier Plot:
         frontier = getFrontier(object)
         fPoint = frontier[N, ]
         frontierPlot(object, xlim = con$xlim.frontier, ylim = con$ylim.frontier,
             xlab = "", ylab = "")
-        mtext("Risk", side = 1, line = 2, cex = .7)
-        mtext("Weight", side = 2, line = 2, cex = .7)
+        mtext("Target Risk", side = 1, line = 2, cex = 0.7)
+        mtext("Target Return", side = 2, line = 2, cex = 0.7)
         points(fPoint[1], fPoint[2], col = con$runningPoint.col, pch = 19,
             cex = con$runningPoint.cex)
         .tangencyPlot(object, col = con$tangency.col)

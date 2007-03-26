@@ -360,7 +360,7 @@ title = NULL, description = NULL)
     sqrtSig = sqrt(diag(Sigma))
     if (is.null(sigmaRange)){
         sigmaRange = c(min(sqrtSig), max(sqrtSig))+
-        .25*c(-diff(range(sqrtSig)), diff(range(sqrtSig)))
+            0.25*c(-diff(range(sqrtSig)), diff(range(sqrtSig)))
     }
                
     # Efficient Frontier Portfolios:

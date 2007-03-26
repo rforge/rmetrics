@@ -71,7 +71,7 @@ function(data, spec, constraints)
     
     # Setting the constraints matrix and vector:
     tmp.ans = setConstraints(data = data, spec = spec,
-        constraints =  constraints)
+        constraints = constraints)
     dim = length(mu)
     A = tmp.ans[, -(dim+1)]
     b0 = tmp.ans[, (dim+1)]
@@ -84,10 +84,10 @@ function(data, spec, constraints)
     b0 = sum(b0)
     targetReturn = as.numeric(mu %*% weights)
     targetRisk = sqrt( as.numeric( t(weights) %*% Sigma %*% (weights) ) )
-
     
     # Check constraints, if it is feasible:
-    if(b0 != b0Test) warning("Inconsistent Weights respectively Constraints")
+    # DW
+    # if(b0 != b0Test) warning("Inconsistent Weights respectively Constraints")
    
     # Return Value:
     new("fPORTFOLIO", 
@@ -339,15 +339,14 @@ function(data, spec, constraints)
     # Calculate Efficient Frontier:
     muMin = returnRange[1]
     muMax = returnRange[2]
-    eps = 1.0e-6
-    k = 0
     targetMu = targetSigma = nextWeights = rep(0, times = nFrontierPoints)
     weights = error = NULL
 
     # Loop over .efficientConstrainedMVPortfolio
     Spec = spec
-    for (nTargetReturn in seq(muMin+eps, muMax-eps, length = nFrontierPoints)) {
-        k = k + 1
+    k = 0
+    for (nTargetReturn in seq(muMin, muMax, length = nFrontierPoints)) {
+        k = k + 1  
         setTargetReturn(Spec)<-nTargetReturn     
         tmp.object = .efficientConstrainedMVPortfolio(data = data, spec = Spec,
             constraints = constraints)
@@ -369,7 +368,8 @@ function(data, spec, constraints)
             targetReturn = targetMu[!error],
             targetRisk = targetSigma[!error],
             targetMean = targetMu[!error],
-            targetStdev = targetSigma[!error]),
+            targetStdev = targetSigma[!error],
+            error = error),
         title = "Constrained MV Frontier", 
         description = .description())       
 }

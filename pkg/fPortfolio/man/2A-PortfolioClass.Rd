@@ -204,32 +204,35 @@ frontierSlider(object, control = list(), \dots)
         a call, returning the matched function call.
         }
     \item{@data}{
-        a list, containing two named elements being 'mu' and 'Sigma'.
-         }  
+        a list with two named elements, \code{series} holding the time series
+        data if available, otherwise NA, and \code{statistics}, itself a
+        named list with two named elements \code{mu} and \code{Sigma)
+        holding the vector of means and the matrix of covariances.
+        }  
     \item{@description}{
         a character string, allowing for a brief project description.
-        }
-           
+        }        
     \item{@portfolio}{
         a list, containing parameter specifications for the portfolio:\cr 
         \code{weights} a numeric vector specifying the portfolio 
-            weights.\cr
+            weights,\cr
         \code{targetReturn} a numeric value specifying the target 
-            return.\cr
-        \code{targetRisk} a numeric value specifying the target risk.\cr  
+            return,\cr
+        \code{targetRisk} a numeric value specifying the target 
+            risk,\cr  
         \code{targetMean} a numeric value specifying the target 
-            return determinated with function mean().\cr
+            return determinated with function mean(),\cr
         \code{targetStdev} a numeric value specifying the target risk in 
-        standart deviation as risk measure.\cr 
+            standart deviation as risk measure.\cr 
         }
-    \item{@specifications}{
-        an object of class \code{fPFOLIOSPEC}, including all information about
+    \item{@specification}{
+        a list with one named element \code{spec} which represents an object 
+        of class \code{fPFOLIOSPEC}, including all information about
         the portfolio specifications, see \code{\link{PortfolioSpecification}}
         for further details.}
     \item{@title}{
         a title string.\cr
         }
-    having all information about the whole efficient frontier.
     \cr
     
     \code{feasiblePortfolio}\cr
@@ -237,8 +240,8 @@ frontierSlider(object, control = list(), \dots)
     \code{tangencyPortfolio}\cr
     \code{minvariancePortfolio}\cr
     \code{efficientPortfolio}\cr
-    return an S4 object of class \code{fPORTFOLIO} having information only about
-    one portfolio.
+    return an S4 object of class \code{fPORTFOLIO} having information only 
+    about one portfolio.
 }
 
 
