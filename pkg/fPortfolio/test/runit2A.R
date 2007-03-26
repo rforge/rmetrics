@@ -315,10 +315,8 @@ function()
     
     # Plot:
     # par(mfrow = c(1, 1))
-    # plot(Frontier)                                      # CHECK 2 Sharpe Ratio
-                                                          # CHECK 6 Fails
-                                                          # CHECK 7
-                                                          # CHECK 9
+    plot(Frontier)
+    
     # Return Value:
     return()
 }
