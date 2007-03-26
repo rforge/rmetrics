@@ -503,7 +503,7 @@ function(x, which = "ask", control = list(), ...)
 
     # Control List:
     con <<- list(
-        sharpeRatio.col = "black",
+        sharpeRatio.col = "blue",
         minvariance.col = "red",
         tangency.col = "steelblue",
         cml.col = "green",
@@ -511,21 +511,21 @@ function(x, which = "ask", control = list(), ...)
         singleAsset.col = rainbow(N),
         twoAssets.col = "grey",
         monteCarlo.col = "black",
-        
         sharpeRatio.cex = 0.1,
-        minvariance.cex = 1,
+        # Point Sizes:
+        minvariance.cex = 1.25,
         tangency.cex = 1.25,
         cml.cex = 1.25,
-        equalWeights.cex = 0.8,
+        equalWeights.cex = 1.25,
         singleAsset.cex = 1,
         twoAssets.cex = 0.01,
         monteCarlo.cex = 0.01,
-        
+        # Frontier Limits:
         xlim.frontier = xLim,
         ylim.frontier = yLim,
-        
+        # Monte Carlo Steps:
         mcSteps = 5000,
-        
+        # Pie Settings:
         pieR = NULL, 
         piePos = NULL, 
         pieOffset = NULL
@@ -538,44 +538,49 @@ function(x, which = "ask", control = list(), ...)
     # Plot Function and Addons:
     plot.1 <<- function(x, ...) {
         frontierPlot(object = x, xlim = con$xlim.frontier,
-            ylim = con$ylim.frontier)
+            ylim = con$ylim.frontier, main = "Efficient Frontier",
+            xlab = "Target Risk", ylab = "Target Return")
     }       
     plot.2 <<- function(x, ...) {
-        .sharpeRatioPlot(object = x, type = "l", 
-            col = con$sharpeRatio.col, cex = con$sharpeRatio.cex, 
-            lty = 3)
-    } 
-    plot.3 <<- function(x, ...) {
         .minvariancePlot(object = x, 
             col = con$minvariance.col, cex = con$minvariance.cex, 
             pch = 19)
     }       
-    plot.4 <<- function(x, ...) {
+    plot.3 <<- function(x, ...) {
         .tangencyPlot(object = x, 
             col = con$tangency.col, cex = con$tangency.cex, 
             pch = 17)
     }
-    plot.5 <<- function(x, ...) {
+    plot.4 <<- function(x, ...) {
         .singleAssetPlot(object =x , 
             col = con$singleAsset.col, cex = con$singleAsset.cex, 
             pch = 18)
     }       
-    plot.6 <<- function(x, ...) {
+    plot.5 <<- function(x, ...) {
         .equalWeightsPlot(object = x, 
             col = con$equalWeights.col, cex = con$equalWeights.cex, 
             pch = 15)
     }  
-    plot.7 <<- function(x, ...) {
+    plot.6 <<- function(x, ...) {
+        .singleAssetPlot(object = x , 
+            col = con$singleAsset.col, cex = con$singleAsset.cex, 
+            pch = 18)
+        lines(getFrontier(object = x), col = "grey")
         .twoAssetsPlot(object = x, col = con$twoAssets.col) 
     }       
-    plot.8 <<- function(x, ...) {
+    plot.7 <<- function(x, ...) {
         .wheelPiePlot(object = x,
             piePos = con$PiePos, pieR = con$pieR, pieOffset = con$pieOffset)
     }  
-    plot.9 <<- function(x, ...) {
+    plot.8 <<- function(x, ...) {
         .monteCarloPlot(object = x, 
             col = con$monteCarlo.col, cex = con$monteCarlo.cex, 
             mcSteps = con$mcSteps) 
+    }
+    plot.9 <<- function(x, ...) {
+        .sharpeRatioPlot(object = x, type = "l", 
+            col = con$sharpeRatio.col, cex = con$sharpeRatio.cex, 
+            lty = 3)
     }       
    
     # Plot:
@@ -583,14 +588,14 @@ function(x, which = "ask", control = list(), ...)
         x,
         choices = c(
             "Plot Efficient Frontier",
-            "Add Sharpe Ratio",
-            "Add minvariance Portfolio",
+            "Add min Variance Portfolio",
             "Add Tangency Portfolio",
             "Add Single Assets",
             "Add Equal Weights Portfolio",
             "Add Two Asset Frontiers",
             "Add Wheel Pie",
-            "Add Monte Carlo Portfolios"),
+            "Add Monte Carlo Portfolios",
+            "Add Sharpe Ratio"),
         plotFUN = c(
             "plot.1", "plot.2", "plot.3", "plot.4", "plot.5",  
             "plot.6", "plot.7", "plot.8", "plot.9"),

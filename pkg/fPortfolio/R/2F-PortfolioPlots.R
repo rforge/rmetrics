@@ -29,7 +29,7 @@
 
 ################################################################################
 # FUNCTION:                    EFFICIENT FRONTIER PLOT AND ADDONS:  
-#  frontierPlot                  Plots efficient Frontier
+#  frontierPlot                 Plots efficient Frontier
 #   .sharpeRatioPlot             Adds Sharpe Ratio
 #   .minvariancePlot             Adds Minimum Variance point
 #   .cmlPlot                     Adds Market Portfolio and Capital Market Line
@@ -410,6 +410,7 @@ function(object, ...)
     # Get Portfolio Statistics: 
     Data = getSlot(object, "data")
     Spec = getSpecification(object) 
+    # Constraints = 
     
     # Add Froniters for all Two-Assets Portfolios:
     N = length(Data$statistics$mu)
@@ -422,6 +423,7 @@ function(object, ...)
             Data2 = list(
                 mu = Data$statistics$mu[index],
                 Sigma = Data$statistics$Sigma[index, index])
+            # Constraints2 ?
             ans = portfolioFrontier(data = Data2, spec = Spec)
             lines(getFrontier(ans), ...)
         }
@@ -611,14 +613,31 @@ function(object, mcSteps, ...)
     mu = Data$mu
     Sigma = Data$Sigma
     N = length(mu)  
-    # Monte Carlo Loop:
-    for (k in 1:mcSteps) {  
-        s = sign(rnorm(N, mean = rnorm(1)))
-        weights = s * abs(rcauchy(N))        
-        weights = weights / sum(weights)
-        Return = as.numeric(mu %*% weights)
-        Risk = sqrt( as.numeric( t(weights) %*% Sigma %*% (weights) ) )
-        points(Risk, Return, ...)
+    
+    # Get Constraints Model:
+    Model = rev(attr(object@constraints, "model"))[1]
+    
+    if (Model == "Short") {
+        # Monte Carlo Loop - Short:
+        for (k in 1:mcSteps) {  
+            s = sign(rnorm(N, mean = rnorm(1)))
+            weights = s * abs(rcauchy(N))        
+            weights = weights / sum(weights)
+            Return = as.numeric(mu %*% weights)
+            Risk = sqrt( as.numeric( t(weights) %*% Sigma %*% (weights) ) )
+            points(Risk, Return, ...)
+        }
+    } else if (Model == "LongOnly") {
+        # Monte Carlo Loop - Long Only:
+        for (k in 1:mcSteps) {  
+            weights = abs(rcauchy(N))        
+            weights = weights / sum(weights)
+            Return = as.numeric(mu %*% weights)
+            Risk = sqrt( as.numeric( t(weights) %*% Sigma %*% (weights) ) )
+            points(Risk, Return, ...)
+        }
+    } else {
+        print("Monte Carlo only for short and long only portfolios implemented")
     }
     
     # Return Value:
