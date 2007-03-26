@@ -13,7 +13,7 @@ PortfolioData           Example Portfolio Data Sets
 PortfolioDataSets       fPortfolio Data Sets
 PortfolioExtractors     Portfolio Extractor Functions
 PortfolioPlots          Portfolio Plots
+PortfolioSolver         Portfolio Solver
 PortfolioSpecification
                         Specification of Portfolios
-ResampledPortfolio      Resampled Portfolio Frontier
 VaRModelling            Value-at-Risk Measures for Portfolios
