@@ -72,6 +72,14 @@ assetsTest(x, method = c("shapiro", "energy"), Replicates = 100,
 }
 
 
+\note{
+    
+    The usage of the alternative \code{method="energy"} requires to
+    load the contributed R package \code{energy}.
+    
+}
+
+
 \value{
   
     \code{assetsTest}
