@@ -44,7 +44,7 @@ function()
 {
     # Help File:
     helpFile = function() { 
-        example(???, ask = FALSE)
+        example(AssetsPlots, ask = FALSE)
         return() 
     }
     checkIdentical(
@@ -59,9 +59,13 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test. =
+test.assetsSeriesPlot =
 function()
 { 
+    X = as.timeSeries(data(berndtInvest))
+    par(mfrow = c(2,2), cex = 0.7)
+    assetsSeriesPlot(X, which = c(2, 4, 11, 13))
+    
     # Return Value:
     return()
 }
@@ -70,9 +74,13 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test. =
+test.assetsHistPlot =
 function()
 { 
+    X = as.timeSeries(data(berndtInvest))
+    par(mfrow = c(2,2), cex = 0.7)
+    assetsHistPlot(X, which = c(2, 4, 11, 13))                    # CHECK - main
+    
     # Return Value:
     return()
 }
@@ -81,9 +89,13 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test. =
+test.assetsDensityPlot =
 function()
 { 
+    X = as.timeSeries(data(berndtInvest))
+    par(mfrow = c(2,2), cex = 0.7)
+    # assetsDensityPlot(X, which = c(2, 4, 11, 13))                # CHECK fails    
+    
     # Return Value:
     return()
 }
@@ -92,9 +104,13 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test. =
+test.assetsQQNormPlot =
 function()
 { 
+    X = as.timeSeries(data(berndtInvest))
+    par(mfrow = c(2,2), cex = 0.7)
+    assetsQQNormPlot(X, which = c(2, 4, 11, 13))
+    
     # Return Value:
     return()
 }
@@ -103,9 +119,13 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test. =
+test.assetsPairsPlot =
 function()
 { 
+    X = as.timeSeries(data(berndtInvest))
+    par(mfrow = c(2,2), cex = 0.7)
+    assetsPairsPlot(X[, c(2, 4, 11, 13)])
+    
     # Return Value:
     return()
 }
@@ -114,86 +134,13 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test. =
+test.assetsCorTestPlot =
 function()
 { 
-    # Return Value:
-    return()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-test. =
-function()
-{ 
-    # Return Value:
-    return()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-test. =
-function()
-{ 
-    # Return Value:
-    return()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-test. =
-function()
-{ 
-    # Return Value:
-    return()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-test. =
-function()
-{ 
-    # Return Value:
-    return()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-test. =
-function()
-{ 
-    # Return Value:
-    return()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-test. =
-function()
-{ 
-    # Return Value:
-    return()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-test. =
-function()
-{ 
+    X = as.timeSeries(data(berndtInvest))
+    par(mfrow = c(2,2), cex = 0.7)
+    assetsCorTestPlot(X[, c(2, 4, 11, 13)], scale = 0.7)
+    
     # Return Value:
     return()
 }

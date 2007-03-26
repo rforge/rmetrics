@@ -40,7 +40,7 @@ function()
 {
     # Help File:
     helpFile = function() { 
-        example(PortfolioExtractors, ask = FALSE)
+        example(PortfolioData, ask = FALSE)
         return() 
     }
     checkIdentical(

@@ -39,7 +39,7 @@ function()
 {
     # Help File:
     helpFile = function() { 
-        example(???, ask = FALSE)
+        example(PortfolioConstraints, ask = FALSE)
         return() 
     }
     checkIdentical(

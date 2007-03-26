@@ -52,7 +52,7 @@ function()
 {
     # Help File:
     helpFile = function() { 
-        example(PortfolioExtractors, ask = FALSE)
+        example(PortfolioSpec, ask = FALSE)
         return() 
     }
     checkIdentical(

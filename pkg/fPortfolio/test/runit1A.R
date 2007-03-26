@@ -36,7 +36,7 @@
 #   method = "snorm"      assuming a multivariate skew-Normal distribution
 #   method = "st"         assuming a multivariate skew-Student-t 
 # FUNCTION:             PRINT, PLOT AND SUMMARY METHOD: 
-#  show.fASSETS         S4: Print method for an object of class fASSETS
+#  show.fASSETS          S4: Print method for an object of class fASSETS
 #  plot.fASSETS          S3: Plot method for an object of class fASSETS
 #  summary.fASSETS       S3: Summary method for an object of class fASSETS
 # FUNCTION:             REQUIRED UTILITY FUNCTION:
@@ -49,7 +49,7 @@ function()
 {
     # Help File:
     helpFile = function() { 
-        example(???, ask = FALSE)
+        example(AssetsModelling, ask = FALSE)
         return() 
     }
     checkIdentical(
@@ -64,9 +64,33 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test. =
+test.assetsSim =
 function()
 { 
+    # assetsSim(n, dim=2, model = 
+    #   list(mu=rep(0, dim), Omega=diag(dim), alpha=rep(0, dim), df=Inf), 
+    #   assetNames = NULL) 
+    
+    # Normel Assets:
+    assetsSim(n = 10, dim = 3)
+    assetsSim(n = 10, dim = 3,
+        list(mu=rep(0, 3), Omega=diag(3), alpha=rep(0, 3), df=Inf))
+    
+    # Skew Normal Assets:
+    assetsSim(n = 10, dim = 3, model = 
+        list(mu=rep(0, 3), Omega=diag(3), alpha=rep(0.1, 3), df=Inf))
+        
+    # Student-t Assets:
+    assetsSim(n = 10, dim = 3, model = 
+        list(mu=rep(0, 3), Omega=diag(3), alpha=rep(0, 3), df=4))
+        
+    # Skew Student-t Assets:
+    assetsSim(n = 10, dim = 3, model = 
+        list(mu=rep(0, 3), Omega=diag(3), alpha=rep(0.1, 3), df=4))
+        
+    # Add Asset Names:
+    assetsSim(n = 10, dim = 3, assetNames = c("A", "B", "C"))
+
     # Return Value:
     return()
 }
@@ -75,130 +99,40 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test. =
+test.assetsFit =
 function()
 { 
-    # Return Value:
-    return()
-}
+    # function (x, method = c("st", "snorm", "norm"), title = NULL, 
+    #   description = NULL, fixed.df = NA, ...) 
 
-
-# ------------------------------------------------------------------------------
-
-
-test. =
-function()
-{ 
-    # Return Value:
-    return()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-test. =
-function()
-{ 
-    # Return Value:
-    return()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-test. =
-function()
-{ 
-    # Return Value:
-    return()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-test. =
-function()
-{ 
-    # Return Value:
-    return()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-test. =
-function()
-{ 
-    # Return Value:
-    return()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-test. =
-function()
-{ 
-    # Return Value:
-    return()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-test. =
-function()
-{ 
-    # Return Value:
-    return()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-test. =
-function()
-{ 
-    # Return Value:
-    return()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-test. =
-function()
-{ 
-    # Return Value:
-    return()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-test. =
-function()
-{ 
-    # Return Value:
-    return()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-test. =
-function()
-{ 
+    # Normal Assets:
+    x = assetsSim(n = 1000, dim = 3)
+    fit = assetsFit(x, "norm")
+    fit
+    
+    # Skew Normal Assets:
+    x = assetsSim(n = 1000, dim = 3, model = 
+        list(mu=rep(0, 3), Omega=diag(3), alpha=c(-0.5, 0 , 0.5), df=Inf))
+    fit = assetsFit(x, "snorm")
+    fit
+    
+    # Student-t Assets:
+    x = assetsSim(n = 1000, dim = 3, model = 
+        list(mu=rep(0, 3), Omega=diag(3), alpha=rep(0, 3), df=4))    
+    fit = assetsFit(x, "st")
+    fit
+    
+    # Student-t Assets - Fixed df:
+    x = assetsSim(n = 1000, dim = 3, model = 
+        list(mu=rep(0, 3), Omega=diag(3), alpha=rep(0, 3), df=4))    
+    fit = assetsFit(x, "st", fixed.df = 4)
+    fit
+    
+    class(fit)
+    print(fit)
+    plot(fit)                                                    # CHECK X-Label
+    summary(fit, doplot = FALSE)                            # CHECK - add doplot
+    
     # Return Value:
     return()
 }

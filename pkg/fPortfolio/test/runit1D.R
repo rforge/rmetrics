@@ -40,7 +40,7 @@ function()
 {
     # Help File:
     helpFile = function() { 
-        example(???, ask = FALSE)
+        example(AssetsTests, ask = FALSE)
         return() 
     }
     checkIdentical(
@@ -58,8 +58,10 @@ function()
 test.assetsTestShapiro =
 function()
 { 
+    # default Method:
     x = assetsSim(100)
     assetsTest(x)
+    assetsTest(x, method = "shapiro")
 
     # Return Value:
     return()

@@ -44,7 +44,7 @@ function()
 {
     # Help File:
     helpFile = function() { 
-        example(???, ask = FALSE)
+        example(ConstrainedMVPortfolio, ask = FALSE)
         return() 
     }
     checkIdentical(

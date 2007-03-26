@@ -61,6 +61,25 @@ function()
 # ------------------------------------------------------------------------------
 
 
+test.assetsStats =
+function()
+{
+    # Settings:
+    Data = usPortfolioData()
+    class(Data)
+    head(Data)
+    
+    # Statistics:
+    assetsStats(as.matrix(Data))          # CHECK - extend to timeSeries Objects
+    
+    # Return Value:
+    return()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
 test.assetsMeanCov =
 function()
 {
@@ -93,7 +112,6 @@ function()
     # Return Value:
     return()
 }
-
 
 
 # ------------------------------------------------------------------------------

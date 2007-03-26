@@ -40,7 +40,7 @@ function()
 {
     # Help File:
     helpFile = function() { 
-        example(???, ask = FALSE)
+        example(AssetsSelection, ask = FALSE)
         return() 
     }
     checkIdentical(
