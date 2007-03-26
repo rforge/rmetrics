@@ -70,7 +70,18 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.density =
+test.grid2d =
+function()
+{
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.density2d =
 function()
 {
     # Data:
@@ -81,17 +92,6 @@ function()
     .perspPlot(D)
     .contourPlot(D)
     
-    # Histogram:
-    H = hist2d(x = z[, 1], y = z[, 2])
-    .perspPlot(H)
-    .contourPlot(H)
-    
-    # Probability:
-    # P = integrate2d(fun = *)
-    # .perspPlot(P)
-    # .contourPlot(P)
-    
-    
     # Return Value:
     return()    
 }
@@ -100,7 +100,40 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.bivariate.norm =
+test.hist2d =
+function()
+{
+    # Data:
+    z = rnorm2d(1000)
+   
+    # Histogram:
+    H = hist2d(x = z[, 1], y = z[, 2])
+    .perspPlot(H)
+    .contourPlot(H)
+
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.integrate2d =
+function()
+{
+    # Data:
+    z = rnorm2d(1000)
+  
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.norm2d =
 function()
 {
     #  pnorm2d               Computes bivariate Normal probability function
@@ -131,7 +164,7 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.bivariate.cauchy =
+test.cauchy2d =
 function()
 {
     #  pcauchy2d             Computes bivariate Cauchy probability function
@@ -162,7 +195,7 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.bivariate.t =
+test.t2d =
 function()
 {
     #  pt2d                  Computes bivariate Student-t probability function
@@ -193,7 +226,7 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.elliptical =
+test.delliptical2d =
 function()
 { 
     # Settings:

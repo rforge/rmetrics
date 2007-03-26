@@ -35,13 +35,20 @@
 ################################################################################
 
 
-test.NA = 
+test.aaa = 
 function()
 {
-    NA
-    
+    # Help File:
+    helpFile = function() { 
+        example(TermPlots, ask = FALSE)
+        return() 
+    }
+    checkIdentical(
+        target = class(try(helpFile())),
+        current = "NULL")
+
     # Return Value:
-    return()
+    return()    
 }
 
 

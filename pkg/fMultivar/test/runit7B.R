@@ -43,7 +43,7 @@
 #  plot.fMV            S3: Plot method for objects of class 'fMV'
 #  summary.fMV         S3: Summary method for objects of class 'fMV'
 # INTERNAL:           DESCRIPTION:
-#  .mvsnormFit         Fits a Multivariate Normal Distribution
+#  .mvnormFit          Fits a Multivariate Normal Distribution
 #  .mvstFit            Fits a Multivariate Student-t Distribution
 #  .mvsnormPlot        Plots for Multivariate Normal Distribution
 #  .mvstPlot           Plots for Multivariate Student-t Distribution
@@ -70,19 +70,60 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.mvsnorm =
+test.dmvsnorm =
 function()
 {
     # Bivariate Density:
-    x = y = (-40:40)/10
+    x = y = seq(-4, 4, length = 81)
     G = grid2d(x)
     X = cbind(G$x, G$y)
-    z = dmvsnorm(X, 2, mu = rep(0, 2), Omega = diag(2), alpha = rep(0, 2))
+    z = dmvsnorm(X, dim = 2, mu = rep(0, 2), Omega = diag(2), alpha = rep(0, 2))
     Z = list(x = x, y = x, z = matrix(z, ncol = length(x)))
+    
+    # Plot:
     persp(Z, theta = -40, phi = 30, col = "steelblue")
-    # .perspPlot(Z)
+    .perspPlot(Z)
+       
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.pmvsnorm =
+function()
+{
+    # Bivariate Density:
+    x = y = seq(-4, 4, length = 21)
+    G = grid2d(x)
+    X = cbind(G$x, G$y)
+    z = pmvsnorm(X, dim = 2, mu = rep(0, 2), Omega = diag(2), alpha = rep(0, 2))
+    Z = list(x = x, y = x, z = matrix(z, ncol = length(x)))
     
+    # Plot:
+    persp(Z, theta = -40, phi = 30, col = "steelblue")
+    .perspPlot(Z)
+       
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.rmvsnorm =
+function()
+{
+    # RVs:
+    N = 5000
+    z = rmvsnorm(N, dim = 2, mu = rep(0, 2), Omega = diag(2), alpha = rep(1, 2))
     
+    # Scatterplot:
+    plot(z, pch = 19)
+       
     # Return Value:
     return()    
 }

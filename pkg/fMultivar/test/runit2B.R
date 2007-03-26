@@ -46,7 +46,7 @@ function()
 {
     # Help File:
     helpFile = function() { 
-        example(RegressionTests, ask = FALSE)
+        example(RegressionTestsInterface, ask = FALSE)
         return() 
     }
     checkIdentical(

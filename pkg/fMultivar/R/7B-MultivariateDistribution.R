@@ -42,7 +42,7 @@
 #  print.fMV           S3: Print method for objects of class 'fMV'
 #  plot.fMV            S3: Plot method for objects of class 'fMV'
 #  summary.fMV         S3: Summary method for objects of class 'fMV'
-#  .mvsnormFit         Fits a Multivariate Normal Distribution
+#  .mvnormFit         Fits a Multivariate Normal Distribution
 #  .mvstFit            Fits a Multivariate Student-t Distribution
 #  .mvsnormPlot        Plots for Multivariate Normal Distribution
 #  .mvstPlot           Plots for Multivariate Student-t Distribution
