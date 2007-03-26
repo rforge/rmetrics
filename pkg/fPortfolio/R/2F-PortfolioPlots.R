@@ -419,7 +419,6 @@ function(object, ...)
     for ( i in 1:(N-1) ) {
         for (j in (i+1):N ) {
             index = c(i, j) 
-            print(index)
             Data2 = list(
                 mu = Data$statistics$mu[index],
                 Sigma = Data$statistics$Sigma[index, index])
