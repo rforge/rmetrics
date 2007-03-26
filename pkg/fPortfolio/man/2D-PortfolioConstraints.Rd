@@ -43,11 +43,16 @@ getConstraints(object)
     which must have the following form:
     
     \describe{
-      \item{box constraints}{\code{"minW[asset]=percentage"}, and for }
-      \item{sector constraints}{\code{"maxsumW[assets]=percentage"}. }
+        \item{box constraints}{
+            \code{"minW[asset]=percentage"}, and for 
+        }
+      \item{sector constraints}{
+            \code{"maxsumW[assets]=percentage"}. 
+      }
     }
     
-    While the asset(s) "argument" can be either a number or a vector.
+    While the asset(s) "argument" can be either an integer value or an
+    integer vector.
 
 }
 
@@ -66,8 +71,8 @@ getConstraints(object)
         and the exposure vector.
         }
     \item{spec}{
-        an object of class \code{fPORTFOLIOSPEC}, containing slots call, model,
-        portfolio, title, description.\cr
+        an object of class \code{fPFOLIOSPEC}, containing slots call, model,
+        portfolio, title, description.
     }
 
 }

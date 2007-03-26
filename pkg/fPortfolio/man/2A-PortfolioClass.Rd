@@ -80,7 +80,7 @@ frontierSlider(object, control = list(), \dots)
     \item{constraints}{
         a character string vector, containing the constraints of the form\cr
         \code{"minW[asset]=percentage"} for box constraints resp. \cr
-        \code{"maxsumW[assets]=percentage} for sector constraints.
+        \code{"maxsumW[assets]=percentage"} for sector constraints.
         }
     \item{control}{
         [plot, *Sliders] - \cr
@@ -131,6 +131,7 @@ frontierSlider(object, control = list(), \dots)
         }
 
 }
+
 
 \details{
 
@@ -206,7 +207,7 @@ frontierSlider(object, control = list(), \dots)
     \item{@data}{
         a list with two named elements, \code{series} holding the time series
         data if available, otherwise NA, and \code{statistics}, itself a
-        named list with two named elements \code{mu} and \code{Sigma)
+        named list with two named elements \code{mu} and \code{Sigma}
         holding the vector of means and the matrix of covariances.
         }  
     \item{@description}{
@@ -223,17 +224,17 @@ frontierSlider(object, control = list(), \dots)
         \code{targetMean} a numeric value specifying the target 
             return determinated with function mean(),\cr
         \code{targetStdev} a numeric value specifying the target risk in 
-            standart deviation as risk measure.\cr 
+            standart deviation as risk measure.
         }
     \item{@specification}{
         a list with one named element \code{spec} which represents an object 
         of class \code{fPFOLIOSPEC}, including all information about
         the portfolio specifications, see \code{\link{PortfolioSpecification}}
-        for further details.}
-    \item{@title}{
-        a title string.\cr
+        for further details.
         }
-    \cr
+    \item{@title}{
+        a title string.
+        }
     
     \code{feasiblePortfolio}\cr
     \code{cmlPortfolio}\cr
@@ -242,6 +243,7 @@ frontierSlider(object, control = list(), \dots)
     \code{efficientPortfolio}\cr
     return an S4 object of class \code{fPORTFOLIO} having information only 
     about one portfolio.
+    
 }
 
 
@@ -409,7 +411,7 @@ frontierSlider(object, control = list(), \dots)
         [weightsSlider, frontierSlider] - 
         a vector, containing y-axis plot limits of the efficient frontier.
         Default setting is maximum of frontier range or single assets portfolios. 
-    } 
+        } 
     }                 
 }
 
