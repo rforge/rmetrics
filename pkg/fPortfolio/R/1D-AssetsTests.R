@@ -34,10 +34,6 @@
 #   method = "energy"     ... calling E-Statistic (energy) test
 # FUNCTION:             INTERNAL UTILITY FUNCTIONS:
 #  .mvenergyTest         Multivariate Energy Test
-#   .mvnorm.etest         Internal Function used by assetsTest
-#   .mvnorm.e             Internal Function used by assetsTest
-#   .normal.e             Internal Function used by assetsTest
-#   .mvnormBoot           Internal Function used by assetsTest
 #  .mvshapiroTest        Multivariate Shapiro Test     
 ################################################################################
 
@@ -56,13 +52,12 @@ title = NULL, description = NULL)
     # FUNCTION:
     
     # Test:
-    method = method[1]
-    if (method == "shapiro" | method == "s") {
+    method = match.arg(method)
+    if (method == "shapiro") {
         test = .mvshapiroTest(x)
-    } else if (method == "energy" | method == "e") {
+    } 
+    if (method == "energy") {
         test = .mvenergyTest(x, Replicates = Replicates)
-    } else {
-        stop("No valid method specified")
     }
     
     # Return Value:
@@ -79,7 +74,7 @@ function(x, Replicates = 99, title = NULL, description = NULL)
     # Description:
     
     # Note:
-    #   Requires Contributed R package energy
+    #   Requires Contributed R package "energy"
     
     # Example:
     #   .mvenergyTest(x = assetsSim(100), 99)
@@ -126,6 +121,10 @@ function(x, title = NULL, description = NULL)
 {   
     # Description:
     #   Computes Shapiro's normality test for multivariate variables
+    
+    # Note:
+    #   Builtin Function, doesn't require the contributed R package 
+    #   mvnormtest
     
     # Author: 
     #   Slawomir Jarek

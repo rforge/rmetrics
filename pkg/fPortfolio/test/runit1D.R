@@ -31,14 +31,7 @@
 # FUNCTION:             ASSETS NORMALITY TESTS:
 #  assetsTest            Tests for multivariate Normal Assets
 #   method = "shapiro"    ... calling Shapiro test
-#   method = "energy"     ... calling E-Statistic (energy) test
-# FUNCTION:             INTERNAL UTILITY FUNCTIONS:
-#  .mvenergyTest         Multivariate Energy Test
-#   .mvnorm.etest         Internal Function used by assetsTest
-#   .mvnorm.e             Internal Function used by assetsTest
-#   .normal.e             Internal Function used by assetsTest
-#   .mvnormBoot           Internal Function used by assetsTest
-#  .mvshapiroTest        Multivariate Shapiro Test                        
+#   method = "energy"     ... calling E-Statistic (energy) test                       
 ################################################################################
 
 
@@ -62,9 +55,12 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test. =
+test.assetsTestShapiro =
 function()
 { 
+    x = assetsSim(100)
+    assetsTest(x)
+
     # Return Value:
     return()
 }
@@ -73,130 +69,19 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test. =
+test.assetsTestEnergy =
 function()
 { 
-    # Return Value:
-    return()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-test. =
-function()
-{ 
-    # Return Value:
-    return()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-test. =
-function()
-{ 
-    # Return Value:
-    return()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-test. =
-function()
-{ 
-    # Return Value:
-    return()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-test. =
-function()
-{ 
-    # Return Value:
-    return()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-test. =
-function()
-{ 
-    # Return Value:
-    return()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-test. =
-function()
-{ 
-    # Return Value:
-    return()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-test. =
-function()
-{ 
-    # Return Value:
-    return()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-test. =
-function()
-{ 
-    # Return Value:
-    return()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-test. =
-function()
-{ 
-    # Return Value:
-    return()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-test. =
-function()
-{ 
-    # Return Value:
-    return()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-test. =
-function()
-{ 
+    # Load "energy" Package:
+    require(energy)
+    
+    # Bivariate Data:
+    x = assetsSim(100)
+    head(x)
+    
+    # Test:
+    assetsTest(x, method = "energy")
+    
     # Return Value:
     return()
 }
