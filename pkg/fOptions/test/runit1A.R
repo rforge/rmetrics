@@ -68,20 +68,43 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.distribution =
+test.NDF =
 function()
 {
     #  NDF                        Normal distribution function
-    #  CND                        Cumulative normal distribution function
-    #  CBND                       Cumulative bivariate normal distribution  
-    
+  
     # NDF:
     x = (-3):3
     NDF(x)
     dnorm(x)
     NDF(x)-dnorm(x)
+
+    # Return Value:
+    return()    
+}
+
+# ------------------------------------------------------------------------------
+
+
+test.CND =
+function()
+{
+    #  CND                        Cumulative normal distribution function 
     
     # CND:
+
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.distribution =
+function()
+{
+    #  CBND                       Cumulative bivariate normal distribution  
     
     # CBND:
 
@@ -128,16 +151,76 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.moreOptions =
+test.GBSOption =
+function()
+{
+    # GBSOption                   Computes Option Price from the GBS Formula
+
+    # GBSOption(TypeFlag = c("c", "p"), S, X, Time, r, b, sigma, 
+    #   title = NULL, description = NULL) 
+    GBSOption("c", 100, 100, 1, 0.10, 0.10, 0.30)
+    
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.GBSCharacteristics =
+function()
+{
+    # GBSCharacteristics          Computes Option Price and all Greeks of GBS Model
+
+    # GBSCharacteristics(TypeFlag = c("c", "p"), S, X, Time, r, b, sigma) 
+    GBSCharacteristics("c", 100, 100, 1, 0.10, 0.10, 0.30)
+    
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.BlackScholesOption =
+function()
+{
+    # BlackScholesOption          Synonyme Function Call to GBSOption
+   
+    # BlackScholesOption(...)
+  
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.Black76Option =
 function()
 { 
-    #  Black76Option              Computes Prices of Options on Futures
-    #  MiltersenSchwartzOption    Pricing a Miltersen Schwartz Option
+    # Black76Option              Computes Prices of Options on Futures
 
     # Black76Option:
     # Black76Option = (TypeFlag = c("c", "p"), FT, X, Time, r, sigma, 
     #   title = NULL, description = NULL)
     Black76Option(FT = 95, X = 80, Time = 1/2, r = 0.05, sigma = 0.266)
+        
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.MiltersenSchwartzOption =
+function()
+{ 
+    # MiltersenSchwartzOption    Pricing a Miltersen Schwartz Option
 
     # MiltersenSchwartzOption:
     # MiltersenSchwartzOption(TypeFlag = c("c", "p"), Pt, FT, X, time, Time, 
@@ -156,7 +239,7 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.Reporting =
+test.print =
 function()
 {
     # GBSOption(TypeFlag = c("c", "p"), S, X, Time, r, b, sigma, 
