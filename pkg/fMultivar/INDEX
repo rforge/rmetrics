@@ -1,11 +1,10 @@
 BenchmarkAnalysis       Utilities and Benchmark Analysis
 BivariateTools          Handling Missing Values
-EquationsModelling      Equations Modelling
-MissingValues           Handling Missing Values
 MultivariateDistribution
-                        Multivariate Normal and Student-t Distributions
-RegressionModelling     Univariate Regression Modelling
-RegressionTests         Regression Tests
+                        Multivariate Skew Normal and Student-t
+                        Distributions
+RegressionInterface     Univariate Regression Modelling
+RegressionTestsInterface
+                        Regression Tests
 RollingAnalysis         Rolling Analysis
 TechnicalAnalysis       Tools for the Technical Analysis
-VectorMatrixAddon       Vector/Matrix Arithmetics and Linear Algebra
