@@ -1,3 +1,4 @@
+BasicExtensions         Modify and Extend R Methods
 BivariateBinning        Square and Hexagonal Data Binning
 BivariateGridding       Bivariate Gridded Data Sets
 BivariateInterpolation
@@ -13,7 +14,6 @@ HypothesisTesting       Tests Class Representation and Utilities
 McKinnonPValues         McKinnon's Unit Root p Values
 PlotUtilities           Explorative Data Analysis
 PortableInnovations     Generator for Portable Random Innovations
-RmetricsUtilities       Modify and Extend R Methods
 SkewnessKurtosis        Skdewness and Kurtosis
 TimeSeriesData          Time Series Data Sets
 VectorMatrixAddon       Vector/Matrix Arithmetics and Linear Algebra
