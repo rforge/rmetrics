@@ -56,7 +56,7 @@
  
 
 rarchmCopula =
-function(n, alpha = NULL, type = 1:22)
+function(n, alpha = NULL, type = paste(1:22))
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -65,7 +65,8 @@ function(n, alpha = NULL, type = 1:22)
     # FUNCTION:
     
     # Type:
-    type = as.integer(type[1])
+    type = match.arg(type)
+    Type = as.integer(type)
     
     # Alpha:
     if (is.null(alpha)) alpha = .archmParam(type)$param
@@ -73,7 +74,7 @@ function(n, alpha = NULL, type = 1:22)
     # Check alpha:
     check = .archmCheck(alpha, type)
     
-    if (type == 1) {
+    if (Type == 1) {
         # Use faster Algorithm:
         ans = .rNo1Copula(n, alpha)
     } else {
@@ -265,7 +266,7 @@ function(n, alpha = NULL, doplot = FALSE)
 
 
 parchmCopula = 
-function(u = 0.5, v = u, alpha = NULL, type = 1:22,
+function(u = 0.5, v = u, alpha = NULL, type = paste(1:22),
 output = c("vector", "list"), alternative = FALSE )
 {   # A function implemented by Diethelm Wuertz
 
@@ -355,7 +356,7 @@ function(type = c("persp", "contour"), B = 10)
 
 
 .parchm1Copula =
-function(u = 0.5, v = u, alpha = NULL, type = 1:22, 
+function(u = 0.5, v = u, alpha = NULL, type = paste(1:22), 
 output = c("vector", "list") )
 {   # A function implemented by Diethelm Wuertz
 
@@ -374,8 +375,11 @@ output = c("vector", "list") )
     # Match Arguments:
     output = match.arg(output)
     
+    # Type:
+    type = match.arg(type)
+    Type = as.integer(type)
+    
     # Settings:
-    type = as.integer(type[1])
     if (is.null(alpha)) {
         alpha = .archmParam(type)$param
     }
@@ -389,34 +393,34 @@ output = c("vector", "list") )
     }
  
     # Copula:
-    if (alpha == 0 & type == 1) {
+    if (alpha == 0 & Type == 1) {
         C.uv = pfrechetCopula(u, v, type = "pi")
-    } else if (alpha == 1 & type == 3) {
+    } else if (alpha == 1 & Type == 3) {
         C.uv = pfrechetCopula(u, v, type = "psp") 
-    } else if (alpha == 0 & type == 7) {
+    } else if (alpha == 0 & Type == 7) {
         C.uv = pfrechetCopula(u, v, type = "w")
-    } else if (alpha == 0 & type == 9) {
+    } else if (alpha == 0 & Type == 9) {
         C.uv = pfrechetCopula(u, v, type = "pi")
-    } else if (alpha == 0 & type == 10) {
+    } else if (alpha == 0 & Type == 10) {
         C.uv = pfrechetCopula(u, v, type = "pi")
-    } else if (alpha == 0 & type == 11) {
+    } else if (alpha == 0 & Type == 11) {
         C.uv = pfrechetCopula(u, v, type = "pi")
-    } else if (alpha == 1 & type == 13) {
+    } else if (alpha == 1 & Type == 13) {
         C.uv = pfrechetCopula(u, v, type = "pi")
-    } else if (alpha == 0 & type == 19) {
+    } else if (alpha == 0 & Type == 19) {
         C.uv = pfrechetCopula(u, v, type = "psp")
-    } else if (alpha == 0 & type == 20) {
+    } else if (alpha == 0 & Type == 20) {
         C.uv = pfrechetCopula(u, v, type = "pi")
-    } else if (alpha == 1 & type == 21) {
+    } else if (alpha == 1 & Type == 21) {
         C.uv = pfrechetCopula(u, v, type = "w")
-    } else if (alpha == 0 & type == 22) {
+    } else if (alpha == 0 & Type == 22) {
         C.uv = pfrechetCopula(u, v, type = "pi")
     } else {
         C.uv = .invPhi(.Phi(u, alpha, type) + .Phi(v, alpha, type), alpha, type)
     } 
     
     # Requires special attention:
-    if (type == 20) {
+    if (type == "20") {
         C.uv = C.uv + (1-sign(C.uv)) * pfrechetCopula(u, v, type = "m")
     }
     
@@ -453,7 +457,7 @@ output = c("vector", "list") )
 
 
 .parchm2Copula = 
-function(u = 0.5, v = u, alpha = NULL, type = 1:20,
+function(u = 0.5, v = u, alpha = NULL, type = paste(1:20),
 output = c("vector", "list") )
 {   # A function implemented by Diethelm Wuertz
 
@@ -471,8 +475,11 @@ output = c("vector", "list") )
     # Match Arguments:
     output = match.arg(output)
     
+    # Type:
+    type = match.arg(type)
+    Type = as.integer(type)
+    
     # Settings:
-    type = as.integer(type[1])
     if (is.null(alpha)) {
         alpha = .archmParam(type)$param
     }
@@ -486,92 +493,92 @@ output = c("vector", "list") )
     }
     
     # Copula:
-    if (alpha == 0 & type == 1) {
+    if (alpha == 0 & Type == 1) {
         C.uv = pfrechetCopula(u, v, type = "pi")
-    } else if (alpha == 1 & type == 3) {
+    } else if (alpha == 1 & Type == 3) {
         C.uv = pfrechetCopula(u, v, type = "psp") 
-    } else if (alpha == 0 & type == 7) {
+    } else if (alpha == 0 & Type == 7) {
         C.uv = pfrechetCopula(u, v, type = "w")
-    } else if (alpha == 0 & type == 9) {
+    } else if (alpha == 0 & Type == 9) {
         C.uv = pfrechetCopula(u, v, type = "pi")
-    } else if (alpha == 0 & type == 10) {
+    } else if (alpha == 0 & Type == 10) {
         C.uv = pfrechetCopula(u, v, type = "pi")
-    } else if (alpha == 0 & type == 11) {
+    } else if (alpha == 0 & Type == 11) {
         C.uv = pfrechetCopula(u, v, type = "pi")
-    } else if (alpha == 1 & type == 13) {
+    } else if (alpha == 1 & Type == 13) {
         C.uv = pfrechetCopula(u, v, type = "pi")
-    } else if (alpha == 0 & type == 19) {
+    } else if (alpha == 0 & Type == 19) {
         C.uv = pfrechetCopula(u, v, type = "psp")
-    } else if (alpha == 0 & type == 20) {
+    } else if (alpha == 0 & Type == 20) {
         C.uv = pfrechetCopula(u, v, type = "pi")
     } else {    
-        if (type == 1) {# Clayton Copula
+        if (Type == 1) {# Clayton Copula
             C.uv = (u^(-alpha)+v^(-alpha)-1)^(-1/alpha) 
         }   
-        if (type == 2) {
+        if (Type == 2) {
             X = 1-((1-u)^alpha+(1-v)^alpha)^(1/alpha)
             Y = rep(0, times = length(X))
             C.uv = apply(cbind(X, Y), 1, max) 
         } 
-        if (type == 3) {
+        if (Type == 3) {
             C.uv = u*v/(1-alpha*(1-u)*(1-v)) 
         }  
-        if (type == 4) { # Gumbel Copula 
+        if (Type == 4) { # Gumbel Copula 
             C.uv = exp( -((-log(u))^(alpha)+(-log(v))^(alpha))^(1/alpha)) 
         }  
-        if (type == 5) { # Frank Copula
+        if (Type == 5) { # Frank Copula
             C.uv = -1/alpha*log(1+(exp(-alpha*u)-1)*
                 (exp(-alpha*v)-1)/(exp(-alpha)-1)) }
-        if (type == 6) {
+        if (Type == 6) {
             C.uv = 1-((1-u)^alpha+(1-v)^alpha-(1-u)^alpha*
                 (1-v)^alpha)^(1/alpha) 
         }  
-        if (type == 7) {
+        if (Type == 7) {
             X = alpha*u*v+(1-alpha)*(u+v-1)
             Y = rep(0, times = length(X))
             C.uv = apply(cbind(X, Y), 1, max) 
         }  
-        if (type == 8) {
+        if (Type == 8) {
             X = (alpha^2*u*v-(1-u)*(1-v))/(alpha^2-(alpha-1)^2*(1-u)*(1-v))
             Y = rep(0, times = length(X))
             C.uv = apply(cbind(X, Y), 1, max) 
         }     
-        if (type == 9) {
+        if (Type == 9) {
             C.uv = u*v*exp(-alpha*log(u)*log(v)) 
         }   
-        if (type == 10) {
+        if (Type == 10) {
             C.uv = u*v/(1+(1-u^alpha)*(1-v^alpha))^(1/alpha) 
         }  
-        if (type == 11) {
+        if (Type == 11) {
             X = (u^alpha*v^alpha-2*(1-u^alpha)*(1-v^alpha))^(1/alpha)
             Y = rep(0, times = length(X))
             C.uv = apply(cbind(X, Y), 1, max) 
         }     
-        if (type == 12) {
+        if (Type == 12) {
             C.uv = (1+((u^(-1)-1)^alpha+(v^(-1)-1)^alpha)^(1/alpha))^(-1) 
         } 
-        if (type == 13) {
+        if (Type == 13) {
             C.uv = exp(1-((1-log(u))^alpha+(1-log(v))^alpha-1)^(1/alpha)) 
         }
-        if (type == 14) {
+        if (Type == 14) {
             C.uv = (1+((u^(-1/alpha)-1)^alpha +
                 (v^(-1/alpha)-1)^alpha)^(1/alpha))^(-alpha) 
         }
-        if (type == 15) {
+        if (Type == 15) {
             X = (1-((1-u^(1/alpha))^alpha + 
                 (1-v^(1/alpha))^alpha )^(1/alpha) )^alpha
             Y = rep(0, times = length(X))
             C.uv = apply(cbind(X, Y), 1, max) 
         }       
-        if (type == 16) {
+        if (Type == 16) {
             C.uv = 1/2*((u+v-1-alpha*(1/u+1/v-1))+
                 sqrt((u+v-1-alpha*(1/u+1/v-1))^2+4*alpha)) 
         }
-        if (type == 17) {
+        if (Type == 17) {
             C.uv = (1+((1+u)^(-alpha)-1)*
                 ((1+v)^(-alpha)-1)/(2^(-alpha)-1))^(-1/alpha)-1 
         }
-        if (type == 18) {
+        if (Type == 18) {
             eps = 1/10^8
             u = u - eps*(1-sign(1-u))
             v = v - eps*(1-sign(1-v))
@@ -579,15 +586,15 @@ output = c("vector", "list") )
             Y = rep(0, times = length(X))
             C.uv = apply(cbind(X, Y), 1, max) 
         }  
-        if (type == 19) {
+        if (Type == 19) {
             C.uv = alpha/log(exp(alpha/u)+exp(alpha/v)-exp(alpha)) 
         }
-        if (type == 20) {
+        if (Type == 20) {
             a.range = "(0, Inf)"
             C.uv = (log(exp(1/u^alpha)+exp(1/v^alpha)-exp(1)))^(-1/alpha) 
             C.uv = C.uv + (1-sign(C.uv)) * pfrechetCopula(u, v, type = "m")
         }  
-        if (type == 21) {
+        if (Type == 21) {
             # NOT YET IMPLEMENTED
             warning("No. 21 alternative not active")
             C.uv = NA
@@ -596,7 +603,7 @@ output = c("vector", "list") )
                 output = output )
             return(C.uv)
         }
-        if (type == 22) {
+        if (Type == 22) {
             # NOT YET IMPLEMENTED
             warning("No. 22 alternative not active")
             C.uv = NA
@@ -889,7 +896,7 @@ function(B = 5)
 
 
 darchmCopula = 
-function(u = 0.5, v = u, alpha = NULL, type = 1:22,
+function(u = 0.5, v = u, alpha = NULL, type = paste(1:22),
 output = c("vector", "list"), alternative = FALSE )
 {   # A function implemented by Diethelm Wuertz
 
@@ -976,7 +983,7 @@ function(type = c("persp", "contour"), B = 10)
 
 
 .darchm1Copula = 
-function(u = 0.5, v = u, alpha = NULL, type = 1:22, output = 
+function(u = 0.5, v = u, alpha = NULL, type = paste(1:22), output = 
 c("vector", "list")) 
 {   # A function implemented by Diethelm Wuertz
 
@@ -993,8 +1000,11 @@ c("vector", "list"))
     # Match Arguments:
     output = match.arg(output)
     
+    # Type:
+    type = match.arg(type)
+    Type = as.integer(type)
+    
     # Settings:
-    type = as.integer(type[1])
     if (is.null(alpha)) {
         alpha = .archmParam(type)$param
     }
@@ -1038,7 +1048,7 @@ c("vector", "list"))
 
 
 .darchm2Copula = 
-function(u = 0.5, v = u, alpha = NULL, type = 1:22, output = 
+function(u = 0.5, v = u, alpha = NULL, type = paste(1:22), output = 
 c("vector", "list")) 
 {   # A function implemented by Diethelm Wuertz
 
@@ -1060,8 +1070,11 @@ c("vector", "list"))
     # Match Arguments:
     output = match.arg(output)
     
+    # Type:
+    type = match.arg(type)
+    Type = as.integer(type)
+    
     # Settings:
-    type = as.integer(type[1])
     if (is.null(alpha)) {
         alpha = .archmParam(type)$param
     }
@@ -1076,11 +1089,11 @@ c("vector", "list"))
     }
     
     # Density:
-    if (type == 1) { 
+    if (Type == 1) { 
         c.uv = (1 + a)*u^(-1 - a)*v^(-1 - a) *
             (-1 + u^(-a) + v^(-a))^(-2 - a^(-1)) 
     }
-    if (type == 2) { 
+    if (Type == 2) { 
         # NOT YET IMPLEMENTED!
         c.uv = NA 
         # USE:
@@ -1089,13 +1102,13 @@ c("vector", "list"))
             output = output)  
         return(c.uv)
     }
-    if (type == 3) { 
+    if (Type == 3) { 
         c.uv = (-1 + a^2*(-1 + u + v - u*v) - 
             a*(-2 + u + v + u*v)) /
             (-1 + a*(-1 + u)*(-1 + v))^3 
     }
-    if (type == 4) { 
-        # Matteis yields wrong results
+    if (Type == 4) { 
+        # Matteis yields wrong results!
         # c.uv = ((-log(u))^(-1 + a)*(-1 + a + ((-log(u))^a + 
         #    (-log(v))^a)^a^(-1))*((-log(u))^a + 
         #    (-log(v))^a)^(-2 + a^(-1))*(-log(v))^(-1 + a))/
@@ -1114,16 +1127,16 @@ c("vector", "list"))
             (-log(u))^(2*alpha)+2*(-log(u))^alpha*(-log(v))^alpha +
             (-log(v))^(2*alpha))
     }
-    if (type == 5) { 
+    if (Type == 5) { 
         c.uv = (a*exp(a*(1 + u + v))*(-1 + exp(a)))/(exp(a) - 
             exp(a + a*u) + exp(a*(u + v)) - exp(a + a*v))^2 
     }
-    if (type == 6) { 
+    if (Type == 6) { 
         c.uv = (1 - u)^(-1 + a)*(a - (-1 + (1 - u)^a)*(-1 + 
             (1 - v)^a)) * ((1 - u)^a + (1 - v)^a - (1 - u)^a *
             (1 - v)^a)^(-2 + a^(-1)) * (1 - v)^(-1 + a) 
     }
-    if (type == 7) { 
+    if (Type == 7) { 
         # NOT YET IMPLEMENTED!
         c.uv = NA 
         # USE:
@@ -1132,7 +1145,7 @@ c("vector", "list"))
             output = output) 
         return(c.uv)
     }
-    if (type == 8) { 
+    if (Type == 8) { 
         # NOT YET IMPLEMENTED!
         c.uv = NA 
         # USE:
@@ -1141,15 +1154,15 @@ c("vector", "list"))
             output = output)  
         return(c.uv)
     }
-    if (type == 9) { 
+    if (Type == 9) { 
         c.uv = (1 - a - a*log(v) + a*log(u)*(-1 + a*log(v))) /
             exp(a*log(u)*log(v)) 
     }
-    if (type == 10) { 
+    if (Type == 10) { 
         c.uv = (2 - v^a + u^a*(-1 + v^a))^(-2 - a^(-1)) *
             (4 - 2*v^a + u^a*(-2 - (-1 + a)*v^a)) 
     }
-    if (type == 11) {
+    if (Type == 11) {
         # NOT YET IMPLEMENTED!
         c.uv = NA 
         # USE:
@@ -1158,7 +1171,7 @@ c("vector", "list"))
             output = output)  
         return(c.uv) 
     }
-    if (type == 12) {
+    if (Type == 12) {
         c.uv = ((-1+u^(-1))^a*(-1+a+((-1+u^(-1))^a + 
             (-1+v^(-1))^a)^a^(-1)+a*((-1+u^(-1))^a + 
             (-1+v^(-1))^a)^a^(-1))*((-1+u^(-1))^a + 
@@ -1166,7 +1179,7 @@ c("vector", "list"))
             ((-1+u)*u*(1+((-1+u^(-1))^a +
             (-1+v^(-1))^a)^a^(-1))^3*(-1+v)*v) 
     }
-    if (type == 13) {
+    if (Type == 13) {
         c.uv = (exp(1 - (-1 + (1 - log(u))^a + 
             (1 - log(v))^a)^a^(-1)) *
             (1 - log(u))^(-1 + a)*(-1 + a + (-1 + 
@@ -1175,7 +1188,7 @@ c("vector", "list"))
             (1 - log(v))^a)^(-2 + a^(-1)) *
             (1 - log(v))^(-1 + a))/(u*v) 
     }
-    if (type == 14) {
+    if (Type == 14) {
         c.uv = ((-1+u^(-a^(-1)))^a*(-1+v^(-a^(-1)))^a *
             ((-1+u^(-a^(-1)))^a + 
             (-1+v^(-a^(-1)))^a)^(-2+a^(-1)) *
@@ -1185,7 +1198,7 @@ c("vector", "list"))
             (-1+v^(-a^(-1)))^a)^a^(-1))) /
             (a*u*(-1+u^a^(-1))*v*(-1+v^a^(-1))) 
     }
-    if (type == 15) {
+    if (Type == 15) {
         # NOT YET IMPLEMENTED!
         c.uv = NA 
         # USE:
@@ -1194,20 +1207,20 @@ c("vector", "list"))
             output = output) 
         return(c.uv)
     }
-    if (type == 16) {
+    if (Type == 16) {
         c.uv = (2*a*(a^2 + u^2*v^2 + a*(u^2 + v^2))) /
             (sqrt(4*a + (-1 + u - a*(-1 + u^(-1) + v^(-1)) + v)^2) *
             (u^2*v^2*(-1 + u + v)^2 + a^2*(u + v - u*v)^2 + 
             2*a*u*v*(u^2*(-1 + v) - (-1 + v)*v + u*(1 - v + v^2)))) 
     }
-    if (type == 17) {
+    if (Type == 17) {
         c.uv = (2^a*((-1 + 2^a)*a*(1 + u)^a*(1 + v)^a + 2^a*(-1 + 
             (1 + u)^a) * (-1 + (1 + v)^a)))/((1 + u)*(1 + v)*(2^a - 
             2^a*(1 + u)^a - 2^a*(1 + v)^a + (1 + u)^a*(1 + v)^a)^2 *
             (1 + ((-1 + (1 + u)^(-a)) * (-1 + (1 + v)^(-a))) /
             (-1 + 2^(-a)))^a^(-1)) 
     }
-    if (type == 18) {
+    if (Type == 18) {
         # NOT YET IMPLEMENTED!
         c.uv = NA 
         # USE:
@@ -1216,18 +1229,18 @@ c("vector", "list"))
             output = output) 
         return(c.uv) 
     }
-    if (type == 19) {
+    if (Type == 19) {
         c.uv = (a^3*exp(a*(u^(-1) + v^(-1)))*(2 + log(-exp(a) + 
             exp(a/u) + exp(a/v))))/((-exp(a) + exp(a/u) + 
             exp(a/v))^2*u^2*v^2*log(-exp(a) + exp(a/u) + exp(a/v))^3) 
     }
-    if (type == 20) {
+    if (Type == 20) {
         c.uv = (exp(u^(-a) + v^(-a))*u^(-1 - a)*v^(-1 - a) *
             log(-exp(1) + exp(u^(-a)) + exp(v^(-a)))^(-2 - a^(-1)) *
             (1 + a + a*log(-exp(1) + exp(u^(-a)) + exp(v^(-a))))) /
             (-exp(1) + exp(u^(-a)) + exp(v^(-a)))^2 
     }
-    if (type == 21) {
+    if (Type == 21) {
         # NOT YET IMPLEMENTED!
         c.uv = NA 
         # USE:
@@ -1236,7 +1249,7 @@ c("vector", "list"))
             output = output) 
         return(c.uv) 
     }
-    if (type == 22) {
+    if (Type == 22) {
         # NOT YET IMPLEMENTED!
         c.uv = NA 
         # USE:

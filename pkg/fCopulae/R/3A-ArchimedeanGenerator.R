@@ -62,7 +62,7 @@
 
 
 .archmParam =
-function(type = 1:22)
+function(type = paste(1:22))
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -79,9 +79,9 @@ function(type = 1:22)
     
     # FUNCTION:
     
-    # Settings:
+    # Type:
     type = match.arg(type)
-    type = as.integer(type)
+    Type = as.integer(type)
     
     # Parameter Values:
     B = Inf
@@ -91,8 +91,8 @@ function(type = 1:22)
     
     # Parameter List:
     ans = list(copula = type)
-    ans$param = c(alpha = Alpha[type])
-    ans$range = c(lower = lower[type], upper = upper[type]) 
+    ans$param = c(alpha = Alpha[Type])
+    ans$range = c(lower = lower[Type], upper = upper[Type]) 
     
     # Return Value: 
     ans
@@ -103,7 +103,7 @@ function(type = 1:22)
    
   
 .archmRange = 
-function(type = 1:22, B = Inf)
+function(type = paste(1:22), B = Inf)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -111,13 +111,17 @@ function(type = 1:22, B = Inf)
     
     # FUNCTION:
     
+    # Type:
+    type = match.arg(type)
+    Type = as.integer(type)
+    
     # Range:
-    lower=c(-1, 1,-1, 1,-B, 1,  0, 1, 0, 0, 0, 1, 0, 1, 1, 0,-B, 2, 0, 0, 1, 0)
-    upper=c( B, B, 1, B, B, B,  1, B, 1, 1,.5, B, B, B, B, B, B, B, B, B, B, 1)
+    lower = c(-1, 1,-1, 1,-B, 1, 0, 1, 0, 0, 0, 1, 0, 1, 1, 0,-B, 2, 0, 0, 1, 0)
+    upper = c( B, B, 1, B, B, B, 1, B, 1, 1,.5, B, B, B, B, B, B, B, B, B, B, 1)
     
     # Return Value:
-    ans = cbind(lower[type], upper[type])
-    rownames(ans) = as.character(type)
+    ans = cbind(lower[Type], upper[Type])
+    rownames(ans) = type
     colnames(ans) = c("lower", "upper")
     ans
 }
@@ -127,7 +131,7 @@ function(type = 1:22, B = Inf)
 
 
 .archmCheck =
-function(alpha = 0.5, type = 1:22)
+function(alpha = 0.5, type = paste(1:22))
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -135,13 +139,13 @@ function(alpha = 0.5, type = 1:22)
     
     # FUNCTION:
     
-    # Type"
+    # Type:
     type = match.arg(type)
-    type = as.integer(type)
+    Type = as.integer(type)
     
     # Check:
     ans = TRUE
-    if (type < 1 | type > 22) {
+    if (Type < 1 | Type > 22) {
         print(c(type = type))
         stop("type must be in the range 1 ... 22")
     }
@@ -171,11 +175,12 @@ function(alpha = 0.5, type = 1:22)
 
 
 Phi = 
-function(x, alpha = NULL, type = 1:22, inv = FALSE, deriv = c(0, 1, 2))
+function(x, alpha = NULL, type = paste(1:22), inv = FALSE, deriv = c(0, 1, 2))
 {   # A function implemented by Diethelm Wuertz
 
-    # Settings:
+    # Type:
     type = match.arg(type)
+    Type = as.integer(type)
     deriv = match.arg(deriv)
     
     # Default alpha:
@@ -389,7 +394,7 @@ function()
 
 
 .Phi = 
-function(x, alpha = NULL, type = 1:22)
+function(x, alpha = NULL, type = paste(1:22))
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -398,7 +403,8 @@ function(x, alpha = NULL, type = 1:22)
     # FUNCTION:
     
     # Type:
-    type = as.integer(type[1])
+    type = match.arg(type)
+    Type = as.integer(type)
     
     # Missing x:
     if (missing(x)) x = (0:10)/10
@@ -500,6 +506,7 @@ function(alpha, type)
 {   # A function implemented by Diethelm Wuertz
 
     # Phi(0):
+    type = as.integer(type)
     if (type == 1) phi0 = if (alpha < 0) -1/alpha else Inf
     else if (type ==  2) phi0 = 1
     else if (type ==  3) phi0 = Inf
@@ -532,7 +539,7 @@ function(alpha, type)
 
 
 .PhiFirstDer  = 
-function(x, alpha = NULL, type = 1:22) 
+function(x, alpha = NULL, type = paste(1:22)) 
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -541,7 +548,8 @@ function(x, alpha = NULL, type = 1:22)
     # FUNCTION:
     
     # Type:
-    type = as.integer(type[1])
+    type = match.arg(type)
+    Type = as.integer(type)
     
     # Missing x:
     if (missing(x)) x = (0:10)/10
@@ -556,80 +564,80 @@ function(x, alpha = NULL, type = 1:22)
     
     # The functions were created by MAPLE:
     N = length(x)
-    Type = "NA"
-    if (type == 1) 
-        if (alpha == -1) Type = "W"
-        else if (alpha == 0) Type = "Pi"
-        else if (alpha == 1) Type = "L"
+    cType = "NA"
+    if (Type == 1) 
+        if (alpha == -1) cType = "W"
+        else if (alpha == 0) cType = "Pi"
+        else if (alpha == 1) cType = "L"
         else f1 = -x^(-alpha-1)
-    if (type == 2) 
-        if (alpha == 1) Type = "W"
+    if (Type == 2) 
+        if (alpha == 1) cType = "W"
         else f1 = -(1-x)^alpha*alpha/(1-x)
-    if (type == 3) 
-        if (alpha == 0) Type = "Pi"
-        else if (alpha == 1) Type = "L"
+    if (Type == 3) 
+        if (alpha == 0) cType = "Pi"
+        else if (alpha == 1) cType = "L"
         else f1 = (alpha/x-(1-alpha*(1-x))/x^2)/(1-alpha*(1-x))*x
-    if (type == 4) 
-        if (alpha == 1) Type = "Pi"
+    if (Type == 4) 
+        if (alpha == 1) cType = "Pi"
         else f1 = (-log(x))^alpha*alpha/x/log(x)
-    if (type == 5) 
-        if (alpha == 0) Type = "Pi"
+    if (Type == 5) 
+        if (alpha == 0) cType = "Pi"
         else f1 = alpha*exp(-alpha*x)/(exp(-alpha*x)-1)
-    if (type == 6) 
-        if (alpha == 1) Type = "Pi"
+    if (Type == 6) 
+        if (alpha == 1) cType = "Pi"
         else f1 = -(1-x)^alpha*alpha/(1-x)/(1-(1-x)^alpha)
-    if (type == 7) 
-        if (alpha == 0) Type = "W"
-        else if (alpha == 1) Type = "Pi"
+    if (Type == 7) 
+        if (alpha == 0) cType = "W"
+        else if (alpha == 1) cType = "Pi"
         else f1 = -alpha/(alpha*x+1-alpha)
-    if (type == 8) 
-        if (alpha == 1) Type = "W"
+    if (Type == 8) 
+        if (alpha == 1) cType = "W"
         else f1 = -1/(1+x*(-1+alpha))-(1-x)/(1+x*(-1+alpha))^2*(-1+alpha)
-    if (type == 9) 
-        if (alpha == 0) Type = "Pi"
+    if (Type == 9) 
+        if (alpha == 0) cType = "Pi"
         else f1 = -alpha/x/(1-alpha*log(x))
-    if (type == 10) 
-        if (alpha == 0) Type = "Pi"
+    if (Type == 10) 
+        if (alpha == 0) cType = "Pi"
         else f1 = -2*x^(-alpha)*alpha/x/(2*x^(-alpha)-1)
-    if (type == 11) 
-        if (alpha == 0) Type = "Pi"
+    if (Type == 11) 
+        if (alpha == 0) cType = "Pi"
         else f1 = -x^alpha*alpha/x/(2-x^alpha)
-    if (type == 12) 
-        if (alpha == 1) Type = "L"
+    if (Type == 12) 
+        if (alpha == 1) cType = "L"
         else f1 = -(1/x-1)^alpha*alpha/x^2/(1/x-1)
-    if (type == 13) 
-        if (alpha == 1) Type = "Pi"
+    if (Type == 13) 
+        if (alpha == 1) cType = "Pi"
         else f1 = -(1-log(x))^alpha*alpha/x/(1-log(x))
-    if (type == 14) 
-        if (alpha == 1) Type = "L"
+    if (Type == 14) 
+        if (alpha == 1) cType = "L"
         else f1 = -(x^(-1/alpha)-1)^alpha*x^(-1/alpha)/x/(x^(-1/alpha)-1)
-    if (type == 15) 
-        if (alpha == 1) Type = "W"
+    if (Type == 15) 
+        if (alpha == 1) cType = "W"
         else f1 = -(1-x^(1/alpha))^alpha*x^(1/alpha)/x/(1-x^(1/alpha))
-    if (type == 16) 
-        if (alpha == 0) Type = "W"
+    if (Type == 16) 
+        if (alpha == 0) cType = "W"
         else f1 = -alpha/x^2*(1-x)-alpha/x-1
-    if (type == 17) 
-        if (alpha == -1) Type = "Pi"
+    if (Type == 17) 
+        if (alpha == -1) cType = "Pi"
         else f1 = (1+x)^(-alpha)*alpha/(1+x)/((1+x)^(-alpha)-1)
-    if (type == 18) 
+    if (Type == 18) 
         f1 = -alpha/(-1+x)^2*exp(alpha/(-1+x))
-    if (type == 19) 
-        if (alpha == 0) Type = "L"
+    if (Type == 19) 
+        if (alpha == 0) cType = "L"
         else f1 = -alpha/x^2*exp(alpha/x)
-    if (type == 20) 
-        if (alpha == 0) Type = "Pi"
+    if (Type == 20) 
+        if (alpha == 0) cType = "Pi"
         else f1 = -x^(-alpha)*alpha/x*exp(x^(-alpha))
-    if (type == 21) 
-        if (alpha == 1) Type = "W"
+    if (Type == 21) 
+        if (alpha == 1) cType = "W"
         else f1 = -(1-(1-x)^alpha)^(-(-1+alpha)/alpha)*(1-x)^(-1+alpha)
-    if (type == 22) 
-        if (alpha == 0) Type = "Pi"
+    if (Type == 22) 
+        if (alpha == 0) cType = "Pi"
         else f1 = -x^(-1+alpha)*alpha/(2*x^alpha-x^(2*alpha))^(1/2)
     
-    if (Type == "Pi") f1 = -1/x
-    if (Type == "W") f1 = rep(-1, times = N)
-    if (Type == "L") f1 = -1/x^2
+    if (cType == "Pi") f1 = -1/x
+    if (cType == "W") f1 = rep(-1, times = N)
+    if (cType == "L") f1 = -1/x^2
         
     # Return Value:
     f1
@@ -640,7 +648,7 @@ function(x, alpha = NULL, type = 1:22)
 
 
 .PhiSecondDer  = 
-function(x, alpha = NULL, type = 1:22) 
+function(x, alpha = NULL, type = paste(1:22)) 
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -649,7 +657,8 @@ function(x, alpha = NULL, type = 1:22)
     # FUNCTION:
     
     # Type:
-    type = as.integer(type[1])
+    type = match.arg(type)
+    Type = as.integer(type)
     
     # Missing x:
     if (missing(x)) x = (0:10)/10
@@ -665,89 +674,89 @@ function(x, alpha = NULL, type = 1:22)
     # The functions were created by MAPLE:
     a = alpha
     N = length(x)
-    Type = "NA"
-    if (type == 1)       
-        if (alpha == -1) Type = "W"
-        else if (alpha == 0) Type = "Pi"
-        else if (alpha == 1) Type = "L"
+    cType = "NA"
+    if (Type == 1)       
+        if (alpha == -1) cType = "W"
+        else if (alpha == 0) cType = "Pi"
+        else if (alpha == 1) cType = "L"
         else f2 = x^(-a-2)*a+x^(-a-2)
-    if (type == 2)  
-        if (alpha == 1) Type = "W"
+    if (Type == 2)  
+        if (alpha == 1) cType = "W"
         else f2 = (1-x)^(a-2)*a^2-(1-x)^(a-2)*a
-    if (type == 3) 
-        if (alpha == 0) Type = "Pi"
+    if (Type == 3) 
+        if (alpha == 0) cType = "Pi"
         else if (alpha == 1) Type = "L"
         else f2 = -1/x^2*(a-1)*(1-a+2*x)/(1-a+x)^2
-    if (type == 4) 
-        if (alpha == 1) Type = "Pi"
+    if (Type == 4) 
+        if (alpha == 1) cType = "Pi"
         else f2 = a*((-log(x))^(a-2)*a+(-log(x))^(a-1)-(-log(x))^(a-2))/x^2
-    if (type == 5) 
-        if (alpha == 0) Type = "Pi"
+    if (Type == 5) 
+        if (alpha == 0) cType = "Pi"
         else f2 = a^2*exp(-a*x)/(exp(-a*x)-1)^2
-    if (type == 6) 
-        if (alpha == 1) Type = "Pi"
+    if (Type == 6) 
+        if (alpha == 1) cType = "Pi"
         else f2 = a*((1-x)^(a-2)*a-(1-x)^(a-2)+(1-x)^(2*a-2))/(-1+(1-x)^a)^2
-    if (type == 7) 
-        if (alpha == 0) Type = "W"
-        else if (alpha == 1) Type = "Pi"
+    if (Type == 7) 
+        if (alpha == 0) cType = "W"
+        else if (alpha == 1) cType = "Pi"
         else f2 = alpha^2/(alpha*x+1-alpha)^2
-    if (type == 8) 
-        if (alpha == 1) Type = "W"
+    if (Type == 8) 
+        if (alpha == 1) cType = "W"
         else f2 = 2*(a-1)*a/(1+a*x-x)^3
-    if (type == 9) 
-        if (alpha == 0) Type = "Pi"
+    if (Type == 9) 
+        if (alpha == 0) cType = "Pi"
         else f2 = -a*(-1+a*log(x)+a)/x^2/(-1+a*log(x))^2
-    if (type == 10) 
-        if (alpha == 0) Type = "Pi"
+    if (Type == 10) 
+        if (alpha == 0) cType = "Pi"
         else f2 = -2*a*(x^a*a-2+x^a)/(-2+x^a)^2/x^2
-    if (type == 11) 
-        if (alpha == 0) Type = "Pi"
+    if (Type == 11) 
+        if (alpha == 0) cType = "Pi"
         else f2 = -a*(2*x^(a-2)*a-2*x^(a-2)+x^(2*a-2))/(-2+x^a)^2
-    if (type == 12) 
-        if (alpha == 1) Type = "L"
+    if (Type == 12) 
+        if (alpha == 1) cType = "L"
         else f2 = -(-(x-1)/x)^a*a*(-a+2*x-1)/x^2/(x-1)^2
-    if (type == 13) 
-        if (alpha == 1) Type = "Pi"
+    if (Type == 13) 
+        if (alpha == 1) cType = "Pi"
         else f2 = a*((1-log(x))^(a-2)*a+(1-log(x))^(a-1)-(1-log(x))^(a-2))/x^2
-    if (type == 14) 
-        if (alpha == 1) Type = "L"
+    if (Type == 14) 
+        if (alpha == 1) cType = "L"
         else f2 = ((x^(-1/a)-1)^(a-2)*x^(-2*(a+1)/a)*a+(x^(-1/a)-1)^(a-1) *
             x^(-(1+2*a)/a)+(x^(-1/a)-1)^(a-1)*x^(-(1+2*a)/a) *
             a-(x^(-1/a)-1)^(a-2)*x^(-2*(a+1)/a))/a
-    if (type == 15)  
-        if (alpha == 1) Type = "W"
+    if (Type == 15)  
+        if (alpha == 1) cType = "W"
         else f2 = ((1-x^(1/a))^(a-2)*x^(-2*(a-1)/a)*a-(1-x^(1/a))^(a-1) *
             x^(-(-1+2*a)/a)+(1-x^(1/a))^(a-1)*x^(-(-1+2*a)/a) *
             a-(1-x^(1/a))^(a-2)*x^(-2*(a-1)/a))/a
-    if (type == 16) 
-        if (alpha == 0) Type = "W"
+    if (Type == 16) 
+        if (alpha == 0) cType = "W"
         else f2 = 2*a/x^3
-    if (type == 17) 
-        if (alpha == -1) Type = "Pi"
+    if (Type == 17) 
+        if (alpha == -1) cType = "Pi"
         else f2 = a*((1+x)^(a-2)*a+2*(1+x)^(a-2)*a*x+(1+x)^(a-2)*a*x^2 -
             1+(1+x)^(a-2)+2*(1+x)^(a-2)*x+(1+x)^(a-2)*x^2) /
             (-1+(1+x)^a)^2/(1+x)^2
-    if (type == 18) 
+    if (Type == 18) 
         f2 = a*exp(a/(x-1))*(2*x-2+a)/(x-1)^4
-    if (type == 19) 
-        if (alpha == 0) Type = "L"
+    if (Type == 19) 
+        if (alpha == 0) cType = "L"
         else f2 = a*exp(a/x)*(2*x+a)/x^4
-    if (type == 20) 
-        if (alpha == 0) Type = "Pi"
+    if (Type == 20) 
+        if (alpha == 0) cType = "Pi"
         else f2 = a*exp(x^(-a))*(x^(-a-2)*a+x^(-a-2)+x^(-2*a-2)*a)
-    if (type == 21) 
-        if (alpha == 1) Type = "W"
+    if (Type == 21) 
+        if (alpha == 1) cType = "W"
         else f2 = -(1-(1-x)^a)^(-(-1+2*a)/a)*(1-x)^(2*a-2) +
             (1-(1-x)^a)^(-(-1+a)/a)*(1-x)^(a-2)*a -
             (1-(1-x)^a)^(-(-1+a)/a)*(1-x)^(a-2) + 
             (1-(1-x)^a)^(-(-1+2*a)/a)*(1-x)^(2*a-2)*a
-    if (type == 22) 
-        if (alpha == 0) Type = "Pi"
+    if (Type == 22) 
+        if (alpha == 0) cType = "Pi"
         else f2 = -a/x^2*(a*x^(2*a)-2*x^(2*a)+x^(3*a))/(2*x^a-x^(2*a))^(3/2)
         
-    if (Type == "Pi") f2 = 1/x^2
-    if (Type == "W") f2 = rep(0, times = N)
-    if (Type == "L") f2 = 2/x^3
+    if (cType == "Pi") f2 = 1/x^2
+    if (cType == "W") f2 = rep(0, times = N)
+    if (cType == "L") f2 = 2/x^3
                 
     # Return Value:
     f2
@@ -758,7 +767,7 @@ function(x, alpha = NULL, type = 1:22)
 
 
 .invPhi = 
-function(x, alpha = NULL, type = 1:22)
+function(x, alpha = NULL, type = paste(1:22))
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -767,7 +776,8 @@ function(x, alpha = NULL, type = 1:22)
     # FUNCTION:
     
     # Type:
-    type = as.integer(type[1])
+    type = match.arg(type)
+    Type = as.integer(type)
     
     # Missing x:
     if (missing(x)) x = (0:10)/10
@@ -780,80 +790,80 @@ function(x, alpha = NULL, type = 1:22)
    
     # Inverse Generator:
     N = length(x)
-    Type = "NA"
-    if (type == 1)       
-        if (alpha == -1) Type = "W"
-        else if (alpha == 0) Type = "Pi"
-        else if (alpha == 1) Type = "L"
+    cType = "NA"
+    if (Type == 1)       
+        if (alpha == -1) cType = "W"
+        else if (alpha == 0) cType = "Pi"
+        else if (alpha == 1) cType = "L"
         else finv = exp(-log(1 + alpha*x)/alpha) 
-    if (type == 2)  
-        if (alpha == 1) Type = "W"
+    if (Type == 2)  
+        if (alpha == 1) cType = "W"
         else finv = 1 - x^(1/alpha)
-    if (type == 3) 
-        if (alpha == 0) Type = "Pi"
-        else if (alpha == 1) Type = "L"
+    if (Type == 3) 
+        if (alpha == 0) cType = "Pi"
+        else if (alpha == 1) cType = "L"
         else finv = (1-alpha) / (exp(x)-alpha)
-    if (type == 4) 
-        if (alpha == 1) Type = "Pi"
+    if (Type == 4) 
+        if (alpha == 1) cType = "Pi"
         else finv = exp(-x^(1/alpha))
-    if (type == 5) 
-        if (alpha == 0) Type = "Pi"
+    if (Type == 5) 
+        if (alpha == 0) cType = "Pi"
         else finv = -log(1+exp(-x)*( exp(-alpha)-1 ) ) / alpha
-    if (type == 6) 
-        if (alpha == 1) Type = "Pi"
+    if (Type == 6) 
+        if (alpha == 1) cType = "Pi"
         else finv = 1 - (1 - exp(-x))^(1/alpha)
-    if (type == 7)  
-        if (alpha == 0) Type = "W"
+    if (Type == 7)  
+        if (alpha == 0) cType = "W"
         else if (alpha == 1) Type = "Pi"
         else finv = (1-exp(x)+alpha*exp(x))/alpha/exp(x)
-    if (type == 8) 
-        if (alpha == 1) Type = "W"
+    if (Type == 8) 
+        if (alpha == 1) cType = "W"
         else finv = (1-x) / ((alpha-1)*x+1) 
-    if (type == 9) 
-        if (alpha == 0) Type = "Pi"
+    if (Type == 9) 
+        if (alpha == 0) cType = "Pi"
         else  finv = exp((1-exp(x))/alpha) 
-    if (type == 10)  
-        if (alpha == 0) Type = "Pi"
+    if (Type == 10)  
+        if (alpha == 0) cType = "Pi"
         else finv = ((1+exp(x))/2 )^(-1/alpha)
-    if (type == 11) 
-        if (alpha == 0) Type = "Pi"
+    if (Type == 11) 
+        if (alpha == 0) cType = "Pi"
         else finv = (2-exp(x))^(1/alpha)
-    if (type == 12) 
-        if (alpha == 1) Type = "L"
+    if (Type == 12) 
+        if (alpha == 1) cType = "L"
         else finv = 1/(1+x^(1/alpha))
-    if (type == 13) 
-        if (alpha == 1) Type = "Pi"
+    if (Type == 13) 
+        if (alpha == 1) cType = "Pi"
         else finv = exp(1-(1+x)^(1/alpha))
-    if (type == 14) 
-        if (alpha == 1) Type = "L"
+    if (Type == 14) 
+        if (alpha == 1) cType = "L"
         else finv = (1+x^(1/alpha))^(-alpha)
-    if (type == 15)  
-        if (alpha == 1) Type = "W"
+    if (Type == 15)  
+        if (alpha == 1) cType = "W"
         else finv = (1-x^(1/alpha))^alpha
-    if (type == 16) 
-        if (alpha == 0) Type = "W"
+    if (Type == 16) 
+        if (alpha == 0) cType = "W"
         else finv = (1-alpha-x)/2 + sqrt(((1-alpha-x)^2)/4+alpha)
-    if (type == 17) 
-        if (alpha == -1) Type = "Pi"
+    if (Type == 17) 
+        if (alpha == -1) cType = "Pi"
         else finv = (exp(-x)*(2^(-alpha)-1)+1)^(-1/alpha) - 1
-    if (type == 18) 
+    if (Type == 18) 
         finv = 1+alpha/log(x)
-    if (type == 19) 
-        if (alpha == 0) Type = "L"
+    if (Type == 19) 
+        if (alpha == 0) cType = "L"
         else finv = alpha / log(x+exp(alpha))
-    if (type == 20) 
-        if (alpha == 0) Type = "Pi"
+    if (Type == 20) 
+        if (alpha == 0) cType = "Pi"
         else finv = exp( -log((log(x+exp(1))))/alpha) 
-    if (type == 21) 
-        if (alpha == 1) Type = "W"
+    if (Type == 21) 
+        if (alpha == 1) cType = "W"
         else finv = 1-(1-(1-x)^alpha)^(1/alpha)
-    if (type == 22) 
-        if (alpha == 0) Type = "Pi"
+    if (Type == 22) 
+        if (alpha == 0) cType = "Pi"
         else finv = (1-sin(x))^(1/alpha)
           
-    if (Type == "Pi") finv = exp(-x)
-    if (Type == "W") finv = 1 - x
-    if (Type == "L") finv = 1 / (x+1)   
+    if (cType == "Pi") finv = exp(-x)
+    if (cType == "W") finv = 1 - x
+    if (cType == "L") finv = 1 / (x+1)   
      
     # Large x Limit:
     finv[which(x>=.Phi0(alpha, type))] = 0
@@ -867,7 +877,7 @@ function(x, alpha = NULL, type = 1:22)
 
 
 .invPhiFirstDer = 
-function(x, alpha = NULL, type = 1:22)
+function(x, alpha = NULL, type = paste(1:22))
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -876,7 +886,8 @@ function(x, alpha = NULL, type = 1:22)
     # FUNCTION:
     
     # Type:
-    type = as.integer(type[1])
+    type = match.arg(type)
+    Type = as.integer(type)
     
     # Missing x:
     if (missing(x)) x = (0:10)/10
@@ -889,84 +900,84 @@ function(x, alpha = NULL, type = 1:22)
     
     # Generator:
     N = length(x)
-    Type = "NA"
+    cType = "NA"
     a = alpha
     y = x
     ln = log
-    if (type == 1)       
-        if (alpha == -1) Type = "W"
-        else if (alpha == 0) Type = "Pi"
-        else if (alpha == 1) Type = "L"
+    if (Type == 1)       
+        if (alpha == -1) cType = "W"
+        else if (alpha == 0) cType = "Pi"
+        else if (alpha == 1) cType = "L"
         else finv1 = -(1+y*a)^(-(a+1)/a)
-    if (type == 2)  
-        if (alpha == 1) Type = "W"
+    if (Type == 2)  
+        if (alpha == 1) cType = "W"
         else finv1 = -y^(-(a-1)/a)/a
-    if (type == 3) 
-        if (alpha == 0) Type = "Pi"
-        else if (alpha == 1) Type = "L"
+    if (Type == 3) 
+        if (alpha == 0) cType = "Pi"
+        else if (alpha == 1) cType = "L"
         else  finv1 = (a-1)/(exp(y)-1)^2*exp(y)
-    if (type == 4) 
-        if (alpha == 1) Type = "Pi"
+    if (Type == 4) 
+        if (alpha == 1) cType = "Pi"
         else finv1 = -y^(-(a-1)/a)/a*exp(-y^(1/a))
-    if (type ==  5) 
-        if (alpha == 0) Type = "Pi"
+    if (Type ==  5) 
+        if (alpha == 0) cType = "Pi"
         else finv1 = (-1+exp(a))/(-1+exp(a)-exp(y+a))/a
-    if (type == 6) 
-        if (alpha == 1) Type = "Pi"
+    if (Type == 6) 
+        if (alpha == 1) cType = "Pi"
         else finv1 = -exp(-(-ln(exp(y)-1)+y)/a)/(exp(y)-1)/a
-    if (type == 7)  
-        if (alpha == 0) Type = "W"
+    if (Type == 7)  
+        if (alpha == 0) cType = "W"
         else if (alpha == 1) Type = "Pi"
         else finv1 = (-exp(y)+a*exp(y))/a/exp(y)-(1-exp(y)+a*exp(y))/a/exp(y)
-    if (type == 8) 
-        if (alpha == 1) Type = "W"
+    if (Type == 8) 
+        if (alpha == 1) cType = "W"
         else finv1 = -a/(1+y*a-y)^2
-    if (type == 9)  
-        if (alpha == 0) Type = "Pi"
+    if (Type == 9)  
+        if (alpha == 0) cType = "Pi"
         else finv1 = -1/a*exp((y*a-exp(y)+1)/a)
-    if (type == 10)  
-        if (alpha == 0) Type = "Pi"
+    if (Type == 10)  
+        if (alpha == 0) cType = "Pi"
         else finv1 = -1/(exp(y)+1)/a*exp((y*a+ln(2)-ln(exp(y)+1))/a)
-    if (type == 11) 
-        if (alpha == 0) Type = "Pi"
+    if (Type == 11) 
+        if (alpha == 0) cType = "Pi"
         else finv1 = -(-exp(y)+2)^(-(a-1)/a)/a*exp(y)
-    if (type == 12) 
-        if (alpha == 1) Type = "L"
+    if (Type == 12) 
+        if (alpha == 1) cType = "L"
         else finv1 = -1/(y^(1/a)+1)^2*y^(-(a-1)/a)/a
-    if (type == 13) 
-        if (alpha == 1) Type = "Pi"
+    if (Type == 13) 
+        if (alpha == 1) cType = "Pi"
         else finv1 = -(1+y)^(-(a-1)/a)/a*exp(-(1+y)^(1/a)+1)
-    if (type == 14) 
-        if (alpha == 1) Type = "L"
+    if (Type == 14) 
+        if (alpha == 1) cType = "L"
         else finv1 = -(y^(1/a)+1)^(-a-1)*y^(-(a-1)/a)
-    if (type == 15)  
-        if (alpha == 1) Type = "L"
+    if (Type == 15)  
+        if (alpha == 1) cType = "L"
         else finv1 = -(-y^(1/a)+1)^(a-1)*y^(-(a-1)/a)
-    if (type == 16)  
-        if (alpha == 0) Type = "W"
+    if (Type == 16)  
+        if (alpha == 0) cType = "W"
         else finv1 = -1/2+1/4/(a^2+2*a+2*a*y+1-2*y+y^2)^(1/2)*(2*a-2+2*y)
-    if (type == 17)  
-        if (alpha == -1) Type = "Pi"
+    if (Type == 17)  
+        if (alpha == -1) cType = "Pi"
         else finv1 = -(2^(-a)-1+exp(y))^(-1/a)*exp(1/a*y) *
             (-1+2^a)/a/(1-2^a+exp(y)*2^a)
-    if (type == 18) 
+    if (Type == 18) 
         finv1 = -a/ln(y)^2/y
-    if (type == 19)  
-        if (alpha == 0) Type = "L"
+    if (Type == 19)  
+        if (alpha == 0) cType = "L"
         else finv1 = -a/ln(exp(a)+y)^2/(exp(a)+y)
-    if (type == 20)  
-        if (alpha == 0) Type = "Pi"
+    if (Type == 20)  
+        if (alpha == 0) cType = "Pi"
         else finv1 = -ln(exp(1)+y)^(-(a+1)/a)/a/(exp(1)+y)
-    if (type == 21) 
-        if (alpha == 1) Type = "W"
+    if (Type == 21) 
+        if (alpha == 1) cType = "W"
         else finv1 = -exp((log(1-y)*a^2+log(-(1-y)^a+1))/a)/(-1+y)/((1-y)^a-1)
-    if (type == 22)  
-        if (alpha == 0) Type = "Pi"
+    if (Type == 22)  
+        if (alpha == 0) cType = "Pi"
         else finv1 = -cos(y)*(1-sin(y))^(-(-1+a)/a)/a
     
-    if (Type == "Pi") finv1 = -exp(-x)
-    if (Type == "W") finv1 = rep(-1, times = N)
-    if (Type == "L") finv1 = -1 / (x+1)^2
+    if (cType == "Pi") finv1 = -exp(-x)
+    if (cType == "W") finv1 = rep(-1, times = N)
+    if (cType == "L") finv1 = -1 / (x+1)^2
     
     # Large x Limit:
     finv1[which(x>=.Phi0(a, type))] = 0
@@ -980,7 +991,7 @@ function(x, alpha = NULL, type = 1:22)
 
 
 .invPhiSecondDer = 
-function(x, alpha = NULL, type = 1:22)
+function(x, alpha = NULL, type = paste(1:22))
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -989,7 +1000,8 @@ function(x, alpha = NULL, type = 1:22)
     # FUNCTION:
     
     # Type:
-    type = as.integer(type[1])
+    type = match.arg(type)
+    Type = as.integer(type)
     
     # Missing x:
     if (missing(x)) x = (0:10)/10
@@ -1002,71 +1014,71 @@ function(x, alpha = NULL, type = 1:22)
     
     # Generator:
     N = length(x)
-    Type = "NA"
+    cType = "NA"
     a = alpha
     y = x
     ln = log
-    if (type == 1) if (alpha == 0) finv2 = exp(-y) else finv2 = 
+    if (Type == 1) if (alpha == 0) finv2 = exp(-y) else finv2 = 
         finv2 = (1+y*a)^(-(2*a+1)/a)*(a+1)
-    if (type == 2)  
-        if (alpha == 1) Type = "W"
+    if (Type == 2)  
+        if (alpha == 1) cType = "W"
         else finv2 = y^(-(2*a-1)/a)*(a-1)/a^2    
-    if (type == 3) 
-        if (alpha == 0) Type = "Pi"
+    if (Type == 3) 
+        if (alpha == 0) cType = "Pi"
         else if (alpha == 1) Type = "L"
         else  finv2 = -(a-1)*exp(y)*(exp(y)+1)/(exp(y)-1)^3
-    if (type == 4) 
-        if (alpha == 1) Type = "Pi"
+    if (Type == 4) 
+        if (alpha == 1) cType = "Pi"
         else finv2 = exp(-y^(1/a))*(y^(-(2*a-1)/a)*a-y^(-(2*a-1)/a) +
             y^(-2*(a-1)/a))/a^2
-    if (type == 5) 
-        if (alpha == 0) Type = "Pi"
+    if (Type == 5) 
+        if (alpha == 0) cType = "Pi"
         else finv2 = (-1+exp(a))/(-1+exp(a)-exp(y+a))^2/a*exp(y+a)
-    if (type == 6) 
-        if (alpha == 1) Type = "Pi"
+    if (Type == 6) 
+        if (alpha == 1) cType = "Pi"
         else finv2 = (-exp(-(-ln(exp(y)-1)+y)/a) + 
             exp((ln(exp(y)-1)-y+y*a)/a)*a) / (exp(y)-1)^2/a^2
-    if (type == 7) 
-        if (alpha == 0) Type = "W"
+    if (Type == 7) 
+        if (alpha == 0) cType = "W"
         else if (alpha == 1) Type = "Pi"
         else finv2 = -(-exp(y)+a*exp(y))/a/exp(y)+(1-exp(y)+a*exp(y))/a/exp(y)
-    if (type == 8) 
-        if (alpha == 1) Type = "W"
+    if (Type == 8) 
+        if (alpha == 1) cType = "W"
         else finv2 = 2*a/(1+y*a-y)^3*(a-1)
-    if (type == 9)  
-        if (alpha == 0) Type = "Pi"
+    if (Type == 9)  
+        if (alpha == 0) cType = "Pi"
         else finv2 = -1/a^2*(a-exp(y))*exp((y*a-exp(y)+1)/a)
-    if (type == 10) 
-        if (alpha == 0) Type = "Pi"
+    if (Type == 10) 
+        if (alpha == 0) cType = "Pi"
         else finv2 = -(exp((y*a+ln(2)-ln(exp(y)+1))/a)*a-exp((2*y*a+ln(2) -
             ln(exp(y)+1))/a))/(exp(y)+1)^2/a^2
-    if (type == 11) 
-        if (alpha == 0) Type = "Pi"
+    if (Type == 11) 
+        if (alpha == 0) cType = "Pi"
         else finv2 = -exp(y)*((-exp(y)+2)^(-(2*a-1)/a)*exp(y)*a -
             (-exp(y)+2)^(-(2*a-1)/a)*exp(y)+(-exp(y)+2)^(-(a-1)/a)*a)/a^2
-    if (type == 12) 
-        if (alpha == 1) Type = "L"
+    if (Type == 12) 
+        if (alpha == 1) cType = "L"
         else finv2 = (y^(-2*(a-1)/a)+y^(-2*(a-1)/a)*a+y^(-(2*a-1)/a)*a -
             y^(-(2*a-1)/a))/(y^(1/a)+1)^3/a^2
-    if (type == 13)
-        if (alpha == 1) Type = "Pi"
+    if (Type == 13)
+        if (alpha == 1) cType = "Pi"
         else finv2 = exp(-(1+y)^(1/a)+1)*((1+y)^(1/a)*a-(1+y)^(1/a) +
             (1+y)^(-2*(a-1)/a)+2*(1+y)^(-2*(a-1)/a)*y +
             (1+y)^(-2*(a-1)/a)*y^2)/a^2/(1+2*y+y^2) 
-    if (type == 14) 
-        if (alpha == 1) Type = "L"
+    if (Type == 14) 
+        if (alpha == 1) cType = "L"
         else finv2 = ((y^(1/a)+1)^(-a-2)*y^(-2*(a-1)/a)*a + 
             (y^(1/a)+1)^(-a-2)*y^(-2*(a-1)/a)+(y^(1/a)+1)^(-a-1) *
             y^(-(2*a-1)/a)*a-(y^(1/a)+1)^(-a-1)*y^(-(2*a-1)/a))/a 
-    if (type == 15)  
-        if (alpha == 1) Type = "L"
+    if (Type == 15)  
+        if (alpha == 1) cType = "L"
         else finv2 = (a-1)*((-y^(1/a)+1)^(a-2)*y^(-2*(a-1)/a) +
             (-y^(1/a)+1)^(a-1)*y^(-(2*a-1)/a))/a
-    if (type == 16) 
-        if (alpha == 0) Type = "W"
+    if (Type == 16) 
+        if (alpha == 0) cType = "W"
         else finv2 = 2*a/(a^2+2*a+2*a*y+1-2*y+y^2)^(3/2)
-    if (type == 17) 
-        if (alpha == -1) Type = "Pi"
+    if (Type == 17) 
+        if (alpha == -1) cType = "Pi"
         else finv2 = (2^(-a)-1+exp(y))^(-1/a)*(exp(y*(a+1)/a) -
             2^(a+1)*exp(y*(a+1)/a)+exp(y*(a+1)/a)*4^a +
             exp(1/a*y)*2^(-a)-3*exp(1/a*y)+3*exp(1/a*y)*2^a -
@@ -1074,31 +1086,31 @@ function(x, alpha = NULL, type = 1:22)
             exp(y*(a+1)/a)*a- exp(y*(2*a+1)/a)*a*2^a -
             exp(y*(a+1)/a)*a*4^a+exp(y*(2*a+1)/a)*a*4^a)/a^2/(2^(-a)-1 +
             exp(y))/(1-2^a+exp(y)*2^a)^2
-    if (type == 18) 
+    if (Type == 18) 
         finv2 = a*(2+ln(y))/ln(y)^3/y^2
-    if (type == 19) 
-        if (alpha == 0) Type = "L"
+    if (Type == 19) 
+        if (alpha == 0) cType = "L"
         else finv2 = a*(2+ln(exp(a)+y))/ln(exp(a)+y)^3/(exp(a)+y)^2
     if (type == 20) 
-        if (alpha == 0) Type = "Pi"
+        if (alpha == 0) cType = "Pi"
         else finv2 = (ln(exp(1)+y)^(-(2*a+1)/a)*a +
             ln(exp(1)+y)^(-(2*a+1)/a) + 
             ln(exp(1)+y)^(-(a+1)/a)*a)/a^2/(exp(1)+y)^2
-    if (type == 21) 
-        if (alpha == 1) Type = "W"
+    if (Type == 21) 
+        if (alpha == 1) cType = "W"
         else finv2 = -(-(1-y)^a+1)^(1/a)*((1-y)^(2*a)-(1-y)^a -
             a*(1-y)^(2*a)+a*(1-y)^a+(1-y)^(2*a-2)*a -
             2*(1-y)^(2*a-2)*a*y+(1-y)^(2*a-2)*a*y^2 -(
             1-y)^(2*a-2)+2*(1-y)^(2*a-2)*y-(1-y)^(2*a-2)*y^2) /
             (-1+y)^2/(-(1-y)^(2*a)+2*(1-y)^a-1)
-    if (type == 22) 
-        if (alpha == 0) Type = "Pi"
+    if (Type == 22) 
+        if (alpha == 0) cType = "Pi"
         else finv2 = -(1-sin(y))^(1/a)*(cos(y)^2 + 
             a*sin(y)-2*sin(y)+a-2)/cos(y)^2/a^2
         
-    if (Type == "Pi") finv2 = exp(-x)
-    if (Type == "W") finv2 = rep(0, times = N)
-    if (Type == "L") finv2 = 2 / (x+1)^3
+    if (cType == "Pi") finv2 = exp(-x)
+    if (cType == "W") finv2 = rep(0, times = N)
+    if (cType == "L") finv2 = 2 / (x+1)^3
     
     # Large x Limit:
     finv2[which(x>=.Phi0(a, type))] = 0
@@ -1121,7 +1133,7 @@ function(x, alpha = NULL, type = 1:22)
 
 
 Kfunc =
-function(x, alpha = NULL, type = 1:22, inv = FALSE, lower = 1.0e-8)
+function(x, alpha = NULL, type = paste(1:22), inv = FALSE, lower = 1.0e-8)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -1129,8 +1141,9 @@ function(x, alpha = NULL, type = 1:22, inv = FALSE, lower = 1.0e-8)
     
     # FUNCTION:
     
-    # Settings
+    # Type:
     type = match.arg(type)
+    Type = as.integer(type)
     
     # Default alpha:
     if (is.null(alpha)) alpha = .archmParam(type)$param
@@ -1308,7 +1321,7 @@ function()
 
 
 .Kfunc =
-function(x, alpha = NULL, type = 1:22)
+function(x, alpha = NULL, type = paste(1:22))
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -1320,7 +1333,8 @@ function(x, alpha = NULL, type = 1:22)
     # FUNCTION:
     
     # Type:
-    type = as.integer(type[1])
+    type = match.arg(type)
+    Type = as.integer(type)
     
     # Missing x:
     if (missing(x)) x = (0:10)/10
@@ -1347,7 +1361,7 @@ function(x, alpha = NULL, type = 1:22)
 
 
 .invK = 
-function(x, alpha = NULL, type = 1:22, lower = 1.0e-8)
+function(x, alpha = NULL, type = paste(1:22), lower = 1.0e-8)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -1356,7 +1370,8 @@ function(x, alpha = NULL, type = 1:22, lower = 1.0e-8)
     # FUNCTION:
     
     # Type:
-    type = type[1]
+    type = match.arg(type)
+    Type = as.integer(type)
     
     # Alpha:
     if (is.null(alpha)) alpha = .archmParam(type)$param
@@ -1397,6 +1412,10 @@ function(x, alpha, type)
     
     # FUNCTION:
    
+    # Type:
+    type = match.arg(type)
+    Type = as.integer(type)
+    
     # Tabulated Values:
     iK = NULL
     for (i in 1:length(x)) {

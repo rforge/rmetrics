@@ -49,7 +49,7 @@ function (n, alpha = NULL, type = 1:22)
     
     # Match Arguments:
     type = match.arg(type)
-    type = as.integer(type)
+    Type = as.integer(type)
       
     # Settings:
     if (is.null(alpha)) alpha = .archmParam(type)$param
@@ -82,7 +82,8 @@ function(u, v = NULL, type = 1:22, ...)
     # FUNCTION:
     
     # Match Arguments:
-    type = as.integer(type[1])
+    type = match.arg(type)
+    Type = as.integer(type)
     
     # Settings:
     U = u

@@ -52,7 +52,7 @@
 
 
 archmTau =
-function(alpha = NULL, type = 1:22, lower = 1.0e-10)
+function(alpha = NULL, type = paste(1:22), lower = 1.0e-10)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -62,7 +62,7 @@ function(alpha = NULL, type = 1:22, lower = 1.0e-10)
     
     # Settings:
     type = match.arg(type)
-    type = as.integer(type)
+    Type = as.integer(type)
     
     # Alpha:
     if (is.null(alpha)) alpha = .archmParam(type)$param
@@ -95,7 +95,7 @@ function(alpha = NULL, type = 1:22, lower = 1.0e-10)
     
 
 .archmTau = 
-function(alpha = NULL, type = 1:22, lower = 1.0e-10)
+function(alpha = NULL, type = paste(1:22), lower = 1.0e-10)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -105,7 +105,7 @@ function(alpha = NULL, type = 1:22, lower = 1.0e-10)
     
     # Type:
     type = match.arg(type)
-    type = as.integer(type)
+    Type = as.integer(type)
     
     # Alpha:
     if (is.null(alpha)) alpha = .archmParam(type)$param
@@ -114,80 +114,80 @@ function(alpha = NULL, type = 1:22, lower = 1.0e-10)
     check = .archmCheck(alpha, type)
     
     # Select Type:
-    if (type == 1) {
+    if (Type == 1) {
         if (alpha == -1) return(-1)
         if (alpha == 0) return(0)
         tau = alpha/(alpha+2)
         return(tau)
-    } else if (type == 2) {
+    } else if (Type == 2) {
         if (alpha == 1) return(-1)
         tau = 1 - 2/alpha
         return(tau)
-    } else if (type == 3 & alpha == 0) {
+    } else if (Type == 3 & alpha == 0) {
         return(0)
         # tau numeric
-    } else if (type == 3 & alpha == 1) {
+    } else if (Type == 3 & alpha == 1) {
         return(1/3)
         # tau numeric
-    } else if (type == 4) {
+    } else if (Type == 4) {
         if (alpha == 1) return(0)
         tau = 1 - 1/alpha
         return(tau)
-    } else if (type == 5 & alpha == 0) {
+    } else if (Type == 5 & alpha == 0) {
         return(0)
         # tau numeric
-    } else if (type == 6 & alpha == 1) {
+    } else if (Type == 6 & alpha == 1) {
         return(0)
-    } else if (type == 7) {
+    } else if (Type == 7) {
         if (alpha == 0) return(1)
         if (alpha == 1) return(0)
         tau = 2*(1-alpha)*(alpha+log(1-alpha)-alpha*log(1-alpha))/alpha^2
         return(tau)
-    } else if (type == 8) {
+    } else if (Type == 8) {
         if (alpha == 1) return(-1) 
         tau = (-4+alpha)/(3*alpha)
         return(tau)
-    } else if (type == 9 & alpha == 0) { 
+    } else if (Type == 9 & alpha == 0) { 
         return(0)
         # tau numeric
-    } else if (type == 10 & alpha == 0) { 
+    } else if (Type == 10 & alpha == 0) { 
         return(0)
         # tau numeric
-    } else if (type == 11 & alpha == 0) { 
+    } else if (Type == 11 & alpha == 0) { 
         return(0)
-    } else if (type == 12) {
+    } else if (Type == 12) {
         tau = 1 - 2/(3*alpha)
         return(tau)
-    } else if (type == 13 & alpha == 1) { 
+    } else if (Type == 13 & alpha == 1) { 
         return(0)
         # tau numeric
-    } else if (type == 13 & alpha == 0) {
+    } else if (Type == 13 & alpha == 0) {
         return(-0.3613289) # 1e-8 value
-    } else if (type == 14) {
+    } else if (Type == 14) {
         tau = 1 - 4/(2+4*alpha) 
         return(tau)
-    } else if (type == 15) {
+    } else if (Type == 15) {
         if (alpha == 1) return(-1)
         tau = 1 + 4/(2-4*alpha)
         return(tau)
-    } else if (type == 16 & alpha == 0) { 
+    } else if (Type == 16 & alpha == 0) { 
         return(-1)
         # tau numeric
-    } else if (type == 17 & alpha == -1) { 
+    } else if (Type == 17 & alpha == -1) { 
         return(0)
         # tau numeric
-    } else if (type == 18) {
+    } else if (Type == 18) {
         tau = 1 - 4/(3*alpha)
         return(tau)
-    } else if (type == 19 & alpha == 0) { 
+    } else if (Type == 19 & alpha == 0) { 
         return(0)
         # tau numeric
-    } else if (type == 20 & alpha == 0) { 
+    } else if (Type == 20 & alpha == 0) { 
         return(1/3)
         # tau numeric
-    # } else if (type == 21) {
+    # } else if (Type == 21) {
         # tau numeric
-    # } else if (type == 22) {
+    # } else if (Type == 22) {
         # tau numeric
     } else {  
         # Integrate:
@@ -208,14 +208,14 @@ function(alpha = NULL, type = 1:22, lower = 1.0e-10)
 
 
 .archmTauRange =
-function(type = 1:22)
+function(type = paste(1:22))
 {   # A function implemented by Diethelm Wuertz
 
     # FUNCTION:
     
     # Type:
     type = match.arg(type)
-    type = as.integer(type)
+    Type = as.integer(type)
         
     # Range:
     range = matrix( c(
@@ -243,7 +243,7 @@ function(type = 1:22)
         22,     NA,    NA ), byrow = TRUE, ncol = 3 )
         
     # Result:
-    ans = range[type, ][-1]
+    ans = range[Type, ][-1]
     names(ans) = c("tau.lower", "tau.upper")
     attr(ans, "control")<-c(type = type)
     
@@ -256,14 +256,14 @@ function(type = 1:22)
 
 
 .archm2Tau = 
-function (alpha = NULL, type = 1:22, lower = 1e-6) 
+function (alpha = NULL, type = paste(1:22), lower = 1e-6) 
 {   # A function implemented by Diethelm Wuertz
 
     # Joe's [1997] alternative expression:
     
     # Type:
     type = match.arg(type)
-    type = as.integer(type)
+    Type = as.integer(type)
     
     # Alpha:
     if (is.null(alpha)) alpha = .archmParam(type)$param
@@ -289,7 +289,7 @@ function (alpha = NULL, type = 1:22, lower = 1e-6)
 
 
 archmRho =
-function(alpha = NULL, type = 1:22, method = c("integrate2d", "adapt"),
+function(alpha = NULL, type = paste(1:22), method = c("integrate2d", "adapt"),
 error = 1.0e-5)
 {   # A function implemented by Diethelm Wuertz
 
@@ -303,7 +303,7 @@ error = 1.0e-5)
     
     # Type:
     type = match.arg(type)
-    type = as.integer(type)
+    Type = as.integer(type)
     
     # Alpha:
     if (is.null(alpha)) alpha = .archmParam(type)$param
@@ -337,7 +337,7 @@ error = 1.0e-5)
 
 
 .archmRho =
-function(alpha = NULL, type = 1:22, method = c("integrate2d", "adapt"),
+function(alpha = NULL, type = paste(1:22), method = c("integrate2d", "adapt"),
 error = 1.0e-5)
 {   # A function implemented by Diethelm Wuertz
 
@@ -354,7 +354,7 @@ error = 1.0e-5)
     
     # Type:
     type = match.arg(type)
-    type = as.integer(type)
+    Type = as.integer(type)
     
     # Alpha:
     if (is.null(alpha)) alpha = .archmParam(type)$param
@@ -401,7 +401,7 @@ error = 1.0e-5)
 
 
 .archmGamma =
-function(alpha = 0.5, type = 1:22)
+function(alpha = 0.5, type = paste(1:22))
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -410,7 +410,8 @@ function(alpha = 0.5, type = 1:22)
     # FUNCTION:
     
     # Type:
-    type = type[1]
+    type = match.arg(type)
+    Type = as.integer(type)
     
     # Check alpha:
     check = .archmCheck(alpha, type)
@@ -444,7 +445,7 @@ function(alpha = 0.5, type = 1:22)
 
 
 archmTailCoeff =
-function(alpha = NULL, type = 1:22)
+function(alpha = NULL, type = paste(1:22))
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -453,7 +454,8 @@ function(alpha = NULL, type = 1:22)
     # FUNCTION:
     
     # Type:
-    type = as.integer(type[1])
+    type = match.arg(type)
+    Type = as.integer(type)
     
     # Alpha:
     if (is.null(alpha)) alpha = .archmParam(type)$param
@@ -479,7 +481,7 @@ function(alpha = NULL, type = 1:22)
 
 
 archmTailPlot =
-function(alpha = NULL, type = 1:22, tail = c("Upper", "Lower"))
+function(alpha = NULL, type = paste(1:22), tail = c("Upper", "Lower"))
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -492,7 +494,9 @@ function(alpha = NULL, type = 1:22, tail = c("Upper", "Lower"))
     # FUNCTION:
     
     # Match Arguments:
-    type = type[1]
+    # Type:
+    type = match.arg(type)
+    Type = as.integer(type)
     tail = match.arg(tail)
     
     # Settings:
