@@ -866,7 +866,7 @@ function(x, alpha = NULL, type = paste(1:22))
     if (cType == "L") finv = 1 / (x+1)   
      
     # Large x Limit:
-    finv[which(x>=.Phi0(alpha, type))] = 0
+    finv[which(x >= .Phi0(alpha, type))] = 0
     
     # Return Value:
     finv
@@ -980,7 +980,7 @@ function(x, alpha = NULL, type = paste(1:22))
     if (cType == "L") finv1 = -1 / (x+1)^2
     
     # Large x Limit:
-    finv1[which(x>=.Phi0(a, type))] = 0
+    finv1[which(x >= .Phi0(a, type))] = 0
         
     # Return Value:
     finv1
@@ -1384,7 +1384,7 @@ function(x, alpha = NULL, type = paste(1:22), lower = 1.0e-8)
     p = x
     z = NULL
     for (P in p) {
-        if (P > 1 -lower/2) {
+        if (P > 1 - lower/2) {
             res = 1    
         } else if (P < .Kfunc(0, alpha, type) + lower/2 ) {
             res = 0 
@@ -1404,11 +1404,11 @@ function(x, alpha = NULL, type = paste(1:22), lower = 1.0e-8)
 
 
 .invK2 =
-function(x, alpha, type)
+function(x, alpha, type = paste(1:22))
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Compute from tabulated values
+    #   Computes from tabulated values
     
     # FUNCTION:
    

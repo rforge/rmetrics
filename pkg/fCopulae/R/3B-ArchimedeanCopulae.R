@@ -82,8 +82,8 @@ function(n, alpha = NULL, type = paste(1:22))
         X = runif(n)
         Y = runif(n)
         t = .invK(Y, alpha, type)
-        U = .invPhi(X*.Phi(t))
-        V = .invPhi((1-X)*.Phi(t))
+        U = .invPhi(X*.Phi(t, alpha, type), alpha, type)
+        V = .invPhi((1-X)*.Phi(t, alpha, type), alpha, type)
         ans = cbind(U, V)
         # Add Control Attribute:
         colnames(ans) = NULL

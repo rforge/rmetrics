@@ -66,31 +66,31 @@
 
 \usage{
     
-rarchmCopula(n, alpha = NULL, type = 1:22)
-parchmCopula(u = 0.5, v = u, alpha = NULL, type = 1:22, output = 
+rarchmCopula(n, alpha = NULL, type = paste(1:22))
+parchmCopula(u = 0.5, v = u, alpha = NULL, type = paste(1:22), output = 
     c("vector", "list"), alternative = FALSE )
-darchmCopula(u = 0.5, v = u, alpha = NULL, type = 1:22, output = 
+darchmCopula(u = 0.5, v = u, alpha = NULL, type = paste(1:22), output = 
     c("vector", "list"), alternative = FALSE )
    
 rarchmSlider(B = 10) 
 parchmSlider(type = c("persp", "contour"), B = 10)
 darchmSlider(type = c("persp", "contour"), B = 10)
     
-archmTau(alpha = NULL, type = 1:22, lower = 1.0e-10)
-archmRho(alpha = NULL, type = 1:22, method = c("integrate2d", "adapt"), 
+archmTau(alpha = NULL, type = paste(1:22), lower = 1.0e-10)
+archmRho(alpha = NULL, type = paste(1:22), method = c("integrate2d", "adapt"), 
     error = 1.0e-5)
     
-archmTailCoeff(alpha = NULL, type = 1:22)
-archmTailPlot(alpha = NULL, type = 1:22, tail = c("Upper", "Lower"))
+archmTailCoeff(alpha = NULL, type = paste(1:22))
+archmTailPlot(alpha = NULL, type = paste(1:22), tail = c("Upper", "Lower"))
    
-Phi(x, alpha = NULL, type = 1:22, inv = FALSE, deriv = c(0,1,2))
+Phi(x, alpha = NULL, type = paste(1:22), inv = FALSE, deriv = c(0, 1, 2))
 PhiSlider()
 
-Kfunc(x, alpha = NULL, type = 1:22, inv = FALSE, lower = 1.0e-8)
+Kfunc(x, alpha = NULL, type = paste(1:22), inv = FALSE, lower = 1.0e-8)
 KfuncSlider()
 
-archmCopulaSim(n, alpha = NULL, type = 1:22)
-archmCopulaFit(u, v = NULL, type = 1:22, \dots)
+archmCopulaSim(n, alpha = NULL, type = paste(1:22))
+archmCopulaFit(u, v = NULL, type = paste(1:22), \dots)
 
 }
 
