@@ -157,7 +157,7 @@ function(alpha = 0.5, type = paste(1:22))
     }
     
     # Return Value:
-    invisible()
+    invisible(TRUE)
 }
 
 
@@ -175,7 +175,7 @@ function(alpha = 0.5, type = paste(1:22))
 
 
 Phi = 
-function(x, alpha = NULL, type = paste(1:22), inv = FALSE, deriv = c(0, 1, 2))
+function(x, alpha = NULL, type = paste(1:22), inv = FALSE, deriv = paste(0:2))
 {   # A function implemented by Diethelm Wuertz
 
     # Type:
@@ -191,28 +191,28 @@ function(x, alpha = NULL, type = paste(1:22), inv = FALSE, deriv = c(0, 1, 2))
     
     # Phi Generator:
     if (inv) {
-        if (deriv == 0) {
+        if (deriv == "0") {
             ans = .invPhi(x, alpha, type)
             names(ans) = "invPhi"
         }
-        if (deriv == 1) {
+        if (deriv == "1") {
             ans = .invPhiFirstDer(x, alpha, type)
             names(ans) = "invPhiFirstDer"
         }
-        if (deriv == 2) {
+        if (deriv == "2") {
             ans = .invPhiSecondDer(x, alpha, type)
             names(ans) = "invPhiSecondDer"
         }
     } else {
-        if (deriv == 0) {
+        if (deriv == "0") {
             ans = .Phi(x, alpha, type)
             names(ans) = "Phi"
         }
-        if (deriv == 1) {
+        if (deriv == "1") {
             ans = .PhiFirstDer(x, alpha, type)
             names(ans) = "PhiFirstDer"
         }
-        if (deriv == 2) {
+        if (deriv == "2") {
             ans = .PhiSecondDer(x, alpha, type)
             names(ans) = "PhiSecondDer"
         }
@@ -297,22 +297,24 @@ function()
         Title = paste("Generator Phi - Copula No:", as.character(Copula), 
             "\nalpha = ", as.character(alpha), "  Strict = ", strict, 
             limitTitle)
-        phi.0 = .Phi(x = 0, alpha = alpha, type = Copula)
-        y = .Phi(x = x, alpha = alpha, type = Copula)
+        phi.0 = .Phi(x = 0, alpha = alpha, type = as.character(Copula))
+        y = .Phi(x = x, alpha = alpha, type = as.character(Copula))
         x = x[y < 1e6]
         y = y[y < 1e6]
         if (is.finite(y[1])) ylim = c(0, y[1]) else ylim = c(0, y[2])
         plot(x = x, y = y, type = "l", ylim = ylim, main = Title[1], 
             xlab = "t", ylab = paste("Phi |", RANGE))
         if (N < 100) points(x = x, y = y, pch = 19, cex = 0.5)
-        y.inv = .invPhi(x = y, alpha = alpha, type = Copula)
+        y.inv = .invPhi(x = y, alpha = alpha, type = as.character(Copula))
         lines(x = y.inv, y = y, col = "red", lty = 3)
         abline(h = 0, lty = 3)
         points(0, phi.0, col = "red", pch = 19) 
         
         # Plot phi first and second Derivative:
-        y1 = .PhiFirstDer(x = x, alpha = alpha, type = Copula)
-        y2 = .PhiSecondDer(x = x, alpha = alpha, type = Copula)
+        y1 = .PhiFirstDer(x = x, alpha = alpha, 
+            type = as.character(Copula))
+        y2 = .PhiSecondDer(x = x, alpha = alpha, 
+            type = as.character(Copula))
         r1 = max(abs(y1[is.finite(y1)]))
         r2 = max(abs(y2[is.finite(y2)]))
         if (r2 == 0) r2 = 1
@@ -342,8 +344,10 @@ function()
         # Plot invPhi first & second Derivative:
         y = y[y < .Phi0(alpha, Copula)]
         Title = "Inverse Phi 1st Derivative"
-        y1.inv = .invPhiFirstDer(x = y, alpha = alpha, type = Copula)
-        y2.inv = .invPhiSecondDer(x = y, alpha = alpha, type = Copula)
+        y1.inv = .invPhiFirstDer(x = y, alpha = alpha, 
+            type = as.character(Copula))
+        y2.inv = .invPhiSecondDer(x = y, alpha = alpha, 
+            type = as.character(Copula))
         r1 = max(abs(y1.inv[is.finite(y1.inv)]))
         r2 = max(abs(y2.inv[is.finite(y2.inv)]))
         if (r2 == 0) r2 = 1
@@ -1236,19 +1240,19 @@ function()
                 
         # Plot 1 - Kfunc: 
         x = (0:N)/N
-        y = .Kfunc(x = x, alpha = alpha, type = Copula)
+        y = .Kfunc(x = x, alpha = alpha, type = as.character(Copula))
         plot(x = x, y = y, ylim = c(0, 1), type = "l", xlab = "t", ylab = "K")
         title(main = paste("K - Archimedean Copula No:", as.character(Copula), 
             "\nalpha = ", as.character(alpha), "  Strict = ", strict, 
             limitTitle)) 
         if (N < 100) points(x = x, y = y, pch = 19, cex = 0.5)   
-        y10 = .Kfunc(x = (0:10)/10, alpha = alpha, type = Copula) 
-        invK10 = .invK2(y10, alpha = alpha, type = Copula)
+        y10 = .Kfunc(x = (0:10)/10, alpha = alpha, type = as.character(Copula)) 
+        invK10 = .invK2(y10, alpha = alpha, type = as.character(Copula))
         points(invK10, y10, col = "red")  
         text(x = 0.8, y = 0.075, labels = "Test: invK[invK]", col = "red")  
         
         # Plot 2 - archmTau:
-        tau = .archmTau(alpha = alpha, type = Copula)
+        tau = .archmTau(alpha = alpha, type = as.character(Copula))
         rho = approx(.ALPHA[, Copula], .RHO[, Copula], xout = alpha)$y
         plot(x = .ALPHA[, Copula], y = .TAU[, Copula], ylim = c(-1, 1), 
             type = "l", col = "red",
@@ -1258,8 +1262,10 @@ function()
         # points(x = .ALPHA[, Copula], y = .RHO[, Copula], pch = 19, cex = 0.5)
          
         points(x = alpha, y = tau, pch = 19, col = "red") 
-        abline(h = .archmTauRange(type = Copula)[1], lty =3, col = "steelblue")
-        abline(h = .archmTauRange(type = Copula)[2], lty =3, col = "steelblue")
+        abline(h = .archmTauRange(type = as.character(Copula))[1], lty =3, 
+            col = "steelblue")
+        abline(h = .archmTauRange(type = as.character(Copula))[2], lty =3, 
+            col = "steelblue")
         points(x = alpha, y = rho, col = "blue", pch = 19) 
         mtext("rho          ", 4, col = "blue", cex = 0.75)
         mtext("          tau", 4, col = "red ", cex = 0.75)
@@ -1273,7 +1279,7 @@ function()
         
         # Plot 3 - lambda U:
         # xTail = 1 - (1/2)^(1:20)
-        # Tail = .archmTail(alpha = alpha, type = Copula)
+        # Tail = .archmTail(alpha = alpha, type = as.character(Copula))
         # plot(x = xTail, y = Tail$lambdaU.Cuv, col = "blue",
         #     xlim = c(0, 1), ylim = c(0, 1), main = "Tail Dependence")
         # points(x = xTail, y = Tail$lambdaU.Phi, col = "red", pch = 3)
@@ -1281,9 +1287,9 @@ function()
         # Rho:
         # Rho = NULL
         # for ( a in Alpha)
-        #   Rho = c(Rho, archmRho(alpha = a, type = Copula))
+        #   Rho = c(Rho, archmRho(alpha = a, type = as.character(Copula)))
         # lines(x = Alpha, y = Rho, type = "l", col = "blue")
-        # rho =  archmRho(alpha = alpha, type = Copula)
+        # rho =  archmRho(alpha = alpha, type = as.character(Copula))
         # points(x = alpha, y = rho, col = "red", pty = 19)
         
         # plot(rnorm(100))

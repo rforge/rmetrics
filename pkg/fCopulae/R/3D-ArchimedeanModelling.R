@@ -41,7 +41,7 @@
 
 
 archmCopulaSim = 
-function (n, alpha = NULL, type = 1:22) 
+function (n, alpha = NULL, type = paste(1:22)) 
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -70,7 +70,7 @@ function (n, alpha = NULL, type = 1:22)
 
     
 archmCopulaFit =
-function(u, v = NULL, type = 1:22, ...)
+function(u, v = NULL, type = paste(1:22), ...)
 {   # A function implemented by Diethelm Wuertz
     
     # Description:

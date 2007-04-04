@@ -28,29 +28,16 @@
 
 
 ################################################################################
+# FUNCTION:                  ARCHIMEDEAN COPULAE PARAMETER:
+#  .archmParam                Sets Default parameters for an Archimedean copula
+#  .archmCheck                Checks if alpha is in the valid range
+#  .archmRange                Returns the range of valid alpha values
 # FUNCTION:                  ARCHIMEDEAN COPULAE PHI GENERATOR:
 #  Phi                        Computes Archimedean Phi, inverse and derivatives
 #  PhiSlider                  Displays interactively generator function
 # FUNCTION:                  ARCHIMEDEAN DENSITY K GENERATOR:
 #  Kfunc                      Computes Archimedean Density Kc and its Inverse
 #  KfuncSlider                Displays interactively the density and concordance
-# FUNCTION                   KENDALL'S TAU AND SPEARMAN'S RHO:
-#  archmTau                   Returns Kendall's tau for Archemedean copulae
-#  archmRho                   Returns Spearman's rho for Archemedean copulae
-# FUNCTION:                  ARCHIMEDEAN COPULAE TAIL COEFFICIENT:
-#  archmTailCoeff       X     Computes tail dependence for Archimedean copulae
-#  archmTailPlot        X     Plots Archimedean tail dependence function
-# FUNCTION:                  ARCHIMEDEAN COPULAE RANDOM VARIATES:
-#  rarchmCopula               Generates Archimedean copula random variates 
-# FUNCTION:                  ARCHIMEDEAN COPULAE PROBABILITY:
-#  parchmCopula               Computes Archimedean copula probability 
-#  parchmSlider               Displays interactively archimedean probability 
-# FUNCTION:                  ARCHIMEDEAN COPULAE DENSITY:
-#  darchmCopula               Computes Archimedean copula density 
-#  darchmSlider                Displays interactively archimedean density 
-# FUNCTION:                  ARCHIMEDEAN COPULAE PARAMETER FITTING:
-#  archmCopulaSim             Simulates bivariate elliptical copula
-#  archmCopulaFit             Fits the paramter of an elliptical copula
 ################################################################################
 
 
@@ -59,7 +46,7 @@ function()
 {
     # Help File:
     helpFile = function() { 
-        example(ArchimedeanCopulae, ask = FALSE)
+        example(ArchimedeanGenerator, ask = FALSE)
         return() 
     }
     checkIdentical(
@@ -74,7 +61,7 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.utilityFunctions = 
+test.archmParam = 
 function()
 {
 
@@ -82,13 +69,47 @@ function()
     args(.archmParam)
     
     # Parameters:
-    for (type in 1:22) {
+    for (type in paste(1:22)) {
         cat("\n")
         print(unlist(.archmParam(type)))
     }
     
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.archmCheck = 
+function()
+{
+    # Arguments ?
+    args(.archmCheck)
+    
     # Range:
-    for (type in 1:22) {
+    for (type in paste(1:22)) {
+        cat("\n")
+        print(.archmCheck(.archmParam(type)$param))
+    }
+
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.archmRange = 
+function()
+{
+    # Arguments ?
+    args(.archmRange)
+    
+    # Range:
+    for (type in paste(1:22)) {
         cat("\n")
         print(.archmRange(type))
     }
@@ -101,7 +122,7 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.generatorFunctionPhi = 
+test.Phi = 
 function()
 {
     # Arguments ?
@@ -109,33 +130,31 @@ function()
 
     # Call Generator Function Phi:
     for (type in 1:22) {
-        print(Phi(0.5, inv = TRUE, deriv = 0))
+        print(Phi(0.5, inv = TRUE, deriv = "0"))
         cat("\n")
     }
     for (type in 1:22) {
-        print(Phi(0.5, inv = TRUE, deriv = 1))
+        print(Phi(0.5, inv = TRUE, deriv = "1"))
         cat("\n")
     }
     for (type in 1:22) {
-        print(Phi(0.5, inv = TRUE, deriv = 2))
+        print(Phi(0.5, inv = TRUE, deriv = "2"))
         cat("\n")
     }
     
     for (type in 1:22) {
-        print(Phi(0.5, inv = FALSE, deriv = 0)) 
+        print(Phi(0.5, inv = FALSE, deriv = "0")) 
         cat("\n")
     }
     for (type in 1:22) {
-        print(Phi(0.5, inv = FALSE, deriv = 1))
+        print(Phi(0.5, inv = FALSE, deriv = "1"))
         cat("\n")
     }
     for (type in 1:22) {
-        print(Phi(0.5, inv = FALSE, deriv = 2))
+        print(Phi(0.5, inv = FALSE, deriv = "2"))
         cat("\n")
     }
-    
-    # Try Slider:
-    # PhiSlider()
+
     
     # Return Value:
     return()    
@@ -145,7 +164,23 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.densityFunctionK = 
+test.PhiSlider = 
+function()
+{
+    # Try Slider:
+    # PhiSlider()
+    
+    NA
+    
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.Kfunc = 
 function()
 {
     # Arguments ?
@@ -165,204 +200,18 @@ function()
 # ------------------------------------------------------------------------------
  
     
-test.dependenceMeasures = 
+test.KfuncSlider = 
 function()
 {
-    # Arguments ?
-    args(archmTau)
+    # Try Slider:
+    # KfuncSlider()
     
-    # Tau Value:
-    for (type in 1:22) {
-        print(archmTau(type = type))
-        cat("\n")
-    }
-    
-    # Vector Tau Value:
-    for (type in 1:22) {
-        alpha = .archmParam(type)$param
-        print(archmTau(c(alpha, alpha+0.1), type = type))
-        cat("\n")
-    }
-    
-    # Tau Range:
-    for (type in 1:22) {
-        range = .archmTauRange(type)
-        print(range) 
-        cat("\n")
-    }
-    
-    # Rho Value:
-    for (type in 1:22) {
-        print(archmRho(type = type))
-        cat("\n")
-    }
-    
-    # Vector Rho Value - Method "integrate2d":
-    for (type in 1:22) {
-        alpha = .archmParam(type)$param
-        print(archmRho(c(alpha, alpha+0.1), type = type, 
-            method = "integrate2d", error = 1e-5))
-        cat("\n")
-    }
-    
-    # Vector Rho Value - Method "adapt":
-    # ...
+    NA
     
     # Return Value:
     return()    
 }
-    
-
-# ------------------------------------------------------------------------------
- 
-    
-test.tailCoefficient = 
-function()
-{
-    # archmTailCoeff  X  Computes tail dependence for Archimedean copulae
-    # archmTailPlot   X  Plots Archimedean tail dependence function
-
-    NA
- 
-    # Return Value:
-    return()    
-} 
-
-
-# ------------------------------------------------------------------------------  
- 
-    
-test.rCopulae = 
-function()
-{
-    # Random Variates - Check all Types:
-    for (type in 1:22) {
-        R = rarchmCopula(n = 5, alpha = NULL, type = type)
-        print(R)
-        cat("\n")
-    }
-    
-    # Try Slider:
-    # rarchmSlider()
-      
-    # Return Value:
-    return()    
-} 
-
-
-# ------------------------------------------------------------------------------  
-    
-
-test.pCopulae = 
-function()
-{
-    # u - single input value:
-    parchmCopula()
-    parchmCopula(0.5)
-    parchmCopula(0.5, 0.25)
-    
-    # u - input vector:
-    U = (0:10)/10
-    V = U
-    parchmCopula(U)
-    parchmCopula(u = U, v = V)
-    parchmCopula(u = U, v = rev(V))
-    
-    # u - input matrix:
-    parchmCopula(cbind(U, V))
-    
-    # u - input list:
-    u = grid2d()
-    u
-    parchmCopula(u) # output = "vector"
-    parchmCopula(u, output = "list")
-    diff = parchmCopula(u) - parchmCopula(u, alternative = TRUE)
-    mean(abs(diff))
    
-    # Check All Types:
-    u = grid2d()
-    for (type in 1:22) {
-        cop1 = parchmCopula(u, type = type, output = "list")
-        cop2 = parchmCopula(u, type = type, output = "list", alternative = TRUE)
-        cat("Type: ", type, "\t Difference: ", mean(abs(cop1$z-cop2$z)), "\n")
-        persp(cop1, main = type, theta = -40, phi = 30, col = "steelblue")
-    }
-        
-    # Try Slider:
-    # parchmSlider()
-    # parchmSlider("contour")    
-  
-    # Return Value:
-    return()    
-} 
-
-
-# ------------------------------------------------------------------------------  
-    
-
-test.dCopulae = 
-function()
-{
-    # u - single input value:
-    darchmCopula()
-    darchmCopula(0.5)
-    darchmCopula(0.5, 0.25)
-    
-    # u - input vector:
-    U = (0:10)/10
-    V = U
-    darchmCopula(U)
-    darchmCopula(u = U, v = V)
-    darchmCopula(u = U, v = rev(V))
-    
-    # u - input matrix:
-    darchmCopula(cbind(U, V))
-    
-    # u - input list:
-    u = grid2d()
-    u
-    darchmCopula(u) # output = "vector"
-    darchmCopula(u, output = "list")
-    
-    # Check All Types:
-    u = grid2d(x = (0:25)/25)
-    for (type in 1:22) {
-        cop1 = darchmCopula(u, type = type, output = "list")
-        cop2 = darchmCopula(u, type = type, output = "list", 
-            alternative = TRUE)
-        diff = abs(cop1$z-cop2$z)
-        diff = diff[!is.na(diff)]
-        cat("Type: ", type, "\t Difference: ", mean(diff), "\n")
-        persp(cop2, main = type, theta = -40, phi = 30, col = "steelblue")
-    }
-        
-    # Try Slider:
-    # darchmSlider()
-    # darchmSlider("contour")
-  
-    # Return Value:
-    return()    
-} 
-
-
-# ------------------------------------------------------------------------------  
-    
-
-test.parameterFitting = 
-function()
-{
-
-    TYPE = 5
-    R = archmCopulaSim(n = 1000, alpha = 1, type = TYPE)
-    R[1:10, ]
-    plot(R, pch = 19)
-    fit = archmCopulaFit(u = R[,1], v = R[,2], type = TYPE)
-    fit
-    
-    # Return Value:
-    return()    
-} 
-        
 
 # ------------------------------------------------------------------------------
 

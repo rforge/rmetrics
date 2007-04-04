@@ -83,7 +83,7 @@ archmRho(alpha = NULL, type = paste(1:22), method = c("integrate2d", "adapt"),
 archmTailCoeff(alpha = NULL, type = paste(1:22))
 archmTailPlot(alpha = NULL, type = paste(1:22), tail = c("Upper", "Lower"))
    
-Phi(x, alpha = NULL, type = paste(1:22), inv = FALSE, deriv = c(0, 1, 2))
+Phi(x, alpha = NULL, type = paste(1:22), inv = FALSE, deriv = paste(0:2))
 PhiSlider()
 
 Kfunc(x, alpha = NULL, type = paste(1:22), inv = FALSE, lower = 1.0e-8)
@@ -112,8 +112,8 @@ archmCopulaFit(u, v = NULL, type = paste(1:22), \dots)
         }
     \item{deriv}{
         [Phi] - \cr
-        an integer value. Should the function itself, \code{deriv=0}, 
-        or the first \code{deriv=1}, or second \code{deriv=2} derivative 
+        an integer value. Should the function itself, \code{deriv="0"}, 
+        or the first \code{deriv="1"}, or second \code{deriv="2"} derivative 
         be evaluated?
         }
     \item{error}{
