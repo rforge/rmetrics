@@ -28,9 +28,12 @@
 
 
 ################################################################################
-# FUNCTION:                  ELLIPTICAL GENERATOR AND RELATED FUNCTIONS:
-#  gfunc                      Generator function for elliptical distributions
-#  gfuncSlider                Slider for generator, density and probability
+# FUNCTION                   KENDALL'S TAU AND SPEARMAN'S RHO:
+#  archmTau                   Returns Kendall's tau for Archemedean copulae
+#  archmRho                   Returns Spearman's rho for Archemedean copulae
+# FUNCTION:                  ARCHIMEDEAN COPULAE TAIL COEFFICIENT:
+#  archmTailCoeff       X     Computes tail dependence for Archimedean copulae
+#  archmTailPlot        X     Plots Archimedean tail dependence function
 ################################################################################
 
 
@@ -39,7 +42,7 @@ function()
 {
     # Help File:
     helpFile = function() { 
-        example(EllipticalGenerator, ask = FALSE)
+        example(ArchimedeanDependency, ask = FALSE)
         return() 
     }
     checkIdentical(
@@ -54,32 +57,14 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.gfunc = 
+test.archmTau = 
 function()
 {
-    # Arguments ?
-    args(gfunc)
-
-    # Call Generator Function - Missing x:
-    gfunc(type = "norm")
-    gfunc(type = "cauchy")
-    gfunc(type = "t")
-    gfunc(type = "t", param = 2)
-    gfunc(type = "logistic")
-    gfunc(type = "laplace")
-    gfunc(type = "kotz")
-    gfunc(type = "kotz", param = 2)
-    gfunc(type = "epower")  
-    gfunc(type = "epower", param = c(2, 1))
-      
-    # Call Generator Function - With specified x:
-    gfunc(x = 0:10, type = "norm")
-    gfunc(x = 0:10, type = "cauchy")
-    gfunc(x = 0:10, type = "t") 
-    gfunc(x = 0:10, type = "logistic")
-    gfunc(x = 0:10, type = "laplace")
-    gfunc(x = 0:10, type = "kotz") 
-    gfunc(x = 0:10, type = "epower") 
+    # Tau:
+    for (type in paste(1:22)) {
+        ans = archmTau(type = type)
+        print(ans)
+    }
     
     # Return Value:
     return()    
@@ -89,27 +74,69 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.gfunc = 
+test.archmRho = 
 function()
 {
-    # Try Slider:
-    gfuncSlider()
+    # Rho:
+    for (type in paste(1:22)) {
+        ans = archmRho(alpha = NULL, type = type, 
+            method = "integrate2d", error = 1e-5)
+        print(ans)
+    }
     
     # Return Value:
     return()    
 }
 
+
+# ------------------------------------------------------------------------------
+
+
+test.archmTailCoeff = 
+function()
+{
+    # Tail Coefficient:
+    for (type in paste(1:22)) {
+        ans = archmTailCoeff(alpha = NULL, type = type)
+        print(ans)
+    }
+        
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.archmTailPlot = 
+function()
+{
+    # Tail Coefficient Plot:
+    par(mfrow = c(2, 2), cex = 0.7)
+    for (type in paste(1:22)) {
+        archmTailPlot(alpha = NULL, type = type, tail = "Upper")
+    }
+    # CHECK 4, 8, 19
+    for (type in paste(1:22)) {
+        archmTailPlot(alpha = NULL, type = type, tail = "Lower")
+    }
+    # CHECK 4, 8, 19
     
+    # Return Value:
+    return()    
+}
+
+
 # ------------------------------------------------------------------------------
 
 
 if (FALSE) {
     require(RUnit)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fCopulae/test/runit2A.R")
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fCopulae/test/runit3C.R")
     printTextProtocol(testResult)
 }
  
-
   
 ################################################################################
-   
+

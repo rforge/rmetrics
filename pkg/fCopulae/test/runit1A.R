@@ -33,6 +33,8 @@
 #  show                      S4 print method for copula specification
 # FUNCTION:                 FRECHET COPULAE:
 #  pfrechetCopula            Computes Frechet copula probability
+# FUNCTION:                 SPEARMAN'S RHO:
+#  .copulaRho                Spearman's rho by integration for "ANY" copula 
 ################################################################################
 
 
@@ -54,7 +56,6 @@ function()
 
 
 # ------------------------------------------------------------------------------
-# Copula Class
 
 
 test.tables = 
@@ -103,6 +104,24 @@ function()
     # Return Value:
     return()    
 }
+
+
+# ------------------------------------------------------------------------------
+
+
+test.copulaRho = 
+function()
+{
+    # .copulaRho(rho = NULL, alpha = NULL, param = NULL, 
+    #     family = c("elliptical", "archm", "ev", "archmax"), 
+    #     type = NULL, error = 1e-3, ...)
+    
+    .copulaRo(rho = 0.5, family = "elliptical", type = "norm")
+    
+    # Return Value:
+    return()    
+}
+
 
 
 # ------------------------------------------------------------------------------

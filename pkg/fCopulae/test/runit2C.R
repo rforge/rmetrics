@@ -28,9 +28,12 @@
 
 
 ################################################################################
-# FUNCTION:                  ELLIPTICAL GENERATOR AND RELATED FUNCTIONS:
-#  gfunc                      Generator function for elliptical distributions
-#  gfuncSlider                Slider for generator, density and probability
+# FUNCTION:                  ELLIPTICAL COPULAE DEPENDENCE MASURES:
+#  ellipticalTau              Computes Kendall's tau for elliptical copulae
+#  ellipticalRho              Computes Spearman's rho for elliptical copulae
+# FUNCTION:                  ELLIPTICAL COPULAE TAIL COEFFICIENT:
+#  ellipticalTailCoeff        Computes tail dependence for elliptical copulae
+#  ellipticalTailPlot         Plots tail dependence function
 ################################################################################
 
 
@@ -39,7 +42,7 @@ function()
 {
     # Help File:
     helpFile = function() { 
-        example(EllipticalGenerator, ask = FALSE)
+        example(EllipticalDependency, ask = FALSE)
         return() 
     }
     checkIdentical(
@@ -54,33 +57,13 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.gfunc = 
+test.ellipticalTau = 
 function()
 {
-    # Arguments ?
-    args(gfunc)
-
-    # Call Generator Function - Missing x:
-    gfunc(type = "norm")
-    gfunc(type = "cauchy")
-    gfunc(type = "t")
-    gfunc(type = "t", param = 2)
-    gfunc(type = "logistic")
-    gfunc(type = "laplace")
-    gfunc(type = "kotz")
-    gfunc(type = "kotz", param = 2)
-    gfunc(type = "epower")  
-    gfunc(type = "epower", param = c(2, 1))
-      
-    # Call Generator Function - With specified x:
-    gfunc(x = 0:10, type = "norm")
-    gfunc(x = 0:10, type = "cauchy")
-    gfunc(x = 0:10, type = "t") 
-    gfunc(x = 0:10, type = "logistic")
-    gfunc(x = 0:10, type = "laplace")
-    gfunc(x = 0:10, type = "kotz") 
-    gfunc(x = 0:10, type = "epower") 
-    
+    # Computes Kendall's tau for elliptical copulae
+    args(ellipticalTau)
+    ellipticalTau(rho = 0.5)
+    ellipticalTau(rho = c(-0.5, 0, 0.5))
     # Return Value:
     return()    
 }
@@ -89,17 +72,58 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.gfunc = 
+test.ellipticalRho = 
+function()
+{    
+    # Computes Spearman's rho for elliptical copulae
+    args(ellipticalRho)
+    ellipticalRho(0.5)
+    ellipticalRho(rho = c(-0.5, 0, 0.5))
+ 
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.ellipticalTailCoeff = 
 function()
 {
-    # Try Slider:
-    gfuncSlider()
+    # Lower - Upper ----
+    
+    # Tail Coefficient - Using Default Parameters:
+    Type = c("norm", "cauchy", "t") 
+    for (type in Type) {
+        ans = ellipticalTailCoeff(rho = 0.5, type = type)   
+        print(ans)
+        cat("\n")
+    }
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.ellipticalTailPlot = 
+function()
+{    
+    # Plot - Be patient, plotting takes some time ...
+    Type = c("norm", "cauchy", "t") 
+    for (type in Type) {
+        par(mfrow = c(2, 2), cex = 0.7)
+        ellipticalTailPlot(type = type)  
+        ellipticalTailPlot(type = type, tail = "Lower")   
+    }           
     
     # Return Value:
     return()    
 }
 
-    
+
 # ------------------------------------------------------------------------------
 
 
@@ -109,7 +133,6 @@ if (FALSE) {
     printTextProtocol(testResult)
 }
  
-
   
 ################################################################################
    

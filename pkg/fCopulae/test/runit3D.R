@@ -28,18 +28,17 @@
 
 
 ################################################################################
-# FUNCTION:                  ELLIPTICAL GENERATOR AND RELATED FUNCTIONS:
-#  gfunc                      Generator function for elliptical distributions
-#  gfuncSlider                Slider for generator, density and probability
+# FUNCTION:                  ARCHIMEDEAN COPULAE PARAMETER FITTING:
+#  archmCopulaSim             Simulates bivariate elliptical copula
+#  archmCopulaFit             Fits the paramter of an elliptical copula
 ################################################################################
-
 
 test.aaa = 
 function()
 {
     # Help File:
     helpFile = function() { 
-        example(EllipticalGenerator, ask = FALSE)
+        example(ArchimedeanModelling, ask = FALSE)
         return() 
     }
     checkIdentical(
@@ -51,65 +50,36 @@ function()
 }
 
 
-# ------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------  
+    
 
-
-test.gfunc = 
+test.parameterFitting = 
 function()
 {
-    # Arguments ?
-    args(gfunc)
-
-    # Call Generator Function - Missing x:
-    gfunc(type = "norm")
-    gfunc(type = "cauchy")
-    gfunc(type = "t")
-    gfunc(type = "t", param = 2)
-    gfunc(type = "logistic")
-    gfunc(type = "laplace")
-    gfunc(type = "kotz")
-    gfunc(type = "kotz", param = 2)
-    gfunc(type = "epower")  
-    gfunc(type = "epower", param = c(2, 1))
-      
-    # Call Generator Function - With specified x:
-    gfunc(x = 0:10, type = "norm")
-    gfunc(x = 0:10, type = "cauchy")
-    gfunc(x = 0:10, type = "t") 
-    gfunc(x = 0:10, type = "logistic")
-    gfunc(x = 0:10, type = "laplace")
-    gfunc(x = 0:10, type = "kotz") 
-    gfunc(x = 0:10, type = "epower") 
+    # Random Variates:
+    R = archmCopulaSim(n = 1000, alpha = 1, type = "4")
+    
+    # Plot:
+    plot(R, pch = 19)
+    
+    # Fit:
+    fit = archmCopulaFit(u = R[, 1], v = R[, 2], type = "4")
+    fit
     
     # Return Value:
     return()    
-}
+} 
+        
 
-
-# ------------------------------------------------------------------------------
-
-
-test.gfunc = 
-function()
-{
-    # Try Slider:
-    gfuncSlider()
-    
-    # Return Value:
-    return()    
-}
-
-    
 # ------------------------------------------------------------------------------
 
 
 if (FALSE) {
     require(RUnit)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fCopulae/test/runit2A.R")
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fCopulae/test/runit3D.R")
     printTextProtocol(testResult)
 }
  
-
   
 ################################################################################
-   
+
