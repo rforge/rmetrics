@@ -36,8 +36,8 @@
 #  .archmGamma                Returns Gini's gamma for Archimedean copulae
 #  .archmTail                  Utility Function
 # FUNCTION:                  ARCHIMEDEAN COPULAE TAIL COEFFICIENT:
-#  archmTailCoeff       X     Computes tail dependence for Archimedean copulae
-#  archmTailPlot        X     Plots Archimedean tail dependence function
+#  archmTailCoeff             Computes tail dependence for Archimedean copulae
+#  archmTailPlot              Plots Archimedean tail dependence function
 ################################################################################
 
 
@@ -440,8 +440,8 @@ function(alpha = 0.5, type = paste(1:22))
 
 ################################################################################
 # FUNCTION:                  ARCHIMEDEAN COPULAE TAIL COEFFICIENT:
-#  archmTailCoeff       X     Computes tail dependence for Archimedean copulae
-#  archmTailPlot        X     Plots Archimedean tail dependence function
+#  archmTailCoeff             Computes tail dependence for Archimedean copulae
+#  archmTailPlot              Plots Archimedean tail dependence function
 
 
 archmTailCoeff =
@@ -462,11 +462,10 @@ function(alpha = NULL, type = paste(1:22))
     
     # Check alpha:
     check = .archmCheck(alpha, type)
-    
-    #
+
+    # Tail Coefficient:
     N = 20
-    x = 1 - (1/2)^(1:N)   
-    
+    x = 1 - (1/2)^(1:N)
     lambdaU.Cuv = ( 1 - 2*x + 
         parchmCopula(u = x, v = x, alpha = alpha, type = type) ) / (1-x)
     lambdaU.Phi = 2 - 2 * .invPhiFirstDer(2*x, alpha = alpha, type = type) / 
@@ -541,8 +540,7 @@ function(alpha = NULL, type = paste(1:22), tail = c("Upper", "Lower"))
         }
         points(u[Index], lambdaTail[Index], pch = 19, cex = 0.7)
         # Add Tail Coefficient:
-        # points(x = X, y = lambda[1], pch = 19, col = "red")
-        
+        # points(x = X, y = lambda[1], pch = 19, col = "red")       
     }
     
     # points(1, 0, pch = 19, col = "red")

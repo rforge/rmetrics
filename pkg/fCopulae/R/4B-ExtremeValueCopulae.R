@@ -29,8 +29,8 @@
 
 ################################################################################
 # FUNCTION:                  EXTREME VALUE COPULAE RANDOM VARIATES:
-#  revCopula            X     Generates extreme value copula random variates 
-#  revSlider            X     isplays interactively plots of random variates
+#  revCopula                  Generates extreme value copula random variates 
+#  revSlider                  isplays interactively plots of random variates
 # FUNCTION:                  EXTREME VALUE COPULAE PROBABILIY:
 #  pevCopula                  Computes extreme value copula probability
 #  pevSlider                  Displays interactively plots of probability
@@ -50,15 +50,45 @@
 
 ################################################################################
 # FUNCTION:                  EXTREME VALUE COPULAE RANDOM VARIATES:
-#  revCopula            X     Generates extreme value copula random variates 
-#  revSlider            X     Displays interactively plots of random variates
+#  revCopula                  Generates extreme value copula random variates 
+#  revSlider                  Displays interactively plots of random variates
 
     
 revCopula = 
 function(n, param = NULL, type = c("gumbel", "galambos", "husler.reiss", 
 "tawn", "bb5"))
 {
-    NA
+    # Default Settings:
+    subsamples = 100
+    u = runif(n)
+    
+    # Match Arguments:
+    type = match.arg(type)
+    
+    # Check Parameters:
+    if (is.null(param)) param = .evParam(type)$param
+
+    # Random Variates:
+    q = runif(n)
+    v = u
+    Y = seq(0, 1, length = subsamples)
+    for (i in 1:n) {
+        U = rep(u[i], times = subsamples)
+        C.uv = pevCopula(u = U, v = Y, param, type) / U
+        x = log(U)/log(U*Y)
+        A = Afunc(x, param, type)
+        Aderiv = .AfuncFirstDer(x, param, type)
+        X = C.uv * (A + Aderiv * log(Y)/log(U*Y))
+        v[i] = approx(X, Y, xout = q[i])$y
+    }
+    ans = cbind(u = u, v = v)
+    
+    # Add Control List:
+    control = list(param = param, copula = "ev", type = type)
+    attr(ans, "control")<-unlist(control)
+    
+    # Return Value:
+    ans
 }
 
 
@@ -67,8 +97,56 @@ function(n, param = NULL, type = c("gumbel", "galambos", "husler.reiss",
 
 revSlider =
 function(B = 10)
-{
-    NA
+{   # A function implemented by Diethelm Wuertz
+        
+    # Description:
+    #   Displays interactively perspective plots of random variates
+    
+    # FUNCTION:
+    
+    # Graphic Frame:
+    par(mfrow = c(1, 1))
+    
+    # Internal Function:
+    refresh.code = function(...)
+    {
+        # Sliders:
+        Type = c("gumbel", "galambos", "husler.reiss", "tawn", "bb5")
+        Copula = .sliderMenu(no = 1)
+        N = .sliderMenu(no = 2)
+        if (Copula <= 3) 
+            param = c(delta = .sliderMenu(no = Copula + 2))
+        if (Copula == 4) 
+            param = c(alpha = .sliderMenu(no = 6), 
+                beta = .sliderMenu(no = 7), r = .sliderMenu(no = 8))
+        if (Copula == 5)   
+            param = c(delta = .sliderMenu(no = 9), theta = .sliderMenu(no = 10)) 
+        
+        # Title:
+        type = Type[Copula]
+        subTitle = paste(paste(names(param) , "="), param, collapse = " | " )
+        Title = paste(" ", type, "\n", subTitle) 
+        
+        # Plot:   
+        R = revCopula(N, param = param, type = type)
+        plot(R, pch = 19, col = "steelblue")
+        grid()
+        title(main = Title)
+                           
+        # Reset Frame:
+        par(mfrow = c(1, 1))
+    }
+  
+    # Open Slider Menu:
+    C = c("1 Gumbel: delta", "2 Galambos: delta", "3 Husler-Reis: delta",
+          "4 Tawn: alpha", "... beta", "... r", "5 BB5: delta", "... theta")
+    .sliderMenu(refresh.code,
+        names = c("Copula", "N", C), 
+                         #   gumbel galamb h.r  tawn-tawn-tawn  bb5-bb5   
+        minima =      c(1, 100,   1,    0,   0,    0,   0,   1,   0,  1),
+        maxima =      c(5,5000,   B,    B,   B,    1,   1,   B,   B,  B),
+        resolutions = c(1, 100, .05,  .05, .05,  .01, .01,  .1,  .1, .1),
+        starts =      c(1, 100,   2,    1,   1,   .5,  .5,   2,   1,  2))
 }
 
 

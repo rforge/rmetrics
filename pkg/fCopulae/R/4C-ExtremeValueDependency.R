@@ -29,8 +29,8 @@
 
 ################################################################################
 # FUNCTION                   KENDALL'S TAU AND SPEARMAN'S RHO:
-#  evTau                X     Returns Kendall's tau for extreme value copulae
-#  evRho                X     Returns Spearman's rho for extreme value copulae
+#  evTau                      Returns Kendall's tau for extreme value copulae
+#  evRho                      Returns Spearman's rho for extreme value copulae
 # FUNCTION:                  EXTREME VALUE COPULAE TAIL DEPENDENCE:
 #  evTailCoeff          X     Computes tail dependence for extreme value copulae
 #  evTailPlot           X     Plots extreme value tail dependence function
@@ -39,25 +39,232 @@
 
 ################################################################################
 # FUNCTION                   KENDALL'S TAU AND SPEARMAN'S RHO:
-#  evTau                X     Returns Kendall's tau for extreme value copulae
-#  evRho                X     Returns Spearman's rho for extreme value copulae
+#  evTau                      Returns Kendall's tau for extreme value copulae
+#  evRho                      Returns Spearman's rho for extreme value copulae
 
 
-evTau = 
-function(param = NULL, type = 1:22, lower = 1.0e-10)
-{
-    NA
+evTau =
+function(param = NULL, type = c("gumbel", "galambos", "husler.reiss", 
+"tawn", "bb5"), alternative = FALSE)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Computes Kendall's tau for an extreme value copula
+    
+    # Example:
+    #   evTau(alternative = FALSE)
+    #   evTau(alternative = TRUE)
+    
+    # FUNCTION:
+    
+    # Kendall's Tau:
+    if (!alternative) {
+        ans = .ev1Tau(param, type)
+    } else {
+        ans = .ev2Tau(param, type)
+    }
+    
+    # Return Value:
+    ans
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-evRho = 
-function(param = NULL, type = 1:22, method = c("integrate2d", "adapt"), 
-error = 1.0e-5)
-{
-    NA
+.ev1Tau =
+function(param = NULL, type = c("gumbel", "galambos", "husler.reiss", 
+"tawn", "bb5"))
+{   # A function implemented by Diethelm Wuertz
+    # Type:
+    type = match.arg(type)
+    
+    # Default Parameters:
+    if (is.null(param)) param = .evParam(type)$param
+    
+    # Kendall's Tau Integrand:
+    fun = function(x, param, type) {
+        # To be integrated from 0 to 1 ...
+        A = Afunc(x = x, param = param, type = type)
+        A2 = .AfuncSecondDer(x, param, type)
+        f = (x*(1-x)/A) * A2
+        f
+    }
+    
+    # Get control attribute from:
+    attribute = Afunc(0.5, param, type)
+    
+    # Integrate:
+    ans = integrate(fun, 0, 1, param = param, type = type)
+    Tau = c(Tau = ans[[1]])
+    
+    # Add Control Attribute:
+    attr(Tau, "control")<-attr(attribute, "control")
+    
+    # Return Value:
+    Tau   
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.ev2Tau =
+function(param = NULL, type = c("gumbel", "galambos", "husler.reiss", 
+"tawn", "bb5"))
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    
+    # Example:
+    #   .ev2Tau()
+    
+    # FUNCTION:
+    
+    # Type:
+    type = match.arg(type)
+    
+    # Default Parameters:
+    if (is.null(param)) param = .evParam(type)$param
+    
+    # Kendall's Tau Minus Rho/3 Double Integrand:
+    fun = function(x, y, ...) {
+        D = devCopula(x, y, alternative = FALSE, ...)
+        D[is.na(D)] = 0
+        f = 4 * 
+            ( pevCopula(x, y, alternative = FALSE, ...) - x*y) * D
+        f
+    }
+    
+    # Get control attribute from:
+    attribute = Afunc(0.5, param, type)
+    
+    # Integrate:
+    ans = integrate2d(fun, param = param, type = type, error = 1e-8)
+    Tau = c(Tau = ans[[1]] + .ev2Rho(param, type)/3)
+    
+    # Add Control Attribute:
+    attr(Tau, "control")<-attr(attribute, "control")
+    
+    # Return Value:
+    Tau   
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+evRho =
+function(param = NULL, type = c("gumbel", "galambos", "husler.reiss", 
+"tawn", "bb5"), alternative = FALSE)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Computes Spearman's rho for an extreme value copula
+    
+    # Example:
+    #   evRho(alternative = FALSE)
+    #   evRho(alternative = TRUE)
+    
+    # FUNCTION:
+    
+    # Spearman's Rho:
+    if (!alternative) {
+        ans = .ev1Rho(param, type)
+    } else {
+        ans = .ev2Rho(param, type)
+    }
+    
+    # Return Value:
+    ans
+}
+   
+
+# ------------------------------------------------------------------------------
+
+
+.ev1Rho =
+function(param = NULL, type = c("gumbel", "galambos", "husler.reiss", 
+"tawn", "bb5"))
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Computes Spearman's rho for an extreme value copula
+    
+    # Example:
+    #   .ev1Rho()
+
+    # FUNCTION:
+    
+    # Type:
+    type = match.arg(type)
+    
+    # Default Parameters:
+    if (is.null(param)) param = .evParam(type)$param
+
+    # Spearman's Rho Integrand:
+    fun = function(x, param, type) {
+        # To be integrated from 0 to 1 ...
+        A = Afunc(x = x, param = param, type = type)
+        f = ( 12 / (A+1)^2 ) - 3
+        f
+    }
+    
+    # Get control attribute from:
+    attribute = Afunc(0.5, param, type)
+    
+    # Integrate:
+    ans = integrate(fun, 0, 1, param = param, type = type)
+    Rho = c(Rho = ans[[1]])
+    
+    # Add Control Attribute:
+    attr(Rho, "control")<-attr(attribute, "control")
+    
+    # Return Value:
+    Rho   
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.ev2Rho =
+function(param = NULL, type = c("gumbel", "galambos", "husler.reiss", 
+"tawn", "bb5"))
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Computes Spearman's rho for an extreme value copula
+    
+    # Example:
+    #   .ev2Rho()
+    
+    # FUNCTION:
+    
+    # Type:
+    type = match.arg(type)
+    
+    # Default Parameters:
+    if (is.null(param)) param = .evParam(type)$param
+
+    # Spearman's Rho Integrand:
+    fun = function(x, y, ...) {
+        f = 12 * pevCopula(x, y, ...) - 3
+        f
+    }
+    
+    # Get control attribute from:
+    attribute = Afunc(0.5, param, type)
+    
+    # Integrate:
+    ans = integrate2d(fun, param = param, type = type)
+    Rho = c(Rho = ans[[1]])
+    
+    # Add Control Attribute:
+    attr(Rho, "control")<-attr(attribute, "control")
+    
+    # Return Value:
+    Rho   
 }
 
 
@@ -69,7 +276,8 @@ error = 1.0e-5)
 
 evTailCoeff = 
 function(param = NULL, type = 1:22)
-{
+{   # A function implemented by Diethelm Wuertz
+
     NA
 }
 
@@ -79,10 +287,38 @@ function(param = NULL, type = 1:22)
 
 evTailPlot = 
 function(param = NULL, type = 1:22, tail = c("Upper", "Lower"))
-{
+{   # A function implemented by Diethelm Wuertz
+
     NA
 }
 
 
 ################################################################################
 
+
+
+evTailCoeff =
+function(param = NULL, type = c("gumbel", "galambos", "husler.reiss", 
+"tawn", "bb5"))
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Tail Dependence for extreme value copulae
+    
+    # FUNCTION:
+    
+    # Type:
+    type = match.arg(type)
+    
+    # Default Parameters:
+    if (is.null(param)) param = .evParam(type)$param
+
+    # Tail Coefficient:
+    N = 20
+    x = 1 - (1/2)^(1:N)
+    lambdaU.Cuv = ( 1 - 2*x + 
+        pevCopula(u = x, v = x, param = param, type = type) ) / (1-x)
+       
+    # Return Value:
+    list(x = x, y = lambdaU.Cuv)
+}

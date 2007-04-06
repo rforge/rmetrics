@@ -129,33 +129,32 @@ function()
     args(Phi)
 
     # Call Generator Function Phi:
-    for (type in 1:22) {
-        print(Phi(0.5, inv = TRUE, deriv = "0"))
+    for (type in paste(1:22)) {
+        print(Phi(x = 0.5, type = type, inv = TRUE, deriv = "0"))
         cat("\n")
     }
-    for (type in 1:22) {
-        print(Phi(0.5, inv = TRUE, deriv = "1"))
+    for (type in paste(1:22)) {
+        print(Phi(x = 0.5, type = type, inv = TRUE, deriv = "1"))
         cat("\n")
     }
-    for (type in 1:22) {
-        print(Phi(0.5, inv = TRUE, deriv = "2"))
+    for (type in paste(1:22)) {
+        print(Phi(x = 0.5, type = type, inv = TRUE, deriv = "2"))
         cat("\n")
     }
     
-    for (type in 1:22) {
-        print(Phi(0.5, inv = FALSE, deriv = "0")) 
+    for (type in paste(1:22)) {
+        print(Phi(x = 0.5, type = type, inv = FALSE, deriv = "0")) 
         cat("\n")
     }
-    for (type in 1:22) {
-        print(Phi(0.5, inv = FALSE, deriv = "1"))
+    for (type in paste(1:22)) {
+        print(Phi(x = 0.5, type = type, inv = FALSE, deriv = "1"))
         cat("\n")
     }
-    for (type in 1:22) {
-        print(Phi(0.5, inv = FALSE, deriv = "2"))
+    for (type in paste(1:22)) {
+        print(Phi(x = 0.5, type = type, inv = FALSE, deriv = "2"))
         cat("\n")
     }
-
-    
+   
     # Return Value:
     return()    
 }
@@ -168,9 +167,7 @@ test.PhiSlider =
 function()
 {
     # Try Slider:
-    # PhiSlider()
-    
-    NA
+    PhiSlider()
     
     # Return Value:
     return()    
@@ -187,8 +184,12 @@ function()
     args(Kfunc)
     
     # Call Generator Function Phi:
-    for (type in 1:22) {
-        print(Kfunc(0.5, inv = TRUE))
+    for (type in paste(1:22)) {
+        print(Kfunc(x = 0.5, inv = FALSE))
+        cat("\n")
+    }
+    for (type in paste(1:22)) {
+        print(Kfunc(x = 0.5, inv = TRUE))
         cat("\n")
     }
     
@@ -204,9 +205,7 @@ test.KfuncSlider =
 function()
 {
     # Try Slider:
-    # KfuncSlider()
-    
-    NA
+    KfuncSlider()
     
     # Return Value:
     return()    

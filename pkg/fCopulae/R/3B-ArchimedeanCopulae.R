@@ -30,8 +30,9 @@
 ################################################################################
 # FUNCTION:                  ARCHIMEDEAN COPULAE RANDOM VARIATES:
 #  rarchmCopula               Generates Archimedean copula random variates 
-#  .r1Copula                  Generates rv's for copulae No 1
-#  .r2Copula                  Generates rv's for copulae No 2
+#  rarchmSlider               Displays interactively archimedean probability
+#  .rNo1Copula                Generates rv's for copulae No 1
+#  .rNo2Copula                Generates rv's for copulae No 2
 # FUNCTION:                  ARCHIMEDEAN COPULAE PROBABILITY:
 #  parchmCopula               Computes Archimedean copula probability 
 #  parchmSlider               Displays interactively archimedean probability 
@@ -123,8 +124,6 @@ function(B = 10)
         No = Counter[Copula]
         N = .sliderMenu(no = 2)
         alpha = .sliderMenu(no = No+2)
-        theta = .sliderMenu(no = 11)
-        phi = .sliderMenu(no = 12)
                      
         # There is no known Copula for the following bounds:
         eps = 1.0e-6
@@ -144,7 +143,7 @@ function(B = 10)
             Names[Copula], "\nalpha = ", as.character(alpha)) 
         
         # Plot: 
-        R = rarchmCopula(n = N, alpha = alpha, type = Copula)
+        R = rarchmCopula(n = N, alpha = alpha, type = as.character(Copula))
         plot(R, xlab = "U", ylab = "V", pch = 19, col = "steelblue")
         grid()
         title(main = Title)
@@ -177,7 +176,7 @@ function(n, alpha = NULL, alternative = FALSE, doplot = FALSE)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Generates rv's for copulae No 1
+    #   Generates rv's for copula No 1
     
     # Default Parameter:
     if (is.null(alpha)) alpha = .archmParam(1)$param
@@ -225,7 +224,7 @@ function(n, alpha = NULL, doplot = FALSE)
     # HERE IS SOMETHING WRONG !!!!
     
     # Description:
-    #   Generates rv's for copulae No 2
+    #   Generates rv's for copula No 2
     
     # Source: armstrong03.pdf
     
@@ -457,7 +456,7 @@ output = c("vector", "list") )
 
 
 .parchm2Copula = 
-function(u = 0.5, v = u, alpha = NULL, type = paste(1:20),
+function(u = 0.5, v = u, alpha = NULL, type = paste(1:22),
 output = c("vector", "list") )
 {   # A function implemented by Diethelm Wuertz
 
@@ -488,8 +487,8 @@ output = c("vector", "list") )
         u = u[[1]]
     }
     if (is.matrix(u)) {
-        v = u[,1]
-        u = u[,2]
+        v = u[, 1]
+        u = u[, 2]
     }
     
     # Copula:

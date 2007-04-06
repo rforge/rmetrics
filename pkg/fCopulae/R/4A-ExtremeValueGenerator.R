@@ -30,8 +30,6 @@
 ################################################################################
 # FUNCTION:                  EXTREME VALUE COPULAE PARAMETER:
 #  .evParam                   Sets parameters for an extreme value copula
-#  .evRange             X
-#  .evCheck             X
 # FUNCTION:                  EXTREME VALUE COPULAE GENERATOR FUNCTION:
 #  Afunc                      Computes Dependence function
 #  AfuncSlider                Displays interactively dependence function
@@ -43,8 +41,6 @@
 ################################################################################
 # FUNCTION:                  EXTREME VALUE COPULAE PARAMETER:
 #  .evParam                   Sets parameters for an extreme value copula
-#  .evRange             X
-#  .evCheck             X
 
     
 .evParam =
@@ -166,8 +162,7 @@ function(x, param = NULL, type = c("gumbel", "galambos",
         # 1 <= alpha < Inf
         alpha = param[1]    
         if (alpha == 1) A = rep(1, times = length(x)) else 
-        A = 
-       (x^alpha + (1-x)^alpha)^(1/alpha) 
+        A = (x^alpha + (1-x)^alpha)^(1/alpha) 
     }    
     if (type == "galambos") {
         # 0 <= alpha < Inf
@@ -177,9 +172,8 @@ function(x, param = NULL, type = c("gumbel", "galambos",
     if (type == "husler.reiss") {
         # 0 <= alpha <= Inf
         alpha = param[1]    
-        A =   
-        x * pnorm(1/alpha + 0.5*alpha*log(x/(1-x))) + 
-        (1-x) * pnorm(1/alpha - 0.5*alpha*log(x/(1-x))) 
+        A = x * pnorm(1/alpha + 0.5*alpha*log(x/(1-x))) + 
+            (1-x) * pnorm(1/alpha - 0.5*alpha*log(x/(1-x))) 
     }    
     if (type == "tawn") {
         # 0 <= alpha <=1
@@ -189,8 +183,7 @@ function(x, param = NULL, type = c("gumbel", "galambos",
         beta = param[2]
         r = param[3]   
         if (alpha == 0 | beta == 0 | r == 1) A = rep(1, times = length(x)) else 
-        A = 
-        1 - beta +(beta-alpha)*x + ( (alpha*x)^r + (beta*(1-x))^r )^(1/r) 
+        A = 1 - beta +(beta-alpha)*x + ( (alpha*x)^r + (beta*(1-x))^r )^(1/r) 
     }    
     if (type == "bb5") {
         # 0 < delta < Inf
@@ -198,9 +191,8 @@ function(x, param = NULL, type = c("gumbel", "galambos",
         delta = param[1]
         theta = param[2]    
         if (theta == 1) return(Afunc(x, param, "galambos")) else
-        A = 
-        ( x^theta + (1-x)^theta - 
-        ( x^(-delta*theta) + (1-x)^(-delta*theta) )^(-1/delta))^(1/theta) 
+        A = ( x^theta + (1-x)^theta - 
+            ( x^(-delta*theta) + (1-x)^(-delta*theta) )^(-1/delta))^(1/theta) 
     }   
     
     # Some more, yet untested and undocumented:
@@ -346,13 +338,12 @@ function(x, param = NULL, type = c("gumbel", "galambos", "husler.reiss",
         theta = param[2]    
         # Maple Generated Output:
         if (theta == 1) return(.AfuncFirstDer(x, param, "galambos")) else
-        A1 = 
-        (x^theta+(1-x)^theta-(x^(-delta*theta)+(1-x)^(-delta*theta))^(-1/
-        delta))^(1/theta)/theta*(x^theta*theta/x-(1-x)^theta*theta/(1-x)+(x
-        ^(-delta*theta)+(1-x)^(-delta*theta))^(-1/delta)/delta*(-x^(-delta*
-        theta)*delta*theta/x+(1-x)^(-delta*theta)*delta*theta/(1-x))/(x^(-
-        delta*theta)+(1-x)^(-delta*theta)))/(x^theta+(1-x)^theta-(x^(-delta
-        *theta)+(1-x)^(-delta*theta))^(-1/delta))
+        A1 = (x^theta+(1-x)^theta-(x^(-delta*theta)+(1-x)^(-delta*theta))^(-1/
+            delta))^(1/theta)/theta*(x^theta*theta/x-(1-x)^theta*theta/(1-x)+(x
+            ^(-delta*theta)+(1-x)^(-delta*theta))^(-1/delta)/delta*(-x^(-delta*
+            theta)*delta*theta/x+(1-x)^(-delta*theta)*delta*theta/(1-x))/(x^(-
+            delta*theta)+(1-x)^(-delta*theta)))/(x^theta+(1-x)^theta-(x^(-delta
+            *theta)+(1-x)^(-delta*theta))^(-1/delta))
         A1[x < eps] = -1
         A1[x > 1-eps] = 1
     } 
@@ -447,13 +438,12 @@ function(x, param = NULL, type = c("gumbel", "galambos", "husler.reiss",
         alpha = param[1]        
         # Maple Generated Output:
         if (alpha == 1) A2 = rep(0, times = length(x)) else
-        A2 = 
-        (x^alpha+(1-x)^alpha)^(1/alpha)/alpha^2*(x^alpha*alpha/x-(1-x)^
-        alpha*alpha/(1-x))^2/(x^alpha+(1-x)^alpha)^2+(x^alpha+(1-x)^alpha)^
-        (1/alpha)/alpha*(x^alpha*alpha^2/x^2-x^alpha*alpha/x^2+(1-x)^alpha*
-        alpha^2/(1-x)^2-(1-x)^alpha*alpha/(1-x)^2)/(x^alpha+(1-x)^alpha)-(x
-        ^alpha+(1-x)^alpha)^(1/alpha)/alpha*(x^alpha*alpha/x-(1-x)^alpha*
-        alpha/(1-x))^2/(x^alpha+(1-x)^alpha)^2
+        A2 = (x^alpha+(1-x)^alpha)^(1/alpha)/alpha^2*(x^alpha*alpha/x-(1-x)^
+            alpha*alpha/(1-x))^2/(x^alpha+(1-x)^alpha)^2+(x^alpha+(1-x)^alpha)^
+            (1/alpha)/alpha*(x^alpha*alpha^2/x^2-x^alpha*alpha/x^2+(1-x)^alpha*
+            alpha^2/(1-x)^2-(1-x)^alpha*alpha/(1-x)^2)/(x^alpha+(1-x)^alpha)-(x
+            ^alpha+(1-x)^alpha)^(1/alpha)/alpha*(x^alpha*alpha/x-(1-x)^alpha*
+            alpha/(1-x))^2/(x^alpha+(1-x)^alpha)^2
     }   
     if (type == "galambos") {
         # 0 <= alpha < Inf
@@ -461,35 +451,33 @@ function(x, param = NULL, type = c("gumbel", "galambos", "husler.reiss",
         # Maple Generated Output:
         if (alpha == 0) A2 = rep(0, times = length(x)) else 
         if (alpha == 1) A2 = rep(2, times = length(x)) else
-        A2 = 
-        -(x^(-alpha)+(1-x)^(-alpha))^(-1/alpha)/alpha^2*(-x^(-alpha)*alpha/
-        x+(1-x)^(-alpha)*alpha/(1-x))^2/(x^(-alpha)+(1-x)^(-alpha))^2+(x^(-
-        alpha)+(1-x)^(-alpha))^(-1/alpha)/alpha*(x^(-alpha)*alpha^2/x^2+x^(
-        -alpha)*alpha/x^2+(1-x)^(-alpha)*alpha^2/(1-x)^2+(1-x)^(-alpha)*
-        alpha/(1-x)^2)/(x^(-alpha)+(1-x)^(-alpha))-(x^(-alpha)+(1-x)^(-
-        alpha))^(-1/alpha)/alpha*(-x^(-alpha)*alpha/x+(1-x)^(-alpha)*alpha/
-        (1-x))^2/(x^(-alpha)+(1-x)^(-alpha))^2
+        A2 = -(x^(-alpha)+(1-x)^(-alpha))^(-1/alpha)/alpha^2*(-x^(-alpha)*alpha/
+            x+(1-x)^(-alpha)*alpha/(1-x))^2/(x^(-alpha)+(1-x)^(-alpha))^2+(x^(-
+            alpha)+(1-x)^(-alpha))^(-1/alpha)/alpha*(x^(-alpha)*alpha^2/x^2+x^(
+            -alpha)*alpha/x^2+(1-x)^(-alpha)*alpha^2/(1-x)^2+(1-x)^(-alpha)*
+            alpha/(1-x)^2)/(x^(-alpha)+(1-x)^(-alpha))-(x^(-alpha)+(1-x)^(-
+            alpha))^(-1/alpha)/alpha*(-x^(-alpha)*alpha/x+(1-x)^(-alpha)*alpha/
+            (1-x))^2/(x^(-alpha)+(1-x)^(-alpha))^2
     }   
     if (type == "husler.reiss") {
         # 0 <= alpha <= Inf
         alpha = param[1]    
         # Maple Generated Output:
         if (alpha == 0) A2 = rep(0, times = length(x)) else
-        A2 = 
-        .2500000000/Pi^(1/2)*exp(-1/2*(1/alpha+.5*alpha*ln(x/(1-x)))^2)*
-        alpha*(1/(1-x)+x/(1-x)^2)/x*(1-x)*2^(1/2)-.1250000000/Pi^(1/2)*(1/
-        alpha+.5*alpha*ln(x/(1-x)))*alpha^2*(1/(1-x)+x/(1-x)^2)^2/x*(1-x)^2*
-        exp(-1/2*(1/alpha+.5*alpha*ln(x/(1-x)))^2)*2^(1/2)+.2500000000/Pi^(
-        1/2)*exp(-1/2*(1/alpha+.5*alpha*ln(x/(1-x)))^2)*alpha*(2/(1-x)^2+2
-        *x/(1-x)^3)*(1-x)*2^(1/2)-.2500000000/Pi^(1/2)*exp(-1/2*(1/alpha+.5
-        *alpha*ln(x/(1-x)))^2)*alpha*(1/(1-x)+x/(1-x)^2)*2^(1/2)+.75000000/
-        Pi^(1/2)*exp(-1/2*(1/alpha-.5*alpha*ln(x/(1-x)))^2)*alpha*(1/(1-x
-        )+x/(1-x)^2)/x*(1-x)*2^(1/2)-.1250000000*(1-x)^3/Pi^(1/2)*(1/alpha-
-        .5*alpha*ln(x/(1-x)))*alpha^2*(1/(1-x)+x/(1-x)^2)^2/x^2*exp(-1/2*(1
-        /alpha-.5*alpha*ln(x/(1-x)))^2)*2^(1/2)-.2500000000*(1-x)^2/Pi^(1/2
-        )*exp(-1/2*(1/alpha-.5*alpha*ln(x/(1-x)))^2)*alpha*(2/(1-x)^2+2*x/(
-        1-x)^3)/x*2^(1/2)+.2500000000*(1-x)^2/Pi^(1/2)*exp(-1/2*(1/alpha-.5
-        *alpha*ln(x/(1-x)))^2)*alpha*(1/(1-x)+x/(1-x)^2)/x^2*2^(1/2)
+        A2 = .2500000000/Pi^(1/2)*exp(-1/2*(1/alpha+.5*alpha*ln(x/(1-x)))^2)*
+            alpha*(1/(1-x)+x/(1-x)^2)/x*(1-x)*2^(1/2)-.1250000000/Pi^(1/2)*(1/
+            alpha+.5*alpha*ln(x/(1-x)))*alpha^2*(1/(1-x)+x/(1-x)^2)^2/x*(1-x)^2*
+            exp(-1/2*(1/alpha+.5*alpha*ln(x/(1-x)))^2)*2^(1/2)+.2500000000/Pi^(
+            1/2)*exp(-1/2*(1/alpha+.5*alpha*ln(x/(1-x)))^2)*alpha*(2/(1-x)^2+2
+            *x/(1-x)^3)*(1-x)*2^(1/2)-.2500000000/Pi^(1/2)*exp(-1/2*(1/alpha+.5
+            *alpha*ln(x/(1-x)))^2)*alpha*(1/(1-x)+x/(1-x)^2)*2^(1/2)+.75000000/
+            Pi^(1/2)*exp(-1/2*(1/alpha-.5*alpha*ln(x/(1-x)))^2)*alpha*(1/(1-x
+            )+x/(1-x)^2)/x*(1-x)*2^(1/2)-.1250000000*(1-x)^3/Pi^(1/2)*(1/alpha-
+            .5*alpha*ln(x/(1-x)))*alpha^2*(1/(1-x)+x/(1-x)^2)^2/x^2*exp(-1/2*(1
+            /alpha-.5*alpha*ln(x/(1-x)))^2)*2^(1/2)-.2500000000*(1-x)^2/Pi^(1/2
+            )*exp(-1/2*(1/alpha-.5*alpha*ln(x/(1-x)))^2)*alpha*(2/(1-x)^2+2*x/(
+            1-x)^3)/x*2^(1/2)+.2500000000*(1-x)^2/Pi^(1/2)*exp(-1/2*(1/alpha-.5*
+            alpha*ln(x/(1-x)))^2)*alpha*(1/(1-x)+x/(1-x)^2)/x^2*2^(1/2)
     }  
     if (type == "tawn") {
         # 0 <= alpha, beta <= 1, 1 <= r < Inf
@@ -498,13 +486,12 @@ function(x, param = NULL, type = c("gumbel", "galambos", "husler.reiss",
         r = param[3]    
         # Maple Generated Output:
         if (alpha == 0 | beta == 0 | r == 1) A2 = rep(0, length(x)) else 
-        A2 = 
-        ((alpha*x)^r+(beta*(1-x))^r)^(1/r)/r^2*((alpha*x)^r*r/x-(beta*(1-x)
-        )^r*r/(1-x))^2/((alpha*x)^r+(beta*(1-x))^r)^2+((alpha*x)^r+(beta*(1
-        -x))^r)^(1/r)/r*((alpha*x)^r*r^2/x^2-(alpha*x)^r*r/x^2+(beta*(1-x))
-        ^r*r^2/(1-x)^2-(beta*(1-x))^r*r/(1-x)^2)/((alpha*x)^r+(beta*(1-x))^
-        r)-((alpha*x)^r+(beta*(1-x))^r)^(1/r)/r*((alpha*x)^r*r/x-(beta*(1-x
-        ))^r*r/(1-x))^2/((alpha*x)^r+(beta*(1-x))^r)^2 
+        A2 = ((alpha*x)^r+(beta*(1-x))^r)^(1/r)/r^2*((alpha*x)^r*r/x-(beta*(1-x)
+            )^r*r/(1-x))^2/((alpha*x)^r+(beta*(1-x))^r)^2+((alpha*x)^r+(beta*(1
+            -x))^r)^(1/r)/r*((alpha*x)^r*r^2/x^2-(alpha*x)^r*r/x^2+(beta*(1-x))
+            ^r*r^2/(1-x)^2-(beta*(1-x))^r*r/(1-x)^2)/((alpha*x)^r+(beta*(1-x))^
+            r)-((alpha*x)^r+(beta*(1-x))^r)^(1/r)/r*((alpha*x)^r*r/x-(beta*(1-x
+            ))^r*r/(1-x))^2/((alpha*x)^r+(beta*(1-x))^r)^2 
         # A2[x<1e-12] = 0
         # A2[x>1-1e-12] = 0 
     }
@@ -514,32 +501,31 @@ function(x, param = NULL, type = c("gumbel", "galambos", "husler.reiss",
         theta = param[2]    
         # Maple Generated Output:
         if (theta == 1) return(.AfuncSecondDer(x, param, "galambos")) else
-        A2 = 
-        (x^theta+(1-x)^theta-(x^(-delta*theta)+(1-x)^(-delta*theta))^(-1/
-        delta))^(1/theta)/theta^2*(x^theta*theta/x-(1-x)^theta*theta/(1-x)+
-        (x^(-delta*theta)+(1-x)^(-delta*theta))^(-1/delta)/delta*(-x^(-
-        delta*theta)*delta*theta/x+(1-x)^(-delta*theta)*delta*theta/(1-x))/
-        (x^(-delta*theta)+(1-x)^(-delta*theta)))^2/(x^theta+(1-x)^theta-(x^
-        (-delta*theta)+(1-x)^(-delta*theta))^(-1/delta))^2+(x^theta+(1-x)^
-        theta-(x^(-delta*theta)+(1-x)^(-delta*theta))^(-1/delta))^(1/theta)/
-        theta*(x^theta*theta^2/x^2-x^theta*theta/x^2+(1-x)^theta*theta^2/(
-        1-x)^2-(1-x)^theta*theta/(1-x)^2-(x^(-delta*theta)+(1-x)^(-delta*
-        theta))^(-1/delta)/delta^2*(-x^(-delta*theta)*delta*theta/x+(1-x)^(
-        -delta*theta)*delta*theta/(1-x))^2/(x^(-delta*theta)+(1-x)^(-delta*
-        theta))^2+(x^(-delta*theta)+(1-x)^(-delta*theta))^(-1/delta)/delta*
-        (x^(-delta*theta)*delta^2*theta^2/x^2+x^(-delta*theta)*delta*theta/
-        x^2+(1-x)^(-delta*theta)*delta^2*theta^2/(1-x)^2+(1-x)^(-delta*
-        theta)*delta*theta/(1-x)^2)/(x^(-delta*theta)+(1-x)^(-delta*theta))
-        -(x^(-delta*theta)+(1-x)^(-delta*theta))^(-1/delta)/delta*(-x^(-
-        delta*theta)*delta*theta/x+(1-x)^(-delta*theta)*delta*theta/(1-x))^
-        2/(x^(-delta*theta)+(1-x)^(-delta*theta))^2)/(x^theta+(1-x)^theta-(
-        x^(-delta*theta)+(1-x)^(-delta*theta))^(-1/delta))-(x^theta+(1-x)^
-        theta-(x^(-delta*theta)+(1-x)^(-delta*theta))^(-1/delta))^(1/theta)/
-        theta*(x^theta*theta/x-(1-x)^theta*theta/(1-x)+(x^(-delta*theta)+(
-        1-x)^(-delta*theta))^(-1/delta)/delta*(-x^(-delta*theta)*delta*
-        theta/x+(1-x)^(-delta*theta)*delta*theta/(1-x))/(x^(-delta*theta)+(
-        1-x)^(-delta*theta)))^2/(x^theta+(1-x)^theta-(x^(-delta*theta)+(1-x
-        )^(-delta*theta))^(-1/delta))^2
+        A2 = (x^theta+(1-x)^theta-(x^(-delta*theta)+(1-x)^(-delta*theta))^(-1/
+            delta))^(1/theta)/theta^2*(x^theta*theta/x-(1-x)^theta*theta/(1-x)+
+            (x^(-delta*theta)+(1-x)^(-delta*theta))^(-1/delta)/delta*(-x^(-
+            delta*theta)*delta*theta/x+(1-x)^(-delta*theta)*delta*theta/(1-x))/
+            (x^(-delta*theta)+(1-x)^(-delta*theta)))^2/(x^theta+(1-x)^theta-(x^
+            (-delta*theta)+(1-x)^(-delta*theta))^(-1/delta))^2+(x^theta+(1-x)^
+            theta-(x^(-delta*theta)+(1-x)^(-delta*theta))^(-1/delta))^(1/theta)/
+            theta*(x^theta*theta^2/x^2-x^theta*theta/x^2+(1-x)^theta*theta^2/(
+            1-x)^2-(1-x)^theta*theta/(1-x)^2-(x^(-delta*theta)+(1-x)^(-delta*
+            theta))^(-1/delta)/delta^2*(-x^(-delta*theta)*delta*theta/x+(1-x)^(
+            -delta*theta)*delta*theta/(1-x))^2/(x^(-delta*theta)+(1-x)^(-delta*
+            theta))^2+(x^(-delta*theta)+(1-x)^(-delta*theta))^(-1/delta)/delta*
+            (x^(-delta*theta)*delta^2*theta^2/x^2+x^(-delta*theta)*delta*theta/
+            x^2+(1-x)^(-delta*theta)*delta^2*theta^2/(1-x)^2+(1-x)^(-delta*
+            theta)*delta*theta/(1-x)^2)/(x^(-delta*theta)+(1-x)^(-delta*theta))
+            -(x^(-delta*theta)+(1-x)^(-delta*theta))^(-1/delta)/delta*(-x^(-
+            delta*theta)*delta*theta/x+(1-x)^(-delta*theta)*delta*theta/(1-x))^
+            2/(x^(-delta*theta)+(1-x)^(-delta*theta))^2)/(x^theta+(1-x)^theta-(
+            x^(-delta*theta)+(1-x)^(-delta*theta))^(-1/delta))-(x^theta+(1-x)^
+            theta-(x^(-delta*theta)+(1-x)^(-delta*theta))^(-1/delta))^(1/theta)/
+            theta*(x^theta*theta/x-(1-x)^theta*theta/(1-x)+(x^(-delta*theta)+(
+            1-x)^(-delta*theta))^(-1/delta)/delta*(-x^(-delta*theta)*delta*
+            theta/x+(1-x)^(-delta*theta)*delta*theta/(1-x))/(x^(-delta*theta)+(
+            1-x)^(-delta*theta)))^2/(x^theta+(1-x)^theta-(x^(-delta*theta)+(1-x
+            )^(-delta*theta))^(-1/delta))^2
     } 
     
     # Some more, yet untested and undocumented:  

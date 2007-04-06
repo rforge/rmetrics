@@ -28,26 +28,9 @@
 
 
 ################################################################################
-#                       X     NOT YET IMPEMENTED
 # FUNCTION:                  EXTREME VALUE COPULAE GENERATOR FUNCTION:
 #  Afunc                      Computes Dependence function
 #  AfuncSlider                Displays interactively dependence function
-# FUNCTION                   KENDALL'S TAU AND SPEARMAN'S RHO:
-#  evTau                X      Returns Kendall's tau for extreme value copulae
-#  evRho                X      Returns Spearman's rho for extreme value copulae
-# FUNCTION:                  EXTREME VALUE COPULAE TAIL DEPENDENCE:
-#  evTailCoeff          X     Computes tail dependence for extreme value copulae
-#  evTailPlot           X     Plots extreme value tail dependence function
-# FUNCTION:                  EXTREME VALUE COPULAE RANDOM VARIATES:
-#  revCopula            X     Generates extreme value copula random variates 
-#  revSlider
-# FUNCTION:                  EXTREME VALUE COPULAE PROBABILIY:
-#  pevCopula                  Computes extreme value copula probability
-# FUNCTION:                  EXTREME VALUE COPULAE DENSITY:
-#  devCopula                  Computes extreme value copula density
-# FUNCTION:                  EXTREME VALUE COPULAE PARAMETER FITTING:
-#  evCopulaSim          X      Simulates bivariate extreme value copula
-#  evCopulaFit          X      Fits the paramter of an extreme value copula
 #################################################################################
 
 

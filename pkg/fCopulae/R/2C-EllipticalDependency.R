@@ -58,7 +58,7 @@ function(rho)
     
     # Compute Kendall's Tau:
     ans = 2 * asin(rho) / pi
-    if (length(rho) ==1) {
+    if (length(rho) == 1) {
         names(ans) = "Tau"
     } else {
         names(ans) = paste("Tau", 1:length(rho), sep = "")
