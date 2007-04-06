@@ -142,7 +142,7 @@ function(B = 100)
     #FUNCTION:
     
     # Graphic Frame:
-    par(mfrow = c(1, 1), cex = 0.7)
+    par(mfrow = c(1, 1))
     
     # Internal Function:
     refresh.code = function(...)
@@ -179,7 +179,7 @@ function(B = 100)
         title(main = Title)
         
         # Reset Frame:
-        par(mfrow = c(1, 1), cex = 0.7)
+        par(mfrow = c(1, 1))
     }
   
     # Open Slider Menu:
@@ -728,7 +728,7 @@ function(B = 20)
     # FUNCTION:
     
     # Graphic Frame:
-    par(mfrow = c(1, 1), cex = 0.7)
+    par(mfrow = c(1, 1))
     
     # Internal Function:
     refresh.code = function(...)
@@ -773,7 +773,7 @@ function(B = 20)
         mtext(mTitle, side = 1, line = 3, col = "grey", cex = 0.7)
                            
         # Reset Frame:
-        par(mfrow = c(1, 1), cex = 0.7)
+        par(mfrow = c(1, 1))
     }
   
     # Open Slider Menu:
@@ -800,7 +800,7 @@ function(B = 20)
     #FUNCTION:
     
     # Graphic Frame:
-    par(mfrow = c(1, 1), cex = 0.7)
+    par(mfrow = c(1, 1))
     
     # Internal Function:
     refresh.code = function(...)
@@ -845,7 +845,7 @@ function(B = 20)
         mtext(mTitle, side = 1, line = 3, col = "grey", cex = 0.7)
         
         # Reset Frame:
-        par(mfrow = c(1, 1), cex = 0.7)
+        par(mfrow = c(1, 1))
     }
   
     # Open Slider Menu:
@@ -1206,7 +1206,7 @@ function(B = 20)
     # FUNCTION:
     
     # Graphic Frame:
-    par(mfrow = c(1, 1), cex = 0.7)
+    par(mfrow = c(1, 1))
     
     # Internal Function:
     refresh.code = function(...)
@@ -1262,7 +1262,7 @@ function(B = 20)
         mtext(mTitle, side = 1, col = "grey", cex = 0.7)
                            
         # Reset Frame:
-        par(mfrow = c(1, 1), cex = 0.7)
+        par(mfrow = c(1, 1))
     }
   
     # Open Slider Menu:
@@ -1289,7 +1289,7 @@ function(B = 20)
     #FUNCTION:
     
     # Graphic Frame:
-    par(mfrow = c(1, 1), cex = 0.7)
+    par(mfrow = c(1, 1))
     
     # Internal Function:
     refresh.code = function(...)
