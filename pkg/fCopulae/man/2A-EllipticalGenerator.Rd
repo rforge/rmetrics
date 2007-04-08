@@ -17,11 +17,14 @@
 
 \description{
     
-    A collection and description of functions to investigate 
-    bivariate elliptical copulae. 
+    A collection and description of functions 
+    concerned with the generator function for 
+    the elliptical copula and with functions
+    for setting and checking the distributional
+    parameters.
     \cr
     
-    Elliptical Copulae Functions:
+    Functions:
     
     \tabular{ll}{
     \code{ellipticalList} \tab Returns list of implemented elliptical copulae, \cr
@@ -209,41 +212,17 @@ gfuncSlider(B = 10)
 
 
 \examples{
-\dontrun{
-## [rp]ellipticalCopula -
-   # Default Normal Copula:
-   rellipticalCopula(10)
-   pellipticalCopula(10)
+## ellipticalList -
+   # List implemented copulae:
+   ellipticalList()
 
-## [rp]ellipticalCopula -   
-   # Student-t Copula Probability and Density:
-   u = grid2d(x = (0:25)/25)
-   pellipticalCopula(u, rho = 0.75, param = 4, 
-     type = "t", output = "list")
-   d = dellipticalCopula(u, rho = 0.75, param = 4, 
-     type = "t", output = "list")   
-   persp(d, theta = -40, phi = 30, col = "steelblue")
+## gfunc - 
+   # Generator Function:    
+   gfunc(x = (0:10)/10, param = 2, type = "t")
    
-## ellipticalTau -
-## ellipticalRho -
-   # Dependence Measures:
-   ellipticalTau(rho = -0.5)
-   ellipticalRho(rho = 0.75, type = "logistic", subdivisions = 100)
-   
-## ellipticalTailCoeff -
-   # Student-t Tail Coefficient:
-   ellipticalTailCoeff(rho = 0.25, param = 3, type = "t")
-
-## gfunc -
-   # Generator Function:
-   plot(gfunc(x = 0:10), main = "Generator Function")
-   
-## ellipticalCopulaSim -
-## ellipticalCopulaSim -
-   # Simualtion and Parameter Fitting:
-   rv = ellipticalCopulaSim(n = 100, rho = 0.75)
-   ellipticalCopulaFit(rv)
-}  
+## gfuncSlider -
+   # Try:   
+   gfuncSlider()
 }
 
 

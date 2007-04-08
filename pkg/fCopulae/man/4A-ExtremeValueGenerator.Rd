@@ -17,12 +17,14 @@
 
 \description{
     
-    A collection and description of functions to investigate 
-    bivariate extreme value copulae. 
+    A collection and description of functions 
+    concerned with the generator function for 
+    the extreme value copula and with functions
+    for setting and checking the distributional
+    parameters.
     \cr
     
-     
-    Extreme Value Copulae Functions:
+    Functions:
     
     \tabular{ll}{
     \code{evList} \tab Returns list of implemented extreme value copulae, \cr
@@ -48,73 +50,19 @@ AfuncSlider()
 
 
 \arguments{
-  
-    \item{alternative}{
-        [evRho][evTau][*evCopula] - \cr
-        Should the probability be computed alternatively in a
-        direct way from the probability formula or by default 
-        via the dependency function?  
-        }
-    \item{B}{
-        [*Slider] - \cr
-        the maximum slider menu value when the boundary value is 
-        infinite. By default this is set to 10.
-        }
-    %\item{error}{
-    %    [evRho] - \cr
-    %    the error bound to be achieved by the \code{integrate2d} 
-    %    integration formula. A numeric value, by default \code{error=1.0e-5}.
-    %    }
-    \item{n}{
-        [revCopula][evCopulaSim] - \cr         
-        the number of random deviates to be generated, an integer value.
-        }
-    \item{output}{
-        [*evCopula] - \cr
-        output - a character string specifying how the output should
-        be formatted. By default a vector of the same length as 
-        \code{u} and \code{v}. If specified as \code{"list"} 
-        then \code{u} and \code{v} are
-        expected to span a two-dimensional grid as outputted by the 
-        function \code{grid2d} and the function returns a list with
-        elements \code{$x}, \code{y}, and \code{z} which can be directly 
-        used for example by 2D plotting functions.
-        }
+
     \item{param}{
-        [*ev*][A*] - \cr
-        distribution and copulae parameters.
-        A numeric value or vector of named parameters as required by 
-        the copula specified by the variable \code{type}.
-        If set to \code{NULL}, then the default parameters will be taken.
+        distribution and copulae parameters. A numeric value or vector 
+        of named parameters as required by the copula specified by the 
+        variable \code{type}. If set to \code{NULL}, then the default 
+        parameters will be taken.
         }
     \item{type}{
-        [*ev*][Afunc] - \cr
-        the type of the extreme value copula. A character
-        string selected from: "gumbel", "galambos", "husler.reiss", 
-        "tawn", or "bb5".
-        \cr
-        [evSlider] - \cr
-        a character string specifying the plot type. Either a 
-        perspective plot which is the default or a contour plot 
-        with an underlying image plot will be created.
+        the type of the extreme value copula. A character string selected 
+        from: "gumbel", "galambos", "husler.reiss", "tawn", or "bb5".
         }
-    \item{u, v}{
-        [*evCopula][*archmCopula] - \cr
-        two numeric values or vectors of the same length at which
-        the copula will be computed. If \code{u} is a list then the
-        the \code{$x} and \code{$y} elements will be used as \code{u} 
-        and \code{v}. If \code{u} is a two column matrix then the 
-        first column will be used as \code{u} and the the second 
-        as \code{v}.
-       }
     \item{x}{
-        [A*] - \cr
         a numeric value or vector ranging between zero and one.
-        \cr
-        }
-    \item{\dots}{
-        [evCopulaFit] - \cr
-        arguments passed to the optimization function \code{nlminb}.
         }
             
 }

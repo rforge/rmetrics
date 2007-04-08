@@ -20,11 +20,14 @@
 
 \description{
     
-    A collection and description of functions to 
-    investigate bivariate Archimedean copulae. 
+    A collection and description of functions 
+    concerned with the generator function for 
+    the Archimedean copula and with functions
+    for setting and checking the distributional
+    parameters.
     \cr
     
-    Archimedean Copulae Functions:
+    Functions:
     
     \tabular{ll}{
     \code{evList} \tab Returns list of implemented Archimedean copulae, \cr
