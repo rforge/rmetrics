@@ -246,7 +246,7 @@ function(x, alpha = NULL, type = archmList(), inv = FALSE, deriv = paste(0:2))
 
 
 PhiSlider =
-function()
+function(B = 5)
 {   # A function implemented by Diethelm Wuertz
        
     # Description:
@@ -386,7 +386,6 @@ function()
     }
   
     # Open Slider Menu:
-    B = 5
     C1 = "1: [-1,Inf]"
     C2 = "2-4-6-8-12-14-15-21: [1,Inf)"
     C3 = "3: [-1,1)"
@@ -1192,7 +1191,7 @@ function(x, alpha = NULL, type = archmList(), inv = FALSE, lower = 1.0e-8)
 
 
 KfuncSlider =
-function()
+function(B = 5)
 {   # A function implemented by Diethelm Wuertz
        
     # Description:
@@ -1315,7 +1314,6 @@ function()
     }
   
     # Open Slider Menu:
-    B = 5
     C1 = "1: [-1,Inf]"
     C2 = "2-4-6-8-12-14-15-21: [1,Inf)"
     C3 = "3: [-1,1)"
