@@ -16,7 +16,7 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2006, Diethelm Wuertz, GPL
+#   1999 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
 #   www.rmetrics.org
@@ -76,8 +76,7 @@ function(rho)
 
 
 .ellipticalRho =
-function(rho, param = NULL, type = c("norm", "cauchy", "t", "logistic", 
-"laplace", "kotz", "epower"), subdivisions = 500)
+function(rho, param = NULL, type = ellipticalList(), subdivisions = 500)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -118,8 +117,7 @@ function(rho, param = NULL, type = c("norm", "cauchy", "t", "logistic",
 
 
 ellipticalRho =
-function(rho, param = NULL, type = c("norm", "cauchy", "t", "logistic", 
-"laplace", "kotz", "epower"), subdivisions = 500)
+function(rho, param = NULL, type = ellipticalList(), subdivisions = 500)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:

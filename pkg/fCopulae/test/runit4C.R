@@ -16,7 +16,7 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2006, Diethelm Wuertz, GPL
+#   1999 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
 #   www.rmetrics.org
@@ -28,9 +28,12 @@
 
 
 ################################################################################
-# FUNCTION:                  EXTREME VALUE COPULAE GENERATOR FUNCTION:
-#  Afunc                      Computes Dependence function
-#  AfuncSlider                Displays interactively dependence function
+# FUNCTION                   KENDALL'S TAU AND SPEARMAN'S RHO:
+#  evTau                      Returns Kendall's tau for extreme value copulae
+#  evRho                      Returns Spearman's rho for extreme value copulae
+# FUNCTION:                  EXTREME VALUE COPULAE TAIL DEPENDENCE:
+#  evTailCoeff                Computes tail dependence for extreme value copulae
+#  evTailCoeffSlider          Plots extreme value tail dependence function
 #################################################################################
 
 
@@ -54,41 +57,7 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.evCopulae = 
-function()
-{
-    # No. 1 - 5
-    TYPES = c("gumbel", "galambos", "husler.reiss", "tawn", "bb5")
-    for (type in TYPES) {
-        param = .evParam(type)
-        print(unlist(param))
-        cat("\n")
-    }
-
-    # Return Value:
-    return()    
-}
-
-    
-# ------------------------------------------------------------------------------
-
-
-test.dependenceMeasures = 
-function()
-{
-    # TYPES = c("gumbel", "galambos", "husler.reiss", "tawn", "bb5")
-    # A, A', A'':
-    AfuncSlider() 
-    
-    # Return Value:
-    return()    
-}
-
-    
-# ------------------------------------------------------------------------------
-
-
-test.kendallsTau = 
+test.evTau = 
 function()
 {
     NA
@@ -101,7 +70,7 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.spearmansRho = 
+test.evRho = 
 function()
 {
     NA
@@ -114,7 +83,7 @@ function()
 # ------------------------------------------------------------------------------
     
 
-test.revCopula = 
+test.evTailCoeff = 
 function()
 {
     
@@ -122,61 +91,11 @@ function()
     return()    
 }
 
-       
+
 # ------------------------------------------------------------------------------
-
-
-test.pevCopula = 
-function()
-{        
-    # u - single input value:
-    pevCopula()
-    pevCopula(0.5)
-    pevCopula(0.5, 0.25)
     
-    # u - input vector:
-    U = (0:10)/10
-    V = rev(U)
-    pevCopula(U)
-    pevCopula(u = U, v = V)
-    
-    # u - input matrix:
-    pevCopula(cbind(U,V))
-    
-    # u - input list:
-    u = grid2d()
-    u
-    pevCopula(u) # output = "vector"
-    pevCopula(u, output = "list")
-    pevCopula(u) - pevCopula(u, alternative = TRUE)
-    
-    # Slider:
-    pevSlider() # type = "persp"   
-    pevSlider(type = "contour")  
-    
-    # Return Value:
-    return()    
-}
 
-   
-# ------------------------------------------------------------------------------
-
-
-test.devCopula = 
-function()
-{
-    devSlider() # type = "persp" 
-    devSlider(type = "contour") 
-    
-    # Return Value:
-    return()    
-}
-
-   
-# ------------------------------------------------------------------------------
-
-    
-test.parameterFitting = 
+test.evTailCoeffSlider = 
 function()
 {
     
@@ -190,7 +109,7 @@ function()
 
 if (FALSE) {
     require(RUnit)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fCopulae/test/runit4A.R")
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fCopulae/test/runit4C.R")
     printTextProtocol(testResult)
 }
  

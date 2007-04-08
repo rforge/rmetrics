@@ -3,6 +3,11 @@
 \alias{EllipticalCopulae}
 
 
+\alias{ellipticalList}
+\alias{ellipticalParam}
+\alias{ellipticalRange}
+\alias{ellipticalCheck}
+
 \alias{rellipticalCopula}
 \alias{pellipticalCopula}
 \alias{dellipticalCopula}
@@ -36,7 +41,12 @@
     Elliptical Copulae Functions:
     
     \tabular{ll}{
-    \code{rellipticalCopula} \tab Generates elliptical copula variates, \cr
+    \code{ellipticalList} \tab Returns list of implemented elliptical copulae, \cr
+    \code{ellipticalParam} \tab Sets default parameters for an elliptical copula, \cr
+    \code{ellipticalRange} \tab returns the range of valid rho values, \cr
+    \code{ellipticalCheck} \tab checks if rho is in the valid range, \cr
+    
+    \code{rellipticalCopula} \tab generates elliptical copula variates, \cr
     \code{pellipticalCopula} \tab computes elliptical copula probability, \cr
     \code{dellipticalCopula} \tab computes elliptical copula density, \cr
         
@@ -59,30 +69,31 @@
 }
 
 
-\usage{ 
+\usage{
+ellipticalList()
+ellipticalParam(type = ellipticalList())
+ellipticalRange(type = ellipticalList())
+ellipticalCheck(rho = 0.75, param = NULL, type = ellipticalList())
+     
 rellipticalCopula(n, rho = 0.75, param = NULL, type = c("norm", "cauchy", 
     "t"))
-pellipticalCopula(u = 0.5, v = u, rho = 0.75, param = NULL, type = c("norm", 
-    "cauchy", "t", "logistic", "laplace", "kotz", "epower"), output = 
-    c("vector", "list"), border = TRUE)
-dellipticalCopula(u = 0.5, v = u, rho = 0.75, param = NULL, type = c("norm", 
-    "cauchy", "t", "logistic", "laplace", "kotz", "epower"), output = 
-    c("vector", "list"), border = TRUE)
+pellipticalCopula(u = 0.5, v = u, rho = 0.75, param = NULL, 
+    type = ellipticalList(), output = c("vector", "list"), border = TRUE)
+dellipticalCopula(u = 0.5, v = u, rho = 0.75, param = NULL, 
+    type = ellipticalList(), output = c("vector", "list"), border = TRUE)
 
 rellipticalSlider(B = 100)
 pellipticalSlider(type = c("persp", "contour"), B = 20)
 dellipticalSlider(type = c("persp", "contour"), B = 20)
     
 ellipticalTau(rho)
-ellipticalRho(rho, param = NULL, type = c("norm", "cauchy", "t", "logistic", 
-    "laplace", "kotz", "epower"), subdivisions = 500)
+ellipticalRho(rho, param = NULL, type = ellipticalList(), subdivisions = 500)
     
 ellipticalTailCoeff(rho, param = NULL, type = c("norm", "cauchy", "t"))
 ellipticalTailPlot(param = NULL, type = c("norm", "cauchy", "t"), 
     tail = c("Lower", "Upper"))
 
-gfunc(x, param = NULL, type = c("norm", "cauchy", "t", "logistic", "laplace", 
-    "kotz", "epower"))
+gfunc(x, param = NULL, type = ellipticalList())
 gfuncSlider()
 
 ellipticalCopulaSim(n, rho = 0.75, param = NULL, type = c("norm", "cauchy", "t"))

@@ -16,7 +16,7 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2006, Diethelm Wuertz, GPL
+#   1999 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
 #   www.rmetrics.org
@@ -41,7 +41,7 @@
 
 
 archmCopulaSim = 
-function (n, alpha = NULL, type = paste(1:22)) 
+function (n, alpha = NULL, type = archmList()) 
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -52,7 +52,7 @@ function (n, alpha = NULL, type = paste(1:22))
     Type = as.integer(type)
       
     # Settings:
-    if (is.null(alpha)) alpha = .archmParam(type)$param
+    if (is.null(alpha)) alpha = archmParam(type)$param
     
     # Random Variates:
     ans = rarchmCopula(n = n, alpha = alpha, type = type) 
@@ -70,7 +70,7 @@ function (n, alpha = NULL, type = paste(1:22))
 
     
 archmCopulaFit =
-function(u, v = NULL, type = paste(1:22), ...)
+function(u, v = NULL, type = archmList(), ...)
 {   # A function implemented by Diethelm Wuertz
     
     # Description:
@@ -100,13 +100,13 @@ function(u, v = NULL, type = paste(1:22), ...)
     V <<- v
 
     # Estimate Rho from Kendall's tau for all types of Copula:
-    alpha = .archmParam(type)$param
+    alpha = archmParam(type)$param
      
     # Estimate Copula:
     fun = function(x, type) {
         -mean( log(darchmCopula(u = U, v = V, alpha = x, type = type)) )
     }
-    range = .archmRange(type)
+    range = archmRange(type)
 
     fit = nlminb(start = alpha, objective = fun, 
         lower = range[1], upper = range[2],  type = type, ...)

@@ -16,7 +16,7 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2006, Diethelm Wuertz, GPL
+#   1999 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
 #   www.rmetrics.org
@@ -231,8 +231,8 @@ type = NULL, error = 1e-3, ...)
             12 * (C - x*y )
         }
     } else if (family == "archm") {
-        if (is.null(alpha)) alpha <<- .archmParam(type)$param
-        check = .archmCheck(alpha, type)
+        if (is.null(alpha)) alpha <<- archmParam(type)$param
+        check = archmCheck(alpha, type)
         dCopulaRho <- function(x, y) {
             C = parchmCopula(x, y, alpha = alpha, type = type)
             12 * (C - x*y )

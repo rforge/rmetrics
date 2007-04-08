@@ -16,7 +16,7 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2006, Diethelm Wuertz, GPL
+#   1999 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
 #   www.rmetrics.org
@@ -28,9 +28,14 @@
 
 
 ################################################################################
-# FUNCTION:                  EXTREME VALUE COPULAE GENERATOR FUNCTION:
-#  Afunc                      Computes Dependence function
-#  AfuncSlider                Displays interactively dependence function
+# FUNCTION:                 EXTREME VALUE COPULAE PARAMETER:
+#  evList                    Returns list of implemented extreme value copulae
+#  evParam                   Sets Default parameters for an extreme value copula
+#  evCheck                   Checks if parameters are in the valid range
+#  evRange                   Returns the range of valid parameter values
+# FUNCTION:                 EXTREME VALUE COPULAE GENERATOR FUNCTION:
+#  Afunc                     Computes Dependence function
+#  AfuncSlider               Displays interactively dependence function
 #################################################################################
 
 
@@ -54,16 +59,14 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.evCopulae = 
+test.evList = 
 function()
 {
-    # No. 1 - 5
-    TYPES = c("gumbel", "galambos", "husler.reiss", "tawn", "bb5")
-    for (type in TYPES) {
-        param = .evParam(type)
-        print(unlist(param))
-        cat("\n")
-    }
+    # Arguments ?
+    args(evList)
+    
+    # List:
+    evList()
 
     # Return Value:
     return()    
@@ -73,13 +76,12 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.dependenceMeasures = 
+test.evParam = 
 function()
 {
-    # TYPES = c("gumbel", "galambos", "husler.reiss", "tawn", "bb5")
-    # A, A', A'':
-    AfuncSlider() 
-    
+    # 
+    NA
+
     # Return Value:
     return()    
 }
@@ -88,7 +90,7 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.kendallsTau = 
+test.evRange = 
 function()
 {
     NA
@@ -101,7 +103,7 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.spearmansRho = 
+test.evCheck = 
 function()
 {
     NA
@@ -112,61 +114,12 @@ function()
 
    
 # ------------------------------------------------------------------------------
-    
 
-test.revCopula = 
+
+test.Afunc = 
 function()
 {
-    
-    # Return Value:
-    return()    
-}
-
-       
-# ------------------------------------------------------------------------------
-
-
-test.pevCopula = 
-function()
-{        
-    # u - single input value:
-    pevCopula()
-    pevCopula(0.5)
-    pevCopula(0.5, 0.25)
-    
-    # u - input vector:
-    U = (0:10)/10
-    V = rev(U)
-    pevCopula(U)
-    pevCopula(u = U, v = V)
-    
-    # u - input matrix:
-    pevCopula(cbind(U,V))
-    
-    # u - input list:
-    u = grid2d()
-    u
-    pevCopula(u) # output = "vector"
-    pevCopula(u, output = "list")
-    pevCopula(u) - pevCopula(u, alternative = TRUE)
-    
-    # Slider:
-    pevSlider() # type = "persp"   
-    pevSlider(type = "contour")  
-    
-    # Return Value:
-    return()    
-}
-
-   
-# ------------------------------------------------------------------------------
-
-
-test.devCopula = 
-function()
-{
-    devSlider() # type = "persp" 
-    devSlider(type = "contour") 
+    NA
     
     # Return Value:
     return()    
@@ -176,9 +129,10 @@ function()
 # ------------------------------------------------------------------------------
 
     
-test.parameterFitting = 
+test.AfuncSlider = 
 function()
 {
+    NA
     
     # Return Value:
     return()    

@@ -16,7 +16,7 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2006, Diethelm Wuertz, GPL
+#   1999 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
 #   www.rmetrics.org
@@ -28,31 +28,30 @@
 
 
 ################################################################################
-#                       X     NOT YET IMPEMENTED
 # FUNCTION:                  ARMAX COPULAE PARAMETER:
-#  .armaxParam          X     Sets parameters for an armax copula
-#  .armaxRange          X     Returns the range of valid parameter values
-#  .armaxCheck          X     Checks if the parameters are in the valid range
+#  .armaxParam                Sets parameters for an armax copula
+#  .armaxRange                Returns the range of valid parameter values
+#  .armaxCheck                Checks if the parameters are in the valid range
 # FUNCTION:                  ARMAX COPULAE GENERATOR FUNCTION:
-#  armax*               X
+#  armax*                
 # FUNCTION                   KENDALL'S TAU AND SPEARMAN'S RHO:
-#  armaxTau             X     Returns Kendall's tau for armax copulae
-#  armaxRho             X     Returns Spearman's rho for armax copulae
+#  armaxTau                   Returns Kendall's tau for armax copulae
+#  armaxRho                   Returns Spearman's rho for armax copulae
 # FUNCTION:                  ARMAX COPULAE TAIL COEFFICIENT:
-#  armaxTailCoeff       X     Computes tail dependence for armax copulae
-#  armaxTailPlot        X     Plots armax tail dependence function
+#  armaxTailCoeff             Computes tail dependence for armax copulae
+#  armaxTailPlot              Plots armax tail dependence function
 # FUNCTION:                  ARMAX COPULAE RANDOM VARIATES:
-#  rarmaxCopula         X     Generates armax copula random variates 
-#  rarmaxSlider         X     Generates interactive plots of random variates
+#  rarmaxCopula               Generates armax copula random variates 
+#  rarmaxSlider               Generates interactive plots of random variates
 # FUNCTION:                  ARMAX COPULAE PROBABILITY:
 #  parmaxlCopula              Computes armax copula probability
-#  parmaxSlider         X     Generates interactive plots of probability
+#  parmaxSlider               Generates interactive plots of probability
 # FUNCTION:                  ARMAX COPULAE DENSITY:
-#  darmaxCopula         X     Computes armax copula density 
-#  darmaxSlider         X     Generates interactive plots of armax density
+#  darmaxCopula               Computes armax copula density 
+#  darmaxSlider               Generates interactive plots of armax density
 # FUNCTION:                  ARMAX COPULAE PARAMETER FITTING:
-#  armaxCopulaSim       X     Simulates bivariate extreme value copula
-#  armaxCopulaFit       X     Fits the paramter of an extreme value copula
+#  armaxCopulaSim             Simulates bivariate extreme value copula
+#  armaxCopulaFit             Fits the paramter of an extreme value copula
 ################################################################################
 
 
@@ -78,7 +77,7 @@ function()
 
 if (FALSE) {
     require(RUnit)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fCopulae/test/runit1A.R")
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fCopulae/test/runit5A.R")
     printTextProtocol(testResult)
 }
  

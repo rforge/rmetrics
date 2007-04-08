@@ -16,7 +16,7 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2006, Diethelm Wuertz, GPL
+#   1999 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
 #   www.rmetrics.org
@@ -29,9 +29,10 @@
 
 ################################################################################
 # FUNCTION:                  UTILITY FUNCTIONS:
-#  .ellipticalParam           Sets Default parameters for an elliptical copula
-#  .ellipticalRange           Returns the range of valid rho values
-#  .ellipticalCheck           Checks if rho is in the valid range
+#  ellipticalList             Returns list of implemented Elliptical copulae
+#  ellipticalParam            Sets default parameters for an elliptical copula
+#  ellipticalRange            Returns the range of valid rho values
+#  ellipticalCheck            Checks if rho is in the valid range
 # FUNCTION:                  ELLIPTICAL GENERATOR AND RELATED FUNCTIONS:
 #  gfunc                      Generator function for elliptical distributions
 #  gfuncSlider                Slider for generator, density and probability
@@ -46,14 +47,32 @@
 
 ################################################################################
 # UTILITY FUNCTIONS:
-#  .ellipticalParam           Sets Default parameters for an elliptical copula
-#  .ellipticalRange           Returns the range of valid rho values
-#  .ellipticalCheck           Checks if rho is in the valid range
+#  ellipticalParam           Sets Default parameters for an elliptical copula
+#  ellipticalList             Returns list of implemented Elliptical copulae
+#  ellipticalRange           Returns the range of valid rho values
+#  ellipticalCheck           Checks if rho is in the valid range
 
 
-.ellipticalParam =
-function(type = c("norm", "cauchy", "t", "logistic", "laplace", "kotz", 
-"epower"))
+ellipticalList =
+function()
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Returns list of implemented elliptical copulae
+    
+    # Compose List:
+    ans = c("norm", "cauchy", "t", "logistic", "laplace", "kotz", "epower")
+    
+    # Return Value:
+    ans
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+ellipticalParam =
+function(type = ellipticalList())
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -76,7 +95,7 @@ function(type = c("norm", "cauchy", "t", "logistic", "laplace", "kotz",
     #       maximum values for each of the parameters. 
     
     # Example:
-    #   .ellipticalParam("norm"); .ellipticalParam("t")
+    #   ellipticalParam("norm"); ellipticalParam("t")
     
     # FUNCTION:
     
@@ -130,9 +149,8 @@ function(type = c("norm", "cauchy", "t", "logistic", "laplace", "kotz",
 # ------------------------------------------------------------------------------ 
    
   
-.ellipticalRange = 
-function(type = c("norm", "cauchy", "t", "logistic", "laplace", "kotz", 
-"epower"))
+ellipticalRange = 
+function(type = ellipticalList())
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -149,7 +167,7 @@ function(type = c("norm", "cauchy", "t", "logistic", "laplace", "kotz",
     #       "epower" for the exponential power distribution
     
     # Example:
-    #   .ellipticalRange("norm"); .ellipticalRange("t")
+    #   ellipticalRange("norm"); ellipticalRange("t")
     
     # FUNCTION:
     
@@ -157,7 +175,7 @@ function(type = c("norm", "cauchy", "t", "logistic", "laplace", "kotz",
     type = match.arg(type)
     
     # Range:
-    ans = .ellipticalParam(type)$range
+    ans = ellipticalParam(type)$range
     
     # Return Value:
     ans
@@ -167,9 +185,8 @@ function(type = c("norm", "cauchy", "t", "logistic", "laplace", "kotz",
 # ------------------------------------------------------------------------------
 
 
-.ellipticalCheck =
-function(rho = 0.75, param = NULL, type = c("norm", "cauchy", "t", 
-"logistic", "laplace", "kotz", "epower"))
+ellipticalCheck =
+function(rho = 0.75, param = NULL, type = ellipticalList())
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -189,8 +206,8 @@ function(rho = 0.75, param = NULL, type = c("norm", "cauchy", "t",
     #       "epower" for the exponential power distribution
     
     # Example:
-    #   .ellipticalCheck(0.5, NULL, "norm") 
-    #   .ellipticalCheck(1.5, NULL, "t")
+    #   ellipticalCheck(0.5, NULL, "norm") 
+    #   ellipticalCheck(1.5, NULL, "t")
     
     # FUNCTION:
     
@@ -198,7 +215,7 @@ function(rho = 0.75, param = NULL, type = c("norm", "cauchy", "t",
     type = match.arg(type)
 
     # Range:
-    range = as.vector(.ellipticalRange(type))
+    range = as.vector(ellipticalRange(type))
     if (rho < range[1] | rho > range[2]) {
         print(c(rho = rho))
         print(c(range = range))
@@ -223,8 +240,7 @@ function(rho = 0.75, param = NULL, type = c("norm", "cauchy", "t",
 
 
 gfunc = 
-function(x, param = NULL, type = c("norm", "cauchy", "t", "logistic", 
-"laplace", "kotz", "epower"))
+function(x, param = NULL, type = ellipticalList())
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -266,7 +282,7 @@ function(x, param = NULL, type = c("norm", "cauchy", "t", "logistic",
     type = type[1]
     
     # Get Parameters:   
-    # if (is.null(param)) param = .ellipticalParam$param
+    # if (is.null(param)) param = ellipticalParam$param
     
     # Create Generator:
     if (type == "norm") {
@@ -366,16 +382,22 @@ function()
     
     # FUNCTION:
     
+    # Settings:
+    B = 10
+    
     # Graphic Frame:
     par(mfrow = c(2, 2), cex = 0.7)
     
     # Internal Function:
     refresh.code = function(...)
     {
+        # Startup Counter:
+        .counter <<- .counter + 1
+        if (.counter < 6) return ()
+        
         # Sliders:
         Copula = as.integer(.sliderMenu(no = 1))
-        type = c("norm", "cauchy", "t", "logistic", "laplace", "kotz", 
-            "epower")
+        type = ellipticalList()
         type = type[Copula]
         Type = c("Normal", "Cauchy", "Student-t", "Logistic", "Laplace",
             "Kotz", "Exponential Power")
@@ -479,10 +501,11 @@ function()
     }
   
     # Open Slider Menu:
+    .counter <<- 0
     .sliderMenu(refresh.code,
         names       = c("Copula",   "N", "3: nu",  "6|7: r",  "7: s", "rho"),
         minima      = c(       1,    50,       1,       0.1,     0.1, -0.95),
-        maxima      = c(       7,  2000,      10,        10,      10,  0.95),
+        maxima      = c(       7,  2000,       B,         B,       B,  0.95),
         resolutions = c(       1,    50,     0.1,       0.1,     0.1,  0.05),
         starts      = c(       1,   100,       4,         1,       1,  0.00)) 
 }
@@ -492,8 +515,8 @@ function()
 
 
 .pelliptical = 
-function(q, param = NULL, type = c("norm", "cauchy", "t", "logistic", 
-"laplace", "kotz", "epower"), alternative = TRUE, subdivisions = 100)
+function(q, param = NULL, type = ellipticalList(), 
+alternative = TRUE, subdivisions = 100)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -574,57 +597,9 @@ function(q, param = NULL, type = c("norm", "cauchy", "t", "logistic",
 # ------------------------------------------------------------------------------
 
 
-.pelliptical.RUnit = 
-function()
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   RUnit test
-
-    # TEST:
-    
-    # Probability:
-    q = (-1000:1000)/2000
-    S = NULL
-    
-    s = Sys.time()
-    .pelliptical(q = q, param = NULL, type = "norm")
-    S = c(S, as.integer(Sys.time() - s))
-     
-    s = Sys.time()
-    .pelliptical(q = q, param = NULL, type = "cauchy") 
-    S = c(S, as.integer(Sys.time() - s))
-    
-    s = Sys.time()
-    .pelliptical(q = q, param = 2, type = "t") 
-    S = c(S, as.integer(Sys.time() - s))
-    
-    s = Sys.time()
-    .pelliptical(q = q, param = NULL, type = "logistic") 
-    S = c(S, as.integer(Sys.time() - s))
-    
-    s = Sys.time()
-    .pelliptical(q = q, param = NULL, type = "laplace")
-    S = c(S, as.integer(Sys.time() - s))
-    
-    s = Sys.time()
-    .pelliptical(q = q, param = c(r = 1), type = "kotz")  
-    S = c(S, as.integer(Sys.time() - s))
-    
-    s = Sys.time()
-    .pelliptical(q = q, param = c(r = 1, s = 1), type = "epower")
-    S = c(S, as.integer(Sys.time() - s))
-    
-    S 
-}
-
-
-# ------------------------------------------------------------------------------
-
-
 .delliptical = 
-function(x, param = NULL, type = c("norm", "cauchy", "t", "logistic", 
-"laplace", "kotz", "epower"), alternative = TRUE, subdivisions = 100)
+function(x, param = NULL, type = ellipticalList(), alternative = TRUE, 
+subdivisions = 100)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -710,47 +685,8 @@ function(x, param = NULL, type = c("norm", "cauchy", "t", "logistic",
 # ------------------------------------------------------------------------------
 
 
-.delliptical.RUnit = 
-function()
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   RUnit test
-
-    # TEST:
-    
-    # Probability:
-    N = 100
-    x = (-1999:1999)/N
-    d = .delliptical(x = x, param = NULL, type = "norm")
-        sum(d)/N
-    d = .delliptical(x = x, param = NULL, type = "cauchy")
-        sum(d)/N
-    d = .delliptical(x = x, param = NULL, type = "t")
-        sum(d)/N
-    d = .delliptical(x = x, param = NULL, type = "logistic")
-        sum(d)/N
-    d = .delliptical(x = x, param = NULL, type = "laplace")
-        sum(d)/N
-    d = .delliptical(x = x, param = NULL, type = "kotz")
-        sum(d)/N
-    d = .delliptical(x = x, param = NULL, type = "epower")
-        sum(d)/N
-        
-    # Non-default Parameters:
-    d = .delliptical(x = (-100:100)/10, param = 1, type = "kotz")
-        sum(d)/N
-    d = .delliptical(x = (-100:100)/10, param = 1/2, type = "kotz")
-        sum(d)/N
-}
-
-
-# ------------------------------------------------------------------------------
-
-
 .qelliptical = 
-function(p, param = NULL, type = c("norm", "cauchy", "t", "logistic", 
-"laplace", "kotz", "epower"), alternative = TRUE)
+function(p, param = NULL, type = ellipticalList(), alternative = TRUE)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -831,30 +767,6 @@ function(p, param = NULL, type = c("norm", "cauchy", "t", "logistic",
     
     # Return Value:
     ans
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.qelliptical.RUnit = 
-function()
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   RUnit test
-
-    # TEST:
-    
-    # Probability:
-    p = (0:10)/10
-    .qelliptical(p = p, param = NULL, type = "norm") 
-    .qelliptical(p = p, param = NULL, type = "cauchy") 
-    .qelliptical(p = p, param = 2, type = "t") 
-    .qelliptical(p = p, param = NULL, type = "logistic") 
-    .qelliptical(p = p, param = NULL, type = "laplace")
-    .qelliptical(p = p, param = c(r = 1), type = "kotz")  
-    .qelliptical(p = p, param = c(r = 1, s = 1), type = "epower") 
 }
 
 

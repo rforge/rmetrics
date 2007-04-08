@@ -3,6 +3,11 @@
 \alias{ExtremeValueCopulae}
 
 
+\alias{evList}
+\alias{evParam}
+\alias{evRange}
+\alias{evCheck}
+
 \alias{revCopula}
 \alias{pevCopula}
 \alias{devCopula}
@@ -15,7 +20,7 @@
 \alias{evRho}        
 
 \alias{evTailCoeff}     
-\alias{evTailPlot}  
+\alias{evTailCoeffSlider}  
 
 \alias{Afunc}
 \alias{AfuncSlider}
@@ -37,7 +42,12 @@
     Extreme Value Copulae Functions:
     
     \tabular{ll}{
-    \code{revCopula} \tab Generates extreme value copula random variates, \cr
+    \code{evList} \tab Returns list of implemented extreme value copulae, \cr
+    \code{evParam} \tab sets default parameters for an extreme value copula, \cr
+    \code{evRange} \tab returns the range of valid rho values, \cr
+    \code{evCheck} \tab checks if rho is in the valid range, \cr
+    
+    \code{revCopula} \tab generates extreme value copula random variates, \cr
     \code{pevCopula} \tab computes extreme value copula probability, \cr
     \code{devCopula} \tab computes extreme value copula density, \cr
     
@@ -52,7 +62,7 @@
     \code{evRho} \tab computes Spearman's rho for extreme value copulae, \cr
     
     \code{evTailCoeff} \tab computes tail dependence for extreme value copulae, \cr
-    \code{evTailPlot} \tab plots tail dependence for extreme value copulae, \cr
+    \code{evTailCoeffSlider} \tab plots tail dependence for extreme value copulae, \cr
     
     \code{evCopulaSim} \tab simulates an extreme value copula, \cr
     \code{evCopulaFit} \tab fits the parameters of an extreme value copula. }
@@ -61,40 +71,39 @@
 
 
 \usage{
+evList()
+evParam(type = evList())
+evRange(type = evList())
+evCheck(param, type = evList())
 
-%revCopula(n, param = NULL, type = c("gumbel", "galambos", "husler.reiss", 
-%    "tawn", "bb5"))
-pevCopula(u = 0.5, v = u, param = NULL, type = c("gumbel", "galambos", 
-    "husler.reiss", "tawn", "bb5"), output = c("vector", "list"), 
-    alternative = FALSE )
-devCopula(u = 0.5, v = u, param = NULL, type = c("gumbel", "galambos", 
-    "husler.reiss", "tawn", "bb5"), output = c("vector", "list"), 
-    alternative = FALSE )   
+revCopula(n, param = NULL, type = evList())
+pevCopula(u = 0.5, v = u, param = NULL, type = evList(), 
+    output = c("vector", "list"), alternative = FALSE )
+devCopula(u = 0.5, v = u, param = NULL, type = evList(), 
+    output = c("vector", "list"), alternative = FALSE )   
 
-%revSlider(B = 10)
+revSlider(B = 10)
 pevSlider(type = c("persp", "contour"), B = 10)
 devSlider(type = c("persp", "contour"), B = 10)
 
-%evTau(param = NULL, type = 1:22, lower = 1.0e-10)
-%evRho(param = NULL, type = 1:22, method = c("integrate2d", "adapt"), error = 1.0e-5)
+evTau(param = NULL, type = evList(), alternative = FALSE)
+evRho(param = NULL, type = evList(), alternative = FALSE)
     
-%evTailCoeff(param = NULL, type = 1:22)
-%evTailPlot(param = NULL, type = 1:22, tail = c("Upper", "Lower"))
+evTailCoeff(param = NULL, type = evList())
+evTailCoeffSlider(B = 10)
 
-Afunc(x, param = NULL, type = c("gumbel", "galambos", "husler.reiss", "tawn", "bb5") )
+Afunc(x, param = NULL, type = evList())
 AfuncSlider()
 
-%evCopulaSim(n, param = NULL,  type = c("gumbel", "galambos", "husler.reiss", 
-%    "tawn", "bb5"))
-%evCopulaFit(u, v = NULL, type = c("gumbel", "galambos", "husler.reiss", 
-%    "tawn", "bb5"), \dots)
+evCopulaSim(n, param = NULL,  type = evList())
+evCopulaFit(u, v = NULL, type = evList(), \dots)
 }
 
 
 \arguments{
   
     \item{alternative}{
-        [*evCopula] - \cr
+        [evRho][evTau][*evCopula] - \cr
         Should the probability be computed alternatively in a
         direct way from the probability formula or by default 
         via the dependency function?  
@@ -109,22 +118,10 @@ AfuncSlider()
     %    the error bound to be achieved by the \code{integrate2d} 
     %    integration formula. A numeric value, by default \code{error=1.0e-5}.
     %    }
-    %\item{lower}{
-    %    [evTau] - \cr
-    %    a numeric value setting the lower bound for the internal integration
-    %    function \code{integrate}.
-    %    }
-    %\item{n}{
-    %    [revCopula][evCopulaSim] - \cr         
-    %    the number of random deviates to be generated, an integer value.
-    %    }
-    %\item{method}{
-    %    [evRho] - \cr         
-    %    a character string that determines which integration should be 
-    %    used, either \code{"integrate2d"} or \code{"adapt"}. If the second
-    %    method is selected the condtributed R package \code{"adapt"} is 
-    %    required.
-    %    }
+    \item{n}{
+        [revCopula][evCopulaSim] - \cr         
+        the number of random deviates to be generated, an integer value.
+        }
     \item{output}{
         [*evCopula] - \cr
         output - a character string specifying how the output should
@@ -143,15 +140,9 @@ AfuncSlider()
         the copula specified by the variable \code{type}.
         If set to \code{NULL}, then the default parameters will be taken.
         }
-    %\item{tail}{
-    %    [evTailPlot] - \cr
-    %    a character string, either \code{"Upper"} or \code{"Lower"} denoting 
-    %    which of the two tails should be displayed. By default the upper
-    %    tail dependence will be considered.
-    %    }
     \item{type}{
         [*ev*][Afunc] - \cr
-        the type of the maximum extreme value copula. A character
+        the type of the extreme value copula. A character
         string selected from: "gumbel", "galambos", "husler.reiss", 
         "tawn", or "bb5".
         \cr

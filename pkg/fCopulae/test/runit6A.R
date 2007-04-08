@@ -16,7 +16,7 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2006, Diethelm Wuertz, GPL
+#   1999 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
 #   www.rmetrics.org
@@ -28,10 +28,8 @@
 
 
 ################################################################################
-#                       X     NOT YET IMPEMENTED
-# FUNCTION:                  EMPIRICAL COPULAE PROBABILIY:
+# FUNCTION:                  EMPIRICAL COPULAE:
 #  pempiricalCopula           Computes empirical copula probability
-# FUNCTION:                  EMPIRICAL COPULAE DENSITY:
 #  dempiricalCopula           Computes empirical copula density
 ################################################################################
 
@@ -56,9 +54,37 @@ function()
 # ------------------------------------------------------------------------------
 
 
+test.pempiricalCopula = 
+function()
+{
+    #
+    NA
+
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.dempiricalCopula = 
+function()
+{
+    #
+    NA
+
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
 if (FALSE) {
     require(RUnit)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fCopulae/test/runit1A.R")
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fCopulae/test/runit6A.R")
     printTextProtocol(testResult)
 }
  

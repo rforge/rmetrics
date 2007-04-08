@@ -16,7 +16,7 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2006, Diethelm Wuertz, GPL
+#   1999 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
 #   www.rmetrics.org
@@ -28,9 +28,17 @@
 
 
 ################################################################################
+# FUNCTION:                  UTILITY FUNCTIONS:
+#  ellipticalList             Returns list of implemented Elliptical copulae
+#  ellipticalParam            Sets default parameters for an elliptical copula
+#  ellipticalRange            Returns the range of valid rho values
+#  ellipticalCheck            Checks if rho is in the valid range
 # FUNCTION:                  ELLIPTICAL GENERATOR AND RELATED FUNCTIONS:
 #  gfunc                      Generator function for elliptical distributions
 #  gfuncSlider                Slider for generator, density and probability
+#  .pelliptical               Univariate elliptical distribution probability
+#  .delliptical               Univariate elliptical distribution density
+#  .qelliptical               Univariate elliptical distribution quantiles
 ################################################################################
 
 
@@ -45,6 +53,68 @@ function()
     checkIdentical(
         target = class(try(helpFile())),
         current = "NULL")
+
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.ellipticalList = 
+function()
+{
+
+    # Arguments ?
+    args(ellipticalList)
+    
+    # List:
+    target = c("norm", "cauchy", "t", "logistic", "laplace", "kotz", "epower")
+    current = ellipticalList()
+    print(current)
+    
+    
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.ellipticalParam = 
+function()
+{
+
+    # Arguments ?
+    args(ellipticalParam)
+    
+    # Parameters:
+    for (type in ellipticalList()) {
+        cat("\n")
+        print(unlist(ellipticalParam(type)))
+    }
+    
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.ellipticalCheck = 
+function()
+{
+    # Arguments ?
+    args(ellipticalCheck)
+    
+    # Range:
+    for (type in ellipticalList()) {
+        cat("\n")
+        print(ellipticalCheck(ellipticalParam(type)$param))              # CHECK
+    }
 
     # Return Value:
     return()    
@@ -89,7 +159,7 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.gfunc = 
+test.gfuncSlider = 
 function()
 {
     # Try Slider:
@@ -103,13 +173,110 @@ function()
 # ------------------------------------------------------------------------------
 
 
+test.pelliptical = 
+function()
+{  
+    # Probability:
+    q = (-1000:1000)/2000
+    S = NULL
+    
+    s = Sys.time()
+    .pelliptical(q = q, param = NULL, type = "norm")
+    S = c(S, as.integer(Sys.time() - s))
+     
+    s = Sys.time()
+    .pelliptical(q = q, param = NULL, type = "cauchy") 
+    S = c(S, as.integer(Sys.time() - s))
+    
+    s = Sys.time()
+    .pelliptical(q = q, param = 2, type = "t") 
+    S = c(S, as.integer(Sys.time() - s))
+    
+    s = Sys.time()
+    .pelliptical(q = q, param = NULL, type = "logistic") 
+    S = c(S, as.integer(Sys.time() - s))
+    
+    s = Sys.time()
+    .pelliptical(q = q, param = NULL, type = "laplace")
+    S = c(S, as.integer(Sys.time() - s))
+    
+    s = Sys.time()
+    .pelliptical(q = q, param = c(r = 1), type = "kotz")  
+    S = c(S, as.integer(Sys.time() - s))
+    
+    s = Sys.time()
+    .pelliptical(q = q, param = c(r = 1, s = 1), type = "epower")
+    S = c(S, as.integer(Sys.time() - s))
+    
+    # Return Value:
+    return() 
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.delliptical = 
+function()
+{   
+    # Probability:
+    N = 100
+    x = (-1999:1999)/N
+    d = .delliptical(x = x, param = NULL, type = "norm")
+        sum(d)/N
+    d = .delliptical(x = x, param = NULL, type = "cauchy")
+        sum(d)/N
+    d = .delliptical(x = x, param = NULL, type = "t")
+        sum(d)/N
+    d = .delliptical(x = x, param = NULL, type = "logistic")
+        sum(d)/N
+    d = .delliptical(x = x, param = NULL, type = "laplace")
+        sum(d)/N
+    d = .delliptical(x = x, param = NULL, type = "kotz")
+        sum(d)/N
+    d = .delliptical(x = x, param = NULL, type = "epower")
+        sum(d)/N
+        
+    # Non-default Parameters:
+    d = .delliptical(x = (-100:100)/10, param = 1, type = "kotz")
+        sum(d)/N
+    d = .delliptical(x = (-100:100)/10, param = 1/2, type = "kotz")
+        sum(d)/N
+        
+    # Return Value:
+    return() 
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.qelliptical = 
+function()
+{   
+    # Probability:
+    p = (0:10)/10
+    .qelliptical(p = p, param = NULL, type = "norm") 
+    .qelliptical(p = p, param = NULL, type = "cauchy") 
+    .qelliptical(p = p, param = 2, type = "t") 
+    .qelliptical(p = p, param = NULL, type = "logistic") 
+    .qelliptical(p = p, param = NULL, type = "laplace")
+    .qelliptical(p = p, param = c(r = 1), type = "kotz")  
+    .qelliptical(p = p, param = c(r = 1, s = 1), type = "epower") 
+    
+    # Return Value:
+    return() 
+}
+
+
+# ------------------------------------------------------------------------------
+
+
 if (FALSE) {
     require(RUnit)
     testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fCopulae/test/runit2A.R")
     printTextProtocol(testResult)
 }
  
-
   
 ################################################################################
-   

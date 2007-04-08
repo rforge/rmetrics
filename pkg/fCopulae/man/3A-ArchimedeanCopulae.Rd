@@ -3,6 +3,11 @@
 \alias{ArchimedeanCopulae}
 
 
+\alias{archmList}
+\alias{archmParam}
+\alias{archmRange}
+\alias{archmCheck}
+
 \alias{rarchmCopula}
 \alias{parchmCopula}
 \alias{darchmCopula}      
@@ -38,7 +43,12 @@
     Archimedean Copulae Functions:
     
     \tabular{ll}{
-    \code{rarchmCopula} \tab Generates Archimedean copula variates, \cr
+    \code{evList} \tab Returns list of implemented Archimedean copulae, \cr
+    \code{archmParam} \tab Sets default parameters for an Archimedean copula, \cr
+    \code{archmRange} \tab returns the range of valid rho values, \cr
+    \code{archmCheck} \tab checks if rho is in the valid range, \cr
+    
+    \code{rarchmCopula} \tab generates Archimedean copula variates, \cr
     \code{parchmCopula} \tab computes Archimedean copula probability, \cr
     \code{darchmCopula} \tab computes Archimedean copula density, \cr
     
@@ -65,33 +75,36 @@
 
 
 \usage{
+archmList()
+archmParam(type = archmList())
+archmRange(type = archmList(), B = Inf)
+archmCheck(alpha, type = archmList())
     
-rarchmCopula(n, alpha = NULL, type = paste(1:22))
-parchmCopula(u = 0.5, v = u, alpha = NULL, type = paste(1:22), output = 
+rarchmCopula(n, alpha = NULL, type = archmList())
+parchmCopula(u = 0.5, v = u, alpha = NULL, type = archmList(), output = 
     c("vector", "list"), alternative = FALSE )
-darchmCopula(u = 0.5, v = u, alpha = NULL, type = paste(1:22), output = 
+darchmCopula(u = 0.5, v = u, alpha = NULL, type = archmList(), output = 
     c("vector", "list"), alternative = FALSE )
    
 rarchmSlider(B = 10) 
 parchmSlider(type = c("persp", "contour"), B = 10)
 darchmSlider(type = c("persp", "contour"), B = 10)
     
-archmTau(alpha = NULL, type = paste(1:22), lower = 1.0e-10)
-archmRho(alpha = NULL, type = paste(1:22), method = c("integrate2d", "adapt"), 
+archmTau(alpha = NULL, type = archmList(), lower = 1.0e-10)
+archmRho(alpha = NULL, type = archmList(), method = c("integrate2d", "adapt"), 
     error = 1.0e-5)
     
-archmTailCoeff(alpha = NULL, type = paste(1:22))
-archmTailPlot(alpha = NULL, type = paste(1:22), tail = c("Upper", "Lower"))
+archmTailCoeff(alpha = NULL, type = archmList())
+archmTailPlot(alpha = NULL, type = archmList(), tail = c("Upper", "Lower"))
    
-Phi(x, alpha = NULL, type = paste(1:22), inv = FALSE, deriv = paste(0:2))
+Phi(x, alpha = NULL, type = archmList(), inv = FALSE, deriv = paste(0:2))
 PhiSlider()
 
-Kfunc(x, alpha = NULL, type = paste(1:22), inv = FALSE, lower = 1.0e-8)
+Kfunc(x, alpha = NULL, type = archmList(), inv = FALSE, lower = 1.0e-8)
 KfuncSlider()
 
-archmCopulaSim(n, alpha = NULL, type = paste(1:22))
-archmCopulaFit(u, v = NULL, type = paste(1:22), \dots)
-
+archmCopulaSim(n, alpha = NULL, type = archmList())
+archmCopulaFit(u, v = NULL, type = archmList(), \dots)
 }
 
 

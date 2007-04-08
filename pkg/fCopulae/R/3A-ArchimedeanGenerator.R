@@ -16,7 +16,7 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2006, Diethelm Wuertz, GPL
+#   1999 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
 #   www.rmetrics.org
@@ -29,9 +29,10 @@
 
 ################################################################################
 # FUNCTION:                  ARCHIMEDEAN COPULAE PARAMETER:
-#  .archmParam                Sets Default parameters for an Archimedean copula
-#  .archmCheck                Checks if alpha is in the valid range
-#  .archmRange                Returns the range of valid alpha values
+#  archmList                  Returns list of implemented Archimedean copulae
+#  archmParam                 Sets default parameters for an Archimedean copula
+#  archmCheck                 Checks if alpha is in the valid range
+#  archmRange                 Returns the range of valid alpha values
 # FUNCTION:                  ARCHIMEDEAN COPULAE PHI GENERATOR:
 #  Phi                        Computes Archimedean Phi, inverse and derivatives
 #  PhiSlider                  Displays interactively generator function
@@ -56,13 +57,32 @@
 
 ################################################################################
 # FUNCTION:                  ARCHIMEDEAN COPULAE PARAMETER:
-#  .archmParam                Sets Default parameters for an Archimedean copula
-#  .archmCheck                Checks if alpha is in the valid range
-#  .archmRange                Returns the range of valid alpha values
+#  archmList                  Returns list of implemented Archimedean copulae
+#  archmParam                 Sets default parameters for an Archimedean copula
+#  archmCheck                 Checks if alpha is in the valid range
+#  archmRange                 Returns the range of valid alpha values
 
 
-.archmParam =
-function(type = paste(1:22))
+archmList =
+function()
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Returns list of implemented Archimedean copulae
+    
+    # Compose List:
+    ans = paste(1:22)
+    
+    # Return Value:
+    ans
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+archmParam =
+function(type = archmList())
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -102,8 +122,8 @@ function(type = paste(1:22))
 # ------------------------------------------------------------------------------ 
    
   
-.archmRange = 
-function(type = paste(1:22), B = Inf)
+archmRange = 
+function(type = archmList(), B = Inf)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -130,8 +150,8 @@ function(type = paste(1:22), B = Inf)
 # ------------------------------------------------------------------------------
 
 
-.archmCheck =
-function(alpha = 0.5, type = paste(1:22))
+archmCheck =
+function(alpha, type = archmList())
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -141,15 +161,10 @@ function(alpha = 0.5, type = paste(1:22))
     
     # Type:
     type = match.arg(type)
-    Type = as.integer(type)
     
     # Check:
     ans = TRUE
-    if (Type < 1 | Type > 22) {
-        print(c(type = type))
-        stop("type must be in the range 1 ... 22")
-    }
-    range = as.vector(.archmRange(type))
+    range = as.vector(archmRange(type))
     if (alpha < range[1] | alpha > range[2]) {
         print(c(alpha = alpha))
         print(c(range = range))
@@ -175,7 +190,7 @@ function(alpha = 0.5, type = paste(1:22))
 
 
 Phi = 
-function(x, alpha = NULL, type = paste(1:22), inv = FALSE, deriv = paste(0:2))
+function(x, alpha = NULL, type = archmList(), inv = FALSE, deriv = paste(0:2))
 {   # A function implemented by Diethelm Wuertz
 
     # Type:
@@ -184,10 +199,10 @@ function(x, alpha = NULL, type = paste(1:22), inv = FALSE, deriv = paste(0:2))
     deriv = match.arg(deriv)
     
     # Default alpha:
-    if (is.null(alpha)) alpha = .archmParam(type)$param
+    if (is.null(alpha)) alpha = archmParam(type)$param
      
     # Check alpha:
-    check = .archmCheck(alpha, type)
+    check = archmCheck(alpha, type)
     
     # Phi Generator:
     if (inv) {
@@ -398,7 +413,7 @@ function()
 
 
 .Phi = 
-function(x, alpha = NULL, type = paste(1:22))
+function(x, alpha = NULL, type = archmList())
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -414,10 +429,10 @@ function(x, alpha = NULL, type = paste(1:22))
     if (missing(x)) x = (0:10)/10
     
     # Alpha:
-    if (is.null(alpha)) alpha = .archmParam(type)$param
+    if (is.null(alpha)) alpha = archmParam(type)$param
      
     # Check alpha:
-    check = .archmCheck(alpha, type)
+    check = archmCheck(alpha, type)
  
     # As listed in Nelsen:
     N = length(x)
@@ -543,7 +558,7 @@ function(alpha, type)
 
 
 .PhiFirstDer  = 
-function(x, alpha = NULL, type = paste(1:22)) 
+function(x, alpha = NULL, type = archmList()) 
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -559,10 +574,10 @@ function(x, alpha = NULL, type = paste(1:22))
     if (missing(x)) x = (0:10)/10
     
     # Alpha:
-    if (is.null(alpha)) alpha = .archmParam(type)$param
+    if (is.null(alpha)) alpha = archmParam(type)$param
     
     # Check alpha:
-    check = .archmCheck(alpha, type)
+    check = archmCheck(alpha, type)
     
     # FUNCTION:
     
@@ -652,7 +667,7 @@ function(x, alpha = NULL, type = paste(1:22))
 
 
 .PhiSecondDer  = 
-function(x, alpha = NULL, type = paste(1:22)) 
+function(x, alpha = NULL, type = archmList()) 
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -668,10 +683,10 @@ function(x, alpha = NULL, type = paste(1:22))
     if (missing(x)) x = (0:10)/10
     
     # Alpha:
-    if (is.null(alpha)) alpha = .archmParam(type)$param
+    if (is.null(alpha)) alpha = archmParam(type)$param
     
     # Check alpha:
-    check = .archmCheck(alpha, type)
+    check = archmCheck(alpha, type)
     
     # FUNCTION:
     
@@ -771,7 +786,7 @@ function(x, alpha = NULL, type = paste(1:22))
 
 
 .invPhi = 
-function(x, alpha = NULL, type = paste(1:22))
+function(x, alpha = NULL, type = archmList())
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -787,10 +802,10 @@ function(x, alpha = NULL, type = paste(1:22))
     if (missing(x)) x = (0:10)/10
     
     # Alpha:
-    if (is.null(alpha)) alpha = .archmParam(type)$param
+    if (is.null(alpha)) alpha = archmParam(type)$param
     
     # Check alpha:
-    check = .archmCheck(alpha, type)
+    check = archmCheck(alpha, type)
    
     # Inverse Generator:
     N = length(x)
@@ -881,7 +896,7 @@ function(x, alpha = NULL, type = paste(1:22))
 
 
 .invPhiFirstDer = 
-function(x, alpha = NULL, type = paste(1:22))
+function(x, alpha = NULL, type = archmList())
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -897,10 +912,10 @@ function(x, alpha = NULL, type = paste(1:22))
     if (missing(x)) x = (0:10)/10
     
     # Alpha:
-    if (is.null(alpha)) alpha = .archmParam(type)$param
+    if (is.null(alpha)) alpha = archmParam(type)$param
     
     # Check alpha:
-    check = .archmCheck(alpha, type)
+    check = archmCheck(alpha, type)
     
     # Generator:
     N = length(x)
@@ -995,7 +1010,7 @@ function(x, alpha = NULL, type = paste(1:22))
 
 
 .invPhiSecondDer = 
-function(x, alpha = NULL, type = paste(1:22))
+function(x, alpha = NULL, type = archmList())
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -1011,10 +1026,10 @@ function(x, alpha = NULL, type = paste(1:22))
     if (missing(x)) x = (0:10)/10
     
     # Alpha:
-    if (is.null(alpha)) alpha = .archmParam(type)$param
+    if (is.null(alpha)) alpha = archmParam(type)$param
     
     # Check alpha:
-    check = .archmCheck(alpha, type)
+    check = archmCheck(alpha, type)
     
     # Generator:
     N = length(x)
@@ -1137,7 +1152,7 @@ function(x, alpha = NULL, type = paste(1:22))
 
 
 Kfunc =
-function(x, alpha = NULL, type = paste(1:22), inv = FALSE, lower = 1.0e-8)
+function(x, alpha = NULL, type = archmList(), inv = FALSE, lower = 1.0e-8)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -1150,10 +1165,10 @@ function(x, alpha = NULL, type = paste(1:22), inv = FALSE, lower = 1.0e-8)
     Type = as.integer(type)
     
     # Default alpha:
-    if (is.null(alpha)) alpha = .archmParam(type)$param
+    if (is.null(alpha)) alpha = archmParam(type)$param
      
     # Check alpha:
-    check = .archmCheck(alpha, type)
+    check = archmCheck(alpha, type)
     
     # Density or its inverse:
     if (!inv) {
@@ -1327,7 +1342,7 @@ function()
 
 
 .Kfunc =
-function(x, alpha = NULL, type = paste(1:22))
+function(x, alpha = NULL, type = archmList())
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -1346,10 +1361,10 @@ function(x, alpha = NULL, type = paste(1:22))
     if (missing(x)) x = (0:10)/10
     
     # Alpha:
-    if (is.null(alpha)) alpha = .archmParam(type)$param
+    if (is.null(alpha)) alpha = archmParam(type)$param
     
     # Check alpha:
-    check = .archmCheck(alpha, type)
+    check = archmCheck(alpha, type)
     
     # Density:
     Kfunc = x - .Phi(x, alpha, type) / .PhiFirstDer(x, alpha, type)
@@ -1367,7 +1382,7 @@ function(x, alpha = NULL, type = paste(1:22))
 
 
 .invK = 
-function(x, alpha = NULL, type = paste(1:22), lower = 1.0e-8)
+function(x, alpha = NULL, type = archmList(), lower = 1.0e-8)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -1380,10 +1395,10 @@ function(x, alpha = NULL, type = paste(1:22), lower = 1.0e-8)
     Type = as.integer(type)
     
     # Alpha:
-    if (is.null(alpha)) alpha = .archmParam(type)$param
+    if (is.null(alpha)) alpha = archmParam(type)$param
     
     # Check alpha:
-    check = .archmCheck(alpha, type)
+    check = archmCheck(alpha, type)
     
     # Compute Inverse:
     .fKC = function(x, p, alpha, type) { .Kfunc (x, alpha, type) - p }
@@ -1410,7 +1425,7 @@ function(x, alpha = NULL, type = paste(1:22), lower = 1.0e-8)
 
 
 .invK2 =
-function(x, alpha, type = paste(1:22))
+function(x, alpha, type = archmList())
 {   # A function implemented by Diethelm Wuertz
 
     # Description:

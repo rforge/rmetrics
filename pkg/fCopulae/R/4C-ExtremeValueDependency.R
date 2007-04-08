@@ -16,7 +16,7 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2006, Diethelm Wuertz, GPL
+#   1999 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
 #   www.rmetrics.org
@@ -48,8 +48,7 @@
 
 
 evTau =
-function(param = NULL, type = c("gumbel", "galambos", "husler.reiss", 
-"tawn", "bb5"), alternative = FALSE)
+function(param = NULL, type = evList(), alternative = FALSE)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -63,8 +62,10 @@ function(param = NULL, type = c("gumbel", "galambos", "husler.reiss",
     
     # Kendall's Tau:
     if (!alternative) {
+        # Default Method:
         ans = .ev1Tau(param, type)
     } else {
+        # Alternative Method:
         ans = .ev2Tau(param, type)
     }
     
@@ -77,8 +78,7 @@ function(param = NULL, type = c("gumbel", "galambos", "husler.reiss",
 
 
 .ev1Tau =
-function(param = NULL, type = c("gumbel", "galambos", "husler.reiss", 
-"tawn", "bb5"))
+function(param = NULL, type = evList())
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -90,7 +90,7 @@ function(param = NULL, type = c("gumbel", "galambos", "husler.reiss",
     type = match.arg(type)
     
     # Default Parameters:
-    if (is.null(param)) param = .evParam(type)$param
+    if (is.null(param)) param = evParam(type)$param
     
     # Kendall's Tau Integrand:
     fun = function(x, param, type) {
@@ -120,8 +120,7 @@ function(param = NULL, type = c("gumbel", "galambos", "husler.reiss",
 
 
 .ev2Tau =
-function(param = NULL, type = c("gumbel", "galambos", "husler.reiss", 
-"tawn", "bb5"))
+function(param = NULL, type = evList())
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -136,7 +135,7 @@ function(param = NULL, type = c("gumbel", "galambos", "husler.reiss",
     type = match.arg(type)
     
     # Default Parameters:
-    if (is.null(param)) param = .evParam(type)$param
+    if (is.null(param)) param = evParam(type)$param
     
     # Kendall's Tau Minus Rho/3 Double Integrand:
     fun = function(x, y, ...) {
@@ -166,8 +165,7 @@ function(param = NULL, type = c("gumbel", "galambos", "husler.reiss",
 
 
 evRho =
-function(param = NULL, type = c("gumbel", "galambos", "husler.reiss", 
-"tawn", "bb5"), alternative = FALSE)
+function(param = NULL, type = evList(), alternative = FALSE)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -181,8 +179,10 @@ function(param = NULL, type = c("gumbel", "galambos", "husler.reiss",
     
     # Spearman's Rho:
     if (!alternative) {
+        # Default Method:
         ans = .ev1Rho(param, type)
     } else {
+        # Alternative Method:
         ans = .ev2Rho(param, type)
     }
     
@@ -195,8 +195,7 @@ function(param = NULL, type = c("gumbel", "galambos", "husler.reiss",
 
 
 .ev1Rho =
-function(param = NULL, type = c("gumbel", "galambos", "husler.reiss", 
-"tawn", "bb5"))
+function(param = NULL, type = evList())
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -211,7 +210,7 @@ function(param = NULL, type = c("gumbel", "galambos", "husler.reiss",
     type = match.arg(type)
     
     # Default Parameters:
-    if (is.null(param)) param = .evParam(type)$param
+    if (is.null(param)) param = evParam(type)$param
 
     # Spearman's Rho Integrand:
     fun = function(x, param, type) {
@@ -240,8 +239,7 @@ function(param = NULL, type = c("gumbel", "galambos", "husler.reiss",
 
 
 .ev2Rho =
-function(param = NULL, type = c("gumbel", "galambos", "husler.reiss", 
-"tawn", "bb5"))
+function(param = NULL, type = evList())
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -256,7 +254,7 @@ function(param = NULL, type = c("gumbel", "galambos", "husler.reiss",
     type = match.arg(type)
     
     # Default Parameters:
-    if (is.null(param)) param = .evParam(type)$param
+    if (is.null(param)) param = evParam(type)$param
 
     # Spearman's Rho Integrand:
     fun = function(x, y, ...) {
@@ -286,8 +284,7 @@ function(param = NULL, type = c("gumbel", "galambos", "husler.reiss",
 
 
 evTailCoeff =
-function(param = NULL, type = c("gumbel", "galambos", "husler.reiss", 
-"tawn", "bb5"))
+function(param = NULL, type = evList())
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -302,7 +299,7 @@ function(param = NULL, type = c("gumbel", "galambos", "husler.reiss",
     type = match.arg(type)
     
     # Default Parameters:
-    if (is.null(param)) param = .evParam(type)$param
+    if (is.null(param)) param = evParam(type)$param
 
     # Limit:
     lambdaU = 2-2*Afunc(0.5, param, type)[[1]]
@@ -344,7 +341,7 @@ function(B = 10)
         if (.counter < 10) return()
         
         # Sliders:
-        Type = c("gumbel", "galambos", "husler.reiss", "tawn", "bb5")
+        Type = evList
         Copula = .sliderMenu(no = 1)
         N = .sliderMenu(no = 2)
         if (Copula <= 3) 

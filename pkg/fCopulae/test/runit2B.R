@@ -16,7 +16,7 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2006, Diethelm Wuertz, GPL
+#   1999 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
 #   www.rmetrics.org
@@ -63,7 +63,6 @@ function()
 test.rellipticalCopula = 
 function()
 {
-
     # Random Number Generator:
     R = rellipticalCopula(1000, type = "norm")
     plot(R, pch = 19, col = "steelblue", main = "norm")
@@ -109,8 +108,7 @@ function()
 
 test.pellipticalCopula = 
 function()
-{
-       
+{ 
     # Arguments ?
     args(pellipticalCopula)
     

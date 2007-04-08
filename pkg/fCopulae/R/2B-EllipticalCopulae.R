@@ -16,7 +16,7 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2006, Diethelm Wuertz, GPL
+#   1999 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
 #   www.rmetrics.org
@@ -51,7 +51,6 @@
 #  .dcauchyCopula             Computes Cauchy copula density
 #  .dtCopula                  Computes Student-t copula density
 #  .dellipticalCopulaGrid     Fast grid version for elliptical copula density
-#  .dellipticalCopula.RUnit   R Unit test for elliptical copula density
 #  .dellipticalPerspSlider    Interactive perspective plots of density
 #  .dellipticalContourSlider  Interactive contour plots of density
 ################################################################################
@@ -284,9 +283,8 @@ function(n, rho = 0.75, nu = 4)
 
 
 pellipticalCopula =
-function(u = 0.5, v = u, rho = 0.75, param = NULL, type = c("norm", "cauchy", 
-"t", "logistic", "laplace", "kotz", "epower"), output = c("vector", "list"), 
-border = TRUE)
+function(u = 0.5, v = u, rho = 0.75, param = NULL, type = ellipticalList(), 
+output = c("vector", "list"), border = TRUE)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -612,8 +610,7 @@ function(u = 0.5, v = u, rho = 0.75, nu = 4, output = c("vector", "list") )
 
 
 .pellipticalCopulaGrid =
-function(N, rho = 0.75, param = NULL, type = c("norm", "cauchy",
-"t", "logistic", "laplace", "kotz", "epower"), border = TRUE)
+function(N, rho = 0.75, param = NULL, type = ellipticalList(), border = TRUE)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -675,8 +672,7 @@ function(N, rho = 0.75, param = NULL, type = c("norm", "cauchy",
 
 
 .pellipticalCopulaDiag =
-function(N, rho = 0.75, param = NULL, type = c("norm", "cauchy",
-"t", "logistic", "laplace", "kotz", "epower"), border = TRUE)
+function(N, rho = 0.75, param = NULL, type = ellipticalList(), border = TRUE)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -867,15 +863,13 @@ function(B = 20)
 #  .dcauchyCopula             Computes Cauchy copula density
 #  .dtCopula                  Computes Student-t copula density
 #  .dellipticalCopulaGrid     Fast grid version for elliptical copula density
-#  .dellipticalCopula.RUnit   R Unit test for elliptical copula density
 #  .dellipticalPerspSlider    Interactive perspective plots of density
 #  .dellipticalContourSlider  Interactive contour plots of density
 
 
 dellipticalCopula = 
-function(u = 0.5, v = u, rho = 0.75, param = NULL, type = c("norm", "cauchy",
-"t", "logistic", "laplace", "kotz", "epower"), output = c("vector", "list"), 
-border = TRUE)
+function(u = 0.5, v = u, rho = 0.75, param = NULL, type = ellipticalList(), 
+output = c("vector", "list"), border = TRUE)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -1129,8 +1123,7 @@ function(u = 0.5, v = u, rho = 0.75, nu = 4, output = c("vector", "list") )
 
 
 .dellipticalCopulaGrid =
-function(N, rho = 0.75, param = NULL, type = c("norm", "cauchy",
-"t", "laplace", "kotz", "epower"), border = TRUE)
+function(N, rho = 0.75, param = NULL, type = ellipticalList(), border = TRUE)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:

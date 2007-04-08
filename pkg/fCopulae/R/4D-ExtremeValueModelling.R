@@ -16,7 +16,7 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2006, Diethelm Wuertz, GPL
+#   1999 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
 #   www.rmetrics.org
@@ -41,8 +41,7 @@
 
 
 evCopulaSim = 
-function(n, param = NULL, 
-type = c("gumbel", "galambos", "husler.reiss", "tawn", "bb5"))
+function(n, param = NULL, type = evList())
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -54,7 +53,7 @@ type = c("gumbel", "galambos", "husler.reiss", "tawn", "bb5"))
     type = match.arg(type)
       
     # Settings:
-    if (is.null(param)) param = .evParam(type)$param
+    if (is.null(param)) param = evParam(type)$param
     
     # Random Variates:
     ans = revCopula(n = n, param = param, type = type) 
@@ -68,8 +67,7 @@ type = c("gumbel", "galambos", "husler.reiss", "tawn", "bb5"))
 
     
 evCopulaFit =
-function(u, v = NULL, 
-type = c("gumbel", "galambos", "husler.reiss", "tawn", "bb5"), ...)
+function(u, v = NULL, type = evList(), ...)
 {   # A function implemented by Diethelm Wuertz
     
     # Description:
@@ -98,13 +96,13 @@ type = c("gumbel", "galambos", "husler.reiss", "tawn", "bb5"), ...)
     V <<- v
 
     # Start Values:
-    param = .evParam(type)$param
+    param = evParam(type)$param
      
     # Estimate Copula:
     fun = function(x, type) {
         -mean( log(evCopula(u = U, v = V, param = x, type = type)) )
     }
-    range = .evRange(type)
+    range = evRange(type)
 
     # fit = nlminb(start = alpha, objective = fun, 
     #     lower = range[1], upper = range[2],  type = type, ...)

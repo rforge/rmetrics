@@ -16,7 +16,7 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2006, Diethelm Wuertz, GPL
+#   1999 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
 #   www.rmetrics.org
@@ -55,8 +55,7 @@
 
     
 revCopula = 
-function(n, param = NULL, type = c("gumbel", "galambos", "husler.reiss", 
-"tawn", "bb5"))
+function(n, param = NULL, type = evList())
 {
     # Default Settings:
     subintervals = 100
@@ -66,7 +65,7 @@ function(n, param = NULL, type = c("gumbel", "galambos", "husler.reiss",
     type = match.arg(type)
     
     # Check Parameters:
-    if (is.null(param)) param = .evParam(type)$param
+    if (is.null(param)) param = evParam(type)$param
 
     # Random Variates:
     q = runif(n)
@@ -115,7 +114,7 @@ function(B = 10)
         if (.counter < 10) return ()
         
         # Sliders:
-        Type = c("gumbel", "galambos", "husler.reiss", "tawn", "bb5")
+        Type = evList
         Copula = .sliderMenu(no = 1)
         N = .sliderMenu(no = 2)
         if (Copula <= 3) 
@@ -166,8 +165,7 @@ function(B = 10)
 
 
 pevCopula = 
-function(u = 0.5, v = u, param = NULL, 
-type = c("gumbel", "galambos", "husler.reiss", "tawn", "bb5"),
+function(u = 0.5, v = u, param = NULL, type = evList(),
 output = c("vector", "list"), alternative = FALSE )
 {   # A function implemented by Diethelm Wuertz
 
@@ -183,7 +181,7 @@ output = c("vector", "list"), alternative = FALSE )
     #   param - a numeric value or vector of named parameters as 
     #       required by the copula specified by the variable 'type'.
     #       If set to NULL, then the parameters will be taken as
-    #       specified by the function '.evParam'.
+    #       specified by the function 'evParam'.
     #   type - the type of the maximum extreme value copula. A character
     #       string selected from: "gumbel", "galambos", "husler.reiss", 
     #       "tawn", or "bb5".
@@ -259,8 +257,7 @@ function(type = c("persp", "contour"), B = 10)
 
 
 .pev1Copula = 
-function(u = 0.5, v = u, param = NULL, 
-type = c("gumbel", "galambos", "husler.reiss", "tawn", "bb5"),
+function(u = 0.5, v = u, param = NULL, type = evList(),
 output = c("vector", "list") )
 {   # A function implemented by Diethelm Wuertz
 
@@ -275,7 +272,7 @@ output = c("vector", "list") )
     
     # Settings:
     if (is.null(param)) {
-        param = .evParam(type)$param
+        param = evParam(type)$param
     }
     if (is.list(u)) {
         v = u$y
@@ -328,8 +325,7 @@ output = c("vector", "list") )
 
 
 .pev2Copula = 
-function(u = 0.5, v = u, param = NULL,
-type = c("gumbel", "galambos", "husler.reiss", "tawn", "bb5"),
+function(u = 0.5, v = u, param = NULL, type = evList(),
 output = c("vector", "list") )
 {   # A function implemented by Diethelm Wuertz
     
@@ -344,7 +340,7 @@ output = c("vector", "list") )
     
     # Settings:
     if (is.null(param)) {
-        param = .evParam(type)$param
+        param = evParam(type)$param
     }
     if (is.list(u)) {
         v = u$y
@@ -462,7 +458,7 @@ function(B = 10)
         if (.counter < 10) return ()
         
         # Sliders:
-        Type = c("gumbel", "galambos", "husler.reiss", "tawn", "bb5")
+        Type = evList
         Copula = .sliderMenu(no = 1)
         N = .sliderMenu(no = 2)
         if (Copula <= 3) 
@@ -528,7 +524,7 @@ function(B = 10)
         if (.counter < 12) return ()
         
         # Sliders:
-        Type = c("gumbel", "galambos", "husler.reiss", "tawn", "bb5")
+        Type = evList
         Copula = .sliderMenu(no = 1)
         N = .sliderMenu(no = 2)
         if (Copula <= 3) 
@@ -583,8 +579,7 @@ function(B = 10)
 
 
 devCopula =
-function(u = 0.5, v = u, param = NULL, 
-type = c("gumbel", "galambos", "husler.reiss", "tawn", "bb5"),
+function(u = 0.5, v = u, param = NULL, type = evList(),
 output = c("vector", "list"), alternative = FALSE )
 {   # A function implemented by Diethelm Wuertz
 
@@ -600,7 +595,7 @@ output = c("vector", "list"), alternative = FALSE )
     #   param - a numeric value or vector of named parameters as 
     #       required by the copula specified by the variable 'type'.
     #       If set to NULL, then the parameters will be taken as
-    #       specified by the function '.evParam'.
+    #       specified by the function 'evParam'.
     #   type - the type of the maximum extreme value copula. A character
     #       string selected from: "gumbel", "galambos", "husler.reiss", 
     #       "tawn", or "bb5".
@@ -677,8 +672,7 @@ function(type = c("persp", "contour"), B = 10)
 
 
 .dev1Copula =
-function(u = 0.5, v = u, param = NULL, 
-type = c("gumbel", "galambos", "husler.reiss", "tawn", "bb5"),
+function(u = 0.5, v = u, param = NULL, type = evList(),
 output = c("vector", "list") )
 {   # A function implemented by Diethelm Wuertz
 
@@ -697,7 +691,7 @@ output = c("vector", "list") )
     
     # Settings:
     if (is.null(param)) {
-        param = .evParam(type)$param
+        param = evParam(type)$param
     }
     if (is.list(u)) {
         v = u$y
@@ -749,8 +743,7 @@ output = c("vector", "list") )
 
 
 .dev2Copula = 
-function(u = 0.5, v = u, param = NULL, 
-type = c("gumbel", "galambos", "husler.reiss", "tawn", "bb5"),  
+function(u = 0.5, v = u, param = NULL, type = evList(),  
 output = c("vector", "list") ) 
 {   # A function implemented by Diethelm Wuertz
     
@@ -773,7 +766,7 @@ output = c("vector", "list") )
     
     # Settings:
     if (is.null(param)) {
-        param = .evParam(type)$param
+        param = evParam(type)$param
     }
     if (is.list(u)) {
         v = u$y
@@ -785,7 +778,7 @@ output = c("vector", "list") )
     }
     
     # Settings:
-    if (is.null(param)) param = .evParam[[type]]
+    if (is.null(param)) param = evParam[[type]]
     Pi = pi 
     ln = function(x) { log(x) }
     erf = function (x) { 2*pnorm(sqrt(2)*x)-1 }
@@ -972,7 +965,7 @@ function(B = 10)
         if (.counter < 12) return ()
         
         # Sliders:
-        Type = c("gumbel", "galambos", "husler.reiss", "tawn", "bb5")
+        Type = evList
         Copula = .sliderMenu(no = 1)
         N = .sliderMenu(no = 2)
         if (Copula <= 3) 
@@ -1039,7 +1032,7 @@ function(B = 10)
         if (.counter < 12) return ()
         
         # Sliders:
-        Type = c("gumbel", "galambos", "husler.reiss", "tawn", "bb5")
+        Type = evList
         Copula = .sliderMenu(no = 1)
         N = .sliderMenu(no = 2)
         if (Copula <= 3) 

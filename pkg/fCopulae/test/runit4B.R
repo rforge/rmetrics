@@ -16,7 +16,7 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2006, Diethelm Wuertz, GPL
+#   1999 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
 #   www.rmetrics.org
@@ -28,9 +28,15 @@
 
 
 ################################################################################
-# FUNCTION:                  EXTREME VALUE COPULAE GENERATOR FUNCTION:
-#  Afunc                      Computes Dependence function
-#  AfuncSlider                Displays interactively dependence function
+# FUNCTION:                  EXTREME VALUE COPULAE RANDOM VARIATES:
+#  revCopula                  Generates extreme value copula random variates 
+#  revSlider                  isplays interactively plots of random variates
+# FUNCTION:                  EXTREME VALUE COPULAE PROBABILIY:
+#  pevCopula                  Computes extreme value copula probability
+#  pevSlider                  Displays interactively plots of probability
+# FUNCTION:                  EXTREME VALUE COPULAE DENSITY:
+#  devCopula                  Computes extreme value copula density
+#  devSlider                  Displays interactively plots of density
 #################################################################################
 
 
@@ -54,132 +60,82 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.evCopulae = 
-function()
-{
-    # No. 1 - 5
-    TYPES = c("gumbel", "galambos", "husler.reiss", "tawn", "bb5")
-    for (type in TYPES) {
-        param = .evParam(type)
-        print(unlist(param))
-        cat("\n")
-    }
-
-    # Return Value:
-    return()    
-}
-
-    
-# ------------------------------------------------------------------------------
-
-
-test.dependenceMeasures = 
-function()
-{
-    # TYPES = c("gumbel", "galambos", "husler.reiss", "tawn", "bb5")
-    # A, A', A'':
-    AfuncSlider() 
-    
-    # Return Value:
-    return()    
-}
-
-    
-# ------------------------------------------------------------------------------
-
-
-test.kendallsTau = 
-function()
-{
-    NA
-    
-    # Return Value:
-    return()    
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-test.spearmansRho = 
-function()
-{
-    NA
-    
-    # Return Value:
-    return()    
-}
-
-   
-# ------------------------------------------------------------------------------
-    
-
 test.revCopula = 
 function()
 {
-    
+    # 
+    NA
+
     # Return Value:
     return()    
 }
 
-       
+
+# ------------------------------------------------------------------------------
+
+
+test.revCopulaSlider = 
+function()
+{
+    # 
+    NA
+
+    # Return Value:
+    return()    
+}
+
+    
 # ------------------------------------------------------------------------------
 
 
 test.pevCopula = 
 function()
-{        
-    # u - single input value:
-    pevCopula()
-    pevCopula(0.5)
-    pevCopula(0.5, 0.25)
-    
-    # u - input vector:
-    U = (0:10)/10
-    V = rev(U)
-    pevCopula(U)
-    pevCopula(u = U, v = V)
-    
-    # u - input matrix:
-    pevCopula(cbind(U,V))
-    
-    # u - input list:
-    u = grid2d()
-    u
-    pevCopula(u) # output = "vector"
-    pevCopula(u, output = "list")
-    pevCopula(u) - pevCopula(u, alternative = TRUE)
-    
-    # Slider:
-    pevSlider() # type = "persp"   
-    pevSlider(type = "contour")  
-    
+{
+    # 
+    NA
+
     # Return Value:
     return()    
 }
 
-   
+
+# ------------------------------------------------------------------------------
+
+
+test.pevCopulaSlider = 
+function()
+{
+    # 
+    NA
+
+    # Return Value:
+    return()    
+}
+
+
 # ------------------------------------------------------------------------------
 
 
 test.devCopula = 
 function()
 {
-    devSlider() # type = "persp" 
-    devSlider(type = "contour") 
-    
+    # 
+    NA
+
     # Return Value:
     return()    
 }
 
-   
+
 # ------------------------------------------------------------------------------
 
-    
-test.parameterFitting = 
+
+test.devCopulaSlider = 
 function()
 {
-    
+    # 
+    NA
+
     # Return Value:
     return()    
 }
@@ -190,7 +146,7 @@ function()
 
 if (FALSE) {
     require(RUnit)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fCopulae/test/runit4A.R")
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fCopulae/test/runit4B.R")
     printTextProtocol(testResult)
 }
  

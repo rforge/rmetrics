@@ -16,7 +16,7 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2006, Diethelm Wuertz, GPL
+#   1999 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
 #   www.rmetrics.org
@@ -57,7 +57,7 @@
  
 
 rarchmCopula =
-function(n, alpha = NULL, type = paste(1:22))
+function(n, alpha = NULL, type = archmList())
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -70,10 +70,10 @@ function(n, alpha = NULL, type = paste(1:22))
     Type = as.integer(type)
     
     # Alpha:
-    if (is.null(alpha)) alpha = .archmParam(type)$param
+    if (is.null(alpha)) alpha = archmParam(type)$param
     
     # Check alpha:
-    check = .archmCheck(alpha, type)
+    check = archmCheck(alpha, type)
     
     if (Type == 1) {
         # Use faster Algorithm:
@@ -179,7 +179,7 @@ function(n, alpha = NULL, alternative = FALSE, doplot = FALSE)
     #   Generates rv's for copula No 1
     
     # Default Parameter:
-    if (is.null(alpha)) alpha = .archmParam(1)$param
+    if (is.null(alpha)) alpha = archmParam(1)$param
     
     # Clayton Random Variate:
     if (alternative) {
@@ -229,7 +229,7 @@ function(n, alpha = NULL, doplot = FALSE)
     # Source: armstrong03.pdf
     
     # Default Parameter:
-    if (is.null(alpha)) alpha = .archmParam(2)$param
+    if (is.null(alpha)) alpha = archmParam(2)$param
     
     # Random Variates:
     U = runif(n)
@@ -265,7 +265,7 @@ function(n, alpha = NULL, doplot = FALSE)
 
 
 parchmCopula = 
-function(u = 0.5, v = u, alpha = NULL, type = paste(1:22),
+function(u = 0.5, v = u, alpha = NULL, type = archmList(),
 output = c("vector", "list"), alternative = FALSE )
 {   # A function implemented by Diethelm Wuertz
 
@@ -355,7 +355,7 @@ function(type = c("persp", "contour"), B = 10)
 
 
 .parchm1Copula =
-function(u = 0.5, v = u, alpha = NULL, type = paste(1:22), 
+function(u = 0.5, v = u, alpha = NULL, type = archmList(), 
 output = c("vector", "list") )
 {   # A function implemented by Diethelm Wuertz
 
@@ -380,7 +380,7 @@ output = c("vector", "list") )
     
     # Settings:
     if (is.null(alpha)) {
-        alpha = .archmParam(type)$param
+        alpha = archmParam(type)$param
     }
     if (is.list(u)) {
         v = u[[2]]
@@ -456,7 +456,7 @@ output = c("vector", "list") )
 
 
 .parchm2Copula = 
-function(u = 0.5, v = u, alpha = NULL, type = paste(1:22),
+function(u = 0.5, v = u, alpha = NULL, type = archmList(),
 output = c("vector", "list") )
 {   # A function implemented by Diethelm Wuertz
 
@@ -480,7 +480,7 @@ output = c("vector", "list") )
     
     # Settings:
     if (is.null(alpha)) {
-        alpha = .archmParam(type)$param
+        alpha = archmParam(type)$param
     }
     if (is.list(u)) {
         v = u[[2]]
@@ -895,7 +895,7 @@ function(B = 5)
 
 
 darchmCopula = 
-function(u = 0.5, v = u, alpha = NULL, type = paste(1:22),
+function(u = 0.5, v = u, alpha = NULL, type = archmList(),
 output = c("vector", "list"), alternative = FALSE )
 {   # A function implemented by Diethelm Wuertz
 
@@ -982,7 +982,7 @@ function(type = c("persp", "contour"), B = 10)
 
 
 .darchm1Copula = 
-function(u = 0.5, v = u, alpha = NULL, type = paste(1:22), output = 
+function(u = 0.5, v = u, alpha = NULL, type = archmList(), output = 
 c("vector", "list")) 
 {   # A function implemented by Diethelm Wuertz
 
@@ -1005,7 +1005,7 @@ c("vector", "list"))
     
     # Settings:
     if (is.null(alpha)) {
-        alpha = .archmParam(type)$param
+        alpha = archmParam(type)$param
     }
     if (is.list(u)) {
         v = u[[2]]
@@ -1047,7 +1047,7 @@ c("vector", "list"))
 
 
 .darchm2Copula = 
-function(u = 0.5, v = u, alpha = NULL, type = paste(1:22), output = 
+function(u = 0.5, v = u, alpha = NULL, type = archmList(), output = 
 c("vector", "list")) 
 {   # A function implemented by Diethelm Wuertz
 
@@ -1075,7 +1075,7 @@ c("vector", "list"))
     
     # Settings:
     if (is.null(alpha)) {
-        alpha = .archmParam(type)$param
+        alpha = archmParam(type)$param
     }
     a = alpha
     if (is.list(u)) {

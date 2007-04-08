@@ -16,7 +16,7 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2006, Diethelm Wuertz, GPL
+#   1999 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
 #   www.rmetrics.org
@@ -52,7 +52,7 @@
 
 
 archmTau =
-function(alpha = NULL, type = paste(1:22), lower = 1.0e-10)
+function(alpha = NULL, type = archmList(), lower = 1.0e-10)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -65,10 +65,10 @@ function(alpha = NULL, type = paste(1:22), lower = 1.0e-10)
     Type = as.integer(type)
     
     # Alpha:
-    if (is.null(alpha)) alpha = .archmParam(type)$param
+    if (is.null(alpha)) alpha = archmParam(type)$param
     
     # Check alpha:
-    check = .archmCheck(alpha, type)
+    check = archmCheck(alpha, type)
     
     if (length(alpha) == 1) {
         ans = .archmTau(alpha, type, lower)
@@ -95,7 +95,7 @@ function(alpha = NULL, type = paste(1:22), lower = 1.0e-10)
     
 
 .archmTau = 
-function(alpha = NULL, type = paste(1:22), lower = 1.0e-10)
+function(alpha = NULL, type = archmList(), lower = 1.0e-10)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -108,10 +108,10 @@ function(alpha = NULL, type = paste(1:22), lower = 1.0e-10)
     Type = as.integer(type)
     
     # Alpha:
-    if (is.null(alpha)) alpha = .archmParam(type)$param
+    if (is.null(alpha)) alpha = archmParam(type)$param
     
     # Check alpha:
-    check = .archmCheck(alpha, type)
+    check = archmCheck(alpha, type)
     
     # Select Type:
     if (Type == 1) {
@@ -208,7 +208,7 @@ function(alpha = NULL, type = paste(1:22), lower = 1.0e-10)
 
 
 .archmTauRange =
-function(type = paste(1:22))
+function(type = archmList())
 {   # A function implemented by Diethelm Wuertz
 
     # FUNCTION:
@@ -256,7 +256,7 @@ function(type = paste(1:22))
 
 
 .archm2Tau = 
-function (alpha = NULL, type = paste(1:22), lower = 1e-6) 
+function (alpha = NULL, type = archmList(), lower = 1e-6) 
 {   # A function implemented by Diethelm Wuertz
 
     # Joe's [1997] alternative expression:
@@ -266,10 +266,10 @@ function (alpha = NULL, type = paste(1:22), lower = 1e-6)
     Type = as.integer(type)
     
     # Alpha:
-    if (is.null(alpha)) alpha = .archmParam(type)$param
+    if (is.null(alpha)) alpha = archmParam(type)$param
     
     # Check alpha:
-    check = .archmCheck(alpha, type)
+    check = archmCheck(alpha, type)
     
     # Integrate:
     K2func = function(x, alpha, type) {
@@ -289,7 +289,7 @@ function (alpha = NULL, type = paste(1:22), lower = 1e-6)
 
 
 archmRho =
-function(alpha = NULL, type = paste(1:22), method = c("integrate2d", "adapt"),
+function(alpha = NULL, type = archmList(), method = c("integrate2d", "adapt"),
 error = 1.0e-5)
 {   # A function implemented by Diethelm Wuertz
 
@@ -306,10 +306,10 @@ error = 1.0e-5)
     Type = as.integer(type)
     
     # Alpha:
-    if (is.null(alpha)) alpha = .archmParam(type)$param
+    if (is.null(alpha)) alpha = archmParam(type)$param
     
     # Check alpha:
-    check = .archmCheck(alpha, type)
+    check = archmCheck(alpha, type)
     
     # Compute Rho:
     if (length(alpha) == 1) {
@@ -337,7 +337,7 @@ error = 1.0e-5)
 
 
 .archmRho =
-function(alpha = NULL, type = paste(1:22), method = c("integrate2d", "adapt"),
+function(alpha = NULL, type = archmList(), method = c("integrate2d", "adapt"),
 error = 1.0e-5)
 {   # A function implemented by Diethelm Wuertz
 
@@ -357,10 +357,10 @@ error = 1.0e-5)
     Type = as.integer(type)
     
     # Alpha:
-    if (is.null(alpha)) alpha = .archmParam(type)$param
+    if (is.null(alpha)) alpha = archmParam(type)$param
     
     # Check alpha:
-    check = .archmCheck(alpha, type)
+    check = archmCheck(alpha, type)
     
     # Global Parameters:
     alpha <<- alpha
@@ -401,7 +401,7 @@ error = 1.0e-5)
 
 
 .archmGamma =
-function(alpha = 0.5, type = paste(1:22))
+function(alpha = 0.5, type = archmList())
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -414,7 +414,7 @@ function(alpha = 0.5, type = paste(1:22))
     Type = as.integer(type)
     
     # Check alpha:
-    check = .archmCheck(alpha, type)
+    check = archmCheck(alpha, type)
     
     # Specification:
     spec = copulaSpec("archm", model = list(alpha = alpha, type = type))
@@ -445,7 +445,7 @@ function(alpha = 0.5, type = paste(1:22))
 
 
 archmTailCoeff =
-function(alpha = NULL, type = paste(1:22))
+function(alpha = NULL, type = archmList())
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -458,10 +458,10 @@ function(alpha = NULL, type = paste(1:22))
     Type = as.integer(type)
     
     # Alpha:
-    if (is.null(alpha)) alpha = .archmParam(type)$param
+    if (is.null(alpha)) alpha = archmParam(type)$param
     
     # Check alpha:
-    check = .archmCheck(alpha, type)
+    check = archmCheck(alpha, type)
 
     # Tail Coefficient:
     N = 20
@@ -480,7 +480,7 @@ function(alpha = NULL, type = paste(1:22))
 
 
 archmTailPlot =
-function(alpha = NULL, type = paste(1:22), tail = c("Upper", "Lower"))
+function(alpha = NULL, type = archmList(), tail = c("Upper", "Lower"))
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -512,8 +512,8 @@ function(alpha = NULL, type = paste(1:22), tail = c("Upper", "Lower"))
     
     # Iterate rho:
     B = 10
-    lower = max(.archmRange(type)[1], -B)
-    upper = min(.archmRange(type)[2], B)
+    lower = max(archmRange(type)[1], -B)
+    upper = min(archmRange(type)[2], B)
     Alpha = seq(lower, upper, length = 5)
     for (alpha in Alpha) {
         # Compute Copula Tail dependence lambda:

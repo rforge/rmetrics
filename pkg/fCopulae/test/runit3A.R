@@ -16,7 +16,7 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2006, Diethelm Wuertz, GPL
+#   1999 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
 #   www.rmetrics.org
@@ -29,9 +29,9 @@
 
 ################################################################################
 # FUNCTION:                  ARCHIMEDEAN COPULAE PARAMETER:
-#  .archmParam                Sets Default parameters for an Archimedean copula
-#  .archmCheck                Checks if alpha is in the valid range
-#  .archmRange                Returns the range of valid alpha values
+#  archmParam                 Sets Default parameters for an Archimedean copula
+#  archmCheck                 Checks if alpha is in the valid range
+#  archmRange                 Returns the range of valid alpha values
 # FUNCTION:                  ARCHIMEDEAN COPULAE PHI GENERATOR:
 #  Phi                        Computes Archimedean Phi, inverse and derivatives
 #  PhiSlider                  Displays interactively generator function
@@ -61,17 +61,35 @@ function()
 # ------------------------------------------------------------------------------
 
 
+test.archmList = 
+function()
+{
+
+    # Arguments ?
+    args(archmList)
+    
+    # List:
+    archmList()
+    
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
 test.archmParam = 
 function()
 {
 
     # Arguments ?
-    args(.archmParam)
+    args(archmParam)
     
     # Parameters:
-    for (type in paste(1:22)) {
+    for (type in archmList()) {
         cat("\n")
-        print(unlist(.archmParam(type)))
+        print(unlist(archmParam(type)))
     }
     
     # Return Value:
@@ -86,12 +104,12 @@ test.archmCheck =
 function()
 {
     # Arguments ?
-    args(.archmCheck)
+    args(archmCheck)
     
     # Range:
-    for (type in paste(1:22)) {
+    for (type in archmList()) {
         cat("\n")
-        print(.archmCheck(.archmParam(type)$param))
+        print(archmCheck(archmParam(type)$param))
     }
 
     # Return Value:
@@ -106,12 +124,12 @@ test.archmRange =
 function()
 {
     # Arguments ?
-    args(.archmRange)
+    args(archmRange)
     
     # Range:
     for (type in paste(1:22)) {
         cat("\n")
-        print(.archmRange(type))
+        print(archmRange(type))
     }
 
     # Return Value:

@@ -16,7 +16,7 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2006, Diethelm Wuertz, GPL
+#   1999 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
 #   www.rmetrics.org
@@ -28,23 +28,47 @@
 
 
 ################################################################################
-# FUNCTION:                  EXTREME VALUE COPULAE PARAMETER:
-#  .evParam                   Sets parameters for an extreme value copula
-# FUNCTION:                  EXTREME VALUE COPULAE GENERATOR FUNCTION:
-#  Afunc                      Computes Dependence function
-#  AfuncSlider                Displays interactively dependence function
-#  .AfuncFirstDer              Computes Derivative of dependence function
-#  .AfuncSecondDer             Computes 2nd Derivative of dependence function
+# FUNCTION:                 EXTREME VALUE COPULAE PARAMETER:
+#  evList                    Returns list of implemented extreme value copulae
+#  evParam                   Sets Default parameters for an extreme value copula
+#  evCheck                   Checks if parameters are in the valid range
+#  evRange                   Returns the range of valid parameter values
+# FUNCTION:                 EXTREME VALUE COPULAE GENERATOR FUNCTION:
+#  Afunc                     Computes Dependence function
+#  AfuncSlider               Displays interactively dependence function
+#  .AfuncFirstDer             Computes Derivative of dependence function
+#  .AfuncSecondDer            Computes 2nd Derivative of dependence function
 ################################################################################
 
 
 ################################################################################
-# FUNCTION:                  EXTREME VALUE COPULAE PARAMETER:
-#  .evParam                   Sets parameters for an extreme value copula
+# FUNCTION:                 EXTREME VALUE COPULAE PARAMETER:
+#  evList                    Returns list of implemented extreme value copulae
+#  evParam                   Sets parameters for an extreme value copula
+#  evCheck                   Checks if parameters are in the valid range
+#  evRange                   Returns the range of valid parameter values
 
+   
+evList =
+function()
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Returns list of implemented extreme value copulae
     
-.evParam =
-function(type = c("gumbel", "galambos", "husler.reiss", "tawn", "bb5"))
+    # Compose List:
+    ans = c("gumbel", "galambos", "husler.reiss", "tawn", "bb5")
+    
+    # Return Value:
+    ans
+}
+
+
+# ------------------------------------------------------------------------------
+    
+    
+evParam =
+function(type = evList())
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -102,7 +126,70 @@ function(type = c("gumbel", "galambos", "husler.reiss", "tawn", "bb5"))
 }
 
 
+# ------------------------------------------------------------------------------
+
+
+evRange = 
+function(type = evList())
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Returns the range of valid parameter values
     
+    # Examples:
+    #   evRange("galambos")
+    
+    # FUNCTION:
+    
+    # Type:
+    type = match.arg(type)
+    
+    # Range:
+    ans = evParam(type)$range
+    Names1 = rep(c("lower", "upper"), times = length(ans)/2)
+    Names2 = rep(names(evParam(type)$param), each = length(ans)/2)
+    names(ans) = paste(Names1, Names2, sep = ".")
+    
+    # Return Value:
+    ans
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+evCheck =
+function(param, type = evList())
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Checks if parameters are in the valid range
+    
+    # FUNCTION:
+    
+    # Type:
+    type = match.arg(type)
+    
+    # Check
+    range = evRange(type)
+    nParam = length(range)/2
+    j = -1
+    J = 0
+    for (i in 1:nParam) {
+        j = j + 2
+        J = J + 2
+        if (param[i] < range[j] | param[i] > range[J]) {
+            print(c(param = param[i]))
+            print(c(range = c(range[j], range[J])))
+            stop("param is out of range")
+        }
+    }
+    
+    # Return Value:
+    invisible(TRUE)
+}
+    
+
 ################################################################################
 # FUNCTION:                  EXTREME VALUE COPULAE GENERATOR FUNCTION:
 #  Afunc                      Computes Dependence function
@@ -112,8 +199,7 @@ function(type = c("gumbel", "galambos", "husler.reiss", "tawn", "bb5"))
 
 
 Afunc = 
-function(x, param = NULL, type = c("gumbel", "galambos", 
-"husler.reiss", "tawn", "bb5"))
+function(x, param = NULL, type = evList())
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -154,8 +240,8 @@ function(x, param = NULL, type = c("gumbel", "galambos",
     
     # Type:
     type = type[1]
-    if (is.null(param)) param = .evParam(type)$param
-    names(param) = names(.evParam(type)$param)
+    if (is.null(param)) param = evParam(type)$param
+    names(param) = names(evParam(type)$param)
     
     # Compute Dependence Function:
     if (type == "gumbel") {
@@ -228,9 +314,81 @@ function(x, param = NULL, type = c("gumbel", "galambos",
 # ------------------------------------------------------------------------------
 
 
+AfuncSlider =
+function()
+{   # A function implemented by Diethelm Wuertz
+       
+    # Description:
+    #   Displays interactively the dependence function
+    
+    # Graphic Frame:
+    par(mfrow = c(2, 2), cex = 0.7)
+    
+    # Internal Function:
+    refresh.code = function(...)
+    {
+        # Startup Counter:
+        .counter <<- .counter + 1
+        if (.counter < 10) return ()
+        
+        # Sliders:
+        Type = evList()
+        Copula = .sliderMenu(no = 1)
+        N = .sliderMenu(no = 2)
+        if (Copula <= 3) 
+            param = c(delta = .sliderMenu(no = Copula + 2))
+        if (Copula == 4) 
+            param = c(alpha = .sliderMenu(no = 6), 
+                beta = .sliderMenu(no = 7), r = .sliderMenu(no = 8))
+        if (Copula == 5)   
+            param = c(delta = .sliderMenu(no = 9), theta = .sliderMenu(no = 10))  
+        
+        # Title:
+        type = Type[Copula]
+        subTitle = paste(paste(names(param) , "="), param, collapse = " | " )
+        Title = paste(" ", type, "\n", subTitle) 
+        
+        # Plot A:   
+        plot(x = (0:N)/N, Afunc(x = (0:N)/N, param = param, type = type), 
+            ylim = c(0.5, 1), type = "l", xlab = "x", ylab = "A", main = Title)
+        lines(c(0.0, 1.0), c(1.0, 1.0), col = "steelblue", lty = 3)
+        lines(c(0.0, 0.5), c(1.0, 0.5), col = "steelblue", lty = 3)
+        lines(c(0.5, 1.0), c(0.5, 1.0), col = "steelblue", lty = 3)    
+        points(x = c(0, 1), Afunc(x = c(0, 1), param = param, type = type), 
+            col = "red")
+        # Plot A':           
+        plot(x = (0:N)/N, .AfuncFirstDer(x = (0:N)/N, param = param, type = type), 
+            type = "l", xlab = "x", ylab = "A'", main = Title) 
+        points(x = c(0, 1),
+            .AfuncFirstDer(x = c(0, 1), param = param, type = type), col = "red")
+        # Plot A'':         
+        plot(x = (0:N)/N, .AfuncSecondDer(x = (0:N)/N, param = param, type = type), 
+            type = "l", xlab = "x", ylab = "A''", main = Title) 
+        points(x = c(0, 1),
+            .AfuncSecondDer(x = c(0, 1), param = param, type = type), col = "red")
+                           
+        # Reset Frame:
+        par(mfrow = c(2, 2), cex = 0.7)
+    }
+  
+    # Open Slider Menu:
+    .counter <<- 0
+    C = c("Gumbel: delta", "Galambos: delta", "Husler-Reis: delta",
+          "Tawn: alpha", "... beta", "... r", "BB5: delta", "... theta")
+    .sliderMenu(refresh.code,
+        names =       c("Copula", "N", C), #gal hr  tawn               bb5
+        minima =      c(1,   100,  1.0, 0.00, 0.00, 0.00, 0.00, 1.0, 0.0, 1.0),
+        maxima =      c(5, 10000, 10.0, 10.0, 10.0, 1.00, 1.00, 10., 10., 10.),
+        resolutions = c(1,   100, 0.05, 0.05, 0.05, 0.01, 0.01, 0.1, 0.1, 0.1),
+        starts =      c(1,  5000, 1.00, 0.00, 0.00, 0.00, 0.00, 1.0, 0.0, 1.0))
+}
+
+
+# ------------------------------------------------------------------------------
+
+
 .AfuncFirstDer = 
-function(x, param = NULL, type = c("gumbel", "galambos", "husler.reiss", 
-"tawn", "bb5"), eps = 1.0e-6 )
+function(x, param = NULL, type = evList(), eps = 1.0e-6 )
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -271,8 +429,8 @@ function(x, param = NULL, type = c("gumbel", "galambos", "husler.reiss",
     
     # Type:
     type = type[1]
-    if (is.null(param)) param = .evParam(type)$param
-    names(param) = names(.evParam(type)$param)
+    if (is.null(param)) param = evParam(type)$param
+    names(param) = names(evParam(type)$param)
     
     # Settings for Maple Output:
     Pi = pi 
@@ -382,8 +540,7 @@ function(x, param = NULL, type = c("gumbel", "galambos", "husler.reiss",
 
 
 .AfuncSecondDer = 
-function(x, param = NULL, type = c("gumbel", "galambos", "husler.reiss", 
-"tawn", "bb5"))
+function(x, param = NULL, type = evList())
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -424,8 +581,8 @@ function(x, param = NULL, type = c("gumbel", "galambos", "husler.reiss",
     
     # Type:
     type = type[1]
-    if (is.null(param)) param = .evParam(type)$param
-    names(param) = names(.evParam(type)$param)
+    if (is.null(param)) param = evParam(type)$param
+    names(param) = names(evParam(type)$param)
     
     # Settings for Maple Output:
     Pi = pi 
@@ -550,74 +707,6 @@ function(x, param = NULL, type = c("gumbel", "galambos", "husler.reiss",
     
     # Return Value:
     A2  
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-AfuncSlider =
-function()
-{   # A function implemented by Diethelm Wuertz
-       
-    # Description:
-    #   Displays interactively the dependence function
-    
-    # Graphic Frame:
-    par(mfrow = c(2,2), cex = 0.7)
-    
-    # Internal Function:
-    refresh.code = function(...)
-    {
-        # Sliders:
-        Type = c("gumbel", "galambos", "husler.reiss", "tawn", "bb5")
-        Copula = .sliderMenu(no = 1)
-        N = .sliderMenu(no = 2)
-        if (Copula <= 3) 
-            param = c(delta = .sliderMenu(no = Copula + 2))
-        if (Copula == 4) 
-            param = c(alpha = .sliderMenu(no = 6), 
-                beta = .sliderMenu(no = 7), r = .sliderMenu(no = 8))
-        if (Copula == 5)   
-            param = c(delta = .sliderMenu(no = 9), theta = .sliderMenu(no = 10))  
-        
-        # Title:
-        type = Type[Copula]
-        subTitle = paste(paste(names(param) , "="), param, collapse = " | " )
-        Title = paste(" ", type, "\n", subTitle) 
-        
-        # Plot A:   
-        plot(x = (0:N)/N, Afunc(x = (0:N)/N, param = param, type = type), 
-            ylim = c(0.5, 1), type = "l", xlab = "x", ylab = "A", main = Title)
-        lines(c(0.0, 1.0), c(1.0, 1.0), col = "steelblue", lty = 3)
-        lines(c(0.0, 0.5), c(1.0, 0.5), col = "steelblue", lty = 3)
-        lines(c(0.5, 1.0), c(0.5, 1.0), col = "steelblue", lty = 3)    
-        points(x = c(0, 1), Afunc(x = c(0, 1), param = param, type = type), 
-            col = "red")
-        # Plot A':           
-        plot(x = (0:N)/N, .AfuncFirstDer(x = (0:N)/N, param = param, type = type), 
-            type = "l", xlab = "x", ylab = "A'", main = Title) 
-        points(x = c(0, 1),
-            .AfuncFirstDer(x = c(0, 1), param = param, type = type), col = "red")
-        # Plot A'':         
-        plot(x = (0:N)/N, .AfuncSecondDer(x = (0:N)/N, param = param, type = type), 
-            type = "l", xlab = "x", ylab = "A''", main = Title) 
-        points(x = c(0, 1),
-            .AfuncSecondDer(x = c(0, 1), param = param, type = type), col = "red")
-                           
-        # Reset Frame:
-        par(mfrow = c(2, 2), cex = 0.7)
-    }
-  
-    # Open Slider Menu:
-    C = c("Gumbel: delta", "Galambos: delta", "Husler-Reis: delta",
-          "Tawn: alpha", "... beta", "... r", "BB5: delta", "... theta")
-    .sliderMenu(refresh.code,
-        names =       c("Copula", "N", C), #gal hr  tawn               bb5
-        minima =      c(1,   100,  1.0, 0.00, 0.00, 0.00, 0.00, 1.0, 0.0, 1.0),
-        maxima =      c(5, 10000, 10.0, 10.0, 10.0, 1.00, 1.00, 10., 10., 10.),
-        resolutions = c(1,   100, 0.05, 0.05, 0.05, 0.01, 0.01, 0.1, 0.1, 0.1),
-        starts =      c(1,  5000, 1.00, 0.00, 0.00, 0.00, 0.00, 1.0, 0.0, 1.0))
 }
 
 
