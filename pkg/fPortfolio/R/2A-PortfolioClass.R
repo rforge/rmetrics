@@ -81,6 +81,8 @@ function(data, spec = portfolioSpec(), constraints = NULL)
         Sigma = data$Sigma
         statistics = list(mu = mu, Sigma = Sigma)
     } else {
+        # Take care of time ordering ...
+        if (is.timeSeries(data)) data = sort(data)
         series = data
         statistics = portfolioStatistics(data, spec)
         mu = statistics$mu
@@ -137,6 +139,8 @@ function(data, spec = portfolioSpec(), constraints = NULL)
         Sigma = data$Sigma
         statistics = list(mu = mu, Sigma = Sigma)
     } else {
+        # Take care of time ordering ...
+        if (is.timeSeries(data)) data = sort(data)
         series = data
         statistics = portfolioStatistics(data, spec)
         mu = statistics$mu
@@ -193,6 +197,8 @@ function(data, spec = portfolioSpec(), constraints = NULL)
         Sigma = data$Sigma
         statistics = list(mu = mu, Sigma = Sigma)
     } else {
+        # Take care of time ordering ...
+        if (is.timeSeries(data)) data = sort(data)
         series = data
         statistics = portfolioStatistics(data, spec)
         mu = statistics$mu
@@ -249,6 +255,8 @@ function(data, spec = portfolioSpec(), constraints = NULL)
         Sigma = data$Sigma
         statistics = list(mu = mu, Sigma = Sigma)
     } else {
+        # Take care of time ordering ...
+        if (is.timeSeries(data)) data = sort(data)
         series = data
         statistics = portfolioStatistics(data, spec)
         mu = statistics$mu
@@ -305,6 +313,8 @@ function(data, spec = portfolioSpec(), constraints = NULL)
         Sigma = data$Sigma
         statistics = list(mu = mu, Sigma = Sigma)
     } else {
+        # Take care of time ordering ...
+        if (is.timeSeries(data)) data = sort(data)
         series = data
         statistics = portfolioStatistics(data, spec)
         mu = statistics$mu
@@ -362,6 +372,8 @@ title = NULL, description = NULL)
         Sigma = data$Sigma
         statistics = list(mu = mu, Sigma = Sigma)
     } else {
+        # Take care of time ordering ...
+        if (is.timeSeries(data)) data = sort(data)
         series = data
         statistics = portfolioStatistics(data, spec)
         mu = statistics$mu
