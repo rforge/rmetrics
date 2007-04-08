@@ -1,29 +1,7 @@
-\name{EllipticalCopulae}
+\name{EllipticalModelling}
 
-\alias{EllipticalCopulae}
+\alias{EllipticalModelling}
 
-
-\alias{ellipticalList}
-\alias{ellipticalParam}
-\alias{ellipticalRange}
-\alias{ellipticalCheck}
-
-\alias{rellipticalCopula}
-\alias{pellipticalCopula}
-\alias{dellipticalCopula}
-
-\alias{rellipticalSlider}
-\alias{pellipticalSlider}
-\alias{dellipticalSlider}
-
-\alias{ellipticalTau}
-\alias{ellipticalRho}
-
-\alias{ellipticalTailCoeff}
-\alias{ellipticalTailPlot}
-
-\alias{gfunc}
-\alias{gfuncSlider}
 
 \alias{ellipticalCopulaSim}
 \alias{ellipticalCopulaFit}
@@ -41,61 +19,13 @@
     Elliptical Copulae Functions:
     
     \tabular{ll}{
-    \code{ellipticalList} \tab Returns list of implemented elliptical copulae, \cr
-    \code{ellipticalParam} \tab Sets default parameters for an elliptical copula, \cr
-    \code{ellipticalRange} \tab returns the range of valid rho values, \cr
-    \code{ellipticalCheck} \tab checks if rho is in the valid range, \cr
-    
-    \code{rellipticalCopula} \tab generates elliptical copula variates, \cr
-    \code{pellipticalCopula} \tab computes elliptical copula probability, \cr
-    \code{dellipticalCopula} \tab computes elliptical copula density, \cr
-        
-    \code{rellipticalSlider} \tab displays interactive plots of variates, \cr
-    \code{pellipticalSlider} \tab displays interactive plots of probability, \cr
-    \code{dellipticalSlider} \tab displays interactive plots of density, \cr
-    
-    \code{ellipticalTau} \tab computes Kendall's tau for elliptical copulae, \cr
-    \code{ellipticalRho} \tab computes Spearman's rho for elliptical copulae, \cr
-    
-    \code{ellipticalTailCoeff} \tab computes tail dependence for elliptical copulae, \cr
-    \code{ellipticalTailPlot} \tab plots tail dependence for elliptical copulae, \cr
-    
-    \code{gfunc} \tab Generator function for elliptical distributions, \cr
-    \code{gfuncSlider} \tab Slider for generator, density and probability, \cr 
-    
     \code{ellipticalCopulaSim} \tab simulates an elliptical copula, \cr
     \code{ellipticalCopulaFit} \tab fits the parameters of an elliptical copula. }
     
 }
 
 
-\usage{
-ellipticalList()
-ellipticalParam(type = ellipticalList())
-ellipticalRange(type = ellipticalList())
-ellipticalCheck(rho = 0.75, param = NULL, type = ellipticalList())
-     
-rellipticalCopula(n, rho = 0.75, param = NULL, type = c("norm", "cauchy", 
-    "t"))
-pellipticalCopula(u = 0.5, v = u, rho = 0.75, param = NULL, 
-    type = ellipticalList(), output = c("vector", "list"), border = TRUE)
-dellipticalCopula(u = 0.5, v = u, rho = 0.75, param = NULL, 
-    type = ellipticalList(), output = c("vector", "list"), border = TRUE)
-
-rellipticalSlider(B = 100)
-pellipticalSlider(type = c("persp", "contour"), B = 20)
-dellipticalSlider(type = c("persp", "contour"), B = 20)
-    
-ellipticalTau(rho)
-ellipticalRho(rho, param = NULL, type = ellipticalList(), subdivisions = 500)
-    
-ellipticalTailCoeff(rho, param = NULL, type = c("norm", "cauchy", "t"))
-ellipticalTailPlot(param = NULL, type = c("norm", "cauchy", "t"), 
-    tail = c("Lower", "Upper"))
-
-gfunc(x, param = NULL, type = ellipticalList())
-gfuncSlider()
-
+\usage{    
 ellipticalCopulaSim(n, rho = 0.75, param = NULL, type = c("norm", "cauchy", "t"))
 ellipticalCopulaFit(u, v, type = c("norm", "cauchy", "t"), \dots)
 }

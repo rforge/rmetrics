@@ -1,32 +1,13 @@
-\name{ExtremeValueCopulae}
+\name{ExtremeValueDependency}
 
-\alias{ExtremeValueCopulae}
+\alias{ExtremeValueDependency}
 
-
-\alias{evList}
-\alias{evParam}
-\alias{evRange}
-\alias{evCheck}
-
-\alias{revCopula}
-\alias{pevCopula}
-\alias{devCopula}
-
-\alias{revSlider}
-\alias{pevSlider}
-\alias{devSlider}
 
 \alias{evTau}         
 \alias{evRho}        
 
 \alias{evTailCoeff}     
 \alias{evTailCoeffSlider}  
-
-\alias{Afunc}
-\alias{AfuncSlider}
-
-\alias{evCopulaSim}
-\alias{evCopulaFit}
 
 
 \title{Bivariate Extreme Value Copulae}
@@ -42,61 +23,21 @@
     Extreme Value Copulae Functions:
     
     \tabular{ll}{
-    \code{evList} \tab Returns list of implemented extreme value copulae, \cr
-    \code{evParam} \tab sets default parameters for an extreme value copula, \cr
-    \code{evRange} \tab returns the range of valid rho values, \cr
-    \code{evCheck} \tab checks if rho is in the valid range, \cr
-    
-    \code{revCopula} \tab generates extreme value copula random variates, \cr
-    \code{pevCopula} \tab computes extreme value copula probability, \cr
-    \code{devCopula} \tab computes extreme value copula density, \cr
-    
-    \code{revSlider} \tab displays interactive plots of extreme value random variates, \cr
-    \code{pevSlider} \tab displays interactive plots of extreme value probability, \cr
-    \code{devSlider} \tab displays interactive plots of extreme value density, \cr
-    
-    \code{Afunc} \tab computes dependence function, \cr
-    \code{AfuncSlider} \tab displays interactively dependence function, \cr
-    
-    \code{evTau} \tab computes Kendall's tau for extreme value copulae, \cr
+    \code{evTau} \tab Computes Kendall's tau for extreme value copulae, \cr
     \code{evRho} \tab computes Spearman's rho for extreme value copulae, \cr
     
     \code{evTailCoeff} \tab computes tail dependence for extreme value copulae, \cr
-    \code{evTailCoeffSlider} \tab plots tail dependence for extreme value copulae, \cr
-    
-    \code{evCopulaSim} \tab simulates an extreme value copula, \cr
-    \code{evCopulaFit} \tab fits the parameters of an extreme value copula. }
+    \code{evTailCoeffSlider} \tab plots tail dependence for extreme value copulae. }
     
 }
 
 
 \usage{
-evList()
-evParam(type = evList())
-evRange(type = evList())
-evCheck(param, type = evList())
-
-revCopula(n, param = NULL, type = evList())
-pevCopula(u = 0.5, v = u, param = NULL, type = evList(), 
-    output = c("vector", "list"), alternative = FALSE )
-devCopula(u = 0.5, v = u, param = NULL, type = evList(), 
-    output = c("vector", "list"), alternative = FALSE )   
-
-revSlider(B = 10)
-pevSlider(type = c("persp", "contour"), B = 10)
-devSlider(type = c("persp", "contour"), B = 10)
-
 evTau(param = NULL, type = evList(), alternative = FALSE)
 evRho(param = NULL, type = evList(), alternative = FALSE)
     
 evTailCoeff(param = NULL, type = evList())
 evTailCoeffSlider(B = 10)
-
-Afunc(x, param = NULL, type = evList())
-AfuncSlider()
-
-evCopulaSim(n, param = NULL,  type = evList())
-evCopulaFit(u, v = NULL, type = evList(), \dots)
 }
 
 
@@ -174,28 +115,6 @@ evCopulaFit(u, v = NULL, type = evList(), \dots)
 
 
 \value{
-    
-    Th functions \code{*Spec} return an S4 object 
-    of class \code{"fCOPULA"}. The object contains the following slots:
-    
-    \item{@call}{
-        the function call.  
-        }
-    \item{@copula}{
-        the name of the copula.
-        }
-    \item{@param}{
-        a list whose elements specify the model parameters.
-        }
-    \item{@title}{
-        a character string with the name of the copula. This can be 
-        overwritten specifying a user defined input argument.
-        }
-    \item{@description}{
-        a character string with an optional user defined description. 
-        By default just the current date when the test was applied will
-        be returned.
-        }
         
     The function \code{pcopula} returns a numeric matrix of probabilities 
     computed at grid positions \code{x}|\code{y}.
@@ -225,6 +144,7 @@ evCopulaFit(u, v = NULL, type = evList(), \dots)
     Diethelm Wuertz for the Rmetrics \R-port.
     
 }
+
 
 \examples{
 ## fCOPULA -
