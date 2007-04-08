@@ -29,15 +29,15 @@
 
 ################################################################################
 # FUNCTION:                  EXTREME VALUE COPULA PARAMETER FITTING:
-#  evCopulaSim          X      Simulates bivariate extreme value copula
-#  evCopulaFit          X      Fits the paramter of an extreme value copula
+#  evCopulaSim                Simulates bivariate extreme value copula
+#  evCopulaFit                Fits the paramter of an extreme value copula
 ################################################################################
 
 
 ################################################################################
 # FUNCTION:                  EXTREME VALUE COPULA PARAMETER FITTING:
-#  evCopulaSim          X      Simulates bivariate extreme value copula
-#  evCopulaFit          X      Fits the paramter of an extreme value copula
+#  evCopulaSim                Simulates bivariate extreme value copula
+#  evCopulaFit                Fits the paramter of an extreme value copula
 
 
 evCopulaSim = 
@@ -48,8 +48,7 @@ type = c("gumbel", "galambos", "husler.reiss", "tawn", "bb5"))
     # Description:
     #   Simulates bivariate extreme value Copula
     
-    return("not yet implemented")
-    # revCopula() is missing ...
+    # FUNCTION:
     
     # Match Arguments:
     type = match.arg(type)
@@ -58,11 +57,7 @@ type = c("gumbel", "galambos", "husler.reiss", "tawn", "bb5"))
     if (is.null(param)) param = .evParam(type)$param
     
     # Random Variates:
-    ans = revCopula(n = n, param = parm, type = type) 
-
-    # Control:
-    control = list(param = param, copula = "ev", type = type)
-    attr(ans, "control")<-unlist(control)
+    ans = revCopula(n = n, param = param, type = type) 
       
     # Return Value:
     ans

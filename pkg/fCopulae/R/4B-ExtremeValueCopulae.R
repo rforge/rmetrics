@@ -59,7 +59,7 @@ function(n, param = NULL, type = c("gumbel", "galambos", "husler.reiss",
 "tawn", "bb5"))
 {
     # Default Settings:
-    subsamples = 100
+    subintervals = 100
     u = runif(n)
     
     # Match Arguments:
@@ -71,9 +71,9 @@ function(n, param = NULL, type = c("gumbel", "galambos", "husler.reiss",
     # Random Variates:
     q = runif(n)
     v = u
-    Y = seq(0, 1, length = subsamples)
+    Y = seq(0, 1, length = subintervals)
     for (i in 1:n) {
-        U = rep(u[i], times = subsamples)
+        U = rep(u[i], times = subintervals)
         C.uv = pevCopula(u = U, v = Y, param, type) / U
         x = log(U)/log(U*Y)
         A = Afunc(x, param, type)
@@ -110,6 +110,10 @@ function(B = 10)
     # Internal Function:
     refresh.code = function(...)
     {
+        # Startup Counter:
+        .counter <<- .counter + 1
+        if (.counter < 10) return ()
+        
         # Sliders:
         Type = c("gumbel", "galambos", "husler.reiss", "tawn", "bb5")
         Copula = .sliderMenu(no = 1)
@@ -138,6 +142,7 @@ function(B = 10)
     }
   
     # Open Slider Menu:
+    .counter <<- 0
     C = c("1 Gumbel: delta", "2 Galambos: delta", "3 Husler-Reis: delta",
           "4 Tawn: alpha", "... beta", "... r", "5 BB5: delta", "... theta")
     .sliderMenu(refresh.code,
@@ -207,10 +212,10 @@ output = c("vector", "list"), alternative = FALSE )
     type = match.arg(type)
     
     # Compute Copula:
-    if (alternative) {
-        ans = .pev2Copula(u, v, param, type, output)
-    } else {
+    if (!alternative) {
         ans = .pev1Copula(u, v, param, type, output)
+    } else {
+        ans = .pev2Copula(u, v, param, type, output)
     }
     
     # Return Value:
@@ -452,6 +457,10 @@ function(B = 10)
     # Internal Function:
     refresh.code = function(...)
     {
+        # Startup Counter:
+        .counter <<- .counter + 1
+        if (.counter < 10) return ()
+        
         # Sliders:
         Type = c("gumbel", "galambos", "husler.reiss", "tawn", "bb5")
         Copula = .sliderMenu(no = 1)
@@ -483,6 +492,7 @@ function(B = 10)
     }
   
     # Open Slider Menu:
+    .counter <<- 0   
     C = c("1 Gumbel: delta", "2 Galambos: delta", "3 Husler-Reis: delta",
           "4 Tawn: alpha", "... beta", "... r", "5 BB5: delta", "... theta", 
           "Plot - levels", "... colors")
@@ -513,6 +523,10 @@ function(B = 10)
     # Internal Function:
     refresh.code = function(...)
     {
+        # Startup Counter:
+        .counter <<- .counter + 1
+        if (.counter < 12) return ()
+        
         # Sliders:
         Type = c("gumbel", "galambos", "husler.reiss", "tawn", "bb5")
         Copula = .sliderMenu(no = 1)
@@ -545,6 +559,7 @@ function(B = 10)
     }
   
     # Open Slider Menu:
+    .counter <<- 0
     C = c("1 Gumbel: delta", "2 Galambos: delta", "3 Husler-Reis: delta",
           "4 Tawn: alpha", "... beta", "... r", "5 BB5: delta", "... theta", 
           "Plot - theta", "... phi")
@@ -952,6 +967,10 @@ function(B = 10)
     # Internal Function:
     refresh.code = function(...)
     {
+        # Startup Counter:
+        .counter <<- .counter + 1
+        if (.counter < 12) return ()
+        
         # Sliders:
         Type = c("gumbel", "galambos", "husler.reiss", "tawn", "bb5")
         Copula = .sliderMenu(no = 1)
@@ -987,6 +1006,7 @@ function(B = 10)
     }
   
     # Open Slider Menu:
+    .counter <<- 0
     C = c("1 Gumbel: delta", "2 Galambos: delta", "3 Husler-Reis: delta",
           "4 Tawn: alpha", "... beta", "... r", "5 BB5: delta", "... theta", 
           "Plot - levels", "... colors")
@@ -1014,6 +1034,10 @@ function(B = 10)
     # Internal Function:
     refresh.code = function(...)
     {
+        # Startup Counter:
+        .counter <<- .counter + 1
+        if (.counter < 12) return ()
+        
         # Sliders:
         Type = c("gumbel", "galambos", "husler.reiss", "tawn", "bb5")
         Copula = .sliderMenu(no = 1)
@@ -1049,6 +1073,7 @@ function(B = 10)
     }
   
     # Open Slider Menu:
+    .counter <<- 12
     C = c("1 Gumbel: delta", "2 Galambos: delta", "3 Husler-Reis: delta",
           "4 Tawn: alpha", "... beta", "... r", "5 BB5: delta", "... theta", 
           "Plot - theta", "... phi")

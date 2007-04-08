@@ -30,10 +30,14 @@
 ################################################################################
 # FUNCTION                   KENDALL'S TAU AND SPEARMAN'S RHO:
 #  evTau                      Returns Kendall's tau for extreme value copulae
+#  .ev1Tau                     Computes Kendall's tau from dependency function
+#  .ev2Tau                     Computes Kendall's tau from integration
 #  evRho                      Returns Spearman's rho for extreme value copulae
+#  .ev1Rho                     Computes Spearman's rho from dependency function
+#  .ev2Rho                     Computes Spearman's rho from integration
 # FUNCTION:                  EXTREME VALUE COPULAE TAIL DEPENDENCE:
-#  evTailCoeff          X     Computes tail dependence for extreme value copulae
-#  evTailPlot           X     Plots extreme value tail dependence function
+#  evTailCoeff                Computes tail dependence for extreme value copulae
+#  evTailCoeffSlider          Plots extreme value tail dependence function
 ################################################################################
 
 
@@ -76,6 +80,12 @@ function(param = NULL, type = c("gumbel", "galambos", "husler.reiss",
 function(param = NULL, type = c("gumbel", "galambos", "husler.reiss", 
 "tawn", "bb5"))
 {   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Computes Kendall's tau from dependency function
+    
+    # FUNCTION:
+    
     # Type:
     type = match.arg(type)
     
@@ -115,6 +125,7 @@ function(param = NULL, type = c("gumbel", "galambos", "husler.reiss",
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
+    #   Computes Kendall's tau from integration
     
     # Example:
     #   .ev2Tau()
@@ -189,7 +200,7 @@ function(param = NULL, type = c("gumbel", "galambos", "husler.reiss",
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Computes Spearman's rho for an extreme value copula
+    #   Computes Spearman's rho from dependency function
     
     # Example:
     #   .ev1Rho()
@@ -234,7 +245,7 @@ function(param = NULL, type = c("gumbel", "galambos", "husler.reiss",
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Computes Spearman's rho for an extreme value copula
+    #   Computes Spearman's rho from integration
     
     # Example:
     #   .ev2Rho()
@@ -270,31 +281,8 @@ function(param = NULL, type = c("gumbel", "galambos", "husler.reiss",
 
 ################################################################################
 # FUNCTION:                  EXTREME VALUE COPULAE TAIL DEPENDENCE:
-#  evTailCoeff          X     Computes tail dependence for extreme value copulae
-#  evTailPlot           X     Plots extreme value tail dependence function
-
-
-evTailCoeff = 
-function(param = NULL, type = 1:22)
-{   # A function implemented by Diethelm Wuertz
-
-    NA
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-evTailPlot = 
-function(param = NULL, type = 1:22, tail = c("Upper", "Lower"))
-{   # A function implemented by Diethelm Wuertz
-
-    NA
-}
-
-
-################################################################################
-
+#  evTailCoeff                Computes tail dependence for extreme value copulae
+#  evTailCoeffSlider          Plots extreme value tail dependence function
 
 
 evTailCoeff =
@@ -305,6 +293,9 @@ function(param = NULL, type = c("gumbel", "galambos", "husler.reiss",
     # Description:
     #   Tail Dependence for extreme value copulae
     
+    # Example:
+    #   evTailCoeff()
+    
     # FUNCTION:
     
     # Type:
@@ -313,12 +304,100 @@ function(param = NULL, type = c("gumbel", "galambos", "husler.reiss",
     # Default Parameters:
     if (is.null(param)) param = .evParam(type)$param
 
-    # Tail Coefficient:
-    N = 20
-    x = 1 - (1/2)^(1:N)
-    lambdaU.Cuv = ( 1 - 2*x + 
-        pevCopula(u = x, v = x, param = param, type = type) ) / (1-x)
+    # Limit:
+    lambdaU = 2-2*Afunc(0.5, param, type)[[1]]
+    lambdaL = 0
+    ans = c(lower = lambdaL, upper = lambdaU)
+    
+    # Add Control Attribute:
+    attr(ans, "control") <- 
+        unlist(list(copula = "ev", param = param, type = type))
        
     # Return Value:
-    list(x = x, y = lambdaU.Cuv)
+    ans
 }
+
+
+# ------------------------------------------------------------------------------
+
+
+evTailCoeffSlider =
+function(B = 10)
+{   # A function implemented by Diethelm Wuertz
+        
+    # Description:
+    #   Displays interactively perspective plots of tail coefficient
+    
+    # Example:
+    #   evTailCoeffSlider()
+    
+    # FUNCTION:
+    
+    # Graphic Frame:
+    par(mfrow = c(1, 1))
+    
+    # Internal Function:
+    refresh.code = function(...)
+    {
+        # Startup:
+        .counter <<- .counter + 1
+        if (.counter < 10) return()
+        
+        # Sliders:
+        Type = c("gumbel", "galambos", "husler.reiss", "tawn", "bb5")
+        Copula = .sliderMenu(no = 1)
+        N = .sliderMenu(no = 2)
+        if (Copula <= 3) 
+            param = c(delta = .sliderMenu(no = Copula + 2))
+        if (Copula == 4) 
+            param = c(alpha = .sliderMenu(no = 6), 
+                beta = .sliderMenu(no = 7), r = .sliderMenu(no = 8))
+        if (Copula == 5)   
+            param = c(delta = .sliderMenu(no = 9), theta = .sliderMenu(no = 10)) 
+        
+        # Title:
+        type = Type[Copula]
+        subTitle = paste(paste(names(param) , "="), param, collapse = " | " )
+        Title = paste(" ", type, "\n", subTitle) 
+        
+        # Plot: 
+        u = seq(0, 0.5, length = N+1)[-1] 
+        C.uu = pevCopula(u, u, param, type)
+        lambda = C.uu/u
+        v = seq(0.5, 1, length = N+1)[-(N+1)] 
+        C.uu = pevCopula(v, v, param, type)
+        lambda = c(lambda, (1-2*v+C.uu)/(1-v))
+        x = c(u, v) 
+        plot(x, lambda, xlim = c(0, 1), ylim = c(0, 1), 
+            pch = 19, col = "steelblue", xlab = "u")
+        title(main = Title)
+        grid()
+        
+        # Add Points:
+        points(x = 0, y = 0, pch = 19, col = "red")
+        points(x = 1, y = 2-2*Afunc(0.5, param, type), pch = 19, col = "red")
+        
+        # Lines:
+        abline(h = 0, col = "grey")
+        abline(v = 0.5, col = "grey")
+             
+        # Reset Frame:
+        par(mfrow = c(1, 1))
+    }
+  
+    .counter <<- 0
+    # Open Slider Menu:
+    C = c("1 Gumbel: delta", "2 Galambos: delta", "3 Husler-Reis: delta",
+          "4 Tawn: alpha", "... beta", "... r", "5 BB5: delta", "... theta")
+    .sliderMenu(refresh.code,
+        names = c("Copula", "N", C), 
+                         #   N gumbel galamb h.r  tawn-tawn-tawn  bb5-bb5   
+        minima =      c(1,  10,     1,    0,   0,    0,   0,   1,   0,  1),
+        maxima =      c(5, 100,     B,    B,   B,    1,   1,   B,   B,  B),
+        resolutions = c(1,  10,   .05,  .05, .05,  .01, .01,  .1,  .1, .1),
+        starts =      c(1,  20,     2,    1,   1,   .5,  .5,   2,   1,  2))
+}
+
+
+################################################################################
+

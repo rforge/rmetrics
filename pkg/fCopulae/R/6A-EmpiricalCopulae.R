@@ -34,7 +34,7 @@
 #  dempiricalCopula           Computes empirical copula density
 # FUNCTION:                  DEBYE FUNCTION:
 #  .Debye                     Returns the value of the Debye function of order k
-#  .Debye1
+#  .Debye1                    Returns the value of the Debye function of order 1
 # FUNCTION:
 #  .pmoCopula
 #  .dmoCopula
