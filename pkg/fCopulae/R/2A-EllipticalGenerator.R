@@ -374,16 +374,13 @@ function(x, param = NULL, type = ellipticalList())
 
 
 gfuncSlider = 
-function()
+function(B = 10)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Slider for generator function, density and probability
     
     # FUNCTION:
-    
-    # Settings:
-    B = 10
     
     # Graphic Frame:
     par(mfrow = c(2, 2), cex = 0.7)
