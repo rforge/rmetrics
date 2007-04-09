@@ -33,7 +33,7 @@
     the development of records.
     \cr
     
-    The plot functions are:
+    The functions are:
     
     \tabular{ll}{
     \code{emdPlot} \tab Plot of empirical distribution function, \cr
@@ -289,15 +289,15 @@ Embrechts, P., Klueppelberg, C., Mikosch, T. (1997);
    emdPlot(danishClaims) 
    
 ## qqparetoPlot -
-   # QQ-Plot of heavy-tailed Danish fire insurance data
+   # QQ-Plot of heavy-tailed Danish fire insurance data:
    qqparetoPlot(danishClaims, xi = 0.7) 
  
 ## mePlot -
-   # Sample mean excess plot of heavy-tailed Danish fire 
+   # Sample mean excess plot of heavy-tailed Danish fire:
    mePlot(danishClaims)
       
 ## ssrecordsPlot -
-   # Record fire insurance losses in Denmark
+   # Record fire insurance losses in Denmark:
    ssrecordsPlot(danishClaims, subsamples = 10) 
 }
 
