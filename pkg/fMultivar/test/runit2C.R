@@ -55,6 +55,200 @@ function()
 # ------------------------------------------------------------------------------
 
 
+test.termPlot = 
+function()
+{    
+    # Requirements:
+    require(MASS)
+    require(polspline)
+    
+    # Simulate Data - a data frame:
+    DATA = regSim(model = "GAM3", n = 100)
+    head(DATA)
+    class(DATA)
+    # Convert to a timeSeries object:
+    DATATS = as.timeSeries(DATA)
+    head(DATATS)
+    class(DATATS)
+    
+    # Fit:
+    LM    = regFit(Y ~ 1 + X1 + X2 + X3, data = DATATS, use = "lm") 
+    RLM   = regFit(Y ~ 1 + X1 + X2 + X3, data = DATATS, use = "rlm") 
+    AM    = regFit(Y ~ 1 + s(X1)+s(X2)+s(X3),   DATATS, use = "am") 
+    PPR   = regFit(Y ~ X1 + X2 + X3,     data = DATATS, use = "ppr") 
+    PPR4  = regFit(Y ~ X1 + X2 + X3,     data = DATATS, use = "ppr", nterms = 4) 
+    MARS  = regFit(Y ~ X1 + X2 + X3,     data = DATATS, use = "mars") 
+    PMARS = regFit(Y ~ X1 + X2 + X3,     data = DATATS, use = "polymars") 
+    NNET  = regFit(Y ~ X1 + X2 + X3,     data = DATATS, use = "nnet") 
+    NNET6 = regFit(Y ~ X1 + X2 + X3,     data = DATATS, use = "nnet", size = 6)    
+    
+    # Term Plot:
+    par(ask = FALSE) 
+    par(mfrow = c(1, 1))
+    .termPlot(LM)
+    .termPlot(RLM)
+    .termPlot(AM)
+    .termPlot(PPR)
+    .termPlot(MARS)
+    .termPlot(PMARS)
+    .termPlot(NNET)
+    
+    # 
+    par(ask = FALSE) 
+    par(mfrow = c(1, 1))
+    .termPlot(LM, terms = "X1")
+    .termPlot(RLM, terms = "X1")
+    .termPlot(AM, terms = "X1")
+    .termPlot(PPR, terms = "X1")
+    .termPlot(PPR4, terms = "X1")
+    .termPlot(MARS, terms = "X1")
+    .termPlot(PMARS, terms = "X1")
+    .termPlot(NNET, terms = "X1")
+    .termPlot(NNET6, terms = "X1")
+    
+    # Return Value:
+    return()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.termPersp = 
+function()
+{    
+    # Requirements:
+    require(MASS)
+    require(polspline)
+    
+    # Simulate Data - a data frame:
+    DATA = regSim(model = "GAM3", n = 100)
+    head(DATA)
+    class(DATA)
+    # Convert to a timeSeries object:
+    DATATS = as.timeSeries(DATA)
+    head(DATATS)
+    class(DATATS)
+    
+    # Fit:
+    LM    = regFit(Y ~ 1 + X1 + X2 + X3, data = DATATS, use = "lm") 
+    RLM   = regFit(Y ~ 1 + X1 + X2 + X3, data = DATATS, use = "rlm") 
+    AM    = regFit(Y ~ 1 + s(X1)+s(X2)+s(X3),   DATATS, use = "am") 
+    PPR   = regFit(Y ~ X1 + X2 + X3,     data = DATATS, use = "ppr") 
+    PPR4  = regFit(Y ~ X1 + X2 + X3,     data = DATATS, use = "ppr", nterms = 4) 
+    MARS  = regFit(Y ~ X1 + X2 + X3,     data = DATATS, use = "mars") 
+    PMARS = regFit(Y ~ X1 + X2 + X3,     data = DATATS, use = "polymars") 
+    NNET  = regFit(Y ~ X1 + X2 + X3,     data = DATATS, use = "nnet") 
+    NNET6 = regFit(Y ~ X1 + X2 + X3,     data = DATATS, use = "nnet", size = 6)        
+    
+    # Bivariate Perspective Term Plot: 
+    par(ask = FALSE)
+    par(mfrow = c(1, 1))
+    .termPersp(LM,    terms = c("X1", "X2"))
+    .termPersp(RLM,   terms = c("X1", "X2"))
+    .termPersp(AM,    terms = c("X1", "X2"))
+    .termPersp(PPR,   terms = c("X1", "X2"))
+    .termPersp(PPR4,  terms = c("X1", "X2"))
+    .termPersp(MARS,  terms = c("X1", "X2"))
+    .termPersp(PMARS, terms = c("X1", "X2"))
+    .termPersp(NNET,  terms = c("X1", "X2"))
+    .termPersp(NNET6, terms = c("X1", "X2"))  
+    
+    # Return Value:
+    return()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.termContour = 
+function()
+{    
+    # Requirements:
+    require(MASS)
+    require(polspline)
+    
+    # Simulate Data - a data frame:
+    DATA = regSim(model = "GAM3", n = 100)
+    head(DATA)
+    class(DATA)
+    # Convert to a timeSeries object:
+    DATATS = as.timeSeries(DATA)
+    head(DATATS)
+    class(DATATS)
+    
+    # Fit:
+    LM    = regFit(Y ~ 1 + X1 + X2 + X3, data = DATATS, use = "lm") 
+    RLM   = regFit(Y ~ 1 + X1 + X2 + X3, data = DATATS, use = "rlm") 
+    AM    = regFit(Y ~ 1 + s(X1)+s(X2)+s(X3),   DATATS, use = "am") 
+    PPR   = regFit(Y ~ X1 + X2 + X3,     data = DATATS, use = "ppr") 
+    PPR4  = regFit(Y ~ X1 + X2 + X3,     data = DATATS, use = "ppr", nterms = 4) 
+    MARS  = regFit(Y ~ X1 + X2 + X3,     data = DATATS, use = "mars") 
+    PMARS = regFit(Y ~ X1 + X2 + X3,     data = DATATS, use = "polymars") 
+    NNET  = regFit(Y ~ X1 + X2 + X3,     data = DATATS, use = "nnet") 
+    NNET6 = regFit(Y ~ X1 + X2 + X3,     data = DATATS, use = "nnet", size = 6)        
+        
+    # Bivariate Contour Term Plot:
+    par(ask = FALSE)
+    par(mfrow = c(1, 1))
+    .termContour(LM,    terms = c("X1", "X2"))
+    .termContour(RLM,   terms = c("X1", "X2"))
+    .termContour(AM,    terms = c("X1", "X2"))
+    .termContour(PPR,   terms = c("X1", "X2"))
+    .termContour(PPR4,  terms = c("X1", "X2"))
+    .termContour(MARS,  terms = c("X1", "X2"))
+    .termContour(PMARS, terms = c("X1", "X2"))
+    .termContour(NNET,  terms = c("X1", "X2"))
+    .termContour(NNET6, terms = c("X1", "X2"))
+    
+    
+    # Return Value:
+    return()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.termComparison = 
+function()
+{    
+    # Requirements:
+    require(MASS)
+    require(polspline)
+    
+    # Simulate Data - a data frame:
+    DATA = regSim(model = "GAM3", n = 100)
+    head(DATA)
+    class(DATA)
+    # Convert to a timeSeries object:
+    DATATS = as.timeSeries(DATA)
+    head(DATATS)
+    class(DATATS)    
+ 
+    # Comparison:
+    par(ask = FALSE)
+    par(mfrow = c(1, 1))
+    .termPlot(LM)
+    lm = lm(Y ~ X1 + X2 + X3, DATA)
+    termplot(lm, rug = TRUE, partial.resid = TRUE, se = TRUE, pch = 19, 
+        main = "LM", ask = par("ask"))
+    .termPlot(AM)
+    am = gam(formula = Y ~ s(X1) + s(X2) + s(X3), data = DATA) 
+    for (s in 1:3) { 
+        plot(am, residuals = residuals(am), se = TRUE, 
+            main = "AM", cex = 0.7, select = s, pch = 19); grid() 
+    }
+    
+    # Return Value:
+    return()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
 if (FALSE) {
     require(RUnit)
     testResult = runTestFile("C:/Rmetrics/SVN/trunk/fMultivar/test/runit2C.R",

@@ -94,12 +94,12 @@ function()
     par(mfrow = c(2, 1), cex = 0.7)
     xi = seq(-5, 2, length = 351)
     mom = gevMoments(xi)
-    plot(xi, mom$mean, main = "Mean", pch = 19, col = "steelblue")
+    plot(xi, mom$mean, main = "Mean GEV", pch = 19, col = "steelblue")
     abline(v = 1, col = "red", lty = 3)
     abline(h = 0, col = "red", lty = 3)
     
     # Plot Variance:
-    plot(xi, log(mom$var), main = "log Variance", pch = 19, col = "steelblue")
+    plot(xi, log(mom$var), main = "log Variance GEV", pch = 19, col = "steelblue")
     abline(v = 1/2, col = "red", lty = 3)
     abline(h = 0.0, col = "red", lty = 3)
     
@@ -116,11 +116,11 @@ function()
 {
     # Distribution Slider:
     print("Activate Slider manually!")
-    # gevSlider(method = "dist")
+    gevSlider(method = "dist")
     
     # Random Variates Slider:
     print("Activate Slider manually!")
-    # gevSlider(method = "rvs")
+    gevSlider(method = "rvs")
     
     # Return Value:
     return()    

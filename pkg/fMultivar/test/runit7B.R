@@ -103,6 +103,7 @@ function()
     Z = list(x = x, y = x, z = matrix(z, ncol = length(x)))
     
     # Plot:
+    par(mfrow = c(1, 1), ask = FALSE)
     persp(Z, theta = -40, phi = 30, col = "steelblue")
     .perspPlot(Z)
        
@@ -122,7 +123,9 @@ function()
     z = rmvsnorm(N, dim = 2, mu = rep(0, 2), Omega = diag(2), alpha = rep(1, 2))
     
     # Scatterplot:
-    plot(z, pch = 19)
+    par(mfrow = c(1, 1), ask = FALSE)
+    plot(z, pch = 19, col = "steelblue")
+    grid()
        
     # Return Value:
     return()    

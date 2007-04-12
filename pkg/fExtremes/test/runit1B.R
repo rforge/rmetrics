@@ -69,13 +69,14 @@ function()
     head(x.ret)
     class(x.ret)
     
-    # Monthly BlockMaxima:
-    blockMaxima(x.ret, block = "monthly", doplot = TRUE)
+    # Monthly Block Maxima:
+    ans = blockMaxima(x.ret, block = "monthly", doplot = TRUE)
+    print(ans)
     
-    # Quarterly BlockMaxima:
+    # Quarterly Block Maxima:
     blockMaxima(x.ret, block = "q", doplot = TRUE)
     
-    # 20-Days BlockMaxima:
+    # 20-Days Block Maxima:
     blockMaxima(x.ret, block = 20, doplot = TRUE)
     
     # Numerical Data Vector:
@@ -112,10 +113,11 @@ function()
     findThreshold(x.ret, n = floor(0.01*length(as.vector(x))), doplot = TRUE)
     
     # Remark - Alternative use ...
-    quantile(x.ret, 1-0.01)
+    quantile(x.ret, probs = 1 - 0.01)
+    quantile(x.ret, probs = 1 - 0.01, type = 1)
     
     # Find 95% Threshold:
-    findThreshold(x.ret, doplot = TRUE)     # CHECK y-label
+    findThreshold(x.ret, doplot = TRUE)      
     
     # Find 90% Threshold:
     findThreshold(x.ret, n = floor(0.1*length(as.vector(x))), doplot = TRUE)

@@ -123,7 +123,8 @@ function()
     # Check numeric vector as input:
     X = rt(5000, df = 4)
     x.vec = blockMaxima(X, 20)
-    class(x)
+    class(x.vec)
+    head(x.vec)
     
     # Internal Fit - GEV PWM:
     fit = .gevpwmFit(x.vec)
@@ -160,6 +161,7 @@ function()
     X = as.timeSeries(rt(5000, df = 4))
     x.tS = blockMaxima(X, "monthly")
     class(x.tS)
+    head(x.tS)
     
     # Internal Fit - GEV PWM:
     fit = .gevpwmFit(x.tS)
