@@ -32,14 +32,8 @@
 #  'fARMA'                 S4 Class representation for "fARMA" objects
 #  armaSim                 Simulates an ARIMA time series process
 #  armaFit                 Fits parameters for ARMA Time Series process
-#  .arFit                   Internal function called by armaFit
-#  .arimaFit                Internal function called by armaFit
-#  .arfimaFit               Internal function called by armaFit
 # S3 METHOD:              PREDICTION:
 #  predict.fARMA           S3: Predicts from an ARMA time series prrocess 
-#  .arPpredict              Internal function called by predict.fARMA
-#  .arimaPpredict           Internal function called by predict.fARMA
-#  .arfimaPredict           Internal function - Not yet implemented
 # GENERIC METHODS:        PRINT - PLOT - SUMMARY METHODS:
 #  show.fARMA              S4: Prints a fitted ARMA time series object
 #  plot.fARMA              S3: Plots stylized facts of a fitted ARMA object
@@ -49,9 +43,6 @@
 #  coefficients.fARMA      S3: Synonyme for coef.fARMA
 #  fitted.fARMA            S3: Returns fitted values from a fitted ARMA object
 #  residuals.fARMA         S3: Returns residuals from a fitted ARMA object
-# FUNCTION:               TRUE ARMA STATISTICS:
-#  armaTrueacf             Returns True ARMA autocorrelation function
-#  armaRoots               Returns Roots of the ARMA characteristic polynomial
 ################################################################################
 
 
@@ -109,8 +100,8 @@ function()
     #   positions = NULL, innov = NULL, n.start = 100, start.innov = NULL, 
     #   rand.gen = rnorm, rseed = NULL, addControl = FALSE, ...) 
     
-    # ts: ARMA(2,1):
-    # Note, positions=NULL,
+    # ts: Simulate ARMA(2,1):
+    # Note, if "positions=NULL",
     #    then a 'ts' object will be returned ...
     ts = armaSim(n = 25)
     class(ts)
@@ -118,8 +109,8 @@ function()
     ts = armaSim(n = 25, addControl = TRUE)
     print(ts)
     
-    # timeSeries: ARMA(2,1):
-    # Note, positions is a timeDate object, 
+    # timeSeries: Simulate ARMA(2,1):
+    # Note, if "positions" is a timeDate object, 
     #   then a 'timeSeries' object will be returned ...
     tS = armaSim(n = 12, positions = timeCalendar()) 
     class(tS)
@@ -127,7 +118,7 @@ function()
     tS = armaSim(n = 12, positions = timeCalendar(), addControl = TRUE) 
     print(tS)
     
-    # ts: t4-ARMA(2,1):
+    # ts: Simulate t4-ARMA(2,1):
     ts = armaSim(n = 25, rand.gen = rt, df = 4, rseed = 4711)
     print(ts)
     

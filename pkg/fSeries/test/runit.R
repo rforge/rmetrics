@@ -37,7 +37,7 @@ if (FALSE) {
     require(RUnit)
     testIndex = c(
         "1A", "1B", "1C", 
-        "2A", 
+        "2A", "2B", 
         "3A", "3B", 
         "4A", "4B", "4C", "4D", 
         "5A", "5B", "5C")

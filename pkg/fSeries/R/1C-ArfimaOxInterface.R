@@ -28,14 +28,12 @@
 
 
 ################################################################################
-#  *                      Asterisked Functions are in ArmaModelling.R
 # FUNCTION:               DESCRIPTION:
 #  * fARMA                 Class representation for "fARMA" objects
 #  * armaSim               Simulates a time series process from the ARIMA family
 #    arfimaOxFit           Fits parameters for AR(FI)MA time series processes
 # S3 METHOD:              PREDICTION:
 #  * predict.fARMA         S3: Predicts from an ARMA time series prrocess 
-#    .arfimaOxPredict          Internal function called by predict.fARMA
 # S3 METHOD:              RINT - PLOT - SUMMARY METHODS:
 #  * show.fARMA            S4: Prints a fitted ARMA time series object
 #  * plot.fARMA            S3: Plots stylized facts of a fitted ARMA object
@@ -45,6 +43,7 @@
 #  * coefficients.fARMA    S3: Synonyme for coef.fARMA
 #  * fitted.fARMA          S3: Returns fitted values from a fitted ARMA object
 #  * residuals.fARMA       S3: Returns residuals from a fitted ARMA object
+#  *                      Asterisked Functions are in ArmaModelling.R
 ################################################################################
 
 

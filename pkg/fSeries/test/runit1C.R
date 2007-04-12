@@ -28,7 +28,6 @@
 
 
 ################################################################################
-#  *                      Asterisked Functions are in ArmaModelling.R
 # FUNCTION:               DESCRIPTION:
 #  * fARMA                 Class representation for "fARMA" objects
 #  * armaSim               Simulates a time series process from the ARIMA family
@@ -45,6 +44,7 @@
 #  * coefficients.fARMA    S3: Synonyme for coef.fARMA
 #  * fitted.fARMA          S3: Returns fitted values from a fitted ARMA object
 #  * residuals.fARMA       S3: Returns residuals from a fitted ARMA object
+#  *                      Asterisked Functions are in ArmaModelling.R
 ################################################################################
 
 

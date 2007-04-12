@@ -31,15 +31,6 @@
 # FUNCTION:               TRUE ARMA STATISTICS:
 #  armaTrueacf             Returns True ARMA autocorrelation function
 #  armaRoots               Returns Roots of the ARMA characteristic polynomial
-#  .armaToeplitz           Returns Toeplitz matrix from an ARMA process
-#  .armaFischer            Returns ARMA Fischer information matrix
-#  .schurTest               Tests invertibility
-#  .toeplitzARMA            Computes Toeplitz matrix
-#  .iARMA                   Returns Information matrix ARMA
-#  .iFARMA                  Returns Information matrix FARMA
-#  .psiwtsARMA              Returns MA expansion coefficients
-#  .tacvfARMA               Returns true acvf ARMA
-#  .tccfAR                  Returns cross covariances between ARs
 ################################################################################
 
 
