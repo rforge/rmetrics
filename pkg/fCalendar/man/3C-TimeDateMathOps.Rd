@@ -74,7 +74,6 @@ difftimeDate(time1, time2,
 
 \arguments{
   
-
     \item{differences}{
         [lag] - \cr
         an integer indicating the order of the difference.

@@ -722,7 +722,7 @@ Wood (2001);
      inSample = as.vector(in.sample)
      plot(Date, Recession, type = "n", main = "US Recession")
      grid()
-     lines(Date, Recession, type = "h", col = "steelblue3")
+     lines(Date, Recession, type = "h", col = "steelblue")
      lines(Date, inSample) 
    }
    

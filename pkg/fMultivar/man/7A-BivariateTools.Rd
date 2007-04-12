@@ -227,7 +227,7 @@ Warnes G.R., (2004);
 
 
 \examples{
-## Normal Density, rho = 0.5:
+## Normal Density:
    x = (-40:40)/10
    X = grid2d(x)
    z = dnorm2d(X$x, X$y, rho = 0.5)

@@ -42,7 +42,8 @@
     \code{as.POSIXct.timeDate} \tab Returns a 'timeDate' object as POSIXct object, \cr
     \code{julian.timeDate} \tab Returns Julian day counts since 1970-01-01, \cr
     \code{atoms.timeDate} \tab Returns date/time atoms from a 'timeDate' object, \cr
-    \code{months.timeDate} \tab Extract months atom from a 'timeDate' object. }    
+    \code{months.timeDate} \tab Extract months atom from a 'timeDate' object. } 
+       
 }
 
 

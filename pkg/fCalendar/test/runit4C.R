@@ -86,7 +86,7 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.seriesPositions = 
+test.newPositions = 
 function()
 {
     # Generate nivariate daily random sequence
@@ -97,7 +97,8 @@ function()
     uTS
     
     # Add one Day to Positions:
-    newPositions(uTS) <- POS + 24*3600          # CHECK
+    POS = seriesPositions(uTS)
+    newPositions(uTS) <- POS + 24*3600                      # CHECK
     uTS
     
     # Return Value:

@@ -1,6 +1,6 @@
 Package: fEcofin
 Version: 241.69
-Date: 1996 - 2007
+Date: 1997 - 2007
 Title: Ecofin - Selected Economic and Financial Data Sets
 Author: Diethelm Wuertz and many others. See the SOURCE file
 Depends: R (>= 2.2.1), methods, spatial

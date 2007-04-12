@@ -191,7 +191,6 @@ ISO-8601 (1988);
   
 ## holidayNYSE -
    holidayNYSE(currentYear)
-   
 }
 
 

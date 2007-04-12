@@ -169,14 +169,6 @@ nigSlider()
 }
 
 
-\author{
-
-    David Scott for the HYP Generator from R's "HyperbolicDist" package, \cr
-    Diethelm Wuertz for the Rmetrics \R-port.
-    
-}
-
-
 \references{
 Atkinson, A.C. (1982); 
     \emph{The simulation of generalized inverse Gaussian and hyperbolic 
@@ -197,6 +189,14 @@ Barndorff-Nielsen O., Blaesild, P. (1983);
 Raible S. (2000);
     \emph{Levy Processes in Finance: Theory, Numerics and Empirical Facts},
     PhD Thesis, University of Freiburg, Germany, 161 pages.
+}
+
+
+\author{
+
+    David Scott for the HYP Generator from R's "HyperbolicDist" package, \cr
+    Diethelm Wuertz for the Rmetrics \R-port.
+    
 }
 
 
