@@ -61,7 +61,7 @@ function (x, block = c("monthly", "quarterly"), doplot = FALSE)
         stopifnot(isUnivariate(x))
     } else {
         x = as.vector(x)
-        stopifnot(is.numeric( block[1])) 
+        stopifnot(is.numeric(block[1])) 
     }
     
     # Maxima:

@@ -59,6 +59,8 @@ function(model = list(xi = -0.25, mu = 0, beta = 1), n = 1000, seed = NULL)
     # Description:
     #   Generates random variates from a GEV distribution
     
+    # Arguments:
+    
     # Examples:
     #   gevSim(n = 100)
     #   gevSim(n = 100, seed = 4711)
@@ -91,6 +93,8 @@ function(model = list(mu = 0, beta = 1), n = 1000, seed = NULL)
 
     # Description:
     #   Generates random variates from a GEV distribution
+    
+    # Arguments:
     
     # Examples:
     #   gumbelSim(n = 100)
@@ -132,10 +136,18 @@ function(x, block = 1, type = c("mle", "pwm"),
 title = NULL, description = NULL, ...)
 {   # A function implemented by Diethelm Wuertz
 
-    # Call:
-    call = match.call()
+    # Description:
     
     # Arguments:
+    
+    # Examples:
+    
+    # FUNCTION:
+    
+    # Match Call:
+    call = match.call()
+    
+    # Match Arguments:
     type = match.arg(type)
     
     # Fit:
@@ -156,10 +168,18 @@ function(x, block = 1, type = c("mle", "pwm"),
 title = NULL, description = NULL, ...)
 {   # A function implemented by Diethelm Wuertz
 
-    # Call:
-    call = match.call()
+    # Description:
     
     # Arguments:
+    
+    # Examples:
+    
+    # FUNCTION:
+    
+    # Match Call:
+    call = match.call()
+    
+    # Match Arguments:
     type = match.arg(type)
     
     # Fit:
@@ -191,10 +211,9 @@ gumbel = FALSE, title = NULL, description = NULL, ...)
     #   fit = gevFit(gevSim(), type = "pwm", gumbel = FALSE); print(fit)
     #   fit = gevFit(gevSim(), type = "mle", gumbel = TRUE); print(fit)
     #   fit = gevFit(gevSim(), type = "pwm", gumbel = TRUE); print(fit)
-    
-    #   x=rnorm(500);  block=20; type="mle"; gumbel=FALSE
-    #   x=as.ts(rnorm(500));  block=20; type="mle"; gumbel=FALSE
-    #   x = dummyDailySeries(rnorm(500)); block=20; type="mle"; gumbel=FALSE
+    #   x = rnorm(500);  block = 20; type="mle"; gumbel=FALSE
+    #   x = as.ts(rnorm(500));  block = 20; type = "mle"; gumbel = FALSE
+    #   x = dummyDailySeries(rnorm(500)); block = 20; type = "mle"; gumbel=FALSE
     
     # Note:
     #   Argument named "method is already used for the selection
@@ -203,10 +222,10 @@ gumbel = FALSE, title = NULL, description = NULL, ...)
     
     # FUNCTION:
     
-    # Settings:
+    # Match Call:
     call = match.call()
     
-    # Arguments:
+    # Match Arguments:
     type = match.arg(type)
     
     # Check Type and Convert:
@@ -321,6 +340,10 @@ function(data, ...)
 
     # Description # FUNCTION:
     
+    # Arguments:
+    
+    # FUNCTION:
+    
     # "Probability Weighted Moment" method.
     data = as.numeric(data)
     n = length(data)
@@ -363,6 +386,10 @@ function(data, ...)
 function(data, block = NA, ...) 
 {   # A function implemented by Diethelm Wuertz
 
+    # Description:
+    
+    # Arguments:
+    
     # FUNCTION:
     
     # Probability Weighted Moment method.
@@ -422,15 +449,20 @@ function(data, block = NA, ...)
 function(data, block = NA, ...)
 {   # A copy from evir
 
+    # Description:
+    
+    # Arguments:
+    
+    # FUNCTION:
+    
     # Data:
     data = as.numeric(data)
     n = length(data)
     
-    # EVIR Start Values:
+    # Generate EVIR Start Values:
     # beta0 = sqrt(6 * var(data))/pi
     # mu0 = mean(data) - 0.57722 * beta0
-    # theta = c(mu = mu0, beta = beta0)
-    
+    # theta = c(mu = mu0, beta = beta0)  
     # We use PWM Start Values:
     theta = .gumpwmFit(data)$par.ests
     
@@ -464,6 +496,12 @@ function(data, block = NA, ...)
 function(theta, tmp)
 {   # A copy from evir
 
+    # Description:
+    
+    # Arguments:
+    
+    # FUNCTION:
+    
     # Gumbel Log-Likelihood:
     y = (tmp - theta[1])/theta[2]
     if(theta[2] < 0) {
@@ -487,6 +525,12 @@ function(theta, tmp)
 function(data, block = NA, ...)
 {   # A copy from evir
 
+    # Description:
+    
+    # Arguments:
+    
+    # FUNCTION:
+    
     # Data:
     data = as.numeric(data)
     n = length(data)
@@ -529,6 +573,12 @@ function(data, block = NA, ...)
 function(theta, tmp)
 {   # A copy from evir
 
+    # Description:
+    
+    # Arguments:
+    
+    # FUNCTION:
+    
     # GEV Log-likelihood:
     y = 1 + (theta[1] * (tmp - theta[2]))/theta[3]
     if((theta[3] < 0) || (min(y) < 0)) {
@@ -554,6 +604,8 @@ function(object)
 
     # Description:
     #   Print Method for an object of class "gevFit".
+    
+    # Arguments:
     
     # FUNCTION:
     
@@ -592,6 +644,8 @@ function(x, which = "ask", ...)
 
     # Description:
     #   Plot method for an object of class "gevFit".
+    
+    # Arguments:
     
     # Details:
     #   plot.gev:
@@ -646,6 +700,8 @@ function(x, labels = TRUE, ...)
     # Description:
     #   Time Series Plot of Block Maxima
     
+    # Arguments:
+    
     # FUNCTION:
     
     # Data:
@@ -682,6 +738,8 @@ function(x, labels = TRUE, ...)
 
     # Description:
     #   Scatterplot of Residuals:
+    
+    # Arguments:
     
     # FUNCTION:
     
@@ -721,6 +779,8 @@ function(x, labels = TRUE, ...)
     # Description:
     #   Histogram Plot of Residuals with Gaussian Fit:
     
+    # Arguments:
+    
     # FUNCTION:
     
     # Data:
@@ -759,6 +819,8 @@ function(x, labels = TRUE, ...)
 
     # Description:
     #   Quantile-Quantile Plot:
+    
+    # Arguments:
     
     # FUNCTION:
     
@@ -801,6 +863,8 @@ function(object, doplot = TRUE, which = "all", ...)
     # Description:
     #   Summary method for an object of class "gevFit".
 
+    # Arguments:
+    
     # Example:
     #   fit = gevFit(gevSim(), type = "mle", gumbel = FALSE)
     #   par(mfrow = c(2, 2)); summary(fit)

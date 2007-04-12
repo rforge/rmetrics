@@ -134,7 +134,7 @@ labels = TRUE, ...)
     # Arguments:
     #   x - any object which can be transformed by the function
     #       as.vector() into a numeric vector 
-    #   doplot - a logical flag, should a pot be returned ?
+    #   doplot - a logical flag, should a plot be returned ?
     
     # FUNCTION:
     
@@ -327,6 +327,13 @@ function(x, doplot = TRUE, labels = TRUE, ...)
     #   Create a Mean Excess Plot
     
     # Arguments:
+    #   x - an univariate time series object or any other object which 
+    #       can be transformed by the function as.vector() into a numeric
+    #       vector.
+    #   doplot - a logical flag, should a plot be created?
+    #   labels - a logical flag, should the plot be automatically labeld?
+    #       If TRUE, then default values to xlab, ylab, main, pch and col 
+    #       are assigned.
     
     # Reference:
     #   A function imported from R-package evir
@@ -352,7 +359,7 @@ function(x, doplot = TRUE, labels = TRUE, ...)
     }
     
     # Convert x to a vector, if the input is a data.frame.
-    if(is.data.frame(x)) x = x[,1] 
+    if(is.data.frame(x)) x = x[, 1] 
     x = as.numeric(x)
     n = length(x)
     x = sort(x)
@@ -372,20 +379,19 @@ function(x, doplot = TRUE, labels = TRUE, ...)
             xlab = "Threshold: u"
             ylab = "Mean Excess: e"
             main = "Mean Excess Plot" 
+            plot(xx, yy, pch = 19, col = "steelblue", 
+                xlab = xlab, ylab = ylab, main = main, ...) 
+            grid()
         } else {
-            main = xlab = ylab = ""
+            plot(xx, yy, ...) 
         }
-        plot(xx, yy, pch = 19, col = "steelblue", 
-           xlab = xlab, ylab = ylab, main = main, ...) 
-        if (labels) grid()
     }
     
     # Results:
     result = data.frame(threshold = xx, me = yy)
     
     # Return Value:
-    if (doplot) return(invisible(result)) else return(result)
-    
+    if (doplot) return(invisible(result)) else return(result)   
 }
 
 
