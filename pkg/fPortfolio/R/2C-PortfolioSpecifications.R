@@ -57,7 +57,7 @@
 #  setSolver<-                    alternative function call
 # FUNCTION:                     Classical and Robust Estimators
 #  portfolioStatistics           Estimates mu and Sigma statistics
-#  .portfolioData                 Creates portfolio data list
+#  portfolioData                 Creates portfolio data list
 ################################################################################
 
 
@@ -720,7 +720,7 @@ function(data, spec = portfolioSpec())
 # ------------------------------------------------------------------------------
 
 
-.portfolioData =
+portfolioData =
 function(data, spec = portfolioSpec())
 {   # A function implemented by Rmetrics
 

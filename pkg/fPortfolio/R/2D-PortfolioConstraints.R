@@ -83,7 +83,7 @@ type = c("BoxGroup", "RiskBudget"))
     type = match.arg(type)
     
     # Check Data:
-    if (!inherits(data, "fPFOLIODATA")) data = .portfolioData(data, spec)
+    if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
     
     # Short Selling:
     if (length(constraints) > 0) {
@@ -125,7 +125,7 @@ function(data, spec = portfolioSpec(), constraints = NULL)
     # FUNCTION:
      
     # Get Statistics:
-    if (!inherits(data, "fPFOLIODATA")) data = .portfolioData(data, spec)
+    if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
     mu = data$statistics$mu
     Sigma = data$statistics$Sigma
 
@@ -215,7 +215,7 @@ function(data, spec = NULL, constraints = NULL)
     # FUNCTION:
     
     # Get Statistics:
-    if (!inherits(data, "fPFOLIODATA")) data = .portfolioData(data, spec)
+    if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
     mu = data$statistics$mu
     Sigma = data$statistics$Sigma
 

@@ -65,7 +65,7 @@ function(data, spec, constraints)
     # FUNCTION:
 
     # Get Statistics:
-    if (!inherits(data, "fPFOLIODATA")) data = .portfolioData(data, spec)
+    if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
     mu = data$statistics$mu
     Sigma = data$statistics$Sigma
     
@@ -89,7 +89,7 @@ function(data, spec, constraints)
     # FUNCTION:
 
     # Get Statistics:
-    if (!inherits(data, "fPFOLIODATA")) data = .portfolioData(data, spec)
+    if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
     mu = data$statistics$mu
     Sigma = data$statistics$Sigma
     
@@ -113,7 +113,7 @@ function(data, spec, constraints)
     # FUNCTION:
     
     # Get Statistics:
-    if (!inherits(data, "fPFOLIODATA")) data = .portfolioData(data, spec)
+    if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
     mu = data$statistics$mu
     Sigma = data$statistics$Sigma
     
@@ -139,7 +139,7 @@ function(data, spec, constraints)
     # FUNCTION:
 
     # Get Statistics:
-    if (!inherits(data, "fPFOLIODATA")) data = .portfolioData(data, spec)
+    if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
     mu = data$statistics$mu
     Sigma = data$statistics$Sigma
     
@@ -167,7 +167,7 @@ function(data, spec, constraints)
     # FUNCTION:
        
     # Get Statistics:
-    if (!inherits(data, "fPFOLIODATA")) data = .portfolioData(data, spec)
+    if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
     mu = data$statistics$mu
     Sigma = data$statistics$Sigma
 
@@ -205,7 +205,7 @@ function(data, spec, constraints)
     # FUNCTION:
 
     # Get Statistics:
-    # if (!inherits(data, "fPFOLIODATA")) data = .portfolioData(data, spec)
+    # if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
     # mu = data$statistics$mu
     # Sigma = data$statistics$Sigma
     

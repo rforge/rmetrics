@@ -141,8 +141,12 @@ getTargetStdev(object)
 
 \examples{
 ## getStatistics -
+   # Load data:
+   Data = as.timeSeries(data(smallcap.ts))
+   Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
+   Data
    # Calculation of Long Only Efficient Frontier
-   frontier = portfolioFrontier(usPortfolioData())
+   frontier = portfolioFrontier(Data)
    # Get Mean and Covariance:
    getStatistics(frontier)
 

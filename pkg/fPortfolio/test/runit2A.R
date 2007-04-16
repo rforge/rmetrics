@@ -70,8 +70,9 @@ function()
 test.fPORTFOLIO =
 function()
 { 
-    NA
-   
+    # Class:
+    getClass("fPORTFOLIO")
+  
     # Return Value:
     return()
 }
@@ -93,7 +94,7 @@ function()
    
     # Set Default Specifications - Long Only MV Portfolio
     Spec = portfolioSpec()
-    setWeights(Spec) = rep(1/8, times = 8)
+    setWeights(Spec) = rep(1/4, times = 4)
     Spec
     
     # Optimize Long Only Minimum Variance Portfolio:
@@ -102,7 +103,7 @@ function()
    
     # Try Solver Rdonlp2:
     require(Rdonlp2)
-    setSolver(Spec)<-"Rdonlp2"
+    setSolver(Spec)<-"RDonlp2"
     Spec
     Portfolio = feasiblePortfolio(Data, Spec)
     Portfolio
@@ -205,7 +206,7 @@ function()
     
     # Try RDonlp2:
     require(Rdonlp2)
-    setSolver(Spec)<-"Rdonlp2"
+    setSolver(Spec)<-"RDonlp2"
     Spec
     Portfolio = minvariancePortfolio(Data, Spec)
     Portfolio
@@ -278,7 +279,7 @@ function()
     
     # Check:
     target = round(sum(rowSums(getWeights(Frontier))))
-    current = 32
+    current = 49
     checkIdentical(target, current)
     
     # Return Value:

@@ -36,8 +36,8 @@ if (FALSE) {
     require(fPortfolio)
     require(RUnit)
     testIndex = c(
-        "2E",
-        "3A")
+        "2A", "2B", "2C", "2D", "2E", "2F", "2G",
+        "3A", "3B", "3C", "3D")
     File = "C:/Rmetrics/SVN/trunk/fPortfolio/test/runit"
     Protocol = "runitfPortfolio.txt"
     

@@ -66,16 +66,16 @@ function(data, spec, constraints)
     # FUNCTION:
 
     # Get Statistics:
-    if (!inherits(data, "fPFOLIODATA")) data = .portfolioData(data, spec)
+    if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
     mu = data$statistics$mu
     Sigma = data$statistics$Sigma
     
     # Setting the constraints matrix and vector:
-    tmp.ans = .setConstraints(data = data, spec = spec,
+    tmpConstraints = .setConstraints(data = data, spec = spec,
         constraints = constraints)
     dim = length(mu)
-    A = tmp.ans[, -(dim+1)]
-    b0 = tmp.ans[, (dim+1)]
+    A = tmpConstraints[, -(dim+1)]
+    b0 = tmpConstraints[, (dim+1)]
     
     # Weights:
     weights = spec@portfolio$weights
@@ -129,7 +129,7 @@ function(data, spec, constraints)
     # FUNCTION:
     
     # Get Statistics:
-    if (!inherits(data, "fPFOLIODATA")) data = .portfolioData(data, spec)
+    if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
     mu = data$statistics$mu
     Sigma = data$statistics$Sigma
     
@@ -193,7 +193,7 @@ function(data, spec, constraints)
     # FUNCTION:
     
     # Get Statistics:
-    if (!inherits(data, "fPFOLIODATA")) data = .portfolioData(data, spec)
+    if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
     mu = data$statistics$mu
     Sigma = data$statistics$Sigma
  
@@ -229,7 +229,7 @@ function(data, spec, constraints)
     # FUNCTION:
 
     # Get Statistics:
-    if (!inherits(data, "fPFOLIODATA")) data = .portfolioData(data, spec)
+    if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
     mu = data$statistics$mu
     Sigma = data$statistics$Sigma
     
@@ -302,7 +302,7 @@ function(data, spec, constraints)
     # FUNCTION:
      
     # Get Statistics:
-    if (!inherits(data, "fPFOLIODATA")) data = .portfolioData(data, spec)
+    if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
     mu = data$statistics$mu
     Sigma = data$statistics$Sigma
     
@@ -368,7 +368,7 @@ function(data, spec, constraints)
     # FUNCTION:
 
     # Get Statistics:
-    if (!inherits(data, "fPFOLIODATA")) data = .portfolioData(data, spec)
+    if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
     mu = data$statistics$mu
     Sigma = data$statistics$Sigma
 

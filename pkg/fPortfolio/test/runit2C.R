@@ -57,7 +57,7 @@
 #  setSolver<-                    alternative function call
 # FUNCTION:                     Classical and Robust Estimators
 #  portfolioStatistics           Estimates mu and Sigma statistics
-#  .portfolioData                 Creates portfolio data list
+#  portfolioData                 Creates portfolio data list
 ################################################################################
 
 
@@ -84,6 +84,18 @@ function()
 test.portfolioSpec =
 function()
 { 
+    # Arguments:
+    # portfolioSpec(model = list(type = "MV", estimator = c("mean", "cov"), 
+    #   params = list()), portfolio = list(weights = NULL, targetReturn = NULL, 
+    #   riskFreeRate = 0, nFrontierPoints = 50, returnRange = NULL, 
+    #   riskRange = NULL), solver = list(type = c("RQuadprog", "RDonlp2"), 
+    #   trace = FALSE), title = NULL, description = NULL) 
+
+    # Default Specs:
+    Spec = portfolioSpec()
+    print(Spec)
+    unclass(Spec)
+        
     # Return Value:
     return()
 }
@@ -95,8 +107,10 @@ function()
 test.setType =
 function()
 { 
-    spec = portfolioSpec()
-    spec@model$type
+    # Modify Model Type:
+    Spec = portfolioSpec()
+    setType(Spec) = "CVaR"
+    Spec
 
     # Return Value:
     return()
@@ -109,6 +123,11 @@ function()
 test.setEstimator =
 function()
 { 
+    # Modify Model Estimator:
+    Spec = portfolioSpec()
+    setEstimator(Spec) = c("mean", "shrink")
+    Spec
+    
     # Return Value:
     return()
 }
@@ -120,6 +139,11 @@ function()
 test.setWeights =
 function()
 { 
+    # Modify portfolio weights:
+    Spec = portfolioSpec()
+    setWeights(Spec) = rep(1/8, 8)
+    Spec
+    
     # Return Value:
     return()
 }
@@ -131,6 +155,11 @@ function()
 test.setTargetReturn =
 function()
 { 
+    # Modify portfolio target return:
+    Spec = portfolioSpec()
+    setTargetReturn(Spec) = 0.20
+    Spec
+    
     # Return Value:
     return()
 }
@@ -142,6 +171,11 @@ function()
 test.setRiskFreeRate =
 function()
 { 
+    # Modify portfolio target return:
+    Spec = portfolioSpec()
+    setRiskFreeRate(Spec) = 0.03
+    Spec
+    
     # Return Value:
     return()
 }
@@ -153,28 +187,11 @@ function()
 test.setNFrontierPoints =
 function()
 { 
-    # Return Value:
-    return()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-test.setReturnRange =
-function()
-{ 
-    # Return Value:
-    return()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-test.setRiskRange =
-function()
-{ 
+    # Modify portfolio number of frontier points:
+    Spec = portfolioSpec()
+    setNFrontierPoints(Spec) = 10
+    Spec
+    
     # Return Value:
     return()
 }
@@ -217,7 +234,7 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.portfolioData =
+testportfolioData =
 function()
 { 
     # Arguments:
@@ -229,7 +246,7 @@ function()
     Data
     
     # Portfolio Statistics - i.e. add Statistics to time Series:
-    .portfolioData(Data)  
+    portfolioData(Data)  
     
     # Return Value:
     return()

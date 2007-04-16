@@ -32,6 +32,7 @@
 \alias{setRiskRange<-}
 
 \alias{portfolioStatistics}
+\alias{portfolioData}
 
 
 \title{Specification of Portfolios}
@@ -94,7 +95,7 @@ setRiskRange(spec = portfolioSpec(), riskRange = NULL)
 setRiskRange(spec) <- value
 
 portfolioStatistics(data, spec = portfolioSpec())
-%.portfolioData(data, spec = portfolioSpec())
+portfolioData(data, spec = portfolioSpec())
 }
 
 
@@ -381,7 +382,9 @@ portfolioStatistics(data, spec = portfolioSpec())
 
 ## portfolioStatistics -
    # Load Data, i.e. a List of Returns:
-   Data = usPortfolioData()
+   Data = as.timeSeries(data(smallcap.ts))
+   Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
+   Data
    # Estimating Mean and Covariance with mean()and cov()
    portfolioStatistics(Data)
    # Set Estimators to "mcd" Estimator:

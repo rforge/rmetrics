@@ -84,8 +84,16 @@ setSolver(spec) <- value
 }
 
 
-%\examples{
-%}
+\examples{
+## Solve RQuadprog:
+   # Load Data:
+   Data = as.timeSeries(data(smallcap.ts))
+   Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
+   Data
+   
+## Solve RDonlp2:
+   #
+}
 
 
 \keyword{models}

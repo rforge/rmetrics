@@ -75,7 +75,7 @@ function(data, spec = portfolioSpec(), constraints = NULL)
     # FUNCTION:
     
     # Compose Portfolio Data: 
-    data = .portfolioData(data, spec)
+    data = portfolioData(data, spec)
     
     # Compose Optimization Function:
     if(is.null(constraints) | length(constraints) == 0) {
@@ -120,7 +120,7 @@ function(data, spec = portfolioSpec(), constraints = NULL)
     # FUNCTION:
     
     # Compose Portfolio Data: 
-    data = .portfolioData(data, spec)
+    data = portfolioData(data, spec)
     
     # Compose Optimization Function:
     if(is.null(constraints) | length(constraints) == 0) {
@@ -165,7 +165,7 @@ function(data, spec = portfolioSpec(), constraints = NULL)
     # FUNCTION:
     
     # Compose Portfolio Data: 
-    data = .portfolioData(data, spec)
+    data = portfolioData(data, spec)
     
     # Compose Optimization Function:
     if(is.null(constraints) | length(constraints) == 0) {
@@ -210,7 +210,7 @@ function(data, spec = portfolioSpec(), constraints = NULL)
     # FUNCTION:
     
     # Compose Portfolio Data: 
-    data = .portfolioData(data, spec)
+    data = portfolioData(data, spec)
     
     # Compose Optimization Function:
     if(is.null(constraints) | length(constraints) == 0) {
@@ -255,7 +255,7 @@ function(data, spec = portfolioSpec(), constraints = NULL)
     # FUNCTION:
     
     # Compose Portfolio Data: 
-    data = .portfolioData(data, spec)
+    data = portfolioData(data, spec)
     
     # Compose Optimization Function:
     if(is.null(constraints) | length(constraints) == 0) {
@@ -301,7 +301,7 @@ title = NULL, description = NULL)
     # FUNCTION:
     
     # Compose Portfolio Data: 
-    data = .portfolioData(data, spec)
+    data = portfolioData(data, spec)
     
     # Compose Optimization Function:
     if(is.null(constraints) | length(constraints) == 0) {

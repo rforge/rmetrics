@@ -150,8 +150,12 @@ covEllipsesPlot(x = list(), \dots)
 
 \examples{
 ## portfolioFrontier -
+   # Load Data:
+   Data = as.timeSeries(data(smallcap.ts))
+   Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
+   Data
    # Compute Long Only Efficient Frontier
-   frontier = portfolioFrontier(usPortfolioData())
+   frontier = portfolioFrontier(Data)
    frontier
    
 ## frontierPlot -  
