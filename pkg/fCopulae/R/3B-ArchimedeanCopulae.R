@@ -112,7 +112,7 @@ function(B = 10)
     # FUNCTION:
     
     # Graphic Frame:
-    par(mfrow = c(1, 1), cex = 0.7)
+    par(mfrow = c(1, 1))
     
     # Internal Function:
     refresh.code = function(...)
@@ -149,7 +149,7 @@ function(B = 10)
         title(main = Title)
                            
         # Reset Frame:
-        par(mfrow = c(1, 1), cex = 0.7)
+        par(mfrow = c(1, 1))
     }
   
     # Open Slider Menu:
@@ -391,7 +391,7 @@ output = c("vector", "list") )
         u = u[,2]
     }
  
-    # Copula:
+    # Consider Special Copulae:
     if (alpha == 0 & Type == 1) {
         C.uv = pfrechetCopula(u, v, type = "pi")
     } else if (alpha == 1 & Type == 3) {
@@ -418,15 +418,15 @@ output = c("vector", "list") )
         C.uv = .invPhi(.Phi(u, alpha, type) + .Phi(v, alpha, type), alpha, type)
     } 
     
-    # Requires special attention:
+    # Require special attention for No. 20:
     if (type == "20") {
         C.uv = C.uv + (1-sign(C.uv)) * pfrechetCopula(u, v, type = "m")
     }
     
-    # Simulates max function:
+    # Simulate max function:
     C.uv = (C.uv + abs(C.uv))/2       
     
-    # C(u,v) on Boundary of Unit Square:
+    # Correct C(u,v) on Boundary of Unit Square:
     C.uv[is.na(C.uv)] = 0      
     C.uv[which(u == 0)] = 0
     C.uv[which(u == 1)] = v[which(u == 1)]
@@ -491,7 +491,7 @@ output = c("vector", "list") )
         u = u[, 2]
     }
     
-    # Copula:
+    # Consider Special Copulae:
     if (alpha == 0 & Type == 1) {
         C.uv = pfrechetCopula(u, v, type = "pi")
     } else if (alpha == 1 & Type == 3) {
@@ -613,10 +613,10 @@ output = c("vector", "list") )
         }
     }
         
-    # Simulates max function:
+    # Simulate max function:
     C.uv = (C.uv + abs(C.uv))/2       
     
-    # C(u,v) on Boundary of Unit Square:
+    # Correct C(u,v) on Boundary of Unit Square:
     C.uv[is.na(C.uv)] = 0      
     C.uv[which(u == 0)] = 0
     C.uv[which(u == 1)] = v[which(u == 1)]
@@ -655,7 +655,7 @@ function(B = 5)
     # FUNCTION:
     
     # Graphic Frame:
-    par(mfrow = c(1, 1), cex = 0.7)
+    par(mfrow = c(1, 1))
     
     # Internal Function:
     refresh.code = function(...)
@@ -735,7 +735,7 @@ function(B = 5)
         title(main = Title)
                            
         # Reset Frame:
-        par(mfrow = c(1, 1), cex = 0.7)
+        par(mfrow = c(1, 1))
     }
   
    
@@ -777,7 +777,7 @@ function(B = 5)
     #FUNCTION:
     
     # Graphic Frame:
-    par(mfrow = c(1, 1), cex = 0.7)
+    par(mfrow = c(1, 1))
     
     # Internal Function:
     refresh.code = function(...)
@@ -857,7 +857,7 @@ function(B = 5)
         title(main = Title)
                            
         # Reset Frame:
-        par(mfrow = c(1, 1), cex = 0.7)
+        par(mfrow = c(1, 1))
     }
   
     # Open Slider Menu:
@@ -1291,7 +1291,7 @@ function(B = 10)
     # FUNCTION:
     
     # Graphic Frame:
-    par(mfrow = c(1, 1), cex = 0.7)
+    par(mfrow = c(1, 1))
     
     # Internal Function:
     refresh.code = function(...)
@@ -1371,7 +1371,7 @@ function(B = 10)
         title(main = Title)
                            
         # Reset Frame:
-        par(mfrow = c(1, 1), cex = 0.7)
+        par(mfrow = c(1, 1))
     }
   
     # Open Slider Menu:
@@ -1412,7 +1412,7 @@ function(B = 10)
     #FUNCTION:
     
     # Graphic Frame:
-    par(mfrow = c(1, 1), cex = 0.7)
+    par(mfrow = c(1, 1))
     
     # Internal Function:
     refresh.code = function(...)
@@ -1491,7 +1491,7 @@ function(B = 10)
         title(main = Title)
                            
         # Reset Frame:
-        par(mfrow = c(1, 1), cex = 0.7)
+        par(mfrow = c(1, 1))
     }
   
     # Open Slider Menu:

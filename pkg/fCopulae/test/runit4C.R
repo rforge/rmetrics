@@ -60,7 +60,15 @@ function()
 test.evTau = 
 function()
 {
-    NA
+    # Arguments:
+    # evTau(param = NULL, type = evList(), alternative = FALSE)
+    
+    # Tau:
+    for (type in evList()) {
+        ans = evTau(type = type)
+        cat("\n")
+        print(ans)
+    }
     
     # Return Value:
     return()    
@@ -73,7 +81,16 @@ function()
 test.evRho = 
 function()
 {
-    NA
+    # Arguments:
+    # evRho(param = NULL, type = evList(), alternative = FALSE) 
+    
+    # Rho:
+    for (type in evList()) {
+        ans = evRho(type = type)
+        cat("\n")
+        print(type)
+        print(ans)
+    }
     
     # Return Value:
     return()    
@@ -86,6 +103,16 @@ function()
 test.evTailCoeff = 
 function()
 {
+    # Arguments:
+    # evTailCoeff(param = NULL, type = evList())
+    
+    # Tail Coefficient:
+    for (type in evList()) {
+        ans = evTailCoeff(type = type)
+        cat("\n")
+        print(type)
+        print(ans)
+    }
     
     # Return Value:
     return()    
@@ -98,6 +125,11 @@ function()
 test.evTailCoeffSlider = 
 function()
 {
+    # Arguments:
+    # evTailCoeffSlider(B = 10) 
+    
+    # Try Slider:
+    evTailCoeffSlider()                                                  # CHECK
     
     # Return Value:
     return()    
@@ -109,7 +141,8 @@ function()
 
 if (FALSE) {
     require(RUnit)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fCopulae/test/runit4C.R")
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fCopulae/test/runit4C.R",
+        rngKind = "Marsaglia-Multicarry", rngNormalKind = "Inversion")
     printTextProtocol(testResult)
 }
  

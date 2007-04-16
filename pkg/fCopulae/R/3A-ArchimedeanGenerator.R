@@ -28,30 +28,30 @@
 
 
 ################################################################################
-# FUNCTION:                  ARCHIMEDEAN COPULAE PARAMETER:
-#  archmList                  Returns list of implemented Archimedean copulae
-#  archmParam                 Sets default parameters for an Archimedean copula
-#  archmCheck                 Checks if alpha is in the valid range
-#  archmRange                 Returns the range of valid alpha values
-# FUNCTION:                  ARCHIMEDEAN COPULAE PHI GENERATOR:
-#  Phi                        Computes Archimedean Phi, inverse and derivatives
-#  PhiSlider                  Displays interactively generator function
-#  .Phi                       Computes Archimedean generator Phi
-#  .Phi0                      Utility Function
-#  .PhiFirstDer               Computes first derivative of Phi
-#  .PhiSecondDer              Computes second derivative of Phi
-#  .invPhi                    Computes inverse of Archimedean generator
-#  .invPhiFirstDer            Computes first derivative of inverse Phi
-#  .invPhiSecondDer           Computes second derivative of inverse Phi
-# FUNCTION:                  ARCHIMEDEAN DENSITY K GENERATOR:
-#  Kfunc                      Computes Archimedean Density Kc and its Inverse
-#  KfuncSlider                Displays interactively the density and concordance
-#  .Kfunc                     Computes Density for Archimedean Copulae
-#  .invK                      Computes Inverse of Density
-#  .invK2                     Utility Function
-#  .ALPHA                     Utility Function
-#  .TAU                       Utility Function
-#  .RHO                       Utility Function
+# FUNCTION:                 ARCHIMEDEAN COPULAE PARAMETER:
+#  archmList                 Returns list of implemented Archimedean copulae
+#  archmParam                Sets Default parameters for an Archimedean copula
+#  archmRange                Returns the range of valid alpha values
+#  archmCheck                Checks if alpha is in the valid range
+# FUNCTION:                 ARCHIMEDEAN COPULAE PHI GENERATOR:
+#  Phi                       Computes Archimedean Phi, inverse and derivatives
+#  PhiSlider                 Displays interactively generator function
+#  .Phi                      Computes Archimedean generator Phi
+#  .Phi0                     Utility Function
+#  .PhiFirstDer              Computes first derivative of Phi
+#  .PhiSecondDer             Computes second derivative of Phi
+#  .invPhi                   Computes inverse of Archimedean generator
+#  .invPhiFirstDer           Computes first derivative of inverse Phi
+#  .invPhiSecondDer          Computes second derivative of inverse Phi
+# FUNCTION:                 ARCHIMEDEAN DENSITY K GENERATOR:
+#  Kfunc                     Computes Archimedean Density Kc and its Inverse
+#  KfuncSlider               Displays interactively the density and concordance
+#  .Kfunc                    Computes Density for Archimedean Copulae
+#  .invK                     Computes Inverse of Density
+#  .invK2                    Utility Function
+#  .ALPHA                    Utility Function
+#  .TAU                      Utility Function
+#  .RHO                      Utility Function
 ################################################################################
 
 
@@ -245,7 +245,7 @@ function(x, alpha = NULL, type = archmList(), inv = FALSE, deriv = paste(0:2))
 # ------------------------------------------------------------------------------
 
 
-PhiSlider =
+PhiSlider = 
 function(B = 5)
 {   # A function implemented by Diethelm Wuertz
        
@@ -260,6 +260,10 @@ function(B = 5)
     # Internal Function:
     refresh.code = function(...)
     {
+        # Startup Counter:
+        .counter <<- .counter + 1
+        if (.counter < 10) return ()
+        
         # Sliders:
         Copula = as.integer(.sliderMenu(no = 1))
         Counter = c(1,2,3,2,4,2,5,2,5,5,6,2,7,2,2,7,4,8,7,7,2,5)
@@ -386,6 +390,7 @@ function(B = 5)
     }
   
     # Open Slider Menu:
+    .counter <<- 10
     C1 = "1: [-1,Inf]"
     C2 = "2-4-6-8-12-14-15-21: [1,Inf)"
     C3 = "3: [-1,1)"
@@ -1205,6 +1210,10 @@ function(B = 5)
     # Internal Function:
     refresh.code = function(...)
     {
+        # Startup Counter:
+        .counter <<- .counter + 1
+        if (.counter < 10) return ()
+        
         # Sliders:
         Copula = as.integer(.sliderMenu(no = 1))
         Counter = c(1,2,3,2,4,2,5,2,5,5,6,2,7,2,2,7,4,8,7,7,2,5)
@@ -1314,6 +1323,7 @@ function(B = 5)
     }
   
     # Open Slider Menu:
+    .counter <<- 0
     C1 = "1: [-1,Inf]"
     C2 = "2-4-6-8-12-14-15-21: [1,Inf)"
     C3 = "3: [-1,1)"

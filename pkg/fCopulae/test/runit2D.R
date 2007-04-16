@@ -57,11 +57,9 @@ function()
 test.copulaSim = 
 function()
 {  
-    # Arguments ?
-    args(ellipticalCopulaSim)
-    
-    # Arguments ?
-    args(ellipticalCopulaFit)
+    # Arguments:
+    # ellipticalCopulaSim(n, rho = 0.75, param = NULL, 
+    #   type = c("norm", "cauchy", "t")) 
 
     # Normal Copula:
     rho = 0.5
@@ -83,6 +81,8 @@ function()
     R[1:10, ]
     plot(R, pch = 19)
     
+    # The remaining Copulae are not yet implemented ...
+    
     # Return Value:
     return()
     
@@ -93,10 +93,10 @@ function()
 test.copulaFit = 
 function()
 {     
-    # Arguments ?
-    args(ellipticalCopulaFit) 
-    
-    # Normal Copula:
+    # Arguments:
+    # ellipticalCopulaFit(u, v = NULL, type = c("norm", "cauchy", "t"), ...) 
+  
+    # Fit Normal Copula:
     rho = 0.5
     R = ellipticalCopulaSim(n = 1000, rho = rho)
     fit = ellipticalCopulaFit(u = R[,1], v = R[,2])
@@ -111,7 +111,7 @@ function()
         print(c(rho-fit$par, fit$Rho-fit$par))
     }
 
-    # Cauchy Copula:
+    # Fit Cauchy Copula:
     rho = runif(1, -1, 1)
     R = ellipticalCopulaSim(n = 100, rho = rho, type = "cauchy")
     ellipticalCopulaFit(R, type = "cauchy")
@@ -125,7 +125,7 @@ function()
         print(c(rho-fit$par, fit$Rho-fit$par))
     }
     
-    # Student-t Copula:
+    # Fit Student-t Copula:
     rho = runif(1, -1, 1)
     nu = runif(1, 3, 20)
     print(c(rho, nu))
@@ -141,6 +141,8 @@ function()
         print(c(rho, nu, fit$par))
     }
     
+    # The remaining Copulae are not yet implemented ...
+    
     # Return Value:
     return()
         
@@ -150,7 +152,8 @@ function()
 
 if (FALSE) {
     require(RUnit)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fCopulae/test/runit2D.R")
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fCopulae/test/runit2D.R",
+        rngKind = "Marsaglia-Multicarry", rngNormalKind = "Inversion")
     printTextProtocol(testResult)
 }
  

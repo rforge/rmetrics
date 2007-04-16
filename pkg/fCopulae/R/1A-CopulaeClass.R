@@ -107,7 +107,8 @@ setMethod("show", "fCOPULA", show.fCOPULA)
 
 
 pfrechetCopula =
-function(u = 0.5, v = u, type = c("m", "pi", "w"), output = c("vector", "list"))
+function(u = 0.5, v = u, type = c("m", "pi", "w"), 
+output = c("vector", "list"))
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -137,7 +138,7 @@ function(u = 0.5, v = u, type = c("m", "pi", "w"), output = c("vector", "list"))
     # FUNCTION:
     
     # Match Arguments:
-    type = match.arg(type)
+    type = type[1] # Allow for "psp" ... # type = match.arg(type)
     output = match.arg(output)
 
     # Settings:  

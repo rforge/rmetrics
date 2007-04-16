@@ -448,7 +448,7 @@ function(B = 10)
     #FUNCTION:
     
     # Graphic Frame:
-    par(mfrow = c(1, 1), cex = 0.7)
+    par(mfrow = c(1, 1))
     
     # Internal Function:
     refresh.code = function(...)
@@ -484,7 +484,7 @@ function(B = 10)
         title(main = Title)
                            
         # Reset Frame:
-        par(mfrow = c(1, 1), cex = 0.7)
+        par(mfrow = c(1, 1))
     }
   
     # Open Slider Menu:
@@ -514,7 +514,7 @@ function(B = 10)
     #FUNCTION:
     
     # Graphic Frame:
-    par(mfrow = c(1, 1), cex = 0.7)
+    par(mfrow = c(1, 1))
     
     # Internal Function:
     refresh.code = function(...)
@@ -551,7 +551,7 @@ function(B = 10)
         title(main = Title)
                            
         # Reset Frame:
-        par(mfrow = c(1, 1), cex = 0.7)
+        par(mfrow = c(1, 1))
     }
   
     # Open Slider Menu:
@@ -995,7 +995,7 @@ function(B = 10)
         title(main = Title)
                            
         # Reset Frame:
-        par(mfrow = c(1, 1), cex = 0.7)
+        par(mfrow = c(1, 1))
     }
   
     # Open Slider Menu:
@@ -1062,7 +1062,7 @@ function(B = 10)
         title(main = Title)
                            
         # Reset Frame:
-        par(mfrow = c(1, 1), cex = 0.7)
+        par(mfrow = c(1, 1))
     }
   
     # Open Slider Menu:

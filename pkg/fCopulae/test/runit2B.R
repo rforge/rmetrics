@@ -84,6 +84,8 @@ function()
     plot(R, pch = 19, col = "steelblue", main = "t3")
     grid()
     
+    # The remaining copulae are not yet implemented ...
+    
     # Return Value:
     return()    
 }
@@ -110,15 +112,15 @@ test.pellipticalCopula =
 function()
 { 
     # Arguments ?
-    args(pellipticalCopula)
-    
-    # All Types:
-    Type = c("norm", "cauchy", "t", "logistic", "laplace", "kotz", "epower")
+    # pellipticalCopula(u = 0.5, v = u, rho = 0.75, param = NULL, 
+    #   type = ellipticalList(), output = c("vector", "list"), border = TRUE) 
     
     # Use Default Settings:
-    for (type in Type) {
+    par (mfrow = c(1, 1))
+    for (type in ellipticalList()) {
         UV = grid2d()
         p = pellipticalCopula(u = UV, rho = 0.75, type = type, output = "list")   
+        print(type)
         persp(p, main = type, theta = -40, phi = 30, col = "steelblue", 
             ps = 9, xlab = "u", ylab = "v", zlab = "C")
     }
@@ -133,7 +135,10 @@ function()
 
 test.pellipticalSlider = 
 function()
-{        
+{       
+    # Arguments:
+    # pellipticalSlider(type = c("persp", "contour"), B = 20) 
+ 
     # Try Perspective Slider:
     pellipticalSlider()
     
@@ -152,15 +157,15 @@ test.dellipticalCopula =
 function()
 {  
     # Arguments ?
-    args(dellipticalCopula)
+    # dellipticalCopula(u = 0.5, v = u, rho = 0.75, param = NULL, 
+    #   type = ellipticalList(), output = c("vector", "list"), border = TRUE) 
 
-    # All Types:
-    Type = c("norm", "cauchy", "t", "logistic", "laplace", "kotz", "epower")
-    
     # Use Default Settings:
-    for (type in Type) {
+    par (mfrow = c(1, 1))
+    for (type in ellipticalList()) {
         UV = grid2d()
         d = dellipticalCopula(u = UV, rho = 0.75, type = type, output = "list")   
+        print(type)
         persp(d, main = type, theta = -40, phi = 30, col = "steelblue", 
             ps = 9, xlab = "u", ylab = "v", zlab = "c")
     }
@@ -176,6 +181,9 @@ function()
 test.dellipticalSlider = 
 function()
 {  
+    # Arguments:
+    # dellipticalSlider(type = c("persp", "contour"), B = 20) 
+    
     # Try Perspective Slider:
     dellipticalSlider()
     
@@ -192,7 +200,8 @@ function()
 
 if (FALSE) {
     require(RUnit)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fCopulae/test/runit2B.R")
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fCopulae/test/runit2B.R",
+        rngKind = "Marsaglia-Multicarry", rngNormalKind = "Inversion")
     printTextProtocol(testResult)
 }
  

@@ -76,7 +76,6 @@ function (n, rho = 0.75, param = NULL, type = c("norm", "cauchy", "t"))
     # "laplace" Random Deviates:
     # NOT YET IMPLEMENTED ...
 
-    
     # "kotz" Random Deviates:
     # NOT YET IMPLEMENTED ...
 

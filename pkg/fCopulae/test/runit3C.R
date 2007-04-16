@@ -32,8 +32,8 @@
 #  archmTau                   Returns Kendall's tau for Archemedean copulae
 #  archmRho                   Returns Spearman's rho for Archemedean copulae
 # FUNCTION:                  ARCHIMEDEAN COPULAE TAIL COEFFICIENT:
-#  archmTailCoeff       X     Computes tail dependence for Archimedean copulae
-#  archmTailPlot        X     Plots Archimedean tail dependence function
+#  archmTailCoeff             Computes tail dependence for Archimedean copulae
+#  archmTailPlot              Plots Archimedean tail dependence function
 ################################################################################
 
 
@@ -60,9 +60,14 @@ function()
 test.archmTau = 
 function()
 {
+    # Arguments:
+    # archmTau(alpha = NULL, type = archmList(), lower = 1e-10)
+    
     # Tau:
-    for (type in paste(1:22)) {
+    for (type in archmList()) {
         ans = archmTau(type = type)
+        cat("\n")
+        print(type)
         print(ans)
     }
     
@@ -77,10 +82,16 @@ function()
 test.archmRho = 
 function()
 {
+    # Arguments:
+    # archmRho(alpha = NULL, type = archmList(), 
+    #   method = c("integrate2d", "adapt"), error = 1e-05)
+    
     # Rho:
-    for (type in paste(1:22)) {
+    for (type in archmList()) {
         ans = archmRho(alpha = NULL, type = type, 
             method = "integrate2d", error = 1e-5)
+        cat("\n")
+        print(type)
         print(ans)
     }
     
@@ -95,9 +106,14 @@ function()
 test.archmTailCoeff = 
 function()
 {
+    # Arguments:
+    # archmTailCoeff(alpha = NULL, type = archmList())
+    
     # Tail Coefficient:
-    for (type in paste(1:22)) {
+    for (type in archmList()) {
         ans = archmTailCoeff(alpha = NULL, type = type)
+        cat("\n")
+        print(type)
         print(ans)
     }
         
@@ -112,13 +128,20 @@ function()
 test.archmTailPlot = 
 function()
 {
-    # Tail Coefficient Plot:
+    # Arguments:
+    # archmTailPlot(alpha = NULL, type = archmList(), 
+    #   tail = c("Upper", "Lower")) 
+    
+    # Lower Tail Coefficient Plot:
     par(mfrow = c(2, 2), cex = 0.7)
-    for (type in paste(1:22)) {
+    for (type in archmList()) {
+        print(type)
         archmTailPlot(alpha = NULL, type = type, tail = "Upper")
     }
     # CHECK 4, 8, 19
-    for (type in paste(1:22)) {
+    
+    # Upper Tail Coefficient Plot:
+    for (type in archmList()) {
         archmTailPlot(alpha = NULL, type = type, tail = "Lower")
     }
     # CHECK 4, 8, 19
@@ -133,7 +156,8 @@ function()
 
 if (FALSE) {
     require(RUnit)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fCopulae/test/runit3C.R")
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fCopulae/test/runit3C.R",
+        rngKind = "Marsaglia-Multicarry", rngNormalKind = "Inversion")
     printTextProtocol(testResult)
 }
  

@@ -53,15 +53,37 @@ function()
 # ------------------------------------------------------------------------------  
     
 
-test.parameterFitting = 
+test.archmCopulaSim = 
 function()
 {
+    # Arguments:
+    # archmCopulaSim(n, alpha = NULL, type = archmList())
+    
+    # Simulate Random Variates:
+    for (type in archmList()) {
+        ans = archmCopulaSim(5, type = type)
+        cat("\n")
+        print(type)
+        print(ans)
+    }
+    
+    # Return Value:
+    return()    
+} 
+
+
+# ------------------------------------------------------------------------------  
+    
+
+test.archmCopulaFit = 
+function()
+{
+    # Arguments:
+    # archmCopulaFit(u, v = NULL, type = archmList(), ...)
+    
     # Random Variates:
     R = archmCopulaSim(n = 1000, alpha = 1, type = "4")
-    
-    # Plot:
-    plot(R, pch = 19)
-    
+
     # Fit:
     fit = archmCopulaFit(u = R[, 1], v = R[, 2], type = "4")
     fit
@@ -76,7 +98,8 @@ function()
 
 if (FALSE) {
     require(RUnit)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fCopulae/test/runit3D.R")
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fCopulae/test/runit3D.R",
+        rngKind = "Marsaglia-Multicarry", rngNormalKind = "Inversion")
     printTextProtocol(testResult)
 }
  

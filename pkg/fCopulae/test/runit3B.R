@@ -63,11 +63,15 @@ function()
 test.rarchmCopula = 
 function()
 {
+    # Arguments:
+    # rarchmCopula(n, alpha = NULL, type = archmList())
+    
     # Random Variates - Check all Types:
-    for (type in paste(1:22)) {
+    for (type in archmList()) {
         R = rarchmCopula(n = 5, alpha = NULL, type = type)
-        print(R)
         cat("\n")
+        print(type)
+        print(R)
     }
       
     # Return Value:
@@ -81,10 +85,11 @@ function()
 test.rarchmSlider = 
 function()
 {        
+    # Arguments:
+    # rarchmSlider(B = 10)
+    
     # Try Slider:
     rarchmSlider()
-    
-    NA
   
     # Return Value:
     return()    
@@ -97,6 +102,10 @@ function()
 test.parchmCopula = 
 function()
 {
+    # Arguments:
+    # parchmCopula(u = 0.5, v = u, alpha = NULL, type = archmList(), 
+    #   output = c("vector", "list"), alternative = FALSE)
+    
     # u - single input value:
     parchmCopula()
     parchmCopula(0.5)
@@ -140,11 +149,14 @@ function()
 test.parchmSlider = 
 function()
 {        
-    # Try Slider:
-    # parchmSlider()
-    # parchmSlider("contour")
-  
-    NA
+    # Arguments:
+    # parchmSlider(type = c("persp", "contour"), B = 10)
+    
+    # Try Perspective Slider:
+    parchmSlider()
+    
+    # Try Contour Slider:
+    parchmSlider("contour")
     
     # Return Value:
     return()    
@@ -157,6 +169,10 @@ function()
 test.darchmCopula = 
 function()
 {
+    # Arguments:
+    # darchmCopula(u = 0.5, v = u, alpha = NULL, type = archmList(), 
+    #   output = c("vector", "list"), alternative = FALSE)
+    
     # u - single input value:
     darchmCopula()
     darchmCopula(0.5)
@@ -198,14 +214,17 @@ function()
 # ------------------------------------------------------------------------------  
     
 
-test.darchmCopula = 
+test.darchmSlider = 
 function()
 {        
-    # Try Slider:
-    # darchmSlider()
-    # darchmSlider("contour")
-  
-    NA
+    # Arguments:
+    # darchmSlider(type = c("persp", "contour"), B = 10)
+    
+    # Try Perspective Slider:
+    darchmSlider()
+    
+    # Try Contour Slider:
+    darchmSlider("contour")
     
     # Return Value:
     return()    
@@ -217,7 +236,8 @@ function()
 
 if (FALSE) {
     require(RUnit)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fCopulae/test/runit3B.R")
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fCopulae/test/runit3B.R",
+        rngKind = "Marsaglia-Multicarry", rngNormalKind = "Inversion")
     printTextProtocol(testResult)
 }
  

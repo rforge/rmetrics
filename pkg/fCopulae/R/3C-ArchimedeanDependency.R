@@ -69,7 +69,8 @@ function(alpha = NULL, type = archmList(), lower = 1.0e-10)
     
     # Check alpha:
     check = archmCheck(alpha, type)
-    
+
+    # Compute tau: 
     if (length(alpha) == 1) {
         ans = .archmTau(alpha, type, lower)
         names(ans) = "Tau"
@@ -493,7 +494,6 @@ function(alpha = NULL, type = archmList(), tail = c("Upper", "Lower"))
     # FUNCTION:
     
     # Match Arguments:
-    # Type:
     type = match.arg(type)
     Type = as.integer(type)
     tail = match.arg(tail)

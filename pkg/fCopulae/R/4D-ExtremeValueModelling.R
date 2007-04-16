@@ -97,16 +97,26 @@ function(u, v = NULL, type = evList(), ...)
 
     # Start Values:
     param = evParam(type)$param
-     
-    # Estimate Copula:
-    fun = function(x, type) {
-        -mean( log(evCopula(u = U, v = V, param = x, type = type)) )
-    }
     range = evRange(type)
-
-    # fit = nlminb(start = alpha, objective = fun, 
-    #     lower = range[1], upper = range[2],  type = type, ...)
-    fit = NA
+    paramLength = length(param)
+    
+    # Log-Likelihood Function:
+    .fun = function(x, type) {
+        -mean( log(devCopula(u = U, v = V, param = x, type = type)) )
+    }
+        
+    if (paramLength == 1) {
+        # We have only one parameter to optimize ...
+        fit = optimize(f = .fun, lower = range[1], upper = range, 
+            maximum = FALSE, tol = .Machine$double.eps^0.25, 
+            type = type, ...)
+    } else {
+        # Log-Likelihood Function:
+        range = evRange(type)
+        fit = nlminb(start = alpha, objective = .fun, 
+            lower = range[1], upper = range[2], type = type, ...)
+        }
+    }
     
     # Return Value:
     fit

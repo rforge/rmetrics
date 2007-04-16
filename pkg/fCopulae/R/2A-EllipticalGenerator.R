@@ -60,6 +60,10 @@ function()
     # Description:
     #   Returns list of implemented elliptical copulae
     
+    # Arguments:
+    
+    # FUNCTION:
+    
     # Compose List:
     ans = c("norm", "cauchy", "t", "logistic", "laplace", "kotz", "epower")
     
@@ -110,7 +114,7 @@ function(type = ellipticalList())
     param1 = c( NA,      NA,    4,         NA,         NA,      1,        1)
     param2 = c( NA,      NA,   NA,         NA,         NA,     NA,        1)
     
-    # Parameter List:
+    # Create Parameter List:
     ans = list(type = type)
     if (type == "norm") {
         ans$param = c(rho = rho[1])
@@ -156,6 +160,7 @@ function(type = ellipticalList())
     # Description:
     #   Returns the range of valid alpha values
     
+    # Arguments:
     #   type -  a character string denoting the type of distribution.
     #       This may be either 
     #       "norm" for the normal distribution, or
@@ -267,7 +272,7 @@ function(x, param = NULL, type = ellipticalList())
     
     # FUNCTION:
     
-    # Type:
+    # Match Arguments:
     type = match.arg(type)
     
     # Handle Missing x:

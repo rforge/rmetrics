@@ -45,8 +45,8 @@
 # FUNCTION:                 EXTREME VALUE COPULAE PARAMETER:
 #  evList                    Returns list of implemented extreme value copulae
 #  evParam                   Sets parameters for an extreme value copula
-#  evCheck                   Checks if parameters are in the valid range
 #  evRange                   Returns the range of valid parameter values
+#  evCheck                   Checks if parameters are in the valid range
 
    
 evList =

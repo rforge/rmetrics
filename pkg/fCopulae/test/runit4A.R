@@ -31,8 +31,8 @@
 # FUNCTION:                 EXTREME VALUE COPULAE PARAMETER:
 #  evList                    Returns list of implemented extreme value copulae
 #  evParam                   Sets Default parameters for an extreme value copula
-#  evCheck                   Checks if parameters are in the valid range
 #  evRange                   Returns the range of valid parameter values
+#  evCheck                   Checks if parameters are in the valid range
 # FUNCTION:                 EXTREME VALUE COPULAE GENERATOR FUNCTION:
 #  Afunc                     Computes Dependence function
 #  AfuncSlider               Displays interactively dependence function
@@ -62,8 +62,8 @@ function()
 test.evList = 
 function()
 {
-    # Arguments ?
-    args(evList)
+    # Arguments:
+    # evList()
     
     # List:
     evList()
@@ -79,8 +79,14 @@ function()
 test.evParam = 
 function()
 {
-    # 
-    NA
+    # Arguments:
+    # evParam(type = evList())
+    
+    # Parameters:
+    for (type in archmList()) {
+        cat("\n")
+        print(unlist(evParam(type)))
+    }
 
     # Return Value:
     return()    
@@ -93,8 +99,15 @@ function()
 test.evRange = 
 function()
 {
-    NA
-    
+    # Arguments:
+    # evRange(type = evList()) 
+
+    # Range:
+    for (type in evList()) {
+        cat("\n")
+        print(evRange(type))
+    }
+
     # Return Value:
     return()    
 }
@@ -106,7 +119,14 @@ function()
 test.evCheck = 
 function()
 {
-    NA
+    # Arguments:
+    # evCheck(type = evList()) 
+    
+    # Check:
+    for (type in evList()) {
+        cat("\n")
+        print(evCheck(evParam(type)$param))
+    }
     
     # Return Value:
     return()    
@@ -119,7 +139,16 @@ function()
 test.Afunc = 
 function()
 {
-    NA
+    # Arguments:
+    # Afunc(x, param = NULL, type = evList()
+    
+    # Afunc:
+    x = (0:10)/10
+    for (type in evList()) {
+        cat("\n")
+        print(type)
+        print(Afunc(x, type = type))
+    }
     
     # Return Value:
     return()    
@@ -132,7 +161,11 @@ function()
 test.AfuncSlider = 
 function()
 {
-    NA
+    # Arguments:
+    # AfuncSlider()
+    
+    # Try Slider:
+    AfuncSlider()
     
     # Return Value:
     return()    
@@ -144,7 +177,8 @@ function()
 
 if (FALSE) {
     require(RUnit)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fCopulae/test/runit4A.R")
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fCopulae/test/runit4A.R",
+        rngKind = "Marsaglia-Multicarry", rngNormalKind = "Inversion")
     printTextProtocol(testResult)
 }
  

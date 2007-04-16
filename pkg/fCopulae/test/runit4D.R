@@ -57,9 +57,17 @@ function()
 test.evCopulaSim = 
 function()
 {
-    # 
-    NA
+    # Arguments:
+    # evCopulaSim(n, param = NULL, type = evList()) 
 
+    # Simulate Random Variates:
+    for (type in evList()) {
+        ans = evCopulaSim(5, type = type)
+        cat("\n")
+        print(type)
+        print(ans)
+    }
+    
     # Return Value:
     return()    
 }
@@ -71,8 +79,13 @@ function()
 test.evCopulaFit = 
 function()
 {
-    # 
-    NA
+    # Arguments:
+    # evCopulaFit(u, v = NULL, type = evList(), ...) 
+
+    # Fit:
+    type = "gumbel"
+    R = evCopulaSim(500, type = type)
+    evCopulaFit(x, type = type)
     
     # Return Value:
     return()    
@@ -84,7 +97,8 @@ function()
 
 if (FALSE) {
     require(RUnit)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fCopulae/test/runit4D.R")
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fCopulae/test/runit4D.R",
+        rngKind = "Marsaglia-Multicarry", rngNormalKind = "Inversion")
     printTextProtocol(testResult)
 }
  

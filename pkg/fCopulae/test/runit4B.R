@@ -63,9 +63,17 @@ function()
 test.revCopula = 
 function()
 {
-    # 
-    NA
+    # Arguments:
+    # revCopula(n, param = NULL, type = evList())
 
+    # Random Variates - Check all Types:
+    for (type in evList()) {
+        R = revCopula(n = 5, param = NULL, type = type)
+        cat("\n")
+        print(type)
+        print(R)
+    }
+    
     # Return Value:
     return()    
 }
@@ -74,11 +82,14 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.revCopulaSlider = 
+test.revSlider = 
 function()
 {
-    # 
-    NA
+    # Arguments:
+    # revSlider(B = 10)
+    
+    # Try Slider()
+    revSlider()
 
     # Return Value:
     return()    
@@ -91,8 +102,9 @@ function()
 test.pevCopula = 
 function()
 {
-    # 
-    NA
+    # Arguments:
+    # pevCopula(u = 0.5, v = u, param = NULL, type = evList(), 
+    #   output = c("vector", "list"), alternative = FALSE) 
 
     # Return Value:
     return()    
@@ -102,12 +114,18 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.pevCopulaSlider = 
+test.pevSlider = 
 function()
 {
-    # 
-    NA
+    # Arguments:
+    # pevSlider(type = c("persp", "contour"), B = 10)
 
+    # Try Perspective Slider:
+    pevSlider()
+    
+    # Try Contour Slider:
+    pevSlider(" contour")
+    
     # Return Value:
     return()    
 }
@@ -119,8 +137,9 @@ function()
 test.devCopula = 
 function()
 {
-    # 
-    NA
+    # Arguments:
+    # devCopula(u = 0.5, v = u, param = NULL, type = evList(), 
+    #   output = c("vector", "list"), alternative = FALSE)
 
     # Return Value:
     return()    
@@ -130,12 +149,18 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.devCopulaSlider = 
+test.devSlider = 
 function()
 {
-    # 
-    NA
+    # Arguments:
+    # devSlider(type = c("persp", "contour"), B = 10)
 
+    # Try Perspective Slider:
+    devSlider()
+    
+    # Try Contour Slider:
+    devSlider(" contour")
+    
     # Return Value:
     return()    
 }
@@ -146,7 +171,8 @@ function()
 
 if (FALSE) {
     require(RUnit)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fCopulae/test/runit4B.R")
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fCopulae/test/runit4B.R",
+        rngKind = "Marsaglia-Multicarry", rngNormalKind = "Inversion")
     printTextProtocol(testResult)
 }
  

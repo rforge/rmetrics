@@ -28,16 +28,17 @@
 
 
 ################################################################################
-# FUNCTION:                  ARCHIMEDEAN COPULAE PARAMETER:
-#  archmParam                 Sets Default parameters for an Archimedean copula
-#  archmCheck                 Checks if alpha is in the valid range
-#  archmRange                 Returns the range of valid alpha values
-# FUNCTION:                  ARCHIMEDEAN COPULAE PHI GENERATOR:
-#  Phi                        Computes Archimedean Phi, inverse and derivatives
-#  PhiSlider                  Displays interactively generator function
-# FUNCTION:                  ARCHIMEDEAN DENSITY K GENERATOR:
-#  Kfunc                      Computes Archimedean Density Kc and its Inverse
-#  KfuncSlider                Displays interactively the density and concordance
+# FUNCTION:                 ARCHIMEDEAN COPULAE PARAMETER:
+#  evList                    Returns list of implemented extreme value copulae
+#  archmParam                Sets Default parameters for an extreme value copula
+#  archmRange                Returns the range of valid alpha values
+#  archmCheck                Checks if alpha is in the valid range
+# FUNCTION:                 ARCHIMEDEAN COPULAE PHI GENERATOR:
+#  Phi                       Computes Archimedean Phi, inverse and derivatives
+#  PhiSlider                 Displays interactively generator function
+# FUNCTION:                 ARCHIMEDEAN DENSITY K GENERATOR:
+#  Kfunc                     Computes Archimedean Density Kc and its Inverse
+#  KfuncSlider               Displays interactively the density and concordance
 ################################################################################
 
 
@@ -65,8 +66,8 @@ test.archmList =
 function()
 {
 
-    # Arguments ?
-    args(archmList)
+    # Arguments:
+    # archmList()
     
     # List:
     archmList()
@@ -82,9 +83,8 @@ function()
 test.archmParam = 
 function()
 {
-
-    # Arguments ?
-    args(archmParam)
+    # Arguments:
+    # archmParam(type = archmList()) 
     
     # Parameters:
     for (type in archmList()) {
@@ -100,13 +100,33 @@ function()
 # ------------------------------------------------------------------------------
 
 
+test.archmRange = 
+function()
+{
+    # Arguments:
+    # archmRange(type = archmList(), B = Inf)
+    
+    # Range:
+    for (type in archmList()) {
+        cat("\n")
+        print(archmRange(type))
+    }
+
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
 test.archmCheck = 
 function()
 {
     # Arguments ?
-    args(archmCheck)
+    # archmCheck(alpha, type = archmList())
     
-    # Range:
+    # Check:
     for (type in archmList()) {
         cat("\n")
         print(archmCheck(archmParam(type)$param))
@@ -120,31 +140,11 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.archmRange = 
-function()
-{
-    # Arguments ?
-    args(archmRange)
-    
-    # Range:
-    for (type in paste(1:22)) {
-        cat("\n")
-        print(archmRange(type))
-    }
-
-    # Return Value:
-    return()    
-}
-
-
-# ------------------------------------------------------------------------------
-
-
 test.Phi = 
 function()
 {
-    # Arguments ?
-    args(Phi)
+    # Arguments:
+    # Phi(x, alpha = NULL, type = archmList(), inv = FALSE, deriv = paste(0:2))
 
     # Call Generator Function Phi:
     for (type in paste(1:22)) {
@@ -184,6 +184,9 @@ function()
 test.PhiSlider = 
 function()
 {
+    # Arguments:
+    # PhiSlider()
+    
     # Try Slider:
     PhiSlider()
     
@@ -198,8 +201,8 @@ function()
 test.Kfunc = 
 function()
 {
-    # Arguments ?
-    args(Kfunc)
+    # Arguments:
+    # Kfunc(x, alpha = NULL, type = archmList(), inv = FALSE, lower = 1e-08)
     
     # Call Generator Function Phi:
     for (type in paste(1:22)) {
@@ -222,6 +225,9 @@ function()
 test.KfuncSlider = 
 function()
 {
+    # Arguments:
+    # KfuncSlider()
+    
     # Try Slider:
     KfuncSlider()
     
@@ -235,7 +241,8 @@ function()
 
 if (FALSE) {
     require(RUnit)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fCopulae/test/runit3A.R")
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fCopulae/test/runit3A.R",
+        rngKind = "Marsaglia-Multicarry", rngNormalKind = "Inversion")
     printTextProtocol(testResult)
 }
  

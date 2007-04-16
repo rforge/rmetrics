@@ -131,7 +131,7 @@ function(n, rho = 0.75, param = NULL, type = c("norm", "cauchy", "t"))
 # ------------------------------------------------------------------------------
 
 
-rellipticalSlider =
+rellipticalSlider = 
 function(B = 100)
 {   # A function implemented by Diethelm Wuertz
         
@@ -146,6 +146,10 @@ function(B = 100)
     # Internal Function:
     refresh.code = function(...)
     {
+        # Startup Counter:
+        .counter <<- .counter + 1
+        if (.counter < 7) return ()
+        
         # Sliders:
         Copula = .sliderMenu(no = 1)
         N = .sliderMenu(no = 2)
@@ -182,6 +186,7 @@ function(B = 100)
     }
   
     # Open Slider Menu:
+    .counter <<- 0 
     plot.names = c("Plot - size", "... color")
     .sliderMenu(refresh.code,
         names       = c("Copula",   "N", "rho", "t: nu", "seed", plot.names),
@@ -721,6 +726,8 @@ function(B = 20)
     # Description:
     #   Displays interactively perspective plots of probability
     
+    # Arguments:
+    
     # FUNCTION:
     
     # Graphic Frame:
@@ -729,6 +736,10 @@ function(B = 20)
     # Internal Function:
     refresh.code = function(...)
     {
+        # Startup Counter:
+        .counter <<- .counter + 1
+        if (.counter < 7) return ()
+        
         # Sliders:
         Copula = .sliderMenu(no = 1)
         N = .sliderMenu(no = 2)
@@ -773,6 +784,7 @@ function(B = 20)
     }
   
     # Open Slider Menu:
+    .counter <<- 0
     plot.names = c("Plot - theta", "... phi")
     .sliderMenu(refresh.code,
         names = c("Copula",  "N", "rho", "2: nu", "4: s", plot.names),
@@ -793,7 +805,9 @@ function(B = 20)
     # Description:
     #   Displays interactively perspective plots of probability
     
-    #FUNCTION:
+    # Arguments:
+    
+    # FUNCTION:
     
     # Graphic Frame:
     par(mfrow = c(1, 1))
@@ -801,6 +815,10 @@ function(B = 20)
     # Internal Function:
     refresh.code = function(...)
     {
+        # Startup Counter:
+        .counter <<- .counter + 1
+        if (.counter < 7) return ()
+        
         # Sliders:
         Copula = .sliderMenu(no = 1)
         N = .sliderMenu(no = 2)
@@ -845,6 +863,7 @@ function(B = 20)
     }
   
     # Open Slider Menu:
+    .counter <<- 0
     plot.names = c("Plot - levels", "... colors")
     .sliderMenu(refresh.code,
         names = c("Copula", "N", "rho", "2: nu", "4: s", plot.names),
@@ -1204,6 +1223,10 @@ function(B = 20)
     # Internal Function:
     refresh.code = function(...)
     {
+        # Startup Counter:
+        .counter <<- .counter + 1
+        if (.counter < 7) return ()
+        
         # Sliders:
         Copula = .sliderMenu(no = 1)
         N = .sliderMenu(no = 2)
@@ -1259,6 +1282,7 @@ function(B = 20)
     }
   
     # Open Slider Menu:
+    .counter <<- 0
     plot.names = c("Plot - theta", "... phi")
     .sliderMenu(refresh.code,
         names = c("Copula", "N", "rho", "3: nu", "4: s", plot.names),
@@ -1287,6 +1311,10 @@ function(B = 20)
     # Internal Function:
     refresh.code = function(...)
     {
+        # Startup Counter:
+        .counter <<- .counter + 1
+        if (.counter < 7) return ()
+        
         # Sliders:
         Copula = .sliderMenu(no = 1)
         N = .sliderMenu(no = 2)
@@ -1332,10 +1360,11 @@ function(B = 20)
         mtext(mTitle, side = 1, line =  3, col = "grey", cex = 0.7)
         
         # Reset Frame:
-        par(mfrow = c(1, 1), cex = 0.7)
+        par(mfrow = c(1, 1))
     }
   
     # Open Slider Menu:
+    .counter <<- 0
     plot.names = c("Plot - levels", "... colors")
     .sliderMenu(refresh.code,
         names = c("Copula", "N", "rho", "2: nu", "4: s", plot.names),

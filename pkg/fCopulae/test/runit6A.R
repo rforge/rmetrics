@@ -57,8 +57,8 @@ function()
 test.pempiricalCopula = 
 function()
 {
+    # Arguments:
     #
-    NA
 
     # Return Value:
     return()    
@@ -71,8 +71,8 @@ function()
 test.dempiricalCopula = 
 function()
 {
+    # Arguments:
     #
-    NA
 
     # Return Value:
     return()    
@@ -84,7 +84,8 @@ function()
 
 if (FALSE) {
     require(RUnit)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fCopulae/test/runit6A.R")
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fCopulae/test/runit6A.R",
+        rngKind = "Marsaglia-Multicarry", rngNormalKind = "Inversion")
     printTextProtocol(testResult)
 }
  

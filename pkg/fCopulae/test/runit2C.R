@@ -111,6 +111,10 @@ function()
 test.ellipticalTailPlot = 
 function()
 {    
+    # Arguments:
+    # ellipticalTailPlot(param = NULL, type = c("norm", "cauchy", "t"), 
+    #   tail = c("Lower", "Upper")) 
+    
     # Plot - Be patient, plotting takes some time ...
     Type = c("norm", "cauchy", "t") 
     for (type in Type) {
@@ -129,7 +133,8 @@ function()
 
 if (FALSE) {
     require(RUnit)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fCopulae/test/runit2C.R")
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fCopulae/test/runit2C.R",
+        rngKind = "Marsaglia-Multicarry", rngNormalKind = "Inversion")
     printTextProtocol(testResult)
 }
  
