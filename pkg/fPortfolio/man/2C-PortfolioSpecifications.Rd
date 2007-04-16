@@ -12,7 +12,7 @@
 \alias{portfolioSpec}
 
 \alias{setType}
-\alias{setType}
+\alias{setType<-}
 \alias{setEstimator}
 \alias{setEstimator<-}
 \alias{setParams}
@@ -25,8 +25,11 @@
 \alias{setRiskFreeRate}
 \alias{setRiskFreeRate<-}
 \alias{setNFrontierPoints}
+\alias{setNFrontierPoints<-}
 \alias{setReturnRange}
+\alias{setReturnRange<-}
 \alias{setRiskRange}
+\alias{setRiskRange<-}
 
 \alias{portfolioStatistics}
 
@@ -74,7 +77,7 @@ setType(spec = portfolioSpec(), type = c("MV", "LPM", "CVaR"))
 setType(spec) <- value
 setEstimator(spec = portfolioSpec(), estimator = c("mean", "cov"))
 setEstimator(spec) <- value
-setParams(spec = portfolioSpec(), estimator = c("mean", "cov"))
+setParams(spec = portfolioSpec(), params = list())
 setParams(spec) <- value
 
 setWeights(spec = portfolioSpec(), weights = NULL)
@@ -129,6 +132,10 @@ portfolioStatistics(data, spec = portfolioSpec())
         [show] - \cr
         an S4 object of class \code{fPFOLIOSPEC}, having slots call, model,
         portfolio, title, description. See \code{value} for slot description.
+        }
+    \item{params}{
+        [setParams] - \cr
+        a list of optional model parameters, currently not used.
         }
     \item{portfolio}{
         [portfolioSpec] - \cr
