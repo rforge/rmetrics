@@ -28,22 +28,36 @@
 
 
 ################################################################################
-# FUNCTION                      PORTFOLIO SPECIFICATION CLASS:
+# FUNCTION:                     PORTFOLIO SPECIFICATION CLASS:
 #  'fPFOLIOSPEC'                 S4 Portfolio Specification Class
 #  portfolioSpec                 Specifies a portfolio
-#  show.fPORTFOLIO               Print method for 'fPFOLIOSPEC' objects
+#  show.fPFOLIOSPEC              Print method for 'fPFOLIOSPEC' objects
 # FUNCTION:                     MODEL SLOT:
 #  setType                       Sets type of portfolio Optimization
+#  setType<-                      alternative function call
 #  setEstimator                  Sets name of mean-covariance estimator
+#  setEstimator<-                 alternative function call
+#  setParams                     Sets optional model parameters
+#  setParams<-                    alternative function call
 # FUNCTION:                     PORTFOLIO SLOT:
 #  setWeights                    Sets weights vector
+#  setWeights<-                   alternative function call
 #  setTargetReturn               Sets target return value
+#  setTargetReturn<-              alternative function call
 #  setRiskFreeRate               Sets risk-free rate value
+#  setRiskFreeRate<-              alternative function call
 #  setNFrontierPoints            Sets number of frontier points
+#  setNFrontierPoints<-           alternative function call
 #  setReturnRange                Sets range of target returns
-#  setRiskRange                  Sets range of target risks 
+#  setReturnRange<-               alternative function call
+#  setRiskRange                  Sets range of target risks
+#  setRiskRange<-                 alternative function call
+# FUNCTION:                     SOLVER SLOT:
+#  setSolver                     Sets name of desired solver
+#  setSolver<-                    alternative function call
 # FUNCTION:                     Classical and Robust Estimators
-#  portfolioStatistics           Estimates mu and Sigma Statistics
+#  portfolioStatistics           Estimates mu and Sigma statistics
+#  .portfolioData                 Creates portfolio data list
 ################################################################################
 
 
@@ -172,6 +186,51 @@ function()
 test.portfolioStatistics =
 function()
 { 
+    # Arguments:
+    # portfolioStatistics = (data, spec = portfolioSpec())
+    
+    # Data:
+    Data = as.timeSeries(data(smallcap.ts))
+    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
+    Data
+    
+    # Specification:
+    Spec = portfolioSpec()
+    Spec
+    
+    # Portfolio Statistics:
+    portfolioStatistics(Data, Spec)
+    
+    # mean-mcd Portfolio Statistics:
+    setEstimator(Spec) <- c("mean", "mcd")
+    portfolioStatistics(Data, Spec)
+    
+    # mean-shrink Portfolio Statistics:
+    setEstimator(Spec) <- c("mean", "shrink")
+    portfolioStatistics(Data, Spec)
+    
+    # Return Value:
+    return()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.portfolioData =
+function()
+{ 
+    # Arguments:
+    # portfolioStatistics = (data, spec = portfolioSpec())
+    
+    # Data:
+    Data = as.timeSeries(data(smallcap.ts))
+    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
+    Data
+    
+    # Portfolio Statistics - i.e. add Statistics to time Series:
+    .portfolioData(Data)  
+    
     # Return Value:
     return()
 }

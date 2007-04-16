@@ -12,7 +12,11 @@
 \alias{portfolioSpec}
 
 \alias{setType}
+\alias{setType}
 \alias{setEstimator}
+\alias{setEstimator<-}
+\alias{setParams}
+\alias{setParams<-}
 
 \alias{setWeights}
 \alias{setWeights<-}
@@ -44,6 +48,7 @@
     \code{portfolioSpec} \tab Specifies a portfolio, \cr
     \code{setType} \tab Sets type of portfolio optimization, \cr
     \code{setEstimator} \tab Sets names of mean and covariance estimators, \cr
+    \code{setParams} \tab Sets optional model parameters, \cr
     \code{setWeights} \tab Sets weights vector, \cr
     \code{setTargetReturn} \tab Sets target return value, \cr
     \code{setRiskFreeRate} \tab Sets risk-free rate value, \cr
@@ -66,7 +71,11 @@ portfolioSpec(
 show.fPFOLIOSPEC(object)
 
 setType(spec = portfolioSpec(), type = c("MV", "LPM", "CVaR"))
+setType(spec) <- value
 setEstimator(spec = portfolioSpec(), estimator = c("mean", "cov"))
+setEstimator(spec) <- value
+setParams(spec = portfolioSpec(), estimator = c("mean", "cov"))
+setParams(spec) <- value
 
 setWeights(spec = portfolioSpec(), weights = NULL)
 setWeights(spec) <- value
@@ -75,10 +84,14 @@ setTargetReturn(spec) <- value
 setRiskFreeRate(spec = portfolioSpec(), riskFreeRate = 0)
 setRiskFreeRate(spec) <- value
 setNFrontierPoints(spec = portfolioSpec(), nFrontierPoints = 100)
+setNFrontierPoints(spec) <- value
 setReturnRange(spec = portfolioSpec(), returnRange = NULL)
+setReturnRange(spec) <- value
 setRiskRange(spec = portfolioSpec(), riskRange = NULL)
+setRiskRange(spec) <- value
 
 portfolioStatistics(data, spec = portfolioSpec())
+%.portfolioData(data, spec = portfolioSpec())
 }
 
 
@@ -196,6 +209,8 @@ portfolioStatistics(data, spec = portfolioSpec())
                 second the covariance estimator. Additional meaningful 
                 selections include robust covariance estimators, e.g. 
                 \code{c("mean","mcd")}, or \code{c("mean","shrink")}.
+            \code{params=list()} a list of optional model parameters,
+                currently not used.
             }     
         \item{@portfolio}{
             a list, settings portfolio parameters including predefined
@@ -237,23 +252,42 @@ portfolioStatistics(data, spec = portfolioSpec())
     from scratch.
     \cr
      
-    \bold{Estimators:}
+    \bold{Model:}
     \cr\cr
-    The estimator for mean vector and covariance matrix are determined by the
-    argument \code{type}. Estimator are "mean" (only for mean vector), "cov"
-    (only for covariance matrix), "mcd" and "shrink". Especially for portfolios
-    with a lot of assets and minor number of data points, MCD and shrinkage
-    improve the estimation covariance matrix. The estimator effects only the
-    mean-variance/Markowitz framework.
+    \emph{Type:} The risk measure in use is determined by the argument 
+    \code{model$type}. Available measures are mean-variance/Markowitz 
+    \code{"MV"}, later we will add lower partial moments \code{LPM} and 
+    conditional value at risk \code{"CVaR"}.
     \cr
-       
-    \bold{Risk Measures:}
+    \emph{Estimators:} The estimator(s) for the mean vector and covariance 
+    matrix are determined by the argument \code{model$type}, which is a 
+    character vector with two elements, the first for the mean and the 
+    second for the covariance matrix. Valid pairs for example are 
+    \code{c("mean","cov")}, \code{c("mean","shrink")}, or 
+    \code{c("mean","mcd")}. The latter two covariance estimators are robust 
+    covariance estimators which are recommended to be used for portfolios 
+    with many assets and few number of data records. 
+    \cr
+    
+    \bold{Portfolio:}
     \cr\cr
-    The risk measures is determined by the argument \code{type}. Available
-    measures are mean-variance/Markowitz, lower partial moments (LPM) and CVaR.
-    Markowitz framework is only useful along with multivariate normally
-    distributed assets. Where CVaR framework is independent from assets
-    distribution.
+    This slot sets portfolio parameters including weights, target return,
+    risk free rate, number of frontier points, and target range and return.
+    Note, only one of \code{portfolio$weights} or \code{targetReturn} can
+    be set exclusively. If one of both is set, the other will be set to
+    \code{NULL}.
+    \cr
+    
+    \bold{Solver:}
+    \cr\cr
+    The default solver is the quadratic programming solver from the 
+    contributes R package \code{quadprog}, Optionally, one can use 
+    the sequential quadratic programming algorithm from Spelucci as
+    implemented in the contributed R package \code{Rdonlp2}. Note,
+    this package is not part of the Rmetrics software and has to be 
+    installed separately. In the case of non-linear risk budget 
+    constraints which can can be handled by \code{quadprog}, one has
+    to use \code{Rdonlp2}.
  
 }
 

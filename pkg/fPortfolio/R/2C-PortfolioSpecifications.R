@@ -236,10 +236,37 @@ function(spec = portfolioSpec(), type = c("MV", "LPM", "CVaR"))
     
     # FUNCTION:
     
+    # Check Validity:
+    # ...
+    
     # Type ?
     type = match.arg(type)
     spec@model$type = type
     if (type == "LPM") spec@model$estimator = c("lpm", "lpm")
+
+    # Return Value:
+    spec
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+"setType<-" =
+function(spec, value)
+{   # A function implemented by Rmetrics
+
+    # Description:                
+    #   Sets type of portfolio optimization
+    
+    # FUNCTION:
+    
+    # Check Validity:
+    # ...
+    
+    # Type ?
+    spec@model$type = value
+    if (value == "LPM") spec@model$estimator = c("lpm", "lpm")
 
     # Return Value:
     spec
@@ -258,6 +285,9 @@ function(spec = portfolioSpec(), estimator = c("mean", "cov"))
     
     # FUNCTION:
     
+    # Check Validity:
+    # ...
+    
     # Estimator ?
     spec@model$estimator = estimator 
     
@@ -269,8 +299,8 @@ function(spec = portfolioSpec(), estimator = c("mean", "cov"))
 # ------------------------------------------------------------------------------
 
 
-.setParams = 
-function(spec = portfolioSpec(), params = list())
+"setEstimator<-" = 
+function(spec, value)
 {   # A function implemented by Rmetrics
 
     # Description:                  
@@ -278,8 +308,57 @@ function(spec = portfolioSpec(), params = list())
     
     # FUNCTION:
     
+    # Check Validity:
+    # ...
+    
+    # Estimator ?
+    spec@model$estimator = value 
+    
+    # Return Value:
+    spec
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+setParams = 
+function(spec = portfolioSpec(), params = list())
+{   # A function implemented by Rmetrics
+
+    # Description:                  
+    #   Sets optional parameters
+    
+    # FUNCTION:
+    
+    # Check Validity:
+    # ...
+    
     # Estimator ?
     spec@model$params = params 
+    
+    # Return Value:
+    spec
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+"setParams<-" = 
+function(spec, value)
+{   # A function implemented by Rmetrics
+
+    # Description:                  
+    #   Sets optional parameters
+    
+    # FUNCTION:
+    
+    # Check Validity:
+    # ...
+    
+    # Estimator ?
+    spec@model$params = value 
     
     # Return Value:
     spec
@@ -321,6 +400,9 @@ function(spec, value)
     
     # FUNCTION:
     
+    # Check Validity:
+    # ...
+    
     # Weights ?
     spec@portfolio$weights = value
     if(!is.null(value)) {
@@ -343,6 +425,9 @@ function(spec = portfolioSpec(), targetReturn = NULL)
     #   Sets target return value
     
     # FUNCTION:
+    
+    # Check Validity:
+    # ...
     
     # Target Return ?
     spec@portfolio$targetReturn = targetReturn 
@@ -367,6 +452,9 @@ function(spec, value)
     
     # FUNCTION:
     
+    # Check Validity:
+    # ...
+    
     # Target Return ?
     spec@portfolio$targetReturn = value
     if(!is.null(value)) {
@@ -390,6 +478,9 @@ function(spec = portfolioSpec(), riskFreeRate = 0)
     
     # FUNCTION:
     
+    # Check Validity:
+    stopifnot(is.numeric(riskFreeRate))
+    
     # Risk-Free Rate ?
     spec@portfolio$riskFreeRate = riskFreeRate 
     
@@ -409,6 +500,9 @@ function(spec, value)
     #   Sets risk-free rate value
     
     # FUNCTION:
+    
+    # Check Validity:
+    stopifnot(is.numeric(value))
     
     # Risk-Free Rate ?
     spec@portfolio$riskFreeRate = value
@@ -430,6 +524,10 @@ function(spec = portfolioSpec(), nFrontierPoints = 100)
     
     # FUNCTION:
     
+    # Check Validity:
+    stopifnot(is.numeric(nFrontierPoints))
+    stopifnot(nFrontierPoints > 0)
+    
     # Number of Frontier Points ?
     spec@portfolio$nFrontierPoints = nFrontierPoints
     
@@ -449,6 +547,10 @@ function(spec, value)
     #   Sets number of frontier points
     
     # FUNCTION:
+    
+    # Check Validity:
+    stopifnot(is.numeric(value))
+    stopifnot(value > 0)
     
     # Risk-Free Rate ?
     spec@portfolio$nFrontierPoints = value
@@ -470,8 +572,34 @@ function(spec = portfolioSpec(), returnRange = NULL)
     
     # FUNCTION:
     
+    # Check Validity:
+    #
+    
     # Return Range ?
     spec@portfolio$returnRange = returnRange
+    
+    # Return Value:
+    spec
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.setReturnRange<- = 
+function(spec = portfolioSpec(), value)
+{   # A function implemented by Rmetrics
+
+    # Description:                                    
+    #   Sets range of target returns
+    
+    # FUNCTION:
+    
+    # Check Validity:
+    #
+    
+    # Return Range ?
+    spec@portfolio$returnRange = value
     
     # Return Value:
     spec
@@ -490,8 +618,34 @@ function(spec = portfolioSpec(), riskRange = NULL)
     
     # FUNCTION:
     
+    # Check Validity:
+    #
+    
     # Risk Range ?
     spec@portfolio$riskRange = riskRange
+    
+    # Return Value:
+    spec
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+"setRiskRange<-" = 
+function(spec = portfolioSpec(), value)
+{   # A function implemented by Rmetrics
+
+    # Description:                                      
+    #   Sets range of target risks
+    
+    # FUNCTION:
+    
+    # Check Validity:
+    #
+    
+    # Risk Range ?
+    spec@portfolio$riskRange = value
     
     # Return Value:
     spec
@@ -567,7 +721,7 @@ function(data, spec = portfolioSpec())
 
 
 .portfolioData =
-function(data, spec)
+function(data, spec = portfolioSpec())
 {   # A function implemented by Rmetrics
 
     # Description:
