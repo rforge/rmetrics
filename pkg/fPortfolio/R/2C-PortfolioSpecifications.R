@@ -539,7 +539,7 @@ function(spec = portfolioSpec(), nFrontierPoints = 100)
 # ------------------------------------------------------------------------------
 
 
-".setNFrontierPoints<-" <- 
+"setNFrontierPoints<-" <- 
 function(spec, value)
 {   # A function implemented by Rmetrics
 
@@ -586,7 +586,7 @@ function(spec = portfolioSpec(), returnRange = NULL)
 # ------------------------------------------------------------------------------
 
 
-.setReturnRange<- = 
+"setReturnRange<-" = 
 function(spec = portfolioSpec(), value)
 {   # A function implemented by Rmetrics
 
