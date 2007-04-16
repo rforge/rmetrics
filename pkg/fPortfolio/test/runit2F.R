@@ -73,6 +73,11 @@ function()
 test.frontierPlot =
 function()
 { 
+    # Portfolio Frontier Plot:
+    myPF = portfolioFrontier(Data)
+    par(mfrow = c(1, 1))
+    plot(myPF, which = c(1, 8, 2:6))
+    
     # Return Value:
     return()
 }
@@ -84,6 +89,11 @@ function()
 test.weightsPlot =
 function()
 { 
+    # Portfolio Frontier Plot:
+    myPF = portfolioFrontier(Data)
+    par(mfrow = c(1, 1))
+    weightsPlot(myPF)
+    
     # Return Value:
     return()
 }
@@ -95,6 +105,12 @@ function()
 test.weightsPie =
 function()
 { 
+    # Portfolio Frontier Plot:
+    myPF = tangencyPortfolio(Data)
+    par(mfrow = c(1, 1))
+    weightsPie(myPF)
+    title(main = "Weights Pie")
+    
     # Return Value:
     return()
 }
@@ -106,6 +122,11 @@ function()
 test.attributesPlot =
 function()
 { 
+    # Portfolio Frontier Plot:
+    myPF = portfolioFrontier(Data)
+    par(mfrow = c(1, 1))
+    attributes(myPF)                                # CHECK OUTPUT !!!
+    
     # Return Value:
     return()
 }

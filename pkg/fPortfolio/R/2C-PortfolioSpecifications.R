@@ -44,6 +44,8 @@
 #  setWeights<-                   alternative function call
 #  setTargetReturn               Sets target return value
 #  setTargetReturn<-              alternative function call
+#  setTargetAlpha                Sets CVaR target alpha value
+#  setTargetAlpha<-               alternative function call
 #  setRiskFreeRate               Sets risk-free rate value
 #  setRiskFreeRate<-              alternative function call
 #  setNFrontierPoints            Sets number of frontier points
@@ -84,6 +86,7 @@ model = list(
 portfolio = list(
     weights = NULL, 
     targetReturn = NULL, 
+    targetAlpha = NULL,
     riskFreeRate = 0, 
     nFrontierPoints = 50, 
     returnRange = NULL, 
@@ -122,8 +125,8 @@ description = NULL)
     
     # Portfolio:
     Portfolio = list(weights = NULL, targetReturn = NULL, targetRisk = NULL,
-        riskFreeRate = 0, nFrontierPoints = 100, returnRange = NULL, 
-        riskRange = NULL)
+        targetAlpha = NULL, riskFreeRate = 0, nFrontierPoints = 100, 
+        returnRange = NULL, riskRange = NULL)
     Portfolio[(Names <- names(portfolio))] <- portfolio
     # Check Portfolio - weights, targetReturn, targetRisk:
     # ... at least two of them must be set to NULL!
@@ -191,6 +194,10 @@ function(object)
     if (!is.null(object@portfolio$targetReturn)) {
         cat("\nTarget Return:\n")
         print(object@portfolio$targetReturn)
+    }
+    if (!is.null(object@portfolio$targetAlpha)) {
+        cat("\nTarget Alpha:\n")
+        print(object@portfolio$targetAlpha)
     }
     if (!is.null(object@portfolio$riskFreeRate)) {
         cat("\nPortfolio Risk-Free Rate:\n ")
@@ -460,6 +467,52 @@ function(spec, value)
     if(!is.null(value)) {
         spec@portfolio$weights = NULL
     }
+    
+    # Return Value:
+    spec
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+setTargetAlpha = 
+function(spec = portfolioSpec(), targetAlpha = NULL)
+{   # A function implemented by Rmetrics
+
+    # Description:                                   
+    #   Sets target return value
+    
+    # FUNCTION:
+    
+    # Check Validity:
+    # ...
+    
+    # Target Alpha ?
+    spec@portfolio$targetAlpha = targetAlpha 
+    
+    # Return Value:
+    spec
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+"setTargetAlpha<-" = 
+function(spec, value)
+{   # A function implemented by Rmetrics
+
+    # Description:                  
+    #   Sets target Alpha value
+    
+    # FUNCTION:
+    
+    # Check Validity:
+    # ...
+    
+    # Estimator ?
+    spec@portfolio$targetAlpha = value 
     
     # Return Value:
     spec

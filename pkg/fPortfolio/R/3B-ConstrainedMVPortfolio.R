@@ -51,9 +51,9 @@ function(data, spec, constraints)
     #       $series holding the time series which may be any rectangular,
     #       object or if not specified holding NA;
     #       $statistics holding a named two element list by itself, 
-    #        $mu the location of the asset returns by default the mean and 
-    #        $Sigma the scale of the asset returns by default the covariance
-    #        matrix.
+    #         $mu the location of the asset returns by default the mean and 
+    #         $Sigma the scale of the asset returns by default the covariance
+    #         matrix.
     
     # Note:
     #   In contrast to the functions *Portfolio(), which only require either the

@@ -60,8 +60,28 @@ function()
 test.portfolioConstraints =
 function()
 { 
-    # Return Value:
-    return()
+   # Load Data:
+   Data = as.timeSeries(data(smallcap.ts))
+   Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
+   Data
+   
+   # Set Default Specifications:
+   Spec = portfolioSpec() 
+   
+   # Set Portfolio Constraints:
+   Constraints = "minW[1:4]"
+   portfolioConstraints(Data, Spec, Constraints)
+   
+   # Set Portfolio Constraints:
+   Constraints = NULL
+   portfolioConstraints(Data, Spec, Constraints)
+   
+   # Set Portfolio Constraints:
+   Constraints = "LongOnly"
+   portfolioConstraints(Data, Spec, Constraints)
+   
+   # Return Value:
+   return()
 }
 
    

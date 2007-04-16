@@ -90,7 +90,7 @@ function()
     # Get Data:
     Data = as.timeSeries(data(smallcap.ts))
     Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
-    Data
+    head(Data)
    
     # Set Default Specifications - Long Only MV Portfolio
     Spec = portfolioSpec()
@@ -125,7 +125,7 @@ function()
     # Load Data:
     Data = as.timeSeries(data(smallcap.ts))
     Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
-    Data
+    head(Data)
    
     # Set Default Specifications - Long Only MV Portfolio
     Spec = portfolioSpec()
@@ -157,7 +157,7 @@ function()
     # Load Data:
     Data = as.timeSeries(data(smallcap.ts))
     Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
-    Data
+    head(Data)
     
     # Set Default Specifications - Long Only MV Portfolio
     Spec = portfolioSpec()
@@ -189,7 +189,7 @@ function()
     # Load Data:
     Data = as.timeSeries(data(smallcap.ts))
     Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
-    Data
+    head(Data)
     
     # Set Default Specifications - Long Only MV Portfolio
     Spec = portfolioSpec()
@@ -233,7 +233,7 @@ function()
     # Load Data:
     Data = as.timeSeries(data(smallcap.ts))
     Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
-    Data
+    head(Data)
    
     # Set Default Specifications - Long Only MV Portfolio
     Spec = portfolioSpec()
@@ -267,7 +267,7 @@ function()
     # Load Data:
     Data = as.timeSeries(data(smallcap.ts))
     Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
-    Data
+    head(Data)
    
     # Set Default Specifications - Long Only MV Portfolio
     Spec = portfolioSpec()
@@ -296,7 +296,7 @@ function()
     # Load Data::
     Data = as.timeSeries(data(smallcap.ts))
     Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
-    Data
+    head(Data)
    
     # Set Default Specifications:
     Spec = portfolioSpec()
@@ -324,7 +324,7 @@ function()
     # Load Data::
     Data = as.timeSeries(data(smallcap.ts))
     Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
-    Data
+    head(Data)
    
     # Set Default Specifications:
     Spec = portfolioSpec()
@@ -361,7 +361,7 @@ function()
     # Load Data::
     Data = as.timeSeries(data(smallcap.ts))
     Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
-    Data
+    head(Data)
    
     # Set Default Specifications:
     Spec = portfolioSpec()
@@ -388,7 +388,7 @@ function()
     # Load Data::
     Data = as.timeSeries(data(smallcap.ts))
     Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
-    Data
+    head(Data)
    
     # Set Default Specifications:
     Spec = portfolioSpec()

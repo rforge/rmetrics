@@ -61,12 +61,13 @@ function()
 
 # IMPORTANT NOTE:
 #
-#   All *ShortMV* portfolio and frontier functions assume no constraints
-#   on weights, neither box nor group constraints. Al Weights can take
-#   unlimited values in the range [-Inf, Inf].
+#   All *ShortMV* portfolios and the portfolio frontier function assume no 
+#   constraints on weights, neither box nor group constraints. All Weights 
+#   can take unlimited values in the range [-Inf, Inf].
 #
-#   All these functions are internal functions, not thought to be used by
-#   the enduser of the fPortfolio Package.
+#   Note, all these functions are internal functions, not thought to be used 
+#   by the enduser of the fPortfolio Package.
+
 
 # ------------------------------------------------------------------------------
 
@@ -77,26 +78,22 @@ function()
     # Data:
     Data = as.timeSeries(data(smallcap.ts))
     Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
-    Data
+    head(Data)
     
-    # Specification:
+    # Specification - Equal Weights Portfolio:
     Spec = portfolioSpec()
     Spec
     
-    # Constraints:
+    # Constraints are ignored:
     Constraints = NULL
-    
-    # Feasible Portfolio:
     .feasibleShortMVPortfolio(Data, Spec, Constraints)
     
-    # Constraints:
+    # Constraints can natursally also defined as:
     Constraints = "Short"
-    
-    # Feasible Portfolio:
     .feasibleShortMVPortfolio(Data, Spec, Constraints)
     
     # Remember, it is not yet checked if the predefined weights
-    #   are compatiblre with the specified constraints!
+    #   are compatible with the specified constraints!
     
     # Return Value:
     return()
@@ -112,22 +109,15 @@ function()
     # Data:
     Data = as.timeSeries(data(smallcap.ts))
     Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
-    Data
+    head(Data)
     
     # Specification:
     Spec = portfolioSpec()
+    setRiskFreeRate = 0.01
     Spec
     
-    # Constraints:
-    Constraints = NULL
-    
-    # CML Portfolio:
-    .cmlShortMVPortfolio(Data, Spec, Constraints)
-    
-    # Constraints:
+    # Constraints - Capital Market Line:
     Constraints = "Short"
-    
-    # CML Portfolio:
     .cmlShortMVPortfolio(Data, Spec, Constraints)
     
     # Return Value:
@@ -144,22 +134,14 @@ function()
     # Data:
     Data = as.timeSeries(data(smallcap.ts))
     Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
-    Data
+    head(Data)
     
     # Specification:
     Spec = portfolioSpec()
     Spec
   
-    # Constraints:
-    Constraints = NULL
-    
-    # Tangency Portfolio:
-    .tangencyShortMVPortfolio(Data, Spec, Constraints)
-    
-    # Constraints:
+    # Constraints - Tangency Portfolio:
     Constraints = "Short"
-    
-    # Tangency Portfolio:
     .tangencyShortMVPortfolio(Data, Spec, Constraints)
     
     # Return Value:
@@ -176,22 +158,14 @@ function()
     # Data:
     Data = as.timeSeries(data(smallcap.ts))
     Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
-    Data
+    head(Data)
     
     # Specification:
     Spec = portfolioSpec()
     Spec
     
-    # Constraints:
-    Constraints = NULL
-    
-    # Minimum Variance Portfolio:
-    .minvarianceShortMVPortfolio(Data, Spec, Constraints)
-    
-    # Constraints:
+    # Constraints - Minimum Variance Portfolio:
     Constraints = "Short"
-    
-    # Minimum Variance Portfolio:
     .minvarianceShortMVPortfolio(Data, Spec, Constraints)
     
     # Return Value:
@@ -208,22 +182,15 @@ function()
     # Data:
     Data = as.timeSeries(data(smallcap.ts))
     Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
-    Data
+    head(Data)
     
     # Specification:
     Spec = portfolioSpec()
+    setTargetReturn(Spec) = 0.15
     Spec
     
-    # Constraints:
-    Constraints = NULL
-    
-    # Efficient Portfolio:
-    .efficientShortMVPortfolio(Data, Spec, Constraints)
-    
-    # Constraints:
-    Constraints = "Short"
-    
-    # Efficient Portfolio:
+    # Constraints - Efficient Portfolio:
+    Constraints = "Short" 
     .efficientShortMVPortfolio(Data, Spec, Constraints)
     
     # Return Value:
@@ -240,26 +207,20 @@ function()
     # Data:
     Data = as.timeSeries(data(smallcap.ts))
     Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
-    Data
+    head(Data)
     
     # Specification:
     Spec = portfolioSpec()
     Spec
     
     # Constraints:
-    Constraints = NULL 
-    
-    # Portfolio Frontier:
-    .portfolioShortMVFrontier(Data, Spec, Constraints)
-    frontier = portfolioFrontier(Data, Spec, Constraints)
-    plot(frontier)
-    
-    # Constraints:
     Constraints = "Short" 
-    
-    # Portfolio Frontier:
     .portfolioShortMVFrontier(Data, Spec, Constraints)
-    portfolioFrontier(Data, Spec, Constraints)
+    Frontier = portfolioFrontier(Data, Spec, Constraints)
+    Frontier
+    par(mfrow = c(1, 1))
+    frontierPlot(Frontier)
+    title(main = "Efficient Frontier")
     
     # Return Value:
     return()

@@ -38,11 +38,17 @@
  
 
 portfolioConstraints =
-function(data, spec, constraints)
+function(data, spec = portfolioSpec(), constraints = NULL)
 {   # A function implemented by Rmetrics
 
     # Description:
     #   Checks Consistency of Constraints Strings
+    
+    # Check NULL:
+    if(is.null(constraints)) {
+        # attr(constraints, "control") = "valid" --- Not possible!
+        return(constraints)
+    }
     
     # Vector of Valid Strings:
     validStrings = c(

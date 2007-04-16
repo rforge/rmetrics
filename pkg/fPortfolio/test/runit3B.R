@@ -60,10 +60,11 @@ function()
 
 
 # IMPORTANT NOTE:
-#   All .*ConstrainedMV* portfolio and frontier functions assume that the
-#   constraints are predefined. If this is not the case, then the default 
-#   value "LongOnly" will be used, i.e. 0 <= W_i <= 1, and no other 
-#   constraints.
+#   All *ConstrainedMV* portfolios and the portfolio frontier function 
+#   assume by default zero-one Box constrained weights, i.e. strict
+#   "LongOnly" constraints. These can be modified to more general box
+#   constraints including limites "Short" constraints, group constraints,
+#   and risk budget constraints.
 
 
 # ------------------------------------------------------------------------------
@@ -87,7 +88,7 @@ function()
     # Data:
     Data = as.timeSeries(data(smallcap.ts))
     Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
-    Data
+    head(Data)
     
     # Constraints:
     Constraints = NULL
@@ -124,7 +125,7 @@ function()
     # Data:
     Data = as.timeSeries(data(smallcap.ts))
     Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
-    Data
+    head(Data)
     
     # Specification:
     Spec = portfolioSpec()
@@ -148,7 +149,7 @@ function()
     # Data:
     Data = as.timeSeries(data(smallcap.ts))
     Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
-    Data
+    head(Data)
     
     # Specification:
     Spec = portfolioSpec()
@@ -177,7 +178,7 @@ function()
     # Data:
     Data = as.timeSeries(data(smallcap.ts))
     Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
-    Data
+    head(Data)
     
     # Specification:
     Spec = portfolioSpec()
@@ -201,7 +202,7 @@ function()
     # Data:
     Data = as.timeSeries(data(smallcap.ts))
     Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
-    Data
+    head(Data)
     
     # Specification:
     Spec = portfolioSpec()
@@ -231,7 +232,7 @@ function()
     # Data:
     Data = as.timeSeries(data(smallcap.ts))
     Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
-    Data
+    head(Data)
     
     # Specification:
     Spec = portfolioSpec()
@@ -265,7 +266,7 @@ function()
     # Data:
     Data = as.timeSeries(data(smallcap.ts))
     Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
-    Data
+    head(Data)
     
     # Specification:
     Spec = portfolioSpec()
@@ -297,7 +298,7 @@ function()
     # Data:
     Data = as.timeSeries(data(smallcap.ts))
     Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
-    Data
+    head(Data)
     
     # Specification:
     Spec = portfolioSpec()

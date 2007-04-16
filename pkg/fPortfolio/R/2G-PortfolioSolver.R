@@ -31,6 +31,7 @@
 # FUNCTION:                    DESCRIPTION:  
 #  solveRQuadprog               Calls Goldfarb and Idnani's QP solver
 #  solveRDonlp2                 Calls Spelucci's donlp2 solver
+#  solveRlpSolve                Calls linear programming solver
 # FUNCTION:                    DESCRIPTION:
 #  setSolver                    Sets the desired solver
 #  setSolver<-                  Sets the desired solver
@@ -229,6 +230,106 @@ function(data, spec, constraints)
 # ------------------------------------------------------------------------------
 
 
+solveRlpSolve =
+function(data, spec, constraints)
+{   # A function implemented by Rmetrics
+
+    # Description:
+    #   Linear Solver from R package lpSolve
+    
+    # Note:
+    #   This function requires to load the contributed R package
+    #   lpSolve explicitely!
+    #
+    #   IMPORTANR:
+    #   Only Zero-One Long-Only Constraints are implemented !!!
+    
+    # FUNCTION:
+    
+    # Get data statistics:
+    if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
+    mu = data$statistics$mu
+    Sigma = data$statistics$Sigma
+    
+    # Get quantile measure alpha:
+    targetAlpha = spec@portfolio$targetAlpha
+    
+    # Get target Return:
+    targetReturn = spec@portfolio$targetReturn
+    
+    # Scenarios:
+    Data = data$series
+    colNames = colnames(Data)
+    rowNames = rownames(Data)
+    DIM = dim(Data)
+    m = DIM[1]
+    w = DIM[2]
+
+    # Compose objective function:
+    Names = c("VaR", paste("e", 1:m, sep = ""), colNames)
+    f.obj = c(1, rep(-1/(targetAlpha*m), m), rep(0, w))
+    names(f.obj) = Names
+    
+    # Info on constraints - Constraint matrix:
+    #   Example m=8 Data Records, and w=4 Assets
+    #   
+    #   VaR  es          weights          exposure
+    #   x1   x2 ... x9   x10 ... x13
+    #       
+    #    0    0      0   mu1     mu4      = Mu
+    #    0    0      0   1       1        = 1
+    #               
+    #   -1   x2      0   r1.1    r4.1     >= 0
+    #   -1   0 x3    0   r1.2    r4.1     >= 0
+    #   
+    #   -1   0   x8  0   r1.8    r4.8     >= 0
+    #   -1   0      x9   r1.9    r4.9     >= 0
+    #   
+    #   x2   >= 0       es    Not yet Implemented !!!
+    #   ...
+    #   x9   >= 0
+    #   
+    #   x10  >= 0       w     Not yet Implemented !!!
+    #   ...
+    #   x13  >= 0
+    
+    # Compose constraint matrix:
+    nX = 1 + m + w
+    nY = 2 + m
+    f.con = matrix(rep(0, nX*nY), ncol = nX)
+    rownames(f.con) = c("Budget", "Return", rowNames)
+    colnames(f.con) = c("VaR", paste("e", 1:m, sep = ""), colNames) 
+    f.con[1, (2+m):(2+m+w-1)] = 1 
+    f.con[2, (2+m):(2+m+w-1)] = mu
+    f.con[3:(m+2), (2+m):(2+m+w-1)] = seriesData(Data)
+    f.con[3:(m+2), 1] = -1 
+    f.con[3:(m+2), 2:(m+1)] = diag(m)
+    
+    # Set directions:
+    f.dir = c("=", "=", rep(">=", m))
+    names(f.dir) = rownames(f.con)
+  
+    # Compose right hand side vector:
+    f.rhs = c(1, targetReturn, rep(0, m))
+    names(f.rhs) = rownames(f.con)
+    
+    # Optimize:
+    ans = lp("max", f.obj, f.con, f.dir, f.rhs)
+
+    # Prepare output list:
+    ans$Solution = ans$solution
+    ans$solution = ans$solution[(m+2):(m+1+w)] 
+    ans$ierr = ans$status
+    ans$solver = "lpSolve"
+    
+    # Return Value:
+    ans
+}
+
+
+# ------------------------------------------------------------------------------
+
+
 setSolver = 
 function (spec = portfolioSpec(), solver = c("RQuadprog", "Rdonlp2")) 
 {   # A function implemented by Rmetrics
@@ -238,8 +339,8 @@ function (spec = portfolioSpec(), solver = c("RQuadprog", "Rdonlp2"))
     # FUNCTION:
     
     # Set Solver:
-    solver = match.arg(solver)
-    spec@solver$type = solver
+    # solver = match.arg(solver)
+    # spec@solver$type = solver
     
     # Return Value:
     spec
@@ -257,8 +358,8 @@ function (spec = portfolioSpec(), solver = c("RQuadprog", "Rdonlp2"))
     # FUNCTION:
     
     # Valid Solvers:
-    validSolvers = c("RQuadprog", "RDonlp2")
-    stopifnot(value %in% validSolvers)
+    # validSolvers = c("RQuadprog", "RDonlp2")
+    # stopifnot(value %in% validSolvers)
     
     # Set Solver:
     spec@solver$type = value

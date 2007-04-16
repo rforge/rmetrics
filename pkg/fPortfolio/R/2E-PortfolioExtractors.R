@@ -95,7 +95,7 @@ function(object)
     # FUNCTION:
     
     # Get Series of Assets
-    ans = length(object@data$statistics$mu)
+    ans = c(nAssets = length(object@data$statistics$mu))
     
     # Return Value:
     ans  
@@ -178,6 +178,9 @@ function(object, frontier = c("both", "lower", "upper"), doplot = FALSE, ...)
         index = index[test < 0]
         ans = ans[index, ]
     }
+    
+    # Add colnames:
+    colnames(ans) = c("targetRisk", "targetReturn")
   
     # Plot:
     if(doplot) plot(ans, ...)

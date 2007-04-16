@@ -70,12 +70,8 @@ function()
     Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
     myPF = tangencyPortfolio(Data)
     
-    # Test:
-    myAssets = getAssets(myPF) 
-    myAssets
-    target = round(mean(colAvgs(myAssets)), 3)
-    current = 1.112
-    checkEqualsNumeric(target, current)
+    # Time Series of Assets:
+    getAssets(myPF) 
     
     # Return Value:
     return()
@@ -93,13 +89,8 @@ function()
     Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
     myPF = tangencyPortfolio(Data)
     
-    # Test:
-    myStatistics = getStatistics(myPF)
-    myStatistics
-    target = 
-        round(mean(myStatistics$mu), 3) + round(mean(myStatistics$Sigma), 3)
-    current = 1.122
-    checkEqualsNumeric(target, current)
+    # Assets Statistics:
+    getStatistics(myPF)
     
     # Return Value:
     return()
@@ -136,8 +127,10 @@ function()
     Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
     myPF = tangencyPortfolio(Data)
     
-    # Test:
-    getSpecification(myPF)
+    # Specification:
+    Spec = getSpecification(myPF)
+    Spec
+    unclass(Spec)
     
     # Return Value:
     return()
@@ -155,7 +148,7 @@ function()
     Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
     myPF = tangencyPortfolio(Data)
     
-    # Test:
+    # Portfolio:
     getPortfolio(myPF)
     
     # Return Value:
@@ -172,10 +165,15 @@ function()
     # Settings:
     Data = as.timeSeries(data(smallcap.ts))
     Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
-    myPF = tangencyPortfolio(Data)
     
-    # Test:
-    getFrontier(myPF)                                           # CHECK Colnames
+    # Tangency Portfolio:
+    myPF = tangencyPortfolio(Data)
+    getFrontier(myPF)     
+    
+    # Frontier:
+    myPF = portfolioFrontier(Data)
+    Frontier = getFrontier(myPF)     
+    head(Frontier)                                     
     
     # Return Value:
     return()
@@ -191,9 +189,13 @@ function()
     # Settings:
     Data = as.timeSeries(data(smallcap.ts))
     Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
-    myPF = tangencyPortfolio(Data)
     
-    # Test:
+    # Tangency Portfolio Weights:
+    myPF = tangencyPortfolio(Data)
+    getWeights(myPF) 
+    
+    # Portfolio Frontier Weights:
+    myPF = portfolioFrontier(Data)
     getWeights(myPF) 
     
     # Return Value:
@@ -210,9 +212,13 @@ function()
     # Settings:
     Data = as.timeSeries(data(smallcap.ts))
     Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
+
+    # Tangency Portfolio Target Returns:
     myPF = tangencyPortfolio(Data)
+    getTargetReturn(myPF)  
     
-    # Test:
+    # Portfolio Frontier Target Returns:
+    myPF = portfolioFrontier(Data)
     getTargetReturn(myPF)  
     
     # Return Value:
@@ -229,29 +235,14 @@ function()
     # Settings:
     Data = as.timeSeries(data(smallcap.ts))
     Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
+    
+    # Tangency Portfolio Target Risk:
     myPF = tangencyPortfolio(Data)
+    getTargetRisk(myPF)  
     
-    # Test:
-    getTargetRisk(myPF)                                          # CHECK numeric
-    
-    # Return Value:
-    return()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-test.getTargetStdev =
-function()
-{ 
-    # Settings:
-    Data = as.timeSeries(data(smallcap.ts))
-    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
-    myPF = tangencyPortfolio(Data)
-    
-    # Test:
-    getTargetStdev(myPF)                                         # CHECK numeric
+    # Portfolio Frontier Target Risk:
+    myPF = portfolioFrontier(Data)
+    getTargetRisk(myPF)                                           
     
     # Return Value:
     return()
