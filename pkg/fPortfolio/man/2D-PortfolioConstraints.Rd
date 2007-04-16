@@ -26,7 +26,7 @@
 }    
 
 \usage{
-portfolioConstraints(data, spec, constraints)
+portfolioConstraints(data, spec = portfolioSpec(), constraints = NULL)
 }
 
 
@@ -176,7 +176,15 @@ portfolioConstraints(data, spec, constraints)
 
 \examples{
 ## portfolioConstraints -
-   #
+   # Load Data, i.e. a List of Returns:
+   Data = as.timeSeries(data(smallcap.ts))
+   Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
+   Data
+   # Specification:
+   Spec = portfolioSpec() 
+   # Portfolio Constraints:
+   Constraints = "minW[1:4]"
+   portfolioConstraints(Data, Spec, Constraints)
 }
 
 

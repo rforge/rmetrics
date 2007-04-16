@@ -4,6 +4,8 @@
 
 \alias{solveRQuadprog}
 \alias{solveRDonlp2} 
+\alias{solveRlpSolve}
+
 \alias{setSolver} 
 \alias{setSolver<-}
 
@@ -31,6 +33,7 @@
 \usage{
 solveRQuadprog(data, spec, constraints)
 solveRDonlp2(data, spec, constraints)
+solveRlpSolve(data, spec, constraints)
 
 setSolver(spec = portfolioSpec(), solver = c("RQuadprog", "Rdonlp2"))
 setSolver(spec) <- value
@@ -85,14 +88,17 @@ setSolver(spec) <- value
 
 
 \examples{
-## Solve RQuadprog:
+## Solver RQuadprog:
    # Load Data:
    Data = as.timeSeries(data(smallcap.ts))
    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
    Data
    
 ## Solve RDonlp2:
-   #
+   # ...
+   
+## Solve RlpSolve:
+   # ...
 }
 
 

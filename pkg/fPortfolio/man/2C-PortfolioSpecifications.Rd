@@ -22,6 +22,8 @@
 \alias{setWeights<-}
 \alias{setTargetReturn}
 \alias{setTargetReturn<-}
+\alias{setTargetAlpha}
+\alias{setTargetAlpha<-}
 \alias{setRiskFreeRate}
 \alias{setRiskFreeRate<-}
 \alias{setNFrontierPoints}
@@ -55,6 +57,7 @@
     \code{setParams} \tab Sets optional model parameters, \cr
     \code{setWeights} \tab Sets weights vector, \cr
     \code{setTargetReturn} \tab Sets target return value, \cr
+    \code{setTargetAlpha} \tab Sets CVaR target alpha value, \cr
     \code{setRiskFreeRate} \tab Sets risk-free rate value, \cr
     \code{setNFrontierPoints} \tab Sets number of frontier points, \cr
     \code{setReturnRange} \tab Sets range of target returns, \cr
@@ -68,8 +71,9 @@
 \usage{
 portfolioSpec(
     model = list(type = "MV", estimator = c("mean", "cov"), params = list()), 
-    portfolio = list(weights = NULL, targetReturn = NULL, riskFreeRate = 0, 
-        nFrontierPoints = 50, returnRange = NULL, riskRange = NULL),
+    portfolio = list(weights = NULL, targetReturn = NULL, targetAlpha = NULL,
+        riskFreeRate = 0, nFrontierPoints = 50, returnRange = NULL, 
+        riskRange = NULL),
     solver = list(type = c("RQuadprog", "RDonlp2"), trace = FALSE), 
     title = NULL, description = NULL)
 show.fPFOLIOSPEC(object)
@@ -85,6 +89,8 @@ setWeights(spec = portfolioSpec(), weights = NULL)
 setWeights(spec) <- value
 setTargetReturn(spec = portfolioSpec(), targetReturn = NULL)
 setTargetReturn(spec) <- value
+setTargetAlpha(spec = portfolioSpec(), targetAlpha = NULL)
+setTargetAlpha(spec) <- value
 setRiskFreeRate(spec = portfolioSpec(), riskFreeRate = 0)
 setRiskFreeRate(spec) <- value
 setNFrontierPoints(spec = portfolioSpec(), nFrontierPoints = 100)
@@ -165,6 +171,10 @@ portfolioData(data, spec = portfolioSpec())
     \item{spec}{
         an S4 object of class \code{fPFOLIOSPEC}, the specification to be modified,
         by default the default of the function \code{portfolioSpec()}.
+        }
+    \item{targetAlpha}{
+        [setTargetAlpha] - \cr
+        a numerical value, setting the desired portfolio CVaR alpha.
         }
     \item{targetReturn}{
         [setTargetReturn] - \cr
