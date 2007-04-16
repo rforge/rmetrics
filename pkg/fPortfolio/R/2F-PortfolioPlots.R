@@ -45,6 +45,9 @@
 #  weightsPlot                  Plots staggered weights
 #  weightsPie                   Plots staggered weights
 #  attributesPlot               Plots weighted means
+#  .attributesPie               NYI
+#  .riskBudgetsPlot             NYI
+#  .riskBudgetsPie              NYI
 # FUNCTION:                    DESCRIPTION:
 #  covEllipsesPlot              Plots covariance ellipses
 ################################################################################
@@ -767,14 +770,15 @@ function(object, control = list())
 
 
 weightsPlot =
-function(object, col = NULL, legend = FALSE)
+function(object, col = NULL, legend = TRUE)
 {   # A function implemented by Rmetrics
 
     # Description:
+    #   Plots a bar chart of weights
     
     # Arguments:
     #   object - an object of class 'fPORTFOLIO'
-    #   col - a color palette, by the rainbow palette
+    #   col - a color palette, by default the rainbow palette
     
     # FUNCTION:
     
@@ -819,6 +823,7 @@ function(object, col = NULL, legend = FALSE)
     nSigma = length(targetRisk)
     nLabels = 6
     M = c(0, ( 1:(nSigma %/% nLabels) ) ) *nLabels + 1
+    
     # Take a reasonable number of significant digits to plot, e.g. 2 ...
     nPrecision = 3
     axis(1, at = M, labels = signif(targetRisk[M], nPrecision))
@@ -837,10 +842,10 @@ function(object, col = NULL, legend = FALSE)
     names(targetRisk) <- as.character(seq(1, nSigma, 1))
     minRisk = min(targetRisk)
     for(i in 1: nSigma){
-          if(minRisk == targetRisk[i]) minRisk = targetRisk[i]
+        if(minRisk == targetRisk[i]) minRisk = targetRisk[i]
     }
     minRisk = as.numeric(names(minRisk))
-    abline(v = minRisk, col = "black", lty = 3)
+    abline(v = minRisk, col = "black", lty = 1, lwd = 2)
 
     # Complete to draw box ...
     box()
@@ -854,12 +859,16 @@ function(object, col = NULL, legend = FALSE)
 
 
 weightsPie = 
-function(object, col = NULL, box = TRUE, ...)
+function(object, col = NULL, box = TRUE, legend = TRUE)
 {   # A function implemented by Rmetrics
 
     # Description:
-    #   Adds a pie plot of the weights
+    #   Plots a Pie Chart of Weigths
         
+    # Arguments:
+    #   object - an object of class 'fPORTFOLIO'
+    #   col - a color palette, by default the rainbow palette
+    
     # Example:
     #   weightsPie(tangencyPortfolio(dutchPortfolioData(), portfolioSpec()))
     #   title(main = "Tangency Portfolio Weights")
@@ -876,26 +885,51 @@ function(object, col = NULL, box = TRUE, ...)
     if (is.null(col)) col = rainbow(nWeights)
     
     # Pie Chart:
-    pie(abs(weights), labels = paste(1:nWeights, Sign), col = col, ...)
+    Weights = abs(weights)
+    Index = (1:nWeights)[Weights > 0]
+    Labels = paste(1:nWeights, Sign)
+    Labels = Labels[Weights > 0]
+    Weights = Weights[Weights > 0]
+    Radius = 0.8
+    if (length(Weights) > 10) Radius = 0.65
+    pie(Weights, labels = Labels, col = col, radius = Radius)
     if (box) box()
+    
+    if (legend) {
+        # Add Legend:
+        legendAssets = names(object@data$statistics$mu)[Index]
+        if(is.null(legendAssets)){
+            for(i in 1:dim[2]){legendAssets[i] = paste("Asset", i, sep = " ")}
+        }
+        legend("topleft", legend = legendAssets, bty = "n", cex = 0.8, 
+            fill = col)
+        
+        # Add Legend:
+        legendWeights = as.character(round(100*Weights, digits = 1))
+        legendWeights = paste(legendWeights, "%")
+        legend("topright", legend = legendWeights, bty = "n", cex = 0.8, 
+            fill = col)
+    }
     
     # Return Value:
     invisible()
 }
-
+              
+   
 
 # ------------------------------------------------------------------------------
 
 
 attributesPlot =
-function(object, col = NULL, legend = FALSE)
+function(object, col = NULL, legend = TRUE)
 {   # A function implemented by Rmetrics
 
     # Description:
+    #   Plots ...
     
     # Arguments:
     #   object - an object of class 'fPORTFOLIO'
-    #   col - a color palette, by the rainbow palette
+    #   col - a color palette, by default the rainbow palette
     
     # FUNCTION:
     
@@ -970,7 +1004,7 @@ function(object, col = NULL, legend = FALSE)
           if(minRisk == targetRisk[i]) minRisk = targetRisk[i]
     }
     minRisk = as.numeric(names(minRisk))
-    abline(v = minRisk, col = "black", lty = 3)
+    abline(v = minRisk, col = "black", lty = 1, lwd = 2)
    
     # Complete to draw box ...
     box()
@@ -978,6 +1012,70 @@ function(object, col = NULL, legend = FALSE)
     # Return Value:
     invisible()
 }
+
+
+# ------------------------------------------------------------------------------
+
+
+.attributesPie =
+function(object, col = NULL, legend = TRUE)
+{   # A function implemented by Rmetrics
+
+    # Description:
+    #   Plots ...
+    
+    # Arguments:
+    #   object - an object of class 'fPORTFOLIO'
+    #   col - a color palette, by default the rainbow palette
+    
+    # FUNCTION:
+
+    # Return Value:
+    invisible()
+}    
+
+
+# ------------------------------------------------------------------------------
+
+
+.riskBudgetsPlot =
+function(object, col = NULL, legend = TRUE)
+{   # A function implemented by Rmetrics
+
+    # Description:
+    #   Plots ...
+    
+    # Arguments:
+    #   object - an object of class 'fPORTFOLIO'
+    #   col - a color palette, by default the rainbow palette
+    
+    # FUNCTION:
+
+    # Return Value:
+    invisible()
+}    
+
+
+# ------------------------------------------------------------------------------
+
+
+.riskBudgetsPie =
+function(object, col = NULL, legend = TRUE)
+{   # A function implemented by Rmetrics
+
+    # Description:
+    #   Plots ...
+    
+    # Arguments:
+    #   object - an object of class 'fPORTFOLIO'
+    #   col - a color palette, by default the rainbow palette
+    
+    # FUNCTION:
+
+    # Return Value:
+    invisible()
+}    
+    
 
 
 ################################################################################

@@ -64,8 +64,37 @@ function(data, spec, constraints)
     
     # FUNCTION:
 
+    # Get Statistics:
+    if (!inherits(data, "fPFOLIODATA")) data = .portfolioData(data, spec)
+    mu = data$statistics$mu
+    Sigma = data$statistics$Sigma
+    
     # Return Value:
     stop(".feasibleConstrainedLPMPortfolio NYI")
+}
+
+
+#-------------------------------------------------------------------------------
+
+
+.tangencyConstrainedLPMPortfolio = 
+function(data, spec, constraints)
+{
+    # Description:
+    #   Computes Risk, Return and Weight for the tangency portfolio
+    
+    # Example:
+    #   .tangencyConstrainedLPMPortfolio()
+    
+    # FUNCTION:
+
+    # Get Statistics:
+    if (!inherits(data, "fPFOLIODATA")) data = .portfolioData(data, spec)
+    mu = data$statistics$mu
+    Sigma = data$statistics$Sigma
+    
+    # Return Value:
+    stop(".tangencyConstrainedLPMPortfolio NYI")
 }
 
 
@@ -84,6 +113,7 @@ function(data, spec, constraints)
     # FUNCTION:
     
     # Get Statistics:
+    if (!inherits(data, "fPFOLIODATA")) data = .portfolioData(data, spec)
     mu = data$statistics$mu
     Sigma = data$statistics$Sigma
     
@@ -91,25 +121,6 @@ function(data, spec, constraints)
 
     # Return Value:
     stop("cml.ConstrainedLPMPortfolio NYI")
-}
-
-
-#-------------------------------------------------------------------------------
-
-
-.tangencyConstrainedLPMPortfolio = 
-function(data, spec, constraints)
-{
-    # Description:
-    #   Computes Risk, Return and Weight for the tangency portfolio
-    
-    # Example:
-    #   .tangencyConstrainedLPMPortfolio()
-    
-    # FUNCTION:
-
-    # Return Value:
-    stop(".tangencyConstrainedLPMPortfolio NYI")
 }
 
 
@@ -127,6 +138,11 @@ function(data, spec, constraints)
     
     # FUNCTION:
 
+    # Get Statistics:
+    if (!inherits(data, "fPFOLIODATA")) data = .portfolioData(data, spec)
+    mu = data$statistics$mu
+    Sigma = data$statistics$Sigma
+    
     # Return Value:
     stop(".minvarianceConstrainedLPMPortfolio NYI")
 }
@@ -150,8 +166,10 @@ function(data, spec, constraints)
 
     # FUNCTION:
        
-    # Check if time Series exist:
-    # stopifnot(!is.na(data$series))
+    # Get Statistics:
+    if (!inherits(data, "fPFOLIODATA")) data = .portfolioData(data, spec)
+    mu = data$statistics$mu
+    Sigma = data$statistics$Sigma
 
     # Portfolio Optimization:
     ans = .efficientConstrainedMVPortfolio(data, spec, constraints)
@@ -186,8 +204,12 @@ function(data, spec, constraints)
 
     # FUNCTION:
 
-    # Check if time Series exist:
-    # stopifnot(!is.na(data$series))
+    # Get Statistics:
+    # if (!inherits(data, "fPFOLIODATA")) data = .portfolioData(data, spec)
+    # mu = data$statistics$mu
+    # Sigma = data$statistics$Sigma
+    
+    # Series:
     x = as.matrix(data$series)
     mu = colMeans(x)
     Sigma = cov(x)

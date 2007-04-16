@@ -28,13 +28,85 @@
 
 
 ################################################################################
-# FUNCTION:               CONSTRAINTS:
-#  setConstraints          Transforms constraint strings into a list value
-#  getConstraints          Transforms a constraint list value into strings
+# FUNCTION:                    CONSTRAINTS:
+#  portfolioConstraints         Checks Consistency of Constraints Strings
+#  .setConstraints              Transforms constraint strings into a list value
+#  .setBoxGroupConstraints       Utility function called by .setConstraints()
+#  .setRiskBudgetsConstraints    Utility function called by .setConstraints()
+#  .getConstraints              Transforms a constraint list value into strings
 ################################################################################
-   
+ 
+
+portfolioConstraints =
+function(data, spec, constraints)
+{   # A function implemented by Rmetrics
+
+    # Description:
+    #   Checks Consistency of Constraints Strings
     
-setConstraints =
+    # Vector of Valid Strings:
+    validStrings = c(
+        "LongOnly", "Short", 
+        "minW", "maxW", "minsumW", "maxsumW",
+        "minB", "maxB")
+    
+    # Check Strings:
+    usedStrings = unique(sort(sub("\\[.*", "", constraints)))
+    usedStrings
+    checkStrings = usedStrings %in% validStrings
+    checkStrings
+    check = (sum(!checkStrings) == 0)
+    if (check) check = "valid"
+    attr(constraints, "control") = check
+    
+    # Return Value:
+    constraints
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.setConstraints =
+function(data, spec = portfolioSpec(), constraints = NULL,
+type = c("BoxGroup", "RiskBudget"))
+{   # A function implemented by Rmetrics
+
+    # Description:
+    #   Transforms constraint strings into a list value
+    
+    # Arguments:
+ 
+    # FUNCTION:
+     
+    # Check Arguments:
+    type = match.arg(type)
+    
+    # Check Data:
+    if (!inherits(data, "fPFOLIODATA")) data = .portfolioData(data, spec)
+    
+    # Short Selling:
+    if (length(constraints) > 0) {
+        # 'constraints' must be at least of length 1, to be checked ...
+        if (constraints[1] == "Short") constraints = NULL  
+    }
+    
+    # Constraints:
+    if (type == "BoxGroup") {
+            ans = .setBoxGroupConstraints(data, spec, constraints)
+    } else if (type == "RiskBudget") {
+            ans = .setRiskBudgetsConstraints(data, spec, constraints)
+    }
+ 
+    # Return Value:
+    ans
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.setBoxGroupConstraints =
 function(data, spec = portfolioSpec(), constraints = NULL)
 {   # A function implemented by Rmetrics
 
@@ -53,16 +125,19 @@ function(data, spec = portfolioSpec(), constraints = NULL)
     # FUNCTION:
      
     # Get Statistics:
+    if (!inherits(data, "fPFOLIODATA")) data = .portfolioData(data, spec)
     mu = data$statistics$mu
     Sigma = data$statistics$Sigma
-    N = length(mu)
+
+    # Number of Assets:
+    N = nAssets = length(mu)
     
     # Target Return:
     targetReturn = spec@portfolio$targetReturn 
     weights = spec@portfolio$weights
     if(is.null(targetReturn) & is.null(weights)) {
         weights = rep(1/N, N)
-        warning("Equal Weights Portfolio in use")
+        # warning("Equal Weights Portfolio in use")
     }
     if(is.null(targetReturn)) {
         targetReturn = (weights %*% Sigma %*% weights)[1, 1]
@@ -109,9 +184,9 @@ function(data, spec = portfolioSpec(), constraints = NULL)
             }
         }
     }
-
-
     rownames(b0) = rownames(A)
+    
+    # Bind Results:
     ans = cbind(A = A, b = b0)
     colnames(ans) = c(colnames(A), "Exposure")
     class(ans) = c("constraintsMatrix", "matrix")
@@ -121,21 +196,56 @@ function(data, spec = portfolioSpec(), constraints = NULL)
 }
 
 
-################################################################################
-
-
-getConstraints =
-function(object)
-{   # A function implemented by Rmetrics
-
-    UseMethod("getConstraints")
-}
-
-
 # ------------------------------------------------------------------------------
 
 
-getConstraints.constraintsMatrix = 
+.setRiskBudgetsConstraints =
+function(data, spec = NULL, constraints = NULL)
+{   # A function implemented by Rmetrics
+
+    # Description:
+    #   Transforms constraint strings into a list value
+    
+    # Arguments:
+    
+    # Example:
+    #   Constraints = c("minB[3:4]=0.1","maxB[1:3]=0.3","maxB[c(4,6)]=0.4")
+    #   setRiskBudgetsConstraints(8,  constraints = Constraints)
+     
+    # FUNCTION:
+    
+    # Get Statistics:
+    if (!inherits(data, "fPFOLIODATA")) data = .portfolioData(data, spec)
+    mu = data$statistics$mu
+    Sigma = data$statistics$Sigma
+
+    # Number of Assets:
+    N = nAssets = length(mu)
+    
+    # Compose Risk Budgets:
+    minB = rep(0, N)
+    maxB = rep(1, N)
+    if (!is.null(constraints)) {
+        nC = length(constraints)
+        what = substr(constraints, 1, 4)
+        for (i in 1:nC) {       
+            if (what[i] == "minB" | what[i] == "maxB") {
+                eval(parse(text = constraints[i]))
+            }
+        }  
+    }
+    ans = rbind(minB = minB, maxB = maxB)
+    colnames(ans) = paste("A", 1:N, sep = "")
+ 
+    # Return Value:
+    ans
+}
+
+
+################################################################################
+
+
+.getConstraints = 
 function(object)
 {   # A function implemented by Rmetrics
 

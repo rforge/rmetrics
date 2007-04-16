@@ -65,18 +65,6 @@ assetsSelect(x, method = c("hclust", "kmeans"),
 }
 
 
-\details{
-    
-    \bold{Assets Selection:}
-    \cr\cr   
-    The function \code{assetsSelect} calls the functions \code{hclust}
-    or \code{kmeans} from R's \code{"stats"} package. \code{hclust}
-    performs a hierarchical cluster analysis on the set of dissimilarities 
-    \code{hclust(dist(t(x)))} and \code{kmeans} performs a k-means
-    clustering on the data matrix itself. 
-}
-
-
 \value{
   
     \code{assetsSelect}
@@ -89,13 +77,25 @@ assetsSelect(x, method = c("hclust", "kmeans"),
 }
 
 
-\references{
+\details{
     
-N. N. (1989); 
-    \emph{Title},
-     Lecture Notes, Budapest Institute of Technology, TechnicalUniversity.
-
+    \bold{Assets Selection:}
+    \cr\cr   
+    The function \code{assetsSelect} calls the functions \code{hclust}
+    or \code{kmeans} from R's \code{"stats"} package. \code{hclust}
+    performs a hierarchical cluster analysis on the set of dissimilarities 
+    \code{hclust(dist(t(x)))} and \code{kmeans} performs a k-means
+    clustering on the data matrix itself. 
 }
+
+
+%\references{
+%    
+%N. N. (1989); 
+%    \emph{Title},
+%     Lecture Notes, Budapest Institute of Technology, TechnicalUniversity.
+%
+%}
 
 
 \seealso{

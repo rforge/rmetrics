@@ -34,16 +34,30 @@
 #  show.fPFOLIOSPEC              Print method for 'fPFOLIOSPEC' objects
 # FUNCTION:                     MODEL SLOT:
 #  setType                       Sets type of portfolio Optimization
+#  setType<-                      alternative function call
 #  setEstimator                  Sets name of mean-covariance estimator
+#  setEstimator<-                 alternative function call
+#  setParams                     Sets optional model parameters
+#  setParams<-                    alternative function call
 # FUNCTION:                     PORTFOLIO SLOT:
 #  setWeights                    Sets weights vector
+#  setWeights<-                   alternative function call
 #  setTargetReturn               Sets target return value
+#  setTargetReturn<-              alternative function call
 #  setRiskFreeRate               Sets risk-free rate value
+#  setRiskFreeRate<-              alternative function call
 #  setNFrontierPoints            Sets number of frontier points
+#  setNFrontierPoints<-           alternative function call
 #  setReturnRange                Sets range of target returns
-#  setRiskRange                  Sets range of target risks 
+#  setReturnRange<-               alternative function call
+#  setRiskRange                  Sets range of target risks
+#  setRiskRange<-                 alternative function call
+# FUNCTION:                     SOLVER SLOT:
+#  setSolver                     Sets name of desired solver
+#  setSolver<-                    alternative function call
 # FUNCTION:                     Classical and Robust Estimators
-#  portfolioStatistics           Estimates mu and Sigma Statistics
+#  portfolioStatistics           Estimates mu and Sigma statistics
+#  .portfolioData                 Creates portfolio data list
 ################################################################################
 
 
@@ -75,7 +89,8 @@ portfolio = list(
     returnRange = NULL, 
     riskRange = NULL),
 solver = list(
-    type = c("RQuadprog", "RDonlp2")), 
+    type = c("RQuadprog", "RDonlp2"),
+    trace = FALSE),  
 title = NULL, 
 description = NULL)
 {   # A function implemented by Rmetrics
@@ -88,23 +103,28 @@ description = NULL)
     
     # FUNCTION:
     
+    # Compose Checklists:
+    model.type = "MV"
+    model.estimator.mean = "mean"
+    model.estimator.cov = c("cov", "mcd", "shrink")
+    solver.type = c("RQuadprog", "RDonlp2")
+    solver.trace = FALSE
+    
+    # Check Arguments:
+    stopifnot(model$type %in% model.type)
+    stopifnot(model$estimator[1] %in% model.estimator.mean)
+    stopifnot(model$estimator[2] %in% model.estimator.cov)
+    stopifnot(solver$type %in% solver.type)
+    
     # Model:
-    Model = list(
-        type = "MV", 
-        estimator = c("mean", "cov"))
+    Model = list(type = "MV", estimator = c("mean", "cov"))
     Model[(Names <- names(model))] <- model
     
     # Portfolio:
-    Portfolio = list(
-        weights = NULL, 
-        targetReturn = NULL, 
-        targetRisk = NULL,
-        riskFreeRate = 0, 
-        nFrontierPoints = 50, 
-        returnRange = NULL, 
+    Portfolio = list(weights = NULL, targetReturn = NULL, targetRisk = NULL,
+        riskFreeRate = 0, nFrontierPoints = 100, returnRange = NULL, 
         riskRange = NULL)
     Portfolio[(Names <- names(portfolio))] <- portfolio
-    
     # Check Portfolio - weights, targetReturn, targetRisk:
     # ... at least two of them must be set to NULL!
     checkPortfolio = 0
@@ -112,6 +132,9 @@ description = NULL)
     if(!is.null(portfolio$targetReturn)) checkPortfolio = checkPortfolio + 1
     stopifnot(checkPortfolio <= 1)
   
+    # Add Solver Solver:
+    Solver = list(type = solver$type[1], trace = solver$trace)
+    
     # Add Title and Description:
     if (is.null(title)) title = "Portfolio Specification"
     if (is.null(description)) description = .description()
@@ -120,8 +143,8 @@ description = NULL)
     new("fPFOLIOSPEC", 
         call = match.call(),
         model = Model,
-        solver = solver,
         portfolio = Portfolio,
+        solver = Solver,
         title = title, 
         description = description)    
 } 
@@ -141,7 +164,7 @@ function(object)
     #   object - an object of class "fPFOLIOSPEC"
     
     # FUNCTION:
-            
+    
     # Title:
     cat("\nTitle:\n ")
     cat(getTitle(object), "\n")
@@ -237,6 +260,26 @@ function(spec = portfolioSpec(), estimator = c("mean", "cov"))
     
     # Estimator ?
     spec@model$estimator = estimator 
+    
+    # Return Value:
+    spec
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.setParams = 
+function(spec = portfolioSpec(), params = list())
+{   # A function implemented by Rmetrics
+
+    # Description:                  
+    #   Sets name of mean-covariance estimator
+    
+    # FUNCTION:
+    
+    # Estimator ?
+    spec@model$params = params 
     
     # Return Value:
     spec
@@ -398,6 +441,26 @@ function(spec = portfolioSpec(), nFrontierPoints = 100)
 # ------------------------------------------------------------------------------
 
 
+".setNFrontierPoints<-" <- 
+function(spec, value)
+{   # A function implemented by Rmetrics
+
+    # Description:                                   
+    #   Sets number of frontier points
+    
+    # FUNCTION:
+    
+    # Risk-Free Rate ?
+    spec@portfolio$nFrontierPoints = value
+    
+    # Return Value:
+    spec
+}
+
+
+# ------------------------------------------------------------------------------
+
+
 setReturnRange = 
 function(spec = portfolioSpec(), returnRange = NULL)
 {   # A function implemented by Rmetrics
@@ -440,9 +503,12 @@ function(spec = portfolioSpec(), riskRange = NULL)
 
 portfolioStatistics = 
 function(data, spec = portfolioSpec())
-{
+{   # A function implemented by Rmetrics
+
     # Description:
     #   Estimates mu and Sigma Statistics
+    
+    # FUNCTION:
     
     # Check Data: 
     stopifnot(!is.list(data))
@@ -494,6 +560,42 @@ function(data, spec = portfolioSpec())
     
     # Return Value:
     statistics
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.portfolioData =
+function(data, spec)
+{   # A function implemented by Rmetrics
+
+    # Description:
+    #   Creates portfolio data list
+    
+    # FUNCTION:
+    
+    # Check Data: 
+    if (is.list(data)) {
+        series = NA
+        mu = data$mu
+        Sigma = data$Sigma
+        statistics = list(mu = mu, Sigma = Sigma)
+    } else {
+        # Take care of time ordering ...
+        if (is.timeSeries(data)) data = sort(data)
+        series = data
+        statistics = portfolioStatistics(data, spec)
+        mu = statistics$mu
+        Sigma = statistics$Sigma
+    }
+    
+    # Portfolio data list:
+    data = list(series = series, statistics = statistics) 
+    class(data) <- c("list", "fPFOLIODATA") 
+    
+    # Return Value:
+    data
 }
 
 

@@ -25,7 +25,7 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2004, Diethelm Wuertz, GPL
+#   1997 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
 #   www.rmetrics.org
@@ -38,24 +38,13 @@
 
 ################################################################################
  
-
-.corpcorBuiltin =
-function(builtin = "/fPortfolio/demo/funCorpcor.R") 
-{
-    Builtin = paste(.Library, builtin, sep = "")
-    source(Builtin)
-}
-
-
-# ------------------------------------------------------------------------------
-
     
 .First.lib =  
 function(lib, pkg)
 {   # A function implemented by Diethelm Wuertz
     
     # Package:
-    cat("\nRmetrics, (C) 1999-2004, Diethelm Wuertz, GPL")
+    cat("\nRmetrics, (C) 1997-2007, Diethelm Wuertz, GPL")
     cat("\nfPortfolio: Portfolio Selection and Optimization\n")
     
     # Load dll:

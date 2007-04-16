@@ -83,20 +83,24 @@ function()
 test.feasiblePortfolio =
 function()
 { 
-    # Setting Data:
-    Data = usPortfolioData()
+    # Arguments:
+    # feasiblePortfolio(data, spec = portfolioSpec(), constraints = NULL)
+    
+    # Get Data:
+    Data = as.timeSeries(data(smallcap.ts))
+    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
     Data
    
-    # Setting Default Specifications - Long Only MV Portfolio
+    # Set Default Specifications - Long Only MV Portfolio
     Spec = portfolioSpec()
     setWeights(Spec) = rep(1/8, times = 8)
     Spec
     
-    # Calculation of Long Only Minimum Variance Portfolio:
+    # Optimize Long Only Minimum Variance Portfolio:
     Portfolio = feasiblePortfolio(Data, Spec)
     Portfolio                                                             
    
-    # Try Rdonlp2:
+    # Try Solver Rdonlp2:
     require(Rdonlp2)
     setSolver(Spec)<-"Rdonlp2"
     Spec
@@ -114,11 +118,15 @@ function()
 test.cmlPortfolio =
 function()
 { 
-    # Setting Data:
-    Data = usPortfolioData()
+    # Arguments:
+    # cmlPortfolio(data, spec = portfolioSpec(), constraints = NULL)
+    
+    # Load Data:
+    Data = as.timeSeries(data(smallcap.ts))
+    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
     Data
    
-    # Setting Default Specifications - Long Only MV Portfolio
+    # Set Default Specifications - Long Only MV Portfolio
     Spec = portfolioSpec()
     Spec
     
@@ -142,11 +150,15 @@ function()
 test.tangencyPortfolio =
 function()
 { 
-    # Setting Data
-    Data = usPortfolioData()
+    # Arguments:
+    # tangencyPortfolio(data, spec = portfolioSpec(), constraints = NULL)
+    
+    # Load Data:
+    Data = as.timeSeries(data(smallcap.ts))
+    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
     Data
     
-    # Setting Default Specifications - Long Only MV Portfolio
+    # Set Default Specifications - Long Only MV Portfolio
     Spec = portfolioSpec()
     Spec
     
@@ -170,11 +182,15 @@ function()
 test.minvariancePortfolio =
 function()
 { 
-    # Setting Data
-    Data = usPortfolioData()
+    # Arguments:
+    # minvariancePortfolio(data, spec = portfolioSpec(), constraints = NULL)
+    
+    # Load Data:
+    Data = as.timeSeries(data(smallcap.ts))
+    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
     Data
     
-    # Setting Default Specifications - Long Only MV Portfolio
+    # Set Default Specifications - Long Only MV Portfolio
     Spec = portfolioSpec()
     Spec
     
@@ -198,8 +214,7 @@ function()
     target = round(sum(getWeights(Portfolio)), 3)
     current = 1
     checkIdentical(target, current)
- 
-    
+
     # Return Value:
     return()
 }
@@ -211,11 +226,15 @@ function()
 test.efficientPortfolio =
 function()
 { 
-    # Setting Data
-    Data = usPortfolioData()
+    # Arguments:
+    # efficientPortfolio(data, spec = portfolioSpec(), constraints = NULL) 
+ 
+    # Load Data:
+    Data = as.timeSeries(data(smallcap.ts))
+    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
     Data
    
-    # Setting Default Specifications - Long Only MV Portfolio
+    # Set Default Specifications - Long Only MV Portfolio
     Spec = portfolioSpec()
     setTargetReturn(Spec)<-mean(seriesData(Data))
     Spec
@@ -240,11 +259,16 @@ function()
 test.portfolioFrontier =
 function()
 { 
-    # Setting Data
-    Data = usPortfolioData()
+    # Arguments:
+    # portfolioFrontier(data, spec = portfolioSpec(), constraints = NULL, 
+    #   title = NULL, description = NULL) 
+   
+    # Load Data:
+    Data = as.timeSeries(data(smallcap.ts))
+    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
     Data
    
-    # Setting Default Specifications - Long Only MV Portfolio
+    # Set Default Specifications - Long Only MV Portfolio
     Spec = portfolioSpec()
     Spec
    
@@ -268,11 +292,12 @@ function()
 test.show =
 function()
 { 
-    # Setting Data:
-    Data = usPortfolioData()
+    # Load Data::
+    Data = as.timeSeries(data(smallcap.ts))
+    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
     Data
    
-    # Setting Default Specifications:
+    # Set Default Specifications:
     Spec = portfolioSpec()
     Spec
    
@@ -295,27 +320,31 @@ function()
 test.plot =
 function()
 { 
-    # Setting Data:
-    Data = sm132PortfolioData()
+    # Load Data::
+    Data = as.timeSeries(data(smallcap.ts))
+    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
     Data
    
-    # Setting Default Specifications:
+    # Set Default Specifications:
     Spec = portfolioSpec()
     Spec
+    
+    # Set Constraints:
+    Constraints = "LongOnly"
    
     # Calculation of Long Only Minimum Variance Portfolio:
-    Frontier = portfolioFrontier(Data, Spec)
+    Frontier = portfolioFrontier(Data, Spec, Constraints)
     Frontier
     
     # Try RDonlp2:
     require(Rdonlp2)
-    setSolver(Spec)<-"Rdonlp2"
-    Frontier = portfolioFrontier(Data, Spec)
+    setSolver(Spec)<-"RDonlp2"
+    Frontier = portfolioFrontier(Data, Spec, Constraints)
     Frontier
     
     # Plot:
     # par(mfrow = c(1, 1))
-    plot(Frontier)
+    # plot(Frontier, which = c(1, 8, 8, 8, 2:6))
     
     # Return Value:
     return()
@@ -328,11 +357,12 @@ function()
 test.weightsSlider =
 function()
 { 
-    # Setting Data:
-    Data = usPortfolioData()
+    # Load Data::
+    Data = as.timeSeries(data(smallcap.ts))
+    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
     Data
    
-    # Setting Default Specifications:
+    # Set Default Specifications:
     Spec = portfolioSpec()
     Spec
    
@@ -341,7 +371,7 @@ function()
     Frontier
     
     # Try:
-    # weightsSlider(Frontier)                                            # CHECK
+    weightsSlider(Frontier)                                             
     
     # Return Value:
     return()
@@ -354,11 +384,12 @@ function()
 test.frontierSlider =
 function()
 { 
-    # Setting Data:
-    Data = usPortfolioData()
+    # Load Data::
+    Data = as.timeSeries(data(smallcap.ts))
+    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
     Data
    
-    # Setting Default Specifications:
+    # Set Default Specifications:
     Spec = portfolioSpec()
     Spec
    
@@ -367,7 +398,7 @@ function()
     Frontier
     
     # Try:
-    # frontierSlider(Frontier)                                           # CHECK
+    frontierSlider(Frontier)                                            
     
     # Return Value:
     return()

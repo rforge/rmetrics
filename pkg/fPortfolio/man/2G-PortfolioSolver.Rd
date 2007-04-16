@@ -13,8 +13,8 @@
 
 \description{
 
-    A collection of solver and utility functions
-    for portfolio optimization.
+    A collection and description of solver and utility 
+    functions for portfolio optimization.
     \cr
 
     The functions are:

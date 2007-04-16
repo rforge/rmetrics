@@ -29,7 +29,7 @@
   
     A collection and description of functions 
     allowing to gain information about optimal 
-    portfolios. Generally optimization is done 
+    portfolios. Generally, optimization is done 
     via three arguments, data, specification of 
     the portfolio, and constraints, while function
     portfolioFrontier() has two additional 
@@ -43,15 +43,15 @@
     
     \tabular{ll}{
     \code{feasiblePortfolio} \tab Returns a feasible portfolio, \cr
-    \code{cmlPortfolio} \tab Returns capital market line, \cr
-    \code{tangencyPortfolio} \tab Returns the tangency portfolio, \cr
-    \code{minvariancePortfolio} \tab Returns the minimum variance portfolio, \cr
-    \code{efficientPortfolio} \tab Returns a frontier portfolio, \cr
-    \code{portfolioFrontier} \tab Returns the efficient frontier of a portfolio, \cr
-    \code{show} \tab Print method for 'fPPORTFOLIO' objects, \cr   
-    \code{plot} \tab Plot method for objects of class fPORTFOLIO, \cr   
-    \code{weightsSlider} \tab Weights Slider, \cr           
-    \code{frontierSlider} \tab Efficient Frontier Slider. }
+    \code{cmlPortfolio} \tab returns the capital market line portfolio, \cr
+    \code{tangencyPortfolio} \tab returns the tangency portfolio, \cr
+    \code{minvariancePortfolio} \tab returns the minimum variance portfolio, \cr
+    \code{efficientPortfolio} \tab returns an efficient portfolio, \cr
+    \code{portfolioFrontier} \tab returns the efficient frontier, \cr
+    \code{show} \tab print method for 'fPPORTFOLIO' objects, \cr   
+    \code{plot} \tab plot method for objects of class fPORTFOLIO, \cr   
+    \code{weightsSlider} \tab starts the weights slider, \cr           
+    \code{frontierSlider} \tab starts the efficient frontier Slider. }
     
 }
     
@@ -160,37 +160,53 @@ frontierSlider(object, control = list(), \dots)
     see Value for further details.
     \cr
     
-    \bold{Single Portfolio:}
+    \bold{Individual Portfolios:}
     \cr\cr   
-    The single portfolio functions allow a direct calculation of interesting
-    portfolio. The calculation is done with three arguments: data, specifications,
-    constraints, see above. The functions are named like the portfolio and
-    return only one portfolio on efficient frontier in an S4 object of class
+    Individual portfolio functions allow a direct computation of portfolios 
+    with specific properties. The functions are:
+    
+    \tabular{ll}{
+    \code{feasiblePortfolio} \tab a feasible portfolio, \cr
+    \code{cmlPortfolio} \tab the capital market line portfolio, \cr
+    \code{tangencyPortfolio} \tab the tangency portfolio, \cr
+    \code{minvariancePortfolio} \tab the minimum variance portfolio, \cr
+    \code{efficientPortfolio} \tab an efficient portfolio. } 
+    
+    The functions require three arguments: \code{data}, \code{spec} 
+    (specifications), and \code{constraints}, see above. The functions 
+    are named according to their specific property and return the result
+    of the computed or optimized portfolio as an S4 object of class 
     \code{fPortfolio}.
-    \cr
+    
+    \emph{FeasiblePortfolio:} The weights are retrieved from the 
+    specification structure, by default they are undefined, \code{NULL},
+    and in this case the function \code{feasiblePortfolio} assumes
+    equal weights. To set user specified weights in the specification 
+    structure, use the function \code{setWeights}. 
     
     \bold{Portfolio Sliders:}
     \cr\cr   
     The sliders have illustrative objectives. The functions expect an S4 object
     of class fPortfolio.\cr
-    \code{frontierSlider}: With the frontier slider it is possible to slide over
-    the efficient frontier. Risk and return of the current portfolio is plotted
-    in the title. The frontier slider has several addable plot features listed 
-    in the following. Little pies at the current portfolio showing the weights
-    (left pie) and/or the attributed weights (right pie), legend, minimum
-    variance portfolio, tangency portfolio, market portfolio with capital market
-    line (risk free rate is slidable), Sharpe ratio plot, equal weights
-    portfolio, single asset portfolios, two assets short selling efficient
-    frontier, Monte Carlo portfolios (number is sliderable in a range from 0 to
-    25000).\cr    
-    \code{weightsSlider}: The weights slider gives an overview of the weights on
-    the efficient frontier. Three weight plots \code{weightsPlot}, 
+    \code{frontierSlider}: With the frontier slider it is possible to slide 
+    over the efficient frontier. Risk and return of the current portfolio is 
+    plotted in the title. The frontier slider has several addable plot features 
+    listed in the following. Little pies at the current portfolio showing the 
+    weights (left pie) and/or the attributed weights (right pie), legend, 
+    minimum variance portfolio, tangency portfolio, market portfolio with 
+    capital market line (risk free rate is slidable), Sharpe ratio plot, equal 
+    weights portfolio, single asset portfolios, two assets short selling 
+    efficient frontier, Monte Carlo portfolios (number is sliderable in a 
+    range from 0  to 25000).
+    \cr    
+    \code{weightsSlider}: The weights slider gives an overview of the weights 
+    on the efficient frontier. Three weight plots \code{weightsPlot}, 
     \code{piePlot} and the not stacked weights and a frontier plot with the
-    single assets, the tangency portfolio and a legend are provided. In the two
-    weights plots the vertical line indicates the current portfolio and a dotted
-    one indicates the minimum variance portfolio. The number in the pie plot
-    stands for the asset and the sign shows whether this asset is short or long.
-    In all plots colors represent the same asset.
+    single assets, the tangency portfolio and a legend are provided. In the 
+    two weights plots the vertical line indicates the current portfolio and a 
+    dotted one indicates the minimum variance portfolio. The number in the 
+    pie plot stands for the asset and the sign shows whether this asset is 
+    short or long. In all plots colors represent the same asset.
 
 }
 
@@ -402,15 +418,17 @@ frontierSlider(object, control = list(), \dots)
         frontier. Default is NULL, i.e. the pie is set one default radius left
         of the efficient frontier.
         }
-    \item{xlim.frontier}{
+    \item{xlim}{
         [weightsSlider, frontierSlider] - 
         a vector, containing x-axis plot limits of the efficient frontier.
-        Default setting is maximum of frontier range or single assets portfolios.
+        Default setting is maximum of frontier range or single assets 
+        portfolios.
         }
-    \item{ylim.frontier}{
+    \item{ylim}{
         [weightsSlider, frontierSlider] - 
         a vector, containing y-axis plot limits of the efficient frontier.
-        Default setting is maximum of frontier range or single assets portfolios. 
+        Default setting is maximum of frontier range or single assets 
+        portfolios. 
         } 
     }                 
 }
@@ -437,42 +455,34 @@ frontierSlider(object, control = list(), \dots)
 
 
 \examples{
-\dontrun{
 ## minvariancePortfolio -
-   # Setting Data
+   # Load Data:
    Data = usPortfolioData()
-   # Setting Default Specifications
+   # Set Default Specifications:
    Spec = portfolioSpec()
-   # Calculation of Short Selling Minimum Variance Portfolio
-   minvariancePortfolio(Data, Spec)
+   # Allow for unlimited Short Selling:
+   Constraints = "Short"
+   # Compute Short Selling Minimum Variance Portfolio
+   minvariancePortfolio(Data, Spec, Constraints)
     
 ## portfolioFrontier -
-   # Setting Data
-   Data = usPortfolioData()
-   # Setting Default Specifications
-   Spec = portfolioSpec()
-   # Setting Long Only Constraints
+   # Modify Constraints - Now Long Only Constraints:
    Constraint = c("minW[1:8]=0")
    # Calculation of the Efficient Frontier
    frontier = portfolioFrontier(Data, Spec, Constraint)
    print(frontier)
     
 ## plot -
-   # Requiring S4 Object "frontier" from 2nd example
-   # Plotting the Efficient Frontier with Minimum Variance Portfolio
-   par(mfrow = c(1, 1))
+   # Plot Efficient Frontier with Minimum Variance Portfolio
    plot(frontier, which = c(1, 3))
     
 ## frontierSlider -
-   # Requiring S4 Object "frontier" from 2nd example
-   # Plotting the Frontier Slider
+   # Try Frontier Slider:
    # frontierSlider(frontier)
 
 ## weightsSlider -
-   # Requiring S4 Object "frontier" from 2nd example
-   # Plotting the Weights Slider
+   # Try Weights Slider:
    # weightsSlider(frontier)
-}
 }
 
 

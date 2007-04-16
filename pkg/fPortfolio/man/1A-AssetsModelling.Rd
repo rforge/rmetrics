@@ -22,12 +22,9 @@
   
     A collection and description of functions which 
     generate multivariate artificial data sets of assets, 
-    which fit the parameters to a multivariate normal, 
+    and fit the parameters to a multivariate normal, 
     skew normal, or (skew) Student-t distribution and 
-    which compute some benchmark statistics. In addition 
-    a function is provided which allows for the selection 
-    and clustering of individual assets from portfolios 
-    using hierarchical and k-means clustering approaches.
+    which compute some benchmark statistics. 
     \cr
     
     The functions are:
@@ -153,27 +150,6 @@ show.fASSETS(object)
 }
 
 
-\details{
-
-    \bold{Assets Objects:}
-    \cr\cr
-    Data sets of assets \code{x} can be expressed as multivariate 
-    'timeSeries' objects, as 'data.frame' objects, or any other rectangular 
-    object which can be transformed into an object of class 'matrix'.
-    \cr
-       
-    \bold{Parameter Estimation:}
-    \cr\cr
-    The function \code{assetsFit} for the parameter estimation and 
-    \code{assetsSim} for the simulation of assets sets use code based on 
-    functions from the contributed packages \code{"mtvnorm"} and \code{"sn"}. 
-    The required functionality for fitting data to a multivariate Normal, 
-    skew-Normal, or skew-Student-t is available from builtin functions, so 
-    it is not necessary to load the packages \code{"mtvnorm"} and \code{"sn"}. 
-
-}
-
-
 \value{
   
     \code{assetsFit()} 
@@ -239,6 +215,27 @@ show.fASSETS(object)
     returns a matrix, the artifical data records represent the assets 
     of the portfolio. Row names and column names are not created, they
     have to be added afterwards.
+
+}
+
+
+\details{
+
+    \bold{Assets Objects:}
+    \cr\cr
+    Data sets of assets \code{x} can be expressed as multivariate 
+    'timeSeries' objects, as 'data.frame' objects, or any other rectangular 
+    object which can be transformed into an object of class 'matrix'.
+    \cr
+       
+    \bold{Parameter Estimation:}
+    \cr\cr
+    The function \code{assetsFit} for the parameter estimation and 
+    \code{assetsSim} for the simulation of assets sets use code based on 
+    functions from the contributed packages \code{"mtvnorm"} and \code{"sn"}. 
+    The required functionality for fitting data to a multivariate Normal, 
+    skew-Normal, or skew-Student-t is available from builtin functions, so 
+    it is not necessary to load the packages \code{"mtvnorm"} and \code{"sn"}. 
 
 }
 

@@ -28,14 +28,17 @@
 
 
 ################################################################################
-# FUNCTION:                     PORTFOLIO S4 EXTRACTORS:
+# FUNCTION:                     PORTFOLIO S4 EXTRACTORS FROM DATA SLOT:
 #  getAssets                     Extracts assets series data, if available
 #  getStatistics                 Extracts assets statistics, mean and covariance
 #  getNumberOfAssets             Extracts number of assets from statistics
+# FUNCTION:                     PORTFOLIO S4 EXTRACTORS FROM SPECIFICATION SLOT:
 #  getSpecification              Extracts @specification Slot
+# FUNCTION:                     PORTFOLIO S4 EXTRACTORS FROM SPECIFICATION SLOT:
 #  getPortfolio                  Extracts @portfolio Slot
 #  getFrontier                   Extracts the efficient frontier
 #  getWeights                    Extracts weights from a fPORTFOLIO object
+#  getRiskBudgets                Extracts risk budgets from a fPORTFOLIO object
 #  getTargetReturn               Extracts target return from a portfolio
 #  getTargetRisk                 Extracts target riks from a portfolio
 #  getTargetStdev                Extracts target standard deviations from a PF
@@ -51,7 +54,7 @@ function(object)
     
     # FUNCTION:
     
-    # Get Series of Assets
+    # Get Series of Assets:
     ans = object@data$series
     
     # Return Value:
@@ -99,7 +102,7 @@ function(object)
 }
 
 
-# ------------------------------------------------------------------------------
+################################################################################
 
 
 getSpecification =
@@ -119,7 +122,7 @@ function(object)
 }
 
 
-# ------------------------------------------------------------------------------
+################################################################################
 
 
 getPortfolio =
@@ -204,6 +207,44 @@ function(object, doplot = FALSE, ...)
     
     # Return Value:
     ans  
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+getRiskBudgets = 
+function (object) 
+{   # A function implemented by Rmetrics
+
+    # Description:
+    
+    # FUNCTION:
+    
+    # Risk Budgets:
+    weights = getWeights(object)
+    ans = NA
+    Sigma = getStatistics(object)$Sigma
+    if (is.null(dim(weights))) {
+        # Single Portfolio ...
+        ans1 = as.vector(weights %*% Sigma %*% weights)
+        ans2 = as.vector(weights * Sigma %*% weights)
+        ans = round(ans2/ans1, digits = 4)
+        names(ans) = names(weights)
+    } else {
+        # Frontier ...
+        Names = colnames(weights)
+        ans = NULL
+        for (i in 1:(dim(weights)[1])) {
+            ans1 = as.vector(weights[i, ] %*% Sigma %*% weights[i, ])
+            ans2 = as.vector(weights[i, ] * Sigma %*% weights[i, ])
+            ans = rbind(ans, ans2/ans1)
+        }
+        colnames(ans) = Names
+    }
+    
+    # Return Value:
+    ans
 }
 
 

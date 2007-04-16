@@ -11,7 +11,8 @@
 \description{
   
     A collection and description of functions 
-    for the estimation of lower partial moments.
+    for the estimation of lower partial moments
+    from a tinme series of assets.
     \cr
     
     The functions are:
@@ -47,15 +48,6 @@ assetsLPM(x, tau, a, \dots)
 }
 
 
-%\details{
-%
-%    \bold{Assets Lower Partial Moments:}
-%    \cr\cr   
-%    The function \code{assetsLPM} computes xxx.
-%  
-%}
-
-
 \value{
   
   
@@ -68,6 +60,15 @@ assetsLPM(x, tau, a, \dots)
     the LPM efficient frontier.
   
 }
+
+
+%\details{
+%
+%    \bold{Assets Lower Partial Moments:}
+%    \cr\cr   
+%    The function \code{assetsLPM} computes xxx.
+%  
+%}
 
 
 %\references{

@@ -8,7 +8,8 @@
 \alias{getSpecification}   
 \alias{getPortfolio}       
 \alias{getFrontier}        
-\alias{getWeights}       
+\alias{getWeights}    
+\alias{getRiskBudgets}   
 \alias{getTargetReturn}   
 \alias{getTargetRisk}  
 \alias{getTargetStdev}    
@@ -19,10 +20,9 @@
 
 \description{
   
-    A collection of extractors for S4 objects 
-    of class \code{fPORTFOLIO}. The aim of 
-    these functions is to get an quick access 
-    to the desired data.
+    A collection and description of extractor 
+    functions for S4 objects of class 
+    \code{fPORTFOLIO}. 
     \cr
     
     The data sets are:
@@ -35,6 +35,7 @@
     \code{getPortfolio} \tab Extracts @portfolio slot, \cr
     \code{getFrontier} \tab Extracts the efficient frontier, \cr
     \code{getWeights} \tab Extracts weights from a fPORTFOLIO object, \cr
+    \code{getRiskBudgets} \tab Extracts risk budgets from a fPORTFOLIO object, \cr
     \code{getTargetReturn} \tab Extracts target return from a portfolio, \cr
     \code{getTargetRisk} \tab Extracts target risk from a portfolio, \cr
     \code{getTargetStdev} \tab Extracts target standard deviation from a portfolio. }
@@ -49,7 +50,8 @@ getNumberOfAssets(object)
 getSpecification(object)   
 getPortfolio(object, doplot = FALSE, \dots)     
 getFrontier(object, frontier = c("both", "lower", "upper"), doplot = FALSE, \dots)        
-getWeights(object, doplot = FALSE, \dots)      
+getWeights(object, doplot = FALSE, \dots) 
+getRiskBudgets(object)     
 getTargetReturn(object)  
 getTargetRisk(object)
 getTargetStdev(object)
@@ -83,18 +85,6 @@ getTargetStdev(object)
 }
 
 
-\details{
-
-    \bold{Portfolio Extractor Functions:}
-    \cr\cr
-    The extractor functions allow an quick access to all important information 
-    of the optimization problem. The functions \code{getFrontier, getPortfolio,
-    getWeights} also provide direct plotting of the data with argument doplot.
-
-}
-
-
-
 \value{
   
     \code{getAssets}\cr
@@ -110,6 +100,22 @@ getTargetStdev(object)
     all functions return a list or a value of the desired information.
   
 }
+
+
+\details{
+
+    \bold{Portfolio Extractor Functions:}
+    \cr\cr
+    The extractor functions allow an quick access to the information 
+    provided by the portfolio optimization through the returned S4
+    object of class \code{fPORTFOLIO"}. 
+    \cr
+    
+    The functions \code{getFrontier}, \code{getPortfolio}, \code{getWeights} 
+    also provide direct plotting of the data with argument \code{doplot}.
+
+}
+
 
 
 %\references{}
@@ -137,12 +143,12 @@ getTargetStdev(object)
 ## getStatistics -
    # Calculation of Long Only Efficient Frontier
    frontier = portfolioFrontier(usPortfolioData())
-   # Getting the Statistics
+   # Get Mean and Covariance:
    getStatistics(frontier)
 
-## getStatistics -
-   # Getting and Plotting the Efficient Frontier
-   getFrontier(frontier, doplot = TRUE)     
+## getFrontier -
+   # Get and Plot the Efficient Frontier:
+   getFrontier(frontier, doplot = TRUE, main = "Efficient Frontier")  
 }
 
 

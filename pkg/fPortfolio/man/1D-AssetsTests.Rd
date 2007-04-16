@@ -62,16 +62,6 @@ assetsTest(x, method = c("shapiro", "energy"), Replicates = 100,
 }
 
 
-\details{
-  
-    \bold{Assets Tests:}
-    \cr\cr   
-    The function \code{assetsTest} performs two tests for multivariate
-    Normality of an assets Set.
-
-}
-
-
 \note{
     
     The usage of the alternative \code{method="energy"} requires to
@@ -86,6 +76,16 @@ assetsTest(x, method = c("shapiro", "energy"), Replicates = 100,
     \cr
     returns an object of class \code{fHTEST}.     
   
+}
+
+
+\details{
+  
+    \bold{Assets Tests:}
+    \cr\cr   
+    The function \code{assetsTest} performs two tests for multivariate
+    Normality of an assets Set.
+
 }
 
 

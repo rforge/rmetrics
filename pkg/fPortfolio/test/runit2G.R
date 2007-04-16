@@ -64,26 +64,21 @@ function()
     require(Rdonlp2)
     
     # Direct Access:
-    data = series = usPortfolioData()
-    spec = portfolioSpec()
-    constraints = NULL
-    setTargetReturn(spec) = mean(as.matrix(series))
-    statistics = portfolioStatistics(data, spec)
-    data = list(series = series, statistics = statistics)
-    solveRQuadprog(data, spec, constraints)
-    
-    # Frontier Portfolio:
-    Data = usPortfolioData() 
+    Data = as.timeSeries(data(smallcap.ts))
+    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
     Spec = portfolioSpec()
-    setTargetReturn(Spec)<- mean(as.matrix(series))
-    Constraints = c(
-        "minW[1:8]=0", 
-        "minsumW[1:3]=0.3", "minsumW[2:4]=0.1", 
-        "maxsumW[6:8]=0.8")
-    setSolver(Spec)<-"RQuadprog"
-    quadprog = efficientPortfolio(Data, Spec, Constraints) 
-    quadprog
-
+    setTargetReturn(Spec) = mean(as.matrix(Data))
+    
+    # Default Constraints:
+    Constraints = "LongOnly"
+    
+    # Quadprog:
+    solveRQuadprog(Data, Spec, Constraints)$solution 
+    
+    # Check Termination Error:
+    round(getWeights(efficientPortfolio(Data, Spec, Constraints)), 2)
+    round(getWeights(efficientPortfolio(10*Data, Spec, Constraints)), 2) 
+    
     # Return Value:
     return()
 }
@@ -97,27 +92,64 @@ function()
 { 
     # Install "Rdonlp2" from - http://arumat.net/Rdonlp2/
     require(Rdonlp2)
-
-    # Direct Access:
-    data = series = usPortfolioData()
-    spec = portfolioSpec()
-    constraints = NULL
-    setTargetReturn(spec) = mean(as.matrix(series))
-    statistics = portfolioStatistics(data, spec)
-    data = list(series = series, statistics = statistics)
-    solveRQuadprog(data, spec, constraints)
     
-    # Frontier Portfolio:
-    Data = usPortfolioData() 
+    # Direct Access:   
+    Data = as.timeSeries(data(smallcap.ts))
+    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
     Spec = portfolioSpec()
-    setTargetReturn(Spec)<- mean(as.matrix(series))
-    Constraints = c(
-        "minW[1:8]=0", 
-        "minsumW[1:3]=0.3", "minsumW[2:4]=0.1", 
-        "maxsumW[6:8]=0.8")
-    donlp2 = efficientPortfolio(Data, Spec, Constraints)
-    donlp2
+    setTargetReturn(Spec) = mean(as.matrix(Data))
     
+    # Long Only Constraints:
+    Constraints = NULL
+    
+    # Quadprog:
+    setSolver(Spec) = "RQuadprog"
+    round(solveRQuadprog(Data, Spec, Constraints)$solution, 3)
+    round(getWeights(efficientPortfolio(Data, Spec, Constraints)), 3)
+    
+    # Donlp2:
+    setSolver(Spec) = "RDonlp2"
+    round(solveRDonlp2(Data, Spec, Constraints)$solution, 3)
+    round(getWeights(efficientPortfolio(Data, Spec, Constraints)), 3)
+    
+    # Add Budget Constraints:
+    Constraints = c("minW[1:4]=0", "maxB[1:4]=1")
+    solveRDonlp2(Data, Spec, Constraints)$solution
+    round(getWeights(efficientPortfolio(Data, Spec, Constraints)), 2)
+    
+    # PART II:
+    
+    # Scale Returns - You should get the same Weights:
+    Data2 = 10* Data
+    setTargetReturn(Spec) = mean(as.matrix(Data2))
+    
+    # Long Only Constraints:
+    Constraints = NULL
+    
+    # Scaled Quadprog:
+    setSolver(Spec) = "RQuadprog"
+    round(solveRQuadprog(Data2, Spec, Constraints)$solution, 3)
+    round(getWeights(efficientPortfolio(Data2, Spec, Constraints)), 3)
+    
+    # Scaled Donlp2:
+    setSolver(Spec) = "RDonlp2"
+    round(solveRDonlp2(Data2, Spec, Constraints)$solution, 3)
+    round(getWeights(efficientPortfolio(Data2, Spec, Constraints)), 3)
+    
+    # Scaled Donlp2 - Add Budget Constraints:
+    Constraints = c("minW[1:4]=0", "maxB[1:4]=1")
+    solveRDonlp2(Data2, Spec, Constraints)$solution
+    myPf = efficientPortfolio(Data2, Spec, Constraints)
+    round(getWeights(myPf), 2)
+    getRiskBudgets(myPf)
+    
+    # Scaled Donlp2 - Add Budget Constraints:
+    Constraints = c("minW[1:4]=0", "maxB[1:4]=0.3")
+    solveRDonlp2(Data2, Spec, Constraints)$solution
+    myPf = efficientPortfolio(Data2, Spec, Constraints)
+    round(getWeights(myPf), 2)
+    getRiskBudgets(myPf)
+
     # Return Value:
     return()
 }

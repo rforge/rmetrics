@@ -5,6 +5,7 @@
 \alias{dutchPortfolioData}
 \alias{usPortfolioData}
 \alias{sm132PortfolioData}
+\alias{worldIndexData}
 
 
 \title{Example Portfolio Data Sets}
@@ -12,17 +13,18 @@
 
 \description{
   
-    A collection of example data from different sources. The data is either a
-    time series or a named list with entries 'mu' and 'Sigma'.
+    A collection and description of example data sets 
+    from different sources. The data include time series
+    of assets and/or their mean/covariance estimates.
     \cr
     
     The data sets are:
     
     \tabular{ll}{
-    \code{dutchPortfolioData} \tab Means and covariance matrix from Dutch stock index AEX, \cr
+    \code{dutchPortfolioData} \tab Mean-Cov matrix from Dutch stock index AEX, \cr
     \code{usPortfolioData} \tab a time series of US Assets, \cr
-    \code{sm132PortfolioData} \tab Means and covariance matrix for a pseudo portfolio
-     from Scherer, Martin.
+    \code{sm132PortfolioData} \tab Mean-Cov matrix from Scherer and Martin, \cr
+    \code{sm132PortfolioData} \tab World Index Returns from D. Locher. }
     }
     
 }
@@ -32,6 +34,7 @@
 dutchPortfolioData() 
 usPortfolioData()
 sm132PortfolioData()
+worldIndexData()
 }
 
 
@@ -56,13 +59,22 @@ sm132PortfolioData()
     \cr
     
     
-    \bold{Scherer-Martin Data Set:}
+    \bold{Simulated Mean-Cov Data Set:}
     \cr\cr   
     This data is taken from chapter 1.3.2 in Scherer, M., Martin, R.D. (2005);
     \emph{Introduction To Modern Portfolio Optimization with NuOPT, S-PLUS and
     S+Bayes}, Springer, Berlin. It is a list of covariance matrix and the return
     means of imaginary assets. It is an example set for learning about 
     optimization.
+    \cr
+    
+    
+    \bold{World Index Returns Data Set:}
+    \cr\cr   
+    This data set is contributed by D. Locher (2007);
+    It is a timeSeries object of four world
+    index return data sets including Asia, Eastern Europe, Far East and 
+    Latin America.
 
 }
 
@@ -76,12 +88,18 @@ sm132PortfolioData()
 
     \code{dutchPortfolioData} 
     \cr
-    returns a time series of yearly returns.
+    returns a \code{timeSeries} object of yearly returns.
     \cr
     
     \code{dutchPortfolioData} 
     \cr
     returns a list of covariance matrix and the return means. 
+    \cr
+    
+    \code{worldIndexData} 
+    \cr
+    returns a \code{timeSeries} object of daily returns.
+    \cr
   
 }
 

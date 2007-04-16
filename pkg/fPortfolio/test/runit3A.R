@@ -59,9 +59,45 @@ function()
 # ------------------------------------------------------------------------------
 
 
+# IMPORTANT NOTE:
+#
+#   All *ShortMV* portfolio and frontier functions assume no constraints
+#   on weights, neither box nor group constraints. Al Weights can take
+#   unlimited values in the range [-Inf, Inf].
+#
+#   All these functions are internal functions, not thought to be used by
+#   the enduser of the fPortfolio Package.
+
+# ------------------------------------------------------------------------------
+
+
 test.feasibleShortMVPortfolio = 
 function()
-{
+{  
+    # Data:
+    Data = as.timeSeries(data(smallcap.ts))
+    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
+    Data
+    
+    # Specification:
+    Spec = portfolioSpec()
+    Spec
+    
+    # Constraints:
+    Constraints = NULL
+    
+    # Feasible Portfolio:
+    .feasibleShortMVPortfolio(Data, Spec, Constraints)
+    
+    # Constraints:
+    Constraints = "Short"
+    
+    # Feasible Portfolio:
+    .feasibleShortMVPortfolio(Data, Spec, Constraints)
+    
+    # Remember, it is not yet checked if the predefined weights
+    #   are compatiblre with the specified constraints!
+    
     # Return Value:
     return()
 }
@@ -73,6 +109,27 @@ function()
 test.cmlShortMVPortfolio = 
 function()
 {
+    # Data:
+    Data = as.timeSeries(data(smallcap.ts))
+    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
+    Data
+    
+    # Specification:
+    Spec = portfolioSpec()
+    Spec
+    
+    # Constraints:
+    Constraints = NULL
+    
+    # CML Portfolio:
+    .cmlShortMVPortfolio(Data, Spec, Constraints)
+    
+    # Constraints:
+    Constraints = "Short"
+    
+    # CML Portfolio:
+    .cmlShortMVPortfolio(Data, Spec, Constraints)
+    
     # Return Value:
     return()
 }
@@ -84,6 +141,27 @@ function()
 test.tangencyShortMVPortfolio = 
 function()
 {
+    # Data:
+    Data = as.timeSeries(data(smallcap.ts))
+    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
+    Data
+    
+    # Specification:
+    Spec = portfolioSpec()
+    Spec
+  
+    # Constraints:
+    Constraints = NULL
+    
+    # Tangency Portfolio:
+    .tangencyShortMVPortfolio(Data, Spec, Constraints)
+    
+    # Constraints:
+    Constraints = "Short"
+    
+    # Tangency Portfolio:
+    .tangencyShortMVPortfolio(Data, Spec, Constraints)
+    
     # Return Value:
     return()
 }
@@ -95,6 +173,27 @@ function()
 test.minvarianceShortMVPortfolio = 
 function()
 {
+    # Data:
+    Data = as.timeSeries(data(smallcap.ts))
+    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
+    Data
+    
+    # Specification:
+    Spec = portfolioSpec()
+    Spec
+    
+    # Constraints:
+    Constraints = NULL
+    
+    # Minimum Variance Portfolio:
+    .minvarianceShortMVPortfolio(Data, Spec, Constraints)
+    
+    # Constraints:
+    Constraints = "Short"
+    
+    # Minimum Variance Portfolio:
+    .minvarianceShortMVPortfolio(Data, Spec, Constraints)
+    
     # Return Value:
     return()
 }
@@ -103,9 +202,30 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.frontierShortMVPortfolio = 
+test.efficientShortMVPortfolio = 
 function()
 {
+    # Data:
+    Data = as.timeSeries(data(smallcap.ts))
+    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
+    Data
+    
+    # Specification:
+    Spec = portfolioSpec()
+    Spec
+    
+    # Constraints:
+    Constraints = NULL
+    
+    # Efficient Portfolio:
+    .efficientShortMVPortfolio(Data, Spec, Constraints)
+    
+    # Constraints:
+    Constraints = "Short"
+    
+    # Efficient Portfolio:
+    .efficientShortMVPortfolio(Data, Spec, Constraints)
+    
     # Return Value:
     return()
 }
@@ -114,9 +234,33 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.portfolioShortMVFrontier
+test.portfolioShortMVFrontier = 
 function()
-{
+{ 
+    # Data:
+    Data = as.timeSeries(data(smallcap.ts))
+    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
+    Data
+    
+    # Specification:
+    Spec = portfolioSpec()
+    Spec
+    
+    # Constraints:
+    Constraints = NULL 
+    
+    # Portfolio Frontier:
+    .portfolioShortMVFrontier(Data, Spec, Constraints)
+    frontier = portfolioFrontier(Data, Spec, Constraints)
+    plot(frontier)
+    
+    # Constraints:
+    Constraints = "Short" 
+    
+    # Portfolio Frontier:
+    .portfolioShortMVFrontier(Data, Spec, Constraints)
+    portfolioFrontier(Data, Spec, Constraints)
+    
     # Return Value:
     return()
 }

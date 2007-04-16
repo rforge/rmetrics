@@ -66,29 +66,33 @@ function(data, spec, constraints)
     # FUNCTION:
 
     # Get Statistics:
+    if (!inherits(data, "fPFOLIODATA")) data = .portfolioData(data, spec)
     mu = data$statistics$mu
     Sigma = data$statistics$Sigma
     
     # Setting the constraints matrix and vector:
-    tmp.ans = setConstraints(data = data, spec = spec,
+    tmp.ans = .setConstraints(data = data, spec = spec,
         constraints = constraints)
     dim = length(mu)
     A = tmp.ans[, -(dim+1)]
     b0 = tmp.ans[, (dim+1)]
     
+    # Weights:
     weights = spec@portfolio$weights
     if(is.null(weights)) weights = rep(1/dim, times = dim)  
-
-    b0Test = A %*% weights
-    b0Test = sum(b0Test)
-    b0 = sum(b0)
+    names(weights) = names(mu)
+    
+    # Target Return and Risk:
     targetReturn = as.numeric(mu %*% weights)
     targetRisk = sqrt( as.numeric( t(weights) %*% Sigma %*% (weights) ) )
     
-    # Check constraints, if it is feasible:
-    # DW
+    # STILL TO DO:
+    # Check constraints, if they are feasible:
+    b0Test = A %*% weights
+    b0Test = sum(b0Test)
+    b0 = sum(b0)
     # if(b0 != b0Test) warning("Inconsistent Weights respectively Constraints")
-   
+    
     # Return Value:
     new("fPORTFOLIO", 
         call = match.call(),
@@ -102,7 +106,7 @@ function(data, spec, constraints)
             targetMean = targetReturn,
             targetStdev = targetRisk),
         title = "Feasible Portfolio", 
-       description = .description()) 
+        description = .description()) 
 }
 
 
@@ -115,12 +119,17 @@ function(data, spec, constraints)
     # Description:
     #   Computes Computes Risk, Return and Weight for CML portfolio
     
+    # Note:
+    #   Calls .efficientConstrainedMVPortfolio()
+    #   Calls efficientPortfolio()
+    
     # Example:
     #   .cmlConstrainedMVPortfolio()
     
     # FUNCTION:
     
     # Get Statistics:
+    if (!inherits(data, "fPFOLIODATA")) data = .portfolioData(data, spec)
     mu = data$statistics$mu
     Sigma = data$statistics$Sigma
     
@@ -133,16 +142,20 @@ function(data, spec, constraints)
         (x - spec@portfolio$riskFreeRate) / getTargetRisk(ans)      
     }
     
-    # Calling optimize function
+    # Calling optimize() function:
     cml = optimize(.sharpeRatioFun, interval = range(mu), maximum = TRUE,
         data = data, spec = spec, constraints = constraints,
         tol = .Machine$double.eps^0.5)
-           
+      
+    # Compute Target Return and Risk:     
     targetReturn = spec@portfolio$targetReturn = cml$maximum  
-    targetRisk = getTargetRisk(efficientPortfolio(data = data$statistics, spec,
-        constraints)) 
+    targetRisk = getTargetRisk(
+        efficientPortfolio(data = data$statistics, spec, constraints)) 
+        
+    # Get Weights:
     weights = getWeights(efficientPortfolio(data = data$statistics,
         spec, constraints))
+    names(weights) = names(mu)
 
     # Return Value:
     new("fPORTFOLIO", 
@@ -170,12 +183,17 @@ function(data, spec, constraints)
     # Description:
     #   Computes Risk, Return and Weight for the tangency portfolio
     
+    # Note:
+    #   Calls .cmlConstrainedMVPortfolio()
+    #       Calls .efficientConstrainedMVPortfolio()
+    
     # Example:
     #   .tangencyConstrainedMVPortfolio()
     
     # FUNCTION:
     
     # Get Statistics:
+    if (!inherits(data, "fPFOLIODATA")) data = .portfolioData(data, spec)
     mu = data$statistics$mu
     Sigma = data$statistics$Sigma
  
@@ -201,12 +219,17 @@ function(data, spec, constraints)
     # Description:
     #   Computes Risk, Return and Weight for minimum variance portfolio
     
+    # Note:
+    #   Calls .efficientConstrainedMVPortfolio()
+    #   Calls efficientPortfolio()
+    
     # Example:
     #   .minvarianceConstrainedMVPortfolio()
     
     # FUNCTION:
 
     # Get Statistics:
+    if (!inherits(data, "fPFOLIODATA")) data = .portfolioData(data, spec)
     mu = data$statistics$mu
     Sigma = data$statistics$Sigma
     
@@ -228,6 +251,7 @@ function(data, spec, constraints)
         constraints)) 
     weights = getWeights(efficientPortfolio(data = data$statistics, spec,
         constraints))
+    names(weights) = names(mu)
 
     # Return Value:
     new("fPORTFOLIO", 
@@ -251,8 +275,34 @@ function(data, spec, constraints)
 
 .efficientConstrainedMVPortfolio = 
 function(data, spec, constraints)
-{      
+{   # A function implemented by Rmetrics
+
+    # Description:
+    #   Computes Risk and Return for a feasible portfolio
+    
+    # Arguments:
+    #   data - a list with two named elements. 
+    #       $series holding the time series which may be any rectangular,
+    #       object or if not specified holding NA;
+    #       $statistics holding a named two element list by itself, 
+    #        $mu the location of the asset returns by default the mean and 
+    #        $Sigma the scale of the asset returns by default the covariance
+    #        matrix.
+    
+    # Note:
+    #   In contrast to the functions *Portfolio(), which only require either the
+    #   statistics or the series the functions .*Portfolio() require both as
+    #   input
+    #   Calls   solveRQuadprog()
+    #   Calls   solveRDonlp2()
+
+    # Example:
+    #   .feasibleConstrainedMVPortfolio()
+    
+    # FUNCTION:
+     
     # Get Statistics:
+    if (!inherits(data, "fPFOLIODATA")) data = .portfolioData(data, spec)
     mu = data$statistics$mu
     Sigma = data$statistics$Sigma
     
@@ -263,11 +313,11 @@ function(data, spec, constraints)
     targetReturn = spec@portfolio$targetReturn  
     stopifnot(is.numeric(targetReturn)) 
     
-    # Calling solver:
-    solver = spec@solver$type[1]
+    # Calling Solver:
+    solver = spec@solver$type 
     if (solver == "RQuadprog") {
         ans = solveRQuadprog(data, spec, constraints) 
-    } else if (solver == "Rdonlp2") {
+    } else if (solver == "RDonlp2") {
         ans = solveRDonlp2(data, spec, constraints)
     }
     
@@ -279,7 +329,7 @@ function(data, spec, constraints)
     }
     weights = ans$solution
 
-    # Attributing no solutions
+    # Converged ?
     attr(weights, "error") <- ans$ierr
     targetRisk = sqrt(weights %*% Sigma %*% weights)
 
@@ -318,6 +368,7 @@ function(data, spec, constraints)
     # FUNCTION:
 
     # Get Statistics:
+    if (!inherits(data, "fPFOLIODATA")) data = .portfolioData(data, spec)
     mu = data$statistics$mu
     Sigma = data$statistics$Sigma
 
@@ -326,7 +377,7 @@ function(data, spec, constraints)
     riskRange = spec@portfolio$riskRange
     nFrontierPoints = spec@portfolio$nFrontierPoints
     
-    # Ranges for mean and Standard Deviation:
+    # Ranges for Mean and Standard Deviation:
     if (is.null(returnRange)){
         returnRange = range(mu) + 0.25*c(-diff(range(mu)), diff(range(mu)))
     }
@@ -337,24 +388,30 @@ function(data, spec, constraints)
     }
     
     # Calculate Efficient Frontier:
-    muMin = returnRange[1]
-    muMax = returnRange[2]
+    muMin = min(mu) # returnRange[1]
+    muMax = max(mu) # returnRange[2]
     targetMu = targetSigma = nextWeights = rep(0, times = nFrontierPoints)
     weights = error = NULL
 
     # Loop over .efficientConstrainedMVPortfolio
     Spec = spec
-    k = 0
+    solver = spec@solver$type
+    k = 0 
     for (nTargetReturn in seq(muMin, muMax, length = nFrontierPoints)) {
         k = k + 1  
-        setTargetReturn(Spec)<-nTargetReturn     
-        tmp.object = .efficientConstrainedMVPortfolio(data = data, spec = Spec,
-            constraints = constraints)
-        targetMu[k] = tmp.object@portfolio$targetReturn
-        targetSigma[k] = tmp.object@portfolio$targetRisk
-        nextWeight = tmp.object@portfolio$weights
-        weights = rbind(weights, t(nextWeight))
-        error = c(error, as.logical(attr(nextWeight, "error")))
+        setTargetReturn(Spec)<-nTargetReturn    
+        tmpObject = .efficientConstrainedMVPortfolio(
+            data = data, spec = Spec, constraints = constraints)
+        targetMu[k] = tmpObject@portfolio$targetReturn
+        targetSigma[k] = tmpObject@portfolio$targetRisk
+        nextWeights = tmpObject@portfolio$weights
+        names(nextWeights) = names(mu)
+        weights = rbind(weights, t(nextWeights))
+        if (solver == "RQuadprog") {
+            error = c(error, as.logical(attr(nextWeights, "error")))
+        } else {
+            error = c(error, FALSE)
+        }
     }
     
     # Return Value:

@@ -74,28 +74,15 @@ function(data, spec = portfolioSpec(), constraints = NULL)
     
     # FUNCTION:
     
-    # Check Data: 
-    if (is.list(data)) {
-        series = NA
-        mu = data$mu
-        Sigma = data$Sigma
-        statistics = list(mu = mu, Sigma = Sigma)
-    } else {
-        # Take care of time ordering ...
-        if (is.timeSeries(data)) data = sort(data)
-        series = data
-        statistics = portfolioStatistics(data, spec)
-        mu = statistics$mu
-        Sigma = statistics$Sigma
-    }
-    data = list(series = series, statistics = statistics)
+    # Compose Portfolio Data: 
+    data = .portfolioData(data, spec)
     
-    # Compose Function:
+    # Compose Optimization Function:
     if(is.null(constraints) | length(constraints) == 0) {
         Model = c("Constrained", "LongOnly")
-        nAssets = length(mu)
+        nAssets = length(data$statistics$mu)
         constraints = paste("minW[1:", nAssets, "]=0", sep = "")
-    } else if (constraints[1] == "short") {
+    } else if (constraints[1] == "Short") {
         Model = "Short"
     } else {
         Model = "Constrained"
@@ -132,28 +119,15 @@ function(data, spec = portfolioSpec(), constraints = NULL)
      
     # FUNCTION:
     
-    # Check Data: 
-    if (is.list(data)) {
-        series = NA
-        mu = data$mu
-        Sigma = data$Sigma
-        statistics = list(mu = mu, Sigma = Sigma)
-    } else {
-        # Take care of time ordering ...
-        if (is.timeSeries(data)) data = sort(data)
-        series = data
-        statistics = portfolioStatistics(data, spec)
-        mu = statistics$mu
-        Sigma = statistics$Sigma
-    }
-    data = list(series = series, statistics = statistics)
+    # Compose Portfolio Data: 
+    data = .portfolioData(data, spec)
     
-    # Compose Function:
+    # Compose Optimization Function:
     if(is.null(constraints) | length(constraints) == 0) {
         Model = c("Constrained", "LongOnly")
-        nAssets = length(mu)
+        nAssets = length(data$statistics$mu)
         constraints = paste("minW[1:", nAssets, "]=0", sep = "")
-    } else if (constraints[1] == "short") {
+    } else if (constraints[1] == "Short") {
         Model = "Short"
     } else {
         Model = "Constrained"
@@ -190,28 +164,15 @@ function(data, spec = portfolioSpec(), constraints = NULL)
      
     # FUNCTION:
     
-    # Check Data: 
-    if (is.list(data)) {
-        series = NA
-        mu = data$mu
-        Sigma = data$Sigma
-        statistics = list(mu = mu, Sigma = Sigma)
-    } else {
-        # Take care of time ordering ...
-        if (is.timeSeries(data)) data = sort(data)
-        series = data
-        statistics = portfolioStatistics(data, spec)
-        mu = statistics$mu
-        Sigma = statistics$Sigma
-    }
-    data = list(series = series, statistics = statistics)
+    # Compose Portfolio Data: 
+    data = .portfolioData(data, spec)
     
-    # Compose Function:
+    # Compose Optimization Function:
     if(is.null(constraints) | length(constraints) == 0) {
         Model = c("Constrained", "LongOnly")
-        nAssets = length(mu)
+        nAssets = length(data$statistics$mu)
         constraints = paste("minW[1:", nAssets, "]=0", sep = "")
-    } else if (constraints[1] == "short") {
+    } else if (constraints[1] == "Short") {
         Model = "Short"
     } else {
         Model = "Constrained"
@@ -248,28 +209,15 @@ function(data, spec = portfolioSpec(), constraints = NULL)
     
     # FUNCTION:
     
-    # Check Data: 
-    if (is.list(data)) {
-        series = NA
-        mu = data$mu
-        Sigma = data$Sigma
-        statistics = list(mu = mu, Sigma = Sigma)
-    } else {
-        # Take care of time ordering ...
-        if (is.timeSeries(data)) data = sort(data)
-        series = data
-        statistics = portfolioStatistics(data, spec)
-        mu = statistics$mu
-        Sigma = statistics$Sigma
-    }
-    data = list(series = series, statistics = statistics)
+    # Compose Portfolio Data: 
+    data = .portfolioData(data, spec)
     
-    # Compose Function:
+    # Compose Optimization Function:
     if(is.null(constraints) | length(constraints) == 0) {
         Model = c("Constrained", "LongOnly")
-        nAssets = length(mu)
+        nAssets = length(data$statistics$mu)
         constraints = paste("minW[1:", nAssets, "]=0", sep = "")
-    } else if (constraints[1] == "short") {
+    } else if (constraints[1] == "Short") {
         Model = "Short"
     } else {
         Model = "Constrained"
@@ -306,28 +254,15 @@ function(data, spec = portfolioSpec(), constraints = NULL)
     
     # FUNCTION:
     
-    # Check Data: 
-    if (is.list(data)) {
-        series = NA
-        mu = data$mu
-        Sigma = data$Sigma
-        statistics = list(mu = mu, Sigma = Sigma)
-    } else {
-        # Take care of time ordering ...
-        if (is.timeSeries(data)) data = sort(data)
-        series = data
-        statistics = portfolioStatistics(data, spec)
-        mu = statistics$mu
-        Sigma = statistics$Sigma
-    }
-    data = list(series = series, statistics = statistics)
+    # Compose Portfolio Data: 
+    data = .portfolioData(data, spec)
     
-    # Compose Function:
+    # Compose Optimization Function:
     if(is.null(constraints) | length(constraints) == 0) {
         Model = c("Constrained", "LongOnly")
-        nAssets = length(mu)
+        nAssets = length(data$statistics$mu)
         constraints = paste("minW[1:", nAssets, "]=0", sep = "")
-    } else if (constraints[1] == "short") {
+    } else if (constraints[1] == "Short") {
         Model = "Short"
     } else {
         Model = "Constrained"
@@ -365,28 +300,15 @@ title = NULL, description = NULL)
     
     # FUNCTION:
     
-    # Check Data: 
-    if (is.list(data)) {
-        series = NA
-        mu = data$mu
-        Sigma = data$Sigma
-        statistics = list(mu = mu, Sigma = Sigma)
-    } else {
-        # Take care of time ordering ...
-        if (is.timeSeries(data)) data = sort(data)
-        series = data
-        statistics = portfolioStatistics(data, spec)
-        mu = statistics$mu
-        Sigma = statistics$Sigma
-    }
-    data = list(series = series, statistics = statistics)
+    # Compose Portfolio Data: 
+    data = .portfolioData(data, spec)
     
-    # Compose Function:
+    # Compose Optimization Function:
     if(is.null(constraints) | length(constraints) == 0) {
         Model = c("Constrained", "LongOnly")
-        nAssets = length(mu)
+        nAssets = length(data$statistics$mu)
         constraints = paste("minW[1:", nAssets, "]=0", sep = "")
-    } else if (constraints[1] == "short") {
+    } else if (constraints[1] == "Short") {
         Model = "Short"
     } else {
         Model = "Constrained"
@@ -432,13 +354,22 @@ function(object)
     
     # Target Weights:
     cat("\nPortfolio Weight(s):\n")
-    weights = getWeights(object)
+    weights = round(getWeights(object), digits = 4)
     if (length(weights) == 1) {
         cat(" ", weights, "\n")
     } else {
-        print(weights)
+        print.table(weights)
     }
-
+    
+    # Risk Budgets:
+    cat("\nRiskBudget(s):\n")
+    riskBudgets = round(getRiskBudgets(object), digits = 4)
+    if (length(riskBudgets) == 1) {
+        cat(" ", riskBudgets, "\n")
+    } else {
+        print.table(riskBudgets)
+    }
+       
     # Target Returns:   
     cat("\nTarget Return(s):\n")
     targetReturn = getTargetReturn(object)
@@ -458,13 +389,13 @@ function(object)
     }
     
     # Target Stdev:
-    cat("\nTarget Standard Deviation(s):\n")   
-    targetStdev = getTargetStdev(object) 
-    if (length(targetStdev) == 1) {
-        cat(" ", targetStdev, "\n")
-    } else {
-        print(targetStdev)
-    }
+    # cat("\nTarget Standard Deviation(s):\n")   
+    # targetStdev = getTargetStdev(object) 
+    # if (length(targetStdev) == 1) {
+    #     cat(" ", targetStdev, "\n")
+    # } else {
+    #     print(targetStdev)
+    # }
        
     # Description:
     cat("\nDescription:\n ")
@@ -533,8 +464,8 @@ function(x, which = "ask", control = list(), ...)
         twoAssets.cex = 0.01,
         monteCarlo.cex = 0.01,
         # Frontier Limits:
-        xlim.frontier = xLim,
-        ylim.frontier = yLim,
+        xlim = xLim,
+        ylim = yLim,
         # Monte Carlo Steps:
         mcSteps = 5000,
         # Pie Settings:
@@ -549,8 +480,8 @@ function(x, which = "ask", control = list(), ...)
 
     # Plot Function and Addons:
     plot.1 <<- function(x, ...) {
-        frontierPlot(object = x, xlim = con$xlim.frontier,
-            ylim = con$ylim.frontier, main = "Efficient Frontier",
+        frontierPlot(object = x, xlim = con$xlim,
+            ylim = con$ylim, main = "Efficient Frontier",
             xlab = "Target Risk", ylab = "Target Return")
     }       
     plot.2 <<- function(x, ...) {
@@ -666,8 +597,8 @@ function(object, control = list(), ...)
         tangency.cex = 1.25,
         singleAsset.cex = 1,
         
-        xlim.frontier = xLim,
-        ylim.frontier = yLim
+        xlim = xLim,
+        ylim = yLim
 
         )    
     con[(Names <- names(control))] <- control
@@ -675,6 +606,10 @@ function(object, control = list(), ...)
     # Internal Function:
     refresh.code = function(...)
     {
+        # Startup Counter:
+        .counter <<- .counter + 1
+        if (.counter < 1) return ()
+        
         # Sliders:
         N = .sliderMenu(no = 1)
         
@@ -696,7 +631,8 @@ function(object, control = list(), ...)
         # Plot 3 - Frontier Plot:
         frontier = getFrontier(object)
         fPoint = frontier[N, ]
-        frontierPlot(object, xlim = con$xlim.frontier, ylim = con$ylim.frontier,
+        frontierPlot(object, 
+            xlim = con$xlim, ylim = con$ylim,
             xlab = "", ylab = "")
         mtext("Target Risk", side = 1, line = 2, cex = 0.7)
         mtext("Target Return", side = 2, line = 2, cex = 0.7)
@@ -714,14 +650,15 @@ function(object, control = list(), ...)
         title(main = Title)
         grid()
         
-        # Weights Pie:
+        # Plot 4 - Weights Pie:
         Object = object
         Object@portfolio$weights = getWeights(object)[N, ]
         weightsPie(Object)
-        title(main = "Portfolio Pie")   
+        title(main = "Weights Pie")   
     }
   
     # Open Slider Menu:
+    .counter <<- 0
     .sliderMenu(refresh.code,
        names =       c(                 "N"),
        minima =      c(                   1),
@@ -742,6 +679,7 @@ function(object, control = list(), ...)
 {   # A function implemented by Rmetrics
 
     # Description:
+    #   Views interactively frontier and related plots
     
     # FUNCTION:
     
@@ -797,8 +735,8 @@ function(object, control = list(), ...)
         piePos = NULL, 
         pieOffset = NULL,
         
-        xlim.frontier = xLim,
-        ylim.frontier = yLim
+        xlim = xLim,
+        ylim = yLim
         )    
     con[(Names <- names(control))] <- control
      
@@ -810,6 +748,10 @@ function(object, control = list(), ...)
     # Internal Function:
     refresh.code = function(...)
     {
+        # Startup Counter:
+        .counter <<- .counter + 1
+        if (.counter < 14) return ()
+        
         # Sliders:  
         N                = .sliderMenu(no =  1)
         pieFlag          = .sliderMenu(no =  2)
@@ -830,8 +772,8 @@ function(object, control = list(), ...)
         par(mfrow = c(1, 1))
         
         # Plots and Addons:
-        frontierPlot(object = object, pch = 19, ylim = con$ylim.frontier,
-            xlim = con$xlim.frontier)
+        frontierPlot(object = object, pch = 19, 
+            xlim = con$xlim, ylim = con$ylim)
         ef = getFrontier(object)
         points(ef[N, 1], ef[N, 2], col = "red", pch = 19, cex = 1.5)
         if (sharpeRatioFlag) {
@@ -899,8 +841,8 @@ function(object, control = list(), ...)
     }
   
     # Open Slider Menu:
+    .counter <<-0
     nFP = nFrontierPoints
-    # #RF
     maxRF = max(getTargetReturn(object))
     resRF = maxRF/100
     .sliderMenu(refresh.code,

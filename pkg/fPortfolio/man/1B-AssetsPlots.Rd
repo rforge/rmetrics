@@ -86,6 +86,9 @@ assetsCorTestPlot(x, scale = 1, labels = TRUE, \dots)
 }
 
 
+%\value{}
+
+
 %\details{
 %
 %    \bold{Displaying Asset Return Plots:}
@@ -100,8 +103,6 @@ assetsCorTestPlot(x, scale = 1, labels = TRUE, \dots)
 %
 %}
 
-
-%\value{}
 
 
 %\references{}

@@ -48,6 +48,7 @@ function(data, spec, constraints)
     # FUNCTION:
     
     # Get Statistics:
+    if (!inherits(data, "fPFOLIODATA")) data = .portfolioData(data, spec)
     mu = data$statistics$mu
     Sigma = data$statistics$Sigma
     
@@ -59,13 +60,13 @@ function(data, spec, constraints)
     stopifnot(is.numeric(targetReturn)) 
 
     # Setting the constraints matrix and vector:   
-    tmp.ans = setConstraints(data = data, spec = spec,
-        constraints = constraints)
+    tmpConstraints = .setConstraints(
+        data = data, spec = spec, constraints = constraints)
     Dmat = Sigma
     dvec = rep(0, dim)
-    A = tmp.ans[, -(dim+1)]
+    A = tmpConstraints[, -(dim+1)]
     Amat = t(A)
-    b0 = tmp.ans[, (dim+1)] 
+    b0 = tmpConstraints[, (dim+1)] 
     bvec = t(b0)
     meq = 2
     n = nrow(Dmat)
@@ -90,6 +91,8 @@ function(data, spec, constraints)
         work = as.double(work), 
         ierr = as.integer(0), 
         PACKAGE = "fPortfolio")
+        
+    # Prepare output list:
     ans = list(
         solution = res1$sol, 
         value = res1$crval, 
@@ -110,17 +113,12 @@ function(data, spec, constraints)
 solveRDonlp2 =
 function(data, spec, constraints)
 {   # A function implemented by Rmetrics
-
-    # Description:
-    #   Calls Spelucci's donlp2 solver
-    
-    # Note:
-    #   Requires package "Rdonlp2" to be loaded
     
     # FUNCTION:
     
     # Get Statistics:
-    mu = data$statistics$mu
+    if (!inherits(data, "fPFOLIODATA")) data = .portfolioData(data, spec)
+    mu <<- data$statistics$mu
     Sigma <<- data$statistics$Sigma
     
     # Number of Assets:
@@ -132,16 +130,16 @@ function(data, spec, constraints)
     
     # Donlp2 Settings - Variables and Function:
     par = rep(1/dim, dim)
-    fn = function(x) x %*% Sigma %*% x
+    fn = function(x) { x %*% Sigma %*% x }
     
-    # Donlp2 Settings - Box Constraints:
-    A.mat = setConstraints(data, spec, constraints)
+    # Donlp2 Settings - Box/Group Constraints:
+    A.mat = .setConstraints(data, spec, constraints, type = "BoxGroup")
     upperNames = paste("maxW", 1:dim, sep = "")
     par.upper = -A.mat[upperNames, "Exposure"]
     lowerNames = paste("minW", 1:dim, sep = "")
     par.lower = A.mat[lowerNames, "Exposure"]
     
-    # Donlp2 Settings - Sector Constraints:
+    # Donlp2 Settings - Group Constraints:
     Rows = (1:nrow(A.mat))
     names(Rows) = rownames(A.mat)
     Rows[c(lowerNames, upperNames)]
@@ -151,6 +149,8 @@ function(data, spec, constraints)
     lin.upper = lin.lower = rep(NA, M)
     lin.upper[1] = lin.lower[1] = A[1, dim+1]
     lin.upper[2] = lin.lower[2] = A[2, dim+1]
+    
+    # Further Group Constraints:
     if (M > 2) {
         for (i in 3:M) {
             if (mNames[i] == "minsumW") {
@@ -159,21 +159,67 @@ function(data, spec, constraints)
             } else if (mNames[i] == "maxsumW") {
                 lin.lower[i] = -Inf
                 lin.upper[i] = -A[i, dim+1]
-                A[i, 1:N] = -A[i, 1:dim]
+                A[i, 1:dim] = -A[i, 1:dim]
             }
         }
     }
     A = A[, -(dim+1)]
     
-    # Optimize:
-    ans = donlp2(
-        par, fn, 
-        par.lower = par.lower, par.upper = par.upper,
-        A = A, lin.upper = lin.upper, lin.lower = lin.lower, 
-        control = donlp2.control(silent = TRUE),
-        name = "portfolio")
+    # Trace Solver:
+    solver.trace = spec@solver$trace  
+    
+    # Check Constraint Strings for Risk Budgets:
+    validStrings = c("minB", "maxB")
+    usedStrings = unique(sort(sub("\\[.*", "", constraints)))
+    usedStrings
+    checkStrings = usedStrings %in% validStrings
+    checkStrings
+    includeRiskBudgeting = (sum(!checkStrings) > 0)
+    if (solver.trace) cat("Include Risk Budgeting:", includeRiskBudgeting, "\n")
+    
+    if (includeRiskBudgeting) {
+        nlcon <- function(x) {
+            B1 = as.vector(x %*% Sigma %*% x)
+            B2 = as.vector(x * Sigma %*% x)
+            B = B2/B1
+            B
+        }
+          
+        # Compose non-linear functions:
+        for (I in 1:dim) 
+        eval( parse(text = paste(
+            "nlcon", I, " = function(x) { nlcon(x)[", I, "] }", sep = "")) )
+        nlinFunctions = paste("nlcon", 1:dim, sep = "", collapse = ",")
+        nlinFunctions = paste("list(", nlinFunctions, ")")
+        nlin = eval( parse(text = nlinFunctions) )
+        
+        # Constraints Vectors:
+        B = .setConstraints(data, spec, constraints, type = "RiskBudget")
+        nlin.lower = B[1, ]
+        nlin.upper = B[2, ]
+        
+        # Optimize:
+        ans = donlp2(
+            par, fn, 
+            par.l = par.lower, par.u = par.upper,
+            A = A, lin.l = lin.lower, lin.u = lin.upper,  
+            nlin = nlin, nlin.l = nlin.lower, nlin.u = nlin.upper,  
+            control = donlp2.control(silent = !solver.trace),
+            name = "portfolio")
+    } else {
+        # Optimize:
+        ans = donlp2(
+            par, fn, 
+            par.l = par.lower, par.u = par.upper,
+            A = A, lin.l = lin.lower, lin.u = lin.upper,  
+            control = donlp2.control(silent = !solver.trace),
+            name = "portfolio")
+   }
+   
+   # Add:
    ans$solution = ans$par
-   ans$ierr = NA
+   ans$ierr = ans$message
+   if (solver.trace) cat("Rdonlp2 Message:", ans$message, "\n")
    
    # Return Value:
    ans
@@ -209,6 +255,10 @@ function (spec = portfolioSpec(), solver = c("RQuadprog", "Rdonlp2"))
     # Description:
     
     # FUNCTION:
+    
+    # Valid Solvers:
+    validSolvers = c("RQuadprog", "RDonlp2")
+    stopifnot(value %in% validSolvers)
     
     # Set Solver:
     spec@solver$type = value

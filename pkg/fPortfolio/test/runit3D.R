@@ -62,6 +62,11 @@ function()
 test.feasibleConstrainedLPMPortfolio = 
 function()
 {
+    Data = as.timeSeries(data(smallcap.ts))
+    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
+    
+    # Not Yet Ready ...
+    
     # Return Value:
     return()
 }
@@ -73,6 +78,11 @@ function()
 test.cmlConstrainedLPMPortfolio = 
 function()
 {
+    Data = as.timeSeries(data(smallcap.ts))
+    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
+    
+    # Not Yet Ready ...
+    
     # Return Value:
     return()
 }
@@ -84,6 +94,11 @@ function()
 test.tangencyConstrainedLPMPortfolio = 
 function()
 {
+    Data = as.timeSeries(data(smallcap.ts))
+    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
+    
+    # Not Yet Ready ...
+    
     # Return Value:
     return()
 }
@@ -95,6 +110,11 @@ function()
 test.minvarianceConstrainedLPMPortfolio = 
 function()
 {
+    Data = as.timeSeries(data(smallcap.ts))
+    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
+    
+    # Not Yet Ready ...
+    
     # Return Value:
     return()
 }
@@ -103,9 +123,14 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.frontierConstrainedLPMPortfolio = 
+test.efficientConstrainedLPMPortfolio = 
 function()
 {
+    Data = as.timeSeries(data(smallcap.ts))
+    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
+    
+    # Not Yet Ready ...
+    
     # Return Value:
     return()
 }
@@ -117,6 +142,11 @@ function()
 test.portfolioConstrainedLPMFrontier
 function()
 {
+    Data = as.timeSeries(data(smallcap.ts))
+    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
+    
+    # Not Yet Ready ...
+    
     # Return Value:
     return()
 }

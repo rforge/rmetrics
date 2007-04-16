@@ -11,7 +11,9 @@
 
 \description{
   
-    A collection and description of functions which 
+    A collection and description of functions which allow
+    to estimate the mean and/or covariance matrix of a 
+    time series of assets by traditional and robust methods.
     \cr
     
     The functions are:
@@ -69,6 +71,20 @@ assetsMeanCov(x, method = c("cov", "mve", "mcd", "nnve", "shrink", "bagged"),
 }
 
 
+\value{
+  
+  
+    \code{assetsMeanCov}
+    \cr
+    returns a list with two entries named \code{mu} and Sigma{Sigma}.
+    The first denotes the vector of assets means, and the second the 
+    covariance matrix. Note, that the output of this function can be
+    used as data input for the portfolio functions to compute the
+    efficient frontier.
+  
+}
+
+
 \details{
 
     \bold{Assets Mean and Covariance:}
@@ -80,20 +96,6 @@ assetsMeanCov(x, method = c("cov", "mve", "mcd", "nnve", "shrink", "bagged"),
     The latter two choices implement the covariance computation from the
     functions \code{cov.shrink()} and \code{cov.bagged()} which are part
     of the contributed R package \code{corpcov}.
-  
-}
-
-
-\value{
-  
-  
-    \code{assetsMeanCov}
-    \cr
-    returns a list with two entries named \code{mu} and Sigma{Sigma}.
-    The first denotes the vector of assets means, and the second the 
-    covariance matrix. Note, that the output of this function can be
-    used as data input for the portfolio functions to compute the
-    efficient frontier.
   
 }
 

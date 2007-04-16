@@ -16,8 +16,9 @@
 
 \description{
 
-    A collection of different plot functions 
-    from the "fPortfolio" package.
+    A collection and description of plot functions. 
+    Included are weights, frontier, and related plots,
+    as well as covariance ellipses plots.
     \cr
 
     The functions are:
@@ -36,9 +37,12 @@
 frontierPlot(object, frontier = c("both", "lower", "upper"),
     col = c("black", "grey"), add = FALSE, \dots)
     
-weightsPlot(object, col = NULL, legend = FALSE)
-weightsPie(object, col = NULL, box = TRUE, \dots)
-attributesPlot(object, col = NULL, legend = FALSE)
+weightsPlot(object, col = NULL, legend = TRUE)
+weightsPie(object, col = NULL, box = TRUE, legend = TRUE)
+attributesPlot(object, col = NULL, legend = TRUE)
+%attributesPie(object, col = NULL, legend = TRUE)
+%riskBudgetPlot(object, col = NULL, legend = TRUE)
+%riskBudgetPie(object, col = NULL, legend = TRUE)
 
 covEllipsesPlot(x = list(), \dots)
 }
@@ -72,7 +76,7 @@ covEllipsesPlot(x = list(), \dots)
     \item{legend}{
         [weightsPlot, attributesPlot] - \cr
         a logical value, determining whether a legend with the names of the
-        assets should be plotted, by default FALSE
+        assets should be plotted, by default TRUE
         }
     \item{object}{
         an S4 object of class \code{fPORTFOLIO}, containing slots call, data,
@@ -146,21 +150,22 @@ covEllipsesPlot(x = list(), \dots)
 
 \examples{
 ## portfolioFrontier -
-   # Calculation of Long Only Efficient Frontier
+   # Compute Long Only Efficient Frontier
    frontier = portfolioFrontier(usPortfolioData())
+   frontier
    
 ## frontierPlot -  
-   # Plotting Upper Part
+   # Plot Upper Part of Frontier:
    frontierPlot(frontier, frontier = "upper")
    # Adding Lower Part to Plot
    frontierPlot(frontier, frontier = "lower", add = TRUE)
     
 ## weightsPlot -
-   # Calculation of Long Only Efficient Frontier
+   # View Weights Plot:
    weightsPlot(frontier)
     
 ## attributesPlot -
-   # Calculation of Long Only Efficient Frontier
+   # View Attributes Plot:
    attributesPlot(frontier, legend = TRUE)
 }
 

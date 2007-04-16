@@ -66,7 +66,8 @@ test.getAssets =
 function()
 {
     # Settings:
-    Data = usPortfolioData()
+    Data = as.timeSeries(data(smallcap.ts))
+    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
     myPF = tangencyPortfolio(Data)
     
     # Test:
@@ -88,7 +89,8 @@ test.getStatistics =
 function()
 {
     # Settings:
-    Data = usPortfolioData()
+    Data = as.timeSeries(data(smallcap.ts))
+    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
     myPF = tangencyPortfolio(Data)
     
     # Test:
@@ -111,7 +113,8 @@ test.getNumberOfAssets =
 function()
 { 
     # Settings:
-    Data = usPortfolioData()
+    Data = as.timeSeries(data(smallcap.ts))
+    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
     myPF = tangencyPortfolio(Data)
     
     # Test:
@@ -129,7 +132,8 @@ test.getSpecification =
 function()
 { 
     # Settings:
-    Data = usPortfolioData()
+    Data = as.timeSeries(data(smallcap.ts))
+    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
     myPF = tangencyPortfolio(Data)
     
     # Test:
@@ -147,7 +151,8 @@ test.getPortfolio =
 function()
 { 
     # Settings:
-    Data = usPortfolioData()
+    Data = as.timeSeries(data(smallcap.ts))
+    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
     myPF = tangencyPortfolio(Data)
     
     # Test:
@@ -165,7 +170,8 @@ test.getFrontier =
 function()
 { 
     # Settings:
-    Data = usPortfolioData()
+    Data = as.timeSeries(data(smallcap.ts))
+    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
     myPF = tangencyPortfolio(Data)
     
     # Test:
@@ -183,7 +189,8 @@ test.getWeights =
 function()
 { 
     # Settings:
-    Data = usPortfolioData()
+    Data = as.timeSeries(data(smallcap.ts))
+    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
     myPF = tangencyPortfolio(Data)
     
     # Test:
@@ -201,7 +208,8 @@ test.getTargetReturn =
 function()
 { 
     # Settings:
-    Data = usPortfolioData()
+    Data = as.timeSeries(data(smallcap.ts))
+    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
     myPF = tangencyPortfolio(Data)
     
     # Test:
@@ -219,7 +227,8 @@ test.getTargetRisk =
 function()
 { 
     # Settings:
-    Data = usPortfolioData()
+    Data = as.timeSeries(data(smallcap.ts))
+    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
     myPF = tangencyPortfolio(Data)
     
     # Test:
@@ -237,7 +246,8 @@ test.getTargetStdev =
 function()
 { 
     # Settings:
-    Data = usPortfolioData()
+    Data = as.timeSeries(data(smallcap.ts))
+    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
     myPF = tangencyPortfolio(Data)
     
     # Test:
