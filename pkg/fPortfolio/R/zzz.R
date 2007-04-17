@@ -48,7 +48,7 @@ function(lib, pkg)
     cat("\nfPortfolio: Portfolio Selection and Optimization\n")
     
     # Load dll:
-    library.dynam("fPortfolio", pkg, lib)
+    # library.dynam("fPortfolio", pkg, lib)
 }
 
 
