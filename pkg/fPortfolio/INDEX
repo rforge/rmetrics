@@ -7,6 +7,8 @@ AssetsPlots             Plots of Multivariate Asset Sets
 AssetsSelection         Selecting Assets from Multivariate Asset Sets
 AssetsTests             Testing Multivariate Asset Sets
 DrawdownStatistics      Drawdown Statistics
+portfolio               Portfolio Modelling, Optimization and
+                        Benchmarking
 PortfolioClass          Portfolio Class
 PortfolioConstraints    Portfolio Constraints
 PortfolioData           Example Portfolio Data Sets
