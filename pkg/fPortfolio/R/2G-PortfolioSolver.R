@@ -91,7 +91,7 @@ function(data, spec, constraints)
         iter = as.integer(rep(0, 2)), 
         work = as.double(work), 
         ierr = as.integer(0), 
-        PACKAGE = "fPortfolio")
+        PACKAGE = "quadprog")
         
     # Prepare output list:
     ans = list(
