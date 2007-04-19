@@ -46,13 +46,9 @@ function(data, spec = portfolioSpec(), constraints = NULL)
     #   Computes Risk and Return for a feasible portfolio
     
     # Arguments:
-    #   data - a list with two named elements. 
-    #       $series holding the time series which may be any rectangular,
-    #       object or if not specified holding NA;
-    #       $statistics holding a named two element list by itself, 
-    #        $mu the location of the asset returns by default the mean and 
-    #        $Sigma the scale of the asset returns by default the covariance
-    #        matrix.
+    #   data - portfolio of assets
+    #   spec - specification of the portfolio
+    #   constraints - string of constraints
     
     # Note:
     #   In contrast to the functions *Portfolio(), which only require either the
@@ -69,12 +65,19 @@ function(data, spec = portfolioSpec(), constraints = NULL)
     mu = data$statistics$mu
     Sigma = data$statistics$Sigma
    
-    # Targets:
-    N = length(mu)
+    # Get Weights:
     weights = spec@portfolio$weights
+    N = length(mu)
     if (is.null(weights)) weights =  rep(1/N, times = N)
+    names(weights) = names(mu)
+    
+    # Get Target Return:
     targetReturn = as.numeric(mu %*% weights)
+    attr(targetReturn, "return") = spec@model$estimator[1]
+    
+    # Get Target Risk:
     targetRisk = sqrt( as.numeric( t(weights) %*% Sigma %*% (weights) ) )
+    attr(targetRisk, "risk") <- spec@ model$estimator[2]
     
     # Return Value:
     new("fPORTFOLIO", 
@@ -102,6 +105,11 @@ function(data, spec = portfolioSpec(), constraints = NULL)
     # Description:
     #   Computes capital market line
     
+    # Arguments:
+    #   data - portfolio of assets
+    #   spec - specification of the portfolio
+    #   constraints - string of constraints
+    
     # Example:
     #   .tangencyShortMVPortfolio(engelsPortfolioData())
     
@@ -127,9 +135,18 @@ function(data, spec = portfolioSpec(), constraints = NULL)
     # Capital Market Line:
     A = (a - b*riskFreeRate)
     B = (b - c*riskFreeRate)/C0
+    
+    # Get Weights:
     weights = C0 * as.vector(invSigma %*% (mu - riskFreeRate) ) / B
+    names(weights) = names(mu)
+    
+    # Get Target Return:
     targetReturn = A / B
+    attr(targetReturn, "return") = spec@model$estimator[1]
+    
+    # Get Target Risk:
     targetRisk = sqrt(c*riskFreeRate^2 - 2*b*riskFreeRate + a) / B
+    attr(targetRisk, "risk") <- spec@ model$estimator[2]
     
     # Return Value:
     new("fPORTFOLIO", 
@@ -157,6 +174,11 @@ function(data, spec = portfolioSpec(), constraints = NULL)
     # Description:
     #   Computes target risk and weights for the tangency portfolio
     
+    # Arguments:
+    #   data - portfolio of assets
+    #   spec - specification of the portfolio
+    #   constraints - string of constraints
+    
     # Example:
     #   .tangencyShortMVPortfolio(engelsPortfolioData())
     
@@ -176,10 +198,17 @@ function(data, spec = portfolioSpec(), constraints = NULL)
     c = as.numeric(one %*% invSigma %*% one)
     d = as.numeric(a*c - b^2)
     
-    # Tangency Portfolio:
+    # Get Weights:
     weights = C0 * as.vector(invSigma %*% mu ) / b 
+    names(weights) = names(mu)
+    
+    # Get Target Return:
     targetReturn = (a/b)*C0
+    attr(targetReturn, "return") = spec@model$estimator[1]
+    
+    # Get Target Risk:
     targetRisk = (sqrt(a)/b)*C0
+    attr(targetRisk, "risk") <- spec@ model$estimator[2]
     
     # Return Value:
     new("fPORTFOLIO", 
@@ -207,6 +236,11 @@ function(data, spec = portfolioSpec(), constraints = NULL)
     # Description:
     #   Computes target risk and weights for the minimum variance portfolio
     
+    # Arguments:
+    #   data - portfolio of assets
+    #   spec - specification of the portfolio
+    #   constraints - string of constraints
+    
     # Example:
     #   .minvarianceShortMVPortfolio(engelsPortfolioData())
     
@@ -226,10 +260,17 @@ function(data, spec = portfolioSpec(), constraints = NULL)
     c = as.numeric(one %*% invSigma %*% one)
     d = as.numeric(a*c - b^2)
     
-    # Minimum Variance Portfolio:
+    # Get Weights:
+    weights = as.vector(invSigma %*% ((a-b*mu)*C0 + (c*mu-b)*(b/c)*C0 )/d)
+    names(weights) = names(mu)
+    
+    # Get Target Return:
     targetReturn = (b/c)*C0
+    attr(targetReturn, "return") = spec@model$estimator[1]
+    
+    # Get Target Risk:
     targetRisk = C0/sqrt(c)
-    weights = as.vector(invSigma %*% ((a-b*mu)*C0 + (c*mu-b)*targetReturn )/d)
+    attr(targetRisk, "risk") = spec@model$estimator[2]
 
     # Return Value:
     new("fPORTFOLIO", 
@@ -257,6 +298,11 @@ function(data, spec = portfolioSpec(), constraints = NULL)
     # Description:
     #   Computes target risk and weights for an efficient portfolio
     
+    # Arguments:
+    #   data - portfolio of assets
+    #   spec - specification of the portfolio
+    #   constraints - string of constraints
+    
     # Example:
     #   .efficientShortMVPortfolio(engelsPortfolioData())
     
@@ -267,14 +313,6 @@ function(data, spec = portfolioSpec(), constraints = NULL)
     mu = data$statistics$mu
     Sigma = data$statistics$Sigma
     
-    # Specification:
-    targetReturn = spec@portfolio$targetReturn
-    
-    # Compute Default Target Return:   
-    if (is.null(targetReturn)) {
-        targetReturn = getTargetReturn(.tangencyShortMVPortfolio(data, spec))
-    }
-    
     # Parameter Settings:
     C0 = 1
     one = rep(1, times = length(mu))
@@ -284,9 +322,19 @@ function(data, spec = portfolioSpec(), constraints = NULL)
     c = as.numeric(one %*% invSigma %*% one)
     d = as.numeric(a*c - b^2)
     
-    # A Portfolio on the EF with given Target Return:
+    # Get Target Return:
+    targetReturn = spec@portfolio$targetReturn 
+    if (is.null(targetReturn))  
+        targetReturn = getTargetReturn(.tangencyShortMVPortfolio(data, spec))
+    attr(targetReturn, "return") = spec@model$estimator[1]
+    
+    # Get Target Risk:
     targetRisk = sqrt((c*targetReturn^2 - 2*b*C0*targetReturn + a*C0^2) / d)
+    attr(targetRisk, "risk") = spec@model$estimator[2]
+    
+    # Get Weights:
     weights = as.vector(invSigma %*% ((a-b*mu)*C0 + (c*mu-b)*targetReturn )/d)
+    names(weights) = names(mu)
     
     # Return Value:
     new("fPORTFOLIO", 
@@ -321,18 +369,10 @@ title = NULL, description = NULL)
     #   a matrix of either market or simulated assets given in matrix "x". 
     #   Each time series represents a column in this matrix.
     
-    # Arguments:     
-    #   data - either a rectangular time series object which can be
-    #       transformed into a matrix or a list with two named entries,
-    #       mu - the returns of the multivariate series, and
-    #       Sigma - the Covariance matrix of the multivariate series
-    #   riskFreeRate - rate in percent of risk free asset
-    #   nFrontierPoints - Number of equidistant return points on the Efficient 
-    #       frontier
-    #   muRange - Plot range of returns, if NULL, the range will be created
-    #       automatically
-    #   sigmaRange - Plot range of standard deviations, if NULL, the range 
-    #       will be created automatically
+    # Arguments:
+    #   data - portfolio of assets
+    #   spec - specification of the portfolio
+    #   constraints - string of constraints
     
     # Example:
     #   .shortMVFrontier(engelsPortfolioData())

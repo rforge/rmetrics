@@ -32,11 +32,47 @@
 #  solveRQuadprog               Calls Goldfarb and Idnani's QP solver
 #  solveRDonlp2                 Calls Spelucci's donlp2 solver
 #  solveRlpSolve                Calls linear programming solver
-# FUNCTION:                    DESCRIPTION:
-#  setSolver                    Sets the desired solver
-#  setSolver<-                  Sets the desired solver
 ################################################################################
 
+
+.solveShortExact =
+function(data, spec, constraints)
+{
+    # Get Statistics:
+    if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
+    mu = data$statistics$mu
+    Sigma = data$statistics$Sigma
+    
+    # Parameter Settings:
+    C0 = 1
+    one = rep(1, times = length(mu))
+    invSigma = solve(Sigma)
+    a = as.numeric(mu %*% invSigma %*% mu)
+    b = as.numeric(mu %*% invSigma %*% one)
+    c = as.numeric(one %*% invSigma %*% one)
+    d = as.numeric(a*c - b^2)
+
+    # Get Target Return - if NULL use Tangency Portfolio:
+    targetReturn = spec@portfolio$targetReturn 
+    if (is.null(targetReturn)) targetreturn = (a/b)*C0     
+    
+    # Get Target Risk:
+    targetRisk = sqrt((c*targetReturn^2 - 2*b*C0*targetReturn + a*C0^2) / d)
+    
+    # Get Weights:
+    weights = as.vector(invSigma %*% ((a-b*mu)*C0 + (c*mu-b)*targetReturn )/d)
+    
+    # Prepare Output List:
+    ans = list(
+        weights = weights, 
+        targetReturn = targetReturn, targetRisk = targetRisk)
+        
+    # Return Value:
+    ans
+}
+
+
+# ------------------------------------------------------------------------------
 
 
 solveRQuadprog =
@@ -46,15 +82,18 @@ function(data, spec, constraints)
     # Description:
     #   Calls Goldfarb and Idnani's QP solver
     
+    # Arguments:
+    #   data - portfolio of assets
+    #   spec - specification of the portfolio
+    #   constraints - string of constraints
+    
     # FUNCTION:
     
     # Get Statistics:
     if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
     mu = data$statistics$mu
     Sigma = data$statistics$Sigma
-    
-    # Number of Assets:
-    dim = length(mu)
+    nAssets = length(mu)
 
     # Extracting data from spec:
     targetReturn = spec@portfolio$targetReturn  
@@ -64,10 +103,10 @@ function(data, spec, constraints)
     tmpConstraints = .setConstraints(
         data = data, spec = spec, constraints = constraints)
     Dmat = Sigma
-    dvec = rep(0, dim)
-    A = tmpConstraints[, -(dim+1)]
+    dvec = rep(0, nAssets)
+    A = tmpConstraints[, -(nAssets+1)]
     Amat = t(A)
-    b0 = tmpConstraints[, (dim+1)] 
+    b0 = tmpConstraints[, (nAssets+1)] 
     bvec = t(b0)
     meq = 2
     n = nrow(Dmat)
@@ -93,12 +132,17 @@ function(data, spec, constraints)
         ierr = as.integer(0), 
         PACKAGE = "quadprog")
         
-    # Prepare output list:
+    # Handle when failed ...
+    weights = res1$sol 
+    for(i in 1:nAssets) if(abs(weights[i]) < .Machine$double.eps) weights[i] = 0
+    weights[as.logical(res1$err)] = NA
+        
+    # Prepare Output List:
     ans = list(
-        solution = res1$sol, 
+        weights = weights, 
+        status = res1$ierr, 
         value = res1$crval, 
         unconstrainted.solution = res1$dvec, 
-        ierr = res1$ierr, 
         iterations = res1$iter, 
         iact = res1$iact[1:res1$nact],
         solver = "quadprog")
@@ -115,29 +159,38 @@ solveRDonlp2 =
 function(data, spec, constraints)
 {   # A function implemented by Rmetrics
     
+    # Arguments:
+    #   data - portfolio of assets
+    #   spec - specification of the portfolio
+    #   constraints - string of constraints
+    
     # FUNCTION:
     
     # Get Statistics:
     if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
     mu <<- data$statistics$mu
     Sigma <<- data$statistics$Sigma
-    
-    # Number of Assets:
-    dim = length(mu)
+    nAssets = length(mu)
 
     # Extracting data from spec:
     targetReturn = spec@portfolio$targetReturn  
     stopifnot(is.numeric(targetReturn)) 
     
-    # Donlp2 Settings - Variables and Function:
-    par = rep(1/dim, dim)
+    # Donlp2 Settings - Start Weights:
+    if (is.null(spec@portfolio$weights)) {
+        par = rep(1/nAssets, nAssets)
+    } else {
+        par = spec@portfolio$weights
+    }
+    
+    # Donlp2 Settings - Function to be optimized:
     fn = function(x) { x %*% Sigma %*% x }
     
     # Donlp2 Settings - Box/Group Constraints:
     A.mat = .setConstraints(data, spec, constraints, type = "BoxGroup")
-    upperNames = paste("maxW", 1:dim, sep = "")
+    upperNames = paste("maxW", 1:nAssets, sep = "")
     par.upper = -A.mat[upperNames, "Exposure"]
-    lowerNames = paste("minW", 1:dim, sep = "")
+    lowerNames = paste("minW", 1:nAssets, sep = "")
     par.lower = A.mat[lowerNames, "Exposure"]
     
     # Donlp2 Settings - Group Constraints:
@@ -148,23 +201,23 @@ function(data, spec, constraints)
     M = nrow(A)
     mNames = rownames(A)
     lin.upper = lin.lower = rep(NA, M)
-    lin.upper[1] = lin.lower[1] = A[1, dim+1]
-    lin.upper[2] = lin.lower[2] = A[2, dim+1]
+    lin.upper[1] = lin.lower[1] = A[1, nAssets+1]
+    lin.upper[2] = lin.lower[2] = A[2, nAssets+1]
     
     # Further Group Constraints:
     if (M > 2) {
         for (i in 3:M) {
             if (mNames[i] == "minsumW") {
-                lin.lower[i] = A[i, dim+1]
+                lin.lower[i] = A[i, nAssets+1]
                 lin.upper[i] = Inf
             } else if (mNames[i] == "maxsumW") {
                 lin.lower[i] = -Inf
-                lin.upper[i] = -A[i, dim+1]
-                A[i, 1:dim] = -A[i, 1:dim]
+                lin.upper[i] = -A[i, nAssets+1]
+                A[i, 1:nAssets] = -A[i, 1:nAssets]
             }
         }
     }
-    A = A[, -(dim+1)]
+    A = A[, -(nAssets+1)]
     
     # Trace Solver:
     solver.trace = spec@solver$trace  
@@ -172,9 +225,7 @@ function(data, spec, constraints)
     # Check Constraint Strings for Risk Budgets:
     validStrings = c("minB", "maxB")
     usedStrings = unique(sort(sub("\\[.*", "", constraints)))
-    usedStrings
     checkStrings = usedStrings %in% validStrings
-    checkStrings
     includeRiskBudgeting = (sum(!checkStrings) > 0)
     if (solver.trace) cat("Include Risk Budgeting:", includeRiskBudgeting, "\n")
     
@@ -187,10 +238,10 @@ function(data, spec, constraints)
         }
           
         # Compose non-linear functions:
-        for (I in 1:dim) 
+        for (I in 1:nAssets) 
         eval( parse(text = paste(
             "nlcon", I, " = function(x) { nlcon(x)[", I, "] }", sep = "")) )
-        nlinFunctions = paste("nlcon", 1:dim, sep = "", collapse = ",")
+        nlinFunctions = paste("nlcon", 1:nAssets, sep = "", collapse = ",")
         nlinFunctions = paste("list(", nlinFunctions, ")")
         nlin = eval( parse(text = nlinFunctions) )
         
@@ -218,8 +269,8 @@ function(data, spec, constraints)
    }
    
    # Add:
-   ans$solution = ans$par
-   ans$ierr = ans$message
+   ans$weights = ans$par
+   ans$status = ans$message
    if (solver.trace) cat("Rdonlp2 Message:", ans$message, "\n")
    
    # Return Value:
@@ -236,6 +287,11 @@ function(data, spec, constraints)
 
     # Description:
     #   Linear Solver from R package lpSolve
+    
+    # Arguments:
+    #   data - portfolio of assets
+    #   spec - specification of the portfolio
+    #   constraints - string of constraints
     
     # Note:
     #   This function requires to load the contributed R package
@@ -316,7 +372,7 @@ function(data, spec, constraints)
     # Optimize:
     ans = lp("max", f.obj, f.con, f.dir, f.rhs)
 
-    # Prepare output list:
+    # Prepare Output List:
     ans$Solution = ans$solution
     ans$solution = ans$solution[(m+2):(m+1+w)] 
     ans$ierr = ans$status
@@ -324,48 +380,6 @@ function(data, spec, constraints)
     
     # Return Value:
     ans
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-setSolver = 
-function (spec = portfolioSpec(), solver = c("RQuadprog", "Rdonlp2")) 
-{   # A function implemented by Rmetrics
-
-    # Description:
-    
-    # FUNCTION:
-    
-    # Set Solver:
-    # solver = match.arg(solver)
-    # spec@solver$type = solver
-    
-    # Return Value:
-    spec
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-"setSolver<-" <- function(spec, value)
-{   # A function implemented by Rmetrics
-
-    # Description:
-    
-    # FUNCTION:
-    
-    # Valid Solvers:
-    # validSolvers = c("RQuadprog", "RDonlp2")
-    # stopifnot(value %in% validSolvers)
-    
-    # Set Solver:
-    spec@solver$type = value
-    
-    # Return Value:
-    spec
 }
 
 

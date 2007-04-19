@@ -30,8 +30,8 @@
 ################################################################################
 # FUNCTION:                          SINGLE PORTFOLIOS:
 #  .feasibleConstrainedMVPortfolio    Returns a constrained feasible MV-PF
-#  .tangencyConstrainedMVPortfolio    Returns constrained tangency MV-PF
 #  .cmlConstrainedMVPortfolio         Returns constrained CML-Portfolio
+#  .tangencyConstrainedMVPortfolio    Returns constrained tangency MV-PF
 #  .minvarianceConstrainedMVPortfolio Returns constrained min-Variance-PF
 #  .frontierConstrainedMVPortfolio    Returns a constrained frontier MV-PF
 # FUNCTION:                          PORTFOLIO FRONTIER:
@@ -81,38 +81,79 @@ function()
     #       if this entry is NULL, equal weights are used to
     #       compute the portfolio.
     
-    # Specification:
-    Spec = portfolioSpec()
-    Spec
-    
     # Data:
     Data = as.timeSeries(data(smallcap.ts))
     Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
     head(Data)
     
+    # Specification:
+    Spec = portfolioSpec()
+    Spec
+ 
     # Constraints:
     Constraints = NULL
     
     # Feasible Portfolio:
     .feasibleConstrainedMVPortfolio(Data, Spec, Constraints)
+}
+
+
+# ------------------------------------------------------------------------------
+   
+ 
+test.feasibleConstrainedMVPortfolio.LongOnly = 
+function()
+{   
+    # Data:
+    Data = as.timeSeries(data(smallcap.ts))
+    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
+    head(Data)
     
-    # Constraints:
-    Constraints = "LongOnly"
-    
-    # Feasible Portfolio:
-    .feasibleConstrainedMVPortfolio(Data, Spec, Constraints)
-    
-    # Random Weights:
+    # Specification + Random Weights:
+    Spec = portfolioSpec()
     nAssets = ncol(Data)
     Weights = runif(nAssets, 0, 1)
     Weights = Weights/sum(Weights)
     setWeights(Spec) <- Weights
+    Spec
+    
+    # Constraints:
+    Constraints = "LongOnly"
 
     # Feasible Portfolio:
     .feasibleConstrainedMVPortfolio(Data, Spec, Constraints)
     
     # Return Value:
     spec
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.cmlConstrainedMVPortfolio = 
+function()
+{
+    # Data:
+    Data = as.timeSeries(data(smallcap.ts))
+    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
+    head(Data)
+    
+    # Specification:
+    Spec = portfolioSpec()
+    Spec
+    
+    # Feasible Portfolio - Equals Tangency Portfolio:
+    .cmlConstrainedMVPortfolio(Data, Spec, NULL)
+    .cmlConstrainedMVPortfolio(Data, Spec, "LongOnly")
+    
+    # Modify Risk Free Rate:
+    setRiskFreeRate(Spec) = mean(colMeans(Data@Data))
+    Spec
+    .cmlConstrainedMVPortfolio(Data, Spec, "LongOnly")
+    
+    # Return Value:
+    return()
 }
 
 
@@ -143,35 +184,6 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.cmlConstrainedMVPortfolio = 
-function()
-{
-    # Data:
-    Data = as.timeSeries(data(smallcap.ts))
-    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
-    head(Data)
-    
-    # Specification:
-    Spec = portfolioSpec()
-    Spec
-    
-    # Feasible Portfolio:
-    .cmlConstrainedMVPortfolio(Data, Spec, NULL)
-    .cmlConstrainedMVPortfolio(Data, Spec, "LongOnly")
-    
-    # Modify Risk Free Rate:
-    setRiskFreeRate(Spec) = mean(colMeans(Data@Data))
-    Spec
-    .cmlConstrainedMVPortfolio(Data, Spec, "LongOnly")
-    
-    # Return Value:
-    return()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
 test.minvarianceConstrainedMVPortfolio = 
 function()
 {
@@ -184,7 +196,7 @@ function()
     Spec = portfolioSpec()
     Spec
     
-    # Miimum Variance Portfolio:
+    # Minimum Variance Portfolio:
     .minvarianceConstrainedMVPortfolio(Data, Spec, "LongOnly")
     .minvarianceConstrainedMVPortfolio(Data, Spec, "maxW[1:nAssets]=0.6")
     
@@ -226,6 +238,38 @@ function()
 # ------------------------------------------------------------------------------
 
 
+test.efficientConstrainedMVPortfolio.RDonlp2 = 
+function()
+{
+    # Data:
+    Data = as.timeSeries(data(smallcap.ts))
+    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
+    head(Data)
+    
+    # Specification:
+    Spec = portfolioSpec()
+    setSolver(Spec) = "RDonlp2"
+    Spec
+    
+    # Modify Target Return:
+    targetReturn = mean(colMeans(Data@Data))
+    targetReturn
+    setTargetReturn(Spec) <- targetReturn
+    Spec
+    
+    # Tangency Portfolio:
+    .efficientConstrainedMVPortfolio(Data, Spec, NULL)
+    .efficientConstrainedMVPortfolio(Data, Spec, "LongOnly")
+    .efficientConstrainedMVPortfolio(Data, Spec, "maxW[1:nAssets]=0.6")
+    
+    # Return Value:
+    return()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
 test.portfolioConstrainedMVFrontier =
 function()
 {
@@ -238,16 +282,13 @@ function()
     Spec = portfolioSpec()
     Spec
     
-    # Modify Target Return:
-    riskFreeRate = mean(colMeans(Data@Data))
-    riskFreeRate
-    setRiskFreeRate(Spec) = riskFreeRate
-    Spec
+    # Constraints: 
+    Constraints = NULL
     
     # Portfolio Frontier:
-    frontier = .portfolioConstrainedMVFrontier(Data, Spec, "LongOnly")
-    frontier
-    plot(frontier, which = c(1, 2, 5))
+    Frontier = .portfolioConstrainedMVFrontier(Data, Spec, Constraints)
+    Frontier
+    plot(Frontier, which = c(1, 2, 3, 5))
     
     # Return Value:
     return()
@@ -270,16 +311,16 @@ function()
     
     # Specification:
     Spec = portfolioSpec()
-    Spec
-    
-    # Solver:
     setSolver(Spec) = "RDonlp2"
     Spec
     
+    # Constraints: 
+    Constraints = NULL                        
+    
     # Portfolio Frontier:
-    frontier = .portfolioConstrainedMVFrontier(Data, Spec, "LongOnly")
-    frontier
-    plot(frontier, which = c(1, 2, 5))
+    Frontier = .portfolioConstrainedMVFrontier(Data, Spec, Constraints)
+    Frontier
+    plot(Frontier, which = c(1, 2, 3, 5))
     
     # Return Value:
     return()
@@ -310,16 +351,15 @@ function()
     Constraints = "LongOnly"
     
     # Portfolio Frontier:
-    frontier = .efficientConstrainedMVPortfolio(Data, Spec, Constraints)
-    frontier
+    Frontier = .efficientConstrainedMVPortfolio(Data, Spec, Constraints)
+    Frontier
     
     # Add Risk Budgets:
     Constraints = c("minW[1:4]=0", "maxB[1:4]=0.3")
         
     # Portfolio Frontier:
-    # frontier = .efficientConstrainedMVPortfolio(Data, Spec, Constraints)
-    portfolioFrontier(Data, Spec, Constraints)
-    frontier
+    # Frontier = portfolioFrontier(Data, Spec, Constraints)
+    # Frontier                                                       # CHECK !!!
     
     # Return Value:
     return()

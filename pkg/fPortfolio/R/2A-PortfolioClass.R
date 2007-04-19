@@ -380,8 +380,13 @@ function(object)
     }
     
     # Target Risk:
-    cat("\nTarget Risk(s):\n")   
     targetRisk = getTargetRisk(object) 
+    attribute = attr(targetRisk, "risk")
+    if (is.null(attribute)) {
+        cat("\nTarget Risk(s):\n")
+    } else {
+        cat("\nTarget Risk(s) -", attribute, "Risk:\n")  
+    }
     if (length(targetRisk) == 1) {
         cat(" ", targetRisk, "\n")
     } else {

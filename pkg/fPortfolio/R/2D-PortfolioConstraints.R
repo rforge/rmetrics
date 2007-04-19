@@ -58,9 +58,7 @@ function(data, spec = portfolioSpec(), constraints = NULL)
     
     # Check Strings:
     usedStrings = unique(sort(sub("\\[.*", "", constraints)))
-    usedStrings
     checkStrings = usedStrings %in% validStrings
-    checkStrings
     check = (sum(!checkStrings) == 0)
     if (check) check = "valid"
     attr(constraints, "control") = check

@@ -135,11 +135,6 @@ function()
     Portfolio = cmlPortfolio(Data, Spec)
     Portfolio
     
-    # Check:
-    target = round(sum(getWeights(Portfolio)), 3)
-    current = 1
-    checkIdentical(target, current)
-    
     # Return Value:
     return()
 }
@@ -166,11 +161,6 @@ function()
     # Calculation of Long Only Minimum Variance Portfolio
     Portfolio = tangencyPortfolio(Data, Spec)
     Portfolio
-    
-    # Check:
-    target = round(sum(getWeights(Portfolio)), 3)
-    current = 1
-    checkIdentical(target, current)
     
     # Return Value:
     return()
@@ -199,22 +189,12 @@ function()
     Portfolio = minvariancePortfolio(Data, Spec)
     Portfolio
     
-    # Check:
-    target = round(sum(getWeights(Portfolio)), 3)
-    current = 1
-    checkIdentical(target, current)
-    
     # Try RDonlp2:
     require(Rdonlp2)
     setSolver(Spec)<-"RDonlp2"
     Spec
     Portfolio = minvariancePortfolio(Data, Spec)
     Portfolio
-    
-    # Check:
-    target = round(sum(getWeights(Portfolio)), 3)
-    current = 1
-    checkIdentical(target, current)
 
     # Return Value:
     return()
@@ -243,11 +223,6 @@ function()
     # Calculation of Long Only Minimum Variance Portfolio
     Portfolio = efficientPortfolio(Data, Spec)
     Portfolio
-    
-    # Check:
-    target = round(sum(getWeights(Portfolio)), 3)
-    current = 1
-    checkIdentical(target, current)
    
     # Return Value:
     return()
@@ -276,11 +251,6 @@ function()
     # Calculation of Long Only Minimum Variance Portfolio
     Frontier = portfolioFrontier(Data, Spec)
     Frontier
-    
-    # Check:
-    target = round(sum(rowSums(getWeights(Frontier))))
-    current = 49
-    checkIdentical(target, current)
     
     # Return Value:
     return()

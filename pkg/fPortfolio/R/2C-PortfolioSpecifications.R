@@ -706,6 +706,48 @@ function(spec = portfolioSpec(), value)
 
 
 ################################################################################
+ 
+
+setSolver = 
+function (spec = portfolioSpec(), solver = c("RQuadprog", "Rdonlp2")) 
+{   # A function implemented by Rmetrics
+
+    # Description:
+    
+    # FUNCTION:
+    
+    # Set Solver:
+    # solver = match.arg(solver)
+    # spec@solver$type = solver
+    
+    # Return Value:
+    spec
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+"setSolver<-" <- function(spec, value)
+{   # A function implemented by Rmetrics
+
+    # Description:
+    
+    # FUNCTION:
+    
+    # Valid Solvers:
+    # validSolvers = c("RQuadprog", "RDonlp2")
+    # stopifnot(value %in% validSolvers)
+    
+    # Set Solver:
+    spec@solver$type = value
+    
+    # Return Value:
+    spec
+}
+
+
+################################################################################
 
 
 portfolioStatistics = 
@@ -784,17 +826,14 @@ function(data, spec = portfolioSpec())
     
     # Check Data: 
     if (is.list(data)) {
+        # In this case no time series is given, only mean and covariance ...
         series = NA
-        mu = data$mu
-        Sigma = data$Sigma
-        statistics = list(mu = mu, Sigma = Sigma)
+        statistics = list(mu = data$mu, Sigma = data$Sigma)
     } else {
         # Take care of time ordering ...
         if (is.timeSeries(data)) data = sort(data)
         series = data
         statistics = portfolioStatistics(data, spec)
-        mu = statistics$mu
-        Sigma = statistics$Sigma
     }
     
     # Portfolio data list:

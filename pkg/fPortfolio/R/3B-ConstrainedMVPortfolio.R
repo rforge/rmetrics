@@ -30,8 +30,8 @@
 ################################################################################
 # FUNCTION:                          SINGLE PORTFOLIOS:
 #  .feasibleConstrainedMVPortfolio    Returns a constrained feasible MV-PF
-#  .tangencyConstrainedMVPortfolio    Returns constrained tangency MV-PF
 #  .cmlConstrainedMVPortfolio         Returns constrained CML-Portfolio
+#  .tangencyConstrainedMVPortfolio    Returns constrained tangency MV-PF
 #  .minvarianceConstrainedMVPortfolio Returns constrained min-Variance-PF
 #  .efficientConstrainedMVPortfolio   Returns a constrained frontier MV-PF
 # FUNCTION:                          PORTFOLIO FRONTIER:
@@ -47,13 +47,9 @@ function(data, spec, constraints)
     #   Computes Risk and Return for a feasible portfolio
     
     # Arguments:
-    #   data - a list with two named elements. 
-    #       $series holding the time series which may be any rectangular,
-    #       object or if not specified holding NA;
-    #       $statistics holding a named two element list by itself, 
-    #         $mu the location of the asset returns by default the mean and 
-    #         $Sigma the scale of the asset returns by default the covariance
-    #         matrix.
+    #   data - portfolio of assets
+    #   spec - specification of the portfolio
+    #   constraints - string of constraints
     
     # Note:
     #   In contrast to the functions *Portfolio(), which only require either the
@@ -69,29 +65,23 @@ function(data, spec, constraints)
     if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
     mu = data$statistics$mu
     Sigma = data$statistics$Sigma
+    nAssets = length(mu)
     
-    # Setting the constraints matrix and vector:
-    tmpConstraints = .setConstraints(data = data, spec = spec,
-        constraints = constraints)
-    dim = length(mu)
-    A = tmpConstraints[, -(dim+1)]
-    b0 = tmpConstraints[, (dim+1)]
+    # Check for compatible Weights and Constraints:
+    # ...
     
-    # Weights:
+    # Get Weights:
     weights = spec@portfolio$weights
-    if(is.null(weights)) weights = rep(1/dim, times = dim)  
+    if(is.null(weights)) weights = rep(1/nAssets, times = nAssets)  
     names(weights) = names(mu)
     
-    # Target Return and Risk:
+    # Target Return:
     targetReturn = as.numeric(mu %*% weights)
-    targetRisk = sqrt( as.numeric( t(weights) %*% Sigma %*% (weights) ) )
+    attr(targetReturn, "return") <- spec@model$estimator[1]
     
-    # STILL TO DO:
-    # Check constraints, if they are feasible:
-    b0Test = A %*% weights
-    b0Test = sum(b0Test)
-    b0 = sum(b0)
-    # if(b0 != b0Test) warning("Inconsistent Weights respectively Constraints")
+    # Target Risk:
+    targetRisk = sqrt( as.numeric( weights %*% Sigma %*% weights ) )
+    attr(targetRisk, "risk") <- spec@model$estimator[2]
     
     # Return Value:
     new("fPORTFOLIO", 
@@ -102,9 +92,7 @@ function(data, spec, constraints)
         portfolio = list(
             weights = weights,
             targetReturn = targetReturn,
-            targetRisk = targetRisk,
-            targetMean = targetReturn,
-            targetStdev = targetRisk),
+            targetRisk = targetRisk),
         title = "Feasible Portfolio", 
         description = .description()) 
 }
@@ -119,6 +107,11 @@ function(data, spec, constraints)
     # Description:
     #   Computes Computes Risk, Return and Weight for CML portfolio
     
+    # Arguments:
+    #   data - portfolio of assets
+    #   spec - specification of the portfolio
+    #   constraints - string of constraints
+    
     # Note:
     #   Calls .efficientConstrainedMVPortfolio()
     #   Calls efficientPortfolio()
@@ -132,31 +125,37 @@ function(data, spec, constraints)
     if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
     mu = data$statistics$mu
     Sigma = data$statistics$Sigma
+    nAssets = length(mu)
     
-    # Function to be minimized:
+    # Compose function to be minimized:
     .sharpeRatioFun =
     function(x, data, spec, constraints) {
         spec@portfolio$targetReturn = x
         ans = .efficientConstrainedMVPortfolio(data = data, spec = spec,
             constraints = constraints)
-        (x - spec@portfolio$riskFreeRate) / getTargetRisk(ans)      
+        f = (x - spec@portfolio$riskFreeRate) / getTargetRisk(ans)  
+        attr(f, "targetRisk") <- getTargetRisk(ans)   
+        attr(f, "weights") <- getWeights(ans) 
+        f 
     }
     
-    # Calling optimize() function:
+    # Optimize Sharpe Ratio:
     cml = optimize(.sharpeRatioFun, interval = range(mu), maximum = TRUE,
         data = data, spec = spec, constraints = constraints,
         tol = .Machine$double.eps^0.5)
       
-    # Compute Target Return and Risk:     
-    targetReturn = spec@portfolio$targetReturn = cml$maximum  
-    targetRisk = getTargetRisk(
-        efficientPortfolio(data = data$statistics, spec, constraints)) 
-        
     # Get Weights:
-    weights = getWeights(efficientPortfolio(data = data$statistics,
-        spec, constraints))
+    weights = attr(cml$objective, "weights")
     names(weights) = names(mu)
 
+    # Get Target Return:     
+    targetReturn = spec@portfolio$targetReturn = cml$maximum  
+    attr(targetReturn, "return") = spec@model$estimator[1]
+    
+    # Get Target Return:
+    targetRisk = attr(cml$objective, "targetRisk")
+    attr(targetRisk, "risk") = spec@model$estimator[2]
+        
     # Return Value:
     new("fPORTFOLIO", 
         call = match.call(),
@@ -166,9 +165,7 @@ function(data, spec, constraints)
         portfolio = list(
             weights = weights,
             targetReturn = targetReturn,
-            targetRisk = targetRisk,
-            targetMean = targetReturn,
-            targetStdev = targetRisk),
+            targetRisk = targetRisk),
         title = "CML Portfolio", 
         description = .description()) 
 }
@@ -183,6 +180,11 @@ function(data, spec, constraints)
     # Description:
     #   Computes Risk, Return and Weight for the tangency portfolio
     
+    # Arguments:
+    #   data - portfolio of assets
+    #   spec - specification of the portfolio
+    #   constraints - string of constraints
+    
     # Note:
     #   Calls .cmlConstrainedMVPortfolio()
     #       Calls .efficientConstrainedMVPortfolio()
@@ -191,16 +193,11 @@ function(data, spec, constraints)
     #   .tangencyConstrainedMVPortfolio()
     
     # FUNCTION:
-    
-    # Get Statistics:
-    if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
-    mu = data$statistics$mu
-    Sigma = data$statistics$Sigma
  
     # Set Risk Free Rate:
     spec@portfolio$riskFreeRate = 0
     
-    # Calling cml function
+    # Call cmlPorfolio unction:
     ans = .cmlConstrainedMVPortfolio(data, spec, constraints)
     ans@call = match.call()
     ans@title = "Tangency Portfolio"
@@ -219,6 +216,11 @@ function(data, spec, constraints)
     # Description:
     #   Computes Risk, Return and Weight for minimum variance portfolio
     
+    # Arguments:
+    #   data - portfolio of assets
+    #   spec - specification of the portfolio
+    #   constraints - string of constraints
+    
     # Note:
     #   Calls .efficientConstrainedMVPortfolio()
     #   Calls efficientPortfolio()
@@ -232,27 +234,38 @@ function(data, spec, constraints)
     if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
     mu = data$statistics$mu
     Sigma = data$statistics$Sigma
+    nAssets = length(mu)
     
-    # Function to be minimized:
+    # Compose function to be minimized:
     .minVariancePortfolioFun = 
     function(x, data, spec, constraints) {
         spec@portfolio$targetReturn = x
         ans = .efficientConstrainedMVPortfolio(data = data, spec = spec,
             constraints = constraints)
-        getTargetRisk(ans)
+        f = getTargetRisk(ans)
+        attr(f, "targetReturn") <- getTargetReturn(ans)   
+        attr(f, "weights") <- getWeights(ans) 
+        f
     }
 
-    # Calling optimize function
+    # Optimize Minimum Risk Function:
     minVar = optimize(.minVariancePortfolioFun, interval = range(mu),
         data = data, spec = spec, constraints = constraints,
         tol = .Machine$double.eps^0.5)
-    targetReturn = spec@portfolio$targetReturn = minVar$minimum
-    targetRisk = getTargetRisk(efficientPortfolio(data = data$statistics, spec,
-        constraints)) 
-    weights = getWeights(efficientPortfolio(data = data$statistics, spec,
-        constraints))
+        
+    # Get Weights:  
+    weights = attr(minVar$objective, "weights")
     names(weights) = names(mu)
-
+    
+    # Get Target Return:
+    targetReturn = spec@portfolio$targetReturn = 
+        attr(minVar$objective, "targetReturn")
+    attr(targetReturn, "return") = spec@model$estimator[1]
+    
+    # Get Target Risk:
+    targetRisk = minVar$objective       
+    attr(targetRisk, "risk") = spec@model$estimator[2]
+    
     # Return Value:
     new("fPORTFOLIO", 
         call = match.call(),
@@ -262,9 +275,7 @@ function(data, spec, constraints)
         portfolio = list(
             weights = weights,
             targetReturn = targetReturn,
-            targetRisk = targetRisk,
-            targetMean = targetReturn,
-            targetStdev = targetRisk),
+            targetRisk = targetRisk),
         title = "Minimum Variance Portfolio", 
         description = .description()) 
 }
@@ -281,13 +292,9 @@ function(data, spec, constraints)
     #   Computes Risk and Return for a feasible portfolio
     
     # Arguments:
-    #   data - a list with two named elements. 
-    #       $series holding the time series which may be any rectangular,
-    #       object or if not specified holding NA;
-    #       $statistics holding a named two element list by itself, 
-    #        $mu the location of the asset returns by default the mean and 
-    #        $Sigma the scale of the asset returns by default the covariance
-    #        matrix.
+    #   data - portfolio of assets
+    #   spec - specification of the portfolio
+    #   constraints - string of constraints
     
     # Note:
     #   In contrast to the functions *Portfolio(), which only require either the
@@ -305,33 +312,28 @@ function(data, spec, constraints)
     if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
     mu = data$statistics$mu
     Sigma = data$statistics$Sigma
-    
-    # Number of Assets:
-    dim = length(mu)
-    
-    # Extracting data from spec:
-    targetReturn = spec@portfolio$targetReturn  
-    stopifnot(is.numeric(targetReturn)) 
+    nAssets = length(mu)
     
     # Calling Solver:
     solver = spec@solver$type 
     if (solver == "RQuadprog") {
-        ans = solveRQuadprog(data, spec, constraints) 
+        portfolio = solveRQuadprog(data, spec, constraints) 
     } else if (solver == "RDonlp2") {
-        ans = solveRDonlp2(data, spec, constraints)
+        portfolio = solveRDonlp2(data, spec, constraints)
     }
     
-    # Setting all weights zero being smaler than the machine precision:
-    for(i in 1:dim){
-        if(abs(ans$solution[i]) < .Machine$double.eps){
-            ans$solution[i] = 0
-        }
-    }
-    weights = ans$solution
-
-    # Converged ?
-    attr(weights, "error") <- ans$ierr
-    targetRisk = sqrt(weights %*% Sigma %*% weights)
+    # Get Weights:
+    weights = portfolio$weights
+    attr(weights, "status") <- portfolio$status
+    names(weights) = names(mu)
+    
+    # Get Target Risk:
+    targetReturn = mu %*% weights
+    attr(targetReturn, "return") <- spec@model$estimator[1]
+    
+    # Get Target Risk:
+    targetRisk = sqrt( weights %*% Sigma %*% weights )
+    attr(targetRisk, "risk") = spec@model$estimator[2]
 
     # Return Value:
     new("fPORTFOLIO", 
@@ -342,9 +344,7 @@ function(data, spec, constraints)
         portfolio = list(
             weights = weights,
             targetReturn = targetReturn,
-            targetRisk = targetRisk,
-            targetMean = targetReturn,
-            targetStdev = targetRisk),
+            targetRisk = targetRisk),
         title = paste("Constrained MV Portfolio - Solver:", solver),
         description = .description())    
 }
@@ -360,8 +360,7 @@ function(data, spec, constraints)
     #   Evaluates the EF for a given set of box and or sector constraints
     
     # Arguments:
-    #   data - portfolio of assets, a matrix or an object which can be 
-    #       transformed to a matrix
+    #   data - portfolio of assets
     #   spec - specification of the portfolio
     #   constraints - string of constraints
 
@@ -371,48 +370,50 @@ function(data, spec, constraints)
     if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
     mu = data$statistics$mu
     Sigma = data$statistics$Sigma
+    nAssets = length(mu)
 
     # Settings:
     returnRange = spec@portfolio$returnRange
     riskRange = spec@portfolio$riskRange
     nFrontierPoints = spec@portfolio$nFrontierPoints
     
-    # Ranges for Mean and Standard Deviation:
-    if (is.null(returnRange)){
-        returnRange = range(mu) + 0.25*c(-diff(range(mu)), diff(range(mu)))
-    }
-    sqrtSig = sqrt(diag(Sigma))
-    if (is.null(riskRange)){
-        riskRange = c(min(sqrtSig), max(sqrtSig))+
-        0.25*c(-diff(range(sqrtSig)), diff(range(sqrtSig)))
-    }
-    
     # Calculate Efficient Frontier:
-    muMin = min(mu) # returnRange[1]
-    muMax = max(mu) # returnRange[2]
     targetMu = targetSigma = nextWeights = rep(0, times = nFrontierPoints)
-    weights = error = NULL
+    targetWeights = error = NULL
 
     # Loop over .efficientConstrainedMVPortfolio
     Spec = spec
     solver = spec@solver$type
+    # Start Weights:
+    Spec@portfolio$weights = rep(1/nAssets, nAssets)
     k = 0 
-    for (nTargetReturn in seq(muMin, muMax, length = nFrontierPoints)) {
+    for (nTargetReturn in seq(min(mu), max(mu), length = nFrontierPoints)) {
         k = k + 1  
-        setTargetReturn(Spec)<-nTargetReturn    
-        tmpObject = .efficientConstrainedMVPortfolio(
+        setTargetReturn(Spec) <- nTargetReturn     
+        nextPortfolio = .efficientConstrainedMVPortfolio(
             data = data, spec = Spec, constraints = constraints)
-        targetMu[k] = tmpObject@portfolio$targetReturn
-        targetSigma[k] = tmpObject@portfolio$targetRisk
-        nextWeights = tmpObject@portfolio$weights
+        # Start Weights for Donlp2:
+        Spec@portfolio$weights = nextPortfolio@portfolio$weights
+        # Target Return and Risk:
+        targetMu[k] = nextPortfolio@portfolio$targetReturn
+        targetSigma[k] = nextPortfolio@portfolio$targetRisk
+        nextWeights = nextPortfolio@portfolio$weights
         names(nextWeights) = names(mu)
-        weights = rbind(weights, t(nextWeights))
-        if (solver == "RQuadprog") {
-            error = c(error, as.logical(attr(nextWeights, "error")))
-        } else {
-            error = c(error, FALSE)
-        }
+        targetWeights = rbind(targetWeights, t(nextWeights))
     }
+    
+    # Get Weights:
+    weights = targetWeights
+    names(weights) = names(mu)
+    
+    # Get TargetReturn:
+    targetReturn = targetMu
+    attr(targetReturn, "return") <- spec@model$estimator[1]
+    
+    # Get Target Risk:
+    targetRisk = targetSigma
+    attr(targetRisk, "risk") = spec@model$estimator[2]
+
     
     # Return Value:
     new("fPORTFOLIO", 
@@ -421,12 +422,9 @@ function(data, spec, constraints)
         specification = list(spec = spec),
         constraints = as.character(constraints),
         portfolio = list(
-            weights = weights[!error, ],
-            targetReturn = targetMu[!error],
-            targetRisk = targetSigma[!error],
-            targetMean = targetMu[!error],
-            targetStdev = targetSigma[!error],
-            error = error),
+            weights = weights,  
+            targetReturn = targetReturn, 
+            targetRisk = targetRisk),
         title = "Constrained MV Frontier", 
         description = .description())       
 }

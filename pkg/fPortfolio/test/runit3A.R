@@ -215,12 +215,12 @@ function()
     
     # Constraints:
     Constraints = "Short" 
+    
+    # Frontier:
     .portfolioShortMVFrontier(Data, Spec, Constraints)
     Frontier = portfolioFrontier(Data, Spec, Constraints)
     Frontier
-    par(mfrow = c(1, 1))
-    frontierPlot(Frontier)
-    title(main = "Efficient Frontier")
+    plot(Frontier, which = c(1, 2, 3, 5))
     
     # Return Value:
     return()

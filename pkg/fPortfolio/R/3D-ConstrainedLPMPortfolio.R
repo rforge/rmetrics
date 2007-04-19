@@ -46,13 +46,9 @@ function(data, spec, constraints)
     #   Computes Risk and Return for a feasible portfolio
     
     # Arguments:
-    #   data - a list with two named elements. 
-    #       $series holding the time series which may be any rectangular,
-    #       object or if not specified holding NA;
-    #       $statistics holding a named two element list by itself, 
-    #           $mu the location of the asset returns by default the mean and 
-    #           $Sigma the scale of the asset returns by default the covariance
-    #           matrix.
+    #   data - portfolio of assets
+    #   spec - specification of the portfolio
+    #   constraints - string of constraints
     
     # Note:
     #   In contrast to the functions *Portfolio(), which only require either the
@@ -63,6 +59,8 @@ function(data, spec, constraints)
     #   .feasibleConstrainedLPMPortfolio()
     
     # FUNCTION:
+    
+    stop("NYI")
 
     # Get Statistics:
     if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
@@ -83,18 +81,26 @@ function(data, spec, constraints)
     # Description:
     #   Computes Risk, Return and Weight for the tangency portfolio
     
+    # Arguments:
+    #   data - portfolio of assets
+    #   spec - specification of the portfolio
+    #   constraints - string of constraints
+    
     # Example:
     #   .tangencyConstrainedLPMPortfolio()
     
     # FUNCTION:
-
-    # Get Statistics:
-    if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
-    mu = data$statistics$mu
-    Sigma = data$statistics$Sigma
+ 
+    # Set Risk Free Rate:
+    spec@portfolio$riskFreeRate = 0
     
-    # Return Value:
-    stop(".tangencyConstrainedLPMPortfolio NYI")
+    # Call cmlPorfolio unction:
+    ans = .cmlConstrainedLPMPortfolio(data, spec, constraints)
+    ans@call = match.call()
+    ans@title = "Tangency Portfolio"
+    
+    # Return value:
+    ans
 }
 
 
@@ -106,6 +112,11 @@ function(data, spec, constraints)
 {
     # Description:
     #   Computes Computes Risk, Return and Weight for CML portfolio
+    
+    # Arguments:
+    #   data - portfolio of assets
+    #   spec - specification of the portfolio
+    #   constraints - string of constraints
     
     # Example:
     #   .cmlConstrainedLPMPortfolio()
@@ -133,6 +144,11 @@ function(data, spec, constraints)
     # Description:
     #   Computes Risk, Return and Weight for minimum variance portfolio
     
+    # Arguments:
+    #   data - portfolio of assets
+    #   spec - specification of the portfolio
+    #   constraints - string of constraints
+    
     # Example:
     #   .minvarianceConstrainedLPMPortfolio()
     
@@ -159,10 +175,10 @@ function(data, spec, constraints)
     #   box and or sector constraints
     
     # Arguments:
-    #   data - portfolio of assets, a matrix or an object which can be 
-    #       transformed to a matrix
+    #   data - portfolio of assets
     #   spec - specification of the portfolio
     #   constraints - string of constraints
+
 
     # FUNCTION:
        
@@ -197,8 +213,7 @@ function(data, spec, constraints)
     #   Evaluates the EF for a given set of box and or sector constraints
     
     # Arguments:
-    #   data - portfolio of assets, a matrix or an object which can be 
-    #       transformed to a matrix
+    #   data - portfolio of assets
     #   spec - specification of the portfolio
     #   constraints - string of constraints
 

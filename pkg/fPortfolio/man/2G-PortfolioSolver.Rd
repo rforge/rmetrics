@@ -6,9 +6,6 @@
 \alias{solveRDonlp2} 
 \alias{solveRlpSolve}
 
-\alias{setSolver} 
-\alias{setSolver<-}
-
 
 \title{Portfolio Solver}
 
@@ -34,9 +31,6 @@
 solveRQuadprog(data, spec, constraints)
 solveRDonlp2(data, spec, constraints)
 solveRlpSolve(data, spec, constraints)
-
-setSolver(spec = portfolioSpec(), solver = c("RQuadprog", "Rdonlp2"))
-setSolver(spec) <- value
 }
 
 
@@ -57,12 +51,6 @@ setSolver(spec) <- value
         a character string vector, containing the constraints of the form\cr
         \code{"minW[asset]=percentage"} for box constraints resp. \cr
         \code{"maxsumW[assets]=percentage} for sector constraints.
-        }
-    \item{solver}{
-        a character string denoting the type of the solver to be used.
-        }
-    \item{value}{
-        a value for that component of \code{spec} to be set.
         }
 }
 

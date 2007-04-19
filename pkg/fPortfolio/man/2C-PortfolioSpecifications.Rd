@@ -33,6 +33,9 @@
 \alias{setRiskRange}
 \alias{setRiskRange<-}
 
+\alias{setSolver}
+\alias{setSolver<-}
+
 \alias{portfolioStatistics}
 \alias{portfolioData}
 
@@ -99,6 +102,9 @@ setReturnRange(spec = portfolioSpec(), returnRange = NULL)
 setReturnRange(spec) <- value
 setRiskRange(spec = portfolioSpec(), riskRange = NULL)
 setRiskRange(spec) <- value
+
+setSolver(spec = portfolioSpec(), solver = c("RQuadprog", "Rdonlp2"))
+setSolver(spec) <- value
 
 portfolioStatistics(data, spec = portfolioSpec())
 portfolioData(data, spec = portfolioSpec())
