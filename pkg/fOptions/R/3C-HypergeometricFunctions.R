@@ -52,10 +52,14 @@ function(x, a, b, lnchf = 0, ip = 0)
     #   Kind for complex argument "x" and complex indexes "a" and "b"
     
     # Arguments:
+    #   x - complex function argument
+    #   a, b - complex indexes 
+    #   lnchf - 
+    #   ip - 
     
     # FUNCTION:
     
-    # Test for complex arguments:
+    # You can also input real arguments:
     if (!is.complex(x)) x = complex(real = x, imag = 0*x)
     if (!is.complex(a)) a = complex(real = a, imag = 0)
     if (!is.complex(b)) b = complex(real = b, imag = 0)    
