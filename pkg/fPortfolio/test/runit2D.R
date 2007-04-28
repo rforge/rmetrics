@@ -69,15 +69,19 @@ function()
    Spec = portfolioSpec() 
    
    # Set Portfolio Constraints:
-   Constraints = "minW[1:4]"
-   portfolioConstraints(Data, Spec, Constraints)
-   
-   # Set Portfolio Constraints:
    Constraints = NULL
    portfolioConstraints(Data, Spec, Constraints)
    
    # Set Portfolio Constraints:
    Constraints = "LongOnly"
+   portfolioConstraints(Data, Spec, Constraints)
+   
+   # Set Portfolio Constraints:
+   Constraints = "Short"
+   portfolioConstraints(Data, Spec, Constraints)
+   
+   # Set Portfolio Constraints:
+   Constraints = "c(minW[1:4], maxW[1:4])"
    portfolioConstraints(Data, Spec, Constraints)
    
    # Return Value:

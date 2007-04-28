@@ -41,7 +41,8 @@
 #  getRiskBudgets                Extracts risk budgets from a fPORTFOLIO object
 #  getTargetReturn               Extracts target return from a portfolio
 #  getTargetRisk                 Extracts target riks from a portfolio
-#  getTargetStdev                Extracts target standard deviations from a PF
+#  getTargetStdev                Extracts target std deviations from a portfolio
+#  getNames                      Extracts assets names from a portfolio
 ################################################################################
 
 
@@ -206,7 +207,7 @@ function(object, doplot = FALSE, ...)
     ans = object@portfolio$weights
     
     # Plot:
-    if (doplot) .weightsPlot(object, ...)
+    if (doplot) weightsPlot(object, ...)
     
     # Return Value:
     ans  
@@ -314,6 +315,30 @@ function(object)
     
     # Return Value:
     ans
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+getNames =
+function(object)
+{   # A function implemented by Rmetrics
+
+    # Description:
+    #   Extracts the asset names from a 'fPORTFOLIO' object
+    
+    # FUNCTION:
+    
+    # Get Names of Assets:
+    ans = names(object@data$statistics$mu)
+    if(is.null(ans)){
+        counter = seq(1, getNumberOfAssets(object), 1)
+        ans = paste("A", counter, sep = "")
+    } 
+    
+    # Return Value:
+    ans  
 }
 
 

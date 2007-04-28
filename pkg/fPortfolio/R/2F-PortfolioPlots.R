@@ -45,9 +45,9 @@
 #  weightsPlot                  Plots staggered weights
 #  weightsPie                   Plots staggered weights
 #  attributesPlot               Plots weighted means
-#  .attributesPie               NYI
-#  .riskBudgetsPlot             NYI
-#  .riskBudgetsPie              NYI
+#  attributesPie                Plots weighted means
+#  riskBudgetsPlot              Plots weighted risks
+#  riskBudgetsPie               Plots weighted risks
 # FUNCTION:                    DESCRIPTION:
 #  covEllipsesPlot              Plots covariance ellipses
 ################################################################################
@@ -315,26 +315,27 @@ function(object, ...)
 
     # Description:
     #   Adds the capital market line to a portfolio plot
-    
+
     # FUNCTION:
-    
+
     # Get Portfolio Statistics:
     Data = object@data$statistics
     Spec = getSpecification(object)
     Constraints = object@constraints
-    
+
     # Compute Tangency Portfolio:
     cmlPortfolio = cmlPortfolio(Data, Spec, Constraints)
-    
+
     # Add Tangency Point:
     points(getFrontier(cmlPortfolio), ...)
-    
-    # Add Tangency Line:
-    riskFreeRate = getPortfolio(cmlPortfolio)$riskFreeRate
-    slope = ((getTargetReturn(cmlPortfolio) - riskFreeRate)
-        /getTargetRisk(cmlPortfolio))
-    abline(b = slope, a = riskFreeRate, ...)
-    
+
+    # Add Tangency Line - if slope is positive:
+    # riskFreeRate = getPortfolio(cmlPortfolio)$riskFreeRate
+    riskFreeRate = object@specification$spec@portfolio$riskFreeRate
+    slope = ((getTargetReturn(cmlPortfolio) - riskFreeRate) /
+        getTargetRisk(cmlPortfolio))
+    if(slope > 0) abline(b = slope, a = riskFreeRate, ...)
+
     # Return Value:
     invisible(object)
 }
@@ -859,7 +860,7 @@ function(object, col = NULL, legend = TRUE)
 
 
 weightsPie = 
-function(object, col = NULL, box = TRUE, legend = TRUE)
+function(object, pos = NULL, col = NULL, box = TRUE, legend = TRUE)
 {   # A function implemented by Rmetrics
 
     # Description:
@@ -875,9 +876,16 @@ function(object, col = NULL, box = TRUE, legend = TRUE)
     
     # FUNCTION:
     
+    # Extracting weights position, if specified
+    if(!is.null(pos)){
+        Object = object
+        object@portfolio$weights = getWeights(Object)[pos, ]
+    }
+
     # Plot Circle:
     weights = getWeights(object)
     nWeights = length(weights)
+    if(length(weights) != nWeights) stop("Plot position is not specified")
     Sign = rep("+", nWeights)
     Sign[(1:nWeights)[weights < 0]] = "-"
     
@@ -887,7 +895,10 @@ function(object, col = NULL, box = TRUE, legend = TRUE)
     # Pie Chart:
     Weights = abs(weights)
     Index = (1:nWeights)[Weights > 0]
-    Labels = paste(1:nWeights, Sign)
+    col = col[Index]
+    names = getNames(object)
+    legendAssets = names[Index]
+    Labels = paste(names, Sign)
     Labels = Labels[Weights > 0]
     Weights = Weights[Weights > 0]
     Radius = 0.8
@@ -897,10 +908,6 @@ function(object, col = NULL, box = TRUE, legend = TRUE)
     
     if (legend) {
         # Add Legend:
-        legendAssets = names(object@data$statistics$mu)[Index]
-        if(is.null(legendAssets)){
-            for(i in 1:dim[2]){legendAssets[i] = paste("Asset", i, sep = " ")}
-        }
         legend("topleft", legend = legendAssets, bty = "n", cex = 0.8, 
             fill = col)
         
@@ -914,8 +921,7 @@ function(object, col = NULL, box = TRUE, legend = TRUE)
     # Return Value:
     invisible()
 }
-              
-   
+
 
 # ------------------------------------------------------------------------------
 
@@ -1017,65 +1023,240 @@ function(object, col = NULL, legend = TRUE)
 # ------------------------------------------------------------------------------
 
 
-.attributesPie =
-function(object, col = NULL, legend = TRUE)
+attributesPie = 
+function(object, pos = NULL, col = NULL, box = TRUE, legend = TRUE)
 {   # A function implemented by Rmetrics
 
     # Description:
-    #   Plots ...
-    
-    # Arguments:
-    #   object - an object of class 'fPORTFOLIO'
-    #   col - a color palette, by default the rainbow palette
+    #   Adds a pie plot of the weights
+        
+    # Example:
+    #   attributesPie(tangencyPortfolio(dutchPortfolioData(), portfolioSpec()))
+    #   title(main = "Tangency Portfolio Weights")
     
     # FUNCTION:
+    
+    # Extracting weights position, if specified
+    if(!is.null(pos)){
+        Object = object
+        object@portfolio$weights = getWeights(Object)[pos, ]
+    }
+    
+    # Get weighted Returns:
+    weights = getWeights(object)
+    nWeights = getNumberOfAssets(object)
+    if(length(weights) != nWeights) stop("Plot position is not specified")
+    returns = object@data$statistics$mu
+    weightedReturns = weights*returns
+    
+    # Plot Circle:
+    Sign = rep("+", nWeights)
+    Sign[(1:nWeights)[weightedReturns < 0]] = "-"
+    names = substr(getNames(object), 1, 3)
+    
+    # Color Palette:
+    if (is.null(col)) col = rainbow(nWeights)
 
+    # Pie Chart:
+    WeightedReturns = abs(weightedReturns)
+    Index = (1:nWeights)[WeightedReturns > 0]
+    col = col[Index]
+    names = getNames(object)
+    legendAssets = names[Index]
+    Labels = paste(names, Sign)
+    Labels = Labels[WeightedReturns > 0]
+    WeightedReturns = WeightedReturns[WeightedReturns > 0]
+    Radius = 0.8
+    if (length(WeightedReturns) > 10) Radius = 0.65
+    pie(WeightedReturns, labels = Labels, col = col, radius = Radius)
+    if (box) box()
+    
+    if (legend) {
+        # Add Legend:
+        legend("topleft", legend = legendAssets, bty = "n", cex = 0.8, 
+            fill = col)
+        
+        # Add Legend:
+        sumWeightedReturns = sum(WeightedReturns)
+        legendWeights = as.character(round(100*WeightedReturns/
+            sumWeightedReturns, digits = 1))
+        legendWeights = paste(legendWeights, "%")
+        legend("topright", legend = legendWeights, bty = "n", cex = 0.8, 
+            fill = col)
+    }
+    
     # Return Value:
     invisible()
-}    
+}
 
 
 # ------------------------------------------------------------------------------
 
 
-.riskBudgetsPlot =
+riskBudgetsPlot =
 function(object, col = NULL, legend = TRUE)
 {   # A function implemented by Rmetrics
 
     # Description:
-    #   Plots ...
     
     # Arguments:
     #   object - an object of class 'fPORTFOLIO'
-    #   col - a color palette, by default the rainbow palette
+    #   col - a color palette, by the rainbow palette
     
     # FUNCTION:
+    
+    # Select Colors if not specified ...
+    if (is.null(col)) col = rainbow(ncol(object@portfolio$weights))
+    
+    # Get weighted Returns:
+    weights = getWeights(object)
+    dim = dim(weights)
+    Sigma = object@data$statistics$Sigma
+    weightedRisk = matrix(nrow = dim[1], ncol = dim[2])
+    
+    for(k in 1:dim[1]){
+        # Calculating risk for k position
+        risk = Sigma %*% weights[k, ]
+        risk = as.vector(risk)
+        for(i in 1:dim[2]){
+            weightedRisk[k, i] = weights[k, i]*risk[i]
+        }
+    }
+    colnames(weightedRisk) = getNames(object)
+    pos.weightedRisk = +0.5 * (abs(weightedRisk) + weightedRisk)
+    neg.weightedRisk = -0.5 * (abs(weightedRisk) - weightedRisk)
+    
+    # Define Plot Range:
+    ymax = max(rowSums(pos.weightedRisk))
+    ymin = min(rowSums(neg.weightedRisk))
+    range = ymax - ymin
+    ymax = ymax + 0.005 * range
+    ymin = ymin - 0.005 * range
+    range = dim[1]
+    xmin = 0
+    xmax = range + .2 * range
 
+    # Create Bar Plots:
+    if(!legend){
+        barplot(t(pos.weightedRisk), space = 0, ylab = "",
+            ylim = c(ymin, ymax), col = col, border = "grey")
+    } else {
+        legendtext = getNames(object)
+
+        barplot(t(pos.weightedRisk), space = 0, ylab = "",
+            xlim = c(xmin, xmax), ylim = c(ymin, ymax), col = col,
+            border = "grey")
+        legend("topright", legend = legendtext, bty = "n", cex = 0.8,
+            fill = col)
+    }
+    barplot(t(neg.weightedRisk), space = 0, add = TRUE, col = col,
+        border = "grey") 
+
+    # Add Tailored Labels -  6 may be a good Number ...
+    targetRisk = getTargetRisk(object)
+    targetReturn = getTargetReturn(object)
+    nSigma = length(targetRisk)
+    nLabels = 6
+    M = c(0, ( 1: (nSigma %/% nLabels) ) ) *nLabels + 1
+    # Take a reasonable number of significant digits to plot, e.g. 2 ...
+    nPrecision = 3
+    axis(1, at = M, labels = signif(targetReturn[M], nPrecision))
+    
+    # Add Axis Labels and Title:
+    mtext("Return", side = 1, line = 2, cex = .7)
+    mtext("Target Risk", side = 2, line = 2, cex = .7)
+          
+    # Add vertical Line at minimum risk:
+    names(targetRisk) <- as.character(seq(1, nSigma, 1))
+    minRisk = min(targetRisk)
+    for(i in 1: nSigma){
+          if(minRisk == targetRisk[i]) minRisk = targetRisk[i]
+    }
+    minRisk = as.numeric(names(minRisk))
+    abline(v = minRisk, col = "black", lty = 1, lwd = 2)
+    # Complete to draw box ...
+    box()
+    
     # Return Value:
     invisible()
-}    
+}
 
 
 # ------------------------------------------------------------------------------
 
 
-.riskBudgetsPie =
-function(object, col = NULL, legend = TRUE)
+riskBudgetsPie = 
+function(object, pos = NULL, col = NULL, box = TRUE, legend = TRUE)
 {   # A function implemented by Rmetrics
 
     # Description:
-    #   Plots ...
-    
-    # Arguments:
-    #   object - an object of class 'fPORTFOLIO'
-    #   col - a color palette, by default the rainbow palette
+    #   Pie plot of weighted risks
+        
+    # Example:
+    #   riskPie(tangencyPortfolio(dutchPortfolioData(), portfolioSpec()))
+    #   title(main = "Tangency Portfolio Risk Weights")
     
     # FUNCTION:
-
+    
+    # Extracting weights position, if specified
+    if(!is.null(pos)){
+        Object = object
+        object@portfolio$weights = getWeights(Object)[pos, ]
+    }
+    
+    # Get weighted Returns:
+    weights = getWeights(object)
+    nWeights = getNumberOfAssets(object)
+    if(length(weights) != nWeights) stop("Plot position is not specified")
+    Sigma = object@data$statistics$Sigma
+    
+    # Calculating risk
+    weightedRisk = NULL
+    risk = Sigma %*% weights
+    
+    for(i in 1:nWeights){
+        weightedRisk[i] = weights[i]*risk[i]
+    }
+    # Plot Circle:
+    Sign = rep("+", nWeights)
+    Sign[(1:nWeights)[weightedRisk < 0]] = "-"
+    names = substr(getNames(object), 1, 3)
+    
+    # Color Palette:
+    if (is.null(col)) col = rainbow(nWeights)
+    
+    # Pie Chart:
+    # Pie Chart:
+    weightedRisk = abs(weightedRisk)
+    Index = (1:nWeights)[weightedRisk > 0]
+    col = col[Index]
+    names = getNames(object)
+    legendAssets = names[Index]
+    Labels = paste(names, Sign)
+    Labels = Labels[weightedRisk > 0]
+    weightedRisk = weightedRisk[weightedRisk > 0]
+    Radius = 0.8
+    if (length(weightedRisk) > 10) Radius = 0.65
+    pie(weightedRisk, labels = Labels, col = col, radius = Radius)
+    if (box) box()
+    
+    if (legend) {
+        # Add Legend:
+        legend("topleft", legend = legendAssets, bty = "n", cex = 0.8, 
+            fill = col)
+        
+        # Add Legend:
+        sumWeightedRisk = sum(weightedRisk)
+        legendWeights = as.character(round(100*weightedRisk/
+            sumWeightedRisk, digits = 1))
+        legendWeights = paste(legendWeights, "%")
+        legend("topright", legend = legendWeights, bty = "n", cex = 0.8, 
+            fill = col)
+    }
+    
     # Return Value:
     invisible()
-}    
-    
+}
 
 
 ################################################################################

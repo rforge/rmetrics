@@ -596,15 +596,15 @@ function(object, control = list(), ...)
 
         minvariance.pch = 19,
         singleAsset.pch = 19,
+        tangency.pch = 17,
         
         runningPoint.cex = 1.5,
         minvariance.cex = 1,
         tangency.cex = 1.25,
         singleAsset.cex = 1,
-        
+
         xlim = xLim,
         ylim = yLim
-
         )    
     con[(Names <- names(control))] <- control
     
@@ -637,20 +637,22 @@ function(object, control = list(), ...)
         frontier = getFrontier(object)
         fPoint = frontier[N, ]
         frontierPlot(object, 
-            xlim = con$xlim, ylim = con$ylim,
-            xlab = "", ylab = "")
+            xlim = con$xlim, 
+            ylim = con$ylim,
+            xlab = "", 
+            ylab = "")
         mtext("Target Risk", side = 1, line = 2, cex = 0.7)
         mtext("Target Return", side = 2, line = 2, cex = 0.7)
         points(fPoint[1], fPoint[2], col = con$runningPoint.col, pch = 19,
             cex = con$runningPoint.cex)
-        .tangencyPlot(object, col = con$tangency.col)
+        .tangencyPlot(object, col = con$tangency.col, pch = con$tangency.pch)
         .singleAssetPlot(object, col = con$singleAsset.col,
             cex = con$singleAsset.cex, pch = con$singleAsset.pch)
         .minvariancePlot(object, col = con$minvariance.col,
             cex = con$minvariancePlot.cex, pch = con$minvariance.pch)
         Title = paste(
-            "Return =", signif(fPoint[1], 2), "|", 
-            "Risk = ", signif(fPoint[2], 2))
+            "Return =", signif(fPoint[2], 2), "|", 
+            "Risk = ", signif(fPoint[1], 2))
         .addlegend(object = object, control = con)
         title(main = Title)
         grid()
@@ -664,7 +666,7 @@ function(object, control = list(), ...)
   
     # Open Slider Menu:
     .counter <<- 0
-    .sliderMenu(refresh.code,
+    .sliderMenu(refresh.code, title = "Weights Slider",
        names =       c(                 "N"),
        minima =      c(                   1),
        maxima =      c(     nFrontierPoints),
@@ -697,15 +699,25 @@ function(object, control = list(), ...)
     mu = object@data$statistics$mu
     Sigma = object@data$statistics$Sigma      
     yLim = range(mu) + 0.25*c(-diff(range(mu)), diff(range(mu)))
+    
     # First, take care that all assets appear on the plot ...
     sqrtSig = sqrt(diag(Sigma))
     xLimAssets = c(min(sqrtSig), max(sqrtSig))+
          c(-0.4*diff(range(sqrtSig)), 0.1*diff(range(sqrtSig)))
+
     # ... second take care that the whole frontier appears on the plot:
     fullFrontier = getFrontier(object)
     xLimFrontier = range(fullFrontier[, 1])
     xLim = range(c(xLimAssets, xLimFrontier))
-    
+
+    # Initial setting of the pies:
+    Data = object@data$statistics
+    Spec = getSpecification(object)
+    Constraints = object@constraints
+    tg = getTargetReturn(tangencyPortfolio(Data, Spec, Constraints))
+    ef = getTargetReturn(object)
+    piePos = which(diff(sign(ef-tg)) > 0) 
+
     # Control list:
     con <<- list(
         sliderFlag = "frontier",
@@ -736,9 +748,11 @@ function(object, control = list(), ...)
         
         mcSteps = 5000,
         
-        pieR = NULL, 
-        piePos = NULL, 
-        pieOffset = NULL,
+        weightsPieR = NULL, 
+        weightsPieOffset = NULL,
+        
+        attributesPieR = NULL, 
+        attributesPieOffset = NULL,
         
         xlim = xLim,
         ylim = yLim
@@ -783,8 +797,7 @@ function(object, control = list(), ...)
         points(ef[N, 1], ef[N, 2], col = "red", pch = 19, cex = 1.5)
         if (sharpeRatioFlag) {
             .sharpeRatioPlot(object = object, type = "l", 
-                col = con$sharpeRatio.col, cex = con$sharpeRatio.cex, 
-                lty = 3)
+                col = con$sharpeRatio.col, cex = con$sharpeRatio.cex, lty = 3)
         }
         if (minvarianceFlag) {
             .minvariancePlot(object = object, 
@@ -792,18 +805,10 @@ function(object, control = list(), ...)
                 pch = con$minvariance.pch)
         }
         if (cmlFlag) {
-            object@portfolio$riskFreeRate = riskFreeRate
-            data = object@data$statistics
-            spec = getSpecification(object)
-            constraints = object@constraints
-            setRiskFreeRate(spec = getSpecification(object),
-                riskFreeRate = riskFreeRate)
-            cml = cmlPortfolio(data = data, spec = spec,
-               constraints = constraints)
-            .cmlPlot(object = cml, 
+            object@specification$spec@portfolio$riskFreeRate = riskFreeRate
+            .cmlPlot(object, 
                 col = con$cml.col, cex = con$cml.cex, pch = con$cml.pch)
         }
-        
         if (tangencyFlag) {
             .tangencyPlot(object = object, 
                 col = con$tangency.col, cex = con$tangency.cex,
@@ -824,7 +829,8 @@ function(object, control = list(), ...)
         }
         if (pieFlag) {
             .wheelPiePlot(object = object,
-                piePos = N, pieR = con$PieR, pieOffset = con$pieOffset)
+                piePos = N, pieR = con$weightsPieR,
+                pieOffset = con$weightsPieOffset)
         }
         if (mcFlag) {
             .monteCarloPlot(object = object, 
@@ -836,12 +842,13 @@ function(object, control = list(), ...)
         } 
         if (attributePieFlag) {
             .attPiePlot(object = object,
-                piePos = N, pieR = con$PieR, pieOffset = con$pieOffset)
+                piePos = N, pieR = con$attributesPieR,
+                pieOffset = con$attributesPieOffset)
             }
         fPoint = ef[N, ] 
         Title = paste(
-            "Return =", signif(fPoint[1], 2), "|", 
-            "Risk = ", signif(fPoint[2], 2))
+            "Return =", signif(fPoint[2], 2), "|", 
+            "Risk = ", signif(fPoint[1], 2))
         title(main = Title)            
     }
   
@@ -850,7 +857,7 @@ function(object, control = list(), ...)
     nFP = nFrontierPoints
     maxRF = max(getTargetReturn(object))
     resRF = maxRF/100
-    .sliderMenu(refresh.code,
+    .sliderMenu(refresh.code, title = "Frontier Slider",
         names =       c(  "Select Frontier Point  ",
                           "Add Weights Pie        ",
                           "Add Attribute Pie      ",
@@ -866,12 +873,12 @@ function(object, control = list(), ...)
                           "Add Monte Carlo PFs    ",
                           "# of MC Steps          "),
                           
-            #  frontierPoints Pie Pie L mv tg cml    #RF SR EW SA TA MC   #MC 
-                    #       1   2   2 3  4  5   7      8  6  9 10 11 12    13 
-        minima =      c(    1,  0,  0,0, 0, 0,  0,     0, 0, 0, 0, 0, 0,    0),
-        maxima =      c(  nFP,  1,  1,1, 1, 1,  1, maxRF, 1, 1, 1, 1, 1,25000),
-        resolutions = c(    1,  1,  1,1, 1, 1,  1, resRF, 1, 1, 1, 1, 1, 1000),
-        starts =      c(    1,  1,  0,1, 1, 1,  1,     0, 0, 0, 1, 0, 0, 1000))
+            #   frontierPoints Pie Pie  L mv tg cml    #RF SR EW SA TA MC   #MC 
+                    #        1   2   2  3  4  5  7      8  6  9 10 11 12    13 
+        minima =      c(     1,  0,  0, 0, 0, 0, 0,     0, 0, 0, 0, 0, 0,    0),
+        maxima =      c(   nFP,  1,  1, 1, 1, 1, 1, maxRF, 1, 1, 1, 1, 1,25000),
+        resolutions = c(     1,  1,  1, 1, 1, 1, 1, resRF, 1, 1, 1, 1, 1, 1000),
+        starts =      c(piePos,  1,  0, 1, 1, 1, 1,     0, 0, 0, 1, 0, 0, 1000))
       
     # Return Value:                                                 
     invisible()

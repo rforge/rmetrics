@@ -4,9 +4,12 @@
 
 \alias{frontierPlot}
 
-\alias{weightsPlot} 
-\alias{weightsPie} 
+\alias{weightsPlot}
+\alias{weightsPie}
 \alias{attributesPlot}
+\alias{attributesPie}
+\alias{riskBudgetsPlot}
+\alias{riskBudgetsPie}
 
 \alias{covEllipsesPlot}
 
@@ -28,6 +31,9 @@
     \code{weightsPlot} \tab Plots staggered weights, \cr
     \code{weightsPie} \tab Plots staggered weights, \cr
     \code{attributesPlot} \tab Plots weighted means, \cr
+    \code{attributesPie} \tab Plots weighted means, \cr
+    \code{riskBudgetPlot} \tab  Plots weighted risks, \cr
+    \code{riskBudgetPie} \tab Plots weighted risks, \cr
     \code{covEllipsesPlot} \tab Plots covariance ellipses. }
 
 }
@@ -38,11 +44,11 @@ frontierPlot(object, frontier = c("both", "lower", "upper"),
     col = c("black", "grey"), add = FALSE, \dots)
     
 weightsPlot(object, col = NULL, legend = TRUE)
-weightsPie(object, col = NULL, box = TRUE, legend = TRUE)
+weightsPie(object, pos = NULL, col = NULL, box = TRUE, legend = TRUE)
 attributesPlot(object, col = NULL, legend = TRUE)
-%attributesPie(object, col = NULL, legend = TRUE)
-%riskBudgetPlot(object, col = NULL, legend = TRUE)
-%riskBudgetPie(object, col = NULL, legend = TRUE)
+attributesPie(object, pos = NULL, col = NULL, box = TRUE, legend = TRUE)
+riskBudgetPlot(object, col = NULL, legend = TRUE)
+riskBudgetPie(object, pos = NULL, col = NULL, box = TRUE, legend = TRUE)
 
 covEllipsesPlot(x = list(), \dots)
 }
@@ -61,7 +67,7 @@ covEllipsesPlot(x = list(), \dots)
         }
     \item{col}{
         a character string vector, setting the color. For \code{frontierPlot} 
-        it is two dimensional a vector; first entry is the upper part of the
+        it is a two dimensional a vector; first entry is the upper part of the
         frontier,\cr second entry the lower, by default "black" and "grey".\cr
         For the other functions the argument defines the color representation,
         by default sets the default color is the rainbow palette.
@@ -74,9 +80,15 @@ covEllipsesPlot(x = list(), \dots)
         for the actual efficient frontier, by default "both".
          }
     \item{legend}{
-        [weightsPlot, attributesPlot] - \cr
+        [*Pie][*Plot] - \cr
+        a numeric value, determining the position on the efficient frontier 
+        plotting the pie, by default NULL, i.e. expecting a object having 
+        only one set of weights like the tangency portfolio.
+        }
+    \item{pos}{
+        [*Pie] - \cr
         a logical value, determining whether a legend with the names of the
-        assets should be plotted, by default TRUE
+        assets should be plotted, by default TRUE.
         }
     \item{object}{
         an S4 object of class \code{fPORTFOLIO}, containing slots call, data,
@@ -109,12 +121,15 @@ covEllipsesPlot(x = list(), \dots)
     \cr
 
 
-    \bold{Weights and Attributes Plots:}
+    \bold{Weights, Attributes, and Risk Budgets Plots:}
     \cr\cr
-    This two plots give a view on the weights of the whole frontier. A vertical
-    dotted line indicates the minimum variance portfolio. The weights plot
-    shows the stacked weights, while the attributes plot shows the
-    mean weighted weights of the portfolios, i.e. the real return.
+    These plotds give a view on three different views related to the weights 
+    of the frontier. This concern the constitution of the weights, the 
+    weights attributes and of the risk budgets. A vertical line indicates 
+    the minimum variance portfolio. The weights plot displays staggered 
+    weights, while the attributes plot shows the mean return weighted weights 
+    of the portfolio, i.e. the real return. The risk budget plot shows the 
+    risk weighted weights.
     \cr
 
 

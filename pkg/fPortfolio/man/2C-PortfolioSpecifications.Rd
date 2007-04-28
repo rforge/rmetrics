@@ -96,7 +96,7 @@ setTargetAlpha(spec = portfolioSpec(), targetAlpha = NULL)
 setTargetAlpha(spec) <- value
 setRiskFreeRate(spec = portfolioSpec(), riskFreeRate = 0)
 setRiskFreeRate(spec) <- value
-setNFrontierPoints(spec = portfolioSpec(), nFrontierPoints = 100)
+setNFrontierPoints(spec = portfolioSpec(), nFrontierPoints = 50)
 setNFrontierPoints(spec) <- value
 setReturnRange(spec = portfolioSpec(), returnRange = NULL)
 setReturnRange(spec) <- value

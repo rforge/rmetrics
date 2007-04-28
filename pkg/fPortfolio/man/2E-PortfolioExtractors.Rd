@@ -5,14 +5,15 @@
 \alias{getAssets}
 \alias{getStatistics}
 \alias{getNumberOfAssets}
-\alias{getSpecification}   
-\alias{getPortfolio}       
-\alias{getFrontier}        
-\alias{getWeights}    
-\alias{getRiskBudgets}   
-\alias{getTargetReturn}   
-\alias{getTargetRisk}  
-\alias{getTargetStdev}    
+\alias{getSpecification}
+\alias{getPortfolio}  
+\alias{getFrontier}
+\alias{getWeights}
+\alias{getRiskBudgets}
+\alias{getTargetReturn}
+\alias{getTargetRisk}
+\alias{getTargetStdev}
+\alias{getNames}
 
 
 \title{Portfolio Extractor Functions}
@@ -38,7 +39,8 @@
     \code{getRiskBudgets} \tab Extracts risk budgets from a fPORTFOLIO object, \cr
     \code{getTargetReturn} \tab Extracts target return from a portfolio, \cr
     \code{getTargetRisk} \tab Extracts target risk from a portfolio, \cr
-    \code{getTargetStdev} \tab Extracts target standard deviation from a portfolio. }
+    \code{getTargetStdev} \tab Extracts target standard deviation from a portfolio, \cr
+    \code{getNames} \tab Extracts asset names from a portfolio. }
     
 }
     
@@ -55,6 +57,7 @@ getRiskBudgets(object)
 getTargetReturn(object)  
 getTargetRisk(object)
 getTargetStdev(object)
+getNames(object)
 }
 
 
@@ -97,6 +100,7 @@ getTargetStdev(object)
     \code{getTargetReturn}\cr
     \code{getTargetRisk}\cr
     \code{getTargetStdev}\cr
+    \code{getNames}\cr
     all functions return a list or a value of the desired information.
   
 }

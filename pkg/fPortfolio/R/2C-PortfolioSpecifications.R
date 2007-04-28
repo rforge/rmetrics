@@ -569,7 +569,7 @@ function(spec, value)
 
 
 setNFrontierPoints = 
-function(spec = portfolioSpec(), nFrontierPoints = 100)
+function(spec = portfolioSpec(), nFrontierPoints = 50)
 {   # A function implemented by Rmetrics
 
     # Description:                                
