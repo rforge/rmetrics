@@ -30,6 +30,14 @@
 ################################################################################
 # FUNCTION:                 COLOR PALETTES:
 #  greyPalette               Creates a grey palette
+#  .timPalette
+#  .rainbowPalette
+#  .heatPalette
+#  .terrainPalette
+#  .topoPalette
+#  .cmPalette
+# FUNCTION:
+#  .asRGB                    Converts any R color to RGB (red/green/blue)
 # FUNCTION:                 CONVERSION HEXIMAL/DECIMAL:
 #  .chcode                   Changes from one to another number system
 #  .hex.to.dec               Converts heximal numbers do decimal numbers
@@ -72,6 +80,84 @@ function(n = 64, start = 255-n, end = 255)
     
     # Return Value:
     ans
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.timPalette = 
+function (n = 64) 
+{
+    # Notes:
+    #   'Tim.colors' in 'fields' package goes from blue to red, and passes 
+    #   through the colors cyan, yellow, and orange. Also known as Jet 
+    #   color-map in Matlab. You can also easily design your own color map 
+    #   using 'rgb' function from 'gdDevices'. 
+    #   From:  <Jaroslaw.W.Tuszynski@saic.com>     
+    
+    orig <- c(
+        "#00008F", "#00009F", "#0000AF", "#0000BF", "#0000CF", 
+        "#0000DF", "#0000EF", "#0000FF", "#0010FF", "#0020FF", 
+        "#0030FF", "#0040FF", "#0050FF", "#0060FF", "#0070FF", 
+        "#0080FF", "#008FFF", "#009FFF", "#00AFFF", "#00BFFF", 
+        "#00CFFF", "#00DFFF", "#00EFFF", "#00FFFF", "#10FFEF", 
+        "#20FFDF", "#30FFCF", "#40FFBF", "#50FFAF", "#60FF9F", 
+        "#70FF8F", "#80FF80", "#8FFF70", "#9FFF60", "#AFFF50", 
+        "#BFFF40", "#CFFF30", "#DFFF20", "#EFFF10", "#FFFF00", 
+        "#FFEF00", "#FFDF00", "#FFCF00", "#FFBF00", "#FFAF00", 
+        "#FF9F00", "#FF8F00", "#FF8000", "#FF7000", "#FF6000", 
+        "#FF5000", "#FF4000", "#FF3000", "#FF2000", "#FF1000", 
+        "#FF0000", "#EF0000", "#DF0000", "#CF0000", "#BF0000", 
+        "#AF0000", "#9F0000", "#8F0000", "#800000")
+    if (n == 64) return(orig)
+    rgb.tim <- t(col2rgb(orig))
+    temp <- matrix(NA, ncol = 3, nrow = n)
+    x <- seq(0, 1, , 64)
+    xg <- seq(0, 1, , n)
+    for (k in 1:3) {
+        hold <- splint(x, rgb.tim[, k], xg)
+        hold[hold < 0] <- 0
+        hold[hold > 255] <- 255
+        temp[, k] <- round(hold)
+    }
+    rgb(temp[, 1], temp[, 2], temp[, 3], maxColorValue = 255)
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.rainbowPalette = function(n = 64) rainbow(n = n)
+.heatPalette = function(n = 64) heat.colors(n)
+.terrainPalette = function(n = 64) terrain.colors(n)
+.topoPalette = function(n = 64) topo.colors(n)
+.cmPalette = function(n = 64) cm.colors(n)
+
+
+################################################################################
+
+
+.asRGB = 
+function (col = rainbowPalette(64), alpha = FALSE) 
+{
+    # Description:
+    #   Converts any R color to RGB (red/green/blue) 
+    
+    # Arguments:
+    #   col - vector of any of the three kind of R colors, i.e., either a 
+    #       color name (an element of colors()), a hexadecimal string of 
+    #       the form "#rrggbb", or an integer i meaning palette()[i]. 
+    #   alpha - a logical value indicating whether alpha channel values 
+    #       should be returned. 
+
+    # FUNCTION:
+    # Color Conversion:
+    result <- .Internal(col2rgb(col))
+    if (!alpha) result <- result[1:3, , drop = FALSE]
+    
+    # Return Value:
+    t(result)
 }
 
 
