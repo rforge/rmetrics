@@ -47,8 +47,8 @@ weightsPlot(object, col = NULL, legend = TRUE)
 weightsPie(object, pos = NULL, col = NULL, box = TRUE, legend = TRUE)
 attributesPlot(object, col = NULL, legend = TRUE)
 attributesPie(object, pos = NULL, col = NULL, box = TRUE, legend = TRUE)
-riskBudgetPlot(object, col = NULL, legend = TRUE)
-riskBudgetPie(object, pos = NULL, col = NULL, box = TRUE, legend = TRUE)
+riskBudgetsPlot(object, col = NULL, legend = TRUE)
+riskBudgetsPie(object, pos = NULL, col = NULL, box = TRUE, legend = TRUE)
 
 covEllipsesPlot(x = list(), \dots)
 }
