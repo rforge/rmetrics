@@ -16,25 +16,25 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2007, Diethelm Wuertz, GPL
-#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   info@rmetrics.org
-#   www.rmetrics.org
+#  1999 - 2007, Diethelm Wuertz, GPL
+#  Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
+#  info@rmetrics.org
+#  www.rmetrics.org
 # for the code accessed (or partly included) from other R-ports:
-#   see R's copyright and license files
+#  see R's copyright and license files
 # for the code accessed (or partly included) from contributed R-ports
 # and other sources
-#   see Rmetrics's copyright file
+#  see Rmetrics's copyright file
 
 
 ################################################################################
 # FUNCTION:                 DESCRIPTION:
-#  CRRBinomialTreeOption     Cox-Ross-Rubinstein Binomial Tree Option Model
-#  JRBinomialTreeOption      JR Modfication to the Binomial Tree Option
-#  TIANBinomialTreeOption    Tian's Modification to the Binomial Tree Option
+# CRRBinomialTreeOption     Cox-Ross-Rubinstein Binomial Tree Option Model
+# JRBinomialTreeOption      JR Modfication to the Binomial Tree Option
+# TIANBinomialTreeOption    Tian's Modification to the Binomial Tree Option
 # FUNCTION:                 DESCRIPTION:
-#  BinomialTreeOption        CRR Binomial Tree Option with Cost of Carry Term
-#  BinomialTreePlot          Plots results from the CRR Option Pricing Model
+# BinomialTreeOption        CRR Binomial Tree Option with Cost of Carry Term
+# BinomialTreePlot          Plots results from the CRR Option Pricing Model
 ################################################################################
 
 
@@ -61,7 +61,8 @@ function()
 test.CRRBinomialTreeOption = 
 function()
 {
-    #  CRRBinomialTreeOption     Cox-Ross-Rubinstein Binomial Tree Option Model
+    # CRRBinomialTreeOption     
+    #   Cox-Ross-Rubinstein Binomial Tree Option Model
 
     # Return Value:
     return()
@@ -74,7 +75,8 @@ function()
 test.JRBinomialTreeOption = 
 function()
 {
-    #  JRBinomialTreeOption      JR Modfication to the Binomial Tree Option
+    # JRBinomialTreeOption      
+    #   JR Modfication to the Binomial Tree Option
 
     # Return Value:
     return()
@@ -87,7 +89,8 @@ function()
 test.TIANBinomialTreeOption = 
 function()
 {
-    #  TIANBinomialTreeOption    Tian's Modification to the Binomial Tree Option
+    # TIANBinomialTreeOption    
+    #   Tian's Modification to the Binomial Tree Option
 
     # Return Value:
     return()
@@ -100,7 +103,8 @@ function()
 test.BinomialTreeOption = 
 function()
 {
-    #  BinomialTreeOption        CRR Binomial Tree Option with Cost of Carry Term
+    # BinomialTreeOption        
+    #   CRR Binomial Tree Option with Cost of Carry Term
     
     # Return Value:
     return()
@@ -113,7 +117,8 @@ function()
 test.BinomialTreePlot = 
 function()
 {
-    #  BinomialTreePlot          Plots results from the CRR Option Pricing Model
+    # BinomialTreePlot          
+    #   Plots results from the CRR Option Pricing Model
     
     # Return Value:
     return()

@@ -71,8 +71,12 @@ function()
 test.NDF =
 function()
 {
-    #  NDF                        Normal distribution function
-  
+    # NDF:                        
+    #   Normal distribution function
+    
+    # Arguments:
+    #   NDF(x)
+    
     # NDF:
     x = (-3):3
     NDF(x)
@@ -89,9 +93,18 @@ function()
 test.CND =
 function()
 {
-    #  CND                        Cumulative normal distribution function 
+    # CND                        
+    #   Cumulative normal distribution function 
+    
+    # Arguments:
+    #   CND(x)
     
     # CND:
+    # NDF:
+    x = (-3):3
+    CND(x)
+    pnorm(x)
+    CND(x)-pnorm(x)
 
     # Return Value:
     return()    
@@ -101,47 +114,17 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.distribution =
+test.CBND =
 function()
 {
-    #  CBND                       Cumulative bivariate normal distribution  
+    # CBND                       
+    #   Cumulative bivariate normal distribution  
+    
+    # Arguments:
+    #   CBND(x1, x2, rho)
     
     # CBND:
-
-    # Return Value:
-    return()    
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-test.GBSOption =
-function()
-{
-    #  GBSOption                  Computes Option Price from the GBS Formula
-    #  GBSCharacteristics         Computes Option Price and all Greeks of GBS Model
-    #  BlackScholesOption         Synonyme Function Call to GBSOption
-    #  GBSGreeks                  Computes one of the Greeks of the GBS formula
-
-    # GBSOption(TypeFlag = c("c", "p"), S, X, Time, r, b, sigma, 
-    #   title = NULL, description = NULL) 
-    GBSOption("c", 100, 100, 1, 0.10, 0.10, 0.30)
-    
-    # GBSCharacteristics(TypeFlag = c("c", "p"), S, X, Time, r, b, sigma) 
-    GBSCharacteristics("c", 100, 100, 1, 0.10, 0.10, 0.30)
-    
-    # BlackScholesOption(...)
-    
-    # GBSGreeks(Selection = c("Delta", "Theta", "Vega", "Rho", "Lambda", 
-    #   "Gamma", "CofC"), TypeFlag = c("c", "p"), S, X, Time, r, b, sigma) 
-    GBSGreeks("Delta", "c", 100, 100, 1, 0.10, 0.10, 0.30)
-    GBSGreeks("Theta", "c", 100, 100, 1, 0.10, 0.10, 0.30)
-    GBSGreeks("Vega", "c", 100, 100, 1, 0.10, 0.10, 0.30)
-    GBSGreeks("Rho", "c", 100, 100, 1, 0.10, 0.10, 0.30)
-    GBSGreeks("Lambda", "c", 100, 100, 1, 0.10, 0.10, 0.30)
-    GBSGreeks("Gamma", "c", 100, 100, 1, 0.10, 0.10, 0.30)
-    GBSGreeks("CofC", "c", 100, 100, 1, 0.10, 0.10, 0.30)
+    CBND(0, 0, 1/2)
     
     # Return Value:
     return()    
@@ -150,14 +133,17 @@ function()
 
 # ------------------------------------------------------------------------------
 
-
 test.GBSOption =
 function()
 {
-    # GBSOption                   Computes Option Price from the GBS Formula
+    # GBSOption                   
+    #   Computes Option Price from the GBS Formula
 
-    # GBSOption(TypeFlag = c("c", "p"), S, X, Time, r, b, sigma, 
+    # Arguments:
+    #   GBSOption(TypeFlag = c("c", "p"), S, X, Time, r, b, sigma, 
     #   title = NULL, description = NULL) 
+    
+    # GBSOption:
     GBSOption("c", 100, 100, 1, 0.10, 0.10, 0.30)
     
     # Return Value:
@@ -171,9 +157,13 @@ function()
 test.GBSCharacteristics =
 function()
 {
-    # GBSCharacteristics          Computes Option Price and all Greeks of GBS Model
+    # GBSCharacteristics          
+    #   Computes Option Price and all Greeks of GBS Model
 
-    # GBSCharacteristics(TypeFlag = c("c", "p"), S, X, Time, r, b, sigma) 
+    # Arguments:
+    #   GBSCharacteristics(TypeFlag = c("c", "p"), S, X, Time, r, b, sigma) 
+    
+    # GBSCharacteristics:
     GBSCharacteristics("c", 100, 100, 1, 0.10, 0.10, 0.30)
     
     # Return Value:
@@ -187,9 +177,11 @@ function()
 test.BlackScholesOption =
 function()
 {
-    # BlackScholesOption          Synonyme Function Call to GBSOption
+    # BlackScholesOption          
+    #   Synonyme Function Call to GBSOption
    
-    # BlackScholesOption(...)
+    # Arguments:
+    #   BlackScholesOption(...)
   
     # Return Value:
     return()    
@@ -202,11 +194,14 @@ function()
 test.Black76Option =
 function()
 { 
-    # Black76Option              Computes Prices of Options on Futures
-
-    # Black76Option:
-    # Black76Option = (TypeFlag = c("c", "p"), FT, X, Time, r, sigma, 
+    # Black76Option              
+    #   Computes Prices of Options on Futures
+    
+    # Arguments:
+    #   Black76Option = (TypeFlag = c("c", "p"), FT, X, Time, r, sigma, 
     #   title = NULL, description = NULL)
+    
+    # Black76Option:
     Black76Option(FT = 95, X = 80, Time = 1/2, r = 0.05, sigma = 0.266)
         
     # Return Value:
@@ -220,12 +215,15 @@ function()
 test.MiltersenSchwartzOption =
 function()
 { 
-    # MiltersenSchwartzOption    Pricing a Miltersen Schwartz Option
+    # MiltersenSchwartzOption    
+    #   Pricing a Miltersen Schwartz Option
 
-    # MiltersenSchwartzOption:
-    # MiltersenSchwartzOption(TypeFlag = c("c", "p"), Pt, FT, X, time, Time, 
+    # Arguments:
+    #   MiltersenSchwartzOption(TypeFlag = c("c", "p"), Pt, FT, X, time, Time, 
     #   sigmaS, sigmaE, sigmaF, rhoSE, rhoSF, rhoEF, KappaE, KappaF, 
     #   title = NULL, description = NULL)
+    
+    # MiltersenSchwartzOption:
     MiltersenSchwartzOption(TypeFlag = "c", Pt = exp(-0.05/4), FT = 95, 
         X = 80, time = 1/4, Time = 1/2, sigmaS = 0.2660, sigmaE = 0.2490, 
         sigmaF = 0.0096, rhoSE = 0.805, rhoSF = 0.0805, rhoEF = 0.1243, 

@@ -28,17 +28,16 @@
 
 
 ################################################################################
-# FUNCTION:                       DESCRIPTION:
-#  Multiple Exercices Options:           
-#   ExecutiveStockOption            Executive Stock Option
-#   ForwardStartOption              Forward Start Option
-#   RatchetOption                   Ratchet [Compound] Option
-#   TimeSwitchOption                Time Switch Option
-#   SimpleChooserOption             Simple Chooser Option
-#   ComplexChooserOption            Complex Chooser Option
-#   OptionOnOption                  Options On Options
-#   HolderExtendibleOption          Holder Extendible Option
-#   WriterExtendibleOption          Writer Extendible Option
+# FUNCTION:                       MULTIPLE EXERCISES OPTIONS:           
+#  ExecutiveStockOption            Executive Stock Option
+#  ForwardStartOption              Forward Start Option
+#  RatchetOption                   Ratchet [Compound] Option
+#  TimeSwitchOption                Time Switch Option
+#  SimpleChooserOption             Simple Chooser Option
+#  ComplexChooserOption            Complex Chooser Option
+#  OptionOnOption                  Options On Options
+#  HolderExtendibleOption          Holder Extendible Option
+#  WriterExtendibleOption          Writer Extendible Option
 ################################################################################
 
 

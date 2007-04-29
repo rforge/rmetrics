@@ -290,7 +290,8 @@ function()
 test.dasymEBM = 
 function()
 {  
-    #  dasymEBM            Exponential Brownian motion asymptotic density
+    # dasymEBM            
+    #   Exponential Brownian motion asymptotic density
      
     # Density:
     x = c(

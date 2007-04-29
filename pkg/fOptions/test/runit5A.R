@@ -58,10 +58,51 @@ function()
 # ------------------------------------------------------------------------------
 
 
+test.pseudo = 
+function()
+{  
+    # Pseudo Random Numbers:
+    #   Uniform and Normal pseudo random number sequences
+    
+    # Graphics Frame:
+    par(mfrow = c(2, 2), cex = 0.75)
+    
+    # Histogram Uniform:
+    runif.pseudo(n = 10, dimension = 5)
+    r = runif.pseudo(n = 1000, dimension = 1)
+    hist(r, probability = TRUE, main = "Uniform Pseudo", xlab = "x", 
+        col = "steelblue", border = "white")
+    abline (h = 1, col = "orange", lwd = 2)
+        
+    # Scatterplot Uniform:
+    r = runif.pseudo(n = 1000, dimension = 2)
+    plot(r, cex = 0.5, main = "Scatterplot Uniform Pseudo")
+    
+    # Histogram Normal:
+    rnorm.pseudo(n = 10, dimension = 5)
+    r = rnorm.pseudo(n = 1000, dimension = 1)
+    hist(r, probability = TRUE, xlim = c(-3, 3), main = "Normal Pseudo", 
+        xlab = "x", col = "steelblue", border = "white")
+    x = seq(-3, 3, length = 301)
+    lines(x, dnorm(x), col = "orange", lwd = 2)
+          
+    # Scatterplot Normal:
+    r = rnorm.pseudo(n = 1000, dimension = 2)
+    plot(r, cex = 0.5, main = "Scatterplot Normal Pseudo")
+
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
 test.halton = 
 function()
 {
     # Halton Sequence:
+    #   Uniform and Normal Halton low discrepancy sequences
     
     # Graphics Frame:
     par(mfrow = c(2, 2), cex = 0.75)
@@ -100,7 +141,8 @@ function()
 test.sobol = 
 function()
 {   
-    # Sobol Sequence
+    # Sobol Sequence:
+    #   Uniform and Normal Sobol low discrepancy sequences
     
     # Graphics Frame:
     par(mfrow = c(2, 2), cex = 0.75)
@@ -123,45 +165,6 @@ function()
     lines(x, dnorm(x), col = "orange", lwd = 2)
     
     # Scatterplot Normal:
-
-    # Return Value:
-    return()    
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-test.pseudo = 
-function()
-{  
-    # Pseudo Random Numbers:
-    
-    # Graphics Frame:
-    par(mfrow = c(2, 2), cex = 0.75)
-    
-    # Histogram Uniform:
-    runif.pseudo(n = 10, dimension = 5)
-    r = runif.pseudo(n = 1000, dimension = 1)
-    hist(r, probability = TRUE, main = "Uniform Pseudo", xlab = "x", 
-        col = "steelblue", border = "white")
-    abline (h = 1, col = "orange", lwd = 2)
-        
-    # Scatterplot Uniform:
-    r = runif.pseudo(n = 1000, dimension = 2)
-    plot(r, cex = 0.5, main = "Scatterplot Uniform Pseudo")
-    
-    # Histogram Normal:
-    rnorm.pseudo(n = 10, dimension = 5)
-    r = rnorm.pseudo(n = 1000, dimension = 1)
-    hist(r, probability = TRUE, xlim = c(-3, 3), main = "Normal Pseudo", 
-        xlab = "x", col = "steelblue", border = "white")
-    x = seq(-3, 3, length = 301)
-    lines(x, dnorm(x), col = "orange", lwd = 2)
-          
-    # Scatterplot Normal:
-    r = rnorm.pseudo(n = 1000, dimension = 2)
-    plot(r, cex = 0.5, main = "Scatterplot Normal Pseudo")
 
     # Return Value:
     return()    

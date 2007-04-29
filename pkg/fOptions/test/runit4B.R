@@ -58,7 +58,8 @@ function()
 test.HNGOption = 
 function()
 {
-    # HNG Model
+    # HNGOption           
+    #   Computes Option Price from the HN-GARCH Formula
     
     # Define the Model Parameters for a Heston-Nandi Option:
     model = list(lambda = -0.5, omega = 2.3e-6, alpha = 2.9e-6, 
@@ -70,7 +71,7 @@ function()
         (1 - model$beta - model$alpha * model$gamma^2))
     data.frame(S, X, r.daily, sigma.daily)
     
-    # HNGOption
+    # HNGOption:
     
     # Compute HNG Call-Put and compare with GBS Call-Put:
     HNG = GBS = Diff = NULL
@@ -85,8 +86,30 @@ function()
     data.frame(Options)
     
     # TODO: HNG not yet a S4 Class Member !!!
-     
-    # HNGGreeks
+
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.HNGOption = 
+function()
+{       
+    # HNGGreeks           
+    #   Calculates one of the Greeks of the HN-GARCH Formula
+    
+    # Define the Model Parameters for a Heston-Nandi Option:
+    model = list(lambda = -0.5, omega = 2.3e-6, alpha = 2.9e-6, 
+        beta = 0.85, gamma = 184.25) 
+    S = X = 100
+    Time.inDays = 252
+    r.daily = 0.05/Time.inDays
+    sigma.daily = sqrt((model$omega + model$alpha) /
+        (1 - model$beta - model$alpha * model$gamma^2))
+    data.frame(S, X, r.daily, sigma.daily)
     
     # Compute HNG Greeks and compare with GBS Greeks:
     Selection = c("Delta", "Gamma")
@@ -101,6 +124,20 @@ function()
     row.names(Greeks) <- Selection
     data.frame(Greeks)
 
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.HNGCharacteristics = 
+function()
+{ 
+    # HNGCharacteristics  
+    #   Computes Option Price and all Greeks of HN-GARCH Model
+    
     # Return Value:
     return()    
 }

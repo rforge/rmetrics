@@ -58,7 +58,12 @@ function()
 test.RollGeskeWhaleyOption =
 function()
 {
-    #  RollGeskeWhaleyOption      Roll-Geske-Whaley Calls on Dividend Paying Stocks
+    # RollGeskeWhaleyOption      
+    #   Roll-Geske-Whaley Calls on Dividend Paying Stocks
+    
+    # Arguments:
+    #   RollGeskeWhaleyOption(S, X, time1, Time2, r, D, sigma, 
+    #   title = NULL, description = NULL)
     
     # Roll-Geske-Whaley American Calls on Dividend Paying 
     # Stocks [Haug 1.4.1]
@@ -76,8 +81,13 @@ function()
 test.BAWAmericanApproxOption =
 function()
 {
-    #  BAWAmericanApproxOption    Barone-Adesi and Whaley Approximation
+    # BAWAmericanApproxOption    
+    #   Barone-Adesi and Whaley Approximation
       
+    # Arguments:
+    #   BAWAmericanApproxOption(TypeFlag = c("c", "p"), S, X, Time, r, b, 
+    #   sigma, title = NULL, description = NULL)
+    
     # Barone-Adesi and Whaley Approximation for American 
     # Options [Haug 1.4.2] vs. Black76 Option on Futures:
     BAWAmericanApproxOption(TypeFlag = "p", S = 100, 
@@ -96,8 +106,13 @@ function()
 test.BSAmericanApproxOption =
 function()
 {
-    #  BSAmericanApproxOption     Bjerksund and Stensland Approximation  
+    # BSAmericanApproxOption     
+    #   Bjerksund and Stensland Approximation  
      
+    # Arguments:
+    #   BSAmericanApproxOption(TypeFlag = c("c", "p"), S, X, Time, r, b, 
+    #   sigma, title = NULL, description = NULL) 
+   
     # Bjerksund and Stensland Approximation for American Options:
     BSAmericanApproxOption(TypeFlag = "c", S = 42, X = 40, 
         Time = 0.75, r = 0.04, b = 0.04-0.08, sigma = 0.35)

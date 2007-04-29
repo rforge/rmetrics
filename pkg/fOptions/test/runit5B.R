@@ -53,7 +53,7 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.monteCarlo = 
+test.MonteCarloOption = 
 function()
 {
     # How to perform a Monte Carlo Simulation?
