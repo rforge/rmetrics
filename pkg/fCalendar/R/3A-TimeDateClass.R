@@ -565,7 +565,7 @@ FinCenter = myFinCenter)
 
 
 .whichFormat =
-function(charvec)
+function(charvec, silent = FALSE)
 {   # A function implemented by Diethelm Wuertz
 
     # Changes:
@@ -603,7 +603,9 @@ function(charvec)
     if (NCHAR == 14 & !SUBSTR) return("%Y%m%d%H%M%S")
     
     # STOP:
-    if (format == "unknown") warning("Unknown Format Specification")
+    if (!silent)
+        if (format == "unknown") 
+            warning("Unknown Format Specification")
      
     # Return Value:
     format

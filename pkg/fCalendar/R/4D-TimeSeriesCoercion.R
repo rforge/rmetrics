@@ -151,10 +151,10 @@ function(x, ...)
     dummyDates = FALSE
     firstColumn = TRUE
     charvec = as.character(as.vector(x[, 1]))
-    format = .whichFormat(charvec)
+    format = .whichFormat(charvec, ...)
     if (format == "unknown") {
         charvec = rownames(x)
-        format = .whichFormat(charvec)
+        format = .whichFormat(charvec, ...)
         if (format == "unknown") {
             # warning("Could not identify timeDate Format")
             dummyDates = TRUE
@@ -162,7 +162,7 @@ function(x, ...)
             charvec = as.character(timeSequence(from = "1970-01-01", 
                 length.out = N, format = "%Y-%m-%d", zone = "GMT", 
                 FinCenter = "GMT"))
-            format = .whichFormat(charvec)
+            format = .whichFormat(charvec, ...)
         }
         firstColumn = FALSE
     }
