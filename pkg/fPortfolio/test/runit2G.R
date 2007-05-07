@@ -115,7 +115,7 @@ function()
     # Add Budget Constraints:
     Constraints = c("minW[1:4]=0", "maxB[1:4]=1")
     solveRDonlp2(Data, Spec, Constraints)$solution
-    round(getWeights(efficientPortfolio(Data, Spec, Constraints)), 2)
+    round(getWeights(efficientPortfolio(Data, Spec, Constraints)), 3)
     
     # PART II:
     

@@ -482,7 +482,6 @@ function(x, which = "ask", control = list(), ...)
     
     par(mar = c(5, 4, 4, 3) + 0.1)
 
-
     # Plot Function and Addons:
     plot.1 <<- function(x, ...) {
         frontierPlot(object = x, xlim = con$xlim,

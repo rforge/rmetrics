@@ -177,7 +177,11 @@ function(object, frontier = c("both", "lower", "upper"), doplot = FALSE, ...)
         index = 1:length(ans[, 1])
         test = c(-1, diff(ans[, 1]))
         index = index[test < 0]
-        ans = ans[index, ]
+        if (length(index) == 1) {
+            ans = matrix(ans[index, ], ncol = 2)
+        } else {
+            ans = ans[index, ]
+        }         
     }
     
     # Add colnames:
