@@ -345,7 +345,19 @@ function(x, ci = 0.95)
     # Univariate/Multivariate:
     y = as.matrix(x)
     
-    # CL Levels:    
+    
+    # Handle Column Names:
+    if (is.null(colnames(y))) {
+        Dim = dim(y)[2]
+        if (Dim == 1) {
+            colnames(y) = paste(substitute(x), collapse = ".")
+        } else if (Dim > 1) {
+            colnames(y) = 
+                paste(paste(substitute(x), collapse = ""), 1:Dim, sep = "")
+        }
+    }
+    
+    # Internal Function - CL Levels:    
     cl.vals = function(x, ci) {
         x = x[!is.na(x)]
         n = length(x)
@@ -359,22 +371,22 @@ function(x, ci = 0.95)
     }        
     
     # Basic Statistics:
-    nColumns = dim(x)[2]
+    nColumns = dim(y)[2]
     ans = NULL
     for (i in 1:nColumns) {
-        x = y[, i]     
+        X = y[, i]     
         # Observations:
-        x.length = length(x)
-        x = x[!is.na(x)]
-        x.na = x.length - length(x)
+        X.length = length(X)
+        X = X[!is.na(X)]
+        X.na = X.length - length(X)
         # Basic Statistics:
         z = c(
-            x.length, x.na, min(x), max(x),
-            as.numeric(quantile(x, prob = 0.25, na.rm = TRUE)), 
-            as.numeric(quantile(x, prob = 0.75, na.rm = TRUE)), 
-            mean(x), median(x), sum(x), sqrt(var(x)/length(x)), 
-            cl.vals(x, ci)[1], cl.vals(x, ci)[2], var(x), 
-            sqrt(var(x)), skewness(x), kurtosis(x) )    
+            X.length, X.na, min(X), max(X),
+            as.numeric(quantile(X, prob = 0.25, na.rm = TRUE)), 
+            as.numeric(quantile(X, prob = 0.75, na.rm = TRUE)), 
+            mean(X), median(X), sum(X), sqrt(var(X)/length(X)), 
+            cl.vals(X, ci)[1], cl.vals(X, ci)[2], var(X), 
+            sqrt(var(X)), skewness(X), kurtosis(X) )    
         # Row Names:
         znames = c(
             "nobs", "NAs",  "Minimum", "Maximum", 
@@ -384,12 +396,12 @@ function(x, ci = 0.95)
         # Output as data.frame
         result = matrix(z, ncol = 1)
         row.names(result) = znames    
-        ans = cbind(ans, result)
+        ans = cbind(ans, result) 
     }
-    colNames = colnames(x)
-    if (!is.null(colNames)) 
-    colnames(ans) = colNames  
-
+    
+    # Column Names:
+    colnames(ans) = colnames(y)
+    
     # Return Value:
     data.frame(round(ans, digits = 6))
 }
@@ -402,7 +414,7 @@ function(x, ci = 0.95)
 
 
 .distCheck = 
-function(fun = "norm", n = 1000, seed = 4711, ...)
+function(fun = "norm", n = 1000, seed = 4711, robust = FALSE, ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -454,8 +466,14 @@ function(fun = "norm", n = 1000, seed = 4711, ...)
     set.seed(seed)
     cat("\n3. r(", n, ") Check:\n", sep = "")
     r = rfun(n = n, ...)
-    SAMPLE.MEAN = mean(r)
-    SAMPLE.VAR = var(r)
+    if (robust) {
+        SAMPLE.MEAN = mean(r)
+        SAMPLE.VAR = var(r)
+    } else {
+        robustSample = cov.mcd(r, quantile.used = floor(0.95*n))
+        SAMPLE.MEAN = robustSample$center
+        SAMPLE.VAR = robustSample$cov[1,1]
+    }
     SAMPLE = data.frame(t(c(MEAN = SAMPLE.MEAN, "VAR" = SAMPLE.VAR)), 
         row.names = "SAMPLE")
     print(signif(SAMPLE, 3))
@@ -495,7 +513,8 @@ function(x, na.rm = FALSE)
     #   Returns the standard deviation of a vector
     
     # Notes:
-    #   Under use sd, this function is for SPlus compatibility.
+    #   Under R use sd, this function is for SPlus compatibility.
+    #   The S-Plus argument list also includes "...".
 
     # FUNCTION:
     

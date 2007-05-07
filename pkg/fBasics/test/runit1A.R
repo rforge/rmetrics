@@ -42,14 +42,6 @@
 ################################################################################
 
 
-################################################################################
-# FUNCTION:               TAILORED PLOT FUNCTIONS:     
-#  seriesPlot              Returns a tailored return series plot
-#  histPlot                Returns a tailored histogram plot
-#  densityPlot             Returns a tailored kernel density estimate plot
-#  qqnormPlot              Returns a tailored normal quantile-quantile plot
-
-
 test.aaa = 
 function()
 {
@@ -73,16 +65,17 @@ function()
 test.seriesPlot = 
 function()
 {
+    # Description:
+    #   Returns a tailored return series plot
+    
     # Time Series:
-    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
-    set.seed(4711, kind = "Marsaglia-Multicarry")
-    tD = timeSequence(from = "2004-07-01", to = "2005-06-30")
-    nD = length(tD)
-    tS = timeSeries(cbind(N = rnorm(nD), T = rt(nD, 4)), tD)
+    tS = as.timeSeries(data(msft.dat))[, "Close"]
     
     # Series Plot:
-    par(mfrow = c(1, 1))
-    seriesPlot(tS) 
+    par(mfrow = c(2, 1))
+    seriesPlot(tS)
+    seriesPlot(tS)
+    points(tS, col = "red", pch = 19, cex = 0.7) 
     
     # Return Value:
     return()    
@@ -91,20 +84,20 @@ function()
 
 # ------------------------------------------------------------------------------
 
-
+             
 test.histPlot = 
 function()
 {
+    # Description:
+    #   Returns a tailored histogram plot
+    
     # Time Series:
-    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
-    set.seed(4711, kind = "Marsaglia-Multicarry")
-    tD = timeSequence(from = "2004-07-01", to = "2005-06-30")
-    nD = length(tD)
-    tS = timeSeries(cbind(N = rnorm(nD), T = rt(nD, 4)), tD)
+    tS = as.timeSeries(data(msft.dat))[, "Close"]
     
     # Histogram Plot:    
     par(mfrow = c(1, 1))
     histPlot(tS)
+    histPlot(tS, add.fit = FALSE)
     
     # Return Value:
     return()    
@@ -117,12 +110,11 @@ function()
 test.densityPlot = 
 function()
 {    
+    # Description:
+    #   Returns a tailored kernel density estimate plot
+    
     # Time Series:
-    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
-    set.seed(4711, kind = "Marsaglia-Multicarry")
-    tD = timeSequence(from = "2004-07-01", to = "2005-06-30")
-    nD = length(tD)
-    tS = timeSeries(cbind(N = rnorm(nD), T = rt(nD, 4)), tD)
+    tS = as.timeSeries(data(msft.dat))[, "Close"]
     
     # Density Plot:
     par(mfrow = c(1, 1))
@@ -136,16 +128,15 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.quantilePlot = 
+test.qqnormPlot = 
 function()
 {    
+    # Description:
+    #   Returns a tailored normal quantile-quantile plot
+    
     # Time Series:
-    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
-    set.seed(4711, kind = "Marsaglia-Multicarry")
-    tD = timeSequence(from = "2004-07-01", to = "2005-06-30")
-    nD = length(tD)
-    tS = timeSeries(cbind(N = rnorm(nD), T = rt(nD, 4)), tD)
-      
+    tS = as.timeSeries(data(msft.dat))[, "Close"]
+    
     # Quantile Plot:
     par(mfrow = c(1, 1))
     qqnormPlot(tS)
@@ -156,22 +147,27 @@ function()
 
 
 
-################################################################################
-# FUNCTION:               BASIC STATISTICS:
-#  basicStats              Returns a basic statistics summary
+# ------------------------------------------------------------------------------             
 
 
 test.basicStats = 
 function()
 {    
+    # Description:
+    #   Returns a basic statistics summary
+    
     # Time Series:
-    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
-    set.seed(4711, kind = "Marsaglia-Multicarry")
-    tD = timeSequence(from = "2004-07-01", to = "2005-06-30")
-    nD = length(tD)
-    tS = timeSeries(cbind(N = rnorm(nD), T = rt(nD, 4)), tD)
-      
-    # timeSeries - basicStats(x, ci = 0.95) 
+    tS = as.timeSeries(data(msft.dat))
+    Close = tS[, "Close"]  
+    
+    # Univariate timeSeries - basicStats(x, ci = 0.95) 
+    basicStats(Close)
+    # basicStats(as.numeric(Close))
+    basicStats(as.matrix(Close))
+    basicStats(as.data.frame(Close))
+    basicStats(as.ts(Close))
+    
+    # Multivariate - timeSeries - basicStats(x, ci = 0.95) 
     basicStats(tS)
     basicStats(as.matrix(tS))
     basicStats(as.data.frame(tS))
@@ -182,32 +178,53 @@ function()
 }
 
 
-################################################################################
-# FUNCTION:               DESCRIPTION:
-#  .distCheck              Checks consistency of distributions
+# ------------------------------------------------------------------------------
 
 
-################################################################################
-# FUNCTION:               SPLUS FUNCTIONALITY:
-#  stdev                   S-PLUS: Returns the standard deviation of a vector
+test.distCheck = 
+function()
+{
+    # Description:
+    #   Checks consistency of distributions
+    
+    # Arguments:
+    #   .distCheck(fun = "norm", n = 1000, seed = 4711, ...)
+    
+    # Normal Distribution Check:
+    .distCheck()
+   
+    # Return Value:   
+    return()    
+}
 
 
-test.basicStats = 
+# ------------------------------------------------------------------------------
+
+
+test.stdev = 
 function()
 {    
+    # Description:
+    #   S-PLUS: Returns the standard deviation of a vector
+    
     # Time Series:
-    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
-    set.seed(4711, kind = "Marsaglia-Multicarry")
-    tD = timeSequence(from = "2004-07-01", to = "2005-06-30")
-    nD = length(tD)
-    tS = timeSeries(cbind(N = rnorm(nD), T = rt(nD, 4)), tD)
+    tS = as.timeSeries(data(msft.dat))
       
-    # timeSeries - basicStats(x, ci = 0.95) 
+    # stdev - Univariate:
     tU = tS[, 1]
+    
+    # S-Plus Compatible:
     stdev(tU)
     stdev(as.numeric(tU))
     stdev(as.vector(tU))
     stdev(as.ts(tU))
+    
+    # Base R:
+    sd(tU)
+    sd(as.numeric(tU))
+    sd(as.vector(tU))
+    sd(as.ts(tU))
+    
      
     # Return Value:
     return()    
