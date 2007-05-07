@@ -52,7 +52,7 @@
 #  .plot.mars             Multivariate Adaptive Regression Spline Model plot
 #  .plot.polymars         Polytochomous MARS Model internal plot
 #  .plot.nnet             Feedforward Neural Network Model internal plot
-#  summary               Summarizes fit and diagnostics for a regression model
+#  summary.fREG           Summarizes fit and diagnostics for a regression model
 # S3-METHODS:           DESCRIPTION:
 #  predict.fREG          Predicts values from a fitted regression model
 #  coefficients.fREG     Returns coefficients from a fitted regression model
@@ -139,7 +139,68 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.regFit = 
+test.regFit.df = 
+function()
+{
+    # Plot Parameters:
+    par(ask = FALSE)
+    par(mfrow = c(1, 1))
+    
+    # Requirements:
+    require(MASS)
+    require(polspline)
+    
+    # Simulate Data - a data frame:
+    DATA = regSim(model = "GAM3", n = 100)
+    head(DATA)
+    class(DATA)
+    
+    # Regression Fit:
+    LM    = regFit(formula = Y ~ X1 + X2, data = DATA, use = "lm") 
+    RLM   = regFit(Y ~ X1 + X2, data = DATA, use = "rlm") 
+    AM    = regFit(Y ~ X1 + X2, data = DATA, use = "am")                
+    PPR   = regFit(Y ~ X1 + X2, data = DATA, use = "ppr") 
+    MARS  = regFit(Y ~ X1 + X2, data = DATA, use = "mars") 
+    PMARS = regFit(Y ~ X1 + X2, data = DATA, use = "polymars") 
+    NNET  = regFit(Y ~ X1 + X2, data = DATA, use = "nnet")  
+    # ... a note on AM the smoothing functions are added by default!
+    
+    # Print Method:
+    print(LM) 
+    print(RLM)
+    print(AM)       
+    print(PPR)
+    print(MARS)
+    print(PMARS)
+    print(NNET)  
+    
+    # Plot Method:
+    plot(LM, which = "all")                             # CHECK which !!!
+    plot(RLM, which = "all")
+    plot(AM, which = "all")            
+    plot(PPR, which = "all")
+    plot(MARS, which = "all")
+    plot(PMARS, which = "all")
+    plot(NNET, which = "all")  
+    
+    # Summary Method:
+    summary(LM) 
+    summary(RLM)
+    summary(AM)    
+    summary(PPR)
+    summary(MARS)
+    summary(PMARS)
+    summary(NNET)  
+
+    # Return Value:
+    return()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.regFit.tS = 
 function()
 {
     # Plot Parameters:
@@ -163,7 +224,7 @@ function()
     # Regression Fit:
     LM    = regFit(formula = Y ~ X1 + X2, data = DATATS, use = "lm") 
     RLM   = regFit(Y ~ X1 + X2, data = DATATS, use = "rlm") 
-    AM    = regFit(Y ~ X1 + X2, data = DATATS, use = "am")      # CHECK
+    AM    = regFit(Y ~ X1 + X2, data = DATATS, use = "am")   
     PPR   = regFit(Y ~ X1 + X2, data = DATATS, use = "ppr") 
     MARS  = regFit(Y ~ X1 + X2, data = DATATS, use = "mars") 
     PMARS = regFit(Y ~ X1 + X2, data = DATATS, use = "polymars") 
@@ -180,13 +241,13 @@ function()
     print(NNET)  
     
     # Plot Method:
-    # plot(LM, which = "all")           # Plot 3 ERROR
-    # plot(RLM, which = "all")
-    # plot(AM, which = "all")            
-    # plot(PPR, which = "all")
-    # plot(MARS, which = "all")
-    # plot(PMARS, which = "all")
-    # plot(NNET, which = "all")  
+    plot(LM, which = "all")           
+    plot(RLM, which = "all")
+    plot(AM, which = "all")            
+    plot(PPR, which = "all")
+    plot(MARS, which = "all")
+    plot(PMARS, which = "all")
+    plot(NNET, which = "all")  
     
     # Summary Method:
     summary(LM) 
@@ -205,83 +266,7 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.regPredict = 
-function()
-{    
-    # Plot Parameters:
-    par(ask = FALSE)
-    par(mfrow = c(1, 1))
-    
-    # Requirements:
-    require(MASS)
-    require(polspline)
-    
-    # Simulate Data - a data frame:
-    DATA = regSim(model = "GAM3", n = 100)
-    head(DATA)
-    class(DATA)
-    
-    # Simulate Data - a timeSeries object:
-    DATATS = as.timeSeries(DATA)
-    head(DATATS)
-    class(DATATS)
-    
-    # Regression Fit:
-    require(MASS)
-    require(polspline)
-    LM    = regFit(Y ~ X1 + X2, data = DATATS, use = "lm") 
-    RLM   = regFit(Y ~ X1 + X2, data = DATATS, use = "rlm") 
-    AM    = regFit(Y ~ s(X1) + s(X2),  DATATS, use = "am")      # CHECK
-    PPR   = regFit(Y ~ X1 + X2, data = DATATS, use = "ppr") 
-    MARS  = regFit(Y ~ X1 + X2, data = DATATS, use = "mars") 
-    PMARS = regFit(Y ~ X1 + X2, data = DATATS, use = "polymars") 
-    NNET  = regFit(Y ~ X1 + X2, data = DATATS, use = "nnet")   
-     
-    # Predict:
-    #   predict.fREG(object, newdata, se.fit = FALSE, ...)
-
-    # Selext some rows to predict:
-    set.seed(4711)
-    N = round(runif(5, 1, 100), 0)
-    N
-    
-    # Predict response:
-    predict(LM,    DATATS[N, ])   
-    predict(RLM,   DATATS[N, ])
-    predict(AM,    DATATS[N, ])     
-    predict(PPR,   DATATS[N, ])
-    predict(MARS,  DATATS[N, ])
-    predict(PMARS, DATATS[N, ])
-    predict(NNET,  DATATS[N, ])   
-    
-    # Predict response:
-    predict(LM,    DATATS[N, ], type = "response")
-    predict(RLM,   DATATS[N, ], type = "response")
-    predict(AM,    DATATS[N, ], type = "response")       
-    predict(PPR,   DATATS[N, ], type = "response")
-    predict(MARS,  DATATS[N, ], type = "response")
-    predict(PMARS, DATATS[N, ], type = "response")
-    predict(NNET,  DATATS[N, ], type = "response")
-    
-    
-    # Predict response with Standard Errors:
-    predict(LM,    DATATS[N, ], se.fit = TRUE)
-    predict(RLM,   DATATS[N, ], se.fit = TRUE)
-    predict(AM,    DATATS[N, ], se.fit = TRUE)       
-    predict(PPR,   DATATS[N, ], se.fit = TRUE)
-    predict(MARS,  DATATS[N, ], se.fit = TRUE)
-    predict(PMARS, DATATS[N, ], se.fit = TRUE)
-    predict(NNET,  DATATS[N, ], se.fit = TRUE)
-    
-    # Return Value:
-    return()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-test.regSlots = 
+test.regFit.valueSlots = 
 function()
 {    
     # Plot Parameters:
@@ -396,7 +381,82 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.regNonDefaults = 
+test.predict.fREG = 
+function()
+{    
+    # Plot Parameters:
+    par(ask = FALSE)
+    par(mfrow = c(1, 1))
+    
+    # Requirements:
+    require(MASS)
+    require(polspline)
+    
+    # Simulate Data - a data frame:
+    DATA = regSim(model = "GAM3", n = 100)
+    head(DATA)
+    class(DATA)
+    
+    # Simulate Data - a timeSeries object:
+    DATATS = as.timeSeries(DATA)
+    head(DATATS)
+    class(DATATS)
+    
+    # Regression Fit:
+    require(MASS)
+    require(polspline)
+    LM    = regFit(Y ~ X1 + X2, data = DATATS, use = "lm") 
+    RLM   = regFit(Y ~ X1 + X2, data = DATATS, use = "rlm") 
+    AM    = regFit(Y ~ s(X1) + s(X2),  DATATS, use = "am")       
+    PPR   = regFit(Y ~ X1 + X2, data = DATATS, use = "ppr") 
+    MARS  = regFit(Y ~ X1 + X2, data = DATATS, use = "mars") 
+    PMARS = regFit(Y ~ X1 + X2, data = DATATS, use = "polymars") 
+    NNET  = regFit(Y ~ X1 + X2, data = DATATS, use = "nnet")   
+     
+    # Predict:
+    #   predict.fREG(object, newdata, se.fit = FALSE, type = "response", ...)
+
+    # Selext some rows to predict:
+    set.seed(4711)
+    N = round(runif(5, 1, 100), 0)
+    N
+    
+    # Predict Response:
+    predict(LM,    DATATS[N, ])   
+    predict(RLM,   DATATS[N, ])
+    predict(AM,    DATATS[N, ])     
+    predict(PPR,   DATATS[N, ])
+    predict(MARS,  DATATS[N, ])
+    predict(PMARS, DATATS[N, ])
+    predict(NNET,  DATATS[N, ])   
+    
+    # Predict Response:
+    predict(LM,    DATATS[N, ], type = "response")
+    predict(RLM,   DATATS[N, ], type = "response")
+    predict(AM,    DATATS[N, ], type = "response")       
+    predict(PPR,   DATATS[N, ], type = "response")
+    predict(MARS,  DATATS[N, ], type = "response")
+    predict(PMARS, DATATS[N, ], type = "response")
+    predict(NNET,  DATATS[N, ], type = "response")
+        
+    # Predict Response with Standard Errors:
+    predict(LM,    DATATS[N, ], se.fit = TRUE)
+    predict(RLM,   DATATS[N, ], se.fit = TRUE)
+    predict(AM,    DATATS[N, ], se.fit = TRUE)       
+    predict(PPR,   DATATS[N, ], se.fit = TRUE)
+    predict(MARS,  DATATS[N, ], se.fit = TRUE)
+    predict(PMARS, DATATS[N, ], se.fit = TRUE)
+    predict(NNET,  DATATS[N, ], se.fit = TRUE)
+    
+    # Return Value:
+    return()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.regFit.nonDefaults = 
 function()
 {   
     # Requirements:
@@ -534,6 +594,45 @@ function()
     
     fit.glm = glm(Y ~ X1 + X2, data = D2, family = binomial("logit"))
     print(fit.glm)
+    
+    # Return Value:
+    return()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.coefficients = 
+function()
+{
+    NA
+    
+    # Return Value:
+    return()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.fitted = 
+function()
+{
+    NA
+    
+    # Return Value:
+    return()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.residuals = 
+function()
+{
+    NA
     
     # Return Value:
     return()

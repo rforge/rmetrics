@@ -102,7 +102,7 @@
 #   polymars*   polspline   -       xx     x         -         x
 #   nnet        nnet        x       -      x         x         x
 #
-#   *BUILTIN
+#   *BUILTIN:
 #    mda        Mixture and flexible discriminant analysis
 #    polspline  required!
 #   *IMPORTANT NOTE:
@@ -276,7 +276,11 @@ title = NULL, description = NULL, ...)
     trace = FALSE
    
     # Get Method:
-    if (!(class(data) == "timeSeries")) data = as.timeSeries(data)
+    if (!(class(data) == "timeSeries")) {
+        data = as.timeSeries(data, silent = TRUE)
+    }
+    
+    # Function to be called:
     fun = use = match.arg(use)
     if (use == "am") {
         fun = "gam"
@@ -425,8 +429,8 @@ title = NULL, description = NULL, ...)
 # ------------------------------------------------------------------------------
 
 
-print.fREG = 
-function(x, ...)
+show.fREG = 
+function(object)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -435,7 +439,7 @@ function(x, ...)
     # FUNCTION:
     
     # Settings:
-    object = x
+    object
     
     # Title:
     cat("\nTitle:\n ")
@@ -537,7 +541,13 @@ function(x, ...)
         
     # Return Value:
     invisible()
-}            
+}   
+
+
+# ------------------------------------------------------------------------------
+
+
+setMethod("show", "fREG", show.fREG)         
     
 
 # ------------------------------------------------------------------------------
@@ -585,7 +595,7 @@ function(x, which = "ask", ...)
     # 8. Negative Mean Excess Plot"
     .plot1 <<- function(x, ...) .responsesPlot(residuals(x)+fitted(x),fitted(x))
     .plot2 <<- function(x, ...) .residualsPlot(residuals(x))    
-    .plot3 <<- function(x, ...) .qqbayesPlot(residuals(x))
+    .plot3 <<- function(x, ...) qqnormPlot(residuals(x))
     .plot4 <<- function(x, ...) .firePlot(fitted(x), residuals(x)) 
     .plot5 <<- function(x, ...) .acfPlot(residuals(x))
     .plot6 <<- function(x, ...) .pacfPlot(residuals(x))
@@ -643,7 +653,7 @@ function(x, which = "ask", ...)
     # 4. Fitted Values vs. Residuals Plot:
     .plot1 <<- function(x, ...) .responsesPlot(residuals(x)+fitted(x),fitted(x))
     .plot2 <<- function(x, ...) .residualsPlot(residuals(x))    
-    .plot3 <<- function(x, ...) .qqbayesPlot(residuals(x))
+    .plot3 <<- function(x, ...) qqnormPlot(residuals(x))
     .plot4 <<- function(x, ...) .firePlot(fitted(x), residuals(x)) 
     .plot5 <<- function(x, ...) .acfPlot(residuals(x))
     .plot6 <<- function(x, ...) .pacfPlot(residuals(x))

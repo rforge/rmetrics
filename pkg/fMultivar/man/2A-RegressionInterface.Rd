@@ -31,11 +31,11 @@
 
 \description{
 
-    A collection and description of easy to use functions to perform 
-    an univariate regression analysis from several methods, to analyse 
-    and summarize the fit, and to predict for new data records. This 
-    wrapper was mainly build for multivariate financial time series 
-    analysis.
+    A collection and description of easy to use 
+    functions to perform an univariate regression 
+    analysis from several methods, to analyse and 
+    summarize the fit, and to predict for new 
+    data records.
     \cr
     
     The models include:
@@ -48,8 +48,6 @@
     \code{"MARS"} \tab Multivariate Adaptive Regression Splines, \cr
     \code{"POLYMARS"} \tab Polytochomous MARS, and \cr
     \code{"NNET"} \tab Feedforward Neural Network Modelling. }
-    
-    Note, \code{"POLYMARS"} requires contributed package \code{"polspline"}
             
     Available methods are:
     
@@ -81,6 +79,9 @@
     
 
 \note{  
+    
+    Note, \code{"POLYMARS"} requires contributed package \code{"polspline"}
+    \cr
     
     This \code{regFit} function offers for several regression models
     an easy to use wrapper. There is nothing really new in this package. 

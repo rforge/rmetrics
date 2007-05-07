@@ -66,6 +66,7 @@ function()
     DATA = regSim(model = "GAM3", n = 100)
     head(DATA)
     class(DATA)
+    
     # Convert to a timeSeries object:
     DATATS = as.timeSeries(DATA)
     head(DATATS)

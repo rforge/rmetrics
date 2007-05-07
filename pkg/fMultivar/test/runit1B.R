@@ -109,7 +109,7 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.bechmarkRatios =
+test.benchmarkRatios =
 function()
 {  
     # Data from fEcofin:
@@ -142,7 +142,7 @@ function()
     R = getReturns(X)[1:10,-5]
     
     # Plot:
-    # ohlcPlot(as.ts(R))  # CHECK !!!
+    # ohlcPlot(as.ts(R))                                             # CHECK !!!
     
     # Return Value:
     return()

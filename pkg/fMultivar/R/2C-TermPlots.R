@@ -42,6 +42,8 @@ function(object, terms = NULL)
     # Description:
     
     # Arguments:
+    #   object -
+    #   terms -
 
     # FUNCTION:
     
@@ -101,6 +103,9 @@ function(object, terms = NULL, gridPoints = 25)
     # Description:
     
     # Arguments:
+    #   object -
+    #   terms -
+    #   gridPoints -
     
     # FUNCTION:
     
@@ -159,6 +164,9 @@ function(object, terms = NULL, gridPoints = 25)
     # Description:
     
     # Arguments:
+    #   object -
+    #   terms -
+    #   gridPoints -
     
     # FUNCTION:
     

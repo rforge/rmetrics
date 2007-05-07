@@ -21,7 +21,8 @@
     of financial markets. The collection 
     provides a set of functions for the 
     computation of returns, for the display 
-    of price charts, and for benchmark measurements.
+    of price charts, and for benchmark 
+    measurements.
     \cr
     
     The functions are:

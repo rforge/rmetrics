@@ -394,7 +394,6 @@ function()
 # ------------------------------------------------------------------------------
 
 
-
 test.splusLikeIndicators =
 function()
 {    
@@ -438,7 +437,8 @@ function()
 test.dailyIndicatorFunction =
 function()
 {    
-    # .dailyTA                  Computes an indicator for technical analysis
+    # .dailyTA                  
+    #   Computes an indicator for technical analysis
 
     # Data from fEcofin:
     X = as.timeSeries(data(msft.dat))

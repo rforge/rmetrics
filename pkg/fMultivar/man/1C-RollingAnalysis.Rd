@@ -15,8 +15,8 @@
 
     A collection and description of functions 
     to perform a rolling analysis. A rolling 
-    analysis is often required in building trading 
-    models.
+    analysis is often required in building 
+    trading models.
     \cr
         
     The functions are:
