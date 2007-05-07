@@ -2204,7 +2204,7 @@ function(x, which = "ask", ...)
     plot.7 <<- function(x, ...) {
         # 7. Residuals:
         res = residuals(x, standardize = FALSE)
-        plot(res, type = "l", main = "Residuals", col = "steelblue")
+        plot(res, type = "l", main = "Residuals", col = "steelblue", ...)
         abline(h = 0, lty = 3)
         grid()
     }   
@@ -2212,7 +2212,7 @@ function(x, which = "ask", ...)
         # 8. Conditional SDs:
         xcsd = x@sigma.t
         plot(xcsd, type = "l", main = "Conditional SD's", 
-            col = "steelblue")
+            col = "steelblue", ...)
         abline(h = 0, lty = 3)
         grid()
     }   
@@ -2220,7 +2220,7 @@ function(x, which = "ask", ...)
         # 9. Standardized Residuals:
         sres = residuals(x, standardize = FALSE)
         plot(sres, type = "l", main = "Standardized Residuals", 
-            col = "steelblue")
+            col = "steelblue", ...)
         abline(h = 0, lty = 3)
         grid()
     }       
@@ -2288,7 +2288,7 @@ function(x, which = "ask", ...)
             "plot.1",  "plot.2",  "plot.3", "plot.4", "plot.5",
             "plot.6",  "plot.7",  "plot.8", "plot.9", "plot.10",
             "plot.11", "plot.12", "plot.13"),
-        which = which) 
+        which = which, ...) 
             
     # Return Value:
     invisible(x)
