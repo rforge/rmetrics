@@ -93,7 +93,7 @@ function()
 test.CND =
 function()
 {
-    # CND                        
+    # CND:                        
     #   Cumulative normal distribution function 
     
     # Arguments:
@@ -117,7 +117,7 @@ function()
 test.CBND =
 function()
 {
-    # CBND                       
+    # CBND:                   
     #   Cumulative bivariate normal distribution  
     
     # Arguments:
@@ -136,7 +136,7 @@ function()
 test.GBSOption =
 function()
 {
-    # GBSOption                   
+    # GBSOption:                   
     #   Computes Option Price from the GBS Formula
 
     # Arguments:
@@ -157,7 +157,7 @@ function()
 test.GBSCharacteristics =
 function()
 {
-    # GBSCharacteristics          
+    # GBSCharacteristics:          
     #   Computes Option Price and all Greeks of GBS Model
 
     # Arguments:
@@ -177,7 +177,7 @@ function()
 test.BlackScholesOption =
 function()
 {
-    # BlackScholesOption          
+    # BlackScholesOption:        
     #   Synonyme Function Call to GBSOption
    
     # Arguments:
