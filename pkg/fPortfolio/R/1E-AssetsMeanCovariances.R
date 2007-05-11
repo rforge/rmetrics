@@ -35,14 +35,13 @@
 #   method = "cov"        uses standard covariance estimation
 #   method = "mve"        uses "mve" from [MASS]
 #   method = "mcd"        uses "mcd" from [MASS]
-#   method = "nnve"       uses "nnve" from [covRobust]
-#   method = "shrink"     uses "shrinkage" from [corpcor]
-#   method = "bagged"     uses "bagging" [corpcor]
+#   method = "nnve"       requires "nnve" from [covRobust]
+#   method = "shrink"     uses "shrinkage" builtin from [corpcor]
+#   method = "bagged"     uses "bagging" builtin from [corpcor]
 # FUNCTION:             INTERNAL USE:
-#  .cov.rob
-#  .cov.nnve
-#  .cov.shrink
-#  .cov.bagged
+#  .cov.nnve             Builtin from Package 'covRobust'
+#  .cov.shrink           Builtin from Package 'corpcor'
+#  .cov.bagged           Builtin from Package 'corpcor'
 ################################################################################
 
 
@@ -201,12 +200,12 @@ check = TRUE, force = TRUE, baggedR = 100, ...)
         Sigma = cov(x.mat)
     } else if (method == "mve") {
         # require(MASS)
-        ans = .cov.rob(x, method = "mve")
+        ans = MASS::cov.rob(x, method = "mve")
         mu = ans$mu
         Sigma = ans$Omega
     } else if (method == "mcd") {
         # require(MASS)
-        ans = .cov.rob(x, method = "mcd") 
+        ans = MASS::cov.rob(x, method = "mcd") 
         mu = ans$mu
         Sigma = ans$Omega       
     } else if (method == "shrink") {
@@ -256,41 +255,6 @@ check = TRUE, force = TRUE, baggedR = 100, ...)
     
     # Return Value:
     ans
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.cov.rob =
-function(x, method = c("mve", "mcd")) 
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Resistant Estimation of Multivariate Location and Scatter
-    
-    # Arguments:
-    #   x - a timeSeries object or any other rectangular object
-    #       which can be transformed by the function as. matrix
-    #       into a numeric matrix.
-    #   method - the method to be used. Minimum volume ellipsoid
-    #       "mve", minimum covariance determinant "mcd", or 
-    #       classical product-moment. 
-    
-    # FUNCTION:
-    
-    # Settings:
-    x = as.matrix(x)
-    method = match.arg(method)
-    covRob = cov.rob(x, method = method)
-    
-    # Result:
-    ans = list(mu = covRob$center, Omega = covRob$cov)
-    attr(ans, "control") = c(control = method)
-    
-    # Return Value:
-    ans
-
 }
 
 
@@ -399,7 +363,7 @@ extension = TRUE, devsm = 0.01)
     SaveM = rbind(SaveM, c(xa, updNNC$mu1, .cov.nne.Mtovec(updNNC$Sig1)))
     SaveP = rbind(SaveP, (updNNC$probs)[1:n])
     
-    # sda <- .cov.nne.Mtovec(orgNNC$Sig1)  
+    # sda = .cov.nne.Mtovec(orgNNC$Sig1)  
     # sda save the results corresponding to xa = qchisq(.99, pd)
     stopv = diag(updNNC$Sig1)
     time1 = 2
@@ -433,8 +397,8 @@ extension = TRUE, devsm = 0.01)
                 xa = xa + gap
                 startv = stopv
                 Np = Nc - Ndir * (xa^0.5)
-                updNNC = .cov.nne.nclean.sub(rbind(datamat, Np), k, convergence = 
-                    0.001, S.mean = S.mean, S.sd = S.sd)
+                updNNC = .cov.nne.nclean.sub(rbind(datamat, Np), k, 
+                    convergence = 0.001, S.mean = S.mean, S.sd = S.sd)
                 SaveM = rbind(SaveM, c(xa, updNNC$mu1, .cov.nne.Mtovec(
                     updNNC$Sig1)))
                 SaveP = rbind(SaveP[2, ], (updNNC$probs)[
@@ -882,7 +846,7 @@ function(fun, data, R, diag, ...)
     lo = lower.tri(matrix(NA, nrow=p, ncol=p), diag=diag)
 
     # bootstrap function
-    .bootFun <- function(data, i) {
+    .bootFun = function(data, i) {
         vec = as.vector( fun(data[i,], ...)[lo] )
         # if we get NAs flag result as being erroneous
         if(sum(is.na(vec)) > 0) class(vec) = "try-error"
@@ -953,7 +917,7 @@ function(data, statistic, R)
 #   Convert symmetric matrix to vector and back
 #   Copyright 2003-04 Korbinian Strimmer
 #
-# This file is part of the `corpcor' library for R and related languages.
+# This file is part of the 'corpcor' library for R and related languages.
 # It is made available under the terms of the GNU General Public
 # License, version 2, or at your option, any later version,
 # incorporated herein by reference.
@@ -1070,32 +1034,31 @@ function(vec, diag = FALSE, order = NULL)
 ################################################################################
 
 
-
-.cov.ogk <- 
+.cov.ogk =  
 function(x, niter = 2, beta = 0.9, control)
 {
-    metodo2 <- function(XX) {
+    metodo2 = function(XX) {
     
-        n <- nrow(XX)
-        p <- ncol(XX)
+        n = nrow(XX)
+        p = ncol(XX)
     
-        sigma <- apply(XX, 2, mrob)[2,]
-        Y <- XX %*% diag(1/sigma)
-        U <- matrix(1, p, p)
+        sigma = apply(XX, 2, mrob)[2,]
+        Y = XX %*% diag(1/sigma)
+        U = matrix(1, p, p)
         for(i in 1:p)
             for(j in i:p) {
-                U[j, i] <- U[i, j] <- vrob(Y[,i], Y[,j])
+                U[j, i] = U[i, j] = vrob(Y[,i], Y[,j])
         }
     
-        diag(U) <- 1
-        E <- eigen(U)$vectors
-        A <- diag(sigma) %*% E
-        Z <- Y %*% E
+        diag(U) = 1
+        E = eigen(U)$vectors
+        A = diag(sigma) %*% E
+        Z = Y %*% E
     
-        restau <- apply(Z, 2, mrob)
-        sigma <- as.vector(restau[2,])
-        cov <- A %*% diag(sigma^2) %*% t(A)
-        loc <- A %*% restau[1,]
+        restau = apply(Z, 2, mrob)
+        sigma = as.vector(restau[2,])
+        cov = A %*% diag(sigma^2) %*% t(A)
+        loc = A %*% restau[1,]
     
         list(cov = cov, center = loc, AA = A, ZZ = Z)
     }
@@ -1109,80 +1072,80 @@ function(x, niter = 2, beta = 0.9, control)
     #  object. If no control object i spassed these function will be taken 
     #  from the default one
     
-    defcontrol <- CovControlOgk()           # default control
-    mrob <- defcontrol@mrob
-    vrob <- defcontrol@vrob
+    defcontrol = CovControlOgk()           # default control
+    mrob = defcontrol@mrob
+    vrob = defcontrol@vrob
     if(!missing(control)){                  # a control object was supplied
-        if(niter == defcontrol@niter)       niter <- control@niter
-        if(beta == defcontrol@beta)         beta <- control@beta
-        mrob <- control@mrob
-        vrob <- control@vrob
+        if(niter == defcontrol@niter)       niter = control@niter
+        if(beta == defcontrol@beta)         beta = control@beta
+        mrob = control@mrob
+        vrob = control@vrob
     }
 
     if(is.data.frame(x))
-        x <- data.matrix(x)
+        x = data.matrix(x)
     else if (!is.matrix(x))
-        x <- matrix(x, length(x), 1,
+        x = matrix(x, length(x), 1,
             dimnames = list(names(x), deparse(substitute(x))))
 
     # drop all rows with missing values (!!) :
-    na.x <- !is.finite(x %*% rep(1, ncol(x)))
-    ok <- !na.x
-    x <- x[ok, , drop = FALSE]
-    dx <- dim(x)
+    na.x = !is.finite(x %*% rep(1, ncol(x)))
+    ok = !na.x
+    x = x[ok, , drop = FALSE]
+    dx = dim(x)
     if(!length(dx))
         stop("All observations have missing values!")
-    dimn <- dimnames(x)
-    n <- dx[1]
-    p <- dx[2]
+    dimn = dimnames(x)
+    n = dx[1]
+    p = dx[2]
     if(p < 2)
         stop("Need at least 2 columns ")
 
-    call <- match.call()
+    call = match.call()
 
     #  iterate two times to obtain OGK2
-    first <- metodo2(x)
-    cov <- first$cov
-    center <- as.vector(first$center)
-    ZZ <- first$ZZ
+    first = metodo2(x)
+    cov = first$cov
+    center = as.vector(first$center)
+    ZZ = first$ZZ
     if(niter >= 2){
-        second <- metodo2(first$ZZ)
-        cov  <- first$AA %*% second$cov %*% t(first$AA)
-        center <- as.vector(first$AA %*% as.vector(second$center))
-        ZZ <- second$ZZ
+        second = metodo2(first$ZZ)
+        cov  = first$AA %*% second$cov %*% t(first$AA)
+        center = as.vector(first$AA %*% as.vector(second$center))
+        ZZ = second$ZZ
     }
     
-    dimnames(cov) <- list(dimn[[2]], dimn[[2]])
-    names(center) <- dimn[[2]]
+    dimnames(cov) = list(dimn[[2]], dimn[[2]])
+    names(center) = dimn[[2]]
     
     #  compute distances and weights
     #  do not invert cov to compute the distances, use the transformed data
     #
-    #  dist2 <- mahalanobis(X, center, cov)
+    #  dist2 = mahalanobis(X, center, cov)
     #
     
-    musigma <- apply(ZZ,2,mrob)
-    ZZ <- sweep(ZZ, 2, musigma[1,])
-    ZZ <- sweep(ZZ, 2, musigma[2,], '/')
-    dist2 <- rowSums(ZZ^2)
+    musigma = apply(ZZ,2,mrob)
+    ZZ = sweep(ZZ, 2, musigma[1,])
+    ZZ = sweep(ZZ, 2, musigma[2,], '/')
+    dist2 = rowSums(ZZ^2)
 
-    quantiel <- qchisq(beta, p)
-    qq <- (quantiel * median(dist2))/qchisq(0.5, p)
-    wt <- ifelse(dist2 < qq, 1, 0)
-    swt <- sum(wt)
+    quantiel = qchisq(beta, p)
+    qq = (quantiel * median(dist2))/qchisq(0.5, p)
+    wt = ifelse(dist2 < qq, 1, 0)
+    swt = sum(wt)
 
     #  compute the reweighted estimates:  OGK2(0.9)
-    wcenter <- colSums(x*wt)/swt
-    X <- sqrt(wt) * sweep(x, 2, wcenter)
-    wcov <- (t(X) %*% X)/swt
+    wcenter = colSums(x*wt)/swt
+    X = sqrt(wt) * sweep(x, 2, wcenter)
+    wcov = (t(X) %*% X)/swt
 
     #  Compute consistency correction factor for the reweighted  cov
-    #    qdelta.rew <- qchisq(sum(wt)/n, p)
-    #    cdeltainvers.rew <- pgamma(qdelta.rew/2, p/2 + 1)/(sum(wt)/n)
-    #    cnp2 <- 1/cdeltainvers.rew
+    #    qdelta.rew = qchisq(sum(wt)/n, p)
+    #    cdeltainvers.rew = pgamma(qdelta.rew/2, p/2 + 1)/(sum(wt)/n)
+    #    cnp2 = 1/cdeltainvers.rew
 
     method = "Orthogonalized Gnanadesikan-Kettenring Estimator"
-    ans <- list(
+    ans = list(
                call = call,
                iter=niter,
                crit=1,
