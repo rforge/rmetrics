@@ -17,6 +17,8 @@
 \alias{midcapD.ts}
 \alias{returns.three.ts}
 
+\alias{SWXLP}
+
 
 \title{fPortfolio Data Sets}
 
@@ -25,8 +27,12 @@
 
     Data sets used in the examples of the 'fPortfolio'
     package.
-    \cr
-    
+
+}
+
+
+\format{
+
     The \emph{Van Hedge Fund Indices} were one of the first performance 
     benchmarks based on a large and representative sample of hedge fund 
     returns. Published from 1995 until now, the Van Indices reflect the 
@@ -45,11 +51,6 @@
     The Van Global Hedge Fund Index is reported on a percentage-change 
     basis. The Index was set at an initial value of 1,000 as of its 
     January 1, 1988 inception.
-
-}
-
-
-\format{
 
     The csv data file consists of 16 columns, the first with the date
     entries formatted as "\%m/\%d/\%Y", followed by 14 columns with the
@@ -77,8 +78,10 @@
 
 
 \source{
+
     Van Hedge Fund Advisors International, Inc. \cr
     \emph{http://hedgefund.com/}
+    
 }
 
 
