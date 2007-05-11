@@ -147,13 +147,13 @@ Schaefer J., Strimmer K. (2005);
    assetsMeanCov(berndtAssets.tS, method = "cov")
    
 ## mcd Covariance Estimation:
-   assetsMeanCov(berndtAssets.tS, method = "mcd")
+   # assetsMeanCov(berndtAssets.tS, method = "mcd")
    
 ## mve Covariance Estimation:
-   assetsMeanCov(berndtAssets.tS, method = "mve")
+   # assetsMeanCov(berndtAssets.tS, method = "mve")
    
 ## nnve Covariance Estimation:
-   assetsMeanCov(berndtAssets.tS, method = "nnve")
+   # assetsMeanCov(berndtAssets.tS, method = "nnve")
    
 ## shrinkage Covariance Estimation:
    assetsMeanCov(berndtAssets.tS, method = "shrink")
