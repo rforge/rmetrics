@@ -433,7 +433,7 @@ function(x, which = "ask", control = list(), ...)
     # xLimAssets = c(
     #    min(sqrtSig), 
     #    max(sqrtSig))+ c(-0.4*diff(range(sqrtSig)), 0.1*diff(range(sqrtSig)))
-    xRange = range(getFrontier(object)[,1])    
+    xRange = range(getFrontier(x)[,1])    
     xDiff = diff(xRange)   
     xLimAssets = c(xRange[1] - 2.5*xDiff/10, xRange[2] + xDiff/10)
       

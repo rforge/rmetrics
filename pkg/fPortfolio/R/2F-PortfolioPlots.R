@@ -74,6 +74,7 @@ function(object, frontier = c("both", "lower", "upper"),
     upperFrontier = getFrontier(object, frontier = "upper")
     lowerFrontier = getFrontier(object, frontier = "lower")
     
+    
     # Check for 'xlim' Argument:
     Arg <- match.call(expand.dots = TRUE)
     m <- match(c("xlim", "ylim"), names(Arg), Arg)
@@ -82,19 +83,10 @@ function(object, frontier = c("both", "lower", "upper"),
 
     # Plot:
     if(xArg == "NULL" & yArg == "NULL") {
-        # Use default, if xlim and ylim is not specified ...
-        mu = object@data$statistics$mu
-        Sigma = object@data$statistics$Sigma      
-        yLim = range(mu) + 0.25*c(-diff(range(mu)), diff(range(mu)))
-        
-        # First, take care that all assets appear on the plot ...
-        sqrtSig = sqrt(diag(Sigma))
-        xLimAssets = c(min(sqrtSig), max(sqrtSig))+
-             c(-0.4*diff(range(sqrtSig)), 0.1*diff(range(sqrtSig)))
-        
-        # ... second take care that the whole frontier appears on the plot:
-        xLimFrontier = range(fullFrontier[, 1])
-        xLim = range(c(xLimAssets, xLimFrontier))
+        yLim = range(fullFrontier[, 2])
+        xRange = range(fullFrontier[, 1])    
+        xDiff = diff(xRange)   
+        xLim = c(xRange[1] - 2.5*xDiff/10, xRange[2] + xDiff/10) 
         
         # Plot:
         if(!add){
@@ -118,10 +110,8 @@ function(object, frontier = c("both", "lower", "upper"),
             points(lowerFrontier, col = col[2], ...)
         }
     } else if (xArg != "NULL" & yArg == "NULL") {
-        # In this only xlim is specified in the argument list 
-        mu = object@data$statistics$mu
-        Sigma = object@data$statistics$Sigma      
-        yLim = range(mu) + 0.25*c(-diff(range(mu)), diff(range(mu)))
+        # In this case only xlim is specified in the argument list 
+        yLim = range(fullFrontier[, 2])
         # Plot:
         if(!add){
             if(frontier == "upper" | frontier == "both") {
@@ -143,14 +133,9 @@ function(object, frontier = c("both", "lower", "upper"),
         }   
     } else if(xArg == "NULL" & yArg != "NULL") {
         # In this only ylim is specified in the argument list 
-        Sigma = object@data$statistics$Sigma      
-        # First, take care that all assets appear on the plot ...
-        sqrtSig = sqrt(diag(Sigma))
-        xLimAssets = c(min(sqrtSig), max(sqrtSig))+
-             c(-0.4*diff(range(sqrtSig)), 0.1*diff(range(sqrtSig)))
-        # ... second take care that the whole frontier appears on the plot:
-        xLimFrontier = range(fullFrontier[, 1])
-        xLim = range(c(xLimAssets, xLimFrontier))
+        xRange = range(fullFrontier[, 1])    
+        xDiff = diff(xRange)   
+        xLim = c(xRange[1] - 2.5*xDiff/10, xRange[2] + xDiff/10) 
         # Plot:
         if(!add){
             if(frontier == "upper" | frontier == "both") {
@@ -676,7 +661,7 @@ function(object, mcSteps, ...)
     N = length(mu)  
      
     # Get Specification:
-    if (type == "MV") {
+    if (Type == "MV") {
         # Get Constraints Model:
         Model = rev(attr(object@constraints, "model"))[1]
         if (Model == "Short") {
@@ -699,7 +684,7 @@ function(object, mcSteps, ...)
                 points(Risk, Return, ...)
             }
         } 
-    } else if (type == "CVaR") {
+    } else if (Type == "CVaR") {
         # Monte Carlo Loop - Long Only:
         x = object@data$series
         alpha = getTargetAlpha(object)
@@ -855,6 +840,9 @@ function(object, col = NULL, legend = TRUE)
     # Select Colors if not specified ...
     if (is.null(col)) col = rainbow(ncol(object@portfolio$weights))
     
+    # Get Type:
+    Type = getType(object)
+    
     # Get Weights:
     weights = getWeights(object)
     pos.weights = +0.5 * (abs(weights) + weights)
@@ -869,7 +857,7 @@ function(object, col = NULL, legend = TRUE)
     dim = dim(weights)
     range = dim[1]
     xmin = 0
-    xmax = range + .2 * range
+    xmax = range + 0.2 * range
     
     # Create Bar Plots:
     if(!legend){
@@ -889,6 +877,7 @@ function(object, col = NULL, legend = TRUE)
     
     # Add Tailored Labels -  6 may be a good Number ...
     targetRisk = getTargetRisk(object)
+    if(Type == "CVaR") targetRisk = targetRisk[, 1]
     targetReturn = getTargetReturn(object)
     nSigma = length(targetRisk)
     nLabels = 6

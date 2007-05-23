@@ -73,11 +73,11 @@ function(data, spec = portfolioSpec(), constraints = NULL)
     
     # Get Target Return:
     targetReturn = as.numeric(mu %*% weights)
-    attr(targetReturn, "return") = spec@model$estimator[1]
+    names(targetReturn) = spec@model$estimator[1]
     
     # Get Target Risk:
     targetRisk = sqrt( as.numeric( t(weights) %*% Sigma %*% (weights) ) )
-    attr(targetRisk, "risk") <- spec@ model$estimator[2]
+    names(targetRisk) <- spec@ model$estimator[2]
     
     # Return Value:
     new("fPORTFOLIO", 
@@ -142,11 +142,11 @@ function(data, spec = portfolioSpec(), constraints = NULL)
     
     # Get Target Return:
     targetReturn = A / B
-    attr(targetReturn, "return") = spec@model$estimator[1]
+    names(targetReturn) = spec@model$estimator[1]
     
     # Get Target Risk:
     targetRisk = sqrt(c*riskFreeRate^2 - 2*b*riskFreeRate + a) / B
-    attr(targetRisk, "risk") <- spec@ model$estimator[2]
+    names(targetRisk) = spec@model$estimator[2]
     
     # Return Value:
     new("fPORTFOLIO", 
@@ -204,11 +204,11 @@ function(data, spec = portfolioSpec(), constraints = NULL)
     
     # Get Target Return:
     targetReturn = (a/b)*C0
-    attr(targetReturn, "return") = spec@model$estimator[1]
+    names(targetReturn) = spec@model$estimator[1]
     
     # Get Target Risk:
     targetRisk = (sqrt(a)/b)*C0
-    attr(targetRisk, "risk") <- spec@ model$estimator[2]
+    names(targetRisk) = spec@model$estimator[2]
     
     # Return Value:
     new("fPORTFOLIO", 
@@ -266,11 +266,11 @@ function(data, spec = portfolioSpec(), constraints = NULL)
     
     # Get Target Return:
     targetReturn = (b/c)*C0
-    attr(targetReturn, "return") = spec@model$estimator[1]
+    names(targetReturn) = spec@model$estimator[1]
     
     # Get Target Risk:
     targetRisk = C0/sqrt(c)
-    attr(targetRisk, "risk") = spec@model$estimator[2]
+    names(targetRisk) = spec@model$estimator[2]
 
     # Return Value:
     new("fPORTFOLIO", 
@@ -326,11 +326,11 @@ function(data, spec = portfolioSpec(), constraints = NULL)
     targetReturn = spec@portfolio$targetReturn 
     if (is.null(targetReturn))  
         targetReturn = getTargetReturn(.tangencyShortMVPortfolio(data, spec))
-    attr(targetReturn, "return") = spec@model$estimator[1]
+    names(targetReturn) = spec@model$estimator[1]
     
     # Get Target Risk:
     targetRisk = sqrt((c*targetReturn^2 - 2*b*C0*targetReturn + a*C0^2) / d)
-    attr(targetRisk, "risk") = spec@model$estimator[2]
+    names(targetRisk) = spec@model$estimator[2]
     
     # Get Weights:
     weights = as.vector(invSigma %*% ((a-b*mu)*C0 + (c*mu-b)*targetReturn )/d)
@@ -353,7 +353,7 @@ function(data, spec = portfolioSpec(), constraints = NULL)
 }
 
 
-# ------------------------------------------------------------------------------
+################################################################################
 
 
 .portfolioShortMVFrontier = 
@@ -421,6 +421,8 @@ title = NULL, description = NULL)
         nextWeight = getWeights(.efficientShortMVPortfolio(data, Spec))
         weights = rbind(weights, t(nextWeight))
     }
+    names(targetReturn) <- NULL
+    names(targetRisk) <- NULL
          
     # Adding title and description:
     if(is.null(title)) title = "Short Selling Portfolio Frontier"

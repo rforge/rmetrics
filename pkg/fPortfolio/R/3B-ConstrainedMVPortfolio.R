@@ -415,12 +415,12 @@ function(data, spec, constraints)
     
     # Get TargetReturn:
     targetReturn = targetMu
-    attr(targetReturn, "return") <- spec@model$estimator[1]
+    names(targetReturn) <- NULL # spec@model$estimator[1]
     if (solverType == "RQuadprog") targetReturn = targetReturn[Index]
     
     # Get Target Risk:
     targetRisk = targetSigma
-    attr(targetRisk, "risk") = spec@model$estimator[2]
+    names(targetRisk) = NULL # spec@model$estimator[2]
     if (solverType == "RQuadprog") targetRisk = targetRisk[Index]
   
     # Return Value:

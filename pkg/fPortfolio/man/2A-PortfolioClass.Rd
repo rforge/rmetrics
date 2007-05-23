@@ -477,7 +477,7 @@ frontierSlider(object, control = list(), \dots)
     
 ## plot -
    # Plot Efficient Frontier with Minimum Variance Portfolio
-   plot(frontier, which = c(1, 3))
+   # plot(frontier, which = c(1, 3))
     
 ## frontierSlider -
    # Try Frontier Slider:

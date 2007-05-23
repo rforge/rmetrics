@@ -184,17 +184,21 @@ function(object, frontier = c("both", "lower", "upper"), doplot = FALSE, ...)
     frontier = match.arg(frontier)
     
     # Get Efficient Frontier:
-    targetRisk = object@portfolio$targetRisk
-    targetReturn = object@portfolio$targetReturn
-    if (is.null(dim(targetRisk))) {
-        ans = cbind(
-            Risk = targetRisk[1], 
-            Return = targetReturn)
-    } else {
-        ans = cbind(
-            Risk = targetRisk[, 1], 
-            Return = targetReturn)
+    Type = getType(object)
+    targetRisk = getTargetRisk(object)
+    targetReturn = getTargetReturn(object)
+    
+    if (Type == "MV") {
+        ans = cbind(Risk = targetRisk, Return = targetReturn)
+    } else if (Type == "CVaR") {
+        if (is.matrix(targetRisk)) {
+            Risk = targetRisk[, 1]
+        } else {
+            Risk = targetRisk[1]
+        }
+        ans = cbind(Risk = Risk, Return = targetReturn)
     }
+    rownames(ans) = NULL
 
     # Extract upper part of frontier
     if(frontier == "upper"){
