@@ -5,13 +5,17 @@
 \alias{getAssets}
 \alias{getStatistics}
 \alias{getNumberOfAssets}
+
 \alias{getSpecification}
+\alias{getType}
+
 \alias{getPortfolio}  
 \alias{getFrontier}
 \alias{getWeights}
 \alias{getRiskBudgets}
 \alias{getTargetReturn}
 \alias{getTargetRisk}
+\alias{getTargetAlpha}
 \alias{getTargetStdev}
 \alias{getNames}
 
@@ -33,12 +37,14 @@
     \code{getStatistics} \tab Extracts assets statistics, mean and covariance, \cr
     \code{getNumberOfAssets} \tab Extracts number of assets from statistics, \cr
     \code{getSpecification} \tab Extracts @specification slot, \cr
+    \code{getType} \tab Extracts type from @specification slot, \cr
     \code{getPortfolio} \tab Extracts @portfolio slot, \cr
     \code{getFrontier} \tab Extracts the efficient frontier, \cr
     \code{getWeights} \tab Extracts weights from a fPORTFOLIO object, \cr
     \code{getRiskBudgets} \tab Extracts risk budgets from a fPORTFOLIO object, \cr
     \code{getTargetReturn} \tab Extracts target return from a portfolio, \cr
     \code{getTargetRisk} \tab Extracts target risk from a portfolio, \cr
+    \code{getTargetAlpha} \tab Extracts target VaR-alpha from a portfolio, \cr
     \code{getTargetStdev} \tab Extracts target standard deviation from a portfolio, \cr
     \code{getNames} \tab Extracts asset names from a portfolio. }
     
@@ -49,13 +55,17 @@
 getAssets(object)
 getStatistics(object)
 getNumberOfAssets(object)
-getSpecification(object)   
+
+getSpecification(object)  
+getType(object)
+ 
 getPortfolio(object, doplot = FALSE, \dots)     
 getFrontier(object, frontier = c("both", "lower", "upper"), doplot = FALSE, \dots)        
 getWeights(object, doplot = FALSE, \dots) 
 getRiskBudgets(object)     
 getTargetReturn(object)  
 getTargetRisk(object)
+getTargetAlpha(object)
 getTargetStdev(object)
 getNames(object)
 }
@@ -94,11 +104,13 @@ getNames(object)
     \code{getStatistics}\cr
     \code{getNumberOfAssets}\cr
     \code{getSpecification}\cr
+    \code{getType}\cr
     \code{getPortfolio}\cr
     \code{getFrontier}\cr
     \code{getWeights}\cr
     \code{getTargetReturn}\cr
     \code{getTargetRisk}\cr
+    \code{getTargetAlpha}\cr
     \code{getTargetStdev}\cr
     \code{getNames}\cr
     all functions return a list or a value of the desired information.

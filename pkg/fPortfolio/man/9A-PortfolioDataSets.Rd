@@ -18,6 +18,7 @@
 \alias{returns.three.ts}
 
 \alias{SWXLP}
+\alias{SWXLPP2005REC}
 
 
 \title{fPortfolio Data Sets}

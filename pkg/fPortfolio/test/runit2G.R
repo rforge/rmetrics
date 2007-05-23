@@ -158,6 +158,36 @@ function()
 # ------------------------------------------------------------------------------
 
 
+test.solveRlpSolve = 
+function()
+{
+    # Load Library:
+    require(lpSolve)
+    
+    # Load Data:
+    Data = as.timeSeries(data(smallcap.ts))
+    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
+    
+    # CVaR Specification:
+    Spec = portfolioSpec()
+    setType(Spec) = "CVaR"
+    setTargetReturn(Spec) = mean(colAvgs(Data))
+    setTargetAlpha(Spec) = 0.05
+    setSolver(Spec) = "RlpSolve"
+    Spec
+    
+    # Constraints:
+    Constraints = NULL
+    
+    # CVaR Portfolio Optimization:
+    ans = .solveRlpSolve(Data, Spec, Constraints)   
+    ans = solveRlpSolve(Data, Spec, Constraints)
+}
+
+
+# ------------------------------------------------------------------------------
+
+
 if (FALSE) {
     require(RUnit)
     testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fPortfolio/test/runit2G.R",

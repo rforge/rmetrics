@@ -373,25 +373,12 @@ function(object)
     # Target Returns:   
     cat("\nTarget Return(s):\n")
     targetReturn = getTargetReturn(object)
-    if (length(targetReturn) == 1) {
-        cat(" ", targetReturn, "\n")
-    } else {
-        print(targetReturn)
-    }
-    
+    print(targetReturn)
+ 
     # Target Risk:
+    cat("\nTarget Risk(s):\n")
     targetRisk = getTargetRisk(object) 
-    attribute = attr(targetRisk, "risk")
-    if (is.null(attribute)) {
-        cat("\nTarget Risk(s):\n")
-    } else {
-        cat("\nTarget Risk(s) -", attribute, "Risk:\n")  
-    }
-    if (length(targetRisk) == 1) {
-        cat(" ", targetRisk, "\n")
-    } else {
-        print(targetRisk)
-    }
+    print(targetRisk)
     
     # Target Stdev:
     # cat("\nTarget Standard Deviation(s):\n")   
@@ -440,10 +427,16 @@ function(x, which = "ask", control = list(), ...)
     mu = x@data$statistics$mu
     Sigma = x@data$statistics$Sigma      
     yLim = range(mu) + 0.25*c(-diff(range(mu)), diff(range(mu)))
+    
     # First, take care that all assets appear on the plot ...
-    sqrtSig = sqrt(diag(Sigma))
-    xLimAssets = c(min(sqrtSig), max(sqrtSig))+
-         c(-0.4*diff(range(sqrtSig)), 0.1*diff(range(sqrtSig)))
+    # sqrtSig = sqrt(diag(Sigma))
+    # xLimAssets = c(
+    #    min(sqrtSig), 
+    #    max(sqrtSig))+ c(-0.4*diff(range(sqrtSig)), 0.1*diff(range(sqrtSig)))
+    xRange = range(getFrontier(object)[,1])    
+    xDiff = diff(xRange)   
+    xLimAssets = c(xRange[1] - 2.5*xDiff/10, xRange[2] + xDiff/10)
+      
     # ... second take care that the whole frontier appears on the plot:
     fullFrontier = getFrontier(x)
     xLimFrontier = range(fullFrontier[, 1])
@@ -484,9 +477,16 @@ function(x, which = "ask", control = list(), ...)
 
     # Plot Function and Addons:
     plot.1 <<- function(x, ...) {
+        Type = x@specification$spec@model$type
+        if (Type == "MV") {
+            xLab = "Mean-Var Target Risk"
+        } else if (Type == "CVaR") {
+            xLab = "-CVaR Target Risk"
+        }
         frontierPlot(object = x, xlim = con$xlim,
             ylim = con$ylim, main = "Efficient Frontier",
-            xlab = "Target Risk", ylab = "Target Return")
+            xlab = xLab, ylab = "Target Return", 
+            pch = 19, cex = 0.75)
     }       
     plot.2 <<- function(x, ...) {
         .minvariancePlot(object = x, 
@@ -535,14 +535,14 @@ function(x, which = "ask", control = list(), ...)
         x,
         choices = c(
             "Plot Efficient Frontier",
-            "Add min Variance Portfolio",
+            "Add Minimum Risk Portfolio",
             "Add Tangency Portfolio",
-            "Add Single Assets",
+            "Add Risk/Return of Single Assets",
             "Add Equal Weights Portfolio",
-            "Add Two Asset Frontiers",
-            "Add Wheel Pie",
+            "Add Two Asset Frontiers [0-1 PF Only]",
+            "Add Wheel Pie of Weights",
             "Add Monte Carlo Portfolios",
-            "Add Sharpe Ratio"),
+            "Add Sharpe Ratio [MV PF Only]"),
         plotFUN = c(
             "plot.1", "plot.2", "plot.3", "plot.4", "plot.5",  
             "plot.6", "plot.7", "plot.8", "plot.9"),
@@ -561,6 +561,7 @@ function(object, control = list(), ...)
 {   # A function implemented by Rmetrics
 
     # Description:
+    #    Interactive view of Portfolio Weights
     
     # FUNCTION:
      
@@ -573,10 +574,12 @@ function(object, control = list(), ...)
     mu = object@data$statistics$mu
     Sigma = object@data$statistics$Sigma      
     yLim = range(mu) + 0.25*c(-diff(range(mu)), diff(range(mu)))
+    
     # First, take care that all assets appear on the plot ...
     sqrtSig = sqrt(diag(Sigma))
     xLimAssets = c(min(sqrtSig), max(sqrtSig))+
          c(-0.4*diff(range(sqrtSig)), 0.1*diff(range(sqrtSig)))
+    
     # ... second take care that the whole frontier appears on the plot:
     fullFrontier = getFrontier(object)
     xLimFrontier = range(fullFrontier[, 1])
@@ -584,24 +587,19 @@ function(object, control = list(), ...)
 
     # Control Parameters:
     con <<- list(
-        sliderResolution = 1,
-        
+        sliderResolution = 1,     
         sliderFlag = "weights",
-    
         runningPoint.col  = "red",
         minvariance.col = "red",
         tangency.col = "steelblue",
         singleAsset.col = rainbow(dim),
-
         minvariance.pch = 19,
         singleAsset.pch = 19,
         tangency.pch = 17,
-        
         runningPoint.cex = 1.5,
         minvariance.cex = 1,
         tangency.cex = 1.25,
         singleAsset.cex = 1,
-
         xlim = xLim,
         ylim = yLim
         )    

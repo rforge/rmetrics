@@ -86,25 +86,28 @@ function(object, frontier = c("both", "lower", "upper"),
         mu = object@data$statistics$mu
         Sigma = object@data$statistics$Sigma      
         yLim = range(mu) + 0.25*c(-diff(range(mu)), diff(range(mu)))
+        
         # First, take care that all assets appear on the plot ...
         sqrtSig = sqrt(diag(Sigma))
         xLimAssets = c(min(sqrtSig), max(sqrtSig))+
              c(-0.4*diff(range(sqrtSig)), 0.1*diff(range(sqrtSig)))
+        
         # ... second take care that the whole frontier appears on the plot:
         xLimFrontier = range(fullFrontier[, 1])
         xLim = range(c(xLimAssets, xLimFrontier))
+        
         # Plot:
         if(!add){
             if(frontier == "upper" | frontier == "both") {
                 plot(upperFrontier, col = col[1], xlim = xLim, ylim = yLim, ...)
             } else {
                 if( frontier == "both") {
-                    points(bothFrontier, col = col[2], xlim = xLim,
-                        ylim = yLim, ...)
+                    points(bothFrontier, col = col[2], 
+                        xlim = xLim, ylim = yLim, ...)
                 }
                 if(frontier == "lower" ) {
-                    plot(lowerFrontier, col = col[2], xlim = xLim, ylim = yLim,
-                         ...)
+                    plot(lowerFrontier, col = col[2], 
+                        xlim = xLim, ylim = yLim, ...)
                 }
             }
         }
@@ -208,9 +211,16 @@ function(object, ...)
     # FUNCTION:
     
     # Get Portfolio Slots:
-    Data = object@data$statistics
+    Data = object@data$series
     Spec = getSpecification(object)
     Constraints = object@constraints
+    Type = getType(object)
+    
+    # CVaR ?
+    if (Type == "CVaR") {
+        cat("\n\tOnly for Mean-Variance Portfolios\n")
+        return()
+    }
     
     # Efficient Frontier:
     portfolio = object@portfolio
@@ -238,13 +248,14 @@ function(object, ...)
     # Take a reasonable number of significant digits to plot, e.g. 2 ...
     nPrecision = 3
     Labels = signif(Range, nPrecision)
-    axis(4, at = Range, labels = c(" ", " "))
-    axis(4, at = mean(Range), labels = paste(Labels[1], "   ", Labels[2]))
+    axis(4, at = Range, labels = c(" ", " "), cex.axis = 0.75)
+    axis(4, at = mean(Range), labels = paste(Labels[1], "   ", Labels[2]), 
+        cex.axis = 0.75)
     
     # Add Axis Labels and Title:
-    mtext("Sharpe Ratio", side = 4, line = 2)
+    mtext("Sharpe Ratio", side = 4, line = 2, cex = 0.75)
     
-    # return Value:
+    # Return Value:
     invisible()
 }
 
@@ -257,17 +268,20 @@ function(object, ...)
 {   # A function implemented by Rmetrics
 
     # Description:
-    #   Adds the minimum variance point to a portfolio plot
+    #   Adds the minimum risk point to a MV and CVaR portfolio plot
     
     # FUNCTION:
      
     # Get Portfolio Slots:
-    Data = object@data$statistics
+    Data = object@data$series
     Spec = getSpecification(object)
     Constraints = object@constraints
+    Type = getType(object)
     
     # Add Minimum Variance Point:
-    points(getFrontier(minvariancePortfolio(Data, Spec, Constraints)), ...)
+    minvarPortfolio = minvariancePortfolio(Data, Spec, Constraints)
+    assets = getFrontier(minvarPortfolio)
+    points(assets, ...)
     
     # Return Value:
     invisible()
@@ -282,14 +296,15 @@ function(object, ...)
 {   # A function implemented by Rmetrics
 
     # Description:
-    #   Adds the tangency point and line to a portfolio plot
+    #   Adds tangency point and line to a MV and CVaR portfolio plot
     
     # FUNCTION:
     
     # Get Portfolio Slots:
-    Data = object@data$statistics
+    Data = object@data$series
     Spec = getSpecification(object)
     Constraints = object@constraints
+    Type = getType(object)
     
     # Compute Tangency Portfolio:
     tangencyPortfolio = tangencyPortfolio(Data, Spec, Constraints)
@@ -298,9 +313,10 @@ function(object, ...)
     points(getFrontier(tangencyPortfolio), ...)
     
     # Add Tangency Line:
-    slope = getTargetReturn(tangencyPortfolio)/getTargetRisk(tangencyPortfolio)
+    slope = getTargetReturn(tangencyPortfolio) /
+        getTargetRisk(tangencyPortfolio)[1]
     abline(0, slope, ...)
-   
+    
     # Return Value:
     invisible()
 }
@@ -319,23 +335,27 @@ function(object, ...)
     # FUNCTION:
 
     # Get Portfolio Statistics:
-    Data = object@data$statistics
+    Data = object@data$series
     Spec = getSpecification(object)
     Constraints = object@constraints
+    Type = getType(object)
 
-    # Compute Tangency Portfolio:
-    cmlPortfolio = cmlPortfolio(Data, Spec, Constraints)
-
-    # Add Tangency Point:
-    points(getFrontier(cmlPortfolio), ...)
-
-    # Add Tangency Line - if slope is positive:
-    # riskFreeRate = getPortfolio(cmlPortfolio)$riskFreeRate
-    riskFreeRate = object@specification$spec@portfolio$riskFreeRate
-    slope = ((getTargetReturn(cmlPortfolio) - riskFreeRate) /
-        getTargetRisk(cmlPortfolio))
-    if(slope > 0) abline(b = slope, a = riskFreeRate, ...)
-
+    # Add Capital Market Line:
+    if (Type == "MV") {
+        # Compute Tangency Portfolio:
+        cmlPortfolio = cmlPortfolio(Data, Spec, Constraints)
+        # Add Tangency Point:
+        points(getFrontier(cmlPortfolio), ...)
+        # Add Tangency Line - if slope is positive:
+        # riskFreeRate = getPortfolio(cmlPortfolio)$riskFreeRate
+        riskFreeRate = object@specification$spec@portfolio$riskFreeRate
+        slope = ((getTargetReturn(cmlPortfolio) - riskFreeRate) /
+            getTargetRisk(cmlPortfolio))
+        if(slope > 0) abline(b = slope, a = riskFreeRate, ...)
+    } else if (Type == "CVaR") {
+        cat("\n\tNot Yet Implemented\n")
+    }
+    
     # Return Value:
     invisible(object)
 }
@@ -353,13 +373,21 @@ function(object, ...)
     
     # FUNCTION:
      
-    # Get Portfolio Statistics:
+    # Add Single Assets:
     Statistics = object@data$statistics
+    Type = getType(object)
     
-    # Compose Assets:
-    assets = cbind(sigma = sqrt(diag(Statistics$Sigma)), mu = Statistics$mu)
-    
-    # Add Asset Points:
+    Return = Statistics$mu
+    if (Type == "MV") {
+        Risk = sqrt(diag(Statistics$Sigma))
+    } else if (Type == "CVaR") {
+        nAssets = length(Return)
+        Data = object@data$series@Data
+        alpha = getTargetAlpha(object)
+        Risk = NULL
+        for (i in 1:nAssets) Risk = c(Risk, -.cvarRisk(Data[ ,i], 1, alpha))
+    }
+    assets = cbind(Risk = Risk, Return = Return)
     points(assets, ...)
     
     # Return Value:
@@ -380,15 +408,19 @@ function(object, ...)
     # FUNCTION:
     
     # Get Portfolio Statistics: 
-    Data = object@data$statistics
+    Data = object@data$series
     Spec = getSpecification(object)
     Constraints = object@constraints
+    Type = getType(object)
     
-    # Compute Equal Weights Portfolio:
+    # Add Equal Weights Portfolio:
     equalWeightsPortfolio = feasiblePortfolio(Data, Spec, Constraints)
-   
-    # Add Equal Weights Point:
-    points(getFrontier(equalWeightsPortfolio), ...)
+    if (Type == "MV") {
+        assets = getFrontier(equalWeightsPortfolio) 
+    } else if (Type == "CVaR") {
+        assets = getFrontier(equalWeightsPortfolio) * c(-1, 1)
+    }
+    points(assets, ...)
     
     # Return Value:   
     invisible()    
@@ -405,6 +437,9 @@ function(object, ...)
     # Description:
     #   Adds efficient long-only frontier of all portfolio pairs
     
+    # Note:
+    #   Only supported for "Short" and "LongOnly" Constraints!
+    
     # FUNCTION:
     
     # Supported ?
@@ -413,25 +448,38 @@ function(object, ...)
 
     # Get Portfolio Statistics: 
     Data = getSlot(object, "data")
-    Spec = getSpecification(object) 
-    # Constraints = 
+    Spec = getSpecification(object)
+    Constraints = object@constraints
+    Type = getType(object)
     
     # Add Froniters for all Two-Assets Portfolios:
     N = length(Data$statistics$mu)
-    
-    # Plotting frontier points
-    for ( i in 1:(N-1) ) {
-        for (j in (i+1):N ) {
-            index = c(i, j) 
-            Data2 = list(
-                mu = Data$statistics$mu[index],
-                Sigma = Data$statistics$Sigma[index, index])
-            # Constraints2 ?
-            ans = portfolioFrontier(data = Data2, spec = Spec)
-            lines(getFrontier(ans), ...)
+    if (Type == "MV") { 
+        # Plotting Frontier Points:
+        for ( i in 1:(N-1) ) {
+            for (j in (i+1):N ) {
+                index = c(i, j) 
+                Data2 = list(
+                    mu = Data$statistics$mu[index],
+                    Sigma = Data$statistics$Sigma[index, index])
+                # Zero-One Constraints2 ?
+                ans = portfolioFrontier(data = Data2, spec = Spec)
+                lines(getFrontier(ans), ...)
+            }
+        }
+    } else if (Type == "CVaR") {
+        # Plotting Frontier Points:
+        for ( i in 1:(N-1) ) {
+            for (j in (i+1):N ) {
+                index = c(i, j) 
+                Data2 = object@data$series
+                # Zero-One Constraints2 ?
+                ans = portfolioFrontier(data = Data2[, index], spec = Spec)
+                lines(getFrontier(ans), ...)
+            }
         }
     }
-
+    
     # Return Value:
     invisible()   
 }
@@ -445,12 +493,12 @@ function(object, piePos = NULL, pieR = NULL, pieOffset = NULL, ...)
 {   # A function implemented by Rmetrics
 
     # Description:
-    #   Adds a pie plot of the weights
+    #   Adds a pie plot of weights for MV and CVaR Portfolios
     
     # Details:
     #   The default settings are:
     #   piePos - Position of tangency Portfolio
-    #   pieR - 10% of the Risk Range: diff(range(targetRisk(object)))/10 
+    #   pieR - 10% of the Risk Range: diff(range(targetRisk(object)))/10
     
     # FUNCTION:
     
@@ -459,20 +507,26 @@ function(object, piePos = NULL, pieR = NULL, pieOffset = NULL, ...)
     dx = p[2]-p[1]
     dy = p[4]-p[3]
   
+    # Pie Position:
     if(is.null(piePos)) {
-        Data = object@data$statistics
+        Data = object@data$series
         Spec = getSpecification(object)
         Constraints = object@constraints
         tg = getTargetReturn(tangencyPortfolio(Data, Spec, Constraints))
         ef = getTargetReturn(object)
         piePos = which(diff(sign(ef-tg)) > 0) 
     }
+    
+    # Pie Radius:
     if(is.null(pieR)) { 
         pieR = c(1, 1)
     }
+    
+    # Pie Offset:
     if(is.null(pieOffset)) { 
         pieOffset = c(-2*dx, 0)
     }
+    
     # Plot Circle:
     weights = getWeights(object)[piePos, ]
     nWeights = length(weights)
@@ -511,6 +565,7 @@ function(object, piePos = NULL, pieR = NULL, pieOffset = NULL, ...)
     invisible()
 }
 
+
 # ------------------------------------------------------------------------------
 
 
@@ -533,8 +588,7 @@ function(object, piePos = NULL, pieR = NULL, pieOffset = NULL, ...)
     dx = p[2]-p[1]
     dy = p[4]-p[3]
 
-
-    
+    # Pie Position:
     if(is.null(piePos)) {
         Data = object@data$statistics
         Spec = getSpecification(object)
@@ -543,17 +597,20 @@ function(object, piePos = NULL, pieR = NULL, pieOffset = NULL, ...)
         ef = getTargetReturn(object)
         piePos = which(diff(sign(ef-tg)) > 0) 
     }
+    
+    # Pie Radius:
     if(is.null(pieR)) { 
         pieR = c(1, 1)
     }
+    
+    # Pie Offset:
     if(is.null(pieOffset)) { 
         pieOffset = c(2*dx, 0)
     }
-    # Plot Circle:
-    # Get weighted Returns:
+    
+    # Plot Circle - Get weighted Returns:
     weights = getWeights(object)
     dim = dim(weights)
- 
     returns = object@data$statistics$mu
     weightedReturns = NULL
     for(i in 1:dim[2]){
@@ -613,34 +670,46 @@ function(object, mcSteps, ...)
     
     # Get Portfolio Statistics: 
     Data = object@data$statistics
+    Type = getType(object)
     mu = Data$mu
     Sigma = Data$Sigma
     N = length(mu)  
-    
-    # Get Constraints Model:
-    Model = rev(attr(object@constraints, "model"))[1]
-    
-    if (Model == "Short") {
-        # Monte Carlo Loop - Short:
-        for (k in 1:mcSteps) {  
-            s = sign(rnorm(N, mean = rnorm(1)))
-            weights = s * abs(rcauchy(N))        
-            weights = weights / sum(weights)
-            Return = as.numeric(mu %*% weights)
-            Risk = sqrt( as.numeric( t(weights) %*% Sigma %*% (weights) ) )
-            points(Risk, Return, ...)
-        }
-    } else if (Model == "LongOnly") {
+     
+    # Get Specification:
+    if (type == "MV") {
+        # Get Constraints Model:
+        Model = rev(attr(object@constraints, "model"))[1]
+        if (Model == "Short") {
+            # Monte Carlo Loop - Short:
+            for (k in 1:mcSteps) {  
+                s = sign(rnorm(N, mean = rnorm(1)))
+                weights = s * abs(rcauchy(N))        
+                weights = weights / sum(weights)
+                Return = as.numeric(mu %*% weights)
+                Risk = sqrt( as.numeric( t(weights) %*% Sigma %*% (weights) ) )
+                points(Risk, Return, ...)
+            }
+        } else if (Model == "LongOnly") {
+            # Monte Carlo Loop - Long Only:
+            for (k in 1:mcSteps) {  
+                weights = abs(rcauchy(N))        
+                weights = weights / sum(weights)
+                Return = as.numeric(mu %*% weights)
+                Risk = sqrt( as.numeric( t(weights) %*% Sigma %*% (weights) ) )
+                points(Risk, Return, ...)
+            }
+        } 
+    } else if (type == "CVaR") {
         # Monte Carlo Loop - Long Only:
+        x = object@data$series
+        alpha = getTargetAlpha(object)
         for (k in 1:mcSteps) {  
             weights = abs(rcauchy(N))        
             weights = weights / sum(weights)
             Return = as.numeric(mu %*% weights)
-            Risk = sqrt( as.numeric( t(weights) %*% Sigma %*% (weights) ) )
-            points(Risk, Return, ...)
+            Risk = .cvarRisk(x, weights, alpha)
+            points(-Risk, Return, ...)
         }
-    } else {
-        print("Monte Carlo only for short and long only portfolios implemented")
     }
     
     # Return Value:

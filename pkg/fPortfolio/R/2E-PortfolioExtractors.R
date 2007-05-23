@@ -34,6 +34,7 @@
 #  getNumberOfAssets             Extracts number of assets from statistics
 # FUNCTION:                     PORTFOLIO S4 EXTRACTORS FROM SPECIFICATION SLOT:
 #  getSpecification              Extracts @specification Slot
+#  getType                       Extract Type from specification
 # FUNCTION:                     PORTFOLIO S4 EXTRACTORS FROM SPECIFICATION SLOT:
 #  getPortfolio                  Extracts @portfolio Slot
 #  getFrontier                   Extracts the efficient frontier
@@ -41,6 +42,7 @@
 #  getRiskBudgets                Extracts risk budgets from a fPORTFOLIO object
 #  getTargetReturn               Extracts target return from a portfolio
 #  getTargetRisk                 Extracts target riks from a portfolio
+#  getTargetAlpha                Extracts target VaR-alpha from a portfolio
 #  getTargetStdev                Extracts target std deviations from a portfolio
 #  getNames                      Extracts assets names from a portfolio
 ################################################################################
@@ -111,12 +113,32 @@ function(object)
 {   # A function implemented by Rmetrics
 
     # Description:
-    #   Extracts the statistics from a 'fPORTFOLIO' object
+    #   Extracts the specification structure from a 'fPORTFOLIO' object
     
     # FUNCTION:
     
-    # Get Portfolio:
+    # Get Specification:
     ans = object@specification$spec
+    
+    # Return Value:
+    ans  
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+getType =
+function(object)
+{   # A function implemented by Rmetrics
+
+    # Description:
+    #   Extracts the type from specification of a 'fPORTFOLIO' object
+    
+    # FUNCTION:
+    
+    # Get Specification Type:
+    ans = object@specification$spec@model$type
     
     # Return Value:
     ans  
@@ -162,10 +184,17 @@ function(object, frontier = c("both", "lower", "upper"), doplot = FALSE, ...)
     frontier = match.arg(frontier)
     
     # Get Efficient Frontier:
-    
-    ans = cbind(
-        Risk = object@portfolio$targetRisk, 
-        Return = object@portfolio$targetReturn)
+    targetRisk = object@portfolio$targetRisk
+    targetReturn = object@portfolio$targetReturn
+    if (is.null(dim(targetRisk))) {
+        ans = cbind(
+            Risk = targetRisk[1], 
+            Return = targetReturn)
+    } else {
+        ans = cbind(
+            Risk = targetRisk[, 1], 
+            Return = targetReturn)
+    }
 
     # Extract upper part of frontier
     if(frontier == "upper"){
@@ -273,7 +302,7 @@ function(object)
     
     # Target MV Return:
     ans = object@portfolio$targetReturn
-    if (length(ans) == 1) names(ans) = "targetReturn"
+    # if (length(ans) == 1) names(ans) = "targetReturn"
     
     # Return Value:
     ans
@@ -294,7 +323,28 @@ function(object)
     
     # Target MV Risk:
     ans = object@portfolio$targetRisk
-    if (length(ans) == 1) names(ans) = "targetRisk"
+    # if (length(ans) == 1) names(ans) = "targetRisk"
+    
+    # Return Value:
+    ans
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+getTargetAlpha =
+function(object)
+{   # A function implemented by Rmetrics
+
+    # Description:
+    #   Extracts the VaR-alpha from a 'fPORTFOLIO' object
+   
+    # FUNCTION:
+    
+    # Target Alpha:
+    ans = object@portfolio$targetAlpha
+    # if (length(ans) == 1) names(ans) = "targetRisk"
     
     # Return Value:
     ans

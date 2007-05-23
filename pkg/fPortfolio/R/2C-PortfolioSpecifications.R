@@ -717,8 +717,8 @@ function (spec = portfolioSpec(), solver = c("RQuadprog", "Rdonlp2"))
     # FUNCTION:
     
     # Set Solver:
-    # solver = match.arg(solver)
-    # spec@solver$type = solver
+    solver = match.arg(solver)
+    spec@solver$type = solver
     
     # Return Value:
     spec
@@ -736,8 +736,8 @@ function (spec = portfolioSpec(), solver = c("RQuadprog", "Rdonlp2"))
     # FUNCTION:
     
     # Valid Solvers:
-    # validSolvers = c("RQuadprog", "RDonlp2")
-    # stopifnot(value %in% validSolvers)
+    validSolvers = c("RQuadprog", "RDonlp2", "RlpSolve")
+    stopifnot(value %in% validSolvers)
     
     # Set Solver:
     spec@solver$type = value

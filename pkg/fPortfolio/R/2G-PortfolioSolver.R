@@ -134,9 +134,10 @@ function(data, spec, constraints)
         
     # Handle when failed ...
     weights = res1$sol 
-    for(i in 1:nAssets) if(abs(weights[i]) < .Machine$double.eps) weights[i] = 0
-    weights[as.logical(res1$err)] = NA
-        
+    for(i in 1:nAssets) {
+        if(abs(weights[i]) < sqrt(.Machine$double.eps)) weights[i] = 0
+    }
+       
     # Prepare Output List:
     ans = list(
         weights = weights, 
@@ -296,14 +297,11 @@ function(data, spec, constraints)
     # Note:
     #   This function requires to load the contributed R package
     #   lpSolve explicitely!
-    #
-    #   IMPORTANR:
-    #   Only Zero-One Long-Only Constraints are implemented !!!
     
     # FUNCTION:
     
     # Get data statistics:
-    if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
+    if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)  
     mu = data$statistics$mu
     Sigma = data$statistics$Sigma
     
@@ -317,67 +315,80 @@ function(data, spec, constraints)
     Data = data$series
     colNames = colnames(Data)
     rowNames = rownames(Data)
-    DIM = dim(Data)
-    m = DIM[1]
-    w = DIM[2]
+    assets = dim(Data)
+    m = assets[1]
+    w = assets[2]
 
     # Compose objective function:
-    Names = c("VaR", paste("e", 1:m, sep = ""), colNames)
-    f.obj = c(1, rep(-1/(targetAlpha*m), m), rep(0, w))
+    Names = c("VaR", paste("e", 1:m, sep = ""), colNames)      
+    f.obj = c(-1, rep(-1/(targetAlpha*m), m), rep(0, w))
     names(f.obj) = Names
     
     # Info on constraints - Constraint matrix:
     #   Example m=8 Data Records, and w=4 Assets
     #   
-    #   VaR  es          weights          exposure
-    #   x1   x2 ... x9   x10 ... x13
+    #   VaR  es            weights          exposure
+    #   x1   x2  ...  x9   x10 ... x13
     #       
-    #    0    0      0   mu1     mu4      = Mu
-    #    0    0      0   1       1        = 1
+    #    0    0       0    mu1     mu4      >= Mu
+    #    0    0       0    1       1        == 1
     #               
-    #   -1   x2      0   r1.1    r4.1     >= 0
-    #   -1   0 x3    0   r1.2    r4.1     >= 0
+    #   -1    1       0    r1.1    r4.1     >= 0
+    #   -1    0  1    0    r1.2    r4.2     >= 0
     #   
-    #   -1   0   x8  0   r1.8    r4.8     >= 0
-    #   -1   0      x9   r1.9    r4.9     >= 0
+    #   -1    0    1  0    r1.8    r4.8     >= 0
+    #   -1    0       1    r1.9    r4.9     >= 0
     #   
-    #   x2   >= 0       es    Not yet Implemented !!!
-    #   ...
-    #   x9   >= 0
-    #   
-    #   x10  >= 0       w     Not yet Implemented !!!
-    #   ...
-    #   x13  >= 0
+    #   x2   >= 0    ...   x9   >= 0  
+    #   x10  >= 0    ...   x13  >= 0
     
-    # Compose constraint matrix:
+    # Compose Constraint Matrix:
     nX = 1 + m + w
     nY = 2 + m
     f.con = matrix(rep(0, nX*nY), ncol = nX)
     rownames(f.con) = c("Budget", "Return", rowNames)
     colnames(f.con) = c("VaR", paste("e", 1:m, sep = ""), colNames) 
-    f.con[1, (2+m):(2+m+w-1)] = 1 
-    f.con[2, (2+m):(2+m+w-1)] = mu
-    f.con[3:(m+2), (2+m):(2+m+w-1)] = seriesData(Data)
-    f.con[3:(m+2), 1] = -1 
+    f.con[1, (2+m):(2+m+w-1)] = as.numeric(mu)
+    f.con[2, (2+m):(2+m+w-1)] = 1 
+    f.con[3:(m+2), 1] = 1 
     f.con[3:(m+2), 2:(m+1)] = diag(m)
+    f.con[3:(m+2), (2+m):(2+m+w-1)] = seriesData(Data)
     
-    # Set directions:
-    f.dir = c("=", "=", rep(">=", m))
+    # Box and Group Constraints:
+    # tmpConstraints = .setConstraints(data, spec, constraints)
+    # nConstraints = dim(tmpConstraints)
+    # append = cbind(matrix(0, ncol = 1+m, nrow = (nConstraints[1]-2)),
+    #     tmpConstraints[3:nConstraints[1], 1:(nConstraints[2]-1)])
+    # f.con = rbind(f.con, append)
+   
+    # Set Directions:
+    f.dir = c("==", "==", rep(">=", m))
+    # f.dir = c(f.dir, rep(">=", (nConstraints[1]-2)))
     names(f.dir) = rownames(f.con)
   
-    # Compose right hand side vector:
-    f.rhs = c(1, targetReturn, rep(0, m))
+    # Compose Right Hand Side Vector:
+    f.rhs = c(targetReturn, 1, rep(0, m))
+    # f.rhs = c(f.rhs, tmpConstraints[3:(nConstraints[1]), nConstraints[2]])
     names(f.rhs) = rownames(f.con)
     
-    # Optimize:
+    # Optimize Portfolio:
     ans = lp("max", f.obj, f.con, f.dir, f.rhs)
-
+    class(ans) <- "list"
+    
     # Prepare Output List:
-    ans$Solution = ans$solution
-    ans$solution = ans$solution[(m+2):(m+1+w)] 
+    ans$weights = ans$solution[(m+2):(m+1+w)] 
+    for(i in 1:w) 
+        if(abs(ans$weights[i]) < sqrt(.Machine$double.eps)) ans$weights[i] = 0
+    attr(ans$weights, "error") <- ans$ierr
+    ans$weights[as.logical(ans$ierr)] = NA
+    ans$VaR = ans$solution[1]
+    ans$CVaR = -ans$objval 
     ans$ierr = ans$status
     ans$solver = "lpSolve"
+    ans$targetAlpha = targetAlpha
     
+    result <<- ans
+
     # Return Value:
     ans
 }
