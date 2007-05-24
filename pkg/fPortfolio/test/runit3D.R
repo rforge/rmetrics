@@ -44,7 +44,7 @@ function()
 {
     # Help File:
     helpFile = function() { 
-        example(???, ask = FALSE)
+        example(ConstrainedLPMPortfolio, ask = FALSE)
         return() 
     }
     checkIdentical(
@@ -139,7 +139,7 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.portfolioConstrainedLPMFrontier
+test.portfolioConstrainedLPMFrontier = 
 function()
 {
     Data = as.timeSeries(data(smallcap.ts))

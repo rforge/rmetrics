@@ -61,7 +61,7 @@ test.solverRQuadprog =
 function()
 { 
     # Install "Rdonlp2" from - http://arumat.net/Rdonlp2/
-    require(Rdonlp2)
+    require(quadprog)
     
     # Direct Access:
     Data = as.timeSeries(data(smallcap.ts))
@@ -71,6 +71,7 @@ function()
     
     # Default Constraints:
     Constraints = "LongOnly"
+    Constraints
     
     # Quadprog:
     solveRQuadprog(Data, Spec, Constraints)$solution 
@@ -91,6 +92,7 @@ test.solverRDonlp2 =
 function()
 { 
     # Install "Rdonlp2" from - http://arumat.net/Rdonlp2/
+    require(quadprog)
     require(Rdonlp2)
     
     # Direct Access:   
@@ -101,15 +103,16 @@ function()
     
     # Long Only Constraints:
     Constraints = NULL
+    Constraints
     
     # Quadprog:
     setSolver(Spec) = "RQuadprog"
-    round(solveRQuadprog(Data, Spec, Constraints)$solution, 3)
+    # round(solveRQuadprog(Data, Spec, Constraints)$solution, 3)
     round(getWeights(efficientPortfolio(Data, Spec, Constraints)), 3)
     
     # Donlp2:
     setSolver(Spec) = "RDonlp2"
-    round(solveRDonlp2(Data, Spec, Constraints)$solution, 3)
+    # round(solveRDonlp2(Data, Spec, Constraints)$solution, 3)
     round(getWeights(efficientPortfolio(Data, Spec, Constraints)), 3)
     
     # Add Budget Constraints:
@@ -128,12 +131,12 @@ function()
     
     # Scaled Quadprog:
     setSolver(Spec) = "RQuadprog"
-    round(solveRQuadprog(Data2, Spec, Constraints)$solution, 3)
+    # round(solveRQuadprog(Data2, Spec, Constraints)$solution, 3)
     round(getWeights(efficientPortfolio(Data2, Spec, Constraints)), 3)
     
     # Scaled Donlp2:
     setSolver(Spec) = "RDonlp2"
-    round(solveRDonlp2(Data2, Spec, Constraints)$solution, 3)
+    # round(solveRDonlp2(Data2, Spec, Constraints)$solution, 3)
     round(getWeights(efficientPortfolio(Data2, Spec, Constraints)), 3)
     
     # Scaled Donlp2 - Add Budget Constraints:
@@ -179,9 +182,11 @@ function()
     # Constraints:
     Constraints = NULL
     
-    # CVaR Portfolio Optimization:
-    ans = .solveRlpSolve(Data, Spec, Constraints)   
-    ans = solveRlpSolve(Data, Spec, Constraints)
+    # CVaR Portfolio Optimization:  
+    solveRlpSolve(Data, Spec, Constraints)
+    
+    # Return Value:
+    return()
 }
 
 
@@ -190,6 +195,9 @@ function()
 
 if (FALSE) {
     require(RUnit)
+    require(quadprog)
+    require(Rdonlp2)
+    require(lpSolve)
     testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fPortfolio/test/runit2G.R",
         rngKind = "Marsaglia-Multicarry", rngNormalKind = "Inversion")
     printTextProtocol(testResult)

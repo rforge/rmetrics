@@ -80,7 +80,7 @@ setClass("fPFOLIOSPEC",
 portfolioSpec = 
 function(
 model = list(
-    type = "MV", 
+    type = c("MV", "CVaR"), 
     estimator = c("mean", "cov"), 
     params = list()),
 portfolio = list(
@@ -92,7 +92,7 @@ portfolio = list(
     returnRange = NULL, 
     riskRange = NULL),
 solver = list(
-    type = c("RQuadprog", "RDonlp2"),
+    type = c("RQuadprog", "RDonlp2", "RlpSolve"),
     trace = FALSE),  
 title = NULL, 
 description = NULL)

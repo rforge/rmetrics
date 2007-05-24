@@ -142,11 +142,11 @@ function(data, spec, constraints)
     names(weights) = names(mu)
     
     # Get Target Risk:
-    targetReturn = mu %*% weights
+    targetReturn = as.numeric(mu %*% weights)
     names(targetReturn) <- spec@model$estimator[1]
     
     # Get Target Risk:
-    targetRisk = sqrt( weights %*% Sigma %*% weights )
+    targetRisk = as.numeric( sqrt( weights %*% Sigma %*% weights ) )
     names(targetRisk) <- spec@model$estimator[2]
 
     # Return Value:
@@ -216,11 +216,11 @@ function(data, spec, constraints)
     names(weights) = names(mu)
 
     # Get Target Return:     
-    targetReturn = spec@portfolio$targetReturn = cml$maximum  
+    targetReturn = spec@portfolio$targetReturn = as.numeric(cml$maximum)  
     names(targetReturn) <- spec@model$estimator[1]
     
     # Get Target Return:
-    targetRisk = attr(cml$objective, "targetRisk")
+    targetRisk = as.numeric(attr(cml$objective, "targetRisk"))
     names(targetRisk) <- spec@model$estimator[2]
         
     # Return Value:
@@ -326,11 +326,11 @@ function(data, spec, constraints)
     
     # Get Target Return:
     targetReturn = spec@portfolio$targetReturn = 
-        attr(minVar$objective, "targetReturn")
+        as.numeric(attr(minVar$objective, "targetReturn"))
     names(targetReturn) <- spec@model$estimator[1]
     
     # Get Target Risk:
-    targetRisk = minVar$objective       
+    targetRisk = as.numeric(minVar$objective)      
     names(targetRisk) <- spec@model$estimator[2]
     
     # Return Value:
@@ -348,7 +348,7 @@ function(data, spec, constraints)
 }
 
 
-# ------------------------------------------------------------------------------
+################################################################################
 
 
 .portfolioConstrainedMVFrontier = 

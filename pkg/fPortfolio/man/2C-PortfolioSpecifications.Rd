@@ -73,11 +73,13 @@
 
 \usage{
 portfolioSpec(
-    model = list(type = "MV", estimator = c("mean", "cov"), params = list()), 
+    model = list(type = c("MV", "CVaR", estimator = c("mean", "cov"), 
+        params = list()), 
     portfolio = list(weights = NULL, targetReturn = NULL, targetAlpha = NULL,
         riskFreeRate = 0, nFrontierPoints = 50, returnRange = NULL, 
         riskRange = NULL),
-    solver = list(type = c("RQuadprog", "RDonlp2"), trace = FALSE), 
+    solver = list(type = c("RQuadprog", "RDonlp2", "RlpSolve"), 
+        trace = FALSE), 
     title = NULL, description = NULL)
 show.fPFOLIOSPEC(object)
 

@@ -306,7 +306,6 @@ function(object)
     
     # Target MV Return:
     ans = object@portfolio$targetReturn
-    # if (length(ans) == 1) names(ans) = "targetReturn"
     
     # Return Value:
     ans
@@ -327,7 +326,6 @@ function(object)
     
     # Target MV Risk:
     ans = object@portfolio$targetRisk
-    # if (length(ans) == 1) names(ans) = "targetRisk"
     
     # Return Value:
     ans
@@ -348,7 +346,6 @@ function(object)
     
     # Target Alpha:
     ans = object@portfolio$targetAlpha
-    # if (length(ans) == 1) names(ans) = "targetRisk"
     
     # Return Value:
     ans

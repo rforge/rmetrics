@@ -355,20 +355,20 @@ function(data, spec, constraints)
     f.con[3:(m+2), (2+m):(2+m+w-1)] = seriesData(Data)
     
     # Box and Group Constraints:
-    # tmpConstraints = .setConstraints(data, spec, constraints)
-    # nConstraints = dim(tmpConstraints)
-    # append = cbind(matrix(0, ncol = 1+m, nrow = (nConstraints[1]-2)),
-    #     tmpConstraints[3:nConstraints[1], 1:(nConstraints[2]-1)])
-    # f.con = rbind(f.con, append)
+    tmpConstraints = .setConstraints(data, spec, constraints)
+    nConstraints = dim(tmpConstraints)
+    append = cbind(matrix(0, ncol = 1+m, nrow = (nConstraints[1]-2)),
+        tmpConstraints[3:nConstraints[1], 1:(nConstraints[2]-1)])
+    f.con = rbind(f.con, append)
    
     # Set Directions:
     f.dir = c("==", "==", rep(">=", m))
-    # f.dir = c(f.dir, rep(">=", (nConstraints[1]-2)))
+    f.dir = c(f.dir, rep(">=", (nConstraints[1]-2)))
     names(f.dir) = rownames(f.con)
   
     # Compose Right Hand Side Vector:
     f.rhs = c(targetReturn, 1, rep(0, m))
-    # f.rhs = c(f.rhs, tmpConstraints[3:(nConstraints[1]), nConstraints[2]])
+    f.rhs = c(f.rhs, tmpConstraints[3:(nConstraints[1]), nConstraints[2]])
     names(f.rhs) = rownames(f.con)
     
     # Optimize Portfolio:

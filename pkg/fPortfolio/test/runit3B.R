@@ -92,6 +92,7 @@ function()
  
     # Constraints:
     Constraints = NULL
+    Constraints
     
     # Feasible Portfolio:
     .feasibleConstrainedMVPortfolio(Data, Spec, Constraints)
@@ -119,12 +120,13 @@ function()
     
     # Constraints:
     Constraints = "LongOnly"
-
+    Constraints
+    
     # Feasible Portfolio:
     .feasibleConstrainedMVPortfolio(Data, Spec, Constraints)
     
     # Return Value:
-    spec
+    return()
 }
 
 
@@ -241,6 +243,7 @@ function()
 test.efficientConstrainedMVPortfolio.RDonlp2 = 
 function()
 {
+    
     # Data:
     Data = as.timeSeries(data(smallcap.ts))
     Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
@@ -300,10 +303,7 @@ function()
 
 test.portfolioConstrainedMVFrontier.RDonlp2 =
 function()
-{
-    # Load RDonlp2 Solver:
-    require(RDonlp2)
-    
+{   
     # Data:
     Data = as.timeSeries(data(smallcap.ts))
     Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
@@ -332,10 +332,7 @@ function()
 
 test.portfolioConstrainedMVFrontier.RiskBudgets =
 function()
-{
-    # Load RDonlp2 Solver:
-    require(Rdonlp2)
-    
+{   
     # Data:
     Data = as.timeSeries(data(smallcap.ts))
     Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
@@ -371,6 +368,7 @@ function()
 
 if (FALSE) {
     require(RUnit)
+    require(Rdonlp2)
     testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fPortfolio/test/runit3B.R",
         rngKind = "Marsaglia-Multicarry", rngNormalKind = "Inversion")
     printTextProtocol(testResult)

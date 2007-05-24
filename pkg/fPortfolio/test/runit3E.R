@@ -28,6 +28,9 @@
 
 
 ################################################################################
+# FUNCTION:                            DESCRIPTION:
+#  .varRisk                             Computes Value at Risk
+#  .cvarRisk                            Computes Conditional Value at Risk
 # FUNCTION:                            SINGLE PORTFOLIOS:
 #  .feasibleConstrainedCVaRPortfolio    Returns constrained feasible M-CVaR PF
 #  .efficientConstrainedCVaRPortfolio   Returns constrained frontier M-CVaR PF
@@ -62,7 +65,8 @@ function()
 test.CVaRPortfolioSpec = 
 function()
 {
-    CVaRPortfolioSpec = 
+    # This Function may be added for conveniance ...
+    .CVaRPortfolioSpec = 
     function()
     {
         Spec = portfolioSpec()
@@ -104,8 +108,8 @@ function()
     Constraints
     
     # CVaR Portfolio:
-    myPortfolio = feasiblePortfolio(Data, Spec, Constraints)
-    myPortfolio
+    cvarPortfolio = feasiblePortfolio(Data, Spec, Constraints)
+    cvarPortfolio
     
     # Return Value:
     return()
@@ -177,6 +181,7 @@ function()
     
     # CVaR Portfolio Optimization:
     cvarPortfolio = efficientPortfolio(Data, Spec, Constraints)
+    cvarPortfolio
     weights = round(getWeights(cvarPortfolio), 3)
     weights
     par(mfrow = c(2, 2), cex = 0.7)
@@ -189,6 +194,7 @@ function()
     Spec = portfolioSpec()
     setTargetReturn(Spec) = mean(colAvgs(Data))
     covPortfolio = efficientPortfolio(Data, Spec)
+    covPortfolio
     weights = round(getWeights(covPortfolio), 3)
     weights
     weightsPie(covPortfolio)
@@ -228,12 +234,14 @@ function()
     Constraints = NULL
     Constraints
     
+    # Graph Frame:
+    par(mfrow = c(2, 2), cex = 0.7)
+    
     # CVaR Portfolio:
     cvarPortfolio = cmlPortfolio(Data, Spec, Constraints)
     cvarPortfolio
     weights = round(getWeights(cvarPortfolio), 3)
     weights
-    par(mfrow = c(2, 2), cex = 0.7)
     weightsPie(cvarPortfolio)
     title(main = "CVaR Portfolio")
       
@@ -324,6 +332,7 @@ function()
     Spec = portfolioSpec()
     setTargetReturn(Spec) = mean(colAvgs(Data))
     covPortfolio = minvariancePortfolio(Data, Spec)
+    covPortfolio
     weights = round(getWeights(covPortfolio), 3)
     weights
     weightsPie(covPortfolio)
@@ -387,20 +396,24 @@ test.Scherer.1 =
 function()
 {
     .CVaR = 
-    function(portfolio)
+    function(object, alpha = 0.05)
     {
-        data.mat = as.matrix(portfolio@data$series)
-        weights.vec = getWeights(portfolio)
+        data = as.matrix(object@data$series)
+        weights = getWeights(object)
         
-        x = as.vector(data.mat %*% weights.vec)
-        alpha = getSpecification(portfolio)@portfolio$targetAlpha
-        
+        x = as.numeric(data %*% weights)       
         VaR = sort(x)[trunc(length(x)*alpha)] 
         CVaR = mean(sort(x)[1:trunc(length(x)*alpha)])
-        TCL = mean(x[x<=VaR(x, alpha)]) 
+        TCL = mean(x[x <= VaR(x, alpha)]) 
         
         list(VaR = VaR, CVaR = CVaR, TCL = TCL)
     }
+    
+    Spec = portfolioSpec()
+    covPortfolio = tangencyPortfolio(Data, Spec)
+    covPortfolio
+    
+    .CVaR(covPortfolio, alpha = 0.10)
   
     # Return Value:
     return()    
@@ -413,6 +426,8 @@ function()
 test.Scherer.2 =
 function()
 {
+    # A VERY IMPORTANT CHECK!
+    
     # Load Swiss SPI and Swiss Immofunds SII
     Data = 100 * as.timeSeries(data(LPP2005REC))[, c("SPI", "SII")]
     head(Data)
@@ -459,8 +474,8 @@ function()
    
     # CVaR Portfolio Optimization:
     myPortfolio = efficientPortfolio(Data, Spec, NULL)
-    optVaR = -result$solution[1]
-    optCVaR = result$objval   
+    optVaR = -.DEBUG$solution[1]
+    optCVaR = .DEBUG$objval   
     
     # Compare Results from Scratch and Optimization:
     c(VaR, optVaR)
@@ -476,6 +491,7 @@ function()
 
 if (FALSE) {
     require(RUnit)
+    require(lpSolve)
     testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fPortfolio/test/runit3E.R",
         rngKind = "Marsaglia-Multicarry", rngNormalKind = "Inversion")
     printTextProtocol(testResult)

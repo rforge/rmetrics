@@ -37,7 +37,7 @@ function()
 {
     # Help File:
     helpFile = function() { 
-        example(???, ask = FALSE)
+        example(ConstrainedLPMPortfolio, ask = FALSE)
         return() 
     }
     checkIdentical(
