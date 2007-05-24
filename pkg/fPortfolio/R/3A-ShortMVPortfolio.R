@@ -41,7 +41,8 @@
 
 .feasibleShortMVPortfolio =
 function(data, spec = portfolioSpec(), constraints = NULL)
-{
+{   # A function implemented by Rmetrics
+
     # Description:
     #   Computes Risk and Return for a feasible portfolio
     
@@ -101,7 +102,8 @@ function(data, spec = portfolioSpec(), constraints = NULL)
 
 .cmlShortMVPortfolio =
 function(data, spec = portfolioSpec(), constraints = NULL)
-{
+{   # A function implemented by Rmetrics
+
     # Description:
     #   Computes capital market line
     
@@ -170,7 +172,8 @@ function(data, spec = portfolioSpec(), constraints = NULL)
 
 .tangencyShortMVPortfolio =
 function(data, spec = portfolioSpec(), constraints = NULL)
-{
+{   # A function implemented by Rmetrics
+
     # Description:
     #   Computes target risk and weights for the tangency portfolio
     
@@ -232,7 +235,8 @@ function(data, spec = portfolioSpec(), constraints = NULL)
 
 .minvarianceShortMVPortfolio =
 function(data, spec = portfolioSpec(), constraints = NULL)
-{
+{   # A function implemented by Rmetrics
+
     # Description:
     #   Computes target risk and weights for the minimum variance portfolio
     
@@ -294,7 +298,8 @@ function(data, spec = portfolioSpec(), constraints = NULL)
 
 .efficientShortMVPortfolio =
 function(data, spec = portfolioSpec(), constraints = NULL)
-{
+{   # A function implemented by Rmetrics
+
     # Description:
     #   Computes target risk and weights for an efficient portfolio
     

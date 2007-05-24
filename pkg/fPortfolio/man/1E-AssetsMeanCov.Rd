@@ -28,13 +28,17 @@
 \usage{
 assetsStats(x)
 
-assetsMeanCov(x, method = c("cov", "mve", "mcd", "nnve", "shrink", "bagged"), 
-    check = TRUE, force = TRUE, baggedR = 100, \dots)
+assetsMeanCov(x, method = c("cov", "mve", "mcd", "Mcd", "OGK", "nnve", 
+    "shrink", "bagged"), check = TRUE, force = TRUE, baggedR = 100, 
+    sigmamu = scaleTau2, alpha = 1/2, \dots)
 }
 
 \arguments{
   
 
+    \item{alpha}{ 
+        ...
+        }
     \item{baggedR}{
         an integer value, the number of bootstrap replicates, by
         default 100. This value is only used if \code{method="bagged"}.
@@ -58,7 +62,10 @@ assetsMeanCov(x, method = c("cov", "mve", "mcd", "nnve", "shrink", "bagged"),
         Strimmer [2005], if \code{method="bagged"} is selected then the 
         covariance will be calculated from the bootstrap aggregated (bagged)
         version of the covariance estimator.\cr
-        }     
+        }  
+    \item{sigmamu}{ 
+        ...
+        }
     \item{x}{
         any rectangular time series object which can be converted by the 
         function \code{as.matrix()} into a matrix object, e.g. like an 

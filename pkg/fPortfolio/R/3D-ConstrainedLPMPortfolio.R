@@ -41,7 +41,8 @@
 
 .feasibleConstrainedLPMPortfolio = 
 function(data, spec, constraints)
-{
+{   # A function implemented by Rmetrics
+
     # Description:
     #   Computes Risk and Return for a feasible portfolio
     
@@ -77,7 +78,8 @@ function(data, spec, constraints)
 
 .tangencyConstrainedLPMPortfolio = 
 function(data, spec, constraints)
-{
+{   # A function implemented by Rmetrics
+
     # Description:
     #   Computes Risk, Return and Weight for the tangency portfolio
     
@@ -109,7 +111,8 @@ function(data, spec, constraints)
  
 .cmlConstrainedLPMPortfolio = 
 function(data, spec, constraints)
-{
+{   # A function implemented by Rmetrics
+
     # Description:
     #   Computes Computes Risk, Return and Weight for CML portfolio
     
@@ -140,7 +143,8 @@ function(data, spec, constraints)
    
 .minvarianceConstrainedLPMPortfolio = 
 function(data, spec, constraints)
-{
+{   # A function implemented by Rmetrics
+
     # Description:
     #   Computes Risk, Return and Weight for minimum variance portfolio
     
@@ -169,7 +173,8 @@ function(data, spec, constraints)
 
 .efficientConstrainedLPMPortfolio = 
 function(data, spec, constraints)
-{
+{   # A function implemented by Rmetrics
+
     # Description:
     #   Optimizes a LPM portfolio for a given desired return and a set of
     #   box and or sector constraints
@@ -208,7 +213,8 @@ function(data, spec, constraints)
 
 .portfolioConstrainedLPMFrontier = 
 function(data, spec, constraints)
-{
+{   # A function implemented by Rmetrics
+
     # Description:
     #   Evaluates the EF for a given set of box and or sector constraints
     

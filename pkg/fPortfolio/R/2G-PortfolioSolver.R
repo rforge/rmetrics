@@ -387,7 +387,8 @@ function(data, spec, constraints)
     ans$solver = "lpSolve"
     ans$targetAlpha = targetAlpha
     
-    result <<- ans
+    # For Debugging ...
+    .DEBUG <<- ans
 
     # Return Value:
     ans
