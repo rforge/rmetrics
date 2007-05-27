@@ -73,7 +73,7 @@
 
 \usage{
 portfolioSpec(
-    model = list(type = c("MV", "CVaR", estimator = c("mean", "cov"), 
+    model = list(type = c("MV", "CVaR"), estimator = c("mean", "cov"), 
         params = list()), 
     portfolio = list(weights = NULL, targetReturn = NULL, targetAlpha = NULL,
         riskFreeRate = 0, nFrontierPoints = 50, returnRange = NULL, 

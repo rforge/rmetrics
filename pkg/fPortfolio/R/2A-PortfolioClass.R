@@ -88,7 +88,8 @@ function(data, spec = portfolioSpec(), constraints = NULL)
         Model = "Constrained"
     }     
     Type = spec@model$type
-    fun = match.fun(paste(".feasible", Model[1], Type, "Portfolio", sep = ""))
+    fun = match.fun(paste(".feasible", Model[1], Type[1], "Portfolio", 
+        sep = ""))
     attr(constraints, "model") = Model
     
     # Compute Portfolio:
@@ -133,7 +134,8 @@ function(data, spec = portfolioSpec(), constraints = NULL)
         Model = "Constrained"
     }        
     Type = spec@model$type
-    fun = match.fun(paste(".cml", Model[1], Type, "Portfolio", sep = ""))
+    fun = match.fun(paste(".cml", Model[1], Type[1], "Portfolio", 
+        sep = ""))
     attr(constraints, "model") = Model
     
     # Compute Portfolio
@@ -178,7 +180,8 @@ function(data, spec = portfolioSpec(), constraints = NULL)
         Model = "Constrained"
     }        
     Type = spec@model$type
-    fun = match.fun(paste(".tangency", Model[1], Type, "Portfolio", sep = ""))
+    fun = match.fun(paste(".tangency", Model[1], Type[1], "Portfolio", 
+        sep = ""))
     attr(constraints, "model") = Model
     
     # Compute Portfolio:
@@ -223,7 +226,8 @@ function(data, spec = portfolioSpec(), constraints = NULL)
         Model = "Constrained"
     }        
     Type = spec@model$type
-    fun = match.fun(paste(".minvariance", Model[1], Type, "Portfolio", sep = ""))
+    fun = match.fun(paste(".minvariance", Model[1], Type[1], "Portfolio", 
+        sep = ""))
     attr(constraints, "model") = Model
     
     # Compute Portfolio:
@@ -268,7 +272,8 @@ function(data, spec = portfolioSpec(), constraints = NULL)
         Model = "Constrained"
     }        
     Type = spec@model$type
-    fun = match.fun(paste(".efficient", Model[1], Type, "Portfolio", sep = ""))
+    fun = match.fun(paste(".efficient", Model[1], Type[1], "Portfolio", 
+        sep = ""))
     attr(constraints, "model") = Model
     
     # Compute Portfolio:
@@ -314,7 +319,8 @@ title = NULL, description = NULL)
         Model = "Constrained"
     }   
     Type = spec@model$type
-    fun = match.fun(paste(".portfolio", Model[1], Type, "Frontier", sep = ""))
+    fun = match.fun(paste(".portfolio", Model[1], Type[1], "Frontier", 
+        sep = ""))
     attr(constraints, "model") = Model
     
     # Compute Portfolio:

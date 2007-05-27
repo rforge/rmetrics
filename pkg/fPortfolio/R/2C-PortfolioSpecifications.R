@@ -107,10 +107,10 @@ description = NULL)
     # FUNCTION:
     
     # Compose Checklists:
-    model.type = "MV"
+    model.type = c("MV", "CVaR")
     model.estimator.mean = "mean"
     model.estimator.cov = c("cov", "mcd", "shrink")
-    solver.type = c("RQuadprog", "RDonlp2")
+    solver.type = c("RQuadprog", "RDonlp2", "RlpSolve")
     solver.trace = FALSE
     
     # Check Arguments:
