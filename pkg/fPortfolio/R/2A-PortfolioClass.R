@@ -483,7 +483,7 @@ function(x, which = "ask", control = list(), ...)
 
     # Plot Function and Addons:
     plot.1 <<- function(x, ...) {
-        Type = x@specification$spec@model$type
+        Type = x@specification$spec@model$type[1]
         if (Type == "MV") {
             xLab = "Mean-Var Target Risk"
         } else if (Type == "CVaR") {

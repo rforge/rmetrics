@@ -73,8 +73,7 @@ function(object, frontier = c("both", "lower", "upper"),
     fullFrontier = getFrontier(object, frontier = "both")
     upperFrontier = getFrontier(object, frontier = "upper")
     lowerFrontier = getFrontier(object, frontier = "lower")
-    
-    
+       
     # Check for 'xlim' Argument:
     Arg <- match.call(expand.dots = TRUE)
     m <- match(c("xlim", "ylim"), names(Arg), Arg)
@@ -176,7 +175,7 @@ function(object, frontier = c("both", "lower", "upper"),
                 points(lowerFrontier, col = col[2], ...)
             }
         }
-    }    
+    }  
       
     # Return Value:
     invisible()
@@ -197,6 +196,7 @@ function(object, ...)
     
     # Get Portfolio Slots:
     Data = object@data$series
+    if (!is.timeSeries(Data)) Data = object@data$statistics
     Spec = getSpecification(object)
     Constraints = object@constraints
     Type = getType(object)
@@ -259,6 +259,7 @@ function(object, ...)
      
     # Get Portfolio Slots:
     Data = object@data$series
+    if (!is.timeSeries(Data)) Data = object@data$statistics
     Spec = getSpecification(object)
     Constraints = object@constraints
     Type = getType(object)
@@ -287,6 +288,7 @@ function(object, ...)
     
     # Get Portfolio Slots:
     Data = object@data$series
+    if (!is.timeSeries(Data)) Data = object@data$statistics
     Spec = getSpecification(object)
     Constraints = object@constraints
     Type = getType(object)
@@ -321,6 +323,7 @@ function(object, ...)
 
     # Get Portfolio Statistics:
     Data = object@data$series
+    if (!is.timeSeries(Data)) Data = object@data$statistics
     Spec = getSpecification(object)
     Constraints = object@constraints
     Type = getType(object)
@@ -394,6 +397,7 @@ function(object, ...)
     
     # Get Portfolio Statistics: 
     Data = object@data$series
+    if (!is.timeSeries(Data)) Data = object@data$statistics
     Spec = getSpecification(object)
     Constraints = object@constraints
     Type = getType(object)
@@ -429,7 +433,7 @@ function(object, ...)
     
     # Supported ?
     check = rev(attr(object@constraints, "model"))[1]
-    stopifnot(check == "Short" | check == "LongOnly")
+    # stopifnot(check == "Short" | check == "LongOnly")
 
     # Get Portfolio Statistics: 
     Data = getSlot(object, "data")
@@ -495,6 +499,7 @@ function(object, piePos = NULL, pieR = NULL, pieOffset = NULL, ...)
     # Pie Position:
     if(is.null(piePos)) {
         Data = object@data$series
+        if (!is.timeSeries(Data)) Data = object@data$statistics
         Spec = getSpecification(object)
         Constraints = object@constraints
         tg = getTargetReturn(tangencyPortfolio(Data, Spec, Constraints))
@@ -683,6 +688,8 @@ function(object, mcSteps, ...)
                 Risk = sqrt( as.numeric( t(weights) %*% Sigma %*% (weights) ) )
                 points(Risk, Return, ...)
             }
+        } else {
+            cat("\n\tOnly for Short and LongOnly Portfolios\n")
         } 
     } else if (Type == "CVaR") {
         # Monte Carlo Loop - Long Only:

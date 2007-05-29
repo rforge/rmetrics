@@ -250,6 +250,8 @@ function(spec = portfolioSpec(), type = c("MV", "LPM", "CVaR"))
     type = match.arg(type)
     spec@model$type = type
     if (type == "LPM") spec@model$estimator = c("lpm", "lpm")
+    if (type == "CVaR") setSolver(spec) <- "RlpSolve"
+    if (is.null(spec@portfolio$targetAlpha)) setTargetAlpha(spec) = 0.05
 
     # Return Value:
     spec
@@ -274,7 +276,9 @@ function(spec, value)
     # Type ?
     spec@model$type = value
     if (value == "LPM") spec@model$estimator = c("lpm", "lpm")
-
+    if (value == "CVaR") setSolver(spec) <- "RlpSolve"
+    if (is.null(spec@portfolio$targetAlpha)) setTargetAlpha(spec) = 0.05
+    
     # Return Value:
     spec
 }
@@ -709,7 +713,8 @@ function(spec = portfolioSpec(), value)
  
 
 setSolver = 
-function (spec = portfolioSpec(), solver = c("RQuadprog", "Rdonlp2")) 
+function (spec = portfolioSpec(), 
+solver = c("RQuadprog", "RDonlp2", "RlpSolve")) 
 {   # A function implemented by Rmetrics
 
     # Description:
