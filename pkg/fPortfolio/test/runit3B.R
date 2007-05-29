@@ -240,6 +240,36 @@ function()
 # ------------------------------------------------------------------------------
 
 
+test.efficientConstrainedMVPortfolio.twoAssets = 
+function()
+{
+    # Data:
+    Data = as.timeSeries(data(smallcap.ts))
+    Data = Data[, c("BKE", "GG")]
+    head(Data)
+    
+    # Specification:
+    Spec = portfolioSpec()
+    Spec
+    
+    # Modify Target Return:
+    targetReturn = mean(Data@Data)
+    targetReturn
+    setTargetReturn(Spec) <- targetReturn
+    Spec
+    
+    # Tangency Portfolio:
+    .efficientConstrainedMVPortfolio(Data, Spec, "LongOnly")
+    .DEBUG
+    
+    # Return Value:
+    return()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
 test.efficientConstrainedMVPortfolio.RDonlp2 = 
 function()
 {

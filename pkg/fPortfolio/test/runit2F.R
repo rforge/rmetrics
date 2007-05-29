@@ -73,10 +73,31 @@ function()
 test.frontierPlot =
 function()
 { 
-    # Portfolio Frontier Plot:
+    # Note, calls generic function plot.fPORTFOLIO() ... 
+    
+    # Load Time Series Data:
+    Data = as.timeSeries(data(smallcap.ts))
+    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
+    head(Data)
+
+    # MV Portfolio Frontier Plot from Time Series Data:
     myPF = portfolioFrontier(Data)
     par(mfrow = c(1, 1))
     plot(myPF, which = c(1, 8, 2:6))
+
+    # MV Portfolio Frontier Plot from Statistics Data:
+    Statistics = portfolioData(Data)$statistics
+    myPF = portfolioFrontier(Statistics)
+    par(mfrow = c(1, 1))
+    plot(myPF, which = c(1, 8, 2:6)) 
+    
+    # CVaR Portfolio Frontier Plot from Time Series Data:
+    Spec = portfolioSpec()
+    setType(Spec) = "CVaR"
+    setSolver(Spec) = "RlpSolve"
+    myPF = portfolioFrontier(Data, Spec, NULL)
+    par(mfrow = c(1, 1))
+    plot(myPF, which = c(1, 8, 2:6))                        
     
     # Return Value:
     return()
@@ -89,8 +110,19 @@ function()
 test.weightsPlot =
 function()
 { 
-    # Portfolio Frontier Plot:
+    # Load Time Series Data:
+    Data = as.timeSeries(data(smallcap.ts))
+    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
+    head(Data)
+    
+    # Portfolio Weights Plot from Time Series Data:
     myPF = portfolioFrontier(Data)
+    par(mfrow = c(1, 1))
+    weightsPlot(myPF)
+    
+    # Portfolio Weights Plot from Statistics Data:
+    Statistics = portfolioData(Data)$statistics
+    myPF = portfolioFrontier(Statistics)
     par(mfrow = c(1, 1))
     weightsPlot(myPF)
     
@@ -105,8 +137,20 @@ function()
 test.weightsPie =
 function()
 { 
-    # Portfolio Frontier Plot:
+    # Load Time Series Data:
+    Data = as.timeSeries(data(smallcap.ts))
+    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
+    head(Data)
+    
+    # Portfolio Weights Pie from Time Series Data:
     myPF = tangencyPortfolio(Data)
+    par(mfrow = c(1, 1))
+    weightsPie(myPF)
+    title(main = "Weights Pie")
+    
+    # Portfolio Weights Pie from Statistics Data:
+    Statistics = portfolioData(Data)$statistics
+    myPF = tangencyPortfolio(Statistics)
     par(mfrow = c(1, 1))
     weightsPie(myPF)
     title(main = "Weights Pie")
@@ -122,10 +166,21 @@ function()
 test.attributesPlot =
 function()
 { 
-    # Portfolio Frontier Plot:
+    # Load Time Series Data:
+    Data = as.timeSeries(data(smallcap.ts))
+    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
+    head(Data)
+    
+    # Portfolio Attributes Plot from Time Series Data:
     myPF = portfolioFrontier(Data)
     par(mfrow = c(1, 1))
-    attributes(myPF)                                # CHECK OUTPUT !!!
+    attributesPlot(myPF)  
+    
+    # Portfolio Attributes Plot from Statistics Data:
+    Statistics = portfolioData(Data)$statistics
+    myPF = portfolioFrontier(Statistics)
+    par(mfrow = c(1, 1))
+    attributesPlot(myPF)                             
     
     # Return Value:
     return()
@@ -138,6 +193,8 @@ function()
 test.covEllipsesPlot =
 function()
 { 
+    # Input must be a list of at least 2 covariance matrices!
+    
     # Return Value:
     return()
 }

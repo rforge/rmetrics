@@ -288,10 +288,10 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.plot =
+test.plot.timeSeriesData.RQuadprog =
 function()
 { 
-    # Load Data::
+    # Load Data:
     Data = as.timeSeries(data(smallcap.ts))
     Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
     head(Data)
@@ -302,20 +302,24 @@ function()
     
     # Set Constraints:
     Constraints = "LongOnly"
+    Constraints
    
     # Calculation of Long Only Minimum Variance Portfolio:
     Frontier = portfolioFrontier(Data, Spec, Constraints)
     Frontier
     
-    # Try RDonlp2:
-    require(Rdonlp2)
-    setSolver(Spec)<-"RDonlp2"
-    Frontier = portfolioFrontier(Data, Spec, Constraints)
-    Frontier
-    
     # Plot:
-    # par(mfrow = c(1, 1))
-    # plot(Frontier, which = c(1, 8, 8, 8, 2:6))
+    par(mfrow = c(1, 1))
+    plot(Frontier, which = 1)
+    .minvariancePlot(Frontier, col = "red", pch = 19)  
+    .tangencyPlot(Frontier, col = "green") 
+    .singleAssetPlot(Frontier, col = "red", cex = 1.5)
+    .equalWeightsPlot(Frontier, col = "blue", pch = 19)
+    .twoAssetsPlot(Frontier, col = "grey")
+    .wheelPiePlot(Frontier)
+    .monteCarloPlot(Frontier, mcSteps = 1000, cex = 0.25, pch =19)  
+    .sharpeRatioPlot(Frontier) 
+    plot(Frontier, which = "all")
     
     # Return Value:
     return()
@@ -325,7 +329,144 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.weightsSlider =
+test.plot.timeSeriesData.RDonlp2 =
+function()
+{     
+    # Try RDonlp2:
+    require(Rdonlp2)
+    
+    # Load Data:
+    Data = as.timeSeries(data(smallcap.ts))
+    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
+    head(Data)
+   
+    # Set Default Specifications:
+    Spec = portfolioSpec()
+    setSolver(Spec)<-"RDonlp2"
+    Spec
+    
+    # Set Constraints:
+    Constraints = "LongOnly"
+    Constraints
+    
+    # Calculation of Long Only Minimum Variance Portfolio:
+    Frontier = portfolioFrontier(Data, Spec, Constraints)
+    Frontier
+   
+    # Plot:
+    par(mfrow = c(1, 1))
+    # Plot:
+    par(mfrow = c(1, 1))
+    plot(Frontier, which = 1)
+    .minvariancePlot(Frontier, col = "red", pch = 19)  
+    .tangencyPlot(Frontier, col = "green") 
+    .singleAssetPlot(Frontier, col = "red", cex = 1.5)
+    .equalWeightsPlot(Frontier, col = "blue", pch = 19)
+    .twoAssetsPlot(Frontier, col = "grey")
+    .DEBUG$solver
+    .wheelPiePlot(Frontier)
+    .monteCarloPlot(Frontier, mcSteps = 1000, cex = 0.25, pch =19)  
+    .sharpeRatioPlot(Frontier) 
+    plot(Frontier, which = "all")
+    
+    # Return Value:
+    return()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.plot.timeSeriesData.RlpSolve =
+function()
+{     
+    # Try RlpSolve:
+    require(lpSolve)
+    
+    # Load Data:
+    Data = as.timeSeries(data(smallcap.ts))
+    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
+    head(Data)
+   
+    # Set Default Specifications:
+    Spec = portfolioSpec()
+    setType(Spec) <- "CVaR"
+    Spec
+    
+    # Set Constraints:
+    Constraints = "LongOnly"
+    Constraints
+    
+    # Calculation of Long Only Minimum Variance Portfolio:
+    Frontier = portfolioFrontier(Data, Spec, Constraints)
+    Frontier
+   
+    # Plot:
+    par(mfrow = c(1, 1))
+    plot(Frontier, which = 1)
+    .minvariancePlot(Frontier, col = "red", pch = 19)  
+    .tangencyPlot(Frontier, col = "green") 
+    .singleAssetPlot(Frontier, col = "red", cex = 1.5)
+    .equalWeightsPlot(Frontier, col = "blue", pch = 19)
+    .twoAssetsPlot(Frontier, col = "grey")
+    .DEBUG$solver
+    .wheelPiePlot(Frontier)
+    .monteCarloPlot(Frontier, mcSteps = 1000, cex = 0.25, pch =19)  
+    .sharpeRatioPlot(Frontier) 
+    plot(Frontier, which = "all")
+    
+    # Return Value:
+    return()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.plot.statisticsData =
+function()
+{ 
+    # Load Data:
+    Data = as.timeSeries(data(smallcap.ts))
+    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
+    Data = portfolioData(Data)$statistics
+    Data
+   
+    # Set Mean-Variance Default Specifications:
+    Spec = portfolioSpec()
+    Spec
+    
+    # Set Long Only Constraints:
+    Constraints = "LongOnly"
+    Constraints
+   
+    # Calculation of Long Only Minimum Variance Portfolio:
+    Frontier = portfolioFrontier(Data, Spec, Constraints)
+    Frontier
+       
+    # Plot:
+    par(mfrow = c(1, 1))
+    plot(Frontier, which = 1)
+    .minvariancePlot(Frontier, col = "red", pch = 19)  
+    .tangencyPlot(Frontier, col = "green") 
+    .singleAssetPlot(Frontier, col = "red", cex = 1.5)
+    .equalWeightsPlot(Frontier, col = "blue", pch = 19)
+    .twoAssetsPlot(Frontier, col = "grey")
+    .DEBUG$solver
+    .wheelPiePlot(Frontier)
+    .monteCarloPlot(Frontier, mcSteps = 1000, cex = 0.25, pch =19)  
+    .sharpeRatioPlot(Frontier) 
+    plot(Frontier, which = "all")
+           
+    # Return Value:
+    return()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.weightsSlider.data =
 function()
 { 
     # Load Data::
@@ -342,7 +483,7 @@ function()
     Frontier
     
     # Try:
-    weightsSlider(Frontier)                                             
+    weightsSlider(Frontier) 
     
     # Return Value:
     return()
@@ -352,7 +493,35 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.frontierSlider =
+test.weightsSlider.statistics =
+function()
+{ 
+    # Load Data::
+    Data = as.timeSeries(data(smallcap.ts))
+    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
+    Data = portfolioData(Data)$statistics 
+    head(Data)
+   
+    # Set Default Specifications:
+    Spec = portfolioSpec()
+    Spec
+   
+    # Calculation of Long Only Minimum Variance Portfolio:
+    Frontier = portfolioFrontier(Data, Spec)
+    Frontier
+    
+    # Try:
+    weightsSlider(Frontier)  
+    
+    # Return Value:
+    return()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.frontierSlider.data =
 function()
 { 
     # Load Data::
@@ -381,6 +550,8 @@ function()
 
 if (FALSE) {
     require(RUnit)
+    require(lpSolve)
+    require(Rdonlp2)
     testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fPortfolio/test/runit2A.R",
         rngKind = "Marsaglia-Multicarry", rngNormalKind = "Inversion")
     printTextProtocol(testResult)

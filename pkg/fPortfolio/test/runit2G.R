@@ -30,10 +30,7 @@
 ################################################################################
 # FUNCTION:                    DESCRIPTION:  
 #  solveRQuadprog               Calls Goldfarb and Idnani's QP solver
-#  solveRDonlp2                 Calls Spelucci's donlp2 solver
-# FUNCTION:                    DESCRIPTION:
-#  setSolver                    Sets the desired solver
-#  setSolver<-                  Sets the desired solver                    
+#  solveRDonlp2                 Calls Spelucci's donlp2 solver                    
 ################################################################################
 
 
@@ -57,15 +54,46 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.solverRQuadprog =
+test.solveRQuadprog =
 function()
 { 
-    # Install "Rdonlp2" from - http://arumat.net/Rdonlp2/
+    # Load:
     require(quadprog)
     
     # Direct Access:
     Data = as.timeSeries(data(smallcap.ts))
     Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
+    Spec = portfolioSpec()
+    setTargetReturn(Spec) = mean(as.matrix(Data))
+    
+    # Default Constraints:
+    Constraints = "LongOnly"
+    Constraints
+    
+    # Quadprog:
+    solveRQuadprog(Data, Spec, Constraints)$solution 
+    
+    # Check Termination Error:
+    round(getWeights(efficientPortfolio(Data, Spec, Constraints)), 2)
+    round(getWeights(efficientPortfolio(10*Data, Spec, Constraints)), 2) 
+    
+    # Return Value:
+    return()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.solveRQuadprog.twoAssets =
+function()
+{ 
+    # Load:
+    require(quadprog)
+    
+    # Direct Access:
+    Data = as.timeSeries(data(smallcap.ts))
+    Data = Data[, c("BKE", "GG")]
     Spec = portfolioSpec()
     setTargetReturn(Spec) = mean(as.matrix(Data))
     

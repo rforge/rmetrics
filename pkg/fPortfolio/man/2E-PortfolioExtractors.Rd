@@ -8,6 +8,7 @@
 
 \alias{getSpecification}
 \alias{getType}
+\alias{getSolver}
 
 \alias{getPortfolio}  
 \alias{getFrontier}
@@ -38,6 +39,7 @@
     \code{getNumberOfAssets} \tab Extracts number of assets from statistics, \cr
     \code{getSpecification} \tab Extracts @specification slot, \cr
     \code{getType} \tab Extracts type from @specification slot, \cr
+    \code{getSolver} \tab Extracts solver from @specification slot, \cr
     \code{getPortfolio} \tab Extracts @portfolio slot, \cr
     \code{getFrontier} \tab Extracts the efficient frontier, \cr
     \code{getWeights} \tab Extracts weights from a fPORTFOLIO object, \cr
@@ -58,6 +60,7 @@ getNumberOfAssets(object)
 
 getSpecification(object)  
 getType(object)
+getSolver(object)
  
 getPortfolio(object, doplot = FALSE, \dots)     
 getFrontier(object, frontier = c("both", "lower", "upper"), doplot = FALSE, \dots)        
@@ -105,6 +108,7 @@ getNames(object)
     \code{getNumberOfAssets}\cr
     \code{getSpecification}\cr
     \code{getType}\cr
+    \code{getSolver}\cr
     \code{getPortfolio}\cr
     \code{getFrontier}\cr
     \code{getWeights}\cr
