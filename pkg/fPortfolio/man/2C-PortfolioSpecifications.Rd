@@ -105,7 +105,7 @@ setReturnRange(spec) <- value
 setRiskRange(spec = portfolioSpec(), riskRange = NULL)
 setRiskRange(spec) <- value
 
-setSolver(spec = portfolioSpec(), solver = c("RQuadprog", "Rdonlp2"))
+setSolver(spec = portfolioSpec(), solver = c("RQuadprog", "Rdonlp2", "RlpSolve"))
 setSolver(spec) <- value
 
 portfolioStatistics(data, spec = portfolioSpec())
