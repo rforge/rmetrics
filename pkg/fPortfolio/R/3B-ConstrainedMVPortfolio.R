@@ -269,7 +269,7 @@ function(data, spec, constraints)
     ans@call = match.call()
     ans@title = "Tangency Portfolio"
     
-    # Return value:
+    # Return Value:
     ans
 }
 

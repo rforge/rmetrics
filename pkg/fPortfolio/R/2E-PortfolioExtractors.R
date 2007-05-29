@@ -34,7 +34,8 @@
 #  getNumberOfAssets             Extracts number of assets from statistics
 # FUNCTION:                     PORTFOLIO S4 EXTRACTORS FROM SPECIFICATION SLOT:
 #  getSpecification              Extracts @specification Slot
-#  getType                       Extract Type from specification
+#  getType                       Extract portfolio ype from specification
+#  getSolver                     Extract solver from specification
 # FUNCTION:                     PORTFOLIO S4 EXTRACTORS FROM SPECIFICATION SLOT:
 #  getPortfolio                  Extracts @portfolio Slot
 #  getFrontier                   Extracts the efficient frontier
@@ -138,11 +139,32 @@ function(object)
     # FUNCTION:
     
     # Get Specification Type:
-    ans = object@specification$spec@model$type
+    ans = object@specification$spec@model$type[1]
     
     # Return Value:
     ans  
 }
+
+
+# ------------------------------------------------------------------------------
+
+
+getSolver =
+function(object)
+{   # A function implemented by Rmetrics
+
+    # Description:
+    #   Extracts the solver from specification of a 'fPORTFOLIO' object
+    
+    # FUNCTION:
+    
+    # Get Solver:
+    ans = object@specification$spec@solver$type
+    
+    # Return Value:
+    ans  
+}
+
 
 
 ################################################################################
