@@ -53,7 +53,7 @@
 #  dummyDailySeries     Creates a dummy daily 'timeSeries' object
 #  alignDailySeries     Aligns a 'timeSeries' object to new positions 
 #  ohlcDailyPlot        Plots open–high–low–close bar chart    
-# FUNCTION:
+# FUNCTION:            DESCRIPTION:
 #  .modelSeries         Models a timeSeries object to use formulas
 ################################################################################
 

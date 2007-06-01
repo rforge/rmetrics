@@ -2,6 +2,8 @@
 
 \alias{TimeSeriesData}
 
+\alias{fapply}
+\alias{aggregate.timeSeries}
 \alias{diff.timeSeries} 
 \alias{lag.timeSeries} 
 \alias{merge.timeSeries} 
@@ -23,6 +25,7 @@
 
 \alias{[.timeSeries} 
 \alias{cut.timeSeries} 
+\alias{window.timeSeries}
 \alias{head.timeSeries}
 \alias{tail.timeSeries}
 \alias{outlier.timeSeries}
@@ -50,7 +53,9 @@
     
     Functions and methods to modify 'timeSeries' objects:         
 
-    \tabular{ll}{  
+    \tabular{ll}{ 
+    \code{fapply} \tab Applies a function to 'timeSeries' windows, \cr 
+    \code{aggregate} \tab Aggregates a 'timeSeries' object, \cr
     \code{diff} \tab Takes differences from a 'timeSeries' object, \cr
     \code{lag} \tab Lags a 'timeSeries' object, \cr
     \code{merge} \tab Merges two 'timeSeries' objects, \cr
@@ -85,6 +90,7 @@
     \tabular{ll}{
     \code{"["} \tab "[" method for a 'timeSeries' object, \cr
     \code{cut} \tab Cuts a block from a 'timeSeries' object, \cr
+    \code{window} \tab Windows a piece from a 'timeSeries' object, \cr
     \code{head} \tab Returns the head of a 'timeSeries' object, \cr
     \code{tail} \tab Returns the tail of a 'timeSeries' object, \cr
     \code{outliers} \tab Removes outliers from a 'timeSeries' object. }
@@ -102,6 +108,11 @@
 
 
 \usage{
+
+fapply(x, from, to, FUN, \dots)
+
+\method{aggregate}{timeSeries}((x, by = c("monthly", "quarterly"), 
+    FUN = colMeans, units = NULL, \dots)
 \method{diff}{timeSeries}(x, lag = 1, diff = 1, trim = FALSE, pad = NA, \dots)
 \method{lag}{timeSeries}(x, k = 1, trim = FALSE, units = NULL, \dots)
 \method{merge}{timeSeries}(x, y, units = NULL, \dots)
@@ -124,6 +135,7 @@
 \method{[}{timeSeries}(x, i = min(1, nrow(x@Data)):nrow(x@Data), 
     j = min(1, ncol(x@Data)):ncol(x@Data))
 \method{cut}{timeSeries}(x, from, to, \dots)
+\method{window}{timeSeries}(x, from, to, \dots)
 \method{head}{timeSeries}(x, n = 6, recordIDs = FALSE, \dots)
 \method{tail}{timeSeries}(x, n = 6, recordIDs = FALSE, \dots)
 \method{outlier}{timeSeries}(x, sd = 10, complement = TRUE, \dots)
@@ -142,6 +154,11 @@ rownames<-.timeSeries(x) <- value
         [log] - \cr
         a positive number. The base with respect to which logarithms
         are computed. Defaults to \code{e=exp(1)}.
+        }
+    \item{by}{
+        [aggregate] - \cr
+        a character string denoting the aggregation period, either 
+        \code{"monthly"} or \code{"quarterly"}.
         }
     \item{center, scale}{ 
         [scale] - \cr
@@ -169,6 +186,9 @@ rownames<-.timeSeries(x) <- value
         }
     \item{from, to}{
         starting date and end date, \code{to} must be after \code{from}.
+        }
+    \item{FUN}{
+        the function to be applied.
         }
     \item{i, j}{
         ["["] - \cr 
@@ -304,11 +324,18 @@ rownames<-.timeSeries(x) <- value
 
 \value{
 
+    \code{fapply}\cr
+    returns an object depending on the output of function \code{FUN}.
+    If \code{FUN} returns an S4 object of class \code{timeSeries} then
+    also \code{fapply} returns an S4 object of class \code{timeSeries}.
+    In all other cases \code{fapply} returns a \code{list}.
+    \cr
+    
     \code{timeSeries}\cr
     \code{read.timeSeries}\cr
     \code{as.timeSeries}
     \cr
-    return a S4 object of class \code{timeSeries}.
+    return an S4 object of class \code{timeSeries}.
     \cr
     
     \code{seriesData}\cr
@@ -329,6 +356,7 @@ rownames<-.timeSeries(x) <- value
     \code{aggregateSeries}\cr
     \code{applySeries}\cr
     \code{cutSeries}\cr
+    \code{window}\cr
     \code{mergeSeries}\cr
     \code{returnSeries}\cr
     \code{revSeries}
