@@ -29,6 +29,7 @@
 
 ################################################################################
 # FUNCTION:                            DESCRIPTION:
+#  .covRisk                             Computes Covariance Risk
 #  .varRisk                             Computes Value at Risk
 #  .cvarRisk                            Computes Conditional Value at Risk
 # FUNCTION:                            SINGLE PORTFOLIOS:
@@ -40,6 +41,35 @@
 # FUNCTION:                            PORTFOLIO FRONTIER:
 #  .portfolioConstrainedCVaRFrontier    Returns EF of a constrained M-CVaR PF
 ################################################################################
+
+
+.covRisk = 
+function(data, weights)
+{   # A function implemented by Rmetrics
+
+    # Description:
+    #   Computes Covariance Risk for assets given weights and alpha
+    
+    # FUNCTION:
+    
+    # Data:
+    Data = as.matrix(data)
+    nAssets = dim(Data)[2]
+    
+    # Mean Vector and Covariance:
+    mu = colMeans(Data)
+    Sigma = cov(Data)
+    
+    # Return and Risk:
+    return = as.numeric( weights %*% mu )
+    risk = sqrt( as.numeric( weights %*% Sigma %*% weights ) )
+    
+    # Return Value:
+    list(risk = risk, return = return)
+}
+    
+    
+# ------------------------------------------------------------------------------
 
 
 .varRisk = 

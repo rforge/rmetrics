@@ -29,17 +29,17 @@
 
 ################################################################################
 # FUNCTION:                         DESCRIPTION:
-# .rollingWindows
+# .rollingWindows                    Returns a list of rolling window frames
 # FUNCTION:                         DESCRIPTION:
-# .rollingCmlPortfolio
-# .rollingTangencyPortfolio
-# .rollingMinvariancePortfolio
+# .rollingCmlPortfolio               Rolls a CML portfolio
+# .rollingTangencyPortfolio          Rolls a tangency portfolio
+# .rollingMinvariancePortfolio       Rolls a minimum risk portfolio
 # FUNCTION:                         DESCRIPTION:
-# .rollingPortfolioFrontier
+# .rollingPortfolioFrontier          Rolls a portfolio frontier
 # FUNCTION:                         DESCRIPTION:
-# .portfolioBacktesting
-# .rollingOptimalPortfolio
-# .portfolioMonthlyStats
+# .portfolioBacktesting              Does portfolio backtesting
+# .rollingOptimalPortfolio           Rolls an optimal portfolio
+# .portfolioMonthlyStats             Computes monthly portfolio statistics
 ################################################################################
 
 
@@ -109,10 +109,6 @@ title = NULL, description = NULL, ...)
     #   Computes EF on a rolling timeSeries Windows
     
     # Arguments:
-    #   windows - a list with two named 'timeDate' entries, "from" and
-    #       "to", defining the start and end dates of your windows.
-    #   ... - optional parameters which can be directed to the optional
-    #       function action().
       
     # FUNCTION:
     
@@ -125,7 +121,7 @@ title = NULL, description = NULL, ...)
         
         # Calculation efficient frontiers and save them all in a list:
         portfolio = cmlPortfolio(data = series, spec, constraints)
-        roll[i] = portfolio
+        roll[[i]] = portfolio
         
         # Now you can do any "action" you want to do with the EFs:
         if (!is.null(action)) {
