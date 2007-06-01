@@ -68,13 +68,13 @@ function(x, FUN, na.rm = FALSE, ...)
     # FUNCTION:
     
     # Transform:
-    x = as.matrix(x)
+    X = as.matrix(x)
     
     # Statistics:
     if (na.rm) {
-        result = apply(na.remove(x), MARGIN = 1, FUN = FUN, ...) 
+        result = apply(na.remove(X), MARGIN = 1, FUN = FUN, ...) 
     } else {
-        result = apply(x, MARGIN = 1, FUN = FUN, ...) 
+        result = apply(X, MARGIN = 1, FUN = FUN, ...) 
     }
         
     # Return Value:
@@ -98,13 +98,13 @@ function(x, na.rm = FALSE, ...)
     # FUNCTION:
     
     # Transform:
-    x = as.matrix(x)
+    X = as.matrix(x)
     
     # Statistics:
     if (na.rm) {
-        result = apply(na.remove(x), MARGIN = 1, FUN = mean, ...) 
+        result = apply(na.remove(X), MARGIN = 1, FUN = mean, ...) 
     } else {
-        result = apply(x, MARGIN = 1, FUN = mean, ...) 
+        result = apply(X, MARGIN = 1, FUN = mean, ...) 
     }
     result = t(t(result))
     colnames(result) = "Mean"
@@ -127,13 +127,13 @@ function(x, na.rm = FALSE, ...)
     # FUNCTION:
     
     # Transform:
-    x = as.matrix(x)
+    X = as.matrix(x)
     
     # Statistics:
     if (na.rm) {
-        result = apply(na.remove(x), MARGIN = 1, FUN = var, ...) 
+        result = apply(na.remove(X), MARGIN = 1, FUN = var, ...) 
     } else {
-        result = apply(x, MARGIN = 1, FUN = var, ...) 
+        result = apply(X, MARGIN = 1, FUN = var, ...) 
     }
     result = t(t(result))
     colnames(result) = "Variance"
@@ -156,13 +156,13 @@ function(x, na.rm = FALSE, ...)
     # FUNCTION:
     
     # Transform:
-    x = as.matrix(x)
+    X = as.matrix(x)
     
     # Statistics:
     if (na.rm) {
-        result = sqrt(apply(na.remove(x), MARGIN = 1, FUN = var, ...))
+        result = sqrt(apply(na.remove(X), MARGIN = 1, FUN = var, ...))
     } else {
-        result = sqrt(apply(x, MARGIN = 1, FUN = var, ...))
+        result = sqrt(apply(X, MARGIN = 1, FUN = var, ...))
     }
     result = t(t(result))
     colnames(result) = "StDev"
@@ -185,13 +185,13 @@ function(x, na.rm = FALSE, ...)
     # FUNCTION:
     
     # Transform:
-    x = as.matrix(x)
+    X = as.matrix(x)
     
     # Statistics:
     if (na.rm) {
-        result = apply(na.remove(x), MARGIN = 1, FUN = skewness, ...) 
+        result = apply(na.remove(X), MARGIN = 1, FUN = skewness, ...) 
     } else {
-        result = apply(x, MARGIN = 1, FUN = skewness, ...) 
+        result = apply(X, MARGIN = 1, FUN = skewness, ...) 
     }
     result = t(t(result))
     colnames(result) = "Skewness"
@@ -214,13 +214,13 @@ function(x, na.rm = FALSE, ...)
     # FUNCTION:
     
     # Transform:
-    x = as.matrix(x)
+    X = as.matrix(x)
     
     # Statistics:
     if (na.rm) {
-        result = apply(na.remove(x), MARGIN = 1, FUN = kurtosis, ...) 
+        result = apply(na.remove(X), MARGIN = 1, FUN = kurtosis, ...) 
     } else {
-        result = apply(x, MARGIN = 1, FUN = kurtosis, ...) 
+        result = apply(X, MARGIN = 1, FUN = kurtosis, ...) 
     }
     result = t(t(result))
     colnames(result) = "Kurtosis"
@@ -243,13 +243,13 @@ function(x, na.rm = FALSE, ...)
     # FUNCTION:
     
     # Transform:
-    x = as.matrix(x)
+    X = as.matrix(x)
     
     # Statistics:
     if (na.rm) {
-        result = apply(na.remove(x), MARGIN = 2, FUN = cumsum, ...) 
+        result = apply(na.remove(X), MARGIN = 2, FUN = cumsum, ...) 
     } else {
-        result = apply(x, MARGIN = 2, FUN = cumsum, ...) 
+        result = apply(X, MARGIN = 2, FUN = cumsum, ...) 
     }
     colnames(result) = paste(1:ncol(x))
         
@@ -279,13 +279,13 @@ function(x, FUN, na.rm = FALSE, ...)
     # FUNCTION:
     
     # Transform:
-    x = as.matrix(x)
+    X = as.matrix(x)
     
     # Statistics:
     if (na.rm) {
-        result = apply(na.remove(x), MARGIN = 2, FUN = FUN, ...) 
+        result = apply(na.remove(X), MARGIN = 2, FUN = FUN, ...) 
     } else {
-        result = apply(x, MARGIN = 2, FUN = FUN, ...) 
+        result = apply(X, MARGIN = 2, FUN = FUN, ...) 
     }
         
     # Return Value:
@@ -309,13 +309,13 @@ function(x, na.rm = FALSE, ...)
     # FUNCTION:
     
     # Transform:
-    x = as.matrix(x)
+    X = as.matrix(x)
     
     # Statistics:
     if (na.rm){
-        result = apply(na.remove(x), MARGIN = 2, FUN = mean, ...) 
+        result = apply(na.remove(X), MARGIN = 2, FUN = mean, ...) 
     } else {
-        result = apply(x, MARGIN = 2, FUN = mean, ...) 
+        result = apply(X, MARGIN = 2, FUN = mean, ...) 
     }
         
     # Return Value:
@@ -336,13 +336,13 @@ function(x, na.rm = FALSE, ...)
     # FUNCTION:
     
     # Transform:
-    x = as.matrix(x)
+    X = as.matrix(x)
     
     # Statistics:
     if (na.rm) { 
-        result = apply(na.remove(x), MARGIN = 2, FUN = var, ...) 
+        result = apply(na.remove(X), MARGIN = 2, FUN = var, ...) 
     } else {
-        result = apply(x, MARGIN = 2, FUN = var, ...) 
+        result = apply(X, MARGIN = 2, FUN = var, ...) 
     }
         
     # Return Value:
@@ -363,13 +363,13 @@ function(x, na.rm = FALSE, ...)
     # FUNCTION:
     
     # Transform:
-    x = as.matrix(x)
+    X = as.matrix(x)
     
     # Statistics:
     if (na.rm) {
-        result = sqrt(apply(na.remove(x), MARGIN = 2, FUN = var, ...))
+        result = sqrt(apply(na.remove(X), MARGIN = 2, FUN = var, ...))
     } else {
-        result = sqrt(apply(x, MARGIN = 2, FUN = var, ...))
+        result = sqrt(apply(X, MARGIN = 2, FUN = var, ...))
     }
         
     # Return Value:
@@ -390,13 +390,13 @@ function(x, na.rm = FALSE, ...)
     # FUNCTION:
     
     # Transform:
-    x = as.matrix(x)
+    X = as.matrix(x)
     
     # Statistics:
     if (na.rm) {
-        result = apply(na.remove(x), MARGIN = 2, FUN = skewness, ...) 
+        result = apply(na.remove(X), MARGIN = 2, FUN = skewness, ...) 
     } else {
-        result = apply(x, MARGIN = 2, FUN = skewness, ...) 
+        result = apply(X, MARGIN = 2, FUN = skewness, ...) 
     }
         
     # Return Value:
@@ -417,13 +417,13 @@ function(x, na.rm = FALSE, ...)
     # FUNCTION:
     
     # Transform:
-    x = as.matrix(x)
+    X = as.matrix(x)
     
     # Statistics:
     if (na.rm) {
-        result = apply(na.remove(x), MARGIN = 2, FUN = kurtosis, ...) 
+        result = apply(na.remove(X), MARGIN = 2, FUN = kurtosis, ...) 
     } else {
-        result = apply(x, MARGIN = 2, FUN = kurtosis, ...) 
+        result = apply(X, MARGIN = 2, FUN = kurtosis, ...) 
     }
         
     # Return Value:
@@ -444,13 +444,13 @@ function(x, na.rm = FALSE, ...)
     # FUNCTION:
     
     # Transform:
-    x = as.matrix(x)
+    X = as.matrix(x)
     
     # Statistics:
     if (na.rm) {
-        result = apply(na.remove(x), MARGIN = 2, FUN = cumsum, ...) 
+        result = apply(na.remove(X), MARGIN = 2, FUN = cumsum, ...) 
     } else {
-        result = apply(x, MARGIN = 2, FUN = cumsum, ...) 
+        result = apply(X, MARGIN = 2, FUN = cumsum, ...) 
     }
         
     # Return Value:
