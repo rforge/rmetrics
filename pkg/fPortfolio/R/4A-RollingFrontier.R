@@ -29,21 +29,21 @@
 
 ################################################################################
 # FUNCTION:                         DESCRIPTION:
-# .rollingWindows                    Returns a list of rolling window frames
+#  rollingWindows                    Returns a list of rolling window frames
 # FUNCTION:                         DESCRIPTION:
-# .rollingCmlPortfolio               Rolls a CML portfolio
-# .rollingTangencyPortfolio          Rolls a tangency portfolio
-# .rollingMinvariancePortfolio       Rolls a minimum risk portfolio
+#  rollingCmlPortfolio               Rolls a CML portfolio
+#  rollingTangencyPortfolio          Rolls a tangency portfolio
+#  rollingMinvariancePortfolio       Rolls a minimum risk portfolio
 # FUNCTION:                         DESCRIPTION:
-# .rollingPortfolioFrontier          Rolls a portfolio frontier
+#  rollingPortfolioFrontier          Rolls a portfolio frontier
 # FUNCTION:                         DESCRIPTION:
-# .portfolioBacktesting              Does portfolio backtesting
-# .rollingOptimalPortfolio           Rolls an optimal portfolio
-# .portfolioMonthlyStats             Computes monthly portfolio statistics
+#  portfolioBacktesting              Does portfolio backtesting
+#  rollingOptimalPortfolio           Rolls an optimal portfolio
+#  portfolioMonthlyStats             Computes monthly portfolio statistics
 ################################################################################
 
 
-.rollingWindows =
+rollingWindows =
 function(x, period = "24m", by = "1m")
 {   # A function implemented by Rmetrics
 
@@ -61,7 +61,7 @@ function(x, period = "24m", by = "1m")
     #   Only "monthly" frequencies are currently supported.
     
     # Example:
-    #   x = sort(as.timeSeries(data(smallcap.ts))); .rollingWindows(x)
+    #   x = sort(as.timeSeries(data(smallcap.ts))); rollingWindows(x)
     
     # FUNCTION:
     
@@ -100,7 +100,7 @@ function(x, period = "24m", by = "1m")
 # ------------------------------------------------------------------------------
 
 
-.rollingCmlPortfolio =
+rollingCmlPortfolio =
 function(data, spec, constraints, from, to, action = NULL, 
 title = NULL, description = NULL, ...)
 {   # A function implemented by Rmetrics
@@ -138,7 +138,7 @@ title = NULL, description = NULL, ...)
 # ------------------------------------------------------------------------------
 
 
-.rollingTangencyPortfolio =
+rollingTangencyPortfolio =
 function(data, spec, constraints, from, to, action = NULL, 
 title = NULL, description = NULL, ...)
 {   # A function implemented by Rmetrics
@@ -180,7 +180,7 @@ title = NULL, description = NULL, ...)
 # ------------------------------------------------------------------------------
 
 
-.rollingMinvariancePortfolio =
+rollingMinvariancePortfolio =
 function(data, spec, constraints, from, to, action = NULL, 
 title = NULL, description = NULL, ...)
 {   # A function implemented by Rmetrics
@@ -222,7 +222,7 @@ title = NULL, description = NULL, ...)
 ################################################################################
 
 
-.rollingPortfolioFrontier =
+rollingPortfolioFrontier =
 function(data, spec, constraints, from, to, action = NULL, 
 title = NULL, description = NULL, ...)
 {   # A function implemented by Rmetrics
@@ -265,7 +265,7 @@ title = NULL, description = NULL, ...)
 ################################################################################
 
 
-.portfolioBacktesting =   
+portfolioBacktesting =   
 function(formula, data, horizon, smoothing, trace = TRUE)   
 {
     # Description:
@@ -347,7 +347,7 @@ function(formula, data, horizon, smoothing, trace = TRUE)
         text.col = 1:(nAssets+1))
     
     # Create Rolling Windows:
-    rW = .rollingWindows(x, paste(horizon, "m", sep = ""), "1m")
+    rW = rollingWindows(x, paste(horizon, "m", sep = ""), "1m")
     From = rW$from 
     To = rW$to 
     from = rW$from[-1] 
@@ -365,7 +365,7 @@ function(formula, data, horizon, smoothing, trace = TRUE)
     Spec = portfolioSpec()
     setEstimator(Spec) = c("mean", "shrink")
     Constraints = NULL # "maxsumW[2:3]=0.7" 
-    tg = .rollingOptimalPortfolio(
+    tg = rollingOptimalPortfolio(
         data = x[, assets], 
         spec = Spec, 
         constraints = Constraints,
@@ -475,7 +475,7 @@ function(formula, data, horizon, smoothing, trace = TRUE)
     # Statistics:
     if (trace) {
         cat("\n")
-        print(.portfolioMonthlyStats(ans))
+        print(portfolioMonthlyStats(ans))
     }
     
     # Return Value:
@@ -486,7 +486,7 @@ function(formula, data, horizon, smoothing, trace = TRUE)
 # ------------------------------------------------------------------------------
 
 
-.rollingOptimalPortfolio =
+rollingOptimalPortfolio =
 function(data, spec, constraints, from, to, benchmark, action = NULL, 
 trace = TRUE, title = NULL, description = NULL, ...)
 {   
@@ -554,7 +554,7 @@ trace = TRUE, title = NULL, description = NULL, ...)
 # ------------------------------------------------------------------------------
 
 
-.portfolioMonthlyStats =
+portfolioMonthlyStats =
 function(x) 
 {   # A function implemented by Rmetrics
 
@@ -562,7 +562,7 @@ function(x)
     #   Computes some monthly portfolio performance measures
     
     # Arguments:
-    #   An object returned by the function .portfolioBacktesting
+    #   An object returned by the function portfolioBacktesting
     
     # FUNCTION:
     
