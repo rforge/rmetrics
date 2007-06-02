@@ -39,7 +39,7 @@
 # FUNCTION:                         DESCRIPTION:
 #  portfolioBacktesting              Does portfolio backtesting
 #  rollingOptimalPortfolio           Rolls an optimal portfolio
-#  portfolioMonthlyStats             Computes monthly portfolio statistics
+#  portfolioBacktestingStats         Computes monthly portfolio statistics
 ################################################################################
 
 
@@ -554,7 +554,7 @@ trace = TRUE, title = NULL, description = NULL, ...)
 # ------------------------------------------------------------------------------
 
 
-portfolioMonthlyStats =
+portfolioBacktestingStats =
 function(x) 
 {   # A function implemented by Rmetrics
 
@@ -562,7 +562,7 @@ function(x)
     #   Computes some monthly portfolio performance measures
     
     # Arguments:
-    #   An object returned by the function portfolioBacktesting
+    #   x - an object as returned by the function portfolioBacktesting
     
     # FUNCTION:
     
