@@ -51,7 +51,7 @@
 
 
 seriesPlot = 
-function(x, col = "steelblue", main = x@units, ...) 
+function(x, type = "l", col = "steelblue", main = x@units, rug = TRUE, ...) 
 {   # A function implemented by Diethelm Wuertz
     
     # Description:
@@ -74,10 +74,11 @@ function(x, col = "steelblue", main = x@units, ...)
     # Series Plots:
     for (i in 1:DIM) {
         X = x[, i]
-        plot(x = X, type = "l", col = col, main = main[i], ylab = X@units, ...)
+        plot(x = X, type = type, col = col, 
+            main = main[i], ylab = X@units, ...)
         grid()
         abline(h = 0, col = "grey")
-        rug(as.vector(X), ticksize = 0.01, side = 4)
+        if (rug) rug(as.vector(X), ticksize = 0.01, side = 4)
     }
          
     # Return Value:

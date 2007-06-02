@@ -42,7 +42,7 @@
     
 
 \usage{ 
-seriesPlot(x, col = "steelblue", main = x@units, \dots) 
+seriesPlot(x, type = "l", col = "steelblue", main = x@units, rug = TRUE, \dots) 
 histPlot(x, labels = TRUE, main = x@units, add.fit = TRUE, \dots) 
 densityPlot(x, col = "steelblue", main = x@units, add.fit = TRUE, \dots)
 qqnormPlot(x, labels = TRUE, col = "steelblue", main = x@units, \dots) 
@@ -72,6 +72,14 @@ basicStats(x, ci = 0.95)
         }
         \item{na.rm}{
         a logical. Should missing values be removed?
+        }
+   \item{rug}{
+        a logical value by default TRUE. Should a rug representation 
+        of the data added to the plot?
+        }
+   \item{type}{
+        what type of plot should be drawn. For ossible types consult
+        the \code{plot} help page.
         }
    \item{x}{
         an object of class \code{"timeSeries"} or a numeric vector.
