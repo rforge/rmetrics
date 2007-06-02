@@ -452,6 +452,12 @@ function(x, na.rm = FALSE, ...)
     } else {
         result = apply(X, MARGIN = 2, FUN = cumsum, ...) 
     }
+    
+    # Time Series Input ?
+    if (is.timeSeries(x)) {
+        x@Data = result
+        result = x
+    }
         
     # Return Value:
     result 
