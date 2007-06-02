@@ -133,11 +133,11 @@ function(x, from, to, FUN, ...)
     pos = seriesPositions(x)
     rowNames = rownames(x@Data)
     
-    i = from@Dim
+    # Compute for the first window ...
+    i = 1
     test = (j.pos >= j.from[i] & j.pos <= j.to[i])
     # make sure that cutted is a matrix ...
     cutted = as.matrix(y[test, ])
-    
     ### if (sum(test)>0) rownames(cutted) <- rowNames[test]
     ans = fun(cutted, ...)
     
