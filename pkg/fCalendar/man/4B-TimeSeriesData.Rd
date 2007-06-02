@@ -111,7 +111,7 @@
 
 fapply(x, from, to, FUN, \dots)
 
-\method{aggregate}{timeSeries}((x, by = c("monthly", "quarterly"), 
+\method{aggregate}{timeSeries}(x, by = c("monthly", "quarterly"), 
     FUN = colMeans, units = NULL, \dots)
 \method{diff}{timeSeries}(x, lag = 1, diff = 1, trim = FALSE, pad = NA, \dots)
 \method{lag}{timeSeries}(x, k = 1, trim = FALSE, units = NULL, \dots)
