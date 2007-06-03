@@ -268,14 +268,17 @@ title = NULL, description = NULL, ...)
 
 
 rollingBacktestPortfolio =
-function(data, spec, constraints, from, to, benchmark, 
-portfolio = "minvariancePortfolio", action = NULL, trace = TRUE, 
-title = NULL, description = NULL, ...)
+function(data, spec, constraints, from, to, benchmark, action = NULL, 
+trace = TRUE, title = NULL, description = NULL, ...)
 {   
     # Description:
     #   Computes minvariance/efficient Portfolio dependent on a benchmark   
       
     # FUNCTION:
+    
+    # Settings:
+    portfolio = "minvariancePortfolio"
+    portfolioFun = match.arg(portfolio)
     
     # Roll the Portfolio and return the Results in a List:
     nAssets = dim(data)[2]
@@ -288,7 +291,6 @@ title = NULL, description = NULL, ...)
         bmSeries = cut(benchmark, from = from[i], to = to[i])  
         
         # Calculate "safe" Portfolio:
-        portfolioFun = match.arg(portfolio)
         portfolio = portfolioFun(data = pfSeries, spec, constraints)
         tgReturn = as.numeric(getTargetReturn(portfolio))
         
