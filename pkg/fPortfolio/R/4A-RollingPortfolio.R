@@ -37,8 +37,8 @@
 # FUNCTION:                         DESCRIPTION:
 #  rollingPortfolioFrontier          Rolls a portfolio frontier
 # FUNCTION:                         DESCRIPTION:
+#  rollingBacktestPortfolio          Rolls a backtesting portfolio
 #  portfolioBacktesting              Does portfolio backtesting
-#  rollingOptimalPortfolio           Rolls an optimal portfolio
 #  portfolioBacktestingStats         Computes monthly portfolio statistics
 ################################################################################
 
@@ -265,6 +265,78 @@ title = NULL, description = NULL, ...)
 ################################################################################
 
 
+
+
+rollingBacktestPortfolio =
+function(data, spec, constraints, from, to, benchmark, 
+portfolio = "minvariancePortfolio", action = NULL, trace = TRUE, 
+title = NULL, description = NULL, ...)
+{   
+    # Description:
+    #   Computes minvariance/efficient Portfolio dependent on a benchmark   
+      
+    # FUNCTION:
+    
+    # Roll the Portfolio and return the Results in a List:
+    nAssets = dim(data)[2]
+    roll = list()
+    for (i in 1:length(from)) {
+        
+        # Cut Data from the Multivariate timeSeries object "data" of 
+        #   assets and from the Univariate "benchmark" time series:
+        pfSeries = cut(data, from = from[i], to = to[i]) 
+        bmSeries = cut(benchmark, from = from[i], to = to[i])  
+        
+        # Calculate "safe" Portfolio:
+        portfolioFun = match.arg(portfolio)
+        portfolio = portfolioFun(data = pfSeries, spec, constraints)
+        tgReturn = as.numeric(getTargetReturn(portfolio))
+        
+        # If the benchmark return was higher than the "safe" portfolio
+        #   target return, then we use the efficient portfolio with the
+        #   target return given by the benchmark portfolio:
+        bmReturn = mean(as.numeric(bmSeries))
+        whichPortfolio = "tg PF"
+        if(bmReturn > tgReturn) {
+            whichPortfolio = "ef PF"
+            Spec = spec
+            setTargetReturn(Spec) = bmReturn
+            portfolio = efficientPortfolio(
+                data = pfSeries, spec = Spec, constraints)
+                efReturn = as.numeric(getTargetReturn(portfolio))
+            efReturn = as.numeric(getTargetReturn(portfolio))
+        }
+            
+        # Save Results:
+        portfolio@portfolio$benchmarkReturn = bmReturn
+        weights = round(getWeights(portfolio), digits = 3)
+        roll[i] = portfolio
+        
+        # Trace Optionally the Results:
+        if (trace) {    
+            cat(as.character(from[i]), as.character(to[i]))
+            cat("\t", round(tgReturn, digits = 3))
+            cat("\t", round(bmReturn, digits = 3))
+            cat("\t", whichPortfolio)
+            for (i in 1:nAssets) cat("\t", weights[i])
+            cat("\n")
+        }
+        
+        # Now you can do any "action" you want to do with the EFs:
+        if (!is.null(action)) {
+            fun = match.fun(action)
+            fun(roll, from, to, ...)
+        }         
+    }
+    
+    # Return Value:
+    invisible(roll)
+}
+
+
+# ------------------------------------------------------------------------------
+
+
 portfolioBacktesting =   
 function(formula, data, horizon, smoothing, trace = TRUE)   
 {
@@ -291,11 +363,11 @@ function(formula, data, horizon, smoothing, trace = TRUE)
     #   The rolling backtesting strategy is the following. 
     #       1.  Consider a rolling window of financial returns of length 
     #           'horizon'. 
-    #       2.  Compute the target Return foor the tangency portfolio based
+    #       2.  Compute the target Return for the "safe" portfolio based
     #           on this window and the 'data' listed in the 'formula' 
     #           expression.
     #       3.  If the benchmark return is higher than the target return
-    #           of the tangency portfolio, then replace the tangency
+    #           of the "safe" portfolio, then replace the "safe"
     #           portfolio by the efficient portfolio with a target return
     #           given by the benchmark. We call the resulting portfolio
     #           the "optimal" portfolio
@@ -357,7 +429,7 @@ function(formula, data, horizon, smoothing, trace = TRUE)
         cat("\nEnd Series:         ", as.character(end(x)))
     }   
  
-    # We invest in the Tangency or Efficient Portfolio:
+    # We invest in the "safe" or Efficient Portfolio:
     if(trace) {
         cat("\n\nPortfolio Optimization:")
         cat("\nOptimization Period\tTarget\tBenchmark\t Weights\n")
@@ -365,7 +437,7 @@ function(formula, data, horizon, smoothing, trace = TRUE)
     Spec = portfolioSpec()
     setEstimator(Spec) = c("mean", "shrink")
     Constraints = NULL # "maxsumW[2:3]=0.7" 
-    tg = rollingOptimalPortfolio(
+    tg = rollingBacktestPortfolio(
         data = x[, assets], 
         spec = Spec, 
         constraints = Constraints,
@@ -475,79 +547,11 @@ function(formula, data, horizon, smoothing, trace = TRUE)
     # Statistics:
     if (trace) {
         cat("\n")
-        print(portfolioMonthlyStats(ans))
+        print(portfolioBacktestingStats(ans))
     }
     
     # Return Value:
     invisible(ans)
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-rollingOptimalPortfolio =
-function(data, spec, constraints, from, to, benchmark, action = NULL, 
-trace = TRUE, title = NULL, description = NULL, ...)
-{   
-    # Description:
-    #   Computes tangency/efficient Portfolio dependent on a benchmark   
-      
-    # FUNCTION:
-    
-    # Roll the Portfolio and return the Results in a List:
-    nAssets = dim(data)[2]
-    roll = list()
-    for (i in 1:length(from)) {
-        
-        # Cut Data from the Multivariate timeSeries object "data" of 
-        #   assets and from the Univariate "benchmark" time series:
-        pfSeries = cut(data, from = from[i], to = to[i]) 
-        bmSeries = cut(benchmark, from = from[i], to = to[i])  
-        
-        # Calculate Tangency Portfolio:
-        portfolio = tangencyPortfolio(data = pfSeries, spec, constraints)
-        tgReturn = as.numeric(getTargetReturn(portfolio))
-        
-        # If the benchmark return was higher than the tangency portfolio
-        #   target return, then we use the efficient portfolio with the
-        #   target return given by the benchmark return:
-        bmReturn = mean(as.numeric(bmSeries))
-        whichPortfolio = "tg PF"
-        if(bmReturn > tgReturn) {
-            whichPortfolio = "ef PF"
-            Spec = spec
-            setTargetReturn(Spec) = bmReturn
-            portfolio = efficientPortfolio(
-                data = pfSeries, spec = Spec, constraints)
-                efReturn = as.numeric(getTargetReturn(portfolio))
-            efReturn = as.numeric(getTargetReturn(portfolio))
-        }
-            
-        # Save Results:
-        portfolio@portfolio$benchmarkReturn = bmReturn
-        weights = round(getWeights(portfolio), digits = 3)
-        roll[i] = portfolio
-        
-        # Trace Optionally the Results:
-        if (trace) {    
-            cat(as.character(from[i]), as.character(to[i]))
-            cat("\t", round(tgReturn, digits = 3))
-            cat("\t", round(bmReturn, digits = 3))
-            cat("\t", whichPortfolio)
-            for (i in 1:nAssets) cat("\t", weights[i])
-            cat("\n")
-        }
-        
-        # Now you can do any "action" you want to do with the EFs:
-        if (!is.null(action)) {
-            fun = match.fun(action)
-            fun(roll, from, to, ...)
-        }         
-    }
-    
-    # Return Value:
-    invisible(roll)
 }
 
 

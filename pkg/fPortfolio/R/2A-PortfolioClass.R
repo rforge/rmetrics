@@ -71,11 +71,15 @@ function(data, spec = portfolioSpec(), constraints = NULL)
     # Arguments:
     #   data - a rectangular object of assets
     #   spec - an object of class 'fPFOLIOSPEC'
+    #   constraints - a character vector or NULL
     
     # FUNCTION:
     
     # Compose Portfolio Data: 
     data = portfolioData(data, spec)
+    
+    # Constraints:
+    .checkPortfolioConstraints
     
     # Compose Optimization Function:
     if(is.null(constraints) | length(constraints) == 0) {
@@ -86,8 +90,8 @@ function(data, spec = portfolioSpec(), constraints = NULL)
         Model = "Short"
     } else {
         Model = "Constrained"
-    }     
-    Type = spec@model$type
+    }         
+    Type = getType(spec)
     fun = match.fun(paste(".feasible", Model[1], Type[1], "Portfolio", 
         sep = ""))
     attr(constraints, "model") = Model
@@ -117,6 +121,7 @@ function(data, spec = portfolioSpec(), constraints = NULL)
     # Arguments:
     #   data - a rectangular object of assets
     #   spec - an object of class 'fPFOLIOSPEC'
+    #   constraints - a character vector or NULL
      
     # FUNCTION:
     
@@ -132,8 +137,8 @@ function(data, spec = portfolioSpec(), constraints = NULL)
         Model = "Short"
     } else {
         Model = "Constrained"
-    }        
-    Type = spec@model$type
+    }         
+    Type = getType(spec)
     fun = match.fun(paste(".cml", Model[1], Type[1], "Portfolio", 
         sep = ""))
     attr(constraints, "model") = Model
@@ -163,6 +168,7 @@ function(data, spec = portfolioSpec(), constraints = NULL)
     # Arguments:
     #   data - a rectangular object of assets
     #   spec - an object of class 'fPFOLIOSPEC'
+    #   constraints - a character vector or NULL
      
     # FUNCTION:
     
@@ -179,7 +185,7 @@ function(data, spec = portfolioSpec(), constraints = NULL)
     } else {
         Model = "Constrained"
     }        
-    Type = spec@model$type
+    Type = getType(spec)
     fun = match.fun(paste(".tangency", Model[1], Type[1], "Portfolio", 
         sep = ""))
     attr(constraints, "model") = Model
@@ -209,6 +215,7 @@ function(data, spec = portfolioSpec(), constraints = NULL)
     # Arguments:
     #   data - a rectangular object of assets
     #   spec - an object of class 'fPFOLIOSPEC'
+    #   constraints - a character vector or NULL
     
     # FUNCTION:
     
@@ -224,8 +231,8 @@ function(data, spec = portfolioSpec(), constraints = NULL)
         Model = "Short"
     } else {
         Model = "Constrained"
-    }        
-    Type = spec@model$type
+    }       
+    Type = getType(spec)
     fun = match.fun(paste(".minvariance", Model[1], Type[1], "Portfolio", 
         sep = ""))
     attr(constraints, "model") = Model
@@ -255,6 +262,7 @@ function(data, spec = portfolioSpec(), constraints = NULL)
     # Arguments:
     #   data - a rectangular object of assets
     #   spec - an object of class 'fPFOLIOSPEC'
+    #   constraints - a character vector or NULL
     
     # FUNCTION:
     
@@ -270,8 +278,8 @@ function(data, spec = portfolioSpec(), constraints = NULL)
         Model = "Short"
     } else {
         Model = "Constrained"
-    }        
-    Type = spec@model$type
+    }         
+    Type = getType(spec)
     fun = match.fun(paste(".efficient", Model[1], Type[1], "Portfolio", 
         sep = ""))
     attr(constraints, "model") = Model
@@ -302,6 +310,7 @@ title = NULL, description = NULL)
     # Arguments:
     #   data - a rectangular object of assets
     #   spec - an object of class 'fPFOLIOSPEC'
+    #   constraints - a character vector or NULL
     
     # FUNCTION:
     
@@ -317,8 +326,8 @@ title = NULL, description = NULL)
         Model = "Short"
     } else {
         Model = "Constrained"
-    }   
-    Type = spec@model$type
+    }         
+    Type = getType(spec)
     fun = match.fun(paste(".portfolio", Model[1], Type[1], "Frontier", 
         sep = ""))
     attr(constraints, "model") = Model

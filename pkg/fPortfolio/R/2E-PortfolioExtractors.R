@@ -34,7 +34,7 @@
 #  getNumberOfAssets             Extracts number of assets from statistics
 # FUNCTION:                     PORTFOLIO S4 EXTRACTORS FROM SPECIFICATION SLOT:
 #  getSpecification              Extracts @specification Slot
-#  getType                       Extract portfolio ype from specification
+#  getType                       Extract portfolio type from specification
 #  getSolver                     Extract solver from specification
 # FUNCTION:                     PORTFOLIO S4 EXTRACTORS FROM SPECIFICATION SLOT:
 #  getPortfolio                  Extracts @portfolio Slot
@@ -139,7 +139,11 @@ function(object)
     # FUNCTION:
     
     # Get Specification Type:
-    ans = object@specification$spec@model$type[1]
+    if (class(object) == "fPFOLIOSPEC") {
+        ans = object@model$type[1]
+    } else if (class(object) == "fPORTFOLIO") {
+        ans = object@specification$spec@model$type[1]
+    }
     
     # Return Value:
     ans  

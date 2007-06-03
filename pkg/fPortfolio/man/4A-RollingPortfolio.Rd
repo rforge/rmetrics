@@ -10,8 +10,8 @@
 
 \alias{rollingPortfolioFrontier}
 
+\alias{rollingBacktestPortfolio}
 \alias{portfolioBacktesting}
-\alias{rollingOptimalPortfolio}
 \alias{portfolioBacktestingStats}
 
 
@@ -33,8 +33,8 @@
     \code{rollingTangencyPortfolio} \tab Rolls a tangency portfolio, \cr
     \code{rollingMinvariancePortfolio} \tab Rolls a minimum risk portfolio, \cr
     \code{rollingPortfolioFrontier} \tab returns an efficient portfolio, \cr
-    \code{portfolioBacktesting} \tab Does portfolio backtesting, \cr
-    \code{rollingOptimalPortfolio} \tab Rolls an optimal portfolio, \cr   
+    \code{rollingBacktestPortfolio} \tab Rolls an optimal portfolio, \cr 
+    \code{portfolioBacktesting} \tab Does portfolio backtesting, \cr  
     \code{portfolioBacktestingStats} \tab pComputes monthly portfolio statistics. }
     
 }
@@ -52,10 +52,10 @@ rollingMinvariancePortfolio(data, spec, constraints, from, to, action = NULL,
     
 rollingPortfolioFrontier(data, spec, constraints, from, to, action = NULL, 
     title = NULL, description = NULL, ...)
-    
+   
+rollingBacktestPortfolio(data, spec, constraints, from, to, benchmark, 
+    action = NULL, trace = TRUE, title = NULL, description = NULL, ...) 
 portfolioBacktesting(formula, data, horizon, smoothing, trace = TRUE)
-rollingOptimalPortfolio(data, spec, constraints, from, to, benchmark, 
-    action = NULL, trace = TRUE, title = NULL, description = NULL, ...)
 portfolioBacktestingStats(x)
 }
 
@@ -189,11 +189,11 @@ portfolioBacktestingStats(x)
     returns ...
     \cr
     
-    \code{portfolioBacktesting}\cr
+    \code{rollingBacktestPortfolio}\cr
     returns ...
     \cr
     
-    \code{rollingOptimalPortfolio}\cr
+    \code{portfolioBacktesting}\cr
     returns ...
     \cr
     
