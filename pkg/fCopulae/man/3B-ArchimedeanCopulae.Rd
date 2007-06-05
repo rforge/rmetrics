@@ -74,13 +74,13 @@ darchmSlider(type = c("persp", "contour"), B = 10)
         and \code{v}. If specified as \code{"list"} then \code{u} and 
         \code{v} are expected to span a two-dimensional grid as outputted 
         by the function \code{grid2d} and the function returns a list with
-        elements \code{$x}, \code{y}, and \code{z} which can be directly 
+        elements \code{\$x}, \code{\$y}, and \code{\$z} which can be directly 
         used for example by 2D plotting functions.
         }
     \item{type}{
         [*archmCopula] - \cr
         the type of the Archimedean copula. A character string ranging 
-        beween \code{"1"} and \code{"22"). By default copula No. 1 will 
+        beween \code{"1"} and \code{"22"}. By default copula No. 1 will 
         be chosen.\cr
         [*archmSlider] - \cr
         the type of the plot. A charcter string either specifying a 
@@ -90,7 +90,7 @@ darchmSlider(type = c("persp", "contour"), B = 10)
         [*archmCopula] - \cr
         two numeric values or vectors of the same length at which
         the copula will be computed. If \code{u} is a list then the
-        the \code{$x} and \code{$y} elements will be used as \code{u} 
+        the \code{\$x} and \code{\$y} elements will be used as \code{u} 
         and \code{v}. If \code{u} is a two column matrix then the 
         first column will be used as \code{u} and the the second 
         as \code{v}.

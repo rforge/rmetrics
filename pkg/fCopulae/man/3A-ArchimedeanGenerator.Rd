@@ -67,7 +67,7 @@ KfuncSlider(B = 5)
     \item{B}{
         [archmRange] - \cr
         the maximum slider menu value when the boundary value is infinite. 
-        By default this is set to \code{B=Inf}.
+        By default this is set to \code{B=Inf}.\cr
         [*Slider] - \cr
         the maximum slider menu value when the boundary value is infinite. 
         By default this is set to \code{B=5}.
@@ -90,13 +90,12 @@ KfuncSlider(B = 5)
     \item{type}{
         [*archmCopula][Phi][Kfunc] - \cr
         the type of the Archimedean copula. A character string ranging 
-        beween \code{"1"} and \code{"22"). By default copula No. 1 will 
+        beween \code{"1"} and \code{"22"}. By default copula No. 1 will 
         be chosen.
         }
     \item{x}{
         [Kfunc] - \cr
-        a numeric value or vector ranging between zero and one.
-        \cr
+        a numeric value or vector ranging between zero and one.\cr
         [Phi] - \cr
         a numeric value or vector.
         }   
@@ -127,7 +126,7 @@ KfuncSlider(B = 5)
 \examples{  
 ## archmList -
    # Return list of implemented copulae:
-   archmList())
+   archmList()
 }
 
 

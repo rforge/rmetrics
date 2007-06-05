@@ -97,18 +97,6 @@ dellipticalSlider(type = c("persp", "contour"), B = 20)
         the generator, the density, the probability and the quantile 
         functions.
         }
-    \item{subdivisions}{
-        [ellipticalRho] - \cr
-        an integer value with the number of subdivisons in each direction
-        on the two dimensional unit square to compute the mean value of
-        Spearman's Rho. By default 500 subdivisions are used.
-        }
-    \item{tail}{
-        [ellipticalTailPlot] - \cr
-        a character string, either \code{"Upper"} or \code{"Lower"} denoting 
-        which of the two tails should be displayed. By default the upper
-        tail dependence will be considered.
-        }
     \item{type}{
         [*ellipticalCopula][gfunc] - \cr
         the type of the elliptical copula. A character string selected 
@@ -129,11 +117,6 @@ dellipticalSlider(type = c("persp", "contour"), B = 20)
         as \code{v}. If \code{u} is an integer value greater than one,
         say \code{N}, than the values for all points on the 
         \code{[(0:N)/N]^2} grid spanning the unit square will be returned.
-        }
-    \item{x}{
-        [gfunc] - \cr
-        a numeric value or vector out of the range \code{[0,Inf)} at
-        which the generator will be computed.
         }
     \item{\dots}{
         [ellipticalCopulaFit] - \cr

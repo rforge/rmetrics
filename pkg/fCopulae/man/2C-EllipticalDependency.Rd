@@ -43,34 +43,6 @@ ellipticalTailPlot(param = NULL, type = c("norm", "cauchy", "t"),
 
 \arguments{
   
-    \item{B}{
-        [*Slider] - \cr
-        the maximum slider menu value when the boundary value is infinite. 
-        By default this is set to 10.
-        }
-    \item{border}{
-        [pellipticalCopula][dellipticalCopula] - \cr
-        a logical flag. If the argument \code{u} is an integer, say \code{N}, 
-        greater than one than all points on a square grid \code{[(0:N)/N]^2}
-        are computed. If border is FALSE than the border points are removed 
-        from the returned value, by default this is not the case.
-        }
-    \item{n}{
-        [rellipticalCopula][ellipticalCopulaSim] - \cr         
-        the number of random deviates to be generated, an integer value.
-        }
-    \item{output}{
-        [pellipticalCopula][dellipticalCopula] - \cr
-        a character string specifying how the output should be formatted. 
-        By default a vector of the same length as \code{u} and \code{v} 
-        is returned. If specified as \code{"list"} then \code{u} and \code{v} 
-        are expected to span a two-dimensional grid as outputted by the 
-        function \code{grid2d} and the function returns a list with
-        elements \code{$x}, \code{y}, and \code{z} which can be directly 
-        used for example by 2D plotting functions. For the grid version,
-        when \code{u} is specified as an integer greater than one, always 
-        the output in form of a list will be returned.
-        }
     \item{rho}{
         [*ellipticalCopula] - \cr
         is the numeric value setting the correlation strength, ranging
@@ -110,22 +82,6 @@ ellipticalTailPlot(param = NULL, type = c("norm", "cauchy", "t"),
         a character string which indicates what kind of plot should be 
         displayed, either a perspective plot if \code{type="persp"}, the
         default value, or a contour plot if \code{type="contour"}.
-        }
-    \item{u, v}{
-        [*ellipticalCopula] - \cr
-        two numeric values or vectors of the same length at which
-        the copula will be computed. If \code{u} is a list then the
-        the \code{$x} and \code{$y} elements will be used as \code{u} 
-        and \code{v}. If \code{u} is a two column matrix then the 
-        first column will be used as \code{u} and the the second 
-        as \code{v}. If \code{u} is an integer value greater than one,
-        say \code{N}, than the values for all points on the 
-        \code{[(0:N)/N]^2} grid spanning the unit square will be returned.
-        }
-    \item{x}{
-        [gfunc] - \cr
-        a numeric value or vector out of the range \code{[0,Inf)} at
-        which the generator will be computed.
         }
     \item{\dots}{
         [ellipticalCopulaFit] - \cr

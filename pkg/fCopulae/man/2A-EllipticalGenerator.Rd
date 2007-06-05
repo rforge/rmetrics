@@ -56,29 +56,6 @@ gfuncSlider(B = 10)
         the maximum slider menu value when the boundary value is infinite. 
         By default this is set to 10.
         }
-    \item{border}{
-        [pellipticalCopula][dellipticalCopula] - \cr
-        a logical flag. If the argument \code{u} is an integer, say \code{N}, 
-        greater than one than all points on a square grid \code{[(0:N)/N]^2}
-        are computed. If border is FALSE than the border points are removed 
-        from the returned value, by default this is not the case.
-        }
-    \item{n}{
-        [rellipticalCopula][ellipticalCopulaSim] - \cr         
-        the number of random deviates to be generated, an integer value.
-        }
-    \item{output}{
-        [pellipticalCopula][dellipticalCopula] - \cr
-        a character string specifying how the output should be formatted. 
-        By default a vector of the same length as \code{u} and \code{v} 
-        is returned. If specified as \code{"list"} then \code{u} and \code{v} 
-        are expected to span a two-dimensional grid as outputted by the 
-        function \code{grid2d} and the function returns a list with
-        elements \code{$x}, \code{y}, and \code{z} which can be directly 
-        used for example by 2D plotting functions. For the grid version,
-        when \code{u} is specified as an integer greater than one, always 
-        the output in form of a list will be returned.
-        }
     \item{rho}{
         [*ellipticalCopula] - \cr
         is the numeric value setting the correlation strength, ranging
@@ -97,18 +74,6 @@ gfuncSlider(B = 10)
         the generator, the density, the probability and the quantile 
         functions.
         }
-    \item{subdivisions}{
-        [ellipticalRho] - \cr
-        an integer value with the number of subdivisons in each direction
-        on the two dimensional unit square to compute the mean value of
-        Spearman's Rho. By default 500 subdivisions are used.
-        }
-    \item{tail}{
-        [ellipticalTailPlot] - \cr
-        a character string, either \code{"Upper"} or \code{"Lower"} denoting 
-        which of the two tails should be displayed. By default the upper
-        tail dependence will be considered.
-        }
     \item{type}{
         [*ellipticalCopula][gfunc] - \cr
         the type of the elliptical copula. A character string selected 
@@ -118,17 +83,6 @@ gfuncSlider(B = 10)
         a character string which indicates what kind of plot should be 
         displayed, either a perspective plot if \code{type="persp"}, the
         default value, or a contour plot if \code{type="contour"}.
-        }
-    \item{u, v}{
-        [*ellipticalCopula] - \cr
-        two numeric values or vectors of the same length at which
-        the copula will be computed. If \code{u} is a list then the
-        the \code{$x} and \code{$y} elements will be used as \code{u} 
-        and \code{v}. If \code{u} is a two column matrix then the 
-        first column will be used as \code{u} and the the second 
-        as \code{v}. If \code{u} is an integer value greater than one,
-        say \code{N}, than the values for all points on the 
-        \code{[(0:N)/N]^2} grid spanning the unit square will be returned.
         }
     \item{x}{
         [gfunc] - \cr

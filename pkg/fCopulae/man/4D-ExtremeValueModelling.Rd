@@ -33,36 +33,9 @@ evCopulaFit(u, v = NULL, type = evList(), \dots)
 
 \arguments{
   
-    \item{alternative}{
-        [evRho][evTau][*evCopula] - \cr
-        Should the probability be computed alternatively in a
-        direct way from the probability formula or by default 
-        via the dependency function?  
-        }
-    \item{B}{
-        [*Slider] - \cr
-        the maximum slider menu value when the boundary value is 
-        infinite. By default this is set to 10.
-        }
-    %\item{error}{
-    %    [evRho] - \cr
-    %    the error bound to be achieved by the \code{integrate2d} 
-    %    integration formula. A numeric value, by default \code{error=1.0e-5}.
-    %    }
     \item{n}{
         [revCopula][evCopulaSim] - \cr         
         the number of random deviates to be generated, an integer value.
-        }
-    \item{output}{
-        [*evCopula] - \cr
-        output - a character string specifying how the output should
-        be formatted. By default a vector of the same length as 
-        \code{u} and \code{v}. If specified as \code{"list"} 
-        then \code{u} and \code{v} are
-        expected to span a two-dimensional grid as outputted by the 
-        function \code{grid2d} and the function returns a list with
-        elements \code{$x}, \code{y}, and \code{z} which can be directly 
-        used for example by 2D plotting functions.
         }
     \item{param}{
         [*ev*][A*] - \cr
@@ -91,11 +64,6 @@ evCopulaFit(u, v = NULL, type = evList(), \dots)
         first column will be used as \code{u} and the the second 
         as \code{v}.
        }
-    \item{x}{
-        [A*] - \cr
-        a numeric value or vector ranging between zero and one.
-        \cr
-        }
     \item{\dots}{
         [evCopulaFit] - \cr
         arguments passed to the optimization function \code{nlminb}.

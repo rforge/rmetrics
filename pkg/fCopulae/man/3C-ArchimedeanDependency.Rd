@@ -64,7 +64,7 @@ archmTailPlot(alpha = NULL, type = archmList(), tail = c("Upper", "Lower"))
         }
     \item{type}{
         the type of the Archimedean copula. A character string ranging 
-        beween \code{"1"} and \code{"22"). By default copula No. 1 will 
+        beween \code{"1"} and \code{"22"}. By default copula No. 1 will 
         be chosen.
         }
     \item{method}{

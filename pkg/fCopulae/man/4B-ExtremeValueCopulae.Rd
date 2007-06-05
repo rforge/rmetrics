@@ -109,11 +109,6 @@ devSlider(type = c("persp", "contour"), B = 10)
         first column will be used as \code{u} and the the second 
         as \code{v}.
        }
-    \item{x}{
-        [A*] - \cr
-        a numeric value or vector ranging between zero and one.
-        \cr
-        }
     \item{\dots}{
         [evCopulaFit] - \cr
         arguments passed to the optimization function \code{nlminb}.

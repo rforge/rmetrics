@@ -59,21 +59,6 @@ evTailCoeffSlider(B = 10)
     %    the error bound to be achieved by the \code{integrate2d} 
     %    integration formula. A numeric value, by default \code{error=1.0e-5}.
     %    }
-    \item{n}{
-        [revCopula][evCopulaSim] - \cr         
-        the number of random deviates to be generated, an integer value.
-        }
-    \item{output}{
-        [*evCopula] - \cr
-        output - a character string specifying how the output should
-        be formatted. By default a vector of the same length as 
-        \code{u} and \code{v}. If specified as \code{"list"} 
-        then \code{u} and \code{v} are
-        expected to span a two-dimensional grid as outputted by the 
-        function \code{grid2d} and the function returns a list with
-        elements \code{$x}, \code{y}, and \code{z} which can be directly 
-        used for example by 2D plotting functions.
-        }
     \item{param}{
         [*ev*][A*] - \cr
         distribution and copulae parameters.
@@ -91,20 +76,6 @@ evTailCoeffSlider(B = 10)
         a character string specifying the plot type. Either a 
         perspective plot which is the default or a contour plot 
         with an underlying image plot will be created.
-        }
-    \item{u, v}{
-        [*evCopula][*archmCopula] - \cr
-        two numeric values or vectors of the same length at which
-        the copula will be computed. If \code{u} is a list then the
-        the \code{$x} and \code{$y} elements will be used as \code{u} 
-        and \code{v}. If \code{u} is a two column matrix then the 
-        first column will be used as \code{u} and the the second 
-        as \code{v}.
-       }
-    \item{x}{
-        [A*] - \cr
-        a numeric value or vector ranging between zero and one.
-        \cr
         }
     \item{\dots}{
         [evCopulaFit] - \cr

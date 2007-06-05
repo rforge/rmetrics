@@ -42,14 +42,14 @@ archmCopulaFit(u, v = NULL, type = archmList(), \dots)
         }
     \item{type}{
         the type of the Archimedean copula. A character string ranging 
-        beween \code{"1"} and \code{"22"). By default copula No. 1 will 
+        beween \code{"1"} and \code{"22"}. By default copula No. 1 will 
         be chosen.
         }
     \item{u, v}{
         [*archmCopula] - \cr
         two numeric values or vectors of the same length at which
         the copula will be computed. If \code{u} is a list then the
-        the \code{$x} and \code{$y} elements will be used as \code{u} 
+        the \code{\$x} and \code{\$y} elements will be used as \code{u} 
         and \code{v}. If \code{u} is a two column matrix then the 
         first column will be used as \code{u} and the the second 
         as \code{v}.
