@@ -14,6 +14,7 @@
 \alias{getFrontier}
 \alias{getWeights}
 \alias{getRiskBudgets}
+\alias{getTailRiskBudgets}
 \alias{getTargetReturn}
 \alias{getTargetRisk}
 \alias{getTargetAlpha}
@@ -42,8 +43,9 @@
     \code{getSolver} \tab Extracts solver from @specification slot, \cr
     \code{getPortfolio} \tab Extracts @portfolio slot, \cr
     \code{getFrontier} \tab Extracts the efficient frontier, \cr
-    \code{getWeights} \tab Extracts weights from a fPORTFOLIO object, \cr
-    \code{getRiskBudgets} \tab Extracts risk budgets from a fPORTFOLIO object, \cr
+    \code{getWeights} \tab Extracts weights from a portfolio object, \cr
+    \code{getRiskBudgets} \tab Extracts risk budgets from a portfolio object, \cr
+    \code{getTailRiskBudgets} \tab Extracts tail risk budgets from a portfolio, \cr
     \code{getTargetReturn} \tab Extracts target return from a portfolio, \cr
     \code{getTargetRisk} \tab Extracts target risk from a portfolio, \cr
     \code{getTargetAlpha} \tab Extracts target VaR-alpha from a portfolio, \cr
@@ -65,7 +67,8 @@ getSolver(object)
 getPortfolio(object, doplot = FALSE, \dots)     
 getFrontier(object, frontier = c("both", "lower", "upper"), doplot = FALSE, \dots)        
 getWeights(object, doplot = FALSE, \dots) 
-getRiskBudgets(object)     
+getRiskBudgets(object)    
+getTailRiskBudgets(object) 
 getTargetReturn(object)  
 getTargetRisk(object)
 getTargetAlpha(object)

@@ -124,9 +124,15 @@ description = NULL)
     Model[(Names <- names(model))] <- model
     
     # Portfolio:
-    Portfolio = list(weights = NULL, targetReturn = NULL, targetRisk = NULL,
-        targetAlpha = NULL, riskFreeRate = 0, nFrontierPoints = 100, 
-        returnRange = NULL, riskRange = NULL)
+    Portfolio = list(
+        weights = NULL, 
+        targetReturn = NULL, 
+        targetRisk = NULL,
+        targetAlpha = NULL, 
+        riskFreeRate = 0, 
+        nFrontierPoints = 100, 
+        returnRange = NULL, 
+        riskRange = NULL)
     Portfolio[(Names <- names(portfolio))] <- portfolio
     # Check Portfolio - weights, targetReturn, targetRisk:
     # ... at least two of them must be set to NULL!
@@ -183,6 +189,7 @@ function(object)
     cat("\nCovariance Estimator:\n ")
     cat(object@model$estimator, "\n")
     
+    # Solver:
     cat("\nSolver:\n ")
     cat(object@solver$type[1], "\n")
     
@@ -721,8 +728,12 @@ solver = c("RQuadprog", "RDonlp2", "RlpSolve"))
     
     # FUNCTION:
     
-    # Set Solver:
+    # Valid Solvers:
     solver = match.arg(solver)
+    validSolvers = c("RQuadprog", "RDonlp2", "RlpSolve")
+    stopifnot(value %in% validSolvers)
+    
+    # Set Solver:
     spec@solver$type = solver
     
     # Return Value:

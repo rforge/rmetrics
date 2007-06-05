@@ -2,39 +2,46 @@
 
 \alias{PortfolioData}
 
-\alias{dutchPortfolioData}
-\alias{usPortfolioData}
-\alias{sm132PortfolioData}
-\alias{worldIndexData}
+\alias{portfolioStatistics}
+\alias{portfolioData}
 
 
-\title{Example Portfolio Data Sets}
+\title{Portfolio Data Handling}
 
 
 \description{
   
-    A collection and description of example data sets 
-    from different sources. The data include time series
-    of assets and/or their mean/covariance estimates.
+    A collection and description of functions to 
+    handle portfolio data. 
     \cr
     
-    The data sets are:
+    The functions are:
     
     \tabular{ll}{
-    \code{dutchPortfolioData} \tab Mean-Cov matrix from Dutch stock index AEX, \cr
-    \code{usPortfolioData} \tab a time series of US Assets, \cr
-    \code{sm132PortfolioData} \tab Mean-Cov matrix from Scherer and Martin, \cr
-    \code{sm132PortfolioData} \tab World Index Returns from D. Locher. }
-    }
+    \code{portfolioStatistics} \tab Estimates 'mu' and 'Sigma' statistics, \cr
+    \code{print|show} \tab Print method for \code{fPFOLIOSPEC} objects. }
     
 }
     
 
 \usage{
-dutchPortfolioData() 
-usPortfolioData()
-sm132PortfolioData()
-worldIndexData()
+portfolioStatistics(data, spec = portfolioSpec())
+portfolioData(data, spec = portfolioSpec())
+}
+
+
+\arguments{
+
+    \item{data}{
+        [portfolioStatistics] - \cr
+        a time series or a named list, containing either a series of returns or
+        named entries 'mu' and 'Sigma' being mean and covariance matrix.
+        }
+    \item{spec}{
+        an S4 object of class \code{fPFOLIOSPEC}, the specification to be 
+        modified, by default the default of the function \code{portfolioSpec()}.
+        }
+
 }
 
 
@@ -81,35 +88,20 @@ worldIndexData()
 
 \value{
   
-    \code{dutchPortfolioData} 
-    \cr
-    returns a list of the covariance matrix and the return means.
-    \cr
-
-    \code{dutchPortfolioData} 
-    \cr
-    returns a \code{timeSeries} object of yearly returns.
+    \code{portfolioStatistics}\cr
+    returns a named list of estimated mean \code{$mu} and covariance 
+    \code{$Sigma} statistics, from a multivariate time series of assets.
     \cr
     
-    \code{dutchPortfolioData} 
-    \cr
-    returns a list of covariance matrix and the return means. 
-    \cr
-    
-    \code{worldIndexData} 
-    \cr
-    returns a \code{timeSeries} object of daily returns.
-    \cr
+    \code{portfolioData}\cr
+    returns a named list of the time series \code{$series} and the 
+    portfolio \code{$statistics} as returned by the function
+    \code{portfolioStatistics}.
   
 }
 
 
-\references{
-Scherer, M., Martin, R.D. (2005);\cr
-    \emph{Introduction To Modern Portfolio Optimization with NuOPT,\cr
-    S-PLUS and S+Bayes}, Springer, Berlin
-
-}
+%\references{}
 
 
 \seealso{
@@ -131,12 +123,7 @@ Scherer, M., Martin, R.D. (2005);\cr
 
 
 \examples{
-## usPortfolioData -
-   usPortfolioData()
-      
-## dutchPortfolioData -
-   x = dutchPortfolioData()
-   x
+## ...
 }
 
 

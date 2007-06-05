@@ -28,9 +28,11 @@
 
 
 ################################################################################
-# FUNCTION:                    DESCRIPTION:  
+# FUNCTION:                    DESCRIPTION:   
+#  solveShortExact              Solves Analytically Unlimited Short Portfolio 
 #  solveRQuadprog               Calls Goldfarb and Idnani's QP solver
-#  solveRDonlp2                 Calls Spelucci's donlp2 solver                    
+#  solveRDonlp2                 Calls Spelucci's donlp2 solver
+#  solveRlpSolve                Calls linear programming solver                    
 ################################################################################
 
 
@@ -54,6 +56,20 @@ function()
 # ------------------------------------------------------------------------------
 
 
+test.solveShortExact =
+function()
+{ 
+    # Tod:
+    NA
+    
+    # Return Value:
+    return()
+}
+
+
+# ------------------------------------------------------------------------------
+    
+    
 test.solveRQuadprog =
 function()
 { 
@@ -184,6 +200,38 @@ function()
     # Return Value:
     return()
 }
+
+
+# ------------------------------------------------------------------------------
+
+
+test.solveRDonlp2.twoAssets =
+function()
+{ 
+    # Load:
+    require(Rdonlp2)
+    
+    # Direct Access:
+    Data = as.timeSeries(data(smallcap.ts))
+    Data = Data[, c("BKE", "GG")]
+    Spec = portfolioSpec()
+    setTargetReturn(Spec) = mean(as.matrix(Data))
+    
+    # Default Constraints:
+    Constraints = "LongOnly"
+    Constraints
+    
+    # RDonlp2:
+    solveRDonlp2(Data, Spec, Constraints)$solution 
+    
+    # Check Termination Error:
+    round(getWeights(efficientPortfolio(Data, Spec, Constraints)), 2)
+    round(getWeights(efficientPortfolio(10*Data, Spec, Constraints)), 2) 
+    
+    # Return Value:
+    return()
+}
+
 
 
 # ------------------------------------------------------------------------------

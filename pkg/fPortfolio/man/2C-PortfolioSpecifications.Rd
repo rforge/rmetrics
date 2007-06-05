@@ -36,9 +36,6 @@
 \alias{setSolver}
 \alias{setSolver<-}
 
-\alias{portfolioStatistics}
-\alias{portfolioData}
-
 
 \title{Specification of Portfolios}
 
@@ -107,9 +104,6 @@ setRiskRange(spec) <- value
 
 setSolver(spec = portfolioSpec(), solver = c("RQuadprog", "RDonlp2", "RlpSolve"))
 setSolver(spec) <- value
-
-portfolioStatistics(data, spec = portfolioSpec())
-portfolioData(data, spec = portfolioSpec())
 }
 
 
@@ -177,8 +171,8 @@ portfolioData(data, spec = portfolioSpec())
         a character string denoting the type of the solver to be used.
         }
     \item{spec}{
-        an S4 object of class \code{fPFOLIOSPEC}, the specification to be modified,
-        by default the default of the function \code{portfolioSpec()}.
+        an S4 object of class \code{fPFOLIOSPEC}, the specification to be 
+        modified, by default the default of the function \code{portfolioSpec()}.
         }
     \item{targetAlpha}{
         [setTargetAlpha] - \cr
@@ -359,10 +353,6 @@ portfolioData(data, spec = portfolioSpec())
     \emph{Solver Settings:} just modifies the solver setting, i.e. the type 
     of solver to be used for portfolio optimization.
     \cr
-        
-    \code{portfolioStatistics}\cr
-    returns a named list of estimated mean \code{$mu} and covariance 
-    \code{$Sigma} statistics, from a multivariate time series of assets.\cr
 
 }
 

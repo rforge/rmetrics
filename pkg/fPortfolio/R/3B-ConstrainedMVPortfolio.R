@@ -47,14 +47,20 @@ function(data, spec, constraints)
     #   Computes Risk and Return for a feasible portfolio
     
     # Arguments:
-    #   data - portfolio of assets
-    #   spec - specification of the portfolio
-    #   constraints - string of constraints
+    #   data - a list with two named elements. 
+    #       $series holding the time series which may be any rectangular,
+    #           object or if not specified holding NA;
+    #       $statistics holding a named two element list by itself, 
+    #           $mu the location of the asset returns by default the mean  
+    #           and $Sigma the scale of the asset returns by default the 
+    #           covariance matrix.
+    #   spec - specification object of the portfolio
+    #   constraints - string value or vector of constraints
     
     # Note:
-    #   In contrast to the functions *Portfolio(), which only require either the
-    #   statistics or the series the functions .*Portfolio() require both as
-    #   input
+    #   In contrast to the functions *Portfolio(), which only require either 
+    #   the statistics or the series the functions .*Portfolio() require both 
+    #   as input.
 
     # Example:
     #   .feasibleConstrainedMVPortfolio()
@@ -111,9 +117,9 @@ function(data, spec, constraints)
     #   constraints - string of constraints
     
     # Note:
-    #   In contrast to the functions *Portfolio(), which only require either the
-    #   statistics or the series the functions .*Portfolio() require both as
-    #   input
+    #   In contrast to the functions *Portfolio(), which only require 
+    #   either the statistics or the series the functions .*Portfolio() 
+    #   require both as input
     #   Calls   solveRQuadprog()
     #   Calls   solveRDonlp2()
 
@@ -128,8 +134,13 @@ function(data, spec, constraints)
     Sigma = data$statistics$Sigma
     nAssets = length(mu)
     
+    # Check Constraints:
+    #   If there are risk budget constraints then the solver must
+    #   be of type "RDonlp2"!
+     
     # Calling Solver:
     solver = spec@solver$type 
+    stopifnot(solver == "RQuadprog" | solver == "RDonlp2")
     if (solver == "RQuadprog") {
         portfolio = solveRQuadprog(data, spec, constraints) 
     } else if (solver == "RDonlp2") {

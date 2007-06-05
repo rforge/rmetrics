@@ -79,7 +79,7 @@ function(data, spec = portfolioSpec(), constraints = NULL)
     data = portfolioData(data, spec)
     
     # Constraints:
-    .checkPortfolioConstraints
+    # .checkPortfolioConstraints
     
     # Compose Optimization Function:
     if(is.null(constraints) | length(constraints) == 0) {
@@ -376,7 +376,7 @@ function(object)
         print.table(weights)
     }
     
-    # Risk Budgets:
+    # Covariance Risk Budgets:
     cat("\nRiskBudget(s):\n")
     riskBudgets = round(getRiskBudgets(object), digits = 4)
     if (length(riskBudgets) == 1) {
@@ -384,7 +384,18 @@ function(object)
     } else {
         print.table(riskBudgets)
     }
-       
+    
+    # Tail Risk Budgets:
+    if (!is.na(getTailRiskBudgets(object))) {
+        cat("\nRiskBudget(s):\n")
+        riskBudgets = round(getTailRiskBudgets(object), digits = 4)
+        if (length(riskBudgets) == 1) {
+            cat(" ", riskBudgets, "\n")
+        } else {
+            print.table(riskBudgets)
+        }   
+    }  
+  
     # Target Returns:   
     cat("\nTarget Return(s):\n")
     targetReturn = getTargetReturn(object)
@@ -394,15 +405,6 @@ function(object)
     cat("\nTarget Risk(s):\n")
     targetRisk = getTargetRisk(object) 
     print(targetRisk)
-    
-    # Target Stdev:
-    # cat("\nTarget Standard Deviation(s):\n")   
-    # targetStdev = getTargetStdev(object) 
-    # if (length(targetStdev) == 1) {
-    #     cat(" ", targetStdev, "\n")
-    # } else {
-    #     print(targetStdev)
-    # }
        
     # Description:
     cat("\nDescription:\n ")

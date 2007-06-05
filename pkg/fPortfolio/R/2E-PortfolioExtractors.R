@@ -39,8 +39,9 @@
 # FUNCTION:                     PORTFOLIO S4 EXTRACTORS FROM SPECIFICATION SLOT:
 #  getPortfolio                  Extracts @portfolio Slot
 #  getFrontier                   Extracts the efficient frontier
-#  getWeights                    Extracts weights from a fPORTFOLIO object
-#  getRiskBudgets                Extracts risk budgets from a fPORTFOLIO object
+#  getWeights                    Extracts weights from a portfolio object
+#  getRiskBudgets                Extracts risk budgets from a portfolio object
+#  getTailRiskBudgets            Extracts tail risk budgets from a portfolio
 #  getTargetReturn               Extracts target return from a portfolio
 #  getTargetRisk                 Extracts target riks from a portfolio
 #  getTargetAlpha                Extracts target VaR-alpha from a portfolio
@@ -55,6 +56,10 @@ function(object)
 
     # Description:
     #   Extracts the efficient frontier from a 'fPORTFOLO' object
+    
+    # Arguments:
+    #   object - an object of S4 class fPORTFOLIO as returned by the
+    #       functions *Portfolio().
     
     # FUNCTION:
     
@@ -76,6 +81,10 @@ function(object)
     # Description:
     #   Extracts the efficient frontier from a 'fPORTFOLO' object
     
+    # Arguments:
+    #   object - an object of S4 class fPORTFOLIO as returned by the
+    #       functions *Portfolio().
+    
     # FUNCTION:
     
     # Get Series of Assets
@@ -95,6 +104,10 @@ function(object)
 
     # Description:
     #   Extracts the efficient frontier from a 'fPORTFOLO' object
+    
+    # Arguments:
+    #   object - an object of S4 class fPORTFOLIO as returned by the
+    #       functions *Portfolio().
     
     # FUNCTION:
     
@@ -116,6 +129,10 @@ function(object)
     # Description:
     #   Extracts the specification structure from a 'fPORTFOLIO' object
     
+    # Arguments:
+    #   object - an object of S4 class fPORTFOLIO as returned by the
+    #       functions *Portfolio().
+    
     # FUNCTION:
     
     # Get Specification:
@@ -135,6 +152,10 @@ function(object)
 
     # Description:
     #   Extracts the type from specification of a 'fPORTFOLIO' object
+    
+    # Arguments:
+    #   object - an object of S4 class fPORTFOLIO as returned by the
+    #       functions *Portfolio().
     
     # FUNCTION:
     
@@ -160,6 +181,10 @@ function(object)
     # Description:
     #   Extracts the solver from specification of a 'fPORTFOLIO' object
     
+    # Arguments:
+    #   object - an object of S4 class fPORTFOLIO as returned by the
+    #       functions *Portfolio().
+    
     # FUNCTION:
     
     # Get Solver:
@@ -180,6 +205,10 @@ function(object, doplot = FALSE, ...)
 
     # Description:
     #   Extracts the statistics from a 'fPORTFOLIO' object
+    
+    # Arguments:
+    #   object - an object of S4 class fPORTFOLIO as returned by the
+    #       functions *Portfolio().
     
     # FUNCTION:
     
@@ -203,6 +232,10 @@ function(object, frontier = c("both", "lower", "upper"), doplot = FALSE, ...)
 
     # Description:
     #   Extracts the efficient frontier from a 'fPORTFOLO' object
+    
+    # Arguments:
+    #   object - an object of S4 class fPORTFOLIO as returned by the
+    #       functions *Portfolio().
     
     # FUNCTION:
     
@@ -264,6 +297,10 @@ function(object, doplot = FALSE, ...)
     # Description:
     #   Extracts the weights from a 'fPORTFOLIO' object
     
+    # Arguments:
+    #   object - an object of S4 class fPORTFOLIO as returned by the
+    #       functions *Portfolio().
+    
     # FUNCTION:
     
     # Get Weights:
@@ -285,10 +322,11 @@ function (object)
 {   # A function implemented by Rmetrics
 
     # Description:
+    #   Extracts risk budgets from a portfolio object
     
     # FUNCTION:
     
-    # Risk Budgets:
+    # Covariance Risk Budgets:
     weights = getWeights(object)
     ans = NA
     Sigma = getStatistics(object)$Sigma
@@ -318,12 +356,62 @@ function (object)
 # ------------------------------------------------------------------------------
 
 
+getTailRiskBudgets = 
+function (object) 
+{   # A function implemented by Rmetrics
+
+    # Description:
+    #   Extracts tail risk budgets from a portfolio object
+    
+    # Arguments:
+    #   object - an object of S4 class fPORTFOLIO as returned by the
+    #       functions *Portfolio().
+    
+    # FUNCTION:
+    
+    # Check if available:
+    Lambda = object@data$tailrisk
+    if (is.na(Lambda)) return(NA)
+    
+    # Tail Risk Budgets:
+    weights = getWeights(object)
+    ans = NA
+    if (is.null(dim(weights))) {
+        ans1 = as.vector(weights %*% Lambda %*% weights)
+        ans2 = as.vector(weights * Lambda %*% weights)
+        ans = round(ans2/ans1, digits = 4)
+        names(ans) = names(weights)
+    }
+    else {
+        Names = colnames(weights)
+        ans = NULL
+        for (i in 1:(dim(weights)[1])) {
+            ans1 = as.vector(weights[i, ] %*% Lambda %*% weights[i, ])
+            ans2 = as.vector(weights[i, ] * Lambda %*% weights[i, ])
+            ans = rbind(ans, ans2/ans1)
+        }
+        colnames(ans) = Names
+    }
+    
+    # Return Value:
+    ans
+}
+
+
+
+# ------------------------------------------------------------------------------
+
+
 getTargetReturn =
 function(object)
 {   # A function implemented by Rmetrics
 
     # Description:
     #   Extracts the target return from a 'fPORTFOLIO' object
+    
+    # Arguments:
+    #   object - an object of S4 class fPORTFOLIO as returned by the
+    #       functions *Portfolio().
     
     # Example:
     #   targetReturn()
@@ -348,6 +436,10 @@ function(object)
     # Description:
     #   Extracts the target risk from a 'fPORTFOLIO' object
    
+    # Arguments:
+    #   object - an object of S4 class fPORTFOLIO as returned by the
+    #       functions *Portfolio().
+    
     # FUNCTION:
     
     # Target MV Risk:
@@ -368,6 +460,10 @@ function(object)
     # Description:
     #   Extracts the VaR-alpha from a 'fPORTFOLIO' object
    
+    # Arguments:
+    #   object - an object of S4 class fPORTFOLIO as returned by the
+    #       functions *Portfolio().
+    
     # FUNCTION:
     
     # Target Alpha:
@@ -388,6 +484,10 @@ function(object)
     # Description:
     #   Extracts the target standard deviation from a 'fPORTFOLIO' object
    
+    # Arguments:
+    #   object - an object of S4 class fPORTFOLIO as returned by the
+    #       functions *Portfolio().
+    
     # FUNCTION:
     
     # Target Standard Deviation:
@@ -408,6 +508,10 @@ function(object)
 
     # Description:
     #   Extracts the asset names from a 'fPORTFOLIO' object
+    
+    # Arguments:
+    #   object - an object of S4 class fPORTFOLIO as returned by the
+    #       functions *Portfolio().
     
     # FUNCTION:
     

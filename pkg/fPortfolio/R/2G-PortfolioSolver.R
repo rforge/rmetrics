@@ -29,7 +29,7 @@
 
 ################################################################################
 # FUNCTION:                    DESCRIPTION: 
-#  solveShortExact              Solves Analyticallu Unlimited Short Portfolio 
+#  solveShortExact              Solves Analytically Unlimited Short Portfolio 
 #  solveRQuadprog               Calls Goldfarb and Idnani's QP solver
 #  solveRDonlp2                 Calls Spelucci's donlp2 solver
 #  solveRlpSolve                Calls linear programming solver
@@ -194,6 +194,9 @@ solveRDonlp2 =
 function(data, spec, constraints)
 {   # A function implemented by Rmetrics
     
+    # Description:
+    #   Calls Spelucci's donlp2 solver  
+    
     # Arguments:
     #   data - portfolio of assets
     #   spec - specification of the portfolio
@@ -213,6 +216,7 @@ function(data, spec, constraints)
     
     # Optimize:
     if (nAssets == 2) {
+        
         # Two Assets Portfolio:
         stopifnot(targetReturn >= min(mu))
         stopifnot(targetReturn <= max(mu))  
@@ -227,31 +231,39 @@ function(data, spec, constraints)
             iterations = c(NA, NA), 
             iact = c(NA, NA),
             solver = "twoAssetsMV")
+            
     } else { 
+        
         # Donlp2 Settings - Start Weights:
         if (is.null(spec@portfolio$weights)) {
             par = rep(1/nAssets, nAssets)
         } else {
             par = spec@portfolio$weights
         } 
+        
         # Donlp2 Settings - Function to be optimized:
         fn = function(x) { x %*% Sigma %*% x } 
+        
         # Donlp2 Settings - Box/Group Constraints:
         A.mat = .setConstraints(data, spec, constraints, type = "BoxGroup")
         upperNames = paste("maxW", 1:nAssets, sep = "")
         par.upper = -A.mat[upperNames, "Exposure"]
         lowerNames = paste("minW", 1:nAssets, sep = "")
         par.lower = A.mat[lowerNames, "Exposure"]
-        # Donlp2 Settings - Group Constraints:
+        
+        # Linear Constraints Donlp2 Settings - Group Constraints:
         Rows = (1:nrow(A.mat))
         names(Rows) = rownames(A.mat)
-        Rows[c(lowerNames, upperNames)]
+        ### Rows[c(lowerNames, upperNames)]
         A = A.mat[-Rows[c(lowerNames, upperNames)], ]
         M = nrow(A)
         mNames = rownames(A)
         lin.upper = lin.lower = rep(NA, M)
+        # All weights must sum up to one ...
         lin.upper[1] = lin.lower[1] = A[1, nAssets+1]
+        # All assets must sum up to the target return ...
         lin.upper[2] = lin.lower[2] = A[2, nAssets+1] 
+        
         # Further Group Constraints:
         if (M > 2) {
             for (i in 3:M) {
@@ -266,8 +278,10 @@ function(data, spec, constraints)
             }
         }
         A = A[, -(nAssets+1)]
+        
         # Trace Solver:
-        solver.trace = spec@solver$trace  
+        solver.trace = spec@solver$trace 
+         
         # Check Constraint Strings for Risk Budgets:
         validStrings = c("minB", "maxB")
         usedStrings = unique(sort(sub("\\[.*", "", constraints)))
@@ -276,6 +290,7 @@ function(data, spec, constraints)
         if (solver.trace) cat("Include Risk Budgeting:", 
             includeRiskBudgeting, "\n")
         if (includeRiskBudgeting) {
+            # Non-Linear Constraints Functions:
             nlcon <- function(x) {
                 B1 = as.vector(x %*% Sigma %*% x)
                 B2 = as.vector(x * Sigma %*% x)
