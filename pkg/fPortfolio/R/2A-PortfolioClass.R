@@ -386,8 +386,9 @@ function(object)
     }
     
     # Tail Risk Budgets:
+    if (FALSE) {
     if (!is.na(getTailRiskBudgets(object))) {
-        cat("\nRiskBudget(s):\n")
+         cat("\nRiskBudget(s):\n")
         riskBudgets = round(getTailRiskBudgets(object), digits = 4)
         if (length(riskBudgets) == 1) {
             cat(" ", riskBudgets, "\n")
@@ -395,6 +396,7 @@ function(object)
             print.table(riskBudgets)
         }   
     }  
+    }
   
     # Target Returns:   
     cat("\nTarget Return(s):\n")
