@@ -115,7 +115,6 @@ function(u, v = NULL, type = evList(), ...)
         range = evRange(type)
         fit = nlminb(start = alpha, objective = .fun, 
             lower = range[1], upper = range[2], type = type, ...)
-        }
     }
     
     # Return Value:
