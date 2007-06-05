@@ -109,22 +109,18 @@ setSolver(spec) <- value
 
 \arguments{
 
-    \item{data}{
-        [portfolioStatistics] - \cr
-        a time series or a named list, containing either a series of returns or
-        named entries 'mu' and 'Sigma' being mean and covariance matrix.
-        }
     \item{description}{
         [portfolioSpec] - \cr
-        a character string, allowing for a brief project description, by default
-        NULL, i.e. Date and User.
+        a character string, allowing for a brief project description, by 
+        default \code{NULL}, i.e. Date and User.
         }
     \item{estimator}{
         [setEstimator] - \cr
-        a character string vector, determining which estimation type should be
-        used calculating mean and covariance matrix, by default "mean" and "cov"
-        meaning functions mean() and cov(). Other estimators are "mcd", using 
-        an mcd estimator, and "shrink", using an shrinkage estimator.
+        a character string vector, determining which estimation type should 
+        be used calculating mean and covariance matrix, by default 
+        \code{"mean"} and \code{"cov"} meaning functions mean() and cov(). 
+        Other estimators are "mcd", using an mcd estimator, and 
+        \code{"shrink"}, using an shrinkage estimator.
         See section details for further information.
         }
     \item{model}{
@@ -155,8 +151,8 @@ setSolver(spec) <- value
     \item{returnRange}{
         [setReturnRange] - \cr
         a numerical vector, setting return range for calculation of efficient
-        frontier, by default NULL, i.e. range of returns from input data is taken.
-        }
+        frontier, by default NULL, i.e. range of returns from input data is 
+        taken.}
     \item{riskFreeRate}{
         [setRiskFreeRate] - \cr
         a integer value, determining the percentage of the yearly return for a
@@ -191,15 +187,17 @@ setSolver(spec) <- value
     \item{type}{
         [setType] - \cr
         a character string, determining which risk measure should be taken,
-        by default "MV" meaning mean-variance. Other types are "CVaR" and "LPM".
+        by default "MV" meaning mean-variance. Other types are "CVaR" and 
+        "LPM".
         }
     \item{value}{
         a value for that component of \code{spec} to be set.
         }
     \item{weights}{
         [setWeights] - \cr
-        a numerical vector, containing the weights of the desired optimal portfolio.
-        Note that the program stops if desired return and weights are set.
+        a numerical vector, containing the weights of the desired optimal 
+        portfolio. Note that the program stops if desired return and weights 
+        are set.
         }
 
 }
