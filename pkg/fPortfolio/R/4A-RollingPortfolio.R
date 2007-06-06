@@ -265,8 +265,6 @@ title = NULL, description = NULL, ...)
 ################################################################################
 
 
-
-
 rollingBacktestPortfolio =
 function(data, spec, constraints, from, to, benchmark, action = NULL, 
 trace = TRUE, title = NULL, description = NULL, ...)

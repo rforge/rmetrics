@@ -285,10 +285,16 @@ function(data, spec, constraints)
         # Check Constraint Strings for Risk Budgets:
         validStrings = c("minB", "maxB")
         usedStrings = unique(sort(sub("\\[.*", "", constraints)))
-        checkStrings = usedStrings %in% validStrings
-        includeRiskBudgeting = (sum(!checkStrings) > 0)
+        checkStrings = sum(usedStrings %in% validStrings)
+        if (checkStrings > 0) {
+            includeRiskBudgeting = TRUE 
+        } else {
+            includeRiskBudgeting = FALSE
+        }
+        
         if (solver.trace) cat("Include Risk Budgeting:", 
             includeRiskBudgeting, "\n")
+            
         if (includeRiskBudgeting) {
             # Non-Linear Constraints Functions:
             nlcon <- function(x) {
@@ -317,7 +323,9 @@ function(data, spec, constraints)
                 par.l = par.lower, par.u = par.upper,
                 A = A, lin.l = lin.lower, lin.u = lin.upper,  
                 nlin = nlin, nlin.l = nlin.lower, nlin.u = nlin.upper,  
-                control = donlp2.control(silent = !solver.trace),
+                control = donlp2.control(
+                    iterma = 400, 
+                    silent = !solver.trace),
                 name = "portfolio")
         } else {
             # Optimize:
@@ -325,13 +333,18 @@ function(data, spec, constraints)
                 par, fn, 
                 par.l = par.lower, par.u = par.upper,
                 A = A, lin.l = lin.lower, lin.u = lin.upper,  
-                control = donlp2.control(silent = !solver.trace),
+                control = donlp2.control(
+                    iterma = 400, 
+                    silent = !solver.trace),
                 name = "portfolio")
-       }
-       # Add:
-       ans$weights = ans$par
-       ans$status = ans$message
-       if (solver.trace) cat("Rdonlp2 Message:", ans$message, "\n")
+        }
+        # Add:
+        ans$weights = ans$par
+        message = "KT-conditions satisfied, no further correction computed"
+        if (ans$message == message) ans$status = 0 else ans$status = 1
+        ans$solver = "RDonlp2"
+        # if (solver.trace) 
+            cat("Rdonlp2 Message:", ans$message, "\n")
    }
    
    # For Debugging ...

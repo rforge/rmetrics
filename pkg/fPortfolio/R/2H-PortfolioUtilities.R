@@ -28,9 +28,99 @@
 
 
 ################################################################################
+# FUNCTION:                   DESCRIPTION:
+#  .covRisk                    Computes Covariance Risk
+#  .varRisk                    Computes Value at Risk
+#  .cvarRisk                   Computes Conditional Value at Risk
 # FUNCTION:                   PORTFOLIO UTILITIES: 
 #  .cfgFit                     Fits bivariate tail dependency parameter lambda
 #  .lambdaTailRisk             Fits tail lambda for multivariate data
+################################################################################
+
+
+.covRisk = 
+function(data, weights)
+{   # A function implemented by Rmetrics
+
+    # Description:
+    #   Computes Covariance Risk for assets given weights and alpha
+    
+    # FUNCTION:
+    
+    # Data:
+    Data = as.matrix(data)
+    nAssets = dim(Data)[2]
+    
+    # Mean Vector and Covariance:
+    mu = colMeans(Data)
+    Sigma = cov(Data)
+    
+    # Return and Risk:
+    return = as.numeric( weights %*% mu )
+    risk = sqrt( as.numeric( weights %*% Sigma %*% weights ) )
+    
+    # Return Value:
+    list(risk = risk, return = return)
+}
+    
+    
+# ------------------------------------------------------------------------------
+
+
+.varRisk = 
+function(x, weights, alpha = 0.05)
+{   # A function implemented by Rmetrics
+
+    # Description:
+    #   Computes VaR for assets given weights and alpha
+    
+    # Arguments:
+    #   x - any univariate or multivariate object which can
+    #       be transformed into a matrix
+    #   weights - a numeric vector, the weights vector
+    #   alpha - a numeric value, the quantile
+    
+    # FUNCTION:
+    
+    # VaR:
+    X = as.matrix(x) %*% weights
+    VaR = quantile(X, alpha, type = 1) 
+    names(VaR) <- paste("VaR.", alpha*100, "%", sep = "")
+    
+    # Return Value:
+    VaR
+} 
+
+
+# ------------------------------------------------------------------------------
+
+
+.cvarRisk = 
+function(x, weights, alpha = 0.05)
+{   # A function implemented by Rmetrics
+
+    # Description:
+    #   Computes CVaR for assets given weights and alpha
+    
+    # Arguments:
+    #   x - any univariate or multivariate object which can
+    #       be transformed into a matrix
+    #   weights - a numeric vector, the weights vector
+    #   alpha - a numeric value, the quantile
+    
+    # FUNCTION:
+    
+    # CVaR:
+    X = as.matrix(x) %*% weights
+    VaR = quantile(X, alpha, type = 1)
+    CVaR = c(CVaR = VaR - 0.5 * mean(((VaR-X) + abs(VaR-X))) / alpha) 
+    names(CVaR) <- paste("CVaR.", alpha*100, "%", sep = "")
+    
+    # Return Value:
+    CVaR
+} 
+
+
 ################################################################################
 
 

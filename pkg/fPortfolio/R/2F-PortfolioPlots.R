@@ -912,6 +912,14 @@ function(object, col = NULL, legend = TRUE)
     }
     minRisk = as.numeric(names(minRisk))
     abline(v = minRisk, col = "black", lty = 1, lwd = 2)
+    
+    # Add Info:
+    mtext(paste(getType(object), "|",getSolver(object)), 
+        side = 4, adj = 0, col = "grey", cex = 0.7)
+        
+    # Add Title:
+    mtext("Weights", adj = 0, line = 2.5, font = 2, cex = 0.8)
+    
 
     # Complete to draw box ...
     box()
@@ -1077,6 +1085,10 @@ function(object, col = NULL, legend = TRUE)
     minRisk = as.numeric(names(minRisk))
     abline(v = minRisk, col = "black", lty = 1, lwd = 2)
    
+    # Add Info:
+    mtext(paste(getType(object), "|",getSolver(object)), 
+        side = 4, adj = 0, col = "grey", cex = 0.7)
+    
     # Complete to draw box ...
     box()
     
@@ -1163,88 +1175,97 @@ function(object, col = NULL, legend = TRUE)
 {   # A function implemented by Rmetrics
 
     # Description:
+    #   Plots a bar chart of covariance risk budgets
     
     # Arguments:
     #   object - an object of class 'fPORTFOLIO'
-    #   col - a color palette, by the rainbow palette
+    #   col - a color palette, by default the rainbow palette
     
     # FUNCTION:
     
     # Select Colors if not specified ...
     if (is.null(col)) col = rainbow(ncol(object@portfolio$weights))
     
-    # Get weighted Returns:
-    weights = getWeights(object)
-    dim = dim(weights)
-    Sigma = object@data$statistics$Sigma
-    weightedRisk = matrix(nrow = dim[1], ncol = dim[2])
+    # Get Type:
+    Type = getType(object)
     
-    for(k in 1:dim[1]){
-        # Calculating risk for k position
-        risk = Sigma %*% weights[k, ]
-        risk = as.vector(risk)
-        for(i in 1:dim[2]){
-            weightedRisk[k, i] = weights[k, i]*risk[i]
-        }
-    }
-    colnames(weightedRisk) = getNames(object)
-    pos.weightedRisk = +0.5 * (abs(weightedRisk) + weightedRisk)
-    neg.weightedRisk = -0.5 * (abs(weightedRisk) - weightedRisk)
+    # Get Budgets:
+    budgets = getRiskBudgets(object)
+    pos.budgets = +0.5 * (abs(budgets) + budgets)
+    neg.budgets = -0.5 * (abs(budgets) - budgets)
     
     # Define Plot Range:
-    ymax = max(rowSums(pos.weightedRisk))
-    ymin = min(rowSums(neg.weightedRisk))
+    ymax = max(rowSums(pos.budgets))
+    ymin = min(rowSums(neg.budgets))
     range = ymax - ymin
     ymax = ymax + 0.005 * range
     ymin = ymin - 0.005 * range
+    dim = dim(budgets)
     range = dim[1]
     xmin = 0
-    xmax = range + .2 * range
-
+    xmax = range + 0.2 * range
+    
     # Create Bar Plots:
     if(!legend){
-        barplot(t(pos.weightedRisk), space = 0, ylab = "",
+        barplot(t(pos.budgets), space = 0, ylab = "",
             ylim = c(ymin, ymax), col = col, border = "grey")
     } else {
-        legendtext = getNames(object)
-
-        barplot(t(pos.weightedRisk), space = 0, ylab = "",
-            xlim = c(xmin, xmax), ylim = c(ymin, ymax), col = col,
-            border = "grey")
+        legendtext = names(object@data$statistics$mu)
+        if(is.null(legendtext)){
+            for(i in 1:dim[2]){legendtext[i] = paste("Asset", i, sep = " ")}
+        }
+        barplot(t(pos.budgets), space = 0, ylab = "", xlim = c(xmin, xmax),
+            ylim = c(ymin, ymax), col = col, border = "grey")
         legend("topright", legend = legendtext, bty = "n", cex = 0.8,
             fill = col)
     }
-    barplot(t(neg.weightedRisk), space = 0, add = TRUE, col = col,
-        border = "grey") 
-
+    barplot(t(neg.budgets), space = 0, add = TRUE, col = col, border = "grey") 
+    
     # Add Tailored Labels -  6 may be a good Number ...
     targetRisk = getTargetRisk(object)
+    if(Type == "CVaR") targetRisk = targetRisk[, 1]
     targetReturn = getTargetReturn(object)
     nSigma = length(targetRisk)
     nLabels = 6
-    M = c(0, ( 1: (nSigma %/% nLabels) ) ) *nLabels + 1
+    M = c(0, ( 1:(nSigma %/% nLabels) ) ) *nLabels + 1
+    
     # Take a reasonable number of significant digits to plot, e.g. 2 ...
     nPrecision = 3
-    axis(1, at = M, labels = signif(targetReturn[M], nPrecision))
+    axis(1, at = M, labels = signif(targetRisk[M], nPrecision))
+    axis(3, at = M, labels = signif(targetReturn[M], nPrecision))
     
     # Add Axis Labels and Title:
-    mtext("Return", side = 1, line = 2, cex = .7)
-    mtext("Target Risk", side = 2, line = 2, cex = .7)
-          
+    mtext("Target Risk", side = 1, line = 2, cex = .7)
+    mtext("Target Return", side = 3, line = 2, cex = .7)
+    mtext("Weight", side = 2, line = 2, cex = .7)
+      
+    # Add Budgets 0 and 1 Reference Lines
+    lines(x = c(0, nSigma), c(1, 1), col = "grey", lty = 3) 
+    lines(x = c(0, nSigma), c(0, 0), col = "grey", lty = 3)   
+    
     # Add vertical Line at minimum risk:
     names(targetRisk) <- as.character(seq(1, nSigma, 1))
     minRisk = min(targetRisk)
     for(i in 1: nSigma){
-          if(minRisk == targetRisk[i]) minRisk = targetRisk[i]
+        if(minRisk == targetRisk[i]) minRisk = targetRisk[i]
     }
     minRisk = as.numeric(names(minRisk))
     abline(v = minRisk, col = "black", lty = 1, lwd = 2)
+    
+    # Add Info:
+    mtext(paste(getType(object), "|",getSolver(object)), 
+        side = 4, adj = 0, col = "grey", cex = 0.7)
+    
+    # Add Title:
+    mtext("Risk", adj = 0, line = 2.5, font = 2, cex = 0.8)
+    
     # Complete to draw box ...
     box()
     
     # Return Value:
     invisible()
 }
+
 
 
 # ------------------------------------------------------------------------------
@@ -1259,7 +1280,7 @@ function(object, pos = NULL, col = NULL, box = TRUE, legend = TRUE)
         
     # Example:
     #   riskPie(tangencyPortfolio(dutchPortfolioData(), portfolioSpec()))
-    #   title(main = "Tangency Portfolio Risk Weights")
+    #   title(main = "Tangency Portfolio Risk Budgets")
     
     # FUNCTION:
     
