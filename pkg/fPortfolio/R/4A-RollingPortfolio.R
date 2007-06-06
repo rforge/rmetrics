@@ -276,7 +276,7 @@ trace = TRUE, title = NULL, description = NULL, ...)
     
     # Settings:
     portfolio = "minvariancePortfolio"
-    portfolioFun <<- match.arg(portfolio)
+    portfolioFun = match.fun(portfolio)
     
     # Roll the Portfolio and return the Results in a List:
     nAssets = dim(data)[2]
