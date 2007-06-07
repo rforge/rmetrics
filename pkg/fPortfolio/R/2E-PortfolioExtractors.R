@@ -146,34 +146,6 @@ function(object)
 # ------------------------------------------------------------------------------
 
 
-.getType =
-function(object, ...)
-{
-    UseMethod(".getType")
-}
-
-
-.getType.default =
-function(object, ...)
-{
-    object$type
-}
-
-
-.getType.fPFOLIOSPEC =
-function(object)
-{
-    object@model$type[1]
-}
-
-
-.getType.fPORTFOLIO =
-function(object, ...)
-{
-    object@specification$spec@model$type[1]
-}
-
-
 getType =
 function(object)
 {   # A function implemented by Rmetrics
