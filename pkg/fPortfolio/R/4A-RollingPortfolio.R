@@ -37,14 +37,14 @@
 # FUNCTION:                         DESCRIPTION:
 #  rollingPortfolioFrontier          Rolls a portfolio frontier
 # FUNCTION:                         DESCRIPTION:
-#  rollingBacktestPortfolio          Rolls a backtesting portfolio
 #  portfolioBacktesting              Does portfolio backtesting
-#  portfolioBacktestingStats         Computes monthly portfolio statistics
+#  .rollingBacktestPortfolio         Rolls a backtesting portfolio
+#  .portfolioBacktestingStats         Computes monthly portfolio statistics
 ################################################################################
 
 
 rollingWindows =
-function(x, period = "24m", by = "1m")
+function(x, period = "12m", by = "1m")
 {   # A function implemented by Rmetrics
 
     # Description:
@@ -265,81 +265,12 @@ title = NULL, description = NULL, ...)
 ################################################################################
 
 
-rollingBacktestPortfolio =
-function(data, spec, constraints, from, to, benchmark, action = NULL, 
-trace = TRUE, title = NULL, description = NULL, ...)
-{   
-    # Description:
-    #   Computes minvariance/efficient Portfolio dependent on a benchmark   
-      
-    # FUNCTION:
-    
-    # Settings:
-    portfolio = "minvariancePortfolio"
-    portfolioFun = match.fun(portfolio)
-    
-    # Roll the Portfolio and return the Results in a List:
-    nAssets = dim(data)[2]
-    roll = list()
-    for (i in 1:length(from)) {
-        
-        # Cut Data from the Multivariate timeSeries object "data" of 
-        #   assets and from the Univariate "benchmark" time series:
-        pfSeries = cut(data, from = from[i], to = to[i]) 
-        bmSeries = cut(benchmark, from = from[i], to = to[i])  
-        
-        # Calculate "safe" Portfolio:
-        portfolio = portfolioFun(data = pfSeries, spec, constraints)
-        tgReturn = as.numeric(getTargetReturn(portfolio))
-        
-        # If the benchmark return was higher than the "safe" portfolio
-        #   target return, then we use the efficient portfolio with the
-        #   target return given by the benchmark portfolio:
-        bmReturn = mean(as.numeric(bmSeries))
-        whichPortfolio = "tg PF"
-        if(bmReturn > tgReturn) {
-            whichPortfolio = "ef PF"
-            Spec = spec
-            setTargetReturn(Spec) = bmReturn
-            portfolio = efficientPortfolio(
-                data = pfSeries, spec = Spec, constraints)
-                efReturn = as.numeric(getTargetReturn(portfolio))
-            efReturn = as.numeric(getTargetReturn(portfolio))
-        }
-            
-        # Save Results:
-        portfolio@portfolio$benchmarkReturn = bmReturn
-        weights = round(getWeights(portfolio), digits = 3)
-        roll[i] = portfolio
-        
-        # Trace Optionally the Results:
-        if (trace) {    
-            cat(as.character(from[i]), as.character(to[i]))
-            cat("\t", round(tgReturn, digits = 3))
-            cat("\t", round(bmReturn, digits = 3))
-            cat("\t", whichPortfolio)
-            for (i in 1:nAssets) cat("\t", weights[i])
-            cat("\n")
-        }
-        
-        # Now you can do any "action" you want to do with the EFs:
-        if (!is.null(action)) {
-            fun = match.fun(action)
-            fun(roll, from, to, ...)
-        }         
-    }
-    
-    # Return Value:
-    invisible(roll)
-}
-
-
-# ------------------------------------------------------------------------------
-
-
 portfolioBacktesting =   
-function(formula, data, horizon, smoothing, trace = TRUE)   
-{
+function(formula, data, spec = portfolioSpec(), constraints = NULL, 
+portfolio = "minvariancePortfolio", horizon = "12m", smoothing = "6m", 
+trace = TRUE)   
+{   # A function implemented by Rmetrics
+
     # Description:
     #   Does backtesting on a simple rolling portfolio strategy
     
@@ -357,7 +288,7 @@ function(formula, data, horizon, smoothing, trace = TRUE)
     #       perfolio optimization will be performed.
     #   smoothing - the smoothing period of weights. Weights are exponentially
     #       smoothed given by this period measured in multiples of months.
-    #   trace - alogical value. Should the backtesting procedure be traced?
+    #   trace - a logical value. Should the backtesting procedure be traced?
     
     # Details:
     #   The rolling backtesting strategy is the following. 
@@ -383,6 +314,18 @@ function(formula, data, horizon, smoothing, trace = TRUE)
     # Settings:
     doplot = TRUE
     
+    # Get Horizon Window Parameter:
+    horizonLength = as.numeric(substr(horizon, 1, nchar(horizon)-1))
+    horizonUnit = substr(horizon, nchar(horizon), nchar(horizon))
+    stopifnot(horizonUnit == "m")
+    horizon = horizonLength
+    
+    # Get Smoothing Window Parameter:
+    smoothingLength = as.numeric(substr(smoothing, 1, nchar(smoothing)-1))
+    smoothingUnit = substr(smoothing, nchar(smoothing), nchar(smoothing))
+    stopifnot(smoothingUnit == "m")
+    smoothing = smoothingLength
+    
     # The Benchmark Label:
     benchmark = as.character(formula)[2]
     
@@ -391,11 +334,14 @@ function(formula, data, horizon, smoothing, trace = TRUE)
     
     # Trace the Specifications:
     if(trace) {
-        cat("\nPortfolio Backtesting\n")
+        cat("\nPortfolio Backtesting:\n")
+        cat("\nPortfolio Strategy: ", portfolio)
+        cat("\nPortfolio Type:     ", getType(spec))
+        cat("\nPortfolio Solver:   ", getSolver(spec))
         cat("\nAssets:             ", assets)
         cat("\nBenchmark:          ", benchmark)
-        cat("\nInvestment Horizon: ", horizon, "Months")
-        cat("\nUpdate Period:      ",    "1 Month")
+        cat("\nInvestment Horizon: ", horizon, horizonUnit)
+        cat("\nUpdate Period:      ", "1 m")
     }
     
     # The Data:
@@ -420,10 +366,8 @@ function(formula, data, horizon, smoothing, trace = TRUE)
     
     # Create Rolling Windows:
     rW = rollingWindows(x, paste(horizon, "m", sep = ""), "1m")
-    From = rW$from 
-    To = rW$to 
-    from = rW$from[-1] 
-    to = rW$to[-1]
+    from = rW$from 
+    to = rW$to 
     if(trace) {
         cat("\nStart Series:       ", as.character(start(x)))
         cat("\nEnd Series:         ", as.character(end(x)))
@@ -434,19 +378,29 @@ function(formula, data, horizon, smoothing, trace = TRUE)
         cat("\n\nPortfolio Optimization:")
         cat("\nOptimization Period\tTarget\tBenchmark\t Weights\n")
     }
-    Spec = portfolioSpec()
+    Spec = spec
     setEstimator(Spec) = c("mean", "shrink")
-    Constraints = NULL # "maxsumW[2:3]=0.7" 
-    tg = rollingBacktestPortfolio(
+    Constraints = constraints
+    tg = .rollingBacktestPortfolio(
         data = x[, assets], 
         spec = Spec, 
         constraints = Constraints,
         from = from, 
         to = to,
         benchmark = x[, benchmark],
+        portfolio = portfolio,
         action = NULL,
         trace = trace)
             
+    # Portfolio Status:
+    Status = (tg[[1]])@portfolio$status
+    for (i in 2:length(tg)) {
+        status = (tg[[i]])@portfolio$status
+        Status = rbind(Status, status)      
+    }
+    rownames(Status) = as.character(to)
+    colnames(Status) = "Status"
+      
     # Portfolio Investment Weights:
     #   Performance will be measured at time "i"
     #   Note, we have invested at period i-1 with the weights from period i-1
@@ -547,7 +501,7 @@ function(formula, data, horizon, smoothing, trace = TRUE)
     # Statistics:
     if (trace) {
         cat("\n")
-        print(portfolioBacktestingStats(ans))
+        print(.portfolioBacktestingStats(ans))
     }
     
     # Return Value:
@@ -558,7 +512,86 @@ function(formula, data, horizon, smoothing, trace = TRUE)
 # ------------------------------------------------------------------------------
 
 
-portfolioBacktestingStats =
+.rollingBacktestPortfolio =
+function(data, spec, constraints, from, to, benchmark, portfolio = 
+"minvariancePortfolio", action = NULL, trace = TRUE, ...)
+{   # A function implemented by Rmetrics
+  
+    # Description:
+    #   Computes strategy/efficient Portfolio dependent on a benchmark   
+    
+    # Notes:
+    #   An internal function called by function 'portfolioBacktesting()'
+      
+    # FUNCTION:
+    
+    # Settings:
+    portfolioFun = match.fun(portfolio)
+    
+    # Roll the Portfolio and return the Results in a List:
+    nAssets = dim(data)[2]
+    roll = list()
+    for (i in 1:length(from)) {
+        
+        # Cut Data from the Multivariate timeSeries object "data" of 
+        #   assets and from the Univariate "benchmark" time series:
+        pfSeries = cut(data, from = from[i], to = to[i]) 
+        bmSeries = cut(benchmark, from = from[i], to = to[i])  
+        
+        # Calculate "safe" Portfolio:
+        portfolio = portfolioFun(data = pfSeries, spec, constraints)
+        tgReturn = as.numeric(getTargetReturn(portfolio))
+        
+        # If the benchmark return was higher than the "safe" portfolio
+        #   target return, then we use the efficient portfolio with the
+        #   target return given by the benchmark portfolio:
+        bmReturn = mean(as.numeric(bmSeries))
+        whichPortfolio = "tg PF"
+        if(bmReturn > tgReturn) {
+            Spec = spec
+            setTargetReturn(Spec) = bmReturn
+            efPortfolio = efficientPortfolio(
+                data = pfSeries, spec = Spec, constraints = constraints)
+            # The efPortfolio may return with Status 1, i.e. it fails
+            #   then we return back to the "safe Portfolio"
+            Status = efPortfolio@portfolio$status
+            if(Status == 0) {
+                portfolio = efPortfolio
+                whichPortfolio = "ef PF"
+            }          
+        }
+            
+        # Save Results:
+        portfolio@portfolio$benchmarkReturn = bmReturn
+        weights = round(getWeights(portfolio), digits = 3)
+        roll[i] = portfolio
+        
+        # Trace Optionally the Results:
+        if (trace) {    
+            cat(as.character(from[i]), as.character(to[i]))
+            cat("\t", round(tgReturn, digits = 3))
+            cat("\t", round(bmReturn, digits = 3))
+            cat("\t", whichPortfolio)
+            for (i in 1:nAssets) cat("\t", weights[i])
+            cat("\n")
+        }
+        
+        # Now you can do any "action" you want to do with the EFs:
+        if (!is.null(action)) {
+            fun = match.fun(action)
+            fun(roll, from, to, ...)
+        }         
+    }
+    
+    # Return Value:
+    invisible(roll)
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.portfolioBacktestingStats =
 function(x) 
 {   # A function implemented by Rmetrics
 
@@ -567,6 +600,9 @@ function(x)
     
     # Arguments:
     #   x - an object as returned by the function portfolioBacktesting
+    
+    # Notes:
+    #   An internal function called by function 'portfolioBacktesting()'
     
     # FUNCTION:
     
@@ -592,9 +628,16 @@ function(x)
     
     # Combined Statistics:
     Stats = round(cbind(pfStats, bmStats), digits = 2)
-    colnames(Stats) = c("Portfolio", "Benchmark")
-    rownames(Stats) = c("Total Return", "Mean Return", "StandardDev Return",
-        "VaR 5% Quantile", "Var 10% Quantile", "5% Expected Shortfall",
+    colnames(Stats) = c(
+        "Portfolio", 
+        "Benchmark")
+    rownames(Stats) = c(
+        "Total Return", 
+        "Mean Return", 
+        "StandardDev Return",
+        "VaR 5% Quantile", 
+        "Var 10% Quantile", 
+        "5% Expected Shortfall",
         "Minimum Monthly Return")
     
     # Return Value:

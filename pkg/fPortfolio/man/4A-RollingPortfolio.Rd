@@ -10,7 +10,6 @@
 
 \alias{rollingPortfolioFrontier}
 
-\alias{rollingBacktestPortfolio}
 \alias{portfolioBacktesting}
 \alias{portfolioBacktestingStats}
 
@@ -33,30 +32,27 @@
     \code{rollingTangencyPortfolio} \tab Rolls a tangency portfolio, \cr
     \code{rollingMinvariancePortfolio} \tab Rolls a minimum risk portfolio, \cr
     \code{rollingPortfolioFrontier} \tab returns an efficient portfolio, \cr
-    \code{rollingBacktestPortfolio} \tab Rolls an optimal portfolio, \cr 
-    \code{portfolioBacktesting} \tab Does portfolio backtesting, \cr  
-    \code{portfolioBacktestingStats} \tab pComputes monthly portfolio statistics. }
+    \code{portfolioBacktesting} \tab Does portfolio backtesting. }
     
 }
     
 
 \usage{
-rollingWindows(x, period = "24m", by = "1m")
+rollingWindows(x, period = "12m", by = "1m")
 
 rollingCmlPortfolio(data, spec, constraints, from, to, action = NULL, 
-    title = NULL, description = NULL, ...)
+    title = NULL, description = NULL, \dots)
 rollingTangencyPortfolio(data, spec, constraints, from, to, action = NULL, 
-    title = NULL, description = NULL, ...)
+    title = NULL, description = NULL, \dots)
 rollingMinvariancePortfolio(data, spec, constraints, from, to, action = NULL, 
-    title = NULL, description = NULL, ...)
+    title = NULL, description = NULL, \dots)
     
 rollingPortfolioFrontier(data, spec, constraints, from, to, action = NULL, 
-    title = NULL, description = NULL, ...)
+    title = NULL, description = NULL, \dots)
    
-rollingBacktestPortfolio(data, spec, constraints, from, to, benchmark, 
-    action = NULL, trace = TRUE, title = NULL, description = NULL, ...) 
-portfolioBacktesting(formula, data, horizon, smoothing, trace = TRUE)
-portfolioBacktestingStats(x)
+portfolioBacktesting(formula, data, spec = portfolioSpec(), constraints = NULL, 
+    portfolio = "minvariancePortfolio", horizon = "12m", smoothing = "6m", 
+    trace = TRUE)
 }
 
 
@@ -65,15 +61,13 @@ portfolioBacktestingStats(x)
 
     \item{action}{
         [*Portfolio][*Frontier] - \cr
-        .
-        }
-    \item{benchmark}{
-        [rollingOptimalPortfolio] - \cr
-        .
+        a  character string naming a user defined function. This function
+        is optionally applied after each rolling step.
         }
     \item{by}{
         [rollingWindows] - \cr
-        .
+        a character string, by default \code{"1m"}, which denotes 1
+        month. The shift by which the portfolio is rolled.
         }
     \item{constraints}{
         [*Portfolio][*Frontier] - \cr
@@ -86,7 +80,6 @@ portfolioBacktestingStats(x)
         a list, having a statistics named list, having named entries 'mu' and 
         'Sigma', containing the information of the statistics. \cr
         [*Backtesting] - \cr
-        .
         }
     \item{description}{
         [*Portfolio][*Frontier] - \cr
@@ -95,23 +88,37 @@ portfolioBacktestingStats(x)
         }
     \item{formula}{
         [*Backtesting] - \cr
-        .
+        a formula describing the benchmark and assets used for backtesting
+        in the form \code{backtest ~ assetA + ... + assetZ}. Here,
+        \code{backtest} and \code{asset*} are column names of the
+        \code{data} set.
         }
     \item{from, to}{
         [*Portfolio][*Frontier] - \cr
-        .
+        a vector of S4 \code{timeDate} objects which denote the starting
+        and ending dates for the investigation.
         }
     \item{horizon}{
         [*Backtesting] - \cr
-        .
+        a character string, by default \code{"12m"}, which denotes 12
+        months. The period over which the portfolio is rolled.
         }
     \item{period}{
         [rollingWindows] - \cr
-        .
+        a character string, by default \code{"12m"}, which denotes 12
+        months. The period over which the portfolio is rolled.
+        }
+    \item{portfolio}{
+        [portfolioBacktesting] - \cr
+        a character string, the function name of a user defined 
+        portfolio function, which defines the rolling portfolio
+        strategy.
         }
     \item{smoothing}{
-        [*Backtesting] - \cr
-        .
+        [portfolioBacktesting] - \cr
+        a character string, by default \code{"6m"}, which denotes 6
+        months. The period over which the rolling weights are smoothed
+        by an exponential moving average.
         }
     \item{spec}{
         [*Portfolio][*Frontier] - \cr
@@ -126,18 +133,15 @@ portfolioBacktestingStats(x)
         default NULL.
         }
     \item{trace}{
-        [*Backtesting][*OptimalPortfolio] - \cr
-        .
+        [portfolioBacktesting][*OptimalPortfolio] - \cr
+        a logical value. Should the calculataion be traced?
         }
     \item{x}{
         [rollingWindows] - \cr
         an S4 object of class \code{timeSeries} from which the rolling
         window frames will be created. The length of these frames is given
         by the argument \code{period} and they are shifted by the value
-        specified by the argument \code{by}. \cr
-        [portfolioBacktestingStats] - \cr
-        an object as returned by the function portfolioBacktesting
-        
+        specified by the argument \code{by}.
         }
     \item{\dots}{
         optional arguments to be passed.\cr
@@ -166,7 +170,7 @@ portfolioBacktestingStats(x)
     The function \code{rollingPortfolioFrontier} ...
     
     
-    \bold{Backtesting:}
+    \bold{Rolling Backtesting:}
     \cr\cr   
     The functions  ...
 
@@ -189,17 +193,8 @@ portfolioBacktestingStats(x)
     returns ...
     \cr
     
-    \code{rollingBacktestPortfolio}\cr
-    returns ...
-    \cr
-    
     \code{portfolioBacktesting}\cr
     returns ...
-    \cr
-    
-    \code{portfolioBacktestingStats}\cr
-    returns ...
-    \cr
     
 }
 

@@ -159,7 +159,7 @@ function(object)
     
     # FUNCTION:
     
-    # Get Specification Type:
+    # Get Type:
     if (class(object) == "fPFOLIOSPEC") {
         ans = object@model$type[1]
     } else if (class(object) == "fPORTFOLIO") {
@@ -188,7 +188,11 @@ function(object)
     # FUNCTION:
     
     # Get Solver:
-    ans = object@specification$spec@solver$type
+    if (class(object) == "fPFOLIOSPEC") {
+        ans = object@solver$type[1]
+    } else if (class(object) == "fPORTFOLIO") {
+        ans = object@specification$spec@solver$type[1]
+    }
     
     # Return Value:
     ans  
