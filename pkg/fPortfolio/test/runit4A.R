@@ -230,9 +230,9 @@ function()
     windows = rollingWindows(x = Data, period = "12m", by = "1m")
     
     # Mean-Variance Backtesting:
-    par(mfrow = c(2,2), cex = 0.7)
+    par(mfrow = c(2, 2), cex = 0.7)
     portfolioBacktesting(
-        formula = LP40 ~ SBI + SPI + SWIIT, 
+        formula = LP60 ~ SBI + SPI + SWIIT, 
         data = Data, 
         spec = portfolioSpec(), 
         constraints = NULL, 
@@ -251,6 +251,46 @@ function()
     # 5% Expected Shortfall      -1.63     -3.90
     # Minimum Monthly Return     -2.07     -4.71
         
+    # Return Value:
+    return()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.portfolioBacktesting.MeanVariance.myPortfolio = 
+function()
+{   
+    if (FALSE)  {
+    
+        myPortfolio = 
+        function(data, spec, constraints)
+        {
+            strategyPortfolio = tangencyPortfolio(data, spec, constraints)
+            Status = strategyPortfolio@portfolio$status
+            if(Status == 1)  
+                strategyPortfolio = minvariancePortfolio(data, spec, contraints)
+            strategyPortfolio
+        }
+        
+        # Mean-Variance Backtesting:
+            par(mfrow = c(2, 2), cex = 0.7)
+            portfolioBacktesting(
+                formula = LP60 ~ SBI + SPI + SWIIT, 
+                data = Data, 
+                spec = portfolioSpec(), 
+                constraints = NULL, 
+                portfolio = "myPortfolio", 
+                horizon = "24m", 
+                smoothing = "24m", 
+                trace = TRUE)   
+                
+                
+        # CHECK DOESN't WORK !!!
+    
+    }
+            
     # Return Value:
     return()
 }
