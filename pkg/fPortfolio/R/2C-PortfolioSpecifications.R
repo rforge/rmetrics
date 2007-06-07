@@ -33,30 +33,19 @@
 #  portfolioSpec                 Specifies a portfolio
 #  show.fPFOLIOSPEC              Print method for 'fPFOLIOSPEC' objects
 # FUNCTION:                     MODEL SLOT:
-#  setType                       Sets type of portfolio Optimization
-#  setType<-                      alternative function call
-#  setEstimator                  Sets name of mean-covariance estimator
-#  setEstimator<-                 alternative function call
-#  setParams                     Sets optional model parameters
-#  setParams<-                    alternative function call
+#  setType<-                     Sets type of portfolio Optimization
+#  setEstimator<-                Sets name of mean-covariance estimator
+#  setParams<-                   Sets optional model parameters
 # FUNCTION:                     PORTFOLIO SLOT:
-#  setWeights                    Sets weights vector
-#  setWeights<-                   alternative function call
-#  setTargetReturn               Sets target return value
-#  setTargetReturn<-              alternative function call
-#  setTargetAlpha                Sets CVaR target alpha value
-#  setTargetAlpha<-               alternative function call
-#  setRiskFreeRate               Sets risk-free rate value
-#  setRiskFreeRate<-              alternative function call
-#  setNFrontierPoints            Sets number of frontier points
-#  setNFrontierPoints<-           alternative function call
-#  setReturnRange                Sets range of target returns
-#  setReturnRange<-               alternative function call
-#  setRiskRange                  Sets range of target risks
-#  setRiskRange<-                 alternative function call
+#  setWeights<-                  Sets weights vector
+#  setTargetReturn<-             Sets target return value
+#  setTargetAlpha<-              Sets CVaR target alpha value
+#  setRiskFreeRate<-             Sets risk-free rate value
+#  setNFrontierPoints<-          Sets number of frontier points
+#  setReturnRange<-              Sets range of target returns
+#  setRiskRange<-                Sets range of target risks
 # FUNCTION:                     SOLVER SLOT:
-#  setSolver                     Sets name of desired solver
-#  setSolver<-                    alternative function call
+#  setSolver<-                   Sets name of desired solver
 # FUNCTION:                     Classical and Robust Estimators
 #  portfolioStatistics           Estimates mu and Sigma statistics
 #  portfolioData                 Creates portfolio data list
@@ -241,32 +230,6 @@ setMethod("show", "fPFOLIOSPEC", show.fPFOLIOSPEC)
 ################################################################################
 
 
-setType =
-function(spec = portfolioSpec(), type = c("MV", "LPM", "CVaR"))
-{   # A function implemented by Rmetrics
-
-    # Description:                
-    #   Sets type of portfolio optimization
-    
-    # FUNCTION:
-    
-    # Check Validity:
-    # ...
-    
-    # Type ?
-    type = match.arg(type)
-    spec@model$type = type
-    if (type == "LPM") spec@model$estimator = c("lpm", "lpm")
-    if (type == "CVaR") setSolver(spec) <- "RlpSolve"
-    if (is.null(spec@portfolio$targetAlpha)) setTargetAlpha(spec) = 0.05
-
-    # Return Value:
-    spec
-}
-
-
-# ------------------------------------------------------------------------------
-
 
 "setType<-" =
 function(spec, value)
@@ -285,29 +248,6 @@ function(spec, value)
     if (value == "LPM") spec@model$estimator = c("lpm", "lpm")
     if (value == "CVaR") setSolver(spec) <- "RlpSolve"
     if (is.null(spec@portfolio$targetAlpha)) setTargetAlpha(spec) = 0.05
-    
-    # Return Value:
-    spec
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-setEstimator = 
-function(spec = portfolioSpec(), estimator = c("mean", "cov"))
-{   # A function implemented by Rmetrics
-
-    # Description:                  
-    #   Sets name of mean-covariance estimator
-    
-    # FUNCTION:
-    
-    # Check Validity:
-    # ...
-    
-    # Estimator ?
-    spec@model$estimator = estimator 
     
     # Return Value:
     spec
@@ -340,29 +280,6 @@ function(spec, value)
 # ------------------------------------------------------------------------------
 
 
-setParams = 
-function(spec = portfolioSpec(), params = list())
-{   # A function implemented by Rmetrics
-
-    # Description:                  
-    #   Sets optional parameters
-    
-    # FUNCTION:
-    
-    # Check Validity:
-    # ...
-    
-    # Estimator ?
-    spec@model$params = params 
-    
-    # Return Value:
-    spec
-}
-
-
-# ------------------------------------------------------------------------------
-
-
 "setParams<-" = 
 function(spec, value)
 {   # A function implemented by Rmetrics
@@ -377,29 +294,6 @@ function(spec, value)
     
     # Estimator ?
     spec@model$params = value 
-    
-    # Return Value:
-    spec
-}
-
-
-################################################################################
-
-
-setWeights = 
-function(spec = portfolioSpec(), weights = NULL)
-{   # A function implemented by Rmetrics
-
-    # Description:                    
-    #   Sets weights vector
-    
-    # FUNCTION:
-    
-    # Weights ?
-    spec@portfolio$weights = weights
-    if(!is.null(weights)) {
-        spec@portfolio$targetReturn = NULL
-    }
     
     # Return Value:
     spec
@@ -425,32 +319,6 @@ function(spec, value)
     spec@portfolio$weights = value
     if(!is.null(value)) {
         spec@portfolio$targetReturn = NULL
-    }
-    
-    # Return Value:
-    spec
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-setTargetReturn = 
-function(spec = portfolioSpec(), targetReturn = NULL)
-{   # A function implemented by Rmetrics
-
-    # Description:                                   
-    #   Sets target return value
-    
-    # FUNCTION:
-    
-    # Check Validity:
-    # ...
-    
-    # Target Return ?
-    spec@portfolio$targetReturn = targetReturn 
-    if(!is.null(targetReturn)) {
-        spec@portfolio$weights = NULL
     }
     
     # Return Value:
@@ -487,29 +355,6 @@ function(spec, value)
 # ------------------------------------------------------------------------------
 
 
-setTargetAlpha = 
-function(spec = portfolioSpec(), targetAlpha = NULL)
-{   # A function implemented by Rmetrics
-
-    # Description:                                   
-    #   Sets target return value
-    
-    # FUNCTION:
-    
-    # Check Validity:
-    # ...
-    
-    # Target Alpha ?
-    spec@portfolio$targetAlpha = targetAlpha 
-    
-    # Return Value:
-    spec
-}
-
-
-# ------------------------------------------------------------------------------
-
-
 "setTargetAlpha<-" = 
 function(spec, value)
 {   # A function implemented by Rmetrics
@@ -533,29 +378,6 @@ function(spec, value)
 # ------------------------------------------------------------------------------
 
 
-setRiskFreeRate = 
-function(spec = portfolioSpec(), riskFreeRate = 0)
-{   # A function implemented by Rmetrics
-
-    # Description:                                   
-    #   Sets risk-free rate value
-    
-    # FUNCTION:
-    
-    # Check Validity:
-    stopifnot(is.numeric(riskFreeRate))
-    
-    # Risk-Free Rate ?
-    spec@portfolio$riskFreeRate = riskFreeRate 
-    
-    # Return Value:
-    spec
-}
-
-
-# ------------------------------------------------------------------------------
-
-
 "setRiskFreeRate<-" <- 
 function(spec, value)
 {   # A function implemented by Rmetrics
@@ -570,30 +392,6 @@ function(spec, value)
     
     # Risk-Free Rate ?
     spec@portfolio$riskFreeRate = value
-    
-    # Return Value:
-    spec
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-setNFrontierPoints = 
-function(spec = portfolioSpec(), nFrontierPoints = 50)
-{   # A function implemented by Rmetrics
-
-    # Description:                                
-    #   Sets number of frontier points
-    
-    # FUNCTION:
-    
-    # Check Validity:
-    stopifnot(is.numeric(nFrontierPoints))
-    stopifnot(nFrontierPoints > 0)
-    
-    # Number of Frontier Points ?
-    spec@portfolio$nFrontierPoints = nFrontierPoints
     
     # Return Value:
     spec
@@ -627,29 +425,6 @@ function(spec, value)
 # ------------------------------------------------------------------------------
 
 
-setReturnRange = 
-function(spec = portfolioSpec(), returnRange = NULL)
-{   # A function implemented by Rmetrics
-
-    # Description:                                    
-    #   Sets range of target returns
-    
-    # FUNCTION:
-    
-    # Check Validity:
-    #
-    
-    # Return Range ?
-    spec@portfolio$returnRange = returnRange
-    
-    # Return Value:
-    spec
-}
-
-
-# ------------------------------------------------------------------------------
-
-
 "setReturnRange<-" = 
 function(spec = portfolioSpec(), value)
 {   # A function implemented by Rmetrics
@@ -664,29 +439,6 @@ function(spec = portfolioSpec(), value)
     
     # Return Range ?
     spec@portfolio$returnRange = value
-    
-    # Return Value:
-    spec
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-setRiskRange = 
-function(spec = portfolioSpec(), riskRange = NULL)
-{   # A function implemented by Rmetrics
-
-    # Description:                                      
-    #   Sets range of target risks
-    
-    # FUNCTION:
-    
-    # Check Validity:
-    #
-    
-    # Risk Range ?
-    spec@portfolio$riskRange = riskRange
     
     # Return Value:
     spec
@@ -718,31 +470,6 @@ function(spec = portfolioSpec(), value)
 
 ################################################################################
  
-
-setSolver = 
-function (spec = portfolioSpec(), 
-solver = c("RQuadprog", "RDonlp2", "RlpSolve")) 
-{   # A function implemented by Rmetrics
-
-    # Description:
-    
-    # FUNCTION:
-    
-    # Valid Solvers:
-    solver = match.arg(solver)
-    validSolvers = c("RQuadprog", "RDonlp2", "RlpSolve")
-    stopifnot(value %in% validSolvers)
-    
-    # Set Solver:
-    spec@solver$type = solver
-    
-    # Return Value:
-    spec
-}
-
-
-# ------------------------------------------------------------------------------
-
 
 "setSolver<-" <- function(spec, value)
 {   # A function implemented by Rmetrics
