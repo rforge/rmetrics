@@ -36,7 +36,7 @@
 #  getSpecification              Extracts @specification Slot
 #  getType                       Extract portfolio type from specification
 #  getSolver                     Extract solver from specification
-# FUNCTION:                     PORTFOLIO S4 EXTRACTORS FROM SPECIFICATION SLOT:
+# FUNCTION:                     PORTFOLIO S4 EXTRACTORS FROM PORTFOLIO SLOT:
 #  getPortfolio                  Extracts @portfolio Slot
 #  getFrontier                   Extracts the efficient frontier
 #  getWeights                    Extracts weights from a portfolio object
@@ -144,6 +144,34 @@ function(object)
 
 
 # ------------------------------------------------------------------------------
+
+
+.getType =
+function(object, ...)
+{
+    UseMethod(".getType")
+}
+
+
+.getType.default =
+function(object, ...)
+{
+    object$type
+}
+
+
+.getType.fPFOLIOSPEC =
+function(object)
+{
+    object@model$type[1]
+}
+
+
+.getType.fPORTFOLIO =
+function(object, ...)
+{
+    object@specification$spec@model$type[1]
+}
 
 
 getType =

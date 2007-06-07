@@ -275,7 +275,7 @@ function(data, spec, constraints)
     # FUNCTION:
  
     # Set Risk Free Rate:
-    setRiskFreeRate(Spec) <- 0
+    setRiskFreeRate(spec) <- 0
     
     # Call cmlPorfolio unction:
     ans = .cmlConstrainedCVaRPortfolio(data, spec, constraints)
