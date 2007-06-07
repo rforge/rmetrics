@@ -11,29 +11,18 @@
 
 \alias{portfolioSpec}
 
-\alias{setType}
 \alias{setType<-}
-\alias{setEstimator}
 \alias{setEstimator<-}
-\alias{setParams}
 \alias{setParams<-}
 
-\alias{setWeights}
 \alias{setWeights<-}
-\alias{setTargetReturn}
 \alias{setTargetReturn<-}
-\alias{setTargetAlpha}
 \alias{setTargetAlpha<-}
-\alias{setRiskFreeRate}
 \alias{setRiskFreeRate<-}
-\alias{setNFrontierPoints}
 \alias{setNFrontierPoints<-}
-\alias{setReturnRange}
 \alias{setReturnRange<-}
-\alias{setRiskRange}
 \alias{setRiskRange<-}
 
-\alias{setSolver}
 \alias{setSolver<-}
 
 
@@ -80,29 +69,18 @@ portfolioSpec(
     title = NULL, description = NULL)
 show.fPFOLIOSPEC(object)
 
-setType(spec = portfolioSpec(), type = c("MV", "LPM", "CVaR"))
 setType(spec) <- value
-setEstimator(spec = portfolioSpec(), estimator = c("mean", "cov"))
 setEstimator(spec) <- value
-setParams(spec = portfolioSpec(), params = list())
 setParams(spec) <- value
 
-setWeights(spec = portfolioSpec(), weights = NULL)
 setWeights(spec) <- value
-setTargetReturn(spec = portfolioSpec(), targetReturn = NULL)
 setTargetReturn(spec) <- value
-setTargetAlpha(spec = portfolioSpec(), targetAlpha = NULL)
 setTargetAlpha(spec) <- value
-setRiskFreeRate(spec = portfolioSpec(), riskFreeRate = 0)
 setRiskFreeRate(spec) <- value
-setNFrontierPoints(spec = portfolioSpec(), nFrontierPoints = 50)
 setNFrontierPoints(spec) <- value
-setReturnRange(spec = portfolioSpec(), returnRange = NULL)
 setReturnRange(spec) <- value
-setRiskRange(spec = portfolioSpec(), riskRange = NULL)
 setRiskRange(spec) <- value
 
-setSolver(spec = portfolioSpec(), solver = c("RQuadprog", "RDonlp2", "RlpSolve"))
 setSolver(spec) <- value
 }
 
@@ -379,9 +357,7 @@ setSolver(spec) <- value
 \examples{
 ## portfolioSpec -
    # Show Default Portfolio Specifications:
-   portfolioSpec()
-   # Modify Specifications - Set the Number of Frontier Points:
-   Spec = portfolioSpec(portfolio = list(nFrontierPoints = 150))
+   Spec = portfolioSpec()
    # Change Risk Free Rate
    setRiskFreeRate(Spec) = 3
    Spec
@@ -393,8 +369,8 @@ setSolver(spec) <- value
    Data
    # Estimating Mean and Covariance with mean()and cov()
    portfolioStatistics(Data)
-   # Set Estimators to "mcd" Estimator:
-   Spec = setEstimator(estimator = c("mean", "shrink"))
+   # Set Covariance Estimator to "shrink" Estimator:
+   setEstimator(Spec) = c("mean", "shrink")
    # Estimating Mean and Covariance MCD
    portfolioStatistics(Data, Spec)
 }
