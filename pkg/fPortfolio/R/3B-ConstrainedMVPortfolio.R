@@ -246,7 +246,7 @@ function(data, spec, constraints)
         ans = .efficientConstrainedMVPortfolio(data = data, spec = spec,
             constraints = constraints)
         f = (x - spec@portfolio$riskFreeRate) / getTargetRisk(ans)[1]  
-        attr(f, "targetRisk") <- getTargetRisk(ans)   
+        attr(f, "targetRisk") <- getTargetRisk(ans)[1]  
         attr(f, "weights") <- getWeights(ans) 
         f 
     }
@@ -264,9 +264,18 @@ function(data, spec, constraints)
     targetReturn = spec@portfolio$targetReturn = as.numeric(cml$maximum)  
     names(targetReturn) <- spec@model$estimator[1]
     
-    # Get Target Return:
-    targetRisk = as.numeric(attr(cml$objective, "targetRisk"))
-    names(targetRisk) <- spec@model$estimator[2]
+    # Get Target Risk:
+    # targetRisk = as.numeric(attr(cml$objective, "targetRisk"))
+    # names(targetRisk) <- spec@model$estimator[2]
+    
+    # Compute Target Risks:
+    covTargetRisk = as.numeric(attr(cml$objective, "targetRisk"))
+    x = data$series@Data %*% weights
+    VaR = quantile(x, targetAlpha, type = 1)
+    CVaR = VaR - 0.5*mean(((VaR-x) + abs(VaR-x))) / targetAlpha
+    targetRisk = c(covTargetRisk, CVaR, VaR)
+    names(targetRisk) <- 
+        c("cov", paste(c("CVaR.", "VaR."), targetAlpha*100, "%", sep = ""))
         
     # Return Value:
     new("fPORTFOLIO", 
@@ -362,6 +371,7 @@ function(data, spec, constraints)
             constraints = constraints)
         f = getTargetRisk(ans)[1]
         attr(f, "targetReturn") <- getTargetReturn(ans)   
+        attr(f, "targetRisk") <- getTargetRisk(ans)[1]  
         attr(f, "weights") <- getWeights(ans) 
         f
     }
@@ -381,8 +391,17 @@ function(data, spec, constraints)
     names(targetReturn) <- spec@model$estimator[1]
     
     # Get Target Risk:
-    targetRisk = as.numeric(minVar$objective)      
-    names(targetRisk) <- spec@model$estimator[2]
+    # targetRisk = as.numeric(minVar$objective)      
+    # names(targetRisk) <- spec@model$estimator[2]
+    
+    # Compute Target Risks:
+    covTargetRisk = as.numeric(attr(minVar$objective, "targetRisk"))
+    x = data$series@Data %*% weights
+    VaR = quantile(x, targetAlpha, type = 1)
+    CVaR = VaR - 0.5*mean(((VaR-x) + abs(VaR-x))) / targetAlpha
+    targetRisk = c(covTargetRisk, CVaR, VaR)
+    names(targetRisk) <- 
+        c("cov", paste(c("CVaR.", "VaR."), targetAlpha*100, "%", sep = ""))
     
     # Return Value:
     new("fPORTFOLIO", 
@@ -458,7 +477,7 @@ function(data, spec, constraints)
         nextWeights = nextPortfolio@portfolio$weights
         names(nextWeights) = names(mu)
         
-        #if (solverType == "RQuadprog")
+        # if (solverType == "RQuadprog")
             status = c(status, nextPortfolio@portfolio$status)
         targetWeights = rbind(targetWeights, t(nextWeights))
     }

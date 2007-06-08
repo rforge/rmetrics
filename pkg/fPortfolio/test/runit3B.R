@@ -273,7 +273,6 @@ function()
 test.efficientConstrainedMVPortfolio.RDonlp2 = 
 function()
 {
-    
     # Data:
     Data = as.timeSeries(data(smallcap.ts))
     Data = Data[, c("BKE", "GG", "GYMB", "KRON")]

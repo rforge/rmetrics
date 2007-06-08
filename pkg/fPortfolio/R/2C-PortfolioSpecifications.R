@@ -54,12 +54,9 @@
 
 setClass("fPFOLIOSPEC", 
     representation(
-        call = "call",
         model = "list",
         portfolio = "list",
-        solver = "list",
-        title = "character",
-        description = "character")  
+        solver = "list")  
 )
 
 
@@ -76,15 +73,14 @@ portfolio = list(
     weights = NULL, 
     targetReturn = NULL, 
     targetAlpha = NULL,
+    targetRisk = NULL, 
     riskFreeRate = 0, 
     nFrontierPoints = 50, 
     returnRange = NULL, 
     riskRange = NULL),
 solver = list(
     type = c("RQuadprog", "RDonlp2", "RlpSolve"),
-    trace = FALSE),  
-title = NULL, 
-description = NULL)
+    trace = FALSE))
 {   # A function implemented by Rmetrics
 
     # Description:
@@ -108,11 +104,13 @@ description = NULL)
     stopifnot(model$estimator[2] %in% model.estimator.cov)
     stopifnot(solver$type %in% solver.type)
     
-    # Model:
-    Model = list(type = "MV", estimator = c("mean", "cov"))
+    # Model Slot:
+    Model = list(
+        type = "MV", 
+        estimator = c("mean", "cov"))
     Model[(Names <- names(model))] <- model
     
-    # Portfolio:
+    # Portfolio Slot:
     Portfolio = list(
         weights = NULL, 
         targetReturn = NULL, 
@@ -130,21 +128,16 @@ description = NULL)
     if(!is.null(portfolio$targetReturn)) checkPortfolio = checkPortfolio + 1
     stopifnot(checkPortfolio <= 1)
   
-    # Add Solver Solver:
-    Solver = list(type = solver$type[1], trace = solver$trace)
-    
-    # Add Title and Description:
-    if (is.null(title)) title = "Portfolio Specification"
-    if (is.null(description)) description = .description()
+    # Solver Slot:
+    Solver = list(
+        type = solver$type[1], 
+        trace = solver$trace)
     
     # Return Value:
     new("fPFOLIOSPEC", 
-        call = match.call(),
         model = Model,
         portfolio = Portfolio,
-        solver = Solver,
-        title = title, 
-        description = description)    
+        solver = Solver)    
 } 
 
 
@@ -162,14 +155,6 @@ function(object)
     #   object - an object of class "fPFOLIOSPEC"
     
     # FUNCTION:
-    
-    # Title:
-    cat("\nTitle:\n ")
-    cat(getTitle(object), "\n")
-    
-    # Call:
-    cat("\nCall:\n ")
-    print.default(getCall(object))
     
     # Model:
     cat("\nPortfolio Type:\n ")
@@ -211,10 +196,6 @@ function(object)
         cat("\nTarget Risk Range:\n")
         print(object@portfolio$riskRange)
     }
-   
-    # Description:
-    cat("\nDescription:\n ")
-    cat(getDescription(object), "\n")
         
     # Return Value: 
     invisible(object)
@@ -241,7 +222,7 @@ function(spec, value)
     # FUNCTION:
     
     # Check Validity:
-    # ...
+    #   ...
     
     # Type ?
     spec@model$type = value
@@ -267,7 +248,7 @@ function(spec, value)
     # FUNCTION:
     
     # Check Validity:
-    # ...
+    #   ...
     
     # Estimator ?
     spec@model$estimator = value 
@@ -290,7 +271,7 @@ function(spec, value)
     # FUNCTION:
     
     # Check Validity:
-    # ...
+    #   ...
     
     # Estimator ?
     spec@model$params = value 
@@ -313,7 +294,7 @@ function(spec, value)
     # FUNCTION:
     
     # Check Validity:
-    # ...
+    #   ...
     
     # Weights ?
     spec@portfolio$weights = value
@@ -339,7 +320,7 @@ function(spec, value)
     # FUNCTION:
     
     # Check Validity:
-    # ...
+    #   ...
     
     # Target Return ?
     spec@portfolio$targetReturn = value
@@ -365,7 +346,7 @@ function(spec, value)
     # FUNCTION:
     
     # Check Validity:
-    # ...
+    #   ...
     
     # Estimator ?
     spec@portfolio$targetAlpha = value 
@@ -389,6 +370,7 @@ function(spec, value)
     
     # Check Validity:
     stopifnot(is.numeric(value))
+    stopifnot(length(value) == 1)
     
     # Risk-Free Rate ?
     spec@portfolio$riskFreeRate = value
@@ -412,6 +394,7 @@ function(spec, value)
     
     # Check Validity:
     stopifnot(is.numeric(value))
+    stopifnot(length(value == 1))
     stopifnot(value > 0)
     
     # Risk-Free Rate ?
@@ -435,7 +418,7 @@ function(spec = portfolioSpec(), value)
     # FUNCTION:
     
     # Check Validity:
-    #
+    #   ...
     
     # Return Range ?
     spec@portfolio$returnRange = value
@@ -458,7 +441,7 @@ function(spec = portfolioSpec(), value)
     # FUNCTION:
     
     # Check Validity:
-    #
+    #   ...
     
     # Risk Range ?
     spec@portfolio$riskRange = value

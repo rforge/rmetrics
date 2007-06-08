@@ -58,15 +58,11 @@
 
 
 \usage{
-portfolioSpec(
-    model = list(type = c("MV", "CVaR"), estimator = c("mean", "cov"), 
-        params = list()), 
-    portfolio = list(weights = NULL, targetReturn = NULL, targetAlpha = NULL,
-        riskFreeRate = 0, nFrontierPoints = 50, returnRange = NULL, 
-        riskRange = NULL),
-    solver = list(type = c("RQuadprog", "RDonlp2", "RlpSolve"), 
-        trace = FALSE), 
-    title = NULL, description = NULL)
+portfolioSpec(model = list(type = c("MV", "CVaR"), estimator = c("mean", "cov"), 
+    params = list()), portfolio = list(weights = NULL, targetReturn = NULL, 
+    targetAlpha = NULL, targetRisk = NULL, riskFreeRate = 0, nFrontierPoints = 50, 
+    returnRange = NULL, riskRange = NULL), solver = list(type = c("RQuadprog", 
+    "RDonlp2", "RlpSolve"), trace = FALSE))
 show.fPFOLIOSPEC(object)
 
 setType(spec) <- value
@@ -87,18 +83,12 @@ setSolver(spec) <- value
 
 \arguments{
 
-    \item{description}{
-        [portfolioSpec] - \cr
-        a character string, allowing for a brief project description, by 
-        default \code{NULL}, i.e. Date and User.
-        }
     \item{estimator}{
         [setEstimator] - \cr
-        a character string vector, determining which estimation type should 
-        be used calculating mean and covariance matrix, by default 
-        \code{"mean"} and \code{"cov"} meaning functions mean() and cov(). 
-        Other estimators are "mcd", using an mcd estimator, and 
-        \code{"shrink"}, using an shrinkage estimator.
+        a character string vector, determining which estimation type should be
+        used calculating mean and covariance matrix, by default "mean" and "cov"
+        meaning functions mean() and cov(). Other estimators are "mcd", using 
+        an mcd estimator, and "shrink", using an shrinkage estimator.
         See section details for further information.
         }
     \item{model}{
@@ -130,7 +120,8 @@ setSolver(spec) <- value
         [setReturnRange] - \cr
         a numerical vector, setting return range for calculation of efficient
         frontier, by default NULL, i.e. range of returns from input data is 
-        taken.}
+        taken.
+        }
     \item{riskFreeRate}{
         [setRiskFreeRate] - \cr
         a integer value, determining the percentage of the yearly return for a
@@ -157,16 +148,15 @@ setSolver(spec) <- value
         a numerical value, setting the desired portfolio return,
         by default return of the tangency portfolio.
         }
-    \item{title}{
-        [portfolioSpec] - \cr
-        a character string, containing the title for the object,
-        by default NULL, i.e. "Portfolio Specification".
+    \item{targetRisk}{
+        [setTargetRisk] - \cr
+        a numerical value, setting the desired portfolio risk,
+        only for the dual portfolio calculation.
         }
     \item{type}{
         [setType] - \cr
         a character string, determining which risk measure should be taken,
-        by default "MV" meaning mean-variance. Other types are "CVaR" and 
-        "LPM".
+        by default "MV" meaning mean-variance. Other types are "CVaR" and "LPM".
         }
     \item{value}{
         a value for that component of \code{spec} to be set.
@@ -178,7 +168,7 @@ setSolver(spec) <- value
         are set.
         }
 
-}
+}       
 
 
 \details{
@@ -195,28 +185,37 @@ setSolver(spec) <- value
             }
         \item{@model}{
             a list, setting the \code{type} of portfolio to be optimized, 
-            and the mean/covariance \code{estimator} to be applied:\cr
-            \code{type="MV"} a character string denoting the type of
-                portfolio, currently the only implemented type is the
-                Mean-Variance Markowitz Portfolio.
+            and the mean/covariance \code{estimator} to be applied:
+            \cr
+            \code{type=c("MV","CVaR")} a character string denoting the type of
+                portfolio, the implemented types are the
+                Mean-Variance Markowitz Portfolio, \code{"MV"}, and the
+                Mean-CVaR Portfolio, \code{"CVaR"}.
                 \cr
             \code{estimator=c("mean","cov")} a vector of two character
                 strings, the first denoting the mean estimator, and the 
                 second the covariance estimator. Additional meaningful 
                 selections include robust covariance estimators, e.g. 
                 \code{c("mean","mcd")}, or \code{c("mean","shrink")}.
+                \cr
             \code{params=list()} a list of optional model parameters,
                 currently not used.
             }     
         \item{@portfolio}{
             a list, settings portfolio parameters including predefined
             weights, target return, risk free rate, number of frontier
-            points, and the return and risk range:\cr 
+            points, and the return and risk range:
+            \cr 
             \code{weights=NULL} a numeric vector specifying the portfolio 
                 weights.
                 \cr
             \code{targetReturn=NULL} a numeric value specifying the target 
-                return. The default value set the target return.\cr
+                return. The default value sets the target return.
+                \cr
+            \code{targetAlpha=NULL} a numeric value specifying the target 
+                alpha confidence level for CVaR portfolio optimization. 
+                The default value sets the target return.
+                \cr
             \code{riskFreeRate=0} a numeric value specifying the risk free 
                 rate.
                 \cr  
@@ -233,19 +232,19 @@ setSolver(spec) <- value
             a list, setting the type of solver to be used for portfolio
             optimization:
             \cr 
-            \code{type=c("RQuadprog", "RDonlp2")}
+            \code{type=c("RQuadprog", "RDonlp2", "RlpSolve")}
             }
         \item{@title}{
-            a title string, allowing to set a project title. 
+            a title string, with a default project title. 
             }
         \item{@description}{
-            a character string, allowing for a brief project description.
+            a character string, with a default project description.
             }
     }
     
-    The function \code{portfolioSpec} sets the values for the default 
-    specification structure or allows to create a specification structure
-    from scratch.
+    The function \code{portfolioSpec()} sets the values for the default 
+    specification structure. The default settings can be modified using
+    the assignment functions for the specification structure.
     \cr
      
     \bold{Model:}
