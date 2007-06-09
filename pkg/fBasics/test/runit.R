@@ -37,7 +37,8 @@ if (FALSE) {
     require(RUnit)
     testIndex = c(
         "1A", 
-        "2A", "2B", "2D", 
+      # "2A", "2B", 
+        "2D",  
         "3A",  
         "5A", "5B")
     File = "C:/Rmetrics/SVN/trunk/fBasics/test/runit"

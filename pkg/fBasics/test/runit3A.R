@@ -65,11 +65,7 @@ test.plotLabels =
 function()
 {
     # MSFT Opening Prices:
-    URL = "http://www.itp.phys.ethz.ch/econophysics/R/data/textbooks/"
-    SRC = "ZivotWang/data/msft.dat.csv"
-    DATA = paste(URL, SRC, sep = "") 
-    download.file(DATA, destfile = "msft.dat.csv")
-    msft.dat = readSeries("msft.dat.csv")
+    msft.dat = as.timeSeries(data(msft.dat))
     msft = msft.dat[, 1]
     checkSum = 15349.9344
     checkEqualsNumeric(sum(msft@Data), checkSum)
@@ -132,12 +128,6 @@ test.plotNoLabels =
 function()
 { 
     # MSFT Opening Prices:
-    # URL = "http://www.itp.phys.ethz.ch/econophysics/R/data/textbooks/"
-    # SRC = "ZivotWang/data/msft.dat.csv"
-    # DATA = paste(URL, SRC, sep = "") 
-    # download.file(DATA, destfile = "msft.dat.csv")
-    # msft.dat = readSeries("msft.dat.csv")
-    # ... or load it from Package fEcofin
     data(msft.dat)
     msft.dat = as.timeSeries(msft.dat)
     msft = msft.dat[, 1]
