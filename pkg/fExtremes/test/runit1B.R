@@ -59,7 +59,7 @@ function()
 test.blockMaxima = 
 function()
 {
-    # blockMaxima       Returns block maxima from a time series
+    # blockMaxima - Returns block maxima from a time series
     
     # blockMaxima(x, block = c("monthly", "quarterly"), doplot = FALSE)
     
@@ -97,7 +97,7 @@ function()
 test.findThreshold = 
 function()
 {
-    # findThreshold     Upper threshold for a given number of extremes 
+    # findThreshold - Upper threshold for a given number of extremes 
     
     # findThreshold(x, n = floor(0.05*length(as.vector(x))), doplot = FALSE) 
     
@@ -136,7 +136,7 @@ function()
 test.pointProcess = 
 function()
 {
-    # pointProcess      Returns peaks over a threshold from a time series
+    # pointProcess - Returns peaks over a threshold from a time series
     
     # pointProcess(x, u = quantile(x, 0.95), doplot = FALSE)  
     
@@ -173,7 +173,7 @@ function()
 test.deCluster = 
 function()
 {
-    # deCluster         Declusters a point process
+    # deCluster - Declusters a point process
     
     # deCluster(x, run = 20, doplot = TRUE)  
     

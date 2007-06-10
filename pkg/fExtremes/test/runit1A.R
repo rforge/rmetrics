@@ -66,7 +66,7 @@ function()
 test.emd = 
 function()
 {
-    # emdPlot              Creates an empirical distribution plot
+    # emdPlot - Creates an empirical distribution plot
     
     # Artificial Data Set:
     x = rgpd(1000)
@@ -76,7 +76,7 @@ function()
     emdPlot(x, plottype = "xy")
     emdPlot(x, plottype = "x")
     emdPlot(x, plottype = "y")
-    emdPlot(x, plottype = "")
+    # emdPlot(x, plottype = " ")                # CHECK !!!
     
     # Artificial Data Set:
     x = rt(1000, df = 3) 
@@ -86,7 +86,7 @@ function()
     emdPlot(x, plottype = "xy")
     emdPlot(x, plottype = "x")
     emdPlot(x, plottype = "y")
-    emdPlot(x, plottype = "")
+    # emdPlot(x, plottype = " ")                # CHECK !!!
     
     # Artificial Data Set:
     x = rnorm(1000) 
@@ -96,7 +96,7 @@ function()
     emdPlot(x, plottype = "xy")
     emdPlot(x, plottype = "x")
     emdPlot(x, plottype = "y")
-    emdPlot(x, plottype = "")
+    # emdPlot(x, plottype = " ")                # CHECK !!!
       
     # Return Value:
     return()    
@@ -109,7 +109,7 @@ function()
 test.qqpareto = 
 function()
 {
-    # qqparetoPlot         Creates exploratory QQ plot for EV analysis
+    # qqparetoPlot - Creates exploratory QQ plot for EV analysis
 
     # Artificial Data Set - 
     r0 = rgpd(n = 1000, xi = 0)
@@ -138,9 +138,9 @@ function()
 test.me = 
 function()
 {
-    # mePlot              Creates a sample mean excess function plot
-    # mxfPlot             Creates another view of a sample mean excess plot
-    # mrlPlot             Returns a mean residual life plot with confidence levels
+    # mePlot - Creates a sample mean excess function plot
+    # mxfPlot - Creates another view of a sample mean excess plot
+    # mrlPlot - Returns a mean residual life plot with confidence levels
     
     # Artificial Data Set - 
     r = rgpd(n = 1000)
@@ -170,8 +170,8 @@ function()
 test.records = 
 function()
 {
-    #  recordsPlot          Plots records development
-    #  ssrecordsPlot        Plots records development of data subsamples
+    #  recordsPlot - Plots records development
+    #  ssrecordsPlot - Plots records development of data subsamples
 
     # Artificial Data Set - 
     set.seed(1985)
@@ -218,7 +218,7 @@ function()
 test.msratio = 
 function()
 {
-    # msratioPlot          Plots ratio of maximums and sums
+    # msratioPlot - Plots ratio of maximums and sums
     
     # Artificial Data Set - 
     set.seed(1953)
@@ -242,8 +242,8 @@ function()
 test.laws = 
 function()
 {
-    # sllnPlot             Verifies Kolmogorov's Strong Law of large numbers
-    # lilPlot              Verifies Hartman-Wintner's Law of the iterated logarithm
+    # sllnPlot - Verifies Kolmogorov's Strong Law of large numbers
+    # lilPlot - Verifies Hartman-Wintner's Law of the iterated logarithm
 
     # Artificial Data Set - 
     set.seed(1953)
@@ -272,7 +272,7 @@ function()
 test.xacf = 
 function()
 {
-    # xacfPlot             Plots autocorrelations of exceedences
+    # xacfPlot - Plots autocorrelations of exceedences
     
     # Artificial Data Set - 
     set.seed(1953)

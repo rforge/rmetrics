@@ -36,11 +36,17 @@ if (FALSE) {
     require(fExtremes)
     require(RUnit)
     testIndex = c( 
-        "1A", "1B",  
-        "2A", "2B", "2C", 
-        "3A", "3B", "3C", 
-        "4B", 
-        "5A")
+        "1A", # ExtremesData
+        "1B", # DataPreprocessing
+        "2A", # GevDistribution
+        "2B", # GevModeling
+        "2C", # GevRisk
+        "2D", # GevMdaEstimation
+        "3A", # GpdDistribution
+        "3B", # GpdModelling
+        "3C", # GpdRisk
+        "4B", # PotModelling
+        "5A") # ExtremeIndex
     File = "C:/Rmetrics/SVN/trunk/fExtremes/test/runit"
     Protocol = "runitfExtremes.txt"
     

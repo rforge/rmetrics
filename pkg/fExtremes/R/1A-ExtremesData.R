@@ -45,7 +45,7 @@
 
 
 emdPlot = 
-function(x, doplot = TRUE, plottype = c("xy", "x", "y", ""),
+function(x, doplot = TRUE, plottype = c("xy", "x", "y", " "),
 labels = TRUE, ...)
 {   # A function imported from R-package evir
 
