@@ -36,9 +36,14 @@ if (FALSE) {
     require(fMultivar)
     require(RUnit)
     testIndex = c( 
-        "1A", "1B", "1C", 
-        "2A", "2B", "2C",  
-        "7A", "7B")
+        "1A", # Technical Analysis
+        "1B", # BenchmarkAnalysis
+        "1C", # Rolling Analysis
+      # "2A", # RegressionInterface
+        "2B", # RegressionTestsInterface
+        "2C", # TermPlots
+        "7A", # BivariateTools
+        "7B") # MultivariateDistribution
     File = "C:/Rmetrics/SVN/trunk/fMultivar/test/runit"
     Protocol = "runitfMultivar.txt"
     

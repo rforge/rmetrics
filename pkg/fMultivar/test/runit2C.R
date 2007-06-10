@@ -202,8 +202,7 @@ function()
     .termContour(PMARS, terms = c("X1", "X2"))
     .termContour(NNET,  terms = c("X1", "X2"))
     .termContour(NNET6, terms = c("X1", "X2"))
-    
-    
+       
     # Return Value:
     return()
 }

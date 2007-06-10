@@ -73,6 +73,8 @@ function()
 test.grid2d =
 function()
 {
+    NA
+    
     # Return Value:
     return()    
 }
@@ -136,9 +138,9 @@ function()
 test.norm2d =
 function()
 {
-    #  pnorm2d               Computes bivariate Normal probability function
-    #  dnorm2d               Computes bivariate Normal density function
-    #  rnorm2d               Generates bivariate normal random deviates
+    #  pnorm2d - Computes bivariate Normal probability function
+    #  dnorm2d - Computes bivariate Normal density function
+    #  rnorm2d - Generates bivariate normal random deviates
     
     # Normal Density:
     x = (-40:40)/10
@@ -167,9 +169,9 @@ function()
 test.cauchy2d =
 function()
 {
-    #  pcauchy2d             Computes bivariate Cauchy probability function
-    #  dcauchy2d             Computes bivariate Cauchy density function
-    #  rcauchy2d             Generates bivariate Cauchy random deviates
+    #  pcauchy2d - Computes bivariate Cauchy probability function
+    #  dcauchy2d - Computes bivariate Cauchy density function
+    #  rcauchy2d - Generates bivariate Cauchy random deviates
     
     # Cauchy Density:
     x = (-40:40)/10
@@ -198,9 +200,9 @@ function()
 test.t2d =
 function()
 {
-    #  pt2d                  Computes bivariate Student-t probability function
-    #  dt2d                  Computes bivariate Student-t density function
-    #  rt2d                  Generates bivariate Student-t random deviates
+    #  pt2d - Computes bivariate Student-t probability function
+    #  dt2d - Computes bivariate Student-t density function
+    #  rt2d - Generates bivariate Student-t random deviates
     
     # Student Density:
     x = (-40:40)/10
