@@ -28,10 +28,9 @@
 
 
 ################################################################################
-# FUNCTION:                     EXAMPLE DATA:
-#  dutchPortfolioData            Example Data from Engel's Diploma Thesis
-#  usPortfolioData               Annual US Economics Portfolio Data
-#  sm132PortfolioData            Example from Scherer, Martin: Chapter 1.32
+# FUNCTION:                     Classical and Robust Estimators
+#  portfolioStatistics           Estimates mu and Sigma statistics
+#  portfolioData                 Creates portfolio data list
 ################################################################################
 
 
@@ -55,17 +54,10 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.dutchPortfolioData =
+test.portfolioStatistics =
 function()
 {
-    # mu/Sigma List:
-    x = dutchPortfolioData()
-    print(x)
-    mu = x$mu
-    Sigma = x$Sigma
-    target = round(mean(mu) + mean(Sigma), 3)
-    current = 0.194
-    checkIdentical(target, current)
+    NA
         
     # Return Value:
     return()
@@ -75,41 +67,10 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.sm132PortfolioData =
+test.portfolioData =
 function()
 {
-    # Data Frame:
-    df = usPortfolioData()
-    print(df)
-    mu = colMeans(as.matrix(df))
-    Sigma = cov(as.matrix(df))
-    target = round(mean(mu) + mean(Sigma), 3)
-    current = 1.122
-    checkIdentical(target, current)
-  
-    # Convert to timeSeries:
-    tS = as.timeSeries(df)
-    tS
-    
-    # Return Value:
-    return()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-test.sm132PortfolioData =
-function()
-{
-    # mu/Sigma List:
-    x = sm132PortfolioData()
-    print(x)
-    mu = x$mu
-    Sigma = x$Sigma
-    target = round(mean(mu) + mean(Sigma), 3)
-    current = 80.744
-    checkIdentical(target, current)
+    NA
     
     # Return Value:
     return()

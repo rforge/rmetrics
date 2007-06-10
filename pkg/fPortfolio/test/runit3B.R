@@ -125,6 +125,9 @@ function()
     # Feasible Portfolio:
     .feasibleConstrainedMVPortfolio(Data, Spec, Constraints)
     
+    # Feasible Portfolio:
+    portfolio = feasiblePortfolio(Data, Spec, Constraints)
+    
     # Return Value:
     return()
 }

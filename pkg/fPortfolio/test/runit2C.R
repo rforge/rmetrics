@@ -33,28 +33,19 @@
 #  portfolioSpec                 Specifies a portfolio
 #  show.fPFOLIOSPEC              Print method for 'fPFOLIOSPEC' objects
 # FUNCTION:                     MODEL SLOT:
-#  setType                       Sets type of portfolio Optimization
-#  setType<-                      alternative function call
-#  setEstimator                  Sets name of mean-covariance estimator
-#  setEstimator<-                 alternative function call
-#  setParams                     Sets optional model parameters
-#  setParams<-                    alternative function call
+#  setType<-                     Sets type of portfolio Optimization
+#  setEstimator<-                Sets name of mean-covariance estimator
+#  setParams<-                   Sets optional model parameters
 # FUNCTION:                     PORTFOLIO SLOT:
-#  setWeights                    Sets weights vector
-#  setWeights<-                   alternative function call
-#  setTargetReturn               Sets target return value
-#  setTargetReturn<-              alternative function call
-#  setRiskFreeRate               Sets risk-free rate value
-#  setRiskFreeRate<-              alternative function call
-#  setNFrontierPoints            Sets number of frontier points
-#  setNFrontierPoints<-           alternative function call
-#  setReturnRange                Sets range of target returns
-#  setReturnRange<-               alternative function call
-#  setRiskRange                  Sets range of target risks
-#  setRiskRange<-                 alternative function call
+#  setWeights<-                  Sets weights vector
+#  setTargetReturn<-             Sets target return value
+#  setTargetAlpha<-              Sets CVaR target alpha value
+#  setRiskFreeRate<-             Sets risk-free rate value
+#  setNFrontierPoints<-          Sets number of frontier points
+#  setReturnRange<-              Sets range of target returns
+#  setRiskRange<-                Sets range of target risks
 # FUNCTION:                     SOLVER SLOT:
-#  setSolver                     Sets name of desired solver
-#  setSolver<-                    alternative function call
+#  setSolver<-                   Sets name of desired solver
 # FUNCTION:                     Classical and Robust Estimators
 #  portfolioStatistics           Estimates mu and Sigma statistics
 #  portfolioData                 Creates portfolio data list

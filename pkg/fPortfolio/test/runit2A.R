@@ -99,14 +99,49 @@ function()
     
     # Optimize Long Only Minimum Variance Portfolio:
     Portfolio = feasiblePortfolio(Data, Spec)
-    Portfolio                                                             
+    Portfolio    
+    
+    # Plot:
+    par(mfrow = c(2, 2), cex = 0.7)
+    weightsPie(Portfolio) 
+    attributesPie(Portfolio) 
+    riskBudgetsPie(Portfolio)                                                                   
+     
+    # Return Value:
+    return()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.feasiblePortfolio.RDonlp2 =
+function()
+{ 
+    # Arguments:
+    # feasiblePortfolio(data, spec = portfolioSpec(), constraints = NULL)
+    
+    # Get Data:
+    Data = as.timeSeries(data(smallcap.ts))
+    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
+    head(Data)
    
-    # Try Solver Rdonlp2:
+    # Set Default Specifications - Long Only MV Portfolio
+    Spec = portfolioSpec()
+    setWeights(Spec) = rep(1/4, times = 4)
     require(Rdonlp2)
     setSolver(Spec)<-"RDonlp2"
     Spec
+    
+    # Optimize Long Only Minimum Variance Portfolio:
     Portfolio = feasiblePortfolio(Data, Spec)
-    Portfolio
+    Portfolio  
+    
+    # Plot:
+    par(mfrow = c(2, 2), cex = 0.7)
+    weightsPie(Portfolio) 
+    attributesPie(Portfolio) 
+    riskBudgetsPie(Portfolio)                                                         
      
     # Return Value:
     return()
@@ -135,6 +170,12 @@ function()
     Portfolio = cmlPortfolio(Data, Spec)
     Portfolio
     
+    # Plot:
+    par(mfrow = c(2, 2), cex = 0.7)
+    weightsPie(Portfolio) 
+    attributesPie(Portfolio) 
+    riskBudgetsPie(Portfolio) 
+    
     # Return Value:
     return()
 }
@@ -161,6 +202,12 @@ function()
     # Calculation of Long Only Minimum Variance Portfolio
     Portfolio = tangencyPortfolio(Data, Spec)
     Portfolio
+    
+    # Plot:
+    par(mfrow = c(2, 2), cex = 0.7)
+    weightsPie(Portfolio) 
+    attributesPie(Portfolio) 
+    riskBudgetsPie(Portfolio) 
     
     # Return Value:
     return()
@@ -189,12 +236,46 @@ function()
     Portfolio = minvariancePortfolio(Data, Spec)
     Portfolio
     
-    # Try RDonlp2:
+    # Plot:
+    par(mfrow = c(2, 2), cex = 0.7)
+    weightsPie(Portfolio) 
+    attributesPie(Portfolio) 
+    riskBudgetsPie(Portfolio) 
+
+    # Return Value:
+    return()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.minvariancePortfolio.RDonlp2 =
+function()
+{ 
+    # Arguments:
+    # minvariancePortfolio(data, spec = portfolioSpec(), constraints = NULL)
+    
+    # Load Data:
+    Data = as.timeSeries(data(smallcap.ts))
+    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
+    head(Data)
+    
+    # Set Default Specifications - Long Only MV Portfolio
+    Spec = portfolioSpec()
     require(Rdonlp2)
     setSolver(Spec)<-"RDonlp2"
     Spec
+    
+    # Calculation of Long Only Minimum Variance Portfolio
     Portfolio = minvariancePortfolio(Data, Spec)
     Portfolio
+    
+    # Plot:
+    par(mfrow = c(2, 2), cex = 0.7)
+    weightsPie(Portfolio) 
+    attributesPie(Portfolio) 
+    riskBudgetsPie(Portfolio) 
 
     # Return Value:
     return()
@@ -223,6 +304,12 @@ function()
     # Calculation of Long Only Minimum Variance Portfolio
     Portfolio = efficientPortfolio(Data, Spec)
     Portfolio
+    
+    # Plot:
+    par(mfrow = c(2, 2), cex = 0.7)
+    weightsPie(Portfolio) 
+    attributesPie(Portfolio) 
+    riskBudgetsPie(Portfolio) 
    
     # Return Value:
     return()
@@ -251,6 +338,12 @@ function()
     # Calculation of Long Only Minimum Variance Portfolio
     Frontier = portfolioFrontier(Data, Spec)
     Frontier
+    
+    # Plot:
+    par(mfrow = c(2, 2), cex = 0.7)
+    weightsPlot(Frontier) 
+    attributesPlot(Frontier) 
+    riskBudgetsPlot(Frontier) 
     
     # Return Value:
     return()

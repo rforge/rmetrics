@@ -81,7 +81,7 @@ function()
    portfolioConstraints(Data, Spec, Constraints)
    
    # Set Portfolio Constraints:
-   Constraints = "c(minW[1:4], maxW[1:4])"
+   Constraints = c("minW[1:4]=0", "maxW[1:4]=1")
    portfolioConstraints(Data, Spec, Constraints)
    
    # Return Value:
@@ -178,7 +178,7 @@ test.getConstraints =
 function()
 { 
     # Arguments:
-    # setConstraints(data, spec = portfolioSpec(), constraints = NULL, 
+    # getConstraints(data, spec = portfolioSpec(), constraints = NULL, 
     #   type = c("BoxGroup", "RiskBudget"))
     
     # Data, Specification and Constraints:
@@ -189,32 +189,32 @@ function()
     
     # Set Default Box-Group Constraints:
     # These are: 0 <= W[1:nAssets] <= 1, no Group Constraints ...
-    ans = setConstraints(Data, Spec, Constraints)
+    ans = .setConstraints(Data, Spec, Constraints)
     .getConstraints(ans)
     
     # Set Default Covariance Risk-Budget Constraints:
-    ans = setConstraints(Data, Spec, Constraints, type = "RiskBudget")  
+    ans = .setConstraints(Data, Spec, Constraints, type = "RiskBudget")  
     .getConstraints(ans)
     
     # Short:
     Constraints = "Short"
-    ans = setConstraints(Data, portfolioSpec(), Constraints)
+    ans = .setConstraints(Data, portfolioSpec(), Constraints)
     .getConstraints(ans)
     
     # Long Only:
     Constraints = "LongOnly"
-    ans = setConstraints(Data, portfolioSpec(), Constraints)
+    ans = .setConstraints(Data, portfolioSpec(), Constraints)
     .getConstraints(ans)
     
     # minW, maxW:
     Constraints = 
         c("minW[1:nAssets]=0.09", "maxW[1:nAssets]=rep(c(0.6, 0.4),4)")
-    ans = setConstraints(Data, portfolioSpec(), Constraints)
+    ans = .setConstraints(Data, portfolioSpec(), Constraints)
     .getConstraints(ans)
     
     # minsumW, maxsumW:
     Constraints = c("minsumW[c(2,4)]=0.20", "maxsumW[4:6]=0.80")
-    ans = setConstraints(Data, portfolioSpec(), Constraints)
+    ans = .setConstraints(Data, portfolioSpec(), Constraints)
     .getConstraints(ans)
     
     # Return Value:
@@ -227,7 +227,7 @@ function()
 
 if (FALSE) {
     require(RUnit)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fPortfolio/test/runit2C.R",
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fPortfolio/test/runit2D.R",
         rngKind = "Marsaglia-Multicarry", rngNormalKind = "Inversion")
     printTextProtocol(testResult)
 }
