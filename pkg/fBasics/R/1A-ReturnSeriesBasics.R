@@ -415,7 +415,7 @@ function(x, ci = 0.95)
 
 
 .distCheck = 
-function(fun = "norm", n = 1000, seed = 4711, robust = FALSE, ...)
+function(fun = "norm", n = 1000, robust = FALSE, ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -464,7 +464,6 @@ function(fun = "norm", n = 1000, seed = 4711, robust = FALSE, ...)
     rmseCheck = (abs(RMSE) < 0.0001)
     
     # Check 3:
-    set.seed(seed)
     cat("\n3. r(", n, ") Check:\n", sep = "")
     r = rfun(n = n, ...)
     if (robust) {
