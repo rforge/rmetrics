@@ -36,11 +36,20 @@ if (FALSE) {
     require(fSeries)
     require(RUnit)
     testIndex = c(
-        "1A", "1B", "1C", 
-        "2A", "2B", 
-        "3A", "3B", 
-        "4A", "4B", "4C", "4D", 
-        "5A", "5B", "5C")
+        "1A", # ArmaInterface
+        "1B", # ArmaStatistics
+        "1C", # ArfimaOxInterface
+        "2A", # UnitrootTests
+        "2B", # UnitRootUrcaInterface
+        "3A", # LrdModelling
+        "3B", # LrdStatistics
+        "4A", # GarchDistributions
+      # "4B", #  --- 
+      # "4C", # GarchModelling 
+        "4D", # GarchOxInterface
+        "5A", # NonLinModelling
+        "5B", # NonLinStatistics
+        "5C") # NonLinTests
     File = "C:/Rmetrics/SVN/trunk/fSeries/test/runit"
     Protocol = "runitfSeries.txt"
     

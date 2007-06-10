@@ -263,6 +263,7 @@ function()
     #   description = NULL, 
     #   ...)
 
+    # *** OLD VERSION ***
     # .garchFit(
     #   formula.mean = ~arma(0, 0), 
     #   formula.var = ~garch(1, 1), 
