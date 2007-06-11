@@ -63,6 +63,8 @@ function()
 test.getReturns =
 function()
 {     
+    # getReturns - Computes return series given a price series
+    
     # Data from fEcofin:
     X = as.timeSeries(data(msft.dat))
     print(head(X))
@@ -86,6 +88,8 @@ function()
 test.maxDrawDown =
 function()
 { 
+    # maxDrawDown - Computes the maximum drawdown
+    
     # Data from fEcofin:
     X = as.timeSeries(data(msft.dat))
     print(head(X))
@@ -109,9 +113,11 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.benchmarkRatios =
+test.sharpeRatio =
 function()
 {  
+    # sharpeRatio - Calculates the Sharpe Ratio
+    
     # Data from fEcofin:
     X = as.timeSeries(data(msft.dat))
     print(head(X)) 
@@ -119,8 +125,30 @@ function()
     # Get Returns:
     R = getReturns(X)
     
-    # Sharpe- and Sterling Ratios:
+    # Sharpe Ratio:
     sharpeRatio(R[, "Close"])
+    
+    # Return Value:
+    return()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.sterlingRatio =
+function()
+{  
+    # sterlingRatio - Calculates the Sterling Ratio
+    
+    # Data from fEcofin:
+    X = as.timeSeries(data(msft.dat))
+    print(head(X)) 
+    
+    # Get Returns:
+    R = getReturns(X)
+    
+    # Sterling Ratio:
     sterlingRatio(R[, "Close"])
     
     # Return Value:
@@ -134,13 +162,17 @@ function()
 test.ohlcPlot =
 function()
 {   
+    #  ohlcPlot - Creates a Open-High-Low-Close plot
+    
     # Data from fEcofin:
+    myFinCenter <<- "GMT"
     X = as.timeSeries(data(msft.dat))
     print(head(X))
         
     # Get Returns:
-    R = getReturns(X)[1:10,-5]
-    
+    R = returnSeries(X)[, -5]
+    Y = alignDailySeries(X, method = "fillNA", include.weekends = TRUE)
+
     # Plot:
     # ohlcPlot(as.ts(R))                                             # CHECK !!!
     

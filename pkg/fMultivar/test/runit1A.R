@@ -94,19 +94,19 @@ function()
 }
 
 
-# ------------------------------------------------------------------------------
+################################################################################
 
 
 test.utilityFunctions =
 function()
 {
-    #  emaTA                     Exponential Moving Average
-    #  biasTA                    EMA-Bias
-    #  medpriceTA                Median Price                   
-    #  typicalpriceTA            Typical Price
-    #  wcloseTA                  Weighted Close Price
-    #  rocTA                     Rate of Change
-    #  oscTA                     EMA-Oscillator
+    #  emaTA - Exponential Moving Average
+    #  biasTA - EMA-Bias
+    #  medpriceTA - Median Price                   
+    #  typicalpriceTA - Typical Price
+    #  wcloseTA - Weighted Close Price
+    #  rocTA - Rate of Change
+    #  oscTA - EMA-Oscillator
  
     # Data from fEcofin:
     X = as.timeSeries(data(msft.dat))
@@ -159,18 +159,18 @@ function()
 }
 
 
-# ------------------------------------------------------------------------------
+################################################################################
 
 
 test.oscillatorIndicators =
 function()
 {
-    #  momTA                     Momentum
-    #  macdTA                    MACD
-    #  cdsTA                     MACD Signal Line
-    #  cdoTA                     MACD Oscillator
-    #  vohlTA                    High/Low Volatility
-    #  vorTA                     Volatility Ratio   
+    #  momTA - Momentum
+    #  macdTA - MACD
+    #  cdsTA - MACD Signal Line
+    #  cdoTA - MACD Oscillator
+    #  vohlTA - High/Low Volatility
+    #  vorTA - Volatility Ratio   
    
     # Data from fEcofin:
     X = as.timeSeries(data(msft.dat))
@@ -218,19 +218,19 @@ function()
 } 
 
 
-# ------------------------------------------------------------------------------
+################################################################################
 
 
 test.stochasticsIndicators =
 function()
 {
-    # stochasticTA              Stochastics %K/%D, fast/slow
-    # fpkTA                     Fast Percent %K
-    # fpdTA                     Fast Percent %D
-    # spdTA                     Slow Percent %D
-    # apdTA                     Averaged Percent %D
-    # wprTA                     Williams Percent %R
-    # rsiTA                     Relative Strength Index
+    # stochasticTA - Stochastics %K/%D, fast/slow
+    # fpkTA - Fast Percent %K
+    # fpdTA - Fast Percent %D
+    # spdTA - Slow Percent %D
+    # apdTA - Averaged Percent %D
+    # wprTA - Williams Percent %R
+    # rsiTA - Relative Strength Index
     
     # Data from fEcofin:
     X = as.timeSeries(data(msft.dat))
@@ -291,25 +291,25 @@ function()
 }
 
 
-# ------------------------------------------------------------------------------
+################################################################################
 
 
 test.moreIndicators =
 function()
 {
-    # accelTA                   Acceleration
-    # adiTA                     AD Indicator      
-    # adoscillatorTA            AD Oscillator
-    # bollingerTA               Bollinger Bands
-    # chaikinoTA                Chaikin Oscillator
-    # chaikinvTA                Chaikin Volatility
-    # garmanklassTA             Garman-Klass Volatility
-    # nviTA                     Negative Volume Index
-    # obvTA                     On Balance Volume
-    # pviTA                     Positive Volume Index
-    # pvtrendTA                 Price-Volume Trend
-    # williamsadTA              Williams AD
-    # williamsrTA               Williams R%
+    # accelTA - Acceleration
+    # adiTA - AD Indicator      
+    # adoscillatorTA - AD Oscillator
+    # bollingerTA - Bollinger Bands
+    # chaikinoTA - Chaikin Oscillator
+    # chaikinvTA - Chaikin Volatility
+    # garmanklassTA - Garman-Klass Volatility
+    # nviTA - Negative Volume Index
+    # obvTA - On Balance Volume
+    # pviTA - Positive Volume Index
+    # pvtrendTA - Price-Volume Trend
+    # williamsadTA - Williams AD
+    # williamsrTA- Williams R%
     
     # Data from fEcofin:
     X = as.timeSeries(data(msft.dat))
@@ -391,14 +391,14 @@ function()
 }
 
 
-# ------------------------------------------------------------------------------
+################################################################################
 
 
 test.splusLikeIndicators =
 function()
 {    
-    # SMA                       Computes Simple Moving Average           
-    # EWMA                      Computes Exponentially Weighted  Moving Average
+    # SMA - Computes Simple Moving Average           
+    # EWMA - Computes Exponentially Weighted  Moving Average
     
     # Data from fEcofin:
     X = as.timeSeries(data(msft.dat))
@@ -434,7 +434,7 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.dailyIndicatorFunction =
+test.dailyTA =
 function()
 {    
     # .dailyTA                  
@@ -465,9 +465,9 @@ function()
 test.tradingFunctions =
 function()
 {    
-    # .tradeSignals             Computes trade signals from trading positions
-    # .tradeLengths             Computes trade length from trading signals
-    # .hitRate                  Computes hit rates from returns and positions
+    # .tradeSignals - Computes trade signals from trading positions
+    # .tradeLengths - Computes trade length from trading signals
+    # .hitRate - Computes hit rates from returns and positions
     
     # Positions:
     long = +1
@@ -506,4 +506,5 @@ if (FALSE) {
    
 
 ################################################################################
+# OK
     
