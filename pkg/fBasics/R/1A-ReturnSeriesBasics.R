@@ -447,7 +447,7 @@ function(fun = "norm", n = 1000, robust = FALSE, ...)
     xmin = qfun(p = 0.01, ...)
     xmax = qfun(p = 0.99, ...)
     
-    # Check 1:
+    # Check 1 - Normalization:
     NORM = integrate(dfun, lower = -Inf, upper = Inf, 
         subdivisions = 5000, stop.on.error = FALSE, ...)
     cat("\n1. Normalization Check:\n NORM ")
@@ -495,7 +495,9 @@ function(fun = "norm", n = 1000, robust = FALSE, ...)
     
     # Done:
     ans = list(
-        normCheck = normCheck, rmseCheck = rmseCheck, meanvarCheck = meanvarCheck)
+        normCheck = normCheck, 
+        rmseCheck = rmseCheck, 
+        meanvarCheck = meanvarCheck)
     unlist(ans)
 }
 
