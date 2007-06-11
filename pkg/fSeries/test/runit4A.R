@@ -69,7 +69,6 @@
 ################################################################################
 
 
-
 test.aaa = 
 function()
 {
@@ -96,16 +95,16 @@ function()
     # Normal Distribution:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
-    test = .distCheck("norm",  mean = 0, sd = 1)
+    test = .distCheck("norm",  mean = 0, sd = 1, robust = TRUE)
     print(test)
-    # checkTrue(mean(test) == 1)
+    checkTrue(mean(test) == 1)
     
     # Skew Normal Distribution:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
-    test = .distCheck("snorm", mean = 0, sd = 1, xi = 1.5) 
+    test = .distCheck("snorm", mean = 0, sd = 1, xi = 1.5, robust = TRUE) 
     print(test)
-    # checkTrue(mean(test) == 1)
+    checkTrue(mean(test) == 1)
     
     # Return Value:
     return()    
@@ -134,22 +133,22 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.stdDistribution = 
+test.sstdDistribution = 
 function()
 { 
     # Standardized Student-t Distribution:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
-    test = .distCheck("std",  mean = 0, sd = 1, nu = 5) 
+    test = .distCheck("std",  mean = 0, sd = 1, nu = 5, robust = TRUE) 
     print(test)
-    # checkTrue(mean(test) == 1)
+    checkTrue(mean(test) == 1)
     
     # Skew Standardized Student-t Distribution:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
-    test = .distCheck("sstd", mean = 0, sd = 1, nu = 5, xi = 1.5) 
+    test = .distCheck("sstd", mean = 0, sd = 1, nu = 5, xi = 1.5, robust = TRUE) 
     print(test)
-    # checkTrue(mean(test) == 1)
+    checkTrue(mean(test) == 1)
 
     # Return Value:
     return()    
@@ -163,7 +162,7 @@ test.sstdSlider =
 function()
 {   
     # Try Distribution:
-    .sstdSlider(type = "dist")                              # CHECK RUnit
+    .sstdSlider(type = "dist")                              
    
     # Try Random Variates:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
@@ -178,22 +177,22 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.gedDistribution = 
+test.sgedDistribution = 
 function()
 {       
     # Generalized Error Distribution:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
-    test = .distCheck("ged",  mean = 0, sd = 1, nu = 2) 
+    test = .distCheck("ged",  mean = 0, sd = 1, nu = 2, robust = TRUE) 
     print(test)
-    # checkTrue(mean(test) == 1)
+    checkTrue(mean(test) == 1)
        
     # Skew Generalized Error Distribution:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(1953, kind = "Marsaglia-Multicarry")
-    test = .distCheck("sged", mean = 0, sd = 1, nu = 2, xi = 0.8) 
+    test = .distCheck("sged", mean = 0, sd = 1, nu = 2, xi = 0.8, robust = TRUE) 
     print(test)
-    # checkTrue(mean(test) == 1)
+    checkTrue(mean(test) == 1)
     
     # Return Value:
     return()    
@@ -226,7 +225,7 @@ test.normFit =
 function()
 {  
     # Parameter Estimation:
-    #  normFit             Fit the parameters for a Normal distribution
+    #  normFit - Fit the parameters for a Normal distribution
     
     # Normal Distribution:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
@@ -251,7 +250,7 @@ test.snormFit =
 function()
 {  
     # Parameter Estimation:
-    #  snormFit            Fit the parameters for a skew Normal distribution
+    #  snormFit - Fit the parameters for a skew Normal distribution
     
     # Skew Normal Distribution:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
@@ -276,8 +275,7 @@ test.gedFit =
 function()
 {      
     # Parameter Estimation:
-    #  gedFit              Fit the parameters for a GED distribution
-    #  sgedFit             Fit the parameters for a skew GED distribution
+    #  gedFit - Fit the parameters for a GED distribution
     
     # Generalized Error Distribution:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
@@ -302,7 +300,8 @@ test.sgedFit =
 function()
 {      
     # Fit the parameters for a skew GED distribution
-
+    #  sgedFit - Fit the parameters for a skew GED distribution
+    
     # Skew Generalized Error Distribution:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
@@ -325,7 +324,8 @@ function()
 test.stdFit = 
 function()
 {         
-    # Fit the parameters for a Sudent-t distribution
+    # Fit the parameters for a Student-t distribution
+    # stdFit - Fit the parameters for a Sudent-t distribution
     
     # Standardized Student-t Distribution:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
@@ -350,7 +350,8 @@ test.sstdFit =
 function()
 {         
     # Fit the parameters for a skew Sudent-t distribution
-     
+    # sstdFit - Fit the parameters for a Sudent-t distribution
+    
     # Skew Standardized Student-t Distribution:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
@@ -380,12 +381,15 @@ function()
     
     # Absolute Moments - Normal Distribution:
     ans = absMoments(1:4, "dnorm")
+    print(ans)
     
     # Absolute Moments - Skew Student-t Distribution:
     ans = absMoments(1:4, "dstd", nu = 20)
+    print(ans)
     
     # Absolute Moments - GED Distribution:
     ans = absMoments(1:4, "dged", nu = 2)
+    print(ans)
     
     # Return Value:
     return()
