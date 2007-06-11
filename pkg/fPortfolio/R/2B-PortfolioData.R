@@ -28,10 +28,95 @@
 
 
 ################################################################################
-# FUNCTION:                     Classical and Robust Estimators
-#  portfolioStatistics           Estimates mu and Sigma statistics
+# FUNCTION:                     PORTFOLIO DATA CLASS:
+#  'fPFOLIODATA'                 S4 Portfolio Data Class
 #  portfolioData                 Creates portfolio data list
+#  show.fPFOLIODATA              Print method for 'fPFOLIODATA' objects
+# FUNCTION:                     PORTFOLIO STATISTICS:
+#  portfolioStatistics           Estimates mu and Sigma statistics
 ################################################################################
+
+
+setClass("fPFOLIODATA", 
+    representation(
+        series = "list",
+        statistics = "list",
+        tailrisk = "list")  
+)
+
+
+# ------------------------------------------------------------------------------
+
+
+portfolioData =
+function(data, spec = portfolioSpec())
+{   # A function implemented by Rmetrics
+
+    # Description:
+    #   Creates portfolio data list
+    
+    # Arguments:
+    #   data - a multivariate timeSeries object
+    #   spec -  a portfolio specification structure, from which
+    #       the mean and covariance type of estimator will be extracted
+    
+    # FUNCTION:
+    
+    # Check and Sort Data: 
+    stopifnot(class(data) == "timeSeries") 
+    data = sort(data)
+        
+    # Statistics:
+    statistics = portfolioStatistics(data, spec)
+    
+    # Explore Tail Dependency:
+    tailrisk = list()
+     
+    # Return Value:
+    new("fPFOLIODATA", 
+        series = list(data = data),
+        statistics = statistics,
+        tailrisk = tailrisk)  
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+show.fPFOLIODATA =
+function(object)
+{   # A function implemented by Rmetrics
+
+    # Description:
+    #   S4 Print Method for an object of class "fPFOLIODATA"
+    
+    # Arguments:
+    #   object - an object of class "fPFOLIOSPEC"
+    
+    # FUNCTION:
+    
+    # Series:
+    # NYI
+    
+    # Statistics:
+    cat("\nStatistics:\n\n")
+    print(object@statistics)
+    
+    # Tailrisk:
+    # NYI
+        
+    # Return Value: 
+    invisible(object)
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+setMethod("show", "fPFOLIODATA", show.fPFOLIODATA)
+
+
+# ------------------------------------------------------------------------------
 
 
 portfolioStatistics = 
@@ -101,55 +186,5 @@ function(data, spec = portfolioSpec())
 }
 
 
-# ------------------------------------------------------------------------------
-
-
-portfolioData =
-function(data, spec = portfolioSpec())
-{   # A function implemented by Rmetrics
-
-    # Description:
-    #   Creates portfolio data list
-    
-    # Arguments:
-    #   data - a multivariate timeSeries object
-    #   spec -  a portfolio specification structure, from which
-    #       the mean and covariance type of estimator will be extracted
-    
-    # FUNCTION:
-    
-    # Check Data: 
-    if (is.list(data)) {
-        # In this case no time series is given, only mean and covariance ...
-        series = NA
-        statistics = list(mu = data$mu, Sigma = data$Sigma)
-    } else {
-        # Take care of time ordering ...
-        if (is.timeSeries(data)) data = sort(data)
-        series = data
-        statistics = portfolioStatistics(data, spec)
-    }
-    
-    # Explore Tail Dependency:
-    if (!is.na(series)) {
-        tailrisk = .lambdaTailRisk(series)
-    } else {
-        tailrisk = NA
-    }
-    
-    # Portfolio Data List:
-    data = list(
-        series = series, 
-        statistics = statistics, 
-        tailrisk = tailrisk) 
-    class(data) <- c("list", "fPFOLIODATA") 
-    
-    # Return Value:
-    data
-}
-
-
 ################################################################################
-
-
 

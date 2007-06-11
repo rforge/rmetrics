@@ -46,25 +46,44 @@
 #  getTargetRisk                 Extracts target riks from a portfolio
 #  getTargetAlpha                Extracts target VaR-alpha from a portfolio
 #  getTargetStdev                Extracts target std deviations from a portfolio
-#  getNames                      Extracts assets names from a portfolio
+#  getNames                      Extracts assets names from a portfolio\
+# FUNCTION:
 ################################################################################
 
 
-getAssets =
-function(object)
+################################################################################
+# DEFAULTS:
+
+
+################################################################################
+# fPFOLIODATA - S4
+
+    # Slots:
+    # series = list(
+    #   data)
+    # statistics = list(
+    #   mu,
+    #   Sigma) 
+    # tailrisk = list()
+    
+    
+# ------------------------------------------------------------------------------
+    
+    
+getSeries =
 {   # A function implemented by Rmetrics
 
     # Description:
-    #   Extracts the efficient frontier from a 'fPORTFOLO' object
+    #   Extracts the series from data
     
     # Arguments:
-    #   object - an object of S4 class fPORTFOLIO as returned by the
-    #       functions *Portfolio().
+    #   object - an object of S4 class fPFOLIODATA
     
     # FUNCTION:
- 
-    # Get Series of Assets:
-    ans = object@data$series
+    
+    # Get Series:
+    stopifnot (class(object) == "fPFOLIODATA") 
+    ans = object@series$data
     
     # Return Value:
     ans  
@@ -75,20 +94,19 @@ function(object)
 
 
 getStatistics =
-function(object)
 {   # A function implemented by Rmetrics
 
     # Description:
-    #   Extracts the efficient frontier from a 'fPORTFOLO' object
+    #   Extracts the statistics from data 
     
     # Arguments:
-    #   object - an object of S4 class fPORTFOLIO as returned by the
-    #       functions *Portfolio().
+    #   object - an object of S4 class fPFOLIODATA
     
     # FUNCTION:
     
-    # Get Series of Assets
-    ans = object@data$statistics
+    # Get Statistics
+    stopifnot (class(object) == "fPFOLIODATA")  
+    ans = object@statistics
     
     # Return Value:
     ans  
@@ -98,49 +116,44 @@ function(object)
 # ------------------------------------------------------------------------------
 
 
-getNumberOfAssets =
-function(object)
+getTailrisk =
 {   # A function implemented by Rmetrics
 
     # Description:
-    #   Extracts the efficient frontier from a 'fPORTFOLO' object
+    #   Extracts the tailrisk from data 
     
     # Arguments:
-    #   object - an object of S4 class fPORTFOLIO as returned by the
-    #       functions *Portfolio().
+    #   object - an object of S4 class fPFOLIODATA
     
     # FUNCTION:
     
-    # Get Series of Assets
-    ans = c(nAssets = length(object@data$statistics$mu))
+    # Get Statistics
+    stopifnot (class(object) == "fPFOLIODATA")  
+    ans = object@tailrisk
     
     # Return Value:
     ans  
 }
-
+    
 
 ################################################################################
+# fPFOLIOSPEC - S4
 
-
-getSpecification =
-function(object)
-{   # A function implemented by Rmetrics
-
-    # Description:
-    #   Extracts the specification structure from a 'fPORTFOLIO' object
-    
-    # Arguments:
-    #   object - an object of S4 class fPORTFOLIO as returned by the
-    #       functions *Portfolio().
-    
-    # FUNCTION:
-    
-    # Get Specification:
-    ans = object@specification$spec
-    
-    # Return Value:
-    ans  
-}
+    # Slots:
+    # model = list(
+    #     type = c("MV", "CVaR"),
+    #     estimator = c("mean", "cov"),
+    #     params = list())
+    # portfolio = list(
+    #     weights = NULL, 
+    #     targetReturn = NULL, 
+    #     targetRisk = NULL, 
+    #     targetAlpha = NULL,
+    #     riskFreeRate = 0, 
+    #     nFrontierPoints = 50),
+    # solver = list(
+    #     solver = c("quadprog", "Rdonlp2", "lpSolve"),
+    #     trace = FALSE)
 
 
 # ------------------------------------------------------------------------------
@@ -151,11 +164,10 @@ function(object)
 {   # A function implemented by Rmetrics
 
     # Description:
-    #   Extracts the type from specification of a 'fPORTFOLIO' object
+    #   Extracts the type from specification
     
     # Arguments:
-    #   object - an object of S4 class fPORTFOLIO as returned by the
-    #       functions *Portfolio().
+    #   object - an object of S4 class fPFOLIOSPEC or fPORTFOLIO
     
     # FUNCTION:
     
@@ -174,24 +186,270 @@ function(object)
 # ------------------------------------------------------------------------------
 
 
+getEstimator =
+function(object)
+{   # A function implemented by Rmetrics
+
+    # Description:
+    #   Extracts the estimator from specification
+    
+    # Arguments:
+    #   object - an object of S4 class fPFOLIOSPEC or fPORTFOLIO
+    
+    # FUNCTION:
+    
+    # Get Estimator:
+    if (class(object) == "fPFOLIOSPEC") {
+        ans = object@model$estimator
+    } else if (class(object) == "fPORTFOLIO") {
+        ans = object@specification$spec@model$estimator
+    }
+    
+    # Return Value:
+    ans  
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+getParams =
+function(object)
+{   # A function implemented by Rmetrics
+
+    # Description:
+    #   Extracts the params from specification
+    
+    # Arguments:
+    #   object - an object of S4 class fPFOLIOSPEC or fPORTFOLIO
+    
+    # FUNCTION:
+    
+    # Get Params:
+    if (class(object) == "fPFOLIOSPEC") {
+        ans = object@model$params
+    } else if (class(object) == "fPORTFOLIO") {
+        ans = object@specification$spec@model$params
+    }
+    
+    # Return Value:
+    ans  
+}
+
+
+################################################################################
+
+
+
+getWeights =
+function(object)
+{   # A function implemented by Rmetrics
+
+    # Description:
+    #   Extracts the weights from specification
+    
+    # Arguments:
+    #   object - an object of S4 class fPFOLIOSPEC or fPORTFOLIO
+    
+    # FUNCTION:
+    
+    # Get Params:
+    if (class(object) == "fPFOLIOSPEC") {
+        ans = object@portfolio$weights
+    } else if (class(object) == "fPORTFOLIO") {
+        ans = object@specification$spec@portfolio$weights
+    }
+    
+    # Return Value:
+    ans  
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+getTargetReturn =
+function(object)
+{   # A function implemented by Rmetrics
+
+    # Description:
+    #   Extracts the target return from specification
+    
+    # Arguments:
+    #   object - an object of S4 class fPFOLIOSPEC or fPORTFOLIO
+    
+    # Example:
+    #   targetReturn()
+    
+    # FUNCTION:
+    
+    # Get Target Return:
+    if (class(object) == "fPFOLIOSPEC") {
+        ans = object@portfolio$targetReturn
+    } else if (class(object) == "fPORTFOLIO") {
+        ans = object@specification$spec@portfolio$targetReturn
+    }
+    
+    # Return Value:
+    ans
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+getTargetRisk =
+function(object)
+{   # A function implemented by Rmetrics
+
+    # Description:
+    #   Extracts the target risk from specification
+   
+    # Arguments:
+    #   object - an object of S4 class fPFOLIOSPEC or fPORTFOLIO
+    
+    # FUNCTION:
+    
+    # Get Target Risk:
+    if (class(object) == "fPFOLIOSPEC") {
+        ans = object@portfolio$targetRisk
+    } else if (class(object) == "fPORTFOLIO") {
+        ans = object@specification$spec@portfolio$targetRisk
+    }
+    
+    # Return Value:
+    ans
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+getTargetAlpha =
+function(object)
+{   # A function implemented by Rmetrics
+
+    # Description:
+    #   Extracts the VaR-alpha from specification
+   
+    # Arguments:
+    #   object - an object of S4 class fPFOLIOSPEC or fPORTFOLIO
+    
+    # FUNCTION:
+    
+    # Get Target Alpha:
+    if (class(object) == "fPFOLIOSPEC") {
+        ans = object@portfolio$targetAlpha
+    } else if (class(object) == "fPORTFOLIO") {
+        ans = object@specification$spec@portfolio$targetAlpha
+    }
+    
+    # Return Value:
+    ans
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+getRiskFreeRate =
+function(object)
+{   # A function implemented by Rmetrics
+
+    # Description:
+    #   Extracts the risk free rate from specification
+   
+    # Arguments:
+    #   object - an object of S4 class fPFOLIOSPEC or fPORTFOLIO
+    
+    # FUNCTION:
+    
+    # Get Risk Free Rate:
+    if (class(object) == "fPFOLIOSPEC") {
+        ans = object@portfolio$riskFreeRate
+    } else if (class(object) == "fPORTFOLIO") {
+        ans = object@specification$spec@portfolio$riskFreeRate
+    }
+    
+    # Return Value:
+    ans
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+getNFrontierPoints =
+function(object)
+{   # A function implemented by Rmetrics
+
+    # Description:
+    #   Extracts the number of Frontier Points from specification
+   
+    # Arguments:
+    #   object - an object of S4 class fPFOLIOSPEC or fPORTFOLIO
+    
+    # FUNCTION:
+    
+    # Get Number of Frontier Points:
+    if (class(object) == "fPFOLIOSPEC") {
+        ans = object@portfolio$nFrontierPoints
+    } else if (class(object) == "fPORTFOLIO") {
+        ans = object@specification$spec@portfolio$nFrontierPoints
+    }
+    
+    # Return Value:
+    ans
+}
+
+
+# ------------------------------------------------------------------------------
+
+
 getSolver =
 function(object)
 {   # A function implemented by Rmetrics
 
     # Description:
-    #   Extracts the solver from specification of a 'fPORTFOLIO' object
+    #   Extracts the solver from specification
     
     # Arguments:
-    #   object - an object of S4 class fPORTFOLIO as returned by the
-    #       functions *Portfolio().
+    #   object - an object of S4 class fPFOLIOSPEC or fPORTFOLIO
     
     # FUNCTION:
     
     # Get Solver:
     if (class(object) == "fPFOLIOSPEC") {
-        ans = object@solver$type[1]
+        ans = object@solver$solver[1]
     } else if (class(object) == "fPORTFOLIO") {
-        ans = object@specification$spec@solver$type[1]
+        ans = object@specification$spec@solver$solver[1]
+    }
+    
+    # Return Value:
+    ans  
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+getTrace =
+function(object)
+{   # A function implemented by Rmetrics
+
+    # Description:
+    #   Extracts the trace from specification
+    
+    # Arguments:
+    #   object - an object of S4 class fPFOLIOSPEC or fPORTFOLIO
+    
+    # FUNCTION:
+    
+    # Get Trace:
+    if (class(object) == "fPFOLIOSPEC") {
+        ans = object@solver$trace
+    } else if (class(object) == "fPORTFOLIO") {
+        ans = object@specification$spec@solver$trace
     }
     
     # Return Value:
@@ -201,10 +459,47 @@ function(object)
 
 
 ################################################################################
+# fPORTFOLIO - S4
+
+    #   call = "call",
+    #   data = "list",
+    #   specification = "list",
+    #   constraints = "character",
+    #   portfolio = "list",
+    #   title = "character",
+    #   description = "character")  
 
 
-getPortfolio =
-function(object, doplot = FALSE, ...)
+# ------------------------------------------------------------------------------
+
+
+getSpecification =
+function(object)
+{   # A function implemented by Rmetrics
+
+    # Description:
+    #   Extracts the specification structure from a 'fPORTFOLIO' object
+    
+    # Arguments:
+    #   object - an object of S4 class fPORTFOLIO as returned by the
+    #       functions *Portfolio().
+    
+    # FUNCTION:
+    
+    # Get Specification:
+    stopifnot(class(object) == "fPortfolio")
+    ans = object@specification$spec
+    
+    # Return Value:
+    ans  
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+getConstraints =
+function(object)
 {   # A function implemented by Rmetrics
 
     # Description:
@@ -217,11 +512,86 @@ function(object, doplot = FALSE, ...)
     # FUNCTION:
     
     # Get Portfolio:
-    ans = object@portfolio
-    
-    # Plot:
-    if (doplot) plot(object, which = c(1, 3, 4, 5, 6), ...)
+    stopifnot(class(object) == "fPortfolio")
+    ans = object@constraints
   
+    # Return Value:
+    ans  
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+getPortfolio =
+function(object)
+{   # A function implemented by Rmetrics
+
+    # Description:
+    #   Extracts the statistics from a 'fPORTFOLIO' object
+    
+    # Arguments:
+    #   object - an object of S4 class fPORTFOLIO as returned by the
+    #       functions *Portfolio().
+    
+    # FUNCTION:
+    
+    # Get Portfolio:
+    stopifnot(class(object) == "fPortfolio")
+    ans = object@portfolio
+  
+    # Return Value:
+    ans  
+}
+
+
+################################################################################
+
+
+getNumberOfAssets =
+function(object)
+{   # A function implemented by Rmetrics
+
+    # Description:
+    #   Extracts the number of assets
+    
+    # Arguments:
+    #   object - an object of S4 class fPORTFOLIO as returned by the
+    #       functions *Portfolio().
+    
+    # FUNCTION:
+    
+    # Get Series of Assets
+    ans = c(nAssets = length(object@data$statistics$mu))
+    
+    # Return Value:
+    ans  
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+getNames =
+function(object)
+{   # A function implemented by Rmetrics
+
+    # Description:
+    #   Extracts the asset names from a 'fPORTFOLIO' object
+    
+    # Arguments:
+    #   object - an object of S4 class fPORTFOLIO as returned by the
+    #       functions *Portfolio().
+    
+    # FUNCTION:
+    
+    # Get Names of Assets:
+    ans = names(object@data$statistics$mu)
+    if(is.null(ans)){
+        counter = seq(1, getNumberOfAssets(object), 1)
+        ans = paste("A", counter, sep = "")
+    } 
+    
     # Return Value:
     ans  
 }
@@ -285,33 +655,6 @@ function(object, frontier = c("both", "lower", "upper"), doplot = FALSE, ...)
   
     # Plot:
     if(doplot) plot(ans, ...)
-    
-    # Return Value:
-    ans  
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-getWeights =
-function(object, doplot = FALSE, ...)
-{   # A function implemented by Rmetrics
-
-    # Description:
-    #   Extracts the weights from a 'fPORTFOLIO' object
-    
-    # Arguments:
-    #   object - an object of S4 class fPORTFOLIO as returned by the
-    #       functions *Portfolio().
-    
-    # FUNCTION:
-    
-    # Get Weights:
-    ans = object@portfolio$weights
-    
-    # Plot:
-    if (doplot) weightsPlot(object, ...)
     
     # Return Value:
     ans  
@@ -399,135 +742,6 @@ function (object)
     
     # Return Value:
     ans
-}
-
-
-
-# ------------------------------------------------------------------------------
-
-
-getTargetReturn =
-function(object)
-{   # A function implemented by Rmetrics
-
-    # Description:
-    #   Extracts the target return from a 'fPORTFOLIO' object
-    
-    # Arguments:
-    #   object - an object of S4 class fPORTFOLIO as returned by the
-    #       functions *Portfolio().
-    
-    # Example:
-    #   targetReturn()
-    
-    # FUNCTION:
-    
-    # Target MV Return:
-    ans = object@portfolio$targetReturn
-    
-    # Return Value:
-    ans
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-getTargetRisk =
-function(object)
-{   # A function implemented by Rmetrics
-
-    # Description:
-    #   Extracts the target risk from a 'fPORTFOLIO' object
-   
-    # Arguments:
-    #   object - an object of S4 class fPORTFOLIO as returned by the
-    #       functions *Portfolio().
-    
-    # FUNCTION:
-    
-    # Target MV Risk:
-    ans = object@portfolio$targetRisk
-    
-    # Return Value:
-    ans
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-getTargetAlpha =
-function(object)
-{   # A function implemented by Rmetrics
-
-    # Description:
-    #   Extracts the VaR-alpha from a 'fPORTFOLIO' object
-   
-    # Arguments:
-    #   object - an object of S4 class fPORTFOLIO as returned by the
-    #       functions *Portfolio().
-    
-    # FUNCTION:
-    
-    # Target Alpha:
-    ans = object@portfolio$targetAlpha
-    
-    # Return Value:
-    ans
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-getTargetStdev =
-function(object)
-{   # A function implemented by Rmetrics
-
-    # Description:
-    #   Extracts the target standard deviation from a 'fPORTFOLIO' object
-   
-    # Arguments:
-    #   object - an object of S4 class fPORTFOLIO as returned by the
-    #       functions *Portfolio().
-    
-    # FUNCTION:
-    
-    # Target Standard Deviation:
-    ans = object@portfolio$targetStdev
-    if (length(ans) == 1) names(ans) = "targetStdev"
-    
-    # Return Value:
-    ans
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-getNames =
-function(object)
-{   # A function implemented by Rmetrics
-
-    # Description:
-    #   Extracts the asset names from a 'fPORTFOLIO' object
-    
-    # Arguments:
-    #   object - an object of S4 class fPORTFOLIO as returned by the
-    #       functions *Portfolio().
-    
-    # FUNCTION:
-    
-    # Get Names of Assets:
-    ans = names(object@data$statistics$mu)
-    if(is.null(ans)){
-        counter = seq(1, getNumberOfAssets(object), 1)
-        ans = paste("A", counter, sep = "")
-    } 
-    
-    # Return Value:
-    ans  
 }
 
 

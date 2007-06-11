@@ -42,13 +42,9 @@
 #  setTargetAlpha<-              Sets CVaR target alpha value
 #  setRiskFreeRate<-             Sets risk-free rate value
 #  setNFrontierPoints<-          Sets number of frontier points
-#  setReturnRange<-              Sets range of target returns
-#  setRiskRange<-                Sets range of target risks
 # FUNCTION:                     SOLVER SLOT:
 #  setSolver<-                   Sets name of desired solver
-# FUNCTION:                     Classical and Robust Estimators
-#  portfolioStatistics           Estimates mu and Sigma statistics
-#  portfolioData                 Creates portfolio data list
+#  setTrace<-                    Sets name of desired solver
 ################################################################################
 
 
@@ -72,14 +68,12 @@ model = list(
 portfolio = list(
     weights = NULL, 
     targetReturn = NULL, 
-    targetAlpha = NULL,
-    targetRisk = NULL, 
+    targetRisk = NULL,
+    targetAlpha = NULL, 
     riskFreeRate = 0, 
-    nFrontierPoints = 50, 
-    returnRange = NULL, 
-    riskRange = NULL),
+    nFrontierPoints = 50),
 solver = list(
-    type = c("RQuadprog", "RDonlp2", "RlpSolve"),
+    solver = c("quadprog", "Rdonlp2", "lpSolve"),
     trace = FALSE))
 {   # A function implemented by Rmetrics
 
@@ -95,7 +89,7 @@ solver = list(
     model.type = c("MV", "CVaR")
     model.estimator.mean = "mean"
     model.estimator.cov = c("cov", "mcd", "shrink")
-    solver.type = c("RQuadprog", "RDonlp2", "RlpSolve")
+    solver.type = c("quadprog", "Rdonlp2", "lpSolve")
     solver.trace = FALSE
     
     # Check Arguments:
@@ -121,6 +115,7 @@ solver = list(
         returnRange = NULL, 
         riskRange = NULL)
     Portfolio[(Names <- names(portfolio))] <- portfolio
+    
     # Check Portfolio - weights, targetReturn, targetRisk:
     # ... at least two of them must be set to NULL!
     checkPortfolio = 0

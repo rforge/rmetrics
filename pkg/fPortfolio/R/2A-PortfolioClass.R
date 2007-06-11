@@ -30,16 +30,15 @@
 ################################################################################
 # FUNCTION:                     PORTFOLIO CLASS:
 #  'fPORTFOLIO'                  S4 Portfolio Class
+#  portfolioFrontier             Returns the efficient frontier of a portfolio
+#  show.fPORTFOLIO               S4 Print method for 'fPPORTFOLIO' objects
 # FUNCTION:                     SINGLE PORTFOLIOS:
 #  feasiblePortfolio             Returns a feasible portfolio
 #  cmlPortfolio                  Returns capital market line
 #  tangencyPortfolio             Returns the tangency portfolio
 #  minvariancePortfolio          Returns the minimum variance portfolio
 #  efficientPortfolio            Returns a frontier portfolio
-# FUNCTION:                     PORTFOLIO FRONTIER:
-#  portfolioFrontier             Returns the efficient frontier of a portfolio
-# FUNCTION:                     PRINT AND PLOT METHODS:        
-#  show.fPORTFOLIO               S4 Print method for 'fPPORTFOLIO' objects   
+# FUNCTION:                     PRINT AND PLOT METHODS:           
 #  plot.fPORTFOLIO               S3 Plot method for 'fPORTFOLIO' objects   
 #  summary.fPORTFOLIO            S3 Summary method for 'fPORTFOLIO' objects
 # FUNCTION:                     EDUCATIONAL PORTFOLIO SLIDERS: 
@@ -61,6 +60,133 @@ setClass("fPORTFOLIO",
 
 
 # ------------------------------------------------------------------------------
+
+
+portfolioFrontier =
+function(data, spec = portfolioSpec(), constraints = NULL, 
+title = NULL, description = NULL)
+{   # A function implemented by Rmetrics
+
+    # Description:
+    #   Computes the efficient frontier of a portfolio
+    
+    # Arguments:
+    #   data - a rectangular object of assets
+    #   spec - an object of class 'fPFOLIOSPEC'
+    #   constraints - a character vector or NULL
+    
+    # FUNCTION:
+    
+    # Compose Portfolio Data: 
+    data = portfolioData(data, spec)
+    
+    # Compose Optimization Function:
+    if(is.null(constraints) | length(constraints) == 0) {
+        Model = c("Constrained", "LongOnly")
+        nAssets = length(data$statistics$mu)
+        constraints = paste("minW[1:", nAssets, "]=0", sep = "")
+    } else if (constraints[1] == "Short") {
+        Model = "Short"
+    } else {
+        Model = "Constrained"
+    }         
+    Type = getType(spec)
+    fun = match.fun(paste(".portfolio", Model[1], Type[1], "Frontier", 
+        sep = ""))
+    attr(constraints, "model") = Model
+    
+    # Compute Portfolio:
+    ans = fun(data, spec, constraints)
+    attr(ans@constraints, "model") = Model
+    
+    # Reset Call:
+    ans@call = match.call() 
+    
+    # Return Value:
+    ans   
+}
+
+  
+################################################################################
+
+
+show.fPORTFOLIO =
+function(object)
+{   # A function implemented by Rmetrics
+
+    # Description:
+    #   S4 Print Method for an object of class "fPORTFOLIO"
+    
+    # Arguments:
+    #   object - an object of class "fPORTFOLIO"
+    
+    # FUNCTION:
+     
+    # Title:
+    cat("\nTitle:\n ")
+    cat(getTitle(object), "\n")
+    
+    # Call:
+    cat("\nCall:\n ")
+    print.default(getCall(object))
+    
+    # Target Weights:
+    cat("\nPortfolio Weight(s):\n")
+    weights = round(getWeights(object), digits = 4)
+    if (length(weights) == 1) {
+        cat(" ", weights, "\n")
+    } else {
+        print.table(weights)
+    }
+    
+    # Covariance Risk Budgets:
+    cat("\nRiskBudget(s):\n")
+    riskBudgets = round(getRiskBudgets(object), digits = 4)
+    if (length(riskBudgets) == 1) {
+        cat(" ", riskBudgets, "\n")
+    } else {
+        print.table(riskBudgets)
+    }
+    
+    # Tail Risk Budgets:
+    if (FALSE) {
+        if (!is.na(getTailRiskBudgets(object))) {
+             cat("\nRiskBudget(s):\n")
+            riskBudgets = round(getTailRiskBudgets(object), digits = 4)
+            if (length(riskBudgets) == 1) {
+                cat(" ", riskBudgets, "\n")
+            } else {
+                print.table(riskBudgets)
+            }   
+        }  
+    }
+  
+    # Target Returns:   
+    cat("\nTarget Return(s):\n")
+    targetReturn = getTargetReturn(object)
+    print(targetReturn)
+ 
+    # Target Risk:
+    cat("\nTarget Risk(s):\n")
+    targetRisk = getTargetRisk(object) 
+    print(targetRisk)
+       
+    # Description:
+    cat("\nDescription:\n ")
+    cat(getDescription(object), "\n")
+        
+    # Return Value: 
+    invisible(object)
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+setMethod("show", "fPORTFOLIO", show.fPORTFOLIO)
+
+
+################################################################################
 
 
 feasiblePortfolio =
@@ -295,133 +421,6 @@ function(data, spec = portfolioSpec(), constraints = NULL)
     # Return Value:
     ans   
 }
-
-
-# ------------------------------------------------------------------------------
-
-
-portfolioFrontier =
-function(data, spec = portfolioSpec(), constraints = NULL, 
-title = NULL, description = NULL)
-{   # A function implemented by Rmetrics
-
-    # Description:
-    #   Computes the efficient frontier of a portfolio
-    
-    # Arguments:
-    #   data - a rectangular object of assets
-    #   spec - an object of class 'fPFOLIOSPEC'
-    #   constraints - a character vector or NULL
-    
-    # FUNCTION:
-    
-    # Compose Portfolio Data: 
-    data = portfolioData(data, spec)
-    
-    # Compose Optimization Function:
-    if(is.null(constraints) | length(constraints) == 0) {
-        Model = c("Constrained", "LongOnly")
-        nAssets = length(data$statistics$mu)
-        constraints = paste("minW[1:", nAssets, "]=0", sep = "")
-    } else if (constraints[1] == "Short") {
-        Model = "Short"
-    } else {
-        Model = "Constrained"
-    }         
-    Type = getType(spec)
-    fun = match.fun(paste(".portfolio", Model[1], Type[1], "Frontier", 
-        sep = ""))
-    attr(constraints, "model") = Model
-    
-    # Compute Portfolio:
-    ans = fun(data, spec, constraints)
-    attr(ans@constraints, "model") = Model
-    
-    # Reset Call:
-    ans@call = match.call() 
-    
-    # Return Value:
-    ans   
-}
-
-  
-################################################################################
-
-
-show.fPORTFOLIO =
-function(object)
-{   # A function implemented by Rmetrics
-
-    # Description:
-    #   S4 Print Method for an object of class "fPORTFOLIO"
-    
-    # Arguments:
-    #   object - an object of class "fPORTFOLIO"
-    
-    # FUNCTION:
-     
-    # Title:
-    cat("\nTitle:\n ")
-    cat(getTitle(object), "\n")
-    
-    # Call:
-    cat("\nCall:\n ")
-    print.default(getCall(object))
-    
-    # Target Weights:
-    cat("\nPortfolio Weight(s):\n")
-    weights = round(getWeights(object), digits = 4)
-    if (length(weights) == 1) {
-        cat(" ", weights, "\n")
-    } else {
-        print.table(weights)
-    }
-    
-    # Covariance Risk Budgets:
-    cat("\nRiskBudget(s):\n")
-    riskBudgets = round(getRiskBudgets(object), digits = 4)
-    if (length(riskBudgets) == 1) {
-        cat(" ", riskBudgets, "\n")
-    } else {
-        print.table(riskBudgets)
-    }
-    
-    # Tail Risk Budgets:
-    if (FALSE) {
-        if (!is.na(getTailRiskBudgets(object))) {
-             cat("\nRiskBudget(s):\n")
-            riskBudgets = round(getTailRiskBudgets(object), digits = 4)
-            if (length(riskBudgets) == 1) {
-                cat(" ", riskBudgets, "\n")
-            } else {
-                print.table(riskBudgets)
-            }   
-        }  
-    }
-  
-    # Target Returns:   
-    cat("\nTarget Return(s):\n")
-    targetReturn = getTargetReturn(object)
-    print(targetReturn)
- 
-    # Target Risk:
-    cat("\nTarget Risk(s):\n")
-    targetRisk = getTargetRisk(object) 
-    print(targetRisk)
-       
-    # Description:
-    cat("\nDescription:\n ")
-    cat(getDescription(object), "\n")
-        
-    # Return Value: 
-    invisible(object)
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-setMethod("show", "fPORTFOLIO", show.fPORTFOLIO)
 
 
 # ------------------------------------------------------------------------------

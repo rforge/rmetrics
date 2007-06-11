@@ -69,9 +69,9 @@ function(data, spec, constraints)
 
     # Get Statistics:
     if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
-    mu = getStatistics(data)$mu
-    Sigma = getStatistics(data)$Sigma
-    nAssets = getNumberOfAssets(data)
+    mu = data$statistics$mu
+    Sigma = data$statistics$Sigma
+    nAssets = length(mu)
     
     # Get or Set Target Alpha:
     targetAlpha = spec@portfolio$targetAlpha
@@ -145,9 +145,9 @@ function(data, spec, constraints)
      
     # Get Statistics:
     if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
-    mu = getStatistics(data)$mu
-    Sigma = getStatistics(data)$Sigma
-    nAssets = getNumberOfAssets(data)
+    mu = data$statistics$mu
+    Sigma = data$statistics$Sigma
+    nAssets = length(mu)
     
     # Get or Set Target Alpha:
     targetAlpha = spec@portfolio$targetAlpha
@@ -230,9 +230,9 @@ function(data, spec, constraints)
     
     # Get Statistics:
     if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
-    mu = getStatistics(data)$mu
-    Sigma = getStatistics(data)$Sigma
-    nAssets = getNumberOfAssets(data)
+    mu = data$statistics$mu
+    Sigma = data$statistics$Sigma
+    nAssets = length(mu)
     
     # Get or Set Target Alpha:
     targetAlpha = spec@portfolio$targetAlpha
@@ -358,9 +358,9 @@ function(data, spec, constraints)
 
     # Get Statistics:
     if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
-    mu = getStatistics(data)$mu
-    Sigma = getStatistics(data)$Sigma
-    nAssets = getNumberOfAssets(data)
+    mu = data$statistics$mu
+    Sigma = data$statistics$Sigma
+    nAssets = length(mu)
     
     # Get or Set Target Alpha:
     targetAlpha = spec@portfolio$targetAlpha
@@ -441,9 +441,9 @@ function(data, spec, constraints)
 
     # Get Statistics:
     if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
-    mu = getStatistics(data)$mu
-    Sigma = getStatistics(data)$Sigma
-    nAssets = getNumberOfAssets(data)
+    mu = data$statistics$mu
+    Sigma = data$statistics$Sigma
+    nAssets = length(mu)
 
     # Get or Set Target Alpha:
     targetAlpha = spec@portfolio$targetAlpha
