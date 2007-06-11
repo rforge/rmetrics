@@ -392,7 +392,7 @@ trace = TRUE)
         action = NULL,
         trace = trace)
             
-    # Portfolio Status:
+    # Extract Portfolio Status:
     Status = (tg[[1]])@portfolio$status
     for (i in 2:length(tg)) {
         status = (tg[[i]])@portfolio$status
@@ -401,7 +401,7 @@ trace = TRUE)
     rownames(Status) = as.character(to)
     colnames(Status) = "Status"
       
-    # Portfolio Investment Weights:
+    # Extract Portfolio Investment Weights:
     #   Performance will be measured at time "i"
     #   Note, we have invested at period i-1 with the weights from period i-1
     Weights = getWeights(tg[[1]])
@@ -411,6 +411,34 @@ trace = TRUE)
     }
     rownames(Weights) = as.character(to)
     colnames(Weights) = assets
+    
+    # Extract RiskBudgets:
+    RiskBudgets = getRiskBudgets(tg[[1]])
+    for (i in 2:length(tg)) {
+        riskBudgets = getRiskBudgets(tg[[i-1]])
+        RiskBudgets = rbind(RiskBudgets, riskBudgets)      
+    }
+    rownames(RiskBudgets) = as.character(to)
+    colnames(RiskBudgets) = assets
+    
+    # Extrakt Shrinkage Lambda:
+    Lambda = attr(getStatistics(tg[[1]])$Sigma, "lambda")
+    for (i in 2:length(tg)) {
+        lambda = attr(getStatistics(tg[[i]])$Sigma, "lambda")
+        Lambda = rbind(Lambda, lambda)      
+    }
+    rownames(Lambda) = as.character(to)
+    colnames(Lambda) = "Lambda"
+    
+    # Extrakt Eigenvalue Ratio:
+    Values = eigen(getStatistics(tg[[1]])$Sigma)$values
+    Eigen = Values[1]/Values[length(assets)]
+    for (i in 2:length(tg)) {
+        Values = eigen(getStatistics(tg[[i]])$Sigma)$values
+        Eigen = rbind(Eigen, Values[1]/Values[length(assets)])    
+    }
+    rownames(Eigen) = as.character(to)
+    colnames(Eigen) = "Eigen"
      
     # Exponentially Smoothed Weights:
     emaWeights = NULL
@@ -438,7 +466,8 @@ trace = TRUE)
         ts.plot(rbind(naWeights, emaWeights), xlab = "", 
             ylab = "Weights Factor", ylim = c(0, 1),
             col = 2:(nAssets+1), main = "Weights Recommendation")
-        text = paste("Horizon = ", horizon, 
+        text = paste(
+            "Horizon = ", horizon, 
             "Months | Smoothing:", smoothing, "Months")
         mtext(text, line = 0.5, cex = 0.7)
         grid()
@@ -461,12 +490,24 @@ trace = TRUE)
     for (i in 2:length(tg)) {
         weights = emaWeights[i, ] 
         mu = as.vector(monthlyAssets[as.character(to[i]), ]@Data)
-        pfReturns = c(pfReturns, weights %*% mu)     
+        pfReturns = c(pfReturns, weights %*% mu)   
     }
     pfReturns = matrix(pfReturns, ncol = 1)
     colnames(pfReturns) = "Portfolio"
     rownames(pfReturns) = as.character(to)
-    pfReturns.tS = timeSeries(data = pfReturns, charvec = to)  
+    pfReturns.tS = timeSeries(data = pfReturns, charvec = to)   
+    
+    # Collect Portfolio Risk:
+    monthlyAssets = applySeries(x[, 1:nAssets], FUN = colSums)
+    pfRisk = getTargetRisk(tg[[1]])
+    pfRiskNames = names(pfRisk)
+    for (i in 2:length(tg)) {  
+        pfRisk = rbind(pfRisk, getTargetRisk(tg[[i]]))
+    }
+    pfRisk = matrix(pfRisk, ncol = 3)
+    colnames(pfRisk) = pfRiskNames
+    rownames(pfRisk) = as.character(to)
+    pfRisk.tS = timeSeries(data = pfRisk, charvec = to)  
         
     # Collect Benchmark Returns:
     monthlyBenchmark = applySeries(x[, benchmark], FUN = colSums)
@@ -492,11 +533,13 @@ trace = TRUE)
     grid()
     
     # Result:
-    ans = list(
+    ans = list(tg = tg,
         pfReturns = pfReturns.tS, 
+        pfRisk = pfRisk.tS,
         bmReturns = bmReturns.tS, 
         pfWeights = emaWeights)
     attr(ans, "control") <- formula
+    class(ans) = c("list", "portfolioBacktest")
     
     # Statistics:
     if (trace) {
