@@ -52,9 +52,9 @@ function(data, spec, constraints)
     #   constraints - string of constraints
     
     # Note:
-    #   In contrast to the functions *Portfolio(), which only require either the
-    #   statistics or the series the functions .*Portfolio() require both as
-    #   input
+    #   In contrast to the functions *Portfolio(), which only require either 
+    #   the statistics or the series the functions .*Portfolio() require both 
+    #   as input.
 
     # Example:
     #   .feasibleConstrainedLPMPortfolio()

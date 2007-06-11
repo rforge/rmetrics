@@ -41,9 +41,14 @@ function(data, spec = portfolioSpec())
     # Description:
     #   Estimates mu and Sigma Statistics
     
+    # Arguments:
+    #   data - a multivariate timeSeries object
+    #   spec -  a portfolio specification structure, from which
+    #       the mean and covariance type of estimator will be extracted
+    
     # FUNCTION:
     
-    # Check Data: 
+    # Check Data - Should be a multivariate time series: 
     stopifnot(!is.list(data))
     
     # Convert data to matrix object:
@@ -106,6 +111,11 @@ function(data, spec = portfolioSpec())
     # Description:
     #   Creates portfolio data list
     
+    # Arguments:
+    #   data - a multivariate timeSeries object
+    #   spec -  a portfolio specification structure, from which
+    #       the mean and covariance type of estimator will be extracted
+    
     # FUNCTION:
     
     # Check Data: 
@@ -127,8 +137,11 @@ function(data, spec = portfolioSpec())
         tailrisk = NA
     }
     
-    # Portfolio data list:
-    data = list(series = series, statistics = statistics, tailrisk = tailrisk) 
+    # Portfolio Data List:
+    data = list(
+        series = series, 
+        statistics = statistics, 
+        tailrisk = tailrisk) 
     class(data) <- c("list", "fPFOLIODATA") 
     
     # Return Value:

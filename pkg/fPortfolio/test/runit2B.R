@@ -57,8 +57,18 @@ function()
 test.portfolioStatistics =
 function()
 {
-    NA
-        
+    # Load Data:
+    Data = as.timeSeries(data(smallcap.ts))
+    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
+    head(Data)
+   
+    # Set Default Specifications:
+    Spec = portfolioSpec()
+    Spec
+    
+    # PortfolioStatistics:
+    portfolioStatistics(Data, Spec)
+         
     # Return Value:
     return()
 }
@@ -70,7 +80,17 @@ function()
 test.portfolioData =
 function()
 {
-    NA
+    # Load Data:
+    Data = as.timeSeries(data(smallcap.ts))
+    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
+    head(Data)
+   
+    # Set Default Specifications:
+    Spec = portfolioSpec()
+    Spec
+    
+    # PortfolioData:
+    portfolioData(Data, Spec)
     
     # Return Value:
     return()

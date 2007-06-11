@@ -17,6 +17,7 @@
 \alias{portfolioFrontier}
       
 \alias{plot.fPORTFOLIO}
+\alias{summary.fPORTFOLIO}
 
 \alias{weightsSlider}     
 \alias{frontierSlider}
@@ -68,6 +69,7 @@ efficientPortfolio(data, spec = portfolioSpec(), constraints = NULL)
 
 show.fPORTFOLIO(object)
 \method{plot}{fPORTFOLIO}(x, which = "ask", control = list(), \dots)
+\method{summary}{fPORTFOLIO}(object)
 
 weightsSlider(object, control = list(), \dots)     
 frontierSlider(object, control = list(), \dots)
@@ -90,8 +92,10 @@ frontierSlider(object, control = list(), \dots)
          see Notes for a complete list of control parameters.
         }
     \item{data}{
-        a list, having a statistics named list, having named entries 'mu' and 
-        'Sigma', containing the information of the statistics.
+        a multivariate time series described by an S4 object of class
+        \code{timeSeries}. If your timeSerie is not a \code{timeSeries}
+        object, consult the generic function \code{as.timeSeries} to 
+        convert your time series.
         }
     \item{description}{
         [portfolioFrontier] - \cr
@@ -115,15 +119,15 @@ frontierSlider(object, control = list(), \dots)
         }
     \item{which}{
         [plot] - \cr
-        which of the plots should be displayed? which can be either a character 
-        string, "all" (displays all plots) or "ask" (interactively asks which 
-        one to display), or a vector values displaying the corresponding plot.
-        Default value is "ask".
+        which of the plots should be displayed? \code{which} can be either a 
+        character string, \code{"all"} (displays all plots) or \code{"ask"} 
+        (interactively asks which one to display), or a vector of integer
+        values displaying the corresponding plot. Default value is 
+        \code{"ask"}.
         }
     \item{x}{
         [plot] - \cr
-        an S4 object of class \code{fPORTFOLIO}, containing slots call, data,
-        specification, constraints, portfolio, title, description.
+        an S4 object of class \code{fPORTFOLIO}.
         }
     \item{\dots}{
         [plot, *Sliders] - \cr
@@ -139,8 +143,8 @@ frontierSlider(object, control = list(), \dots)
     \cr\cr
     This S4 class contains all information about the portfolio. Basically this
     are risk measure, mean and covariance estimation, target return, risk free
-    rate, number of frontier points, ranges for calculation, see Value for
-    further slot description. 
+    rate, number of frontier points, ranges for calculation, see the "Value"
+    section  for a detailed description of the slots. 
     \cr
     
     
@@ -404,8 +408,8 @@ frontierSlider(object, control = list(), \dots)
     \item{pieR}{
         [plot, frontierSlider] - 
         a vector, containing factors for shrinking and stretching the x- and
-        y-axis, by default NULL, i.e. c(1, 1) is used. Default pie size is 1/15
-        of the plot range.
+        y-axis, by default NULL, i.e. c(1, 1) is used. Default pie size is 
+        1/15 of the plot range.
         }
     \item{piePos}{
         [plot, frontierSlider] - 
@@ -456,7 +460,7 @@ frontierSlider(object, control = list(), \dots)
 
 \examples{
 ## minvariancePortfolio -
-   # Load Data:
+   # Load Data and Convert to timeSeries Object:
    Data = as.timeSeries(data(smallcap.ts))
    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
    Data

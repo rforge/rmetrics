@@ -105,7 +105,11 @@ function()
     par(mfrow = c(2, 2), cex = 0.7)
     weightsPie(Portfolio) 
     attributesPie(Portfolio) 
-    riskBudgetsPie(Portfolio)                                                                   
+    riskBudgetsPie(Portfolio)  
+    
+    # Summary:
+    par(mfrow = c(2, 2), cex = 0.7) 
+    summary(Portfolio)                                                                
      
     # Return Value:
     return()
@@ -141,7 +145,11 @@ function()
     par(mfrow = c(2, 2), cex = 0.7)
     weightsPie(Portfolio) 
     attributesPie(Portfolio) 
-    riskBudgetsPie(Portfolio)                                                         
+    riskBudgetsPie(Portfolio)   
+    
+    # Summary:
+    par(mfrow = c(2, 2), cex = 0.7) 
+    summary(Portfolio)                                                         
      
     # Return Value:
     return()
@@ -176,6 +184,10 @@ function()
     attributesPie(Portfolio) 
     riskBudgetsPie(Portfolio) 
     
+    # Summary:
+    par(mfrow = c(2, 2), cex = 0.7) 
+    summary(Portfolio)
+    
     # Return Value:
     return()
 }
@@ -207,7 +219,11 @@ function()
     par(mfrow = c(2, 2), cex = 0.7)
     weightsPie(Portfolio) 
     attributesPie(Portfolio) 
-    riskBudgetsPie(Portfolio) 
+    riskBudgetsPie(Portfolio)
+    
+    # Summary:
+    par(mfrow = c(2, 2), cex = 0.7) 
+    summary(Portfolio)
     
     # Return Value:
     return()
@@ -241,6 +257,10 @@ function()
     weightsPie(Portfolio) 
     attributesPie(Portfolio) 
     riskBudgetsPie(Portfolio) 
+    
+    # Summary:
+    par(mfrow = c(2, 2), cex = 0.7) 
+    summary(Portfolio)
 
     # Return Value:
     return()
@@ -277,6 +297,10 @@ function()
     attributesPie(Portfolio) 
     riskBudgetsPie(Portfolio) 
 
+    # Summary:
+    par(mfrow = c(2, 2), cex = 0.7) 
+    summary(Portfolio)
+    
     # Return Value:
     return()
 }
@@ -310,6 +334,10 @@ function()
     weightsPie(Portfolio) 
     attributesPie(Portfolio) 
     riskBudgetsPie(Portfolio) 
+    
+    # Summary:
+    par(mfrow = c(2, 2), cex = 0.7) 
+    summary(Portfolio)
    
     # Return Value:
     return()
@@ -344,6 +372,10 @@ function()
     weightsPlot(Frontier) 
     attributesPlot(Frontier) 
     riskBudgetsPlot(Frontier) 
+    
+    # Summary:
+    par(mfrow = c(2, 2), cex = 0.7) 
+    summary(Portfolio)
     
     # Return Value:
     return()
@@ -381,7 +413,7 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.plot.timeSeriesData.RQuadprog =
+test.plot.RQuadprog =
 function()
 { 
     # Load Data:
@@ -404,14 +436,16 @@ function()
     # Plot:
     par(mfrow = c(1, 1))
     plot(Frontier, which = 1)
-    .minvariancePlot(Frontier, col = "red", pch = 19)  
+    .minvariancePlot(Frontier, col = "red", pch = 19, cex = 1.5)  
     .tangencyPlot(Frontier, col = "green") 
     .singleAssetPlot(Frontier, col = "red", cex = 1.5)
-    .equalWeightsPlot(Frontier, col = "blue", pch = 19)
+    .equalWeightsPlot(Frontier, col = "blue", pch = 19, cex = 1.5)
     .twoAssetsPlot(Frontier, col = "grey")
     .wheelPiePlot(Frontier)
-    .monteCarloPlot(Frontier, mcSteps = 1000, cex = 0.25, pch =19)  
-    .sharpeRatioPlot(Frontier) 
+    .monteCarloPlot(Frontier, mcSteps = 1000, cex = 0.25, pch = 19)  
+    .sharpeRatioPlot(Frontier, pch = 19, col = "blue") 
+    
+    # Plot All:
     plot(Frontier, which = "all")
     
     # Return Value:
@@ -422,7 +456,7 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.plot.timeSeriesData.RDonlp2 =
+test.plot.RDonlp2 =
 function()
 {     
     # Try RDonlp2:
@@ -448,18 +482,17 @@ function()
    
     # Plot:
     par(mfrow = c(1, 1))
-    # Plot:
-    par(mfrow = c(1, 1))
     plot(Frontier, which = 1)
-    .minvariancePlot(Frontier, col = "red", pch = 19)  
+    .minvariancePlot(Frontier, col = "red", pch = 19, cex = 1.5)  
     .tangencyPlot(Frontier, col = "green") 
     .singleAssetPlot(Frontier, col = "red", cex = 1.5)
-    .equalWeightsPlot(Frontier, col = "blue", pch = 19)
+    .equalWeightsPlot(Frontier, col = "blue", pch = 19, cex = 1.5)
     .twoAssetsPlot(Frontier, col = "grey")
-    .DEBUG$solver
     .wheelPiePlot(Frontier)
-    .monteCarloPlot(Frontier, mcSteps = 1000, cex = 0.25, pch =19)  
-    .sharpeRatioPlot(Frontier) 
+    .monteCarloPlot(Frontier, mcSteps = 1000, cex = 0.25, pch = 19)  
+    .sharpeRatioPlot(Frontier, pch = 19, col = "blue") 
+    
+    # Plot All:
     plot(Frontier, which = "all")
     
     # Return Value:
@@ -470,7 +503,7 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.plot.timeSeriesData.RlpSolve =
+test.plot.RlpSolve =
 function()
 {     
     # Try RlpSolve:
@@ -497,15 +530,16 @@ function()
     # Plot:
     par(mfrow = c(1, 1))
     plot(Frontier, which = 1)
-    .minvariancePlot(Frontier, col = "red", pch = 19)  
+    .minvariancePlot(Frontier, col = "red", pch = 19, cex = 1.5)  
     .tangencyPlot(Frontier, col = "green") 
     .singleAssetPlot(Frontier, col = "red", cex = 1.5)
-    .equalWeightsPlot(Frontier, col = "blue", pch = 19)
+    .equalWeightsPlot(Frontier, col = "blue", pch = 19, cex = 1.5)
     .twoAssetsPlot(Frontier, col = "grey")
-    .DEBUG$solver
     .wheelPiePlot(Frontier)
-    .monteCarloPlot(Frontier, mcSteps = 1000, cex = 0.25, pch =19)  
-    .sharpeRatioPlot(Frontier) 
+    .monteCarloPlot(Frontier, mcSteps = 1000, cex = 0.25, pch = 19)  
+    .sharpeRatioPlot(Frontier, pch = 19, col = "blue") 
+    
+    # Plot All:
     plot(Frontier, which = "all")
     
     # Return Value:
@@ -516,53 +550,10 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.plot.statisticsData =
+test.weightsSlider =
 function()
 { 
     # Load Data:
-    Data = as.timeSeries(data(smallcap.ts))
-    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
-    Data = portfolioData(Data)$statistics
-    Data
-   
-    # Set Mean-Variance Default Specifications:
-    Spec = portfolioSpec()
-    Spec
-    
-    # Set Long Only Constraints:
-    Constraints = "LongOnly"
-    Constraints
-   
-    # Calculation of Long Only Minimum Variance Portfolio:
-    Frontier = portfolioFrontier(Data, Spec, Constraints)
-    Frontier
-       
-    # Plot:
-    par(mfrow = c(1, 1))
-    plot(Frontier, which = 1)
-    .minvariancePlot(Frontier, col = "red", pch = 19)  
-    .tangencyPlot(Frontier, col = "green") 
-    .singleAssetPlot(Frontier, col = "red", cex = 1.5)
-    .equalWeightsPlot(Frontier, col = "blue", pch = 19)
-    .twoAssetsPlot(Frontier, col = "grey")
-    .DEBUG$solver
-    .wheelPiePlot(Frontier)
-    .monteCarloPlot(Frontier, mcSteps = 1000, cex = 0.25, pch =19)  
-    .sharpeRatioPlot(Frontier) 
-    plot(Frontier, which = "all")
-           
-    # Return Value:
-    return()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-test.weightsSlider.data =
-function()
-{ 
-    # Load Data::
     Data = as.timeSeries(data(smallcap.ts))
     Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
     head(Data)
@@ -586,38 +577,10 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.weightsSlider.statistics =
+test.frontierSlider =
 function()
 { 
-    # Load Data::
-    Data = as.timeSeries(data(smallcap.ts))
-    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
-    Data = portfolioData(Data)$statistics 
-    head(Data)
-   
-    # Set Default Specifications:
-    Spec = portfolioSpec()
-    Spec
-   
-    # Calculation of Long Only Minimum Variance Portfolio:
-    Frontier = portfolioFrontier(Data, Spec)
-    Frontier
-    
-    # Try:
-    weightsSlider(Frontier)  
-    
-    # Return Value:
-    return()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-test.frontierSlider.data =
-function()
-{ 
-    # Load Data::
+    # Load Data:
     Data = as.timeSeries(data(smallcap.ts))
     Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
     head(Data)

@@ -383,7 +383,7 @@ function(spec, value)
 # ------------------------------------------------------------------------------
 
 
-"setNFrontierPoints<-" <- 
+"setNFrontierPoints<-" = 
 function(spec, value)
 {   # A function implemented by Rmetrics
 
@@ -394,7 +394,7 @@ function(spec, value)
     
     # Check Validity:
     stopifnot(is.numeric(value))
-    stopifnot(length(value == 1))
+    stopifnot(length(value) == 1)
     stopifnot(value > 0)
     
     # Risk-Free Rate ?

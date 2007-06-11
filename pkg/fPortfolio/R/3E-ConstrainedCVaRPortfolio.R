@@ -209,6 +209,7 @@ function(data, spec, constraints)
         f = (x - spec@portfolio$riskFreeRate) / getTargetRisk(ans)[3]  
         attr(f, "targetRisk") <- getTargetRisk(ans)   
         attr(f, "weights") <- getWeights(ans) 
+        attr(f, "status") <- ans@portfolio$status
         f   
     }
     
@@ -217,9 +218,12 @@ function(data, spec, constraints)
         data = data, spec = spec, constraints = constraints,
         tol = .Machine$double.eps^0.5)
         
-    # Weights:
+    # Get Weights:
     weights = attr(cml$objective, "weights")
     names(weights) = names(mu)
+    
+    # Get Status:
+    status = attr(cml$objective, "status")
     
     # Target Return:     
     targetReturn = spec@portfolio$targetReturn = cml$maximum  
@@ -244,7 +248,7 @@ function(data, spec, constraints)
             targetReturn = targetReturn,
             targetRisk = targetRisk,
             targetAlpha = targetAlpha,
-            status = NA),
+            status = status),
         title = "CML CVaR Portfolio", 
         description = .description()) 
 }

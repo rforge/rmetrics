@@ -139,7 +139,7 @@ function(data, spec, constraints)
     #   Calls   solveRDonlp2()
 
     # Example:
-    #   .feasibleConstrainedMVPortfolio()
+    #   .efficientConstrainedMVPortfolio()
     
     # FUNCTION:
      
@@ -248,6 +248,7 @@ function(data, spec, constraints)
         f = (x - spec@portfolio$riskFreeRate) / getTargetRisk(ans)[1]  
         attr(f, "targetRisk") <- getTargetRisk(ans)[1]  
         attr(f, "weights") <- getWeights(ans) 
+        attr(f, "status") <- ans@portfolio$status
         f 
     }
     
@@ -259,6 +260,9 @@ function(data, spec, constraints)
     # Get Weights:
     weights = attr(cml$objective, "weights")
     names(weights) = names(mu)
+    
+    # Get Status:
+    status = attr(cml$objective, "status")
 
     # Get Target Return:     
     targetReturn = spec@portfolio$targetReturn = as.numeric(cml$maximum)  
@@ -288,7 +292,7 @@ function(data, spec, constraints)
             targetReturn = targetReturn,
             targetRisk = targetRisk,
             targetAlpha = targetAlpha,
-            status = NA),
+            status = status),
         title = "CML Portfolio", 
         description = .description()) 
 }

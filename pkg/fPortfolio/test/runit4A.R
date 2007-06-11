@@ -195,7 +195,7 @@ function()
     
     # Portfolio Backtesting:
     ans = .rollingBacktestPortfolio(
-        data = Data[, c("SBI", "SPI", "SWIIT")], 
+        data = Data[, c("SBI", "SPI", "SII")], 
         spec = portfolioSpec(), 
         constraints = NULL, 
         from = windows$from, 
@@ -229,10 +229,12 @@ function()
     # Rolling Windows:
     windows = rollingWindows(x = Data, period = "12m", by = "1m")
     
-    # Mean-Variance Backtesting:
+    # Graph Frame:
     par(mfrow = c(2, 2), cex = 0.7)
+    
+    # Mean-Variance Backtesting:
     portfolioBacktesting(
-        formula = LP60 ~ SBI + SPI + SWIIT, 
+        formula = LP60 ~ SBI + SPI + SII, 
         data = Data, 
         spec = portfolioSpec(), 
         constraints = NULL, 
@@ -261,35 +263,38 @@ function()
 
 test.portfolioBacktesting.MeanVariance.myPortfolio = 
 function()
-{   
-    if (FALSE)  {
-    
-        myPortfolio = 
-        function(data, spec, constraints)
-        {
-            strategyPortfolio = tangencyPortfolio(data, spec, constraints)
-            Status = strategyPortfolio@portfolio$status
-            if(Status == 1)  
-                strategyPortfolio = minvariancePortfolio(data, spec, contraints)
-            strategyPortfolio
-        }
-        
-        # Mean-Variance Backtesting:
-            par(mfrow = c(2, 2), cex = 0.7)
-            portfolioBacktesting(
-                formula = LP60 ~ SBI + SPI + SWIIT, 
-                data = Data, 
-                spec = portfolioSpec(), 
-                constraints = NULL, 
-                portfolio = "myPortfolio", 
-                horizon = "24m", 
-                smoothing = "24m", 
-                trace = TRUE)   
-                
-                
-        # CHECK DOESN't WORK !!!
-    
+{    
+    # Strategy Portfolio:
+    myPortfolio = 
+    function(data, spec, constraints)
+    {
+        strategyPortfolio = tangencyPortfolio(data, spec, constraints)
+        Status = strategyPortfolio@portfolio$status
+        if(Status == 1)  
+            strategyPortfolio = minvariancePortfolio(data, spec, contraints)
+        strategyPortfolio
     }
+    
+    # Mean-Variance Backtesting:
+    par(mfrow = c(2, 2), cex = 0.7)
+    portfolioBacktesting(
+        formula = LP60 ~ SBI + SPI + SII, 
+        data = Data, 
+        spec = portfolioSpec(), 
+        constraints = NULL, 
+        portfolio = "myPortfolio", 
+        horizon = "24m", 
+        smoothing = "24m", 
+        trace = TRUE)  
+        
+    #                        Portfolio Benchmark
+    # Total Return               40.33     33.70
+    # Mean Return                 0.62      0.52
+    # StandardDev Return          1.30      2.51
+    # VaR 5% Quantile            -1.69     -5.39
+    # Var 10% Quantile           -0.98     -2.18
+    # 5% Expected Shortfall      -2.06     -6.12
+    # Minimum Monthly Return     -2.21     -6.51 
             
     # Return Value:
     return()
@@ -324,13 +329,14 @@ function()
     # Mean-CVaR Backtesting:
     par(mfrow = c(2,2), cex = 0.7)
     portfolioBacktesting(
-        formula = LP40 ~ SBI + SPI + SWIIT, 
+        formula = LP60 ~ SBI + SPI + SII, 
         data = Data, 
         spec = Spec,
         constraints = NULL, 
-        portfolio = "minvariancePortfolio", 
-        horizon = "12m", 
-        smoothing = "6m", 
+        # portfolio = "minvariancePortfolio", 
+        portfolio = "myPortfolio", 
+        horizon = "24m", 
+        smoothing = "24m", 
         trace = TRUE) 
         
     # Mean-CVaR Result:

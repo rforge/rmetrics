@@ -193,12 +193,12 @@ function()
     .getConstraints(ans)
     
     # Set Default Covariance Risk-Budget Constraints:
-    ans = .setConstraints(Data, Spec, Constraints, type = "RiskBudget")  
-    .getConstraints(ans)
+    # ans = .setConstraints(Data, Spec, Constraints, type = "RiskBudget")  
+    # .getConstraints(ans)                                       # CHECK !!!
     
     # Short:
     Constraints = "Short"
-    ans = .setConstraints(Data, portfolioSpec(), Constraints)
+    ans = .setConstraints(Data, portfolioSpec(), Constraints)    # CHECK !!!
     .getConstraints(ans)
     
     # Long Only:
@@ -209,12 +209,12 @@ function()
     # minW, maxW:
     Constraints = 
         c("minW[1:nAssets]=0.09", "maxW[1:nAssets]=rep(c(0.6, 0.4),4)")
-    ans = .setConstraints(Data, portfolioSpec(), Constraints)
+    ans = .setConstraints(Data, portfolioSpec(), Constraints)    # CHECK !!!
     .getConstraints(ans)
     
     # minsumW, maxsumW:
     Constraints = c("minsumW[c(2,4)]=0.20", "maxsumW[4:6]=0.80")
-    ans = .setConstraints(Data, portfolioSpec(), Constraints)
+    ans = .setConstraints(Data, portfolioSpec(), Constraints)    # CHECK !!!
     .getConstraints(ans)
     
     # Return Value:

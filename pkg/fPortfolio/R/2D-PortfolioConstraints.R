@@ -30,6 +30,7 @@
 ################################################################################
 # FUNCTION:                    CONSTRAINTS:
 #  portfolioConstraints         Checks Consistency of Constraints Strings
+# FUNCTION:                    INTERNAL USAGE ONLY:
 #  .setConstraints              Transforms constraint strings into a list value
 #  .setBoxGroupConstraints       Utility function called by .setConstraints()
 #  .setRiskBudgetsConstraints    Utility function called by .setConstraints()
@@ -44,6 +45,13 @@ function(data, spec = portfolioSpec(), constraints = NULL)
     # Description:
     #   Checks Consistency of Constraints Strings
     
+    # Arguments
+    #   data - 
+    #   spec - 
+    #   constraints
+    
+    # FUNCTION:
+    
     # Check NULL:
     if(is.null(constraints)) {
         # attr(constraints, "control") = "valid" --- Not possible!
@@ -51,10 +59,12 @@ function(data, spec = portfolioSpec(), constraints = NULL)
     }
     
     # Vector of Valid Strings:
-    validStrings = c(
-        "LongOnly", "Short", 
-        "minW", "maxW", "minsumW", "maxsumW",
-        "minB", "maxB")
+    validStrings = c(    
+        "LongOnly", "Short",    # LongOnly and Short Notification
+        "minW", "maxW",         # Box Constraints
+        "minsumW", "maxsumW",   # Group Constraints:
+        "minB", "maxB")         # Covariance Risk Budgets
+                                # ... Tail Risk Budgets
     
     # Check Strings:
     usedStrings = unique(sort(sub("\\[.*", "", constraints)))
@@ -80,6 +90,10 @@ type = c("BoxGroup", "RiskBudget"))
     #   Transforms constraint strings into a list value
     
     # Arguments:
+    #   data -
+    #   spec -
+    #   constraints -
+    #   type -
  
     # FUNCTION:
      
@@ -118,13 +132,10 @@ function(data, spec = portfolioSpec(), constraints = NULL)
     #   Transforms constraint strings into a list value
     
     # Arguments:
-    #   assetReturns - a numerich vector of asset returns
-    #   targetReturn - a nueric value specifying the target freturn
-    #   constrainedStrings - a character vector with the following entries:
-    #       minW[index] = numeric      maxW[index] = numeric  
-    #       minsumW[index] = numeric   maxsumW[index] = numeric
-    #       where index is an integer vector or integer value specifying
-    #       one or more of the assets, numbered by index = 1, ..., N.
+    #   data -
+    #   spec -
+    #   constraints -
+    #   type -
     
     # FUNCTION:
      
@@ -258,8 +269,8 @@ function(object)
     
     # Arguments:
     #   object - the "constraintMatrix", a list with two named elements, 
-    #   the constrainded Matrix A and the constrained vector b, satisfying
-    #   A * w >= b, wher b is the exosure.
+    #       the constrainded Matrix A and the constrained vector b, satisfying
+    #       A * w >= b, wher b is the exosure.
     
     # Value:
     #   A one column matrix with constraint strings.

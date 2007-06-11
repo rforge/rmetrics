@@ -62,7 +62,7 @@ function(object)
     #       functions *Portfolio().
     
     # FUNCTION:
-    
+ 
     # Get Series of Assets:
     ans = object@data$series
     

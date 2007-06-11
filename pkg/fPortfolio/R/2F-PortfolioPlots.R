@@ -176,6 +176,10 @@ function(object, frontier = c("both", "lower", "upper"),
             }
         }
     }  
+    
+    # Add Info:
+    mtext(paste(getType(object), "|",getSolver(object)), 
+        side = 4, adj = 0, col = "grey", cex = 0.7)
       
     # Return Value:
     invisible()
@@ -337,8 +341,8 @@ function(object, ...)
         # Add Tangency Line - if slope is positive:
         # riskFreeRate = getPortfolio(cmlPortfolio)$riskFreeRate
         riskFreeRate = object@specification$spec@portfolio$riskFreeRate
-        slope = ((getTargetReturn(cmlPortfolio) - riskFreeRate) /
-            getTargetRisk(cmlPortfolio))
+        slope = ((getTargetReturn(cmlPortfolio)[1] - riskFreeRate) /
+            getTargetRisk(cmlPortfolio)[1])
         if(slope > 0) abline(b = slope, a = riskFreeRate, ...)
     } else if (Type == "CVaR") {
         cat("\n\tNot Yet Implemented\n")
@@ -443,32 +447,16 @@ function(object, ...)
     
     # Add Froniters for all Two-Assets Portfolios:
     N = length(Data$statistics$mu)
-    if (Type == "MV") { 
-        # Plotting Frontier Points:
-        for ( i in 1:(N-1) ) {
-            for (j in (i+1):N ) {
-                index = c(i, j) 
-                Data2 = list(
-                    mu = Data$statistics$mu[index],
-                    Sigma = Data$statistics$Sigma[index, index])
-                # Zero-One Constraints2 ?
-                ans = portfolioFrontier(data = Data2, spec = Spec)
-                lines(getFrontier(ans), ...)
-            }
-        }
-    } else if (Type == "CVaR") {
-        # Plotting Frontier Points:
-        for ( i in 1:(N-1) ) {
-            for (j in (i+1):N ) {
-                index = c(i, j) 
-                Data2 = object@data$series
-                # Zero-One Constraints2 ?
-                ans = portfolioFrontier(data = Data2[, index], spec = Spec)
-                lines(getFrontier(ans), ...)
-            }
+    for ( i in 1:(N-1) ) {
+        for (j in (i+1):N ) {
+            index = c(i, j) 
+            Data2 = object@data$series[, index]
+            # Zero-One Constraints2 ?
+            ans = portfolioFrontier(data = Data2, spec = Spec)
+            lines(getFrontier(ans), ...)
         }
     }
-    
+   
     # Return Value:
     invisible()   
 }
@@ -669,7 +657,7 @@ function(object, mcSteps, ...)
     if (Type == "MV") {
         # Get Constraints Model:
         Model = rev(attr(object@constraints, "model"))[1]
-        if (Model == "Short") {
+        if (Model == "Short" | object@constraints == "Short") {
             # Monte Carlo Loop - Short:
             for (k in 1:mcSteps) {  
                 s = sign(rnorm(N, mean = rnorm(1)))
@@ -679,7 +667,7 @@ function(object, mcSteps, ...)
                 Risk = sqrt( as.numeric( t(weights) %*% Sigma %*% (weights) ) )
                 points(Risk, Return, ...)
             }
-        } else if (Model == "LongOnly") {
+        } else if (Model == "LongOnly" | object@constraints == "LongOnly") {
             # Monte Carlo Loop - Long Only:
             for (k in 1:mcSteps) {  
                 weights = abs(rcauchy(N))        
@@ -773,6 +761,13 @@ function(object, col = NULL)
     mtext("Target Risk", side = 1, line = 2, cex = .7)
     mtext("Target Return", side = 3, line = 2, cex = .7)
     mtext("Weight", side = 2, line = 2, cex = .7)
+    
+    # Add Info:
+    mtext(paste(getType(object), "|",getSolver(object)), 
+        side = 4, adj = 0, col = "grey", cex = 0.7)
+        
+    # Add Title:
+    mtext("Weights", adj = 0, line = 2.5, font = 2, cex = 0.8)
     
     # Return Value:
     invisible()   
@@ -920,7 +915,6 @@ function(object, col = NULL, legend = TRUE)
     # Add Title:
     mtext("Weights", adj = 0, line = 2.5, font = 2, cex = 0.8)
     
-
     # Complete to draw box ...
     box()
     
@@ -979,6 +973,14 @@ function(object, pos = NULL, col = NULL, box = TRUE, legend = TRUE)
     pie(Weights, labels = Labels, col = col, radius = Radius)
     if (box) box()
     
+    # Add Title:
+    title(main = "Weights")
+    
+    # Add Info:
+    mtext(paste(getType(object), "|",getSolver(object)), 
+        side = 4, adj = 0, col = "grey", cex = 0.7)
+    
+    # Add Legend:
     if (legend) {
         # Add Legend:
         legend("topleft", legend = legendAssets, bty = "n", cex = 0.8, 
@@ -1089,6 +1091,9 @@ function(object, col = NULL, legend = TRUE)
     mtext(paste(getType(object), "|",getSolver(object)), 
         side = 4, adj = 0, col = "grey", cex = 0.7)
     
+    # Add Title:
+    mtext("Investments", adj = 0, line = 2.5, font = 2, cex = 0.8)
+    
     # Complete to draw box ...
     box()
     
@@ -1148,6 +1153,14 @@ function(object, pos = NULL, col = NULL, box = TRUE, legend = TRUE)
     pie(WeightedReturns, labels = Labels, col = col, radius = Radius)
     if (box) box()
     
+    # Add Title:
+    title(main = "Investments")
+    
+    # Add Info:
+    mtext(paste(getType(object), "|",getSolver(object)), 
+        side = 4, adj = 0, col = "grey", cex = 0.7)
+    
+    # Add Legend:
     if (legend) {
         # Add Legend:
         legend("topleft", legend = legendAssets, bty = "n", cex = 0.8, 
@@ -1257,7 +1270,7 @@ function(object, col = NULL, legend = TRUE)
         side = 4, adj = 0, col = "grey", cex = 0.7)
     
     # Add Title:
-    mtext("Risk", adj = 0, line = 2.5, font = 2, cex = 0.8)
+    mtext("Risk Budgets", adj = 0, line = 2.5, font = 2, cex = 0.8)
     
     # Complete to draw box ...
     box()
@@ -1276,11 +1289,15 @@ function(object, pos = NULL, col = NULL, box = TRUE, legend = TRUE)
 {   # A function implemented by Rmetrics
 
     # Description:
-    #   Pie plot of weighted risks
+    #   Plots a Pie Chart of Risk Budgets
         
+    # Arguments:
+    #   object - an object of class 'fPORTFOLIO'
+    #   col - a color palette, by default the rainbow palette
+    
     # Example:
-    #   riskPie(tangencyPortfolio(dutchPortfolioData(), portfolioSpec()))
-    #   title(main = "Tangency Portfolio Risk Budgets")
+    #   riskBudgetsPie(tangencyPortfolio(dutchPortfolioData(), portfolioSpec()))
+    #   title(main = "Tangency Portfolio Weights")
     
     # FUNCTION:
     
@@ -1289,54 +1306,49 @@ function(object, pos = NULL, col = NULL, box = TRUE, legend = TRUE)
         Object = object
         object@portfolio$weights = getWeights(Object)[pos, ]
     }
-    
-    # Get weighted Returns:
-    weights = getWeights(object)
-    nWeights = getNumberOfAssets(object)
-    if(length(weights) != nWeights) stop("Plot position is not specified")
-    Sigma = object@data$statistics$Sigma
-    
-    # Calculating risk
-    weightedRisk = NULL
-    risk = Sigma %*% weights
-    
-    for(i in 1:nWeights){
-        weightedRisk[i] = weights[i]*risk[i]
-    }
+
     # Plot Circle:
-    Sign = rep("+", nWeights)
-    Sign[(1:nWeights)[weightedRisk < 0]] = "-"
-    names = substr(getNames(object), 1, 3)
+    riskBudgets = getRiskBudgets(object)
+    nRiskBudgets = length(riskBudgets)
+    if(length(riskBudgets) != nRiskBudgets) 
+        stop("Plot position is not specified")
+    Sign = rep("+", nRiskBudgets)
+    Sign[(1:nRiskBudgets)[riskBudgets < 0]] = "-"
     
     # Color Palette:
-    if (is.null(col)) col = rainbow(nWeights)
+    if (is.null(col)) col = rainbow(nRiskBudgets)
     
     # Pie Chart:
-    # Pie Chart:
-    weightedRisk = abs(weightedRisk)
-    Index = (1:nWeights)[weightedRisk > 0]
+    RiskBudgets = abs(riskBudgets)
+    Index = (1:nRiskBudgets)[RiskBudgets > 0]
     col = col[Index]
     names = getNames(object)
     legendAssets = names[Index]
     Labels = paste(names, Sign)
-    Labels = Labels[weightedRisk > 0]
-    weightedRisk = weightedRisk[weightedRisk > 0]
+    Labels = Labels[RiskBudgets > 0]
+    RiskBudgets = RiskBudgets[RiskBudgets > 0]
     Radius = 0.8
-    if (length(weightedRisk) > 10) Radius = 0.65
-    pie(weightedRisk, labels = Labels, col = col, radius = Radius)
+    if (length(RiskBudgets) > 10) Radius = 0.65
+    pie(RiskBudgets, labels = Labels, col = col, radius = Radius)
     if (box) box()
     
+    # Add Title:
+    title(main = "Risk Budgets")
+    
+    # Add Info:
+    mtext(paste(getType(object), "|",getSolver(object)), 
+        side = 4, adj = 0, col = "grey", cex = 0.7)
+    
+    # Add Legend:
     if (legend) {
         # Add Legend:
         legend("topleft", legend = legendAssets, bty = "n", cex = 0.8, 
             fill = col)
         
         # Add Legend:
-        sumWeightedRisk = sum(weightedRisk)
-        legendWeights = as.character(round(100*weightedRisk/
-            sumWeightedRisk, digits = 1))
-        legendWeights = paste(legendWeights, "%")
-        legend("topright", legend = legendWeights, bty = "n", cex = 0.8, 
+        legendRiskBudgets = as.character(round(100*RiskBudgets, digits = 1))
+        legendRiskBudgets = paste(legendRiskBudgets, "%")
+        legend("topright", legend = legendRiskBudgets, bty = "n", cex = 0.8, 
             fill = col)
     }
     

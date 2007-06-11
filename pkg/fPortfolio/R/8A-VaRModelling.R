@@ -52,7 +52,7 @@ function(x, weights = NULL, alpha = 0.05)
     # Arguments:
     #   x - a time series, data.frame or any other rectangular object
     #       of assets which can be written as a matrix object
-    #   w - a numeric vector of weights
+    #   weights - a numeric vector of weights
     #   alpha - the confidence level    
 
     # FUNCTION:
@@ -87,7 +87,7 @@ function(x, weights = NULL, alpha = 0.05)
     # Arguments:
     #   x - a time series, data.frame or any other rectangular object
     #       of assets which can be written as a matrix object
-    #   w - a numeric vector of weights
+    #   weights - a numeric vector of weights
     #   alpha - the confidence level    
     
     # FUNCTION:
@@ -123,7 +123,7 @@ function(x, weights = NULL, alpha = 0.05)
     # Arguments:
     #   x - a time series, data.frame or any other rectangular object
     #       of assets which can be written as a matrix object
-    #   w - a numeric vector of weights
+    #   weights - a numeric vector of weights
     #   alpha - the confidence level    
     #   lambda - split value
     
@@ -199,7 +199,7 @@ function(x, weights = NULL)
     # Arguments:
     #   x - a timeSeries, data.frame or any other rectangular object
     #       of assets which can be written as a matrix object
-    #   w - the vector of weights
+    #   weights - the vector of weights
     #   alpha - the confidence level    
     
     # FUNCTION:
@@ -232,7 +232,7 @@ function(x, weights = NULL)
     # Arguments:
     #   x - a timeSeries, data.frame or any other rectangular object
     #       of assets which can be written as a matrix object
-    #   w - the vector of weights   
+    #   weights - the vector of weights   
 
     # FUNCTION:
     
@@ -276,7 +276,7 @@ function(x, weights = NULL)
     # Arguments:
     #   x - a timeSeries, data.frame or any other rectangular object
     #       of assets which can be written as a matrix object
-    #   w - the vector of weights   
+    #   weights - the vector of weights   
 
     # FUNCTION:
     
@@ -305,7 +305,7 @@ function(x, weights = NULL)
     # Arguments:
     #   x - a timeSeries, data.frame or any other rectangular object
     #       of assets which can be written as a matrix object
-    #   w - the vector of weights   
+    #   weights - the vector of weights   
 
     # FUNCTION:
     
@@ -337,7 +337,7 @@ function(x, weights = NULL, alpha = 0.05, range = NULL, details = TRUE, ...)
     # Arguments:
     #   x - a timeSeries, data.frame or any other rectangular object
     #       of assets which can be written as a matrix object
-    #   w - the vector of weights   
+    #   weights - the vector of weights   
     
     # FUNCTION:
     

@@ -46,9 +46,6 @@
 #  setRiskRange<-                Sets range of target risks
 # FUNCTION:                     SOLVER SLOT:
 #  setSolver<-                   Sets name of desired solver
-# FUNCTION:                     Classical and Robust Estimators
-#  portfolioStatistics           Estimates mu and Sigma statistics
-#  portfolioData                 Creates portfolio data list
 ################################################################################
 
 
@@ -92,7 +89,7 @@ function()
 }
 
 
-# ------------------------------------------------------------------------------
+################################################################################
 
 
 test.setType =
@@ -124,7 +121,7 @@ function()
 }
 
 
-# ------------------------------------------------------------------------------
+################################################################################
 
 
 test.setWeights =
@@ -188,7 +185,21 @@ function()
 }
 
 
-# ------------------------------------------------------------------------------
+################################################################################
+
+
+test.setSolver =
+function()
+{ 
+    NA
+    
+    # Return Value:
+    return()
+}
+
+
+################################################################################
+
 
 
 test.portfolioStatistics =
@@ -216,28 +227,6 @@ function()
     # mean-shrink Portfolio Statistics:
     setEstimator(Spec) <- c("mean", "shrink")
     portfolioStatistics(Data, Spec)
-    
-    # Return Value:
-    return()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-testportfolioData =
-function()
-{ 
-    # Arguments:
-    # portfolioStatistics = (data, spec = portfolioSpec())
-    
-    # Data:
-    Data = as.timeSeries(data(smallcap.ts))
-    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
-    Data
-    
-    # Portfolio Statistics - i.e. add Statistics to time Series:
-    portfolioData(Data)  
     
     # Return Value:
     return()

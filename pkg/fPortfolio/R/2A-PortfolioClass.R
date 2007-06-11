@@ -41,6 +41,7 @@
 # FUNCTION:                     PRINT AND PLOT METHODS:        
 #  show.fPORTFOLIO               S4 Print method for 'fPPORTFOLIO' objects   
 #  plot.fPORTFOLIO               S3 Plot method for 'fPORTFOLIO' objects   
+#  summary.fPORTFOLIO            S3 Summary method for 'fPORTFOLIO' objects
 # FUNCTION:                     EDUCATIONAL PORTFOLIO SLIDERS: 
 #  weightsSlider                 Weights Slider           
 #  frontierSlider                Efficient Frontier Slider
@@ -387,15 +388,15 @@ function(object)
     
     # Tail Risk Budgets:
     if (FALSE) {
-    if (!is.na(getTailRiskBudgets(object))) {
-         cat("\nRiskBudget(s):\n")
-        riskBudgets = round(getTailRiskBudgets(object), digits = 4)
-        if (length(riskBudgets) == 1) {
-            cat(" ", riskBudgets, "\n")
-        } else {
-            print.table(riskBudgets)
-        }   
-    }  
+        if (!is.na(getTailRiskBudgets(object))) {
+             cat("\nRiskBudget(s):\n")
+            riskBudgets = round(getTailRiskBudgets(object), digits = 4)
+            if (length(riskBudgets) == 1) {
+                cat(" ", riskBudgets, "\n")
+            } else {
+                print.table(riskBudgets)
+            }   
+        }  
     }
   
     # Target Returns:   
@@ -572,6 +573,43 @@ function(x, which = "ask", control = list(), ...)
 } 
 
 
+# ------------------------------------------------------------------------------
+
+
+summary.fPORTFOLIO =
+function(object)
+{   # A function implemented by Rmetrics
+
+    # Description:
+    #   Plot method for an object of class 'fPORTFOLIO'
+    
+    # Note:
+    #   This method can also be used for plotting graphs fitted by 
+    #   the function 'garch' from the contributed R package 'tseries'.
+    
+    # FUNCTION:
+
+    # Summary:
+    print(object)
+    funCalled = as.character(object@call[1])
+    if (funCalled == "portfolioFrontier") {      
+        weightsPlot(object)
+        attributesPlot(object)
+        riskBudgetsPlot(object)
+        # Plot Frontier:
+        plot(object, which = 1)
+    } else {
+        weightsPie(object)
+        attributesPie(object)
+        riskBudgetsPie(object)
+    }
+          
+    # Return Value:
+    invisible(object)
+} 
+
+
+
 ################################################################################
 
 
@@ -639,7 +677,6 @@ function(object, control = list(), ...)
         
         # Plot 1 - Weights Plot: 
         weightsPlot(object)
-        title(main = "Weights", line = 3)
         # Weights Plot Pointer:
         abline(v = N, col = "black")
         
@@ -647,7 +684,6 @@ function(object, control = list(), ...)
         .notStackedWeightsPlot(object)
         # Weights Plot Pointer for not stacked:
         abline(v = N, col = "black")
-        title(main = "Weights", line = 3)
 
         # Plot 3 - Frontier Plot:
         frontier = getFrontier(object)
@@ -677,17 +713,24 @@ function(object, control = list(), ...)
         Object = object
         Object@portfolio$weights = getWeights(object)[N, ]
         weightsPie(Object)
-        title(main = "Weights Pie")   
+        targetReturn = signif(getTargetReturn(object)[N], 3)
+        targetRisk = signif(getTargetRisk(object)[N], 3)
+        Text = paste(
+            "Target Return =", targetReturn, " | ", 
+            "Target Risk =", targetRisk)
+        mtext(Text, side = 1, line = 0, adj = 0, cex = 0.7)
+
     }
   
     # Open Slider Menu:
     .counter <<- 0
+    Start <<- which.min(getTargetRisk(Frontier))
     .sliderMenu(refresh.code, title = "Weights Slider",
        names =       c(                 "N"),
        minima =      c(                   1),
        maxima =      c(     nFrontierPoints),
        resolutions = c(con$sliderResolution),
-       starts =      c(                   1))
+       starts =      c(               Start))
     
     # Return Value:
     invisible()
@@ -727,7 +770,7 @@ function(object, control = list(), ...)
     xLim = range(c(xLimAssets, xLimFrontier))
 
     # Initial setting of the pies:
-    Data = object@data$statistics
+    Data = object@data$series
     Spec = getSpecification(object)
     Constraints = object@constraints
     tg = getTargetReturn(tangencyPortfolio(Data, Spec, Constraints))
