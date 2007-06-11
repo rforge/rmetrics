@@ -58,8 +58,7 @@ function()
 test.HNGOption = 
 function()
 {
-    # HNGOption           
-    #   Computes Option Price from the HN-GARCH Formula
+    # HNGOption - Computes Option Price from the HN-GARCH Formula
     
     # Define the Model Parameters for a Heston-Nandi Option:
     model = list(lambda = -0.5, omega = 2.3e-6, alpha = 2.9e-6, 
@@ -95,11 +94,10 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.HNGOption = 
+test.HNGGreeks = 
 function()
 {       
-    # HNGGreeks           
-    #   Calculates one of the Greeks of the HN-GARCH Formula
+    # HNGGreeks - Calculates one of the Greeks of the HN-GARCH Formula
     
     # Define the Model Parameters for a Heston-Nandi Option:
     model = list(lambda = -0.5, omega = 2.3e-6, alpha = 2.9e-6, 
@@ -137,6 +135,8 @@ function()
 { 
     # HNGCharacteristics  
     #   Computes Option Price and all Greeks of HN-GARCH Model
+    
+    NA
     
     # Return Value:
     return()    

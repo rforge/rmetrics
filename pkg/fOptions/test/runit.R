@@ -36,11 +36,25 @@ if (FALSE) {
     require(fOptions)
     require(RUnit)
     testIndex = c( 
-        "1A", "1B", "1C", 
-        "2A", "2B", "2C", "2D", "2E", "2F", "2G",
-        "3A", "3B", "3C", "3D", "3E",
-        "4A", "4B", 
-        "5A", "5B")
+        "1A", # PlainVanillaOptions
+        "1B", # BasicAmericanOptions
+        "1C", # BinomialTreeOptions
+        "2A", # MultipleExercisesOptions
+        "2B", # MultipleAssetsOptions
+        "2C", # LookBackOptions
+        "2D", # BarrierOptions
+        "2E", # BinaryOptions
+        "2F", # AsianOptions
+        "2G", # CurrencyTranslatedOptions
+        "3A", # EBMDistribution
+        "3B", # GammaFunctions
+        "3C", # HypergeometricFunctions
+        "3D", # BesselFunctions
+        "3E", # EBMAsianOptions
+        "4A", # HestonNandiGarchFit
+        "4B", # HestonNandiOptions
+        "5A", # Low Discrepancy
+        "5B") # MonteCarloOptions
     File = "C:/Rmetrics/SVN/trunk/fOptions/test/runit"
     Protocol = "runitfOptions.txt"
     

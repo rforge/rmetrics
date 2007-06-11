@@ -130,7 +130,7 @@ NULL, description = NULL, ...)
     # Initial Log Likelihood:
     opt = list()
     opt$value = .llhHNGarch(par = par.start, 
-        trace = trace, symmetric = symmetric, x = x)
+        trace = trace, symmetric = symmetric, rfr = rfr, x = x)
     opt$estimate = par.start
     if (trace) {
         print(c(lambda, omega, alpha, beta, gam))
@@ -138,15 +138,8 @@ NULL, description = NULL, ...)
     }
      
     # Estimate parameters:
-    # if (exists("nlm")) {
-        opt = nlm(.llhHNGarch, par.start, 
-            trace = trace, symmetric = symmetric, x = x, ...) 
-    #} else {
-    #    opt = nlminb(par.start, .llhHNGarch, 
-    #        trace = trace, symmetric = symmetric, x = x, ...)
-    #    opt$minimum = opt$objective
-    #    opt$estimate = opt$parameters
-    #}
+    opt = nlm(.llhHNGarch, par.start, 
+        trace = trace, symmetric = symmetric, rfr = rfr, x = x, ...) 
     
     # Log-Likelihood:
     opt$minimum = -opt$minimum + length(x)*sqrt(2*pi)
@@ -195,7 +188,7 @@ NULL, description = NULL, ...)
 
 
 .llhHNGarch = 
-function(par, trace, symmetric, x) 
+function(par, trace, symmetric, rfr, x) 
 {
     # h = sigma^2
     h = Z = x
@@ -211,6 +204,7 @@ function(par, trace, symmetric, x)
       
     # HN Garch Filter:
     h[1] = ( omega + alpha )/( 1 - alpha*gam*gam - beta)
+    print(h[1])
     Z[1] = ( x[1] - rfr - lambda*h[1] ) / sqrt(h[1])
     for ( i in 2:length(Z) ) {
         h[i] = omega + alpha * ( Z[i-1] - gam * sqrt(h[i-1]) )^2 +

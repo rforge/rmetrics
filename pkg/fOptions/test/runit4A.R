@@ -60,7 +60,8 @@ function()
 test.hngarchSim = 
 function()
 {
-    # Simulate a Heston-Nandi Garch(1,1) Process:
+    # Simulate a Heston-Nandi Garch(1,1) Process
+    
     # Symmetric Model - Parameters:
     model = list(lambda = 4, omega = 8e-5, alpha = 6e-5, 
         beta = 0.7, gamma = 0, rf = 0)
@@ -85,22 +86,25 @@ function()
     model = list(lambda = 4, omega = 8e-5, alpha = 6e-5, 
         beta = 0.7, gamma = 0, rf = 0)
     x = hngarchSim(model = model, n = 500, n.start = 100)
-                                                                     # CHECK !!!
+                                                                     
     # Estimate Parameters:
     # HN-GARCH log likelihood Parameter Estimation:
     # To speed up, we start with the simulated model ...
-    # mle = hngarchFit(x = x, model = model, trace = TRUE, symmetric = TRUE)
-    # print(mle)
     
-    # mle = hngarchFit(x = ts, model = model, trace = TRUE, symmetric = FALSE)
-    # print(mle)
+    # Symmetric Case:
+    mle = hngarchFit(x = x, model = model, trace = TRUE, symmetric = TRUE)
+    print(mle)
+    
+    # Assymmetric Case:
+    mle = hngarchFit(x = x, model = model, trace = TRUE, symmetric = FALSE)
+    print(mle)
            
     # HN-GARCH Diagnostic Analysis:
-    # par(mfrow = c(3, 1), cex = 0.75)
-    # summary(mle, col = "steelblue")                                             
+    par(mfrow = c(3, 1), cex = 0.7)
+    summary(mle, col = "steelblue")                                             
     
     # HN-GARCH Moments:
-    # hngarchStats(mle$model)    
+    hngarchStats(mle$model)    
 
     # Return Value:
     return()    

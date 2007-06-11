@@ -29,12 +29,12 @@
 
 ################################################################################
 # FUNCTION:                 DESCRIPTION:
-# CRRBinomialTreeOption     Cox-Ross-Rubinstein Binomial Tree Option Model
-# JRBinomialTreeOption      JR Modfication to the Binomial Tree Option
-# TIANBinomialTreeOption    Tian's Modification to the Binomial Tree Option
+#  CRRBinomialTreeOption     Cox-Ross-Rubinstein Binomial Tree Option Model
+#  JRBinomialTreeOption      JR Modfication to the Binomial Tree Option
+#  TIANBinomialTreeOption    Tian's Modification to the Binomial Tree Option
 # FUNCTION:                 DESCRIPTION:
-# BinomialTreeOption        CRR Binomial Tree Option with Cost of Carry Term
-# BinomialTreePlot          Plots results from the CRR Option Pricing Model
+#  BinomialTreeOption        CRR Binomial Tree Option with Cost of Carry Term
+#  BinomialTreePlot          Plots results from the CRR Option Pricing Model
 ################################################################################
 
 

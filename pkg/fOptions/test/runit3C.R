@@ -145,8 +145,7 @@ function()
 {
     # whittakerM(x, kappa, mu, ip = 0) 
     # whittakerW(x, kappa, mu, ip = 0)
-    
-    
+     
     # Abramowitz-Stegun: Example 13
     AS = c(1.10622, 0.57469)
     W = c(
@@ -165,8 +164,7 @@ function()
 test.hermite = 
 function()
 {
-    # Hermite Polynomial
-    #   internally computed from Kummer U
+    # Hermite Polynomial - internally computed from Kummer U
     
     # hermiteH(x, n, ip = 0)
 
