@@ -242,7 +242,7 @@ description = NULL)
     fit$title = title
     if (is.null(title)) fit$title = "GARCH Ox Modelling"
     fit$description = description
-    if (is.null(description)) fit$description = .descrption()
+    if (is.null(description)) fit$description = .description()
         
     # Execution Time:
     Time = Sys.time() - Start

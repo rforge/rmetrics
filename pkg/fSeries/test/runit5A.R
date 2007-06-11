@@ -63,19 +63,13 @@ function()
 }
 
 
-# ------------------------------------------------------------------------------
+################################################################################
 
 
-test.chaosSim = 
+test.tentSim = 
 function()
 {  
-    #  tentSim               Simulates series from Tent map
-    #  henonSim              Simulates series from Henon map 
-    #  ikedaSim              Simulates series from Ikeda map
-    #  logisticSim           Simulates series from Logistic map
-    #  lorentzSim            Simulates series from Lorentz map
-    #  roesslerSim           Simulates series from Roessler map
-    
+    #  tentSim - Simulates series from Tent map 
     
     # Tent Map:  
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
@@ -83,7 +77,20 @@ function()
     par (mfrow = c(1, 1))
     ts = tentSim(n = 1000, n.skip = 100, parms = c(a = 2), start = runif(1), 
         doplot = TRUE) 
-        
+    
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.henonSim = 
+function()
+{  
+    #  henonSim - Simulates series from Henon map 
+     
     # Henon Map - 2D:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
@@ -91,6 +98,19 @@ function()
     ts = henonSim(n = 1000, n.skip = 100, parms = c(a = 1.4, b = 0.3), 
         start = runif(2), doplot = TRUE) 
     
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.ikedaSim = 
+function()
+{   
+    #  ikedaSim - Simulates series from Ikeda map 
+
     # Ikeda Map - 2D:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
@@ -99,12 +119,40 @@ function()
         start = runif(2), doplot = TRUE) 
     head(ts)
   
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.logisticSim = 
+function()
+{  
+    #  logisticSim - Simulates series from Logistic map
+    #  lorentzSim - Simulates series from Lorentz map
+    #  roesslerSim - Simulates series from Roessler map  
+    
     # Logistic Map:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
     par (mfrow = c(1, 1))
     logisticSim(n = 1000, n.skip = 100, parms = c(r = 4), start = runif(1), 
         doplot = TRUE) 
+    
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.lorentzSim = 
+function()
+{  
+    #  lorentzSim - Simulates series from Lorentz map
     
     # Lorentz Map:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
@@ -113,6 +161,19 @@ function()
     ts = lorentzSim(times = seq(0, 20, by = 0.01), parms = c(sigma = 16, 
         r = 45.92, b = 4), start = c(-14, -13, 47), doplot = TRUE) 
     head(ts)
+    
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.roesslerSim = 
+function()
+{  
+    #  roesslerSim - Simulates series from Roessler map  
     
     # Roessler Map:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
@@ -127,7 +188,7 @@ function()
 }
 
 
-# ------------------------------------------------------------------------------
+################################################################################
 
 
 test.henonSlider = 

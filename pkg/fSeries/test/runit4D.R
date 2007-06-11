@@ -59,8 +59,20 @@ function()
 test.garchOxFit = 
 function()
 {  
-    #
-    NA
+    # Tested for MS Windows only ...
+    
+    # garchOxFit(formula, data, 
+    #   cond.dist = c("gaussian", "t", "ged", "skewed-t"), 
+    #   include.mean = TRUE, trace = TRUE, control = list(), 
+    #   title = NULL, description = NULL)
+    
+    # Load Data, convert to numeric Vector:
+    data(dem2gbp)  
+    x = dem2gbp[, 1]
+    
+    # Fit:
+    OXPATH <<- "C:\\Ox\\Ox3"
+    # fit = garchOxFit(~garch(1,1), data = x, trace = FALSE) # CHECK !!!
 
     # Return Value:
     return()    
@@ -70,10 +82,41 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.garchOxReport = 
+test.print = 
 function()
 {  
     #
+    
+    NA  
+
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.summary = 
+function()
+{  
+    #
+    
+    NA  
+
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.plot = 
+function()
+{  
+    #
+    
     NA  
 
     # Return Value:

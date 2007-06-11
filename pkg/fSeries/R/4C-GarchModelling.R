@@ -65,11 +65,6 @@
 #  garchKappa               Computes Expection for APARCH Models
 #  .funE                    Internal function used by kappa()
 ################################################################################
-# FUNCTION:              SPECIFICATION: 
-#  setClass[garchSpec]    S4: garchSpec Class representation 
-#  garchSpec              S4: Creates a 'garchSpec' object from scratch
-#  show.garchSpec          S4: Print method for an object of class 'garchSpec'
-################################################################################
 
 
 setClass("garchSpec", 

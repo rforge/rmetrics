@@ -38,14 +38,12 @@
 #  'fGARCH'                S4: fGARCH Class representation   
 #  garchFit                Fits GARCH and APARCH processes
 # METHODS:                DESCRIPTION:
-#  .print.fGARCH           S3 print method for an object of class fGARCH
-#  .show.fGARCH            S4 print method for an object of class fGARCH
-#  summary.fGARCH          S3 summary method for an object of class fGARCH
-#  plot.fGARCH             S3 plot method for an object of class fGARCH
-#  .interactiveGarchPlot   Utility Function
-#  residuals.fGARCH        S3 residuals method for an object of class fGARCH
-#  fitted.fGARCH           S3 fitted values method for an object of class fGARCH
-#  predict.fGARCH          S3 prediction method for an object of class fGARCH
+#  show.fGARCH             S4 print method for an object of class 'fGARCH'
+#  summary.fGARCH          S3 summary method for an object of class 'fGARCH'
+#  plot.fGARCH             S3 plot method for an object of class 'fGARCH'
+#  residuals.fGARCH        S3 residuals method for an object of class 'fGARCH'
+#  fitted.fGARCH           S3 fitted values for an object of class 'fGARCH'
+#  predict.fGARCH          S3 prediction method for an object of class 'fGARCH'
 # STATISTICS:             Description:
 #  .truePersistence        Compute persistence
 # FUNCTION:               FORECASTING: 
@@ -71,7 +69,7 @@ function()
 }
 
 
-# ------------------------------------------------------------------------------
+################################################################################
 
 
 test.garchSpec = 
@@ -152,7 +150,7 @@ function()
 }
 
 
-# ------------------------------------------------------------------------------
+################################################################################
 
 
 test.garchSim = 
@@ -237,7 +235,7 @@ function()
 }
 
 
-# ------------------------------------------------------------------------------
+################################################################################
 
 
 test.garchFit = 
@@ -283,29 +281,35 @@ function()
     #   title = NULL, 
     #   description = NULL, 
     #   ...)
-    
-    
+        
     # Use: dem2gbp data frame
     data(dem2gbp)
     print(head(dem2gbp))
     print(class(dem2gbp))
-    # As vector:
+    
+    # Data Frame to Numeric Vector:
     x = dem2gbp[,1]
     print(head(x))
     print(class(x))
     
-    # GARCH(1,1) - just a vector
-    fit = garchFit(~garch(1,1), data = x)
-    # GARCH(1,1) - a named data frame
+    # GARCH(1,1) - just a vector:
+    fit = garchFit(x ~ garch(1,1), data = x)
+    fit = garchFit(~ garch(1,1), data = x)
+    
+    # GARCH(1,1) - a named data frame:
     fit = garchFit(DEM2GBP ~garch(1,1), data = dem2gbp)
     
     # Modify Start Values:
-    fit = garchFit(~garch(1,1), x, init.rec = "uev")
+    fit = garchFit( ~ garch(1,1), x, init.rec = "mci") # default
+    fit@fit$coef
+    fit = garchFit( ~ garch(1,1), x, init.rec = "uev")
     fit@fit$coef
     
-    # Skew-Normal Conditional Distribution:
+    # Skew Normal Conditional Distribution:
     fit = garchFit(~garch(1,1), x, cond.dist = "dsnorm")
     fit@fit$coef
+    #          mu       omega      alpha1       beta1        skew 
+    # 0.002418474 0.020628074 0.213000422 0.699638422 0.903313891
         
     # Symmetric GED:
     fit = garchFit(~garch(1,1), x, cond.dist = "dged")
@@ -317,28 +321,252 @@ function()
     fit = garchFit(~garch(1,1), x, cond.dist = "dsged", shape = 1.15)     
     fit@fit$coef
     #          mu       omega      alpha1       beta1        skew       shape 
-    # -0.02249079  0.01338750  0.22139687  0.73464632  1.18529867  1.13871844 
-    # ... don't trust this solution, Hessian fails   
+    # 0.030125742 0.008820863 0.169395870 0.799183865 1.174542338 1.162325254   
 
     # Standardized Student-t:
     fit = garchFit(~garch(1,1), x, cond.dist = "dstd")     
     fit@fit$coef
     #          mu       omega      alpha1       beta1       shape 
-    # 0.002248651 0.002319034 0.124437902 0.884653277 4.118426687
+    # 0.002248651 0.002319034 0.124437901 0.884653280 4.118426541
+    # Warning - Persistence: 1.009091
     # ... misspecified since persistence > 1
     
     # Skew Standardized Student-t:
-    # fit = garchFit(~garch(1,1), x, cond.dist = "dsstd", control = list(MET = 5, XMAX = 1))     
-    # fit = garchFit(~garch(1,1), x, cond.dist = "dsstd", algorithm = "nlminb+nm")
-    # fit@fit$coef 
-    # ... fails                                            
+    # Default Settings fail, use instead ...    
+    fit = garchFit(~garch(1,1), x, cond.dist = "dsstd", algorithm = "nlminb+nm")
+    #           mu       omega      alpha1       beta1        skew       shape 
+    # -0.008571022 0.002398384 0.124832720 0.883071726 0.913095642 4.201071258 
+    # Warning - Persistence: 1.007904                                            
+    # ... misspecified since persistence > 1
     
     # Return Value:
     return()    
-}   
+} 
 
 
 # ------------------------------------------------------------------------------
+
+
+test.garchFit.initialization = 
+function()
+{  
+    # Load Data:
+    data(dem2gbp)  
+    # Data Frame to Numeric Vector:
+    x = dem2gbp[, 1]
+    print(head(x))
+    print(class(x))
+    
+    # Modify Start Values - mci default:
+    fit = garchFit( ~ garch(1,1), x, init.rec = "mci") # default
+    fit@fit$coef
+    
+    # Modify Start Values - uev alternative:
+    fit = garchFit( ~ garch(1,1), x, init.rec = "uev")
+    fit@fit$coef
+    
+    # Return Value:
+    return()    
+} 
+
+
+# ------------------------------------------------------------------------------
+
+test.garchFit.distributions = 
+function()
+{  
+    # Load Data:
+    data(dem2gbp)  
+    # Data Frame to Numeric Vector:
+    x = dem2gbp[, 1]
+    print(head(x))
+    print(class(x))
+    
+    # Skew Normal Conditional Distribution:
+    fit = garchFit(~garch(1,1), x, cond.dist = "dsnorm")
+    fit@fit$coef
+    #          mu       omega      alpha1       beta1        skew 
+    # 0.002418474 0.020628074 0.213000422 0.699638422 0.903313891
+        
+    # Symmetric GED:
+    fit = garchFit(~garch(1,1), x, cond.dist = "dged")
+    fit@fit$coef
+    #          mu       omega      alpha1       beta1       shape 
+    # 0.001692849 0.004478847 0.130834725 0.859287121 1.149396980
+
+    # Skew GED - Take the shape from symmetric solution ...
+    fit = garchFit(~garch(1,1), x, cond.dist = "dsged", shape = 1.15)     
+    fit@fit$coef
+    #          mu       omega      alpha1       beta1        skew       shape 
+    # 0.030125742 0.008820863 0.169395870 0.799183865 1.174542338 1.162325254   
+
+    # Standardized Student-t:
+    fit = garchFit(~garch(1,1), x, cond.dist = "dstd")     
+    fit@fit$coef
+    #          mu       omega      alpha1       beta1       shape 
+    # 0.002248651 0.002319034 0.124437901 0.884653280 4.118426541
+    # Warning - Persistence: 1.009091
+    # ... misspecified since persistence > 1
+    
+    # Skew Standardized Student-t:
+    # Default Settings fail, use instead ...    
+    fit = garchFit(~garch(1,1), x, cond.dist = "dsstd", algorithm = "nlminb+nm")
+    #           mu       omega      alpha1       beta1        skew       shape 
+    # -0.008571022 0.002398384 0.124832720 0.883071726 0.913095642 4.201071258 
+    # Warning - Persistence: 1.007904                                            
+    # ... misspecified since persistence > 1
+    
+    # Return Value:
+    return()    
+} 
+
+
+################################################################################
+
+
+test.show.fGARCH = 
+function()
+{ 
+    # show.fGARCH - S4 print method for an object of class 'fGARCH'
+    
+    # Load Data, convert to numeric Vector:
+    data(dem2gbp)  
+    x = dem2gbp[, 1]
+    
+    # Fit:
+    fit = garchFit(~garch(1,1), data = x, trace = FALSE)
+    
+    # Print:
+    print(fit)
+    show(fit)
+    
+    # Return Value:
+    return()    
+} 
+
+
+# ------------------------------------------------------------------------------
+
+
+test.summary.fGARCH = 
+function()
+{
+    # summary.fGARCH - S3 summary method for an object of class 'fGARCH'
+    
+    # Load Data, convert to numeric Vector:
+    data(dem2gbp)  
+    x = dem2gbp[, 1]
+    
+    # Fit:
+    fit = garchFit(~garch(1,1), data = x, trace = FALSE)
+    
+    # Summary:
+    summary(fit)
+    
+    # Return Value:
+    return()    
+} 
+
+
+# ------------------------------------------------------------------------------
+
+
+test.plot.fGARCH = 
+function()
+{
+    # plot.fGARCH - S3 plot method for an object of class 'fGARCH'
+    
+    # Load Data, convert to numeric Vector:
+    data(dem2gbp)  
+    x = dem2gbp[, 1]
+    
+    # Fit:
+    fit = garchFit(~garch(1,1), data = x, trace = FALSE)
+    
+    # Plot:
+    par(mfrow = c(2, 2), cex = 0.7)
+    par(ask = FALSE)
+    plot(fit, which = "all")
+    
+    # Plot - try interactively:
+    par(mfrow = c(1, 1))
+    plot(fit)
+    
+    # Return Value:
+    return()    
+} 
+
+
+# ------------------------------------------------------------------------------
+
+
+test.residuals.fGARCH = 
+function()
+{
+    # residuals.fGARCH - S3 residuals method for an object of class 'fGARCH'
+    
+    # Load Data, convert to numeric Vector:
+    data(dem2gbp)  
+    x = dem2gbp[, 1]
+    
+    # Fit:
+    fit = garchFit(~garch(1,1), data = x, trace = FALSE)
+    
+    # Residuals:
+    residuals(fit)
+    
+    # Return Value:
+    return()    
+} 
+
+
+# ------------------------------------------------------------------------------
+
+
+test.fitted.fGARCH = 
+function()
+{
+    # fitted.fGARCH - S3 fitted values for an object of class 'fGARCH'
+    
+    # Load Data, convert to numeric Vector:
+    data(dem2gbp)  
+    x = dem2gbp[, 1]
+    
+    # Fit:
+    fit = garchFit(~garch(1,1), data = x, trace = FALSE)
+    
+    # Fitted Values:
+    fitted(fit)
+    
+    # Return Value:
+    return()    
+} 
+
+
+# ------------------------------------------------------------------------------
+
+
+test.predict.fGARCH = 
+function()
+{
+    # predict.fGARCH - S3 prediction method for an object of class 'fGARCH'  
+
+    # Load Data, convert to numeric Vector:
+    data(dem2gbp)  
+    x = dem2gbp[, 1]
+    
+    # Fit:
+    fit = garchFit(~garch(1,1), data = x, trace = FALSE)
+    
+    # Predict:
+    predict(object = fit, n.ahead = 10, trace = FALSE)
+    
+    # Return Value:
+    return()    
+}
+
+
+################################################################################
 
 
 test.garchKappa = 
@@ -348,11 +576,13 @@ function()
     #   cond.dist = c("dnorm", "dged", "dstd", "dsnorm", "dsged", "dsstd"), 
     #   gamma = 0, delta = 2, skew = NA, shape = NA)
     
-    # garchKappa()
-    # garchKappa("dnorm", gamma = 0.3)
-    # garchKappa("dged", skew = 0.95, shape = 1)
+    garchKappa()
     
-    # garchKappa("dstd", skew = 0.95, shape = 1)
+    garchKappa("dnorm", gamma = 0.3)
+    
+    garchKappa("dged", skew = 0.95, shape = 1)
+    
+    # CHECK !!! garchKappa("dstd", skew = 0.95, shape = 1)
     
     # Return Value:
     return()    

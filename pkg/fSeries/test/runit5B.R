@@ -59,7 +59,7 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.phaseSpace = 
+test.mutualPlot = 
 function()
 {  
     # Mutual Information Index:
@@ -71,6 +71,17 @@ function()
         doplot = FALSE) 
     mutualPlot(x = lorentz[, 2], partitions = 16, lag.max = 20, doplot = TRUE) 
     
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.falsennPlot = 
+function()
+{  
     # False Nearest Neighbours:
     par(mfrow = c(1, 1))
     roessler = roesslerSim(
@@ -79,6 +90,9 @@ function()
         start = c(-1.894, -9.92, 0.025), 
         doplot = FALSE)
     falsennPlot(x = roessler[, 2], m = 6, d = 8, t = 180, eps = 1, rt = 3)
+    abline(h = 0, col = "grey")
+    grid()
+
    
     # Return Value:
     return()    
@@ -88,7 +102,7 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.nonStationarity = 
+test.recurrencePlot = 
 function()
 {  
     # Recurrence Plot:
@@ -104,7 +118,17 @@ function()
         nt = 5, pch = '.', cex = 2)
     recurrencePlot(lorentz[, 4], m = 3, d = 2, end.time = 800, eps = 3, 
         nt = 5, pch = '.', cex = 2)
-        
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.separationPlot = 
+function()
+{          
     # Separation Plot:
     par(mfrow = c(1, 1))
     roessler = roesslerSim(
@@ -113,8 +137,21 @@ function()
         start = c(-1.894, -9.92, 0.025), 
         doplot = FALSE)
     separationPlot(roessler[, 2], m = 3, d = 8, idt = 1, mdt = 250)    
+   
+    # Return Value:
+    return()    
+}
 
-    
+
+################################################################################
+
+
+test.lyapunovPlot = 
+function()
+{          
+    # Lyapunov Plot:
+    NA
+   
     # Return Value:
     return()    
 }
