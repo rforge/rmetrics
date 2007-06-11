@@ -316,6 +316,29 @@ function(object, ema = 12)
 par(mfrow = c(3,2), cex = 0.7)
 plot(ans)
 
+
+    # Load Data:
+    MIDCAP = as.timeSeries(data(midcapD.ts))
+    Data = returnSeries(SWXLP, percentage = TRUE)
+    head(Data)
+    colnames(Data)
+    
+    # Rolling Windows:
+    windows = rollingWindows(x = Data, period = "12m", by = "1m")
+    
+    # Graph Frame:
+    par(mfrow = c(2, 2), cex = 0.7)
+    
+    # Mean-Variance Backtesting:
+    ans = portfolioBacktesting(
+        formula = LP60 ~ SBI + SPI + SII, 
+        data = Data, 
+        spec = portfolioSpec(), 
+        constraints = NULL, 
+        portfolio = "minvariancePortfolio", 
+        horizon = "6m", 
+        smoothing = "6m", 
+        trace = TRUE)   
         
     # Mean Variance Result:
     #                        Portfolio Benchmark
@@ -326,6 +349,11 @@ plot(ans)
     # Var 10% Quantile           -0.72     -1.96
     # 5% Expected Shortfall      -1.63     -3.90
     # Minimum Monthly Return     -2.07     -4.71
+    
+    
+    
+    
+    
         
     # Return Value:
     return()
