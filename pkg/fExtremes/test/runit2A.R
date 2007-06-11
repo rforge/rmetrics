@@ -64,7 +64,7 @@ function()
     # Check Distribution:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
-    .distCheck(fun = "gev", n = 1000, xi = 0.0, mu = 0, beta = 1)
+    .distCheck(fun = "gev", n = 2000, xi = 0.0, mu = 0, beta = 1)
     
     # Check Distribution:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
@@ -90,8 +90,8 @@ function()
     print(mom)
     
     # Plot Mean:
-    par(ask = FALSE)
     par(mfrow = c(2, 1), cex = 0.7)
+    par(ask = FALSE)
     xi = seq(-5, 2, length = 351)
     mom = gevMoments(xi)
     plot(xi, mom$mean, main = "Mean GEV", pch = 19, col = "steelblue")

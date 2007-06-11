@@ -66,7 +66,8 @@ function()
     X = as.timeSeries(data(danishClaims))
     x = potSim(X, u = quantile(x, 0.95), run = 1)
     print(class(x))
-    par(mfrow = c(2,2), cex = 0.7)
+    par(mfrow = c(2, 2), cex = 0.7)
+    par(ask = FALSE)
     seriesPlot(x)
     
     # Decluster the Process:
@@ -133,6 +134,7 @@ function()
     
     # Plot:
     par(mfrow = c(2, 2), cex = 0.7)
+    par(ask = FALSE)
     plot(fit, which = 1:4)
     plot(fit, which = 5:7)
     

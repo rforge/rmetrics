@@ -51,7 +51,6 @@ function (x, block = c("monthly", "quarterly"), doplot = FALSE)
     # Example:
     #   data(bmwRet)
     #   blockMaxima(bmwRet, 200)
-    
     #   data(bmwRet); x = bmwRet[5100:5280, ]; x;  block = "monthly"
 
     # FUNCTION:

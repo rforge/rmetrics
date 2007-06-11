@@ -86,8 +86,8 @@ function()
     mom = gpdMoments(xi)
     
     # Plot Mean:
-    par(ask = FALSE)
     par(mfrow = c(2, 1), cex = 0.7)
+    par(ask = FALSE)
     plot(xi, mom$mean, main = "Mean", pch = 19, cex = 0.5)
     abline(v = 1, col = "red", lty = 3)
     abline(h = 0, col = "red", lty = 3)

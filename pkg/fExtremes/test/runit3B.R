@@ -67,6 +67,7 @@ function()
     x = gpdSim(model = list(xi = 0.25, mu = 0, beta = 1), n = 1000, seed = 4711)
     class(x) 
     par(mfrow = c(2, 1), cex = 0.7)
+    par(ask = FALSE)
     seriesPlot(x)
       
 
@@ -158,12 +159,12 @@ function()
     # Fit: 
     fit = gpdFit(ts, u = min(ts), type = "mle") 
     print(fit) 
-    par(ask = FALSE)
     par(mfrow = c(2, 2), cex = 0.7)
+    par(ask = FALSE)
     plot(fit, which = "all") 
     
     # Try:
-    plot(fit, which = "ask")
+    # plot(fit, which = "ask")
     
     # Return Value:
     return()    

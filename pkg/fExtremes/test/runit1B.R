@@ -74,16 +74,20 @@ function()
     print(ans)
     
     # Quarterly Block Maxima:
-    blockMaxima(x.ret, block = "q", doplot = TRUE)
+    ans = blockMaxima(x.ret, block = "q", doplot = TRUE)
+    print(ans)
     
     # 20-Days Block Maxima:
-    blockMaxima(x.ret, block = 20, doplot = TRUE)
+    ans = blockMaxima(x.ret, block = 20, doplot = TRUE)
+    print(ans)
     
     # Numerical Data Vector:
     x.ret = as.vector(x.ret)
-    blockMaxima(x.ret, block = 20, doplot = TRUE) 
+    head(x.ret)
+    ans = blockMaxima(x.ret, block = 20, doplot = TRUE) 
+    print(ans)
     
-    # Stops by stopifnot():
+    # Stops by stopifnot() - Check:
     # blockMaxima(x.ret, block = "month", doplot = TRUE) 
     
     # Return Value:
@@ -108,8 +112,8 @@ function()
     class(x.ret)
     
     # Find 99% Threshold:
-    par(ask = FALSE)
     par(mfrow = c(2, 2), cex = 0.7)
+    par(ask = FALSE)
     findThreshold(x.ret, n = floor(0.01*length(as.vector(x))), doplot = TRUE)
     
     # Remark - Alternative use ...
@@ -147,8 +151,8 @@ function()
     class(x.ret)
     
     # Plot Series:
+    par(mfrow = c(2, 1), cex = 0.7)
     par(ask = FALSE)
-    par(mfrow = c(2, 1))
     # plot(x.ret, type = "l", main = "Series")
     # abline(h = 0, col = "red", lty = 3)
     # or use ...

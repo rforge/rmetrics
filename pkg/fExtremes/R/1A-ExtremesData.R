@@ -30,7 +30,6 @@
 ################################################################################
 # FUNCTION             EXPLORATIVE DATA ANALYSIS:
 #  emdPlot              Creates an empirical distribution plot
-#  qqnormPlot           -> Has been moved to package fEcofin
 #  qqparetoPlot         Creates exploratory QQ plot for EV analysis
 #  mePlot               Creates a sample mean excess plot
 #   mxfPlot             Creates another view of a sample mean excess plot

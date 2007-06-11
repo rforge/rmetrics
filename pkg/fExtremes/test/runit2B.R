@@ -337,6 +337,7 @@ function()
     
     # Plot:
     par(mfrow = c(2, 2), cex = 0.7)
+    par(ask = FALSE)
     plot(fit, which = 1:4)
     
     # Try Interactive:

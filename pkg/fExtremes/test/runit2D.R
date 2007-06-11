@@ -64,6 +64,7 @@ function()
    
     # Graph Frame:
     par(mfrow = c(2, 2), cex = 0.7)
+    par(ask = FALSE)
     
     # Hill Plot:
     hillPlot(gevSim(n=1000), plottype = "alpha")
@@ -88,12 +89,14 @@ function()
    
     # Graph Frame:
     par(mfrow = c(2, 2), cex = 0.7)
+    par(ask = FALSE)
     
     # shaparmPlot(x, p = 0.01*(1:10), xiRange = NULL, alphaRange = NULL,
     #   doplot = TRUE, plottype = c("both", "upper"))
 
     # Graph Frame:
-    par(mfcol = c(3, 2))
+    par(mfcol = c(3, 2), cex = 0.7)
+    par(ask = FALSE)
     shaparmPlot(as.timeSeries(data(bmwRet)))
     
     # Print (Results:

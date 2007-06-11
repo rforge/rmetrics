@@ -68,7 +68,7 @@ function()
 {
     # Slot Names:
     slotNames("fTHETA")
-    # [1] "call"        "data"        "theta"       "title"       "description"
+    # [1] "call" "data" "theta" "title" "description"
 
     # Return Value:
     return()    
@@ -152,13 +152,14 @@ function()
 {
     # Graphics Frame:
     par(mfrow = c(2, 2), cex = 0.7)
+    par(ask = FALSE)
     
     # Parameter Estimation:
-    x = thetaSim("max", n=22000)
+    x = thetaSim("max", n = 22000)
     exindexesPlot(x)
     
     # Parameter Estimation:
-    y = thetaSim("pair", n=22000)
+    y = thetaSim("pair", n = 22000)
     exindexesPlot(y)
     
     # Return Value:
@@ -174,6 +175,7 @@ function()
 {
     # Graphics Frame:
     par(mfrow = c(2, 2), cex = 0.7)
+    par(ask = FALSE)
     
     # Parameter Estimation:
     x = thetaSim("max", n=22000)

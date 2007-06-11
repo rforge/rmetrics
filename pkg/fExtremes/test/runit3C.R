@@ -68,11 +68,15 @@ function()
     # Artificial Data Set:
     x = gpdSim(seed = 1985)
     fit = gpdFit(x)
+    par(mfrow = c(1, 1))
+    par(ask = FALSE)
     gpdTailPlot(fit)
     
     # Danish Fire Claims:
     x = as.timeSeries(data(danishClaims))
     fit = gpdFit(x)
+    par(mfrow = c(1, 1))
+    par(ask = FALSE)
     gpdTailPlot(fit)
     
     # Return Value:
@@ -88,11 +92,15 @@ function()
 {
     # Artificial Data Set:
     x = gpdSim(seed = 1985)
+    par(mfrow = c(1, 1))
+    par(ask = FALSE)
     gpdQuantPlot(x)
     
     # Danish Fire Claims:
     x = as.timeSeries(data(danishClaims))
     fit = gpdFit(x)
+    par(mfrow = c(1, 1))
+    par(ask = FALSE)
     gpdQuantPlot(x)
 
     # Return Value:
@@ -108,10 +116,14 @@ function()
 {
     # Artificial Data Set:
     x = gpdSim(seed = 1985)
+    par(mfrow = c(1, 1))
+    par(ask = FALSE)
     gpdShapePlot(x)
     
     # Danish Fire Claims:
     x = as.timeSeries(data(danishClaims))
+    par(mfrow = c(1, 1))
+    par(ask = FALSE)
     gpdShapePlot(x)
     
     # Return Value:
