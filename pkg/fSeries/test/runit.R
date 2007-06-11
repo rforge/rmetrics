@@ -44,7 +44,6 @@ if (FALSE) {
         "3A", # LrdModelling
         "3B", # LrdStatistics
         "4A", # GarchDistributions
-      # "4B", #  --- 
       # "4C", # GarchModelling 
         "4D", # GarchOxInterface
         "5A", # NonLinModelling

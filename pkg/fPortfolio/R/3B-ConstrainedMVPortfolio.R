@@ -69,9 +69,9 @@ function(data, spec, constraints)
 
     # Get Statistics:
     if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
-    mu = data$statistics$mu
-    Sigma = data$statistics$Sigma
-    nAssets = length(mu)
+    mu = getStatistics(data)$mu
+    Sigma = getStatistics(data)$Sigma
+    nAssets = getNumberOfAssets(data)
     
     # Get or Set Target Alpha:
     targetAlpha = spec@portfolio$targetAlpha
@@ -145,9 +145,9 @@ function(data, spec, constraints)
      
     # Get Statistics:
     if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
-    mu = data$statistics$mu
-    Sigma = data$statistics$Sigma
-    nAssets = length(mu)
+    mu = getStatistics(data)$mu
+    Sigma = getStatistics(data)$Sigma
+    nAssets = getNumberOfAssets(data)
     
     # Get or Set Target Alpha:
     targetAlpha = spec@portfolio$targetAlpha
@@ -188,7 +188,6 @@ function(data, spec, constraints)
     names(targetRisk) <- 
         c("cov", paste(c("CVaR.", "VaR."), targetAlpha*100, "%", sep = ""))
     
-
     # Return Value:
     new("fPORTFOLIO", 
         call = match.call(),
@@ -231,9 +230,9 @@ function(data, spec, constraints)
     
     # Get Statistics:
     if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
-    mu = data$statistics$mu
-    Sigma = data$statistics$Sigma
-    nAssets = length(mu)
+    mu = getStatistics(data)$mu
+    Sigma = getStatistics(data)$Sigma
+    nAssets = getNumberOfAssets(data)
     
     # Get or Set Target Alpha:
     targetAlpha = spec@portfolio$targetAlpha
@@ -359,9 +358,9 @@ function(data, spec, constraints)
 
     # Get Statistics:
     if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
-    mu = data$statistics$mu
-    Sigma = data$statistics$Sigma
-    nAssets = length(mu)
+    mu = getStatistics(data)$mu
+    Sigma = getStatistics(data)$Sigma
+    nAssets = getNumberOfAssets(data)
     
     # Get or Set Target Alpha:
     targetAlpha = spec@portfolio$targetAlpha
@@ -442,9 +441,9 @@ function(data, spec, constraints)
 
     # Get Statistics:
     if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
-    mu = data$statistics$mu
-    Sigma = data$statistics$Sigma
-    nAssets = length(mu)
+    mu = getStatistics(data)$mu
+    Sigma = getStatistics(data)$Sigma
+    nAssets = getNumberOfAssets(data)
 
     # Get or Set Target Alpha:
     targetAlpha = spec@portfolio$targetAlpha
