@@ -36,12 +36,20 @@ if (FALSE) {
     require(fCopulae)
     require(RUnit)
     testIndex = c(
-        "1A",
-        "2A",
-        "3A",
-        "4A",
-        "5A",
-        "6A")
+        "1A", # CopulaClass
+        "2A", # EllipticalGenerator
+        "2B", # EllipticalCo[pula
+        "2C", # EllipticalDependency
+        "2D", # EllipticalModelling
+        "3A", # ArchimedeanGenerator
+        "3B", # ArchimedeanCopulae
+        "3C", # ArchimedeanDependency
+        "3D", # ArchimedeanModelling
+        "4A", # ExtremeValueGenerator
+        "4B", # ExtremeValueCopulae
+        "4C", # ExtremeVa;lueDependency
+        "4D", # ExtremeValueModelling
+        "6A") # EmpiricalCopulae
     File = "C:/Rmetrics/SVN/trunk/fCopulae/test/runit"
     Protocol = "runitfCopulae.txt"
     
