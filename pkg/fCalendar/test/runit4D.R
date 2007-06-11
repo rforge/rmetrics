@@ -43,12 +43,6 @@
 #  as.matrix.timeS*     S3: Converts a 'timeSeries' to a 'matrix'
 #  as.data.frame.t*     S3: Converts a 'timeSeries' to a 'data.frame'
 #  as.ts.timeSeries     S3: Converts a 'timeSeries' to a 'ts'     
-# NEW METHODS 
-#  .as.vector.zoo
-#  .as.matrix.zoo
-#  .quantile.zoo
-#  .t.timeSeries
-#  .mergeSeries
 ################################################################################
 
 
@@ -75,13 +69,13 @@ function()
 test.asTimeSeries = 
 function()
 {
-    # as.timeSeries.default     Returns the input
-    # as.timeSeries.numeric     Transforms a numeric vector into a 'timeSeries'
-    # as.timeSeries.data.frame  Transformas a 'data.frame' into a 'timeSeries'
-    # as.timeSeries.matrix      Trasformas a 'matrix' into a 'timeSeries'
-    # as.timeSeries.ts          Tranf orms a 'ts' object into a 'timeSeries'
-    # as.timeSeries.character   Loads and transformas from a demo file
-    # as.timeSeries.zoo         Transforms a 'zoo' object into a 'timeSeries'
+    # as.timeSeries.default - Returns the input
+    # as.timeSeries.numeric - Transforms a numeric vector into a 'timeSeries'
+    # as.timeSeries.data.frame - Transformas a 'data.frame' into a 'timeSeries'
+    # as.timeSeries.matrix - Trasformas a 'matrix' into a 'timeSeries'
+    # as.timeSeries.ts - Tranf orms a 'ts' object into a 'timeSeries'
+    # as.timeSeries.character - Loads and transformas from a demo file
+    # as.timeSeries.zoo - Transforms a 'zoo' object into a 'timeSeries'
     
     # Create timeSeries Object:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
@@ -213,10 +207,10 @@ function()
 test.fromTimeSeriesUV = 
 function()
 {     
-    # as.vector.timeSeries      Converts a univariate 'timeSeries' to a vector
-    # as.matrix.timeSeries      Converts a 'timeSeries' to a 'matrix'
-    # as.data.frame.timeSeries  Converts a 'timeSeries' to a 'data.frame'
-    # as.ts.timeSeries          Converts a 'timeSeries' to a 'ts'
+    # as.vector.timeSeries - Converts a univariate 'timeSeries' to a vector
+    # as.matrix.timeSeries - Converts a 'timeSeries' to a 'matrix'
+    # as.data.frame.timeSeries - Converts a 'timeSeries' to a 'data.frame'
+    # as.ts.timeSeries - Converts a 'timeSeries' to a 'ts'
       
     # Univariate Case:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
@@ -268,10 +262,10 @@ function()
 test.fromTimeSeriesMV = 
 function()
 {     
-    # as.vector.timeS*     Converts a univariate 'timeSeries' to a vector
-    # as.matrix.timeS*     Converts a 'timeSeries' to a 'matrix'
-    # as.data.frame.t*     Converts a 'timeSeries' to a 'data.frame'
-    # as.ts.timeSeries     Converts a 'timeSeries' to a 'ts'
+    # as.vector.timeSeries - Converts a univariate 'timeSeries' to a vector
+    # as.matrix.timeSeries - Converts a 'timeSeries' to a 'matrix'
+    # as.data.frame.timeSeries - Converts a 'timeSeries' to a 'data.frame'
+    # as.ts.timeSeries - Converts a 'timeSeries' to a 'ts'
     
     # Multivariate Case:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")

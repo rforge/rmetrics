@@ -74,7 +74,7 @@ function()
 test.timeSeries = 
 function()
 {    
-    #  timeSeries           Creates a 'timeSeries' object from scratch
+    #  timeSeries - Creates a 'timeSeries' object from scratch
     
     # Settings:
     myFinCenter <<- "GMT"
@@ -115,7 +115,7 @@ function()
 test.readSeries = 
 function()
 {
-    #  readSeries           Reads from a spreadsheet and creates a 'timeSeries'
+    #  readSeries - Reads from a spreadsheet and creates a 'timeSeries'
     
     # Microsoft Data:
     data(msft.dat)
@@ -146,7 +146,7 @@ function()
 test.returnSeries = 
 function()
 {    
-    #  returnSeries         Computes returns from a 'timeSeries' object     
+    #  returnSeries - Computes returns from a 'timeSeries' object     
     
     # Load Time Series:
     X = as.timeSeries(data(msft.dat))
@@ -169,7 +169,7 @@ function()
 test.applySeries = 
 function()
 {     
-    #  applySeries          Applies a function to blocks of a 'timeSeries'    
+    #  applySeries - Applies a function to blocks of a 'timeSeries'    
 
     NA
     
@@ -184,7 +184,7 @@ function()
 test.orderStatistics = 
 function()
 {
-    #  orderStatistics      Compute order statistic of a 'timeSeries' 
+    #  orderStatistics - Compute order statistic of a 'timeSeries' 
    
     # Load Data:
     X = as.timeSeries(data(msft.dat))
@@ -210,7 +210,7 @@ function()
 test.seriesData = 
 function()
 {    
-    #  seriesData       Extracts data slot from 'timeSeries' object
+    #  seriesData - Extracts data slot from 'timeSeries' object
 
     # Load Microsoft Data:
     X = as.timeSeries(data(msft.dat))
@@ -277,7 +277,7 @@ function()
 test.isMultivariate = 
 function()
 {  
-    #  isMultivariate   Tests if an object of class 'timeSeries' is multivariate
+    #  isMultivariate - Tests if an object of class 'timeSeries' is multivariate
     
     # Load Microsoft Data:
     X = as.timeSeries(data(msft.dat))  
@@ -382,7 +382,7 @@ function()
 test.dummyDailySeries = 
 function()
 {    
-    #  dummyDailySeries     Creates a dummy daily 'timeSeries' object
+    #  dummyDailySeries - Creates a dummy daily 'timeSeries' object
 
     # Create Dummy Time Series:
     myFinCenter = "GMT"
@@ -400,14 +400,22 @@ function()
 test.alignDailySeries = 
 function()
 {    
-    #  alignDailySeries     Aligns a 'timeSeries' object to new positions 
+    # alignDailySeries - Aligns a 'timeSeries' object to new positions 
 
-    # Create Dummy Time Series:
+    # Time Series:
     myFinCenter = "GMT"
-    tS = dummyDailySeries(matrix(rnorm(12)))
+    tS = as.timeSeries(data(msft.dat))[1:25, ]
     print(tS)
+    dim(tS)
     
-    # alignDailySeries()    # CHECK
+    # Align Daily Series:
+    alignDailySeries(tS, method = "linear")
+    
+    # Align Daily Series:
+    alignDailySeries(tS, method = "fillNA")
+    
+    # Align Daily Series:
+    alignDailySeries(tS, method = "fillNA", include.weekends = TRUE)
 
     # Return Value:
     return()    
@@ -420,14 +428,18 @@ function()
 test.ohlcDailyPlot = 
 function()
 {    
-    #  ohlcDailyPlot        Plots open–high–low–close bar chart 
+    # ohlcDailyPlot - Plots open–high–low–close bar chart 
     
-    # Create Dummy Time Series:
+    # Price or Incdex Series:
     myFinCenter = "GMT"
-    tS = dummyDailySeries(matrix(rnorm(12)))
+    tS = as.timeSeries(data(msft.dat))[1:25, ]
     print(tS)
+    dim(tS)
+    colnames(tS)
 
-    # ohlcDailyPlot()       # CHECK
+    # Graph Frame:
+    par(mfrow = c(2, 1), cex = 0.7)
+    ohlcDailyPlot(tS)       
 
     # Return Value:
     return()    

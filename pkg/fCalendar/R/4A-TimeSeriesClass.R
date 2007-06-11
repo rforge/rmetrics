@@ -933,13 +933,10 @@ FinCenter = myFinCenter)
     #   include.weekends - a logical value. Should weekend dates be 
     #       included or removed?
     
-    # Changes:
-    #
-    
     # FUNCTION:
     
     # Settings:
-    method = method[1]
+    method = match.arg(method)
     
     # Internal Function
     # Univariate Time Series Alignment:
@@ -952,19 +949,17 @@ FinCenter = myFinCenter)
         myUnits <- "days"
         # Fill with NAs:
         if (method == "fillNA") {
-            colsX = 1
-            dtCount = as.integer(julian(seriesPositions(x)))
-            cbind(dtCount, x@Data)
-            newX = rep(NA, times = colsX * (max(dtCount) - min(dtCount) + 1))
-            newX = matrix(newX, ncol = colsX)
-            index = dtCount - min(dtCount) + 1
-            newX[index, ] = x@Data
-            colnames(newX) = colnames(x@Data)
-            newPos = (min(dtCount):max(dtCount)) * 24 * 3600
-            class(newPos) = "POSIXct"
-            newPos = as.POSIXlt(newPos)
-            td = timeSeries(newX, newPos, units = colnames(newX), 
-                zone = zone, FinCenter = FinCenter)
+            positions = seriesPositions(x)
+            u = as.integer(julian(positions))
+            v = as.vector(x@Data[, 1])    
+            x = u[1]:u[length(u)]
+            y = approx(u, v, xout = x, method = "linear", f = 0.5)$y
+            y[!(x %in% u)] = NA
+            poschar = as.character(positions)
+            td = timeSeries(y, timeSequence(from = poschar[1], 
+                to = poschar[length(poschar)], FinCenter = FinCenter, 
+                format = "%Y-%m-%d"), FinCenter = FinCenter)
+            td@format = "%Y-%m-%d"     
         } else {
             # Interpolate with real Values:
             # Wich method ?
@@ -1013,7 +1008,8 @@ FinCenter = myFinCenter)
         colnames(td@Data) = units
         ans = td
         # Return Value:
-        ans }
+        ans 
+    }
         
     # First Column:
     ans = alignDailySeries.OneColumn(x = x[, 1], method = method, 
@@ -1037,8 +1033,7 @@ FinCenter = myFinCenter)
     }       
     
     # Return Value:
-    ans
-   
+    ans  
 }
 
 
@@ -1054,98 +1049,95 @@ grid.nx = 7, grid.lty = "solid", ...)
     # Description:
     #   Plots open–high–low–close bar chart 
     
+    # Arguments:
+    #   x - an S4 object of class 'timeSeries' with named entries:
+    #       Open, High, Low, Close, and Volume
+    
     # Reference:
     #   Build on top of Adrian Trapletti's plotOHLC()
-    #   function from his R-package "tseries".
-    
-    # Changes:
-    #    
+    #   function from his R-package "tseries".  
     
     # FUNCTION:
-    
-    # Units:
-    myUnits <<- "days"
-    
-    # Internal Function:
-    addDailyNA = function(x) {
-        # Fill:
-        colsX = 5
-        dtCount = as.integer(julian(seriesPositions(x)))
-        cbind(dtCount, x@Data)
-        newX = rep(NA, times = colsX*(max(dtCount) - min(dtCount) + 1))
-        newX = matrix(newX, ncol = colsX)
-        index = dtCount - min(dtCount) + 1
-        newX[index, ] = x@Data
-        colnames(newX) = colnames(x@Data)
-        newPos = (min(dtCount):max(dtCount)) * 24 * 3600
-        class(newPos) = "POSIXct"
-        newPos = as.POSIXlt(newPos) 
-        # New Daily Time Series:
-        ans = timeSeries(newX, newPos, units = colnames(newX), 
-            zone = x@FinCenter, FinCenter = x@FinCenter)
-        # Return Value:
-        ans }
      
     # Next:   
-    x.filled = addDailyNA(x[, colOrder])
+    x.filled = alignDailySeries(x, method = "fillNA", include.weekends = TRUE)
     jul = as.integer(julian(seriesPositions(x.filled)))
     X = ts(x.filled@Data[, 1:4], start = min(jul), end = max(jul))
     
-    # plotOHLC - require ( tseries ) :
-    plotOHLC = function (x, xlim = NULL, ylim = NULL, xlab = "Time", 
-    ylab, col = par("col"), bg = par("bg"), axes = TRUE, frame.plot = 
-    axes, ann = par("ann"), main = NULL, date = c("calendar", "julian"), 
-    format = "%Y-%m-%d", origin = "1899-12-30", ...) {
-        if ((!is.mts(x)) || (colnames(x)[1] != "Open") || (colnames(x)[2] != 
-            "High") || (colnames(x)[3] != "Low") || (colnames(x)[4] != 
-            "Close")) stop("x is not a open/high/low/close time series")
-        xlabel <- if (!missing(x)) deparse(substitute(x)) else NULL
-        if (missing(ylab)) ylab <- xlabel
-        date <- match.arg(date)
-        time.x <- time(x)
-        dt <- min(lag(time.x) - time.x)/3
-        if (is.null(xlim)) xlim <- range(time.x)
-        if (is.null(ylim)) ylim <- range(x[is.finite(x)])
-        plot.new()
-        plot.window(xlim, ylim, ...)
-        segments(time.x, x[, "High"], time.x, x[, "Low"], col = col[1], bg = bg)
-        segments(time.x - dt, x[, "Open"], time.x, x[, "Open"], col = col[1], 
-            bg = bg)
-        segments(time.x, x[, "Close"], time.x + dt, x[, "Close"], 
-            col = col[1], bg = bg)
-        if (ann) title(main = main, xlab = xlab, ylab = ylab, ...)
-        if (axes) {
-            if (date == "julian") {
-                axis(1, ...)
-                axis(2, ...) 
-            } else {
-                n <- NROW(x)
-                lab.ind <- round(seq(1, n, length = 5))
-                D <- as.vector(time.x[lab.ind] * 86400) + as.POSIXct(origin, 
-                    tz = "GMT")
-                DD <- format.POSIXct(D, format = format, tz = "GMT")
-                axis(1, at = time.x[lab.ind], lab = DD, ...)
-                axis(2, ...) } }
-        if (frame.plot) box(...) }
-    
     # Plot OHLC: 
-    plotOHLC(X, origin = "1970-01-01", xlab = xlab[1], ylab = ylab[1])
-    print(axTicks(1))
-    print(axTicks(2))
+    .plotOHLC(X, origin = "1970-01-01", xlab = xlab[1], ylab = ylab[1])
+    # print(axTicks(1))
+    # print(axTicks(2))
     title(main = main[1])
     grid(nx = grid.nx, ny = NULL, lty = grid.lty, ...)
     
     # Include Volume?
     if (volume) {
         Volume = x[, 5]/units
-        plot(Volume, reference.grid = FALSE, type = "h", 
-            xlab = xlab[2], ylab = ylab[2])
+        plot(Volume, type = "h", xlab = xlab[2], ylab = ylab[2])
         title(main = main[2])
         grid(nx = grid.nx, ny = NULL, lty = grid.lty, ...) }
     
     # Return value:
     invisible()  
-}   
+}  
+
+
+# ------------------------------------------------------------------------------
+
+
+.plotOHLC = 
+function (x, xlim = NULL, ylim = NULL, xlab = "Time", ylab, col = par("col"), 
+    bg = par("bg"), axes = TRUE, frame.plot = axes, ann = par("ann"), 
+    main = NULL, date = c("calendar", "julian"), format = "%Y-%m-%d", 
+    origin = "1899-12-30", ...) 
+{   # A Copy from Contributed R Package 'tseries'
+    
+    # Description:
+    
+    # FUNCTION:
+    
+    # Check for mts:
+    if ((!is.mts(x)) || (colnames(x)[1] != "Open") || (colnames(x)[2] != 
+        "High") || (colnames(x)[3] != "Low") || (colnames(x)[4] != 
+        "Close")) 
+        stop("x is not a open/high/low/close time series")
+    xlabel <- if (!missing(x)) deparse(substitute(x)) else NULL
+    if (missing(ylab)) ylab <- xlabel
+    date <- match.arg(date)
+    time.x <- time(x)
+    dt <- min(lag(time.x) - time.x)/3
+    if (is.null(xlim)) xlim <- range(time.x)
+    if (is.null(ylim)) ylim <- range(x[is.finite(x)])
+    plot.new()
+    plot.window(xlim, ylim, ...)
+    segments(time.x, x[, "High"], time.x, x[, "Low"], col = col[1], 
+        bg = bg)
+    segments(time.x - dt, x[, "Open"], time.x, x[, "Open"], col = col[1], 
+        bg = bg)
+    segments(time.x, x[, "Close"], time.x + dt, x[, "Close"], 
+        col = col[1], bg = bg)
+    if (ann) title(main = main, xlab = xlab, ylab = ylab, ...)
+    if (axes) {
+        if (date == "julian") {
+            axis(1, ...)
+            axis(2, ...)
+        }
+        else {
+            n <- NROW(x)
+            lab.ind <- round(seq(1, n, length = 5))
+            D <- as.vector(time.x[lab.ind] * 86400) + as.POSIXct(origin, 
+                tz = "GMT")
+            DD <- format.POSIXct(D, format = format, tz = "GMT")
+            axis(1, at = time.x[lab.ind], lab = DD, ...)
+            axis(2, ...)
+        }
+    }
+    if (frame.plot) box(...)
+    
+    # Return Value:
+    invisible()
+} 
 
 
 ################################################################################

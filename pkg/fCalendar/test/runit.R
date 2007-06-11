@@ -36,18 +36,19 @@ if (FALSE) {
     require(fCalendar)
     require(RUnit)
     testIndex = c(
-        "2A", 
-        "3A", 
-        "3B", 
-        "3C", 
-        "3E", 
-        "4A", 
-        "4B", 
-        "4C", 
-        "4D", 
-        "5A", 
-        "5B", 
-        "6A")
+        "2A", # DaylightsavingTime
+        "3A", # TimeDateClass
+        "3B", # TimeDateSubsets
+        "3C", # TimeDateMathOps
+        "3E", # TimeDateSpecDates
+        "4A", # TimeSeriesClass
+        "4B", # TimeSeriesdata
+        "4C", # TimeSeriesPositions
+        "4D", # TimeSeriesCoercion
+        "4E", # TimeSeriesMissingvalues
+        "5A", # HolidayDates
+        "5B", # HolidayCalendars
+        "6A") # TimeSeriesImport
     File = "C:/Rmetrics/SVN/trunk/fCalendar/test/runit"
     Protocol = "runitfCalendar.txt"
     

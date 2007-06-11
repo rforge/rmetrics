@@ -98,7 +98,7 @@ function()
     
     # Add one Day to Positions:
     POS = seriesPositions(uTS)
-    newPositions(uTS) <- POS + 24*3600                      # CHECK
+    newPositions(uTS) <- POS + 24*3600                     
     uTS
     
     # Return Value:
@@ -112,11 +112,11 @@ function()
 test.timeSeriesOrdering = 
 function()
 {
-    #  sample.timeSeries    Resamples a 'timeSeries' object in time
-    #  sort.timeSeries      Sorts reverts a 'timeSeries' object in time
-    #  rev.timeSeries       Reverts a 'timeSeries' object in time 
-    #  start.timeSeries     Extracts start date of a 'timeSeries' object 
-    #  end.timeSeries       Extracts end date of a 'timeSeries' object
+    #  sample.timeSeries - Resamples a 'timeSeries' object in time
+    #  sort.timeSeries - Sorts reverts a 'timeSeries' object in time
+    #  rev.timeSeries - Reverts a 'timeSeries' object in time 
+    #  start.timeSeries - Extracts start date of a 'timeSeries' object 
+    #  end.timeSeries - Extracts end date of a 'timeSeries' object
     
     # Generate univariate monthly random sequence:
     set.seed(4711)

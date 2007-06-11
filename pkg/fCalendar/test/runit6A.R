@@ -70,7 +70,7 @@ function()
 # ------------------------------------------------------------------------------
 
    
-test.economagic = 
+test.economagicImport = 
 function()
 {  
     # economagicImport() - 
@@ -114,7 +114,7 @@ function()
 # ------------------------------------------------------------------------------
        
         
-test.yahoo = 
+test.yahooImport = 
 function()
 {       
     # yahooImport() -
@@ -144,7 +144,7 @@ function()
 # ------------------------------------------------------------------------------
        
         
-test.fred = 
+test.fredImport = 
 function()
 {     
     # fredImport -

@@ -81,7 +81,7 @@ function()
 test.diffTimeSeries = 
 function()
 {
-    # diff.timeSeries      Differences a 'timeSeries' object
+    # diff.timeSeries - Differences a 'timeSeries' object
 
     # Univariate Series:
     # Multivariate Data Set:
@@ -140,7 +140,7 @@ function()
 test.lagTimeSeries = 
 function()
 {
-    # lag.timeSeries       Lags a 'timeSeries' object
+    # lag.timeSeries - Lags a 'timeSeries' object
          
     # Univariate Series:
     set.seed(4711)
@@ -185,10 +185,10 @@ function()
 test.mergeTimeSeries = 
 function()
 {
-    # merge.timeSeries     Merges two 'timeSeries' objects
-    # scale.timeSeries     Centers and/or scales a 'timeSeries' object
-    # summary.timeSeries   Summarizes a 'timeDate' object
-    # var.timeSeries       Returns variance for a 'timeSeries' object
+    # merge.timeSeries - Merges two 'timeSeries' objects
+    # scale.timeSeries - Centers and/or scales a 'timeSeries' object
+    # summary.timeSeries - Summarizes a 'timeDate' object
+    # var.timeSeries - Returns variance for a 'timeSeries' object
          
     # Univariate Series:
     set.seed(4711)
@@ -215,7 +215,7 @@ function()
 test.scaleTimeSeries = 
 function()
 {
-    # scale.timeSeries     Centers and/or scales a 'timeSeries' object
+    # scale.timeSeries - Centers and/or scales a 'timeSeries' object
      
     # Univariate Series:
     set.seed(4711)
@@ -245,7 +245,7 @@ function()
 test.summaryTimeSeries = 
 function()
 {
-    # summary.timeSeries   Summarizes a 'timeDate' object
+    # summary.timeSeries - Summarizes a 'timeDate' object
      
     # Univariate Series:
     set.seed(4711)
@@ -275,7 +275,7 @@ function()
 test.varTimeSeries = 
 function()
 {
-    # var.timeSeries       Returns variance for a 'timeSeries' object
+    # var.timeSeries - Returns variance for a 'timeSeries' object
      
     # Univariate Series:
     set.seed(4711)
@@ -308,12 +308,12 @@ function()
 test.mathOpsTimeSeries = 
 function()
 {
-    # Ops.timeSeries       Arith method for a 'timeSeries' object
-    # abs.timeSeries       Returns abolute values of a 'timeSeries' object
-    # sqrt.timeSeries      Returns sqrt values of a 'timeSeries' object
-    # exp.timeSeries       Returns exponentials of a 'timeSeries' object
-    # log.timeSeries       Returns logarithms of a 'timeSeries' object
-    # quantile.timeSeries  produces sample quantiles of a 'timeSeries' object
+    # Ops.timeSeries - Arith method for a 'timeSeries' object
+    # abs.timeSeries - Returns abolute values of a 'timeSeries' object
+    # sqrt.timeSeries - Returns sqrt values of a 'timeSeries' object
+    # exp.timeSeries - Returns exponentials of a 'timeSeries' object
+    # log.timeSeries - Returns logarithms of a 'timeSeries' object
+    # quantile.timeSeries - produces sample quantiles of a 'timeSeries' object
 
     # Univariate Series:
     myFinCenter <<- "GMT"
@@ -362,11 +362,11 @@ function()
 test.subsetTimeSeries = 
 function()
 {
-    # [.timeSeries         subsets of a 'timeSeries' object
-    # cut.timeSeries       cuts a block from a 'timeSeries' object
-    # head.timeSeries      returns the head of a 'timeSeries' object
-    # tail.timeSeries      returns the tail of a 'timeSeries' object
-    # outlier.timeSeries   Removes outliers from a 'timeSeries' object  
+    # [.timeSeries - subsets of a 'timeSeries' object
+    # cut.timeSeries - cuts a block from a 'timeSeries' object
+    # head.timeSeries - returns the head of a 'timeSeries' object
+    # tail.timeSeries - returns the tail of a 'timeSeries' object
+    # outlier.timeSeries - Removes outliers from a 'timeSeries' object  
 
     # Univariate Series:
     myFinCenter <<- "GMT"
@@ -410,11 +410,11 @@ function()
 test.dimOpsTimeSeries = 
 function()
 {
-    # dim                  Returns the dimension of a 'timeSeries' object
-    # dimnames             Returns the dimension names of a 'timeSeries' object
-    # colnames<-.timeS*    Assigns column names to a 'timeSeries' object
-    # rownames<-.timeS*    Assigns row names to a 'timeSeries' object
-    # is.array.timeSeries  Allows that NCOL and NROW work properly   
+    # dim - Returns the dimension of a 'timeSeries' object
+    # dimnames - Returns the dimension names of a 'timeSeries' object
+    # colnames<-.timeS* - Assigns column names to a 'timeSeries' object
+    # rownames<-.timeS* - Assigns row names to a 'timeSeries' object
+    # is.array.timeSeries - Allows that NCOL and NROW work properly   
 
     # Univariate Series:
     myFinCenter <<- "GMT"
