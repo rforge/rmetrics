@@ -208,7 +208,6 @@ function()
 }
 
 
-
 # ------------------------------------------------------------------------------
 
 
@@ -233,15 +232,90 @@ function()
     par(mfrow = c(2, 2), cex = 0.7)
     
     # Mean-Variance Backtesting:
-    portfolioBacktesting(
+    ans = portfolioBacktesting(
         formula = LP60 ~ SBI + SPI + SII, 
         data = Data, 
         spec = portfolioSpec(), 
         constraints = NULL, 
         portfolio = "minvariancePortfolio", 
-        horizon = "12m", 
+        horizon = "6m", 
         smoothing = "6m", 
         trace = TRUE)   
+    
+    
+    par(mfrow = c(3,2), cex = 0.7)
+    
+    
+plot.portfolioBacktest = 
+function(object, ema = 12) 
+{
+    ans = object 
+    N = ema
+    
+    # Extrakt Shrinkage Lambda:
+    Lambda = attr(getStatistics(ans$tg[[1]])$Sigma, "lambda")
+    for (i in 2:length(tg)) {
+        lambda = attr(getStatistics(ans$tg[[i]])$Sigma, "lambda")
+        Lambda = rbind(Lambda, lambda)      
+    }
+    plot(x = (1:length(Lambda)) + N, emaTA(Lambda, N), pch = 19, 
+        type = "o", xlim = c(0, length(Lambda) + N), main = "lambda" )
+    grid()
+    
+    # Extrakt Eigenvalue Ratio:
+    Values = eigen(getStatistics(ans$tg[[1]])$Sigma)$values
+    Eigen = Values[1]/Values[length(assets)]
+    for (i in 2:length(tg)) {
+        Values = eigen(getStatistics(ans$tg[[i]])$Sigma)$values
+        Eigen = rbind(Eigen, Values[1]/Values[length(assets)])    
+    }
+    plot(x = (1:length(Eigen)) + N, emaTA(-log(Eigen), N), pch = 19, 
+        type = "o", xlim = c(0, length(Eigen) + N), main = "eigen" )
+    grid()
+    
+    # Condition Number:
+    Kappa = kappa(getStatistics(ans$tg[[1]])$Sigma)
+    for (i in 2:length(tg)) {
+        kappa = kappa(getStatistics(ans$tg[[i]])$Sigma) 
+        Kappa = rbind(Kappa, kappa)    
+    }
+    plot(x = (1:length(Kappa)) + N, emaTA(-log(Kappa), N), pch = 19, 
+        type = "o", xlim = c(0, length(Kappa) + N), main = "kappa" )
+    grid()
+    
+    # Collect Portfolio Risk:
+    monthlyAssets = applySeries(x[, 1:3], FUN = colSums)
+    pfRisk = getTargetRisk(ans$tg[[1]])
+    for (i in 2:length(tg)) {  
+        pfRisk = rbind(pfRisk, getTargetRisk(tg[[i]]))
+    }
+    pfRisk = matrix(pfRisk, ncol = 3)
+    pfRisk1 = pfRisk[, 1]
+    plot(x = (1:length(pfRisk1)) + N, emaTA(pfRisk1, N), pch = 19, 
+        type = "o", xlim = c(0, length(pfRisk1) + N), main = "Covariance Risk" )
+    grid()
+    pfRisk2 = pfRisk[, 2]
+    plot(x = (1:length(pfRisk2)) + N, -emaTA(pfRisk2, N), pch = 19, 
+        type = "o", xlim = c(0, length(pfRisk2) + N), main = "-CVaR" )
+    grid()
+     
+    # Extrakt Shrinkage Lambda:
+    Norm = norm(getStatistics(ans$tg[[1]])$Sigma)
+    for (i in 2:length(tg)) {
+        norm = norm(getStatistics(ans$tg[[i]])$Sigma)
+        Norm = rbind(Norm, norm)      
+    }
+    plot(x = (1:length(Norm)) + N, emaTA(Norm, N), pch = 19, 
+        type = "o", xlim = c(0, length(Norm) + N), main = "Covariance Norm" )  
+    grid()
+    
+    # Return Value:
+    invisible()
+}
+    
+par(mfrow = c(3,2), cex = 0.7)
+plot(ans)
+
         
     # Mean Variance Result:
     #                        Portfolio Benchmark
