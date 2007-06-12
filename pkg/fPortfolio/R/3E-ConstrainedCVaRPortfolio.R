@@ -58,16 +58,15 @@ function(data, spec, constraints)
 
     # Get Statistics:
     if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
-    mu = data$statistics$mu
-    Sigma = data$statistics$Sigma
-    nAssets = length(mu)
-    
+    mu = getStatistics(data)$mu
+    Sigma = getStatistics(data)$Sigma
+    nAssets = getNumberOfAssets(data)
+
     # Get or Set Target Alpha:
-    targetAlpha = spec@portfolio$targetAlpha
-    if (is.null(targetAlpha)) targetAlpha = 0.05
+    targetAlpha = getTargetAlpha(spec)
     
     # Get or Set Weights:
-    weights = spec@portfolio$weights
+    weights = getWeights(spec)
     if(is.null(weights)) weights = rep(1/nAssets, times = nAssets)  
     names(weights) = names(mu)
     
@@ -77,7 +76,7 @@ function(data, spec, constraints)
     
     # Compute Covariance and CVaR Target Risk:
     covTargetRisk = sqrt( as.numeric( weights %*% Sigma %*% weights ) )
-    x = data$series@Data %*% weights
+    x = getSeries(data)@Data %*% weights
     VaR = quantile(x, targetAlpha, type = 1)
     CVaR = VaR - 0.5*mean(((VaR-x) + abs(VaR-x))) / targetAlpha
     targetRisk = c(CVaR, VaR, covTargetRisk)
@@ -87,8 +86,8 @@ function(data, spec, constraints)
     # Return Value:
     new("fPORTFOLIO", 
         call = match.call(),
-        data = data,
-        specification = list(spec = spec),
+        data = list(data = data),
+        spec = list(spec = spec),
         constraints = as.character(constraints),
         portfolio = list(
             weights = weights,
@@ -123,13 +122,12 @@ function(data, spec, constraints)
      
     # Get Statistics:
     if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
-    mu = data$statistics$mu
-    Sigma = data$statistics$Sigma
-    nAssets = length(mu)
-    
+    mu = getStatistics(data)$mu
+    Sigma = getStatistics(data)$Sigma
+    nAssets = getNumberOfAssets(data)
+
     # Get or Set Target Alpha:
-    targetAlpha = spec@portfolio$targetAlpha
-    if (is.null(targetAlpha)) targetAlpha = 0.05
+    targetAlpha = getTargetAlpha(spec)
     
     # Optimize Portfolio - Requires R Package lpSolve:
     stopifnot(spec@solver$type == "RlpSolve")
@@ -157,8 +155,8 @@ function(data, spec, constraints)
     # Return Value:
     new("fPORTFOLIO", 
         call = match.call(),
-        data = data,
-        specification = list(spec = spec),
+        data = list(data = data),
+        spec = list(spec = spec),
         constraints = as.character(constraints),
         portfolio = list(
             weights = weights,
@@ -193,12 +191,12 @@ function(data, spec, constraints)
     
     # Get Statistics:
     if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
-    mu = data$statistics$mu
-    Sigma = data$statistics$Sigma
+    mu = getStatistics(data)$mu
+    Sigma = getStatistics(data)$Sigma
+    nAssets = getNumberOfAssets(data)
 
     # Get or Set Target Alpha:
-    targetAlpha = spec@portfolio$targetAlpha
-    if (is.null(targetAlpha)) targetAlpha = 0.05
+    targetAlpha = getTargetAlpha(spec)
     
     # Function to be minimized:
     .sharpeRatioFun =
@@ -240,8 +238,8 @@ function(data, spec, constraints)
     # Return Value:
     new("fPORTFOLIO", 
         call = match.call(),
-        data = data,
-        specification = list(spec = spec),
+        data = list(data = data),
+        spec = list(spec = spec),
         constraints = as.character(constraints),
         portfolio = list(
             weights = weights,
@@ -313,12 +311,12 @@ function(data, spec, constraints)
 
     # Get Statistics:
     if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
-    mu = data$statistics$mu
-    Sigma = data$statistics$Sigma
-        
+    mu = getStatistics(data)$mu
+    Sigma = getStatistics(data)$Sigma
+    nAssets = getNumberOfAssets(data)
+
     # Get or Set Target Alpha:
-    targetAlpha = spec@portfolio$targetAlpha
-    if (is.null(targetAlpha)) targetAlpha = 0.05
+    targetAlpha = getTargetAlpha(spec)
     
     # Function to be Minimized:
     .minVariancePortfolioFun = 
@@ -355,8 +353,8 @@ function(data, spec, constraints)
     # Return Value:
     new("fPORTFOLIO", 
         call = match.call(),
-        data = data,
-        specification = list(spec = spec),
+        data = list(data = data),
+        spec = list(spec = spec),
         constraints = as.character(constraints),
         portfolio = list(
             weights = weights,
@@ -388,13 +386,12 @@ function(data, spec, constraints)
 
     # Get Statistics:
     if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
-    mu = data$statistics$mu
-    Sigma = data$statistics$Sigma
-    nAssets = length(mu)
-       
+    mu = getStatistics(data)$mu
+    Sigma = getStatistics(data)$Sigma
+    nAssets = getNumberOfAssets(data)
+
     # Get or Set Target Alpha:
-    targetAlpha = spec@portfolio$targetAlpha
-    if (is.null(targetAlpha)) targetAlpha = 0.05
+    targetAlpha = getTargetAlpha(spec)
     
     # Settings:
     nFrontierPoints = spec@portfolio$nFrontierPoints
@@ -449,8 +446,8 @@ function(data, spec, constraints)
     # Return Value:
     new("fPORTFOLIO", 
         call = match.call(),
-        data = data,
-        specification = list(spec = spec),
+        data = list(data = data),
+        spec = list(spec = spec),
         constraints = as.character(constraints),
         portfolio = list(
             weights = weights,

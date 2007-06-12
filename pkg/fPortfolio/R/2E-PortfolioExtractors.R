@@ -96,7 +96,7 @@ function(object)
 # ------------------------------------------------------------------------------
     
     
-getNumberofAssets =
+getNumberOfAssets =
 function(object)
 {   # A function implemented by Rmetrics
 

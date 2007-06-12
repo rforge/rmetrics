@@ -63,9 +63,13 @@ function(data, spec = portfolioSpec(), constraints = NULL)
        
     # Get Statistics:
     if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
-    mu = data$statistics$mu
-    Sigma = data$statistics$Sigma
+    mu = getStatistics(data)$mu
+    Sigma = getStatistics(data)$Sigma
+    nAssets = getNumberOfAssets(data)
    
+    # Get or Set Target Alpha:
+    targetAlpha = getTargetAlpha(spec)
+    
     # Get Weights:
     weights = spec@portfolio$weights
     N = length(mu)
@@ -80,18 +84,21 @@ function(data, spec = portfolioSpec(), constraints = NULL)
     targetRisk = sqrt( as.numeric( t(weights) %*% Sigma %*% (weights) ) )
     names(targetRisk) <- spec@ model$estimator[2]
     
+    # Status:
+    status = 0
+    
     # Return Value:
     new("fPORTFOLIO", 
         call = match.call(),
-        data = data,
-        specification = list(spec = spec), 
+        data = list(data = data), 
+        spec = list(spec = spec),
         constraints = as.character(constraints),
         portfolio = list(
-            weights = weights,
-            targetReturn = targetReturn,
+            weights = weights,  
+            targetReturn = targetReturn, 
             targetRisk = targetRisk,
-            targetMean = targetReturn,
-            targetStdev = targetRisk),
+            targetAlpha = targetAlpha,
+            status = status),
         title = "Feasible Portfolio", 
         description = .description())  
 }
@@ -119,8 +126,12 @@ function(data, spec = portfolioSpec(), constraints = NULL)
     
     # Get Statistics:
     if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
-    mu = data$statistics$mu
-    Sigma = data$statistics$Sigma
+    mu = getStatistics(data)$mu
+    Sigma = getStatistics(data)$Sigma
+    nAssets = getNumberOfAssets(data)
+    
+    # Get or Set Target Alpha:
+    targetAlpha = getTargetAlpha(spec)
     
     # Risk-Free Rate:
     riskFreeRate = spec@portfolio$riskFreeRate
@@ -150,18 +161,21 @@ function(data, spec = portfolioSpec(), constraints = NULL)
     targetRisk = sqrt(c*riskFreeRate^2 - 2*b*riskFreeRate + a) / B
     names(targetRisk) = spec@model$estimator[2]
     
+    # Status:
+    status = 0
+    
     # Return Value:
     new("fPORTFOLIO", 
         call = match.call(),
-        data = data,
-        specification = list(spec = spec),
+        data = list(data = data), 
+        spec = list(spec = spec),
         constraints = as.character(constraints),
         portfolio = list(
-            weights = weights,
-            targetReturn = targetReturn,
+            weights = weights,  
+            targetReturn = targetReturn, 
             targetRisk = targetRisk,
-            targetMean = targetReturn,
-            targetStdev = targetRisk),
+            targetAlpha = targetAlpha,
+            status = status),
         title = "Capital Market Line", 
         description = .description())  
 }
@@ -189,8 +203,12 @@ function(data, spec = portfolioSpec(), constraints = NULL)
     
     # Get Statistics:
     if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
-    mu = data$statistics$mu
-    Sigma = data$statistics$Sigma
+    mu = getStatistics(data)$mu
+    Sigma = getStatistics(data)$Sigma
+    nAssets = getNumberOfAssets(data)
+    
+    # Get or Set Target Alpha:
+    targetAlpha = getTargetAlpha(spec)
     
     # Parameter Settings:
     C0 = 1
@@ -213,18 +231,21 @@ function(data, spec = portfolioSpec(), constraints = NULL)
     targetRisk = (sqrt(a)/b)*C0
     names(targetRisk) = spec@model$estimator[2]
     
+    # Status:
+    status = 0
+    
     # Return Value:
     new("fPORTFOLIO", 
         call = match.call(),
-        data = data,
-        specification = list(spec = spec),
+        data = list(data = data), 
+        spec = list(spec = spec),
         constraints = as.character(constraints),
         portfolio = list(
-            weights = weights,
-            targetReturn = targetReturn,
+            weights = weights,  
+            targetReturn = targetReturn, 
             targetRisk = targetRisk,
-            targetMean = targetReturn,
-            targetStdev = targetRisk),
+            targetAlpha = targetAlpha,
+            status = status),
         title = "Tangency MV Portfolio", 
         description = .description())  
 }
@@ -252,8 +273,12 @@ function(data, spec = portfolioSpec(), constraints = NULL)
     
     # Get Statistics:
     if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
-    mu = data$statistics$mu
-    Sigma = data$statistics$Sigma
+    mu = getStatistics(data)$mu
+    Sigma = getStatistics(data)$Sigma
+    nAssets = getNumberOfAssets(data)
+    
+    # Get or Set Target Alpha:
+    targetAlpha = getTargetAlpha(spec)
     
     # Parameter Settings:
     C0 = 1
@@ -276,18 +301,21 @@ function(data, spec = portfolioSpec(), constraints = NULL)
     targetRisk = C0/sqrt(c)
     names(targetRisk) = spec@model$estimator[2]
 
+    # Status:
+    status = 0
+    
     # Return Value:
     new("fPORTFOLIO", 
         call = match.call(),
-        specification = list(spec = spec),
+        data = list(data = data), 
+        spec = list(spec = spec),
         constraints = as.character(constraints),
-        data = data, 
         portfolio = list(
-            weights = weights,
-            targetReturn = targetReturn,
+            weights = weights,  
+            targetReturn = targetReturn, 
             targetRisk = targetRisk,
-            targetMean = targetReturn,
-            targetStdev = targetRisk),
+            targetAlpha = targetAlpha,
+            status = status),
         title = "Minimum Variance MV Portfolio", 
         description = .description())  
 }
@@ -315,8 +343,12 @@ function(data, spec = portfolioSpec(), constraints = NULL)
     
     # Get Statistics:
     if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
-    mu = data$statistics$mu
-    Sigma = data$statistics$Sigma
+    mu = getStatistics(data)$mu
+    Sigma = getStatistics(data)$Sigma
+    nAssets = getNumberOfAssets(data)
+    
+    # Get or Set Target Alpha:
+    targetAlpha = getTargetAlpha(spec)
     
     # Parameter Settings:
     C0 = 1
@@ -341,18 +373,21 @@ function(data, spec = portfolioSpec(), constraints = NULL)
     weights = as.vector(invSigma %*% ((a-b*mu)*C0 + (c*mu-b)*targetReturn )/d)
     names(weights) = names(mu)
     
+    # Status:
+    status = 0
+    
     # Return Value:
     new("fPORTFOLIO", 
         call = match.call(),
-        specification = list(spec = spec),
+        data = list(data = data), 
+        spec = list(spec = spec),
         constraints = as.character(constraints),
-        data = data, 
         portfolio = list(
-            weights = weights,
-            targetReturn = targetReturn,
+            weights = weights,  
+            targetReturn = targetReturn, 
             targetRisk = targetRisk,
-            targetMean = targetReturn,
-            targetStdev = targetRisk),
+            targetAlpha = targetAlpha,
+            status = status),
         title = "Frontier MV Portfolio", 
         description = .description())  
 }
@@ -386,14 +421,16 @@ title = NULL, description = NULL)
     
     # Get Statistics:
     if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
-    mu = data$statistics$mu
-    Sigma = data$statistics$Sigma
+    mu = getStatistics(data)$mu
+    Sigma = getStatistics(data)$Sigma
+    nAssets = getNumberOfAssets(data)
+    
+    # Get or Set Target Alpha:
+    targetAlpha = getTargetAlpha(spec)
     
     # Specification:
     riskFreeRate = spec@portfolio$riskFreeRate 
     nFrontierPoints = spec@portfolio$nFrontierPoints
-    muRange = spec@portfolio$returnRange
-    sigmaRange = spec@portfolio$riskRange
     
     # Parameter Settings:
     C0 = 1
@@ -405,14 +442,10 @@ title = NULL, description = NULL)
     d = as.numeric(a*c - b^2)
     
     # Ranges for mean and Standard Deviation:
-    if (is.null(muRange)){
-        muRange = range(mu)+ .25*c(-diff(range(mu)), diff(range(mu)))
-    }
+    muRange = range(mu)+ .25*c(-diff(range(mu)), diff(range(mu)))
     sqrtSig = sqrt(diag(Sigma))
-    if (is.null(sigmaRange)){
-        sigmaRange = c(min(sqrtSig), max(sqrtSig))+
-            0.25*c(-diff(range(sqrtSig)), diff(range(sqrtSig)))
-    }
+    sigmaRange = c(min(sqrtSig), max(sqrtSig))+
+        0.25*c(-diff(range(sqrtSig)), diff(range(sqrtSig)))
                
     # Efficient Frontier Portfolios:
     targetReturn = seq(muRange[1], muRange[2], length = nFrontierPoints)
@@ -433,18 +466,21 @@ title = NULL, description = NULL)
     if(is.null(title)) title = "Short Selling Portfolio Frontier"
     if(is.null(description)) description = .description()
     
+    # Status:
+    status = 0
+    
     # Return Value:
     new("fPORTFOLIO",
         call = match.call(),
-        specification = list(spec = spec),
+        data = list(data = data), 
+        spec = list(spec = spec),
         constraints = as.character(constraints),
-        data = data, 
         portfolio = list(
-            weights = weights, 
-            targetReturn = targetReturn,
+            weights = weights,  
+            targetReturn = targetReturn, 
             targetRisk = targetRisk,
-            targetMean = targetReturn,
-            targetStdev = targetRisk), 
+            targetAlpha = targetAlpha,
+            status = status),
         title = title, 
         description = description)
 }

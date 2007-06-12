@@ -106,12 +106,14 @@ function(data, spec, constraints)
     
     # Get Statistics:
     if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
-    mu = data$statistics$mu
-    Sigma = data$statistics$Sigma
-    nAssets = length(mu)
+    
+    # Get Specifications:
+    mu = getMu(data) 
+    Sigma = getSigma(data)
+    nAssets = getNumberOfAssets(data)
 
     # Extracting data from spec:
-    targetReturn = spec@portfolio$targetReturn  
+    targetReturn = getTargetReturn(spec)  
     stopifnot(is.numeric(targetReturn)) 
     
     # Optimize:
@@ -206,13 +208,15 @@ function(data, spec, constraints)
     
     # Get Statistics:
     if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
-    mu <<- data$statistics$mu
-    Sigma <<- data$statistics$Sigma
-    nAssets = length(mu)
+    
+    # Get Specifications:
+    mu = getMu(data) 
+    Sigma = getSigma(data)
+    nAssets = getNumberOfAssets(data)
 
     # Extracting data from spec:
-    targetReturn = spec@portfolio$targetReturn  
-    stopifnot(is.numeric(targetReturn)) 
+    targetReturn = getTargetReturn(spec)  
+    stopifnot(is.numeric(targetReturn))
     
     # Optimize:
     if (nAssets == 2) {
@@ -376,21 +380,23 @@ function(data, spec, constraints)
     
     # FUNCTION:
     
-    # Get data statistics:
-    if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)  
-    mu = data$statistics$mu
-    Sigma = data$statistics$Sigma
-    nAssets = length(mu)
+    # Get Statistics:
+    if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
+    
+    # Get Specifications:
+    mu = getMu(data) 
+    Sigma = getSigma(data)
+    nAssets = getNumberOfAssets(data)
+
+    # Extracting data from spec:
+    targetReturn = getTargetReturn(spec)  
+    stopifnot(is.numeric(targetReturn))
     
     # Get quantile measure alpha:
     targetAlpha = spec@portfolio$targetAlpha
-    if (is.null(targetAlpha)) targetAlpha = 0.05
-    
-    # Get target Return:
-    targetReturn = spec@portfolio$targetReturn
     
     # Scenarios:
-    Data = data$series
+    Data = getSeries(data)
     colNames = colnames(Data)
     rowNames = rownames(Data)
     assets = dim(Data)

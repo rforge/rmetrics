@@ -141,15 +141,15 @@ function(data, spec = portfolioSpec(), constraints = NULL)
      
     # Get Statistics:
     if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
-    mu = data$statistics$mu
-    Sigma = data$statistics$Sigma
-
-    # Number of Assets:
-    N = nAssets = length(mu)
+    
+    # Get Specifications:
+    mu = getMu(data) 
+    Sigma = getSigma(data)
+    N = nAssets = getNumberOfAssets(data)
     
     # Target Return:
-    targetReturn = spec@portfolio$targetReturn 
-    weights = spec@portfolio$weights
+    targetReturn = getTargetReturn(spec) 
+    weights = getWeights(spec)
     if(is.null(targetReturn) & is.null(weights)) {
         weights = rep(1/N, N)
         # warning("Equal Weights Portfolio in use")
@@ -229,13 +229,13 @@ function(data, spec = NULL, constraints = NULL)
      
     # FUNCTION:
     
-    # Get Statistics:
+    # Create Data Object:
     if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
-    mu = data$statistics$mu
-    Sigma = data$statistics$Sigma
-
-    # Number of Assets:
-    N = nAssets = length(mu)
+    
+    # Get Specifications:
+    mu = getMu(data) 
+    Sigma = getSigma(data)
+    N = nAssets = getNumberOfAssets(data)
     
     # Compose Risk Budgets:
     minB = rep(0, N)

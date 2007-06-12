@@ -39,7 +39,7 @@
 
 setClass("fPFOLIODATA", 
     representation(
-        series = "list",
+        data = "list",
         statistics = "list",
         tailrisk = "list")  
 )
@@ -75,7 +75,7 @@ function(data, spec = portfolioSpec())
      
     # Return Value:
     new("fPFOLIODATA", 
-        series = list(data = data, nAssets = nAssets),
+        data = list(series = data, nAssets = nAssets),
         statistics = statistics,
         tailrisk = tailrisk)  
 }
@@ -98,7 +98,7 @@ function(object)
     
     # Series:
     cat("\nSeries Data:\n\n")
-    print(object@series$data)
+    print(object@data$series)
     
     # Statistics:
     cat("\nStatistics:\n\n")

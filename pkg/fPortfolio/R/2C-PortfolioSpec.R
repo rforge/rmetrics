@@ -101,7 +101,9 @@ solver = list(
     # Model Slot:
     Model = list(
         type = "MV", 
-        estimator = c("mean", "cov"))
+        estimator = c("mean", "cov"),
+        params = list())
+    model$type = model$type[1]
     Model[(Names <- names(model))] <- model
     
     # Portfolio Slot:
@@ -212,7 +214,7 @@ function(spec, value)
     # Type ?
     spec@model$type = value
     if (value == "LPM") spec@model$estimator = c("lpm", "lpm")
-    if (value == "CVaR") setSolver(spec) <- "RlpSolve"
+    if (value == "CVaR") setSolver(spec) <- "lpSolve"
     if (is.null(spec@portfolio$targetAlpha)) setTargetAlpha(spec) = 0.05
     
     # Return Value:
@@ -393,7 +395,8 @@ function(spec, value)
 ################################################################################
  
 
-"setSolver<-" <- function(spec, value)
+"setSolver<-" <- 
+function(spec, value)
 {   # A function implemented by Rmetrics
 
     # Description:
@@ -401,7 +404,7 @@ function(spec, value)
     # FUNCTION:
     
     # Valid Solvers:
-    validSolvers = c("RQuadprog", "RDonlp2", "RlpSolve")
+    validSolvers = c("quadprog", "Rdonlp2", "lpSolve")
     stopifnot(value %in% validSolvers)
     
     # Set Solver:
@@ -415,7 +418,8 @@ function(spec, value)
 # ------------------------------------------------------------------------------
 
 
-"setTrace<-" <- function(spec, value)
+"setTrace<-" <- 
+function(spec, value)
 {   # A function implemented by Rmetrics
 
     # Description:

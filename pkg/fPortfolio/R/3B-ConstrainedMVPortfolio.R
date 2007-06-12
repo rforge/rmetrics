@@ -71,8 +71,8 @@ function(data, spec, constraints)
     if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
     
     # Get Specifications:
-    mu = getStatistics(data)$mu
-    Sigma = getStatistics(data)$Sigma
+    mu = getMu(data) 
+    Sigma = getSigma(data)
     nAssets = getNumberOfAssets(data)
     
     # Get Alpha:
@@ -89,7 +89,7 @@ function(data, spec, constraints)
     
     # Compute Target Risks:
     covTargetRisk = sqrt( as.numeric( weights %*% Sigma %*% weights ) )
-    x = data@series$data@Data %*% weights
+    x = getSeries(data)@Data %*% weights
     VaR = quantile(x, targetAlpha, type = 1)
     CVaR = VaR - 0.5*mean(((VaR-x) + abs(VaR-x))) / targetAlpha
     targetRisk = c(covTargetRisk, CVaR, VaR)
@@ -133,13 +133,15 @@ function(data, spec, constraints)
     
     # FUNCTION:
      
-    # Get Statistics:
+    # Create Data Object:
     if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
-    mu = getStatistics(data)$mu
-    Sigma = getStatistics(data)$Sigma
+    
+    # Get Specifications:
+    mu = getMu(data) 
+    Sigma = getSigma(data)
     nAssets = getNumberOfAssets(data)
-
-    # Get or Set Target Alpha:
+    
+    # Get Alpha:
     targetAlpha = getTargetAlpha(spec)
     
     # Calling Solver:
@@ -158,7 +160,7 @@ function(data, spec, constraints)
     
     # Get Target Risk:
     targetReturn = as.numeric(mu %*% weights)
-    names(targetReturn) <- spec@model$estimator[1]
+    names(targetReturn) <- getEstimator(spec)[1]
     
     # Compute Target Risks:
     covTargetRisk = sqrt( as.numeric( weights %*% Sigma %*% weights ) )
@@ -173,7 +175,7 @@ function(data, spec, constraints)
     new("fPORTFOLIO", 
         call = match.call(),
         data = list(data = data),
-        specification = list(spec = spec),
+        spec = list(spec = spec),
         constraints = as.character(constraints),
         portfolio = list(
             weights = weights,
@@ -209,10 +211,12 @@ function(data, spec, constraints)
     
     # FUNCTION:
     
-    # Get Statistics:
+    # Create Data Object:
     if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
-    mu = getStatistics(data)$mu
-    Sigma = getStatistics(data)$Sigma
+    
+    # Get Specifications:
+    mu = getMu(data) 
+    Sigma = getSigma(data)
     nAssets = getNumberOfAssets(data)
 
     # Get or Set Target Alpha:
@@ -245,11 +249,7 @@ function(data, spec, constraints)
 
     # Get Target Return:     
     targetReturn = spec@portfolio$targetReturn = as.numeric(cml$maximum)  
-    names(targetReturn) <- spec@model$estimator[1]
-    
-    # Get Target Risk:
-    # targetRisk = as.numeric(attr(cml$objective, "targetRisk"))
-    # names(targetRisk) <- spec@model$estimator[2]
+    names(targetReturn) <- getEstimator(spec)[1]
     
     # Compute Target Risks:
     covTargetRisk = as.numeric(attr(cml$objective, "targetRisk"))
@@ -263,8 +263,8 @@ function(data, spec, constraints)
     # Return Value:
     new("fPORTFOLIO", 
         call = match.call(),
-        data = data,
-        specification = list(spec = spec),
+        data = list(data = data),
+        spec = list(spec = spec),
         constraints = as.character(constraints),
         portfolio = list(
             weights = weights,
@@ -388,8 +388,8 @@ function(data, spec, constraints)
     # Return Value:
     new("fPORTFOLIO", 
         call = match.call(),
-        data = data,
-        specification = list(spec = spec),
+        data = list(data = data),
+        spec = list(spec = spec),
         constraints = as.character(constraints),
         portfolio = list(
             weights = weights,
@@ -483,8 +483,8 @@ function(data, spec, constraints)
     # Return Value:
     new("fPORTFOLIO", 
         call = match.call(),
-        data = data,
-        specification = list(spec = spec),
+        data = list(data = data),
+        spec = list(spec = spec),
         constraints = as.character(constraints),
         portfolio = list(
             weights = weights,  
