@@ -44,7 +44,7 @@
 #  setNFrontierPoints<-          Sets number of frontier points
 # FUNCTION:                     SOLVER SLOT:
 #  setSolver<-                   Sets name of desired solver
-#  setTrace<-                    Sets name of desired solver
+#  setTrace<-                    Sets solver's trace flag
 ################################################################################
 
 
@@ -69,7 +69,7 @@ portfolio = list(
     weights = NULL, 
     targetReturn = NULL, 
     targetRisk = NULL,
-    targetAlpha = NULL, 
+    targetAlpha = 0.05, 
     riskFreeRate = 0, 
     nFrontierPoints = 50),
 solver = list(
@@ -89,14 +89,14 @@ solver = list(
     model.type = c("MV", "CVaR")
     model.estimator.mean = "mean"
     model.estimator.cov = c("cov", "mcd", "shrink")
-    solver.type = c("quadprog", "Rdonlp2", "lpSolve")
+    solver.solver = c("quadprog", "Rdonlp2", "lpSolve")
     solver.trace = FALSE
     
     # Check Arguments:
     stopifnot(model$type %in% model.type)
     stopifnot(model$estimator[1] %in% model.estimator.mean)
     stopifnot(model$estimator[2] %in% model.estimator.cov)
-    stopifnot(solver$type %in% solver.type)
+    stopifnot(solver$solver %in% solver.solver)
     
     # Model Slot:
     Model = list(
@@ -111,9 +111,7 @@ solver = list(
         targetRisk = NULL,
         targetAlpha = NULL, 
         riskFreeRate = 0, 
-        nFrontierPoints = 100, 
-        returnRange = NULL, 
-        riskRange = NULL)
+        nFrontierPoints = 50)
     Portfolio[(Names <- names(portfolio))] <- portfolio
     
     # Check Portfolio - weights, targetReturn, targetRisk:
@@ -125,7 +123,7 @@ solver = list(
   
     # Solver Slot:
     Solver = list(
-        type = solver$type[1], 
+        solver = solver$solver[1], 
         trace = solver$trace)
     
     # Return Value:
@@ -158,10 +156,6 @@ function(object)
     cat("\nCovariance Estimator:\n ")
     cat(object@model$estimator, "\n")
     
-    # Solver:
-    cat("\nSolver:\n ")
-    cat(object@solver$type[1], "\n")
-    
     # Portfolio:
     if (!is.null(object@portfolio$weights)) {
         cat("\nPortfolio Weights:\n")
@@ -183,14 +177,10 @@ function(object)
         cat("\nNumber of Frontier Points:\n ")
         cat(object@portfolio$nFrontierPoints, "\n")
     }
-    if (!is.null(object@portfolio$returnRange)) {
-        cat("\nTarget Return Range:\n")
-        print(object@portfolio$returnRange) 
-    }
-    if (!is.null(object@portfolio$riskRange)) {
-        cat("\nTarget Risk Range:\n")
-        print(object@portfolio$riskRange)
-    }
+    
+    # Solver:
+    cat("\nSolver:\n ")
+    cat(object@solver$solver[1], "\n")
         
     # Return Value: 
     invisible(object)
@@ -276,7 +266,7 @@ function(spec, value)
 }
 
 
-# ------------------------------------------------------------------------------
+################################################################################
 
 
 "setWeights<-" = 
@@ -400,52 +390,6 @@ function(spec, value)
 }
 
 
-# ------------------------------------------------------------------------------
-
-
-"setReturnRange<-" = 
-function(spec = portfolioSpec(), value)
-{   # A function implemented by Rmetrics
-
-    # Description:                                    
-    #   Sets range of target returns
-    
-    # FUNCTION:
-    
-    # Check Validity:
-    #   ...
-    
-    # Return Range ?
-    spec@portfolio$returnRange = value
-    
-    # Return Value:
-    spec
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-"setRiskRange<-" = 
-function(spec = portfolioSpec(), value)
-{   # A function implemented by Rmetrics
-
-    # Description:                                      
-    #   Sets range of target risks
-    
-    # FUNCTION:
-    
-    # Check Validity:
-    #   ...
-    
-    # Risk Range ?
-    spec@portfolio$riskRange = value
-    
-    # Return Value:
-    spec
-}
-
-
 ################################################################################
  
 
@@ -461,108 +405,28 @@ function(spec = portfolioSpec(), value)
     stopifnot(value %in% validSolvers)
     
     # Set Solver:
-    spec@solver$type = value
+    spec@solver$solver = value
     
     # Return Value:
     spec
 }
 
 
-################################################################################
-
-
-portfolioStatistics = 
-function(data, spec = portfolioSpec())
-{   # A function implemented by Rmetrics
-
-    # Description:
-    #   Estimates mu and Sigma Statistics
-    
-    # FUNCTION:
-    
-    # Check Data: 
-    stopifnot(!is.list(data))
-    
-    # Convert data to matrix object:
-    series = as.matrix(data)
-    
-    # Select Estimator:
-    meanEstimator = spec@model$estimator[1]
-    covEstimator = spec@model$estimator[2]
-    
-    # Robust Estimates:
-    if (meanEstimator == "mcd" | covEstimator == "mcd") {
-        # require(MASS)
-        estimate = MASS::cov.mcd(series)
-        mu = estimate$center
-        Sigma = estimate$cov
-    } else if (meanEstimator == "mve" | covEstimator == "mve") {
-        # require(MASS)
-        estimate = MASS::cov.mve(series)
-        mu = estimate$center
-        Sigma = estimate$cov
-    } else if(meanEstimator == "lpm" | covEstimator == "lpm") {
-        stopifnot(!is.null(spec@model$params$tau))
-        stopifnot(!is.null(spec@model$params$a))
-        estimate = assetsLPM(x, 
-            tau = spec@model$params$tau, a = spec@model$params$a)
-        mu = estimate$mu
-        Sigma = estimate$Sigma
-    } else if(meanEstimator == "shrink" | covEstimator == "shrink") {
-        estimate = assetsMeanCov(series, method = "shrink")
-        mu = estimate$mu
-        Sigma = estimate$Sigma
-    } 
-    # Classical Estimates:
-    if (meanEstimator == "mean") {
-        mu = apply(series, MARGIN = 2, FUN = mean)
-    }
-    if (meanEstimator == "median") {
-        mu = apply(series, MARGIN = 2, FUN = median)
-    }
-    if (covEstimator == "cov") {
-        Sigma = cov(series)
-    }
-    
-    # Statistics:
-    statistics = list(mu = mu, Sigma = Sigma)
-    attr(statistics, "estimator") = spec@model$estimator
-    
-    # Return Value:
-    statistics
-}
-
-
 # ------------------------------------------------------------------------------
 
 
-portfolioData =
-function(data, spec = portfolioSpec())
+"setTrace<-" <- function(spec, value)
 {   # A function implemented by Rmetrics
 
     # Description:
-    #   Creates portfolio data list
     
     # FUNCTION:
     
-    # Check Data: 
-    if (is.list(data)) {
-        # In this case no time series is given, only mean and covariance ...
-        series = NA
-        statistics = list(mu = data$mu, Sigma = data$Sigma)
-    } else {
-        # Take care of time ordering ...
-        if (is.timeSeries(data)) data = sort(data)
-        series = data
-        statistics = portfolioStatistics(data, spec)
-    }
-    
-    # Portfolio data list:
-    data = list(series = series, statistics = statistics) 
-    class(data) <- c("list", "fPFOLIODATA") 
+    # Set Trace:
+    spec@solver$trace = value
     
     # Return Value:
-    data
+    spec
 }
 
 

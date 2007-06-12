@@ -65,6 +65,7 @@ function(data, spec = portfolioSpec())
     # Check and Sort Data: 
     stopifnot(class(data) == "timeSeries") 
     data = sort(data)
+    nAssets = dim(data)[2]
         
     # Statistics:
     statistics = portfolioStatistics(data, spec)
@@ -74,7 +75,7 @@ function(data, spec = portfolioSpec())
      
     # Return Value:
     new("fPFOLIODATA", 
-        series = list(data = data),
+        series = list(data = data, nAssets = nAssets),
         statistics = statistics,
         tailrisk = tailrisk)  
 }
@@ -96,7 +97,8 @@ function(object)
     # FUNCTION:
     
     # Series:
-    # NYI
+    cat("\nSeries Data:\n\n")
+    print(object@series$data)
     
     # Statistics:
     cat("\nStatistics:\n\n")

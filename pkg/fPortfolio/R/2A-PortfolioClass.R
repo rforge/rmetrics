@@ -51,7 +51,7 @@ setClass("fPORTFOLIO",
     representation(
         call = "call",
         data = "list",
-        specification = "list",
+        spec = "list",
         constraints = "character",
         portfolio = "list",
         title = "character",
