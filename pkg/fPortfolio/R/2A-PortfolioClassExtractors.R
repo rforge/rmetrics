@@ -38,7 +38,7 @@
 #   getTargetRisk
 #   getTargetAlpha
 #   getStatus
-# FUNCTION:
+# FUNCTION:                     GENERAL EXTRACTORS:
 #  getFrontier
 #  getRiskBudgets
 #  getTailRiskBudgets

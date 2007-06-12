@@ -29,13 +29,13 @@
 
 ################################################################################
 # FUNCTION:                     PORTFOLIO S4 EXTRACTORS FROM DATA SLOT:
-#  getData
+#  getData                        Extracts data slot
 #   getSeries                    Extracts assets series data 
 #   getNumberOfAssets            Extracts number of assets from statistics
-#  getStatistics                 Extracts assets statistics, mean and covariance
-#   getMu
-#   getSigma
-#  getTailrisk                   Extracts tail risk
+#  getStatistics                 Extracts statistics slot
+#   getMu                         Extracs mean  mu from statistics
+#   getSigma                      Extracs covariance Sigma from statistics
+#  getTailrisk                   Extracts tail risk slot
 ################################################################################
 
 
