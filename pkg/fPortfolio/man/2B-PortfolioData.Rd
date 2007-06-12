@@ -2,8 +2,15 @@
 
 \alias{PortfolioData}
 
-\alias{portfolioStatistics}
+\alias{fPFOLIODATA}
+\alias{fPFOLIODATA-class}
+
+\alias{show.fPFOLIODATA}
+\alias{show,fPFOLIODATA-method}
+
 \alias{portfolioData}
+
+\alias{portfolioStatistics}
 
 
 \title{Portfolio Data Handling}
@@ -25,8 +32,11 @@
     
 
 \usage{
-portfolioStatistics(data, spec = portfolioSpec())
 portfolioData(data, spec = portfolioSpec())
+
+portfolioStatistics(data, spec = portfolioSpec())
+
+show.fPFOLIODATA(object)
 }
 
 

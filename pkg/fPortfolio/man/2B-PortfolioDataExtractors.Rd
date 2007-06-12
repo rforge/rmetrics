@@ -2,15 +2,15 @@
 
 \alias{PortfolioDataExtractors}
 
-\alias{getData}
-\alias{getSeries}
-\alias{getNumberOfAssets}
+\alias{getData.fPFOLIODATA}
+\alias{getSeries.fPFOLIODATA}
+\alias{getNumberOfAssets.fPFOLIODATA}
 
-\alias{getStatistics}
-\alias{getMu}
-\alias{getSigma}
+\alias{getStatistics.fPFOLIODATA}
+\alias{getMu.fPFOLIODATA}
+\alias{getSigma.fPFOLIODATA}
 
-\alias{getTailrisk}
+\alias{getTailrisk.fPFOLIODATA}
 
 
 \title{Portfolio Data Extractors}

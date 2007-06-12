@@ -4,7 +4,6 @@
 
 \alias{fPORTFOLIO}
 \alias{fPORTFOLIO-class}
-\alias{fPortfolio}
 
 \alias{show.fPORTFOLIO}
 \alias{show,fPORTFOLIO-method}

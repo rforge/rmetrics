@@ -3,19 +3,19 @@
 \alias{PortfolioSpecExtractors}
 
 
-\alias{getType}         
-\alias{getEstimator}       
-\alias{getParams}       
+\alias{getType.fPFOLIOSPEC}         
+\alias{getEstimator.fPFOLIOSPEC}       
+\alias{getParams.fPFOLIOSPEC}       
          
-\alias{getWeights}         
-\alias{getTargetReturn}    
-\alias{getTargetRisk}   
-\alias{getTargetAlpha}     
-\alias{getRiskFreeRate}    
-\alias{getNFrontierPoints} 
+\alias{getWeights.fPFOLIOSPEC}         
+\alias{getTargetReturn.fPFOLIOSPEC}    
+\alias{getTargetRisk.fPFOLIOSPEC}   
+\alias{getTargetAlpha.fPFOLIOSPEC}     
+\alias{getRiskFreeRate.fPFOLIOSPEC}    
+\alias{getNFrontierPoints.fPFOLIOSPEC} 
          
-\alias{getSolver}         
-\alias{getTrace}           
+\alias{getSolver.fPFOLIOSPEC}         
+\alias{getTrace.fPFOLIOSPEC}           
 
 
 \title{Portfolio Specification Extractors}
@@ -47,19 +47,19 @@
     
 
 \usage{
-\method{getType}{fPFOLIODATA}(object)
-\method{getEstimator}{fPFOLIODATA}(object)
-\method{getParams}{fPFOLIODATA}(object)
+\method{getType}{fPFOLIOSPEC}(object)
+\method{getEstimator}{fPFOLIOSPEC}(object)
+\method{getParams}{fPFOLIOSPEC}(object)
 
-\method{getWeights}{fPFOLIODATA}(object)
-\method{getTargetReturn}{fPFOLIODATA}(object)
-\method{getTargetRisk}{fPFOLIODATA}(object)
-\method{getTargetAlpha}{fPFOLIODATA}(object)
-\method{getRiskFreeRate}{fPFOLIODATA}(object)
-\method{getNFrontierPoints}{fPFOLIODATA}(object)
+\method{getWeights}{fPFOLIOSPEC}(object)
+\method{getTargetReturn}{fPFOLIOSPEC}(object)
+\method{getTargetRisk}{fPFOLIOSPEC}(object)
+\method{getTargetAlpha}{fPFOLIOSPEC}(object)
+\method{getRiskFreeRate}{fPFOLIOSPEC}(object)
+\method{getNFrontierPoints}{fPFOLIOSPEC}(object)
 
-\method{getSolver}{fPFOLIODATA}(object)
-\method{getTrace}{fPFOLIODATA}(object)
+\method{getSolver}{fPFOLIOSPEC}(object)
+\method{getTrace}{fPFOLIOSPEC}(object)
 }
 
 

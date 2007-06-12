@@ -2,19 +2,19 @@
 
 \alias{PortfolioClassExtractors}
 
-\alias{getData}
-\alias{getSpec}
-\alias{getConstraints}
-\alias{getPortfolio}
-\alias{getWeights}
-\alias{getTargetReturn}
-\alias{getTargetRisk}
-\alias{getTargetAlpha}
-\alias{getStatus}
+\alias{getData.fPORTFOLIO}
+\alias{getSpec.fPORTFOLIO}
+\alias{getConstraints.fPORTFOLIO}
+\alias{getPortfolio.fPORTFOLIO}
+\alias{getWeights.fPORTFOLIO}
+\alias{getTargetReturn.fPORTFOLIO}
+\alias{getTargetRisk.fPORTFOLIO}
+\alias{getTargetAlpha.fPORTFOLIO}
+\alias{getStatus.fPORTFOLIO}
 
-\alias{getFrontier}
-\alias{getRiskBudgets}
-\alias{getTailRiskBudgets}
+\alias{getFrontier.fPORTFOLIO}
+\alias{getRiskBudgets.fPORTFOLIO}
+\alias{getTailRiskBudgets.fPORTFOLIO}
 
 
 \title{Portfolio Class Extractors}
