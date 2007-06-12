@@ -47,6 +47,11 @@ show.fPFOLIODATA(object)
         a time series or a named list, containing either a series of returns or
         named entries 'mu' and 'Sigma' being mean and covariance matrix.
         }
+    \item{object}{
+        [show] - \cr
+        an object of class \code{fPFOLIODATA} as returned by the function
+        \code{portfolioData}.
+        }
     \item{spec}{
         an S4 object of class \code{fPFOLIOSPEC}, the specification to be 
         modified, by default the default of the function \code{portfolioSpec()}.
@@ -119,7 +124,6 @@ show.fPFOLIODATA(object)
    \code{\link{PortfolioSpecification}},
    \code{\link{PortfolioConstraints}},
    \code{\link{fPORTFOLIO}},
-   \code{\link{PortfolioExtractors}},
    \code{\link{PortfolioPlots}}.
 
 }

@@ -68,7 +68,7 @@ efficientPortfolio(data, spec = portfolioSpec(), constraints = NULL)
 
 show.fPORTFOLIO(object)
 \method{plot}{fPORTFOLIO}(x, which = "ask", control = list(), \dots)
-\method{summary}{fPORTFOLIO}(object)
+\method{summary}{fPORTFOLIO}(object, \dots)
 
 weightsSlider(object, control = list(), \dots)     
 frontierSlider(object, control = list(), \dots)
@@ -444,7 +444,6 @@ frontierSlider(object, control = list(), \dots)
    \code{\link{PortfolioData}},
    \code{\link{PortfolioSpecification}},
    \code{\link{PortfolioConstraints}},
-   \code{\link{PortfolioExtractors}},
    \code{\link{PortfolioPlots}}.
 
 }
@@ -458,6 +457,7 @@ frontierSlider(object, control = list(), \dots)
 
 
 \examples{
+\dontrun{
 ## minvariancePortfolio -
    # Load Data and Convert to timeSeries Object:
    Data = as.timeSeries(data(smallcap.ts))
@@ -489,6 +489,7 @@ frontierSlider(object, control = list(), \dots)
 ## weightsSlider -
    # Try Weights Slider:
    # weightsSlider(frontier)
+}
 }
 
 

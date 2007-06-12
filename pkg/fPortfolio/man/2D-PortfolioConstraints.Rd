@@ -161,7 +161,6 @@ portfolioConstraints(data, spec = portfolioSpec(), constraints = NULL)
    \code{\link{PortfolioData}},
    \code{\link{PortfolioSpecification}},
    \code{\link{fPORTFOLIO}},
-   \code{\link{PortfolioExtractors}},\cr
    \code{\link{PortfolioPlots}}.
 
 }

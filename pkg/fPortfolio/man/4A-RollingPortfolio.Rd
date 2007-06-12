@@ -207,8 +207,7 @@ portfolioBacktesting(formula, data, spec = portfolioSpec(), constraints = NULL,
    \code{\link{PortfolioClass}},
    \code{\link{PortfolioData}},
    \code{\link{PortfolioSpecification}},
-   \code{\link{PortfolioConstraints}},
-   \code{\link{PortfolioExtractors}}.
+   \code{\link{PortfolioConstraints}}.
 
 }
 

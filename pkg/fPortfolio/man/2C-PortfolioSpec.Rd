@@ -60,9 +60,8 @@
 \usage{
 portfolioSpec(model = list(type = c("MV", "CVaR"), estimator = c("mean", "cov"), 
     params = list()), portfolio = list(weights = NULL, targetReturn = NULL, 
-    targetAlpha = NULL, targetRisk = NULL, riskFreeRate = 0, nFrontierPoints = 50, 
-    returnRange = NULL, riskRange = NULL), solver = list(type = c("RQuadprog", 
-    "RDonlp2", "RlpSolve"), trace = FALSE))
+    targetRisk = NULL, targetAlpha = 0.05, riskFreeRate = 0, nFrontierPoints = 50),
+    solver = list(solver = c("quadprog", "Rdonlp2", "lpSolve"), trace = FALSE))
 show.fPFOLIOSPEC(object)
 
 setType(spec) <- value
@@ -340,7 +339,6 @@ setSolver(spec) <- value
    \code{\link{PortfolioData}},
    \code{\link{PortfolioConstraints}},
    \code{\link{fPORTFOLIO}},
-   \code{\link{PortfolioExtractors}},\cr
    \code{\link{PortfolioPlots}}.
 
 }

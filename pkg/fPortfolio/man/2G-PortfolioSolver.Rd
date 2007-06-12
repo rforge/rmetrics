@@ -62,8 +62,7 @@ solveRlpSolve(data, spec, constraints)
    \code{\link{PortfolioData}},
    \code{\link{PortfolioSpecification}},
    \code{\link{PortfolioConstraints}},
-   \code{\link{fPORTFOLIO}},\cr
-   \code{\link{PortfolioExtractors}}.
+   \code{\link{fPORTFOLIO}}.
 
 }
 
