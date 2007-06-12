@@ -154,7 +154,7 @@ frontierSlider(object, control = list(), \dots)
     constraints, title and description. The data can be either the mean vector
     and the covariance matrix in a equivalently named list or a time series
     table. The specifications are done by the \code{portfolioSpec} function,
-    see \code{\link{PortfolioSpec}. The constrains have the following
+    see \code{\link{PortfolioSpec}}. The constrains have the following
     syntax. For bound constraints: \code{"minW[asset]=percentage"} and for
     sector constraints \code{"maxsumW[assets]=percentage"}. The function chooses
     from this information the right algorithm to calculate the efficient frontier.
@@ -163,10 +163,12 @@ frontierSlider(object, control = list(), \dots)
     see Value for further details.
     \cr
     
+    
     \bold{Individual Portfolios:}
     \cr\cr   
     Individual portfolio functions allow a direct computation of portfolios 
     with specific properties. The functions are:
+    
     
     \tabular{ll}{
     \code{feasiblePortfolio} \tab a feasible portfolio, \cr
@@ -186,6 +188,7 @@ frontierSlider(object, control = list(), \dots)
     and in this case the function \code{feasiblePortfolio} assumes
     equal weights. To set user specified weights in the specification 
     structure, use the function \code{setWeights}. 
+    
     
     \bold{Portfolio Sliders:}
     \cr\cr   
