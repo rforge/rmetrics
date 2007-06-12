@@ -31,7 +31,7 @@
 
 
 getConstraints =
-function(object, ...)
+function(object)
 {   # A function implemented by Rmetrics
 
     UseMethod("getConstraints")
@@ -42,7 +42,7 @@ function(object, ...)
 
 
 getData =
-function(object, ...)
+function(object)
 {   # A function implemented by Rmetrics
 
     UseMethod("getData")
@@ -53,7 +53,7 @@ function(object, ...)
 
 
 getEstimator =
-function(object, ...)
+function(object)
 {   # A function implemented by Rmetrics
 
     UseMethod("getEstimator")
@@ -75,7 +75,7 @@ function(object, ...)
 
 
 getMu =
-function(object, ...)
+function(object)
 {   # A function implemented by Rmetrics
 
     UseMethod("getMu")
@@ -86,7 +86,7 @@ function(object, ...)
     
     
 getNumberOfAssets =
-function(object, ...)
+function(object)
 {   # A function implemented by Rmetrics
 
     UseMethod("getNAssets")
@@ -97,7 +97,7 @@ function(object, ...)
 
 
 getNFrontierPoints =
-function(object, ...)
+function(object)
 {   # A function implemented by Rmetrics
 
     UseMethod("getNFrontierPoints")
@@ -108,7 +108,7 @@ function(object, ...)
 
 
 getPortfolio =
-function(object, ...)
+function(object)
 {   # A function implemented by Rmetrics
 
     UseMethod("getPortfolio")
@@ -119,7 +119,7 @@ function(object, ...)
 
 
 getParams =
-function(object, ...)
+function(object)
 {   # A function implemented by Rmetrics
 
     UseMethod("getParams")
@@ -130,7 +130,7 @@ function(object, ...)
 
 
 getRiskBudgets = 
-function(object, ...) 
+function(object) 
 {   # A function implemented by Rmetrics
 
     UseMethod("getRiskBudgets")
@@ -141,7 +141,7 @@ function(object, ...)
 
 
 getRiskFreeRate =
-function(object, ...)
+function(object)
 {   # A function implemented by Rmetrics
 
     UseMethod("getRiskFreeRate")
@@ -152,7 +152,7 @@ function(object, ...)
     
     
 getSeries =
-function(object, ...)
+function(object)
 {   # A function implemented by Rmetrics
 
     UseMethod("getSeries") 
@@ -163,7 +163,7 @@ function(object, ...)
 
 
 getSigma =
-function(object, ...)
+function(object)
 {   # A function implemented by Rmetrics
 
     UseMethod("getSigma")
@@ -174,7 +174,7 @@ function(object, ...)
 
 
 getSolver =
-function(object, ...)
+function(object)
 {   # A function implemented by Rmetrics
 
     UseMethod("getSolver")
@@ -184,8 +184,8 @@ function(object, ...)
 # ------------------------------------------------------------------------------
 
 
-getSpecification =
-function(object, ...)
+getSpec =
+function(object)
 {   # A function implemented by Rmetrics
 
     UseMethod("getSpecification")
@@ -196,7 +196,7 @@ function(object, ...)
 
 
 getStatistics =
-function(object, ...)
+function(object)
 {   # A function implemented by Rmetrics
 
     UseMethod("getStatistics")
@@ -207,7 +207,7 @@ function(object, ...)
 
 
 getTargetAlpha =
-function(object, ...)
+function(object)
 {   # A function implemented by Rmetrics
 
     UseMethod("getTargetAlpha")
@@ -218,7 +218,7 @@ function(object, ...)
 
 
 getTailRisk =
-function(object, ...)
+function(object)
 {   # A function implemented by Rmetrics
 
     UseMethod("getTailRisk")
@@ -229,7 +229,7 @@ function(object, ...)
 
 
 getTailRiskBudgets = 
-function(object, ...) 
+function(object) 
 {   # A function implemented by Rmetrics
 
     UseMethod("getTailRiskBudgets")
@@ -240,7 +240,7 @@ function(object, ...)
 
 
 getTargetReturn =
-function(object, ...)
+function(object)
 {   # A function implemented by Rmetrics
 
     UseMethod("getTargetReturn")
@@ -251,7 +251,7 @@ function(object, ...)
 
 
 getTargetRisk =
-function(object, ...)
+function(object)
 {   # A function implemented by Rmetrics
 
     UseMethod("getTargetRisk")
@@ -262,7 +262,7 @@ function(object, ...)
 
 
 getTrace =
-function(object, ...)
+function(object)
 {   # A function implemented by Rmetrics
 
     UseMethod("getTrace")
@@ -273,7 +273,7 @@ function(object, ...)
 
 
 getType =
-function(object, ...)
+function(object)
 {   # A function implemented by Rmetrics
 
     UseMethod("getType")
@@ -284,7 +284,7 @@ function(object, ...)
 
 
 getWeights =
-function(object, ...)
+function(object)
 {   # A function implemented by Rmetrics
 
     UseMethod("getWeights")

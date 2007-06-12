@@ -30,7 +30,7 @@
 ################################################################################
 # FUNCTION:                     PORTFOLIO S4 EXTRACTORS FROM PORTFOLIO:
 #  getData
-#  getSpecification
+#  getSpec 
 #  getConstraints
 #  getPortfolio
 #   getWeights
@@ -85,7 +85,7 @@ function(object)
 # ------------------------------------------------------------------------------
 
 
-getSpecification.fPORTFOLIO =
+getSpec.fPORTFOLIO =
 function(object)
 {   # A function implemented by Rmetrics
 
