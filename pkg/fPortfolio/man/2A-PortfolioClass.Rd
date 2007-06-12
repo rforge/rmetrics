@@ -109,7 +109,7 @@ frontierSlider(object, control = list(), \dots)
         }
     \item{spec}{
         an S4 object of class \code{fPFOLIOSPEC}, containing slots call, model,
-        portfolio, title, description, see \code{\link{PortfolioSpecification}}
+        portfolio, title, description, see \code{\link{PortfolioSpec}}
         for a full slot description.
         }
     \item{title}{
@@ -154,7 +154,7 @@ frontierSlider(object, control = list(), \dots)
     constraints, title and description. The data can be either the mean vector
     and the covariance matrix in a equivalently named list or a time series
     table. The specifications are done by the \code{portfolioSpec} function,
-    see \code{\link{PortfolioSpecification}}. The constrains have the following
+    see \code{\link{PortfolioSpec}. The constrains have the following
     syntax. For bound constraints: \code{"minW[asset]=percentage"} and for
     sector constraints \code{"maxsumW[assets]=percentage"}. The function chooses
     from this information the right algorithm to calculate the efficient frontier.
@@ -248,7 +248,7 @@ frontierSlider(object, control = list(), \dots)
     \item{@specification}{
         a list with one named element \code{spec} which represents an object 
         of class \code{fPFOLIOSPEC}, including all information about
-        the portfolio specifications, see \code{\link{PortfolioSpecification}}
+        the portfolio specifications, see \code{\link{PortfolioSpec}}
         for further details.
         }
     \item{@title}{
@@ -442,7 +442,7 @@ frontierSlider(object, control = list(), \dots)
 \seealso{
 
    \code{\link{PortfolioData}},
-   \code{\link{PortfolioSpecification}},
+   \code{\link{PortfolioSpec}},
    \code{\link{PortfolioConstraints}},
    \code{\link{PortfolioPlots}}.
 

@@ -576,7 +576,7 @@ function(x, which = "ask", control = list(), ...)
 
 
 summary.fPORTFOLIO =
-function(object)
+function(object, ...)
 {   # A function implemented by Rmetrics
 
     # Description:

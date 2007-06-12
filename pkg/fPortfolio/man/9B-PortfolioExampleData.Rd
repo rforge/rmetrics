@@ -114,7 +114,7 @@ Scherer, M., Martin, R.D. (2005);\cr
 
 \seealso{
 
-   \code{\link{PortfolioSpecification}},
+   \code{\link{PortfolioSpec}},
    \code{\link{PortfolioConstraints}},
    \code{\link{fPORTFOLIO}},
    \code{\link{PortfolioPlots}}.

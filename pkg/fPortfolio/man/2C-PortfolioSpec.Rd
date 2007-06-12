@@ -1,6 +1,6 @@
-\name{PortfolioSpecification}
+\name{PortfolioSpec}
 
-\alias{PortfolioSpecification}
+\alias{PortfolioSpec}
 
 \alias{fPFOLIOSPEC}
 \alias{fPFOLIOSPEC-class}
@@ -20,10 +20,9 @@
 \alias{setTargetAlpha<-}
 \alias{setRiskFreeRate<-}
 \alias{setNFrontierPoints<-}
-\alias{setReturnRange<-}
-\alias{setRiskRange<-}
 
 \alias{setSolver<-}
+\alias{setTrace<-}
 
 
 \title{Specification of Portfolios}
@@ -49,8 +48,6 @@
     \code{setTargetAlpha} \tab Sets CVaR target alpha value, \cr
     \code{setRiskFreeRate} \tab Sets risk-free rate value, \cr
     \code{setNFrontierPoints} \tab Sets number of frontier points, \cr
-    \code{setReturnRange} \tab Sets range of target returns, \cr
-    \code{setRiskRange} \tab Sets range of target risks, \cr
     \code{portfolioStatistics} \tab Estimates 'mu' and 'Sigma' statistics, \cr
     \code{print|show} \tab Print method for \code{fPFOLIOSPEC} objects. }
     
@@ -73,10 +70,9 @@ setTargetReturn(spec) <- value
 setTargetAlpha(spec) <- value
 setRiskFreeRate(spec) <- value
 setNFrontierPoints(spec) <- value
-setReturnRange(spec) <- value
-setRiskRange(spec) <- value
 
 setSolver(spec) <- value
+setTrace(spec) <- value
 }
 
 
@@ -112,24 +108,13 @@ setSolver(spec) <- value
     \item{portfolio}{
         [portfolioSpec] - \cr
         a list, containing different arguments: weights, targetReturn,
-        riskFreeRate, nFrontierPoints, returnRange, riskRange. See these
+        riskFreeRate, nFrontierPoints. See these
         arguments for further explanation.
-        }
-    \item{returnRange}{
-        [setReturnRange] - \cr
-        a numerical vector, setting return range for calculation of efficient
-        frontier, by default NULL, i.e. range of returns from input data is 
-        taken.
         }
     \item{riskFreeRate}{
         [setRiskFreeRate] - \cr
         a integer value, determining the percentage of the yearly return for a
         risk free asset.
-        }
-    \item{riskRange}{
-        [setRiskRange] - \cr
-        a numerical vector, setting risk range for calculation of efficient
-        frontier, by default NULL, i.e. range of risk from input data is taken.
         }
     \item{solver}{
         a character string denoting the type of the solver to be used.
@@ -203,7 +188,7 @@ setSolver(spec) <- value
         \item{@portfolio}{
             a list, settings portfolio parameters including predefined
             weights, target return, risk free rate, number of frontier
-            points, and the return and risk range:
+            points:
             \cr 
             \code{weights=NULL} a numeric vector specifying the portfolio 
                 weights.
@@ -220,12 +205,6 @@ setSolver(spec) <- value
                 \cr  
             \code{nFrontierPoints=50} a numeric value determining the number
                 of points on the efficient frontier.
-                \cr
-            \code{returnRange=NULL} a numeric vector of length two, giving 
-                the smallest and largest values for the range of returns.
-                \cr
-            \code{riskRange=NULL} a numeric vector of length two, giving the
-                smallest and largest values for the range of risks.
             }
         \item{@solver}{
             a list, setting the type of solver to be used for portfolio
@@ -266,7 +245,7 @@ setSolver(spec) <- value
     \bold{Portfolio:}
     \cr\cr
     This slot sets portfolio parameters including weights, target return,
-    risk free rate, number of frontier points, and target range and return.
+    risk free rate, and number of frontier points.
     Note, only one of \code{portfolio$weights} or \code{targetReturn} can
     be set exclusively. If one of both is set, the other will be set to
     \code{NULL}.

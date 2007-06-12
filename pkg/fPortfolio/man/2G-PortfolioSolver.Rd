@@ -44,7 +44,7 @@ solveRlpSolve(data, spec, constraints)
         }
     \item{spec}{
         an S4 object of class \code{fPFOLIOSPEC}, containing slots call, model,
-        portfolio, title, description, see \code{\link{PortfolioSpecification}}
+        portfolio, title, description, see \code{\link{PortfolioSpec}}
         for a full slot description.
         }
     \item{constraints}{
@@ -60,7 +60,7 @@ solveRlpSolve(data, spec, constraints)
 \seealso{
 
    \code{\link{PortfolioData}},
-   \code{\link{PortfolioSpecification}},
+   \code{\link{PortfolioSpec}},
    \code{\link{PortfolioConstraints}},
    \code{\link{fPORTFOLIO}}.
 

@@ -124,7 +124,7 @@ portfolioBacktesting(formula, data, spec = portfolioSpec(), constraints = NULL,
         [*Portfolio][*Frontier] - \cr
         an S4 object of class \code{fPFOLIOSPEC}, containing slots call, 
         model, portfolio, title, description, 
-        see \code{\link{PortfolioSpecification}}
+        see \code{\link{PortfolioSpec}}
         for a full slot description.
         }
     \item{title}{
@@ -206,7 +206,7 @@ portfolioBacktesting(formula, data, spec = portfolioSpec(), constraints = NULL,
 
    \code{\link{PortfolioClass}},
    \code{\link{PortfolioData}},
-   \code{\link{PortfolioSpecification}},
+   \code{\link{PortfolioSpec}},
    \code{\link{PortfolioConstraints}}.
 
 }

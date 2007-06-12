@@ -148,10 +148,9 @@ covEllipsesPlot(x = list(), \dots)
 \seealso{
 
    \code{\link{PortfolioData}},
-   \code{\link{PortfolioSpecification}},
+   \code{\link{PortfolioSpec}},
    \code{\link{PortfolioConstraints}},
-   \code{\link{fPORTFOLIO}},\cr
-   \code{\link{PortfolioExtractors}}.
+   \code{\link{fPORTFOLIO}}.
 
 }
 
@@ -164,6 +163,7 @@ covEllipsesPlot(x = list(), \dots)
 
 
 \examples{
+\dontrun{
 ## portfolioFrontier -
    # Load Data:
    Data = as.timeSeries(data(smallcap.ts))
@@ -186,6 +186,7 @@ covEllipsesPlot(x = list(), \dots)
 ## attributesPlot -
    # View Attributes Plot:
    attributesPlot(frontier, legend = TRUE)
+}
 }
 
 
