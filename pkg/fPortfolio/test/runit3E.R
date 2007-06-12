@@ -28,9 +28,6 @@
 
 
 ################################################################################
-# FUNCTION:                            DESCRIPTION:
-#  .varRisk                             Computes Value at Risk
-#  .cvarRisk                            Computes Conditional Value at Risk
 # FUNCTION:                            SINGLE PORTFOLIOS:
 #  .feasibleConstrainedCVaRPortfolio    Returns constrained feasible M-CVaR PF
 #  .efficientConstrainedCVaRPortfolio   Returns constrained frontier M-CVaR PF
@@ -62,28 +59,6 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.CVaRPortfolioSpec = 
-function()
-{
-    # This Function may be added for conveniance ...
-    .CVaRPortfolioSpec = 
-    function()
-    {
-        Spec = portfolioSpec()
-        setType(Spec) = "CVaR"
-        setTargetAlpha(Spec) = 0.05
-        setSolver(Spec) = "RlpSolve"
-        Spec
-    }  
-    
-    # Return Value:
-    return()  
-}
-
-
-# ------------------------------------------------------------------------------
-
-
 test.feasibleConstrainedCVaRPortfolio =
 function()
 {
@@ -91,25 +66,24 @@ function()
     require(lpSolve)
     
     # Data:
-    Data = as.timeSeries(data(smallcap.ts))
-    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
-    head(Data)
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG", "GYMB", "KRON")]
+    head(data)
     
     # CVaR Specification:
-    Spec = portfolioSpec()
-    setType(Spec) = "CVaR"
-    setWeights(Spec) = rep(1/4, 4)
-    setTargetAlpha(Spec) = 0.05
-    setSolver(Spec) = "RlpSolve"
-    Spec
+    spec = portfolioSpec()
+    setType(spec) = "CVaR"
+    setWeights(spec) = rep(1/4, 4)
+    setTargetAlpha(spec) = 0.05
+    setSolver(spec) = "lpSolve"
+    spec
     
     # Constraints:
-    Constraints = NULL
-    Constraints
+    constraints = NULL
+    constraints
     
     # CVaR Portfolio:
-    cvarPortfolio = feasiblePortfolio(Data, Spec, Constraints)
-    cvarPortfolio
+    .feasibleConstrainedCVaRPortfolio(data, spec, constraints)
     
     # Return Value:
     return()
@@ -126,31 +100,24 @@ function()
     require(lpSolve)
     
     # Data:
-    Data = as.timeSeries(data(smallcap.ts))
-    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
-    head(Data)
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG", "GYMB", "KRON")]
+    head(data)
     
     # CVaR Specification:
-    Spec = portfolioSpec()
-    setType(Spec) = "CVaR"
-    setTargetReturn(Spec) = mean(colAvgs(Data))
-    setTargetAlpha(Spec) = 0.05
-    setSolver(Spec) = "RlpSolve"
-    Spec
+    spec = portfolioSpec()
+    setType(spec) = "CVaR"
+    setTargetReturn(spec) = mean(data@Data)
+    setTargetAlpha(spec) = 0.05
+    setSolver(spec) = "lpSolve"
+    spec
     
     # Constraints:
-    Constraints = NULL
-    Constraints
+    constraints = NULL
+    constraints
     
     # CVaR Portfolio Optimization:
-    cvarPortfolio = efficientPortfolio(Data, Spec, Constraints)
-    cvarPortfolio
-    
-    # Compare with Mean Variance Portfolio:
-    Spec = portfolioSpec()
-    setTargetReturn(Spec) = mean(colAvgs(Data))
-    covPortfolio = efficientPortfolio(Data, Spec)
-    covPortfolio
+    .efficientConstrainedCVaRPortfolio(data, spec, constraints)
     
     # Return Value:
     return()    
@@ -164,43 +131,23 @@ test.efficientConstrainedCVaRPortfolio.LPP =
 function()
 {  
     # Second Example:
-    Data = 100*as.timeSeries(data(LPP2005REC))[, 1:6]
-    head(Data)
+    data = 100*as.timeSeries(data(LPP2005REC))[, 1:6]
+    head(data)
     
     # CVaR Specification:
-    Spec = portfolioSpec()
-    setType(Spec) = "CVaR"
-    setTargetReturn(Spec) = mean(Data@data)
-    setTargetAlpha(Spec) = 0.05
-    setSolver(Spec) = "RlpSolve"
-    Spec
+    spec = portfolioSpec()
+    setType(spec) = "CVaR"
+    setTargetReturn(spec) = mean(data@Data)
+    setTargetAlpha(spec) = 0.05
+    setSolver(spec) = "lpSolve"
+    spec
     
     # Constraints:
-    Constraints = NULL
-    Constraints
+    constraints = NULL
+    constraints
     
     # CVaR Portfolio Optimization:
-    cvarPortfolio = efficientPortfolio(Data, Spec, Constraints)
-    cvarPortfolio
-    weights = round(getWeights(cvarPortfolio), 3)
-    weights
-    par(mfrow = c(2, 2), cex = 0.7)
-    weightsPie(cvarPortfolio)
-    title(main = "Weights - CVaR Portfolio")
-    attributesPie(cvarPortfolio)
-    title(main = "Investment - CVaR Portfolio")
-    
-    # Compare with Mean Variance Portfolio:
-    Spec = portfolioSpec()
-    setTargetReturn(Spec) = mean(colAvgs(Data))
-    covPortfolio = efficientPortfolio(Data, Spec)
-    covPortfolio
-    weights = round(getWeights(covPortfolio), 3)
-    weights
-    weightsPie(covPortfolio)
-    title(main = "Weights - MV Portfolio")
-    attributesPie(covPortfolio)
-    title(main = "Investments - MV Portfolio")
+    .efficientConstrainedCVaRPortfolio(data, spec, constraints)
     
     # Return Value:
     return()    
@@ -217,27 +164,24 @@ function()
     require(lpSolve)
     
     # Data:
-    Data = as.timeSeries(data(smallcap.ts))
-    Data = Data[, c("BKE", "GG")]
-    head(Data)
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG")]
+    head(data)
     
     # CVaR Specification:
-    Spec = portfolioSpec()
-    setTargetReturn(Spec) = mean(Data@Data)
+    spec = portfolioSpec()
+    setType(spec) = "CVaR"
+    setTargetReturn(spec) = mean(data@Data)
+    setTargetAlpha(spec) = 0.05
+    setSolver(spec) = "lpSolve"
+    spec
     
     # Constraints:
-    Constraints = NULL
-    Constraints
+    constraints = NULL
+    constraints
     
     # CVaR Portfolio:
-    cvar2Portfolio = 
-        .efficient2ConstrainedCVaRPortfolio(Data, Spec, Constraints)
-    cvar2Portfolio
-    
-    # Or:
-    cvar2Portfolio = 
-        .efficientConstrainedCVaRPortfolio(Data, Spec, Constraints)
-    cvar2Portfolio
+    .efficientConstrainedCVaRPortfolio(data, spec, constraints)
     
     # Return Value:
     return()
@@ -255,42 +199,25 @@ function()
     require(lpSolve)
     
     # Data:
-    Data = as.timeSeries(data(smallcap.ts))
-    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
-    head(Data)
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG", "GYMB", "KRON")]
+    head(data)
     
     # CVaR Specification:
-    Spec = portfolioSpec()
-    setType(Spec) = "CVaR"
-    setTargetReturn(Spec) = mean(Data@data)
-    setTargetAlpha(Spec) = 0.05
-    setSolver(Spec) = "RlpSolve"
-    setRiskFreeRate(Spec) = mean(Data@data)/10
-    Spec
+    spec = portfolioSpec()
+    setType(spec) = "CVaR"
+    setTargetReturn(spec) = mean(data@Data)
+    setTargetAlpha(spec) = 0.05
+    setSolver(spec) = "lpSolve"
+    setRiskFreeRate(spec) = mean(data@Data)/10
+    spec
     
     # Constraints:
-    Constraints = NULL
-    Constraints
-    
-    # Graph Frame:
-    par(mfrow = c(2, 2), cex = 0.7)
+    constraints = NULL
+    constraints
     
     # CVaR Portfolio:
-    cvarPortfolio = cmlPortfolio(Data, Spec, Constraints)
-    cvarPortfolio
-    weights = round(getWeights(cvarPortfolio), 3)
-    weights
-    weightsPie(cvarPortfolio)
-    title(main = "CVaR Portfolio")
-      
-    # Compare with Mean Variance Portfolio:
-    Spec = portfolioSpec()
-    setTargetReturn(Spec) = mean(Data@data)
-    covPortfolio = cmlPortfolio(Data, Spec)
-    weights = round(getWeights(covPortfolio), 3)
-    weights
-    weightsPie(covPortfolio)
-    title(main = "MV Portfolio")
+    .cmlConstrainedCVaRPortfolio(data, spec, constraints)
     
     # Return Value:
     return()
@@ -307,25 +234,24 @@ function()
     require(lpSolve)
     
     # Data:
-    Data = as.timeSeries(data(smallcap.ts))
-    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
-    head(Data)
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG", "GYMB", "KRON")]
+    head(data)
     
     # CVaR Specification:
-    Spec = portfolioSpec()
-    setType(Spec) = "CVaR"
-    setTargetReturn(Spec) = mean(colAvgs(Data))
-    setTargetAlpha(Spec) = 0.10
-    setSolver(Spec) = "RlpSolve"
-    Spec
+    spec = portfolioSpec()
+    setType(spec) = "CVaR"
+    setTargetReturn(spec) = mean(data@Data)
+    setTargetAlpha(spec) = 0.10
+    setSolver(spec) = "lpSolve"
+    spec
     
     # Constraints:
-    Constraints = NULL
-    Constraints
+    constraints = NULL
+    constraints
     
     # Portfolio:
-    cvarPortfolio = tangencyPortfolio(Data, Spec, Constraints)
-    cvarPortfolio
+    .tangencyConstrainedCVaRPortfolio(data, spec, constraints)
     
     # Return Value:
     return()
@@ -342,39 +268,23 @@ function()
     require(lpSolve)
     
     # Data:
-    Data = as.timeSeries(data(smallcap.ts))
-    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
-    head(Data)
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG", "GYMB", "KRON")]
+    head(data)
     
     # CVaR Specification:
-    Spec = portfolioSpec()
-    setType(Spec) = "CVaR"
-    setTargetAlpha(Spec) = 0.05
-    setSolver(Spec) = "RlpSolve"
-    Spec
+    spec = portfolioSpec()
+    setType(spec) = "CVaR"
+    setTargetAlpha(spec) = 0.05
+    setSolver(spec) = "lpSolve"
+    spec
     
     # Constraints:
-    Constraints = NULL
-    Constraints
+    constraints = NULL
+    constraints
     
     # CVaR Portfolio Optimization:
-    cvarPortfolio = minvariancePortfolio(Data, Spec, Constraints)
-    cvarPortfolio
-    weights = round(getWeights(cvarPortfolio), 3)
-    weights
-    par(mfrow = c(2, 2), cex = 0.7)
-    weightsPie(cvarPortfolio)
-    title(main = "Minimum-CVaR Portfolio")
-      
-    # Compare with Mean Variance Portfolio:
-    Spec = portfolioSpec()
-    setTargetReturn(Spec) = mean(colAvgs(Data))
-    covPortfolio = minvariancePortfolio(Data, Spec)
-    covPortfolio
-    weights = round(getWeights(covPortfolio), 3)
-    weights
-    weightsPie(covPortfolio)
-    title(main = "Minimum-Variance Portfolio")
+    .minvarianceConstrainedCVaRPortfolio(data, spec, constraints)
     
     # Return Value:
     return()
@@ -391,39 +301,21 @@ function()
     require(lpSolve)
     
     # Data:
-    Data = as.timeSeries(data(smallcap.ts))
-    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
-    head(Data)
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG", "GYMB", "KRON")]
+    head(data)
     
     # CVaR Specification:
-    Spec = portfolioSpec()
-    setType(Spec) = "CVaR"
-    Spec
+    spec = portfolioSpec()
+    setType(spec) = "CVaR"
+    spec
     
     # Constraints:
-    Constraints = NULL
-    Constraints
-    
-    # Graph Frame:
-    par(mfrow = c(2, 2), cex = 0.7)
+    constraints = NULL
+    constraints
     
     # CVaR Portfolio Optimization:
-    cvarFrontier = portfolioFrontier(Data, Spec, Constraints)
-    cvarFrontier
-    
-    # CVaR Weights Plot:
-    weightsPlot(cvarFrontier)
-    plot(cvarFrontier, which = "all")
-    plot
-    
-    # Compare with Mean-Variance Portfolio:
-    Spec = portfolioSpec()
-    covFrontier = portfolioFrontier(Data, Spec)
-    covFrontier
-    
-    # COV Weights Plot:
-    weightsPlot(covFrontier)
-    plot(covFrontier, which = 1:6)
+    .portfolioConstrainedCVaRFrontier(data, spec, constraints)
      
     # Return Value:
     return()    
@@ -440,135 +332,28 @@ function()
     require(lpSolve)
     
     # Data:
-    Data = as.timeSeries(data(smallcap.ts))
-    Data = Data[, c("BKE", "GG")]
-    head(Data)
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG", "GYMB", "KRON")]
+    head(data)
     
     # CVaR Specification:
-    Spec = portfolioSpec()
-    # CVaR Specification:
-    Spec = portfolioSpec()
-    setType(Spec) = "CVaR"
-    Spec
+    spec = portfolioSpec()
+    setType(spec) = "CVaR"
+    spec
     
     # Constraints:
-    Constraints = NULL
-    Constraints
+    constraints = NULL
+    constraints
     
     # CVaR Portfolio:
-    cvar2Portfolio = 
-        .portfolio2ConstrainedCVaRFrontier(Data, Spec, Constraints)
-    cvar2Portfolio
-    
-    # Or:
-    cvar2Portfolio = 
-        .portfolioConstrainedCVaRFrontier(Data, Spec, Constraints)
-    cvar2Portfolio
+    .portfolioConstrainedCVaRFrontier(data, spec, constraints)
     
     # Return Value:
     return()
 }
 
 
-
 ################################################################################
-
-
-test.Scherer.1 =
-function()
-{
-    .CVaR = 
-    function(object, alpha = 0.05)
-    {
-        data = as.matrix(object@data$series)
-        weights = getWeights(object)
-        
-        x = as.numeric(data %*% weights)       
-        VaR = sort(x)[trunc(length(x)*alpha)] 
-        CVaR = mean(sort(x)[1:trunc(length(x)*alpha)])
-        TCL = mean(x[x <= VaR(x, alpha)]) 
-        
-        list(VaR = VaR, CVaR = CVaR, TCL = TCL)
-    }
-    
-    Spec = portfolioSpec()
-    covPortfolio = tangencyPortfolio(Data, Spec)
-    covPortfolio
-    
-    .CVaR(covPortfolio, alpha = 0.10)
-  
-    # Return Value:
-    return()    
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-test.Scherer.2 =
-function()
-{
-    # A VERY IMPORTANT CHECK!
-    
-    # Load Swiss SPI and Swiss Immofunds SII
-    Data = 100 * as.timeSeries(data(LPP2005REC))[, c("SPI", "SII")]
-    head(Data)
-    
-    # Create Equidistant Weights from 0 to 1:
-    nWeights = 21
-    W1 = seq(0, 1, length = nWeights)
-    W2 = 1 - W1
-  
-    # Create Points where to calculate the VaR:
-    nVaR = nWeights - 1
-    Returns = as.numeric( cbind(W1, W2) %*% colMeans(Data@Data))
-    sReturns = sort(Returns)
-    VaR = sReturns[-nWeights] + diff(sReturns)/2
-
-    # Set alpha and compute CVaR on "nWeights x nVaR" Grid:
-    alpha = 0.20
-    CVaR = matrix(rep(0, nWeights*nVaR), ncol = nVaR)
-    for (i in 1:nWeights) {
-        for (j in 1:nVaR) {  
-            RET = W1[i] * Data@Data[, 1] + W2[i] * Data@Data[, 2]
-            es = ( (-VaR[j] - RET) + abs(-VaR[j] - RET) ) / 2
-            CVaR[i, j] = -VaR[j] - mean(es)/alpha
-        }
-    }
-    rownames(CVaR) = substr(as.character(W1+0.001), 1, 4)
-    colnames(CVaR) = substr(as.character(VaR+0.0000001), 1, 5)
-    round(CVaR, 3)
-    persp(W1, VaR, CVaR, theta = 120, phi = 30, col = "steelblue", 
-        ps = 9, ticktype = "detailed", expand = 0.6, r = 500)
-   
-    # Compute Example (e.g. Case 7) for VaR and CVaR from Scratch:
-    S = 7   
-    x = W1[S] * Data@Data[, 1] + W2[S] * Data@Data[, 2]
-    VaR = quantile(x, alpha, type = 1)
-    CVaR = VaR - 0.5*mean(((VaR-x) + abs(VaR-x)))/alpha
-      
-    # CVaR Portfolio Specification:
-    Spec = portfolioSpec()
-    setType(Spec) = "CVaR"
-    setTargetReturn(Spec) = mean(x)
-    setTargetAlpha(Spec) = alpha
-    setSolver(Spec) = "RlpSolve"
-   
-    # CVaR Portfolio Optimization:
-    myPortfolio = efficientPortfolio(Data, Spec, NULL)
-    optVaR = -.DEBUG$solution[1]
-    optCVaR = .DEBUG$objval   
-    
-    # Compare Results from Scratch and Optimization:
-    c(VaR, optVaR)
-    c(CVaR, optCVaR)
-    
-    # Return Value:
-    return()    
-}
-
-
-# ******************************************************************************
 
 
 if (FALSE) {

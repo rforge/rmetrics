@@ -77,21 +77,27 @@ function()
     require(quadprog)
     
     # Direct Access:
-    Data = as.timeSeries(data(smallcap.ts))
-    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
-    Spec = portfolioSpec()
-    setTargetReturn(Spec) = mean(as.matrix(Data))
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG", "GYMB", "KRON")]
+    head(data)
+    
+    # Specification
+    spec = portfolioSpec()
+    spec
     
     # Default Constraints:
-    Constraints = "LongOnly"
-    Constraints
+    constraints = "LongOnly"
+    constraints
     
     # Quadprog:
-    solveRQuadprog(Data, Spec, Constraints)$solution 
+    setTargetReturn(spec) = mean(as.matrix(data))
+    ans = solveRQuadprog(data, spec, constraints)
+    ans
     
     # Check Termination Error:
-    round(getWeights(efficientPortfolio(Data, Spec, Constraints)), 2)
-    round(getWeights(efficientPortfolio(10*Data, Spec, Constraints)), 2) 
+    setTargetReturn(spec) = mean(as.matrix(10*data))
+    ans = solveRQuadprog(10*data, spec, constraints)
+    ans
     
     # Return Value:
     return()
@@ -108,21 +114,27 @@ function()
     require(quadprog)
     
     # Direct Access:
-    Data = as.timeSeries(data(smallcap.ts))
-    Data = Data[, c("BKE", "GG")]
-    Spec = portfolioSpec()
-    setTargetReturn(Spec) = mean(as.matrix(Data))
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG")]
+    head(data)
+    
+    # Specification:
+    spec = portfolioSpec()
+    spec
     
     # Default Constraints:
-    Constraints = "LongOnly"
-    Constraints
+    constraints = "LongOnly"
+    constraints
     
     # Quadprog:
-    solveRQuadprog(Data, Spec, Constraints)$solution 
+    setTargetReturn(spec) = mean(as.matrix(data))
+    ans = solveRQuadprog(data, spec, constraints) 
+    ans
     
     # Check Termination Error:
-    round(getWeights(efficientPortfolio(Data, Spec, Constraints)), 2)
-    round(getWeights(efficientPortfolio(10*Data, Spec, Constraints)), 2) 
+    setTargetReturn(spec) = mean(as.matrix(10*data))
+    ans = solveRQuadprog(10*data, spec, constraints)
+    ans 
     
     # Return Value:
     return()
@@ -136,67 +148,72 @@ test.solverRDonlp2 =
 function()
 { 
     # Install "Rdonlp2" from - http://arumat.net/Rdonlp2/
-    require(quadprog)
     require(Rdonlp2)
     
-    # Direct Access:   
-    Data = as.timeSeries(data(smallcap.ts))
-    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
-    Spec = portfolioSpec()
-    setTargetReturn(Spec) = mean(as.matrix(Data))
+    # Load Data:   
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG", "GYMB", "KRON")]
+    head(data)
+    
+    # Specification:
+    spec = portfolioSpec()
+    setSolver(spec) = "Rdonlp2"
+    spec
     
     # Long Only Constraints:
-    Constraints = NULL
-    Constraints
-    
-    # Quadprog:
-    setSolver(Spec) = "RQuadprog"
-    # round(solveRQuadprog(Data, Spec, Constraints)$solution, 3)
-    round(getWeights(efficientPortfolio(Data, Spec, Constraints)), 3)
+    constraints = NULL
+    constraints
     
     # Donlp2:
-    setSolver(Spec) = "RDonlp2"
-    # round(solveRDonlp2(Data, Spec, Constraints)$solution, 3)
-    round(getWeights(efficientPortfolio(Data, Spec, Constraints)), 3)
+    setTargetReturn(spec) = mean(as.matrix(data))
+    ans = solveRDonlp2(data, spec, constraints) 
+    ans
+    
+    # Check Termination Error:
+    setTargetReturn(spec) = mean(as.matrix(10*data))
+    ans10 = solveRDonlp2(10*data, spec, constraints)
+    ans10
+    
+    # Compare:
+    ans$weights
+    ans10$weights
+    # Return Value:
+    return()
+}
+
+
+# ------------------------------------------------------------------------------
+    
+ 
+test.solverRDonlp2.budgetConsatraints =
+function()
+{    
+    # Install "Rdonlp2" from - http://arumat.net/Rdonlp2/
+    require(Rdonlp2)
+    
+    # Load Data:   
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG", "GYMB", "KRON")]
+    head(data)
+    
+    # Specification:
+    spec = portfolioSpec()
+    setSolver(spec) = "Rdonlp2"
+    setTargetReturn(spec) = mean(as.matrix(data))
+    spec
     
     # Add Budget Constraints:
-    Constraints = c("minW[1:4]=0", "maxB[1:4]=1")
-    solveRDonlp2(Data, Spec, Constraints)$solution
-    round(getWeights(efficientPortfolio(Data, Spec, Constraints)), 3)
-    
-    # PART II:
-    
-    # Scale Returns - You should get the same Weights:
-    Data2 = 10* Data
-    setTargetReturn(Spec) = mean(as.matrix(Data2))
-    
-    # Long Only Constraints:
-    Constraints = NULL
-    
-    # Scaled Quadprog:
-    setSolver(Spec) = "RQuadprog"
-    # round(solveRQuadprog(Data2, Spec, Constraints)$solution, 3)
-    round(getWeights(efficientPortfolio(Data2, Spec, Constraints)), 3)
-    
-    # Scaled Donlp2:
-    setSolver(Spec) = "RDonlp2"
-    # round(solveRDonlp2(Data2, Spec, Constraints)$solution, 3)
-    round(getWeights(efficientPortfolio(Data2, Spec, Constraints)), 3)
+    constraints = c("minW[1:4]=0", "maxB[1:4]=1")
+    constraints
+    ans = solveRDonlp2(data, spec, constraints)
+    ans$weights
     
     # Scaled Donlp2 - Add Budget Constraints:
-    Constraints = c("minW[1:4]=0", "maxB[1:4]=1")
-    solveRDonlp2(Data2, Spec, Constraints)$solution
-    myPf = efficientPortfolio(Data2, Spec, Constraints)
-    round(getWeights(myPf), 2)
-    getRiskBudgets(myPf)
+    constraints = c("minW[1:4]=0", "maxB[1:4]=0.3")
+    constraints
+    ans = solveRDonlp2(data, spec, constraints)
+    ans$weights
     
-    # Scaled Donlp2 - Add Budget Constraints:
-    Constraints = c("minW[1:4]=0", "maxB[1:4]=0.3")
-    solveRDonlp2(Data2, Spec, Constraints)$solution
-    myPf = efficientPortfolio(Data2, Spec, Constraints)
-    round(getWeights(myPf), 2)
-    getRiskBudgets(myPf)
-
     # Return Value:
     return()
 }
@@ -212,21 +229,22 @@ function()
     require(Rdonlp2)
     
     # Direct Access:
-    Data = as.timeSeries(data(smallcap.ts))
-    Data = Data[, c("BKE", "GG")]
-    Spec = portfolioSpec()
-    setTargetReturn(Spec) = mean(as.matrix(Data))
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG")]
+    head(data)
+    
+    # Specification:
+    spec = portfolioSpec()
+    setTargetReturn(spec) = mean(as.matrix(data))
     
     # Default Constraints:
-    Constraints = "LongOnly"
-    Constraints
+    constraints = "LongOnly"
+    constraints
     
     # RDonlp2:
-    solveRDonlp2(Data, Spec, Constraints)$solution 
-    
-    # Check Termination Error:
-    round(getWeights(efficientPortfolio(Data, Spec, Constraints)), 2)
-    round(getWeights(efficientPortfolio(10*Data, Spec, Constraints)), 2) 
+    ans = solveRDonlp2(data, spec, constraints) 
+    ans 
+    ans$weights
     
     # Return Value:
     return()
@@ -244,22 +262,24 @@ function()
     require(lpSolve)
     
     # Load Data:
-    Data = as.timeSeries(data(smallcap.ts))
-    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG", "GYMB", "KRON")]
+    head(data)
     
     # CVaR Specification:
-    Spec = portfolioSpec()
-    setType(Spec) = "CVaR"
-    setTargetReturn(Spec) = mean(colAvgs(Data))
-    setTargetAlpha(Spec) = 0.05
-    setSolver(Spec) = "RlpSolve"
-    Spec
+    spec = portfolioSpec()
+    setType(spec) = "CVaR"
+    setTargetReturn(spec) = mean(colAvgs(data))
+    setTargetAlpha(spec) = 0.05
+    setSolver(spec) <- "lpSolve"
+    spec
     
     # Constraints:
-    Constraints = NULL
+    constraints = NULL
     
     # CVaR Portfolio Optimization:  
-    solveRlpSolve(Data, Spec, Constraints)
+    ans = solveRlpSolve(data, spec, constraints)
+    ans$weights
     
     # Return Value:
     return()

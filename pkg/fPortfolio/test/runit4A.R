@@ -241,7 +241,16 @@ function()
         horizon = "6m", 
         smoothing = "6m", 
         trace = TRUE)   
-    
+ 
+        
+        formula = LP60 ~ SBI + SPI + SII
+        data = Data
+        spec = portfolioSpec()
+        constraints = NULL
+        portfolio = "minvariancePortfolio"
+        horizon = "6m"
+        smoothing = "6m"
+        trace = TRUE 
     
     par(mfrow = c(3,2), cex = 0.7)
     
@@ -318,20 +327,18 @@ plot(ans)
 
 
     # Load Data:
-    MIDCAP = as.timeSeries(data(midcapD.ts))
-    Data = returnSeries(SWXLP, percentage = TRUE)
+    Data = as.timeSeries(data(midcapD.ts))
+    Data = Data[, c(1:4, 21)]
     head(Data)
     colnames(Data)
-    
-    # Rolling Windows:
-    windows = rollingWindows(x = Data, period = "12m", by = "1m")
+  
     
     # Graph Frame:
     par(mfrow = c(2, 2), cex = 0.7)
     
     # Mean-Variance Backtesting:
     ans = portfolioBacktesting(
-        formula = LP60 ~ SBI + SPI + SII, 
+        formula = market ~ LSCC + CSGS + EC + NYB, 
         data = Data, 
         spec = portfolioSpec(), 
         constraints = NULL, 

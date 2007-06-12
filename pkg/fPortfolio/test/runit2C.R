@@ -42,10 +42,9 @@
 #  setTargetAlpha<-              Sets CVaR target alpha value
 #  setRiskFreeRate<-             Sets risk-free rate value
 #  setNFrontierPoints<-          Sets number of frontier points
-#  setReturnRange<-              Sets range of target returns
-#  setRiskRange<-                Sets range of target risks
 # FUNCTION:                     SOLVER SLOT:
 #  setSolver<-                   Sets name of desired solver
+#  setTrace<-                    Sets solver's trace flag
 ################################################################################
 
 

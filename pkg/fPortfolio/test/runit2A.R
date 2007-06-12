@@ -28,22 +28,22 @@
 
 
 ################################################################################
-# FUNCTION                      PORTFOLIO CLASS:
+# FUNCTION:                     PORTFOLIO CLASS:
 #  'fPORTFOLIO'                  S4 Portfolio Class
+#  portfolioFrontier             Returns the efficient frontier of a portfolio
+#  show.fPORTFOLIO               S4 Print method for 'fPPORTFOLIO' objects
 # FUNCTION:                     SINGLE PORTFOLIOS:
 #  feasiblePortfolio             Returns a feasible portfolio
 #  cmlPortfolio                  Returns capital market line
 #  tangencyPortfolio             Returns the tangency portfolio
 #  minvariancePortfolio          Returns the minimum variance portfolio
 #  efficientPortfolio            Returns a frontier portfolio
-# FUNCTION:                     PORTFOLIO FRONTIER:
-#  portfolioFrontier             Returns the efficient frontier of a portfolio
-# FUNCTION:                     PRINT AND PLOT METHODS:        
-#  show.fPORTFOLIO               S4 Print method for 'fPPORTFOLIO' objects   
+# FUNCTION:                     PRINT AND PLOT METHODS:           
 #  plot.fPORTFOLIO               S3 Plot method for 'fPORTFOLIO' objects   
+#  summary.fPORTFOLIO            S3 Summary method for 'fPORTFOLIO' objects
 # FUNCTION:                     EDUCATIONAL PORTFOLIO SLIDERS: 
 #  weightsSlider                 Weights Slider           
-#  frontierSlider                Efficient Frontier Slider                    
+#  frontierSlider                Efficient Frontier Slider                   
 ################################################################################
 
 
@@ -64,7 +64,7 @@ function()
 }
 
 
-# ------------------------------------------------------------------------------
+################################################################################
 
 
 test.fPORTFOLIO =
@@ -79,6 +79,72 @@ function()
 
 
 # ------------------------------------------------------------------------------
+
+
+test.portfolioFrontier =
+function()
+{ 
+    # Arguments:
+    # portfolioFrontier(data, spec = portfolioSpec(), constraints = NULL, 
+    #   title = NULL, description = NULL) 
+   
+    # Load Data:
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG", "GYMB", "KRON")]
+    head(data)
+   
+    # Set Default Specifications - Long Only MV Portfolio
+    spec = portfolioSpec()
+    spec
+   
+    # Calculation of Long Only Minimum Variance Portfolio
+    Frontier = portfolioFrontier(data, spec)
+    Frontier
+    
+    # Plot:
+    par(mfrow = c(2, 2), cex = 0.7)
+    weightsPlot(Frontier) 
+    attributesPlot(Frontier) 
+    riskBudgetsPlot(Frontier) 
+    
+    # Summary:
+    par(mfrow = c(2, 2), cex = 0.7) 
+    summary(Portfolio)
+    
+    # Return Value:
+    return()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.show =
+function()
+{ 
+    # Load Data::
+    Data = as.timeSeries(data(smallcap.ts))
+    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
+    head(Data)
+   
+    # Set Default Specifications:
+    Spec = portfolioSpec()
+    Spec
+   
+    # Calculation of Long Only Minimum Variance Portfolio:
+    Frontier = portfolioFrontier(Data, Spec)
+    Frontier
+    
+    # Show and Print:
+    print(Frontier)
+    show(Frontier)
+    
+    # Return Value:
+    return()
+}
+
+
+################################################################################
 
 
 test.feasiblePortfolio =
@@ -343,71 +409,6 @@ function()
     return()
 }
 
-
-# ------------------------------------------------------------------------------
-
-
-test.portfolioFrontier =
-function()
-{ 
-    # Arguments:
-    # portfolioFrontier(data, spec = portfolioSpec(), constraints = NULL, 
-    #   title = NULL, description = NULL) 
-   
-    # Load Data:
-    Data = as.timeSeries(data(smallcap.ts))
-    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
-    head(Data)
-   
-    # Set Default Specifications - Long Only MV Portfolio
-    Spec = portfolioSpec()
-    Spec
-   
-    # Calculation of Long Only Minimum Variance Portfolio
-    Frontier = portfolioFrontier(Data, Spec)
-    Frontier
-    
-    # Plot:
-    par(mfrow = c(2, 2), cex = 0.7)
-    weightsPlot(Frontier) 
-    attributesPlot(Frontier) 
-    riskBudgetsPlot(Frontier) 
-    
-    # Summary:
-    par(mfrow = c(2, 2), cex = 0.7) 
-    summary(Portfolio)
-    
-    # Return Value:
-    return()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-test.show =
-function()
-{ 
-    # Load Data::
-    Data = as.timeSeries(data(smallcap.ts))
-    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
-    head(Data)
-   
-    # Set Default Specifications:
-    Spec = portfolioSpec()
-    Spec
-   
-    # Calculation of Long Only Minimum Variance Portfolio:
-    Frontier = portfolioFrontier(Data, Spec)
-    Frontier
-    
-    # Show and Print:
-    print(Frontier)
-    show(Frontier)
-    
-    # Return Value:
-    return()
-}
 
 
 # ------------------------------------------------------------------------------

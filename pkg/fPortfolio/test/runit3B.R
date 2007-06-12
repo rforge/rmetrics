@@ -30,10 +30,10 @@
 ################################################################################
 # FUNCTION:                          SINGLE PORTFOLIOS:
 #  .feasibleConstrainedMVPortfolio    Returns a constrained feasible MV-PF
+#  .efficientConstrainedMVPortfolio   Returns a constrained frontier MV-PF
 #  .cmlConstrainedMVPortfolio         Returns constrained CML-Portfolio
 #  .tangencyConstrainedMVPortfolio    Returns constrained tangency MV-PF
 #  .minvarianceConstrainedMVPortfolio Returns constrained min-Variance-PF
-#  .frontierConstrainedMVPortfolio    Returns a constrained frontier MV-PF
 # FUNCTION:                          PORTFOLIO FRONTIER:
 #  .portfolioConstrainedMVFrontier    Returns the EF of a constrained MV-PF                    
 ################################################################################
@@ -82,20 +82,20 @@ function()
     #       compute the portfolio.
     
     # Data:
-    Data = as.timeSeries(data(smallcap.ts))
-    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
-    head(Data)
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG", "GYMB", "KRON")]
+    head(data)
     
     # Specification:
-    Spec = portfolioSpec()
-    Spec
+    spec = portfolioSpec()
+    spec
  
     # Constraints:
-    Constraints = NULL
-    Constraints
+    constraints = NULL
+    constraints
     
     # Feasible Portfolio:
-    .feasibleConstrainedMVPortfolio(Data, Spec, Constraints)
+    .feasibleConstrainedMVPortfolio(data, spec, constraints)
 }
 
 
@@ -106,104 +106,24 @@ test.feasibleConstrainedMVPortfolio.LongOnly =
 function()
 {   
     # Data:
-    Data = as.timeSeries(data(smallcap.ts))
-    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
-    head(Data)
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG", "GYMB", "KRON")]
+    head(data)
     
     # Specification + Random Weights:
-    Spec = portfolioSpec()
+    spec = portfolioSpec()
     nAssets = ncol(Data)
     Weights = runif(nAssets, 0, 1)
     Weights = Weights/sum(Weights)
-    setWeights(Spec) <- Weights
-    Spec
+    setWeights(spec) <- Weights
+    spec
     
     # Constraints:
-    Constraints = "LongOnly"
-    Constraints
+    constraints = "LongOnly"
+    constraints
     
     # Feasible Portfolio:
-    .feasibleConstrainedMVPortfolio(Data, Spec, Constraints)
-    
-    # Feasible Portfolio:
-    portfolio = feasiblePortfolio(Data, Spec, Constraints)
-    
-    # Return Value:
-    return()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-test.cmlConstrainedMVPortfolio = 
-function()
-{
-    # Data:
-    Data = as.timeSeries(data(smallcap.ts))
-    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
-    head(Data)
-    
-    # Specification:
-    Spec = portfolioSpec()
-    Spec
-    
-    # Feasible Portfolio - Equals Tangency Portfolio:
-    .cmlConstrainedMVPortfolio(Data, Spec, NULL)
-    .cmlConstrainedMVPortfolio(Data, Spec, "LongOnly")
-    
-    # Modify Risk Free Rate:
-    setRiskFreeRate(Spec) = mean(colMeans(Data@Data))
-    Spec
-    .cmlConstrainedMVPortfolio(Data, Spec, "LongOnly")
-    
-    # Return Value:
-    return()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-test.tangencyConstrainedMVPortfolio = 
-function()
-{
-    # Data:
-    Data = as.timeSeries(data(smallcap.ts))
-    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
-    head(Data)
-    
-    # Specification:
-    Spec = portfolioSpec()
-    Spec
-    
-    # Tangency Portfolio:
-    .tangencyConstrainedMVPortfolio(Data, Spec, "LongOnly")
-    .tangencyConstrainedMVPortfolio(Data, Spec, "maxW[1:nAssets]=0.6")
-    
-    # Return Value:
-    return()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-test.minvarianceConstrainedMVPortfolio = 
-function()
-{
-    # Data:
-    Data = as.timeSeries(data(smallcap.ts))
-    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
-    head(Data)
-    
-    # Specification:
-    Spec = portfolioSpec()
-    Spec
-    
-    # Minimum Variance Portfolio:
-    .minvarianceConstrainedMVPortfolio(Data, Spec, "LongOnly")
-    .minvarianceConstrainedMVPortfolio(Data, Spec, "maxW[1:nAssets]=0.6")
+    .feasibleConstrainedMVPortfolio(data, spec, constraints)
     
     # Return Value:
     return()
@@ -217,23 +137,23 @@ test.efficientConstrainedMVPortfolio =
 function()
 {
     # Data:
-    Data = as.timeSeries(data(smallcap.ts))
-    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
-    head(Data)
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG", "GYMB", "KRON")]
+    head(data)
     
     # Specification:
-    Spec = portfolioSpec()
-    Spec
+    spec = portfolioSpec()
+    spec
     
     # Modify Target Return:
-    targetReturn = mean(colMeans(Data@Data))
+    targetReturn = mean(colMeans(data@Data))
     targetReturn
-    setTargetReturn(Spec) <- targetReturn
-    Spec
+    setTargetReturn(spec) <- targetReturn
+    spec
     
-    # Tangency Portfolio:
-    .efficientConstrainedMVPortfolio(Data, Spec, "LongOnly")
-    .efficientConstrainedMVPortfolio(Data, Spec, "maxW[1:nAssets]=0.6")
+    # Efficient Portfolio:
+    .efficientConstrainedMVPortfolio(data, spec, "LongOnly")
+    .efficientConstrainedMVPortfolio(data, spec, "maxW[1:nAssets]=0.6")
     
     # Return Value:
     return()
@@ -243,27 +163,214 @@ function()
 # ------------------------------------------------------------------------------
 
 
+test.cmlConstrainedMVPortfolio = 
+function()
+{
+    # Data:
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG", "GYMB", "KRON")]
+    head(data)
+    
+    # Specification:
+    spec = portfolioSpec()
+    spec
+    
+    # Constraints:
+    constraints = NULL
+    constraints
+    
+    # Portfolio - Equals tangency Portfolio:
+    .cmlConstrainedMVPortfolio(data, spec, constraints)
+    
+    # Return Value:
+    return()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.cmlConstrainedMVPortfolio.LongOnly = 
+function()
+{
+    # Data:
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG", "GYMB", "KRON")]
+    head(data)
+    
+    # Specification:
+    spec = portfolioSpec()
+    spec
+    
+    # CML Portfolio - Equals Tangency Portfolio:
+    constraints = "LongOnly"
+    constraints
+    
+    # Portfolio - Equals tangency Portfolio:
+    .cmlConstrainedMVPortfolio(data, spec, constraints)
+    
+    # Return Value:
+    return()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.cmlConstrainedMVPortfolio.RiskFreeRate = 
+function()
+{
+    # Data:
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG", "GYMB", "KRON")]
+    head(data)
+    
+    # Specification:
+    spec = portfolioSpec()
+    setRiskFreeRate(spec) = mean(data@Data)
+    spec
+    
+    # Constraints:
+    constraints = "LongOnly"
+    constraints
+    
+    # Portfolio:
+    .cmlConstrainedMVPortfolio(data, spec, constraints)
+    
+    # Return Value:
+    return()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.tangencyConstrainedMVPortfolio.LongOnly = 
+function()
+{
+    # Data:
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG", "GYMB", "KRON")]
+    head(data)
+    
+    # Specification:
+    spec = portfolioSpec()
+    spec
+    
+    # Constraints:
+    constraints = "LongOnly"
+    constraints
+    
+    # Tangency Portfolio:
+    .tangencyConstrainedMVPortfolio(data, spec,  constraints)
+    
+    # Return Value:
+    return()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.tangencyConstrainedMVPortfolio.Tailored = 
+function()
+{
+    # Data:
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG", "GYMB", "KRON")]
+    head(data)
+    
+    # Specification:
+    spec = portfolioSpec()
+    spec
+
+    # Constraints:
+    constraints = "maxW[1:nAssets]=0.6"
+    constraints
+    
+    # Tangency Portfolio:
+    .tangencyConstrainedMVPortfolio(data, spec, constraints)
+    
+    # Return Value:
+    return()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.minvarianceConstrainedMVPortfolio.LongOnly = 
+function()
+{
+    # Data:
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG", "GYMB", "KRON")]
+    head(data)
+    
+    # Specification:
+    spec = portfolioSpec()
+    spec
+    
+    # Constraints:
+    constraints = "LongOnly"
+    constraints
+    
+    # Minimum Variance Portfolio:
+    .minvarianceConstrainedMVPortfolio(data, spec, constraints)
+    
+    # Return Value:
+    return()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.minvarianceConstrainedMVPortfolio.Tailored = 
+function()
+{
+    # Data:
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG", "GYMB", "KRON")]
+    head(data)
+    
+    # Specification:
+    spec = portfolioSpec()
+    spec
+    
+    # Constraints:
+    constraints = "maxW[1:nAssets]=0.6"
+    constraints
+    
+    # Minimum Variance Portfolio:
+    .minvarianceConstrainedMVPortfolio(data, spec, constraints)
+    
+    # Return Value:
+    return()
+}
+
+# ------------------------------------------------------------------------------
+
+
 test.efficientConstrainedMVPortfolio.twoAssets = 
 function()
 {
     # Data:
-    Data = as.timeSeries(data(smallcap.ts))
-    Data = Data[, c("BKE", "GG")]
-    head(Data)
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG")]
+    head(data)
     
     # Specification:
-    Spec = portfolioSpec()
-    Spec
+    spec = portfolioSpec()
+    setTargetReturn(spec) = mean(data@Data)
+    spec
     
-    # Modify Target Return:
-    targetReturn = mean(Data@Data)
-    targetReturn
-    setTargetReturn(Spec) <- targetReturn
-    Spec
+    # Constraints:
+    constraints = "LongOnly"
+    constraints
     
-    # Tangency Portfolio:
-    .efficientConstrainedMVPortfolio(Data, Spec, "LongOnly")
-    .DEBUG
+    # Efficient Portfolio:
+    .efficientConstrainedMVPortfolio(data, spec, constraints)
     
     # Return Value:
     return()
@@ -277,25 +384,20 @@ test.efficientConstrainedMVPortfolio.RDonlp2 =
 function()
 {
     # Data:
-    Data = as.timeSeries(data(smallcap.ts))
-    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
-    head(Data)
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG", "GYMB", "KRON")]
+    head(data)
     
     # Specification:
-    Spec = portfolioSpec()
-    setSolver(Spec) = "RDonlp2"
-    Spec
-    
-    # Modify Target Return:
-    targetReturn = mean(colMeans(Data@Data))
-    targetReturn
-    setTargetReturn(Spec) <- targetReturn
-    Spec
+    spec = portfolioSpec()
+    setTargetReturn(spec) = mean(data@Data)
+    setSolver(spec) = "Rdonlp2"
+    spec
     
     # Tangency Portfolio:
-    .efficientConstrainedMVPortfolio(Data, Spec, NULL)
-    .efficientConstrainedMVPortfolio(Data, Spec, "LongOnly")
-    .efficientConstrainedMVPortfolio(Data, Spec, "maxW[1:nAssets]=0.6")
+    .efficientConstrainedMVPortfolio(data, spec, NULL)
+    .efficientConstrainedMVPortfolio(data, spec, "LongOnly")
+    .efficientConstrainedMVPortfolio(data, spec, "maxW[1:nAssets]=0.6")
     
     # Return Value:
     return()
@@ -309,21 +411,20 @@ test.portfolioConstrainedMVFrontier =
 function()
 {
     # Data:
-    Data = as.timeSeries(data(smallcap.ts))
-    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
-    head(Data)
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG", "GYMB", "KRON")]
+    head(data)
     
     # Specification:
-    Spec = portfolioSpec()
-    Spec
+    spec = portfolioSpec()
+    spec
     
     # Constraints: 
-    Constraints = NULL
+    constraints = NULL
+    constraints
     
     # Portfolio Frontier:
-    Frontier = .portfolioConstrainedMVFrontier(Data, Spec, Constraints)
-    Frontier
-    plot(Frontier, which = c(1, 2, 3, 5))
+    .portfolioConstrainedMVFrontier(data, spec, constraints)
     
     # Return Value:
     return()
@@ -337,22 +438,22 @@ test.portfolioConstrainedMVFrontier.RDonlp2 =
 function()
 {   
     # Data:
-    Data = as.timeSeries(data(smallcap.ts))
-    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
-    head(Data)
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG", "GYMB", "KRON")]
+    head(data)
     
     # Specification:
-    Spec = portfolioSpec()
-    setSolver(Spec) = "RDonlp2"
-    Spec
+    spec = portfolioSpec()
+    setSolver(spec) = "Rdonlp2"
+    setNFrontierPoints(spec) = 5
+    spec
     
     # Constraints: 
-    Constraints = NULL                        
+    constraints = NULL                        
+    constraints
     
     # Portfolio Frontier:
-    Frontier = .portfolioConstrainedMVFrontier(Data, Spec, Constraints)
-    Frontier
-    plot(Frontier, which = c(1, 2, 3, 5))
+    .portfolioConstrainedMVFrontier(data, spec, constraints)
     
     # Return Value:
     return()
@@ -366,30 +467,23 @@ test.portfolioConstrainedMVFrontier.RiskBudgets =
 function()
 {   
     # Data:
-    Data = as.timeSeries(data(smallcap.ts))
-    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
-    head(Data)
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG", "GYMB", "KRON")]
+    head(data)
     
     # Specification:
-    Spec = portfolioSpec()
-    setTargetReturn(Spec)<- mean(colAvgs(Data))
-    setSolver(Spec) = "RDonlp2"
-    Spec
-    
-    # Weight Constraints Only:
-    Constraints = "LongOnly"
-    
-    # Portfolio Frontier:
-    Frontier = .efficientConstrainedMVPortfolio(Data, Spec, Constraints)
-    Frontier
+    spec = portfolioSpec()
+    setSolver(spec) = "Rdonlp2"
+    setNFrontierPoints(spec) = 5
+    spec
     
     # Add Risk Budgets:
-    Constraints = c("minW[1:4]=0", "maxB[1:4]=0.3")
-        
-    # Portfolio Frontier:
-    # Frontier = portfolioFrontier(Data, Spec, Constraints)
-    # Frontier                                                       # CHECK !!!
-    
+    constraints = c("minW[1:4]=0", "maxB[1:4]=0.8")
+    constraints
+       
+    # Frontier:
+    .portfolioConstrainedMVFrontier(data, spec, constraints)
+       
     # Return Value:
     return()
 }

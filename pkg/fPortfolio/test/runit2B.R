@@ -29,8 +29,19 @@
 
 ################################################################################
 # FUNCTION:                     Classical and Robust Estimators
-#  portfolioStatistics           Estimates mu and Sigma statistics
 #  portfolioData                 Creates portfolio data list
+#  portfolioStatistics           Estimates mu and Sigma statistics
+################################################################################
+
+################################################################################
+# FUNCTION:                     PORTFOLIO S4 EXTRACTORS FROM DATA SLOT:
+#  getData
+#   getSeries                    Extracts assets series data 
+#   getNumberOfAssets            Extracts number of assets from statistics
+#  getStatistics                 Extracts assets statistics, mean and covariance
+#   getMu
+#   getSigma
+#  getTailrisk                   Extracts tail risk
 ################################################################################
 
 
@@ -54,20 +65,43 @@ function()
 # ------------------------------------------------------------------------------
 
 
+test.portfolioData =
+function()
+{
+    # Load Data:
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG", "GYMB", "KRON")]
+    head(data)
+   
+    # Set Default Specifications:
+    spec = portfolioSpec()
+    spec
+    
+    # PortfolioData:
+    portfolioData(data, spec)
+    
+    # Return Value:
+    return()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
 test.portfolioStatistics =
 function()
 {
     # Load Data:
-    Data = as.timeSeries(data(smallcap.ts))
-    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
-    head(Data)
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG", "GYMB", "KRON")]
+    head(data)
    
     # Set Default Specifications:
-    Spec = portfolioSpec()
-    Spec
+    spec = portfolioSpec()
+    spec
     
     # PortfolioStatistics:
-    portfolioStatistics(Data, Spec)
+    portfolioStatistics(data, spec)
          
     # Return Value:
     return()
@@ -77,21 +111,24 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.portfolioData =
+test.Extractors =
 function()
 {
     # Load Data:
-    Data = as.timeSeries(data(smallcap.ts))
-    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
-    head(Data)
-   
-    # Set Default Specifications:
-    Spec = portfolioSpec()
-    Spec
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG", "GYMB", "KRON")]
+    if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
+     
+    getData(data)
+    getSeries(data)
+    getNumberOfAssets(data)
+     
+    getStatistics(data) 
+    getMu(data)
+    getSigma(data)
     
-    # PortfolioData:
-    portfolioData(Data, Spec)
-    
+    getTailrisk(data)
+         
     # Return Value:
     return()
 }

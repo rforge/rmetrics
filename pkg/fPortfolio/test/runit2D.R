@@ -61,28 +61,101 @@ test.portfolioConstraints =
 function()
 { 
    # Load Data:
-   Data = as.timeSeries(data(smallcap.ts))
-   Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
-   Data
+   data = as.timeSeries(data(smallcap.ts))
+   data = data[, c("BKE", "GG", "GYMB", "KRON")]
+   head(data)
    
    # Set Default Specifications:
-   Spec = portfolioSpec() 
+   spec = portfolioSpec() 
+   spec
+   
+   # Constraints:
+   constraints = NULL
+   constraints
+   
+   # Set Portfolio Constraints - Returns NULL:
+   portfolioConstraints(data, spec, constraints)
+   
+   # Return Value:
+   return()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.portfolioConstraints.LongOnly =
+function()
+{    
+   # Load Data:
+   data = as.timeSeries(data(smallcap.ts))
+   data = data[, c("BKE", "GG", "GYMB", "KRON")]
+   head(data)
+   
+   # Set Default Specifications:
+   spec = portfolioSpec() 
+   spec
+   
+   # Constraints:
+   constraints = "LongOnly"
+   constraints
    
    # Set Portfolio Constraints:
-   Constraints = NULL
-   portfolioConstraints(Data, Spec, Constraints)
+   portfolioConstraints(data, spec, constraints)
+   
+   # Return Value:
+   return()
+}
+     
+   
+# ------------------------------------------------------------------------------
+
+
+test.portfolioConstraints.Short =
+function()
+{    
+   # Load Data:
+   data = as.timeSeries(data(smallcap.ts))
+   data = data[, c("BKE", "GG", "GYMB", "KRON")]
+   head(data)
+   
+   # Set Default Specifications:
+   spec = portfolioSpec() 
+   spec
+   
+   # Constraints:
+   constraints = "Short"
+   constraints
    
    # Set Portfolio Constraints:
-   Constraints = "LongOnly"
-   portfolioConstraints(Data, Spec, Constraints)
+   portfolioConstraints(data, spec, constraints)
+   
+   # Return Value:
+   return()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.portfolioConstraints.tailored =
+function()
+{    
+   # Load Data:
+   data = as.timeSeries(data(smallcap.ts))
+   data = data[, c("BKE", "GG", "GYMB", "KRON")]
+   head(data)
+   
+   # Set Default Specifications:
+   spec = portfolioSpec() 
+   spec
+   
+   # Constraints:
+   constraints = c("minW[1:4]=0", "maxW[1:4]=1")
+   constraints
    
    # Set Portfolio Constraints:
-   Constraints = "Short"
-   portfolioConstraints(Data, Spec, Constraints)
-   
-   # Set Portfolio Constraints:
-   Constraints = c("minW[1:4]=0", "maxW[1:4]=1")
-   portfolioConstraints(Data, Spec, Constraints)
+   portfolioConstraints(data, spec, constraints)
    
    # Return Value:
    return()
@@ -100,37 +173,59 @@ function()
     #   type = c("BoxGroup", "RiskBudget"))
     
     # Data, Specification and Constraints:
-    Data = as.timeSeries(data(smallcap.ts))
-    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
-    Spec = portfolioSpec()
-    Constraints = NULL
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG", "GYMB", "KRON")]
+    spec = portfolioSpec()
+    constraints = NULL
     
     # Set Default Box-Group Constraints:
     # These are: 0 <= W[1:nAssets] <= 1, no Group Constraints ...
-    .setConstraints(Data, Spec, Constraints)
+    .setConstraints(data, spec, constraints)
     
     # Set Default Covariance Risk-Budget Constraints:
     # These are: 0 <= RiskBudgets[1:nAssets] <= 1, 
     #   no RiskBudget Group Constraints ...
     # Note,  Risk-Budget Constraints have to been added explicitely!
-    .setConstraints(Data, Spec, Constraints, type = "RiskBudget")  
+    .setConstraints(data, spec, constraints, type = "RiskBudget")  
     
     # Short:
-    Constraints = "Short"
-    .setConstraints(Data, portfolioSpec(), Constraints)
+    constraints = "Short"
+    .setConstraints(data, portfolioSpec(), constraints)
     
     # Long Only:
-    Constraints = "LongOnly"
-    .setConstraints(Data, portfolioSpec(), Constraints)
+    constraints = "LongOnly"
+    .setConstraints(data, portfolioSpec(), constraints)
     
-    # minW, maxW:
-    Constraints = 
-        c("minW[1:nAssets]=0.09", "maxW[1:nAssets]=rep(c(0.6, 0.4),4)")
-    .setConstraints(Data, portfolioSpec(), Constraints)
+    # Tailored - minW, maxW:
+    constraints = 
+        c("minW[1:nAssets]=0.09", "maxW[1:nAssets]=rep(c(0.6, 0.4),2)")
+    .setConstraints(data, portfolioSpec(), constraints)
     
-    # minsumW, maxsumW:
-    Constraints = c("minsumW[c(2,4)]=0.20", "maxsumW[4:6]=0.80")
-    .setConstraints(Data, portfolioSpec(), Constraints)
+    # Tailored - minsumW, maxsumW:
+    constraints = c("minsumW[c(2,4)]=0.20", "maxsumW[3:4]=0.80")
+    .setConstraints(data, portfolioSpec(), constraints)
+    
+    # Return Value:
+    return()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.setBoxGroupConstraints = 
+function()
+{
+    # Data, Specification and Constraints:
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG", "GYMB", "KRON")]
+    spec = portfolioSpec()
+    constraints = c(
+        "minW[1:4]=runif(4, 0, 0.2)", "maxW[1:4]=0.9",
+        "minsumW[1:2]=0.2", "maxsumW[3:4]=0.8")
+    
+    # Set Constraints:
+    .setBoxGroupConstraints(data, spec, constraints)
     
     # Return Value:
     return()
@@ -143,28 +238,14 @@ function()
 test.setRiskBudgetsConstraints =
 function()
 {
-    # .setBoxGroupConstraints()       
-    #   Utility function called by .setConstraints()
-
-    # Todo:
-    NA
+    # Data, Specification and Constraints:
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG", "GYMB", "KRON")]
+    spec = portfolioSpec()
+    constraints = c("minB[1:4]=runif(4, 0, 0.2)", "maxB[1:4]=0.9")
     
-    # Return Value:
-    return()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-test.setRiskBudgetsConstraints =
-function()
-{ 
-    # .setRiskBudgetsConstraints()    
-    #   Utility function called by .setConstraints()
-    
-    # Todo:
-    NA
+    # Set Constraints:
+    .setRiskBudgetsConstraints(data, spec, constraints)
     
     # Return Value:
     return()
@@ -182,39 +263,39 @@ function()
     #   type = c("BoxGroup", "RiskBudget"))
     
     # Data, Specification and Constraints:
-    Data = as.timeSeries(data(smallcap.ts))
-    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
-    Spec = portfolioSpec()
-    Constraints = NULL
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG", "GYMB", "KRON")]
+    spec = portfolioSpec()
+    constraints = NULL
     
     # Set Default Box-Group Constraints:
     # These are: 0 <= W[1:nAssets] <= 1, no Group Constraints ...
-    ans = .setConstraints(Data, Spec, Constraints)
+    ans = .setConstraints(data, spec, constraints)
     .getConstraints(ans)
     
     # Set Default Covariance Risk-Budget Constraints:
-    # ans = .setConstraints(Data, Spec, Constraints, type = "RiskBudget")  
+    ans = .setConstraints(data, spec, constraints, type = "RiskBudget")  
     # .getConstraints(ans)                                       # CHECK !!!
     
     # Short:
-    Constraints = "Short"
-    ans = .setConstraints(Data, portfolioSpec(), Constraints)    # CHECK !!!
+    constraints = "Short"
+    ans = .setConstraints(data, portfolioSpec(), constraints)    # CHECK !!!
     .getConstraints(ans)
     
     # Long Only:
-    Constraints = "LongOnly"
-    ans = .setConstraints(Data, portfolioSpec(), Constraints)
+    constraints = "LongOnly"
+    ans = .setConstraints(data, portfolioSpec(), constraints)
     .getConstraints(ans)
     
     # minW, maxW:
-    Constraints = 
-        c("minW[1:nAssets]=0.09", "maxW[1:nAssets]=rep(c(0.6, 0.4),4)")
-    ans = .setConstraints(Data, portfolioSpec(), Constraints)    # CHECK !!!
+    constraints = 
+        c("minW[1:nAssets]=0.09", "maxW[1:nAssets]=rep(c(0.6, 0.4),2)")
+    ans = .setConstraints(data, portfolioSpec(), constraints)    # CHECK !!!
     .getConstraints(ans)
     
     # minsumW, maxsumW:
-    Constraints = c("minsumW[c(2,4)]=0.20", "maxsumW[4:6]=0.80")
-    ans = .setConstraints(Data, portfolioSpec(), Constraints)    # CHECK !!!
+    constraints = c("minsumW[c(2,4)]=0.20", "maxsumW[3:4]=0.80")
+    ans = .setConstraints(data, portfolioSpec(), constraints)    # CHECK !!!
     .getConstraints(ans)
     
     # Return Value:
