@@ -95,21 +95,12 @@ function()
    
     # Set Default Specifications - Long Only MV Portfolio
     spec = portfolioSpec()
+    setNFrontierPoints(spec) = 10
     spec
    
     # Calculation of Long Only Minimum Variance Portfolio
     Frontier = portfolioFrontier(data, spec)
     Frontier
-    
-    # Plot:
-    par(mfrow = c(2, 2), cex = 0.7)
-    weightsPlot(Frontier) 
-    attributesPlot(Frontier) 
-    riskBudgetsPlot(Frontier) 
-    
-    # Summary:
-    par(mfrow = c(2, 2), cex = 0.7) 
-    summary(Portfolio)
     
     # Return Value:
     return()
@@ -123,20 +114,17 @@ test.show =
 function()
 { 
     # Load Data::
-    Data = as.timeSeries(data(smallcap.ts))
-    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
-    head(Data)
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG", "GYMB", "KRON")]
+    head(data)
    
     # Set Default Specifications:
-    Spec = portfolioSpec()
-    Spec
+    spec = portfolioSpec()
+    setNFrontierPoints(spec) = 10
+    spec
    
     # Calculation of Long Only Minimum Variance Portfolio:
-    Frontier = portfolioFrontier(Data, Spec)
-    Frontier
-    
-    # Show and Print:
-    print(Frontier)
+    Frontier = portfolioFrontier(data, spec)
     show(Frontier)
     
     # Return Value:
@@ -154,28 +142,18 @@ function()
     # feasiblePortfolio(data, spec = portfolioSpec(), constraints = NULL)
     
     # Get Data:
-    Data = as.timeSeries(data(smallcap.ts))
-    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
-    head(Data)
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG", "GYMB", "KRON")]
+    head(data)
    
     # Set Default Specifications - Long Only MV Portfolio
-    Spec = portfolioSpec()
-    setWeights(Spec) = rep(1/4, times = 4)
-    Spec
+    spec = portfolioSpec()
+    setWeights(spec) = rep(1/4, times = 4)
+    spec
     
     # Optimize Long Only Minimum Variance Portfolio:
-    Portfolio = feasiblePortfolio(Data, Spec)
-    Portfolio    
-    
-    # Plot:
-    par(mfrow = c(2, 2), cex = 0.7)
-    weightsPie(Portfolio) 
-    attributesPie(Portfolio) 
-    riskBudgetsPie(Portfolio)  
-    
-    # Summary:
-    par(mfrow = c(2, 2), cex = 0.7) 
-    summary(Portfolio)                                                                
+    Portfolio = feasiblePortfolio(data, spec)  
+    Portfolio                                                           
      
     # Return Value:
     return()
@@ -192,30 +170,20 @@ function()
     # feasiblePortfolio(data, spec = portfolioSpec(), constraints = NULL)
     
     # Get Data:
-    Data = as.timeSeries(data(smallcap.ts))
-    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
-    head(Data)
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG", "GYMB", "KRON")]
+    head(data)
    
     # Set Default Specifications - Long Only MV Portfolio
-    Spec = portfolioSpec()
-    setWeights(Spec) = rep(1/4, times = 4)
+    spec = portfolioSpec()
+    setWeights(spec) = rep(1/4, times = 4)
     require(Rdonlp2)
-    setSolver(Spec)<-"RDonlp2"
-    Spec
+    setSolver(spec)<-"Rdonlp2"
+    spec
     
     # Optimize Long Only Minimum Variance Portfolio:
-    Portfolio = feasiblePortfolio(Data, Spec)
-    Portfolio  
-    
-    # Plot:
-    par(mfrow = c(2, 2), cex = 0.7)
-    weightsPie(Portfolio) 
-    attributesPie(Portfolio) 
-    riskBudgetsPie(Portfolio)   
-    
-    # Summary:
-    par(mfrow = c(2, 2), cex = 0.7) 
-    summary(Portfolio)                                                         
+    Portfolio = feasiblePortfolio(data, spec)  
+    Portfolio                                                       
      
     # Return Value:
     return()
@@ -232,27 +200,17 @@ function()
     # cmlPortfolio(data, spec = portfolioSpec(), constraints = NULL)
     
     # Load Data:
-    Data = as.timeSeries(data(smallcap.ts))
-    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
-    head(Data)
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG", "GYMB", "KRON")]
+    head(data)
    
     # Set Default Specifications - Long Only MV Portfolio
-    Spec = portfolioSpec()
-    Spec
+    spec = portfolioSpec()
+    spec
     
     # Calculation of Long Only Minimum Variance Portfolio:
-    Portfolio = cmlPortfolio(Data, Spec)
+    Portfolio = cmlPortfolio(data, spec)
     Portfolio
-    
-    # Plot:
-    par(mfrow = c(2, 2), cex = 0.7)
-    weightsPie(Portfolio) 
-    attributesPie(Portfolio) 
-    riskBudgetsPie(Portfolio) 
-    
-    # Summary:
-    par(mfrow = c(2, 2), cex = 0.7) 
-    summary(Portfolio)
     
     # Return Value:
     return()
@@ -269,27 +227,17 @@ function()
     # tangencyPortfolio(data, spec = portfolioSpec(), constraints = NULL)
     
     # Load Data:
-    Data = as.timeSeries(data(smallcap.ts))
-    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
-    head(Data)
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG", "GYMB", "KRON")]
+    head(data)
     
     # Set Default Specifications - Long Only MV Portfolio
-    Spec = portfolioSpec()
-    Spec
+    spec = portfolioSpec()
+    spec
     
     # Calculation of Long Only Minimum Variance Portfolio
-    Portfolio = tangencyPortfolio(Data, Spec)
+    Portfolio = tangencyPortfolio(data, spec)
     Portfolio
-    
-    # Plot:
-    par(mfrow = c(2, 2), cex = 0.7)
-    weightsPie(Portfolio) 
-    attributesPie(Portfolio) 
-    riskBudgetsPie(Portfolio)
-    
-    # Summary:
-    par(mfrow = c(2, 2), cex = 0.7) 
-    summary(Portfolio)
     
     # Return Value:
     return()
@@ -306,27 +254,17 @@ function()
     # minvariancePortfolio(data, spec = portfolioSpec(), constraints = NULL)
     
     # Load Data:
-    Data = as.timeSeries(data(smallcap.ts))
-    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
-    head(Data)
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG", "GYMB", "KRON")]
+    head(data)
     
     # Set Default Specifications - Long Only MV Portfolio
-    Spec = portfolioSpec()
-    Spec
+    spec = portfolioSpec()
+    spec
     
     # Calculation of Long Only Minimum Variance Portfolio
-    Portfolio = minvariancePortfolio(Data, Spec)
+    Portfolio = minvariancePortfolio(data, spec)
     Portfolio
-    
-    # Plot:
-    par(mfrow = c(2, 2), cex = 0.7)
-    weightsPie(Portfolio) 
-    attributesPie(Portfolio) 
-    riskBudgetsPie(Portfolio) 
-    
-    # Summary:
-    par(mfrow = c(2, 2), cex = 0.7) 
-    summary(Portfolio)
 
     # Return Value:
     return()
@@ -343,29 +281,19 @@ function()
     # minvariancePortfolio(data, spec = portfolioSpec(), constraints = NULL)
     
     # Load Data:
-    Data = as.timeSeries(data(smallcap.ts))
-    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
-    head(Data)
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG", "GYMB", "KRON")]
+    head(data)
     
     # Set Default Specifications - Long Only MV Portfolio
-    Spec = portfolioSpec()
+    spec = portfolioSpec()
     require(Rdonlp2)
-    setSolver(Spec)<-"RDonlp2"
-    Spec
+    setSolver(spec)<-"Rdonlp2"
+    spec
     
     # Calculation of Long Only Minimum Variance Portfolio
-    Portfolio = minvariancePortfolio(Data, Spec)
+    Portfolio = minvariancePortfolio(data, spec)
     Portfolio
-    
-    # Plot:
-    par(mfrow = c(2, 2), cex = 0.7)
-    weightsPie(Portfolio) 
-    attributesPie(Portfolio) 
-    riskBudgetsPie(Portfolio) 
-
-    # Summary:
-    par(mfrow = c(2, 2), cex = 0.7) 
-    summary(Portfolio)
     
     # Return Value:
     return()
@@ -382,61 +310,54 @@ function()
     # efficientPortfolio(data, spec = portfolioSpec(), constraints = NULL) 
  
     # Load Data:
-    Data = as.timeSeries(data(smallcap.ts))
-    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
-    head(Data)
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG", "GYMB", "KRON")]
+    head(data)
    
     # Set Default Specifications - Long Only MV Portfolio
-    Spec = portfolioSpec()
-    setTargetReturn(Spec)<-mean(seriesData(Data))
-    Spec
+    spec = portfolioSpec()
+    setTargetReturn(spec)<-mean(seriesData(Data))
+    spec
+    
+    # Constraints:
+    constraints = NULL
+    constraints
    
     # Calculation of Long Only Minimum Variance Portfolio
-    Portfolio = efficientPortfolio(Data, Spec)
+    Portfolio = efficientPortfolio(data, spec, constraints)
     Portfolio
-    
-    # Plot:
-    par(mfrow = c(2, 2), cex = 0.7)
-    weightsPie(Portfolio) 
-    attributesPie(Portfolio) 
-    riskBudgetsPie(Portfolio) 
-    
-    # Summary:
-    par(mfrow = c(2, 2), cex = 0.7) 
-    summary(Portfolio)
    
     # Return Value:
     return()
 }
 
 
-
-# ------------------------------------------------------------------------------
+################################################################################
 
 
 test.plot.RQuadprog =
 function()
 { 
     # Load Data:
-    Data = as.timeSeries(data(smallcap.ts))
-    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
-    head(Data)
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG", "GYMB", "KRON")]
+    head(data)
    
     # Set Default Specifications:
-    Spec = portfolioSpec()
-    Spec
+    spec = portfolioSpec()
+    spec
     
     # Set Constraints:
-    Constraints = "LongOnly"
-    Constraints
+    constraints = "LongOnly"
+    constraints
    
     # Calculation of Long Only Minimum Variance Portfolio:
-    Frontier = portfolioFrontier(Data, Spec, Constraints)
+    Frontier = object = portfolioFrontier(data, spec, constraints)
     Frontier
     
     # Plot:
     par(mfrow = c(1, 1))
-    plot(Frontier, which = 1)
+    frontierPlot(Frontier, pch = 19)
     .minvariancePlot(Frontier, col = "red", pch = 19, cex = 1.5)  
     .tangencyPlot(Frontier, col = "green") 
     .singleAssetPlot(Frontier, col = "red", cex = 1.5)

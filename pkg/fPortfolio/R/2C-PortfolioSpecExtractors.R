@@ -81,11 +81,7 @@ function(object)
     # FUNCTION:
     
     # Get Type:
-    if (class(object) == "fPFOLIOSPEC") {
-        ans = object@model$type[1]
-    } else if (class(object) == "fPORTFOLIO") {
-        ans = object@specification$spec@model$type[1]
-    }
+    ans = object@model$type[1]
     
     # Return Value:
     ans  
@@ -108,11 +104,7 @@ function(object)
     # FUNCTION:
     
     # Get Estimator:
-    if (class(object) == "fPFOLIOSPEC") {
-        ans = object@model$estimator
-    } else if (class(object) == "fPORTFOLIO") {
-        ans = object@specification$spec@model$estimator
-    }
+    ans = object@model$estimator
     
     # Return Value:
     ans  
@@ -135,11 +127,7 @@ function(object)
     # FUNCTION:
     
     # Get Params:
-    if (class(object) == "fPFOLIOSPEC") {
-        ans = object@model$params
-    } else if (class(object) == "fPORTFOLIO") {
-        ans = object@specification$spec@model$params
-    }
+    ans = object@model$params
     
     # Return Value:
     ans  
@@ -163,11 +151,7 @@ function(object)
     # FUNCTION:
     
     # Get Weights:
-    if (class(object) == "fPFOLIOSPEC") {
-        ans = object@portfolio$weights
-    } else if (class(object) == "fPORTFOLIO") {
-        ans = object@portfolio$weights
-    }
+    ans = object@portfolio$weights
     
     # Return Value:
     ans  
@@ -193,11 +177,7 @@ function(object)
     # FUNCTION:
     
     # Get Target Return:
-    if (class(object) == "fPFOLIOSPEC") {
-        ans = object@portfolio$targetReturn
-    } else if (class(object) == "fPORTFOLIO") {
-        ans = object@specification$spec@portfolio$targetReturn
-    }
+    ans = object@portfolio$targetReturn
     
     # Return Value:
     ans
@@ -220,11 +200,7 @@ function(object)
     # FUNCTION:
     
     # Get Target Risk:
-    if (class(object) == "fPFOLIOSPEC") {
-        ans = object@portfolio$targetRisk
-    } else if (class(object) == "fPORTFOLIO") {
-        ans = object@specification$spec@portfolio$targetRisk
-    }
+    ans = object@portfolio$targetRisk
     
     # Return Value:
     ans
@@ -247,11 +223,7 @@ function(object)
     # FUNCTION:
     
     # Get Target Alpha:
-    if (class(object) == "fPFOLIOSPEC") {
-        ans = object@portfolio$targetAlpha
-    } else if (class(object) == "fPORTFOLIO") {
-        ans = object@specification$spec@portfolio$targetAlpha
-    }
+    ans = object@portfolio$targetAlpha
     
     # Return Value:
     ans
@@ -274,11 +246,7 @@ function(object)
     # FUNCTION:
     
     # Get Risk Free Rate:
-    if (class(object) == "fPFOLIOSPEC") {
-        ans = object@portfolio$riskFreeRate
-    } else if (class(object) == "fPORTFOLIO") {
-        ans = object@specification$spec@portfolio$riskFreeRate
-    }
+    ans = object@portfolio$riskFreeRate
     
     # Return Value:
     ans
@@ -301,11 +269,7 @@ function(object)
     # FUNCTION:
     
     # Get Number of Frontier Points:
-    if (class(object) == "fPFOLIOSPEC") {
-        ans = object@portfolio$nFrontierPoints
-    } else if (class(object) == "fPORTFOLIO") {
-        ans = object@specification$spec@portfolio$nFrontierPoints
-    }
+    ans = object@portfolio$nFrontierPoints
     
     # Return Value:
     ans
@@ -328,11 +292,7 @@ function(object)
     # FUNCTION:
     
     # Get Solver:
-    if (class(object) == "fPFOLIOSPEC") {
-        ans = object@solver$solver[1]
-    } else if (class(object) == "fPORTFOLIO") {
-        ans = object@specification$spec@solver$solver[1]
-    }
+    ans = object@solver$solver[1]
     
     # Return Value:
     ans  
@@ -355,11 +315,7 @@ function(object)
     # FUNCTION:
     
     # Get Trace:
-    if (class(object) == "fPFOLIOSPEC") {
-        ans = object@solver$trace
-    } else if (class(object) == "fPORTFOLIO") {
-        ans = object@specification$spec@solver$trace
-    }
+    ans = object@solver$trace
     
     # Return Value:
     ans  

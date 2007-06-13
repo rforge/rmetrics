@@ -42,7 +42,7 @@ function()
 {
     # Help File:
     helpFile = function() { 
-        example(???, ask = FALSE)
+        example(DrawdownStatistics, ask = FALSE)
         return() 
     }
     checkIdentical(

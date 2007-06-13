@@ -37,7 +37,7 @@ function()
 {
     # Help File:
     helpFile = function() { 
-        example(???, ask = FALSE)
+        example(PortfolioDataSets, ask = FALSE)
         return() 
     }
     checkIdentical(

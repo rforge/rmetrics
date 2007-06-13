@@ -62,8 +62,10 @@ function()
 test.feasibleConstrainedLPMPortfolio = 
 function()
 {
-    Data = as.timeSeries(data(smallcap.ts))
-    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
+    # Load Data:
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG", "GYMB", "KRON")]
+    head(data)
     
     # Not Yet Ready ...
     
@@ -78,8 +80,10 @@ function()
 test.cmlConstrainedLPMPortfolio = 
 function()
 {
-    Data = as.timeSeries(data(smallcap.ts))
-    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
+    # Load Data:
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG", "GYMB", "KRON")]
+    head(data)
     
     # Not Yet Ready ...
     
@@ -94,8 +98,10 @@ function()
 test.tangencyConstrainedLPMPortfolio = 
 function()
 {
-    Data = as.timeSeries(data(smallcap.ts))
-    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
+    # Load Data:
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG", "GYMB", "KRON")]
+    head(data)
     
     # Not Yet Ready ...
     
@@ -110,8 +116,10 @@ function()
 test.minvarianceConstrainedLPMPortfolio = 
 function()
 {
-    Data = as.timeSeries(data(smallcap.ts))
-    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
+    # Load Data:
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG", "GYMB", "KRON")]
+    head(data)
     
     # Not Yet Ready ...
     
@@ -126,8 +134,10 @@ function()
 test.efficientConstrainedLPMPortfolio = 
 function()
 {
-    Data = as.timeSeries(data(smallcap.ts))
-    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
+    # Load Data:
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG", "GYMB", "KRON")]
+    head(data)
     
     # Not Yet Ready ...
     
@@ -142,8 +152,10 @@ function()
 test.portfolioConstrainedLPMFrontier = 
 function()
 {
-    Data = as.timeSeries(data(smallcap.ts))
-    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
+    # Load Data:
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG", "GYMB", "KRON")]
+    head(data)
     
     # Not Yet Ready ...
     

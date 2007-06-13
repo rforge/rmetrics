@@ -9,10 +9,11 @@
 \alias{show,fPORTFOLIO-method}
 
 \alias{feasiblePortfolio}
+
+\alias{efficientPortfolio}
 \alias{cmlPortfolio}
 \alias{tangencyPortfolio}
 \alias{minvariancePortfolio}
-\alias{efficientPortfolio}
 \alias{portfolioFrontier}
       
 \alias{plot.fPORTFOLIO}
@@ -460,7 +461,6 @@ frontierSlider(object, control = list(), \dots)
 
 
 \examples{
-\dontrun{
 ## minvariancePortfolio -
    # Load Data and Convert to timeSeries Object:
    Data = as.timeSeries(data(smallcap.ts))
@@ -483,7 +483,7 @@ frontierSlider(object, control = list(), \dots)
     
 ## plot -
    # Plot Efficient Frontier with Minimum Variance Portfolio
-   plot(frontier, which = c(1, 3))
+   # plot(frontier, which = c(1, 3))
     
 ## frontierSlider -
    # Try Frontier Slider:
@@ -492,7 +492,6 @@ frontierSlider(object, control = list(), \dots)
 ## weightsSlider -
    # Try Weights Slider:
    # weightsSlider(frontier)
-}
 }
 
 

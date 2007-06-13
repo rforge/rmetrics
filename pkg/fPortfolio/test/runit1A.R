@@ -128,6 +128,7 @@ function()
     fit = assetsFit(x, "st", fixed.df = 4)
     fit
     
+    par(ask = FALSE)
     class(fit)
     print(fit)
     plot(fit)                                                    # CHECK X-Label

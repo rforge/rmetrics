@@ -84,16 +84,16 @@ function(data, spec, constraints)
     names(weights) = names(mu)
     
     # Target Return:
-    targetReturn = as.numeric(mu %*% weights)
-    names(targetReturn) <- getEstimator(spec)[1]
+    targetReturn = matrix(as.numeric(mu %*% weights), nrow = 1)
+    colnames(targetReturn) <- getEstimator(spec)[1]
     
     # Compute Target Risks:
     covTargetRisk = sqrt( as.numeric( weights %*% Sigma %*% weights ) )
     x = getSeries(data)@Data %*% weights
     VaR = quantile(x, targetAlpha, type = 1)
     CVaR = VaR - 0.5*mean(((VaR-x) + abs(VaR-x))) / targetAlpha
-    targetRisk = c(covTargetRisk, CVaR, VaR)
-    names(targetRisk) <- 
+    targetRisk = matrix(c(covTargetRisk, CVaR, VaR), nrow = 1)
+    colnames(targetRisk) <- 
         c("cov", paste(c("CVaR.", "VaR."), targetAlpha*100, "%", sep = ""))
     
     # Return Value:
@@ -159,16 +159,16 @@ function(data, spec, constraints)
     names(weights) = names(mu)
     
     # Get Target Risk:
-    targetReturn = as.numeric(mu %*% weights)
-    names(targetReturn) <- getEstimator(spec)[1]
+    targetReturn = matrix(as.numeric(mu %*% weights), nrow = 1)
+    colnames(targetReturn) <- getEstimator(spec)[1]
     
     # Compute Target Risks:
     covTargetRisk = sqrt( as.numeric( weights %*% Sigma %*% weights ) )
     x = getSeries(data)@Data %*% weights
     VaR = quantile(x, targetAlpha, type = 1)
     CVaR = VaR - 0.5*mean(((VaR-x) + abs(VaR-x))) / targetAlpha
-    targetRisk = c(covTargetRisk, CVaR, VaR)
-    names(targetRisk) <- 
+    targetRisk = matrix(c(covTargetRisk, CVaR, VaR), nrow = 1)
+    colnames(targetRisk) <- 
         c("cov", paste(c("CVaR.", "VaR."), targetAlpha*100, "%", sep = ""))
     
     # Return Value:
@@ -249,15 +249,16 @@ function(data, spec, constraints)
 
     # Get Target Return:     
     targetReturn = spec@portfolio$targetReturn = as.numeric(cml$maximum)  
-    names(targetReturn) <- getEstimator(spec)[1]
+    targetReturn = matrix(targetReturn, nrow = 1) 
+    colnames(targetReturn) <- getEstimator(spec)[1]
     
     # Compute Target Risks:
     covTargetRisk = as.numeric(attr(cml$objective, "targetRisk"))
     x = getSeries(data)@Data %*% weights
     VaR = quantile(x, targetAlpha, type = 1)
     CVaR = VaR - 0.5*mean(((VaR-x) + abs(VaR-x))) / targetAlpha
-    targetRisk = c(covTargetRisk, CVaR, VaR)
-    names(targetRisk) <- 
+    targetRisk = matrix(c(covTargetRisk, CVaR, VaR), nrow = 1)
+    colnames(targetRisk) <- 
         c("cov", paste(c("CVaR.", "VaR."), targetAlpha*100, "%", sep = ""))
         
     # Return Value:
@@ -336,10 +337,12 @@ function(data, spec, constraints)
     
     # FUNCTION:
 
-    # Get Statistics:
+    # Create Data Object:
     if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
-    mu = getStatistics(data)$mu
-    Sigma = getStatistics(data)$Sigma
+    
+    # Get Specifications:
+    mu = getMu(data) 
+    Sigma = getSigma(data)
     nAssets = getNumberOfAssets(data)
 
     # Get or Set Target Alpha:
@@ -370,7 +373,8 @@ function(data, spec, constraints)
     # Get Target Return:
     targetReturn = spec@portfolio$targetReturn = 
         as.numeric(attr(minVar$objective, "targetReturn"))
-    names(targetReturn) <- spec@model$estimator[1]
+    targetReturn = matrix(targetReturn, nrow = 1) 
+    colnames(targetReturn) <- spec@model$estimator[1]
     
     # Get Target Risk:
     # targetRisk = as.numeric(minVar$objective)      
@@ -381,8 +385,8 @@ function(data, spec, constraints)
     x = getSeries(data)@Data %*% weights
     VaR = quantile(x, targetAlpha, type = 1)
     CVaR = VaR - 0.5*mean(((VaR-x) + abs(VaR-x))) / targetAlpha
-    targetRisk = c(covTargetRisk, CVaR, VaR)
-    names(targetRisk) <- 
+    targetRisk = matrix(c(covTargetRisk, CVaR, VaR), nrow = 1)
+    colnames(targetRisk) <- 
         c("cov", paste(c("CVaR.", "VaR."), targetAlpha*100, "%", sep = ""))
     
     # Return Value:
@@ -418,10 +422,12 @@ function(data, spec, constraints)
 
     # FUNCTION:
 
-    # Get Statistics:
+    # Create Data Object:
     if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
-    mu = getStatistics(data)$mu
-    Sigma = getStatistics(data)$Sigma
+    
+    # Get Specifications:
+    mu = getMu(data) 
+    Sigma = getSigma(data)
     nAssets = getNumberOfAssets(data)
 
     # Get or Set Target Alpha:
@@ -431,8 +437,9 @@ function(data, spec, constraints)
     nFrontierPoints = getNFrontierPoints(spec)
     
     # Calculate Efficient Frontier:
-    targetMu = targetSigma = nextWeights = rep(0, times = nFrontierPoints)
-    targetWeights = error = NULL
+    # targetMu = targetSigma = nextWeights = rep(0, times = nFrontierPoints)
+    # targetWeights = error = NULL
+    targetReturn = targetRisk = targetWeights = error = NULL
 
     # Loop over .efficientConstrainedMVPortfolio
     Spec = spec
@@ -453,8 +460,11 @@ function(data, spec, constraints)
         Spec@portfolio$weights = nextPortfolio@portfolio$weights
         
         # Target Return and Risk:
-        targetMu[k] = nextPortfolio@portfolio$targetReturn
-        targetSigma[k] = nextPortfolio@portfolio$targetRisk[1]
+        targetReturn = rbind(targetReturn, nextPortfolio@portfolio$targetReturn)
+        
+        # Target Return and Risk:
+        targetRisk = rbind(targetRisk, nextPortfolio@portfolio$targetRisk)
+        
         nextWeights = nextPortfolio@portfolio$weights
         names(nextWeights) = names(mu)
         
@@ -471,14 +481,13 @@ function(data, spec, constraints)
     weights = weights[Index, ]
     
     # Get TargetReturn:
-    targetReturn = targetMu
-    names(targetReturn) <- NULL  
-    targetReturn = targetReturn[Index]
+    DIM = dim(targetReturn)[2]
+    targetReturn = targetReturn[Index, ]
+    targetReturn = matrix(targetReturn, ncol = DIM)
+    colnames(targetReturn) = getEstimator(spec)[1]
     
     # Get Target Risk:
-    targetRisk = targetSigma
-    names(targetRisk) = NULL  
-    targetRisk = targetRisk[Index]
+    targetRisk = targetRisk[Index, ]
   
     # Return Value:
     new("fPORTFOLIO", 

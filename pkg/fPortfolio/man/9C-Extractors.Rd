@@ -8,6 +8,7 @@
 \alias{getEstimator}
 \alias{getFrontier}
 \alias{getMu}
+\alias{getNames}
 \alias{getNumberOfAssets}
 \alias{getNFrontierPoints}
 \alias{getPortfolio}
@@ -51,6 +52,7 @@ getData(object)
 getEstimator(object)
 getFrontier(object, \dots)
 getMu(object)
+getNames(object)
 getNumberOfAssets(object)
 getNFrontierPoints(object)
 getPortfolio(object)

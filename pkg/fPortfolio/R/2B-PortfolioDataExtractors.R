@@ -29,9 +29,10 @@
 
 ################################################################################
 # FUNCTION:                     PORTFOLIO S4 EXTRACTORS FROM DATA SLOT:
-#  getData                        Extracts data slot
-#   getSeries                    Extracts assets series data 
-#   getNumberOfAssets            Extracts number of assets from statistics
+#  getData                       Extracts data slot
+#   getSeries                     Extracts assets series data 
+#   getNumberOfAssets             Extracts number of assets from statistics
+#   getNames                      Extracts assets names
 #  getStatistics                 Extracts statistics slot
 #   getMu                         Extracs mean  mu from statistics
 #   getSigma                      Extracs covariance Sigma from statistics
@@ -119,6 +120,30 @@ function(object)
     # Return Value:
     ans  
 }
+
+
+# ------------------------------------------------------------------------------
+
+
+getNames.fPFOLIODATA =
+function(object)
+{   # A function implemented by Rmetrics
+
+    # Description:
+    #   Extracts the asset names from a 'fPORTFOLIO' object
+     
+    # FUNCTION:
+      
+    # Get Names of Assets:
+    ans = names(getMu(object))
+    if(is.null(ans)){
+        counter = seq(1, getNumberOfAssets(object), 1)
+        ans = paste("A", counter, sep = "")
+    }
+      
+    # Return Value:
+    ans  
+} 
 
 
 

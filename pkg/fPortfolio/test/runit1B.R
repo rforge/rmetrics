@@ -64,6 +64,7 @@ function()
 { 
     X = as.timeSeries(data(berndtInvest))
     par(mfrow = c(2,2), cex = 0.7)
+    par(ask = FALSE)
     assetsSeriesPlot(X, which = c(2, 4, 11, 13))
     
     # Return Value:
@@ -79,6 +80,7 @@ function()
 { 
     X = as.timeSeries(data(berndtInvest))
     par(mfrow = c(2,2), cex = 0.7)
+    par(ask = FALSE)
     assetsHistPlot(X, which = c(2, 4, 11, 13))                    # CHECK - main
     
     # Return Value:
@@ -94,6 +96,7 @@ function()
 { 
     X = as.timeSeries(data(berndtInvest))
     par(mfrow = c(2,2), cex = 0.7)
+    par(ask = FALSE)
     # assetsDensityPlot(X, which = c(2, 4, 11, 13))                # CHECK fails    
     
     # Return Value:
@@ -109,6 +112,7 @@ function()
 { 
     X = as.timeSeries(data(berndtInvest))
     par(mfrow = c(2,2), cex = 0.7)
+    par(ask = FALSE)
     assetsQQNormPlot(X, which = c(2, 4, 11, 13))
     
     # Return Value:
@@ -124,6 +128,7 @@ function()
 { 
     X = as.timeSeries(data(berndtInvest))
     par(mfrow = c(2,2), cex = 0.7)
+    par(ask = FALSE)
     assetsPairsPlot(X[, c(2, 4, 11, 13)])
     
     # Return Value:
@@ -139,6 +144,7 @@ function()
 { 
     X = as.timeSeries(data(berndtInvest))
     par(mfrow = c(2,2), cex = 0.7)
+    par(ask = FALSE)
     assetsCorTestPlot(X[, c(2, 4, 11, 13)], scale = 0.7)
     
     # Return Value:

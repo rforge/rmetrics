@@ -56,7 +56,7 @@ function()
 }
 
 
-# ------------------------------------------------------------------------------
+################################################################################
 
 
 test.feasibleConstrainedCVaRPortfolio =
@@ -83,7 +83,8 @@ function()
     constraints
     
     # CVaR Portfolio:
-    .feasibleConstrainedCVaRPortfolio(data, spec, constraints)
+    Portfolio = .feasibleConstrainedCVaRPortfolio(data, spec, constraints)
+    Portfolio
     
     # Return Value:
     return()

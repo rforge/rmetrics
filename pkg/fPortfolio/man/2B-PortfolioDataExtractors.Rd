@@ -5,6 +5,7 @@
 \alias{getData.fPFOLIODATA}
 \alias{getSeries.fPFOLIODATA}
 \alias{getNumberOfAssets.fPFOLIODATA}
+\alias{getNames.fPFOLIODATA}
 
 \alias{getStatistics.fPFOLIODATA}
 \alias{getMu.fPFOLIODATA}
@@ -29,6 +30,7 @@
     \code{getData} \tab Extracts data slot, \cr
     \code{getSeries} \tab Extracts assets series data, \cr
     \code{getNumberOfAssets} \tab Extracts number of assets from statistics, \cr
+    \code{getNames} \tab Extracts names of assets, \cr
     \code{getStatistics} \tab Extracts statistics slot, \cr
     \code{getMu} \tab Extracs mean  mu from statistics, \cr
     \code{getSigma} \tab Extracs covariance Sigma from statistics, \cr
@@ -41,6 +43,7 @@
 \method{getData}{fPFOLIODATA}(object)
 \method{getSeries}{fPFOLIODATA}(object)
 \method{getNumberOfAssets}{fPFOLIODATA}(object)
+\method{getNames}{fPFOLIODATA}(object)
 
 \method{getStatistics}{fPFOLIODATA}(object)
 \method{getMu}{fPFOLIODATA}(object)

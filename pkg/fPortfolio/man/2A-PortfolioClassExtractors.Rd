@@ -4,6 +4,7 @@
 
 \alias{getData.fPORTFOLIO}
 \alias{getSpec.fPORTFOLIO}
+\alias{getType.fPORTFOLIO}
 \alias{getConstraints.fPORTFOLIO}
 \alias{getPortfolio.fPORTFOLIO}
 \alias{getWeights.fPORTFOLIO}
@@ -32,6 +33,7 @@
     \tabular{ll}{
     \code{getData} \tab Extracts ..., \cr
     \code{getSpec} \tab Extracts ..., \cr
+    \code{getType \tab Extracts ..., \cr
     \code{getConstraints} \tab Extracts ..., \cr
     \code{getPortfolio} \tab Extracts ..., \cr
     \code{getWeights} \tab Extracts ..., \cr
@@ -49,6 +51,7 @@
 \usage{
 \method{getData}{fPORTFOLIO}(object)
 \method{getSpec}{fPORTFOLIO}(object)
+\method{getType}{fPORTFOLIO}(object)
 \method{getConstraints}{fPORTFOLIO}(object)
 \method{getPortfolio}{fPORTFOLIO}(object)
 \method{getWeights}{fPORTFOLIO}(object)

@@ -93,13 +93,13 @@ function()
    
     
     # uses "mve" from [MASS]
-    assetsMeanCov(Data, method = "mve")
+    # assetsMeanCov(Data, method = "mve")
     
     # uses "mcd" from [MASS]
-    assetsMeanCov(Data, method = "mcd")
+    # assetsMeanCov(Data, method = "mcd")
     
     # uses "nnve" from [covRobust]
-    assetsMeanCov(Data, method = "nnve")                       # CHECK control
+    # assetsMeanCov(Data, method = "nnve")                       # CHECK control
     
     # uses "shrinkage" from [corpcor]
     assetsMeanCov(Data, method = "shrink")

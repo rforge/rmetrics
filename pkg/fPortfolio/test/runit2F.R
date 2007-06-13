@@ -29,7 +29,7 @@
 
 ################################################################################
 # FUNCTION:                    EFFICIENT FRONTIER PLOT AND ADDONS:  
-#  frontierPlot                  Plots efficient Frontier
+#  frontierPlot                 Plots efficient Frontier
 #   .sharpeRatioPlot             Adds Sharpe Ratio
 #   .minvariancePlot             Adds Minimum Variance point
 #   .cmlPlot                     Adds Market Portfolio and Capital Market Line
@@ -45,8 +45,11 @@
 #  weightsPlot                  Plots staggered weights
 #  weightsPie                   Plots staggered weights
 #  attributesPlot               Plots weighted means
+#  attributesPie                Plots weighted means
+#  riskBudgetsPlot              Plots weighted risks
+#  riskBudgetsPie               Plots weighted risks
 # FUNCTION:                    DESCRIPTION:
-#  covEllipsesPlot              Plots covariance ellipses                    
+#  covEllipsesPlot              Plots covariance ellipses                 
 ################################################################################
 
 
@@ -84,12 +87,6 @@ function()
     myPF = portfolioFrontier(Data)
     par(mfrow = c(1, 1))
     plot(myPF, which = c(1, 8, 2:6))
-
-    # MV Portfolio Frontier Plot from Statistics Data:
-    Statistics = portfolioData(Data)$statistics
-    myPF = portfolioFrontier(Statistics)
-    par(mfrow = c(1, 1))
-    plot(myPF, which = c(1, 8, 2:6)) 
     
     # CVaR Portfolio Frontier Plot from Time Series Data:
     Spec = portfolioSpec()

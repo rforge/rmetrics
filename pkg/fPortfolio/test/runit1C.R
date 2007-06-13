@@ -145,6 +145,7 @@ function()
 test.assetsSelectKMeans =
 function()
 { 
+    if (FALSE) {
     require(cluster)
         
         
@@ -225,6 +226,9 @@ function()
     .assetsSelect(X, 4, "kmeans", doplot = FALSE)
     .assetsSelect(X, 4, "pam", doplot = FALSE)
     .assetsSelect(X, 4, "clara", doplot = FALSE)
+    
+    }
+    NA
    
     # Return Value:
     return()

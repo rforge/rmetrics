@@ -67,7 +67,7 @@ function()
 #   and risk budget constraints.
 
 
-# ------------------------------------------------------------------------------
+################################################################################
 
 
 test.feasibleConstrainedMVPortfolio = 
@@ -130,10 +130,10 @@ function()
 }
 
 
-# ------------------------------------------------------------------------------
+################################################################################
 
 
-test.efficientConstrainedMVPortfolio = 
+test.efficientConstrainedMVPortfolio.LongOnly = 
 function()
 {
     # Data:
@@ -143,16 +143,34 @@ function()
     
     # Specification:
     spec = portfolioSpec()
-    spec
-    
-    # Modify Target Return:
-    targetReturn = mean(colMeans(data@Data))
-    targetReturn
-    setTargetReturn(spec) <- targetReturn
+    setTargetReturn(spec) <- mean(seriesData(data))
     spec
     
     # Efficient Portfolio:
     .efficientConstrainedMVPortfolio(data, spec, "LongOnly")
+    
+    # Return Value:
+    return()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.efficientConstrainedMVPortfolio.Tailored = 
+function()
+{
+    # Data:
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG", "GYMB", "KRON")]
+    head(data)
+    
+    # Specification:
+    spec = portfolioSpec()
+    setTargetReturn(spec) <- mean(seriesData(data))
+    spec
+    
+    # Efficient Portfolio:
     .efficientConstrainedMVPortfolio(data, spec, "maxW[1:nAssets]=0.6")
     
     # Return Value:
@@ -161,6 +179,90 @@ function()
 
 
 # ------------------------------------------------------------------------------
+
+
+test.efficientConstrainedMVPortfolio.Rdonlp2 = 
+function()
+{
+    # Data:
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG", "GYMB", "KRON")]
+    head(data)
+    
+    # Specification:
+    spec = portfolioSpec()
+    setTargetReturn(spec) <- mean(seriesData(data))
+    setSolver(spec) = "Rdonlp2"
+    spec
+    
+    # Constraints:
+    constraints = "maxW[1:nAssets]=0.6"
+    constraints
+    
+    # Efficient Portfolio:
+    .efficientConstrainedMVPortfolio(data, spec, constraints)
+    
+    # Return Value:
+    return()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.efficientConstrainedMVPortfolio.twoAssets = 
+function()
+{
+    # Data:
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG")]
+    head(data)
+    
+    # Specification:
+    spec = portfolioSpec()
+    setTargetReturn(spec) = mean(data@Data)
+    spec
+    
+    # Constraints:
+    constraints = "LongOnly"
+    constraints
+    
+    # Efficient Portfolio:
+    .efficientConstrainedMVPortfolio(data, spec, constraints)
+    
+    # Return Value:
+    return()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.efficientConstrainedMVPortfolio.RDonlp2 = 
+function()
+{
+    # Data:
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG", "GYMB", "KRON")]
+    head(data)
+    
+    # Specification:
+    spec = portfolioSpec()
+    setTargetReturn(spec) = mean(seriesData(data))
+    setSolver(spec) = "Rdonlp2"
+    spec
+    
+    # Tangency Portfolio:
+    .efficientConstrainedMVPortfolio(data, spec, NULL)
+    .efficientConstrainedMVPortfolio(data, spec, "LongOnly")
+    .efficientConstrainedMVPortfolio(data, spec, "maxW[1:nAssets]=0.6")
+    
+    # Return Value:
+    return()
+}
+
+
+################################################################################
 
 
 test.cmlConstrainedMVPortfolio = 
@@ -227,7 +329,7 @@ function()
     
     # Specification:
     spec = portfolioSpec()
-    setRiskFreeRate(spec) = mean(data@Data)
+    setRiskFreeRate(spec) = mean(seriesData(data))
     spec
     
     # Constraints:
@@ -242,7 +344,7 @@ function()
 }
 
 
-# ------------------------------------------------------------------------------
+################################################################################
 
 
 test.tangencyConstrainedMVPortfolio.LongOnly = 
@@ -296,7 +398,7 @@ function()
 }
 
 
-# ------------------------------------------------------------------------------
+################################################################################
 
 
 test.minvarianceConstrainedMVPortfolio.LongOnly = 
@@ -349,62 +451,8 @@ function()
     return()
 }
 
-# ------------------------------------------------------------------------------
 
-
-test.efficientConstrainedMVPortfolio.twoAssets = 
-function()
-{
-    # Data:
-    data = as.timeSeries(data(smallcap.ts))
-    data = data[, c("BKE", "GG")]
-    head(data)
-    
-    # Specification:
-    spec = portfolioSpec()
-    setTargetReturn(spec) = mean(data@Data)
-    spec
-    
-    # Constraints:
-    constraints = "LongOnly"
-    constraints
-    
-    # Efficient Portfolio:
-    .efficientConstrainedMVPortfolio(data, spec, constraints)
-    
-    # Return Value:
-    return()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-test.efficientConstrainedMVPortfolio.RDonlp2 = 
-function()
-{
-    # Data:
-    data = as.timeSeries(data(smallcap.ts))
-    data = data[, c("BKE", "GG", "GYMB", "KRON")]
-    head(data)
-    
-    # Specification:
-    spec = portfolioSpec()
-    setTargetReturn(spec) = mean(data@Data)
-    setSolver(spec) = "Rdonlp2"
-    spec
-    
-    # Tangency Portfolio:
-    .efficientConstrainedMVPortfolio(data, spec, NULL)
-    .efficientConstrainedMVPortfolio(data, spec, "LongOnly")
-    .efficientConstrainedMVPortfolio(data, spec, "maxW[1:nAssets]=0.6")
-    
-    # Return Value:
-    return()
-}
-
-
-# ------------------------------------------------------------------------------
+################################################################################
 
 
 test.portfolioConstrainedMVFrontier =
@@ -417,6 +465,7 @@ function()
     
     # Specification:
     spec = portfolioSpec()
+    setNFrontierPoints(spec) = 5
     spec
     
     # Constraints: 
@@ -474,7 +523,7 @@ function()
     # Specification:
     spec = portfolioSpec()
     setSolver(spec) = "Rdonlp2"
-    setNFrontierPoints(spec) = 5
+    setNFrontierPoints(spec) = 10
     spec
     
     # Add Risk Budgets:
@@ -489,7 +538,7 @@ function()
 }
 
 
-# ------------------------------------------------------------------------------
+################################################################################
 
 
 if (FALSE) {

@@ -89,7 +89,18 @@ getNumberOfAssets =
 function(object)
 {   # A function implemented by Rmetrics
 
-    UseMethod("getNAssets")
+    UseMethod("getNumberOfAssets")
+}
+
+
+# ------------------------------------------------------------------------------
+    
+    
+getNames =
+function(object)
+{   # A function implemented by Rmetrics
+
+    UseMethod("getNames")
 }
 
 
@@ -188,7 +199,7 @@ getSpec =
 function(object)
 {   # A function implemented by Rmetrics
 
-    UseMethod("getSpecification")
+    UseMethod("getSpec")
 }
 
 

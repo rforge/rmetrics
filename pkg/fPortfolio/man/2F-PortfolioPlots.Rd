@@ -163,7 +163,6 @@ covEllipsesPlot(x = list(), \dots)
 
 
 \examples{
-\dontrun{
 ## portfolioFrontier -
    # Load Data:
    Data = as.timeSeries(data(smallcap.ts))
@@ -175,18 +174,17 @@ covEllipsesPlot(x = list(), \dots)
    
 ## frontierPlot -  
    # Plot Upper Part of Frontier:
-   frontierPlot(frontier, frontier = "upper")
+   # frontierPlot(frontier, frontier = "upper")
    # Adding Lower Part to Plot
-   frontierPlot(frontier, frontier = "lower", add = TRUE)
+   # frontierPlot(frontier, frontier = "lower", add = TRUE)
     
 ## weightsPlot -
    # View Weights Plot:
-   weightsPlot(frontier)
+   # weightsPlot(frontier)
     
 ## attributesPlot -
    # View Attributes Plot:
-   attributesPlot(frontier, legend = TRUE)
-}
+   # attributesPlot(frontier, legend = TRUE)
 }
 
 

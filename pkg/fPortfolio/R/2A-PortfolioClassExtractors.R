@@ -30,7 +30,11 @@
 ################################################################################
 # FUNCTION:                     PORTFOLIO S4 EXTRACTORS FROM PORTFOLIO:
 #  getData
-#  getSpec 
+#   getSeries
+#   getStatistics
+#  getSpec
+#   getType 
+#   getSolver
 #  getConstraints
 #  getPortfolio
 #   getWeights
@@ -74,8 +78,55 @@ function(object)
     # FUNCTION:
     
     # Get Specification:
-    stopifnot(class(object) == "fPortfolio")
-    ans = object@Data
+    ans = object@data$data
+    
+    # Return Value:
+    ans  
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+getSeries.fPORTFOLIO =
+function(object)
+{   # A function implemented by Rmetrics
+
+    # Description:
+    #   Extracts the data slot from a 'fPORTFOLIO' object
+    
+    # Arguments:
+    #   object - an object of S4 class fPORTFOLIO as returned by the
+    #       functions *Portfolio().
+    
+    # FUNCTION:
+    
+    # Get Specification:
+    ans = getSeries(getData(object))
+    
+    # Return Value:
+    ans  
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+getStatistics.fPORTFOLIO =
+function(object)
+{   # A function implemented by Rmetrics
+
+    # Description:
+    #   Extracts the data slot from a 'fPORTFOLIO' object
+    
+    # Arguments:
+    #   object - an object of S4 class fPORTFOLIO as returned by the
+    #       functions *Portfolio().
+    
+    # FUNCTION:
+    
+    # Get Specification:
+    ans = getStatistics(getData(object))
     
     # Return Value:
     ans  
@@ -99,8 +150,55 @@ function(object)
     # FUNCTION:
     
     # Get Specification:
-    stopifnot(class(object) == "fPortfolio")
-    ans = object@specification
+    ans = object@spec$spec
+    
+    # Return Value:
+    ans  
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+getType.fPORTFOLIO =
+function(object)
+{   # A function implemented by Rmetrics
+
+    # Description:
+    #   Extracts the specification-type slot from a 'fPORTFOLIO' object
+    
+    # Arguments:
+    #   object - an object of S4 class fPORTFOLIO as returned by the
+    #       functions *Portfolio().
+    
+    # FUNCTION:
+    
+    # Get Specification:
+    ans = getType(getSpec(object))
+    
+    # Return Value:
+    ans  
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+getSolver.fPORTFOLIO =
+function(object)
+{   # A function implemented by Rmetrics
+
+    # Description:
+    #   Extracts the specification-solver slot from a 'fPORTFOLIO' object
+    
+    # Arguments:
+    #   object - an object of S4 class fPORTFOLIO as returned by the
+    #       functions *Portfolio().
+    
+    # FUNCTION:
+    
+    # Get Specification:
+    ans = getSolver(getSpec(object))
     
     # Return Value:
     ans  
@@ -124,7 +222,6 @@ function(object)
     # FUNCTION:
     
     # Get Portfolio:
-    stopifnot(class(object) == "fPortfolio")
     ans = object@constraints
   
     # Return Value:
@@ -297,20 +394,20 @@ function(object, frontier = c("both", "lower", "upper"), doplot = FALSE, ...)
     
     # Get Efficient Frontier:
     Type = getType(object)
-    targetRisk = getTargetRisk(object)
-    targetReturn = getTargetReturn(object)
+    targetRisk = getTargetRisk(object)[ ,1] 
+    targetReturn = getTargetReturn(object)[ , 1]
     
-    if (Type == "MV") {
+    #if (Type == "MV") {
+    #    ans = cbind(Risk = targetRisk, Return = targetReturn)
+    #} else if (Type == "CVaR") {
+    #    if (is.matrix(targetRisk)) {
+    #        Risk = targetRisk[, 1]
+    #    } else {
+    #        Risk = targetRisk[1]
+    #    }
         ans = cbind(Risk = targetRisk, Return = targetReturn)
-    } else if (Type == "CVaR") {
-        if (is.matrix(targetRisk)) {
-            Risk = targetRisk[, 1]
-        } else {
-            Risk = targetRisk[1]
-        }
-        ans = cbind(Risk = Risk, Return = targetReturn)
-    }
-    rownames(ans) = NULL
+    #}
+    #rownames(ans) = NULL
 
     # Extract upper part of frontier
     if(frontier == "upper"){

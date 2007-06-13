@@ -47,7 +47,7 @@ function()
 {
     # Help File:
     helpFile = function() { 
-        example(???, ask = FALSE)
+        example(VaRModelling, ask = FALSE)
         return() 
     }
     checkIdentical(
@@ -65,6 +65,8 @@ function()
 test.VaR =
 function()
 { 
+    NA
+    
     # Return Value:
     return()
 }
@@ -76,6 +78,8 @@ function()
 test.CVaRplus =
 function()
 { 
+    NA
+    
     # Return Value:
     return()
 }
@@ -87,6 +91,8 @@ function()
 test.CVaR =
 function()
 { 
+    NA
+    
     # Return Value:
     return()
 }
@@ -98,6 +104,8 @@ function()
 test.lambdaCVaR =
 function()
 { 
+    NA
+    
     # Return Value:
     return()
 }
@@ -109,6 +117,8 @@ function()
 test.pfolioMaxLoss =
 function()
 { 
+    NA
+    
     # Return Value:
     return()
 }
@@ -120,6 +130,8 @@ function()
 test.pfolioReturn =
 function()
 { 
+    NA
+    
     # Return Value:
     return()
 }
@@ -131,6 +143,8 @@ function()
 test.pfolioTargetReturn =
 function()
 { 
+    NA
+    
     # Return Value:
     return()
 }
@@ -142,6 +156,8 @@ function()
 test.pfolioTargetRisk =
 function()
 { 
+    NA
+    
     # Return Value:
     return()
 }
@@ -153,6 +169,8 @@ function()
 test.pfolioHist =
 function()
 { 
+    NA
+    
     # Return Value:
     return()
 }

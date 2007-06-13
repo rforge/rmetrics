@@ -178,7 +178,7 @@ function(object, frontier = c("both", "lower", "upper"),
     }  
     
     # Add Info:
-    mtext(paste(getType(object), "|",getSolver(object)), 
+    mtext(paste(getType(object), "|", getSolver(object)), 
         side = 4, adj = 0, col = "grey", cex = 0.7)
       
     # Return Value:
@@ -199,10 +199,9 @@ function(object, ...)
     # FUNCTION:
     
     # Get Portfolio Slots:
-    Data = object@data$series
-    if (!is.timeSeries(Data)) Data = object@data$statistics
-    Spec = getSpecification(object)
-    Constraints = object@constraints
+    Data = getSeries(object)
+    Spec = getSpec(object)
+    Constraints = getConstraints(object)
     Type = getType(object)
     
     # CVaR ?
@@ -212,13 +211,12 @@ function(object, ...)
     }
     
     # Efficient Frontier:
-    portfolio = object@portfolio
-    x = portfolio$targetRisk
-    y = portfolio$targetReturn
+    x = getTargetRisk(object)[, 1] 
+    y = getTargetReturn(object)[, 1]  
     
     # Tangency Portfolio:
     tangenyPortfolio = tangencyPortfolio(Data, Spec, Constraints)
-    x.tg = tangenyPortfolio@portfolio$targetReturn 
+    x.tg = getTargetReturn(tangencyPortfolio) 
      
     # Normalization to fit in EF Plot:
     norm = x.tg / max(y/x) 
@@ -262,15 +260,13 @@ function(object, ...)
     # FUNCTION:
      
     # Get Portfolio Slots:
-    Data = object@data$series
-    if (!is.timeSeries(Data)) Data = object@data$statistics
-    Spec = getSpecification(object)
-    Constraints = object@constraints
-    Type = getType(object)
+    Data = getSeries(object)
+    Spec = getSpec(object)
+    Constraints = getConstraints(object)
     
     # Add Minimum Variance Point:
-    minvarPortfolio = minvariancePortfolio(Data, Spec, Constraints)
-    assets = getFrontier(minvarPortfolio)
+    mvPortfolio = minvariancePortfolio(Data, Spec, Constraints)
+    assets = getFrontier(mvPortfolio)
     points(assets, ...)
     
     # Return Value:
@@ -291,21 +287,18 @@ function(object, ...)
     # FUNCTION:
     
     # Get Portfolio Slots:
-    Data = object@data$series
-    if (!is.timeSeries(Data)) Data = object@data$statistics
-    Spec = getSpecification(object)
-    Constraints = object@constraints
-    Type = getType(object)
+    Data = getSeries(object)
+    Spec = getSpec(object)
+    Constraints = getConstraints(object)
     
     # Compute Tangency Portfolio:
-    tangencyPortfolio = tangencyPortfolio(Data, Spec, Constraints)
+    tgPortfolio = tangencyPortfolio(Data, Spec, Constraints)
     
     # Add Tangency Point:
-    points(getFrontier(tangencyPortfolio), ...)
+    points(getFrontier(tgPortfolio), ...)
     
     # Add Tangency Line:
-    slope = getTargetReturn(tangencyPortfolio) /
-        getTargetRisk(tangencyPortfolio)[1]
+    slope = getTargetReturn(tgPortfolio) / getTargetRisk(tgPortfolio)[1]
     abline(0, slope, ...)
     
     # Return Value:
@@ -326,10 +319,9 @@ function(object, ...)
     # FUNCTION:
 
     # Get Portfolio Statistics:
-    Data = object@data$series
-    if (!is.timeSeries(Data)) Data = object@data$statistics
-    Spec = getSpecification(object)
-    Constraints = object@constraints
+    Data = getSeries(object)
+    Spec = getSpec(object)
+    Constraints = getConstraints(object)
     Type = getType(object)
 
     # Add Capital Market Line:
@@ -366,7 +358,7 @@ function(object, ...)
     # FUNCTION:
      
     # Add Single Assets:
-    Statistics = object@data$statistics
+    Statistics = getStatistics(object)
     Type = getType(object)
     
     Return = Statistics$mu
@@ -400,18 +392,17 @@ function(object, ...)
     # FUNCTION:
     
     # Get Portfolio Statistics: 
-    Data = object@data$series
-    if (!is.timeSeries(Data)) Data = object@data$statistics
-    Spec = getSpecification(object)
-    Constraints = object@constraints
+    Data = getSeries(object)
+    Spec = getSpec(object)
+    Constraints = getConstraints(object)
     Type = getType(object)
     
     # Add Equal Weights Portfolio:
-    equalWeightsPortfolio = feasiblePortfolio(Data, Spec, Constraints)
+    ewPortfolio = feasiblePortfolio(Data, Spec, Constraints)
     if (Type == "MV") {
-        assets = getFrontier(equalWeightsPortfolio) 
+        assets = getFrontier(ewPortfolio) 
     } else if (Type == "CVaR") {
-        assets = getFrontier(equalWeightsPortfolio) * c(-1, 1)
+        assets = getFrontier(ewPortfolio) * c(-1, 1)
     }
     points(assets, ...)
     
@@ -440,17 +431,17 @@ function(object, ...)
     # stopifnot(check == "Short" | check == "LongOnly")
 
     # Get Portfolio Statistics: 
-    Data = getSlot(object, "data")
-    Spec = getSpecification(object)
-    Constraints = object@constraints
+    Data = getSeries(object)
+    Spec = getSpec(object)
+    Constraints = getConstraints(object)
     Type = getType(object)
     
-    # Add Froniters for all Two-Assets Portfolios:
-    N = length(Data$statistics$mu)
+    # Add Frontiers for all Two-Assets Portfolios:
+    N = getNumberOfAssets(getData(object))
     for ( i in 1:(N-1) ) {
         for (j in (i+1):N ) {
             index = c(i, j) 
-            Data2 = object@data$series[, index]
+            Data2 = Data[, index]
             # Zero-One Constraints2 ?
             ans = portfolioFrontier(data = Data2, spec = Spec)
             lines(getFrontier(ans), ...)
@@ -486,12 +477,11 @@ function(object, piePos = NULL, pieR = NULL, pieOffset = NULL, ...)
   
     # Pie Position:
     if(is.null(piePos)) {
-        Data = object@data$series
-        if (!is.timeSeries(Data)) Data = object@data$statistics
-        Spec = getSpecification(object)
-        Constraints = object@constraints
+        Data = getSeries(object)
+        Spec = getSpec(object)
+        Constraints = getConstraints(object)
         tg = getTargetReturn(tangencyPortfolio(Data, Spec, Constraints))
-        ef = getTargetReturn(object)
+        ef = as.vector(getTargetReturn(object))
         piePos = which(diff(sign(ef-tg)) > 0) 
     }
     
@@ -647,10 +637,10 @@ function(object, mcSteps, ...)
     # FUNCTION:
     
     # Get Portfolio Statistics: 
-    Data = object@data$statistics
+    Statistics = getStatistics(object)
     Type = getType(object)
-    mu = Data$mu
-    Sigma = Data$Sigma
+    mu = Statistics$mu
+    Sigma = Statistics$Sigma
     N = length(mu)  
      
     # Get Specification:
@@ -963,7 +953,7 @@ function(object, pos = NULL, col = NULL, box = TRUE, legend = TRUE)
     Weights = abs(weights)
     Index = (1:nWeights)[Weights > 0]
     col = col[Index]
-    names = getNames(object)
+    names = .getNames(object)
     legendAssets = names[Index]
     Labels = paste(names, Sign)
     Labels = Labels[Weights > 0]
@@ -1134,7 +1124,7 @@ function(object, pos = NULL, col = NULL, box = TRUE, legend = TRUE)
     # Plot Circle:
     Sign = rep("+", nWeights)
     Sign[(1:nWeights)[weightedReturns < 0]] = "-"
-    names = substr(getNames(object), 1, 3)
+    names = substr(.getNames(object), 1, 3)
     
     # Color Palette:
     if (is.null(col)) col = rainbow(nWeights)
@@ -1143,7 +1133,7 @@ function(object, pos = NULL, col = NULL, box = TRUE, legend = TRUE)
     WeightedReturns = abs(weightedReturns)
     Index = (1:nWeights)[WeightedReturns > 0]
     col = col[Index]
-    names = getNames(object)
+    names = .getNames(object)
     legendAssets = names[Index]
     Labels = paste(names, Sign)
     Labels = Labels[WeightedReturns > 0]
@@ -1322,7 +1312,7 @@ function(object, pos = NULL, col = NULL, box = TRUE, legend = TRUE)
     RiskBudgets = abs(riskBudgets)
     Index = (1:nRiskBudgets)[RiskBudgets > 0]
     col = col[Index]
-    names = getNames(object)
+    names = .getNames(object)
     legendAssets = names[Index]
     Labels = paste(names, Sign)
     Labels = Labels[RiskBudgets > 0]

@@ -83,7 +83,7 @@ title = NULL, description = NULL)
     # Compose Optimization Function:
     if(is.null(constraints) | length(constraints) == 0) {
         Model = c("Constrained", "LongOnly")
-        nAssets = length(data$statistics$mu)
+        nAssets = getNumberOfAssets(data)
         constraints = paste("minW[1:", nAssets, "]=0", sep = "")
     } else if (constraints[1] == "Short") {
         Model = "Short"
@@ -162,14 +162,23 @@ function(object)
     }
   
     # Target Returns:   
-    cat("\nTarget Return(s):\n")
+    # cat("\nTarget Return(s):\n")
     targetReturn = getTargetReturn(object)
-    print(targetReturn)
+    # print(targetReturn)
  
     # Target Risk:
-    cat("\nTarget Risk(s):\n")
+    # cat("\nTarget Risk(s):\n")
     targetRisk = getTargetRisk(object) 
-    print(targetRisk)
+    # print(targetRisk)
+    
+    cat("\nTarget Risk(s) and Return(s):\n")
+    if (is.null(dim(targetRisk))) {
+        target = c(targetReturn, targetRisk)
+    } else {
+        target = cbind(targetReturn, targetRisk)
+        colnames(target) = c(colnames(targetReturn), colnames(targetRisk))    
+    }
+    print(target)
        
     # Description:
     cat("\nDescription:\n ")
@@ -211,7 +220,7 @@ function(data, spec = portfolioSpec(), constraints = NULL)
     # Compose Optimization Function:
     if(is.null(constraints) | length(constraints) == 0) {
         Model = c("Constrained", "LongOnly")
-        nAssets = length(data$statistics$mu)
+        nAssets = getNumberOfAssets(data)
         constraints = paste("minW[1:", nAssets, "]=0", sep = "")
     } else if (constraints[1] == "Short") {
         Model = "Short"
@@ -258,7 +267,7 @@ function(data, spec = portfolioSpec(), constraints = NULL)
     # Compose Optimization Function:
     if(is.null(constraints) | length(constraints) == 0) {
         Model = c("Constrained", "LongOnly")
-        nAssets = length(data$statistics$mu)
+        nAssets = getNumberOfAssets(data)
         constraints = paste("minW[1:", nAssets, "]=0", sep = "")
     } else if (constraints[1] == "Short") {
         Model = "Short"
@@ -305,7 +314,7 @@ function(data, spec = portfolioSpec(), constraints = NULL)
     # Compose Optimization Function:
     if(is.null(constraints) | length(constraints) == 0) {
         Model = c("Constrained", "LongOnly")
-        nAssets = length(data$statistics$mu)
+        nAssets = getNumberOfAssets(data)
         constraints = paste("minW[1:", nAssets, "]=0", sep = "")
     } else if (constraints[1] == "Short") {
         Model = "Short"
@@ -352,7 +361,7 @@ function(data, spec = portfolioSpec(), constraints = NULL)
     # Compose Optimization Function:
     if(is.null(constraints) | length(constraints) == 0) {
         Model = c("Constrained", "LongOnly")
-        nAssets = length(data$statistics$mu)
+        nAssets = getNumberOfAssets(data)
         constraints = paste("minW[1:", nAssets, "]=0", sep = "")
     } else if (constraints[1] == "Short") {
         Model = "Short"
@@ -399,7 +408,7 @@ function(data, spec = portfolioSpec(), constraints = NULL)
     # Compose Optimization Function:
     if(is.null(constraints) | length(constraints) == 0) {
         Model = c("Constrained", "LongOnly")
-        nAssets = length(data$statistics$mu)
+        nAssets = getNumberOfAssets(data)
         constraints = paste("minW[1:", nAssets, "]=0", sep = "")
     } else if (constraints[1] == "Short") {
         Model = "Short"
@@ -440,11 +449,12 @@ function(x, which = "ask", control = list(), ...)
     # FUNCTION:
     
     # Control Parameters:
-    N = length(x@data$statistics$mu)
+    Statistics = getStatistics(x)
          
     # Use default, if xlim and ylim is not specified ...
-    mu = x@data$statistics$mu
-    Sigma = x@data$statistics$Sigma      
+    mu = Statistics$mu
+    Sigma = Statistics$Sigma   
+    N = length(mu)   
     yLim = range(mu) + 0.25*c(-diff(range(mu)), diff(range(mu)))
     
     # First, take care that all assets appear on the plot ...
@@ -452,7 +462,7 @@ function(x, which = "ask", control = list(), ...)
     # xLimAssets = c(
     #    min(sqrtSig), 
     #    max(sqrtSig))+ c(-0.4*diff(range(sqrtSig)), 0.1*diff(range(sqrtSig)))
-    xRange = range(getFrontier(x)[,1])    
+    xRange = range(getFrontier(x)[, 1])    
     xDiff = diff(xRange)   
     xLimAssets = c(xRange[1] - 2.5*xDiff/10, xRange[2] + xDiff/10)
       
@@ -496,7 +506,7 @@ function(x, which = "ask", control = list(), ...)
 
     # Plot Function and Addons:
     plot.1 <<- function(x, ...) {
-        Type = x@specification$spec@model$type[1]
+        Type = getType(x)
         if (Type == "MV") {
             xLab = "Mean-Var Target Risk"
         } else if (Type == "CVaR") {

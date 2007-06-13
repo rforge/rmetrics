@@ -30,10 +30,10 @@
 ################################################################################
 # FUNCTION:                      SINGLE PORTFOLIOS:
 #  .feasibleShortMVPortfolio      Returns a feasible MV portfolio
+#  .efficientShortMVPortfolio     Returns a frontier MV portfolio
 #  .cmlShortMVPortfolio           Returns a capital market line
 #  .tangencyShortMVPortfolio      Returns the tangency MV portfolio
 #  .minvarianceShortMVPortfolio   Returns the minimum variance portfolio
-#  .efficientShortMVPortfolio     Returns a frontier MV portfolio
 # FUNCTION:                      PORTFOLIO FRONTIER:
 #  .portfolioShortMVFrontier      Returns the EF of a short selling MV portfolio
 ################################################################################

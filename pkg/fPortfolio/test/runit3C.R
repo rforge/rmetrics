@@ -55,8 +55,10 @@ function()
 test.NA =
 function()
 { 
-    Data = as.timeSeries(data(smallcap.ts))
-    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
+    # Load Data:
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG", "GYMB", "KRON")]
+    head(data)
     
     NA
     

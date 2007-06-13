@@ -30,10 +30,10 @@
 ################################################################################
 # FUNCTION:                      SINGLE PORTFOLIOS:
 #  .feasibleShortMVPortfolio      Returns a feasible MV portfolio
+#  .efficientShortMVPortfolio     Returns a frontier MV portfolio
 #  .cmlShortMVPortfolio           Returns a capital market line
 #  .tangencyShortMVPortfolio      Returns the tangency MV portfolio
 #  .minvarianceShortMVPortfolio   Returns the minimum variance portfolio
-#  .frontierShortMVPortfolio      Returns a frontier MV portfolio
 # FUNCTION:                      PORTFOLIO FRONTIER:
 #  .portfolioShortMVFrontier      Returns the EF of a short selling MV portfolio
 ################################################################################
@@ -123,89 +123,7 @@ function()
 }
 
 
-# ------------------------------------------------------------------------------
-
-
-test.cmlShortMVPortfolio = 
-function()
-{
-    # Data:
-    data = as.timeSeries(data(smallcap.ts))
-    data = data[, c("BKE", "GG", "GYMB", "KRON")]
-    head(data)
-    
-    # Specification:
-    spec = portfolioSpec()
-    setRiskFreeRate(spec) = 0.01
-    spec
-    
-    # Constraints - Capital Market Line:
-    constraints = "Short"
-    constraints
-    
-    # Portfolio:
-    .cmlShortMVPortfolio(data, spec, constraints)
-    
-    # Return Value:
-    return()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-test.tangencyShortMVPortfolio = 
-function()
-{
-    # Data:
-    data = as.timeSeries(data(smallcap.ts))
-    data = data[, c("BKE", "GG", "GYMB", "KRON")]
-    head(data)
-    
-    # Specification:
-    spec = portfolioSpec()
-    spec
-  
-    # Constraints - Tangency Portfolio:
-    constraints = "Short"
-    constraints
-    
-    # Portfolio:
-    .tangencyShortMVPortfolio(data, spec, constraints)
-    
-    # Return Value:
-    return()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-test.minvarianceShortMVPortfolio = 
-function()
-{
-    # Data:
-    data = as.timeSeries(data(smallcap.ts))
-    data = data[, c("BKE", "GG", "GYMB", "KRON")]
-    head(data)
-    
-    # Specification:
-    spec = portfolioSpec()
-    spec
-    
-    # Constraints - Minimum Variance Portfolio:
-    constraints = "Short"
-    constraints
-    
-    # Portfolio:
-    .minvarianceShortMVPortfolio(data, spec, constraints)
-    
-    # Return Value:
-    return()
-}
-
-
-# ------------------------------------------------------------------------------
+################################################################################
 
 
 test.efficientShortMVPortfolio = 
@@ -233,7 +151,89 @@ function()
 }
 
 
-# ------------------------------------------------------------------------------
+################################################################################
+
+
+test.cmlShortMVPortfolio = 
+function()
+{
+    # Data:
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG", "GYMB", "KRON")]
+    head(data)
+    
+    # Specification:
+    spec = portfolioSpec()
+    setRiskFreeRate(spec) = 0.01
+    spec
+    
+    # Constraints - Capital Market Line:
+    constraints = "Short"
+    constraints
+    
+    # Portfolio:
+    .cmlShortMVPortfolio(data, spec, constraints)
+    
+    # Return Value:
+    return()
+}
+
+
+################################################################################
+
+
+test.tangencyShortMVPortfolio = 
+function()
+{
+    # Data:
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG", "GYMB", "KRON")]
+    head(data)
+    
+    # Specification:
+    spec = portfolioSpec()
+    spec
+  
+    # Constraints - Tangency Portfolio:
+    constraints = "Short"
+    constraints
+    
+    # Portfolio:
+    .tangencyShortMVPortfolio(data, spec, constraints)
+    
+    # Return Value:
+    return()
+}
+
+
+################################################################################
+
+
+test.minvarianceShortMVPortfolio = 
+function()
+{
+    # Data:
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG", "GYMB", "KRON")]
+    head(data)
+    
+    # Specification:
+    spec = portfolioSpec()
+    spec
+    
+    # Constraints - Minimum Variance Portfolio:
+    constraints = "Short"
+    constraints
+    
+    # Portfolio:
+    .minvarianceShortMVPortfolio(data, spec, constraints)
+    
+    # Return Value:
+    return()
+}
+
+
+################################################################################
 
 
 test.portfolioShortMVFrontier = 
@@ -253,14 +253,15 @@ function()
     constraints
     
     # Frontier:
-    .portfolioShortMVFrontier(data, spec, constraints)
+    Frontier = .portfolioShortMVFrontier(data, spec, constraints)
+    Frontier
     
     # Return Value:
     return()
 }
 
 
-# ------------------------------------------------------------------------------
+################################################################################
 
 
 if (FALSE) {
