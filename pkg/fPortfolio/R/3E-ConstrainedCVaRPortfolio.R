@@ -70,17 +70,17 @@ function(data, spec, constraints)
     if(is.null(weights)) weights = rep(1/nAssets, times = nAssets)  
     names(weights) = names(mu)
     
-    # Compute Mean Target Return:
-    targetReturn = as.numeric(mu %*% weights)
-    names(targetReturn) = "mean"
+    # Target Return:
+    targetReturn = matrix(as.numeric(mu %*% weights), nrow = 1)
+    colnames(targetReturn) <- getEstimator(spec)[1]
     
     # Compute Covariance and CVaR Target Risk:
     covTargetRisk = sqrt( as.numeric( weights %*% Sigma %*% weights ) )
     x = getSeries(data)@Data %*% weights
     VaR = quantile(x, targetAlpha, type = 1)
     CVaR = VaR - 0.5*mean(((VaR-x) + abs(VaR-x))) / targetAlpha
-    targetRisk = c(CVaR, VaR, covTargetRisk)
-    names(targetRisk) <- 
+    targetRisk = matrix(c(covTargetRisk, CVaR, VaR), nrow = 1)
+    colnames(targetRisk) <- 
         c(paste(c("CVaR.", "VaR."), targetAlpha*100, "%", sep = ""), "cov")
      
     # Return Value:
@@ -142,14 +142,16 @@ function(data, spec, constraints)
     # Extract Target Return from Specification:
     targetReturn = spec@portfolio$targetReturn  
     stopifnot(is.numeric(targetReturn)) 
-    names(targetReturn) <- spec@model$estimator[1]
+    targetReturn = matrix(targetReturn, nrow = 1)
+    colnames(targetReturn) <- getEstimator(spec)[1]
    
     # Compute Covariance and CVaR Target Risk:
     covTargetRisk = sqrt(as.numeric(weights %*% Sigma %*% weights))
     VaRTargetRisk = ans$VaR
     CVaRTargetRisk = ans$CVaR
     targetRisk = c(CVaRTargetRisk, VaRTargetRisk, covTargetRisk)
-    names(targetRisk) <- 
+    targetRisk = matrix(targetRisk, nrow = 1)
+    colnames(targetRisk) <- 
         c(paste(c("CVaR.", "VaR."), targetAlpha*100, "%", sep = ""), "cov")
 
     # Return Value:
@@ -225,14 +227,16 @@ function(data, spec, constraints)
     
     # Target Return:     
     targetReturn = spec@portfolio$targetReturn = cml$maximum  
-    names(targetReturn) <- spec@model$estimator[1]
+    targetReturn = matrix(targetReturn, nrow = 1)
+    colnames(targetReturn) <- spec@model$estimator[1]
      
     # Compute Covariance and CVaR Target Risk:
     covTargetRisk = sqrt(as.numeric(weights %*% Sigma %*% weights))
     VaRTargetRisk = attr(cml$objective, "targetRisk")[2]
     CVaRTargetRisk = attr(cml$objective, "targetRisk")[1]
     targetRisk = c(CVaRTargetRisk, VaRTargetRisk, covTargetRisk)
-    names(targetRisk) <- 
+    targetRisk = matrix(targetRisk, nrow = 1)
+    colnames(targetRisk) <- 
         c(paste(c("CVaR.", "VaR."), targetAlpha*100, "%", sep = ""), "cov")
 
     # Return Value:
@@ -343,11 +347,13 @@ function(data, spec, constraints)
     # Get Target Return:
     targetReturn = spec@portfolio$targetReturn = 
         attr(minVar$objective, "targetReturn")
-    names(targetReturn) <- spec@model$estimator[1]
+    targetReturn = matrix(targetReturn, nrow = 1)
+    colnames(targetReturn) <- spec@model$estimator[1]
     
     # Get Target Risk:
     targetRisk = attr(minVar$objective, "targetRisk")  
-    names(targetRisk) <-      
+    targetRisk = matrix(targetRisk, nrow = 1)
+    colnames(targetRisk) <-      
         c(paste(c("CVaR.", "VaR."), targetAlpha*100, "%", sep = ""), "cov")
 
     # Return Value:
@@ -429,7 +435,8 @@ function(data, spec, constraints)
     
     # Get Target Risk:
     targetReturn = targetMu 
-    names(targetReturn) <- NULL # spec@model$estimator[1]
+    targetReturn = matrix(targetReturn, ncol = 1)
+    colnames(targetReturn) <- spec@model$estimator[1]
     
     # Get Target Risk:
     targetRisk1 = targetSigma1 

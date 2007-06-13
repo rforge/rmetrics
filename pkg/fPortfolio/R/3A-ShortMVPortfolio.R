@@ -459,8 +459,10 @@ title = NULL, description = NULL)
         nextWeight = getWeights(.efficientShortMVPortfolio(data, Spec))
         weights = rbind(weights, t(nextWeight))
     }
-    names(targetReturn) <- NULL
-    names(targetRisk) <- NULL
+    targetReturn = matrix(targetReturn, ncol = 1)
+    targetRisk = matrix(targetRisk, ncol = 1)
+    colnames(targetReturn) <- getEstimator(spec)[1]
+    colnames(targetRisk) <- getEstimator(spec)[2]
          
     # Adding title and description:
     if(is.null(title)) title = "Short Selling Portfolio Frontier"

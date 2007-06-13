@@ -163,22 +163,30 @@ function(object)
   
     # Target Returns:   
     # cat("\nTarget Return(s):\n")
-    targetReturn = getTargetReturn(object)
+    targetReturn = object@portfolio$targetReturn # getTargetReturn(object)
     # print(targetReturn)
  
     # Target Risk:
     # cat("\nTarget Risk(s):\n")
-    targetRisk = getTargetRisk(object) 
+    targetRisk = object@portfolio$targetRisk # getTargetRisk(object) 
     # print(targetRisk)
     
     cat("\nTarget Risk(s) and Return(s):\n")
-    if (is.null(dim(targetRisk))) {
-        target = c(targetReturn, targetRisk)
-    } else {
-        target = cbind(targetReturn, targetRisk)
-        colnames(target) = c(colnames(targetReturn), colnames(targetRisk))    
+    if (is.null(dim(targetReturn))) {
+        targetReturn = matrix(targetReturn, nrow = 1)
+        colnames(targetReturn) = getEstimator(spec)[1]
     }
-    print(target)
+    if (is.null(dim(targetRisk))) {
+        targetRisk = matrix(targetRisk, nrow = 1)
+        colnames(targetRisk) = getEstimator(spec)[2]
+    }
+    target = cbind(targetReturn, targetRisk)
+    colnames(target) = c(colnames(targetReturn), colnames(targetRisk))    
+    if (nrow(target) == 1) {
+        print(target[1, ])
+    } else {
+        print(target)
+    }
        
     # Description:
     cat("\nDescription:\n ")
