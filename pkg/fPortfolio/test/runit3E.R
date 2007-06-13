@@ -318,6 +318,7 @@ function()
     # CVaR Specification:
     spec = portfolioSpec()
     setType(spec) = "CVaR"
+    setNFrontierPoints(spec) = 10
     spec
     
     # Constraints:
@@ -344,7 +345,7 @@ function()
     
     # Data:
     data = as.timeSeries(data(smallcap.ts))
-    data = data[, c("BKE", "GG", "GYMB", "KRON")]
+    data = data[, c("BKE", "GG")]
     head(data)
     
     # CVaR Specification:
@@ -357,7 +358,8 @@ function()
     constraints
     
     # CVaR Portfolio:
-    .portfolioConstrainedCVaRFrontier(data, spec, constraints)
+    Frontier = .portfolioConstrainedCVaRFrontier(data, spec, constraints)
+    Frontier
     
     # Return Value:
     return()

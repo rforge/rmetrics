@@ -70,32 +70,41 @@ function()
 }
 
 
-# ------------------------------------------------------------------------------
+################################################################################
 
 
-test.frontierPlot =
+test.frontierPlot.ShortMV =
 function()
-{ 
-    # Note, calls generic function plot.fPORTFOLIO() ... 
+{    
+    # Load Data:
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG", "GYMB", "KRON")]
+    head(data)
+   
+    # Set Default Specifications:
+    spec = portfolioSpec()
+    spec
     
-    # Load Time Series Data:
-    Data = as.timeSeries(data(smallcap.ts))
-    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
-    head(Data)
+    # Set Constraints:
+    constraints = "Short"
+    constraints
+   
+    # Calculation of Long Only Minimum Variance Portfolio:
+    Frontier = portfolioFrontier(data, spec, constraints)
+    Frontier
+    
+    # Plot:
+    par(mfrow = c(1, 1))
+    frontierPlot(Frontier, pch = 19)
+    .minvariancePlot(Frontier, col = "red", pch = 19, cex = 1.5)  
+    .tangencyPlot(Frontier, col = "green") 
+    .singleAssetPlot(Frontier, col = "red", cex = 1.5)
+    .equalWeightsPlot(Frontier, col = "blue", pch = 19, cex = 1.5)
+    .twoAssetsPlot(Frontier, col = "grey")
+    .wheelPiePlot(Frontier)
+    .monteCarloPlot(Frontier, mcSteps = 1000, cex = 0.25, pch = 19)  
+    .sharpeRatioPlot(Frontier, pch = 19, col = "blue") 
 
-    # MV Portfolio Frontier Plot from Time Series Data:
-    myPF = portfolioFrontier(Data)
-    par(mfrow = c(1, 1))
-    plot(myPF, which = c(1, 8, 2:6))
-    
-    # CVaR Portfolio Frontier Plot from Time Series Data:
-    Spec = portfolioSpec()
-    setType(Spec) = "CVaR"
-    setSolver(Spec) = "RlpSolve"
-    myPF = portfolioFrontier(Data, Spec, NULL)
-    par(mfrow = c(1, 1))
-    plot(myPF, which = c(1, 8, 2:6))                        
-    
     # Return Value:
     return()
 }
@@ -104,24 +113,110 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.weightsPlot =
+test.frontierPlot.ConstrainedMV =
+function()
+{    
+    # Load Data:
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG", "GYMB", "KRON")]
+    head(data)
+   
+    # Set Default Specifications:
+    spec = portfolioSpec()
+    spec
+    
+    # Set Constraints:
+    constraints = NULL
+    constraints
+   
+    # Calculation of Long Only Minimum Variance Portfolio:
+    Frontier = portfolioFrontier(data, spec, constraints)
+    Frontier
+    
+    # Plot:
+    par(mfrow = c(1, 1))
+    frontierPlot(Frontier, pch = 19)
+    .minvariancePlot(Frontier, col = "red", pch = 19, cex = 1.5)  
+    .tangencyPlot(Frontier, col = "green") 
+    .singleAssetPlot(Frontier, col = "red", cex = 1.5)
+    .equalWeightsPlot(Frontier, col = "blue", pch = 19, cex = 1.5)
+    .twoAssetsPlot(Frontier, col = "grey")
+    .wheelPiePlot(Frontier)
+    .monteCarloPlot(Frontier, mcSteps = 1000, cex = 0.25, pch = 19)  
+    .sharpeRatioPlot(Frontier, pch = 19, col = "blue") 
+
+    # Return Value:
+    return()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.frontierPlot.ConstrainedCVaR =
+function()
+{    
+    # Load Data:
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG", "GYMB", "KRON")]
+    head(data)
+   
+    # Set Default Specifications:
+    spec = portfolioSpec()
+    setType(spec) = "CVaR"
+    spec
+    
+    # Set Constraints:
+    constraints = NULL
+    constraints
+   
+    # Calculation of Long Only Minimum Variance Portfolio:
+    Frontier = portfolioFrontier(data, spec, constraints)
+    Frontier
+    
+    # Plot:
+    par(mfrow = c(1, 1))
+    frontierPlot(Frontier, pch = 19)
+    .minvariancePlot(Frontier, col = "red", pch = 19, cex = 1.5)  
+    .tangencyPlot(Frontier, col = "green") 
+    .singleAssetPlot(Frontier, col = "red", cex = 1.5)
+    .equalWeightsPlot(Frontier, col = "blue", pch = 19, cex = 1.5)
+    .twoAssetsPlot(Frontier, col = "grey")
+    .wheelPiePlot(Frontier)
+    .monteCarloPlot(Frontier, mcSteps = 1000, cex = 0.25, pch = 19)  
+    .sharpeRatioPlot(Frontier, pch = 19, col = "blue") 
+
+    # Return Value:
+    return()
+}
+
+
+################################################################################
+
+
+test.weightsPlot.ShortMV =
 function()
 { 
     # Load Time Series Data:
-    Data = as.timeSeries(data(smallcap.ts))
-    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
-    head(Data)
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG", "GYMB", "KRON")]
+    head(data)
+    
+    # Specification:
+    spec = portfolioSpec()
+    spec
+    
+    # Constraints:
+    constraints = "Short"
+    constraints
     
     # Portfolio Weights Plot from Time Series Data:
-    myPF = portfolioFrontier(Data)
-    par(mfrow = c(1, 1))
-    weightsPlot(myPF)
+    Frontier = portfolioFrontier(data, spec, constraints)
+    Frontier
     
-    # Portfolio Weights Plot from Statistics Data:
-    Statistics = portfolioData(Data)$statistics
-    myPF = portfolioFrontier(Statistics)
+    # Plot:
     par(mfrow = c(1, 1))
-    weightsPlot(myPF)
+    weightsPlot(Frontier)
     
     # Return Value:
     return()
@@ -129,6 +224,71 @@ function()
 
 
 # ------------------------------------------------------------------------------
+
+
+test.weightsPlot.ConstrainedMV =
+function()
+{ 
+    # Load Time Series Data:
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG", "GYMB", "KRON")]
+    head(data)
+    
+    # Specification:
+    spec = portfolioSpec()
+    spec
+    
+    # Constraints:
+    constraints = "LongOnly"
+    constraints
+    
+    # Portfolio Weights Plot from Time Series Data:
+    Frontier = portfolioFrontier(data, spec, constraints)
+    Frontier
+    
+    # Plot:
+    par(mfrow = c(1, 1))
+    weightsPlot(Frontier)
+    
+    # Return Value:
+    return()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.weightsPlot.ConstrainedCVaR =
+function()
+{ 
+    # Load Time Series Data:
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG", "GYMB", "KRON")]
+    head(data)
+    
+    # Specification:
+    spec = portfolioSpec()
+    setType = "CVaR"
+    spec
+    
+    # Constraints:
+    constraints = NULL
+    constraints
+    
+    # Portfolio Weights Plot from Time Series Data:
+    Frontier = portfolioFrontier(data, spec, constraints)
+    Frontier
+    
+    # Plot:
+    par(mfrow = c(1, 1))
+    weightsPlot(Frontier)
+    
+    # Return Value:
+    return()
+}
+
+
+################################################################################
 
 
 test.weightsPie =
