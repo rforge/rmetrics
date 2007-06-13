@@ -95,6 +95,7 @@ function()
     
     # Plot:
     par(mfrow = c(1, 1))
+    object = Frontier
     frontierPlot(Frontier, pch = 19)
     .minvariancePlot(Frontier, col = "red", pch = 19, cex = 1.5)  
     .tangencyPlot(Frontier, col = "green") 
@@ -194,29 +195,27 @@ function()
 ################################################################################
 
 
-test.weightsPlot.ShortMV =
+test.barPlots.ShortMV =
 function()
 { 
     # Load Time Series Data:
     data = as.timeSeries(data(smallcap.ts))
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
-    head(data)
     
     # Specification:
     spec = portfolioSpec()
-    spec
     
     # Constraints:
     constraints = "Short"
-    constraints
     
     # Portfolio Weights Plot from Time Series Data:
     Frontier = portfolioFrontier(data, spec, constraints)
-    Frontier
     
     # Plot:
-    par(mfrow = c(1, 1))
+    par(mfrow = c(2, 2), cex = 0.7)
     weightsPlot(Frontier)
+    attributesPlot(Frontier)
+    riskBudgetsPlot(Frontier)
     
     # Return Value:
     return()
@@ -226,29 +225,27 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.weightsPlot.ConstrainedMV =
+test.barPlots.ConstrainedMV =
 function()
 { 
     # Load Time Series Data:
     data = as.timeSeries(data(smallcap.ts))
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
-    head(data)
     
     # Specification:
     spec = portfolioSpec()
-    spec
     
     # Constraints:
     constraints = "LongOnly"
-    constraints
     
     # Portfolio Weights Plot from Time Series Data:
     Frontier = portfolioFrontier(data, spec, constraints)
-    Frontier
     
     # Plot:
-    par(mfrow = c(1, 1))
+    par(mfrow = c(2, 2), cex = 0.7)
     weightsPlot(Frontier)
+    attributesPlot(Frontier)
+    riskBudgetsPlot(Frontier)
     
     # Return Value:
     return()
@@ -258,30 +255,28 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.weightsPlot.ConstrainedCVaR =
+test.barPlots.ConstrainedCVaR =
 function()
 { 
     # Load Time Series Data:
     data = as.timeSeries(data(smallcap.ts))
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
-    head(data)
     
     # Specification:
     spec = portfolioSpec()
-    setType = "CVaR"
-    spec
+    setType(spec) = "CVaR"
     
     # Constraints:
     constraints = NULL
-    constraints
     
     # Portfolio Weights Plot from Time Series Data:
     Frontier = portfolioFrontier(data, spec, constraints)
-    Frontier
     
     # Plot:
-    par(mfrow = c(1, 1))
+    par(mfrow = c(2, 2), cex = 0.7)
     weightsPlot(Frontier)
+    attributesPlot(Frontier)
+    riskBudgetsPlot(Frontier)
     
     # Return Value:
     return()
@@ -291,26 +286,27 @@ function()
 ################################################################################
 
 
-test.weightsPie =
+test.piePlots.ShortMV =
 function()
 { 
     # Load Time Series Data:
-    Data = as.timeSeries(data(smallcap.ts))
-    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
-    head(Data)
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG", "GYMB", "KRON")]
     
-    # Portfolio Weights Pie from Time Series Data:
-    myPF = tangencyPortfolio(Data)
-    par(mfrow = c(1, 1))
-    weightsPie(myPF)
-    title(main = "Weights Pie")
+    # Specification:
+    spec = portfolioSpec()
     
-    # Portfolio Weights Pie from Statistics Data:
-    Statistics = portfolioData(Data)$statistics
-    myPF = tangencyPortfolio(Statistics)
-    par(mfrow = c(1, 1))
-    weightsPie(myPF)
-    title(main = "Weights Pie")
+    # Constraints:
+    constraints = "Short"
+    
+    # Portfolio Weights Plot from Time Series Data:
+    Portfolio = minvariancePortfolio(data, spec, constraints)
+    
+    # Plot:
+    par(mfrow = c(2, 2), cex = 0.7)
+    weightsPie(Portfolio)
+    attributesPie(Portfolio)
+    riskBudgetsPie(Portfolio)
     
     # Return Value:
     return()
@@ -320,24 +316,27 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.attributesPlot =
+test.piePlots.ConstrainedMV =
 function()
 { 
     # Load Time Series Data:
-    Data = as.timeSeries(data(smallcap.ts))
-    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
-    head(Data)
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG", "GYMB", "KRON")]
     
-    # Portfolio Attributes Plot from Time Series Data:
-    myPF = portfolioFrontier(Data)
-    par(mfrow = c(1, 1))
-    attributesPlot(myPF)  
+    # Specification:
+    spec = portfolioSpec()
     
-    # Portfolio Attributes Plot from Statistics Data:
-    Statistics = portfolioData(Data)$statistics
-    myPF = portfolioFrontier(Statistics)
-    par(mfrow = c(1, 1))
-    attributesPlot(myPF)                             
+    # Constraints:
+    constraints = "LongOnly"
+    
+    # Portfolio Weights Plot from Time Series Data:
+    Portfolio = minvariancePortfolio(data, spec, constraints)
+    
+    # Plot:
+    par(mfrow = c(2, 2), cex = 0.7)
+    weightsPie(Portfolio)
+    attributesPie(Portfolio)
+    riskBudgetsPie(Portfolio)
     
     # Return Value:
     return()
@@ -347,17 +346,36 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.covEllipsesPlot =
+test.piePlots.ConstrainedCVaR =
 function()
 { 
-    # Input must be a list of at least 2 covariance matrices!
+    # Load Time Series Data:
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG", "GYMB", "KRON")]
+    
+    # Specification:
+    spec = portfolioSpec()
+    setType(spec) = "CVaR"
+    
+    # Constraints:
+    constraints = NULL
+    
+    # Portfolio Weights Plot from Time Series Data:
+    Portfolio = minvariancePortfolio(data, spec, constraints)
+    
+    # Plot:
+    par(mfrow = c(2, 2), cex = 0.7)
+    weightsPie(Portfolio)
+    attributesPie(Portfolio)
+    riskBudgetsPie(Portfolio)
     
     # Return Value:
     return()
 }
 
 
-# ------------------------------------------------------------------------------
+
+###############################################################################
 
 
 if (FALSE) {

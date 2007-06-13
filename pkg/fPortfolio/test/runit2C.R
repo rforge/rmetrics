@@ -190,7 +190,10 @@ function()
 test.setSolver =
 function()
 { 
-    NA
+    # Modify Solver:
+    Spec = portfolioSpec()
+    setSolver(Spec) = "lpSolve"
+    Spec
     
     # Return Value:
     return()

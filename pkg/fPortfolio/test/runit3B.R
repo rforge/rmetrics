@@ -56,31 +56,13 @@ function()
 }
 
 
-# ------------------------------------------------------------------------------
-
-
-# IMPORTANT NOTE:
-#   All *ConstrainedMV* portfolios and the portfolio frontier function 
-#   assume by default zero-one Box constrained weights, i.e. strict
-#   "LongOnly" constraints. These can be modified to more general box
-#   constraints including limites "Short" constraints, group constraints,
-#   and risk budget constraints.
-
-
 ################################################################################
 
 
 test.feasibleConstrainedMVPortfolio = 
 function()
 {
-    # IMPORTANT NOTE:
-    #   It is not yet checked if the portfolio is feasible, that
-    #       means that the weights are compatible with the constraints.
-    #       In the current version constraints are ignored!
-    #   Note, the weights are taken from "spec@portfolio$eights"
-    #       if this entry is NULL, equal weights are used to
-    #       compute the portfolio.
-    
+   
     # Data:
     data = as.timeSeries(data(smallcap.ts))
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
@@ -127,7 +109,8 @@ function()
     constraints
     
     # Feasible Portfolio:
-    .feasibleConstrainedMVPortfolio(data, spec, constraints)
+    Portfolio = .feasibleConstrainedMVPortfolio(data, spec, constraints)
+    Portfolio
     
     # Return Value:
     return()
@@ -151,7 +134,8 @@ function()
     spec
     
     # Efficient Portfolio:
-    .efficientConstrainedMVPortfolio(data, spec, "LongOnly")
+    Portfolio = .efficientConstrainedMVPortfolio(data, spec, "LongOnly")
+    Portfolio
     
     # Return Value:
     return()
@@ -174,8 +158,13 @@ function()
     setTargetReturn(spec) <- mean(seriesData(data))
     spec
     
+    # Consgtraints:
+    constraints = "maxW[1:nAssets]=0.6"
+    constraints
+    
     # Efficient Portfolio:
-    .efficientConstrainedMVPortfolio(data, spec, "maxW[1:nAssets]=0.6")
+    Portfolio = .efficientConstrainedMVPortfolio(data, spec, constraints)
+    Portfolio
     
     # Return Value:
     return()
@@ -204,7 +193,8 @@ function()
     constraints
     
     # Efficient Portfolio:
-    .efficientConstrainedMVPortfolio(data, spec, constraints)
+    Portfolio = .efficientConstrainedMVPortfolio(data, spec, constraints)
+    Portfolio
     
     # Return Value:
     return()
@@ -232,7 +222,8 @@ function()
     constraints
     
     # Efficient Portfolio:
-    .efficientConstrainedMVPortfolio(data, spec, constraints)
+    Portfolio = .efficientConstrainedMVPortfolio(data, spec, constraints)
+    Portfolio
     
     # Return Value:
     return()
@@ -286,7 +277,8 @@ function()
     constraints
     
     # Portfolio - Equals tangency Portfolio:
-    .cmlConstrainedMVPortfolio(data, spec, constraints)
+    Portfolio = .cmlConstrainedMVPortfolio(data, spec, constraints)
+    Portfolio
     
     # Return Value:
     return()
@@ -313,7 +305,8 @@ function()
     constraints
     
     # Portfolio - Equals tangency Portfolio:
-    .cmlConstrainedMVPortfolio(data, spec, constraints)
+    Portfolio = .cmlConstrainedMVPortfolio(data, spec, constraints)
+    Portfolio
     
     # Return Value:
     return()
@@ -341,7 +334,8 @@ function()
     constraints
     
     # Portfolio:
-    .cmlConstrainedMVPortfolio(data, spec, constraints)
+    Portfolio = .cmlConstrainedMVPortfolio(data, spec, constraints)
+    Portfolio 
     
     # Return Value:
     return()
@@ -368,7 +362,8 @@ function()
     constraints
     
     # Tangency Portfolio:
-    .tangencyConstrainedMVPortfolio(data, spec,  constraints)
+    Portfolio = .tangencyConstrainedMVPortfolio(data, spec,  constraints)
+    Portfolio
     
     # Return Value:
     return()
@@ -395,7 +390,8 @@ function()
     constraints
     
     # Tangency Portfolio:
-    .tangencyConstrainedMVPortfolio(data, spec, constraints)
+    Portfolio = .tangencyConstrainedMVPortfolio(data, spec, constraints)
+    Portfolio 
     
     # Return Value:
     return()
@@ -422,7 +418,8 @@ function()
     constraints
     
     # Minimum Variance Portfolio:
-    .minvarianceConstrainedMVPortfolio(data, spec, constraints)
+    Portfolio = .minvarianceConstrainedMVPortfolio(data, spec, constraints)
+    Portfolio 
     
     # Return Value:
     return()
@@ -508,7 +505,8 @@ function()
     constraints
     
     # Portfolio Frontier:
-    .portfolioConstrainedMVFrontier(data, spec, constraints)
+    Frontier = .portfolioConstrainedMVFrontier(data, spec, constraints)
+    Frontier 
     
     # Return Value:
     return()
@@ -540,8 +538,8 @@ function()
     constraints
        
     # Frontier:
-    Portfolio = .portfolioConstrainedMVFrontier(data, spec, constraints)
-    Portfolio
+    Frontier = .portfolioConstrainedMVFrontier(data, spec, constraints)
+    Frontier
       
     # Return Value:
     return()

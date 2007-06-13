@@ -56,20 +56,7 @@ function()
 }
 
 
-# ------------------------------------------------------------------------------
-
-
-# IMPORTANT NOTE:
-#
-#   All *ShortMV* portfolios and the portfolio frontier function assume no 
-#   constraints on weights, neither box nor group constraints. All Weights 
-#   can take unlimited values in the range [-Inf, Inf].
-#
-#   Note, all these functions are internal functions, not thought to be used 
-#   by the enduser of the fPortfolio Package.
-
-
-# ------------------------------------------------------------------------------
+################################################################################
 
 
 test.feasibleShortMVPortfolio = 
@@ -117,7 +104,8 @@ function()
     constraints
     
     # Portfolio:
-    .feasibleShortMVPortfolio(data, spec, constraints)
+    Portfolio = .feasibleShortMVPortfolio(data, spec, constraints)
+    Portfolio
     
     # Return Value:
     return()
@@ -145,7 +133,8 @@ function()
     constraints
     
     # Portfolio:
-    .efficientShortMVPortfolio(data, spec, constraints)
+    Portfolio = .efficientShortMVPortfolio(data, spec, constraints)
+    Portfolio
     
     # Return Value:
     return()
@@ -173,7 +162,8 @@ function()
     constraints
     
     # Portfolio:
-    .cmlShortMVPortfolio(data, spec, constraints)
+    Portfolio = .cmlShortMVPortfolio(data, spec, constraints)
+    Portfolio
     
     # Return Value:
     return()
@@ -200,7 +190,8 @@ function()
     constraints
     
     # Portfolio:
-    .tangencyShortMVPortfolio(data, spec, constraints)
+    Portfolio = .tangencyShortMVPortfolio(data, spec, constraints)
+    Portfolio
     
     # Return Value:
     return()
@@ -248,6 +239,7 @@ function()
     
     # Specification:
     spec = portfolioSpec()
+    setNFrontierPoints = 10
     spec
     
     # Constraints:

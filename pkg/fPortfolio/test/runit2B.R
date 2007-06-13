@@ -126,8 +126,6 @@ function()
     getStatistics(data) 
     getMu(data)
     getSigma(data)
-    
-    getTailrisk(data)
          
     # Return Value:
     return()
