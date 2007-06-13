@@ -91,7 +91,7 @@ function()
 }
 
 
-# ------------------------------------------------------------------------------
+################################################################################
 
 
 test.efficientConstrainedCVaRPortfolio.SmallCaps = 
@@ -118,19 +118,23 @@ function()
     constraints
     
     # CVaR Portfolio Optimization:
-    .efficientConstrainedCVaRPortfolio(data, spec, constraints)
+    Portfolio = .efficientConstrainedCVaRPortfolio(data, spec, constraints)
+    Portfolio 
     
     # Return Value:
     return()    
 }
 
 
-# ------------------------------------------------------------------------------
+################################################################################
 
    
 test.efficientConstrainedCVaRPortfolio.LPP = 
 function()
 {  
+    # Require lpSolve:
+    require(lpSolve)
+    
     # Second Example:
     data = 100*as.timeSeries(data(LPP2005REC))[, 1:6]
     head(data)
@@ -148,7 +152,8 @@ function()
     constraints
     
     # CVaR Portfolio Optimization:
-    .efficientConstrainedCVaRPortfolio(data, spec, constraints)
+    Portfolio = .efficientConstrainedCVaRPortfolio(data, spec, constraints)
+    Portfolio
     
     # Return Value:
     return()    
@@ -182,7 +187,8 @@ function()
     constraints
     
     # CVaR Portfolio:
-    .efficientConstrainedCVaRPortfolio(data, spec, constraints)
+    Portfolio = .efficientConstrainedCVaRPortfolio(data, spec, constraints)
+    Portfolio 
     
     # Return Value:
     return()
@@ -190,7 +196,7 @@ function()
 
 
 
-# ------------------------------------------------------------------------------
+################################################################################
 
 
 test.cmlConstrainedCVaRPortfolio = 
@@ -218,14 +224,15 @@ function()
     constraints
     
     # CVaR Portfolio:
-    .cmlConstrainedCVaRPortfolio(data, spec, constraints)
+    Portfolio = .cmlConstrainedCVaRPortfolio(data, spec, constraints)
+    Portfolio
     
     # Return Value:
     return()
 }
 
 
-# ------------------------------------------------------------------------------
+################################################################################
 
 
 test.tangencyConstrainedCVaRPortfolio = 
@@ -252,14 +259,15 @@ function()
     constraints
     
     # Portfolio:
-    .tangencyConstrainedCVaRPortfolio(data, spec, constraints)
+    Portfolio = .tangencyConstrainedCVaRPortfolio(data, spec, constraints)
+    Portfolio
     
     # Return Value:
     return()
 }
 
 
-# ------------------------------------------------------------------------------
+################################################################################
 
 
 test.minvarianceConstrainedCVaRPortfolio =
@@ -285,14 +293,15 @@ function()
     constraints
     
     # CVaR Portfolio Optimization:
-    .minvarianceConstrainedCVaRPortfolio(data, spec, constraints)
+    Portfolio = .minvarianceConstrainedCVaRPortfolio(data, spec, constraints)
+    Portfolio 
     
     # Return Value:
     return()
 }
 
 
-# ------------------------------------------------------------------------------
+################################################################################
 
 
 test.portfolioConstrainedCVaRFrontier = 
@@ -316,8 +325,9 @@ function()
     constraints
     
     # CVaR Portfolio Optimization:
-    .portfolioConstrainedCVaRFrontier(data, spec, constraints)
-     
+    Frontier = .portfolioConstrainedCVaRFrontier(data, spec, constraints)
+    Frontier
+    
     # Return Value:
     return()    
 }

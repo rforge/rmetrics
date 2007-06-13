@@ -95,7 +95,11 @@ function()
     constraints
     
     # Feasible Portfolio:
-    .feasibleConstrainedMVPortfolio(data, spec, constraints)
+    Portfolio = .feasibleConstrainedMVPortfolio(data, spec, constraints)
+    Portfolio
+    
+    # Return Value:
+    return()
 }
 
 
@@ -445,7 +449,8 @@ function()
     constraints
     
     # Minimum Variance Portfolio:
-    .minvarianceConstrainedMVPortfolio(data, spec, constraints)
+    Portfolio = .minvarianceConstrainedMVPortfolio(data, spec, constraints)
+    Portfolio
     
     # Return Value:
     return()
@@ -473,7 +478,8 @@ function()
     constraints
     
     # Portfolio Frontier:
-    .portfolioConstrainedMVFrontier(data, spec, constraints)
+    Frontier = .portfolioConstrainedMVFrontier(data, spec, constraints)
+    Frontier
     
     # Return Value:
     return()
@@ -515,6 +521,9 @@ function()
 test.portfolioConstrainedMVFrontier.RiskBudgets =
 function()
 {   
+    # Load:
+    require(Rdonlp2)
+    
     # Data:
     data = as.timeSeries(data(smallcap.ts))
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
@@ -531,8 +540,9 @@ function()
     constraints
        
     # Frontier:
-    .portfolioConstrainedMVFrontier(data, spec, constraints)
-       
+    Portfolio = .portfolioConstrainedMVFrontier(data, spec, constraints)
+    Portfolio
+      
     # Return Value:
     return()
 }

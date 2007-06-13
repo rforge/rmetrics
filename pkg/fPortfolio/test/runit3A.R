@@ -89,7 +89,8 @@ function()
     constraints
     
     # Portfolio:
-    .feasibleShortMVPortfolio(data, spec, constraints)
+    Portfolio = .feasibleShortMVPortfolio(data, spec, constraints)
+    Portfolio
     
     # Return Value:
     return()
@@ -226,7 +227,8 @@ function()
     constraints
     
     # Portfolio:
-    .minvarianceShortMVPortfolio(data, spec, constraints)
+    Portfolio = .minvarianceShortMVPortfolio(data, spec, constraints)
+    Portfolio 
     
     # Return Value:
     return()

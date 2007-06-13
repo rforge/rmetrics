@@ -29,11 +29,11 @@
 
 ################################################################################
 # FUNCTION:                          SINGLE PORTFOLIOS:
-#  .feasibleConstrainedLPMPortfolio    Returns a constrained feasible MV-PF
-#  .tangencyConstrainedLPMPortfolio    Returns constrained tangency MV-PF
-#  .cmlConstrainedLPMPortfolio         Returns constrained CML-Portfolio
+#  .feasibleConstrainedLPMPortfolio   Returns a constrained feasible MV-PF
+#  .efficientConstrainedLPMPortfolio  Returns a constrained frontier MV-PF
+#  .cmlConstrainedLPMPortfolio        Returns constrained CML-Portfolio
+#  .tangencyConstrainedLPMPortfolio   Returns constrained tangency MV-PF
 #  .minvarianceConstraineLPMPortfolio Returns constrained min-Variance-PF
-#  .frontierConstrainedLPMPortfolio    Returns a constrained frontier MV-PF
 # FUNCTION:                          PORTFOLIO FRONTIER:
 #  .portfolioConstrainedLPMFrontier    Returns the EF of a constrained MV-PF                  
 ################################################################################
@@ -56,7 +56,7 @@ function()
 }
 
 
-# ------------------------------------------------------------------------------
+################################################################################
 
 
 test.feasibleConstrainedLPMPortfolio = 
