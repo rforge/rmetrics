@@ -30,7 +30,6 @@
 ################################################################################
 # FUNCTION:                    EFFICIENT FRONTIER PLOT AND ADDONS:  
 #  frontierPlot                 Plots efficient Frontier
-#   .sharpeRatioPlot             Adds Sharpe Ratio
 #   .minvariancePlot             Adds Minimum Variance point
 #   .cmlPlot                     Adds Market Portfolio and Capital Market Line
 #   .tangencyPlot                Adds Tangency Portfolio point and line
@@ -39,17 +38,19 @@
 #   .twoAssetsPlot               Adds EF for all combinations of two assets
 #   .wheelPiePlot                Adds pie chart of weights on EF
 #   .monteCarloPlot              Adds randomly produced feasible portfolios
+#   .sharpeRatioPlot             Adds Sharpe Ratio
 #   .notStackedWeightsPlot       Plots the not stacked weights of potfolio
 #   .addlegend                   Adds legend to sliders
-# FUNCTION:                    DESCRIPTION:                  
+# FUNCTION:                    FRONTIER BAR PLOTS:                  
 #  weightsPlot                  Plots staggered weights
-#  weightsPie                   Plots staggered weights
 #  attributesPlot               Plots weighted means
-#  attributesPie                Plots weighted means
 #  riskBudgetsPlot              Plots weighted risks
+# FUNCTION:                    PORTFOLIO PIE PLOTS:
+#  weightsPie                   Plots staggered weights
+#  attributesPie                Plots weighted means
 #  riskBudgetsPie               Plots weighted risks
 # FUNCTION:                    DESCRIPTION:
-#  covEllipsesPlot              Plots covariance ellipses                 
+#  covEllipsesPlot              Plots covariance ellipses                
 ################################################################################
 
 

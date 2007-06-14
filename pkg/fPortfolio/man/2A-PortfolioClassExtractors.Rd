@@ -33,7 +33,7 @@
     \tabular{ll}{
     \code{getData} \tab Extracts ..., \cr
     \code{getSpec} \tab Extracts ..., \cr
-    \code{getType \tab Extracts ..., \cr
+    \code{getType} \tab Extracts ..., \cr
     \code{getConstraints} \tab Extracts ..., \cr
     \code{getPortfolio} \tab Extracts ..., \cr
     \code{getWeights} \tab Extracts ..., \cr

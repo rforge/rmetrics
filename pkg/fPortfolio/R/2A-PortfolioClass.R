@@ -34,10 +34,10 @@
 #  show.fPORTFOLIO               S4 Print method for 'fPPORTFOLIO' objects
 # FUNCTION:                     SINGLE PORTFOLIOS:
 #  feasiblePortfolio             Returns a feasible portfolio
+#  efficientPortfolio            Returns a frontier portfolio
 #  cmlPortfolio                  Returns capital market line
 #  tangencyPortfolio             Returns the tangency portfolio
 #  minvariancePortfolio          Returns the minimum variance portfolio
-#  efficientPortfolio            Returns a frontier portfolio
 # FUNCTION:                     PRINT AND PLOT METHODS:           
 #  plot.fPORTFOLIO               S3 Plot method for 'fPORTFOLIO' objects   
 #  summary.fPORTFOLIO            S3 Summary method for 'fPORTFOLIO' objects
@@ -641,12 +641,12 @@ function(object, control = list(), ...)
      
     # Global Variables:
     object <<- object
-    nFrontierPoints <<- length(getTargetRisk(object))
+    nFrontierPoints <<- length(getTargetRisk(object)[ ,1])
     dim = dim(getWeights(object))[2]
         
     # Use default, if xlim and ylim is not specified ...
-    mu = object@data$statistics$mu
-    Sigma = object@data$statistics$Sigma      
+    mu = getStatistics(object)$mu
+    Sigma = getStatistics(object)$Sigma      
     yLim = range(mu) + 0.25*c(-diff(range(mu)), diff(range(mu)))
     
     # First, take care that all assets appear on the plot ...
@@ -658,7 +658,8 @@ function(object, control = list(), ...)
     fullFrontier = getFrontier(object)
     xLimFrontier = range(fullFrontier[, 1])
     xLim = range(c(xLimAssets, xLimFrontier))
-
+    xLim[1] = xLim[1]-diff(xLim)/5
+    
     # Control Parameters:
     con <<- list(
         sliderResolution = 1,     
@@ -694,22 +695,17 @@ function(object, control = list(), ...)
         
         # Plot 1 - Weights Plot: 
         weightsPlot(object)
-        # Weights Plot Pointer:
         abline(v = N, col = "black")
         
         # Plot 2 - Single Weights Plot:
         .notStackedWeightsPlot(object)
-        # Weights Plot Pointer for not stacked:
         abline(v = N, col = "black")
 
         # Plot 3 - Frontier Plot:
         frontier = getFrontier(object)
         fPoint = frontier[N, ]
-        frontierPlot(object, 
-            xlim = con$xlim, 
-            ylim = con$ylim,
-            xlab = "", 
-            ylab = "")
+        frontierPlot(object, xlim = con$xlim, ylim = con$ylim,
+            xlab = "", ylab = "")
         mtext("Target Risk", side = 1, line = 2, cex = 0.7)
         mtext("Target Return", side = 2, line = 2, cex = 0.7)
         points(fPoint[1], fPoint[2], col = con$runningPoint.col, pch = 19,
@@ -741,7 +737,7 @@ function(object, control = list(), ...)
   
     # Open Slider Menu:
     .counter <<- 0
-    Start <<- which.min(getTargetRisk(Frontier))
+    Start <<- which.min(getTargetRisk(object)[ , 1])
     .sliderMenu(refresh.code, title = "Weights Slider",
        names =       c(                 "N"),
        minima =      c(                   1),
@@ -772,8 +768,8 @@ function(object, control = list(), ...)
     dim = dim(getWeights(object))[2]
        
     # Use default, if xlim and ylim is not specified ...
-    mu = object@data$statistics$mu
-    Sigma = object@data$statistics$Sigma      
+    mu = getStatistics(object)$mu
+    Sigma = getStatistics(object)$Sigma      
     yLim = range(mu) + 0.25*c(-diff(range(mu)), diff(range(mu)))
     
     # First, take care that all assets appear on the plot ...
@@ -785,19 +781,19 @@ function(object, control = list(), ...)
     fullFrontier = getFrontier(object)
     xLimFrontier = range(fullFrontier[, 1])
     xLim = range(c(xLimAssets, xLimFrontier))
-
+    xLim[1] = xLim[1]-diff(xLim)/5
+    
     # Initial setting of the pies:
-    Data = object@data$series
-    Spec = getSpecification(object)
-    Constraints = object@constraints
+    Data = getSeries(object)
+    Spec = getSpec(object)
+    Constraints = getConstraints(object)
     tg = getTargetReturn(tangencyPortfolio(Data, Spec, Constraints))
     ef = getTargetReturn(object)
-    piePos = which(diff(sign(ef-tg)) > 0) 
+    piePos = which(diff(sign(as.vector(ef)-as.vector(tg))) > 0) 
 
     # Control list:
     con <<- list(
         sliderFlag = "frontier",
-    
         sharpeRatio.col = "black",
         minvariance.col = "red",
         tangency.col = "steelblue",
@@ -805,14 +801,12 @@ function(object, control = list(), ...)
         equalWeights.col = "blue",
         singleAsset.col = rainbow(dim),
         twoAssets.col = "grey",
-        monteCarlo.col = "black",
-        
+        monteCarlo.col = "black",  
         minvariance.pch = 17,
         tangency.pch = 17,
         cml.pch = 17,
         equalWeights.pch = 15,
-        singleAsset.pch = 18,
-        
+        singleAsset.pch = 18,  
         sharpeRatio.cex = 0.1,
         minvariance.cex = 1,
         tangency.cex = 1.25,
@@ -820,16 +814,12 @@ function(object, control = list(), ...)
         equalWeights.cex = 0.8,
         singleAsset.cex = 1,
         twoAssets.cex = 0.01,
-        monteCarlo.cex = 0.01,
-        
-        mcSteps = 5000,
-        
+        monteCarlo.cex = 0.01, 
+        mcSteps = 5000, 
         weightsPieR = NULL, 
         weightsPieOffset = NULL,
-        
         attributesPieR = NULL, 
         attributesPieOffset = NULL,
-        
         xlim = xLim,
         ylim = yLim
         )    
@@ -849,8 +839,8 @@ function(object, control = list(), ...)
         
         # Sliders:  
         N                = .sliderMenu(no =  1)
-        pieFlag          = .sliderMenu(no =  2)
-        attributePieFlag = .sliderMenu(no =  3)
+        weightsWheel     = .sliderMenu(no =  2)
+        attributesWheel  = .sliderMenu(no =  3)
         legendFlag       = .sliderMenu(no =  4)
         minvarianceFlag  = .sliderMenu(no =  5)
         tangencyFlag     = .sliderMenu(no =  6)
@@ -872,60 +862,75 @@ function(object, control = list(), ...)
         ef = getFrontier(object)
         points(ef[N, 1], ef[N, 2], col = "red", pch = 19, cex = 1.5)
         if (sharpeRatioFlag) {
-            .sharpeRatioPlot(object = object, type = "l", 
-                col = con$sharpeRatio.col, cex = con$sharpeRatio.cex, lty = 3)
+            .sharpeRatioPlot(object = object, 
+                type = "l", 
+                col = con$sharpeRatio.col, 
+                cex = con$sharpeRatio.cex, 
+                lty = 3)
         }
         if (minvarianceFlag) {
             .minvariancePlot(object = object, 
-                col = con$minvariance.col, cex = con$minvariance.cex, 
+                col = con$minvariance.col, 
+                cex = con$minvariance.cex, 
                 pch = con$minvariance.pch)
         }
         if (cmlFlag) {
-            object@specification$spec@portfolio$riskFreeRate = riskFreeRate
+            object@spec$spec@portfolio$riskFreeRate = riskFreeRate
             .cmlPlot(object, 
-                col = con$cml.col, cex = con$cml.cex, pch = con$cml.pch)
+                col = con$cml.col, 
+                cex = con$cml.cex, 
+                pch = con$cml.pch)
         }
         if (tangencyFlag) {
             .tangencyPlot(object = object, 
-                col = con$tangency.col, cex = con$tangency.cex,
+                col = con$tangency.col, 
+                cex = con$tangency.cex,
                 pch = con$tangency.pch)
         }
         if (singleAssetFlag) {
             .singleAssetPlot(object = object, 
-                col = con$singleAsset.col, cex = con$singleAsset.cex, 
+                col = con$singleAsset.col, 
+                cex = con$singleAsset.cex, 
                 pch = con$singleAsset.pch)
         }
         if (equalWeightsFlag) {
             .equalWeightsPlot(object = object, 
-                col = con$equalWeights.col, cex = con$equalWeights.cex, 
+                col = con$equalWeights.col, 
+                cex = con$equalWeights.cex, 
                 pch = con$equalWeights.pch)
         }
         if (twoAssetsFlag) {
-            .twoAssetsPlot(object = object, col = con$twoAssets.col) 
+            .twoAssetsPlot(object = object, 
+                col = con$twoAssets.col) 
         }
-        if (pieFlag) {
-            .wheelPiePlot(object = object,
+        if (weightsWheel) {
+            .weightsWheel(object = object,
                 piePos = N, pieR = con$weightsPieR,
                 pieOffset = con$weightsPieOffset)
         }
+        if (attributesWheel) {
+            .attributesWheel(object = object,
+                piePos = N, 
+                pieR = con$attributesPieR,
+                pieOffset = con$attributesPieOffset)
+            }
         if (mcFlag) {
             .monteCarloPlot(object = object, 
-                col = con$monteCarlo.col, cex = con$monteCarlo.cex, 
+                col = con$monteCarlo.col, 
+                cex = con$monteCarlo.cex, 
                 mcSteps = mcSteps) 
         }
         if (legendFlag) {
-            .addlegend(object = object, control = con)
+            .addlegend(object = object, 
+                control = con)
         } 
-        if (attributePieFlag) {
-            .attPiePlot(object = object,
-                piePos = N, pieR = con$attributesPieR,
-                pieOffset = con$attributesPieOffset)
-            }
         fPoint = ef[N, ] 
         Title = paste(
             "Return =", signif(fPoint[2], 2), "|", 
             "Risk = ", signif(fPoint[1], 2))
-        title(main = Title)            
+        title(main = Title) 
+        
+        grid()           
     }
   
     # Open Slider Menu:
@@ -934,20 +939,20 @@ function(object, control = list(), ...)
     maxRF = max(getTargetReturn(object))
     resRF = maxRF/100
     .sliderMenu(refresh.code, title = "Frontier Slider",
-        names =       c(  "Select Frontier Point  ",
-                          "Add Weights Pie        ",
-                          "Add Attribute Pie      ",
-                          "Add Legend             ",
-                          "Add Min Variance PF    ", 
-                          "Add Tangency PF        ",
-                          "Add Capital Market Line",
-                          "Risk Free Rate         ",
-                          "Add Sharpe Ratio       ",
-                          "Add Equal Weights PF   ",
-                          "Add Single Assets      ",
-                          "Add Two Assets EFs     ",
-                          "Add Monte Carlo PFs    ",
-                          "# of MC Steps          "),
+        names =   c(  "Select Frontier Point         ",
+                      "Add|Remove Weights Pie        ",
+                      "Add|Remove Attribute Pie      ",
+                      "Add|Remove Legend             ",
+                      "Add|Remove Min Variance PF    ", 
+                      "Add|Remove Tangency PF        ",
+                      "Add|Remove Capital Market Line",
+                      "-> Risk Free Rate             ",
+                      "Add|Remove Sharpe Ratio       ",
+                      "Add|Remove Equal Weights PF   ",
+                      "Add|Remove Single Assets      ",
+                      "Add|Remove Two Assets EFs     ",
+                      "Add|Remove Monte Carlo PFs    ",
+                      "-> # of MC Steps              "),
                           
             #   frontierPoints Pie Pie  L mv tg cml    #RF SR EW SA TA MC   #MC 
                     #        1   2   2  3  4  5  7      8  6  9 10 11 12    13 

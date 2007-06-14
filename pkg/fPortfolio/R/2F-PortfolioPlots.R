@@ -30,7 +30,6 @@
 ################################################################################
 # FUNCTION:                    EFFICIENT FRONTIER PLOT AND ADDONS:  
 #  frontierPlot                 Plots efficient Frontier
-#   .sharpeRatioPlot             Adds Sharpe Ratio
 #   .minvariancePlot             Adds Minimum Variance point
 #   .cmlPlot                     Adds Market Portfolio and Capital Market Line
 #   .tangencyPlot                Adds Tangency Portfolio point and line
@@ -39,6 +38,7 @@
 #   .twoAssetsPlot               Adds EF for all combinations of two assets
 #   .wheelPiePlot                Adds pie chart of weights on EF
 #   .monteCarloPlot              Adds randomly produced feasible portfolios
+#   .sharpeRatioPlot             Adds Sharpe Ratio
 #   .notStackedWeightsPlot       Plots the not stacked weights of potfolio
 #   .addlegend                   Adds legend to sliders
 # FUNCTION:                    FRONTIER BAR PLOTS:                  
@@ -333,7 +333,7 @@ function(object, ...)
         points(getFrontier(cmlPortfolio), ...)
         # Add Tangency Line - if slope is positive:
         # riskFreeRate = getPortfolio(cmlPortfolio)$riskFreeRate
-        riskFreeRate = object@specification$spec@portfolio$riskFreeRate
+        riskFreeRate = object@spec$spec@portfolio$riskFreeRate
         slope = ((getTargetReturn(cmlPortfolio)[1] - riskFreeRate) /
             getTargetRisk(cmlPortfolio)[1])
         if(slope > 0) abline(b = slope, a = riskFreeRate, ...)
@@ -362,12 +362,12 @@ function(object, ...)
     Statistics = getStatistics(object)
     Type = getType(object)
     
-    Return = Statistics$mu
+    Return = getStatistics(object)$mu
     if (Type == "MV") {
         Risk = sqrt(diag(Statistics$Sigma))
     } else if (Type == "CVaR") {
-        nAssets = length(Return)
-        Data = object@data$series@Data
+        nAssets = getNumberOfAssets(object)
+        Data = getSeries(object)
         alpha = getTargetAlpha(object)
         Risk = NULL
         for (i in 1:nAssets) Risk = c(Risk, -.cvarRisk(Data[ ,i], 1, alpha))
@@ -456,8 +456,8 @@ function(object, ...)
 
 # ------------------------------------------------------------------------------
 
-
-.wheelPiePlot = 
+ 
+.weightsWheel =
 function(object, piePos = NULL, pieR = NULL, pieOffset = NULL, ...)
 {   # A function implemented by Rmetrics
 
@@ -538,7 +538,7 @@ function(object, piePos = NULL, pieR = NULL, pieOffset = NULL, ...)
 # ------------------------------------------------------------------------------
 
 
-.attPiePlot = 
+.attributesWheel = 
 function(object, piePos = NULL, pieR = NULL, pieOffset = NULL, ...)
 {   # A function implemented by Rmetrics
 
@@ -559,11 +559,11 @@ function(object, piePos = NULL, pieR = NULL, pieOffset = NULL, ...)
 
     # Pie Position:
     if(is.null(piePos)) {
-        Data = object@data$statistics
-        Spec = getSpecification(object)
-        Constraints = object@constraints
+        Data = getSeries(object)
+        Spec = getSpec(object)
+        Constraints = getConstraints(object)
         tg = getTargetReturn(tangencyPortfolio(Data, Spec, Constraints))
-        ef = getTargetReturn(object)
+        ef = as.vector(getTargetReturn(object))
         piePos = which(diff(sign(ef-tg)) > 0) 
     }
     
@@ -580,7 +580,7 @@ function(object, piePos = NULL, pieR = NULL, pieOffset = NULL, ...)
     # Plot Circle - Get weighted Returns:
     weights = getWeights(object)
     dim = dim(weights)
-    returns = object@data$statistics$mu
+    returns = getStatistics(object)$mu
     weightedReturns = NULL
     for(i in 1:dim[2]){
         nextWeightedReturns = weights[,i]*returns[i]
@@ -672,7 +672,7 @@ function(object, mcSteps, ...)
         } 
     } else if (Type == "CVaR") {
         # Monte Carlo Loop - Long Only:
-        x = object@data$series
+        x = getSeries(object)  
         alpha = getTargetAlpha(object)
         for (k in 1:mcSteps) {  
             weights = abs(rcauchy(N))        
@@ -703,10 +703,11 @@ function(object, col = NULL)
     
     # FUNCTION:
     
+    # Settings:
     weights = getWeights(object)
     N = ncol(weights)
-    targetRisk = getTargetRisk(object)
-    targetReturn = getTargetReturn(object)
+    targetRisk = getTargetRisk(object)[, 1]
+    targetReturn = getTargetReturn(object)[, 1]
     nSigma = length(targetRisk)
     
     # Select Colors if not specified ...
@@ -715,46 +716,47 @@ function(object, col = NULL)
     # Plot first asset ...    
     plot(weights[, 1], col = col[1], type = "l", ylim = c(min(weights),
         max(weights)), xaxt = "n", xlab = "", ylab = "")
-
+    
     # Add vertical Line at minimum risk:
-    names(targetRisk) <- as.character(seq(1, nSigma, 1))
+    minIndex = which.min(targetRisk)
     minRisk = min(targetRisk)
-    for(i in 1: nSigma){
-          if(minRisk == targetRisk[i]) minRisk = targetRisk[i]
-    }
-    minRisk = as.numeric(names(minRisk))
         
     # Big Point at minimum risk for first asset ...
-    points(y = weights[minRisk, 1], x = minRisk, col = col[1], pch = 19,
+    points(x = minIndex, y = weights[minIndex, 1], col = col[1], pch = 19,
         xaxt = "n", yaxt = "n", cex = 2)
     
-    # ... and all other  
+    # ... and all other assets 
     for(i in 1:(N-1)){
         points(weights[, i+1], col = col[i+1], type = "l", xaxt = "n",
         yaxt = "n")
-        points(y = weights[minRisk, i+1], x = minRisk, col = col[i+1], pch = 19,
-            xaxt = "n", yaxt = "n", cex = 2)
+        points(x = minIndex, y = weights[minIndex, i+1], col = col[i+1], 
+            pch = 19, xaxt = "n", yaxt = "n", cex = 2)
     }
     grid()
     abline(h = 0, col = "grey", lty = 3)
-    abline(v = minRisk, col = "black", lty = 3)
+    lines(x = c(minIndex, minIndex), y = c(0, 1), col = "black", lwd = 2)
 
     # Add Tailored Labels -  6 may be a good Number ...
     nLabels = 6
-    M = c(0, ( 1: (nSigma %/% nLabels) ) ) *nLabels + 1
-    
+    M = c(0, ( 1: (nSigma %/% nLabels) ) ) * nLabels + 1
+    text(minIndex, 1, "Min Risk", pos = 4)
+    minRiskValue = as.character(signif(minRisk, 3))
+    minReturnValue = as.character(signif(targetReturn[minIndex], 3))
+    mtext(minRiskValue, side = 1, at = minIndex, cex = 0.7) 
+    mtext(minReturnValue, side = 3, line = 0.5, at = minIndex, cex = 0.7) 
+
     # Take a reasonable number of significant digits to plot, e.g. 2 ...
     nPrecision = 3
     axis(1, at = M, labels = signif(targetRisk[M], nPrecision))
     axis(3, at = M, labels = signif(targetReturn[M], nPrecision))
       
     # Add Axis Labels and Title:
-    mtext("Target Risk", side = 1, line = 2, cex = .7)
-    mtext("Target Return", side = 3, line = 2, cex = .7)
-    mtext("Weight", side = 2, line = 2, cex = .7)
+    mtext("Target Risk", side = 1, line = 2, cex = 0.7)
+    mtext("Target Return", side = 3, line = 2, cex = 0.7)
+    mtext("Weight", side = 2, line = 2, cex = 0.7)
     
     # Add Info:
-    mtext(paste(getType(object), "|",getSolver(object)), 
+    mtext(paste(getType(object), "|", getSolver(object)), 
         side = 4, adj = 0, col = "grey", cex = 0.7)
         
     # Add Title:
@@ -781,6 +783,7 @@ function(object, control = list())
     
     # FUNCTION:
     
+    # Settings:
     dim = getNumberOfAssets(object)
     namesSingleAsset = names(object@data$statistics$mu)
     # Check if polt is used for forntierSlider...
@@ -857,7 +860,7 @@ function(object, col = NULL, legend = TRUE)
         barplot(t(pos.weights), space = 0, ylab = "",
             ylim = c(ymin, ymax), col = col, border = "grey")
     } else {
-        legendtext = names(object@data$statistics$mu)
+        legendtext = names(getStatistics(object)$mu)
         if(is.null(legendtext)){
             for(i in 1:dim[2]){legendtext[i] = paste("Asset", i, sep = " ")}
         }
@@ -869,9 +872,8 @@ function(object, col = NULL, legend = TRUE)
     barplot(t(neg.weights), space = 0, add = TRUE, col = col, border = "grey") 
     
     # Add Tailored Labels -  6 may be a good Number ...
-    targetRisk = getTargetRisk(object)
-    if(Type == "CVaR") targetRisk = targetRisk[, 1]
-    targetReturn = getTargetReturn(object)
+    targetRisk = getTargetRisk(object) 
+    targetReturn = getTargetReturn(object) 
     nSigma = length(targetRisk)
     nLabels = 6
     M = c(0, ( 1:(nSigma %/% nLabels) ) ) *nLabels + 1
@@ -891,9 +893,9 @@ function(object, col = NULL, legend = TRUE)
     lines(x = c(0, nSigma), c(0, 0), col = "grey", lty = 3)   
     
     # Add vertical Line at minimum risk:
-    minSigma = which.min(targetRisk[, 1])
+    minIndex = which.min(targetRisk[, 1])
     minRisk = signif(min(targetRisk[, 1]), 3)
-    abline(v = minSigma, col = "black", lty = 1, lwd = 2)
+    abline(v = minIndex, col = "black", lty = 1, lwd = 2)
     
     # Add Info:
     mtext(paste(
@@ -958,7 +960,7 @@ function(object, col = NULL, legend = TRUE)
         barplot(t(pos.weightedReturns), space = 0, ylab = "",
             ylim = c(ymin, ymax), col = col, border = "grey")
     } else {
-        legendtext = names(object@data$statistics$mu)
+        legendtext = names(getStatistics(object)$mu)
         if(is.null(legendtext)){
             for(i in 1:dim[2]){legendtext[i] = paste("Asset", i, sep = " ")}
         }
@@ -992,9 +994,9 @@ function(object, col = NULL, legend = TRUE)
     lines(x = c(0, nSigma), c(0, 0), col = "grey", lty = 3)   
     
     # Add vertical Line at minimum risk:
-    minSigma = which.min(targetRisk)
+    minIndex = which.min(targetRisk)
     minRisk = signif(min(targetRisk))
-    abline(v = minSigma, col = "black", lty = 1, lwd = 2)
+    abline(v = minIndex, col = "black", lty = 1, lwd = 2)
    
     # Add Info:
     mtext(paste(
@@ -1055,7 +1057,7 @@ function(object, col = NULL, legend = TRUE)
         barplot(t(pos.budgets), space = 0, ylab = "",
             ylim = c(ymin, ymax), col = col, border = "grey")
     } else {
-        legendtext = names(object@data$statistics$mu)
+        legendtext = names(getStatistics(object)$mu)
         if(is.null(legendtext)){
             for(i in 1:dim[2]){legendtext[i] = paste("Asset", i, sep = " ")}
         }
@@ -1088,9 +1090,9 @@ function(object, col = NULL, legend = TRUE)
     lines(x = c(0, nSigma), c(0, 0), col = "grey", lty = 3)   
     
     # Add vertical Line at minimum risk:
-    minSigma = which.min(targetRisk)
+    minIndex = which.min(targetRisk)
     minRisk = signif(min(targetRisk), 3)
-    abline(v = minSigma, col = "black", lty = 1, lwd = 2)
+    abline(v = minIndex, col = "black", lty = 1, lwd = 2)
     
     # Add Info:
     mtext(paste(
@@ -1173,7 +1175,7 @@ function(object, pos = NULL, col = NULL, box = TRUE, legend = TRUE)
         
         # Add Legend:
         legendWeights = as.character(round(100*Weights, digits = 1))
-        legendWeights = paste(Sign, legendWeights, sep = "")
+        legendWeights = paste(Sign[Index], legendWeights, sep = "")
         legendWeights = paste(legendWeights, "%")
         legend("topright", legend = legendWeights, bty = "n", cex = 0.8, 
             fill = col)
@@ -1209,6 +1211,7 @@ function(object, pos = NULL, col = NULL, box = TRUE, legend = TRUE)
     
     # Get weighted Returns:
     weights = getWeights(object)
+    names = names(weights)
     nWeights = length(weights)
     # if(length(weights) != nWeights) stop("Plot position is not specified")
     returns = getStatistics(object)$mu
@@ -1253,7 +1256,7 @@ function(object, pos = NULL, col = NULL, box = TRUE, legend = TRUE)
         sumWeightedReturns = sum(WeightedReturns)
         legendWeights = as.character(round(100*WeightedReturns/
             sumWeightedReturns, digits = 1))
-        legendWeights = paste(Sign, legendWeights)
+        legendWeights = paste(Sign[Index], legendWeights)
         legendWeights = paste(legendWeights, "%")
         legend("topright", legend = legendWeights, bty = "n", cex = 0.8, 
             fill = col)
@@ -1305,7 +1308,7 @@ function(object, pos = NULL, col = NULL, box = TRUE, legend = TRUE)
     RiskBudgets = abs(riskBudgets)
     Index = (1:nRiskBudgets)[RiskBudgets > 0]
     col = col[Index]
-    names = names(weights)
+    names = names(RiskBudgets)
     legendAssets = names[Index]
     Labels = paste(names, Sign)
     Labels = Labels[RiskBudgets > 0]
@@ -1330,7 +1333,7 @@ function(object, pos = NULL, col = NULL, box = TRUE, legend = TRUE)
         
         # Add Legend:
         legendRiskBudgets = as.character(round(100*RiskBudgets, digits = 1))
-        legendRiskBudgets = paste(Sign, legendRiskBudgets)      
+        legendRiskBudgets = paste(Sign[Index], legendRiskBudgets)      
         legendRiskBudgets = paste(legendRiskBudgets, "%")
         legend("topright", legend = legendRiskBudgets, bty = "n", cex = 0.8, 
             fill = col)
