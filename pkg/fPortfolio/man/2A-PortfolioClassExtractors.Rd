@@ -3,14 +3,26 @@
 \alias{PortfolioClassExtractors}
 
 \alias{getData.fPORTFOLIO}
+\alias{getSeries.fPORTFOLIO}
+\alias{getStatistics.fPORTFOLIO}
+\alias{getNumberOfAssets.fPORTFOLIO}
+
 \alias{getSpec.fPORTFOLIO}
 \alias{getType.fPORTFOLIO}
+\alias{getEstimator.fPORTFOLIO}
+\alias{getParams.fPORTFOLIO}
+\alias{getSolver.fPORTFOLIO}
+\alias{getTrace.fPORTFOLIO}
+
 \alias{getConstraints.fPORTFOLIO}
+
 \alias{getPortfolio.fPORTFOLIO}
 \alias{getWeights.fPORTFOLIO}
 \alias{getTargetReturn.fPORTFOLIO}
 \alias{getTargetRisk.fPORTFOLIO}
 \alias{getTargetAlpha.fPORTFOLIO}
+\alias{getRiskFreeRate.fPORTFOLIO}
+\alias{getNFrontierPoints.fPORTFOLIO}
 \alias{getStatus.fPORTFOLIO}
 
 \alias{getFrontier.fPORTFOLIO}
@@ -32,14 +44,23 @@
     
     \tabular{ll}{
     \code{getData} \tab Extracts ..., \cr
+    \code{getSeries} \tab Extracts ..., \cr
+    \code{getStatistics} \tab Extracts ..., \cr
+    \code{getNumberOfAssets} \tab Extracts ..., \cr
     \code{getSpec} \tab Extracts ..., \cr
     \code{getType} \tab Extracts ..., \cr
+    \code{getEstimator} \tab Extracts ..., \cr
+    \code{getParams} \tab Extracts ..., \cr
+    \code{getSolver} \tab Extracts ..., \cr
+    \code{getTrace} \tab Extracts ..., \cr
     \code{getConstraints} \tab Extracts ..., \cr
     \code{getPortfolio} \tab Extracts ..., \cr
     \code{getWeights} \tab Extracts ..., \cr
     \code{getTargetReturn} \tab Extracts ..., \cr
     \code{getTargetRisk} \tab Extracts ..., \cr
     \code{getTargetAlpha} \tab Extracts ..., \cr
+    \code{getRiskFreeRate} \tab Extracts ..., \cr
+    \code{getNFrontierPoints} \tab Extracts ..., \cr
     \code{getStatus} \tab Extracts ..., \cr
     \code{getFrontier} \tab Extracts ..., \cr
     \code{getRiskBudgets} \tab Extracts ..., \cr
@@ -50,14 +71,26 @@
 
 \usage{
 \method{getData}{fPORTFOLIO}(object)
+\method{getSeries}{fPORTFOLIO}(object)
+\method{getStatistics}{fPORTFOLIO}(object)
+\method{getNumberOfAssets}{fPORTFOLIO}(object)
+
 \method{getSpec}{fPORTFOLIO}(object)
 \method{getType}{fPORTFOLIO}(object)
+\method{getEstimator}{fPORTFOLIO}(object)
+\method{getParams}{fPORTFOLIO}(object)
+\method{getSolver}{fPORTFOLIO}(object)
+\method{getTrace}{fPORTFOLIO}(object)
+
 \method{getConstraints}{fPORTFOLIO}(object)
+
 \method{getPortfolio}{fPORTFOLIO}(object)
 \method{getWeights}{fPORTFOLIO}(object)
 \method{getTargetReturn}{fPORTFOLIO}(object)
 \method{getTargetRisk}{fPORTFOLIO}(object)
 \method{getTargetAlpha}{fPORTFOLIO}(object)
+\method{getRiskFreeRate}{fPORTFOLIO}(object)
+\method{getNFrontierPoints}{fPORTFOLIO}(object)
 \method{getStatus}{fPORTFOLIO}(object)
 
 \method{getFrontier}{fPORTFOLIO}(object, frontier = c("both", "lower", "upper"), 
