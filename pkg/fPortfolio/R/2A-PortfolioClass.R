@@ -553,7 +553,7 @@ function(x, which = "ask", control = list(), ...)
         .twoAssetsPlot(object = x, col = con$twoAssets.col) 
     }       
     plot.7 <<- function(x, ...) {
-        .wheelPiePlot(object = x,
+        .weightsWheel(object = x,
             piePos = con$PiePos, pieR = con$pieR, pieOffset = con$pieOffset)
     }  
     plot.8 <<- function(x, ...) {

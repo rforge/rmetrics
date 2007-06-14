@@ -588,7 +588,7 @@ function(data, spec, constraints, from, to, benchmark, portfolio =
         # If the benchmark return was higher than the "safe" portfolio
         #   target return, then we use the efficient portfolio with the
         #   target return given by the benchmark portfolio:
-        bmReturn = mean(as.numeric(bmSeries))
+        bmReturn = mean(bmSeries@Data)
         whichPortfolio = "tg PF"
         if(bmReturn > tgReturn) {
             Spec = spec
