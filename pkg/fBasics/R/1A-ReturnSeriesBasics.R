@@ -415,7 +415,7 @@ function(x, ci = 0.95)
 
 
 .distCheck = 
-function(fun = "norm", n = 1000, robust = TRUE, ...)
+function(fun = "norm", n = 1000, robust = TRUE, subdivisions = 100, ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -449,7 +449,7 @@ function(fun = "norm", n = 1000, robust = TRUE, ...)
     
     # Check 1 - Normalization:
     NORM = integrate(dfun, lower = -Inf, upper = Inf, 
-        subdivisions = 5000, stop.on.error = FALSE, ...)
+        subdivisions = subdivisions, stop.on.error = FALSE, ...)
     cat("\n1. Normalization Check:\n NORM ")
     print(NORM)
     normCheck = (abs(NORM[[1]]-1) < 0.01)
@@ -458,7 +458,8 @@ function(fun = "norm", n = 1000, robust = TRUE, ...)
     cat("\n2. [p-pfun(qfun(p))]^2 Check:\n ")
     p = c(0.001, 0.01, 0.1, 0.5, 0.9, 0.99, 0.999)
     P = pfun(qfun(p, ...), ...)
-    cat("PROB = 0.001, 0.01, 0.1, 0.5, 0.9, 0.99, 0.999\n")
+    pP = round(rbind(p, P), 3)
+    print(pP)
     RMSE = sd(p-P)
     print(c(RMSE = RMSE))
     rmseCheck = (abs(RMSE) < 0.0001)

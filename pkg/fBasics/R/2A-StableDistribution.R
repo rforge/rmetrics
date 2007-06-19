@@ -131,13 +131,13 @@ function(p, alpha)
         for (i in 1:length(p)) {
             pp = p[i]
             # xmin = -(1-pp)/pp
-            if (pp < 0.5) {
+            if (pp <= 0.5) {    # <=
                 xmin = qcauchy(pp)
             } else {
                 xmin = qnorm(pp, mean = 0, sd = sqrt(2))
             }
             # xmax = pp/(1-pp) 
-            if (pp < 0.5) {
+            if (pp <= 0.5) {    # <=
                 xmax = qnorm(pp, mean = 0, sd = sqrt(2))
             } else {
                 xmax = qcauchy(pp)  

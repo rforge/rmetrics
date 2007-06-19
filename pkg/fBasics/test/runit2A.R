@@ -71,7 +71,7 @@ function()
     # rsymstb, alpha=1.8
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
-    test = .distCheck("symstb", alpha = 1.9)
+    test = .distCheck("symstb", alpha = 1.9, robust = FALSE)
     print(test)
     checkTrue(mean(test) == 1)
     
