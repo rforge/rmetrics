@@ -9,7 +9,11 @@
 
 \alias{rarchmSlider}     
 \alias{parchmSlider}
-\alias{darchmSlider}       
+\alias{darchmSlider}  
+
+\alias{rgumbelCopula}   
+\alias{pgumbelCopula}
+\alias{dgumbelCopula}  
 
 
 \title{Bivariate Archimedean Copulae}
@@ -32,6 +36,14 @@
     \code{parchmSlider} \tab displays interactive plots of probability, \cr
     \code{darchmSlider} \tab displays interactive plots of density.  }
     
+    
+    Special Copulae Functions:
+    
+    \tabular{ll}{
+    \code{rgumbelCopula} \tab Generates Gumbel copula variates, \cr
+    \code{pgumbelCopula} \tab computes Gumbel copula probability, \cr
+    \code{dgumbelCopula} \tab computes Gumbel copula density.  }
+    
 }
 
 
@@ -45,6 +57,10 @@ darchmCopula(u = 0.5, v = u, alpha = NULL, type = archmList(), output =
 rarchmSlider(B = 10) 
 parchmSlider(type = c("persp", "contour"), B = 10)
 darchmSlider(type = c("persp", "contour"), B = 10)
+
+rgumbelCopula(n, alpha = 2)
+pgumbelCopula(u = 0.5, v = u, alpha = 2, output = c("vector", "list"))
+dgumbelCopula(u = 0.5, v = u, alpha = 2, output = c("vector", "list"))
 }
 
 
