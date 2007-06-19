@@ -65,7 +65,6 @@ function()
 test.ellipticalList = 
 function()
 {
-
     # Arguments ?
     args(ellipticalList)
     
@@ -73,7 +72,6 @@ function()
     target = c("norm", "cauchy", "t", "logistic", "laplace", "kotz", "epower")
     current = ellipticalList()
     print(current)
-    
     
     # Return Value:
     return()    
@@ -83,10 +81,30 @@ function()
 # ------------------------------------------------------------------------------
 
 
+test.ellipticalRange = 
+function()
+{
+    # Arguments ?
+    args(ellipticalRange)
+    
+    # Range:
+    for (type in ellipticalList()) {
+        cat("\n")
+        print(ellipticalRange(type))
+    }
+    
+    # Return Value:
+    return()    
+}
+
+
+
+# ------------------------------------------------------------------------------
+
+
 test.ellipticalParam = 
 function()
 {
-
     # Arguments ?
     args(ellipticalParam)
     
@@ -109,11 +127,16 @@ function()
 {
     # Arguments ?
     args(ellipticalCheck)
+    # ellipticalCheck(rho = 0.75, param = NULL, type = ellipticalList()) 
+
     
     # Range:
     for (type in ellipticalList()) {
         cat("\n")
-        print(ellipticalCheck(ellipticalParam(type)$param))              # CHECK
+        param = ellipticalParam(type)$param
+        rho = param[1]
+        # Returns NULL if OK
+        print(ellipticalCheck(rho, param[-1], type))        
     }
 
     # Return Value:
@@ -121,7 +144,7 @@ function()
 }
 
 
-# ------------------------------------------------------------------------------
+################################################################################
 
 
 test.gfunc = 
@@ -129,6 +152,8 @@ function()
 {
     # Arguments ?
     args(gfunc)
+    # gfunc(x, param = NULL, type = ellipticalList()) 
+
 
     # Call Generator Function - Missing x:
     gfunc(type = "norm")
@@ -269,7 +294,7 @@ function()
 }
 
 
-# ------------------------------------------------------------------------------
+################################################################################
 
 
 if (FALSE) {

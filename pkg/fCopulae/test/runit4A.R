@@ -56,17 +56,18 @@ function()
 }
 
 
-# ------------------------------------------------------------------------------
+################################################################################
 
 
 test.evList = 
 function()
 {
     # Arguments:
-    # evList()
+    #   evList()
     
     # List:
     evList()
+    # c("gumbel", "galambos", "husler.reiss", "tawn", "bb5")
 
     # Return Value:
     return()    
@@ -80,10 +81,10 @@ test.evParam =
 function()
 {
     # Arguments:
-    # evParam(type = evList())
+    #   evParam(type = evList())
     
     # Parameters:
-    for (type in archmList()) {
+    for (type in evList()) {
         cat("\n")
         print(unlist(evParam(type)))
     }
@@ -125,7 +126,8 @@ function()
     # Check:
     for (type in evList()) {
         cat("\n")
-        print(evCheck(evParam(type)$param))
+        param = evParam(type)$param
+        print(evCheck(param))
     }
     
     # Return Value:
@@ -133,14 +135,14 @@ function()
 }
 
    
-# ------------------------------------------------------------------------------
+################################################################################
 
 
 test.Afunc = 
 function()
 {
     # Arguments:
-    # Afunc(x, param = NULL, type = evList()
+    #   Afunc(x, param = NULL, type = evList()
     
     # Afunc:
     x = (0:10)/10
@@ -162,7 +164,7 @@ test.AfuncSlider =
 function()
 {
     # Arguments:
-    # AfuncSlider()
+    #   AfuncSlider()
     
     # Try Slider:
     AfuncSlider()
@@ -172,7 +174,7 @@ function()
 }
 
         
-# ------------------------------------------------------------------------------
+################################################################################
 
 
 if (FALSE) {

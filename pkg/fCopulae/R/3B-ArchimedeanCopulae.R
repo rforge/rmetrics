@@ -47,6 +47,10 @@
 #  .darchm2Copula              Utility Function
 #  .darchmPerspSlider          Utility Function
 #  .darchmContourSlider        Utility Function
+# FUNCTION:                  SPECIAL BIVARIATE COPULA:
+#  rgumbelCopula              Generates fast gumbel random variates
+#  pgumbelCopula              Computes bivariate Gumbel copula probability
+#  dgumbelCopula              Computes bivariate Gumbel copula density
 ################################################################################
 
 
@@ -1516,6 +1520,77 @@ function(B = 10)
         maxima      = c(      22, 100, U,  100,  256),
         resolutions = c(       1,  10, V,   10,    1),
         starts      = c(       1,  30, A,   30,   64)) 
+}
+
+
+################################################################################
+
+
+rgumbelCopula =
+function(n = 100, alpha = 2) 
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Generates fast gumbel random variates
+    
+    # FUNCTION:
+    
+    # Stable RVs:
+    dim = 2
+    theta <- runif(n, 0, pi)
+    w <- rexp(n)
+    b = 1/alpha
+    a <- sin((1-b)*theta)*(sin(b*theta))^(b/(1-b)) / (sin(theta))^(1/(1-b))
+    fr = (a/w)^((1-b)/b)
+    fr <- matrix(fr, nrow = n, ncol = dim)
+    val <- matrix(runif(dim * n), nrow = n)
+    s = -log(val)/fr
+    
+    # Bivariate Gumbel RVs:
+    ans = exp(-s^(1/alpha) )
+    
+    # Return Value:
+    ans
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+pgumbelCopula =
+function(u = 0.5, v = u, alpha = 2, output = c("vector", "list"))
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Computes bivariate Gumbel copula probability 
+    
+    # FUNCTION:
+    
+    # Bivariate Gumbel Probability:
+    ans = parchmCopula (u, v, alpha, type = "4", output, alternative = FALSE) 
+    
+    # Return Value:
+    ans
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+dgumbelCopula =
+function(u = 0.5, v = u, alpha = 2, output = c("vector", "list"))
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Computes bivariate Gumbel copula density
+    
+    # FUNCTION:
+    
+    # Bivariate Gumbel Density:
+    ans = darchmCopula (u, v, alpha, type = "4", output, alternative = FALSE) 
+    
+    # Return Value:
+    ans
 }
 
 

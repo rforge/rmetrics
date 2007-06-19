@@ -51,7 +51,7 @@ function()
 }
 
 
-# ------------------------------------------------------------------------------
+################################################################################
 
 
 test.evCopulaSim = 
@@ -80,19 +80,20 @@ test.evCopulaFit =
 function()
 {
     # Arguments:
-    # evCopulaFit(u, v = NULL, type = evList(), ...) 
+    #   evCopulaFit(u, v = NULL, type = evList(), ...) 
 
     # Fit:
+    set.seed(4711)
     type = "gumbel"
     R = evCopulaSim(500, type = type)
-    evCopulaFit(x, type = type)
+    evCopulaFit(x = R, type = type)
     
     # Return Value:
     return()    
 }
 
  
-# ------------------------------------------------------------------------------
+################################################################################
 
 
 if (FALSE) {

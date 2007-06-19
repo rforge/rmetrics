@@ -114,7 +114,7 @@ function(B = 10)
         if (.counter < 10) return ()
         
         # Sliders:
-        Type = evList
+        Type = evList()
         Copula = .sliderMenu(no = 1)
         N = .sliderMenu(no = 2)
         if (Copula <= 3) 
@@ -458,7 +458,7 @@ function(B = 10)
         if (.counter < 10) return ()
         
         # Sliders:
-        Type = evList
+        Type = evList()
         Copula = .sliderMenu(no = 1)
         N = .sliderMenu(no = 2)
         if (Copula <= 3) 
@@ -524,7 +524,7 @@ function(B = 10)
         if (.counter < 12) return ()
         
         # Sliders:
-        Type = evList
+        Type = evList()
         Copula = .sliderMenu(no = 1)
         N = .sliderMenu(no = 2)
         if (Copula <= 3) 
@@ -965,7 +965,7 @@ function(B = 10)
         if (.counter < 12) return ()
         
         # Sliders:
-        Type = evList
+        Type = evList()
         Copula = .sliderMenu(no = 1)
         N = .sliderMenu(no = 2)
         if (Copula <= 3) 
@@ -1007,7 +1007,7 @@ function(B = 10)
         names = c("Copula","N", C), #gal   hr   tawn          bb5    nlev  ncol
         minima =      c(1,  10,   1,   0,   0,   0,   0,  1,  0,  1,   5,   12),
         maxima =      c(5, 100,   B,   B,   B,   1,   1,  B,  B,  B, 100,  256),
-        resolutions = c(1,   1, .05, .05, .05, .01, .01, .1, .1, .1,   5,    1),
+        resolutions = c(1,   5, .05, .05, .05, .01, .01, .1, .1, .1,   5,    1),
         starts =      c(1,  25,   2,   1,   1,  .5,  .5,  2,  1,  2,  10,   12))
 }
 
@@ -1032,7 +1032,7 @@ function(B = 10)
         if (.counter < 12) return ()
         
         # Sliders:
-        Type = evList
+        Type = evList()
         Copula = .sliderMenu(no = 1)
         N = .sliderMenu(no = 2)
         if (Copula <= 3) 
@@ -1074,7 +1074,7 @@ function(B = 10)
         names = c("Copula", "N", C), #gal  hr  tawn          bb5    theta  phi
         minima =      c(1,  10,   1,   0,   0,   0,   0,  1,  0,  1, -180,   0),
         maxima =      c(5, 100,   B,   B,   B,   1,   1,  B,  B,  B,  180, 360),
-        resolutions = c(1,   1, .05, .05, .05, .01, .01, .1, .1, .1,    1,   1),
+        resolutions = c(1,   5, .05, .05, .05, .01, .01, .1, .1, .1,    1,   1),
         starts =      c(1,  25,   2,   1,   1,  .5,  .5,  2,  1,  2,  -40,  30))
 }
 

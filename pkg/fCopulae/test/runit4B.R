@@ -57,7 +57,7 @@ function()
 }
 
 
-# ------------------------------------------------------------------------------
+################################################################################
 
 
 test.revCopula = 
@@ -73,6 +73,9 @@ function()
         print(type)
         print(R)
     }
+     
+    # Tawn Copula:
+    revCopula(n = 5, param = NULL, type = "tawn")
     
     # Return Value:
     return()    
@@ -89,14 +92,14 @@ function()
     # revSlider(B = 10)
     
     # Try Slider()
-    revSlider()
+    revSlider()                         # CHECK !!!
 
     # Return Value:
     return()    
 }
 
     
-# ------------------------------------------------------------------------------
+################################################################################
 
 
 test.pevCopula = 
@@ -106,6 +109,17 @@ function()
     # pevCopula(u = 0.5, v = u, param = NULL, type = evList(), 
     #   output = c("vector", "list"), alternative = FALSE) 
 
+    # Random Variates - Check all Types:
+    for (type in evList()) {
+        R = pevCopula(u = grid2d(), param = NULL, type = type, output = "list")
+        cat("\n")
+        print(type)
+        print(R)
+    }
+     
+    # Tawn Copula:
+    revCopula(n = 5, param = NULL, type = "tawn")
+    
     # Return Value:
     return()    
 }
@@ -121,17 +135,17 @@ function()
     # pevSlider(type = c("persp", "contour"), B = 10)
 
     # Try Perspective Slider:
-    pevSlider()
+    pevSlider("persp")
     
     # Try Contour Slider:
-    pevSlider(" contour")
+    pevSlider("contour")
     
     # Return Value:
     return()    
 }
 
 
-# ------------------------------------------------------------------------------
+################################################################################
 
 
 test.devCopula = 
@@ -141,6 +155,17 @@ function()
     # devCopula(u = 0.5, v = u, param = NULL, type = evList(), 
     #   output = c("vector", "list"), alternative = FALSE)
 
+    # Random Variates - Check all Types:
+    for (type in evList()) {
+        R = devCopula(u = grid2d(), param = NULL, type = type, output = "list")
+        cat("\n")
+        print(type)
+        print(R)
+    }                                           # CHECK Border !!!!
+     
+    # Tawn Copula:
+    revCopula(n = 5, param = NULL, type = "tawn")
+    
     # Return Value:
     return()    
 }
@@ -156,17 +181,17 @@ function()
     # devSlider(type = c("persp", "contour"), B = 10)
 
     # Try Perspective Slider:
-    devSlider()
+    devSlider("persp")
     
     # Try Contour Slider:
-    devSlider(" contour")
+    devSlider("contour")
     
     # Return Value:
     return()    
 }
 
         
-# ------------------------------------------------------------------------------
+################################################################################
 
 
 if (FALSE) {

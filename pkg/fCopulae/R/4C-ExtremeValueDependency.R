@@ -341,7 +341,7 @@ function(B = 10)
         if (.counter < 10) return()
         
         # Sliders:
-        Type = evList
+        Type = evList()
         Copula = .sliderMenu(no = 1)
         N = .sliderMenu(no = 2)
         if (Copula <= 3) 

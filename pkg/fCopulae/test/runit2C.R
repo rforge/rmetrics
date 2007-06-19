@@ -54,7 +54,7 @@ function()
 }
 
 
-# ------------------------------------------------------------------------------
+################################################################################
 
 
 test.ellipticalTau = 
@@ -62,6 +62,7 @@ function()
 {
     # Computes Kendall's tau for elliptical copulae
     args(ellipticalTau)
+    
     ellipticalTau(rho = 0.5)
     ellipticalTau(rho = c(-0.5, 0, 0.5))
     # Return Value:
@@ -77,6 +78,7 @@ function()
 {    
     # Computes Spearman's rho for elliptical copulae
     args(ellipticalRho)
+    
     ellipticalRho(0.5)
     ellipticalRho(rho = c(-0.5, 0, 0.5))
  
@@ -85,7 +87,7 @@ function()
 }
 
 
-# ------------------------------------------------------------------------------
+################################################################################
 
 
 test.ellipticalTailCoeff = 
@@ -128,7 +130,7 @@ function()
 }
 
 
-# ------------------------------------------------------------------------------
+################################################################################
 
 
 if (FALSE) {

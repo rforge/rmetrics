@@ -51,7 +51,7 @@ function()
 }
 
 
-# ------------------------------------------------------------------------------
+################################################################################
 
 
 test.copulaSim = 
@@ -85,6 +85,7 @@ function()
     
     # Return Value:
     return()
+}
     
     
 # ------------------------------------------------------------------------------
@@ -102,7 +103,7 @@ function()
     fit = ellipticalCopulaFit(u = R[,1], v = R[,2])
     fit
     rho - fit$par
-    plot(c(-1,1), c(-1,1), xlab = "rho", ylab = "estimate")
+    plot(c(-1,1), c(-1,1), xlab = "rho", ylab = "estimate", main = "Normal")
     for ( i in 1:100) {
         rho = runif(1, -1, 1)
         R = ellipticalCopulaSim(n = 1000, rho = rho)
@@ -116,7 +117,7 @@ function()
     R = ellipticalCopulaSim(n = 100, rho = rho, type = "cauchy")
     ellipticalCopulaFit(R, type = "cauchy")
     rho
-    plot(c(-1,1), c(-1,1))
+    plot(c(-1,1), c(-1,1), main = "Cauchy")
     for ( i in 1:100) {
         rho = runif(1, -1, 1)
         R = ellipticalCopulaSim(n = 1000, rho = rho, type = "cauchy")
@@ -131,7 +132,7 @@ function()
     print(c(rho, nu))
     R = ellipticalCopulaSim(n = 1000, rho = rho, param = nu, type = "t")
     ellipticalCopulaFit(R, type = "t")
-    plot(c(-1,1), c(-1,1))
+    plot(c(-1,1), c(-1,1), main = "Student-t")
     for ( i in 1:100) {
         rho = runif(1, -1, 1)
         nu = runif(1, 3, 20)
@@ -145,9 +146,10 @@ function()
     
     # Return Value:
     return()
+}
         
     
-# ------------------------------------------------------------------------------
+################################################################################
 
 
 if (FALSE) {

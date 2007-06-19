@@ -37,6 +37,10 @@
 # FUNCTION:                  ARCHIMEDEAN COPULAE DENSITY:
 #  darchmCopula               Computes Archimedean copula density 
 #  darchmSlider                Displays interactively archimedean density 
+# FUNCTION:                  SPECIAL BIVARIATE COPULA:
+#  rgumbelCopula              Generates fast gumbel random variates
+#  pgumbelCopula              Computes bivariate Gumbel copula probability
+#  dgumbelCopula              Computes bivariate Gumbel copula density
 ################################################################################
 
 
@@ -57,7 +61,7 @@ function()
 }
 
 
-# ------------------------------------------------------------------------------  
+################################################################################  
  
     
 test.rarchmCopula = 
@@ -96,7 +100,7 @@ function()
 }  
 
 
-# ------------------------------------------------------------------------------  
+################################################################################  
     
 
 test.parchmCopula = 
@@ -163,7 +167,7 @@ function()
 }  
 
 
-# ------------------------------------------------------------------------------  
+################################################################################  
     
 
 test.darchmCopula = 
@@ -229,9 +233,58 @@ function()
     # Return Value:
     return()    
 }  
-        
 
-# ------------------------------------------------------------------------------
+
+################################################################################
+
+
+
+test.rgumbelCopula = 
+function()
+{              
+    # Generates fast gumbel random variates
+
+    # Copula:
+    rgumbelCopula()
+    
+    # Return Value:
+    return()    
+} 
+
+    
+# ------------------------------------------------------------------------------  
+    
+
+test.pgumbelCopula = 
+function()
+{              
+    # Computes bivariate Gumbel copula probability
+
+    # Copula:
+    pgumbelCopula()
+    
+    # Return Value:
+    return()    
+} 
+
+    
+# ------------------------------------------------------------------------------  
+    
+
+test.dgumbelCopula = 
+function()
+{              
+    # Computes bivariate Gumbel copula density
+  
+    # Copula:
+    dgumbelCopula()
+    
+    # Return Value:
+    return()    
+} 
+      
+
+################################################################################
 
 
 if (FALSE) {

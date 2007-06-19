@@ -138,6 +138,7 @@ function(type = evList())
     
     # Examples:
     #   evRange("galambos")
+    #   evRange("bb5")
     
     # FUNCTION:
     
@@ -147,8 +148,9 @@ function(type = evList())
     # Range:
     ans = evParam(type)$range
     Names1 = rep(c("lower", "upper"), times = length(ans)/2)
-    Names2 = rep(names(evParam(type)$param), each = length(ans)/2)
+    Names2 = rep(names(evParam(type)$param), each = 2)
     names(ans) = paste(Names1, Names2, sep = ".")
+    attr(ans, "control")<-type
     
     # Return Value:
     ans

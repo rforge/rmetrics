@@ -181,6 +181,7 @@ function(type = ellipticalList())
     
     # Range:
     ans = ellipticalParam(type)$range
+    attr(ans, "control") <- type 
     
     # Return Value:
     ans

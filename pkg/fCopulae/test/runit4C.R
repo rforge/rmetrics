@@ -54,14 +54,14 @@ function()
 }
 
 
-# ------------------------------------------------------------------------------
+################################################################################
 
 
 test.evTau = 
 function()
 {
     # Arguments:
-    # evTau(param = NULL, type = evList(), alternative = FALSE)
+    #   evTau(param = NULL, type = evList(), alternative = FALSE)
     
     # Tau:
     for (type in evList()) {
@@ -82,7 +82,7 @@ test.evRho =
 function()
 {
     # Arguments:
-    # evRho(param = NULL, type = evList(), alternative = FALSE) 
+    #   evRho(param = NULL, type = evList(), alternative = FALSE) 
     
     # Rho:
     for (type in evList()) {
@@ -97,14 +97,14 @@ function()
 }
 
    
-# ------------------------------------------------------------------------------
+################################################################################
     
 
 test.evTailCoeff = 
 function()
 {
     # Arguments:
-    # evTailCoeff(param = NULL, type = evList())
+    #   evTailCoeff(param = NULL, type = evList())
     
     # Tail Coefficient:
     for (type in evList()) {
@@ -126,17 +126,17 @@ test.evTailCoeffSlider =
 function()
 {
     # Arguments:
-    # evTailCoeffSlider(B = 10) 
+    #   evTailCoeffSlider(B = 10) 
     
     # Try Slider:
-    evTailCoeffSlider()                                                  # CHECK
+    evTailCoeffSlider()                                                   
     
     # Return Value:
     return()    
 }
 
         
-# ------------------------------------------------------------------------------
+################################################################################
 
 
 if (FALSE) {
