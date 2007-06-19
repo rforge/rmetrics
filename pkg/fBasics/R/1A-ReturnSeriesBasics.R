@@ -415,7 +415,7 @@ function(x, ci = 0.95)
 
 
 .distCheck = 
-function(fun = "norm", n = 1000, robust = FALSE, ...)
+function(fun = "norm", n = 1000, robust = TRUE, ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -466,7 +466,7 @@ function(fun = "norm", n = 1000, robust = FALSE, ...)
     # Check 3:
     cat("\n3. r(", n, ") Check:\n", sep = "")
     r = rfun(n = n, ...)
-    if (robust) {
+    if (!robust) {
         SAMPLE.MEAN = mean(r)
         SAMPLE.VAR = var(r)
     } else {
