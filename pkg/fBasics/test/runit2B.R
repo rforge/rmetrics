@@ -77,31 +77,8 @@ function()
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
     test = .distCheck("gh", 
-        alpha = 1.3, beta = 0.3, delta = 1, mu = 0, lambda = 1)
-    print(test)
-    checkTrue(mean(test) == 1)
-    
-    # gh() Distribution, continued:
-    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
-    set.seed(4711, kind = "Marsaglia-Multicarry")
-    test = .distCheck("gh", 
-        alpha = 1.3, beta = 0.3, delta = 1, mu = 0, lambda = 0.8)
-    print(test)
-    checkTrue(mean(test) == 1)
-    
-    # gh() Distribution, continued:
-    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
-    set.seed(4711, kind = "Marsaglia-Multicarry")
-    test = .distCheck("gh", 
-        alpha = 1.3, beta = 0.3, delta = 1.7, mu = 0.5, lambda = 0.8)
-    print(test)
-    checkTrue(mean(test) == 1)
-    
-    # gh() Distribution, continued:
-    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
-    set.seed(4711, kind = "Marsaglia-Multicarry")
-    test = .distCheck("gh", 
-        alpha = 1.3, beta = 0.3, delta = 1.7, mu = 0.5, lambda = 0.8)
+        alpha = 1.3, beta = 0.3, delta = 1.7, mu = 0.2, lambda = 0.8, 
+        n = 2000, robust = FALSE)
     print(test)
     checkTrue(mean(test) == 1)
     
@@ -119,30 +96,34 @@ function()
     # hyp() Distribution - Parameterization 1:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
-    test = .distCheck("hyp", alpha = 1, beta = 0.3, delta = 1)
+    test = .distCheck("hyp", 
+        alpha = 1.2, beta = 0.2, delta = 1.9, mu = 0.1, pm = 1, 
+        n = 1000, robust = FALSE)
     print(test)
     checkTrue(mean(test) == 1)
     
     # hyp() Distribution - Parameterization 2:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
-    test = .distCheck("hyp", alpha = 1, beta = 0.3, delta = 1, pm = 2)
+    test = .distCheck("hyp", 
+        alpha = 0.9, beta = -0.3, delta = 1.4, mu = -0.1, pm = 2,
+        n = 1000, robust = FALSE)
+    print(test)
+    checkTrue(mean(test) == 1)          
+    
+    # hyp() Distribution - Parameterization 3:                
+    .distCheck("hyp", 
+        alpha = 0.9, beta = -0.3, delta = 1.4, mu = -0.1, pm = 3,
+        n = 1000, robust = FALSE)
     print(test)
     checkTrue(mean(test) == 1)
     
-    # hyp() Distribution - Parameterization 3:                  # CHECK
-    # .distCheck("hyp", alpha = 1, beta = 0.3, delta = 1, pm = 3)
-    # hyp() Distribution - Parameterization 1:                  # CHECK
-    # test = .distCheck("hyp", alpha = 1, beta = 0.3, delta = 1)
-    # print(test)
-    # checkTrue(mean(test) == 1)
-    
-    # hyp() Distribution - Parameterization 4:                  # CHECK         
-    # .distCheck("hyp", alpha = 1, beta = 0.3, delta = 1, pm = 4)
-    # hyp() Distribution - Parameterization 1:                  # CHECK
-    # test = .distCheck("hyp", alpha = 1, beta = 0.3, delta = 1)
-    # print(test)
-    # checkTrue(mean(test) == 1)
+    # hyp() Distribution - Parameterization 4:                        
+    .distCheck("hyp", 
+        alpha = 1.6, beta = -0.3, delta = 1.4, mu = 0.1, pm = 4,
+        n = 1000, robust = FALSE)       # CHECK              
+    print(test)
+    checkTrue(mean(test) == 1)
     
     # Return Value:
     return()    
@@ -158,9 +139,12 @@ function()
     # nig() Distribution:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
-    test = .distCheck("nig", n = 2000, alpha = 1, beta = 0.1, delta = 1)
-    print(test)
-    checkTrue(mean(test) == 1)
+    test = .distCheck("nig", 
+        alpha = 2.1, beta = 0.1, delta = 1.5, mu = -0.1,
+        n = 1000, robust = FALSE)
+    print(test) 
+    checkTrue(mean(test) == 1) 
+    
     
     # Return Value:
     return()    
@@ -173,6 +157,9 @@ function()
 test.hypSlider = 
 function()
 {
+    # Arguments ?
+    #   hypSlider()
+    
     # Try:
     hypSlider()
     
@@ -187,6 +174,9 @@ function()
 test.nigSlider = 
 function()
 {
+    # Arguments ?
+    #   nigSlider
+    
     # Try:
     nigSlider()
     

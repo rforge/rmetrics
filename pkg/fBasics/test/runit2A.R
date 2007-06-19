@@ -71,14 +71,14 @@ function()
     # rsymstb, alpha=1.8
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
-    test = .distCheck("symstb", alpha = 1.9, robust = FALSE)
+    test = .distCheck("symstb", alpha = 1.9, robust = FALSE, subdivisions = 500)
     print(test)
     checkTrue(mean(test) == 1)
     
     # rsymstb, alpha=1.2
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
-    test = .distCheck("symstb", alpha = 1.2)
+    test = .distCheck("symstb", alpha = 1.2, subdivisions = 5000)
     print(test)
     checkTrue(mean(test[2:3]) == 1)
     
@@ -188,6 +188,9 @@ function()
 test.symstbSlider = 
 function()
 {
+    # Arguments ?
+    #   sysmstbSlider()
+    
     # Try:
     symstbSlider()
     
@@ -202,6 +205,9 @@ function()
 test.stableSlider = 
 function()
 {
+    # Arguments ?
+    #   stableSlider()
+    
     # Try:
     stableSlider()
     
