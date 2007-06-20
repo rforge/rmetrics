@@ -19,6 +19,8 @@
 \alias{qnig}
 \alias{rnig}
 
+\alias{nigShapeTriangle}
+
 \alias{hypSlider}
 \alias{nigSlider}
 
@@ -44,6 +46,7 @@
     \code{[dpqr]hyp} \tab The hyperbolic distribution, \cr
     \code{[dpqr]nig} \tab The normal inverse Gaussian distribution, \cr
     \code{hypMode} \tab the hyperbolic mode, \cr
+    \code{nigShapeTriangle} \tab plots NIG Shape Triangle, \cr
     \code{hypSlider} \tab interactive hyperbolic distribution display, \cr
     \code{nigSlider} \tab interactive NIG distribution display. }
     
@@ -57,14 +60,16 @@ qgh(p, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1)
 rgh(n, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1)
 
 dhyp(x, alpha = 1, beta = 0, delta = 1, mu = 0, pm = c(1, 2, 3, 4))
-phyp(q, alpha = 1, beta = 0, delta = 1, mu = 0, pm = c(1, 2, 3, 4), ...)
-qhyp(p, alpha = 1, beta = 0, delta = 1, mu = 0, pm = c(1, 2, 3, 4), ...)
+phyp(q, alpha = 1, beta = 0, delta = 1, mu = 0, pm = c(1, 2, 3, 4), \dots)
+qhyp(p, alpha = 1, beta = 0, delta = 1, mu = 0, pm = c(1, 2, 3, 4), \dots)
 rhyp(n, alpha = 1, beta = 0, delta = 1, mu = 0, pm = c(1, 2, 3, 4))
 
 dnig(x, alpha = 1, beta = 0, delta = 1, mu = 0)
 pnig(q, alpha = 1, beta = 0, delta = 1, mu = 0)
 qnig(p, alpha = 1, beta = 0, delta = 1, mu = 0)
 rnig(n, alpha = 1, beta = 0, delta = 1, mu = 0)
+
+nigShapeTriangle(object, add = FALSE, \dots)
 
 hypMode(alpha = 1, beta = 0, delta = 1, mu = 0, pm = c(1, 2, 3, 4))
 
@@ -75,6 +80,11 @@ nigSlider()
 
 \arguments{
 
+    \item{add}{
+        [nigShapeTriangle] - \cr
+        a logical value. Should another point added to the NIG
+        shape triangle? By default FALSE, a new plot will be created.
+        } 
     \item{alpha, beta, delta, mu, lambda}{
         shape parameter \code{alpha};
         skewness parameter \code{beta}, \code{abs(beta)} is in the 
@@ -98,6 +108,11 @@ nigSlider()
         }
     \item{n}{
         number of observations.
+        }
+    \item{object}{
+        [nigShapeTriangle] - \cr
+        an object of class \code{"fDISTFIT"} as returned by the function
+        \code{nigFit}.
         } 
     \item{p}{
         a numeric vector of probabilities.

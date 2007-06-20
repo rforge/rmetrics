@@ -33,6 +33,7 @@
 #  histPlot                Returns a tailored histogram plot
 #  densityPlot             Returns a tailored kernel density estimate plot
 #  qqnormPlot              Returns a tailored normal quantile-quantile plot
+#  qqnigPlot               Returns a tailored NIG quantile-quantile plot
 # FUNCTION:               BASIC STATISTICS:
 #  basicStats              Returns a basic statistics summary
 # FUNCTION:               DESCRIPTION:
@@ -48,6 +49,7 @@
 #  histPlot                Returns a tailored histogram plot
 #  densityPlot             Returns a tailored kernel density estimate plot
 #  qqnormPlot              Returns a tailored normal quantile-quantile plot
+#  qqnigPlot               Returns a tailored NIG quantile-quantile plot
 
 
 seriesPlot = 
@@ -258,6 +260,9 @@ function(x, labels = TRUE, col = "steelblue", main = x@units, ...)
     #   Source from
     #   http://www.stat.duke.edu/courses/Fall99/sta290/Notes/
 
+    # Example:
+    #   x = rnorm(100); qqnormPlot(x); qqnormPlot(x, labels = FALSE)
+    
     # FUNCTION:
     
     # timeSeries:
@@ -270,7 +275,7 @@ function(x, labels = TRUE, col = "steelblue", main = x@units, ...)
     for (i in 1:DIM) {
         x = X[, i]
     
-        # Settings
+        # Settings:
         mydata = as.vector(X[, i])
         n = length(mydata) 
         p = (1:n)/(n+1)
@@ -282,20 +287,14 @@ function(x, labels = TRUE, col = "steelblue", main = x@units, ...)
         if (labels) {
             xlab = "Standard Normal Quantiles"
             ylab = paste(Main[i], "Ordered Data")
-            main = paste(Main[i], "with 95% CI")  
-        } else {
-            main = xlab = ylab = ""
-        }
-        if (labels) {
+            main = paste(Main[i], "with 95% CI") 
             plot(z, x, pch = 19, col = col, 
                 xlab = xlab, ylab = ylab, main = main, ...)
-            abline(0, 1, col = "grey")
-            grid() 
+            grid()  
         } else {
-            plot(z, x, 
-                xlab = xlab, ylab = ylab, main = main, ...)
-            abline(0, 1, col = "grey")
+            plot(z, x, ...)
         }
+        abline(0, 1, col = "grey")
         rug(z, ticksize = 0.01, side = 3)
         rug(x, ticksize = 0.01, side = 4)
       
@@ -313,6 +312,65 @@ function(x, labels = TRUE, col = "steelblue", main = x@units, ...)
     
     # Return Value:
     invisible()  
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+qqnigPlot = 
+function (x, labels = TRUE, col = "steelblue", main = x@units, ...) 
+{   # A function implemented by Diethelm Wuertz
+
+    # Example:
+    #   qqnigPlot(rnig(100))
+    
+    # FUNCTION:
+       
+    # Settings:
+    if (!is.timeSeries(x)) {
+        x = as.timeSeries(x)
+        stopifnot(isUnivariate(x)) 
+        Main = main
+    }
+    x = as.vector(x)
+    
+    # Fit:
+    fit = nigFit(x, doplot = FALSE)
+    par = fit@fit$estimate
+    names(par) = c("alpha", "beta", "delta", "mu")
+    
+    # Plot:
+    x = qnig(ppoints(x), par[1], par[2], par[3], par[4])
+    z = sort(x)
+    if (labels) {
+        main = "NIG QQ Plot"
+        xlab = "Theoretical Quantiles"
+        ylab = "Sample Quantiles"
+        plot(z, x, main = main, xlab = xlab, ylab = ylab, 
+            pch = 19, col = "steelblue")
+        grid()  
+        rpar = signif(par, 3)
+        text = paste(
+            "alpha =", rpar[1], 
+            "| beta =", rpar[2], 
+            "| delta =", rpar[3], 
+            "| mu =", rpar[4])  
+        mtext(text, side = 4, adj = 0, col = "grey", cex = 0.7)
+    } else {
+        plot(z, x, ...)
+    }
+    abline(lsfit(z, x))
+    rug(z, ticksize = 0.01, side = 3)
+    rug(x, ticksize = 0.01, side = 4)
+    
+    # Result:
+    .DEBUG <<-fit
+    ans = list(x = z, y = x)
+    attr(ans, "control")<-par
+    
+    # Return Value:
+    invisible(ans)
 }
 
 

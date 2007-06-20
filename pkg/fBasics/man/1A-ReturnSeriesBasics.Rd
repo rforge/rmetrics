@@ -5,7 +5,9 @@
 \alias{seriesPlot}
 \alias{histPlot}
 \alias{densityPlot}
+
 \alias{qqnormPlot}
+\alias{qqnigPlot}
 
 \alias{basicStats}
 \alias{stdev}
@@ -26,7 +28,8 @@
     \code{seriesPlot} \tab Returns a tailored time series plot, \cr
     \code{histPlot} \tab Returns a tailored histogram plot, \cr
     \code{densityPlot} \tab Returns a tailored kernel density estimate plot, \cr
-    \code{qqnormPlot} \tab Returns a tailored quantile-quantile plot.}
+    \code{qqnormPlot} \tab Returns a tailored Normal quantile-quantile plot, \cr
+    \code{qqnigPlot} \tab Returns a tailored NIG quantile-quantile plot.}
     
     Basic Statistic functions are:
     
@@ -45,7 +48,9 @@
 seriesPlot(x, type = "l", col = "steelblue", main = x@units, rug = TRUE, \dots) 
 histPlot(x, labels = TRUE, main = x@units, add.fit = TRUE, \dots) 
 densityPlot(x, col = "steelblue", main = x@units, add.fit = TRUE, \dots)
+
 qqnormPlot(x, labels = TRUE, col = "steelblue", main = x@units, \dots) 
+qqnigPlot(x, labels = TRUE, col = "steelblue", main = x@units, \dots)
 
 stdev(x, na.rm = FALSE)
 
