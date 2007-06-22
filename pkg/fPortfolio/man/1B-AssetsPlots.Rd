@@ -64,7 +64,7 @@ assetsCorTestPlot(x, labels = TRUE, \dots)
     \item{title}{
         a character string, the plot title.
         }
-    \item{which}
+    \item{which}{
         an integer value, defining which plot in a series of plots 
         should be displayed.
         }
