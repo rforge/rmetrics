@@ -45,7 +45,7 @@ assetsDensityPlot(x, method = c("cov", "mve", "mcd", "nnve", "shrink", "bagged")
     which = 1:dim(x)[2], \dots)
 assetsQQNormPlot(x, which = 1:dim(x)[2], \dots)
 
-assetsPairsPlot(x, labels = TRUE)
+assetsPairsPlot(x, labels = TRUE, \dots)
 assetsCorTestPlot(x, labels = TRUE, \dots)
 }
 
