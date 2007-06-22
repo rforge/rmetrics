@@ -45,6 +45,9 @@ kmeans.centers = 5, kmeans.maxiter = 10, doplot = TRUE, ...)
     
     # FUNCTION:
 
+    # Selection:
+    method = match.arg(method)
+    
     # Transform to matrix:
     if (class(x) == "timeSeries") {
         x = as.matrix(x)
@@ -53,20 +56,23 @@ kmeans.centers = 5, kmeans.maxiter = 10, doplot = TRUE, ...)
     # stats::hclust
     # Hierarchical cluster analysis on a set of dissimilarities 
     # and methods for analyzing it.     
-    if (method[1] == "hclust") {
+    if (method == "hclust") {
         ans = hclust(dist(t(x)), ...)
         if (doplot) {
-            plot(ans)   
+            plot(ans) 
+            box()  
         }
     }
     
     # stats::kmeans
     # Perform k-means clustering on a data matrix   
-    if (method[1] == "kmeans") {
+    if (method == "kmeans") {
         ans = kmeans(x = t(x), centers = kmeans.centers, 
             iter.max = kmeans.maxiter, ...)
         if (doplot) {
-            plot(t(x), col = ans$cluster)
+            plot(t(x), col = ans$cluster, pch = 19)
+            grid()
+            title(main = "kmeans Asset Clustering")
             points(ans$centers, col = 1:(kmeans.centers), pch = 8, cex = 2)
         }
     }

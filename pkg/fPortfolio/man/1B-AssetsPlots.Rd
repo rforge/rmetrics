@@ -2,6 +2,7 @@
 
 \alias{AssetsPlots}
 
+\alias{assetsPlot}
 \alias{assetsSeriesPlot}
 \alias{assetsHistPlot}
 \alias{assetsDensityPlot}
@@ -24,6 +25,7 @@
     The functions are:
     
     \tabular{ll}{
+    \code{assetsPlot} \tab Plots an overview of single assets, \cr
     \code{assetsSeriesPlot} \tab Displays time series of individual assets, \cr
     \code{assetsHistPlot} \tab Displays histograms of individual assets, \cr
     \code{assetsDensityPlot} \tab Displays density plots of individual assets, \cr
@@ -35,6 +37,7 @@
     
 
 \usage{
+assetsPlot(x, title = NULL, \dots)
 assetsSeriesPlot(x, which = 1:dim(x)[2], \dots)
 assetsHistPlot(x, method = c("cov", "mve", "mcd", "nnve", "shrink", "bagged"), 
     which = 1:dim(x)[2], xlim = NULL, \dots) 
@@ -43,7 +46,7 @@ assetsDensityPlot(x, method = c("cov", "mve", "mcd", "nnve", "shrink", "bagged")
 assetsQQNormPlot(x, which = 1:dim(x)[2], \dots)
 
 assetsPairsPlot(x, labels = TRUE)
-assetsCorTestPlot(x, scale = 1, labels = TRUE, \dots)
+assetsCorTestPlot(x, labels = TRUE, \dots)
 }
 
 
@@ -58,14 +61,10 @@ assetsCorTestPlot(x, scale = 1, labels = TRUE, \dots)
         a character string, defining the method to be used for calculating
         the covariance.
         }
-    \item{scale}{
-        which of the plots should be displayed? \code{which} can 
-        be either a character string, \code{"all"} (displays all plots) 
-        or \code{"ask"} (interactively asks which one to display), or a 
-        vector of logical values, for those elements which are set 
-        \code{TRUE} the correponding plot will be displayed.
+    \item{title}{
+        a character string, the plot title.
         }
-    \item{which}{
+    \item{which}
         an integer value, defining which plot in a series of plots 
         should be displayed.
         }

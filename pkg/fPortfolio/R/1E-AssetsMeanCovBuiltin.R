@@ -923,18 +923,18 @@ function(x, niter = 2, beta = 0.9, control)
 
     method = "Orthogonalized Gnanadesikan-Kettenring Estimator"
     ans = list(
-               call = call,
-               iter=niter,
-               crit=1,
-               cov=wcov,
-               center=wcenter,
-               n.obs=n,
-               raw.cov=cov,
-               raw.center=center,
-               raw.mah = dist2,
-               raw.wt = wt,
-               X = x,
-               method=method)
+        call = call,
+        iter=niter,
+        crit=1,
+        cov=wcov,
+        center=wcenter,
+        n.obs=n,
+        raw.cov=cov,
+        raw.center=center,
+        raw.mah = dist2,
+        raw.wt = wt,
+        X = x,
+        method = method)
     ans
 }
 

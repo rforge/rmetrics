@@ -29,13 +29,17 @@
 
 ################################################################################
 # FUNCTION:             TIME SERIES ASSETS PLOTS:
+#  assetsPlot            Displays an overview of single assets
 #  assetsSeriesPlot      Displays time series of individual assets
 #  assetsHistPlot        Displays histograms of individual assets
 #  assetsDensityPlot     Displays density plots of individual assets 
 #  assetsQQNormPlot      Displays normal qq-plots of individual assets
 # FUNCTION:             BIVARIATE ASSETS PLOTS:
 #  assetsPairsPlot       Displays pairs of scatterplots of individual assets
-#  assetsCorTestPlot     Displays and tests pairwise correlations of assets                    
+#  assetsCorTestPlot     Displays and tests pairwise correlations of assets   
+# FUNCTION:             BIVARIATE CORRELATION PLOTS:
+#  .assetsCorgramPlot
+#  .assetsCorEigenPlot                 
 ################################################################################
 
 
@@ -53,6 +57,27 @@ function()
 
     # Return Value:
     return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.assetsPlot =
+function()
+{ 
+    # LPP 2005:
+    LPP = 100* as.timeSeries(data(LPP2005REC))
+    ans = assetsPlot(LPP[, 1:6], title = "LPP2005")
+    ans = assetsPlot(LPP[, 7:9], title = "LPP2005")
+
+    # Berndt Investmwnt Data:
+    BI = as.timeSeries(data(berndtInvest))
+    ans = assetsPlot(BI[,  1:5], title = "Berndt Invest")
+    ans = assetsPlot(BI[, 6:10], title = "Berndt Invest") 
+    
+    # Return Value:
+    return()
 }
 
 
@@ -152,7 +177,41 @@ function()
 }
 
 
+################################################################################
+
+
+test.assetsCorgramPlot =
+function()
+{ 
+    # Pictet Pension Fund Data Sets - Use Percentage Returns:
+    LPP = 100 * as.timeSeries(data(LPP2005REC))[, 1:6]
+    head(LPP)
+    
+    .assetsCorgramPlot(LPP) 
+    
+    # Return Value:
+    return()
+}
+
+
 # ------------------------------------------------------------------------------
+
+
+test.assetsCorEigenPlot =
+function()
+{ 
+    # Pictet Pension Fund Data Sets - Use Percentage Returns:
+    LPP = 100 * as.timeSeries(data(LPP2005REC))[, 1:6]
+    head(LPP)
+    
+    .assetsCorEigenPlot(LPP) 
+    
+    # Return Value:
+    return()
+}
+
+
+################################################################################
 
 
 if (FALSE) {
