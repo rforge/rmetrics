@@ -73,7 +73,7 @@ function(u, v, N = 10)
     h = matrix(rep(0, times = (N+1)^2), N+1)
     for ( i in (0:N) ) {
         for ( j in (0:N) ) {
-            z = H(u, p[i+1]) + H(v, q[j+1])
+            z = Heaviside(u, p[i+1]) + Heaviside(v, q[j+1])
             h[j+1, i+1] = length(z[z == 0])
         }
     }
