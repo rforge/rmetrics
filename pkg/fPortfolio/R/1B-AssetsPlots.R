@@ -28,18 +28,28 @@
 
 
 ################################################################################
-# FUNCTION:             TIME SERIES ASSETS PLOTS:
-#  assetsPlot            Displays an overview of single assets
-#  assetsSeriesPlot      Displays time series of individual assets
-#  assetsHistPlot        Displays histograms of individual assets
-#  assetsDensityPlot     Displays density plots of individual assets 
-#  assetsQQNormPlot      Displays normal qq-plots of individual assets
-# FUNCTION:             BIVARIATE ASSETS PLOTS:
-#  assetsPairsPlot       Displays pairs of scatterplots of individual assets
-#  assetsCorTestPlot     Displays and tests pairwise correlations of assets
-# FUNCTION:             BIVARIATE CORRELATION PLOTS:
-#  .assetsCorgramPlot
-#  .assetsCorEigenPlot
+# FUNCTION:                 TIME SERIES ASSETS PLOTS:
+#  assetsPlot                Displays an overview of single assets
+#  .retAssetsPlot             Internal function
+#  .retcumulatedAssetsPlot    Internal function
+#  .volatilityAssetsPlot      Internal function
+#  .rethistAssetsPlot         Internal function
+#  .retqqnormAssetsPlot       Internal function
+#  .hist                      Internal function
+#  assetsSeriesPlot          Displays time series of individual assets
+#  assetsHistPlot            Displays histograms of individual assets
+#  assetsDensityPlot         Displays density plots of individual assets 
+#  assetsQQNormPlot          Displays normal qq-plots of individual assets
+# FUNCTION:                 DENSITY BOX PLOTS:
+#  assetsBoxPlot             Producess standard box plots
+#  assetsBoxPercentilePlot   Producess side-by-side box-percentile plots
+#  .bpxAssetsPlot             Internal function
+# FUNCTION:                 BIVARIATE ASSETS PLOTS:
+#  assetsPairsPlot           Displays pairs of scatterplots of assets
+#  assetsCorTestPlot         Displays and tests pairwise correlations
+# FUNCTION:                 BIVARIATE CORRELATION PLOTS:
+#  assetsCorgramPlot         Displays correlations between assets
+#  assetsCorEigenPlot        Displays ratio of the largest two eigenvalues
 ################################################################################
 
 
@@ -118,6 +128,7 @@ function(x, title = NULL, ...)
 
 
 # ------------------------------------------------------------------------------
+
 
 .retAssetsPlot = 
 function(X) 
@@ -416,6 +427,143 @@ function(x, which = 1:dim(x)[2], ...)
 ################################################################################
 
 
+assetsBoxPlot =
+function(x, col = "bisque", ...) 
+{   # A function Implemented by Diethelm Wuertz
+
+    # Description:
+    #   Producess standard box plots
+    
+    # Arguments:
+    #   x - a 'timeSeries' object or any other rectangular object
+    #       which cab be transformed by the function as.matrix into 
+    #       a numeric matrix.
+    
+    # FUNCTION:
+    
+    # Settings:
+    x = as.matrix(x)
+    assetNames = colnames(x)
+    
+    # Plot:
+    boxplot(as.data.frame(x), col = col, ...)
+    abline(h = 0 , lty = 3)
+    
+    # Return Value:
+    invisible()
+}   
+
+
+# ------------------------------------------------------------------------------
+
+
+assetsBoxPercentilePlot = 
+function(x, col = "bisque", ...) 
+{   # A modified copy from Hmisc
+
+    # Description:
+    #   Producess side-by-side box-percentile plots
+    
+    # Details:
+    #   Box-percentile plots are similiar to boxplots, except box-percentile 
+    #   plots supply more information about the univariate distributions. At 
+    #   any height the width of the irregular "box" is proportional to the 
+    #   percentile of that height, up to the 50th percentile, and above the 
+    #   50th percentile the width is proportional to 100 minus the percentile. 
+    #   Thus, the width at any given height is proportional to the percent of 
+    #   observations that are more extreme in that direction. As in boxplots, 
+    #   the median, 25th and 75th percentiles are marked with line segments 
+    #   across the box. [Source: Hmisc]
+    
+    # Arguments:
+    #   x - a 'timeSeries' object or any other rectangular object
+    #       which cab be transformed by the function as.matrix into 
+    #       a numeric matrix.
+    
+    # FUNCTION:
+    
+    # Settings:
+    x = as.matrix(x)
+    assetNames = colnames(x)
+    n = ncol(x)
+    all.x = list()
+    for (i in 1:n) all.x[[i]] = as.vector(x[, i])
+    centers <- seq(from = 0, by = 1.2, length = n)
+    ymax <- max(sapply(all.x, max, na.rm = TRUE))
+    ymin <- min(sapply(all.x, min, na.rm = TRUE))
+    xmax <- max(centers) + 0.5
+    xmin <- -0.5
+    
+    # Plot:
+    plot(c(xmin, xmax), c(ymin, ymax), type = "n",  
+        xlab = "", ylab = "", xaxt = "n", ...)
+    xpos = NULL
+    for (i in 1:n) {
+        plot.values <- .bpxAssetsPlot(all.x[[i]], centers[i])
+        xpos = c(xpos, mean(plot.values$med.x))
+        x.p = c(plot.values$x1, plot.values$x2)
+        y.p = c(plot.values$y1, plot.values$y2)
+        polygon(x.p, y.p, col = col, border = "grey")
+        lines(plot.values$x1, plot.values$y1)
+        lines(plot.values$x2, plot.values$y2)
+        lines(plot.values$q1.x, plot.values$q1.y)
+        lines(plot.values$q3.x, plot.values$q3.y)
+        lines(plot.values$med.x, plot.values$med.y) 
+    }
+    axis(side = 1, at = xpos, labels = assetNames)
+    abline(h = 0, lty = 3, col = "black")
+   
+    # Return Value:
+    invisible()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.bpxAssetsPlot = 
+function (y, offset) 
+{   # A copy from Hmisc
+
+    # Description:
+    #   Internal function called by assetsBoxPercentilePlot()
+    
+    # FUNCTION:
+    
+    # bpx:
+    y <- y[!is.na(y)]
+    n <- length(y)
+    delta <- 1/(n + 1)
+    prob <- seq(delta, 1 - delta, delta)
+    quan <- sort(y)
+    med <- median(y)
+    q1 <- median(y[y < med])
+    q3 <- median(y[y > med])
+    first.half.p <- prob[quan <= med]
+    second.half.p <- 1 - prob[quan > med]
+    plotx <- c(first.half.p, second.half.p)
+    options(warn = -1)
+    qx <- approx(quan, plotx, xout = q1)$y
+    q1.x <- c(-qx, qx) + offset
+    qx <- approx(quan, plotx, xout = q3)$y
+    options(warn = 0)
+    q3.x <- c(-qx, qx) + offset
+    q1.y <- c(q1, q1)
+    q3.y <- c(q3, q3)
+    med.x <- c(-max(first.half.p), max(first.half.p)) + offset
+    med.y <- c(med, med)
+    ans = list(x1 = (-plotx) + offset, y1 = quan, x2 = plotx + 
+        offset, y2 = quan, q1.y = q1.y, q1.x = q1.x, q3.y = q3.y, 
+        q3.x = q3.x, med.y = med.y, med.x = med.x)
+    
+    # Return Value:
+    ans
+}
+
+
+################################################################################
+
+
 assetsPairsPlot =
 function(x, labels = TRUE, ...)
 {   # A function implemented by Diethelm Wuertz
@@ -504,9 +652,13 @@ function(x, labels = TRUE, ...)
 ################################################################################
 
 
-.assetsCorgramPlot =
+assetsCorgramPlot =
 function(x, labels = TRUE, method = c("pie", "shade"), ...)
-{
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Displays correlations between assets
+    
     # Arguments:
     #   x - a timeSeries object or any other rectangular object
     #       which can be transformed by the function as. matrix
@@ -544,16 +696,18 @@ function(x, labels = TRUE, method = c("pie", "shade"), ...)
     # Return Value:
     invisible()
 }
-
-
  
 
 # ------------------------------------------------------------------------------
  
   
-.assetsCorEigenPlot =
-function(x, method = c("pearson", "kendall", "spearman"))
-{
+assetsCorEigenPlot =
+function(x, method = c("pearson", "kendall", "spearman"), ...)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Displays ratio of the largest two eigenvalues
+    
     # Arguments:
     #   x - a timeSeries object or any other rectangular object
     #       which can be transformed by the function as. matrix
@@ -574,7 +728,10 @@ function(x, method = c("pearson", "kendall", "spearman"))
     x.eig <- eigen(x.cor)$vectors[, 1:2]
     e1 <- x.eig[, 1]
     e2 <- x.eig[, 2]
-    plot(e1, e2, col = 'white', xlim = range(e1, e2), ylim = range(e1, e2))
+    plot(e1, e2, col = 'white', 
+        xlim = range(e1, e2), ylim = range(e1, e2), ...)
+    abline(h = 0, lty = 3, col = "grey")
+    abline(v = 0, lty = 3, col = "grey")
     arrows(0, 0, e1, e2, cex = 0.5, col = "steelblue", length = 0.1)
     text(e1, e2, rownames(x.cor))
     mtext(method, side = 4, adj = 0, cex = 0.7, col = "grey")

@@ -8,8 +8,14 @@
 \alias{assetsDensityPlot}
 \alias{assetsQQNormPlot}
 
+\alias{assetsBoxPlot}
+\alias{assetsBoxPercentilePlot}
+
 \alias{assetsPairsPlot}
 \alias{assetsCorTestPlot}
+
+\alias{assetsCorgramPlot}
+\alias{assetsCorEigenPlot}
 
 
 \title{Plots of Multivariate Asset Sets}
@@ -30,8 +36,12 @@
     \code{assetsHistPlot} \tab Displays histograms of individual assets, \cr
     \code{assetsDensityPlot} \tab Displays density plots of individual assets, \cr
     \code{assetsQQNormPlot} \tab Displays normal qq-plots of individual assets, \cr
+    \code{assetsBoxPlot} \tab Producess standard box plots, \cr
+    \code{assetsBoxPercentilePlot} \tab roducess side-by-side box-percentile plots, \cr 
     \code{assetsPairsPlot} \tab Displays pairs of scatterplots of individual assets, \cr
-    \code{assetsCorTestPlot} \tab S3 Displays and tests pairwise correlations of assets. }
+    \code{assetsCorTestPlot} \tab Displays and tests pairwise correlations, \cr
+    \code{assetsCorgramPlot} \tab Displays correlations between assets, \cr
+    \code{assetsCorEigenPlot} \tab Displays ratio of the largest two eigenvalues. }
     
 }
     
@@ -45,21 +55,29 @@ assetsDensityPlot(x, method = c("cov", "mve", "mcd", "nnve", "shrink", "bagged")
     which = 1:dim(x)[2], \dots)
 assetsQQNormPlot(x, which = 1:dim(x)[2], \dots)
 
+assetsBoxPlot(x, col = "bisque", \dots)
+assetsBoxPercentilePlot(x, col = "bisque", \dots) 
+
 assetsPairsPlot(x, labels = TRUE, \dots)
 assetsCorTestPlot(x, labels = TRUE, \dots)
+
+assetsCorgramPlot(x, labels = TRUE, method = c("pie", "shade"), \dots)
+assetsCorEigenPlot(x, method = c("pearson", "kendall", "spearman"), \dots)
 }
 
 
 \arguments{
   
+    \item{col}{
+        a character string, defining the color to fill the boxes.
+        }
     \item{labels}{
         a logical flag, if \code{TRUE} then default labels will be used,
         otherwise the plots will be displayed without labels and the user
         can add his own labels.
         }
     \item{method}{
-        a character string, defining the method to be used for calculating
-        the covariance.
+        a character string, defining the method to be used.
         }
     \item{title}{
         a character string, the plot title.

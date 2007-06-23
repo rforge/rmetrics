@@ -28,18 +28,21 @@
 
 
 ################################################################################
-# FUNCTION:             TIME SERIES ASSETS PLOTS:
-#  assetsPlot            Displays an overview of single assets
-#  assetsSeriesPlot      Displays time series of individual assets
-#  assetsHistPlot        Displays histograms of individual assets
-#  assetsDensityPlot     Displays density plots of individual assets 
-#  assetsQQNormPlot      Displays normal qq-plots of individual assets
-# FUNCTION:             BIVARIATE ASSETS PLOTS:
-#  assetsPairsPlot       Displays pairs of scatterplots of individual assets
-#  assetsCorTestPlot     Displays and tests pairwise correlations of assets   
-# FUNCTION:             BIVARIATE CORRELATION PLOTS:
-#  .assetsCorgramPlot
-#  .assetsCorEigenPlot                 
+# FUNCTION:                 TIME SERIES ASSETS PLOTS:
+#  assetsPlot                Displays an overview of single assets
+#  assetsSeriesPlot          Displays time series of individual assets
+#  assetsHistPlot            Displays histograms of individual assets
+#  assetsDensityPlot         Displays density plots of individual assets 
+#  assetsQQNormPlot          Displays normal qq-plots of individual assets
+# FUNCTION:                 DENSITY BOX PLOTS:
+#  assetsBoxPlot             Producess standard box plots
+#  assetsBoxPercentilePlot   Producess side-by-side box-percentile plots
+# FUNCTION:                 BIVARIATE ASSETS PLOTS:
+#  assetsPairsPlot           Displays pairs of scatterplots of assets
+#  assetsCorTestPlot         Displays and tests pairwise correlations
+# FUNCTION:                 BIVARIATE CORRELATION PLOTS:
+#  assetsCorgramPlot         Displays correlations between assets
+#  assetsCorEigenPlot        Displays ratio of the largest two eigenvalues                 
 ################################################################################
 
 
@@ -145,15 +148,63 @@ function()
 }
 
 
+################################################################################
+
+
+test.assetsBoxPlot =
+function()
+{ 
+    # Load Data:
+    LPP = as.timeSeries(data(LPP2005REC))
+    
+    # Graph Frame:
+    par(mfrow = c(2, 2), cex = 0.7)
+    par(ask = FALSE)
+    
+    # Plot:
+    assetsBoxPlot(LPP[, 1:6])
+    assetsBoxPlot(LPP[, 1:6], main = "LPP", pch = 19)     
+    
+    # Return Value:
+    return()
+}
+
+
 # ------------------------------------------------------------------------------
+
+
+test.assetsQQNormPlot =
+function()
+{ 
+    # Load Data:
+    LPP = as.timeSeries(data(LPP2005REC))
+    
+    # Graph Frame:
+    par(mfrow = c(2, 2), cex = 0.7)
+    par(ask = FALSE)
+    
+    # Plot:
+    assetsBoxPercentilePlot(LPP[, 1:6])
+    assetsBoxPercentilePlot(LPP[, 1:6], main = "LPP2005")
+    
+    # Return Value:
+    return()
+}
+
+
+################################################################################
 
 
 test.assetsPairsPlot =
 function()
 { 
     X = as.timeSeries(data(berndtInvest))
+    
+    # Graph Frame:
     par(mfrow = c(2,2), cex = 0.7)
     par(ask = FALSE)
+    
+    # Plot:
     assetsPairsPlot(X[, c(2, 4, 11, 13)])
     
     # Return Value:
@@ -168,8 +219,12 @@ test.assetsCorTestPlot =
 function()
 { 
     X = as.timeSeries(data(berndtInvest))
+    
+    # Graph Frame:
     par(mfrow = c(2,2), cex = 0.7)
     par(ask = FALSE)
+    
+    # Plot:
     assetsCorTestPlot(X[, c(2, 4, 11, 13)], scale = 0.7)
     
     # Return Value:
@@ -187,7 +242,12 @@ function()
     LPP = 100 * as.timeSeries(data(LPP2005REC))[, 1:6]
     head(LPP)
     
-    .assetsCorgramPlot(LPP) 
+    # Graph Frame:
+    par(mfrow = c(1, 1)) 
+    par(ask = FALSE)
+    
+    # Plot:
+    assetsCorgramPlot(LPP) 
     
     # Return Value:
     return()
@@ -204,7 +264,12 @@ function()
     LPP = 100 * as.timeSeries(data(LPP2005REC))[, 1:6]
     head(LPP)
     
-    .assetsCorEigenPlot(LPP) 
+    # Graph Frame:
+    par(mfrow = c(1, 1))
+    par(ask = FALSE)
+    
+    # Plot:
+    assetsCorEigenPlot(LPP) 
     
     # Return Value:
     return()
