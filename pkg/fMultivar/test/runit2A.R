@@ -105,8 +105,7 @@ function()
     return()    
 }
 
-
-# ------------------------------------------------------------------------------
+################################################################################
 
 
 test.regSim =
@@ -114,7 +113,7 @@ function()
 {
     # Plot Parameters:
     par(ask = FALSE)
-    par(mfrow = c(1, 1))
+    par(mfrow = c(2, 2))
     
     # Simulate LM:
     X = regSim(model = "LM3", n = 100)
@@ -139,9 +138,11 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.regFit.df = 
+test.regFit.dataframe = 
 function()
 {
+    # Working with a data frame ...
+    
     # Plot Parameters:
     par(ask = FALSE)
     par(mfrow = c(1, 1))
@@ -200,9 +201,11 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.regFit.tS = 
+test.regFit.timeSeries = 
 function()
 {
+    # Working with timeSeries Objects ...
+    
     # Plot Parameters:
     par(ask = FALSE)
     par(mfrow = c(1, 1))
@@ -211,12 +214,8 @@ function()
     require(MASS)
     require(polspline)
     
-    # Simulate Data - a data frame:
+    # Simulate Data and Transform to a (dummy) timeSeries Object:
     DATA = regSim(model = "GAM3", n = 100)
-    head(DATA)
-    class(DATA)
-    
-    # Simulate Data - a timeSeries object:
     DATATS = as.timeSeries(DATA)
     head(DATATS)
     class(DATATS)
@@ -230,6 +229,8 @@ function()
     PMARS = regFit(Y ~ X1 + X2, data = DATATS, use = "polymars") 
     NNET  = regFit(Y ~ X1 + X2, data = DATATS, use = "nnet")  
     # ... a note on AM the smoothing functions are added by default
+    
+        # CHECK AM ...
     
     # Print Method:
     print(LM) 
@@ -639,7 +640,7 @@ function()
 }
 
 
-# ------------------------------------------------------------------------------
+################################################################################
 
 
 if (FALSE) {

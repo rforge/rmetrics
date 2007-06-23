@@ -42,11 +42,6 @@
 #  print.fMV           S3: Print method for objects of class 'fMV'
 #  plot.fMV            S3: Plot method for objects of class 'fMV'
 #  summary.fMV         S3: Summary method for objects of class 'fMV'
-# INTERNAL:           DESCRIPTION:
-#  .mvnormFit          Fits a Multivariate Normal Distribution
-#  .mvstFit            Fits a Multivariate Student-t Distribution
-#  .mvsnormPlot        Plots for Multivariate Normal Distribution
-#  .mvstPlot           Plots for Multivariate Student-t Distribution
 ################################################################################
 
 
@@ -67,12 +62,14 @@ function()
 }
 
 
-# ------------------------------------------------------------------------------
+################################################################################
 
 
 test.dmvsnorm =
 function()
 {
+    # Multivariate Skew Normal
+    
     # Bivariate Density:
     x = y = seq(-4, 4, length = 81)
     G = grid2d(x)
@@ -81,8 +78,8 @@ function()
     Z = list(x = x, y = x, z = matrix(z, ncol = length(x)))
     
     # Plot:
+    par(mfrow = c(1, 1), ask = FALSE)
     persp(Z, theta = -40, phi = 30, col = "steelblue")
-    .perspPlot(Z)
        
     # Return Value:
     return()    
@@ -95,6 +92,8 @@ function()
 test.pmvsnorm =
 function()
 {
+    # Multivariate Skew Normal
+    
     # Bivariate Density:
     x = y = seq(-4, 4, length = 21)
     G = grid2d(x)
@@ -105,7 +104,6 @@ function()
     # Plot:
     par(mfrow = c(1, 1), ask = FALSE)
     persp(Z, theta = -40, phi = 30, col = "steelblue")
-    .perspPlot(Z)
        
     # Return Value:
     return()    
@@ -118,6 +116,8 @@ function()
 test.rmvsnorm =
 function()
 {
+    # Multivariate Skew Normal
+    
     # RVs:
     N = 5000
     z = rmvsnorm(N, dim = 2, mu = rep(0, 2), Omega = diag(2), alpha = rep(1, 2))
@@ -132,7 +132,139 @@ function()
 }
 
 
+################################################################################
+
+
+test.dmvst =
+function()
+{
+    # Multivariate Skew Sudent-t
+    args(dmvst)
+    # dmvst(x, dim = 2, mu = rep(0, dim), Omega = diag(dim), 
+    #   alpha = rep(0, dim), df = 4) 
+
+    # Bivariate Density:
+    x = y = seq(-4, 4, length = 81)
+    G = grid2d(x)
+    X = cbind(G$x, G$y)
+    z = dmvst(X, dim = 2, mu = rep(0, 2), Omega = diag(2), alpha = c(-1, 1))
+    Z = list(x = x, y = x, z = matrix(z, ncol = length(x)))
+    
+    # Plot:
+    par(mfrow = c(1, 1), ask = FALSE)
+    persp(Z, theta = -40, phi = 30, col = "steelblue")
+       
+    # Return Value:
+    return()    
+}
+
+
 # ------------------------------------------------------------------------------
+
+
+test.pmvst =
+function()
+{
+    # Multivariate Skew Sudent-t
+    
+    # Bivariate Density:
+    x = y = seq(-4, 4, length = 21)
+    G = grid2d(x)
+    X = cbind(G$x, G$y)
+    z = pmvst(X, dim = 2, mu = rep(0, 2), Omega = diag(2), alpha = c(-1, 1))
+    Z = list(x = x, y = x, z = matrix(z, ncol = length(x)))
+    
+    # Plot:
+    par(mfrow = c(1, 1), ask = FALSE)
+    persp(Z, theta = -40, phi = 30, col = "steelblue")
+    .perspPlot(Z)
+       
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.rmvst =
+function()
+{
+    # Multivariate Skew Sudent-t
+    
+    # RVs:
+    N = 5000
+    z = rmvsnorm(N, dim = 2, mu = rep(0, 2), Omega = diag(2), alpha = c(-1, 1))
+    
+    # Scatterplot:
+    par(mfrow = c(1, 1), ask = FALSE)
+    plot(z, pch = 19, col = "steelblue")
+    grid()
+       
+    # Return Value:
+    return()    
+}
+
+
+################################################################################
+
+
+#  fMV                 S4 Object of class 'fMV'
+
+
+################################################################################
+
+
+test.mvFit.mvsnorm =
+function()
+{
+    # mvFit - Fits a MV Normal or Student-t Distribution
+    # mvFit(x, method = c("snorm", "st"), fixed.df = NA, title = NULL, 
+    #   description = NULL, trace = FALSE, ...) 
+
+    # RVs:
+    N = 5000
+    z = rmvsnorm(N, dim = 2, mu = rep(0, 2), Omega = diag(2), alpha = c(-1, 1))
+    
+    # Fit:
+    fit = mvFit(z, "snorm")
+
+    print(fit)
+    plot(fit)
+    summary(fit)
+
+    # Return Value:
+    return()    
+}
+
+
+################################################################################
+
+
+test.mvFit.mvst =
+function()
+{
+    # mvFit - Fits a MV Normal or Student-t Distribution
+    # mvFit(x, method = c("snorm", "st"), fixed.df = NA, title = NULL, 
+    #   description = NULL, trace = FALSE, ...) 
+
+    # RVs:
+    N = 5000
+    z = rmvst(N, dim = 2, mu = rep(0, 2), Omega = diag(2), alpha = c(-1, 1))
+    
+    # Fit:
+    fit = mvFit(z, "st")
+
+    print(fit)
+    plot(fit)
+    summary(fit)
+
+    # Return Value:
+    return()    
+}
+
+
+################################################################################
 
 
 if (FALSE) {
