@@ -156,6 +156,7 @@ function()
 { 
     # Load Data:
     LPP = as.timeSeries(data(LPP2005REC))
+    VAN = as.timeSeries(data(vanIndices))
     
     # Graph Frame:
     par(mfrow = c(2, 2), cex = 0.7)
@@ -164,6 +165,12 @@ function()
     # Plot:
     assetsBoxPlot(LPP[, 1:6])
     assetsBoxPlot(LPP[, 1:6], main = "LPP", pch = 19)     
+    
+    # Plot:
+    par(mfrow = c(1, 1), las = 2, oma = c(9, 0, 0, 0))
+    assetsBoxPlot(VAN)
+    title(main = "Van Hedge Fund Indices")
+    par(las = 1)
     
     # Return Value:
     return()
@@ -218,6 +225,7 @@ function()
 test.assetsCorTestPlot =
 function()
 { 
+    # Load data:
     X = as.timeSeries(data(berndtInvest))
     
     # Graph Frame:
@@ -262,7 +270,7 @@ function()
 { 
     # Pictet Pension Fund Data Sets - Use Percentage Returns:
     LPP = 100 * as.timeSeries(data(LPP2005REC))[, 1:6]
-    head(LPP)
+    DJ30 = as.timeSeries(data(DowJones30)))
     
     # Graph Frame:
     par(mfrow = c(1, 1))
@@ -270,6 +278,52 @@ function()
     
     # Plot:
     assetsCorEigenPlot(LPP) 
+    assetsCorEigenPlot(DJ30) 
+    
+    # Return Value:
+    return()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.assetsTreePlot =
+function()
+{ 
+    
+    # Load Data:
+    DJ30 = as.timeSeries(data(DowJones30))[, sample(1:30)]
+    LPP2005 = as.timeSeries(data(LPP2005REC))[, sample(1:6)]
+
+    # Graph Frame:
+    par(mfrow = c(1, 1))
+
+    # Plot:
+    assetsTreePlot(DJ30)
+    assetsTreePlot(LPP2005)
+    
+    # Return Value:
+    return()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+assetsDendogramPlot =
+function()
+{ 
+    # Load Data:
+    DJ30 = as.timeSeries(data(DowJones30))[, sample(1:30)]
+    LPP2005 = as.timeSeries(data(LPP2005REC))[, sample(1:6)]
+
+    # Graph Frame:
+    par(mfrow = c(1, 1))
+
+    # Plot:   
+    assetsDendogramPlot(DJ30)
+    assetsDendogramPlot(LPP2005)
     
     # Return Value:
     return()

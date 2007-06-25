@@ -13,9 +13,11 @@
 
 \alias{assetsPairsPlot}
 \alias{assetsCorTestPlot}
-
 \alias{assetsCorgramPlot}
+
 \alias{assetsCorEigenPlot}
+\alias{assetsTreePlot}
+\alias{assetsDendogramPlot}
 
 
 \title{Plots of Multivariate Asset Sets}
@@ -41,7 +43,9 @@
     \code{assetsPairsPlot} \tab Displays pairs of scatterplots of individual assets, \cr
     \code{assetsCorTestPlot} \tab Displays and tests pairwise correlations, \cr
     \code{assetsCorgramPlot} \tab Displays correlations between assets, \cr
-    \code{assetsCorEigenPlot} \tab Displays ratio of the largest two eigenvalues. }
+    \code{assetsCorEigenPlot} \tab Displays ratio of the largest two eigenvalues, \cr
+    \code{assetsTreePlot} \tab Displays minimum spanning tree of assets, \cr
+    \code{assetsDendogramPlot} \tab Displays hierarchical clustering dendogram. }
     
 }
     
@@ -60,9 +64,11 @@ assetsBoxPercentilePlot(x, col = "bisque", \dots)
 
 assetsPairsPlot(x, labels = TRUE, \dots)
 assetsCorTestPlot(x, labels = TRUE, \dots)
-
 assetsCorgramPlot(x, labels = TRUE, method = c("pie", "shade"), \dots)
+
 assetsCorEigenPlot(x, method = c("pearson", "kendall", "spearman"), \dots)
+assetsTreePlot(x, method = "euclidian", seed = NULL)
+assetsDendogramPlot(x, method = c(dist = "euclidian", clust = "complete"))
 }
 
 
@@ -77,7 +83,26 @@ assetsCorEigenPlot(x, method = c("pearson", "kendall", "spearman"), \dots)
         can add his own labels.
         }
     \item{method}{
-        a character string, defining the method to be used.
+        [assetsHistPlot, assetsDensityPlot] - \cr
+        a character string, mean-covariance estimator used for the 
+        robust gaussian distribution fit.\cr
+        [assetsCorgramPlot] - \cr
+        a character string, the type of graph used in the lower panel.\cr
+        [assetsCorEigenPlot] - \cr
+        a character string, the method used to compute the correlation
+        matrixs, ee function \code{cor}.\cr
+        [assetsTreePlot] - \cr
+        a character string, the method used to compute the distance
+        matrix, see function \code{dist}.\cr
+        [assetsDendogramPlot] - \cr
+        a character vector with two elements, the method used to compute 
+        the distance matrix, see function \code{dist}, and the method used 
+        for the agglomeration algorithm, see function \code{hclust}.\cr
+        }
+    \item{seed}{
+        [assetsTreePlot] - \cr
+        an integer value setting the seed in the computation of the 
+        sample ranks.
         }
     \item{title}{
         a character string, the plot title.

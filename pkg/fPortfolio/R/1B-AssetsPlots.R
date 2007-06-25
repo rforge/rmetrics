@@ -50,6 +50,10 @@
 # FUNCTION:                 BIVARIATE CORRELATION PLOTS:
 #  assetsCorgramPlot         Displays correlations between assets
 #  assetsCorEigenPlot        Displays ratio of the largest two eigenvalues
+#  assetsTreePlot            Displays minimum spanning tree of assets
+#  assetsDendogramPlot       Displays hierarchical clustering dendogram
+    
+    
 ################################################################################
 
 
@@ -229,13 +233,13 @@ function (x, nbins)
 {   
     nclass = nbins+1
     n = length(x)
-    xname <- paste(deparse(substitute(x), 500), collapse = "\n")
+    xname = paste(deparse(substitute(x), 500), collapse = "\n")
     
-    breaks <- seq(min(x), max(x), length = nclass)  
-    nB <- length(breaks)
-    h <- diff(breaks)
+    breaks = seq(min(x), max(x), length = nclass)  
+    nB = length(breaks)
+    h = diff(breaks)
     
-    counts <- .C("bincount", 
+    counts = .C("bincount", 
         as.double(x), 
         as.integer(n), 
         as.double(breaks), 
@@ -248,10 +252,10 @@ function (x, nbins)
         DUP = FALSE, 
         PACKAGE = "base")$counts
              
-    dens <- counts/(n * h)
-    mids <- 0.5 * (breaks[-1] + breaks[-nB])
+    dens = counts/(n * h)
+    mids = 0.5 * (breaks[-1] + breaks[-nB])
 
-    r <- structure(list(
+    r = structure(list(
         breaks = breaks, 
         counts = counts, 
         intensities = dens, 
@@ -446,11 +450,14 @@ function(x, col = "bisque", ...)
     assetNames = colnames(x)
     
     # Plot:
-    boxplot(as.data.frame(x), col = col, ...)
+    ans = boxplot(as.data.frame(x), col = col, ...)
+    colnames(ans$stats) = ans$names
+    rownames(ans$stats) = c("lower whisker", "lower hinge", "median", 
+        "upper hinge", "upper whisker")
     abline(h = 0 , lty = 3)
     
     # Return Value:
-    invisible()
+    invisible(ans)
 }   
 
 
@@ -488,18 +495,18 @@ function(x, col = "bisque", ...)
     n = ncol(x)
     all.x = list()
     for (i in 1:n) all.x[[i]] = as.vector(x[, i])
-    centers <- seq(from = 0, by = 1.2, length = n)
-    ymax <- max(sapply(all.x, max, na.rm = TRUE))
-    ymin <- min(sapply(all.x, min, na.rm = TRUE))
-    xmax <- max(centers) + 0.5
-    xmin <- -0.5
+    centers = seq(from = 0, by = 1.2, length = n)
+    ymax = max(sapply(all.x, max, na.rm = TRUE))
+    ymin = min(sapply(all.x, min, na.rm = TRUE))
+    xmax = max(centers) + 0.5
+    xmin = -0.5
     
     # Plot:
     plot(c(xmin, xmax), c(ymin, ymax), type = "n",  
         xlab = "", ylab = "", xaxt = "n", ...)
     xpos = NULL
     for (i in 1:n) {
-        plot.values <- .bpxAssetsPlot(all.x[[i]], centers[i])
+        plot.values = .bpxAssetsPlot(all.x[[i]], centers[i])
         xpos = c(xpos, mean(plot.values$med.x))
         x.p = c(plot.values$x1, plot.values$x2)
         y.p = c(plot.values$y1, plot.values$y2)
@@ -531,27 +538,27 @@ function (y, offset)
     # FUNCTION:
     
     # bpx:
-    y <- y[!is.na(y)]
-    n <- length(y)
-    delta <- 1/(n + 1)
-    prob <- seq(delta, 1 - delta, delta)
-    quan <- sort(y)
-    med <- median(y)
-    q1 <- median(y[y < med])
-    q3 <- median(y[y > med])
-    first.half.p <- prob[quan <= med]
-    second.half.p <- 1 - prob[quan > med]
-    plotx <- c(first.half.p, second.half.p)
+    y = y[!is.na(y)]
+    n = length(y)
+    delta = 1/(n + 1)
+    prob = seq(delta, 1 - delta, delta)
+    quan = sort(y)
+    med = median(y)
+    q1 = median(y[y < med])
+    q3 = median(y[y > med])
+    first.half.p = prob[quan <= med]
+    second.half.p = 1 - prob[quan > med]
+    plotx = c(first.half.p, second.half.p)
     options(warn = -1)
-    qx <- approx(quan, plotx, xout = q1)$y
-    q1.x <- c(-qx, qx) + offset
-    qx <- approx(quan, plotx, xout = q3)$y
+    qx = approx(quan, plotx, xout = q1)$y
+    q1.x = c(-qx, qx) + offset
+    qx = approx(quan, plotx, xout = q3)$y
     options(warn = 0)
-    q3.x <- c(-qx, qx) + offset
-    q1.y <- c(q1, q1)
-    q3.y <- c(q3, q3)
-    med.x <- c(-max(first.half.p), max(first.half.p)) + offset
-    med.y <- c(med, med)
+    q3.x = c(-qx, qx) + offset
+    q1.y = c(q1, q1)
+    q3.y = c(q3, q3)
+    med.x = c(-max(first.half.p), max(first.half.p)) + offset
+    med.y = c(med, med)
     ans = list(x1 = (-plotx) + offset, y1 = quan, x2 = plotx + 
         offset, y2 = quan, q1.y = q1.y, q1.x = q1.x, q3.y = q3.y, 
         q3.x = q3.x, med.y = med.y, med.x = med.x)
@@ -631,11 +638,11 @@ function(x, labels = TRUE, ...)
     }
     
     # Lower Plot Function:
-    lowessPanel <-  
+    lowessPanel =  
     function (x, y, ...) 
     {
         points(x, y, ...)
-        ok <- is.finite(x) & is.finite(y)
+        ok = is.finite(x) & is.finite(y)
         if (any(ok)) lines(lowess(x[ok], y[ok]), col = "brown")
     }
 
@@ -724,10 +731,10 @@ function(x, method = c("pearson", "kendall", "spearman"), ...)
     method = match.arg(method)
        
     # Plot:
-    x.cor <- cor(x, use = 'pair', method = method)
-    x.eig <- eigen(x.cor)$vectors[, 1:2]
-    e1 <- x.eig[, 1]
-    e2 <- x.eig[, 2]
+    x.cor = cor(x, use = 'pair', method = method)
+    x.eig = eigen(x.cor)$vectors[, 1:2]
+    e1 = x.eig[, 1]
+    e2 = x.eig[, 2]
     plot(e1, e2, col = 'white', 
         xlim = range(e1, e2), ylim = range(e1, e2), ...)
     abline(h = 0, lty = 3, col = "grey")
@@ -738,6 +745,136 @@ function(x, method = c("pearson", "kendall", "spearman"), ...)
     
     # Return Value:
     invisible()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+assetsTreePlot = 
+function(x, method = "euclidian", seed = NULL)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Displays minimum spanning tree of assets
+    
+    # FUNCTION:
+    
+    # Settings:
+    Main = substitute(x)
+    
+    # Compute Distance Matrix:
+    if (class(x) == "dist") {
+        DIST = x
+    } else {
+        # Rank Seed:
+        x = seriesData(x)
+        if (is.null(seed)) {
+            Order = sample(1:ncol(x))
+            x = x[, Order]
+        }
+        DIST = dist(t(x), method[1])
+    }
+    method = attr(DIST, "method")
+       
+    # Compute Minimum Spanning Tree"
+    MST = .mst(DIST)
+      
+    # Plot Tree:
+    .mstPlot(MST, ".nsca", main = Main)
+    mtext(paste("Distance Method:", method), 
+        side = 4, line = 0.1, adj = 0, col = "darkgrey", cex = 0.7)
+    
+    # Return Value:
+    invisible(list(mst = MST, dist = DIST, order = Order))
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+assetsDendogramPlot =
+function(x, method = c(dist = "euclidian", clust = "complete"))
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Displays hierarchical clustering dendogram
+    
+    # FUNCTION:
+    
+    # Compute Distance Matrix:
+    if (class(x) == "dist") {
+        DIST = x
+    } else {
+        X = t(seriesData(x))
+        DIST = dist(X, method[1])
+    }
+
+    # Hierarchical Clustering:
+    ans = hclust(DIST, method = method[2]) 
+    
+    # Plot Dendogram:
+    plot(ans, xlab = "", main = substitute(x), sub = "")
+    mtext(paste(
+        "Distance Method:", method[2], " | ",
+        "Clustering Method:", method[2]),
+        side = 4, line = 0.1, adj = 0, col = "darkgrey", cex = 0.7)  
+    box()
+    
+    # Return Value:
+    invisible(list(dist = DIST, hclust = ans))
+}
+
+
+################################################################################
+
+
+.assetsStarPlot =
+function(x, method = c("segments", "stars"), keyOffset = 0, ...)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Displays hierarchical clustering dendogram
+    
+    # Arguments
+    #   x - a numeric feature matrix of assets. Each column represents
+    #       an individual asset.
+    
+    # Example:
+    #   x = as.timeSeries(data(LPP2005REC))          
+    #   X = basicStats(x)[-(1:2), 1:6]   
+    #   assetsStarPlot(X, main = "Basic Statistics", keyOffset = -0.5)
+    
+    # FUNCTION:
+    
+    # Settings:
+    method = match.arg(method)
+    if (method == "segments") draw.segments = TRUE else draw.segments = FALSE
+    
+    # Compute Locations:
+    xCol = ncol(x)
+    yCol = nrow(x)
+    NY = NX = ceiling(sqrt(xCol))
+    loc = NULL
+    for (nx in 1:NY)
+        for (ny in 1:NX)
+            loc = rbind(loc, c(nx, ny))
+    loc = loc[1:xCol, ]   
+    loc[, 2] = NY + 1 - loc[, 2]
+    
+    # Stars:
+    palette(rainbow(12, s = 0.6, v = 0.75))
+    ans = stars(t(x), mar = c(4, 2.8, 2.8, 4),
+        locations = loc,
+        len = 0.4, 
+        xlim = c(1, NX+0.5), 
+        ylim = c(0, NY+1), 
+        key.loc = c(NX + 1 + keyOffset, 1), 
+        draw.segments = draw.segments, ... )
+    box()
+    
+    # Return Value:
+    invisible(ans)
 }
 
 
