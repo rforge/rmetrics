@@ -79,7 +79,7 @@ function(data, spec, constraints)
     x = getSeries(data)@Data %*% weights
     VaR = quantile(x, targetAlpha, type = 1)
     CVaR = VaR - 0.5*mean(((VaR-x) + abs(VaR-x))) / targetAlpha
-    targetRisk = matrix(c(covTargetRisk, CVaR, VaR), nrow = 1)
+    targetRisk = matrix(c(CVaR, VaR, covTargetRisk), nrow = 1)   
     colnames(targetRisk) <- 
         c(paste(c("CVaR.", "VaR."), targetAlpha*100, "%", sep = ""), "cov")
      

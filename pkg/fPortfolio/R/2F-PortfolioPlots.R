@@ -1319,7 +1319,7 @@ function(object, pos = NULL, col = NULL, box = TRUE, legend = TRUE)
     if (box) box()
     
     # Add Title:
-    title(main = "Risk Budgets")
+    title(main = "Cov Risk Budgets")
     
     # Add Info:
     mtext(paste(getType(object), "|", getSolver(object)), 
