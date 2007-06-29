@@ -31,6 +31,7 @@
 # FUNCTION:                     PORTFOLIO S4 EXTRACTORS FROM SPECIFICATION:
 #  getType                       Extract portfolio type from specification 
 #  getEstimator                  Extract type of covariance estimator
+#  getTailRisk                   Extract list of tail dependency risk matrixes
 #  getParams                     Extract parameters from specification
 # FUNCTION:                     PORTFOLIO S4 EXTRACTORS FROM SPECIFICATION:
 #  getWeights                    Extracts weights from a portfolio object
@@ -52,6 +53,7 @@
     # model = list(
     #     type = c("MV", "CVaR"),
     #     estimator = c("mean", "cov"),
+    #     tailRisk = NULL,
     #     params = list())
     # portfolio = list(
     #     weights = NULL, 
@@ -76,7 +78,7 @@ function(object)
     #   Extracts the type from specification
     
     # Arguments:
-    #   object - an object of S4 class fPFOLIOSPEC or fPORTFOLIO
+    #   object - an object of S4 class fPFOLIOSPEC
     
     # FUNCTION:
     
@@ -99,7 +101,7 @@ function(object)
     #   Extracts the estimator from specification
     
     # Arguments:
-    #   object - an object of S4 class fPFOLIOSPEC or fPORTFOLIO
+    #   object - an object of S4 class fPFOLIOSPEC
     
     # FUNCTION:
     
@@ -114,6 +116,29 @@ function(object)
 # ------------------------------------------------------------------------------
 
 
+getTailRisk.fPFOLIOSPEC =
+function(object)
+{   # A function implemented by Rmetrics
+
+    # Description:
+    #   Extract list of tail dependency risk matrixes
+    
+    # Arguments:
+    #   object - an object of S4 class fPFOLIOSPEC
+    
+    # FUNCTION:
+    
+    # Get Estimator:
+    ans = object@model$tailRisk
+    
+    # Return Value:
+    ans  
+}
+                  
+
+# ------------------------------------------------------------------------------
+
+
 getParams.fPFOLIOSPEC =
 function(object)
 {   # A function implemented by Rmetrics
@@ -122,7 +147,7 @@ function(object)
     #   Extracts the params from specification
     
     # Arguments:
-    #   object - an object of S4 class fPFOLIOSPEC or fPORTFOLIO
+    #   object - an object of S4 class fPFOLIOSPEC
     
     # FUNCTION:
     
@@ -137,7 +162,6 @@ function(object)
 ################################################################################
 
 
-
 getWeights.fPFOLIOSPEC =
 function(object)
 {   # A function implemented by Rmetrics
@@ -146,7 +170,7 @@ function(object)
     #   Extracts the weights from specification
     
     # Arguments:
-    #   object - an object of S4 class fPFOLIOSPEC or fPORTFOLIO
+    #   object - an object of S4 class fPFOLIOSPEC
     
     # FUNCTION:
     
@@ -169,7 +193,7 @@ function(object)
     #   Extracts the target return from specification
     
     # Arguments:
-    #   object - an object of S4 class fPFOLIOSPEC or fPORTFOLIO
+    #   object - an object of S4 class fPFOLIOSPEC
     
     # Example:
     #   targetReturn()
@@ -195,7 +219,7 @@ function(object)
     #   Extracts the target risk from specification
    
     # Arguments:
-    #   object - an object of S4 class fPFOLIOSPEC or fPORTFOLIO
+    #   object - an object of S4 class fPFOLIOSPEC
     
     # FUNCTION:
     
@@ -218,7 +242,7 @@ function(object)
     #   Extracts the VaR-alpha from specification
    
     # Arguments:
-    #   object - an object of S4 class fPFOLIOSPEC or fPORTFOLIO
+    #   object - an object of S4 class fPFOLIOSPEC
     
     # FUNCTION:
     
@@ -241,7 +265,7 @@ function(object)
     #   Extracts the risk free rate from specification
    
     # Arguments:
-    #   object - an object of S4 class fPFOLIOSPEC or fPORTFOLIO
+    #   object - an object of S4 class fPFOLIOSPEC
     
     # FUNCTION:
     
@@ -264,7 +288,7 @@ function(object)
     #   Extracts the number of Frontier Points from specification
    
     # Arguments:
-    #   object - an object of S4 class fPFOLIOSPEC or fPORTFOLIO
+    #   object - an object of S4 class fPFOLIOSPEC
     
     # FUNCTION:
     
@@ -287,7 +311,7 @@ function(object)
     #   Extracts the solver from specification
     
     # Arguments:
-    #   object - an object of S4 class fPFOLIOSPEC or fPORTFOLIO
+    #   object - an object of S4 class fPFOLIOSPEC
     
     # FUNCTION:
     
@@ -310,7 +334,7 @@ function(object)
     #   Extracts the trace from specification
     
     # Arguments:
-    #   object - an object of S4 class fPFOLIOSPEC or fPORTFOLIO
+    #   object - an object of S4 class fPFOLIOSPEC
     
     # FUNCTION:
     

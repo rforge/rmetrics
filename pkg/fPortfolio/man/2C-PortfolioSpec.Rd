@@ -20,6 +20,7 @@
 \alias{setTargetAlpha<-}
 \alias{setRiskFreeRate<-}
 \alias{setNFrontierPoints<-}
+\alias{setTailRisk<-}
 
 \alias{setSolver<-}
 \alias{setTrace<-}
@@ -48,6 +49,7 @@
     \code{setTargetAlpha} \tab Sets CVaR target alpha value, \cr
     \code{setRiskFreeRate} \tab Sets risk-free rate value, \cr
     \code{setNFrontierPoints} \tab Sets number of frontier points, \cr
+    \code{setNFrontierPoints} \tab Sets tail dependence matrix, \cr
     \code{portfolioStatistics} \tab Estimates 'mu' and 'Sigma' statistics, \cr
     \code{print|show} \tab Print method for \code{fPFOLIOSPEC} objects. }
     
@@ -70,6 +72,7 @@ setTargetReturn(spec) <- value
 setTargetAlpha(spec) <- value
 setRiskFreeRate(spec) <- value
 setNFrontierPoints(spec) <- value
+setTailRisk(spec) <- value
 
 setSolver(spec) <- value
 setTrace(spec) <- value

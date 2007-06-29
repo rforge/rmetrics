@@ -4,7 +4,8 @@
 
 
 \alias{getType.fPFOLIOSPEC}         
-\alias{getEstimator.fPFOLIOSPEC}       
+\alias{getEstimator.fPFOLIOSPEC} 
+\alias{getTailRisk.fPFOLIOSPEC}      
 \alias{getParams.fPFOLIOSPEC}       
          
 \alias{getWeights.fPFOLIOSPEC}         
@@ -33,6 +34,7 @@
     \tabular{ll}{
     \code{getType} \tab Extract portfolio type from specification, \cr
     \code{getEstimator} \tab Extract type of covariance estimator, \cr
+    \code{getEstimator} \tab Extract list of tail dependency risk matrixes, \cr
     \code{getParams} \tab Extract parameters from specification, \cr
     \code{getWeights} \tab Extracts weights from a portfolio object, \cr
     \code{getTargetReturn} \tab Extracts target return from specification, \cr
@@ -49,6 +51,7 @@
 \usage{
 \method{getType}{fPFOLIOSPEC}(object)
 \method{getEstimator}{fPFOLIOSPEC}(object)
+\method{getTailRisk}{fPFOLIOSPEC}(object)
 \method{getParams}{fPFOLIOSPEC}(object)
 
 \method{getWeights}{fPFOLIOSPEC}(object)

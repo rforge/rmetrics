@@ -36,6 +36,7 @@
 #  setType<-                     Sets type of portfolio Optimization
 #  setEstimator<-                Sets name of mean-covariance estimator
 #  setParams<-                   Sets optional model parameters
+#  setTailRisk<-                 Sets tail dependency matrix
 # FUNCTION:                     PORTFOLIO SLOT:
 #  setWeights<-                  Sets weights vector
 #  setTargetReturn<-             Sets target return value
@@ -64,6 +65,7 @@ function(
 model = list(
     type = c("MV", "CVaR"), 
     estimator = c("mean", "cov"), 
+    tailRisk = NULL,
     params = list()),
 portfolio = list(
     weights = NULL, 
@@ -102,6 +104,7 @@ solver = list(
     Model = list(
         type = "MV", 
         estimator = c("mean", "cov"),
+        tailRisk = NULL,
         params = list())
     model$type = model$type[1]
     Model[(Names <- names(model))] <- model
@@ -386,6 +389,37 @@ function(spec, value)
     
     # Risk-Free Rate ?
     spec@portfolio$nFrontierPoints = value
+    
+    # Return Value:
+    spec
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+"setTailRisk<-" = 
+function(spec, value)
+{   # A function implemented by Rmetrics
+
+    # Description:                    
+    #   Sets tailRisk
+    
+    # Arguments:
+    #   value - a list with two matrix elements, $lower and $upper, 
+    #       with the pairwise tail dependence coefficints.
+            
+    # Example:
+    #   LPP = as.timeSeries(data(LPP2005REC))[, 1:6]
+    #   setTailRisk <- .nigDependencyFit(LPP)
+    
+    # FUNCTION:
+    
+    # Check Validity:
+    #   ...
+    
+    # Tail Risk ?
+    spec@model$tailRisk = value  
     
     # Return Value:
     spec
