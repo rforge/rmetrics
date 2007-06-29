@@ -6,16 +6,16 @@
 #
 # This library is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 # GNU Library General Public License for more details.
 #
-# You should have received a copy of the GNU Library General 
-# Public License along with this library; if not, write to the 
-# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+# You should have received a copy of the GNU Library General
+# Public License along with this library; if not, write to the
+# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
 # MA  02111-1307  USA
 
 # Copyrights (C)
-# for this R-port: 
+# for this R-port:
 #   1999 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
@@ -32,8 +32,8 @@
 #  skewness              Returns a number which is the skewness of the data
 #   skewness.default      Default method
 #   skewness.data.frame   Method for objects of class data.frame
-#   skewness.POSIXct      Method for objects of class POSIXct 
-#   skewness.POSIXlt      Method for objects of class POSIXlt 
+#   skewness.POSIXct      Method for objects of class POSIXct
+#   skewness.POSIXlt      Method for objects of class POSIXlt
 #  kurtosis              Returns a number which is the kurtosis of the data
 #   kurtosis.default      Default method
 #   kurtosis.data.frame   Method for objects of class data.frame
@@ -46,16 +46,16 @@
 #  skewness              Returns a number which is the skewness of the data
 #   skewness.default      Default method
 #   skewness.data.frame   Method for objects of class data.frame
-#   skewness.POSIXct      Method for objects of class POSIXct 
-#   skewness.POSIXlt      Method for objects of class POSIXlt 
+#   skewness.POSIXct      Method for objects of class POSIXct
+#   skewness.POSIXlt      Method for objects of class POSIXlt
 
 
 skewness =
-function (x, ...) 
+function (x, ...)
 {   # A function implemented by Diethelm Wuertz
- 
+
     # FUNCTION:
-    
+
     # Return Value:
     UseMethod("skewness")
 }
@@ -65,60 +65,60 @@ function (x, ...)
 
 
 skewness.default =
-function (x, na.rm = FALSE, method = c("moment", "fisher"), ...) 
+function (x, na.rm = FALSE, method = c("moment", "fisher"), ...)
 {   # A function implemented by Diethelm Wuertz
-  
+
     # Description:
-    #   Returns the value of the skewness of a distribution function. 
-    
+    #   Returns the value of the skewness of a distribution function.
+
     # Details:
     #   Missing values can be handled.
-    
+
     # FUNCTION:
-    
+
     # Method:
     method = match.arg(method)
-    
+
     # Warnings:
     if (!is.numeric(x) && !is.complex(x) && !is.logical(x)) {
         warning("argument is not numeric or logical: returning NA")
         return(as.numeric(NA))}
-        
+
     # Remove NAs:
     if (na.rm) x = x[!is.na(x)]
 
     # Skewness:
     n = length(x)
-    if (is.integer(x)) x = as.numeric(x) 
-    
+    if (is.integer(x)) x = as.numeric(x)
+
     # Selected Method:
     if (method == "moment") {
         skewness = sum((x-mean(x))^3/sqrt(var(x))^3)/length(x)
-    } 
+    }
     if (method == "fisher") {
         if (n < 3)
             skewness = NA
-        else 
+        else
             skewness = ((sqrt(n*(n-1))/(n-2))*(sum(x^3)/n))/((sum(x^2)/n)^(3/2))
-    }   
-    
+    }
+
     # Add Control Attribute:
     attr(skewness, "method") <- method
-    
+
     # Return Value:
-    skewness  
+    skewness
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-skewness.data.frame = 
-function (x, ...) 
+skewness.data.frame =
+function (x, ...)
 {   # A function implemented by Diethelm Wuertz
-    
+
     # FUNCTION:
-    
+
     # Return Value:
     sapply(x, skewness, ...)
 }
@@ -128,11 +128,11 @@ function (x, ...)
 
 
 skewness.POSIXct =
-function (x, ...) 
+function (x, ...)
 {   # A function implemented by Diethelm Wuertz
- 
+
     # FUNCTION:
-    
+
     # Return Value:
     structure(skewness(unclass(x), ...), class = c("POSIXt", "POSIXct"))
 }
@@ -142,11 +142,11 @@ function (x, ...)
 
 
 skewness.POSIXlt =
-function (x, ...) 
+function (x, ...)
 {   # A function implemented by Diethelm Wuertz
-  
+
     # FUNCTION:
-    
+
     # Return Value:
     as.POSIXlt(skewness(as.POSIXct(x), ...))
 }
@@ -161,11 +161,11 @@ function (x, ...)
 
 
 kurtosis =
-function (x, ...) 
+function (x, ...)
 {   # A function implemented by Diethelm Wuertz
 
     # FUNCTION:
-    
+
     # Return Value:
     UseMethod("kurtosis")
 }
@@ -175,59 +175,59 @@ function (x, ...)
 
 
 kurtosis.default =
-function (x, na.rm = FALSE, method = c("excess", "moment", "fisher"), ...) 
+function (x, na.rm = FALSE, method = c("excess", "moment", "fisher"), ...)
 {   # A function implemented by Diethelm Wuertz
-  
+
     # Description:
-    #   Returns the value of the kurtosis of a distribution function. 
-    
+    #   Returns the value of the kurtosis of a distribution function.
+
     # Details:
     #   Missing values can be handled.
-    
+
     # FUNCTION:
-    
+
     # Method:
     method = method[1]
-    
+
     # Warnings:
     if (!is.numeric(x) && !is.complex(x) && !is.logical(x)) {
         warning("argument is not numeric or logical: returning NA")
         return(as.numeric(NA))}
-        
+
     # Remove NAs:
     if (na.rm) x = x[!is.na(x)]
 
     # Kurtosis:
     n = length(x)
-    if (is.integer(x)) x = as.numeric(x) 
+    if (is.integer(x)) x = as.numeric(x)
     if (method == "excess") {
         kurtosis = sum((x-mean(x))^4/var(x)^2)/length(x) - 3
-    } 
+    }
     if (method == "moment") {
         kurtosis = sum((x-mean(x))^4/var(x)^2)/length(x)
-    } 
+    }
     if (method == "fisher") {
-        kurtosis = ((n+1)*(n-1)*((sum(x^4)/n)/(sum(x^2)/n)^2 - 
+        kurtosis = ((n+1)*(n-1)*((sum(x^4)/n)/(sum(x^2)/n)^2 -
             (3*(n-1))/(n+1)))/((n-2)*(n-3))
     }
 
     # Add Control Attribute:
     attr(kurtosis, "method") <- method
-    
+
     # Return Value:
-    kurtosis  
+    kurtosis
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-kurtosis.data.frame = 
-function (x, ...) 
+kurtosis.data.frame =
+function (x, ...)
 {   # A function implemented by Diethelm Wuertz
 
     # FUNCTION:
-    
+
     # Return Value:
     sapply(x, kurtosis, ...)
 }
@@ -237,13 +237,13 @@ function (x, ...)
 
 
 kurtosis.POSIXct =
-function (x, ...) 
+function (x, ...)
 {   # A function implemented by Diethelm Wuertz
-    
+
     # FUNCTION:
-    
+
     # Return Value:
-    structure(kortosis(unclass(x), ...), class = c("POSIXt", "POSIXct"))
+    structure(kurtosis(unclass(x), ...), class = c("POSIXt", "POSIXct"))
 }
 
 
@@ -251,11 +251,11 @@ function (x, ...)
 
 
 kurtosis.POSIXlt =
-function (x, ...) 
+function (x, ...)
 {   # A function implemented by Diethelm Wuertz
- 
+
     # FUNCTION:
-    
+
     # Return Value:
     as.POSIXlt(kurtosis(as.POSIXct(x), ...))
 }
