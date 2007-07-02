@@ -163,8 +163,8 @@ sort <- function (x, decreasing = FALSE, ...)
 
 sort.default <- function(x, decreasing = FALSE, ...) {
     if (is.object(x))
-        x[order(x, na.last = na.last, decreasing = decreasing)]
-    else base::sort(x, na.last = na.last, decreasing = decreasing, ...)
+	x[order(x, decreasing = decreasing)]
+    else base::sort(x, decreasing = decreasing, ...)
 }
 
 }# endif {only for outdated R}
