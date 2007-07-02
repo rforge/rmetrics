@@ -33,6 +33,7 @@
 #  portfolioStatistics           Estimates mu and Sigma statistics
 ################################################################################
 
+
 ################################################################################
 # FUNCTION:                     PORTFOLIO S4 EXTRACTORS FROM DATA SLOT:
 #  getData
@@ -101,6 +102,7 @@ function()
     spec
     
     # PortfolioStatistics:
+    
     portfolioStatistics(data, spec)
          
     # Return Value:

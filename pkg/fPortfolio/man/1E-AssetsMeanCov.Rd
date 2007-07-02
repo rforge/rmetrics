@@ -28,7 +28,7 @@
 \usage{
 assetsStats(x)
 
-assetsMeanCov(x, method = c("cov", "mve", "mcd", "Mcd", "OGK", "nnve", 
+assetsMeanCov(x, method = c("cov", "mve", "mcd", "MCD", "OGK", "nnve", 
     "shrink", "bagged"), check = TRUE, force = TRUE, baggedR = 100, 
     sigmamu = scaleTau2, alpha = 1/2, \dots)
 }

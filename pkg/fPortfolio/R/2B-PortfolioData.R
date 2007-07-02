@@ -130,7 +130,7 @@ function(data, spec = portfolioSpec())
     
     # Arguments:
     #   data - a multivariate timeSeries object
-    #   spec -  a portfolio specification structure, from which
+    #   spec - a portfolio specification structure, from which
     #       the mean and covariance type of estimator will be extracted
     
     # FUNCTION:

@@ -160,7 +160,7 @@ function(x)
 
 assetsMeanCov = 
 function(x, 
-method = c("cov", "mve", "mcd", "Mcd", "OGK", "nnve", "shrink", "bagged"), 
+method = c("cov", "mve", "mcd", "MCD", "OGK", "nnve", "shrink", "bagged"), 
 check = TRUE, force = TRUE, baggedR = 100, sigmamu = scaleTau2, alpha = 1/2,
 ...)
 {   # A function implemented by Diethelm Wuertz
@@ -177,6 +177,7 @@ check = TRUE, force = TRUE, baggedR = 100, sigmamu = scaleTau2, alpha = 1/2,
     #       method = "cov"        standard covariance computation
     #       method = "mve"        uses "mve" from [MASS]
     #       method = "mcd"        uses "mcd" from [MASS]
+    #       method = "MCD"        uses "mcd" from [MASS]
     #       method = "nnve"       uses "nnve" from [covRobust]
     #       method = "shrink"     uses "shrinkage" from [corpcor]
     #       method = "bagged"     uses "bagging" [corpcor]

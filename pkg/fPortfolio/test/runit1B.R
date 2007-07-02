@@ -37,12 +37,15 @@
 # FUNCTION:                 DENSITY BOX PLOTS:
 #  assetsBoxPlot             Producess standard box plots
 #  assetsBoxPercentilePlot   Producess side-by-side box-percentile plots
-# FUNCTION:                 BIVARIATE ASSETS PLOTS:
-#  assetsPairsPlot           Displays pairs of scatterplots of assets
-#  assetsCorTestPlot         Displays and tests pairwise correlations
-# FUNCTION:                 BIVARIATE CORRELATION PLOTS:
-#  assetsCorgramPlot         Displays correlations between assets
-#  assetsCorEigenPlot        Displays ratio of the largest two eigenvalues                 
+# FUNCTION:                 BIVARIATE ASSETS PLOTS:                           
+#  assetsPairsPlot           Displays pairs of scatterplots of assets         
+#  assetsCorgramPlot         Displays correlations between assets             
+#  assetsCorTestPlot         Displays and tests pairwise correlations         
+# FUNCTION:                 BIVARIATE CORRELATION PLOTS:                      
+#  assetsCorEigenPlot        Displays ratio of the largest two eigenvalues                    
+#  assetsTreePlot            Displays minimum spanning tree of assets         
+#  assetsDendogramPlot       Displays hierarchical clustering dendogram       
+#  .assetsStarPlot           Draws segment diagrams of a multivariate data set
 ################################################################################
 
 

@@ -31,14 +31,14 @@
 # FUNCTION:                     PORTFOLIO CLASS:
 #  'fPORTFOLIO'                  S4 Portfolio Class
 #  portfolioFrontier             Returns the efficient frontier of a portfolio
-#  show.fPORTFOLIO               S4 Print method for 'fPPORTFOLIO' objects
 # FUNCTION:                     SINGLE PORTFOLIOS:
 #  feasiblePortfolio             Returns a feasible portfolio
 #  efficientPortfolio            Returns a frontier portfolio
 #  cmlPortfolio                  Returns capital market line
 #  tangencyPortfolio             Returns the tangency portfolio
 #  minvariancePortfolio          Returns the minimum variance portfolio
-# FUNCTION:                     PRINT AND PLOT METHODS:           
+# FUNCTION:                     PRINT AND PLOT METHODS: 
+#  show.fPORTFOLIO               S4 Print method for 'fPPORTFOLIO' objects          
 #  plot.fPORTFOLIO               S3 Plot method for 'fPORTFOLIO' objects   
 #  summary.fPORTFOLIO            S3 Summary method for 'fPORTFOLIO' objects
 # FUNCTION:                     EDUCATIONAL PORTFOLIO SLIDERS: 
@@ -101,31 +101,6 @@ function()
     # Calculation of Long Only Minimum Variance Portfolio
     Frontier = portfolioFrontier(data, spec)
     Frontier
-    
-    # Return Value:
-    return()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-test.show =
-function()
-{ 
-    # Load Data::
-    data = as.timeSeries(data(smallcap.ts))
-    data = data[, c("BKE", "GG", "GYMB", "KRON")]
-    head(data)
-   
-    # Set Default Specifications:
-    spec = portfolioSpec()
-    setNFrontierPoints(spec) = 10
-    spec
-   
-    # Calculation of Long Only Minimum Variance Portfolio:
-    Frontier = portfolioFrontier(data, spec)
-    show(Frontier)
     
     # Return Value:
     return()
@@ -377,6 +352,31 @@ function()
 
 
 ################################################################################
+
+
+test.show =
+function()
+{ 
+    # Load Data::
+    data = as.timeSeries(data(smallcap.ts))
+    data = data[, c("BKE", "GG", "GYMB", "KRON")]
+    head(data)
+   
+    # Set Default Specifications:
+    spec = portfolioSpec()
+    setNFrontierPoints(spec) = 10
+    spec
+   
+    # Calculation of Long Only Minimum Variance Portfolio:
+    Frontier = portfolioFrontier(data, spec)
+    show(Frontier)
+    
+    # Return Value:
+    return()
+}
+
+
+# ------------------------------------------------------------------------------
 
 
 test.plot.RQuadprog =

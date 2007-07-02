@@ -74,7 +74,7 @@ function()
     # Normel Assets:
     assetsSim(n = 10, dim = 3)
     assetsSim(n = 10, dim = 3,
-        list(mu=rep(0, 3), Omega=diag(3), alpha=rep(0, 3), df=Inf))
+        list(mu=rep(0, 3), Omega=diag(3), alpha=rep(0.0, 3), df=Inf))
     
     # Skew Normal Assets:
     assetsSim(n = 10, dim = 3, model = 
@@ -82,7 +82,7 @@ function()
         
     # Student-t Assets:
     assetsSim(n = 10, dim = 3, model = 
-        list(mu=rep(0, 3), Omega=diag(3), alpha=rep(0, 3), df=4))
+        list(mu=rep(0, 3), Omega=diag(3), alpha=rep(0.0, 3), df=4))
         
     # Skew Student-t Assets:
     assetsSim(n = 10, dim = 3, model = 

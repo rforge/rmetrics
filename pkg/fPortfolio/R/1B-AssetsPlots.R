@@ -46,14 +46,13 @@
 #  .bpxAssetsPlot             Internal function
 # FUNCTION:                 BIVARIATE ASSETS PLOTS:
 #  assetsPairsPlot           Displays pairs of scatterplots of assets
+#  assetsCorgramPlot         Displays correlations between assets
 #  assetsCorTestPlot         Displays and tests pairwise correlations
 # FUNCTION:                 BIVARIATE CORRELATION PLOTS:
-#  assetsCorgramPlot         Displays correlations between assets
 #  assetsCorEigenPlot        Displays ratio of the largest two eigenvalues
 #  assetsTreePlot            Displays minimum spanning tree of assets
 #  assetsDendogramPlot       Displays hierarchical clustering dendogram
-    
-    
+#  .assetsStarPlot           Draws segment diagrams of a multivariate data set
 ################################################################################
 
 
@@ -834,7 +833,7 @@ function(x, method = c("segments", "stars"), keyOffset = 0, ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Displays hierarchical clustering dendogram
+    #   Draws segment diagrams of a multivariate data set. 
     
     # Arguments
     #   x - a numeric feature matrix of assets. Each column represents
