@@ -193,7 +193,8 @@ sort.timeSeries =
 function (x, ...) 
 {
     # Index:
-    Index = sort(as.POSIXct(x@positions), index.return = TRUE)$ix
+    # Index = sort(as.POSIXct(x@positions), index.return = TRUE)$ix
+    Index = sort(x@positions, index.return = TRUE)$ix
     
     # Compose Series:
     x@positions = x@positions[Index] 
