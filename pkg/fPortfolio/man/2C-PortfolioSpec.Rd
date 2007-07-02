@@ -58,9 +58,10 @@
 
 \usage{
 portfolioSpec(model = list(type = c("MV", "CVaR"), estimator = c("mean", "cov"), 
-    params = list()), portfolio = list(weights = NULL, targetReturn = NULL, 
-    targetRisk = NULL, targetAlpha = 0.05, riskFreeRate = 0, nFrontierPoints = 50),
-    solver = list(solver = c("quadprog", "Rdonlp2", "lpSolve"), trace = FALSE))
+    tailRisk = NULL, params = list()), portfolio = list(weights = NULL, 
+    targetReturn = NULL, targetRisk = NULL, targetAlpha = 0.05, riskFreeRate = 0, 
+    nFrontierPoints = 50),solver = list(solver = c("quadprog", "Rdonlp2", 
+    "lpSolve"), trace = FALSE))
 show.fPFOLIOSPEC(object)
 
 setType(spec) <- value
@@ -125,6 +126,10 @@ setTrace(spec) <- value
     \item{spec}{
         an S4 object of class \code{fPFOLIOSPEC}, the specification to be 
         modified, by default the default of the function \code{portfolioSpec()}.
+        }
+    \item{tailRisk}{
+        a list with two matrices for the upper and lower tail dependence
+        coefficients.
         }
     \item{targetAlpha}{
         [setTargetAlpha] - \cr
