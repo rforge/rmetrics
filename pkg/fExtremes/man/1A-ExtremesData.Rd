@@ -52,7 +52,7 @@
 
 
 \usage{
-emdPlot(x, doplot = TRUE, plottype = c("xy", "x", "y", ""), 
+emdPlot(x, doplot = TRUE, plottype = c("xy", "x", "y", " "), 
     labels = TRUE, \dots)
 
 qqparetoPlot(x, xi = 0, trim = NULL, threshold = NULL, doplot = TRUE, 
