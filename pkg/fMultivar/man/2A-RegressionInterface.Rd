@@ -11,7 +11,8 @@
 
 \alias{predict.fREG}
 
-\alias{print.fREG}
+\alias{show.fREG}
+\alias{show,fREG-method}
 \alias{plot.fREG}
 \alias{summary.fREG}
 
@@ -133,7 +134,7 @@ gregFit(formula, family, data, use = c("glm", "gam"),
     
 \method{predict}{fREG}(object, newdata, se.fit = FALSE, type = "response", \dots)
 
-\method{print}{fREG}(x, \dots)
+show.fREG(object)
 \method{plot}{fREG}(x, \dots)
 \method{summary}{fREG}(object, \dots)
 
@@ -226,10 +227,6 @@ OLS(formula, data, \dots)
     \item{type}{
         a character string, the type of prediction.
         }
-    %\item{weights}{
-    %    a vector of weights. If set to \code{NULL} all weights are
-    %    set to unity, the default value.
-    %    }
     \item{\dots}{
         additional optional arguments to be passed to the underlying 
         functions. For details we refer to inspect the following help 
