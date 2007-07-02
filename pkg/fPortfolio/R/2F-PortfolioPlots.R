@@ -45,6 +45,7 @@
 #  weightsPlot                  Plots staggered weights
 #  attributesPlot               Plots weighted means
 #  riskBudgetsPlot              Plots weighted risks
+#  tailRiskPlot                 Plots tail risks
 # FUNCTION:                    PORTFOLIO PIE PLOTS:
 #  weightsPie                   Plots staggered weights
 #  attributesPie                Plots weighted means
@@ -1038,6 +1039,104 @@ function(object, col = NULL, legend = TRUE)
     
     # Get Budgets:
     budgets = getRiskBudgets(object)
+    pos.budgets = +0.5 * (abs(budgets) + budgets)
+    neg.budgets = -0.5 * (abs(budgets) - budgets)
+    
+    # Define Plot Range:
+    ymax = max(rowSums(pos.budgets))
+    ymin = min(rowSums(neg.budgets))
+    range = ymax - ymin
+    ymax = ymax + 0.005 * range
+    ymin = ymin - 0.005 * range
+    dim = dim(budgets)
+    range = dim[1]
+    xmin = 0
+    xmax = range + 0.2 * range
+    
+    # Create Bar Plots:
+    if(!legend){
+        barplot(t(pos.budgets), space = 0, ylab = "",
+            ylim = c(ymin, ymax), col = col, border = "grey")
+    } else {
+        legendtext = names(getStatistics(object)$mu)
+        if(is.null(legendtext)){
+            for(i in 1:dim[2]){legendtext[i] = paste("Asset", i, sep = " ")}
+        }
+        barplot(t(pos.budgets), space = 0, ylab = "", xlim = c(xmin, xmax),
+            ylim = c(ymin, ymax), col = col, border = "grey")
+        legend("topright", legend = legendtext, bty = "n", cex = 0.8,
+            fill = col)
+    }
+    barplot(t(neg.budgets), space = 0, add = TRUE, col = col, border = "grey") 
+    
+    # Add Tailored Labels -  6 may be a good Number ...
+    targetRisk = getTargetRisk(object)[, 1]
+    targetReturn = getTargetReturn(object)[, 1]
+    nSigma = length(targetRisk)
+    nLabels = 6
+    M = c(0, ( 1:(nSigma %/% nLabels) ) ) *nLabels + 1
+    
+    # Take a reasonable number of significant digits to plot, e.g. 2 ...
+    nPrecision = 3
+    axis(1, at = M, labels = signif(targetRisk[M], nPrecision))
+    axis(3, at = M, labels = signif(targetReturn[M], nPrecision))
+    
+    # Add Axis Labels and Title:
+    mtext("Target Risk", side = 1, line = 2, cex = .7)
+    mtext("Target Return", side = 3, line = 2, cex = .7)
+    mtext("Weight", side = 2, line = 2, cex = .7)
+      
+    # Add Budgets 0 and 1 Reference Lines
+    lines(x = c(0, nSigma), c(1, 1), col = "grey", lty = 3) 
+    lines(x = c(0, nSigma), c(0, 0), col = "grey", lty = 3)   
+    
+    # Add vertical Line at minimum risk:
+    minIndex = which.min(targetRisk)
+    minRisk = signif(min(targetRisk), 3)
+    abline(v = minIndex, col = "black", lty = 1, lwd = 2)
+    
+    # Add Info:
+    mtext(paste(
+        getType(object), "|", getSolver(object), "|", "minRisk =", minRisk),
+        side = 4, adj = 0, col = "grey", cex = 0.7)
+    
+    # Add Title:
+    mtext("Risk Budgets", adj = 0, line = 2.5, font = 2, cex = 0.8)
+    
+    # Complete to draw box ...
+    box()
+    
+    # Return Value:
+    invisible()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.tailRiskPlot =
+function(object, col = NULL, legend = TRUE)
+{   # A function implemented by Rmetrics
+
+    # Description:
+    #   Plots a bar chart of tail risk budgets
+    
+    # Arguments:
+    #   object - an object of class 'fPORTFOLIO'
+    #   col - a color palette, by default the rainbow palette
+    
+    # FUNCTION:
+    
+    # Select Colors if not specified ...
+    if (is.null(col)) col = rainbow(ncol(object@portfolio$weights))
+    
+    # Get Type:
+    Type = getType(object)
+    
+    # Get Budgets:
+    Lambda = getTailRisk(object@spec$spec)$lower
+    # ********************************
+    budgets = NA
     pos.budgets = +0.5 * (abs(budgets) + budgets)
     neg.budgets = -0.5 * (abs(budgets) - budgets)
     
