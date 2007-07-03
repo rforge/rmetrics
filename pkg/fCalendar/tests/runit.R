@@ -49,7 +49,7 @@ if (FALSE) {
         "5A", # HolidayDates
         "5B", # HolidayCalendars
         "6A") # TimeSeriesImport
-    File = "C:/Rmetrics/SVN/trunk/fCalendar/test/runit"
+    File = "C:/Rmetrics/SVN/trunk/fCalendar/tests/runit"
     Protocol = "runitfCalendar.txt"
     
     # Perform and Save all Unit Tests:
