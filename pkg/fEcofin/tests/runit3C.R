@@ -98,7 +98,7 @@ function()
     
 if (FALSE) {
     require(RUnit)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fEcofin/test/runit3C.R")
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fEcofin/tests/runit3C.R")
     printTextProtocol(testResult)
 }   
 
