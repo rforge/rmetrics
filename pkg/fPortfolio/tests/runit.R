@@ -42,7 +42,7 @@ if (FALSE) {
         "4A")
         #"8A", "8B",
         #"9A", "9B")
-    File = "C:/Rmetrics/SVN/trunk/fPortfolio/test/runit"
+    File = "C:/Rmetrics/SVN/trunk/fPortfolio/tests/runit"
     Protocol = "runitfPortfolio.txt"
     
     # Perform and Save all Unit Tests:
