@@ -47,7 +47,7 @@ if (FALSE) {
         "3C", # GpdRisk
         "4B", # PotModelling
         "5A") # ExtremeIndex
-    File = "C:/Rmetrics/SVN/trunk/fExtremes/test/runit"
+    File = "C:/Rmetrics/SVN/trunk/fExtremes/tests/runit"
     Protocol = "runitfExtremes.txt"
     
     # Perform and Save all Unit Tests:
