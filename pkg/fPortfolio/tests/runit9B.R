@@ -32,54 +32,6 @@
 ################################################################################
 
 
-
-
-
-Constraints = c(
-    "minW[1:4]=0", 
-    "minsumW[1:2]=0.1", "minsumW[3:4]=0.2", 
-    "maxsumW[1:2]=0.8")
-    
-    
-par(mfrow = c(2, 2), cex = 0.7)
-ans = portfolioFrontier(Data, Spec, Constraints)
-
-weightsPlot(ans)
-attributesPlot(ans)
-riskBudgetsPlot(ans)    
- 
-
-   
-Constraints = c(   
-    "minB[1:4]=0.01",
-    "maxB[1:4]=0.02")
-    
-    
-setSolver(Spec) <- "RDonlp2"
-Spec@solver$trace = TRUE
-ans = portfolioFrontier(Data, Spec, Constraints)
-
-par(mfrow = c(2, 2), cex = 0.7)
-weightsPlot(ans)
-attributesPlot(ans)
-riskBudgetsPlot(ans) 
-
-getRiskBudgets(ans)
-
-
-
-
-
-
-round(ansRdonlp2@portfolio$weights, 3)
-round(getRiskBudgets(ansRdonlp2), 3)
-setConstraints(Data, Spec, Constraints, type = "RiskBudget")
-round(getRiskBudgets(ansRdonlp2), 1)  
-
-
-# ------------------------------------------------------------------------------
-
-
 test.riskBudgets =
 function()
 { 
