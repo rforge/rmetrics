@@ -44,7 +44,7 @@ if (FALSE) {
         "2C", # TermPlots
         "7A", # BivariateTools
         "7B") # MultivariateDistribution
-    File = "C:/Rmetrics/SVN/trunk/fMultivar/test/runit"
+    File = "C:/Rmetrics/SVN/trunk/fMultivar/tests/runit"
     Protocol = "runitfMultivar.txt"
     
     # Perform and Save all Unit Tests:
