@@ -43,7 +43,7 @@ if (FALSE) {
         "3A",  
         "5A", 
         "5B")
-    File = "C:/Rmetrics/SVN/trunk/fBasics/test/runit"
+    File = "C:/Rmetrics/SVN/trunk/fBasics/tests/runit"
     Protocol = "runitfBasics.txt"
     
     # Perform and Save all Unit Tests:
