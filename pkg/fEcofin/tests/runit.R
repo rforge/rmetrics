@@ -58,7 +58,7 @@ if (FALSE) {
         "5B", 
         "5C", 
         "6A")
-    File = "C:/Rmetrics/SVN/trunk/fEcofin/test/runit"
+    File = "C:/Rmetrics/SVN/trunk/fEcofin/tests/runit"
     Protocol = "runitfEcofin.txt"
     
     # Perform and Save all Unit Tests:
