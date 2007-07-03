@@ -50,7 +50,7 @@ if (FALSE) {
         "4C", # ExtremeVa;lueDependency
         "4D", # ExtremeValueModelling
         "6A") # EmpiricalCopulae
-    File = "C:/Rmetrics/SVN/trunk/fCopulae/test/runit"
+    File = "C:/Rmetrics/SVN/trunk/fCopulae/tests/runit"
     Protocol = "runitfCopulae.txt"
     
     # Perform and Save all Unit Tests:
