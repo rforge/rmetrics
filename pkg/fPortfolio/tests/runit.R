@@ -39,12 +39,27 @@ if (FALSE) {
     require(lpSolve)
     require(RUnit)
     testIndex = c(
-        "1A", "1B", "1C", "1D", "1E", "1F",
-        "2A", "2B", "2C", "2D", "2E", "2F", "2G",
-        "3A", "3B", "3C", "3D", "3E",
+        "1A", 
+        "1B", 
+        "1C", 
+        "1D", 
+        "1E", 
+        "1F",
+        "2A", 
+        "2B", 
+        "2C", 
+        "2D", 
+        "2E", 
+        "2F", 
+        "2G",
+        "3A", 
+        "3B", 
+        "3C", 
+        "3D", 
+        "3E",
         "4A")
-        #"8A", "8B",
-        #"9A", "9B")
+        # "8A", "8B",
+        # "9A", "9B")
     File = "C:/Rmetrics/SVN/trunk/fPortfolio/tests/runit"
     Protocol = "runitfPortfolio.txt"
     
