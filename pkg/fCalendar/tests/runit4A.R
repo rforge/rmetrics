@@ -409,7 +409,7 @@ function()
     dim(tS)
     
     # Align Daily Series:
-    alignDailySeries(tS, method = "linear")
+    alignDailySeries(tS, method = "interp")
     
     # Align Daily Series:
     alignDailySeries(tS, method = "fillNA")
