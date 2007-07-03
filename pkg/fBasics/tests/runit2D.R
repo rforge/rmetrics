@@ -131,7 +131,8 @@ function()
     # Simulate random variates:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
-    s = rgh(n = 2000, alpha = 0.8, beta = 0.2, delta = 2, mu = -0.4, lambda = 1) 
+    s = rgh(n = 2000, alpha = 0.8, beta = 0.2, delta = 2, mu = -0.4, 
+        lambda = 1) 
     
     # Fit:
     ans = ghFit(x = s, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1,
@@ -275,7 +276,7 @@ function()
 
 if (FALSE) {
     require(RUnit)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fBasics/test/runit2D.R",
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fBasics/tests/runit2D.R",
         rngKind = "Marsaglia-Multicarry", rngNormalKind = "Inversion")
     printTextProtocol(testResult)
 }

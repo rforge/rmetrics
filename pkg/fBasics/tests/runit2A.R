@@ -71,7 +71,8 @@ function()
     # rsymstb, alpha=1.8
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
-    test = .distCheck("symstb", alpha = 1.9, robust = FALSE, subdivisions = 500)
+    test = .distCheck("symstb", alpha = 1.9, robust = FALSE, 
+        subdivisions = 500)
     print(test)
     checkTrue(mean(test) == 1)
     
@@ -221,7 +222,7 @@ function()
 
 if (FALSE) {
     require(RUnit)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fBasics/test/runit2A.R",
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fBasics/tests/runit2A.R",
         rngKind = "Marsaglia-Multicarry", rngNormalKind = "Inversion")
     printTextProtocol(testResult)
 }
