@@ -90,20 +90,30 @@ function()
     
     # Abramowitz-Stegun: Examples, p. 511
     M = function(a, b, x) { Re (kummerM(x, a, b)) }     
-    M(  0.3,  0.2, -0.1)  - 0.8578490                       # Example 1
-    M( 17.0, 16.0, 1)     - 2.8881744                       # 2
-    M( -1.3,  1.2, 0.1)   - 0.8924108                       # 3
-    # M( -1, -1.0, 0)     # undefined                       # 4 
-    M( 0.9,   0.1, 10)    - 1227235                         # 6
-    M(-52.5,  0.1, 1)     - 16.34                           # 7    # CHECK!
+    # Example 1
+    M(  0.3,  0.2, -0.1)  - 0.8578490                       
+    # 2
+    M( 17.0, 16.0, 1)     - 2.8881744                       
+    # 3
+    M( -1.3,  1.2, 0.1)   - 0.8924108                      
+    # 4
+    # M( -1, -1.0, 0)     # undefined                   
+    # 6
+    M( 0.9,   0.1, 10)    - 1227235                       
+    # 7
+    M(-52.5,  0.1, 1)     - 16.34                                        # CHECK
     
     # Abramowitz-Stegun: Examples, p. 511
     U = function(a, b, x) { Re (kummerU(x, a, b)) }     
-    U( 1.1, 0.2, 1)     - 0.38664                           #  9
+    # 9
+    U( 1.1, 0.2, 1)     - 0.38664                           
     U(-0.9, 0.2, 1)     - 0.91272                         
-    U( 0.1, 0.2, 1)*0.9 - 0.85276                           # 10
-    U( 1.0, 0.1, 100)   - 0.0098153                         # 11   # CHECK!
-    U( 0.1, 0.2, 0.01)  - 1.09                              # 12
+    # 10
+    U( 0.1, 0.2, 1)*0.9 - 0.85276                            
+    # 11
+    U( 1.0, 0.1, 100)   - 0.0098153                                      # CHECK
+    # 12
+    U( 0.1, 0.2, 0.01)  - 1.09                        
     
     # Abramowitz-Stegun: Example 17, Figure 13.2, p. 513
     # M(-4.5, 1, x)
@@ -191,7 +201,7 @@ function()
 
 if (FALSE) {
     require(RUnit)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fOptions/test/runit3C.R",
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fOptions/tests/runit3C.R",
         rngKind = "Marsaglia-Multicarry", rngNormalKind = "Inversion")
     printTextProtocol(testResult)
 }

@@ -203,11 +203,11 @@ function()
     mlognorm()
     
     # mrgam(alpha = 1/2, beta = 1)
-    mrgam()                                         # CHECK!                                    
+    mrgam()                                                              # CHECK                                   
     
     # mjohnson(a, b, c, d)
     a = 0.3; b = 1.2; c = -0.2; d = 0.8
-    mjohnson(a, b, c, d)                            # CHECK!
+    mjohnson(a, b, c, d)                                                 # CHECK
     
     # masian(Time = 1, r = 0.045, sigma = 0.3) 
     masian()
@@ -313,7 +313,7 @@ function()
 
 if (FALSE) {
     require(RUnit)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fOptions/test/runit3A.R",
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fOptions/tests/runit3A.R",
         rngKind = "Marsaglia-Multicarry", rngNormalKind = "Inversion")
     printTextProtocol(testResult)
 }

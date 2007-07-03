@@ -223,11 +223,16 @@ function()
     # cgamma -
     # Abramowitz-Stegun: Examples, p. 263
     options(digits = 10)
-    gamma(6.38); lgamma(56.38)                            # Example 1, 2
-    Psi(6.38); Psi(56.38)                                 # 3, 4
-    cgamma(complex(real = 1, imag = -1), log = TRUE )     # 5
-    cgamma(complex(real = 1/2, imag = 1/2), log = TRUE )  # 6
-    cgamma(complex(real = 3, imag = 7), log = TRUE )      # 7, 8 
+    # Example 1, 2
+    gamma(6.38); lgamma(56.38)                            
+    # 3, 4
+    Psi(6.38); Psi(56.38)                                 
+    # 5
+    cgamma(complex(real = 1, imag = -1), log = TRUE )     
+    # 6
+    cgamma(complex(real = 1/2, imag = 1/2), log = TRUE )  
+    # 7, 8
+    cgamma(complex(real = 3, imag = 7), log = TRUE )       
 
     # Return Value:
     return()    
@@ -259,7 +264,7 @@ function()
    
 if (FALSE) {
     require(RUnit)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fOptions/test/runit3B.R",
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fOptions/tests/runit3B.R",
         rngKind = "Marsaglia-Multicarry", rngNormalKind = "Inversion")
     printTextProtocol(testResult)
 }
