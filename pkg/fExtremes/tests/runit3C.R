@@ -163,13 +163,13 @@ function()
     # Artificial Data Set:                                 
     x = gpdSim(seed = 1985)
     fit = gpdFit(x)
-    tp = gpdTailPlot(fit)
+    ### tp = gpdTailPlot(fit)                                            # CHECK
     ### gpdSfallPlot(tp)                                                 # CHECK
     
     # Danish Fire Claims:
     x = as.timeSeries(data(danishClaims))
     fit = gpdFit(as.vector(x), u =10)
-    tp = gpdTailPlot(fit)
+    ### tp = gpdTailPlot(fit)                                            # CHECK
     ### gpdSfallPlot(tp)                                                 # CHECK
 
     # Return Value:
