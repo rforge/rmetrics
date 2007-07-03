@@ -81,7 +81,7 @@ function()
 
 if (FALSE) {
     require(RUnit)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fPortfolio/test/runit8B.R",
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fPortfolio/tests/runit8B.R",
         rngKind = "Marsaglia-Multicarry", rngNormalKind = "Inversion")
     printTextProtocol(testResult)
 }

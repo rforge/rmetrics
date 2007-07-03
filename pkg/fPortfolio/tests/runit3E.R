@@ -372,7 +372,7 @@ function()
 if (FALSE) {
     require(RUnit)
     require(lpSolve)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fPortfolio/test/runit3E.R",
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fPortfolio/tests/runit3E.R",
         rngKind = "Marsaglia-Multicarry", rngNormalKind = "Inversion")
     printTextProtocol(testResult)
 }

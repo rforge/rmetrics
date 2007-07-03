@@ -294,7 +294,7 @@ if (FALSE) {
     require(quadprog)
     require(Rdonlp2)
     require(lpSolve)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fPortfolio/test/runit2G.R",
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fPortfolio/tests/runit2G.R",
         rngKind = "Marsaglia-Multicarry", rngNormalKind = "Inversion")
     printTextProtocol(testResult)
 }

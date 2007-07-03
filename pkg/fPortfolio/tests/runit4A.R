@@ -514,7 +514,7 @@ function()
 if (FALSE) {
     require(RUnit)
     require(lpSolve)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fPortfolio/test/runit4A.R",
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fPortfolio/tests/runit4A.R",
         rngKind = "Marsaglia-Multicarry", rngNormalKind = "Inversion")
     printTextProtocol(testResult)
 }
