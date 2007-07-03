@@ -273,7 +273,7 @@ function()
 { 
     # Pictet Pension Fund Data Sets - Use Percentage Returns:
     LPP = 100 * as.timeSeries(data(LPP2005REC))[, 1:6]
-    DJ30 = as.timeSeries(data(DowJones30)))
+    DJ30 = as.timeSeries(data(DowJones30))
     
     # Graph Frame:
     par(mfrow = c(1, 1))
