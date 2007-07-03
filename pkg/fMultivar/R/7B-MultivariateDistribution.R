@@ -426,7 +426,7 @@ function(x, which = "ask", ...)
 
 
 summary.fMV =
-function(object, which = "ask", ...)
+function(object, which = "ask", doplot = TRUE, ...)
 {   # A function implemented by Diethelm Wuertz
 
     # FUNCTION:
@@ -435,7 +435,7 @@ function(object, which = "ask", ...)
     print(x = object, ...)
     
     # Plot:
-    plot(x = object, which = which, ...)
+    plot(x = object, which = which, doplot, ...)
     
     # Return Value:
     invisible(object)

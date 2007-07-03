@@ -223,6 +223,8 @@ function()
     #   description = NULL, trace = FALSE, ...) 
 
     # RVs:
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
     N = 5000
     z = rmvsnorm(N, dim = 2, mu = rep(0, 2), Omega = diag(2), alpha = c(-1, 1))
     
@@ -230,8 +232,8 @@ function()
     fit = mvFit(z, "snorm")
 
     print(fit)
-    plot(fit)
-    summary(fit)
+    plot(fit, which = "all")
+    summary(fit, doplot = FALSE)
 
     # Return Value:
     return()    
@@ -249,6 +251,8 @@ function()
     #   description = NULL, trace = FALSE, ...) 
 
     # RVs:
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
     N = 5000
     z = rmvst(N, dim = 2, mu = rep(0, 2), Omega = diag(2), alpha = c(-1, 1))
     
@@ -256,8 +260,8 @@ function()
     fit = mvFit(z, "st")
 
     print(fit)
-    plot(fit)
-    summary(fit)
+    plot(fit, which = "all")
+    summary(fit, doplot = FALSE)
 
     # Return Value:
     return()    

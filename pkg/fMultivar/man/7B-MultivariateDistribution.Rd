@@ -69,7 +69,7 @@ mvFit(x, method = c("snorm", "st"), fixed.df = NA, title = NULL,
     description = NULL, trace = FALSE, \dots) 
 
 \method{print}{fMV}(x, \dots)
-\method{plot}{fMV}(x, which = "ask", \dots)
+\method{plot}{fMV}(x, which = "ask", doplot = TRUE, \dots)
 \method{summary}{fMV}(object, which = "ask", \dots)
 }
 
@@ -80,6 +80,10 @@ mvFit(x, method = c("snorm", "st"), fixed.df = NA, title = NULL,
         [mvFit] - \cr
         a character string, assigning a brief description to an 
         \code{"fMV"} object.
+        }
+    \item{doplot}{
+        a logical value, by default TRUE. Should a plot be generated
+        and displayed?
         }
     \item{dim}{
         [*mvsnorm][*mvst] - \cr

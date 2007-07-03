@@ -230,10 +230,14 @@ function()
     # Comparison:
     par(ask = FALSE)
     par(mfrow = c(1, 1))
+    
+    LM = regFit(Y ~ 1 + X1 + X2 + X3, data = DATATS, use = "lm") 
     .termPlot(LM)
     lm = lm(Y ~ X1 + X2 + X3, DATA)
     termplot(lm, rug = TRUE, partial.resid = TRUE, se = TRUE, pch = 19, 
         main = "LM", ask = par("ask"))
+    
+    AM = regFit(Y ~ 1 + s(X1)+s(X2)+s(X3), data = DATATS, use = "am") 
     .termPlot(AM)
     am = gam(formula = Y ~ s(X1) + s(X2) + s(X3), data = DATA) 
     for (s in 1:3) { 
