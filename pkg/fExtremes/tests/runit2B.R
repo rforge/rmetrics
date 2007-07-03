@@ -179,7 +179,7 @@ function()
     fit$par.ests
     
     # Internal Fit - Gumbel MLE:
-    fit = .gummleFit(x.ts)
+    fit = .gummleFit(x.tS)
     fit
     fit$par.ests
      
@@ -377,7 +377,7 @@ function()
 
 if (FALSE) {
     require(RUnit)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fExtremes/test/runit2B.R",
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fExtremes/tests/runit2B.R",
         rngKind = "Marsaglia-Multicarry", rngNormalKind = "Inversion")
     printTextProtocol(testResult)
 }

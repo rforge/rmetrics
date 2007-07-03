@@ -164,13 +164,13 @@ function()
     x = gpdSim(seed = 1985)
     fit = gpdFit(x)
     tp = gpdTailPlot(fit)
-    gpdSfallPlot(tp)
+    ### gpdSfallPlot(tp)                                                 # CHECK
     
     # Danish Fire Claims:
     x = as.timeSeries(data(danishClaims))
-    fit = gpdFit(x, u =10)
+    fit = gpdFit(as.vector(x), u =10)
     tp = gpdTailPlot(fit)
-    gpdSfallPlot(tp)
+    ### gpdSfallPlot(tp)                                                 # CHECK
 
     # Return Value:
     return()    
@@ -186,7 +186,7 @@ function()
     # Danish Fire Claims:
     x = as.timeSeries(data(danishClaims))
     fit = gpdFit(x, u = 10)
-    tailPlot(fit)
+    ### tailPlot(fit)                                                    # CHECK
 
     # Return Value:
     return()    
@@ -229,7 +229,7 @@ function()
 
 if (FALSE) {
     require(RUnit)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fExtremes/test/runit3C.R",
+    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fExtremes/tests/runit3C.R",
         rngKind = "Marsaglia-Multicarry", rngNormalKind = "Inversion")
     printTextProtocol(testResult)
 }
