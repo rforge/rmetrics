@@ -34,6 +34,9 @@ if (FALSE) {
     
     # Settings:
     require(fPortfolio)
+    require(quadprog)
+    require(Rdonlp2)
+    require(lpSolve)
     require(RUnit)
     testIndex = c(
         "1A", "1B", "1C", "1D", "1E", "1F",
