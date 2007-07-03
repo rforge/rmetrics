@@ -36,13 +36,13 @@ if (FALSE) {
     require(fBasics)
     require(RUnit)
     testIndex = c(
-        "1A", 
-      # "2A", 
-        "2B", 
-        "2D",  
-        "3A",  
-        "5A", 
-        "5B")
+        "1A", # ReturnSeriesBasics
+      # "2A", # StableDistribution
+        "2B", # HyperbolicDistribution
+        "2D", # DistributionFits  
+        "3A", # StylizedFacts
+        "5A", # NormalityTests
+        "5B") # TwoSampleTests
     File = "C:/Rmetrics/SVN/trunk/fBasics/tests/runit"
     Protocol = "runitfBasics.txt"
     
