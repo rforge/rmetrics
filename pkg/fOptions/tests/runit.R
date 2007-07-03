@@ -55,7 +55,7 @@ if (FALSE) {
         "4B", # HestonNandiOptions
         "5A", # Low Discrepancy
         "5B") # MonteCarloOptions
-    File = "C:/Rmetrics/SVN/trunk/fOptions/test/runit"
+    File = "C:/Rmetrics/SVN/trunk/fOptions/tests/runit"
     Protocol = "runitfOptions.txt"
     
     # Perform and Save all Unit Tests:
