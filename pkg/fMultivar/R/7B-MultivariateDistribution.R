@@ -330,6 +330,8 @@ function(x, method = c("snorm", "st"), fixed.df = NA, title = NULL,
 description = NULL, trace = FALSE, ...) 
 {   # A function implemented by Diethelm Wuertz
 
+    # Description:
+    
     # FUNCTION:
     
     # Fit:
@@ -360,7 +362,7 @@ description = NULL, trace = FALSE, ...)
     }
     
     # Description Slot:
-    if (is.null(description)) descripotion = as.character(date())
+    if (is.null(description)) description = .description()
     
     # Return Value:
     new("fMV",     
@@ -380,6 +382,8 @@ description = NULL, trace = FALSE, ...)
 print.fMV =
 function(x, ...)
 {   # A function implemented by Diethelm Wuertz
+    
+    # Description:
     
     # FUNCTION:
     
@@ -408,6 +412,8 @@ plot.fMV =
 function(x, which = "ask", ...)
 {   # A function implemented by Diethelm Wuertz
 
+    # Description:
+    
     # FUNCTION:
     
     # Plot:
@@ -429,6 +435,8 @@ summary.fMV =
 function(object, which = "ask", doplot = TRUE, ...)
 {   # A function implemented by Diethelm Wuertz
 
+    # Description:
+    
     # FUNCTION:
     
     # Print:
@@ -781,7 +789,7 @@ function(x, which = "ask", ...)
 
 .dsn = 
 function(x, location = 0, scale = 1, shape = 0, log = FALSE)
-{   # A modified copy from contributed R package mvtnorm Version 0.32-2
+{   # A modified copy from contributed R package sn
 
     # Description:
     #   Internal Function
@@ -807,7 +815,7 @@ function(x, location = 0, scale = 1, shape = 0, log = FALSE)
 
 .psn = 
 function(x, location = 0, scale = 1, shape = 0, ...)
-{   # A modified copy from contributed R package mvtnorm Version 0.32-2
+{   # A modified copy from contributed R package sn
 
     # Description:
     #   Internal Function
@@ -827,7 +835,7 @@ function(x, location = 0, scale = 1, shape = 0, ...)
 
 .rsn = 
 function(n = 1, location = 0, scale = 1, shape = 0)
-{   # A modified copy from contributed R package mvtnorm Version 0.32-2
+{   # A modified copy from contributed R package sn
 
     # Description:
     #   Internal Function
@@ -850,7 +858,7 @@ function(n = 1, location = 0, scale = 1, shape = 0)
  
 
 .T.Owen = function(h, a, jmax = 50, cut.point = 6)
-{   # A modified copy from contributed R package mvtnorm Version 0.32-2
+{   # A modified copy from contributed R package sn
 
     # Description:
     #   Internal Function
@@ -922,7 +930,7 @@ function(n = 1, location = 0, scale = 1, shape = 0)
 
 .dst =  
 function (x, location = 0, scale = 1, shape = 0, df = Inf)
-{   # A modified copy from contributed R package mvtnorm Version 0.32-2
+{   # A modified copy from contributed R package sn
 
     # Description:
     #   Internal Function
@@ -944,7 +952,7 @@ function (x, location = 0, scale = 1, shape = 0, df = Inf)
 
 .pst = 
 function (x,  location = 0, scale = 1, shape = 0, df = Inf)
-{   # A modified copy from contributed R package mvtnorm Version 0.32-2
+{   # A modified copy from contributed R package sn
 
     # Description:
     #   Internal Function
@@ -973,7 +981,7 @@ function (x,  location = 0, scale = 1, shape = 0, df = Inf)
 
 .rst = 
 function (n=1, location = 0, scale = 1, shape = 0, df = Inf)
-{   # A modified copy from contributed R package mvtnorm Version 0.32-2
+{   # A modified copy from contributed R package sn
 
     # Description:
     #   Internal Function
@@ -996,7 +1004,7 @@ function (n=1, location = 0, scale = 1, shape = 0, df = Inf)
 
 .dmsn = 
 function(x, xi = rep(0, d), Omega, alpha)
-{   # A modified copy from contributed R package mvtnorm Version 0.32-2
+{   # A modified copy from contributed R package sn
 
     # Description:
     #   Internal Function
@@ -1035,7 +1043,7 @@ function(x, xi = rep(0, d), Omega, alpha)
 
 .pmsn =  
 function(x, xi = rep(0, d), Omega, alpha, ...)
-{   # A modified copy from contributed R package mvtnorm Version 0.32-2
+{   # A modified copy from contributed R package sn
 
     # Description:
     #   Internal Function
@@ -1056,7 +1064,7 @@ function(x, xi = rep(0, d), Omega, alpha, ...)
 
 .rmsn = 
 function(n=1, xi = rep(0, d), Omega, alpha)
-{   # A modified copy from contributed R package mvtnorm Version 0.32-2
+{   # A modified copy from contributed R package sn
 
     # Description:
     #   Internal Function
@@ -1085,7 +1093,7 @@ function(n=1, xi = rep(0, d), Omega, alpha)
 
 .dmst = 
 function(x, xi = rep(0, d), Omega, alpha, df = Inf)
-{   # A modified copy from contributed R package mvtnorm Version 0.32-2
+{   # A modified copy from contributed R package sn
 
     # Description:
     #   Internal Function
@@ -1129,7 +1137,7 @@ function(x, xi = rep(0, d), Omega, alpha, df = Inf)
 
 .pmst = 
 function(x, xi = rep(0, d), Omega = 1, alpha = rep(0, d), df = Inf, ...)
-{   # A modified copy from contributed R package mvtnorm Version 0.32-2
+{   # A modified copy from contributed R package sn
 
     # Description:
     #   Internal Function
@@ -1158,7 +1166,7 @@ function(x, xi = rep(0, d), Omega = 1, alpha = rep(0, d), df = Inf, ...)
 
 .rmst = 
 function(n=1, xi=rep(0,d), Omega, alpha, df = Inf)
-{   # A modified copy from contributed R package mvtnorm Version 0.32-2
+{   # A modified copy from contributed R package sn
 
     # Description:
     #   Internal Function
@@ -1180,7 +1188,7 @@ function(n=1, xi=rep(0,d), Omega, alpha, df = Inf)
 
 .msn.quantities = 
 function(xi, Omega, alpha)
-{   # A modified copy from contributed R package mvtnorm Version 0.32-2
+{   # A modified copy from contributed R package sn
 
     # Description:
     #   Internal Function
@@ -1226,7 +1234,7 @@ function(xi, Omega, alpha)
 .msn.mle = 
 function(X, y, freq, start, trace = FALSE, method = "BFGS", 
 control = list(iter.max = 150) )
-{   # A modified copy from contributed R package mvtnorm Version 0.32-2
+{   # A modified copy from contributed R package sn
 
     # Description:
     #   Internal Function
@@ -1305,7 +1313,7 @@ control = list(iter.max = 150) )
 
 .msn.dev = 
 function(param, X, y, freq, trace = FALSE)
-{   # A modified copy from contributed R package mvtnorm Version 0.32-2
+{   # A modified copy from contributed R package sn
 
     # Description:
     #   Internal Function
@@ -1338,7 +1346,7 @@ function(param, X, y, freq, trace = FALSE)
 
 .msn.dev.grad = 
 function(param, X, y, freq, trace = FALSE)
-{   # A modified copy from contributed R package mvtnorm Version 0.32-2
+{   # A modified copy from contributed R package sn
 
     # Description:
     #   Internal Function
@@ -1374,7 +1382,7 @@ function(param, X, y, freq, trace = FALSE)
 
 .msn.moment.fit = 
 function(y)
-{   # A modified copy from contributed R package mvtnorm Version 0.32-2
+{   # A modified copy from contributed R package sn
 
     # Description:
     #   Internal Function
@@ -1422,7 +1430,7 @@ function(y)
 
 .zeta = 
 function(k, x)
-{   # A modified copy from contributed R package mvtnorm Version 0.32-2
+{   # A modified copy from contributed R package sn
 
     # Description:
     #   Internal Function
@@ -1459,7 +1467,7 @@ function(k, x)
 
 .num.deriv = 
 function(coefficients, FUN, ...)
-{   # A modified copy from contributed R package mvtnorm Version 0.32-2
+{   # A modified copy from contributed R package sn
 
     # Description:
     #   Internal Function
@@ -1493,7 +1501,7 @@ function(coefficients, FUN, ...)
 
 .msn.marginal = 
 function(xi = NULL, Omega = NULL, alpha = NULL, comp = 1:d, dp = NULL)
-{   # A modified copy from contributed R package mvtnorm Version 0.32-2
+{   # A modified copy from contributed R package sn
 
     # Description:
     #   Internal Function
@@ -1555,7 +1563,7 @@ function(xi = NULL, Omega = NULL, alpha = NULL, comp = 1:d, dp = NULL)
 .mst.mle = 
 function(X, y, freq, start = NA, fixed.df = NA, trace = FALSE, 
 method = "BFGS", control = list(iter.max = 150))
-{   # A modified copy from contributed R package mvtnorm Version 0.32-2
+{   # A modified copy from contributed R package sn
 
     # Description:
     #   Internal Function
@@ -1694,7 +1702,7 @@ method = "BFGS", control = list(iter.max = 150))
 
 .mst.dev = 
 function(param, X, y, freq = rep(1, nrow(X)), fixed.df = NA, trace = FALSE)
-{   # A modified copy from contributed R package mvtnorm Version 0.32-2
+{   # A modified copy from contributed R package sn
 
     # Description:
     #   Internal Function
@@ -1750,7 +1758,7 @@ function(param, X, y, freq = rep(1, nrow(X)), fixed.df = NA, trace = FALSE)
 
 .mst.dev.grad = 
 function(param, X, y, freq = rep(1, nrow(X)), fixed.df = NA, trace = FALSE)
-{   # A modified copy from contributed R package mvtnorm Version 0.32-2
+{   # A modified copy from contributed R package sn
 
     # Description:
     #   Internal Function
@@ -1841,7 +1849,7 @@ function(param, X, y, freq = rep(1, nrow(X)), fixed.df = NA, trace = FALSE)
 
 .dsn2.plot = 
 function(x, y, xi, Omega, alpha, ...)
-{   # A modified copy from contributed R package mvtnorm Version 0.32-2
+{   # A modified copy from contributed R package sn
 
     # Description:
     #   Internal Function
@@ -1871,7 +1879,7 @@ function(x, y, xi, Omega, alpha, ...)
 
 .dst2.plot = 
 function(x, y, xi, Omega, alpha, df, ...)
-{   # A modified copy from contributed R package mvtnorm Version 0.32-2
+{   # A modified copy from contributed R package sn
 
     # Description:
     #   Internal Function

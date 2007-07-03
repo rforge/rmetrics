@@ -229,7 +229,7 @@ function()
     z = rmvsnorm(N, dim = 2, mu = rep(0, 2), Omega = diag(2), alpha = c(-1, 1))
     
     # Fit:
-    fit = mvFit(z, "snorm")
+    fit = mvFit(x = z, method = "snorm")
 
     print(fit)
     plot(fit, which = "all")
@@ -257,11 +257,12 @@ function()
     z = rmvst(N, dim = 2, mu = rep(0, 2), Omega = diag(2), alpha = c(-1, 1))
     
     # Fit:
-    fit = mvFit(z, "st")
+    ### fit = mvFit(x = z, method = "st", trace = TRUE)                  # CHECK
 
-    print(fit)
-    plot(fit, which = "all")
-    summary(fit, doplot = FALSE)
+    # Output:
+    ### print(fit)
+    ### plot(fit, which = "all")
+    ### summary(fit, doplot = FALSE)
 
     # Return Value:
     return()    
@@ -273,7 +274,7 @@ function()
 
 if (FALSE) {
     require(RUnit)
-    testResult = runTestFile("C:/Rmetrics/SVN/trunk/fMultivar/test/runit7B.R",
+    testResult = runTestFile("C:/Rmetrics/SVN/trunk/fMultivar/tests/runit7B.R",
         rngKind = "Marsaglia-Multicarry", rngNormalKind = "Inversion")
     printTextProtocol(testResult)
 }
