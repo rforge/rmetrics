@@ -131,7 +131,7 @@ function()
     par(ask = FALSE)
     class(fit)
     print(fit)
-    plot(fit)                                                    # CHECK X-Label
+    plot(fit, which = "all")                                # CHECK X-Label
     summary(fit, doplot = FALSE)                            # CHECK - add doplot
     
     # Return Value:

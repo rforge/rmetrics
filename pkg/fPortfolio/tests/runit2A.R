@@ -403,7 +403,7 @@ function()
     .singleAssetPlot(Frontier, col = "red", cex = 1.5)
     .equalWeightsPlot(Frontier, col = "blue", pch = 19, cex = 1.5)
     .twoAssetsPlot(Frontier, col = "grey")
-    .wheelPiePlot(Frontier)
+    .weightsWheel(Frontier)
     .monteCarloPlot(Frontier, mcSteps = 1000, cex = 0.25, pch = 19)  
     .sharpeRatioPlot(Frontier, pch = 19, col = "blue") 
     
@@ -418,7 +418,7 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.plot.RDonlp2 =
+test.plot.Rdonlp2 =
 function()
 {     
     # Library:
@@ -430,7 +430,7 @@ function()
    
     # Specifications:
     Spec = portfolioSpec()
-    setSolver(Spec)<-"RDonlp2"
+    setSolver(Spec)<-"Rdonlp2"
     
     # Constraints:
     Constraints = "LongOnly"
@@ -446,7 +446,7 @@ function()
     .singleAssetPlot(Frontier, col = "red", cex = 1.5)
     .equalWeightsPlot(Frontier, col = "blue", pch = 19, cex = 1.5)
     .twoAssetsPlot(Frontier, col = "grey")
-    .wheelPiePlot(Frontier)
+    .weightsWheel(Frontier)
     .monteCarloPlot(Frontier, mcSteps = 1000, cex = 0.25, pch = 19)  
     .sharpeRatioPlot(Frontier, pch = 19, col = "blue") 
     
@@ -489,7 +489,7 @@ function()
     .singleAssetPlot(Frontier, col = "red", cex = 1.5)
     .equalWeightsPlot(Frontier, col = "blue", pch = 19, cex = 1.5)
     .twoAssetsPlot(Frontier, col = "grey")
-    .wheelPiePlot(Frontier)
+    .weightsWheel(Frontier)
     .monteCarloPlot(Frontier, mcSteps = 1000, cex = 0.25, pch = 19)  
     .sharpeRatioPlot(Frontier, pch = 19, col = "blue") 
     

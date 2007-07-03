@@ -266,7 +266,7 @@ function()
     colnames(Data)
     
     # Strategy Portfolio:
-    myPortfolio = 
+    myPortfolio <<-  
     function(data, spec, constraints)
     {
         strategyPortfolio = tangencyPortfolio(data, spec, constraints)
@@ -477,7 +477,7 @@ function()
     setType(Spec) = "CVaR"
     
     # Strategy Portfolio:
-    myPortfolio = 
+    myPortfolio <<- 
     function(data, spec, constraints)
     {
         strategyPortfolio = tangencyPortfolio(data, spec, constraints)

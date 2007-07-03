@@ -119,7 +119,7 @@ function()
     # Load Data:
     data = as.timeSeries(data(smallcap.ts))
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
-    if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
+    if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data)
      
     getData(data)
     getSeries(data)
