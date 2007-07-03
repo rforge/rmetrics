@@ -49,7 +49,7 @@ if (FALSE) {
         "5A", # NonLinModelling
         "5B", # NonLinStatistics
         "5C") # NonLinTests
-    File = "C:/Rmetrics/SVN/trunk/fSeries/test/runit"
+    File = "C:/Rmetrics/SVN/trunk/fSeries/tests/runit"
     Protocol = "runitfSeries.txt"
     
     # Perform and Save all Unit Tests:
