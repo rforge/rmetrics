@@ -85,8 +85,11 @@ function()
     # Fit:
     set.seed(4711)
     type = "gumbel"
-    R = evCopulaSim(500, type = type)
-    evCopulaFit(x = R, type = type)
+    R = evCopulaSim(500, param = 2, type = type)
+    evCopulaFit(u = R, type = type)
+    
+    # Fit:
+    evCopulaFit(u = R[, 1], v = R[, 2], type = type)
     
     # Return Value:
     return()    

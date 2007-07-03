@@ -82,18 +82,16 @@ function(u, v = NULL, type = evList(), ...)
     type = match.arg(type)
     
     # Settings:
-    U = u
-    V = v
+    U <<- u
+    V <<- v
     if (is.list(u)) {
-        u = u[[1]]
-        v = u[[2]]
+        U <<- u[[1]]
+        V <<- u[[2]]
     }
     if (is.matrix(u)) {
         U = u[, 1]
         V = u[, 2]
     }
-    U <<- u
-    V <<- v
 
     # Start Values:
     param = evParam(type)$param

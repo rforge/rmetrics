@@ -86,18 +86,16 @@ function(u, v = NULL, type = archmList(), ...)
     Type = as.integer(type)
     
     # Settings:
-    U = u
-    V = v
-    if (is.list(u)) {
-        u = u[[1]]
-        v = u[[2]]
-    }
-    if (is.matrix(u)) {
-        U = u[, 1]
-        V = u[, 2]
-    }
     U <<- u
     V <<- v
+    if (is.list(u)) {
+        U <<- u[[1]]
+        V <<- u[[2]]
+    }
+    if (is.matrix(u)) {
+        U <<- u[, 1]
+        V <<- u[, 2]
+    }
 
     # Estimate Rho from Kendall's tau for all types of Copula:
     alpha = archmParam(type)$param

@@ -82,8 +82,12 @@ function()
     # archmCopulaFit(u, v = NULL, type = archmList(), ...)
     
     # Random Variates:
-    R = archmCopulaSim(n = 1000, alpha = 1, type = "4")
+    R = archmCopulaSim(n = 100, alpha = 2, type = "4")
 
+    # Fit:
+    fit = archmCopulaFit(u = R, type = "4")
+    fit
+    
     # Fit:
     fit = archmCopulaFit(u = R[, 1], v = R[, 2], type = "4")
     fit
