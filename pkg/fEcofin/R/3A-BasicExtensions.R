@@ -163,7 +163,7 @@ sort <- function (x, decreasing = FALSE, ...)
 
 sort.default <- function(x, decreasing = FALSE, ...) {
     if (is.object(x))
-	x[order(x, decreasing = decreasing)]
+    x[order(x, decreasing = decreasing)]
     else base::sort(x, decreasing = decreasing, ...)
 }
 
@@ -198,7 +198,7 @@ function(x, ...)
     UseMethod("round")
 }
 
-round.default <- function(x, digits, ...) base::round(x, digits)
+round.default <- function(x, digits = 0, ...) base::round(x, digits)
 
 # ------------------------------------------------------------------------------
 
