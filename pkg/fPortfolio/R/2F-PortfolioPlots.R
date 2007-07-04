@@ -1135,7 +1135,7 @@ function(object, col = NULL, legend = TRUE)
     
     # Get Budgets:
     Lambda = getTailRisk(object@spec$spec)$lower
-    # ********************************
+    
     budgets = NA
     pos.budgets = +0.5 * (abs(budgets) + budgets)
     neg.budgets = -0.5 * (abs(budgets) - budgets)
