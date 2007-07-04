@@ -58,7 +58,7 @@
 
 \usage{
 portfolioSpec(model = list(type = c("MV", "CVaR"), estimator = c("mean", "cov"), 
-    tailRisk = NULL, params = list()), portfolio = list(weights = NULL, 
+    tailRisk = list(), params = list()), portfolio = list(weights = NULL, 
     targetReturn = NULL, targetRisk = NULL, targetAlpha = 0.05, riskFreeRate = 0, 
     nFrontierPoints = 50),solver = list(solver = c("quadprog", "Rdonlp2", 
     "lpSolve"), trace = FALSE))

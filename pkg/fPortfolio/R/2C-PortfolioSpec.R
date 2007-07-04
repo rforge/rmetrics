@@ -65,7 +65,7 @@ function(
 model = list(
     type = c("MV", "CVaR"), 
     estimator = c("mean", "cov"), 
-    tailRisk = NULL,
+    tailRisk = list(),
     params = list()),
 portfolio = list(
     weights = NULL, 
