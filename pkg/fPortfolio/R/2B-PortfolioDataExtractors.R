@@ -36,7 +36,7 @@
 #  getStatistics                 Extracts statistics slot
 #   getMu                         Extracs mean  mu from statistics
 #   getSigma                      Extracs covariance Sigma from statistics
-#  getTailrisk                   Extracts tail risk slot
+#  getTailRisk                   Extracts tail risk slot
 ################################################################################
 
 
@@ -50,7 +50,7 @@
     # statistics = list(
     #   mu,
     #   Sigma) 
-    # tailrisk = list()
+    # tailRisk = list()
     
     
 # ------------------------------------------------------------------------------
@@ -219,12 +219,12 @@ function(object)
 # ------------------------------------------------------------------------------
 
 
-getTailrisk.fPFOLIODATA =
+getTailRisk.fPFOLIODATA =
 function(object)
 {   # A function implemented by Rmetrics
 
     # Description:
-    #   Extracts the tailrisk from fPOLIODATA 
+    #   Extracts the tailRisk from fPOLIODATA 
     
     # Arguments:
     #   object - an object of S4 class fPFOLIODATA
@@ -232,7 +232,7 @@ function(object)
     # FUNCTION:
     
     # Get Statistics 
-    ans = object@tailrisk
+    ans = object@tailRisk
     
     # Return Value:
     ans  

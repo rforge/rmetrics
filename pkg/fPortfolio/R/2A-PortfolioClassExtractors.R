@@ -642,8 +642,8 @@ function (object)
     # FUNCTION:
     
     # Check if available:
-    Lambda = object@data$tailrisk
-    if (is.na(Lambda)) return(NA)
+    Lambda = object@spec$spec@model$tailRisk$lower
+    if (is.null(Lambda)) return(NA)
     
     # Tail Risk Budgets:
     weights = getWeights(object)

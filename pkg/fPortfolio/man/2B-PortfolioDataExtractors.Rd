@@ -11,7 +11,7 @@
 \alias{getMu.fPFOLIODATA}
 \alias{getSigma.fPFOLIODATA}
 
-\alias{getTailrisk.fPFOLIODATA}
+\alias{getTailRisk.fPFOLIODATA}
 
 
 \title{Portfolio Data Extractors}
@@ -34,7 +34,7 @@
     \code{getStatistics} \tab Extracts statistics slot, \cr
     \code{getMu} \tab Extracs mean  mu from statistics, \cr
     \code{getSigma} \tab Extracs covariance Sigma from statistics, \cr
-    \code{getTailrisk} \tab Extracts tail risk slot. }  
+    \code{getTailRisk} \tab Extracts tail risk slot. }  
     
 }
     
@@ -49,7 +49,7 @@
 \method{getMu}{fPFOLIODATA}(object)
 \method{getSigma}{fPFOLIODATA}(object)
 
-\method{getTailrisk}{fPFOLIODATA}(object)
+\method{getTailRisk}{fPFOLIODATA}(object)
 }
 
 

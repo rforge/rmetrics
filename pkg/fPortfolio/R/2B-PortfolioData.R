@@ -41,7 +41,7 @@ setClass("fPFOLIODATA",
     representation(
         data = "list",
         statistics = "list",
-        tailrisk = "list")  
+        tailRisk = "list")  
 )
 
 
@@ -71,13 +71,13 @@ function(data, spec = portfolioSpec())
     statistics = portfolioStatistics(data, spec)
     
     # Explore Tail Dependency:
-    tailrisk = list()
+    tailRisk = spec@model$tailRisk
      
     # Return Value:
     new("fPFOLIODATA", 
         data = list(series = data, nAssets = nAssets),
         statistics = statistics,
-        tailrisk = tailrisk)  
+        tailRisk = tailRisk)  
 }
 
 
