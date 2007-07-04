@@ -13,7 +13,7 @@
 \alias{getNFrontierPoints}
 \alias{getPortfolio}
 \alias{getParams}
-\alias{getRiskBudgets} 
+\alias{getCovRiskBudgets} 
 \alias{getRiskFreeRate} 
 \alias{getSeries}
 \alias{getSigma}
@@ -57,7 +57,7 @@ getNumberOfAssets(object)
 getNFrontierPoints(object)
 getPortfolio(object)
 getParams(object)
-getRiskBudgets(object)
+getCovRiskBudgets(object)
 getRiskFreeRate(object)
 getSeries(object)
 getSigma(object)
