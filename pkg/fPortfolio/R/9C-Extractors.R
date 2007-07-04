@@ -140,11 +140,11 @@ function(object)
 # ------------------------------------------------------------------------------
 
 
-getRiskBudgets = 
+getCovRiskBudgets = 
 function(object) 
 {   # A function implemented by Rmetrics
 
-    UseMethod("getRiskBudgets")
+    UseMethod("getCovRiskBudgets")
 }
 
 

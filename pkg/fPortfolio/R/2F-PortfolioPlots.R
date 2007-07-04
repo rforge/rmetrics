@@ -1038,7 +1038,7 @@ function(object, col = NULL, legend = TRUE)
     Type = getType(object)
     
     # Get Budgets:
-    budgets = getRiskBudgets(object)
+    budgets = getCovRiskBudgets(object)
     pos.budgets = +0.5 * (abs(budgets) + budgets)
     neg.budgets = -0.5 * (abs(budgets) - budgets)
     
@@ -1393,7 +1393,7 @@ function(object, pos = NULL, col = NULL, box = TRUE, legend = TRUE)
     }
 
     # Plot Circle:
-    riskBudgets = getRiskBudgets(object)
+    riskBudgets = getCovRiskBudgets(object)
     nRiskBudgets = length(riskBudgets)
     if(length(riskBudgets) != nRiskBudgets) 
         stop("Plot position is not specified")

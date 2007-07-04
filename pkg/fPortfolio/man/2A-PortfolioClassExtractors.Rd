@@ -26,7 +26,7 @@
 \alias{getStatus.fPORTFOLIO}
 
 \alias{getFrontier.fPORTFOLIO}
-\alias{getRiskBudgets.fPORTFOLIO}
+\alias{getCovRiskBudgets.fPORTFOLIO}
 \alias{getTailRiskBudgets.fPORTFOLIO}
 
 
@@ -63,7 +63,7 @@
     \code{getNFrontierPoints} \tab Extracts ..., \cr
     \code{getStatus} \tab Extracts ..., \cr
     \code{getFrontier} \tab Extracts ..., \cr
-    \code{getRiskBudgets} \tab Extracts ..., \cr
+    \code{getCovRiskBudgets} \tab Extracts ..., \cr
     \code{getTailRiskBudgets} \tab Extracts ... . }
     
 }
@@ -95,7 +95,7 @@
 
 \method{getFrontier}{fPORTFOLIO}(object, frontier = c("both", "lower", "upper"), 
     doplot = FALSE, \dots)
-\method{getRiskBudgets}{fPORTFOLIO}(object)
+\method{getCovRiskBudgets}{fPORTFOLIO}(object)
 \method{getTailRiskBudgets}{fPORTFOLIO}(object)
 }
 

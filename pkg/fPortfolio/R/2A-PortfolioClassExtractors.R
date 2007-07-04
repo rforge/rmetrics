@@ -29,10 +29,10 @@
 
 ################################################################################
 # FUNCTION:                     PORTFOLIO DATA EXTRACTORS:
-#  getData
-#   getSeries
-#   getStatistics
-#   getNumberOfAssets
+#  getData                       Extracts data slot from a 'fPORTFOLIO' object
+#   getSeries                    Extracts series from a 'fPORTFOLIO' object
+#   getStatistics                Extracts statistics from a 'fPORTFOLIO' object
+#   getNumberOfAssets            Extracts number of assets from a 'fPORTFOLIO' object
 #  getSpec                      PORTFOLIO SPEC EXTRACTORS:
 #   getType
 #   getEstimator
@@ -50,7 +50,7 @@
 #   getStatus
 # FUNCTION:                     GENERAL EXTRACTORS:
 #  getFrontier
-#  getRiskBudgets
+#  getCovRiskBudgets
 #  getTailRiskBudgets
 ################################################################################
 
@@ -75,7 +75,7 @@ function(object)
 {   # A function implemented by Rmetrics
 
     # Description:
-    #   Extracts the data slot from a 'fPORTFOLIO' object
+    #   Extracts data slot from a 'fPORTFOLIO' object
     
     # Arguments:
     #   object - an object of S4 class fPORTFOLIO as returned by the
@@ -99,7 +99,7 @@ function(object)
 {   # A function implemented by Rmetrics
 
     # Description:
-    #   Extracts the data slot from a 'fPORTFOLIO' object
+    #   Extracts series from a 'fPORTFOLIO' object
     
     # Arguments:
     #   object - an object of S4 class fPORTFOLIO as returned by the
@@ -123,7 +123,7 @@ function(object)
 {   # A function implemented by Rmetrics
 
     # Description:
-    #   Extracts the data slot from a 'fPORTFOLIO' object
+    #   Extracts statistics from a 'fPORTFOLIO' object
     
     # Arguments:
     #   object - an object of S4 class fPORTFOLIO as returned by the
@@ -147,7 +147,7 @@ function(object)
 {   # A function implemented by Rmetrics
 
     # Description:
-    #   Extracts the data slot from a 'fPORTFOLIO' object
+    #   Extracts number of assets from a 'fPORTFOLIO' object
     
     # Arguments:
     #   object - an object of S4 class fPORTFOLIO as returned by the
@@ -589,7 +589,7 @@ function(object, frontier = c("both", "lower", "upper"), doplot = FALSE, ...)
 # ------------------------------------------------------------------------------
 
 
-getRiskBudgets.fPORTFOLIO = 
+getCovRiskBudgets.fPORTFOLIO = 
 function (object) 
 {   # A function implemented by Rmetrics
 

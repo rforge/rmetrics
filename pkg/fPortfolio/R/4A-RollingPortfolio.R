@@ -413,9 +413,9 @@ trace = TRUE)
     colnames(Weights) = assets
     
     # Extract RiskBudgets:
-    RiskBudgets = getRiskBudgets(tg[[1]])
+    RiskBudgets = getCovRiskBudgets(tg[[1]])
     for (i in 2:length(tg)) {
-        riskBudgets = getRiskBudgets(tg[[i-1]])
+        riskBudgets = getCovRiskBudgets(tg[[i-1]])
         RiskBudgets = rbind(RiskBudgets, riskBudgets)      
     }
     rownames(RiskBudgets) = as.character(to)

@@ -378,7 +378,7 @@ function(object)
     
     # Covariance Risk Budgets:
     cat("\nRiskBudget(s):\n")
-    riskBudgets = round(getRiskBudgets(object), digits = 4)
+    riskBudgets = round(getCovRiskBudgets(object), digits = 4)
     if (length(riskBudgets) == 1) {
         cat(" ", riskBudgets, "\n")
     } else {
