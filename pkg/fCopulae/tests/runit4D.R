@@ -82,18 +82,27 @@ function()
     # Arguments:
     #   evCopulaFit(u, v = NULL, type = evList(), ...) 
 
-    # Fit:
+    # Random Variates:
     set.seed(4711)
     type = "gumbel"
-    R = evCopulaSim(500, param = 2, type = type)
-    evCopulaFit(u = R, type = type)
+    R = evCopulaSim(500, param = NULL, type = type)
+    Index =  which(is.na(R[,2]))
+    R = R[-Index, ] 
     
     # Fit:
-    evCopulaFit(u = R[, 1], v = R[, 2], type = type)
+    ### evCopulaFit(u = R, type = type)                                  # Check
+    
+    # Fit:
+    ### evCopulaFit(u = R[, 1], v = R[, 2], type = type)                 # Check
     
     # Return Value:
     return()    
 }
+
+
+    type = evList()[1]
+    R = evCopulaSim(500, param = NULL, type = type)
+    evCopulaFit(u = R, type = type)
 
  
 ################################################################################

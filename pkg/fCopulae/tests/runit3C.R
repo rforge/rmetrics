@@ -138,13 +138,12 @@ function()
         print(type)
         archmTailPlot(alpha = NULL, type = type, tail = "Upper")
     }
-    # CHECK 4, 8, 19
     
     # Upper Tail Coefficient Plot:
     for (type in archmList()) {
+        print(type)
         archmTailPlot(alpha = NULL, type = type, tail = "Lower")
     }
-    # CHECK 4, 8, 19
     
     # Return Value:
     return()    

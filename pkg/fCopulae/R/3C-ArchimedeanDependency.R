@@ -504,16 +504,15 @@ function(alpha = NULL, type = archmList(), tail = c("Upper", "Lower"))
     Title = Title[type]
     N = 1000; Points = 20 # don't change these values!
     u = (0:N)/N
-    SHOW = N+1
     
     # Plot Frame:
-    plot(c(0,1), c(0,1), type = "n", main = Title, xlab = "u", 
+    plot(c(0, 1), c(0, 1), type = "n", main = Title, xlab = "u", 
         ylab = paste(tail, "Tail Dependence"))
     
     # Iterate rho:
     B = 10
     lower = max(archmRange(type)[1], -B)
-    upper = min(archmRange(type)[2], B)
+    upper = min(archmRange(type)[2],  B)
     Alpha = seq(lower, upper, length = 5)
     for (alpha in Alpha) {
         # Compute Copula Tail dependence lambda:
@@ -524,26 +523,21 @@ function(alpha = NULL, type = archmList(), tail = c("Upper", "Lower"))
             lambdaTail = C.uu/u
         }
         # Add Parameter Labels:
-        text(x = 0.52, y = lambdaTail[floor(N/2)]+0.025, col = "red", cex = 0.7,
-            labels = as.character(round(alpha, 2)))
+        text(x = 0.52, y = lambdaTail[floor(N/2)]+0.025, col = "red", 
+            cex = 0.7, labels = as.character(round(alpha, 2)))
         # Add Lines:
         lines(u, lambdaTail, lty = 3, col = "black")     
         # Add Points to Curves: 
         if (tail == "Upper") {
-            M = min(SHOW, N)
-            Index = seq(1, M, by = Points)
+            Index = round(seq(1, N-1, length = Points)) 
             X = 1
         } else if (tail == "Lower") {
-            M = max(51, SHOW)
-            Index = rev(seq(N+1, M, by = -Points))
+            Index = round(seq(1, N-1, length = Points)) + 1
             X = 0
         }
-        points(u[Index], lambdaTail[Index], pch = 19, cex = 0.7)
-        # Add Tail Coefficient:
-        # points(x = X, y = lambda[1], pch = 19, col = "red")       
+        points(u[Index], lambdaTail[Index], col = "steelblue",
+            pch = 19, cex = 0.7) 
     }
-    
-    # points(1, 0, pch = 19, col = "red")
     abline(h = 0, lty = 3, col = "grey")
     abline(v = X, lty = 3, col = "grey")
     

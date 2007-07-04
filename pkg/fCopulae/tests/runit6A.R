@@ -60,6 +60,8 @@ function()
     # Arguments:
     #   pempiricalCopula(u, v, N = 10)
 
+    NA
+    
     # Return Value:
     return()    
 }
@@ -74,6 +76,8 @@ function()
     # Arguments:
     #   dempiricalCopula(u, v, N = 10) 
 
+    NA
+    
     # Return Value:
     return()    
 }

@@ -402,6 +402,8 @@ output = c("vector", "list") )
         C.uv = pfrechetCopula(u, v, type = "psp") 
     } else if (alpha == 0 & Type == 7) {
         C.uv = pfrechetCopula(u, v, type = "w")
+    } else if (alpha == 1 & Type == 7) {
+        C.uv = pfrechetCopula(u, v, type = "pi")
     } else if (alpha == 0 & Type == 9) {
         C.uv = pfrechetCopula(u, v, type = "pi")
     } else if (alpha == 0 & Type == 10) {
@@ -502,6 +504,8 @@ output = c("vector", "list") )
         C.uv = pfrechetCopula(u, v, type = "psp") 
     } else if (alpha == 0 & Type == 7) {
         C.uv = pfrechetCopula(u, v, type = "w")
+    } else if (alpha == 1 & Type == 7) {
+        C.uv = pfrechetCopula(u, v, type = "pi")
     } else if (alpha == 0 & Type == 9) {
         C.uv = pfrechetCopula(u, v, type = "pi")
     } else if (alpha == 0 & Type == 10) {
