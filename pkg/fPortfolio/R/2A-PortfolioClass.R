@@ -495,7 +495,7 @@ function(x, which = "ask", control = list(), ...)
         tangency.cex = 1.25,
         cml.cex = 1.25,
         equalWeights.cex = 1.25,
-        singleAsset.cex = 1,
+        singleAsset.cex = 1.25,
         twoAssets.cex = 0.01,
         monteCarlo.cex = 0.01,
         # Frontier Limits:
