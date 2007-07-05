@@ -47,10 +47,10 @@
 
 ################################################################################
 # UTILITY FUNCTIONS:
-#  ellipticalParam           Sets Default parameters for an elliptical copula
+#  ellipticalParam            Sets Default parameters for an elliptical copula
 #  ellipticalList             Returns list of implemented Elliptical copulae
-#  ellipticalRange           Returns the range of valid rho values
-#  ellipticalCheck           Checks if rho is in the valid range
+#  ellipticalRange            Returns the range of valid rho values
+#  ellipticalCheck            Checks if rho is in the valid range
 
 
 ellipticalList =
