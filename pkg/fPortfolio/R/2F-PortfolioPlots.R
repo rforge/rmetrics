@@ -44,12 +44,13 @@
 # FUNCTION:                    FRONTIER BAR PLOTS:                  
 #  weightsPlot                  Plots staggered weights
 #  attributesPlot               Plots weighted means
-#  riskBudgetsPlot              Plots weighted risks
-#  tailRiskPlot                 Plots tail risks
+#  covRiskBudgetsPlot           Plots covariance risk budgets
+#  tailRiskBudgetsPlot          Plots tail risk budgets
 # FUNCTION:                    PORTFOLIO PIE PLOTS:
 #  weightsPie                   Plots staggered weights
 #  attributesPie                Plots weighted means
-#  riskBudgetsPie               Plots weighted risks
+#  covRiskBudgetsPie            Plots covariance risk budgets
+#  tailRiskBudgetsPie           Plots tail risk budgets
 # FUNCTION:                    DESCRIPTION:
 #  covEllipsesPlot              Plots covariance ellipses
 ################################################################################
@@ -1018,7 +1019,7 @@ function(object, col = NULL, legend = TRUE)
 # ------------------------------------------------------------------------------
 
 
-riskBudgetsPlot =
+covRiskBudgetsPlot =
 function(object, col = NULL, legend = TRUE)
 {   # A function implemented by Rmetrics
 
@@ -1101,7 +1102,7 @@ function(object, col = NULL, legend = TRUE)
         side = 4, adj = 0, col = "grey", cex = 0.7)
     
     # Add Title:
-    mtext("Risk Budgets", adj = 0, line = 2.5, font = 2, cex = 0.8)
+    mtext("Cov Budgets", adj = 0, line = 2.5, font = 2, cex = 0.8)
     
     # Complete to draw box ...
     box()
@@ -1114,7 +1115,7 @@ function(object, col = NULL, legend = TRUE)
 # ------------------------------------------------------------------------------
 
 
-.tailRiskPlot =
+tailRiskBudgetsPlot =
 function(object, col = NULL, legend = TRUE)
 {   # A function implemented by Rmetrics
 
@@ -1134,9 +1135,8 @@ function(object, col = NULL, legend = TRUE)
     Type = getType(object)
     
     # Get Budgets:
-    Lambda = getTailRisk(object@spec$spec)$lower
-    
-    budgets = NA
+    budgets = getTailRiskBudgets(object)
+    budgets[is.na(budgets)] = 0
     pos.budgets = +0.5 * (abs(budgets) + budgets)
     neg.budgets = -0.5 * (abs(budgets) - budgets)
     
@@ -1199,7 +1199,7 @@ function(object, col = NULL, legend = TRUE)
         side = 4, adj = 0, col = "grey", cex = 0.7)
     
     # Add Title:
-    mtext("Risk Budgets", adj = 0, line = 2.5, font = 2, cex = 0.8)
+    mtext("Tail Budgets", adj = 0, line = 2.5, font = 2, cex = 0.8)
     
     # Complete to draw box ...
     box()
@@ -1369,7 +1369,7 @@ function(object, pos = NULL, col = NULL, box = TRUE, legend = TRUE)
 # ------------------------------------------------------------------------------
 
 
-riskBudgetsPie = 
+covRiskBudgetsPie = 
 function(object, pos = NULL, col = NULL, box = TRUE, legend = TRUE)
 {   # A function implemented by Rmetrics
 
@@ -1419,6 +1419,83 @@ function(object, pos = NULL, col = NULL, box = TRUE, legend = TRUE)
     
     # Add Title:
     title(main = "Cov Risk Budgets")
+    
+    # Add Info:
+    mtext(paste(getType(object), "|", getSolver(object)), 
+        side = 4, adj = 0, col = "grey", cex = 0.7)
+    
+    # Add Legend:
+    if (legend) {
+        # Add Legend:
+        legend("topleft", legend = legendAssets, bty = "n", cex = 0.8, 
+            fill = col)
+        
+        # Add Legend:
+        legendRiskBudgets = as.character(round(100*RiskBudgets, digits = 1))
+        legendRiskBudgets = paste(Sign[Index], legendRiskBudgets)      
+        legendRiskBudgets = paste(legendRiskBudgets, "%")
+        legend("topright", legend = legendRiskBudgets, bty = "n", cex = 0.8, 
+            fill = col)
+    }
+    
+    # Return Value:
+    invisible()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+tailRiskBudgetsPie = 
+function(object, pos = NULL, col = NULL, box = TRUE, legend = TRUE)
+{   # A function implemented by Rmetrics
+
+    # Description:
+    #   Plots a Pie Chart of Tail Risk Budgets
+        
+    # Arguments:
+    #   object - an object of class 'fPORTFOLIO'
+    #   col - a color palette, by default the rainbow palette
+    
+    # Example:
+    #   riskBudgetsPie(tangencyPortfolio(dutchPortfolioData(), portfolioSpec()))
+    #   title(main = "Tangency Portfolio Weights")
+    
+    # FUNCTION:
+    
+    # Extracting weights position, if specified
+    if(!is.null(pos)){
+        Object = object
+        object@portfolio$weights = getWeights(Object)[pos, ]
+    }
+
+    # Plot Circle:
+    riskBudgets = getTailRiskBudgets(object)
+    nRiskBudgets = length(riskBudgets)
+    if(length(riskBudgets) != nRiskBudgets) 
+        stop("Plot position is not specified")
+    Sign = rep("+", nRiskBudgets)
+    Sign[(1:nRiskBudgets)[riskBudgets < 0]] = "-"
+    
+    # Color Palette:
+    if (is.null(col)) col = rainbow(nRiskBudgets)
+    
+    # Pie Chart:
+    RiskBudgets = abs(riskBudgets)
+    Index = (1:nRiskBudgets)[RiskBudgets > 0]
+    col = col[Index]
+    names = names(RiskBudgets)
+    legendAssets = names[Index]
+    Labels = paste(names, Sign)
+    Labels = Labels[RiskBudgets > 0]
+    RiskBudgets = RiskBudgets[RiskBudgets > 0]
+    Radius = 0.8
+    if (length(RiskBudgets) > 10) Radius = 0.65
+    pie(RiskBudgets, labels = Labels, col = col, radius = Radius)
+    if (box) box()
+    
+    # Add Title:
+    title(main = "Tail Risk Budgets")
     
     # Add Info:
     mtext(paste(getType(object), "|", getSolver(object)), 

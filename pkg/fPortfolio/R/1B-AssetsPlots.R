@@ -684,9 +684,9 @@ function(x, labels = TRUE, method = c("pie", "shade"), ...)
     
     # Internal Function:
     .panel.both = function(x, y, ...) {
-        if (method == "pie") {
+        if (method[1] == "pie") {
             .panel.pie(x, y, ...)
-        } else if (method == "shade") {
+        } else if (method[1] == "shade") {
             .panel.shade(x, y, ...)
         }
         .panel.pts(x, y, ...) 
@@ -763,6 +763,7 @@ function(x, method = "euclidian", seed = NULL)
     Main = substitute(x)
     
     # Compute Distance Matrix:
+    Order = NULL
     if (class(x) == "dist") {
         DIST = x
     } else {
@@ -815,7 +816,7 @@ function(x, method = c(dist = "euclidian", clust = "complete"))
     # Plot Dendogram:
     plot(ans, xlab = "", main = substitute(x), sub = "")
     mtext(paste(
-        "Distance Method:", method[2], " | ",
+        "Distance Method:", method[1], " | ",
         "Clustering Method:", method[2]),
         side = 4, line = 0.1, adj = 0, col = "darkgrey", cex = 0.7)  
     box()
@@ -829,7 +830,7 @@ function(x, method = c(dist = "euclidian", clust = "complete"))
 
 
 .assetsStarPlot =
-function(x, method = c("segments", "stars"), keyOffset = 0, ...)
+function(x, method = c("segments", "stars"), keyOffset = c(0, 0), ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -868,7 +869,7 @@ function(x, method = c("segments", "stars"), keyOffset = 0, ...)
         len = 0.4, 
         xlim = c(1, NX+0.5), 
         ylim = c(0, NY+1), 
-        key.loc = c(NX + 1 + keyOffset, 1), 
+        key.loc = c(NX + 1, 1) + keyOffset, 
         draw.segments = draw.segments, ... )
     box()
     

@@ -5,11 +5,14 @@
 \alias{frontierPlot}
 
 \alias{weightsPlot}
-\alias{weightsPie}
 \alias{attributesPlot}
+\alias{covRiskBudgetsPlot}
+\alias{tailRiskBudgetsPlot}
+
+\alias{weightsPie}
 \alias{attributesPie}
-\alias{riskBudgetsPlot}
-\alias{riskBudgetsPie}
+\alias{covRiskBudgetsPie}
+\alias{tailRiskBudgetsPie}
 
 \alias{covEllipsesPlot}
 
@@ -29,11 +32,13 @@
     \tabular{ll}{
     \code{frontierPlot} \tab Plots efficient frontier, \cr
     \code{weightsPlot} \tab Plots staggered weights, \cr
-    \code{weightsPie} \tab Plots staggered weights, \cr
     \code{attributesPlot} \tab Plots weighted means, \cr
+    \code{covRiskBudgetsPlot} \tab  Plots covariance risk budgets, \cr
+    \code{tailRiskBudgetsPlot} \tab  Plots tail risk budgets, \cr  
+    \code{weightsPie} \tab Plots staggered weights, \cr
     \code{attributesPie} \tab Plots weighted means, \cr
-    \code{riskBudgetPlot} \tab  Plots weighted risks, \cr
-    \code{riskBudgetPie} \tab Plots weighted risks, \cr
+    \code{covRiskBudgetPie} \tab Plots weighted risks, \cr
+    \code{tailRiskBudgetPie} \tab Plots weighted risks, \cr
     \code{covEllipsesPlot} \tab Plots covariance ellipses. }
 
 }
@@ -44,11 +49,14 @@ frontierPlot(object, frontier = c("both", "lower", "upper"),
     col = c("black", "grey"), add = FALSE, \dots)
     
 weightsPlot(object, col = NULL, legend = TRUE)
-weightsPie(object, pos = NULL, col = NULL, box = TRUE, legend = TRUE)
 attributesPlot(object, col = NULL, legend = TRUE)
+covRiskBudgetsPlot(object, col = NULL, legend = TRUE)
+tailRiskBudgetsPlot(object, col = NULL, legend = TRUE)
+
+weightsPie(object, pos = NULL, col = NULL, box = TRUE, legend = TRUE)
 attributesPie(object, pos = NULL, col = NULL, box = TRUE, legend = TRUE)
-riskBudgetsPlot(object, col = NULL, legend = TRUE)
-riskBudgetsPie(object, pos = NULL, col = NULL, box = TRUE, legend = TRUE)
+covRiskBudgetsPie(object, pos = NULL, col = NULL, box = TRUE, legend = TRUE)
+tailRiskBudgetsPie(object, pos = NULL, col = NULL, box = TRUE, legend = TRUE)
 
 covEllipsesPlot(x = list(), \dots)
 }
