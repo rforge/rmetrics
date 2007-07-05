@@ -651,6 +651,7 @@ function (object)
     if (is.null(dim(weights))) {
         ans1 = as.vector(weights %*% Lambda %*% weights)
         ans2 = as.vector(weights * Lambda %*% weights)
+        ans1 = 1
         ans = round(ans2/ans1, digits = 4)
         names(ans) = names(weights)
     }
@@ -660,6 +661,7 @@ function (object)
         for (i in 1:(dim(weights)[1])) {
             ans1 = as.vector(weights[i, ] %*% Lambda %*% weights[i, ])
             ans2 = as.vector(weights[i, ] * Lambda %*% weights[i, ])
+            ans1 = 1
             ans = rbind(ans, ans2/ans1)
         }
         colnames(ans) = Names
