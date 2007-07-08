@@ -90,7 +90,7 @@ solver = list(
     # Compose Checklists:
     model.type = c("MV", "CVaR")
     model.estimator.mean = "mean"
-    model.estimator.cov = c("cov", "mcd", "shrink")
+    model.estimator.cov = c("cov", "mcd", "Mcd", "shrink")
     solver.solver = c("quadprog", "Rdonlp2", "lpSolve")
     solver.trace = FALSE
     

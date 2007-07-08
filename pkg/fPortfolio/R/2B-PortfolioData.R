@@ -145,6 +145,16 @@ function(data, spec = portfolioSpec())
     meanEstimator = spec@model$estimator[1]
     covEstimator = spec@model$estimator[2]
     
+    # LPM:
+    if(meanEstimator == "lpm" | covEstimator == "lpm") {
+        stopifnot(!is.null(spec@model$params$tau))
+        stopifnot(!is.null(spec@model$params$a))
+        estimate = assetsLPM(x, 
+            tau = spec@model$params$tau, a = spec@model$params$a)
+        mu = estimate$mu
+        Sigma = estimate$Sigma
+    }
+        
     # Robust Estimates:
     if (meanEstimator == "mcd" | covEstimator == "mcd") {
         # require(MASS)
@@ -156,18 +166,17 @@ function(data, spec = portfolioSpec())
         estimate = MASS::cov.mve(series)
         mu = estimate$center
         Sigma = estimate$cov
-    } else if(meanEstimator == "lpm" | covEstimator == "lpm") {
-        stopifnot(!is.null(spec@model$params$tau))
-        stopifnot(!is.null(spec@model$params$a))
-        estimate = assetsLPM(x, 
-            tau = spec@model$params$tau, a = spec@model$params$a)
-        mu = estimate$mu
-        Sigma = estimate$Sigma
+    } else if (meanEstimator == "Mcd" | covEstimator == "Mcd") {
+        # require(robustbase)
+        estimate = robustbase::covMcd(series)
+        mu = estimate$center
+        Sigma = estimate$cov
     } else if(meanEstimator == "shrink" | covEstimator == "shrink") {
         estimate = assetsMeanCov(series, method = "shrink")
         mu = estimate$mu
         Sigma = estimate$Sigma
     } 
+    
     # Classical Estimates:
     if (meanEstimator == "mean") {
         mu = apply(series, MARGIN = 2, FUN = mean)
