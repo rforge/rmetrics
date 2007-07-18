@@ -99,11 +99,6 @@ function()
     return()    
 }
 
-
-    type = evList()[1]
-    R = evCopulaSim(500, param = NULL, type = type)
-    evCopulaFit(u = R, type = type)
-
  
 ################################################################################
 
