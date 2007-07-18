@@ -413,8 +413,6 @@ frequency = "daily", save = FALSE, sep = ";", try = TRUE)
         # rowNames = paste(substring(x1, 1, 4), substring(x1, 6, 7), 
         #    substring(x1, 9, 10), sep = "")
         rowNames = substring(x1, 1, 10)
-        # 
-        dimnames(z) = list(rowNames, colNames)
         
         # Save download ?
         if (save) {
