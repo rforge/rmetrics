@@ -69,8 +69,8 @@ mvFit(x, method = c("snorm", "st"), fixed.df = NA, title = NULL,
     description = NULL, trace = FALSE, \dots) 
 
 \method{print}{fMV}(x, \dots)
-\method{plot}{fMV}(x, which = "ask", doplot = TRUE, \dots)
-\method{summary}{fMV}(object, which = "ask", \dots)
+\method{plot}{fMV}(x, which = "ask", \dots)
+\method{summary}{fMV}(object, which = "ask", doplot = TRUE, \dots)
 }
 
 
