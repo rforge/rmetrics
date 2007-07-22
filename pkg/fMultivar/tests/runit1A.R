@@ -74,6 +74,8 @@
 #  .tradeSignals             Computes trade signals from trading positions
 #  .tradeLengths             Computes trade length from trading signals
 #  .hitRate                  Computes hit rates from returns and positions
+# FUNCTION:                 DESCRIPTION:
+#  .emaSlider                EMA Slider
 ################################################################################
 # OK
 
@@ -489,6 +491,67 @@ function()
     
     # Compute Hit Rates:
     .hitRate(tradeReturns, tradePositions)
+    
+    # Return Value:
+    return()  
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.emaSlider =
+function()
+{
+    .emaSlider = 
+    function(x)
+    {   # A function implemented by Diethelm Wuertz
+    
+        # Description
+        #   Displays the selected technical indicator
+    
+        # FUNCTION:
+        
+        # Internal Function:
+        refresh.code = function(...)
+        {
+            # Sliders:
+            lambda1  = .sliderMenu(no = 1)
+            lambda2  = .sliderMenu(no = 2)
+            startup  = .sliderMenu(no = 3)
+            
+            # Compute Data:       
+            seriesPlot(x)
+            ema1 = emaTA(x, lambda1, startup)
+            N1 = ceiling(2/lambda1)-1
+            lines(ema1, col = "red")
+            ema2 = emaTA(x, lambda2, startup)  
+            N2 = ceiling(2/lambda2)-1
+            lines(ema2, col = "green")
+            mText = paste("EMA1 =", N1, "|", "EMA2 =", N2)
+            mtext(mText, side = 4, adj = 0, cex = 0.7, col = "grey")
+            
+            # Difference:
+            seriesPlot(ema2-ema1, type = "h")
+            lines(ema2-ema1, col = "red")
+            
+            # Reset Frame:
+            par(mfrow = c(2, 1), cex = 0.7)
+        }
+      
+        # Open Slider Menu:
+        N = min(10, dim(x)[1])
+        print(N)
+        .sliderMenu(refresh.code,
+           names =       c(  "lamda1", "lamda2", "startup" ),
+           minima =      c(   0.01,     0.01,     0        ),
+           maxima =      c(   0.99,     0.99,     N        ),
+           resolutions = c(   0.01,     0.01,     1        ),
+           starts =      c(   0.10,     0.25,     0        ))
+    }
+    
+    # Chart:
+    .emaSlider(tS)
     
     # Return Value:
     return()  

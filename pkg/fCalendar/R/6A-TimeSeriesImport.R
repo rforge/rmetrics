@@ -185,6 +185,7 @@ save = FALSE, colname = "VALUE", try = TRUE)
         z1 = gsub("color=white........", " ", x = z2)      
         z2 = gsub(">", " ", x = z1) 
         z1 = gsub("<", " ", x = z2) 
+        z1 = gsub("/", " ", x = z1) 
         
         # Next - Compose Matrix: 
         n.rows = length(z1)                         
@@ -302,7 +303,7 @@ swap = 20, try = TRUE)
         
         # Result:
         colnames(x)[1] <- "%Y-%m-%d"
-        rownames(x) = 1:n
+        ### rownames(x) = 1:n
         z = data.frame(x)
    
         # Save Download ?
@@ -313,7 +314,7 @@ swap = 20, try = TRUE)
                 row.names = FALSE, col.names = FALSE, sep = ";")
             # Data:
             write.table(z, file, quote = FALSE, append = TRUE, 
-                col.names = FALSE, sep = ";") 
+                col.names = FALSE, row.names = FALSE, sep = ";") 
             # Check:
             # read.table(file, header = TRUE, sep = ";")
         } else {
