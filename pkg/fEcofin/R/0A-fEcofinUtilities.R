@@ -42,7 +42,8 @@
 #  .contourPlot              Returns a contour plot in 2 dimensions
 #  .histStack                Returns a stacked histogram plot
 # FUNCTION:                 SLIDER MENU:
-#  .sliderMenu               Starts a slider menu
+#  .sliderMenu               Opens a teching demo slider menu
+#  .tdSliderMenu             Opens a teching demo slider and button menu
 # FUNCTION:                 SOME UTILITIES:
 #  .description              Sets default description string
 #  .unirootNA                Computes zero without error exit
@@ -58,6 +59,8 @@
 #  .plot                     Internal plot method
 #  .summary                  Internal summary method
 #  .predict                  Internal predict method
+# FUNCTION:                 DESCRIPTION:
+#  .distCheck                Checks consistency of distributions
 ################################################################################
 
 
@@ -481,6 +484,7 @@ function(x, y = NULL, space = 0, ylab = "frequency", ...)
 
 ################################################################################
 #  .sliderMenu           Starts a slider menu
+#  .tdSlider             Opens a teching demo slider menu
 
 
 .sliderMenu =
@@ -526,8 +530,8 @@ title = "Slider", no = 0, set.no.value = 0)
     for (i in seq(names)) {
         eval(parse(text = paste("assign(\"slider", i, "\",
             tclVar(starts[i]), env = slider.env)", sep = "")))
-        tkpack(fr<-tkframe(nt))
-        lab = tklabel(fr, text = names[i])
+        tkpack(fr<-tkframe(nt), anchor = "sw")
+        lab = tklabel(fr, text = names[i], anchor = "sw")
         sc = tkscale(fr, command = refresh.code, from = minima[i],
             to = maxima[i], showvalue = TRUE, resolution =
             resolutions[i], orient = "horiz")
@@ -536,7 +540,7 @@ title = "Slider", no = 0, set.no.value = 0)
         eval(parse(text = paste("tkconfigure(sc, variable = slider", i, ")",
             sep = "")), env = slider.env)
     }
-    tkpack(fr<-tkframe(nt))
+    tkpack(fr<-tkframe(nt), anchor = "sw")
 
     # Quit:
     quitButton = tkbutton(fr, text = "   Quit   ",
@@ -555,6 +559,164 @@ title = "Slider", no = 0, set.no.value = 0)
 
     # Compose:
     tkgrid(resetButton, quitButton, sticky = "sew")
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.tdSliderMenu = 
+function(sl.functions, names, minima, maxima, resolutions, starts,
+but.functions, but.names, no, set.no.value, obj.name, obj.value, 
+reset.function, title)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description 
+    #   Opens a teching demo slider menu
+    
+    # Notes:
+    #   Build on ideas and code from:
+    #   R Package: TeachingDemos
+    #   Title: Demonstrations for teaching and learning
+    #   Version: 1.5
+    #   Author: Greg Snow
+    #   Description: This package is a set of demonstration functions 
+    #       that can be used in a classroom to demonstrate statistical 
+    #       concepts, or on your own to better understand the concepts 
+    #       or the programming.
+    #   Maintainer: Greg Snow <greg.snow@intermountainmail.org>
+    #   License: Artistic
+    
+    # FUNCTION:
+    
+    # Setup:
+    if(!missing(no)) {
+        return(as.numeric(tclvalue(get(paste(".tdSlider", no, sep=""),
+            env = slider.env))))
+    }
+    if(!missing(set.no.value)){ 
+        try(eval(parse(text=paste("tclvalue(.tdSlider", set.no.value[1],")<-",
+            set.no.value[2], sep = "")), env = slider.env))
+        return(set.no.value[2]) 
+    }
+    if(!exists("slider.env")) {
+        slider.env <<- new.env()
+    }
+    if(!missing(obj.name)){
+        if(!missing(obj.value)) {
+            assign(obj.name, obj.value, env = slider.env) 
+        } else {
+            obj.value <- get(obj.name, env = slider.env)
+        }
+        return(obj.value)
+    }
+    if(missing(title)) {
+        title = "Control Widget"
+    }
+    
+    # GUI Settings:
+    require(tcltk)
+    nt <- tktoplevel() 
+    tkwm.title(nt, title)
+    tkwm.geometry(nt, "+0+0")
+
+    # Buttons:
+    tkpack(
+        f.but <- tkframe(nt), fill = "x")
+        
+    # Quit Button:
+    quitCMD = function() {
+        tkdestroy(nt)
+    } 
+    tkpack(
+        tkbutton(f.but, text = "Quit", command = quitCMD, anchor = "sw"), 
+        side = "right",
+        fill = "y")    
+        
+    # Reset Button:    
+    if(missing(reset.function)) {
+        reset.function <- function(...) print("relax")
+    }
+    if(!is.function(reset.function)) {
+        reset.function<-eval(parse(text = 
+            paste("function(...){",reset.function,"}")))
+    }
+    resetCMD = function() 
+    {
+        for(i in seq(names))
+            eval(parse(text = paste("tclvalue(.tdSlider",i,")<-",
+                starts[i], sep = "")),
+            env = slider.env)
+        reset.function() 
+    }
+    tkpack(
+        tkbutton(f.but, text = "Reset", command = resetCMD, anchor = "sw"),
+        side = "right",
+        fill = "y")   
+    if (missing(but.names)) {
+        but.names <- NULL
+    }    
+    for (i in seq(but.names)) {
+        but.fun <- 
+            if (length(but.functions) > 1) 
+                but.functions[[i]]
+            else 
+                but.functions  
+        if (!is.function(but.fun)) {
+            but.fun <- 
+                eval(parse(text = paste("function(...){", but.fun, "}")))
+        }    
+        tkpack(
+            tkbutton(f.but, text = but.names[i], command = but.fun, 
+                anchor = "nw"), 
+            # side = "right",
+            fill = "x"
+            )
+    }
+    
+    # Sliders: 
+    if(missing(names)) {
+        names <- NULL
+    }        
+    if(missing(sl.functions)) {
+        sl.functions <- function(...){}
+    }
+    for(i in seq(names)){
+        eval(parse(text = paste("assign('.tdSlider",i,"', 
+            tclVar(starts[i]), env = slider.env)", sep = "")))
+        tkpack(fr <- tkframe(nt)) 
+        lab <- tklabel(fr, 
+            text = names[i], 
+            anchor = "sw",
+            width = "35")
+        sc <- tkscale(fr, 
+            from = minima[i], 
+            to = maxima[i], 
+            showvalue = TRUE,
+            resolution = resolutions[i], 
+            orient = "horiz")
+        tkpack(lab, 
+            sc, 
+            anchor = "sw",
+            side = "right"); 
+        assign("sc", sc, env = slider.env)
+        
+        eval(parse(text=paste("tkconfigure(sc,variable=.tdSlider",i,")", 
+            sep="")), env = slider.env)
+        sl.fun <- 
+            if(length(sl.functions)>1) 
+                sl.functions[[i]] 
+            else 
+                sl.functions  
+        if(!is.function(sl.fun)) 
+            sl.fun<-eval(parse(text=paste("function(...){", sl.fun,"}")))
+            
+        tkconfigure(sc, command = sl.fun)
+    }
+    assign("slider.values.old", starts, env = slider.env)
+
+    # Return Value:
+    invisible(nt)
 }
 
 
@@ -1065,6 +1227,100 @@ function(object, ...)
 function(object, ...)
 {
     UseMethod(".predict")
+}
+
+
+################################################################################
+# FUNCTION:               DESCRIPTION:
+#  .distCheck              Checks consistency of distributions
+
+
+.distCheck = 
+function(fun = "norm", n = 1000, robust = TRUE, subdivisions = 100, ...)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Checks consistency of distributions
+    
+    # Arguments:
+    #   fun - name of distribution
+    #   ... - distributional parameters
+    
+    # Examples:
+    #   .distCheck("norm", mean = 1, sd = 1)
+    #   .distCheck("t", df = 4)
+    #   .distCheck("exp", rate = 2)
+    #   .distCheck("weibull", shape = 1)
+
+    # FUNCTION:
+    
+    # Distribution Functions:
+    cat("\nDistribution Check for:", fun, "\n ")
+    CALL = match.call()
+    cat("Call: ")
+    cat(paste(deparse(CALL), sep = "\n", collapse = "\n"), "\n", sep = "") 
+    dfun = match.fun(paste("d", fun, sep = ""))
+    pfun = match.fun(paste("p", fun, sep = ""))
+    qfun = match.fun(paste("q", fun, sep = ""))
+    rfun = match.fun(paste("r", fun, sep = ""))
+    
+    # Range:
+    xmin = qfun(p = 0.01, ...)
+    xmax = qfun(p = 0.99, ...)
+    
+    # Check 1 - Normalization:
+    NORM = integrate(dfun, lower = -Inf, upper = Inf, 
+        subdivisions = subdivisions, stop.on.error = FALSE, ...)
+    cat("\n1. Normalization Check:\n NORM ")
+    print(NORM)
+    normCheck = (abs(NORM[[1]]-1) < 0.01)
+    
+    # Check 2:
+    cat("\n2. [p-pfun(qfun(p))]^2 Check:\n ")
+    p = c(0.001, 0.01, 0.1, 0.5, 0.9, 0.99, 0.999)
+    P = pfun(qfun(p, ...), ...)
+    pP = round(rbind(p, P), 3)
+    print(pP)
+    RMSE = sd(p-P)
+    print(c(RMSE = RMSE))
+    rmseCheck = (abs(RMSE) < 0.0001)
+    
+    # Check 3:
+    cat("\n3. r(", n, ") Check:\n", sep = "")
+    r = rfun(n = n, ...)
+    if (!robust) {
+        SAMPLE.MEAN = mean(r)
+        SAMPLE.VAR = var(r)
+    } else {
+        robustSample = cov.mcd(r, quantile.used = floor(0.95*n))
+        SAMPLE.MEAN = robustSample$center
+        SAMPLE.VAR = robustSample$cov[1,1]
+    }
+    SAMPLE = data.frame(t(c(MEAN = SAMPLE.MEAN, "VAR" = SAMPLE.VAR)), 
+        row.names = "SAMPLE")
+    print(signif(SAMPLE, 3))
+    fun1 = function(x, ...) { x * dfun(x, ...) }
+    fun2 = function(x, M, ...) { x^2 * dfun(x, ...) }   
+    MEAN = integrate(fun1, lower = -Inf, upper = Inf, 
+        subdivisions = 5000, stop.on.error = FALSE,...)
+    cat("   X   ")
+    print(MEAN)
+    VAR = integrate(fun2, lower = -Inf, upper = Inf, 
+        subdivisions = 5000, stop.on.error = FALSE, ...)  
+    cat("   X^2 ")
+    print(VAR)
+    EXACT = data.frame(t(c(MEAN = MEAN[[1]], "VAR" = VAR[[1]] - MEAN[[1]]^2)),
+        row.names = "EXACT ")
+    print(signif(EXACT, 3))
+    meanvarCheck = (abs(SAMPLE.VAR-EXACT$VAR)/EXACT$VAR < 0.1)
+    cat("\n")
+    
+    # Done:
+    ans = list(
+        normCheck = normCheck, 
+        rmseCheck = rmseCheck, 
+        meanvarCheck = meanvarCheck)
+    unlist(ans)
 }
 
 
