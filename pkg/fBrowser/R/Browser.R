@@ -25,10 +25,56 @@
 # for the code accessed (or partly included) from contributed R-ports
 # and other sources
 #   see Rmetrics's copyright file 
-    
-    
+   
+
 ################################################################################
-# fBrowser / .gui
+# FUNCTION:
+#  fBrowser | .gui 
+#  .onInfo
+#  .onClassX
+#  .onObject
+#  .onClassObject
+#  .onSummary
+#  .onPlot
+#  .onRecover
+# FUNCTION:
+#  tkNewPopup
+#  tkAddPopupMenu
+#  tkSeparator
+#  tkCascadePopup   
+# FUNCTION:
+#  tkExecute
+#  tkEval
+#  tkSplit
+#  tkSaveAsX 
+#  tkSaveAsObject
+#  tkObjectToX
+# FUNCTION:
+#  tkTitle
+#  tkOutput
+#  tkDescription
+# FUNCTION:
+#  .tkGetSummary
+#  .tkGetParameters
+#  .tkGetClass
+#  .tkGetTime
+#  .tkGetFinCenters
+#  .tkGetDemoData
+#  .tkGetData
+#  .tkGetDataFrame
+################################################################################
+
+
+################################################################################
+# FUNCTION:
+#  fBrowser | .gui 
+#  .onInfo
+#  .onClassX
+#  .onObject
+#  .onClassObject
+#  .onSummary
+#  .onPlot
+#  .onRecover
 
 
 fBrowser = .gui =

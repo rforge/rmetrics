@@ -158,6 +158,7 @@ function()
         "tkSeparator"
     tkAddPopupMenu(fSeriesMenu, Label, subLabel, Command) 
     
+    if (FALSE) { ###
     # Add Menu:
     Label = "DATA: fSeries Time Series"
     subLabel = c(
@@ -183,6 +184,7 @@ function()
         ".fSeries.SeriesData.9",
         ".fSeries.SeriesData.10",)
     tkAddPopupMenu(fSeriesMenu, Label, subLabel, Command)
+    } ###
     
     # Add Menu:
     Label = "DATA: Portable Innovations"

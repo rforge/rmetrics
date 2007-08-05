@@ -55,6 +55,7 @@ function()
         ".fOptions.PlainVanilla.3")
     tkAddPopupMenu(fOptionsMenu, Label, subLabel, Command)
     
+    if (FALSE) { ###
     # Add Menu:
     Label = "Basic American Options"
     subLabel = c(
@@ -66,6 +67,7 @@ function()
         ".fOptions.BasicAmerican.2",
         ".fOptions.BasicAmerican.3",)
     tkAddPopupMenu(fOptionsMenu, Label, subLabel, Command)    
+    } ###
     
     # Add Menu:
     Label = "Binomial Tree Options"

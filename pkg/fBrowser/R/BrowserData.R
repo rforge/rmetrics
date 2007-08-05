@@ -28,7 +28,33 @@
 
 
 ################################################################################
-# Load Data
+# FUNCTION:
+#  .fData.nyseDaily
+#  .fData.dem2gbpDaily 
+#  .fData.bmwDaily
+#  .fData.ibmsp500Daily
+#  .fData.sp500Monthly
+#  .fData.spcDaily
+#  .fData.sp500IndexMonthly
+#  .fData.msftsp500Monthly
+#  .fData.randomDates
+#  .fData.randomTimes
+# FUNCTION:
+#  .fCalendar.HighFrequencyData.1
+################################################################################
+
+
+################################################################################
+# .fData.nyseDaily
+# .fData.dem2gbpDaily
+# .fData.bmwDaily
+# .fData.ibmsp500Daily
+# .fData.sp500Monthly
+# .fData.spcDaily
+# .fData.sp500IndexMonthly
+# .fData.msftsp500Monthly
+# .fData.randomDates
+# .fData.randomTimes
 
 
 .fData.nyseDaily =  
@@ -251,7 +277,8 @@ function()
 }
 
 
-# ##############################################################################
+################################################################################
+# .fCalendar.HighFrequencyData.1
 
 
 .fCalendar.HighFrequencyData.1 = 

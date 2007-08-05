@@ -43,6 +43,15 @@
 ################################################################################
 
 
+################################################################################                
+# .gevSlider
+# .gpdSlider
+# .unitrootSlider
+# .snormSlider
+# .sstdSlider
+# .sgedSlider
+
+
 .gevSlider =  
 function(GenerateRandomNumbers = FALSE)
 {   # A function implemented by Diethelm Wuertz
@@ -508,6 +517,10 @@ function(GenerateRandomNumbers = FALSE)
 
 
 ################################################################################
+# .heavisideSlider
+# .besselSlider
+# .kummerSlider
+# .whittakerSlider
 
 
 .heavisideSlider = 

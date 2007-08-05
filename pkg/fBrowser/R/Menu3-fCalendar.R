@@ -129,6 +129,7 @@ function()
         "tkSeparator"
     tkAddPopupMenu(fCalendarMenu, Label, subLabel, Command) 
     
+    if (FALSE) { ###
     # Add Menu:
     Label = "Compose and Modify a Time Series"     
     subLabel = c(
@@ -160,6 +161,7 @@ function()
         ".fCalendar.TimeSeriesClass.revSeries",
         ".fCalendar.TimeSeriesClass.applySeries")
     tkAddPopupMenu(fCalendarMenu, Label, subLabel, Command)    
+    } ###
     
     # Add Menu:
     Label = "_________________________________"

@@ -28,8 +28,28 @@
 
 
 ################################################################################
-# File Popup
-           
+# FUNCTION:                         FILE POPUP:
+#  .listActiveDataSet
+#  .listObjects
+#  .listTypeOfObjects
+#  .listRmetricsData
+#  .loadRmetricsData
+# FUNCTION:
+#  .menuInstallPackages
+#  .menuUpdatePackages
+#  .quitBrowser
+# FUNCTION:
+#  .openFile
+################################################################################
+
+
+################################################################################
+# .listActiveDataSet
+# .listObjects
+# .listTypeOfObjects
+# .listRmetricsData
+# .loadRmetricsData
+
     
 .listActiveDataSet =  
 function() 
@@ -98,6 +118,7 @@ function()
 
 # ------------------------------------------------------------------------------
 
+
 .loadRmetricsData =  
 function() 
 {   # A function implemented by Diethelm Wuertz
@@ -137,7 +158,11 @@ function()
         subject = "Data File" ) 
 }    
 
-# ------------------------------------------------------------------------------
+
+################################################################################
+# .menuInstallPackages
+# .menuUpdatePackages
+# .quitBrowser
    
 
 .menuInstallPackages =
@@ -180,6 +205,7 @@ function()
 
 
 ################################################################################
+# .openFile
 
         
 .openFile =  
