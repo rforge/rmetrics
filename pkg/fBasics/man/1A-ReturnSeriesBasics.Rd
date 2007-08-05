@@ -10,7 +10,6 @@
 \alias{qqnigPlot}
 
 \alias{basicStats}
-\alias{stdev}
 
 \title{Return Series Basics}
 
@@ -34,25 +33,24 @@
     Basic Statistic functions are:
     
     \tabular{ll}{
-    \code{basicStats} \tab computes an overview of basic statistical values. }
-    
-    For SPLUS Compatibility:
-    
-    \tabular{ll}{
-    \code{stdev} \tab Returns the standard deviation of a vector or matrix. }
+    \code{basicStats} \tab computes an overview of basic statistical values.}
+
     
 }
     
 
 \usage{ 
-seriesPlot(x, type = "l", col = "steelblue", main = x@units, rug = TRUE, \dots) 
-histPlot(x, labels = TRUE, main = x@units, add.fit = TRUE, \dots) 
-densityPlot(x, col = "steelblue", main = x@units, add.fit = TRUE, \dots)
+seriesPlot(x, type = "l", col = "steelblue", main = x@units, 
+    rug = TRUE, \dots) 
+histPlot(x, labels = TRUE, main = x@units, add.fit = TRUE, 
+    rug = TRUE, skipZeros = TRUE, \dots) 
+densityPlot(x, col = "steelblue", main = x@units, add.fit = TRUE, 
+    rug = TRUE, skipZeros = TRUE, \dots) 
 
-qqnormPlot(x, labels = TRUE, col = "steelblue", main = x@units, \dots) 
-qqnigPlot(x, labels = TRUE, col = "steelblue", main = x@units, \dots)
-
-stdev(x, na.rm = FALSE)
+qqnormPlot(x, labels = TRUE, col = "steelblue", main = x@units, 
+    rug = TRUE, \dots) 
+qqnigPlot(x, labels = TRUE, col = "steelblue", main = x@units, 
+    rug = TRUE, \dots)
 
 basicStats(x, ci = 0.95)
 }
@@ -75,18 +73,21 @@ basicStats(x, ci = 0.95)
     \item{labels}{
         a logical, should the plot be tailored?
         }
-        \item{na.rm}{
+    \item{na.rm}{
         a logical. Should missing values be removed?
         }
-   \item{rug}{
+    \item{rug}{
         a logical value by default TRUE. Should a rug representation 
         of the data added to the plot?
         }
-   \item{type}{
+    \item{skipZeros}{
+        a logical, should zeros be skipped in the return Series?
+        }
+    \item{type}{
         what type of plot should be drawn. For ossible types consult
         the \code{plot} help page.
         }
-   \item{x}{
+    \item{x}{
         an object of class \code{"timeSeries"} or a numeric vector.
         }
     \item{\dots}{

@@ -31,7 +31,6 @@
 # FUNCTION:             DESCRIPTION:
 #  acfPlot               Displays autocorrelations function plot
 #  pacfPlot              Displays partial autocorrelation function plot
-#  ccfPlot               Cross correlation function plot
 #  teffectPlot           Estimates and plots the Taylor effect
 #  lmacfPlot             Estimates and plots the long memory ACF
 #  lacfPlot              Plots lagged autocorrelations
@@ -88,9 +87,6 @@ function()
     
     # pacfPlot -
     pacfPlot(x = msft.ret)
-    
-    # ccfPlot -
-    ccfPlot(x = msft.ret, y = msft.vol)
     
     # teffectPlot -
     teffectPlot(x = msft.ret)
@@ -152,9 +148,6 @@ function()
     
     # pacfPlot -
     pacfPlot(x = msft.ret, labels = FALSE)
-    
-    # ccfPlot -
-    ccfPlot(x = msft.ret, y = msft.vol, labels = FALSE)
     
     # teffectPlot -
     teffectPlot(x = msft.ret, labels = FALSE)

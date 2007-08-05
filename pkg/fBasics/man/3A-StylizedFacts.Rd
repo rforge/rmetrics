@@ -4,7 +4,6 @@
 
 \alias{acfPlot}
 \alias{pacfPlot}
-\alias{ccfPlot}
 \alias{teffectPlot}
 \alias{lmacfPlot}
 \alias{lacfPlot}
@@ -21,9 +20,8 @@
     A collection and description of functions to 
     investigate and to plot several stylized facts 
     of economic and financial time series. This 
-    includes fat tails, autocorrelations, 
-    crosscorrelations, long memory behavior, 
-    and the Taylor effect.
+    includes fat tails, autocorrelations, long 
+    memory behavior, and the Taylor effect.
     \cr
 
     The functions to display stylized facts are:
@@ -31,7 +29,6 @@
     \tabular{ll}{
     \code{acfPlot} \tab autocorrelation function plot, \cr
     \code{pacfPlot} \tab partial autocorrelation function plot, \cr
-    \code{ccfPlot} \tab cross correlation function plot, \cr
     \code{lacfPlot} \tab lagged autocorrelation function plot, \cr
     \code{lmacfPlot} \tab long memory autocorrelation function plot, \cr
     \code{logpdfPlot} \tab logarithmic density plots, \cr
@@ -44,13 +41,11 @@
 
 \usage{
 acfPlot(x, labels = TRUE, \dots)
-pacfPlot(x, labels = TRUE, \dots)
-ccfPlot(x, y, lag.max = max(2, floor(10*log10(length(x)))), type = 
-    c("correlation", "covariance", "partial"), labels = TRUE, \dots) 
+pacfPlot(x, labels = TRUE, \dots) 
 
 lacfPlot(x, n = 12, lag.max = 20, labels = TRUE, \dots)
 lmacfPlot(x, lag.max = max(2, floor(10*log10(length(x)))), ci = 0.95, 
-    type = c("both", "acf", "hurst"), labels = TRUE, details = TRUE, \dots) 
+    type = c("both", "acf", "hurst"), labels = TRUE, trace = TRUE, \dots) 
     
 logpdfPlot(x, n = 50, type = c("lin-log", "log-log"), doplot = TRUE, 
     labels = TRUE, \dots)
@@ -58,7 +53,7 @@ logpdfPlot(x, n = 50, type = c("lin-log", "log-log"), doplot = TRUE,
 qqgaussPlot(x, span = 5, col = "steelblue", labels = TRUE, \dots)
 
 scalinglawPlot(x, span = ceiling(log(length(x)/252)/log(2)), doplot = TRUE, 
-    labels = TRUE, details = TRUE, \dots)
+    labels = TRUE, trace = TRUE, \dots)
 
     teffectPlot(x, deltas = seq(from = 0.2, to = 3, by = 0.2), lag.max = 10, 
     ymax = NA, standardize = TRUE, labels = TRUE, \dots)
@@ -82,9 +77,6 @@ scalinglawPlot(x, span = ceiling(log(length(x)/252)/log(2)), doplot = TRUE,
         }
     \item{doplot}{
         a logical value. Should a plot be displayed?
-        }
-    \item{details}{
-        a logical value. Should the results be printed?
         }
     \item{labels}{
         a logical value. Whether or not x- and y-axes should be automatically 
@@ -113,11 +105,10 @@ scalinglawPlot(x, span = ceiling(log(length(x)/252)/log(2)), doplot = TRUE,
         [teffectPlot] - \cr
         a logical value. Should the vector \code{x} be standardized?
         }
+    \item{trace}{
+        a logical value. Should the computation be traced?
+        }
     \item{type}{
-        [ccfPlot] - \cr
-        a character string, either \code{"correlation"}, \code{"covariance"}, 
-        or \code{"partial"} denoting which type of correlation should be 
-        plotted,\cr
         [lmacf] - \cr
         a character string, either \code{"both"}, \code{"acf"}, or 
         \code{"hurst"} denoting which type of plot should be generated: 
@@ -159,15 +150,14 @@ scalinglawPlot(x, span = ceiling(log(length(x)/252)/log(2)), doplot = TRUE,
     returns a Gaussian Quantile-Quantile Plot.
     \cr
       
-    \code{scalingPlot}
+    \code{scalinglawPlot}
     \cr
-    returns a list with the following components: \code{exponent},
-    the scaling exponent, a numeric value; \code{fit}, a list with 
-    the coefficients returned by \code{lsfit}, i.e. \code{intercept} 
-    and \code{X}.
+    returns a list with the following components: \code{Intercept},
+    \code{Exponent} the scaling exponent, and \code{InverseExponent}
+    its inverse value.
     \cr
     
-    \code{acfPlot}, \code{pacfplot}, \code{ccfPlot}
+    \code{acfPlot}, \code{pacfplot},
     \cr
     return an object of class \code{"acf"}, see \code{\link{acf}}.
     \cr
@@ -222,13 +212,11 @@ scalinglawPlot(x, span = ceiling(log(length(x)/252)/log(2)), doplot = TRUE,
     
     \bold{Autocorrelation Functions:}
     \cr\cr
-    The functions \code{acfPlot}, \code{pacfPlot}, and \code{ccfPlot}
-    plots and estimate autocorrelation, ACF, partial autocorrelation, 
-    PACF, and cross-covariance and cross-correlation functions, CCF. 
-    The functions allow to get a first view on correlations in and 
-    between time series. The functions are synonyme function 
-    calls for R's \code{acf}, \code{pacf}, and \code{ccf} from the 
-    the \code{ts} package.
+    The functions \code{acfPlot} and \code{pacfPlot}, plot and estimate 
+    autocorrelation and partial autocorrelation function. The functions 
+    allow to get a first view on correlations within the time series. 
+    The functions are synonyme function calls for R's \code{acf} and 
+    \code{pacf} from the the \code{ts} package.
     \cr
     
     \bold{Long Memory Autocorrelation Function:}
