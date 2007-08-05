@@ -20,6 +20,8 @@
 \alias{SWXLP}
 \alias{LPP2005REC}
 
+\alias{equityFunds}
+
 
 \title{fPortfolio Data Sets}
 

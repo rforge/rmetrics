@@ -53,6 +53,8 @@
 #  assetsTreePlot            Displays minimum spanning tree of assets
 #  assetsDendogramPlot       Displays hierarchical clustering dendogram
 #  .assetsStarPlot           Draws segment diagrams of a multivariate data set
+# FUNCTION:                 SPECIAL SEGMENT PLOTS:
+#  .assetsStatsBoxPlot       Produces segment star plot of box plot statistics
 ################################################################################
 
 
@@ -301,7 +303,7 @@ function(x, which = 1:dim(x)[2], ...)
 
 assetsHistPlot =
 function(x, method = c("cov", "mve", "mcd", "nnve", "shrink", "bagged"), 
-which = 1:dim(x)[2], xlim = NULL, ...) 
+which = 1:dim(x)[2], xlim = NULL, skipZeros = FALSE, ...) 
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -311,8 +313,8 @@ which = 1:dim(x)[2], xlim = NULL, ...)
     #   x - a timeSeries object or any other rectangular object
     #       which can be transformed by the function as. matrix
     #       into a numeric matrix.
-    #   method - the method to be used. 
-    #       "cov",
+    #   method - the method to be used for the Gaussian fit,
+    #       "cov", sample covariance estimator, 
     #       "mve", minimum volume ellipsoid,
     #       "mcd", minimum covariance determinant method,  
     #       "nnve", 
@@ -320,10 +322,14 @@ which = 1:dim(x)[2], xlim = NULL, ...)
     #       "bagged" .
     #   which - an integer value or vector specifying the number(s)
     #       of the assets which are selected to be plotted. 
+    #   xlim - common x Limits in Plot
+    #   skipZeros - should zeros be skipped in the histogram plot of the
+    #       return series ?
     
     # FUNCTION:
     
     # Settings:
+    Units = colnames(x)
     method = match.arg(method)
     x = as.matrix(x)
     
@@ -333,10 +339,12 @@ which = 1:dim(x)[2], xlim = NULL, ...)
     # Plot:
     for (i in which) {
         # Classical Histogram:
-        histPlot(x[, i], ...)
+        X = x[, i]
+        if (skipZeros) X = X[X != 0]
+        if (is.null(xlim)) xlim = range(X)
+        histPlot(X, main = Units[i], add.fit = TRUE, ...)
         
         # Robust Gaussian Fit:
-        xlim = range(x[, i])
         u = seq(xlim[1], xlim[2], length = 201)
         v = dnorm(u, mean = covRob$mu[i], sd = sqrt(covRob$Sigma[i, i]))
         abline(v = covRob$mu[i], col = "darkgreen")
@@ -814,7 +822,8 @@ function(x, method = c(dist = "euclidian", clust = "complete"))
     ans = hclust(DIST, method = method[2]) 
     
     # Plot Dendogram:
-    plot(ans, xlab = "", main = substitute(x), sub = "")
+    # main = substitute(x)
+    plot(ans, xlab = "", main = "", sub = "")
     mtext(paste(
         "Distance Method:", method[1], " | ",
         "Clustering Method:", method[2]),
@@ -876,6 +885,171 @@ function(x, method = c("segments", "stars"), keyOffset = c(0, 0), ...)
     # Return Value:
     invisible(ans)
 }
+
+
+################################################################################
+
+
+.assetsStatsBoxPlot = 
+function(x, 
+    oma = c(0,0,0,0), mar = c(4, 4, 4, 4), 
+    keyOffset = c(-0.65, -0.50), 
+    main = "Assets Statistics", 
+    title = "Assets", 
+    titlePosition = c(3, 3.65), 
+    description = "Box Plot Statistics", 
+    descriptionPosition = c(3, 3.50))
+{   # A function Implemented by Diethelm Wuertz
+
+    # Description:
+    #   Produces segment star plot of box plot statistics
+    
+    # Note:
+    #    The Default Settings are made for a portfolio with
+    #       7 to 9 assets.
+    
+    # FUNCTION:
+    
+    # Plot:
+    par(mfrow = c(1, 1), oma = oma, mar = mar) 
+    bp = assetsBoxPlot(x, doplot = FALSE)
+    .assetsStarPlot(bp$stats, keyOffset = keyOffset)                          
+    text(titlePosition[1], titlePosition[2], adj = 0, 
+        title, cex = 1.25)
+    text(descriptionPosition[1], descriptionPosition[2], adj = 0, 
+        description, cex = 1.1)
+    title(main = main) 
+    
+    # Return Value:
+    invisible()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.assetsBasicStatsPlot = 
+function(x, 
+    oma = c(0,0,0,0), mar = c(4, 4, 4, 4), 
+    keyOffset = c(-0.65, -0.50), 
+    main = "Assets Statistics", 
+    title = "Assets", 
+    titlePosition = c(3, 3.65), 
+    description = "Basic Returns Statistics", 
+    descriptionPosition = c(3, 3.50))
+{   # A function Implemented by Diethelm Wuertz
+
+    # Description:
+    #   Produces a segment star plot of basic return statistics
+    
+    # Note:
+    #    The Default Settings are made for a portfolio with
+    #       7 to 9 assets.
+    
+    # FUNCTION:
+    
+    # Plot:
+    par(mfrow = c(1, 1), oma = oma, mar = mar) 
+    X = basicStats(x)[-(1:2), ] 
+    .assetsStarPlot(X, keyOffset = keyOffset)                          
+    text(titlePosition[1], titlePosition[2], adj = 0, 
+        title, cex = 1.25)
+    text(descriptionPosition[1], descriptionPosition[2], adj = 0, 
+        description, cex = 1.1)
+    title(main = main) 
+    
+    # Return Value:
+    invisible()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.assetsMomentsPlot = 
+function(x, 
+    oma = c(0,0,0,0), mar = c(4, 4, 4, 4), 
+    keyOffset = c(-0.65, -0.50), 
+    main = "Assets Statistics", 
+    title = "Assets", 
+    titlePosition = c(3, 3.65), 
+    description = "Moments Statistics", 
+    descriptionPosition = c(3, 3.50))
+{   # A function Implemented by Diethelm Wuertz
+
+    # Description:
+    #   Produces a segment star plot of basic return statistics
+    
+    # Note:
+    #    The Default Settings are made for a portfolio with
+    #       7 to 9 assets.
+    
+    # FUNCTION:
+    
+    # Plot:
+    par(mfrow = c(1, 1), oma = oma, mar = mar) 
+    param = NULL
+    for (i in 1:dim(x)[2]) {
+        X = as.vector(seriesData(x[, i]))
+        fit = c(mean = mean(X), stdev = sd(X), 
+            skewness = skewness(X), kurtosis = kurtosis(X))
+        param = cbind(param, fit)
+    }
+    colnames(param) = colnames(x)
+    .assetsStarPlot(param, keyOffset = keyOffset)
+    text(titlePosition[1], titlePosition[2], adj = 0, 
+        title, cex = 1.25)
+    text(descriptionPosition[1], descriptionPosition[2], adj = 0, 
+        description, cex = 1.1)
+    title(main = main) 
+    
+    # Return Value:
+    invisible()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.assetsNIGFitPlot =
+function(x,
+    oma = c(0,0,0,0), mar = c(4, 4, 4, 4), 
+    keyOffset = c(-0.65, -0.50), 
+    main = "Assets Statistics", 
+    title = "Assets", 
+    titlePosition = c(3, 3.65), 
+    description = "NIG  Parameters", 
+    descriptionPosition = c(3, 3.50))
+{   # A function Implemented by Diethelm Wuertz
+
+    # Description:
+    #   Produces a segment star plot of basic return statistics
+    
+    # Note:
+    #    The Default Settings are made for a portfolio with
+    #       7 to 9 assets.
+    
+    # FUNCTION:
+    
+    # Plot: 
+    param = NULL
+    for (i in 1:dim(x)[2]) {
+        fit = nigFit(x[, i], doplot = FALSE)
+        param = cbind(param, fit@fit$estimate)
+    }
+    par(mfrow = c(1, 1), oma = oma, mar = mar)
+    colnames(param) = colnames(x)
+    rownames(param) = c("alpha", "beta", "delta", "mu")
+    .assetsStarPlot(param, keyOffset = keyOffset)
+    text(titlePosition[1], titlePosition[2], adj = 0, 
+        title, cex = 1.25)
+    text(descriptionPosition[1], descriptionPosition[2], adj = 0, 
+        description, cex = 1.1)
+        title(main = main) 
+    
+    # Return Value:
+    invisible()
+} 
 
 
 ################################################################################

@@ -52,9 +52,10 @@
 
 \usage{
 assetsPlot(x, title = NULL, \dots)
+
 assetsSeriesPlot(x, which = 1:dim(x)[2], \dots)
 assetsHistPlot(x, method = c("cov", "mve", "mcd", "nnve", "shrink", "bagged"), 
-    which = 1:dim(x)[2], xlim = NULL, \dots) 
+    which = 1:dim(x)[2], xlim = NULL, skipZeros = FALSE, \dots) 
 assetsDensityPlot(x, method = c("cov", "mve", "mcd", "nnve", "shrink", "bagged"), 
     which = 1:dim(x)[2], \dots)
 assetsQQNormPlot(x, which = 1:dim(x)[2], \dots)
@@ -103,6 +104,11 @@ assetsDendogramPlot(x, method = c(dist = "euclidian", clust = "complete"))
         [assetsTreePlot] - \cr
         an integer value setting the seed in the computation of the 
         sample ranks.
+        }
+    \item{skipZeros}{
+        [assetsHistPlot] - \cr
+        a logical,  should zeros be skipped in the histogram plot of the
+        return series ?
         }
     \item{title}{
         a character string, the plot title.
