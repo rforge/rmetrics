@@ -271,18 +271,20 @@ trace = TRUE, ...)
                 col = "steelblue", xlab = xlab1, ylab = ylab1, 
                 xlim = c(0, lag.max), ylim = c(-2*cl, max(y[-1])), ...)
             # abline(h = 0, lty = 3)
+            if (trace) {
+                cat ("\nLong Memory Autocorrelation Function:")
+                    paste (cat ("\n  Maximum Lag        "), cat(lag.max))
+                    paste (cat ("\n  Cut-Off ConfLevel  "), cat(cl))
+            }
+            ACF = acf(x.ret, lag.max = lag.max, plot = FALSE)$acf[,,1]
+            lines(x = 1:lag.max, y = ACF[-1], type = "l", col = "steelblue")
+            lines(x = c(-0.1, 1.1)*lag.max, y = c(+cl, +cl), lty = 3, 
+                col = "darkgrey")
+            lines(x = c(-0.1, 1.1)*lag.max, y = c(-cl, -cl), lty = 3, 
+                col = "darkgrey")
         }
-        if (trace) {
-            cat ("\nLong Memory Autocorrelation Function:")
-                paste (cat ("\n  Maximum Lag        "), cat(lag.max))
-                paste (cat ("\n  Cut-Off ConfLevel  "), cat(cl))
-        }
-        ACF = acf(x.ret, lag.max = lag.max, plot = FALSE)$acf[,,1]
-        lines(x = 1:lag.max, y = ACF[-1], type = "l", col = "steelblue")
-        lines(x = c(-0.1, 1.1)*lag.max, y = c(+cl, +cl), lty = 3, col = 'grey')
-        lines(x = c(-0.1, 1.1)*lag.max, y = c(-cl, -cl), lty = 3, col = 'grey')
         
-        # log-log:
+        # log-log Plot of ACF:
         x = x[y > cl]
         y = y[y > cl]
         # log-log:

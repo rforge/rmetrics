@@ -40,17 +40,16 @@
     
 
 \usage{ 
-seriesPlot(x, type = "l", col = "steelblue", main = x@units, 
+seriesPlot(x, labels = TRUE, type = "l", col = "steelblue", 
     rug = TRUE, \dots) 
-histPlot(x, labels = TRUE, main = x@units, add.fit = TRUE, 
-    rug = TRUE, skipZeros = TRUE, \dots) 
-densityPlot(x, col = "steelblue", main = x@units, add.fit = TRUE, 
+histPlot(x, labels = TRUE, add.fit = TRUE, rug = TRUE, 
+    skipZeros = TRUE, \dots) 
+densityPlot(x, labelss = TRUE, col = "steelblue", add.fit = TRUE, 
     rug = TRUE, skipZeros = TRUE, \dots) 
 
-qqnormPlot(x, labels = TRUE, col = "steelblue", main = x@units, 
-    rug = TRUE, \dots) 
-qqnigPlot(x, labels = TRUE, col = "steelblue", main = x@units, 
-    rug = TRUE, \dots)
+qqnormPlot(x, labels = TRUE, col = "steelblue", rug = TRUE, 
+    scale = TRUE, \dots) 
+qqnigPlot(x, labels = TRUE, col = "steelblue", rug = TRUE, \dots)
 
 basicStats(x, ci = 0.95)
 }
@@ -68,7 +67,7 @@ basicStats(x, ci = 0.95)
         }
     \item{col, main}{
         [*Plot] - \cr
-        plot parameters, color and main title.
+        plot parameter, color to be used.
         } 
     \item{labels}{
         a logical, should the plot be tailored?
@@ -79,6 +78,10 @@ basicStats(x, ci = 0.95)
     \item{rug}{
         a logical value by default TRUE. Should a rug representation 
         of the data added to the plot?
+        }
+    \item{scale}{
+        a logical value by default TRUE. Should the time series be 
+        scale for further investigation?
         }
     \item{skipZeros}{
         a logical, should zeros be skipped in the return Series?

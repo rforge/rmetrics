@@ -36,6 +36,9 @@
 #  densityPlot             Returns a tailored kernel density estimate plot
 #  qqnormPlot              Returns a tailored normal quantile-quantile plot
 #  qqnigPlot               Returns a tailored NIG quantile-quantile plot
+# FUNCTION:               BOX PLOTS:
+#  .boxPlot
+#  .boxPercentilePlot
 # FUNCTION:               GUI:
 #  .returnSeriesGUI        Opens a GUI for return series plots
 ################################################################################
@@ -143,7 +146,7 @@ function(x, ci = 0.95)
 
 
 seriesPlot = 
-function(x, type = "l", col = "steelblue", main = x@units, rug = TRUE, ...) 
+function(x, labels = TRUE, type = "l", col = "steelblue", rug = TRUE, ...) 
 {   # A function implemented by Diethelm Wuertz
     
     # Description:
@@ -160,17 +163,23 @@ function(x, type = "l", col = "steelblue", main = x@units, rug = TRUE, ...)
 
     # timeSeries:
     if (!is.timeSeries(x)) x = as.timeSeries(x)
-    units = x@units
+    Units = x@units
     DIM = dim(x@Data)[2]
     
     # Series Plots:
     for (i in 1:DIM) {
         X = x[, i]
-        plot(x = X, type = type, col = col, 
-            main = main[i], ylab = X@units, ...)
-        grid()
+        if (labels) {
+            plot(x = X, type = type, col = col, 
+                main = Units[i], ylab = "Values", xlab = "Time", ...)
+            grid()
+        } else {
+            plot(x = X, type = type, col = col, 
+                main = "", ylab = "", xlab = "", ...)   
+        }
         abline(h = 0, col = "grey")
         if (rug) rug(as.vector(X), ticksize = 0.01, side = 4)
+            
     }
          
     # Return Value:
@@ -182,7 +191,7 @@ function(x, type = "l", col = "steelblue", main = x@units, rug = TRUE, ...)
 
 
 histPlot = 
-function(x, labels = TRUE, main = x@units, add.fit = TRUE, rug = TRUE, 
+function(x, labels = TRUE, add.fit = TRUE, rug = TRUE, 
     skipZeros = TRUE, ...) 
 {   # A function implemented by Diethelm Wuertz
 
@@ -197,7 +206,7 @@ function(x, labels = TRUE, main = x@units, add.fit = TRUE, rug = TRUE,
     
     # timeSeries:
     if (!is.timeSeries(x)) x = as.timeSeries(x)
-    units = x@units
+    Units = x@units
     DIM = dim(x@Data)[2]
       
     # Construct output list:
@@ -219,7 +228,7 @@ function(x, labels = TRUE, main = x@units, add.fit = TRUE, rug = TRUE,
         if (labels) {
             xlim = c(qnorm(0.001, mean, sd), qnorm(0.999, mean, sd)) 
             result = hist(x = Values, col = "steelblue", 
-            border = "white", breaks = "FD", main = main[i], 
+            border = "white", breaks = "FD", main = Units[i], 
             xlim = xlim, probability = TRUE, ...) 
             box()
         } else {
@@ -245,7 +254,7 @@ function(x, labels = TRUE, main = x@units, add.fit = TRUE, rug = TRUE,
         abline(h = 0, col = "grey")
     
         # Add Rug Plot:
-        if(rug) rug(Values)
+        if(rug) rug(Values, ticksize = 0.01)
     }
     
     # Return Value:
@@ -257,8 +266,8 @@ function(x, labels = TRUE, main = x@units, add.fit = TRUE, rug = TRUE,
 
 
 densityPlot = 
-function(x, col = "steelblue", main = x@units, add.fit = TRUE, rug = TRUE,
-    skipZeros = TRUE, ...) 
+function(x, col = "steelblue", add.fit = TRUE, rug = TRUE, 
+skipZeros = TRUE, ...) 
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -290,7 +299,7 @@ function(x, col = "steelblue", main = x@units, add.fit = TRUE, rug = TRUE,
             xlim = c(qnorm(0.001, mean, sd), qnorm(0.999, mean, sd)) 
         Density = density(Values, ...)
         plot(x = Density, xlim = xlim, col = col, type = "l", 
-            lwd = 2, main = main[i], ...)  
+            lwd = 2, main = Units[i], ...)  
         ans[[i]] = Density  
         
         # Grid:
@@ -316,7 +325,7 @@ function(x, col = "steelblue", main = x@units, add.fit = TRUE, rug = TRUE,
         abline(h = 0, col = "grey")
         
         # Add Rug Plot:
-        if(rug) rug(Values)     
+        if(rug) rug(Values, ticksize = 0.01)     
     }
     
     # Return Value:
@@ -328,7 +337,7 @@ function(x, col = "steelblue", main = x@units, add.fit = TRUE, rug = TRUE,
 
 
 qqnormPlot = 
-function(x, labels = TRUE, col = "steelblue", main = x@units, rug = TRUE, ...) 
+function(x, labels = TRUE, col = "steelblue", rug = TRUE, scale = TRUE, ...) 
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -364,28 +373,29 @@ function(x, labels = TRUE, col = "steelblue", main = x@units, rug = TRUE, ...)
     # timeSeries:
     if (!is.timeSeries(x)) x = as.timeSeries(x)
     DIM = dim(x@Data)[2]
-    Main = main
+    Main = x@units
     
     # QQ Plots:
     X = x
     for (i in 1:DIM) {
-        x = X[, i]
-    
+
         # Settings:
         mydata = as.vector(X[, i])
         n = length(mydata) 
         p = (1:n)/(n+1)
-        x = (mydata-mean(mydata))/sqrt(var(mydata))
+        if (scale) x = (mydata-mean(mydata))/sqrt(var(mydata)) else x = mydata
         x = sort(x)
-        z = qnorm(p)
+        if (scale) z = z = qnorm(p) else z = qnorm(p, mean(x), sd(x))
      
         # Plot:
         if (labels) {
-            xlab = "Standard Normal Quantiles"
+            main = Main[i]
+            xlab = "Normal Quantiles"
             ylab = paste(Main[i], "Ordered Data")
-            main = paste(Main[i], "with 95% CI") 
             plot(z, x, pch = 19, col = col, 
                 xlab = xlab, ylab = ylab, main = main, ...)
+                Text = "Confidence Intervals: 95%"
+            mtext(Text, side = 4, adj = 0, col = "darkgrey", cex = 0.7)
             grid()  
         } else {
             plot(z, x, ...)
@@ -404,6 +414,8 @@ function(x, labels = TRUE, col = "steelblue", main = x@units, rug = TRUE, ...)
         i = pl < 1 & pl > 0
         upper = quantile(x, probs = pl[i])
         lines(z[i], upper, col = "brown")
+        abline (h = mean(x), col = "grey")
+        abline(v = mean(x), col = "grey")
     }
     
     # Return Value:
@@ -415,7 +427,7 @@ function(x, labels = TRUE, col = "steelblue", main = x@units, rug = TRUE, ...)
 
 
 qqnigPlot = 
-function (x, labels = TRUE, col = "steelblue", main = x@units, rug = TRUE, ...) 
+function (x, labels = TRUE, col = "steelblue", rug = TRUE, ...) 
 {   # A function implemented by Diethelm Wuertz
 
     # Example:
@@ -427,7 +439,7 @@ function (x, labels = TRUE, col = "steelblue", main = x@units, rug = TRUE, ...)
     if (!is.timeSeries(x)) {
         x = as.timeSeries(x)
         stopifnot(isUnivariate(x)) 
-        Main = main
+        Main = x@units
     }
     x = as.vector(x)
     
@@ -468,6 +480,115 @@ function (x, labels = TRUE, col = "steelblue", main = x@units, rug = TRUE, ...)
     # Return Value:
     invisible(ans)
 }
+
+
+################################################################################
+
+
+.boxPlot =
+function(x, col = "bisque", ...) 
+{   # A function Implemented by Diethelm Wuertz
+
+    # Description:
+    #   Producess standard box plots
+    
+    # Arguments:
+    #   x - a 'timeSeries' object or any other rectangular object
+    #       which cab be transformed by the function as.matrix into 
+    #       a numeric matrix.
+    
+    # Optional Arguments:
+    #   las, oma - allows to change style of X labels and creates 
+    #       required space below plot. 
+    #       Try: e.g. las = 3, and oma = c(9, 0, 0, 0)
+    
+    
+    # FUNCTION:
+    
+    # Settings:
+    x = as.matrix(x)
+    assetNames = colnames(x)
+    
+    # Plot:
+    ans = boxplot(as.data.frame(x), col = col, ...)
+    colnames(ans$stats) = ans$names
+    rownames(ans$stats) = c("lower whisker", "lower hinge", "median", 
+        "upper hinge", "upper whisker")
+    abline(h = 0 , lty = 3)
+    
+    # Return Value:
+    invisible(ans)
+}   
+
+
+# ------------------------------------------------------------------------------
+
+
+.boxPercentilePlot = 
+function(x, col = "bisque", ...) 
+{   # A modified copy from Hmisc
+
+    # Description:
+    #   Producess side-by-side box-percentile plots
+    
+    # Details:
+    #   Box-percentile plots are similiar to boxplots, except box-percentile 
+    #   plots supply more information about the univariate distributions. At 
+    #   any height the width of the irregular "box" is proportional to the 
+    #   percentile of that height, up to the 50th percentile, and above the 
+    #   50th percentile the width is proportional to 100 minus the percentile. 
+    #   Thus, the width at any given height is proportional to the percent of 
+    #   observations that are more extreme in that direction. As in boxplots, 
+    #   the median, 25th and 75th percentiles are marked with line segments 
+    #   across the box. [Source: Hmisc]
+    
+    # Arguments:
+    #   x - a 'timeSeries' object or any other rectangular object
+    #       which cab be transformed by the function as.matrix into 
+    #       a numeric matrix.
+    
+    # FUNCTION:
+    
+    # Settings:
+    x = as.matrix(x)
+    assetNames = colnames(x)
+    n = ncol(x)
+    all.x = list()
+    for (i in 1:n) all.x[[i]] = as.vector(x[, i])
+    centers = seq(from = 0, by = 1.2, length = n)
+    ymax = max(sapply(all.x, max, na.rm = TRUE))
+    ymin = min(sapply(all.x, min, na.rm = TRUE))
+    xmax = max(centers) + 0.5
+    xmin = -0.5
+    
+    # Plot:
+    plot(c(xmin, xmax), c(ymin, ymax), type = "n",  
+        xlab = "", ylab = "", xaxt = "n")
+    xpos = NULL
+    for (i in 1:n) {
+        plot.values = .bpxAssetsPlot(all.x[[i]], centers[i])
+        xpos = c(xpos, mean(plot.values$med.x))
+        x.p = c(plot.values$x1, plot.values$x2)
+        y.p = c(plot.values$y1, plot.values$y2)
+        polygon(x.p, y.p, col = col, border = "grey", ...)
+        lines(plot.values$x1, plot.values$y1)
+        lines(plot.values$x2, plot.values$y2)
+        lines(plot.values$q1.x, plot.values$q1.y)
+        lines(plot.values$q3.x, plot.values$q3.y)
+        lines(plot.values$med.x, plot.values$med.y) 
+    }
+    axis(side = 1, at = xpos, labels = assetNames)
+    abline(h = 0, lty = 3, col = "black")
+   
+    # Return Value:
+    invisible()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+# .bpxAssetsPlot
 
 
 ################################################################################
