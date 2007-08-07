@@ -26,6 +26,8 @@
 \alias{var}
 \alias{var.default}
 
+\alias{stdev}
+
 \alias{rownames<-}
 \alias{rownames<-.default}
 
@@ -72,6 +74,8 @@ sample.default(x, size, replace = FALSE, prob = NULL, \dots)
 % sort.default(x, decreasing = FALSE, ...)
 
 var.default(x, y = NULL, na.rm = FALSE, use)
+
+stdev(x, na.rm = FALSE)
 
 rownames(x) <- value
 colnames(x) <- value

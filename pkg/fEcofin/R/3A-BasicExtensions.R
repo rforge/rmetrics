@@ -43,6 +43,7 @@
 #  sort.default                  sort default method
 #  var                           var has become a generic function
 #  var.default                   var default method
+#  stdev                         for SPLUS compatibility
 # FUNCTION:                     ROW AND COLUMN NAMES:
 #  "rownames<-"                  rownames<- has become a generic function
 #  "rownames<-.default"          rownames<- default method
@@ -94,6 +95,7 @@ if (!exists("Sys.setenv"))
 #  sort.default                  sort default method
 #  var                           var has become a generic function
 #  var.default                   var default method
+#  stdev                         for SPLUS compatibility
 
 
 align =
@@ -278,6 +280,19 @@ function(x, y = NULL, na.rm = FALSE, use)
 }
 
 var.default <- stats::var
+
+
+# ------------------------------------------------------------------------------
+
+
+stdev =
+function(x, na.rm = FALSE)
+{   # A function implemented by Diethelm Wuertz
+
+    # FUNCTION:
+    
+    stats::sd(x = x, na.rm = na.rm)
+}
 
 
 ################################################################################

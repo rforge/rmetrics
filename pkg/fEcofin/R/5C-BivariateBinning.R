@@ -76,6 +76,7 @@ function(x, y = NULL, bins = 30)
         y = x[, 2]
         x = x[, 1]
     }
+    data = cbind(x, y)
     
     # Bins:
     n = bins
@@ -118,7 +119,8 @@ function(x, y = NULL, bins = 30)
     length(u) = length(v) = length(w) = L    
     length(ucm) = length(vcm) = L    
     
-    ans = list(x = u, y = v, z = w, xcm = ucm, ycm = vcm, bins = bins)
+    ans = list(x = u, y = v, z = w, xcm = ucm, ycm = vcm, bins = bins,
+        data = data)
     class(ans) = "squareBinning"
     
     # Return Value:
@@ -144,7 +146,7 @@ function(x, col = heat.colors(12), addPoints = TRUE, addRug = TRUE, ...)
     Y = x$y
     
     # Plot Center Points:
-    plot(X, Y, type = "n")
+    plot(X, Y, type = "n", ...)
       
     # Create Hexagon Coordinates:
     rx = min(diff(unique(sort(X))))/2
@@ -172,8 +174,8 @@ function(x, col = heat.colors(12), addPoints = TRUE, addRug = TRUE, ...)
     
     # Add rug:
     if (addRug) {
-        rug(X, ticksize = 0.01, side = 3)
-        rug(Y, ticksize = 0.01, side = 4)
+        rug(x$data[, 1], ticksize = 0.01, side = 3)
+        rug(x$data[, 2], ticksize = 0.01, side = 4)
     }
     
     
@@ -205,6 +207,7 @@ function(x, y = NULL, bins = 30)
         y = x[, 2]
         x = x[, 1]
     }
+    data = cbind(x, y)
     
     # Set Parameters:
     shape = 1
@@ -284,7 +287,8 @@ function(x, y = NULL, bins = 30)
     x = c3 * ifelse(i %% 2 == 0, j, j + 0.5) + xbnds[1]
     
     # Result:
-    ans = list(x = x, y = y, z = cnt, xcm = xcm, ycm = ycm, bins = bins)
+    ans = list(x = x, y = y, z = cnt, xcm = xcm, ycm = ycm, bins = bins,
+        data = data)
     class(ans) = "hexBinning"
     
     # Return Value:
@@ -313,7 +317,7 @@ function(x, col = heat.colors(12), addPoints = TRUE, addRug = TRUE, ...)
     Y = x$y
     
     # Plot Center Points:
-    plot(X, Y, type = "n")
+    plot(X, Y, type = "n", ...)
       
     # Create Hexagon Coordinates:
     rx = min(diff(unique(sort(X))))
@@ -342,8 +346,8 @@ function(x, col = heat.colors(12), addPoints = TRUE, addRug = TRUE, ...)
     
     # Add rug:
     if (addRug) {
-        rug(X, ticksize = 0.01, side = 3)
-        rug(Y, ticksize = 0.01, side = 4)
+        rug(x$data[, 1], ticksize = 0.01, side = 3)
+        rug(x$data[, 2], ticksize = 0.01, side = 4)
     }
     
     # Return Value:
