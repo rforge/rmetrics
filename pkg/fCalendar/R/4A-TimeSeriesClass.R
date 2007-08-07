@@ -686,7 +686,7 @@ function(x)
 
 
 ################################################################################
-#  show.timeSeries     Prints a 'timeSeries' object
+#  show.timeSeries      Prints a 'timeSeries' object
 #  .print.timeSeries    Prints a 'timeSeries' object
 #  summary.timeSeries   Summarizes a 'timeSeries' object
 #  plot.timeSeries      Plots a 'timeSeries' object

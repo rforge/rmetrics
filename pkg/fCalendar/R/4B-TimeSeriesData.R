@@ -40,6 +40,8 @@
 #  cumsum.timeSeries      Returns cumulated sums of 'timeSeries' objects
 #  scale.timeSeries       Centers and/or scales a 'timeSeries' object
 #  var.timeSeries         Returns variance for a 'timeSeries' object
+#  cov.timeSeries         Returns  covariance for a 'timeSeries' object
+#  cor.timeSeries         Returns correlations for a 'timeSeries' object
 # METHODS:               MATHEMATICAL OPERATIONS ON DATA:
 #  Ops.timeSeries         Returns group 'Ops' for a 'timeSeries' object
 #  abs.timeSeries         Returns abolute values of a 'timeSeries' object
@@ -196,7 +198,8 @@ function(x, from, to, FUN, ...)
 #  cumsum.timeSeries      Returns cumulated sums of 'timeSeries' objects
 #  scale.timeSeries       Centers and/or scales a 'timeSeries' object
 #  var.timeSeries         Returns variance for a 'timeSeries' object
-
+#  cov.timeSeries         Returns  covariance for a 'timeSeries' object
+#  cor.timeSeries         Returns correlations for a 'timeSeries' object
 
 .align.timeSeries = 
 function(x, method = c("before", "after", "interp"), startOn = "hours",
@@ -654,7 +657,7 @@ function(x, center = TRUE, scale = TRUE)
 
 
 var.timeSeries =
-function (x, y = NULL, na.rm = FALSE, use) 
+function(x, y = NULL, na.rm = FALSE, use) 
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -680,6 +683,56 @@ function (x, y = NULL, na.rm = FALSE, use)
     
     # Covariance:
     ans = .Internal(cov(x, y, na.method, FALSE))
+    
+    # Return Value:
+    ans
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+cov.timeSeries =
+function(x, y = NULL, use = "all.obs", 
+    method = c("pearson", "kendall", "spearman"))
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Returns variance/covariance for a 'timeSeries' object
+    
+    # FUNCTION:
+    
+    # Settings:
+    x = x@Data
+    if (!is.null(y)) y = y@Data
+    
+    # CoVariance:
+    ans = cov.default(x, y, use = use, method = method) 
+    
+    # Return Value:
+    ans
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+cor.timeSeries =
+function(x, y = NULL, use = "all.obs", 
+    method = c("pearson", "kendall", "spearman"))
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Returns correlations for a 'timeSeries' object
+    
+    # FUNCTION:
+    
+    # Settings:
+    x = x@Data
+    if (!is.null(y)) y = y@Data
+    
+    # CoVariance:
+    ans = cor.default(x, y, use = use, method = method) 
     
     # Return Value:
     ans

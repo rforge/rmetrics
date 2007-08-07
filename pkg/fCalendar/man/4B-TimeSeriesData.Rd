@@ -12,6 +12,8 @@
 \alias{scale.timeSeries}
 
 \alias{var.timeSeries}
+\alias{cov.timeSeries}
+\alias{cor.timeSeries}
 
 \alias{Ops.timeSeries}
 \alias{abs.timeSeries}
@@ -66,7 +68,9 @@
     Functions and methods for classifying 'timeSeries' objects:
     
     \tabular{ll}{
-    \code{var} \tab Computes Variance from a 'timeSeries' object.}
+    \code{var} \tab Computes Variance from a 'timeSeries' object, \cr
+    \code{cov} \tab Computes Covariance from a 'timeSeries' object, \cr
+    \code{cor} \tab Computes Correlations from a 'timeSeries' object.}
     
     Functions and methods for mathematical operations on 'timeSeries' objects:         
 
@@ -120,6 +124,10 @@ fapply(x, from, to, FUN, \dots)
 \method{cumsum}{timeSeries}(x)
 \method{scale}{timeSeries}(x, center = TRUE, scale = TRUE)
 \method{var}{timeSeries}(x, y = NULL, na.rm = FALSE, use)
+\method{cov}{timeSeries}(x, y = NULL, na.rm = FALSE, use = "all.obs", 
+    method = c("pearson", "kendall", "spearman"))
+\method{cor}{timeSeries}(x, y = NULL, na.rm = FALSE, use = "all.obs", 
+    method = c("pearson", "kendall", "spearman"))
 
 \method{Ops}{timeSeries}(e1, e2)
 \method{abs}{timeSeries}(x)
@@ -210,7 +218,11 @@ rownames<-.timeSeries(x) <- value
         just before the unmatched position, or \code{"after"}, use the 
         data from the row whose position is just after the unmatched 
         position, or \code{"linear"}, interpolate linearly between 
-        \code{"before"} and \code{"after"}. 
+        \code{"before"} and \code{"after"}. \cr
+        [cov][cor] - \cr
+        a character string indicating which correlation coefficient (or 
+        covariance) is to be computed. One of \code{"pearson"} (default), 
+        \code{"kendall"}, or \code{"spearman"}, can be abbreviated.
         }
     \item{n}{
         [head][tail] - \cr
