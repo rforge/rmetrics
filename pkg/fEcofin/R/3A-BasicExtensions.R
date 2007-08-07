@@ -43,6 +43,8 @@
 #  sort.default                  sort default method
 #  var                           var has become a generic function
 #  var.default                   var default method
+#  cov                           var has become a generic function
+#  cov.default                   var default method
 #  stdev                         for SPLUS compatibility
 # FUNCTION:                     ROW AND COLUMN NAMES:
 #  "rownames<-"                  rownames<- has become a generic function
@@ -280,6 +282,40 @@ function(x, y = NULL, na.rm = FALSE, use)
 }
 
 var.default <- stats::var
+
+
+# ------------------------------------------------------------------------------
+
+
+cov =
+function(x, y = NULL, use = "all.obs",
+    method = c("pearson", "kendall", "spearman"))
+{   # A function implemented by Diethelm Wuertz
+
+    # FUNCTION:
+
+    # Return Value:
+    UseMethod("cov")
+}
+
+cov.default <- stats::cov
+
+
+# ------------------------------------------------------------------------------
+
+
+cor =
+function(x, y = NULL, use = "all.obs",
+    method = c("pearson", "kendall", "spearman"))
+{   # A function implemented by Diethelm Wuertz
+
+    # FUNCTION:
+
+    # Return Value:
+    UseMethod("cor")
+}
+
+cor.default <- stats::cor
 
 
 # ------------------------------------------------------------------------------

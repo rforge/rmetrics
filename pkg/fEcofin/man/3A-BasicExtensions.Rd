@@ -26,6 +26,12 @@
 \alias{var}
 \alias{var.default}
 
+\alias{cov}
+\alias{cov.default}
+
+\alias{cor}
+\alias{cor.default}
+
 \alias{stdev}
 
 \alias{rownames<-}
@@ -74,7 +80,11 @@ sample.default(x, size, replace = FALSE, prob = NULL, \dots)
 % sort.default(x, decreasing = FALSE, ...)
 
 var.default(x, y = NULL, na.rm = FALSE, use)
-
+cov.default(x, y = NULL, use = "all.obs", 
+    method = c("pearson", "kendall", "spearman"))
+cor.default(x, y = NULL, use = "all.obs", 
+    method = c("pearson", "kendall", "spearman"))
+    
 stdev(x, na.rm = FALSE)
 
 rownames(x) <- value
@@ -112,7 +122,11 @@ as.matrix.mts(x, \dots)
     \item{method}{
         [align] - \cr
         a character string which specifies the alignment method to be used.
-        Choices are \code{"linear"} or \code{"constant"}.
+        Choices are \code{"linear"} or \code{"constant"}.\cr
+        [cov] - \cr
+        a character string indicating which correlation coefficient (or 
+        covariance) is to be computed. One of \code{"pearson" (default)}, 
+        \code{"kendall"}, or \code{"spearman"}, can be abbreviated.
         }
     \item{n}{
         [align] - \cr
@@ -210,7 +224,9 @@ as.matrix.mts(x, \dots)
         [align] - \cr
         y-coordinates of the points to be aligned.\cr
         [var] - \cr
-        additional arguments to the \code{var} function.
+        additional arguments to the \code{var} function.\cr
+        [cov] - \cr
+        additional arguments to the \code{cov} function.
         }
     \item{\dots}{
         arguments to be passed.
