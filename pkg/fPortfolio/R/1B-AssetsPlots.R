@@ -40,6 +40,8 @@
 #  assetsHistPlot            Displays histograms of individual assets
 #  assetsDensityPlot         Displays density plots of individual assets 
 #  assetsQQNormPlot          Displays normal qq-plots of individual assets
+# FUNCTION:                 BIVARIATE ASSETS PLOTS:
+#  .assetsHistPairsPlot      Displays bivariate Histogram Plot
 # FUNCTION:                 DENSITY BOX PLOTS:
 #  assetsBoxPlot             Producess standard box plots
 #  assetsBoxPercentilePlot   Producess side-by-side box-percentile plots
@@ -432,6 +434,44 @@ function(x, which = 1:dim(x)[2], ...)
         
     # Return Value:
     invisible()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+# assetsQQNIGPlot ...
+
+
+################################################################################
+
+
+.assetsHistPairsPlot = 
+function(x, bins = 30, method = c("square", "hex"), ...) 
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Displays bivariate Histogram Plot
+    
+    # FUNCTION:
+    
+    # Match Arguments:
+    method = match.arg(method)
+    
+    # Histogram Plot:
+    X = as.vector(x[, 1])
+    Y = as.vector(x[, 2])
+    if (method == "square") {
+        ans = squareBinning(x = X, y= Y, bins = bins)
+    } else if (method == "hex") {
+        ans = hexBinning(x = X, y = Y, bins = bins)
+    }
+    
+    # Plot:
+    plot(ans, ...)
+    
+    # Return Value:
+    invisible(ans)
 }
 
 
@@ -843,7 +883,7 @@ function(x, method = c("segments", "stars"), keyOffset = c(0, 0), ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Draws segment diagrams of a multivariate data set. 
+    #   Draws segment or star diagrams of a multivariate data set. 
     
     # Arguments
     #   x - a numeric feature matrix of assets. Each column represents
@@ -902,7 +942,7 @@ function(x,
 {   # A function Implemented by Diethelm Wuertz
 
     # Description:
-    #   Produces segment star plot of box plot statistics
+    #   Displays a segment plot of box plot statistics
     
     # Note:
     #    The Default Settings are made for a portfolio with
@@ -940,7 +980,7 @@ function(x,
 {   # A function Implemented by Diethelm Wuertz
 
     # Description:
-    #   Produces a segment star plot of basic return statistics
+    #   Displays a segment plot of basic return statistics
     
     # Note:
     #    The Default Settings are made for a portfolio with
@@ -978,7 +1018,7 @@ function(x,
 {   # A function Implemented by Diethelm Wuertz
 
     # Description:
-    #   Produces a segment star plot of basic return statistics
+    #   Displays a segment plot of distribution moments
     
     # Note:
     #    The Default Settings are made for a portfolio with
@@ -1023,7 +1063,7 @@ function(x,
 {   # A function Implemented by Diethelm Wuertz
 
     # Description:
-    #   Produces a segment star plot of basic return statistics
+    #   Displays a segment plot NIG parameter estimates
     
     # Note:
     #    The Default Settings are made for a portfolio with

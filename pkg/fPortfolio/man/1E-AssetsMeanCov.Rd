@@ -37,11 +37,18 @@ assetsMeanCov(x, method = c("cov", "mve", "mcd", "MCD", "OGK", "nnve",
   
 
     \item{alpha}{ 
-        ...
+        [assetsMeanCov] - \cr
+        when \code{methode="MCD"), a numeric parameter controlling the size 
+        of the subsets over which the determinant is minimized, i.e., 
+        \code{alpha*n} observations are used for computing the determinant. 
+        Allowed values are between 0.5 and 1 and the default is 0.5.
+        For details we refer to the help pages of the R-package
+        \code{robustbase}.
         }
     \item{baggedR}{
-        an integer value, the number of bootstrap replicates, by
-        default 100. This value is only used if \code{method="bagged"}.
+        [assetsMeanCov] - \cr
+        when \code{methode="bagged"), an integer value, the number of 
+        bootstrap replicates, by default 100.
         }
     \item{check}{
         a logical flag. Should the covariance matrix be tested to be
@@ -64,7 +71,17 @@ assetsMeanCov(x, method = c("cov", "mve", "mcd", "MCD", "OGK", "nnve",
         version of the covariance estimator.\cr
         }  
     \item{sigmamu}{ 
-        ...
+        [assetsMeanCov] - \cr
+        when \code{methode="OGK"), a function that computes univariate robust 
+        location and scale estimates. By default it should return a single 
+        numeric value containing the robust scale (standard deviation) 
+        estimate. When \code{mu.too} is true (the default), \code{sigmamu()} 
+        should return a numeric vector of length 2 containing robust location 
+        and scale estimates. See \code{scaleTau2}, \code{s_Qn}, \code{s_Sn}, 
+        \code{s_mad} or \code{s_IQR} for examples to be used as \code{sigmamu} 
+        argument. 
+        For details we refer to the help pages of the R-package
+        \code{robustbase}.
         }
     \item{x}{
         any rectangular time series object which can be converted by the 
@@ -72,7 +89,12 @@ assetsMeanCov(x, method = c("cov", "mve", "mcd", "MCD", "OGK", "nnve",
         object of class \code{timeSeries}, \code{data.frame}, or \code{mts}. 
         }   
     \item{\dots}{
-        optional arguments to be passed.
+        [assetsMeanCov] - \cr
+        optional arguments to be passed to the underlying estimators. 
+        For details we refer to the manual pages of the functions 
+        \code{cov.rob} for arguments \code{"mve"} and \code{mcd"} in 
+        the R package \code{MASS}, to the functions
+        \code{covMcd} and \code{covOGK} in the R package \code{robustbase}.
         }
         
 }

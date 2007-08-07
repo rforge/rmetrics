@@ -173,7 +173,7 @@ function()
     par(mfrow = c(1, 1), las = 2, oma = c(9, 0, 0, 0))
     assetsBoxPlot(VAN)
     title(main = "Van Hedge Fund Indices")
-    par(las = 1)
+    par(las = 1, oma = c(0, 0, 0, 0))
     
     # Return Value:
     return()

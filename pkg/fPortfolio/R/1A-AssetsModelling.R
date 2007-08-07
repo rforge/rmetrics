@@ -31,7 +31,7 @@
 # FUNCTION:             SIMULATION AND PARAMETER ESTIMATION:
 #  'fASSETS'             Class representation for "fASSETS" Objects
 #  assetsSim             Simulates a set of artificial assets
-#  assetsFit             Estimates the parameters of set of assets
+#  assetsFit             Estimates the parameters of a set of assets
 #   method = "norm"       assuming a multivariate Normal distribution
 #   method = "snorm"      assuming a multivariate skew-Normal distribution
 #   method = "st"         assuming a multivariate skew-Student-t 
