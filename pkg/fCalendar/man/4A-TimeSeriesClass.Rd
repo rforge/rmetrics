@@ -7,6 +7,7 @@
 
 \alias{readSeries}
 \alias{returnSeries}
+\alias{cumulatedSeries}
 \alias{durationSeries}
 \alias{midquoteSeries}
 \alias{spreadSeries}
@@ -29,7 +30,11 @@
 
 \alias{dummyDailySeries}
 \alias{alignDailySeries}
+\alias{rollDailySeries}
 \alias{ohlcDailyPlot}
+
+\alias{rollMonthlyWindows}
+\alias{rollMonthlySeries}
 
 
 \title{timeSeries Class}
@@ -52,6 +57,7 @@
     \code{timeSeries} \tab Creates a 'timeSeries' object from scratch, \cr
     \code{readSeries} \tab Reads a 'timeSeries' from a spreadsheet file, \cr
     \code{returnSeries} \tab Computes returns from a 'timeSeries' object, \cr
+    \code{cumulatedSeries} \tab Computes cumulated returns from a 'timeSeries', \cr
     \code{durationSeries} \tab Computes durations from a 'timeSeries' object, \cr
     \code{midquoteSeries} \tab Computes mid quotes from a 'timeSeries' object, \cr
     \code{spreadSeries} \tab Computes spreads from a 'timeSeries' object, \cr
@@ -78,8 +84,15 @@
     
     \tabular{ll}{   
     \code{dummyDailySeries} \tab Creates a dummy daily 'timeSeries' object, \cr        
-    \code{alignDailySeries} \tab Aligns a daily 'timeSeries' to new positions, \cr      
+    \code{alignDailySeries} \tab Aligns a daily 'timeSeries' to new positions, \cr 
+    \code{rollDailySeries} \tab Rolls daily a 'timeSeries' on a given period, \cr    
     \code{ohlcDailyPlot} \tab Plots open high low close bar chart. }
+    
+    Special Functions for Monthly 'timeSeries' objects:  
+    
+    \tabular{ll}{   
+    \code{rollMonthlyWindows} \tab Returns start and end dates for rolling time windows, \cr        
+    \code{rollMonthlySeries} \tab Rolls monthly a 'timeSeries' on a given period. }
     
 }
 
@@ -92,6 +105,7 @@ readSeries(file, header = TRUE, sep = ";", zone = myFinCenter,
     FinCenter = myFinCenter, title = NULL, documentation = NULL, \dots)
 returnSeries(x, type = c("continuous", "discrete"), percentage = FALSE, 
     trim = TRUE, digits = 4, units = NULL)  
+cumulatedSeries(x, index = 100)
 durationSeries(x, trim = FALSE, units = c("secs", "mins", "hours"))   
 midquoteSeries(x, which = c("Bid", "Ask"))
 spreadSeries(x, which = c("Bid", "Ask"), tickSize = NULL)
@@ -119,9 +133,13 @@ dummyDailySeries(x = rnorm(365), units = "X", zone = myFinCenter,
 alignDailySeries(x, method = c("before", "after", "interp", "fillNA"), 
     include.weekends = FALSE, units = NULL, zone = myFinCenter, 
     FinCenter = myFinCenter)
+rollDailySeries(x, period = "7d", FUN, \dots)
 ohlcDailyPlot(x, volume = TRUE, colOrder = c(1:5), units = 1e6, 
     xlab = c("Date", "Date"), ylab = c("Price", "Volume"), 
-    main = c("O-H-L-C", "Volume"), grid.nx = 7, grid.lty = "solid", \dots) 
+    main = c("O-H-L-C", "Volume"), grid.nx = 7, grid.lty = "solid", \dots)
+    
+rollMonthlyWindows(x, period = "12m", by = "1m") 
+rollMonthlySeries(x, period = "12", by = "1m", FUN, \dots)
 }
 
 
@@ -134,6 +152,10 @@ ohlcDailyPlot(x, volume = TRUE, colOrder = c(1:5), units = 1e6,
         \code{from} and \code{to} have ther default values \code{NULL}.
         In this case the function \code{FUN} will be applied to monthly or
         quarterly periods.
+        [rollMonthlySeries] - \cr
+        a character string specifying the rolling shift composed by the
+        length of the shift and its unit, e.g. \code{"3m"} represents 
+        quarterly shifts.
         }
     \item{charvec}{
         a character vector of dates and times.
@@ -159,6 +181,10 @@ ohlcDailyPlot(x, volume = TRUE, colOrder = c(1:5), units = 1e6,
         the filename of a spreadsheet data set from which
         to import the data records.
         }
+    \item{index}{
+        [cumulatedSeries] - \cr
+        a numeric value to which the cumulated return series will be indexed.
+        }
     \item{FinCenter}{
         a character with the the location of the  financial center named 
         as "continent/city". 
@@ -181,6 +207,7 @@ ohlcDailyPlot(x, volume = TRUE, colOrder = c(1:5), units = 1e6,
         starting date and end date, \code{to} must be after \code{from}.
         }
     \item{FUN}{ 
+        the function to be applied.\cr
         [applySeries] - \cr
         a function to use for aggregation, by default \code{colAvgs}.
         }
@@ -193,13 +220,6 @@ ohlcDailyPlot(x, volume = TRUE, colOrder = c(1:5), units = 1e6,
         [alignDailySeries] - \cr
         a logical value. Should weekend dates be included or removed
         from the series.
-        }
-    \item{tickSize}{
-        [spreadSeries] - \cr
-        the default is NULL to simply compute price changes in original 
-        price levels. If ticksize is supplied, the price changes will be 
-        divided by the value of \code{inTicksOfSize} to compute
-        price changes in ticks.
         }
     \item{main}{
         [ohlcDailyPlot] - \cr
@@ -223,6 +243,16 @@ ohlcDailyPlot(x, volume = TRUE, colOrder = c(1:5), units = 1e6,
         a logical value. By default \code{FALSE}, if \code{TRUE} the 
         series will be expressed in percentage changes.
         }
+    \item{period}{
+        [rollDailySeries] - \cr
+        a character string specifying the rollling period composed by the
+        length of the period and its unit, e.g. \code{"7d"} represents 
+        one week.\cr
+        [rollMonthlySeries] - \cr
+        a character string specifying the rollling period composed by the
+        length of the period and its unit, e.g. \code{"12m"} represents 
+        one year.
+        }
     \item{recordIDs}{
         a data frame which can be used for record identification
         information. \cr
@@ -234,6 +264,13 @@ ohlcDailyPlot(x, volume = TRUE, colOrder = c(1:5), units = 1e6,
         [readSeries] - \cr
         the field seperator used in the spreadsheet file to separate 
         columns.
+        }
+    \item{tickSize}{
+        [spreadSeries] - \cr
+        the default is NULL to simply compute price changes in original 
+        price levels. If ticksize is supplied, the price changes will be 
+        divided by the value of \code{inTicksOfSize} to compute
+        price changes in ticks.
         }
     \item{title}{
         an optional title string, if not specified the inputs data 

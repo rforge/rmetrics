@@ -201,6 +201,7 @@ function(x, from, to, FUN, ...)
 #  cov.timeSeries         Returns  covariance for a 'timeSeries' object
 #  cor.timeSeries         Returns correlations for a 'timeSeries' object
 
+
 .align.timeSeries = 
 function(x, method = c("before", "after", "interp"), startOn = "hours",
 by = "30 m")
@@ -827,7 +828,7 @@ function(x)
     #   Returns absolute values of a 'timeSeries' object
     
     # Arguments:
-    #   x - a 'timeSeries' object.
+    #   x - an uni- or multivariate return series of class 'timeSeries'. 
 
     # FUNCTION:
     
@@ -850,7 +851,7 @@ function(x)
     #   Returns logarithmic values of a 'timeSeries' object
     
     # Arguments:
-    #   x - a 'timeSeries' object.
+    #   x - an uni- or multivariate return series of class 'timeSeries'. 
   
     # FUNCTION:
     
@@ -873,7 +874,7 @@ function(x)
     #   Returns exponential values of a 'timeSeries' object
     
     # Arguments:
-    #   x - a 'timeSeries' object.
+    #   x - an uni- or multivariate return series of class 'timeSeries'. 
 
     # FUNCTION:
     
@@ -896,7 +897,7 @@ function(x, base = exp(1))
     #   Returns logarithmic values of a 'timeSeries' object
     
     # Arguments:
-    #   x - a 'timeSeries' object.
+    #   x - an uni- or multivariate return series of class 'timeSeries'. 
  
     # FUNCTION:
     
@@ -918,6 +919,9 @@ function(x)
     # Description:
     #   Returns the signs of a 'timeSeries' object
   
+    # Arguments:
+    #   x - an uni- or multivariate return series of class 'timeSeries'. 
+    
     # FUNCTION:
     
     # Which sign ?
@@ -937,8 +941,7 @@ function(x, probs = 0.95, ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Arguments:
-    #   x - an object of class 'timeSeries'. The quantiles will be 
-    #       computed for the selected column.
+    #   x - an uni- or multivariate return series of class 'timeSeries'.
     #   probs - a numeric value or numeric vector with probabilities.
     #   column - the selected column    
     
@@ -948,12 +951,11 @@ function(x, probs = 0.95, ...)
     # FUNCTION:
     
     # Take the appropriate column:
-    if (dim(x)[[2]] > 1) stop("x must be an univariate time series")
-    x = as.vector(x[, 1])
-
-    # Compute Quantiles:
-    ans = quantile(x, probs, ...)
-    
+    na.rm = TRUE
+    X = as.matrix(x)
+    ans = apply(if (na.rm) na.omit(X) else X, 2, quantile, probs = probs)
+ 
+  
     # Return Value:
     ans
 }

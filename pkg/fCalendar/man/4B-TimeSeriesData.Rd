@@ -124,9 +124,9 @@ fapply(x, from, to, FUN, \dots)
 \method{cumsum}{timeSeries}(x)
 \method{scale}{timeSeries}(x, center = TRUE, scale = TRUE)
 \method{var}{timeSeries}(x, y = NULL, na.rm = FALSE, use)
-\method{cov}{timeSeries}(x, y = NULL, na.rm = FALSE, use = "all.obs", 
+\method{cov}{timeSeries}(x, y = NULL, use = "all.obs", 
     method = c("pearson", "kendall", "spearman"))
-\method{cor}{timeSeries}(x, y = NULL, na.rm = FALSE, use = "all.obs", 
+\method{cor}{timeSeries}(x, y = NULL, use = "all.obs", 
     method = c("pearson", "kendall", "spearman"))
 
 \method{Ops}{timeSeries}(e1, e2)

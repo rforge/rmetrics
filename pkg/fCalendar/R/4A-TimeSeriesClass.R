@@ -32,7 +32,8 @@
 #  'timeSeries'         S4 Class definition for a 'timeSeries' object
 #  timeSeries           Creates a 'timeSeries' object from scratch
 #  readSeries           Reads from a spreadsheet and creates a 'timeSeries'
-#  returnSeries         Computes returns from a 'timeSeries' object  
+#  returnSeries         Computes returns from a 'timeSeries' object
+#  cumulatedSeries      Computes cumulated returns from a 'timeSeries' object  
 #  durationSeries       Computes durations from a 'timeSeries' object
 #  midquoteSeries       Computes mid quotes from a 'timeSeries' object
 #  spreadSeries         Computes spreads from a 'timeSeries' object
@@ -52,7 +53,11 @@
 # FUNCTION:            FOR DAILY OPERATIONS:
 #  dummyDailySeries     Creates a dummy daily 'timeSeries' object
 #  alignDailySeries     Aligns a 'timeSeries' object to new positions 
-#  ohlcDailyPlot        Plots open–high–low–close bar chart    
+#  rollDailySeries      Rolls daily a 'timeSeries' on a given period 
+#  ohlcDailyPlot        Plots open–high–low–close bar chart   
+# FUNCTION:            FOR MONTHLY OPERATIONS:
+#  rollMonthlyWindows   Returns start and end dates for rolling time windows
+#  rollMonthlySeries    Rolls Monthly a 'timeSeries' on a given period 
 # FUNCTION:            DESCRIPTION:
 #  .modelSeries         Models a timeSeries object to use formulas
 ################################################################################
@@ -348,6 +353,30 @@ trim = TRUE, digits = 4, units = NULL)
     ans
 }
 
+
+# ------------------------------------------------------------------------------
+
+
+cumulatedSeries = 
+function(x, index = 100) 
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Computes durations from a financial price series
+    
+    # Arguments:    
+    #   x - a univariate or multivariate 'timeSeries' object.
+    #   index - a numeric value to which the cumulated return 
+    #       series will be indexed.
+    
+    # FUNCTION:
+    
+    # Cumulated Series:
+    ans = index * exp(colCumsums(x))
+    
+    # Return Values:
+    ans
+}
 
 # ------------------------------------------------------------------------------
 
@@ -875,6 +904,7 @@ function(x, ...)
 ################################################################################
 #  dummyDailySeries     Creates a dummy daily 'timeSeries' object
 #  alignDailySeries     Aligns a 'timeSeries' object to new positions 
+#  rollDailySeries      Rolls daily a 'timeSeries' on a given period
 #  ohlcDailyPlot        Plots open–high–low–close bar chart 
 
 
@@ -1040,6 +1070,49 @@ FinCenter = myFinCenter)
 # ------------------------------------------------------------------------------
 
 
+rollDailySeries = 
+    function(x, period = "7d", FUN, ...) 
+    {   # A function implemented by Diethelm Wuertz
+    
+        # Description:
+        #   Rolls daily a 'timeSeries' on a given period
+        
+        # Arguments:
+        #   x - an univariate "timeSeries" object or a numeric vector.
+        #   n - an integer specifying the number of periods or 
+        #       terms to use in each rolling/moving sample.
+        #   trim - a logical flag: if TRUE, the first n-1 missing values in 
+        #       the returned object will be removed; if FALSE, they will 
+        #       be saved in the returned object. The default is TRUE.
+    
+        #   FUN - the rolling function, arguments to this function can be
+        #       passed through the \code{\dots} argument.
+        
+        # FUNCTION:
+        
+        # Fix missing matrix method for quantile(), still to do ...
+        quantile.matrix <<- quantile.timeSeries
+        
+        # Settings:
+        periodLength = as.numeric(substr(period, 1, nchar(period) - 1))
+        periodUnit = substr(period, nchar(period), nchar(period))
+        N = nrow(x)
+        Start = start(x) + (periodLength-1)*24*3600 
+        Positions = seriesPositions(x)
+        to = Positions[Positions > Start]
+        from = to - periodLength*24*3600 
+        
+        # Apply Function:
+        ans = applySeries(x = x, from = from, to = to, FUN = FUN, ...)
+        
+        # Return Value:
+        ans
+    }
+
+
+# ------------------------------------------------------------------------------
+
+
 ohlcDailyPlot =
 function(x, volume = TRUE, colOrder = c(1:5), units = 1e6, xlab = 
 c("Date", "Date"), ylab = c("Price", "Volume"), main = c("O-H-L-C", "Volume"), 
@@ -1138,6 +1211,91 @@ function (x, xlim = NULL, ylim = NULL, xlab = "Time", ylab, col = par("col"),
     # Return Value:
     invisible()
 } 
+
+
+################################################################################
+# FUNCTION:            FOR MONTHLY OPERATIONS:
+#  rollMonthlyWindows   Returns start and end dates for rolling time windows
+#  rollMonthlySeries    Rolls monthly a 'timeSeries' on a given period
+
+
+rollMonthlyWindows = 
+function(x, period = "12m", by = "1m")
+{   # A function implemented by Rmetrics
+
+    # Description:
+    #   Returns start and end dates for rolling time windows
+    
+    # Arguments:
+    #   x - a 'timeSerie's object of asset returns
+    #   period - a character string denoting the length of the rolling
+    #       window, e.g. "24m" means 24 months
+    #   by - a character string denoting the shift of the rolling window,
+    #       e.g. "3m" means one quarter
+    
+    # FUNCTION:
+    
+    # Get Window Parameter:
+    periodLength = as.numeric(substr(period, 1, nchar(period)-1))
+    periodUnit = substr(period, nchar(period), nchar(period))
+    byLength = as.numeric(substr(by, 1, nchar(by)-1))
+    byUnit = substr(by, nchar(by), nchar(by))
+    stopifnot(periodUnit == "m")
+    stopifnot(byUnit == "m")
+    
+    # Get Window Parameter:
+    periodLength = as.numeric(substr(period, 1, nchar(period)-1))
+    periodUnit = substr(period, nchar(period), nchar(period))
+    byLength = as.numeric(substr(by, 1, nchar(by)-1))
+    byUnit = substr(by, nchar(by), nchar(by))
+    stopifnot(periodUnit == "m")
+    stopifnot(byUnit == "m")
+    
+    # Make Windows - We expect monthly data records ...
+    positions = seriesPositions(x)
+    Positions = unique(timeFirstDayInMonth(positions))
+    numberOfPositions = length(Positions)
+    startDates = Positions[1:(numberOfPositions-periodLength)]
+    endDates = Positions[(periodLength+1):numberOfPositions]-24*3600
+    
+    # Windows:
+    windows = list(from = startDates, to = endDates)
+    attr(windows, "control") = c(start = start(positions), end = end(positions))
+    
+    # Return Value:
+    windows
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+rollMonthlySeries =
+function(x, period = "12", by = "1m", FUN, ...)
+{   # A function implemented by Rmetrics
+
+    # Description:
+    #   Rolls Monthly a 'timeSeries' on a given period 
+    
+    # Arguments:
+    #   x - a 'timeSerie's object of asset returns
+    #   period - a character string denoting the length of the rolling
+    #       window, e.g. "24m" means 24 months
+    #   by - a character string denoting the shift of the rolling window,
+    #       e.g. "3m" means one quarter
+    #   FUN - function to be applied
+    
+    # FUNCTION:
+    # Settings:
+    windows = rollMonthlyWindows(x = x[, 1], period = period, by = by)
+    
+    # Apply Function:
+    ans = applySeries(x = x, from = windows$from, to = windows$to, 
+        FUN = FUN, ...)
+    
+    # Return Value:
+    ans
+}
 
 
 ################################################################################
