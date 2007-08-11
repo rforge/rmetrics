@@ -42,6 +42,8 @@
 #  .chcode                   Changes from one to another number system
 #  .hex.to.dec               Converts heximal numbers do decimal numbers
 #  .dec.to.hex               Converts decimal numbers do heximal numbers
+# FUNCTION:                 COLOR RAMPS:
+
 ################################################################################
 
 
@@ -97,7 +99,7 @@ function (n = 64)
     #   using 'rgb' function from 'gdDevices'.
     #   From:  <Jaroslaw.W.Tuszynski@saic.com>
 
-    orig <- c(
+    orig = c(
         "#00008F", "#00009F", "#0000AF", "#0000BF", "#0000CF",
         "#0000DF", "#0000EF", "#0000FF", "#0010FF", "#0020FF",
         "#0030FF", "#0040FF", "#0050FF", "#0060FF", "#0070FF",
@@ -112,15 +114,15 @@ function (n = 64)
         "#FF0000", "#EF0000", "#DF0000", "#CF0000", "#BF0000",
         "#AF0000", "#9F0000", "#8F0000", "#800000")
     if (n == 64) return(orig)
-    rgb.tim <- t(col2rgb(orig))
-    temp <- matrix(NA, ncol = 3, nrow = n)
-    x <- seq(0, 1, , 64)
-    xg <- seq(0, 1, , n)
+    rgb.tim = t(col2rgb(orig))
+    temp = matrix(NA, ncol = 3, nrow = n)
+    x = seq(0, 1, , 64)
+    xg = seq(0, 1, , n)
     for (k in 1:3) {
-        hold <- splint(x, rgb.tim[, k], xg)
-        hold[hold < 0] <- 0
-        hold[hold > 255] <- 255
-        temp[, k] <- round(hold)
+        hold = splint(x, rgb.tim[, k], xg)
+        hold[hold < 0] = 0
+        hold[hold > 255] = 255
+        temp[, k] = round(hold)
     }
     rgb(temp[, 1], temp[, 2], temp[, 3], maxColorValue = 255)
 }
@@ -154,8 +156,8 @@ function (col = .rainbowPalette(64), alpha = FALSE)
 
     # FUNCTION:
     # Color Conversion:
-    result <- .Internal(col2rgb(col))
-    if (!alpha) result <- result[1:3, , drop = FALSE]
+    result = .Internal(col2rgb(col))
+    if (!alpha) result = result[1:3, , drop = FALSE]
 
     # Return Value:
     t(result)
@@ -274,4 +276,93 @@ function(b)
 
 
 ################################################################################
+# Package: colorRamps
+# Type: Package
+# Title: Builds pleasing color tables
+# Version: 1.0
+# Date: 2007-04-05
+# Author: Tim Keitt
+# Maintainer: Tim Keitt <tkeitt@gmail.com>
+# Description: Builds single and double gradient color maps
+# License: GPL
+# Packaged: Thu Apr  5 16:34:42 2007; tkeitt
 
+
+.blue2red = 
+function(n)
+{
+    n2 = ceiling(n / 2)
+    red = rep(c(0, 1), each = n2)[1:n]
+    green = 1 - abs(seq(-1, 1, length.out = n))
+    blue = rev(red)
+    rgb(red, green, blue)
+}
+
+
+# ------------------------------------------------------------------------------
+
+.green2red = 
+function(n)
+{
+    n2 = ceiling(n / 2)
+    red = rep(c(0, 1), each = n2)[1:n]
+    blue = 1 - abs(seq(-1, 1, length.out = n))
+    green = rev(red)
+    rgb(red, green, blue)
+  }
+
+
+# ------------------------------------------------------------------------------
+
+
+.blue2green = 
+function(n)
+{
+    n2 = ceiling(n / 2)
+    green = rep(c(0, 1), each = n2)[1:n]
+    red = 1 - abs(seq(-1, 1, length.out = n))
+    blue = rev(green)
+    rgb(red, green, blue)
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.purple2green = 
+function(n)
+{
+    red = rep(0.5, length.out = n)
+    green = seq(0, 1, length.out = n)
+    blue = rev(green)
+    rgb(red, green, blue)
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.blue2yellow = 
+function(n)
+{
+    red = seq(0, 1, length.out = n)
+    green = red
+    blue = rev(red)
+    rgb(red, green, blue)
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.cyan2magenta = 
+function(n)
+{
+    red = seq(0, 1, length.out = n)
+    green = rev(red)
+    blue = rep(1, n)
+    rgb(red, green, blue)
+}
+
+
+################################################################################
