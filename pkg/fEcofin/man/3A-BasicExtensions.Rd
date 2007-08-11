@@ -94,10 +94,10 @@ cov.default(x, y = NULL, use = "all.obs",
 cor.default(x, y = NULL, use = "all.obs", 
     method = c("pearson", "kendall", "spearman"))
     
-colMeans.default((x, na.rm = FALSE, dims = 1)
-colSums.default((x, na.rm = FALSE, dims = 1)
-rowMeans.default((x, na.rm = FALSE, dims = 1)
-rowSums.default((x, na.rm = FALSE, dims = 1) 
+colMeans.default(x, na.rm = FALSE, dims = 1)
+colSums.default(x, na.rm = FALSE, dims = 1)
+rowMeans.default(x, na.rm = FALSE, dims = 1)
+rowSums.default(x, na.rm = FALSE, dims = 1) 
     
 stdev(x, na.rm = FALSE)
 
