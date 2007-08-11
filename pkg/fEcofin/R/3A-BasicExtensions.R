@@ -155,28 +155,28 @@ warn.conflicts = TRUE)
 
 attach.default <- base::attach
 
+
 # ------------------------------------------------------------------------------
-
-## sort() has been S3 generic in 'base' since 2.4.0
-
-## Otherwise use something that works here
+# sort() has been S3 generic in 'base' since 2.4.0
+# Otherwise use something that works here
 
 if(getRversion() < "2.4.0") {
 
-sort <- function (x, decreasing = FALSE, ...)
-{
-    if (!is.logical(decreasing) || length(decreasing) != 1)
-        stop("'decreasing' must be a length-1 logical vector.\nDid you intend to set 'partial'?")
-    UseMethod("sort")
-}
-
-sort.default <- function(x, decreasing = FALSE, ...) {
-    if (is.object(x))
-    x[order(x, decreasing = decreasing)]
-    else base::sort(x, decreasing = decreasing, ...)
-}
+    sort <- function (x, decreasing = FALSE, ...)
+    {
+        if (!is.logical(decreasing) || length(decreasing) != 1)
+            stop("'decreasing' must be a length-1 logical vector.\nDid you intend to set 'partial'?")
+        UseMethod("sort")
+    }
+    
+    sort.default <- function(x, decreasing = FALSE, ...) {
+        if (is.object(x))
+        x[order(x, decreasing = decreasing)]
+        else base::sort(x, decreasing = decreasing, ...)
+    }
 
 }# endif {only for outdated R}
+
 
 # ------------------------------------------------------------------------------
 
@@ -191,8 +191,16 @@ function(x, ...)
     UseMethod("sample")
 }
 
-sample.default <- function (x, size, replace = FALSE, prob = NULL, ...)
-    base::sample(x, size, replace=replace, prob=prob)
+
+# ------------------------------------------------------------------------------
+
+
+sample.default =  
+function (x, size, replace = FALSE, prob = NULL, ...)
+{
+    base::sample(x, size, replace = replace, prob = prob)
+}
+
 
 # ------------------------------------------------------------------------------
 
@@ -207,7 +215,16 @@ function(x, ...)
     UseMethod("round")
 }
 
-round.default <- function(x, digits = 0, ...) base::round(x, digits)
+
+# ------------------------------------------------------------------------------
+
+
+round.default =
+function(x, digits = 0, ...) 
+{
+    base::round(x, digits)
+}
+
 
 # ------------------------------------------------------------------------------
 
@@ -223,7 +240,15 @@ function(x, base = exp(1))
 }
 
 
-log.default <- function(x, base = exp(1)) base::log(x, base)
+# ------------------------------------------------------------------------------
+
+
+log.default = 
+function(x, base = exp(1)) 
+{
+    base::log(x, base)
+}
+
 
 # ------------------------------------------------------------------------------
 
@@ -286,6 +311,10 @@ function(x, y = NULL, na.rm = FALSE, use)
     UseMethod("var")
 }
 
+
+# ------------------------------------------------------------------------------
+
+
 var.default <- stats::var
 
 
@@ -302,6 +331,10 @@ function(x, y = NULL, use = "all.obs",
     # Return Value:
     UseMethod("cov")
 }
+
+
+# ------------------------------------------------------------------------------
+
 
 cov.default <- stats::cov
 
@@ -320,6 +353,10 @@ function(x, y = NULL, use = "all.obs",
     UseMethod("cor")
 }
 
+
+# ------------------------------------------------------------------------------
+
+
 cor.default <- stats::cor
 
 
@@ -334,6 +371,35 @@ function(x, na.rm = FALSE)
     
     stats::sd(x = x, na.rm = na.rm)
 }
+
+
+################################################################################
+# FUNCTION:                     COLUMN AND ROW STATISTICS:
+#  colSums                       colSums has become a generic function
+#  colMeans                      colMeans has become a generic function
+#  rowSums                       rowSums has become a generic function
+#  rowMeans                      roowMeans has become a generic function
+
+
+colMeans.default <- base::colMeans
+
+
+# ------------------------------------------------------------------------------
+
+
+colSums.default <- base::colSums
+
+
+# ------------------------------------------------------------------------------
+
+
+rowMeans.default <- base::rowMeans
+
+
+# ------------------------------------------------------------------------------
+
+
+rowSums.default <- base::rowSums
 
 
 ################################################################################
@@ -353,10 +419,14 @@ function(x, value)
     UseMethod("rownames<-")
 }
 
+
+# ------------------------------------------------------------------------------
+
+
 `rownames<-.default` <- base::`rownames<-`
 
 
-################################################################################
+# ------------------------------------------------------------------------------
 
 
 "colnames<-" =
@@ -368,6 +438,10 @@ function(x, value)
     # Return Value:
     UseMethod("colnames<-")
 }
+
+
+# ------------------------------------------------------------------------------
+
 
 `colnames<-.default` <- base::`colnames<-`
 
@@ -400,6 +474,7 @@ function(x, ...)
     # Return Value:
     invisible(x)
 }
+
 
 ################################################################################
 
