@@ -32,6 +32,15 @@
 \alias{cor}
 \alias{cor.default}
 
+\alias{colSums}
+\alias{colSums.default}
+\alias{colMeans}
+\alias{colMeans.default}
+\alias{rowSums}
+\alias{rowSums.default}
+\alias{rowMeans}
+\alias{rowMeans.default}
+
 \alias{stdev}
 
 \alias{rownames<-}
@@ -85,6 +94,11 @@ cov.default(x, y = NULL, use = "all.obs",
 cor.default(x, y = NULL, use = "all.obs", 
     method = c("pearson", "kendall", "spearman"))
     
+colMeans.default((x, na.rm = FALSE, dims = 1)
+colSums.default((x, na.rm = FALSE, dims = 1)
+rowMeans.default((x, na.rm = FALSE, dims = 1)
+rowSums.default((x, na.rm = FALSE, dims = 1) 
+    
 stdev(x, na.rm = FALSE)
 
 rownames(x) <- value
@@ -127,6 +141,13 @@ as.matrix.mts(x, \dots)
         a character string indicating which correlation coefficient (or 
         covariance) is to be computed. One of \code{"pearson" (default)}, 
         \code{"kendall"}, or \code{"spearman"}, can be abbreviated.
+        }
+    \item{dims}{
+        [colMeans][colSums][rowMeans][rowSums] - \cr
+        Which dimensions are regarded as \code{rows} or \code{columns} to 
+        sum over. For \code{row*}, the sum or mean is over dimensions 
+        \code{dims+1}, \code{...}; for \code{col*} it is over dimensions 
+        \code{1:dims}.
         }
     \item{n}{
         [align] - \cr

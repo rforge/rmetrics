@@ -85,6 +85,64 @@ function(x, FUN, na.rm = FALSE, ...)
 # ------------------------------------------------------------------------------
 
 
+rowSums.timeSeries =
+function(x, na.rm = FALSE, ...)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Computes sample sum by row
+
+    # FUNCTION:
+
+    # Transform:
+    X = as.matrix(x)
+
+    # Statistics:
+    if (na.rm) {
+        result = apply(na.omit(X), MARGIN = 1, FUN = sum, ...)
+    } else {
+        result = apply(X, MARGIN = 1, FUN = sum, ...)
+    }
+    result = t(t(result))
+    colnames(result) = "Sum"
+
+    # Return Value:
+    result
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+rowMeans.timeSeries =
+function(x, na.rm = FALSE, ...)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Computes sample mean by row
+
+    # FUNCTION:
+
+    # Transform:
+    X = as.matrix(x)
+
+    # Statistics:
+    if (na.rm) {
+        result = apply(na.omit(X), MARGIN = 1, FUN = mean, ...)
+    } else {
+        result = apply(X, MARGIN = 1, FUN = mean, ...)
+    }
+    result = t(t(result))
+    colnames(result) = "Mean"
+
+    # Return Value:
+    result
+}
+
+
+# ------------------------------------------------------------------------------
+
+
 rowAvgs =
 function(x, na.rm = FALSE, ...)
 {   # A function implemented by Diethelm Wuertz
@@ -284,6 +342,65 @@ function(x, FUN, na.rm = FALSE, ...)
     # Statistics:
     apply(if(na.rm) na.omit(X) else X, 2, FUN, ...)
 }
+
+
+# ------------------------------------------------------------------------------
+
+
+colSums.timeSeries =
+function(x, na.rm = FALSE, ...)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Computes sample sum by column
+
+    # FUNCTION:
+
+    # Transform:
+    X = as.matrix(x)
+
+    # Statistics:
+    if (na.rm) {
+        result = apply(na.omit(X), MARGIN = 2, FUN = sum, ...)
+    } else {
+        result = apply(X, MARGIN = 2, FUN = sum, ...)
+    }
+    result = t(t(result))
+    colnames(result) = "Sum"
+
+    # Return Value:
+    result
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+colMeans.timeSeries =
+function(x, na.rm = FALSE, ...)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Computes sample mean by column
+
+    # FUNCTION:
+
+    # Transform:
+    X = as.matrix(x)
+
+    # Statistics:
+    if (na.rm) {
+        result = apply(na.omit(X), MARGIN = 2, FUN = mean, ...)
+    } else {
+        result = apply(X, MARGIN = 2, FUN = mean, ...)
+    }
+    result = t(t(result))
+    colnames(result) = "Mean"
+
+    # Return Value:
+    result
+}
+
 
 
 # ------------------------------------------------------------------------------

@@ -46,6 +46,11 @@
 #  cov                           var has become a generic function
 #  cov.default                   var default method
 #  stdev                         for SPLUS compatibility
+# FUNCTION:                     COLUMN AND ROW STATISTICS:
+#  colSums                       colSums has become a generic function
+#  colMeans                      colMeans has become a generic function
+#  rowSums                       rowSums has become a generic function
+#  rowMeans                      roowMeans has become a generic function
 # FUNCTION:                     ROW AND COLUMN NAMES:
 #  "rownames<-"                  rownames<- has become a generic function
 #  "rownames<-.default"          rownames<- default method

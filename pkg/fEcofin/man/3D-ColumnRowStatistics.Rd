@@ -3,6 +3,8 @@
 \alias{ColumnRowStatistics}
 
 \alias{rowStats} 
+\alias{rowSums.timeSeries}
+\alias{rowMeans.timeSeries}
 \alias{rowAvgs}
 \alias{rowVars}
 \alias{rowStdevs}
@@ -11,6 +13,8 @@
 \alias{rowCumsums}
 
 \alias{colStats} 
+\alias{colSums.timeSeries}
+\alias{colMeans.timeSeries}
 \alias{colAvgs}
 \alias{colVars}
 \alias{colStdevs}
@@ -34,8 +38,10 @@
     \tabular{ll}{  
     \code{rowStats}\tab calculates row statistics, \cr
     \code{colStats} \tab calculates column statistics, \cr
-    \code{rowAvgs} \tab calculates row means, \cr
-    \code{colAvgs} \tab calculates column means, \cr
+    \code{rowAvgs|rowSums} \tab calculates row sums, \cr
+    \code{colAvgs|colSums} \tab calculates column sums, \cr
+    \code{rowAvgs|rowMeans} \tab calculates row means, \cr
+    \code{colAvgs|colMeans} \tab calculates column means, \cr
     \code{rowVars} \tab calculates row variances, \cr
     \code{colVars} \tab calculates column variances, \cr
     \code{rowStdevs} \tab calculates row standard deviations, \cr
@@ -52,6 +58,8 @@
 
 \usage{
 rowStats(x, FUN, na.rm = FALSE, \dots) 
+\method{rowSums}{timeSeries}(x, na.rm = FALSE, \dots)
+\method{rowMeans}{timeSeries}(x, na.rm = FALSE, \dots)
 rowAvgs(x, na.rm = FALSE, \dots)
 rowVars(x, na.rm = FALSE, \dots)
 rowStdevs(x, na.rm = FALSE, \dots)
@@ -60,6 +68,8 @@ rowKurtosis(x, na.rm = FALSE, \dots)
 rowCumsums(x, na.rm = FALSE, \dots)
 
 colStats(x, FUN, na.rm = FALSE, \dots) 
+\method{colSums}{timeSeries}(x, na.rm = FALSE, \dots)
+\method{colMeans}{timeSeries}(x, na.rm = FALSE, \dots)
 colAvgs(x, na.rm = FALSE, \dots)
 colVars(x, na.rm = FALSE, \dots)
 colStdevs(x, na.rm = FALSE, \dots)
