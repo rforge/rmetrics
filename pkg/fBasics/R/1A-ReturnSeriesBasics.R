@@ -32,13 +32,14 @@
 #  basicStats              Returns a basic statistics summary
 # FUNCTION:               TAILORED PLOT FUNCTIONS:     
 #  seriesPlot              Returns a tailored return series plot
+#  cumulatedPlot           Returns a tailored cumulated return series plot
 #  histPlot                Returns a tailored histogram plot
 #  densityPlot             Returns a tailored kernel density estimate plot
 #  qqnormPlot              Returns a tailored normal quantile-quantile plot
 #  qqnigPlot               Returns a tailored NIG quantile-quantile plot
 # FUNCTION:               BOX PLOTS:
-#  .boxPlot
-#  .boxPercentilePlot
+#  boxPlot                 Produces a side-by-side standard box plot
+#  boxPercentilePlot       Produces a side-by-side box-percentile plot
 # FUNCTION:               GUI:
 #  .returnSeriesGUI        Opens a GUI for return series plots
 ################################################################################
@@ -139,6 +140,7 @@ function(x, ci = 0.95)
 ################################################################################    
 # FUNCTION:               TAILORED PLOT FUNCTIONS:
 #  seriesPlot              Returns a tailored return series plot
+#  cumulatedPlot           Returns a tailored cumulated return series plot
 #  histPlot                Returns a tailored histogram plot
 #  densityPlot             Returns a tailored kernel density estimate plot
 #  qqnormPlot              Returns a tailored normal quantile-quantile plot
@@ -146,14 +148,17 @@ function(x, ci = 0.95)
 
 
 seriesPlot = 
-function(x, labels = TRUE, type = "l", col = "steelblue", rug = TRUE, ...) 
+function(x, labels = TRUE, type = "l", col = "steelblue", ylab = "Returns",
+rug = TRUE, ...) 
 {   # A function implemented by Diethelm Wuertz
     
     # Description:
     #   Returns time series graphs in a common plot
   
     # Arguments:
-    #   x - an univariate time series
+    #   x - an uni- or multivariate return series of class 'timeSeries' 
+    #       or any other object which can be transformed by the function
+    #       'as.timeSeries()' into an object of class 'timeSeries'.
     
     # Example:
     # tS=timeSeries(cbind(rnorm(12),rt(12,4)),timeCalendar(),units=c("N","T"))
@@ -165,16 +170,67 @@ function(x, labels = TRUE, type = "l", col = "steelblue", rug = TRUE, ...)
     if (!is.timeSeries(x)) x = as.timeSeries(x)
     Units = x@units
     DIM = dim(x@Data)[2]
+    if (length(col) == 1) col = rep(col, times = DIM)
     
     # Series Plots:
     for (i in 1:DIM) {
         X = x[, i]
         if (labels) {
-            plot(x = X, type = type, col = col, 
-                main = Units[i], ylab = "Values", xlab = "Time", ...)
-            grid()
+            plot(x = X, type = type, col = col[i], 
+                main = Units[i], ylab = ylab, xlab = "Time", ...)
+            # grid()
         } else {
-            plot(x = X, type = type, col = col, 
+            plot(x = X, type = type, col = col[i], 
+                main = "", ylab = "", xlab = "", ...)   
+        }
+        abline(h = 0, col = "grey")
+        if (rug) rug(as.vector(X), ticksize = 0.01, side = 4)
+            
+    }
+         
+    # Return Value:
+    invisible()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+cumulatedPlot = 
+function(x, index = 100, labels = TRUE, type = "l", col = "steelblue", 
+ylab = "Index", rug = TRUE, ...) 
+{   # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   Returns time series graphs in a common plot
+  
+    # Arguments:
+    #   x - an uni- or multivariate return series of class 'timeSeries' 
+    #       or any other object which can be transformed by the function
+    #       'as.timeSeries()' into an object of class 'timeSeries'.
+    
+    # Example:
+    # tS=timeSeries(cbind(rnorm(12),rt(12,4)),timeCalendar(),units=c("N","T"))
+    # seriesPlot(tS)
+    
+    # FUNCTION:
+
+    # timeSeries:
+    if (!is.timeSeries(x)) x = as.timeSeries(x)
+    x = index * exp(colCumsums(x))
+    Units = x@units
+    DIM = dim(x@Data)[2]
+    if (length(col) == 1) col = rep(col, times = DIM)
+    
+    # Series Plots:
+    for (i in 1:DIM) {
+        X = x[, i]
+        if (labels) {
+            plot(x = X, type = type, col = col[i], 
+                main = Units[i], ylab = ylab, xlab = "Time", ...)
+            # grid()
+        } else {
+            plot(x = X, type = type, col = col[i], 
                 main = "", ylab = "", xlab = "", ...)   
         }
         abline(h = 0, col = "grey")
@@ -191,13 +247,18 @@ function(x, labels = TRUE, type = "l", col = "steelblue", rug = TRUE, ...)
 
 
 histPlot = 
-function(x, labels = TRUE, add.fit = TRUE, rug = TRUE, 
-    skipZeros = TRUE, ...) 
+function(x, labels = TRUE, col = "steelblue", add.fit = TRUE, rug = TRUE, 
+skipZeros = TRUE, ...) 
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Returns a probability histogram plot for each column of a 
     #   timeSeries object
+    
+    # Arguments:
+    #   x - an uni- or multivariate return series of class 'timeSeries' 
+    #       or any other object which can be transformed by the function
+    #       'as.timeSeries()' into an object of class 'timeSeries'.
    
     # FUNCTION:
     
@@ -208,6 +269,7 @@ function(x, labels = TRUE, add.fit = TRUE, rug = TRUE,
     if (!is.timeSeries(x)) x = as.timeSeries(x)
     Units = x@units
     DIM = dim(x@Data)[2]
+    if (length(col) == 1) col = rep(col, times = DIM)
       
     # Construct output list:
     ans = paste( " hist", 1:DIM, " = NULL", sep = "", collapse = ",")
@@ -227,13 +289,13 @@ function(x, labels = TRUE, add.fit = TRUE, rug = TRUE,
         # Plot:
         if (labels) {
             xlim = c(qnorm(0.001, mean, sd), qnorm(0.999, mean, sd)) 
-            result = hist(x = Values, col = "steelblue", 
+            result = hist(x = Values, col = col[i], 
             border = "white", breaks = "FD", main = Units[i], 
             xlim = xlim, probability = TRUE, ...) 
             box()
         } else {
             result = hist(x = Values, probability = TRUE, main = "", 
-                xlab = "", ylab = "", ...)
+                xlab = "", ylab = "", col = col[i], ...)
         }
              
         # Add Fit:  
@@ -266,12 +328,17 @@ function(x, labels = TRUE, add.fit = TRUE, rug = TRUE,
 
 
 densityPlot = 
-function(x, col = "steelblue", add.fit = TRUE, rug = TRUE, 
+function(x, labels = TRUE, col = "steelblue", add.fit = TRUE, rug = TRUE, 
 skipZeros = TRUE, ...) 
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Returns density plots for each column of a timeSeries object
+    
+    # Arguments:
+    #   x - an uni- or multivariate return series of class 'timeSeries' 
+    #       or any other object which can be transformed by the function
+    #       'as.timeSeries()' into an object of class 'timeSeries'.
 
     # FUNCTION:
     
@@ -280,6 +347,7 @@ skipZeros = TRUE, ...)
     units = x@units
     DIM = dim(x@Data)[2]
     xlim = NULL
+    if (length(col) == 1) col = rep(col, times = DIM)
       
     # Construct output list:
     ans = paste( " hist", 1:DIM, " = NULL", sep = "", collapse = ",")
@@ -298,7 +366,7 @@ skipZeros = TRUE, ...)
         if (is.null(xlim)) 
             xlim = c(qnorm(0.001, mean, sd), qnorm(0.999, mean, sd)) 
         Density = density(Values, ...)
-        plot(x = Density, xlim = xlim, col = col, type = "l", 
+        plot(x = Density, xlim = xlim, col = col[i], type = "l", 
             lwd = 2, main = Units[i], ...)  
         ans[[i]] = Density  
         
@@ -345,6 +413,11 @@ function(x, labels = TRUE, col = "steelblue", rug = TRUE, scale = TRUE, ...)
     #   assessment of its conformity with a normal (data is standardised    
     #   first).
 
+    # Arguments:
+    #   x - an uni- or multivariate return series of class 'timeSeries' 
+    #       or any other object which can be transformed by the function
+    #       'as.timeSeries()' into an object of class 'timeSeries'.
+    
     # Details:
     #   The ordered data values are posterior point estimates of the 
     #   underlying quantile function. So, if you plot the ordered data 
@@ -374,6 +447,7 @@ function(x, labels = TRUE, col = "steelblue", rug = TRUE, scale = TRUE, ...)
     if (!is.timeSeries(x)) x = as.timeSeries(x)
     DIM = dim(x@Data)[2]
     Main = x@units
+    if (length(col) == 1) col = rep(col, times = DIM)
     
     # QQ Plots:
     X = x
@@ -392,13 +466,13 @@ function(x, labels = TRUE, col = "steelblue", rug = TRUE, scale = TRUE, ...)
             main = Main[i]
             xlab = "Normal Quantiles"
             ylab = paste(Main[i], "Ordered Data")
-            plot(z, x, pch = 19, col = col, 
+            plot(z, x, pch = 19, col = col[i], 
                 xlab = xlab, ylab = ylab, main = main, ...)
                 Text = "Confidence Intervals: 95%"
             mtext(Text, side = 4, adj = 0, col = "darkgrey", cex = 0.7)
             grid()  
         } else {
-            plot(z, x, ...)
+            plot(z, x, col = col[i], ...)
         }
         abline(0, 1, col = "grey")
         if(rug) rug(z, ticksize = 0.01, side = 3)
@@ -430,6 +504,13 @@ qqnigPlot =
 function (x, labels = TRUE, col = "steelblue", rug = TRUE, ...) 
 {   # A function implemented by Diethelm Wuertz
 
+    # Description:
+    
+    # Arguments:
+    #   x - an uni- or multivariate return series of class 'timeSeries' 
+    #       or any other object which can be transformed by the function
+    #       'as.timeSeries()' into an object of class 'timeSeries'.
+    
     # Example:
     #   qqnigPlot(rnig(100))
     
@@ -485,17 +566,17 @@ function (x, labels = TRUE, col = "steelblue", rug = TRUE, ...)
 ################################################################################
 
 
-.boxPlot =
-function(x, col = "bisque", ...) 
+boxPlot =
+function(x, col = "steelblue", ...) 
 {   # A function Implemented by Diethelm Wuertz
 
     # Description:
-    #   Producess standard box plots
+    #   Produces a standard box plot
     
     # Arguments:
-    #   x - a 'timeSeries' object or any other rectangular object
-    #       which cab be transformed by the function as.matrix into 
-    #       a numeric matrix.
+    #   x - an uni- or multivariate return series of class 'timeSeries' 
+    #       or any other object which can be transformed by the function
+    #       'as.matrix()' into an object of class 'matrix'.
     
     # Optional Arguments:
     #   las, oma - allows to change style of X labels and creates 
@@ -524,12 +605,12 @@ function(x, col = "bisque", ...)
 # ------------------------------------------------------------------------------
 
 
-.boxPercentilePlot = 
-function(x, col = "bisque", ...) 
+boxPercentilePlot = 
+function(x, col = "steelblue", ...) 
 {   # A modified copy from Hmisc
 
     # Description:
-    #   Producess side-by-side box-percentile plots
+    #   Produces a side-by-side box-percentile plot
     
     # Details:
     #   Box-percentile plots are similiar to boxplots, except box-percentile 
@@ -543,9 +624,9 @@ function(x, col = "bisque", ...)
     #   across the box. [Source: Hmisc]
     
     # Arguments:
-    #   x - a 'timeSeries' object or any other rectangular object
-    #       which cab be transformed by the function as.matrix into 
-    #       a numeric matrix.
+    #   x - an uni- or multivariate return series of class 'timeSeries' 
+    #       or any other object which can be transformed by the function
+    #       'as.matrix()' into an object of class 'matrix'.
     
     # FUNCTION:
     
@@ -562,15 +643,43 @@ function(x, col = "bisque", ...)
     xmin = -0.5
     
     # Plot:
+    if (length(col) == 1) col = rep(col, times = n)
     plot(c(xmin, xmax), c(ymin, ymax), type = "n",  
         xlab = "", ylab = "", xaxt = "n")
     xpos = NULL
     for (i in 1:n) {
-        plot.values = .bpxAssetsPlot(all.x[[i]], centers[i])
+        # plot.values = .bpxAssetsPlot(all.x[[i]], centers[i])
+        y = all.x[[i]]
+        offset = centers[i]
+        y = y[!is.na(y)]
+        n = length(y)
+        delta = 1/(n + 1)
+        prob = seq(delta, 1 - delta, delta)
+        quan = sort(y)
+        med = median(y)
+        q1 = median(y[y < med])
+        q3 = median(y[y > med])
+        first.half.p = prob[quan <= med]
+        second.half.p = 1 - prob[quan > med]
+        plotx = c(first.half.p, second.half.p)
+        options(warn = -1)
+        qx = approx(quan, plotx, xout = q1)$y
+        q1.x = c(-qx, qx) + offset
+        qx = approx(quan, plotx, xout = q3)$y
+        options(warn = 0)
+        q3.x = c(-qx, qx) + offset
+        q1.y = c(q1, q1)
+        q3.y = c(q3, q3)
+        med.x = c(-max(first.half.p), max(first.half.p)) + offset
+        med.y = c(med, med)
+        plot.values = list(x1 = (-plotx) + offset, y1 = quan, x2 = plotx + 
+            offset, y2 = quan, q1.y = q1.y, q1.x = q1.x, q3.y = q3.y, 
+            q3.x = q3.x, med.y = med.y, med.x = med.x)
+        # Continue:
         xpos = c(xpos, mean(plot.values$med.x))
         x.p = c(plot.values$x1, plot.values$x2)
         y.p = c(plot.values$y1, plot.values$y2)
-        polygon(x.p, y.p, col = col, border = "grey", ...)
+        polygon(x.p, y.p, col = col[i], border = "grey", ...)
         lines(plot.values$x1, plot.values$y1)
         lines(plot.values$x2, plot.values$y2)
         lines(plot.values$q1.x, plot.values$q1.y)
@@ -583,12 +692,6 @@ function(x, col = "bisque", ...)
     # Return Value:
     invisible()
 }
-
-
-# ------------------------------------------------------------------------------
-
-
-# .bpxAssetsPlot
 
 
 ################################################################################

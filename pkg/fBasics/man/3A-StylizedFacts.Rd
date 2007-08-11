@@ -19,7 +19,7 @@
 
     A collection and description of functions to 
     investigate and to plot several stylized facts 
-    of economic and financial time series. This 
+    of economic and financial return series. This 
     includes fat tails, autocorrelations, long 
     memory behavior, and the Taylor effect.
     \cr
@@ -43,25 +43,37 @@
 acfPlot(x, labels = TRUE, \dots)
 pacfPlot(x, labels = TRUE, \dots) 
 
-lacfPlot(x, n = 12, lag.max = 20, labels = TRUE, \dots)
+lacfPlot(x, n = 12, lag.max = 20, type = c("returns", "values"),
+    labels = TRUE, \dots)
 lmacfPlot(x, lag.max = max(2, floor(10*log10(length(x)))), ci = 0.95, 
     type = c("both", "acf", "hurst"), labels = TRUE, trace = TRUE, \dots) 
     
-logpdfPlot(x, n = 50, type = c("lin-log", "log-log"), doplot = TRUE, 
-    labels = TRUE, \dots)
+logpdfPlot(x, breaks = "FD", type = c("lin-log", "log-log"), 
+    doplot = TRUE, labels = TRUE, \dots)
     
 qqgaussPlot(x, span = 5, col = "steelblue", labels = TRUE, \dots)
 
 scalinglawPlot(x, span = ceiling(log(length(x)/252)/log(2)), doplot = TRUE, 
     labels = TRUE, trace = TRUE, \dots)
 
-    teffectPlot(x, deltas = seq(from = 0.2, to = 3, by = 0.2), lag.max = 10, 
+teffectPlot(x, deltas = seq(from = 0.2, to = 3, by = 0.2), lag.max = 10, 
     ymax = NA, standardize = TRUE, labels = TRUE, \dots)
 }
 
 
 \arguments{
 
+    \item{breaks}{
+        logpdfPlot] - \cr
+        one of: 
+        (1) a vector giving the breakpoints between histogram cells, 
+        (2) a single number giving the number of cells for the histogram, 
+        (3) a character string naming an algorithm to compute the number 
+        of cells (The default for breaks is "FD". Other names for which 
+        algorithms are supplied are "Scott", "Sturges" and "Freedman-Diaconis"), 
+        (4) a function to compute the number of cells. 
+        In the last three cases the number is a suggestion only. 
+        }
     \item{ci}{
         [lmacfPlot] - \cr
         the confidence interval, by default 95 percent, i.e. 0.95.
@@ -89,9 +101,7 @@ scalinglawPlot(x, span = ceiling(log(length(x)/252)/log(2)), doplot = TRUE,
         }
     \item{n}{
         [lacfPlot] - \cr
-        an integer value, the number of lags.\cr
-        [logpdfPlot] - \cr
-        an integer value, the number of break and count points.
+        an integer value, the number of lags.
         }
     \item{span}{
         [scalinglawPlot] - \cr
@@ -109,6 +119,12 @@ scalinglawPlot(x, span = ceiling(log(length(x)/252)/log(2)), doplot = TRUE,
         a logical value. Should the computation be traced?
         }
     \item{type}{
+        [lacf] - \cr
+        a character string which specifies the type of the input
+        series, either "returns" or series "values". In the case of 
+        a return series as input, the required value series is 
+        computed by cumulating the financial returns: 
+        \code{exp(colCumsums(x))},\cr
         [lmacf] - \cr
         a character string, either \code{"both"}, \code{"acf"}, or 
         \code{"hurst"} denoting which type of plot should be generated: 
@@ -118,10 +134,10 @@ scalinglawPlot(x, span = ceiling(log(length(x)/252)/log(2)), doplot = TRUE,
         denoting on which scale the plot will produced: on a linear vs. 
         log scale, or on a double logarithmic scale.
         }
-    \item{x, y}{
-        numeric vectors, univariate time series objects, or any
-        other object which can be transformed by the function
-        \code{as.vector} into a numeric vector.
+    \item{x}{
+        an uni- or multivariate return series of class \code{timeSeries} 
+        or any other object which can be transformed by the function
+        \code{as.timeSeries()} into an object of class \code{timeSeries}.
         }
     \item{ymax}{
         [teffectPlot] - \cr

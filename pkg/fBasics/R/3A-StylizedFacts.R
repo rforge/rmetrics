@@ -64,14 +64,16 @@ function(x, labels = TRUE, ...)
     #   Autocorrelations function plot
     
     # Arguments:
-    #   x - an uni- or multivariate 'timeSeries' object
+    #   x - an uni- or multivariate return series of class 'timeSeries' 
+    #       or any other object which can be transformed by the function
+    #       'as.timeSeries()' into an object of class 'timeSeries'.
     #   labels - a logical flag, by default true. Should a default 
     #       main title and labels addet to the plot?
   
     # FUNCTION:
     
     # Settings:
-    stopifnot(class(x) == "timeSeries")
+    if (!is.timeSeries(x)) x = as.timeSeries(x)
     Units = colnames(x)
     
     # Labels:
@@ -106,14 +108,16 @@ function(x, labels = TRUE, ...)
     #   Partial autocorrelation function plot
     
     # Arguments:
-    #   x - an uni- or multivariate 'timeSeries' object
+    #   x - an uni- or multivariate return series of class 'timeSeries' 
+    #       or any other object which can be transformed by the function
+    #       'as.timeSeries()' into an object of class 'timeSeries'.
     #   labels - a logical flag, by default true. Should a default 
     #       main title and labels addet to the plot?
     
     # FUNCTION:
     
     # Settings:
-    stopifnot(class(x) == "timeSeries")
+    if (!is.timeSeries(x)) x = as.timeSeries(x)
     Units = colnames(x)
     
     # Labels:
@@ -150,14 +154,16 @@ ymax = NA, standardize = TRUE, labels = TRUE, ...)
     #   Evaluate and Display Taylor Effect
   
     # Arguments:
-    #   x - an uni- or multivariate 'timeSeries' object
+    #   x - an uni- or multivariate return series of class 'timeSeries' 
+    #       or any other object which can be transformed by the function
+    #       'as.timeSeries()' into an object of class 'timeSeries'.
     #   labels - a logical flag, by default true. Should a default 
     #       main title and labels addet to the plot?
     
     # FUNCTION:
     
     # Settings:
-    stopifnot(class(x) == "timeSeries")
+    if (!is.timeSeries(x)) x = as.timeSeries(x)
     Units = colnames(x)
     
     # Labels:
@@ -220,14 +226,16 @@ trace = TRUE, ...)
     #   Evaluate and display long memory autocorrelation Function.
 
     # Arguments:
-    #   x - an uni- or multivariate 'timeSeries' object
+    #   x - an uni- or multivariate return series of class 'timeSeries' 
+    #       or any other object which can be transformed by the function
+    #       'as.timeSeries()' into an object of class 'timeSeries'.
     #   labels - a logical flag, by default true. Should a default 
     #       main title and labels addet to the plot?
     
     # FUNCTION:
     
     # Settings:
-    stopifnot(class(x) == "timeSeries")
+    if (!is.timeSeries(x)) x = as.timeSeries(x)
     Units = colnames(x)
     X = x
     
@@ -335,14 +343,20 @@ function(x, n = 12, lag.max = 20, type = c("returns", "values"),
     #   Computes the lagged autocorrelation function
     
     # Arguments:
-    #   x - an uni- or multivariate 'timeSeries' object
+    #   x - an uni- or multivariate return series of class 'timeSeries' 
+    #       or any other object which can be transformed by the function
+    #       'as.timeSeries()' into an object of class 'timeSeries'.
+    #   type - a character string which specifies the type of the input
+    #       series, either "returns" or series "values". In the case of 
+    #       a return series as input, the required value series is 
+    #       computed by cumulating the financial returns: 'exp(colCumsums(x))'
     #   labels - a logical flag, by default true. Should a default 
     #       main title and labels addet to the plot?
 
     # FUNCTION:
     
     # Settings:
-    stopifnot(class(x) == "timeSeries")
+    if (!is.timeSeries(x)) x = as.timeSeries(x)
     Units = colnames(x)
     
     # Cumulated Returns:
@@ -457,7 +471,7 @@ function(x, n = 12, lag.max = 20, type = c("returns", "values"),
 
 
 logpdfPlot = 
-function(x, n = 50, type = c("lin-log", "log-log"), 
+function(x, breaks = "FD", type = c("lin-log", "log-log"), 
 doplot = TRUE, labels = TRUE, ...)
 {   # A function implemented by Diethelm Wuertz
     
@@ -472,14 +486,16 @@ doplot = TRUE, labels = TRUE, ...)
     #   the empirical data.
     
     # Arguments:
-    #   x - an uni- or multivariate 'timeSeries' object
+    #   x - an uni- or multivariate return series of class 'timeSeries' 
+    #       or any other object which can be transformed by the function
+    #       'as.timeSeries()' into an object of class 'timeSeries'.
     #   labels - a logical flag, by default true. Should a default 
     #       main title and labels addet to the plot?
     
     # FUNCTION:
     
     # Settings:
-    stopifnot(class(x) == "timeSeries")
+    if (!is.timeSeries(x)) x = as.timeSeries(x)
     Units = colnames(x)
     
     # Select Type:
@@ -501,19 +517,19 @@ doplot = TRUE, labels = TRUE, ...)
     }
     
     X = x
-    DIM = dim(X)[2]
+    DIM = ncol(X)
     
     for (i in 1:DIM) {
         
         # Get Data:
-        x = as.vector(X@Data[, i])
+        x = as.vector(X[, i])
         if (labels) main = Units[i]
         
         # Lin-Log Plot:
         if (type == "lin-log") {
               
             # Histogram PDF:
-            result = hist(x, nclass = n, plot = FALSE)
+            result = hist(x, breaks = breaks, plot = FALSE)
             prob.counts = result$counts/sum(result$counts) / 
                 diff(result$breaks)[1]
             histogram = list(breaks = result$breaks, counts = prob.counts) 
@@ -533,7 +549,7 @@ doplot = TRUE, labels = TRUE, ...)
             } 
             
             # Compare with a Gaussian Plot:
-            xg = seq(from = xh[1], to = xh[length(xh)], length = n)
+            xg = seq(from = xh[1], to = xh[length(xh)], length = 301)
             yg = log(dnorm(xg, mean(x), sqrt(var(x))))
             if (doplot) { 
                 par(err = -1)
@@ -549,7 +565,7 @@ doplot = TRUE, labels = TRUE, ...)
         if (type == "log-log") {
             
             # Histogram PDF:
-            result = hist(x, nclass = n, plot = FALSE)
+            result = hist(x, breaks = breaks, plot = FALSE)
             prob.counts = result$counts/sum(result$counts) / diff(result$breaks)[1]
             histogram = list(breaks = result$breaks, counts = prob.counts) 
              
@@ -575,7 +591,7 @@ doplot = TRUE, labels = TRUE, ...)
             
             # Compare with a Gaussian plot:
             xg = seq(from = min(xh1[1], xh[2]), 
-                to = max(xh1[length(xh1)], xh2[length(xh2)]), length = n)
+                to = max(xh1[length(xh1)], xh2[length(xh2)]), length = 301)
             xg = xg[xg > 0]
             yg = log(dnorm(xg, mean(x), sqrt(var(x))))
             if (doplot) {
@@ -609,7 +625,9 @@ function(x, span = 5, col = "steelblue", labels = TRUE, ...)
     #   Returns a simple Quantile-Quantile plot.
     
     # Arguments:
-    #   x - an uni- or multivariate 'timeSeries' object
+    #   x - an uni- or multivariate return series of class 'timeSeries' 
+    #       or any other object which can be transformed by the function
+    #       'as.timeSeries()' into an object of class 'timeSeries'.
     #   labels - a logical flag, by default true. Should a default 
     #       main title and labels addet to the plot?
     
@@ -619,7 +637,7 @@ function(x, span = 5, col = "steelblue", labels = TRUE, ...)
     # if (SPLUSLIKE) splusLikePlot(TRUE)
     
     # Settings:
-    stopifnot(class(x) == "timeSeries")
+    if (!is.timeSeries(x)) x = as.timeSeries(x)
     Units = colnames(x)
     
     # Labels:
@@ -677,14 +695,16 @@ labels = TRUE, trace = TRUE, ...)
     #   The input "x" requires log-returns.
  
     # Arguments:
-    #   x - an uni- or multivariate 'timeSeries' object
+    #   x - an uni- or multivariate return series of class 'timeSeries' 
+    #       or any other object which can be transformed by the function
+    #       'as.timeSeries()' into an object of class 'timeSeries'.
     #   labels - a logical flag, by default true. Should a default 
     #       main title and labels addet to the plot?
     
     # FUNCTION: 
     
     # Settings:
-    stopifnot(class(x) == "timeSeries")
+    if (!is.timeSeries(x)) x = as.timeSeries(x)
     Units = colnames(x)
     
     # Labels:
