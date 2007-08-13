@@ -17,7 +17,7 @@
 
 \alias{assetsCorEigenPlot}
 \alias{assetsTreePlot}
-\alias{assetsDendogramPlot}
+\alias{assetsDendrogramPlot}
 
 
 \title{Plots of Multivariate Asset Sets}
@@ -45,7 +45,7 @@
     \code{assetsCorgramPlot} \tab Displays correlations between assets, \cr
     \code{assetsCorEigenPlot} \tab Displays ratio of the largest two eigenvalues, \cr
     \code{assetsTreePlot} \tab Displays minimum spanning tree of assets, \cr
-    \code{assetsDendogramPlot} \tab Displays hierarchical clustering dendogram. }
+    \code{assetsDendrogramPlot} \tab Displays hierarchical clustering dendrogram. }
     
 }
     
@@ -69,7 +69,7 @@ assetsCorgramPlot(x, labels = TRUE, method = c("pie", "shade"), \dots)
 
 assetsCorEigenPlot(x, method = c("pearson", "kendall", "spearman"), \dots)
 assetsTreePlot(x, method = "euclidian", seed = NULL)
-assetsDendogramPlot(x, method = c(dist = "euclidian", clust = "complete"))
+assetsDendrogramPlot(x, method = c(dist = "euclidian", clust = "complete"))
 }
 
 
@@ -95,7 +95,7 @@ assetsDendogramPlot(x, method = c(dist = "euclidian", clust = "complete"))
         [assetsTreePlot] - \cr
         a character string, the method used to compute the distance
         matrix, see function \code{dist}.\cr
-        [assetsDendogramPlot] - \cr
+        [assetsDendrogramPlot] - \cr
         a character vector with two elements, the method used to compute 
         the distance matrix, see function \code{dist}, and the method used 
         for the agglomeration algorithm, see function \code{hclust}.\cr
