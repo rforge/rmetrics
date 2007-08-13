@@ -28,254 +28,86 @@
 
 
 ################################################################################
-# FUNCTION:                 TIME SERIES ASSETS PLOTS:
-#  assetsPlot                Displays an overview of single assets
-#  .retAssetsPlot             Internal function
-#  .retcumulatedAssetsPlot    Internal function
-#  .volatilityAssetsPlot      Internal function
-#  .rethistAssetsPlot         Internal function
-#  .retqqnormAssetsPlot       Internal function
-#  .hist                      Internal function
-#  assetsSeriesPlot          Displays time series of individual assets
-#  assetsHistPlot            Displays histograms of individual assets
-#  assetsDensityPlot         Displays density plots of individual assets 
-#  assetsQQNormPlot          Displays normal qq-plots of individual assets
-# FUNCTION:                 BIVARIATE ASSETS PLOTS:
-#  .assetsHistPairsPlot      Displays bivariate Histogram Plot
-# FUNCTION:                 DENSITY BOX PLOTS:
-#  assetsBoxPlot             Producess standard box plots
-#  assetsBoxPercentilePlot   Producess side-by-side box-percentile plots
-#  .bpxAssetsPlot             Internal function
-# FUNCTION:                 BIVARIATE ASSETS PLOTS:
-#  assetsPairsPlot           Displays pairs of scatterplots of assets
-#  assetsCorgramPlot         Displays correlations between assets
-#  assetsCorTestPlot         Displays and tests pairwise correlations
-# FUNCTION:                 BIVARIATE CORRELATION PLOTS:
-#  assetsCorEigenPlot        Displays ratio of the largest two eigenvalues
-#  assetsTreePlot            Displays minimum spanning tree of assets
-#  assetsDendogramPlot       Displays hierarchical clustering dendogram
-#  .assetsStarPlot           Draws segment diagrams of a multivariate data set
-# FUNCTION:                 SPECIAL SEGMENT PLOTS:
-#  .assetsStatsBoxPlot       Produces segment star plot of box plot statistics
+# FUNCTION:                   TIME SERIES ASSETS PLOTS:
+#  assetsReturnSurvey          Displays time series survey of assets
+#  assetsReturnPlot            Displays time series of individual assets
+#  assetsCumulatedPlot         Displays time series of individual assets
+#  assetsHistPlot              Displays histograms of individual assets 
+#  assetsQQNormPlot            Displays normal qq-plots of individual assets
+# FUNCTION:
+#  assetsRiskReturnPlot
+#  assetsNIGShapeTrianglePlot
+# FUNCTION:                   DENSITY BOX PLOTS:
+#  assetsBoxPlot               Producess standard box plots
+#  assetsBoxPercentilePlot     Producess side-by-side box-percentile plots
+# FUNCTION:                   BIVARIATE ASSETS PLOTS:
+#  assetsCorgramPlot           Displays correlations between assets
+#  assetsPairsPlot             Displays pairs of scatterplots of assets
+#  assetsCorTestPlot           Displays and tests pairwise correlations
+# FUNCTION:                   BIVARIATE CORRELATION PLOTS:
+#  assetsCorEigenPlot          Displays ratio of the largest two eigenvalues
+#  assetsTreePlot              Displays minimum spanning tree of assets
+#  assetsDendrogramPlot        Displays hierarchical clustering dendrogram
+# FUNCTION:                   SPECIAL SEGMENT PLOTS:
+#  .assetsStarPlot             Draws star or segment diagrams of a data set
+#  .assetsStatsBoxPlot         Produces segment star plot of box plot statistics
 ################################################################################
 
 
-assetsPlot =
-function(x, title = NULL, ...)
-{    
+################################################################################
+# FUNCTION:                   TIME SERIES ASSETS PLOTS:
+#  assetsReturnSurvey          Displays time series survey of assets
+#  assetsReturnPlot            Displays a return series of individual assets
+#  assetsCumulatedPlot         Displays a cumulated return series of  assets
+#  assetsHistPlot              Displays a return histogram of individual assets 
+#  assetsQQNormPlot            Displays normal qq-plots of individual assets
+
+
+assetsReturnSurvey = 
+function(x, col = "steelblue", ...)
+{   
     # Description:
-    #   Displays an overview of single assets
-    
-    # Arguments:
-    #   x a multivariate 'timeSeries' object of financial returns
+    #   Displays time series survey of assets
     
     # FUNCTION:
     
     # Settings:
-    nRecords <<- dim(x)[1]
-    nAssets <<- dim(x)[2]
-    assetNames <<- x@units
-
-    # Graph Frame:
-    dots = list(...)
-    oma = if("oma" %in% dots) dots$oma else oma = NULL
-    if (is.null(oma)) oma = rep(4, 4)
-    mar = if("mar" %in% dots) dots$mar else mar = NULL
-    if (is.null(mar)) mar = rep(2, 4)
-    par(mfrow = c(nAssets, 5), mar = mar, oma = oma, cex = 0.7)    
+    assetNames = colnames(x)
+    nAssets = ncol(x)
+    if (length(col) == 1) col = rep(col, times = n)
     
-    # Plot:
-    fit = list()
-    counter = 0
+    # Survey:
     for (i in 1:nAssets) {
+        # Return Plot:
+        assetsReturnPlot(x[, i], col[i], labels = FALSE, ...)
+        title(main = assetNames[i], xlab = "", ylab = "Returns")
+        mtext("Returns", line = 0.5, col = "black", cex = 0.7)
         
-        # Settings:
-        X = as.vector((x@Data[, i]))
-        counter = counter + 1
-        assetName = assetNames[i]
+        # Cumulated Return Plot:
+        assetsCumulatedPlot(x[, i], col[i], ...)
+        mtext("Cumulated Returns", line = 0.5, col = "black", cex = 0.7)
         
-        # 1. Return Series Plot:
-        .retAssetsPlot(X)
-        if (counter == 1) {
-            title(main = "Returns")
-            mtext(title, line = 2, side = 3, adj = 0, cex = 1.25)
-        }
-        mtext(assetName, line = 2.5, side = 2)
+        # Histogram Plot:
+        assetsHistPlot(x[, i], col = col[i], ...)
+        title(main = main[i], xlab = "Returns", ylab = "Density")
+        mtext("Histogram of Returns", col = "black", line = 0.5, cex = 0.7)
         
-        # 2. Cumulated Return Series Plot:
-        .retcumulatedAssetsPlot(X)
-        if (counter == 1) title(main = "Cumulated")
-    
-        # 3. Garch(1,1) Volatility Plot:
-        fit[[i]] = .volatilityAssetsPlot(X)
-        if (counter == 1) title(main = "Volatility")
-    
-        # 4. Histogram Plot:
-        .rethistAssetsPlot(X)
-        if (counter == 1) title(main = "Returns")
-        
-        # 5. Normal Quantile Plot:
-        .retqqnormAssetsPlot(X)
-        if (counter == 1) title(main = "QQ-Plot") 
-        
-        # 6. Autocrrelation Plot:
-        # acf(X, lag.max = 10, main = "")
-        # if (counter == 1) title(main = "ACF")
-        
-        # 7. Autocrrelation Plot:
-        # pacf(X, lag.max = 10, main = "")
-        # if (counter == 1) title(main = "PACF")    
-
-        mtext(assetName, side = 4, line = 1.2)
+        # Quantile-Quantile Plot:
+        assetsQQNormPlot(x[, i], scale = FALSE, col = col[i], ...)
+        mtext("Normal Quantile-Quantile Plot", col = "black", 
+            line = 0.5, cex = 0.7)
     }
     
     # Return Value:
-    invisible(fit)    
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.retAssetsPlot = 
-function(X) 
-{
-    # Return Series Plot:
-    plot(x = X, type = "h", col = "steelblue", 
-        main = "", xlab = "", ylab = "")
-    abline(h = 0, col ="grey")
     invisible()
-}
+} 
 
 
 # ------------------------------------------------------------------------------
 
 
-.retcumulatedAssetsPlot =
-function(X)
-{
-    # Cumulated Return Series Plot:
-    plot(x = colCumsums(X), type = "l", col = "steelblue",
-        xlab = "", ylab = "")
-    abline(h = 0, col = "grey")
-    invisible()
-}
-    
-
-# ------------------------------------------------------------------------------
-
-
-.volatilityAssetsPlot =
-function(X)
-{
-    # Garch(1,1) Volatility Plot:
-    fit = garchFit(~garch(1,1), X, trace = FALSE)
-    plot(abs(fit@data$x), type = "h", col = "steelblue", ylab = "x", main = "")
-    abline(h = 0, col ="grey")
-    #for (ci in c(+2, -2)) 
-    lines(2 * fit@sigma.t, col = "brown")
-    invisible(fit)
-}
-    
-
-# ------------------------------------------------------------------------------
-
-
-.rethistAssetsPlot =
-function(X)
-{        
-    # Return Histogram:
-    mean = mean(X)
-    median = median(X)
-    sd = sd(X)
-    result = .hist(X, nbins = 15)
-    plot(result, col = "steelblue", border = "white", 
-        freq = FALSE, main = "")
-    box()
-    # Add Fit:
-    s = seq(min(X), max(X), length = 201)
-    lines(s, dnorm(s, mean, sd), lwd = 2, col = "brown")
-    abline(v = mean, lwd = 2, col = "orange")
-    abline(v = median(X), lwd = 2, col = "darkgreen")
-    abline(h = 0, col = "grey") 
-    invisible()
-}
-    
-
-# ------------------------------------------------------------------------------
-
-
-.retqqnormAssetsPlot =
-function(X)
-{  
-    # 5. Normal Quantile Plot:
-    p = (1:nRecords)/(nRecords + 1)
-    S = sort((X - mean(X))/sqrt(var(X)))
-    z = qnorm(p)
-    plot(z, S, pch = 19, col = "steelblue", 
-        xlab = "", ylab = "", main = "")
-    abline(0, 1, col = "grey")
-    s = 1.96 * sqrt(p * (1 - p)/nRecords)
-    pl = p - s
-    i = pl < 1 & pl > 0
-    lower = quantile(S, probs = pl[i])
-    lines(z[i], lower, col = "brown")
-    pl = p + s
-    i = pl < 1 & pl > 0
-    upper = quantile(S, probs = pl[i])
-    lines(z[i], upper, col = "brown")  
-    invisible()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.hist = 
-function (x, nbins) 
-{   
-    nclass = nbins+1
-    n = length(x)
-    xname = paste(deparse(substitute(x), 500), collapse = "\n")
-    
-    breaks = seq(min(x), max(x), length = nclass)  
-    nB = length(breaks)
-    h = diff(breaks)
-    
-    counts = .C("bincount", 
-        as.double(x), 
-        as.integer(n), 
-        as.double(breaks), 
-        as.integer(nB), 
-        counts = integer(nB - 1), 
-        right = FALSE, 
-        include = TRUE, 
-        naok = FALSE, 
-        NAOK = FALSE, 
-        DUP = FALSE, 
-        PACKAGE = "base")$counts
-             
-    dens = counts/(n * h)
-    mids = 0.5 * (breaks[-1] + breaks[-nB])
-
-    r = structure(list(
-        breaks = breaks, 
-        counts = counts, 
-        intensities = dens, 
-        density = dens, 
-        mids = mids, 
-        xname = xname, 
-        equidist = TRUE), 
-        class = "histogram")
-    
-}   
-
-         
-# ------------------------------------------------------------------------------
-
-
-assetsSeriesPlot =
-function(x, which = 1:dim(x)[2], ...) 
+assetsReturnPlot =
+function(x, col = "steelblue", ...) 
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -285,15 +117,45 @@ function(x, which = 1:dim(x)[2], ...)
     #   x - a timeSeries object or any other rectangular object
     #       which can be transformed by the function as. matrix
     #       into a numeric matrix.
-    #   which - an integer value or vector specifying the number(s)
-    #       of the assets which are selected to be plotted. 
     
     # FUNCTION:
 
+    # Settings:
+    n = ncol(x)
+    if (length(col) == 1) col = rep(col, times = n)
+    
     # Plot:
-    for (i in which) {
-        seriesPlot(x[, i], ...)
-    }
+    seriesPlot(x, ylab = "Returns", col = col, ...)
+        
+    # Return Value:
+    invisible()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+assetsCumulatedPlot =
+function(x, col = "steelblue", ...) 
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Displays histograms of individual assets 
+    
+    # Arguments:
+    #   x - a timeSeries object or any other rectangular object
+    #       which can be transformed by the function as. matrix
+    #       into a numeric matrix.
+    
+    # FUNCTION:
+
+    # Settings:
+    n = ncol(x)
+    if (length(col) == 1) col = rep(col, times = n)
+    
+    # Plot:
+    x = exp(colCumsums(x))
+    seriesPlot(x, ylab = "Cumulated Returns", col = col, ...)
         
     # Return Value:
     invisible()
@@ -304,8 +166,7 @@ function(x, which = 1:dim(x)[2], ...)
 
 
 assetsHistPlot =
-function(x, method = c("cov", "mve", "mcd", "nnve", "shrink", "bagged"), 
-which = 1:dim(x)[2], xlim = NULL, skipZeros = FALSE, ...) 
+function(x, col = "steelblue", skipZeros = FALSE, ...) 
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -314,44 +175,19 @@ which = 1:dim(x)[2], xlim = NULL, skipZeros = FALSE, ...)
     # Arguments:
     #   x - a timeSeries object or any other rectangular object
     #       which can be transformed by the function as. matrix
-    #       into a numeric matrix.
-    #   method - the method to be used for the Gaussian fit,
-    #       "cov", sample covariance estimator, 
-    #       "mve", minimum volume ellipsoid,
-    #       "mcd", minimum covariance determinant method,  
-    #       "nnve", 
-    #       "shrink", 
-    #       "bagged" .
-    #   which - an integer value or vector specifying the number(s)
-    #       of the assets which are selected to be plotted. 
-    #   xlim - common x Limits in Plot
-    #   skipZeros - should zeros be skipped in the histogram plot of the
-    #       return series ?
+    #       into a numeric matrix. 
     
     # FUNCTION:
-    
+
     # Settings:
-    Units = colnames(x)
-    method = match.arg(method)
-    x = as.matrix(x)
-    
-    # Robust Estimation:
-    covRob = assetsMeanCov(x, method, ...)
+    n = ncol(x)
+    if (length(col) == 1) col = rep(col, times = n)
     
     # Plot:
-    for (i in which) {
-        # Classical Histogram:
+    for (i in 1:n) {
         X = x[, i]
-        if (skipZeros) X = X[X != 0]
-        if (is.null(xlim)) xlim = range(X)
-        histPlot(X, main = Units[i], add.fit = TRUE, ...)
-        
-        # Robust Gaussian Fit:
-        u = seq(xlim[1], xlim[2], length = 201)
-        v = dnorm(u, mean = covRob$mu[i], sd = sqrt(covRob$Sigma[i, i]))
-        abline(v = covRob$mu[i], col = "darkgreen")
-        lines(u, v, col = "darkgreen", lwd = 2)
-    }
+        if (skipZeros) X = X[X@Data != 0]
+        histPlot(X, ylab = "Cumulated Returns", col = col[i], ...)
         
     # Return Value:
     invisible()
@@ -361,58 +197,8 @@ which = 1:dim(x)[2], xlim = NULL, skipZeros = FALSE, ...)
 # ------------------------------------------------------------------------------
 
 
-assetsDensityPlot =
-function(x, method = c("cov", "mve", "mcd", "nnve", "shrink", "bagged"), 
-which = 1:dim(x)[2], ...)
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Displays density plots of individual assets
-    
-    # Arguments:
-    #   x - a timeSeries object or any other rectangular object
-    #       which can be transformed by the function as. matrix
-    #       into a numeric matrix. 
-    #   method - the method to be used. 
-    #       "cov",
-    #       "mve", minimum volume ellipsoid,
-    #       "mcd", minimum covariance determinant method,  
-    #       "nnve", 
-    #       "shrink", 
-    #       "bagged" .
-    #   which - an integer value or vector specifying the number(s)
-    #       of the assets which are selected to be plotted. 
-    
-    # FUNCTION:
-    
-    # Settings:
-    method = match.arg(method)
-    
-    # Robust Estimation:
-    covRob = assetsMeanCov(x, method, ...)
-    
-    # Plot:
-    for (i in which) {
-        densityPlot(x[, i], ...)
-                
-        # Robust Gaussian Fit:
-        xlim = range(x[, i])
-        u = seq(xlim[1], xlim[2], length = 201)
-        v = dnorm(u, mean = covRob$mu[i], sd = sqrt(covRob$Sigma[i, i]))
-        abline(v = covRob$mu[i], col = "darkgreen")
-        lines(u, v, col = "darkgreen", lwd = 2)
-    }
-        
-    # Return Value:
-    invisible()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
 assetsQQNormPlot =
-function(x, which = 1:dim(x)[2], ...)
+function(x, col = "steelblue", skipZeroes = FALSE, ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -427,11 +213,70 @@ function(x, which = 1:dim(x)[2], ...)
     
     # FUNCTION:
     
+    # Settings:
+    n = ncol(x)
+    if (length(col) == 1) col = rep(col, times = n)
+    
     # Plot:
-    for (i in which) {
-        qqnormPlot(x[, i], ...)
+    for (i in 1:n) {
+        X = x[, i]
+        if (skipZeros) X = X[X@Data != 0]
+        qqnormPlot(X, col = col, ...)
     }
         
+    # Return Value:
+    invisible()
+}
+
+
+################################################################################
+
+
+# assetsQQNIGPlot ...
+
+
+# ------------------------------------------------------------------------------
+
+
+assetsRiskReturnPlot =
+function(x, col = "steelblue", percentage = FALSE, scale = 252, ...) 
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #
+    
+    # Arguments:
+    #   x - a multivariate 'timeSeries' object
+     
+    # FUNCTION:
+    
+    # Compute Return and Risk:
+    if (percentage) index = 100 else index = 1
+    Risk = index*colStdevs(X)*sqrt(scale)
+    Return = index*colMeans(as.matrix(x))*scale 
+    n = ncol(x)
+    if (length(col) == 1) col = rep(col, times = n)
+
+    # Create Graph Frame:
+    riskRange = range(Risk)
+    returnRange = range(Return)
+    riskRange[1] = 0
+    riskRange[2] = riskRange[2] + diff(riskRange)/10
+    returnRange[2] = returnRange[2] + diff(returnRange)/10
+    plot(x = riskRange, y = returnRange, 
+        xlab = "Risk", ylab = "Return", type = "n", ...)
+        
+    # Add all Points:
+    colNames = names(Risk)
+    for (i in 1:length(Risk)) {
+        points(Risk[i], Return[i], pch = 19, col = col[i], cex = 1.5, ...)
+        text(
+            Risk[i]+diff(riskRange/50), 
+            Return[i]+diff(returnRange/50), 
+            colNames[i], adj = 0, col = col[i])
+    }
+    grid(col = "darkgrey")
+    
     # Return Value:
     invisible()
 }
@@ -440,7 +285,40 @@ function(x, which = 1:dim(x)[2], ...)
 # ------------------------------------------------------------------------------
 
 
-# assetsQQNIGPlot ...
+assetsNIGShapeTrianglePlot =
+function(x, col = "steelblue", ...)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #
+    
+    # Arguments:
+    #   x - a multivariate 'timeSeries' object
+     
+    # FUNCTION:
+    
+    # Settings:
+    n = ncol(x)
+    if (length(col) == 1) col = rep(col, times = n)
+    
+    # Shape Triangle:
+    for (i in 1:n) {
+        fit = nigFit(100*x[, i], doplot = FALSE)
+        nigShapeTriangle(fit, add = as.logical(i-1), col = col[i], ...) 
+        
+        par = fit@fit$estimate
+        alpha = par[1]
+        beta = par[2]
+        delta = par[3]
+        mu = par[4]
+        zeta = 1/sqrt(1 + delta * sqrt(alpha^2 - beta^2))
+        chi = zeta * (beta/alpha)
+        text(chi+0.01, zeta-0.01, colNames[i], adj = 0, col = col[i])
+    }
+    
+    # Return Value:
+    invisible()
+}
 
 
 ################################################################################
@@ -553,7 +431,34 @@ function(x, col = "bisque", ...)
         xlab = "", ylab = "", xaxt = "n", ...)
     xpos = NULL
     for (i in 1:n) {
-        plot.values = .bpxAssetsPlot(all.x[[i]], centers[i])
+        # plot.values = .bpxAssetsPlot(all.x[[i]], centers[i])
+        y = all.x[[i]]
+        offset = centers[i]
+        y = y[!is.na(y)]
+        n = length(y)
+        delta = 1/(n + 1)
+        prob = seq(delta, 1 - delta, delta)
+        quan = sort(y)
+        med = median(y)
+        q1 = median(y[y < med])
+        q3 = median(y[y > med])
+        first.half.p = prob[quan <= med]
+        second.half.p = 1 - prob[quan > med]
+        plotx = c(first.half.p, second.half.p)
+        options(warn = -1)
+        qx = approx(quan, plotx, xout = q1)$y
+        q1.x = c(-qx, qx) + offset
+        qx = approx(quan, plotx, xout = q3)$y
+        options(warn = 0)
+        q3.x = c(-qx, qx) + offset
+        q1.y = c(q1, q1)
+        q3.y = c(q3, q3)
+        med.x = c(-max(first.half.p), max(first.half.p)) + offset
+        med.y = c(med, med)
+        plot.values = list(x1 = (-plotx) + offset, y1 = quan, x2 = plotx + 
+            offset, y2 = quan, q1.y = q1.y, q1.x = q1.x, q3.y = q3.y, 
+            q3.x = q3.x, med.y = med.y, med.x = med.x)      
+        # Continue:
         xpos = c(xpos, mean(plot.values$med.x))
         x.p = c(plot.values$x1, plot.values$x2)
         y.p = c(plot.values$y1, plot.values$y2)
@@ -707,7 +612,7 @@ function(x, labels = TRUE, ...)
 
 
 assetsCorgramPlot =
-function(x, labels = TRUE, method = c("pie", "shade"), ...)
+function(x, labels = TRUE, method = c("pie", "shade", "hist"), ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -731,26 +636,73 @@ function(x, labels = TRUE, method = c("pie", "shade"), ...)
     x = seriesData(x)
     
     # Internal Function:
-    .panel.both = function(x, y, ...) {
+    .panel.lower = function(x, y, ...) 
+    {
         if (method[1] == "pie") {
             .panel.pie(x, y, ...)
+            .panel.pts(x, y, ...) 
         } else if (method[1] == "shade") {
             .panel.shade(x, y, ...)
+            .panel.pts(x, y, ...) 
+        } else if (method[1] == "hist") {
+            .panel.shade(x, y, ...)
+            .panel.hist(x, y, ...)
         }
-        .panel.pts(x, y, ...) 
     } 
+    .panel.upper = function(x, y, ...) 
+    {
+        .panel.ellipse(x, y, ...)
+    }
         
     # Plot Corellogram - Pies and Ellipses:    
     .corrgram(x, 
         order = TRUE,
-        lower.panel = .panel.both,
-        upper.panel = .panel.ellipse, 
+        lower.panel = .panel.lower,
+        upper.panel = .panel.upper, 
         text.panel = .panel.txt, ...)
         
     # Return Value:
     invisible()
 }
- 
+
+
+# ------------------------------------------------------------------------------
+
+
+assetsPairCopulaPlot =
+function(x, labels = TRUE, ...)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Displays correlations between assets
+    
+    # Arguments:
+    #   x - a timeSeries object or any other rectangular object
+    #       which can be transformed by the function as. matrix
+    #       into a numeric matrix.
+    #   labels - a logical flag. Should default labels be printed?
+    #       Not implemented.
+    
+    # Example:
+    #   assetsCorgramPlot(x=100*as.timeSeries(data(LPP2005REC)))
+
+    # FUNCTION:
+    
+    # Settings:
+    stopifnot(is.timeSeries(x))
+    x = seriesData(x)
+   
+    # Plot Corellogram - Pies and Ellipses:    
+    .corrgram(x, 
+        order = TRUE,
+        lower.panel = .panel.copula,
+        upper.panel = .panel.hist, 
+        text.panel = .panel.txt, ...)
+        
+    # Return Value:
+    invisible()
+}
+
 
 # ------------------------------------------------------------------------------
  
@@ -841,12 +793,12 @@ function(x, method = "euclidian", seed = NULL)
 # ------------------------------------------------------------------------------
 
 
-assetsDendogramPlot =
+assetsDendrogramPlot =
 function(x, method = c(dist = "euclidian", clust = "complete"))
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Displays hierarchical clustering dendogram
+    #   Displays hierarchical clustering dendrogram
     
     # FUNCTION:
     
@@ -861,7 +813,7 @@ function(x, method = c(dist = "euclidian", clust = "complete"))
     # Hierarchical Clustering:
     ans = hclust(DIST, method = method[2]) 
     
-    # Plot Dendogram:
+    # Plot Dendrogram:
     # main = substitute(x)
     plot(ans, xlab = "", main = "", sub = "")
     mtext(paste(
@@ -904,6 +856,10 @@ function(x, method = c("segments", "stars"), keyOffset = c(0, 0), ...)
     xCol = ncol(x)
     yCol = nrow(x)
     NY = NX = ceiling(sqrt(xCol))
+    
+    if (NX*NY == xCol) NY = NY + 1
+    
+    
     loc = NULL
     for (nx in 1:NY)
         for (ny in 1:NX)
@@ -1090,6 +1046,49 @@ function(x,
     # Return Value:
     invisible()
 } 
+
+
+################################################################################
+
+
+.hist = 
+function (x, nbins) 
+{   
+    nclass = nbins+1
+    n = length(x)
+    xname = paste(deparse(substitute(x), 500), collapse = "\n")
+    
+    breaks = seq(min(x), max(x), length = nclass)  
+    nB = length(breaks)
+    h = diff(breaks)
+    
+    counts = .C("bincount", 
+        as.double(x), 
+        as.integer(n), 
+        as.double(breaks), 
+        as.integer(nB), 
+        counts = integer(nB - 1), 
+        right = FALSE, 
+        include = TRUE, 
+        naok = FALSE, 
+        NAOK = FALSE, 
+        DUP = FALSE, 
+        PACKAGE = "base")$counts
+             
+    dens = counts/(n * h)
+    mids = 0.5 * (breaks[-1] + breaks[-nB])
+
+    r = structure(list(
+        breaks = breaks, 
+        counts = counts, 
+        intensities = dens, 
+        density = dens, 
+        mids = mids, 
+        xname = xname, 
+        equidist = TRUE), 
+        class = "histogram")
+    
+}   
 
 
 ################################################################################
