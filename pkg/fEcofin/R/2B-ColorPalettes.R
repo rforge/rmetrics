@@ -43,7 +43,7 @@
 #  .hex.to.dec               Converts heximal numbers do decimal numbers
 #  .dec.to.hex               Converts decimal numbers do heximal numbers
 # FUNCTION:                 COLOR RAMPS:
-
+#  .blue2red
 ################################################################################
 
 
@@ -287,14 +287,27 @@ function(b)
 # License: GPL
 # Packaged: Thu Apr  5 16:34:42 2007; tkeitt
 
+# FUNCTION:                 COLOR RAMPS:
+# .blue2red
+# .green2red
+# .blue2green
+# .purple2green
+# .blue2yellow
+# .cyan2magenta
+
 
 .blue2red = 
 function(n)
 {
+    # FUNCTION:
+    
+    # Color Ramp:
     n2 = ceiling(n / 2)
     red = rep(c(0, 1), each = n2)[1:n]
     green = 1 - abs(seq(-1, 1, length.out = n))
     blue = rev(red)
+    
+    # Return Value:
     rgb(red, green, blue)
 }
 
@@ -304,10 +317,15 @@ function(n)
 .green2red = 
 function(n)
 {
+    # FUNCTION:
+    
+    # Color Ramp:
     n2 = ceiling(n / 2)
     red = rep(c(0, 1), each = n2)[1:n]
     blue = 1 - abs(seq(-1, 1, length.out = n))
     green = rev(red)
+    
+    # Return Value:
     rgb(red, green, blue)
   }
 
@@ -318,10 +336,15 @@ function(n)
 .blue2green = 
 function(n)
 {
+    # FUNCTION:
+    
+    # Color Ramp:
     n2 = ceiling(n / 2)
     green = rep(c(0, 1), each = n2)[1:n]
     red = 1 - abs(seq(-1, 1, length.out = n))
     blue = rev(green)
+    
+    # Return Value:
     rgb(red, green, blue)
 }
 
@@ -332,9 +355,14 @@ function(n)
 .purple2green = 
 function(n)
 {
+    # FUNCTION:
+    
+    # Color Ramp:
     red = rep(0.5, length.out = n)
     green = seq(0, 1, length.out = n)
     blue = rev(green)
+    
+    # Return Value:
     rgb(red, green, blue)
 }
 
@@ -345,9 +373,14 @@ function(n)
 .blue2yellow = 
 function(n)
 {
+    # FUNCTION:
+    
+    # Color Ramp:
     red = seq(0, 1, length.out = n)
     green = red
     blue = rev(red)
+    
+    # Return Value:
     rgb(red, green, blue)
 }
 
@@ -358,9 +391,14 @@ function(n)
 .cyan2magenta = 
 function(n)
 {
+    # FUNCTION:
+    
+    # Color Ramp:
     red = seq(0, 1, length.out = n)
     green = rev(red)
     blue = rep(1, n)
+    
+    # Return Value:
     rgb(red, green, blue)
 }
 
