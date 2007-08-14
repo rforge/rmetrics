@@ -40,6 +40,11 @@
 #  sllnPlot             Verifies Kolmogorov's Strong Law of large numbers
 #  lilPlot              Verifies Hartman-Wintner's Law of the iterated logarithm
 #  xacfPlot             Plots autocorrelations of exceedences
+# FUNCTION:            MEAN EXCESS FUNCTION FIT:
+# .normMeanExcessFit    Fits mean excesses to a normal density
+# .ghMeanExcessFit      Fits mean excesses to a generalized hyperbolic density
+# .hypMeanExcessFit     Fits mean excesses to a hyperbolic density
+# .nigMeanExcessFit     Fits mean excesses to a normal inverse Gaussian density
 ################################################################################
 
 
@@ -789,6 +794,197 @@ which = c("all", 1, 2, 3, 4), labels = TRUE, ...)
 
     # Return Value:
     if (doplot) return(invisible(result)) else return(result)
+}
+
+
+################################################################################
+#  .normMeanExcessFit              Fits mean excesses with a normal density
+#  .ghMeanExcessFit                Fits mean excesses with a GH density
+#  .hypMeanExcessFit               Fits mean excesses with a HYP density
+#  .nigMeanExcessFit               Fits mean excesses with a NIG density
+
+
+.normMeanExcessFit = 
+function(x, doplot = TRUE, ...)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Fits mean excesses with a normal density   
+    
+    # Arguments:
+    #   x -  an univariate 'timeSeries' object
+    #   doplot - alogical flag. Should a mean excess plot be dispalyed?
+    #   ... - optional parameters passed to the function mePlot()
+    
+    # FUNCTION: 
+    
+    # Settings:
+    x = as.vector(x)
+    U = mePlot(x, doplot = FALSE)[, 1]
+    U = U[!is.na(U)]
+    U = seq(min(U), max(U), length = 51)
+    
+    # Fit Parameters:
+    param = c(mean(x), sd(x))
+    
+    # Compute Mean Excess Function:
+    func<-function(x, u, param) {
+        (x-u)*dnorm(x, param[1], param[2])}  
+    Y = NULL
+    for (u in U) {
+        y = integrate(func, lower = u, upper = Inf, u = u, 
+            param = param)[[1]]
+        Y = c(Y, y)
+    }
+    if (doplot) {
+        mePlot(x, ...)
+        lines(U, Y)
+    }
+    result = data.frame(threshold = U, me = Y)
+
+    # Return Value:
+    invisible(result)
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+ghMeanExcessFit = 
+function(x, doplot = TRUE, ...)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Fits mean excesses with a genaralized hyperbolic density   
+    
+    # Arguments:
+    #   x -  an univariate 'timeSeries' object
+    #   doplot - alogical flag. Should a mean excess plot be dispalyed?
+    #   ... - optional parameters passed to the function mePlot()
+    
+    # FUNCTION: 
+    
+    # Settings:
+    x = as.vector(x)
+    U = mePlot(x, doplot = FALSE)[, 1]
+    U = U[!is.na(U)]
+    U = seq(min(U), max(U), length = 51)
+    
+    # Fit Parameters:
+    fit = ghFit(x, doplot = FALSE)
+    param = fit@fit$estimate
+    
+    # Compute Mean Excess Function:
+    func<-function(x, u, param) {
+        (x-u)*dhyp(x, param[1], param[2], param[3], param[4], param[5]) }  
+    Y = NULL
+    for (u in U) {
+        y = integrate(func, lower = u, upper = Inf, u = u, 
+            param = param)[[1]]
+        Y = c(Y, y)
+    }
+    if (doplot) {
+        mePlot(x, ...)
+        lines(U, Y)
+    }
+    result = data.frame(threshold = U, me = Y)
+
+    # Return Value:
+    invisible(result)
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.hypMeanExcessFit = 
+function(x, doplot = TRUE, ...)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Fits mean excesses with a hyperbolic density   
+    
+    # Arguments:
+    #   x -  an univariate 'timeSeries' object
+    #   doplot - alogical flag. Should a mean excess plot be dispalyed?
+    #   ... - optional parameters passed to the function mePlot()
+    
+    # FUNCTION: 
+    
+    # Settings:
+    x = as.vector(x)
+    U = mePlot(x, doplot = FALSE)[, 1]
+    U = U[!is.na(U)]
+    U = seq(min(U), max(U), length = 51)
+    
+    # Fit Parameters:
+    fit = hypFit(x, doplot = FALSE)
+    param = fit@fit$estimate
+    
+    # Compute Mean Excess Function:
+    func<-function(x, u, param) {
+        (x-u)*dhyp(x, param[1], param[2], param[3], param[4])}     
+    Y = NULL
+    for (u in U) {
+        y = integrate(func, lower = u, upper = Inf, u = u, 
+            param = param)[[1]]
+        Y = c(Y, y)
+    }
+    if (doplot) {
+        mePlot(x, ...)
+        lines(U, Y)
+    }
+    result = data.frame(threshold = U, me = Y)
+
+    # Return Value:
+    invisible(result)
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.nigMeanExcessFit = 
+function(x, doplot = TRUE, ...)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Fits mean excesses with a normal inverse Gaussian density   
+    
+    # Arguments:
+    #   x -  an univariate 'timeSeries' object
+    #   doplot - alogical flag. Should a mean excess plot be dispalyed?
+    #   ... - optional parameters passed to the function mePlot()
+    
+    # FUNCTION: 
+    
+    # Settings:
+    x = as.vector(x)
+    U = mePlot(x, doplot = FALSE)[, 1]
+    U = U[!is.na(U)]
+    U = seq(min(U), max(U), length = 51)
+    
+    # Fit Parameters:
+    fit = nigFit(x, doplot = FALSE)
+    param = fit@fit$estimate
+    
+    # Compute Mean Excess Function:
+    func<-function(x, u, param) {
+        (x-u)*dnig(x, param[1], param[2], param[3], param[4])}
+    Y = NULL
+    for (u in U) {
+        y = integrate(func, lower = u, upper = Inf, u = u, 
+            param = param)[[1]]
+        Y = c(Y, y)
+    }
+    if (doplot) {
+        mePlot(x, ...)
+        lines(U, Y)
+    }
+    result = data.frame(threshold = U, me = Y)
+
+    # Return Value:
+    invisible(result)
 }
 
 
