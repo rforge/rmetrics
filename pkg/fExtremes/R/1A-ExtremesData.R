@@ -41,10 +41,10 @@
 #  lilPlot              Verifies Hartman-Wintner's Law of the iterated logarithm
 #  xacfPlot             Plots autocorrelations of exceedences
 # FUNCTION:            MEAN EXCESS FUNCTION FIT:
-# .normMeanExcessFit    Fits mean excesses to a normal density
-# .ghMeanExcessFit      Fits mean excesses to a generalized hyperbolic density
-# .hypMeanExcessFit     Fits mean excesses to a hyperbolic density
-# .nigMeanExcessFit     Fits mean excesses to a normal inverse Gaussian density
+#  normMeanExcessFit    Fits mean excesses to a normal density
+#  ghMeanExcessFit      Fits mean excesses to a generalized hyperbolic density
+#  hypMeanExcessFit     Fits mean excesses to a hyperbolic density
+#  nigMeanExcessFit     Fits mean excesses to a normal inverse Gaussian density
 ################################################################################
 
 
@@ -798,14 +798,15 @@ which = c("all", 1, 2, 3, 4), labels = TRUE, ...)
 
 
 ################################################################################
-#  .normMeanExcessFit              Fits mean excesses with a normal density
-#  .ghMeanExcessFit                Fits mean excesses with a GH density
-#  .hypMeanExcessFit               Fits mean excesses with a HYP density
-#  .nigMeanExcessFit               Fits mean excesses with a NIG density
+#   normMeanExcessFit              Fits mean excesses with a normal density
+#   ghMeanExcessFit                Fits mean excesses with a GH density
+#   hypMeanExcessFit               Fits mean excesses with a HYP density
+#   nigMeanExcessFit               Fits mean excesses with a NIG density
+#   ghtMeanExcessFit               Fits mean excesses with a GHT density
 
 
-.normMeanExcessFit = 
-function(x, doplot = TRUE, ...)
+normMeanExcessFit = 
+function(x, doplot = TRUE, trace = TRUE, ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -820,9 +821,10 @@ function(x, doplot = TRUE, ...)
     
     # Settings:
     x = as.vector(x)
-    U = mePlot(x, doplot = FALSE)[, 1]
+    U = mePlot(x, doplot = doplot, ...)[, 1]
     U = U[!is.na(U)]
     U = seq(min(U), max(U), length = 51)
+    if(trace) print(U)
     
     # Fit Parameters:
     param = c(mean(x), sd(x))
@@ -832,14 +834,13 @@ function(x, doplot = TRUE, ...)
         (x-u)*dnorm(x, param[1], param[2])}  
     Y = NULL
     for (u in U) {
-        y = integrate(func, lower = u, upper = Inf, u = u, 
+        y1 = integrate(func, lower = u, upper = Inf, u = u, 
             param = param)[[1]]
-        Y = c(Y, y)
+        y2 = integrate(dnorm, lower = u, upper = Inf, 
+            mean = param[1], sd = param[2])[[1]]
+        Y = c(Y, y1/y2)
     }
-    if (doplot) {
-        mePlot(x, ...)
-        lines(U, Y)
-    }
+    if (doplot) lines(U, Y, lwd = 2)
     result = data.frame(threshold = U, me = Y)
 
     # Return Value:
@@ -851,11 +852,11 @@ function(x, doplot = TRUE, ...)
 
 
 ghMeanExcessFit = 
-function(x, doplot = TRUE, ...)
+function(x, doplot = TRUE, trace = TRUE, ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Fits mean excesses with a genaralized hyperbolic density   
+    #   Fits mean excesses with a hyperbolic density   
     
     # Arguments:
     #   x -  an univariate 'timeSeries' object
@@ -866,9 +867,10 @@ function(x, doplot = TRUE, ...)
     
     # Settings:
     x = as.vector(x)
-    U = mePlot(x, doplot = FALSE)[, 1]
+    U = mePlot(x, doplot = doplot, ...)[, 1]
     U = U[!is.na(U)]
     U = seq(min(U), max(U), length = 51)
+    if(trace) print(U)
     
     # Fit Parameters:
     fit = ghFit(x, doplot = FALSE)
@@ -876,17 +878,19 @@ function(x, doplot = TRUE, ...)
     
     # Compute Mean Excess Function:
     func<-function(x, u, param) {
-        (x-u)*dhyp(x, param[1], param[2], param[3], param[4], param[5]) }  
+        (x-u)*dgh(x, param[1], param[2], param[3], param[4], param[5]) }  
     Y = NULL
     for (u in U) {
-        y = integrate(func, lower = u, upper = Inf, u = u, 
+        y1 = integrate(func, lower = u, upper = Inf, u = u, 
             param = param)[[1]]
-        Y = c(Y, y)
+        if (trace) print(c(u, y1))
+        y2 = integrate(dgh, lower = u, upper = Inf, alpha = param[1], 
+            beta = param[2], delta = param[3], mu = param[4],
+            lambda = param[5])[[1]]
+        if (trace) print(c(u, y2))
+        Y = c(Y, y1/y2)
     }
-    if (doplot) {
-        mePlot(x, ...)
-        lines(U, Y)
-    }
+    if (doplot) lines(U, Y, lwd = 2)
     result = data.frame(threshold = U, me = Y)
 
     # Return Value:
@@ -897,8 +901,8 @@ function(x, doplot = TRUE, ...)
 # ------------------------------------------------------------------------------
 
 
-.hypMeanExcessFit = 
-function(x, doplot = TRUE, ...)
+hypMeanExcessFit = 
+function(x, doplot = TRUE, trace = TRUE, ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -932,7 +936,7 @@ function(x, doplot = TRUE, ...)
     }
     if (doplot) {
         mePlot(x, ...)
-        lines(U, Y)
+        lines(U, Y, ...)
     }
     result = data.frame(threshold = U, me = Y)
 
@@ -944,12 +948,12 @@ function(x, doplot = TRUE, ...)
 # ------------------------------------------------------------------------------
 
 
-.nigMeanExcessFit = 
-function(x, doplot = TRUE, ...)
+nigMeanExcessFit = 
+function(x, doplot = TRUE, trace = TRUE, ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Fits mean excesses with a normal inverse Gaussian density   
+    #   Fits mean excesses with a genaralized hyperbolic density   
     
     # Arguments:
     #   x -  an univariate 'timeSeries' object
@@ -960,27 +964,78 @@ function(x, doplot = TRUE, ...)
     
     # Settings:
     x = as.vector(x)
-    U = mePlot(x, doplot = FALSE)[, 1]
+    U = mePlot(x, doplot = doplot, ...)[, 1]
     U = U[!is.na(U)]
     U = seq(min(U), max(U), length = 51)
+    if(trace) print(U)
     
     # Fit Parameters:
-    fit = nigFit(x, doplot = FALSE)
+    fit = nigFit(x, doplot = FALSE, scale = TRUE)
     param = fit@fit$estimate
     
     # Compute Mean Excess Function:
     func<-function(x, u, param) {
-        (x-u)*dnig(x, param[1], param[2], param[3], param[4])}
+        (x-u)*dnig(x, param[1], param[2], param[3], param[4]) }  
     Y = NULL
     for (u in U) {
-        y = integrate(func, lower = u, upper = Inf, u = u, 
+        y1 = integrate(func, lower = u, upper = Inf, u = u, 
             param = param)[[1]]
-        Y = c(Y, y)
+        if (trace) print(c(u, y1))
+        y2 = integrate(dnig, lower = u, upper = Inf, alpha = param[1], 
+            beta = param[2], delta = param[3], mu = param[4])[[1]]
+        if (trace) print(c(u, y2))
+        Y = c(Y, y1/y2)
     }
-    if (doplot) {
-        mePlot(x, ...)
-        lines(U, Y)
+    if (doplot) lines(U, Y, lwd = 2)
+    result = data.frame(threshold = U, me = Y)
+
+    # Return Value:
+    invisible(result)
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+ghtMeanExcessFit = 
+function(x, doplot = TRUE, trace = TRUE, ...)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Fits mean excesses with a genaralized hyperbolic density   
+    
+    # Arguments:
+    #   x -  an univariate 'timeSeries' object
+    #   doplot - alogical flag. Should a mean excess plot be dispalyed?
+    #   ... - optional parameters passed to the function mePlot()
+    
+    # FUNCTION: 
+    
+    # Settings:
+    x = as.vector(x)
+    U = mePlot(x, doplot = doplot, ...)[, 1]
+    U = U[!is.na(U)]
+    U = seq(min(U), max(U), length = 51)
+    if(trace) print(U)
+    
+    # Fit Parameters:
+    fit = ghtFit(x, doplot = FALSE, scale = TRUE)
+    param = fit@fit$estimate
+    
+    # Compute Mean Excess Function:
+    func<-function(x, u, param) {
+        (x-u) * dght(x, param[1], param[2], param[3], param[4]) }  
+    Y = NULL
+    for (u in U) {
+        y1 = integrate(func, lower = u, upper = Inf, u = u, 
+            param = param)[[1]]
+        if (trace) print(c(u, y1))
+        y2 = integrate(dght, lower = u, upper = Inf, 
+            beta = param[1], delta = param[2], mu = param[3], nu = param[4])[[1]]
+        if (trace) print(c(u, y2))
+        Y = c(Y, y1/y2)
     }
+    if (doplot) lines(U, Y, lwd = 2)
     result = data.frame(threshold = U, me = Y)
 
     # Return Value:
