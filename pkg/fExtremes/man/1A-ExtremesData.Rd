@@ -19,6 +19,12 @@
 
 \alias{xacfPlot}
 
+\alias{normMeanExcessFit} 
+\alias{ghMeanExcessFit}   
+\alias{hypMeanExcessFit}    
+\alias{nigMeanExcessFit}    
+\alias{ghtMeanExcessFit}    
+
 
 \title{Explorative Data Analysis}
 
@@ -46,7 +52,14 @@
     \code{ssrecordsPlot} \tab another variant, investigates subsamples, \cr
     \code{sllnPlot} \tab verifies Kolmogorov's strong law of large numbers, \cr
     \code{lilPlot} \tab verifies Hartman-Wintner's law of the iterated logarithm, \cr
-    \code{xacfPlot} \tab ACF of exceedences over a threshold. }  
+    \code{xacfPlot} \tab ACF of exceedences over a threshold, \cr
+    \code{normMeanExcessFit} \tab fits mean excesses with a normal density, \cr
+    \code{ghMeanExcessFit} \tab fits mean excesses with a GH density, \cr   
+    \code{hypMeanExcessFit} \tab fits mean excesses with a HYP density, \cr   
+    \code{nigMeanExcessFit} \tab fits mean excesses with a NIG density, \cr  
+    \code{ghtMeanExcessFit} \tab fits mean excesses with a GHT density. }   
+    
+     }  
     
 }
 
@@ -74,6 +87,12 @@ lilPlot(x, doplot = TRUE, labels = TRUE, \dots)
 
 xacfPlot(x, u = quantile(x, 0.95), lag.max = 15, doplot = TRUE, 
     which = c("all", 1, 2, 3, 4), labels = TRUE, \dots)
+    
+normMeanExcessFit(x, doplot = TRUE, trace = TRUE, \dots)
+ghMeanExcessFit(x, doplot = TRUE, trace = TRUE, \dots)
+hypMeanExcessFit(x, doplot = TRUE, trace = TRUE, \dots)
+nigMeanExcessFit(x, doplot = TRUE, trace = TRUE, \dots)
+ghtMeanExcessFit(x, doplot = TRUE, trace = TRUE, \dots)
 }
 
 
@@ -131,6 +150,10 @@ xacfPlot(x, u = quantile(x, 0.95), lag.max = 15, doplot = TRUE,
         a numeric value at which data are to be left-truncated, value 
         at which data are to be right-truncated or the thresold value, 
         by default 95\%.
+        }
+    \item{trace}{
+        a logical flag, by default \code{TRUE}. Should the calculations     
+        be traced?
         }
     \item{u}{
         a numeric value at which level the data are to be truncated. By 
