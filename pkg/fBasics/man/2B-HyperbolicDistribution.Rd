@@ -21,6 +21,8 @@
 
 \alias{nigShapeTriangle}
 
+\alias{dght}
+
 \alias{hypSlider}
 \alias{nigSlider}
 
@@ -45,6 +47,7 @@
     \code{[dpqr]gh} \tab The generalized hyperbolic distribution, \cr
     \code{[dpqr]hyp} \tab The hyperbolic distribution, \cr
     \code{[dpqr]nig} \tab The normal inverse Gaussian distribution, \cr
+    \code{dght} \tab The Student-t limit density, \cr
     \code{hypMode} \tab the hyperbolic mode, \cr
     \code{nigShapeTriangle} \tab plots NIG Shape Triangle, \cr
     \code{hypSlider} \tab interactive hyperbolic distribution display, \cr
@@ -54,7 +57,7 @@
 
 
 \usage{
-dgh(x, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1)
+dgh(x, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1, log = FALSE)
 pgh(q, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1)
 qgh(p, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1)
 rgh(n, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1)
@@ -64,10 +67,12 @@ phyp(q, alpha = 1, beta = 0, delta = 1, mu = 0, pm = c(1, 2, 3, 4), \dots)
 qhyp(p, alpha = 1, beta = 0, delta = 1, mu = 0, pm = c(1, 2, 3, 4), \dots)
 rhyp(n, alpha = 1, beta = 0, delta = 1, mu = 0, pm = c(1, 2, 3, 4))
 
-dnig(x, alpha = 1, beta = 0, delta = 1, mu = 0)
+dnig(x, alpha = 1, beta = 0, delta = 1, mu = 0, log = FALSE)
 pnig(q, alpha = 1, beta = 0, delta = 1, mu = 0)
 qnig(p, alpha = 1, beta = 0, delta = 1, mu = 0)
 rnig(n, alpha = 1, beta = 0, delta = 1, mu = 0)
+
+dght(x, beta = 1e-6, delta = 1, mu = 0, nu = 10, log = FALSE)
 
 nigShapeTriangle(object, add = FALSE, \dots)
 
@@ -106,8 +111,15 @@ nigSlider()
         and \code{beta} take the meaning of the shape parameters
         (usually named) \code{a.bar} and \code{b.bar}.
         }
+    \item{log}{
+        a logical flag by default \code{FALSE}. 
+        Should the logarithm of the density be returned?
+        }
     \item{n}{
         number of observations.
+        }
+    \item{nu}{
+        a numeric value, the number of degrees of freedom.
         }
     \item{object}{
         [nigShapeTriangle] - \cr

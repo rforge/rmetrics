@@ -16,6 +16,7 @@
 \alias{ghFit}
 \alias{hypFit}
 \alias{nigFit}
+\alias{ghtFit}
 \alias{print.fDISTFIT}
 
 \title{Parameter Fit of a Distribution}
@@ -39,7 +40,8 @@
     \code{stableFit} \tab MLE and Quantile Method stable parameter fit, \cr
     \code{ghFit} \tab MLE parameter fit for a generalized hyperbolic distribution, \cr
     \code{hypFit} \tab MLE parameter fit for a hyperbolic distribution, \cr
-    \code{nigFit} \tab MLE parameter fit for a normal inverse Gaussian distribution. }
+    \code{nigFit} \tab MLE parameter fit for a normal inverse Gaussian distribution, \cr 
+    \code{ghtFit} \tab MLE parameter fit for a skew Student-t GH distribution. }
 
 }
 
@@ -53,20 +55,26 @@ stableFit(x, alpha = 1.75, beta = 0, gamma = 1, delta = 0,
     type = c("q", "mle"), doplot = TRUE, trace = FALSE, title = NULL, 
     description = NULL)
     
-ghFit(x, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1, doplot = TRUE, 
-    span = "auto", trace = FALSE, title = NULL, description = NULL, \dots) 
-hypFit(x, alpha = 1, beta = 0, delta = 1, mu = 0, doplot = TRUE, 
-    span = "auto", trace = FALSE, title = NULL, description = NULL, \dots)
-nigFit(x, alpha = 1, beta = 0, delta = 1, mu = 0, doplot = TRUE, 
-    span = "auto", trace = FALSE, title = NULL, description = NULL, \dots)
-   
+ghFit(x, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1, 
+    scale = TRUE, doplot = TRUE, span = "auto", trace = TRUE, 
+    title = NULL, description = NULL, \dots) 
+hypFit(x, alpha = 1, beta = 0, delta = 1, mu = 0, 
+    scale = TRUE, doplot = TRUE, span = "auto", trace = TRUE, 
+    title = NULL, description = NULL, \dots) 
+nigFit(x, alpha = 1, beta = 0, delta = 1, mu = 0, 
+    scale = TRUE, doplot = TRUE, span = "auto", trace = TRUE, 
+    title = NULL, description = NULL, \dots) 
+ghtFit(x, beta = 1e-6, delta = 1, mu = 0, nu = 10, 
+    scale = TRUE, doplot = TRUE, span = "auto", trace = TRUE, 
+    title = NULL, description = NULL, \dots) 
+    
 show.fDISTFIT(object)
 }
 
 
 \arguments{
   
-    \item{alpha, beta, gamma, delta, mu, lambda}{
+    \item{alpha, beta, gamma, delta, mu, lambda, nu}{
         [stable] - \cr
         The parameters are \code{alpha}, \code{beta}, \code{gamma}, 
         and \code{delta}:\cr
@@ -97,6 +105,11 @@ show.fDISTFIT(object)
         In the fourth parameterization, \code{pm=4} \code{alpha}
         and \code{beta} take the meaning of the shape parameters
         (usually named) \code{a.bar} and \code{b.bar}.
+        \cr
+        [ght] - \cr
+        The additional parameter \code{nu} defines the number of
+        degrees of freedom. Note, \code{alpha} takes the limit
+        of \code{abs(beta)}, and \code{lambda=-nu/2}.
         }
     \item{description}{
         a character string which allows for a brief description.
@@ -114,6 +127,11 @@ show.fDISTFIT(object)
     \item{doplot}{
         [tFit][hypFit][nigFit] - \cr
         a logical flag. Should a plot be displayed?
+        }
+    \item{scale}{
+        a logical flag, by default \code{TRUE}. Should the time series
+        be scaled by its standard deviation to achieve a more stable
+        optimization?
         }
     \item{span}{
         x-coordinates for the plot, by default 100 values 

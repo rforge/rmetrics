@@ -44,6 +44,7 @@
 #  ghFit                Fits parameters of a generalized hyperbolic density
 #  hypFit               Fits parameters of a hyperbolic density
 #  nigFit               Fits parameters of a normal inverse Gaussian density
+#  ghtFit               Fits parameters of a skew Student-t density
 ################################################################################
 
 
@@ -207,17 +208,14 @@ title = NULL, description = NULL, ...)
     
     # Settings:
     CALL = match.call()
-    .trace <<- trace
-    steps <<- 0
     
     # Log-likelihood Function:
-    etmle = function(x, y = x) { 
+    etmle = function(x, y = x, trace) { 
         # Prevent from negative df's
         if (x[1] <= 0) x[1] = x.save
         f = -sum(log(dt(y, x[1])))
         # Print Iteration Path:
-        steps <<- steps + 1
-        if (.trace) {
+        if (trace) {
             cat("\n Optimization Step:         ", steps)
             cat("\n Objective Function Value:  ", -f)
             cat("\n Students df Estimate:      ", x[1], "\n") 
@@ -807,8 +805,9 @@ trace = FALSE, title = NULL, description = NULL)
 
 
 ghFit = 
-function(x, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1, doplot = TRUE, 
-span = "auto", trace = FALSE, title = NULL, description = NULL, ...)
+function(x, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1, scale = TRUE,
+doplot = TRUE, span = "auto", trace = TRUE, title = NULL, description = NULL, 
+...)
 {   # A function implemented by Diethelm Wuertz
     
     # Description:
@@ -819,70 +818,55 @@ span = "auto", trace = FALSE, title = NULL, description = NULL, ...)
     # Transform:
     x.orig = x
     x = as.vector(x)
+    if (scale) {
+        SD = sd(x)
+        x = x / SD 
+    }
     
     # Settings:
     CALL = match.call()
-    .trace <<- trace
-    steps <<- 0
 
     # Log-likelihood Function:
-    eghmle = function(x, y = x){ 
-        # alpha and delta must be positive ...
-        alpha = exp(-x[1])            # alpha >= 0
-        beta = alpha * tanh(x[2])     # abs(beta) <= alpha
-        delta = exp(-x[3])            # delta >= 0
-        mu = x[4]
-        lambda = x[5]
-        if (alpha <= 0) return(Inf)  
-        if (delta <= 0) return(Inf)
-        if (abs(beta) >= alpha) return(Inf)
-        f = -sum(log(dgh(y, alpha, beta, delta, mu, lambda)))
+    eghmle = function(x, y = x, trace){ 
+        if (NA %in% x) return(1e99)
+        if (abs(x[2]) >= x[1]) return(1e99)
+        f = -sum(dgh(y, x[1], x[2], x[3], x[4], x[5], log = TRUE))
         # Print Iteration Path:
-        steps <<- steps + 1
-        if (.trace) {
-            cat("\n Optimization Step:         ", steps)
+        if (trace) {
             cat("\n Objective Function Value:  ", -f)
-            cat("\n Parameter Estimates:       ", 
-            alpha, beta, delta, mu, lambda, "\n") 
+            cat("\n Parameter Estimates:       ", x, "\n") 
         }
         f 
     }
         
-    # Variable Transformation and Minimization:
-    r = nlm(f = eghmle, 
-        p = c(-log(alpha), atanh(beta/alpha), -log(delta), mu, lambda), y = x)  
-    r$estimate[1] = exp(-r$estimate[1])
-    r$estimate[2] = r$estimate[1] * tanh(r$estimate[2])     
-    r$estimate[3] = exp(-r$estimate[3])
-
+    # Minimization:
+    r = # Variable Transformation and Minimization:
+    eps = 1e-10
+    BIG = 1000
+    f = eghmle(x = c(alpha, beta, delta, mu, lambda), y = x, trace = FALSE)
+    r = nlminb(start = c(alpha, beta, delta, mu, lambda), objective = eghmle, 
+        lower = c(eps, -BIG, eps, -BIG, -BIG), upper = BIG, y = x, 
+        trace = trace) 
+    
+    # Result:
+    if (scale) {
+        r$par = r$par / c(SD, SD, 1/SD, 1/SD, 1)
+        r$objective = eghmle(r$par, y = as.vector(x.orig), trace = trace)
+    }   
+    
     # Optional Plot:
     if (doplot) {
-        if (span == "auto") {
-            alpha = r$estimate[1]
-            beta = r$estimate[2]
-            delta = r$estimate[3]
-            mu = r$estimate[4]
-            lambda = r$estimate[5]
-            span.min = qgh(0.001, alpha, beta, delta, mu, lambda)
-            span.max = qgh(0.999, alpha, beta, delta, mu, lambda)
-            span = seq(span.min, span.max, length = 100)  
-        }
-        par(err = -1)
+        x = as.vector(x.orig)
+        if (span == "auto") span = seq(min(x), max(x), length = 51)
         z = density(x, n = 100, ...)
         x = z$x[z$y > 0]
         y = z$y[z$y > 0]
-        y.points = dgh(span, 
-            alpha = r$estimate[1], 
-            beta = r$estimate[2], 
-            delta = r$estimate[3], 
-            mu = r$estimate[4],
-            lambda = r$estimate[5])
+        y.points = dnig(span, r$par[1], r$par[2], r$par[3], r$par[4])
         ylim = log(c(min(y.points), max(y.points)))
         plot(x, log(y), xlim = c(span[1], span[length(span)]), 
             ylim = ylim, type = "p", xlab = "x", ylab = "log f(x)", ...)
-        title("HYP: Parameter Estimation")    
+        title("GH Parameter Estimation")    
         lines(x = span, y = log(y.points), col = "steelblue")
-        if (exists("grid")) grid()  
     }
     
     # Add Title and Description:
@@ -890,10 +874,7 @@ span = "auto", trace = FALSE, title = NULL, description = NULL, ...)
     if (is.null(description)) description = .description()
         
     # Fit:
-    fit = list(estimate = c(alpha = r$estimate[1], beta = r$estimate[2],
-        delta = r$estimate[3], mu = r$estimate[4], lambda = r$estimate[5]), 
-        minimum = -r$minimum, code = r$code, gradient = r$gradient, 
-        steps = steps)
+    fit = list(estimate = r$par, minimum = -r$objective, code = r$convergence)
         
     # Return Value:
     new("fDISTFIT",     
@@ -910,8 +891,9 @@ span = "auto", trace = FALSE, title = NULL, description = NULL, ...)
 
 
 hypFit = 
-function(x, alpha = 1, beta = 0, delta = 1, mu = 0, doplot = TRUE, 
-span = "auto", trace = FALSE, title = NULL, description = NULL, ...)
+function(x, alpha = 1, beta = 0, delta = 1, mu = 0, scale = TRUE,
+doplot = TRUE, span = "auto", trace = TRUE, title = NULL, description = NULL, 
+...)
 {   # A function implemented by Diethelm Wuertz
     
     # Description:
@@ -922,77 +904,58 @@ span = "auto", trace = FALSE, title = NULL, description = NULL, ...)
     # Transform:
     x.orig = x
     x = as.vector(x)
+    if (scale) {
+        SD = sd(x)
+        x = x / SD 
+    }
     
     # Settings:
     CALL = match.call()
-    .trace <<- TRUE
-    steps <<- 0
     
     # Log-likelihood Function:
-    ehypmle = function(x, y = x){ 
-        # alpha and delta must be positive ...
-        alpha = exp(-x[1])            # alpha >= 0
-        beta = alpha * tanh(x[2])     # abs(beta) <= alpha
-        delta = exp(-x[3])            # delta >= 0
-        mu = x[4]
-        lambda = x[5]
-        # if (alpha <= 0) return(Inf)  
-        # if (delta <= 0) return(Inf)
-        # if (abs(beta) >= alpha) return(Inf)
-        f = -sum(log(dhyp(y, alpha, beta, delta, mu)))
+    ehypmle = function(x, y = x, trace) { 
+        if (abs(x[2]) >= x[1]) return(1e99)
+        f = -sum(log(dhyp(y, x[1], x[2], x[3], x[4])))
         # Print Iteration Path:
-        steps <<- steps + 1
-        if (.trace) {
-            cat("\n Optimization Step:         ", steps)
+        if (trace) {
             cat("\n Objective Function Value:  ", -f)
-            cat("\n Parameter Estimates:       ", alpha, beta, delta, mu, "\n") 
+            cat("\n Parameter Estimates:       ", x[1], x[2], x[3], x[4], "\n")
         }
         f 
-    }
-        
-    # Variable Transformation and Minimization:
-    r = nlm(f = ehypmle, 
-        p = c(-log(alpha), atanh(beta/alpha), -log(delta), mu), y = x)  
-    r$estimate[1] = exp(-r$estimate[1])
-    r$estimate[2] = r$estimate[1] * tanh(r$estimate[2])
-    r$estimate[3] = exp(-r$estimate[3])
-        
-    # Optional Plot:
-    if (doplot) {
-        if (span == "auto") {
-            alpha = r$estimate[1]
-            beta = r$estimate[2]
-            delta = r$estimate[3]
-            mu = r$estimate[4]
-            span.min = qhyp(0.01, alpha, beta, delta, mu)
-            span.max = qhyp(0.99, alpha, beta, delta, mu)
-            span = seq(span.min, span.max, length = 100)  
-        }
-        par(err = -1)
-        z = density(x, n = 100, ...)
-        x = z$x[z$y > 0]
-        y = z$y[z$y > 0]
-        y.points = dhyp(span, 
-            alpha = r$estimate[1], 
-            beta = r$estimate[2], 
-            delta = r$estimate[3], 
-            mu = r$estimate[4])
-        ylim = log(c(min(y.points), max(y.points)))
-        plot(x, log(y), xlim = c(span[1], span[length(span)]), 
-            ylim = ylim, type = "p", xlab = "x", ylab = "log f(x)", ...)
-        title("HYP: Parameter Estimation")    
-        lines(x = span, y = log(y.points), col = "steelblue")
-        if (exists("grid")) grid()  
-    }
+    } 
+    
+    # Minimization:
+    eps = 1e-10
+    BIG = 1000
+    r = nlminb(start = c(alpha, beta, delta, mu), objective = ehypmle, 
+        lower = c(eps, -BIG, eps, -BIG), upper = BIG, y = x, trace = trace)
     
     # Add Title and Description:
     if (is.null(title)) title = "Hyperbolic Parameter Estimation"
     if (is.null(description)) description = .description()
         
-    # Fit:
-    fit = list(estimate = c(alpha = r$estimate[1], beta = r$estimate[2],
-        delta = r$estimate[3], mu = r$estimate[4]), minimum = -r$minimum, 
-        code = r$code, gradient = r$gradient, steps = steps)
+    # Result:
+    if (scale) {
+        r$par = r$par / c(SD, SD, 1/SD, 1/SD)
+        r$objective = ehypmle(r$par, y = as.vector(x.orig), trace = trace)
+    }   
+    fit = list(estimate = r$par, minimum = -r$objective, code = r$convergence)
+    
+    # Optional Plot:
+    if (doplot) {
+        x = as.vector(x.orig)
+        if (span == "auto") span = seq(min(x), max(x), length = 51)
+        z = density(x, n = 100, ...)
+        x = z$x[z$y > 0]
+        y = z$y[z$y > 0]
+        y.points = dnig(span, r$par[1], r$par[2], r$par[3], r$par[4])
+        ylim = log(c(min(y.points), max(y.points)))
+        plot(x, log(y), xlim = c(span[1], span[length(span)]), 
+            ylim = ylim, type = "p", xlab = "x", ylab = "log f(x)", ...)
+        title("NIG Parameter Estimation")    
+        lines(x = span, y = log(y.points), col = "steelblue")
+    }
+    
         
     # Return Value:
     new("fDISTFIT",     
@@ -1009,8 +972,9 @@ span = "auto", trace = FALSE, title = NULL, description = NULL, ...)
 
 
 nigFit = 
-function(x, alpha = 1, beta = 0, delta = 1, mu = 0, doplot = TRUE, 
-span = "auto", trace = FALSE, title = NULL, description = NULL, ...)
+function(x, alpha = 1, beta = 0, delta = 1, mu = 0, scale = TRUE, 
+doplot = TRUE, span = "auto", trace = TRUE, 
+title = NULL, description = NULL, ...)
 {   # A function implemented by Diethelm Wuertz
     
     # Description:
@@ -1021,71 +985,139 @@ span = "auto", trace = FALSE, title = NULL, description = NULL, ...)
     # Transform:
     x.orig = x
     x = as.vector(x)
+    if (scale) {
+        SD = sd(x)
+        x = x / SD 
+    }
     
     # Settings:
     CALL = match.call()
-    .trace <<- trace
-    steps <<- 0
     
     # Log-likelihood Function:
-    enigmle = function(x, y = x) { 
-        if (x[1] <= 0) return(Inf)  
-        if (x[3] <= 0) return(Inf)
-        if (abs(x[2]) >= x[1]) return(Inf)
-        f = -sum(log(dnig(y, x[1], x[2], x[3], x[4])))
+    enigmle = function(x, y = x, trace) { 
+        if (abs(x[2]) >= x[1]) return(1e99)
+        f = -sum(dnig(y, x[1], x[2], x[3], x[4], log = TRUE))
         # Print Iteration Path:
-        steps <<- steps + 1
-        if (.trace) {
-            cat("\n Optimization Step:         ", steps)
+        if (trace) {
             cat("\n Objective Function Value:  ", -f)
             cat("\n Parameter Estimates:       ", x[1], x[2], x[3], x[4], "\n")
-        } 
+        }
         f 
     }
         
     # Minimization:
-    r = nlm(f = enigmle, p = c(alpha, beta, delta, mu), y = x, ...)
+    eps = 1e-10
+    BIG = 1000
+    r = nlminb(start = c(alpha, beta, delta, mu), objective = enigmle, 
+        lower = c(eps, -BIG, eps, -BIG), upper = BIG, y = x, trace = trace) 
         
-    # Optional Plot:
-    if (doplot) {
-        if (span == "auto") {
-            alpha = r$estimate[1]
-            beta = r$estimate[2]
-            delta = r$estimate[3]
-            mu = r$estimate[4]
-            span.min = qnig(0.001, alpha, beta, delta, mu)
-            span.max = qnig(0.999, alpha, beta, delta, mu)
-            span = seq(span.min, span.max, length = 100)   
-        }
-        par(err=-1)
-        z = density(x, n = 100)
-        x = z$x[z$y > 0]
-        y = z$y[z$y > 0]
-        y.points = dnig(span, 
-            alpha = r$estimate[1], 
-            beta = r$estimate[2], 
-            delta = r$estimate[3], 
-            mu = r$estimate[4])
-        ylim = log(c(min(y.points), max(y.points)))
-        plot(x, log(y), xlim = c(span[1], span[length(span)]), 
-            ylim = ylim, type = "p", xlab = "x", ylab = "log f(x)")
-        title("NIG: Parameter Estimation")
-        lines(x = span, y = log(y.points), col = "steelblue") 
-        if (exists("grid")) grid() 
-    }
-    
     # Add Title and Description:
     if (is.null(title)) title = "Normal Inverse Gaussian Parameter Estimation"
     if (is.null(description)) description = .description() 
     
-    # Fit:
-    fit = list(estimate = r$estimate, minimum = -r$minimum, code = r$code,        
-        gradient = r$gradient, steps = steps)
-        
+    # Result:
+    if (scale) {
+        r$par = r$par / c(SD, SD, 1/SD, 1/SD)
+        r$objective = enigmle(r$par, y = as.vector(x.orig), trace = trace)
+    }   
+    fit = list(estimate = r$par, minimum = -r$objective, code = r$convergence)
+     
+    # Optional Plot:
+    if (doplot) {
+        x = as.vector(x.orig)
+        if (span == "auto") span = seq(min(x), max(x), length = 51)
+        z = density(x, n = 100, ...)
+        x = z$x[z$y > 0]
+        y = z$y[z$y > 0]
+        y.points = dnig(span, r$par[1], r$par[2], r$par[3], r$par[4])
+        ylim = log(c(min(y.points), max(y.points)))
+        plot(x, log(y), xlim = c(span[1], span[length(span)]), 
+            ylim = ylim, type = "p", xlab = "x", ylab = "log f(x)", ...)
+        title("NIG Parameter Estimation")    
+        lines(x = span, y = log(y.points), col = "steelblue")
+    }
+       
     # Return Value:
     new("fDISTFIT",     
         call = as.call(CALL),
         model = "Normal Inverse Gaussian Distribution",
+        data = as.data.frame(x.orig),
+        fit = fit,
+        title = as.character(title), 
+        description = .description() )
+}
+
+
+################################################################################
+
+
+ghtFit = 
+function(x, beta = 1e-6, delta = 1, mu = 0, nu = 10, scale = TRUE, 
+doplot = TRUE, span = "auto", trace = TRUE, 
+title = NULL, description = NULL, ...)
+{   # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   Fits parameters of a generalized hyperbolic Student-t density
+  
+    # FUNCTION:
+    
+    # Transform:
+    x.orig = x
+    x = as.vector(x)
+    if (scale) {
+        SD = sd(x)
+        x = x / SD 
+    }
+    
+    # Settings:
+    CALL = match.call()
+    
+    # Log-likelihood Function:
+    eghtmle = function(x, y = x, trace) { 
+        f = -sum(dght(y, x[1], x[2], x[3], x[4], log = TRUE))
+        if (trace) {
+            cat("\n Objective Function Value:  ", -f)
+            cat("\n Parameter Estimates:       ", x[1], x[2], x[3], x[4], "\n")
+        }
+        f 
+    }
+        
+    # Variable Transformation and Minimization:
+    eps = 1e-20
+    BIG = 1000
+    r = nlminb(start = c(beta, delta, mu, nu), objective = eghtmle, 
+        lower = c(eps, eps, -BIG, 2), upper = BIG, y = x, trace = trace) 
+    
+    # Add Title and Description:
+    if (is.null(title)) title = "Generalized Hyperbolic Parameter Estimation"
+    if (is.null(description)) description = .description()
+        
+    # Result:
+    if (scale) {
+        r$par = r$par / c(1, 1/SD, 1/SD, 1)
+        r$objective = eghtmle(r$par, y = as.vector(x.orig), trace = trace)
+    }   
+    fit = list(estimate = r$par, minimum = -r$objective, code = r$convergence)
+     
+    # Optional Plot:
+    if (doplot) {
+        if (span == "auto") span = seq(min(x), max(x), length = 51)
+        z = density(x, n = 100, ...)
+        x = z$x[z$y > 0]
+        y = z$y[z$y > 0]
+        y.points = dght(span, r$par[1], r$par[2], r$par[3], r$par[4])
+        ylim = log(c(min(y.points), max(y.points)))
+        plot(x, log(y), xlim = c(span[1], span[length(span)]), 
+            ylim = ylim, type = "p", xlab = "x", ylab = "log f(x)", ...)
+        title("GHT Parameter Estimation")    
+        lines(x = span, y = log(y.points), col = "steelblue")
+    }
+       
+    # Return Value:
+    new("fDISTFIT",     
+        call = as.call(CALL),
+        model = "Generalized Hyperbolic Distribution",
         data = as.data.frame(x.orig),
         fit = fit,
         title = as.character(title), 

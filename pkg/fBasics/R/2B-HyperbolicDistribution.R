@@ -50,8 +50,9 @@
 #  pnig                  Returns probability for for inverse Gaussian DF
 #  qnig                  Returns quantiles for for inverse Gaussian DF 
 #  rnig                  Returns random variates for inverse Gaussian DF
-# FUNCTION:             DESCRIPTION:
 #  nigShapeTriangle      Plots NIG Shape Triangle
+# FUNCTION:             DESCRIPTION:
+#  dght                  Hyperbolic Distribution - Skew Symmaetric Student-t:
 # FUNCTION:             DESCRIPTION:
 #  hypSlider             Displays hyperbolic distribution function
 #  nigSlider             Displays normal inverse Gausssian distribution function
@@ -70,7 +71,7 @@
 
 
 dgh = 
-function(x, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1)
+function(x, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1, log = FALSE)
 {   # A function implemented by Diethelm Wuertz
     
     # Description:
@@ -84,18 +85,21 @@ function(x, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1)
     if (abs(beta) >= alpha) stop("abs value of beta must be less than alpha")
 
     # Density:
-    denom = sqrt(2*pi) * alpha^(lambda-0.5) * delta^lambda * 
-        besselK(delta * sqrt(alpha^2-beta^2), lambda)           
-    a = (alpha^2-beta^2)^(lambda/2) / denom
-    f = ( delta^2 + (x - mu)^2 ) ^ ( ( lambda - 0.5) / 2 )
+    arg = delta*sqrt(alpha^2-beta^2)
+    a = (lambda/2)*log(alpha^2-beta^2) - (
+        log(sqrt(2*pi)) + (lambda-0.5)*log(alpha) + lambda*log(delta) +
+        log(besselK(arg, lambda, expon.scaled = TRUE)) - arg )      
+    f = ((lambda-0.5)/2)*log(delta^2+(x - mu)^2)
+    
     # Use exponential scaled form to prevent from overflows:
     arg = alpha * sqrt(delta^2+(x-mu)^2)
-    k = besselK(arg, lambda -0.5, expon.scaled = TRUE)
-    e = exp(beta*(x-mu)-arg)    
+    k = log(besselK(arg, lambda-0.5, expon.scaled = TRUE)) - arg
+    e = beta*(x-mu)  
     
     # Put all together:
-    ans = a*f*k*e
-
+    ans = a + f + k + e
+    if(!log) ans = exp(ans)
+    
     # Return Value:  
     ans
 }
@@ -1297,14 +1301,14 @@ function(a.bar = 1, b.bar = 0, delta  = 1, mu = 0)
 
 
 dnig = 
-function(x, alpha = 1, beta = 0, delta = 1, mu = 0)
+function(x, alpha = 1, beta = 0, delta = 1, mu = 0, log = FALSE)
 {   # A function implemented by Diethelm Wuertz
 
     # FUNCTION:
     
     # Density:
     dgh(x = x, alpha = alpha, beta = beta, delta = delta, mu = mu, 
-        lambda = -0.5)
+        lambda = -0.5, log = log)
 }
 
 
@@ -1366,14 +1370,17 @@ function(n, alpha = 1, beta = 0, delta = 1, mu = 0)
         Z = delta*delta / V
         X = sqrt(Z)*rnorm(n) 
     } else { 
+            
+        
         # GAMMA > 0:
         U = runif(n)
         V = rnorm(n)^2
-        z1 <<- function(v, delta, gamma) {
-            delta/gamma + v/(gamma^2) - sqrt( 2*v*delta/(gamma^3) + 
-            (v/(gamma^2))^2 ) 
+        # FIXED ...
+        z1 <- function(v, delta, gamma) {
+            delta/gamma + v/(2*gamma^2) - sqrt(v*delta/(gamma^3) + 
+            (v/(2*gamma^2))^2 ) 
         }
-        z2 <<- function(v, delta, gamma) {
+        z2 <- function(v, delta, gamma) {
             (delta/gamma)^2 / z1(v = v, delta = delta, gamma = gamma)
         }
         pz1 <<- function(v, delta, gamma) {
@@ -1453,6 +1460,37 @@ function(object, add = FALSE, ...)
 }
 
 
+################################################################################
+# dght
+
+
+dght =
+function(x, beta = 1e-6, delta = 1, mu = 0, nu = 10, log = FALSE) 
+{   # A function implemented by Diethelm Wuertz
+
+    # Hyperbolic Distribution - Skew Symmaetric Student-t:
+    #   dght(x, beta = 0.1, delta = 1, mu = 0, nu = 10, log = FALSE) 
+        
+    # FUNCTION:
+    
+    # Density:
+    D = sqrt( delta^2 + (x-mu)^2 )
+    A1 = ((1-nu)/2) * log(2)
+    A2 = nu * log(delta) 
+    A3 = ((nu+1)/2) * log(abs(beta))
+    A4 = log(besselK(abs(beta)*D, (nu+1)/2, expon.scaled = TRUE)) - abs(beta)*D
+    A5 = beta*(x-mu)
+    B1 = lgamma(nu/2) 
+    B2 = log(sqrt(pi))
+    B3 = ((nu+1)/2) * log(D)
+    
+    # Log:
+    ans = (A1 + A2 + A3 + A4 + A5) - (B1 + B2 + B3)
+    if (!log) ans = exp(ans)
+    
+    # Return Value:
+    ans
+}
 
 
 ################################################################################

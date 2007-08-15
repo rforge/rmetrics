@@ -184,7 +184,7 @@ rug = TRUE, ...)
                 main = "", ylab = "", xlab = "", ...)   
         }
         abline(h = 0, col = "grey")
-        if (rug) rug(as.vector(X), ticksize = 0.01, side = 4)
+        if (rug) rug(as.vector(X), ticksize = 0.01, side = 4, quiet = TRUE)
             
     }
          
@@ -234,7 +234,7 @@ ylab = "Index", rug = TRUE, ...)
                 main = "", ylab = "", xlab = "", ...)   
         }
         abline(h = 0, col = "grey")
-        if (rug) rug(as.vector(X), ticksize = 0.01, side = 4)
+        if (rug) rug(as.vector(X), ticksize = 0.01, side = 4, quiet = TRUE)
             
     }
          
@@ -316,7 +316,7 @@ skipZeros = TRUE, ...)
         abline(h = 0, col = "grey")
     
         # Add Rug Plot:
-        if(rug) rug(Values, ticksize = 0.01)
+        if(rug) rug(Values, ticksize = 0.01, quiet = TRUE)
     }
     
     # Return Value:
@@ -393,7 +393,7 @@ skipZeros = TRUE, ...)
         abline(h = 0, col = "grey")
         
         # Add Rug Plot:
-        if(rug) rug(Values, ticksize = 0.01)     
+        if(rug) rug(Values, ticksize = 0.01, quiet = TRUE)     
     }
     
     # Return Value:
@@ -475,8 +475,8 @@ function(x, labels = TRUE, col = "steelblue", rug = TRUE, scale = TRUE, ...)
             plot(z, x, col = col[i], ...)
         }
         abline(0, 1, col = "grey")
-        if(rug) rug(z, ticksize = 0.01, side = 3)
-        if(rug) rug(x, ticksize = 0.01, side = 4)
+        if(rug) rug(z, ticksize = 0.01, side = 3, quiet = TRUE)
+        if(rug) rug(x, ticksize = 0.01, side = 4, quiet = TRUE)
       
         # 95% Intervals:
         s = 1.96*sqrt(p*(1-p)/n)
@@ -550,8 +550,8 @@ function (x, labels = TRUE, col = "steelblue", rug = TRUE, ...)
         plot(z, x, ...)
     }
     abline(lsfit(z, x))
-    if(rug) rug(z, ticksize = 0.01, side = 3)
-    if(rug) rug(x, ticksize = 0.01, side = 4)
+    if(rug) rug(z, ticksize = 0.01, side = 3, quiet = TRUE)
+    if(rug) rug(x, ticksize = 0.01, side = 4, quiet = TRUE)
     
     # Result:
     .DEBUG <<-fit
