@@ -66,33 +66,24 @@
 #  myUnits                   Sets date units
 
 
-.currentYear = 
-function()    
+.currentYear <- function()
 {   # A function implemented by Diethelm Wuertz
 
-    # FUNCTION:
-    
     # Check Time Zone:
-    TZ = Sys.getenv("TZ")  
-    if (TZ[[1]] != "GMT") {
+    TZ <- Sys.getenv("TZ")
+    if(TZ[[1]] != "GMT") {
         Sys.setenv(TZ = "GMT")
-        TZ.RESET = TRUE
-    } else {
-        TZ.RESET = FALSE
+        on.exit(Sys.setenv(TZ = TZ))
     }
-    
-    # Current Year:
-    if (class(version) != "Sversion") {
-        currentYear = as.POSIXlt(Sys.time())$year + 1900
-    } else { 
+
+    # Return current year:
+    if (is.R()) {
+        as.POSIXlt(Sys.time())$year + 1900
+    } else {
         currentDate = timeDate(date(), in.format="%w %m %d %H:%M:%S %Z %Y")
-        currentYear = as.integer(attr(years(currentDate), "levels"))
-    } 
-    
-    # Return Value:
-    if (TZ.RESET) Sys.setenv(TZ = TZ)
-    currentYear 
-} 
+        as.integer(attr(years(currentDate), "levels"))
+    }
+}
 
 # ------------------------------------------------------------------------------
 
@@ -119,26 +110,27 @@ myFinCenter = "GMT"
 # ------------------------------------------------------------------------------
 
   
-rulesFinCenter =
-function(FinCenter = myFinCenter)
+rulesFinCenter <- function(FinCenter = myFinCenter)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Show the day light saving rules for a financial center
     
     # Arguments:
-    #   FinCenter - a character string with the the location of the  
-    #       financial center named as "continent/city". 
-    
-    # Changes:
-    #
-    
-    # FUNCTION:
-    
+    #   FinCenter - a character string with the location of the
+    #       financial center named as "continent/city".
+
     # Check:
     if (FinCenter == "GMT" | FinCenter == "")
         stop("There are no DST rules for GMT FinCenter!")
     
+    TZ <- Sys.getenv("TZ")
+    if(TZ[[1]] != "GMT") {
+        Sys.setenv(TZ = "GMT")
+        on.exit(Sys.setenv(TZ = TZ))
+    }
+      
+
     # Internal Function for Conversion from Ical Tables:
     if (FALSE) {
     rulesFinCenter2 = 
@@ -202,18 +194,14 @@ function(FinCenter = myFinCenter)
         data.frame(ruleChanges = as.character(ruleChangesGMT), 
             offSet = hms.off) } 
     }
-    
-    # Set Timezone to GMT:
-    myTZ = Sys.getenv("TZ")  
-    Sys.setenv(TZ = "GMT")
-    if (FinCenter == "") FinCenter = "GMT"
-       
+    ## Instead:
+
     # Match City:
-    City = strsplit(FinCenter, "/")[[1]][length(strsplit(FinCenter, "/")[[1]])]
-    fun = match.fun(City)
+    fccity <- strsplit(FinCenter, "/")[[1]]
+    City <- fccity[length(fccity)]
+    fun <- match.fun(City)
     
     # Return Value:
-    Sys.setenv(TZ = myTZ)
     fun()
 }  
 
@@ -221,19 +209,18 @@ function(FinCenter = myFinCenter)
 # ------------------------------------------------------------------------------
 
 
-listFinCenter = 
-function(pattern = "*")
+listFinCenter <- function(pattern = ".*")
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   List available Time Zones in Database
+    #   List available Financial Centers
     
     # Arguments:
     #   pattern - a pattern character string which can be recognized
     #       by the 'grep' functs. Wild cards are allowed.
     
     # Value:
-    #   Returns a printed list of financia centers. 
+    #   Returns a printed list of financial centers. 
     
     # Example:
     #   > listFinCenter("Europe/*")
@@ -244,31 +231,21 @@ function(pattern = "*")
     #   [13] "Europe/Dublin"      "Europe/Gibraltar"   "Europe/Helsinki"   
     #   [16] "Europe/Istanbul"    ...   
     
-    # Note:
-    #   The timezone database is required.
     
-    # Changes:
-    #
-    
-    # FUNCTION:
-    
-    # Set Timezone to GMT:
-    myTZ = Sys.getenv("TZ")  
-    Sys.setenv(TZ = "GMT")
-    
-    # Time Zones DB:
-    
+    # Check Time Zone:
+    TZ <- Sys.getenv("TZ")
+    if(TZ[[1]] != "GMT") {
+        Sys.setenv(TZ = "GMT")
+        on.exit(Sys.setenv(TZ = TZ))
+    }
     
     # Load Database:
     tz = .FinCenterList
     
     # Financial Centers:
     if (pattern == "*") pattern = "\\\\*"
-    result = as.character(tz[grep(pattern = pattern, x = tz)])
-    
-    # Return Value:
-    Sys.setenv(TZ = myTZ)
-    result
+
+    as.character(tz[grep(pattern = pattern, x = tz)])
 }
 
 
@@ -349,9 +326,10 @@ setClass("timeDate",
 # ------------------------------------------------------------------------------
    
 
-timeDate = 
-function(charvec = Sys.timeDate(), format = NULL, zone = myFinCenter, 
-FinCenter = myFinCenter) 
+
+timeDate <-
+function(charvec = Sys.timeDate(), format = NULL, zone = myFinCenter,
+         FinCenter = myFinCenter)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -388,9 +366,6 @@ FinCenter = myFinCenter)
     #   td = timeDate("2004-01-01", FinCenter = "GMT"); timeDate(td)
     #   td = timeDate("20040101", FinCenter = "GMT"); timeDate(td)
      
-    # Changes:
-    #
-    
     # FUNCTION:
 
     # Settings and Checks:
@@ -398,40 +373,41 @@ FinCenter = myFinCenter)
     if (FinCenter == "" || is.null(FinCenter)) FinCenter = "GMT"
     if (is.null(zone)) zone = "GMT"
          
-    # Set Timezone to GMT:
-    myTZ = Sys.getenv("TZ")  
-    Sys.setenv(TZ = "GMT")
+    # Check Time Zone:
+    TZ <- Sys.getenv("TZ")
+    if(TZ[[1]] != "GMT") {
+        Sys.setenv(TZ = "GMT")
+        on.exit(Sys.setenv(TZ = TZ))
+    }
     
     # ISO Date/Time Format:
-    isoFormat = "%Y-%m-%d %H:%M:%S"
-    
-    # Autodetect Format:
-    if (inherits(charvec, "character")) {
-        if (is.null(format)) format = .whichFormat(charvec)
+    isoDate   <- "%Y-%m-%d"
+    isoFormat <- "%Y-%m-%d %H:%M:%S"
+
+    if (inherits(charvec, "character")) { # Autodetect Format:
+        if ((noForm <- is.null(format)))
+            format <- .whichFormat(charvec)
     }
-    
-    # Crae for Other Formats:
-    if (inherits(charvec, "timeDate")) {
-        posix = charvec@Data 
-        charvec = format(posix, isoFormat) 
-        format = isoFormat
-    }
-    if (inherits(charvec, "Date")) {
-        charvec = format(charvec) 
-        zone = FinCenter
-    }
-    if (inherits(charvec, "POSIXt")) {
-        charvec = format(charvec, isoFormat) 
-        format = isoFormat
-    }
-    
-    # Get Dimension:
-    Dim = length(charvec)
- 
+    else { ## convert from known classes to ISO :
+        format <- isoFormat
+        noForm <- FALSE # do not change anymore
+        charvec <-
+            if (is(charvec, "timeDate")) {
+                format(charvec@Data, format)
+            } else if (inherits(charvec, "Date")) {
+                zone <- FinCenter
+                format <- isoDate
+                format(charvec, format)
+            } else if (inherits(charvec, "POSIXt")) {
+                format(charvec, format)
+            }
+   }
+
     # Midnight Standard:
-    charvec = .midnightStandard(charvec, format)
-    charvec = format(strptime(charvec, .whichFormat(charvec)), isoFormat)
-    format = isoFormat
+    charvec <- .midnightStandard(charvec, format)
+    charvec <- format(strptime(charvec,
+                               if(noForm) .whichFormat(charvec) else format),
+                      isoFormat)
     
     # Financial Centers:
     recFinCenter = zone      # Time zone where the data were recorded
@@ -444,120 +420,47 @@ FinCenter = myFinCenter)
         print(charvec) 
     }
 
-    # Convert:    
-    DEBUG = FALSE
-    
-    # GMT -> GMT:
-    if (recFinCenter == "GMT" && useFinCenter == "GMT") {       
-        if (DEBUG) print("if - 1:")
-        if (trace) { 
-            cat("\nOutput: ")
-            print(useFinCenter)
-            print(charvec)
-            cat("\n") 
-        }
-        lt = strptime(charvec, format)
-        if (sum(lt$sec+lt$min+lt$hour) == 0) isoFormat = "%Y-%m-%d"
-        # Return Value:
-        ans = new("timeDate", 
-            Data = as.POSIXct(lt), 
-            Dim = as.integer(Dim),
-            format = isoFormat,
-            FinCenter = useFinCenter)
-        Sys.setenv(TZ = myTZ)
-        return(ans)
-    }  
-        
-    # GMT -> nonGMT     
-    if (recFinCenter == "GMT" && useFinCenter != "GMT") {
-        if (DEBUG) print("if - 2:") 
+    ## Convert:
+
+    if (recFinCenter == "GMT" && useFinCenter == "GMT") {	## GMT -> GMT:
+        ## nothing to do
+    }
+    else if (recFinCenter == "GMT" && useFinCenter != "GMT") {  ## GMT -> nonGMT
         charvec = .formatFinCenter(charvec, useFinCenter, type = "gmt2any")
-        if (trace) { 
-            cat("\nOutput: ")
-            print(useFinCenter)
-            print(charvec)
-            cat("\n") 
-        }
-        lt = strptime(charvec, format)
-        if (sum(lt$sec+lt$min+lt$hour) == 0) isoFormat = "%Y-%m-%d"
-        # Return Value:
-        ans = new("timeDate", 
-            Data = as.POSIXct(lt), 
-            Dim = as.integer(Dim),
-            format = isoFormat,
-            FinCenter = useFinCenter)
-        Sys.setenv(TZ = myTZ)
-        return(ans)
-    }    
-         
-    # nonGMT -> GMT       
-    if (recFinCenter != "GMT" && useFinCenter == "GMT") {
-        if (DEBUG) print("if - 3:")
+    }
+    else if (recFinCenter != "GMT" && useFinCenter == "GMT") {  ## nonGMT -> GMT
+
         charvec = .formatFinCenter(charvec, recFinCenter, type = "any2gmt")
-        if (trace) { 
-            cat("\nOutput: ")
-            print(useFinCenter)
-            print(charvec)
-            cat("\n") 
-        }
-        lt = strptime(charvec, format)
-        if (sum(lt$sec+lt$min+lt$hour) == 0) isoFormat = "%Y-%m-%d"
-        # Return Value:
-        ans = new("timeDate", 
-            Data = as.POSIXct(lt), 
-            Dim = as.integer(Dim),
-            format = isoFormat,
-            FinCenter = useFinCenter)
-        Sys.setenv(TZ = myTZ)
-        return(ans)
-    }      
-          
-    # nonGMT -> equal nonGMT   
-    if (recFinCenter == useFinCenter) {     
-        if (DEBUG) print("if - 4:")
-        if (trace) { 
-            cat("\nOutput: ")
-            print(useFinCenter)
-            print(charvec)
-            cat("\n") 
-        }
-        lt = strptime(charvec, format)
-        if (sum(lt$sec+lt$min+lt$hour) == 0) isoFormat = "%Y-%m-%d"
-        # Return Value:
-        ans = new("timeDate", 
-            Data = as.POSIXct(lt),
-            Dim = as.integer(Dim),
-            format = isoFormat ,
-            FinCenter = useFinCenter)
-        Sys.setenv(TZ = myTZ)
-        return(ans)
-    }    
-            
-    # nonGMT -> other nonGMT 
-    if (recFinCenter != useFinCenter) {
-        if (DEBUG) print("if - 5:")
+    }
+    else if (recFinCenter == useFinCenter) { 		## nonGMT -> equal nonGMT
+        ## nothing to do
+    }
+    else if (recFinCenter != useFinCenter) {		## nonGMT -> other nonGMT
+
         charvec = .formatFinCenter(charvec, recFinCenter, type = "any2gmt")
         charvec = .formatFinCenter(charvec, useFinCenter, type = "gmt2any")
-        if (trace) { 
-            cat("\nOutput: ") 
-            print(useFinCenter)
-            print(charvec)
-            cat("\n") 
-        }
-        lt = strptime(charvec, format)
-        if (sum(lt$sec+lt$min+lt$hour) == 0) isoFormat = "%Y-%m-%d"
-        # Return Value:
-        ans = new("timeDate", 
-            Data = as.POSIXct(lt), 
-            Dim = as.integer(Dim),
-            format = isoFormat,
-            FinCenter = useFinCenter)
-        Sys.setenv(TZ = myTZ)
-        return(ans)
-    }    
-            
-    # Return Value:
-    invisible()         
+    }
+    else { ## impossible
+        ## when *not* returning a timeDate() object, we should warn
+        message("returning NULL instead of \"timeDate\"")
+        return(invisible())
+    }
+    ## In all good cases :
+    if (trace) {
+        cat("\nOutput: ")
+        print(useFinCenter)
+        print(charvec)
+        cat("\n")
+    }
+    lt <- strptime(charvec, isoFormat)
+    noTime <- lt$sec == 0 & lt$min == 0 & lt$hour == 0
+    noTime <- all(noTime | is.na(noTime))
+
+    new("timeDate",
+	Data = as.POSIXct(lt),
+	Dim = as.integer(length(charvec)),
+	format = if(noTime) isoDate else isoFormat,
+	FinCenter = useFinCenter)
 }
 
 
@@ -619,24 +522,22 @@ function(charvec, silent = FALSE)
 function(charvec, format)
 {   # A function implemented by Diethelm Wuertz
 
-    # Changes:
-    #
-    
-    # FUNCTION:
-    
     # Format:
-    nchar.iso = mean(nchar(charvec))
+    rng.nch <- range(nchar(charvec[!is.na(charvec)]))
+    if(rng.nch[1] != rng.nch[2])
+        stop("'charvec' has non-NA entries of different number of characters")
+    nch <- rng.nch[1]
     isoFormat = "%Y-%m-%d %H:%M:%S"
     
     # ISO-8601 Midnight Standard:
     s = rep(0, length(charvec))
-    if (nchar.iso == 19) {
+    if (nch == 19) {
         s[grep("24:00:00", charvec)] = 1
         charvec = gsub("24:00:00", "23:59:59", charvec) 
         # Convert "charvec" to standard ISO format:
-        charvec = format(strptime(charvec, format)+s, isoFormat)
+        charvec = format(s + strptime(charvec, format), isoFormat)
     }
-    if (nchar.iso == 14) {
+    else if (nch == 14) {
         # Fixed DW 2006-03-13
         charvec.date = substr(charvec, 1, 8)
         charvec.time = substr(charvec, 9, 14)
@@ -646,8 +547,10 @@ function(charvec, format)
         charvec.time = gsub("240000", "235959", charvec.time) 
         charvec = paste(charvec.date, charvec.time, sep = "")
         # Convert "charvec" to standard ISO format:
-        charvec = format(strptime(charvec, format)+s, isoFormat)
-    }   
+        charvec = format(s + strptime(charvec, format), isoFormat)
+    }
+    else
+	warning("unsupported number of characters of 'charvec' strings")
     
     # Return Value:
     charvec 
@@ -657,26 +560,25 @@ function(charvec, format)
 # ------------------------------------------------------------------------------
 
 
-.formatFinCenter = 
-function(charvec, FinCenter, type = c("gmt2any", "any2gmt")) 
+.formatFinCenter <- function(charvec, FinCenter, type = c("gmt2any", "any2gmt"))
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Internal function used by function timeDate()
-    
-    # Changes:
-    #
-    
-    # FUNCTION:
-    
-    type = match.arg(type)
-    signum = 0
-    if (type == "gmt2any") 
-        signum = +1
-    if (type == "any2gmt") 
-        signum = -1
-    if (FinCenter != "GMT") {
-        # Get the DST list from the database: 
+
+    if (FinCenter == "GMT")
+        return(charvec)
+
+    ## else start working:
+
+    type <- match.arg(type)
+    signum <- switch(type,
+                     "gmt2any" = +1,
+                     "any2gmt" = -1)
+    ##  otherwise give error
+
+
+        # Get the DST list from the database:
         dst.list = rulesFinCenter(FinCenter)
         # Update list with last entry: 
         z = as.matrix(dst.list)
@@ -716,24 +618,21 @@ function(charvec, FinCenter, type = c("gmt2any", "any2gmt"))
         # Put them in the right order:
         # Added DW: 2005-05-27
         idx = order(o[which(o>m)])
-        offSets = yout[idx]      
-        dt = strptime(charvec, "%Y-%m-%d %H:%M:%S")             
-        ans = format(dt + signum * offSets, format="%Y-%m-%d %H:%M:%S") 
-    } else {
-        ans = charvec
-    }
-    
-    # Return Value:
-    ans
+        offSets = yout[idx]
+        dt = strptime(charvec, "%Y-%m-%d %H:%M:%S")
+
+    ## Return Value:
+    format(dt + signum * offSets, format="%Y-%m-%d %H:%M:%S")
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-timeCalendar = 
-function(y = currentYear, m = 1:12, d = 1, h = NULL, min = NULL, 
-s = NULL, zone = myFinCenter, FinCenter = myFinCenter)
+timeCalendar <-
+function(y = currentYear, m = 1:12, d = 1,
+         h = 0, min = 0, s = 0,
+         zone = myFinCenter, FinCenter = myFinCenter)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -834,7 +733,7 @@ s = NULL, zone = myFinCenter, FinCenter = myFinCenter)
     Sys.setenv(TZ = myTZ)
     
     # Return Value:
-    timeDate(charvec = charvec, format = NULL,  
+    timeDate(charvec = charvec, format = format,  
         zone = zone, FinCenter = FinCenter) 
 }
 
@@ -842,10 +741,11 @@ s = NULL, zone = myFinCenter, FinCenter = myFinCenter)
 # ------------------------------------------------------------------------------
 
 
-timeSequence = 
-function(from = "2004-01-01", to = format(Sys.time(), "%Y-%m-%d"), 
-by = c("day", "year", "quarter", "month", "week", "hour", "min", "sec"), 
-length.out = NULL, format = NULL, zone = myFinCenter, FinCenter = myFinCenter)
+timeSequence <- function(from, to = format(Sys.time(), "%Y-%m-%d"), 
+                         by = c("day", "year", "quarter",
+                         "month", "week", "hour", "min", "sec"), 
+                         length.out = NULL, format = NULL,
+                         zone = myFinCenter, FinCenter = myFinCenter)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -1010,6 +910,9 @@ is.timeDate =
 function(object) 
 {   # A function implemented by Diethelm Wuertz
 
+    ## MM: should be deprecated ---  use   is(object, "timeDate") !!!
+    .Deprecated("is( . , \"timeDate\")")
+
     # Description:
     #   Checks if object is of class 'timeDate'
     
@@ -1049,23 +952,14 @@ function(object)
 #  format.timeDate        Formats 'timeDate' as ISO conform character string
 
 
-show.timeDate = 
-function(object)
+show.timeDate <- function(object)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Print method for an S4 object of class "timeDate"
- 
-    # FUNCTION:
-       
-    # Unlike print the argument for show is 'object'.
-    x = object
-    
-    # Series:
-    .print.timeDate(x = object)
-    
-    # Return Value:
-    invisible(object)
+
+    # returns invisibly itself:
+    .print.timeDate(object)
 }
     
     
