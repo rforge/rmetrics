@@ -411,10 +411,10 @@ function(x, method = c("trunc", "round", "next"), ...)
 #  months.timeDate        Extract months atom from a 'timeDate' object
 
  
-julian.timeDate = 
+julian.timeDate <- 
 function(x, origin = timeDate("1970-01-01"), 
-units = c("auto", "secs", "mins", "hours", "days", "weeks"), 
-zone = NULL, FinCenter = NULL, ...)
+         units = c("auto", "secs", "mins", "hours", "days", "weeks"), 
+         zone = NULL, FinCenter = NULL, ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -432,17 +432,12 @@ zone = NULL, FinCenter = NULL, ...)
     # Details:
     #   The origin is "1970-01-01 00:00:00 GMT"
 
-    # Changes:
-    #
-    
-    # FUNCTION:
-    
     # Set Timezone to GMT:
     myTZ = Sys.getenv("TZ")  
     Sys.setenv(TZ = "GMT")
     
     # Check Class Type:
-    stopifnot(is.timeDate(x))
+    stopifnot(is(x, "timeDate"))
     units = match.arg(units)
     
     # POSIX:
@@ -454,13 +449,12 @@ zone = NULL, FinCenter = NULL, ...)
     if (is.null(origin))
         origin = timeDate("1970-01-01", zone = "GMT", FinCenter = "GMT")
     res = difftimeDate(ct, origin, units = units)
-    ans = structure(res, origin = origin)
         
     # Reset Time Zone: 
     Sys.setenv(TZ = myTZ)
     
     # Return Value: 
-    ans
+    structure(res, origin = origin)
 }
     
 

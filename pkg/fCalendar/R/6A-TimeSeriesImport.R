@@ -115,9 +115,9 @@ setMethod("show", "fWEBDATA", show.fWEBDATA)
 
 economagicImport =
 function (query, file = "tempfile", 
-source = "http://www.economagic.com/em-cgi/data.exe/", 
-frequency = c("quarterly", "monthly", "daily"), 
-save = FALSE, colname = "VALUE", try = TRUE)
+          source = "http://www.economagic.com/em-cgi/data.exe/", 
+          frequency = c("quarterly", "monthly", "daily"), 
+          save = FALSE, colname = "VALUE", try = TRUE)
 {   # A function implemented by Diethelm Wuertz
     
     # Description:
@@ -138,9 +138,6 @@ save = FALSE, colname = "VALUE", try = TRUE)
     #    economagicImport("fedstl/gnp", "USGNP.CSV", 
     #       frequency = "monthly", colname = "USGNP")
 
-    # Changes:
-    #
-    
     # FUNCTION:
     
     # Frequency:
@@ -152,24 +149,19 @@ save = FALSE, colname = "VALUE", try = TRUE)
         z = try(economagicImport(query = query, 
             file = file, source = source, frequency = freq, 
             save = save, colname = colname, try = FALSE)) 
-        if (class(z) == "try-error" || class(z) == "Error") {
+        if (inherits(z, "try-error") || inherits(z, "Error")) {
             return("No Internet Access") 
         } else {
             return(z) 
         }
     } else {  
         # Settings:
-        if (freq == "quarterly" || freq == "monthly") n = 2
-        if (freq == "daily") n = 3
+	n <- switch(freq,
+		    "quarterly" =, "monthly" = 2,
+		    "daily" = 3)
        
         # For S-Plus Compatibility:
-        if (class(version) != "Sversion") {
-            # R:
-            method = NULL
-        } else { 
-            # SPlus
-            method = "lynx"
-        }
+        method <- if(is.R()) NULL else "lynx"
     
         # Download the file:
         url = paste(source, query, sep = "")
@@ -224,7 +216,7 @@ save = FALSE, colname = "VALUE", try = TRUE)
         }
         
         # Return Value:
-        ans = new("fWEBDATA",     
+        new("fWEBDATA",     
             call = match.call(),
             param = c(
                 "Instrument Query" = query, 
@@ -233,11 +225,7 @@ save = FALSE, colname = "VALUE", try = TRUE)
             data = z, 
             title = "Web Data Import from Economagic", 
             description = as.character(date()) )
-        return(ans)
     }
-    
-    # Return Value:
-    invisible()
 }
 
 
@@ -277,20 +265,14 @@ swap = 20, try = TRUE)
         # First try if the Internet can be accessed:
         z = try(yahooImport(file = file, source = source, 
             query = query, save = save, try = FALSE))
-        if (class(z) == "try-error" || class(z) == "Error") {
+        if (inherits(z, "try-error") || inherits(z, "Error")) {
             return("No Internet Access") 
         } else {
             return(z) 
         }
     } else {
         # For S-Plus Compatibility:
-        if (class(version) != "Sversion") {
-            # R:
-            method = NULL
-        } else { 
-            # SPlus
-            method = "wget"
-        }
+        method <- if(is.R()) NULL else "wget"
     
         # Download the file:
         url = paste(source, query, sep = "")
@@ -377,7 +359,7 @@ frequency = "daily", save = FALSE, sep = ";", try = TRUE)
         # Try for Internet Connection:
         z = try(fredImport(query = query, file = file, source = source, 
             save = save, try = FALSE))
-        if (class(z) == "try-error" || class(z) == "Error") {
+        if (inherits(z, "try-error") || inherits(z, "Error")) {
             return("No Internet Access") 
         } else {
             return(z) 
@@ -387,13 +369,7 @@ frequency = "daily", save = FALSE, sep = ";", try = TRUE)
         queryFile = paste(query, "/downloaddata/", query, ".txt", sep = "")
         
         # For S-Plus Compatibility:
-        if (class(version) != "Sversion") {
-            # R:
-            method = NULL
-        } else { 
-            # SPlus
-            method = "wget"
-        }
+        method <- if(is.R()) NULL else "wget"
     
         # Download and temporarily store:
         download.file(url = paste(source, queryFile, sep = ""), 
@@ -488,9 +464,8 @@ source = "http://www.forecasts.org/data/data/", save = FALSE, try = TRUE)
         # Try for Internet Connection:
         z = try(forecastsImport(file = file, source = source, query = query, 
             save = save, try = FALSE))
-        if (class(z) == "try-error") {
-            print("No Internet Access")
-            return(NULL) 
+        if (inherits(z, "try-error") || inherits(z, "Error")) {
+            return("No Internet Access")
         } else {
             return(z) 
         } 
@@ -569,7 +544,7 @@ save = FALSE, try = TRUE)
         # First try if the Internet can be accessed:
         z = try(keystatsImport(file = file, source = source, 
             query = query, save = save, try = FALSE))
-        if (class(z) == "try-error" || class(z) == "Error") {
+        if (inherits(z, "try-error") || inherits(z, "Error")) {
             return("No Internet Access")
         }
         else {
@@ -579,11 +554,7 @@ save = FALSE, try = TRUE)
         # offset = 2
         url = paste(source, query, sep = "")
         # For S-Plus Compatibility:
-        if (class(version) != "Sversion") {
-            method = NULL
-        } else {
-            method = "wget"
-        }
+        method <- if(is.R()) NULL else "wget"
         # Download:
         download.file(url = url, destfile = file, method = method)
         .warn = options()$warn
@@ -661,7 +632,7 @@ save = FALSE, try = TRUE)
         # First try if the Internet can be accessed:
         z = try(keystatsImport(file = file, source = source, 
             query = query, save = save, try = FALSE))
-        if (class(z) == "try-error" || class(z) == "Error") {
+        if (inherits(z, "try-error") || inherits(z, "Error")) {
             return("No Internet Access")
         } else {
             return(z) 
@@ -670,13 +641,8 @@ save = FALSE, try = TRUE)
         offset = 2
         url = paste(source, query, sep = "")
         # For S-Plus Compatibility:
-        if (class(version) != "Sversion") {
-            # R:
-            method = NULL
-        } else { 
-            # SPlus
-            method = "wget"
-        }
+        method <- if(is.R()) NULL else "wget"
+
         # Download:
         download.file(url = url, destfile = file, method = method)
         .warn = options()$warn
@@ -984,6 +950,7 @@ function(x)
 # ------------------------------------------------------------------------------
 
 
+## For S-plus compatibility only ... ((MM: does not make sense))
 if (!exists("download.file")) {
 download.file =
 function(url, destfile, method, ...)

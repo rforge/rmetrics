@@ -155,7 +155,7 @@ documentation = NULL, ...)
     }
     
     # charvector | Time Positions:
-    if (is.timeDate(charvec)) { 
+    if (is(charvec, "timeDate")) { 
         timeDates = charvec 
     } else {   
         if (is.null(format)) format = .whichFormat(charvec)    
@@ -193,7 +193,7 @@ documentation = NULL, ...)
     if (is.null(documentation)) documentation = as.character(date())
     
     # Result:
-    ans = new("timeSeries", 
+    new("timeSeries", 
         Data = as.matrix(data), 
         positions = rownames(data),
         format = timeDates@format,
@@ -202,10 +202,7 @@ documentation = NULL, ...)
         recordIDs = recordIDs,
         title = as.character(title), 
         documentation = as.character(documentation) 
-    ) 
-    
-    # Return Value:
-    ans          
+    )
 }
 
 
@@ -543,9 +540,9 @@ FUN = colAvgs, units = NULL, ...)
     # Old/Alternative Version
     
     # Chreck for 'timeSeries' Object:
-    stopifnot(is.timeSeries(x))
-    stopifnot(is.timeDate(from) | is.null(from))
-    stopifnot(is.timeDate(to) | is.null(to))
+    stopifnot(is.timeSeries(x),
+              is(from, "timeDate") || is.null(from),
+              is(to,   "timeDate") || is.null(to))
     
     # Allow for colMeans:
     if (substitute(FUN) == "colMeans") FUN = "colAvgs"
@@ -1353,7 +1350,7 @@ function(formula, data, fake = FALSE, lhs = FALSE)
     x = model.frame(formula, data)
     
     # Convert:
-    if (class(data) == "timeSeries") x = timeSeries(x)
+    if (is(data, "timeSeries")) x = timeSeries(x)
     if (fake) attr(x, "control") <- method
     
     # Return value:

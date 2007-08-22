@@ -1099,9 +1099,9 @@ function(x, from, to, ...)
     
     # Check:
     stopifnot(is.timeSeries(x))
-    if (!is.timeDate(from)) 
+    if (!is(from, "timeDate"))
         from = as.timeDate(x, zone = x@FinCenter, FinCenter = x@FinCenter)
-    if (!is.timeDate(to)) 
+    if (!is(to, "timeDate"))
         to = as.timeDate(x, zone = x@FinCenter, FinCenter = x@FinCenter)
     
     Positions = seriesPositions(x)   
