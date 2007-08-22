@@ -1,48 +1,26 @@
 #### doRUnit.R --- Run RUnit tests
 ####------------------------------------------------------------------------
 
-### This really follows Gregor Gojanc's example in CRAN package  'gdata'
+### Origianlly follows Gregor Gojanc's example in CRAN package  'gdata'
 ### and the corresponding section in the R Wiki:
 ###  http://wiki.r-project.org/rwiki/doku.php?id=developers:runit
+
+### MM: Vastly changed:  This should also be "runnable" for *installed*
+##              package which has no ./tests/
+## ----> put the bulk of the code e.g. in  ../inst/unitTests/runTests.R :
 
 if(require("RUnit", quietly=TRUE)) {
 
   ## --- Setup ---
 
   wd <- getwd()
-  pkg <- basename(sub(pattern="tests$", replacement="", wd))
-  ## Path for standalone i.e. not by R CMD check testing
-  if(Sys.getenv("RCMDCHECK") == "FALSE") {
-    path <- file.path("..", "inst")
-  } else {
-    pkg <- sub(pattern="\.Rcheck$", replacement="", pkg)
-    path <- file.path("..", pkg)
-  }
-  path <- file.path(wd, path, "unitTests")
-  pathReport <- file.path(path, "report")
+  pkg <- sub("\\.Rcheck$", '', basename(dirname(wd)))
 
   library(package=pkg, character.only=TRUE)
 
-  ## --- Testing ---
+  path <- system.file("unitTests", package = pkg)
 
-  ## Define tests
-  testSuite <- defineTestSuite(name=paste(pkg, "unit testing"), dirs=path)
-  ## Run
-  tests <- runTestSuite(testSuite)
+  stopifnot(file.exists(path), file.info(path.expand(path))$isdir)
 
-  ## Print results
-  printTextProtocol(tests)
-  printTextProtocol(tests, fileName=paste(pathReport, ".txt", sep=""))
-
-  ## Print HTML version to a file
-  printHTMLProtocol(tests, fileName=paste(pathReport, ".html", sep=""))
-
-  ## Return stop() if there are any failures i.e. FALSE to unit test.
-  ## This will cause R CMD check to return error and stop
-  if(getErrors(tests)$nFail > 0) {
-    stop("one of unit tests failed")
-  }
+  source(file.path(path, "runTests.R"), echo = TRUE)
 }
-
-###------------------------------------------------------------------------
-### doRUnit.R ends here
