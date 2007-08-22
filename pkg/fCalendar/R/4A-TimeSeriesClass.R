@@ -1271,11 +1271,11 @@ function(x, period = "12m", by = "1m")
 
 
 rollMonthlySeries =
-function(x, period = "12", by = "1m", FUN, ...)
+function(x, period = "12m", by = "1m", FUN, ...)
 {   # A function implemented by Rmetrics
 
     # Description:
-    #   Rolls Monthly a 'timeSeries' on a given period 
+    #   Rolls monthly a 'timeSeries' on a given period 
     
     # Arguments:
     #   x - a 'timeSerie's object of asset returns
@@ -1286,6 +1286,7 @@ function(x, period = "12", by = "1m", FUN, ...)
     #   FUN - function to be applied
     
     # FUNCTION:
+    
     # Settings:
     windows = rollMonthlyWindows(x = x[, 1], period = period, by = by)
     
