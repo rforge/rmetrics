@@ -39,13 +39,20 @@
 function(lib, pkg)
 {   # A function implemented by Diethelm Wuertz
     
-    # Package:
-    cat("\nRmetrics, (C) 1999-2007, Diethelm Wuertz, GPL")
-    cat("\nfCalendar: Chronological Objects and Calendar Tools\n")
-    
+    MSG <- if(getRversion() >= "2.5") packageStartupMessage else message
+    dsc <- packageDescription(pkg)
+    if(interactive() || getOption("verbose")) { # not in test scripts
+	MSG(sprintf("\nPackage %s (%s) loaded.\n%s\n",
+		    pkg, dsc$Version, dsc$Title),
+	    "Rmetrics, (C) 1999-2007, Diethelm Wuertz, GPL\n")
+    }
+
     # Load dll:
     # library.dynam("fCalendar", pkg, lib) 
 }
+
+if(!exists("Sys.setenv", mode = "function")) # pre R-2.5.0, use "old form"
+    Sys.setenv <- Sys.putenv
 
 
 ################################################################################
