@@ -141,60 +141,44 @@ function()
     #  unique.timeDate        NMakes a 'timeDate' object unique
     #  rev.timeDate           Reverts  a 'timeDate' object
 
+    ## NOTA BENE: You CAN NOT work with a function-local variable  'myFincenter',
+    ##            Since  R's evaluation rules will use the global one, here!
+    ## NB (2)   : currently need to specify 'zone'
+
     # NewYork:
-    myFinCenter = "NewYork"
-    NY = timeCalendar(h = 10) 
-    current = c(
-        "2007-01-01 10:00:00", "2007-02-01 10:00:00", "2007-03-01 10:00:00",
-        "2007-04-01 10:00:00", "2007-05-01 10:00:00", "2007-06-01 10:00:00",
-        "2007-07-01 10:00:00", "2007-08-01 10:00:00", "2007-09-01 10:00:00",
-        "2007-10-01 10:00:00", "2007-11-01 10:00:00", "2007-12-01 10:00:00")
-    print(NY)
-    checkIdentical(format(NY), current)
-    
+    cyr <- 2007
+    NY = timeCalendar(cyr, h = 10, FinCenter = "NewYork", zone = "NewYork")
+    str(NY)
+    checkIdentical(format(NY),
+                   sprintf("%4d-%02d-01 %02d:00:00", cyr, 1:12, 10))
+
     # Back to Zurich:
-    myFinCenter = "Zurich"
-    ZH = timeCalendar(h = 16)
-    current = c(
-        "2007-01-01 16:00:00", "2007-02-01 16:00:00", "2007-03-01 16:00:00",
-        "2007-04-01 16:00:00", "2007-05-01 16:00:00", "2007-06-01 16:00:00",
-        "2007-07-01 16:00:00", "2007-08-01 16:00:00", "2007-09-01 16:00:00",
-        "2007-10-01 16:00:00", "2007-11-01 16:00:00", "2007-12-01 16:00:00")
-    print(ZH)
-    checkIdentical(format(ZH), current)
-    
+    ZH = timeCalendar(cyr, h = 16, FinCenter = "Zurich", zone = "Zurich")
+    str(ZH)
+    checkIdentical(format(ZH),
+                   sprintf("%4d-%02d-01 %02d:00:00", cyr, 1:12, 16))
     # NY-ZH Concatenate:
     NYC = c(NY, ZH)[13]
-    print(NYC)
-    # checkIdentical(
-    #    target = format(NYC), 
-    #    current = "2007-01-01 10:00:00")
-    # ... here is problem, runs outside of RUnit correctly
+    checkIdentical(NYC@FinCenter, "NewYork")
+    checkIdentical(format(NYC), paste(cyr, "01-01 10:00:00", sep="-"))
     
     # ZH-NY Concatenate:
     ZRH = c(ZH, NY)[13]
-    print(ZRH)
-    # checkIdentical(
-    #    target = format(ZRH), 
-    #    current = "2007-01-01 16:00:00")
-    # ... here is problem, runs outside of RUnit correctly
+    checkIdentical(ZRH@FinCenter, "Zurich")
+    checkIdentical(format(ZRH), paste(cyr, "01-01 16:00:00", sep="-"))
     
-    # Replicate:
-    DIFF = rep(NY[1:3], times = 3)-rep(NY[1:3], each = 3)
-    target = as.numeric(DIFF[c(1, 5, 9)])
-    checkIdentical(target, c(0, 0, 0))
+    # Replicate and "-":
+    DIFF = rep(NY[1:3], times = 3) - rep(NY[1:3], each = 3)
+    checkIdentical(as.numeric(DIFF[c(1, 5, 9)]), c(0, 0, 0))
     
     # Sort | Sample:
     TC = timeCalendar()
-    print(TC)
-    set.dseed = 4711
     SAMPLE = sample(TC)
     print(SAMPLE)
     checkIdentical(TC, sort(SAMPLE))
     
     # Revert:
-    TS = timeSequence()
-    print(TS)
+    TS = timeSequence("2001-09-11")
     REV = rev(TS)
     print(head(REV))
     checkIdentical(TS, rev(REV))

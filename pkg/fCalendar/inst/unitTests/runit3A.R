@@ -236,17 +236,13 @@ function()
            
     # Format: "%d-%b-%Y"
     Months = c("Mar", "Jun", "Sep", "Dec")
-    charvec = paste("01-", Months, "-2006", sep = "")
-    charvec
-    print(charvec)
-    TD = timeDate(charvec, format = "%Y-%b-%d")
-    print(TD)
-    current = c("2006-03-01", "2006-06-01", "2006-09-01", "2006-12-01")
-    checkIdentical(format(TD), current)
+    charvec <- paste("01", Months, "2006", sep = "-")
+    print(TD <- timeDate(charvec, format = "%d-%b-%Y"))
+    checkIdentical(format(TD),
+		   paste("2006", c("03-01", "06-01", "09-01", "12-01"), sep="-"))
     
     # Format: "%m/%d/%Y"
-    TD = timeDate("12/15/2006", format = "%m/%d/%Y")
-    print(TD)
+    print(TD <- timeDate("12/15/2006", format = "%m/%d/%Y"))
     checkIdentical(format(TD), "2006-12-15")
     
     # Return Value:
@@ -306,55 +302,63 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.midnightStandard = 
-function()
-{   
+test.midnightStandard <- function()
+{
+    ISOform <- "%Y-%m-%d %H:%M:%S"
+
+    .midAuto <- function(cc) .midnightStandard(cc, .whichFormat(cc))
+
     # Midnight Standard - Short Form:
-    MS = .midnightStandard("20010101",       
-        .whichFormat("20010101"))
-    print(MS)
-    checkIdentical(MS, "20010101")
-    MS = .midnightStandard("200101010000",   
-        .whichFormat("200101010000"))
-    print(MS)
-    checkIdentical(MS, "200101010000")
-    MS = .midnightStandard("20010101000000", 
-        .whichFormat("20010101000000"))
-    print(MS)
-    checkIdentical(MS, "2001-01-01 00:00:00")
-    MS = .midnightStandard("200101011600",   
-        .whichFormat("200101011600"))
-    print(MS)
-    checkIdentical(MS, "200101011600")
-    MS = .midnightStandard("20010101160000", 
-        .whichFormat("20010101160000"))
-    print(MS)
+    dd <- c("20010101", "20070131")
+    dd.iso <- format(as.POSIXlt(strptime(dd, "%Y%m%d")), ISOform)
+    print(MS <- .midAuto(dd))
+    checkIdentical(MS, dd.iso)
+
+    checkIdentical(dd.iso, .midAuto(c("200101010000", "200701310000")))
+
+    checkIdentical(dd.iso, .midAuto(c("20010101000000", "20070131000000")))
+
+    checkIdentical(dd.iso, .midAuto(c("2001-01-01 00:00:00",
+				      "2007-01-31 00:00:00")))
+
+    print(MS <- .midAuto("200101011600"))
     checkIdentical(MS, "2001-01-01 16:00:00")
-    
+    checkIdentical(MS, .midAuto("20010101160000"))
+
+    ## midnight case :
+    MN <- .midAuto("20010131240000")
+    checkIdentical(MN, "2001-02-01 00:00:00")
+    checkIdentical(MN, .midAuto(MN))
+    checkIdentical(.midAuto("200101312400"), MN)# no seconds
+    checkIdentical(.midAuto("2001013124"), MN)# no min., no sec.
+
+    ## NEW: "arbitrary format":
+    cv <- c("240000 20010131", "231020 20010131")
+    print(MS <- .midnightStandard(cv, "%H%M%S %Y%m%d"))
+    checkIdentical(MS, c("2001-02-01 00:00:00", "2001-01-31 23:10:20"))
+
+    ## even more extreme
+    cv <- c("24:00, 31.01.2001", "23:10, 31.01.2001",
+	    "24:00, 31.12.2005")
+    print(MS <- .midnightStandard(cv, "%H:%M, %d.%m.%Y"))
+    checkIdentical(MS, c("2001-02-01 00:00:00", "2001-01-31 23:10:00",
+			 "2006-01-01 00:00:00"))
+
     # Midnight Standard - Human Readable Form:
-    MS = .midnightStandard("2001-01-01",          
-        .whichFormat("2001-01-01"))
-    print(MS)
-    checkIdentical(MS, "2001-01-01") 
-    MS = .midnightStandard("2001-01-01 00:00",    
-        .whichFormat("2001-01-01 00:00"))
-    print(MS)
-    checkIdentical(MS, "2001-01-01 00:00")
-    MS = .midnightStandard("2001-01-01 00:00:00", 
-        .whichFormat("2001-01-01 00:00:00"))
-    print(MS)
-    checkIdentical(MS, "2001-01-01 00:00:00")
-    MS = .midnightStandard("2001-01-01 16:00",    
-        .whichFormat("2001-01-01 16:00"))
-    print(MS)
-    checkIdentical(MS, "2001-01-01 16:00")
-    MS = .midnightStandard("2001-01-01 16:00:00", 
-        .whichFormat("2001-01-01 16:00:00"))
-    print(MS)
-    checkIdentical(MS, "2001-01-01 16:00:00")
-     
+    print(MS <- .midAuto("2001-01-31"))
+
+    checkIdentical(MS, "2001-01-31 00:00:00")
+
+    checkIdentical(MS, .midAuto(MS))
+    checkIdentical(MS, .midAuto("2001-01-31 00:00"))
+    checkIdentical(MS, .midAuto("2001-01-31 00"))
+
+    checkIdentical(MN, .midAuto("2001-01-31 24:00:00"))
+    checkIdentical(MN, .midAuto("2001-01-31 24:00"))
+    checkIdentical(MN, .midAuto("2001-01-31 24"))
+
     # Return Value:
-    return()    
+    return()
 }
 
 
