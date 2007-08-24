@@ -1,10 +1,10 @@
 
-# This library is free software; you can redistribute it and/or
+# Rmetrics is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
 # License as published by the Free Software Foundation; either
 # version 2 of the License, or (at your option) any later version.
 #
-# This library is distributed in the hope that it will be useful,
+# Rmetrics is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
 # GNU Library General Public License for more details.
@@ -303,6 +303,7 @@ function()
     #  lines.timeSeries     Lines method for a 'timeSeries' object
     #  points.timeSeries    Points method for a 'timeSeries' object
 
+### FIXME(MM) - if we store this -- make it a package data set!
     # Microsoft Data:
     MSFT.df = data.frame(matrix(c(
     20010326, 57.1250, 57.5000, 55.5625, 56.0625,  31559300,
@@ -489,14 +490,4 @@ function()
 # ------------------------------------------------------------------------------
 
 
-if (FALSE) {
-    require(RUnit)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fCalendar/test/runit4A.R",
-        rngKind = "Marsaglia-Multicarry", rngNormalKind = "Inversion")
-    printTextProtocol(testResult)
-}
-
-
 ################################################################################
-   
-    
