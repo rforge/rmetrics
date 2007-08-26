@@ -27,25 +27,25 @@
 #   see Rmetrics's copyright file
 
 
+# fEcofin::4E-MacKinnonPValues.R
 ################################################################################
-# FUNCTION:          MC KINNON'S PROBABILIY AND QUANTILES:
-#  punitroot          Returns cumulative probability for unit root distributions
-#  qunitroot          Returns quantiles for unit root distributions
-#  unitrootTable      Returns McKinnon's unitroot finite sample test table
-# FUNCTION:          INTERNAL UTILITY FUNCTIONS:
-#  .strsplitUrcval    Implements string split function for S-Plus compatibility
-#  .urcval            Implements unit root statists
-#  .probsUrcval       Implements probability values
-# FUNCTION:          INTERNAL DATA SETS:
-#  .urc1 ... .urc12   Statistical values for unitroot data
+# FUNCTION:                 MAC KINNON'S PROBABILIY AND QUANTILES:
+#  punitroot                 Returns probability for unit root distributions
+#  qunitroot                 Returns quantiles for unit root distributions
+#  unitrootTable             Returns MacKinnon's finite sample test table
+# FUNCTION:                 INTERNAL UTILITY FUNCTIONS:
+#  .strsplitUrcval           Implements string split for S-Plus compatibility
+#  .urcval                   Implements unit root statists
+#  .probsUrcval              Implements probability values
+# FUNCTION:                 INTERNAL DATA SETS:
+#  .urc1 ... .urc12          Statistical values for unitroot data
 ################################################################################
 
 
 ################################################################################
-# FUNCTION:          MC KINNON'S PROBABILIY AND QUANTILES:
-#  punitroot          Returns cumulative probability for unit root distributions
-#  qunitroot          Returns quantiles for unit root distributions
-#  unitrootTable      Returns McKinnon's unitroot finite sample test table
+#  punitroot                 Returns probability for unit root distributions
+#  qunitroot                 Returns quantiles for unit root distributions
+#  unitrootTable             Returns MacKinnon's finite sample test table
 
 
 punitroot =
@@ -222,10 +222,9 @@ function(trend = c("c", "nc", "ct", "ctt"), statistic = c("t", "n"))
 
 
 ################################################################################
-# FUNCTION:          INTERNAL UTILITY FUNCTIONS:
-#  .strsplitUrcval    Implements string split function for S-Plus compatibility
-#  .urcval            Implements unit root statists
-#  .probsUrcval       Implements probability values
+#  .strsplitUrcval           Implements string split for S-Plus compatibility
+#  .urcval                   Implements unit root statists
+#  .probsUrcval              Implements probability values
 
 
 .strsplitUrcval = 
