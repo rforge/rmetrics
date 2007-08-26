@@ -27,17 +27,18 @@
 #   see Rmetrics's copyright file
 
 
+# fEcofin::4A-HypothesisTesting.R
 ################################################################################
-# FUNCTION:             NORMALITY TESTS:
-#  'fHTEST'              S4 Class Representation
-#  show.fHTEST           S4 Print Method
+# FUNCTION:                 HYPOTHESIS TESTS:
+#  'fHTEST'                  S4 Class Representation
+#  show.fHTEST               S4 Print Method
 ################################################################################
 
 
 ################################################################################
-# FUNCTION:             CLASS AND METHODS:
-#  'fHTEST'              S4 Class Representation
-#  show.fHTEST           S4 Print Method
+# FUNCTION:                 HYPOTHESIS TESTS:
+#  'fHTEST'                  S4 Class Representation
+#  show.fHTEST               S4 Print Method
 
 
 setClass("fHTEST", 

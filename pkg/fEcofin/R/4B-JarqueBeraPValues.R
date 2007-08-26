@@ -27,15 +27,16 @@
 #   see Rmetrics's copyright file
 
 
+# fEcofin::4B-JarqueBeraPValues
 ################################################################################
-# FUNCTION:           JARQUE-BERA DATA TABLES:
-# .jbTable             Finite sample p values for the Jarque Bera test
-# .jbPlot              Plots probabilt
-# .pjb                 Returns probabilities for the JB Test given quantiles
-# .qjb                 Returns quantiles for the ADF Test given probabilities
-# DATA:               Description:
-# .jbLM                Jarque-Bera Lagrange Multiplier Test Data
-# .jbALM               Jarque Bera Augmented Lagrange Multiplier Test Data
+# FUNCTION:                 JARQUE-BERA DATA TABLES:
+# .jbTable                   Finite sample p values for the Jarque Bera test
+# .jbPlot                    Plots probabilities
+# .pjb                       Returns probabilities for JB given quantiles
+# .qjb                       Returns quantiles for JB given probabilities
+# DATA:                     DESCRIPTION:
+# .jbLM                      Jarque-Bera Lagrange Multiplier Data
+# .jbALM                     Jarque Bera Augmented Lagrange Multiplier Data
 ################################################################################
 
 

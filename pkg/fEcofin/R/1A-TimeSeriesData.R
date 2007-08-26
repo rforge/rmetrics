@@ -27,6 +27,7 @@
 #   see Rmetrics's copyright file
 
 
+# fEcofin::1A-TimeSeriesData.R
 ################################################################################
 # FUNCTIONS:                   
 #  CPI.dat

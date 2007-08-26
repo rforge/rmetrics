@@ -27,25 +27,26 @@
 #   see Rmetrics's copyright file
 
 
+# fEcofin::3F-HeavisideFunction.R
 ################################################################################
-# FUNCTION:             HEAVISIDE AND RELATED FUNCTIONS:
-#  Heaviside             Computes Heaviside unit step function
-#  Sign                  Another signum function
-#  Delta                 Computes delta function
-#  Boxcar                Computes boxcar function
-#  Ramp                  Computes ramp function
-# FUNCTION:             HEAVISIDE SLIDER:
-#  .heavisideSlider      Displays Heaviside and related functions
+# FUNCTION:                 HEAVISIDE AND RELATED FUNCTIONS:
+#  Heaviside                 Computes Heaviside unit step function
+#  Sign                      Another signum function
+#  Delta                     Computes delta function
+#  Boxcar                    Computes boxcar function
+#  Ramp                      Computes ramp function
+# FUNCTION:                 HEAVISIDE SLIDER:
+#  .heavisideSlider          Displays Heaviside and related functions
 ################################################################################
 
 
 ################################################################################
-# FUNCTION:             HEAVISIDE AND RELATED FUNCTIONS:
-#  Heaviside             Computes Heaviside unit step function
-#  Sign                  Another signum function
-#  Delta                 Computes delta function
-#  Boxcar                Computes boxcar function
-#  Ramp                  Computes ramp function
+# FUNCTION:                 HEAVISIDE AND RELATED FUNCTIONS:
+#  Heaviside                 Computes Heaviside unit step function
+#  Sign                      Another signum function
+#  Delta                     Computes delta function
+#  Boxcar                    Computes boxcar function
+#  Ramp                      Computes ramp function
 
 
 Heaviside = 

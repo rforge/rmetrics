@@ -27,45 +27,46 @@
 #   see Rmetrics's copyright file
 
 
+# fEcofin::3A-BasicExtensions.R                                                 
 ################################################################################
-# FUNCTION:                     BASIC EXTENSIONS:
-#  align                         aligns time series objects by approximation
-#  align.default                 align default method
-#  attach                        attach a database to the R path
-#  attach.default                attach default method
-#  log                           log has become a generic function
-#  log.default                   log default method
-#  round                         round has become a generic function
-#  round.default                 round default method
-#  sample                        sample has become a generic function
-#  sample.default                sample default method
-#  sort                          sort has become a generic function
-#  sort.default                  sort default method
-#  var                           var has become a generic function
-#  var.default                   var default method
-#  cov                           var has become a generic function
-#  cov.default                   var default method
-#  stdev                         for SPLUS compatibility
-# FUNCTION:                     COLUMN AND ROW STATISTICS:
-#  colSums                       colSums has become a generic function
-#  colMeans                      colMeans has become a generic function
-#  rowSums                       rowSums has become a generic function
-#  rowMeans                      roowMeans has become a generic function
-# FUNCTION:                     ROW AND COLUMN NAMES:
-#  "rownames<-"                  rownames<- has become a generic function
-#  "rownames<-.default"          rownames<- default method
-#  "colnames<-"                  colnames<- has become a generic function
-#  "colnames<-.default"          colnames<- default method
-# FUNCTION:                     DATE AND TIME SERIES FUNCTIONS:
-#  modify                        Modifies a 'timeSeries' object
-#  modify.default                Default Method
-#  atoms                         Extracts atoms from 'timeSeries' object
-#  atoms.default                 Default Method
-#  as.POSIXlt                    Converts objects of class POSIXlt
-#  as.POSIXlt.default            Default Method
-#  as.matrix.ts                  Converts univariate ts to 1-column matrix
-#  as.matrix.mts                 Converts multivariate ts to matrix
-#  Sys.putenv                    depreciated after 2.4.1
+# FUNCTION:                 BASIC EXTENSIONS:                                   
+#  align                     aligns time series objects by approximation        
+#  align.default             align default method                               
+#  attach                    attach a database to the R path                    
+#  attach.default            attach default method                              
+#  log                       log has become a generic function                  
+#  log.default               log default method                                 
+#  round                     round has become a generic function                
+#  round.default             round default method                               
+#  sample                    sample has become a generic function               
+#  sample.default            sample default method                              
+#  sort                      sort has become a generic function                 
+#  sort.default              sort default method                                
+#  var                       var has become a generic function                  
+#  var.default               var default method                                 
+#  cov                       var has become a generic function                  
+#  cov.default               var default method                                 
+#  stdev                     for SPLUS compatibility                            
+# FUNCTION:                  COLUMN AND ROW STATISTICS:                         
+#  colSums                    colSums has become a generic function             
+#  colMeans                   colMeans has become a generic function            
+#  rowSums                    rowSums has become a generic function             
+#  rowMeans                   roowMeans has become a generic function           
+# FUNCTION:                  ROW AND COLUMN NAMES:                              
+#  "rownames<-"               rownames<- has become a generic function          
+#  "rownames<-.default"       rownames<- default method                         
+#  "colnames<-"               colnames<- has become a generic function          
+#  "colnames<-.default"       colnames<- default method                         
+# FUNCTION:                  DATE AND TIME SERIES FUNCTIONS:                    
+#  modify                     Modifies a 'timeSeries' object                    
+#  modify.default             Default Method                                    
+#  atoms                      Extracts atoms from 'timeSeries' object           
+#  atoms.default              Default Method                                    
+#  as.POSIXlt                 Converts objects of class POSIXlt                 
+#  as.POSIXlt.default         Default Method                                    
+#  as.matrix.ts               Converts univariate ts to 1-column matrix         
+#  as.matrix.mts              Converts multivariate ts to matrix                
+#  Sys.putenv                 depreciated after 2.4.1                           
 ################################################################################
 
 

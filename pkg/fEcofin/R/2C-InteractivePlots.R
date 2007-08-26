@@ -27,17 +27,18 @@
 #   see Rmetrics's copyright file
 
 
+# fEcofin::2C-InteractivePlots
 ################################################################################
-# FUNCTION:            PLOT UTILITIES:
-#  interactivePlot      Plots several graphs interactively
-#  gridVector           Creates from two vectors rectangular grid points
+# FUNCTION:                 PLOT UTILITIES:
+#  interactivePlot           Plots several graphs interactively
+#  gridVector                Creates from two vectors rectangular grid points
 ################################################################################
 
  
 ################################################################################
-# FUNCTION:            PLOT UTILITIES:
-#  interactivePlot      Plots several graphs interactively
-#  gridVector           Creates from two vectors rectangular grid points
+# FUNCTION:                 PLOT UTILITIES:
+#  interactivePlot           Plots several graphs interactively
+#  gridVector                Creates from two vectors rectangular grid points
 
 
 interactivePlot = 

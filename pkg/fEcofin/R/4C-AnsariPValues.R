@@ -27,23 +27,22 @@
 #   see Rmetrics's copyright file
 
 
+# fEcofin-DickeyFullerPValues.R
 ################################################################################
-# FUNCTION:            AUGMENTED DICKEY FULLER DATA TABLES:
-# .ansariTable          Finite sample p values for the Dickey-Fuller test
-# .ansariPlot           Plots
-# .dansari              Returns densities for the ADF Test given quantiles
-# .pansari              Returns probabilities for the ADF Test given quantiles
-# .qansari              Returns quantiles for the ADF Test given probabilities
+# FUNCTION:                 AUGMENTED DICKEY FULLER DATA TABLES:
+# adfTable                   Finite sample p values for the Dickey-Fuller test
+# .adfPlot                   Plots sample p values for the Dickey-Fuller test
+# padf                       Returns probabilities for ADF given quantiles
+# qadf                       Returns quantiles for ADF given probabilities
 ################################################################################
 
 
 ################################################################################
-# FUNCTION:            AUGMENTED DICKEY FULLER DATA TABLES:
-# .ansariTable          Finite sample p values for the Dickey-Fuller test
-# .ansariPlot           Plots
-# .dansari              Returns densities for the ADF Test given quantiles
-# .pansari              Returns probabilities for the ADF Test given quantiles
-# .qansari              Returns quantiles for the ADF Test given probabilities 
+# FUNCTION:                 AUGMENTED DICKEY FULLER DATA TABLES:
+# adfTable                   Finite sample p values for the Dickey-Fuller test
+# .adfPlot                   Plots sample p values for the Dickey-Fuller test
+# padf                       Returns probabilities for ADF given quantiles
+# qadf                       Returns quantiles for ADF given probabilities
 
 
 .ansariTable =

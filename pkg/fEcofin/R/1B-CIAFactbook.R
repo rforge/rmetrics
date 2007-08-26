@@ -27,27 +27,28 @@
 #   see Rmetrics's copyright file
 
 
+# fEcofin::1B-CIAFactbook
 ################################################################################
-# FINCTIONS:                     WORLD FACTBOOK FROM CIA:
-#  ciaCountries                   Returns a list of CIA country codes
-#  print.ciaCountries             Print method for 'ciaIndicators'
-#  ciaIndicators                  Returns a list of CIA indicator codes
-#  print.ciaIndicators            Print method for 'ciaIndicators'
-#  ciaByCountry                   Returns all Indicators by country 
-#  ciaByIndicator                 Returns for all countries indicator ranking
-# FUNCTIONS:                     FOR INTERNAL USE, ONLY - DO NOT RUN:
-#  .createFactbook                Creates CIA Data for use with Rmetrics
-#  .createIndicators              List of indicator for use with  Rmetrics
+# FINCTIONS:                WORLD FACTBOOK FROM CIA:
+#  ciaCountries              Returns a list of CIA country codes
+#  print.ciaCountries        Print method for 'ciaIndicators'
+#  ciaIndicators             Returns a list of CIA indicator codes
+#  print.ciaIndicators       Print method for 'ciaIndicators'
+#  ciaByCountry              Returns all Indicators by country 
+#  ciaByIndicator            Returns for all countries indicator ranking
+# FUNCTIONS:                FOR INTERNAL USE, ONLY - DO NOT RUN:
+#  .createFactbook           Creates CIA Data for use with Rmetrics
+#  .createIndicators         List of indicator for use with  Rmetrics
 ################################################################################
 
 
 ################################################################################
-#  ciaCountries                   Returns a list of CIA country codes
-#  print.ciaCountries             Print method for 'ciaIndicators'
-#  ciaIndicators                  Returns a list of CIA indicator codes
-#  print.ciaIndicators            Print method for 'ciaIndicators'
-#  ciaByCountry                   Returns all Indicators by country 
-#  ciaByIndicator                 Returns for all countries indicator ranking
+#  ciaCountries              Returns a list of CIA country codes
+#  print.ciaCountries        Print method for 'ciaIndicators'
+#  ciaIndicators             Returns a list of CIA indicator codes
+#  print.ciaIndicators       Print method for 'ciaIndicators'
+#  ciaByCountry              Returns all Indicators by country 
+#  ciaByIndicator            Returns for all countries indicator ranking
 
    
 ciaCountries = 

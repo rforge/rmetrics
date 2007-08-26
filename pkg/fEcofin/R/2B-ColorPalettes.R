@@ -27,23 +27,29 @@
 #   see Rmetrics's copyright file
 
 
+# fEcofin::2B-ColorPalettes:
 ################################################################################
 # FUNCTION:                 COLOR PALETTES:
 #  greyPalette               Creates a grey palette
-#  .timPalette
-#  .rainbowPalette
-#  .heatPalette
-#  .terrainPalette
-#  .topoPalette
-#  .cmPalette
-# FUNCTION:
+#  .timPalette               Creates a cyan, yellow, to orange palette
+#  .rainbowPalette           Creates a rainbow color palette          
+#  .heatPalette              Creates a heat color palette
+#  .terrainPalette           Creates a terrain color palette
+#  .topoPalette              Creates a topo color palette 
+#  .cmPalette                Creates a cm color palette
+# FUNCTION:                 RGB CONVERTER:
 #  .asRGB                    Converts any R color to RGB (red/green/blue)
 # FUNCTION:                 CONVERSION HEXIMAL/DECIMAL:
 #  .chcode                   Changes from one to another number system
 #  .hex.to.dec               Converts heximal numbers do decimal numbers
 #  .dec.to.hex               Converts decimal numbers do heximal numbers
 # FUNCTION:                 COLOR RAMPS:
-#  .blue2red
+# .blue2red                  Creates a blue to red color palette
+# .green2red                 Creates a blue to red color palette
+# .blue2green                Creates a blue to red color palette
+# .purple2green              Creates a blue to red color palette
+# .blue2yellow               Creates a blue to red color palette
+# .cyan2magenta              Creates a blue to red color palette
 ################################################################################
 
 
@@ -92,6 +98,9 @@ if(FALSE) ## This function cannot work: it uses non-existing splint()
 .timPalette =
 function (n = 64)
 {
+    # Description:
+    #   Creates a cyan, yellow, to orange palette
+    
     # Notes:
     #   'Tim.colors' in 'fields' package goes from blue to red, and passes
     #   through the colors cyan, yellow, and orange. Also known as Jet
@@ -99,6 +108,8 @@ function (n = 64)
     #   using 'rgb' function from 'gdDevices'.
     #   From:  <Jaroslaw.W.Tuszynski@saic.com>
 
+    # FUNCTION:
+    
     orig = c(
         "#00008F", "#00009F", "#0000AF", "#0000BF", "#0000CF",
         "#0000DF", "#0000EF", "#0000FF", "#0010FF", "#0020FF",
@@ -129,6 +140,11 @@ function (n = 64)
 
 
 # ------------------------------------------------------------------------------
+#  .rainbowPalette           Creates a rainbow color palette          
+#  .heatPalette              Creates a heat color palette
+#  .terrainPalette           Creates a terrain color palette
+#  .topoPalette              Creates a topo color palette 
+#  .cmPalette                Creates a cm color palette
 
 
 .rainbowPalette = function(n = 64) rainbow(n = n)

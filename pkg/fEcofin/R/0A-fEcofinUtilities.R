@@ -27,6 +27,7 @@
 #   see Rmetrics's copyright file
 
 
+# fEcofin::0-AEcofinUtilities.R
 ################################################################################
 # FUNCTION:                 INTERNAL USED PLOT FUNCTIONS:
 #  .residualsPlot            Returns a residual series plot

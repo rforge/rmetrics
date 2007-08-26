@@ -1,3 +1,4 @@
+
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
 # License as published by the Free Software Foundation; either
@@ -26,6 +27,7 @@
 #   see Rmetrics's copyright file
 
 
+# fEcofin-DickeyFullerPValues.R
 ################################################################################
 # FUNCTION:            AUGMENTED DICKEY FULLER DATA TABLES:
 # adfTable              Finite sample p values for the Dickey-Fuller test

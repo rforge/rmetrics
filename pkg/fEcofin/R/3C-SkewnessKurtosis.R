@@ -27,18 +27,20 @@
 #   see Rmetrics's copyright file
 
 
+# fEcofin::3C-SkewnessKurtosis.R
 ################################################################################
-# FUNCTION:             SKEWNESS AND KURTOSIS:
-#  skewness              Returns a number which is the skewness of the data
-#   skewness.default      Default method
-#   skewness.data.frame   Method for objects of class data.frame
-#   skewness.POSIXct      Method for objects of class POSIXct
-#   skewness.POSIXlt      Method for objects of class POSIXlt
-#  kurtosis              Returns a number which is the kurtosis of the data
-#   kurtosis.default      Default method
-#   kurtosis.data.frame   Method for objects of class data.frame
-#   kurtosis.POSIXct      Method for objects of class POSIXct
-#   kurtosis.POSIXlt      Method for objects of class POSIXlt
+# FUNCTION:                 SKEWNESS::
+#  skewness                  Returns a number which is the skewness of the data
+#  skewness.default          Default method
+#  skewness.data.frame       Method for objects of class data.frame
+#  skewness.POSIXct          Method for objects of class POSIXct
+#  skewness.POSIXlt          Method for objects of class POSIXlt
+# FUNCTION:                 KURTOSIS:
+#  kurtosis                  Returns a number which is the kurtosis of the data
+#  kurtosis.default          Default method
+#  kurtosis.data.frame       Method for objects of class data.frame
+#  kurtosis.POSIXct          Method for objects of class POSIXct
+#  kurtosis.POSIXlt          Method for objects of class POSIXlt
 ################################################################################
 
 

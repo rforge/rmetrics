@@ -27,14 +27,15 @@
 #   see Rmetrics's copyright file
 
 
+# fEcofin::3B-PortableInnovations
 # ##############################################################################
-# FUNCTION:            PORTABLE INNOVATIONS:
-#  set.lcgseed          Sets initial random seed
-#  get.lcgseed          Gets the current valus of the random seed
-# FUNCTION:            DISTRIBUTIONS:
-#  runif.lcg            Generates portable uniform linear congruational rvs
-#  rnorm.lcg            Generates portable normal linear congruational rvs
-#  rt.lcg               Generates portable Student-t linear congruational rvs
+# FUNCTION:                 PORTABLE INNOVATIONS:
+#  set.lcgseed               Sets initial random seed
+#  get.lcgseed               Gets the current valus of the random seed
+# FUNCTION:                 PORTABLE RVS GENERATORS:
+#  runif.lcg                 Generates uniform linear congruational rvs
+#  rnorm.lcg                 Generates normal linear congruational rvs
+#  rt.lcg                    Generates Student-t linear congruational rvs
 ################################################################################
 
 
