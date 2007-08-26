@@ -27,19 +27,20 @@
 #   see Rmetrics's copyright file
 
 
+# fEcofin::4A-BivariateGridding.R
 ################################################################################
-# FUNCTION:           GRID DATA:
-#  gridData            Generates a grid data set
-#  persp.gridData      Generates a perspective plot from a grid data object
-#  contour.gridData    Generates a contour plot from a grid data object
+# FUNCTION:                 GRID DATA:
+#  gridData                  Generates grid data set
+#  persp.gridData            Generates perspective plot from a grid data object
+#  contour.gridData          Generates contour plot from a grid data object
 ################################################################################
 
 
 ################################################################################
-# FUNCTION:           GRID DATA:
-#  gridData            Generates a grid data set
-#  persp.gridData      Generates a perspective plot from a grid data object
-#  contour.gridData    Generates a contour plot from a grid data object
+# FUNCTION:                 GRID DATA:
+#  gridData                  Generates grid data set
+#  persp.gridData            Generates perspective plot from a grid data object
+#  contour.gridData          Generates contour plot from a grid data object
 
 
 gridData =

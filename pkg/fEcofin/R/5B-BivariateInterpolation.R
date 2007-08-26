@@ -27,23 +27,24 @@
 #   see Rmetrics's copyright file
 
 
+# fEcofin::5B-BivariateInterpolation.R
 ################################################################################
-# FUNCTION:           BIVARIATE GRIDDED INTERPOLATION:
-#  linearInterp        Interpolates Linearly Irregularly Distributed Data Points
-#  linearInterpp       Interpolates Linearly pointwise
-#  akimaInterp         Interpolates and Smoothes Irregularly Distributed Points
-#  akimaInterpp        Interpolates and Smoothes pointwise
-#  krigeInterp         Kriges Irregularly Distributed Data Points
+# FUNCTION:                 BIVARIATE GRIDDED INTERPOLATION:
+#  linearInterp             Interpolates linearly irregularly spaced data points
+#  linearInterpp            Interpolates linearly pointwise
+#  akimaInterp              Interpolates and smoothes irregularly spaced points
+#  akimaInterpp             Interpolates and smoothes pointwise
+#  krigeInterp              Kriges irregularly distributed data points
 ################################################################################
 
 
 ################################################################################
-# FUNCTION:           BIVARIATE GRIDDED INTERPOLATION:
-#  linearInterp        Interpolates Linearly Irregularly Distributed Data Points
-#  linearInterpp       Interpolates Linearly pointwise
-#  akimaInterp         Interpolates and Smoothes Irregularly Distributed Points
-#  akimaInterpp        Interpolates and Smoothes pointwise
-#  krigeInterp         Kriges Irregularly Distributed Data Points
+# FUNCTION:                 BIVARIATE GRIDDED INTERPOLATION:
+#  linearInterp             Interpolates linearly irregularly spaced data points
+#  linearInterpp            Interpolates linearly pointwise
+#  akimaInterp              Interpolates and smoothes irregularly spaced points
+#  akimaInterpp             Interpolates and smoothes pointwise
+#  krigeInterp              Kriges irregularly distributed data points
 
 
 linearInterp =   

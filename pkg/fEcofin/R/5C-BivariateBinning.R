@@ -27,20 +27,21 @@
 #   see Rmetrics's copyright file
 
 
+# fEcofin::5C-BivariateBinning.R
 ################################################################################
-# FUNCTION:           DESCRIPTION:
-#  squareBinning       Square binning of irregularly distributed data sets
-#  plot                S3 Method for plotting square binned data sets
-# FUNCTION:           DESCRIPTION:
-#  hexBinning          Hexagonal binning of irregularly distributed data sets
-#  plot                S3 Method for plotting hexagonal binned data sets
+# FUNCTION:                 DESCRIPTION:
+#  squareBinning             Square binning of irregularly spaced points
+#  plot                      S3 Method for plotting square binned points
+# FUNCTION:                 DESCRIPTION:
+#  hexBinning                Hexagonal binning of irregularly spaced points
+#  plot                      S3 Method for plotting hexagonal binned points
 ################################################################################
 
 
 ################################################################################
-# FUNCTION:           DESCRIPTION:
-#  squareBinning       Square binning of irregularly distributed data sets
-#  plot                S3 Method for plotting square binned data sets
+# FUNCTION:                 DESCRIPTION:
+#  squareBinning             Square binning of irregularly spaced points
+#  plot                      S3 Method for plotting square binned points
 
 
 squareBinning = 
@@ -185,9 +186,9 @@ function(x, col = heat.colors(12), addPoints = TRUE, addRug = TRUE, ...)
 
 
 ################################################################################
-# FUNCTION:           DESCRIPTION:
-#  hexBinning          Hexagonal binning of irregularly distributed data sets
-#  plot                S3 Method for plotting hexagonal binned data sets
+# FUNCTION:                 DESCRIPTION:
+#  hexBinning                Hexagonal binning of irregularly spaced points
+#  plot                      S3 Method for plotting hexagonal binned points
 
 
 hexBinning = 

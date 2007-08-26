@@ -1,20 +1,20 @@
-\name{McKinnonPValues}
+\name{MacKinnonPValues}
 
-\alias{McKinnonPValues}
+\alias{MacKinnonPValues}
 
 \alias{punitroot}
 \alias{qunitroot}
 \alias{unitrootTable}
 
 
-\title{McKinnon's Unit Root p Values}
+\title{MacKinnon's Unit Root p Values}
 
 
 \description{
     
     A collection and description of functions 
     to compute the distribution and and quantile 
-    function for McKinnon's unit root test statistics. 
+    function for MacKinnon's unit root test statistics. 
     \cr
     
     The functions are:
@@ -22,7 +22,7 @@
     \tabular{ll}{
     \code{punitroot} \tab the returns cumulative probability, \cr
     \code{qunitroot} \tab the returns quantiles of the unit root test statistics, \cr
-    \code{unitrootTable} \tab tables p values from McKinnon's response surface.}
+    \code{unitrootTable} \tab tables p values from MacKinnon's response surface.}
     
 }
  
@@ -88,8 +88,8 @@ unitrootTable(trend = c("c", "nc", "ct", "ctt"), statistic = c("t", "n"))
 \note{
        
     The function \code{punitroot} and \code{qunitroot} use Fortran 
-    routines and the response surface approach from J.G. McKinnon (1988). 
-    Many thanks to J.G. McKinnon putting his code and tables under the 
+    routines and the response surface approach from J.G. MacKinnon (1988). 
+    Many thanks to J.G. MacKinnon putting his code and tables under the 
     GPL license, which made this implementation possible.
     
 }
@@ -97,7 +97,7 @@ unitrootTable(trend = c("c", "nc", "ct", "ctt"), statistic = c("t", "n"))
 
 \author{
     
-    J.G. McKinnon for the underlying Fortran routine and the tables, \cr
+    J.G. MacKinnon for the underlying Fortran routine and the tables, \cr
     Diethelm Wuertz for the Rmetrics \R-port.
 
 }
@@ -139,7 +139,7 @@ Phillips, P.C.B., Perron, P. (1988);
    # Finite sample cumulative probability of n-statistic
    punitroot(1.2836, N = 100, trend = "nc", statistic = "n")
    
-## Mc Kinnon's unitrootTable -
+## Mac Kinnon's unitrootTable -
    unitrootTable(trend = "nc")
 }
 
