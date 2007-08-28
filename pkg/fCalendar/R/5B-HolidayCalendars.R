@@ -27,19 +27,20 @@
 #   see Rmetrics's copyright file
 
 
+# fCalendar::5B-HolidayCalendars.R
 ################################################################################
-# FUNCTION:           HOLIDAY CALENDAR FUNCTIONS:
-#  holiday             Returns a holiday date of G7 and CH 
-#  holidayNYSE         Returns 'timeDate' object for full-day NYSE holidays
-#  holidayZURICH       Returns 'timeDate' object for ZURICH holidays
+# FUNCTION:                 HOLIDAY CALENDAR FUNCTIONS:
+#  holiday                   Returns a holiday date of G7 and CH 
+#  holidayNYSE               Returns holidays for full-day NYSE calendar
+#  holidayZURICH             Returns holidays for ZURICH calendar
 ################################################################################
 
 
 ################################################################################
-# FUNCTION:           HOLIDAY CALENDAR FUNCTIONS:
-#  holiday             Returns a holiday date of G7 and CH 
-#  holidayNYSE         Returns 'timeDate' object for full-day NYSE holidays
-#  holidayZURICH       Returns 'timeDate' object for ZURICH holidays
+# FUNCTION:                 HOLIDAY CALENDAR FUNCTIONS:
+#  holiday                   Returns a holiday date of G7 and CH 
+#  holidayNYSE               Returns holidays for full-day NYSE calendar
+#  holidayZURICH             Returns holidays for ZURICH calendar
 
 
 holiday = 
