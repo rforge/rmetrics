@@ -36,12 +36,13 @@
 #  isHoliday                 Tests if a date is a non-business day or not
 #  getDayOfWeek              Returns the day of the week to a 'timeDate' object
 #  getDayOfYear              Returns the day of the year to a 'timeDate' object
+#  length.timeDate           Gets the length of a 'timeDate' object
 # MEHODS:                   SUBSETTING TIMEDATE OBJECTS:
 #  [.timeDate                Extracts/replaces subsets from 'timeDate' objects
+#  window.timeDate           Extracts a piece from a 'timeDate' object
 #  cut.timeDate              Extracts a piece from a 'timeDate' object
 #  start.timeDate            Extracts the first entry of a 'timeDate' object
 #  end.timeDate              Extracts the last entry of a 'timeDate' object
-#  length.timeDate           Gets the length of a 'timeDate' object
 #  blockStart                Creates start dates for equally sized blocks
 #  blockEnd                  Creates end dates for equally sized blocks
 ################################################################################
@@ -55,6 +56,7 @@
 #  isHoliday                 Tests if a date is a non-business day or not
 #  getDayOfWeek              Returns the day of the week to a 'timeDate' object
 #  getDayOfYear              Returns the day of the year to a 'timeDate' object
+#  length.timeDate           Gets the length of a 'timeDate' object
 
 
 isWeekday = 
@@ -198,6 +200,9 @@ function(x)
     # Description:
     #   Returns day of week for time date objects
     
+    # Arguments:
+    #   x - an object of class "timeDate"
+    
     # Example:
     #   weekDay(Sys.timeDate())
     #   weekDay(timeSequence("2005-05-15", "2005-07-15"))
@@ -225,9 +230,9 @@ function(x)
     # Description:
     #   Returns day of week for time date objects
     
-    # Changes:
-    #
-    
+    # Arguments:
+    #   #   x - an object of class "timeDate"
+     
     # FUNCTION:
     
     # Assign:
@@ -241,9 +246,36 @@ function(x)
 }   
 
 
+# ------------------------------------------------------------------------------
+
+
+length.timeDate = 
+function(x) 
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Gets the length of a 'timeDate' vector
+
+    # Arguments:
+    #   x - a 'timeDate' object
+    
+    # Value:
+    #   Returns the lengths of an object of class 'timeDate'.
+
+    # FUNCTION:
+    
+    # Length:
+    ans = length(x@Data)
+    
+    # Return Value:
+    ans
+}
+
+
 ################################################################################
 # MEHODS:                   SUBSETTING TIMEDATE OBJECTS:
 #  [.timeDate                Extracts/replaces subsets from 'timeDate' objects
+#  window.timeDate           Extracts a piece from a 'timeDate' object
 #  cut.timeDate              Extracts a piece from a 'timeDate' object
 #  start.timeDate            Extracts the first entry of a 'timeDate' object
 #  end.timeDate              Extracts the last entry of a 'timeDate' object
@@ -293,16 +325,56 @@ function(x, ..., drop = TRUE)
 # ------------------------------------------------------------------------------
 
 
-cut.timeDate = 
-function(x, from , to, ...)
+window.timeDate = 
+function(x, start, end, ...)
 {   # A function implemented by Diethelm Wuertz
-
-    # Changes:
-    #
+    
+    # Descriptions:
+    #   Subsets a timeDate object between from and to dates. 
+ 
+    # Arguments
+    #   x - an object of class "timeDate"
+    #   start, end - start and end dates as "timeDate" objects.
+    
+    # Note:
+    #   This is synonome for the function window() which should 
+    #   be preferred.
     
     # FUNCTION:
     
-    # Cut:
+    # Extract Subset:
+    X = timeDate(x, zone = x@FinCenter, FinCenter = "GMT")
+    FROM = timeDate(start, zone = x@FinCenter, FinCenter = "GMT")
+    TO = timeDate(end, zone = x@FinCenter, FinCenter = "GMT")
+    test = (X >= FROM & X <= TO)
+    ans = timeDate(X[test], zone = "GMT", FinCenter = x@FinCenter)
+    
+    # Return Value:
+    ans
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+cut.timeDate = 
+function(x, from , to, ...)
+{   # A function implemented by Diethelm Wuertz
+    
+    # Descriptions:
+    #   Subsets a timeDate object between from and to dates. 
+ 
+    # Arguments
+    #   x - an object of class "timeDate"
+    #   from, to - start and end dates as "timeDate" objects.
+    
+    # Note:
+    #   This is synonome for the function window() which should 
+    #   be preferred.
+    
+    # FUNCTION:
+    
+    # Extract Subset:
     X = timeDate(x, zone = x@FinCenter, FinCenter = "GMT")
     FROM = timeDate(from, zone = x@FinCenter, FinCenter = "GMT")
     TO = timeDate(to, zone = x@FinCenter, FinCenter = "GMT")
@@ -330,9 +402,6 @@ function(x, ...)
     # Value:
     #   Returns from 'x' the earliest entry as an object of class 
     #   'timeDate'.
-    
-    # Changes:
-    #
     
     # FUNCTION:
     
@@ -370,10 +439,7 @@ function(x, ...)
     
     # Value:
     #   Returns an object of class 'timeDate'.
-    
-    # Changes:
-    #
-    
+
     # FUNCTION:
     
     # Set Timezone to GMT:
@@ -398,35 +464,6 @@ function(x, ...)
 # ------------------------------------------------------------------------------
 
 
-length.timeDate = 
-function(x) 
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Gets the length of a 'timeDate' vector
-
-    # Arguments:
-    #   x - a 'timeDate' object
-    
-    # Value:
-    #   Returns the lengths of an object of class 'timeDate'.
-    
-    # Changes:
-    #
-    
-    # FUNCTION:
-    
-    # Length:
-    ans = length(x@Data)
-    
-    # Return Value:
-    ans
-}
-
-
-# ------------------------------------------------------------------------------
-
-
 blockStart =
 function(x, block = 20)
 {   # A function implemented by Diethelm Wuertz
@@ -436,10 +473,7 @@ function(x, block = 20)
     
     # Example:
     #   blockEnd(timeSequence(), block = 30)
-    
-    # Changes:
-    #
-    
+
     # FUNCTION:
     
     # Start Dates of Blocks:
@@ -465,8 +499,7 @@ function(x, block = 20)
     #   blockEnd(timeSequence(), block = 30)
     
     # Changes:
-    #
-    
+
     # FUNCTION:
     
     # End Dates of Blocks:

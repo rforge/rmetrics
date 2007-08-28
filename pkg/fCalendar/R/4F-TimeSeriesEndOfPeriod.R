@@ -121,7 +121,22 @@ aggregate = c("monthly", "quarterly"), align = TRUE)
     # Series:
     Series = .endOfPeriodSeries(x, nYearsBack = nYearsBack,
         aggregate = aggregate, align = FALSE)
-    
+        
+    # Internal Function:
+    .cl.vals <- function(x, ci) {
+        x = x[!is.na(x)]
+        n = length(x)
+        if (n <= 1) 
+            return(c(NA, NA))
+        se.mean = sqrt(var(x)/n)
+        t.val = qt((1 - ci)/2, n - 1)
+        mn = mean(x)
+        lcl = mn + se.mean * t.val
+        ucl = mn - se.mean * t.val
+        c(lcl, ucl)
+    }
+
+    # Statistics:
     for (i in 1:ncol(Series)) 
     { 
         # Basic Statistics:
@@ -134,7 +149,7 @@ aggregate = c("monthly", "quarterly"), align = TRUE)
             as.numeric(quantile(X, prob = 0.25, na.rm = TRUE)), 
             as.numeric(quantile(X, prob = 0.75, na.rm = TRUE)), 
             mean(X), median(X), sum(x), sqrt(var(X)/length(X)), 
-            cl.vals(X, ci)[1], cl.vals(X, ci)[2], 
+            .cl.vals(X, ci)[1], .cl.vals(X, ci)[2], 
             var(X), sqrt(var(X)), skewness(X), kurtosis(X))
         znames = c("nobs", "NAs", "Minimum", "Maximum", "1. Quartile", 
             "3. Quartile", "Mean", "Median", "Sum", "SE Mean", 

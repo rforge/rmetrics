@@ -889,9 +889,9 @@ function(year = currentYear, shift = 0)
 .easterSunday =
 function(year) 
 {   # A function implemented by Diethelm Wuertz
-
-    # Changes:
-    #
+    
+    # Description:
+    #   Computes the 'timeDate' of Easter Sunday
     
     # FUNCTION:
     
@@ -914,7 +914,7 @@ function(year)
     easter.day = p+1 
     
     # Return Value:
-    year*10000 + easter.month*100 + easter.day 
+    year*10000 + easter.month*100 + easter.day
 }
 
 
