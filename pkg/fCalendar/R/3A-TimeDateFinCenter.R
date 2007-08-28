@@ -145,7 +145,7 @@ function(FinCenter = myFinCenter)
         # Return Value:
         Sys.setenv(TZ = myTZ)
         data.frame(ruleChanges = as.character(ruleChangesGMT),
-            offSet = hms.off) 
+            offSet = hms.off) }
     }
     ## Instead:
 

@@ -128,21 +128,20 @@ aggregate = c("monthly", "quarterly"), align = TRUE)
         X = as.vector(Series[, i])
         X.length = length(X)
         X = X[!is.na(X)]
-        X.na = x.length - length(x)
+        X.na = X.length - length(X)
         ci = 0.95
-        z = c(X.length, x.na, min(X), max(X), 
+        z = c(X.length, X.na, min(X), max(X), 
             as.numeric(quantile(X, prob = 0.25, na.rm = TRUE)), 
             as.numeric(quantile(X, prob = 0.75, na.rm = TRUE)), 
             mean(X), median(X), sum(x), sqrt(var(X)/length(X)), 
-            cl.vals(x, ci)[1], cl.vals(X, ci)[2], 
+            cl.vals(X, ci)[1], cl.vals(X, ci)[2], 
             var(X), sqrt(var(X)), skewness(X), kurtosis(X))
         znames = c("nobs", "NAs", "Minimum", "Maximum", "1. Quartile", 
             "3. Quartile", "Mean", "Median", "Sum", "SE Mean", 
             "LCL Mean", "UCL Mean", "Variance", "Stdev", "Skewness", 
             "Kurtosis")
-        result = matrix(z, ncol = 1)
-        row.names(result) = znames
-        stats1 = cbind(ans, result)
+        stats1 = matrix(z, ncol = 1)
+        row.names(stats) = znames
           
         # Monthly Return Statistics:
         xData = as.vector(x@Data)
