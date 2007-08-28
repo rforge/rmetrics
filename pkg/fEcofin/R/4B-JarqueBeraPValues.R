@@ -201,7 +201,7 @@ function(q, N = Inf, type = c("LM", "ALM"))
 
 
 .qjb =
-function(p, N = Inf, trend = c("nc", "c", "ct"), statistic = c("t", "n"))
+function(p, N = Inf, type = c("LM", "ALM"))
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -220,7 +220,7 @@ function(p, N = Inf, trend = c("nc", "c", "ct"), statistic = c("t", "n"))
     # FUNCTION:
 
     # Match Arguments:
-    trend = match.arg(trend)
+    type = match.arg(type)
     statistic = match.arg(statistic)
 
     # Check N:

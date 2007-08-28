@@ -28,7 +28,7 @@
 
 
 # fEcofin::3B-PortableInnovations
-# ##############################################################################
+################################################################################
 # FUNCTION:                 PORTABLE INNOVATIONS:
 #  set.lcgseed               Sets initial random seed
 #  get.lcgseed               Gets the current valus of the random seed
@@ -42,6 +42,12 @@
 ################################################################################
 #  set.lcgseed               Sets initial random seed
 #  get.lcgseed               Gets the current valus of the random seed
+
+
+.lcg.seed = 4711
+
+
+# ------------------------------------------------------------------------------
 
    
 set.lcgseed = 
@@ -71,7 +77,7 @@ function(seed = 4711)
     # FUNCTION:
     
     # Return Value:
-    lcg.seed <<- seed
+    .lcg.seed <<- seed
 }
 
 
@@ -89,7 +95,7 @@ function()
     # FUNCTION
     
     # Return Value:
-    lcg.seed
+    .lcg.seed
 }
      
 
@@ -124,7 +130,7 @@ function(n, min = 0, max = 1)
     # FUNCTION:
     
     # Initialize:
-    if(!exists("lcg.seed")) lcg.seed <<- 4711
+    if(!exists(".lcg.seed")) .lcg.seed <<- 4711
     
     # Generate:
     r.lcg = rep(0, times = n)
@@ -132,8 +138,8 @@ function(n, min = 0, max = 1)
     c = 0
     m = 2^31-1
     for (i in 1:n) {
-        lcg.seed <<- (a*lcg.seed + c) %% m 
-        r.lcg[i] = lcg.seed/m }
+        .lcg.seed <<- (a * .lcg.seed + c) %% m 
+        r.lcg[i] = .lcg.seed / m }
     r.lcg = (max-min)*r.lcg + min
      
     # Return Value:

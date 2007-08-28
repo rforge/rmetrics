@@ -237,13 +237,13 @@ function(x, sep = " ")
     # FUNCTION:
     
     # Split:
-    if (exists("strsplit")) {
+    # if (exists("strsplit")) {
         # R:
         ans = strsplit(x = x , split = sep)
-    } else {
-        # Splus:
-        ans = lapply(lapply(X = x, FUN = unpaste, sep = sep), unlist)
-    }
+    # } else {
+    #     # Splus:
+    #     ans = lapply(lapply(X = x, FUN = unpaste, sep = sep), unlist)
+    # }
     
     # Return Value:
     ans 

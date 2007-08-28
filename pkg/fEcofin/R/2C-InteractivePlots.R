@@ -41,6 +41,9 @@
 #  gridVector                Creates from two vectors rectangular grid points
 
 
+.n.plots = 0
+
+
 interactivePlot = 
 function(x, choices = paste("Plot", 1:9), 
 plotFUN = paste("plot.", 1:9, sep = ""), which = "all", ...)
@@ -79,20 +82,27 @@ plotFUN = paste("plot.", 1:9, sep = ""), which = "all", ...)
     multPlot = function (x, choices, ...) 
     {
         # Selective Plot:
-        selectivePlot = function (x, choices, FUN, which){
+        selectivePlot <- 
+        function (x, choices, FUN, which){
             # Internal Function:
-            askPlot = function (x, choices, FUN) {
+            askPlot <-
+            function (x, choices, FUN) {
                 # Pick and Plot:
-                pick = 1; n.plots = length(choices)
+                pick = 1
+                .n.plots <<- length(choices)
                 while (pick > 0) { pick = menu (
                     choices = paste("plot:", choices), 
                     title = "\nMake a plot selection (or 0 to exit):")
-                    if (pick > 0) match.fun(FUN[pick])(x) } }                   
+                    if (pick > 0) match.fun(FUN[pick])(x) } 
+            }                   
             if (as.character(which[1]) == "ask") {
-                askPlot(x, choices = choices, FUN = FUN, ...) }
-            else { 
-                for (i in 1:n.plots) if (which[i]) match.fun(FUN[i])(x) }
-            invisible() }  
+                askPlot(x, choices = choices, FUN = FUN, ...) 
+            } else { 
+                for (i in 1:.n.plots) if (which[i]) match.fun(FUN[i])(x) 
+            }
+            invisible() 
+        }  
+        
         # match Functions, up to nine ...
         if (length(plotFUN) < 9) plotFUN = 
             c(plotFUN, rep(plotFUN[1], times = 9 - length(plotFUN)))

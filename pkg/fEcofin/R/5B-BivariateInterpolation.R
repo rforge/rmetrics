@@ -328,7 +328,7 @@ yo = seq(min(y), max(y), length = gridPoints), extrap = FALSE, polDegree = 6)
     # FUNCTION:
     
     # Arguments:
-    if (is.list(x)) x = matrix(unlist(akima), ncol = 3)
+    if (is.list(x)) x = matrix(unlist(x), ncol = 3)
     if (is.data.frame(x)) x = as.matrix.data.frame(x)
     if (is.matrix(x)) {
         z = x[, 3]
