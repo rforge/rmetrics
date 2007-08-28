@@ -43,12 +43,7 @@
 #  fredSeries            Easy to use download from St. Louis FED  
 #  forecastsSeries       Easy to use download from www.forecasts.org
 # FUNCTION:             IMPORT STATISTICS - EXPERIMENTAL:
-#  keystatsImport        Downloads key statistics from Yahoo's web site       
-# FUNCTION:             ONLY FOR SPLUS COMPATIBILITY:
-#  as.Date               S-PLUS: Converts date represenatation
-#  data                  S-PLUS: Loads or lists specified data sets
-#  download.file         S-PLUS: Downloads using "lynx" or "wget"
-#  strsplit              S-PLUS: Splits character vector into substrings
+#  keystatsImport        Downloads key statistics from Yahoo's web site                    S-PLUS: Splits character vector into substrings
 ################################################################################
 
 
@@ -133,11 +128,6 @@ function (query, file = "tempfile",
     #   USDGNP:
     #    economagicImport("fedstl/gnp", "USGNP.CSV", 
     #       frequency = "monthly", colname = "USGNP")
-<<<<<<< .mine
-    
-=======
-
->>>>>>> .r1781
     # FUNCTION:
     
     # Frequency:
@@ -156,9 +146,9 @@ function (query, file = "tempfile",
         }
     } else {  
         # Settings:
-	n <- switch(freq,
-		    "quarterly" =, "monthly" = 2,
-		    "daily" = 3)
+    n <- switch(freq,
+            "quarterly" =, "monthly" = 2,
+            "daily" = 3)
        
         # For S-Plus Compatibility:
         method <- if(is.R()) NULL else "lynx"
@@ -559,100 +549,17 @@ getReturns = FALSE, ...)
     returnClass = match.arg(returnClass)
     
     # Download:
-<<<<<<< .mine
     X = economagicImport(query = query, file = "tempfile", 
         source = "http://www.economagic.com/em-cgi/data.exe/", 
         frequency = frequency, save = FALSE, colname = "VALUE", 
         try = TRUE)@data
-    X = as.timeSeries(X@data)
-=======
-    if (try) {
-        # First try if the Internet can be accessed:
-        z = try(keystatsImport(file = file, source = source, 
-            query = query, save = save, try = FALSE))
-        if (inherits(z, "try-error") || inherits(z, "Error")) {
-            return("No Internet Access")
-        }
-        else {
-            return(z)
-        }
-    } else {
-        # offset = 2
-        url = paste(source, query, sep = "")
-        # For S-Plus Compatibility:
-        method <- if(is.R()) NULL else "wget"
-        # Download:
-        download.file(url = url, destfile = file, method = method)
-        .warn = options()$warn
-        options(warn = -1)
-        x = scan(file, what = "", sep = ">")
-        options(warn = .warn)
-        keynames <- c(
-            "Market Cap ", "Enterprise Value ", "Trailing P/E ",
-            "Forward P/E ", "PEG Ratio ", "Price/Sales ", "Price/Book ", 
-            "Enterprise Value/Revenue ", "Enterprise Value/EBITDA ",
-            "Forward Annual Dividend Rate ", "Forward Annual Dividend Yield ",
-            "Beta: ", "52-Week Change ", 
-            "P500 52-Week Change ", "52-Week High ", "52-Week Low ")
-
-        #
-        if (class(version) != "Sversion") {
-            stats = as.character(Sys.Date())
-        } else {
-            currentDate = timeDate(date(), in.format = "%w %m %d %H:%M:%S %Z %Y")
-            mdy = month.day.year(currentDate)
-            stats = as.character(mdy$year * 10000 + mdy$month * 
-                100 + mdy$day)
-        }
-
-        #
-        offset <- c(2,6,2,7,2,2,2,6,6,6,6,2,6,6,6,6)
-        fff <- 0
-        for (s in keynames) {
-            fff <- fff+1
-            grepped <- paste(gsub("</td", "", x[grep(s, x) + offset[fff]]))
-                    if (length(grepped) > 1)
-                    grepped <- grepped[1]
-                if (length(grepped) == 0) 
-                        grepped <- "NA"
-                    if (grepped == "") 
-                        grepped <- "NA"
-            stats <- c(stats, grepped)
-        }
-
-        #
-        for (i in 1:length(keynames)) {
-            keynames[i] = substring(keynames[i], 1, nchar(keynames[i]) -  1)
-        }
-        keynames = c("Date", keynames)
-        ans = list(
-            query = query, 
-            keystats = data.frame(cbind(Keyname = keynames, Statistic = stats)))
-        class(ans) = "keystats"
-        ans
-    }
-}
-
-
-# ------------------------------------------------------------------------------
- 
-
-.keystatsImport = 
-function(query, file = "tempfile", source = "http://finance.yahoo.com/q/ks?s=", 
-save = FALSE, try = TRUE) 
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Downloads Key Statistics on shares from Yahoo's Internet site
-     
-    # Example:
-    #   keystatsImport("YHOO")
->>>>>>> .r1781
+        
+    # Download:
+    X = as.timeSeries(X@Data, silent = TRUE)
     
     # Compute Return Series ?
     if (getReturns) X = returnSeries(X, ...)  
     
-<<<<<<< .mine
     # Return as Object ?
     if (returnClass == "matrix") {
         X = X@data
@@ -660,78 +567,11 @@ save = FALSE, try = TRUE)
         X = data.frame(X@Data)
     } else if (returnClass == "ts") {
         X = as.ts(X@Data)
-=======
-    # Download:
-    if (try) {
-        # First try if the Internet can be accessed:
-        z = try(keystatsImport(file = file, source = source, 
-            query = query, save = save, try = FALSE))
-        if (inherits(z, "try-error") || inherits(z, "Error")) {
-            return("No Internet Access")
-        } else {
-            return(z) 
-        } 
-    } else {                 
-        offset = 2
-        url = paste(source, query, sep = "")
-        # For S-Plus Compatibility:
-        method <- if(is.R()) NULL else "wget"
-
-        # Download:
-        download.file(url = url, destfile = file, method = method)
-        .warn = options()$warn
-        options(warn = -1)
-        x = scan(file, what = "", sep = ">")
-        options(warn = .warn)
-        keynames = c(
-            "Market Cap ", 
-            "Enterprise Value ",
-            "Trailing P/E ",
-            "Forward P/E ",
-            "PEG Ratio ",
-            "Price/Sales ",
-            "Price/Book ",
-            "Enterprise Value/Revenue ",
-            "Enterprise Value/EBITDA ",
-            "Annual Dividend:",
-            "Dividend Yield:",
-            "Beta:",
-            "52-Week Change:",
-            "52-Week High ",
-            "52-Week Low " )
-        if (class(version) != "Sversion") {
-            # R:
-            stats = as.character(Sys.Date())
-        } else {
-            # SPlus:
-            currentDate = timeDate(date(), in.format="%w %m %d %H:%M:%S %Z %Y")
-            mdy = month.day.year(currentDate)
-            stats = as.character(mdy$year*10000+mdy$month*100+mdy$day)
-        }
-        for (s in keynames) {
-            grepped = paste(gsub("</td", "", x[grep(s, x) + offset]))
-            # DW 2005-05-30
-            if (length(grepped) == 0) grepped = "NA"
-            if (grepped == "") grepped = "NA"
-            ### DW
-            stats = c(stats, grepped)
-        }
-        for (i in 1:length(keynames)) {
-            keynames[i] = substring(keynames[i], 1, nchar(keynames[i])-1)
-        }
-        keynames = c("Date", keynames)  
-             
-        # Return Value:
-        ans = list(
-            query = query, 
-            keystats = data.frame(cbind(Keyname = keynames, Statistic = stats)))   
-        class(ans) = "keystats"
-        ans    
->>>>>>> .r1781
     }
     
     # Return Value:
-    X
+    X  
+
 }
 
     
@@ -1030,21 +870,13 @@ save = FALSE, try = TRUE)
         x = matrix(unlist(strsplit(x, "@" )), byrow = TRUE, ncol = 2)
         
         # Add Current Date:
-        if (class(version) != "Sversion") {
-            # R:
-            stats = as.character(Sys.Date())
-        } else {
-            # S-Plus:
-            currentDate = timeDate(date(), format = "%w %m %d %H:%M:%S %Z %Y")
-            mdy = month.day.year(currentDate)
-            stats = as.character(mdy$year * 10000 + mdy$month * 
-                100 + mdy$day)
-        }
+        stats = as.character(Sys.Date())
         x = rbind(c("Symbol", query), c("Date", stats), x)
         X = as.data.frame(x[, 2])
         rownames(X) = x[, 1] 
         colnames(X) = "Value"
     }
+    
     # Return Value:
     X
 }
@@ -1135,91 +967,6 @@ save = FALSE, try = TRUE)
     X
 }       
         
-
-################################################################################
-# FUNCTION:             ONLY FOR SPLUS VERSION:
-#  as.Date               S-PLUS: Converts date represenatation
-#  data                  S-PLUS: Loads or lists specified data sets
-#  download.file         S-PLUS: Downloads using "lynx" or "wget"
-#  strsplit              S-PLUS: Splits character vector into substrings
-
-
-if (!exists("as.Date")) 
-{   
-as.Date = 
-function(x, format = "%d-%m-%y")
-{   # A Function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Mimics R's as.Date function
-    
-    # FUNCTION:
-    
-    # Used by yahooImport ...
-    ans = timeDate(s, format = format, format = "%Y-%02m-%02d")  
-    
-    # Return Value:
-    ans 
-}}
-
-
-# ------------------------------------------------------------------------------
-
-
-if (!exists("data")) {
-data = 
-function(x)
-{   # A function implemented by Diethelm Wuertz
-
-    # FUNCTION:
-    
-    # For S-Plus Compatibility:
-    invisible(x)
-}}
-
-
-# ------------------------------------------------------------------------------
-
-
-## For S-plus compatibility only ... ((MM: does not make sense))
-if (!exists("download.file")) {
-download.file =
-function(url, destfile, method, ...)
-{   # A function implemented by Diethelm Wuertz
-  
-    # FUNCTION:
-    
-    # Download:
-    if (method == "lynx") {
-        command = paste("lynx.exe -source", url, ">", destfile, sep = " ")
-        dos(command, ...)
-        return(invisible())
-    } 
-    if (method == "wget") {
-        command = paste("wget.exe", url, "-O", destfile, sep = " ")
-        system(command, minimized = TRUE, ...)
-        return(invisible())
-    }       
-}}
-
-
-# ------------------------------------------------------------------------------
-
-
-if (!exists("strsplit")) {
-strsplit = 
-function(x, split = " ") 
-{   # A function implemented by Diethelm Wuertz
-  
-    # FUNCTION:
-    
-    # For S-Plus Compatibility:
-    ans = lapply(lapply(X = x, FUN = unpaste, sep = split), unlist) 
-    
-    # Return Value:
-    ans
-}}
- 
 
 ################################################################################
 
