@@ -29,28 +29,27 @@
 
 # fCalendar::3D-TimeDateSpecs.R
 ################################################################################
-# FUNCTION:                 SPECIAL TIMEDATE OPERATIONS:
+# FUNCTION:                 FIRST AND LAST DAY IN PERIOD:
 #  timeLastDayInMonth        Computes the last day in a given month and year
 #  timeFirstDayInMonth       Computes the first day in a given month and year
 #  timeLastDayInQuarter      Computes the last day in a given quarter and year
 #  timeFirstDayInQuarter     Computes the first day in a given quarter and year
+# FUNCTION:                 DAYS BEFORE AND AFTER:
 #  timeNdayOnOrAfter         Computes date in month that is a n-day ON OR AFTER  
 #  timeNdayOnOrBefore        Computes date in month that is a n-day ON OR BEFORE  
+# FUNCTION:                 THE N'TH DAY IN:
 #  timeNthNdayInMonth        Computes n-th ocurrance of a n-day in year/month
 #  timeLastNdayInMonth       Computes the last n-day in year/month
 ################################################################################
 
 
 ################################################################################
-# FUNCTION:                 SPECIAL TIMEDATE OPERATIONS:
+# FUNCTION:                 FIRST AND LAST DAY IN PERIOD:
 #  timeLastDayInMonth        Computes the last day in a given month and year
 #  timeFirstDayInMonth       Computes the first day in a given month and year
 #  timeLastDayInQuarter      Computes the last day in a given quarter and year
 #  timeFirstDayInQuarter     Computes the first day in a given quarter and year
-#  timeNdayOnOrAfter         Computes date in month that is a n-day ON OR AFTER  
-#  timeNdayOnOrBefore        Computes date in month that is a n-day ON OR BEFORE  
-#  timeNthNdayInMonth        Computes n-th ocurrance of a n-day in year/month
-#  timeLastNdayInMonth       Computes the last n-day in year/month
+
 
 
 timeLastDayInMonth = 
@@ -202,7 +201,10 @@ FinCenter = myFinCenter)
 }
 
     
-# ------------------------------------------------------------------------------
+################################################################################
+# FUNCTION:                 DAYS BEFORE AND AFTER:
+#  timeNdayOnOrAfter         Computes date in month that is a n-day ON OR AFTER  
+#  timeNdayOnOrBefore        Computes date in month that is a n-day ON OR BEFORE  
 
 
 timeNdayOnOrAfter = 
@@ -308,7 +310,10 @@ FinCenter = myFinCenter)
 }
 
 
-# ------------------------------------------------------------------------------
+################################################################################
+# FUNCTION:                 THE N'TH DAY IN:
+#  timeNthNdayInMonth        Computes n-th ocurrance of a n-day in year/month
+#  timeLastNdayInMonth       Computes the last n-day in year/month
 
 
 timeNthNdayInMonth = 
