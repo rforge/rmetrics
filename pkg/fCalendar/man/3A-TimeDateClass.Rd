@@ -6,10 +6,6 @@
 \alias{currentYear}
 \alias{myUnits}
 
-\alias{myFinCenter}
-\alias{rulesFinCenter}
-\alias{listFinCenter}
-
 \alias{timeDate}
 \alias{timeDate-class}
 
@@ -41,12 +37,6 @@
     implemented on a specific computer.
     \cr
 
-    The functions for Financial Centers are:
-
-    \tabular{ll}{
-    \code{rulesFinCenter} \tab Returns DST rules for a financial center, \cr
-    \code{listFinCenter} \tab Lists all supported financial centers. }
-
     The functions for the Generation of 'timeDate' objects are:
 
     \tabular{ll}{
@@ -71,19 +61,15 @@
 
 
 \usage{
-myFinCenter
 myUnits
 currentYear
 
-rulesFinCenter(FinCenter = myFinCenter)
-listFinCenter(pattern = ".*")
-
 timeDate(charvec = Sys.timeDate(), format = NULL,
-         zone = myFinCenter, FinCenter = myFinCenter)
+    zone = myFinCenter, FinCenter = myFinCenter)
 
 timeCalendar(y = currentYear, m = 1:12, d = 1,
-             h = 0, min = 0, s = 0,
-             zone = myFinCenter, FinCenter = myFinCenter)
+    h = 0, min = 0, s = 0,
+    zone = myFinCenter, FinCenter = myFinCenter)
 
 timeSequence(from, to = format(Sys.time(), "\%Y-\%m-\%d"),
     by = c("day", "year", "quarter", "month", "week", "hour", "min", "sec"),
@@ -146,10 +132,6 @@ show.timeDate(object)
     \item{object}{
         [show][summary] - \cr
         an object of class \code{timeDate}.
-        }
-    \item{pattern}{
-        a pattern character string as required
-        by the \code{\link{grep}} function.
         }
     \item{x}{
         [isWeekday][isWeekend][isBizday][weekDay] - \cr
@@ -263,26 +245,6 @@ show.timeDate(object)
     Another important feature of the \code{"timeDate"} concept used here is
     the fact that we don't rely on American or European ways to write dates.
     We use consequently the ISO-8601 standard for date and time notations.
-    \cr
-
-
-    \bold{Financial Centers}
-    \cr\cr
-    There are two functions concerned with the financial centers. The
-    first, \code{rulesFinCenter}, lists the daylight saving rules for a
-    selected financial center, and the second, \code{listFinCenter},
-    lists all centers available in the database. There is no dependency
-    on the POSIX implementation of your operating system because all
-    time zone and day light saving time information is stored locally
-    in ASCII files. It is important to say, that the \code{TZ} environment
-    variable must set to \code{"GMT"} in your system environment that
-    there are no conflicts with the POSIX time zone management.
-
-    Through the definition of financial centers it becomes possible to
-    introduce in the future a specification structure for financial
-    centers, which includes further information for a center like
-    holiday calendars, currency and interest rate conventions or many
-    others.
     \cr
 
 
@@ -420,15 +382,12 @@ Zivot, E., Wang J. (2003);
 
 
 \author{
-  Diethelm Wuertz for the Rmetrics \R-port; some improvements: % bug fixes
-  Martin Maechler.
+    Diethelm Wuertz for the Rmetrics \R-port; some improvements: % bug fixes 
+    Martin Maechler.
 }
 
 \examples{
-## myFinCenter - the global setting currently used :
-   myFinCenter
-
-## timeDate
+## timeDate -
 
    Sys.timeDate()       # direct
    timeDate(Sys.time()) # transformed from "POSIX(c)t"
@@ -472,7 +431,7 @@ Zivot, E., Wang J. (2003);
 %    timeDate(paste(dts,tms), FinCenter = "Europe/Zurich")# but in GMT
 
 
-## timeCalendar
+## timeCalendar -
 
    currentYear
    timeCalendar() # 12 months of current year
@@ -483,7 +442,7 @@ Zivot, E., Wang J. (2003);
                 y = c(1989, 2001, 2004, 1990), FinCenter = "Europe/Zurich")
    timeCalendar(h = c(9, 14), min = c(15, 23))
 
-## timeSequence
+## timeSequence -
 
    timeSequence(from = "2004-03-12", to = "2004-04-11",
         format = "\%Y-\%m-\%d", FinCenter = "GMT")
@@ -495,17 +454,7 @@ Zivot, E., Wang J. (2003);
    print(tC)
    summary(tC)
    format(tC)
-
-## Other financial centers:
-
-  listFinCenter("Asia/")
-  listFinCenter("^A") # all beginning with "A"
-  listFinCenter("^[^A]") # all *not* beginning with "A"
-  listFinCenter(".*/L")  # cities with L*
-
-  stopifnot(identical(listFinCenter(), ## 'A' and 'not A' == everything:
-		      union(listFinCenter("^A"),
-			    listFinCenter("^[^A]"))))
 }
+
 
 \keyword{chron}
