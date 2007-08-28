@@ -210,7 +210,9 @@ blockEnd(x, block = 20)
 ## window - 
    GoodFriday(currentYear)
    EasterMonday(currentYear)
-   window(tS, from = GoodFriday(currentYear), to = EasterMonday(currentYear))
+   window(tS, 
+      start = GoodFriday(currentYear), 
+      end = EasterMonday(currentYear))
    
 ## [ - 
    # All dates after Easter Monday:
