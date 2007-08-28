@@ -11,6 +11,7 @@
 \alias{cumsum.timeSeries}
 \alias{scale.timeSeries}
 
+\alias{mean.timeSeries}
 \alias{var.timeSeries}
 \alias{cov.timeSeries}
 \alias{cor.timeSeries}
@@ -68,6 +69,7 @@
     Functions and methods for classifying 'timeSeries' objects:
     
     \tabular{ll}{
+    \code{mean} \tab Computes column means for a 'timeSeries' object, \cr
     \code{var} \tab Computes Variance from a 'timeSeries' object, \cr
     \code{cov} \tab Computes Covariance from a 'timeSeries' object, \cr
     \code{cor} \tab Computes Correlations from a 'timeSeries' object.}
@@ -123,6 +125,8 @@ fapply(x, from, to, FUN, \dots)
 \method{rbind}{timeSeries}(x, y)
 \method{cumsum}{timeSeries}(x)
 \method{scale}{timeSeries}(x, center = TRUE, scale = TRUE)
+
+\method{mean}{timeSeries}(x, \dots)
 \method{var}{timeSeries}(x, y = NULL, na.rm = FALSE, use)
 \method{cov}{timeSeries}(x, y = NULL, use = "all.obs", 
     method = c("pearson", "kendall", "spearman"))
