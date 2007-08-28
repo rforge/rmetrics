@@ -155,17 +155,14 @@ function()
     head(X) 
     class(X)
     
-    # .fredSeries() -     
-    X = .fredSeries("DPRIME")
+    # fredSeries() -     
+    X = fredSeries("DPRIME")
     head(X)
     class(X)
     
     # Return Value:
     return()
 }
-
-
-# ------------------------------------------------------------------------------
 
     
 ################################################################################

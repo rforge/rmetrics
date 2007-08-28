@@ -1,5 +1,4 @@
 
-
 pkg <- "fCalendar"
 
 if(require("RUnit", quietly=TRUE)) 
@@ -12,11 +11,12 @@ if(require("RUnit", quietly=TRUE))
     ## --- Testing ---
 
     ## Define tests
-    testSuite <- defineTestSuite(name = paste(pkg, "unit testing"), dirs = path)
+    testSuite <- defineTestSuite(name = paste(pkg, "unit testing"), 
+        dirs = path)
 
     if(interactive()) {
-        cat("Now have RUnit Test Suite 'testSuite' for package '", pkg,
-            "' :\n", sep='')
+        cat("Now have RUnit Test Suite 'testSuite' for package '", 
+            pkg, "' :\n", sep='')
         str(testSuite)
         cat('', "Consider doing",
             "\t  tests <- runTestSuite(testSuite)", "\nand later",
