@@ -27,24 +27,24 @@
 #   see Rmetrics's copyright file
 
 
+# fCalendar::6A-TimeSeriesImport.R
 ################################################################################
 # FUNCTION:             DESCRIPTION:
-#  fWEBDATA              Class Representation
-#  show.fWEBDATA         S4 Show Method
-# FUNCTION:             IMPORT DATA FUNCTIONS:
+#  fWEBDATA              Class Representation for WEB download
+#  show.fWEBDATA         S4 Show Method for WEB downloaded data
+# FUNCTION:             IMPORT TIME SERIES DATA FUNCTIONS:
 #  economagicImport      Downloads market data from EconoMagic's web site
-#  yahooImport           Downloads market data from Yahoo's web site 
-#  .yahooImport          ... the old download function 
+#  yahooImport           Downloads market data from Yahoo's web site  
 #  fredImport            Downloads market data from St. Louis FED web site
 #  forecastsImport       Downloads monthly data from www.forecasts.org
-# FUNCTION:             IMPORT STATISTICS - EXPERIMENTELL:
-#  keystatsImport       Downloads key statistics from Yahoo's web site 
-#  .keystatsImport      Downloads key statistics from Yahoo's web site  
-#  print.keystats       Print Method for internal function .keystatsImport
 # FUNCTION:             EASY TO USE ROUTINES:
-#  yahooSeries           Easy to use download from Yahoo
-#  .yahooSeries          Utility function  called by 'yahooSeries'
-# FUNCTION:             ONLY FOR SPLUS VERSION:
+#  economagicSeries      Easy to use download from EconoMagic
+#  yahooSeries           Easy to use download from Yahoo  
+#  fredSeries            Easy to use download from St. Louis FED  
+#  forecastsSeries       Easy to use download from www.forecasts.org
+# FUNCTION:             IMPORT STATISTICS - EXPERIMENTAL:
+#  keystatsImport        Downloads key statistics from Yahoo's web site       
+# FUNCTION:             ONLY FOR SPLUS COMPATIBILITY:
 #  as.Date               S-PLUS: Converts date represenatation
 #  data                  S-PLUS: Loads or lists specified data sets
 #  download.file         S-PLUS: Downloads using "lynx" or "wget"
@@ -74,9 +74,6 @@ setClass("fWEBDATA",
 show.fWEBDATA = 
 function(object)
 {   # A function implemented by Diethelm Wuertz
-
-    # Changes:
-    #
     
     # FUNCTION:
        
@@ -108,7 +105,6 @@ setMethod("show", "fWEBDATA", show.fWEBDATA)
 # FUNCTION:             IMPORT DATA FUNCTIONS:
 #  economagicImport      Downloads market data from EconoMagic's web site
 #  yahooImport           Downloads market data from Yahoo's web site 
-#  .yahooImport          ... the old download function 
 #  fredImport            Downloads market data from St. Louis FED web site
 #  forecastsImport       Downloads monthly data from www.forecasts.org
 
@@ -137,7 +133,11 @@ function (query, file = "tempfile",
     #   USDGNP:
     #    economagicImport("fedstl/gnp", "USGNP.CSV", 
     #       frequency = "monthly", colname = "USGNP")
+<<<<<<< .mine
+    
+=======
 
+>>>>>>> .r1781
     # FUNCTION:
     
     # Frequency:
@@ -445,7 +445,7 @@ source = "http://www.forecasts.org/data/data/", save = FALSE, try = TRUE)
     #   forecastsImport(query = "FEDFUNDS")
     
     # Note:
-    #   This function is not written for daily data sets.
+    #   This function is not written for monthly data sets.
     #   Some example data sets include:  
     #   Indices:
     #     djiaM     sp500M   sp100M     nysecompM  nasdcompM  djcompM  
@@ -472,25 +472,34 @@ source = "http://www.forecasts.org/data/data/", save = FALSE, try = TRUE)
     } else { 
         # File Name:
         queryFile = paste(query, ".htm", sep = "")
+        
         # Construct URL:
         url = paste(source, queryFile, sep = "")
+        
         # Download file:
         download.file(url, file) 
+        
         # Scan the file:
         x = scan(file, what = "", sep = "\n")
+        
         # Extract dates ^19XX and ^20XX:
         x = x[regexpr("^[12][90]", x) > 0]
         # Write back to file:
         write(x, file)  
+        
         # Read as data frame:
         x = read.table(file)
+        
         # Two types of date strings are used %Y-%m-%d and %Y.%m
         # transform to %Y%m and paste the 28th to the format string:
         x[, 1] = substr(gsub("-", ".", as.vector(x[, 1])), 1, 7)
-        x = data.frame(x[, 2], row.names = 
-            as.character(10000*as.numeric(x[, 1]) + 28))
+        charvec = as.character(10000*as.numeric(x[, 1]) + 1)
+        rowNames = as.character(timeLastDayInMonth(charvec, format = "%Y%m%d"))
+        x = data.frame(x[, 2], row.names = rowNames)
+
         # Add column name:
         colnames(x) = query
+        
         # Save Download ?
         if (save) {
             write.table(paste("%Y%m%d;", query, sep = ""), file, 
@@ -507,7 +516,7 @@ source = "http://www.forecasts.org/data/data/", save = FALSE, try = TRUE)
             param = c("Instrument Query" = query),
             data = x,
             title = "Web Data Import from Forecasts", 
-            description = as.character(date()) )
+            description = .description() )
         return(ans)
     }
     
@@ -517,29 +526,46 @@ source = "http://www.forecasts.org/data/data/", save = FALSE, try = TRUE)
 
 
 ################################################################################
-# FUNCTION:             IMPORT STATISTICS - EXPERIMENTELL:
-#  keystatsImport       Downloads key statistics from Yahoo's web site 
-#  .keystatsImport      Downloads key statistics from Yahoo's web site  
-#  print.keystats       Print Method for internal function .keystatsImport
+# FUNCTION:             EASY TO USE ROUTINES:
+#  economagicSeries      Easy to use download from EconoMagic
+#  yahooSeries           Easy to use download from Yahoo  
+#  fredSeries            Easy to use download from St. Louis FED  
+#  forecastsSeries       Easy to use download from www.forecasts.org
 
 
-keystatsImport =  
-function (query, file = "tempfile", source = "http://finance.yahoo.com/q/ks?s=", 
-save = FALSE, try = TRUE) 
-{   # A function implemented by Diethelm Wuertz and Matthew C.Keller
-
+economagicSeries =
+function (query, frequency = c("quarterly", "monthly", "daily"),
+returnClass = c("timeSeries", "ts", "matrix", "data.frame"), 
+getReturns = FALSE, ...)
+{   # A function implemented by Diethelm Wuertz
+    
     # Description:
-    #   Downloads Key Statistics on shares from Yahoo's Internet site
+    #   Downloads easily time series data from Yahoo
     
-    # Example:
-    #   keystatsImport("YHOO")
+    # Arguments:
     
-    # Changes:
-    #   2006-08-26 update by MCK
+    # Examples:
+    #   USDEUR Foreign Exchange Rate:
+    #    economagicSeries("fedny/day-fxus2eu", frequency = "daily")
+    #   USFEDFUNDS US FedFunds Rate:
+    #    economagicImport("fedstl/fedfunds+2", frequency = "monthly")
+    #   USDGNP:
+    #    economagicImport("fedstl/gnp", frequency = "monthly")
     
     # FUNCTION:
     
+    # Match Arguments:
+    frequency = match.arg(frequency)
+    returnClass = match.arg(returnClass)
+    
     # Download:
+<<<<<<< .mine
+    X = economagicImport(query = query, file = "tempfile", 
+        source = "http://www.economagic.com/em-cgi/data.exe/", 
+        frequency = frequency, save = FALSE, colname = "VALUE", 
+        try = TRUE)@data
+    X = as.timeSeries(X@data)
+=======
     if (try) {
         # First try if the Internet can be accessed:
         z = try(keystatsImport(file = file, source = source, 
@@ -621,12 +647,20 @@ save = FALSE, try = TRUE)
      
     # Example:
     #   keystatsImport("YHOO")
+>>>>>>> .r1781
     
-    # Note:
-    #   Old Version, no longer used ...
-       
-    # FUNCTION:
+    # Compute Return Series ?
+    if (getReturns) X = returnSeries(X, ...)  
     
+<<<<<<< .mine
+    # Return as Object ?
+    if (returnClass == "matrix") {
+        X = X@data
+    } else if (returnClass == "data.frame") {
+        X = data.frame(X@Data)
+    } else if (returnClass == "ts") {
+        X = as.ts(X@Data)
+=======
     # Download:
     if (try) {
         # First try if the Internet can be accessed:
@@ -693,47 +727,15 @@ save = FALSE, try = TRUE)
             keystats = data.frame(cbind(Keyname = keynames, Statistic = stats)))   
         class(ans) = "keystats"
         ans    
+>>>>>>> .r1781
     }
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-print.keystats = 
-function(x, ...)
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Print Method for an object of class 'keystats'
-    
-    # Changes:
-    #   2006-08-26 DW description modified
-    
-    # FUNCTION:
-    
-    # Title:
-    cat("\nTitle:\n ")
-    cat("Yahoo Key Statistics\n", sep = "")
-    
-    # Key Statistics:
-    cat("\nKey Statistics for", x$query, "\n")
-    print(x$keystats)
-    
-    # Description:
-    cat("\nDescription:\n ")   
-    cat(.description())
-    cat("\n\n")
     
     # Return Value:
-    invisible()
+    X
 }
 
-
-################################################################################
-# FUNCTION:             EASY TO USE ROUTINES:
-#  yahooSeries           Easy to use download from Yahoo
-#  .yahooSeries          Utility function  called by 'yahooSeries'
+    
+# ------------------------------------------------------------------------------
 
 
 yahooSeries = 
@@ -744,7 +746,7 @@ aggregation = c("d", "w", "m"), returnClass = c("timeSeries", "ts",
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Easily downloads time series data from Yahoo
+    #   Downloads easily time series data from Yahoo
     
     # Arguments:
     #   symbols - a character string value or vector, the Yahoo 
@@ -769,44 +771,56 @@ aggregation = c("d", "w", "m"), returnClass = c("timeSeries", "ts",
     #       class 'timeSeries' will be returned .
     
     # Examples:
-    #   yahooSeries(aggregation = "w")
+    #   yahooSeries(symbols = "IBM", aggregation = "w")
+    #   yahooSeries(symbols = c("^DJI", "IBM"), aggregation = "w")
     #   yahooSeries(aggregation = "m", nDaysBack = 10*366)
     #   yahooSeries(returnSeries = TRUE)
     
     # FUNCTION:
     
-    # Settings:
+    # Match Arguments:
     returnClass = match.arg(returnClass)
     aggregation = match.arg(aggregation)
-       
-    # First Symbol:
-    X = .yahooSeries(symbols[1], from = from, to = to, 
-        nDaysBack = nDaysBack, quote = quote, 
-        aggregation = aggregation, returnClass = "timeSeries")
-    UNITS = paste(symbols[1], ".", quote, sep = "")
-    if (aggregation == "d") X = alignDailySeries(X, ...) 
-    X@units = UNITS
-    colnames(X@Data) = UNITS
-    # print(head(X))
-
-    # Next Symbols:
-    if (length(symbols) > 1) {
-        for (i in 2:length(symbols)) { 
-            Y = .yahooSeries(symbols[i], from = from, to = to, 
-                nDaysBack = nDaysBack, quote = quote, 
-                aggregation = aggregation, returnClass = "timeSeries")
-            # print(head(Y))
-            UNITS = paste(symbols[i], ".", quote, sep = "")
-            if (aggregation == "d") Y = alignDailySeries(Y, ...)
-            X = .mergeSeries(X, Y@Data, units = c(X@units, UNITS))
-            # print(head(X))
-        }
-    }
     
-    # Return Series ?
+    # Internal Univariate Download Function:
+    # symbol = "IBM", from = NULL, to = NULL, nDaysBack = 365, 
+    # quote = "Close", aggregation = c("d", "w", "m"), 
+    # returnClass = c("timeSeries", "zoo", "ts")) 
+ 
+    # Automatic Selection of From / To: 
+    if (is.null(from) & is.null(to)) {
+        to = Sys.Date() 
+        from = as.character(to - nDaysBack)
+        to = as.character(to) }
+    
+    # Extract Atoms - From:
+    yearFrom = substring(from, 1, 4)
+    monthFrom = as.character(as.integer(substring(from, 6,7))-1)
+    dayFrom = substring(from, 9, 10)
+    
+    # Extract Atoms - To:
+    yearTo = substring(to, 1, 4)
+    monthTo = as.character(as.integer(substring(to, 6,7))-1)
+    dayTo = substring(to, 9, 10)
+    
+    # Download:
+    for (i in 1:length(symbols)) {
+        query = paste("s=", symbols[i], "&a=", monthFrom, "&b=", dayFrom, 
+            "&c=", yearFrom, "&d=", monthTo, "&e=", dayTo, "&f=", yearTo, 
+            "&g=", aggregation[1], "&x=.csv", sep = "")  
+        Y = as.timeSeries(yahooImport(query)@data[, quote])
+        UNITS = paste(symbols[i], ".", quote, sep = "")
+        if (aggregation == "d") Y = alignDailySeries(Y, ...) 
+        Y@units = UNITS
+        colnames(Y@Data) = UNITS
+        if (i == 1) X = Y else X = merge(X, Y)
+    }
+   
+    
+    # Compute Return Series ?
     if (getReturns) X = returnSeries(X, ...)  
     
-    # As zoo | ts  Object ?
+    # Return as Object ?
     if (returnClass == "matrix") {
         X = X@data
     } else if (returnClass == "data.frame") {
@@ -823,89 +837,306 @@ aggregation = c("d", "w", "m"), returnClass = c("timeSeries", "ts",
 # ------------------------------------------------------------------------------
 
 
-.yahooSeries = 
-function(symbol = "IBM", from = NULL, to = NULL, nDaysBack = 365, 
-quote = "Close", aggregation = c("d", "w", "m"), 
-returnClass = c("timeSeries", "zoo", "ts"))
+fredSeries = 
+function(query = "DPRIME", frequency = "daily", returnClass = c("timeSeries", 
+"ts", "matrix", "data.frame"), getReturns = FALSE, ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Easily downloads univariate time series data from Yahoo
+    #   Downloads easily time series data from St. Louis FRED
     
     # Arguments:
-    #   symbol - a character string, the Yahoo Symbol name.
-    #   from - ISO formatted character string of the starting date,
-    #       e.g. "2005-01-01".
-    #   to - ISO formatted character string of the end date,
-    #       e.g. "2005-12-31".
-    #   ndaysBack - an integer giving the length of the download 
-    #       period in number of days starting n days back from Today.
-    #       Only in use if 'from' and 'to' are not specified.
-    #   quote - a character value or vector of strings giving the 
-    #       column names of those instruments to be extracted from
-    #       the download. 
-    #   aggregation - a character string denoting the aggregation
-    #       level of the downloaded date, 'd' for daily, 'w' for
-    #       weekly and 'm' for monthly data records.
-    #   returnClass = a character string which decides how the downloaded
-    #       time series will be returned. By default an object of
-    #       class 'timeSeries' will be returned .
+    #   query - a character string value, the St. Louis FRED 
+    #       symbol name.
+    #   frequency - a character string value, the frquency of the
+    #       data records.
     
     # Examples:
-    #   yahooSeries(aggregation = "w")
-    #   yahooSeries(aggregation = "m", nDaysBack = 10*366)
-   
+    #   fredSeries("DPRIME")
+    
     # FUNCTION:
-    
-    # Automatic Selection of From / To: 
-    if (is.null(from) & is.null(to)) {
-        to = Sys.Date() 
-        from = as.character(to - nDaysBack)
-        to = as.character(to)
-    }
-    
-    # Extract Atoms - From:
-    yearFrom = substring(from, 1, 4)
-    monthFrom = as.character(as.integer(substring(from, 6,7))-1)
-    dayFrom = substring(from, 9, 10)
-    
-    # Exgtract Atoms- To:
-    yearTo = substring(to, 1, 4)
-    monthTo = as.character(as.integer(substring(to, 6,7))-1)
-    dayTo = substring(to, 9, 10)
+
+    # Match Arguments:
+    returnClass = match.arg(returnClass)
     
     # Download:
-    query = paste("s=", symbol, 
-        "&a=", monthFrom, "&b=", dayFrom, "&c=", yearFrom, 
-        "&d=", monthTo, "&e=", dayTo, "&f=", yearTo,
-        "&g=", aggregation[1], "&x=.csv", sep = "")  
-    X = yahooImport(query)@data 
+    X = fredImport(query = query, frequency = frequency)@data
+    X = as.timeSeries(X)
+    colnames(X) <- query
     
-    # Extract desired columns from Time Series:
-    ans = as.timeSeries(X)[, quote]
+    # Compute Return Series ?
+    if (getReturns) X = returnSeries(X, ...)  
+    
+    # Return as Object ?
+    if (returnClass == "matrix") {
+        X = X@data
+    } else if (returnClass == "data.frame") {
+        X = data.frame(X@Data)
+    } else if (returnClass == "ts") {
+        X = as.ts(X@Data)
+    }
     
     # Return Value:
-    ans
+    X  
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-.fredSeries = 
-function(symbol = "DPRIME")
-{   
-    data = fredImport(query = symbol)@data
-    data = as.timeSeries(data)
-    colnames(data) <- symbol
-    data
+forecastsSeries = 
+function(query, returnClass = c("timeSeries", "ts", "matrix", "data.frame"), 
+getReturns = FALSE, ...)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Downloads easily time series data from www.forecasts.org
+    
+    # Arguments:
+        
+    # Examples:
+    #   forecastsSeries(query = "GOLD")
+    #   forecastsSeries(query = "MDISCRT")
+    #   forecastsSeries(query = "EXJPUS")
+    #   forecastsSeries(query = "GS3M")
+    #   forecastsSeries(query = "FEDFUNDS")
+    
+    # Note:
+    #   This function is written for monthly data sets!
+    #   Some example data sets include:  
+    #   Indices:
+    #     djiaM     sp500M   sp100M     nysecompM  nasdcompM  djcompM  
+    #     djtransM  djutilM  spmc400M   spsc600M   r1000M     r2000M    
+    #     r3000M    w5000M   valuM   
+    #     nik225M  daxM      hangsengM  ftse100M   tse300M    mtM
+    #   Ohter:  
+    #     MDISCRT      
+    #     EXJPUS        
+    #     GS3M
+
+    # FUNCTION:
+    
+    # Match Arguments:
+    returnClass = match.arg(returnClass)
+    
+    # Download:
+    X = forecastsImport(query = query)@data
+    X = as.timeSeries(X, silent = TRUE)
+    
+    # Compute Return Series ?
+    if (getReturns) X = returnSeries(X, ...)  
+    
+    # Return as Object ?
+    if (returnClass == "matrix") {
+        X = X@data
+    } else if (returnClass == "data.frame") {
+        X = data.frame(X@Data)
+    } else if (returnClass == "ts") {
+        X = as.ts(X@Data)
+    }
+    
+    # Return Value:
+    X  
 }
- 
+
 
 ################################################################################
-# FUNCTION:             EASY TO USE ROUTINES:
-#  yahooSeries           Easy to use download from Yahoo
-#  .yahooSeries          Utility function  called by 'yahooSeries'
+# FUNCTION:             IMPORT STATISTICS - EXPERIMENTELL:
+#  keystatsImport       Downloads key statistics from Yahoo's web site 
+
+
+keystatsImport =  
+function (query, file = "tempfile", source = "http://finance.yahoo.com/q/ks?s=", 
+save = FALSE, try = TRUE) 
+{   # A function implemented by Diethelm Wuertz and Matthew C.Keller
+
+    # Description:
+    #   Downloads Key Statistics on shares from Yahoo's Internet site
+    
+    # Example:
+    #   keystatsImport("YHOO")
+    #   keystatsImport("IBM")
+    #   DEBUG:
+    #       query = "IBM"
+    #       file = "tempfile"; source = "http://finance.yahoo.com/q/ks?s="
+    #       save = FALSE; try = TRUE; method = NULL
+    
+    # Changes:
+    #   2006-08-26 update by MCK
+    
+    # FUNCTION:
+    
+    # Download:
+    if (try) {
+        # First try if the Internet can be accessed:
+        z = try(keystatsImport(file = file, source = source, 
+            query = query, save = save, try = FALSE))
+        if (class(z) == "try-error" || class(z) == "Error") {
+            return("No Internet Access")
+        }
+        else {
+            return(z)
+        }
+    } else {
+        # For S-Plus Compatibility:
+        if (class(version) != "Sversion") {
+            method = NULL
+        } else {
+            method = "wget"
+        }
+        
+        # Download and Scan:
+        url = paste(source, query, sep = "")
+        download.file(url = url, destfile = file, method = method)
+        x = scan(file, what = "", sep = "\n")
+        
+        # Extract Data Records:
+        x = x[grep("datamodoutline1", x)]
+        
+        # Clean up HTML:
+        x = gsub("/", "", x, perl = TRUE)
+        x = gsub(" class=.yfnc_datamodoutline1.", "", x, perl = TRUE)
+        x = gsub(" colspan=.2.", "", x, perl = TRUE)
+        x = gsub(" cell.......=...", "", x, perl = TRUE)
+        x = gsub(" border=...", "", x, perl = TRUE)
+        x = gsub(" class=.yfnc_tablehead1.", "", x, perl = TRUE)
+        x = gsub(" class=.yfnc_tabledata1.", "", x, perl = TRUE)
+        x = gsub(" width=.75%.>", "", x, perl = TRUE)
+        x = gsub(" width=.100%.", "", x, perl = TRUE)
+        x = gsub(" size=.-1.", "", x, perl = TRUE)
+        x = gsub("<.>", "", x, perl = TRUE)
+        x = gsub("<..>", "", x, perl = TRUE)
+        x = gsub("<....>", "", x, perl = TRUE)
+        x = gsub("<table>", "", x, perl = TRUE)
+        x = gsub("<sup>.<sup>", "", x, perl = TRUE)
+        x = gsub("&amp;", "&", x, perl = TRUE)
+        x = gsub("<td", " @ ", x, perl = TRUE)
+        x = gsub(",", "", x, perl = TRUE)
+
+        # Create Matrix:
+        x = unlist(strsplit(x, "@" ))
+        x = x[ grep(":", x) ]
+        x = gsub("^ ", "", x, perl = TRUE)
+        Index = grep("^ ", x)
+        if (length(Index) > 0) x = x[-Index]
+        x = gsub(" $", "", x, perl = TRUE)
+        x = gsub(":$", ":NA", x, perl = TRUE)
+        
+        # If there are two ":" in a line ...
+        x = sub(":", "@", x)
+        x = sub(":", "/", x)
+        
+        # Convert to matrix:
+        x = matrix(unlist(strsplit(x, "@" )), byrow = TRUE, ncol = 2)
+        
+        # Add Current Date:
+        if (class(version) != "Sversion") {
+            # R:
+            stats = as.character(Sys.Date())
+        } else {
+            # S-Plus:
+            currentDate = timeDate(date(), format = "%w %m %d %H:%M:%S %Z %Y")
+            mdy = month.day.year(currentDate)
+            stats = as.character(mdy$year * 10000 + mdy$month * 
+                100 + mdy$day)
+        }
+        x = rbind(c("Symbol", query), c("Date", stats), x)
+        X = as.data.frame(x[, 2])
+        rownames(X) = x[, 1] 
+        colnames(X) = "Value"
+    }
+    # Return Value:
+    X
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.briefingImport =  
+function (query, file = "tempfile", source = "http://finance.yahoo.com/q/ud?s=", 
+save = FALSE, try = TRUE) 
+{   # A function implemented by Diethelm Wuertz and Matthew C.Keller
+
+    # Description:
+    #   Downloads Key Statistics on shares from Yahoo's Internet site
+    
+    # Example:
+    #   .briefingImport("YHOO")
+    #   .briefingImport("IBM")
+    #   DEBUG:
+    #       query = "IBM"
+    #       file = "tempfile"; source = "http://finance.yahoo.com/q/ks?s="
+    #       save = FALSE; try = TRUE; method = NULL
+    
+    # FUNCTION:
+    
+    # Download:
+    if (try) {
+        # First try if the Internet can be accessed:
+        z = try(.briefingImport(file = file, source = source, 
+            query = query, save = save, try = FALSE))
+        if (class(z) == "try-error" || class(z) == "Error") {
+            return("No Internet Access")
+        }
+        else {
+            return(z)
+        }
+    } else {
+        # For S-Plus Compatibility:
+        if (class(version) != "Sversion") {
+            method = NULL
+        } else {
+            method = "wget"
+        }
+        
+        # Download:
+        url = paste(source, query, sep = "")
+        download.file(url = url, destfile = file, method = method)
+        x = scan(file, what = "", sep = "\n")
+        
+        # Extract Data Records:
+        x = x[grep("Briefing.com", x)]
+
+        x = gsub("</", "<", x, perl = TRUE)
+        x = gsub("/", " / ", x, perl = TRUE)
+        x = gsub(" class=.yfnc_tabledata1.", "", x, perl = TRUE)
+        x = gsub(" align=.center.", "", x, perl = TRUE)
+        x = gsub(" cell.......=...", "", x, perl = TRUE)
+        x = gsub(" border=...", "", x, perl = TRUE)
+        x = gsub(" color=.red.", "", x, perl = TRUE)
+        x = gsub(" color=.green.", "", x, perl = TRUE)
+        x = gsub("<.>", "", x, perl = TRUE)
+        x = gsub("<td>", "@", x, perl = TRUE)
+        x = gsub("<..>", "", x, perl = TRUE)
+        x = gsub("<...>", "", x, perl = TRUE)
+        x = gsub("<....>", "", x, perl = TRUE)
+        x = gsub("<table>", "", x, perl = TRUE)
+        x = gsub("<td nowrap", "", x, perl = TRUE)
+        x = gsub("<td height=....", "", x, perl = TRUE)
+        x = gsub("&amp;", "&", x, perl = TRUE)
+        
+        x = unlist(strsplit(x, ">"))
+        
+        x = x[ grep("-...-[90]", x, perl = TRUE) ]
+        nX = length(x)
+        # The last record has an additional @, remove it ...
+        x[nX] = gsub("@$", "", x[nX], perl = TRUE)
+        x = unlist(strsplit(x, "@"))
+        x[x == ""] = "NA"
+        x = matrix(x, byrow = TRUE, ncol = 9)[, -c(2,4,6,8)]
+        x[, 1] = as.character(strptime(x[, 1], format = "%d-%b-%y"))
+        colnames(x) = c("Date", "ResearchFirm", "Action", "From", "To")
+        x = x[nrow(x):1, ]
+        X = as.data.frame(x)
+    }
+    
+    # Return Value:
+    X
+}       
+        
+
+################################################################################
 # FUNCTION:             ONLY FOR SPLUS VERSION:
 #  as.Date               S-PLUS: Converts date represenatation
 #  data                  S-PLUS: Loads or lists specified data sets
@@ -925,7 +1156,7 @@ function(x, format = "%d-%m-%y")
     # FUNCTION:
     
     # Used by yahooImport ...
-    ans = timeDate(s, in.format = format, format = "%Y-%02m-%02d")  
+    ans = timeDate(s, format = format, format = "%Y-%02m-%02d")  
     
     # Return Value:
     ans 
