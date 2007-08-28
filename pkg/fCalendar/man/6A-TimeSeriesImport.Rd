@@ -13,10 +13,12 @@
 \alias{fredImport}
 \alias{forecastsImport}
 
+\alias{economagicSeries}
 \alias{yahooSeries}
+\alias{fredSeries}
+\alias{forecastsSeries}
 
 \alias{keystatsImport}
-\alias{print.keystats}
 
 
 \title{Import Market Data from the Internet}
@@ -37,11 +39,14 @@
     \tabular{ll}{
     \code{economagicImport} \tab Economic series from Economagic's Web site, \cr
     \code{yahooImport} \tab daily stock market data from Yahoo's Web site, \cr
-    \code{yahooSeries} \tab easy to use download from Yahoo, \cr
-    \code{keystatsImport} \tab key statistics from Yahoo's Web site, \cr
     \code{fredImport} \tab time series from St. Louis FRED Web site, \cr
-    \code{forecastsImport} \tab monthly data from the Financial Forecast Center. }
-    
+    \code{forecastsImport} \tab monthly data from the Financial Forecast Center, \cr 
+    \code{economagicImport} \tab easy to use download from Economagic, \cr
+    \code{yahooSeries} \tab easy to use download from Yahoo, \cr
+    \code{fredImport} \tab easy to use download from St. Louis FRED, \cr
+    \code{forecastsImport} \tab easy to use download from Financial Forecast Center, \cr  
+    \code{keystatsImport} \tab key statistics from Yahoo's Web site.}
+   
 }
 
 
@@ -53,9 +58,6 @@ economagicImport(query, file = "tempfile",
 yahooImport(query, file = "tempfile", 
     source = "http://chart.yahoo.com/table.csv?", save = FALSE,
     sep = ";", swap = 20, try = TRUE)
-keystatsImport(query, file = "tempfile", 
-    source = "http://finance.yahoo.com/q/ks?s=", save = FALSE, 
-    try = TRUE) 
 fredImport(query, file = "tempfile", 
     source = "http://research.stlouisfed.org/fred2/series/", 
     frequency = "daily", save = FALSE, sep = ";", try = TRUE) 
@@ -66,10 +68,25 @@ forecastsImport(query, file = "tempfile",
 yahooSeries(symbols = c("^DJI", "IBM"), from = NULL, to = NULL, 
     nDaysBack = 365, quote = c("Open", "High", "Low", "Close", "Volume"), 
     aggregation = c("d", "w", "m"), returnClass = c("timeSeries", "ts", 
-    "matrix", "data.frame"), getReturns = FALSE, ...)
-        
+    "matrix", "data.frame"), getReturns = FALSE, \dots)
+
+economagicSeries(query, frequency = c("quarterly", "monthly", "daily"),
+    returnClass = c("timeSeries", "ts", "matrix", "data.frame"), 
+    getReturns = FALSE, \dots)   
+yahooSeries(symbols = c("^DJI", "IBM"), from = NULL, to = NULL, 
+    nDaysBack = 365, quote = c("Open", "High", "Low", "Close", "Volume"), 
+    aggregation = c("d", "w", "m"), returnClass = c("timeSeries", "ts", 
+    "matrix", "data.frame"), getReturns = FALSE, ...)   
+fredSeries(query = "DPRIME", frequency = "daily", returnClass = 
+    c("timeSeries", "ts", "matrix", "data.frame"), getReturns = FALSE, \dots)    
+forecastsSeries(query, returnClass = c("timeSeries", "ts", "matrix", 
+    "data.frame"), getReturns = FALSE, \dots)    
+    
+keystatsImport(query, file = "tempfile", 
+    source = "http://finance.yahoo.com/q/ks?s=", save = FALSE, 
+    try = TRUE) 
+           
 show.fWEBDATA(object)
-\method{print}{keystats}(x, \dots)
 }
 
 
@@ -157,11 +174,6 @@ show.fWEBDATA(object)
         a logical value, if set to TRUE the Internet access will be
         checked.
         }
-    \item{x}{
-        [print.keystats] - \cr
-        an object of class \code{keystats} as returned by the function
-        \code{keystatsImport}.
-        }
      \item{\dots}{
          optional arguments to be passed.
          }        
@@ -170,9 +182,8 @@ show.fWEBDATA(object)
 
 \value{
 
-    The functions \code{economagicImport}, \code{fredImport}, and
-    \code{yahooImport} return an S4 object of class \code{fWEBDATA} 
-    with the following slots:
+    The functions \code{*Import}nreturn an S4 object of class 
+    \code{fWEBDATA} with the following slots:
     
     \item{@call}{
         the function call.  
@@ -193,14 +204,12 @@ show.fWEBDATA(object)
         By default just the current date when the test was applied will
         be returned.}
         
-    The function \code{yahooSeries} returns by default an S4 object of 
+    The functions \code{*Series} return an S4 object of 
     class  \code{timeSeries} or alternatively an object specified by
-    the function argument \code{returnClass}.
+    the function argument \code{returnClass}.\cr
     
-    %The function \code{keystatsImport} returns an S3 object of class 
-    %\code{keystsats} with two entries: \code{$query} holds the query
-    %name, and \code{keystats} holds the dataframe with the statistical
-    %values. 
+    The function \code{keystatsImport} returns a data frame with 
+    key statistics downloaded from yahoo's web site.
     
 }
 
@@ -268,41 +277,25 @@ show.fWEBDATA(object)
     \code{e}        \tab Last Quote ends with Day (dd) \cr
     \code{f}        \tab Last Quote ends with Year (ccyy) \cr
     \code{z}        \tab Selected Ticker-Symbol }
-
-    Note, that month tokens range between 0 and 11 for January to 
-    December!
-    \cr
-    
-    
-    %\bold{Key statistics data from finance.yahoo.com:}
-    %\cr\cr
-    %The functions downloads the key statistics for the specified
-    %equity query and returns the result as a two column data frame. 
-    %The key names included are: "Market Cap", "Enterprise Value",
-    %"Trailing P/E", "Forward P/E", "PEG Ratio", "Price/Sales",
-    %"Price/Book", "Enterprise Value/Revenue", "Enterprise Value/EBITDA",
-    %"Annual Dividend", "Dividend Yield", "Beta",
-    %"52-Week Change", "52-Week High", and "52-Week Low".
             
 }
 
 
 \note{
   
-    \bold{Internet Download:}
+    \bold{Internet Download Functions:}
     \cr\cr
-    Note, that if the service provider changes the data file format 
+    IMPORTANT NOTE: If the service provider changes the data file format 
     it may become necessary to modify and update the functions. 
     \cr
     The R package \code{tseries} from Adrian Trapletti offers an 
     alternative function to download stock market data and indexes 
     from Yahoo's Internet site.
-    %\cr
-    
+ 
     \bold{Functions added to Splus Version:}
     \cr\cr
     These functions are only used when running Rmetrics under SPlus. 
-    Note, that only part of the functionality is supported which is 
+    Note, that only part of the functionality may be supported which is 
     required running these R functions for Rmetrics under Splus.
   
 }
