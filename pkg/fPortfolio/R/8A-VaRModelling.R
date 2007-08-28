@@ -29,9 +29,9 @@
 
 ################################################################################
 # FUNCTION:            DESCRIPTION:
-#  VaR                  Computes value-at-risk for a portfolio of assets
-#  CVaRplus             Computes value-at-risk Plus for a portfolio of assets
-#  CVaR                 Computes conditional value-at-risk for a PF of assets
+#  pfolioVaR            Computes value-at-risk for a portfolio of assets
+#  pfolioCVaRplus       Computes value-at-risk Plus for a portfolio of assets
+#  pfolioCVaR           Computes conditional value-at-risk for a PF of assets
 #  lambdaCVaR           Computes CVaR's atomic split value lambda
 # FUNCTION:            BENCHMARKS:   
 #  pfolioMaxLoss        Computes maximum loss for a portfolio of assets
@@ -42,7 +42,7 @@
 ################################################################################
 
 
-VaR = 
+pfolioVaR = 
 function(x, weights = NULL, alpha = 0.05) 
 {   # A function implemented by Diethelm Wuertz
 
@@ -60,7 +60,7 @@ function(x, weights = NULL, alpha = 0.05)
     # Transform:
     x = as.matrix(x)
     
-    # Compute VaR:  
+    # Compute Portfolio VaR:  
     if (is.null(weights)) 
         weights = rep(1/dim(x)[[2]], dim(x)[[2]])
     n = dim(x)[1]
@@ -77,7 +77,7 @@ function(x, weights = NULL, alpha = 0.05)
 # ------------------------------------------------------------------------------    
 
 
-CVaRplus = 
+pfolioCVaRplus = 
 function(x, weights = NULL, alpha = 0.05) 
 {   # A function implemented by Diethelm Wuertz
 
@@ -95,7 +95,7 @@ function(x, weights = NULL, alpha = 0.05)
     # Transform:
     x = as.matrix(x)
     
-    # Compute CVaRplus:
+    # Compute Portfolio CVaRplus:
     if (is.null(weights)) {
         weights = rep(1/dim(x)[[2]], dim(x)[[2]])
     }
@@ -113,7 +113,7 @@ function(x, weights = NULL, alpha = 0.05)
 # ------------------------------------------------------------------------------    
     
     
-CVaR = 
+pfolioCVaR = 
 function(x, weights = NULL, alpha = 0.05) 
 {   # A function implemented by Diethelm Wuertz
 
@@ -142,15 +142,15 @@ function(x, weights = NULL, alpha = 0.05)
     # Sort the Portfolio returns Y
     sorted = sort(Rp)
     
-    # Compute VaR:
+    # Compute Portfolio VaR:
     n.alpha = floor(n*alpha)
     VaR = sorted[n.alpha]
     
-    # Compute CVaRplus:
+    # Compute Portfolio CVaRplus:
     n.alpha = max(1, floor(n*alpha)-1)
     CVaRplus = mean(sorted[1:n.alpha])
     
-    # Compute CVaR:
+    # Compute Portfolio CVaR:
     lambda = 1 - floor(n*alpha)/(n*alpha)
     ans = as.vector(lambda*VaR + (1-lambda)*CVaRplus)
     names(ans) = "CVaR"
@@ -365,9 +365,9 @@ function(x, weights = NULL, alpha = 0.05, range = NULL, details = TRUE, ...)
         col = "orange", cex = 1.25)
     
     # Add VaR, CVaRplus and MaxLoss:
-    V1 = VaR(x = x, weights = weights, alpha = alpha)[[1]]
+    V1 = pfolioVaR(x = x, weights = weights, alpha = alpha)[[1]]
     abline(v = V1, col = "blue", ...)
-    V2 = CVaRplus(x = x, weights = weights, alpha = alpha)[[1]]
+    V2 = pfolioCVaRplus(x = x, weights = weights, alpha = alpha)[[1]]
     abline(v = V2, col = "red", ...)
     V3 = pfolioMaxLoss(x = x, weights = weights)[[1]]
     abline(v = V3, col = "green", ...)

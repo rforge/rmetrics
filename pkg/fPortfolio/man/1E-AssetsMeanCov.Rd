@@ -38,7 +38,7 @@ assetsMeanCov(x, method = c("cov", "mve", "mcd", "MCD", "OGK", "nnve",
 
     \item{alpha}{ 
         [assetsMeanCov] - \cr
-        when \code{methode="MCD"), a numeric parameter controlling the size 
+        when \code{methode="MCD"}, a numeric parameter controlling the size 
         of the subsets over which the determinant is minimized, i.e., 
         \code{alpha*n} observations are used for computing the determinant. 
         Allowed values are between 0.5 and 1 and the default is 0.5.
@@ -47,7 +47,7 @@ assetsMeanCov(x, method = c("cov", "mve", "mcd", "MCD", "OGK", "nnve",
         }
     \item{baggedR}{
         [assetsMeanCov] - \cr
-        when \code{methode="bagged"), an integer value, the number of 
+        when \code{methode="bagged"}, an integer value, the number of 
         bootstrap replicates, by default 100.
         }
     \item{check}{
@@ -72,7 +72,7 @@ assetsMeanCov(x, method = c("cov", "mve", "mcd", "MCD", "OGK", "nnve",
         }  
     \item{sigmamu}{ 
         [assetsMeanCov] - \cr
-        when \code{methode="OGK"), a function that computes univariate robust 
+        when \code{methode="OGK"}, a function that computes univariate robust 
         location and scale estimates. By default it should return a single 
         numeric value containing the robust scale (standard deviation) 
         estimate. When \code{mu.too} is true (the default), \code{sigmamu()} 

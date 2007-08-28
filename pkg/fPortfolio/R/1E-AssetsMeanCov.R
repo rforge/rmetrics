@@ -40,9 +40,9 @@
 #   method = "nnve"           uses builtin from [covRobust]
 #   method = "shrink"         uses builtin from [corpcor]
 #   method = "bagged"         uses builtin from [corpcor]
-# FUNCTION:
-# .assetsCorrelationPlot
-# .assetsOutlierDetection
+# FUNCTION:                 DESCRIPTION:
+#  .assetsCorrelationPlot    Plots classical/robust correlation ellipsoids
+#  .assetsOutlierDetection   Detects outliers in a multivariate set of assets
 ################################################################################
 
 
@@ -205,17 +205,18 @@ check = TRUE, force = TRUE, baggedR = 100, sigmamu = scaleTau2, alpha = 1/2,
     x.mat = as.matrix(x)
     # method = match.arg(method)
     method = method[1]
-    N = dim(x)[1]
+    N = ncol(x)
+    assetNames = colnames(x.mat)
        
     # Attribute Control List:
     control = c(method = method[1])
     
     # Compute Classical Covariance:
-    method = match.arg(method)
     if (method == "cov") {
         # Classical Covariance Estimation:
         mu = colMeans(x.mat)
         Sigma = cov(x.mat)
+    }
         
     # From R Package "robustbase":
     if (method == "MCD" | method == "Mcd") {
@@ -224,37 +225,40 @@ check = TRUE, force = TRUE, baggedR = 100, sigmamu = scaleTau2, alpha = 1/2,
         Sigma = estimate$cov
     }   
     if (method == "OGK" | method == "Ogk") {
-        require(robustbase)
-        estimate = robustbase::covOGK(x.mat, sigma.mu = sigma.mu, ...)
+        estimate = robustbase::covOGK(x.mat, sigmamu = scaleTau2, ...)
         mu = estimate$center
         Sigma = estimate$cov     
     }
     
     # [MASS] mve and mcd Routines:
-    } else if (method == "mve") {
+    if (method == "mve") {
         # require(MASS)
-        ans = MASS::cov.rob(x, method = "mve")
-        mu = ans$mu
-        Sigma = ans$Omega
-    } else if (method == "mcd") {
+        ans = MASS::cov.rob(x = x.mat, method = "mve")
+        mu = ans$center
+        Sigma = ans$cov
+    }
+    if (method == "mcd") {
         # require(MASS)
-        ans = MASS::cov.rob(x, method = "mcd") 
-        mu = ans$mu
-        Sigma = ans$Omega    
+        ans = MASS::cov.rob(x = x.mat, method = "mcd") 
+        mu = ans$center
+        Sigma = ans$cov
+    }    
         
     # [corpcor] Shrinkage and Bagging Routines 
-    } else if (method == "shrink") {
+    if (method == "shrink") {
         fit = .cov.shrink(x = x.mat, ...)
         mu = colMeans(x.mat)
         Sigma = fit 
-    } else if (method == "bagged") {
+    } 
+    if (method == "bagged") {
         fit = .cov.bagged(x = x.mat, R = baggedR, ...)
         mu = colMeans(x.mat)
         Sigma = fit 
         control = c(control, R = as.character(baggedR))
+    }
         
     # Nearest Neighbour Variance Estimation:
-    } else if (method == "nnve") {
+    if (method == "nnve") {
         fit = .cov.nnve(datamat = x.mat, ...)
         mu = colMeans(x.mat)
         Sigma = fit$cov
@@ -264,8 +268,8 @@ check = TRUE, force = TRUE, baggedR = 100, sigmamu = scaleTau2, alpha = 1/2,
     control = c(control, size = as.character(N))
     
     # Add Names for Covariance Matrix to Control List:
-    names(mu) = colnames(x)
-    colnames(Sigma) = rownames(Sigma) = colNames = colnames(x)
+    names(mu) = assetNames
+    colnames(Sigma) = rownames(Sigma) = colNames = assetNames
     
     # Check Positive Definiteness:
     if (check) {
@@ -281,7 +285,7 @@ check = TRUE, force = TRUE, baggedR = 100, sigmamu = scaleTau2, alpha = 1/2,
     control = c(control, forced = "FALSE")
     if (force) {
         control = c(control, forced = "TRUE")
-        if (!result) Sigma = makePositiveDefinite(m = Sigma)       
+        if (!result) Sigma = makePositiveDefinite(Sigma)       
     }
     
     # Result:
@@ -297,16 +301,23 @@ check = TRUE, force = TRUE, baggedR = 100, sigmamu = scaleTau2, alpha = 1/2,
 
 
 .assetsCorrelationPlot =
-function (x, y = NULL, method = c("mcd", "mve", "Mcd", "OGK", "shrink"), ...) 
+function (x, y = NULL, method = c("mcd", "mve", "Mcd", "OGK", "shrink"), 
+labels = TRUE, ...) 
 {   # An adapted copy from contributed R package mvoutlier
 
     # Description:
-    #   Plots bivariate corrleation of assets
+    #   Plots classical/robust bivariate corrleation ellipsoids
     
     # Arguments:
     #   x, y -
     #   method -
     #   ... -
+    
+    # Details:
+    #   The function  plots the (two-dimensional) data and adds two 
+    #   correlation ellipsoids, based on classical and robust estimation 
+    #   of location and scatter. Robust estimation can be thought of as 
+    #   estimating the mean and covariance of the 'good' part of the data.
    
     # Source:
     #   Contributed R package "mvoutlers"
@@ -328,7 +339,7 @@ function (x, y = NULL, method = c("mcd", "mve", "Mcd", "OGK", "shrink"), ...)
     method = match.arg(method)
     
     # Allow for 'timeSeries' Input:
-    if (dim(x)[2] == 2) {
+    if (is.null(y)) {
         x = as.matrix(x)
     } else {    
         x = as.matrix(cbind(as.vector(x), as.vector(y)))
@@ -367,14 +378,18 @@ function (x, y = NULL, method = c("mcd", "mve", "Mcd", "OGK", "shrink"), ...)
             tt[, 1], ttr[, 1]))), 
         ylim = c(min(c(x[, 2], tt[, 2], ttr[, 2])), max(c(x[, 2], tt[, 2], 
             ttr[, 2]))), pch = 19, ...)
-    title(main = list( paste(
-        "Classical Cor =", round(cor(x)[1, 2], 2), " | ",
-        "Robust Cor =", round(covr$cor[1, 2], 2)) ))
+    if (labels) {
+        title(main = list( paste(
+            "Classical Cor =", round(cor(x)[1, 2], 2), " | ",
+            "Robust Cor =", round(covr$cor[1, 2], 2)) ))
+    }
     lines( tt[, 1],  tt[, 2], type = "l", col = 4, lty = 3)
     lines(ttr[, 1], ttr[, 2], type = "l", col = 2)   
     grid() 
+    
+    # Add Legend:
     legend("topleft", legend = c("Classical", "Robust"), 
-        text.col = c(2,4), bty = "n")
+        text.col = c(2, 4), bty = "n")
     
     # Result:
     ans = list(
@@ -481,7 +496,7 @@ function (x, method = c("cov", "mcd", "mve", "Mcd", "OGK", "shrink"))
     attr(ans, "control") = c(method = method)
     
     # Return Value:
-    invisible(ans)
+    ans
 }
 
 

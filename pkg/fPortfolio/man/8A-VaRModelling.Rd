@@ -2,9 +2,9 @@
 
 \alias{VaRModelling}
 
-\alias{VaR}
-\alias{CVaR}
-\alias{CVaRplus}
+\alias{pfolioVaR}
+\alias{pfolioCVaR}
+\alias{pfolioCVaRplus}
 \alias{lambdaCVaR}
 
 \alias{pfolioMaxLoss}
@@ -31,9 +31,9 @@
     The functions are:
 
     \tabular{ll}{
-    \code{VaR} \tab computes Value-at-Risk for a portfolio of assets, \cr
-    \code{CVaRplus} \tab computes Value-at-Risk+ for a portfolio of assets, \cr
-    \code{CVaR} \tab computes Conditional Value-at-Risk for a PF of assets, \cr
+    \code{pfolioVaR} \tab computes Value-at-Risk for a portfolio of assets, \cr
+    \code{pfolioCVaRplus} \tab computes Value-at-Risk+ for a portfolio of assets, \cr
+    \code{pfolioCVaR} \tab computes Conditional Value-at-Risk for a PF of assets, \cr
     \code{lambdaCVaR} \tab computes CVaR's atomic split value lambda, \cr
     \code{pfolioMaxLoss} \tab computes Maximum Loss for a portfolio of assets, \cr
     \code{pfolioReturn} \tab computes return values of a portfolio, \cr
@@ -45,9 +45,9 @@
     
 
 \usage{
-VaR(x, weights = NULL, alpha = 0.05) 
-CVaRplus(x, weights = NULL, alpha = 0.05) 
-CVaR(x, weights = NULL, alpha = 0.05) 
+pfolioVaR(x, weights = NULL, alpha = 0.05) 
+pfolioCVaRplus(x, weights = NULL, alpha = 0.05) 
+pfolioCVaR(x, weights = NULL, alpha = 0.05) 
 lambdaCVaR(n, alpha = 0.05) 
 
 pfolioMaxLoss(x, weights = NULL)
@@ -104,15 +104,15 @@ pfolioHist(x, weights = NULL, alpha = 0.05, range = NULL, details = TRUE, \dots)
     upon a decision vector \eqn{x = (x_1, ..., x_n )} and a random 
     vector \eqn{y = (y_1, ..., y_m)}, then 
     
-    \emph{VaR} is the alpha-percentile of the loss distribution, a 
+    \emph{pfolioVaR} is the alpha-percentile of the loss distribution, a 
     smallest value such that the probability that losses exceed or 
     are equal to this value is greater or equal to alpha.
     
-    \emph{CVaRplus} or "CVaR+" or the "upper CVaR" are the expected  
+    \emph{pfolioCVaRplus} or "CVaR+" or the "upper CVaR" are the expected  
     losses strictly exceeding VaR. This is also also called "Mean 
     Excess Loss" and "Expected Shortfall".
 
-    \emph{CVaR} is a weighted average of VaR and CVaRplus defined as
+    \emph{pfolioCVaR} is a weighted average of VaR and CVaRplus defined as
     \eqn{CVaR = lambda*VaR + (1-lambda)} CVaRplus, for 
     \eqn{0 <= lambda <= 1}.
     
@@ -124,19 +124,19 @@ pfolioHist(x, weights = NULL, alpha = 0.05, range = NULL, details = TRUE, \dots)
 
 \value{
 
-    \code{VaR}
+    \code{pfolioVaR}
     \cr
     returns the value of risk, VaR,  for a portfolio of assets, a
     numeric value.
     \cr
     
-    \code{CVaRplus}
+    \code{pfolioCVaRplus}
     \cr
     returns the conditional value of risk plus, CVaRplus, for a 
     portfolio of assets, a numeric value.
     \cr
     
-    \code{CVaR}
+    \code{pfolioCVaR}
     \cr
     returns the conditional value of risk, CVaR, for a portfolio
     of assets, a numeric value.
@@ -210,15 +210,15 @@ Uryasev S. (2000);
    title(main = "Cumulated Returns", ylab = "Cumulated Returns")
    abline(h = 0, lty = 3)
     
-## CVaR -
+## pfolioCVaR -
    equalWeights = rep(1/4, 4)
    alpha = 0.10
    # Value at Risk:
-   VaR(myAssets, equalWeights, alpha)
+   pfolioVaR(myAssets, equalWeights, alpha)
    # Conditional Value at Risk Plus:
-   CVaRplus(myAssets, equalWeights, alpha)
+   pfolioCVaRplus(myAssets, equalWeights, alpha)
    # Conditional Value at Risk Plus:
-   CVaR(myAssets, equalWeights, alpha)
+   pfolioCVaR(myAssets, equalWeights, alpha)
    # Lambda - Atomic Split Value:
    lambdaCVaR(120, alpha) 
 
