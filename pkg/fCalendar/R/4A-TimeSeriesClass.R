@@ -27,39 +27,39 @@
 #   see Rmetrics's copyright file
 
 
+# fCalendar::4A-TimeSeriesClass.R
 ################################################################################
-# FUNCTION:            GENERATION OF TIME SERIES OBJECTS:
-#  'timeSeries'         S4 Class definition for a 'timeSeries' object
-#  timeSeries           Creates a 'timeSeries' object from scratch
-#  readSeries           Reads from a spreadsheet and creates a 'timeSeries'
-#  returnSeries         Computes returns from a 'timeSeries' object
-#  cumulatedSeries      Computes cumulated returns from a 'timeSeries' object  
-#  durationSeries       Computes durations from a 'timeSeries' object
-#  midquoteSeries       Computes mid quotes from a 'timeSeries' object
-#  spreadSeries         Computes spreads from a 'timeSeries' object
-#  applySeries          Applies a function to blocks of a 'timeSeries'
-#  orderStatistics      Compute order statistic of a 'timeSeries'
-# FUNCTION:            DATA SLOT AND CLASSIFICATION OF TIME SERIES OBJECTS:
-#  seriesData           Extracts data slot from 'timeSeries' object
-#  isUnivariate         Tests if object of class 'timeSeries' is univariate
-#  isMultivariate       Tests if object of class 'timeSeries' is multivariate
-# METHODS:             PRINT AND PLOT FUNCTIONS:
-#  show.timeSeries     Prints a 'timeSeries' object
-#  .print.timeSeries    Prints a 'timeSeries' object
-#  summary.timeSeries   Summarizes a 'timeSeries' object
-#  plot.timeSeries      Plots a 'timeSeries' object
-#  points.timeSeries    Adds points to a 'timeSeries' plot
-#  lines.timeSeries     Adds lines to a 'timeSeries' plot
-# FUNCTION:            FOR DAILY OPERATIONS:
-#  dummyDailySeries     Creates a dummy daily 'timeSeries' object
-#  alignDailySeries     Aligns a 'timeSeries' object to new positions 
-#  rollDailySeries      Rolls daily a 'timeSeries' on a given period 
-#  ohlcDailyPlot        Plots open–high–low–close bar chart   
-# FUNCTION:            FOR MONTHLY OPERATIONS:
-#  rollMonthlyWindows   Returns start and end dates for rolling time windows
-#  rollMonthlySeries    Rolls Monthly a 'timeSeries' on a given period 
-# FUNCTION:            DESCRIPTION:
-#  .modelSeries         Models a timeSeries object to use formulas
+# FUNCTION:                 GENERATION OF TIME SERIES OBJECTS:
+#  'timeSeries'              S4 Class definition for a 'timeSeries' object
+#  timeSeries                Creates a 'timeSeries' object from scratch
+#  readSeries                Reads a spreadsheet and creates a 'timeSeries'
+#  returnSeries              Computes returns from a 'timeSeries' object
+#  cumulatedSeries           Computes cumulated returns from a 'timeSeries'  
+#  durationSeries            Computes durations from a 'timeSeries' object
+#  midquoteSeries            Computes mid quotes from a 'timeSeries' object
+#  spreadSeries              Computes spreads from a 'timeSeries' object
+#  applySeries               Applies a function to blocks of a 'timeSeries'
+#  orderStatistics           Compute order statistic of a 'timeSeries'
+# FUNCTION:                 DATA SLOT AND CLASSIFICATION:
+#  seriesData                Extracts data slot from 'timeSeries' object
+#  isUnivariate              Tests if 'timeSeries' object is univariate
+#  isMultivariate            Tests if 'timeSeries' object is multivariate
+# METHODS:                  PRINT AND PLOT FUNCTIONS:
+#  show.timeSeries           Prints a 'timeSeries' object
+#  summary.timeSeries        Summarizes a 'timeSeries' object
+#  plot.timeSeries           Plots a 'timeSeries' object
+#  points.timeSeries         Adds points to a 'timeSeries' plot
+#  lines.timeSeries          Adds lines to a 'timeSeries' plot
+# FUNCTION:                 FOR DAILY OPERATIONS:
+#  dummyDailySeries          Creates a dummy daily 'timeSeries' object
+#  alignDailySeries          Aligns a 'timeSeries' object to new positions 
+#  rollDailySeries           Rolls daily a 'timeSeries' on a given period 
+#  ohlcDailyPlot             Plots open–high–low–close bar chart   
+# FUNCTION:                 FOR MONTHLY OPERATIONS:
+#  rollMonthlyWindows        Returns start/end dates for rolling time windows
+#  rollMonthlySeries         Rolls Monthly a 'timeSeries' on a given period 
+# FUNCTION:                 DESCRIPTION:
+#  .modelSeries              Models a timeSeries object to use formulas
 ################################################################################
 
 
@@ -713,7 +713,6 @@ function(x)
 
 ################################################################################
 #  show.timeSeries      Prints a 'timeSeries' object
-#  .print.timeSeries    Prints a 'timeSeries' object
 #  summary.timeSeries   Summarizes a 'timeSeries' object
 #  plot.timeSeries      Plots a 'timeSeries' object
 #  points.timeSeries    Adds points to a 'timeSeries' plot
@@ -731,42 +730,17 @@ function(object)
        
     # Unlike print the argument for show is 'object'.
     x = object
+    recordIDs = FALSE
     
-    # Series:
-    .print.timeSeries(x = object, recordIDs = FALSE)
-    
-    # Return Value:
-    invisible(object)
-}
-    
-    
-setMethod("show", "timeSeries", show.timeSeries)   
-    
-
-.print.timeSeries =
-function(x, recordIDs = FALSE, ...)
-{   # A function implemented by Diethelm Wuertz
-    
-    # Description:
-    #   Print method for an S4 object of class "timeSeries"
-        
-    # Arguments:
-    #   x - an object of class "timeSeries"
-    
-    # Value:
-    #   Prints a 'timeSeries' object.
-   
-    # FUNCTION:
-        
     # Series:
     if (recordIDs) {
         if (dim(x@Data)[1] == dim(x@recordIDs)[1]) {
-            print(cbind(x@Data, as.matrix(x@recordIDs)), quote = FALSE, ...)
+            print(cbind(x@Data, as.matrix(x@recordIDs)), quote = FALSE)
         } else {
-            print(x@Data, ...)
+            print(x@Data)
         }  
     } else {
-        print(x@Data, ...)
+        print(x@Data)
     }
     
     # Control:
@@ -776,8 +750,11 @@ function(x, recordIDs = FALSE, ...)
     # Return Value:
     invisible(x)
 }
+    
+    
+setMethod("show", "timeSeries", show.timeSeries)   
+    
 
-  
 # ------------------------------------------------------------------------------
 
 
@@ -1080,16 +1057,16 @@ rollDailySeries =
         #       terms to use in each rolling/moving sample.
         #   trim - a logical flag: if TRUE, the first n-1 missing values in 
         #       the returned object will be removed; if FALSE, they will 
-        #       be saved in the returned object. The default is TRUE.
-    
+        #       be saved in the returned object. The default is TRUE.  
         #   FUN - the rolling function, arguments to this function can be
         #       passed through the \code{\dots} argument.
         
         # FUNCTION:
         
         # Fix missing matrix method for quantile(), still to do ...
-        quantile.matrix <<- quantile.timeSeries
-        
+        .quantile.matrix = function(x, probs = 0.95, ...) {
+            apply(as.matrix(x), 2, quantile, probs = probs) }
+
         # Settings:
         periodLength = as.numeric(substr(period, 1, nchar(period) - 1))
         periodUnit = substr(period, nchar(period), nchar(period))
