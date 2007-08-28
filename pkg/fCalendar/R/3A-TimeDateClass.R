@@ -538,12 +538,7 @@ function(charvec, format)
     paste0 <- function(...) paste(..., sep = '')
     
     # Missing Format:
-    timeFormat = FALSE
-    if (missing(format)) {
-        format = .whichFormat(charvec)
-        if ( length(grep("%H", format)) == 1 | length(grep("%M", format)) == 1 |
-            length(grep("%S", format) == 1) )  timeFormat = TRUE
-    }
+    if (missing(format)) format = .whichFormat(charvec)
     
     # Format:
     rng.nch <- range(nchar(charvec[!is.na(charvec)]))
@@ -621,15 +616,9 @@ function(charvec, format)
     }
     
     ## Convert "charvec" to standard ISO format:
-    if (timeFormat) {
-        ans = format(s + strptime(charvec, format), "%Y-%m-%d %H:%M:%S")
-    } else {
-        # Added DW:
-        # Note if we have a simple date format, then the midnight
-        #   has not to be applied - the format must fit!
-        ans = format(s + strptime(charvec, format), "%Y-%m-%d")
-    }
-    # return Value:
+    ans = format(s + strptime(charvec, format), "%Y-%m-%d %H:%M:%S")
+
+    # Return Value:
     ans
 }
 
