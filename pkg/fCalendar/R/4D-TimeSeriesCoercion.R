@@ -27,8 +27,9 @@
 #   see Rmetrics's copyright file
 
 
+# fCalendar::4D-TimeSeriesCoercion.R
 ################################################################################
-# METHODS:                  CREATE A TIMESERIES FROM OTHER OBJECTS:
+# METHOD:                   CREATE A TIMESERIES FROM OTHER OBJECTS:
 #  is.timeSeries             Tests for a 'timeSeries' object
 #  as.timeSeries             Defines method for a 'timeSeries' object
 #  as.timeSeries.default     Returns the input
@@ -38,17 +39,15 @@
 #  as.timeSeries.ts          Transforms a 'ts' object into a 'timeSeries'
 #  as.timeSeries.character   Loads and transformas from a demo file
 #  as.timeSeries.zoo         Transforms a 'zoo' object into a 'timeSeries'
-# METHODS:                  TRANSFORM A TIMESERIES INTO OTHER OBJECTS:
+# METHOD:                   TRANSFORM A TIMESERIES INTO OTHER OBJECTS:
 #  as.vector.timeSeries      Converts a univariate 'timeSeries' to a vector
 #  as.matrix.timeSeries      Converts a 'timeSeries' to a 'matrix'
 #  as.data.frame.timeSeries  Converts a 'timeSeries' to a 'data.frame'
 #  as.ts.timeSeries          Converts a 'timeSeries' to a 'ts'     
-# NEW METHODS:              TESTING - FOR THE FUTURE:
-#  .as.vector.zoo
-#  .as.matrix.zoo
-#  .quantile.zoo
-#  .t.timeSeries
-#  .mergeSeries
+# METHOD:                   HANDLING ZOO OBJECTS:
+#  .as.vector.zoo            Converts a 'zoo' into a 'vector' object
+#  .as.matrix.zoo            Converts a 'zoo' into a 'matrix' object
+#  .quantile.zoo             Computes quantiles from a 'zoo' object
 ################################################################################
 
 
@@ -142,6 +141,8 @@ as.timeSeries.data.frame =
 function(x, ...)
 {   # A function implemented by Diethelm Wuertz
 
+    # Description:
+    
     # Examples:
     #   data(bmwRet); head(as.timeSeries(data(bmwRet)))
  
@@ -418,12 +419,10 @@ function(x, ...)
     
 
 ################################################################################
-# NEW METHODS:              TESTING - FOR THE FUTURE:
-#  .as.vector.zoo
-#  .as.matrix.zoo
-#  .quantile.zoo
-#  .t.timeSeries
-#  .mergeSeries
+# METHODS:              HANDLING ZOO OBJECTS:
+#  .as.vector.zoo            Converts a 'zoo' into a 'vector' object
+#  .as.matrix.zoo           Converts a 'zoo' into a 'matrix' object
+#  .quantile.zoo            Computes quantiles from a 'zoo' object
 
 
 .as.vector.zoo =
@@ -469,7 +468,7 @@ function(x)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Converts a multivariate "timeSeries" to a matrix
+    #   Converts a 'zoo' into a 'matrix' object
 
     # Arguments:
     #   x - a 'timeSeries' object
@@ -506,6 +505,9 @@ function(x)
 function(x, probs = 0.95, ...)
 {   # A function implemented by Diethelm Wuertz
 
+    # Description:
+    #   Computes quantiles from a 'zoo' object
+    
     # Arguments:
     #   x - an object of class 'timeSeries'. The quantiles will be 
     #       computed for the selected column.
@@ -522,81 +524,6 @@ function(x, probs = 0.95, ...)
        
     # Return Value:
     ans
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.t.timeSeries =
-function(x)
-{   # A function implemented by Diethelm Wuertz
-
-    # Changes:
-    #
-    
-    # FUNCTION:
-    
-    # Transpose:
-    ans = t(x@Data)
-    
-    # Return Value:
-    ans
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.mergeSeries = 
-function(x, y, units = NULL)
-{   # A function implemented by Diethelm Wuertz
-    
-    # IMPORTANT:
-    #   This is the old version where 'y' is a matrix with the same 
-    #   row dimension as 'x'.
-    
-    # Description:
-    #   Merges a 'timeSeries' with a 'matrix' object 
-    
-    # Arguments:
-    #   x - a 'timeSeries' object
-    #   y - a numeric matrix with the same number of rows as x
-    
-    # Value:
-    #   Returns a S4 object of class 'timeSeries'.
-    
-    # Changes:
-    #
-
-    # Test Input:
-    if (class(x) != "timeSeries") stop("x must be a timeSeries")
-    if (!is.matrix(y)) stop("y must be a matrix")
-    xRows = dim(x@Data)[1]
-    yRows = dim(as.matrix(y))[1]
-    if (xRows != yRows) stop("x and y must be of same length")
-    
-    # Bind Data:
-    x@Data = cbind(x@Data, y)
-    
-    # Add Column Names:
-    if (is.null(colnames(y))) 
-        colnames(y) <- paste("Y", 1:(dim(y)[2]), sep="")
-    colnames(x@Data) <- c(x@units, colnames(y))
-    if (!is.null(units)) {
-        x@units = units
-        colnames(x@Data) <- units }     
-    
-    # Return Value:
-    new("timeSeries", 
-        Data = x@Data, 
-        positions = x@positions, 
-        format = as.character(x@format), 
-        FinCenter = as.character(x@FinCenter),
-        units = colnames(x@Data), 
-        recordIDs = data.frame(),
-        title = as.character(x@title), 
-        documentation = as.character(x@documentation) )          
 }
 
    
