@@ -33,15 +33,16 @@
 #  myFinCenter               Sets my financial center
 #  rulesFinCenter            Returns DST rules for a financial center
 #  listFinCenter             Lists all supported financial centers
+# VARABLE:                  LIST OF FINANCIAL CENTERS:
 #  .FinCenterList            The list with FinCenter names
 ################################################################################
 
 
 ################################################################################
-# FUNCTION:              FINANCIAL CENTERS:
-#  myFinCenter            Sets my financial center
-#  rulesFinCenter         Returns DST rules for a financial center
-#  listFinCenter          Lists all supported financial centers
+# FUNCTION:                 FINANCIAL CENTERS:
+#  myFinCenter               Sets my financial center
+#  rulesFinCenter            Returns DST rules for a financial center
+#  listFinCenter             Lists all supported financial centers
 
 
 myFinCenter = "GMT"
@@ -60,11 +61,10 @@ function(FinCenter = myFinCenter)
     # Arguments:
     #   FinCenter - a character string with the the location of the  
     #       financial center named as "continent/city". 
-    
-    # FUNCTION:
-    #   FinCenter - a character string with the location of the
-    #       financial center named as "continent/city".
+       financial center named as "continent/city".
 
+    # FUNCTION:
+    
     # Check:
     if (FinCenter == "GMT" | FinCenter == "")
         stop("There are no DST rules for GMT FinCenter!")
@@ -206,7 +206,9 @@ function(pattern = ".*")
 }
 
 
-# ------------------------------------------------------------------------------
+################################################################################
+# VARABLE:                  LIST OF FINANCIAL CENTERS:
+#  .FinCenterList            The list with FinCenter names
 
 
 .FinCenterList = c(
