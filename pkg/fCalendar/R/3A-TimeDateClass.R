@@ -29,7 +29,6 @@
 
 # fCalendar::3A-TimeDateClass.R
 ################################################################################
-<<<<<<< .mine
 # FUNCTION:                 SETTINGS:
 #  currentYear               Sets date of the current year
 #  .currentYear              Sets date of the current year
@@ -58,36 +57,6 @@
 #  lines.timeDate            Adds lines to a 'timeDate' plot
 #  summary.timeDate          Summarizes details of a 'timeDate' object
 #  format.timeDate           Formats 'timeDate' as ISO conform string
-=======
-# FUNCTION:              SETTINGS:
-#  currentYear            Sets date of the current year
-#  .currentYear           Sets date of the current year
-#  myUnits                Sets date units
-# FUNCTION:              FINANCIAL CENTERS:
-#  myFinCenter            Sets my financial center
-#  rulesFinCenter         Returns DST rules for a financial center
-#  listFinCenter          Lists all supported financial centers
-#  .FinCenterList          The list with FinCenter names
-# FUNCTION:              GENERATION OF TIMEDATE OBJECTS:
-#  'timeDate'             S4 Class representation for timeDate objects
-#  timeDate               Creates a 'timeDate' object from given dates
-#  .whichFormat            Returns format string called by timeDate
-#  .midnightStandard       Corrects for midnight standard called by timeDate
-#  .formatFinCenter        Internal called by timeDate
-#  timeCalendar           Creates a 'timeDate' object from calendar atoms
-#  timeSequence           Creates a regularly spaced 'timeDate' object
-#   seq.timeDate           A synonyme function for timeSequence
-#  Sys.timeDate           Returns system time as an object of class 'timeDate'
-#  is.timeDate            Tests if the object is of class 'timeDate'
-# METHODS:               REPRESENTATION OF TIMEDATE OBJECTS:
-#  show.timeDate          Prints 'timeDate' object
-#  .print.timeDate         Prints 'timeDate' object
-#  plot.timeDate          Plots 'timeDate' object
-#  points.timeDate        Adds points to a 'timeDate' plot
-#  lines.timeDate         Adds lines to a 'timeDate' plot
-#  summary.timeDate       Summarizes details of a 'timeDate' object
-#  format.timeDate        Formats 'timeDate' as ISO conform character string
->>>>>>> .r1778
 ################################################################################
 
 
@@ -101,14 +70,11 @@
 .currentYear <- function()
 {   # A function implemented by Diethelm Wuertz
 
-<<<<<<< .mine
     # Description:
     #   Sets date of the current year
     
     # FUNCTION:
     
-=======
->>>>>>> .r1778
     # Check Time Zone:
     TZ <- Sys.getenv("TZ")
     if(TZ[[1]] != "GMT") {
@@ -157,28 +123,21 @@ rulesFinCenter <- function(FinCenter = myFinCenter)
     #   Show the day light saving rules for a financial center
 
     # Arguments:
-<<<<<<< .mine
     #   FinCenter - a character string with the the location of the  
     #       financial center named as "continent/city". 
     
     # FUNCTION:
-    
-=======
     #   FinCenter - a character string with the location of the
     #       financial center named as "continent/city".
 
->>>>>>> .r1778
     # Check:
     if (FinCenter == "GMT" | FinCenter == "")
         stop("There are no DST rules for GMT FinCenter!")
-<<<<<<< .mine
 
     # Set Timezone to GMT:
     myTZ = Sys.getenv("TZ")  
     Sys.setenv(TZ = "GMT")
     if (FinCenter == "") FinCenter = "GMT"
-       
-=======
 
     TZ <- Sys.getenv("TZ")
     if(TZ[[1]] != "GMT") {
@@ -252,7 +211,6 @@ rulesFinCenter <- function(FinCenter = myFinCenter)
     }
     ## Instead:
 
->>>>>>> .r1778
     # Match City:
     fccity <- strsplit(FinCenter, "/")[[1]]
     City <- fccity[length(fccity)]
@@ -475,7 +433,7 @@ function(charvec = Sys.timeDate(), format = NULL, zone = myFinCenter,
 
     ## Convert:
 
-    if (recFinCenter == "GMT" && useFinCenter == "GMT") {	## GMT -> GMT:
+    if (recFinCenter == "GMT" && useFinCenter == "GMT") {   ## GMT -> GMT:
         ## nothing to do
     }
     else if (recFinCenter == "GMT" && useFinCenter != "GMT") {  ## GMT -> nonGMT
@@ -485,10 +443,10 @@ function(charvec = Sys.timeDate(), format = NULL, zone = myFinCenter,
 
         charvec = .formatFinCenter(charvec, recFinCenter, type = "any2gmt")
     }
-    else if (recFinCenter == useFinCenter) { 		## nonGMT -> equal nonGMT
+    else if (recFinCenter == useFinCenter) {        ## nonGMT -> equal nonGMT
         ## nothing to do
     }
-    else if (recFinCenter != useFinCenter) {		## nonGMT -> other nonGMT
+    else if (recFinCenter != useFinCenter) {        ## nonGMT -> other nonGMT
 
         charvec = .formatFinCenter(charvec, recFinCenter, type = "any2gmt")
         charvec = .formatFinCenter(charvec, useFinCenter, type = "gmt2any")
@@ -510,10 +468,10 @@ function(charvec = Sys.timeDate(), format = NULL, zone = myFinCenter,
     noTime <- all(noTime | is.na(noTime))
 
     new("timeDate",
-	Data = as.POSIXct(lt),
-	Dim = as.integer(length(charvec)),
-	format = if(noTime) isoDate else isoFormat,
-	FinCenter = useFinCenter)
+    Data = as.POSIXct(lt),
+    Dim = as.integer(length(charvec)),
+    format = if(noTime) isoDate else isoFormat,
+    FinCenter = useFinCenter)
 }
 
 
@@ -528,11 +486,8 @@ function(charvec, silent = FALSE)
     charvec = as.character(charvec)
 
     # Specifications:
-<<<<<<< .mine
     NCHAR = mean(nchar(charvec))
-=======
     NCHAR = nchar(charvec[1])
->>>>>>> .r1778
     SUBSTR = (substring(charvec[1], 5, 5) == "-")
 
     # American Format:
@@ -556,7 +511,7 @@ function(charvec, silent = FALSE)
 
     # Otherwise
     if (!silent)
-	warning("Could not determine time(date) format")
+    warning("Could not determine time(date) format")
     # Return Value:
     "unknown"
 }
@@ -569,13 +524,13 @@ function(charvec, silent = FALSE)
     ## Midnight Standard & conversion to isoFormat:
 
     ## Motivation: strptime() {et al}  cannot deal with "24:00:00"
-    ##		   In that case, subtract 1 seconds convert and re-add it
+    ##         In that case, subtract 1 seconds convert and re-add it
 
     paste0 <- function(...) paste(..., sep = '')
     # Format:
     rng.nch <- range(nchar(charvec[!is.na(charvec)]))
     if(rng.nch[1] != rng.nch[2])
-	stop("'charvec' has non-NA entries of different number of characters")
+    stop("'charvec' has non-NA entries of different number of characters")
     nch <- rng.nch[1]
 
     n <- length(charvec)
@@ -584,67 +539,67 @@ function(charvec, silent = FALSE)
     ## Do two common formats *fast* (for large n), and then use flexible approach:
     # ISO-8601 Midnight Standard:
     if (length(grep("%H:%M:%S", format, fixed=TRUE)) == 1) {
-	if(length(ii <- grep("24:00:00", charvec, fixed=TRUE)) > 0) {
-	    s[ii] <- 1
-	    charvec[ii] <- gsub("24:00:00", "23:59:59", charvec[ii], fixed=TRUE)
-	}
+    if(length(ii <- grep("24:00:00", charvec, fixed=TRUE)) > 0) {
+        s[ii] <- 1
+        charvec[ii] <- gsub("24:00:00", "23:59:59", charvec[ii], fixed=TRUE)
+    }
     }
     else if (length(grep("%H%M%S$", format)) == 1) {
-	## format *ends* in  %H%M%S, i.e. last 6 chars are time
-	ch.time <- substr(charvec, nch-6+1, nch)
-	if(length(ii <- grep("240000$", ch.time)) > 0) {
-	    s[ii] <- 1
-	    charvec[ii] <- paste(substr(charvec[ii], 1, nch-6),
-				 gsub("240000$", "235959", ch.time[ii]),
-				 sep = "")
-	}
+    ## format *ends* in  %H%M%S, i.e. last 6 chars are time
+    ch.time <- substr(charvec, nch-6+1, nch)
+    if(length(ii <- grep("240000$", ch.time)) > 0) {
+        s[ii] <- 1
+        charvec[ii] <- paste(substr(charvec[ii], 1, nch-6),
+                 gsub("240000$", "235959", ch.time[ii]),
+                 sep = "")
+    }
     }
     else {
-	## Very general approach, to work for any valid format:
-	forms <- c("%Y", "%m", "%d",  "%H","%M","%S")
-	nums  <- c("2003","01","31",  "23","59","58") # pairwise different
-	fDate <- format
-	for(i in seq_along(forms)) {
-	    ## make sure, we don't have nums[i] already :
-	    if(length(grep(nums[i], fDate, fixed=TRUE)))
-		fDate <- gsub(nums[i], paste(rep("x", nchar(nums[i])), collapse=""),
-			      fDate, fixed=TRUE)
-	    fDate <- sub(forms[i], nums[i], fDate, fixed=TRUE)
-	}
-	## in the ISO case, now have  fDate == "2001-01-31 23:59:58"
-	names(nums) <- forms
-	## at which character positions in charvec do I need to look for %H, ... :
-	iHMS <- sapply(nums[c("%H","%M","%S")], regexpr, text=fDate, fixed=TRUE)
-	if(iHMS["%H"] >= 1) { ## have "%H" -- otherwise, nothing to do!
-	    has.S <- iHMS["%S"] >= 1
-	    has.M <- iHMS["%M"] >= 1
-	    if(has.S && !has.M) stop("invalid format: has '%S' but no '%M'")
-	    ## 3 remaining cases:  (H,M,S), (H,M), (H)
-	    m. <- 1 + has.M + has.S # in {1,2,3}
-	    HMStab <- matrix(unlist(lapply(iHMS[1:m.],
-					   function(ic) substr(charvec, start=ic, stop=ic+1))),
-			     n, m.)
-	    twenty4 <- paste0("24", if(has.M)"00", if(has.S)"00")
-	    isMidN <- twenty4 == apply(HMStab, 1, paste, collapse='')
-	    if(any(isMidN)) { ## need midnight correction
-		s[isMidN] <- 1
-		## now *need* seconds, so we can subtract and add 1 sec :
-		if(!has.S) {
-		    if(!has.M) {
-			iHMS["%M"] <- nchar(fDate) + 1
-			format <-  paste0(format,  "%M")
-			fDate  <-  paste0(fDate,   "00")
-			charvec <- paste0(charvec, "00")
-		    }
-		    iHMS["%S"] <- nchar(fDate) + 1
-		    format <-  paste0(format,  "%S")
-		    charvec <- paste0(charvec, "00")
-		}
-		substr(charvec[isMidN], iHMS["%H"], iHMS["%H"]+1) <- "23"
-		substr(charvec[isMidN], iHMS["%M"], iHMS["%M"]+1) <- "59"
-		substr(charvec[isMidN], iHMS["%S"], iHMS["%S"]+1) <- "59"
-	    }
-	}
+    ## Very general approach, to work for any valid format:
+    forms <- c("%Y", "%m", "%d",  "%H","%M","%S")
+    nums  <- c("2003","01","31",  "23","59","58") # pairwise different
+    fDate <- format
+    for(i in seq_along(forms)) {
+        ## make sure, we don't have nums[i] already :
+        if(length(grep(nums[i], fDate, fixed=TRUE)))
+        fDate <- gsub(nums[i], paste(rep("x", nchar(nums[i])), collapse=""),
+                  fDate, fixed=TRUE)
+        fDate <- sub(forms[i], nums[i], fDate, fixed=TRUE)
+    }
+    ## in the ISO case, now have  fDate == "2001-01-31 23:59:58"
+    names(nums) <- forms
+    ## at which character positions in charvec do I need to look for %H, ... :
+    iHMS <- sapply(nums[c("%H","%M","%S")], regexpr, text=fDate, fixed=TRUE)
+    if(iHMS["%H"] >= 1) { ## have "%H" -- otherwise, nothing to do!
+        has.S <- iHMS["%S"] >= 1
+        has.M <- iHMS["%M"] >= 1
+        if(has.S && !has.M) stop("invalid format: has '%S' but no '%M'")
+        ## 3 remaining cases:  (H,M,S), (H,M), (H)
+        m. <- 1 + has.M + has.S # in {1,2,3}
+        HMStab <- matrix(unlist(lapply(iHMS[1:m.],
+                       function(ic) substr(charvec, start=ic, stop=ic+1))),
+                 n, m.)
+        twenty4 <- paste0("24", if(has.M)"00", if(has.S)"00")
+        isMidN <- twenty4 == apply(HMStab, 1, paste, collapse='')
+        if(any(isMidN)) { ## need midnight correction
+        s[isMidN] <- 1
+        ## now *need* seconds, so we can subtract and add 1 sec :
+        if(!has.S) {
+            if(!has.M) {
+            iHMS["%M"] <- nchar(fDate) + 1
+            format <-  paste0(format,  "%M")
+            fDate  <-  paste0(fDate,   "00")
+            charvec <- paste0(charvec, "00")
+            }
+            iHMS["%S"] <- nchar(fDate) + 1
+            format <-  paste0(format,  "%S")
+            charvec <- paste0(charvec, "00")
+        }
+        substr(charvec[isMidN], iHMS["%H"], iHMS["%H"]+1) <- "23"
+        substr(charvec[isMidN], iHMS["%M"], iHMS["%M"]+1) <- "59"
+        substr(charvec[isMidN], iHMS["%S"], iHMS["%S"]+1) <- "59"
+        }
+    }
     }
 
     ## Convert "charvec" to standard ISO format:
@@ -761,9 +716,6 @@ function(y = currentYear, m = 1:12, d = 1,
     #   x = timeCalendar(y = 2000, h = rep(16,12))
     #   x = timeCalendar(m = c(3,4,5), d = c(12,15,7), y = c(1998,1997,2004))
     #   x = timeCalendar(h = c(9,14), min = c(15,23))
-
-    # Changes:
-    #
 
     # FUNCTION:
 
