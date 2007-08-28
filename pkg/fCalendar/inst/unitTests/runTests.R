@@ -1,10 +1,10 @@
 
 pkg <- "fCalendar"
 
-if(require("RUnit", quietly=TRUE)) 
+if(require("RUnit", quietly = TRUE)) 
 {
 
-    library(package=pkg, character.only=TRUE)
+    library(package=pkg, character.only = TRUE)
     if(!(exists("path") && file.exists(path)))
         path <- system.file("unitTests", package = pkg)
 
