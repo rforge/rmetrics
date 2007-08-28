@@ -27,33 +27,34 @@
 #   see Rmetrics's copyright file
 
 
+# fCalendar::3B-TimeDateSubsets.R
 ################################################################################
-# S3 METHODS:            TEST AND REPRESENTATION OF OBJECTS:
-#  isWeekday              Tests if a date is a weekday or not
-#  isWeekend              Tests if a date falls on a weekend or not
-#  isBizday               Tests if a date is a business day or not
-#  isHoliday              Tests if a date is a non-business day or not
-#  getDayOfWeek           Returns the day of the week to a 'timeDate' object
-#  getDayOfYear           Returns the day of the year to a 'timeDate' object
-# S3 MEHOD:              SUBSETTING TIMEDATE OBJECTS:
-#  [.timeDate             Extracts or replaces subsets from 'timeDate' objects
-#  cut.timeDate           Extracts a piece from a 'timeDate' object
-#  start.timeDate         Extracts the first entry of a 'timeDate' object
-#  end.timeDate           Extracts the last entry of a 'timeDate' object
-#  length.timeDate        Gets the length of a 'timeDate' object
-#  blockStart             Creates start dates for equally sized blocks
-#  blockEnd               Creates end dates for equally sized blocks
+# METHODS:                  TEST AND REPRESENTATION OF OBJECTS:
+#  isWeekday                 Tests if a date is a weekday or not
+#  isWeekend                 Tests if a date falls on a weekend or not
+#  isBizday                  Tests if a date is a business day or not
+#  isHoliday                 Tests if a date is a non-business day or not
+#  getDayOfWeek              Returns the day of the week to a 'timeDate' object
+#  getDayOfYear              Returns the day of the year to a 'timeDate' object
+# MEHODS:                   SUBSETTING TIMEDATE OBJECTS:
+#  [.timeDate                Extracts/replaces subsets from 'timeDate' objects
+#  cut.timeDate              Extracts a piece from a 'timeDate' object
+#  start.timeDate            Extracts the first entry of a 'timeDate' object
+#  end.timeDate              Extracts the last entry of a 'timeDate' object
+#  length.timeDate           Gets the length of a 'timeDate' object
+#  blockStart                Creates start dates for equally sized blocks
+#  blockEnd                  Creates end dates for equally sized blocks
 ################################################################################
 
 
 ################################################################################
-# S3 METHODS:            TEST AND REPRESENTATION OF OBJECTS:
-#  isWeekday              Tests if a date is a weekday or not
-#  isWeekend              Tests if a date falls on a weekend or not
-#  isBizday               Tests if a date is a business day or not
-#  isHoliday              Tests if a date is a non-business day or not
-#  getDayOfWeek           Returns the day of the week to a 'timeDate' object
-#  getDayOfYear           Returns the day of the year to a 'timeDate' object
+# METHODS:                  TEST AND REPRESENTATION OF OBJECTS:
+#  isWeekday                 Tests if a date is a weekday or not
+#  isWeekend                 Tests if a date falls on a weekend or not
+#  isBizday                  Tests if a date is a business day or not
+#  isHoliday                 Tests if a date is a non-business day or not
+#  getDayOfWeek              Returns the day of the week to a 'timeDate' object
+#  getDayOfYear              Returns the day of the year to a 'timeDate' object
 
 
 isWeekday = 
@@ -241,13 +242,14 @@ function(x)
 
 
 ################################################################################
-# S3 MEHOD:              SUBSETTING TIMEDATE OBJECTS:
-#  [.timeDate             Extracts or replaces subsets from 'timeDate' objects
-#  cut.timeDate           Extracts a piece from a 'timeDate' object
-#  start.timeDate         Extracts the first object of a 'timeDate' object
-#  end.timeDate           Extracts the last object of a 'timeDate' object
-#  blockStart             Creates start dates for equally sized blocks
-#  blockEnd               Creates end dates for equally sized blocks
+# MEHODS:                   SUBSETTING TIMEDATE OBJECTS:
+#  [.timeDate                Extracts/replaces subsets from 'timeDate' objects
+#  cut.timeDate              Extracts a piece from a 'timeDate' object
+#  start.timeDate            Extracts the first entry of a 'timeDate' object
+#  end.timeDate              Extracts the last entry of a 'timeDate' object
+#  length.timeDate           Gets the length of a 'timeDate' object
+#  blockStart                Creates start dates for equally sized blocks
+#  blockEnd                  Creates end dates for equally sized blocks
 
 
 "[.timeDate" =

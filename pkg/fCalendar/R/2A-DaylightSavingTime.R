@@ -27,14 +27,22 @@
 #   see Rmetrics's copyright file
 
 
+# fCalendar::2A-DaylightSavingTime.R
+################################################################################
+# FUNCTION:                 DESCRIPOTION:
+#  Algiers                   Returns Algiers Daylight Saving Time Rules
+#  ...
+#  Honolulu                  Returns Honolulu Daylight Saving Time Rules
+################################################################################
+
+
 ################################################################################
 # The following DST Rules were extracted from Libical library and 
 # integrated into R functions. 
 # Libical is an Open Source implementation of the iCalendar protocols
 # and protocol data units.
 # The code and datafiles are licensed under the terms of the GNU 
-# Library General Public License. 
-################################################################################
+# Library General Public License.
 
 
 # AFRICA -----------------------------------------------------------------------
