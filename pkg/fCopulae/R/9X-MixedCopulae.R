@@ -1,23 +1,53 @@
 
+# This library is free software; you can redistribute it and/or
+# modify it under the terms of the GNU Library General Public
+# License as published by the Free Software Foundation; either
+# version 2 of the License, or (at your option) any later version.
+#
+# This library is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
+# GNU Library General Public License for more details.
+#
+# You should have received a copy of the GNU Library General 
+# Public License along with this library; if not, write to the 
+# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+# MA  02111-1307  USA
+
+# Copyrights (C)
+# for this R-port: 
+#   1999 - 2007, Diethelm Wuertz, GPL
+#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
+#   info@rmetrics.org
+#   www.rmetrics.org
+# for the code accessed (or partly included) from other R-ports:
+#   see R's copyright and license files
+# for the code accessed (or partly included) from contributed R-ports
+# and other sources
+#   see Rmetrics's copyright file
+
 
 ################################################################################
-# TAIL DEPENDENCY ESTIMATOR 
+# TAIL DEPENDENCE ESTIMATOR 
 #   derived from the "Mixed Gumbel-SurvivalGumbel-Normal Copula" approach
+#   supported Marginals: Normal, NIG and Generalized Hyperbolic Student-t
 
 
 ################################################################################
-# FUNCTION:                         GUMBEL COPULA:
-#  .rgumbelCopula
-#  .dgumbelCopula
-#  .pgumbelCopula
-# FUNCTION:                         MIXED GUMBEL-SURVIVALGUMBEL-NORMAL COPULA:
-#  .rgsgnormCopula
-#  .dgsgnormCopula
-#  .gsgnormCopulaFit
-# FUNCTION:                         NON-PARAMETRIC TAIL DEPENDECY ESTIMATOR:
-#  .cfgTDE
-# FUNCTION:                         COPULA FIT WITH NIG MARGINALS:
-#  .nigDependencyFit                 
+# FUNCTION:                    GUMBEL COPULA:
+#  .rgumbelCopula               Generates fast Gumbel copula random variates
+#  .dgumbelCopula               Computes Gumbel copula probability
+#  .pgumbelCopula               Computes Gumbel copula probability
+# FUNCTION:                    MIXED GUMBEL-SURVIVALGUMBEL-NORMAL COPULA:
+#  .rgsgnormCopula              Generates G-SG-NORM copula random variates
+#  .dgsgnormCopula              Computes G-SG-NORM copula probability
+#  .gsgnormCopulaFit            Computes G-SG-NORM copula probability
+# FUNCTION:                    NON-PARAMETRIC TAIL DEPENDECY ESTIMATOR:
+#  .cfgTDE                      Estimates non-parametrically tail dependence
+# FUNCTION:                    COPULA FIT WITH NIG MARGINALS:
+#  .normDependencyFit           Estimates tail dependence with normal marginals
+#  .nigDependencyFit            Estimates tail dependence with NIG marginals  
+#  .ghtDependencyFit            Estimates tail dependence with GHT marginals   
 ################################################################################
 
 
@@ -27,9 +57,12 @@
 
 .rgumbelCopula =
 function(n, alpha = 2)
-{
+{   # A function implemented by Diethelm Wuertz
+
     # Description:
-    #   Generate Fast Gumbel RVs
+    #   Generates fast Gumbel copula random variates
+    
+    # Arguments:
     
     # FUNCTION:
     
@@ -58,7 +91,8 @@ function(n, alpha = 2)
 
 .dgumbelCopula = 
 function(u = 0.5, v = u, alpha = 2, output = c("vector", "list"))
-{
+{   # A function implemented by Diethelm Wuertz
+
     # Description:
     #   Computes Bivariate Gumbel Copula Density
     
@@ -77,7 +111,8 @@ function(u = 0.5, v = u, alpha = 2, output = c("vector", "list"))
 
 .pgumbelCopula = 
 function(u = 0.5, v = u, alpha = 2, output = c("vector", "list"))
-{
+{   # A function implemented by Diethelm Wuertz
+
     # Description:
     #   Computes Bivariate Gumbel Copula Probability
     
@@ -97,7 +132,8 @@ function(u = 0.5, v = u, alpha = 2, output = c("vector", "list"))
 
 .rgsgnormCopula = 
 function(n = 1000, alpha = c(2, 2), rho = 0, gamma = c(0.5, 0.5))
-{
+{   # A function implemented by Diethelm Wuertz
+
     # Description:
     #   Computes RVs from a mixed GSG copula
     
@@ -134,7 +170,8 @@ function(n = 1000, alpha = c(2, 2), rho = 0, gamma = c(0.5, 0.5))
 
 .dgsgnormCopula = 
 function(u = 0.5, v = u, alpha = c(2, 2), rho = 0, gamma = c(0.5, 0.5))
-{
+{   # A function implemented by Diethelm Wuertz
+
     # Description:
     #   Computes mixed GSG copula density
     
@@ -175,7 +212,8 @@ function(u = 0.5, v = u, alpha = c(2, 2), rho = 0, gamma = c(0.5, 0.5))
 
 .gsgnormCopulaFit =
 function(u, v, trace = FALSE)
-{   
+{   # A function implemented by Diethelm Wuertz
+
     # Description:
     #   Fits parameters for a mixed GSG copula
     
@@ -236,12 +274,13 @@ function(u, v, trace = FALSE)
 
 
 ################################################################################
-# Tail Dependency Estimator:
+# Non-Parametric Tail Dependence Estimator
 
 
 .cfgTDE = 
 function(x, y)
-{
+{   # A function implemented by Diethelm Wuertz
+
     # Description:
     #   Estimates non-parametrically tail dependency coefficient
     
@@ -273,22 +312,161 @@ function(x, y)
 
 
 ################################################################################
+# GSGNORM Parametric Tail Dependence Estimator
+
+
+.normDependencyFit = 
+function(x, doplot = TRUE, trace = TRUE)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Estimates tail dependency coefficients with Normal marginals
+    
+    # Arguments:
+    #   x - a multivariate 'timeSeries' object
+    
+    # FUNCTION:
+    
+    # Settings: 
+    N = ncol(x)
+    lowerLambda = upperLambda = 0*diag(N)
+    assetsNames = colnames(x)
+    P = NULL
+    
+    for (i in 1:(N-1)) {
+        # First asset:
+        r1 = as.vector(x[, i])
+        fit1 = normFit(r1)
+        estim1 = fit1$estimate
+        p1 = pnorm(r1, estim1[1], estim1[2]) 
+        Main1 = assetsNames[i]
+        P = cbind(P, p1)
+        for (j in (i+1):N) 
+        {  
+            # Second asset:
+            r2 = as.vector(x[, j])
+            fit2 = normFit(r2) 
+            estim2 = fit2$estimate      
+            p2 = pnorm(r2, estim2[1], estim2[2]) 
+            Main2 = assetsNames[j]
+            
+            # Optional Plot:
+            if (doplot) 
+            {
+                # Plot Distribution:
+                MainR = paste("Distribution:", Main1, "-", Main2)
+                plot(r1, r2, pch = 19, main = MainR)
+                grid()
+                
+                # Plot Copula:
+                MainP = paste("Copula:", Main1, "-", Main2)
+                plot(p1, p2, pch = 19, main = MainP)
+                grid()
+            }
+            
+            # Fit GSG copula parameters:
+            fit = .gsgnormCopulaFit(u = p1, v = p2, trace = FALSE)
+            if (trace)
+                cat(assetsNames[c(i,j)], round(fit$lambda, 3), "\n")  
+            
+                # Compose lambda Matrix:
+            lowerLambda[i, j] = lowerLambda[j, i] = fit$lambda[1]
+            upperLambda[i, j] = upperLambda[j, i] = fit$lambda[2]
+        }
+    }
+    
+    # Result:
+    colnames(lowerLambda) = rownames(lowerLambda) = assetsNames
+    colnames(upperLambda) = rownames(upperLambda) = assetsNames
+    ans = list(lower = lowerLambda, upper = upperLambda)
+     
+    # Return Value:
+    ans 
+}
+
+
+# ------------------------------------------------------------------------------
 
 
 .nigDependencyFit = 
 function(x, doplot = TRUE, trace = TRUE)
-{
+{   # A function implemented by Diethelm Wuertz
+
     # Description:
     #   Estimates tail dependency coefficients with NIG marginals
     
     # Arguments:
     #   x - a multivariate 'timeSeries' object
+    
     # FUNCTION:
     
     # Settings:
-    start = c(2, 2, 0, 1/3, 1/3)
-    fitted = rowNames = NULL   
-    N = dim(x)[2]
+    N = ncol(x)
+    lowerLambda = upperLambda = 0*diag(N)
+    assetsNames = colnames(x)
+    P = NULL
+    
+    for (i in 1:(N-1)) {
+        # First asset:
+        r1 = as.vector(x[, i])
+        fit1 = nigFit(r1, doplot = FALSE)
+        estim1 = fit1@fit$estimate
+        p1 = pnig(r1, estim1[1], estim1[2], estim1[3], estim1[4]) 
+        Main1 = assetsNames[i]
+        P = cbind(P, p1)
+        for (j in (i+1):N) {  
+            # Second asset:
+            r2 = as.vector(x[, j])
+            fit2 = nigFit(r2, doplot = FALSE) 
+            estim2 = fit2@fit$estimate      
+            p2 = pnig(r2, estim2[1], estim2[2], estim2[3], estim2[4]) 
+            Main2 = assetsNames[j]
+            # Optional Plot:
+            if (doplot) {
+                MainR = paste("Distribution:", Main1, "-", Main2)
+                plot(r1, r2, pch = 19, main = MainR)
+                grid()
+                MainP = paste("Copula:", Main1, "-", Main2)
+                plot(p1, p2, pch = 19, main = MainP)
+                grid()
+            }
+            # Fit GSG copula parameters:
+            fit = .gsgnormCopulaFit(u = p1, v = p2, trace = FALSE)
+            if (trace)
+                cat(assetsNames[c(i,j)], round(fit$lambda, 3), "\n")  
+            # Compose lambda Matrix:
+            lowerLambda[i, j] = lowerLambda[j, i] = fit$lambda[1]
+            upperLambda[i, j] = upperLambda[j, i] = fit$lambda[2]
+        }
+    }
+    
+    # Result:
+    colnames(lowerLambda) = rownames(lowerLambda) = assetsNames
+    colnames(upperLambda) = rownames(upperLambda) = assetsNames
+    ans = list(lower = lowerLambda, upper = upperLambda)
+     
+    # Return Value:
+    ans 
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.ghtDependencyFit = 
+function(x, doplot = TRUE, trace = TRUE)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Estimates tail dependency coefficients with GH Student-t marginals
+    
+    # Arguments:
+    #   x - a multivariate 'timeSeries' object
+    
+    # FUNCTION:
+    
+    # Settings: 
+    N = ncol(x)
     lowerLambda = upperLambda = 0*diag(N)
     assetsNames = colnames(x)
     P = NULL
