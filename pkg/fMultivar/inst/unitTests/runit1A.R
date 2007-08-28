@@ -559,15 +559,4 @@ function()
 
 
 ################################################################################
-
-
-if (FALSE) {
-    require(RUnit)
-    testResult = runTestFile("C:/Rmetrics/SVN/trunk/fMultivar/tests/runit1A.R",
-        rngKind = "Marsaglia-Multicarry", rngNormalKind = "Inversion")
-    printTextProtocol(testResult)
-}
-   
-
-################################################################################
     
