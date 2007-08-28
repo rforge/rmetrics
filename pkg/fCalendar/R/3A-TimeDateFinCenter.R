@@ -80,7 +80,6 @@ function(FinCenter = myFinCenter)
         on.exit(Sys.setenv(TZ = TZ))
     }
 
-
     # Internal Function for Conversion from Ical Tables:
     if (FALSE) {
     rulesFinCenter2 =
@@ -147,7 +146,7 @@ function(FinCenter = myFinCenter)
         # Return Value:
         Sys.setenv(TZ = myTZ)
         data.frame(ruleChanges = as.character(ruleChangesGMT),
-            offSet = hms.off) }
+            offSet = hms.off) 
     }
     ## Instead:
 
