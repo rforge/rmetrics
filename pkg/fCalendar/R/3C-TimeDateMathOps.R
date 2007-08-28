@@ -27,34 +27,35 @@
 #   see Rmetrics's copyright file
 
 
+# fCalendar::3C-TimeDateMathOps.R
 ################################################################################
-# S3 MEHOD:              MATHEMATICAL OPERATIONS:
-#  Ops.timeDate           Group 'Ops' generic functions for 'timeDate' objects
-#  +.timeDate             Performs arithmetic + operation on 'timeDate' objects
-#  -.timeDate             Performs arithmetic - operation on 'timeDate' objects
-#  diff.timeDate          Returns suitably lagged and iterated differences
-#  difftimeDate           Returns a difference of two 'timeDate' objects
-#  round.timeDate         Rounds objects of class 'timeDate'
-#  trunc.timeDate         Truncates objects of class 'timeDate' 
-# S3 MEHOD:              CONCATENATION, ORDERING AND SORTING:
-#  c.timeDate             Concatenates 'timeDate' objects
-#  rep.timeDate           Replicates a 'timeDate' object
-#  sort.timeDate          Sorts a 'timeDate' object
-#  sample.timeDate        Resamples a 'timeDate' object
-#  unique.timeDate        Makes a 'timeDate' object unique
-#  rev.timeDate           Reverts a 'timeDate' object
+# MEHODS:                   MATHEMATICAL OPERATIONS:
+#  Ops.timeDate              Group 'Ops' operations on 'timeDate' objects
+#  +.timeDate                Performs + operation on 'timeDate' objects
+#  -.timeDate                Performs - operation on 'timeDate' objects
+#  diff.timeDate             Returns suitably lagged and iterated differences
+#  difftimeDate              Returns a difference of two 'timeDate' objects
+#  round.timeDate            Rounds objects of class 'timeDate'
+#  trunc.timeDate            Truncates objects of class 'timeDate' 
+# MEHODS:                   CONCATENATION, ORDERING AND SORTING:
+#  c.timeDate                Concatenates 'timeDate' objects
+#  rep.timeDate              Replicates a 'timeDate' object
+#  sort.timeDate             Sorts a 'timeDate' object
+#  sample.timeDate           Resamples a 'timeDate' object
+#  unique.timeDate           Makes a 'timeDate' object unique
+#  rev.timeDate              Reverts a 'timeDate' object
 ################################################################################
 
 
 ################################################################################
-# S3 MEHOD:              MATHEMATICAL OPERATIONS:
-#  Ops.timeDate           Group 'Ops' generic functions for 'timeDate' objects
-#  +.timeDate             Performs arithmetic + operation on 'timeDate' objects
-#  -.timeDate             Performs arithmetic - operation on 'timeDate' objects
-#  diff.timeDate          Returns suitably lagged and iterated differences
-#  difftimeDate           Returns a difference of two 'timeDate' objects
-#  round.timeDate         Rounds objects of class 'timeDate'
-#  trunc.timeDate         Truncates objects of class 'timeDate'
+# MEHODS:                   MATHEMATICAL OPERATIONS:
+#  Ops.timeDate              Group 'Ops' operations on 'timeDate' objects
+#  +.timeDate                Performs + operation on 'timeDate' objects
+#  -.timeDate                Performs - operation on 'timeDate' objects
+#  diff.timeDate             Returns suitably lagged and iterated differences
+#  difftimeDate              Returns a difference of two 'timeDate' objects
+#  round.timeDate            Rounds objects of class 'timeDate'
+#  trunc.timeDate            Truncates objects of class 'timeDate' 
 
 
 Ops.timeDate = 
@@ -352,13 +353,13 @@ function(x, units = c("days", "hours", "mins"), ...)
 
 
 ################################################################################
-# S3 MEHOD:              CONCATENATION, ORDERING AND SORTING:
-#  c.timeDate             Concatenates objects of class 'timeDate'
-#  rep.timeDate           Replicates objects of class 'timeDate'
-#  sample.timeDate        Resamples objects of class 'timeDate'
-#  sort.timeDate          Sorts, Rounds or truncates a 'timeDate' vector
-#  unique.timeDate        Remove duplicates from a 'timeDate' vector
-#  rev.timeDate           Reverts  a 'timeDate' vector object
+# MEHODS:                   CONCATENATION, ORDERING AND SORTING:
+#  c.timeDate                Concatenates 'timeDate' objects
+#  rep.timeDate              Replicates a 'timeDate' object
+#  sort.timeDate             Sorts a 'timeDate' object
+#  sample.timeDate           Resamples a 'timeDate' object
+#  unique.timeDate           Makes a 'timeDate' object unique
+#  rev.timeDate              Reverts a 'timeDate' object
 
 
 c.timeDate = 
