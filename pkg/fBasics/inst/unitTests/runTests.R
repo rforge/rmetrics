@@ -1,5 +1,5 @@
 
-pkg <- "Basics"
+pkg <- "fBasics"
 
 if(require("RUnit", quietly=TRUE)) 
 {
