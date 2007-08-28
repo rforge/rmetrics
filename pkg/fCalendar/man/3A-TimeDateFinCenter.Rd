@@ -21,6 +21,8 @@
     \code{rulesFinCenter} \tab Returns DST rules for a financial center, \cr
     \code{listFinCenter} \tab Lists all supported financial centers. }
 
+}
+
 
 \usage{
 myFinCenter
@@ -54,7 +56,6 @@ listFinCenter(pattern = ".*")
     \code{listFinCenter}
     \cr
     returns a list of time zones available in the database.
-    \cr
 
 }
 
@@ -86,33 +87,34 @@ listFinCenter(pattern = ".*")
 
     \code{timeDateCoercion}, \code{timeDateSpecDates}
 
-    We also recommend to inspect the help pages for the POSIX time and date
-    class, \code{\link{Dates}}, and the help pages from the contributed R packages
-    \code{chron} and \code{date}.
+    We also recommend to inspect the help pages for the POSIX time and 
+    date class, \code{\link{Dates}}, and the help pages from the contributed 
+    R packages \code{chron} and \code{date}.
+    
 }
 
 
 \author{
-  Diethelm Wuertz for the Rmetrics \R-port; some improvements: % bug fixes
-  Martin Maechler.
+    Diethelm Wuertz for the Rmetrics \R-port; some improvements: % bug fixes
+    Martin Maechler.
 }
 
 
 \examples{
-## myFinCenter - the global setting currently used :
+## myFinCenter - the global setting currently used:
    myFinCenter
 
 ## Other Financial Centers:
+   listFinCenter("Asia/")
+   listFinCenter("^A") # all beginning with "A"
+   listFinCenter("^[^A]") # all *not* beginning with "A"
+   listFinCenter(".*/L")  # cities with L*
 
-  listFinCenter("Asia/")
-  listFinCenter("^A") # all beginning with "A"
-  listFinCenter("^[^A]") # all *not* beginning with "A"
-  listFinCenter(".*/L")  # cities with L*
-
-  stopifnot(identical(listFinCenter(), ## 'A' and 'not A' == everything:
+   stopifnot(identical(listFinCenter(), ## 'A' and 'not A' == everything:
         union(listFinCenter("^A"),
             listFinCenter("^[^A]"))))
 }
 
 
 \keyword{chron}
+

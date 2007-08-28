@@ -14,7 +14,6 @@
 \alias{as.POSIXlt.timeDate}
 \alias{as.Date.timeDate}
 
-
 %\alias{julian.POSIXt}
 
 \alias{julian.timeDate}

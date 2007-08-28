@@ -18,11 +18,11 @@
 
 \alias{show.timeDate}
 \alias{show,timeDate-method}
+\alias{summary.timeDate}
 
 \alias{plot.timeDate}
 \alias{points.timeDate}
 \alias{lines.timeDate}
-\alias{summary.timeDate}
 \alias{format.timeDate}
 
 
@@ -51,10 +51,10 @@
     The functions to represent 'timeDate' objects:
     \tabular{ll}{
     \code{print.timeDate} \tab Prints 'timeDate' Object, \cr
+    \code{summary.timeDate} \tab Summarizes details of a 'timeDate' object, \cr
     \code{plot.timeDate} \tab Plots with GMT 'timeDate' x-axis, \cr
     \code{points.timeDate} \tab Adds points to a 'timeDate' plot, \cr
     \code{lines.timeDate} \tab Adds lines to a 'timeDate' plot, \cr
-    \code{summary.timeDate} \tab Summarizes details of a 'timeDate' object, \cr
     \code{format.timeDate} \tab Formats 'timeDate' as ISO conform character string, }
 
 }
@@ -389,10 +389,13 @@ Zivot, E., Wang J. (2003);
 \examples{
 ## timeDate -
 
-   Sys.timeDate()       # direct
-   timeDate(Sys.time()) # transformed from "POSIX(c)t"
+   Sys.timeDate()           # direct
+   timeDate(Sys.time())     # transformed from "POSIX(c)t"
+   
+   # Local Time in Zurich
+   timeDate(Sys.time(), FinCenter = "Zurich")  
 
-   ## Character Vector Strings:
+   # Character Vector Strings:
    dts = c("1989-09-28", "2001-01-15", "2004-08-30", "1990-02-09")
    tms = c(  "23:12:55",   "10:34:02",   "08:30:00",   "11:18:23")
 
@@ -401,20 +404,22 @@ Zivot, E., Wang J. (2003);
    t1 <- timeDate(dts, format = "\%Y-\%m-\%d", FinCenter = "GMT" )
    t1
    stopifnot(identical(t1, timeDate(dts, FinC = "GMT"))) # auto-format
+   
    timeDate(dts, format = "\%Y-\%m-\%d", FinCenter = "Europe/Zurich")
+   
    timeDate(paste(dts, tms), format = "\%Y-\%m-\%d \%H:\%M:\%S",
             zone = "GMT", FinCenter = "GMT")
+   
    timeDate(paste(dts, tms), zone = "Europe/Zurich", FinCenter = "Europe/Zurich")
+   
    timeDate(paste(dts, tms), format = "\%Y-\%m-\%d \%H:\%M:\%S",
             zone = "GMT", FinCenter = "Europe/Zurich")
 
    ## non standard format:
-   timeDate(paste(20:31, "03.2005", sep="."),
-            format = "\%d.\%m.\%Y")
+   timeDate(paste(20:31, "03.2005", sep="."), format = "\%d.\%m.\%Y")
 
 
-   # Note, ISO and American Formats are Auto-Detected
-
+   # Note, ISO and American Formats are Auto-Detected:
    timeDate("2004-12-31", FinCenter = "GMT")
    timeDate("12/11/2004", FinCenter = "GMT")
    timeDate("1/31/2004") # auto-detect American format
@@ -426,16 +431,16 @@ Zivot, E., Wang J. (2003);
    dtms <- paste(dts,tms)
    dtms[2:3] <- NA
    timeDate(dtms, FinCenter = "Europe/Zurich")# but in GMT
+
 % would need  change in R :
 %    tms[3] <- dts[2] <- NA
 %    timeDate(paste(dts,tms), FinCenter = "Europe/Zurich")# but in GMT
 
 
 ## timeCalendar -
-
+   
    currentYear
    timeCalendar() # 12 months of current year
-
    timeCalendar(m = c(9, 1, 8, 2), d = c(28, 15, 30, 9),
                 y = c(1989, 2001, 2004, 1990), FinCenter = "GMT")
    timeCalendar(m = c(9, 1, 8, 2), d = c(28, 15, 30, 9),
@@ -443,13 +448,14 @@ Zivot, E., Wang J. (2003);
    timeCalendar(h = c(9, 14), min = c(15, 23))
 
 ## timeSequence -
-
+   
    timeSequence(from = "2004-03-12", to = "2004-04-11",
         format = "\%Y-\%m-\%d", FinCenter = "GMT")
    timeSequence(from = "2004-03-12", to = "2004-04-11",
         format = "\%Y-\%m-\%d", FinCenter = "Europe/Zurich")
 
 ## print | summary | format -
+
    tC = timeCalendar()
    print(tC)
    summary(tC)
@@ -458,3 +464,4 @@ Zivot, E., Wang J. (2003);
 
 
 \keyword{chron}
+

@@ -4,16 +4,20 @@
 
 \alias{isWeekday}
 \alias{isWeekend}
+
 \alias{isBizday}
 \alias{isHoliday}
+
 \alias{getDayOfWeek}
 \alias{getDayOfYear}
 
+\alias{length.timeDate}
+
 \alias{[.timeDate}
+\alias{window.timeDate}
 \alias{cut.timeDate}
 \alias{start.timeDate}
 \alias{end.timeDate}
-\alias{length.timeDate}
 
 \alias{blockStart}
 \alias{blockEnd}
@@ -46,7 +50,8 @@
     
     \tabular{ll}{
     \code{[.timeDate} \tab Extracts or replaces subsets from 'timeDate' objects, \cr
-    \code{cut.timeDate} \tab Extracts a piece from a 'timeDate' object, \cr
+    \code{window.timeDate} \tab Extracts a piece from a 'timeDate' object, \cr
+    \code{cut.timeDate} \tab A synonyme for the window function, \cr
     \code{start.timeDate} \tab Extracts the first entry of a 'timeDate' object, \cr
     \code{end.timeDate} \tab Extracts the last entry of a 'timeDate' object, \cr
     \code{length.timeDate} \tab Gets the length of a 'timeDate' object, \cr
@@ -65,11 +70,13 @@ isHoliday(x, holidays = holidayNYSE())
 getDayOfWeek(x)
 getDayOfYear(x)
 
+\method{length}{timeDate}(x)
+
 \method{[}{timeDate}(x, \dots, drop = TRUE)
+\method{window}{timeDate}(x, from , to, \dots)
 \method{cut}{timeDate}(x, from , to, \dots)
 \method{start}{timeDate}(x, \dots)
 \method{end}{timeDate}(x, \dots)
-\method{length}{timeDate}(x)
 
 blockStart(x, block = 20)
 blockEnd(x, block = 20)
@@ -117,21 +124,26 @@ blockEnd(x, block = 20)
 \value{
 
     \code{isWeekday}\cr
-    \code{isWeekend}\cr
+    \code{isWeekend}
+    \cr
+    the functions return logical vectors indicating if a date is a 
+    weekday, or a weekend day.
+    \cr
+    
     \code{isBizday}\cr
     \code{isHoliday}
     \cr
     the functions return logical vectors indicating if a date is a 
-    weekday, a weekend day, a business day, or a holiday. Note for
-    business and holidays extraction an holiday/business calendar
-    has to be specified. 
+    business day, or a holiday. Note, that for business and holidays 
+    extraction an holiday/business calendar has to be specified. 
     \cr
     
     \code{getDayOfWeek}\cr
     \code{getDayOfYear}
+    \cr
     the function \code{getDayOfWeek} returns a three letter character 
     string with the names of the day of the week, and the function 
-    \code{getDayOfWeek} returns the day count as integer value starting
+    \code{getDayOfYear} returns the day count as integer value starting
     January, 1st. 
     \cr
    
@@ -172,38 +184,40 @@ blockEnd(x, block = 20)
 }
 
 
-\examples{
-## Easter -
-   currentYear
-   
-## Easter -
-   Easter(currentYear)
-   tS = timeSequence(from = Easter(currentYear)-7*24*3600, length.out = 8) 
+\examples{  
+## Dates in April, currentYear: 
+   tS = timeSequence(
+      from = paste(currentYear, "-04-01", sep = ""),
+      to = paste(currentYear, "-04-30", sep = ""))
    tS
- 
-## Weekdays and Weekend Days: 
-   isWeekday(tS)
+    
+## Subset of Weekends:
    isWeekend(tS)
-   getDayOfWeek(tS)
+   tS[isWeekend(tS)]
    
-## Business Days and Holidays:
+## Subset Wednesdays:
+   getDayOfWeek(tS)
+   tS[getDayOfWeek(tS) == "Wed"]
+   
+## Subset Business Days at NYSE:
    holidayNYSE()
    isBizday(tS, holidayNYSE())
-   isHoliday(tS, holidayNYSE())
-
-## [ - Subsetting:
-   tS[c(1, 6:8)]   
-   tS[isBizday(tS)]
-   tS[isHoliday(tS)]
+   tS[isBizday(tS, holidayNYSE())]
+     
+## [ - Subsetting First Five Days:
+   tS[1:5]   
    
-## cut - 
+## window - 
    GoodFriday(currentYear)
    EasterMonday(currentYear)
-   cut(tS, from = GoodFriday(currentYear), to = EasterMonday(currentYear))
+   window(tS, from = GoodFriday(currentYear), to = EasterMonday(currentYear))
    
-## start | end -
-   start(tS)
-   end(tS)
+## [ - 
+   # All dates after Easter Monday:
+   tS[tS > EasterMonday(currentYear)]
+   
+## Subset Start and End Date:
+   c(start(tS), end(tS))
 }
 
 
