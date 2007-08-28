@@ -9,14 +9,14 @@
 ##              package which has no ./tests/
 ## ----> put the bulk of the code e.g. in  ../inst/unitTests/runTests.R :
 
-if(require("RUnit", quietly=TRUE)) {
+if(require("RUnit", quietly = TRUE)) {
 
   ## --- Setup ---
 
   wd <- getwd()
   pkg <- sub("\\.Rcheck$", '', basename(dirname(wd)))
 
-  library(package=pkg, character.only=TRUE)
+  library(package=pkg, character.only = TRUE)
 
   path <- system.file("unitTests", package = pkg)
 
