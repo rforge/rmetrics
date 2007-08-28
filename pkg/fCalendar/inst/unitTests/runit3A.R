@@ -239,7 +239,7 @@ function()
     charvec <- paste("01", Months, "2006", sep = "-")
     print(TD <- timeDate(charvec, format = "%d-%b-%Y"))
     checkIdentical(format(TD),
-		   paste("2006", c("03-01", "06-01", "09-01", "12-01"), sep="-"))
+           paste("2006", c("03-01", "06-01", "09-01", "12-01"), sep="-"))
     
     # Format: "%m/%d/%Y"
     print(TD <- timeDate("12/15/2006", format = "%m/%d/%Y"))
@@ -319,7 +319,7 @@ test.midnightStandard <- function()
     checkIdentical(dd.iso, .midAuto(c("20010101000000", "20070131000000")))
 
     checkIdentical(dd.iso, .midAuto(c("2001-01-01 00:00:00",
-				      "2007-01-31 00:00:00")))
+                      "2007-01-31 00:00:00")))
 
     print(MS <- .midAuto("200101011600"))
     checkIdentical(MS, "2001-01-01 16:00:00")
@@ -339,10 +339,10 @@ test.midnightStandard <- function()
 
     ## even more extreme
     cv <- c("24:00, 31.01.2001", "23:10, 31.01.2001",
-	    "24:00, 31.12.2005")
+        "24:00, 31.12.2005")
     print(MS <- .midnightStandard(cv, "%H:%M, %d.%m.%Y"))
     checkIdentical(MS, c("2001-02-01 00:00:00", "2001-01-31 23:10:00",
-			 "2006-01-01 00:00:00"))
+             "2006-01-01 00:00:00"))
 
     # Midnight Standard - Human Readable Form:
     print(MS <- .midAuto("2001-01-31"))
@@ -686,9 +686,6 @@ function()
     # Return Value:
     return()
 } 
- 
-
-# ------------------------------------------------------------------------------
 
 
 ################################################################################
