@@ -190,8 +190,13 @@ ymax = NA, standardize = TRUE, labels = TRUE, ...)
         if (is.na(ymax)) ymax = max(data)
         
         # Plot:
-        plot(deltas, data[1,], ylim = c(0, ymax), type = "n", 
-            main = main, xlab = xlab, ylab = ylab, ...)
+        if (labels) {
+            plot(deltas, data[1,], ylim = c(0, ymax), type = "n", 
+                main = main, xlab = xlab, ylab = ylab, ...)
+        } else {
+            plot(deltas, data[1,], type = "n", 
+                main = main, xlab = xlab, ylab = ylab, ...)
+        }
         xl = 1:length(deltas)
         for (il in 1:(lag.max)) {
             yp = max(data[il, ])
@@ -202,8 +207,11 @@ ymax = NA, standardize = TRUE, labels = TRUE, ...)
         }
         
         # Grid:
-        mtext("Taylor Effect", side = 4, adj = 0, col = "darkgrey", cex = 0.7)
-        if (labels) grid()
+        if (labels) {
+            mtext("Taylor Effect", side = 4, adj = 0, col = "darkgrey", 
+                cex = 0.7)
+            grid()
+        }
         ans[[i]] = data
     }
     names(ans) = Units

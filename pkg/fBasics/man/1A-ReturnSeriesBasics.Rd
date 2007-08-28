@@ -2,6 +2,8 @@
 
 \alias{ReturnSeriesBasics}
 
+\alias{basicStats}
+
 \alias{seriesPlot}
 \alias{cumulatedPlot}
 \alias{histPlot}
@@ -13,7 +15,8 @@
 \alias{boxPlot}
 \alias{boxPercentilePlot}
 
-\alias{basicStats}
+\alias{returnSeriesGUI}
+
 
 \title{Return Series Basics}
 
@@ -25,9 +28,10 @@
     financial return sderies.
     \cr
 
-    Tailored plot functions:
+    List of Functions:
     
     \tabular{ll}{
+    \code{basicStats} \tab Computes an overview of basic statistical values, \cr
     \code{seriesPlot} \tab Returns a tailored return series plot, \cr
     \code{cumulatedPlot} \tab Returns a tailored cumulatede return plot, \cr
     \code{histPlot} \tab Returns a tailored histogram plot, \cr
@@ -35,18 +39,15 @@
     \code{qqnormPlot} \tab Returns a tailored Normal quantile-quantile plot, \cr
     \code{qqnigPlot} \tab Returns a tailored NIG quantile-quantile plot, \cr
     \code{boxPlot} \tab Returns a side-by-side standard box plot, \cr
-    \code{boxPercentilePlot} \tab Retutrns a side-by-side box-percentile plot.}
-    
-    Basic Statistic functions are:
-    
-    \tabular{ll}{
-    \code{basicStats} \tab computes an overview of basic statistical values.}
-
+    \code{boxPercentilePlot} \tab Returns a side-by-side box-percentile plot, \cr
+    \code{returnSeriesGUI} \tab Opens a GUI for return series plots.}
     
 }
     
 
 \usage{ 
+basicStats(x, ci = 0.95)
+
 seriesPlot(x, labels = TRUE, type = "l", col = "steelblue", 
     ylab = "Returns", rug = TRUE, \dots) 
 cumulatedPlot(x, index = 100, labels = TRUE, type = "l", col = "steelblue", 
@@ -63,7 +64,7 @@ qqnigPlot(x, labels = TRUE, col = "steelblue", rug = TRUE, \dots)
 boxPlot(x, col = "steelblue", \dots)
 boxPercentilePlot(x, col = "steelblue", \dots) 
 
-basicStats(x, ci = 0.95)
+returnSeriesGUI(x)
 }
 
 
@@ -121,10 +122,6 @@ basicStats(x, ci = 0.95)
 
 \value{
     
-    \code{*Plot}
-    \cr
-    For the \code{*Plot} functions, beside the plot, no other values are 
-    returned.\cr
     
     \code{basicsStats}
     \cr
@@ -132,6 +129,16 @@ basicStats(x, ci = 0.95)
     nobs, NAs, Minimum, Maximum , 1. Quartile, 3. Quartile,
     Mean, Median, Sum, SE Mean, LCL Mean, UCL Mean, Variance,
     Stdev, Skewness, Kurtosis.
+    
+    \code{*Plot}
+    \cr
+    For the \code{*Plot} functions, beside the plot no values are 
+    returned.\cr
+    
+    \code{returnSeriesGUI}
+    \cr
+    For the \code{returnSeriesGUI function, beside the graphical
+    user interface no values are returned.\cr
     
 }
 

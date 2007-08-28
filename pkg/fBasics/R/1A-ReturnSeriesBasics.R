@@ -40,8 +40,8 @@
 # FUNCTION:               BOX PLOTS:
 #  boxPlot                 Produces a side-by-side standard box plot
 #  boxPercentilePlot       Produces a side-by-side box-percentile plot
-# FUNCTION:               GUI:
-#  .returnSeriesGUI        Opens a GUI for return series plots
+# FUNCTION:               GRAPHICAL USER INTERFACE:
+#  returnSeriesGUI         Opens a GUI for return series plots
 ################################################################################
 
 
@@ -564,6 +564,9 @@ function (x, labels = TRUE, col = "steelblue", rug = TRUE, ...)
 
 
 ################################################################################
+# FUNCTION:               BOX PLOTS:
+#  boxPlot                 Produces a side-by-side standard box plot
+#  boxPercentilePlot       Produces a side-by-side box-percentile plot
 
 
 boxPlot =
@@ -695,16 +698,28 @@ function(x, col = "steelblue", ...)
 
 
 ################################################################################
+# FUNCTION:               GRAPHICAL USER INTERFACE:
+#  returnSeriesGUI         Opens a GUI for return series plots
 
 
-.returnSeriesGUI = 
-function(x, mfrow = c(3, 3))
+returnSeriesGUI = 
+function(x)
 {   # A function implemented by Diethelm Wuertz
 
     # Descriptions:
     #   Opens a GUI for return series plots
     
+    # Arguments:
+    #   x - an uni- or multivariate timeSeries object
+    
     # FUNCTION:
+    
+    # Check:
+    stopifnot(class(x) == "timeSeries")
+    
+    # Settings:
+    N = ceiling(sqrt(ncol(x)))
+    mfrow = c(N, N)
     
     returnSeriesRefreshCode = 
     function(...)
@@ -714,7 +729,7 @@ function(x, mfrow = c(3, 3))
         type = as.integer(.tdSliderMenu(obj.name = "returnSeriesType"))
         Unit = colnames(x)
         
-        # Basic Return Statistics:
+        # Print Basic Return Statistics:
         if (type == 1) {
             if (selectedAsset == 0) {
                 print(basicStats(x))
@@ -779,16 +794,6 @@ function(x, mfrow = c(3, 3))
             }   
         }    
         
-        # NIG QQ Plot:
-        if (type == 7) {
-            if (selectedAsset == 0) {
-                par(mfrow = mfrow)
-                qqnigPlot(x)  
-            } else {
-                par(mfrow = c(1, 1))
-                qqnigPlot(x[, selectedAsset])  
-            }
-        } 
     } 
 
     nAssets = dim(x)[2]
@@ -820,9 +825,6 @@ function(x, mfrow = c(3, 3))
                 returnSeriesRefreshCode()},
             function(...){
                 .tdSliderMenu(obj.name = "returnSeriesType", obj.value = "6")
-                returnSeriesRefreshCode()},
-            function(...){
-                .tdSliderMenu(obj.name = "returnSeriesType", obj.value = "7")
                 returnSeriesRefreshCode()}
         ),
         
@@ -832,8 +834,7 @@ function(x, mfrow = c(3, 3))
             "3 Cumulated Return Series Plot", 
             "4 Histogram Plot",
             "5 Density Plot",
-            "6 Normal Quantile-Quantile Plot", 
-            "7 NIG Quantile-Quantile Plot"),
+            "6 Normal Quantile-Quantile Plot"),
      
         title = "Return Series GUI"
         )        

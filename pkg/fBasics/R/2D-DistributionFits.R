@@ -51,7 +51,6 @@
 ################################################################################   
 # FUNCTION:            DESCRIPTION:
 #  'fDISTFIT'           S4 Class Representation
-#  .print.fDISTFIT       Prints Results from a Fitted Distribution
 #  show.fDISTFIT         Prints Results from a Fitted Distribution
 
 
@@ -169,7 +168,10 @@ description = NULL, ...)
     if (is.null(description)) description = .description()
         
     # Fit:
-    fit = list(estimate = c(mean = mean, sd = sd)) 
+    fit = list(
+        estimate = c(mean = mean, sd = sd), 
+        minimum = sum(log(dnorm(x, mean, sd))),
+        code = NA)
         
     # Return Value:
     new("fDISTFIT",     
@@ -216,7 +218,6 @@ title = NULL, description = NULL, ...)
         f = -sum(log(dt(y, x[1])))
         # Print Iteration Path:
         if (trace) {
-            cat("\n Optimization Step:         ", steps)
             cat("\n Objective Function Value:  ", -f)
             cat("\n Students df Estimate:      ", x[1], "\n") 
         }
@@ -254,7 +255,7 @@ title = NULL, description = NULL, ...)
         
     # Fit:
     fit = list(estimate = c(df = r$estimate), minimum = -r$minimum, 
-        code = r$code, gradient = r$gradient, steps = steps) 
+        code = r$code, gradient = r$gradient) 
         
     # Return Value:
     new("fDISTFIT",     
@@ -729,7 +730,6 @@ trace = FALSE, title = NULL, description = NULL)
     
     # Settings:
     CALL = match.call()
-    steps <<- 0
     .trace <<- trace
     
     # Log-likelihood Function:
@@ -741,9 +741,7 @@ trace = FALSE, title = NULL, description = NULL)
         f = -sum(log(dstable(y, alpha = alpha, beta = beta,
             gamma = gamma, delta = delta)))
         # Print Iteration Path:
-        steps <<- steps + 1
         if (.trace) {
-            cat("\n Optimization Step:         ", steps)
             cat("\n Objective Function Value:  ", -f)
             cat("\n Stable Estimate:           ", alpha, beta, gamma, delta)
             cat("\n") 
@@ -784,7 +782,7 @@ trace = FALSE, title = NULL, description = NULL)
     # Fit:
     fit = list(estimate = c(alpha = alpha, beta = beta, gamma = gamma, 
         delta = delta), minimum = -r$minimum, code = r$code, gradient = 
-        r$gradient, steps = steps) 
+        r$gradient) 
     
     # Return Value:
     new("fDISTFIT",     
