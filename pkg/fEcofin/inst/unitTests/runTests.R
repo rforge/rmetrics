@@ -1,8 +1,8 @@
 pkg <- "fEcofin"
 
-if(require("RUnit", quietly=TRUE)) {
+if(require("RUnit", quietly = TRUE)) {
 
-    library(package=pkg, character.only=TRUE)
+    library(package=pkg, character.only = TRUE)
     if(!(exists("path") && file.exists(path)))
         path <- system.file("unitTests", package = pkg)
 
@@ -47,5 +47,5 @@ if(require("RUnit", quietly=TRUE)) {
     }
 } else {
     cat("R package 'RUnit' cannot be loaded -- no unit tests run\n",
-	"for package", pkg,"\n")
+    "for package", pkg,"\n")
 }
