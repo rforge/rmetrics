@@ -136,7 +136,11 @@ ohlcDailyPlot(x, volume = TRUE, colOrder = c(1:5), units = 1e6,
     main = c("O-H-L-C", "Volume"), grid.nx = 7, grid.lty = "solid", \dots)
     
 rollMonthlyWindows(x, period = "12m", by = "1m") 
+<<<<<<< .mine
+rollMonthlySeries(x, period = "12m", by = "1m", FUN, \dots)
+=======
 rollMonthlySeries (x, period = "12m", by = "1m", FUN, \dots)
+>>>>>>> .r1765
 }
 
 
