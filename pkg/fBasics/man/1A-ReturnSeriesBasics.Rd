@@ -121,8 +121,7 @@ returnSeriesGUI(x)
 
 
 \value{
-    
-    
+       
     \code{basicsStats}
     \cr
     returns data frame with the following entries and row names:
@@ -137,7 +136,7 @@ returnSeriesGUI(x)
     
     \code{returnSeriesGUI}
     \cr
-    For the \code{returnSeriesGUI function, beside the graphical
+    For the \code{returnSeriesGUI} function, beside the graphical
     user interface no values are returned.\cr
     
 }
