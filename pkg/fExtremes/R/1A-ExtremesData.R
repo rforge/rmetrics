@@ -827,7 +827,8 @@ function(x, doplot = TRUE, trace = TRUE, ...)
     if(trace) print(U)
     
     # Fit Parameters:
-    param = c(mean(x), sd(x))
+    fit = nFit(x, doplot = FALSE, trace = FALSE)
+    param = fit@fit$estimate
     
     # Compute Mean Excess Function:
     func<-function(x, u, param) {
@@ -840,8 +841,13 @@ function(x, doplot = TRUE, trace = TRUE, ...)
             mean = param[1], sd = param[2])[[1]]
         Y = c(Y, y1/y2)
     }
+    
+    # Plot:
     if (doplot) lines(U, Y, lwd = 2)
+    
+    # Result:
     result = data.frame(threshold = U, me = Y)
+    attr(result, "control")<-fit 
 
     # Return Value:
     invisible(result)
@@ -873,7 +879,7 @@ function(x, doplot = TRUE, trace = TRUE, ...)
     if(trace) print(U)
     
     # Fit Parameters:
-    fit = ghFit(x, doplot = FALSE)
+    fit = ghFit(x, doplot = FALSE, trace = FALSE)
     param = fit@fit$estimate
     
     # Compute Mean Excess Function:
@@ -890,8 +896,13 @@ function(x, doplot = TRUE, trace = TRUE, ...)
         if (trace) print(c(u, y2))
         Y = c(Y, y1/y2)
     }
+    
+    # Plot:
     if (doplot) lines(U, Y, lwd = 2)
+    
+    # Result:
     result = data.frame(threshold = U, me = Y)
+    attr(result, "control")<-fit
 
     # Return Value:
     invisible(result)
@@ -922,7 +933,7 @@ function(x, doplot = TRUE, trace = TRUE, ...)
     U = seq(min(U), max(U), length = 51)
     
     # Fit Parameters:
-    fit = hypFit(x, doplot = FALSE)
+    fit = hypFit(x, doplot = FALSE, trace = FALSE)
     param = fit@fit$estimate
     
     # Compute Mean Excess Function:
@@ -934,12 +945,13 @@ function(x, doplot = TRUE, trace = TRUE, ...)
             param = param)[[1]]
         Y = c(Y, y)
     }
-    if (doplot) {
-        mePlot(x, ...)
-        lines(U, Y, ...)
-    }
+    # Plot:
+    if (doplot) lines(U, Y, lwd = 2)
+    
+    # Result:
     result = data.frame(threshold = U, me = Y)
-
+    attr(result, "control")<-fit
+    
     # Return Value:
     invisible(result)
 }
@@ -970,7 +982,7 @@ function(x, doplot = TRUE, trace = TRUE, ...)
     if(trace) print(U)
     
     # Fit Parameters:
-    fit = nigFit(x, doplot = FALSE, scale = TRUE)
+    fit = nigFit(x, doplot = FALSE, trace = FALSE, scale = FALSE)
     param = fit@fit$estimate
     
     # Compute Mean Excess Function:
@@ -986,8 +998,13 @@ function(x, doplot = TRUE, trace = TRUE, ...)
         if (trace) print(c(u, y2))
         Y = c(Y, y1/y2)
     }
+    
+    # Plot:
     if (doplot) lines(U, Y, lwd = 2)
+    
+    # Result:
     result = data.frame(threshold = U, me = Y)
+    attr(result, "control")<-fit
 
     # Return Value:
     invisible(result)
@@ -1019,7 +1036,7 @@ function(x, doplot = TRUE, trace = TRUE, ...)
     if(trace) print(U)
     
     # Fit Parameters:
-    fit = ghtFit(x, doplot = FALSE, scale = TRUE)
+    fit = ghtFit(x, doplot = FALSE, trace = FALSE, scale = FALSE)
     param = fit@fit$estimate
     
     # Compute Mean Excess Function:
@@ -1035,8 +1052,13 @@ function(x, doplot = TRUE, trace = TRUE, ...)
         if (trace) print(c(u, y2))
         Y = c(Y, y1/y2)
     }
+    
+    # Plot:
     if (doplot) lines(U, Y, lwd = 2)
+    
+    # Result:
     result = data.frame(threshold = U, me = Y)
+    attr(result, "control")<-fit
 
     # Return Value:
     invisible(result)

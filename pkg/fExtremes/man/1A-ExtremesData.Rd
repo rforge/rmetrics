@@ -59,8 +59,6 @@
     \code{nigMeanExcessFit} \tab fits mean excesses with a NIG density, \cr  
     \code{ghtMeanExcessFit} \tab fits mean excesses with a GHT density. }   
     
-     }  
-    
 }
 
 

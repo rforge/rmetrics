@@ -37,13 +37,16 @@ CVaR(x, alpha = 0.05, type = "sample", tail = c("lower", "upper"))
         }
     \item{alpha}{
         a numeric value, the confidence interval.
+        }
     \item{type}{
         a character string, the type to calculate the value-at-risk.
+        }
     \item{tail}{
         a character string denoting which tail will be
         considered, either \code{"lower"} or \code{"upper"}.
         If \code{tail="lower"}, then alpha will be converted to
         \code{alpha=1-alpha}.
+        }
 
 }
 
