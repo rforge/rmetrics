@@ -27,23 +27,24 @@
 #   see Rmetrics's copyright file
 
 
+# fCalendar::4C-TimeSeriesPositions.R
 ################################################################################
-# METHOS:              POSITIONS:
-#  seriesPositions      Extracts positions slot from 'timeSeries' object
-#  newPositions<-       Modifies positions of a 'timeSeries' object
-# METHODS:             ORDERING:
-#  sample.timeSeries    Resamples a 'timeSeries' object in time
-#  sort.timeSeries      Sorts reverts a 'timeSeries' object in time
-#  rev.timeSeries       Reverts a 'timeSeries' object in time 
-#  start.timeSeries     Extracts start date of a 'timeSeries' object 
-#  end.timeSeries       Extracts end date of a 'timeSeries' object
+# FUNCTION:                 POSITIONS:
+#  seriesPositions           Extracts positions slot from 'timeSeries' object
+#  newPositions<-            Modifies positions of a 'timeSeries' object
+# METHOD:                   ORDERING:
+#  sample.timeSeries         Resamples a 'timeSeries' object in time
+#  sort.timeSeries           Sorts reverts a 'timeSeries' object in time
+#  rev.timeSeries            Reverts a 'timeSeries' object in time 
+#  start.timeSeries          Extracts start date of a 'timeSeries' object 
+#  end.timeSeries            Extracts end date of a 'timeSeries' object
 ################################################################################
 
 
 ################################################################################
-# METHOS:              POSITIONS:
-#  seriesPositions      Extracts positions slot from 'timeSeries' object
-#  newPositions<-       Modifies positions of a 'timeSeries' object
+# FUNCTION:                 POSITIONS:
+#  seriesPositions           Extracts positions slot from 'timeSeries' object
+#  newPositions<-            Modifies positions of a 'timeSeries' object
 
 
 seriesPositions =
@@ -87,11 +88,12 @@ function(object, value)
 
 
 ################################################################################
-#  sample.timeSeries    Resamples a 'timeSeries' object in time
-#  sort.timeSeries      Sorts reverts a 'timeSeries' object in time
-#  rev.timeSeries       Reverts a 'timeSeries' object in time 
-#  start.timeSeries     Extracts start date of a 'timeSeries' object 
-#  end.timeSeries       Extracts end date of a 'timeSeries' object
+# METHOD:                   ORDERING:
+#  sample.timeSeries         Resamples a 'timeSeries' object in time
+#  sort.timeSeries           Sorts reverts a 'timeSeries' object in time
+#  rev.timeSeries            Reverts a 'timeSeries' object in time 
+#  start.timeSeries          Extracts start date of a 'timeSeries' object 
+#  end.timeSeries            Extracts end date of a 'timeSeries' object
 
 
 .sample.timeSeries =
