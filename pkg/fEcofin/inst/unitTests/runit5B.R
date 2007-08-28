@@ -104,18 +104,5 @@ function()
 }
 
 
-# ------------------------------------------------------------------------------
-
-    
-if (FALSE) {
-    require(RUnit)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fEcofin/tests/runit5B.R",
-        rngKind = "Marsaglia-Multicarry", rngNormalKind = "Inversion")
-    printTextProtocol(testResult)
-}   
-
-
 ################################################################################
-
-
 
