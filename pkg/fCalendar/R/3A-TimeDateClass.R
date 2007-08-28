@@ -173,15 +173,18 @@ rulesFinCenter <- function(FinCenter = myFinCenter)
         # Note:
         #   Important, the "TZ" environment variable must set
         #   to "GMT" in your Windows Environment!
+        
         # Set Timezone to GMT:
         myTZ = Sys.getenv("TZ")
         Sys.setenv(TZ = "GMT")
         if (FinCenter == "") FinCenter = "GMT"
+        
         # Read the Rules:
         # Get IcalPath from .FirstLib
         file = paste(IcalPath, FinCenter, sep = "")
         zfile <- zip.file.extract(file, "Rdata.zip")
         ical = read.table(zfile, skip = 2)
+        
         # GMT Offsets:
         hm = as.integer(ical[,6])
         sg = sign(hm)
@@ -189,6 +192,7 @@ rulesFinCenter <- function(FinCenter = myFinCenter)
         h = floor(hm/100)
         hms.off = sg * ( floor(hm/100)*3600 + (hm - 100*h)*60 + 0 )
         hms.off
+        
         # When have the rules changed?
         months.num = 1:12
         names(months.num) = c(
@@ -204,6 +208,7 @@ rulesFinCenter <- function(FinCenter = myFinCenter)
         hhmmss = substr(as.character(hms), 2, 7)
         ruleChangesGMT = strptime(paste(CCYYMMDD, hhmmss), "%Y%m%d %H%M%S")
         attr(ruleChangesGMT, "tzone") <- "GMT"
+        
         # Return Value:
         Sys.setenv(TZ = myTZ)
         data.frame(ruleChanges = as.character(ruleChangesGMT),
@@ -518,6 +523,7 @@ function(charvec, silent = FALSE)
 
 
 # ------------------------------------------------------------------------------
+
 
 .midnightStandard <- function(charvec, format)
 {
