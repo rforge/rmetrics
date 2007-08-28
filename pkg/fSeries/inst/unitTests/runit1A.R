@@ -694,16 +694,5 @@ function()
 }
 
 
-# ------------------------------------------------------------------------------
-
-
-if (FALSE) {
-    require(RUnit)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fSeries/tests/runit1A.R",
-        rngKind = "Marsaglia-Multicarry", rngNormalKind = "Inversion")
-    printTextProtocol(testResult)
-}
-   
-
 ################################################################################
 
