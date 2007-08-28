@@ -73,7 +73,7 @@ getDayOfYear(x)
 \method{length}{timeDate}(x)
 
 \method{[}{timeDate}(x, \dots, drop = TRUE)
-\method{window}{timeDate}(x, from , to, \dots)
+\method{window}{timeDate}(x, start , end, \dots)
 \method{cut}{timeDate}(x, from , to, \dots)
 \method{start}{timeDate}(x, \dots)
 \method{end}{timeDate}(x, \dots)
@@ -94,6 +94,7 @@ blockEnd(x, block = 20)
         a logical flag, by default \code{TRUE}.
         }
     \item{from, to}{
+        [cut] - \cr
         starting date, required, and end date, ptional. If supplied 
         \code{to} must be after \code{from}.
         }
@@ -107,6 +108,11 @@ blockEnd(x, block = 20)
         a character string defining the modification method, one of
         \code{"sort"}, \code{"round"}, or \code{"trunc"}. 
         }     
+    \item{start, end}{
+        [window] - \cr
+        starting date, required, and end date, ptional. If supplied 
+        \code{to} must be after \code{from}.
+        }
     \item{x}{
         [isWeekday][isWeekend][isBizday][weekDay] - \cr
         an object of class \code{timeDate}.
