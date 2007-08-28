@@ -61,7 +61,6 @@ function(FinCenter = myFinCenter)
     # Arguments:
     #   FinCenter - a character string with the the location of the  
     #       financial center named as "continent/city". 
-       financial center named as "continent/city".
 
     # FUNCTION:
     
