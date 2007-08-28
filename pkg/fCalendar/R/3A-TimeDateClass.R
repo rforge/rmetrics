@@ -27,7 +27,38 @@
 #   see Rmetrics's copyright file
 
 
+# fCalendar::3A-TimeDateClass.R
 ################################################################################
+<<<<<<< .mine
+# FUNCTION:                 SETTINGS:
+#  currentYear               Sets date of the current year
+#  .currentYear              Sets date of the current year
+#  myUnits                   Sets date units
+# FUNCTION:                 FINANCIAL CENTERS:
+#  myFinCenter               Sets my financial center
+#  rulesFinCenter            Returns DST rules for a financial center
+#  listFinCenter             Lists all supported financial centers
+#  .FinCenterList            The list with FinCenter names
+# FUNCTION:                 GENERATION OF TIMEDATE OBJECTS:
+#  'timeDate'                S4 Class representation for timeDate objects
+#  timeDate                  Creates a 'timeDate' object from given dates
+#  .whichFormat              Returns format string called by 'timeDate'
+#  .midnightStandard         Corrects midnight standard called by 'timeDate'
+#  .formatFinCenter          Internal called by timeDate
+#  timeCalendar              Creates a 'timeDate' object from calendar atoms
+#  timeSequence              Creates a regularly spaced 'timeDate' object
+#   seq.timeDate             A synonyme function for timeSequence
+#  Sys.timeDate              Returns system time as an 'timeDate' object 
+#  is.timeDate               Tests if the object is of class 'timeDate' 
+# METHODS:                  REPRESENTATION OF TIMEDATE OBJECTS:
+#  show.timeDate             Prints 'timeDate' object
+#  .print.timeDate           Prints 'timeDate' object
+#  plot.timeDate             Plots 'timeDate' object
+#  points.timeDate           Adds points to a 'timeDate' plot
+#  lines.timeDate            Adds lines to a 'timeDate' plot
+#  summary.timeDate          Summarizes details of a 'timeDate' object
+#  format.timeDate           Formats 'timeDate' as ISO conform string
+=======
 # FUNCTION:              SETTINGS:
 #  currentYear            Sets date of the current year
 #  .currentYear           Sets date of the current year
@@ -56,6 +87,7 @@
 #  lines.timeDate         Adds lines to a 'timeDate' plot
 #  summary.timeDate       Summarizes details of a 'timeDate' object
 #  format.timeDate        Formats 'timeDate' as ISO conform character string
+>>>>>>> .r1778
 ################################################################################
 
 
@@ -69,6 +101,14 @@
 .currentYear <- function()
 {   # A function implemented by Diethelm Wuertz
 
+<<<<<<< .mine
+    # Description:
+    #   Sets date of the current year
+    
+    # FUNCTION:
+    
+=======
+>>>>>>> .r1778
     # Check Time Zone:
     TZ <- Sys.getenv("TZ")
     if(TZ[[1]] != "GMT") {
@@ -80,7 +120,7 @@
     if (is.R()) {
         as.POSIXlt(Sys.time())$year + 1900
     } else {
-        currentDate = timeDate(date(), in.format="%w %m %d %H:%M:%S %Z %Y")
+        currentDate = timeDate(date(), format = "%w %m %d %H:%M:%S %Z %Y")
         as.integer(attr(years(currentDate), "levels"))
     }
 }
@@ -117,12 +157,28 @@ rulesFinCenter <- function(FinCenter = myFinCenter)
     #   Show the day light saving rules for a financial center
 
     # Arguments:
+<<<<<<< .mine
+    #   FinCenter - a character string with the the location of the  
+    #       financial center named as "continent/city". 
+    
+    # FUNCTION:
+    
+=======
     #   FinCenter - a character string with the location of the
     #       financial center named as "continent/city".
 
+>>>>>>> .r1778
     # Check:
     if (FinCenter == "GMT" | FinCenter == "")
         stop("There are no DST rules for GMT FinCenter!")
+<<<<<<< .mine
+
+    # Set Timezone to GMT:
+    myTZ = Sys.getenv("TZ")  
+    Sys.setenv(TZ = "GMT")
+    if (FinCenter == "") FinCenter = "GMT"
+       
+=======
 
     TZ <- Sys.getenv("TZ")
     if(TZ[[1]] != "GMT") {
@@ -196,6 +252,7 @@ rulesFinCenter <- function(FinCenter = myFinCenter)
     }
     ## Instead:
 
+>>>>>>> .r1778
     # Match City:
     fccity <- strsplit(FinCenter, "/")[[1]]
     City <- fccity[length(fccity)]
@@ -471,7 +528,11 @@ function(charvec, silent = FALSE)
     charvec = as.character(charvec)
 
     # Specifications:
+<<<<<<< .mine
+    NCHAR = mean(nchar(charvec))
+=======
     NCHAR = nchar(charvec[1])
+>>>>>>> .r1778
     SUBSTR = (substring(charvec[1], 5, 5) == "-")
 
     # American Format:
