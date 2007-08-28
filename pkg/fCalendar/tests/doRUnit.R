@@ -9,7 +9,7 @@
 ##              package which has no ./tests/
 ## ----> put the bulk of the code e.g. in  ../inst/unitTests/runTests.R :
 
-if(require("RUnit", quietly=TRUE)) {
+if(require("RUnit", quietly = TRUE)) {
 
   ## --- Setup ---
 
