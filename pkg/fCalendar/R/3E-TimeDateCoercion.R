@@ -27,23 +27,24 @@
 #   see Rmetrics's copyright file
 
 
+# fCalendar::3E-TimeDateCoercion.R
 ################################################################################
-# S3 MEHOD:              COERCION AND OBJECT TRANSFORMATIONS:
-#  as.timeDate            Implements Use Method
-#  as.timeDate.default    Default Method
-#  as.timeDate.POSIXt     Returns a 'POSIX' object as 'timeDate' object
-#  as.timeDate.Date       Returns a 'POSIX' object as 'timeDate' object
-# S3 METHOD:             DESCRIPTION:
-#  as.character.timeDate  Returns a 'timeDate' object as 'character' string
-#  as.double.timeDate     Returns a 'timeDate' object as 'numeric' object
-#  as.data.frame.timeDate Returns a 'timeDate' object as 'data.frame' object
-#  as.POSIXct.timeDate    Returns a 'timeDate' object as 'POSIXct' object
-#  as.POSIXlt.timeDate    Returns a 'timeDate' object as 'POSIXlt' object
-#  as.Date.timeDate       Returns a 'timeDate' object as 'Date' object
-# S3 METHOD:             DESCRIPTION:
-#  julian.timeDate        Returns Julian day counts since 1970-01-01
-#  atoms.timeDate         Returns date/time atoms from a 'timeDate' object
-#  months.timeDate        Extracts months atom from a 'timeDate' object
+# MEHOD:                    COERCION AND OBJECT TRANSFORMATIONS:
+#  as.timeDate               Implements Use Method
+#  as.timeDate.default       Default Method
+#  as.timeDate.POSIXt        Returns a 'POSIX' object as 'timeDate' object
+#  as.timeDate.Date          Returns a 'POSIX' object as 'timeDate' object
+# METHOD:                   DESCRIPTION:
+#  as.character.timeDate     Returns a 'timeDate' object as 'character' string
+#  as.double.timeDate        Returns a 'timeDate' object as 'numeric' object
+#  as.data.frame.timeDate    Returns a 'timeDate' object as 'data.frame' object
+#  as.POSIXct.timeDate       Returns a 'timeDate' object as 'POSIXct' object
+#  as.POSIXlt.timeDate       Returns a 'timeDate' object as 'POSIXlt' object
+#  as.Date.timeDate          Returns a 'timeDate' object as 'Date' object
+# METHOD:                   DESCRIPTION:
+#  julian.timeDate           Returns Julian day counts since 1970-01-01
+#  atoms.timeDate            Returns date/time atoms from a 'timeDate' object
+#  months.timeDate           Extracts months atom from a 'timeDate' object
 ################################################################################
 
 
