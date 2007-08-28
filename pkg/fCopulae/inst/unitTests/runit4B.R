@@ -37,7 +37,7 @@
 # FUNCTION:                  EXTREME VALUE COPULAE DENSITY:
 #  devCopula                  Computes extreme value copula density
 #  devSlider                  Displays interactively plots of density
-#################################################################################
+################################################################################
 
 
 test.aaa = 
@@ -190,17 +190,6 @@ function()
     return()    
 }
 
-        
-################################################################################
-
-
-if (FALSE) {
-    require(RUnit)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fCopulae/tests/runit4B.R",
-        rngKind = "Marsaglia-Multicarry", rngNormalKind = "Inversion")
-    printTextProtocol(testResult)
-}
- 
   
 ################################################################################
 
