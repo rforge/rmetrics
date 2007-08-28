@@ -27,29 +27,30 @@
 #   see Rmetrics's copyright file
 
 
+# fCalendar::5A-HolidayDates.R
 ################################################################################
-# FUNCTION:             DESCRIPTION:
-#  ...                   Holiday Functions
-# FUNCTION:             DESCRIPTION:
-#  .holidayList          Prints all public and ecclestical holidays
-#  .easter               Returns date of easter or related feasts 
-#  .easterSunday         Easter Algorithm 
-# FUNCTION:             DESCRIPTION:
-#  .on.or.after          Computes date in month that is a nday ON OR AFTER date
-#  .on.or.before         Computes date in month that is a nday ON OR BEFORE date
-#  .nth.of.nday          Computes nth ocurrance of a nday in year/month
-#  .last.of.nday         Computes the last nday in year/month
-# FUNCTION:             DESCRIPTION:
-#  .sdate                Computes ISO-8601 dates from Julian day numbers
-#  .sjulian              Computes Julian day numbers from ISO-8601 dates
-#  .sday.of.week         Computes day of the week for ISO-8601 dates 
-#  .sleap.year           Returns TRUE/FALSE if dates belong to leap years or not
+# FUNCTION:                 DESCRIPTION:
+#  ...                       Holiday Functions
+# FUNCTION:                 DESCRIPTION:
+#  .holidayList              Prints all public and ecclestical holidays
+#  .easter                   Returns date of easter or related feasts 
+#  .easterSunday             Easter Algorithm 
+# FUNCTION:                 DESCRIPTION:
+#  .on.or.after              Computes date in month that is a nday ON OR AFTER
+#  .on.or.before             Computes date in month that is a nday ON OR BEFORE
+#  .nth.of.nday              Computes nth ocurrance of a nday in year/month
+#  .last.of.nday             Computes the last nday in year/month
+# FUNCTION:                 DESCRIPTION:
+#  .sdate                    Computes ISO-8601 dates from Julian day numbers
+#  .sjulian                  Computes Julian day numbers from ISO-8601 dates
+#  .sday.of.week             Computes day of the week for ISO-8601 dates 
+#  .sleap.year               Returns TRUE/FALSE for leap years or not
 ################################################################################
 
 
 ################################################################################
-# FUNCTION:             DESCRIPTION:
-#  ...                   Holiday Functions
+# FUNCTION:                 DESCRIPTION:
+#  ...                       Holiday Functions
 
 
 Septuagesima = 
