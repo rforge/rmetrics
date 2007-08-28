@@ -1,6 +1,9 @@
+
+
 pkg <- "fCalendar"
 
-if(require("RUnit", quietly=TRUE)) {
+if(require("RUnit", quietly=TRUE)) 
+{
 
     library(package=pkg, character.only=TRUE)
     if(!(exists("path") && file.exists(path)))
@@ -9,7 +12,7 @@ if(require("RUnit", quietly=TRUE)) {
     ## --- Testing ---
 
     ## Define tests
-    testSuite <- defineTestSuite(name=paste(pkg, "unit testing"), dirs=path)
+    testSuite <- defineTestSuite(name = paste(pkg, "unit testing"), dirs = path)
 
     if(interactive()) {
         cat("Now have RUnit Test Suite 'testSuite' for package '", pkg,
@@ -17,8 +20,9 @@ if(require("RUnit", quietly=TRUE)) {
         str(testSuite)
         cat('', "Consider doing",
             "\t  tests <- runTestSuite(testSuite)", "\nand later",
-            "\t  printTextProtocol(tests)", '', sep="\n")
-    } else { ## run from shell / Rscript / R CMD Batch / ...
+            "\t  printTextProtocol(tests)", '', sep = "\n")
+    } else { 
+        ## run from shell / Rscript / R CMD Batch / ...
         ## Run
         tests <- runTestSuite(testSuite)
 
@@ -33,13 +37,16 @@ if(require("RUnit", quietly=TRUE)) {
             pathReport <- file.path(path, "report")
         }
 
-        ## Print results
+        ## Print Results:
         printTextProtocol(tests)
-        printTextProtocol(tests, fileName=paste(pathReport, ".txt", sep=""))
-        ## Print HTML version to a file
-        printHTMLProtocol(tests, fileName=paste(pathReport, ".html", sep=""))
+        printTextProtocol(tests, 
+            fileName = paste(pathReport, ".txt", sep = ""))
+        
+        ## Print HTML Version to a File:
+        printHTMLProtocol(tests, 
+            fileName = paste(pathReport, ".html", sep = ""))
 
-        ##  stop() if there are any failures i.e. FALSE to unit test.
+        ## stop() if there are any failures i.e. FALSE to unit test.
         ## This will cause R CMD check to return error and stop
         if(getErrors(tests)$nFail > 0) {
             stop("one of the unit tests failed")
@@ -47,5 +54,5 @@ if(require("RUnit", quietly=TRUE)) {
     }
 } else {
     cat("R package 'RUnit' cannot be loaded -- no unit tests run\n",
-	"for package", pkg,"\n")
+    "for package", pkg,"\n")
 }
