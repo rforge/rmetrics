@@ -26,20 +26,21 @@
 # and other sources
 #   see Rmetrics's copyright file
     
-    
+   
+# fCalendar::4E-TimeSeriesMissingValues.R
 ################################################################################
-# FUNCTION:      DESCRIPTION: 
-#  removeNA       Remove NAs from a matrix object
-#  substituteNA   Substitute NAs by zero, the column mean or median
-#  interpNA       Interpolate NAs using R's "approx" function
+# FUNCTION:                 DESCRIPTION: 
+#  removeNA                  Remove NAs from a matrix object
+#  substituteNA              Substitute NAs by zero, the column mean or median
+#  interpNA                  Interpolate NAs using R's "approx" function
 ################################################################################
 
 
 ################################################################################
-# FUNCTION:      DESCRIPTION: 
-#  removeNA       Remove NAs from a matrix object
-#  substituteNA   Substitute NAs by zero, the column mean or median
-#  interpNA       Interpolate NAs using R's "approx" function
+# FUNCTION:                 DESCRIPTION: 
+#  removeNA                  Remove NAs from a matrix object
+#  substituteNA              Substitute NAs by zero, the column mean or median
+#  interpNA                  Interpolate NAs using R's "approx" function
 
 
 removeNA = 
