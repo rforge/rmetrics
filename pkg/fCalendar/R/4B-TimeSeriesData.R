@@ -27,44 +27,46 @@
 #   see Rmetrics's copyright file
 
 
+# fCalendar::4B-TimeSeriesData.R
 ################################################################################
-# FUNCTION:              DESCRIPTION:
-#  fapply                 Applies a function to 'timeSeries' windows
-# METHOS:                MODIFICATION METHODS:
-#  .align.timeSeries      Aligns a timeSeries object
-#  aggregate.timeSeries   Aggregates a 'timeSeries' object
-#  diff.timeSeries        Differences a 'timeSeries' object
-#  lag.timeSeries         Lags a 'timeSeries' object
-#  merge.timeSeries       Merges two 'timeSeries' objects
-#  rbind.timeSeries       Binds rows of two 'timeSeries' objects
-#  cumsum.timeSeries      Returns cumulated sums of 'timeSeries' objects
-#  scale.timeSeries       Centers and/or scales a 'timeSeries' object
-#  var.timeSeries         Returns variance for a 'timeSeries' object
-#  cov.timeSeries         Returns  covariance for a 'timeSeries' object
-#  cor.timeSeries         Returns correlations for a 'timeSeries' object
-# METHODS:               MATHEMATICAL OPERATIONS ON DATA:
-#  Ops.timeSeries         Returns group 'Ops' for a 'timeSeries' object
-#  abs.timeSeries         Returns abolute values of a 'timeSeries' object
-#  sqrt.timeSeries        Returns sqrt values of a 'timeSeries' object
-#  exp.timeSeries         Returns exponentials of a 'timeSeries' object
-#  log.timeSeries         Returns logarithms of a 'timeSeries' object
-#  sign.timeSeries        Returns the signs of a 'timeSeries' object
-#  quantile.timeSeries    Produces sample quantiles of a 'timeSeries' object
-# METHODS:               DATABASE ATTACHEMENT:
-#  attach.timeSeries      Attaches a 'timeSeries' object
-# METHODS:               SUBSETTING METHODS ON DATA:
-#  [.timeSeries           Subsets of a 'timeSeries' object
-#  cut.timeSeries         Cuts a block from a 'timeSeries' object
-#  windows.timeSeries     Windows a piece from a 'timeSeries' object.
-#  head.timeSeries        Returns the head of a 'timeSeries' object
-#  tail.timeSeries        Returns the tail of a 'timeSeries' object
-#  outlier.timeSeries     Removes outliers from a 'timeSeries' object  
-# METHODS:               DIM OPERATIONS ON DATA: 
-#  dim.timeSeries         Returns dimension of a 'timeSeries' object
-#  dimnames.timeDSeries   Returns dimension names of a 'timeSeries' object
-#  colnames<-.timeSeries  Assigns column names to a 'timeSeries' object
-#  rownames<-.timeSeries  Assigns row names to a 'timeSeries' object
-#  is.array.timeSeries    Allows that NCOL and NROW work properly
+# FUNCTION:                 DESCRIPTION:
+#  fapply                    Applies a function to 'timeSeries' windows
+# METHOD:                   MODIFICATION METHODS:
+#  .align.timeSeries         Aligns a timeSeries object
+#  aggregate.timeSeries      Aggregates a 'timeSeries' object
+#  diff.timeSeries           Differences a 'timeSeries' object
+#  lag.timeSeries            Lags a 'timeSeries' object
+#  merge.timeSeries          Merges two 'timeSeries' objects
+#  rbind.timeSeries          Binds rows of two 'timeSeries' objects
+#  cumsum.timeSeries         Returns cumulated sums of 'timeSeries' objects
+#  scale.timeSeries          Centers and/or scales a 'timeSeries' object
+#  mean.timeSeries           Returns column means for a 'timeSeries' object
+#  var.timeSeries            Returns variance for a 'timeSeries' object
+#  cov.timeSeries            Returns  covariance for a 'timeSeries' object
+#  cor.timeSeries            Returns correlations for a 'timeSeries' object
+# METHOD:                   MATHEMATICAL OPERATIONS ON DATA:
+#  Ops.timeSeries            Returns group 'Ops' for a 'timeSeries' object
+#  abs.timeSeries            Returns abolute values of a 'timeSeries' object
+#  sqrt.timeSeries           Returns sqrt values of a 'timeSeries' object
+#  exp.timeSeries            Returns exponentials of a 'timeSeries' object
+#  log.timeSeries            Returns logarithms of a 'timeSeries' object
+#  sign.timeSeries           Returns the signs of a 'timeSeries' object
+#  quantile.timeSeries       Produces sample quantiles of a 'timeSeries' object
+# METHOD:                   DATABASE ATTACHEMENT:
+#  attach.timeSeries         Attaches a 'timeSeries' object
+# METHOD:                   SUBSETTING METHODS ON DATA:
+#  [.timeSeries              Subsets of a 'timeSeries' object
+#  cut.timeSeries            Cuts a block from a 'timeSeries' object
+#  windows.timeSeries        Windows a piece from a 'timeSeries' object.
+#  head.timeSeries           Returns the head of a 'timeSeries' object
+#  tail.timeSeries           Returns the tail of a 'timeSeries' object
+#  outlier.timeSeries        Removes outliers from a 'timeSeries' object  
+# METHOD:                   DIM OPERATIONS ON DATA: 
+#  dim.timeSeries            Returns dimension of a 'timeSeries' object
+#  dimnames.timeDSeries      Returns dimension names of a 'timeSeries' object
+#  colnames<-.timeSeries     Assigns column names to a 'timeSeries' object
+#  rownames<-.timeSeries     Assigns row names to a 'timeSeries' object
+#  is.array.timeSeries       Allows that NCOL and NROW work properly
 ################################################################################
 
 
@@ -116,7 +118,7 @@ function(x, from, to, FUN, ...)
         } else {
             stop("by must be eiter monthly or quarterly")
         } 
-        from@FinCenter = to@FinCenter = FinCenter
+        from@FinCenter = to@FinCenter = x@FinCenter
     }
     
     # Column Names:
@@ -161,9 +163,9 @@ function(x, from, to, FUN, ...)
         }
         # Return Value:
         ans = timeSeries(data = rowBind, charvec = as.character(to), 
-            units = units, format = format, zone = zone, FinCenter = 
-            FinCenter, recordIDs = recordIDs, title = title, 
-            documentation = documentation, ...) 
+            units = units, format = format, zone = x@zone, FinCenter = 
+            x@FinCenter, recordIDs = x@recordIDs, title = x@title, 
+            documentation = x@documentation, ...) 
         return(ans)
     } else {  
         listBind = list()
@@ -197,6 +199,7 @@ function(x, from, to, FUN, ...)
 #  rbind.timeSeries       Binds rows of two 'timeSeries' objects
 #  cumsum.timeSeries      Returns cumulated sums of 'timeSeries' objects
 #  scale.timeSeries       Centers and/or scales a 'timeSeries' object
+#  mean.timeSeries        Returns column means for a 'timeSeries' object
 #  var.timeSeries         Returns variance for a 'timeSeries' object
 #  cov.timeSeries         Returns  covariance for a 'timeSeries' object
 #  cor.timeSeries         Returns correlations for a 'timeSeries' object
@@ -651,6 +654,23 @@ function(x, center = TRUE, scale = TRUE)
     
     # Return Value:
     x
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+mean.timeSeries =
+function(x, ...) 
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Returns column means for a 'timeSeries' object
+    
+    # FUNCTION:
+    
+    # Return Value:
+    colMeans(x@Data)
 }
 
 
