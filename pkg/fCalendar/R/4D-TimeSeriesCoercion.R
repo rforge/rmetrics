@@ -142,6 +142,10 @@ function(x, ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
+    #   Converts a data.frame into a timeSeries object
+    
+    # Notes:
+    #   The first column must contain the dates.
     
     # Examples:
     #   data(bmwRet); head(as.timeSeries(data(bmwRet)))

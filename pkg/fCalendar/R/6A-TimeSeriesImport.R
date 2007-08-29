@@ -182,8 +182,10 @@ function (query, file = "tempfile",
         # For quarterly data multiplay quarters by 3 to get monthly base
         if (freq == "quarterly") z[,1] = 100*(z[,1]%/%100)+3*z[,1]%%100
         z = data.frame(cbind(z[, 1], z[, 2]))
+        
         ## znames = as.character(1:(length(names(z)) - 1))
         names(z) = c("DATE", colname)   
+        
         # DW - add hyphens:
         rowNames = as.character(z[, 1])
         if (freq == "daily") {
@@ -392,8 +394,8 @@ frequency = "daily", save = FALSE, sep = ";", try = TRUE)
         } 
                
         # Return Value:
-        z = data.frame(DATE = rowNames, z, row.names = NULL)
-        colnames(z) = c("DATE", query)
+        X = data.frame(rowNames, z)
+        colnames(X) = c("DATE", query)
         
         # Return Value:
         ans = new("fWEBDATA",     
@@ -401,7 +403,7 @@ frequency = "daily", save = FALSE, sep = ";", try = TRUE)
             param = c(
                 "Instrument Query" = query,
                 "Frequency" = frequency),
-            data = z, 
+            data = X, 
             title = "Web Data Import from FED St. Louis", 
             description = as.character(date()) )
         return(ans)
@@ -486,10 +488,8 @@ source = "http://www.forecasts.org/data/data/", save = FALSE, try = TRUE)
         x[, 1] = substr(gsub("-", ".", as.vector(x[, 1])), 1, 7)
         charvec = as.character(10000*as.numeric(x[, 1]) + 1)
         rowNames = as.character(timeLastDayInMonth(charvec, format = "%Y%m%d"))
-        x = data.frame(x[, 2], row.names = rowNames)
-
-        # Add column name:
-        colnames(x) = query
+        x = data.frame(cbind(rowNames, as.numeric(x[, -1])))
+        colnames(x) = c("DATE", query)
         
         # Save Download ?
         if (save) {
@@ -500,7 +500,7 @@ source = "http://www.forecasts.org/data/data/", save = FALSE, try = TRUE)
         } else {
             unlink(file) 
         }  
-              
+        
         # Return Value:
         ans = new("fWEBDATA",     
             call = match.call(),
@@ -539,9 +539,9 @@ getReturns = FALSE, ...)
     #   USDEUR Foreign Exchange Rate:
     #    economagicSeries("fedny/day-fxus2eu", frequency = "daily")
     #   USFEDFUNDS US FedFunds Rate:
-    #    economagicImport("fedstl/fedfunds+2", frequency = "monthly")
+    #    economagicSeries("fedstl/fedfunds+2", frequency = "monthly")
     #   USDGNP:
-    #    economagicImport("fedstl/gnp", frequency = "monthly")
+    #    economagicSeries("fedstl/gnp", frequency = "monthly")
     
     # FUNCTION:
     
@@ -550,13 +550,9 @@ getReturns = FALSE, ...)
     returnClass = match.arg(returnClass)
     
     # Download:
-    X = economagicImport(query = query, file = "tempfile", 
-        source = "http://www.economagic.com/em-cgi/data.exe/", 
-        frequency = frequency, save = FALSE, colname = "VALUE", 
-        try = TRUE)@data
-        
-    # Download:
-    X = as.timeSeries(X@Data, silent = TRUE)
+    Y = economagicImport(query = query, frequency = frequency)@data
+    X = as.timeSeries(Y)
+    colnames(X)<-colnames(Y)[-1]
     
     # Compute Return Series ?
     if (getReturns) X = returnSeries(X, ...)  
@@ -572,7 +568,6 @@ getReturns = FALSE, ...)
     
     # Return Value:
     X  
-
 }
 
     
@@ -704,10 +699,9 @@ function(query = "DPRIME", frequency = "daily", returnClass = c("timeSeries",
     returnClass = match.arg(returnClass)
     
     # Download:
-    X = fredImport(query = query, frequency = frequency)@data
-    charvec = as.character(X[, 1])
-    data = X[, query]
-    X = timeSeries(data, charvec, units = query)
+    Y = fredImport(query = query, frequency = frequency)@data
+    X = timeSeries(Y)
+    colnames(X)<-colnames(Y)[-1]
     
     # Compute Return Series ?
     if (getReturns) X = returnSeries(X, ...)  
@@ -765,8 +759,9 @@ getReturns = FALSE, ...)
     returnClass = match.arg(returnClass)
     
     # Download:
-    X = forecastsImport(query = query)@data
-    X = as.timeSeries(X, silent = TRUE)
+    Y = forecastsImport(query = query)@data
+    X = as.timeSeries(Y)
+    colnames(X)<-colnames(Y)[-1]
     
     # Compute Return Series ?
     if (getReturns) X = returnSeries(X, ...)  
