@@ -700,7 +700,7 @@ function(query = "DPRIME", frequency = "daily", returnClass = c("timeSeries",
     
     # Download:
     Y = fredImport(query = query, frequency = frequency)@data
-    X = timeSeries(Y)
+    X = as.timeSeries(Y)
     colnames(X)<-colnames(Y)[-1]
     
     # Compute Return Series ?
