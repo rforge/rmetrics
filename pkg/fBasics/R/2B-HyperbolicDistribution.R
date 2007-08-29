@@ -44,7 +44,6 @@
 #  hypMode               Computes the hyperbolic mode
 #  .[dpqr]hyp[1234]       Internal functions called by '*hyp'
 #  .hyp[1234]Mode         Internal functions called by 'hypMode'
-#  .BesselK1              Internal function called by 'dhyp1'
 # FUNCTION:             DESCRIPTION:
 #  dnig                  Returns density for inverse Gaussian DF
 #  pnig                  Returns probability for for inverse Gaussian DF
@@ -154,7 +153,9 @@ function (p, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1)
     if (abs(beta) >= alpha) stop("abs value of beta must be less than alpha")
     
     # Internal Function:
-    froot <<- function(x, alpha, beta, delta, mu, lambda, p) {
+    .froot <- 
+    function(x, alpha, beta, delta, mu, lambda, p) 
+    {
         pgh(q = x, alpha = alpha, beta = beta, delta = delta, 
             mu = mu, lambda = lambda) - p
     }
@@ -167,7 +168,7 @@ function (p, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1)
         counter = 0
         iteration = NA
         while (is.na(iteration)) {
-            iteration = .unirootNA(f = froot, interval = c(lower, 
+            iteration = .unirootNA(f = .froot, interval = c(lower, 
                 upper), alpha = alpha, beta = beta, delta = delta, 
                 mu = mu, lambda = lambda, p = pp)
             counter = counter + 1
@@ -222,7 +223,6 @@ function (n, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1)
 #  hypMode               Computes the hyperbolic mode
 #  .[dpqr]hyp[1234]       Internal functions called by '*hyp'
 #  .hyp[1234]Mode         Internal functions called by 'hypMode'
-#  .BesselK1              Internal function called by 'dhyp1'
 
 
 dhyp = 
@@ -560,105 +560,6 @@ function(n, theta)
 # ------------------------------------------------------------------------------
 
 
-.BesselK1 = 
-function(X) 
-{   # A function implemented by Diethelm Wuertz
-                                            
-    # Description:
-    #   Internal Function - Modified Bessel Function K1
-
-    # FUNCTION:
-    
-    # Compute BI and BK:
-    if (X == 0) return(BK1 = Inf)
-    
-    # Compute BI:
-    if (X <= 18) {                                    
-        bi0.fun <<- function(X) {
-            X2 = X * X
-            BI0 = 1 
-            R = 1          
-            for (K  in 1:50) {     
-                R = 0.25 * R * X2 / (K*K)              
-                BI0 = BI0 + R     
-                if (abs(R/BI0) < 1.0e-15) return(BI0)           
-            }
-            BI0
-        } 
-        BI0 = bi0.fun(X) 
-        bi1.fun <<- function(X) {
-            X2 = X * X
-            BI1 = 1        
-            R = 1          
-            for (K in 1:50) {      
-                R = 0.25 * R * X2 /(K*(K+1))          
-                BI1 = BI1 + R     
-                if (abs(R/BI1) < 1.0e-15) return(0.5 * X * BI1)          
-            }         
-            0.5 * X * BI1 
-        } 
-        BI1 = bi1.fun(X) 
-    } else {
-       A = c(0.125,7.03125e-2, 7.32421875e-2, 1.1215209960938e-1,          
-             2.2710800170898e-1, 5.7250142097473e-1, 1.7277275025845, 
-             6.0740420012735, 24.380529699556, 110.01714026925,     
-             551.33589612202, 3.0380905109224e03) 
-       B = c(-0.375, -1.171875e-1, -1.025390625e-1, -1.4419555664063e-1,       
-            -2.7757644653320e-1, -6.7659258842468e-1, -1.9935317337513, 
-            -6.8839142681099e0, -2.7248827311269e01, -121.59789187654,   
-            -6.0384407670507e02,  -3.3022722944809e03)  
-       K0 = 12            
-       if (X >= 35) K0 = 9                 
-       if (X >= 50) K0 = 7                 
-       CA = exp(X) / sqrt(2 * pi * X)           
-       BI0 = 1        
-       XR = 1/X       
-       for (K in 1:K0) BI0 = BI0 + A[K] * XR^K       
-       BI0 = CA * BI0       
-       BI1 = 1     
-       for (K in 1:K0) BI1 = BI1 + B[K] * XR^K            
-       BI1 = CA * BI1        
-    }  
-       
-    # Compute BK:
-    if (X <= 9) {                   
-        bk0.fun <<- function(X) {
-            X2 = X * X
-            EL = 0.5772156649015329
-            CT = -(log(X/2) + EL)              
-            BK0 = 0        
-            WW = BK0         
-            W0 = 0         
-            R = 1          
-            for (K in 1:50) {     
-                W0 = W0 + 1/K 
-                R = 0.25 * R / (K*K) * X2           
-                BK0 = BK0 + R * (W0 + CT)                
-                if (abs(BK0-WW)/abs(BK0) < 1.0e-15 & abs(BK0) > 0) 
-                    return(BK0 + CT)
-                WW = BK0 
-            }      
-            BK0 + CT 
-        }
-        BK0 = bk0.fun(X)
-    } else {  
-        A1 = c(
-            0.125, 0.2109375, 1.0986328125, 11.775970458984, 214.61706161499, 
-            5.9511522710323e03, 2.3347645606175e05, 1.2312234987631e07)           
-        BK0 = 1        
-        for (K in 1:8) BK0 = BK0 + A1[K] / (X*X)^K             
-        BK0 = (0.5/X) * (BK0/BI0)  
-    } 
-    BK1 = (1/X - BI1*BK0)/BI0    
-                  
-    # Return Value:
-    BK1
-}     
-
-
-# ------------------------------------------------------------------------------
-
-
 .dhyp1 = 
 function(x, alpha = 1, beta = 0, delta = 1, mu = 0)
 {   # A function implemented by Diethelm Wuertz
@@ -676,12 +577,7 @@ function(x, alpha = 1, beta = 0, delta = 1, mu = 0)
     # Density:
     efun = exp( -alpha*sqrt(delta^2 + (x-mu)^2) + beta*(x-mu) )
     sqr = sqrt(alpha^2-beta^2)
-    if (exists("besselK")) {
-        bK1 = besselK(delta*sqr, nu = 1) 
-    } else {
-        # For Splus Compatibility:
-        bK1 = .BesselK1(delta * sqr)
-    }
+    bK1 = besselK(delta*sqr, nu = 1) 
     prefac = sqr / ( 2 * alpha * delta * bK1)
     ans = prefac * efun
 
@@ -909,7 +805,9 @@ function(p, alpha = 1, beta = 0, delta = 1, mu = 0, ...)
     # FUNCTION:
     
     # Internal Functions:
-    froot <<- function(x, alpha, beta, delta, p) {
+    .froot <- 
+    function(x, alpha, beta, delta, p) 
+    {
         phyp(q = x, alpha = alpha, beta = beta, delta = delta, mu = 0) - p 
     }
     
@@ -921,7 +819,7 @@ function(p, alpha = 1, beta = 0, delta = 1, mu = 0, ...)
         counter = 0
         iteration = NA
         while (is.na(iteration)) {
-            iteration = .unirootNA(f = froot, interval = c(lower, upper), 
+            iteration = .unirootNA(f = .froot, interval = c(lower, upper), 
                 alpha = alpha, beta = beta, delta = delta, p = pp)
             counter = counter + 1
             lower = lower-2^counter
@@ -1043,81 +941,95 @@ function (n, alpha = 1, beta = 0, delta = 1, mu = 0)
 
     # FUNCTION:
     
-    # Internal Function:
-    rhyperb <<- function (n, theta) {
-        hyp.pi = theta[1]
-        zeta = theta[2]
-        delta = theta[3]
-        mu = theta[4]
-        alpha = as.numeric(.hyperb.change.pars(1, 2, theta))[1] * delta
-        beta = as.numeric(.hyperb.change.pars(1, 2, theta))[2] * delta
-        phi = as.numeric(.hyperb.change.pars(1, 3, theta))[1] * delta
-        gamma = as.numeric(.hyperb.change.pars(1, 3, theta))[2] * delta
-        theta.start = -sqrt(phi * gamma)
-        t = -sqrt(gamma/phi)
-        w = sqrt(phi/gamma)
-        delta1 = exp(theta.start)/phi
-        delta2 = (w - t) * exp(theta.start)
-        delta3 = exp(-gamma * w)/gamma
-        k = 1/(delta1 + delta2 + delta3)
-        r = k * delta1
-        v = 1 - k * delta3
-        output = numeric(n)
-        need.value = TRUE
-        for (i in 1:n) {
-            while (need.value == TRUE) {
-                U = runif(1)
-                E = rexp(1)
-                if (U <= r) {
-                    x = 1/phi * log(phi * U/k)
-                    if (E >= alpha * (sqrt(1 + x^2) + x)) {
-                      need.value = FALSE } }
-                if ((U > r) & (U <= v)) {
-                    x = t - 1/phi + U * exp(-theta.start)/k
-                    if (E >= alpha * sqrt(1 + x^2) - beta * x + theta.start) {
-                        need.value = FALSE
-                    } 
-                }
-                if (U > v) {
-                    x = 1/gamma * log(k/gamma) - 1/gamma * log(1 - U)
-                    if (E >= alpha * (sqrt(1 + x^2) - x)) {
-                        need.value = FALSE 
-                    } 
-                } 
-            }
-            output[i] = delta * x + mu
-            need.value = TRUE 
-        }
-        output 
-    }
-        
-    # Internal Function:
-    .hyperb.change.pars <<- function (from, to, theta) {
-        delta <- theta[3]
-        mu <- theta[4]
-        hyperb.pi <- theta[1]
-        zeta <- theta[2] 
-        if (from == 1 && to == 2) {
-            alpha <- zeta * sqrt(1 + hyperb.pi^2)/delta
-            beta <- zeta * hyperb.pi/delta
-            output = c(alpha = alpha, beta = beta, delta = delta, mu = mu) 
-        }
-        if (from == 1 && to == 3) {
-            phi <- zeta/delta * (sqrt(1 + hyperb.pi^2) + hyperb.pi)
-            gamma <- zeta/delta * (sqrt(1 + hyperb.pi^2) - hyperb.pi)
-            output = c(phi = phi, gamma = gamma, delta = delta, mu = mu)
-        }
-        output 
-    }
-    
     # Result - Use Standard Parameterization:
     Zeta = delta * sqrt(alpha^2 - beta^2)
     hyp.Pi = beta / sqrt(alpha^2 - beta^2)
     theta = c(hyp.Pi, Zeta, delta, mu)
 
     # Return Value:
-    ans = rhyperb(n = n, theta = theta)
+    ans = .rhyperb(n = n, theta = theta)
     ans
+}
+
+
+# ------------------------------------------------------------------------------
+ 
+
+.rhyperb <- 
+function (n, theta) 
+{
+    # Internal Function:
+    
+    hyp.pi = theta[1]
+    zeta = theta[2]
+    delta = theta[3]
+    mu = theta[4]
+    alpha = as.numeric(.hyperb.change.pars(1, 2, theta))[1] * delta
+    beta = as.numeric(.hyperb.change.pars(1, 2, theta))[2] * delta
+    phi = as.numeric(.hyperb.change.pars(1, 3, theta))[1] * delta
+    gamma = as.numeric(.hyperb.change.pars(1, 3, theta))[2] * delta
+    theta.start = -sqrt(phi * gamma)
+    t = -sqrt(gamma/phi)
+    w = sqrt(phi/gamma)
+    delta1 = exp(theta.start)/phi
+    delta2 = (w - t) * exp(theta.start)
+    delta3 = exp(-gamma * w)/gamma
+    k = 1/(delta1 + delta2 + delta3)
+    r = k * delta1
+    v = 1 - k * delta3
+    output = numeric(n)
+    need.value = TRUE
+    for (i in 1:n) {
+        while (need.value == TRUE) {
+            U = runif(1)
+            E = rexp(1)
+            if (U <= r) {
+                x = 1/phi * log(phi * U/k)
+                if (E >= alpha * (sqrt(1 + x^2) + x)) {
+                  need.value = FALSE } }
+            if ((U > r) & (U <= v)) {
+                x = t - 1/phi + U * exp(-theta.start)/k
+                if (E >= alpha * sqrt(1 + x^2) - beta * x + theta.start) {
+                    need.value = FALSE
+                } 
+            }
+            if (U > v) {
+                x = 1/gamma * log(k/gamma) - 1/gamma * log(1 - U)
+                if (E >= alpha * (sqrt(1 + x^2) - x)) {
+                    need.value = FALSE 
+                } 
+            } 
+        }
+        output[i] = delta * x + mu
+        need.value = TRUE 
+    }
+    output 
+}
+    
+    
+# ------------------------------------------------------------------------------  
+ 
+
+.hyperb.change.pars <-
+function (from, to, theta) 
+{
+    # Internal Function:
+    
+    delta <- theta[3]
+    mu <- theta[4]
+    hyperb.pi <- theta[1]
+    zeta <- theta[2] 
+    if (from == 1 && to == 2) {
+        alpha <- zeta * sqrt(1 + hyperb.pi^2)/delta
+        beta <- zeta * hyperb.pi/delta
+        output = c(alpha = alpha, beta = beta, delta = delta, mu = mu) 
+    }
+    if (from == 1 && to == 3) {
+        phi <- zeta/delta * (sqrt(1 + hyperb.pi^2) + hyperb.pi)
+        gamma <- zeta/delta * (sqrt(1 + hyperb.pi^2) - hyperb.pi)
+        output = c(phi = phi, gamma = gamma, delta = delta, mu = mu)
+    }
+    output 
 }
 
 
@@ -1345,6 +1257,9 @@ function(p, alpha = 1, beta = 0, delta = 1, mu = 0)
 # ------------------------------------------------------------------------------
 
 
+.pz1 = NA
+
+
 rnig = 
 function(n, alpha = 1, beta = 0, delta = 1, mu = 0)
 {   # A function implemented by Diethelm Wuertz
@@ -1383,10 +1298,10 @@ function(n, alpha = 1, beta = 0, delta = 1, mu = 0)
         z2 <- function(v, delta, gamma) {
             (delta/gamma)^2 / z1(v = v, delta = delta, gamma = gamma)
         }
-        pz1 <<- function(v, delta, gamma) {
+        .pz1 <<- function(v, delta, gamma) {
             delta / (delta + gamma * z1(v = v, delta = delta, gamma = gamma) ) 
         }
-        s = (1-sign(U-pz1(v = V, delta = delta, gamma = gamma)))/2
+        s = (1-sign(U-.pz1(v = V, delta = delta, gamma = gamma)))/2
         Z = z1(v = V, delta = delta, gamma = gamma)*s + z2(v = V, delta = 
             delta, gamma = gamma)*(1-s)
         X = mu + beta*Z + sqrt(Z)*rnorm(n) 

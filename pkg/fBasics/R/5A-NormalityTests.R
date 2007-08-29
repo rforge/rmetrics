@@ -131,17 +131,9 @@ function(x, title = NULL, description = NULL)
     call = match.call()
     
     # Test:
-    if (class(version) != "Sversion") {
-        # R:
-        test = ks.test(x, "pnorm", alternative = "two.sided")
-        less = ks.test(x, "pnorm", alternative = "less")
-        greater = ks.test(x, "pnorm", alternative = "greater")
-    } else {
-        # S-Plus:
-        test = ks.gof(x = x, distribution = "normal", alternative = "two.sided")
-        less = list(); less$p.value = NA
-        greater = list(); greater$p.value = NA
-    }
+    test = ks.test(x, "pnorm", alternative = "two.sided")
+    less = ks.test(x, "pnorm", alternative = "less")
+    greater = ks.test(x, "pnorm", alternative = "greater")
     PVAL = c(test$p.value, less$p.value, greater$p.value)
     names(PVAL) = c(
         "Alternative Two-Sided", 
@@ -949,6 +941,7 @@ function(x, title = NULL, description = NULL)
     mu = -1.2725 + 1.0521 * (v - u)
     sig = 1.0308 - 0.26758 * (v + 2/u)
     z = (log(1 - W) - mu)/sig
+    
     # For Splus compatibility:
     # pval = pnorm(z, lower.tail = FALSE)
     PVAL = 1 - pnorm(z)

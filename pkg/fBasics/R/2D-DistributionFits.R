@@ -187,6 +187,9 @@ description = NULL, ...)
 # ------------------------------------------------------------------------------
 
 
+.x.save = NA
+
+
 tFit = 
 function(x, df = 4, doplot = TRUE, span = "auto", trace = FALSE, 
 title = NULL, description = NULL, ...)
@@ -214,14 +217,14 @@ title = NULL, description = NULL, ...)
     # Log-likelihood Function:
     etmle = function(x, y = x, trace) { 
         # Prevent from negative df's
-        if (x[1] <= 0) x[1] = x.save
+        if (x[1] <= 0) x[1] = .x.save
         f = -sum(log(dt(y, x[1])))
         # Print Iteration Path:
         if (trace) {
             cat("\n Objective Function Value:  ", -f)
             cat("\n Students df Estimate:      ", x[1], "\n") 
         }
-        x.save <<- x[1]
+        .x.save <<- x[1]
         f 
     }
         
@@ -730,10 +733,9 @@ trace = FALSE, title = NULL, description = NULL)
     
     # Settings:
     CALL = match.call()
-    .trace <<- trace
     
     # Log-likelihood Function:
-    establemle = function(x, y = x) { 
+    establemle = function(x, y = x, trace = FALSE) { 
         alpha = 2/(1+exp(-x[1]))
         beta = tanh(x[2])
         gamma = x[3]
@@ -741,7 +743,7 @@ trace = FALSE, title = NULL, description = NULL)
         f = -sum(log(dstable(y, alpha = alpha, beta = beta,
             gamma = gamma, delta = delta)))
         # Print Iteration Path:
-        if (.trace) {
+        if (trace) {
             cat("\n Objective Function Value:  ", -f)
             cat("\n Stable Estimate:           ", alpha, beta, gamma, delta)
             cat("\n") 
@@ -751,7 +753,7 @@ trace = FALSE, title = NULL, description = NULL)
         
     # Minimization:
     r = nlm(f = establemle, p = c(log(alpha/(2-alpha)), atanh(beta),
-        gamma, delta), y = x)
+        gamma, delta), y = x, trace = trace)
     alpha = 2/(1+exp(-r$estimate[1]))
     beta = tanh(r$estimate[2])
     gamma = r$estimate[3]

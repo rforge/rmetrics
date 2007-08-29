@@ -60,6 +60,8 @@
 
 .g1 = .g2 = .G1 = .G2 = NA
 
+.fct1 = .fct2 = .FCT1 = .FCT2 = NA
+
 
 dsymstb =
 function(x, alpha = 1.8)

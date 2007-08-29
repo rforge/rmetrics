@@ -936,7 +936,7 @@ function(x, mfrow = c(3, 3))
                 logpdfPlot(x)
             } else {
                 par(mfrow = c(1, 1))
-                logpdf(x[, selectedAsset]) 
+                logpdfPlot(x[, selectedAsset]) 
             }
         } 
         

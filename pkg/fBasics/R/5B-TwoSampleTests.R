@@ -790,6 +790,11 @@ function(x, y, title = NULL, description = NULL)
 # ------------------------------------------------------------------------------
 
 
+# Work to do ...
+
+.N = .EVEN = .ab = .cci = .ccia = .srange = NA
+
+
 .ansari2Test =
 function(x, y, alternative = c("two.sided", "less", "greater"),
 exact = TRUE, conf.int = FALSE, conf.level = 0.95, ...)
@@ -822,11 +827,12 @@ exact = TRUE, conf.int = FALSE, conf.level = 0.95, ...)
     if (n < 1) stop("not enough y observations")
     
     # DW - Made Global:
-    N <<- m + n
-    EVEN <<- ((N %% 2) == 0)
-
+    .N <<- m + n
+    N = .N
+    .EVEN <<- ((.N %% 2) == 0)
+    EVEN = .EVEN
     r = rank(c(x, y))
-    STATISTIC = sum(pmin(r, N - r + 1)[seq(along = x)])
+    STATISTIC = sum(pmin(r, .N - r + 1)[seq(along = x)])
     TIES = (length(r) != length(unique(r)))
 
     # DW - Always select:
@@ -847,7 +853,7 @@ exact = TRUE, conf.int = FALSE, conf.level = 0.95, ...)
             x = sort(x)
             y = sort(y)
             
-            ab <<- function(sig) {
+            .ab <<- function(sig) {
                 rab = rank(c(x/sig, y))
                 sum(pmin(rab, N - rab + 1)[seq(along = x)])
             }
@@ -855,7 +861,7 @@ exact = TRUE, conf.int = FALSE, conf.level = 0.95, ...)
             aratio = ratio[ratio >= 0]
             sigma = sort(aratio)
 
-            cci <<- function(alpha) {
+            .cci <<- function(alpha) {
                 u = absigma - .qansariw(alpha/2,  m, n)
                 l = absigma - .qansariw(1 - alpha/2, m, n)
                 # Check if the statistic exceeds both quantiles first.
@@ -893,11 +899,11 @@ exact = TRUE, conf.int = FALSE, conf.level = 0.95, ...)
             } else {
                 # Compute statistics directly: 
                 absigma = sapply(sigma + c(diff(sigma)/2,
-                    sigma[length(sigma)]*1.01), ab)
+                    sigma[length(sigma)]*1.01), .ab)
                 switch(alternative, 
-                    two.sided = { cci(alpha) }, 
-                    greater = { c(cci(alpha*2)[1], Inf) }, 
-                    less= { c(0, cci(alpha*2)[2]) })
+                    two.sided = { .cci(alpha) }, 
+                    greater = { c(.cci(alpha*2)[1], Inf) }, 
+                    less= { c(0, .cci(alpha*2)[2]) })
             }
             attr(cint, "conf.level") = conf.level
             u = absigma - .qansariw(0.5, m, n)
@@ -916,18 +922,20 @@ exact = TRUE, conf.int = FALSE, conf.level = 0.95, ...)
             ESTIMATE = mean(c(sle, sgr))
         }
     } else {
-        EVEN = ((N %% 2) == 0)
-        normalize <<- function(s, r, TIES, m = length(x), n=length(y)) {
-            z = if (EVEN) s-m*(N+2)/4 else s-m*(N+1)^2/(4*N)
+        .EVEN = ((.N %% 2) == 0)
+        normalize <<- function(s, r, TIES, m = length(x), n = length(y)) {
+            z = if (.EVEN) s-m*(.N+2)/4 else s-m*(N+1)^2/(4*.N)
             if (!TIES) {
                 SIGMA = 
-                if (EVEN) sqrt((m*n *(N+2)*(N-2))/(48*(N-1)))
-                else sqrt((m*n*(N+1)*(3+N^2))/(48*N^2))
+                if (.EVEN) sqrt((m*n *(.N+2)*(.N-2))/(48*(.N-1)))
+                else sqrt((m*n*(.N+1)*(3+.N^2))/(48*.N^2))
             } else {
-                r = rle(sort(pmin(r, N - r + 1)))
+                r = rle(sort(pmin(r, .N - r + 1)))
                 SIGMA = 
-                if (EVEN) sqrt(m*n*(16*sum(r$l*r$v^2)-N*(N+2)^2)/(16*N*(N-1)))
-                else sqrt(m*n*(16*N*sum(r$l*r$v^2)-(N+1)^4)/(16*N^2*(N-1)))
+                if (.EVEN) 
+                    sqrt(m*n*(16*sum(r$l*r$v^2)-.N*(.N+2)^2)/(16*.N*(.N-1)))
+                else 
+                    sqrt(m*n*(16*.N*sum(r$l*r$v^2)-(.N+1)^4)/(16*.N^2*(.N-1)))
             }
             z / SIGMA
         }
@@ -939,9 +947,9 @@ exact = TRUE, conf.int = FALSE, conf.level = 0.95, ...)
 
         if (conf.int && !exact) {
             alpha = 1 - conf.level
-            ab <<- function(sig, zq) {
+            .ab <<- function(sig, zq) {
                 r = rank(c(x / sig, y))
-                s = sum(pmin(r, N -r + 1)[seq(along = x)])
+                s = sum(pmin(r, .N -r + 1)[seq(along = x)])
                 TIES = (length(r) != length(unique(r)))
                 normalize(s, r, TIES, length(x), length(y)) - zq
             }
@@ -961,38 +969,38 @@ exact = TRUE, conf.int = FALSE, conf.level = 0.95, ...)
                     "set or estimator"))
                 conf.int = FALSE
             } else {
-                ccia <<- function(alpha) {
+                .ccia <<- function(alpha) {
                     # Check if the statistic exceeds both quantiles first.
-                    statu = ab(srange[1], zq = qnorm(alpha/2))
-                    statl = ab(srange[2], zq = qnorm(alpha/2, lower.tail = FALSE))
+                    statu = .ab(.srange[1], zq = qnorm(alpha/2))
+                    statl = .ab(.srange[2], zq = qnorm(alpha/2, lower.tail = FALSE))
                     if (statu > 0 || statl < 0) {
                         warning(paste("Samples differ in location:",
                             "Cannot compute confidence set,",
                             "returning NA"))
                         return(c(NA, NA))
                     }
-                    u = uniroot(ab, srange, tol = 1.0e-4,
+                    u = uniroot(.ab, .srange, tol = 1.0e-4,
                         zq = qnorm(alpha/2))$root
-                    l = uniroot(ab, srange, tol = 1.0e-4,
+                    l = uniroot(.ab, .srange, tol = 1.0e-4,
                         zq = qnorm(alpha/2, lower.tail = FALSE))$root
                     # The process of the statistics does not need to be
                     # monotone: sort is ok here.
                     sort(c(u, l))
                 }
-                srange <<- range(c(srangepos, srangeneg), na.rm = FALSE)
+                .srange <<- range(c(srangepos, srangeneg), na.rm = FALSE)
                 cint = switch(alternative, 
-                    two.sided = { ccia(alpha) }, 
-                    greater = { c(ccia(alpha*2)[1], Inf) }, 
-                    less = { c(0, ccia(alpha*2)[2]) })
+                    two.sided = { .ccia(alpha) }, 
+                    greater = { c(.ccia(alpha*2)[1], Inf) }, 
+                    less = { c(0, .ccia(alpha*2)[2]) })
                 attr(cint, "conf.level") = conf.level
                 ## Check if the statistic exceeds both quantiles first.
-                statu = ab(srange[1], zq = 0)
-                statl = ab(srange[2], zq = 0)
+                statu = .ab(.srange[1], zq = 0)
+                statl = .ab(.srange[2], zq = 0)
                 if (statu > 0 || statl < 0) {
                     ESTIMATE = NA
                     warning("Cannot compute estimate, returning NA")
                 } else
-                    ESTIMATE = uniroot(ab, srange, tol = 1.0e-4, zq = 0)$root
+                    ESTIMATE = uniroot(.ab, .srange, tol = 1.0e-4, zq = 0)$root
             }
         }
         if (exact && TIES) {

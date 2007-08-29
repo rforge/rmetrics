@@ -367,7 +367,7 @@ skipZeros = TRUE, ...)
             xlim = c(qnorm(0.001, mean, sd), qnorm(0.999, mean, sd)) 
         Density = density(Values, ...)
         plot(x = Density, xlim = xlim, col = col[i], type = "l", 
-            lwd = 2, main = Units[i], ...)  
+            lwd = 2, main = units[i], ...)  
         ans[[i]] = Density  
         
         # Grid:
@@ -554,7 +554,7 @@ function (x, labels = TRUE, col = "steelblue", rug = TRUE, ...)
     if(rug) rug(x, ticksize = 0.01, side = 4, quiet = TRUE)
     
     # Result:
-    .DEBUG <<-fit
+    # .DEBUG <<-fit
     ans = list(x = z, y = x)
     attr(ans, "control")<-par
     
