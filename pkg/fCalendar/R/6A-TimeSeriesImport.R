@@ -393,6 +393,7 @@ frequency = "daily", save = FALSE, sep = ";", try = TRUE)
                
         # Return Value:
         z = data.frame(DATE = rowNames, z, row.names = NULL)
+        colnames(z) = c("DATE", query)
         
         # Return Value:
         ans = new("fWEBDATA",     
@@ -612,6 +613,7 @@ aggregation = c("d", "w", "m"), returnClass = c("timeSeries", "ts",
     
     # Examples:
     #   yahooSeries(symbols = "IBM", aggregation = "w")
+    #   yahooSeries(symbols = c("^DJI", "IBM"))
     #   yahooSeries(symbols = c("^DJI", "IBM"), aggregation = "w")
     #   yahooSeries(aggregation = "m", nDaysBack = 10*366)
     #   yahooSeries(returnSeries = TRUE)
@@ -648,14 +650,16 @@ aggregation = c("d", "w", "m"), returnClass = c("timeSeries", "ts",
         query = paste("s=", symbols[i], "&a=", monthFrom, "&b=", dayFrom, 
             "&c=", yearFrom, "&d=", monthTo, "&e=", dayTo, "&f=", yearTo, 
             "&g=", aggregation[1], "&x=.csv", sep = "")  
-        Y = as.timeSeries(yahooImport(query)@data[, quote])
+        imported = yahooImport(query)@data
+        charvec = as.character(imported[, 1])
+        data = imported[, quote]
+        Y = timeSeries(data, charvec)
         UNITS = paste(symbols[i], ".", quote, sep = "")
         if (aggregation == "d") Y = alignDailySeries(Y, ...) 
         Y@units = UNITS
         colnames(Y@Data) = UNITS
         if (i == 1) X = Y else X = merge(X, Y)
     }
-   
     
     # Compute Return Series ?
     if (getReturns) X = returnSeries(X, ...)  
@@ -701,8 +705,9 @@ function(query = "DPRIME", frequency = "daily", returnClass = c("timeSeries",
     
     # Download:
     X = fredImport(query = query, frequency = frequency)@data
-    X = as.timeSeries(X)
-    colnames(X) <- query
+    charvec = as.character(X[, 1])
+    data = X[, query]
+    X = timeSeries(data, charvec, units = query)
     
     # Compute Return Series ?
     if (getReturns) X = returnSeries(X, ...)  
