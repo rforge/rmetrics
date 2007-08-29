@@ -227,10 +227,10 @@ function()
     checkIdentical(class(VEC), "numeric")
     
     # Numeric:
-    VEC = as.numeric(uTS) 
-    head(VEC)
-    class(VEC)
-    checkIdentical(class(VEC), "numeric")
+    # VEC = as.numeric(uTS)                         # Not implemented !
+    # head(VEC)
+    # class(VEC)
+    # checkIdentical(class(VEC), "numeric")
     
     # Matrix:
     MAT = as.matrix(uTS)  
