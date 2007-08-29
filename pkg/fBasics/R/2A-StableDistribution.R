@@ -56,13 +56,6 @@
 #  .symstb               Returns symmetric alpha-stable pdf/cdf  
 
 
-.froot = NA
-
-.g1 = .g2 = .G1 = .G2 = NA
-
-.fct1 = .fct2 = .FCT1 = .FCT2 = NA
-
-
 dsymstb =
 function(x, alpha = 1.8)
 {   # A function implemented by Diethelm Wuertz
@@ -130,7 +123,7 @@ function(p, alpha)
     
     # Continue:
     if (alpha != 1 && alpha != 2) {
-        .froot <<- function(x, alpha, p) {
+        .froot <- function(x, alpha, p) {
             psymstb(q = x, alpha = alpha) - p 
         }
         # Calculate:    
@@ -459,38 +452,8 @@ function(x, alpha, beta, gamma = 1, delta = 0, pm = c(0, 1, 2))
     x = (x - delta) / gamma
     
     # General Case 0 < alpha < 2  and  -1 <= beta <= 1 :
-    if (abs(alpha-1) < 1 & alpha != 1 & abs(beta) <= 1) {
-        # Function to Integrate:
-        .g1 <<- 
-        function(x, xarg, alpha, beta) {
-            varzeta = -beta * tan(pi*alpha/2)
-                theta0 = (1/alpha) * atan( beta * tan(pi*alpha/2))
-                v = (cos(alpha*theta0))^(1/(alpha-1)) *
-                    (cos(x)/sin(alpha*(theta0+x)))^(alpha/(alpha-1)) *
-                    (cos(alpha*theta0+(alpha-1)*x)/cos(x))
-                g = (xarg-varzeta)^(alpha/(alpha-1)) * v
-                gval = g * exp(-g) 
-            gval
-        }
-        # Integration:  
-        .fct1 <<-
-        function(xarg, alpha, beta, tol, subdivisions) { 
-            varzeta = -beta * tan(pi*alpha/2)
-                theta0 = (1/alpha) * atan( beta * tan(pi*alpha/2))
-            theta2 = optimize(f = .g1, lower = -theta0, upper = pi/2, 
-                maximum = TRUE, tol = tol, xarg = xarg, 
-                alpha = alpha, beta = beta)$maximum
-            c2 = ( alpha / (pi*abs(alpha-1)*(xarg-varzeta)) ) 
-            result1 = .integrateStable(f = .g1, lower = -theta0, 
-                upper = theta2, subdivisions = subdivisions, 
-                rel.tol = tol, abs.tol = tol, xarg = xarg, 
-                alpha = alpha, beta = beta)[[1]]
-            result2 = .integrateStable(f = .g1, lower = theta2, 
-                upper = pi/2, subdivisions = subdivisions, 
-                rel.tol = tol, abs.tol = tol, xarg = xarg, 
-                alpha = alpha, beta = beta)[[1]]
-            c2*(result1+result2) 
-        }
+    if (abs(alpha-1) < 1 & alpha != 1 & abs(beta) <= 1) 
+    {
         # Loop over all x values:
         result = NULL
         varzeta = -beta * tan(pi*alpha/2) 
@@ -514,36 +477,8 @@ function(x, alpha, beta, gamma = 1, delta = 0, pm = c(0, 1, 2))
     }  
         
     # General Case 0 < alpha < 2  and  -1 <= beta <= 1 :
-    if (alpha == 1 & abs(beta) <= 1 & beta != 0) {
-        # Function to Integrate:
-        .g2 <<- 
-        function(x, xarg, alpha, beta) {
-            # x is a non-sorted vector!
-                v = (2/pi) * ((pi/2+beta*x) / cos(x)) *
-                exp((1/beta)*(pi/2+beta*x)*tan(x))
-                g = exp( -pi*xarg/(2*beta) ) * v
-            gval = g * exp(-g) 
-            # replace NA at pi/2
-            for (i in 1:length(gval)) if(is.na(gval[i])) gval[i] = 0
-            gval 
-        }
-        # Integration:  
-        .fct2 <<-
-        function(xarg, alpha, beta, tol, subdivisions) { 
-            theta2 = optimize(f = .g2, lower = -pi/2, upper = pi/2, 
-                maximum = TRUE, tol = tol, xarg = xarg, 
-                alpha = alpha, beta = beta)$maximum
-            c2 = 1 / (2*abs(beta)) 
-            result1 = .integrateStable(f = .g2, lower = -pi/2, 
-                upper = theta2, subdivisions = subdivisions, 
-                rel.tol = tol, abs.tol = tol, xarg = xarg, 
-                alpha = alpha, beta = beta)[[1]]
-            result2 = .integrateStable(f = .g2, lower = theta2, 
-                upper = pi/2, subdivisions = subdivisions, 
-                rel.tol = tol, abs.tol = tol, xarg = xarg, 
-                alpha = alpha, beta = beta)[[1]]
-            c2*(result1+result2) 
-        }
+    if (alpha == 1 & abs(beta) <= 1 & beta != 0) 
+    {    
         # Loop over all x values:
         result = NULL
         for (z in x) {
@@ -567,6 +502,90 @@ function(x, alpha, beta, gamma = 1, delta = 0, pm = c(0, 1, 2))
     
     # Return Value:
     ans
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.g1 <- 
+function(x, xarg, alpha, beta) 
+{
+    # Function to Integrate:
+    varzeta = -beta * tan(pi*alpha/2)
+        theta0 = (1/alpha) * atan( beta * tan(pi*alpha/2))
+        v = (cos(alpha*theta0))^(1/(alpha-1)) *
+            (cos(x)/sin(alpha*(theta0+x)))^(alpha/(alpha-1)) *
+            (cos(alpha*theta0+(alpha-1)*x)/cos(x))
+        g = (xarg-varzeta)^(alpha/(alpha-1)) * v
+        gval = g * exp(-g) 
+    gval
+}
+        
+        
+# ------------------------------------------------------------------------------
+
+  
+.fct1 <-
+function(xarg, alpha, beta, tol, subdivisions) 
+{ 
+    # Integration:
+    varzeta = -beta * tan(pi*alpha/2)
+        theta0 = (1/alpha) * atan( beta * tan(pi*alpha/2))
+    theta2 = optimize(f = .g1, lower = -theta0, upper = pi/2, 
+        maximum = TRUE, tol = tol, xarg = xarg, 
+        alpha = alpha, beta = beta)$maximum
+    c2 = ( alpha / (pi*abs(alpha-1)*(xarg-varzeta)) ) 
+    result1 = .integrateStable(f = .g1, lower = -theta0, 
+        upper = theta2, subdivisions = subdivisions, 
+        rel.tol = tol, abs.tol = tol, xarg = xarg, 
+        alpha = alpha, beta = beta)[[1]]
+    result2 = .integrateStable(f = .g1, lower = theta2, 
+        upper = pi/2, subdivisions = subdivisions, 
+        rel.tol = tol, abs.tol = tol, xarg = xarg, 
+        alpha = alpha, beta = beta)[[1]]
+    c2*(result1+result2) 
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.g2 <- 
+function(x, xarg, alpha, beta) 
+{
+    # Function to Integrate:
+    # x is a non-sorted vector!
+        v = (2/pi) * ((pi/2+beta*x) / cos(x)) *
+        exp((1/beta)*(pi/2+beta*x)*tan(x))
+        g = exp( -pi*xarg/(2*beta) ) * v
+    gval = g * exp(-g) 
+    # replace NA at pi/2
+    for (i in 1:length(gval)) if(is.na(gval[i])) gval[i] = 0
+    gval 
+}
+
+ 
+# ------------------------------------------------------------------------------
+
+ 
+.fct2 <-
+function(xarg, alpha, beta, tol, subdivisions) 
+{ 
+    # Integration:
+    theta2 = optimize(f = .g2, lower = -pi/2, upper = pi/2, 
+        maximum = TRUE, tol = tol, xarg = xarg, 
+        alpha = alpha, beta = beta)$maximum
+    c2 = 1 / (2*abs(beta)) 
+    result1 = .integrateStable(f = .g2, lower = -pi/2, 
+        upper = theta2, subdivisions = subdivisions, 
+        rel.tol = tol, abs.tol = tol, xarg = xarg, 
+        alpha = alpha, beta = beta)[[1]]
+    result2 = .integrateStable(f = .g2, lower = theta2, 
+        upper = pi/2, subdivisions = subdivisions, 
+        rel.tol = tol, abs.tol = tol, xarg = xarg, 
+        alpha = alpha, beta = beta)[[1]]
+    c2*(result1+result2) 
 }
 
 
@@ -619,40 +638,8 @@ function(q, alpha, beta, gamma = 1, delta = 0, pm = c(0, 1, 2))
     x = (x - delta) / gamma
 
     # General Case 0 < alpha < 2  and  -1 <= beta <= 1 :
-    if (abs(alpha-1) < 1 & alpha !=1 & abs(beta) <= 1) {
-        # Function to Integrate:
-        .G1 <<- 
-        function(x, xarg, alpha, beta) {
-            varzeta = -beta * tan(pi*alpha/2)
-                theta0 = (1/alpha) * atan( beta * tan(pi*alpha/2))
-                v = (cos(alpha*theta0))^(1/(alpha-1)) *
-                    (cos(x)/sin(alpha*(theta0+x)))^(alpha/(alpha-1)) *
-                    cos(alpha*theta0+(alpha-1)*x)/cos(x)
-                g = (xarg-varzeta)^(alpha/(alpha-1)) * v
-                gval = exp(-g)
-            gval
-        }
-        # Integration:  
-        .FCT1 <<-
-        function(xarg, alpha, beta, tol, subdivisions) { 
-            varzeta = -beta * tan(pi*alpha/2)
-                theta0 = (1/alpha) * atan( beta * tan(pi*alpha/2))
-            theta2 = optimize(f = .G1, lower = -theta0, upper = pi/2, 
-                maximum = TRUE, tol = tol, xarg = xarg, 
-                alpha = alpha, beta = beta)$maximum
-            if (alpha < 1) c1 = (1/pi)*(pi/2-theta0)
-            if (alpha > 1) c1 = 1
-            c3 = sign(1-alpha)/pi
-            result1 = .integrateStable(f = .G1, lower = -theta0, 
-                upper = theta2, subdivisions = subdivisions, 
-                rel.tol = tol, abs.tol = tol, xarg = xarg, 
-                alpha = alpha, beta = beta)[[1]]
-            result2 = .integrateStable(f = .G1, lower = theta2, 
-                upper = pi/2, subdivisions = subdivisions, 
-                rel.tol = tol, abs.tol = tol, xarg = xarg, 
-                alpha = alpha, beta = beta)[[1]]
-            c1 + c3*(result1+result2) 
-        }
+    if (abs(alpha-1) < 1 & alpha !=1 & abs(beta) <= 1) 
+    { 
         # Loop over all x values:
         result = rep(0, times = length(x))  
         for ( i in 1:length(result) ) { 
@@ -672,36 +659,8 @@ function(q, alpha, beta, gamma = 1, delta = 0, pm = c(0, 1, 2))
     }
                     
     # General alpha == 1 and  0 < |beta| <= 1 :
-    if (alpha == 1 & abs(beta) <= 1 & beta != 0) {
-        # Function to Integrate:
-        .G2 <<- 
-        function(x, xarg, alpha, beta) {
-            # x is a non-sorted vector!
-                v = (2/pi) * ((pi/2+beta*x) / cos(x)) *
-                exp((1/beta)*(pi/2+beta*x)*tan(x))
-                g = exp( -pi*xarg/(2*beta) ) * v
-            gval = exp(-g) 
-            # replace NA at pi/2
-            for (i in 1:length(gval)) if(is.na(gval[i])) gval[i] = 0
-            gval 
-        }
-        # Integration:  
-        .FCT2 <<-
-        function(xarg, alpha, beta, tol, subdivisions) { 
-            theta2 = optimize(f = .G2, lower = -pi/2, upper = pi/2, 
-                maximum = TRUE, tol = tol, xarg = xarg, 
-                alpha=alpha, beta = beta)$maximum
-            c3 = 1/pi
-            result1 = .integrateStable(f = .G2, lower = -pi/2, 
-                upper = theta2, subdivisions = subdivisions, 
-                rel.tol = tol, abs.tol = tol, xarg = xarg, 
-                alpha = alpha, beta = beta)[[1]]
-            result2 = .integrateStable(f = .G2, lower = theta2, 
-                upper = pi/2, subdivisions = subdivisions, 
-                rel.tol = tol, abs.tol = tol, xarg = xarg, 
-                alpha = alpha, beta = beta)[[1]]
-            c3*(result1+result2) 
-        }
+    if (alpha == 1 & abs(beta) <= 1 & beta != 0) 
+    {
         # Loop over all x values:
         result = rep(0, times = length(x))  
         for ( i in 1:length(result) ) { 
@@ -729,6 +688,94 @@ function(q, alpha, beta, gamma = 1, delta = 0, pm = c(0, 1, 2))
 # ------------------------------------------------------------------------------
 
 
+.G1 <- 
+function(x, xarg, alpha, beta) 
+{
+    
+    # Function to Integrate:
+    varzeta = -beta * tan(pi*alpha/2)
+    theta0 = (1/alpha) * atan( beta * tan(pi*alpha/2))
+    v = (cos(alpha*theta0))^(1/(alpha-1)) *
+        (cos(x)/sin(alpha*(theta0+x)))^(alpha/(alpha-1)) *
+        cos(alpha*theta0+(alpha-1)*x)/cos(x)
+    g = (xarg-varzeta)^(alpha/(alpha-1)) * v
+    gval = exp(-g)
+    gval
+}
+
+
+# ------------------------------------------------------------------------------
+
+  
+.FCT1 <-
+function(xarg, alpha, beta, tol, subdivisions) 
+{ 
+    # Integration:
+    varzeta = -beta * tan(pi*alpha/2)
+        theta0 = (1/alpha) * atan( beta * tan(pi*alpha/2))
+    theta2 = optimize(f = .G1, lower = -theta0, upper = pi/2, 
+        maximum = TRUE, tol = tol, xarg = xarg, 
+        alpha = alpha, beta = beta)$maximum
+    if (alpha < 1) c1 = (1/pi)*(pi/2-theta0)
+    if (alpha > 1) c1 = 1
+    c3 = sign(1-alpha)/pi
+    result1 = .integrateStable(f = .G1, lower = -theta0, 
+        upper = theta2, subdivisions = subdivisions, 
+        rel.tol = tol, abs.tol = tol, xarg = xarg, 
+        alpha = alpha, beta = beta)[[1]]
+    result2 = .integrateStable(f = .G1, lower = theta2, 
+        upper = pi/2, subdivisions = subdivisions, 
+        rel.tol = tol, abs.tol = tol, xarg = xarg, 
+        alpha = alpha, beta = beta)[[1]]
+    c1 + c3*(result1+result2) 
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.G2 <- 
+function(x, xarg, alpha, beta) 
+{
+    # Function to Integrate:
+    # x is a non-sorted vector!
+    v = (2/pi) * ((pi/2+beta*x) / cos(x)) *
+        exp((1/beta)*(pi/2+beta*x)*tan(x))
+        g = exp( -pi*xarg/(2*beta) ) * v
+    gval = exp(-g) 
+    # replace NA at pi/2
+    for (i in 1:length(gval)) if(is.na(gval[i])) gval[i] = 0
+    gval 
+}
+
+
+# ------------------------------------------------------------------------------
+
+  
+.FCT2 <-
+function(xarg, alpha, beta, tol, subdivisions) 
+{ 
+    # Integration:
+    theta2 = optimize(f = .G2, lower = -pi/2, upper = pi/2, 
+        maximum = TRUE, tol = tol, xarg = xarg, 
+        alpha=alpha, beta = beta)$maximum
+    c3 = 1/pi
+    result1 = .integrateStable(f = .G2, lower = -pi/2, 
+        upper = theta2, subdivisions = subdivisions, 
+        rel.tol = tol, abs.tol = tol, xarg = xarg, 
+        alpha = alpha, beta = beta)[[1]]
+    result2 = .integrateStable(f = .G2, lower = theta2, 
+        upper = pi/2, subdivisions = subdivisions, 
+        rel.tol = tol, abs.tol = tol, xarg = xarg, 
+        alpha = alpha, beta = beta)[[1]]
+    c3*(result1+result2) 
+}
+        
+ 
+
+# ------------------------------------------------------------------------------
+       
+        
 qstable = 
 function(p, alpha, beta, gamma = 1, delta = 0, pm = c(0, 1, 2))
 {   # A function implemented by Diethelm Wuertz
@@ -772,7 +819,7 @@ function(p, alpha, beta, gamma = 1, delta = 0, pm = c(0, 1, 2))
     
     # Range 0 < alpha < 2:
     if (abs(alpha-1) < 1) {
-        .froot <<- function(x, alpha, beta, subdivisions, p) {
+        .froot <- function(x, alpha, beta, subdivisions, p) {
             pstable(q = x, alpha = alpha, beta = beta, pm = 0) - p 
         }
         # Calculate:

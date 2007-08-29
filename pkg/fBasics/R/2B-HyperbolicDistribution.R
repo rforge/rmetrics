@@ -1257,9 +1257,6 @@ function(p, alpha = 1, beta = 0, delta = 1, mu = 0)
 # ------------------------------------------------------------------------------
 
 
-.pz1 = NA
-
-
 rnig = 
 function(n, alpha = 1, beta = 0, delta = 1, mu = 0)
 {   # A function implemented by Diethelm Wuertz
@@ -1284,9 +1281,7 @@ function(n, alpha = 1, beta = 0, delta = 1, mu = 0)
         V = rnorm(n)^2
         Z = delta*delta / V
         X = sqrt(Z)*rnorm(n) 
-    } else { 
-            
-        
+    } else {    
         # GAMMA > 0:
         U = runif(n)
         V = rnorm(n)^2
@@ -1298,10 +1293,10 @@ function(n, alpha = 1, beta = 0, delta = 1, mu = 0)
         z2 <- function(v, delta, gamma) {
             (delta/gamma)^2 / z1(v = v, delta = delta, gamma = gamma)
         }
-        .pz1 <<- function(v, delta, gamma) {
+        pz1 <- function(v, delta, gamma) {
             delta / (delta + gamma * z1(v = v, delta = delta, gamma = gamma) ) 
         }
-        s = (1-sign(U-.pz1(v = V, delta = delta, gamma = gamma)))/2
+        s = (1-sign(U-pz1(v = V, delta = delta, gamma = gamma)))/2
         Z = z1(v = V, delta = delta, gamma = gamma)*s + z2(v = V, delta = 
             delta, gamma = gamma)*(1-s)
         X = mu + beta*Z + sqrt(Z)*rnorm(n) 
