@@ -206,13 +206,9 @@ correlationTest(x, y, method = c("pearson", "kendall", "spearman"),
     \bold{Differences in Scale:}
     \cr\cr  
     The \code{ansariTest} performs the Ansari--Bradley two--sample 
-    test for a difference in scale parameters. Note, that we have completely 
-    reimplemented this test based on the statistcs and p-values computed 
-    from algorithm AS 93. The test returns for any sizes of the series 
-    \code{x} and \code{y} the exact p value together with its asymptotic 
-    limit. The test procedure is not limited to sizes shorter of length 50 
-    as this is the case for the function \code{ansari.Test} implemented in 
-    R's \code{stats} package. 
+    test for a difference in scale parameters. The test returns for 
+    any sizes of the series \code{x} and \code{y} the exact p value 
+    together with its asymptotic limit.  
     
     The code{moodTest}, is another test which performs a 
     two--sample test for a difference in scale parameters. The underlying 
