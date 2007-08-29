@@ -29,23 +29,20 @@
 
 ################################################################################
 # FUNCTION:             DESCRIPTION:
-#  fWEBDATA              Class Representation
-#  show.fWEBDATA         S4 Show Method
-# FUNCTION:             IMPORT DATA FUNCTIONS:
+#  fWEBDATA              Class Representation for WEB download
+#  show.fWEBDATA         S4 Show Method for WEB downloaded data
+# FUNCTION:             IMPORT TIME SERIES DATA FUNCTIONS:
 #  economagicImport      Downloads market data from EconoMagic's web site
-#  yahooImport           Downloads market data from Yahoo's web site 
-#  .yahooImport          ... the old download function 
-#  keystatsImport        Downloads key statistics from Yahoo's web site  
+#  yahooImport           Downloads market data from Yahoo's web site  
 #  fredImport            Downloads market data from St. Louis FED web site
 #  forecastsImport       Downloads monthly data from www.forecasts.org
-# FUNCTION              EASY TO USE ROUTINES:
-#  yahooSeries           Easy to use download from Yahoo
-#  .yahooSeries          Utility function  called by 'yahooSeries'
-# FUNCTION:             ONLY FOR SPLUS VERSION:
-#  as.Date               Converts date represenatation
-#  data                  Loads or lists specified data sets
-#  download.file         Downloads files from Internet using "lynx" or "wget"
-#  strsplit              Splits elements of a character vector into substrings
+# FUNCTION:             EASY TO USE ROUTINES:
+#  economagicSeries      Easy to use download from EconoMagic
+#  yahooSeries           Easy to use download from Yahoo  
+#  fredSeries            Easy to use download from St. Louis FED  
+#  forecastsSeries       Easy to use download from www.forecasts.org
+# FUNCTION:             IMPORT STATISTICS - EXPERIMENTAL:
+#  keystatsImport        Downloads key statistics from Yahoo's web site                    S-PLUS: Splits character vector into substrings
 ################################################################################
 
 
@@ -70,7 +67,7 @@ function()
 # ------------------------------------------------------------------------------
 
    
-test.economagicImport = 
+test.economagic = 
 function()
 {  
     # economagicImport() - 
@@ -106,6 +103,10 @@ function()
         target = X@data[6, 2], 
         current = 276.6)
         
+    # economagicSeries() - 
+    # USDEUR Foreign Exchange Rate:
+    economagicSeries("fedny/day-fxus2eu", frequency = "daily")
+         
     # Return Value:
     return()
 }
@@ -114,7 +115,7 @@ function()
 # ------------------------------------------------------------------------------
        
         
-test.yahooImport = 
+test.yahoo = 
 function()
 {       
     # yahooImport() -
@@ -144,19 +145,37 @@ function()
 # ------------------------------------------------------------------------------
        
         
-test.fredImport = 
+test.fred = 
 function()
 {     
     # fredImport -
-    # fredImport(query, file = "tempfile", 
-    #    source = "http://research.stlouisfed.org/fred2/series/", 
-    #   frequency = "daily", save = FALSE, sep = ";", try = TRUE) 
-    X = fredImport("DPRIME")@data
-    head(X) 
+    X = fredImport("DPRIME")
+    print(X) 
     class(X)
     
-    # fredSeries() -     
+    # fredSeries -     
     X = fredSeries("DPRIME")
+    head(X)
+    class(X)
+    
+    # Return Value:
+    return()
+}
+
+
+# ------------------------------------------------------------------------------
+       
+        
+test.forecasts = 
+function()
+{     
+    # fredImport -
+    X = forecastsImport("GOLD")
+    print(X) 
+    class(X)
+    
+    # fredSeries -     
+    X = forecastsSeries("GOLD")
     head(X)
     class(X)
     
@@ -166,4 +185,3 @@ function()
 
     
 ################################################################################
-    
