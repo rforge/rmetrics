@@ -38,18 +38,88 @@
 ################################################################################
 
 
-test.aaa = 
+test.wfe1 = 
 function()
 {
-    # Help File:
-    helpFile = function() { 
-        example(WFEStatistics, ask = FALSE)
-        return() 
-    }
-    checkIdentical(
-        target = class(try(helpFile())),
-        current = "NULL")
-        
+    # wfe1:
+    data(wfe1)
+    print(wfe1)
+   
+    # Return Value:
+    return() 
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.wfe2 = 
+function()
+{
+    # wfe2:
+    data(wfe2)
+    print(wfe2)
+   
+    # Return Value:
+    return() 
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.wfe3 = 
+function()
+{
+    # wfe3:
+    data(wfe3)
+    print(wfe3)
+   
+    # Return Value:
+    return() 
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.wfe4 = 
+function()
+{
+    # wfe4:
+    data(wfe4)
+    print(wfe4)
+   
+    # Return Value:
+    return() 
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.wfe5 = 
+function()
+{
+    # wfe5:
+    data(wfe5)
+    print(wfe5)
+   
+    # Return Value:
+    return() 
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.wfe6 = 
+function()
+{
+    # wfe6:
+    data(wfe6)
+    print(wfe6)
+   
     # Return Value:
     return() 
 }

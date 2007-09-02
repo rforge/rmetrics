@@ -27,7 +27,7 @@
 #   see Rmetrics's copyright file 
 
 
-# ##############################################################################
+################################################################################
 # FUNCTION:            PORTABLE INNOVATIONS:
 #  set.lcgseed          Sets initial random seed
 #  get.lcgseed          Gets the current valus of the random seed
@@ -36,26 +36,6 @@
 #  rnorm.lcg            Generates portable normal linear congruational rvs
 #  rt.lcg               Generates portable Student-t linear congruational rvs
 ################################################################################
-
-
-test.aaa = 
-function()
-{
-    # Help File:
-    helpFile = function() { 
-        example(PortableInnovations, ask = FALSE)
-        return() 
-    }
-    checkIdentical(
-        target = class(try(helpFile())),
-        current = "NULL")
-        
-    # Return Value:
-    return() 
-}
-
-
-# ------------------------------------------------------------------------------
 
 
 test.portableInnovations = 

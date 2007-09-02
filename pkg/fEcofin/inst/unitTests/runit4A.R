@@ -34,20 +34,17 @@
 ################################################################################
 
 
-test.aaa = 
+test.fhtest =
 function()
 {
-    # Help File:
-    helpFile = function() { 
-        example(HypothesisTesting, ask = FALSE)
-        return() 
-    }
-    checkIdentical(
-        target = class(try(helpFile())),
-        current = "NULL")
-        
-    # Return Value:
-    return() 
+   # Class:
+   getClass("fHTEST")
+   
+   # Slots:
+   getSlots("fHTEST")
+   
+   # Return Value:
+   return()
 }
 
 

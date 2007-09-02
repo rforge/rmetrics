@@ -92,22 +92,195 @@
 ################################################################################
 
 
-test.aaa = 
+test.creation =
 function()
 {
-    # Help File:
-    helpFile = function() { 
-        example(ColumnRowStatistics, ask = FALSE)
-        return() 
-    }
-    checkIdentical(
-        target = class(try(helpFile())),
-        current = "NULL")
-        
+    # Create Pascal Matrix:
+    P = pascal(3)
+    P
+    
+    # Create lower triangle matrix
+    L = triang(P)
+    L
+    
+    # Extract diagonal part
+    diag(P)
+    
     # Return Value:
-    return() 
+    return()
 }
 
+
+# ------------------------------------------------------------------------------
+
+      
+test.mathOps =
+function()
+{
+    # Add/Subtract/Multiply/Divide:  
+    X = P
+    
+    # Multiply matrix with a constant
+    3 * X
+    
+    # Multiply two matrices elementwise
+    X * P                     
+    
+    # Multiplies rows/columns of a matrix by a vector
+    X \%*\% diag(P)            
+    diag(P) \%*\% X
+    
+    # Return Value:
+    return()          
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.subsets =
+function()
+{          
+    # Operate on Subsets of a Matrix:
+    n = 3; i = 2; j = 3
+    D = diag(1:3)
+    
+    # Return the dimension of a matrix
+    dim(P)                         
+    
+    # Get the last colum of a matrix
+    P[, ncol(P)]                   
+    
+    # Delete a column of a matrix
+    P[, -i]                      
+        
+    # Permute the columns of a matrix
+    P[c(3, 1, 2), ]              
+    
+    # Augments matrix horizontally 
+    cbind(P, D)
+    
+    # Return Value:
+    return()                           
+}
+
+
+# ------------------------------------------------------------------------------
+
+         
+test.apply =
+function()
+{
+    # Apply a function to all Elements of a Matrix: 
+    
+    # Return square root for each element
+    sqrt(P)
+    
+    # Exponentiate the matrix elementwise
+    exp(P)
+    
+    # Compute the median of each column
+    apply(P, 2, "median") 
+    
+    # Test on all elements of a matrix       
+    all( P > 2 )   
+    
+    # test on any element in a matrix                
+    any( P > 2 )
+    
+    # Return Value:
+    return()                  
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.moreOperations =
+function()
+{       
+    # More Matrix Operations:
+    
+    # Return the product of two matrices
+    P \%*\% D   
+    
+    # Return the Kronecker Product                     
+    P \%x\% D                        
+    
+    # Return the transposed matrix
+    t(P)                           
+    
+    # Return the inverse of a matrix
+    inv(P)  
+    
+    # Return the norm of a matrix                      
+    norm(P)                        
+    
+    # Return the determinante of a matrix
+    det(P)                         
+    
+    # Return the rank of a matrix
+    rk(P)                            
+    
+    # Return trace of a matrix
+    tr(P)                          
+    
+    # Return the variance matrix
+    var(P)     
+    
+    # Return the covariance matrix                   
+    cov(P) 
+    
+    # Stack a matrix
+    vec(P) 
+    
+    # Stack the lower triangle
+    vech(P)
+    
+    # Return Value:
+    return()
+}
+
+
+# ------------------------------------------------------------------------------
+
+ 
+test.linearAlgebra =
+function()
+{  
+    # More Linear Algebra:
+    
+    # Example Matrix and Vector
+    X = P; b = c(1, 2, 3)
+    
+    # Return the Cholesky factor matrix
+    chol(X)                        
+    
+    # Return eigenvalues and eigenvectors
+    eigen(X)                       
+    
+    # Return the singular value decomposition
+    svd(X)                         
+    
+    # Return the condition number of a matrix
+    kappa(X)                       
+    
+    # Return the QR decomposition of a matrix
+    qr(X)                          
+    
+    # Solve a system of linear equations
+    # ... use backsolve when the matrix is upper triangular
+    # ... use forwardsolve when the matrix is lower triangular
+    solve(X, b)  
+    backsolve(Triang(X), b)
+    solve(Triang(X), b)                 
+    forwardsolve(triang(X), b) 
+    solve(triang(X), b)
+    
+    # Return Value:
+    return()
+}  
+   
 
 ################################################################################
 

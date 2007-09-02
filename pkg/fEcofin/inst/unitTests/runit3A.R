@@ -60,26 +60,6 @@
 ################################################################################
 
 
-test.aaa = 
-function()
-{
-    # Help File:
-    helpFile = function() { 
-        example(BasicExtensions, ask = FALSE)
-        return() 
-    }
-    checkIdentical(
-        target = class(try(helpFile())),
-        current = "NULL")
-        
-    # Return Value:
-    return() 
-}
-
-
-# ------------------------------------------------------------------------------
-
-
 test.basicExtensions = 
 function()
 {

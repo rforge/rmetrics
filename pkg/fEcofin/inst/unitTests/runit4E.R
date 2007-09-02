@@ -41,27 +41,6 @@
 ################################################################################
 
 
-
-test.aaa = 
-function()
-{
-    # Help File:
-    helpFile = function() { 
-        example(McKinnonPValues, ask = FALSE)
-        return() 
-    }
-    checkIdentical(
-        target = class(try(helpFile())),
-        current = "NULL")
-        
-    # Return Value:
-    return() 
-}
-
-
-# ------------------------------------------------------------------------------
-
-
 test.asymptoticUnitroot = 
 function()
 {
