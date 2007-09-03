@@ -47,26 +47,6 @@
 ################################################################################
 
 
-test.aaa = 
-function()
-{
-    # Help File:
-    helpFile = function() { 
-        example(PortfolioClass, ask = FALSE)
-        return() 
-    }
-    checkIdentical(
-        target = class(try(helpFile())),
-        current = "NULL")
-
-    # Return Value:
-    return()    
-}
-
-
-################################################################################
-
-
 test.fPORTFOLIO =
 function()
 { 
@@ -556,19 +536,6 @@ function()
     return()
 }
 
-
-# ------------------------------------------------------------------------------
-
-
-if (FALSE) {
-    require(RUnit)
-    require(lpSolve)
-    require(Rdonlp2)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fPortfolio/tests/runit2A.R",
-        rngKind = "Marsaglia-Multicarry", rngNormalKind = "Inversion")
-    printTextProtocol(testResult)
-}
-   
 
 ################################################################################
 
