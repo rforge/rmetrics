@@ -36,11 +36,11 @@
 #   method = "snorm"      assuming a multivariate skew-Normal distribution
 #   method = "st"         assuming a multivariate skew-Student-t 
 # FUNCTION:             PRINT, PLOT AND SUMMARY METHOD: 
-#  show.fASSETS         S4: Print method for an object of class fASSETS
+#  show.fASSETS          S4: Print method for an object of class fASSETS
 #  plot.fASSETS          S3: Plot method for an object of class fASSETS
-#  summary.fASSETS       S3: Summary method for an object of class fASSETS
-# FUNCTION:             REQUIRED UTILITY FUNCTION:
-#  .msn.quantities       Function from R package sn [part of fMultivar]      
+#  summary.fASSETS       S3: Summary method for an object of class fASSETS 
+# REQUIREMENTS:         DESCRIPTION:
+#  sn                    Contributed R-package "sn"
 ################################################################################
 
 
@@ -100,7 +100,7 @@ alpha = rep(0, dim), df = Inf), assetNames = NULL)
         stop("dimensions of arguments do not match")
     
     # Adapted from contributed R package "sn:rmsn"
-    Z = .msn.quantities(model$mu, model$Omega, model$alpha)
+    Z = msn.quantities(model$mu, model$Omega, model$alpha)
     y = matrix(rnorm(n * d), n, d) %*% chol(Z$Psi)
     abs.y0 = matrix(rep(abs(rnorm(n)), d), ncol = d)
     z = Z$delta * t(abs.y0) + sqrt(1 - Z$delta^2) * t(y)
