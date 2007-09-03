@@ -344,7 +344,7 @@ function(x, method = c("unitroot", "adf", "urers", "urkpss", "urpp",
     # FUNCTION:
     
     # Match Function:
-    funTest = match.fun(paste(method[1], Test, sep = ""))
+    funTest = match.fun(paste(method[1], "Test", sep = ""))
     
     # Test:
     ans = funTest(x = x, ...)
@@ -354,8 +354,7 @@ function(x, method = c("unitroot", "adf", "urers", "urkpss", "urpp",
     if (!is.null(description)) ans@description = .description()
     
     # Return Value:
-    ans
-    
+    ans 
 }
         
 

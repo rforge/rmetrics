@@ -426,13 +426,14 @@ function(x, y)
 
     # FUNCTION:
     
+    # Convolution:
     if (missing(x) | missing(y)) {
         break 
     } else {
         a = c(x, rep(0, (length(y) - 1)))
         b = c(y, rep(0, (length(x) - 1)))
-        a = fft(a, inverse = F)
-        b = fft(b, inverse = F)
+        a = fft(a, inverse = FALSE)
+        b = fft(b, inverse = FALSE)
         conv = a * b
         conv = Re(fft(conv, inverse = TRUE))
         conv = conv/length(conv)
@@ -627,7 +628,9 @@ function(n = 100, H = 0.7, doplot = TRUE, fgn = FALSE)
     # FUNCTION:
 
     # First line of the circulant matrix, C, built via covariances of fGn 
-    lineC = function(n, H, m) {
+    lineC = 
+    function(n, H, m) 
+    {
         k = 0:(m - 1)
         H2 = 2 * H
         v = (abs((k - 1)/n)^H2 - 2 * (k/n)^H2 + ((k + 1)/n)^H2)/2
@@ -674,7 +677,7 @@ function(n = 100, H = 0.7, doplot = TRUE, fgn = FALSE)
 
         # Reconstruction of the fGn:
         W = (sqrt(eigenvalC)) * W
-        fGn = fft(W, inverse = F)
+        fGn = fft(W, inverse = FALSE)
         fGn = (1/(sqrt(2 * m))) * fGn
         fGn = Re(fGn[c(1:n)])
         fBm = cumsum(fGn)
@@ -1332,7 +1335,7 @@ function(eta)
     
     # Arguments: 
     #   h
-    #   (n,nhalfm = trunc[(n-1)/2] and the
+    #   (n, nhalfm = trunc[(n-1)/2] and the
     #   nhalfm-dimensional  GLOBAL vector `yper' must be defined.)
     
     # Value: 
@@ -3249,6 +3252,9 @@ function(x, q)
 
 ################################################################################
 # Slider:
+
+
+.xHurst = NA
 
 
 hurstSlider =

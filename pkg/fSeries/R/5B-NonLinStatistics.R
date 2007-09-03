@@ -409,6 +409,10 @@ function(x, m, d, t, ref, s, eps, k = 1, doplot = TRUE, ...)
     #   Antonio, Fabio Di Narzo 
     #   of the original function from the 'tseriesChaos' package
     
+    # Example:
+    #   output = lyapunovPlot(lorenz.ts, m = 3, d = 2, s = 200, t = 40, 
+    #   ref = 1700, k = 2, eps = 4)   
+    
     # FUNCTION:
     
     # Settings:
@@ -539,9 +543,13 @@ function(x, start, end)
 
     # Value:
     #   Returns the regression coefficients of the specified input sequence.
+    
     # Author:
     #   Antonio, Fabio Di Narzo 
     #   of the original function from the 'tseriesChaos' package
+    
+    # Example:
+    #   lyapunovFit(output, start = 0.73, end = 2.47)
     
     # FUNCTION:
     
@@ -559,21 +567,6 @@ function(x, start, end)
     ans
 }
 
-
-# ------------------------------------------------------------------------------
-
-
-.lyapunov.RUnit =
-function()
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   R Unit test function    
-    
-    output = lyapunovPlot(lorenz.ts, m = 3, d = 2, s = 200, t = 40, 
-        ref = 1700, k = 2, eps = 4)
-    lyapunovFit(output, start = 0.73, end = 2.47)
-}
 
 
 ################################################################################

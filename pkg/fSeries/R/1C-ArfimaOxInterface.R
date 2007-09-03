@@ -47,7 +47,7 @@
 ################################################################################
 
 
-OXPATH <<- "C:\\Ox\\Ox3"
+.OXPATH = "C:\\Ox\\Ox3"
 
 
 # ------------------------------------------------------------------------------
@@ -73,7 +73,7 @@ title = NULL, description = NULL)
     #   This is an interface to the Arfime Ox Software Package
     
     # Example:
-    #   OXPATH <<- "C:\\Ox\\Ox3"
+    #   .OXPATH <<- "C:\\Ox\\Ox3"
     #   x = armaSim(list(ar=0.2, ma=-0.4, d=0.3), n = 500) 
     #   object = arfimaOxFit(x ~ arfima(2, 1))
        
@@ -143,8 +143,8 @@ title = NULL, description = NULL)
     write(ts, file = "OxSeries.csv", ncolumns = 1)                        
     
     # Estimate Parameters:    
-    command = paste(OXPATH, "\\bin\\oxl.exe ", 
-        OXPATH, "\\lib\\ArfimaOxFit.ox", sep = "")
+    command = paste(.OXPATH, "\\bin\\oxl.exe ", 
+        .OXPATH, "\\lib\\ArfimaOxFit.ox", sep = "")
     system(command, show.output.on.console = trace, invisible = TRUE)
     
     # Put All Together:
@@ -230,8 +230,8 @@ function(object, n.ahead = 10, n.back = 50, trace = FALSE)
     write(x, file = "OxSeries.csv", ncolumns = 1)   
     
     # Calculate:    
-    command = paste(OXPATH, "\\bin\\oxl.exe ", 
-        OXPATH, "\\lib\\ArfimaOxPredict.ox", sep = "")
+    command = paste(.OXPATH, "\\bin\\oxl.exe ", 
+        .OXPATH, "\\lib\\ArfimaOxPredict.ox", sep = "")
     system(command, show.output.on.console = trace, invisible = TRUE)
     
     # Result:

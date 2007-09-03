@@ -30,25 +30,26 @@
 ################################################################################
 
 
-.First.lib = 
+.First.lib =  
 function(lib, pkg)
-{   # A function implemented by Diethelm Wuertz
-    
-    # Package:
-    cat("\nRmetrics, (C) 1999-2007, Diethelm Wuertz, GPL")
-    cat("\nfSeries: The Dynamical Process Behind Financial Markets\n")
+{   
+    # Startup Mesage and Desription:
+    MSG <- if(getRversion() >= "2.5") packageStartupMessage else message
+    dsc <- packageDescription(pkg)
+    if(interactive() || getOption("verbose")) { 
+        # not in test scripts
+        MSG(sprintf("\nPackage %s (%s) loaded.\n%s\n",
+            pkg, dsc$Version, dsc$Title),
+            "Rmetrics, (C) 1999-2007, Diethelm Wuertz, GPL\n")
+    }
 
-    # Load Libraries:
-    sink("@sink@")
-    library(mgcv) # gam
-    library(nnet) # nnet
-    sink()
-    unlink("@sink@")
-    
     # Load dll:
-    library.dynam("fSeries", pkg, lib)
-
+    library.dynam("fSeries", pkg, lib) 
 }
+
+
+if(!exists("Sys.setenv", mode = "function")) # pre R-2.5.0, use "old form"
+    Sys.setenv <- Sys.putenv
 
 
 ################################################################################

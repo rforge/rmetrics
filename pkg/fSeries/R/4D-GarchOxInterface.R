@@ -36,7 +36,7 @@
 ################################################################################
 
 
-OXPATH <<- "C:\\Ox\\Ox3"
+.OXPATH = "C:\\Ox\\Ox3"
 
 
 # ------------------------------------------------------------------------------
@@ -228,8 +228,8 @@ description = NULL)
     
     # Calculate:    
     command = paste(
-        OXPATH, "\\bin\\oxl.exe ",  
-        OXPATH, "\\lib\\GarchOxModelling.ox", sep = "")
+        .OXPATH, "\\bin\\oxl.exe ",  
+        .OXPATH, "\\lib\\GarchOxModelling.ox", sep = "")
     fit$ox = system(command, show.output.on.console = trace, invisible = TRUE)
     fit$model = selected
     fit$call = match.call()

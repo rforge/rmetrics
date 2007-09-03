@@ -1053,53 +1053,8 @@ function(x, which = "ask", gof.lag = 10, ...)
         return()
     }
     
-    # 1. Standardized Residuals Plot:
-    plot.1 <<- function(x, ...) {
-        object = x@fit
-        rs = as.vector(na.omit(object$residuals))
-        stdres = rs/sqrt(object$sigma2)
-        plot(stdres, type = "h", 
-            main = "Standardized Residuals", 
-            ylab = "Residuals", col = "steelblue", ...)
-        grid()
-        abline(h = 0, col = "grey")
-    }   
-        
-    # 2. ACF of Residuals:
-    plot.2 <<- function(x, ...) {
-        object = x@fit
-        acf(object$residuals, plot = TRUE, main = "ACF of Residuals", 
-            na.action = na.pass, ...)
-        grid()    
-    }   
-    
-    # 3. QQ Plot of Residuals:
-    plot.3 <<- function(x, ...) {           
-        object = x@fit
-        rs = as.vector(na.omit(object$residuals))
-        stdres = rs/sqrt(object$sigma2)
-        qqnorm(stdres, 
-            xlab = "Normal Quantiles", 
-            ylab = "Residual Quantiles", 
-            main = "QQ-Plot of Residuals", 
-            pch = 19, col = "steelblue", ...)
-        qqline(stdres, col = "grey")
-        grid()
-    }  
-             
-    # 4. Ljung-Box p Values:
-    plot.4 <<- function(x, ...) {        
-        object = x@fit
-        rs = as.vector(na.omit(object$residuals))
-        nlag = gof.lag
-        pval = numeric(nlag)
-        for (i in 1:nlag) 
-            pval[i] = Box.test(rs, i, type = "Ljung-Box")$p.value
-        plot(1:nlag, pval, xlab = "lag", ylab = "p value", ylim = c(0, 1), 
-            pch = 19, col = "steelblue", main = "Ljung-Box p-values", ...)
-        abline(h = 0.05, lty = 2, col = "grey")
-        grid()
-    }   
+    # Store Lag:
+    x@fit$gof.lag = gof.lag
     
     # Plot:
     .interactiveGarchPlot(
@@ -1110,12 +1065,72 @@ function(x, which = "ask", gof.lag = 10, ...)
             "QQ Plot of Residuals",
             "Ljung-Box p Values"),
         plotFUN = c(
-            "plot.1",  "plot.2",  "plot.3", "plot.4"),
+            ".plot.arma.1",  ".plot.arma.2",  ".plot.arma.3", ".plot.arma.4"),
         which = which) 
             
     # Return Value:
     invisible(x)
 }
+
+
+.plot.arma.1 <- 
+function(x, ...) 
+{
+    # 1. Standardized Residuals Plot:
+    object = x@fit
+    rs = as.vector(na.omit(object$residuals))
+    stdres = rs/sqrt(object$sigma2)
+    plot(stdres, type = "h", 
+        main = "Standardized Residuals", 
+        ylab = "Residuals", col = "steelblue", ...)
+    grid()
+    abline(h = 0, col = "grey")
+}   
+    
+
+.plot.arma.2 <- 
+function(x, ...) 
+{
+    # 2. ACF of Residuals:
+    object = x@fit
+    acf(object$residuals, plot = TRUE, main = "ACF of Residuals", 
+        na.action = na.pass, ...)
+    grid()    
+}   
+
+
+.plot.arma.3 <- 
+function(x, ...) 
+{           
+    # 3. QQ Plot of Residuals:
+    object = x@fit
+    rs = as.vector(na.omit(object$residuals))
+    stdres = rs/sqrt(object$sigma2)
+    qqnorm(stdres, 
+        xlab = "Normal Quantiles", 
+        ylab = "Residual Quantiles", 
+        main = "QQ-Plot of Residuals", 
+        pch = 19, col = "steelblue", ...)
+    qqline(stdres, col = "grey")
+    grid()
+}  
+
+         
+.plot.arma.4 <- 
+function(x, ...) 
+{        
+    # 4. Ljung-Box p Values:
+    object = x@fit
+    rs = as.vector(na.omit(object$residuals))
+    nlag = x@fit$gof.lag
+    pval = numeric(nlag)
+    for (i in 1:nlag) 
+        pval[i] = Box.test(rs, i, type = "Ljung-Box")$p.value
+    plot(1:nlag, pval, xlab = "lag", ylab = "p value", ylim = c(0, 1), 
+        pch = 19, col = "steelblue", main = "Ljung-Box p-values", ...)
+    abline(h = 0.05, lty = 2, col = "grey")
+    grid()
+}   
 
 
 ################################################################################

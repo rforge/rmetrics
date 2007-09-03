@@ -581,6 +581,11 @@ function(n = 1000, n.start = 1000, spec = garchSpec())
 ################################################################################
 
 
+.params = .series = .llh = .trace = .garchDist = NA
+
+
+# ------------------------------------------------------------------------------
+
 
 # Class Representation:
 setClass("fGARCH", 
@@ -682,6 +687,9 @@ control = list(), title = NULL, description = NULL, ...)
 # ------------------------------------------------------------------------------
 
 
+.Start = NA
+
+
 .garchFit =
 function(formula.mean = ~arma(0, 0), formula.var = ~garch(1, 1), 
 series = x, init.rec = c("mci", "uev"), delta = 2, skew = 1, shape = 4,
@@ -742,7 +750,7 @@ control = list(), title = NULL, description = NULL, ...)
     series = as.vector(series)
     
     # Start Time:
-    Start <<- Sys.time()
+    .Start <<- Sys.time()
     
     # Generate Control List - Define Default Settings:
     con <- list(
@@ -1587,7 +1595,7 @@ function(...)
             upper = .params$V[INDEX],
             scale = parscale,
             control = list(eval.max = 2000, iter.max = 1500, 
-                rel.tol = 1e-14*TOL1, x.tol = 1e-14*TOL1)
+                rel.tol = 1.0e-14*TOL1, x.tol = 1.0e-14*TOL1)
             )  
         fit$value = fit$objective 
         if (algorithm == "nlminb+nm") {          
@@ -1635,7 +1643,7 @@ function(...)
                 fn = .garchLLH, 
                 method = "Nelder-Mead", 
                 control = list(
-                    ndeps = rep(1e-14 * TOL2, length = length(INDEX)), 
+                    ndeps = rep(1.0e-14 * TOL2, length = length(INDEX)), 
                     maxit = 10000, 
                     reltol = 1e-14 * TOL2, 
                     fnscale = fnscale, 
@@ -1746,16 +1754,16 @@ function(...)
     fit$coef = fit$par
     
     # Execution Time:
-    Time =  Sys.time() - Start
+    Time =  Sys.time() - .Start
     if (.trace) {
         cat("\nTime to Estimate Parameters:\n ")
         print(Time) 
     }
     
     # Compute Hessian:
-    Start = Sys.time()
+    .Start <<- Sys.time()
     H = .garchHessian(fit$par)
-    Time =  Sys.time() - Start
+    Time =  Sys.time() - .Start
     if (.trace) {
         cat("\nTime to Compute Hessian:\n ")
         print(Time)  
@@ -2140,128 +2148,7 @@ function(x, which = "ask", ...)
         # Return Value:
         return(invisible())
     }
-    
-    # If we used 'garchFit' then ...
-    plot.1 <<- function(x, ...) {
-        # 1. Time Series:
-        xseries = x@data$x
-        plot(xseries, type = "l", col = "steelblue", ylab = "x",
-            main = "Time Series")
-        abline(h = 0, col = "grey", lty = 3)
-        grid()
-    }       
-    plot.2 <<- function(x, ...) {
-        # 2. Conditional SD:
-        xcsd = x@sigma.t
-        plot(xcsd, type = "l", col = "steelblue", ylab = "x",
-            main = "Conditional SD")
-        abline(h = 0, col = "grey", lty = 3)
-        grid()
-    }   
-    plot.3 <<- function(x, ...) {           
-        # 3. Series with 2 Conditional SD Superimposed:
-        xseries = x@data$x
-        xcsd = x@sigma.t
-        ci = 2
-        plot(xseries, type = "l", col = "steelblue", ylab = "x",
-            main = "Series with 2 Conditional SD Superimposed")
-        lines(+ci * xcsd, col = "grey")
-        lines(-ci * xcsd, col = "grey")
-        abline(h = 0, col = "grey", lty = 3)
-        grid()
-    }           
-    plot.4 <<- function(x, ...) {        
-        # 4. ACF of the Observations:
-        xseries = x@data$x
-        n = length(xseries)
-        lag.max = as.integer(10*log10(n))
-        acf(xseries, lag.max = lag.max, xlab = "Lags", col = "steelblue", 
-            main = "ACF of Observations", plot = TRUE)
-    }   
-    plot.5 <<- function(x, ...) {       
-        # 5. ACF of the Squared Observations:
-        xseries = x@data$x
-        xseries2 = xseries^2
-        n = length(xseries)
-        lag.max = as.integer(10*log10(n))
-        acf(xseries2, lag.max = lag.max, xlab = "Lags", col = "steelblue", 
-            main = "ACF of Squared Observations", plot = TRUE)
-    }           
-    plot.6 <<- function(x, ...) {
-        # 6. Cross Correlation between x^2 and x:
-        xseries = x@data$x
-        xseries2 = xseries^2
-        n = length(xseries)
-        lag.max = as.integer(10*log10(n))
-        ccf(xseries2, xseries, lag.max = lag.max, xlab = "Lags", 
-            main = "Cross Correlation", plot = TRUE, col = "steelblue")
-    }
-    plot.7 <<- function(x, ...) {
-        # 7. Residuals:
-        res = residuals(x, standardize = FALSE)
-        plot(res, type = "l", main = "Residuals", col = "steelblue", ...)
-        abline(h = 0, lty = 3)
-        grid()
-    }   
-    plot.8 <<- function(x, ...) {
-        # 8. Conditional SDs:
-        xcsd = x@sigma.t
-        plot(xcsd, type = "l", main = "Conditional SD's", 
-            col = "steelblue", ...)
-        abline(h = 0, lty = 3)
-        grid()
-    }   
-    plot.9 <<- function(x, ...) {
-        # 9. Standardized Residuals:
-        sres = residuals(x, standardize = FALSE)
-        plot(sres, type = "l", main = "Standardized Residuals", 
-            col = "steelblue", ...)
-        abline(h = 0, lty = 3)
-        grid()
-    }       
-    plot.10 <<- function(x, ...) {
-        # 10. ACF of Standardized Residuals:
-        sres = residuals(x, standardize = FALSE)
-        n = length(sres)
-        lag.max = as.integer(10*log10(n))
-        acf(sres, lag.max = lag.max, xlab = "Lags", col = "steelblue", 
-            main = "ACF of Standardized Residuals", plot = TRUE)
-    }           
-    plot.11 <<- function(x, ...) {
-        # 11. ACF of Squared Standardized Residuals:
-        sres2 = residuals(x, standardize = FALSE)^2
-        n = length(sres2)
-        lag.max = as.integer(10*log10(n))
-        acf(sres2, lag.max = lag.max, xlab = "Lags", col = "steelblue", 
-            main = "ACF of Standardized Residuals", plot = TRUE)
-    }           
-    plot.12 <<- function(x, ...) {      
-        # 12. Cross Correlation between r^2 and r:
-        sres = residuals(x, standardize = FALSE)
-        sres2 = sres^2
-        n = length(sres)
-        lag.max = as.integer(10*log10(n))
-        ccf(sres2, sres, lag.max = lag.max, xlab = "Lags", 
-            main = "Cross Correlation", plot = TRUE, col = "steelblue")
-    }   
-    plot.13 <<- function(x, ...) {
-        # 13. QQ-Plot of Standardized Residuals:
-        sres = residuals(x, standardize = FALSE)
-        cond.dist = x@fit$params$cond.dist
-        nc = nchar(x@fit$params$cond.dist)
-        cond.dist = paste("q", substr(cond.dist, 2, nc), sep = "")
-        skew = x@fit$params$skew
-        shape = x@fit$params$shape
-        if (cond.dist == "qnorm")
-            .qqDist(sres, dist = cond.dist)
-        if (cond.dist == "qstd" | cond.dist == "qged")
-            .qqDist(sres, dist = cond.dist, nu = shape)
-        if (cond.dist == "qsnorm")
-            .qqDist(sres, dist = cond.dist, xi = skew)
-        if (cond.dist == "qsstd" | cond.dist == "qsged")
-            .qqDist(sres, dist = cond.dist, xi = skew, nu = shape)
-    }
-    
+        
     # Plot:
     .interactiveGarchPlot(
         x,
@@ -2280,14 +2167,188 @@ function(x, which = "ask", ...)
             "Cross Correlation between r^2 and r",
             "QQ-Plot of Standardized Residuals"),
         plotFUN = c(
-            "plot.1",  "plot.2",  "plot.3", "plot.4", "plot.5",
-            "plot.6",  "plot.7",  "plot.8", "plot.9", "plot.10",
-            "plot.11", "plot.12", "plot.13"),
+            ".plot.garch.1", ".plot.garch.2", ".plot.garch.3", 
+            ".plot.garch.4", ".plot.garch.5", ".plot.garch.6",  
+            ".plot.garch.7", ".plot.garch.8", ".plot.garch.9", 
+            ".plot.garch.10",".plot.garch.11", ".plot.garch.12", 
+            ".plot.garch.13"),
         which = which, ...) 
             
     # Return Value:
     invisible(x)
 }
+
+
+.plot.garch.1 <- 
+function(x, ...) 
+{
+    # 1. Time Series:
+    xseries = x@data$x
+    plot(xseries, type = "l", col = "steelblue", ylab = "x",
+        main = "Time Series")
+    abline(h = 0, col = "grey", lty = 3)
+    grid()
+}    
+
+   
+.plot.garch.2 <- 
+function(x, ...) 
+{
+    # 2. Conditional SD:
+    xcsd = x@sigma.t
+    plot(xcsd, type = "l", col = "steelblue", ylab = "x",
+        main = "Conditional SD")
+    abline(h = 0, col = "grey", lty = 3)
+    grid()
+}   
+
+
+.plot.garch.3 <- 
+function(x, ...) 
+{           
+    # 3. Series with 2 Conditional SD Superimposed:
+    xseries = x@data$x
+    xcsd = x@sigma.t
+    ci = 2
+    plot(xseries, type = "l", col = "steelblue", ylab = "x",
+        main = "Series with 2 Conditional SD Superimposed")
+    lines(+ci * xcsd, col = "grey")
+    lines(-ci * xcsd, col = "grey")
+    abline(h = 0, col = "grey", lty = 3)
+    grid()
+}     
+
+      
+.plot.garch.4 <- 
+function(x, ...) 
+{        
+    # 4. ACF of the Observations:
+    xseries = x@data$x
+    n = length(xseries)
+    lag.max = as.integer(10*log10(n))
+    acf(xseries, lag.max = lag.max, xlab = "Lags", col = "steelblue", 
+        main = "ACF of Observations", plot = TRUE)
+}   
+
+
+.plot.garch.5 <- 
+function(x, ...) 
+{       
+    # 5. ACF of the Squared Observations:
+    xseries = x@data$x
+    xseries2 = xseries^2
+    n = length(xseries)
+    lag.max = as.integer(10*log10(n))
+    acf(xseries2, lag.max = lag.max, xlab = "Lags", col = "steelblue", 
+        main = "ACF of Squared Observations", plot = TRUE)
+} 
+
+          
+.plot.garch.6 <- 
+function(x, ...) 
+{
+    # 6. Cross Correlation between x^2 and x:
+    xseries = x@data$x
+    xseries2 = xseries^2
+    n = length(xseries)
+    lag.max = as.integer(10*log10(n))
+    ccf(xseries2, xseries, lag.max = lag.max, xlab = "Lags", 
+        main = "Cross Correlation", plot = TRUE, col = "steelblue")
+}
+
+
+.plot.garch.7 <- 
+function(x, ...) 
+{
+    # 7. Residuals:
+    res = residuals(x, standardize = FALSE)
+    plot(res, type = "l", main = "Residuals", col = "steelblue", ...)
+    abline(h = 0, lty = 3)
+    grid()
+}  
+
+ 
+.plot.garch.8 <- 
+function(x, ...) 
+{
+    # 8. Conditional SDs:
+    xcsd = x@sigma.t
+    plot(xcsd, type = "l", main = "Conditional SD's", 
+        col = "steelblue", ...)
+    abline(h = 0, lty = 3)
+    grid()
+}   
+
+
+.plot.garch.9 <- 
+function(x, ...) 
+{
+    # 9. Standardized Residuals:
+    sres = residuals(x, standardize = FALSE)
+    plot(sres, type = "l", main = "Standardized Residuals", 
+        col = "steelblue", ...)
+    abline(h = 0, lty = 3)
+    grid()
+} 
+
+      
+.plot.garch.10 <- 
+function(x, ...) 
+{
+    # 10. ACF of Standardized Residuals:
+    sres = residuals(x, standardize = FALSE)
+    n = length(sres)
+    lag.max = as.integer(10*log10(n))
+    acf(sres, lag.max = lag.max, xlab = "Lags", col = "steelblue", 
+        main = "ACF of Standardized Residuals", plot = TRUE)
+}  
+
+         
+.plot.garch.11 <- 
+function(x, ...) 
+{
+    # 11. ACF of Squared Standardized Residuals:
+    sres2 = residuals(x, standardize = FALSE)^2
+    n = length(sres2)
+    lag.max = as.integer(10*log10(n))
+    acf(sres2, lag.max = lag.max, xlab = "Lags", col = "steelblue", 
+        main = "ACF of Standardized Residuals", plot = TRUE)
+}    
+
+       
+.plot.garch.12 <- 
+function(x, ...) 
+{      
+    # 12. Cross Correlation between r^2 and r:
+    sres = residuals(x, standardize = FALSE)
+    sres2 = sres^2
+    n = length(sres)
+    lag.max = as.integer(10*log10(n))
+    ccf(sres2, sres, lag.max = lag.max, xlab = "Lags", 
+        main = "Cross Correlation", plot = TRUE, col = "steelblue")
+}   
+
+
+.plot.garch.13 <- 
+function(x, ...) 
+{
+    # 13. QQ-Plot of Standardized Residuals:
+    sres = residuals(x, standardize = FALSE)
+    cond.dist = x@fit$params$cond.dist
+    nc = nchar(x@fit$params$cond.dist)
+    cond.dist = paste("q", substr(cond.dist, 2, nc), sep = "")
+    skew = x@fit$params$skew
+    shape = x@fit$params$shape
+    if (cond.dist == "qnorm")
+        .qqDist(sres, dist = cond.dist)
+    if (cond.dist == "qstd" | cond.dist == "qged")
+        .qqDist(sres, dist = cond.dist, nu = shape)
+    if (cond.dist == "qsnorm")
+        .qqDist(sres, dist = cond.dist, xi = skew)
+    if (cond.dist == "qsstd" | cond.dist == "qsged")
+        .qqDist(sres, dist = cond.dist, xi = skew, nu = shape)
+}
+
 
 
 # ------------------------------------------------------------------------------
@@ -2431,21 +2492,26 @@ plotFUN = paste("plot.", 1:19, sep = ""), which = "all", ...)
     multPlot = function (x, choices, ...) 
     {
         # Selective Plot:
-        selectivePlot = function (x, choices, FUN, which){
+        selectivePlot = 
+        function (x, choices, FUN, which)
+        {
             # Internal Function:
             askPlot = function (x, choices, FUN) {
                 # Pick and Plot:
-                pick = 1; n.plots = length(choices)
+                pick = 1  
+                n.plots = length(choices)
                 while (pick > 0) { pick = menu (
                     choices = paste("plot:", choices), 
                     title = "\nMake a plot selection (or 0 to exit):")
                     if (pick > 0) match.fun(FUN[pick])(x) } }                   
             if (as.character(which[1]) == "ask") {
-                askPlot(x, choices = choices, FUN = FUN, ...) }
-            else { 
+                askPlot(x, choices = choices, FUN = FUN, ...) 
+            } else { 
                 for (i in 1:n.plots) if (which[i]) match.fun(FUN[i])(x) }
-            invisible() }  
-        # match Functions, up to nine ...
+            invisible() 
+        } 
+         
+        # Match Functions, up to nine ...
         if (length(plotFUN) < 19) plotFUN = 
             c(plotFUN, rep(plotFUN[1], times = 19 - length(plotFUN)))
         plot.1  = match.fun(plotFUN[1]);  plot.2  = match.fun(plotFUN[2]) 

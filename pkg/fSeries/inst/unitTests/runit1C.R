@@ -51,23 +51,6 @@
 # MS WINDOWS ONLY !!!
 
 
-test.aaa = 
-function()
-{
-    # Help File:
-    helpFile = function() { 
-        example(ArfimaOxInterface, ask = FALSE)
-        return() 
-    }
-    checkIdentical(
-        target = class(try(helpFile())),
-        current = "NULL")
-
-    # Return Value:
-    return()    
-}
-
-
 # ------------------------------------------------------------------------------
 
 
