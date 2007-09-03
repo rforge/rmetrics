@@ -43,26 +43,6 @@
 #  dgumbelCopula              Computes bivariate Gumbel copula density
 ################################################################################
 
-
-test.aaa = 
-function()
-{
-    # Help File:
-    helpFile = function() { 
-        example(ArchimedeanCopulae, ask = FALSE)
-        return() 
-    }
-    checkIdentical(
-        target = class(try(helpFile())),
-        current = "NULL")
-
-    # Return Value:
-    return()    
-}
-
-
-################################################################################  
- 
     
 test.rarchmCopula = 
 function()
