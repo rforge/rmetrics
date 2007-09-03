@@ -579,77 +579,6 @@ function(x, which = "ask", ...)
     #   Internal Function
     
     # FUNCTION: 
-    
-    # Internal Plot Functions:
-    dim = x$k
-    if (dim == 1 ) {
-        plot.1 <<- function(x) {
-            z = x
-            y0 <- z$y
-            xi0 <- apply(z$xi, 2, mean)
-            y0 <- as.vector(y0)
-            x <- seq(min(pretty(y0, 10)), max(pretty(y0, 10)), length = 100)
-            omega <- sqrt(diag(z$Omega))
-            dp0 <- c(xi0, omega, z$alpha)
-            xlab <- z$y.name
-            hist(y0, prob = TRUE, breaks = "FD", xlab = xlab, 
-                ylab = "density", border = "white", col = "steelblue4", 
-                main = z$y.name)
-            lines(x, .dsn(x, dp0[1], dp0[2], dp0[3]))
-            if (length(y0) < 201) 
-                points(y0, rep(0, z$n), pch = 1) 
-        }
-    } else {
-        plot.1 <<- function(x) {
-            opt = options()
-            options(warn = -1)
-            pairs(
-                x$y, 
-                labels = x$y.names, 
-                panel = function(x, y, Y, y.names, xi, Omega, alpha) {
-                    for (i in 1:length(alpha)) {
-                        if (all(Y[, i] == x)) 
-                            Ix = i
-                        if (all(Y[, i] == y)) 
-                            Iy = i }
-                    points(x, y)
-                    marg = .msn.marginal(xi, Omega, alpha, c(Ix, Iy))
-                    xi.marg = marg$xi
-                    Omega.marg = marg$Omega
-                    alpha.marg = marg$alpha
-                    x1 = seq(min(x), max(x), length = 30)
-                    x2 = seq(min(y), max(y), length = 30)
-                    .dsn2.plot(x1, x2, xi.marg, Omega.marg, alpha.marg, 
-                        add = TRUE, col = "steelblue4")}, 
-                Y = x$y, 
-                y.names = dimnames(x$y)[[2]], 
-                xi = apply(x$xi, 2, mean),  
-                Omega = x$Omega, 
-                alpha = x$alpha) 
-                options(opt) } 
-    }
-    plot.2 <<- function(x) {
-        plot(x$pp, sort(x$rad.n), pch = 1, ylim = c(0, max(x$rad.n, x$rad.sn)), 
-            xlab = "Chi-square Percentiles", 
-            ylab = "Mahalanobis Distances")
-        abline(0, 1, lty = 3)
-        title(main = "Normal QQ-Plot", sub = x$y.name) }
-    plot.3 <<- function(x) {            
-        plot(x$pp, sort(x$rad.sn), pch = 1, ylim = c(0, max(x$rad.n, x$rad.sn)), 
-            xlab = "Percentiles of chi-square distribution", 
-            ylab = "Mahalanobis distances")
-        abline(0, 1, lty = 3)
-        title(main = "Skew-Normal QQ-Plot", sub = x$y.name) }
-    plot.4 <<- function(x) {
-        plot((1:x$n)/(x$n + 1), sort(pchisq(x$rad.n, x$k)), 
-            xlab = "",  ylab = "")
-        abline(0, 1, lty = 3)
-        title(main = "Normal PP-Plot", sub = x$y.name) }
-    plot.5 <<- function(x) {            
-        plot((1:x$n)/(x$n + 1), sort(pchisq(x$rad.sn, x$k)), 
-            xlab = "", ylab = "")
-        abline(0, 1, lty = 3)
-        title(main = "Skew-Normal PP-Plot", sub = x$y.name) }
             
     # Plot:
     plot1Title = "Scatterplots"
@@ -663,15 +592,117 @@ function(x, which = "ask", ...)
             "Normal PP-Plot",
             "Skew-Normal PP-Plot"),
         plotFUN = c(
-            "plot.1", 
-            "plot.2", 
-            "plot.3",
-            "plot.4",
-            "plot.5"),
+            ".mvsnorm.plot.1", 
+            ".mvsnorm.plot.2", 
+            ".mvsnorm.plot.3",
+            ".mvsnorm.plot.4",
+            ".mvsnorm.plot.5"),
         which = which)
                     
     # Return Value:
     invisible(x)
+}
+
+
+.mvsnorm.plot.1 <-
+function(x)
+{
+    dim = x$k
+    if(dim == 1) .mvsnorm.plot.1A(x) else .mvsnorm.plot.1B(x)
+}
+
+
+.mvsnorm.plot.1A <- 
+function(x) 
+{
+    z = x
+    y0 <- z$y
+    xi0 <- apply(z$xi, 2, mean)
+    y0 <- as.vector(y0)
+    x <- seq(min(pretty(y0, 10)), max(pretty(y0, 10)), length = 100)
+    omega <- sqrt(diag(z$Omega))
+    dp0 <- c(xi0, omega, z$alpha)
+    xlab <- z$y.name
+    hist(y0, prob = TRUE, breaks = "FD", xlab = xlab, 
+        ylab = "density", border = "white", col = "steelblue4", 
+        main = z$y.name)
+    lines(x, .dsn(x, dp0[1], dp0[2], dp0[3]))
+    if (length(y0) < 201) 
+        points(y0, rep(0, z$n), pch = 1) 
+}
+
+
+.mvsnorm.plot.1B <- 
+function(x) 
+{
+    opt = options()
+    options(warn = -1)
+    pairs(
+        x$y, 
+        labels = x$y.names, 
+        panel = function(x, y, Y, y.names, xi, Omega, alpha) {
+            for (i in 1:length(alpha)) {
+                if (all(Y[, i] == x)) 
+                    Ix = i
+                if (all(Y[, i] == y)) 
+                    Iy = i }
+            points(x, y)
+            marg = .msn.marginal(xi, Omega, alpha, c(Ix, Iy))
+            xi.marg = marg$xi
+            Omega.marg = marg$Omega
+            alpha.marg = marg$alpha
+            x1 = seq(min(x), max(x), length = 30)
+            x2 = seq(min(y), max(y), length = 30)
+            .dsn2.plot(x1, x2, xi.marg, Omega.marg, alpha.marg, 
+                add = TRUE, col = "steelblue4")}, 
+        Y = x$y, 
+        y.names = dimnames(x$y)[[2]], 
+        xi = apply(x$xi, 2, mean),  
+        Omega = x$Omega, 
+        alpha = x$alpha) 
+    options(opt) 
+} 
+
+
+.mvsnorm.plot.2 <- 
+function(x) 
+{
+    plot(x$pp, sort(x$rad.n), pch = 1, ylim = c(0, max(x$rad.n, x$rad.sn)), 
+        xlab = "Chi-square Percentiles", 
+        ylab = "Mahalanobis Distances")
+    abline(0, 1, lty = 3)
+    title(main = "Normal QQ-Plot", sub = x$y.name) 
+}
+
+    
+.mvsnorm.plot.3 <- 
+function(x) 
+{            
+    plot(x$pp, sort(x$rad.sn), pch = 1, ylim = c(0, max(x$rad.n, x$rad.sn)), 
+        xlab = "Percentiles of chi-square distribution", 
+        ylab = "Mahalanobis distances")
+    abline(0, 1, lty = 3)
+    title(main = "Skew-Normal QQ-Plot", sub = x$y.name) 
+}
+
+    
+.mvsnorm.plot.4 <- 
+function(x) 
+{
+    plot((1:x$n)/(x$n + 1), sort(pchisq(x$rad.n, x$k)), 
+        xlab = "",  ylab = "")
+    abline(0, 1, lty = 3)
+    title(main = "Normal PP-Plot", sub = x$y.name) 
+}
+
+
+.mvsnorm.plot.5 <- 
+function(x) 
+{            
+    plot((1:x$n)/(x$n + 1), sort(pchisq(x$rad.sn, x$k)), 
+        xlab = "", ylab = "")
+    abline(0, 1, lty = 3)
+    title(main = "Skew-Normal PP-Plot", sub = x$y.name) 
 }
 
 
@@ -686,79 +717,7 @@ function(x, which = "ask", ...)
     #   Internal Function
     
     # FUNCTION: 
-    
-    # Internal Plot Functions:
-    dim = x$k
-    if (dim == 1 ) {
-        plot.1 <<- function(x) {
-            z = x
-            y0 <- z$y
-            xi0 <- apply(z$xi, 2, mean)
-            y0 <- as.vector(y0)
-            x <- seq(min(pretty(y0, 10)), max(pretty(y0, 10)), length = 100)
-            omega <- sqrt(diag(z$Omega))
-            dp0 <- c(xi0, omega, z$alpha, z$df)
-            xlab <- z$y.name
-            hist(y0, prob = TRUE, breaks = "FD", xlab = xlab, 
-                ylab = "density", border = "white", col = "steelblue4", 
-                main = z$y.name)
-            lines(x, .dst(x, dp0[1], dp0[2], dp0[3], dp0[4]))
-            if (length(y0) < 201) 
-                points(y0, rep(0, z$n), pch = 1) 
-        }
-    } else {
-        plot.1 <<- function(x) {
-            opt = options()
-            options(warn = -1)
-            pairs(
-                x$y, 
-                labels = x$y.names, 
-                panel = function(x, y, Y, y.names, xi, Omega, alpha, df) {
-                    for (i in 1:length(alpha)) {
-                        if (all(Y[, i] == x)) 
-                            Ix = i
-                        if (all(Y[, i] == y)) 
-                            Iy = i }
-                    points(x, y)
-                    marg = .msn.marginal(xi, Omega, alpha, c(Ix, Iy))
-                    xi.marg = marg$xi
-                    Omega.marg = marg$Omega
-                    alpha.marg = marg$alpha
-                    x1 = seq(min(x), max(x), length = 30)
-                    x2 = seq(min(y), max(y), length = 30)
-                    .dst2.plot(x1, x2, xi.marg, Omega.marg, alpha.marg, 
-                        df, add = TRUE, col = "steelblue4")} , 
-                Y = x$y, 
-                y.names = dimnames(x$y)[[2]], 
-                xi = apply(x$xi, 2, mean),  
-                Omega = x$Omega, 
-                alpha = x$alpha,
-                df = x$df) 
-                options(opt) } 
-    }
-    plot.2 <<- function(x) {
-        plot(x$pp, sort(x$rad.n), pch = 1, ylim = c(0, max(x$rad.n, x$rad.sn)), 
-            xlab = "Chi-square Percentiles", 
-            ylab = "Mahalanobis Distances")
-        abline(0, 1, lty = 3)
-        title(main = "Normal QQ-Plot", sub = x$y.name) }
-    plot.3 <<- function(x) {            
-        plot(x$pp, sort(x$rad.sn), pch = 1, ylim = c(0, max(x$rad.n, x$rad.sn)), 
-            xlab = "Percentiles of chi-square distribution", 
-            ylab = "Mahalanobis distances")
-        abline(0, 1, lty = 3)
-        title(main = "Skew-Normal QQ-Plot", sub = x$y.name) }
-    plot.4 <<- function(x) {
-        plot((1:x$n)/(x$n + 1), sort(pchisq(x$rad.n, x$k)), 
-            xlab = "",  ylab = "")
-        abline(0, 1, lty = 3)
-        title(main = "Normal PP-Plot", sub = x$y.name) }
-    plot.5 <<- function(x) {            
-        plot((1:x$n)/(x$n + 1), sort(pchisq(x$rad.sn, x$k)), 
-            xlab = "", ylab = "")
-        abline(0, 1, lty = 3)
-        title(main = "Skew-Normal PP-Plot", sub = x$y.name) }
-            
+           
     # Plot:
     plot1Title = "Scatterplots"
     if (dim == 1) plot1Title = "Histogram Plot" 
@@ -771,17 +730,120 @@ function(x, which = "ask", ...)
             "Normal PP-Plot",
             "Skew-Normal PP-Plot"),
         plotFUN = c(
-            "plot.1", 
-            "plot.2", 
-            "plot.3",
-            "plot.4",
-            "plot.5"),
+            ".mvst.plot.1", 
+            ".mvst.plot.2", 
+            ".mvst.plot.3",
+            ".mvst.plot.4",
+            ".mvst.plot.5"),
         which = which)
                     
     # Return Value:
     invisible(x)
 }
 
+
+.mvst.plot.1 <-
+function(x)
+{
+    dim = x$k
+    if(dim == 1) .mvst.plot.1A(x) else .mvst.plot.1B(x)
+}
+
+
+.mvst.plot.1A <- 
+function(x) 
+{
+    z = x
+    y0 <- z$y
+    xi0 <- apply(z$xi, 2, mean)
+    y0 <- as.vector(y0)
+    x <- seq(min(pretty(y0, 10)), max(pretty(y0, 10)), length = 100)
+    omega <- sqrt(diag(z$Omega))
+    dp0 <- c(xi0, omega, z$alpha, z$df)
+    xlab <- z$y.name
+    hist(y0, prob = TRUE, breaks = "FD", xlab = xlab, 
+        ylab = "density", border = "white", col = "steelblue4", 
+        main = z$y.name)
+    lines(x, .dst(x, dp0[1], dp0[2], dp0[3], dp0[4]))
+    if (length(y0) < 201) 
+        points(y0, rep(0, z$n), pch = 1) 
+}
+
+
+.mvst.plot.1B <- 
+function(x) 
+{
+    opt = options()
+    options(warn = -1)
+    pairs(
+        x$y, 
+        labels = x$y.names, 
+        panel = function(x, y, Y, y.names, xi, Omega, alpha, df) {
+            for (i in 1:length(alpha)) {
+                if (all(Y[, i] == x)) 
+                    Ix = i
+                if (all(Y[, i] == y)) 
+                    Iy = i }
+            points(x, y)
+            marg = .msn.marginal(xi, Omega, alpha, c(Ix, Iy))
+            xi.marg = marg$xi
+            Omega.marg = marg$Omega
+            alpha.marg = marg$alpha
+            x1 = seq(min(x), max(x), length = 30)
+            x2 = seq(min(y), max(y), length = 30)
+            .dst2.plot(x1, x2, xi.marg, Omega.marg, alpha.marg, 
+                df, add = TRUE, col = "steelblue4")} , 
+        Y = x$y, 
+        y.names = dimnames(x$y)[[2]], 
+        xi = apply(x$xi, 2, mean),  
+        Omega = x$Omega, 
+        alpha = x$alpha,
+        df = x$df) 
+    options(opt) 
+} 
+
+       
+.mvst.plot.2 <- 
+function(x) 
+{
+    plot(x$pp, sort(x$rad.n), pch = 1, ylim = c(0, max(x$rad.n, x$rad.sn)), 
+        xlab = "Chi-square Percentiles", 
+        ylab = "Mahalanobis Distances")
+    abline(0, 1, lty = 3)
+    title(main = "Normal QQ-Plot", sub = x$y.name) 
+}
+
+    
+.mvst.plot.3 <- 
+function(x) 
+{            
+    plot(x$pp, sort(x$rad.sn), pch = 1, ylim = c(0, max(x$rad.n, x$rad.sn)), 
+        xlab = "Percentiles of chi-square distribution", 
+        ylab = "Mahalanobis distances")
+    abline(0, 1, lty = 3)
+    title(main = "Skew-Normal QQ-Plot", sub = x$y.name) 
+}
+
+
+.mvst.plot.4 <- 
+function(x) 
+{
+    plot((1:x$n)/(x$n + 1), sort(pchisq(x$rad.n, x$k)), 
+        xlab = "",  ylab = "")
+    abline(0, 1, lty = 3)
+    title(main = "Normal PP-Plot", sub = x$y.name) 
+}
+
+    
+.mvst.plot.5 <- 
+function(x) 
+{            
+    plot((1:x$n)/(x$n + 1), sort(pchisq(x$rad.sn, x$k)), 
+        xlab = "", ylab = "")
+    abline(0, 1, lty = 3)
+    title(main = "Skew-Normal PP-Plot", sub = x$y.name) 
+}
+        
 
 ################################################################################
 # BUILTIN: sn
@@ -801,7 +863,7 @@ function(x, location = 0, scale = 1, shape = 0, log = FALSE)
     if(!log) {
         y = 2 * dnorm(z) * pnorm(z * shape) / scale
     } else {
-        y = (-0.9189385332046727-logb(scale)-z^2/2+zeta(0,shape*z))
+        y = (-0.9189385332046727-logb(scale)-z^2/2+.zeta(0,shape*z))
     }
     
     # Return Value:
@@ -1104,7 +1166,7 @@ function(x, xi = rep(0, d), Omega, alpha, df = Inf)
     # evaluated at x, which is either a d-vector or (n,d) matrix
     
     if (df == Inf) 
-        return(dmsn(x, xi, Omega, alpha))
+        return(.dmsn(x, xi, Omega, alpha))
     if(is.vector(x)) {
         n = 1
         d = length(x)
@@ -1447,9 +1509,9 @@ function(k, x)
     x = replace(x,na,0)
     z = switch(k+1, pnorm(x, log.p = TRUE) + log(2), ifelse(x>(-20), 
         dnorm(x)/pnorm(x), ifelse(x>(-200), exp(-x^2/2-0.5*log(2*pi) - 
-        pnorm(x,log.p = TRUE)), - x*(1+1/x^2-2/x^4))), (-zeta(1,x) * 
-        (x+zeta(1,x))), (-zeta(2,x)*(x+zeta(1,x))-zeta(1,x)*(1+zeta(2,x))),
-        (-zeta(3,x)*(x+2*zeta(1,x)) - 2*zeta(2,x)*(1+zeta(2,x))), NULL)
+        pnorm(x,log.p = TRUE)), - x*(1+1/x^2-2/x^4))), (-.zeta(1,x) * 
+        (x+.zeta(1,x))), (-.zeta(2,x)*(x+.zeta(1,x))-.zeta(1,x)*(1+.zeta(2,x))),
+        (-.zeta(3,x)*(x+2*.zeta(1,x)) - 2*.zeta(2,x)*(1+.zeta(2,x))), NULL)
     neg.inf = (x == -Inf)
     if (any(neg.inf))
     z = switch(k+1, z, replace(z, neg.inf, Inf), replace(z, neg.inf, 1),

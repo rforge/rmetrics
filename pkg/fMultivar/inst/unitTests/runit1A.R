@@ -77,27 +77,6 @@
 # FUNCTION:                 DESCRIPTION:
 #  .emaSlider                EMA Slider
 ################################################################################
-# OK
-
-
-test.aaa = 
-function()
-{
-    # Help File:
-    helpFile = function() { 
-        example(TechnicalAnalysis, ask = FALSE)
-        return() 
-    }
-    checkIdentical(
-        target = class(try(helpFile())),
-        current = "NULL")
-
-    # Return Value:
-    return()    
-}
-
-
-################################################################################
 
 
 test.utilityFunctions =

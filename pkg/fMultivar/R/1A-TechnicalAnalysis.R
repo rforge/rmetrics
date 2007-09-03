@@ -430,7 +430,7 @@ function(high, low)
     
     # VOHL:
     vohl = high - low
-    if(is.timeSeries(x)) colnames(vohl)<-"VOHL"
+    if(is.timeSeries(vohl)) colnames(vohl)<-"VOHL"
     
     # Return Value:
     vohl
@@ -455,7 +455,7 @@ function(high, low)
     
     # VOR:
     vor = (high - low) / low
-    if(is.timeSeries(x)) colnames(vor)<-"VOR"
+    if(is.timeSeries(vor)) colnames(vor)<-"VOR"
     
     # Return Value:
     vor
@@ -668,7 +668,7 @@ function(close, high, low, lag = 50)
     # FUNCTION:
     
     # Check:
-    TS = is.timeSeries(x)
+    TS = is.timeSeries(close)
     if (TS) {
         X = close
         close = as.vector(close)
@@ -677,7 +677,9 @@ function(close, high, low, lag = 50)
     } 
     
     # %R:
-    minlag = function(x, lag){
+    minlag = 
+    function(x, lag)
+    {
         xm = x
         for (i in 1:lag){
             x1 = c(x[1], x[1:(length(x)-1)])
@@ -686,7 +688,9 @@ function(close, high, low, lag = 50)
         }
         xm
     }
-    maxlag = function(x, lag){
+    maxlag = 
+    function(x, lag)
+    {
         xm = x
         for (i in 1:lag){
             x1 = c(x[1], x[1:(length(x)-1)])
@@ -1357,7 +1361,7 @@ function(X, indicator = "ema", select = "Close", lag = 9)
     if (indicator == "osc") {
         if (length(lag) < 2)
             stop("At least two lags must be specified!")
-        ans = oscTA(x = x[, select], lag = lag[1:2])
+        ans = oscTA(x = x[, select], lag1 = lag[1], lag2 = lag[2])
     }
             
     if (indicator == "mom") {

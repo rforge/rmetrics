@@ -182,30 +182,30 @@ function(object)
     # FUNCTION:
     
     # Title:
-    cat("\nTitle:\n" , x@title, "\n")
+    cat("\nTitle:\n" , object@title, "\n")
     
     # Function Call:
     cat("\nCall:\n ")
-    cat(paste(deparse(x@call), sep = "\n", collapse = "\n"), "\n", sep = "")
+    cat(paste(deparse(object@call), sep = "\n", collapse = "\n"), "\n", sep = "")
             
     # Point Process and Decluster Parameters:
-    parameter = cbind(u = x@parameter$u, run = x@parameter$run)
+    parameter = cbind(u = object@parameter$u, run = object@parameter$run)
     rownames(parameter) = paste("", rownames(parameter))
     cat("\nModel Parameters:\n")
     print(parameter)
     
     # Estimation Type:
-    cat("\nEstimation Method:\n", x@method, "\n") 
+    cat("\nEstimation Method:\n", object@method, "\n") 
     
     # Estimated Parameters:
     cat("\nEstimated Parameters:\n")
-    print(x@fit$par.ests)
+    print(object@fit$par.ests)
 
     # Desription:
-    cat("\nDescription\n", x@description, "\n\n")
+    cat("\nDescription\n", object@description, "\n\n")
     
     # Return Value:
-    invisible(x)
+    invisible(object)
 }
 
 

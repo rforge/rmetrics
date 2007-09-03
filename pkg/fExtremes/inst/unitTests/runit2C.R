@@ -16,7 +16,7 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2004, Diethelm Wuertz, GPL
+#   1999 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
 #   www.rmetrics.org
@@ -32,26 +32,6 @@
 #  gevrlevelPlot         Calculates Return Levels Based on GEV Fit
 #  .gevrlevelLLH         Computes log-likelihood function for gevrlevelPlot
 ################################################################################
-
-
-test.aaa = 
-function()
-{
-    # Help File:
-    helpFile = function() { 
-        example(GevReturnLevel, ask = FALSE)
-        return() 
-    }
-    checkIdentical(
-        target = class(try(helpFile())),
-        current = "NULL")
-
-    # Return Value:
-    return()    
-}
-
-
-# ------------------------------------------------------------------------------
 
 
 test.returnLevel = 

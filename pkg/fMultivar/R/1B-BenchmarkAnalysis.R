@@ -159,7 +159,7 @@ function(x, r = 0, scale = sqrt(250))
     }
     
     # Return Value:
-    invsible()
+    invisible()
 }
 
 
@@ -199,7 +199,7 @@ function(x)
     }
     
     # Return Value:
-    invsible()
+    invisible()
 }
 
 

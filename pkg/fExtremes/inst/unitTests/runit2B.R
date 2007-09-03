@@ -16,7 +16,7 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2004, Diethelm Wuertz, GPL
+#   1999 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
 #   www.rmetrics.org
@@ -40,26 +40,6 @@
 #  plot.fGEVFIT          S3 Plot method for object of class "fGEVFIT"
 #  summary.fGEVFIT       S3 Summary Method for object of class "fGEVFIT"
 ################################################################################
-
-
-test.aaa = 
-function()
-{
-    # Help File:
-    helpFile = function() { 
-        example(GevModelling, ask = FALSE)
-        return() 
-    }
-    checkIdentical(
-        target = class(try(helpFile())),
-        current = "NULL")
-
-    # Return Value:
-    return()    
-}
-
-
-# ------------------------------------------------------------------------------
 
 
 test.gevSim = 

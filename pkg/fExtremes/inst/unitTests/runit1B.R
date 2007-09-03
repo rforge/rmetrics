@@ -16,7 +16,7 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2004, Diethelm Wuertz, GPL
+#   1999 - 2007, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
 #   www.rmetrics.org
@@ -34,26 +34,6 @@
 #  pointProcess      Returns peaks over a threshold from a time series
 #  deCluster         Declusters a point process
 ################################################################################
-
-
-test.aaa = 
-function()
-{
-    # Help File:
-    helpFile = function() { 
-        example(DataPreprocessing, ask = FALSE)
-        return() 
-    }
-    checkIdentical(
-        target = class(try(helpFile())),
-        current = "NULL")
-
-    # Return Value:
-    return()    
-}
-
-
-# ------------------------------------------------------------------------------
 
 
 test.blockMaxima = 

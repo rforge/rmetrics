@@ -42,7 +42,7 @@
 #  .polymarsFit           Polytochomous MARS Model
 #  .nnetFit               Feedforward Neural Network Model
 # S3-METHODS:           DESCRIPTION:
-#  print.fREG            Prints results from a regression model fit     
+#  show.fREG             Prints results from a regression model fit     
 #  plot.fREG             Plots fit and diagnostics for a regression model
 #  .plot.lm               Linear Regression Model internal plot        
 #  .plot.rlm              Robust Linear Regression Model internal plot
@@ -438,9 +438,6 @@ function(object)
     
     # FUNCTION:
     
-    # Settings:
-    object
-    
     # Title:
     cat("\nTitle:\n ")
     cat(as.character(object@title), "\n")
@@ -475,10 +472,12 @@ function(object)
         # Regression Model GLM:
         if (object@method == "glm") {
             if (length(object@fit$coef)) {
-                if (is.character(co = object@fit$contrasts)) 
-                cat("  [contrasts: ", apply(cbind(names(co), co), 
+                # if (is.character(co = object@fit$contrasts)) 
+                co = object@fit$contrasts
+                if (is.character(co)) 
+                    cat("  [contrasts: ", apply(cbind(names(co), co), 
                     1, paste, collapse = "="), "]")
-                # cat(":\n")
+                    # cat(":\n")
                 print.default(format(object@fit$coefficients,
                     digits = digits), print.gap = 2, quote = FALSE)
             } else { 
@@ -593,28 +592,14 @@ function(x, which = "ask", ...)
     # 6. PACF Plot
     # 7. Positive Mean Excess Plot"
     # 8. Negative Mean Excess Plot"
-    .plot1 <<- function(x, ...) .responsesPlot(residuals(x)+fitted(x),fitted(x))
-    .plot2 <<- function(x, ...) .residualsPlot(residuals(x))    
-    .plot3 <<- function(x, ...) qqnormPlot(residuals(x))
-    .plot4 <<- function(x, ...) .firePlot(fitted(x), residuals(x)) 
-    .plot5 <<- function(x, ...) .acfPlot(residuals(x))
-    .plot6 <<- function(x, ...) .pacfPlot(residuals(x))
-    .plot7 <<- function(x, ...) .mrlPlot(residuals(x))
-    .plot8 <<- function(x, ...) .mrlPlot(-residuals(x))
-    
+
     # 1. lm: Residuals vs Fitted:
     # 2. lm: Normal Q-Q:
     # 3. lm: Scale-Location:
     # 4. lm: Cook's distance:
     # 5. lm: Residuals vs Leverage:
     # 6. lm: Cook's distance vs Leverage:
-    .plot9 <<- function(x, ...) plot(x, 1, pch = 19, col = "steelblue", ...)  
-    .plot10<<- function(x, ...) plot(x, 2, pch = 19, col = "steelblue", ...)
-    .plot11<<- function(x, ...) plot(x, 3, pch = 19, col = "steelblue", ...)
-    .plot12<<- function(x, ...) plot(x, 4, pch = 19, col = "steelblue", ...)
-    .plot13<<- function(x, ...) plot(x, 5, pch = 19, col = "steelblue", ...)
-    .plot14<<- function(x, ...) plot(x, 6, pch = 19, col = "steelblue", ...)
-    
+
     # Plot:
     .interactiveRegressionPlot(
         x,
@@ -633,7 +618,7 @@ function(x, which = "ask", ...)
             "lm: Cook's distance", 
             "lm: Residuals vs Leverage", 
             "lm: Cook's distance vs Leverage"),
-        plotFUN = paste(".plot", 1:14, sep = ""),
+        plotFUN = paste(".plot.lm.", 1:14, sep = ""),
         which = which) 
             
     # Return Value:
@@ -641,6 +626,22 @@ function(x, which = "ask", ...)
 } 
 
 
+.plot.lm.1 <- function(x, ...) .responsesPlot(residuals(x)+fitted(x),fitted(x))
+.plot.lm.2 <- function(x, ...) .residualsPlot(residuals(x))    
+.plot.lm.3 <- function(x, ...) qqnormPlot(residuals(x))
+.plot.lm.4 <- function(x, ...) .firePlot(fitted(x), residuals(x)) 
+.plot.lm.5 <- function(x, ...) .acfPlot(residuals(x))
+.plot.lm.6 <- function(x, ...) .pacfPlot(residuals(x))
+.plot.lm.7 <- function(x, ...) .mrlPlot(residuals(x))
+.plot.lm.8 <- function(x, ...) .mrlPlot(-residuals(x))
+.plot.lm.9 <- function(x, ...) plot(x, 1, pch = 19, col = "steelblue", ...)  
+.plot.lm.10<- function(x, ...) plot(x, 2, pch = 19, col = "steelblue", ...)
+.plot.lm.11<- function(x, ...) plot(x, 3, pch = 19, col = "steelblue", ...)
+.plot.lm.12<- function(x, ...) plot(x, 4, pch = 19, col = "steelblue", ...)
+.plot.lm.13<- function(x, ...) plot(x, 5, pch = 19, col = "steelblue", ...)
+.plot.lm.14<- function(x, ...) plot(x, 6, pch = 19, col = "steelblue", ...)
+    
+    
 # ------------------------------------------------------------------------------
 
 
@@ -651,14 +652,6 @@ function(x, which = "ask", ...)
     # 2. Residuals Plot:
     # 3. Quantile Plot:
     # 4. Fitted Values vs. Residuals Plot:
-    .plot1 <<- function(x, ...) .responsesPlot(residuals(x)+fitted(x),fitted(x))
-    .plot2 <<- function(x, ...) .residualsPlot(residuals(x))    
-    .plot3 <<- function(x, ...) qqnormPlot(residuals(x))
-    .plot4 <<- function(x, ...) .firePlot(fitted(x), residuals(x)) 
-    .plot5 <<- function(x, ...) .acfPlot(residuals(x))
-    .plot6 <<- function(x, ...) .pacfPlot(residuals(x))
-    .plot7 <<- function(x, ...) .mrlPlot(residuals(x))
-    .plot8 <<- function(x, ...) .mrlPlot(-residuals(x))
     
     # Plot:
     .interactiveRegressionPlot(
@@ -672,12 +665,22 @@ function(x, which = "ask", ...)
             "PACF of Residuals",
             "Positive Mean Excess Plot",
             "Negative Mean Excess Plot"),
-        plotFUN = paste(".plot", 1:8, sep = ""),
+        plotFUN = paste(".plot.common.", 1:8, sep = ""),
         which = which) 
             
     # Return Value:
     invisible(x)
 }
+
+
+.plot.common.1 <- function(x, ...) .responsesPlot(residuals(x)+fitted(x),fitted(x))
+.plot.common.2 <- function(x, ...) .residualsPlot(residuals(x))    
+.plot.common.3 <- function(x, ...) qqnormPlot(residuals(x))
+.plot.common.4 <- function(x, ...) .firePlot(fitted(x), residuals(x)) 
+.plot.common.5 <- function(x, ...) .acfPlot(residuals(x))
+.plot.common.6 <- function(x, ...) .pacfPlot(residuals(x))
+.plot.common.7 <- function(x, ...) .mrlPlot(residuals(x))
+.plot.common.8 <- function(x, ...) .mrlPlot(-residuals(x))
 
 
 # ------------------------------------------------------------------------------
@@ -741,6 +744,7 @@ function(object, ...)
         # cat("\nCall:\n")
         # cat(paste(deparse(x$call), sep = "\n", collapse = "\n"), 
         #   "\n\n", sep = "")
+        aliased = x$aliased
         resid = x$residuals
         df = x$df
         rdf = df[2]
@@ -759,7 +763,7 @@ function(object, ...)
             cat("ALL", df[1], "residuals are 0: no residual ",
                 "degrees of freedom!\n") 
         }
-        if (length(x$aliased) == 0) {
+        if (length(aliased) == 0) {
             cat("\nNo Coefficients\n") 
         } else {
             if (nsingular<-df[3] - df[1]) {
@@ -769,7 +773,7 @@ function(object, ...)
                 cat("\nCoefficients:\n")
             }
             coefs = x$coefficients
-            if (!is.null(aliased = x$aliased) && any(x$aliased)) {
+            if (!is.null(aliased) && any(aliased)) {
                 cn = names(aliased)
                 coefs = matrix(NA, length(aliased), 4, dimnames = 
                     list(cn, colnames(coefs)))
@@ -813,6 +817,8 @@ function(object, ...)
         digits = max(4, getOption("digits") - 4)
         symbolic.cor = x$symbolic.cor
         signif.stars = getOption("show.signif.stars")
+        aliased = x$aliased
+        df = x$df
         #cat("\nCall:\n")
         #cat(paste(deparse(x$call), sep = "\n", collapse = "\n"), 
         #   "\n\n", sep = "")
@@ -823,15 +829,15 @@ function(object, ...)
                 "Max") }
         print.default(x$deviance.resid, digits = digits, na = "", 
             print.gap = 2)
-        if (length(x$aliased) == 0) {
+        if (length(aliased) == 0) {
             cat("\nNo Coefficients\n") 
         } else {
-            if (!is.null(df = x$df) && (nsingular = df[3] - df[1])) 
+            if (!is.null(df) && (nsingular = df[3] - df[1])) 
                 cat("\nCoefficients: (", nsingular, " not defined ",
                 "because of singularities)\n", sep = "")
             else cat("\nCoefficients:\n")
             coefs = x$coefficients
-            if (!is.null(aliased = x$aliased) && any(aliased)) {
+            if (!is.null(aliased) && any(aliased)) {
                 cn = names(aliased)
                 coefs = matrix(NA, length(aliased), 4, dimnames = 
                     list(cn, colnames(coefs)))
@@ -1553,7 +1559,7 @@ function(x, ...)
     print.lm(x, ...) 
     
     # Return Value:
-    inbvisible(x)
+    invisible(x)
 }
     
 
@@ -1574,7 +1580,7 @@ function(x, ...)
     plot.lm(x, ...)
     
     # Return Value:
-    inbvisible(x)
+    invisible(x)
 }
 
 
@@ -1595,7 +1601,7 @@ function(object, ...)
     summary.lm(object, ...) 
     
     # Return Value:
-    inbvisible(object)
+    invisible(object)
 }
 
 
@@ -1636,50 +1642,6 @@ plotFUN = paste("plot.", 1:19, sep = ""), which = "all", ...)
     if (length(choices) > 19)
         stop("Sorry, only 19 plots at max are supported.")
     
-    # Internal "askPlot" Function:                
-    multPlot = function (x, choices, ...) 
-    {
-        # Selective Plot:
-        selectivePlot = function (x, choices, FUN, which){
-            # Internal Function:
-            askPlot = function (x, choices, FUN) {
-                # Pick and Plot:
-                pick = 1; n.plots = length(choices)
-                while (pick > 0) { pick = menu (
-                    choices = paste("plot:", choices), 
-                    title = "\nMake a plot selection (or 0 to exit):")
-                    if (pick > 0) match.fun(FUN[pick])(x) } }                   
-            if (as.character(which[1]) == "ask") {
-                askPlot(x, choices = choices, FUN = FUN, ...) }
-            else { 
-                for (i in 1:n.plots) if (which[i]) match.fun(FUN[i])(x) }
-            invisible() }  
-        # match Functions, up to nine ...
-        if (length(plotFUN) < 19) plotFUN = 
-            c(plotFUN, rep(plotFUN[1], times = 19 - length(plotFUN)))
-        plot.1  = match.fun(plotFUN[1]);  plot.2  = match.fun(plotFUN[2]) 
-        plot.3  = match.fun(plotFUN[3]);  plot.4  = match.fun(plotFUN[4]) 
-        plot.5  = match.fun(plotFUN[5]);  plot.6  = match.fun(plotFUN[6]) 
-        plot.7  = match.fun(plotFUN[7]);  plot.8  = match.fun(plotFUN[8]) 
-        plot.9  = match.fun(plotFUN[9]);  plot.10 = match.fun(plotFUN[10])
-        plot.11 = match.fun(plotFUN[11]); plot.12 = match.fun(plotFUN[12]) 
-        plot.13 = match.fun(plotFUN[13]); plot.14 = match.fun(plotFUN[14]) 
-        plot.15 = match.fun(plotFUN[15]); plot.16 = match.fun(plotFUN[16]) 
-        plot.17 = match.fun(plotFUN[17]); plot.18 = match.fun(plotFUN[18]) 
-        plot.19 = match.fun(plotFUN[19])        
-        pick = 1
-        while (pick > 0) { pick = menu (
-            ### choices = paste("plot:", choices),
-            choices = paste(" ", choices), 
-            title = "\nMake a plot selection (or 0 to exit):")
-            # up to 19 plot functions ...
-            switch (pick, 
-                plot.1(x),  plot.2(x),  plot.3(x),  plot.4(x),  plot.5(x), 
-                plot.6(x),  plot.7(x),  plot.8(x),  plot.9(x),  plot.10(x),
-                plot.11(x), plot.12(x), plot.13(x), plot.14(x), plot.15(x), 
-                plot.16(x), plot.17(x), plot.18(x), plot.19(x)) 
-        } 
-    }
                               
     # Plot:
     if (is.numeric(which)) {
@@ -1691,7 +1653,7 @@ plotFUN = paste("plot.", 1:19, sep = ""), which = "all", ...)
         which = rep(TRUE, times = length(choices))
     }
     if (which[1] == "ask") {
-        multPlot(x, choices, ...) 
+        .interactive.multPlot(x, choices, ...) 
     } else {
         for ( i in 1:length(which) ) {
             FUN = match.fun(plotFUN[i])
@@ -1701,6 +1663,40 @@ plotFUN = paste("plot.", 1:19, sep = ""), which = "all", ...)
             
     # Return Value:
     invisible(x)
+}
+
+
+                
+.interactive.multPlot = 
+function (x, choices, ...) 
+{  
+    # Match Functions, up to nine ...
+    if (length(plotFUN) < 19) plotFUN = 
+        c(plotFUN, rep(plotFUN[1], times = 19 - length(plotFUN)))
+    plot.1  = match.fun(plotFUN[1]);  plot.2  = match.fun(plotFUN[2]) 
+    plot.3  = match.fun(plotFUN[3]);  plot.4  = match.fun(plotFUN[4]) 
+    plot.5  = match.fun(plotFUN[5]);  plot.6  = match.fun(plotFUN[6]) 
+    plot.7  = match.fun(plotFUN[7]);  plot.8  = match.fun(plotFUN[8]) 
+    plot.9  = match.fun(plotFUN[9]);  plot.10 = match.fun(plotFUN[10])
+    plot.11 = match.fun(plotFUN[11]); plot.12 = match.fun(plotFUN[12]) 
+    plot.13 = match.fun(plotFUN[13]); plot.14 = match.fun(plotFUN[14]) 
+    plot.15 = match.fun(plotFUN[15]); plot.16 = match.fun(plotFUN[16]) 
+    plot.17 = match.fun(plotFUN[17]); plot.18 = match.fun(plotFUN[18]) 
+    plot.19 = match.fun(plotFUN[19])        
+    pick = 1
+    
+    while (pick > 0) { 
+        pick = menu (
+        ### choices = paste("plot:", choices),
+        choices = paste(" ", choices), 
+        title = "\nMake a plot selection (or 0 to exit):")
+        # up to 19 plot functions ...
+        switch (pick, 
+            plot.1(x),  plot.2(x),  plot.3(x),  plot.4(x),  plot.5(x), 
+            plot.6(x),  plot.7(x),  plot.8(x),  plot.9(x),  plot.10(x),
+            plot.11(x), plot.12(x), plot.13(x), plot.14(x), plot.15(x), 
+            plot.16(x), plot.17(x), plot.18(x), plot.19(x)) 
+    } 
 }
 
 
@@ -1732,7 +1728,7 @@ function(object, formula = Y ~ X1)
 .response2Plot = 
 function(object, formula = Y ~ X1 + X2, N = 10, fun = mean)
 {  
-    Data = fit@data
+    Data = object@data
     select = all.vars(formula)
     
     X = data[, select[2]]
@@ -1759,7 +1755,7 @@ function(object, formula = Y ~ X1 + X2, N = 10, fun = mean)
     persp(U, V, W, xlab = select[2], ylab = select[3], zlab = select[1],
         phi = 30, theta = -40, col = "steelblue")->res
         
-    R = sign(fit@residuals)
+    R = sign(object@residuals)
     points(trans3d(X[R>0], Y[R>0], Z[R>0], pm = res), col = 5, pch =16)
     points(trans3d(X[R<0], Y[R<0], Z[R<0], pm = res), col = 6, pch =16)
     

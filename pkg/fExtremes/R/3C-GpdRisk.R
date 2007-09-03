@@ -810,6 +810,14 @@ function(object, p = 0.99, ci = 0.95, nLLH = 25, extend = 1.5, labels = TRUE, ..
 # ------------------------------------------------------------------------------
 
 
+.tailSlider.last.Quantile = NA
+.tailSlider.last.nThresholds = NA
+.tailSlider.param = NA
+.tailSlider.conf = NA
+.tailSlider.counter = NA
+.tailSlider.Thresholds = NA
+
+    
 tailSlider = 
 function(x)
 {   # A function implemented by Diethelm Wuertz
@@ -828,17 +836,17 @@ function(x)
     x = as.vector(x)
     
     # Exit:
-    on.exit(rm(last.Quantile))
-    on.exit(rm(last.nThresholds))
-    on.exit(rm(param))
-    on.exit(rm(conf))
-    on.exit(rm(counter))
+    on.exit(rm(.tailSlider.last.Quantile))
+    on.exit(rm(.tailSlider.last.nThresholds))
+    on.exit(rm(.tailSlider.param))
+    on.exit(rm(.tailSlider.conf))
+    on.exit(rm(.tailSlider.counter))
     on.exit(rm(x))
     
     # Internal Function:
     refresh.code = function(...)
     {
-        counter <<- counter + 1      
+        .tailSlider.counter <<- .tailSlider.counter + 1      
         # Sliders:
         u = thresholdStart = .sliderMenu(no = 1)
         du = .sliderMenu(no = 2)
@@ -848,7 +856,7 @@ function(x)
         pp = .sliderMenu(no = 6)
           
         
-        if (counter > 5) {
+        if (.tailSlider.counter > 5) {
             
         # Plot data:        
         par(mfrow = c(2, 2), cex = 0.7)
@@ -884,50 +892,51 @@ function(x)
         title(main = Main, xlab = "Threshold", ylab = "Mean Excess")   
         
         # GPD Fit:
-        if (last.Quantile != Quantile | last.nThresholds != nThresholds) {
-            param <<- NULL
-            conf <<- NULL
-            Thresholds <<- seq(quantile(x, Quantile), quantile(x, 1-Quantile), 
+        if (.tailSlider.last.Quantile != Quantile | .tailSlider.last.nThresholds != nThresholds) {
+            .tailSlider.param <<- NULL
+            .tailSlider.conf <<- NULL
+            .tailSlider.Thresholds <<- seq(quantile(x, Quantile), quantile(x, 1-Quantile), 
                 length = nThresholds)
-            for (threshold in Thresholds) {
+            for (threshold in .tailSlider.Thresholds) {
                 ans = gpdFit(x, threshold)@fit 
-                param <<- rbind(param, c(u = threshold, ans$par.ests))
-                conf <<- rbind(conf, c(u = threshold, ans$par.ses))
+                .tailSlider.param <<- rbind(.tailSlider.param, c(u = threshold, ans$par.ests))
+                .tailSlider.conf <<- rbind(.tailSlider.conf, c(u = threshold, ans$par.ses))
             }
-            last.Quantile <<- Quantile
-            last.nThresholds <<- nThresholds
+            .tailSlider.last.Quantile <<- Quantile
+            .tailSlider.last.nThresholds <<- nThresholds
         } 
         
         # Figure 2:
-        ymax = max(c(param[, 2] + conf[, 2]))
-        ymin = min(c(param[, 2] - conf[, 2]))
-        plot(Thresholds, param[, 2], xlab = "Threshold", ylab = "xi",
+        ymax = max(c(.tailSlider.param[, 2] + .tailSlider.conf[, 2]))
+        ymin = min(c(.tailSlider.param[, 2] - .tailSlider.conf[, 2]))
+        plot(.tailSlider.Thresholds, .tailSlider.param[, 2], xlab = "Threshold", ylab = "xi",
             ylim = c(ymin, ymax), col = "steelblue", type = "l",
             main = "xi Estimation")
         grid()
-        points(Thresholds, param[, 2], pch = 19, col = "steelblue")
-        lines(Thresholds, param[, 2] + conf[, 2], lty = 3)
-        lines(Thresholds, param[, 2] - conf[, 2], lty = 3)
+        points(.tailSlider.Thresholds, .tailSlider.param[, 2], pch = 19, col = "steelblue")
+        lines(.tailSlider.Thresholds, .tailSlider.param[, 2] + .tailSlider.conf[, 2], lty = 3)
+        lines(.tailSlider.Thresholds, .tailSlider.param[, 2] - .tailSlider.conf[, 2], lty = 3)
         abline(h = xi, lty = 3, col = "red") 
         abline(v = u, lty = 3, col = "red")
         abline(v = U, lty = 3, col = "red")
           
         # Figure 3:  
-        ymax = max(c(param[, 3] + conf[, 3]))
-        ymin = min(c(param[, 3] - conf[, 3]))    
-        plot(Thresholds, param[, 3], xlab = "Threshold", ylab = "beta",
+        ymax = max(c(.tailSlider.param[, 3] + .tailSlider.conf[, 3]))
+        ymin = min(c(.tailSlider.param[, 3] - .tailSlider.conf[, 3]))    
+        plot(.tailSlider.Thresholds, .tailSlider.param[, 3], xlab = "Threshold", ylab = "beta",
             ylim = c(ymin, ymax), col = "steelblue", type = "l",
             main = "beta Estimation")
         grid()
-        points(Thresholds, param[, 3], pch = 19, col = "steelblue")
-        lines(Thresholds, param[, 3] + conf[, 3], lty = 3)
-        lines(Thresholds, param[, 3] - conf[, 3], lty = 3)
+        points(.tailSlider.Thresholds, .tailSlider.param[, 3], pch = 19, col = "steelblue")
+        lines(.tailSlider.Thresholds, .tailSlider.param[, 3] + .tailSlider.conf[, 3], lty = 3)
+        lines(.tailSlider.Thresholds, .tailSlider.param[, 3] - .tailSlider.conf[, 3], lty = 3)
         abline(h = beta, lty = 3, col = "red")
         abline(v = u, lty = 3, col = "red")
         abline(v = U, lty = 3, col = "red") 
         
         # Figure 4:
-        fit <<- gpdFit(x, u)
+        #   <<- 
+        fit = gpdFit(x, u)
         tailPlot(object = fit, p = pp)
            
         # Refresh Frame:
@@ -950,11 +959,11 @@ function(x)
     start.q = (qmin+qmax)/2
     
     # Save Globally:
-    last.Quantile <<- 0.05*(1+1e-4)
-    last.nThresholds <<- 10+1
-    param <<- NA
-    conf <<- NA
-    counter <<- 0
+    .tailSlider.last.Quantile <<- 0.05*(1+1e-4)
+    .tailSlider.last.nThresholds <<- 10+1
+    .tailSlider.param <<- NA
+    .tailSlider.conf <<- NA
+    .tailSlider.counter <<- 0
     
     # Open Slider Menu:
     .sliderMenu(refresh.code,
