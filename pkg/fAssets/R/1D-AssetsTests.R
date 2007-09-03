@@ -74,7 +74,7 @@ function(x, Replicates = 99, title = NULL, description = NULL)
     # Description:
     
     # Note:
-    #   Requires Contributed R package "energy"
+    #   Requires Contributed R package "boot"
     
     # Example:
     #   .mvenergyTest(x = assetsSim(100), 99)
@@ -86,7 +86,21 @@ function(x, Replicates = 99, title = NULL, description = NULL)
     x = as.matrix(x)
     
     # Test:
-    test = mvnorm.etest(x = x, R = Replicates)
+    n <- nrow(x)
+    d <- ncol(x)
+    bootobj <- boot(x, statistic = mvnorm.e, R = R, sim = "parametric", 
+        ran.gen = function(x, y) {
+            return(matrix(rnorm(n * d), nrow = n, ncol = d))
+        })
+
+    p <- 1 - mean(bootobj$t < bootobj$t0)
+    names(bootobj$t0) <- "E-statistic"
+    e <- list(statistic = bootobj$t0, p.value = p, 
+        method = "Energy test of multivariate normality: estimated parameters", 
+        data.name = paste("x, sample size ", n, ", dimension ", 
+            d, ", replicates ", R, sep = ""))
+    class(e) <- "htest"
+    test = e
     names(test$p.value) = ""
     class(test) = "list"
     

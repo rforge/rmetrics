@@ -481,14 +481,9 @@ function (x, method = c("cov", "mcd", "mve", "Mcd", "OGK", "shrink"))
     if (alfan < pcrit) alfan = 0
     if (alfan > 0) cn = max(d2ord[n-ceiling(n*alfan)], delta) else cn = Inf
     w = d2 < cn
-    if (sum(w) == 0) {
-        m = m0
-        c = c0
-    } else {
-        m = apply(x[w, ], 2, mean)
-        c1 = as.matrix(x - rep(1, n) %*% t(m))
-        c = (t(c1) %*% diag(w) %*% c1)/sum(w)
-    }
+    m = apply(x[w, ], 2, mean)
+    c1 = as.matrix(x - rep(1, n) %*% t(m))
+    c = (t(c1) %*% diag(w) %*% c1)/sum(w)
     
     # Identify Outliers:
     outliers = (1:dim(x)[1])[!w]
