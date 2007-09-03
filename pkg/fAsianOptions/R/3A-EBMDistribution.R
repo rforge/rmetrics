@@ -313,7 +313,7 @@ function(q, a = 0, b = 1, c = 0, d = 1)
     # FUNCTION:
     
     # Type I:
-    z = a + b * log( (x-c) / d )
+    z = a + b * log( (q-c) / d )
     
     # Return Value:
     pnorm(q = z, mean = 0, sd = 1)

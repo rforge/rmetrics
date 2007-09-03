@@ -1,9 +1,9 @@
-Package: fOptions
+Package: fAsianOptions
 Version: 251.70
 Date: 1997 - 2007
 Title: Rmetrics - Option Valuation
 Author: Diethelm Wuertz and many others, see the SOURCE file
-Depends: R (>= 2.2.1), methods, fEcofin, fBasics, fCalendar, fSeries
+Depends: R (>= 2.2.1), methods, fEcofin, fBasics, fCalendar, fSeries, fOptions
 Maintainer: Diethelm Wuertz and Rmetrics Core Team <wuertz@itp.phys.ethz.ch>
 Description: Environment for teaching "Financial Engineering and Computational Finance"
 NOTE: SEVERAL PARTS ARE STILL PRELIMINARY AND MAY BE CHANGED IN THE FUTURE.

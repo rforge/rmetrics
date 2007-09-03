@@ -149,7 +149,7 @@ function(x)
         # Use R's digamma() function:
         result = digamma(x) 
     } else {
-        for ( i in 1:length(z) ) {  
+        for ( i in 1:length(Re(x)) ) {  
             value = .Fortran("cpsi",
                 as.double(Re(x[i])),
                 as.double(Im(x[i])),
