@@ -28,13 +28,16 @@
 
 
 ################################################################################
-# FUNCTION:             ASSETS NORMALITY TESTS:
-#  assetsTest            Tests for multivariate Normal Assets
-#   method = "shapiro"    ... calling Shapiro test
-#   method = "energy"     ... calling E-Statistic (energy) test
-# FUNCTION:             INTERNAL UTILITY FUNCTIONS:
-#  .mvenergyTest         Multivariate Energy Test
-#  .mvshapiroTest        Multivariate Shapiro Test     
+# FUNCTION:                 ASSETS NORMALITY TESTS:
+#  assetsTest                Tests for multivariate Normal Assets
+#   method = "shapiro"       ... calling Shapiro test
+#   method = "energy"        ... calling E-Statistic (energy) test
+# FUNCTION:                 INTERNAL UTILITY FUNCTIONS:
+#  .mvenergyTest             Multivariate Energy Test
+#  .mvshapiroTest            Multivariate Shapiro Test   
+# REQUIREMENTS:             DESCRIPTION:  
+#  energy                    Contributed R-package "energy"
+#  boot                      Contributed R-package "boot"
 ################################################################################
 
 
@@ -65,7 +68,22 @@ title = NULL, description = NULL)
 }
 
 
-# ------------------------------------------------------------------------------
+################################################################################
+# Package: energy
+# Title: E-statistics (energy statistics) tests of fit, independence, clustering
+# Version: 1.0-6
+# Date: 2007-04-02
+# Author: Maria L. Rizzo <mrizzo @ bgnet.bgsu.edu> and 
+#  Gabor J. Szekely <gabors @ bgnet.bgsu.edu>
+# Description: E-statistics (energy) tests for comparing distributions: 
+#  multivariate normality, multivariate k-sample test for equal distributions, 
+#  hierarchical clustering by e-distances, multivariate independence test, 
+#  goodness-of-fit tests. Energy-statistics concept based on a generalization of 
+#  Newton's potential energy is due to Gabor J. Szekely.
+# Maintainer: Maria Rizzo <mrizzo @ bgnet.bgsu.edu>
+# Depends: boot
+# License: GPL 2.0 or later
+# Packaged: Mon Apr  2 22:30:11 2007; rizzo
 
 
 .mvenergyTest =
@@ -86,21 +104,7 @@ function(x, Replicates = 99, title = NULL, description = NULL)
     x = as.matrix(x)
     
     # Test:
-    n <- nrow(x)
-    d <- ncol(x)
-    bootobj <- boot(x, statistic = mvnorm.e, R = R, sim = "parametric", 
-        ran.gen = function(x, y) {
-            return(matrix(rnorm(n * d), nrow = n, ncol = d))
-        })
-
-    p <- 1 - mean(bootobj$t < bootobj$t0)
-    names(bootobj$t0) <- "E-statistic"
-    e <- list(statistic = bootobj$t0, p.value = p, 
-        method = "Energy test of multivariate normality: estimated parameters", 
-        data.name = paste("x, sample size ", n, ", dimension ", 
-            d, ", replicates ", R, sep = ""))
-    class(e) <- "htest"
-    test = e
+    test = mvnorm.etest(x, Replicates)
     names(test$p.value) = ""
     class(test) = "list"
     
