@@ -1,7 +1,7 @@
 Package: fAssets
 Version: 251.70
 Date: 1997 - 2007
-Title: Rmetrics - Portfolio Selection and Optimization
+Title: Rmetrics - Assets Selection and Modelling
 Author: Diethelm Wuertz and many others, see the SOURCE file
 Depends: R (>= 2.2.1), methods, robustbase, MASS, fEcofin, fCalendar, fBasics, fSeries, fMultivar, fExtremes, fCopulae
 Description: Environment for teaching "Financial Engineering and Computational Finance"
