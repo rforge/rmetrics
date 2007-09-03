@@ -180,6 +180,15 @@ function(object, formula = Y ~ X1 + X2, N = 10, fun = mean)
     
     # FUNCTION:
     
+    .grid2d = function (x = (0:10)/10, y = x) 
+    {
+        nx = length(x)
+        ny = length(y)
+        xoy = cbind(rep(x, ny), as.vector(matrix(y, nx, ny, byrow = TRUE)))
+        XY = matrix(xoy, nx * ny, 2, byrow = FALSE)
+        list(x = XY[, 1], y = XY[, 2])
+    }
+
     Data = object@data
     select = all.vars(formula)
     
@@ -192,7 +201,7 @@ function(object, formula = Y ~ X1 + X2, N = 10, fun = mean)
     
     U = seq(rangeX[1], rangeX[2], length = N)
     V = seq(rangeY[1], rangeY[2], length = N)
-    newGrid = grid2d(U, V)
+    newGrid = .grid2d(U, V)
     
     newData = matrix(rep(statsData, times = N*N), 
         byrow = TRUE, ncol = ncol(Data))
