@@ -1,5 +1,5 @@
 
-pkg <- "fPortfolio"
+pkg <- "fAssets"
 
 if(require("RUnit", quietly = TRUE)) 
 {
