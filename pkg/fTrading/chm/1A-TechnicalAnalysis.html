@@ -1,0 +1,282 @@
+<html><head><title>Tools for the Technical Analysis</title>
+<meta http-equiv="Content-Type" content="text/html; charset=">
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>TechnicalAnalysis(fTrading)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   TechnicalAnalysis">
+<param name="keyword" value="R:   emaTA">
+<param name="keyword" value="R:   biasTA">
+<param name="keyword" value="R:   medpriceTA">
+<param name="keyword" value="R:   typicalpriceTA">
+<param name="keyword" value="R:   wcloseTA">
+<param name="keyword" value="R:   rocTA">
+<param name="keyword" value="R:   oscTA">
+<param name="keyword" value="R:   momTA">
+<param name="keyword" value="R:   macdTA">
+<param name="keyword" value="R:   cdsTA">
+<param name="keyword" value="R:   cdoTA">
+<param name="keyword" value="R:   vohlTA">
+<param name="keyword" value="R:   vorTA">
+<param name="keyword" value="R:   stochasticTA">
+<param name="keyword" value="R:   fpkTA">
+<param name="keyword" value="R:   fpdTA">
+<param name="keyword" value="R:   spdTA">
+<param name="keyword" value="R:   apdTA">
+<param name="keyword" value="R:   wprTA">
+<param name="keyword" value="R:   rsiTA">
+<param name="keyword" value="R:   accelTA">
+<param name="keyword" value="R:   adiTA">
+<param name="keyword" value="R:   adoscillatorTA">
+<param name="keyword" value="R:   bollingerTA">
+<param name="keyword" value="R:   chaikinoTA">
+<param name="keyword" value="R:   chaikinvTA">
+<param name="keyword" value="R:   garmanklassTA">
+<param name="keyword" value="R:   nviTA">
+<param name="keyword" value="R:   obvTA">
+<param name="keyword" value="R:   pviTA">
+<param name="keyword" value="R:   pvtrendTA">
+<param name="keyword" value="R:   williamsadTA">
+<param name="keyword" value="R:   williamsrTA">
+<param name="keyword" value="R:   SMA">
+<param name="keyword" value="R:   EWMA">
+<param name="keyword" value=" Tools for the Technical Analysis">
+</object>
+
+
+<h2>Tools for the Technical Analysis</h2>
+
+
+<h3>Description</h3>
+
+<p>
+A collection and description of functions 
+for the technical analysis of stock markets. 
+The collection provides a set of the most 
+common technical indicators.
+<br>
+</p>
+<p>
+Utility Functions:
+</p>
+
+<table summary="Rd table">
+<tr>
+  <td align="left"><code>emaTA</code> </td>  <td align="left"> Exponential Moving Average, </td>
+</tr>
+<tr>
+  <td align="left"> <code>biasTA</code> </td>  <td align="left"> Bias Indicator, </td>
+</tr>
+<tr>
+  <td align="left"> <code>medpriceTA</code> </td>  <td align="left"> Medium Price Indicator, </td>
+</tr>
+<tr>
+  <td align="left"> <code>typicalpriceTA</code> </td>  <td align="left"> Typical Price Indicator, </td>
+</tr>
+<tr>
+  <td align="left"> <code>wcloseTA</code> </td>  <td align="left"> Weighted Close Indicator, </td>
+</tr>
+<tr>
+  <td align="left"> <code>rocTA</code> </td>  <td align="left"> Rate of Change, </td>
+</tr>
+<tr>
+  <td align="left"> <code>oscTA</code> </td>  <td align="left"> Oscillator Indicator. </td>
+</tr>
+</table>
+
+<p>
+Oscillator Indicators:
+</p>
+
+<table summary="Rd table">
+<tr>
+  <td align="left"><code>momTA</code> </td>  <td align="left"> Momentum Indicator, </td>
+</tr>
+<tr>
+  <td align="left"> <code>macdTA</code> </td>  <td align="left"> MACD Indicator, </td>
+</tr>
+<tr>
+  <td align="left"> <code>cdsTA</code> </td>  <td align="left"> MACD Signal Line, </td>
+</tr>
+<tr>
+  <td align="left"> <code>cdoTA</code> </td>  <td align="left"> MACD Oscillator, </td>
+</tr>
+<tr>
+  <td align="left"> <code>vohlTA</code> </td>  <td align="left"> High/Low Volatility, </td>
+</tr>
+<tr>
+  <td align="left"> <code>vorTA</code> </td>  <td align="left"> Volatility Ratio. </td>
+</tr>
+</table>
+
+
+<table summary="Rd table">
+<tr>
+  <td align="left"><code>stochasticTA</code> </td>  <td align="left"> Stochastics Oscillator, </td>
+</tr>
+<tr>
+  <td align="left"> <code>fpkTA</code> </td>  <td align="left"> Fast Percent K, </td>
+</tr>
+<tr>
+  <td align="left"> <code>fpdTA</code> </td>  <td align="left"> Fast Percent D, </td>
+</tr>
+<tr>
+  <td align="left"> <code>spdTA</code> </td>  <td align="left"> Slow Percent D, </td>
+</tr>
+<tr>
+  <td align="left"> <code>apdTA</code> </td>  <td align="left"> Averaged Percent D, </td>
+</tr>
+<tr>
+  <td align="left"> <code>wprTA</code> </td>  <td align="left"> William's Percent R, </td>
+</tr>
+<tr>
+  <td align="left"> <code>rsiTA</code> </td>  <td align="left"> Relative Strength Index. </td>
+</tr>
+</table>
+
+<p>
+S-Plus Like Moving Averages:
+<table summary="Rd table">
+<tr>
+  <td align="left"><code>SMA</code> </td>  <td align="left"> Simple Moving Average, </td>
+</tr>
+<tr>
+  <td align="left">        <code>EWMA</code> </td>  <td align="left"> Exponentially Weighted  Moving Average.</td>
+</tr>
+</table>
+
+
+<h3>Usage</h3>
+
+<pre>
+emaTA(x, lambda, startup = 0)
+biasTA(x, lag)
+medpriceTA(high, low)
+typicalpriceTA(high, low, close)
+wcloseTA(high, low, close)
+rocTA(x, lag)
+oscTA(x, lag1 = 25, lag2 = 65)
+
+momTA(x, lag)
+macdTA(x, lag1, lag2)
+cdsTA(x, lag1 = 12, lag2 = 26, lag3 = 9)
+cdoTA(x, lag1 = 12, lag2 = 26, lag3 = 9)
+vohlTA(high, low)
+vorTA(high, low)
+
+stochasticTA(close, high, low, lag1 = 5, lag2 = 3, lag3 = 5, 
+    type = c("fast", "slow")) 
+fpkTA(close, high, low, lag)
+fpdTA(close, high, low, lag1, lag2)
+spdTA(close, high, low, lag1, lag2, lag3)
+apdTA(close, high, low, lag1, lag2, lag3, lag4)
+wprTA(close, high, low, lag)
+rsiTA(close, lag)
+
+SMA(x, n = 5)
+EWMA(x, lambda, startup = 0)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>lag, lag1, lag2, lag3, lag4</code></td>
+<td>
+integer values, time lags.
+</td></tr>
+<tr valign="top"><td><code>n</code></td>
+<td>
+[SMA] - <br>
+an integer value, time lag.
+</td></tr>
+<tr valign="top"><td><code>lambda</code></td>
+<td>
+[emaTA][EWMA] - <br>
+a numeric value between zero and one giving the decay length 
+of the exponential moving average. If an integer value greater 
+than one is given, lambda is used as a lag of "n" periods to 
+calculate the decay parameter. 
+</td></tr>
+<tr valign="top"><td><code>startup</code></td>
+<td>
+[emaTA][EWMA] - <br>
+an integer value, the startup position of the exponential
+moving average, by default 0.
+</td></tr>
+<tr valign="top"><td><code>type</code></td>
+<td>
+[stochasticTA] - <br>
+a character string, either <code>"fast"</code> or "<code>"slow"</code>
+characterizing the type of the percent K and percent D
+indicator. By default <code>type="fast"</code>
+</td></tr>
+<tr valign="top"><td><code>x, high, low, close</code></td>
+<td>
+a numeric vector of prices, either opening, closing, or
+high and low values.
+For <code>ohlcPlot</code> a multivariate time series object of 
+class <code>mts</code>.
+</td></tr>
+</table>
+
+<h3>Value</h3>
+
+<p>
+<code>*TA</code>
+<br> 
+The technical Indicators return the following numeric vectors (or matrix):
+<br>
+<code>emaTA</code> returns the Exponential Moving Average, EMA <br>
+<code>biasTA</code> returns the EMA-Bias, <br>
+<code>medpriceTA</code> returns the Medium Price, <br>
+<code>typicalpriceTA</code> returns the Typical Price, <br>
+<code>wcloseTA</code> returns the Weighted Closing Price, <br>
+<code>rocTA</code> returns the Rate of Change Indicator, <br>
+<code>oscTA</code> returns the EMA Oscillator Indicator, <br>
+<code>momTA</code> returns the Momentum Oscillator, <br>
+<br>
+<code>macdTA</code> returns the MACD Oscillator, <br>
+<code>cdsTA</code> returns the MACD Signal Line, <br>
+<code>cdo</code> returns the MACD Oscillator, <br>
+<code>vohlTA</code> returns the High/Low Volatility Oscillator, <br>
+<code>vorTA</code> returns Volatility Ratio Oscillator, <br>
+<br>
+<code>stochasticTA</code> returns a 2-column matrix with percent K and D Indicator, <br>
+<code>fpkTA</code> returns the Fast Percent-K Stochastics Indicator, <br>
+<code>fpdTA</code> returns the Fast Percent-D Stochastics Indicator, <br>
+<code>spdTA</code> returns the Slow Percent-D Stochastics Indicator, <br>
+<code>apdTA</code> returns the Averaged Percent-D Stochastics Indicator, <br>
+<code>wprTA</code> returns the Williams Percent-R Stochastics Indicator, <br>
+<code>rsiTA</code> returns the Relative Strength Index Stochastics Indicator. <br></p>
+
+<h3>Author(s)</h3>
+
+<p>
+Diethelm Wuertz for the Rmetrics <font face="Courier New,Courier" color="#666666"><b>R</b></font>-port.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+## data -
+   # Load MSFT Data:
+   x = as.timeSeries(data(msft.dat))
+   colnames(x)
+   x = x[, "Close"]
+   head(x)
+   
+## emaTA -
+   # Exponential Moving Average:
+   y = emaTA(x, lambda = 9)   
+   seriesPlot(x)
+   lines(y, col = "red")
+</pre>
+
+
+
+<hr><div align="center">[Package <em>fTrading</em> version 251.70 <a href="00Index.html">Index]</a></div>
+
+</body></html>
