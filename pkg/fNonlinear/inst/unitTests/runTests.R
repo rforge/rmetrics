@@ -1,5 +1,5 @@
 
-pkg <- "fSeries"
+pkg <- "fNonlinear"
 
 if(require("RUnit", quietly = TRUE)) 
 {
