@@ -25,7 +25,7 @@
 \alias{assetsStarsPlot}  
 \alias{assetsMomentsPlot} 
 \alias{assetsBasicStatsPlot} 
-\alias{assetsStatsBoxPlot} 
+\alias{assetsBoxStatsPlot} 
 \alias{assetsNIGFitPlot}    
 
 
@@ -61,7 +61,7 @@
     \code{assetsStarsPlot} \tab Draws segment or star diagrams of data sets, \cr
     \code{assetsBasicStatsPlot} \tab Displays a segment plot of box plot statistics, \cr
     \code{assetsMomentsPlot} \tab Displays a segment plot of distribution moments, \cr
-    \code{assetsStatsBoxPlot} \tab Displays a segment plot of box plot statistics, \cr
+    \code{assetsBoxStatsPlot} \tab Displays a segment plot of box plot statistics, \cr
     \code{assetsNIGFitPlot} \tab Displays a segment plot NIG parameter estimates. }
 }
 
@@ -73,7 +73,8 @@ assetsSeriesPlot(x, col = "steelblue", ...)
 assetsHistPlot(x, col = "steelblue", skipZeros = FALSE, \dots)
 assetsQQNormPlot(x, col = "steelblue", skipZeros = FALSE, \dots)
 
-assetsRiskReturnPlot(x, col = "steelblue", percentage = FALSE, scale = 252, \dots)
+assetsRiskReturnPlot(x, col = "steelblue", percentage = FALSE, scale = 252, 
+    labels = TRUE, add = TRUE, \dots)
 assetsNIGShapeTrianglePlot(x, col = "steelblue", \dots)
 
 assetsBoxPlot(x, col = "bisque", \dots)
@@ -88,7 +89,7 @@ assetsTreePlot(x, method = "euclidian", seed = NULL)
 assetsDendrogramPlot(x, method = c(dist = "euclidian", clust = "complete"))
 
 assetsStarsPlot(x, method = c("segments", "stars"), keyOffset = c(0, 0),\dots)
-assetsStatsBoxPlot(x, oma = c(0,0,0,0), mar = c(4, 4, 4, 4), 
+assetsBoxStatsPlot(x, oma = c(0,0,0,0), mar = c(4, 4, 4, 4), 
     keyOffset = c(-0.65, -0.50), main = "Assets Statistics", 
     title = "Assets", titlePosition = c(3, 3.65), 
     description = "Box Plot Statistics", descriptionPosition = c(3, 3.50))
@@ -109,6 +110,9 @@ assetsNIGFitPlot(x, oma = c(0,0,0,0), mar = c(4, 4, 4, 4),
 
 \arguments{
   
+    \item{add}{
+        a logical flag, defining the color to fill the boxes.
+        }
     \item{col}{
         a character string, defining the color to fill the boxes.
         }
