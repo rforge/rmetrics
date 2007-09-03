@@ -850,7 +850,7 @@ r, b, sigma, title = NULL, description = NULL)
             GBSOption("c", S, X, Time, r, b, v)@price - Value }
     if (TypeFlag == "puo") {
         SoftBarrier = 
-            GBSOption("p", S, X, Tome, r, b, v)@price - Value }
+            GBSOption("p", S, X, Time, r, b, v)@price - Value }
     
     # Parameters:
     # TypeFlag = c("cdi", "cdo", "pdi", "pdo"), S, X, L, U, Time , 

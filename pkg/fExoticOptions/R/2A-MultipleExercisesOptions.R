@@ -597,7 +597,7 @@ title = NULL, description = NULL)
         result = 
             GBSOption(TypeFlag, S, X1, time1, r, b, sigma)@price +
                 X2 * exp(-r * Time2) * CBND(-z1 + sqrt(sigma^2 * Time2), 
-                z2 - sqrt(sigma^2 * time11), -rho) - 
+                z2 - sqrt(sigma^2 * time1), -rho) - 
                 S * exp((b - r) * Time2) * CBND(-z1, z2, -rho)
             
     # Parameters:

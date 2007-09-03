@@ -53,7 +53,7 @@ function(lib, pkg)
     }
 
     # Load dll:
-    library.dynam("fOptions", pkg, lib) 
+    # library.dynam("fExoticOptions", pkg, lib) 
 }
 
 
