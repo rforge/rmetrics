@@ -16,7 +16,7 @@ if(require("RUnit", quietly = TRUE)) {
   wd <- getwd()
   pkg <- sub("\\.Rcheck$", '', basename(dirname(wd)))
 
-  library(package=pkg, character.only = TRUE)
+  library(package = pkg, character.only = TRUE)
 
   path <- system.file("unitTests", package = pkg)
 
@@ -24,3 +24,7 @@ if(require("RUnit", quietly = TRUE)) {
 
   source(file.path(path, "runTests.R"), echo = TRUE)
 }
+
+
+################################################################################
+

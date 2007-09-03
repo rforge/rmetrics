@@ -44,7 +44,7 @@ function(lib, pkg)
     }
 
     # Load dll:
-    library.dynam("fSeries", pkg, lib) 
+    library.dynam("fNonlinear", pkg, lib) 
 }
 
 
