@@ -44,7 +44,7 @@ function(lib, pkg)
     }
 
     # Load dll:
-    # library.dynam("fUnitRoots", pkg, lib) 
+    library.dynam("fUnitRoots", pkg, lib) 
 }
 
 
