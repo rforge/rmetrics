@@ -107,7 +107,7 @@ function(x, partitions = 16, lag.max = 20, doplot = TRUE, ...)
             lag = as.integer(i), 
             partitions = as.integer(partitions), 
             hist = as.double(hist), 
-            PACKAGE = "fSeries")[["hist"]]
+            PACKAGE = "fNonlinear")[["hist"]]
         hist = matrix(hist, partitions, partitions)/sum(hist)
         histx = apply(hist, 1, sum)
         hist = hist[hist != 0]
