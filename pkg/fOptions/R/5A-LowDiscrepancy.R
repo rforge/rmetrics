@@ -38,10 +38,10 @@
 ################################################################################
 
 
-runif.halton.seed <<- list()
-rnorm.halton.seed <<- list()
-runif.sobol.seed <<- list()
-rnorm.sobol.seed <<- list()
+runif.halton.seed = list()
+rnorm.halton.seed = list()
+runif.sobol.seed = list()
+rnorm.sobol.seed = list()
 
 
 # ------------------------------------------------------------------------------

@@ -230,47 +230,6 @@ b1, b2, sigma1, sigma2, rho, title = NULL, description = NULL)
     TypeFlag = TypeFlag[1]
     q = Q
     
-    # Third:
-    # To run under SPlus we require "<<-"
-    CriticalPart3 <<- function(id, I, time1, Time2, v) {    
-        if (id == 1) {
-            z1 = (log(I)+v^2/2*(Time2 - time1))/(v*sqrt(Time2-time1))
-            z2 = (log(I)-v^2/2*(Time2 - time1))/(v*sqrt(Time2-time1))
-            CriticalPart3 = I * CND(z1) - CND(z2) }     
-        if (id == 2) {
-            z1 = (-log(I)+v^2/2*(Time2-time1))/(v*sqrt(Time2-time1))
-            z2 = (-log(I)-v^2/2*(Time2-time1))/(v*sqrt(Time2-time1))
-            CriticalPart3 = CND(z1) - I * CND(z2) }
-        CriticalPart3 }   
-        
-    # Second:
-    CriticalPart2 <<- function(id, I, time1, Time2, v) {
-        if (id == 1) {
-            z1 = (log(I)+v^2/2*(Time2-time1))/(v*sqrt(Time2-time1))
-            CriticalPart2 = CND(z1) }      
-        if (id == 2) {
-            z2 = (-log(I)-v^2/2*(Time2-time1))/(v*sqrt(Time2-time1))
-            CriticalPart2 = -CND(z2) }
-        CriticalPart2 }
-        
-    # Numerical search algorithm to find critical price I
-    CriticalPrice = function(id, I1, time1, Time2, v, q) {
-        Ii = I1
-        yi = CriticalPart3(id, Ii, time1, Time2, v)
-        # cat("\nCriticalPart3: ", yi)
-        di = CriticalPart2(id, Ii, time1, Time2, v)
-        # cat("\nCriticalPart2: ", di)
-        epsilon = 0.00001
-        while (abs(yi - q) > epsilon) {
-            Ii = Ii - (yi - q) / di
-            yi = CriticalPart3(id, Ii, time1, Time2, v)
-            # cat("\nCriticalPart3: ", yi)
-            di = CriticalPart2(id, Ii, time1, Time2, v)
-            # cat("\nCriticalPart2: ", di) 
-            }
-        CriticalPrice = Ii
-        CriticalPrice }
-    
     # Compute:
     v = sqrt(sigma1 ^ 2 + sigma2 ^ 2 - 2 * rho * sigma1 * sigma2)
     I1 = S1 * exp((b1 - r) * (Time2 - time1)) / 
@@ -279,7 +238,7 @@ b1, b2, sigma1, sigma2, rho, title = NULL, description = NULL)
         id = 1 }
     else {
         id = 2 }  
-    I = CriticalPrice(id, I1, time1, Time2, v, q)
+    I = .EOnEOption.CriticalPrice(id, I1, time1, Time2, v, q)
     
     d1 = (log(S1 / (I * S2)) + (b1 - b2 + v ^ 2 / 2) * time1) / 
         (v * sqrt(time1))
@@ -343,6 +302,56 @@ b1, b2, sigma1, sigma2, rho, title = NULL, description = NULL)
         title = title,
         description = description
         )      
+}
+
+
+.EOnEOption.CriticalPart3 <- 
+function(id, I, time1, Time2, v) 
+{    
+    if (id == 1) {
+        z1 = (log(I)+v^2/2*(Time2 - time1))/(v*sqrt(Time2-time1))
+        z2 = (log(I)-v^2/2*(Time2 - time1))/(v*sqrt(Time2-time1))
+        .EOnEOption.CriticalPart3 = I * CND(z1) - CND(z2) }     
+    if (id == 2) {
+        z1 = (-log(I)+v^2/2*(Time2-time1))/(v*sqrt(Time2-time1))
+        z2 = (-log(I)-v^2/2*(Time2-time1))/(v*sqrt(Time2-time1))
+        .EOnEOption.CriticalPart3 = CND(z1) - I * CND(z2) }
+    .EOnEOption.CriticalPart3 
+}   
+        
+    
+.EOnEOption.CriticalPart2 <- 
+function(id, I, time1, Time2, v) 
+{
+    if (id == 1) {
+        z1 = (log(I)+v^2/2*(Time2-time1))/(v*sqrt(Time2-time1))
+        .EOnEOption.CriticalPart2 = CND(z1) }      
+    if (id == 2) {
+        z2 = (-log(I)-v^2/2*(Time2-time1))/(v*sqrt(Time2-time1))
+        .EOnEOption.CriticalPart2 = -CND(z2) }
+    .EOnEOption.CriticalPart2 
+}
+        
+    
+.EOnEOption.CriticalPrice = 
+function(id, I1, time1, Time2, v, q) 
+{
+    # Numerical search algorithm to find critical price I
+    Ii = I1
+    yi = .EOnEOption.CriticalPart3(id, Ii, time1, Time2, v)
+    # cat("\n.EOnEOption.CriticalPart3: ", yi)
+    di = .EOnEOption.CriticalPart2(id, Ii, time1, Time2, v)
+    # cat("\n.EOnEOption.CriticalPart2: ", di)
+    epsilon = 0.00001
+    while (abs(yi - q) > epsilon) {
+        Ii = Ii - (yi - q) / di
+        yi = .EOnEOption.CriticalPart3(id, Ii, time1, Time2, v)
+        # cat("\n.EOnEOption.CriticalPart3: ", yi)
+        di = .EOnEOption.CriticalPart2(id, Ii, time1, Time2, v)
+        # cat("\n.EOnEOption.CriticalPart2: ", di) 
+        }
+    .EOnEOption.CriticalPrice = Ii
+    .EOnEOption.CriticalPrice 
 }
 
 

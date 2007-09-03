@@ -206,10 +206,10 @@ sigma, delta1, delta2, title = NULL, description = NULL)
         DoubleBarrier = OutValue
     if (TypeFlag == "ci") 
         DoubleBarrier = 
-            GBlackScholes("c", S, X, Time, r, b, sigma)@price - OutValue
+            GBSOption("c", S, X, Time, r, b, sigma)@price - OutValue
     if (TypeFlag == "pi") 
         DoubleBarrier = 
-            GBlackScholes("p", S, X, Time, r, b, sigma)@price - OutValue
+            GBSOption("p", S, X, Time, r, b, sigma)@price - OutValue
     
     # Parameters:
     # TypeFlag = c("co", "ci", "po", "pi"), S, X, L, U, Time, r, b, 
@@ -477,10 +477,10 @@ description = NULL)
             KnockOutValue           
     if (TypeFlag == "cui" || TypeFlag == "cdi")
         TwoAssetBarrier = 
-            GBlackScholes("c", S1, X, Time, r, b1, v1)@price - KnockOutValue        
+            GBSOption("c", S1, X, Time, r, b1, v1)@price - KnockOutValue        
     if (TypeFlag == "pui" || TypeFlag == "pdi")
         TwoAssetBarrier = 
-            GBlackScholes("p", S1, X, Time, r, b1, v1)@price - KnockOutValue
+            GBSOption("p", S1, X, Time, r, b1, v1)@price - KnockOutValue
 
     # Parameters:
     # TypeFlag = c("cuo", "cui", "cdo", "cdi", "puo", "pui", "pdo", "pdi"), 
@@ -575,10 +575,10 @@ description = NULL)
             OutBarrierValue
     if (TypeFlag == "cui" || TypeFlag == "cdi") 
         PartialTimeTwoAssetBarrier = 
-            GBlackScholes("c", S1, X, T2, r, b1, v1)@price - OutBarrierValue
+            GBSOption("c", S1, X, T2, r, b1, v1)@price - OutBarrierValue
     if (TypeFlag == "pui" || TypeFlag == "pdi") 
         PartialTimeTwoAssetBarrier = 
-            GBlackScholes("p", S1, X, T2, r, b1, v1)@price - OutBarrierValue
+            GBSOption("p", S1, X, T2, r, b1, v1)@price - OutBarrierValue
     
     # Parameters:
     # TypeFlag = c("cdo", "pdo", "cdi", "pdi", "cuo", "puo", "cui", "pui"), 
