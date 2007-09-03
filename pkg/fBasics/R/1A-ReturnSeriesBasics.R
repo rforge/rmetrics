@@ -346,31 +346,27 @@ skipZeros = TRUE, ...)
     if (!is.timeSeries(x)) x = as.timeSeries(x)
     units = x@units
     DIM = dim(x@Data)[2]
-    xlim = NULL
     if (length(col) == 1) col = rep(col, times = DIM)
-      
-    # Construct output list:
-    ans = paste( " hist", 1:DIM, " = NULL", sep = "", collapse = ",")
-    ans = paste( "list(",  ans, ")" )
-    ans = eval(parse(text = ans))
-    
+     
     # Histogram Plots:
     for (i in 1:DIM) {
         
         # Density:
         Values = as.vector(x@Data[, i])
         if (skipZeros) Values = Values[Values != 0]
+        
+        # Statistics:
         mean = mean(Values)
         median = median(Values)
-        sd = sd(Values)
-        if (is.null(xlim)) 
-            xlim = c(qnorm(0.001, mean, sd), qnorm(0.999, mean, sd)) 
-        Density = density(Values, ...)
-        plot(x = Density, xlim = xlim, col = col[i], type = "l", 
-            lwd = 2, main = units[i], ...)  
-        ans[[i]] = Density  
+        sd = sd(Values) 
         
-        # Grid:
+        # Density Plot:
+        Density = density(Values, ...)
+        xlim = c(qnorm(0.001, mean, sd), qnorm(0.999, mean, sd)) 
+        plot(x = Density, xlim = xlim, col = col[i], type = "l", 
+            lwd = 2, main = units[i], ...)   
+        
+        # Add Grid Lines:
         grid()
         
         # Add Fit:

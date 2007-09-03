@@ -369,7 +369,7 @@ function(x, n = 12, lag.max = 20, type = c("returns", "values"),
     
     # Cumulated Returns:
     type = match.arg(type)
-    if (type == "value") {
+    if (type == "values") {
         cumX = x
     } else if (type == "returns") {
         cumX = exp(colCumsums(x))

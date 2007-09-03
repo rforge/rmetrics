@@ -41,26 +41,6 @@
 #  hypFit               Fits parameters of a hyperbolic density
 #  nigFit               Fits parameters of a normal inverse Gaussian density
 ################################################################################
-    
-
-test.aaa = 
-function()
-{
-    # Help File:
-    helpFile = function() { 
-        example(DistributionFits, ask = FALSE)
-        return() 
-    }
-    checkIdentical(
-        target = class(try(helpFile())),
-        current = "NULL")
-
-    # Return Value:
-    return()    
-}
-
-
-# ------------------------------------------------------------------------------
 
 
 test.nFit = 

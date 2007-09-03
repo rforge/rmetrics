@@ -229,7 +229,7 @@ title = NULL, description = NULL, ...)
     }
         
     # Minimization:
-    r = nlm(f = etmle, p = c(df), y = x)
+    r = nlm(f = etmle, p = c(df), y = x, trace = trace)
     
     # Optional Plot:
     if (doplot) {

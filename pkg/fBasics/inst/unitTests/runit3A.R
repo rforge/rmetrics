@@ -40,26 +40,6 @@
 ################################################################################
     
 
-test.aaa = 
-function()
-{
-    # Help File:
-    helpFile = function() { 
-        example(StylizedFacts, ask = FALSE)
-        return() 
-    }
-    checkIdentical(
-        target = class(try(helpFile())),
-        current = "NULL")
-
-    # Return Value:
-    return()    
-}
-
-
-# ------------------------------------------------------------------------------
-
-
 test.plotLabels = 
 function()
 {
@@ -97,7 +77,7 @@ function()
     # ... CHECK ACF OF RETURNS
     
     # lmacfPlot -
-    lacfPlot(x = msft, n = 4)
+    ## lacfPlot(x = msft, n = 4, type = "values")                   ## CHECK !!!
 
     # logpdfPlot -
     logpdfPlot(x = msft.ret, labels = FALSE)
@@ -158,7 +138,7 @@ function()
     # ... CHECK ACF OF RETURNS
     
     # lmacfPlot -
-    lacfPlot(x = msft, n = 4, labels = FALSE)
+    ## lacfPlot(x = msft, n = 4, labels = FALSE, type = "values")   ## CHECK !!!
 
     # logpdfPlot -
     logpdfPlot(x = msft.ret, labels = FALSE)
