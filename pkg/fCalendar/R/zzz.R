@@ -37,14 +37,15 @@
     
 .First.lib =  
 function(lib, pkg)
-{   # A function implemented by Diethelm Wuertz
-    
+{   
+    # Startup Mesage and Desription:
     MSG <- if(getRversion() >= "2.5") packageStartupMessage else message
     dsc <- packageDescription(pkg)
-    if(interactive() || getOption("verbose")) { # not in test scripts
-	MSG(sprintf("\nPackage %s (%s) loaded.\n%s\n",
-		    pkg, dsc$Version, dsc$Title),
-	    "Rmetrics, (C) 1999-2007, Diethelm Wuertz, GPL\n")
+    if(interactive() || getOption("verbose")) { 
+        # not in test scripts
+        MSG(sprintf("\nPackage %s (%s) loaded.\n%s\n",
+            pkg, dsc$Version, dsc$Title),
+            "Rmetrics, (C) 1999-2007, Diethelm Wuertz, GPL\n")
     }
 
     # Load dll:
@@ -54,6 +55,6 @@ function(lib, pkg)
 if(!exists("Sys.setenv", mode = "function")) # pre R-2.5.0, use "old form"
     Sys.setenv <- Sys.putenv
 
-
+    
 ################################################################################
 
