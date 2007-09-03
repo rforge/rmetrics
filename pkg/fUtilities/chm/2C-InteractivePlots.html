@@ -1,0 +1,125 @@
+<html><head><title>Explorative Data Analysis</title>
+<meta http-equiv="Content-Type" content="text/html; charset=">
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>PlotUtilities(fUtilities)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   PlotUtilities">
+<param name="keyword" value="R:   interactivePlot">
+<param name="keyword" value="R:   gridVector">
+<param name="keyword" value=" Explorative Data Analysis">
+</object>
+
+
+<h2>Explorative Data Analysis</h2>
+
+
+<h3>Description</h3>
+
+<p>
+A collection and description of functions for plotting
+with emphasis on interactive plots.
+<br>
+</p>
+<p>
+The plot utility functions are:
+</p>
+
+<table summary="Rd table">
+<tr>
+  <td align="left"><code>interactivePlot</code> </td>  <td align="left"> a framework for interactive plot displays, </td>
+</tr>
+<tr>
+  <td align="left"> <code>gridVector</code> </td>  <td align="left"> creates from two vectors x and y all grid points. </td>
+</tr>
+</table>
+
+
+<h3>Usage</h3>
+
+<pre>
+interactivePlot(x, choices = paste("Plot", 1:9), 
+    plotFUN = paste("plot.", 1:9, sep = ""), which = "all", ...)
+gridVector(x, y)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>choices</code></td>
+<td>
+[interactivePlot] - <br>
+a vector of character strings for the
+choice menu. By Default <code>"Plot 1"</code> ... <code>"Plot 9"</code>
+allowing for 9 plots at maximum.
+</td></tr>
+<tr valign="top"><td><code>plotFUN</code></td>
+<td>
+[interactivePlot] - <br>
+a vector of character strings naming the
+plot functions. By Default <code>"plot.1"</code> ... <code>"plot.9"</code>
+allowing for 9 plots at maximum.
+</td></tr>
+<tr valign="top"><td><code>which</code></td>
+<td>
+plot selection, which graph should be displayed? If <code>"which"</code>
+is a character string named "ask" the user is interactively asked 
+which to plot, if a logical vector of length <code>N</code>, those plots 
+which are set <code>TRUE</code> are displayed, if a character string
+named <code>"all"</code> all plots are displayed.
+</td></tr>
+<tr valign="top"><td><code>x, y</code></td>
+<td>
+[gridVector] - <br>
+two numeric vector which span the two dimensional grid. 
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+additional arguments passed to the FUN or plot function.
+</td></tr>
+</table>
+
+<h3>Author(s)</h3>
+
+<p>
+Diethelm Wuertz for this R port.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+## Test Plot Function:
+   testPlot = function(x, which = "all", ...) {   
+     # Plot Function and Addons:
+     plot.1 &lt;&lt;- function(x, ...) plot(x, ...)      
+     plot.2 &lt;&lt;- function(x, ...) acf(x, ...)
+     plot.3 &lt;&lt;- function(x, ...) hist(x, ...)      
+     plot.4 &lt;&lt;- function(x, ...) qqnorm(x, ...)
+     # Plot:
+     interactivePlot(x,
+       choices = c("Series Plot", "ACF", "Histogram", "QQ Plot"),
+       plotFUN = c("plot.1", "plot.2", "plot.3", "plot.4"),
+       which = which, ...)       
+     # Return Value:
+     invisible()
+   }  
+   # Plot:
+   par(mfrow = c(2, 2), cex = 0.7)
+   testPlot(rnorm(500))
+      
+   # Try:
+   # par(mfrow = c(1,1))
+   # testPlot(rnorm(500), which = "ask")
+        
+## Grid Vector - 
+   gridVector(1:5, 1:5)
+</pre>
+
+
+
+<hr><div align="center">[Package <em>fUtilities</em> version 251.70 <a href="00Index.html">Index]</a></div>
+
+</body></html>

@@ -1,0 +1,176 @@
+<html><head><title>Bivariate Interpolation</title>
+<meta http-equiv="Content-Type" content="text/html; charset=">
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>BivariateInterpolation(fUtilities)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   BivariateInterpolation">
+<param name="keyword" value="R:   linearInterp">
+<param name="keyword" value="R:   akimaInterp">
+<param name="keyword" value="R:   krigeInterp">
+<param name="keyword" value="R:   linearInterpp">
+<param name="keyword" value="R:   akimaInterpp">
+<param name="keyword" value=" Bivariate Interpolation">
+</object>
+
+
+<h2>Bivariate Interpolation</h2>
+
+
+<h3>Description</h3>
+
+<p>
+A collection and description of functions which
+allow to interpolate and smooth bivariate irregular 
+data sets including linear interpolation, Akima
+spline interpolation, and kriging.
+<br>
+</p>
+<p>
+Gridded Interpolation Functions:
+</p>
+
+<table summary="Rd table">
+<tr>
+  <td align="left"><code>linearInterp</code> </td>  <td align="left"> performs linear spline interpolation, </td>
+</tr>
+<tr>
+  <td align="left"> <code>akimaInterp</code> </td>  <td align="left"> performs Akima spline interpolation, </td>
+</tr>
+<tr>
+  <td align="left"> <code>krigeInterp</code> </td>  <td align="left"> performs krige interpolation.</td>
+</tr>
+</table>
+
+<p>
+Pointwise Interpolation Functions:
+</p>
+
+<table summary="Rd table">
+<tr>
+  <td align="left"><code>linearInterpp</code> </td>  <td align="left"> performs linear spline interpolation, </td>
+</tr>
+<tr>
+  <td align="left"> <code>akimaInterpp</code> </td>  <td align="left"> performs Akima spline interpolation</td>
+</tr>
+</table>
+
+
+<h3>Usage</h3>
+
+<pre> 
+linearInterp(x, y = NULL, z = NULL, gridPoints = 21,
+    xo = seq(min(x), max(x), length = gridPoints),
+    yo = seq(min(y), max(y), length = gridPoints))
+linearInterpp(x, y = NULL, z = NULL, xo, yo)
+     
+akimaInterp(x, y = NULL, z = NULL, gridPoints = 21,
+    xo = seq(min(x), max(x), length = gridPoints),
+    yo = seq(min(y), max(y), length = gridPoints), extrap = FALSE)
+akimaInterpp(x, y = NULL, z = NULL, xo, yo, extrap = FALSE)
+
+krigeInterp(x, y = NULL, z = NULL, gridPoints = 21,
+    xo = seq(min(x), max(x), length = gridPoints),
+    yo = seq(min(y), max(y), length = gridPoints), 
+    extrap = FALSE, polDegree = 6)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>x, y, z</code></td>
+<td>
+[griddata] - <br>
+<code>x</code> and <code>y</code> are two numeric vectors of grid pounts
+and <code>z</code> is a numeric matrix or any other rectangular object 
+which can be transformed by the function <code>as.matrix</code> into 
+a matrix object. <br>
+[akimaInterp][krigeInterp] - <br>
+either three numeric vectors of equal length or if  <code>y</code> 
+and <code>z</code> are NULL, a list with entries <code>x</code>, <code>y</code>, 
+<code>z</code>, or named data frame with <code>x</code> in the first, 
+<code>y</code> in the second, and <code>z</code> in the third column. <br>
+[persp][contour] - <br>
+<code>x</code> is an pbject of class <code>gridData</code>.
+</td></tr>
+<tr valign="top"><td><code>gridPoints</code></td>
+<td>
+an integer value specifying the number of grid points in <code>x</code> 
+and <code>y</code> direction.
+</td></tr>
+<tr valign="top"><td><code>xo, yo</code></td>
+<td>
+[*Interp] - <br>
+two numeric vectors of data points spanning the grid.<br>
+[*Interpp] - <br>
+two numeric vectors of data points building pairs for pointwise
+interpolation.
+</td></tr>
+<tr valign="top"><td><code>extrap</code></td>
+<td>
+a logical, if <code>TRUE</code> then the data points are extrapolated.
+</td></tr>
+<tr valign="top"><td><code>polDegree</code></td>
+<td>
+[krige] - <br>
+the polynomial krige degree, an integer ranging between 1 and 6.
+</td></tr>
+</table>
+
+<h3>Value</h3>
+
+<p>
+<code>linearInterp</code> - <br>
+<code>akimaInterp</code> - <br>
+<code>krigeInterp</code> - <br>
+A list with at least three entries, <code>x</code>, <code>y</code> and <code>z</code>. 
+Note, that the returned values, can be directly used by the 
+<code>persp.gridData()</code> and <code>contour.gridData</code> 3D plotting methods.
+<br>
+<code>linearInterpp</code> - <br>
+<code>akimaInterpp</code> - <br>
+A data.frame with columns <code>"x"</code>, <code>"y"</code>, and <code>"z"</code>.</p>
+
+<h3>Note</h3>
+
+<p>
+The function <code>krigeInterp</code> requires loading of the R package
+<code>spatial</code>.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>
+Diethelm Wuertz for the Rmetrics <font face="Courier New,Courier" color="#666666"><b>R</b></font>-port,<br>
+H. Akima for the Fortran Code of the Akima spline interpolation routine.<br>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre> 
+## akimaInterp -
+   # Akima Interpolation:    
+   set.seed(1953)
+   x = runif(999) - 0.5
+   y = runif(999) - 0.5
+   z = cos(2*pi*(x^2+y^2))
+   ans = akimaInterp(x, y, z, extrap = FALSE)
+   persp(ans)
+   contour(ans)
+   
+## krigeInterp -
+   # Kriging:    
+   ans = krigeInterp(x, y, z, extrap = FALSE)
+   persp(ans)
+   contour(ans)
+</pre>
+
+
+
+<hr><div align="center">[Package <em>fUtilities</em> version 251.70 <a href="00Index.html">Index]</a></div>
+
+</body></html>
