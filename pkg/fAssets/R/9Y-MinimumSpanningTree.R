@@ -24,6 +24,15 @@ function(X)
     #   The function mst finds the minimum spanning tree between  
     #   a set of observations using a matrix of pairwise distances.
     
+    # Authors:
+    #   Original Code: Yvonnick Noel, Julien Claude, and Emmanuel Paradis
+    
+    # Source:
+    #   Contributed R-packe "ape".
+    
+    # FUNCTION:
+    
+    # Minimum Spanning Tree:
     if (class(X) == "dist") X = as.matrix(X)
     n = dim(X)[1]
     N = matrix(0, n, n)
@@ -51,6 +60,8 @@ function(X)
     }
     dimnames(N) = dimnames(X)
     class(N) = "mst"
+    
+    # Return Value:
     return(N)
 }
 
@@ -80,6 +91,9 @@ function (x, graph = "circle", x1 = NULL, x2 = NULL, ...)
     #   Plots the minimum spanning tree showing the links 
     #   where the observations are identified by their numbers.
     
+    # FUNCTION:
+    
+    # Plot:
     n = nrow(x)
     if (is.null(x1) || is.null(x2)) {
         if (graph == "circle") {
@@ -131,6 +145,8 @@ function (x, graph = "circle", x1 = NULL, x2 = NULL, ...)
 .nsca = 
 function(A)
 {
+    # FUNCTION:
+    
     Dr = apply(A, 1, sum)
     Dc = apply(A, 2, sum)
 
@@ -141,6 +157,8 @@ function(A)
     # it does not work if 'r' has no dimnames already defined
     # dimnames(r)[[1]] = dimnames(A)[[1]]
     rownames(r) = rownames(A)
+    
+    # Return Value:
     r
 }
 

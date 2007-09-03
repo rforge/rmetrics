@@ -416,7 +416,7 @@ function (x, method = c("cov", "mcd", "mve", "Mcd", "OGK", "shrink"))
     # Arguments:
     
     # Source:
-    #   Contributed R package "mvoutlers"
+    #   The code concerned with the outliers is from R package "mvoutliers"
     #   Moritz Gschwandtner <he0125439@student.tuwien.ac.ati>
     #   Peter Filzmoser <hP.Filzmoser@tuwien.ac.ati> 
     
@@ -440,15 +440,18 @@ function (x, method = c("cov", "mcd", "mve", "Mcd", "OGK", "shrink"))
     if (p  > 10) pcrit = (0.252 - 0.0018 * p)/sqrt(n)
     delta = qchisq(0.975, p)
     
-    # Robust Covariance Estimates:
+    # Compute Robust Covariance Estimates:
     if (method == "cov") {
+        # Standard Method:
         center = colMeans(x)
         cov = cov(x)
     } else if (method == "mcd") {
+        # MCD from MASS Package
         mean.cov = MASS::cov.mcd(x)
         center = mean.cov$center
         cov = mean.cov$cov
     } else if (method == "mve") {
+        # MVE from MASS Package
         mean.cov = MASS::cov.mve(x)
         center = mean.cov$center
         cov = mean.cov$cov
@@ -461,15 +464,16 @@ function (x, method = c("cov", "mcd", "mve", "Mcd", "OGK", "shrink"))
         center = mean.cov$center
         cov = mean.cov$cov 
     } else if (method == "shrink") {
+        # Shrinkage from contributed package "corpcor":
         mean.cov = assetsMeanCov(x, "shrink")
         center = mean.cov$mu
         cov = mean.cov$Sigma
     }
     
-    # Mahalanobis Squared Distances:
+    # Compute Mahalanobis Squared Distances:
     d2 = mahalanobis(x, center, cov)
     
-    # Outlier Detection:
+    # Detect Outliers:
     d2ord = sort(d2)
     dif = pchisq(d2ord, p) - (0.5:n)/n
     i = (d2ord >= delta) & (dif > 0)
@@ -490,7 +494,7 @@ function (x, method = c("cov", "mcd", "mve", "Mcd", "OGK", "shrink"))
     outliers = (1:dim(x)[1])[!w]
     if (length(outliers) == 0) outliers = NA
     
-    # Result:
+    # Compose Result:
     ans = list(center = m, cov = c, cor = cov2cor(c), 
         quantile = cn, outliers = outliers)
     attr(ans, "control") = c(method = method)
