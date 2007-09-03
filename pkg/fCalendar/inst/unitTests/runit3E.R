@@ -46,26 +46,6 @@
 #  months.timeDate        Extract months atom from a 'timeDate' object
 ################################################################################
 
-
-test.aaa = 
-function()
-{
-    # Help File:
-    helpFile = function() { 
-        example(TimeDateCoercion, ask = FALSE)
-        return() 
-    }
-    checkIdentical(
-        target = class(try(helpFile())),
-        current = "NULL")
-
-    # Return Value:
-    return()    
-}
-
-
-# ------------------------------------------------------------------------------
-    
  
 test.toTimeDate = 
 function()

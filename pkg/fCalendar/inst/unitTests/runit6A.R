@@ -45,27 +45,6 @@
 #  keystatsImport        Downloads key statistics from Yahoo's web site                    S-PLUS: Splits character vector into substrings
 ################################################################################
 
-
-test.aaa = 
-function()
-{
-    # Help File:
-    helpFile = function() { 
-        example(TimeSeriesImport, ask = FALSE)
-        return() 
-    }
-    checkIdentical(
-        target = class(try(helpFile())),
-        current = "NULL")
-
-    # Return Value:
-    return()    
-} 
- 
-
-   
-# ------------------------------------------------------------------------------
-
    
 test.economagic = 
 function()

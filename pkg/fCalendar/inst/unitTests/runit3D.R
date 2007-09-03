@@ -40,26 +40,6 @@
 ################################################################################
 
 
-test.aaa = 
-function()
-{
-    # Help File:
-    helpFile = function() { 
-        example(TimeDateSpecDates, ask = FALSE)
-        return() 
-    }
-    checkIdentical(
-        target = class(try(helpFile())),
-        current = "NULL")
-
-    # Return Value:
-    return()    
-} 
-
-
-# ------------------------------------------------------------------------------
-
-
 test.specialDates =
 function()
 {
