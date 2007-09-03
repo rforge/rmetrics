@@ -5,23 +5,25 @@
 #   Packages still under development and available from CRAN:
 
 
-1.  fEcofin
+01.  fEcofin
 
-2.  fCalendar
+02.  fCalendar
 
-3.  fBasics
+03.  fBasics
 
-4.  fSeries
+04.  fSeries
 
-5.  fMultivar
+05.  fGarch
 
-6.  fExtremes
+06.  fMultivar
 
-7.  fCopulae
+07.  fExtremes
 
-8.  fOptions
+08.  fCopulae
 
-9.  fPortfolio
+09.  fOptions
+
+10.  fPortfolio
 
 
 # ------------------------------------------------------------------------------
@@ -31,5 +33,9 @@
     fBrowser
         
     fBonds
+    
+    fTickdata
+    
+    Rdonlp2
     
     
