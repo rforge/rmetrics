@@ -141,7 +141,7 @@ function(x, m = 3, eps = NULL, title = NULL, description = NULL)
     for(i in (1:k)) {
         res = .C("bdstest_main", as.integer(n), as.integer(m),
             as.double(x), as.double(cc), cstan = as.double(cstan), 
-            as.double(eps[i]), as.integer(0), PACKAGE = "fSeries")
+            as.double(eps[i]), as.integer(0), PACKAGE = "fNonlinear")
         ans = res$cstan[2:m+1]
         STATISTIC = c(STATISTIC, ans)   
         names.1 = rep(paste("eps[", i, "]", sep = ""), times = length(ans))
