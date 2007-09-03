@@ -408,6 +408,8 @@ function(object)
     targetRisk = object@portfolio$targetRisk # getTargetRisk(object) 
     # print(targetRisk)
     
+    ##
+    spec = getSpec(object)
     cat("\nTarget Risk(s) and Return(s):\n")
     if (is.null(dim(targetReturn))) {
         targetReturn = matrix(targetReturn, nrow = 1)
@@ -512,60 +514,6 @@ function(x, which = "ask", control = list(), ...)
     
     par(mar = c(5, 4, 4, 3) + 0.1)
 
-    # Plot Function and Addons:
-    plot.1 <<- function(x, ...) {
-        Type = getType(x)
-        if (Type == "MV") {
-            xLab = "Mean-Var Target Risk"
-        } else if (Type == "CVaR") {
-            xLab = "-CVaR Target Risk"
-        }
-        frontierPlot(object = x, xlim = con$xlim,
-            ylim = con$ylim, main = "Efficient Frontier",
-            xlab = xLab, ylab = "Target Return", 
-            pch = 19, cex = 0.75)
-    }       
-    plot.2 <<- function(x, ...) {
-        .minvariancePlot(object = x, 
-            col = con$minvariance.col, cex = con$minvariance.cex, 
-            pch = 19)
-    }       
-    plot.3 <<- function(x, ...) {
-        .tangencyPlot(object = x, 
-            col = con$tangency.col, cex = con$tangency.cex, 
-            pch = 17)
-    }
-    plot.4 <<- function(x, ...) {
-        .singleAssetPlot(object =x , 
-            col = con$singleAsset.col, cex = con$singleAsset.cex, 
-            pch = 18)
-    }       
-    plot.5 <<- function(x, ...) {
-        .equalWeightsPlot(object = x, 
-            col = con$equalWeights.col, cex = con$equalWeights.cex, 
-            pch = 15)
-    }  
-    plot.6 <<- function(x, ...) {
-        .singleAssetPlot(object = x , 
-            col = con$singleAsset.col, cex = con$singleAsset.cex, 
-            pch = 18)
-        lines(getFrontier(object = x), col = "grey")
-        .twoAssetsPlot(object = x, col = con$twoAssets.col) 
-    }       
-    plot.7 <<- function(x, ...) {
-        .weightsWheel(object = x,
-            piePos = con$PiePos, pieR = con$pieR, pieOffset = con$pieOffset)
-    }  
-    plot.8 <<- function(x, ...) {
-        .monteCarloPlot(object = x, 
-            col = con$monteCarlo.col, cex = con$monteCarlo.cex, 
-            mcSteps = con$mcSteps) 
-    }
-    plot.9 <<- function(x, ...) {
-        .sharpeRatioPlot(object = x, type = "l", 
-            col = con$sharpeRatio.col, cex = con$sharpeRatio.cex, 
-            lty = 3)
-    }       
    
     # Plot:
     interactivePlot(
@@ -581,13 +529,106 @@ function(x, which = "ask", control = list(), ...)
             "Add Monte Carlo Portfolios",
             "Add Sharpe Ratio [MV PF Only]"),
         plotFUN = c(
-            "plot.1", "plot.2", "plot.3", "plot.4", "plot.5",  
-            "plot.6", "plot.7", "plot.8", "plot.9"),
+            ".fportfolio.plot.1", ".fportfolio.plot.2", ".fportfolio.plot.3", 
+            ".fportfolio.plot.4", ".fportfolio.plot.5", ".fportfolio.plot.6", 
+            ".fportfolio.plot.7", ".fportfolio.plot.8", ".fportfolio.plot.9"),
         which = which) 
             
     # Return Value:
     invisible(x)
 } 
+
+
+# Plot Function and Addons:
+
+
+.fportfolio.plot.1 <- 
+function(x, ...) 
+{
+    Type = getType(x)
+    if (Type == "MV") {
+        xLab = "Mean-Var Target Risk"
+    } else if (Type == "CVaR") {
+        xLab = "-CVaR Target Risk"
+    }
+    frontierPlot(object = x, xlim = con$xlim,
+        ylim = con$ylim, main = "Efficient Frontier",
+        xlab = xLab, ylab = "Target Return", 
+        pch = 19, cex = 0.75)
+} 
+
+      
+.fportfolio.plot.2 <- 
+function(x, ...) 
+{
+    .minvariancePlot(object = x, 
+        col = con$minvariance.col, cex = con$minvariance.cex, 
+        pch = 19)
+} 
+
+      
+.fportfolio.plot.3 <-
+function(x, ...) 
+{
+    .tangencyPlot(object = x, 
+        col = con$tangency.col, cex = con$tangency.cex, 
+        pch = 17)
+}
+
+
+.fportfolio.plot.4 <- 
+function(x, ...) 
+{
+    .singleAssetPlot(object =x , 
+        col = con$singleAsset.col, cex = con$singleAsset.cex, 
+        pch = 18)
+}       
+
+
+.fportfolio.plot.5 <- 
+function(x, ...) 
+{
+    .equalWeightsPlot(object = x, 
+        col = con$equalWeights.col, cex = con$equalWeights.cex, 
+        pch = 15)
+}  
+
+
+.fportfolio.plot.6 <- 
+function(x, ...) 
+{
+    .singleAssetPlot(object = x , 
+        col = con$singleAsset.col, cex = con$singleAsset.cex, 
+        pch = 18)
+    lines(getFrontier(object = x), col = "grey")
+    .twoAssetsPlot(object = x, col = con$twoAssets.col) 
+}       
+
+
+.fportfolio.plot.7 <- 
+function(x, ...) 
+{
+    .weightsWheel(object = x,
+        piePos = con$PiePos, pieR = con$pieR, pieOffset = con$pieOffset)
+}  
+
+
+.fportfolio.plot.8 <- 
+function(x, ...) 
+{
+    .monteCarloPlot(object = x, 
+        col = con$monteCarlo.col, cex = con$monteCarlo.cex, 
+        mcSteps = con$mcSteps) 
+}
+
+
+.fportfolio.plot.9 <- 
+function(x, ...) 
+{
+    .sharpeRatioPlot(object = x, type = "l", 
+        col = con$sharpeRatio.col, cex = con$sharpeRatio.cex, 
+        lty = 3)
+}       
 
 
 # ------------------------------------------------------------------------------
@@ -752,6 +793,9 @@ function(object, control = list(), ...)
 
 # ------------------------------------------------------------------------------
  
+
+.frontierSlider.Add = NA
+
 
 frontierSlider =     
 function(object, control = list(), ...)
@@ -944,7 +988,7 @@ function(object, control = list(), ...)
     nFP = nFrontierPoints
     maxRF = max(getTargetReturn(object))
     resRF = maxRF/100
-    Add <<- rep(0, times = 11)
+    .frontierSlider.Add <<- rep(0, times = 11)
     
     .tdSlider(
         refresh.code,
@@ -1000,222 +1044,6 @@ function(object, control = list(), ...)
         )        
             
    .tdSlider(obj.name = "type", obj.value = "1", no = 1)
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.oldFrontierSlider =     
-function(object, control = list(), ...)
-{   # A function implemented by Rmetrics
-
-    # Description:
-    #   Views interactively frontier and related plots
-    
-    # FUNCTION:
-    
-    # Global Variables:
-    object <<- object
-    nFrontierPoints <<- nrow(getWeights(object))
-    dim = dim(getWeights(object))[2]
-       
-    # Use default, if xlim and ylim is not specified ...
-    mu = getStatistics(object)$mu
-    Sigma = getStatistics(object)$Sigma      
-    yLim = range(mu) + 0.25*c(-diff(range(mu)), diff(range(mu)))
-    
-    # First, take care that all assets appear on the plot ...
-    sqrtSig = sqrt(diag(Sigma))
-    xLimAssets = c(min(sqrtSig), max(sqrtSig))+
-         c(-0.4*diff(range(sqrtSig)), 0.1*diff(range(sqrtSig)))
-
-    # ... second take care that the whole frontier appears on the plot:
-    fullFrontier = getFrontier(object)
-    xLimFrontier = range(fullFrontier[, 1])
-    xLim = range(c(xLimAssets, xLimFrontier))
-    xLim[1] = xLim[1]-diff(xLim)/5
-    
-    # Initial setting of the pies:
-    Data = getSeries(object)
-    Spec = getSpec(object)
-    Constraints = getConstraints(object)
-    tg = getTargetReturn(tangencyPortfolio(Data, Spec, Constraints))
-    ef = getTargetReturn(object)
-    piePos = which(diff(sign(as.vector(ef)-as.vector(tg))) > 0) 
-
-    # Control list:
-    con <<- list(
-        sliderFlag = "frontier",
-        sharpeRatio.col = "black",
-        minvariance.col = "red",
-        tangency.col = "steelblue",
-        cml.col = "green",
-        equalWeights.col = "blue",
-        singleAsset.col = rainbow(dim),
-        twoAssets.col = "grey",
-        monteCarlo.col = "black",  
-        minvariance.pch = 17,
-        tangency.pch = 17,
-        cml.pch = 17,
-        equalWeights.pch = 15,
-        singleAsset.pch = 18,  
-        sharpeRatio.cex = 0.1,
-        minvariance.cex = 1,
-        tangency.cex = 1.25,
-        cml.cex = 1.25,
-        equalWeights.cex = 0.8,
-        singleAsset.cex = 1,
-        twoAssets.cex = 0.01,
-        monteCarlo.cex = 0.01, 
-        mcSteps = 5000, 
-        weightsPieR = NULL, 
-        weightsPieOffset = NULL,
-        attributesPieR = NULL, 
-        attributesPieOffset = NULL,
-        xlim = xLim,
-        ylim = yLim
-        )    
-    con[(Names <- names(control))] <- control
-     
-    # Set and Reset 'mar': 
-    oldmar = par()$mar
-    on.exit(par(oldmar))  
-    par(mar = c(5, 4, 4, 3) + 0.1)
-    
-    # Internal Function:
-    refresh.code = function(...)
-    {
-        # Startup Counter:
-        .counter <<- .counter + 1
-        if (.counter < 14) return ()
-        
-        # Sliders:  
-        N                = .sliderMenu(no =  1)
-        weightsWheel     = .sliderMenu(no =  2)
-        attributesWheel  = .sliderMenu(no =  3)
-        legendFlag       = .sliderMenu(no =  4)
-        minvarianceFlag  = .sliderMenu(no =  5)
-        tangencyFlag     = .sliderMenu(no =  6)
-        cmlFlag          = .sliderMenu(no =  7)
-        riskFreeRate     = .sliderMenu(no =  8)
-        sharpeRatioFlag  = .sliderMenu(no =  9)
-        equalWeightsFlag = .sliderMenu(no = 10)
-        singleAssetFlag  = .sliderMenu(no = 11)
-        twoAssetsFlag    = .sliderMenu(no = 12)
-        mcFlag           = .sliderMenu(no = 13)
-        mcSteps          = .sliderMenu(no = 14)
-
-        # Reset Frame:
-        par(mfrow = c(1, 1))
-        
-        # Plots and Addons:
-        frontierPlot(object = object, pch = 19, 
-            xlim = con$xlim, ylim = con$ylim)
-        ef = getFrontier(object)
-        points(ef[N, 1], ef[N, 2], col = "red", pch = 19, cex = 1.5)
-        if (sharpeRatioFlag) {
-            .sharpeRatioPlot(object = object, 
-                type = "l", 
-                col = con$sharpeRatio.col, 
-                cex = con$sharpeRatio.cex, 
-                lty = 3)
-        }
-        if (minvarianceFlag) {
-            .minvariancePlot(object = object, 
-                col = con$minvariance.col, 
-                cex = con$minvariance.cex, 
-                pch = con$minvariance.pch)
-        }
-        if (cmlFlag) {
-            object@spec$spec@portfolio$riskFreeRate = riskFreeRate
-            .cmlPlot(object, 
-                col = con$cml.col, 
-                cex = con$cml.cex, 
-                pch = con$cml.pch)
-        }
-        if (tangencyFlag) {
-            .tangencyPlot(object = object, 
-                col = con$tangency.col, 
-                cex = con$tangency.cex,
-                pch = con$tangency.pch)
-        }
-        if (singleAssetFlag) {
-            .singleAssetPlot(object = object, 
-                col = con$singleAsset.col, 
-                cex = con$singleAsset.cex, 
-                pch = con$singleAsset.pch)
-        }
-        if (equalWeightsFlag) {
-            .equalWeightsPlot(object = object, 
-                col = con$equalWeights.col, 
-                cex = con$equalWeights.cex, 
-                pch = con$equalWeights.pch)
-        }
-        if (twoAssetsFlag) {
-            .twoAssetsPlot(object = object, 
-                col = con$twoAssets.col) 
-        }
-        if (weightsWheel) {
-            .weightsWheel(object = object,
-                piePos = N, pieR = con$weightsPieR,
-                pieOffset = con$weightsPieOffset)
-        }
-        if (attributesWheel) {
-            .attributesWheel(object = object,
-                piePos = N, 
-                pieR = con$attributesPieR,
-                pieOffset = con$attributesPieOffset)
-            }
-        if (mcFlag) {
-            .monteCarloPlot(object = object, 
-                col = con$monteCarlo.col, 
-                cex = con$monteCarlo.cex, 
-                mcSteps = mcSteps) 
-        }
-        if (legendFlag) {
-            .addlegend(object = object, 
-                control = con)
-        } 
-        fPoint = ef[N, ] 
-        Title = paste(
-            "Return =", signif(fPoint[2], 2), "|", 
-            "Risk = ", signif(fPoint[1], 2))
-        title(main = Title) 
-        
-        grid()           
-    }
-  
-    # Open Slider Menu:
-    .counter <<-0
-    nFP = nFrontierPoints
-    maxRF = max(getTargetReturn(object))
-    resRF = maxRF/100
-    .sliderMenu(refresh.code, title = "Frontier Slider",
-        names =   c(  "Select Frontier Point         ",
-                      "Add|Remove Weights Pie        ",
-                      "Add|Remove Attribute Pie      ",
-                      "Add|Remove Legend             ",
-                      "Add|Remove Min Variance PF    ", 
-                      "Add|Remove Tangency PF        ",
-                      "Add|Remove Capital Market Line",
-                      "-> Risk Free Rate             ",
-                      "Add|Remove Sharpe Ratio       ",
-                      "Add|Remove Equal Weights PF   ",
-                      "Add|Remove Single Assets      ",
-                      "Add|Remove Two Assets EFs     ",
-                      "Add|Remove Monte Carlo PFs    ",
-                      "-> # of MC Steps              "),
-                          
-            #   frontierPoints Pie Pie  L mv tg cml    #RF SR EW SA TA MC   #MC 
-                    #        1   2   2  3  4  5  7      8  6  9 10 11 12    13 
-        minima =      c(     1,  0,  0, 0, 0, 0, 0,     0, 0, 0, 0, 0, 0,    0),
-        maxima =      c(   nFP,  1,  1, 1, 1, 1, 1, maxRF, 1, 1, 1, 1, 1,25000),
-        resolutions = c(     1,  1,  1, 1, 1, 1, 1, resRF, 1, 1, 1, 1, 1, 1000),
-        starts =      c(piePos,  1,  0, 1, 1, 1, 1,     0, 0, 0, 1, 0, 0, 1000))
-      
-    # Return Value:                                                 
-    invisible()
 }
 
 

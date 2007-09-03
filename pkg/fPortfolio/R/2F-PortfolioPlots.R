@@ -96,7 +96,7 @@ function(object, frontier = c("both", "lower", "upper"),
                 plot(upperFrontier, col = col[1], xlim = xLim, ylim = yLim, ...)
             } else {
                 if( frontier == "both") {
-                    points(bothFrontier, col = col[2], 
+                    points(fullFrontier, col = col[2], 
                         xlim = xLim, ylim = yLim, ...)
                 }
                 if(frontier == "lower" ) {
@@ -120,10 +120,10 @@ function(object, frontier = c("both", "lower", "upper"),
                 plot(upperFrontier, col = col[1], ylim = yLim, ...)
             } else {
                 if( frontier == "both") {
-                    points(bothFrontier, col = col[2], ylim = yLim, ...)
+                    points(fullFrontier, col = col[2], ylim = yLim, ...)
                 }
                 if(frontier == "lower" ) {
-                    plot(lowerFrontier, col = col[2], ylim = yLim, ...)
+                    plot(fullFrontier, col = col[2], ylim = yLim, ...)
                 }
             }
         }
@@ -144,7 +144,7 @@ function(object, frontier = c("both", "lower", "upper"),
                 plot(upperFrontier, col = col[1], xlim = xLim, ...)
             } else {
                 if( frontier == "both") {
-                    points(bothFrontier, col = col[2], xlim = xLim, ...)
+                    points(fullFrontier, col = col[2], xlim = xLim, ...)
                 }
                 if(frontier == "lower" ) {
                     plot(lowerFrontier, col = col[2], xlim = xLim, ...)
