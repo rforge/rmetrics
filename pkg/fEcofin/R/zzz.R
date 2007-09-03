@@ -49,7 +49,7 @@ function(lib, pkg)
     }
 
     # Load dll:
-    library.dynam("fEcofin", pkg, lib) 
+    # library.dynam("fEcofin", pkg, lib) 
 }
 
 
