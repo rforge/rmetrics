@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
+<HEAD></HEAD><HTML><BODY>
+<UL>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Package fImport:  Contents">
+<param name="Local" value="00Index.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Package fImport:  R objects">
+</OBJECT>
+<UL>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Economagic">
+<param name="Local" value="5A-Economagic.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="economagicImport">
+<param name="Local" value="5A-Economagic.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="economagicSeries">
+<param name="Local" value="5A-Economagic.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Forecasts">
+<param name="Local" value="4A-Forecasts.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="forecastsImport">
+<param name="Local" value="4A-Forecasts.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="forecastsSeries">
+<param name="Local" value="4A-Forecasts.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Fred">
+<param name="Local" value="3A-Fred.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="fredImport">
+<param name="Local" value="3A-Fred.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="fredSeries">
+<param name="Local" value="3A-Fred.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="fWEBDATA">
+<param name="Local" value="1A-WebData.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="fWEBDATA-class">
+<param name="Local" value="1A-WebData.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="keystatsImport">
+<param name="Local" value="2A-Yahoo.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="show,fWEBDATA-method">
+<param name="Local" value="1A-WebData.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="show.fWEBDATA">
+<param name="Local" value="1A-WebData.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="WebDataImport">
+<param name="Local" value="1A-WebData.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Yahoo">
+<param name="Local" value="2A-Yahoo.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="yahooImport">
+<param name="Local" value="2A-Yahoo.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="yahooSeries">
+<param name="Local" value="2A-Yahoo.html">
+</OBJECT>
+</UL>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Package fImport:  Titles">
+</OBJECT>
+<UL>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Import Market Data from Economagic">
+<param name="Local" value="5A-Economagic.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Import Market Data from the Fred">
+<param name="Local" value="3A-Fred.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Import Market Data from the Internet">
+<param name="Local" value="1A-WebData.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Import Market Data from www.forecasts.org">
+<param name="Local" value="4A-Forecasts.html">
+</OBJECT>
+<LI> <OBJECT type="text/sitemap">
+<param name="Name" value="Import Market Data from Yahoo">
+<param name="Local" value="2A-Yahoo.html">
+</OBJECT>
+</UL>
+</UL>
+</BODY></HTML>
