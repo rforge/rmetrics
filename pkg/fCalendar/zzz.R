@@ -49,7 +49,7 @@ function(lib, pkg)
     }
 
     # Load dll:
-    library.dynam("fUtilities", pkg, lib) 
+    # library.dynam("fUtilities", pkg, lib) 
 }
 
 
