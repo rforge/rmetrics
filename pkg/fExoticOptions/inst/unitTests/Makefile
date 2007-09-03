@@ -1,4 +1,4 @@
-PKG=fOptions
+PKG=fExoticOptions
 TOP=../..
 SUITE=doRUnit.R
 R=R
