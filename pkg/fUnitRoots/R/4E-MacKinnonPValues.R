@@ -342,7 +342,7 @@ function (arg, nobs = 0, niv = 1, itt = 1, itv = 1, nc = 1)
                     as.double(wght), as.double(cval), as.double(size), 
                     as.double(precrt), as.integer(nobs), as.integer(model), 
                     as.integer(nreg), as.integer(np), as.integer(0),
-                    PACKAGE = "fEcofin") 
+                    PACKAGE = "fUnitRoots") 
                 ans = c(ans, result[[5]]) 
             } 
         }
@@ -352,7 +352,7 @@ function (arg, nobs = 0, niv = 1, itt = 1, itv = 1, nc = 1)
                 as.double(probs), as.double(pval), as.double(stat), 
                 as.double(precrt), as.integer(nobs), as.integer(model), 
                 as.integer(nreg), as.integer(np), as.integer(0),
-                PACKAGE = "fEcofin") 
+                PACKAGE = "fUnitRoots") 
             ans = c(ans, result[[5]]) 
         } 
     }
