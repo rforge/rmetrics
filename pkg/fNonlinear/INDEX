@@ -1,0 +1,13 @@
+ArfimaOxInterface       R Interface for Garch Arfima
+ArmaInterface           Integrated ARMA Time Series Modelling
+ArmaStatistics          Statistics of the True ARMA Process
+GarchDistributions      GARCH Distributions and Parameter Estimation
+GarchModelling          Univariate GARCH Time Series Modelling
+GarchOxInterface        R Interface for Garch Ox
+LongRangeDependence     Statistics of the True LRD Process
+LrdModelling            Long Range Dependence Modelling
+NonLinModelling         Chaotic Time Series Modelling
+NonLinStatistics        Chaotic Time Series Statistics
+NonLinTests             Time Series Tests
+UnitrootTests           Unit Root Time Series Tests
+UnitrootUrcaInterface   Unit Root Time Series Tests

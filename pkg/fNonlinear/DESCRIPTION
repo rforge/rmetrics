@@ -1,0 +1,15 @@
+Package: fSeries
+Version: 251.70
+Date: 1997 - 2007
+Title: Rmetrics - The Dynamical Process Behind Markets
+Author: Diethelm Wuertz and many others, see the SOURCE file
+Depends: R (>= 2.2.1), methods, mgcv, nnet, urca, MASS, fEcofin, fCalendar, fBasics
+Maintainer: Diethelm Wuertz and Rmetrics Core Team <wuertz@itp.phys.ethz.ch>
+Description: Environment for teaching "Financial Engineering and Computational Finance"
+NOTE: SEVERAL PARTS ARE STILL PRELIMINARY AND MAY BE CHANGED IN THE FUTURE.
+      THIS TYPICALLY INCLUDES FUNCTION AND ARGUMENT NAMES,
+      AS WELL AS DEFAULTS FOR ARGUMENTS AND RETURN VALUES.
+LazyLoad: yes
+LazyData: yes
+License: GPL Version 2 or later
+URL: http://www.rmetrics.org 
