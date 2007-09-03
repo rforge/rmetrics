@@ -415,7 +415,7 @@ dupfun = NULL)
         as.integer(n), as.double(x), as.double(y), as.double(z), 
         as.integer(nx), as.integer(ny), x = as.double(xo), y = as.double(yo), 
         z = zo, integer((31 + ncp) * n + nx * ny), double(5 * 
-            n), misso = as.logical(misso), PACKAGE = "fEcofin")[c("x", 
+            n), misso = as.logical(misso), PACKAGE = "fMathlib")[c("x", 
         "y", "z", "misso")]
     ans$z[ans$misso] <- NA
     ans[c("x", "y", "z")]
@@ -485,7 +485,7 @@ duplicate = "error", dupfun = NULL)
         as.integer(ny), y = as.double(yo), z = zo, ier = integer(1), 
         double(36 * n), integer(25 * n), extrap = as.logical(misso), 
         near = integer(n), nxt = integer(n), dist = double(n), 
-        PACKAGE = "fEcofin")[c("x", "y", "z", "extrap")]
+        PACKAGE = "fMathlib")[c("x", "y", "z", "extrap")]
     if (miss) 
         ans$z[ans$extrap] <- NA
     ans[c("x", "y", "z")]
@@ -557,7 +557,7 @@ dupfun = NULL)
         as.integer(n), as.double(x), as.double(y), as.double(z), 
         as.integer(np), x = as.double(xo), y = as.double(yo), 
         z = zo, integer((31 + ncp) * n + np), double(8 * n), 
-        misso = as.logical(misso), PACKAGE = "fEcofin")
+        misso = as.logical(misso), PACKAGE = "Mathlib")
     temp <- ans[c("x", "y", "z", "misso")]
     temp$z[temp$misso] <- NA
     temp[c("x", "y", "z")]
@@ -625,7 +625,7 @@ dupfun = NULL)
         y = as.double(yo), z = zo, ier = integer(1), wk = double(17 * 
             n), iwk = integer(25 * n), extrap = as.logical(extrap), 
         near = integer(n), nxt = integer(n), dist = double(n), 
-        PACKAGE = "fEcofin")
+        PACKAGE = "fMathlib")
     temp <- ans[c("x", "y", "z", "extrap")]
     if (miss) 
         temp$z[temp$extrap] <- NA
