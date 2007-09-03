@@ -366,8 +366,8 @@ function(phi = numeric(0), theta = numeric(0), maxlag = 128)
         x 
     }
     
-    jFARMA = function(theta, maxlag) {
-        psis = psiwtsAR(theta, maxlag = maxlag)
+    .jFARMA = function(theta, maxlag) {
+        psis = .psiwtsAR(theta, maxlag = maxlag)
         q = length(theta)
         J = numeric(q)
         for (k in 1:q) { 
@@ -387,9 +387,9 @@ function(phi = numeric(0), theta = numeric(0), maxlag = 128)
     if ((length(phi) == 0) && (length(theta) == 0)) return(I22)
     I11 = .iARMA(phi = phi, theta = theta)
     J11 = numeric(0)
-    if (length(phi) > 0) J11 = -jFARMA(phi, maxlag)
+    if (length(phi) > 0) J11 = -.jFARMA(phi, maxlag)
     J12 = numeric(0)
-    if (length(theta) > 0) J12 = jFARMA(theta, maxlag)
+    if (length(theta) > 0) J12 = .jFARMA(theta, maxlag)
     J = c(J11, J12)
     I = rbind(I11, J)
     J = c(J, I22)
