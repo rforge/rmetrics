@@ -43,6 +43,15 @@
 ################################################################################
 
 
+.llh = 1e99
+
+
+.garchDist = NA
+
+
+# ------------------------------------------------------------------------------
+
+
 # Class Representation:
 setClass("fGARCH", 
     representation(
@@ -68,7 +77,6 @@ function(formula, data, init.rec = c("mci", "uev"), delta = 2, skew = 1,
 shape = 4, cond.dist = c("dnorm", "dsnorm", "dged", "dsged", "dstd", "dsstd"), 
 include.mean = TRUE, include.delta = NULL, include.skew = NULL, 
 include.shape = NULL, leverage = NULL, trace = TRUE, 
-algorithm = c("sqp", "nlminb", "lbfgsb", "nlminb+nm", "lbfgsb+nm"), 
 control = list(), title = NULL, description = NULL, ...)
 {   # A function implemented by Diethelm Wuertz
 
@@ -131,8 +139,7 @@ control = list(), title = NULL, description = NULL, ...)
     # Fit:
     ans = .garchFit(formula.mean, formula.var, series = x, init.rec, delta, 
         skew, shape, cond.dist, include.mean, include.delta, include.skew, 
-        include.shape, leverage, trace, algorithm, control, title, 
-        description, ...)
+        include.shape, leverage, trace, control, title, description, ...)
     ans@call = CALL
     
     # Return Value:
@@ -143,19 +150,13 @@ control = list(), title = NULL, description = NULL, ...)
 # ------------------------------------------------------------------------------
 
 
-.llh = 1e99
-
-.garchDist = NA
-
-
 .garchFit =
 function(formula.mean = ~arma(0, 0), formula.var = ~garch(1, 1), 
 series = x, init.rec = c("mci", "uev"), delta = 2, skew = 1, shape = 4,
 cond.dist = c("dnorm", "dsnorm", "dged", "dsged", "dstd", "dsstd"), 
 include.mean = TRUE, include.delta = NULL, include.skew = NULL,
-include.shape = NULL, leverage = NULL, trace = TRUE,  
-algorithm = c("sqp", "nlminb", "lbfgsb", "nlminb+nm", "lbfgsb+nm"), 
-control = list(), title = NULL, description = NULL, ...)
+include.shape = NULL, leverage = NULL, trace = TRUE, control = list(), 
+title = NULL, description = NULL, ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description
@@ -193,7 +194,7 @@ control = list(), title = NULL, description = NULL, ...)
     # FUNCTION:
   
     # Check for Recursion Initialization:
-    if(init.rec[1] != "mci" & algorithm[1] != "sqp") {
+    if(init.rec[1] != "mci") {
         stop("Algorithm only supported for mci Recursion")
     }
     
@@ -235,8 +236,7 @@ control = list(), title = NULL, description = NULL, ...)
         skew = skew, shape = shape, cond.dist = cond.dist[1], 
         include.mean = include.mean, include.delta = include.delta, 
         include.skew = include.skew, include.shape = include.shape, 
-        leverage = leverage, algorithm = algorithm[1], control = con,
-        trace = trace)
+        leverage = leverage, control = con, trace = trace)
 
     # Select Conditional Distribution Function:
     .garchDist <<- .garchSetCondDist(cond.dist[1])  
@@ -401,7 +401,7 @@ h.start, llh.start, trace)
 .garchInitParameters = 
 function(formula.mean, formula.var, .series, delta, skew, shape, cond.dist, 
 include.mean, include.delta, include.skew, include.shape, leverage, 
-algorithm, control, trace)
+control, trace)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -665,6 +665,10 @@ function(cond.dist = "dnorm")
 }
 
 
+
+.garchDist = .garchSetCondDist("dnorm")
+
+
 # ------------------------------------------------------------------------------
  
 
@@ -872,7 +876,6 @@ function(par, .series, .params, trace)
     # FUNCTION:
  
     # Compute Hessian:
-    algorithm = .params$control$algorithm[1]
     EPS0 = 1.0e-4
 
     keep.trace = trace
@@ -913,7 +916,7 @@ function(par, .series, .params, trace)
 
 
 .garchOptimizeLLH =
-function(.series, .params, .garchDist, trace) 
+function(.series, .params, trace) 
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -930,8 +933,7 @@ function(.series, .params, .garchDist, trace)
     # Initialization:
     INDEX = .params$index
       
-    # Algorithm:
-    algorithm = .params$control$algorithm[1]
+    # Tolerance Algorithms:
     TOL1 = .params$control$tol1
     TOL2 = .params$control$tol2
     
@@ -948,8 +950,10 @@ function(.series, .params, .garchDist, trace)
         upper = .params$V[INDEX],
         scale = parscale,
         control = list(eval.max = 2000, iter.max = 1500, 
-            rel.tol = 1.0e-14*TOL1, x.tol = 1.0e-14*TOL1)
-        )  
+            rel.tol = 1.0e-14*TOL1, x.tol = 1.0e-14*TOL1),
+        .series = .series,
+        .params = .params,
+        trace = trace) 
     fit$value = fit$objective 
 
     # Add Names:
@@ -958,7 +962,7 @@ function(.series, .params, .garchDist, trace)
     
     # Compute Hessian:
     .StartHessian <- Sys.time()
-    H = .garchHessian(fit$par, .series, .params)
+    H = .garchHessian(fit$par, .series, .params, trace)
     Time =  Sys.time() - .StartHessian 
     if(trace) {
         cat("\nTime to Compute Hessian:\n ")

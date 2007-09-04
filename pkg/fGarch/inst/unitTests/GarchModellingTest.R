@@ -197,7 +197,11 @@ function()
     
     # Modify Start Values - mci default:
     fit = garchFit( ~ garch(1,1), data = x/sd(x), cond.dist = "dsstd", 
-        algorithm = "nlminb", trace = FALSE)
+        trace = TRUE)
+    fit@fit$coef
+    
+    fit = garchFit( ~ aparch(1,1), data = x/sd(x), cond.dist = "dsstd", 
+        trace = TRUE)
     fit@fit$coef
     
     # Return Value:

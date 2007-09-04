@@ -44,7 +44,7 @@ function(lib, pkg)
     }
 
     # Load dll:
-    library.dynam("fGarch", pkg, lib) 
+    # library.dynam("fGarch", pkg, lib) 
 }
 
 
