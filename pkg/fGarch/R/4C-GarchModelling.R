@@ -36,7 +36,7 @@
 #  .garchInitParameters    Initializes Parameters
 #  .garchSetCondDist       Selects conditional density function
 #   .garchDist              Defines conditional density function
-#  .garchOptimizeLLH       Opimizes log-likelihood function by 'nlminb'/'bfgs'
+#  .garchOptimizeLLH       Opimizes log-likelihood function  
 #   .garchLLH               Computes log-likelihood function
 #   .garchHessian           Computes Hessian matrix numerically
 #  .garchNames              Slot names, @fit slot, parameters and controls
