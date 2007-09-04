@@ -108,7 +108,7 @@ function(x, log = FALSE)
             as.integer(KF),
             as.double(0),
             as.double(0), 
-            PACKAGE = "fOptions")
+            PACKAGE = "fAsianOptions")
         result[i] = complex(real = value[[4]], imag = value[[5]]) 
     }
     
@@ -155,7 +155,7 @@ function(x)
                 as.double(Im(x[i])),
                 as.double(0),
                 as.double(0),
-                PACKAGE = "fOptions")
+                PACKAGE = "fAsianOptions")
             result[i] = complex(real = value[[3]], imag = value[[4]]) 
         }
     }
