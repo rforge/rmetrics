@@ -38,6 +38,9 @@
 ################################################################################
 
 
+.counter = NA
+
+
 ################################################################################
 # Specifying and creating copula objects
 
@@ -243,12 +246,13 @@ type = NULL, error = 1e-3, ...)
             C = pevCopula(x, y, param = param, type = type)
             12 * (C - x*y ) 
         }
-    } else if (family == "archmax") {
-        dCopulaRho <- function(x, y) {
-            C = parchmaxCopula(x, y, param = param, type = type)
-            12 * (C - x*y )
-        }
-    }
+    } 
+    # else if (family == "archmax") {
+    #     dCopulaRho <- function(x, y) {
+    #         C = parchmaxCopula(x, y, param = param, type = type)
+    #         12 * (C - x*y )
+    #     }
+    # }
         
     # Integrate:
     ans = integrate2d(dCopulaRho, error = error) 

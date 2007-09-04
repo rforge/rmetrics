@@ -151,8 +151,8 @@ function(n = 1000, alpha = c(2, 2), rho = 0, gamma = c(0.5, 0.5))
     
     # Random Variates:
     r = rbind(
-        if (n1 > 0) .rgumbelCopula(n1, alpha1),
-        if (n2 > 0) 1-.rgumbelCopula(n2, alpha2),
+        if (n1 > 0) .rgumbelCopula(n1, alpha[1]),
+        if (n2 > 0) 1-.rgumbelCopula(n2, alpha[2]),
         if (n3 > 0) rellipticalCopula(n3, rho, type = "norm") )
     index = sample(1:n)
     ans = r[index, ]
@@ -211,7 +211,7 @@ function(u = 0.5, v = u, alpha = c(2, 2), rho = 0, gamma = c(0.5, 0.5))
 
 
 .gsgnormCopulaFit =
-function(u, v, trace = FALSE)
+function(u, v =  NULL, trace = FALSE)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -220,31 +220,26 @@ function(u, v, trace = FALSE)
     # FUNCTION:
     
     # Settings:
+    U <- u
+    V <- v
     if (is.list(u)) {
-        v = u[[2]]
-        u = u[[1]]
+        U = u[[1]]
+        V = u[[2]]
     }
     if (is.matrix(u)) {
-        v = u[, 1]
-        u = u[, 2]
+        U = u[, 1]
+        V = u[, 2]
     }
-
-    # Settings:
-    u <<- u
-    v <<- v
-    .steps <<- 0
-    .trace <<- trace
      
     # Estimate Copula:
     start = c(1.5, 1.5, 0, 1/3, 1/3)
-    fun = function(x) {
-        .steps <<- .steps + 1
-        density = .dgsgnormCopula(u = u, v = v, 
+    fun = function(x, U, V, trace) 
+    {
+        density = .dgsgnormCopula(u = U, v = V, 
             alpha = x[1:2], rho = x[3], gamma = x[4:5])$z
         density = density[!is.na(density)]
         f = -mean( log(density) )
-        if (.trace) {
-            cat("\n Optimization Step:         ", .steps)
+        if (trace) {
             cat("\n Objective Function Value:  ", -f)
             cat("\n Parameter Estimates:       ",   
                 round(c(x[1:3], x[5]*x[4], x[5]*(1-x[4]), 1-x[5]), 4), "\n")
@@ -255,7 +250,7 @@ function(u, v, trace = FALSE)
     # Fit:
     fit = nlminb(start = start, objective = fun, 
         lower = c(  1,   1, -0.999, 0, 0), 
-        upper = c(Inf, Inf,  0.999, 1, 1))
+        upper = c(Inf, Inf,  0.999, 1, 1), U = U, V = V, trace = trace)
         
     param = fit$par
     alpha1 = param[1]
@@ -336,7 +331,7 @@ function(x, doplot = TRUE, trace = TRUE)
     for (i in 1:(N-1)) {
         # First asset:
         r1 = as.vector(x[, i])
-        fit1 = normFit(r1)
+        fit1 = nFit(r1)
         estim1 = fit1$estimate
         p1 = pnorm(r1, estim1[1], estim1[2]) 
         Main1 = assetsNames[i]
@@ -345,7 +340,7 @@ function(x, doplot = TRUE, trace = TRUE)
         {  
             # Second asset:
             r2 = as.vector(x[, j])
-            fit2 = normFit(r2) 
+            fit2 = nFit(r2) 
             estim2 = fit2$estimate      
             p2 = pnorm(r2, estim2[1], estim2[2]) 
             Main2 = assetsNames[j]

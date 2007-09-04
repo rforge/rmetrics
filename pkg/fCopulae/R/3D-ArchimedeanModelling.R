@@ -86,28 +86,28 @@ function(u, v = NULL, type = archmList(), ...)
     Type = as.integer(type)
     
     # Settings:
-    U <<- u
-    V <<- v
+    U = u
+    V = v
     if (is.list(u)) {
-        U <<- u[[1]]
-        V <<- u[[2]]
+        U = u[[1]]
+        V = u[[2]]
     }
     if (is.matrix(u)) {
-        U <<- u[, 1]
-        V <<- u[, 2]
+        U = u[, 1]
+        V = u[, 2]
     }
 
     # Estimate Rho from Kendall's tau for all types of Copula:
     alpha = archmParam(type)$param
      
     # Estimate Copula:
-    fun = function(x, type) {
+    fun = function(x, type, U, V) {
         -mean( log(darchmCopula(u = U, v = V, alpha = x, type = type)) )
     }
     range = archmRange(type)
 
     fit = nlminb(start = alpha, objective = fun, 
-        lower = range[1], upper = range[2],  type = type, ...)
+        lower = range[1], upper = range[2],  type = type, U = U, V = V, ...)
       
     # Return Value:
     fit

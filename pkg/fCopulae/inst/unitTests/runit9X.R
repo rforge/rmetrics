@@ -28,18 +28,20 @@
 
 
 ################################################################################
-# FUNCTION:                         GUMBEL COPULA:
-#  .rgumbelCopula
-#  .dgumbelCopula
-#  .pgumbelCopula
-# FUNCTION:                         MIXED GUMBEL-SURVIVALGUMBEL-NORMAL COPULA:
-#  .rgsgnormCopula
-#  .dgsgnormCopula
-#  .gsgnormCopulaFit
-# FUNCTION:                         NON-PARAMETRIC TAIL DEPENDECY ESTIMATOR:
-#  .cfgTDE
-# FUNCTION:                         COPULA FIT WITH NIG MARGINALS:
-#  .nigDependencyFit                 
+# FUNCTION:                    GUMBEL COPULA:
+#  .rgumbelCopula               Generates fast Gumbel copula random variates
+#  .dgumbelCopula               Computes Gumbel copula probability
+#  .pgumbelCopula               Computes Gumbel copula probability
+# FUNCTION:                    MIXED GUMBEL-SURVIVALGUMBEL-NORMAL COPULA:
+#  .rgsgnormCopula              Generates G-SG-NORM copula random variates
+#  .dgsgnormCopula              Computes G-SG-NORM copula probability
+#  .gsgnormCopulaFit            Computes G-SG-NORM copula probability
+# FUNCTION:                    NON-PARAMETRIC TAIL DEPENDECY ESTIMATOR:
+#  .cfgTDE                      Estimates non-parametrically tail dependence
+# FUNCTION:                    COPULA FIT WITH NIG MARGINALS:
+#  .normDependencyFit           Estimates tail dependence with normal marginals
+#  .nigDependencyFit            Estimates tail dependence with NIG marginals  
+#  .ghtDependencyFit            Estimates tail dependence with GHT marginals                  
 ################################################################################
 
 

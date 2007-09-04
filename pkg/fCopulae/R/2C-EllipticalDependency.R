@@ -349,7 +349,8 @@ tail = c("Lower", "Upper"))
         if (type == "logistic" | type == "laplace" | type == "kotz") {
             if (tail == "Lower") {
                 SHOW = which.min(lambdaTail[-1])
-                lines(u[SHOW:(N+1)], lambdaL[SHOW:(N+1)], type = "l", 
+                ##
+                lines(u[SHOW:(N+1)], lambdaTail[SHOW:(N+1)], type = "l", 
                     lty = linetype, col = color)
             }       
             if (tail == "Upper") {

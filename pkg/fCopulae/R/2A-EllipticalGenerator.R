@@ -382,6 +382,8 @@ function(x, param = NULL, type = ellipticalList())
 # ------------------------------------------------------------------------------
 
 
+
+
 gfuncSlider = 
 function(B = 10)
 {   # A function implemented by Diethelm Wuertz
@@ -529,7 +531,7 @@ alternative = TRUE, subdivisions = 100)
     #   Probability function for univariate elliptical distributions
     
     # Arguments:
-    #   x -  a numeric vector
+    #   q -  a numeric vector
     #   param - NULL, a numeric value, or a numeric vector adding.
     #       additional parameters to the generator function.
     #   type -  a character string denoting the type of distribution.
@@ -562,8 +564,12 @@ alternative = TRUE, subdivisions = 100)
     # Fq1 = function (x, Q, param, type) { 
     #    acos(abs(Q)/sqrt(x)) * gfunc(x, param, type) } 
     # Transformed Function: u = exp(-x+Q^2)
-    Fq2 = function (x, Q, param, type) { 
-        Q^2 * acos(sqrt(x))/x^2 * gfunc(Q^2/x, param, type) } 
+    Fq2 = 
+    function (x, Q, param, type)
+    { 
+        Q^2 * acos(sqrt(x))/x^2 * gfunc(Q^2/x, param, type) 
+    } 
+    
     # Add Default Parameters:
     if (is.null(param)) {
         if (type == "t") param = c(nu = 4)
@@ -578,7 +584,7 @@ alternative = TRUE, subdivisions = 100)
         if (type[1] == "norm") ans = pnorm(q)
         if (type[1] == "cauchy") ans = pt(q, df = 1) # pcauchy(q)
         if (type[1] == "t") ans = pt(q, df = param[[1]])
-        if (type[1] == "kotz") ans = dnorm(x, sd = 1/sqrt(param[[1]]))
+        if (type[1] == "kotz") ans = dnorm(q, sd = 1/sqrt(param[[1]]))
     } else {
         lambda = gfunc(param = param, type = type)[[1]]
         ans = NULL
@@ -699,7 +705,7 @@ function(p, param = NULL, type = ellipticalList(), alternative = TRUE)
     #   Quantile function for univariate elliptical distributions
     
     # Arguments:
-    #   x -  a numeric vector
+    #   p -  a numeric vector
     #   param - NULL, a numeric value, or a numeric vector adding.
     #       additional parameters to the generator function.
     #   type -  a character string denoting the type of distribution.
@@ -744,15 +750,18 @@ function(p, param = NULL, type = ellipticalList(), alternative = TRUE)
         if (type[1] == "cauchy") ans = qcauchy(p)
         if (type[1] == "t") ans = qt(p, df = param[[1]])
         if (type[1] == "logistic") ans = .qlogistic(p)
-        if (type[1] == "kotz") ans = dnorm(x, sd = 1/sqrt(param[[1]]))
+        if (type[1] == "kotz") ans = dnorm(p, sd = 1/sqrt(param[[1]]))
     } else {  
-        froot <<- function(x, p, param, type) {
-            .pelliptical(q = x, param = param, type = type) - p }
+        froot <- 
+        function(x, p, param, type) 
+        {
+            .pelliptical(q = x, param = param, type = type) - p 
+        }
         ans = NULL
         for (pp in p) {
             if (pp < .Machine$double.eps) {
                 ans = c(ans, -Inf)
-            } else if (pp > 1-.Machine$double.eps) {
+            } else if (pp > 1 - .Machine$double.eps) {
                 ans = c(ans, Inf)
             } else { 
                 lower = -1
@@ -828,7 +837,12 @@ function (dump = FALSE )
     p = seq(0.001, 0.500, by = 0.001)
     
     # Quantiles by Integration:
-    froot = function(x, p) { .pelliptical(x, type = "logistic") - p }
+    froot = 
+    function(x, p) 
+    { 
+        .pelliptical(x, type = "logistic") - p 
+    }
+    
     X = NULL
     for (P in p) {
         lower = -1
@@ -843,7 +857,7 @@ function (dump = FALSE )
         }
         X = c(X, iteration)
     }
-    Y = pelliptical(X, type = "logistic")
+    Y = .pelliptical(X, type = "logistic")
     .qlogisticTable = data.frame(cbind(X = X, Y = Y))
     
     # Dump:

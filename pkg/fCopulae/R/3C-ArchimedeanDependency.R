@@ -28,16 +28,18 @@
 
 
 ################################################################################
-# FUNCTION                   KENDALL'S TAU AND SPEARMAN'S RHO:
+# FUNCTION:                  KENDALL'S TAU AND SPEARMAN'S RHO:
 #  archmTau                   Returns Kendall's tau for Archemedean copulae
 #  archmRho                   Returns Spearman's rho for Archemedean copulae
 #  .archmTauRange              Returns range for Kendall's tau
 #  .archm2Tau                  Alternative way to compute Kendall's tau
-#  .archmGamma                Returns Gini's gamma for Archimedean copulae
+#  ### .archmGamma                Returns Gini's gamma for Archimedean copulae
 #  .archmTail                  Utility Function
 # FUNCTION:                  ARCHIMEDEAN COPULAE TAIL COEFFICIENT:
 #  archmTailCoeff             Computes tail dependence for Archimedean copulae
 #  archmTailPlot              Plots Archimedean tail dependence function
+# REQUIREMENT:               DESCRIPTION:
+#  adapt                      Contributed R package adapt
 ################################################################################
 
 
@@ -364,28 +366,30 @@ error = 1.0e-5)
     check = archmCheck(alpha, type)
     
     # Global Parameters:
-    alpha <<- alpha
-    type <<- type
+    ## alpha <<- alpha
+    ## type <<- type
 
     # 2D Integration:
     if (method == "integrate2d" ) {
         # Internal Function :
-        fun = function(x, y) { 
+        fun.integrate2d = 
+        function(x, y, alpha, type ) 
+        { 
             12 * (.parchm1Copula(x, y, alpha = alpha, type = type) - x*y )
         }
-        ans = integrate2d(fun, error = error)
+        ans = integrate2d(fun.integrate2d, error = error)
     } else if (method == "adapt") {
-        # This runs only under R not SPlus
-        # require(adapt)
-        if (class(try(adapt(), TRUE)) == "try-error")
-            stop("*** R Package adapt required ***")
-        fun = function(z) { 
+        # Requires contributed package adapt ...
+        fun.adapt = 
+        function(z, alpha, type) 
+        { 
             x = z[1]
             y = z[2]
             12 * (.parchm1Copula(x, y, alpha = alpha, type = type) - x*y)
         }
         ans = adapt(ndim = 2, lower = c(0, 0), upper = c(1, 1), 
-            minpts = 100, maxpts = NULL, functn = fun, eps = 0.01)
+            minpts = 100, maxpts = NULL, functn = fun.adapt, eps = 0.01,
+            alpha = alpha, type = type)
     }
     rho = ans$value
     
@@ -401,46 +405,46 @@ error = 1.0e-5)
 # ------------------------------------------------------------------------------
 
 
-.archmGamma =
-function(alpha = 0.5, type = archmList())
-{   # A function implemented by Diethelm Wuertz
+# .archmGamma =
+# function(alpha = 0.5, type = archmList())
+# {   # A function implemented by Diethelm Wuertz
+# 
+#     # Description:
+#     #   Gini's gamma by integration for Archimedean copulae
+#     
+#     # FUNCTION:
+#     
+#     # Type:
+#     type = match.arg(type)
+#     Type = as.integer(type)
+#     
+#     # Check alpha:
+#     check = archmCheck(alpha, type)
+#     
+#     # Specification:
+#     spec = copulaSpec("archm", model = list(alpha = alpha, type = type))
+#     
+#     # Internal Function: 
+#     fun = function(x, spec) {
+#         f = NULL
+#         for ( y in x )
+#             f = c( f, 4*(pcopula(y, y, spec) + pcopula(y, 1-y, spec) - y) )
+#         f }
+#         
+#     # Integration:
+#     ans = integrate(fun, c(0, 0), c(1, 1), spec = spec)
+#     
+#     # Result:
+#     gamma = ans$value
+#     attr(gamma, "control") <- unlist(ans[-1])
+#     
+#     # Return Value:
+#     gamma
+# }
 
-    # Description:
-    #   Gini's gamma by integration for Archimedean copulae
-    
-    # FUNCTION:
-    
-    # Type:
-    type = match.arg(type)
-    Type = as.integer(type)
-    
-    # Check alpha:
-    check = archmCheck(alpha, type)
-    
-    # Specification:
-    spec = copulaSpec("archm", model = list(alpha = alpha, type = type))
-    
-    # Internal Function: 
-    fun = function(x, spec) {
-        f = NULL
-        for ( y in x )
-            f = c( f, 4*(pcopula(y, y, spec) + pcopula(y, 1-y, spec) - y) )
-        f }
-        
-    # Integration:
-    ans = integrate(fun, c(0, 0), c(1, 1), spec = spec)
-    
-    # Result:
-    gamma = ans$value
-    attr(gamma, "control") <- unlist(ans[-1])
-    
-    # Return Value:
-    gamma
-}
 
-
-################################################################################
-# FUNCTION:                  ARCHIMEDEAN COPULAE TAIL COEFFICIENT:
+# ################################################################################
+# # FUNCTION:                  ARCHIMEDEAN COPULAE TAIL COEFFICIENT:
 #  archmTailCoeff             Computes tail dependence for Archimedean copulae
 #  archmTailPlot              Plots Archimedean tail dependence function
 
