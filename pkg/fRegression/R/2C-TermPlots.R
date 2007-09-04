@@ -28,10 +28,101 @@
 
 
 ################################################################################
+# FUNCTIONS:                REGRESSION TERMS:
+#  .terms.fREG
+#  .response2Plot
 # FUNCTION:                 REGRESSION TERM PLOTS
 #  .termPlot                 Line Plot          
 #  .termPersp                Perspective Plot         
 #  .termContour              Contour Plot             
+################################################################################
+
+
+.terms.fREG = 
+function(object, formula = Y ~ X1)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    
+    # Arguments:
+    
+    # FUNCTION:
+    
+    select = all.vars(formula)
+    print(class(object@fit)[-1])
+    
+    fit = object@fit
+    data = as.data.frame(object@data)
+    X = predict(fit, data, type = "terms")[, select[2]]
+    Y = predict(fit, data, type = "response")
+    
+    plot(X, Y, xlab = select[2], ylab = select[1], col = "steelblue", pch = 19)
+    grid()   
+    rug(X)
+    
+    # Return Value:
+    invisible()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.response2Plot = 
+function(object, formula = Y ~ X1 + X2, N = 10, fun = mean)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    
+    # Arguments:
+    
+    # FUNCTION:
+    
+    .grid2d = function (x = (0:10)/10, y = x) 
+    {
+        nx = length(x)
+        ny = length(y)
+        xoy = cbind(rep(x, ny), as.vector(matrix(y, nx, ny, byrow = TRUE)))
+        XY = matrix(xoy, nx * ny, 2, byrow = FALSE)
+        list(x = XY[, 1], y = XY[, 2])
+    }
+
+    Data = object@data
+    select = all.vars(formula)
+    
+    X = data[, select[2]]
+    Y = data[, select[3]]
+    Z = data[, select[1]]
+    rangeX = range(X)
+    rangeY = range(Y)
+    statsData = colStats(Data, fun)
+    
+    U = seq(rangeX[1], rangeX[2], length = N)
+    V = seq(rangeY[1], rangeY[2], length = N)
+    newGrid = .grid2d(U, V)
+    
+    newData = matrix(rep(statsData, times = N*N), 
+        byrow = TRUE, ncol = ncol(Data))
+    colnames(newData) = colnames(Data)
+    newData[, select[2]] = newGrid$x
+    newData[, select[3]] = newGrid$y
+    newData[, select[1]] = NA
+    newData = data.frame(newData)
+    P = predict(object, newdata = newData)$fit
+    
+    W = matrix(P, byrow = FALSE, ncol = N)
+    persp(U, V, W, xlab = select[2], ylab = select[3], zlab = select[1],
+        phi = 30, theta = -40, col = "steelblue")->res
+        
+    R = sign(object@residuals)
+    points(trans3d(X[R>0], Y[R>0], Z[R>0], pm = res), col = 5, pch =16)
+    points(trans3d(X[R<0], Y[R<0], Z[R<0], pm = res), col = 6, pch =16)
+    
+    # Return Value:
+    invisible()
+}
+
+
 ################################################################################
 
 
