@@ -38,9 +38,10 @@
 #  .glmFit                Generalized Linear Model
 #  .gamFit                Generalized Additive Model
 #  .pprFit                Projection Pursuit Regression Model
-#  .marsFit               Multivariate Adaptive Regression Spline Model
 #  .polymarsFit           Polytochomous MARS Model
 #  .nnetFit               Feedforward Neural Network Model
+# REQUIREMENT:          DESCRIPTION:
+#  polspline              Contributed R package
 ################################################################################
 
 
@@ -52,12 +53,10 @@
 #   glm         stats       x       -      x         x         x
 #   gam         mgcv        x       x      x         x         x
 #   ppr         modreg      x       x      x         x         x
-#   mars*       mda         -       -      -         -         x 
 #   polymars*   polspline   -       xx     x         -         x
 #   nnet        nnet        x       -      x         x         x
 #
 #   *BUILTIN:
-#    mda        Mixture and flexible discriminant analysis
 #    polspline  required!
 #   *IMPORTANT NOTE:
 #    Both packages r-cran-mda and r-cran-polspline are not available on the
@@ -183,7 +182,7 @@ function(formula)
 
 regFit = 
 function (formula, data,
-use = c("lm", "rlm", "am", "ppr", "mars", "nnet", "polymars"), 
+use = c("lm", "rlm", "am", "ppr", "nnet", "polymars"), 
 title = NULL, description = NULL, ...) 
 {   # A function implemented by Diethelm Wuertz
 
@@ -196,7 +195,6 @@ title = NULL, description = NULL, ...)
     #   RLM         Robust Linear Regression Modelling
     #   AM          Additive Modelling
     #   PPR         Projection Pursuit Regression
-    #   MARS        Multivariate Adaptive Regression Splines
     #   POLYMARS    Polytochomous MARS Modeling
     #   NNET        Feedforward Neural Net
     
@@ -224,7 +222,6 @@ title = NULL, description = NULL, ...)
         fun = "gam"
         formula = .amFormula(formula)
     }
-    if (use == "mars") fun = ".mars"
     if (use == "polymars") fun = ".polymars"
 
     # Title:
@@ -233,7 +230,6 @@ title = NULL, description = NULL, ...)
         if (use == "rlm") title = "Robust Linear Regression Modelling"
         if (use == "am") title = "Additive Modelling"
         if (use == "ppr") title = "Projection Pursuit Regression"
-        if (use == "mars") title = "Multivariate Adaptive Regression Splines"
         if (use == "polymars") title = "Polytochomous MARS Modeling"
         if (use == "nnet") title = "Feedforward Neural Network Modelling" 
     } 
@@ -261,7 +257,7 @@ title = NULL, description = NULL, ...)
     fit$fitted.values = as.vector(fit$fitted.values)
     fit$parameters = fit$coef
     if (use == "am") fit$fake.formula = interpret.gam(formula)$fake.formula
-    noFitModels = c("ppr", "mars", "nnet")
+    noFitModels = c("ppr", "nnet")
     FitModelTest = as.logical(match(use, noFitModels, 0))
     if (FitModelTest) {
         mf <- match.call(expand.dots = FALSE)
