@@ -28,11 +28,6 @@
 
 
 ################################################################################
-# FUNCTION:             SYMMETRIC STABLE DISTRIBUTION:
-#  dsymstb               Returns density for symmetric stable DF
-#  psymstb               Returns probabilities for symmetric stable DF
-#  qsymstb               Returns quantiles for symmetric stable DF
-#  rsymstb               Returns random variates for symmetric stable DF
 # FUNCTIONS:            STABLE DISTRIBUTION:
 #  stableMode            Computes stable mode
 #  dstable               Returns density for stable DF
@@ -43,31 +38,6 @@
 #  symstbSlider          Displays symmetric stable distribution function
 #  stableSlider          Displays stable distribution function
 ################################################################################
-
-
-test.symstb = 
-function()
-{ 
-    # rsymstb, alpha=1.8
-    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
-    set.seed(4711, kind = "Marsaglia-Multicarry")
-    test = .distCheck("symstb", alpha = 1.9, robust = FALSE, 
-        subdivisions = 500)
-    print(test)
-    ## checkTrue(mean(test) == 1)                                    # CHECK !!!
-    
-    # rsymstb, alpha=1.2
-    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
-    set.seed(4711, kind = "Marsaglia-Multicarry")
-    test = .distCheck("symstb", alpha = 1.2, subdivisions = 5000)
-    print(test)
-    ## checkTrue(mean(test[2:3]) == 1)                               # CHECK !!!
-    
-    # Return Value:
-    return()    
-}
-
-# ------------------------------------------------------------------------------
 
 
 test.stableS0 = 
