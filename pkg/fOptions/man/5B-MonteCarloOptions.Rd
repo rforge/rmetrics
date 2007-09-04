@@ -278,16 +278,16 @@ Jaeckel P. (2002);
    par(mfrow = c(1, 1))
    mcPrice = cumsum(mc)/(1:length(mc))
    plot(mcPrice, type = "l", main = "Arithmetic Asian Option", 
-     xlab = "Monte Carlo Loops", ylab = "Option Price")
-   
+     xlab = "Monte Carlo Loops", ylab = "Option Price") 
+    
    # Compare with Turnbull-Wakeman Approximation:
-   TW = TurnbullWakemanAsianApproxOption(TypeFlag = "c", S = 100, SA = 100, 
-     X = 100, Time = 1/12, time = 1/12, tau = 0 , r = 0.1, b = 0.1, 
-     sigma = 0.4)$price
-   print(TW)
-   abline(h = TW, col = 2)
+   # TW = TurnbullWakemanAsianApproxOption(TypeFlag = "c", S = 100, SA = 100, 
+   #    X = 100, Time = 1/12, time = 1/12, tau = 0 , r = 0.1, b = 0.1, 
+   #    sigma = 0.4) 
+   # print(TW)
+   # abline(h = TW, col = 2)
 }
 
 
 \keyword{programming}
-
+    
