@@ -615,7 +615,7 @@ plotFUN = paste("plot.", 1:19, sep = ""), which = "all", ...)
 
 .multGarchPlot = function (x, choices, ...) 
 {    
-    # Match Functions, up to nine ...
+    # Match Functions, up to 19 ...
     if (length(plotFUN) < 19) plotFUN = 
         c(plotFUN, rep(plotFUN[1], times = 19 - length(plotFUN)))
     plot.1  = match.fun(plotFUN[1]);  plot.2  = match.fun(plotFUN[2]) 
