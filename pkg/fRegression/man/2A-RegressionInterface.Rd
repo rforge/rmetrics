@@ -21,11 +21,6 @@
 \alias{residuals.fREG}
 \alias{vcov.fREG}
 
-\alias{OLS}
-\alias{print.OLS}
-\alias{plot.OLS}
-\alias{summary.OLS}
-
 
 \title{Univariate Regression Modelling}
 
@@ -66,22 +61,16 @@
     from new data records. Two other methods to print the fitted 
     values, and the residuals are available.
     
-    Furthermore, a S-Plus Finmetrics like ordinary least square 'OLS' 
-    function has been added including S3 print, plot and summary methods.
-    
+   
     \tabular{ll}{
-    \code{OLS} \tab Predict method for objects of class 'fARMA', \cr
-    \code{print} \tab Print method for objects of class 'fARMA', \cr
-    \code{plot} \tab Plot method for objects of class 'fARMA', \cr
-    \code{summary} \tab Summary method for objects of class 'fARMA'. } 
+    \code{print} \tab Print method for objects of class 'fREG', \cr
+    \code{plot} \tab Plot method for objects of class 'fREG', \cr
+    \code{summary} \tab Summary method for objects of class 'fREG'. } 
     
 }
     
 
 \note{  
-    
-    Note, \code{"POLYMARS"} requires contributed package \code{"polspline"}
-    \cr
     
     This \code{regFit} function offers for several regression models
     an easy to use wrapper. There is nothing really new in this package. 
