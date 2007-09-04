@@ -28,9 +28,11 @@
 
 
 ################################################################################
-# FUNCTION:             REGRESSION MODELLING DESCRIPTION:
+# FUNCTION:             SIMULATION:
 #  'fREG'                S4 Class Representation
 #  regSim                Returns a regression example data set
+################################################################################
+# FUNCTION:             PARAMETER ESTIMATION:
 #  regFit                Wrapper Function for Regression Models
 #  gregFit               Wrapper Function for Generalized Regression Models
 #  .lmFit                 Linear Regression Model
@@ -64,11 +66,8 @@
 ################################################################################
 
 
-# ------------------------------------------------------------------------------
-# Class Representation
-
-
 setClass("fREG", 
+    # Class Representation
     representation(
         call = "call",
         formula = "formula",
@@ -146,38 +145,9 @@ function(model = c("LM3", "LOGIT3", "GAM3"), n = 100)
     # Return Value:
     X
 }
-    
-    
+      
 
-# ------------------------------------------------------------------------------
-
-
-.amFormula =
-function(formula)
-{
-    # Description:
-    #   Adds s() around term labels
-    
-    # FUNCTION:
-    
-    TF = terms(formula)
-    attTF = attr(TF, "term.labels")
-    newF = NULL
-    for (i in 1:length(attTF)) {
-        addF = paste(" s(", attTF[i], ") ", sep = "")
-        newF = paste(newF, addF, sep = "+")
-    }
-    newF = substr(newF, 3, 99)
-    if (attr(TF, "intercept") == 0) newF = paste(newF, "- 1", sep = "")
-    newF = paste("~", newF)
-    if (attr(TF, "response") == 1) newF = paste(as.character(formula)[2], newF)
-    
-    # Return Value:
-    as.formula(newF)
-}
-
-
-# ------------------------------------------------------------------------------
+################################################################################
 
 
 regFit = 
@@ -357,6 +327,34 @@ title = NULL, description = NULL, ...)
         title = as.character(title), 
         description = as.character(description) 
     )
+}
+
+
+################################################################################
+
+
+.amFormula =
+function(formula)
+{
+    # Description:
+    #   Adds s() around term labels
+    
+    # FUNCTION:
+    
+    TF = terms(formula)
+    attTF = attr(TF, "term.labels")
+    newF = NULL
+    for (i in 1:length(attTF)) {
+        addF = paste(" s(", attTF[i], ") ", sep = "")
+        newF = paste(newF, addF, sep = "+")
+    }
+    newF = substr(newF, 3, 99)
+    if (attr(TF, "intercept") == 0) newF = paste(newF, "- 1", sep = "")
+    newF = paste("~", newF)
+    if (attr(TF, "response") == 1) newF = paste(as.character(formula)[2], newF)
+    
+    # Return Value:
+    as.formula(newF)
 }
 
 
