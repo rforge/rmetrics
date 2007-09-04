@@ -47,6 +47,12 @@ function (x, block = c("monthly", "quarterly"), doplot = FALSE)
     #   x - an univariate 'timeSeries' object or any other object
     #       which can be coerced in a numeric vector by the function
     #       as.vector().
+    #    block -  block size, either a "monthl" or "quarterly" 
+    #       calendrical block, or an integer value, specifying the
+    #       length of the block.
+    
+    # Note:
+    #   This function was implemented for daily recorded data sets.
     
     # Example:
     #   data(bmwRet)

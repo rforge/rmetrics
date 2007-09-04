@@ -77,8 +77,7 @@ doplot = TRUE, plottype = c("alpha", "xi"), labels = TRUE, ...)
     xihat = c(NA, (avesumlog - loggs)[2:n])
     y = switch(option, 
         alpha = 1/xihat, 
-        xi = xihat,
-        quantile = ordered * ((n * (1-p))/k)^(-xihat))
+        xi = xihat)
     ses = y / sqrt(k)
     x = trunc(seq(from = min(n, length(data)), to = start))
     y = y[x]

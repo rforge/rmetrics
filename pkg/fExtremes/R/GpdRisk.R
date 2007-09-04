@@ -108,9 +108,9 @@ labels = TRUE, ...)
     
     # Object:
     object@fit$n = length(x)
-    object@fit$data = fit@data$exceedances
+    object@fit$data = object@data$exceedances
     object@fit$n.exceed = length(object@fit$data)
-    if(fit@method[2] == "mle") {
+    if(object@method[2] == "mle") {
         object@fit$method = "ml" 
     } else {
         object@fit$method = ""
@@ -668,7 +668,7 @@ function(object, p = 0.99, ci = 0.95, nLLH = 25, extend = 1.5, labels = TRUE, ..
     
     # Object:
     object@fit$n = length(x)
-    object@fit$data = fit@data$exceedances
+    object@fit$data = object@data$exceedances
     object@fit$n.exceed = length(object@fit$data)
    
     # Tail Plot:
