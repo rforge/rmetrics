@@ -122,11 +122,6 @@ show.fREG(object)
 \method{residuals}{fREG}(object, \dots)
 \method{vcov}{fREG}(object, \dots)
 
-OLS(formula, data, \dots)
-
-\method{print}{OLS}(x, \dots)
-\method{plot}{OLS}(x, \dots)
-\method{summary}{OLS}(object, \dots)
 }
 
 
@@ -195,11 +190,6 @@ OLS(formula, data, \dots)
         and serves as input for the  \code{predict}, \code{print}, 
         \code{summary}, \code{print.summary}, and \code{plot} methods. 
         Some methods allow for additional arguments to be passed.
-        \cr
-        [OLS] - \cr
-        is an object returned by the 'OLS' function \code{OLS} 
-        and serves as input for the  \code{print}, \code{plot}, 
-        and \code{summary} methods.
         } 
    \item{se.fit}{
         [predict] - \cr
@@ -292,14 +282,6 @@ OLS(formula, data, \dots)
      
     The \code{residuals} and \code{fitted.values} methods return
     the residuals and the fitted values as numeric vectors.
-    \cr
-    
-    \bold{Function OLS:} 
-    \cr
-    returns an S3 object of class \code{"OLS"} that represents an 
-    ordinary least squares fit. The list has the same elements like
-    an object of class \code{"lm"}, and additionally the elements
-    \code{$call}, \code{$formula} and \code{$data}. 
 
 }
 
@@ -517,15 +499,6 @@ OLS(formula, data, \dots)
     optimizer is used, written in \code{C}. 
     \cr
     \code{[nnet:nnet]}
-    \cr\cr
-    
-    \bold{OLS -- Ordinary Least Square Fit:}
-    \cr\cr
-    This function was introduced to mimc the Finmetrics S-Plus
-    function \code{OLS}. The function wraps R's \code{"lm"}.
-    Currently it does not support the full functionality of
-    Finmetrics' \code{OLS} function.
-    \cr
     
 }
 
