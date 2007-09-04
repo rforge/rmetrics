@@ -102,7 +102,7 @@ function()
     fit@fit$coef
     
     # Skew Normal Conditional Distribution:
-    fit = garchFit(~garch(1,1), x, cond.dist = "dsnorm")
+    fit = garchFit(~garch(1,1), data = x, cond.dist = "dsnorm")
     fit@fit$coef
         
     # Symmetric GED                                                  # CHECK !!!
@@ -146,6 +146,64 @@ function()
     # Return Value:
     return()    
 } 
+
+
+# ------------------------------------------------------------------------------
+
+
+
+test.garchFit.algorithms = 
+function()
+{  
+    # Load Data:
+    data(dem2gbp)  
+    # Data Frame to Numeric Vector:
+    x = dem2gbp[, 1]
+    print(head(x))
+    print(class(x))
+    
+    # "dnorm", "dsnorm", "dged", "dsged", "dstd", "dsstd"
+    # "sqp", "nlminb", "lbfgsb", "nlminb+nm", "lbfgsb+nm"
+           
+    # Modify Start Values - mci default:
+    fit = garchFit( ~ garch(1,1), data = x, cond.dist = "dnorm", 
+        algorithm = "nlminb")
+    fit@fit$coef
+    
+    # Modify Start Values - mci default:
+    fit = garchFit( ~ garch(1,1), data = x, cond.dist = "dsnorm", 
+        algorithm = "nlminb")
+    fit@fit$coef
+    
+    # Modify Start Values - mci default:
+    fit = garchFit( ~ garch(1,1), data = x, cond.dist = "dged", 
+        algorithm = "nlminb")
+    fit@fit$coef
+    
+    # Modify Start Values - mci default:
+    fit = garchFit( ~ garch(1,1), data = x, cond.dist = "dsged", 
+        algorithm = "nlminb")
+    fit@fit$coef
+    
+    # Modify Start Values - mci default:
+    fit = garchFit( ~ garch(1,1), data = x, cond.dist = "dstd", 
+        algorithm = "nlminb")
+    fit@fit$coef
+    
+    # Modify Start Values - mci default:
+    fit = garchFit( ~ garch(1,1), data = x, cond.dist = "dsstd", 
+        algorithm = "nlminb", trace = FALSE)
+    fit@fit$coef
+    
+    # Modify Start Values - mci default:
+    fit = garchFit( ~ garch(1,1), data = x/sd(x), cond.dist = "dsstd", 
+        algorithm = "nlminb", trace = FALSE)
+    fit@fit$coef
+    
+    # Return Value:
+    return()    
+} 
+
 
 
 ################################################################################
