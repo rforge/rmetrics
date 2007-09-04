@@ -46,7 +46,6 @@
     \code{"GLM"} \tab Generalized Linear Modelling, \cr
     \code{"GAM"} \tab Generalized Additive Modelling, \cr
     \code{"PPR"} \tab Projection Pursuit Regression, \cr
-    \code{"MARS"} \tab Multivariate Adaptive Regression Splines, \cr
     \code{"POLYMARS"} \tab Polytochomous MARS, and \cr
     \code{"NNET"} \tab Feedforward Neural Network Modelling. }
             
@@ -102,22 +101,12 @@
     functions.
     \cr
     
-    All beside two of the underlying functions are available in a default
-    R Installation. They are already available or loaded when Rmetrics 
-    is invoked. For \code{MARS} and \code{POLYMARS} we have implemented
-    BUILTIN functions for parameter estimation and prediction, so that it
-    is becomes not necessary to install the contribute \code{mars} and
-    \code{polyspline} packages. Nevertheless, if loaded you can use them 
-    in your environment, they don't intervene with Rmetrics.
-    \cr
-    
     For further information we refer to the original help pages of the
     functions 
     \code{lm}, 
     \code{glm},
     \code{gam},
     \code{ppr},
-    \code{mars},
     \code{polymars}, and
     \code{nnet}. 
     
@@ -127,7 +116,7 @@
 \usage{
 regSim(model = c("LM3", "LOGIT3", "GAM3"), n = 100)
 
-regFit(formula, data, use = c("lm", "rlm", "am", "ppr", "mars", "nnet", 
+regFit(formula, data, use = c("lm", "rlm", "am", "ppr", "nnet", 
     "polymars"), title = NULL, description = NULL, \dots)
 gregFit(formula, family, data, use = c("glm", "gam"), 
     title = NULL, description = NULL, \dots)
@@ -190,7 +179,6 @@ OLS(formula, data, \dots)
         \code{"GLM"} for generalized linear modelling,\cr
         \code{"GAM"} for generalized additive modelling,\cr
         \code{"PPR"} for projection pursuit regression,\cr
-        \code{"MARS"} for multivariate adaptive regression splines,\cr
         \code{"POLYMARS"} for molytochomous MARS, and\cr
         \code{"NNET"} for feedforward neural network modelling.
         }
@@ -231,7 +219,7 @@ OLS(formula, data, \dots)
         additional optional arguments to be passed to the underlying 
         functions. For details we refer to inspect the following help 
         pages: \code{\link{lm}}, \code{\link{glm}}, \code{gam},
-        \code{\link{ppr}}, \code{mars}, \code{polymars}, 
+        \code{\link{ppr}}, \code{polymars}, 
         or \code{nnet}. 
         }
         
@@ -378,51 +366,6 @@ OLS(formula, data, \dots)
     regression fit. 
     \cr
     \code{[stats:ppr]}
-    \cr
-    
-    \bold{MARS -- Multivariate Adaptive Regression Splines:}
-    \cr\cr
-    This function was coded from scratch, and did not use any of
-    Friedman's mars code.  It gives quite similar results to  Friedman's
-    program in our tests, but not exactly the same results.  We have not 
-    implemented Friedman's anova decomposition nor are categorical
-    predictors handled properly yet.  Our version does handle multiple
-    response variables, however.  As it is not well-tested, we would like
-    to hear of any bugs. 
-    \cr
-    Additional arguments which can be passed to the \code{"mars"}
-    estimator are:
-    \cr
-    \code{w} - an optional vector of observation weights.
-    \cr 
-    \code{wp} - an optional vector of response weights. 
-    \cr
-    \code{degree} - an optional integer specifying maximum interaction 
-    degree, default is 1. 
-    \cr
-    \code{nk} - an optional integer specifying the maximum number of model 
-    terms. 
-    \cr
-    \code{penalty} - an optional value specifying the cost per degree of 
-    freedom charge, default is 2.
-    \cr 
-    \code{thresh} - an optional value specifying forward stepwise stopping 
-    threshold, default is 0.001. 
-    \cr
-    \code{prune} - an optional logical value specifying whether the model 
-    should be pruned in a backward stepwise fashion, default is \code{TRUE}. 
-    \cr
-    \code{trace.mars} - an optional logical value specifying whether info 
-    should be printed along the way, default is \code{FALSE}. 
-    \cr
-    \code{forward.step} - an optional logical value specifying whether 
-    forward stepwise process should be carried out, default is \code{TRUE}. 
-    \cr
-    \code{prevfit} - optional data structure from previous fit. To see the 
-    effect of changing the penalty paramater, one can use prevfit with 
-    \code{forward.step = FALSE}. 
-    \cr
-    \code{[mda:mars]}
     \cr
     
     \bold{POLYMARS -- Polytochomous MARS:}
@@ -696,7 +639,6 @@ Wood (2001);
     B.R. Ripley for the \code{glm} functions from R's \code{base} package, \cr
     S.N. Wood for the \code{gam} functions from R's \code{mgcv} package, \cr
     N.N. for the \code{ppr} functions from R's \code{modreg} package, \cr
-    T. Hastie, R. Tibshirani for the \code{mars} functions from R's \code{?} package, \cr
     M. O' Connors for the \code{polymars} functions from R's \code{?} package, \cr
     The R core team for the \code{nnet} functions from R's \code{nnet} package, \cr
     Diethelm Wuertz for the Rmetrics \R-port.
