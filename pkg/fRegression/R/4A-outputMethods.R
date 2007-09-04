@@ -188,9 +188,6 @@ function(x, which = "ask", ...)
     # Description:
     #   Tailored plot function for an object of class 'lm', 'rlm', 'glm'
     
-    # Changes:
-    #
-    
     # FUNCTION:
     
     # 1. Responses + Fitted Values Plot:
@@ -285,6 +282,9 @@ function(x, which = "ask", ...)
 }
 
 
+# ------------------------------------------------------------------------------
+
+
 .plot.common.1 <- function(x, ...) .responsesPlot(residuals(x)+fitted(x),fitted(x))
 .plot.common.2 <- function(x, ...) .residualsPlot(residuals(x))    
 .plot.common.3 <- function(x, ...) qqnormPlot(residuals(x))
@@ -302,6 +302,110 @@ function(x, which = "ask", ...)
 .plot.ppr = .plot.common
 .plot.polymars = .plot.common
 .plot.nnet = .plot.common
+
+
+# ------------------------------------------------------------------------------
+
+
+.interactiveRegressionPlot = 
+function(x, choices = paste("Plot", 1:19), 
+plotFUN = paste("plot.", 1:19, sep = ""), which = "all", ...)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Plot method for an object of class "template".
+    
+    # Arguments:
+    #   x - an object to be plotted
+    #   choices - the character string for the choice menu
+    #   plotFUN - the names of the plot functions
+    #   which - plot selection, which graph should be 
+    #     displayed. If a character string named "ask" the 
+    #     user is interactively asked which to plot, if
+    #     a logical vector of length N, those plots which
+    #     are set "TRUE" are displayed, if a character string
+    #     named "all" all plots are displayed.
+    
+    # Note:
+    #   At maximum 19 plots are supported.
+
+    # FUNCTION:
+    
+    # Some cecks:
+    if (length(choices) != length(plotFUN)) 
+        stop("Arguments choices and plotFUN must be of same length.")
+    if (length(which) > length(choices)) 
+        stop("Arguments which has incorrect length.")
+    if (length(which) > length(plotFUN)) 
+        stop("Arguments which has incorrect length.")
+    if (length(choices) > 19)
+        stop("Sorry, only 19 plots at max are supported.")
+    
+                              
+    # Plot:
+    if (is.numeric(which)) {
+        Which = rep(FALSE, times = length(choices))
+        Which[which] = TRUE
+        which = Which
+    }
+    if (which[1] == "all") {
+        which = rep(TRUE, times = length(choices))
+    }
+    if (which[1] == "ask") {
+        .interactiveRegressionMultPlot(x, choices, ...) 
+    } else {
+        for ( i in 1:length(which) ) {
+            FUN = match.fun(plotFUN[i])
+            if (which[i]) FUN(x) 
+        } 
+    }
+            
+    # Return Value:
+    invisible(x)
+}
+
+
+# ------------------------------------------------------------------------------
+
+                
+.interactiveRegressionMultPlot = 
+function (x, choices, ...) 
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    
+    # Arguments:
+    
+    # FUNCTION:
+    
+    # Match Functions, up to nine ...
+    if (length(plotFUN) < 19) plotFUN = 
+        c(plotFUN, rep(plotFUN[1], times = 19 - length(plotFUN)))
+    plot.1  = match.fun(plotFUN[1]);  plot.2  = match.fun(plotFUN[2]) 
+    plot.3  = match.fun(plotFUN[3]);  plot.4  = match.fun(plotFUN[4]) 
+    plot.5  = match.fun(plotFUN[5]);  plot.6  = match.fun(plotFUN[6]) 
+    plot.7  = match.fun(plotFUN[7]);  plot.8  = match.fun(plotFUN[8]) 
+    plot.9  = match.fun(plotFUN[9]);  plot.10 = match.fun(plotFUN[10])
+    plot.11 = match.fun(plotFUN[11]); plot.12 = match.fun(plotFUN[12]) 
+    plot.13 = match.fun(plotFUN[13]); plot.14 = match.fun(plotFUN[14]) 
+    plot.15 = match.fun(plotFUN[15]); plot.16 = match.fun(plotFUN[16]) 
+    plot.17 = match.fun(plotFUN[17]); plot.18 = match.fun(plotFUN[18]) 
+    plot.19 = match.fun(plotFUN[19])        
+    pick = 1
+    
+    while (pick > 0) { 
+        pick = menu (
+        ### choices = paste("plot:", choices),
+        choices = paste(" ", choices), 
+        title = "\nMake a plot selection (or 0 to exit):")
+        # up to 19 plot functions ...
+        switch (pick, 
+            plot.1(x),  plot.2(x),  plot.3(x),  plot.4(x),  plot.5(x), 
+            plot.6(x),  plot.7(x),  plot.8(x),  plot.9(x),  plot.10(x),
+            plot.11(x), plot.12(x), plot.13(x), plot.14(x), plot.15(x), 
+            plot.16(x), plot.17(x), plot.18(x), plot.19(x)) 
+    } 
+}
 
 
 ################################################################################
