@@ -29,7 +29,7 @@
 
 ################################################################################
 # FUNCTION:                 DESCRIPTION:
-#  garchOxFit                Fits parameters of a garch model           
+#  garchOxFit                Fits parameters of a garch model interfacing Ox          
 #  print.garchOx             S3 Print Method
 #  summary.garchOx           S3 Summary Method
 #  plot.garchOx              S3 Plot Method
@@ -51,6 +51,16 @@ description = NULL)
     # Description
     #   Fit parameters to a ARMA-GARCH model
     
+    # Example:
+    #   data(dem2gbp); x = dem2gbp[,1]
+    #   fit = garchOxFit(~garch(1, 1), data = x) 
+    #   fit = garchOxFit(~garch(1, 1), data = x, trace = FALSE) 
+    
+    # FUNCTION:
+    
+    # Debug:
+    DEBUG = FALSE
+    
     # Call:
     CALL = match.call()
     
@@ -64,11 +74,11 @@ description = NULL)
     x = eval(mf, parent.frame())
     x = as.vector(x[, 1])
     if (class(mf$data) == "timeSeries") names(x) = rownames(data)
-    # print(head(x))
+    if (DEBUG) print(head(x))
     
     # Compose Mean and variance Formula:
     allLabels = attr(terms(formula), "term.labels")
-    print(allLabels)
+    if (DEBUG) print(allLabels)
     if (length(allLabels) == 2) {
         formula.mean = as.formula(paste("~", allLabels[1]))
         formula.var = as.formula(paste("~", allLabels[2]))
@@ -76,13 +86,15 @@ description = NULL)
         formula.mean = as.formula("~ arma(0, 0)")
         formula.var = as.formula(paste("~", allLabels[1]))
     }
-    # print(formula.mean)
-    # print(formula.var)
+    if (DEBUG) {
+        print(formula.mean)
+        print(formula.var)
+    }
     
     # Fit:
     ans = .garchOxFit(formula.mean, formula.var, series = x, cond.dist,
         include.mean, trace, control, title, description)
-    ans@call = CALL
+    ans$call = CALL
     
     # Return Value:
     ans
@@ -114,10 +126,18 @@ description = NULL)
     #   description - an optional project description string
     
     # Example:
-    #   data(dem2gbp); x = dem2gbp[,1]; fit = garchOxFit(); fit
+    #   data(dem2gbp); x = dem2gbp[,1]
+    #   fit = .garchOxFit(); fit
+    #   fit = .garchOxFit(trace = FALSE); fit
     
+    # Note:
+    #   .garchOxFit() was the original implementation, now it just
+    #   serves as a wrapper for the newer implementation garchOxFit.
     
     # FUNCTION:
+    
+    # Settings:
+    x = series
     
     # Start Time:
     Start = Sys.time()
@@ -276,7 +296,7 @@ function(x, digits = max(3, getOption("digits") - 3), ...)
         stop("method is only for garchOx objects")
     
     # Call:
-    cat("\nTitle:\n")
+    cat("\nTitle:\n ")
     cat(object$title, "\n")
     
     # Note: We use GARCH(p,q) order with alpha(p) and beta(q) !!!

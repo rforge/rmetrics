@@ -49,7 +49,6 @@
 #   .garchLLH               Computes log-likelihood function
 #   .garchHessian           Computes Hessian matrix numerically
 #  .garchNames              Slot names, @fit slot, parameters and controls
-#  .garchTsFit             Wrapper for 'garch()' from 'tseries' package
 # METHODS:                DESCRIPTION:
 #  show.fGARCH             S4 print method for an object of class 'fGARCH'
 #  summary.fGARCH          S3 summary method for an object of class 'fGARCH'
@@ -748,6 +747,9 @@ control = list(), title = NULL, description = NULL, ...)
         series = series[, 1]
     }
     series = as.vector(series)
+    
+    # Visible Binding:
+    x = series
     
     # Start Time:
     .Start <<- Sys.time()
@@ -1841,82 +1843,6 @@ function(object)
 }
 
 
-# ------------------------------------------------------------------------------
-
-
-.garchTsFit = 
-function(formula.var = ~garch(1, 1), series = x, 
-title = NULL, description = NULL, ...)
-{   # A function implemented by Diethelm Wuertz
-    
-    # Description:
-    #   Wrapper for garch() function from R's 'tseries' package
-    
-    # Example:
-    #   data(dem2gbp); ans = .garchTsFit(series = dem2gbp[,1])
-    
-    # Note:
-    #   Requires Contributed R-package 'tseries'
-    
-    # FUNCTION:
-    
-    # Load Contributed 'tseries' Package:
-    # require(tseries)
-    
-    # Check Variance Formula GARCH - Is it Valid ?
-    mv = length(formula.var)
-    if (mv != 2) top("Variance Formula misspecified")
-    end = regexpr("\\(", as.character(formula.var[mv])) - 1
-    model.var = substr(as.character(formula.var[mv]), 1, end)
-    if (!any( c("garch", "aparch") == model.var))
-        stop("formula.var must be one of: garch, aparch") 
-    
-    # Determine Variance Order from GARCH Formula:
-    model.order = as.numeric(strsplit(strsplit(strsplit(as.character(
-        formula.var), "\\(")[[2]][2], "\\)")[[1]], ",")[[1]])
-    p = model.order[1]
-    q = 0
-    if (length(model.order) == 2) q = model.order[2]
-    if (p+q == 0)
-        stop("Misspecified GARCH Model: Both Orders are zero!")
-    if (p < 0 | q < 0) stop("*** GARCH orders must be positive.")
-    
-    # Parameter Estimation:
-    fit = garch(x = series, order = c(p, q))
-    
-    # Addons, that we can use the fGARCH print method:
-    class(fit) = "list"
-    fit$params$cond.dist = "dnorm"
-    fit$par = fit$coef
-    fit$se.coef = fit$asy.se.coef
-    fit$tval = fit$coef/fit$se.coef
-    fit$matcoef = cbind(fit$coef, fit$se.coef, fit$tval, 
-        2*(1-pnorm(abs(fit$tval))))
-    dimnames(fit$matcoef) = list(names(fit$tval), c(" Estimate", 
-        " Std. Error", " t value", "Pr(>|t|)"))
-    #  llh = -(fit$n.likeli + length(series)*log(2*pi)/2)
-    
-    # Add Title and Description:
-    if (is.null(title)) title = "tseries: GARCH Modelling"
-    if (is.null(description)) description = as.character(date())
-    
-    # Return Value:
-    new("fGARCH",     
-        call = as.call(match.call()),
-        formula = list(formula.mean = ~arma(0, 0), formula.var = formula.var),
-        method = "tseries: Max Log-Likelihood Estimation", 
-        data = list(x = series),
-        fit = fit,        
-        residuals = fit$residuals,
-        fitted = series - fit$residuals,
-        h = numeric(),
-        sigma.t = numeric(),
-        title = as.character(title),
-        description = as.character(description) 
-    )
-}
-
-
 ################################################################################
                 
 
@@ -2038,16 +1964,6 @@ function(object, ...)
     LLH = object@fit$value
     N = length(object@data$x)
     cat(LLH, "   normalized: ", LLH/N, "\n")
-     
-    # If we used '.garchTsFit' then ...
-    if (as.character(object@call[1]) == ".garchTsFit") {
-        # Description:
-        cat("\nDescription:\n ")
-        cat(object@description, "\n")
-        # Return Value:
-        cat("\n")
-        return(invisible())
-    }
         
     # Lagged Series:
     .tslagGarch = function (x, k = 1) {
@@ -2139,15 +2055,6 @@ function(x, which = "ask", ...)
     #   the function 'garch' from the contributed R package 'tseries'.
     
     # FUNCTION:
-
-    # If we used '.garchTsFit' then ...
-    if (as.character(x@call[1]) == ".garchTsFit") {
-        fit = x@fit
-        class(fit) = "garch"
-        plot(fit)
-        # Return Value:
-        return(invisible())
-    }
         
     # Plot:
     .interactiveGarchPlot(
@@ -2487,57 +2394,7 @@ plotFUN = paste("plot.", 1:19, sep = ""), which = "all", ...)
         stop("Arguments which has incorrect length.")
     if (length(choices) > 19)
         stop("Sorry, only 19 plots at max are supported.")
-    
-    # Internal "askPlot" Function:                
-    multPlot = function (x, choices, ...) 
-    {
-        # Selective Plot:
-        selectivePlot = 
-        function (x, choices, FUN, which)
-        {
-            # Internal Function:
-            askPlot = function (x, choices, FUN) {
-                # Pick and Plot:
-                pick = 1  
-                n.plots = length(choices)
-                while (pick > 0) { pick = menu (
-                    choices = paste("plot:", choices), 
-                    title = "\nMake a plot selection (or 0 to exit):")
-                    if (pick > 0) match.fun(FUN[pick])(x) } }                   
-            if (as.character(which[1]) == "ask") {
-                askPlot(x, choices = choices, FUN = FUN, ...) 
-            } else { 
-                for (i in 1:n.plots) if (which[i]) match.fun(FUN[i])(x) }
-            invisible() 
-        } 
-         
-        # Match Functions, up to nine ...
-        if (length(plotFUN) < 19) plotFUN = 
-            c(plotFUN, rep(plotFUN[1], times = 19 - length(plotFUN)))
-        plot.1  = match.fun(plotFUN[1]);  plot.2  = match.fun(plotFUN[2]) 
-        plot.3  = match.fun(plotFUN[3]);  plot.4  = match.fun(plotFUN[4]) 
-        plot.5  = match.fun(plotFUN[5]);  plot.6  = match.fun(plotFUN[6]) 
-        plot.7  = match.fun(plotFUN[7]);  plot.8  = match.fun(plotFUN[8]) 
-        plot.9  = match.fun(plotFUN[9]);  plot.10 = match.fun(plotFUN[10])
-        plot.11 = match.fun(plotFUN[11]); plot.12 = match.fun(plotFUN[12]) 
-        plot.13 = match.fun(plotFUN[13]); plot.14 = match.fun(plotFUN[14]) 
-        plot.15 = match.fun(plotFUN[15]); plot.16 = match.fun(plotFUN[16]) 
-        plot.17 = match.fun(plotFUN[17]); plot.18 = match.fun(plotFUN[18]) 
-        plot.19 = match.fun(plotFUN[19])        
-        pick = 1
-        while (pick > 0) { pick = menu (
-            ### choices = paste("plot:", choices),
-            choices = paste(" ", choices), 
-            title = "\nMake a plot selection (or 0 to exit):")
-            # up to 19 plot functions ...
-            switch (pick, 
-                plot.1(x),  plot.2(x),  plot.3(x),  plot.4(x),  plot.5(x), 
-                plot.6(x),  plot.7(x),  plot.8(x),  plot.9(x),  plot.10(x),
-                plot.11(x), plot.12(x), plot.13(x), plot.14(x), plot.15(x), 
-                plot.16(x), plot.17(x), plot.18(x), plot.19(x)) 
-        } 
-    }
-                              
+                  
     # Plot:
     if (is.numeric(which)) {
         Which = rep(FALSE, times = length(choices))
@@ -2548,7 +2405,7 @@ plotFUN = paste("plot.", 1:19, sep = ""), which = "all", ...)
         which = rep(TRUE, times = length(choices))
     }
     if (which[1] == "ask") {
-        multPlot(x, choices, ...) 
+        .multGarchPlot(x, choices, ...) 
     } else {
         for ( i in 1:length(which) ) {
             FUN = match.fun(plotFUN[i])
@@ -2560,6 +2417,37 @@ plotFUN = paste("plot.", 1:19, sep = ""), which = "all", ...)
     invisible(x)
 }
 
+
+.multGarchPlot = function (x, choices, ...) 
+{    
+    # Match Functions, up to nine ...
+    if (length(plotFUN) < 19) plotFUN = 
+        c(plotFUN, rep(plotFUN[1], times = 19 - length(plotFUN)))
+    plot.1  = match.fun(plotFUN[1]);  plot.2  = match.fun(plotFUN[2]) 
+    plot.3  = match.fun(plotFUN[3]);  plot.4  = match.fun(plotFUN[4]) 
+    plot.5  = match.fun(plotFUN[5]);  plot.6  = match.fun(plotFUN[6]) 
+    plot.7  = match.fun(plotFUN[7]);  plot.8  = match.fun(plotFUN[8]) 
+    plot.9  = match.fun(plotFUN[9]);  plot.10 = match.fun(plotFUN[10])
+    plot.11 = match.fun(plotFUN[11]); plot.12 = match.fun(plotFUN[12]) 
+    plot.13 = match.fun(plotFUN[13]); plot.14 = match.fun(plotFUN[14]) 
+    plot.15 = match.fun(plotFUN[15]); plot.16 = match.fun(plotFUN[16]) 
+    plot.17 = match.fun(plotFUN[17]); plot.18 = match.fun(plotFUN[18]) 
+    plot.19 = match.fun(plotFUN[19])        
+    pick = 1
+    while (pick > 0) { 
+        pick = menu (
+            ### choices = paste("plot:", choices),
+            choices = paste(" ", choices), 
+            title = "\nMake a plot selection (or 0 to exit):")
+        # up to 19 plot functions ...
+        switch (pick, 
+            plot.1(x),  plot.2(x),  plot.3(x),  plot.4(x),  plot.5(x), 
+            plot.6(x),  plot.7(x),  plot.8(x),  plot.9(x),  plot.10(x),
+            plot.11(x), plot.12(x), plot.13(x), plot.14(x), plot.15(x), 
+            plot.16(x), plot.17(x), plot.18(x), plot.19(x)) 
+    } 
+}
+                
 
 # ------------------------------------------------------------------------------
 
