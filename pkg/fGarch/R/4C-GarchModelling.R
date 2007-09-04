@@ -43,7 +43,8 @@
 ################################################################################
 
 
-.params = .series = .llh = .trace = .garchDist = NA
+# This has to be changed ...
+.params = .series = .llh = .trace = NA
 
 
 # ------------------------------------------------------------------------------
@@ -87,17 +88,17 @@ control = list(), title = NULL, description = NULL, ...)
     .DEBUG = FALSE
     
     # Check formula expression dependent on data class:
-    if (class(data) == "timeSeries") {
+    if(class(data) == "timeSeries") {
         formulaLength = length(formula)
-        if (formulaLength < 3) {
+        if(formulaLength < 3) {
             stop1 = "For timeSeries objects you must specifiy the full formula:"
             stop2 = "e.g. formula = X ~ arma(2,1) + garch(1,1)"
             stop(paste(stop1, stop2)) 
         }
     }
-    if (class(data) == "data.frame") {
+    if(class(data) == "data.frame") {
         formulaLength = length(formula)
-        if (formulaLength < 3) {
+        if(formulaLength < 3) {
             stop1 = "For data.frame objects you must specifiy the full formula:"
             stop2 = "e.g. formula = X ~ arma(2,1) + garch(1,1)"
             stop(paste(stop1, stop2)) 
@@ -109,30 +110,30 @@ control = list(), title = NULL, description = NULL, ...)
     
     # Get Data:
     mf = match.call(expand.dots = FALSE)
-    if (.DEBUG) print(mf)
+    if(.DEBUG) print(mf)
     m = match(c("formula", "data"), names(mf), 0)
     mf = mf[c(1, m)]
     mf[[1]] = as.name(".modelSeries")
     mf$fake = FALSE
     mf$lhs = TRUE
-    if (.DEBUG) print(mf)
+    if(.DEBUG) print(mf)
     x = eval(mf, parent.frame())
     x = as.vector(x[, 1])
-    if (class(mf$data) == "timeSeries") names(x) = rownames(data)
-    if (.DEBUG) print(head(x))
+    if(class(mf$data) == "timeSeries") names(x) = rownames(data)
+    if(.DEBUG) print(head(x))
     
     # Compose Mean and Variance Formula:
     allLabels = attr(terms(formula), "term.labels")
-    if (.DEBUG) print(allLabels)
-    if (length(allLabels) == 2) {
+    if(.DEBUG) print(allLabels)
+    if(length(allLabels) == 2) {
         formula.mean = as.formula(paste("~", allLabels[1]))
         formula.var = as.formula(paste("~", allLabels[2]))
-    } else if (length(allLabels) == 1) {
+    } else if(length(allLabels) == 1) {
         formula.mean = as.formula("~ arma(0, 0)")
         formula.var = as.formula(paste("~", allLabels[1]))
     }
-    if (.DEBUG) print(formula.mean)
-    if (.DEBUG) print(formula.var)
+    if(.DEBUG) print(formula.mean)
+    if(.DEBUG) print(formula.var)
        
     # Fit:
     ans = .garchFit(formula.mean, formula.var, series = x, init.rec, delta, 
@@ -197,16 +198,16 @@ control = list(), title = NULL, description = NULL, ...)
     # FUNCTION:
   
     # Check for Recursion Initialization:
-    if (init.rec[1] != "mci" & algorithm[1] != "sqp") {
+    if(init.rec[1] != "mci" & algorithm[1] != "sqp") {
         stop("Algorithm only supported for mci Recursion")
     }
     
     # Series:
-    if (is.character(series)) {
+    if(is.character(series)) {
         eval(parse(text = paste("data(", series, ")")))
         series = eval(parse(text = series))
     }
-    if (is.data.frame(series)) {
+    if(is.data.frame(series)) {
         series = series[, 1]
     }
     series = as.vector(series)
@@ -276,7 +277,7 @@ control = list(), title = NULL, description = NULL, ...)
         leverage = leverage, algorithm = algorithm[1], control = con)
 
     # Select Conditional Distribution Function:
-    .garchDist <<- .garchSetCondDist(cond.dist[1]) 
+    .garchDist <<- .garchSetCondDist(cond.dist[1])  
     
     # Estimate Model Parameters - Minimize llh, start from big value: 
     .llh <<- 1.0e99   
@@ -305,8 +306,8 @@ control = list(), title = NULL, description = NULL, ...)
         " Std. Error", " t value", "Pr(>|t|)"))
     
     # Add Title and Description:
-    if (is.null(title)) title = "GARCH Modelling"
-    if (is.null(description)) description = .description()
+    if(is.null(title)) title = "GARCH Modelling"
+    if(is.null(description)) description = .description()
         
     # Return Value:
     new("fGARCH",     
@@ -346,18 +347,18 @@ h.start, llh.start)
     
     # Check Mean Formula ARMA - Is it Valid ?
     mm = length(formula.mean)
-    if (mm != 2) stop("Mean Formula misspecified") 
+    if(mm != 2) stop("Mean Formula misspecified") 
     end = regexpr("\\(", as.character(formula.mean[mm])) - 1
     model.mean = substr(as.character(formula.mean[mm]), 1, end)
-    if (!any( c("ar", "ma", "arma") == model.mean))
+    if(!any( c("ar", "ma", "arma") == model.mean))
         stop("formula.mean must be one of: ar, ma, arma")
     
     # Check Variance Formula GARCH - Is it Valid ?
     mv = length(formula.var)
-    if (mv != 2) top("Variance Formula misspecified")
+    if(mv != 2) stop("Variance Formula misspecified")
     end = regexpr("\\(", as.character(formula.var[mv])) - 1
     model.var = substr(as.character(formula.var[mv]), 1, end)
-    if (!any( c("garch", "aparch") == model.var))
+    if(!any( c("garch", "aparch") == model.var))
         stop("formula.var must be one of: garch, aparch") 
     
     # Determine Mean Order from ARMA Formula:
@@ -365,33 +366,33 @@ h.start, llh.start)
         formula.mean), "\\(")[[2]][2], "\\)")[[1]], ",")[[1]])
     u = model.order[1]
     v = 0
-    if (length(model.order) == 2) v = model.order[2]
+    if(length(model.order) == 2) v = model.order[2]
     maxuv = max(u, v)
-    if (u < 0 | v < 0) stop("*** ARMA orders must be positive.")
+    if(u < 0 | v < 0) stop("*** ARMA orders must be positive.")
     
     # Determine Variance Order from GARCH Formula:
     model.order = as.numeric(strsplit(strsplit(strsplit(as.character(
         formula.var), "\\(")[[2]][2], "\\)")[[1]], ",")[[1]])
     p = model.order[1]
     q = 0
-    if (length(model.order) == 2) q = model.order[2]
-    if (p+q == 0)
+    if(length(model.order) == 2) q = model.order[2]
+    if(p+q == 0)
         stop("Misspecified GARCH Model: Both Orders are zero!")
     maxpq = max(p, q)
-    if (p < 0 | q < 0) stop("*** GARCH orders must be positive.")
+    if(p < 0 | q < 0) stop("*** GARCH orders must be positive.")
     
     # Fix Start Position of Series "h" and for Likelihood Calculation:
     max.order = max(maxuv, maxpq)  
-    if (is.null(h.start)) h.start = max.order + 1
-    if (is.null(llh.start)) llh.start = 1
+    if(is.null(h.start)) h.start = max.order + 1
+    if(is.null(llh.start)) llh.start = 1
     
     # Check for Recursion Initialization:
-    if (init.rec != "mci" & model.var != "garch") {
+    if(init.rec != "mci" & model.var != "garch") {
         stop("GARCH model only supported for mci Recutrsion")
     }
     
     # Trace the Result:
-    if (.trace) {
+    if(.trace) {
         cat("\nSeries Initialization:")
         cat("\n ARMA model:               ", model.mean)
         cat("\n Formula mean:             ", as.character(formula.mean))
@@ -434,7 +435,7 @@ h.start, llh.start)
 .garchInitParameters = 
 function(formula.mean, formula.var, delta, skew, shape, cond.dist, 
 include.mean, include.delta, include.skew, include.shape, leverage, 
-algorithm, control = con)
+algorithm, control)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -456,26 +457,26 @@ algorithm, control = con)
         formula.mean), "\\(")[[2]][2], "\\)")[[1]], ",")[[1]])
     u = model.order[1]
     v = 0
-    if (length(model.order) == 2) v = model.order[2]
+    if(length(model.order) == 2) v = model.order[2]
     
     # Determine Variance Order from GARCH Formula:
     model.order = as.numeric(strsplit(strsplit(strsplit(as.character(
         formula.var), "\\(")[[2]][2], "\\)")[[1]], ",")[[1]])
     p = model.order[1]
     q = 0
-    if (length(model.order) == 2) q = model.order[2]
+    if(length(model.order) == 2) q = model.order[2]
     
     # Includes:
     model.var = .series$model[2]
-    if (is.null(include.delta)) {
-        if (model.var == "garch") {
+    if(is.null(include.delta)) {
+        if(model.var == "garch") {
             include.delta = FALSE 
         } else {
             include.delta = TRUE
         }
     }
-    if (is.null(leverage)) {
-        if (model.var == "garch") {
+    if(is.null(leverage)) {
+        if(model.var == "garch") {
             leverage = FALSE 
         } else {
             leverage = TRUE
@@ -483,18 +484,18 @@ algorithm, control = con)
     }
     
     # Distributional Includes:
-    if (cond.dist == "t") cond.dist = "dstd"
+    if(cond.dist == "t") cond.dist = "dstd"
     skewed.dists = c("dsnorm", "dsged", "dsstd")
-    if (is.null(include.skew)) {
-        if (any(skewed.dists == cond.dist)) {
+    if(is.null(include.skew)) {
+        if(any(skewed.dists == cond.dist)) {
             include.skew = TRUE
         } else {
             include.skew = FALSE
         }
     }
     shaped.dists = c("dged", "dsged", "dstd", "dsstd")
-    if (is.null(include.shape)) {
-        if (any(shaped.dists == cond.dist)) {
+    if(is.null(include.shape)) {
+        if(any(shaped.dists == cond.dist)) {
             include.shape = TRUE
         } else {
             include.shape = FALSE
@@ -504,96 +505,96 @@ algorithm, control = con)
     # Set Names for Parameters:
     Names = c(
         "mu", 
-        if (u > 0) paste("ar", 1:u, sep = ""),
-        if (v > 0) paste("ma", 1:v, sep = ""),   
+        if(u > 0) paste("ar", 1:u, sep = ""),
+        if(v > 0) paste("ma", 1:v, sep = ""),   
         "omega",
-        if (p > 0) paste("alpha", 1:p, sep = ""),
-        if (p > 0) paste("gamma", 1:p, sep = ""),
-        if (q > 0) paste("beta",  1:q, sep = ""),
+        if(p > 0) paste("alpha", 1:p, sep = ""),
+        if(p > 0) paste("gamma", 1:p, sep = ""),
+        if(q > 0) paste("beta",  1:q, sep = ""),
         "delta",
         "skew", 
         "shape")
-    if (.DEBUG) { cat("\nDEBUG - Names: \n"); print(Names) }    
+    if(.DEBUG) { cat("\nDEBUG - Names: \n"); print(Names) }    
     
     # Initialize Model Parameters to be Estimated:
     fit.mean = arima(.series$x, order = c(u, 0, v), 
         include.mean = include.mean)$coef
     alpha.start = 0.1
     beta.start = 0.8  
-    # if (include.delta) delta = 1.5      
+    # if(include.delta) delta = 1.5      
     params = c(
-        if (include.mean) fit.mean[length(fit.mean)] else 0, 
-        if (u > 0) fit.mean[1:u], 
-        if (v > 0) fit.mean[(u+1):(length(fit.mean)-as.integer(include.mean))],
+        if(include.mean) fit.mean[length(fit.mean)] else 0, 
+        if(u > 0) fit.mean[1:u], 
+        if(v > 0) fit.mean[(u+1):(length(fit.mean)-as.integer(include.mean))],
         var(.series$x, na.rm = TRUE)*(1-alpha.start-beta.start),
-        if (p > 0) rep(alpha.start/p, times = p),
-        if (p > 0) rep(0.1, times = p), 
-        if (q > 0) rep(beta.start/q, times = q),
+        if(p > 0) rep(alpha.start/p, times = p),
+        if(p > 0) rep(0.1, times = p), 
+        if(q > 0) rep(beta.start/q, times = q),
         delta,
         skew,
         shape)
     names(params) = Names
-    if (.DEBUG) { cat("\nDEBUG - params: \n"); print(params) }   
+    if(.DEBUG) { cat("\nDEBUG - params: \n"); print(params) }   
     
     # Set Lower Limits of Parameters to be Estimated: 
     TINY = 1.0e-8
     U = c(
         -10*abs(mean(.series$x)), 
-        if (u > 0) rep(-1+TINY, times = u),
-        if (v > 0) rep(-1+TINY, times = v),
+        if(u > 0) rep(-1+TINY, times = u),
+        if(v > 0) rep(-1+TINY, times = v),
         1.0e-6*var(.series$x), 
-        if (p > 0) rep( 0+TINY, times = p),
-        if (p > 0) rep(-1+TINY, times = p),
-        if (q > 0) rep( 0+TINY, times = q),
+        if(p > 0) rep( 0+TINY, times = p),
+        if(p > 0) rep(-1+TINY, times = p),
+        if(q > 0) rep( 0+TINY, times = q),
         0,
         1/10,
         1)     
     names(U) = Names
-    if (.DEBUG) { cat("\nDEBUG - U: \n"); print(U) }
+    if(.DEBUG) { cat("\nDEBUG - U: \n"); print(U) }
     
     # Set Upper Limits of Parameters to be Estimated:    
     V = c(
         10*abs(mean(.series$x)),  
-        if (u > 0) rep(1-TINY, times = u),
-        if (v > 0) rep(1-TINY, times = v),
+        if(u > 0) rep(1-TINY, times = u),
+        if(v > 0) rep(1-TINY, times = v),
         100*var(.series$x), 
-        if (p > 0) rep(1-TINY, times = p),
-        if (p > 0) rep(1-TINY, times = p),
-        if (q > 0) rep(1-TINY, times = q),
+        if(p > 0) rep(1-TINY, times = p),
+        if(p > 0) rep(1-TINY, times = p),
+        if(q > 0) rep(1-TINY, times = q),
         2,
         10,
         20)     
     names(V) = Names
-    if (.DEBUG) { cat("\nDEBUG - V: \n"); print(V) }
+    if(.DEBUG) { cat("\nDEBUG - V: \n"); print(V) }
     
     # Includes:
     includes = c(
         include.mean,
-        if (u > 0) rep(TRUE, times = u),
-        if (v > 0) rep(TRUE, times = v),
+        if(u > 0) rep(TRUE, times = u),
+        if(v > 0) rep(TRUE, times = v),
         TRUE, 
-        if (p > 0) rep(TRUE, times = p),
-        if (p > 0) rep(leverage, times = p),
-        if (q > 0) rep(TRUE, times = q),
+        if(p > 0) rep(TRUE, times = p),
+        if(p > 0) rep(leverage, times = p),
+        if(q > 0) rep(TRUE, times = q),
         include.delta,
         include.skew,
         include.shape)
     names(includes) = Names
-    if (.DEBUG) { cat("\nDEBUG - V: \n"); print(includes) }   
+    if(.DEBUG) { cat("\nDEBUG - V: \n"); print(includes) }   
      
     # Index List of Parameters to be Optimized:
-    index = (1:length(params))[includes == TRUE]
-    names(index) = names(params)[includes == TRUE]
-    if (.DEBUG) { cat("\nDEBUG - fixed: \n"); print(index) }
+    index = (1:length(params))[includes]
+    names(index) = names(params)[includes]
+    if(.DEBUG) { cat("\nDEBUG - fixed: \n"); print(index) }
     
     # Persistence:  
-    if (p > 0) alpha = params[substr(Names, 1, 5) == "alpha"] 
-    if (p > 0 & leverage) gamma = params[substr(Names, 1, 5) == "gamma"]
-    if (p > 0 & !leverage) gamma = rep(0, times = p)
-    if (q > 0) beta  = params[substr(Names, 1, 4) == "beta"] 
-    if (.series$model[2] == "garch") {
+    if(p > 0) alpha = params[substr(Names, 1, 5) == "alpha"] 
+    if(p > 0 & leverage) gamma = params[substr(Names, 1, 5) == "gamma"]
+    if(p > 0 & !leverage) gamma = rep(0, times = p)
+    if(q > 0) beta  = params[substr(Names, 1, 4) == "beta"] 
+    if(.series$model[2] == "garch") {
         persistence = sum(alpha) + sum(beta)
-    } else if (.series$model[2] == "aparch") {
+    } else if(.series$model[2] == "aparch") {
         persistence = sum(beta)
         for (i in 1:p)
             persistence = persistence + alpha[i]*garchKappa(cond.dist,
@@ -602,7 +603,7 @@ algorithm, control = con)
     names(persistence) = "persistence"
       
     # Trace the Result:
-    if (.trace) {
+    if(.trace) {
         cat("Parameter Initialization:")
         cat("\n Initial Parameters:          $params")    
         cat("\n Limits of Transformations:   $U, $V")
@@ -658,43 +659,43 @@ function(cond.dist = "dnorm")
     # FUNCTION:
     
     # Normal Distribution:
-    if (cond.dist == "dnorm") {
+    if(cond.dist == "dnorm") {
          .garchDist = function(z, hh, skew, shape) {
             dnorm(x = z/hh, mean = 0, sd = 1) / hh 
         }
     }
-    if (cond.dist == "dsnorm") { 
+    if(cond.dist == "dsnorm") { 
         .garchDist = function(z, hh, skew, shape) {
             dsnorm(x = z/hh, mean = 0, sd = 1, xi = skew) / hh 
         }
     }
     
     # Standardized Student-t:
-    if (cond.dist == "dstd") { 
+    if(cond.dist == "dstd") { 
         .garchDist = function(z, hh, skew, shape) {
             dstd(x = z/hh, mean = 0, sd = 1, nu = shape) / hh
         }
     }
-    if (cond.dist == "dsstd") { 
+    if(cond.dist == "dsstd") { 
         .garchDist = function(z, hh, skew, shape) {
             dsstd(x = z/hh, mean = 0, sd = 1, nu = shape, xi = skew) / hh
         }
     }
       
     # Generalized Error Distribution:
-    if (cond.dist == "dged") {
+    if(cond.dist == "dged") {
         .garchDist = function(z, hh, skew, shape) {
             dged(x = z/hh, mean = 0, sd = 1, nu = shape) / hh
         }
     }
-    if (cond.dist == "dsged") {
+    if(cond.dist == "dsged") {
         .garchDist = function(z, hh, skew, shape) {
             dsged(x = z/hh, mean = 0, sd = 1, nu = shape, xi = skew) / hh
         }
     }
                        
     # Trace the Result:
-    if (FALSE) {
+    if(FALSE) {
         cat("\n Distribution:     ", cond.dist, "\n    .garchDist = ")
         print(.garchDist)
     }
@@ -702,6 +703,9 @@ function(cond.dist = "dnorm")
     # Return Value:
     .garchDist 
 }
+
+
+.garchDist = .garchSetCondDist(cond.dist = "dnorm")
 
 
 # ------------------------------------------------------------------------------
@@ -757,37 +761,37 @@ function(params)
     skew = c(skew = .params$skew)
     shape = c(shape = .params$shape)
     leverage = c(leverage = .params$leverage)
-    if (.params$includes["mu"]) mu = params["mu"]
-    if (u > 0) ar = params[substr(Names, 1, 2) == "ar"]
-    if (v > 0) ma = params[substr(Names, 1, 2) == "ma"]
+    if(.params$includes["mu"]) mu = params["mu"]
+    if(u > 0) ar = params[substr(Names, 1, 2) == "ar"]
+    if(v > 0) ma = params[substr(Names, 1, 2) == "ma"]
     omega = params[substr(Names, 1, 5) == "omega"]
-    if (p > 0) alpha = params[substr(Names, 1, 5) == "alpha"] 
-    if (p > 0 & leverage) gamma = params[substr(Names, 1, 5) == "gamma"]
-    if (q > 0) beta  = params[substr(Names, 1, 4) == "beta"] 
-    if (.params$includes["delta"]) delta = params["delta"] 
-    if (.params$includes["skew"])  skew  = params["skew"] 
-    if (.params$includes["shape"]) shape = params["shape"] 
+    if(p > 0) alpha = params[substr(Names, 1, 5) == "alpha"] 
+    if(p > 0 & leverage) gamma = params[substr(Names, 1, 5) == "gamma"]
+    if(q > 0) beta  = params[substr(Names, 1, 4) == "beta"] 
+    if(.params$includes["delta"]) delta = params["delta"] 
+    if(.params$includes["skew"])  skew  = params["skew"] 
+    if(.params$includes["shape"]) shape = params["shape"] 
     
     # Iterate z: 
     N = length(x)  
     z = rep(0, N)
-    if (u > 0 & v > 0) 
+    if(u > 0 & v > 0) 
         for (i in (h.start):N) 
             z[i] = x[i] - mu - sum(ar*x[i-(1:u)]) - sum(ma*z[i-(1:v)])
-    if (u > 0 & v == 0) 
+    if(u > 0 & v == 0) 
         for (i in (h.start):N) 
             z[i] = x[i] - mu - sum(ar*x[i-(1:u)])      
-    if (u == 0 & v > 0) 
+    if(u == 0 & v > 0) 
         for (i in (h.start):N) 
             z[i] = x[i] - mu - sum(ma*z[i-(1:v)])                 
-    if (u == 0 & v == 0)  
+    if(u == 0 & v == 0)  
         z = x - mu                
     
     # Initialize Variance Equation:  
     deltainv = 1/delta
-    if (.series$model[2] == "garch") {
+    if(.series$model[2] == "garch") {
         persistence = sum(alpha) + sum(beta)
-    } else if (.series$model[2] == "aparch") {
+    } else if(.series$model[2] == "aparch") {
         persistence = sum(beta)
         for (i in 1:p)
             persistence = persistence + alpha[i]*garchKappa(cond.dist,
@@ -801,11 +805,11 @@ function(params)
     h = rep(omega + persistence*mvar, N)
       
     # Iterate Conditional Variances h: 
-    if (p == 0) { 
+    if(p == 0) { 
         alpha = 0 
         p = 1
     }
-    if (q == 0) {
+    if(q == 0) {
         beta = 0
         q = 1
     }
@@ -814,9 +818,9 @@ function(params)
     USE = .params$control$llh
        
     # Test Version Just a Simple Double 'for' Loop:
-    if (USE == "testing") {
+    if(USE == "testing") {
         # As You Can Imagine, Slow Version But Very Useful for Testing:
-        if (!.params$leverage) {
+        if(!.params$leverage) {
             for (i in (h.start):N) {
                 h[i] = omega + 
                     sum(alpha * ( abs(z[i-(1:p)])) ^ delta ) + 
@@ -826,17 +830,18 @@ function(params)
             for (i in (h.start):N) {
                 h[i] = omega + 
                     sum(alpha * ( abs(z[i-(1:p)]) - 
-                    gamma * eps[i-(1:p)]) ^ delta ) + sum(beta*h[i-(1:q)]) 
+                    ## z|eps
+                    gamma * z[i-(1:p)]) ^ delta ) + sum(beta*h[i-(1:q)]) 
             }
         } 
     }
  
     # R Filter Representation:
     # Entirely written in S, and very effective ...
-    if (USE == "filter") {
+    if(USE == "filter") {
         # Note, sometimes one of the beta's can become undefined 
         # during optimization.
-        if (!.params$leverage) gamma = rep(0, p)
+        if(!.params$leverage) gamma = rep(0, p)
         pq = max(p, q)
         edeltat = 0
         for (j in 1:p) {
@@ -850,10 +855,10 @@ function(params)
         h = c( h[1:pq], c.init + filter(edeltat[-(1:pq)], filter = beta, 
              method = "recursive", init = h[q:1]-c.init))
         ### ? remove ?
-        if ( sum(is.na(h)) > 0 ) {
+        if( sum(is.na(h)) > 0 ) {
             # We use the testing Version ...
             warning("Problems in Filter Representation")
-            if (!.params$leverage) {
+            if(!.params$leverage) {
                 for (i in (h.start):N) {
                     h[i] = omega + 
                         sum(alpha * ( abs(z[i-(1:p)])) ^ delta ) + 
@@ -863,7 +868,8 @@ function(params)
                 for (i in (h.start):N) {
                     h[i] = omega + 
                         sum(alpha * ( abs(z[i-(1:p)]) - 
-                        gamma * eps[i-(1:p)]) ^ delta ) + sum(beta*h[i-(1:q)]) 
+                        ## z|eps
+                        gamma * z[i-(1:p)]) ^ delta ) + sum(beta*h[i-(1:q)]) 
                 }
             } 
         }
@@ -871,8 +877,8 @@ function(params)
     
     # Fortran Implementation:
     # May be Even Faster Compared with R's Filter Representation ...
-    if (USE == "internal") {
-        if (!.params$leverage) gamma = rep(0, p)
+    if(USE == "internal") {
+        if(!.params$leverage) gamma = rep(0, p)
         # For asymmetric APARCH Models Only !!! 
         h = .Fortran("aparchllh", as.double(z), as.double(h), as.integer(N),
             as.double(omega), as.double(alpha), as.double(gamma), 
@@ -880,7 +886,7 @@ function(params)
             as.integer(h.start), PACKAGE = "fSeries")[[2]]  
     }
     
-    # Save h and eps:
+    # Save h and z|eps:
     .series$h <<- h
     .series$z <<- z
     
@@ -888,18 +894,18 @@ function(params)
     hh = (abs(h[(llh.start):N]))^deltainv
     zz = z[(llh.start):N]
     llh = -sum(log(.garchDist(z = zz, hh = hh, skew = skew, shape = shape)))
-    if (.DEBUG) cat("DEBUG - LLH:   ", llh, "\n")
+    if(.DEBUG) cat("DEBUG - LLH:   ", llh, "\n")
     names(params) = names(.params$params[.params$index])
-    if (is.na(llh)) llh = .llh + 0.1*(abs(.llh))  
-    if (!is.finite(llh)) llh = .llh + 0.1*(abs(.llh))
+    if(is.na(llh)) llh = .llh + 0.1*(abs(.llh))  
+    if(!is.finite(llh)) llh = .llh + 0.1*(abs(.llh))
     
     # Print if LLH has Improved:
-    if (llh <.llh) {
+    if(llh <.llh) {
         .llh <<- llh
-        if (.trace) {   
+        if(.trace) {   
             cat(" LLH: ", llh, "   norm LLH: ", llh/N, "\n")
             print(params)
-            if (persistence > 1) 
+            if(persistence > 1) 
                 cat("Warning - Persistence:", persistence, "\n")
         }
     }
@@ -932,7 +938,7 @@ function(par)
     # Compute Hessian:
     algorithm = .params$control$algorithm[1]
     EPS0 = 1.0e-4
-    if (algorithm == "nlminb" | algorithm == "lbfgsb" | 
+    if(algorithm == "nlminb" | algorithm == "lbfgsb" | 
         algorithm == "nlminb+nm" | algorithm == "lbfgsb+nm") {
         # CASE I: NLMINB and BFGS
         keep.trace = .trace
@@ -965,17 +971,17 @@ function(par)
         # Case II: SQP
         N = length(.series$x)
         NF = length(par)
-        if (.params$includes["delta"]) {
+        if(.params$includes["delta"]) {
             XDELTA = par["delta"] 
         } else {
             XDELTA = .params$delta
         } 
-        if (.params$includes["skew"]) {
+        if(.params$includes["skew"]) {
             XSKEW = par["skew"] 
         } else {
             XSKEW = .params$skew
         }   
-        if (.params$includes["shape"]) {
+        if(.params$includes["shape"]) {
             XSHAPE = par["shape"] 
         } else {
             XSHAPE = .params$shape
@@ -984,7 +990,7 @@ function(par)
         MDIST = c(dnorm = 10, dsnorm = 11, dstd = 20, dsstd = 21, dged = 30, 
             dsged = 31)[.params$cond.dist]                # Which Distribution
         REC = 1
-        if (.series$init.rec == "uev") REC = 2
+        if(.series$init.rec == "uev") REC = 2
         MYPAR = c(
             REC   = REC,                                  # How to initialize
             LEV   = as.integer(.params$leverage),         # Include Leverage 0|1 
@@ -1044,12 +1050,12 @@ function(...)
     TOL2 = .params$control$tol2
     
     # Optimize:
-    if (.trace) cat("\nIteration Path:\n") 
+    if(.trace) cat("\nIteration Path:\n") 
     
     # First Method:
     # Two Step Apparoach - Trust Region + Nelder-Mead Simplex
-    if (algorithm == "nlminb" | algorithm == "nlminb+nm") {
-        if (.trace) cat("\n\n\nNow NLMINB \n\n\n")
+    if(algorithm == "nlminb" | algorithm == "nlminb+nm") {
+        if(.trace) cat("\n\n\nNow NLMINB \n\n\n")
         parscale = rep(1, length = length(INDEX))
         names(parscale) = names(.params$params[INDEX])
         parscale["omega"] = var(.series$x)^(.params$delta/2)
@@ -1063,8 +1069,8 @@ function(...)
                 rel.tol = 1.0e-14*TOL1, x.tol = 1.0e-14*TOL1)
             )  
         fit$value = fit$objective 
-        if (algorithm == "nlminb+nm") {          
-            if (.trace) cat("\n\n\nNow Nelder-Mead \n\n\n")
+        if(algorithm == "nlminb+nm") {          
+            if(.trace) cat("\n\n\nNow Nelder-Mead \n\n\n")
             fnscale = abs(.garchLLH(.params$params[INDEX]))
             fit = optim(
                 par = fit$par,
@@ -1082,8 +1088,8 @@ function(...)
     
     # Second Method:
     # Two Step Approach - BFGS + Nelder-Mead Simplex
-    if (algorithm == "lbfgsb" | algorithm == "lbfgsb+nm") {
-        if (.trace) cat("\n\n\nNow L-BFGS-B \n\n\n")
+    if(algorithm == "lbfgsb" | algorithm == "lbfgsb+nm") {
+        if(.trace) cat("\n\n\nNow L-BFGS-B \n\n\n")
         parscale = rep(1, length = length(INDEX))
         names(parscale) = names(.params$params[INDEX])
         parscale["omega"] = var(.series$x)^((.params$params["delta"])/2)
@@ -1099,8 +1105,8 @@ function(...)
                 pgtol = 1e-14 * TOL1, 
                 factr = 1 * TOL1)
         )        
-        if (algorithm == "lbfgsb+nm") {
-            if (.trace) cat("\n\n\nNow Nelder-Mead \n\n\n")
+        if(algorithm == "lbfgsb+nm") {
+            if(.trace) cat("\n\n\nNow Nelder-Mead \n\n\n")
             fnscale = abs(fit$value)
             parscale = abs(fit$par)
             fit = optim(
@@ -1120,8 +1126,8 @@ function(...)
     # Third Method:
     # Sequential Programming Algorithm
     # IPAR, RPAR and MYPAR Parameter Setting:
-    if (algorithm == "sqp") {
-        if (.trace) cat(" SQP Algorithm\n\n")
+    if(algorithm == "sqp") {
+        if(.trace) cat(" SQP Algorithm\n\n")
         IPAR = c(
             IPRNT = as.integer(.trace),    #  [1, 200, 500, 2, 2, 1, 4]
             MIT = .params$control$MIT,    
@@ -1159,9 +1165,9 @@ function(...)
             RPF  = .params$control$RPF)
         MDIST = c(dnorm = 10, dsnorm = 11, dstd = 20, dsstd = 21, dged = 30, 
             dsged = 31)[.params$cond.dist]
-        if (.params$control$fscale) NORM = length(.series$x) else NORM = 1
+        if(.params$control$fscale) NORM = length(.series$x) else NORM = 1
         REC = 1
-        if (.series$init.rec == "uev") REC = 2
+        if(.series$init.rec == "uev") REC = 2
         MYPAR = c(
             REC   = REC,                                  # How to initialize
             LEV   = as.integer(.params$leverage),         # Include Leverage 0|1 
@@ -1177,7 +1183,7 @@ function(...)
         NF = length(INDEX)
         N = length(.series$x)
         DPARM = c(.params$delta, .params$skew, .params$shape)
-        if (IPAR[1] == 0) sink("@sink@")
+        if(IPAR[1] == 0) sink("@sink@")
         ans = .Fortran("garchfit",
             N = as.integer(N), 
             Y = as.double(.series$x), 
@@ -1194,13 +1200,13 @@ function(...)
             MYPAR = as.integer(MYPAR),
             F = as.double(F),
             PACKAGE = "fSeries")
-        if (IPAR[1] == 0) {
+        if(IPAR[1] == 0) {
             sink()        
             unlink("@sink@")
         }
      
         # Result:
-        if (.trace) {
+        if(.trace) {
             cat("\nControl Parameter:\n")
             print(IPAR)
             print(RPAR)
@@ -1220,7 +1226,7 @@ function(...)
     
     # Execution Time:
     Time =  Sys.time() - .Start
-    if (.trace) {
+    if(.trace) {
         cat("\nTime to Estimate Parameters:\n ")
         print(Time) 
     }
@@ -1229,7 +1235,7 @@ function(...)
     .Start <<- Sys.time()
     H = .garchHessian(fit$par)
     Time =  Sys.time() - .Start
-    if (.trace) {
+    if(.trace) {
         cat("\nTime to Compute Hessian:\n ")
         print(Time)  
     }  
@@ -1244,7 +1250,7 @@ function(...)
         HQIC = (-2*fit$value)/N + (2*NPAR*log(log(N)))/N )
         
     # Final Function Evaluation: 
-    if (.trace) {
+    if(.trace) {
         # Note, that .garchLLH() will print the final estimate ...
         .llh <<- 1.0e99
         cat("\nFinal Estimate:\n")
@@ -1256,7 +1262,7 @@ function(...)
     fit$hessian = H
     
     # Print Hessian Matrix:
-    if (.trace) {
+    if(.trace) {
         cat("\nHessian Matrix:\n")
         print(fit$hessian)
         cat("\n--- END OF TRACE ---\n\n") 
