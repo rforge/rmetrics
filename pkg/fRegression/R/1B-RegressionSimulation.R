@@ -34,7 +34,8 @@
 
 
 regSim = 
-function(model = c("LM3", "LOGIT3", "GAM3"), n = 100)
+function(model = c("LM3", "LOGIT3", "GAM3"), n = 100, 
+returnClass = c("timeSeries", "data.frame"))
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -49,6 +50,7 @@ function(model = c("LM3", "LOGIT3", "GAM3"), n = 100)
     
     # Select Regression Models:
     model = match.arg(model)
+    returnClass = match.arg(returnClass) 
     
     # LM3:
     if (model == "LM3") {
@@ -87,6 +89,12 @@ function(model = c("LM3", "LOGIT3", "GAM3"), n = 100)
         eps = 0.1 * rnorm(n, sd = sd(y))
         y = y + eps
         X = data.frame(Y = y, X1 = x1, X2 = x2, X3 = x3)
+    }
+    
+    # Return Class:
+    if (returnClass == "timeSeries") {
+        X = dummyDailySeries(x = as.matrix(X), units = colnames(X), 
+            zone = myFinCenter, FinCenter = myFinCenter)  
     }
     
     # Return Value:
