@@ -113,10 +113,6 @@ function()
 {
     # Working with a data frame ...
     
-    # Plot Parameters:
-    par(ask = FALSE)
-    par(mfrow = c(1, 1))
-    
     # Requirements:
     require(MASS)
     require(polspline)
@@ -146,6 +142,8 @@ function()
     print(NNET)  
     
     # Plot Method:
+    par(ask = FALSE)
+    par(mfrow = c(1, 1))
     plot(LM, which = "all")                             # CHECK which !!!
     plot(RLM, which = "all")
     plot(AM, which = "all")            
