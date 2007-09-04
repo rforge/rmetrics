@@ -78,7 +78,7 @@ function(x, a, b, lnchf = 0, ip = 0)
         as.integer(length(x)),
         as.integer(lnchf),
         as.integer(ip),
-        PACKAGE = "fOptions")
+        PACKAGE = "fAsianOptions")
     result = complex(real = value[[7]], imag = value[[8]]) 
     
     # Return Value:

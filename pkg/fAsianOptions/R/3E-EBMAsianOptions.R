@@ -721,7 +721,7 @@ dt = 1.0e-10)
             as.double(xbkpt),
             as.double(work),
             as.integer(iwork),
-            PACKAGE = "fOptions"  
+            PACKAGE = "fAsianOptions"  
             )
         Price[i] = result[[13]]*S[i]
     }
@@ -859,7 +859,7 @@ sigma = 0.30, table = NA, nint = 800, eps = 1.0e-8, dt = 1.0e-10)
             as.double(xbkpt),
             as.double(work),
             as.integer(iwork),
-            PACKAGE = "fOptions" 
+            PACKAGE = "fAsianOptions" 
             )
         Price[i] = result[[13]]*S[i]
     }
