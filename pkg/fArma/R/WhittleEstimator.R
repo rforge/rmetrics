@@ -99,7 +99,7 @@ trace = FALSE, spec = FALSE, title = NULL, description = NULL)
     ma = rep(0.5, length = order[2]) / order[2] 
     
     # Estimate:
-    if (trace) cat("Iteration Path:\n")
+    if(trace) cat("Iteration Path:\n")
     result = .whittle(xinput = x, nsub = subseries, model = method[1], 
         pp = order[1], qq = order[2], h = h, ar = ar, ma = ma, out = trace, 
         spec = spec)[[1]]
@@ -107,8 +107,8 @@ trace = FALSE, spec = FALSE, title = NULL, description = NULL)
     result$par = NULL
         
     # Add:
-    if (is.null(title)) title = "Hurst Exponent from Whittle Estimator"
-    if (is.null(description)) description = .description()
+    if(is.null(title)) title = "Hurst Exponent from Whittle Estimator"
+    if(is.null(description)) description = .description()
         
     # Return Value:
     new("fHURST", 
@@ -263,14 +263,17 @@ function(eta)
     
     # FUNCTION:
     
+    # To Suppress No Visible Bindings Warning/Error:
+    if(FALSE) { imodel = n = p = yper = NA }
+    
     # Settings:
     h = eta[1]
-    if (imodel == 1) {
-        fspec = .fspecFGN(eta,n)
+    if(imodel == 1) {
+        fspec = .fspecFGN(eta, n)
         theta1 = fspec$theta1
         fspec = fspec$fspec 
     } else {
-        fspec = .fspecARIMA(eta,p,q,n)
+        fspec = .fspecARIMA(eta, p, q, n)
         theta1 = fspec$theta1
         fspec = fspec$fspec 
     }
@@ -458,14 +461,14 @@ function(eta, p, q, m)
     # Calculation of f at Fourier frequencies   
     far = (1:mhalfm)/(1:mhalfm)
     fma = (1:mhalfm)/(1:mhalfm)
-    if (p > 0) {
+    if(p > 0) {
         phi = cbind(eta[2:(p+1)])
         cosar = cos(cbind(x) %*% rbind(1:p))
         sinar = sin(cbind(x) %*% rbind(1:p))
         Rar = cosar %*% phi
         Iar = sinar %*% phi
         far = (1-Rar)**2 + Iar**2 }
-    if (q > 0) {
+    if(q > 0) {
         psi = cbind(eta[(p+2):(p+q+1)])
         cosar = cos(cbind(x) %*% rbind(1:q))
         sinar = sin(cbind(x) %*% rbind(1:q))
@@ -541,6 +544,9 @@ qq = 1, h = 0.5, ar = c(0.5), ma = c(0.5), out = TRUE, spec = FALSE)
     
     # FUNCTION:
     
+    # To suppress No Visible Bindings Warning/Error: 
+    if(FALSE) { n = p = q = imodel = out = yper = bBb = NA }
+    
     # Settings:
     model = model[1]
     assign("out", out, pos = 1)
@@ -551,19 +557,20 @@ qq = 1, h = 0.5, ar = c(0.5), ma = c(0.5), out = TRUE, spec = FALSE)
     nloop = nsub
     assign("n", trunc((iend - istart+1)/nloop), pos = 1)
     nhalfm = trunc((n - 1)/2)
-    if (model == "farma") 
+    if(model == "farma") 
         assign("imodel", 2, pos = 1)
-    if (model == "fgn") 
+    if(model == "fgn") 
         assign("imodel", 1, pos = 1)
     assign("p", 0, pos = 1)
     assign("q", 0, pos = 1)
-    if (imodel == 2) {
+    if(imodel == 2) {
         assign("p", pp, pos = 1); assign("q", qq, pos = 1) 
     } else {
-        assign("p", 0, pos=1); assign("q", 0, pos = 1) }
+        assign("p", 0, pos=1); assign("q", 0, pos = 1) 
+    }
     eta = c(h)
-    if (p > 0) eta[2:(p+1)] = ar 
-    if (q > 0) eta[(p+2):(p+q+1)] = ma 
+    if(p > 0) eta[2:(p+1)] = ar 
+    if(q > 0) eta[(p+2):(p+q+1)] = ma 
     M = length(eta) #loop
     thetavector = c()
     i0 = istart
@@ -582,8 +589,8 @@ qq = 1, h = 0.5, ar = c(0.5), ma = c(0.5), out = TRUE, spec = FALSE)
         y = (y - mean(y))/sqrt(var(y))  
         
         # Periodogram of the Data:
-        if (spec) {
-            assign("yper", .per(y)[2:(nhalfm+1)], w = 1)
+        if(spec) {
+            assign("yper", .per(y)[2:(nhalfm+1)], pos = 1)
         } else {
             assign("yper", .per(y)[2:(nhalfm+1)], pos = 1)
         }
@@ -591,7 +598,7 @@ qq = 1, h = 0.5, ar = c(0.5), ma = c(0.5), out = TRUE, spec = FALSE)
         etatry = eta    
         
         # Modified to make optim not give incorrect result.  VT
-        if (imodel == 1) {
+        if(imodel == 1) {
             result = optim(par = etatry, fn = .Qmin2, 
                 method = "L-BFGS-B", lower = 0, upper = 0.999) 
         } else {
@@ -606,17 +613,17 @@ qq = 1, h = 0.5, ar = c(0.5), ma = c(0.5), out = TRUE, spec = FALSE)
         # Calculate goodness of fit statistic
         Qresult = .Qeta(eta)    #output
         M = length(eta)
-        if (imodel == 1) {
+        if(imodel == 1) {
             SD = .CetaFGN(eta)
             SD = matrix(SD, ncol = M, nrow = M, byrow = TRUE) / n 
         } else {
             # Changed to eliminate crashing in solve.qr in CetaARIMA.  VT
             cat("M =", M, "\n")
-            if (M > 2) {
+            if(M > 2) {
                 for (i in 3:M) {
                     for (j in 2:(i-1)) {
                         temp = eta[i]+eta[j]
-                        if (abs(temp) < 0.0001) {
+                        if(abs(temp) < 0.0001) {
                             cat("Problem with estimating confidence intervals,",
                                 "parameter ", i, "and  parameter ", j, 
                                 "are the same, eliminating.\n")
@@ -634,7 +641,7 @@ qq = 1, h = 0.5, ar = c(0.5), ma = c(0.5), out = TRUE, spec = FALSE)
         }   
         Hlow = eta[1] - 1.96 * sqrt(SD[1, 1])
         Hup = eta[1]+1.96 * sqrt(SD[1, 1])
-        if (out) {
+        if(out) {
             cat("theta =", theta, fill = TRUE)
             cat("H =", eta[1], fill = TRUE)
             cat("95%-CI for H: [", Hlow, ",", Hup, "]", fill = TRUE) 
@@ -642,20 +649,20 @@ qq = 1, h = 0.5, ar = c(0.5), ma = c(0.5), out = TRUE, spec = FALSE)
         
         # Changing of the signs of the moving average parameters
         # in order to respect the sign of the Splus convention
-        if (q > 0) eta[(p+2):(p+q+1)] = -eta[(p+2):(p+q+1)]
+        if(q > 0) eta[(p+2):(p+q+1)] = -eta[(p+2):(p+q+1)]
         etalow = c()
         etaup = c()
         for (i in (1:length(eta))) {
             etalow = c(etalow, eta[i] - 1.96 * sqrt(SD[i, i]))
             etaup = c(etaup, eta[i]+1.96 * sqrt(SD[i, i])) 
         }
-        if (out) {
+        if(out) {
             cat("95%-CI:", fill = TRUE)
             print(cbind(etalow, etaup), fill = TRUE) 
         }
-        if (spec) {
+        if(spec) {
             cat("Periodogram is in yper", fill = TRUE)
-            assign("fest", Qresult$theta1 * Qresult$fspec, w = 1)
+            assign("fest", Qresult$theta1 * Qresult$fspec, pos = 1)
             cat("Spectral density is in fest", fill = TRUE) 
         }
         flax[[iloop]] = list()      
@@ -681,7 +688,7 @@ qq = 1, h = 0.5, ar = c(0.5), ma = c(0.5), out = TRUE, spec = FALSE)
     remove("q", pos = 1)
     remove("imodel", pos = 1)
     remove("out", pos = 1)
-    if (spec == FALSE) remove("yper", pos = 1) 
+    if(spec == FALSE) remove("yper", pos = 1) 
 }
 
 
