@@ -75,16 +75,16 @@ function()
     # Normal Distribution:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
-    test = .distCheck("norm",  mean = 0, sd = 1, robust = TRUE)
+    test = .distCheck("norm",  mean = 0, sd = 1, robust = FALSE)
     print(test)
-    ### checkTrue(mean(test) == 1)                                        #CHECK
+    checkTrue(sum(test) ==3)                                     
     
     # Skew Normal Distribution:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
-    test = .distCheck("snorm", mean = 0, sd = 1, xi = 1.5, robust = TRUE) 
+    test = .distCheck("snorm", mean = 0, sd = 1, xi = 1.5, robust = FALSE) 
     print(test)
-    ### checkTrue(mean(test) == 1)                                       # CHECK
+    checkTrue(sum(test) == 3)                                      
     
     # Return Value:
     return()    
@@ -119,17 +119,17 @@ function()
     # Standardized Student-t Distribution:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
-    test = .distCheck("std",  mean = 0, sd = 1, nu = 5, robust = TRUE) 
+    test = .distCheck("std",  mean = 0, sd = 1, nu = 5, robust = FALSE) 
     print(test)
-    ### checkTrue(mean(test) == 1)                                       # CHECK
+    checkTrue(sum(test) == 3)                                      
     
     # Skew Standardized Student-t Distribution:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
-    test = .distCheck("sstd", mean = 0, sd = 1, nu = 5, xi = 1.5, robust = TRUE) 
+    test = .distCheck("sstd", mean = 0, sd = 1, nu = 5, xi = 1.5, robust = FALSE) 
     print(test)
-    ### checkTrue(mean(test) == 1)                                       # CHECK
-
+    checkTrue(sum(test) == 3)                                      
+    
     # Return Value:
     return()    
 }
@@ -163,16 +163,16 @@ function()
     # Generalized Error Distribution:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
-    test = .distCheck("ged",  mean = 0, sd = 1, nu = 2, robust = TRUE) 
+    test = .distCheck("ged",  mean = 0, sd = 1, nu = 2, robust = FALSE) 
     print(test)
-    ### checkTrue(mean(test) == 1)                                       # CHECK
+    checkTrue(sum(test) == 3)                                       
        
     # Skew Generalized Error Distribution:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(1953, kind = "Marsaglia-Multicarry")
-    test = .distCheck("sged", mean = 0, sd = 1, nu = 2, xi = 0.8, robust = TRUE) 
+    test = .distCheck("sged", mean = 0, sd = 1, nu = 2, xi = 0.8, robust = FALSE) 
     print(test)
-    ### checkTrue(mean(test) == 1)                                       # CHECK
+    checkTrue(sum(test) == 3)                                        
     
     # Return Value:
     return()    
