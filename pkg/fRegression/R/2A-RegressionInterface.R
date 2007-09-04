@@ -28,10 +28,6 @@
 
 
 ################################################################################
-# FUNCTION:             SIMULATION:
-#  'fREG'                S4 Class Representation
-#  regSim                Returns a regression example data set
-################################################################################
 # FUNCTION:             PARAMETER ESTIMATION:
 #  regFit                Wrapper Function for Regression Models
 #  gregFit               Wrapper Function for Generalized Regression Models
@@ -42,8 +38,10 @@
 #  .pprFit                Projection Pursuit Regression Model
 #  .polymarsFit           Polytochomous MARS Model
 #  .nnetFit               Feedforward Neural Network Model
+# UTILITY:              DESCRIPTION:
+#  .amFormula            Adds s() around term labels
 # REQUIREMENT:          DESCRIPTION:
-#  polspline              Contributed R package
+#  polspline             Contributes R package polspline
 ################################################################################
 
 
@@ -63,90 +61,6 @@
 #   *IMPORTANT NOTE:
 #    Both packages r-cran-mda and r-cran-polspline are not available on the
 #    Debian Server, therefore we made them accessible as Builtin functions
-################################################################################
-
-
-setClass("fREG", 
-    # Class Representation
-    representation(
-        call = "call",
-        formula = "formula",
-        family = "character",  
-        method = "character",
-        data = "timeSeries",
-        fit = "list",
-        residuals = "timeSeries",
-        fitted = "timeSeries",
-        title = "character",
-        description = "character"
-    )  
-)
-    
-
-# ------------------------------------------------------------------------------
-
-
-regSim = 
-function(model = c("LM3", "LOGIT3", "GAM3"), n = 100)
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Returns one from three artificial regression data sets
-    
-    # Details:
-    #   LM3         3 Variable Linear Regression Model Example
-    #   LOGIT2      2 Variable GLM Logit Model Example
-    #   GAM         2 Variable Generalized Additive Model Example
-    
-    # FUNCTION:
-    
-    # Select Regression Models:
-    model = match.arg(model)
-    
-    # LM3:
-    if (model == "LM3") {
-        x1 = rnorm(n)
-        x2 = rnorm(n)
-        x3 = rnorm(n)
-        y = 0.75 * x1 + 0.25 * x2 - 0.5 * x3
-        eps = 0.1 * rnorm(n)
-        y = y + eps
-        X = data.frame(Y = y, X1 = x1, X2 = x2, X3 = x3)
-    }
-    
-    # LOGIT2:
-    if (model == "LOGIT3") {
-        # GLM / BINOMIAL/LOGIT - Example Data:
-        x1 = rnorm(n)
-        x2 = rnorm(n)
-        x3 = rnorm(n)
-        eps = 0.1 * rnorm(n)
-        y = 0.75 * x1 + 0.25 * x2 - 0.5 * x3 + eps
-        p = 1 / ( 1 + exp(-y) )
-        X = data.frame(Y = p, X1 = x1, X2 = x2, X3 = x3)
-    }
-    
-    # GAM2:
-    if (model == "GAM3") {  
-        # GAM - Example Data:
-        set.seed(4711)
-        x1 = runif(n)
-        x2 = runif(n)
-        x3 = runif(n)
-        y1 = scale(sin(2 * pi * x1))
-        y2 = scale(exp(x2))
-        y3 = scale(x3)
-        y = scale(y1 + y2 + y3)
-        eps = 0.1 * rnorm(n, sd = sd(y))
-        y = y + eps
-        X = data.frame(Y = y, X1 = x1, X2 = x2, X3 = x3)
-    }
-    
-    # Return Value:
-    X
-}
-      
-
 ################################################################################
 
 

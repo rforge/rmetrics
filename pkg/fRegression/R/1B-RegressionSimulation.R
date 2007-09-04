@@ -29,29 +29,8 @@
 
 ################################################################################
 # FUNCTION:             SIMULATION:
-#  'fREG'                S4 Class Representation
 #  regSim                Returns a regression example data set
 ################################################################################
-
-
-setClass("fREG", 
-    # Class Representation
-    representation(
-        call = "call",
-        formula = "formula",
-        family = "character",  
-        method = "character",
-        data = "timeSeries",
-        fit = "list",
-        residuals = "timeSeries",
-        fitted = "timeSeries",
-        title = "character",
-        description = "character"
-    )  
-)
-    
-
-# ------------------------------------------------------------------------------
 
 
 regSim = 
