@@ -47,12 +47,12 @@
     Available methods are:
     
     \tabular{ll}{
-    \code{predict} \tab Predict method for objects of class 'fARMA', \cr
-    \code{print} \tab Print method for objects of class 'fARMA', \cr
-    \code{plot} \tab Plot method for objects of class 'fARMA', \cr
-    \code{summary} \tab Summary method for objects of class 'fARMA', \cr
-    \code{fitted.values} \tab Fitted values method for objects of class 'fARMA', \cr
-    \code{residuals} \tab Residuals method for objects of class 'fARMA'. }
+    \code{predict} \tab Predict method for objects of class 'fREG', \cr
+    \code{print} \tab Print method for objects of class 'fREG', \cr
+    \code{plot} \tab Plot method for objects of class 'fREG', \cr
+    \code{summary} \tab Summary method for objects of class 'fREG', \cr
+    \code{fitted.values} \tab Fitted values method for objects of class 'fREG', \cr
+    \code{residuals} \tab Residuals method for objects of class 'fREG'. }
             
     The print method prints the returned object from a regression 
     fit, and the summary method performs a diagnostic analysis and 
