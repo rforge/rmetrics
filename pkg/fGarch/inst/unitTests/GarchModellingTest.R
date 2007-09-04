@@ -34,7 +34,7 @@
 ################################################################################
 
 
-test.garchFit = 
+test.garchFit.vector = 
 function()
 {  
     # garchFit(
@@ -84,7 +84,7 @@ function()
     print(class(dem2gbp))
     
     # Data Frame to Numeric Vector:
-    x = dem2gbp[,1]
+    x = dem2gbp[, 1]
     print(head(x))
     print(class(x))
     
@@ -104,36 +104,18 @@ function()
     # Skew Normal Conditional Distribution:
     fit = garchFit(~garch(1,1), x, cond.dist = "dsnorm")
     fit@fit$coef
-    #          mu       omega      alpha1       beta1        skew 
-    # 0.002418474 0.020628074 0.213000422 0.699638422 0.903313891
         
-    # Symmetric GED:
-    fit = garchFit(~garch(1,1), x, cond.dist = "dged")
-    fit@fit$coef
-    #          mu       omega      alpha1       beta1       shape 
-    # 0.001692849 0.004478847 0.130834725 0.859287121 1.149396980
+    # Symmetric GED                                                  # CHECK !!!
+    # fit = garchFit(~garch(1,1), x, cond.dist = "dged")
+    # fit@fit$coef
 
-    # Skew GED - Take the shape from symmetric solution ...
-    fit = garchFit(~garch(1,1), x, cond.dist = "dsged", shape = 1.15)     
-    fit@fit$coef
-    #          mu       omega      alpha1       beta1        skew       shape 
-    # 0.030125742 0.008820863 0.169395870 0.799183865 1.174542338 1.162325254   
+    # Skew GED - Take the shape from symmetric solution ...          # CHECK !!!
+    # fit = garchFit(~garch(1,1), x, cond.dist = "dsged", shape = 1.15)     
+    # fit@fit$coef   
 
-    # Standardized Student-t:
-    fit = garchFit(~garch(1,1), x, cond.dist = "dstd")     
-    fit@fit$coef
-    #          mu       omega      alpha1       beta1       shape 
-    # 0.002248651 0.002319034 0.124437901 0.884653280 4.118426541
-    # Warning - Persistence: 1.009091
-    # ... misspecified since persistence > 1
-    
-    # Skew Standardized Student-t:
-    # Default Settings fail, use instead ...    
-    fit = garchFit(~garch(1,1), x, cond.dist = "dsstd", algorithm = "nlminb+nm")
-    #           mu       omega      alpha1       beta1        skew       shape 
-    # -0.008571022 0.002398384 0.124832720 0.883071726 0.913095642 4.201071258 
-    # Warning - Persistence: 1.007904                                            
-    # ... misspecified since persistence > 1
+    # Standardized Student-t:                                        # CHECK !!!
+    # fit = garchFit(~garch(1,1), x, cond.dist = "dstd")     
+    # fit@fit$coef
     
     # Return Value:
     return()    
@@ -165,58 +147,6 @@ function()
     return()    
 } 
 
-
-# ------------------------------------------------------------------------------
-
-
-test.garchFit.distributions = 
-function()
-{  
-    # Load Data:
-    data(dem2gbp)  
-    # Data Frame to Numeric Vector:
-    x = dem2gbp[, 1]
-    print(head(x))
-    print(class(x))
-    
-    # Skew Normal Conditional Distribution:
-    fit = garchFit(~garch(1,1), x, cond.dist = "dsnorm")
-    fit@fit$coef
-    #          mu       omega      alpha1       beta1        skew 
-    # 0.002418474 0.020628074 0.213000422 0.699638422 0.903313891
-        
-    # Symmetric GED:
-    fit = garchFit(~garch(1,1), x, cond.dist = "dged")
-    fit@fit$coef
-    #          mu       omega      alpha1       beta1       shape 
-    # 0.001692849 0.004478847 0.130834725 0.859287121 1.149396980
-
-    # Skew GED - Take the shape from symmetric solution ...
-    fit = garchFit(~garch(1,1), x, cond.dist = "dsged", shape = 1.15)     
-    fit@fit$coef
-    #          mu       omega      alpha1       beta1        skew       shape 
-    # 0.030125742 0.008820863 0.169395870 0.799183865 1.174542338 1.162325254   
-
-    # Standardized Student-t:
-    fit = garchFit(~garch(1,1), x, cond.dist = "dstd")     
-    fit@fit$coef
-    #          mu       omega      alpha1       beta1       shape 
-    # 0.002248651 0.002319034 0.124437901 0.884653280 4.118426541
-    # Warning - Persistence: 1.009091
-    # ... misspecified since persistence > 1
-    
-    # Skew Standardized Student-t:
-    # Default Settings fail, use instead ...    
-    fit = garchFit(~garch(1,1), x, cond.dist = "dsstd", algorithm = "nlminb+nm")
-    #           mu       omega      alpha1       beta1        skew       shape 
-    # -0.008571022 0.002398384 0.124832720 0.883071726 0.913095642 4.201071258 
-    # Warning - Persistence: 1.007904                                            
-    # ... misspecified since persistence > 1
-    
-    # Return Value:
-    return()    
-} 
- 
 
 ################################################################################
     
