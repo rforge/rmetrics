@@ -38,7 +38,6 @@
 #  .glmFit                Generalized Linear Model
 #  .gamFit                Generalized Additive Model
 #  .pprFit                Projection Pursuit Regression Model
-#  .marsFit               Multivariate Adaptive Regression Spline Model
 #  .polymarsFit           Polytochomous MARS Model
 #  .nnetFit               Feedforward Neural Network Model
 # S3-METHODS:           DESCRIPTION:
@@ -49,7 +48,6 @@
 #  .plot.glm              Generalized Linear Model internal plot
 #  .plot.gam              Generalized Additive Model internal plot
 #  .plot.ppr              Projection Pursuit Regression Model internal plot
-#  .plot.mars             Multivariate Adaptive Regression Spline Model plot
 #  .plot.polymars         Polytochomous MARS Model internal plot
 #  .plot.nnet             Feedforward Neural Network Model internal plot
 #  summary.fREG           Summarizes fit and diagnostics for a regression model
@@ -62,17 +60,10 @@
 ################################################################################
 
 
-### Uncomplete - Under Development ###
-
-
-#       LM|RLM           GLM        
-#       ALM              GAM
-#       LOESS
-#       PPR
-#       MARS|POLYMARS
-#       NNET  
+#       LM  RLM  ALM PPR POLYMARS  NNET     
+#       GAM GLM          
     
-#       see also 
+#       see also: 
 #           rlm  -  M                           [MASS]
 #           rlm  -  MM                          [MASS]
 #           lrm  -  logistic regression model   [Design]
@@ -82,9 +73,10 @@
 #           lmRob -                             [robust]  
 #                                               [roblm]
 #                                               [robustbase]    
-#                                               [brlr]
 #           ...
 
+
+# ------------------------------------------------------------------------------
 
 test.regSim =
 function()
@@ -135,22 +127,22 @@ function()
     class(DATA)
     
     # Regression Fit:
-    LM    = regFit(formula = Y ~ X1 + X2, data = DATA, use = "lm") 
-    RLM   = regFit(Y ~ X1 + X2, data = DATA, use = "rlm") 
-    AM    = regFit(Y ~ X1 + X2, data = DATA, use = "am")                
-    PPR   = regFit(Y ~ X1 + X2, data = DATA, use = "ppr") 
-    MARS  = regFit(Y ~ X1 + X2, data = DATA, use = "mars") 
-    PMARS = regFit(Y ~ X1 + X2, data = DATA, use = "polymars") 
-    NNET  = regFit(Y ~ X1 + X2, data = DATA, use = "nnet")  
+    LM       = regFit(Y ~ X1 + X2, data = DATA, use = "lm") 
+    RLM      = regFit(Y ~ X1 + X2, data = DATA, use = "rlm") 
+    AM       = regFit(Y ~ X1 + X2, data = DATA, use = "am")                
+    PPR      = regFit(Y ~ X1 + X2, data = DATA, use = "ppr") 
+    POLYMARS = regFit(Y ~ X1 + X2, data = DATA, use = "polymars") 
+    NNET     = regFit(Y ~ X1 + X2, data = DATA, use = "nnet")  
     # ... a note on AM the smoothing functions are added by default!
+    # this is different to gam()
+    
     
     # Print Method:
     print(LM) 
     print(RLM)
     print(AM)       
     print(PPR)
-    print(MARS)
-    print(PMARS)
+    print(POLYMARS)
     print(NNET)  
     
     # Plot Method:
@@ -158,8 +150,7 @@ function()
     plot(RLM, which = "all")
     plot(AM, which = "all")            
     plot(PPR, which = "all")
-    plot(MARS, which = "all")
-    plot(PMARS, which = "all")
+    plot(POLYMARS, which = "all")
     plot(NNET, which = "all")  
     
     # Summary Method:
@@ -167,8 +158,7 @@ function()
     summary(RLM)
     summary(AM)    
     summary(PPR)
-    summary(MARS)
-    summary(PMARS)
+    summary(POLYMARS)
     summary(NNET)  
 
     # Return Value:
@@ -203,8 +193,7 @@ function()
     RLM   = regFit(Y ~ X1 + X2, data = DATATS, use = "rlm") 
     AM    = regFit(Y ~ X1 + X2, data = DATATS, use = "am")   
     PPR   = regFit(Y ~ X1 + X2, data = DATATS, use = "ppr") 
-    MARS  = regFit(Y ~ X1 + X2, data = DATATS, use = "mars") 
-    PMARS = regFit(Y ~ X1 + X2, data = DATATS, use = "polymars") 
+    POLYMARS = regFit(Y ~ X1 + X2, data = DATATS, use = "polymars") 
     NNET  = regFit(Y ~ X1 + X2, data = DATATS, use = "nnet")  
     # ... a note on AM the smoothing functions are added by default
     
@@ -215,8 +204,7 @@ function()
     print(RLM)
     print(AM)       
     print(PPR)
-    print(MARS)
-    print(PMARS)
+    print(POLYMARS)
     print(NNET)  
     
     # Plot Method:
@@ -224,8 +212,7 @@ function()
     plot(RLM, which = "all")
     plot(AM, which = "all")            
     plot(PPR, which = "all")
-    plot(MARS, which = "all")
-    plot(PMARS, which = "all")
+    plot(POLYMARS, which = "all")
     plot(NNET, which = "all")  
     
     # Summary Method:
@@ -233,8 +220,7 @@ function()
     summary(RLM)
     summary(AM)    
     summary(PPR)
-    summary(MARS)
-    summary(PMARS)
+    summary(POLYMARS)
     summary(NNET)  
 
     # Return Value:
@@ -271,8 +257,7 @@ function()
     RLM   = regFit(Y ~ X1 + X2, data = DATATS, use = "rlm") 
     AM    = regFit(Y ~ s(X1) + s(X2),  DATATS, use = "am") 
     PPR   = regFit(Y ~ X1 + X2, data = DATATS, use = "ppr") 
-    MARS  = regFit(Y ~ X1 + X2, data = DATATS, use = "mars") 
-    PMARS = regFit(Y ~ X1 + X2, data = DATATS, use = "polymars") 
+    POLYMARS = regFit(Y ~ X1 + X2, data = DATATS, use = "polymars") 
     NNET  = regFit(Y ~ X1 + X2, data = DATATS, use = "nnet")   
     
     # Extract:
@@ -292,64 +277,56 @@ function()
     RLM@call
     AM@call
     PPR@call
-    MARS@call
-    PMARS@call
+    POLYMARS@call
     NNET@call
     
     LM@formula
     RLM@formula
     AM@formula
     PPR@formula
-    MARS@formula
-    PMARS@formula
+    POLYMARS@formula
     NNET@formula
     
     LM@family[1:2]
     RLM@family[1:2]
     AM@family[1:2]
     PPR@family[1:2]
-    MARS@family[1:2]
-    PMARS@family[1:2]
+    POLYMARS@family[1:2]
     NNET@family[1:2]
     
     LM@method
     RLM@method
     AM@method
     PPR@method
-    MARS@method
-    PMARS@method
+    POLYMARS@method
     NNET@method
     
     print(LM@residuals[c(1,100)])
     print(RLM@residuals[c(1,100)])
     print(AM@residuals[c(1,100)])
     print(PPR@residuals[c(1,100)])
-    print(MARS@residuals[c(1,100)])
-    print(PMARS@residuals[c(1,100)])
+    print(POLYMARS@residuals[c(1,100)])
     print(NNET@residuals[c(1,100)])
     
     print(LM@fitted[c(1,100)])
     print(RLM@fitted[c(1,100)])
     print(AM@fitted[c(1,100)])
     print(PPR@fitted[c(1,100)])
-    print(MARS@fitted[c(1,100)])
-    print(PMARS@fitted[c(1,100)])
+    print(POLYMARS@fitted[c(1,100)])
     print(NNET@fitted[c(1,100)])
     
     LM@title
     RLM@title
     AM@title
     PPR@title
-    MARS@title
-    PMARS@title
+    POLYMARS@title
     NNET@title
     
     LM@description
     RLM@description
     AM@description
     PPR@description
-    MARS@description
-    PMARS@description
+    POLYMARS@description
     NNET@description
  
     # Return Value:
@@ -387,9 +364,8 @@ function()
     LM    = regFit(Y ~ X1 + X2, data = DATATS, use = "lm") 
     RLM   = regFit(Y ~ X1 + X2, data = DATATS, use = "rlm") 
     AM    = regFit(Y ~ s(X1) + s(X2),  DATATS, use = "am")       
-    PPR   = regFit(Y ~ X1 + X2, data = DATATS, use = "ppr") 
-    MARS  = regFit(Y ~ X1 + X2, data = DATATS, use = "mars") 
-    PMARS = regFit(Y ~ X1 + X2, data = DATATS, use = "polymars") 
+    PPR   = regFit(Y ~ X1 + X2, data = DATATS, use = "ppr")  
+    POLYMARS = regFit(Y ~ X1 + X2, data = DATATS, use = "polymars") 
     NNET  = regFit(Y ~ X1 + X2, data = DATATS, use = "nnet")   
      
     # Predict:
@@ -405,8 +381,7 @@ function()
     predict(RLM,   DATATS[N, ])
     predict(AM,    DATATS[N, ])     
     predict(PPR,   DATATS[N, ])
-    predict(MARS,  DATATS[N, ])
-    predict(PMARS, DATATS[N, ])
+    predict(POLYMARS, DATATS[N, ])
     predict(NNET,  DATATS[N, ])   
     
     # Predict Response:
@@ -414,8 +389,7 @@ function()
     predict(RLM,   DATATS[N, ], type = "response")
     predict(AM,    DATATS[N, ], type = "response")       
     predict(PPR,   DATATS[N, ], type = "response")
-    predict(MARS,  DATATS[N, ], type = "response")
-    predict(PMARS, DATATS[N, ], type = "response")
+    predict(POLYMARS, DATATS[N, ], type = "response")
     predict(NNET,  DATATS[N, ], type = "response")
         
     # Predict Response with Standard Errors:
@@ -423,8 +397,7 @@ function()
     predict(RLM,   DATATS[N, ], se.fit = TRUE)
     predict(AM,    DATATS[N, ], se.fit = TRUE)       
     predict(PPR,   DATATS[N, ], se.fit = TRUE)
-    predict(MARS,  DATATS[N, ], se.fit = TRUE)
-    predict(PMARS, DATATS[N, ], se.fit = TRUE)
+    predict(POLYMARS, DATATS[N, ], se.fit = TRUE)
     predict(NNET,  DATATS[N, ], se.fit = TRUE)
     
     # Return Value:
@@ -481,14 +454,9 @@ function()
     .termPlot(PPR2)
     .termPlot(PPR3)
     
-    # MARS:
-    MARS = regFit(Y ~ X1 + X2 + X3, DATATS, "mars")
-    MARS = regFit(Y ~ X1 + X2 + X3, DATATS, "mars", nk = 10)
-    MARS = regFit(Y ~ X1 + X2 + X3, DATATS, "mars", trace.mars = TRUE)
-    
-    # PMARS:
-    PMARS = regFit(Y ~ X1 + X2 + X3, DATATS, "polymars")
-    PMARS = regFit(Y ~ X1*X2 + X2*X3 + X3*X1, DATATS, "polymars")
+    # POLYMARS:
+    POLYMARS = regFit(Y ~ X1 + X2 + X3, DATATS, "polymars")
+    POLYMARS = regFit(Y ~ X1*X2 + X2*X3 + X3*X1, DATATS, "polymars")
 
     # NNET
     # todo ...
