@@ -45,7 +45,11 @@ function()
     # Symmetric Model - Parameters:
     model = list(lambda = 4, omega = 8e-5, alpha = 6e-5, 
         beta = 0.7, gamma = 0, rf = 0)
+        
+    # Series:
     x = hngarchSim(model = model, n = 500, n.start = 100)
+    
+    # Plot:
     par(mfrow = c(2, 1), cex = 0.75)
     plot(x, type = "l", col = "steelblue", main = "HN Garch Symmetric Model")
     grid()
@@ -62,6 +66,7 @@ test.hngarchFit =
 function()
 {    
     # Simulate a Heston-Nandi Garch(1,1) Process:
+    
     # Symmetric Model - Parameters:
     model = list(lambda = 4, omega = 8e-5, alpha = 6e-5, 
         beta = 0.7, gamma = 0, rf = 0)
@@ -71,7 +76,7 @@ function()
     # HN-GARCH log likelihood Parameter Estimation:
     # To speed up, we start with the simulated model ...
     
-    # Symmetric Case:
+    # Fit Symmetric Case:
     mle = hngarchFit(x = x, model = model, trace = TRUE, symmetric = TRUE)
     print(mle)
     

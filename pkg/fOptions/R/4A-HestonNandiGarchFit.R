@@ -138,7 +138,7 @@ NULL, description = NULL, ...)
         print(opt$value)
     }
      
-    # Estimate parameters:
+    # Estimate Parameters:
     opt = nlm(.llhHNGarch, par.start, 
         trace = trace, symmetric = symmetric, rfr = rfr, x = x, ...) 
     
@@ -146,12 +146,17 @@ NULL, description = NULL, ...)
     opt$minimum = -opt$minimum + length(x)*sqrt(2*pi)
     opt$params = params
     opt$symmetric = symmetric
+    
+    # LLH, h, and z for Final Estimates:
+    final = .llhHNGarch(opt$estimate, trace = FALSE, symmetric, rfr, x)
+    opt$h = attr(final, "h")
+    opt$z = attr(final, "Z")
         
-    # Backtransform estimated parameters:
+    # Backtransform Estimated parameters:
     lambda = opt$estimate[1]
-    omega = opt$estimate[2] = (1/(1+exp(-opt$estimate[2])))
-    alpha = opt$estimate[3] = (1/(1+exp(-opt$estimate[3])))
-    beta = opt$estimate[4] = (1/(1+exp(-opt$estimate[4])))
+    omega = opt$estimate[2] = (1 / (1+exp(-opt$estimate[2])))
+    alpha = opt$estimate[3] = (1 / (1+exp(-opt$estimate[3])))
+    beta = opt$estimate[4] = (1 / (1+exp(-opt$estimate[4])))
     if (symmetric) opt$estimate[5] = 0
     gam = opt$estimate[5] 
     names(opt$estimate) = c("lambda", "omega", "alpha", "beta", "gamma")
@@ -160,16 +165,16 @@ NULL, description = NULL, ...)
     opt$model = list(lambda = lambda, omega = omega, alpha = alpha,
         beta = beta, gamma = gam, rf = rfr)
     opt$x = x
-    opt$h = h
-    opt$residuals = Z
-    opt$call = match.call()
     
     # Statistics - Printing:
     opt$persistence = beta + alpha*gam*gam
     opt$sigma2 = ( omega + alpha ) / ( 1 - opt$persistence )
     
     # Print Estimated Parameters:
-    if (trace > 0) print(opt$estimate)
+    if (trace) print(opt$estimate)
+    
+    # Call:
+    opt$call = match.call()
     
     # Add title and description:
     if (is.null(title)) 
@@ -181,7 +186,7 @@ NULL, description = NULL, ...)
                 
     # Return Value:
     class(opt) = "hngarch"
-    opt
+    invisible(opt)
 }
 
 
@@ -196,16 +201,15 @@ function(par, trace, symmetric, rfr, x)
     lambda = par[1]
     
     # Transform - to keep them between 0 and 1:
-    omega = 1/(1+exp(-par[2]))
-    alpha = 1/(1+exp(-par[3]))
-    beta = 1/(1+exp(-par[4]))
+    omega = 1 / (1+exp(-par[2]))
+    alpha = 1 / (1+exp(-par[3]))
+    beta = 1 / (1+exp(-par[4]))
     
     # Add gamma if selected:
     if (!symmetric) gam = par[5] else gam = 0
       
     # HN Garch Filter:
     h[1] = ( omega + alpha )/( 1 - alpha*gam*gam - beta)
-    print(h[1])
     Z[1] = ( x[1] - rfr - lambda*h[1] ) / sqrt(h[1])
     for ( i in 2:length(Z) ) {
         h[i] = omega + alpha * ( Z[i-1] - gam * sqrt(h[i-1]) )^2 +
@@ -215,16 +219,14 @@ function(par, trace, symmetric, rfr, x)
     
     # Calculate Log - Likelihood for Normal Distribution:       
     llhHNGarch = -sum(log( dnorm(Z)/sqrt(h) ))
-    if (trace > 0) {
+    if (trace) {
         cat("Parameter Estimate\n")
         print(c(lambda, omega, alpha, beta, gam)) 
     }
     
-    Z <<- Z
-    h <<- h
-    
-    # attr(.llhHNGarch, "Z") = Z
-    # attr(.llhHNGarch, "h") = h
+    # Attribute Z and h to the result:
+    attr(llhHNGarch, "Z") = Z
+    attr(llhHNGarch, "h") = h
        
     # Return Value:
     llhHNGarch
