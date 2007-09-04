@@ -37,6 +37,7 @@
 ################################################################################
 
 
+
 hngarchSim = 
 function(model = list(lambda = 4, omega = 4*0.0002, alpha = 0.3*0.0002, 
 beta = 0.3, gamma = 0, rf = 0), n = 1000, innov = NULL, n.start = 100, 
@@ -222,6 +223,9 @@ function(par, trace, symmetric, rfr, x)
     Z <<- Z
     h <<- h
     
+    # attr(.llhHNGarch, "Z") = Z
+    # attr(.llhHNGarch, "h") = h
+       
     # Return Value:
     llhHNGarch
 }

@@ -284,75 +284,109 @@ function(Selection = c("Delta", "Theta", "Vega", "Rho", "Lambda", "Gamma",
     TypeFlag = TypeFlag[1]
     Selection = Selection[1]
     
-    # Internal Functions:
-    GBSDelta <<- function(TypeFlag, S, X, Time, r, b, sigma) {
-        d1 = ( log(S/X) + (b+sigma*sigma/2)*Time ) / (sigma*sqrt(Time))
-        if (TypeFlag == "c") result = exp((b-r)*Time)*CND(d1)
-        if (TypeFlag == "p") result = exp((b-r)*Time)*(CND(d1)-1)
-        result }
-    GBSTheta <<- function(TypeFlag, S, X, Time, r, b, sigma) {
-        d1 = ( log(S/X) + (b+sigma*sigma/2)*Time ) / (sigma*sqrt(Time))
-        d2 = d1 - sigma*sqrt(Time)
-        Theta1 = -(S*exp((b-r)*Time)*NDF(d1)*sigma)/(2*sqrt(Time))  
-        if (TypeFlag == "c") result = Theta1 - 
-            (b-r)*S*exp((b-r)*Time)*CND(+d1) - r*X*exp(-r*Time)*CND(+d2) 
-        if (TypeFlag == "p") result = Theta1 + 
-            (b-r)*S*exp((b-r)*Time)*CND(-d1) + r*X*exp(-r*Time)*CND(-d2) 
-        result }
-    GBSVega <<- function(TypeFlag, S, X, Time, r, b, sigma) {
-        d1 = ( log(S/X) + (b+sigma*sigma/2)*Time ) / (sigma*sqrt(Time))
-        result = S*exp((b-r)*Time)*NDF(d1)*sqrt(Time) # Call,Put
-        result }
-    GBSRho <<- function(TypeFlag, S, X, Time, r, b, sigma) {
-        d1 = ( log(S/X) + (b+sigma*sigma/2)*Time ) / (sigma*sqrt(Time))
-        d2 = d1 - sigma*sqrt(Time)
-        CallPut = GBSOption(TypeFlag, S, X, Time, r, b , sigma)@price
-        if (TypeFlag == "c") {
-            if (b != 0) {result =  Time * X * exp(-r*Time)*CND( d2)} 
-            else {result = -Time * CallPut } }
-        if (TypeFlag == "p") {
-            if (b != 0) {result = -Time * X * exp(-r*Time)*CND(-d2)}
-            else { result = -Time * CallPut } }
-        result }
-    GBSLambda <<- function(TypeFlag, S, X, Time, r, b, sigma) {
-        d1 = ( log(S/X) + (b+sigma*sigma/2)*Time ) / (sigma*sqrt(Time))
-        CallPut = GBSOption(TypeFlag,S,X,Time,r,b,sigma)@price
-        if (TypeFlag == "c") result = exp((b-r)*Time)* CND(d1)*S / CallPut
-        if (TypeFlag == "p") result = exp((b-r)*Time)*(CND(d1)-1)*S / CallPut
-        result }        
-    GBSGamma <<- function(TypeFlag, S, X, Time, r, b, sigma) {
-        d1 = ( log(S/X) + (b+sigma*sigma/2)*Time ) / (sigma*sqrt(Time))
-        result = exp((b-r)*Time)*NDF(d1)/(S*sigma*sqrt(Time)) # Call,Put
-        result }
-    GBSCofC <<- function(TypeFlag, S, X, Time, r, b, sigma) {
-        d1 = ( log(S/X) + (b+sigma*sigma/2)*Time ) / (sigma*sqrt(Time))
-        if (TypeFlag == "c") result = Time*S*exp((b-r)*Time)*CND(d1)
-        if (TypeFlag == "p") result = -Time*S*exp((b-r)*Time)*CND(-d1)
-        result }
-    
     # Function Call to all Greeks via selection parameter 
     result = NA
     if (Selection == "Delta" || Selection == "delta")
-            result = GBSDelta (TypeFlag, S, X, Time, r, b, sigma)  
+            result = .GBSDelta (TypeFlag, S, X, Time, r, b, sigma)  
     if (Selection == "Theta" || Selection == "theta")
-            result = GBSTheta (TypeFlag, S, X, Time, r, b, sigma)
+            result = .GBSTheta (TypeFlag, S, X, Time, r, b, sigma)
     if (Selection == "Vega" || Selection == "vega")
-            result = GBSVega  (TypeFlag, S, X, Time, r, b, sigma)
+            result = .GBSVega  (TypeFlag, S, X, Time, r, b, sigma)
     if (Selection == "Rho" || Selection == "rho")
-            result = GBSRho   (TypeFlag, S, X, Time, r, b, sigma)
+            result = .GBSRho   (TypeFlag, S, X, Time, r, b, sigma)
     if (Selection == "Lambda" || Selection == "lambda")
-            result = GBSLambda(TypeFlag, S, X, Time, r, b, sigma)  
+            result = .GBSLambda(TypeFlag, S, X, Time, r, b, sigma)  
     if (Selection == "Gamma" || Selection == "gamma")
-            result = GBSGamma (TypeFlag, S, X, Time, r, b, sigma)  
+            result = .GBSGamma (TypeFlag, S, X, Time, r, b, sigma)  
     if (Selection == "CofC" || Selection == "cofc")
-            result = GBSCofC  (TypeFlag, S, X, Time, r, b, sigma)
+            result = .GBSCofC  (TypeFlag, S, X, Time, r, b, sigma)
     
     # Return Value:
     result    
 } 
 
 
-# ******************************************************************************
+# Internal Functions:
+
+.GBSDelta <- 
+function(TypeFlag, S, X, Time, r, b, sigma) 
+{
+    d1 = ( log(S/X) + (b+sigma*sigma/2)*Time ) / (sigma*sqrt(Time))
+    if (TypeFlag == "c") result = exp((b-r)*Time)*CND(d1)
+    if (TypeFlag == "p") result = exp((b-r)*Time)*(CND(d1)-1)
+    result 
+}
+
+
+.GBSTheta <- 
+function(TypeFlag, S, X, Time, r, b, sigma) 
+{
+    d1 = ( log(S/X) + (b+sigma*sigma/2)*Time ) / (sigma*sqrt(Time))
+    d2 = d1 - sigma*sqrt(Time)
+    Theta1 = -(S*exp((b-r)*Time)*NDF(d1)*sigma)/(2*sqrt(Time))  
+    if (TypeFlag == "c") result = Theta1 - 
+        (b-r)*S*exp((b-r)*Time)*CND(+d1) - r*X*exp(-r*Time)*CND(+d2) 
+    if (TypeFlag == "p") result = Theta1 + 
+        (b-r)*S*exp((b-r)*Time)*CND(-d1) + r*X*exp(-r*Time)*CND(-d2) 
+    result 
+}
+
+
+.GBSVega <- 
+function(TypeFlag, S, X, Time, r, b, sigma) 
+{
+    d1 = ( log(S/X) + (b+sigma*sigma/2)*Time ) / (sigma*sqrt(Time))
+    result = S*exp((b-r)*Time)*NDF(d1)*sqrt(Time) # Call,Put
+    result 
+}
+
+
+.GBSRho <- 
+function(TypeFlag, S, X, Time, r, b, sigma) 
+{
+    d1 = ( log(S/X) + (b+sigma*sigma/2)*Time ) / (sigma*sqrt(Time))
+    d2 = d1 - sigma*sqrt(Time)
+    CallPut = GBSOption(TypeFlag, S, X, Time, r, b , sigma)@price
+    if (TypeFlag == "c") {
+        if (b != 0) {result =  Time * X * exp(-r*Time)*CND( d2)} 
+        else {result = -Time * CallPut } }
+    if (TypeFlag == "p") {
+        if (b != 0) {result = -Time * X * exp(-r*Time)*CND(-d2)}
+        else { result = -Time * CallPut } }
+    result 
+}
+
+
+.GBSLambda <- 
+function(TypeFlag, S, X, Time, r, b, sigma) 
+{
+    d1 = ( log(S/X) + (b+sigma*sigma/2)*Time ) / (sigma*sqrt(Time))
+    CallPut = GBSOption(TypeFlag,S,X,Time,r,b,sigma)@price
+    if (TypeFlag == "c") result = exp((b-r)*Time)* CND(d1)*S / CallPut
+    if (TypeFlag == "p") result = exp((b-r)*Time)*(CND(d1)-1)*S / CallPut
+    result 
+}
+
+       
+.GBSGamma <- 
+function(TypeFlag, S, X, Time, r, b, sigma) 
+{
+    d1 = ( log(S/X) + (b+sigma*sigma/2)*Time ) / (sigma*sqrt(Time))
+    result = exp((b-r)*Time)*NDF(d1)/(S*sigma*sqrt(Time)) # Call,Put
+    result 
+}
+
+
+.GBSCofC <- 
+function(TypeFlag, S, X, Time, r, b, sigma) 
+{
+    d1 = ( log(S/X) + (b+sigma*sigma/2)*Time ) / (sigma*sqrt(Time))
+    if (TypeFlag == "c") result = Time*S*exp((b-r)*Time)*CND(d1)
+    if (TypeFlag == "p") result = -Time*S*exp((b-r)*Time)*CND(-d1)
+    result }
+
+
+# ------------------------------------------------------------------------------
 
 
 Black76Option = 
@@ -501,14 +535,8 @@ tol = .Machine$double.eps, maxiter = 10000)
     # Option Type:
     TypeFlag = TypeFlag[1]
     
-    # Internal Function:
-    .f <<- function(x, price, TypeFlag, S, X, Time, r, b, ...) {
-        GBS = GBSOption(TypeFlag = TypeFlag, S = S, X = X, Time = Time, 
-            r = r, b = b, sigma = x)@price 
-        price - GBS}
-    
     # Search for Root:
-    volatility = uniroot(.f, interval = c(-10,10), price = price, 
+    volatility = uniroot(.fGBSVolatility, interval = c(-10,10), price = price, 
         TypeFlag = TypeFlag, S = S, X = X, Time = Time, r = r, b = b, 
         tol = tol, maxiter = maxiter)$root
         
@@ -517,7 +545,18 @@ tol = .Machine$double.eps, maxiter = 10000)
 }
 
 
-# ******************************************************************************
+
+# Internal Function:
+.fGBSVolatility <- 
+function(x, price, TypeFlag, S, X, Time, r, b, ...) 
+{
+    GBS = GBSOption(TypeFlag = TypeFlag, S = S, X = X, Time = Time, 
+        r = r, b = b, sigma = x)@price 
+    price - GBS
+}
+
+
+# ------------------------------------------------------------------------------
 
 
 print.option = 

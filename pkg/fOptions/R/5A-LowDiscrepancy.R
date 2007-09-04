@@ -38,10 +38,10 @@
 ################################################################################
 
 
-runif.halton.seed = list()
-rnorm.halton.seed = list()
-runif.sobol.seed = list()
-rnorm.sobol.seed = list()
+.runif.halton.seed = list()
+.rnorm.halton.seed = list()
+.runif.sobol.seed = list()
+.rnorm.sobol.seed = list()
 
 
 # ------------------------------------------------------------------------------
@@ -104,9 +104,9 @@ function (n, dimension, init = TRUE)
     if (init) {
         .warn = options()$warn
         options(warn = -1)
-        rm("runif.halton.seed")
+        rm(".runif.halton.seed")
         options(warn = .warn)
-        runif.halton.seed <<- list(base = rep(0, dimension), offset = 0)
+        .runif.halton.seed <<- list(base = rep(0, dimension), offset = 0)
     }
     
     # Generate:
@@ -117,8 +117,8 @@ function (n, dimension, init = TRUE)
         as.double(qn),
         as.integer(n),
         as.integer(dimension),
-        as.integer(runif.halton.seed$base),
-        as.integer(runif.halton.seed$offset),
+        as.integer(.runif.halton.seed$base),
+        as.integer(.runif.halton.seed$offset),
         as.integer(init),
         as.integer(0),
         PACKAGE = "fOptions")
@@ -126,9 +126,9 @@ function (n, dimension, init = TRUE)
     # For the next numbers save:    
     .warn = options()$warn
     options(warn = -1)
-    rm("runif.halton.seed")
+    rm(".runif.halton.seed")
     options(warn = .warn)
-    runif.halton.seed <<- list(base = result[[4]], offset = result[[5]])
+    .runif.halton.seed <<- list(base = result[[4]], offset = result[[5]])
     
     # Deviates:
     result = matrix(result[[1]], ncol = dimension)
@@ -158,9 +158,9 @@ function (n, dimension, init = TRUE)
     if (init) {
         .warn = options()$warn
         options(warn = -1)
-        rm("rnorm.halton.seed")
+        rm(".rnorm.halton.seed")
         options(warn = .warn)
-        rnorm.halton.seed <<- list(base = rep(0, dimension), offset = 0)
+        .rnorm.halton.seed <<- list(base = rep(0, dimension), offset = 0)
     }
     
     # Generate:
@@ -171,8 +171,8 @@ function (n, dimension, init = TRUE)
         as.double(qn),
         as.integer(n),
         as.integer(dimension),
-        as.integer(rnorm.halton.seed$base),
-        as.integer(rnorm.halton.seed$offset),
+        as.integer(.rnorm.halton.seed$base),
+        as.integer(.rnorm.halton.seed$offset),
         as.integer(init),
         as.integer(1),
         PACKAGE = "fOptions")
@@ -180,9 +180,9 @@ function (n, dimension, init = TRUE)
     # For the next numbers save:    
     .warn = options()$warn
     options(warn = -1)
-    rm("rnorm.halton.seed")
+    rm(".rnorm.halton.seed")
     options(warn = .warn)
-    rnorm.halton.seed <<- list(base = result[[4]], offset = result[[5]])
+    .rnorm.halton.seed <<- list(base = result[[4]], offset = result[[5]])
     
     # Deviates:
     result = matrix(result[[1]], ncol = dimension)
@@ -214,9 +214,9 @@ function (n, dimension, init = TRUE, scrambling = 0, seed = 4711)
     if (init) {
         .warn = options()$warn
         options(warn = -1)
-        rm("runif.sobol.seed")
+        rm(".runif.sobol.seed")
         options(warn = .warn)
-        runif.sobol.seed <<- list(quasi = rep(0, dimension), ll = 0,
+        .runif.sobol.seed <<- list(quasi = rep(0, dimension), ll = 0,
             count = 0, sv = rep(0, dimension*30), seed = seed)
     }
     
@@ -228,12 +228,12 @@ function (n, dimension, init = TRUE, scrambling = 0, seed = 4711)
         as.double(qn),
         as.integer(n),
         as.integer(dimension),
-        as.double (runif.sobol.seed$quasi),
-        as.integer(runif.sobol.seed$ll),
-        as.integer(runif.sobol.seed$count),
-        as.integer(runif.sobol.seed$sv),
+        as.double (.runif.sobol.seed$quasi),
+        as.integer(.runif.sobol.seed$ll),
+        as.integer(.runif.sobol.seed$count),
+        as.integer(.runif.sobol.seed$sv),
         as.integer(scrambling),
-        as.integer(runif.sobol.seed$seed),
+        as.integer(.runif.sobol.seed$seed),
         as.integer(init),
         as.integer(0),
         PACKAGE = "fOptions")
@@ -241,9 +241,9 @@ function (n, dimension, init = TRUE, scrambling = 0, seed = 4711)
     # For the next numbers save:    
     .warn = options()$warn
     options(warn = -1)
-    rm("runif.sobol.seed")
+    rm(".runif.sobol.seed")
     options(warn = .warn)
-    runif.sobol.seed <<- list(quasi = result[[4]], ll = result[[5]],
+    .runif.sobol.seed <<- list(quasi = result[[4]], ll = result[[5]],
         count = result[[6]], sv = result[[7]], seed = result[[9]])
     
     # Deviates:
@@ -275,9 +275,9 @@ function (n, dimension, init = TRUE, scrambling = 0, seed = 4711)
     if (init) {
         .warn = options()$warn
         options(warn = -1)
-        rm("rnorm.sobol.seed")
+        rm(".rnorm.sobol.seed")
         options(warn = .warn)
-        rnorm.sobol.seed <<- list( quasi = rep(0, dimension), ll = 0,
+        .rnorm.sobol.seed <<- list( quasi = rep(0, dimension), ll = 0,
             count = 0, sv = rep(0, dimension*30), seed = seed)
     }
 
@@ -289,12 +289,12 @@ function (n, dimension, init = TRUE, scrambling = 0, seed = 4711)
         as.double(qn),
         as.integer(n),
         as.integer(dimension),
-        as.double (rnorm.sobol.seed$quasi),
-        as.integer(rnorm.sobol.seed$ll),
-        as.integer(rnorm.sobol.seed$count),
-        as.integer(rnorm.sobol.seed$sv),
+        as.double (.rnorm.sobol.seed$quasi),
+        as.integer(.rnorm.sobol.seed$ll),
+        as.integer(.rnorm.sobol.seed$count),
+        as.integer(.rnorm.sobol.seed$sv),
         as.integer(scrambling),
-        as.integer(rnorm.sobol.seed$seed),
+        as.integer(.rnorm.sobol.seed$seed),
         as.integer(init),
         as.integer(1),
         PACKAGE = "fOptions")   
@@ -302,9 +302,9 @@ function (n, dimension, init = TRUE, scrambling = 0, seed = 4711)
     # For the next numbers save:    
     .warn = options()$warn
     options(warn = -1)
-    rm("rnorm.sobol.seed")
+    rm(".rnorm.sobol.seed")
     options(warn = .warn)
-    rnorm.sobol.seed <<- list(quasi = result[[4]], ll = result[[5]],
+    .rnorm.sobol.seed <<- list(quasi = result[[4]], ll = result[[5]],
         count = result[[6]], sv = result[[7]], seed = result[[9]])
     
     # Deviates:

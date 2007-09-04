@@ -50,35 +50,13 @@ function(TypeFlag = c("c", "p"), model, S, X, Time.inDays, r.daily)
     
     # Option Type:
     TypeFlag = TypeFlag[1]
-    
-    # Internal Function:
-    .fstar <<- function(phi, const, model, S, X, Time.inDays, r.daily) {          
-        # Model Parameters:
-        lambda = -1/2 
-        omega = model$omega
-        alpha = model$alpha 
-        gamma = model$gamma + model$lambda + 1/2
-        beta = model$beta   
-        sigma2 = (omega + alpha)/(1 - beta - alpha * gamma^2)   
-        # Function to be integrated:
-        cphi0 = phi*complex(real = 0, imag = 1) 
-        cphi = cphi0 + const   
-        a = cphi * r.daily
-        b = lambda*cphi + cphi*cphi/2           
-        for (i in 2:Time.inDays) {
-            a = a + cphi*r.daily + b*omega - log(1-2*alpha*b)/2
-            b = cphi*(lambda+gamma) - gamma^2/2 + beta*b + 
-                0.5*(cphi-gamma)^2/(1-2*alpha*b) }
-        f = Re(exp(-cphi0*log(X)+cphi*log(S)+a+b*sigma2 )/cphi0)/pi 
-        # Return Value:
-        f }
                 
     # Integrate:
-    call1 = integrate(.fstar, 0, Inf, const = 1, model = model, 
+    call1 = integrate(.fstarHN, 0, Inf, const = 1, model = model, 
         S = S, X = X, Time.inDays = Time.inDays, r.daily = r.daily)
     # For SPlus Compatibility:
     if (is.null(call1$value)) call1$value = call1$integral
-    call2 = integrate(.fstar, 0, Inf, const = 0, model = model, 
+    call2 = integrate(.fstarHN, 0, Inf, const = 0, model = model, 
         S = S, X = X, Time.inDays = Time.inDays, r.daily = r.daily)
     # For SPlus Compatibility:
     if (is.null(call2$value)) call2$value = call2$integral
@@ -98,6 +76,34 @@ function(TypeFlag = c("c", "p"), model, S, X, Time.inDays, r.daily)
         call = match.call())
     class(option) = "option"
     option
+}
+
+
+.fstarHN <- 
+function(phi, const, model, S, X, Time.inDays, r.daily) 
+{          
+    # Internal Function:
+
+    # Model Parameters:
+    lambda = -1/2 
+    omega = model$omega
+    alpha = model$alpha 
+    gamma = model$gamma + model$lambda + 1/2
+    beta = model$beta   
+    sigma2 = (omega + alpha)/(1 - beta - alpha * gamma^2)   
+    # Function to be integrated:
+    cphi0 = phi*complex(real = 0, imag = 1) 
+    cphi = cphi0 + const   
+    a = cphi * r.daily
+    b = lambda*cphi + cphi*cphi/2           
+    for (i in 2:Time.inDays) {
+        a = a + cphi*r.daily + b*omega - log(1-2*alpha*b)/2
+        b = cphi*(lambda+gamma) - gamma^2/2 + beta*b + 
+            0.5*(cphi-gamma)^2/(1-2*alpha*b) }
+    f = Re(exp(-cphi0*log(X)+cphi*log(S)+a+b*sigma2 )/cphi0)/pi 
+    
+    # Return Value:
+    f 
 }
 
 
@@ -121,47 +127,15 @@ S, X, Time.inDays, r.daily)
     # Type Flags:
     Selection = Selection[1]
     TypeFlag = TypeFlag[1]
-        
-    # Internal Function:
-    .f <<- function(phi, const, model, S, X, Time.inDays, r.daily) {           
-        # Model Parameters:
-        lambda = -1/2 
-        omega = model$omega
-        alpha = model$alpha 
-        gamma = model$gamma + model$lambda + 1/2
-        beta = model$beta   
-        sigma2 = (omega + alpha)/(1 - beta - alpha * gamma^2)   
-        # Function to be integrated:
-        cphi0 = phi*complex(real = 0, imag = 1) 
-        cphi = cphi0 + const   
-        a = cphi * r.daily
-        b = lambda*cphi + cphi*cphi/2           
-        for (i in 2:Time.inDays) {
-            a = a + cphi*r.daily + b*omega - log(1-2*alpha*b)/2
-            b = cphi*(lambda+gamma) - gamma^2/2 + beta*b + 
-                0.5*(cphi-gamma)^2/(1-2*alpha*b) }
-        fun = exp(-cphi0*log(X)+cphi*log(S)+a+b*sigma2)/cphi0/pi
-        # Return Value:
-        fun 
-    }
             
     # Delta:
     if (Selection == "Delta") {
-        .fdelta <<- function(phi, const, model, S, X, Time.inDays, r.daily) {          
-            # Function to be integrated:
-            cphi0 = phi * complex(real = 0, imag = 1) 
-            cphi = cphi0 + const
-            fdelta = cphi * 
-                .f(phi, const, model, S, X, Time.inDays, r.daily) / S
-            # Return Value:
-            Re(fdelta) 
-        }
         # Integrate:
-        delta1 = integrate(.fdelta, 0, Inf, const = 1, model = model, 
+        delta1 = integrate(.fdeltaHN, 0, Inf, const = 1, model = model, 
             S = S, X = X, Time.inDays = Time.inDays, r.daily = r.daily)
         # For SPlus Compatibility:
         if (is.null(delta1$value)) delta1$value = delta1$integral   
-        delta2 = integrate(.fdelta, 0, Inf, const = 0, model = model, 
+        delta2 = integrate(.fdeltaHN, 0, Inf, const = 0, model = model, 
             S = S, X = X, Time.inDays = Time.inDays, r.daily = r.daily) 
         # For SPlus Compatibility:
         if (is.null(delta2$value)) delta2$value = delta2$integral   
@@ -172,21 +146,12 @@ S, X, Time.inDays, r.daily)
     
     # Gamma:
     if (Selection == "Gamma") {
-        .fgamma <<- function(phi, const, model, S, X, Time.inDays, r.daily) {          
-            # Function to be integrated:
-            cphi0 = phi * complex(real = 0, imag = 1) 
-            cphi = cphi0 + const
-            fgamma = cphi * ( cphi - 1 ) *
-                .f(phi, const, model, S, X, Time.inDays, r.daily) / S^2
-            # Return Value:
-            Re(fgamma) 
-        }
         # Integrate:    
-        gamma1 = integrate(.fgamma, 0, Inf, const = 1, model = model, 
+        gamma1 = integrate(.fgammaHN, 0, Inf, const = 1, model = model, 
             S = S, X = X, Time.inDays = Time.inDays, r.daily = r.daily)
         # For SPlus Compatibility:
         if (is.null(gamma1$value)) gamma1$value = gamma1$integral    
-        gamma2 = integrate(.fgamma, 0, Inf, const = 0, model = model, 
+        gamma2 = integrate(.fgammaHN, 0, Inf, const = 0, model = model, 
             S = S, X = X, Time.inDays = Time.inDays, r.daily = r.daily)
         # For SPlus Compatibility:
         if (is.null(gamma2$value)) gamma2$value = gamma2$integral   
@@ -196,6 +161,63 @@ S, X, Time.inDays, r.daily)
         
     # Return Value: 
     greek
+}
+
+
+.fdeltaHN <- 
+function(phi, const, model, S, X, Time.inDays, r.daily) 
+{          
+    # Function to be integrated:
+    cphi0 = phi * complex(real = 0, imag = 1) 
+    cphi = cphi0 + const
+    fdelta = cphi * 
+        .fHN(phi, const, model, S, X, Time.inDays, r.daily) / S
+    
+    # Return Value:
+    Re(fdelta) 
+}
+
+
+.fgammaHN <- 
+function(phi, const, model, S, X, Time.inDays, r.daily) 
+{          
+    # Function to be integrated:
+    cphi0 = phi * complex(real = 0, imag = 1) 
+    cphi = cphi0 + const
+    fgamma = cphi * ( cphi - 1 ) *
+        .fHN(phi, const, model, S, X, Time.inDays, r.daily) / S^2
+    
+    # Return Value:
+    Re(fgamma) 
+}
+
+
+
+.fHN <- 
+function(phi, const, model, S, X, Time.inDays, r.daily) 
+{           
+    # Internal Function:
+    
+    # Model Parameters:
+    lambda = -1/2 
+    omega = model$omega
+    alpha = model$alpha 
+    gamma = model$gamma + model$lambda + 1/2
+    beta = model$beta   
+    sigma2 = (omega + alpha)/(1 - beta - alpha * gamma^2)   
+    # Function to be integrated:
+    cphi0 = phi*complex(real = 0, imag = 1) 
+    cphi = cphi0 + const   
+    a = cphi * r.daily
+    b = lambda*cphi + cphi*cphi/2           
+    for (i in 2:Time.inDays) {
+        a = a + cphi*r.daily + b*omega - log(1-2*alpha*b)/2
+        b = cphi*(lambda+gamma) - gamma^2/2 + beta*b + 
+            0.5*(cphi-gamma)^2/(1-2*alpha*b) }
+    fun = exp(-cphi0*log(X)+cphi*log(S)+a+b*sigma2)/cphi0/pi
+    
+    # Return Value:
+    fun 
 }
 
 

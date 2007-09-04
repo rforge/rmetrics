@@ -89,7 +89,7 @@ standardization = FALSE, trace = TRUE, ...)
                   eps = rbind(eps, -eps)
             # Standardize Variates if requested:
               if (standardization) eps = 
-                 (epsilon-mean(epsilon))/sqrt(var(as.vector(epsilon)))
+                 (eps-mean(eps))/sqrt(var(as.vector(eps)))
             # Calculate for each path the option price:
               path = t(path.gen(eps))
               payoff = NULL

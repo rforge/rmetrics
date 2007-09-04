@@ -58,7 +58,7 @@ function(S, X, time1, Time2, r, D, sigma, title = NULL, description = NULL)
     
     # Compute:
     Sx = S - D * exp(-r * t1)
-    if (D <= X * (1 - exp(-r*(T2-t1)))) {         
+    if(D <= X * (1 - exp(-r*(T2-t1)))) {         
         result = GBSOption("c", Sx, X, T2, r, b=r, sigma)@price
         cat("\nWarning: Not optimal to exercise\n")
         return(result) }
@@ -67,7 +67,7 @@ function(S, X, time1, Time2, r, D, sigma, title = NULL, description = NULL)
     while ( ci-HighS-D+X > 0 && HighS < big ) {
         HighS = HighS * 2
         ci = GBSOption("c", HighS, X, T2-t1, r, b=r, sigma)@price }
-    if (HighS > big) {
+    if(HighS > big) {
         result = GBSOption("c", Sx, X, T2, r, b=r, sigma)@price
         stop()}
     LowS = 0
@@ -75,7 +75,7 @@ function(S, X, time1, Time2, r, D, sigma, title = NULL, description = NULL)
     ci = GBSOption("c", I, X, T2-t1, r, b=r, sigma)@price 
     # Search algorithm to find the critical stock price I
     while ( abs(ci-I-D+X) > eps && HighS - LowS > eps ) {
-         if (ci-I-D+X < 0 ) { HighS = I }
+         if(ci-I-D+X < 0 ) { HighS = I }
         else { LowS = I }
         I = (HighS + LowS) / 2
         ci = GBSOption("c", I, X, T2-t1, r, b=r, sigma)@price }
@@ -99,8 +99,8 @@ function(S, X, time1, Time2, r, D, sigma, title = NULL, description = NULL)
     param$sigma = sigma
     
     # Add title and description:
-    if (is.null(title)) title = "Roll Geske Whaley Option"
-    if (is.null(description)) description = as.character(date())
+    if(is.null(title)) title = "Roll Geske Whaley Option"
+    if(is.null(description)) description = as.character(date())
     
     # Return Value:
     new("fOPTION", 
@@ -135,110 +135,11 @@ description = NULL)
     # Settings:
     TypeFlag = TypeFlag[1]
     
-    # Internal Function - The Call:
-    BAWAmCallApproxOption <<- function(S, X, Time, r, b, sigma) {
-        # Newton Raphson Algorithm:
-        Kc <<- function(X, Time, r, b, sigma) {   
-            # Newton Raphson algorithm to solve for the critical commodity 
-            # price for a Call.
-            # Calculation of seed value, Si
-            n = 2*b/sigma^2
-            m = 2*r/sigma^2
-            q2u = (-(n-1)+sqrt((n-1)^2+4*m))/2
-            Su = X/(1-1/q2u)
-            h2 = -(b*Time+2*sigma*sqrt(Time))*X/(Su-X)
-            Si = X+(Su-X)*(1-exp(h2))
-            K = 2*r/(sigma^2*(1-exp(-r*Time)))
-            d1 = (log(Si/X)+(b+sigma^2/2)*Time)/(sigma*sqrt(Time))
-            Q2 = (-(n-1)+sqrt((n-1)^2+4*K))/2
-            LHS = Si-X
-            RHS = GBSOption("c", Si, X, Time, r, b, sigma)@price + 
-                (1-exp((b-r)*Time)*CND(d1))*Si/Q2
-            bi = exp((b-r)*Time)*CND(d1)*(1-1/Q2) +
-                (1-exp((b-r)*Time)*CND(d1)/(sigma*sqrt(Time)))/Q2
-            E = 0.000001
-            # Newton Raphson algorithm for finding critical price Si
-            while (abs(LHS-RHS)/X > E) {
-                Si = (X+RHS-bi*Si)/(1-bi)
-                d1 = (log(Si/X)+(b+sigma^2/2)*Time)/(sigma*sqrt(Time))
-                LHS = Si-X
-                RHS = GBSOption("c", Si, X, Time, r, b, sigma)@price + 
-                    (1-exp((b-r)*Time)*CND(d1))*Si/Q2
-                bi = exp((b-r)*Time)*CND(d1)*(1-1/Q2) + 
-                (   1-exp((b-r)*Time)*CND(d1)/(sigma*sqrt(Time)))/Q2 }
-            # Return Value:
-            Si}
-        # Compute:
-        if (b >= r) {
-            result = GBSOption("c", S, X, Time, r, b, sigma)@price }
-        else {
-            Sk = Kc(X, Time, r, b, sigma)
-            n = 2*b/sigma^2
-            K = 2*r/(sigma^2*(1-exp(-r*Time)))
-            d1 = (log(Sk/X)+(b+sigma^2/2)*Time)/(sigma*sqrt(Time))
-            Q2 = (-(n-1)+sqrt((n-1)^2+4*K))/2
-            a2 = (Sk/Q2)*(1-exp((b-r)*Time)*CND(d1))
-            if (S < Sk) {
-                result = GBSOption("c", S, X, Time, r, b, sigma)@price +
-                    a2*(S/Sk)^Q2 }
-            else {
-                result = S-X } }
-        # Return Value:
-        result }
-
-    # Internal Function - The Put:
-    BAWAmPutApproxOption <<- function(S, X, Time, r, b, sigma) {
-        # Internal Function:
-        Kp <<- function(X, Time, r, b, sigma) {   
-            # Newton Raphson algorithm to solve for the critical commodity 
-            # price for a Put.
-            # Calculation of seed value, Si
-            n = 2*b/sigma^2
-            m = 2*r/sigma^2
-            q1u = (-(n-1)-sqrt((n-1)^2+4*m))/2
-            Su = X/(1-1/q1u)
-            h1 = (b*Time-2*sigma*sqrt(Time))*X/(X-Su)
-            Si = Su+(X-Su)*exp(h1) 
-            K = 2*r/(sigma^2*(1-exp(-r*Time)))
-            d1 = (log(Si/X)+(b+sigma^2/2)*Time)/(sigma*sqrt(Time))
-            Q1 = (-(n-1)-sqrt((n-1)^2+4*K))/2
-            LHS = X-Si
-            RHS = GBSOption("p", Si, X, Time, r, b, sigma)@price -
-                (1-exp((b-r)*Time)*CND(-d1))*Si/Q1
-            bi = -exp((b-r)*Time)*CND(-d1)*(1-1/Q1) -
-                (1+exp((b-r)*Time)*CND(-d1)/(sigma*sqrt(Time)))/Q1
-            E = 0.000001
-            # Newton Raphson algorithm for finding critical price Si
-            while (abs(LHS-RHS)/X > E ) {
-                Si = (X-RHS+bi*Si)/(1+bi)
-                d1 = (log(Si/X)+(b+sigma^2/2)*Time)/(sigma*sqrt(Time))
-                LHS = X-Si
-                RHS = GBSOption("p", Si, X, Time, r, b, sigma)@price -
-                    (1-exp((b-r)*Time)*CND(-d1))*Si/Q1
-                bi = -exp((b-r)*Time)*CND(-d1)*(1-1/Q1) -
-                    (1+exp((b-r)*Time)*CND(-d1)/(sigma*sqrt(Time)))/Q1 }
-            # Return Value:
-            Si}
-        # Compute:
-        Sk = Kp(X, Time, r, b, sigma)
-        n = 2*b/sigma^2
-        K = 2*r/(sigma^2*(1-exp(-r*Time)))
-        d1 = (log(Sk/X)+(b+sigma^2/2)*Time)/(sigma*sqrt(Time))
-        Q1 = (-(n-1)-sqrt((n-1)^2+4*K))/2
-        a1 = -(Sk/Q1)*(1-exp((b-r)*Time)*CND(-d1))
-        if (S > Sk) {
-            result = GBSOption("p", S, X, Time, r, b, sigma)@price + 
-                a1*(S/Sk)^Q1 }
-        else {
-            result = X-S }  
-        # Return Value:
-        result}
-    
     # Compute:
-    if (TypeFlag == "c") {
-        result = BAWAmCallApproxOption(S, X, Time, r, b, sigma) }
-    if (TypeFlag == "p") {      
-        result = BAWAmPutApproxOption(S, X, Time, r, b, sigma) }
+    if(TypeFlag == "c") {
+        result = .BAWAmCallApproxOption(S, X, Time, r, b, sigma) }
+    if(TypeFlag == "p") {      
+        result = .BAWAmPutApproxOption(S, X, Time, r, b, sigma) }
        
     # Parameters:
     # TypeFlag = c("c", "p"), S, X, Time, r, b, sigma
@@ -252,8 +153,8 @@ description = NULL)
     param$sigma = sigma
     
     # Add title and description:
-    if (is.null(title)) title = "BAW American Approximated Option"
-    if (is.null(description)) description = as.character(date())
+    if(is.null(title)) title = "BAW American Approximated Option"
+    if(is.null(description)) description = as.character(date())
     
     # Return Value:
     new("fOPTION", 
@@ -263,6 +164,131 @@ description = NULL)
         title = title,
         description = description
         )      
+}
+
+
+.BAWAmCallApproxOption <- 
+function(S, X, Time, r, b, sigma) 
+{
+    # Internal Function - The Call:
+        
+    # Compute:
+    if(b >= r) {
+        result = GBSOption("c", S, X, Time, r, b, sigma)@price }
+    else {
+        Sk = .bawKc(X, Time, r, b, sigma)
+        n = 2*b/sigma^2
+        K = 2*r/(sigma^2*(1-exp(-r*Time)))
+        d1 = (log(Sk/X)+(b+sigma^2/2)*Time)/(sigma*sqrt(Time))
+        Q2 = (-(n-1)+sqrt((n-1)^2+4*K))/2
+        a2 = (Sk/Q2)*(1-exp((b-r)*Time)*CND(d1))
+        if(S < Sk) {
+            result = GBSOption("c", S, X, Time, r, b, sigma)@price +
+                a2*(S/Sk)^Q2 
+        } else {
+            result = S-X 
+        } 
+    }
+    
+    # Return Value:
+    result 
+}
+
+
+.bawKc <- 
+function(X, Time, r, b, sigma) 
+{   
+    # Newton Raphson algorithm to solve for the critical commodity 
+    # price for a Call.
+    # Calculation of seed value, Si
+    n = 2*b/sigma^2
+    m = 2*r/sigma^2
+    q2u = (-(n-1)+sqrt((n-1)^2+4*m))/2
+    Su = X/(1-1/q2u)
+    h2 = -(b*Time+2*sigma*sqrt(Time))*X/(Su-X)
+    Si = X+(Su-X)*(1-exp(h2))
+    K = 2*r/(sigma^2*(1-exp(-r*Time)))
+    d1 = (log(Si/X)+(b+sigma^2/2)*Time)/(sigma*sqrt(Time))
+    Q2 = (-(n-1)+sqrt((n-1)^2+4*K))/2
+    LHS = Si-X
+    RHS = GBSOption("c", Si, X, Time, r, b, sigma)@price + 
+        (1-exp((b-r)*Time)*CND(d1))*Si/Q2
+    bi = exp((b-r)*Time)*CND(d1)*(1-1/Q2) +
+        (1-exp((b-r)*Time)*CND(d1)/(sigma*sqrt(Time)))/Q2
+    E = 0.000001
+    
+    # Newton Raphson algorithm for finding critical price Si
+    while (abs(LHS-RHS)/X > E) {
+        Si = (X+RHS-bi*Si)/(1-bi)
+        d1 = (log(Si/X)+(b+sigma^2/2)*Time)/(sigma*sqrt(Time))
+        LHS = Si-X
+        RHS = GBSOption("c", Si, X, Time, r, b, sigma)@price + 
+            (1-exp((b-r)*Time)*CND(d1))*Si/Q2
+        bi = exp((b-r)*Time)*CND(d1)*(1-1/Q2) + 
+        (   1-exp((b-r)*Time)*CND(d1)/(sigma*sqrt(Time)))/Q2 }
+    
+    # Return Value:
+    Si
+}
+
+
+.BAWAmPutApproxOption <- 
+function(S, X, Time, r, b, sigma) 
+{
+    # Internal Function - The Put:
+    
+    # Compute:
+    Sk = .bawKp(X, Time, r, b, sigma)
+    n = 2*b/sigma^2
+    K = 2*r/(sigma^2*(1-exp(-r*Time)))
+    d1 = (log(Sk/X)+(b+sigma^2/2)*Time)/(sigma*sqrt(Time))
+    Q1 = (-(n-1)-sqrt((n-1)^2+4*K))/2
+    a1 = -(Sk/Q1)*(1-exp((b-r)*Time)*CND(-d1))
+    if(S > Sk) {
+        result = GBSOption("p", S, X, Time, r, b, sigma)@price + a1*(S/Sk)^Q1 
+    } else {
+        result = X-S 
+    }  
+    
+    # Return Value:
+    result
+}
+
+
+.bawKp <- 
+function(X, Time, r, b, sigma) 
+{   
+    # Internal Function - used for the Put:
+    
+    # Newton Raphson algorithm to solve for the critical commodity 
+    # price for a Put.
+    # Calculation of seed value, Si
+    n = 2*b/sigma^2
+    m = 2*r/sigma^2
+    q1u = (-(n-1)-sqrt((n-1)^2+4*m))/2
+    Su = X/(1-1/q1u)
+    h1 = (b*Time-2*sigma*sqrt(Time))*X/(X-Su)
+    Si = Su+(X-Su)*exp(h1) 
+    K = 2*r/(sigma^2*(1-exp(-r*Time)))
+    d1 = (log(Si/X)+(b+sigma^2/2)*Time)/(sigma*sqrt(Time))
+    Q1 = (-(n-1)-sqrt((n-1)^2+4*K))/2
+    LHS = X-Si
+    RHS = GBSOption("p", Si, X, Time, r, b, sigma)@price -
+        (1-exp((b-r)*Time)*CND(-d1))*Si/Q1
+    bi = -exp((b-r)*Time)*CND(-d1)*(1-1/Q1) -
+        (1+exp((b-r)*Time)*CND(-d1)/(sigma*sqrt(Time)))/Q1
+    E = 0.000001
+    # Newton Raphson algorithm for finding critical price Si
+    while (abs(LHS-RHS)/X > E ) {
+        Si = (X-RHS+bi*Si)/(1+bi)
+        d1 = (log(Si/X)+(b+sigma^2/2)*Time)/(sigma*sqrt(Time))
+        LHS = X-Si
+        RHS = GBSOption("p", Si, X, Time, r, b, sigma)@price -
+            (1-exp((b-r)*Time)*CND(-d1))*Si/Q1
+        bi = -exp((b-r)*Time)*CND(-d1)*(1-1/Q1) -
+            (1+exp((b-r)*Time)*CND(-d1)/(sigma*sqrt(Time)))/Q1 }
+    # Return Value:
+    Si
 }
 
 
@@ -287,48 +313,12 @@ description = NULL)
     # Settings:
     TypeFlag = TypeFlag[1]
     
-    # Utility function phi:
-    phi <<- function(S, Time, gamma, H, I, r, b, sigma) {
-        lambda = (-r + gamma*b + 0.5*gamma * (gamma-1)*sigma^2) * Time
-        d = -(log(S/H) + (b + (gamma-0.5)*sigma^2)*Time) / 
-            (sigma*sqrt(Time))
-        kappa = 2 * b / (sigma^2) + (2*gamma - 1)
-        result = exp(lambda)*S^gamma * 
-        (CND(d)-(I/S)^kappa*CND(d-2*log(I/S)/(sigma*sqrt(Time))))
-        result }
-    # Call Approximation:
-    BSAmericanCallApprox <<- function(S, X, Time, r, b, sigma) { 
-        if (b >= r) { 
-        # Never optimal to exersice before maturity
-        result = list(
-          Premium = GBSOption("c", S, X, Time, r, b, sigma)@price,
-          TriggerPrice = NA)}
-      else {
-        Beta = (1/2 - b/sigma^2) + sqrt((b/sigma^2 - 1/2)^2 + 2*r/sigma^2)
-        BInfinity = Beta/(Beta-1) * X
-        B0 = max(X, r/(r-b) * X)
-        ht = -(b*Time + 2*sigma*sqrt(Time)) * B0/(BInfinity-B0)
-        # Trigger Price I:
-        I = B0 + (BInfinity-B0) * (1 - exp(ht))
-        alpha = (I-X) * I^(-Beta)
-        if (S >= I) { 
-          result = list(
-           Premium = S-X, 
-           TriggerPrice = I) }
-        else {
-          result = list(
-            Premium = alpha*S^Beta - alpha*phi(S,Time,Beta,I,I,r,b,sigma) + 
-              phi(S,Time,1,I,I,r,b,sigma) - phi(S,Time,1,X,I,r,b,sigma) - 
-              X*phi(S,Time,0,I,I,r,b,sigma) + X*phi(S,Time,0,X,I,r,b,sigma), 
-            TriggerPrice = I) } }
-      result}
-    
     # The Bjerksund and Stensland (1993) American approximation:
-    if (TypeFlag == "c") {
-      result = BSAmericanCallApprox(S, X, Time, r, b, sigma) }
-    if (TypeFlag == "p") {
+    if(TypeFlag == "c") {
+      result = .BSAmericanCallApprox(S, X, Time, r, b, sigma) }
+    if(TypeFlag == "p") {
       # Use the Bjerksund and Stensland put-call transformation
-      result = BSAmericanCallApprox(X, S, Time, r - b, -b, sigma) }
+      result = .BSAmericanCallApprox(X, S, Time, r - b, -b, sigma) }
     
     # Parameters:
     # TypeFlag = c("c", "p"), S, X, Time, r, b, sigma
@@ -340,11 +330,11 @@ description = NULL)
     param$r = r
     param$b = b
     param$sigma = sigma
-    if (!is.na(result$TriggerPrice)) param$TrigerPrice = result$TriggerPrice 
+    if(!is.na(result$TriggerPrice)) param$TrigerPrice = result$TriggerPrice 
     
     # Add title and description:
-    if (is.null(title)) title = "BS American Approximated Option"
-    if (is.null(description)) description = as.character(date())
+    if(is.null(title)) title = "BS American Approximated Option"
+    if(is.null(description)) description = as.character(date())
     
     # Return Value:
     new("fOPTION", 
@@ -354,6 +344,54 @@ description = NULL)
         title = title,
         description = description
         )      
+}
+
+
+.BSAmericanCallApprox <- 
+function(S, X, Time, r, b, sigma) 
+{ 
+    # Call Approximation:
+    
+    if(b >= r) { 
+        # Never optimal to exersice before maturity
+        result = list(
+            Premium = GBSOption("c", S, X, Time, r, b, sigma)@price,
+            TriggerPrice = NA)
+    } else {
+    Beta = (1/2 - b/sigma^2) + sqrt((b/sigma^2 - 1/2)^2 + 2*r/sigma^2)
+    BInfinity = Beta/(Beta-1) * X
+    B0 = max(X, r/(r-b) * X)
+    ht = -(b*Time + 2*sigma*sqrt(Time)) * B0/(BInfinity-B0)
+    # Trigger Price I:
+    I = B0 + (BInfinity-B0) * (1 - exp(ht))
+    alpha = (I-X) * I^(-Beta)
+    if(S >= I) { 
+        result = list(
+            Premium = S-X, 
+            TriggerPrice = I) }
+    else {
+        result = list(
+            Premium = alpha*S^Beta - alpha*.bsPhi(S,Time,Beta,I,I,r,b,sigma) + 
+            .bsPhi(S,Time,1,I,I,r,b,sigma) - .bsPhi(S,Time,1,X,I,r,b,sigma) - 
+            X*.bsPhi(S,Time,0,I,I,r,b,sigma) + X*.bsPhi(S,Time,0,X,I,r,b,sigma), 
+            TriggerPrice = I) } }
+    result}
+      
+
+.bsPhi <- 
+function(S, Time, gamma, H, I, r, b, sigma) 
+{
+    # Utility function phi:
+
+    lambda = (-r + gamma*b + 0.5*gamma * (gamma-1)*sigma^2) * Time
+    d = -(log(S/H) + (b + (gamma-0.5)*sigma^2)*Time) / 
+        (sigma*sqrt(Time))
+    kappa = 2 * b / (sigma^2) + (2*gamma - 1)
+    result = exp(lambda)*S^gamma * 
+    (CND(d)-(I/S)^kappa*CND(d-2*log(I/S)/(sigma*sqrt(Time))))
+    
+    # Return Value:
+    result 
 }
 
 
