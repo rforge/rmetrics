@@ -37,7 +37,6 @@
 #  .plot.glm              Generalized Linear Model internal plot
 #  .plot.gam              Generalized Additive Model internal plot
 #  .plot.ppr              Projection Pursuit Regression Model internal plot
-#  .plot.mars             Multivariate Adaptive Regression Spline Model plot
 #  .plot.polymars         Polytochomous MARS Model internal plot
 #  .plot.nnet             Feedforward Neural Network Model internal plot
 # S3-METHODS:           SUMMARY METHOD:
@@ -114,13 +113,7 @@ function(object)
             print(object@fit$alpha)
             cat("-- Coefficients of Ridge Terms --\n")
             print(object@fit$beta) 
-        }    
-        
-        # Regression Model MARS:
-        if (object@method == "mars") {      
-            Parameters = round(object@fit$parameters, digits = digits)      
-            print(data.frame(Parameters)) 
-        }             
+        }                 
         
         # Regression Model POLYMARS:
         if (object@method == "polymars") {
@@ -307,7 +300,6 @@ function(x, which = "ask", ...)
 
 .plot.gam = .plot.common
 .plot.ppr = .plot.common
-.plot.mars = .plot.common
 .plot.polymars = .plot.common
 .plot.nnet = .plot.common
 
@@ -574,12 +566,7 @@ function(object, ...)
             edf = fit$edf
             names(edf) = paste("term", 1:fit$mu)
             print(round(edf, 2), ...)} 
-    }        
-                
-    # Regression Model: MARS
-    if (object@method == "mars") {
-        # Use the print Method 
-    } 
+    }         
             
     # Regression Model: POLYMARS
     if (object@method == "polymars") {
