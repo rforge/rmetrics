@@ -883,7 +883,7 @@ function(params)
         h = .Fortran("aparchllh", as.double(z), as.double(h), as.integer(N),
             as.double(omega), as.double(alpha), as.double(gamma), 
             as.integer(p), as.double(beta), as.integer(q), as.double(delta), 
-            as.integer(h.start), PACKAGE = "fSeries")[[2]]  
+            as.integer(h.start), PACKAGE = "fGarch")[[2]]  
     }
     
     # Save h and z|eps:
@@ -1012,7 +1012,7 @@ function(par)
             MYPAR = as.integer(MYPAR), 
             E0 = as.double(EPS0),
             HESS = as.double(rep(0, times = NF*NF)),
-            PACKAGE = "fSeries")
+            PACKAGE = "fGarch")
         # The Matrix:
         H = matrix(ans[["HESS"]], ncol = NF)  
         colnames(H) = rownames(H) = names(par)
@@ -1199,7 +1199,7 @@ function(...)
             RPAR = as.double(RPAR), 
             MYPAR = as.integer(MYPAR),
             F = as.double(F),
-            PACKAGE = "fSeries")
+            PACKAGE = "fGarch")
         if(IPAR[1] == 0) {
             sink()        
             unlink("@sink@")
