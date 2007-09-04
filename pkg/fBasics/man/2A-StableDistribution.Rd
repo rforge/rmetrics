@@ -2,11 +2,6 @@
 
 \alias{StableDistribution}
 
-\alias{dsymstb}
-\alias{psymstb}
-\alias{qsymstb}
-\alias{rsymstb}
-
 \alias{dstable}
 \alias{pstable}
 \alias{qstable}
@@ -24,15 +19,12 @@
     A collection and description of functions to compute 
     density, distribution function, quantile function and 
     to generate random variates, the stable distribution,
-    and the stable mode. Two different cases are considered,
-    the first for the symmetric and the second for the 
-    skewed distribution.
+    and the stable mode. 
     \cr
     
     The functions are:
     
     \tabular{ll}{
-    \code{[dpqr]symstb} \tab The symmetric stable distribution, \cr
     \code{[dpqr]stable} \tab the skewed stable distribution, \cr
     \code{stableMode} \tab the stable mode, \cr
     \code{symstbSlider} \tab interactive symmetric distribution display, \cr
@@ -42,11 +34,6 @@
 
 
 \usage{
-dsymstb(x, alpha)
-psymstb(q, alpha)
-qsymstb(p, alpha)
-rsymstb(n, alpha)
-
 dstable(x, alpha, beta, gamma = 1, delta = 0, pm = c(0, 1, 2))
 pstable(q, alpha, beta, gamma = 1, delta = 0, pm = c(0, 1, 2))
 qstable(p, alpha, beta, gamma = 1, delta = 0, pm = c(0, 1, 2))
@@ -86,7 +73,7 @@ stableSlider()
 
 \value{
 
-    All values for the \code{*symstb} and \code{*stable} functions
+    All values for the \code{*stable} functions
     are numeric vectors: 
     \code{d*} returns the density, 
     \code{p*} returns the distribution function, 
@@ -104,22 +91,6 @@ stableSlider()
 
 
 \details{
-
-    \bold{Symmetric Stable Distribution:}
-    \cr\cr
-    For the density and probability the approach of McCulloch is 
-    implemented. Note, that McCulloch's approach has a density 
-    precision of 0.000066 and a distribution precision of 0.000022 
-    for \code{alpha} in the  range [0.84, 2.00]. 
-    Quantiles are evaluated from a root finding process via the
-    probability function. Thus, this leads to nonnegligible 
-    errors for small quantiles, since the quantile evaluation 
-    depends on the quality of the probability function.To achieve 
-    higher precisions use the function \code{stable} with argument 
-    \code{beta=0}. \cr
-    For generation of random deviates the results of Chambers, 
-    Mallows, and Stuck are used.
-    \cr
     
     \bold{Skew Stable Distribution:}
     \cr\cr
