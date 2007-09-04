@@ -62,7 +62,7 @@ function(rate, maturity, doplot = TRUE)
     for (i in 1:n) {    
         tau[i] = maturity[i] 
         x = maturity/tau[i]
-        a = matrix(rep(NA, times = 9), byrow = T, nrow = 3)
+        a = matrix(rep(NA, times = 9), byrow = TRUE, nrow = 3)
             a[1,1] = 1
             a[1,2] = a[2,1] = mean( (1-exp(-x))/x )
             a[1,3] = a[3,1] = mean( (1-exp(-x))/x - exp(-x) )
