@@ -28,12 +28,6 @@
 
 
 ################################################################################
-# FUNCTION:             SYMMETRIC STABLE DISTRIBUTION:
-#  dsymstb               Returns density for symmetric stable DF
-#  psymstb               Returns probabilities for symmetric stable DF
-#  qsymstb               Returns quantiles for symmetric stable DF
-#  rsymstb               Returns random variates for symmetric stable DF
-#  .symstb               Returns symmetric alpha-stable pdf/cdf 
 # FUNCTIONS:            STABLE DISTRIBUTION:
 #  dstable               Returns density for stable DF
 #  pstable               Returns probabilities for stable DF
@@ -48,127 +42,11 @@
 
 
 ################################################################################
-# FUNCTION:             SYMMETRIC STABLE DISTRIBUTION:
-#  dsymstb               Returns density for symmetric stable DF
-#  psymstb               Returns probabilities for symmetric stable DF
-#  qsymstb               Returns quantiles for symmetric stable DF
-#  rsymstb               Returns random variates for symmetric stable DF
+#  .rsymstb              Returns random variates for symmetric stable DF
 #  .symstb               Returns symmetric alpha-stable pdf/cdf  
 
 
-dsymstb =
-function(x, alpha = 1.8)
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Returns density for symmetric stable DF
-    
-    # FUNCTION:
-    
-    # Density:
-    ans = as.vector(.symstb(x = x, alpha = alpha)[, "d"])
-    
-    # Attributes:
-    attr(ans, "control") = 
-        cbind.data.frame(dist = "symstb", alpha = alpha, row.names = "")
-      
-    # Return Value:
-    ans
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-psymstb =
-function(q, alpha = 1.8)
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Returns probabilities for symmetric stable DF
-    
-    # FUNCTION:
-    
-    # Probability:
-    ans = as.vector(.symstb(x = q, alpha = alpha)[, "p"])
-    
-    # Attributes:
-    attr(ans, "control") = 
-        cbind.data.frame(dist = "symstb", alpha = alpha, row.names = "")
-    
-    # Return Value:
-    ans
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-qsymstb = 
-function(p, alpha)
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Returns quantiles for symmetric stable DF
-    
-    # FUNCTION:
-    
-    # Parameter Check:
-    if (alpha > +2)  stop("Error: alpha greater than 2")
-    if (alpha <= 0)  stop("Error: alpha less or equal 0")
-    
-    # Special Cases:
-    if (alpha == 2) result = qnorm(p = p, mean = 0, sd = sqrt(2))
-    if (alpha == 1) result = qcauchy(p = p) 
-    
-    # Continue:
-    if (alpha != 1 && alpha != 2) {
-        .froot <- function(x, alpha, p) {
-            psymstb(q = x, alpha = alpha) - p 
-        }
-        # Calculate:    
-        result = rep(NA, times = length(p))
-        for (i in 1:length(p)) {
-            pp = p[i]
-            # xmin = -(1-pp)/pp
-            if (pp <= 0.5) {    # <=
-                xmin = qcauchy(pp)
-            } else {
-                xmin = qnorm(pp, mean = 0, sd = sqrt(2))
-            }
-            # xmax = pp/(1-pp) 
-            if (pp <= 0.5) {    # <=
-                xmax = qnorm(pp, mean = 0, sd = sqrt(2))
-            } else {
-                xmax = qcauchy(pp)  
-            }       
-            iteration = NA
-            counter = 0
-            while (is.na(iteration)) {
-                iteration = .unirootNA(f = .froot, interval = c(xmin, xmax), 
-                    alpha = alpha, p = pp)
-                counter = counter + 1
-                xmin = xmin - 2^counter
-                xmax = xmax + 2^counter
-            }
-            result[i] = iteration 
-        } 
-    }
-    
-    # Attributes:
-    ans = result
-    attr(ans, "control") = 
-        cbind.data.frame(dist = "symstb", alpha = alpha, row.names = "")
-    
-    # Return Value:
-    ans
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-rsymstb = 
+.rsymstb = 
 function(n, alpha) 
 {   # A function implemented by Diethelm Wuertz
     
@@ -207,7 +85,7 @@ function(n, alpha)
 # ------------------------------------------------------------------------------
 
 
-.symstbR =
+.symstb =
 function(x, alpha)
 {   # A function implemented by Diethelm Wuertz
 
@@ -351,26 +229,6 @@ function(x, alpha)
     # Return Value:
     cbind(x = X, p = prob, d = dens)
 }  
-
-
-# ------------------------------------------------------------------------------
-
-
-.symstb = 
-function (x, alpha) 
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Returns symmetric alpha-stable pdf/cdf
-    
-    # Distribution:
-    ans = .Fortran("symstb", as.double(x), as.double(1:length(x)), 
-        as.double(1:length(x)), as.integer(length(x)), as.double(alpha), 
-        PACKAGE = "fBasics")
-        
-    # Return Value:
-    cbind(x = x, p = ans[[2]], d = ans[[3]])
-}
 
 
 ################################################################################
