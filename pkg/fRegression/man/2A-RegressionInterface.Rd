@@ -103,7 +103,8 @@
 
 
 \usage{
-regSim(model = c("LM3", "LOGIT3", "GAM3"), n = 100)
+regSim(model = c("LM3", "LOGIT3", "GAM3"), n = 100, returnClass =
+    c("timeSeries", "data.frame"))
 
 regFit(formula, data, use = c("lm", "rlm", "am", "ppr", "nnet", 
     "polymars"), title = NULL, description = NULL, \dots)
@@ -160,6 +161,12 @@ OLS(formula, data, \dots)
         formula. See \code{gam.side.conditions} for details and 
         examples.
         }  
+    \item{returnClass}{
+        [regSim] - \cr
+        a character value which describes what should be returned,
+        either a \code{"timeSeries"} object with dummy daily dates 
+        starting 1970-01-01 (the default) or a data frame.
+        }
     \item{use}{
         denotes the regression method by a character string used to fit 
         the model.
