@@ -1,4 +1,4 @@
-PKG=fSeries
+PKG=fNonlinear
 TOP=../..
 SUITE=doRUnit.R
 R=R
