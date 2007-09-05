@@ -3,7 +3,7 @@ Version: 251.70
 Date: 1997 - 2007
 Title: Ecofin - Economic and Financial Data Sets and Utilities
 Author: Diethelm Wuertz and many others. See the SOURCE file
-Depends: R (>= 2.5.1), MASS, spatial, akima, fEcofin
+Depends: R (>= 2.5.1), methods, MASS, spatial, akima, fEcofin
 Maintainer: Diethelm Wuertz and Rmetrics Core Team <Rmetrics-core@r-project.org>
 Description: Environment for teaching "Financial Engineering and Computational Finance"
 NOTE: SEVERAL PARTS ARE STILL PRELIMINARY AND MAY BE CHANGED IN THE FUTURE.
