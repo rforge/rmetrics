@@ -44,7 +44,7 @@ function(lib, pkg)
     }
 
     # Load dll:
-    library.dynam("fBasics", pkg, lib) 
+    # library.dynam("fBasics", pkg, lib) 
 }
 
 
