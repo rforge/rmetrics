@@ -28,11 +28,6 @@
 
 
 ################################################################################
-# fBasics - A SOFTWARE COLLECTION FOR FINANCIAL ENGINEERS
-# Basic Statistics And Return Distributions
-#
-# collected by Diethelm Wuertz
-################################################################################
 
 
 .First.lib =  
