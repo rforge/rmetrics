@@ -1,13 +1,4 @@
 
-#*******************************************************************************
-# fOptions - A SOFTWARE COLLECTION FOR FINANCIAL ENGINEERS
-# Valuation of Options
-#
-# collected by Diethelm Wuertz
-#    
-#*******************************************************************************
-                                                        
-
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
 # License as published by the Free Software Foundation; either

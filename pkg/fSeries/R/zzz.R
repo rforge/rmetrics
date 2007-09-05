@@ -28,11 +28,6 @@
 
 
 ################################################################################
-# fCalendar - A SOFTWARE COLLECTION FOR FINANCIAL ENGINEERS
-# Chronological Objects and Calendar Tools
-#
-# collected by Diethelm Wuertz
-################################################################################
  
     
 .First.lib =  

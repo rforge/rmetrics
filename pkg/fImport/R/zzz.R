@@ -28,9 +28,6 @@
 
 
 ################################################################################
-# fImport - A SOFTWARE COLLECTION FOR FINANCIAL ENGINEERS
-# Downloading Financial Data from the Internet
-################################################################################
  
     
 .First.lib =  
