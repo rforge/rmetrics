@@ -28,11 +28,6 @@
 
 
 ################################################################################
-# fEcofin - A SOFTWARE COLLECTION FOR FINANCIAL ENGINEERS
-# Economic and Financial Time Series Data
-#
-# (c) Diethelm Wuertz and Rmetrics Foundation (2007)
-################################################################################
  
 
 .First.lib =  
@@ -49,7 +44,7 @@ function(lib, pkg)
     }
 
     # Load dll:
-    # library.dynam("fUtilities", pkg, lib) 
+    # library.dynam("fCalendar", pkg, lib) 
 }
 
 
