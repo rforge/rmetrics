@@ -36,6 +36,9 @@
 ################################################################################
 
 
+.DEBUG = NA
+
+
 .solveShortExact =
 function(data, spec, constraints)
 {   # A function implemented by Rmetrics

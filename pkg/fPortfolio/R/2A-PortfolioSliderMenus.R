@@ -45,7 +45,7 @@ function(object, control = list(), ...)
      
     # Global Variables:
     object <<- object
-    nFrontierPoints <<- length(getTargetRisk(object)[ ,1])
+    nFrontierPoints <- length(getTargetRisk(object)[ ,1])
     dim = dim(getWeights(object))[2]
         
     # Use default, if xlim and ylim is not specified ...
@@ -141,7 +141,7 @@ function(object, control = list(), ...)
   
     # Open Slider Menu:
     .counter <<- 0
-    Start <<- which.min(getTargetRisk(object)[ , 1])
+    Start <- which.min(getTargetRisk(object)[ , 1])
     .sliderMenu(refresh.code, title = "Weights Slider",
        names =       c(                 "N"),
        minima =      c(                   1),
@@ -155,7 +155,11 @@ function(object, control = list(), ...)
 
 
 # ------------------------------------------------------------------------------
+
  
+.Add = NA
+.type = NA
+
 
 frontierSlider =     
 function(object, control = list(), ...)
@@ -170,7 +174,7 @@ function(object, control = list(), ...)
     
     # Global Variables:
     object <<- object
-    nFrontierPoints <<- nrow(getWeights(object))
+    nFrontierPoints <- nrow(getWeights(object))
     dim = dim(getWeights(object))[2]
        
     # Use default, if xlim and ylim is not specified ...
@@ -247,13 +251,13 @@ function(object, control = list(), ...)
         riskFreeRate      = .tdSliderMenu(no =  3)
         mcSteps           = .tdSliderMenu(no =  4)
         
-        type <<- as.integer(.tdSliderMenu(obj.name = "type"))
-        Add[type] <<- AddRemove
+        .type <<- as.integer(.tdSliderMenu(obj.name = "type"))
+        .Add[.type] <<- AddRemove
         
         cat("\nType:")
-        print(type)
+        print(.type)
         cat("\nType:")
-        print(Add)
+        print(.Add)
 
         # Reset Frame:
         par(mfrow = c(1, 1))
@@ -265,39 +269,39 @@ function(object, control = list(), ...)
         points(ef[N, 1], ef[N, 2], col = "red", pch = 19, cex = 1.5)
         
         
-        if (Add[1] == 1) {
+        if (.Add[1] == 1) {
             .weightsWheel(object = object,
                 piePos = N, pieR = con$weightsPieR,
                 pieOffset = con$weightsPieOffset)
         }
         
-        if (Add[2] == 1) {
+        if (.Add[2] == 1) {
             .attributesWheel(object = object,
                 piePos = N, 
                 pieR = con$attributesPieR,
                 pieOffset = con$attributesPieOffset)
         }
             
-        if (Add[3] == 1) {
+        if (.Add[3] == 1) {
             .addlegend(object = object, 
                 control = con)
         }   
         
-        if (Add[4] == 1) {
+        if (.Add[4] == 1) {
             .minvariancePlot(object = object, 
                 col = con$minvariance.col, 
                 cex = con$minvariance.cex, 
                 pch = con$minvariance.pch)
         } 
         
-        if (Add[5] == 1) {
+        if (.Add[5] == 1) {
             .tangencyPlot(object = object, 
                 col = con$tangency.col, 
                 cex = con$tangency.cex,
                 pch = con$tangency.pch)
         }
             
-        if (Add[6] == 1) {
+        if (.Add[6] == 1) {
             object@spec$spec@portfolio$riskFreeRate = riskFreeRate
             .cmlPlot(object, 
                 col = con$cml.col, 
@@ -305,7 +309,7 @@ function(object, control = list(), ...)
                 pch = con$cml.pch)
         }
         
-        if (Add[7] == 1) {
+        if (.Add[7] == 1) {
             .sharpeRatioPlot(object = object, 
                 type = "l", 
                 col = con$sharpeRatio.col, 
@@ -313,27 +317,27 @@ function(object, control = list(), ...)
                 lty = 3)
         }
            
-        if (Add[8] == 1) {
+        if (.Add[8] == 1) {
             .equalWeightsPlot(object = object, 
                 col = con$equalWeights.col, 
                 cex = con$equalWeights.cex, 
                 pch = con$equalWeights.pch)
         }
         
-        if (Add[9] == 1) {
+        if (.Add[9] == 1) {
             .singleAssetPlot(object = object, 
                 col = con$singleAsset.col, 
                 cex = con$singleAsset.cex, 
                 pch = con$singleAsset.pch)
         }
         
-        if (Add[10] == 1) {
+        if (.Add[10] == 1) {
             .twoAssetsPlot(object = object, 
                 col = con$twoAssets.col) 
         }
         
         
-        if (Add[11] == 1) {
+        if (.Add[11] == 1) {
             .monteCarloPlot(object = object, 
                 col = con$monteCarlo.col, 
                 cex = con$monteCarlo.cex, 
@@ -352,7 +356,7 @@ function(object, control = list(), ...)
     nFP = nFrontierPoints
     maxRF = max(getTargetReturn(object))
     resRF = maxRF/100
-    Add <<- rep(0, times = 11)
+    .Add <<- rep(0, times = 11)
     
     .tdSliderMenu(
         refresh.code,

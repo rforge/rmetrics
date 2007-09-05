@@ -342,13 +342,13 @@ function(object, ...)
     if (funCalled == "portfolioFrontier") {      
         weightsPlot(object)
         attributesPlot(object)
-        riskBudgetsPlot(object)
+        covRiskBudgetsPlot(object)
         # Plot Frontier:
         plot(object, which = 1)
     } else {
         weightsPie(object)
         attributesPie(object)
-        riskBudgetsPie(object)
+        covRiskBudgetsPie(object)
     }
           
     # Return Value:

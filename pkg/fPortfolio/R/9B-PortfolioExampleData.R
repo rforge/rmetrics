@@ -29,14 +29,14 @@
 
 ################################################################################
 # FUNCTION:                     EXAMPLE DATA:
-#  dutchPortfolioData            Example Data from Engel's Diploma Thesis
-#  usPortfolioData               Annual US Economics Portfolio Data
-#  sm132PortfolioData            Example from Scherer, Martin: Chapter 1.32
-#  worldIndexData                A data set of World Indexes  
+#  .dutchPortfolioData            Example Data from Engel's Diploma Thesis
+#  .usPortfolioData               Annual US Economics Portfolio Data
+#  .sm132PortfolioData            Example from Scherer, Martin: Chapter 1.32
+#  .worldIndexData                A data set of World Indexes  
 ################################################################################
 
 
-dutchPortfolioData =
+.dutchPortfolioData =
 function()
 {   # A function implemented by Rmetrics
 
@@ -74,7 +74,7 @@ function()
 # ------------------------------------------------------------------------------
 
 
-usPortfolioData =
+.usPortfolioData =
 function()
 {   # A function implemented by Rmetrics
 
@@ -127,7 +127,7 @@ function()
 # ------------------------------------------------------------------------------
 
 
-sm132PortfolioData = 
+.sm132PortfolioData = 
 function()
 {
     # A function implemented by Rmetrics
@@ -161,7 +161,7 @@ function()
 # ------------------------------------------------------------------------------
 
 
-worldIndexData = 
+.worldIndexData = 
 function()
 {
     # Description:

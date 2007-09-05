@@ -149,7 +149,7 @@ function(data, spec = portfolioSpec())
     if(meanEstimator == "lpm" | covEstimator == "lpm") {
         stopifnot(!is.null(spec@model$params$tau))
         stopifnot(!is.null(spec@model$params$a))
-        estimate = assetsLPM(x, 
+        estimate = assetsLPM(x = data, 
             tau = spec@model$params$tau, a = spec@model$params$a)
         mu = estimate$mu
         Sigma = estimate$Sigma
