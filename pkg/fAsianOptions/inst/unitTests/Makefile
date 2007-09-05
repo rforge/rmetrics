@@ -1,4 +1,4 @@
-PKG=fOptions
+PKG=fAsianOptions
 TOP=../..
 SUITE=doRUnit.R
 R=R
