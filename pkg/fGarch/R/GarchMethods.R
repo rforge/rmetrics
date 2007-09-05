@@ -29,6 +29,8 @@
 
 ################################################################################
 # METHODS:                DESCRIPTION:
+#  'fGARCH'                S4: fGARCH Class representation
+# METHODS:                DESCRIPTION:
 #  show.fGARCH             S4 print method for an object of class 'fGARCH'
 #  summary.fGARCH          S3 summary method for an object of class 'fGARCH'
 #  plot.fGARCH             S3 plot method for an object of class 'fGARCH'
@@ -36,9 +38,29 @@
 #  residuals.fGARCH        S3 residuals method for an object of class 'fGARCH'
 #  fitted.fGARCH           S3 fitted values for an object of class 'fGARCH'
 #  predict.fGARCH          S3 prediction method for an object of class 'fGARCH'
-# STATISTICS:             Description:
+# STATISTICS:             DESCRIPTION:
 #  .truePersistence        Computes persistence
 ################################################################################
+
+
+# Class Representation:
+setClass("fGARCH", 
+    representation(
+        call = "call",
+        formula = "list",
+        method = "character",
+        data = "list",
+        fit = "list",
+        residuals = "numeric",
+        fitted = "numeric",
+        h.t = "numeric",
+        sigma.t = "numeric",
+        title = "character",
+        description = "character")  
+)
+
+
+# ------------------------------------------------------------------------------
 
 
 show.fGARCH = 

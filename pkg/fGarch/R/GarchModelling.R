@@ -28,8 +28,7 @@
 
 
 ################################################################################
-# FUNCTION:               PARAMETER ESTIMATION: 
-#  'fGARCH'                S4: fGARCH Class representation   
+# FUNCTION:               PARAMETER ESTIMATION:    
 #  garchFit                Fits GARCH and APARCH processes
 #  .garchFit               ... old Version
 #  .garchInitSeries        Initializes Series
@@ -47,26 +46,6 @@
 
 
 .garchDist = NA
-
-
-# ------------------------------------------------------------------------------
-
-
-# Class Representation:
-setClass("fGARCH", 
-    representation(
-        call = "call",
-        formula = "list",
-        method = "character",
-        data = "list",
-        fit = "list",
-        residuals = "numeric",
-        fitted = "numeric",
-        h.t = "numeric",
-        sigma.t = "numeric",
-        title = "character",
-        description = "character")  
-)
 
 
 # ------------------------------------------------------------------------------
