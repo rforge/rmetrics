@@ -36,7 +36,6 @@
 #  stableMode            Computes the mode of the stable DF
 #  .integrateStable      Integrates internal functions for *stable
 # FUNCTION:             STABLE SLIDERS:
-#  symstbSlider          Displays symmetric stable distribution function
 #  stableSlider          Displays stable distribution function
 ################################################################################
 
@@ -902,67 +901,7 @@ function (f, lower, upper, subdivisions, rel.tol, abs.tol, ...)
 
 ################################################################################
 # FUNCTION:             STABLE SLIDERS:
-#  symstbSlider          Displays symmetric stable distribution function
 #  stableSlider          Displays stable distribution function
-
-
-symstbSlider = 
-function()
-{   # A function implemented by Diethelm Wuertz
-
-    # Description
-    #   Displays the symmetric stable distribution
-
-    # FUNCTION:
-    
-    # Internal Function:
-    refresh.code = function(...)
-    {
-        # Sliders:
-        N     = .sliderMenu(no = 1)
-        alpha = .sliderMenu(no = 2)
-        
-        # Compute Data:        
-        xmin = round(qsymstb(0.01, alpha), digits = 2)
-        xmax = round(qsymstb(0.99, alpha), digits = 2)
-        s = seq(xmin, xmax, length = N)
-        y1 = dsymstb(s, alpha)
-        y2 = psymstb(s, alpha)
-        main1 = paste("Symmetric Stable Density\n", 
-            "alpha = ", as.character(alpha))
-        main2 = paste("Symmetric Stable Probability\n",
-            "xmin [0.01%] = ", as.character(xmin), " | ",
-            "xmax [0.99%] = ", as.character(xmax))       
-        
-        # Frame:
-        par(mfrow = c(2, 1), cex = 0.7)
-        
-        # Density:
-        plot(s, y1, type = "l", xlim = c(xmin, xmax), col = "steelblue")
-        abline (h = 0, lty = 3)
-        title(main = main1)     
-        
-        # Probability:
-        plot(s, y2, type = "l", xlim = c(xmin, xmax), ylim = c(0, 1),
-            col = "steelblue" )
-        abline (h = 0, lty = 3)
-        title(main = main2) 
-        
-        # Reset Frame:
-        par(mfrow = c(1, 1), cex = 0.7)
-    }
-  
-    # Open Slider Menu:
-    .sliderMenu(refresh.code,
-       names =       c(  "N", "alpha"),
-       minima =      c(   50,   0.10),
-       maxima =      c( 1000,   2.00),
-       resolutions = c(   50,   0.10),
-       starts =      c(   50,   1.75))
-}
-
-
-# ------------------------------------------------------------------------------
 
 
 stableSlider =  

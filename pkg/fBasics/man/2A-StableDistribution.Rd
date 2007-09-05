@@ -8,7 +8,6 @@
 \alias{rstable}
 \alias{stableMode}
 
-\alias{symstbSlider}
 \alias{stableSlider}
 
 \title{Stable Distribution Function}
@@ -27,7 +26,6 @@
     \tabular{ll}{
     \code{[dpqr]stable} \tab the skewed stable distribution, \cr
     \code{stableMode} \tab the stable mode, \cr
-    \code{symstbSlider} \tab interactive symmetric distribution display, \cr
     \code{stableSlider} \tab interactive stable distribution display. }
 
 }
@@ -41,7 +39,6 @@ rstable(n, alpha, beta, gamma = 1, delta = 0, pm = c(0, 1, 2))
 
 stableMode(alpha, beta)
 
-symstbSlider()
 stableSlider()
 }
 
@@ -83,9 +80,9 @@ stableSlider()
     The function \code{stableMode} returns a numeric value, the
     location of the stable mode.
     
-    The functions \code{symstbSlider} and \code{stableSlider} 
-    display for educational purposes the densities and probabilities
-    of the symmetric and skew stable distributions.
+    The function \code{stableSlider} 
+    displays for educational purposes the densities and probabilities
+    of the skew stable distribution.
     
 }
 
@@ -129,7 +126,6 @@ stableSlider()
 
 \author{
 
-    McCulloch for the 'symstb' Fortran program, and \cr
     Diethelm Wuertz for the Rmetrics \R-port.
 
 }
