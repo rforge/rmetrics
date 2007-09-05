@@ -1,0 +1,228 @@
+<html><head><title>Holiday Calendars and Utilities</title>
+<meta http-equiv="Content-Type" content="text/html; charset=">
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>HolidayCalendars(fCalendar)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   HolidayCalendars">
+<param name="keyword" value="R:   holiday">
+<param name="keyword" value="R:   holidayNYSE">
+<param name="keyword" value="R:   holidayZURICH">
+<param name="keyword" value=" Holiday Calendars and Utilities">
+</object>
+
+
+<h2>Holiday Calendars and Utilities</h2>
+
+
+<h3>Description</h3>
+
+<p>
+A collection and description of functions and 
+methods dealing with holiday dates and holiday
+calendars. 
+<br>
+</p>
+<p>
+The functions for the generation of holiday calendars are: 
+</p>
+
+<table summary="Rd table">
+<tr>
+  <td align="left"><code>holiday</code> </td>  <td align="left"> Returns a holiday date of G7 and CH as 'sdate', </td>
+</tr>
+<tr>
+  <td align="left"> <code>holidayNYSE</code> </td>  <td align="left"> Computes 'timeDate' object for full-day NYSE holidays, </td>
+</tr>
+<tr>
+  <td align="left"> <code>holidayZURICH</code> </td>  <td align="left"> Computes 'timeDate' object for Zurich holidays. </td>
+</tr>
+</table>
+
+
+<h3>Usage</h3>
+
+<pre>
+holiday(year, Holiday = Easter)
+holidayNYSE(year = currentYear)
+holidayZURICH(year = currentYear)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>Holiday</code></td>
+<td>
+the unquoted function name of an ecclestial or public holiday 
+in the G7 countries or Switzerland, see the list below.
+</td></tr>
+<tr valign="top"><td><code>year</code></td>
+<td>
+an integer vector of years, [CCYY].
+[day.of.week] - cr
+vector of integer year numbers.
+</td></tr>
+</table>
+
+<h3>Details</h3>
+
+<p>
+<B>Holiday Calendar:</B>
+<br><br>
+Easter is the central ecclestial holiday. Many other holidays
+are related to this feast. The function <code>easter</code> computes
+the dates of easter and related ecclestial holidays for the 
+requested year vector. <code>holiday</code> calculates the dates of 
+ecclestial or publich holidays in the G7 countries, e.g. 
+<code>holiday(2003, "GoodFriday")</code>. <code>holidays.db</code> is our 
+Data Base of World Wide Holidays. The database contains holiday 
+functions automatically loaded by the <code>fBasics</code> library at 
+startup time. The user can add additional holiday functions to 
+this data base. The information for the holiday data base were 
+collected from several web pages about holiday calendars.
+The following ecclestial and public <code>[HOLIDAY]</code> functions 
+in the G7 countries and Switzerland are available: 
+<br><br>
+</p>
+<p>
+<EM>Holidays Related to Easter:</EM> 
+<br>
+Septuagesima, Quinquagesima, AshWednesday, PalmSunday,
+GoodFriday,  EasterSunday, Easter, EasterMonday, 
+RogationSunday, Ascension, Pentecost, PentecostMonday, 
+TrinitySunday CorpusChristi. 
+</p>
+<p>
+<EM>Holidays Related to Christmas:</EM> 
+<br>
+ChristTheKing, Advent1st, Advent1st, Advent3rd, 
+Advent4th, ChristmasEve, ChristmasDay, BoxingDay, 
+NewYearsDay. 
+</p>
+<p>
+<EM>Other Ecclestical Feasts:</EM> 
+<br>
+SolemnityOfMary, Epiphany, PresentationOfLord, 
+Annunciation, TransfigurationOfLord, AssumptionOfMary, 
+AssumptionOfMary, BirthOfVirginMary, CelebrationOfHolyCross, 
+MassOfArchangels, AllSaints, AllSouls. 
+</p>
+<p>
+<EM>CHZurich - Public Holidays:</EM> 
+<br>
+CHBerchtoldsDay, CHSechselaeuten, CHAscension, 
+CHConfederationDay, CHKnabenschiessen. 
+</p>
+<p>
+<EM>GBLondon - Public Holidays:</EM> 
+<br>
+GBMayDay, GBBankHoliday, GBSummerBankHoliday, 
+GBNewYearsEve.
+</p>
+<p>
+<EM>DEFrankfurt - Public Holidays:</EM> 
+<br>
+DEAscension, DECorpusChristi, DEGermanUnity, DEChristmasEve,
+DENewYearsEve. 
+</p>
+<p>
+<EM>FRParis - Public Holidays:</EM> 
+<br>
+FRFetDeLaVictoire1945, FRAscension, FRBastilleDay, 
+FRAssumptionVirginMary, FRAllSaints, FRArmisticeDay. 
+</p>
+<p>
+<EM>ITMilano - Public Holidays:</EM> 
+<br>
+ITEpiphany, ITLiberationDay, ITRepublicAnniversary, 
+ITAssumptionOfVirginMary, ITAllSaints, ITWWIVictoryAnniversary, 
+ITStAmrose, ITImmaculateConception. 
+</p>
+<p>
+<EM>USNewYork/USChicago - Public Holidays:</EM> 
+<br>
+USNewYearsDay, USInaugurationDay, USMLKingsBirthday, 
+USLincolnsBirthday, USWashingtonsBirthday, USMemorialDay, 
+USIndependenceDay, USLaborDay,  USColumbusDay, USElectionDay, 
+USVeteransDay, USThanksgivingDay, USChristmasDay, 
+USCPulaskisBirthday, USGoodFriday. 
+</p>
+<p>
+<EM>CAToronto/CAMontreal - Public Holidays:</EM> 
+<br>
+CAVictoriaDay, CACanadaDay, CACivicProvincialHoliday, 
+CALabourDay, CAThanksgivingDay, CaRemembranceDay. 
+</p>
+<p>
+<EM>JPTokyo/JPOsaka - Public Holidays:</EM> 
+<br>
+JPNewYearsDay, JPGantan, JPBankHolidayJan2, JPBankHolidayJan3,
+JPComingOfAgeDay, JPSeijinNoHi, JPNatFoundationDay,
+JPKenkokuKinenNoHi, JPGreeneryDay, JPMidoriNoHi, 
+JPConstitutionDay, JPKenpouKinenBi, JPNationHoliday, 
+JPKokuminNoKyujitu, JPChildrensDay, JPKodomoNoHi, 
+JPMarineDay, JPUmiNoHi, JPRespectForTheAgedDay,
+JPKeirouNoHi, JPAutumnalEquinox, JPShuubun-no-hi, 
+JPHealthandSportsDay, JPTaiikuNoHi, JPNationalCultureDay, 
+JPBunkaNoHi, JPThanksgivingDay, JPKinrouKanshaNohi, 
+JPKinrou-kansha-no-hi, JPEmperorsBirthday,
+JPTennou-tanjyou-bi, JPTennou-tanjyou-bi. 
+</p>
+<p>
+All the holiday functions are listed in the data file <code>holidays.R</code>.
+Additional holidays, which are not yet available there, can be added
+to this data base file.
+</p>
+
+
+<h3>Value</h3>
+
+<p>
+<code>holiday</code><br>
+<code>holidayNYSE</code>
+<code>holidayZURICH</code>
+<br>
+return an ISO-8601 formatted calendar date <code>CCYYMMDD</code>, an
+object of class <code>"sdate"</code> which represents an integer
+value or vector.</p>
+
+<h3>Author(s)</h3>
+
+<p>
+Diethelm Wuertz for the Rmetrics <font face="Courier New,Courier" color="#666666"><b>R</b></font>-port.
+</p>
+
+
+<h3>References</h3>
+
+<p>
+ISO-8601 (1988); 
+<EM>Data Elements and Interchange Formats -
+Information Interchange, Representation of Dates and Time</EM>,
+International Organization for Standardization,
+Reference Number ISO 8601, 14 pages.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+## easter -
+   # Dates for GoodFriday from 2000 until 2010:                     
+   holiday(2000:2010, "GoodFriday")                  
+   
+## holidays -   
+   Easter(2000:2010)                                
+   GoodFriday(2000:2010)
+  
+## holidayNYSE -
+   holidayNYSE(currentYear)
+</pre>
+
+
+
+<hr><div align="center">[Package <em>fCalendar</em> version 251.70 <a href="00Index.html">Index]</a></div>
+
+</body></html>

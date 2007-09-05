@@ -1,0 +1,219 @@
+<html><head><title>timeDate Class, Coercion and Transformation</title>
+<meta http-equiv="Content-Type" content="text/html; charset=">
+<link rel="stylesheet" type="text/css" href="Rchm.css">
+</head>
+<body>
+
+<table width="100%"><tr><td>TimeDateCoercion(fCalendar)</td><td align="right">R Documentation</td></tr></table><object type="application/x-oleobject" classid="clsid:1e2a7bd0-dab9-11d0-b93a-00c04fc99f9e">
+<param name="keyword" value="R:   TimeDateCoercion">
+<param name="keyword" value="R:   as.timeDate">
+<param name="keyword" value="R:   as.timeDate.default">
+<param name="keyword" value="R:   as.timeDate.POSIXt">
+<param name="keyword" value="R:   as.timeDate.Date">
+<param name="keyword" value="R:   as.character.timeDate">
+<param name="keyword" value="R:   as.double.timeDate">
+<param name="keyword" value="R:   as.data.frame.timeDate">
+<param name="keyword" value="R:   as.POSIXct.timeDate">
+<param name="keyword" value="R:   as.POSIXlt.timeDate">
+<param name="keyword" value="R:   as.Date.timeDate">
+<param name="keyword" value="R:   julian.timeDate">
+<param name="keyword" value="R:   atoms.timeDate">
+<param name="keyword" value="R:   months.timeDate">
+<param name="keyword" value=" timeDate Class Coercion and Transformation">
+</object>
+
+
+<h2>timeDate Class Coercion and Transformation</h2>
+
+
+<h3>Description</h3>
+
+<p>
+A collection and description of functions and 
+methods for coercion and transformation of 
+objects of class 'timeDate'.
+<br>
+</p>
+<p>
+The functions are:
+</p>
+
+<table summary="Rd table">
+<tr>
+  <td align="left"><code>as.timeDate.POSIXt</code> </td>  <td align="left"> Returns a 'POSIX' object as 'timeDate' object, </td>
+</tr>
+<tr>
+  <td align="left"> <code>as.timeDate.Date</code> </td>  <td align="left"> Returns a 'POSIX' object as 'timeDate' object, </td>
+</tr>
+<tr>
+  <td align="left"> <code>as.character.timeDate</code> </td>  <td align="left"> Returns a 'timeDate' object as character string, </td>
+</tr>
+<tr>
+  <td align="left"> <code>as.data.frame.timeDate</code> </td>  <td align="left"> Returns a 'timeDate' object as data frame, </td>
+</tr>
+<tr>
+  <td align="left"> <code>as.POSIXct.timeDate</code> </td>  <td align="left"> Returns a 'timeDate' object as POSIXct object, </td>
+</tr>
+<tr>
+  <td align="left"> <code>julian.timeDate</code> </td>  <td align="left"> Returns Julian day counts since 1970-01-01, </td>
+</tr>
+<tr>
+  <td align="left"> <code>atoms.timeDate</code> </td>  <td align="left"> Returns date/time atoms from a 'timeDate' object, </td>
+</tr>
+<tr>
+  <td align="left"> <code>months.timeDate</code> </td>  <td align="left"> Extract months atom from a 'timeDate' object. </td>
+</tr>
+</table>
+
+
+<h3>Usage</h3>
+
+<pre>
+## Default S3 method:
+as.timeDate(x, zone = myFinCenter, FinCenter = myFinCenter)
+## S3 method for class 'POSIXt':
+as.timeDate(x, zone = myFinCenter, FinCenter = myFinCenter)
+## S3 method for class 'Date':
+as.timeDate(x, zone = myFinCenter, FinCenter = myFinCenter) 
+
+## S3 method for class 'timeDate':
+as.character(x, ...)
+## S3 method for class 'timeDate':
+as.double(x, units = c("auto", "secs", "mins", "hours", "days", "weeks"), ...)
+## S3 method for class 'timeDate':
+as.data.frame(x, ...)
+## S3 method for class 'timeDate':
+as.POSIXct(x, tz = "")
+## S3 method for class 'timeDate':
+as.POSIXlt(x, tz = "")
+## S3 method for class 'timeDate':
+as.Date(x, method = c("trunc", "round", "next"), ...)
+
+## S3 method for class 'timeDate':
+julian(x, origin = timeDate("1970-01-01"), units = c("auto", 
+    "secs", "mins", "hours", "days", "weeks"), zone = NULL, FinCenter = NULL, ...)
+## S3 method for class 'timeDate':
+atoms(x, ...)
+## S3 method for class 'timeDate':
+months(x, abbreviate = NULL)
+</pre>
+
+
+<h3>Arguments</h3>
+
+<table summary="R argblock">
+<tr valign="top"><td><code>abbreviate</code></td>
+<td>
+[months] - <br>
+currently not used.
+</td></tr>
+<tr valign="top"><td><code>tz</code></td>
+<td>
+inputs the time zone to POSIX objects, i.e. the time zone, 
+<code>zone</code>, or financial center string, <code>FinCenter</code>, 
+as used by <code>timeDate</code> objects.
+</td></tr>
+<tr valign="top"><td><code>FinCenter</code></td>
+<td>
+a character with the the location of the  
+financial center named as "continent/city". 
+</td></tr>
+<tr valign="top"><td><code>method</code></td>
+<td>
+a character string denoting the method how to determine the
+dates.
+</td></tr>
+<tr valign="top"><td><code>origin</code></td>
+<td>
+a length-one object inheriting from class <code>"timeDate"</code>
+setting the origin for the julian counter.
+</td></tr>
+<tr valign="top"><td><code>units</code></td>
+<td>
+a character string denoting the date/time units in which the 
+results are desired.
+</td></tr>
+<tr valign="top"><td><code>x</code></td>
+<td>
+an object of class <code>timeDate</code>.
+</td></tr>
+<tr valign="top"><td><code>zone</code></td>
+<td>
+the time zone or financial center where the data were recorded.
+</td></tr>
+<tr valign="top"><td><code>...</code></td>
+<td>
+arguments passed to other methods.
+</td></tr>
+</table>
+
+<h3>Value</h3>
+
+<p>
+<code>as.character</code><br>
+<code>as.data.frame</code>
+<br>
+return a <code>timeDate</code> object trnasformed into a character or a
+data frame formatted object.
+<br>
+<br>
+<code>as.POSIXct</code>
+<br>
+return a <code>timeDate</code> object transformed into a POSIX type
+formatted object.
+<br>
+<br>
+<code>julian</code>
+<br>
+return a <code>timeDate</code> object as a Julian count.
+<br>
+<br>
+<code>atoms</code><br>
+<code>months</code>
+<br>
+extrac from a <code>timeDate</code> object the calendar atoms, i.e,
+the year, month, day, and optionally hour, minute and second.</p>
+
+<h3>Author(s)</h3>
+
+<p>
+Diethelm Wuertz for the Rmetrics <font face="Courier New,Courier" color="#666666"><b>R</b></font>-port.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>
+<code>timeDateClass</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre>
+## as.character 
+   tD = timeDate()
+   as.character(tD)
+   
+## as.data.frame -
+   as.data.frame(tD)
+   
+## as.POSIXct -  
+   as.POSIXct(tD)
+
+## julian -
+   tC = timeCalendar()
+   julian(tC)[1:3]
+   
+## atoms -
+   atoms(tC)
+   
+## months -
+   months(tC)
+</pre>
+
+
+
+<hr><div align="center">[Package <em>fCalendar</em> version 251.70 <a href="00Index.html">Index]</a></div>
+
+</body></html>
