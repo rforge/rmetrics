@@ -1,4 +1,4 @@
-PKG=fEcofin
+PKG=fUtilities
 TOP=../..
 SUITE=doRUnit.R
 R=R
