@@ -28,6 +28,8 @@
 
 
 ################################################################################
+# FUNCTION:             DESCRIPTION:
+#  'fREG'                S4 Class Representation
 # S3-METHODS:           PRINT METHOD:
 #  show.fREG             Prints results from a regression model fit 
 # S3-METHODS:           PLOT METHOD:    
@@ -45,6 +47,26 @@
 # S3-METHODS:           SUMMARY METHOD:
 #  summary               Summarizes fit and diagnostics for a regression model
 ################################################################################
+
+
+setClass("fREG", 
+    # Class Representation
+    representation(
+        call = "call",
+        formula = "formula",
+        family = "character",  
+        method = "character",
+        data = "timeSeries",
+        fit = "list",
+        residuals = "timeSeries",
+        fitted = "timeSeries",
+        title = "character",
+        description = "character"
+    )  
+)
+      
+
+# ------------------------------------------------------------------------------
 
 
 show.fREG = 
