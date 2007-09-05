@@ -1,4 +1,4 @@
-PKG=fCalendar
+PKG=fSeries
 TOP=../..
 SUITE=doRUnit.R
 R=R

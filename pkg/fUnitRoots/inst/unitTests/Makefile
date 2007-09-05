@@ -1,4 +1,4 @@
-PKG=fSeries
+PKG=fUnitRoots
 TOP=../..
 SUITE=doRUnit.R
 R=R
