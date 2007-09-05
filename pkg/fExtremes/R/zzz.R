@@ -1,13 +1,4 @@
 
-#*******************************************************************************
-# fExtremes - A SOFTWARE COLLECTION FOR FINANCIAL ENGINEERS
-# Beyond the Sample: Dealing with Extreme Values
-#
-# collected by Diethelm Wuertz
-# Version 0.9
-#*******************************************************************************
-
-
 # This library is free software; you can redistribute it and/or
 # modify it under the terms of the GNU Library General Public
 # License as published by the Free Software Foundation; either

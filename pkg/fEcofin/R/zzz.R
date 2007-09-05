@@ -28,11 +28,6 @@
 
 
 ################################################################################
-# fEcofin - A SOFTWARE COLLECTION FOR FINANCIAL ENGINEERS
-# Economic and Financial Time Series Data
-#
-# (c) Diethelm Wuertz and Rmetrics Foundation (2007)
-################################################################################
  
 
 .First.lib =  
