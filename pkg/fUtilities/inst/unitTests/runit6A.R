@@ -1,0 +1,78 @@
+
+# This library is free software; you can redistribute it and/or
+# modify it under the terms of the GNU Library General Public
+# License as published by the Free Software Foundation; either
+# version 2 of the License, or (at your option) any later version.
+#
+# This library is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the 
+# GNU Library General Public License for more details.
+#
+# You should have received a copy of the GNU Library General 
+# Public License along with this library; if not, write to the 
+# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston, 
+# MA  02111-1307  USA
+
+# Copyrights (C)
+# for this R-port: 
+#   1999 - 2007, Diethelm Wuertz, GPL
+#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
+#   info@rmetrics.org
+#   www.rmetrics.org
+# for the code accessed (or partly included) from other R-ports:
+#   see R's copyright and license files
+# for the code accessed (or partly included) from contributed R-ports
+# and other sources
+#   see Rmetrics's copyright file 
+
+
+################################################################################
+# FUNCTION:           GENERAL EXTRACTORS FOR S4:
+#  isS4                Checks if a function is a S4 object
+#  getCall             Extracts the call slot from a S4 object 
+#  getModel            Extracts the model slot from a S4 object
+#  getTitle            Extracts the title slot from a S4 object
+#  getDescription      Extracts the description slot from a S4 object
+#  getSlot             Extracts a specified slot from a S4 object
+################################################################################
+
+
+test.extractors =
+function()
+{   
+    # Example S4 Representation:
+    # Hyothesis Testing with Control Settings 
+    setClass("hypTest", 
+        representation(
+            call = "call",
+            data = "numeric",
+            test = "list",
+            description = "character")  
+    )
+   
+    # Shapiro Wilk Normaility Test
+    swTest = function(x, description = "") 
+    {
+        ans = shapiro.test(x)
+        class(ans) = "list"
+        new("hypTest", 
+            call = match.call(), 
+            data = x, 
+            test = ans,
+            description = description)
+    }
+    test = swTest(x = rnorm(500), description = "500 RVs")
+   
+    # Extractor Functions:
+    isS4(test)
+    getCall(test)
+    getDescription(test)
+    
+    # Return Value:
+    return()
+}
+
+
+################################################################################
+
