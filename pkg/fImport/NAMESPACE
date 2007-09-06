@@ -1,0 +1,23 @@
+
+
+## Functions defined in this package
+export(
+    economagicImport,
+    economagicSeries,
+    fredImport,
+    fredSeries,
+    forecastsImport,
+    forecastsSeries,
+    yahooImport,
+    yahooSeries,
+    keystatsImport)
+    
+## Classes       
+exportClasses(
+    "fWEBDATA")
+    
+## Methods
+exportMethods(
+    "show")
+
+    
