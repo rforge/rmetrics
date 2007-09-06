@@ -1,6 +1,6 @@
-\name{AssetsLPM}
+\name{LowerPartialMoments}
 
-\alias{AssetsLPM}
+\alias{LowerPartialMoments}
 
 \alias{assetsLPM}
 
