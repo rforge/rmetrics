@@ -2,7 +2,6 @@
 
 \alias{holiday}
 
-
 \title{Holidays}
 
 
@@ -14,9 +13,7 @@
 
 
 \usage{
-function(year = currentYear, Holiday = "Easter")
-holidayNYSE(year = currentYear)
-holidayZURICH(year = currentYear)
+holiday(year = currentYear, Holiday = "Easter")
 }
 
 

@@ -1,6 +1,6 @@
-\name{TimeDateSpecDates}
+\name{timeSpecialDate}
 
-\alias{TimeDateSpecDates}
+\alias{timeSpecialDate}
 
 
 \alias{timeLastDayInMonth}
@@ -15,7 +15,7 @@
 \alias{timeLastNdayInMonth}
 
 
-\title{timeDate Class, Special Date Functions}
+\title{Special Dates}
 
 
 \description{
