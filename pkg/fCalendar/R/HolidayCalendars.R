@@ -48,7 +48,7 @@ function(year = currentYear, Holiday = "Easter")
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Returns the data of a holiday, year may be a vector.
+    #   Returns the date of a holiday, year may be a vector.
     
     # Arguments:
     #   year - an integer variable or vector for the year(s) ISO-8601 
@@ -59,7 +59,7 @@ function(year = currentYear, Holiday = "Easter")
     
     # Value:
     #   Returns the date of a listed holiday for the selected
-    #   "year"(s), ".sdate" formatted, an integer of the form CCYYMMDD.
+    #   "year"(s), an object of class 'timeDate'.
     
     # Example:
     #   holiday()
@@ -279,39 +279,33 @@ function(year = currentYear)
     
     # FUNCTION:
     
-    # Calendar:
-    years = y = year
-    holidays = NULL
-    # Iterate Years:
-    for (y in years ) { 
-        holidays = c(holidays, NewYearsDay(y))
-        holidays = c(holidays, GoodFriday(y))   
-        holidays = c(holidays, EasterMonday(y)) 
-        holidays = c(holidays, LaborDay(y))
-        holidays = c(holidays, PentecostMonday(y))  
-        holidays = c(holidays, ChristmasDay(y)) 
-        holidays = c(holidays, BoxingDay(y)) 
-        holidays = c(holidays, CHBerchtoldsDay(y))
-        holidays = c(holidays, CHSechselaeuten(y))
-        holidays = c(holidays, CHAscension(y))
-        holidays = c(holidays, CHConfederationDay(y))
-        holidays = c(holidays, CHKnabenschiessen(y)) }
+
+    # Iterate Years: 
+    holidays = c(
+        NewYearsDay(year),
+        GoodFriday(year),   
+        EasterMonday(year), 
+        LaborDay(year),
+        PentecostMonday(year),  
+        ChristmasDay(year),
+        BoxingDay(year),
+        CHBerchtoldsDay(year),
+        CHSechselaeuten(year),
+        CHAscension(year),
+        CHConfederationDay(year),
+        CHKnabenschiessen(year) )
     
-    # Sort and Convert to 'timeDate':
-    holidays = as.character(sort(holidays))
-    ans = timeDate(holidays, format = "%Y%m%d", FinCenter = "GMT")
+    # Sort and Remove Weekends: 
+    holidays = sort(holidays)
+    holidays = holidays[isWeekday(holidays)]
 
-    # Remove Remaining Weekend Dates:
-    ans = ans[!( (ans@Data)$wday == 0 | (ans@Data)$wday == 6 )]
-
-    # Set Financial Center:
-    ans@FinCenter = "Europe/Zurich"
+    # Add Financial Center:
+    holidays@FinCenter = "Zurich"
 
     # Return Value:
-    ans 
+    holidays 
 }
 
 
 ################################################################################
-
 
