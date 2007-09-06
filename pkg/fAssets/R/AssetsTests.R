@@ -104,7 +104,12 @@ function(x, Replicates = 99, title = NULL, description = NULL)
     x = as.matrix(x)
     
     # Test:
-    test = mvnorm.etest(x, Replicates)
+    mvnorm.etest = function() { return() }
+    .require = require
+    .require("energy")
+    test = mvnorm.etest(x = x, R = Replicates)
+    detach("package:energy")
+    detach("package:boot")
     names(test$p.value) = ""
     class(test) = "list"
     
