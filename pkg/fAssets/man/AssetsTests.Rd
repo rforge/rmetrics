@@ -65,7 +65,9 @@ assetsTest(x, method = c("shapiro", "energy"), Replicates = 100,
 \note{
     
     The usage of the alternative \code{method="energy"} requires to
-    load the contributed R package \code{energy}.
+    load the contributed R package \code{energy}. This is done by the
+    function \code{assetsTest} itself, but it is important to know, 
+    that the packages can only loaded if they are installed.
     
 }
 

@@ -92,7 +92,14 @@ function(x, Replicates = 99, title = NULL, description = NULL)
     # Description:
     
     # Note:
-    #   Requires Contributed R package "boot"
+    #   Requires Contributed R packags "energy and "boot".
+    #   Unfortunately, "boot" conflicts with "robustbase".
+    #   What we are doing here is to load the packages not 
+    #   at startup, we load it here, and detach it after usage.
+    #   It is important to know, that require can only load 
+    #   an installed package, and this is detected by having a 
+    #   ‘DESCRIPTION’ file. ".require" is used here that it
+    #   is not detected  by R CMD. - Can we do this better ? 
     
     # Example:
     #   .mvenergyTest(x = assetsSim(100), 99)
@@ -103,10 +110,11 @@ function(x, Replicates = 99, title = NULL, description = NULL)
     if (class(x) == "timeSeries") x = seriesData(x)
     x = as.matrix(x)
     
-    # Test:
-    mvnorm.etest = function() { return() }
+    # Test:  
+    mvnorm.etest = function(x = x, R = Replicates) { NA }
     .require = require
     .require("energy")
+    rm(mvnorm.etest)
     test = mvnorm.etest(x = x, R = Replicates)
     detach("package:energy")
     detach("package:boot")
