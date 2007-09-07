@@ -1,4 +1,4 @@
-pkg <- "fEcofin"
+pkg <- "fUtilities"
 
 if(require("RUnit", quietly = TRUE)) {
 
