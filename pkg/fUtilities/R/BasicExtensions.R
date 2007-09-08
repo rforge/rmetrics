@@ -221,7 +221,7 @@ function(x, ...)
 
 
 round.default =
-function(x, digits = 0, ...) 
+function(x, digits = 0) 
 {
     base::round(x, digits)
 }
