@@ -72,33 +72,33 @@
 
 
 \usage{
-align.default(x, y, xout, method = "linear", n = 50, rule = 1, f = 0,
+\method{align}{default}(x, y, xout, method = "linear", n = 50, rule = 1, f = 0,
     ties = mean, \dots)
 
-attach.default(what, pos = 2, name = deparse(substitute(what)),
+\method{attach}{default}(what, pos = 2, name = deparse(substitute(what)),
     warn.conflicts = TRUE)
 
-log.default(x, base = exp(1))
+\method{log}{default}(x, base = exp(1))
 
-outlier.default(x, sd = 5, complement = TRUE, \dots)
+\method{outlier}{default}(x, sd = 5, complement = TRUE, \dots)
 
 % round.default(x, digits, \dots)
-round.default(x, digits = 0)
+\method{round}{default}(x, digits = 0)
 
-sample.default(x, size, replace = FALSE, prob = NULL, \dots)
+\method{sample}{default}(x, size, replace = FALSE, prob = NULL, \dots)
 
 % sort.default(x, decreasing = FALSE, ...)
 
-var.default(x, y = NULL, na.rm = FALSE, use)
-cov.default(x, y = NULL, use = "all.obs", 
+\method{var}{default}(x, y = NULL, na.rm = FALSE, use)
+\method{cov}{default}(x, y = NULL, use = "all.obs", 
     method = c("pearson", "kendall", "spearman"))
-cor.default(x, y = NULL, use = "all.obs", 
+\method{cor}{default}(x, y = NULL, use = "all.obs", 
     method = c("pearson", "kendall", "spearman"))
     
-colMeans.default(x, na.rm = FALSE, dims = 1)
-colSums.default(x, na.rm = FALSE, dims = 1)
-rowMeans.default(x, na.rm = FALSE, dims = 1)
-rowSums.default(x, na.rm = FALSE, dims = 1) 
+\method{colMeans}{default}(x, na.rm = FALSE, dims = 1)
+\method{colSums}{default}(x, na.rm = FALSE, dims = 1)
+\method{rowMeans}{default}(x, na.rm = FALSE, dims = 1)
+\method{rowSums}{default}(x, na.rm = FALSE, dims = 1) 
     
 stdev(x, na.rm = FALSE)
 
@@ -109,8 +109,8 @@ atoms(x, \dots)
 
 as.POSIXlt(x, tz = "")
 
-as.matrix.ts(x, \dots)
-as.matrix.mts(x, \dots)
+\method{as.matrix}{ts}(x, \dots)
+\method{as.matrix}{mts}(x, \dots)
 }
 
 
