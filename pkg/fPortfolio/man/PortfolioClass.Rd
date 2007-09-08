@@ -19,9 +19,6 @@
 \alias{plot.fPORTFOLIO}
 \alias{summary.fPORTFOLIO}
 
-\alias{weightsSlider}     
-\alias{frontierSlider}
-
 
 \title{Portfolio Class}
 
@@ -35,9 +32,6 @@
     the portfolio, and constraints, while function
     portfolioFrontier() has two additional 
     arguments for title and description. 
-    Additionally to the optimization functions 
-    there are two sliders and a plot function 
-    available.
     \cr
     
     The functions are:
@@ -50,9 +44,7 @@
     \code{efficientPortfolio} \tab returns an efficient portfolio, \cr
     \code{portfolioFrontier} \tab returns the efficient frontier, \cr
     \code{show} \tab print method for 'fPPORTFOLIO' objects, \cr   
-    \code{plot} \tab plot method for objects of class fPORTFOLIO, \cr   
-    \code{weightsSlider} \tab starts the weights slider, \cr           
-    \code{frontierSlider} \tab starts the efficient frontier Slider. }
+    \code{plot} \tab plot method for objects of class fPORTFOLIO. }
     
 }
     
@@ -70,9 +62,6 @@ efficientPortfolio(data, spec = portfolioSpec(), constraints = NULL)
 show.fPORTFOLIO(object)
 \method{plot}{fPORTFOLIO}(x, which = "ask", control = list(), \dots)
 \method{summary}{fPORTFOLIO}(object, \dots)
-
-weightsSlider(object, control = list(), \dots)     
-frontierSlider(object, control = list(), \dots)
 }
 
 
@@ -189,31 +178,6 @@ frontierSlider(object, control = list(), \dots)
     and in this case the function \code{feasiblePortfolio} assumes
     equal weights. To set user specified weights in the specification 
     structure, use the function \code{setWeights}. 
-    
-    
-    \bold{Portfolio Sliders:}
-    \cr\cr   
-    The sliders have illustrative objectives. The functions expect an S4 object
-    of class fPortfolio.\cr
-    \code{frontierSlider}: With the frontier slider it is possible to slide 
-    over the efficient frontier. Risk and return of the current portfolio is 
-    plotted in the title. The frontier slider has several addable plot features 
-    listed in the following. Little pies at the current portfolio showing the 
-    weights (left pie) and/or the attributed weights (right pie), legend, 
-    minimum variance portfolio, tangency portfolio, market portfolio with 
-    capital market line (risk free rate is slidable), Sharpe ratio plot, equal 
-    weights portfolio, single asset portfolios, two assets short selling 
-    efficient frontier, Monte Carlo portfolios (number is sliderable in a 
-    range from 0  to 25000).
-    \cr    
-    \code{weightsSlider}: The weights slider gives an overview of the weights 
-    on the efficient frontier. Three weight plots \code{weightsPlot}, 
-    \code{piePlot} and the not stacked weights and a frontier plot with the
-    single assets, the tangency portfolio and a legend are provided. In the 
-    two weights plots the vertical line indicates the current portfolio and a 
-    dotted one indicates the minimum variance portfolio. The number in the 
-    pie plot stands for the asset and the sign shows whether this asset is 
-    short or long. In all plots colors represent the same asset.
 
 }
 
@@ -448,6 +412,7 @@ frontierSlider(object, control = list(), \dots)
    \code{\link{PortfolioData}},
    \code{\link{PortfolioSpec}},
    \code{\link{PortfolioConstraints}},
+   \code{\link{PortfolioPlots}},
    \code{\link{PortfolioPlots}}.
 
 }
@@ -488,10 +453,6 @@ frontierSlider(object, control = list(), \dots)
 ## frontierSlider -
    # Try Frontier Slider:
    # frontierSlider(frontier)
-
-## weightsSlider -
-   # Try Weights Slider:
-   # weightsSlider(frontier)
 }
 
 
