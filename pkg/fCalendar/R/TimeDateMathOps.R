@@ -298,7 +298,7 @@ units = c("auto", "secs", "mins", "hours", "days", "weeks"))
 
 
 round.timeDate =
-function(x, units = c("days", "hours", "mins"), ...)     
+function(x, units = c("days", "hours", "mins"))     
 {   # A function implemented by Diethelm Wuertz
 
     # Changes:

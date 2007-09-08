@@ -42,7 +42,7 @@
 \method{diff}{timeDate}(x, lag = 1, differences = 1, \dots)
 difftimeDate(time1, time2, 
     units = c("auto", "secs", "mins", "hours", "days", "weeks"))
-\method{round}{timeDate}(x, units = c("days", "hours", "mins"), ...) 
+\method{round}{timeDate}(x, units = c("days", "hours", "mins")) 
 \method{trunc}{timeDate}(x, units = c("days", "hours", "mins"), ...)     
 }
 
