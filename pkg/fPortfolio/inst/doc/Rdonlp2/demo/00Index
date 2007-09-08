@@ -1,0 +1,4 @@
+Rdonlp2.simple	minimization with parameter bounds and linear constraints
+Rdonlp2.simple2	minimization with parameter bounds and nonlinear constraints
+Rdonlp2.alkylation	     middle-scale minimization with all the constraints
+Rdonlp2.fmincontest	     minimization with appropriate lower bounds for parameters in denominator
