@@ -530,7 +530,8 @@ function()
     }
     
     # Chart:
-    .emaSlider(tS)
+    # .emaSlider(tS)
+    NA
     
     # Return Value:
     return()  

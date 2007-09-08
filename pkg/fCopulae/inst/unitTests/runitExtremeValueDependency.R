@@ -109,7 +109,8 @@ function()
     #   evTailCoeffSlider(B = 10) 
     
     # Try Slider:
-    evTailCoeffSlider()                                                   
+    # evTailCoeffSlider()                                                   
+    NA
     
     # Return Value:
     return()    

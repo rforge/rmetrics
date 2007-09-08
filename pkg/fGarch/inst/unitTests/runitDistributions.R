@@ -98,12 +98,14 @@ test.snormSlider =
 function()
 {   
     # Try Distribution:
-    .snormSlider(type = "dist")
+    # .snormSlider(type = "dist")
+    NA
    
     # Try Random Variates:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
-    .snormSlider(type = "rand")
+    # .snormSlider(type = "rand")
+    NA 
     
     # Return Value:
     return()    
@@ -142,12 +144,14 @@ test.sstdSlider =
 function()
 {   
     # Try Distribution:
-    .sstdSlider(type = "dist")                              
-   
+    # .sstdSlider(type = "dist")                              
+    NA
+    
     # Try Random Variates:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
-    .sstdSlider(type = "rand")
+    # .sstdSlider(type = "rand")
+    NA
     
     # Return Value:
     return()    
@@ -186,12 +190,13 @@ test.sgedSlider =
 function()
 {   
     # Try Distribution:
-    .sgedSlider(type = "dist")
-   
+    # .sgedSlider(type = "dist")
+    NA 
     # Try Random Variates:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
-    .sgedSlider(type = "rand")
+    # .sgedSlider(type = "rand")
+    NA
     
     # Return Value:
     return()    

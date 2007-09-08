@@ -73,7 +73,8 @@ function()
     # rarchmSlider(B = 10)
     
     # Try Slider:
-    rarchmSlider()
+    # rarchmSlider()
+    NA
   
     # Return Value:
     return()    
@@ -137,10 +138,12 @@ function()
     # parchmSlider(type = c("persp", "contour"), B = 10)
     
     # Try Perspective Slider:
-    parchmSlider()
+    # parchmSlider()
+    NA 
     
     # Try Contour Slider:
-    parchmSlider("contour")
+    # parchmSlider("contour")
+    NA
     
     # Return Value:
     return()    
@@ -205,10 +208,12 @@ function()
     # darchmSlider(type = c("persp", "contour"), B = 10)
     
     # Try Perspective Slider:
-    darchmSlider()
+    # darchmSlider()
+    NA
     
     # Try Contour Slider:
-    darchmSlider("contour")
+    # darchmSlider("contour")
+    NA
     
     # Return Value:
     return()    

@@ -37,15 +37,19 @@
 test.forecasts = 
 function()
 {     
-    # fredImport -
-    X = forecastsImport("GOLD")
-    print(X) 
-    class(X)
-    
-    # fredSeries -     
-    X = forecastsSeries("GOLD")
-    head(X)
-    class(X)
+    if (FALSE) {
+        
+        # fredImport -
+        X = forecastsImport("GOLD")
+        print(X) 
+        class(X)
+        
+        # fredSeries -     
+        X = forecastsSeries("GOLD")
+        head(X)
+        class(X)
+        
+    }
     
     # Return Value:
     return()

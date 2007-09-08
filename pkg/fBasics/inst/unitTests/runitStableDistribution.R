@@ -35,7 +35,6 @@
 #  qstable               Returns quantiles for stable DF
 #  rstable               Returns random variates for stable DF
 # FUNCTION:             STABLE SLIDERS:
-#  symstbSlider          Displays symmetric stable distribution function
 #  stableSlider          Displays stable distribution function
 ################################################################################
 
@@ -142,23 +141,6 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.symstbSlider = 
-function()
-{
-    # Arguments ?
-    #   sysmstbSlider()
-    
-    # Try:
-    symstbSlider()
-    
-    # Return Value:
-    return()    
-}
-
-
-# ------------------------------------------------------------------------------
-
-
 test.stableSlider = 
 function()
 {
@@ -166,7 +148,8 @@ function()
     #   stableSlider()
     
     # Try:
-    stableSlider()
+    # stableSlider()
+    NA
     
     # Return Value:
     return()    

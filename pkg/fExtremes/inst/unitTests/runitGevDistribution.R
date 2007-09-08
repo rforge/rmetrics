@@ -95,12 +95,14 @@ test.gevSlider =
 function()
 {
     # Distribution Slider:
-    print("Activate Slider manually!")
-    gevSlider(method = "dist")
+    # print("Activate Slider manually!")
+    # gevSlider(method = "dist")
+    NA
     
     # Random Variates Slider:
-    print("Activate Slider manually!")
-    gevSlider(method = "rvs")
+    # print("Activate Slider manually!")
+    # gevSlider(method = "rvs")
+    NA
     
     # Return Value:
     return()    

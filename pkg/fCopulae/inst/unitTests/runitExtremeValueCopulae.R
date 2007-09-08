@@ -72,8 +72,9 @@ function()
     # revSlider(B = 10)
     
     # Try Slider()
-    revSlider()                         # CHECK !!!
-
+    # revSlider()                         # CHECK !!!
+    NA
+    
     # Return Value:
     return()    
 }
@@ -115,10 +116,12 @@ function()
     # pevSlider(type = c("persp", "contour"), B = 10)
 
     # Try Perspective Slider:
-    pevSlider("persp")
+    # pevSlider("persp")
+    NA
     
     # Try Contour Slider:
-    pevSlider("contour")
+    # pevSlider("contour")
+    NA
     
     # Return Value:
     return()    
@@ -161,10 +164,12 @@ function()
     # devSlider(type = c("persp", "contour"), B = 10)
 
     # Try Perspective Slider:
-    devSlider("persp")
+    # devSlider("persp")
+    NA 
     
     # Try Contour Slider:
-    devSlider("contour")
+    # devSlider("contour")
+    NA
     
     # Return Value:
     return()    

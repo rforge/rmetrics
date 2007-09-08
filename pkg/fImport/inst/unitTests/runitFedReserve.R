@@ -37,15 +37,18 @@
 test.fred = 
 function()
 {     
-    # fredImport -
-    X = fredImport("DPRIME")
-    print(X) 
-    class(X)
-    
-    # fredSeries -     
-    X = fredSeries("DPRIME")
-    head(X)
-    class(X)
+    if (FALSE) {
+        
+        # fredImport -
+        X = fredImport("DPRIME")
+        print(X) 
+        class(X)
+        
+        # fredSeries -     
+        X = fredSeries("DPRIME")
+        head(X)
+        class(X)
+    }
     
     # Return Value:
     return()

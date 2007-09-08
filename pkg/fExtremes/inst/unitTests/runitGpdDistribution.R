@@ -89,11 +89,11 @@ test.gpdSlider =
 function()
 {
     # Distribution Slider:
-    print("Activate Slider manually!")
+    # print("Activate Slider manually!")
     # gpdSlider(method = "dist")
     
     # Random Variates Slider:
-    print("Activate Slider manually!")
+    # print("Activate Slider manually!")
     # gpdSlider(method = "rvs")
     
     # Return Value:

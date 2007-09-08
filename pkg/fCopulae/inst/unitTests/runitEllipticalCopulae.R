@@ -78,7 +78,8 @@ test.rellipticalSlider =
 function()
 {   
     # Try Slider:
-    rellipticalSlider()
+    # rellipticalSlider()
+    NA
     
     # Return Value:
     return()    
@@ -120,10 +121,12 @@ function()
     # pellipticalSlider(type = c("persp", "contour"), B = 20) 
  
     # Try Perspective Slider:
-    pellipticalSlider()
+    # pellipticalSlider()
+    NA
     
     # Try Contour Slider:
-    pellipticalSlider("contour")
+    # pellipticalSlider("contour")
+    NA
    
     # Return Value:
     return()    
@@ -165,10 +168,12 @@ function()
     # dellipticalSlider(type = c("persp", "contour"), B = 20) 
     
     # Try Perspective Slider:
-    dellipticalSlider()
+    # dellipticalSlider()
+    NA
     
     # Try Contour Slider:
-    dellipticalSlider("contour")
+    # dellipticalSlider("contour")
+    NA
     
     # Return Value:
     return()    

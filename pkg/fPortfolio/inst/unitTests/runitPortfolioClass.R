@@ -502,7 +502,8 @@ function()
     Frontier
     
     # Slider:
-    weightsSlider(Frontier) 
+    # weightsSlider(Frontier) 
+    NA
     
     # Return Value:
     return()
@@ -530,7 +531,8 @@ function()
     Frontier
     
     # Slider:
-    frontierSlider(Frontier)                                            
+    # frontierSlider(Frontier)                                            
+    NA 
     
     # Return Value:
     return()

@@ -147,7 +147,8 @@ function()
     #   hypSlider()
     
     # Try:
-    hypSlider()
+    # hypSlider()
+    NA
     
     # Return Value:
     return()    
@@ -164,7 +165,8 @@ function()
     #   nigSlider
     
     # Try:
-    nigSlider()
+    # nigSlider()
+    NA
     
     # Return Value:
     return()    

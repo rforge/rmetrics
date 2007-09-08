@@ -168,7 +168,8 @@ test.gfuncSlider =
 function()
 {
     # Try Slider:
-    gfuncSlider()
+    # gfuncSlider()
+    NA
     
     # Return Value:
     return()    

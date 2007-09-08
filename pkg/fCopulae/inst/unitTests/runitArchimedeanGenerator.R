@@ -168,7 +168,8 @@ function()
     # PhiSlider()
     
     # Try Slider:
-    PhiSlider()
+    # PhiSlider()
+    NA
     
     # Return Value:
     return()    
@@ -209,7 +210,8 @@ function()
     # KfuncSlider()
     
     # Try Slider:
-    KfuncSlider()
+    # KfuncSlider()
+    NA
     
     # Return Value:
     return()    

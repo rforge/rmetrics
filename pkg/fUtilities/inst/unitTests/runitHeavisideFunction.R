@@ -42,7 +42,8 @@ test.heavisideSlider =
 function()
 {
     # Slider:
-    .heavisideSlider()
+    # .heavisideSlider()
+    NA
         
     # Return Value:
     return() 

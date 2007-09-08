@@ -147,7 +147,8 @@ function()
     #   AfuncSlider()
     
     # Try Slider:
-    AfuncSlider()
+    # AfuncSlider()
+    NA
     
     # Return Value:
     return()    

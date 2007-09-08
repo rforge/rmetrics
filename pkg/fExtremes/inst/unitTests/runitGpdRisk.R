@@ -180,9 +180,10 @@ test.tailSlider =
 function()
 {
     # Danish Fire Claims:
-    x = as.timeSeries(data(danishClaims))
-    tailSlider(x)
-
+    # x = as.timeSeries(data(danishClaims))
+    # tailSlider(x)
+    NA
+    
     # Return Value:
     return()    
 }
