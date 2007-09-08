@@ -82,7 +82,8 @@ log.default(x, base = exp(1))
 
 outlier.default(x, sd = 5, complement = TRUE, \dots)
 
-round.default(x, digits, \dots)
+% round.default(x, digits, \dots)
+round.default(x, digits = 0)
 
 sample.default(x, size, replace = FALSE, prob = NULL, \dots)
 
