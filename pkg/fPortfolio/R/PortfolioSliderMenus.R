@@ -34,6 +34,9 @@
 ################################################################################
 
 
+.counterWeightsSlider = NA
+
+
 weightsSlider =     
 function(object, control = list(), ...)
 {   # A function implemented by Rmetrics
@@ -88,8 +91,8 @@ function(object, control = list(), ...)
     refresh.code = function(...)
     {
         # Startup Counter:
-        .counter <<- .counter + 1
-        if (.counter < 1) return ()
+        .counterWeightsSlider <<- .counterWeightsSlider + 1
+        if (.counterWeightsSlider < 1) return ()
         
         # Sliders:
         N = .sliderMenu(no = 1)
@@ -140,7 +143,7 @@ function(object, control = list(), ...)
     }
   
     # Open Slider Menu:
-    .counter <<- 0
+    .counterWeightsSlider <<- 0
     Start <- which.min(getTargetRisk(object)[ , 1])
     .sliderMenu(refresh.code, title = "Weights Slider",
        names =       c(                 "N"),

@@ -168,7 +168,9 @@ function(data, spec = portfolioSpec())
         Sigma = estimate$cov
     } else if (meanEstimator == "Mcd" | covEstimator == "Mcd") {
         # require(robustbase)
-        estimate = robustbase::covMcd(series)
+        # estimate = robustbase::covMcd(series)
+        # Note imports not declared from robustbase
+        estimate = covMcd(series)
         mu = estimate$center
         Sigma = estimate$cov
     } else if(meanEstimator == "shrink" | covEstimator == "shrink") {
