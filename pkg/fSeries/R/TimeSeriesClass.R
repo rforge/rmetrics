@@ -29,7 +29,6 @@
 
 ################################################################################
 # FUNCTION:                 GENERATION OF TIME SERIES OBJECTS:
-#  'timeSeries'              S4 Class definition for a 'timeSeries' object
 #  timeSeries                Creates a 'timeSeries' object from scratch
 #  readSeries                Reads a spreadsheet and creates a 'timeSeries'
 #  returnSeries              Computes returns from a 'timeSeries' object
@@ -61,35 +60,11 @@ require(methods)
 
 ################################################################################
 # FUNCTION:            GENERATION OF TIME SERIES OBJECTS:
-#  'timeSeries'         S4 Class definition for a 'timeSeries' object
 #  timeSeries           Creates a 'timeSeries' object from scratch
 #  readSeries           Reads from a spreadsheet and creates a 'timeSeries'
 #  returnSeries         Computes returns from a 'timetimehhhhh' object  
 #  applySeries          Applies a function to blocks of a 'timeSeries'
 #  orderStatistics      Compute order statistic of a 'timeSeries'
-
-
-setClass("timeSeries", 
-    # A class implemented by Diethelm Wuertz
-    
-    # Description:
-    #   Class representatation for 'timeSeries' Objects.
-   
-    # CLASS:
-    
-    representation(
-        Data = "matrix",
-        positions = "character",
-        format = "character",
-        FinCenter = "character",      
-        units = "character",
-        recordIDs = "data.frame",
-        title = "character",
-        documentation = "character")    
-)
-   
-
-# ------------------------------------------------------------------------------
 
 
 timeSeries =
