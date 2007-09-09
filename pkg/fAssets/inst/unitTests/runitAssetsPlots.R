@@ -29,7 +29,6 @@
 
 ################################################################################
 # FUNCTION:                 TIME SERIES ASSETS PLOTS:
-#  assetsPlot                Displays an overview of single assets
 #  assetsSeriesPlot          Displays time series of individual assets
 #  assetsHistPlot            Displays histograms of individual assets
 #  assetsDensityPlot         Displays density plots of individual assets 
@@ -49,34 +48,13 @@
 ################################################################################
 
 
-test.assetsPlot =
-function()
-{ 
-    # LPP 2005:
-    LPP = 100* as.timeSeries(data(LPP2005REC))
-    ans = assetsPlot(LPP[, 1:6], title = "LPP2005")
-    ans = assetsPlot(LPP[, 7:9], title = "LPP2005")
-
-    # Berndt Investmwnt Data:
-    BI = as.timeSeries(data(berndtInvest))
-    ans = assetsPlot(BI[,  1:5], title = "Berndt Invest")
-    ans = assetsPlot(BI[, 6:10], title = "Berndt Invest") 
-    
-    # Return Value:
-    return()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
 test.assetsSeriesPlot =
 function()
 { 
     X = as.timeSeries(data(berndtInvest))
-    par(mfrow = c(2,2), cex = 0.7)
+    par(mfrow = c(2,2))
     par(ask = FALSE)
-    assetsSeriesPlot(X, which = c(2, 4, 11, 13))
+    assetsSeriesPlot(X[, c(2, 4, 11, 13)])
     
     # Return Value:
     return()
@@ -90,25 +68,9 @@ test.assetsHistPlot =
 function()
 { 
     X = as.timeSeries(data(berndtInvest))
-    par(mfrow = c(2,2), cex = 0.7)
+    par(mfrow = c(2,2))
     par(ask = FALSE)
-    assetsHistPlot(X, which = c(2, 4, 11, 13))                    # CHECK - main
-    
-    # Return Value:
-    return()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-test.assetsDensityPlot =
-function()
-{ 
-    X = as.timeSeries(data(berndtInvest))
-    par(mfrow = c(2,2), cex = 0.7)
-    par(ask = FALSE)
-    # assetsDensityPlot(X, which = c(2, 4, 11, 13))                # CHECK fails    
+    assetsHistPlot(X[, c(2, 4, 11, 13)])
     
     # Return Value:
     return()
@@ -122,7 +84,7 @@ test.assetsQQNormPlot =
 function()
 { 
     X = as.timeSeries(data(berndtInvest))
-    par(mfrow = c(2,2), cex = 0.7)
+    par(mfrow = c(2,2))
     par(ask = FALSE)
     assetsQQNormPlot(X, which = c(2, 4, 11, 13))
     
@@ -142,7 +104,7 @@ function()
     VAN = as.timeSeries(data(vanIndices))
     
     # Graph Frame:
-    par(mfrow = c(2, 2), cex = 0.7)
+    par(mfrow = c(2, 2))
     par(ask = FALSE)
     
     # Plot:
@@ -170,7 +132,7 @@ function()
     LPP = as.timeSeries(data(LPP2005REC))
     
     # Graph Frame:
-    par(mfrow = c(2, 2), cex = 0.7)
+    par(mfrow = c(2, 2))
     par(ask = FALSE)
     
     # Plot:
@@ -191,7 +153,7 @@ function()
     X = as.timeSeries(data(berndtInvest))
     
     # Graph Frame:
-    par(mfrow = c(2,2), cex = 0.7)
+    par(mfrow = c(2,2))
     par(ask = FALSE)
     
     # Plot:
@@ -212,7 +174,7 @@ function()
     X = as.timeSeries(data(berndtInvest))
     
     # Graph Frame:
-    par(mfrow = c(2,2), cex = 0.7)
+    par(mfrow = c(2,2))
     par(ask = FALSE)
     
     # Plot:

@@ -36,7 +36,7 @@
 test.assetsLPM =
 function()
 { 
-    tS = usPortfolioData()
+    tS = .usPortfolioData()
     # assetsLPM(x = tS, tau = colAvgs(tS), a = 1)                  # CHECK error
 
 

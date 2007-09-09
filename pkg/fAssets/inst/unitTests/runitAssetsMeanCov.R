@@ -45,7 +45,7 @@ test.assetsStats =
 function()
 {
     # Settings:
-    Data = usPortfolioData()
+    Data = .usPortfolioData()
     class(Data)
     head(Data)
     
@@ -64,7 +64,7 @@ test.assetsMeanCov =
 function()
 {
     # Settings:
-    Data = usPortfolioData()
+    Data = .usPortfolioData()
     class(Data)
     
     # Test Standard Mean-Covariance:
@@ -85,7 +85,7 @@ function()
     assetsMeanCov(Data, method = "shrink")
     
     # uses "bagging" [corpcor]
-    assetsMeanCov(Data, method = "bagg")
+    # assetsMeanCov(Data, method = "bagg")
     
     # checkEqualsNumeric(target, current)
     
