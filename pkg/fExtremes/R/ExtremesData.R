@@ -747,7 +747,10 @@ which = c("all", 1, 2, 3, 4), labels = TRUE, ...)
     
     # Convert Type:
     x = as.vector(x)
-    which = match.arg(which)
+    # which = match.arg(which)
+    which = as.character(which[1])
+    stopifnot(which == "all" | 
+        which == "1" | which == "2" | which == "3" | which == "4")
     which = as.character(which)
     
     # Settings:

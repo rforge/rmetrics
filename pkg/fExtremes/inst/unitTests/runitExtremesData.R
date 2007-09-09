@@ -49,10 +49,12 @@ function()
     # emdPlot - Creates an empirical distribution plot
     
     # Artificial Data Set:
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
     x = rgpd(1000)
     # Empirical distribution plot:
     par(ask = FALSE)
-    par(mfrow = c(2, 2), cex = 0.7)
+    par(mfrow = c(2, 2))
     emdPlot(x, plottype = "xy")
     emdPlot(x, plottype = "x")
     emdPlot(x, plottype = "y")
@@ -62,7 +64,7 @@ function()
     x = rt(1000, df = 3) 
     # Empirical distribution plot:
     par(ask = FALSE)
-    par(mfrow = c(2, 2), cex = 0.7)
+    par(mfrow = c(2, 2))
     emdPlot(x, plottype = "xy")
     emdPlot(x, plottype = "x")
     emdPlot(x, plottype = "y")
@@ -72,7 +74,7 @@ function()
     x = rnorm(1000) 
     # Empirical distribution plot:
     par(ask = FALSE)
-    par(mfrow = c(2, 2), cex = 0.7)
+    par(mfrow = c(2, 2))
     emdPlot(x, plottype = "xy")
     emdPlot(x, plottype = "x")
     emdPlot(x, plottype = "y")
@@ -92,12 +94,14 @@ function()
     # qqparetoPlot - Creates exploratory QQ plot for EV analysis
 
     # Artificial Data Set - 
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
     r0 = rgpd(n = 1000, xi = 0)
     r1 = rgpd(n = 1000, xi = 1)
     
     # Graph Frame:
     par(ask = FALSE)
-    par(mfrow = c(2, 2), cex = 0.7)
+    par(mfrow = c(2, 2))
        
     # Empirical Pareto Distribution Plot:
     qqparetoPlot(x = r0, xi = 0)
@@ -123,17 +127,19 @@ function()
     # mrlPlot - Returns a mean residual life plot with confidence levels
     
     # Artificial Data Set - 
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
     r = rgpd(n = 1000)
      
     # Mean Excess Function Plot:
     par(ask = FALSE)
-    par(mfrow = c(2, 2), cex = 0.7)
+    par(mfrow = c(2, 2))
     mePlot(x = r)           # Check, the largest point is missing ...
     mxfPlot(x = r)
     mrlPlot(x = r)
     
     # No Labels:
-    par(mfrow = c(2, 2), cex = 0.7)
+    par(mfrow = c(2, 2))
     par(ask = FALSE)
     mePlot(x = r, labels = FALSE)
     mxfPlot(x = r, labels = FALSE)
@@ -154,11 +160,12 @@ function()
     #  ssrecordsPlot - Plots records development of data subsamples
 
     # Artificial Data Set - 
-    set.seed(1985)
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
     r = rgpd(n = 1000)
     
     # Records Plot:
-    par(mfrow = c(2, 2), cex = 0.7)
+    par(mfrow = c(2, 2))
     par(ask = FALSE)
     recordsPlot(x = r)
     recordsPlot(x = r, ci = 0.99)
@@ -168,7 +175,7 @@ function()
     # Subrecords Plot:
     set.seed(1985)
     r = rgpd(n = 10000)
-    par(mfrow = c(2, 2), cex = 0.7)
+    par(mfrow = c(2, 2))
     par(ask = FALSE)
     recordsPlot(r)
     ssrecordsPlot(r, subsamples = 1)
@@ -179,7 +186,7 @@ function()
     # Subrecords Plot:
     set.seed(1985)
     r = rgpd(n = 10000)
-    par(mfrow = c(2, 2), cex = 0.7)
+    par(mfrow = c(2, 2))
     par(ask = FALSE)
     ssrecordsPlot(r, subsamples = 10)
     ssrecordsPlot(r, subsamples = 50)
@@ -201,12 +208,13 @@ function()
     # msratioPlot - Plots ratio of maximums and sums
     
     # Artificial Data Set - 
-    set.seed(1953)
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry") 
     r = rgpd(n = 1000)
     
     # Mean Excess Function Plot:
     par(ask = FALSE)
-    par(mfrow = c(2, 2), cex = 0.7)
+    par(mfrow = c(2, 2))
     msratioPlot(x = r, p = 1:4)
     ans = msratioPlot(x = r, p = 1:4, labels = FALSE)
     print(head(ans))
@@ -226,17 +234,18 @@ function()
     # lilPlot - Verifies Hartman-Wintner's Law of the iterated logarithm
 
     # Artificial Data Set - 
-    set.seed(1953)
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
     r = rgpd(n = 1000)
     
-    # Strong Law of large numbers:
+    # Strong Law of Large Numbers:
     par(ask = FALSE)
-    par(mfrow = c(2, 2), cex = 0.7)
+    par(mfrow = c(2, 2))
     sllnPlot(x = r)
     ans = sllnPlot(x = r, labels = FALSE)
     print(ans)
     
-    # Law of the iterated logarithm
+    # Law of the Iterated Logarithm:
     lilPlot(x = r)
     ans = lilPlot(x = r, labels = FALSE)
     print(ans)
@@ -254,42 +263,32 @@ function()
 {
     # xacfPlot - Plots autocorrelations of exceedences
     
-    # Artificial Data Set - 
-    set.seed(1953)
+    # Create an Artificial Data Set: 
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
     r = rgpd(n = 1000)
     
     # ACF of Exceedances Plot:
     par(ask = FALSE)
-    par(mfrow = c(2, 2), cex = 0.7)
+    par(mfrow = c(2, 2))
     ans = xacfPlot(x = r)
     print(ans)
     
     # ACF of Exceedances Plot:
     par(ask = FALSE)
-    par(mfrow = c(2, 2), cex = 0.7)
+    par(mfrow = c(2, 2))
     xacfPlot(x = r, labels = FALSE)
     
     # ACF of Exceedances Plot:
     par(ask = FALSE)
-    par(mfrow = c(2, 2), cex = 0.7)
+    par(mfrow = c(2, 2))
     xacfPlot(x = r, labels = FALSE, which = 1); title(main = "1")
     xacfPlot(x = r, labels = FALSE, which = 2); title(main = "2")
-    xacfPlot(x = r, labels = FALSE, which = 3); title(main = "3")
-    xacfPlot(x = r, labels = FALSE, which = 4); title(main = "4")
+    xacfPlot(x = r, labels = FALSE, which = "3"); title(main = "3")
+    xacfPlot(x = r, labels = FALSE, which = "4"); title(main = "4")
       
     # Return Value:
     return()    
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-if (FALSE) {
-    require(RUnit)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fExtremes/tests/runit1A.R",
-        rngKind = "Marsaglia-Multicarry", rngNormalKind = "Inversion")
-    printTextProtocol(testResult)
 }
 
 
