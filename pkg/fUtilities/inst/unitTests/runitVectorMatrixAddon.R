@@ -117,6 +117,10 @@ function()
 test.mathOps =
 function()
 {
+    # Create Pascal Matrix:
+    P = pascal(3)
+    P
+    
     # Add/Subtract/Multiply/Divide:  
     X = P
     
@@ -127,8 +131,8 @@ function()
     X * P                     
     
     # Multiplies rows/columns of a matrix by a vector
-    X \%*\% diag(P)            
-    diag(P) \%*\% X
+    X %*% diag(P)            
+    diag(P) %*% X
     
     # Return Value:
     return()          
@@ -141,8 +145,14 @@ function()
 test.subsets =
 function()
 {          
+    # Create Pascal Matrix:
+    P = pascal(3)
+    P
+    
     # Operate on Subsets of a Matrix:
-    n = 3; i = 2; j = 3
+    n = 3
+    i = 2
+    j = 3
     D = diag(1:3)
     
     # Return the dimension of a matrix
@@ -173,6 +183,10 @@ function()
 {
     # Apply a function to all Elements of a Matrix: 
     
+    # Create Pascal Matrix:
+    P = pascal(3)
+    P
+    
     # Return square root for each element
     sqrt(P)
     
@@ -201,11 +215,18 @@ function()
 {       
     # More Matrix Operations:
     
+    # Create Pascal Matrix:
+    P = pascal(3)
+    P
+    
+    # Create Diagonal Matrix:
+    D = diag(1:3)
+    
     # Return the product of two matrices
-    P \%*\% D   
+    P %*% D   
     
     # Return the Kronecker Product                     
-    P \%x\% D                        
+    P %x% D                        
     
     # Return the transposed matrix
     t(P)                           
@@ -250,8 +271,13 @@ function()
 {  
     # More Linear Algebra:
     
+    # Create Pascal Matrix:
+    P = pascal(3)
+    P
+    
     # Example Matrix and Vector
-    X = P; b = c(1, 2, 3)
+    X = P
+    b = c(1, 2, 3)
     
     # Return the Cholesky factor matrix
     chol(X)                        
