@@ -64,6 +64,35 @@ function()
 # ------------------------------------------------------------------------------
 
 
+test.plot.fGARCH = 
+function()
+{
+    # plot.fGARCH - S3 plot method for an object of class 'fGARCH'
+    
+    # Load Data, convert to numeric Vector:
+    data(dem2gbp)  
+    x = dem2gbp[, 1]
+    
+    # Fit:
+    fit = garchFit(~garch(1,1), data = x, trace = FALSE)
+    
+    # Plot:
+    par(mfrow = c(2, 2))
+    par(ask = FALSE)
+    plot(fit, which = "all")
+    
+    # Plot - try interactively:
+    # par(mfrow = c(1, 1))
+    # plot(fit)
+    
+    # Return Value:
+    return()    
+} 
+
+
+# ------------------------------------------------------------------------------
+
+
 test.summary.fGARCH = 
 function()
 {
@@ -78,35 +107,6 @@ function()
     
     # Summary:
     summary(fit)
-    
-    # Return Value:
-    return()    
-} 
-
-
-# ------------------------------------------------------------------------------
-
-
-test.plot.fGARCH = 
-function()
-{
-    # plot.fGARCH - S3 plot method for an object of class 'fGARCH'
-    
-    # Load Data, convert to numeric Vector:
-    data(dem2gbp)  
-    x = dem2gbp[, 1]
-    
-    # Fit:
-    fit = garchFit(~garch(1,1), data = x, trace = FALSE)
-    
-    # Plot:
-    par(mfrow = c(2, 2), cex = 0.7)
-    par(ask = FALSE)
-    plot(fit, which = "all")
-    
-    # Plot - try interactively:
-    par(mfrow = c(1, 1))
-    plot(fit)
     
     # Return Value:
     return()    
