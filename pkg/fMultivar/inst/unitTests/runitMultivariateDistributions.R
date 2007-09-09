@@ -99,6 +99,8 @@ function()
     # Multivariate Skew Normal
     
     # RVs:
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
     N = 5000
     z = rmvsnorm(N, dim = 2, mu = rep(0, 2), Omega = diag(2), alpha = rep(1, 2))
     
@@ -173,6 +175,8 @@ function()
     # Multivariate Skew Sudent-t
     
     # RVs:
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
     N = 5000
     z = rmvsnorm(N, dim = 2, mu = rep(0, 2), Omega = diag(2), alpha = c(-1, 1))
     
