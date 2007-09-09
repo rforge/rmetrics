@@ -47,22 +47,8 @@
 #  .mvsnormPlot        Plots for Multivariate Normal Distribution
 #  .mvstPlot           Plots for Multivariate Student-t Distribution
 # REQUIREMENTS:       DESCRIPTION:
-#  "mvtnorm"           Contributed Package - available on CRAN & DEBIAN
-# SN BUILTIN:         DESCRIPTION - NOT AVAILABLE ON DEBIAN
-#  .rsn                Internal Function
-#  .rst                Internal Function
-#  .rmst               Internal Function
-#  .rmsn               Internal Function
-#  .msn.quantities     Internal Function
-#  .msn.mle            Internal Function
-#  .msn.dev            Internal Function
-#  .msn.dev.grad       Internal Function
-#  .msn.moment.fit     Internal Function
-#  .zeta               Internal Function
-#  .num.deriv          Internal Function
-#  .mst.mle            Internal Function
-#  .mst.dev            Internal Function
-#  .mst.dev.grad       Internal Function
+#  "mvtnorm"           Contributed R - Package
+#  "sn" | "mnormt"     Contributed R - Package
 ################################################################################
 
 
@@ -86,14 +72,14 @@ alpha = rep(0, dim))
     
     # Univariate Case:
     if (is.vector(x) & dim == 1) {
-        ans = .dsn(x, location = xi[1], scale = as.vector(Omega)[1], 
+        ans = dsn(x, location = xi[1], scale = as.vector(Omega)[1], 
             shape = alpha[1])
     }
     
     # Multivariate Case:
     if (is.matrix(x)) {
         if (dim == ncol(x)) {
-            ans = .dmsn(x = x, xi = xi, Omega = Omega, alpha = alpha)
+            ans = dmsn(x = x, xi = xi, Omega = Omega, alpha = alpha)
         } 
     }
     
@@ -124,7 +110,7 @@ alpha = rep(0, dim))
     
     # Univariate Case:
     if (is.vector(x) & dim == 1) {
-        ans = .psn(x, location = xi[1], scale = as.vector(Omega)[1], 
+        ans = psn(x, location = xi[1], scale = as.vector(Omega)[1], 
             shape = alpha[1])
     }
     
@@ -133,7 +119,7 @@ alpha = rep(0, dim))
         if (dim == ncol(x)) {
             ans = NULL
             for (i in 1:nrow(x) ) {
-                ans = c(ans, .pmsn(x = x[i,], xi = xi, Omega = Omega, 
+                ans = c(ans, pmsn(x = x[i,], xi = xi, Omega = Omega, 
                     alpha = alpha))
             }
         } 
@@ -165,13 +151,13 @@ alpha = rep(0, dim))
     
     # Univariate Case:
     if (dim == 1) {
-        ans = as.matrix(.rsn(n, location = xi[1], 
+        ans = as.matrix(rsn(n, location = xi[1], 
             scale = as.vector(Omega)[1], shape = alpha[1]))
     }
     
     # Multivariate Case:
     if (dim > 1) {
-        ans = .rmsn(n, xi = xi, Omega = Omega, alpha = alpha)
+        ans = rmsn(n, xi = xi, Omega = Omega, alpha = alpha)
     }
     
     # Check for conflicting Dimensions:
@@ -206,14 +192,14 @@ alpha = rep(0, dim), df = 4)
     
     # Univariate Case:
     if (is.vector(x) & dim == 1) {
-        ans = .dst(x, location = xi[1], scale = as.vector(Omega)[1], 
+        ans = dst(x, location = xi[1], scale = as.vector(Omega)[1], 
             shape = alpha[1], df = Inf)
     }
     
     # Multivariate Case:
     if (is.matrix(x)) {
         if (dim == ncol(x)) {
-            ans = .dmst(x = x, xi = xi, Omega = Omega, alpha = alpha, df = df)
+            ans = dmst(x = x, xi = xi, Omega = Omega, alpha = alpha, df = df)
         } 
     }
     
@@ -244,7 +230,7 @@ alpha = rep(0, dim), df = 4)
     
     # Univariate Case:
     if (is.vector(x) & dim == 1) {
-        ans = .pst(x, location = xi[1], scale = as.vector(Omega)[1], 
+        ans = pst(x, location = xi[1], scale = as.vector(Omega)[1], 
             shape = alpha[1], df = df)
     }
     
@@ -253,7 +239,7 @@ alpha = rep(0, dim), df = 4)
         if (dim == ncol(x)) {
             ans = NULL
             for (i in 1:nrow(x) ) {
-                ans = c(ans, .pmst(x = x[i,], xi = xi, Omega = Omega, 
+                ans = c(ans, pmst(x = x[i,], xi = xi, Omega = Omega, 
                     alpha = alpha, df = df))
             }
         } 
@@ -285,13 +271,13 @@ alpha = rep(0, dim), df = 4)
     
     # Univariate Case:
     if (dim == 1) {
-        ans = as.matrix(.rst(n, location = xi[1], 
+        ans = as.matrix(rst(n, location = xi[1], 
             scale = as.vector(Omega)[1], shape = alpha[1], df = df))
     }
     
     # Multivariate Case:
     if (dim > 1) {
-        ans = .rmst(n, xi = xi, Omega = Omega, alpha = alpha, df = df)
+        ans = rmst(n, xi = xi, Omega = Omega, alpha = alpha, df = df)
     }
     
     # Check for conflicting Dimensions:
@@ -508,7 +494,7 @@ function(x, trace = FALSE, ...)
     qrX = qr(X)
     
     # Fit:
-    mle = .msn.mle(X = X, y = y, freq = freq, trace = trace, ...) 
+    mle = msn.mle(X = X, y = y, freq = freq, trace = trace, ...) 
     mle$call = match.call()
     mle$y = y
     mle$y.names = y.names
@@ -520,10 +506,10 @@ function(x, trace = FALSE, ...)
     mle$alpha = alpha = mle$dp$alpha
 
     # Test:
-    dev.norm = .msn.dev(c(qr.coef(qrX, y), rep(0, k)), X, y, freq)
-    test = dev.norm + 2 * mle$logL
-    p.value = 1 - pchisq(test, k)    
-    mle$test.normality = list(LRT = test, p.value = p.value)
+    # dev.norm = msn.dev(c(qr.coef(qrX, y), rep(0, k)), X, y, freq)
+    # test = dev.norm + 2 * mle$logL
+    # p.value = 1 - pchisq(test, k)    
+    # mle$test.normality = list(LRT = test, p.value = p.value)
     
     # Save for Plot:
     Xb = qr.fitted(qrX, y)
@@ -567,8 +553,8 @@ function(x, fixed.df = NA, trace = FALSE, ...)
     m = ncol(X)
     
     # Fit:
-    mle = .mst.mle(X = X, y = y, freq = freq, fixed.df = fixed.df, 
-        start = NA, trace = trace, ...)
+    mle = mst.mle(X = X, y = y, freq = freq, fixed.df = fixed.df, 
+        trace = trace, ...)
     mle$call = match.call()
     mle$y = y
     mle$y.names = y.names
@@ -579,8 +565,7 @@ function(x, fixed.df = NA, trace = FALSE, ...)
     mle$Omega = Omega = mle$dp$Omega
     mle$alpha = alpha = mle$dp$alpha 
     mle$df = df = mle$dp$df
-    
-    
+       
     # Save for Plot:
     Xb = qr.fitted(qrX, y)
     res = qr.resid(qrX, y)
@@ -668,7 +653,7 @@ function(x)
     hist(y0, prob = TRUE, breaks = "FD", xlab = xlab, 
         ylab = "density", border = "white", col = "steelblue4", 
         main = z$y.name)
-    lines(x, .dsn(x, dp0[1], dp0[2], dp0[3]))
+    lines(x, dsn(x, dp0[1], dp0[2], dp0[3]))
     if (length(y0) < 201) 
         points(y0, rep(0, z$n), pch = 1) 
 }
@@ -692,13 +677,13 @@ function(x)
                 if (all(Y[, i] == y)) 
                     Iy = i }
             points(x, y)
-            marg = .msn.marginal(xi, Omega, alpha, c(Ix, Iy))
+            marg = msn.marginal(xi, Omega, alpha, c(Ix, Iy))
             xi.marg = marg$xi
             Omega.marg = marg$Omega
             alpha.marg = marg$alpha
             x1 = seq(min(x), max(x), length = 30)
             x2 = seq(min(y), max(y), length = 30)
-            .dsn2.plot(x1, x2, xi.marg, Omega.marg, alpha.marg, 
+            dsn2.plot(x1, x2, xi.marg, Omega.marg, alpha.marg, 
                 add = TRUE, col = "steelblue4")}, 
         Y = x$y, 
         y.names = dimnames(x$y)[[2]], 
@@ -837,7 +822,7 @@ function(x)
     hist(y0, prob = TRUE, breaks = "FD", xlab = xlab, 
         ylab = "density", border = "white", col = "steelblue4", 
         main = z$y.name)
-    lines(x, .dst(x, dp0[1], dp0[2], dp0[3], dp0[4]))
+    lines(x, dst(x, dp0[1], dp0[2], dp0[3], dp0[4]))
     if (length(y0) < 201) 
         points(y0, rep(0, z$n), pch = 1) 
 }
@@ -861,13 +846,13 @@ function(x)
                 if (all(Y[, i] == y)) 
                     Iy = i }
             points(x, y)
-            marg = .msn.marginal(xi, Omega, alpha, c(Ix, Iy))
+            marg = msn.marginal(xi, Omega, alpha, c(Ix, Iy))
             xi.marg = marg$xi
             Omega.marg = marg$Omega
             alpha.marg = marg$alpha
             x1 = seq(min(x), max(x), length = 30)
             x2 = seq(min(y), max(y), length = 30)
-            .dst2.plot(x1, x2, xi.marg, Omega.marg, alpha.marg, 
+            dst2.plot(x1, x2, xi.marg, Omega.marg, alpha.marg, 
                 df, add = TRUE, col = "steelblue4")} , 
         Y = x$y, 
         y.names = dimnames(x$y)[[2]], 
@@ -934,1124 +919,4 @@ function(x)
         
 
 ################################################################################
-# BUILTIN: sn
-
-
-.dsn = 
-function(x, location = 0, scale = 1, shape = 0, log = FALSE)
-{   # A modified copy from contributed R package sn
-
-    # Description:
-    #   Internal Function
-    
-    # FUNCTION:
-    
-    z = (x - location) / scale
-    
-    if(!log) {
-        y = 2 * dnorm(z) * pnorm(z * shape) / scale
-    } else {
-        y = (-0.9189385332046727-logb(scale)-z^2/2+.zeta(0,shape*z))
-    }
-    
-    # Return Value:
-    replace(y, scale <= 0, NaN)
-
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.psn = 
-function(x, location = 0, scale = 1, shape = 0, ...)
-{   # A modified copy from contributed R package sn
-
-    # Description:
-    #   Internal Function
-    
-    # FUNCTION:
-    
-    z = (x-location)/scale
-    p = pmin(1, pmax(0, pnorm(z) - 2 * .T.Owen(z, shape,...)))
-   
-    # Return Value:
-    replace(p, scale <= 0, NaN)
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.rsn = 
-function(n = 1, location = 0, scale = 1, shape = 0)
-{   # A modified copy from contributed R package sn
-
-    # Description:
-    #   Internal Function
-    
-    # FUNCTION:
-    
-    u1 = rnorm(n)
-    u2 = rnorm(n)
-    id = (u2 > shape * u1)
-    u1[id] = (-u1[id])
-    y = location + scale * u1
-    attr(y,"parameters") = c(location, scale, shape)
-    
-    # Return Value:
-    return(y)
-}
-
-
-# ------------------------------------------------------------------------------
- 
-
-.T.Owen = function(h, a, jmax = 50, cut.point = 6)
-{   # A modified copy from contributed R package sn
-
-    # Description:
-    #   Internal Function
-    
-    # FUNCTION:
-    
-    # Internal Function:
-    .T.int <-function(h,a,jmax,cut.point) {
-        fui<- function(h,i) (h^(2*i))/((2^i)*gamma(i+1)) 
-        seriesL = seriesH = NULL
-        i = 0:jmax
-        low = (h<=cut.point)
-        hL = h[low]
-        hH = h[!low]
-        L = length(hL)
-        if (L > 0) {
-            b = outer(hL,i,fui)
-            cumb = apply(b,1,cumsum)
-            b1 = exp(-0.5*hL^2)*t(cumb)
-            matr = matrix(1,jmax+1,L)-t(b1)
-            jk = rep(c(1,-1),jmax)[1:(jmax+1)]/(2*i+1)
-            matr = t(matr*jk) %*%  a^(2*i+1)
-            seriesL = (atan(a)-as.vector(matr))/(2*pi)
-        }
-        if (length(hH) > 0) 
-            seriesH = atan(a)*exp(-0.5*(hH^2)*a/atan(a)) *
-            (1+0.00868*(hH^4)*a^4)/(2*pi)   
-        series = c(seriesL, seriesH)
-        id = c((1:length(h))[low],(1:length(h))[!low]) 
-        # re-sets in original order
-        series[id] = series  
-        series
-    }
-      
-    if (!is.vector(a) | length(a)>1) 
-        stop("a must be a vector of length 1")
-        
-    if (!is.vector(h)) 
-        stop("h must be a vector")
-        
-    aa = abs(a)    
-    ah = abs(h)
-    
-    if (aa == Inf) 
-        return(0.5 * pnorm(-ah))
-    if (aa == 0)   
-        return(rep(0, length(h)))
-        
-    na = is.na(h)
-    inf = (ah == Inf)
-    ah = replace(ah, (na | inf), 0)
-    
-    if (aa <= 1)
-        owen = .T.int(ah, aa, jmax,cut.point)
-    else
-        owen = 0.5 * pnorm(ah) + pnorm(aa*ah) * (0.5 - pnorm(ah)) - 
-            .T.int(aa*ah,(1/aa), jmax, cut.point)
-            
-    owen = replace(owen, na, NA)
-    owen = replace(owen, inf, 0)
-    
-    # Return Value:
-    return(owen*sign(a))
-} 
-
-
-# ------------------------------------------------------------------------------
-
-
-.dst =  
-function (x, location = 0, scale = 1, shape = 0, df = Inf)
-{   # A modified copy from contributed R package sn
-
-    # Description:
-    #   Internal Function
-    
-    # FUNCTION:
-    
-    if (df == Inf) return(.dsn(x, location, scale, shape))
-    z   = (x - location) / scale
-    pdf = dt(z, df = df) / scale
-    cdf = pt(shape*z*sqrt((df+1)/(z^2+df)), df = df+1)
-    
-    
-    2 * pdf * cdf
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.pst = 
-function (x,  location = 0, scale = 1, shape = 0, df = Inf)
-{   # A modified copy from contributed R package sn
-
-    # Description:
-    #   Internal Function
-    
-    # FUNCTION:
-    
-    if (df == Inf) {
-        p =  .psn(x, location, scale, shape)
-    } else {
-        fp = function(v, shape, df, t)
-            .psn(sqrt(v)*t, 0, 1, shape) * dchisq(v * df, df = df) * df
-        z = (x - location) / scale
-        p = numeric(length(z))
-        for (i in 1:length(z))
-            p[i] = integrate(fp, 0, Inf, shape = shape, df = df, 
-                t = z[i])$value
-    }
-    
-    # Return Value:
-    p
-}
-
-
-# ------------------------------------------------------------------------------
-  
-
-.rst = 
-function (n=1, location = 0, scale = 1, shape = 0, df = Inf)
-{   # A modified copy from contributed R package sn
-
-    # Description:
-    #   Internal Function
-    
-    # FUNCTION:
-    
-    z = .rsn(n, location = 0, scale, shape)
-    if (df == Inf) return(z + location)
-    v = rchisq(n, df) / df
-    y = z / sqrt(v) + location
-    attr(y, "parameters") = c(location, scale, shape, df)
-    
-    # Return Value:
-    return(y)
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.dmsn = 
-function(x, xi = rep(0, d), Omega, alpha)
-{   # A modified copy from contributed R package sn
-
-    # Description:
-    #   Internal Function
-    
-    # FUNCTION:
-    
-    # Density of Multivariate SN rv with parameters (xi, Omega, alpha) 
-    # evaluated at x, which is either a d-vector or (n x d) matrix
-    
-    scale = sqrt(diag(Omega))
-    
-    if (is.vector(x)) {
-        n <-1     
-        d = length(x)
-    } else {
-        n <-dim(x)[1]
-        d = dim(x)[2]
-    }
-    
-    X = t(matrix(x, nrow = n,ncol = d))- xi
-    z = X/scale
-    # diag of (x Omega^(-1) x^T)
-    Q = apply((solve(Omega)%*% X)* X, 2, sum) 
-    # d = diag(qr(Omega)[[1]])
-    Det = prod(abs( diag(qr(Omega)[[1]])))
-    pdf = 2*exp(-0.5*Q) * pnorm(t(z)%*%as.matrix(alpha)) / 
-        sqrt((2*pi)^d * Det)
-        
-    # Return Value:
-    pdf
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.pmsn =  
-function(x, xi = rep(0, d), Omega, alpha, ...)
-{   # A modified copy from contributed R package sn
-
-    # Description:
-    #   Internal Function
-    
-    # FUNCTION:
-     
-    d = length(alpha)
-    p = .pmst(x, xi, Omega, alpha, df = Inf, ...)
-    
-    # Return Value:
-    p
-}
-
-
-
-# ------------------------------------------------------------------------------
-
-
-.rmsn = 
-function(n=1, xi = rep(0, d), Omega, alpha)
-{   # A modified copy from contributed R package sn
-
-    # Description:
-    #   Internal Function
-    
-    # FUNCTION:
-    
-    # generates SN_d(xi,Omega,alpha) variates using transformation method
-    
-    d = ncol(Omega)
-    Z = .msn.quantities(xi, Omega, alpha)
-    y = matrix(rnorm(n*d), n, d) %*% chol(Z$Psi)
-    # each row of y is N_d(0,Psi)
-    abs.y0 = abs(rnorm(n))  
-    abs.y0 = matrix(rep(abs.y0, d), ncol = d)
-    delta = Z$delta
-    z = delta * t(abs.y0) +  sqrt(1-delta^2) * t(y)
-    y = t(xi + Z$omega*z)
-    
-    # Return Value:
-    return(y)
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.dmst = 
-function(x, xi = rep(0, d), Omega, alpha, df = Inf)
-{   # A modified copy from contributed R package sn
-
-    # Description:
-    #   Internal Function
-    
-    # FUNCTION:
-    
-    # Density of multivariate ST rv with parameters (xi, Omega, alpha, df) 
-    # evaluated at x, which is either a d-vector or (n,d) matrix
-    
-    if (df == Inf) 
-        return(.dmsn(x, xi, Omega, alpha))
-    if(is.vector(x)) {
-        n = 1
-        d = length(x)
-    } else {
-        n = dim(x)[1]
-        d = dim(x)[2]
-    }
-    
-    omega = sqrt(diag(Omega))
-    X = t(matrix(x, nrow = n, ncol = d)) - xi
-    z = X/omega
-    
-    # diag of (x Omega^(-1) x^T)
-    Q = apply((solve(Omega) %*% X) * X, 2, sum) 
-    # Det = as.numeric(det.Hermitian(as.Matrix(Omega), logarithm = F)$modulus)
-    Det = abs(prod(diag(qr(Omega)$qr)))
-    L = as.vector(t(z) %*% as.matrix(alpha))
-    pdf.mt = (gamma((df+d)/2) / (sqrt((pi*df)^d*Det) * 
-        gamma(df/2) * (1+Q/df)^((df+d)/2)))
-    cdf.T = pt(L*sqrt((df+d) / (Q+df)), df + d)
-    ans = 2 * pdf.mt * cdf.T
-    
-    # Return Value:
-    ans
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.pmst = 
-function(x, xi = rep(0, d), Omega = 1, alpha = rep(0, d), df = Inf, ...)
-{   # A modified copy from contributed R package sn
-
-    # Description:
-    #   Internal Function
-    
-    # FUNCTION:
-    
-    Diag = function(x) diag(x,nrow=length(x),ncol=length(x))
-    d = ifelse(is.matrix(Omega),nrow(Omega),1)
-    Omega<- matrix(Omega,d,d) 
-    omega<- sqrt(diag(Omega))
-    Ocor = Diag(1/omega) %*% Omega %*% Diag(1/omega)
-    #  t(Omega /omega)/omega
-    O.alpha = as.vector(Ocor %*% alpha)
-    delta = O.alpha/sqrt(1+sum(alpha*O.alpha))
-    A = matrix(rbind(c(1,-delta),cbind(-delta,Ocor)), d+1,d+1)
-    
-    if (df == Inf) 
-        2 * pmvnorm(upper = c(0,(x - xi) / omega), corr = A, ...)
-    else 
-        2 * pmvt(upper = c(0,(x - xi) / omega), corr = A, df = df, ...)
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.rmst = 
-function(n=1, xi=rep(0,d), Omega, alpha, df = Inf)
-{   # A modified copy from contributed R package sn
-
-    # Description:
-    #   Internal Function
-    
-    # FUNCTION:
-    
-    d = ncol(Omega)
-    if (df == Inf) x = 1 
-    else x = rchisq(n,df)/df
-    z = .rmsn(n, rep(0, d), Omega, alpha)
-    y = t(xi+t(sqrt(x)*z))
-    
-    # Return Value:
-    return(y)
-}
-
-# ------------------------------------------------------------------------------
-
-
-.msn.quantities = 
-function(xi, Omega, alpha)
-{   # A modified copy from contributed R package sn
-
-    # Description:
-    #   Internal Function
-    
-    # FUNCTION:
-    
-    # 21-12/1997; computes various quantities related to SN_k(xi,Omega,alpha)
-    
-    Diag = function(x) diag(x,nrow = length(x),ncol = length(x))
-    k = length(alpha)
-    if (length(xi)!=k | any(dim(Omega)!=c(k,k))) 
-       stop("dimensions of arguments do not match")
-    omega = sqrt(diag(Omega))
-    O.cor = Diag(1/omega) %*% Omega %*% Diag(1/omega)
-    tmp = as.vector(sqrt(1 + t(as.matrix(alpha))%*%O.cor%*%alpha)) 
-    delta = as.vector(O.cor %*% alpha) / tmp
-    lambda = delta/sqrt(1-delta^2)
-    D = diag(sqrt(1+lambda^2))
-    Psi = D %*% (O.cor-outer(delta,delta)) %*% D
-    Psi = (Psi+t(Psi))/2
-    O.inv = solve(Omega)
-    oi = sqrt(diag(O.inv))
-    O.pcor = Diag(1/oi)%*% (-O.inv) %*% Diag(1/oi)
-    diag(O.pcor) = rep(1,k)
-    muZ = delta*sqrt(2/pi)
-    muY = xi+omega*muZ
-    Sigma = Diag(omega) %*% (O.cor-outer(muZ,muZ)) %*% Diag(omega) 
-    Sigma = (Sigma+t(Sigma))/2
-    cv = muZ/sqrt(1-muZ^2)
-    gamma1 = 0.5*(4-pi)*cv^3
-    
-    # Return Value:
-    list(xi = xi, Omega = Omega, alpha = alpha, omega = omega,  mean = muY, 
-        variance = Sigma, Omega.conc = O.inv, Omega.cor = O.cor, 
-        Omega.pcor = O.pcor, lambda = lambda, Psi = Psi, delta = delta, 
-        skewness = gamma1)
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.msn.mle = 
-function(X, y, freq, start, trace = FALSE, method = "BFGS", 
-control = list(iter.max = 150) )
-{   # A modified copy from contributed R package sn
-
-    # Description:
-    #   Internal Function
-    
-    # FUNCTION:
-    
-    y = as.matrix(y)
-    if (missing(X)) X = rep(1,nrow(y))
-    if (missing(freq)) freq = rep(1,nrow(y))
-    X = as.matrix(X) 
-    k = ncol(y)  
-    n = sum(freq)
-    m = ncol(X)
-    y.names = dimnames(y)[[2]] 
-    x.names = dimnames(X)[[2]]
-    if (missing(start)) {
-        fit0 = lm.fit(X, y, method="qr")
-        beta = as.matrix(coef(fit0))
-        res = resid(fit0)
-        a = .msn.moment.fit(res)
-        Omega = a$Omega
-        omega = a$omega
-        alpha = a$alpha
-        if (!a$admissible) alpha = alpha / (1+max(abs(alpha)))
-        beta[1,] = beta[1,]-omega*a$delta*sqrt(2/pi)  
-    } else {
-        beta  = start$beta
-        Omega = start$Omega
-        alpha = start$alpha
-        omega = sqrt(diag(Omega)) 
-    }
-    
-    al.om = alpha / omega
-    if (trace){ 
-        cat("Initial parameters:\n")
-        print(cbind(t(beta),al.om,Omega))
-    }
-    
-    param = c(beta,al.om)
-    dev = .msn.dev(param,X,y,freq) 
-    opt = optim(param, fn = .msn.dev, gr = .msn.dev.grad, method = method,
-        control = control, X = X, y = y, freq = freq, trace = trace) 
-             
-    if (trace) 
-        cat(paste("Message from optimization routine:", opt$message,"\n"))
-        
-    logL = (-opt$value)/2
-    beta = matrix(opt$par[1:(m*k)],m,k)
-    dimnames(beta)[2] = list(y.names)
-    dimnames(beta)[1] = list(x.names)
-    al.om = opt$par[(m*k+1):(m*k+k)]
-    xi = X %*% beta
-    Omega = t(y-xi) %*% (freq*(y-xi))/n
-    omega = sqrt(diag(Omega))
-    alpha = al.om*omega
-    param = cbind(omega,alpha)
-    dimnames(Omega) = list(y.names,y.names)
-    dimnames(param)[1] = list(y.names)
-    info = .num.deriv(opt$par, FUN = ".msn.dev.grad", 
-        X = X, y = y, freq = freq)/2
-    se = sqrt(diag(solve(info)))
-    se.beta = matrix(se[1:(m*k)],m,k)
-    se.alpha = se[(m*k+1):(m*k+k)]*omega
-    dimnames(se.beta)[2] = list(y.names)
-    dimnames(se.beta)[1] = list(x.names)
-    se = list(beta = se.beta, alpha = se.alpha, info = info)
-    dp = list(beta = beta, Omega = Omega, alpha = alpha)
-    
-    # Return Value:
-    list(call = match.call(), dp = dp, logL = logL, se = se, optim = opt)
-}
- 
-
-# ------------------------------------------------------------------------------
-
-
-.msn.dev = 
-function(param, X, y, freq, trace = FALSE)
-{   # A modified copy from contributed R package sn
-
-    # Description:
-    #   Internal Function
-    
-    # FUNCTION:
-    
-    k = ncol(y)
-    # if (missing(freq)) freq = rep(1, nrow(y))
-    n = sum(freq)
-    m = ncol(X)
-    beta = matrix(param[1:(m*k)],m,k)
-    al.om = param[(m*k+1):(m*k+k)]
-    y0 = y-X %*% beta
-    Omega = (t(y0) %*% (y0*freq))/n  
-    d = diag(qr(2*pi*Omega)[[1]])
-    logDet = sum(log(abs(d)))
-    dev = n*logDet-2*sum(.zeta(0,y0 %*% al.om)*freq)+n*k
-    if (trace) { 
-        cat("\nmsn.dev:", dev, "\n","parameters:"); 
-        print(rbind(beta, al.om))
-    }
-    
-    # Return Value:
-    dev
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.msn.dev.grad = 
-function(param, X, y, freq, trace = FALSE)
-{   # A modified copy from contributed R package sn
-
-    # Description:
-    #   Internal Function
-    
-    # FUNCTION:
-    
-    k = ncol(y)
-    # if (missing(freq)) freq = rep(1, nrow(y))
-    n = sum(freq)
-    m = ncol(X)
-    beta = matrix(param[1:(m*k)],m,k)
-    al.om = param[(m*k+1):(m*k+k)]
-    y0 = y-X %*% beta
-    Omega = (t(y0) %*% (freq*y0))/n
-    p1 = .zeta(1, as.vector(y0 %*% al.om))
-    Dbeta = t(X)%*% (y0*freq) %*%solve(Omega) - 
-        outer(as.vector(t(X*freq)%*%p1), al.om)
-    Dal.om = as.vector(t(y0*freq) %*% p1)
-    
-    if (trace) {
-        cat("gradient:\n")
-        print(rbind(Dbeta, Dal.om))
-    }
-    ans = -2 * c(Dbeta,Dal.om)
-    
-    # Return Value:
-    ans
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.msn.moment.fit = 
-function(y)
-{   # A modified copy from contributed R package sn
-
-    # Description:
-    #   Internal Function
-    
-    # FUNCTION:
-    
-    # 31-12-1997: simple fit of MSN distribution usign moments
-    
-    Diag = function(x) diag(x,nrow=length(x),ncol=length(x))
-    y = as.matrix(y)
-    k = ncol(y)
-    m.y = apply(y, 2, mean)
-    var.y = var(y)
-    y0 = (t(y)-m.y) / sqrt(diag(var.y))
-    gamma1 = apply(y0^3, 1, mean)
-    out = (abs(gamma1) > 0.99527)
-    gamma1[out] = sign(gamma1[out]) * 0.995
-    a = sign(gamma1) * (2*abs(gamma1) / (4-pi))^0.33333
-    delta = sqrt(pi/2)*a/sqrt(1+a^2)
-    m.z = delta*sqrt(2/pi) 
-    omega = sqrt(diag(var.y)/(1-m.z^2))
-    Omega = var.y+outer(omega*m.z,omega*m.z) 
-    xi = m.y-omega*m.z
-    O.cor = Diag(1/omega) %*% Omega %*% Diag(1/omega)
-    O.cor = (t(O.cor)+O.cor)/2
-    O.inv = solve(O.cor)
-    tmp = as.vector(1-t(delta) %*% O.inv %*% delta)
-    if (tmp <= 0) {
-        tmp = 0.0001
-        admissible = FALSE
-    } else {
-        admissible = TRUE
-    }
-    alpha = as.vector(O.inv %*% delta)/sqrt(tmp)
-    
-    # Return Value:
-    list(xi = xi, Omega = Omega, alpha = alpha, Omega.cor = O.cor, 
-        omega = omega, delta = delta, skewness = gamma1, 
-        admissible = admissible) 
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.zeta = 
-function(k, x)
-{   # A modified copy from contributed R package sn
-
-    # Description:
-    #   Internal Function
-    
-    # FUNCTION:
-    
-    # k integer in (0, 4)
-    if (k < 0 | k > 4) 
-        return(NULL)
-    if (k != as.integer(k)) 
-        warning("k must be an integer")
-    k = as.integer(k)
-    na = is.na(x)
-    x = replace(x,na,0)
-    z = switch(k+1, pnorm(x, log.p = TRUE) + log(2), ifelse(x>(-20), 
-        dnorm(x)/pnorm(x), ifelse(x>(-200), exp(-x^2/2-0.5*log(2*pi) - 
-        pnorm(x,log.p = TRUE)), - x*(1+1/x^2-2/x^4))), (-.zeta(1,x) * 
-        (x+.zeta(1,x))), (-.zeta(2,x)*(x+.zeta(1,x))-.zeta(1,x)*(1+.zeta(2,x))),
-        (-.zeta(3,x)*(x+2*.zeta(1,x)) - 2*.zeta(2,x)*(1+.zeta(2,x))), NULL)
-    neg.inf = (x == -Inf)
-    if (any(neg.inf))
-    z = switch(k+1, z, replace(z, neg.inf, Inf), replace(z, neg.inf, 1),
-        replace(z, neg.inf, 0), replace(z, neg.inf, 0), NULL)
-    if (k > 1) z = replace(z, x == Inf, 0)
-    ans = replace(z, na, NA)
-    
-    # Return Value:
-    ans
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.num.deriv = 
-function(coefficients, FUN, ...)
-{   # A modified copy from contributed R package sn
-
-    # Description:
-    #   Internal Function
-    
-    # FUNCTION:
-    
-    # da rm.fit: derivate seconde numeriche, se FUN da` il gradiente
-    
-    FUN = get(FUN, inherit = TRUE)
-    values = FUN(coefficients, ...)
-    p = length(values)
-    H = matrix(0, p, p)
-    h = rep(0, p)
-    delta = cbind((abs(coefficients) + 1.0e-10) * 1.0e-5, rep(1.0e-06, p))
-    delta = apply(delta, 1, max)
-    for(i in 1:p) {
-        h[i] = delta[i]
-        new.values = FUN(coefficients + h, ...)
-        H[, i] = (new.values - values)/delta[i]
-        h[i] = 0
-    }
-    ans = (H+t(H))/2
-    
-    # Return Value:
-    ans
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.msn.marginal = 
-function(xi = NULL, Omega = NULL, alpha = NULL, comp = 1:d, dp = NULL)
-{   # A modified copy from contributed R package sn
-
-    # Description:
-    #   Internal Function
-    
-    # FUNCTION:
-    
-    # calcola parametri della marginale associata a comp di un SN_d 
-    
-    Diag = function(x) diag(x, nrow = length(x), ncol = length(x))
-    
-    if (!is.null(xi) && !is.null(dp)) 
-        stop("You cannot set both xi and dp")
-    if (!is.null(xi) && is.list(xi) && is.null(dp)) 
-        dp = xi
-    if (!is.null(dp)) {
-        xi = dp$xi
-        Omega = dp$Omega
-        alpha = dp$alpha
-    }
-    
-    xi = as.vector(xi)
-    comp = as.integer(comp)
-    alpha = as.vector(alpha)
-    d = length(alpha)
-    
-    if (length(comp) < d) {
-        if (any(comp > d | comp < 1)) 
-            stop("comp makes no sense")
-        scale = sqrt(diag(Omega))
-        O = Diag(1/scale) %*% Omega %*% Diag(1/scale)
-        O11 = O[comp,comp, drop=FALSE]
-        O12 = O[comp,-comp, drop=FALSE]
-        O21 = O[-comp,comp, drop=FALSE]
-        O22 = O[-comp,-comp, drop=FALSE]
-        alpha1 = as.matrix(alpha[comp, drop=FALSE])
-        alpha2 = as.matrix(alpha[-comp, drop=FALSE])
-        O22.1 = O22 - O21 %*% solve(O11) %*% O12
-        a.sum = as.vector(t(alpha2) %*% O22.1 %*% alpha2)
-        a.new = as.vector(alpha1+solve(O11) %*% O12 %*% alpha2) /
-            sqrt(1+a.sum)
-        O.new = Diag(scale[comp]) %*% O11 %*% Diag(scale[comp])
-        result = list(xi=xi[comp], Omega=O.new, alpha=a.new)
-    } else {
-        if (any(sort(comp) != (1:d))) 
-            stop("comp makes no sense")
-        result = list(xi = xi[comp], 
-            Omega = as.matrix(Omega[comp, comp, drop = FALSE]), 
-            alpha = alpha[comp]) 
-    }
-    
-    # Return Value:
-    result
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.mst.mle = 
-function(X, y, freq, start = NA, fixed.df = NA, trace = FALSE, 
-method = "BFGS", control = list(iter.max = 150))
-{   # A modified copy from contributed R package sn
-
-    # Description:
-    #   Internal Function
-    
-    # FUNCTION:
-    
-    Diag = function(x) diag(x, nrow=length(x), ncol=length(x))
-    y.name  = deparse(substitute(y))
-    y.names = dimnames(y)[[2]] 
-    y = as.matrix(y)
-    if (missing(X)) X = matrix(rep(1,nrow(y)),ncol=1) 
-    if (missing(freq)) freq = rep(1,nrow(y))
-    x.names = dimnames(X)[[2]]
-    X = as.matrix(X) 
-    d = ncol(y)  
-    n = sum(freq)
-    m = ncol(X)
-    if (missing(start) | is.na(start)) {
-        qrX   = qr(X)
-        beta  = as.matrix(qr.coef(qrX,y))
-        Omega = matrix(var(qr.resid(qrX,y)),d,d)
-        omega = sqrt(diag(Omega))
-        alpha = rep(0,d)
-        if (is.na(fixed.df)) 
-            df = 15 
-        else 
-            df = fixed.df
-        if (trace) {
-            cat("mst.mle: dp=","\n")
-            print(c(beta,Omega,alpha))
-            cat("df:", df,"\n")
-        }
-    } else {
-        beta = start$beta
-        Omega = start$Omega
-        alpha = start$alpha
-        df  = start$df
-    } 
-    
-    eta = alpha / sqrt(diag(Omega))
-    Oinv = solve(Omega)
-    Oinv = (Oinv+t(Oinv)) / 2
-    upper = chol(Oinv)
-    D = diag(upper)
-    A = upper / D
-    D = D^2
-    
-    if (d > 1) 
-        param = c(beta, -0.5*log(D), A[!lower.tri(A,diag = TRUE)], eta) 
-    else 
-        param = c(beta, -0.5*log(D), eta)
-        
-    if (is.na(fixed.df)) 
-        param = c(param, log(df))
-        
-    opt = optim(param, fn = .mst.dev,  gr = .mst.dev.grad, 
-        method = method,  control=control, hessian = TRUE, 
-        X = X, y = y, freq = freq, trace = trace, fixed.df = fixed.df)
-        
-    dev = opt$value
-    param = opt$par
-    
-    if (trace){
-        cat("Message from optimization routine:", opt$message,"\n")
-        cat("deviance:", dev,"\n")
-    }
-    
-    beta = matrix(param[1:(m*d)],m,d)
-    D = exp(-2*param[(m*d+1):(m*d+d)])
-    
-    if (d>1) {
-        A = diag(d)
-        A[!lower.tri(A,diag=TRUE)] = param[(m*d+d+1):(m*d+d+d*(d-1)/2)]
-        i0 = m*d+d+d*(d-1)/2
-    } else {
-        i0 = m+1
-        A = as.matrix(1)
-    }
-    
-    eta = param[(i0+1):(i0+d)]
-    
-    if (is.na(fixed.df)) {
-        df = exp(param[i0+d+1])
-    } else {
-        df = fixed.df
-    }
-    
-    # Omega = solve(t(A) %*% diag(D) %*% A)
-    Ainv = backsolve(A,diag(d))
-    Omega = Ainv %*% Diag(1/D) %*% t(Ainv)
-    omega = sqrt(diag(Omega))
-    alpha = eta*omega
-    dimnames(beta) = list(x.names,y.names)
-    dimnames(Omega) = list(y.names, y.names)
-    
-    if (length(y.names)>0) 
-        names(alpha) = y.names
-        
-    info = opt$hessian/2
-    
-    if (all(is.finite(info))) {
-        qr.info = qr(info)
-        info.ok = (qr.info$rank == length(param))
-    } else {
-        info.ok = FALSE 
-    }
-        
-    if (info.ok) {
-        se2 = diag(solve(qr.info)) 
-        if (min(se2) < 0 ) {
-            se = NA 
-        } else {
-            se = sqrt(se2)
-            se.beta = matrix(se[1:(m*d)],m,d)
-            se.alpha =  se[(i0+1):(i0+d)] * omega
-            dimnames(se.beta)[2] = list(y.names)
-            dimnames(se.beta)[1] = list(x.names)
-            names(se.alpha) = y.names
-            se.df = df*se[i0+d+1]
-            se = list(beta = se.beta, alpha = se.alpha, df = se.df,
-                internal = se, info = info)
-        }
-    } else {
-        se = NA }
-        
-    dp = list(beta = beta, Omega = Omega,  alpha = alpha, df = df)
-  
-    # Return Value:
-    list(call = match.call(), logL = -0.5*dev, deviance = dev, dp = dp, 
-        se = se, optim = opt)
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.mst.dev = 
-function(param, X, y, freq = rep(1, nrow(X)), fixed.df = NA, trace = FALSE)
-{   # A modified copy from contributed R package sn
-
-    # Description:
-    #   Internal Function
-    
-    # FUNCTION:
-    
-    Diag = function(x) diag(x, nrow = length(x), ncol = length(x))
-    d = ncol(y)
-    # if (missing(freq)) freq = rep(1, nrow(y))
-    n = sum(freq)
-    m = ncol(X)
-    beta = matrix(param[1:(m*d)],m,d)
-    D = exp(-2*param[(m*d+1):(m*d+d)])
-    
-    if (d > 1) {
-        A = diag(d)
-        A[!lower.tri(A,diag=TRUE)] = param[(m*d+d+1):(m*d+d+d*(d-1)/2)]
-        i0 = m*d+d+d*(d-1)/2
-    } else {
-        i0 = m+1
-        A = as.matrix(1)
-    }
-  
-    eta = param[(i0+1):(i0+d)]
-    
-    if (is.na(fixed.df)) {
-        df = exp(param[i0+d+1])
-    } else { 
-        df = fixed.df
-    }
-        
-    Oinv = t(A) %*% Diag(D) %*% A
-    
-    # Omega = solve(Oinv)
-    u =  y - X %*% beta
-    Q = apply((u %*% Oinv)*u,1,sum)
-    L = as.vector(u %*% eta) 
-    logDet = sum(log(df*pi/D))
-    dev = (n*(2*lgamma(df/2) + logDet - 2*lgamma((df+d)/2)) + (df+d) * 
-        sum(freq * log(1+Q/df)) - 2*sum(freq * log(2*pt( L * 
-        sqrt((df+d) / (Q+df)),df+d))))
-        
-    if (trace) 
-        cat("mst.dev: ",dev, "\n")
-        
-    # Return Value:
-    dev
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.mst.dev.grad = 
-function(param, X, y, freq = rep(1, nrow(X)), fixed.df = NA, trace = FALSE)
-{   # A modified copy from contributed R package sn
-
-    # Description:
-    #   Internal Function
-    
-    # FUNCTION:
-    
-    Diag = function(x) diag(x, nrow=length(x), ncol=length(x))
-    d = ncol(y)
-    # if (missing(freq)) freq = rep(1, nrow(y))
-    n = sum(freq)
-    m = ncol(X)
-    beta = matrix(param[1:(m*d)],m,d)
-    D   = exp(-2*param[(m*d+1):(m*d+d)])
-    
-    if (d>1) {
-        A  = diag(d)
-        A[!lower.tri(A,diag=TRUE)] = param[(m*d+d+1):(m*d+d+d*(d-1)/2)]
-        i0 = m*d+d+d*(d-1)/2
-    } else {
-        i0 = m*d+d
-        A  = as.matrix(1)
-    }
-    
-    eta   = param[(i0+1):(i0+d)]
-    
-    if (is.na(fixed.df)) {
-        df = exp(param[i0 + d + 1])
-    } else {
-        df = fixed.df
-    }
-        
-    tA = t(A)
-    Oinv = tA %*% Diag(D) %*% A
-    u = y-X %*% beta
-    Q = as.vector(apply((u %*% Oinv)*u,1,sum))
-    L = as.vector(u %*% eta) 
-    t. = L*sqrt((df+d)/(Q+df))
-    dlogft = -(df+d)/(2*df*(1+Q/df))
-    dt.dL = sqrt((df+d)/(Q+df))
-    dt.dQ = (-0.5)*L*sqrt(df+d)/(Q+df)^1.5
-    T. = pt(t., df+d)
-    dlogT. = dt(t., df+d)/T.
-    u.freq = u*freq
-    Dbeta = (-2* t(X) %*% (u.freq*dlogft) %*% Oinv - 
-        outer(as.vector(t(X) %*% (dlogT. * dt.dL* freq)), eta) - 
-        2 * t(X) %*% (dlogT.* dt.dQ * u.freq) %*% Oinv )
-    Deta  = apply(dlogT.*sqrt((df+d)/(Q+df))*u.freq, 2, sum)
-    
-    if (d > 1) {
-        M  = 2*( Diag(D) %*% A %*% t(u * dlogft + u * dlogT. * 
-            dt.dQ) %*% u.freq)
-        DA = M[!lower.tri(M,diag=TRUE)]
-    } else {
-        DA = NULL
-    } 
-    
-    M = ( A %*% t(u*dlogft + u*dlogT.*dt.dQ) %*% u.freq %*% tA)
-    
-    if (d > 1) {
-        DD = diag(M) + 0.5*n/D
-    } else {
-        DD = as.vector(M + 0.5*n/D) 
-    }
-    
-    grad = (-2)*c(Dbeta,DD*(-2*D), DA, Deta)
-    
-    # browser()  
-    if (is.na(fixed.df)) {  
-        dlogft.ddf = 0.5 * (digamma((df+d)/2) - digamma(df/2) - 
-            d/df + (df+d)*Q/((1+Q/df)*df^2) - log(1+Q/df))
-        eps = 1.0e-4
-        T.eps = pt(L*sqrt((df+eps+d) / (Q+df+eps)), df+eps+d)
-        dlogT.ddf = (log(T.eps) - log(T.)) / eps
-        Ddf = sum((dlogft.ddf + dlogT.ddf) * freq)
-        grad = c(grad, -2 * Ddf * df)
-    }
-    
-    if (trace)  
-        cat("mst.dev.grad: norm is ",sqrt(sum(grad^2)),"\n")  
-    
-    # Return Value:
-    return(grad)
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.dsn2.plot = 
-function(x, y, xi, Omega, alpha, ...)
-{   # A modified copy from contributed R package sn
-
-    # Description:
-    #   Internal Function
-    
-    # FUNCTION:
-    
-    # plot bivariate density SN_2(xi,Omega,alpha) computed at (x,y) grid
-    if (any(dim(Omega)!=c(2,2))) 
-        stop("dim(Omega) != c(2,2)")
-        
-    nx = length(x)
-    ny = length(y)
-    xoy = cbind(rep(x, ny), as.vector(matrix(y, nx, ny, byrow = TRUE)))
-    X = matrix(xoy, nx*ny, 2, byrow = FALSE)
-    pdf = .dmsn(X, xi, Omega, alpha)
-    pdf = matrix(pdf, nx, ny)
-    contour(x, y, pdf, ...)
-    
-    # Return Value:
-    invisible(list(x = x, y = y, density = pdf, xi = xi, Omega = Omega, 
-        alpha = alpha))
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.dst2.plot = 
-function(x, y, xi, Omega, alpha, df, ...)
-{   # A modified copy from contributed R package sn
-
-    # Description:
-    #   Internal Function
-    
-    # FUNCTION:
-
-    # plot bivariate density ST_2(xi,Omega,alpha,df) computed at (x,y) grid
-    if(any(dim(Omega) != c(2, 2))) 
-        stop("dim(Omega) != c(2,2)")
-    nx = length(x)
-    ny = length(y)
-    xoy = cbind(rep(x, ny), as.vector(matrix(y, nx, ny, byrow = TRUE)))
-    X = matrix(xoy, nx * ny, 2, byrow = FALSE)
-    pdf = .dmst(X, xi, Omega, alpha, df)
-    pdf = matrix(pdf, nx, ny)
-    contour(x, y, pdf, ...)
-    
-    # Return Value:
-    invisible(list(x = x, y = y, density = pdf, xi = xi, Omega = Omega,
-        alpha = alpha, df = df))
-}
-
-
-# ##############################################################################
 

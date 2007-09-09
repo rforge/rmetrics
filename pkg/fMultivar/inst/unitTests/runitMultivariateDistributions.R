@@ -256,7 +256,8 @@ function()
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
     N = 1000
-    z = rmvst(N, dim = 2, mu = rep(0, 2), Omega = diag(2), alpha = c(-1, 1), df = 4)
+    z = rmvst(N, dim = 2, mu = rep(0, 2), Omega = diag(2), alpha = c(-1, 1), 
+        df = 4)
     
     # Fit:
     # fit = mvFit(x = z, method = "st", trace = TRUE)       
