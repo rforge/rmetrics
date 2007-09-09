@@ -38,6 +38,10 @@ function()
 {
     # How to perform a Monte Carlo Simulation?
     
+    # RVs:
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
+    
     # First Step:
     # Write a function to generate the option's innovations. 
     # Use scrambled normal Sobol numbers:
@@ -111,17 +115,6 @@ function()
 
     # Return Value:
     return()    
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-if (FALSE) {
-    require(RUnit)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fOptions/tests/runit5B.R",
-        rngKind = "Marsaglia-Multicarry", rngNormalKind = "Inversion")
-    printTextProtocol(testResult)
 }
 
 

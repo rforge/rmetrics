@@ -44,6 +44,10 @@ function()
     # Pseudo Random Numbers:
     #   Uniform and Normal pseudo random number sequences
     
+    # RVs:
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
+    
     # Graphics Frame:
     par(mfrow = c(2, 2), cex = 0.75)
     
@@ -83,6 +87,10 @@ function()
 {
     # Halton Sequence:
     #   Uniform and Normal Halton low discrepancy sequences
+    
+    # RVs:
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
     
     # Graphics Frame:
     par(mfrow = c(2, 2), cex = 0.75)
@@ -124,6 +132,10 @@ function()
     # Sobol Sequence:
     #   Uniform and Normal Sobol low discrepancy sequences
     
+    # RVs:
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
+    
     # Graphics Frame:
     par(mfrow = c(2, 2), cex = 0.75)
     
@@ -159,6 +171,10 @@ function()
 {  
     # Sobol Scrambling:
     
+    # RVs:
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
+    
     # runif.sobol(n, dimension, init = TRUE, scrambling = 0, seed = 4711)
     
     # Unscrambled:
@@ -186,26 +202,19 @@ function()
 {  
     # Sobol Restart:
     
+    # RVs:
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
+    
     # runif.sobol(n, dimension, init = TRUE, scrambling = 0, seed = 4711)
     runif.sobol(10, 5, init = TRUE)
     runif.sobol(10, 5, init = FALSE)
     
     # Seed:
-    print(runif.sobol.seed)
+    print(.runif.sobol.seed)
 
     # Return Value:
     return()    
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-if (FALSE) {
-    require(RUnit)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fOptions/tests/runit5A.R",
-        rngKind = "Marsaglia-Multicarry", rngNormalKind = "Inversion")
-    printTextProtocol(testResult)
 }
 
 

@@ -42,6 +42,10 @@ function()
 {
     # Simulate a Heston-Nandi Garch(1,1) Process
     
+    # RVs:
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
+    
     # Symmetric Model - Parameters:
     model = list(lambda = 4, omega = 8e-5, alpha = 6e-5, 
         beta = 0.7, gamma = 0, rf = 0)
@@ -67,6 +71,10 @@ function()
 {    
     # Simulate a Heston-Nandi Garch(1,1) Process:
     
+    # RVs:
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
+    
     # Symmetric Model - Parameters:
     model = list(lambda = 4, omega = 8e-5, alpha = 6e-5, 
         beta = 0.7, gamma = 0, rf = 0)
@@ -83,9 +91,13 @@ function()
     # Assymmetric Case:
     mle = hngarchFit(x = x, model = model, trace = TRUE, symmetric = FALSE)
     print(mle)
-           
+        
+    # HN GARCH Plot:
+    # ... there is no plot - plotting is done in summary 
+    
     # HN-GARCH Diagnostic Analysis:
-    par(mfrow = c(3, 1), cex = 0.7)
+    # Note, residuals are still missing ...
+    par(mfrow = c(3, 1))
     summary(mle, col = "steelblue")                                             
     
     # HN-GARCH Moments:
@@ -93,17 +105,6 @@ function()
 
     # Return Value:
     return()    
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-if (FALSE) {
-    require(RUnit)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fOptions/tests/runit4A.R",
-        rngKind = "Marsaglia-Multicarry", rngNormalKind = "Inversion")
-    printTextProtocol(testResult)
 }
 
 

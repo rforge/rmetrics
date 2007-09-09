@@ -340,9 +340,10 @@ function(object, ...)
     plot(x = object$x, type = "l", xlab = "Days", ylab = "log-Returns", 
         main = "Log-Returns", ...)
     plot(sqrt(object$h), type = "l", xlab = "Days", ylab = "sqrt(h)", 
-        main = "Conditional Standard Deviations", ...)
-    plot(object$residuals, type = "l", xlab = "Days", ylab = "Z", 
-        main = "Residuals", ...)
+        main = "Conditional Standard Deviations", ...)   
+    # ... there are not resiudal yet implemented:
+    # plot(object$residuals, type = "l", xlab = "Days", ylab = "Z", 
+    #     main = "Residuals", ...)
     
     # Return Value:
     invisible()
