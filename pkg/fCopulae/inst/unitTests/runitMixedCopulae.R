@@ -47,9 +47,7 @@
 
 test.mixedCopula =
 function()
-{
-    require(fCopulae)
-    
+{    
     # Simulated data:
     x = .rnormCopula(1000, rho = 0.7)
     .gsgnormCopulaFit(x, trace = TRUE)
@@ -100,9 +98,9 @@ function()
     # MPI 0.00000000 0.21421052 0.1640199 0.00000000 0.00000000 0.01209013
     # ALT 0.00000000 0.04785965 0.1522827 0.00000000 0.01209013 0.00000000
 
-    par(mfrow = c(1,1))
-    .assetsStarPlot(ans$lower, main = "Lower Tail Relations")
-    .assetsStarPlot(ans$upper, main = "Lower Tail Relations")
+    # par(mfrow = c(1,1))
+    # .assetsStarPlot(ans$lower, main = "Lower Tail Relations")
+    # .assetsStarPlot(ans$upper, main = "Lower Tail Relations")
 
     # Return Value:
     return()

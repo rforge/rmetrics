@@ -183,7 +183,7 @@ function()
     
     # Check All Types:
     u = grid2d(x = (0:25)/25)
-    for (type in 1:22) {
+    for (type in archmList()) {
         cop1 = darchmCopula(u, type = type, output = "list")
         cop2 = darchmCopula(u, type = type, output = "list", 
             alternative = TRUE)

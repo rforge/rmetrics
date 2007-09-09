@@ -377,7 +377,7 @@ error = 1.0e-5)
         { 
             12 * (.parchm1Copula(x, y, alpha = alpha, type = type) - x*y )
         }
-        ans = integrate2d(fun.integrate2d, error = error)
+        ans = integrate2d(fun.integrate2d, error = error, alpha = alpha, type = type)
     } else if (method == "adapt") {
         # Requires contributed package adapt ...
         fun.adapt = 
@@ -443,8 +443,8 @@ error = 1.0e-5)
 # }
 
 
-# ################################################################################
-# # FUNCTION:                  ARCHIMEDEAN COPULAE TAIL COEFFICIENT:
+################################################################################
+# FUNCTION:                  ARCHIMEDEAN COPULAE TAIL COEFFICIENT:
 #  archmTailCoeff             Computes tail dependence for Archimedean copulae
 #  archmTailPlot              Plots Archimedean tail dependence function
 
