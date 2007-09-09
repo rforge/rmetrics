@@ -28,14 +28,6 @@
 
 
 ################################################################################
-# FUNCTION:           DESCRIPTION:
-#  dmvsnorm            Multivariate Skew Normal Density Function
-#  pmvsnorm            Multivariate Skew Normal Probability Function
-#  rmvsnorm            Multivariate Skew Normal Random Deviates
-# FUNCTION:           DESCRIPTION:
-#  dmvst               Multivariate Skew Sudent-t Density Function
-#  pmvst               Multivariate Skew Sudent-t Probability Function
-#  rmvst               Multivariate Skew Sudent-t Random Deviates
 # FUNCTION:           PARAMETER ESTIMATION:
 #  fMV                 S4 Object of class 'fMV'
 #  mvFit               Fits a MV Normal or Student-t Distribution
@@ -50,246 +42,6 @@
 #  "mvtnorm"           Contributed R - Package
 #  "sn" | "mnormt"     Contributed R - Package
 ################################################################################
-
-
-################################################################################
-# Multivariate Skew Normal Distribution
-
-
-dmvsnorm = 
-function(x, dim = 2, mu = rep(0, dim), Omega = diag(dim), 
-alpha = rep(0, dim))
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Multivariate Skew Normal Density Function
-    
-    # FUNCTION:
-        
-    # Settings:
-    xi = mu 
-    ans = NA
-    
-    # Univariate Case:
-    if (is.vector(x) & dim == 1) {
-        ans = dsn(x, location = xi[1], scale = as.vector(Omega)[1], 
-            shape = alpha[1])
-    }
-    
-    # Multivariate Case:
-    if (is.matrix(x)) {
-        if (dim == ncol(x)) {
-            ans = dmsn(x = x, xi = xi, Omega = Omega, alpha = alpha)
-        } 
-    }
-    
-    # Check for conflicting Dimensions:
-    if (is.na(ans[1])) {
-        stop("conflicting x and dim")
-    }
-        
-    # Return Value:
-    as.vector(ans)
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-pmvsnorm = 
-function(q, dim = 2, mu = rep(0, dim), Omega = diag(dim), 
-alpha = rep(0, dim))
-{   # A function implemented by Diethelm Wuertz
-
-    # FUNCTION:
-    
-    # Settings:
-    x = q
-    xi = mu
-    ans = NA
-    
-    # Univariate Case:
-    if (is.vector(x) & dim == 1) {
-        ans = psn(x, location = xi[1], scale = as.vector(Omega)[1], 
-            shape = alpha[1])
-    }
-    
-    # Multivariate Case:
-    if (is.matrix(x)) {
-        if (dim == ncol(x)) {
-            ans = NULL
-            for (i in 1:nrow(x) ) {
-                ans = c(ans, pmsn(x = x[i,], xi = xi, Omega = Omega, 
-                    alpha = alpha))
-            }
-        } 
-    }
-    
-    # Check for conflicting Dimensions:
-    if (is.na(ans[1])) {
-        stop("conflicting x and dim")
-    }
-        
-    # Return Value:
-    as.vector(ans)
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-rmvsnorm = 
-function(n, dim = 2, mu = rep(0, dim), Omega = diag(dim), 
-alpha = rep(0, dim))
-{   # A function implemented by Diethelm Wuertz
-
-    # FUNCTION:
-    
-    # Settings:
-    ans = NA
-    xi = mu
-    
-    # Univariate Case:
-    if (dim == 1) {
-        ans = as.matrix(rsn(n, location = xi[1], 
-            scale = as.vector(Omega)[1], shape = alpha[1]))
-    }
-    
-    # Multivariate Case:
-    if (dim > 1) {
-        ans = rmsn(n, xi = xi, Omega = Omega, alpha = alpha)
-    }
-    
-    # Check for conflicting Dimensions:
-    if (is.na(ans[1])) {
-        stop("dim must be greater 1")
-    }
-        
-    # Return Value:
-    rownames(ans) = as.character(1:n)
-    colnames(ans) = as.character(1:dim)
-    ans
-}
-
-
-################################################################################
-# MULTIVARIATE SKEW STUDENT-T
-
-
-dmvst = 
-function(x, dim = 2, mu = rep(0, dim), Omega = diag(dim), 
-alpha = rep(0, dim), df = 4)
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Multivariate Skew Sudent-t Density Function
-    
-    # FUNCTION:
-    
-    # Settings:
-    xi = mu
-    ans = NA
-    
-    # Univariate Case:
-    if (is.vector(x) & dim == 1) {
-        ans = dst(x, location = xi[1], scale = as.vector(Omega)[1], 
-            shape = alpha[1], df = Inf)
-    }
-    
-    # Multivariate Case:
-    if (is.matrix(x)) {
-        if (dim == ncol(x)) {
-            ans = dmst(x = x, xi = xi, Omega = Omega, alpha = alpha, df = df)
-        } 
-    }
-    
-    # Check for conflicting Dimensions:
-    if (is.na(ans[1])) {
-        stop("conflicting x and dim")
-    }
-        
-    # Return Value:
-    as.vector(ans)
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-pmvst = 
-function(q, dim = 2, mu = rep(0, dim), Omega = diag(dim), 
-alpha = rep(0, dim), df = 4)
-{   # A function implemented by Diethelm Wuertz
-
-    # FUNCTION:
-    
-    # Settings:
-    x = q
-    xi = mu
-    ans = NA
-    
-    # Univariate Case:
-    if (is.vector(x) & dim == 1) {
-        ans = pst(x, location = xi[1], scale = as.vector(Omega)[1], 
-            shape = alpha[1], df = df)
-    }
-    
-    # Multivariate Case:
-    if (is.matrix(x)) {
-        if (dim == ncol(x)) {
-            ans = NULL
-            for (i in 1:nrow(x) ) {
-                ans = c(ans, pmst(x = x[i,], xi = xi, Omega = Omega, 
-                    alpha = alpha, df = df))
-            }
-        } 
-    }
-    
-    # Check for conflicting Dimensions:
-    if (is.na(ans[1])) {
-        stop("conflicting x and dim")
-    }
-        
-    # Return Value:
-    as.vector(ans)
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-rmvst = 
-function(n, dim = 2, mu = rep(0, dim), Omega = diag(dim), 
-alpha = rep(0, dim), df = 4)
-{   # A function implemented by Diethelm Wuertz
-
-    # FUNCTION:
-    
-    # Settings:
-    ans = NA
-    xi = mu
-    
-    # Univariate Case:
-    if (dim == 1) {
-        ans = as.matrix(rst(n, location = xi[1], 
-            scale = as.vector(Omega)[1], shape = alpha[1], df = df))
-    }
-    
-    # Multivariate Case:
-    if (dim > 1) {
-        ans = rmst(n, xi = xi, Omega = Omega, alpha = alpha, df = df)
-    }
-    
-    # Check for conflicting Dimensions:
-    if (is.na(ans[1])) {
-        stop("dim must be greater 1")
-    }
-        
-    # Return Value:
-    rownames(ans) = as.character(1:n)
-    colnames(ans) = as.character(1:dim)
-    ans
-}
 
 
 ################################################################################
@@ -375,30 +127,8 @@ function(object)
     
     # FUNCTION:
     
-    # Print:
-    print(x = object)
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-setMethod("show", "fMV", show.fMV)
-
-
-# ------------------------------------------------------------------------------
-
-
-print.fMV =
-function(x, ...)
-{   # A function implemented by Diethelm Wuertz
-    
-    # Description:
-    
-    # FUNCTION:
-    
     # Extract fit:
-    fit = x@fit
+    fit = object@fit
     
     # Print:
     cat("\nCall:\n ")
@@ -413,6 +143,12 @@ function(x, ...)
     # cat("\nOptimization:\n")
     # print.default(fit$optim)   
 }
+
+
+# ------------------------------------------------------------------------------
+
+
+setMethod("show", "fMV", show.fMV)
 
 
 # ------------------------------------------------------------------------------
@@ -474,6 +210,8 @@ function(x, trace = FALSE, ...)
 
     # Description:
     #   Internal Function
+    
+    # Arguments:
 
     # FUNCTION:
     
@@ -535,6 +273,8 @@ function(x, fixed.df = NA, trace = FALSE, ...)
 
     # Description:
     #   Internal Function
+    
+    # Arguments:
     
     # FUNCTION:
     
@@ -631,6 +371,7 @@ function(x, which = "ask", ...)
 .mvsnorm.plot.1 <-
 function(x)
 {
+    # Plot:
     dim = x$k
     if(dim == 1) .mvsnorm.plot.1A(x) else .mvsnorm.plot.1B(x)
 }
@@ -642,6 +383,7 @@ function(x)
 .mvsnorm.plot.1A <- 
 function(x) 
 {
+    # Plot:
     z = x
     y0 <- z$y
     xi0 <- apply(z$xi, 2, mean)
@@ -665,6 +407,7 @@ function(x)
 .mvsnorm.plot.1B <- 
 function(x) 
 {
+    # Plot:
     opt = options()
     options(warn = -1)
     pairs(
@@ -700,6 +443,7 @@ function(x)
 .mvsnorm.plot.2 <- 
 function(x) 
 {
+    # Plot:
     plot(x$pp, sort(x$rad.n), pch = 1, ylim = c(0, max(x$rad.n, x$rad.sn)), 
         xlab = "Chi-square Percentiles", 
         ylab = "Mahalanobis Distances")
@@ -714,6 +458,7 @@ function(x)
 .mvsnorm.plot.3 <- 
 function(x) 
 {            
+    # Plot:
     plot(x$pp, sort(x$rad.sn), pch = 1, ylim = c(0, max(x$rad.n, x$rad.sn)), 
         xlab = "Percentiles of chi-square distribution", 
         ylab = "Mahalanobis distances")
@@ -728,6 +473,7 @@ function(x)
 .mvsnorm.plot.4 <- 
 function(x) 
 {
+    # Plot:
     plot((1:x$n)/(x$n + 1), sort(pchisq(x$rad.n, x$k)), 
         xlab = "",  ylab = "")
     abline(0, 1, lty = 3)
@@ -741,6 +487,7 @@ function(x)
 .mvsnorm.plot.5 <- 
 function(x) 
 {            
+    # Plot:
     plot((1:x$n)/(x$n + 1), sort(pchisq(x$rad.sn, x$k)), 
         xlab = "", ylab = "")
     abline(0, 1, lty = 3)
@@ -800,6 +547,7 @@ function(x, which = "ask", ...)
 .mvst.plot.1 <-
 function(x)
 {
+    # Plot:
     dim = x$k
     if(dim == 1) .mvst.plot.1A(x) else .mvst.plot.1B(x)
 }
@@ -811,6 +559,7 @@ function(x)
 .mvst.plot.1A <- 
 function(x) 
 {
+    # Plot:
     z = x
     y0 <- z$y
     xi0 <- apply(z$xi, 2, mean)
@@ -834,6 +583,7 @@ function(x)
 .mvst.plot.1B <- 
 function(x) 
 {
+    # Plot:
     opt = options()
     options(warn = -1)
     pairs(
@@ -870,6 +620,7 @@ function(x)
 .mvst.plot.2 <- 
 function(x) 
 {
+    # Plot:
     plot(x$pp, sort(x$rad.n), pch = 1, ylim = c(0, max(x$rad.n, x$rad.sn)), 
         xlab = "Chi-square Percentiles", 
         ylab = "Mahalanobis Distances")
@@ -884,6 +635,7 @@ function(x)
 .mvst.plot.3 <- 
 function(x) 
 {            
+    # Plot:
     plot(x$pp, sort(x$rad.sn), pch = 1, ylim = c(0, max(x$rad.n, x$rad.sn)), 
         xlab = "Percentiles of chi-square distribution", 
         ylab = "Mahalanobis distances")
@@ -898,6 +650,7 @@ function(x)
 .mvst.plot.4 <- 
 function(x) 
 {
+    # Plot:
     plot((1:x$n)/(x$n + 1), sort(pchisq(x$rad.n, x$k)), 
         xlab = "",  ylab = "")
     abline(0, 1, lty = 3)
@@ -911,6 +664,7 @@ function(x)
 .mvst.plot.5 <- 
 function(x) 
 {            
+    # Plot:
     plot((1:x$n)/(x$n + 1), sort(pchisq(x$rad.sn, x$k)), 
         xlab = "", ylab = "")
     abline(0, 1, lty = 3)

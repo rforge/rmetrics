@@ -2,6 +2,9 @@
 
 \alias{MultivariateDistribution}
 
+\alias{show.fMV}
+\alias{show,fMV-method}
+
 \alias{fMV}
 \alias{fMV-class}
 
@@ -68,7 +71,8 @@ rmvst(n, dim = 2, mu = rep(0, dim), Omega = diag(dim), alpha = rep(0, dim), df =
 mvFit(x, method = c("snorm", "st"), fixed.df = NA, title = NULL, 
     description = NULL, trace = FALSE, \dots) 
 
-\method{print}{fMV}(x, \dots)
+show.fMV(object)    
+    
 \method{plot}{fMV}(x, which = "ask", \dots)
 \method{summary}{fMV}(object, which = "ask", doplot = TRUE, \dots)
 }
