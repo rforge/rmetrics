@@ -28,16 +28,16 @@
 
 
 ################################################################################
-# FUNCTION:             PHASE SPACE REPRESENTATION:
+# FUNCTION:             PHASE SPACE REPRESENTATION PLOTS:
 #  mutualPlot            Creates mutual information plot
-#  .embeddPSR
-#  .checkEmbParams
+#  .embeddPSR            Embeds a time series given time delay and dimension
+#  .checkEmbParms        Checks embedding parameters
 #  falsennPlot           Creates false nearest neigbours plot
-# FUNCTION:             NON STATIONARITY:
+# FUNCTION:             NON STATIONARITY PLOTS:
 #  recurrencePlot        Creates recurrence plot
 #  separationPlot        Creates space-time separation plot
-# FUNCTION:             LYAPUNOV EXPONENTS:
-#  lyapunovPlot          Maximum Lyapunov plot    
+# FUNCTION:             LYAPUNOV EXPONENTS PLOT:
+#  lyapunovPlot          Creates Maximum Lyapunov plot    
 #  .find.nearest
 #  .follow.points
 #  .lyapunovFit            
@@ -135,8 +135,7 @@ function(x, m, d)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Embedding of a time series with provided time delay and 
-    #   embedding dimension parameters.
+    #   Embeds a time series given time delay and dimension parameters.
     
     # Arguments
     #   x - time series
@@ -170,7 +169,7 @@ function(series, m, d, t = 0, s = 1, ref = NULL)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Check embedding parameters
+    #   Checks embedding parameters
     
     # Author:
     #   Antonio, Fabio Di Narzo 
@@ -193,7 +192,7 @@ function(series, m, d, t = 0, s = 1, ref = NULL)
 }
 
 
-# ******************************************************************************
+# ------------------------------------------------------------------------------
 
 
 falsennPlot = 
@@ -242,7 +241,7 @@ function(x, m, d, t, rt = 10, eps = NULL, doplot = TRUE, ...)
             rt = as.double(rt), 
             out = as.double(res[i]), 
             out2 = as.integer(res2[i]), 
-            PACKAGE = "fSeries")
+            PACKAGE = "fNonlinear")
         res[i] = a[["out"]]
         res2[i]= a[["out2"]]
     }
@@ -317,7 +316,7 @@ function(x, m, d, end.time, eps, nt = 10, doplot = TRUE, ...)
 }
 
 
-# ******************************************************************************
+# ------------------------------------------------------------------------------
 
 
 separationPlot = 
@@ -360,7 +359,7 @@ function(x, m, d, mdt, idt = 1, doplot = TRUE, ...)
         idt = as.integer(idt),
         eps.max = as.double(eps.max), 
         res = as.double(res), 
-        PACKAGE = "fSeries")[["res"]]
+        PACKAGE = "fNonlinear")[["res"]]
     stp = matrix(res, 10, mdt)
     eps.m = min(stp)
     eps.M = max(stp)
@@ -461,6 +460,8 @@ function(series, m, d, t, eps, ref, k, s)
     # Description:
     #   Internal Function called by 'lyapunovPlot'  
     
+    # Arguments:
+    
     # Author:
     #   Antonio, Fabio Di Narzo 
     #   of the original function from the 'tseriesChaos' package
@@ -480,7 +481,7 @@ function(series, m, d, t, eps, ref, k, s)
         k = as.integer(k), 
         s = as.integer(s), 
         res = as.integer(res), 
-        PACKAGE = "fSeries")[["res"]]
+        PACKAGE = "fNonlinear")[["res"]]
     res[res == -1] = NA
     
     # Return Value:
@@ -497,6 +498,8 @@ function(series, m, d, ref, k, s, nearest)
 
     # Description:
     #   Internal Function called by 'lyapunovPlot'
+    
+    # Arguments:
     
     # Author:
     #   Antonio, Fabio Di Narzo 
@@ -519,7 +522,7 @@ function(series, m, d, ref, k, s, nearest)
         nearest = as.integer(nearest), 
         ref = as.integer(ref), 
         res = as.double(res),
-        PACKAGE = "fSeries")[["res"]]
+        PACKAGE = "fNonlinear")[["res"]]
         
     # Return Value:
     ans
@@ -592,7 +595,7 @@ function(x, m, d, t, eps)
         t = as.integer(t), 
         eps = as.double(eps), 
         res = as.double(res), 
-        PACKAGE = "fSeries")[["res"]]
+        PACKAGE = "fNonlinear")[["res"]]
         
     # Return Value:
     ans
@@ -624,7 +627,7 @@ function(series, m, d, t, eps.min, neps = 100)
         eps.max = as.double(eps.max), 
         eps.min = as.double(eps.min), 
         res = as.double(res), 
-        PACKAGE = "fSeries")[["res"]]
+        PACKAGE = "fNonlinear")[["res"]]
     res = matrix(res, neps, m)
     res = res[neps:1,]
     denom = length(series) - (m-1)*d
