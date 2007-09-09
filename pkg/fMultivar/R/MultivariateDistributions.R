@@ -379,6 +379,30 @@ description = NULL, trace = FALSE, ...)
 # ------------------------------------------------------------------------------
 
 
+show.fMV =
+function(object)
+{   # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    
+    # Arguments:
+    
+    # FUNCTION:
+    
+    # Print:
+    print(x = object)
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+setMethod("show", "fMV", show.fMV)
+
+
+# ------------------------------------------------------------------------------
+
+
 print.fMV =
 function(x, ...)
 {   # A function implemented by Diethelm Wuertz
@@ -391,7 +415,7 @@ function(x, ...)
     fit = x@fit
     
     # Print:
-    cat("\nCall:\n")
+    cat("\nCall:\n ")
     print.default(fit$call)
     
     cat("\nParameter Sstimates:\n")
@@ -400,8 +424,8 @@ function(x, ...)
     cat("\nParameter Errors:\n")
     print.default(fit$se) 
     
-    cat("\nOptimization:\n")
-    print.default(fit$optim)   
+    # cat("\nOptimization:\n")
+    # print.default(fit$optim)   
 }
 
 
@@ -413,6 +437,8 @@ function(x, which = "ask", ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
+    
+    # Arguments:
     
     # FUNCTION:
     
@@ -437,13 +463,15 @@ function(object, which = "ask", doplot = TRUE, ...)
 
     # Description:
     
+    # Arguments:
+    
     # FUNCTION:
     
     # Print:
     print(x = object, ...)
     
     # Plot:
-    plot(x = object, which = which, doplot, ...)
+    if (doplot) plot(x = object, which = which, doplot, ...)
     
     # Return Value:
     invisible(object)
@@ -576,13 +604,21 @@ function(x, which = "ask", ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Internal Function
+    #   Internal Plot Function
+    
+    # Arguments:
+    #   x - the slot @fit from an object of class "fMV"
     
     # FUNCTION: 
             
-    # Plot:
+    # Settings:
+    dim = ncol(x$y)
+    
+    # Plot Title:
     plot1Title = "Scatterplots"
     if (dim == 1) plot1Title = "Histogram Plot" 
+    
+    # Plot:
     interactivePlot(
         x = x,
         choices = c(
@@ -604,12 +640,18 @@ function(x, which = "ask", ...)
 }
 
 
+# ------------------------------------------------------------------------------
+
+
 .mvsnorm.plot.1 <-
 function(x)
 {
     dim = x$k
     if(dim == 1) .mvsnorm.plot.1A(x) else .mvsnorm.plot.1B(x)
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .mvsnorm.plot.1A <- 
@@ -630,6 +672,9 @@ function(x)
     if (length(y0) < 201) 
         points(y0, rep(0, z$n), pch = 1) 
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .mvsnorm.plot.1B <- 
@@ -664,6 +709,9 @@ function(x)
 } 
 
 
+# ------------------------------------------------------------------------------
+
+
 .mvsnorm.plot.2 <- 
 function(x) 
 {
@@ -673,6 +721,9 @@ function(x)
     abline(0, 1, lty = 3)
     title(main = "Normal QQ-Plot", sub = x$y.name) 
 }
+
+
+# ------------------------------------------------------------------------------
 
     
 .mvsnorm.plot.3 <- 
@@ -685,6 +736,9 @@ function(x)
     title(main = "Skew-Normal QQ-Plot", sub = x$y.name) 
 }
 
+
+# ------------------------------------------------------------------------------
+
     
 .mvsnorm.plot.4 <- 
 function(x) 
@@ -694,6 +748,9 @@ function(x)
     abline(0, 1, lty = 3)
     title(main = "Normal PP-Plot", sub = x$y.name) 
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .mvsnorm.plot.5 <- 
@@ -714,10 +771,20 @@ function(x, which = "ask", ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Internal Function
+    #   Internal Plot Function
+    
+    # Arguments:
+    #   x - the slot @fit from an object of class "fMV"
     
     # FUNCTION: 
-           
+            
+    # Settings:
+    dim = ncol(x$y)
+    
+    # Plot Title:
+    plot1Title = "Scatterplots"
+    if (dim == 1) plot1Title = "Histogram Plot" 
+     
     # Plot:
     plot1Title = "Scatterplots"
     if (dim == 1) plot1Title = "Histogram Plot" 
@@ -742,12 +809,18 @@ function(x, which = "ask", ...)
 }
 
 
+# ------------------------------------------------------------------------------
+
+
 .mvst.plot.1 <-
 function(x)
 {
     dim = x$k
     if(dim == 1) .mvst.plot.1A(x) else .mvst.plot.1B(x)
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .mvst.plot.1A <- 
@@ -768,6 +841,9 @@ function(x)
     if (length(y0) < 201) 
         points(y0, rep(0, z$n), pch = 1) 
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .mvst.plot.1B <- 
@@ -802,7 +878,10 @@ function(x)
     options(opt) 
 } 
 
-       
+ 
+# ------------------------------------------------------------------------------
+
+      
 .mvst.plot.2 <- 
 function(x) 
 {
@@ -812,6 +891,9 @@ function(x)
     abline(0, 1, lty = 3)
     title(main = "Normal QQ-Plot", sub = x$y.name) 
 }
+
+
+# ------------------------------------------------------------------------------
 
     
 .mvst.plot.3 <- 
@@ -825,6 +907,9 @@ function(x)
 }
 
 
+# ------------------------------------------------------------------------------
+
+
 .mvst.plot.4 <- 
 function(x) 
 {
@@ -834,7 +919,10 @@ function(x)
     title(main = "Normal PP-Plot", sub = x$y.name) 
 }
 
-    
+ 
+# ------------------------------------------------------------------------------
+
+   
 .mvst.plot.5 <- 
 function(x) 
 {            
