@@ -258,7 +258,7 @@ bc = c("periodic", "symmetric"), verbose = getOption("verbose"))
         offsetD = as.integer(fl.dbase$first.last.d[, 3]),
         nbc = as.integer(nbc),
         error = as.integer(error),
-        PACKAGE = "fSeries")
+        PACKAGE = "fArma")
            
     if (verbose) cat("done\n")
     error = wavelet.decomposition$error

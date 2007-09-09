@@ -1073,7 +1073,7 @@ method = c("freq", "time"), ...)
             as.double(mu), as.double(rnorm(n + q)), x = double(n + q), 
             as.double(.Machine$double.xmin), as.double(.Machine$double.xmax), 
             as.double(.Machine$double.neg.eps), as.double(.Machine$double.eps), 
-            PACKAGE = "fSeries")$x[1:n] 
+            PACKAGE = "fArma")$x[1:n] 
     }
                
     # Return Value:

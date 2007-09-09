@@ -186,7 +186,7 @@ rand.gen = rnorm, rseed = NULL, addControl = FALSE, ...)
             as.double(mu), as.double(eps), x = double(n + q), 
             as.double(.Machine$double.xmin), as.double(.Machine$double.xmax), 
             as.double(.Machine$double.neg.eps), as.double(.Machine$double.eps), 
-            PACKAGE = "fSeries")$x[1:n] 
+            PACKAGE = "fArma")$x[1:n] 
     }
                
     # Time Series:
@@ -594,7 +594,7 @@ M = 100, h = -1, ...)
         ma = as.double(ma), w = double(lwork), as.integer(lwork), 
         info = integer(1), .Machine$double.xmin, 
         .Machine$double.xmax, .Machine$double.neg.eps,
-        .Machine$double.eps, PACKAGE = "fSeries")
+        .Machine$double.eps, PACKAGE = "fArma")
     if (result$info) switch(result$info,
         stop("insufficient workspace"),
         stop("error in gamma function"),
@@ -604,12 +604,12 @@ M = 100, h = -1, ...)
         warning(" Optimization limit reached"))
     hess = .Fortran("fdhpq",
          as.double(x), hess = double(npq1 * npq1), as.integer(npq1),
-         result$w, PACKAGE = "fSeries")$hess
+         result$w, PACKAGE = "fArma")$hess
     temp = .Fortran("fdcov", as.double(x), as.double(result$d),
          h = as.double(if (missing(h)) -1 else h), hd = double(npq1),
          cov = hess, as.integer(npq1), cor = hess, as.integer(npq1), 
          se = double(npq1), result$w, info = integer(1), 
-         PACKAGE = "fSeries")
+         PACKAGE = "fArma")
     if (temp$info) switch(temp$info,
          warning(" Warning in gamma function"),
          warning(" Singular Hessian matrix"),
