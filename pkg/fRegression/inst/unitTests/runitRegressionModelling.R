@@ -138,12 +138,12 @@ function()
     # Plot Method:
     par(ask = FALSE)
     par(mfrow = c(1, 1))
-    plot(LM, which = "all")                             # CHECK which !!!
-    plot(RLM, which = "all")
-    plot(AM, which = "all")            
-    plot(PPR, which = "all")
-    plot(POLYMARS, which = "all")
-    plot(NNET, which = "all")  
+    # plot(LM, which = "all")                             # CHECK which !!!
+    # plot(RLM, which = "all")
+    # plot(AM, which = "all")            
+    # plot(PPR, which = "all")
+    # plot(POLYMARS, which = "all")
+    # plot(NNET, which = "all")  
     
     # Summary Method:
     summary(LM) 

@@ -38,10 +38,6 @@
 test.termPlot = 
 function()
 {    
-    # Requirements:
-    require(MASS)
-    require(polspline)
-    
     # Simulate Data - a data frame:
     DATA = regSim(model = "GAM3", n = 100)
     head(DATA)
@@ -58,7 +54,6 @@ function()
     AM    = regFit(Y ~ 1 + s(X1)+s(X2)+s(X3),   DATATS, use = "am") 
     PPR   = regFit(Y ~ X1 + X2 + X3,     data = DATATS, use = "ppr") 
     PPR4  = regFit(Y ~ X1 + X2 + X3,     data = DATATS, use = "ppr", nterms = 4) 
-    MARS  = regFit(Y ~ X1 + X2 + X3,     data = DATATS, use = "mars") 
     PMARS = regFit(Y ~ X1 + X2 + X3,     data = DATATS, use = "polymars") 
     NNET  = regFit(Y ~ X1 + X2 + X3,     data = DATATS, use = "nnet") 
     NNET6 = regFit(Y ~ X1 + X2 + X3,     data = DATATS, use = "nnet", size = 6)    
@@ -70,7 +65,6 @@ function()
     .termPlot(RLM)
     .termPlot(AM)
     .termPlot(PPR)
-    .termPlot(MARS)
     .termPlot(PMARS)
     .termPlot(NNET)
     
@@ -82,7 +76,6 @@ function()
     .termPlot(AM, terms = "X1")
     .termPlot(PPR, terms = "X1")
     .termPlot(PPR4, terms = "X1")
-    .termPlot(MARS, terms = "X1")
     .termPlot(PMARS, terms = "X1")
     .termPlot(NNET, terms = "X1")
     .termPlot(NNET6, terms = "X1")
@@ -97,11 +90,7 @@ function()
 
 test.termPersp = 
 function()
-{    
-    # Requirements:
-    require(MASS)
-    require(polspline)
-    
+{      
     # Simulate Data - a data frame:
     DATA = regSim(model = "GAM3", n = 100)
     head(DATA)
@@ -117,7 +106,6 @@ function()
     AM    = regFit(Y ~ 1 + s(X1)+s(X2)+s(X3),   DATATS, use = "am") 
     PPR   = regFit(Y ~ X1 + X2 + X3,     data = DATATS, use = "ppr") 
     PPR4  = regFit(Y ~ X1 + X2 + X3,     data = DATATS, use = "ppr", nterms = 4) 
-    MARS  = regFit(Y ~ X1 + X2 + X3,     data = DATATS, use = "mars") 
     PMARS = regFit(Y ~ X1 + X2 + X3,     data = DATATS, use = "polymars") 
     NNET  = regFit(Y ~ X1 + X2 + X3,     data = DATATS, use = "nnet") 
     NNET6 = regFit(Y ~ X1 + X2 + X3,     data = DATATS, use = "nnet", size = 6)        
@@ -130,7 +118,6 @@ function()
     .termPersp(AM,    terms = c("X1", "X2"))
     .termPersp(PPR,   terms = c("X1", "X2"))
     .termPersp(PPR4,  terms = c("X1", "X2"))
-    .termPersp(MARS,  terms = c("X1", "X2"))
     .termPersp(PMARS, terms = c("X1", "X2"))
     .termPersp(NNET,  terms = c("X1", "X2"))
     .termPersp(NNET6, terms = c("X1", "X2"))  
@@ -164,8 +151,7 @@ function()
     RLM   = regFit(Y ~ 1 + X1 + X2 + X3, data = DATATS, use = "rlm") 
     AM    = regFit(Y ~ 1 + s(X1)+s(X2)+s(X3),   DATATS, use = "am") 
     PPR   = regFit(Y ~ X1 + X2 + X3,     data = DATATS, use = "ppr") 
-    PPR4  = regFit(Y ~ X1 + X2 + X3,     data = DATATS, use = "ppr", nterms = 4) 
-    MARS  = regFit(Y ~ X1 + X2 + X3,     data = DATATS, use = "mars") 
+    PPR4  = regFit(Y ~ X1 + X2 + X3,     data = DATATS, use = "ppr", nterms = 4)  
     PMARS = regFit(Y ~ X1 + X2 + X3,     data = DATATS, use = "polymars") 
     NNET  = regFit(Y ~ X1 + X2 + X3,     data = DATATS, use = "nnet") 
     NNET6 = regFit(Y ~ X1 + X2 + X3,     data = DATATS, use = "nnet", size = 6)        
@@ -178,7 +164,6 @@ function()
     .termContour(AM,    terms = c("X1", "X2"))
     .termContour(PPR,   terms = c("X1", "X2"))
     .termContour(PPR4,  terms = c("X1", "X2"))
-    .termContour(MARS,  terms = c("X1", "X2"))
     .termContour(PMARS, terms = c("X1", "X2"))
     .termContour(NNET,  terms = c("X1", "X2"))
     .termContour(NNET6, terms = c("X1", "X2"))
@@ -194,14 +179,11 @@ function()
 test.termComparison = 
 function()
 {    
-    # Requirements:
-    require(MASS)
-    require(polspline)
-    
     # Simulate Data - a data frame:
     DATA = regSim(model = "GAM3", n = 100)
     head(DATA)
     class(DATA)
+    
     # Convert to a timeSeries object:
     DATATS = as.timeSeries(DATA)
     head(DATATS)
@@ -213,9 +195,6 @@ function()
     
     LM = regFit(Y ~ 1 + X1 + X2 + X3, data = DATATS, use = "lm") 
     .termPlot(LM)
-    lm = lm(Y ~ X1 + X2 + X3, DATA)
-    termplot(lm, rug = TRUE, partial.resid = TRUE, se = TRUE, pch = 19, 
-        main = "LM", ask = par("ask"))
     
     AM = regFit(Y ~ 1 + s(X1)+s(X2)+s(X3), data = DATATS, use = "am") 
     .termPlot(AM)
