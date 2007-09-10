@@ -206,7 +206,7 @@ function()
     colnames(Data)
     
     # Graph Frame:
-    par(mfrow = c(2, 2), cex = 0.7)
+    par(mfrow = c(2, 2))
     
     # Mean-Variance Backtesting:
     ans = portfolioBacktesting(
@@ -257,7 +257,7 @@ function()
     }
     
     # Mean-Variance Backtesting:
-    par(mfrow = c(2, 2), cex = 0.7)
+    par(mfrow = c(2, 2))
     portfolioBacktesting(
         formula = LP60 ~ SBI + SPI + SII, 
         data = Data, 
@@ -317,7 +317,7 @@ function()
     
     if (FALSE) {
         # Mean-CVaR Backtesting - Please be pagtient ...
-        par(mfrow = c(2,2), cex = 0.7)
+        par(mfrow = c(2,2))
         portfolioBacktesting(
             formula = LP60 ~ SBI + SPI + SII, 
             data = Data, 
@@ -357,7 +357,7 @@ function()
     colnames(Data)
     
     # Graph Frame:
-    par(mfrow = c(2, 2), cex = 0.7)
+    par(mfrow = c(2, 2))
     
     # Mean-Variance Backtesting:
     ans = portfolioBacktesting(
@@ -372,7 +372,7 @@ function()
                 
     N = ema = 12
     
-    par(mfrow = c(3, 2), cex = 0.7)
+    par(mfrow = c(3, 2))
     
     
     # Extrakt Shrinkage Lambda:
@@ -468,7 +468,7 @@ function()
     }
     
     # Graph Frame:
-    par(mfrow = c(2, 2), cex = 0.7)
+    par(mfrow = c(2, 2))
     
     # Mean-Variance Backtesting:
     ans = portfolioBacktesting(

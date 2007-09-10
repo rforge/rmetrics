@@ -650,7 +650,7 @@ function(x)
     # FUNCTION:
     
     # Portfolio Returns:
-    pfReturns = as.numeric(x$pfReturns)
+    pfReturns = as.vector(x$pfReturns)
     pfStats = c(
         sum(pfReturns) ,
         mean(pfReturns),
@@ -660,7 +660,7 @@ function(x)
         min(pfReturns) )
     
     # Benchmark Returns:
-    bmReturns = as.numeric(x$bmReturns)
+    bmReturns = as.vector(x$bmReturns)
     bmStats = c(
         sum(bmReturns),
         mean(bmReturns),

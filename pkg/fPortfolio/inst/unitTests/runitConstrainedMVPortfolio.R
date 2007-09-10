@@ -78,7 +78,7 @@ function()
     
     # Specification + Random Weights:
     spec = portfolioSpec()
-    nAssets = ncol(Data)
+    nAssets = ncol(data)
     Weights = runif(nAssets, 0, 1)
     Weights = Weights/sum(Weights)
     setWeights(spec) <- Weights
@@ -498,10 +498,7 @@ function()
 
 test.portfolioConstrainedMVFrontier.RiskBudgets =
 function()
-{   
-    # Load:
-    require(Rdonlp2)
-    
+{    
     # Data:
     data = as.timeSeries(data(smallcap.ts))
     data = data[, c("BKE", "GG", "GYMB", "KRON")]

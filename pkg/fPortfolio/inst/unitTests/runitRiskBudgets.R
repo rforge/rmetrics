@@ -91,13 +91,13 @@ function()
     par(mfrow = c(2, 2), cex = 0.7)
     weightsPlot(ans)
     attributesPlot(ans)
-    riskBudgetsPlot(ans)
+    covRiskBudgetsPlot(ans)
 
     # Get Weights:
     getWeights(ans)
     
     # Extract Risk Budgets:
-    getRiskBudgets(ans)
+    # getRiskBudgets(ans)
 
     # Return Value:
     return()
@@ -131,13 +131,13 @@ function()
     par(mfrow = c(2, 2), cex = 0.7)
     weightsPlot(ans)
     attributesPlot(ans)
-    riskBudgetsPlot(ans)
+    covRiskBudgetsPlot(ans)
 
     # Get Weights:
     getWeights(ans)
     
     # Get Risk Budgets:
-    getRiskBudgets(ans)
+    # getRiskBudgets(ans)
 
     # Return Value:
     return()
@@ -157,7 +157,7 @@ function()
    
     # Set Specifications:
     Spec = portfolioSpec() 
-    setSolver(Spec) = "RDonlp2"
+    setSolver(Spec) = "Rdonlp2"
     setNFrontierPoints(Spec) <- 10
     
     # Set Constraints:
@@ -168,29 +168,29 @@ function()
         "maxsumW[1:4]=1.0",
         "minB[1:4]=0.05",
         "maxB[1:4]=0.35")
+         
+    # still to be done ...
         
-    require(Rdonlp2)  
-    setTargetReturn(Spec) <- mean(Data@Data)   
-    solveRDonlp2(Data, Spec, Constraints)
+    ## setTargetReturn(Spec) <- mean(Data@Data)   
+    ## solveRDonlp2(Data, Spec, Constraints)
     
-    ans = .efficientConstrainedMVPortfolio(Data, Spec, Constraints)
+    ## ans = .efficientConstrainedMVPortfolio(Data, Spec, Constraints)
     
-    efficientPortfolio(Data, Spec, Constraints)
+    ## efficientPortfolio(Data, Spec, Constraints)
     
-    
-    ans = portfolioFrontier(Data, Spec, Constraints)
+    ## ans = portfolioFrontier(Data, Spec, Constraints)
     
     # Plot:
-    par(mfrow = c(2, 2), cex = 0.7)
-    weightsPlot(ans)
-    attributesPlot(ans)
-    riskBudgetsPlot(ans)
+    ## par(mfrow = c(2, 2), cex = 0.7)
+    ## weightsPlot(ans)
+    ## attributesPlot(ans)
+    ## covRiskBudgetsPlot(ans)
 
     # Get Weights:
-    getWeights(ans)
+    ## getWeights(ans)
     
     # Get Risk Budgets:
-    getRiskBudgets(ans)                                     # Does not work !!!!
+    # getRiskBudgets(ans)                                   # Does not work !!!!
 
     # Return Value:
     return()
@@ -210,7 +210,7 @@ function()
    
     # Set Specifications:
     Spec = portfolioSpec() 
-    setSolver(Spec) = "RDonlp2"
+    setSolver(Spec) = "Rdonlp2"
     setTargetReturn(Spec) = mean(Data@Data)
     
     # Set Constraints:
@@ -218,21 +218,23 @@ function()
         "minB[1:4]=0.15",
         "maxB[1:4]=0.35")
         
+    ## still to be checked ...
+    
     # Solve:
-    ans = solveRDonlp2(Data, Spec, Constraints)
-    ans = efficientPortfolio(Data, Spec, Constraints)       # Does not work !!!!
+    ## ans = solveRDonlp2(Data, Spec, Constraints)
+    ## ans = efficientPortfolio(Data, Spec, Constraints)       # Does not work !!!!
     
     # Plot:
-    par(mfrow = c(2, 2), cex = 0.7)
-    weightsPlot(ans)
-    attributesPlot(ans)
-    riskBudgetsPlot(ans)
+    ## par(mfrow = c(2, 2), cex = 0.7)
+    ## weightsPlot(ans)
+    ## attributesPlot(ans)
+    ## covRiskBudgetsPlot(ans)
 
     # Get Weights:
-    getWeights(ans)
+    ## getWeights(ans)
     
     # Get Risk Budgets:
-    getRiskBudgets(ans)                                     # Does not work !!!!
+    # getRiskBudgets(ans)                                   # Does not work !!!!
 
     # Return Value:
     return()

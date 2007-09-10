@@ -124,9 +124,6 @@ function()
     # Arguments:
     # feasiblePortfolio(data, spec = portfolioSpec(), constraints = NULL)
     
-    # Load Librarhy:
-    require(Rdonlp2)
-    
     # Get Data:
     data = as.timeSeries(data(smallcap.ts))
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
@@ -159,9 +156,6 @@ function()
 { 
     # Arguments:
     # feasiblePortfolio(data, spec = portfolioSpec(), constraints = NULL)
-    
-    # Load Librarhy:
-    require(lpsolve)
     
     # Get Data:
     data = as.timeSeries(data(smallcap.ts))
@@ -309,9 +303,6 @@ function()
     # Arguments:
     # minvariancePortfolio(data, spec = portfolioSpec(), constraints = NULL)
     
-    # Library:
-    require(Rdonlp2)
-    
     # Data:
     data = as.timeSeries(data(smallcap.ts))
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
@@ -400,10 +391,7 @@ function()
 
 test.plot.Rdonlp2 =
 function()
-{     
-    # Library:
-    require(Rdonlp2)
-    
+{   
     # Data:
     Data = as.timeSeries(data(smallcap.ts))
     Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
@@ -420,7 +408,7 @@ function()
    
     # Plot:
     par(mfrow = c(1, 1))
-    plot(Frontier, which = 1)
+    frontierPlot(Frontier)
     .minvariancePlot(Frontier, col = "red", pch = 19, cex = 1.5)  
     .tangencyPlot(Frontier, col = "green") 
     .singleAssetPlot(Frontier, col = "red", cex = 1.5)
@@ -444,9 +432,6 @@ function()
 test.plot.RlpSolve =
 function()
 {     
-    # Library:
-    require(lpSolve)
-    
     # Data:
     data = as.timeSeries(data(smallcap.ts))
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
@@ -463,7 +448,7 @@ function()
    
     # Plot:
     par(mfrow = c(1, 1))
-    plot(Frontier, which = 1)
+    frontierPlot(Frontier)
     .minvariancePlot(Frontier, col = "red", pch = 19, cex = 1.5)  
     .tangencyPlot(Frontier, col = "green") 
     .singleAssetPlot(Frontier, col = "red", cex = 1.5)

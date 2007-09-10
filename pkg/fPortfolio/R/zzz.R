@@ -53,7 +53,7 @@ function(lib, pkg)
     }
 
     # Load dll:
-    # library.dynam("fPortfolio", pkg, lib) 
+    library.dynam("fPortfolio", pkg, lib) 
 }
 
 

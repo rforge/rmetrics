@@ -41,10 +41,7 @@
 
 test.feasibleConstrainedCVaRPortfolio =
 function()
-{
-    # Require lpSolve:
-    require(lpSolve)
-    
+{   
     # Data:
     data = as.timeSeries(data(smallcap.ts))
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
@@ -77,9 +74,6 @@ function()
 test.efficientConstrainedCVaRPortfolio.SmallCaps = 
 function()
 {  
-    # Require lpSolve:
-    require(lpSolve)
-    
     # Data:
     data = as.timeSeries(data(smallcap.ts))
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
@@ -111,10 +105,7 @@ function()
    
 test.efficientConstrainedCVaRPortfolio.LPP = 
 function()
-{  
-    # Require lpSolve:
-    require(lpSolve)
-    
+{   
     # Second Example:
     data = 100*as.timeSeries(data(LPP2005REC))[, 1:6]
     head(data)
@@ -146,9 +137,6 @@ function()
 test.efficientConstrainedCVaRPortfolio.TwoAssets =
 function()
 {
-    # Require lpSolve:
-    require(lpSolve)
-    
     # Data:
     data = as.timeSeries(data(smallcap.ts))
     data = data[, c("BKE", "GG")]
@@ -182,9 +170,6 @@ function()
 test.cmlConstrainedCVaRPortfolio = 
 function()
 {
-    # Require lpSolve:
-    require(lpSolve)
-    
     # Data:
     data = as.timeSeries(data(smallcap.ts))
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
@@ -218,9 +203,6 @@ function()
 test.tangencyConstrainedCVaRPortfolio = 
 function()
 {
-    # Require lpSolve:
-    require(lpSolve)
-    
     # Data:
     data = as.timeSeries(data(smallcap.ts))
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
@@ -253,9 +235,6 @@ function()
 test.minvarianceConstrainedCVaRPortfolio =
 function()
 {
-    # Require lpSolve:
-    require(lpSolve)
-    
     # Data:
     data = as.timeSeries(data(smallcap.ts))
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
@@ -287,9 +266,6 @@ function()
 test.portfolioConstrainedCVaRFrontier = 
 function()
 {  
-    # Require lpSolve:
-    require(lpSolve)
-    
     # Data:
     data = as.timeSeries(data(smallcap.ts))
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
@@ -320,9 +296,6 @@ function()
 test.portfolioConstrainedCVaRFrontier.TwoAssets =
 function()
 {
-    # Require lpSolve:
-    require(lpSolve)
-    
     # Data:
     data = as.timeSeries(data(smallcap.ts))
     data = data[, c("BKE", "GG")]

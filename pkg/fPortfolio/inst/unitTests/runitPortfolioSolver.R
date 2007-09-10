@@ -53,9 +53,6 @@ function()
 test.solveRQuadprog =
 function()
 { 
-    # Load:
-    require(quadprog)
-    
     # Direct Access:
     data = as.timeSeries(data(smallcap.ts))
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
@@ -90,9 +87,6 @@ function()
 test.solveRQuadprog.twoAssets =
 function()
 { 
-    # Load:
-    require(quadprog)
-    
     # Direct Access:
     data = as.timeSeries(data(smallcap.ts))
     data = data[, c("BKE", "GG")]
@@ -127,9 +121,6 @@ function()
 test.solverRDonlp2 =
 function()
 { 
-    # Install "Rdonlp2" from - http://arumat.net/Rdonlp2/
-    require(Rdonlp2)
-    
     # Load Data:   
     data = as.timeSeries(data(smallcap.ts))
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
@@ -167,10 +158,7 @@ function()
  
 test.solverRDonlp2.budgetConsatraints =
 function()
-{    
-    # Install "Rdonlp2" from - http://arumat.net/Rdonlp2/
-    require(Rdonlp2)
-    
+{     
     # Load Data:   
     data = as.timeSeries(data(smallcap.ts))
     data = data[, c("BKE", "GG", "GYMB", "KRON")]
@@ -205,9 +193,6 @@ function()
 test.solveRDonlp2.twoAssets =
 function()
 { 
-    # Load:
-    require(Rdonlp2)
-    
     # Direct Access:
     data = as.timeSeries(data(smallcap.ts))
     data = data[, c("BKE", "GG")]
@@ -238,9 +223,6 @@ function()
 test.solveRlpSolve = 
 function()
 {
-    # Load Library:
-    require(lpSolve)
-    
     # Load Data:
     data = as.timeSeries(data(smallcap.ts))
     data = data[, c("BKE", "GG", "GYMB", "KRON")]

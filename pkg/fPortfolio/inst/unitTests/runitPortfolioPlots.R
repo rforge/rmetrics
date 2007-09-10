@@ -44,11 +44,11 @@
 # FUNCTION:                    FRONTIER BAR PLOTS:                  
 #  weightsPlot                  Plots staggered weights
 #  attributesPlot               Plots weighted means
-#  riskBudgetsPlot              Plots weighted risks
+#  covRiskBudgetsPlot           Plots weighted risks
 # FUNCTION:                    PORTFOLIO PIE PLOTS:
 #  weightsPie                   Plots staggered weights
 #  attributesPie                Plots weighted means
-#  riskBudgetsPie               Plots weighted risks
+#  covRiskBudgetsPie            Plots weighted risks
 # FUNCTION:                    DESCRIPTION:
 #  covEllipsesPlot              Plots covariance ellipses                
 ################################################################################
@@ -196,7 +196,7 @@ function()
     par(mfrow = c(2, 2), cex = 0.7)
     weightsPlot(Frontier)
     attributesPlot(Frontier)
-    riskBudgetsPlot(Frontier)
+    covRiskBudgetsPlot(Frontier)
     
     # Return Value:
     return()
@@ -226,7 +226,7 @@ function()
     par(mfrow = c(2, 2), cex = 0.7)
     weightsPlot(Frontier)
     attributesPlot(Frontier)
-    riskBudgetsPlot(Frontier)
+    covRiskBudgetsPlot(Frontier)
     
     # Return Value:
     return()
@@ -257,7 +257,7 @@ function()
     par(mfrow = c(2, 2), cex = 0.7)
     weightsPlot(Frontier)
     attributesPlot(Frontier)
-    riskBudgetsPlot(Frontier)
+    covRiskBudgetsPlot(Frontier)
     
     # Return Value:
     return()
@@ -287,7 +287,7 @@ function()
     par(mfrow = c(2, 2), cex = 0.7)
     weightsPie(Portfolio)
     attributesPie(Portfolio)
-    riskBudgetsPie(Portfolio)
+    covRiskBudgetsPie(Portfolio)
     
     # Return Value:
     return()
@@ -317,7 +317,7 @@ function()
     par(mfrow = c(2, 2), cex = 0.7)
     weightsPie(Portfolio)
     attributesPie(Portfolio)
-    riskBudgetsPie(Portfolio)
+    covRiskBudgetsPie(Portfolio)
     
     # Return Value:
     return()
@@ -348,7 +348,7 @@ function()
     par(mfrow = c(2, 2), cex = 0.7)
     weightsPie(Portfolio)
     attributesPie(Portfolio)
-    riskBudgetsPie(Portfolio)
+    covRiskBudgetsPie(Portfolio)
     
     # Return Value:
     return()
