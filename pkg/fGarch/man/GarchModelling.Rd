@@ -85,6 +85,7 @@ garchFit(formula, data, init.rec = c("mci", "uev"), delta = 2, skew = 1,
     shape = 4, cond.dist = c("dnorm", "dsnorm", "dged", "dsged", "dstd", "dsstd"), 
     include.mean = TRUE, include.delta = NULL, include.skew = NULL,
     include.shape = NULL, leverage = NULL, trace = TRUE,  
+    algorithm = c("nlminb", "sqp", "lbfgsb", "nlminb+nm", "lbfgsb+nm"), 
     control = list(), title = NULL, description = NULL, \dots)
     
 garchKappa(cond.dist = c("dnorm", "dged", "dstd", "dsnorm", "dsged", "dsstd"), 
@@ -102,6 +103,13 @@ show.fGARCH(object)
 
 \arguments{
 
+    \item{algorithm}{
+        [garchFit] - \cr
+        a string parameter that determines the algorithm used for maximum 
+        likelihood estimation. Allowed values are \code{"sqp"}, 
+        \code{"nlminb"}, and \code{"bfgs"} where the first is the default
+        setting.
+        }
     \item{cond.dist}{
         [garchSpec, garchSim, garchFit] - \cr
         a character string naming the desired conditional distribution.
@@ -337,7 +345,8 @@ show.fGARCH(object)
         input argument \code{series}.
         } 
     \item{@fit}{
-        a list with the results from the parameter estimation. 
+        a list with the results from the parameter estimation. The entries
+        of the list depend on the selected algorithm, see below.
         }
     \item{@residuals}{
         a numeric vector with the residual values.
@@ -355,9 +364,50 @@ show.fGARCH(object)
         a string with a brief description.
         }
         
-    The entries of the \code{@fit} slot show the results from the
-    optimization step achieved through the \code{"nlminb"} optimization
-    algorithm.
+    The entries of the @fit slot in the case of the algorithms 
+    \code{"nlminb"} and \code{"bfgs"} show the results from the
+    second optimization step achieved through the Nelder-Mead 
+    Algorithm:\cr
+    
+    \item{$par}{
+        The best set of parameters found.
+        }
+    \item{$value}{
+        The value of the max log likelihood function corresponding to 
+        the optimal values of \code{$par}.
+        }
+    \item{$counts}{
+        A two-element integer vector giving the number of calls to
+        'fn' and 'gr' respectively. This excludes those calls needed
+        to compute the Hessian, if requested, and any calls to 'fn'
+        to compute a finite-difference approximation to the gradient.
+        }
+    \item{$convergence}{
+        An integer code. '0' indicates successful convergence. Values 
+        different from zero indicate an error code. For details, please 
+        consult the help page of \code{optim}.
+        }
+    \item{message} {
+        A character string giving any additional information returned
+        by the optimizer, or \code{NULL}.
+        }
+    \item{hessian}{ 
+        Only if control list argument \code{hessian} is true. A 
+        symmetric matrix giving an estimate of the Hessian at the 
+        solution found. Note that this is the Hessian of the 
+        unconstrained problem even if the box constraints are active.
+        }
+        
+    The entries of the @fit slot in the case of the sequencial
+    quadratic programming algorithm \code{"sqp"} are:\cr
+    
+    \item{$par}{
+        The best set of parameters found.
+        }
+    \item{$value}{
+        The value of the max log likelihood function corresponding to 
+        the optimal values of \code{$par}.
+        }
         
 }
 
@@ -404,8 +454,11 @@ Nocedal J., Wright S.J. (1999);
 \author{
 
     Diethelm Wuertz for the Rmetrics \R-port,\cr
+    R Core Team for the 'optim' \R-port,\cr
     Douglas Bates and Deepayan Sarkar for the 'nlminb' \R-port,\cr
-    Bell-Labs for the underlying PORT Library.
+    Bell-Labs for the underlying PORT Library,\cr
+    Ladislav Luksan for the underlying Fortran SQP Routine, \cr
+    Zhu, Byrd, Lu-Chen and Nocedal for the underlying L-BFGS-B Routine.
     
 }
 

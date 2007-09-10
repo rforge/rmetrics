@@ -161,12 +161,7 @@ function(x, which = "ask", ...)
             "ACF of Squared Standardized Residuals",
             "Cross Correlation between r^2 and r",
             "QQ-Plot of Standardized Residuals"),
-        plotFUN = c(
-            ".plot.garch.1", ".plot.garch.2", ".plot.garch.3", 
-            ".plot.garch.4", ".plot.garch.5", ".plot.garch.6",  
-            ".plot.garch.7", ".plot.garch.8", ".plot.garch.9", 
-            ".plot.garch.10",".plot.garch.11", ".plot.garch.12", 
-            ".plot.garch.13"),
+        plotFUN = paste(".plot.garch", 1:13, sep = "."),
         which = which, ...) 
             
     # Return Value:
@@ -209,7 +204,6 @@ function(x, choices, plotFUN, which, ...)
     if (is.numeric(which)) {
         Which = rep(FALSE, times = length(choices))
         Which[which] = TRUE
-        ## which = Which
     }
     
     if (which[1] == "all") {
@@ -217,9 +211,9 @@ function(x, choices, plotFUN, which, ...)
     }
     
     if (which[1] == "ask") {
-        .multGarchPlot(x, choices, ...) 
+        .multGarchPlot(x, choices, plotFUN, ...) 
     } else {
-        for ( i in 1:length(Which) ) {
+        for ( i in 1:length(choices) ) {
             FUN = match.fun(plotFUN[i])
             if (Which[i]) FUN(x) 
         } 
@@ -235,19 +229,6 @@ function(x, choices, plotFUN, which, ...)
 
 .multGarchPlot = function (x, choices, ...) 
 {    
-    # Match Functions, up to 19 ...
-    if (length(plotFUN) < 19) plotFUN = 
-        c(plotFUN, rep(plotFUN[1], times = 19 - length(plotFUN)))
-    plot.1  = match.fun(plotFUN[1]);  plot.2  = match.fun(plotFUN[2]) 
-    plot.3  = match.fun(plotFUN[3]);  plot.4  = match.fun(plotFUN[4]) 
-    plot.5  = match.fun(plotFUN[5]);  plot.6  = match.fun(plotFUN[6]) 
-    plot.7  = match.fun(plotFUN[7]);  plot.8  = match.fun(plotFUN[8]) 
-    plot.9  = match.fun(plotFUN[9]);  plot.10 = match.fun(plotFUN[10])
-    plot.11 = match.fun(plotFUN[11]); plot.12 = match.fun(plotFUN[12]) 
-    plot.13 = match.fun(plotFUN[13]); plot.14 = match.fun(plotFUN[14]) 
-    plot.15 = match.fun(plotFUN[15]); plot.16 = match.fun(plotFUN[16]) 
-    plot.17 = match.fun(plotFUN[17]); plot.18 = match.fun(plotFUN[18]) 
-    plot.19 = match.fun(plotFUN[19])        
     pick = 1
     while (pick > 0) { 
         pick = menu (
@@ -256,10 +237,11 @@ function(x, choices, plotFUN, which, ...)
             title = "\nMake a plot selection (or 0 to exit):")
         # up to 19 plot functions ...
         switch (pick, 
-            plot.1(x),  plot.2(x),  plot.3(x),  plot.4(x),  plot.5(x), 
-            plot.6(x),  plot.7(x),  plot.8(x),  plot.9(x),  plot.10(x),
-            plot.11(x), plot.12(x), plot.13(x), plot.14(x), plot.15(x), 
-            plot.16(x), plot.17(x), plot.18(x), plot.19(x)) 
+            .plot.garch.1(x),  .plot.garch.2(x),  .plot.garch.3(x),  
+            .plot.garch.4(x),  .plot.garch.5(x),  .plot.garch.6(x),  
+            .plot.garch.7(x),  .plot.garch.8(x),  .plot.garch.9(x),  
+            .plot.garch.10(x), .plot.garch.11(x), .plot.garch.12(x), 
+            .plot.garch.13(x)) 
     } 
 }
 

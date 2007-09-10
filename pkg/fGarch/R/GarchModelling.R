@@ -40,22 +40,24 @@
 #   .garchHessian           Computes Hessian matrix numerically
 #  .garchNames              Slot names, @fit slot, parameters and controls
 ################################################################################
+  
 
 
 .llh = 1e99
-
-
 .garchDist = NA
+.params = NA
+.series = NA
 
 
 # ------------------------------------------------------------------------------
-      
+    
 
 garchFit = 
 function(formula, data, init.rec = c("mci", "uev"), delta = 2, skew = 1, 
 shape = 4, cond.dist = c("dnorm", "dsnorm", "dged", "dsged", "dstd", "dsstd"), 
 include.mean = TRUE, include.delta = NULL, include.skew = NULL, 
 include.shape = NULL, leverage = NULL, trace = TRUE, 
+algorithm = c("nlminb", "sqp", "lbfgsb", "nlminb+nm", "lbfgsb+nm"), 
 control = list(), title = NULL, description = NULL, ...)
 {   # A function implemented by Diethelm Wuertz
 
@@ -118,7 +120,8 @@ control = list(), title = NULL, description = NULL, ...)
     # Fit:
     ans = .garchFit(formula.mean, formula.var, series = x, init.rec, delta, 
         skew, shape, cond.dist, include.mean, include.delta, include.skew, 
-        include.shape, leverage, trace, control, title, description, ...)
+        include.shape, leverage, trace, algorithm, control, title, 
+        description, ...)
     ans@call = CALL
     
     # Return Value:
@@ -131,11 +134,12 @@ control = list(), title = NULL, description = NULL, ...)
 
 .garchFit =
 function(formula.mean = ~arma(0, 0), formula.var = ~garch(1, 1), 
-series = x, init.rec = c("mci", "uev"), delta = 2, skew = 1, shape = 4,
+series, init.rec = c("mci", "uev"), delta = 2, skew = 1, shape = 4,
 cond.dist = c("dnorm", "dsnorm", "dged", "dsged", "dstd", "dsstd"), 
 include.mean = TRUE, include.delta = NULL, include.skew = NULL,
-include.shape = NULL, leverage = NULL, trace = TRUE, control = list(), 
-title = NULL, description = NULL, ...)
+include.shape = NULL, leverage = NULL, trace = TRUE,  
+algorithm = c("sqp", "nlminb", "lbfgsb", "nlminb+nm", "lbfgsb+nm"), 
+control = list(), title = NULL, description = NULL, ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description
@@ -173,7 +177,7 @@ title = NULL, description = NULL, ...)
     # FUNCTION:
   
     # Check for Recursion Initialization:
-    if(init.rec[1] != "mci") {
+    if(init.rec[1] != "mci" & algorithm[1] != "sqp") {
         stop("Algorithm only supported for mci Recursion")
     }
     
@@ -187,42 +191,72 @@ title = NULL, description = NULL, ...)
     }
     series = as.vector(series)
     
-    # Visible Binding:
-    x = series
-    
     # Start Time:
-    ##
     .StartFit <- Sys.time()
     
     # Generate Control List - Define Default Settings:
     con <- list(
+    
+        # In General:
         fscale = FALSE,
         xscale = FALSE,
+        algorithm = algorithm,
+        llh = c("filter", "internal", "testing")[1],
+        
+        # BFGS - NLMINB Algorithm:
         tol1 = 1, 
-        tol2 = 1,
-        llh = c("filter", "testing")[1])
+        tol2 = 1, 
+        
+        # SQP Algorithm:
+        MIT = 200,     # maximum number of iterations (200)
+        MFV = 500,     # maximum number of function evaluations (500)
+        MET = 2,       # specifies scaling strategy:
+                       #  MET=1 - no scaling 
+                       #  MET=2 - preliminary scaling in 1st iteration (default)
+                       #  MET=3 - controlled scaling 
+                       #  MET=4 - interval scaling 
+                       #  MET=5 - permanent scaling in all iterations 
+        MEC = 2,       # correction for negative curvature:
+                       #  MEC=1 - no correction
+                       #  MEC=2 - Powell correction (default)
+        MER = 1,       # restarts after unsuccessful variable metric updates:
+                       #  MER=0 - no restarts
+                       #  MER=1 - standard restart 
+        MES = 4,       # interpolation method selection in a line search:
+                       #  MES=1 - bisection
+                       #  MES=2 - two point quadratic interpolation
+                       #  MES=3 - three point quadratic interpolation
+                       #  MES=4 - three point cubic interpolation (default)
+        XMAX = 1.0e3, 
+        TOLX = 1.0e-16, 
+        TOLC = 1.0e-6, 
+        TOLG = 1.0e-6, 
+        TOLD = 1.0e-6, 
+        TOLS = 1.0e-4, 
+        RPF  = 1.0e-4)  
     con[(namc <- names(control))] <- control
     
-    # Initialize Time Series Information - Save Globally:           
-    .series <- .garchInitSeries(formula.mean = formula.mean, 
+    # Initialize Time Series Information - Save Globally:            
+    .series <<- .garchInitSeries(formula.mean = formula.mean, 
         formula.var = formula.var, series = series, scale = sd(series),
         init.rec = init.rec[1], h.start = NULL, llh.start = NULL, 
         trace = trace)
         
     # Initialize Model Parameters - Save Globally:
-    .params <- .garchInitParameters(formula.mean = formula.mean, 
-        formula.var = formula.var, .series = .series, delta = delta, 
-        skew = skew, shape = shape, cond.dist = cond.dist[1], 
+    .params <<- .garchInitParameters(formula.mean = formula.mean, 
+        formula.var = formula.var, delta = delta, skew = skew, 
+        shape = shape, cond.dist = cond.dist[1], 
         include.mean = include.mean, include.delta = include.delta, 
         include.skew = include.skew, include.shape = include.shape, 
-        leverage = leverage, control = con, trace = trace)
+        leverage = leverage, algorithm = algorithm[1], control = con,
+        trace = trace)
 
     # Select Conditional Distribution Function:
-    .garchDist <<- .garchSetCondDist(cond.dist[1])  
+    .garchDist <<- .garchSetCondDist(cond.dist[1]) 
     
     # Estimate Model Parameters - Minimize llh, start from big value: 
     .llh <<- 1.0e99   
-    fit = .garchOptimizeLLH(.series, .params, trace) 
+    fit = .garchOptimizeLLH(trace) 
     fit$llh = .llh
      
     # Add to Fit: 
@@ -234,7 +268,7 @@ title = NULL, description = NULL, ...)
     residuals = .series$z 
     fitted.values = .series$x - residuals
     h.t = .series$h
-    deltainv = 1 / fit$params$delta
+    deltainv = 1/fit$params$delta
     sigma.t = (.series$h)^deltainv
     
     # Standard Errors and t-Values:
@@ -375,12 +409,12 @@ h.start, llh.start, trace)
 
 
 # ------------------------------------------------------------------------------
-
+      
 
 .garchInitParameters = 
-function(formula.mean, formula.var, .series, delta, skew, shape, cond.dist, 
+function(formula.mean, formula.var, delta, skew, shape, cond.dist, 
 include.mean, include.delta, include.skew, include.shape, leverage, 
-control, trace)
+algorithm, control, trace)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -525,8 +559,8 @@ control, trace)
     if(.DEBUG) { cat("\nDEBUG - V: \n"); print(includes) }   
      
     # Index List of Parameters to be Optimized:
-    index = (1:length(params))[includes]
-    names(index) = names(params)[includes]
+    index = (1:length(params))[includes == TRUE]
+    names(index) = names(params)[includes == TRUE]
     if(.DEBUG) { cat("\nDEBUG - fixed: \n"); print(index) }
     
     # Persistence:  
@@ -644,6 +678,8 @@ function(cond.dist = "dnorm")
 }
 
 
+# ------------------------------------------------------------------------------
+
 
 .garchDist = .garchSetCondDist("dnorm")
 
@@ -652,7 +688,7 @@ function(cond.dist = "dnorm")
  
 
 .garchLLH =
-function(params, .series, .params, trace) 
+function(params, trace) 
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -664,6 +700,9 @@ function(params, .series, .params, trace)
     
     # Value:
     #   Returns the value of the max log-likelihood function.
+    
+    # Note:
+    #   The variables '.series' and '.params' must be global available
     
     # FUNCTION:
     
@@ -737,7 +776,7 @@ function(params, .series, .params, trace)
     names(persistence) = "persistence"
     attr(persistence, "control") = NULL
     attr(persistence, "cond.dist") = NULL
-    .params$persistence <- persistence
+    .params$persistence <<- persistence
     mvar = mean(z^2)
     h = rep(omega + persistence*mvar, N)
       
@@ -767,7 +806,7 @@ function(params, .series, .params, trace)
             for (i in (h.start):N) {
                 h[i] = omega + 
                     sum(alpha * ( abs(z[i-(1:p)]) - 
-                    gamma * z[i-(1:p)]) ^ delta ) + sum(beta*h[i-(1:q)]) 
+                    gamma * z[i-(1:p)])^delta ) + sum(beta*h[i-(1:q)]) 
             }
         } 
     }
@@ -804,16 +843,26 @@ function(params, .series, .params, trace)
                 for (i in (h.start):N) {
                     h[i] = omega + 
                         sum(alpha * ( abs(z[i-(1:p)]) - 
-                        gamma * z[i-(1:p)]) ^ delta ) + sum(beta*h[i-(1:q)]) 
+                        gamma * z[i-(1:p)])^delta ) + sum(beta*h[i-(1:q)]) 
                 }
             } 
         }
     }
     
-    # Save h and z|eps:
-    ##
-    .series$h <- h
-    .series$z <- z
+    # Fortran Implementation:
+    # May be Even Faster Compared with R's Filter Representation ...
+    if(USE == "internal") {
+        if(!.params$leverage) gamma = rep(0, p)
+        # For asymmetric APARCH Models Only !!! 
+        h = .Fortran("aparchllh", as.double(z), as.double(h), as.integer(N),
+            as.double(omega), as.double(alpha), as.double(gamma), 
+            as.integer(p), as.double(beta), as.integer(q), as.double(delta), 
+            as.integer(h.start), PACKAGE = "fGarch")[[2]]  
+    }
+    
+    # Save h and z:
+    .series$h <<- h
+    .series$z <<- z
     
     # Calculate Log Likelihood:    
     hh = (abs(h[(llh.start):N]))^deltainv
@@ -821,13 +870,11 @@ function(params, .series, .params, trace)
     llh = -sum(log(.garchDist(z = zz, hh = hh, skew = skew, shape = shape)))
     if(.DEBUG) cat("DEBUG - LLH:   ", llh, "\n")
     names(params) = names(.params$params[.params$index])
-    
     if(is.na(llh)) llh = .llh + 0.1*(abs(.llh))  
     if(!is.finite(llh)) llh = .llh + 0.1*(abs(.llh))
     
     # Print if LLH has Improved:
     if(llh < .llh) {
-        ##
         .llh <<- llh
         if(trace) {   
             cat(" LLH: ", llh, "   norm LLH: ", llh/N, "\n")
@@ -846,45 +893,105 @@ function(params, .series, .params, trace)
 
 
 .garchHessian =
-function(par, .series, .params, trace)
+function(par, trace)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Compute the Hessian Matrix
+    
+    # Details:
+    #   This function computes the Hessian dependent on the 
+    #   implementation. For the pure S implementations "nlminb"
+    #   and "lbfgsb" the Hessian is also computed from a pure S
+    #   function. In the case of the Fortran version we also 
+    #   compute the Hessian from a much more effective Fortran
+    #   implementation.
 
     # FUNCTION:
  
     # Compute Hessian:
+    algorithm = .params$control$algorithm[1]
     EPS0 = 1.0e-4
-
-    keep.trace = trace
-    keep.control = .params$control
-    eps = EPS0 * par
-    n = length(par)
-    H = matrix(0, ncol = n, nrow = n)
-
-    trace <- FALSE
-    for (i in 1:n) {
-        for (j in 1:n) {
-            x1 = x2 = x3 = x4 = par
-            x1[i] = x1[i] + eps[i]
-            x1[j] = x1[j] + eps[j]
-            x2[i] = x2[i] + eps[i]
-            x2[j] = x2[j] - eps[j]
-            x3[i] = x3[i] - eps[i]
-            x3[j] = x3[j] + eps[j]
-            x4[i] = x4[i] - eps[i]
-            x4[j] = x4[j] - eps[j]
-            H[i, j] = ( 
-                .garchLLH(x1, .series, .params, trace) - 
-                .garchLLH(x2, .series, .params, trace) -
-                .garchLLH(x3, .series, .params, trace) + 
-                .garchLLH(x4, .series, .params, trace) ) / 
-                    (4*eps[i]*eps[j])
+    if(algorithm == "nlminb" | algorithm == "lbfgsb" | 
+        algorithm == "nlminb+nm" | algorithm == "lbfgsb+nm") {
+        # CASE I: NLMINB and BFGS
+        keep.trace = trace
+        keep.control = .params$control
+        eps = EPS0 * par
+        n = length(par)
+        H = matrix(0, ncol = n, nrow = n)
+        trace <- FALSE
+        for (i in 1:n) {
+            for (j in 1:n) {
+                x1 = x2 = x3 = x4 = par
+                x1[i] = x1[i] + eps[i]
+                x1[j] = x1[j] + eps[j]
+                x2[i] = x2[i] + eps[i]
+                x2[j] = x2[j] - eps[j]
+                x3[i] = x3[i] - eps[i]
+                x3[j] = x3[j] + eps[j]
+                x4[i] = x4[i] - eps[i]
+                x4[j] = x4[j] - eps[j]
+                H[i, j] = ( 
+                    .garchLLH(x1, trace) - 
+                    .garchLLH(x2, trace) -
+                    .garchLLH(x3, trace) + 
+                    .garchLLH(x4, trace) ) / 
+                        (4*eps[i]*eps[j])
+            }
         }
+        trace <- keep.trace  
+        .params$control <<- keep.control 
+    } else {
+        # Case II: SQP
+        N = length(.series$x)
+        NF = length(par)
+        if(.params$includes["delta"]) {
+            XDELTA = par["delta"] 
+        } else {
+            XDELTA = .params$delta
+        } 
+        if(.params$includes["skew"]) {
+            XSKEW = par["skew"] 
+        } else {
+            XSKEW = .params$skew
+        }   
+        if(.params$includes["shape"]) {
+            XSHAPE = par["shape"] 
+        } else {
+            XSHAPE = .params$shape
+        } 
+        DPARM = c(XDELTA, XSKEW, XSHAPE)    
+        MDIST = c(dnorm = 10, dsnorm = 11, dstd = 20, dsstd = 21, dged = 30, 
+            dsged = 31)[.params$cond.dist]                # Which Distribution
+        REC = 1
+        if(.series$init.rec == "uev") REC = 2
+        MYPAR = c(
+            REC   = REC,                                  # How to initialize
+            LEV   = as.integer(.params$leverage),         # Include Leverage 0|1 
+            MEAN  = as.integer(.params$includes["mu"]),   # Include Mean 0|1 
+            DELTA = as.integer(.params$includes["delta"]),# Include Delta 0|1                          
+            SKEW  = as.integer(.params$includes["skew"]), # Include Skew 0|1 
+            SHAPE = as.integer(.params$includes["shape"]),# Include Shape 0|1 
+            ORDER = .series$order)                        # Order of ARMA-GARCH
+        # Compute Hessian:
+        ans = .Fortran("garchhess",
+            N = as.integer(N), 
+            Y = as.double(.series$x), 
+            Z = as.double(rep(0, times = N)), 
+            H = as.double(rep(0, times = N)), 
+            NF = as.integer(NF), 
+            X = as.double(par), 
+            DPARM = as.double(DPARM), 
+            MDIST = as.integer(MDIST), 
+            MYPAR = as.integer(MYPAR), 
+            E0 = as.double(EPS0),
+            HESS = as.double(rep(0, times = NF*NF)),
+            PACKAGE = "fGarch")
+        # The Matrix:
+        H = matrix(ans[["HESS"]], ncol = NF)  
+        colnames(H) = rownames(H) = names(par)
     }
-    trace <- keep.trace  
-    .params$control <- keep.control 
     
     # Return Value:
     H   
@@ -895,7 +1002,7 @@ function(par, .series, .params, trace)
 
 
 .garchOptimizeLLH =
-function(.series, .params, trace) 
+function(trace) 
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -912,37 +1019,192 @@ function(.series, .params, trace)
     # Initialization:
     INDEX = .params$index
       
-    # Tolerance Algorithms:
+    # Algorithm:
+    algorithm = .params$control$algorithm[1]
     TOL1 = .params$control$tol1
     TOL2 = .params$control$tol2
     
     # Optimize:
     if(trace) cat("\nIteration Path:\n") 
-
-    parscale = rep(1, length = length(INDEX))
-    names(parscale) = names(.params$params[INDEX])
-    parscale["omega"] = var(.series$x)^(.params$delta/2)
-    fit = nlminb(
-        start = .params$params[INDEX],
-        objective = .garchLLH, 
-        lower = .params$U[INDEX],
-        upper = .params$V[INDEX],
-        scale = parscale,
-        control = list(eval.max = 2000, iter.max = 1500, 
-            rel.tol = 1.0e-14*TOL1, x.tol = 1.0e-14*TOL1),
-        .series = .series,
-        .params = .params,
-        trace = trace) 
-    fit$value = fit$objective 
-
+    
+    # First Method:
+    # Two Step Apparoach - Trust Region + Nelder-Mead Simplex
+    if(algorithm == "nlminb" | algorithm == "nlminb+nm") {
+        if(trace) cat("\n\n\nNow NLMINB \n\n\n")
+        parscale = rep(1, length = length(INDEX))
+        names(parscale) = names(.params$params[INDEX])
+        parscale["omega"] = var(.series$x)^(.params$delta/2)
+        fit = nlminb(
+            start = .params$params[INDEX],
+            objective = .garchLLH, 
+            lower = .params$U[INDEX],
+            upper = .params$V[INDEX],
+            scale = parscale,
+            control = list(eval.max = 2000, iter.max = 1500, 
+                rel.tol = 1e-14*TOL1, x.tol = 1e-14*TOL1),
+            trace = trace)
+        fit$value = fit$objective 
+        if(algorithm == "nlminb+nm") {          
+            if(trace) cat("\n\n\nNow Nelder-Mead \n\n\n")
+            fnscale = abs(.garchLLH(.params$params[INDEX], trace))
+            fit = optim(
+                par = fit$par,
+                fn = .garchLLH,
+                method = "Nelder-Mead",
+                control = list(
+                    ndeps = rep(1e-14*TOL2, length = length(INDEX)), 
+                    maxit = 10000, 
+                    reltol = 1e-14*TOL2, 
+                    fnscale = fnscale, 
+                    parscale = c(1, abs(fit$par[-1]))),
+                hessian = TRUE,
+                trace = trace)
+        }
+    }
+    
+    # Second Method:
+    # Two Step Approach - BFGS + Nelder-Mead Simplex
+    if(algorithm == "lbfgsb" | algorithm == "lbfgsb+nm") {
+        if(trace) cat("\n\n\nNow L-BFGS-B \n\n\n")
+        parscale = rep(1, length = length(INDEX))
+        names(parscale) = names(.params$params[INDEX])
+        parscale["omega"] = var(.series$x)^((.params$params["delta"])/2)
+        fit = optim(
+            par = .params$params[INDEX], 
+            fn = .garchLLH, 
+            lower = .params$U[INDEX], 
+            upper = .params$V[INDEX], 
+            method = "L-BFGS-B", 
+            control = list(
+                parscale = parscale, 
+                lmm = 20, 
+                pgtol = 1e-14 * TOL1, 
+                factr = 1 * TOL1),
+            trace = trace)       
+        if(algorithm == "lbfgsb+nm") {
+            if(trace) cat("\n\n\nNow Nelder-Mead \n\n\n")
+            fnscale = abs(fit$value)
+            parscale = abs(fit$par)
+            fit = optim(
+                par = fit$par, 
+                fn = .garchLLH, 
+                method = "Nelder-Mead", 
+                control = list(
+                    ndeps = rep(1e-14 * TOL2, length = length(INDEX)), 
+                    maxit = 10000, 
+                    reltol = 1e-14 * TOL2, 
+                    fnscale = fnscale, 
+                    parscale = parscale), 
+                hessian = TRUE,
+                trace = trace)
+        }
+    } # End of Second Method
+    
+    # Third Method:
+    # Sequential Programming Algorithm
+    # IPAR, RPAR and MYPAR Parameter Setting:
+    if(algorithm == "sqp") {
+        if(trace) cat(" SQP Algorithm\n\n")
+        IPAR = c(
+            IPRNT = as.integer(trace),    #  [1, 200, 500, 2, 2, 1, 4]
+            MIT = .params$control$MIT,    
+                        # maximum number of iterations (200)
+            MFV = .params$control$MFV,    
+                        # maximum number of function evaluations (500)
+            MET = .params$control$MET,      
+                        # specifies scaling strategy:
+                        #  MET=1 - no scaling 
+                        #  MET=2 - preliminary scaling in 1st iteration (default)
+                        #  MET=3 - controlled scaling 
+                        #  MET=4 - interval scaling 
+                        #  MET=5 - permanent scaling in all iterations 
+            MEC = .params$control$MEC,    
+                        # correction for negative curvature:
+                        #  MEC=1 - no correction
+                        #  MEC=2 - Powell correction (default)
+            MER = .params$control$MER,    
+                        # restarts after unsuccessful variable metric updates:
+                        #  MER=0 - no restarts
+                        #  MER=1 - standard restart 
+            MES = .params$control$MES) 
+                        # interpolation method selection in a line search:
+                        #  MES=1 - bisection
+                        #  MES=2 - two point quadratic interpolation
+                        #  MES=3 - three point quadratic interpolation
+                        #  MES=4 - three point cubic interpolation (default)            
+        RPAR = c(
+            XMAX = .params$control$XMAX,  
+            TOLX = .params$control$TOLX, 
+            TOLC = .params$control$TOLC,
+            TOLG = .params$control$TOLG, 
+            TOLD = .params$control$TOLD,
+            TOLS = .params$control$TOLS,
+            RPF  = .params$control$RPF)
+        MDIST = c(dnorm = 10, dsnorm = 11, dstd = 20, dsstd = 21, dged = 30, 
+            dsged = 31)[.params$cond.dist]
+        if(.params$control$fscale) NORM = length(.series$x) else NORM = 1
+        REC = 1
+        if(.series$init.rec == "uev") REC = 2
+        MYPAR = c(
+            REC   = REC,                                  # How to initialize
+            LEV   = as.integer(.params$leverage),         # Include Leverage 0|1 
+            MEAN  = as.integer(.params$includes["mu"]),   # Include Mean 0|1 
+            DELTA = as.integer(.params$includes["delta"]),# Include Delta 0|1                          
+            SKEW  = as.integer(.params$includes["skew"]), # Include Skew 0|1 
+            SHAPE = as.integer(.params$includes["shape"]),# Include Shape 0|1 
+            ORDER = .series$order,                        # Order of ARMA-GARCH
+            NORM  = as.integer(NORM))
+        
+        # Now Estimate Parameters:     
+        MAX = max(.series$order)
+        NF = length(INDEX)
+        N = length(.series$x)
+        DPARM = c(.params$delta, .params$skew, .params$shape)
+        if(IPAR[1] == 0) sink("@sink@")
+        ans = .Fortran("garchfit",
+            N = as.integer(N), 
+            Y = as.double(.series$x), 
+            Z = as.double(rep(2, times = N)), 
+            H = as.double(rep(0, times = N)), 
+            NF = as.integer(NF), 
+            X = as.double(.params$params[INDEX]), 
+            XL = as.double(.params$U[INDEX]), 
+            XU = as.double(.params$V[INDEX]), 
+            DPARM = as.double(DPARM), 
+            MDIST = as.integer(MDIST), 
+            IPAR = as.integer(IPAR), 
+            RPAR = as.double(RPAR), 
+            MYPAR = as.integer(MYPAR),
+            F = as.double(FALSE),
+            PACKAGE = "fGarch")
+        if(IPAR[1] == 0) {
+            sink()        
+            unlink("@sink@")
+        }
+     
+        # Result:
+        if(trace) {
+            cat("\nControl Parameter:\n")
+            print(IPAR)
+            print(RPAR)
+        }
+        fit = list()
+        fit$par = ans[[6]]
+        fit$value = ans[[14]] 
+        
+        # Update .series
+        names(fit$par) = names(.params$params[INDEX]) 
+        updateLLH = .garchLLH(fit$par, trace)
+    } # End of Third Method
+    
     # Add Names:
     names(fit$par) = names(.params$params[INDEX]) 
     fit$coef = fit$par
     
     # Compute Hessian:
     .StartHessian <- Sys.time()
-    H = .garchHessian(fit$par, .series, .params, trace)
-    Time =  Sys.time() - .StartHessian 
+    H = .garchHessian(fit$par, trace)
+    Time =  Sys.time() - .StartHessian
     if(trace) {
         cat("\nTime to Compute Hessian:\n ")
         print(Time)  
@@ -960,11 +1222,9 @@ function(.series, .params, trace)
     # Final Function Evaluation: 
     if(trace) {
         # Note, that .garchLLH() will print the final estimate ...
-        ##
-        .llh <- 1.0e99
+        .llh <<- 1.0e99
         cat("\nFinal Estimate:\n")
-        ##
-        .llh <- .garchLLH(fit$par, .series, .params, trace)
+        .llh <<- .garchLLH(fit$par, trace)
     }  
     
     # Hessian:

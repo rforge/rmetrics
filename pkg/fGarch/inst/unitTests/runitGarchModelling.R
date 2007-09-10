@@ -98,8 +98,8 @@ function()
     # Modify Start Values:
     fit = garchFit( ~ garch(1,1), x, init.rec = "mci") # default
     fit@fit$coef
-    fit = garchFit( ~ garch(1,1), x, init.rec = "uev")
-    fit@fit$coef
+    ## fit = garchFit( ~ garch(1,1), x, init.rec = "uev")
+    ## fit@fit$coef
     
     # Skew Normal Conditional Distribution:
     fit = garchFit(~garch(1,1), data = x, cond.dist = "dsnorm")
@@ -140,8 +140,8 @@ function()
     fit@fit$coef
     
     # Modify Start Values - uev alternative:
-    fit = garchFit( ~ garch(1,1), x, init.rec = "uev")
-    fit@fit$coef
+    ## fit = garchFit( ~ garch(1,1), x, init.rec = "uev")
+    ## fit@fit$coef
     
     # Return Value:
     return()    
