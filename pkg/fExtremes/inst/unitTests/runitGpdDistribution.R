@@ -28,9 +28,6 @@
 
 
 ################################################################################
-
-
-################################################################################
 # FUNCTION:              GPD DISTRIBUTION FAMILY:
 # dgpd                    Density for the Generalized Pareto DF [USE FROM EVIS]
 #  pgpd                    Probability for the Generalized Pareto DF

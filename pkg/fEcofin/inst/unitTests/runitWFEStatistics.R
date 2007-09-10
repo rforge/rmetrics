@@ -38,32 +38,15 @@
 ################################################################################
 
 
-test.aaa = 
+test.wfe = 
 function()
 {
-    # Help File:
-    helpFile = function() { 
-        example(WFEStatistics, ask = FALSE)
-        return() 
-    }
-    checkIdentical(
-        target = class(try(helpFile())),
-        current = "NULL")
+    # Data
+    NA
         
     # Return Value:
     return() 
 }
-
-
-# ------------------------------------------------------------------------------
-
-    
-if (FALSE) {
-    require(RUnit)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fEcofin/tests/runit1C.R",
-        rngKind = "Marsaglia-Multicarry", rngNormalKind = "Inversion")
-    printTextProtocol(testResult)
-}   
 
 
 ################################################################################

@@ -27,7 +27,6 @@
 #   see Rmetrics's copyright file
 
 
-# fCalendar::4B-TimeSeriesData.R
 ################################################################################
 # FUNCTION:                 DESCRIPTION:
 #  fapply                    Applies a function to 'timeSeries' windows

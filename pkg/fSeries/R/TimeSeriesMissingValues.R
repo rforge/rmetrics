@@ -27,7 +27,6 @@
 #   see Rmetrics's copyright file
     
    
-# fCalendar::4E-TimeSeriesMissingValues.R
 ################################################################################
 # FUNCTION:                 DESCRIPTION: 
 #  removeNA                  Remove NAs from a matrix object

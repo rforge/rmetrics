@@ -480,9 +480,7 @@ function()
         horizon = "6m", 
         smoothing = "6m", 
         trace = TRUE)  
-        
-   
- 
+
     # Return Value:
     return()
 }        

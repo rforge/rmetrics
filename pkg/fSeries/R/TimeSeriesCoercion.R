@@ -27,7 +27,6 @@
 #   see Rmetrics's copyright file
 
 
-# fCalendar::4D-TimeSeriesCoercion.R
 ################################################################################
 # METHOD:                   CREATE A TIMESERIES FROM OTHER OBJECTS:
 #  is.timeSeries             Tests for a 'timeSeries' object

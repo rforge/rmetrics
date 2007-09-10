@@ -27,7 +27,6 @@
 #   see Rmetrics's copyright file
 
 
-# fCalendar::4F-TimeSeriesEndOfPeriod.R
 ################################################################################
 # FUNCTION:                 DESCRIPTION:
 #  .endOfPeriodSeries        Returns series back to a given period

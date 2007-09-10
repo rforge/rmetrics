@@ -82,15 +82,5 @@ function()
 }
 
 
-# ------------------------------------------------------------------------------
-
-    
-if (FALSE) {
-    require(RUnit)
-    testResult <- runTestFile("C:/Rmetrics/SVN/trunk/fEcofin/tests/runit3B.R")
-    printTextProtocol(testResult)
-}   
-
-
 ################################################################################
 

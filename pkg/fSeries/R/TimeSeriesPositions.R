@@ -27,7 +27,6 @@
 #   see Rmetrics's copyright file
 
 
-# fCalendar::4C-TimeSeriesPositions.R
 ################################################################################
 # FUNCTION:                 POSITIONS:
 #  seriesPositions           Extracts positions slot from 'timeSeries' object
