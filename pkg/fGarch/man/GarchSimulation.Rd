@@ -1,0 +1,104 @@
+\name{garchSim}
+
+\alias{garchSim}
+
+\title{Univariate GARCH Time Series Simulation}
+
+
+\description{
+
+    Simulates an univariate GARCH time series model.
+
+}
+
+
+\usage{
+garchSim(model = list(omega = 1.0e-6, alpha = 0.1, beta = 0.8), n = 100, 
+    n.start = 100, presample = NULL, cond.dist = c("rnorm", "rged", "rstd", 
+    "rsnorm", "rsged", "rsstd"), rseed = NULL)
+}
+
+
+\arguments{
+
+    \item{cond.dist}{
+        a character string naming the desired conditional distribution.
+        Valid values are \code{"dnorm"}, \code{"dged"}, \code{"dstd"}, 
+        \code{"dsnorm"}, \code{"dsged"}, \code{"dsstd"}. The default value 
+        is the normal distribution.
+        }
+    \item{model}{
+        a list of GARCH model parameters: \cr
+        \code{omega} - the constant coefficient of the variance equation,
+            by default 1e-6; \cr
+        \code{alpha} - the value or vector of autoregressive coefficients, 
+            by default 0.1, specifying a model of order 1; \cr
+        \code{beta} - the value or vector of variance coefficients,
+            by default 0.8, specifying a model of order 1; 
+        \cr
+        The optional values for the linear part are: \cr
+        \code{mu} - the mean value, by default 0; \cr
+        \code{ar} - the autoregressive ARMA coefficients, by default 0; \cr
+        \code{ma} - the moving average ARMA coefficients, by default 0. 
+        \cr
+        The optional parameters for the conditional distributions are:\cr
+        \code{skew} - the skewness parameter (also named xi), by default
+            0.9, effective only for the \code{"dsnorm"}, the \code{"dsged"},
+            and the \code{"dsstd"} skewed conditional distributions; \cr
+        \code{shape} = the shape parameter (also named nu), by default 2 
+            for the \code{"dged"} and \code{"dsged"}, and by default 4
+            for the \code{"dstd"} and \code{"dsstd"} conditional
+            distributions.\cr
+        \cr
+        Note, the default model specifies Bollerslev's GARCH(1,1) model
+        with normal distributed innovations.
+        }   
+    \item{n}{
+        length of output series, an integer value. An integer value,
+        by default \code{n=100}.
+        }
+    \item{n.start}{
+        length of "burn-in" period, by default 100.
+        }
+    \item{presample}{
+        a numeric three column matrix with start values for the series, 
+        for the innovations, and for the conditional variances. For an 
+        ARMA(m,n)-GARCH(p,q) process the number of rows must be at least 
+        max(m,n,p,q), longer presamples are cutted.
+        }
+    \item{rseed}{
+        single integer argument, the seed for the intitialization of
+        the random number generator for the innovations.
+        }
+
+}
+
+
+\value{
+
+    returns an objects of class \code{ts} atrributed with an appropriate
+    specification structure as returned by the function \code{garchSpec}. 
+
+}
+
+
+\author{
+
+    Diethelm Wuertz for the Rmetrics \R-port.
+    
+}
+
+
+\examples{
+## garchSpec -
+   spec = garchSpec()
+   spec
+
+## garchSim -
+   x = garchSim(model = spec@model, n = 500)
+   head(x) 
+}
+
+
+\keyword{models}
+
