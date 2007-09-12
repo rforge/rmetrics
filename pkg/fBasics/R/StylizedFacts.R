@@ -177,6 +177,7 @@ ymax = NA, standardize = TRUE, labels = TRUE, ...)
        
     # Taylor Effect:
     ans = list()
+    maxDelta = NULL
     for (i in 1:dim(x)[2]) {
         if (labels) main = Units[i]
         X = as.vector(x[, i])
@@ -203,7 +204,8 @@ ymax = NA, standardize = TRUE, labels = TRUE, ...)
             yl = xl[data[il, ] == yp]
             lines(deltas, data[il, ], col = il)
             points(deltas[yl], yp, pch = 19)
-            lines (c(1, 1), c(0, ymax))
+            maxDelta = c(maxDelta, deltas[yl])
+            lines (c(1, 1), c(0, ymax)) 
         }
         
         # Grid:
@@ -215,7 +217,10 @@ ymax = NA, standardize = TRUE, labels = TRUE, ...)
         ans[[i]] = data
     }
     names(ans) = Units
-            
+    
+    # Deltas for max Peak: 
+    ans$maxDelta = maxDelta
+             
     # Return Value:
     invisible(ans)
 }
