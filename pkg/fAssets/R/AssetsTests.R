@@ -69,37 +69,22 @@ title = NULL, description = NULL)
 
 
 ################################################################################
-# Package: energy
-# Title: E-statistics (energy statistics) tests of fit, independence, clustering
-# Version: 1.0-6
-# Date: 2007-04-02
-# Author: Maria L. Rizzo <mrizzo @ bgnet.bgsu.edu> and 
-#  Gabor J. Szekely <gabors @ bgnet.bgsu.edu>
-# Description: E-statistics (energy) tests for comparing distributions: 
-#  multivariate normality, multivariate k-sample test for equal distributions, 
-#  hierarchical clustering by e-distances, multivariate independence test, 
-#  goodness-of-fit tests. Energy-statistics concept based on a generalization of 
-#  Newton's potential energy is due to Gabor J. Szekely.
-# Maintainer: Maria Rizzo <mrizzo @ bgnet.bgsu.edu>
-# Depends: boot
-# License: GPL 2.0 or later
-# Packaged: Mon Apr  2 22:30:11 2007; rizzo
 
 
 .mvenergyTest =
 function(x, Replicates = 99, title = NULL, description = NULL)
 {
     # Description:
+    #   Computes E-statistics test for multivariate variables
     
     # Note:
-    #   Requires Contributed R packags "energy and "boot".
-    #   Unfortunately, "boot" conflicts with "robustbase".
-    #   What we are doing here is to load the packages not 
-    #   at startup, we load it here, and detach it after usage.
-    #   It is important to know, that require can only load 
-    #   an installed package, and this is detected by having a 
-    #   ‘DESCRIPTION’ file. ".require" is used here that it
-    #   is not detected  by R CMD. - Can we do this better ? 
+    #   Reimplemented function, doesn't require the contributed 
+    #   R package energy, we only use the C Program here.
+    
+    # Source:
+    #   Maria L. Rizzo <mrizzo @ bgnet.bgsu.edu> and 
+    #   Gabor J. Szekely <gabors @ bgnet.bgsu.edu>
+    #   License: GPL 2.0 or later
     
     # Example:
     #   .mvenergyTest(x = assetsSim(100), 99)
@@ -110,20 +95,37 @@ function(x, Replicates = 99, title = NULL, description = NULL)
     if (class(x) == "timeSeries") x = seriesData(x)
     x = as.matrix(x)
     
-    # Test:  
-    mvnorm.etest = function(x = x, R = Replicates) { NA }
-    .require = require
-    .require("energy")
-    rm(mvnorm.etest)
-    test = mvnorm.etest(x = x, R = Replicates)
-    detach("package:energy")
-    detach("package:boot")
+    # Test: 
+    R = Replicates 
+    
+    # RVs:
+    n <- nrow(x)
+    d <- ncol(x)
+    ran.gen = function(x, y) return(matrix(rnorm(n * d), nrow = n, ncol = d))
+    
+    # Parametric Mini Boot:
+    strata = rep(1, n)
+    n <- nrow(x)
+    temp.str <- strata
+    strata <- tapply(1:n, as.numeric(strata))
+    t0 <- .mvnorm.e(x)
+    lt0 <- length(t0)
+    t.star <- matrix(NA, sum(R), lt0)
+    pred.i <- NULL
+    for(r in 1:R) t.star[r, ] <- .mvnorm.e(ran.gen(x, NULL))
+    
+    # Result:
+    test <- list(
+        statistic = c("E-Statistic" = t0),
+        p.value = 1 - mean(t.star < t0),
+        method = "Energy Test",
+        data.name = paste("x, obs ", n, ", dim ", d, ", reps ", R, sep = ""))
     names(test$p.value) = ""
-    class(test) = "list"
+    class(test) = "list" 
     
     # Add:
     if (is.null(title)) title = test$method
-    if (is.null(description)) description = date()
+    if (is.null(description)) description = .description()
     
     # Return Value:
     new("fHTEST",
@@ -134,6 +136,26 @@ function(x, Replicates = 99, title = NULL, description = NULL)
         description = description)
 }
 
+
+# ------------------------------------------------------------------------------
+
+
+.mvnorm.e <- 
+function(x) 
+{
+    z <- scale(x, scale = FALSE)   
+    ev <- eigen(var(x), symmetric = TRUE)  
+    P <- ev$vectors   
+    y <- z %*% (P %*% diag(1 / sqrt(ev$values)) %*% t(P))
+    e <- .C("mvnEstat", y = as.double(t(y)), byrow = as.integer(TRUE),
+        nobs = as.integer(nrow(x)), dim = as.integer(ncol(x)), 
+        stat = as.double(0), PACKAGE = "fAssets")$stat
+        
+    # Return Value:
+    e
+}
+
+
   
 ################################################################################
 # Package: mvnormtest
@@ -143,7 +165,7 @@ function(x, Replicates = 99, title = NULL, description = NULL)
 # Author: Slawomir Jarek
 # Maintainer: Slawomir Jarek <slawomir.jarek@gallus.edu.pl>
 # Description: Generalization of shapiro-wilk test for multivariate variables.
-# License: GPL
+
 # Depends: stats
 
 
@@ -154,12 +176,13 @@ function(x, title = NULL, description = NULL)
     #   Computes Shapiro's normality test for multivariate variables
     
     # Note:
-    #   Builtin Function, doesn't require the contributed R package 
+    #   Reimplemented function, doesn't require the contributed R package 
     #   mvnormtest
     
     # Author: 
     #   Slawomir Jarek
-
+    #   License: GPL
+    
     # Example:
     #   .mvshapiroTest(x = assetsSim(100))
     
@@ -187,7 +210,7 @@ function(x, title = NULL, description = NULL)
     
     # Add title and description:
     if (is.null(title)) title = "Multivariate Shapiro Test"
-    if (is.null(description)) description = as.character(date())
+    if (is.null(description)) description = .description()
     
     # Return Value:
     new("fHTEST", 

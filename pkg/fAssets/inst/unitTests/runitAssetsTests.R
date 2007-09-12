@@ -61,9 +61,8 @@ function()
     x = assetsSim(100)
     head(x)
     
-    # Test - dont run, requires packages energy/boot, and we 
-    # don't know if the packages are installed ...
-    # assetsTest(x, method = "energy")
+    # Energy Test: 
+    assetsTest(x, method = "energy")
     
     # Return Value:
     return()
