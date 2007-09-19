@@ -6,6 +6,7 @@
 \alias{seriesPositions}
 \alias{newPositions<-}
 
+\alias{time.timeSeries}
 \alias{sample.timeSeries}
 \alias{sort.timeSeries}
 \alias{rev.timeSeries}
@@ -29,6 +30,7 @@
     \tabular{ll}{   
     \code{seriesPositions} \tab Extracts positions slot from a 'timeSeries', \cr
     \code{newPositions<-} \tab Modifies positions of a 'timeSeries' object, \cr
+    \code{time.timeSeries} \tab Extracts time positions from a 'timeSeries', \cr
     \code{sample.timeSeries} \tab Resamples a 'timeSeries' object in time, \cr
     \code{sort.timeSeries} \tab Sorts reverts a 'timeSeries' object in time, \cr
     \code{rev.timeSeries} \tab Reverts a 'timeSeries' object in time, \cr 
@@ -41,6 +43,8 @@
 \usage{
 seriesPositions(object)
 newPositions(object) <- value
+
+\method{time}{timeSeries}(x, \dots)
 
 \method{start}{timeSeries}(x, \dots)
 \method{end}{timeSeries}(x, \dots)

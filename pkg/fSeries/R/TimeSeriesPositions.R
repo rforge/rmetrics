@@ -31,7 +31,8 @@
 # FUNCTION:                 POSITIONS:
 #  seriesPositions           Extracts positions slot from 'timeSeries' object
 #  newPositions<-            Modifies positions of a 'timeSeries' object
-# METHOD:                   ORDERING:
+# METHOD:                   POSITION HANDLING:
+#  time.timeSeries           extracs time positions from a 'timeSeries'
 #  sample.timeSeries         Resamples a 'timeSeries' object in time
 #  sort.timeSeries           Sorts reverts a 'timeSeries' object in time
 #  rev.timeSeries            Reverts a 'timeSeries' object in time 
@@ -87,12 +88,37 @@ function(object, value)
 
 
 ################################################################################
-# METHOD:                   ORDERING:
+# METHOD:                   POSITION HANDLING:
+#  time.timeSeries           Extracs time positions from a 'timeSeries'
 #  sample.timeSeries         Resamples a 'timeSeries' object in time
 #  sort.timeSeries           Sorts reverts a 'timeSeries' object in time
 #  rev.timeSeries            Reverts a 'timeSeries' object in time 
 #  start.timeSeries          Extracts start date of a 'timeSeries' object 
 #  end.timeSeries            Extracts end date of a 'timeSeries' object
+
+
+time.timeSeries =
+function(x, ...)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Extracs time positions from a 'timeSeries'
+    
+    # Arguments:
+    #   x - a 'timeSeries' object.
+    
+    # Value:
+    #   Returns a time resampled object of class 'timeSeries'.
+  
+    # FUNCTION:
+    
+    # Get Positions:
+    timeDate(charvec = x@positions, format = x@format, 
+        zone = x@FinCenter, FinCenter = x@FinCenter)
+}
+
+
+# ------------------------------------------------------------------------------
 
 
 .sample.timeSeries =
