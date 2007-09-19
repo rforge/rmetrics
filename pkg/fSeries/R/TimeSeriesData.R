@@ -145,6 +145,7 @@ function(x, from, to, FUN, ...)
     ans = fun(cutted, ...)
     
     if (is.timeSeries(ans)) {
+        ## DW can this happen - check ?
         rowBind = ans
         for (i in 2:from@Dim) {
             test = (j.pos >= j.from[1] & j.pos <= j.to[1])
@@ -168,14 +169,16 @@ function(x, from, to, FUN, ...)
         return(ans)
     } else {  
         listBind = list()
-        listBind[1] = ans
+        ## DW [] -> [[]]
+        listBind[[1]] = ans
         for (i in 2:from@Dim) {
             test = (j.pos >= j.from[i] & j.pos <= j.to[i])
             # make sure that cutted is a matrix ...
             cutted = as.matrix(y[test, ])
             ### if (sum(test)>0) rownames(cutted) <- rowNames[test]
             ans = fun(cutted, ...)
-            listBind[i] = ans 
+            ## DW [] -> [[]]
+            listBind[[i]] = ans 
         }
         # Return Value:
         ans = listBind
