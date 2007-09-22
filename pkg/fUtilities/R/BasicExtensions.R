@@ -26,8 +26,7 @@
 # and other sources
 #   see Rmetrics's copyright file
 
-
-# fEcofin::3A-BasicExtensions.R                                                 
+                                                
 ################################################################################
 # FUNCTION:                 BASIC EXTENSIONS:                                   
 #  align                     aligns time series objects by approximation        
@@ -47,7 +46,8 @@
 #  cov                       var has become a generic function                  
 #  cov.default               var default method                                 
 #  stdev                     for SPLUS compatibility                            
-# FUNCTION:                  COLUMN AND ROW STATISTICS:                         
+# FUNCTION:                  COLUMN AND ROW STATISTICS: 
+#  ## DW: moved to Column Row Statistics ..                        
 #  colSums                    colSums has become a generic function             
 #  colMeans                   colMeans has become a generic function            
 #  rowSums                    rowSums has become a generic function             
@@ -382,25 +382,11 @@ function(x, na.rm = FALSE)
 #  rowMeans                      roowMeans has become a generic function
 
 
-colMeans.default <- base::colMeans
-
-
-# ------------------------------------------------------------------------------
-
-
-colSums.default <- base::colSums
-
-
-# ------------------------------------------------------------------------------
-
-
-rowMeans.default <- base::rowMeans
-
-
-# ------------------------------------------------------------------------------
-
-
-rowSums.default <- base::rowSums
+## DW: moved to Column Row Statistics ...
+## colMeans.default <- base::colMeans
+## colSums.default <- base::colSums
+## rowMeans.default <- base::rowMeans
+## rowSums.default <- base::rowSums
 
 
 ################################################################################

@@ -27,7 +27,6 @@
 #   see Rmetrics's copyright file
 
 
-# fEcofin::ColumnRowStatistics.R
 ################################################################################
 # FUNCTION:                 ROW STATISTICS:
 #  rowStats                  Computes sample statistics by row
@@ -36,7 +35,6 @@
 #  rowStdevs                 Computes sample variance by row
 #  rowSkewness               Computes sample skewness by row
 #  rowKurtosis               Computes sample kurtosis by row
-#  rowCumsums                Computes sample cumulated sums by row
 # FUNCTION:                 COLUMN STATISTICS:
 #  colStats                  Computes sample statistics by column
 #  colAvgs                   Computes sample mean by column
@@ -44,7 +42,26 @@
 #  colStdevs                 Computes sample variance by column
 #  colSkewness               Computes sample skewness by column
 #  colKurtosis               Computes sample kurtosis by column
-#  colCumsums                Computes sample cumulated sums by column
+# FUNCTION                  ADDONS:
+#  colSums                   Computes sums of all values in each column
+#  rowSums                   Computes sums of all values in each row
+#  colMeans                  Computes means of all values in each column
+#  rowMeans                  Computes means of all values in each row
+#  colSds                    Computes standardard deviation of each column
+#  colMaxs                   Computes maximum values in each colum
+#  colProds                  Computes product of all values in each colum
+################################################################################
+
+
+################################################################################
+# @comments
+#   DW 2007-09-20           further col* functions added, see ADDONS
+################################################################################
+
+
+################################################################################
+# @todo
+#
 ################################################################################
 
 
@@ -56,7 +73,6 @@
 #  rowStdevs                 Computes sample variance by row
 #  rowSkewness               Computes sample skewness by row
 #  rowKurtosis               Computes sample kurtosis by row
-#  rowCumsums                Computes sample cumulated sums by row
 
 
 rowStats =
@@ -77,64 +93,6 @@ function(x, FUN, na.rm = FALSE, ...)
     } else {
         result = apply(X, MARGIN = 1, FUN = FUN, ...)
     }
-
-    # Return Value:
-    result
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-rowSums.timeSeries =
-function(x, na.rm = FALSE, ...)
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Computes sample sum by row
-
-    # FUNCTION:
-
-    # Transform:
-    X = as.matrix(x)
-
-    # Statistics:
-    if (na.rm) {
-        result = apply(na.omit(X), MARGIN = 1, FUN = sum, ...)
-    } else {
-        result = apply(X, MARGIN = 1, FUN = sum, ...)
-    }
-    result = t(t(result))
-    colnames(result) = "Sum"
-
-    # Return Value:
-    result
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-rowMeans.timeSeries =
-function(x, na.rm = FALSE, ...)
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Computes sample mean by row
-
-    # FUNCTION:
-
-    # Transform:
-    X = as.matrix(x)
-
-    # Statistics:
-    if (na.rm) {
-        result = apply(na.omit(X), MARGIN = 1, FUN = mean, ...)
-    } else {
-        result = apply(X, MARGIN = 1, FUN = mean, ...)
-    }
-    result = t(t(result))
-    colnames(result) = "Mean"
 
     # Return Value:
     result
@@ -289,34 +247,6 @@ function(x, na.rm = FALSE, ...)
 }
 
 
-# ------------------------------------------------------------------------------
-
-
-rowCumsums =
-function(x, na.rm = FALSE, ...)
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Computes sample cumulated sums by column
-
-    # FUNCTION:
-
-    # Transform:
-    X = as.matrix(x)
-
-    # Statistics:
-    if (na.rm) {
-        result = apply(na.omit(X), MARGIN = 2, FUN = cumsum, ...)
-    } else {
-        result = apply(X, MARGIN = 2, FUN = cumsum, ...)
-    }
-    colnames(result) = paste(1:ncol(x))
-
-    # Return Value:
-    result
-}
-
-
 ################################################################################
 # FUNCTION:                 COLUMN STATISTICS:
 #  colStats                  Computes sample statistics by column
@@ -325,7 +255,6 @@ function(x, na.rm = FALSE, ...)
 #  colStdevs                 Computes sample variance by column
 #  colSkewness               Computes sample skewness by column
 #  colKurtosis               Computes sample kurtosis by column
-#  colCumsums                Computes sample cumulated sums by column
 
 
 colStats =
@@ -343,65 +272,6 @@ function(x, FUN, na.rm = FALSE, ...)
     # Statistics:
     apply(if(na.rm) na.omit(X) else X, 2, FUN, ...)
 }
-
-
-# ------------------------------------------------------------------------------
-
-
-colSums.timeSeries =
-function(x, na.rm = FALSE, ...)
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Computes sample sum by column
-
-    # FUNCTION:
-
-    # Transform:
-    X = as.matrix(x)
-
-    # Statistics:
-    if (na.rm) {
-        result = apply(na.omit(X), MARGIN = 2, FUN = sum, ...)
-    } else {
-        result = apply(X, MARGIN = 2, FUN = sum, ...)
-    }
-    result = t(t(result))
-    colnames(result) = "Sum"
-
-    # Return Value:
-    result
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-colMeans.timeSeries =
-function(x, na.rm = FALSE, ...)
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Computes sample mean by column
-
-    # FUNCTION:
-
-    # Transform:
-    X = as.matrix(x)
-
-    # Statistics:
-    if (na.rm) {
-        result = apply(na.omit(X), MARGIN = 2, FUN = mean, ...)
-    } else {
-        result = apply(X, MARGIN = 2, FUN = mean, ...)
-    }
-    result = t(t(result))
-    colnames(result) = "Mean"
-
-    # Return Value:
-    result
-}
-
 
 
 # ------------------------------------------------------------------------------
@@ -507,35 +377,108 @@ function(x, na.rm = FALSE, ...)
 }
 
 
+################################################################################
+# FUNCTION                  ADDONS:
+#  colSums                   Computes sums of all values in each column
+#  rowSums                   Computes sums of all values in each row
+#  colMeans                  Computes means of all values in each column
+#  rowMeans                  Computes means of all values in each row
+#  colSds                    Computes standardard deviation of each column
+#  colMaxs                   Computes maximum values in each colum
+#  colProds                  Computes product of all values in each colum
+
+
+.conflicts.OK = TRUE
+
+
+# ------------------------------------------------------------------------------
+# DW: moved from BasicExtensions ...
+
+
+colSums = 
+function(x, na.rm = FALSE, dims = 1) 
+{
+    # Column Sums:
+    if (class(x) == "timeSeries") x = as.matrix(x)
+    base::colSums(x, na.rm, dims)
+}
+
+
+rowSums = 
+function(x, na.rm = FALSE, dims = 1) 
+{
+    # Column Sums:
+    if (class(x) == "timeSeries") x = as.matrix(x)
+    base::rowSums(x, na.rm, dims)
+}
+
+
 # ------------------------------------------------------------------------------
 
 
-colCumsums =
-function(x, na.rm = FALSE, ...)
-{   # A function implemented by Diethelm Wuertz
+colMeans = 
+function(x, na.rm = FALSE, dims = 1) 
+{
+    # Column Sums:
+    if (class(x) == "timeSeries") x = as.matrix(x)
+    base::colSums(x, na.rm, dims)
+}
 
-    # Description:
-    #   Computes sample cumulated sums by column
 
-    # FUNCTION:
+rowMeans = 
+function(x, na.rm = FALSE, dims = 1) 
+{
+    # Column Sums:
+    if (class(x) == "timeSeries") x = as.matrix(x)
+    base::rowSums(x, na.rm, dims)
+}
 
-    # Transform:
-    X = as.matrix(x)
 
-    # Statistics:
-    result <- apply(if(na.rm) na.omit(X) else X,
-                    2, cumsum, ...)
+# ------------------------------------------------------------------------------
 
-    # Time Series Input ?
-    if (is(x, "timeSeries")) {
-        x@Data = result
-        result = x
-    }
 
-    # Return Value:
-    result
+colSds = 
+function(x) 
+{     
+    # Column Standard Deviations:
+    ans = apply(as.matrix(x), 2, max)  
+    names(ans) = colnames(x)
+    
+    # Return Value: 
+    ans
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+colMaxs = 
+function(x) 
+{     
+    # Column Maximums:
+    ans = apply(as.matrix(x), 2, max)  
+    names(ans) = colnames(x)
+    
+    # Return Value: 
+    ans
+}
+    
+
+# ------------------------------------------------------------------------------
+
+
+colProds = 
+function(x) 
+{     
+    # Column Products:
+    ans = apply(as.matrix(x), 2, prod)  
+    names(ans) = colnames(x)
+    
+    # Return Value: 
+    ans
 }
 
 
 ################################################################################
 
+    

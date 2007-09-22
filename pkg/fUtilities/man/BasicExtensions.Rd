@@ -32,14 +32,15 @@
 \alias{cor}
 \alias{cor.default}
 
-\alias{colSums}
-\alias{colSums.default}
-\alias{colMeans}
-\alias{colMeans.default}
-\alias{rowSums}
-\alias{rowSums.default}
-\alias{rowMeans}
-\alias{rowMeans.default}
+%DW: moved to Column Row Statistics ...
+%\alias{colSums}
+%\alias{colSums.default}
+%\alias{colMeans}
+%\alias{colMeans.default}
+%\alias{rowSums}
+%\alias{rowSums.default}
+%\alias{rowMeans}
+%\alias{rowMeans.default}
 
 \alias{stdev}
 
@@ -95,10 +96,10 @@
 \method{cor}{default}(x, y = NULL, use = "all.obs", 
     method = c("pearson", "kendall", "spearman"))
     
-\method{colMeans}{default}(x, na.rm = FALSE, dims = 1)
-\method{colSums}{default}(x, na.rm = FALSE, dims = 1)
-\method{rowMeans}{default}(x, na.rm = FALSE, dims = 1)
-\method{rowSums}{default}(x, na.rm = FALSE, dims = 1) 
+%\method{colMeans}{default}(x, na.rm = FALSE, dims = 1)
+%\method{colSums}{default}(x, na.rm = FALSE, dims = 1)
+%\method{rowMeans}{default}(x, na.rm = FALSE, dims = 1)
+%\method{rowSums}{default}(x, na.rm = FALSE, dims = 1) 
     
 stdev(x, na.rm = FALSE)
 
@@ -143,13 +144,13 @@ as.POSIXlt(x, tz = "")
         covariance) is to be computed. One of \code{"pearson" (default)}, 
         \code{"kendall"}, or \code{"spearman"}, can be abbreviated.
         }
-    \item{dims}{
-        [colMeans][colSums][rowMeans][rowSums] - \cr
-        Which dimensions are regarded as \code{rows} or \code{columns} to 
-        sum over. For \code{row*}, the sum or mean is over dimensions 
-        \code{dims+1}, \code{...}; for \code{col*} it is over dimensions 
-        \code{1:dims}.
-        }
+    %\item{dims}{
+    %    [colMeans][colSums][rowMeans][rowSums] - \cr
+    %    Which dimensions are regarded as \code{rows} or \code{columns} to 
+    %    sum over. For \code{row*}, the sum or mean is over dimensions 
+    %    \code{dims+1}, \code{...}; for \code{col*} it is over dimensions 
+    %    \code{1:dims}.
+    %    }
     \item{n}{
         [align] - \cr
         if \code{xout} is not specified, alignment takes place at \code{n}
@@ -160,10 +161,10 @@ as.POSIXlt(x, tz = "")
         alternative way to specify the database to be attached.
         See for details \code{help(attach,package=base)}.
         }
-%     \item{partial, na.last, decreasing, index.return}{
-%         [sort] - \cr
-%         additional arguments to the \code{sort} function.
-%         }
+    %\item{partial, na.last, decreasing, index.return}{
+    %    [sort] - \cr
+    %    additional arguments to the \code{sort} function.
+    %    }
     \item{pos}{
         [attach] - \cr
         an integer specifying position in \code{search()} where to attach

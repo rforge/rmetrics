@@ -10,7 +10,6 @@
 \alias{rowStdevs}
 \alias{rowSkewness}
 \alias{rowKurtosis}
-\alias{rowCumsums}
 
 \alias{colStats} 
 \alias{colSums.timeSeries}
@@ -20,7 +19,15 @@
 \alias{colStdevs}
 \alias{colSkewness}
 \alias{colKurtosis}
-\alias{colCumsums}
+
+\alias{rowSums}    
+\alias{rowMeans}
+
+\alias{colSums}    
+\alias{colMeans}     
+\alias{colSds}        
+\alias{colMaxs}         
+\alias{colProds}            
 
 
 \title{Column and Row Statistics}
@@ -50,40 +57,52 @@
     \code{colSkewness} \tab calculates column skewness, \cr
     \code{rowKurtosis} \tab calculates row kurtosis, \cr
     \code{colKurtosis} \tab calculates column kurtosis, \cr
-    \code{rowCumsums} \tab calculates row cumulated Sums, \cr
-    \code{colCumsums} \tab calculates column cumulated Sums. }
+    \code{colSums} \tab computes sums of all values in each column, \cr
+    \code{rowSums} \tab computes sums of all values in each row, \cr
+    \code{colMeans} \tab computes sums of all values in each column, \cr
+    \code{rowMeans} \tab computes sums of all values in each row, \cr
+    \code{colSds} \tab computes standardard deviation of each column, \cr
+    \code{colMaxs} \tab computes maximum values in each colum, \cr
+    \code{colProds} \tab computes product of all values in each colum. }
 
 }
 
 
 \usage{
 rowStats(x, FUN, na.rm = FALSE, \dots) 
-\method{rowSums}{timeSeries}(x, na.rm = FALSE, \dots)
-\method{rowMeans}{timeSeries}(x, na.rm = FALSE, \dots)
+rowSums(x, na.rm = FALSE, dims = 1)
+rowMeans(x, na.rm = FALSE, dims = 1)
 rowAvgs(x, na.rm = FALSE, \dots)
 rowVars(x, na.rm = FALSE, \dots)
 rowStdevs(x, na.rm = FALSE, \dots)
 rowSkewness(x, na.rm = FALSE, \dots)
 rowKurtosis(x, na.rm = FALSE, \dots)
-rowCumsums(x, na.rm = FALSE, \dots)
 
 colStats(x, FUN, na.rm = FALSE, \dots) 
-\method{colSums}{timeSeries}(x, na.rm = FALSE, \dots)
-\method{colMeans}{timeSeries}(x, na.rm = FALSE, \dots)
+colSums(x, na.rm = FALSE, dims = 1)
+colMeans(x, na.rm = FALSE, dims = 1)
 colAvgs(x, na.rm = FALSE, \dots)
 colVars(x, na.rm = FALSE, \dots)
 colStdevs(x, na.rm = FALSE, \dots)
 colSkewness(x, na.rm = FALSE, \dots)
 colKurtosis(x, na.rm = FALSE, \dots)
-colCumsums(x, na.rm = FALSE, \dots)
+
+colSds(x)
+colMaxs(x)
+colProds(x)
 }
 
 
 \arguments{
   
+    \item{dims}{
+        Which dimensions are regarded as \code{rows} or \code{columns} to 
+        sum over. For \code{row*}, the sum or mean is over dimensions 
+        \code{dims+1}, \code{...}; for \code{col*} it is over dimensions 
+        \code{1:dims}.
+        }
     \item{FUN}{
-        [colStats][rowStats - \cr
-        the statistical function to be applied.
+        a function name. The statistical function to be applied.
         }
     \item{na.rm}{
         a logical. Should missing values be removed?
@@ -102,39 +121,7 @@ colCumsums(x, na.rm = FALSE, \dots)
 
 \value{
     
-    \code{rowStats}\cr
-    \code{rowAvgs}\cr
-    \code{rowVars}\cr
-    \code{rowStdevs}\cr
-    \code{rowSkewness}\cr
-    \code{rowKurtosis}\cr
-    \code{rowCumsum}
-    \cr 
-    compute sample statistics by column. Missing values can be
-    handled.
-    \cr
-    
-    \code{colStats}\cr
-    \code{colAvgs}\cr
-    \code{colVars}\cr
-    \code{colStdevs},\cr
-    \code{colSkewness}\cr
-    \code{colKurtosis}\cr
-    \code{colCumsum}
-    \cr 
-    compute sample statistics by column. Missing values can be
-    handled. 
-    
-}
-
-
-\note{
-
-    R's-base package contains a function \code{colMeans} with an
-    additional argument \code{dim=1}. Therefore, the function used 
-    here to compute column means (averages) is named \code{colAvgs}.
-    \cr
-    
+    the functions return a numeric vector of the statistics.
 }
 
 
