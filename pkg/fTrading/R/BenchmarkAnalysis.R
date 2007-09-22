@@ -28,8 +28,6 @@
 
 
 ################################################################################
-# FUNCTION:                 BENCHMARK ANALYSIS FUNCTIONS:
-#  getReturns                Computes return series given a price series
 # FUNCTION:                 DRAWDOWNS:
 #  maxDrawDown               Computes the maximum drawdown
 # FUNCTION:                 PERFORMANCE RATIOS:
@@ -38,46 +36,6 @@
 # FUNCTION:                 OHLC PLOT:
 #  ohlcPlot                  Creates a Open-High-Low-Close plot
 ################################################################################
-
-
-getReturns = 
-function(x, type = c("continuous", "discrete"), percentage = FALSE, 
-trim = TRUE)
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Computes returns given a price series, for SPlus compatibility.
-    
-    # Arguments:
-    #   type - a character string specifying the type of returns to be 
-    #       computed. Valid choices are: "continuous" and "discrete". 
-    #       If type="continuous", the returns are calculated as the 
-    #       logarithm differences; if type="discrete", the returns are 
-    #       calculated as percentage changes. The default is "continuous" 
-    #   percentage - a logical flag. If TRUE, the return series will be 
-    #       expressed in percentage points. The default is FALSE. 
-    #   trim - a logical flag. If TRUE, the first missing observation 
-    #       in the return series will be removed. The default is TRUE. 
-
-    # Note:
-    #   Function for S-Plus Compatibility
-    #   getReturns(x, type = "continuous", percentage = FALSE, trim = TRUE) 
-    
-    # FUNCTION:
-    
-    # Check Type:
-    type = match.arg(type)
-    
-    # Return Series:
-    ans = returnSeries(x = x, type = type, percentage = percentage, 
-        trim = trim, digits = 12)
-        
-    # Return Value:
-    ans
-}
-
-
-# ------------------------------------------------------------------------------
 
 
 maxDrawDown = 

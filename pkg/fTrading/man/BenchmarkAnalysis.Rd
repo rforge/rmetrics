@@ -8,8 +8,6 @@
 \alias{sterlingRatio}
 \alias{maxDrawDown}
 
-\alias{getReturns}
-
 
 \title{Utilities and Benchmark Analysis}
 
@@ -28,7 +26,6 @@
     The functions are:
     
     \tabular{ll}{
-    \code{getReturns} \tab Computes returns given a price series, \cr
     \code{ohlcPlot} \tab Plots open--high--low--close bar charts, \cr
     \code{sharpeRatio} \tab Computes Sharpe Ratio, \cr
     \code{sterlingRatio} \tab Computes Sterling Ratio, \cr
@@ -38,9 +35,6 @@
 
 
 \usage{
-getReturns(x, type = c("continuous", "discrete"), percentage = FALSE, 
-    trim = TRUE)
-    
 ohlcPlot(x, xlim = NULL, ylim = NULL, xlab = "Time", ylab, col = par("col"),
     bg = par("bg"), axes = TRUE, frame.plot = axes, ann = par("ann"),
     main = NULL, date = c("calendar", "julian"), format = "\%Y-\%m-\%d",
@@ -68,12 +62,6 @@ maxDrawDown(x)
         (Popular spreadsheet programs internally also use Julian dates 
         with this origin).
         }
-    \item{percentage}{
-        [getReturns] - \cr
-        a logical flag. If set to \code{TRUE}, the return series will 
-        be expressed in percentage points otherwise not. The default 
-        is \code{FALSE}. 
-        }
     \item{r}{
         [sharpeRatio] - \cr
         the risk free rate. Default corresponds to using portfolio
@@ -83,19 +71,6 @@ maxDrawDown(x)
         [sharpeRatio] - \cr
         a scale factor. Default corresponds to an annualization
         when working with daily financial time series data.
-        } 
-    \item{trim}{
-        [getReturns] - \cr
-        a logical flag. If set to \code{TRUE}, the first missing 
-        observation in the return series will be removed. The 
-        default is \code{TRUE}.
-        }
-    \item{type}{
-        [getReturns] - \cr
-        a character string specifying the type of returns to be 
-        computed. If \code{type="continuous"}, the returns are calculated 
-        as the logarithm differences; if \code{type="discrete"}, the 
-        returns are calculated as percentage changes.
         } 
     \item{x}{
         a numeric vector of prices.
@@ -183,10 +158,6 @@ maxDrawDown(x)
     statistic; \code{from}, the index (or vector of indices) where the 
     maximum drawdown period starts; \code{to}, the index (or vector of 
     indices) where the max drawdown period ends.
-    
-    \code{getReturns}
-    \cr
-    returns an object of the same class as the input object \code{x}.
 
 }
 
@@ -228,10 +199,6 @@ maxDrawDown(x)
    mid = time(dax)[(mdd$from + mdd$to)/2]
    arrows(mid, dax[mdd$from], mid, dax[mdd$to], col = 2)
    title(main = "DAX: Max Drawdown")
-   
-## getReturns -
-   Close = as.timeSeries(data(msft.dat))[, "Close"]
-   seriesPlot(getReturns(Close))
 }
   
 
