@@ -2,6 +2,8 @@
 
 \alias{TimeSeriesMissingValues}
 
+\alias{na.omit.timeSeries}
+
 \alias{removeNA}
 \alias{substituteNA}
 \alias{interpNA}
@@ -19,9 +21,9 @@
     
     The functions are listed by topic.
     \cr
- 
     
     \tabular{ll}{  
+    \code{na.omit} \tab Handles NAs, \cr
     \code{removeNA} \tab Removes NAs from a matrix object, \cr
     \code{substituteNA} \tab substitute NAs by zero, the column mean or median, \cr
     \code{interpNA} \tab interpolates NAs using R's "approx" function. }
@@ -30,30 +32,48 @@
 
 
 \usage{
-removeNA(x, ...)
-substituteNA(x, type = c("zeros", "mean", "median"), ...)
-interpNA(x, method = c("linear", "before", "after"), ...)
+\method{na.omit}{timeSeries}(object, method = c("s", "r", "z", "ir", "iz", "ie"), 
+    interp = c("before", "linear", "after"), \dots)
+
+removeNA(x, \dots)
+substituteNA(x, type = c("zeros", "mean", "median"), \dots)
+interpNA(x, method = c("linear", "before", "after"), \dots)
 }
 
 
 \arguments{
 
-    \item{method}{
-        [interpNA] - \cr
-        Specifies the method how to interpolate the matrix column
-        by column. One of the applied vector strings: 
-        \code{method="linear"}, \code{method="before"} or 
-        \code{method="after"}.
-        For the  interpolation the function \code{approx} is used.
-        }
-    \item{type}{
-        [substituteNA] - \cr
+    \item{interp, type}{
+        [nna.omit][substituteNA] - \cr
         Three alternative methods are provided to remove NAs from the
         data: 
         \code{type="zeros"} replaces the missing values by zeros,
         \code{type="mean"} replaces the missing values by the column mean,
         \code{type="median"} replaces the missing values by the the column
         median.
+        }
+    \item{method}{
+        [na.omit] - \cr
+        Specifies the method how to handle NAs. 
+        One of the applied vector strings: \cr
+        \code{method="s"} na.rm = FALSE, skip, i.e. do nothing, 
+        \code{method="r"} remove NAs, 
+        \code{method="z"} substitute NAs by zeros, 
+        \code{method="ir"} interpolate NAs and 
+            remove NAs at the beginning and end of the series, 
+        \code{method="iz"} interpolate NAs and 
+            substitute NAs at the beginning and end of the series, 
+        \code{method="ie"} interpolate NAs and 
+            extrapolate NAs at the beginning and end of the series, 
+        [interpNA] - \cr
+        Specifies the method how to interpolate the matrix column
+        by column. One of the applied vector strings: 
+        \code{method="linear"}, \code{method="before"} or 
+        \code{method="after"}.\cr
+        For the  interpolation the function \code{approx} is used.
+        }
+    \item{object}{ 
+        an object of class("timeSeries").
         }
     \item{x}{
         a numeric matrix, or any other object which can be transformed
@@ -86,6 +106,15 @@ interpNA(x, method = c("linear", "before", "after"), ...)
     appropriate columns.
     
 }
+
+
+\note{
+
+    The functions \code{removeNA}, \code{substituteNA} and \code{interpNA} 
+    are older implementations. Please use in all cases if possible the 
+    new function \code{na.omit}.
+    
+}   
 
 
 \references{

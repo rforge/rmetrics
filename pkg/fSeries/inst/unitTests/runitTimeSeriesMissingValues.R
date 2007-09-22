@@ -28,12 +28,67 @@
 
 
 ################################################################################
-# FUNCTION:      DESCRIPTION: 
-#  removeNA       Remove NAs from a matrix object
-#  substituteNA   Substitute NAs by zero, the column mean or median
-#  interpNA       Interpolate NAs using R's "approx" function
+# FUNCTION:                 DESCRIPTION:
+#  na.omit.timeSeries        Handles missing values in objects
+#  .naOmitMatrix             Internal function called from na.omit.timeSeries
+# OLD FUNCTIONS:            DESCRIPTION:
+#  removeNA                  Remove NAs from a matrix object
+#  substituteNA              Substitute NAs by zero, the column mean or median
+#  interpNA                  Interpolate NAs using R's "approx" function
 ################################################################################
 
+
+test.naOmitMatrix =
+function()
+{
+    x = as.timeSeries(data(edhec))[1:20, 1:4]  
+    colnames(x) = abbreviate(colnames(x), 6)
+    
+    x@Data[1, 1] = NA
+    x@Data[3:4, 2] = NA
+    x@Data[18:20, 4] = NA
+    print(x)
+    
+    .naOmitMatrix(as.matrix(x))
+    .naOmitMatrix(as.matrix(x), "r")
+    .naOmitMatrix(as.matrix(x), "z")
+    .naOmitMatrix(as.matrix(x), "ir")
+    .naOmitMatrix(as.matrix(x), "iz")
+    .naOmitMatrix(as.matrix(x), "ie")
+  
+    # Return Value:
+    return()    
+    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.na.omit =
+function()
+{
+    x = as.timeSeries(data(edhec))[1:20, 1:4]  
+    colnames(x) = abbreviate(colnames(x), 6)
+    
+    x@Data[1, 1] = NA
+    x@Data[3:4, 2] = NA
+    x@Data[18:20, 4] = NA
+    print(x)
+    
+    na.omit(x)
+    na.omit(x, "r")
+    na.omit(x, "z")
+    na.omit(x, "ir")
+    na.omit(x, "iz")
+    na.omit(x, "ie")
+    
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
 
 test.removeNA =
 function()

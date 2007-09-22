@@ -28,11 +28,139 @@
     
    
 ################################################################################
-# FUNCTION:                 DESCRIPTION: 
+# FUNCTION:                 DESCRIPTION:
+#  na.omit.timeSeries        Handles missing values in objects
+#  .naOmitMatrix             Internal function called from na.omit.timeSeries
+# OLD FUNCTIONS:            DESCRIPTION:
 #  removeNA                  Remove NAs from a matrix object
 #  substituteNA              Substitute NAs by zero, the column mean or median
 #  interpNA                  Interpolate NAs using R's "approx" function
 ################################################################################
+
+     
+na.omit.timeSeries <- 
+function(object, method = c("s", "r", "z", "ir", "iz", "ie"), 
+interp = c("before", "linear", "after"), ...)
+{
+    # Description
+    #    Handles NAs in timeSeries objects
+   
+    # FUNTION:
+   
+    # Check Arguments:
+    method = match.arg(method)
+    interp = match.arg(interp) 
+    
+    # Skip ? 
+    if (method == "s") return(object)
+    
+    # Handle NAs in data matrix:
+    x = .naOmitMatrix(as.matrix(object), method, interp)
+    
+    # Handle recordIDs ...
+    recordIDs = object@recordIDs
+    modID = c(r = TRUE, z = FALSE, ir = TRUE, iz = FALSE, ie = FALSE)
+    if(modID[method] > 0 && sum(dim(recordIDs)) > 0 ) {
+        index = attr(x, "n.action")
+        recordIDs = recordIDs[index, ]
+    }
+
+    # Make timeSeries:
+    ans = new("timeSeries", 
+        Data = x, 
+        positions = rownames(x), 
+        format = object@format, 
+        FinCenter = object@FinCenter, 
+        units = colnames(object), 
+        recordIDs = recordIDs, 
+        title = object@title, 
+        documentation = object@documentation)
+    if (substr(method, 1, 1) == "i") {
+        attr(ans, "control") = c(method = method, interp = interp)
+    } else {
+        attr(ans, "control") = c(method = method)
+    }
+    
+    # return Value:
+    ans
+}
+ 
+
+# ------------------------------------------------------------------------------
+
+
+.naOmitMatrix =
+function(object, method = c("r", "z", "ir", "iz", "ie"), 
+interp = c("before", "linear", "after"))
+{
+    # Internal Function called from na.omit.timSeries()
+    
+    # Extract matrix:
+    x = object
+    stopifnot (is.matrix(x))
+    
+    # Match Arguments:
+    method = match.arg(method)
+    interp = match.arg(interp)
+    
+    # Handle NAs:
+    if (method == "r") {
+        # Remove NAs:
+        x = na.omit(x)
+    } else if (method == "z") {
+        # Substitute NAs by Zero's:
+        x[is.na(x)] = 0
+    } else if (substr(method, 1, 1) == "i") {
+        # Interpolate:
+        interp = match.arg(interp)
+        f = 0
+        if (interp == "before") {
+            interp = "constant"
+            f = 0
+        }
+        if (interp == "after") {
+            interp = "constant"
+            f = 1
+        }
+        n = nrow(x)
+        for (i in 1:ncol(x)) {
+            y = x[, i]
+            idy = (1:n)[!is.na(y)]
+            y = approx(idy, y[idy], 1:n, method = interp, f = f)$y
+            x[, i] = y
+        }
+        modID = FALSE
+        if (method == "ir") {
+            # Remove Start and End NAs:
+            x = na.omit(x)
+        } else if (method == "iz") {
+            # Set Start and End NAs to Zero:
+            x[is.na(x)] = 0
+        } else if (method == "ie") {
+            n = nrow(x)
+            for (k in 1:ncol(x)) {
+                y  = x[, k]
+                if (NA %in% y) {  
+                    start = sum(cumprod(is.na(y))) 
+                    if (start > 0) for (i in start:1) y[i] = y[i+1]
+                    end = n+1 - sum(cumprod(rev(is.na(y))))
+                    if (end <= n) for (i in end:n) y[i] = y[i-1]
+                    x[, k] = y
+                }
+            }
+        }
+    }
+    
+    # Add Control:
+    if (substr(method, 1, 1) == "i") {
+        attr(x, "control") = c(method = method, interp = interp)
+    } else {
+        attr(x, "control") = c(method = method)
+    }
+    
+    # Return Value:
+    x   
+}
 
 
 ################################################################################
