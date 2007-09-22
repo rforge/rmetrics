@@ -32,6 +32,7 @@
 #  timeSeries                Creates a 'timeSeries' object from scratch
 #  readSeries                Reads a spreadsheet and creates a 'timeSeries'
 #  returnSeries              Computes returns from a 'timeSeries' object
+#   getReturns           
 #  cumulatedSeries           Computes cumulated returns from a 'timeSeries'  
 #  durationSeries            Computes durations from a 'timeSeries' object
 #  midquoteSeries            Computes mid quotes from a 'timeSeries' object
@@ -63,6 +64,7 @@ require(methods)
 #  timeSeries           Creates a 'timeSeries' object from scratch
 #  readSeries           Reads from a spreadsheet and creates a 'timeSeries'
 #  returnSeries         Computes returns from a 'timetimehhhhh' object  
+#   getReturns
 #  applySeries          Applies a function to blocks of a 'timeSeries'
 #  orderStatistics      Compute order statistic of a 'timeSeries'
 
@@ -317,6 +319,23 @@ trim = TRUE, digits = 4, units = NULL)
     # Return Value:
     ans
 }
+
+
+# ------------------------------------------------------------------------------
+
+
+getReturns = 
+function(x, type = c("continuous", "discrete"), percentage = FALSE, 
+trim = FALSE, digits = 12, units = NULL)
+{   # A function implemented by Diethelm Wuertz
+
+    # Return Series:
+    ans = returnSeries(x, type, percentage, trim, digits, units)
+        
+    # Return Value:
+    ans
+}
+
 
 
 # ------------------------------------------------------------------------------

@@ -8,6 +8,7 @@
 
 \alias{readSeries}
 \alias{returnSeries}
+\alias{getReturns}
 \alias{cumulatedSeries}
 \alias{durationSeries}
 \alias{midquoteSeries}
@@ -54,6 +55,7 @@
     \code{timeSeries} \tab Creates a 'timeSeries' object from scratch, \cr
     \code{readSeries} \tab Reads a 'timeSeries' from a spreadsheet file, \cr
     \code{returnSeries} \tab Computes returns from a 'timeSeries' object, \cr
+    \code{getReturns} \tab Computes returns from a 'timeSeries' object, \cr
     \code{cumulatedSeries} \tab Computes cumulated returns from a 'timeSeries', \cr
     \code{durationSeries} \tab Computes durations from a 'timeSeries' object, \cr
     \code{midquoteSeries} \tab Computes mid quotes from a 'timeSeries' object, \cr
@@ -101,7 +103,9 @@ timeSeries(data, charvec, units = NULL, format = NULL, zone = myFinCenter,
 readSeries(file, header = TRUE, sep = ";", zone = myFinCenter, 
     FinCenter = myFinCenter, title = NULL, documentation = NULL, \dots)
 returnSeries(x, type = c("continuous", "discrete"), percentage = FALSE, 
-    trim = TRUE, digits = 4, units = NULL)  
+    trim = TRUE, digits = 4, units = NULL)
+getReturns(x, type = c("continuous", "discrete"), percentage = FALSE, 
+    trim = FALSE, digits = 12, units = NULL)  
 cumulatedSeries(x, index = 100)
 durationSeries(x, trim = FALSE, units = c("secs", "mins", "hours"))   
 midquoteSeries(x, which = c("Bid", "Ask"))
