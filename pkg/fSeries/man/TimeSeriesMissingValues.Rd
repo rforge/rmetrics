@@ -32,7 +32,7 @@
 
 
 \usage{
-\method{na.omit}{timeSeries}(object, method = c("s", "r", "z", "ir", "iz", "ie"), 
+\method{na.omit}{timeSeries}(object, method = c("r", "s", "z", "ir", "iz", "ie"), 
     interp = c("before", "linear", "after"), \dots)
 
 removeNA(x, \dots)

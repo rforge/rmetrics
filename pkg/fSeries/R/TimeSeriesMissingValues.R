@@ -39,7 +39,7 @@
 
      
 na.omit.timeSeries <- 
-function(object, method = c("s", "r", "z", "ir", "iz", "ie"), 
+function(object, method = c("r", "s", "z", "ir", "iz", "ie"), 
 interp = c("before", "linear", "after"), ...)
 {
     # Description
@@ -65,8 +65,8 @@ interp = c("before", "linear", "after"), ...)
         recordIDs = recordIDs[index, ]
     }
 
-    # Make timeSeries:
-    ans = new("timeSeries", 
+    # Return Value:
+    new("timeSeries", 
         Data = x, 
         positions = rownames(x), 
         format = object@format, 
@@ -75,14 +75,6 @@ interp = c("before", "linear", "after"), ...)
         recordIDs = recordIDs, 
         title = object@title, 
         documentation = object@documentation)
-    if (substr(method, 1, 1) == "i") {
-        attr(ans, "control") = c(method = method, interp = interp)
-    } else {
-        attr(ans, "control") = c(method = method)
-    }
-    
-    # return Value:
-    ans
 }
  
 
