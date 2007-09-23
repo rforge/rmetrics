@@ -19,8 +19,6 @@
 \alias{isUnivariate}
 \alias{isMultivariate}
 
-\alias{rollMonthlyWindows}
-\alias{rollMonthlySeries}
 
 \description{
     
@@ -47,13 +45,6 @@
     \code{seriesData} \tab Extracts data slot from a 'timeSeries', \cr
     \code{isUnivariate} \tab Tests if a 'timeSeries' object is univariate, \cr
     \code{isMultivariate} \tab Tests if a 'timeSeries' object is multivariate. }          
-   
-    Special Functions for Monthly 'timeSeries' objects:  
-    
-    \tabular{ll}{   
-    \code{rollMonthlyWindows} \tab Returns start and end dates for rolling time windows, \cr        
-    \code{rollMonthlySeries} \tab Rolls monthly a 'timeSeries' on a given period. }
-    
 }
 
 
@@ -74,9 +65,6 @@ orderStatistics(x)
 seriesData(object)
 isUnivariate(x)
 isMultivariate(x)
-    
-rollMonthlyWindows(x, period = "12m", by = "1m") 
-rollMonthlySeries(x, period = "12m", by = "1m", FUN, \dots)
 }
 
 
@@ -89,10 +77,6 @@ rollMonthlySeries(x, period = "12m", by = "1m", FUN, \dots)
         \code{from} and \code{to} have ther default values \code{NULL}.
         In this case the function \code{FUN} will be applied to monthly or
         quarterly periods.
-        [rollMonthlySeries] - \cr
-        a character string specifying the rolling shift composed by the
-        length of the shift and its unit, e.g. \code{"3m"} represents 
-        quarterly shifts.
         }
     \item{charvec}{
         a character vector of dates and times.
@@ -136,12 +120,6 @@ rollMonthlySeries(x, period = "12m", by = "1m", FUN, \dots)
     \item{object}{
         [is][seriesData][seriesPositions][show][summary] -    
         an object of class \code{timeSeries}.
-        }
-    \item{period}{
-        [rollMonthlySeries] - \cr
-        a character string specifying the rollling period composed by the
-        length of the period and its unit, e.g. \code{"12m"} represents 
-        one year.
         }
     \item{recordIDs}{
         a data frame which can be used for record identification
