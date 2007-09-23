@@ -22,19 +22,6 @@
 \alias{isUnivariate}
 \alias{isMultivariate}
 
-\alias{show.timeSeries}
-\alias{show,timeSeries-method}
-
-\alias{summary.timeSeries}
-\alias{plot.timeSeries}
-\alias{lines.timeSeries}
-\alias{points.timeSeries}
-
-\alias{dummyDailySeries}
-\alias{alignDailySeries}
-\alias{rollDailySeries}
-\alias{ohlcDailyPlot}
-
 \alias{rollMonthlyWindows}
 \alias{rollMonthlySeries}
 
@@ -68,25 +55,8 @@
     \tabular{ll}{        
     \code{seriesData} \tab Extracts data slot from a 'timeSeries', \cr
     \code{isUnivariate} \tab Tests if a 'timeSeries' object is univariate, \cr
-    \code{isMultivariate} \tab Tests if a 'timeSeries' object is multivariate. }
-    
-    Functions to print and plot 'timeSeries' objects:      
-    
-    \tabular{ll}{   
-    \code{print.timeSeries} \tab S3: Print method for a 'timeSeries' object, \cr
-    \code{summary.timeSeries} \tab S3: Summary method for a 'timeSeries' object, \cr
-    \code{plot.timeSeries} \tab S3: Plot method for a 'timeSeries' object, \cr
-    \code{lines.timeSeries} \tab S3: Lines method for a 'timeSeries' object, \cr
-    \code{points.timeSeries} \tab S3: Points method for a 'timeSeries' object. }
-    
-    Special Functions for daily 'timeSeries' objects:  
-    
-    \tabular{ll}{   
-    \code{dummyDailySeries} \tab Creates a dummy daily 'timeSeries' object, \cr        
-    \code{alignDailySeries} \tab Aligns a daily 'timeSeries' to new positions, \cr 
-    \code{rollDailySeries} \tab Rolls daily a 'timeSeries' on a given period, \cr    
-    \code{ohlcDailyPlot} \tab Plots open high low close bar chart. }
-    
+    \code{isMultivariate} \tab Tests if a 'timeSeries' object is multivariate. }          
+   
     Special Functions for Monthly 'timeSeries' objects:  
     
     \tabular{ll}{   
@@ -121,23 +91,6 @@ orderStatistics(x)
 seriesData(object)
 isUnivariate(x)
 isMultivariate(x)
-
-show.timeSeries(object)
-
-\method{summary}{timeSeries}(object, \dots)
-\method{plot}{timeSeries}(x, \dots) 
-\method{lines}{timeSeries}(x, \dots)
-\method{points}{timeSeries}(x, \dots)
-
-dummyDailySeries(x = rnorm(365), units = "X", zone = myFinCenter, 
-    FinCenter = myFinCenter)
-alignDailySeries(x, method = c("before", "after", "interp", "fillNA"), 
-    include.weekends = FALSE, units = NULL, zone = myFinCenter, 
-    FinCenter = myFinCenter)
-rollDailySeries(x, period = "7d", FUN, \dots)
-ohlcDailyPlot(x, volume = TRUE, colOrder = c(1:5), units = 1e6, 
-    xlab = c("Date", "Date"), ylab = c("Price", "Volume"), 
-    main = c("O-H-L-C", "Volume"), grid.nx = 7, grid.lty = "solid", \dots)
     
 rollMonthlyWindows(x, period = "12m", by = "1m") 
 rollMonthlySeries(x, period = "12m", by = "1m", FUN, \dots)
@@ -160,12 +113,6 @@ rollMonthlySeries(x, period = "12m", by = "1m", FUN, \dots)
         }
     \item{charvec}{
         a character vector of dates and times.
-        }
-    \item{colOrder}{
-        [ohlcDailyPlot] - \cr 
-        an integer vector which gives the order of the prices and the
-        volume in the input object. By default the following order of
-        columns from 1 to 5 is assumed: Open, high, low, close, and volume.
         }
     \item{data}{
         a \code{data.frame} or a \code{matrix} object of numeric data.
@@ -212,29 +159,6 @@ rollMonthlySeries(x, period = "12m", by = "1m", FUN, \dots)
         [applySeries] - \cr
         a function to use for aggregation, by default \code{colAvgs}.
         }
-    \item{grid.lty, grid.nx}{
-        [ohlcDailyPlot] - \cr
-        The type of grid line and the number of grid lines used in the
-        plot.
-        }
-     \item{include.weekends}{   
-        [alignDailySeries] - \cr
-        a logical value. Should weekend dates be included or removed
-        from the series.
-        }
-    \item{main}{
-        [ohlcDailyPlot] - \cr
-        a character string to title the price and volume plot.
-        }
-    \item{method}{ 
-        [alignDailySeries] - \cr
-        the method to be used for the alignment. A character string, one
-        of \code{"before"}, use the data from the row whose position is
-        just before the unmatched position, or \code{"after"}, use the 
-        data from the row whose position is just after the unmatched 
-        position, or \code{"linear"}, interpolate linearly between 
-        \code{"before"} and \code{"after"}. 
-        }
     \item{object}{
         [is][seriesData][seriesPositions][show][summary] -    
         an object of class \code{timeSeries}.
@@ -245,10 +169,6 @@ rollMonthlySeries(x, period = "12m", by = "1m", FUN, \dots)
         series will be expressed in percentage changes.
         }
     \item{period}{
-        [rollDailySeries] - \cr
-        a character string specifying the rollling period composed by the
-        length of the period and its unit, e.g. \code{"7d"} represents 
-        one week.\cr
         [rollMonthlySeries] - \cr
         a character string specifying the rollling period composed by the
         length of the period and its unit, e.g. \code{"12m"} represents 
@@ -291,7 +211,7 @@ rollMonthlySeries(x, period = "12m", by = "1m", FUN, \dots)
         the returns are calculated as percentage changes. 
         }
     \item{units}{
-        [applySeries][lag][allignDailySeries][returnSeries][mergeSeries] - \cr
+        [applySeries][lag][returnSeries][mergeSeries] - \cr
         an optional character string, which allows to overwrite the 
         current column names of a \code{timeSeries} object. By default 
         \code{NULL} which means that the column names are selected
@@ -301,17 +221,7 @@ rollMonthlySeries(x, period = "12m", by = "1m", FUN, \dots)
         a character value or vector which allows to set the 
         units in which the durations are measured. By default durations
         are measured in seconds. 
-        \cr
-        [ohlcDailyPlot] - \cr
-        a numeric value, specifying in which multiples the volume should
-        be referenced on the plot labels. By default 1e6, i.e. in units
-        of 1 Million.
         } 
-    \item{volume}{
-        [ohlcDailyPlot] - \cr
-        a logigical value. Should a volume plot added to the OHLC Plot.
-        By default \code{TRUE}.
-        }
     \item{which}{
         [midquoteSeries][spreadSeries] - \cr
         a vector with two character strings naming the column names of
@@ -326,11 +236,6 @@ rollMonthlySeries(x, period = "12m", by = "1m", FUN, \dots)
         [applySeries] - \cr
         [cut][end][mergeSeries][plot][print][rev][start] - \cr
         an object of class \code{timeSeries}.
-        }
-    \item{xlab, ylab}{
-        [ohlcDailyPlot] - \cr
-        two string vectors to name the x and y axis of the price and
-        volume plot.
         }
     \item{zone}{
         the time zone or financial center where the data were recorded.
@@ -416,13 +321,13 @@ rollMonthlySeries(x, period = "12m", by = "1m", FUN, \dots)
 
 
 \examples{
-## data - Data Frame:
+## data -  
    # Microsoft Data: 
    myFinCenter <<- "GMT"
    MSFT = as.timeSeries(data(msft.dat))
    head(MSFT)
 
-## timeSeries - Conversion:
+## timeSeries -  
    # Create a timeSeries Objec - The Direct Way ...
    Close = MSFT[, 5]
    head(Close)
@@ -433,12 +338,12 @@ rollMonthlySeries(x, period = "12m", by = "1m", FUN, \dots)
    head(Close)
    c(start(Close), end(Close))
     
-## Cut Series -    
+## window  -    
    # Cut out April Data from 2001:
-   tsApril01 = cut(Close, "2001-04-01", "2001-04-30") 
+   tsApril01 = window(Close, "2001-04-01", "2001-04-30") 
    tsApril01
 
-## Return Series -  
+## returnSeries -  
    # Compute Returns:
    args(returnSeries)
    # Continuous Returns:
@@ -448,23 +353,9 @@ rollMonthlySeries(x, period = "12m", by = "1m", FUN, \dots)
    # Don't trim:
    returnSeries(tsApril01, trim = FALSE)
    # Use Percentage Values:
-   returnSeries(tsApril01, percentage = TRUE, trim = FALSE)
-    
-## Align Daily Series -     
-   # Align with NA:
-   args(alignDailySeries)
-   tsRet = returnSeries(tsApril01, trim = TRUE)
-   GoodFriday(2001)   
-   EasterMonday(2001) 
-   alignDailySeries(tsRet, method = "fillNA", include.weekends = FALSE)
-   alignDailySeries(tsRet, method = "fillNA", include.weekends = TRUE)
-    
-## alignDailySeries - 
-   # Interpolate:
+   tsRet = returnSeries(tsApril01, percentage = TRUE, trim = FALSE)
    tsRet
-   alignDailySeries(tsRet, method = "interp", include.weekend = FALSE)
-   alignDailySeries(tsRet, method = "interp", include.weekend = TRUE)
-
+     
 ## applySeries -   
    # Aggregate weekly:
    GoodFriday(2001)

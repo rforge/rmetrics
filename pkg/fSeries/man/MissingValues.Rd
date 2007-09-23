@@ -1,6 +1,6 @@
-\name{TimeSeriesMissingValues}
+\name{MissingValues}
 
-\alias{TimeSeriesMissingValues}
+\alias{MissingValues}
 
 \alias{na.omit.timeSeries}
 
