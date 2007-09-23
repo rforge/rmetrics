@@ -28,27 +28,27 @@
 
 
 ################################################################################
-# FUNCTION:                 COLUMN STATISTICS:
-#  colStats                  Computes sample statistics by column
-#  colSums                   Computes sums of all values in each column
-#  colMeans                  Computes means of all values in each column
-#  colSds                    Computes standardard deviation of each column
-#  colVars                   Computes sample variance by column
-#  colSkewness               Computes sample skewness by column
-#  colKurtosis               Computes sample kurtosis by column
-#  colMaxs                   Computes maximum values in each colum
-#  colMins                   Computes minimum values in each colum
-#  colProds                  Computes product of all values in each colum
+# FUNCTION:                 row STATISTICS:
+#  rowStats                  Computes sample statistics by row
+#  rowSums                   Computes sums of all values in each row
+#  rowMeans                  Computes means of all values in each row
+#  rowSds                    Computes standardard deviation of each row
+#  rowVars                   Computes sample variance by row
+#  rowSkewness               Computes sample skewness by row
+#  rowKurtosis               Computes sample kurtosis by row
+#  rowMaxs                   Computes maximum values in each row
+#  rowMins                   Computes minimum values in each row
+#  rowProds                  Computes product of all values in each row
 # FUNCTION:                 NO LONGER USED:
-#  colAvgs                   Computes sample mean by column
-#  colStdevs                 Computes sample variance by column
+#  rowAvgs                   Computes sample mean by row
+#  rowStdevs                 Computes sample variance by row
 ################################################################################
 
 
 ################################################################################
 # @comments
 #   DW 2007-09-23           completely new implemented
-#   DW 2007-09-20           further col* functions added, see ADDONS
+#   DW 2007-09-20           further row* functions added, see ADDONS
 ################################################################################
 
 
@@ -62,12 +62,12 @@
 .conflicts.OK = TRUE
 
 
-colStats =
+rowStats =
 function(x, FUN, ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Computes sample statistics by column
+    #   Computes sample statistics by row
 
     # FUNCTION:
     
@@ -76,45 +76,45 @@ function(x, FUN, ...)
 }
 
 
-colSums = 
+rowSums = 
 function(x, ...) 
 {
     if (class(x) == "timeSeries") {
-        return(colStats(x, sum, ...))
+        return(rowStats(x, sum, ...))
     } else {
-        return(base::colSums(x, ...))
+        return(base::rowSums(x, ...))
     }
 }
     
 
-colMeans = 
+rowMeans = 
 function(x, ...)
 {
     if (class(x) == "timeSeries") {
-        return(colStats(x, mean, ...))
+        return(rowStats(x, mean, ...))
     } else {
-        return(base::colMeans(x, ...))
+        return(base::rowMeans(x, ...))
     }
 }
 
 
-colSds = function(x, ...) { colStats(x, sd, ...) }       
-colVars = function(x, ...) { colStats(x, var, ...) }      
-colSkewness = function(x, ...) { colStats(x, skewness, ...) }   
-colKurtosis = function(x, ...) { colStats(x, kurtosis, ...) } 
-colMaxs = function(x, ...) { colStats(x, max, ...) } 
-colMins = function(x, ...) { colStats(x, min, ...) }      
-colProds = function(x, ...) { colStats(x, prod, ...) } 
+rowSds = function(x, ...) { rowStats(x, sd, ...) }       
+rowVars = function(x, ...) { rowStats(x, var, ...) }      
+rowSkewness = function(x, ...) { rowStats(x, skewness, ...) }   
+rowKurtosis = function(x, ...) { rowStats(x, kurtosis, ...) } 
+rowMaxs = function(x, ...) { rowStats(x, max, ...) } 
+rowMins = function(x, ...) { rowStats(x, min, ...) }      
+rowProds = function(x, ...) { rowStats(x, prod, ...) } 
 
 
-colQuantiles = 
+rowQuantiles = 
 function(x, prob = 0.05, ...) { 
     stopifnot(length(prob) == 1)
-    colStats(x, quantile, probs = prob, ...) } 
+    rowStats(x, quantile, probs = prob, ...) } 
 
 
-colAvgs <- colMeans
-colStdevs <- colSds
+rowAvgs <- rowMeans
+rowStdevs <- rowSds
 
 
 ################################################################################
