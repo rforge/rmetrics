@@ -40,12 +40,6 @@
 #  scale.timeSeries          Centers and/or scales a 'timeSeries' object
 # FUNCTION:
 #  cumsum.timeSeries         Returns cumulated sums of 'timeSeries' objects
-# FUNCTIONS:                STATS OPERATIONS:
-#  mean.timeSeries           Returns column means for a 'timeSeries' object
-#  var.timeSeries            Returns variance for a 'timeSeries' object
-#  cov.timeSeries            Returns  covariance for a 'timeSeries' object
-#  cor.timeSeries            Returns correlations for a 'timeSeries' object
-#  quantile.timeSeries       Produces sample quantiles of a 'timeSeries' object
 # METHOD:                   DIM OPERATIONS ON DATA: 
 #  dim.timeSeries            Returns dimension of a 'timeSeries' object
 #  dimnames.timeDSeries      Returns dimension names of a 'timeSeries' object
@@ -187,12 +181,6 @@ function(x, from, to, FUN, ...)
 #  rbind.timeSeries       Binds rows of two 'timeSeries' objects
 
 #  cumsum.timeSeries      Returns cumulated sums of 'timeSeries' objects
-#  scale.timeSeries       Centers and/or scales a 'timeSeries' object
-#  mean.timeSeries        Returns column means for a 'timeSeries' object
-#  var.timeSeries         Returns variance for a 'timeSeries' object
-#  cov.timeSeries         Returns  covariance for a 'timeSeries' object
-#  cor.timeSeries         Returns correlations for a 'timeSeries' object
-#  quantile.timeSeries    Produces sample quantiles of a 'timeSeries' object
 
 .align.timeSeries = 
 function(x, method = c("before", "after", "interp"), startOn = "hours",
@@ -694,84 +682,6 @@ function(x, y = NULL, na.rm = FALSE, use)
     # Covariance:
     ans = .Internal(cov(x, y, na.method, FALSE))
     
-    # Return Value:
-    ans
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-cov.timeSeries =
-function(x, y = NULL, use = "all.obs", 
-    method = c("pearson", "kendall", "spearman"))
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Returns variance/covariance for a 'timeSeries' object
-    
-    # FUNCTION:
-    
-    # Settings:
-    x = x@Data
-    if (!is.null(y)) y = y@Data
-    
-    # CoVariance:
-    ans = cov.default(x, y, use = use, method = method) 
-    
-    # Return Value:
-    ans
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-cor.timeSeries =
-function(x, y = NULL, use = "all.obs", 
-    method = c("pearson", "kendall", "spearman"))
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Returns correlations for a 'timeSeries' object
-    
-    # FUNCTION:
-    
-    # Settings:
-    x = x@Data
-    if (!is.null(y)) y = y@Data
-    
-    # CoVariance:
-    ans = cor.default(x, y, use = use, method = method) 
-    
-    # Return Value:
-    ans
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-quantile.timeSeries = 
-function(x, probs = 0.95, ...)
-{   # A function implemented by Diethelm Wuertz
-
-    # Arguments:
-    #   x - an uni- or multivariate return series of class 'timeSeries'.
-    #   probs - a numeric value or numeric vector with probabilities.
-    #   column - the selected column    
-    
-    # Examples:
-    #   quantile(as.timeSeries(data(daxRet)))
-    
-    # FUNCTION:
-    
-    # Take the appropriate column:
-    na.rm = TRUE
-    X = as.matrix(x)
-    ans = apply(if (na.rm) na.omit(X) else X, 2, quantile, probs = probs)
- 
-  
     # Return Value:
     ans
 }

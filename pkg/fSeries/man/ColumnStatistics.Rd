@@ -1,6 +1,6 @@
-\name{TimeSeriesData}
+\name{SimpleStatistics}
 
-\alias{TimeSeriesData}
+\alias{SimpleStatistics}
 
 \alias{fapply}
 \alias{aggregate.timeSeries}
@@ -18,7 +18,7 @@
 \alias{is.array.timeSeries}
   
 
-\title{timeSeries Class, Functions and Methods}
+\title{Simple timeSeries Statistics}
 
 
 \description{
@@ -44,6 +44,13 @@
     \code{cumsum} \tab Returns the cumulated sum of a 'timeSeries' object, \cr
     \code{lag} \tab Scales and centers a 'timeSeries' object. }
     
+    Functions and methods for classifying 'timeSeries' objects:
+    
+    \tabular{ll}{
+    \code{mean} \tab Computes column means for a 'timeSeries' object, \cr
+    \code{var} \tab Computes Variance from a 'timeSeries' object, \cr
+    \code{cov} \tab Computes Covariance from a 'timeSeries' object, \cr
+    \code{cor} \tab Computes Correlations from a 'timeSeries' object.}
    
     Functions and methods for dimensional operations on 'timeSeries' objects: 
     
@@ -68,6 +75,14 @@ fapply(x, from, to, FUN, \dots)
 \method{rbind}{timeSeries}(x, y)
 \method{cumsum}{timeSeries}(x)
 \method{scale}{timeSeries}(x, center = TRUE, scale = TRUE)
+
+\method{mean}{timeSeries}(x, \dots)
+\method{var}{timeSeries}(x, y = NULL, na.rm = FALSE, use)
+\method{cov}{timeSeries}(x, y = NULL, use = "all.obs", 
+    method = c("pearson", "kendall", "spearman"))
+\method{cor}{timeSeries}(x, y = NULL, use = "all.obs", 
+    method = c("pearson", "kendall", "spearman"))
+\method{quantile}{timeSeries}(x, probs = 0.95, \dots)
 
 \method{dim}{timeSeries}(x)
 \method{dimnames}{timeSeries}(x)
@@ -319,6 +334,19 @@ rownames<-.timeSeries(x) <- value
 ## merge -    
    # Merge two timeSeries Object:
    merge(TS, diff(log(TS), units = c("ts", "diffLog")))
+
+## var -    
+   # Variance of a timeSeries Object:
+   var(returnSeries(TS, percentage = TRUE))
+   
+## Ops | +/- * ^ ...
+   # Mathematical Operations:
+   TS^2
+   TS[2:4]
+   OR = returnSeries(TS)
+   OR
+   OR > 0
+   quantile(OR, probs = c(0.90, 0.95))
 }
 
 
