@@ -1,4 +1,6 @@
 \name{TimeSeriesClass}
+
+
 \title{timeSeries Class}
 
 \alias{TimeSeriesClass}
@@ -13,6 +15,7 @@
 \alias{orderStatistics}
 
 \alias{seriesData}
+
 \alias{isUnivariate}
 \alias{isMultivariate}
 

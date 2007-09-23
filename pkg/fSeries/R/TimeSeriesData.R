@@ -30,22 +30,17 @@
 ################################################################################
 # FUNCTION:                 DESCRIPTION:
 #  fapply                    Applies a function to 'timeSeries' windows
-#  .align.timeSeries         Aligns a timeSeries object
-#  aggregate.timeSeries      Aggregates a 'timeSeries' object
 # METHOD:                   MODIFICATION METHODS:
-#  diff.timeSeries           Differences a 'timeSeries' object
-#  lag.timeSeries            Lags a 'timeSeries' object
 #  merge.timeSeries          Merges two 'timeSeries' objects
 #  rbind.timeSeries          Binds rows of two 'timeSeries' objects
-#  scale.timeSeries          Centers and/or scales a 'timeSeries' object
+#  lag.timeSeries            Lags a 'timeSeries' object
+#  apply
+#  .align.timeSeries         Aligns a timeSeries object 
+#  aggregate.timeSeries      Aggregates a 'timeSeries' object 
 # FUNCTION:
+#  scale.timeSeries          Centers and/or scales a 'timeSeries' object
+#  diff.timeSeries           Differences a 'timeSeries' object
 #  cumsum.timeSeries         Returns cumulated sums of 'timeSeries' objects
-# METHOD:                   DIM OPERATIONS ON DATA: 
-#  dim.timeSeries            Returns dimension of a 'timeSeries' object
-#  dimnames.timeDSeries      Returns dimension names of a 'timeSeries' object
-#  colnames<-.timeSeries     Assigns column names to a 'timeSeries' object
-#  rownames<-.timeSeries     Assigns row names to a 'timeSeries' object
-#  is.array.timeSeries       Allows that NCOL and NROW work properly
 ################################################################################
 
 
@@ -631,193 +626,6 @@ function(x, center = TRUE, scale = TRUE)
     
     # Return Value:
     x
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-mean.timeSeries =
-function(x, ...) 
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Returns column means for a 'timeSeries' object
-    
-    # FUNCTION:
-    
-    # Return Value:
-    colMeans(x@Data)
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-var.timeSeries =
-function(x, y = NULL, na.rm = FALSE, use) 
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Returns variance/covariance for a 'timeSeries' object
-    
-    # FUNCTION:
-    
-    # Variance:
-    if (missing(use)) 
-        use <- if (na.rm) "complete.obs" else "all.obs"
-    na.method <- 
-        pmatch(use, c("all.obs", "complete.obs", "pairwise.complete.obs"))
-    if (is.timeSeries(x)) {
-        x <- as.matrix(x)
-    } else {
-        stopifnot(is.atomic(x))
-    }
-    if (is.timeSeries(y)) {
-        y <- as.matrix(y)
-    } else {
-        stopifnot(is.atomic(y))
-    }
-    
-    # Covariance:
-    ans = .Internal(cov(x, y, na.method, FALSE))
-    
-    # Return Value:
-    ans
-}
-
-
-################################################################################
-# METHODS:               DIM OPERATIONS ON DATA: 
-#  dim.timeSeries         Returns dimension of a 'timeSeries' object
-#  dimnames.timeDSeries   Returns dimension names of a 'timeSeries' object
-#  colnames<-.timeSeries  Assigns column names to a 'timeSeries' object
-#  rownames<-.timeSeries  Assigns row names to a 'timeSeries' object
-#  is.array.timeSeries    Allows that NCOL and NROW work properly 
-
-
-dim.timeSeries =
-function(x)
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Returns the dimension of a 'timeSeries' object
-
-    # FUNCTION:
-    
-    # Dimension:
-    ans = dim(x@Data)
-    
-    # Return Value:
-    ans
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-dimnames.timeSeries =
-function(x)
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Returns the dimension names of a 'timeSeries' object
-
-    # FUNCTION:
-    
-    # Dimension Names:
-    ans = dimnames(x@Data)
-    
-    # Return Value:
-    ans
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-"colnames<-.timeSeries" =
-function(x, value)
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Assigns column names to a 'timeSeries' object
-
-    # FUNCTION:
-    
-    # Assign Column Names:
-    X = x@Data
-    dn <- dimnames(X)
-    if(is.null(dn)) {
-        if(is.null(value)) return(x)
-        if((nd <- length(dim(X))) < 2) stop(
-            "attempt to set colnames on object with less than two dimensions")
-        dn <- vector("list", nd)
-    }
-    if(length(dn) < 2) stop(
-        "attempt to set colnames on object with less than two dimensions")
-    if(is.null(value)) dn[2] <- list(NULL) else dn[[2]] <- value
-    dimnames(X) <- dn   
-    
-    # DW addded for timeSeries objects 
-    x@Data = X
-    x@units = colnames(X)
-    x
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-"rownames<-.timeSeries" =
-function(x, value)
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Assigns row names to a 'timeSeries' object
-
-    # FUNCTION:
-    
-    # Assign Row Names:
-    X = x@Data
-    dn <- dimnames(X)
-    if(is.null(dn)) {
-        if(is.null(value)) return(x)
-        if((nd <- length(dim(X))) < 2) stop(
-            "attempt to set colnames on object with less than two dimensions")
-        dn <- vector("list", nd)
-    }
-    if(length(dn) < 2) stop(
-        "attempt to set colnames on object with less than two dimensions")
-    if(is.null(value)) dn[1] <- list(NULL) else dn[[1]] <- value
-    dimnames(X) <- dn 
-    
-    # DW addded for timeSeries objects 
-    x@Data = X
-    x@positions = rownames(X)
-       
-    # Return Value: 
-    x
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-is.array.timeSeries = 
-function(x)
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Allows that NCOL and NROW work properly
-  
-    # FUNCTION:
-    
-    # Is an array:
-    ans = TRUE
-    
-    # Return Value:
-    ans    
 }
 
    

@@ -3,19 +3,16 @@
 \alias{TimeSeriesData}
 
 \alias{fapply}
+
 \alias{aggregate.timeSeries}
-\alias{diff.timeSeries} 
 \alias{lag.timeSeries} 
 \alias{merge.timeSeries} 
 \alias{rbind.timeSeries}
+
+
+\alias{diff.timeSeries}
 \alias{cumsum.timeSeries}
 \alias{scale.timeSeries}
-
-\alias{dim.timeSeries}
-\alias{dimnames.timeSeries}
-\alias{colnames<-.timeSeries}
-\alias{rownames<-.timeSeries}
-\alias{is.array.timeSeries}
   
 
 \title{timeSeries Class, Functions and Methods}
@@ -68,12 +65,6 @@ fapply(x, from, to, FUN, \dots)
 \method{rbind}{timeSeries}(x, y)
 \method{cumsum}{timeSeries}(x)
 \method{scale}{timeSeries}(x, center = TRUE, scale = TRUE)
-
-\method{dim}{timeSeries}(x)
-\method{dimnames}{timeSeries}(x)
-colnames<-.timeSeries(x) <- value
-rownames<-.timeSeries(x) <- value
-\method{is.array}{timeSeries}(x)
 }
 
 
@@ -92,11 +83,6 @@ rownames<-.timeSeries(x) <- value
     \item{diff}{
         [diffSeries] - \cr
         an integer indicating the order of the difference. By default 1.
-        }
-    \item{dimnames}{
-        [as.timeSeries] - \cr
-        a logical, if \code{TRUE} the dimension names of the
-        matrix are assigned to the time series object.
         }
     \item{from, to}{
         starting date and end date, \code{to} must be after \code{from}.
@@ -125,21 +111,12 @@ rownames<-.timeSeries(x) <- value
         a character string indicating which correlation coefficient (or 
         covariance) is to be computed. One of \code{"pearson"} (default), 
         \code{"kendall"}, or \code{"spearman"}, can be abbreviated.
-        }
-    \item{na.rm}{
-        [var] - \cr
-        a logical flag. Should missing values be removed?
-        By default \code{FALSE}.
         }      
     \item{pad}{
         [diffSeries] - \cr
         which value should get the padded values? By default \code{NA}.
         Another choice often used would be zero.
         }   
-    \item{probs}{
-        a numeric value or numeric vector of probabilities with values 
-        in \code{[0,1]}.
-        }
     \item{trim}{
         [diffSeries][returnSeries] - \cr
         a logical value. By default \code{TRUE}, the first missing 
@@ -156,21 +133,6 @@ rownames<-.timeSeries(x) <- value
         a numeric value, specifying in which multiples the volume should
         be referenced on the plot labels. By default 1e6, i.e. in units
         of 1 Million.
-        }
-    \item{use}{
-        [var] - \cr
-        an optional character string giving a method for computing
-        covariances in the presence of missing values. This must 
-        be (an abbreviation of) one of the strings \code{"all.obs"},
-        \code{"complete.obs"} or \code{"pairwise.complete.obs"}.
-        }
-    \item{value}{
-        [colnames<-][rownames<-] - \cr
-        a valid value for column names component of \code{dimnames(x)}. 
-        For a \code{"timeSeries"} object this is either \code{NULL} or a 
-        character vector of length the column dimension. Not, row names
-        cannot be assigne for a \code{"timeSeries"} object, the function
-        \code{rownames()} will stop and return an error message.
         }
     \item{x}{
         [as] - \cr   

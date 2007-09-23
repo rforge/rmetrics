@@ -6,7 +6,7 @@
 \alias{cor.timeSeries}
   
 
-\title{timeSeries Correlations
+\title{timeSeries Correlations}
 
 
 \description{

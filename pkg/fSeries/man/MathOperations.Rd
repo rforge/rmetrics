@@ -94,7 +94,6 @@
    OR = returnSeries(TS)
    OR
    OR > 0
-   quantile(OR, probs = c(0.90, 0.95))
 }
 
 
