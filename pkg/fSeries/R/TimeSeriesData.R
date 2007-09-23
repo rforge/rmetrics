@@ -29,17 +29,17 @@
 
 ################################################################################
 # FUNCTION:                 DESCRIPTION:
-#  fapply                    Applies a function to 'timeSeries' windows
-# METHOD:                   MODIFICATION METHODS:
 #  merge.timeSeries          Merges two 'timeSeries' objects
 #  rbind.timeSeries          Binds rows of two 'timeSeries' objects
 #  lag.timeSeries            Lags a 'timeSeries' object
+#  diff.timeSeries           Differences a 'timeSeries' object
 #  apply
+#  fapply                    Applies a function to 'timeSeries' windows
 #  .align.timeSeries         Aligns a timeSeries object 
 #  aggregate.timeSeries      Aggregates a 'timeSeries' object 
-# FUNCTION:
 #  scale.timeSeries          Centers and/or scales a 'timeSeries' object
-#  diff.timeSeries           Differences a 'timeSeries' object
+#  roll.timeSeries
+# FUNCTION:
 #  cumsum.timeSeries         Returns cumulated sums of 'timeSeries' objects
 ################################################################################
 

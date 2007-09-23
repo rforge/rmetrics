@@ -42,3 +42,11 @@
 #  colQuantiles              Computes quantiles of each column
 ################################################################################
 
+
+# No longer in use ...
+
+# mean.timeSeries <- colMeans
+# var.timeSeries <- colVars
+
+# currently still in fUtilities
+
