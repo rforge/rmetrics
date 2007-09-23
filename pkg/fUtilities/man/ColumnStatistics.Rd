@@ -17,6 +17,9 @@
 \alias{colAvgs}           
 \alias{colStdevs}
 
+\alias{mean.timeSeries}           
+\alias{var.timeSeries}
+
 \title{Column Statistics}
 
 
@@ -62,6 +65,9 @@ colQuantiles(x, prob = 0.05, \dots)
 
 colStdevs(x, \dots)
 colAvgs(x, \dots)
+
+\method{mean}{timeSeries}(x, \dots)
+\method{var}{timeSeries}(x, \dots)
 }
 
 
@@ -81,6 +87,15 @@ colAvgs(x, \dots)
         arguments to be passed.
         }
         
+}
+
+
+\note{
+
+    The functions \code{colStdevs}, \code{colAvgs},
+    \code{mean.timeSeries}, and \code{var.timeSeries} are no longer 
+    in use.
+    
 }
 
 
