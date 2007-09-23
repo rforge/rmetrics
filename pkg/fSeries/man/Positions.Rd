@@ -51,7 +51,7 @@ newPositions(object) <- value
 
 \method{sample}{timeSeries}(x, \dots)
 \method{sort}{timeSeries}(x, \dots)
-\method{rev}{timeSeries}(x)
+\method{rev}{timeSeries}(x, \dots)
 }
 
 

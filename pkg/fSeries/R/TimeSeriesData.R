@@ -30,23 +30,22 @@
 ################################################################################
 # FUNCTION:                 DESCRIPTION:
 #  fapply                    Applies a function to 'timeSeries' windows
-# METHOD:                   MODIFICATION METHODS:
 #  .align.timeSeries         Aligns a timeSeries object
 #  aggregate.timeSeries      Aggregates a 'timeSeries' object
+# METHOD:                   MODIFICATION METHODS:
 #  diff.timeSeries           Differences a 'timeSeries' object
 #  lag.timeSeries            Lags a 'timeSeries' object
 #  merge.timeSeries          Merges two 'timeSeries' objects
 #  rbind.timeSeries          Binds rows of two 'timeSeries' objects
-# FUNCTIONS:                STATS OPERATIONS:
-#  cumsum.timeSeries         Returns cumulated sums of 'timeSeries' objects
 #  scale.timeSeries          Centers and/or scales a 'timeSeries' object
+# FUNCTION:
+#  cumsum.timeSeries         Returns cumulated sums of 'timeSeries' objects
+# FUNCTIONS:                STATS OPERATIONS:
 #  mean.timeSeries           Returns column means for a 'timeSeries' object
 #  var.timeSeries            Returns variance for a 'timeSeries' object
 #  cov.timeSeries            Returns  covariance for a 'timeSeries' object
 #  cor.timeSeries            Returns correlations for a 'timeSeries' object
 #  quantile.timeSeries       Produces sample quantiles of a 'timeSeries' object
-# METHOD:                   DATABASE ATTACHEMENT:
-#  attach.timeSeries         Attaches a 'timeSeries' object
 # METHOD:                   DIM OPERATIONS ON DATA: 
 #  dim.timeSeries            Returns dimension of a 'timeSeries' object
 #  dimnames.timeDSeries      Returns dimension names of a 'timeSeries' object
@@ -775,29 +774,6 @@ function(x, probs = 0.95, ...)
   
     # Return Value:
     ans
-}
-
-
-################################################################################
-# METHODS:               DATABASE ATTACHEMENT:
-#  attach.timeSeries      Attaches a 'timeSeries' object
-
-
-attach.timeSeries = 
-function(what, pos = 2, name = deparse(substitute(what)), 
-warn.conflicts = TRUE) 
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Attaches a 'timeSeries' object   
-    
-    # FUNCTION:
-    
-    # Convert to data.frame Object:    
-    what.df = as.data.frame(what)
-    
-    # Attach:
-    return(attach.default(what.df, pos, name, warn.conflicts))
 }
 
 

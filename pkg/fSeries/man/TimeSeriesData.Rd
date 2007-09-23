@@ -17,8 +17,6 @@
 \alias{cor.timeSeries}
 \alias{quantile.timeSeries}
 
-\alias{attach.timeSeries}
-
 \alias{dim.timeSeries}
 \alias{dimnames.timeSeries}
 \alias{colnames<-.timeSeries}
@@ -59,13 +57,6 @@
     \code{var} \tab Computes Variance from a 'timeSeries' object, \cr
     \code{cov} \tab Computes Covariance from a 'timeSeries' object, \cr
     \code{cor} \tab Computes Correlations from a 'timeSeries' object.}
-    
-    Functions for attaching 'timeSeries' objects: 
-    
-    \tabular{ll}{
-    \code{attach} \tab attaches a 'timeSeries' object, \cr
-    \code{detach} \tab detaches a 'timeSeries' object [see base package]. } 
-
    
     Functions and methods for dimensional operations on 'timeSeries' objects: 
     
@@ -80,7 +71,6 @@
 
 
 \usage{
-
 fapply(x, from, to, FUN, \dots)
 
 \method{aggregate}{timeSeries}(x, by = c("monthly", "quarterly"), 
@@ -99,9 +89,6 @@ fapply(x, from, to, FUN, \dots)
 \method{cor}{timeSeries}(x, y = NULL, use = "all.obs", 
     method = c("pearson", "kendall", "spearman"))
 \method{quantile}{timeSeries}(x, probs = 0.95, \dots)
-
-\method{attach}{timeSeries}(what, pos = 2, name = deparse(substitute(what)), 
-    warn.conflicts = TRUE)
 
 \method{dim}{timeSeries}(x)
 \method{dimnames}{timeSeries}(x)
@@ -164,22 +151,11 @@ rownames<-.timeSeries(x) <- value
         [var] - \cr
         a logical flag. Should missing values be removed?
         By default \code{FALSE}.
-        } 
-    \item{name}{
-        [attach] - \cr    
-        alternative way to specify the database to be attached.
-        See for details \code{help(attach,package=base)}.
-        }     
+        }      
     \item{pad}{
         [diffSeries] - \cr
         which value should get the padded values? By default \code{NA}.
         Another choice often used would be zero.
-        }
-    \item{pos}{
-        [attach] - \cr    
-        an integer specifying position in \code{search()} where to attach
-        the database. 
-        See for details \code{help(attach,package=base)}.
         }   
     \item{probs}{
         a numeric value or numeric vector of probabilities with values 
@@ -216,22 +192,6 @@ rownames<-.timeSeries(x) <- value
         character vector of length the column dimension. Not, row names
         cannot be assigne for a \code{"timeSeries"} object, the function
         \code{rownames()} will stop and return an error message.
-        }
-    \item{warn.conflicts}{
-        [attach] - \cr    
-        a logical value. If \code{TRUE}, warnings are printed about 
-        conflicts from attaching the database, unless that database 
-        contains an object \code{.conflicts.OK}. A conflict is a 
-        function masking a function, or a non-function masking a 
-        non-function. 
-        See for details \code{help(attach,package=base)}.
-        }
-    \item{what}{
-        [attach] - \cr
-        database to be attached. This may currently be a timeSeries object,
-        a data.frame or a list or a R data file created with save or NULL 
-        or an environment. 
-        See for details \code{help(attach,package=base)}.
         }
     \item{x}{
         [as] - \cr   

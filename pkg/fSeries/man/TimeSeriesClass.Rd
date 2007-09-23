@@ -7,12 +7,6 @@
 \alias{timeSeries-class}
 
 \alias{readSeries}
-\alias{returnSeries}
-\alias{getReturns}
-\alias{cumulatedSeries}
-\alias{durationSeries}
-\alias{midquoteSeries}
-\alias{spreadSeries}
 
 \alias{applySeries}
 
@@ -41,12 +35,6 @@
     \tabular{ll}{   
     \code{timeSeries} \tab Creates a 'timeSeries' object from scratch, \cr
     \code{readSeries} \tab Reads a 'timeSeries' from a spreadsheet file, \cr
-    \code{returnSeries} \tab Computes returns from a 'timeSeries' object, \cr
-    \code{getReturns} \tab Computes returns from a 'timeSeries' object, \cr
-    \code{cumulatedSeries} \tab Computes cumulated returns from a 'timeSeries', \cr
-    \code{durationSeries} \tab Computes durations from a 'timeSeries' object, \cr
-    \code{midquoteSeries} \tab Computes mid quotes from a 'timeSeries' object, \cr
-    \code{spreadSeries} \tab Computes spreads from a 'timeSeries' object, \cr
     \code{applySeries} \tab Applies a function to margins of a 'timeSeries', \cr
     \code{orderStatistics} \tab Computes order statistic of a 'timeSeries'. }
     
@@ -72,14 +60,6 @@ timeSeries(data, charvec, units = NULL, format = NULL, zone = myFinCenter,
     documentation = NULL, ...)   
 readSeries(file, header = TRUE, sep = ";", zone = myFinCenter, 
     FinCenter = myFinCenter, title = NULL, documentation = NULL, \dots)
-returnSeries(x, type = c("continuous", "discrete"), percentage = FALSE, 
-    trim = TRUE, digits = 4, units = NULL)
-getReturns(x, type = c("continuous", "discrete"), percentage = FALSE, 
-    trim = FALSE, digits = 12, units = NULL)  
-cumulatedSeries(x, index = 100)
-durationSeries(x, trim = FALSE, units = c("secs", "mins", "hours"))   
-midquoteSeries(x, which = c("Bid", "Ask"))
-spreadSeries(x, which = c("Bid", "Ask"), tickSize = NULL)
  
 applySeries(x, from = NULL, to = NULL, by = c("monthly", "quarterly"), 
     FUN = colAvgs, units = NULL, format = x@format, zone = x@FinCenter, 
@@ -117,21 +97,12 @@ rollMonthlySeries(x, period = "12m", by = "1m", FUN, \dots)
     \item{data}{
         a \code{data.frame} or a \code{matrix} object of numeric data.
         }
-    \item{digits}{
-        [returnSeries] - \cr
-        an integer value. The number of digits to be printed in the 
-        output.
-        }
     \item{documentation}{
         optional documentation string, or a vector of character strings.
         }
     \item{file}{
         the filename of a spreadsheet data set from which
         to import the data records.
-        }
-    \item{index}{
-        [cumulatedSeries] - \cr
-        a numeric value to which the cumulated return series will be indexed.
         }
     \item{FinCenter}{
         a character with the the location of the  financial center named 
@@ -163,11 +134,6 @@ rollMonthlySeries(x, period = "12m", by = "1m", FUN, \dots)
         [is][seriesData][seriesPositions][show][summary] -    
         an object of class \code{timeSeries}.
         }
-    \item{percentage}{
-        [returnSeries] - \cr
-        a logical value. By default \code{FALSE}, if \code{TRUE} the 
-        series will be expressed in percentage changes.
-        }
     \item{period}{
         [rollMonthlySeries] - \cr
         a character string specifying the rollling period composed by the
@@ -186,29 +152,9 @@ rollMonthlySeries(x, period = "12m", by = "1m", FUN, \dots)
         the field seperator used in the spreadsheet file to separate 
         columns.
         }
-    \item{tickSize}{
-        [spreadSeries] - \cr
-        the default is NULL to simply compute price changes in original 
-        price levels. If ticksize is supplied, the price changes will be 
-        divided by the value of \code{inTicksOfSize} to compute
-        price changes in ticks.
-        }
     \item{title}{
         an optional title string, if not specified the inputs data 
         name is deparsed.
-        }
-    \item{trim}{
-        [diffSeries][returnSeries] - \cr
-        a logical value. By default \code{TRUE}, the first missing 
-        observation in the return series will be removed. 
-        }
-    \item{type}{
-        [returnSeries] - \cr
-        a character string specifying how to compute the returns. Valid 
-        choices are: \code{continuous} and \code{discrete}. For the 
-        default \code{type="continuous"}, the returns are calculated as 
-        the logarithmic differences, otherwise if \code{type="discrete"}, 
-        the returns are calculated as percentage changes. 
         }
     \item{units}{
         [applySeries][lag][returnSeries][mergeSeries] - \cr
@@ -222,13 +168,6 @@ rollMonthlySeries(x, period = "12m", by = "1m", FUN, \dots)
         units in which the durations are measured. By default durations
         are measured in seconds. 
         } 
-    \item{which}{
-        [midquoteSeries][spreadSeries] - \cr
-        a vector with two character strings naming the column names of
-        the time series from which to compute the mid quotes and spreads.
-        By default these are bid and ask prices with column names
-        \code{c("Bid", "Ask")}.
-        }
     \item{x}{
         [as] - \cr   
         a \code{matrix} type object to be converted.\cr
