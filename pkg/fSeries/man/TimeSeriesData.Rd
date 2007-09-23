@@ -15,23 +15,9 @@
 \alias{var.timeSeries}
 \alias{cov.timeSeries}
 \alias{cor.timeSeries}
-
-\alias{Ops.timeSeries}
-\alias{abs.timeSeries}
-\alias{sqrt.timeSeries}
-\alias{exp.timeSeries}
-\alias{log.timeSeries}
-\alias{sign.timeSeries}
 \alias{quantile.timeSeries}
 
 \alias{attach.timeSeries}
-
-\alias{[.timeSeries} 
-\alias{cut.timeSeries} 
-\alias{window.timeSeries}
-\alias{head.timeSeries}
-\alias{tail.timeSeries}
-\alias{outlier.timeSeries}
 
 \alias{dim.timeSeries}
 \alias{dimnames.timeSeries}
@@ -74,32 +60,12 @@
     \code{cov} \tab Computes Covariance from a 'timeSeries' object, \cr
     \code{cor} \tab Computes Correlations from a 'timeSeries' object.}
     
-    Functions and methods for mathematical operations on 'timeSeries' objects:         
-
-    \tabular{ll}{  
-    \code{Ops.timeSeries} \tab S3: Arith method for a 'timeSeries' object, \cr
-    \code{abs} \tab Returns absolute values of a 'timeSeries' object, \cr
-    \code{sqrt} \tab Returns square root of a 'timeSeries' object, \cr
-    \code{exp} \tab Returns the exponential values of a 'timeSeries' object, \cr
-    \code{log} \tab Returns the logarithm of  a 'timeSeries' object, \cr
-    \code{sign} \tab returns the signs of a 'timeSeries' object, \cr
-    \code{quantile} \tab Computes quantiles of a 'timeSeries' object. } 
-    
     Functions for attaching 'timeSeries' objects: 
     
     \tabular{ll}{
     \code{attach} \tab attaches a 'timeSeries' object, \cr
     \code{detach} \tab detaches a 'timeSeries' object [see base package]. } 
-    
-    Functions and methods for subsetting 'timeSeries' objects: 
-    
-    \tabular{ll}{
-    \code{"["} \tab "[" method for a 'timeSeries' object, \cr
-    \code{cut} \tab Cuts a block from a 'timeSeries' object, \cr
-    \code{window} \tab Windows a piece from a 'timeSeries' object, \cr
-    \code{head} \tab Returns the head of a 'timeSeries' object, \cr
-    \code{tail} \tab Returns the tail of a 'timeSeries' object, \cr
-    \code{outliers} \tab Removes outliers from a 'timeSeries' object. }
+
    
     Functions and methods for dimensional operations on 'timeSeries' objects: 
     
@@ -132,25 +98,10 @@ fapply(x, from, to, FUN, \dots)
     method = c("pearson", "kendall", "spearman"))
 \method{cor}{timeSeries}(x, y = NULL, use = "all.obs", 
     method = c("pearson", "kendall", "spearman"))
-
-\method{Ops}{timeSeries}(e1, e2)
-\method{abs}{timeSeries}(x)
-\method{sqrt}{timeSeries}(x)
-\method{exp}{timeSeries}(x)
-\method{log}{timeSeries}(x, base = exp(1))
-\method{sign}{timeSeries}(x)
 \method{quantile}{timeSeries}(x, probs = 0.95, \dots)
 
 \method{attach}{timeSeries}(what, pos = 2, name = deparse(substitute(what)), 
     warn.conflicts = TRUE)
-
-\method{[}{timeSeries}(x, i = min(1, nrow(x@Data)):nrow(x@Data), 
-    j = min(1, ncol(x@Data)):ncol(x@Data))
-\method{cut}{timeSeries}(x, from, to, \dots)
-\method{window}{timeSeries}(x, from, to, \dots)
-\method{head}{timeSeries}(x, n = 6, recordIDs = FALSE, \dots)
-\method{tail}{timeSeries}(x, n = 6, recordIDs = FALSE, \dots)
-\method{outlier}{timeSeries}(x, sd = 10, complement = TRUE, \dots)
 
 \method{dim}{timeSeries}(x)
 \method{dimnames}{timeSeries}(x)
@@ -162,11 +113,6 @@ rownames<-.timeSeries(x) <- value
 
 \arguments{
   
-    \item{base}{
-        [log] - \cr
-        a positive number. The base with respect to which logarithms
-        are computed. Defaults to \code{e=exp(1)}.
-        }
     \item{by}{
         [aggregate] - \cr
         a character string denoting the aggregation period, either 
@@ -177,12 +123,6 @@ rownames<-.timeSeries(x) <- value
         either a logical value or a numeric vector of length equal to
         the number of columns of \code{x}.
         }
-    \item{complement}{
-        [outlierSeries] - \cr
-        a logical flag, should the outler series
-        or its complement be returns, by default \code{TRUE}
-        which returns the series free of outliers.
-        }
     \item{diff}{
         [diffSeries] - \cr
         an integer indicating the order of the difference. By default 1.
@@ -192,20 +132,12 @@ rownames<-.timeSeries(x) <- value
         a logical, if \code{TRUE} the dimension names of the
         matrix are assigned to the time series object.
         }
-    \item{e1, e2}{
-        [Ops] - \cr   
-        two objects of class \code{timeSeries}.
-        }
     \item{from, to}{
         starting date and end date, \code{to} must be after \code{from}.
         }
     \item{FUN}{
         the function to be applied.
-        }
-    \item{i, j}{
-        ["["] - \cr 
-        index arguments used for subsettings.
-        }        
+        }       
     \item{k}{   
         [lagSeries] - \cr   
         an integer value. The number of lags (in units of observations).
@@ -227,11 +159,6 @@ rownames<-.timeSeries(x) <- value
         a character string indicating which correlation coefficient (or 
         covariance) is to be computed. One of \code{"pearson"} (default), 
         \code{"kendall"}, or \code{"spearman"}, can be abbreviated.
-        }
-    \item{n}{
-        [head][tail] - \cr
-        an integer specifying the number of lines to be returned. 
-        By default \code{n=6}.
         }
     \item{na.rm}{
         [var] - \cr
@@ -257,18 +184,6 @@ rownames<-.timeSeries(x) <- value
     \item{probs}{
         a numeric value or numeric vector of probabilities with values 
         in \code{[0,1]}.
-        }
-    \item{recordIDs}{
-        [head][tail] - \cr
-        a logical value. Should the \code{recordIDs} returned together
-        with the data matrix and time series positions?
-        }
-    \item{sd}{
-        [outlierSeries] - \cr
-        a numeric value of standard deviations, e.g. 10
-        means that values larger or smaller tahn ten 
-        times the standard deviation will be removed from
-        the series.
         }
     \item{trim}{
         [diffSeries][returnSeries] - \cr
