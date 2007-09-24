@@ -513,11 +513,21 @@ function(alpha = NULL, type = archmList(), tail = c("Upper", "Lower"))
     plot(c(0, 1), c(0, 1), type = "n", main = Title, xlab = "u", 
         ylab = paste(tail, "Tail Dependence"))
     
-    # Iterate rho:
+    # Iterate alpha:
     B = 10
     lower = max(archmRange(type)[1], -B)
     upper = min(archmRange(type)[2],  B)
-    Alpha = seq(lower, upper, length = 5)
+    
+    # Select alpha:
+    if (is.null(alpha)) {
+        # from range:
+        Alpha = seq(lower, upper, length = 5)
+    } else {
+        # from arguments:
+        Alpha = alpha
+    }
+    
+    # Do for all alpha:
     for (alpha in Alpha) {
         # Compute Copula Tail dependence lambda:
         C.uu = parchmCopula(u, alpha = alpha, type = type)
