@@ -29,9 +29,62 @@
 
 ################################################################################ 
 # FUNCTION:                 FOR MONTHLY OPERATIONS:
+#  countMonthlyRecords       Returns a series with monthly counts of records
+#  isMonthly                 Decides if the series consists of monthly records
 #  rollMonthlyWindows        Returns start/end dates for rolling time windows
 #  rollMonthlySeries         Rolls Monthly a 'timeSeries' on a given period 
 ################################################################################
+
+
+countMonthlyRecords = 
+function(x) 
+{   # A function implemented by Rmetrics
+
+    # Description:
+    #   Returns a series with monthly counts of records
+    
+    # Example:
+    #   x = as.timeSeries(data(msft.dat)); countMonthlyRecords(x)
+    #   x = as.timeSeries(data(edhec)); countMonthlyRecords(x)
+    
+    # FUNCTION:
+    
+    # Count: 
+    ans = rollMonthlySeries(x[, 1], period = "1m", by = "1m", FUN = NROW)
+    colnames(ans) <- "Counts"
+    
+    # Return Value:
+    ans
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+isMonthly =
+function(x)
+{   # A function implemented by Rmetrics
+
+    # Description:
+    #   Decides if the series consists of monthly records
+    
+    # Example:
+    #   x = as.timeSeries(data(msft.dat)); isMonthly(x)
+    #   x = as.timeSeries(data(edhec)); isMonthly(x)
+    
+    # FUNCTION:
+    
+    # Compare Counts wit Number of Records:
+    Counts = colSums(countMonthlyRecords(x))[[1]]
+    Months = NROW(x) - 1
+    
+    
+    # Return Value:
+    Counts == Months
+}
+
+
+# ------------------------------------------------------------------------------
 
 
 rollMonthlyWindows = 
