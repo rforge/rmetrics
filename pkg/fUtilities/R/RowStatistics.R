@@ -72,7 +72,7 @@ function(x, FUN, ...)
     # FUNCTION:
     
     # Statistics:
-    apply(na.omit(as.matrix(x), ...), 2, FUN, ...)
+    apply(na.omit(as.matrix(x), ...), 1, FUN, ...)
 }
 
 
