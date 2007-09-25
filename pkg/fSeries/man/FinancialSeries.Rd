@@ -1,10 +1,10 @@
-\name{FinancialSeries}
+\name{financial}
 
 
 \title{Financial Time Series}
 
 
-\alias{FinancialSeries}
+\alias{financial}
 
 \alias{returnSeries}
 \alias{getReturns}
@@ -12,6 +12,7 @@
 \alias{durationSeries}
 \alias{midquoteSeries}
 \alias{spreadSeries}
+
 
 \description{
     

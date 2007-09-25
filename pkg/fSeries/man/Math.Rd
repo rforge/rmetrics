@@ -1,7 +1,7 @@
-\name{MathOperations}
+\name{math}
 
 
-\alias{MathOperations}
+\alias{math}
 
 
 \alias{Ops.timeSeries}
@@ -43,7 +43,7 @@
 \method{exp}{timeSeries}(x)
 \method{log}{timeSeries}(x, base = exp(1))
 \method{sign}{timeSeries}(x)
-\method{diff}{timeSeries}(x, lag = 1, diff = 1, trim = FALSE, pad = NA, ...)
+\method{diff}{timeSeries}(x, lag = 1, diff = 1, trim = FALSE, pad = NA, \dots)
 \method{scale}{timeSeries}(x, center = TRUE, scale = TRUE)
 }
 
@@ -81,6 +81,9 @@
         }
     \item{x}{
         an object of class \code{timeSeries}.
+        }
+    \item{\dots}{
+        arguments to be passed.
         }
        
 }
