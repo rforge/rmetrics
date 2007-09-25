@@ -28,37 +28,12 @@
 
 
 ################################################################################
-# FUNCTION:                 FINANCIAL TIME SERIES:
-#  cumulatedSeries           Computes cumulated returns from a 'timeSeries'  
-#  durationSeries            Computes durations from a 'timeSeries' object
+# FUNCTION:                 FINANCIAL TIME SERIES: 
+#  durations                 Computes durations from a 'timeSeries' object
 ################################################################################
 
 
-cumulatedSeries = 
-function(x, index = 100) 
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Computes durations from a financial price series
-    
-    # Arguments:    
-    #   x - a univariate or multivariate 'timeSeries' object.
-    #   index - a numeric value to which the cumulated return 
-    #       series will be indexed.
-    
-    # FUNCTION:
-    
-    # Cumulated Series:
-    ans = index * exp(colCumsums(x))
-    
-    # Return Values:
-    ans
-}
-
-# ------------------------------------------------------------------------------
-
-
-durationSeries = 
+durations = 
 function(x, trim = FALSE, units = c("secs", "mins", "hours"))
 {   # A function implemented by Diethelm Wuertz
 
@@ -88,6 +63,16 @@ function(x, trim = FALSE, units = c("secs", "mins", "hours"))
     
     # Return Series:
     x
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+durationSeries = 
+function(...}
+{
+    durationSeries(...)
 }
 
 

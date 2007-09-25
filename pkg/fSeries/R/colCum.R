@@ -28,20 +28,26 @@
 
 
 ################################################################################
-# FUNCTION:                 COLUMN/ROW CUMULATIVE STATISTICS:
+# FUNCTION:                 COLUMN CUMULATIVE SUMS:
 #  colCumsums                Computes sample cumulated sums by column
 #  colCumsums.default        S3 default method (for matrix objects)
 #  colCumsums.timeSeries     S3 method for timeSeries objects
 #  colCumsums.zoo            S3 method for zoo objects
-# FUNCTION:                 ADDONS:
+# FUNCTION:                 COLUMN CUMULATIVE MAXIMA:
 #  colCummaxs                Computes cumulated maximum values
 #  colCummaxs.default        S3 default method (for matrix objects)
 #  colCummaxs.timeSeries     S3 method for timeSeries objects
 #  colCummaxs.zoo            S3 method for zoo objects
+# FUNCTION:                 COLUMN CUMULATIVE MINIMA:
 #  colCumprods               Computes cumulated product values
 #  colCumprods.default       S3 default method (for matrix objects)
-#  colCumprods.timeSderies   S3 method for timeSeries objects
+#  colCumprods.timeSeries    S3 method for timeSeries objects
 #  colCumprods.zoo           S3 method for zoo objects
+# FUNCTION:                 COLUMN CUMULATIVE RETURNS:
+#  colCumreturns             Computes cumulated product values
+#  colCumreturns.default     S3 default method (for matrix objects)
+#  colCumreturns.timeSeries  S3 method for timeSeries objects
+#  colCumreturns.zoo         S3 method for zoo objects
 # FUNCTION:                 NO LONGER SUPPORTED:
 #  cumsum.timeSeries         use colCumsums()
 ################################################################################
@@ -57,6 +63,12 @@
 # @todo
 #
 ################################################################################
+
+
+.conflicts.OK = TRUE
+
+
+# ------------------------------------------------------------------------------
 
 
 colCumsums =
@@ -156,19 +168,6 @@ function(x, na.rm = FALSE, ...)
 }
 
 
-################################################################################
-#  colCummaxs                Computes cumulated maximum values
-#  colCummaxs.default        S3 default method (for matrix objects)
-#  colCummaxs.timeSeries     S3 method for timeSeries objects
-#  colCummaxs.zoo            S3 method for zoo objects
-#  colCumprods               Computes cumulated product values
-#  colCumprods.default       S3 default method (for matrix objects)
-#  colCumprods.timeSderies   S3 method for timeSeries objects
-#  colCumprods.zoo           S3 method for zoo objects
-
-
-.conflicts.OK = TRUE
-
 
 # ------------------------------------------------------------------------------
 # DW: moved from BasicExtensions ...
@@ -258,11 +257,96 @@ function(x, na.rm = FALSE, ...)
 
 ################################################################################
 
+
+colCummins =
+function(x, na.rm = FALSE, ...)
+{   
+    UseMethod("colCummmins")
+}
+
+    
+# ------------------------------------------------------------------------------
+
+
+colCummins.default =
+function(x, na.rm = FALSE, ...)
+{   
+    # Description:
+    
+    # Arguments:
+    
+    # FUNCTION:
+    
+    # Cumulated minima:
+    ans = apply(as.matrix(x), 2, cummin, ...) 
+    colnames(ans) = colnames(x)
+    
+    # Return Value: 
+    ans
+}
+
+    
+# ------------------------------------------------------------------------------
+
+
+colCummins.timeSeries =
+function(x, na.rm = FALSE, ...)
+{   
+    # Description:
+    
+    # Arguments:
+    
+    # FUNCTION:
+    
+    # Cumulated minima:
+    ans = colCummins(as.matrix(x, ...), ...)
+    
+    # Time Series Input ?
+    if (class(x) == "timeSeries") {
+        x@Data = ans
+        ans = x
+    }
+    
+    
+    # Return Value: 
+    ans
+}
+
+    
+# ------------------------------------------------------------------------------
+
+
+colCummins.zoo =
+function(x, na.rm = FALSE, ...)
+{   
+    # Description:
+    
+    # Arguments:
+    
+    # FUNCTION:
+    
+    # Cumulated minima:
+    ans = colCummins(as.matrix(x, ...), na.rm, ...)
+    
+    # Zoo Input ?
+    if (class(x) == "zoo") {
+        index = attr(x, "index")
+        frequency = attr(x, "frequency")
+        ans = zoo(ans, index, frequency)
+    }
+
+    # Return Value: 
+    ans
+}
+
+
+################################################################################
+
   
 colCumprods =
 function(x, na.rm = FALSE, ...)
 {   
-    UseMethod("colCummaxs")
+    UseMethod("colCumprods")
 }
 
     
@@ -336,6 +420,97 @@ function(x, na.rm = FALSE, ...)
 
 ################################################################################
 
+  
+colCumreturns =
+function(x, method = c("geometric", "simple"), na.rm = FALSE, ...)
+{   
+    UseMethod("colCumreturns")
+}
+
+    
+# ------------------------------------------------------------------------------
+
+
+colCumreturns.default =
+function(x, method = c("geometric", "simple"), na.rm = FALSE, ...)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Cumulates Returns from a stream of returns
+    
+    # Arguments:
+    #   x - a vector, matrix, data frame, timeSeries or zoo object of 
+    #       asset returns.}
+    #   method - generate geometric (TRUE) or simple (FALSE) returns, 
+    #       default "geometric".
+
+    # FUNCTION:
+    
+    # Handle Missing Values:
+    if (na.rm) R = na.omit(R, ...) 
+    
+    # Cumulative Returns:
+    if (method == "geometric") {
+        ans = cumsum(R)
+    } else if (method == "simple") {
+        ans = cumprod(1+R) - 1
+    }
+    names(ans) = colnames(R)
+
+    
+    # Return Value:
+    ans
+}
+
+    
+# ------------------------------------------------------------------------------
+
+
+colCumreturns.timeSeries =
+function(x, method = c("geometric", "simple"), na.rm = FALSE, ...)
+{   
+    # Description:
+    
+    # Arguments:
+    
+    # FUNCTION:
+    
+    # Cumulated Maxima:
+    ans = colCumreturns(as.matrix(x, ...), na.rm, ...)
+    
+    # Time Series Input ?
+    if (class(x) == "timeSeries") {
+        x@Data = ans
+        ans = x
+    }
+        
+    # Return Value: 
+    ans
+}
+
+    
+# ------------------------------------------------------------------------------
+
+
+colCumreturns.zoo =
+function(x, method = c("geometric", "simple"), na.rm = FALSE, ...)
+{   
+    # Cumulated Maxima:
+    ans = colCummaxs(as.matrix(x, ...), ...)
+    
+    # Zoo Input ?
+    if (class(x) == "zoo") {
+        index = attr(x, "index")
+        frequency = attr(x, "frequency")
+        ans = zoo(ans, index, frequency)
+    }
+
+    # Return Value: 
+    ans
+}  
+
+
+################################################################################
 
 # NO LONGER IN USE
 

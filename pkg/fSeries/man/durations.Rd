@@ -1,36 +1,28 @@
-\name{financial}
+\name{durations}
 
 
-\title{Financial Time Series}
+\title{Computes durations from a timeSeries}
 
 
-\alias{financial}
-
-\alias{cumulatedSeries}
+\alias{durations}
 \alias{durationSeries}
 
 
 
 \description{
     
-    A collection and description of functions 
-    and methods dealing with special financial 
-    timeseries objects.  
+    Computes durations from an object of class 'timeSeries'.  
        
 }
 
 
 \usage{  
-cumulatedSeries(x, index = 100)
 durationSeries(x, trim = FALSE, units = c("secs", "mins", "hours"))   
 }
 
 
 \arguments{
-
-    \item{index}{
-        a numeric value to which the cumulated return series will be indexed.
-        }   
+  
     \item{trim}{
         a logical value. By default \code{TRUE}, the first missing 
         observation in the return series will be removed. 
@@ -50,7 +42,7 @@ durationSeries(x, trim = FALSE, units = c("secs", "mins", "hours"))
 
 \value{
 
-    all functions return an object of class \code{timeSeries}.
+    returns an object of class \code{timeSeries}.
         
 }
 
@@ -71,7 +63,7 @@ durationSeries(x, trim = FALSE, units = c("secs", "mins", "hours"))
 
 ## durations -  
    # Durations in hours: Continuous Returns:
-   durationSeries(MSFT, units = "hours")
+   durations(MSFT, units = "hours")
 }
 
 

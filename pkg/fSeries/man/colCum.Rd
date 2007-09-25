@@ -1,5 +1,9 @@
 \name{colCum}
 
+
+\title{Cumulated Column Statistics}
+
+
 \alias{colCum}
 
 \alias{colCumsums} 
@@ -12,16 +16,22 @@
 \alias{colCummaxs.timeSeries}
 \alias{colCummaxs.zoo} 
 
+\alias{colCummins} 
+\alias{colCummins.default}
+\alias{colCummins.timeSeries}
+\alias{colCummins.zoo}
+
 \alias{colCumprods} 
 \alias{colCumprods.default}
 \alias{colCumprods.timeSeries}
 \alias{colCumprods.zoo}  
 
+\alias{colCumreturns}
+\alias{colCumreturns.default}
+\alias{colCumreturns.timeSeries}
+\alias{colCumreturns.zoo}
 
 \alias{cumsum.timeSeries}  
-
-
-\title{Cumulated Column Statistics}
 
 
 \description{
@@ -44,12 +54,20 @@
 \method{colCumprods}{timeSeries}(x, na.rm = FALSE, \dots)
 \method{colCumprods}{zoo}(x, na.rm = FALSE, \dots)
 
+\method{colCumreturns}{default}(x, method = c("geometric", "simple"), na.rm = FALSE, \dots)
+\method{colCumreturns}{timeSeries}(x, method = c("geometric", "simple"), na.rm = FALSE, \dots)
+\method{colCumreturns}{zoo}(x, method = c("geometric", "simple"), na.rm = FALSE, \dots)
+
 \method{cumsum}{timeSeries}(x)
 }
 
 
 \arguments{
   
+    \item{method}{
+        a character string to indicate if geometric (TRUE) or simple 
+        (FALSE) returns should be computed.
+        }
     \item{na.rm}{
         a logical. Should missing values be removed?
         }
