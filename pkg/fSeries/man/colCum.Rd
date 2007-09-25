@@ -1,12 +1,6 @@
-\name{cumColumnRowStatistics}
+\name{colCum}
 
 \alias{cumColumnRowStatistics}
-
-
-\alias{rowCumsums} 
-\alias{rowCumsums.default}
-\alias{rowCumsums.timeSeries}
-\alias{rowCumsums.zoo}
 
 \alias{colCumsums} 
 \alias{colCumsums.default}
@@ -27,23 +21,12 @@
 \alias{cumsum.timeSeries}  
 
 
-\title{Cumulated Column and Row Statistics}
+\title{Cumulated Column Statistics}
 
 
 \description{
 
-    A collection and description of functions to compute 
-    cumulated column and row statistical properties of 
-    financial and economic time series data. 
-    \cr
-    
-    The functions are:
-    
-    \tabular{ll}{  
-    \code{rowCumsums}\tab Computes sample cumulated sums by row, \cr
-    \code{colCumsums}\tab Computes sample cumulated sums by column, \cr
-    \code{colCummaxs}\tab Computes cumulated maximum values by column, \cr
-    \code{colCumprods}\tab Computes cumulated product values by column. }
+    Functions to compute cumulative column statistics.
 
 }
 
@@ -83,9 +66,7 @@
 
 \value{
     
-    the functions return either a \code{"matrix"}, a \code{"timeSeries"}, 
-    or a \code{"zoo"} object dependeing on the class of the argument 
-    \code{"x"}.
+    all functions return an S4 object of class \code{timeSeries}.
     
 }
 

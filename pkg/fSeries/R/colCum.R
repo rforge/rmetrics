@@ -29,10 +29,6 @@
 
 ################################################################################
 # FUNCTION:                 COLUMN/ROW CUMULATIVE STATISTICS:
-#  rowCumsums                Computes sample cumulated sums by row
-#  rowCumsums.default        S3 default method (for matrix objects)
-#  rowCumsums.timeSeries     S3 method for timeSeries objects
-#  rowCumsums.zoo            S3 method for zoo objects
 #  colCumsums                Computes sample cumulated sums by column
 #  colCumsums.default        S3 default method (for matrix objects)
 #  colCumsums.timeSeries     S3 method for timeSeries objects
@@ -63,115 +59,10 @@
 ################################################################################
 
 
-################################################################################
-#  rowCumsums                Computes sample cumulated sums by row
-#  rowCumsums.default        S3 default method (for matrix objects)
-#  rowCumsums.timeSeries     S3 method for timeSeries objects
-#  rowCumsums.zoo            S3 method for zoo objects
-#  colCumsums                Computes sample cumulated sums by row
-#  colCumsums.default        S3 default method (for matrix objects)require
-#  colCumsums.timeSeries     S3 method for timeSeries objects
-#  colCumsums.zoo            S3 method for zoo objects
-
-
-rowCumsums =
-function(x, na.rm = FALSE, ...)
-{
-    UseMethod("rowCumsums") 
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-rowCumsums.default =
-function(x, na.rm = FALSE, ...)
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Computes sample cumulated sums by row (for matrix objects)
-
-    # FUNCTION:
-
-    # Transform:
-    X = as.matrix(x, ...)
-
-    # Statistics:
-    if (na.rm) {
-        result = apply(na.omit(X), MARGIN = 2, FUN = cumsum, ...)
-    } else {
-        result = apply(X, MARGIN = 2, FUN = cumsum, ...)
-    }
-    colnames(result) = paste(1:ncol(x))
-
-    # Statistics:
-    result <- apply(if(na.rm) na.omit(X) else X, 2, cumsum, ...)
-
-    # Return Value:
-    result
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-rowCumsums.timeSeries =
-function(x, na.rm = FALSE, ...)
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Computes sample cumulated sums by row for timeSeries objects
-
-    # FUNCTION:
-
-    # Cumulative Sums:
-    x = rowCumsums(as.matrix(x, ...))
-
-    # Time Series Input ?
-    if (class(x) == "timeSeries") {
-        x@Data = result
-        result = x
-    }
-
-    # Return Value:
-    result
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-rowCumsums.zoo =
-function(x, na.rm = FALSE, ...)
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Computes sample cumulated sums by row for zoo objects
-
-    # FUNCTION:
-
-    # Cumulative Sums:
-    x = rowCumsums(as.matrix(x, ...))
- 
-    # Zoo Input ?
-    if (class(x) == "zoo") {
-        index = attr(x, "index")
-        frequency = attr(x, "frequency")
-        result = zoo(result, index, frequency)
-    }
-
-    # Return Value:
-    result
-}
-
-
-################################################################################
-
-
 colCumsums =
 function(x, na.rm = FALSE, ...)
 {
-    UseMethod("rowCumsums") 
+    UseMethod("colCumsums") 
 }
 
 
@@ -185,6 +76,8 @@ function(x, na.rm = FALSE, ...)
     # Description:
     #   Computes sample cumulated sums by column (for matrix objects)
 
+    # Arguments:
+    
     # FUNCTION:
 
     # Transform:
@@ -216,6 +109,8 @@ function(x, na.rm = FALSE, ...)
     # Description:
     #   Computes sample cumulated sums by column for timeSeries objects
 
+    # Arguments:
+    
     # FUNCTION:
 
     # Cumulative Sums:
@@ -242,6 +137,8 @@ function(x, na.rm = FALSE, ...)
     # Description:
     #   Computes sample cumulated sums by column for zoo objects
 
+    # Arguments:
+    
     # FUNCTION:
 
     # Cumulative Sums:
@@ -290,6 +187,12 @@ function(x, na.rm = FALSE, ...)
 colCummaxs.default =
 function(x, na.rm = FALSE, ...)
 {   
+    # Description:
+    
+    # Arguments:
+    
+    # FUNCTION:
+    
     # Cumulated Maxima:
     ans = apply(as.matrix(x), 2, cummax, ...) 
     colnames(ans) = colnames(x)
@@ -305,6 +208,12 @@ function(x, na.rm = FALSE, ...)
 colCummaxs.timeSeries =
 function(x, na.rm = FALSE, ...)
 {   
+    # Description:
+    
+    # Arguments:
+    
+    # FUNCTION:
+    
     # Cumulated Maxima:
     ans = colCummaxs(as.matrix(x, ...), ...)
     
@@ -326,6 +235,12 @@ function(x, na.rm = FALSE, ...)
 colCummaxs.zoo =
 function(x, na.rm = FALSE, ...)
 {   
+    # Description:
+    
+    # Arguments:
+    
+    # FUNCTION:
+    
     # Cumulated Maxima:
     ans = colCummaxs(as.matrix(x, ...), na.rm, ...)
     
@@ -357,6 +272,12 @@ function(x, na.rm = FALSE, ...)
 colCumprods.default =
 function(x, na.rm = FALSE, ...)
 {   
+    # Description:
+    
+    # Arguments:
+    
+    # FUNCTION:
+    
     # Cumulated Maxima:
     ans = apply(as.matrix(x, ...), 2, cumprod, ...) 
     colnames(ans) = colnames(x)
@@ -372,6 +293,12 @@ function(x, na.rm = FALSE, ...)
 colCumprods.timeSeries =
 function(x, na.rm = FALSE, ...)
 {   
+    # Description:
+    
+    # Arguments:
+    
+    # FUNCTION:
+    
     # Cumulated Maxima:
     ans = colCumprods(as.matrix(x, ...), na.rm, ...)
     

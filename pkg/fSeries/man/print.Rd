@@ -25,10 +25,7 @@ show.timeSeries(object)
     \item{object}{  
         an object of class \code{timeSeries}.
         }
-    \item{\dots}{
-        arguments passed to other methods.
-        }
-
+        
 }
 
 
