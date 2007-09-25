@@ -21,7 +21,10 @@
 \alias{colCumprods} 
 \alias{colCumprods.default}
 \alias{colCumprods.timeSeries}
-\alias{colCumprods.zoo}    
+\alias{colCumprods.zoo}  
+
+
+\alias{cumsum.timeSeries}  
 
 
 \title{Cumulated Column and Row Statistics}
@@ -57,6 +60,8 @@
 \method{colCumprods}{default}(x, na.rm = FALSE, \dots)
 \method{colCumprods}{timeSeries}(x, na.rm = FALSE, \dots)
 \method{colCumprods}{zoo}(x, na.rm = FALSE, \dots)
+
+\method{cumsum}{timeSeries}(x)
 }
 
 
@@ -86,6 +91,9 @@
 
 
 \note{
+    
+    The method \code{cumsum.timeSeries} will be no longer supported
+    use instead \code{colCumsums}.
     
     The methods for the \code{"zoo"} methods are still preliminary and 
     untested. \code{na.rm} is not yet supported in all case, please test.

@@ -40,6 +40,7 @@
 #  colMins                   Computes minimum values in each colum
 #  colProds                  Computes product of all values in each colum
 #  colQuantiles              Computes quantiles of each column
+# FUNCTION
 ################################################################################
 
 

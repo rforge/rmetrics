@@ -35,6 +35,8 @@
 #  exp.timeSeries            Returns exponentials of a 'timeSeries' object
 #  log.timeSeries            Returns logarithms of a 'timeSeries' object
 #  sign.timeSeries           Returns the signs of a 'timeSeries' object
+#  diff.timeSeries           Differences a 'timeSeries' object
+#  scale.timeSeries          Centers and/or scales a 'timeSeries' object
 ################################################################################
 
 
@@ -232,7 +234,85 @@ function(x)
     # Return Value;
     x 
 }
+
+
+# ------------------------------------------------------------------------------
+
+
+diff.timeSeries = 
+function(x, lag = 1, diff = 1, trim = FALSE, pad = NA, ...) 
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Difference 'timeSeries' objects.
     
+    # Arguments:
+    #   x - a 'timeSeries' object.
+    #   lag - an integer indicating which lag to use. 
+    #       By default 1.
+    #   diff - an integer indicating the order of the difference.
+    #       By default 1.
+    #   trim - a logical. Should NAs at the beginning of the
+    #       series be removed?
+    #   pad - a umeric value with which NAs should be replaced
+    #       at the beginning of the series.
+
+    # Value:
+    #   Returns a differenced object of class 'timeSeries'.
+
+    # FUNCTION:
+        
+    # Convert:
+    y = as.matrix(x)
+        
+    # Check NAs:
+    # if (any(is.na(y))) stop("NAs are not allowed in time series")
+        
+    # Difference:
+    z = diff(y, lag = lag, difference = diff)
+
+    # Trim:
+    if (!trim) {
+        diffNums = dim(y)[1] - dim(z)[1]
+        zpad = matrix(0*y[1:diffNums, ] + pad, nrow = diffNums)
+        rownames(zpad) = rownames(y)[1:diffNums] 
+        z = rbind(zpad, z)
+    }
+      
+    # Record IDs:
+    df = x@recordIDs
+    if (trim) {
+        if (sum(dim(df)) > 0) {
+            TRIM = dim(df)[1] - dim(z)[1]
+            df = df[-(1:TRIM), ]
+        }
+    }
+            
+    # Return Value:
+    timeSeries(data = z, charvec = rownames(z), units = colnames(z),
+        format = x@format, zone = x@FinCenter, FinCenter = x@FinCenter, 
+        recordIDs = df, title = x@title, documentation = x@documentation)
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+scale.timeSeries =
+function(x, center = TRUE, scale = TRUE)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Centers and/or scales a 'timeSeries' object.
+
+    # FUNCTION:
+    
+    # Scale:
+    x@Data = scale(x = x@Data, center = center, scale = scale)
+    
+    # Return Value:
+    x
+}    
 
 
 ################################################################################

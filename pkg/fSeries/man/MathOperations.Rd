@@ -10,6 +10,9 @@
 \alias{exp.timeSeries}
 \alias{log.timeSeries}
 \alias{sign.timeSeries}
+
+\alias{diff.timeSeries}
+\alias{scale.timeSeries}
   
 
 \title{Mathematical timeSeries Operations}
@@ -40,6 +43,8 @@
 \method{exp}{timeSeries}(x)
 \method{log}{timeSeries}(x, base = exp(1))
 \method{sign}{timeSeries}(x)
+\method{diff}{timeSeries}(x, lag = 1, diff = 1, trim = FALSE, pad = NA, ...)
+\method{scale}{timeSeries}(x, center = TRUE, scale = TRUE)
 }
 
 
@@ -50,10 +55,30 @@
         a positive number. The base with respect to which logarithms
         are computed. Defaults to \code{e=exp(1)}.
         }
+    \item{center, scale}{ 
+        [scale] - \cr
+        either a logical value or a numeric vector of length equal to
+        the number of columns of \code{x}.
+        }
+    \item{diff}{
+        an integer indicating the order of the difference. By default 1.
+        }
     \item{e1, e2}{
         [Ops] - \cr   
         two objects of class \code{timeSeries}.
         } 
+    \item{lag}{   
+        an integer indicating which lag to use. By default 1.
+        }     
+    \item{pad}{
+        [diffSeries] - \cr
+        which value should get the padded values? By default \code{NA}.
+        Another choice often used would be zero.
+        } 
+    \item{trim}{
+        a logical value. By default \code{TRUE}, the first missing 
+        observation in the return series will be removed. 
+        }
     \item{x}{
         an object of class \code{timeSeries}.
         }

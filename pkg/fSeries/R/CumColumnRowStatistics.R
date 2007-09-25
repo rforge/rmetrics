@@ -46,6 +46,8 @@
 #  colCumprods.default       S3 default method (for matrix objects)
 #  colCumprods.timeSderies   S3 method for timeSeries objects
 #  colCumprods.zoo           S3 method for zoo objects
+# FUNCTION:                 NO LONGER SUPPORTED:
+#  cumsum.timeSeries         use colCumsums()
 ################################################################################
 
 
@@ -403,6 +405,29 @@ function(x, na.rm = FALSE, ...)
     # Return Value: 
     ans
 }  
+
+
+################################################################################
+
+
+# NO LONGER IN USE
+
+
+cumsum.timeSeries = 
+function(x) 
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   No longer in use, use colCumsums()
+
+    # FUNCTION:
+    
+    # Cumulate:
+    x@Data = colCumsums(x@Data)
+    
+    # Return Value:
+    x    
+}
 
 
 ################################################################################
