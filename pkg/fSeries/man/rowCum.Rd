@@ -22,14 +22,6 @@
 \method{rowCumsums}{default}(x, na.rm = FALSE, \dots)
 \method{rowCumsums}{timeSeries}(x, na.rm = FALSE, \dots)
 \method{rowCumsums}{zoo}(x, na.rm = FALSE, \dots)
-
-\method{rowCummaxs}{default}(x, na.rm = FALSE, \dots)
-\method{rowCummaxs}{timeSeries}(x, na.rm = FALSE, \dots)
-\method{rowCummaxs}{zoo}(x, na.rm = FALSE, \dots)
-
-\method{rowCumprods}{default}(x, na.rm = FALSE, \dots)
-\method{rowCumprods}{timeSeries}(x, na.rm = FALSE, \dots)
-\method{rowCumprods}{zoo}(x, na.rm = FALSE, \dots)
 }
 
 

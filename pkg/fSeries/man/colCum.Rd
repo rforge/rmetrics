@@ -1,6 +1,6 @@
 \name{colCum}
 
-\alias{cumColumnRowStatistics}
+\alias{colCum}
 
 \alias{colCumsums} 
 \alias{colCumsums.default}
