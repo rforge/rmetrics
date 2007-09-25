@@ -6,6 +6,8 @@
 
 \alias{SpecialMonthlySeries}
 
+\alias{countMonthlyRecords}
+\alias{isMonthly}
 
 \alias{rollMonthlyWindows}
 \alias{rollMonthlySeries}
@@ -85,7 +87,7 @@ rollMonthlySeries(x, period = "12m", by = "1m", FUN, \dots)
    isMonthly(x)
    
 ## data -   
-   EDHEC Hedge Funds Monthly Data Set
+   # EDHEC Hedge Funds Monthly Data Set
    x = as.timeSeries(data(edhec))
    isMonthly(x)   
 }

@@ -37,8 +37,6 @@
 #  seriesData                Extracts data slot from 'timeSeries' object
 #  isUnivariate              Tests if 'timeSeries' object is univariate
 #  isMultivariate            Tests if 'timeSeries' object is multivariate  
-# FUNCTION:                 DESCRIPTION:
-#  .modelSeries              Models a timeSeries object to use formulas
 ################################################################################
 
 
@@ -144,7 +142,7 @@ documentation = NULL, ...)
     if (is.null(documentation)) documentation = as.character(date())
     
     # Result:
-    new("timeSeries", 
+    ans = new("timeSeries", 
         Data = as.matrix(data), 
         positions = rownames(data),
         format = timeDates@format,
@@ -153,7 +151,11 @@ documentation = NULL, ...)
         recordIDs = recordIDs,
         title = as.character(title), 
         documentation = as.character(documentation) 
-    )
+        )
+    attr(ans, "dimension") = c(NCOL(data), NROW(data))
+    
+    # Return Value:
+    ans
 }
 
 
@@ -477,68 +479,6 @@ function(x)
     ans
 }
 
-
-################################################################################
-# FUNCTION:
-#  .modelSeries         Models a timeSeries object to use formulas
-
-
-.modelSeries = 
-function(formula, data, fake = FALSE, lhs = FALSE)
-{   # A function implemented by Diethelm Wuertz
-
-    # Arguments:
-    #   data - a timeSeries, a data.frame or a numeric vector
-    
-    # Details:
-    #   Time Series Modelling
-    #   Regression Modelling
-    #   Data Management
-    
-    
-    # If no respnonse is pecified:
-    if (length(formula) == 2) {
-        formula = as.formula(paste("x", formula[1], formula[2], collapse = ""))
-        stopifnot(!missing(data))
-    }
-
-    # Isf data is missing, take the first data set from the search path:
-    if (missing(data)) {
-        data = eval(parse(text = search()[2]), parent.frame())
-    }
-    
-    if (is.numeric(data)) {
-        data = data.frame(data)
-        colnames(data) = all.vars(formula)[1]
-        lhs = TRUE
-    }
-    
-    # If we consider a faked formula:
-    if (fake) {
-        response = as.character(formula)[2]
-        Call = as.character(match.call()[[2]][[3]])
-        method = Call[1]
-        predictors = Call[2]
-        formula = as.formula(paste(response, "~", predictors))
-    }
-    
-    # If only left hand side is required:
-    if (lhs) {
-        response = as.character(formula)[2]
-        formula = as.formula(paste(response, "~", 1))
-    } 
-    
-    # Create Model Data:
-    x = model.frame(formula, data)
-    
-    # Convert:
-    if (is(data, "timeSeries")) x = timeSeries(x)
-    if (fake) attr(x, "control") <- method
-    
-    # Return value:
-    x
-    
-}
 
 
 ################################################################################
