@@ -1,12 +1,13 @@
-\name{TimeSeriesCorrelations}
+\name{cor}
 
-\alias{TimeSeriesCorrelations}
-
-\alias{cov.timeSeries}
-\alias{cor.timeSeries}
-  
 
 \title{timeSeries Correlations}
+
+
+\alias{cor}
+\alias{cov}
+\alias{cor.timeSeries}
+\alias{cov.timeSeries}
 
 
 \description{

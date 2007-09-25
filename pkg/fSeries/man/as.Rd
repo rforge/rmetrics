@@ -1,8 +1,10 @@
-\name{TimeSeriesCoercion}
-
-\alias{TimeSeriesCoercion}
+\name{as}
 
 
+\title{timeSeries Class, Coercion and Transformation}
+
+
+\alias{as}
 \alias{is.timeSeries}
 
 \alias{as.timeSeries}
@@ -18,9 +20,6 @@
 \alias{as.matrix.timeSeries}
 \alias{as.data.frame.timeSeries}
 \alias{as.ts.timeSeries}
-
-
-\title{timeSeries Class, Coercion and Transformation}
 
 
 \description{

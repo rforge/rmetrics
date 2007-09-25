@@ -1,11 +1,11 @@
 \name{aggregate}
 
 
+\title{timeSeries Class, Functions and Methods}
+
+
 \alias{aggregate}
 \alias{aggregate.timeSeries}
-
-
-\title{timeSeries Class, Functions and Methods}
 
 
 \description{

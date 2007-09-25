@@ -1,11 +1,11 @@
 \name{merge}
 
 
+\title{Merge two timeSeries objects}
+
+
 \alias{merge}
 \alias{merge.timeSeries} 
-  
-
-\title{Merge two timeSeries objects}
 
 
 \description{

@@ -1,14 +1,15 @@
-\name{MissingValues}
+\name{na}
 
-\alias{MissingValues}
 
+\title{Handling Missing Values}
+
+\alias{na}
+\alias{na.omit}
 \alias{na.omit.timeSeries}
 
 \alias{removeNA}
 \alias{substituteNA}
 \alias{interpNA}
-
-\title{Handling Missing Values}
 
 
 \description{

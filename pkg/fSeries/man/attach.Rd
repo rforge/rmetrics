@@ -1,12 +1,11 @@
-\name{AttachTimeSeries}
-
-
-\alias{AttachTimeSeries}
-
-\alias{attach.timeSeries}
+\name{attach}
   
 
 \title{Attach a timSeries to the search path}
+
+
+\alias{attach}
+\alias{attach.timeSeries}
 
 
 \description{

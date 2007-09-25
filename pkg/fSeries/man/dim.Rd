@@ -1,17 +1,15 @@
-\name{ColumnsAndRows}
+\name{dim}
+  
+
+\title{timeSeries Columns and Rows}
 
 
-\alias{ColumnsAndRows}
-
-
+\alias{dim}
 \alias{dim.timeSeries}
 \alias{dimnames.timeSeries}
 \alias{colnames<-.timeSeries}
 \alias{rownames<-.timeSeries}
 \alias{is.array.timeSeries}
-  
-
-\title{timeSeries Columns and Rows}
 
 
 \description{

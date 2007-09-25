@@ -1,8 +1,10 @@
-\name{TimeSeriesPositions}
-
-\alias{TimeSeriesPositions}
+\name{time}
 
 
+\title{timeSeries, Positions}
+
+
+\alias{time}
 \alias{seriesPositions}
 \alias{newPositions<-}
 
@@ -13,9 +15,6 @@
 
 \alias{start.timeSeries}
 \alias{end.timeSeries}
-
-
-\title{timeSeries, Positions}
 
 
 \description{

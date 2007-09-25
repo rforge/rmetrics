@@ -1,10 +1,10 @@
-\name{SpecialMonthlySeries}
+\name{monthly}
 
 
 \title{Special Monthly Series}
 
 
-\alias{SpecialMonthlySeries}
+\alias{monthly}
 
 \alias{countMonthlyRecords}
 \alias{isMonthly}

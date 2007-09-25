@@ -1,13 +1,13 @@
 \name{bind}
 
 
+\title{Bind two timeSeries objects}
+
+
 \alias{cbind}
 \alias{rbind}
 \alias{cbind.timeSeries} 
 \alias{rbind.timeSeries} 
-
-
-\title{Bind two timeSeries objects}
 
 
 \description{

@@ -1,11 +1,11 @@
 \name{lag}
 
 
+\title{Lag a timeSeries Object}
+
+
 \alias{lag}
 \alias{lag.timeSeries} 
-  
-
-\title{Lag a timeSeries Object}
 
 
 \description{

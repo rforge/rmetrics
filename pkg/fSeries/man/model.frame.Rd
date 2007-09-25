@@ -1,10 +1,10 @@
-\name{ModelFrames}
+\name{model.fram}
 
 
 \title{Model Frames for timeSeries Objects}
 
 
-\alias{ModelFrames}
+\alias{model.frame}
 \alias{model.frame.timeSeries}
 
 
