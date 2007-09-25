@@ -33,6 +33,7 @@ fapply(x, from, to, FUN, \dots)
         }
     \item{FUN}{
         the function to be applied.
+        }
     \item{x}{
         an object of class \code{timeSeries}.
         } 
