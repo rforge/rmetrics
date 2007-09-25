@@ -17,7 +17,8 @@
 
 
 \usage{  
-durationSeries(x, trim = FALSE, units = c("secs", "mins", "hours"))   
+durations(x, trim = FALSE, units = c("secs", "mins", "hours"))   
+durationSeries(\dots)
 }
 
 
@@ -35,6 +36,9 @@ durationSeries(x, trim = FALSE, units = c("secs", "mins", "hours"))
         }     
     \item{x}{
         an object of class \code{timeSeries}.
+        }
+    \item{\dots}{
+        arguments to be passed.
         }
         
 }

@@ -70,9 +70,9 @@ function(x, trim = FALSE, units = c("secs", "mins", "hours"))
 
 
 durationSeries = 
-function(...}
+function(...)
 {
-    durationSeries(...)
+    durations(...)
 }
 
 

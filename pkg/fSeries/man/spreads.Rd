@@ -18,12 +18,12 @@
 }
 
 
-\usage{      
+\usage{  
+spreads(x, which = c("Bid", "Ask"), tickSize = NULL)    
 midquotes(x, which = c("Bid", "Ask"))
-spreads(x, which = c("Bid", "Ask"), tickSize = NULL)
 
-midquoteSeries(x, which = c("Bid", "Ask"))
-spreadSeries(x, which = c("Bid", "Ask"), tickSize = NULL)
+midquoteSeries(\dots)
+spreadSeries(\dots)
 }
 
 
@@ -44,7 +44,10 @@ spreadSeries(x, which = c("Bid", "Ask"), tickSize = NULL)
     \item{x}{
         an object of class \code{timeSeries}.
         }
-        
+    \item{\dots}{
+        arguments to be passed.
+        }
+           
 }
 
 
