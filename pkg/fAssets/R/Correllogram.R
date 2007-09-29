@@ -266,24 +266,13 @@ function (x, y, ...)
 
 
 .corrgram = 
-function (x, order = NULL, labels, panel = .panel.shade, ...,
+function (x, labels, panel = .panel.shade, ...,
     lower.panel = panel, upper.panel = panel,
     diag.panel = NULL, text.panel = textPanel,
     label.pos = 0.5,
     cex.labels = NULL, font.labels = 1,
     row1attop = TRUE, gap = 1)
 {
-
-    # Order the variables by PCA of correlation matrix
-    if(!is.null(order)){
-        x.cor = cor(x, use = "pair")
-        x.eigen = eigen(x.cor)$vectors[,1:2]
-        e1 = x.eigen[,1]
-        e2 = x.eigen[,2]
-        alpha = ifelse(e1>0,atan(e2/e1), atan(e2/e1)+pi)
-        x = x[, order(alpha)]
-    }
-  
     textPanel <-
         function(x = 0.5, y = 0.5, txt, cex, font)
             text(x, y, txt, cex = cex, font = font)
