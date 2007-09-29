@@ -82,7 +82,7 @@ colSums =
 function(x, ...) 
 {
     if (class(x) == "timeSeries") {
-        return(colStats(x, sum, ...))
+        return(colStats(x, "sum", ...))
     } else {
         return(base::colSums(x, ...))
     }
@@ -93,26 +93,26 @@ colMeans =
 function(x, ...)
 {
     if (class(x) == "timeSeries") {
-        return(colStats(x, mean, ...))
+        return(colStats(x, "mean", ...))
     } else {
         return(base::colMeans(x, ...))
     }
 }
 
 
-colSds = function(x, ...) { colStats(x, sd, ...) }       
-colVars = function(x, ...) { colStats(x, var, ...) }      
-colSkewness = function(x, ...) { colStats(x, skewness, ...) }   
-colKurtosis = function(x, ...) { colStats(x, kurtosis, ...) } 
-colMaxs = function(x, ...) { colStats(x, max, ...) } 
-colMins = function(x, ...) { colStats(x, min, ...) }      
-colProds = function(x, ...) { colStats(x, prod, ...) } 
+colSds = function(x, ...) { colStats(x, "sd", ...) }       
+colVars = function(x, ...) { colStats(x, "var", ...) }      
+colSkewness = function(x, ...) { colStats(x, "skewness", ...) }   
+colKurtosis = function(x, ...) { colStats(x, "kurtosis", ...) } 
+colMaxs = function(x, ...) { colStats(x, "max", ...) } 
+colMins = function(x, ...) { colStats(x, "min", ...) }      
+colProds = function(x, ...) { colStats(x, "prod", ...) } 
 
 
 colQuantiles = 
 function(x, prob = 0.05, ...) { 
     stopifnot(length(prob) == 1)
-    colStats(x, quantile, probs = prob, ...) } 
+    colStats(x, "quantile", probs = prob, ...) } 
 
 
 colAvgs <- colMeans
