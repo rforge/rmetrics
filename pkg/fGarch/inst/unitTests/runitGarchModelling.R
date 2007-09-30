@@ -34,10 +34,7 @@
 ################################################################################
 
 
-test.garchFit.vector = 
-function()
-{  
-    # garchFit(
+# garchFit(
     #   formula, 
     #   data, 
     #   init.rec = c("mci", "uev"), 
@@ -77,45 +74,204 @@ function()
     #   title = NULL, 
     #   description = NULL, 
     #   ...)
-        
-    # Use: dem2gbp data frame
-    data(dem2gbp)
-    print(head(dem2gbp))
-    print(class(dem2gbp))
     
-    # Data Frame to Numeric Vector:
-    x = dem2gbp[, 1]
-    print(head(x))
-    print(class(x))
     
-    # GARCH(1,1) - just a vector:
+# ------------------------------------------------------------------------------
+
+
+test.garchFit = 
+function()
+{       
+    # Use Simulated Series - an Object of class 'ts' ...
+    
+    # RVs:
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
+    
+    # normal GARCH(1, 1)
+    model = list(omega = 1e-06, alpha = 0.1, beta = 0.8)
+    x = garchSim(model, 1000)
+    # Default Settings ...
     fit = garchFit(x ~ garch(1,1), data = x)
-    fit = garchFit(~ garch(1,1), data = x)
-    
-    # GARCH(1,1) - a named data frame:
-    fit = garchFit(DEM2GBP ~garch(1,1), data = dem2gbp)
-    
-    # Modify Start Values:
-    fit = garchFit( ~ garch(1,1), x, init.rec = "mci") # default
     fit@fit$coef
-    ## fit = garchFit( ~ garch(1,1), x, init.rec = "uev")
-    ## fit@fit$coef
     
-    # Skew Normal Conditional Distribution:
-    fit = garchFit(~garch(1,1), data = x, cond.dist = "dsnorm")
+    # RVs:
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
+    
+    # normal-GARCH(2, 1)
+    model = list(omega = 1e-06, alpha = c(0.1, 0.2), beta = 0.6)
+    x = garchSim(model, n = 1000)
+    # Default Settings ...
+    fit = garchFit(x ~ garch(2,1), data = x)
     fit@fit$coef
-        
-    # Symmetric GED                                                  # CHECK !!!
-    # fit = garchFit(~garch(1,1), x, cond.dist = "dged")
-    # fit@fit$coef
+    
+    # RVs:
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
+    
+    # normal AR(1)-GARCH(1,1)
+    model = list(omega = 1e-06, ar = -0.1, alpha = c(0.1, 0.2), beta = 0.6)
+    x = garchSim(model, n = 1000)
+    # Default Settings ...
+    fit = garchFit(x ~ ar(1) + garch(1,1), data = x)
+    fit@fit$coef
+    
+    # Return Value:
+    return()    
+} 
 
-    # Skew GED - Take the shape from symmetric solution ...          # CHECK !!!
-    # fit = garchFit(~garch(1,1), x, cond.dist = "dsged", shape = 1.15)     
-    # fit@fit$coef   
 
-    # Standardized Student-t:                                        # CHECK !!!
-    # fit = garchFit(~garch(1,1), x, cond.dist = "dstd")     
-    # fit@fit$coef
+# ------------------------------------------------------------------------------
+
+
+test.aparchFit = 
+function()
+{       
+    # Use Simulated Series - an Object of class 'ts' ...
+    
+    # RVs:
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
+    
+    # Leveraged normal APARCH(1, 1)
+    model = list(omega = 1e-06, alpha = 0.1, beta = 0.8, gamma = 0.1)
+    x = garchSim(model, n = 1000)
+    fit = garchFit(x ~ garch(1,1), data = x, leverage = TRUE)
+    fit@fit$coef
+    
+    # RVs:
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
+    
+    # Leveraged normal APARCH(1, 1) delta = 1.5
+    model = list(omega = 1e-05, alpha = 0.1, beta = 0.8, gamma = 0.1, delta = 1.5)
+    x = garchSim(model, n = 1000)
+    var(x)    
+    fit = garchFit(x ~ garch(1,1), data = x, leverage = TRUE,
+        include.delta = TRUE, delta = 2)
+    fit@fit$coef
+    
+    # RVs:
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
+    
+    # Leveraged normal AR(1)-APARCH(2, 1) delta = 1
+    model = list(omega = 1e-06, ar = -0.1, alpha = c(0.1, 0.2), beta = 0.6, 
+        delta = 1)
+    x = garchSim(model, n = 1000)
+    taylor = teffectPlot(x)
+    init.delta = mean(taylor$maxDelta)
+    init.delta    
+    fit = garchFit(x ~ ar(1) + garch(2,1), data = x, include.delta = TRUE, 
+        delta = init.delta)
+    fit@fit$coef
+    
+    # Return Value:
+    return()    
+} 
+
+
+# ------------------------------------------------------------------------------
+   
+
+test.garchFit.norm = 
+function()
+{  
+    # Conditional Densities:
+    #   "dnorm", "dsnorm", "dged", "dsged", "dstd", "dsstd"
+    
+    # RVs:
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
+    
+    # skewed normal GARCH(1, 1)
+    model = list(omega = 1e-06, alpha = 0.1, beta = 0.8, skew = 0.9)
+    x = garchSim(model, 1000, cond.dist = "rsnorm")
+    fit = garchFit(~garch(1,1), data = x, include.skew = TRUE, 
+        cond.dist = "dsnorm")
+    fit@fit$coef
+    
+    # Skewed Normal GARCH(1, 1) - fixed skew ...
+    fit = garchFit(~garch(1,1), data = x, skew = 0.9, include.skew = FALSE,
+        cond.dist = "dsnorm")
+    fit@fit$coef
+    
+    # Return Value:
+    return()    
+} 
+
+
+# ------------------------------------------------------------------------------
+
+
+test.garchFit.ged = 
+function()
+{  
+    # Conditional Densities:
+    #   "dnorm", "dsnorm", "dged", "dsged", "dstd", "dsstd"
+    
+    # RVs:
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")    
+    
+    # GED-GARCH(1, 1)
+    model = list(omega = 1e-06, alpha = 0.1, beta = 0.8, shape = 2)
+    x = garchSim(model, 1000, cond.dist = "rged")
+    fit = garchFit(~garch(1,1), data = x, include.shape = TRUE, 
+        cond.dist = "dged")
+    fit@fit$coef
+    
+    
+    # RVs:
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")    
+    
+    # Skewed GED-GARCH(1, 1)
+    model = list(omega = 1e-05, alpha = 0.1, beta = 0.8, shape = 4, skew = 0.9)
+    x = garchSim(model, 1000, cond.dist = "rsged")
+    fit = garchFit(~garch(1,1), data = x, include.shape = TRUE, 
+        include.skew = TRUE, cond.dist = "dsged")
+    fit@fit$coef
+    
+    # Return Value:
+    return()    
+} 
+
+
+# ------------------------------------------------------------------------------
+
+
+test.garchFit.student = 
+function()
+{  
+    # Conditional Densities:
+    #   "dnorm", "dsnorm", "dged", "dsged", "dstd", "dsstd"
+    
+    # Algorithms:
+    #   "sqp", "nlminb", "lbfgsb", "nlminb+nm", "lbfgsb+nm"
+    
+    # RVs:
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")    
+    
+    # Student t-GARCH(1, 1)
+    model = list(omega = 1e-06, alpha = 0.1, beta = 0.8, shape = 4)
+    x = garchSim(model, 1000, cond.dist = "rstd")
+    fit = garchFit(~garch(1,1), data = x, include.shape = TRUE, 
+        cond.dist = "dstd")
+    fit@fit$coef 
+    
+    # RVs:
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")    
+    
+    # Skewed Student t-GARCH(1, 1)
+    model = list(omega = 1e-06, alpha = 0.1, beta = 0.8, shape = 4, skew = 0.9)
+    x = garchSim(model, 1000, cond.dist = "rsstd")
+    fit = garchFit(~garch(1,1), data = x, include.shape = TRUE, 
+        include.skew = TRUE, cond.dist = "dsstd")
+    fit@fit$coef
     
     # Return Value:
     return()    
@@ -155,15 +311,12 @@ function()
 test.garchFit.algorithms = 
 function()
 {  
-    # Load Data:
-    data(dem2gbp)  
-    # Data Frame to Numeric Vector:
-    x = dem2gbp[, 1]
-    print(head(x))
-    print(class(x))
     
-    # "dnorm", "dsnorm", "dged", "dsged", "dstd", "dsstd"
-    # "sqp", "nlminb", "lbfgsb", "nlminb+nm", "lbfgsb+nm"
+    # Conditional Densities:
+    #   "dnorm", "dsnorm", "dged", "dsged", "dstd", "dsstd"
+    
+    # Algorithms:
+    #   "sqp", "nlminb", "lbfgsb", "nlminb+nm", "lbfgsb+nm"
            
     # Modify Start Values - mci default:
     fit = garchFit( ~ garch(1,1), data = x, cond.dist = "dnorm", 
@@ -207,7 +360,6 @@ function()
     # Return Value:
     return()    
 } 
-
 
 
 ################################################################################

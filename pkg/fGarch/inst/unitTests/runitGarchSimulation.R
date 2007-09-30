@@ -33,14 +33,16 @@
 ################################################################################
 
 
-test.garchSim = 
+test.garchSim.arch = 
 function()
 {   
-    # ARCH(1)
+    # Simulation of ARCH Models:
+    
+    # ARCH(1) - default omega and alpha
     spec = garchSpec(model = list())
     print(garchSim(n = 10, model = spec))
     
-    # ARCH(1)
+    # ARCH(1) - default omega
     spec = garchSpec(model = list(alpha = 0.1))
     print(garchSim(n = 10, model = spec))
     
@@ -48,22 +50,61 @@ function()
     spec = garchSpec(model = list(omega = 1e-6, alpha = 0.1))
     print(garchSim(n = 10, model = spec))
     
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.garchSim.arma.arch = 
+function()
+{  
+    # Simulation of ARMA-ARCH Models:
+    
     # AR(1)-ARCH(1)
     spec = garchSpec(model = list(ar = 0.5)) 
     print(garchSim(n = 10, model = spec))
     
     # AR([1,5])-ARCH(1)
-    spec = garchSpec(model = list(ar = c(0.5,0,0,0,0.1)))
+    spec = garchSpec(model = list(ar = c(0.5, 0, 0, 0 ,0.1)))
     print(garchSim(n = 10, model = spec))
     
     # ARMA(1,2)-ARCH(1)
     spec = garchSpec(model = list(ar = 0.5, ma = c(0.3,-0.3)))
     print(garchSim(n = 10, model = spec))
     
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.garchSim.dist.arch = 
+function()
+{     
+    # Simulation of non-normal ARCH Models:
+    
     # rsnorn-ARCH(2)
     spec = garchSpec(model = list(alpha = c(0.12, 0.04), dist = 2/3), 
         cond.dist = "rsnorm")
     print(garchSim(n = 10, model = spec))
+    
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.garchSim.garch = 
+function()
+{    
+    # Simulation of GARCH Models:
     
     # GARCH(1,1)
     spec = garchSpec()
@@ -85,28 +126,55 @@ function()
     spec = garchSpec(model = list(alpha = c(0.12, 0.04), beta = 0.08))
     print(garchSim(n = 10, model = spec))
     
-    # r[s]norm-GARCH(1,1)   
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.garchSim.dist.garch = 
+function()
+{     
+    # Simulation of non-normal GARCH Models:    
+    
+    # Normal - GARCH(1,1)   
     spec = garchSpec(model = list(), cond.dist = "rnorm")
     print(garchSim(n = 10, model = spec))
     
+    # Skewed Normal - GARCH(1,1)
     spec = garchSpec(model = list(parm = 2), cond.dist = "rsnorm")
     print(garchSim(n = 10, model = spec))
     
-    # r[s]ged-GARCH(1,1)
+    # GED - GARCH(1,1)
     spec = garchSpec(model = list(parm = 4), cond.dist = "rged")
     print(garchSim(n = 10, model = spec))
     
+    # Skewed GED - GARCH(1,1)
     spec = garchSpec(model = list(parm = c(4, 2)), cond.dist = "rsged")
     print(garchSim(n = 10, model = spec))
     
-    # r[s]std-GARCH(1,1)
+    # Normalized Student t - GARCH(1,1)
     spec = garchSpec(model = list(parm = 4), cond.dist = "rstd")
     print(garchSim(n = 10, model = spec))
     
+    # Skewed Normalized Student t - GARCH(1,1)
     spec = garchSpec(model = list(parm = c(4, 2)), cond.dist = "rsstd")
     print(garchSim(n = 10, model = spec))
-    
-    # TS-GARCH(1,1)
+ 
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.garchSim.aparch = 
+function()
+{         
+    # Taylor Schwert Normal GARCH(1,1)
     spec = garchSpec(list(alpha = 0.1, delta = 1))
     print(garchSim(n = 10, model = spec))
     

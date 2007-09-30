@@ -497,7 +497,7 @@ algorithm, control, trace)
         include.mean = include.mean)$coef
     alpha.start = 0.1
     beta.start = 0.8  
-    # if(include.delta) delta = 1.5      
+    ## if(include.delta) delta = 1.5        
     params = c(
         if(include.mean) fit.mean[length(fit.mean)] else 0, 
         if(u > 0) fit.mean[1:u], 
@@ -1034,12 +1034,13 @@ function(trace)
         parscale = rep(1, length = length(INDEX))
         names(parscale) = names(.params$params[INDEX])
         parscale["omega"] = var(.series$x)^(.params$delta/2)
+        parscale["mu"] = abs(mean(.series$x))
         fit = nlminb(
             start = .params$params[INDEX],
             objective = .garchLLH, 
             lower = .params$U[INDEX],
             upper = .params$V[INDEX],
-            scale = parscale,
+            scale = 1/parscale,
             control = list(eval.max = 2000, iter.max = 1500, 
                 rel.tol = 1e-14*TOL1, x.tol = 1e-14*TOL1),
             trace = trace)
