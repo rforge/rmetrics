@@ -53,7 +53,6 @@ function(x, alpha = 0.05, type = "sample", tail = c("lower", "upper"))
     # FUNCTION:
     
     # Settings:
-    quantile.matrix = quantile.timeSeries
     x = as.matrix(x)
     tail = match.arg(tail)
     

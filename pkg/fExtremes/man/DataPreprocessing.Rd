@@ -187,7 +187,7 @@ Embrechts, P., Klueppelberg, C., Mikosch, T. (1997);
 ## deCluster -
    # Decluster the 200 exceedances of a particular  
    # threshold in the negative BMW log-return data
-   PP = pointProcess(x = -BMW, u = quantile(x, 0.75))
+   PP = pointProcess(x = -BMW, u = quantile(as.vector(x), 0.75))
    PP
    dim(PP)
    DC = deCluster(x = PP, run = 15, doplot = TRUE) 
