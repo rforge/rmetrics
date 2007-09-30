@@ -344,6 +344,9 @@ function(type = c("persp", "contour"), B = 10)
     
     # FUNCTION:
     
+    # Match Arguments:
+    type = match(type)
+    
     # Plot:
     if (type[1] == "persp")
         .parchmPerspSlider(B = B)
@@ -974,6 +977,9 @@ function(type = c("persp", "contour"), B = 10)
     #       value is infinite. By default this is set to 10.
     
     # FUNCTION:
+    
+    # Match Arguments:
+    type = match(type)
     
     # Plot:
     if (type == "persp")
