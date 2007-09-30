@@ -50,7 +50,7 @@
 #  assetsCorEigenPlot          Displays ratio of the largest two eigenvalues
 #  assetsTreePlot              Displays minimum spanning tree of assets
 #  assetsDendrogramPlot        Displays hierarchical clustering dendrogram
-#  assetsCorrelationImage
+#  assetsCorrelationImage      Displays an image plot of a correlations
 # FUNCTION:                   SPECIAL SEGMENT PLOTS:
 #  assetsStarsPlot             Draws segment/star diagrams of data sets
 #  assetsBoxStatsPlot          Displays a segment plot of box plot statistics
@@ -971,7 +971,6 @@ assetsCorrelationImage <-
 function(R,
 show = c("cor", "test"),
 use = c("pearson", "kendall", "spearman"),
-method = c("cor", "robust", "shrink"),
 labels = TRUE, abbreviate = 3, ...)
 {   # @author Sandrine Dudoit, sandrine@stat.berkeley.edu, from "SMA" library
     # @author modified by Peter Carl
@@ -1016,7 +1015,9 @@ labels = TRUE, abbreviate = 3, ...)
                 for (j in 1:n)
                     test[i,j] = cor.test(R[,i], R[,j], method = use)$p.value
         }
-    } else {
+    } else if (method == "robust") {
+        stop("robust: Not Yet Implemented")  
+    } else if (method == "shrink") {
         stop("robust: Not Yet Implemented")  
     }
     
