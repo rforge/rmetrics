@@ -1,9 +1,12 @@
 \name{PerformanceAnalyticsData}
 
+
 \alias{PerformanceAnalyticsData}
+
 
 \alias{edhec}
 \alias{managers}
+
 
 \title{Performance Analytics Data Sets} 
 
@@ -22,7 +25,9 @@
    
 }
 
+
 \details{
+
 
     \bold{EDHEC composite hedge fund style index returns:}
     
@@ -81,10 +86,6 @@ Vaissie Mathieu (2003);
     \emph{A Detailed Analysis of the Construction Methods and Management 
         Principles of Hedge Fund Indices},
     \url{http://www.edhec-risk.com/site_edhecrisk/public/indexes/EDHEC_Publications/RISKReview1072705188065793513}.
-}
-
-
-
 }
 
 
