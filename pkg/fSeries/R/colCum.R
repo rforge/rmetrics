@@ -126,16 +126,15 @@ function(x, na.rm = FALSE, ...)
     # FUNCTION:
 
     # Cumulative Sums:
-    x = colCumsums(as.matrix(x, ...))
+    X = colCumsums(as.matrix(x, ...))
 
     # Time Series Input ?
     if (class(x) == "timeSeries") {
-        x@Data = result
-        result = x
+        x@Data = X
     }
 
     # Return Value:
-    result
+    x
 }
 
 
