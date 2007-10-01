@@ -37,6 +37,7 @@
 #  sign.timeSeries           Returns the signs of a 'timeSeries' object
 #  diff.timeSeries           Differences a 'timeSeries' object
 #  scale.timeSeries          Centers and/or scales a 'timeSeries' object
+#  quantile.timeSeries       Returns quantiles of an univariate 'timeSeries'
 ################################################################################
 
 
@@ -305,6 +306,8 @@ function(x, center = TRUE, scale = TRUE)
     # Description:
     #   Centers and/or scales a 'timeSeries' object.
 
+    # Arguments:
+    
     # FUNCTION:
     
     # Scale:
@@ -312,6 +315,31 @@ function(x, center = TRUE, scale = TRUE)
     
     # Return Value:
     x
+} 
+
+
+# ------------------------------------------------------------------------------
+
+
+quantile.timeSeries =      
+function(x, ...)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Returns quantiles of an univariate 'timeSeries  
+    
+    # Arguments:
+    
+    # FUNCTION:
+    
+    # Check:
+    stopifnot(NCOL(x) == 1)
+    
+    # Quantiles:
+    ans = quantile(x = as.vector(x), ...)
+    
+    # Return Value:
+    ans
 }    
 
 

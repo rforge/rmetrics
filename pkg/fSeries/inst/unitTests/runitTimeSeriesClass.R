@@ -433,35 +433,44 @@ function()
 test.modelSeries =
 function()
 {
-    # Undocumented Material:
-    
-    Matrix = cbind(X = rnorm(10), Y = rnorm(10))
-    Matrix = cbind(Matrix, Z = Matrix[, "Y"] - Matrix[, "X"])
-    TS = dummyDailySeries(Matrix, units = c("X", "Y", "Z") )
-    head(TS)
-            
-    .modelSeries(Y ~ ar(2), data = TS, lhs = TRUE)  
-    .modelSeries(log(abs(Z)) ~ lm(X + sin(Y)), data = TS, fake = TRUE)
-    .modelSeries(log(abs(Z)) ~ lm(X + sin(Y)), data = TS, lhs = TRUE)
-    
-    .modelSeries(Y ~ ar(2), data = as.data.frame(TS), lhs = TRUE)  
-    .modelSeries(log(abs(Z)) ~ lm(X + sin(Y)), data = TS, fake = TRUE)
-    .modelSeries(log(abs(Z)) ~ lm(X + sin(Y)), data = TS, lhs = TRUE)
-    
-    require(fSeries)
-    .modelSeries(Y ~ ar(2), data = rnorm(10)) 
-    .modelSeries(Y ~ ar(2), data = as.ts(rnorm(10))) 
-    .modelSeries(x ~ arima(2, 0, 1), data = armaSim(n=10))
-    
-    .modelSeries(~ ar(2), rnorm(10))
-    
-    # attach(TS)                                    # CHECK
-    # .modelSeries(Y ~ ar(2), lhs = TRUE) 
-    
-    .modelSeries(Y ~ ar(2) + garch(1,1), data = rnorm(10))
-    .modelSeries(Y ~ ar(2) + garch(1,1), data = rnorm(10), lhs = TRUE)
-    .modelSeries(Y ~ ar(2) + garch(1,1), data = TS, lhs = TRUE)
-    
+    if (FALSE) {   
+        
+        # Move to fArma ...
+        
+        # Undocumented Material:
+        Matrix = cbind(X = rnorm(10), Y = rnorm(10))
+        Matrix = cbind(Matrix, Z = Matrix[, "Y"] - Matrix[, "X"])
+        TS = dummyDailySeries(Matrix, units = c("X", "Y", "Z") )
+        head(TS)
+                
+        .modelSeries(Y ~ ar(2), data = TS, lhs = TRUE)  
+        .modelSeries(log(abs(Z)) ~ lm(X + sin(Y)), data = TS, fake = TRUE)
+        .modelSeries(log(abs(Z)) ~ lm(X + sin(Y)), data = TS, lhs = TRUE)
+        
+        .modelSeries(Y ~ ar(2), data = as.data.frame(TS), lhs = TRUE)  
+        .modelSeries(log(abs(Z)) ~ lm(X + sin(Y)), data = TS, fake = TRUE)
+        .modelSeries(log(abs(Z)) ~ lm(X + sin(Y)), data = TS, lhs = TRUE)
+        
+        require(fSeries)
+        .modelSeries(Y ~ ar(2), data = rnorm(10)) 
+        .modelSeries(Y ~ ar(2), data = as.ts(rnorm(10))) 
+        .modelSeries(x ~ arima(2, 0, 1), data = armaSim(n=10))
+        
+        .modelSeries(~ ar(2), rnorm(10))
+        
+        # attach(TS)                                    # CHECK
+        # .modelSeries(Y ~ ar(2), lhs = TRUE) 
+        
+        .modelSeries(Y ~ ar(2) + garch(1,1), data = rnorm(10))
+        .modelSeries(Y ~ ar(2) + garch(1,1), data = rnorm(10), lhs = TRUE)
+        .modelSeries(Y ~ ar(2) + garch(1,1), data = TS, lhs = TRUE)
+        
+    } else {
+        
+        NA
+        
+    }
+        
     # Return Value:
     return()  
 }

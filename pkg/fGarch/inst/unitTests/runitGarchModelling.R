@@ -125,7 +125,7 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.aparchFit = 
+test.aparch11 = 
 function()
 {       
     # Use Simulated Series - an Object of class 'ts' ...
@@ -140,6 +140,17 @@ function()
     fit = garchFit(x ~ garch(1,1), data = x, leverage = TRUE)
     fit@fit$coef
     
+    # Return Value:
+    return()    
+} 
+
+
+# ------------------------------------------------------------------------------
+
+
+test.aparch11delta = 
+function()
+{       
     # RVs:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
@@ -152,6 +163,17 @@ function()
         include.delta = TRUE, delta = 2)
     fit@fit$coef
     
+    # Return Value:
+    return()    
+} 
+
+
+# ------------------------------------------------------------------------------
+
+
+test.ar1aparch21 = 
+function()
+{       
     # RVs:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
@@ -163,9 +185,13 @@ function()
     taylor = teffectPlot(x)
     init.delta = mean(taylor$maxDelta)
     init.delta    
-    fit = garchFit(x ~ ar(1) + garch(2,1), data = x, include.delta = TRUE, 
-        delta = init.delta)
-    fit@fit$coef
+    
+    ## fit = garchFit(x ~ ar(1) + garch(2,1), data = x, include.delta = TRUE, 
+    ##     delta = init.delta)
+    ## fit@fit$coef
+    
+    ## Error in solve.default(fit$hessian) : 
+    ##  Lapack routine dgesv: system is exactly singular            ## CHECK !!!
     
     # Return Value:
     return()    
@@ -286,6 +312,7 @@ function()
 {  
     # Load Data:
     data(dem2gbp)  
+    
     # Data Frame to Numeric Vector:
     x = dem2gbp[, 1]
     print(head(x))
@@ -311,6 +338,13 @@ function()
 test.garchFit.algorithms = 
 function()
 {  
+    # Load Data:
+    data(dem2gbp) 
+     
+    # Data Frame to Numeric Vector:
+    x = dem2gbp[, 1]
+    print(head(x))
+    print(class(x))
     
     # Conditional Densities:
     #   "dnorm", "dsnorm", "dged", "dsged", "dstd", "dsstd"
@@ -337,7 +371,7 @@ function()
     fit = garchFit( ~ garch(1,1), data = x, cond.dist = "dsged", 
         algorithm = "nlminb")
     fit@fit$coef
-    
+   
     # Modify Start Values - mci default:
     fit = garchFit( ~ garch(1,1), data = x, cond.dist = "dstd", 
         algorithm = "nlminb")

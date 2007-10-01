@@ -13,6 +13,8 @@
 
 \alias{diff.timeSeries}
 \alias{scale.timeSeries}
+
+\alias{quantile.timeSeries}
   
 
 \title{Mathematical timeSeries Operations}
@@ -31,7 +33,10 @@
     \code{sqrt} \tab Returns square root of a 'timeSeries' object, \cr
     \code{exp} \tab Returns the exponential values of a 'timeSeries' object, \cr
     \code{log} \tab Returns the logarithm of  a 'timeSeries' object, \cr
-    \code{sign} \tab returns the signs of a 'timeSeries' object. }
+    \code{sign} \tab Returns the signs of a 'timeSeries' object, \cr
+    \code{diff} \tab Differences a 'timeSeries' object, \cr 
+    \code{scale} \tab Centers and/or scales a 'timeSeries' object, \cr
+    \code{quantile} \tab Returns quantiles of an univariate 'timeSeries'. }
     
 }
 
@@ -45,6 +50,7 @@
 \method{sign}{timeSeries}(x)
 \method{diff}{timeSeries}(x, lag = 1, diff = 1, trim = FALSE, pad = NA, \dots)
 \method{scale}{timeSeries}(x, center = TRUE, scale = TRUE)
+\method{quantile}{timeSeries}(x, \dots)
 }
 
 

@@ -82,7 +82,7 @@ interp = c("before", "linear", "after"), ...)
 
 
 .naOmitMatrix =
-function(object, method = c("r", "z", "ir", "iz", "ie"), 
+function(object, method = c("r", "s", "z", "ir", "iz", "ie"), 
 interp = c("before", "linear", "after"))
 {
     # Internal Function called from na.omit.timSeries()
