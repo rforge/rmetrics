@@ -50,7 +50,7 @@ function(x, ...)
     # FUNCTION:
     
     # Order:
-    order(colnames(as.matrix(x)), ...)
+    ans = order(colnames(as.matrix(x)), ...)
     
     # Return Value:
     ans
