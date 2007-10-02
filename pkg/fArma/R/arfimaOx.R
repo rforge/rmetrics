@@ -43,7 +43,7 @@
 #  * coefficients.fARMA    S3: Synonyme for coef.fARMA
 #  * fitted.fARMA          S3: Returns fitted values from a fitted ARMA object
 #  * residuals.fARMA       S3: Returns residuals from a fitted ARMA object
-#  *                      Asterisked Functions are in ArmaModelling.R
+#  *                      Asterisked Functions are in arma*.R
 ################################################################################
 
 
