@@ -1,5 +1,3 @@
-
-
 /*  
 
     Blake LeBaron
@@ -24,9 +22,8 @@
 
 #include <stdio.h>
 #include <math.h>
-/*
 #include <R.h>
-*/
+
       
 /* NBITS is the number of useable bits per word entry.  Technically
    on the sun this should be 32, as the sun uses 4 byte integers.
@@ -40,6 +37,7 @@
 #define PREC    double  
 #define TABLEN 32767
 
+static int BDS_DEBUG;
 
 /* ----------- grid macro: turn bits on --------------------------- */
 
@@ -58,7 +56,7 @@
         ibit = NBITS - 1 - (iy % NBITS); \
         *(*(start+ix)+ipos) |= bits[ibit];\
     }
- 
+
 /* define struct */
 
 struct position {
@@ -82,17 +80,15 @@ static  struct position *postab,*postlast;
     free all memory allocations
 */
 
-
 static void
 freeall()
 {
-    free(grid);
-    free(mask);
-    free(postab);
-    free(start);
-    free(lookup);
+    Free(grid);
+    Free(mask);
+    Free(postab);
+    Free(start);
+    Free(lookup);
 }
-
 
 /* module function definitions */
 
@@ -172,10 +168,8 @@ int n;
 
             for (i = *(start+j);i< *(start+j+1)-2;i++) {
                 count += lookup[*i];
-                /*
                 if(lookup[*i]>15)
                     Rprintf("%d %d %d\n", (int)(i-grid),*i,lookup[*i]);
-                */
             }
             for(i = *(start+j+1)-2;i< *(start+j+1);i++) {
                 count += lookup[ (*i) & mask[j*2+ *(start+j+1)-i-1]];
@@ -187,6 +181,8 @@ int n;
             }
         }
     }
+    if(BDS_DEBUG)
+        Rprintf("count = %ld\n",count);
 
     return ( 2*((double)count)/ (nd*(nd-1)));
 }
@@ -290,35 +286,30 @@ double *k,c[];
 
     /* allocate memory */
     if(first ) {
-        /* mask = Calloc(2*n,int); */
-        mask = (int *)calloc(2*n,sizeof(int));
-        
-        /* lookup = Calloc(TABLEN+1,int); */
-        lookup = (int *)calloc(TABLEN+1,sizeof(int));
+        mask = Calloc(2*n,int);
+        lookup = Calloc(TABLEN+1,int);
 
-        /* postab = Calloc(n,struct position); */
-        postab = (struct position *)calloc(n,sizeof(struct position));
 
+        if(BDS_DEBUG)
+            Rprintf("set up grid\n");
+        postab = Calloc(n,struct position);
 
         /* build start : grid pointers */
-        /*start = Calloc(n+1,short int *);*/
-        start = (short int **)calloc(n+1,sizeof(short int *));
-        
+        if(BDS_DEBUG)
+            Rprintf("build start\n");
+        start = Calloc(n+1,short int *);
         /* find out how big grid has to be */
         memsize = 0;
         for(i=0;i<=n;i++) 
             memsize += (n-i)/NBITS + 1;
 
         /* grid is defined as short (2 byte integers) */
-        /* grid =  Calloc(memsize,short); */
-        grid =  (short int *)calloc(memsize,sizeof(short));
-        
-    
+        grid =  Calloc(memsize,short);
         if(grid==NULL) {
-            /* error("Out of memory\n"); */
-            exit(-1);
+            error("Out of memory\n");
+            /*exit(-1);*/
         }
-    
+
 
         start[0] = grid;
         for(i=1;i<=n;i++) 
@@ -330,7 +321,8 @@ double *k,c[];
             bits[i] = (bits[i-1] << 1);
 
         /* table for bit countining */
-
+        if(BDS_DEBUG)
+            Rprintf("build lookup\n");
         for(i=0;i<=TABLEN;i++){
             *(lookup+i) = 0;
             for(j=0;j<NBITS;j++)
@@ -345,6 +337,8 @@ double *k,c[];
         *ip = 0;
 
 
+    if(BDS_DEBUG)
+        Rprintf("build pos tab\n");
 
     /* perform thieler sort */
     for(i=0;i<n;i++){
@@ -352,13 +346,16 @@ double *k,c[];
         (postab+i)->pos   = i;
     }
 
+    if(BDS_DEBUG)
+        Rprintf("sort\n");
 
     qsort((char *)postab,n,sizeof(struct position),comp);
     postlast = postab+n-1;
 
     /* start row by row construction */
     /* use theiler method */
-
+    if(BDS_DEBUG)
+        Rprintf("set grid\n");
 
     count = 0;
     phi   = 0;
@@ -396,7 +393,8 @@ double *k,c[];
     /* adjust k and c to u statistic */
     count = count - nobs;
     phi   = phi - nobs - 3*count;
-
+    if(BDS_DEBUG)
+        Rprintf("%ld %f\n",count,phi);
     *k    = ((double)phi)/(dlength*(dlength-1)*(dlength-2));
     c[1]  = ((double)count)/(dlength*(dlength-1));
 
@@ -541,12 +539,20 @@ void bdstest_main (int *N, int *M, double *x, double *c, double *cstan, double *
     n = (*N);  
     m = (*M);
     eps = (*EPS);
+    BDS_DEBUG = (*TRACE);
     
     /* calculate raw c and k statistics : This is the hard part */
     fkc(x,n,&k,c,m,m-1,eps);
 
+    if(BDS_DEBUG) {
+        Rprintf("k = %f\n",k);
+        for(i=1;i<=m;i++) {
+            Rprintf("c(%d) %f\n",i,c[i]);
+        }
+    }
+
     /* calculate normalized stats:  This is the easy part */
-    for(i=2; i<=m;i++) { 
+    for(i=2;i<=m;i++) { 
         cstan[i] = cstat(c[1],c[i],k,i,n-m+1);
     }
     

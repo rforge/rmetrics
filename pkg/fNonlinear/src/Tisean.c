@@ -3,11 +3,13 @@
 #ifndef tseriesChaos_h
 #define tseriesChaos_h
 
+
 #include <math.h>
-/* #include <R.h> */
+#include <R.h>
 #define sqr(a) (a)*(a)
 #define MIN(a,b) (a)<(b) ? (a) : (b)
 #define MAX(a,b) (a)>(b) ? (a) : (b)
+
 
 #endif
 
@@ -47,7 +49,22 @@ void C2(double *in_series, int *in_m, int *in_d, int *in_length,
 /* -------------------------------------------------------------------------- */
 
 
-#define output(i,j) out[(j)+(i)*neps]
+/*
+Sample correlation integral for multiple length scales and multiple 
+    embedding dimensions.
+    
+in_series:          input time series
+in_length:          time series length
+in_m, in_d, in_t:   max embedding dimension, time delay and theiler window
+in_neps:            number of length scales to evaluate
+in_epsM:            max length scale
+in_epsm:            min length scale
+out:                matrix of results
+*/
+
+
+#define output1(i,j) out[(j)+(i)*neps]
+
 
 void d2(double *in_series, int *in_length, int *in_m, int *in_d, int *in_t, 
     int *in_neps, double *in_epsM, double *in_epsm, double *out)
@@ -73,7 +90,7 @@ void d2(double *in_series, int *in_length, int *in_m, int *in_d, int *in_t,
     for(i=0; i<m; i++) {
         hist[i] = (double*) R_alloc(neps, sizeof(double));
         for(j = 0; j<neps; j++)
-            output(i,j) = hist[i][j] = 0.0;
+            output1(i,j) = hist[i][j] = 0.0;
     }
 
     for(i = 0; i<(blength-t); i++) {
@@ -89,7 +106,7 @@ void d2(double *in_series, int *in_length, int *in_m, int *in_d, int *in_t,
 
     for(i=0; i<m; i++)
         for(j = 0; j<neps; j++)
-            output(i,j) = hist[i][j];
+            output1(i,j) = hist[i][j];
 }
 
 
@@ -97,7 +114,7 @@ void d2(double *in_series, int *in_length, int *in_m, int *in_d, int *in_t,
 
 
 void falseNearest(double *in_series, int *in_length, int *in_m, int *in_d, 
-    int *in_t, double *in_eps, double *in_rt, double *out, int *out2) 
+int *in_t, double *in_eps, double *in_rt, double *out, int *out2) 
 {
 
 double eps, *series; 
@@ -146,7 +163,8 @@ BIND PARAMETERS
 /* -------------------------------------------------------------------------- */
 
 
-#define output(a,b) out[(b)*ref + (a)]
+#define output2(a,b) out[(b)*ref + (a)]
+
 
 void find_nearest(double *in_series, int *in_m, int *in_d, int *in_t,
     int *in_length, double *in_eps, int *in_ref, int *in_k, int *in_s, 
@@ -178,7 +196,7 @@ BIND PARAMETERS
     md = m*d;
     for(i = 0; i<ref; i++) 
         for(j=0; j<k; j++) 
-            output(i,j) = -1;
+            output2(i,j) = -1;
     dsts = (double*) R_alloc(blength, sizeof(double));
     ids = (int*) R_alloc(blength, sizeof(int));
     eps = sqr(eps);
@@ -196,7 +214,7 @@ BIND PARAMETERS
         }
         R_qsort_I(dsts, ids, 1, id);
         for(j=0; (j<k) && (j<id); j++)
-            output(i, j) = ids[j]+1;
+            output2(i, j) = ids[j]+1;
     }
 }
 
@@ -205,8 +223,8 @@ BIND PARAMETERS
 
 
 void follow_points(double *in_series, int *in_m, int *in_d, 
-    int *in_length, int *in_nref, int *in_totref, int *in_k, 
-    int *in_s, int *in_nearest, int *in_ref, double *lyap)
+int *in_length, int *in_nref, int *in_totref, int *in_k, 
+int *in_s, int *in_nearest, int *in_ref, double *lyap)
 {
 
 double *series; 
@@ -257,7 +275,7 @@ BIND PARAMETERS
 /* -------------------------------------------------------------------------- */
 
 
-#define output(i, j) out_hist[(i)*partitions + (j)]
+#define output3(i, j) out_hist[(i)*partitions + (j)]
 
 void mutual(double *in_series, int *in_length, int *in_lag, 
 int *in_partitions, double *out_hist) {
@@ -272,13 +290,13 @@ int *in_partitions, double *out_hist) {
 
     for(i =0; i<partitions; i++) 
         for(j=0; j<partitions; j++)
-            output(i, j) = 0.0;
+            output3(i, j) = 0.0;
 
     for(ix = 0; ix < (length-lag); ix++) {
         iy = ix + lag;
         binx = MIN((int)(series[ix]*partitions),partitions-1);
         biny = MIN((int)(series[iy]*partitions),partitions-1);
-        output(binx, biny) ++;
+        output3(binx, biny) ++;
     }
 }
 
@@ -288,6 +306,7 @@ int *in_partitions, double *out_hist) {
 
 #define MEPS 1000
 #define MFRAC 10
+
 
 void stplot(double *in_series, int *in_length, int *in_m, int *in_d, 
     int *in_steps, int *in_idt, double *in_epsmax, double *out) 
