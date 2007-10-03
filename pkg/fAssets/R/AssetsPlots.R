@@ -967,7 +967,7 @@ function(x, method = c(dist = "euclidian", clust = "complete"))
 # ------------------------------------------------------------------------------
 
    
-assetsCorrelationImage <-
+.assetsCorrelationImage <-
 function(R,
 show = c("cor", "test"),
 use = c("pearson", "kendall", "spearman"),
