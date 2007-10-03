@@ -121,33 +121,38 @@ function()
 test.solverRDonlp2 =
 function()
 { 
-    # Load Data:   
-    data = as.timeSeries(data(smallcap.ts))
-    data = data[, c("BKE", "GG", "GYMB", "KRON")]
-    head(data)
+    if FALSE) {
+        
+        # Load Data:   
+        data = as.timeSeries(data(smallcap.ts))
+        data = data[, c("BKE", "GG", "GYMB", "KRON")]
+        head(data)
+        
+        # Specification:
+        spec = portfolioSpec()
+        setSolver(spec) = "Rdonlp2"
+        spec
+        
+        # Long Only Constraints:
+        constraints = NULL
+        constraints
+        
+        # Donlp2:
+        setTargetReturn(spec) = mean(as.matrix(data))
+        ans = solveRDonlp2(data, spec, constraints) 
+        ans
+        
+        # Check Termination Error:
+        setTargetReturn(spec) = mean(as.matrix(10*data))
+        ans10 = solveRDonlp2(10*data, spec, constraints)
+        ans10
+        
+        # Compare:
+        ans$weights
+        ans10$weights
+        
+    }
     
-    # Specification:
-    spec = portfolioSpec()
-    setSolver(spec) = "Rdonlp2"
-    spec
-    
-    # Long Only Constraints:
-    constraints = NULL
-    constraints
-    
-    # Donlp2:
-    setTargetReturn(spec) = mean(as.matrix(data))
-    ans = solveRDonlp2(data, spec, constraints) 
-    ans
-    
-    # Check Termination Error:
-    setTargetReturn(spec) = mean(as.matrix(10*data))
-    ans10 = solveRDonlp2(10*data, spec, constraints)
-    ans10
-    
-    # Compare:
-    ans$weights
-    ans10$weights
     # Return Value:
     return()
 }
@@ -159,28 +164,32 @@ function()
 test.solverRDonlp2.budgetConsatraints =
 function()
 {     
-    # Load Data:   
-    data = as.timeSeries(data(smallcap.ts))
-    data = data[, c("BKE", "GG", "GYMB", "KRON")]
-    head(data)
-    
-    # Specification:
-    spec = portfolioSpec()
-    setSolver(spec) = "Rdonlp2"
-    setTargetReturn(spec) = mean(as.matrix(data))
-    spec
-    
-    # Add Budget Constraints:
-    constraints = c("minW[1:4]=0", "maxB[1:4]=1")
-    constraints
-    ans = solveRDonlp2(data, spec, constraints)
-    ans$weights
-    
-    # Scaled Donlp2 - Add Budget Constraints:
-    constraints = c("minW[1:4]=0", "maxB[1:4]=0.3")
-    constraints
-    ans = solveRDonlp2(data, spec, constraints)
-    ans$weights
+    if (FALSE) {
+        
+        # Load Data:   
+        data = as.timeSeries(data(smallcap.ts))
+        data = data[, c("BKE", "GG", "GYMB", "KRON")]
+        head(data)
+        
+        # Specification:
+        spec = portfolioSpec()
+        setSolver(spec) = "Rdonlp2"
+        setTargetReturn(spec) = mean(as.matrix(data))
+        spec
+        
+        # Add Budget Constraints:
+        constraints = c("minW[1:4]=0", "maxB[1:4]=1")
+        constraints
+        ans = solveRDonlp2(data, spec, constraints)
+        ans$weights
+        
+        # Scaled Donlp2 - Add Budget Constraints:
+        constraints = c("minW[1:4]=0", "maxB[1:4]=0.3")
+        constraints
+        ans = solveRDonlp2(data, spec, constraints)
+        ans$weights
+        
+    }
     
     # Return Value:
     return()

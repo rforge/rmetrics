@@ -22,7 +22,7 @@ rdonlp2(par, fn,
     lin.upper = rep(+Inf, length(par)), lin.lower = rep(-Inf, length(par)),
     nlin = list(), 
     nlin.upper = rep(+Inf, length(nlin)), nlin.lower = rep(-Inf, length(nlin)),
-    control = donlp2.control(), control.fun = function(lst){return(TRUE)},
+    control = rdonlp2Control(), control.fun = function(lst){return(TRUE)},
     env = .GlobalEnv, name = NULL)
 }
 
@@ -73,15 +73,15 @@ rdonlp2(par, fn,
     
     \item{control}{
         "control parameters" that defines the behavior of
-        Rdonlp2. See \code{\link{donlp2.control}} for details.
+        Rdonlp2. See \code{\link{rdonlp2Control}} for details.
         }
     
     \item{control.fun}{
-        \code{donlp2()} reports a group of optimization
+        \code{rdonlp2()} reports a group of optimization
         parameters in every iteration(see below for details). This (read-only)
         information can be available within \code{control.fun()}, in which user
         can decide whether the optimization should be iterrupted. Set its
-        return value to \code{FALSE} to interrupt \code{donlp2()}.
+        return value to \code{FALSE} to interrupt \code{rdonlp2()}.
         }
     
     \item{env}{
@@ -95,7 +95,7 @@ rdonlp2(par, fn,
         DONLP2 creates 2 files(\code{name}.pro and \code{name}.mes) in
         current working directory which contain detailed information during
         the optimization. The amount of information depends
-        \code{te0,te1,te2,te3} specified in \code{\link{donlp2.control}}.
+        \code{te0,te1,te2,te3} specified in \code{\link{rdonlp2Control}}.
         }
     
 }
@@ -240,7 +240,7 @@ rdonlp2(par, fn,
         }
     \item{hessian}{
         numeric Hessian matrix if \code{hessian=TRUE} in 
-        \code{\link{donlp2.control}}.
+        \code{\link{rdonlp2Control}}.
         }
     \item{runtime}{
         the elapsed time for the optimization.

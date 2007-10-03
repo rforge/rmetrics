@@ -124,24 +124,28 @@ function()
     # Arguments:
     # feasiblePortfolio(data, spec = portfolioSpec(), constraints = NULL)
     
-    # Get Data:
-    data = as.timeSeries(data(smallcap.ts))
-    data = data[, c("BKE", "GG", "GYMB", "KRON")]
-    head(data)
-   
-    # Set Default Specifications - Long Only MV Portfolio
-    spec = portfolioSpec()
-    setWeights(spec) = rep(1/4, times = 4)
-    setSolver(spec)<-"Rdonlp2"
-    spec
-    
-    # Constraints:
-    constraints = NULL
-    constraints
-    
-    # Optimize Long Only Minimum Variance Portfolio:
-    Portfolio = feasiblePortfolio(data, spec, constraints)  
-    Portfolio                                                       
+    if (FALSE) {
+        
+        # Get Data:
+        data = as.timeSeries(data(smallcap.ts))
+        data = data[, c("BKE", "GG", "GYMB", "KRON")]
+        head(data)
+       
+        # Set Default Specifications - Long Only MV Portfolio
+        spec = portfolioSpec()
+        setWeights(spec) = rep(1/4, times = 4)
+        setSolver(spec)<-"Rdonlp2"
+        spec
+        
+        # Constraints:
+        constraints = NULL
+        constraints
+        
+        # Optimize Long Only Minimum Variance Portfolio:
+        Portfolio = feasiblePortfolio(data, spec, constraints)  
+        Portfolio  
+        
+    }                                                     
      
     # Return Value:
     return()
@@ -303,19 +307,23 @@ function()
     # Arguments:
     # minvariancePortfolio(data, spec = portfolioSpec(), constraints = NULL)
     
-    # Data:
-    data = as.timeSeries(data(smallcap.ts))
-    data = data[, c("BKE", "GG", "GYMB", "KRON")]
-    head(data)
-    
-    # Specifications:
-    spec = portfolioSpec()
-    setSolver(spec) = "Rdonlp2"
-    spec
-    
-    # Portfolio:
-    Portfolio = minvariancePortfolio(data, spec)
-    Portfolio
+    if (FALSE) {
+        
+        # Data:
+        data = as.timeSeries(data(smallcap.ts))
+        data = data[, c("BKE", "GG", "GYMB", "KRON")]
+        head(data)
+        
+        # Specifications:
+        spec = portfolioSpec()
+        setSolver(spec) = "Rdonlp2"
+        spec
+        
+        # Portfolio:
+        Portfolio = minvariancePortfolio(data, spec)
+        Portfolio
+        
+    }
     
     # Return Value:
     return()
@@ -392,34 +400,38 @@ function()
 test.plot.Rdonlp2 =
 function()
 {   
-    # Data:
-    Data = as.timeSeries(data(smallcap.ts))
-    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
-   
-    # Specifications:
-    Spec = portfolioSpec()
-    setSolver(Spec)<-"Rdonlp2"
-    
-    # Constraints:
-    Constraints = "LongOnly"
-    
-    # Frontier:
-    Frontier = portfolioFrontier(Data, Spec, Constraints)
-   
-    # Plot:
-    par(mfrow = c(1, 1))
-    frontierPlot(Frontier)
-    .minvariancePlot(Frontier, col = "red", pch = 19, cex = 1.5)  
-    .tangencyPlot(Frontier, col = "green") 
-    .singleAssetPlot(Frontier, col = "red", cex = 1.5)
-    .equalWeightsPlot(Frontier, col = "blue", pch = 19, cex = 1.5)
-    .twoAssetsPlot(Frontier, col = "grey")
-    .weightsWheel(Frontier)
-    .monteCarloPlot(Frontier, mcSteps = 1000, cex = 0.25, pch = 19)  
-    .sharpeRatioPlot(Frontier, pch = 19, col = "blue") 
-    
-    # Plot Ask:
-    # plot(Frontier, which = "ask")
+    if (FALSE) {
+        
+        # Data:
+        Data = as.timeSeries(data(smallcap.ts))
+        Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
+       
+        # Specifications:
+        Spec = portfolioSpec()
+        setSolver(Spec)<-"Rdonlp2"
+        
+        # Constraints:
+        Constraints = "LongOnly"
+        
+        # Frontier:
+        Frontier = portfolioFrontier(Data, Spec, Constraints)
+       
+        # Plot:
+        par(mfrow = c(1, 1))
+        frontierPlot(Frontier)
+        .minvariancePlot(Frontier, col = "red", pch = 19, cex = 1.5)  
+        .tangencyPlot(Frontier, col = "green") 
+        .singleAssetPlot(Frontier, col = "red", cex = 1.5)
+        .equalWeightsPlot(Frontier, col = "blue", pch = 19, cex = 1.5)
+        .twoAssetsPlot(Frontier, col = "grey")
+        .weightsWheel(Frontier)
+        .monteCarloPlot(Frontier, mcSteps = 1000, cex = 0.25, pch = 19)  
+        .sharpeRatioPlot(Frontier, pch = 19, col = "blue") 
+        
+        # Plot Ask:
+        # plot(Frontier, which = "ask")
+        
+    }
     
     # Return Value:
     return()

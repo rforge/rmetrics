@@ -150,47 +150,51 @@ function()
 test.portfolioLongOnly.RiskBudgetConstraints =
 function()
 {
-    # Load Data:
-    Data = as.timeSeries(data(smallcap.ts))
-    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
-    head(Data)
-   
-    # Set Specifications:
-    Spec = portfolioSpec() 
-    setSolver(Spec) = "Rdonlp2"
-    setNFrontierPoints(Spec) <- 10
-    
-    # Set Constraints:
-    Constraints = c(
-        "minW[1:4]=0.1",
-        "maxW[1:4]=0.9",
-        "minsumW[1:4]=0.0",
-        "maxsumW[1:4]=1.0",
-        "minB[1:4]=0.05",
-        "maxB[1:4]=0.35")
-         
-    # still to be done ...
+    if (FALSE) {
         
-    ## setTargetReturn(Spec) <- mean(Data@Data)   
-    ## solveRDonlp2(Data, Spec, Constraints)
+        # Load Data:
+        Data = as.timeSeries(data(smallcap.ts))
+        Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
+        head(Data)
+       
+        # Set Specifications:
+        Spec = portfolioSpec() 
+        setSolver(Spec) = "Rdonlp2"
+        setNFrontierPoints(Spec) <- 10
+        
+        # Set Constraints:
+        Constraints = c(
+            "minW[1:4]=0.1",
+            "maxW[1:4]=0.9",
+            "minsumW[1:4]=0.0",
+            "maxsumW[1:4]=1.0",
+            "minB[1:4]=0.05",
+            "maxB[1:4]=0.35")
+             
+        # still to be done ...
+            
+        ## setTargetReturn(Spec) <- mean(Data@Data)   
+        ## solveRDonlp2(Data, Spec, Constraints)
+        
+        ## ans = .efficientConstrainedMVPortfolio(Data, Spec, Constraints)
+        
+        ## efficientPortfolio(Data, Spec, Constraints)
+        
+        ## ans = portfolioFrontier(Data, Spec, Constraints)
+        
+        # Plot:
+        ## par(mfrow = c(2, 2), cex = 0.7)
+        ## weightsPlot(ans)
+        ## attributesPlot(ans)
+        ## covRiskBudgetsPlot(ans)
     
-    ## ans = .efficientConstrainedMVPortfolio(Data, Spec, Constraints)
-    
-    ## efficientPortfolio(Data, Spec, Constraints)
-    
-    ## ans = portfolioFrontier(Data, Spec, Constraints)
-    
-    # Plot:
-    ## par(mfrow = c(2, 2), cex = 0.7)
-    ## weightsPlot(ans)
-    ## attributesPlot(ans)
-    ## covRiskBudgetsPlot(ans)
-
-    # Get Weights:
-    ## getWeights(ans)
-    
-    # Get Risk Budgets:
-    # getRiskBudgets(ans)                                   # Does not work !!!!
+        # Get Weights:
+        ## getWeights(ans)
+        
+        # Get Risk Budgets:
+        # getRiskBudgets(ans)                               # Does not work !!!!
+        
+    }
 
     # Return Value:
     return()
@@ -203,38 +207,42 @@ function()
 test.solveRDonlp2 =
 function()
 {
-    # Load Data:
-    Data = as.timeSeries(data(smallcap.ts))
-    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
-    head(Data)
-   
-    # Set Specifications:
-    Spec = portfolioSpec() 
-    setSolver(Spec) = "Rdonlp2"
-    setTargetReturn(Spec) = mean(Data@Data)
-    
-    # Set Constraints:
-    Constraints = c(
-        "minB[1:4]=0.15",
-        "maxB[1:4]=0.35")
+    if (FALSE) {
         
-    ## still to be checked ...
+        # Load Data:
+        Data = as.timeSeries(data(smallcap.ts))
+        Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
+        head(Data)
+       
+        # Set Specifications:
+        Spec = portfolioSpec() 
+        setSolver(Spec) = "Rdonlp2"
+        setTargetReturn(Spec) = mean(Data@Data)
+        
+        # Set Constraints:
+        Constraints = c(
+            "minB[1:4]=0.15",
+            "maxB[1:4]=0.35")
+            
+        ## still to be checked ...
+        
+        # Solve:
+        ## ans = solveRDonlp2(Data, Spec, Constraints)
+        ## ans = efficientPortfolio(Data, Spec, Constraints)  # Does not work !!
+        
+        # Plot:
+        ## par(mfrow = c(2, 2), cex = 0.7)
+        ## weightsPlot(ans)
+        ## attributesPlot(ans)
+        ## covRiskBudgetsPlot(ans)
     
-    # Solve:
-    ## ans = solveRDonlp2(Data, Spec, Constraints)
-    ## ans = efficientPortfolio(Data, Spec, Constraints)       # Does not work !!!!
-    
-    # Plot:
-    ## par(mfrow = c(2, 2), cex = 0.7)
-    ## weightsPlot(ans)
-    ## attributesPlot(ans)
-    ## covRiskBudgetsPlot(ans)
-
-    # Get Weights:
-    ## getWeights(ans)
-    
-    # Get Risk Budgets:
-    # getRiskBudgets(ans)                                   # Does not work !!!!
+        # Get Weights:
+        ## getWeights(ans)
+        
+        # Get Risk Budgets:
+        # getRiskBudgets(ans)                               # Does not work !!!!
+        
+    }
 
     # Return Value:
     return()

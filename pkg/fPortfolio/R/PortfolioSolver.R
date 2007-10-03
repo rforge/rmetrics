@@ -325,22 +325,22 @@ function(data, spec, constraints)
             nlin.upper = B[2, ]
             
             # Optimize:
-            ans = donlp2(
+            ans = rdonlp2(
                 par, fn, 
                 par.l = par.lower, par.u = par.upper,
                 A = A, lin.l = lin.lower, lin.u = lin.upper,  
                 nlin = nlin, nlin.l = nlin.lower, nlin.u = nlin.upper,  
-                control = donlp2.control(
+                control = rdonlp2Control(
                     iterma = 400, 
                     silent = !solver.trace),
                 name = "portfolio")
         } else {
             # Optimize:
-            ans = donlp2(
+            ans = rdonlp2(
                 par, fn, 
                 par.l = par.lower, par.u = par.upper,
                 A = A, lin.l = lin.lower, lin.u = lin.upper,  
-                control = donlp2.control(
+                control = rdonlp2Control(
                     iterma = 400, 
                     silent = !solver.trace),
                 name = "portfolio")

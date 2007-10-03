@@ -157,24 +157,28 @@ function()
 test.efficientConstrainedMVPortfolio.Rdonlp2 = 
 function()
 {
-    # Data:
-    data = as.timeSeries(data(smallcap.ts))
-    data = data[, c("BKE", "GG", "GYMB", "KRON")]
-    head(data)
-    
-    # Specification:
-    spec = portfolioSpec()
-    setTargetReturn(spec) <- mean(seriesData(data))
-    setSolver(spec) = "Rdonlp2"
-    spec
-    
-    # Constraints:
-    constraints = "maxW[1:nAssets]=0.6"
-    constraints
-    
-    # Efficient Portfolio:
-    Portfolio = .efficientConstrainedMVPortfolio(data, spec, constraints)
-    Portfolio
+    if (FALSE) {
+        
+        # Data:
+        data = as.timeSeries(data(smallcap.ts))
+        data = data[, c("BKE", "GG", "GYMB", "KRON")]
+        head(data)
+        
+        # Specification:
+        spec = portfolioSpec()
+        setTargetReturn(spec) <- mean(seriesData(data))
+        setSolver(spec) = "Rdonlp2"
+        spec
+        
+        # Constraints:
+        constraints = "maxW[1:nAssets]=0.6"
+        constraints
+        
+        # Efficient Portfolio:
+        Portfolio = .efficientConstrainedMVPortfolio(data, spec, constraints)
+        Portfolio
+        
+    }
     
     # Return Value:
     return()
@@ -216,21 +220,24 @@ function()
 test.efficientConstrainedMVPortfolio.RDonlp2 = 
 function()
 {
-    # Data:
-    data = as.timeSeries(data(smallcap.ts))
-    data = data[, c("BKE", "GG", "GYMB", "KRON")]
-    head(data)
-    
-    # Specification:
-    spec = portfolioSpec()
-    setTargetReturn(spec) = mean(seriesData(data))
-    setSolver(spec) = "Rdonlp2"
-    spec
-    
-    # Tangency Portfolio:
-    .efficientConstrainedMVPortfolio(data, spec, NULL)
-    .efficientConstrainedMVPortfolio(data, spec, "LongOnly")
-    .efficientConstrainedMVPortfolio(data, spec, "maxW[1:nAssets]=0.6")
+    if (FALSE) {
+        
+        # Data:
+        data = as.timeSeries(data(smallcap.ts))
+        data = data[, c("BKE", "GG", "GYMB", "KRON")]
+        head(data)
+        
+        # Specification:
+        spec = portfolioSpec()
+        setTargetReturn(spec) = mean(seriesData(data))
+        setSolver(spec) = "Rdonlp2"
+        spec
+        
+        # Tangency Portfolio:
+        .efficientConstrainedMVPortfolio(data, spec, NULL)
+        .efficientConstrainedMVPortfolio(data, spec, "LongOnly")
+        .efficientConstrainedMVPortfolio(data, spec, "maxW[1:nAssets]=0.6")
+    }
     
     # Return Value:
     return()
@@ -469,24 +476,28 @@ function()
 test.portfolioConstrainedMVFrontier.RDonlp2 =
 function()
 {   
-    # Data:
-    data = as.timeSeries(data(smallcap.ts))
-    data = data[, c("BKE", "GG", "GYMB", "KRON")]
-    head(data)
-    
-    # Specification:
-    spec = portfolioSpec()
-    setSolver(spec) = "Rdonlp2"
-    setNFrontierPoints(spec) = 5
-    spec
-    
-    # Constraints: 
-    constraints = NULL                        
-    constraints
-    
-    # Portfolio Frontier:
-    Frontier = .portfolioConstrainedMVFrontier(data, spec, constraints)
-    Frontier 
+    if (FALSE) {
+        
+        # Data:
+        data = as.timeSeries(data(smallcap.ts))
+        data = data[, c("BKE", "GG", "GYMB", "KRON")]
+        head(data)
+        
+        # Specification:
+        spec = portfolioSpec()
+        setSolver(spec) = "Rdonlp2"
+        setNFrontierPoints(spec) = 5
+        spec
+        
+        # Constraints: 
+        constraints = NULL                        
+        constraints
+        
+        # Portfolio Frontier:
+        Frontier = .portfolioConstrainedMVFrontier(data, spec, constraints)
+        Frontier 
+        
+    }
     
     # Return Value:
     return()
@@ -499,24 +510,28 @@ function()
 test.portfolioConstrainedMVFrontier.RiskBudgets =
 function()
 {    
-    # Data:
-    data = as.timeSeries(data(smallcap.ts))
-    data = data[, c("BKE", "GG", "GYMB", "KRON")]
-    head(data)
+    if (FALSE) {
+        
+        # Data:
+        data = as.timeSeries(data(smallcap.ts))
+        data = data[, c("BKE", "GG", "GYMB", "KRON")]
+        head(data)
+        
+        # Specification:
+        spec = portfolioSpec()
+        setSolver(spec) = "Rdonlp2"
+        setNFrontierPoints(spec) = 10
+        spec
+        
+        # Add Risk Budgets:
+        constraints = c("minW[1:4]=0", "maxB[1:4]=0.8")
+        constraints
+           
+        # Frontier:
+        Frontier = .portfolioConstrainedMVFrontier(data, spec, constraints)
+        Frontier
     
-    # Specification:
-    spec = portfolioSpec()
-    setSolver(spec) = "Rdonlp2"
-    setNFrontierPoints(spec) = 10
-    spec
-    
-    # Add Risk Budgets:
-    constraints = c("minW[1:4]=0", "maxB[1:4]=0.8")
-    constraints
-       
-    # Frontier:
-    Frontier = .portfolioConstrainedMVFrontier(data, spec, constraints)
-    Frontier
+    }
       
     # Return Value:
     return()
