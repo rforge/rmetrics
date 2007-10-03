@@ -1,9 +1,9 @@
 Package: fUtilities
-Version: 260.71
+Version: 260.72
 Date: 1997 - 2007
 Title: Utilities - Rmetrics Function Utilities
 Author: Diethelm Wuertz and many others. See the SOURCE file
-Depends: R (>= 2.2.0), RUnit, methods, MASS, spatial, tcltk, zoo
+Depends: R (>= 2.4.0), RUnit, methods, MASS, spatial, tcltk, zoo
 Maintainer: Diethelm Wuertz and Rmetrics Core Team <Rmetrics-core@r-project.org>
 Description: Environment for teaching "Financial Engineering and Computational Finance"
 NOTE: SEVERAL PARTS ARE STILL PRELIMINARY AND MAY BE CHANGED IN THE FUTURE.
