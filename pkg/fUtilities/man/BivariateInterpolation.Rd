@@ -95,6 +95,11 @@ krigeInterp(x, y = NULL, z = NULL, gridPoints = 21,
 
     The function \code{krigeInterp} requires loading of the R package
     \code{spatial}.
+    
+    IMPORTANT: The contributed package \code{akima} is not in the 
+    dependence list of the DESCRIPTION file due to license conditions.
+    The Rmetrics user has to load this package from the CRAN server on 
+    his own responsibility, please check the license conditions.
 
 }
        
@@ -124,6 +129,7 @@ krigeInterp(x, y = NULL, z = NULL, gridPoints = 21,
 
 
 \examples{ 
+\dontrun{
 ## akimaInterp -
    # Akima Interpolation:    
    set.seed(1953)
@@ -139,6 +145,7 @@ krigeInterp(x, y = NULL, z = NULL, gridPoints = 21,
    ans = krigeInterp(x, y, z, extrap = FALSE)
    persp(ans)
    contour(ans)
+}
 }
 
 

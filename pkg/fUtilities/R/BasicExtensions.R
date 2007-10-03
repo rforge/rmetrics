@@ -35,8 +35,8 @@
 #  attach.default            attach default method                              
 #  log                       log has become a generic function                  
 #  log.default               log default method                                 
-#  round                     round has become a generic function                
-#  round.default             round default method                               
+#  %round                     round has become a generic function                
+#  %round.default             round default method                               
 #  sample                    sample has become a generic function               
 #  sample.default            sample default method                              
 #  sort                      sort has become a generic function                 
@@ -95,8 +95,8 @@ if (!exists("Sys.setenv"))
 #  attach.default                attach default method
 #  log                           log has become a generic function
 #  log.default                   log default method
-#  round                         round has become a generic function
-#  round.default                 round default method
+#  %round                         round has become a generic function
+#  %round.default                 round default method
 #  sample                        sample has become a generic function
 #  sample.default                sample default method
 #  sort                          sort has become a generic function
@@ -199,6 +199,8 @@ function(x, ...)
 sample.default =  
 function (x, size, replace = FALSE, prob = NULL, ...)
 {
+    # FUNCTION:
+    
     base::sample(x, size, replace = replace, prob = prob)
 }
 
@@ -206,25 +208,25 @@ function (x, size, replace = FALSE, prob = NULL, ...)
 # ------------------------------------------------------------------------------
 
 
-round =
-function(x, ...)
-{   # A function implemented by Diethelm Wuertz
-
-    # FUNCTION:
-
-    # Return Value:
-    UseMethod("round")
-}
+# round =
+# function(x, ...)
+# {   # A function implemented by Diethelm Wuertz
+#
+#     # FUNCTION:
+#
+#     # Return Value:
+#    UseMethod("round")
+# }
 
 
 # ------------------------------------------------------------------------------
 
 
-round.default =
-function(x, digits = 0) 
-{
-    base::round(x, digits)
-}
+# round.default =
+# function(x, digits = 0) 
+# {
+#     base::round(x, digits)
+# }
 
 
 # ------------------------------------------------------------------------------

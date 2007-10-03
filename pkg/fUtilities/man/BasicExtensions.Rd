@@ -14,8 +14,8 @@
 \alias{outlier}
 \alias{outlier.default}
 
-\alias{round}
-\alias{round.default}
+%\alias{round}
+%\alias{round.default}
 
 \alias{sample}
 \alias{sample.default}
@@ -84,7 +84,7 @@
 \method{outlier}{default}(x, sd = 5, complement = TRUE, \dots)
 
 % round.default(x, digits, \dots)
-\method{round}{default}(x, digits = 0)
+%\method{round}{default}(x, digits = 0)
 
 \method{sample}{default}(x, size, replace = FALSE, prob = NULL, \dots)
 
@@ -122,10 +122,10 @@ as.POSIXlt(x, tz = "")
         additional argument to the \code{log} function.
         See for details \code{help(log,package=base)}.
         }
-    \item{digits}{
-        [round] - \cr
-        an integer indicating the precision to be used.
-        }
+    %\item{digits}{
+    %    [round] - \cr
+    %    an integer indicating the precision to be used.
+    %    }
     \item{f}{
         [align] - \cr
         for \code{method="constant"} the value of \code{f} takes a
