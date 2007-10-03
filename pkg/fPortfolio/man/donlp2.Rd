@@ -2,9 +2,7 @@
 
 
 \alias{donlp2}
-
-
-\keyword{optimize}
+\alias{rdonlp2}
 
 
 \title{Solve constrained nonlinear minimization problem}
@@ -18,7 +16,7 @@
 
 
 \usage{
-donlp2(par, fn,
+rdonlp2(par, fn,
     par.upper=rep(+Inf, length(par)), par.lower=rep(-Inf, length(par)),
     A = NULL, 
     lin.upper = rep(+Inf, length(par)), lin.lower = rep(-Inf, length(par)),
@@ -271,7 +269,10 @@ donlp2(par, fn,
 
 \seealso{
 
-    \code{\link{donlp2.control}}
+    \code{\link{rdonlp2Control}}
     
 }
+
+
+\keyword{optimize}
 
