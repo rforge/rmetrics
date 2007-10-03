@@ -143,7 +143,7 @@ Heston S.L., Nandi S. (1997);
      HNG = c(HNG, HNGOption(TypeFlag, model = model, S = S, X = X, 
        Time.inDays = Time.inDays, r.daily = r.daily)$price )
      GBS = c(GBS, GBSOption(TypeFlag, S = S, X = X, Time = Time.inDays, 
-       r = r.daily, b = r.daily, sigma = sigma.daily)$price) }
+       r = r.daily, b = r.daily, sigma = sigma.daily)@price) }
    Options = cbind(HNG, GBS, Diff = round(100*(HNG-GBS)/GBS, digits=2))
    row.names(Options) <- c("Call", "Put")
    data.frame(Options)
