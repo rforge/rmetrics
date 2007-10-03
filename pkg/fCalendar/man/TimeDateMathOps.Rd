@@ -42,7 +42,7 @@
 \method{diff}{timeDate}(x, lag = 1, differences = 1, \dots)
 difftimeDate(time1, time2, 
     units = c("auto", "secs", "mins", "hours", "days", "weeks"))
-\method{round}{timeDate}(x, units = c("days", "hours", "mins")) 
+\method{round}{timeDate}(x, digits = c("days", "hours", "mins")) 
 \method{trunc}{timeDate}(x, units = c("days", "hours", "mins"), ...)     
 }
 
@@ -52,6 +52,11 @@ difftimeDate(time1, time2,
     \item{differences}{
         [diff] - \cr
         an integer indicating the order of the difference.
+        }
+    \item{digits, units}{
+        [difftimeDate][round][trunc] -\cr
+        a character string denoting the date/time units in which the 
+        results are desired.
         }
     \item{e1, e2}{
         ["+"][["-"]["Ops"] - \cr
@@ -63,7 +68,6 @@ difftimeDate(time1, time2,
         [lag] - \cr
         an integer indicating which lag to use.  
         }
-
     \item{method}{
         [modify] - \cr
         a character string defining the modification method, one of
@@ -72,11 +76,6 @@ difftimeDate(time1, time2,
     \item{time1, time2}{
         [difftime] - \cr
         two objects objects of class \code{timeDate}.
-        }
-    \item{units}{
-        [difftimeDate][round][trunc] -\cr
-        a character string denoting the date/time units in which the 
-        results are desired.
         }
     \item{x}{
         [diff][round][trunc] -\cr
@@ -125,7 +124,8 @@ difftimeDate(time1, time2,
     \cr
     The two functions \code{round} and \code{trunc} allow to round or to 
     truncate \code{"timedate"} objects to the specified unit and return
-    them as \code{"timedate"} objects.
+    them as \code{"timedate"} objects. - Note, ther is an inconsistency
+    \code{round} uses \code{digits} as argument and not \code{units}. 
     \cr
 
 }
