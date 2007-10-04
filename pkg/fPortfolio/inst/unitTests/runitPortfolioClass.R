@@ -126,6 +126,8 @@ function()
     
     if (FALSE) {
         
+        require(Rdonlp2)
+        
         # Get Data:
         data = as.timeSeries(data(smallcap.ts))
         data = data[, c("BKE", "GG", "GYMB", "KRON")]
@@ -309,6 +311,8 @@ function()
     
     if (FALSE) {
         
+        require(Rdonlp2)
+        
         # Data:
         data = as.timeSeries(data(smallcap.ts))
         data = data[, c("BKE", "GG", "GYMB", "KRON")]
@@ -401,6 +405,8 @@ test.plot.Rdonlp2 =
 function()
 {   
     if (FALSE) {
+        
+        require(Rdonlp2)
         
         # Data:
         Data = as.timeSeries(data(smallcap.ts))

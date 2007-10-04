@@ -159,6 +159,8 @@ function()
 {
     if (FALSE) {
         
+        require(Rdonlp2)
+        
         # Data:
         data = as.timeSeries(data(smallcap.ts))
         data = data[, c("BKE", "GG", "GYMB", "KRON")]
@@ -221,6 +223,8 @@ test.efficientConstrainedMVPortfolio.RDonlp2 =
 function()
 {
     if (FALSE) {
+        
+        require(Rdonlp2)
         
         # Data:
         data = as.timeSeries(data(smallcap.ts))
@@ -478,6 +482,8 @@ function()
 {   
     if (FALSE) {
         
+        require(Rdonlp2)
+        
         # Data:
         data = as.timeSeries(data(smallcap.ts))
         data = data[, c("BKE", "GG", "GYMB", "KRON")]
@@ -511,6 +517,8 @@ test.portfolioConstrainedMVFrontier.RiskBudgets =
 function()
 {    
     if (FALSE) {
+        
+        require(Rdonlp2)
         
         # Data:
         data = as.timeSeries(data(smallcap.ts))

@@ -96,13 +96,19 @@ function()
 test.adfPlot =
 function()
 {
-    # .adfPlot(trend = c("nc", "c", "ct"), statistic = c("t", "n"))
+    if (FALSE) {
+        
+        require(akima)
+        
+        # .adfPlot(trend = c("nc", "c", "ct"), statistic = c("t", "n"))
     
-    par(mfrow = c(1, 1))
-    for (trend in c("nc", "c", "ct")) {
-        for (statistic in c("t", "n")) {
-            .adfPlot(trend, statistic)
+        par(mfrow = c(1, 1))
+        for (trend in c("nc", "c", "ct")) {
+            for (statistic in c("t", "n")) {
+                .adfPlot(trend, statistic)
+            }
         }
+        
     }
     
     # Return Value:
@@ -117,19 +123,25 @@ function()
 test.adfQuantiles = 
 function()
 {    
-    # padf(q, n.sample, trend = c("nc", "c", "ct"), statistic = c("t", "n")) 
-    # qadf(p, n.sample, trend = c("nc", "c", "ct"), statistic = c("t", "n"))
-    
-    p = 0.984
-    n.sample = 78
-    for (trend in c("nc", "c", "ct")) {
-        for (statistic in c("t", "n")) {
-            cat(trend, statistic, ": ")
-            Q = qadf(p, n.sample, trend, statistic)
-            target = P = padf(Q, n.sample, trend, statistic)
-            cat(c(Q, P), 
-                checkEqualsNumeric(target, current = p, tolerance = 1e-3), "\n")
+    if (FALSE) {
+        
+        require(akima)
+        
+        # padf(q, n.sample, trend = c("nc", "c", "ct"), statistic = c("t", "n")) 
+        # qadf(p, n.sample, trend = c("nc", "c", "ct"), statistic = c("t", "n"))
+        
+        p = 0.984
+        n.sample = 78
+        for (trend in c("nc", "c", "ct")) {
+            for (statistic in c("t", "n")) {
+                cat(trend, statistic, ": ")
+                Q = qadf(p, n.sample, trend, statistic)
+                target = P = padf(Q, n.sample, trend, statistic)
+                cat(c(Q, P), 
+                    checkEqualsNumeric(target, current = p, tolerance = 1e-3), "\n")
+            }
         }
+        
     }
     
     # Return Value:
@@ -143,32 +155,38 @@ function()
 test.interpolationQuantiles = 
 function()
 {      
-    # Extrapolation: Quantiles
-    adfTable()
-    check = c(NA, NA, NA, -2.66, NA, 2.16, NA, NA)
-    ans = NULL
-    for (p in c(0.005, 0.010, 0.990, 0.995)) {
-        for (n.sample in c(10, 25)) {
-            Q = qadf(p, n.sample)
-            ans = rbind(ans, c(p, n.sample, Q))
+    if (FALSE) {
+        
+        require(akima)
+        
+        # Extrapolation: Quantiles
+        adfTable()
+        check = c(NA, NA, NA, -2.66, NA, 2.16, NA, NA)
+        ans = NULL
+        for (p in c(0.005, 0.010, 0.990, 0.995)) {
+            for (n.sample in c(10, 25)) {
+                Q = qadf(p, n.sample)
+                ans = rbind(ans, c(p, n.sample, Q))
+            }
         }
+        ans = cbind(ans, check)
+        ans
+        checkEqualsNumeric(target = ans[, 3], current = ans[, 4])
+    
+        # (Extra)Interpolation: Probabilities - uses linearInterpp()
+        A = padf(q = -2.70, N = 100)  # NA
+        print(A)
+        B = padf(q =  2.03, N = 100)  # 0.99 
+        print(B)
+        C = padf(q = -1.50, N =  10)  # NA
+        print(C)
+        D = padf(q = -1.60, N = Inf)  # 0.1064
+        print(D)
+        target = c(A[[1]], B[[1]], C[[1]], D[[1]])
+        current = c(NA, 0.99, NA, 0.1063745)
+        checkEqualsNumeric(target, current, tolerance = 1e-4)
+        
     }
-    ans = cbind(ans, check)
-    ans
-    checkEqualsNumeric(target = ans[, 3], current = ans[, 4])
-
-    # (Extra)Interpolation: Probabilities - uses linearInterpp()
-    A = padf(q = -2.70, N = 100)  # NA
-    print(A)
-    B = padf(q =  2.03, N = 100)  # 0.99 
-    print(B)
-    C = padf(q = -1.50, N =  10)  # NA
-    print(C)
-    D = padf(q = -1.60, N = Inf)  # 0.1064
-    print(D)
-    target = c(A[[1]], B[[1]], C[[1]], D[[1]])
-    current = c(NA, 0.99, NA, 0.1063745)
-    checkEqualsNumeric(target, current, tolerance = 1e-4)
     
     # Return Value:
     return()    

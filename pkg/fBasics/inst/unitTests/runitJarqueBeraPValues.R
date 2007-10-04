@@ -42,14 +42,20 @@
 test.jbTable = 
 function()
 {
-    # Jarque-Bera Table:
-    #   .jbTable(type = c("LM", "ALM"), size = c("mini", "small", "all")) 
-    table = .jbTable()
-    table
-    
-    # Perspective Plot:
-    #   .jbPlot(type = c("LM", "ALM"))
-    .jbPlot()
+    if (FALSE) {
+        
+        require(akima)
+        
+        # Jarque-Bera Table:
+        #   .jbTable(type = c("LM", "ALM"), size = c("mini", "small", "all")) 
+        table = .jbTable()
+        table
+        
+        # Perspective Plot:
+        #   .jbPlot(type = c("LM", "ALM"))
+        .jbPlot()
+        
+    }
         
     # Return Value:
     return() 

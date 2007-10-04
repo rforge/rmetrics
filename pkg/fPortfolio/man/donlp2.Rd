@@ -100,6 +100,17 @@ rdonlp2(par, fn,
     
 }
 
+
+\note{
+
+    IMPORTANT: Due to license reasons the R package \code{Rdonlp2} is
+    not part of the Rmetrics distribution. You can download and install
+    the package from\cr
+    https://svn.r-project.org/Rmetrics/trunk/Rdonlp2/
+    
+}
+
+
 \value{
 
     For \code{n=length(par)} parameters, \code{lin} linear constraints,

@@ -152,6 +152,8 @@ function()
 {
     if (FALSE) {
         
+        require(Rdonlp2)
+        
         # Load Data:
         Data = as.timeSeries(data(smallcap.ts))
         Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
@@ -208,6 +210,8 @@ test.solveRDonlp2 =
 function()
 {
     if (FALSE) {
+        
+        require(Rdonlp2)
         
         # Load Data:
         Data = as.timeSeries(data(smallcap.ts))

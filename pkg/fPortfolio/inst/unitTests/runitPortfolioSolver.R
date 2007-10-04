@@ -121,7 +121,9 @@ function()
 test.solverRDonlp2 =
 function()
 { 
-    if FALSE) {
+    if (FALSE) {
+        
+        require(Rdonlp2)
         
         # Load Data:   
         data = as.timeSeries(data(smallcap.ts))
@@ -166,6 +168,8 @@ function()
 {     
     if (FALSE) {
         
+        require(Rdonlp2)
+        
         # Load Data:   
         data = as.timeSeries(data(smallcap.ts))
         data = data[, c("BKE", "GG", "GYMB", "KRON")]
@@ -202,23 +206,29 @@ function()
 test.solveRDonlp2.twoAssets =
 function()
 { 
-    # Direct Access:
-    data = as.timeSeries(data(smallcap.ts))
-    data = data[, c("BKE", "GG")]
-    head(data)
-    
-    # Specification:
-    spec = portfolioSpec()
-    setTargetReturn(spec) = mean(as.matrix(data))
-    
-    # Default Constraints:
-    constraints = "LongOnly"
-    constraints
-    
-    # RDonlp2:
-    ans = solveRDonlp2(data, spec, constraints) 
-    ans 
-    ans$weights
+    if (FALSE) {
+        
+        require(Rdonlp2)
+        
+        # Direct Access:
+        data = as.timeSeries(data(smallcap.ts))
+        data = data[, c("BKE", "GG")]
+        head(data)
+        
+        # Specification:
+        spec = portfolioSpec()
+        setTargetReturn(spec) = mean(as.matrix(data))
+        
+        # Default Constraints:
+        constraints = "LongOnly"
+        constraints
+        
+        # RDonlp2:
+        ans = solveRDonlp2(data, spec, constraints) 
+        ans 
+        ans$weights
+        
+    }
     
     # Return Value:
     return()
