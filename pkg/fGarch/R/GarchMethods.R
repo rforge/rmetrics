@@ -35,9 +35,7 @@
 #  plot.fGARCH             S3 plot method for an object of class 'fGARCH'
 #  .interactiveGarchPlot   Utility Function
 #  summary.fGARCH          S3 summary method for an object of class 'fGARCH'
-# METHOD:                 DESCRIPTION:
-#  residuals.fGARCH        S3 residuals method for an object of class 'fGARCH'
-#  fitted.fGARCH           S3 fitted values for an object of class 'fGARCH'
+# METHOD:                 PREDICTION:
 #  predict.fGARCH          S3 prediction method for an object of class 'fGARCH'
 # STATISTICS:             DESCRIPTION:
 #  .truePersistence        Computes persistence
@@ -688,68 +686,6 @@ function(object, ...)
     invisible()
 }
                 
-
-# ------------------------------------------------------------------------------
-
-
-residuals.fGARCH = 
-function(object, ...) 
-{   # A function implemented by Diethelm Wuertz
-    
-    # Description:
-    #   S3 Residuals method for an object of class fGARCH
-
-    # FUNCTION:
-    
-    # Return Value:
-    .residuals.fGARCH(object = object, ...) 
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.residuals.fGARCH = 
-function(object, standardize = FALSE) 
-{   # A function implemented by Diethelm Wuertz
-    
-    # Description:
-    #   S3 Residuals method for an object of class fGARCH
-
-    # FUNCTION:
-    
-    # Residuals:
-    if (standardize) {
-        ans = object@residuals/object@sigma.t
-    } else {
-        ans = object@residuals
-    }
-    
-    # Return Value:
-    ans
-    
-}
-
-    
-# ------------------------------------------------------------------------------
-
-
-fitted.fGARCH = 
-function(object, ...) 
-{   # A function implemented by Diethelm Wuertz
-    
-    # Description:  
-    #   S3 Fitted values method for an object of class fGARCH
-    
-    # FUNCTION:
-    
-    # Fitted Values:
-    ans = object@fitted
-    
-    # Return Value:
-    ans
-}
-
 
 # ------------------------------------------------------------------------------
 
