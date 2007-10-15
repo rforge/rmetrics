@@ -295,7 +295,7 @@ function(x, ...)
 
 
 as.POSIXct.timeDate =
-function(x, tz = "")
+function(x, tz = "", ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
