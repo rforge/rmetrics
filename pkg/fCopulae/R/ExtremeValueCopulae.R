@@ -571,7 +571,7 @@ function(B = 10)
 ################################################################################
 # FUNCTION:                  EXTREME VALUE COPULAE DENSITY:
 #  devCopula                  Computes extreme value copula density
-#  devSlider
+#  devSlider                  Displays interactively plots of density
 #  .dev1Copula                 EV copula density via dependence function
 #  .dev2Copula                 EV copula density direct computation
 #  .devContourSlider           Interactive contour plots of EV density

@@ -452,7 +452,7 @@ function(type = c("persp", "contour"), B = 20)
     # FUNCTION:
     
     # Settings:
-    type = type[1]
+    type = match.arg(type)
     
     # Plot:
     if (type == "persp")
@@ -999,7 +999,7 @@ function(type = c("persp", "contour"), B = 20)
     # FUNCTION:
     
     # Settings:
-    type = type[1]
+    type = match.arg(type)
     
     # Plot:
     if (type == "persp")

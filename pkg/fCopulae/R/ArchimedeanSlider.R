@@ -31,11 +31,11 @@
 # FUNCTION:                  ARCHIMEDEAN COPULAE SLIDERS:
 #  rarchmSlider               Displays interactively Archimedean probability
 #  parchmSlider               Displays interactively Archimedean probability 
-#  .parchmPerspSlider          Utility Function
-#  .parchmContourSlider        Utility Function
+#  .parchmPerspSlider          Perspective Archimedean probability slider
+#  .parchmContourSlider        Contour Archimedean probability slider
 #  darchmSlider                Displays interactively archimedean density 
-#  .darchmPerspSlider          Utility Function
-#  .darchmContourSlider        Utility Function
+#  .darchmPerspSlider          Perspective Archimedean density slider
+#  .darchmContourSlider        Contour Archimedean density slider
 ################################################################################
 
 
@@ -127,7 +127,7 @@ function(type = c("persp", "contour"), B = 10)
     # FUNCTION:
     
     # Match Arguments:
-    type = match(type)
+    type = match.arg(type)
     
     # Plot:
     if (type[1] == "persp")
@@ -761,7 +761,7 @@ function(type = c("persp", "contour"), B = 10)
     # FUNCTION:
     
     # Match Arguments:
-    type = match(type)
+    type = match.arg(type)
     
     # Plot:
     if (type == "persp")
@@ -1159,7 +1159,7 @@ function(B = 10)
         
         # Plot: 
         uv = grid2d(x = (1:(N-1))/N)
-        D = .darchm1Copula(u = uv, alpha = alpha, type = Copula, 
+        D = .darchm1Copula(u = uv, alpha = alpha, type = as.character(Copula), 
             output = "list")
         persp(D, theta = theta, phi = phi, col = "steelblue", shade = 0.5,
             ticktype = "detailed", cex = 0.5, xlab = "u", ylab = "v",
@@ -1280,7 +1280,7 @@ function(B = 10)
         
         # Plot:   
         uv = grid2d(x = (1:(N-1)/N))
-        D = .darchm1Copula(u = uv, alpha = alpha, type = Copula, 
+        D = .darchm1Copula(u = uv, alpha = alpha, type = as.character(Copula), 
             output = "list")
         image(D, xlim = c(0, 1), ylim = c(0,1), col = heat.colors(n.col) )
         contour(D, xlab = "u", ylab = "v", nlevels = n.lev, add = TRUE)
