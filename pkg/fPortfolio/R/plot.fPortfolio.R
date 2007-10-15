@@ -29,107 +29,7 @@
 
 ################################################################################
 # FUNCTION:                     PRINT AND PLOT METHODS:           
-#  show.fPORTFOLIO               S4 Print method for 'fPPORTFOLIO' objects
 #  plot.fPORTFOLIO               S3 Plot method for 'fPORTFOLIO' objects   
-#  summary.fPORTFOLIO            S3 Summary method for 'fPORTFOLIO' objects
-################################################################################
-
-
-show.fPORTFOLIO =
-function(object)
-{   # A function implemented by Rmetrics
-
-    # Description:
-    #   S4 Print Method for an object of class "fPORTFOLIO"
-    
-    # Arguments:
-    #   object - an object of class "fPORTFOLIO"
-    
-    # FUNCTION:
-     
-    # Title:
-    cat("\nTitle:\n ")
-    cat(getTitle(object), "\n")
-    
-    # Call:
-    cat("\nCall:\n ")
-    print.default(getCall(object))
-    
-    # Target Weights:
-    cat("\nPortfolio Weight(s):\n")
-    weights = round(getWeights(object), digits = 4)
-    if (length(weights) == 1) {
-        cat(" ", weights, "\n")
-    } else {
-        print.table(weights)
-    }
-    
-    # Covariance Risk Budgets:
-    cat("\nRiskBudget(s):\n")
-    riskBudgets = round(getCovRiskBudgets(object), digits = 4)
-    if (length(riskBudgets) == 1) {
-        cat(" ", riskBudgets, "\n")
-    } else {
-        print.table(riskBudgets)
-    }
-    
-    # Tail Risk Budgets:
-    if (FALSE) {
-        if (!is.na(getTailRiskBudgets(object))) {
-             cat("\nRiskBudget(s):\n")
-            riskBudgets = round(getTailRiskBudgets(object), digits = 4)
-            if (length(riskBudgets) == 1) {
-                cat(" ", riskBudgets, "\n")
-            } else {
-                print.table(riskBudgets)
-            }   
-        }  
-    }
-  
-    # Target Returns:   
-    # cat("\nTarget Return(s):\n")
-    targetReturn = object@portfolio$targetReturn # getTargetReturn(object)
-    # print(targetReturn)
- 
-    # Target Risk:
-    # cat("\nTarget Risk(s):\n")
-    targetRisk = object@portfolio$targetRisk # getTargetRisk(object) 
-    # print(targetRisk)
-    
-    ##
-    spec = getSpec(object)
-    cat("\nTarget Risk(s) and Return(s):\n")
-    if (is.null(dim(targetReturn))) {
-        targetReturn = matrix(targetReturn, nrow = 1)
-        colnames(targetReturn) = getEstimator(spec)[1]
-    }
-    if (is.null(dim(targetRisk))) {
-        targetRisk = matrix(targetRisk, nrow = 1)
-        colnames(targetRisk) = getEstimator(spec)[2]
-    }
-    target = cbind(targetReturn, targetRisk)
-    colnames(target) = c(colnames(targetReturn), colnames(targetRisk))    
-    if (nrow(target) == 1) {
-        print(target[1, ])
-    } else {
-        print(target)
-    }
-       
-    # Description:
-    cat("\nDescription:\n ")
-    cat(getDescription(object), "\n")
-        
-    # Return Value: 
-    invisible(object)
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-setMethod("show", "fPORTFOLIO", show.fPORTFOLIO)
-
-
 ################################################################################
 
 
@@ -170,7 +70,7 @@ function(x, which = "ask", control = list(), ...)
     xLim = range(c(xLimAssets, xLimFrontier))
 
     # Control List:
-    con <<- list(
+    con <- list(
         sharpeRatio.col = "blue",
         minvariance.col = "red",
         tangency.col = "steelblue",
@@ -202,6 +102,7 @@ function(x, which = "ask", control = list(), ...)
     
     par(mar = c(5, 4, 4, 3) + 0.1)
 
+    attr(x, "control") <- con
    
     # Plot:
     interactivePlot(
@@ -220,140 +121,204 @@ function(x, which = "ask", control = list(), ...)
             ".fportfolio.plot.1", ".fportfolio.plot.2", ".fportfolio.plot.3", 
             ".fportfolio.plot.4", ".fportfolio.plot.5", ".fportfolio.plot.6", 
             ".fportfolio.plot.7", ".fportfolio.plot.8", ".fportfolio.plot.9"),
-        which = which,
-        con = con) 
+        which = which) 
             
     # Return Value:
     invisible(x)
 } 
 
 
-# Plot Function and Addons:
+# ------------------------------------------------------------------------------
 
 
 .fportfolio.plot.1 <- 
 function(x, con, ...) 
 {
+    # FUNCTION:
+    
+    # Control:
+    con = attr(x, "control")
     Type = getType(x)
     if (Type == "MV") {
         xLab = "Mean-Var Target Risk"
     } else if (Type == "CVaR") {
         xLab = "-CVaR Target Risk"
     }
-    frontierPlot(object = x, xlim = con$xlim,
-        ylim = con$ylim, main = "Efficient Frontier",
-        xlab = xLab, ylab = "Target Return", 
-        pch = 19, cex = 0.75)
+    
+    # Plot:
+    frontierPlot(
+        object = x, 
+        xlim = con$xlim,
+        ylim = con$ylim, 
+        main = "Efficient Frontier",
+        xlab = xLab, 
+        ylab = "Target Return", 
+        pch = 19, 
+        cex = 0.75)
 } 
+
+
+# ------------------------------------------------------------------------------
 
       
 .fportfolio.plot.2 <- 
 function(x, con, ...) 
 {
-    .minvariancePlot(object = x, 
-        col = con$minvariance.col, cex = con$minvariance.cex, 
+    # FUNCTION:
+    
+    # Control:
+    con = attr(x, "control")
+    
+    # Plot:
+    .minvariancePlot(
+        object = x, 
+        col = con$minvariance.col, 
+        cex = con$minvariance.cex, 
         pch = 19)
 } 
+
+
+# ------------------------------------------------------------------------------
 
       
 .fportfolio.plot.3 <-
 function(x, con, ...) 
 {
-    .tangencyPlot(object = x, 
-        col = con$tangency.col, cex = con$tangency.cex, 
+    # FUNCTION:
+    
+    # Control:
+    con = attr(x, "control")
+    
+    # Plot:
+    .tangencyPlot(
+        object = x, 
+        col = con$tangency.col, 
+        cex = con$tangency.cex, 
         pch = 17)
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 .fportfolio.plot.4 <- 
 function(x, con, ...) 
 {
-    .singleAssetPlot(object =x , 
-        col = con$singleAsset.col, cex = con$singleAsset.cex, 
+    # FUNCTION:
+    
+    # Control:
+    con = attr(x, "control")
+    
+    # Plot:
+    .singleAssetPlot(
+        object =x , 
+        col = con$singleAsset.col, 
+        cex = con$singleAsset.cex, 
         pch = 18)
-}       
-
-
-.fportfolio.plot.5 <- 
-function(x, con, ...) 
-{
-    .equalWeightsPlot(object = x, 
-        col = con$equalWeights.col, cex = con$equalWeights.cex, 
-        pch = 15)
-}  
-
-
-.fportfolio.plot.6 <- 
-function(x, con, ...) 
-{
-    .singleAssetPlot(object = x , 
-        col = con$singleAsset.col, cex = con$singleAsset.cex, 
-        pch = 18)
-    lines(getFrontier(object = x), col = "grey")
-    .twoAssetsPlot(object = x, col = con$twoAssets.col) 
-}       
-
-
-.fportfolio.plot.7 <- 
-function(x, con, ...) 
-{
-    .weightsWheel(object = x,
-        piePos = con$PiePos, pieR = con$pieR, pieOffset = con$pieOffset)
-}  
-
-
-.fportfolio.plot.8 <- 
-function(x, con, ...) 
-{
-    .monteCarloPlot(object = x, 
-        col = con$monteCarlo.col, cex = con$monteCarlo.cex, 
-        mcSteps = con$mcSteps) 
-}
-
-
-.fportfolio.plot.9 <- 
-function(x, con, ...) 
-{
-    .sharpeRatioPlot(object = x, type = "l", 
-        col = con$sharpeRatio.col, cex = con$sharpeRatio.cex, 
-        lty = 3)
 }       
 
 
 # ------------------------------------------------------------------------------
 
 
-summary.fPORTFOLIO =
-function(object, ...)
-{   # A function implemented by Rmetrics
-
-    # Description:
-    #   Plot method for an object of class 'fPORTFOLIO'
-    
-    # Note:
-    #   This method can also be used for plotting graphs fitted by 
-    #   the function 'garch' from the contributed R package 'tseries'.
-    
+.fportfolio.plot.5 <- 
+function(x, con, ...) 
+{
     # FUNCTION:
+    
+    # Control:
+    con = attr(x, "control")
+    
+    # Plot:
+    .equalWeightsPlot(
+        object = x, 
+        col = con$equalWeights.col, 
+        cex = con$equalWeights.cex, 
+        pch = 15)
+}  
 
-    # Summary:
-    print(object)
-    funCalled = as.character(object@call[1])
-    if (funCalled == "portfolioFrontier") {      
-        weightsPlot(object)
-        attributesPlot(object)
-        covRiskBudgetsPlot(object)
-        # Plot Frontier:
-        plot(object, which = 1)
-    } else {
-        weightsPie(object)
-        attributesPie(object)
-        covRiskBudgetsPie(object)
-    }
-          
-    # Return Value:
-    invisible(object)
-} 
+
+# ------------------------------------------------------------------------------
+
+
+.fportfolio.plot.6 <- 
+function(x, con, ...) 
+{
+    # FUNCTION:
+    
+    # Control:
+    con = attr(x, "control")
+    
+    # Plot:
+    .singleAssetPlot(
+        object = x , 
+        col = con$singleAsset.col, 
+        cex = con$singleAsset.cex, 
+        pch = 18)
+    lines(getFrontier(object = x), col = "grey")
+    .twoAssetsPlot(object = x, col = con$twoAssets.col) 
+}       
+
+
+# ------------------------------------------------------------------------------
+
+
+.fportfolio.plot.7 <- 
+function(x, con, ...) 
+{
+    # FUNCTION:
+    
+    # Control:
+    con = attr(x, "control")
+    
+    # Plot:
+    .weightsWheel(
+        object = x,
+        piePos = con$PiePos, 
+        pieR = con$pieR, 
+        pieOffset = con$pieOffset)
+}  
+
+
+# ------------------------------------------------------------------------------
+
+
+.fportfolio.plot.8 <- 
+function(x, con, ...) 
+{
+    # FUNCTION:
+    
+    # Control:
+    con = attr(x, "control")
+    
+    # Plot:
+    .monteCarloPlot(
+        object = x, 
+        col = con$monteCarlo.col, 
+        cex = con$monteCarlo.cex, 
+        mcSteps = con$mcSteps) 
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.fportfolio.plot.9 <- 
+function(x, con, ...) 
+{
+    # FUNCTION:
+    
+    # Control:
+    con = attr(x, "control")
+    
+    # Plot:
+    .sharpeRatioPlot(
+        object = x, 
+        type = "l", 
+        col = con$sharpeRatio.col, 
+        cex = con$sharpeRatio.cex, 
+        lty = 3)
+}       
 
 
 ################################################################################
