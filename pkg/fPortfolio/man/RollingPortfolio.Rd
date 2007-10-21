@@ -10,9 +10,6 @@
 
 \alias{rollingPortfolioFrontier}
 
-\alias{portfolioBacktesting}
-\alias{portfolioBacktestingStats}
-
 
 \title{Rolling Portfolio}
 
@@ -31,8 +28,7 @@
     \code{rollingCmlPortfolio} \tab Rolls a CML portfolio, \cr
     \code{rollingTangencyPortfolio} \tab Rolls a tangency portfolio, \cr
     \code{rollingMinvariancePortfolio} \tab Rolls a minimum risk portfolio, \cr
-    \code{rollingPortfolioFrontier} \tab returns an efficient portfolio, \cr
-    \code{portfolioBacktesting} \tab Does portfolio backtesting. }
+    \code{rollingPortfolioFrontier} \tab returns an efficient portfolio}
     
 }
     
@@ -49,10 +45,6 @@ rollingMinvariancePortfolio(data, spec, constraints, from, to, action = NULL,
     
 rollingPortfolioFrontier(data, spec, constraints, from, to, action = NULL, 
     title = NULL, description = NULL, \dots)
-   
-portfolioBacktesting(formula, data, spec = portfolioSpec(), constraints = NULL, 
-    portfolio = "minvariancePortfolio", horizon = "12m", smoothing = "6m", 
-    trace = TRUE)
 }
 
 
@@ -78,47 +70,22 @@ portfolioBacktesting(formula, data, spec = portfolioSpec(), constraints = NULL,
     \item{data}{
         [*Portfolio][*Frontier] - \cr
         a list, having a statistics named list, having named entries 'mu' and 
-        'Sigma', containing the information of the statistics. \cr
-        [*Backtesting] - \cr
+        'Sigma', containing the information of the statistics.
         }
     \item{description}{
         [*Portfolio][*Frontier] - \cr
         a character string, allowing for a brief project description,
         by default NULL, i.e. Date and User.
         }
-    \item{formula}{
-        [*Backtesting] - \cr
-        a formula describing the benchmark and assets used for backtesting
-        in the form \code{backtest ~ assetA + ... + assetZ}. Here,
-        \code{backtest} and \code{asset*} are column names of the
-        \code{data} set.
-        }
     \item{from, to}{
         [*Portfolio][*Frontier] - \cr
         a vector of S4 \code{timeDate} objects which denote the starting
         and ending dates for the investigation.
         }
-    \item{horizon}{
-        [*Backtesting] - \cr
-        a character string, by default \code{"12m"}, which denotes 12
-        months. The period over which the portfolio is rolled.
-        }
     \item{period}{
         [rollingWindows] - \cr
         a character string, by default \code{"12m"}, which denotes 12
         months. The period over which the portfolio is rolled.
-        }
-    \item{portfolio}{
-        [portfolioBacktesting] - \cr
-        a character string, the function name of a user defined 
-        portfolio function, which defines the rolling portfolio
-        strategy.
-        }
-    \item{smoothing}{
-        [portfolioBacktesting] - \cr
-        a character string, by default \code{"6m"}, which denotes 6
-        months. The period over which the rolling weights are smoothed
-        by an exponential moving average.
         }
     \item{spec}{
         [*Portfolio][*Frontier] - \cr
@@ -131,10 +98,6 @@ portfolioBacktesting(formula, data, spec = portfolioSpec(), constraints = NULL,
         [*Portfolio][*Frontier] - \cr
         a character string, containing the title for the object, by 
         default NULL.
-        }
-    \item{trace}{
-        [portfolioBacktesting][*OptimalPortfolio] - \cr
-        a logical value. Should the calculataion be traced?
         }
     \item{x}{
         [rollingWindows] - \cr
@@ -168,11 +131,6 @@ portfolioBacktesting(formula, data, spec = portfolioSpec(), constraints = NULL,
     \bold{Rolling Frontier:}
     \cr\cr   
     The function \code{rollingPortfolioFrontier} ...
-    
-    
-    \bold{Rolling Backtesting:}
-    \cr\cr   
-    The functions  ...
 
 }
 
@@ -192,9 +150,6 @@ portfolioBacktesting(formula, data, spec = portfolioSpec(), constraints = NULL,
     \code{rollingPortfolioFrontier}\cr
     returns ...
     \cr
-    
-    \code{portfolioBacktesting}\cr
-    returns ...
     
 }
 
