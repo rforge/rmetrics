@@ -246,7 +246,7 @@ function()
     colnames(Data)
     
     # Strategy Portfolio:
-    myPortfolio <<-  
+    myPortfolio <-  
     function(data, spec, constraints)
     {
         strategyPortfolio = tangencyPortfolio(data, spec, constraints)
@@ -258,7 +258,7 @@ function()
     
     # Mean-Variance Backtesting:
     par(mfrow = c(2, 2))
-    portfolioBacktesting(
+    ans = portfolioBacktesting(
         formula = LP60 ~ SBI + SPI + SII, 
         data = Data, 
         spec = portfolioSpec(), 

@@ -29,9 +29,9 @@
 
 ################################################################################
 #  portfolioBacktesting              Does portfolio backtesting
-#  plot.portfolioBacktest
-#  print.portfolioBacktes.
-#  summary.portfolioBacktest
+#  plot.portfolioBacktest             S3 Plot Method
+#  print.portfolioBacktes             S3 Print Method
+#  summary.portfolioBacktest          S3 Summary Method
 #  .rollingBacktestPortfolio         Rolls a backtesting portfolio
 #  .portfolioBacktestingStats         Computes monthly portfolio statistics
 ################################################################################
@@ -147,7 +147,7 @@ trace = TRUE)
         trace = trace)
         
     # Add Additional Info from Plot Function:    
-    attr(object$tg, "control") = list(
+    attr(tg, "control") = list(
         formula = formula,
         data = data,
         spec = spec,
@@ -156,6 +156,7 @@ trace = TRUE)
         horizon = Horizon,
         smoothing = Smoothing, 
         trace = trace)
+    object = list(tg = tg) 
     class(object) = "portfolioBacktest"
     ans = plot(object, which = 0)  
  
@@ -174,7 +175,7 @@ trace = TRUE)
 
 
 plot.portfolioBacktest =   
-function(x, which = "all", ...)   
+function(x, labels = TRUE, which = "all", ...)   
 {   # A function implemented by Rmetrics
 
     # Description:
@@ -228,14 +229,22 @@ function(x, which = "all", ...)
     # Plot 1:
     plot.1 = function(bechmark, assets)
     {
+        if (labels) {
+            ylab = "Series" 
+        } else {
+            ylab = ""
+        }
         plot(cumsum(x[, benchmark]), type = "l", ylim = c(MIN, MAX), 
-            ylab = "Series", col = "black")   
-        for (i in 1:nAssets) lines( cumsum(x[, assets[i]]), type = "l", col = i+1)
-        assetsTitle = paste(assets, collapse = " - ", sep = "")
-        title(main = paste(benchmark, "~", assetsTitle))
-        grid()
-        legend("topleft", legend = c(benchmark, assets), bty = "n", 
-            text.col = 1:(nAssets+1))
+            ylab = ylab, col = "black")  
+        for (i in 1:nAssets) 
+            lines( cumsum(x[, assets[i]]), type = "l", col = i+1)
+        if (labels) {
+            assetsTitle = paste(assets, collapse = " - ", sep = "")
+            title(main = paste(benchmark, "~", assetsTitle))
+            grid()
+            legend("topleft", legend = c(benchmark, assets), bty = "n", 
+                text.col = 1:(nAssets+1))
+        }
     }
     if (which == 1 || which == "all") plot.1(benchmark, assets)
            
@@ -314,14 +323,24 @@ function(x, which = "all", ...)
     function(emaWeights, naWeights, nAssets, horizon, smoothing)
     {
         # Plot 2:
-        ts.plot(rbind(naWeights, emaWeights), xlab = "", 
-            ylab = "Weights Factor", ylim = c(0, 1),
-            col = 2:(nAssets+1), main = "Weights Recommendation")
-        text = paste(
-            "Horizon = ", horizon, 
-            "Months | Smoothing:", smoothing, "Months")
-        mtext(text, line = 0.5, cex = 0.7)
-        grid()
+        if (labels) {
+            xlab = ""
+            ylab = "Weights Factor"
+            main = "Weights Recommendation"
+        } else {
+            xlab = ""
+            ylab = ""
+            main = ""
+        }
+        ts.plot(rbind(naWeights, emaWeights), xlab = xlab, ylab = ylab, 
+            ylim = c(0, 1), col = 2:(nAssets+1), main = main)
+        if (labels) {
+            text = paste(
+                "Horizon = ", horizon, 
+                "Months | Smoothing:", smoothing, "Months")
+            mtext(text, line = 0.5, cex = 0.7)
+            grid()
+        }
     }
     if(which == 2 || which == "all")
         plot.2(emaWeights, naWeights, nAssets, horizon, smoothing)
@@ -334,14 +353,24 @@ function(x, which = "all", ...)
         absSum <- function(x) { sum(abs(x)) }
         diffWeights = apply(diffWeights, 1, FUN = absSum)       
         diffWeights = cbind(diffWeights, rbind(naWeights, diff(emaWeights)))
-        ts.plot(diffWeights, xlab = "", 
-            ylab = "Weights Changes",
-            col = 1:(nAssets+1), main = "Weights Rearrangement")
-        text = paste(
-            "Horizon = ", horizon, 
-            "Months | Smoothing:", smoothing, "Months")
-        mtext(text, line = 0.5, cex = 0.7)
-        grid()
+        if (labels) {
+            xlab = ""
+            ylab = "Weights Changes"
+            main = "Weights Rearrangement"
+        } else {
+            xlab = ""
+            ylab = ""
+            main = ""
+        }
+        ts.plot(diffWeights, xlab = xlab, ylab = ylab,
+            col = 1:(nAssets+1), main = main)
+        if(labels) {
+            text = paste(
+                "Horizon = ", horizon, 
+                "Months | Smoothing:", smoothing, "Months")
+            mtext(text, line = 0.5, cex = 0.7)
+            grid()
+        }
     }
     if (which == 3 || which == "all") 
         plot.3(x, emaWeights, naWeights, nAssets)
@@ -389,13 +418,22 @@ function(x, which = "all", ...)
     {
         MAX = max(cumsum(x[, benchmark]@Data), cumsum(pfReturns.tS@Data))
         MIN = min(cumsum(x[, benchmark]@Data), cumsum(pfReturns.tS@Data))
+        if (labels) {
+            ylab = "Total Percentage Return"
+            main = "Portfolio versus Benchmark"
+        } else {
+            ylab = ""
+            main = ""
+        }
         plot (cumsum(x[, benchmark]), type= "l", col = "black", 
-            ylab = "Total Percentage Return", ylim = c(MIN, MAX))
+            ylab = ylab, ylim = c(MIN, MAX))
         lines(cumsum(pfReturns.tS), type = "l", col = "red", lwd = 2)
-        title(main = "Portfolio versus Benchmark")
-        mtext("red - black", line = 0.5, cex = 0.7) 
         lines(cumsum(bmReturns.tS), col = "orange", lwd = 2)
-        grid()
+        if (labels) {
+            title(main = main)
+            mtext("red - black", line = 0.5, cex = 0.7)  
+            grid()
+        }
     }
     if (which == 4 || which == "all")
         plot.4(x, benchmark, pfReturns.tS, bmReturns.tS)
