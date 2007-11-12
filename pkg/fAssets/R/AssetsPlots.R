@@ -28,29 +28,30 @@
 
 
 ################################################################################
+# FUNCTION:                   TIME SERIES ASSETS SURVEY PLOTS:
+#  .assetsReturnSurvey         Displays time series survey of assets
 # FUNCTION:                   TIME SERIES ASSETS PLOTS:
-# .assetsReturnSurvey         Displays time series survey of assets
 #  assetsReturnPlot            Displays time series of individual assets
 #  assetsCumulatedPlot         Displays time series of individual assets
 #  assetsSeriesPlot            Displays time series of individual assets
 #  assetsHistPlot              Displays histograms of individual assets 
 #  .assetsLogDensityPlot       Displays a pdf plot on logarithmic scale 
 #  assetsQQNormPlot            Displays normal qq-plots of individual assets
-# FUNCTION:                   RISK-RETURN PLOTS:
+# FUNCTION:                   MULTIVARIATE RISK PLOTS:
 #  assetsRiskReturnPlot        Displays risk-return giagram of assets 
 #  assetsNIGShapeTrianglePlot  Displays NIG Shape Triangle
-# FUNCTION:                   DENSITY BOX PLOTS:
+# FUNCTION:                   MULTIVARIATE DENSITY BOX PLOTS:
 #  assetsBoxPlot               Producess standard box plots
 #  assetsBoxPercentilePlot     Producess side-by-side box-percentile plots
-# FUNCTION:                   BIVARIATE ASSETS PLOTS:
+# FUNCTION:                   BIVARIATE ASSETS CORRELATION PLOTS:
 #  assetsCorgramPlot           Displays correlations between assets
 #  assetsPairsPlot             Displays pairs of scatterplots of assets
 #  assetsCorTestPlot           Displays and tests pairwise correlations
-# FUNCTION:                   BIVARIATE CORRELATION PLOTS:
+#  assetsCorrelationImage      Displays an image plot of a correlations
+# FUNCTION:                   MULTIVARIATE DEPENDENCY PLOTS:
 #  assetsCorEigenPlot          Displays ratio of the largest two eigenvalues
 #  assetsTreePlot              Displays minimum spanning tree of assets
 #  assetsDendrogramPlot        Displays hierarchical clustering dendrogram
-#  assetsCorrelationImage      Displays an image plot of a correlations
 # FUNCTION:                   SPECIAL SEGMENT PLOTS:
 #  assetsStarsPlot             Draws segment/star diagrams of data sets
 #  assetsBoxStatsPlot          Displays a segment plot of box plot statistics
@@ -73,6 +74,16 @@ function(x, col = "steelblue", ...)
 {   
     # Description:
     #   Displays time series survey of assets
+    
+    # Arguments:
+    #   x - an object of class 'timeSeries'
+    
+    # Details:
+    #   The assets return survey includes the following plots:
+    #       assetsReturnPlot()
+    #       assetsCumulatedPlot()   
+    #       assetsHistPlot()
+    #       assetsQQNormPlot() 
     
     # FUNCTION:
     
@@ -746,6 +757,98 @@ function(x, labels = TRUE, ...)
 }
 
 
+# ------------------------------------------------------------------------------
+
+   
+.assetsCorrelationImage <-
+function(R,
+show = c("cor", "test"),
+use = c("pearson", "kendall", "spearman"),
+labels = TRUE, abbreviate = 3, ...)
+{   # @author Sandrine Dudoit, sandrine@stat.berkeley.edu, from "SMA" library
+    # @author modified by Peter Carl
+    # @author extended by Diethelm Wuertz
+
+    # Description:
+    #   Creates an image plot of a correlations
+
+    # Arguments:
+    #   R - data to be evaluated against its own members
+
+    # Details:
+    #   uses relative colors to indicate the strength of the pairwise 
+    #   correlation.
+
+    # Examples:
+    #   R = as.timeSeries(data(edhec))
+    #   palette(.rgPalette(NCOL(edhec)))
+    #   correlationImage(edhec)
+
+    # FUNCTION:
+    
+    # Match Arguments:
+    show = match.arg(show)
+    use = match.arg(use)
+    method = match.arg(method)
+    
+    # Handle Missing Values:
+    R = na.omit(R, ...)
+    
+    # Abbreviate Instrument Names:
+    Names = colnames(R) = substring(colnames(R), 1, abbreviate)  
+
+    # Compute Correlation Matrix:
+    R = as.matrix(R)
+    n = NCOL(R)
+    if (method == "cor") {
+        corr <- cor(R, method = use) 
+        if (show == "test") {
+            test = corr*NA 
+            for ( i in 1:n)
+                for (j in 1:n)
+                    test[i,j] = cor.test(R[,i], R[,j], method = use)$p.value
+        }
+    } else if (method == "robust") {
+        stop("robust: Not Yet Implemented")  
+    } else if (method == "shrink") {
+        stop("robust: Not Yet Implemented")  
+    }
+    
+    # Plot Image:
+    image(x = 1:n, y = 1:n, z = corr[, n:1], col = 1:n,
+        axes = FALSE, main = "", xlab = "", ylab = "", ...)
+    
+    # Add Text Values:
+    if (show == "cor") X = t(corr) else X = t(test)
+    coord = grid2d(1:n, 1:n)   
+    for (i in 1:(n*n)) {
+        text(coord$x[i], coord$y[n*n+1-i], 
+            round(X[coord$x[i], coord$y[i]], digits = 2), 
+            col = "white", cex = 0.7)
+    }
+        
+    # Add Axis Labels:
+    if(labels) {
+        axis(2, at = n:1, labels = Names, las = 2)
+        axis(1, at = 1:n, labels = Names, las = 2)
+        Names = c(
+            pearson = "Pearson", kendall = "Kendall", spearman = "Spearman")
+        if (show == "test") Test = "Test" else Test = ""
+        title(main = 
+            paste(Names[use], "Corrleation ", Test, " Image", sep = ""))
+        mText = paste("Method:", method)
+        mtext(mText, side = 4, adj = 0, col = "grey", cex = 0.7)
+        # Box:
+    } 
+    
+    # Add Box:
+    box()
+       
+    # Return Value:
+    invisible()
+}
+
+
 ################################################################################
 
 
@@ -961,98 +1064,6 @@ function(x, method = c(dist = "euclidian", clust = "complete"))
     
     # Return Value:
     invisible(list(dist = DIST, hclust = ans))
-}
-
-
-# ------------------------------------------------------------------------------
-
-   
-.assetsCorrelationImage <-
-function(R,
-show = c("cor", "test"),
-use = c("pearson", "kendall", "spearman"),
-labels = TRUE, abbreviate = 3, ...)
-{   # @author Sandrine Dudoit, sandrine@stat.berkeley.edu, from "SMA" library
-    # @author modified by Peter Carl
-    # @author extended by Diethelm Wuertz
-
-    # Description:
-    #   Creates an image plot of a correlations
-
-    # Arguments:
-    #   R - data to be evaluated against its own members
-
-    # Details:
-    #   uses relative colors to indicate the strength of the pairwise 
-    #   correlation.
-
-    # Examples:
-    #   R = as.timeSeries(data(edhec))
-    #   palette(.rgPalette(NCOL(edhec)))
-    #   correlationImage(edhec)
-
-    # FUNCTION:
-    
-    # Match Arguments:
-    show = match.arg(show)
-    use = match.arg(use)
-    method = match.arg(method)
-    
-    # Handle Missing Values:
-    R = na.omit(R, ...)
-    
-    # Abbreviate Instrument Names:
-    Names = colnames(R) = substring(colnames(R), 1, abbreviate)  
-
-    # Compute Correlation Matrix:
-    R = as.matrix(R)
-    n = NCOL(R)
-    if (method == "cor") {
-        corr <- cor(R, method = use) 
-        if (show == "test") {
-            test = corr*NA 
-            for ( i in 1:n)
-                for (j in 1:n)
-                    test[i,j] = cor.test(R[,i], R[,j], method = use)$p.value
-        }
-    } else if (method == "robust") {
-        stop("robust: Not Yet Implemented")  
-    } else if (method == "shrink") {
-        stop("robust: Not Yet Implemented")  
-    }
-    
-    # Plot Image:
-    image(x = 1:n, y = 1:n, z = corr[, n:1], col = 1:n,
-        axes = FALSE, main = "", xlab = "", ylab = "", ...)
-    
-    # Add Text Values:
-    if (show == "cor") X = t(corr) else X = t(test)
-    coord = grid2d(1:n, 1:n)   
-    for (i in 1:(n*n)) {
-        text(coord$x[i], coord$y[n*n+1-i], 
-            round(X[coord$x[i], coord$y[i]], digits = 2), 
-            col = "white", cex = 0.7)
-    }
-        
-    # Add Axis Labels:
-    if(labels) {
-        axis(2, at = n:1, labels = Names, las = 2)
-        axis(1, at = 1:n, labels = Names, las = 2)
-        Names = c(
-            pearson = "Pearson", kendall = "Kendall", spearman = "Spearman")
-        if (show == "test") Test = "Test" else Test = ""
-        title(main = 
-            paste(Names[use], "Corrleation ", Test, " Image", sep = ""))
-        mText = paste("Method:", method)
-        mtext(mText, side = 4, adj = 0, col = "grey", cex = 0.7)
-        # Box:
-    } 
-    
-    # Add Box:
-    box()
-       
-    # Return Value:
-    invisible()
 }
 
 

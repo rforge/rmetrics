@@ -86,7 +86,7 @@ function()
     X = as.timeSeries(data(berndtInvest))
     par(mfrow = c(2,2))
     par(ask = FALSE)
-    assetsQQNormPlot(X, which = c(2, 4, 11, 13))
+    assetsQQNormPlot(X, which = c(2, 4, 11, 13))          ### CHECK which arg !!
     
     # Return Value:
     return()
@@ -267,8 +267,8 @@ function()
     par(mfrow = c(1, 1))
 
     # Plot:   
-    assetsDendogramPlot(DJ30)
-    assetsDendogramPlot(LPP2005)
+    assetsDendrogramPlot(DJ30)
+    assetsDendrogramPlot(LPP2005)                        ### CHECK side text !!!
     
     # Return Value:
     return()
