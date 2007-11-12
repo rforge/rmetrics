@@ -15,18 +15,17 @@
 
 05.  fBasics
 
+06.  fGarch
 
-05.  fGarch
+07.  fMultivar
 
-06.  fMultivar
+08.  fExtremes
 
-07.  fExtremes
+09.  fCopulae
 
-08.  fCopulae
+10.  fOptions
 
-09.  fOptions
-
-10.  fPortfolio
+11.  fPortfolio
 
 
 # ------------------------------------------------------------------------------
