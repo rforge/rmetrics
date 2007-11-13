@@ -104,7 +104,7 @@ function(font = par('font'), cex = 0.7)
     #   Shows a table of plot characters.
     
     # Example:
-    #   plotcharacterTable()
+    #   symbolTable()
     
     # Author:
     #   Unknown, code found on the internet.

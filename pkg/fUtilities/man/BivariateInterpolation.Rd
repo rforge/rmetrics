@@ -132,6 +132,7 @@ krigeInterp(x, y = NULL, z = NULL, gridPoints = 21,
 \dontrun{
 ## akimaInterp -
    # Akima Interpolation:    
+   require(akima)
    set.seed(1953)
    x = runif(999) - 0.5
    y = runif(999) - 0.5
