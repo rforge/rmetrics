@@ -540,6 +540,47 @@ function(year = currentYear) {
 # ------------------------------------------------------------------------------
 
 
+JPVernalEquinox <- 
+function(year = currentYear) 
+{
+    # Author:
+    #   Parlamis Franklin wrote:
+    #   It's me again, with Japanese calendar minutiae I'm sure you've all  
+    #   been dying to brush up on. The fCalendar functions don't include 
+    #   the Japanese Vernal Equinox holiday. this is perhaps because there 
+    #   is no easy way to calculate it. at any rate, here's a function I
+    #   wrote to fill the gap.
+    
+    # Notes:
+    #   Origin and End Date data from 
+    #   http://aa.usno.navy.mil/data/docs/EarthSeasons.html
+    #   The function Vernal.Equinox delivers correct values at the  
+    #   endpoints of the above data. There may be minor variances 
+    #   (+/- a few minutes) in the intermediate values, because the 
+    #   function linearly approximates a phenomenon that is apparently
+    #   nonlinear in recorded time.
+    
+    Equinox.Origin <- timeCalendar(1992, 3, 20, 8, 48, 0, FinCenter = "GMT")
+    Data.EndDate <- timeCalendar(2020, 3, 20, 3, 49, 0, FinCenter = "GMT")
+    Total.Seconds <- as.numeric(Data.EndDate-Equinox.Origin)*24*60*60
+    Mean.Annual.Seconds <- Total.Seconds / (atoms(Data.EndDate)$Y -
+        atoms(Equinox.Origin)$Y)
+    Vernal.Equinox <- function(year) 
+    {
+        Equinox.Origin + 
+        unclass((year-atoms(Equinox.Origin)$Y)*Mean.Annual.Seconds)
+    }
+    
+    # Nota bene: JP Vernal Equinox is celebrated when the equinox  
+    #   occurs in the Japanese time zone (see, e.g., 2006, where GMT 
+    #   Vernal Equinox is on 20 March, but Japanese Equinox holiday is 
+    #   21 March)
+    
+    # Return Value:
+    trunc(timeDate(as.character(Vernal.Equinox(year)), FinCenter = "Tokyo"))
+}
+
+
 JPNewYearsDay = 
 function(year = currentYear) {
     ans = year*10000 + 0101
