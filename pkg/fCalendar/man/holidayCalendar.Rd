@@ -4,6 +4,7 @@
 
 \alias{holidayNYSE}
 \alias{holidayZURICH}
+\alias{holidayTSX}
 
 
 \title{Holiday Calendars}
@@ -19,6 +20,7 @@
 \usage{
 holidayNYSE(year = currentYear)
 holidayZURICH(year = currentYear)
+holidayTSX(year = currentYear)
 }
 
 
@@ -34,7 +36,8 @@ holidayZURICH(year = currentYear)
 \value{
 
     \code{holidayNYSE}\cr
-    \code{holidayZURICH}
+    \code{holidayZURICH}\cr
+    \code{holidayTSX}
     \cr
     return an holiday calendar as an object of class \code{timeDate}. 
 

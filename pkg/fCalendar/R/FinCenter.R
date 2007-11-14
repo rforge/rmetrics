@@ -218,6 +218,7 @@ function(pattern = ".*")
     "America/Eastern", "America/Edmonton", "America/Indianapolis",
     "America/LosAngeles", "America/MexicoCity", "America/Montreal",
     "America/Nassau", "America/NewYork", "America/Pacific",
+    "America/Toronto",
     "America/Vancouver", "America/Winnipeg", "Asia/Bahrain",
     "Asia/Bangkok", "Asia/Beirut", "Asia/Calcutta",
     "Asia/Dubai", "Asia/HongKong", "Asia/Istanbul",

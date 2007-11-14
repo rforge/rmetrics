@@ -33,14 +33,8 @@
 #  holiday                   Returns a holiday date of G7 and CH 
 #  holidayNYSE               Returns holidays for full-day NYSE calendar
 #  holidayZURICH             Returns holidays for ZURICH calendar
+#  holidayTSX                Returns holidays for TSX calendar
 ################################################################################
-
-
-################################################################################
-# FUNCTION:                 HOLIDAY CALENDAR FUNCTIONS:
-#  holiday                   Returns a holiday date of G7 and CH 
-#  holidayNYSE               Returns holidays for full-day NYSE calendar
-#  holidayZURICH             Returns holidays for ZURICH calendar
 
 
 holiday = 
@@ -277,9 +271,13 @@ function(year = currentYear)
     #       CHConfederationDay  Aug, 1st
     #       CHKnabenschiessen   2nd Saturday to Monday in Sep
     
+    # Example:
+    #   holidayTSX(2008)
+    #   holidayTSX(2008)
+    #   holidayTSX(2006:2008)
+
     # FUNCTION:
     
-
     # Iterate Years: 
     holidays = c(
         NewYearsDay(year),
@@ -304,6 +302,82 @@ function(year = currentYear)
 
     # Return Value:
     holidays 
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+holidayTSX <- 
+function (year = currentYear) 
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   TSX Holiday Calendar
+    
+    # In Canada, the first Monday in August is generally a holiday but it 
+    # is known by different names in different areas. In Rmetrics it is
+    # called CACivicProvincialHoliday()  
+    
+    # TSX Holidays:
+    # http://www.tsx.com/en/market_activity/market_hours.html
+    #  
+    #    * 2007:
+    #    * New Year's Day - January 1, 2007
+    #    * Good Friday - April 6, 2007
+    #    * Victoria Day - May 21, 2007
+    #    * Canada Day - July 2, 2007 (for July 1 holiday)
+    #    * Civic Day - August 6, 2007
+    #    * Labour Day - September 3, 2007
+    #    * Thanksgiving Day - October 8, 2007
+    #    * Christmas Eve - markets close at 1:00 p.m. ET
+    #    * Christmas Day - December 25, 2007
+    #    * Boxing Day - December 26, 2007
+    #    
+    #    * 2008:
+    #    * New Year's Day - January 1, 2008
+    #    * Family Day - February 18, 2008
+    #    * Good Friday - March 21, 2008
+    #    * Victoria Day - May 19, 2008
+    #    * Canada Day - July 1, 2008
+    #    * Civic Day - August 4, 2008
+    #    * Labour Day - September 1, 2008
+    #    * Thanksgiving Day - October 13, 2008
+    #    * Christmas Day - December 25, 2008
+    #    * Boxing Day - December 26, 2008
+
+    # Trading Hours:
+    #   Toronto Stock Exchange and TSX Venture Exchange have trading hours 
+    #   of 9:30 a.m. to 4:00 p.m. ET, Monday to Friday, with the exception 
+    #   of the stock market holidays listed below. There is also an extended 
+    #   session for market participants (Participating Organizations and Members) 
+    #   from 4:15 to 5:00 p.m. ET each trading day.
+    
+    # FUNCTION:
+    
+    # Holidays - Years before 2007 are not checked out ...
+    holidays = c(
+        NewYearsDay(year), 
+        GoodFriday(year), 
+        CAVictoriaDay(year),
+        CACanadaDay(year),
+        CACivicProvincialHoliday(year),
+        CAThanksgivingDay(year), 
+        ChristmasDay(year),
+        BoxingDay(year))
+    for (y in year)
+        if (y >= 2008) holidays = c(holidays, CAFamilyDay(year))
+    holidays = sort(holidays)
+    
+    # Holidays falling on Saturdays and Sundays:
+    holidays =  holidays + (1-isWeekday(holidays))*24*3600
+    holidays =  holidays + (1-isWeekday(holidays))*24*3600
+
+    # Add Financial Center:
+    holidays@FinCenter = "Toronto"
+    
+    # Return Value:
+    holidays
 }
 
 

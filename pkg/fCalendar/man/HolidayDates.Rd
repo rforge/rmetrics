@@ -82,6 +82,7 @@
 \alias{USCPulaskisBirthday}
 \alias{USGoodFriday}
 \alias{CAVictoriaDay}
+\alias{CAFamilyDay}
 \alias{CACanadaDay}
 \alias{CACivicProvincialHoliday}
 \alias{CALabourDay}

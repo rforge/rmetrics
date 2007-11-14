@@ -82,6 +82,7 @@
 \alias{Taipei}
 \alias{Tallinn}
 \alias{Tehran}
+\alias{Toronto}
 \alias{Tokyo}
 \alias{Tunis}
 \alias{Vaduz}

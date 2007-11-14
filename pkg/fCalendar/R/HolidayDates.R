@@ -495,6 +495,22 @@ function(year = currentYear) {
     ans = .on.or.before(year, 5, 24, 1) 
     timeDate(as.character(ans)) } 
     
+CAFamilyDay =
+function(year = currentYear)
+{   # Description:
+    #   Adds the new Family Day
+    # Note:
+    #   Check ...
+    #   www.sbhlawyers.com/media/ELD%20Oct%2019%202007%20Public%20Holidays%20and%20Family%20Day.pdf
+    #   Family Day will fall on the third Monday of 
+    #       every February, beginning in 2008.
+    # Family Day:
+    charvec = paste(year, "02", "01", sep = "-")
+    ans = timeNthNdayInMonth(charvec, nday = 1, nth = 3)
+    # Return Value:
+    ans
+} 
+    
 CACanadaDay = 
 function(year = currentYear) {
     ans = year*10000 + 0701
