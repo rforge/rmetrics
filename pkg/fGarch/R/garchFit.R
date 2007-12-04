@@ -27,7 +27,7 @@
 #   see Rmetrics's copyright file
 
 
-################################################################################
+##############################################################################
 # FUNCTION:               PARAMETER ESTIMATION:    
 #  garchFit                Fits GARCH and APARCH processes
 #  .garchFit               ... old Version
@@ -39,7 +39,7 @@
 #   .garchLLH               Computes log-likelihood function
 #   .garchHessian           Computes Hessian matrix numerically
 #  .garchNames              Slot names, @fit slot, parameters and controls
-################################################################################
+##############################################################################
   
 
 
