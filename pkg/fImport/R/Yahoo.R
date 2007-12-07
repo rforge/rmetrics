@@ -32,7 +32,8 @@
 #  yahooImport           Downloads market data from Yahoo's web site  
 #  yahooSeries           Easy to use download from Yahoo  
 # FUNCTION:             IMPORT STATISTICS - EXPERIMENTAL:
-#  keystatsImport        Downloads key statistics from Yahoo's web site                    S-PLUS: Splits character vector into substrings
+#  keystatsImport        Downloads key statistics from Yahoo's web site
+#  briefingImport        Downloads briefings from Yahoo's Internet site
 ################################################################################
 
 
@@ -46,7 +47,8 @@ yahooImport =
 function (query, file = "tempfile", 
 source = "http://chart.yahoo.com/table.csv?", save = FALSE, sep = ";", 
 swap = 20, try = TRUE)
-{   # A function implemented by Diethelm Wuertz
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Example:
     #   IBM SHARES, test 19/20 century change 01-12-1999 -- 31-01-2000:
@@ -136,7 +138,8 @@ function(symbols = c("^DJI", "IBM"), from = NULL, to = NULL,
 nDaysBack = 365, quote = c("Open", "High", "Low", "Close", "Volume"), 
 aggregation = c("d", "w", "m"), returnClass = c("timeSeries", "ts", 
 "matrix", "data.frame"), getReturns = FALSE, ...)
-{   # A function implemented by Diethelm Wuertz
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Downloads easily time series data from Yahoo
@@ -238,7 +241,8 @@ aggregation = c("d", "w", "m"), returnClass = c("timeSeries", "ts",
 keystatsImport =  
 function (query, file = "tempfile", source = "http://finance.yahoo.com/q/ks?s=", 
 save = FALSE, try = TRUE) 
-{   # A function implemented by Diethelm Wuertz and Matthew C.Keller
+{   
+    # A function implemented by Diethelm Wuertz and Matthew C.Keller
 
     # Description:
     #   Downloads Key Statistics on shares from Yahoo's Internet site
@@ -335,10 +339,11 @@ save = FALSE, try = TRUE)
 # ------------------------------------------------------------------------------
 
 
-.briefingImport =  
+briefingImport =  
 function (query, file = "tempfile", source = "http://finance.yahoo.com/q/ud?s=", 
 save = FALSE, try = TRUE) 
-{   # A function implemented by Diethelm Wuertz and Matthew C.Keller
+{   
+    # A function implemented by Diethelm Wuertz and Matthew C.Keller
 
     # Description:
     #   Downloads Key Statistics on shares from Yahoo's Internet site
