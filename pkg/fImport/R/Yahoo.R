@@ -349,8 +349,8 @@ save = FALSE, try = TRUE)
     #   Downloads Key Statistics on shares from Yahoo's Internet site
     
     # Example:
-    #   .briefingImport("YHOO")
-    #   .briefingImport("IBM")
+    #   briefingImport("YHOO")
+    #   briefingImport("IBM")
     #   DEBUG:
     #       query = "IBM"
     #       file = "tempfile"; source = "http://finance.yahoo.com/q/ks?s="
@@ -361,7 +361,7 @@ save = FALSE, try = TRUE)
     # Download:
     if (try) {
         # First try if the Internet can be accessed:
-        z = try(.briefingImport(file = file, source = source, 
+        z = try(briefingImport(file = file, source = source, 
             query = query, save = save, try = FALSE))
         if (class(z) == "try-error" || class(z) == "Error") {
             return("No Internet Access")
