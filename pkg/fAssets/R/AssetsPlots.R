@@ -28,99 +28,47 @@
 
 
 ################################################################################
-# FUNCTION:                   TIME SERIES ASSETS SURVEY PLOTS:
-#  .assetsReturnSurvey         Displays time series survey of assets
 # FUNCTION:                   TIME SERIES ASSETS PLOTS:
 #  assetsReturnPlot            Displays time series of individual assets
 #  assetsCumulatedPlot         Displays time series of individual assets
 #  assetsSeriesPlot            Displays time series of individual assets
 #  assetsHistPlot              Displays histograms of individual assets 
-#  .assetsLogDensityPlot       Displays a pdf plot on logarithmic scale 
+#  assetsLogDensityPlot        Displays a pdf plot on logarithmic scale 
 #  assetsQQNormPlot            Displays normal qq-plots of individual assets
 # FUNCTION:                   MULTIVARIATE RISK PLOTS:
 #  assetsRiskReturnPlot        Displays risk-return giagram of assets 
 #  assetsNIGShapeTrianglePlot  Displays NIG Shape Triangle
-# FUNCTION:                   MULTIVARIATE DENSITY BOX PLOTS:
-#  assetsBoxPlot               Producess standard box plots
-#  assetsBoxPercentilePlot     Producess side-by-side box-percentile plots
-# FUNCTION:                   BIVARIATE ASSETS CORRELATION PLOTS:
-#  assetsCorgramPlot           Displays correlations between assets
+# FUNCTION:                   BIVARIATE HISTOGRAM PLOTS:
+#  assetsHistPairsPlot         Displays bivariate Histogram Plot
+# FUNCTION:                   MULTIPLE DENSITY BOX PLOTS:
+#  assetsBoxPlot               Displays standard box plots
+#  assetsBoxPercentilePlot     Displays side-by-side box-percentile plots
+# FUNCTION:                   CORRELATION PLOTS:
 #  assetsPairsPlot             Displays pairs of scatterplots of assets
+#  assetsCorgramPlot           Displays correlations between assets
 #  assetsCorTestPlot           Displays and tests pairwise correlations
-#  assetsCorrelationImage      Displays an image plot of a correlations
-# FUNCTION:                   MULTIVARIATE DEPENDENCY PLOTS:
-#  assetsCorEigenPlot          Displays ratio of the largest two eigenvalues
-#  assetsTreePlot              Displays minimum spanning tree of assets
+#  assetsCorImagePlot          Displays an image plot of a correlations
+# FUNCTION:                   DEPENDENCY PLOTS:
 #  assetsDendrogramPlot        Displays hierarchical clustering dendrogram
-# FUNCTION:                   SPECIAL SEGMENT PLOTS:
+#  assetsCorEigenPlot          Displays ratio of the largest two eigenvalues
+#  assetsTreePlot              Displays a minimum spanning tree of assets
+# FUNCTION:                   SEGMENT PLOTS:
 #  assetsStarsPlot             Draws segment/star diagrams of data sets
 #  assetsBoxStatsPlot          Displays a segment plot of box plot statistics
 #  assetsMomentsPlot           Displays a segment plot of distribution moments
 #  assetsNIGFitPlot            Displays a segment plot NIG parameter estimates
+# FUNCTION:                   DESCRPTION:
+#  .hist                       Show histogram with guaranteed number of bins
 ################################################################################
 
 
 ################################################################################
-# FUNCTION:                   TIME SERIES ASSETS PLOTS:
-#  .assetsReturnSurvey         Displays time series survey of assets
-#  assetsReturnPlot            Displays a return series of individual assets
-#  assetsCumulatedPlot         Displays a cumulated return series of  assets
-#  assetsHistPlot              Displays a return histogram of individual assets 
+#  assetsReturnPlot            Displays time series of individual assets
+#  assetsCumulatedPlot         Displays time series of individual assets
+#  assetsSeriesPlot            Displays time series of individual assets
+#  assetsHistPlot              Displays histograms of individual assets 
+#  assetsLogDensityPlot        Displays a pdf plot on logarithmic scale 
 #  assetsQQNormPlot            Displays normal qq-plots of individual assets
-
-
-.assetsReturnSurvey = 
-function(x, col = "steelblue", ...)
-{   
-    # Description:
-    #   Displays time series survey of assets
-    
-    # Arguments:
-    #   x - an object of class 'timeSeries'
-    
-    # Details:
-    #   The assets return survey includes the following plots:
-    #       assetsReturnPlot()
-    #       assetsCumulatedPlot()   
-    #       assetsHistPlot()
-    #       assetsQQNormPlot() 
-    
-    # FUNCTION:
-    
-    # Settings:
-    assetNames = colnames(x)
-    nAssets = ncol(x)
-    if (length(col) == 1) col = rep(col, times = nAssets)
-    
-    # Survey:
-    for (i in 1:nAssets) {
-        # Return Plot:
-        assetsReturnPlot(x[, i], col[i], labels = FALSE, ...)
-        title(main = assetNames[i], xlab = "", ylab = "Returns")
-        mtext("Returns", line = 0.5, col = "black", cex = 0.7)
-        
-        # Cumulated Return Plot:
-        assetsCumulatedPlot(x[, i], col[i], ...)
-        mtext("Cumulated Returns", line = 0.5, col = "black", cex = 0.7)
-        
-        # Histogram Plot:
-        assetsHistPlot(x[, i], col = col[i], ...)
-        title(main = assetNames[i], xlab = "Returns", ylab = "Density")
-        mtext("Histogram of Returns", col = "black", line = 0.5, cex = 0.7)
-        
-        # Quantile-Quantile Plot:
-        assetsQQNormPlot(x[, i], scale = FALSE, col = col[i], ...)
-        title(main = assetNames[i], xlab = "Returns", ylab = "Density")
-        mtext("Normal Quantile-Quantile Plot", col = "black", 
-            line = 0.5, cex = 0.7)
-    }
-    
-    # Return Value:
-    invisible()
-} 
-
-
-# ------------------------------------------------------------------------------
 
 
 assetsReturnPlot =
@@ -244,20 +192,13 @@ function(x, col = "steelblue", skipZeros = FALSE, ...)
 # ------------------------------------------------------------------------------
 
 
-.assetsLogDensityPlot = 
+assetsLogDensityPlot = 
 function(x, estimator = c("hubers", "sample", "both"), 
-doplot = TRUE, labels = TRUE, ...)
+labels = TRUE, ...)
 {   # A function implemented by Diethelm Wuertz
     
     # Description:
     #   Displays a pdf plot on logarithmic scale 
-    
-    # Details:
-    #   Returns a pdf plot on a lin-log scale in comparison to a Gaussian 
-    #   density plot Two type of fits are available: a normal density with
-    #   fitted sample mean and sample standard deviation, or a normal 
-    #   density with Hubers robust mean and standard deviation corfrected
-    #   by the bandwidth of the Kernel estimator.
     
     # Arguments:
     #   x - an uni- or multivariate return series of class 'timeSeries' 
@@ -271,11 +212,19 @@ doplot = TRUE, labels = TRUE, ...)
     #       title and labels addet to the plot?
     #   ... - 
     
+    # Details:
+    #   Returns a pdf plot on a lin-log scale in comparison to a Gaussian 
+    #   density plot Two type of fits are available: a normal density with
+    #   fitted sample mean and sample standard deviation, or a normal 
+    #   density with Hubers robust mean and standard deviation corfrected
+    #   by the bandwidth of the Kernel estimator.
+    
     # FUNCTION:
     
     # Settings:
     if (!is.timeSeries(x)) x = as.timeSeries(x)
     Units = colnames(x)
+    doplot = TRUE
     
     # Select Type:
     estimator = match.arg(estimator)
@@ -339,8 +288,7 @@ doplot = TRUE, labels = TRUE, ...)
               
             # Grid:
             if (labels) grid()
-        }
-        
+        }    
     }
     
     # Return Value:
@@ -384,6 +332,9 @@ function(x, col = "steelblue", skipZeros = FALSE, ...)
 
 
 ################################################################################
+# FUNCTION:                   MULTIVARIATE RISK PLOTS:
+#  assetsRiskReturnPlot        Displays risk-return giagram of assets 
+#  assetsNIGShapeTrianglePlot  Displays NIG Shape Triangle
 
 
 # assetsQQNIGPlot ...
@@ -514,9 +465,11 @@ function(x, col = "steelblue", ...)
 
 
 ################################################################################
+# FUNCTION:                   BIVARIATE HISTOGRAM PLOTS:
+#  assetsHistPairsPlot         Displays bivariate Histogram Plot
 
 
-.assetsHistPairsPlot = 
+assetsHistPairsPlot = 
 function(x, bins = 30, method = c("square", "hex"), ...) 
 {   # A function implemented by Diethelm Wuertz
 
@@ -527,6 +480,9 @@ function(x, bins = 30, method = c("square", "hex"), ...)
     
     # Match Arguments:
     method = match.arg(method)
+    
+    # Check:
+    stopifnot(ncol(x) == 2)
     
     # Histogram Plot:
     X = as.vector(x[, 1])
@@ -546,6 +502,9 @@ function(x, bins = 30, method = c("square", "hex"), ...)
 
 
 ################################################################################
+# FUNCTION:                   MULTIPLE DENSITY BOX PLOTS:
+#  assetsBoxPlot               Producess standard box plots
+#  assetsBoxPercentilePlot     Producess side-by-side box-percentile plots
 
 
 assetsBoxPlot =
@@ -553,7 +512,7 @@ function(x, col = "bisque", ...)
 {   # A function Implemented by Diethelm Wuertz
 
     # Description:
-    #   Producess standard box plots
+    #   Displays standard box plots
     
     # Arguments:
     #   x - a 'timeSeries' object or any other rectangular object
@@ -586,7 +545,12 @@ function(x, col = "bisque", ...)
 {   # A modified copy from Hmisc
 
     # Description:
-    #   Producess side-by-side box-percentile plots
+    #   Displays side-by-side box-percentile plots
+    
+    # Arguments:
+    #   x - a 'timeSeries' object or any other rectangular object
+    #       which cab be transformed by the function as.matrix into 
+    #       a numeric matrix.
     
     # Details:
     #   Box-percentile plots are similiar to boxplots, except box-percentile 
@@ -598,11 +562,6 @@ function(x, col = "bisque", ...)
     #   observations that are more extreme in that direction. As in boxplots, 
     #   the median, 25th and 75th percentiles are marked with line segments 
     #   across the box. [Source: Hmisc]
-    
-    # Arguments:
-    #   x - a 'timeSeries' object or any other rectangular object
-    #       which cab be transformed by the function as.matrix into 
-    #       a numeric matrix.
     
     # FUNCTION:
     
@@ -670,6 +629,11 @@ function(x, col = "bisque", ...)
 
 
 ################################################################################
+# FUNCTION:                   CORRELATION PLOTS:
+#  assetsPairsPlot             Displays pairs of scatterplots of assets
+#  assetsCorgramPlot           Displays correlations between assets
+#  assetsCorTestPlot           Displays and tests pairwise correlations
+#  assetsCorImagePlot          Displays an image plot of a correlations
 
 
 assetsPairsPlot =
@@ -693,6 +657,63 @@ function(x, labels = TRUE, ...)
     
     # Plot:
     pairs(x, ...)
+        
+    # Return Value:
+    invisible()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+assetsCorgramPlot =
+function(x, labels = TRUE, method = c("pie", "shade", "hist"), ...)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Displays correlations between assets
+    
+    # Arguments:
+    #   x - a timeSeries object or any other rectangular object
+    #       which can be transformed by the function as. matrix
+    #       into a numeric matrix.
+    #   labels - a logical flag. Should default labels be printed?
+    #       Not implemented.
+    
+    # Example:
+    #   assetsCorgramPlot(x=100*as.timeSeries(data(LPP2005REC)))
+
+    # FUNCTION:
+    
+    # Settings:
+    method <<- match.arg(method)
+    stopifnot(is.timeSeries(x))
+    x = seriesData(x)
+    
+    # Internal Function:
+    .panel.lower = function(x, y, ...) 
+    {
+        if (method[1] == "pie") {
+            .panel.pie(x, y, ...)
+            .panel.pts(x, y, ...) 
+        } else if (method[1] == "shade") {
+            .panel.shade(x, y, ...)
+            .panel.pts(x, y, ...) 
+        } else if (method[1] == "hist") {
+            .panel.shade(x, y, ...)
+            .panel.hist(x, y, ...)
+        }
+    } 
+    .panel.upper = function(x, y, ...) 
+    {
+        .panel.ellipse(x, y, ...)
+    }
+        
+    # Plot Corellogram - Pies and Ellipses:    
+    .corrgram(x, 
+        lower.panel = .panel.lower,
+        upper.panel = .panel.upper, 
+        text.panel = .panel.txt, ...)
         
     # Return Value:
     invisible()
@@ -760,12 +781,11 @@ function(x, labels = TRUE, ...)
 # ------------------------------------------------------------------------------
 
    
-.assetsCorrelationImage <-
-function(R,
-show = c("cor", "test"),
-use = c("pearson", "kendall", "spearman"),
+assetsCorImagePlot <-
+function(x, show = c("cor", "test"), use = c("pearson", "kendall", "spearman"),
 labels = TRUE, abbreviate = 3, ...)
-{   # @author Sandrine Dudoit, sandrine@stat.berkeley.edu, from "SMA" library
+{   
+    # @author Sandrine Dudoit, sandrine@stat.berkeley.edu, from "SMA" library
     # @author modified by Peter Carl
     # @author extended by Diethelm Wuertz
 
@@ -785,6 +805,9 @@ labels = TRUE, abbreviate = 3, ...)
     #   correlationImage(edhec)
 
     # FUNCTION:
+    
+    # Settings:
+    R = x
     
     # Match Arguments:
     show = match.arg(show)
@@ -850,103 +873,49 @@ labels = TRUE, abbreviate = 3, ...)
 
 
 ################################################################################
+# FUNCTION:                   DEPENDENCY PLOTS:
+#  assetsDendrogramPlot        Displays hierarchical clustering dendrogram
+#  assetsCorEigenPlot          Displays ratio of the largest two eigenvalues
+#  assetsTreePlot              Displays a minimum spanning tree of assets
 
 
-assetsCorgramPlot =
-function(x, labels = TRUE, method = c("pie", "shade", "hist"), ...)
+assetsDendrogramPlot =
+function(x, method = c(dist = "euclidian", clust = "complete"))
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Displays correlations between assets
+    #   Displays hierarchical clustering dendrogram
     
-    # Arguments:
-    #   x - a timeSeries object or any other rectangular object
-    #       which can be transformed by the function as. matrix
-    #       into a numeric matrix.
-    #   labels - a logical flag. Should default labels be printed?
-    #       Not implemented.
-    
-    # Example:
-    #   assetsCorgramPlot(x=100*as.timeSeries(data(LPP2005REC)))
-
     # FUNCTION:
     
-    # Settings:
-    method <<- match.arg(method)
-    stopifnot(is.timeSeries(x))
-    x = seriesData(x)
-    
-    # Internal Function:
-    .panel.lower = function(x, y, ...) 
-    {
-        if (method[1] == "pie") {
-            .panel.pie(x, y, ...)
-            .panel.pts(x, y, ...) 
-        } else if (method[1] == "shade") {
-            .panel.shade(x, y, ...)
-            .panel.pts(x, y, ...) 
-        } else if (method[1] == "hist") {
-            .panel.shade(x, y, ...)
-            .panel.hist(x, y, ...)
-        }
-    } 
-    .panel.upper = function(x, y, ...) 
-    {
-        .panel.ellipse(x, y, ...)
+    # Compute Distance Matrix:
+    if (class(x) == "dist") {
+        DIST = x
+    } else {
+        X = t(seriesData(x))
+        DIST = dist(X, method[1])
     }
-        
-    # Plot Corellogram - Pies and Ellipses:    
-    .corrgram(x, 
-        lower.panel = .panel.lower,
-        upper.panel = .panel.upper, 
-        text.panel = .panel.txt, ...)
-        
+
+    # Hierarchical Clustering:
+    ans = hclust(DIST, method = method[2]) 
+    
+    # Plot Dendrogram:
+    # main = substitute(x)
+    plot(ans, xlab = "", main = "", sub = "")
+    mtext(paste(
+        "Distance Method:", method[1], " | ",
+        "Clustering Method:", method[2]),
+        side = 4, line = 0.1, adj = 0, col = "darkgrey", cex = 0.7)  
+    box()
+    
     # Return Value:
-    invisible()
+    invisible(list(dist = DIST, hclust = ans))
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-.assetsPairCopulaPlot =
-function(x, labels = TRUE, ...)
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Displays NIG Copula between assets
-    
-    # Arguments:
-    #   x - a timeSeries object or any other rectangular object
-    #       which can be transformed by the function as. matrix
-    #       into a numeric matrix.
-    #   labels - a logical flag. Should default labels be printed?
-    #       Not implemented.
-    
-    # Example:
-    #   assetsCorgramPlot(x=100*as.timeSeries(data(LPP2005REC)))
-
-    # FUNCTION:
-    
-    # Settings:
-    stopifnot(is.timeSeries(x))
-    x = seriesData(x)
-   
-    # Plot Corellogram - Pies and Ellipses:    
-    .corrgram(x, 
-        order = TRUE,
-        lower.panel = .panel.copula,
-        upper.panel = .panel.hist, 
-        text.panel = .panel.txt, ...)
-        
-    # Return Value:
-    invisible()
-}
-
-
-# ------------------------------------------------------------------------------
- 
-  
 assetsCorEigenPlot =
 function(x, method = c("pearson", "kendall", "spearman"), ...)
 {   # A function implemented by Diethelm Wuertz
@@ -995,7 +964,7 @@ function(x, method = "euclidian", seed = NULL)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Displays minimum spanning tree of assets
+    #   Displays a minimum spanning tree of assets
     
     # FUNCTION:
     
@@ -1030,47 +999,11 @@ function(x, method = "euclidian", seed = NULL)
 }
 
 
-# ------------------------------------------------------------------------------
-
-
-assetsDendrogramPlot =
-function(x, method = c(dist = "euclidian", clust = "complete"))
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Displays hierarchical clustering dendrogram
-    
-    # FUNCTION:
-    
-    # Compute Distance Matrix:
-    if (class(x) == "dist") {
-        DIST = x
-    } else {
-        X = t(seriesData(x))
-        DIST = dist(X, method[1])
-    }
-
-    # Hierarchical Clustering:
-    ans = hclust(DIST, method = method[2]) 
-    
-    # Plot Dendrogram:
-    # main = substitute(x)
-    plot(ans, xlab = "", main = "", sub = "")
-    mtext(paste(
-        "Distance Method:", method[1], " | ",
-        "Clustering Method:", method[2]),
-        side = 4, line = 0.1, adj = 0, col = "darkgrey", cex = 0.7)  
-    box()
-    
-    # Return Value:
-    invisible(list(dist = DIST, hclust = ans))
-}
-
-
 ################################################################################
-# FUNCTION:
+# FUNCTION:               SEGMENT PLOTS:
 #  assetsStarsPlot         Draws segment/star diagrams of a multivariate data
 #  assetsBoxStatsPlot      Displays a segment plot of box plot statistics
+#  assetsBasicStatsPlot    Displays a segment plot of basic return statistics
 #  assetsMomentsPlot       Displays a segment plot of distribution moments
 #  assetsNIGFitPlot        Displays a segment plot NIG parameter estimates    
 
@@ -1279,6 +1212,11 @@ description = "NIG  Parameters", descriptionPosition = c(3, 3.50))
 .hist = 
 function (x, nbins) 
 {   
+    # Description:
+    #   Show histogram with guaranteed number of bins
+    
+    # FUNCTION:
+    
     nclass = nbins+1
     n = length(x)
     xname = paste(deparse(substitute(x), 500), collapse = "\n")
@@ -1303,6 +1241,7 @@ function (x, nbins)
     dens = counts/(n * h)
     mids = 0.5 * (breaks[-1] + breaks[-nB])
 
+    # Return Value:
     r = structure(list(
         breaks = breaks, 
         counts = counts, 
@@ -1311,8 +1250,7 @@ function (x, nbins)
         mids = mids, 
         xname = xname, 
         equidist = TRUE), 
-        class = "histogram")
-    
+        class = "histogram")  
 }   
 
 

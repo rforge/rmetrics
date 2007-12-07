@@ -6,10 +6,13 @@
 \alias{assetsCumulatedPlot}
 \alias{assetsSeriesPlot}
 \alias{assetsHistPlot}
+\alias{assetsLogDensityPlot}
 \alias{assetsQQNormPlot}
 
 \alias{assetsRiskReturnPlot}
 \alias{assetsNIGShapeTrianglePlot}
+
+\alias{assetsHistPairsPlot}
 
 \alias{assetsBoxPlot}
 \alias{assetsBoxPercentilePlot}
@@ -17,6 +20,7 @@
 \alias{assetsCorgramPlot}
 \alias{assetsPairsPlot}
 \alias{assetsCorTestPlot}
+\alias{assetsCorImagePlot}
 
 \alias{assetsCorEigenPlot}
 \alias{assetsTreePlot}
@@ -43,21 +47,38 @@
     The functions are:
     
     \tabular{ll}{
+    
+    % TIME SERIES ASSETS PLOTS:
     \code{assetsReturnPlot} \tab Displays return series of individual assets, \cr
     \code{assetsCumulatedPlot} \tab Displays cumulated returns of individual assets, \cr
     \code{assetsSeriesPlot} \tab Displays time series of individual assets, \cr
     \code{assetsHistPlot} \tab Displays histograms of individual assets, \cr
+    \code{assetsLogDensityPlot} \tab Displays a pdf plot on logarithmic scale, \cr
     \code{assetsQQNormPlot} \tab Displays normal qq-plots of individual assets, \cr
+    
+    % MULTIVARIATE RISK PLOTS:
     \code{assetsRiskReturnPlot} \tab Displays risk-return giagram of assets, \cr
     \code{assetsNIGShapeTrianglePlot} \tab Displays NIG Shape Triangle, \cr
-    \code{assetsBoxPlot} \tab Producess standard box plots, \cr
-    \code{assetsBoxPercentilePlot} \tab roducess side-by-side box-percentile plots, \cr 
-    \code{assetsCorgramPlot} \tab Displays correlations between assets, \cr 
+    
+    % BIVARIATE HISTOGRAM PLOTS::
+    \code{assetsHistPairsPlot} \tab Displays bivariate Histogram Plot, \cr
+ 
+    % MULTIPLE DENSITY BOX PLOTS:
+    \code{assetsBoxPlot} \tab Displays standard box plots, \cr
+    \code{assetsBoxPercentilePlot} \tab Displays side-by-side box-percentile plots, \cr 
+    
+    % CORRELATION PLOTS:
     \code{assetsPairsPlot} \tab Displays pairs of scatterplots of individual assets, \cr
+    \code{assetsCorgramPlot} \tab Displays correlations between assets, \cr 
     \code{assetsCorTestPlot} \tab Displays and tests pairwise correlations, \cr
+    \code{assetsCorImagePlot} \tab Displays an image plot of a correlations, \cr
+
+    % DEPENDENCY PLOTS:
+    \code{assetsDendrogramPlot} \tab Displays hierarchical clustering dendrogram, \cr
     \code{assetsCorEigenPlot} \tab Displays ratio of the largest two eigenvalues, \cr
-    \code{assetsTreePlot} \tab Displays minimum spanning tree of assets, \cr
-    \code{assetsDendrogramPlot} \tab Displays hierarchical clustering dendrogram, \cr 
+    \code{assetsTreePlot} \tab Displays minimum spanning tree of assets, \cr 
+    
+    % SEGMENT PLOTS:
     \code{assetsStarsPlot} \tab Draws segment or star diagrams of data sets, \cr
     \code{assetsBasicStatsPlot} \tab Displays a segment plot of box plot statistics, \cr
     \code{assetsMomentsPlot} \tab Displays a segment plot of distribution moments, \cr
@@ -71,6 +92,8 @@ assetsReturnPlot(x, col = "steelblue", \dots)
 assetsCumulatedPlot(x, col = "steelblue", \dots)
 assetsSeriesPlot(x, col = "steelblue", ...)
 assetsHistPlot(x, col = "steelblue", skipZeros = FALSE, \dots)
+assetsLogDensityPlot(x, estimator = c("hubers", "sample", "both"), 
+    labels = TRUE, \dots)
 assetsQQNormPlot(x, col = "steelblue", skipZeros = FALSE, \dots)
 
 assetsRiskReturnPlot(x, col = "steelblue", percentage = FALSE, scale = 252, 
@@ -80,13 +103,15 @@ assetsNIGShapeTrianglePlot(x, col = "steelblue", \dots)
 assetsBoxPlot(x, col = "bisque", \dots)
 assetsBoxPercentilePlot(x, col = "bisque", \dots) 
 
-assetsCorgramPlot(x, labels = TRUE, method = c("pie", "shade", "hist"), \dots)
 assetsPairsPlot(x, labels = TRUE, \dots)
+assetsCorgramPlot(x, labels = TRUE, method = c("pie", "shade", "hist"), \dots)
 assetsCorTestPlot(x, labels = TRUE, \dots)
+assetsCorImagePlot(x, show = c("cor", "test"), use = c("pearson", 
+    "kendall", "spearman"), labels = TRUE, abbreviate = 3, \dots)
 
+assetsDendrogramPlot(x, method = c(dist = "euclidian", clust = "complete"))
 assetsCorEigenPlot(x, method = c("pearson", "kendall", "spearman"), \dots)
 assetsTreePlot(x, method = "euclidian", seed = NULL)
-assetsDendrogramPlot(x, method = c(dist = "euclidian", clust = "complete"))
 
 assetsStarsPlot(x, method = c("segments", "stars"), keyOffset = c(0, 0),\dots)
 assetsBoxStatsPlot(x, oma = c(0,0,0,0), mar = c(4, 4, 4, 4), 
@@ -110,6 +135,9 @@ assetsNIGFitPlot(x, oma = c(0,0,0,0), mar = c(4, 4, 4, 4),
 
 \arguments{
   
+    \item{abbreviate}{
+        ...
+        }
     \item{add}{
         a logical flag, defining the color to fill the boxes.
         }
@@ -121,6 +149,11 @@ assetsNIGFitPlot(x, oma = c(0,0,0,0), mar = c(4, 4, 4, 4),
         }
     \item{descriptionPosition}{
         ... 
+        }
+    \item{estimator}{
+        a character string naming the type of estimator to fit the mean 
+        and variance of the normal density. This may be either \code{"huber"}, 
+        \code{sample"}, or \code{"both"}.
         }
     \item{keyOffset}{
         ...
@@ -167,6 +200,9 @@ assetsNIGFitPlot(x, oma = c(0,0,0,0), mar = c(4, 4, 4, 4),
         an integer value setting the seed in the computation of the 
         sample ranks.
         }
+    \item{show}{
+        ...
+        }
     \item{skipZeros}{
         [assetsHistPlot] - \cr
         a logical,  should zeros be skipped in the histogram plot of the
@@ -177,6 +213,9 @@ assetsNIGFitPlot(x, oma = c(0,0,0,0), mar = c(4, 4, 4, 4),
         }
     \item{titlePosition}{
         ... 
+        }
+    \item{use}{
+        ...
         }
     \item{x}{
         any rectangular time series object which can be converted by the 
