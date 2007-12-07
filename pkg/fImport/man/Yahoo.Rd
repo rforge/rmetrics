@@ -5,6 +5,7 @@
 \alias{yahooImport}
 \alias{yahooSeries}
 \alias{keystatsImport}
+\alias{briefingImport}
 
 
 \title{Import Market Data from Yahoo}
@@ -22,7 +23,8 @@
     \tabular{ll}{
     \code{yahooImport} \tab daily stock market data from Yahoo's Web site, \cr
     \code{yahooSeries} \tab easy to use download from Yahoo, \cr 
-    \code{keystatsImport} \tab key statistics from Yahoo's Web site.}
+    \code{keystatsImport} \tab key statistics from Yahoo's Web site. \cr
+    \code{briefingImport} \tab more key statistics from Yahoo's Web site. }
    
 }
 
@@ -40,6 +42,10 @@ yahooSeries(symbols = c("^DJI", "IBM"), from = NULL, to = NULL,
 keystatsImport(query, file = "tempfile", 
     source = "http://finance.yahoo.com/q/ks?s=", save = FALSE, 
     try = TRUE) 
+    
+briefingImport(query, file = "tempfile", 
+    source = "http://finance.yahoo.com/q/ud?s=", 
+    save = FALSE, try = TRUE) 
 }
 
 
