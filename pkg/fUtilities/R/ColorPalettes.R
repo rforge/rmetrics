@@ -27,7 +27,6 @@
 #   see Rmetrics's copyright file
 
 
-# fEcofin::2B-ColorPalettes:
 ################################################################################
 # FUNCTION:                 COLOR PALETTES:
 #  greyPalette               Creates a grey palette
@@ -37,6 +36,9 @@
 #  .terrainPalette           Creates a terrain color palette
 #  .topoPalette              Creates a topo color palette 
 #  .cmPalette                Creates a cm color palette
+# FUNCTION:                 COLOR NAMES:
+#  colorsLocator             Plots R's 657 named colors for selection
+#  colorsMatrix              Returns matrix of R's color names
 # FUNCTION:                 RGB CONVERTER:
 #  .asRGB                    Converts any R color to RGB (red/green/blue)
 # FUNCTION:                 CONVERSION HEXIMAL/DECIMAL:
@@ -58,7 +60,7 @@
 #  greyPalette               Creates a grey palette
 
 
-greyPalette =
+greyPalette <- 
 function(n = 64, start = 255-n, end = 255)
 {   # A function implemented by Diethelm Wuertz
 
@@ -95,7 +97,7 @@ function(n = 64, start = 255-n, end = 255)
 
 
 if(FALSE) ## This function cannot work: it uses non-existing splint()
-.timPalette =
+.timPalette <- 
 function (n = 64)
 {
     # Description:
@@ -155,11 +157,89 @@ function (n = 64)
 
 
 ################################################################################
+# Package: epitools
+# Version: 0.4-9
+# Date: 2007-06-27
+# Title: Epidemiology Tools
+# Author: Tomas Aragon <aragon@berkeley.edu>
+# Maintainer: Tomas Aragon <aragon@berkeley.edu>
+# Depends: R (>= 2.1.0)
+# Description: EpiTools: R Package for Epidemiologic Data and Graphics
+# License: GPL version 2 or newer
+# URL: http://www.epitools.net
+# Packaged: Wed Jun 27 20:27:33 2007; Tomas
 
 
-.asRGB =
+colorsLocator <- 
+function(locator = FALSE) 
+{   
+    # A copy from contributed R-package epitools
+    
+    # Description:
+    #   Plots R's 657 named colors for selection
+    
+    # FUNCTION:
+    
+    # Settings: 
+    cex.axis = 0.7
+    
+    xx <- rep(1:30, 22)
+    yy <- rep(1:22, rep(30, 22))
+    yyy <- matrix(yy, ncol = 22)
+    cm <- colorsMatrix()
+    matplot(xx[1:30], yyy, pch = 15, type = "n", axes = FALSE, 
+        xlab = "colorsMatrix[row, ]", ylab = "colorsMatrix[ , col]", 
+        main = "Identify Color Names.")
+    # title(sub = "Source: www.epitools.net", cex.sub = 0.7)
+    points(xx, yy, type = "p", pch = 15, cex = 2, col = c(colors(), 
+        NA, NA, NA))
+    axis(1, at = c(0:30 + 0.5), labels = FALSE, tick = TRUE)
+    axis(1, at = 1:30, label = 1:30, cex.axis = cex.axis, tick = FALSE)
+    axis(2, at = c(0:22 + 0.5), labels = FALSE, tick = TRUE)
+    axis(2, at = 1:22, label = 1:22, cex.axis = cex.axis, tick = FALSE, 
+        las = 1)
+        
+    if (locator == TRUE) {
+        lxy <- locator()
+        xy <- round(data.frame(lxy))
+        xym <- as.matrix(xy)
+        located <- data.frame(xy, color.names = cm[xym])
+        return(located)
+    } else {
+        return(invisible(cm))
+    }
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+colorsMatrix <-
+function()
+{   
+    # A copy from contributed R-package epitools
+
+    # Description:
+    #   Returns matrix of R's color names
+    
+    # FUNCTION:
+    
+    # Color Names:
+    x <- matrix(c(colors(),NA,NA,NA), 30, 22)
+    
+    # return Value:
+    invisible(x)
+}
+
+
+
+################################################################################
+
+
+.asRGB <- 
 function (col = .rainbowPalette(64), alpha = FALSE)
-{
+{   
+    # A function implemented by Diethelm Wuertz   
     # Description:
     #   Converts any R color to RGB (red/green/blue)
 
@@ -171,6 +251,7 @@ function (col = .rainbowPalette(64), alpha = FALSE)
     #       should be returned.
 
     # FUNCTION:
+    
     # Color Conversion:
     result = .Internal(col2rgb(col))
     if (!alpha) result = result[1:3, , drop = FALSE]
@@ -187,9 +268,10 @@ function (col = .rainbowPalette(64), alpha = FALSE)
 #  .dec.to.hex               Converts decimal numbers do heximal numbers
 
 
-.chcode =
+.chcode <- 
 function(b, base.in = 2, base.out = 10, digits="0123456789ABCDEF")
-{   # A function implemented by Diethelm Wuertz
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Changes from one to another number system
@@ -242,9 +324,10 @@ function(b, base.in = 2, base.out = 10, digits="0123456789ABCDEF")
 # ------------------------------------------------------------------------------
 
 
-.hex.to.dec =
+.hex.to.dec <- 
 function(b)
-{   # A function implemented by Diethelm Wuertz
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Converts heximal numbers do decimal numbers
@@ -268,9 +351,10 @@ function(b)
 # ------------------------------------------------------------------------------
 
 
-.dec.to.hex =
+.dec.to.hex <- 
 function(b)
-{   # A function implemented by Diethelm Wuertz
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Converts decimal numbers do heximal numbers
@@ -304,17 +388,19 @@ function(b)
 # Packaged: Thu Apr  5 16:34:42 2007; tkeitt
 
 # FUNCTION:                 COLOR RAMPS:
-# .blue2red
-# .green2red
-# .blue2green
-# .purple2green
-# .blue2yellow
-# .cyan2magenta
+# .blue2red                  Creates a blue to red color palette
+# .green2red                 Creates a blue to red color palette
+# .blue2green                Creates a blue to red color palette
+# .purple2green              Creates a blue to red color palette
+# .blue2yellow               Creates a blue to red color palette
+# .cyan2magenta              Creates a blue to red color palette
 
 
-.blue2red = 
+.blue2red <-  
 function(n)
 {
+    # A copy from contributed R-package colorRamps
+    
     # FUNCTION:
     
     # Color Ramp:
@@ -330,9 +416,12 @@ function(n)
 
 # ------------------------------------------------------------------------------
 
-.green2red = 
+
+.green2red <-  
 function(n)
 {
+    # A copy from contributed R-package colorRamps
+    
     # FUNCTION:
     
     # Color Ramp:
@@ -349,9 +438,11 @@ function(n)
 # ------------------------------------------------------------------------------
 
 
-.blue2green = 
+.blue2green <-  
 function(n)
 {
+    # A copy from contributed R-package colorRamps
+    
     # FUNCTION:
     
     # Color Ramp:
@@ -368,9 +459,11 @@ function(n)
 # ------------------------------------------------------------------------------
 
 
-.purple2green = 
+.purple2green <-  
 function(n)
 {
+    # A copy from contributed R-package colorRamps
+    
     # FUNCTION:
     
     # Color Ramp:
@@ -386,9 +479,11 @@ function(n)
 # ------------------------------------------------------------------------------
 
 
-.blue2yellow = 
+.blue2yellow <-  
 function(n)
 {
+    # A copy from contributed R-package colorRamps
+    
     # FUNCTION:
     
     # Color Ramp:
@@ -404,9 +499,11 @@ function(n)
 # ------------------------------------------------------------------------------
 
 
-.cyan2magenta = 
+.cyan2magenta <-  
 function(n)
 {
+    # A copy from contributed R-package colorRamps
+    
     # FUNCTION:
     
     # Color Ramp:
