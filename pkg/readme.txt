@@ -1,40 +1,43 @@
 
 
 # ------------------------------------------------------------------------------
-#   Packages available from CRAN: (still under development\)
+#   Packages available from CRAN: (still under development)
 
-
+     PACKAGE:           DEPENDS:           
+     
 01.  fUtilities
-02.  fEcofin
+02.  fEcofin            fUtilities
 
-03.  fCalendar
-04.  fSeries
-05.  fImport
+03.  fCalendar          methods, MASS, fEcofin, fUtilities
+04.  fSeries            robustbase, fCalendar
+05.  fImport            fSeries
 
-06.  fBasics
+06.  fBasics            fImport
 
-07.  fArma
-08.  fGarch
-09.  fNonlinear
-10.  fUnitRoots
+07.  fArma              fBasics
+08.  fGarch             fBasics, fArma
+09.  fNonlinear         fBasics
+10.  fUnitRoots         urca, fBasics
 
-11.  fTrading
-12.  fMultivar
-13.  fRegression
+11.  fTrading           fBasics
+12.  fMultivar          methods, sn, fBasics
+13.  fRegression        methods, mgcv, nnet, polspline, fTrading, fMultivar
 
-14.  fExtremes
-15.  fCopulae
+14.  fExtremes          fBasics
+15.  fCopulae           adapt, fBasics, fMultivar
 
-16.  fOptions
-17.  fExoticOptions
-18.  fAsianOptions
+16.  fOptions           fBasics
+17.  fExoticOptions     fOptions
+18.  fAsianOptions      fOptions
 
-19.  fBonds
+19.  fAssets            methods, robustbase, MASS, fBasics, fRegression
+20.  fPortfolio         quadprog, lpSolve, MASS, fAssets
 
-20.  fAssets
-21.  fPortfolio
-
-22.  Rmetrics
+21.  Rmetrics           fEcofin, fUtilities, fCalendar, fSeries, fImport, 
+                        fBasics, fArma, fGarch, fNonlinear, fUnitRoots, 
+                        fTrading, fMultivar, fRegression, fExtremes, fCopulae, 
+                        fOptions, fExoticOptions, fAsianOptions, fAssets, 
+                        fPortfolio
 
 
 # ------------------------------------------------------------------------------
@@ -46,3 +49,4 @@
     fTickdata
     
     Rdonlp2
+    akima
