@@ -310,6 +310,79 @@ function(x, y)
 # GSGNORM Parametric Tail Dependence Estimator
 
 
+.empiricalDependencyFit = 
+function(x, doplot = TRUE, trace = TRUE)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Estimates tail dependency coefficients with Normal marginals
+    
+    # Arguments:
+    #   x - a multivariate 'timeSeries' object
+    
+    # FUNCTION:
+    
+    # Settings: 
+    N = ncol(x)
+    lowerLambda = upperLambda = 0*diag(N)
+    assetsNames = colnames(x)
+    P = NULL
+    
+    for (i in 1:(N-1)) {
+        # First asset:
+        r1 = as.vector(x[, i])
+        fit1 = nFit(r1)
+        estim1 = fit1$estimate
+        p1 = pnorm(r1, estim1[1], estim1[2]) 
+        Main1 = assetsNames[i]
+        P = cbind(P, p1)
+        for (j in (i+1):N) 
+        {  
+            # Second asset:
+            r2 = as.vector(x[, j])
+            fit2 = nFit(r2) 
+            estim2 = fit2$estimate      
+            p2 = pnorm(r2, estim2[1], estim2[2]) 
+            Main2 = assetsNames[j]
+            
+            # Optional Plot:
+            if (doplot) 
+            {
+                # Plot Distribution:
+                MainR = paste("Distribution:", Main1, "-", Main2)
+                plot(r1, r2, pch = 19, main = MainR)
+                grid()
+                
+                # Plot Copula:
+                MainP = paste("Copula:", Main1, "-", Main2)
+                plot(p1, p2, pch = 19, main = MainP)
+                grid()
+            }
+            
+            # Fit GSG copula parameters:
+            fit = .gsgnormCopulaFit(u = p1, v = p2, trace = FALSE)
+            if (trace)
+                cat(assetsNames[c(i,j)], round(fit$lambda, 3), "\n")  
+            
+                # Compose lambda Matrix:
+            lowerLambda[i, j] = lowerLambda[j, i] = fit$lambda[1]
+            upperLambda[i, j] = upperLambda[j, i] = fit$lambda[2]
+        }
+    }
+    
+    # Result:
+    colnames(lowerLambda) = rownames(lowerLambda) = assetsNames
+    colnames(upperLambda) = rownames(upperLambda) = assetsNames
+    ans = list(lower = lowerLambda, upper = upperLambda)
+     
+    # Return Value:
+    ans 
+}
+
+
+# ------------------------------------------------------------------------------
+
+
 .normDependencyFit = 
 function(x, doplot = TRUE, trace = TRUE)
 {   # A function implemented by Diethelm Wuertz
