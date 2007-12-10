@@ -132,7 +132,7 @@ function(x, which = "ask", control = list(), ...)
 
 
 .fportfolio.plot.1 <- 
-function(x, con, ...) 
+function(x) 
 {
     # FUNCTION:
     
@@ -162,7 +162,7 @@ function(x, con, ...)
 
       
 .fportfolio.plot.2 <- 
-function(x, con, ...) 
+function(x) 
 {
     # FUNCTION:
     
@@ -182,7 +182,7 @@ function(x, con, ...)
 
       
 .fportfolio.plot.3 <-
-function(x, con, ...) 
+function(x) 
 {
     # FUNCTION:
     
@@ -202,7 +202,7 @@ function(x, con, ...)
 
 
 .fportfolio.plot.4 <- 
-function(x, con, ...) 
+function(x) 
 {
     # FUNCTION:
     
@@ -222,7 +222,7 @@ function(x, con, ...)
 
 
 .fportfolio.plot.5 <- 
-function(x, con, ...) 
+function(x) 
 {
     # FUNCTION:
     
@@ -242,7 +242,7 @@ function(x, con, ...)
 
 
 .fportfolio.plot.6 <- 
-function(x, con, ...) 
+function(x) 
 {
     # FUNCTION:
     
@@ -264,7 +264,7 @@ function(x, con, ...)
 
 
 .fportfolio.plot.7 <- 
-function(x, con, ...) 
+function(x) 
 {
     # FUNCTION:
     
@@ -284,7 +284,7 @@ function(x, con, ...)
 
 
 .fportfolio.plot.8 <- 
-function(x, con, ...) 
+function(x) 
 {
     # FUNCTION:
     
@@ -304,7 +304,7 @@ function(x, con, ...)
 
 
 .fportfolio.plot.9 <- 
-function(x, con, ...) 
+function(x) 
 {
     # FUNCTION:
     
