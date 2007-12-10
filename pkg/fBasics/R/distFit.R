@@ -144,7 +144,7 @@ description = NULL, ...)
     }
     
     # Add Title and Description:
-    if (is.null(title)) title = "Student-t Parameter Estimation"
+    if (is.null(title)) title = "Normal Parameter Estimation"
     if (is.null(description)) description = .description()
         
     # Fit:
@@ -156,7 +156,7 @@ description = NULL, ...)
     # Return Value:
     new("fDISTFIT",     
         call = as.call(CALL),
-        model = "Student-t Distribution",
+        model = "Normal Distribution",
         data = as.data.frame(x.orig),
         fit = fit,
         title = as.character(title), 
