@@ -27,7 +27,6 @@
 #   see Rmetrics's copyright file
 
 
-# fEcofin::5C-BivariateBinning.R
 ################################################################################
 # FUNCTION:                 DESCRIPTION:
 #  squareBinning             Square binning of irregularly spaced points
@@ -55,7 +54,8 @@ function(x, y = NULL, bins = 30)
     #   x, y - two vectors of coordinates of data. If y is NULL then x 
     #       is assumed to be a two column matrix, where the first column 
     #       contains the x data, and the second column the y data. 
-    #   nGrid - number of bins in each dimension, may be a scalar or a 2
+    #       'timeSeries' objects are also allowed as input.
+    #   bins - number of bins in each dimension, may be a scalar or a 2
     #       element vector. The default value is 20.
     
     # Value:
@@ -74,8 +74,12 @@ function(x, y = NULL, bins = 30)
     
     # 2D Histogram Counts:
     if (is.null(y)) {
+        x = as.matrix(x)
         y = x[, 2]
         x = x[, 1]
+    } else {
+        x = as.vector(x)
+        y = as.vector(y)
     }
     data = cbind(x, y)
     
@@ -198,6 +202,14 @@ function(x, y = NULL, bins = 30)
     # Description:
     #   Does a hexagonal binning of data points
     
+    # Arguments:
+    #   x, y - two vectors of coordinates of data. If y is NULL then x 
+    #       is assumed to be a two column matrix, where the first column 
+    #       contains the x data, and the second column the y data. 
+    #       'timeSeries' objects are also allowed as input.
+    #   bins - number of bins in each dimension, may be a scalar or a 2
+    #       element vector. The default value is 20.
+    
     # Example:
     #   hB = hexBinning(x = rnorm(10000), y = rnorm(10000)); plot(hB)
        
@@ -205,8 +217,12 @@ function(x, y = NULL, bins = 30)
     
     # Extract Series:
     if (is.null(y)) {
+        x = as.matrix(x)
         y = x[, 2]
         x = x[, 1]
+    } else {
+        x = as.vector(x)
+        y = as.vector(y)
     }
     data = cbind(x, y)
     

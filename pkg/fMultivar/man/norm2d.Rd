@@ -37,7 +37,6 @@ rnorm2d(n, rho = 0)
     \item{x, y}{
         two numeric vectors defining the x and y coordinates. 
         }    
-    }
         
 }
 

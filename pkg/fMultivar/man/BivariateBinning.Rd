@@ -57,7 +57,8 @@ hexBinning(x, y = NULL, bins = 30)
         either two numeric vectors of equal length or if  \code{y} 
         is NULL, a list with entries \code{x}, \code{y}, 
         or named data frame with \code{x} in the first and
-        \code{y} in the second column.\cr
+        \code{y} in the second column.
+        Note, \code{timeSeries} objects are also allowed as input.\cr
         [plot] - \cr
         an object of class \code{squareBinning} or \code{hexBinning}.
         }
