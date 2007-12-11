@@ -14,6 +14,9 @@
 \alias{outlier}
 \alias{outlier.default}
 
+\alias{rank}
+\alias{rank.default}
+
 %\alias{round}
 %\alias{round.default}
 
@@ -73,8 +76,8 @@
 
 
 \usage{
-\method{align}{default}(x, y, xout, method = "linear", n = 50, rule = 1, f = 0,
-    ties = mean, \dots)
+\method{align}{default}(x, y, xout, method = "linear", n = 50, rule = 1, 
+    f = 0, ties = mean, \dots)
 
 \method{attach}{default}(what, pos = 2, name = deparse(substitute(what)),
     warn.conflicts = TRUE)
@@ -83,23 +86,16 @@
 
 \method{outlier}{default}(x, sd = 5, complement = TRUE, \dots)
 
-% round.default(x, digits, \dots)
-%\method{round}{default}(x, digits = 0)
+\method{rank}{default}(x, na.last = TRUE, 
+    ties.method = c("average", "first", "random", "max", "min"))
 
 \method{sample}{default}(x, size, replace = FALSE, prob = NULL, \dots)
-
-% sort.default(x, decreasing = FALSE, ...)
 
 \method{var}{default}(x, y = NULL, na.rm = FALSE, use)
 \method{cov}{default}(x, y = NULL, use = "all.obs", 
     method = c("pearson", "kendall", "spearman"))
 \method{cor}{default}(x, y = NULL, use = "all.obs", 
     method = c("pearson", "kendall", "spearman"))
-    
-%\method{colMeans}{default}(x, na.rm = FALSE, dims = 1)
-%\method{colSums}{default}(x, na.rm = FALSE, dims = 1)
-%\method{rowMeans}{default}(x, na.rm = FALSE, dims = 1)
-%\method{rowSums}{default}(x, na.rm = FALSE, dims = 1) 
     
 stdev(x, na.rm = FALSE)
 
@@ -122,10 +118,6 @@ as.POSIXlt(x, tz = "")
         additional argument to the \code{log} function.
         See for details \code{help(log,package=base)}.
         }
-    %\item{digits}{
-    %    [round] - \cr
-    %    an integer indicating the precision to be used.
-    %    }
     \item{f}{
         [align] - \cr
         for \code{method="constant"} the value of \code{f} takes a
@@ -144,27 +136,23 @@ as.POSIXlt(x, tz = "")
         covariance) is to be computed. One of \code{"pearson" (default)}, 
         \code{"kendall"}, or \code{"spearman"}, can be abbreviated.
         }
-    %\item{dims}{
-    %    [colMeans][colSums][rowMeans][rowSums] - \cr
-    %    Which dimensions are regarded as \code{rows} or \code{columns} to 
-    %    sum over. For \code{row*}, the sum or mean is over dimensions 
-    %    \code{dims+1}, \code{...}; for \code{col*} it is over dimensions 
-    %    \code{1:dims}.
-    %    }
     \item{n}{
         [align] - \cr
         if \code{xout} is not specified, alignment takes place at \code{n}
         equally spaced points spanning the interval \code{range(x)}.
+        }
+    \item{na.last}{
+        [rank] - \cr
+        for controlling the treatment of NAs. If \code{TRUE}, missing 
+        values in the data are put last; if \code{FALSE}, they are put 
+        first; if \code{NA}, they are removed; if \code{"keep"} they are 
+        kept with rank \code{NA}.
         }
     \item{name}{
         [attach] - \cr
         alternative way to specify the database to be attached.
         See for details \code{help(attach,package=base)}.
         }
-    %\item{partial, na.last, decreasing, index.return}{
-    %    [sort] - \cr
-    %    additional arguments to the \code{sort} function.
-    %    }
     \item{pos}{
         [attach] - \cr
         an integer specifying position in \code{search()} where to attach
@@ -200,6 +188,12 @@ as.POSIXlt(x, tz = "")
         handles tied \code{x} values. Either a function with a single
         vector argument returning a single number result or the
         string \code{"ordered"}.
+        }
+    \item{ties.method}{ 
+        [rank] - \cr
+        a character string, one of \code{"average"}, \code{"first"}, 
+        \code{"random"}, \code{"max"}, \code{"min"} specifying how 
+        ties are treated, can be abbreviated, see \code{rank}.
         }
     \item{tz}{
         [as.POSIXlt] - \cr

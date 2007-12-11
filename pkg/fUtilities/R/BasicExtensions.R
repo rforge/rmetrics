@@ -34,9 +34,9 @@
 #  attach                    attach a database to the R path                    
 #  attach.default            attach default method                              
 #  log                       log has become a generic function                  
-#  log.default               log default method                                 
-#  %round                     round has become a generic function                
-#  %round.default             round default method                               
+#  log.default               log default method     
+#  rank                      rank has become a generic function 
+#  rank.default              rank default method                                                       
 #  sample                    sample has become a generic function               
 #  sample.default            sample default method                              
 #  sort                      sort has become a generic function                 
@@ -45,13 +45,7 @@
 #  var.default               var default method                                 
 #  cov                       var has become a generic function                  
 #  cov.default               var default method                                 
-#  stdev                     for SPLUS compatibility                            
-# FUNCTION:                  COLUMN AND ROW STATISTICS: 
-#  ## DW: moved to Column Row Statistics ..                        
-#  colSums                    colSums has become a generic function             
-#  colMeans                   colMeans has become a generic function            
-#  rowSums                    rowSums has become a generic function             
-#  rowMeans                   roowMeans has become a generic function           
+#  stdev                     for SPLUS compatibility                                      
 # FUNCTION:                  ROW AND COLUMN NAMES:                              
 #  "rownames<-"               rownames<- has become a generic function          
 #  "rownames<-.default"       rownames<- default method                         
@@ -71,6 +65,9 @@
 
 
 .conflicts.OK = TRUE
+
+
+# ------------------------------------------------------------------------------
 
 
 if (!exists("Sys.setenv"))
@@ -95,8 +92,6 @@ if (!exists("Sys.setenv"))
 #  attach.default                attach default method
 #  log                           log has become a generic function
 #  log.default                   log default method
-#  %round                         round has become a generic function
-#  %round.default                 round default method
 #  sample                        sample has become a generic function
 #  sample.default                sample default method
 #  sort                          sort has become a generic function
@@ -106,9 +101,10 @@ if (!exists("Sys.setenv"))
 #  stdev                         for SPLUS compatibility
 
 
-align =
+align <- 
 function(x, y, xout, ...)
-{   # A function implemented by Diethelm Wuertz
+{   
+    # A function implemented by Diethelm Wuertz
 
     # FUNCTION:
 
@@ -120,10 +116,11 @@ function(x, y, xout, ...)
 # ------------------------------------------------------------------------------
 
 
-align.default =
+align.default <- 
 function(x, y, xout, method = "linear", n = 50, rule = 1, f = 0,
-ties = mean, ...)
-{   # A function implemented by Diethelm Wuertz
+    ties = mean, ...)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # FUNCTION:
 
@@ -139,10 +136,11 @@ ties = mean, ...)
 # ------------------------------------------------------------------------------
 
 
-attach =
+attach <- 
 function(what, pos = 2, name = deparse(substitute(what)),
-warn.conflicts = TRUE)
-{   # A function implemented by Diethelm Wuertz
+    warn.conflicts = TRUE)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # FUNCTION:
 
@@ -158,10 +156,13 @@ attach.default <- base::attach
 
 
 # ------------------------------------------------------------------------------
-# sort() has been S3 generic in 'base' since 2.4.0
-# Otherwise use something that works here
+
 
 if(getRversion() < "2.4.0") {
+
+    # Note:
+    # sort() has been S3 generic in 'base' since 2.4.0
+    # Otherwise use something that works here
 
     sort <- function (x, decreasing = FALSE, ...)
     {
@@ -182,7 +183,7 @@ if(getRversion() < "2.4.0") {
 # ------------------------------------------------------------------------------
 
 
-sample =
+sample <-
 function(x, ...)
 {   # A function implemented by Diethelm Wuertz
 
@@ -196,7 +197,7 @@ function(x, ...)
 # ------------------------------------------------------------------------------
 
 
-sample.default =  
+sample.default <-  
 function (x, size, replace = FALSE, prob = NULL, ...)
 {
     # FUNCTION:
@@ -208,31 +209,7 @@ function (x, size, replace = FALSE, prob = NULL, ...)
 # ------------------------------------------------------------------------------
 
 
-# round =
-# function(x, ...)
-# {   # A function implemented by Diethelm Wuertz
-#
-#     # FUNCTION:
-#
-#     # Return Value:
-#    UseMethod("round")
-# }
-
-
-# ------------------------------------------------------------------------------
-
-
-# round.default =
-# function(x, digits = 0) 
-# {
-#     base::round(x, digits)
-# }
-
-
-# ------------------------------------------------------------------------------
-
-
-log =
+log <- 
 function(x, base = exp(1))
 {   # A function implemented by Diethelm Wuertz
 
@@ -246,9 +223,14 @@ function(x, base = exp(1))
 # ------------------------------------------------------------------------------
 
 
-log.default = 
+log.default <-  
 function(x, base = exp(1)) 
 {
+    # A function implemented by Diethelm Wuertz
+
+    # FUNCTION:
+
+    # Return Value:
     base::log(x, base)
 }
 
@@ -256,9 +238,42 @@ function(x, base = exp(1))
 # ------------------------------------------------------------------------------
 
 
-outlier =
+rank <- 
+function(x, na.last = TRUE, 
+    ties.method = c("average", "first", "random", "max", "min")) 
+{   
+    # A function implemented by Diethelm Wuertz
+
+    # FUNCTION:
+
+    # Return Value:
+    UseMethod("log")
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+rank.default <-  
+function(x, na.last = TRUE, 
+    ties.method = c("average", "first", "random", "max", "min")) 
+{
+    # A function implemented by Diethelm Wuertz
+
+    # FUNCTION:
+
+    # Return Value:
+    base::rank(x, na.last = na.last, ties.method = ties.method)
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+outlier <- 
 function(x, sd = 5, complement = TRUE, ...)
-{   # A function implemented by Diethelm Wuertz
+{   
+    # A function implemented by Diethelm Wuertz
 
     # FUNCTION:
 
@@ -269,9 +284,10 @@ function(x, sd = 5, complement = TRUE, ...)
 # ------------------------------------------------------------------------------
 
 
-outlier.default =
+outlier.default <- 
 function(x, sd = 5, complement = TRUE, ...)
-{   # A function implemented by Diethelm Wuertz
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Returns outliers
@@ -304,9 +320,10 @@ function(x, sd = 5, complement = TRUE, ...)
 # ------------------------------------------------------------------------------
 
 
-var =
+var <- 
 function(x, y = NULL, na.rm = FALSE, use)
-{   # A function implemented by Diethelm Wuertz
+{   
+    # A function implemented by Diethelm Wuertz
 
     # FUNCTION:
 
@@ -324,10 +341,11 @@ var.default <- stats::var
 # ------------------------------------------------------------------------------
 
 
-cov =
+cov <-
 function(x, y = NULL, use = "all.obs",
     method = c("pearson", "kendall", "spearman"))
-{   # A function implemented by Diethelm Wuertz
+{   
+    # A function implemented by Diethelm Wuertz
 
     # FUNCTION:
 
@@ -345,10 +363,11 @@ cov.default <- stats::cov
 # ------------------------------------------------------------------------------
 
 
-cor =
+cor <- 
 function(x, y = NULL, use = "all.obs",
     method = c("pearson", "kendall", "spearman"))
-{   # A function implemented by Diethelm Wuertz
+{   
+    # A function implemented by Diethelm Wuertz
 
     # FUNCTION:
 
@@ -366,12 +385,14 @@ cor.default <- stats::cor
 # ------------------------------------------------------------------------------
 
 
-stdev =
+stdev <-
 function(x, na.rm = FALSE)
-{   # A function implemented by Diethelm Wuertz
+{   
+    # A function implemented by Diethelm Wuertz
 
     # FUNCTION:
     
+    # Return Value:
     stats::sd(x = x, na.rm = na.rm)
 }
 
@@ -420,7 +441,8 @@ function(x, value)
 
 "colnames<-" =
 function(x, value)
-{   # A function implemented by Diethelm Wuertz
+{   
+    # A function implemented by Diethelm Wuertz
 
     # FUNCTION:
 
@@ -440,9 +462,10 @@ function(x, value)
 #  atoms.default             Default Method
 
 
-atoms =
+atoms <- 
 function(x, ...)
-{   # A function implemented by Diethelm WUertz
+{   
+    # A function implemented by Diethelm WUertz
 
     # FUNCTION:
 
@@ -454,9 +477,10 @@ function(x, ...)
 # ------------------------------------------------------------------------------
 
 
-atoms.default =
+atoms.default <- 
 function(x, ...)
-{   # A function implemented by Diethelm WUertz
+{   
+    # A function implemented by Diethelm WUertz
 
     # FUNCTION:
 
@@ -468,9 +492,10 @@ function(x, ...)
 ################################################################################
 
 
-as.POSIXlt =
+as.POSIXlt <- 
 function(x, tz = "")
-{   # A function implemented by Diethelm Wuertz
+{   
+    # A function implemented by Diethelm Wuertz
 
     # FUNCTION:
 
@@ -482,9 +507,10 @@ function(x, tz = "")
 # ------------------------------------------------------------------------------
 
 
-as.POSIXlt.default =
+as.POSIXlt.default <- 
 function (x, tz = "")
-{   # A function implemented by Diethelm Wuertz
+{   
+    # A function implemented by Diethelm Wuertz
 
     # FUNCTION:
 
@@ -534,9 +560,10 @@ function (x, tz = "")
 # ------------------------------------------------------------------------------
 
 
-as.matrix.ts =
+as.matrix.ts <- 
 function(x, ...)
-{   # A function implemented by Diethelm Wuertz
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Coerces a "ts" object into a matrix
@@ -557,9 +584,10 @@ function(x, ...)
 # ------------------------------------------------------------------------------
 
 
-as.matrix.mts =
+as.matrix.mts <- 
 function(x, ...)
-{   # A function implemented by Diethelm Wuertz
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Coerces a multivariate "ts" object into a matrix
