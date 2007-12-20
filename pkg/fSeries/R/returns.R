@@ -28,7 +28,7 @@
 
 ################################################################################
 # FUNCTION:                 FINANCIAL TIME SERIES:
-#  returns                   Computes returns from a 'timeSeries' object 
+#  returns                   Computes returns from a financial time series 
 #  returns.default           Computes returns from a 'matrix' object
 #  returns.timeSeries        Computes returns from a 'timeSeries' object
 #  returns.zoo               Computes returns from a 'zoo' object
@@ -43,6 +43,10 @@ function(x, ...)
 {
     # A function implemented by Diethelm Wuertz
     
+    # Description:
+    #   Computes returns from a financial time series 
+    
+    # Return Value:
     UseMethod("returns")
 }
 
@@ -57,8 +61,8 @@ returns.default <-
     # A function implemented by Diethelm Wuertz
     
     # Description:
-    #   Calculates returns from a price stream
-
+    #   Computes returns from a 'matrix' object
+    
     # Arguments:
     #   x - data object containing ordered price observations
     #   method - "continuous == "compound" and "discrete" == "simple"
@@ -100,6 +104,12 @@ returns.timeSeries <-
     percentage = FALSE, na.rm = TRUE, trim = TRUE, ...)
 {   
     # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    
+    # Arguments:
+    
+    # FUNCTION:
 
     # Get Returns:
     if (na.rm) x = na.omit(x, ...)
@@ -120,6 +130,12 @@ returns.zoo <-
     percentage = FALSE, na.rm = TRUE, trim = TRUE, ...)
 {   
     # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    
+    # Arguments:
+    
+    # FUNCTION:
 
     # Get Returns:
     if (na.rm) x = na.omit(x, ...)
@@ -140,6 +156,12 @@ returnSeries <-
 {
     # A function implemented by Diethelm Wuertz
     
+    # Description:
+    
+    # Arguments:
+    
+    # FUNCTION:
+    
     returns.timeSeries(...)
 }
 
@@ -149,6 +171,14 @@ returnSeries <-
 
 getReturns <-  function(...)
 {
+    # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    
+    # Arguments:
+    
+    # FUNCTION:
+    
     returns.timeSeries(...)
 }
 

@@ -23,12 +23,14 @@
 \usage{
 returns(x, \dots)
 
-\method{returns}{default}(x, method = c("continuous", "discrete", "compound", "simple"), 
-    percentage = FALSE, \dots)
-\method{returns}{timeSeries}(x, method = c("continuous", "discrete", "compound", "simple"), 
-    percentage = FALSE, na.rm = TRUE, trim = TRUE, \dots)
-\method{returns}{zoo}(x, method = c("continuous", "discrete", "compound", "simple"), 
-    percentage = FALSE, na.rm = TRUE, trim = TRUE, \dots)
+\method{returns}{default}(x, method = c("continuous", "discrete", 
+    "compound", "simple"), percentage = FALSE, \dots)
+\method{returns}{timeSeries}(x, method = c("continuous", "discrete", 
+    "compound", "simple"), percentage = FALSE, na.rm = TRUE, 
+    trim = TRUE, \dots)
+\method{returns}{zoo}(x, method = c("continuous", "discrete", 
+    "compound", "simple"), percentage = FALSE, na.rm = TRUE, 
+    trim = TRUE, \dots)
     
 getReturns(\dots)
 returnSeries(\dots)
