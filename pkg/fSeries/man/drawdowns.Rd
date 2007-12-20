@@ -19,11 +19,13 @@
     \code{drawdowns} \tab Generates 'timeSeries' object of drawdown levels, \cr
     \code{drawdownsStats} \tab Compute drawdown stats for univariate time series. }
     
+}
+    
     
 \usage{
 drawdowns(x, \dots)
 
-drwdownsStats(x, \dots)
+drawdownsStats(x, \dots)
 }
 
 
