@@ -16,9 +16,8 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2007, Diethelm Wuertz, GPL
+#   1999 - 2008, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
-#   info@rmetrics.org
 #   www.rmetrics.org
 # for the code accessed (or partly included) from other R-ports:
 #   see R's copyright and license files
@@ -30,18 +29,20 @@
 ################################################################################
 # FUNCTION:                 FINANCIAL TIME SERIES:
 #  returns                   Computes returns from a 'timeSeries' object 
-#  returns.default
-#  returns.timeSeries
-#  returns.zoo
-# OLD FUNCTIONS:
-#  returnSeries <- returns.timeSeries
-#  getReturns <- returns.timeSeries
+#  returns.default           Computes returns from a 'matrix' object
+#  returns.timeSeries        Computes returns from a 'timeSeries' object
+#  returns.zoo               Computes returns from a 'zoo' object
+# OLD FUNCTIONS:            KEEP THESE FUNCTIONS FOR COMPATIBILIT:
+#  returnSeries              <- returns.timeSeries
+#  getReturns                <- returns.timeSeries
 ################################################################################
 
 
-returns = 
+returns <-  
 function(x, ...)
 {
+    # A function implemented by Diethelm Wuertz
+    
     UseMethod("returns")
 }
 
@@ -50,16 +51,17 @@ function(x, ...)
 
 
 returns.default <-
-function(x, method = c("continuous", "discrete", "compound", "simple"), 
-percentage = FALSE, ...)
-{   # A function implemented by Diethelm Wuertz
+    function(x, method = c("continuous", "discrete", "compound", "simple"), 
+    percentage = FALSE, ...)
+{   
+    # A function implemented by Diethelm Wuertz
     
     # Description:
     #   Calculates returns from a price stream
 
     # Arguments:
     #   x - data object containing ordered price observations
-    #   method - "simple", "compound"
+    #   method - "continuous == "compound" and "discrete" == "simple"
     
     # Note:
     #   To make it conform with PortfolioAnalytics:
@@ -93,10 +95,11 @@ percentage = FALSE, ...)
 # ------------------------------------------------------------------------------
 
 
-returns.timeSeries =
-function(x, method = c("continuous", "discrete", "compound", "simple"), 
-percentage = FALSE, na.rm = TRUE, trim = TRUE, ...)
-{   # A function implemented by Diethelm Wuertz
+returns.timeSeries <- 
+    function(x, method = c("continuous", "discrete", "compound", "simple"), 
+    percentage = FALSE, na.rm = TRUE, trim = TRUE, ...)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Get Returns:
     if (na.rm) x = na.omit(x, ...)
@@ -112,10 +115,11 @@ percentage = FALSE, na.rm = TRUE, trim = TRUE, ...)
 # ------------------------------------------------------------------------------
 
 
-returns.zoo =
-function(x, method = c("continuous", "discrete", "compound", "simple"), 
-percentage = FALSE, na.rm = TRUE, trim = TRUE, ...)
-{   # A function implemented by Diethelm Wuertz
+returns.zoo <- 
+    function(x, method = c("continuous", "discrete", "compound", "simple"), 
+    percentage = FALSE, na.rm = TRUE, trim = TRUE, ...)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Get Returns:
     if (na.rm) x = na.omit(x, ...)
@@ -131,8 +135,11 @@ percentage = FALSE, na.rm = TRUE, trim = TRUE, ...)
 # ------------------------------------------------------------------------------
 
 
-returnSeries = function(...)
+returnSeries <-  
+    function(...)
 {
+    # A function implemented by Diethelm Wuertz
+    
     returns.timeSeries(...)
 }
 
