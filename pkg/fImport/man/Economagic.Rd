@@ -161,21 +161,11 @@ economagicSeries(query, frequency = c("quarterly", "monthly", "daily"),
 
 \examples{
 \dontrun{
-## economagicImport -
-   USDEUR = economagicImport(query = "fedny/day-fxus2eu", 
-     frequency = "daily", colname = "USDEUR")
-   # Print Data Slot if Internet Download was Successful:
-   if (!is.null(USDEUR)) print(USDEUR@data[1:20, ])
-
-## economagicImport -
-   USFEDFUNDS = economagicImport(query = "fedstl/fedfunds+2", 
-     frequency = "monthly", colname = "USFEDFUNDS")
-   if (!is.null(USFEDFUNDS)) print(USFEDFUNDS@data[1:20, ])
-   
-## economagicImport -
-   USGNP = economagicImport(query = "fedstl/gnp", 
-     frequency = "quarterly", colname = "USGNP")
-   if(!is.null(USGNP)) print(USGNP@data[1:20, ])  
+## economagicSeries -
+   # USDEUR Foreign Exchange Rate:
+   economagicSeries("fedny/day-fxus2eu", frequency = "daily")
+   # USFEDFUNDS US FedFunds Rate:
+   economagicSeries("fedstl/fedfunds+2", frequency = "monthly")
 }
 }
 
