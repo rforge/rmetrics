@@ -154,8 +154,8 @@ cumulatedPlot <-
 
 
 returnPlot <-  
-    function(x, index = 100, labels = TRUE, type = "l", col = "steelblue", 
-    ylab = "Index", rug = TRUE, ...) 
+    function(x, labels = TRUE, type = "l", col = "steelblue", 
+    ylab = "Returns", rug = TRUE, ...) 
 {   # A function implemented by Diethelm Wuertz
     
     # Description:
