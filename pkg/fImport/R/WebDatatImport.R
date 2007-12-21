@@ -53,9 +53,10 @@ setClass("fWEBDATA",
 # ------------------------------------------------------------------------------
 
 
-show.fWEBDATA = 
-function(object)
-{   # A function implemented by Diethelm Wuertz
+show.fWEBDATA <-  
+    function(object)
+{   
+    # A function implemented by Diethelm Wuertz
     
     # FUNCTION:
        
@@ -78,6 +79,9 @@ function(object)
     # Return Value:
     invisible()
 }
+
+
+# ------------------------------------------------------------------------------
 
 
 setMethod("show", "fWEBDATA", show.fWEBDATA)

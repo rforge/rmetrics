@@ -40,10 +40,11 @@
 #  forecastsSeries       Easy to use download from www.forecasts.org     
 
 
-forecastsImport = 
-function(query, file = "tempfile", 
-source = "http://www.forecasts.org/data/data/", save = FALSE, try = TRUE) 
-{   # A function implemented by Diethelm Wuertz
+forecastsImport <-  
+    function(query, file = "tempfile", 
+    source = "http://www.forecasts.org/data/data/", save = FALSE, try = TRUE) 
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Downloads Monthly Market Data, Indices and Benchmarks from the 
@@ -142,10 +143,11 @@ source = "http://www.forecasts.org/data/data/", save = FALSE, try = TRUE)
 # ------------------------------------------------------------------------------
 
 
-forecastsSeries = 
-function(query, returnClass = c("timeSeries", "ts", "matrix", "data.frame"), 
-getReturns = FALSE, ...)
-{   # A function implemented by Diethelm Wuertz
+forecastsSeries <-  
+    function(query, returnClass = c("timeSeries", "ts", "matrix", "data.frame"), 
+    getReturns = FALSE, ...)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Downloads easily time series data from www.forecasts.org

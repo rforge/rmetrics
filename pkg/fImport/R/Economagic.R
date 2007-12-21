@@ -40,12 +40,13 @@
 #  economagicSeries      Easy to use download from EconoMagic
 
 
-economagicImport =
-function (query, file = "tempfile", 
-          source = "http://www.economagic.com/em-cgi/data.exe/", 
-          frequency = c("quarterly", "monthly", "daily"), 
-          save = FALSE, colname = "VALUE", try = TRUE)
-{   # A function implemented by Diethelm Wuertz
+economagicImport <-
+    function (query, file = "tempfile", 
+    source = "http://www.economagic.com/em-cgi/data.exe/", 
+    frequency = c("quarterly", "monthly", "daily"), 
+    save = FALSE, colname = "VALUE", try = TRUE)
+{   
+    # A function implemented by Diethelm Wuertz
     
     # Description:
     #   Downloads market data from EconoMagic's web site
@@ -160,11 +161,12 @@ function (query, file = "tempfile",
 # ------------------------------------------------------------------------------
 
 
-economagicSeries =
-function (query, frequency = c("quarterly", "monthly", "daily"),
-returnClass = c("timeSeries", "ts", "matrix", "data.frame"), 
-getReturns = FALSE, ...)
-{   # A function implemented by Diethelm Wuertz
+economagicSeries <- 
+    function (query, frequency = c("quarterly", "monthly", "daily"),
+    returnClass = c("timeSeries", "ts", "matrix", "data.frame"), 
+    getReturns = FALSE, ...)
+{   
+    # A function implemented by Diethelm Wuertz
     
     # Description:
     #   Downloads easily time series data from Yahoo

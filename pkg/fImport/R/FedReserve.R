@@ -44,7 +44,8 @@ fredImport <-
     function(query, file = "tempfile", 
     source = "http://research.stlouisfed.org/fred2/series/", 
     frequency = "daily", save = FALSE, sep = ";", try = TRUE) 
-{   # A function implemented by Diethelm Wuertz
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Downloads Monthly Market Data, Indices and Benchmarks from 
@@ -147,7 +148,8 @@ fredImport <-
 fredSeries <-  
     function(query = "DPRIME", frequency = "daily", returnClass = 
     c("timeSeries", "ts", "matrix", "data.frame"), getReturns = FALSE, ...)
-{   # A function implemented by Diethelm Wuertz
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Downloads easily time series data from St. Louis FRED

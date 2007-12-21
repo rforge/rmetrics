@@ -43,13 +43,16 @@
 #  yahooSeries           Easy to use download from Yahoo
 
 
-yahooImport = 
-function (query, file = "tempfile", 
-source = "http://chart.yahoo.com/table.csv?", save = FALSE, sep = ";", 
-swap = 20, try = TRUE)
+yahooImport <-  
+    function (query, file = "tempfile", 
+    source = "http://chart.yahoo.com/table.csv?", save = FALSE, sep = ";", 
+    swap = 20, try = TRUE)
 {   
     # A function implemented by Diethelm Wuertz
 
+    # Description:
+    #   Downloads market data from Yahoo's web site  
+    
     # Example:
     #   IBM SHARES, test 19/20 century change 01-12-1999 -- 31-01-2000:
     #   yahooImport("s=IBM&a=11&b=1&c=1999&d=0&e=31&f=2000&g=d&x=.csv")
@@ -133,11 +136,11 @@ swap = 20, try = TRUE)
 # ------------------------------------------------------------------------------
 
 
-yahooSeries = 
-function(symbols = c("^DJI", "IBM"), from = NULL, to = NULL, 
-nDaysBack = 365, quote = c("Open", "High", "Low", "Close", "Volume"), 
-aggregation = c("d", "w", "m"), returnClass = c("timeSeries", "ts", 
-"matrix", "data.frame"), getReturns = FALSE, ...)
+yahooSeries <-  
+    function(symbols = c("^DJI", "IBM"), from = NULL, to = NULL, 
+    nDaysBack = 365, quote = c("Open", "High", "Low", "Close", "Volume"), 
+    aggregation = c("d", "w", "m"), returnClass = c("timeSeries", "ts", 
+    "matrix", "data.frame"), getReturns = FALSE, ...)
 {   
     # A function implemented by Diethelm Wuertz
 
@@ -238,9 +241,9 @@ aggregation = c("d", "w", "m"), returnClass = c("timeSeries", "ts",
 #  keystatsImport       Downloads key statistics from Yahoo's web site 
 
 
-keystatsImport =  
-function (query, file = "tempfile", source = "http://finance.yahoo.com/q/ks?s=", 
-save = FALSE, try = TRUE) 
+keystatsImport <-   
+    function (query, file = "tempfile", source = 
+    "http://finance.yahoo.com/q/ks?s=", save = FALSE, try = TRUE) 
 {   
     # A function implemented by Diethelm Wuertz and Matthew C.Keller
 
@@ -339,9 +342,9 @@ save = FALSE, try = TRUE)
 # ------------------------------------------------------------------------------
 
 
-briefingImport =  
-function (query, file = "tempfile", source = "http://finance.yahoo.com/q/ud?s=", 
-save = FALSE, try = TRUE) 
+briefingImport <-   
+    function (query, file = "tempfile", source = 
+    "http://finance.yahoo.com/q/ud?s=", save = FALSE, try = TRUE) 
 {   
     # A function implemented by Diethelm Wuertz and Matthew C.Keller
 
