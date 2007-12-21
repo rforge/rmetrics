@@ -5,6 +5,7 @@
 \alias{basicStats}
 
 \alias{seriesPlot}
+\alias{returnPlot}
 \alias{cumulatedPlot}
 \alias{histPlot}
 \alias{densityPlot}
@@ -18,7 +19,7 @@
 \alias{returnSeriesGUI}
 
 
-\title{Return Series Basics}
+\title{Return Series Plots}
 
 
 \description{
@@ -33,7 +34,8 @@
     \tabular{ll}{
     \code{basicStats} \tab Computes an overview of basic statistical values, \cr
     \code{seriesPlot} \tab Returns a tailored return series plot, \cr
-    \code{cumulatedPlot} \tab Returns a tailored cumulatede return plot, \cr
+    \code{cumulatedPlot} \tab Displays a cumulated series given the returns, \cr
+    \code{returnsPlot} \tab Displays returns given the cumulated series, \cr
     \code{histPlot} \tab Returns a tailored histogram plot, \cr
     \code{densityPlot} \tab Returns a tailored kernel density estimate plot, \cr
     \code{qqnormPlot} \tab Returns a tailored Normal quantile-quantile plot, \cr
@@ -52,6 +54,9 @@ seriesPlot(x, labels = TRUE, type = "l", col = "steelblue",
     ylab = "Returns", rug = TRUE, \dots) 
 cumulatedPlot(x, index = 100, labels = TRUE, type = "l", col = "steelblue", 
     ylab = "Index", rug = TRUE, \dots)
+returnPlot(x, labels = TRUE, type = "l", col = "steelblue", 
+    ylab = "Returns", rug = TRUE, ...)
+    
 histPlot(x, labels = TRUE, col = "steelblue", add.fit = TRUE, rug = TRUE, 
     skipZeros = TRUE, \dots) 
 densityPlot(x, labels = TRUE, col = "steelblue", add.fit = TRUE, 
