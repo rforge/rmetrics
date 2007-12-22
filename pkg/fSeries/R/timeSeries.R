@@ -92,6 +92,9 @@ documentation = NULL, ...)
   
     # FUNCTION:
 
+    # This allows data to be a vector as input ...
+    if (is.vector(data)) data = matrix(data)
+    
     # Trace:
     if (FinCenter == "") FinCenter = "GMT"
     trace = FALSE
@@ -435,26 +438,12 @@ function(x)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Tests if an object of class timeSeries is univariate
+    #   Tests if a time series is univariate
      
     # FUNCTION:
     
-    # Is univariate ?
-    if (class(x) == "timeSeries") {
-        # timeSeries Object ?
-        DIM = dim(x@Data)[2]
-        # Univariate ?
-        if (DIM == 1) {
-            ans = TRUE 
-        } else {
-            ans = FALSE
-        }
-    } else {
-        stop("x is not an object of class timeSeries")
-    }
-    
     # Return Value:
-    ans
+    if (NCOL(x) == 1) return(TRUE) else return(FALSE)
 }
 
 
@@ -465,6 +454,9 @@ isMultivariate =
 function(x)
 {   # A function implemented by Diethelm Wuertz
 
+    # Description:
+    #   Tests if a time series is multivariate
+    
     # FUNCTION:
     
     # Examples:
@@ -472,11 +464,8 @@ function(x)
 
     # FUNCTION:
     
-    # Test:
-    ans = !isUnivariate(x)
-    
     # Return Value:
-    ans
+    if (NCOL(x) > 1) return(TRUE) else return(FALSE)
 }
 
 
