@@ -83,11 +83,14 @@ asMatrix.timeSeries <-
     ans = x@Data
     positions = x@positions
     attr(positions, "control")<-NULL
+    rownames(ans) = positions
     
     # Add attributes:
-    attr(ans, "control")<-
-        list(class = "timeSeries", positions = positions,
-            units = x@units, FinCenter = x@FinCenter)
+    control = list(class = "timeSeries", units = x@units, 
+        FinCenter = x@FinCenter)
+    class(control) = "control"      
+    attr(ans, "control")<-control
+        
     
     # Return Value:
     ans
@@ -116,10 +119,12 @@ asMatrix.zoo =
     # Convert to Matrix:
     ans = as.matrix(x)
     colnames(ans) = colnames(x)
+    rownames(ans) = attr(x, "index")
     
     # Add Attributes:
-    attr(ans, "control")<-list(class = "zoo", index = attr(x, "index"),
-        units = colnames(x))
+    control = list(class = "zoo", units = colnames(x))
+    class(control) = "control"
+    attr(ans, "control")<-control
     
     # Return Value:
     ans
@@ -150,8 +155,9 @@ asMatrix.ts <-
     colnames(ans) = colnames(x)
     
     # Add Attributes:
-    attr(ans, "control")<-list(class = "ts", tsp = attr(x, "tsp"),
-        units = colnames(x))
+    control = list(class = "ts", tsp = attr(x, "tsp"), units = colnames(x))
+    class(control) = "control"
+    attr(ans, "control")<-control
     
     # Return Value:
     ans

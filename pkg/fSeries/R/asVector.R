@@ -82,12 +82,15 @@ asVector.timeSeries <-
     # Convert to Vector:
     ans = as.vector(x@Data, mode = "any")
     positions = x@positions
-    attr(positions, "control")<-NULL
+    attr(positions, "control") <- NULL
+    names(ans) = positions
     
     # Add attributes:
-    attr(ans, "control")<-
-        list(class = "timeSeries", positions = positions,
-            units = x@units, FinCenter = x@FinCenter)
+    control = list(class = "timeSeries", units = x@units, 
+        FinCenter = x@FinCenter)
+    class(control) = "control"
+    attr(ans, "control") <- control
+        
     
     # Return Value:
     ans
@@ -115,10 +118,12 @@ asVector.zoo =
     
     # Convert to Vector:
     ans = as.vector(x, mode = "any")
+    names(ans) = attr(x, "index")
     
     # Add attributes:
-    attr(ans, "control")<-list(class = "zoo", index = attr(x, "index"),
-        units = NULL)
+    control = list(class = "zoo", units = NULL)
+    class(control) = "control"
+    attr(ans, "control") <- control
     
     # Return Value:
     ans
@@ -148,8 +153,9 @@ asVector.ts <-
     ans = as.vector(x, mode = "any")
     
     # Add Attributes:
-    attr(ans, "control") <- list(class = "ts", tsp = attr(x, "tsp"),
-        units = NULL)
+    control = list(class = "ts", tsp = attr(x, "tsp"), units = NULL)
+    class(control) = "control"
+    attr(ans, "control") <- control
     
     # Return Value:
     ans
