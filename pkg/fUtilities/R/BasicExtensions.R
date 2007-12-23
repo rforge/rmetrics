@@ -45,22 +45,24 @@
 #  var.default               var default method                                 
 #  cov                       var has become a generic function                  
 #  cov.default               var default method                                 
-#  stdev                     for SPLUS compatibility                                      
-# FUNCTION:                  ROW AND COLUMN NAMES:                              
-#  "rownames<-"               rownames<- has become a generic function          
-#  "rownames<-.default"       rownames<- default method                         
-#  "colnames<-"               colnames<- has become a generic function          
-#  "colnames<-.default"       colnames<- default method                         
-# FUNCTION:                  DATE AND TIME SERIES FUNCTIONS:                    
-#  modify                     Modifies a 'timeSeries' object                    
-#  modify.default             Default Method                                    
-#  atoms                      Extracts atoms from 'timeSeries' object           
-#  atoms.default              Default Method                                    
-#  as.POSIXlt                 Converts objects of class POSIXlt                 
-#  as.POSIXlt.default         Default Method                                    
-#  as.matrix.ts               Converts univariate ts to 1-column matrix         
-#  as.matrix.mts              Converts multivariate ts to matrix                
-#  Sys.putenv                 depreciated after 2.4.1                           
+#  stdev                     for SPLUS compatibility 
+# FUNCTION:                 CONTROL ATTRIBUTES:
+#  print.control             Prints unlisted control attributes                                  
+# FUNCTION:                 ROW AND COLUMN NAMES:                              
+#  "rownames<-"              rownames<- has become a generic function          
+#  "rownames<-.default"      rownames<- default method                         
+#  "colnames<-"              colnames<- has become a generic function          
+#  "colnames<-.default"      colnames<- default method                         
+# FUNCTION:                 DATE AND TIME SERIES FUNCTIONS:                    
+#  modify                    Modifies a 'timeSeries' object                    
+#  modify.default            Default Method                                    
+#  atoms                     Extracts atoms from 'timeSeries' object           
+#  atoms.default             Default Method                                    
+#  as.POSIXlt                Converts objects of class POSIXlt                 
+#  as.POSIXlt.default        Default Method                                    
+#  as.matrix.ts              Converts univariate ts to 1-column matrix         
+#  as.matrix.mts             Converts multivariate ts to matrix                
+#  Sys.putenv                depreciated after 2.4.1                           
 ################################################################################
 
 
@@ -386,7 +388,7 @@ cor.default <- stats::cor
 
 
 stdev <-
-function(x, na.rm = FALSE)
+    function(x, na.rm = FALSE)
 {   
     # A function implemented by Diethelm Wuertz
 
@@ -394,6 +396,19 @@ function(x, na.rm = FALSE)
     
     # Return Value:
     stats::sd(x = x, na.rm = na.rm)
+}
+
+
+################################################################################
+# FUNCTION:                 CONTROL ATTRIBUTES:
+#  print.control             Prints unlisted control attributes  
+
+
+print.control <-
+    function(x, ...)
+{
+    # Return Value:
+    print(unlist(x))
 }
 
 
