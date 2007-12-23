@@ -47,6 +47,9 @@
 
 \alias{stdev}
 
+
+\alias{print.control}
+
 \alias{rownames<-}
 \alias{rownames<-.default}
 
@@ -98,6 +101,8 @@
     method = c("pearson", "kendall", "spearman"))
     
 stdev(x, na.rm = FALSE)
+
+\method{print}{control}(x, \dots)
 
 rownames(x) <- value
 colnames(x) <- value
@@ -224,8 +229,9 @@ as.POSIXlt(x, tz = "")
         [align] - \cr
         x-coordinates of the points to be aligned.\cr
         [log][sort][var] - \cr
-        first argument.
-        \cr
+        first argument.\cr
+        [print.control] - cr
+        prints an unlisted object of class control.\cr
         [as.matrix.ts][as.matrix.mts] - \cr
         an univariate or multivariate time series object
         of class \code{"ts"} or \code{"mts"} which will be
