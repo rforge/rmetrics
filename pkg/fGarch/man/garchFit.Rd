@@ -145,7 +145,7 @@ garchKappa(cond.dist = c("dnorm", "dged", "dstd", "dsnorm", "dsged", "dsstd"),
         a numeric vector with the conditional variances.
         }
     \item{@sigma.t}{
-        a numeric vector with the conditional variances.
+        a numeric vector with the conditional standard deviations.
         }
     \item{@title}{
         a title string.
@@ -209,8 +209,8 @@ garchKappa(cond.dist = c("dnorm", "dged", "dstd", "dsnorm", "dsged", "dsstd"),
     Load a data file from the demo example, e.g. the LPP2005REC Swiss
     Pension Fund benchmark portfolio, given by a data frame:
     
-        \code{> data(LPP2005REC)}\cr
-        \code{> LPP.df = LPP2005REC}
+        \code{> data(LPP2005REC) }\cr
+        \code{> LPP.df = LPP2005REC }
     
     This data frame consists of 10 columns of financial returns named 
     LPP25, LPP40, and LPP60, together with its 6 major asset classes 
@@ -225,8 +225,8 @@ garchKappa(cond.dist = c("dnorm", "dged", "dstd", "dsnorm", "dsged", "dsstd"),
     \code{charvec} of time stamps.
     
 
-        \code{data = LPP.mat = as.matrix(LPP.df[, 2:10])}\cr
-        \code{charvec = as.character(LPP.df[, 1])}
+        \code{> data = LPP.mat = as.matrix(LPP.df[, 2:10]) }\cr
+        \code{> charvec = as.character(LPP.df[, 1]) }
 
     
     From these two objects we can construct several time series objects
@@ -240,8 +240,8 @@ garchKappa(cond.dist = c("dnorm", "dged", "dstd", "dsnorm", "dsged", "dsstd"),
     SPI, and then we estimate the parameters. Note, that the left 
     hand side of the formula has not to be specified! 
      
-    \code{> SPI = as.vector(DATA[, "SPI"])}
-    \code{garchFit(~ garch(1,1), data = SPI)}
+        \code{> SPI = as.vector(LPP.mat[, "SPI"]) }\cr
+        \code{> garchFit(~ garch(1,1), data = SPI) }
     
     
     %--------------------------------------------------------------------
@@ -250,7 +250,7 @@ garchKappa(cond.dist = c("dnorm", "dged", "dstd", "dsnorm", "dsged", "dsstd"),
     It is important to note, that the matrix must have column names
     to specify the left hand side of the formula:
         
-    \code{> garchFit(SPI ~ garch(1,1), data = LPP.mat)}\cr
+        \code{> garchFit(SPI ~ garch(1,1), data = LPP.mat) }\cr
         
         
     %--------------------------------------------------------------------
@@ -267,9 +267,9 @@ garchKappa(cond.dist = c("dnorm", "dged", "dstd", "dsnorm", "dsged", "dsstd"),
     \code{"timeSeries"} objects. Don't forget, that the left hand side
     has to be specified by the column name of the selected time series.  
     
-    \code{> LPP.tS = timeSeries(data, charvec)}\cr 
-    \code{> LPP.tS = as.timeSeries(LPP2005REC)}\cr
-    \code{> garchFit(SPI ~ garch(1,1), data = LPP.tS)}\cr
+        \code{> LPP.tS = timeSeries(data, charvec) }\cr 
+        \code{> LPP.tS = as.timeSeries(LPP2005REC) }\cr
+        \code{> garchFit(SPI ~ garch(1,1), data = LPP.tS) }\cr
     
        
     %--------------------------------------------------------------------
@@ -277,7 +277,7 @@ garchKappa(cond.dist = c("dnorm", "dged", "dstd", "dsnorm", "dsged", "dsstd"),
     The data is given by a \code{"data.frame"} object:
     Again, we proceed in the same way as for the numeric matrix: 
     
-    \code{> garchFit(SPI ~ garch(1,1), data = LPP.df)}\cr
+        \code{> garchFit(SPI ~ garch(1,1), data = LPP.df)}\cr
 
         
     %---------------------------------------------------------------------------
@@ -288,8 +288,8 @@ garchKappa(cond.dist = c("dnorm", "dged", "dstd", "dsnorm", "dsged", "dsstd"),
     given time stamps. Again, we proceed in the same way as for the numeric 
     matrix: 
         
-    \code{> LPP.zoo = zoo(data = LPP.mat, order.by = as.Date(charvec))}\cr
-    \code{> garchFit(SPI ~ garch(1,1), data = LPP.zoo)}\cr
+        \code{> LPP.zoo = zoo(data = LPP.mat, order.by = as.Date(charvec))}\cr
+        \code{> garchFit(SPI ~ garch(1,1), data = LPP.zoo)}\cr
         
       
     % ==========================================================================
@@ -333,7 +333,7 @@ garchKappa(cond.dist = c("dnorm", "dged", "dstd", "dsnorm", "dsged", "dsstd"),
     on the choice of the other parameters. The following example shows
     how to fit Bollerslev’s t-GARCH(1,1) model:
     
-    \code{> garchFit(x = "dem2gbp", cond.dist = "dst")}
+        \code{> garchFit(x = "dem2gbp", cond.dist = "dst")}
 
     Note, that the model has not to be specified explicitly, since the 
     GARCH(1,1) model is the default.\cr
@@ -383,9 +383,9 @@ garchKappa(cond.dist = c("dnorm", "dged", "dstd", "dsnorm", "dsged", "dsstd"),
     The following example shows how to fit a normal GARCH(1,1) model 
     using different types of solvers:
     
-    \code{> garchFit(x = "dem2gbp", algorithm = "nlminb+nm")}\cr
-    \code{> garchFit(x = "dem2gbp", algorithm = "lbfgsb+nm")}\cr
-    \code{> garchFit(x = "dem2gbp", algorithm = "sqp")}\cr
+        \code{> garchFit(x = "dem2gbp", algorithm = "nlminb+nm")}\cr
+        \code{> garchFit(x = "dem2gbp", algorithm = "lbfgsb+nm")}\cr
+        \code{> garchFit(x = "dem2gbp", algorithm = "sqp")}\cr
     
     
     % ==========================================================================
