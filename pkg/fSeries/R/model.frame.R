@@ -37,9 +37,12 @@ model.frame.timeSeries =
 function(formula, data, ...) 
 {   # A function implemented by Diethelm Wuertz
 
+    # Description:
+    #   Extracting the “Environment” of a Model Formula
+  
     # Arguments:
     #   formula - a model formula
-    #   data - a timeSeries object
+    #   data - a 'timeSeries' object
     
     # Details:
     #   Allows to use model.frame() for "timeSeries" objects.
