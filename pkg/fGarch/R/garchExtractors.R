@@ -16,7 +16,7 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2007, Diethelm Wuertz, GPL
+#   1999 - 2008, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
 #   www.rmetrics.org
@@ -41,10 +41,31 @@ function(object, ...)
     # Description:
     #   S3 Residuals method for an object of class fGARCH
 
+    # Arguments:
+    #   object - an object of class fGarch as returned by the function
+    #       garchFit
+    #   ... - optional argument to be passed, this may be standardize=FALSE
+    #       to return the -non-standardized values of the residuals. 
+    #       By default standardized residuals will be returned.
+    
     # FUNCTION:
     
+    # Numeric vector of residuals:
+    ans = .residuals.fGARCH(object = object, ...) 
+    
+    # Check out the return class:
+    dataClass = class(object@data$data)
+    if (dataClass == "timeSeries") {
+        residuals = ans
+        ans = data = object@data$data
+        data.mat = matrix(residuals)
+        rownames(data.mat) = rownames(data)
+        colnames(data.mat) = object@data$unit
+        ans@Data = data.mat
+    }
+    
     # Return Value:
-    .residuals.fGARCH(object = object, ...) 
+    ans
 }
 
 
@@ -83,10 +104,26 @@ function(object, ...)
     # Description:  
     #   S3 Fitted values method for an object of class fGARCH
     
+    # Arguments:
+    #   object - an object of class fGarch as returned by the function
+    #       garchFit
+    #   ... - optional argument to be passed, not used.
+    
     # FUNCTION:
     
-    # Fitted Values:
+    # Numeric vector of fitted values:
     ans = object@fitted
+    
+    # Check out the return class:
+    dataClass = class(object@data$data)
+    if (dataClass == "timeSeries") {
+        fitted = ans
+        ans = data = object@data$data
+        data.mat = matrix(fitted)
+        rownames(data.mat) = rownames(data)
+        colnames(data.mat) = object@data$unit
+        ans@Data = data.mat
+    }
     
     # Return Value:
     ans
