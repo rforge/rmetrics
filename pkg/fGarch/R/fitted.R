@@ -29,72 +29,8 @@
 
 ################################################################################
 # METHOD:                 EXTRACTORS:
-#  residuals.fGARCH        S3 residuals method for an object of class 'fGARCH'
 #  fitted.fGARCH           S3 fitted values for an object of class 'fGARCH'
 ################################################################################
-
-
-residuals.fGARCH = 
-function(object, ...) 
-{   # A function implemented by Diethelm Wuertz
-    
-    # Description:
-    #   S3 Residuals method for an object of class fGARCH
-
-    # Arguments:
-    #   object - an object of class fGarch as returned by the function
-    #       garchFit
-    #   ... - optional argument to be passed, this may be standardize=FALSE
-    #       to return the -non-standardized values of the residuals. 
-    #       By default standardized residuals will be returned.
-    
-    # FUNCTION:
-    
-    # Numeric vector of residuals:
-    ans = .residuals.fGARCH(object = object, ...) 
-    
-    # Check out the return class:
-    dataClass = class(object@data$data)
-    if (dataClass == "timeSeries") {
-        residuals = ans
-        ans = data = object@data$data
-        data.mat = matrix(residuals)
-        rownames(data.mat) = rownames(data)
-        colnames(data.mat) = object@data$unit
-        ans@Data = data.mat
-    }
-    
-    # Return Value:
-    ans
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.residuals.fGARCH = 
-function(object, standardize = FALSE) 
-{   # A function implemented by Diethelm Wuertz
-    
-    # Description:
-    #   S3 Residuals method for an object of class fGARCH
-
-    # FUNCTION:
-    
-    # Residuals:
-    if (standardize) {
-        ans = object@residuals/object@sigma.t
-    } else {
-        ans = object@residuals
-    }
-    
-    # Return Value:
-    ans
-    
-}
-
-    
-# ------------------------------------------------------------------------------
 
 
 fitted.fGARCH = 

@@ -30,7 +30,7 @@
 ################################################################################
 # METHOD:                 EXTRACTORS:
 #  residuals.fGARCH        S3 residuals method for an object of class 'fGARCH'
-#  fitted.fGARCH           S3 fitted values for an object of class 'fGARCH'
+#  .residuals.fGARCH       Internal Function to standardize residuals
 ################################################################################
 
 
@@ -42,8 +42,8 @@ function(object, ...)
     #   S3 Residuals method for an object of class fGARCH
 
     # Arguments:
-    #   object - an object of class fGarch as returned by the function
-    #       garchFit
+    #   object - an object of class fGarch as returned by the  
+    #       function garchFit
     #   ... - optional argument to be passed, this may be standardize=FALSE
     #       to return the -non-standardized values of the residuals. 
     #       By default standardized residuals will be returned.
@@ -78,6 +78,12 @@ function(object, standardize = FALSE)
     
     # Description:
     #   S3 Residuals method for an object of class fGARCH
+    
+    # Arguments:
+    #   object - an object of class fGarch as returned by the 
+    #       function garchFit
+    #   standardize - a logial flag, should the residuals be
+    #       standardized    
 
     # FUNCTION:
     
@@ -91,42 +97,6 @@ function(object, standardize = FALSE)
     # Return Value:
     ans
     
-}
-
-    
-# ------------------------------------------------------------------------------
-
-
-fitted.fGARCH = 
-function(object, ...) 
-{   # A function implemented by Diethelm Wuertz
-    
-    # Description:  
-    #   S3 Fitted values method for an object of class fGARCH
-    
-    # Arguments:
-    #   object - an object of class fGarch as returned by the function
-    #       garchFit
-    #   ... - optional argument to be passed, not used.
-    
-    # FUNCTION:
-    
-    # Numeric vector of fitted values:
-    ans = object@fitted
-    
-    # Check out the return class:
-    dataClass = class(object@data$data)
-    if (dataClass == "timeSeries") {
-        fitted = ans
-        ans = data = object@data$data
-        data.mat = matrix(fitted)
-        rownames(data.mat) = rownames(data)
-        colnames(data.mat) = object@data$unit
-        ans@Data = data.mat
-    }
-    
-    # Return Value:
-    ans
 }
 
 
