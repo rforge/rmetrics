@@ -1,6 +1,4 @@
-\name{GarchFitting}
-
-\alias{GarchFitting}
+\name{garchFit}
 
 \alias{garchFit}
 
