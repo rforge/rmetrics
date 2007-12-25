@@ -16,7 +16,7 @@
 
 # Copyrights (C)
 # for this R-port:
-#   1999 - 2007, Diethelm Wuertz, GPL
+#   1999 - 2008, Diethelm Wuertz, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
 #   www.rmetrics.org
@@ -396,6 +396,39 @@ stdev <-
     
     # Return Value:
     stats::sd(x = x, na.rm = na.rm)
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+volatility <- 
+function(x, ...)
+{   
+    # A function implemented by Diethelm Wuertz
+
+    # FUNCTION:
+
+    # Return Value:
+    UseMethod("volatility")
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+volatility.default <- 
+function(x, ...)
+{   
+    # A function implemented by Diethelm Wuertz
+
+    # FUNCTION:
+
+    # Compute volatility:
+    ans = (x - mean(x))^2
+
+    # Return Value:
+    ans
 }
 
 
