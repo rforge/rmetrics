@@ -30,6 +30,13 @@
 }
 
 
+\note{
+
+    \code{residuals} is a generic function which extracts residual values 
+    from objects returned by modeling functions.
+}
+
+
 \author{
 
     Diethelm Wuertz for the Rmetrics \R-port.
