@@ -1,6 +1,6 @@
 \name{residuals}
 
-\alias{residuals.fGarch}
+\alias{residuals.fGARCH}
 
 
 \title{Extract GARCH Model Residuals}
