@@ -35,6 +35,9 @@
 \alias{cor}
 \alias{cor.default}
 
+\alias{volatility}
+\alias{volatility.default}
+
 %DW: moved to Column Row Statistics ...
 %\alias{colSums}
 %\alias{colSums.default}
@@ -99,6 +102,8 @@
     method = c("pearson", "kendall", "spearman"))
 \method{cor}{default}(x, y = NULL, use = "all.obs", 
     method = c("pearson", "kendall", "spearman"))
+    
+\method{volatility}{default}(x, \dots)
     
 stdev(x, na.rm = FALSE)
 
