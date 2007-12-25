@@ -49,10 +49,10 @@ setClass("garchSpec",
 # ------------------------------------------------------------------------------
 
 
-garchSpec =
-function (model = list(omega = 1.0e-6, alpha = 0.1, beta = 0.8), 
-presample = NULL, cond.dist = c("rnorm", "rged", "rstd", "rsnorm", 
-"rsged", "rsstd"), rseed = NULL)
+garchSpec <- 
+    function (model = list(omega = 1.0e-6, alpha = 0.1, beta = 0.8), 
+    presample = NULL, cond.dist = c("rnorm", "rged", "rstd", "rsnorm", 
+    "rsged", "rsstd"), rseed = NULL)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -275,7 +275,7 @@ presample = NULL, cond.dist = c("rnorm", "rged", "rstd", "rsnorm",
 
 
 show.garchSpec =
-function(object)
+    function(object)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -343,6 +343,9 @@ function(object)
     # Return Value:
     invisible()
 }
+
+
+# ------------------------------------------------------------------------------
    
     
 setMethod("show", "garchSpec", show.garchSpec)

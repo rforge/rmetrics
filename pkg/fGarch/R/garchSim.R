@@ -34,11 +34,12 @@
 ################################################################################
 
 
-garchSim =
-function (model = list(omega = 1.0e-6, alpha = 0.1, beta = 0.8), n = 100, 
-n.start = 100, presample = NULL, cond.dist = c("rnorm", "rged", "rstd", 
-"rsnorm", "rsged", "rsstd"), rseed = NULL)
-{   # A function implemented by Diethelm Wuertz
+garchSim <- 
+    function (model = list(omega = 1.0e-6, alpha = 0.1, beta = 0.8), n = 100, 
+    n.start = 100, presample = NULL, cond.dist = c("rnorm", "rged", "rstd", 
+    "rsnorm", "rsged", "rsstd"), rseed = NULL, returnClass = c("ts", "numeric"))
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Simulates a time series process from the GARCH family
@@ -82,6 +83,9 @@ n.start = 100, presample = NULL, cond.dist = c("rnorm", "rged", "rstd",
     
     # FUNCTION:
     
+    # Match Arguments:
+    returnClass = match.arg(returnClass)
+    
     # Simulate Series:
     if (class(model) == "list") {
         # Create Specification Object:
@@ -93,6 +97,10 @@ n.start = 100, presample = NULL, cond.dist = c("rnorm", "rged", "rstd",
     } else {
         stop("model must be an object of class list or garchSpec")
     }
+    
+    if (returnClass == "numeric") {
+        ans = as.numeric(as.vector(ans))
+    }
 
     # Return Value:
     ans
@@ -102,8 +110,8 @@ n.start = 100, presample = NULL, cond.dist = c("rnorm", "rged", "rstd",
 # ------------------------------------------------------------------------------
 
 
-.garchSim =
-function(n = 1000, n.start = 1000, spec = garchSpec())
+.garchSim <- 
+    function(n = 1000, n.start = 1000, spec = garchSpec())
 {   # A function implemented by Diethelm Wuertz
     
     # Description:
@@ -200,9 +208,9 @@ function(n = 1000, n.start = 1000, spec = garchSpec())
     data = data[-(1:n.start),]
         
     # Add Series:
-    # spec@series = data[, 1:2]
-    ans = ts(as.vector(data[, 3]))
-    attr(ans, "spec") = spec
+    ans = as.ts(as.vector(data[, 3]))
+    class(spec) = "garchSpec"
+    attr(ans, "control") = list(garchSpec = spec)
   
     # Return Value: 
     ans

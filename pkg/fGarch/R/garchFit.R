@@ -30,6 +30,8 @@
 ##############################################################################
 # FUNCTION:               PARAMETER ESTIMATION:    
 #  garchFit                Fits GARCH and APARCH processes
+#  .garchArgsParser        Parses formula and data for garchFit
+#  .garchOptimizerControl  Sets default values for Garch Optimizer
 #  .garchFit               ... old Version
 #  .garchInitSeries        Initializes Series
 #  .garchInitParameters    Initializes Parameters
@@ -52,22 +54,79 @@
 # ------------------------------------------------------------------------------
     
 
-garchFit = 
-function(formula, data, init.rec = c("mci", "uev"), delta = 2, skew = 1, 
-shape = 4, cond.dist = c("dnorm", "dsnorm", "dged", "dsged", "dstd", "dsstd"), 
-include.mean = TRUE, include.delta = NULL, include.skew = NULL, 
-include.shape = NULL, leverage = NULL, trace = TRUE, 
-algorithm = c("nlminb", "sqp", "lbfgsb", "nlminb+nm", "lbfgsb+nm"), 
-control = list(), title = NULL, description = NULL, ...)
-{   # A function implemented by Diethelm Wuertz
+garchFit <-  
+    function(formula, data, init.rec = c("mci", "uev"), delta = 2, skew = 1, 
+    shape = 4, cond.dist = c("dnorm", "dsnorm", "dged", "dsged", "dstd", "dsstd"), 
+    include.mean = TRUE, include.delta = NULL, include.skew = NULL, 
+    include.shape = NULL, leverage = NULL, trace = TRUE, 
+    algorithm = c("nlminb", "sqp", "lbfgsb", "nlminb+nm", "lbfgsb+nm"), 
+    control = list(), title = NULL, description = NULL, ...)
+{   
+    # A function implemented by Diethelm Wuertz
 
-    # Description
+    # Description:
     #   Fit parameters to a ARMA-GARCH model
+    
+    # Arguments:
+    #   formula - ARMA(m,n) + GARCH/APARCH(p,q) mean and variance 
+    #       specification
+    #   data - any univariate time series which can be converted
+    #       into anumeric vector using the generic function asVector   
+    #   init.rec - names type of initialization of recurrence
+    #       mci = mu-current-iteration, or
+    #       uev = unconditional-expected-variances
+    #   delta - numeric value of the exponent delta
+    #   skew - optional skewness parameter
+    #   shape - optional shape parameter 
+    #   cond.dist - name of the conditional distribution 
+    #   include.mean - should the mean value be estimated ?
+    #   include.delta - should the exponent be estimated ?
+    #   leverage - should the leverage factors be estimated ?
+    #   trace - should the optimization be traced ?
+    #   control - list of additional control parameters for solver
+    #   title - an optional title string
+    #   description - an optional project description string
     
     # FUNCTION:
     
-    # DEBUG Status:
-    .DEBUG = FALSE
+    # Call:
+    CALL = match.call()
+    
+    # Parse formula and data for garchFit
+    args = .garchArgsParser(formula, data, trace = FALSE)
+          
+    # Fit:
+    ans = .garchFit(
+        formula.mean = args$formula.mean, 
+        formula.var = args$formula.var, 
+        series = args$series, 
+        init.rec, delta, skew, shape, cond.dist, include.mean, 
+        include.delta, include.skew, include.shape, leverage, 
+        trace, algorithm, control, title, description, ...)
+    ans@call = CALL
+    
+    # Return Value:
+    ans
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.garchArgsParser <-  
+    function(formula, data, trace = FALSE)
+{   
+    # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Parses formula and data for garchFit
+    
+    # Arguments:
+    #   formula - ARMA(m,n) + GARCH/APARCH(p,q) mean and variance 
+    #       specification
+    #   data - any univariate time series which can be converted
+    
+    # FUNCTION:
     
     # Check formula expression dependent on data class:
     if(class(data) == "timeSeries") {
@@ -87,26 +146,37 @@ control = list(), title = NULL, description = NULL, ...)
         }
     }
     
-    # Call:
-    CALL = match.call()
-    
     # Get Data:
     mf = match.call(expand.dots = FALSE)
-    if(.DEBUG) print(mf)
+    if(trace) {
+        cat("\nMatched Function Call:\n ")
+        print(mf)
+    }
     m = match(c("formula", "data"), names(mf), 0)
     mf = mf[c(1, m)]
     mf[[1]] = as.name(".modelSeries")
     mf$fake = FALSE
     mf$lhs = TRUE
-    if(.DEBUG) print(mf)
+    if(trace) {
+        cat("\nModelSeries Call:\n ") 
+        print(mf)
+    }
     x = eval(mf, parent.frame())
-    x = as.vector(x[, 1])
+    x = asVector(x[, 1])
     if(class(mf$data) == "timeSeries") names(x) = rownames(data)
-    if(.DEBUG) print(head(x))
+    if(trace) {
+        cat("\nThe first few data points:\n ")
+        print(head(x))
+        cat("\nData Class:\n ")
+        print(class(x))
+    }
     
     # Compose Mean and Variance Formula:
     allLabels = attr(terms(formula), "term.labels")
-    if(.DEBUG) print(allLabels)
+    if(trace) {
+        cat("\nAll Term Labels:\n ")
+        print(allLabels)
+    }
     if(length(allLabels) == 2) {
         formula.mean = as.formula(paste("~", allLabels[1]))
         formula.var = as.formula(paste("~", allLabels[2]))
@@ -114,87 +184,41 @@ control = list(), title = NULL, description = NULL, ...)
         formula.mean = as.formula("~ arma(0, 0)")
         formula.var = as.formula(paste("~", allLabels[1]))
     }
-    if(.DEBUG) print(formula.mean)
-    if(.DEBUG) print(formula.var)
-       
-    # Fit:
-    ans = .garchFit(formula.mean, formula.var, series = x, init.rec, delta, 
-        skew, shape, cond.dist, include.mean, include.delta, include.skew, 
-        include.shape, leverage, trace, algorithm, control, title, 
-        description, ...)
-    ans@call = CALL
+    if(trace) {
+        cat("\nMean Formula:\n ")
+        print(formula.mean)
+        cat("\nVariance Formula:\n ")
+        print(formula.var)
+    }
+    
+    # Result:
+    ans = list(
+        formula.mean = formula.mean, 
+        formula.var = formula.var, 
+        series = x)
     
     # Return Value:
-    ans
+    invisible(ans)  
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-.garchFit =
-function(formula.mean = ~arma(0, 0), formula.var = ~garch(1, 1), 
-series, init.rec = c("mci", "uev"), delta = 2, skew = 1, shape = 4,
-cond.dist = c("dnorm", "dsnorm", "dged", "dsged", "dstd", "dsstd"), 
-include.mean = TRUE, include.delta = NULL, include.skew = NULL,
-include.shape = NULL, leverage = NULL, trace = TRUE,  
-algorithm = c("sqp", "nlminb", "lbfgsb", "nlminb+nm", "lbfgsb+nm"), 
-control = list(), title = NULL, description = NULL, ...)
-{   # A function implemented by Diethelm Wuertz
+.garchOptimizerControl =
+function(algorithm)
+{
+    # A function implemented by Diethelm Wuertz
 
-    # Description
-    #   Fit parameters to a ARMA-GARCH model
+    # Description:
+    #   Sets default values for Garch Optimizer
     
     # Arguments:
-    #   formula.mean - ARMA(m,n) mean specification
-    #   formula.var - GARCH/APARCH(p,q) variance specification
-    #   series - time series 
-    #       by default the data are taken from the series x
-    #           if x is a data.frame then the first column is selected
-    #       if series is a character string then the data are
-    #           retrieved from data(series)
-    #   init.rec - names type of initialization of recurrence
-    #       mci = mu-current-iteration, or
-    #       uev = unconditional-expected-variances
-    #   delta - numeric value of the exponent delta
-    #   skew - optional skewness parameter
-    #   shape - optional shape parameter 
-    #   cond.dist - name of the conditional distribution 
-    #   include.mean - should the mean value be estimated ?
-    #   include.delta - should the exponent be estimated ?
-    #   leverage - should the leverage factors be estimated ?
-    #   trace - should the optimization be traced ?
-    #   control - list of additional control parameters for solver
-    #   title - an optional title string
-    #   description - an optional project description string
+    #   none
     
-    # Example:
-    #   # GARCH(1,1): 
-    #   > data(dem2gbp); x = dem2gbp[,1, fit = garchFit(); fit
-    #   > data(dem2gbp); fit = garchFit(series = dem2gbp[,1]); fit
-    #   > fit = garchFit(series = "dem2gbp"); fit
-        
     # FUNCTION:
-  
-    # Check for Recursion Initialization:
-    if(init.rec[1] != "mci" & algorithm[1] != "sqp") {
-        stop("Algorithm only supported for mci Recursion")
-    }
     
-    # Series:
-    if(is.character(series)) {
-        eval(parse(text = paste("data(", series, ")")))
-        series = eval(parse(text = series))
-    }
-    if(is.data.frame(series)) {
-        series = series[, 1]
-    }
-    series = as.vector(series)
-    
-    # Start Time:
-    .StartFit <- Sys.time()
-    
-    # Generate Control List - Define Default Settings:
+    # Generate Control List with Default Settings:
     con <- list(
     
         # In General:
@@ -233,7 +257,75 @@ control = list(), title = NULL, description = NULL, ...)
         TOLG = 1.0e-6, 
         TOLD = 1.0e-6, 
         TOLS = 1.0e-4, 
-        RPF  = 1.0e-4)  
+        RPF  = 1.0e-4) 
+        
+    # Return Value:
+    con
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.garchFit <-
+    function(formula.mean = ~arma(0, 0), formula.var = ~garch(1, 1), 
+    series, init.rec = c("mci", "uev"), delta = 2, skew = 1, shape = 4,
+    cond.dist = c("dnorm", "dsnorm", "dged", "dsged", "dstd", "dsstd"), 
+    include.mean = TRUE, include.delta = NULL, include.skew = NULL,
+    include.shape = NULL, leverage = NULL, trace = TRUE,  
+    algorithm = c("sqp", "nlminb", "lbfgsb", "nlminb+nm", "lbfgsb+nm"), 
+    control = list(), title = NULL, description = NULL, ...)
+{   
+    # A function implemented by Diethelm Wuertz
+
+    # Description
+    #   Fit parameters to a ARMA-GARCH model
+    
+    # Arguments:
+    #   formula.mean - ARMA(m,n) mean specification
+    #   formula.var - GARCH/APARCH(p,q) variance specification
+    #   series - time series 
+    #       by default the data are taken from the series x
+    #           if x is a data.frame then the first column is selected
+    #       if series is a character string then the data are
+    #           retrieved from data(series)
+    #   init.rec - names type of initialization of recurrence
+    #       mci = mu-current-iteration, or
+    #       uev = unconditional-expected-variances
+    #   delta - numeric value of the exponent delta
+    #   skew - optional skewness parameter
+    #   shape - optional shape parameter 
+    #   cond.dist - name of the conditional distribution 
+    #   include.mean - should the mean value be estimated ?
+    #   include.delta - should the exponent be estimated ?
+    #   leverage - should the leverage factors be estimated ?
+    #   trace - should the optimization be traced ?
+    #   control - list of additional control parameters for solver
+    #   title - an optional title string
+    #   description - an optional project description string
+        
+    # FUNCTION:
+  
+    # Check for Recursion Initialization:
+    if(init.rec[1] != "mci" & algorithm[1] != "sqp") {
+        stop("Algorithm only supported for mci Recursion")
+    }
+    
+    # Series:
+    if(is.character(series)) {
+        eval(parse(text = paste("data(", series, ")")))
+        series = eval(parse(text = series))
+    }
+    if(is.data.frame(series)) {
+        series = series[, 1]
+    }
+    series = as.vector(series)
+    
+    # Start Time:
+    .StartFit <- Sys.time()
+    
+    # Generate Control List - Define Default Settings:
+    con <- .garchOptimizerControl(algorithm)
     con[(namc <- names(control))] <- control
     
     # Initialize Time Series Information - Save Globally:            
@@ -311,10 +403,11 @@ control = list(), title = NULL, description = NULL, ...)
 # ------------------------------------------------------------------------------
 
 
-.garchInitSeries = 
-function(formula.mean, formula.var, series, scale, init.rec, 
-h.start, llh.start, trace)
-{   # A function implemented by Diethelm Wuertz
+.garchInitSeries <-  
+    function(formula.mean, formula.var, series, scale, init.rec, 
+    h.start, llh.start, trace)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Initialize time series
@@ -412,10 +505,11 @@ h.start, llh.start, trace)
       
 
 .garchInitParameters = 
-function(formula.mean, formula.var, delta, skew, shape, cond.dist, 
-include.mean, include.delta, include.skew, include.shape, leverage, 
-algorithm, control, trace)
-{   # A function implemented by Diethelm Wuertz
+    function(formula.mean, formula.var, delta, skew, shape, cond.dist, 
+    include.mean, include.delta, include.skew, include.shape, leverage, 
+    algorithm, control, trace)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Initialize model parameters
@@ -604,9 +698,10 @@ algorithm, control, trace)
 # ------------------------------------------------------------------------------
 
       
-.garchSetCondDist =
-function(cond.dist = "dnorm") 
-{   # A function implemented by Diethelm Wuertz
+.garchSetCondDist <- 
+    function(cond.dist = "dnorm") 
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Select Conditional Density Function
@@ -688,8 +783,9 @@ function(cond.dist = "dnorm")
  
 
 .garchLLH =
-function(params, trace) 
-{   # A function implemented by Diethelm Wuertz
+    function(params, trace) 
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Compute Log-Likelihood Function
@@ -893,8 +989,9 @@ function(params, trace)
 
 
 .garchHessian =
-function(par, trace)
-{   # A function implemented by Diethelm Wuertz
+    function(par, trace)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Compute the Hessian Matrix
@@ -1002,8 +1099,9 @@ function(par, trace)
 
 
 .garchOptimizeLLH =
-function(trace) 
-{   # A function implemented by Diethelm Wuertz
+    function(trace) 
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Opimize Log-Likelihood Function
@@ -1251,8 +1349,9 @@ function(trace)
 
 
 .garchNames =
-function(object)
-{   # A function implemented by Diethelm Wuertz
+    function(object)
+{   
+    # A function implemented by Diethelm Wuertz
     
     # Description:
     #   Print slot names, @fit slot, parameters and controls
