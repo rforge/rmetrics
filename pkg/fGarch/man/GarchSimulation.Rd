@@ -2,20 +2,21 @@
 
 \alias{garchSim}
 
-\title{Univariate GARCH Time Series Simulation}
+\title{Univariate GARCH/APARCH Time Series Simulation}
 
 
 \description{
 
-    Simulates an univariate GARCH time series model.
+    Simulates an univariate GARCH/APARCH time series model.
 
 }
 
 
 \usage{
-garchSim(model = list(omega = 1.0e-6, alpha = 0.1, beta = 0.8), n = 100, 
-    n.start = 100, presample = NULL, cond.dist = c("rnorm", "rged", "rstd", 
-    "rsnorm", "rsged", "rsstd"), rseed = NULL)
+garchSim(model = list(omega = 1.0e-6, alpha = 0.1, beta = 0.8), 
+    n = 100, n.start = 100, presample = NULL, cond.dist = c("rnorm", 
+    "rged", "rstd", "rsnorm", "rsged", "rsstd"), rseed = NULL,
+    returnClass = c("ts", "numeric"))
 }
 
 
@@ -66,6 +67,11 @@ garchSim(model = list(omega = 1.0e-6, alpha = 0.1, beta = 0.8), n = 100,
         ARMA(m,n)-GARCH(p,q) process the number of rows must be at least 
         max(m,n,p,q), longer presamples are cutted.
         }
+    \item{returnClass}{
+        a character string denoting the return class of the simulated
+        time series, either an object of class \code{"ts"} or a 
+        \code{"numeric"} vector.
+        }
     \item{rseed}{
         single integer argument, the seed for the intitialization of
         the random number generator for the innovations.
@@ -74,11 +80,32 @@ garchSim(model = list(omega = 1.0e-6, alpha = 0.1, beta = 0.8), n = 100,
 }
 
 
+\details{
+
+    The function \code{garchSim} simulates a GARCH or APARCH time
+    series process as specified by the argument \code{model}.
+    
+    The \code{model} argument can be set up from scratch or obtained
+    from the \code{@model} as returned by the function \code{garchSpec}.
+    
+}
+
+
 \value{
 
-    returns an objects of class \code{ts} atrributed with an appropriate
+    The function \code{garchSim} returns an objects of class \code{ts} 
+    attributed with a list with entry \code{$garchSpec} giving the GARCH 
     specification structure as returned by the function \code{garchSpec}. 
-
+    
+    Optionally, the function can return a numeric vector when setting
+    the argument \code{returnClass="numeric"}. In this case the specification 
+    structure will not be attributed to the returned numeric vector.
+    
+    Alternatively, one can create a \code{ts} object and convert it with
+    the function \code{asVector} into a numeric vector. In this case the
+    parameters of the \code{ts} object will be attributed to the returned
+    numeric vector.
+    
 }
 
 
@@ -95,8 +122,23 @@ garchSim(model = list(omega = 1.0e-6, alpha = 0.1, beta = 0.8), n = 100,
    spec
 
 ## garchSim -
-   x = garchSim(model = spec@model, n = 500)
-   head(x) 
+   # Simulate a "ts" object:
+   x = garchSim(model = spec@model, n = 10)
+   class(x)
+   print(x) 
+   
+## garchSim - 
+   # Simulate a numeric vector:
+   y = garchSim(model = spec@model, n = 10, returnClass = "numeric")
+   class(y)
+   print(y)
+   
+   
+## asVector - 
+   # Simulate a numeric vector:
+   z = asVector(x)
+   class(z)
+   print(z)
 }
 
 
