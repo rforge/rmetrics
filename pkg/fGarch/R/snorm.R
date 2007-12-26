@@ -38,6 +38,10 @@
 #  psnorm                 Probability function for the skew NORM
 #  qsnorm                 Quantile function for the skew NORM
 #  rsnorm                 Random Number Generator for the skew NORM
+# FUNCTION:              PARAMETER ESTIMATION:
+#  normFit                Fit the parameters for a Normal distribution
+#  snormFit               Fit the parameters for a skew Normal distribution
+# FUNCTION:              SLIDER:
 #  .snormSlider           Displays Normal Distribution and RVS
 ################################################################################
 
@@ -249,14 +253,81 @@ function(n, mean = 0, sd = 1, xi = 1.5)
 }
 
 
+################################################################################
+
+
+normFit =
+function(x, ...)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Fit the parameters for a Normal distribution
+    
+    # FUNCTION:
+    
+    # For S-Plus compatibility:
+    if (!exists("nlm")) 
+        nlm = function (f, p, ...) nlminb(start = p, objective = f, ...) 
+        
+    # Start Value:
+    p = c(mean = mean(x), sd = sqrt(var(x)))
+
+    # Log-likelihood Function:
+    loglik = function(x, y = x){ 
+        f = -sum(log(dnorm(y, x[1], x[2])))
+        f }
+        
+    # Minimization:
+    fit = nlm(f = loglik, p = p, y = x, ...)
+    
+    # Return Value:
+    fit
+}   
+
+
 # ------------------------------------------------------------------------------
 
 
-.snormSlider = 
+snormFit =
+function(x, ...)
+{   # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   Fit the parameters for a skew Normal distribution
+    
+    # FUNCTION:
+    
+    # For S-Plus compatibility:
+    if (!exists("nlm")) 
+        nlm = function (f, p, ...) nlminb(start = p, objective = f, ...) 
+        
+    # Start Value:
+    p = c(mean = mean(x), sd = sqrt(var(x)), xi = 1)
+
+    # Log-likelihood Function:
+    loglik = function(x, y = x){ 
+        f = -sum(log(dsnorm(y, x[1], x[2], x[3])))
+        f }
+        
+    # Minimization:
+    fit = nlm(f = loglik, p = p, y = x, ...)
+    
+    # Return Value:
+    fit
+}   
+
+
+################################################################################
+
+
+snormSlider = 
 function(type = c("dist", "rand"))
 {   # A function implemented by Diethelm Wuertz
     
     # Description:
+    #   Displays interactively skew Normal distribution
+    
+    # Note:
     #   dsnorm(x, mean = 0, sd = 1, xi = 1.5)
     
     # FUNCTION:

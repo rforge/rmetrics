@@ -15,6 +15,8 @@
 \alias{gedFit}
 \alias{sgedFit}
 
+\alias{sgedSlider}
+
 
 \title{Skew GED Distribution and Parameter Estimation}
 
@@ -36,8 +38,9 @@
     \code{[dpqr]ged} \tab Symmetric GED Distribution, \cr
     \code{[dpqr]sged} \tab Skew GED Distribution, \cr
     \code{gedFit} \tab MLE parameter fit for a GED distribution, \cr
-    \code{sgedFit} \tab MLE parameter fit for a skew GED distribution. }
-       
+    \code{sgedFit} \tab MLE parameter fit for a skew GED distribution, \cr
+    \code{sgedSlider} \tab Displays interactively skew GED distribution. }
+      
 }
     
     
@@ -57,6 +60,8 @@ rsged(n, mean = 0, sd = 1, nu = 2, xi = 1.5)
 
 gedFit(x, \dots)
 sgedFit(x, \dots)
+
+sgedSlider(type = c("dist", "rand"))
 }
 
 
@@ -73,6 +78,11 @@ sgedFit(x, \dots)
         } 
     \item{p}{
         a numeric vector of probabilities.
+        }
+    \item{type}{
+        a character string denoting which interactive plot should
+        be displayed. Either a distribution plot \code{type="dist"},
+        the default value, or a random variates plot, \code{type="rand"}.
         }
     \item{x, q}{
         a numeric vector of quantiles.

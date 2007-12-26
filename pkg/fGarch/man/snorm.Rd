@@ -11,6 +11,8 @@
 \alias{normFit}
 \alias{snormFit}
 
+\alias{snormSlider}
+
 
 \title{Skew Normal Distribution and Parameter Estimation}
 
@@ -27,10 +29,10 @@
     The functions are:
     
     \tabular{ll}{
-    \code{[dpqr]std} \tab Symmetric Student-t Distribution, \cr
-    \code{[dpqr]snorm} \tab Skew Student-t Distribution, \cr
-    \code{stdFit} \tab MLE parameter fit for a Sudent-t distribution, \cr
-    \code{snormFit} \tab MLE parameter fit for a skew Sudent-t distribution. }
+    \code{[dpqr]snorm} \tab Skew Normal Distribution, \cr
+    \code{normFit} \tab MLE parameter fit for Normal distribution, \cr
+    \code{snormFit} \tab MLE parameter fit for skew Normal distribution, \cr
+    \code{snormSlider} \tab Displays interactively skew Normal distribution. }
        
 }
 
@@ -43,6 +45,8 @@ rsnorm(n, mean = 0, sd = 1, xi = 1.5)
 
 normFit(x, \dots)
 snormFit(x, \dots)
+
+snormSlider(type = c("dist", "rand"))
 }
 
 
@@ -58,6 +62,11 @@ snormFit(x, \dots)
         } 
     \item{p}{
         a numeric vector of probabilities.
+        }
+    \item{type}{
+        a character string denoting which interactive plot should
+        be displayed. Either a distribution plot \code{type="dist"},
+        the default value, or a random variates plot, \code{type="rand"}.
         }
     \item{x, q}{
         a numeric vector of quantiles.

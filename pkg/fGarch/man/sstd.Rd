@@ -15,6 +15,8 @@
 \alias{stdFit}
 \alias{sstdFit}
 
+\alias{sstdSlider}
+
 
 \title{Skew Student-t Distribution and Parameter Estimation}
 
@@ -34,7 +36,8 @@
     \code{[dpqr]std} \tab Symmetric Student-t Distribution, \cr
     \code{[dpqr]sstd} \tab Skew Student-t Distribution, \cr
     \code{stdFit} \tab MLE parameter fit for a Sudent-t distribution, \cr
-    \code{sstdFit} \tab MLE parameter fit for a skew Sudent-t distribution. }
+    \code{sstdFit} \tab MLE parameter fit for a skew Sudent-t distribution, \cr
+    \code{sstdSlider} \tab 
        
 }
 
@@ -52,6 +55,8 @@ rsstd(n, mean = 0, sd = 1, nu = 5, xi = 1.5)
 
 stdFit(x, \dots)
 sstdFit(x, \dots)
+
+sstdSlider(type = c("dist", "rand"))
 }
 
 
@@ -68,6 +73,11 @@ sstdFit(x, \dots)
         } 
     \item{p}{
         a numeric vector of probabilities.
+        }
+    \item{type}{
+        a character string denoting which interactive plot should
+        be displayed. Either a distribution plot \code{type="dist"},
+        the default value, or a random variates plot, \code{type="rand"}.
         }
     \item{x, q}{
         a numeric vector of quantiles.

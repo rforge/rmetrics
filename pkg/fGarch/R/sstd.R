@@ -38,6 +38,10 @@
 #  psstd                  Probability function for the skewed STD
 #  qsstd                  Quantile function for the skewed STD
 #  rsstd                  Random Number Generator for the skewed STD
+# FUNCTION:              PARAMETER ESTIMATION:
+#  stdFit                 Fit the parameters for a Sudent-t distribution
+#  sstdFit                Fit the parameters for a skew Sudent-t distribution
+# FUNCTION:              SLIDER:
 #  .stdSlider             Displays Variance-1 Student-t Distribution and RVS
 ################################################################################
 
@@ -349,15 +353,91 @@ function(n, mean = 0, sd = 1, nu = 5, xi = 1.5)
 }
 
 
+################################################################################
+
+
+stdFit =
+function(x, ...)
+{   # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   Fit the parameters for a Sudent-t distribution
+    #   with unit variance
+    
+    # FUNCTION:
+    
+    # For S-Plus compatibility:
+    if (!exists("nlm")) 
+        nlm = function (f, p, ...) nlminb(start = p, objective = f, ...) 
+        
+    # Start Value:
+    p = c(mean = mean(x), sd = sqrt(var(x)), nu = 4)
+
+    # Log-likelihood Function:
+    loglik = function(x, y = x){ 
+        f = -sum(log(dstd(y, x[1], x[2], x[3])))
+        f }
+        
+    # Minimization:
+    fit = nlm(f = loglik, p = p, y = x, ...)
+    Names = c("mean", "sd", "nu")
+    names(fit$estimate) = Names
+    names(fit$gradient) = Names
+    
+    # Return Value:
+    fit
+}   
+
+
 # ------------------------------------------------------------------------------
 
 
-.sstdSlider = 
+sstdFit =
+function(x, ...)
+{   # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   Fit the parameters for a skew Sudent-t distribution
+    #   with unit variance
+    
+    # FUNCTION:
+    
+    # For S-Plus compatibility:
+    if (!exists("nlm")) 
+        nlm = function (f, p, ...) nlminb(start = p, objective = f, ...) 
+    
+    # Start Value:
+    p = c(mean = mean(x), sd = sqrt(var(x)), nu = 4, xi = 1)
+
+    # Log-likelihood Function:
+    loglik = function(x, y = x){ 
+        f = -sum(log(dsstd(y, x[1], x[2], x[3], x[4])))
+        f }
+        
+    # Minimization:
+    fit = nlm(f = loglik, p = p, y = x, ...)
+    Names = c("mean", "sd", "nu", "xi")
+    names(fit$estimate) = Names
+    names(fit$gradient) = Names
+    
+    # Return Value:
+    fit
+}   
+
+
+################################################################################# ------------------------------------------------------------------------------
+
+
+sstdSlider = 
 function(type = c("dist", "rand"))
 {   # A function implemented by Diethelm Wuertz
     
     # Description:
+    #   Displays interactively skew Student-t distribution
+    
+    # Note:
     #   dsstd(x, mean = 0, sd = 1, nu = 5, xi = 1.5)
+    
     
     # FUNCTION:
     

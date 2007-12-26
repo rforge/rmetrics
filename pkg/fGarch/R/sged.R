@@ -38,6 +38,10 @@
 #  psged                  Probability function for the skewed GED
 #  qsged                  Quantile function for the skewed GED
 #  rsged                  Random Number Generator for the skewed GED
+# FUNCTION:              PARAMETER ESTIMATION:
+#  gedFit                 Fit the parameters for a GED distribution
+#  sgedFit                Fit the parameters for a skew GED distribution
+# FUNCTION:              SLIDER:
 #  .sgedSlider            Displays Generalized Error Distribution and RVS
 ################################################################################
 
@@ -336,14 +340,81 @@ function(n, mean = 0, sd = 1, nu = 2, xi = 1.5)
 }
 
 
+################################################################################
+
+
+gedFit =
+function(x, ...)
+{   # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   Fit the parameters for a GED distribution
+    
+    # FUNCTION:
+    
+    # For S-Plus compatibility:
+    if (!exists("nlm")) 
+        nlm = function (f, p, ...) nlminb(start = p, objective = f, ...) 
+        
+    # Start Value:
+    p = c(mean = mean(x), sd = sqrt(var(x)), nu = 2)
+
+    # Log-likelihood Function:
+    loglik = function(x, y = x){ 
+        f = -sum(log(dged(y, x[1], x[2], x[3])))
+        f }
+        
+    # Minimization:
+    fit = nlm(f = loglik, p = p, y = x, ...)
+    
+    # Return Value:
+    fit
+}   
+
+
 # ------------------------------------------------------------------------------
 
 
-.sgedSlider = 
+sgedFit =
+function(x, ...)
+{   # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   Fit the parameters for a skew GED distribution
+    
+    # FUNCTION:
+    
+    # For S-Plus compatibility:
+    if (!exists("nlm")) 
+        nlm = function (f, p, ...) nlminb(start = p, objective = f, ...) 
+        
+    # Start Value:
+    p = c(mean = mean(x), sd = sqrt(var(x)), nu = 2, xi = 1)
+
+    # Log-likelihood Function:
+    loglik = function(x, y = x){ 
+        f = -sum(log(dsged(y, x[1], x[2], x[3], x[4])))
+        f }
+        
+    # Minimization:
+    fit = nlm(f = loglik, p = p, y = x, ...)
+    
+    # Return Value:
+    fit
+}   
+
+
+################################################################################
+
+
+sgedSlider = 
 function(type = c("dist", "rand"))
 {   # A function implemented by Diethelm Wuertz
     
     # Description:
+    #   Displays interactively skew GED distribution
+    
+    # Note:
     #   dsged(x, mean = 0, sd = 1, nu = 5, xi = 1.5)
     
     # FUNCTION:
