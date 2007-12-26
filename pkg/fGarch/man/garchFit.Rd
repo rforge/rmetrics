@@ -127,7 +127,6 @@ garchKappa(cond.dist = c("dnorm", "dged", "dstd", "dsnorm", "dsged", "dsstd"),
 \value{
     
     \code{garchFit}\cr
-    \cr
     returns a S4 object of class \code{fGARCH} with the following slots:
 
     \item{@call}{
@@ -236,7 +235,7 @@ garchKappa(cond.dist = c("dnorm", "dged", "dstd", "dsnorm", "dsged", "dsstd"),
         \code{> garchFit(~ garch(1,1), data = x.ts)) }
     
     Note it is not necessary to specifiy a left hand side for the 
-    formula expression. 
+    formula expression.\cr
     
     
     \bold{How to specify the formula for a multivariate data input?}
@@ -259,10 +258,10 @@ garchKappa(cond.dist = c("dnorm", "dged", "dstd", "dsnorm", "dsged", "dsstd"),
         \code{> garchFit(GARCH11 ~ garch(1,1), data = X.mat)) }\cr
         \code{> garchFit(GARCH11 ~ garch(1,1), data = X.timeSeries)) }\cr           
         \code{> garchFit(GARCH11 ~ garch(1,1), data = X.zoo)) }\cr  
-        \code{> garchFit(GARCH11 ~ garch(1,1), data = X.ts)) }
+        \code{> garchFit(GARCH11 ~ garch(1,1), data = X.ts)) }\cr
     
     
-    \bold{Extracting the Environment of a Model Formula:}
+    \bold{Extracting the Environment of a Model Formula}
     
     The \code{garchFit} also allows to make use of the environment of the
     model formula. As an example we show how to model the spread of two
@@ -301,7 +300,7 @@ garchKappa(cond.dist = c("dnorm", "dged", "dstd", "dsnorm", "dsged", "dsstd"),
     the Microsoft equity price series:
         
         \code{> MSFT = as.timeSeries(data(msft.dat)) }\cr
-        \code{> garchFit(100*(High-Low) ~ garch(1,1), data = returns(MSFT)) }
+        \code{> garchFit(100*(High-Low) ~ garch(1,1), data = returns(MSFT)) }\cr
     
         
     \bold{How are time series slots returned by the function \code{garchFit}?}
@@ -321,7 +320,7 @@ garchKappa(cond.dist = c("dnorm", "dged", "dstd", "dsnorm", "dsged", "dsstd"),
         \code{volatility(object, type = c("sigma", "h")) }
     
     where object is a fitted model as returned by the function 
-    \code{garchFit}. 
+    \code{garchFit}.\cr
 
   
     \bold{GARCH Processes with non-normal distributions}
@@ -355,24 +354,24 @@ garchKappa(cond.dist = c("dnorm", "dged", "dstd", "dsnorm", "dsged", "dsstd"),
     financial return series, we submit the command
     
         \code{> garchFit(~ garch(1,1), data = dem2gbp, cond.dist ="dstd", }\cr
-        \code{  shape = 4, include.shape = FALSE) }\c
+        \code{  shape = 4, include.shape = FALSE) }\cr
     
            
     \bold{The Solvers:}
        
     The reason why the function \code{garchFit} has implemented different 
-    optimization algorithms has historical reasons. 
+    optimization algorithms has historical reasons.\cr
     
     \code{algorithm = "lbfgsb"}\cr
     When the first version 
     was written the only solver implemented in R was the AMC TOMS 778 
-    algorithm \code{optim(method="L-BFGS-B")}. 
+    algorithm \code{optim(method="L-BFGS-B")}.\cr 
     
     \code{algorithm = "nlminb"}\cr
     Later when the function 
     \code{nlminb} was added to R's base package, interfacing the PORT 
     Mathematical Software Library, we implemented it in \code{garchFit}.
-    This is the default solver. 
+    This is the default solver.\cr 
     
     \code{algorithm = "nlminb+nm"}\cr
     \code{algorithm = "lbfgsb+nm"}\cr
@@ -387,7 +386,7 @@ garchKappa(cond.dist = c("dnorm", "dged", "dstd", "dsnorm", "dsged", "dsstd"),
     The result is that one finds with
     this "hybrid approach" or "mixed method" in many cases an improved 
     solution. The idea of two step approaches is also mentioned in 
-    McCullough and Renfro [1999]. 
+    McCullough and Renfro [1999].\cr
     
     \code{algorithm = "sqp"}\cr
     The idea to implement the "Sequential 
@@ -417,7 +416,7 @@ garchKappa(cond.dist = c("dnorm", "dged", "dstd", "dsnorm", "dsged", "dsstd"),
         \code{> coef(garchFit(~ garch(1,1), dem2gbp, algorithm = "sqp")) } 
         
     The execution times range by a factor of about 4, the fastest is 
-    \code{"sqp"}, and the slowest \code{"lbfgsb+nm"}.
+    \code{"sqp"}, and the slowest \code{"lbfgsb+nm"}.\cr
     
     
     \bold{Why does the function \code{garchFit} sometimes fails?}
