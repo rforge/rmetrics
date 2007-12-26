@@ -33,15 +33,10 @@
 ################################################################################
 
 
-.absMoments.error = NA
-
-
-# ------------------------------------------------------------------------------
-
-
-absMoments =
+absMoments <- 
 function(n, density = c("dnorm", "dged", "dstd"), ...)
-{   # A function implemented by Diethelm Wuertz 
+{   
+    # A function implemented by Diethelm Wuertz 
 
     # Description:
     #   Compute the absolute moments of a standardized
@@ -84,12 +79,13 @@ function(n, density = c("dnorm", "dged", "dstd"), ...)
     # Any other standardized symmetric Distribution ...
     fun = match.fun(density)
     moments = function(x, n, ...) { 2 * x^n * fun(x, ...) }
-    M = .absMoments.error <<- NULL
+    M = .absMoments.error <- NULL
     for (i in n) {
         I = integrate(moments, 0, Inf, n = i, ...)
         M = c(M, I$value)
-        .absMoments.error <<- c(.absMoments.error, I$abs.error) 
+        .absMoments.error <- c(.absMoments.error, I$abs.error) 
     }
+    attr(M, "control") <- .absMoments.error 
     return(M)
 
     # Return Value:
