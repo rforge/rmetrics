@@ -16,7 +16,7 @@
 
 
 \usage{
-\method{volatility}{fGARCH}(object, \dots)
+\method{volatility}{fGARCH}(object, type = c("sigma", "h"), \dots)
 }
 
 
@@ -26,6 +26,11 @@
         an object of class \code{fGARCH} as returned from the function
         \code{garchFit()}.
         }  
+    \item{type}{
+        type - a character string denoting if the conditional standard
+        deviations \code{"sigma"} or the variances \code{"h"} should 
+        be returned.
+        }
     \item{\dots}{
         additional arguments to be passed.
         }   

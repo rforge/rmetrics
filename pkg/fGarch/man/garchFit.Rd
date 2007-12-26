@@ -196,21 +196,66 @@ garchKappa(cond.dist = c("dnorm", "dged", "dstd", "dsnorm", "dsged", "dsstd"),
     research.\cr
 
 
-    \bold{How to specify the formula and data input?}
+    \bold{How to specify the formula for an univariate data input?}
     
     \code{formula} and \code{data} arguments are closely related. 
     Several different data types are allowed to be specified. Our 
     recommended data object would be a time
     series object of class \code{"timeSeries"}, but also other
-    time series data objects are allowed: Simple vectors, R's base 
-    time series objects of class \code{"ts"}, and Z's ordered time 
-    series objects of class \ code{"zoo"}.
+    time series data objects are allowed: Simple vectors (usually used
+    when missing time stamps), R's base time series objects of class 
+    \code{"ts"}, and Z's ordered time series objects of class 
+    \code{"zoo"}. Let us start to consider univariate objects, defining
+    univariate time series objects from several classes:
     
-    Load a data file from the demo example, e.g. the LPP2005REC Swiss
-    Pension Fund benchmark portfolio, given by a data frame:
+        \code{> x.vec = 100*garchSim(model, n = 1000, returnClass = "numeric") }\cr
+        \code{> x.timeSeries = dummyDailySeries(matrix(x.vec), units = "GARCH11") }\cr
+        \code{> x.zoo = zoo(x.vec, order.by = as.Date(rownames(x.timeSeries))) \cr
+        \code{> x.ts = as.ts(x.vec) 
+    
+    Fitting a GARCH(1,1) is done in the following way:
+    
+        \code{> garchFit(~ garch(1,1), data = x.vec)) }\cr
+        \code{> garchFit(~ garch(1,1), data = x.timeSeries)) }\cr           
+        \code{> garchFit(~ garch(1,1), data = x.zoo)) }\cr  
+        \code{> garchFit(~ garch(1,1), data = x.ts)) }\cr  
+    
+    Note it is not necessary to specifiy a left hand side for the 
+    formula expression. 
+    
+    
+    \bold{How to specify the formula for a multivariate data input?}
+    
+    For multivariate time series one has to specify the left hand side
+    of the formula, so that the \code{garchFit} function knows which
+    column has to be taken for the modelling process. let us construct a
+    bivariate time series where the first column is a GARCH(1,1) proces
+    and the second coulmn random normal variates
+    
+        \code{> X.mat = cbind(GARCH11 = x.vec, R = rnorm(1000)) }\cr
+        \code{> X.timeSeries = dummyDailySeries(X.mat, units = c("GARCH11", "R")) }\cr
+        \code{> X.zoo = zoo(X.mat, order.by = as.Date(rownames(x.timeSeries))) } \cr
+        \code{> X.mts = as.ts(X.mat) }\cr
+    
+    To model the GARCH(1,1) process from the first column of the datasets 
+    above, we have to express the left hand formula by the desired column
+    name of the bivariate series:
+    
+        \code{> garchFit(GARCH11 ~ garch(1,1), data = X.mat)) }\cr
+        \code{> garchFit(GARCH11 ~ garch(1,1), data = X.timeSeries)) }\cr           
+        \code{> garchFit(GARCH11 ~ garch(1,1), data = X.zoo)) }\cr  
+        \code{> garchFit(GARCH11 ~ garch(1,1), data = X.ts)) }\cr  
+    
+    
+    \bold{Extracting the Environment of a Model Formula:}
+    
+    The \code{garchFit} also allows to make use of the environment of the
+    model formula. As an example we show how to model the spred of two
+    series from a multivariate data set.
+    Load the LPP2005REC "Swiss Pension Fund" benchmark portfolio time
+    series, given by a data frame:
     
         \code{> data(LPP2005REC) }\cr
-        \code{> LPP.df = LPP2005REC }
     
     This data frame consists of 10 columns of financial returns named 
     LPP25, LPP40, and LPP60, together with its 6 major asset classes 
@@ -224,76 +269,27 @@ garchKappa(cond.dist = c("dnorm", "dged", "dstd", "dsnorm", "dsged", "dsstd"),
     we can extract the core \code{data} matrix and the character vector
     \code{charvec} of time stamps.
     
-
         \code{> data = LPP.mat = as.matrix(LPP.df[, 2:10]) }\cr
         \code{> charvec = as.character(LPP.df[, 1]) }
 
+    From these two objects we can construct several multivariate time 
+    series objects which can serve as input for the \code{garchFit} 
+    function, e.g. a \code{"timeSeries"} object, objects of class 
+    \code{zoo} or \code{mts}, or a just a data \code{"matrix"}. Then 
+    the percentual spread of the Swiss, SPI, and foreign equity, MPI,
+    indexes can be modelled in the following way:
     
-    From these two objects we can construct several time series objects
-    which can serve as input for the \code{garchFit} function.\cr
- 
-    
-    %--------------------------------------------------------------------
-    \emph{Case 1:}\cr
-    The data will be a numeric vector of returns:  
-    First we create a numeric vector for the Swiss Performance Index, 
-    SPI, and then we estimate the parameters. Note, that the left 
-    hand side of the formula has not to be specified! 
-     
-        \code{> SPI = as.vector(LPP.mat[, "SPI"]) }\cr
-        \code{> garchFit(~ garch(1,1), data = SPI) }
-    
-    
-    %--------------------------------------------------------------------
-    \emph{Case 2:}\cr 
-    The data is given by a numeric matrix of returns:
-    It is important to note, that the matrix must have column names
-    to specify the left hand side of the formula:
+        \code{> LPP = as.timeSeries(data(LPP2005REC)) }\cr
+        \code{>  garchFit(100*(SPI-MPI) ~ garch(1,1), data = LPP) }
         
-        \code{> garchFit(SPI ~ garch(1,1), data = LPP.mat) }\cr
+    As a second example we show how to model high/low spreds from 
+    the Microsoft equity price series:
         
-        
-    %--------------------------------------------------------------------
-    \emph{The generic Case 3:}\cr
-    The data is given by a \code{"timeSeries"} object:   
-    First let us construct the \code{"timeSeries"} object from scratch
-    using the core \code{data} matrix and the character vector
-    \code{charvec} with the given time stamps.
-    Alternatively, we can construct the time series directly from the
-    loaded data frame LPP2005RET, using the function \code{as.timeSeries}.
-    Finally, we proceed in the same way as for the numeric matrix to 
-    estimate the parameters. 
-    Note, this procedure works for both, univariate and multivariate
-    \code{"timeSeries"} objects. Don't forget, that the left hand side
-    has to be specified by the column name of the selected time series.  
+        \code{> MSFT = as.timeSeries(data(msft.dat)) }\cr
+        \code{> garchFit(100*(High-Low) ~ garch(1,1), data = returns(MSFT))
     
-        \code{> LPP.tS = timeSeries(data, charvec) }\cr 
-        \code{> LPP.tS = as.timeSeries(LPP2005REC) }\cr
-        \code{> garchFit(SPI ~ garch(1,1), data = LPP.tS) }\cr
-    
-       
-    %--------------------------------------------------------------------
-    \emph{Case 4:}\cr
-    The data is given by a \code{"data.frame"} object:
-    Again, we proceed in the same way as for the numeric matrix: 
-    
-        \code{> garchFit(SPI ~ garch(1,1), data = LPP.df)}\cr
-
         
-    %---------------------------------------------------------------------------
-    \emph{Case 5:}\cr 
-    The data is given by a \code{"zoo"} object: First let 
-    us construct an example \code{"zoo"} object from scratch using the core 
-    \code{data} matrix and the character vector \code{charvec} with the 
-    given time stamps. Again, we proceed in the same way as for the numeric 
-    matrix: 
-        
-        \code{> LPP.zoo = zoo(data = LPP.mat, order.by = as.Date(charvec))}\cr
-        \code{> garchFit(SPI ~ garch(1,1), data = LPP.zoo)}\cr
-        
-      
-    % ==========================================================================
-    \bold{How are time series returned by the function \code{garchFit}?}
+    \bold{How are time series slots returned by the function \code{garchFit}?}
    
     The value section describes the S4 object returned by the function 
     \code{garchFit}. Special attention require the four time series slots
@@ -301,30 +297,32 @@ garchKappa(cond.dist = c("dnorm", "dged", "dstd", "dsnorm", "dsged", "dsstd"),
     \code{@fitted},
     \code{@h.t}, and
     \code{@sigma.t}.
-    Their output depends on the class of the \code{data} input, i.e. the
-    class of the object of the above mentioned slots have the same mode
-    as the input \code{data} argument.\cr
-   
+    Their output is always a numeric vector with optional time stamps, 
+    if available. If we want to have the output as objects from thye 
+    same class as the data points we can use the extractor functions
     
-    % ==========================================================================
+        \code{residuals(object) }\cr
+        \code{fitted(object) }\cr
+        \code{volatility(object, type = c(sigma", "h")) }\cr
+    
+    where object is a fitted model as returned by the function 
+    \code{garchFit}. 
+
+  
     \bold{GARCH Processes with non-normal distributions}
     
     Bollerslev [1987] was the first who modelled financial time series 
     for foreign exchange rates and stock indexes using GARCH(1,1) models 
-    extended by the use of standardized Student-t distributions. In 
-    comparison to conditionally normal errors he found that t-GARCH(1,1)
-    errors much better capture the leptokurtosis seen in the data.
-    It is straightforward to add non-normal distribution functions to 
-    \code{garchFit} specifying the argument \code{cond.dist}.  
-    For this up to two additional parameters which can be either kept 
-    fixed or estimated have to be introduced, the \code{skew} and/or 
-    the \code{shape} parameter. 
-    
+    extended by the use of standardized Student-t distributions.
+    It is straightforward with the function \code{garchFit} to model 
+    GARCH processes with non-normal distribution functions, just 
+    specifying the argument \code{cond.dist} by one of the alternatives.
     The argument \code{cond.dist} allows to select one from six conditional 
     distributions. Three of them are skewed distributions, (the skew-Normal, 
     the skew-Student, and the skew-GED), and four of them have an additional 
-    shape parameter (the Student, the GED and their skewed versions). The 
-    values for the skew and the shape are determined through the arguments 
+    shape parameter (the Student, the GED and their skewed versions). 
+    
+    The values for the skew and the shape are determined through the arguments 
     \code{skew} and \code{shape}. There are two additional undetermined
     arguments named \code{include.skew} and \code{include.shape}. They can 
     be set to \code{TRUE} or \code{FALSE}, then the distributional parameters 
@@ -333,45 +331,58 @@ garchKappa(cond.dist = c("dnorm", "dged", "dstd", "dsnorm", "dsged", "dsstd"),
     on the choice of the other parameters. The following example shows
     how to fit Bollerslev’s t-GARCH(1,1) model:
     
-        \code{> garchFit(x = "dem2gbp", cond.dist = "dst")}
-
-    Note, that the model has not to be specified explicitly, since the 
-    GARCH(1,1) model is the default.\cr
+        \code{> data(dem2gbp)
+        \code{> garchFit(~ garch(1,1), data = dem2gbp, cond.dist = "dstd") }\cr
+        
+    Here the shape of the distribution, giving the number of degrees of 
+    freedom of the Student-t distribution, has been also estimated. If we
+    like to fix this value to 4, a number which is often observed for
+    financial return series, we submit the command
     
-            
-    % ==========================================================================
+        \code{> garchFit(~ garch(1,1), data = dem2gbp, cond.dist ="dstd", }\cr
+        \code{  shape = 4, include.shape = FALSE) }\c
+    
+           
     \bold{The Solvers:}
        
-    The reason why the function garchFit() has implemented different 
+    The reason why the function \code{garchFit} has implemented different 
     optimization algorithms has historical reasons. 
     
-    When the first version 
+    \code{algorithm = "lbfgsb"}\cr
+     When the first version 
     was written the only solver implemented in R was the AMC TOMS 778 
     algorithm \code{optim(method="L-BFGS-B")}. 
     
+    \code{algorithm = "nlminb"}\cr
     Later when the function 
-    \code{nlminb()} was added to R's base package, interfacing the PORT 
-    Mathematical Software Library, we implemented it in \code{garchFit}. 
-    Unfortunately, we found that for both solvers it was not always 
+    \code{nlminb} was added to R's base package, interfacing the PORT 
+    Mathematical Software Library, we implemented it in \code{garchFit}.
+    This is the default solver. 
+    
+    \code{algorithm = "nlminb+nm"}\cr
+    \code{algorithm = "lbfgsb+nm"}\cr
+    Unfortunately, we found that for both solvers \code{"lbfgsb"} 
+    and \code{"nlminb"} it was not always 
     possible to find the optimal values for the set of model parameters 
-    even if we tried to adapt the control parameters. This problem was 
+    even if we tried to adapt the control parameters. This problem could be 
     solved in many cases using a two stage approach: First find a (near 
     optimal) solution with one of the two constrained algorithms,
     and then start with this solution a second optimization step with 
-    the (unconstrained) simplex algorithm of Nelder-Mead, 
-    \code{optim(method="Nelder-Mead")}. The result is that one finds with
+    the (unconstrained) simplex algorithm of Nelder-Mead. 
+    The result is that one finds with
     this "hybrid approach" or "mixed method" in many cases an improved 
     solution. The idea of two step approaches is also mentioned in 
     McCullough and Renfro [1999]. 
     
-    The idea to implement the Sequential 
-    Quadratic Programming algorithm, SQP, was inspired by the fact that 
+    \code{algorithm = "sqp"}\cr
+    The idea to implement the "Sequential 
+    Quadratic Programming" algorithm, SQP, was inspired by the fact that 
     this algorithm is also part of the Ox, Doormik [1999], Matlab and Gauss,
     Schoenberg [1999], software packages. SQP based algorithms represent 
     very efficient nonlinear programming methods. SQP algorithms have been 
-    implemented and tested, Schittkowski [1999], that outperform other 
-    methods in terms of accuracy and efficiency over a large number of 
-    test problems. Based on work of Biggs [1999], Han [1999], and 
+    implemented and tested, see e.g. Schittkowski [1999]. They outperform 
+    often other methods in terms of accuracy and efficiency over a large 
+    number of test problems. Based on work of Biggs [1999], Han [1999], and 
     Powell [1999], the method allows to closely mimic constrained 
     optimization just as it is done for unconstrained optimization. An 
     overview of SQP methods can be found in Fletcher [1999], Gill et 
@@ -381,34 +392,44 @@ garchKappa(cond.dist = c("dnorm", "dged", "dstd", "dsnorm", "dsged", "dsstd"),
     metric update for general nonlinear programming problems.
   
     The following example shows how to fit a normal GARCH(1,1) model 
-    using different types of solvers:
+    using different types of solvers, let us compare the fitted
+    coefficients:
     
-        \code{> garchFit(x = "dem2gbp", algorithm = "nlminb+nm")}\cr
-        \code{> garchFit(x = "dem2gbp", algorithm = "lbfgsb+nm")}\cr
-        \code{> garchFit(x = "dem2gbp", algorithm = "sqp")}\cr
+        \code{> coef(garchFit(~ garch(1,1), dem2gbp, algorithm = "nlminb")) }\cr
+        \code{> coef(garchFit(~ garch(1,1), dem2gbp, algorithm = "nlminb+nm")) }\cr
+        \code{> coef(garchFit(~ garch(1,1), dem2gbp, algorithm = "lbfgsb")) }\cr
+        \code{> coef(garchFit(~ garch(1,1), dem2gbp, algorithm = "lbfgsb+nm")) }\cr
+        \code{> coef(garchFit(~ garch(1,1), dem2gbp, algorithm = "sqp")) }\cr
+        
+    The execution times range by a factor of about 4, the fastest is 
+    \code{"sqp"}, and the slowest \code{"lbfgsb+nm"}.
     
     
-    % ==========================================================================
     \bold{Why does the function \code{garchFit} sometimes fails?}
     
     There might be several reasons why the GARCH modelling process can fail.
     
     First, in the most simple case, the \code{formula} argument is 
-    misspecified, e.g. the left hand side of the formula is missing.
+    misspecified, e.g. the left hand side of the formula is missing
+    for multivariate time series.
     
-    Second, the GARCH model can be misspecified, so that the log likelihood
+    Second, in the multivariate time series case, column names my be
+    missing, defined by empty strings, or the may have doubled entries.
+    
+    Third, the GARCH model can be misspecified, so that the log likelihood
     function does not converge. In this case use another model expressed
     by the \code{formula} specification and/or choose another conditional 
     distribution function \code{cond.dist}. Pretest the unconditional
     returns, to find out what would be an appropriate unconditional
     distribution function for the GARCH model.
     
-    Third, the log-likelihood function and the parameters are not properly
+    Fourth, the log-likelihood function and the parameters are not properly
     scaled. In this case you should scale the objective function and the
     parameters using the \code{control=list()} specification. For details
     we refer to the descriptions of the selected solver. This happens often
-    using logarithmic returns. A simple trick may help in most cases, use 
-    percentual returns, i.e. multiply the tme series with a factor of 100.\cr
+    using logarithmic returns. A simple trick may circumvent this problem 
+    and help in many cases, use percentual returns, i.e. multiply the time 
+    series with a factor of 100.\cr
       
 }
 
@@ -465,22 +486,60 @@ Nocedal J., Wright S.J. (1999);
 
 
 \examples{
-## garchSpec -
-   spec = garchSpec()
-   spec
+\dontrun{   
+## UNIVARIATE TIME SERIES INPUT:
+    
+   # A numeric Vector:
+   x.vec = 100*garchSim(model, N, returnClass = "numeric")
+   garchFit( ~ garch(1,1), data = x.vec)
 
-## garchSim -
-   x = garchSim(model = spec@model, n = 500)
-   head(x) 
+   # An univariate timeSeries object with dummy dates:
+   x.timeSeries = dummyDailySeries(matrix(x.vec), units = "GARCH11")
+   garchFit(~ garch(1,1), data = x.timeSeries)         
 
-## garchFit - 
-   # fit = garchFit(~garch(1, 1), data = x)
-   # print(fit)
-   ## Interactive Plot:
-   ## plot(fit)
-   ## Batch Plot:
-   # plot(fit, which = 3)
-   # summary(fit)
+   # An univariate zoo object:
+   x.zoo = zoo(x.vec, order.by = as.Date(rownames(x.timeSeries)))
+   garchFit(~ garch(1,1), data = x.zoo) 
+
+   # An univariate "ts" object:
+   x.ts = as.ts(x.vec)
+   garchFit(~ garch(1,1), data = x.ts)
+    
+## MULTIVARIATE TIME SERIES INPUT:
+    
+   # A numeric matrix binded with random normal variates:
+   X.mat = cbind(GARCH11 = x.vec, R = rnorm(N))
+   garchFit(GARCH11 ~ garch(1,1), data = X.mat)
+        
+   # A multivariate timeSeries object with dummy dates:
+   X.timeSeries = dummyDailySeries(X.mat, units = c("GARCH11", "R")) 
+   garchFit(GARCH11 ~ garch(1,1), data = X.timeSeries)
+    
+   # A multivariate zoo object:
+   X.zoo = zoo(X.mat, order.by = as.Date(rownames(x.timeSeries)))
+   garchFit(GARCH11 ~ garch(1,1), data = X.zoo)
+
+   # A multivariate "mts" object:
+   X.mts = as.ts(X.mat)
+   garchFit(GARCH11 ~ garch(1,1), data = X.mts))
+ 
+## MODELING THE PERCENTUAL SPI/SBI SPREAD FROM LPP BENCHMARK:
+    
+   X.timeSeries = as.timeSeries(data(LPP2005REC))
+   X.mat = as.matrix(x.timeSeries)
+   X.zoo = zoo(X.mat, order.by = as.Date(rownames(x.mat)))
+   X.mts = ts(X.mat)
+   garchFit(100*(SPI - SBI) ~ garch(1,1), data = X.timeSeries)
+   garchFit(100*(SPI - SBI) ~ garch(1,1), data = X.mat)
+   garchFit(100*(SPI - SBI) ~ garch(1,1), data = X.zoo)
+   garchFit(100*(SPI - SBI) ~ garch(1,1), data = X.mts)
+    
+## MODELING HIGH/LOW RETURN SPREADS FROM MSFT PRICE SERIES:
+    
+   X.timeSeries = as.timeSeries(msft.dat)
+   garchFit(Open ~ garch(1,1), data = returns(X.timeSeries)) 
+   garchFit(100*(High-Low) ~ garch(1,1), data = returns(X.timeSeries)) 
+}
 }
 
 

@@ -1,4 +1,4 @@
-\name{garchPredictor}
+\name{predict}
 
 \alias{garchPredictor}
 
