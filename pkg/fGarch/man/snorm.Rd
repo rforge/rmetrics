@@ -48,7 +48,7 @@ snormFit(x, \dots)
 
 \arguments{
 
-    \item{mean, sd, nu, xi}{
+    \item{mean, sd, xi}{
         location parameter \code{mean},
         scale parameter \code{sd},
         skewness parameter \code{xi}.

@@ -61,7 +61,7 @@ Fernandez C., Steel M.F.J. (2000);
 
 \examples{
 ## absMoment -
-    absMoments(4, "dged")
+    absMoments(4, "dstd", nu = 4)
 }
 
 
