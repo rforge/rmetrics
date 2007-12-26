@@ -16,7 +16,7 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2007, Diethelm Wuertz, GPL
+#   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
 #   www.rmetrics.org
@@ -91,9 +91,18 @@ garchFit <-
     
     # Call:
     CALL = match.call()
-    
+       
     # Parse formula and data for garchFit
-    args = .garchArgsParser(formula, data, trace = FALSE)
+    Data = as.data.frame(data)
+    if (length(formula) == 2) {
+        if (isUnivariate(Data)) {
+            if (is.null(colnames(Data))) colnames(Data) = "x"
+            formula = as.formula(
+                paste(colnames(Data), paste(formula, collapse = " ")))
+        }
+    }      
+    args = .garchArgsParser(formula, data = Data, trace = FALSE)
+    print(args)
           
     # Fit:
     ans = .garchFit(
@@ -104,6 +113,8 @@ garchFit <-
         include.delta, include.skew, include.shape, leverage, 
         trace, algorithm, control, title, description, ...)
     ans@call = CALL
+    ans@data$data = data
+    ans@data$unit = args$formula.lhs
     
     # Return Value:
     ans
@@ -124,29 +135,23 @@ garchFit <-
     # Arguments:
     #   formula - ARMA(m,n) + GARCH/APARCH(p,q) mean and variance 
     #       specification
-    #   data - any univariate time series which can be converted
+    #   data - time series input as a data frame object
+    
+    # Note:
+    #   This function returns the input formula and input data in
+    #   proper formats. Two cases are deistinguished
     
     # FUNCTION:
     
     # Check formula expression dependent on data class:
-    if(class(data) == "timeSeries") {
-        formulaLength = length(formula)
-        if(formulaLength < 3) {
-            stop1 = "For timeSeries objects you must specifiy the full formula:"
-            stop2 = "e.g. formula = X ~ arma(2,1) + garch(1,1)"
-            stop(paste(stop1, stop2)) 
-        }
-    }
-    if(class(data) == "data.frame") {
-        formulaLength = length(formula)
-        if(formulaLength < 3) {
-            stop1 = "For data.frame objects you must specifiy the full formula:"
-            stop2 = "e.g. formula = X ~ arma(2,1) + garch(1,1)"
-            stop(paste(stop1, stop2)) 
-        }
-    }
-    
+
     # Get Data:
+    if(length(formula) == 2) stop ("Left hand side of formula is missing")
+    allVars = unique(sort(all.vars(formula)))
+    allVarsTest =  mean(allVars %in% colnames(data))
+    if (allVarsTest != 1) stop ("Formula and data units do not match")
+    formula.lhs = as.character(formula)[2]
+     
     mf = match.call(expand.dots = FALSE)
     if(trace) {
         cat("\nMatched Function Call:\n ")
@@ -154,6 +159,8 @@ garchFit <-
     }
     m = match(c("formula", "data"), names(mf), 0)
     mf = mf[c(1, m)]
+    
+    # Model the timeSeries - Have a look on the function .modelSeries() ...
     mf[[1]] = as.name(".modelSeries")
     mf$fake = FALSE
     mf$lhs = TRUE
@@ -162,15 +169,17 @@ garchFit <-
         print(mf)
     }
     x = eval(mf, parent.frame())
-    x = asVector(x[, 1])
-    if(class(mf$data) == "timeSeries") names(x) = rownames(data)
     if(trace) {
-        cat("\nThe first few data points:\n ")
-        print(head(x))
-        cat("\nData Class:\n ")
-        print(class(x))
+        print(x)
     }
     
+    # Now extract the modelled series ...
+    x = as.vector(x[, 1])
+    names(x) = rownames(data)
+    if(trace) {
+        print(x)
+    }        
+              
     # Compose Mean and Variance Formula:
     allLabels = attr(terms(formula), "term.labels")
     if(trace) {
@@ -195,10 +204,11 @@ garchFit <-
     ans = list(
         formula.mean = formula.mean, 
         formula.var = formula.var, 
+        formula.lhs = formula.lhs,
         series = x)
     
     # Return Value:
-    invisible(ans)  
+    ans
 }
 
 
@@ -304,6 +314,10 @@ function(algorithm)
     #   title - an optional title string
     #   description - an optional project description string
         
+    # Note:
+    #   This is the old version of garchFit, we keep it for backward
+    #   compatoibility.
+    
     # FUNCTION:
   
     # Check for Recursion Initialization:

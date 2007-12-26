@@ -4,7 +4,6 @@
 \alias{coef.fGARCH}
 
 
-
 \title{Extract GARCH Model Fitted Values}
 
 

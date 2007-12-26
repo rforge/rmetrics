@@ -1,7 +1,6 @@
 \name{garchReports}
 
 \alias{garchReports}
-}
 
 \alias{fGARCH-class}
 

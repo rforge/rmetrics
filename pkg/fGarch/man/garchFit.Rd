@@ -54,10 +54,11 @@ garchKappa(cond.dist = c("dnorm", "dged", "dstd", "dsnorm", "dsged", "dsstd"),
         the series is converted into a numeric vector and the name of the
         response in the formula will be neglected.
         }
-    \item{delta, include.delta}{
-        the exponent \code{delta} of the variance recursion. By default,
-        this value will be fixed, otherwise the exponent will be estimated 
-        together with the other model parameters if \code{include.delta=FALSE}.
+    \item{delta}{
+        a numeric value, the exponent \code{delta} of the variance recursion.
+        By default, this value will be fixed, otherwise the exponent will be 
+        estimated together with the other model parameters if 
+        \code{include.delta=FALSE}.
         }
     \item{description}{ 
         a character string which allows for a brief description. 
@@ -72,18 +73,29 @@ garchKappa(cond.dist = c("dnorm", "dged", "dstd", "dsnorm", "dsged", "dsstd"),
         APARCH leverage parameter entering into the formula for calculating
         the expectation value.
         }
+    \item{include.delta}{
+        a logical flag which determines if the parameter for the recursion
+        equation \code{delta} will be estimated or not. If 
+        \code{include.delta=FALSE} then the shape parameter will be kept 
+        fixed during the process of parameter optimization.
+        }
     \item{include.mean}{
         this flag determines if the parameter for the mean will be estimated
         or not. If \code{include.mean=TRUE} this will be the case, otherwise
         the parameter will be kept fixed durcing the process
         of parameter optimization.
         }
-    \item{include.skew, include.shape}{
-        this flag determines if the parameters for the skew and shape
+    \item{include.shape}{
+        a logical flag which determines if the parameter for the shape
         of the conditional distribution will be estimated or not. If 
-        \code{include.skew=TRUE} and/or \code{include.shape=TRUE} this will 
-        be the case, otherwise the parameters will be kept fixed durcing 
-        the process of parameter optimization.
+        \code{include.shape=FALSE} then the shape parameter will be kept 
+        fixed during the process of parameter optimization.
+        }
+    \item{include.skew}{
+        a logical flag which determines if the parameter for the skewness
+        of the conditional distribution will be estimated or not. If 
+        \code{include.skew=FALSE} then the skewness parameter will be kept 
+        fixed during the process of parameter optimization.
         }
     \item{init.rec}{
         a character string indicating the method how to initialize the 
@@ -93,8 +105,11 @@ garchKappa(cond.dist = c("dnorm", "dged", "dstd", "dsnorm", "dsged", "dsstd"),
         a logical flag for APARCH models. Should the model be leveraged?
         By default \code{leverage=TRUE}.
         }  
-    \item{skew, shape}{
-        skewness and shape parameter of the conditional distribution.
+    \item{shape}{
+        a numeric value, the shape parameter of the conditional distribution.
+        }
+    \item{skew}{
+        a numeric value, the skewness parameter of the conditional distribution.
         }
     \item{title}{
         a character string which allows for a project title.
@@ -210,15 +225,15 @@ garchKappa(cond.dist = c("dnorm", "dged", "dstd", "dsnorm", "dsged", "dsstd"),
     
         \code{> x.vec = 100*garchSim(model, n = 1000, returnClass = "numeric") }\cr
         \code{> x.timeSeries = dummyDailySeries(matrix(x.vec), units = "GARCH11") }\cr
-        \code{> x.zoo = zoo(x.vec, order.by = as.Date(rownames(x.timeSeries))) \cr
-        \code{> x.ts = as.ts(x.vec) 
+        \code{> x.zoo = zoo(x.vec, order.by = as.Date(rownames(x.timeSeries))) } \cr
+        \code{> x.ts = as.ts(x.vec) }
     
     Fitting a GARCH(1,1) is done in the following way:
     
         \code{> garchFit(~ garch(1,1), data = x.vec)) }\cr
         \code{> garchFit(~ garch(1,1), data = x.timeSeries)) }\cr           
         \code{> garchFit(~ garch(1,1), data = x.zoo)) }\cr  
-        \code{> garchFit(~ garch(1,1), data = x.ts)) }\cr  
+        \code{> garchFit(~ garch(1,1), data = x.ts)) }
     
     Note it is not necessary to specifiy a left hand side for the 
     formula expression. 
@@ -235,7 +250,7 @@ garchKappa(cond.dist = c("dnorm", "dged", "dstd", "dsnorm", "dsged", "dsstd"),
         \code{> X.mat = cbind(GARCH11 = x.vec, R = rnorm(1000)) }\cr
         \code{> X.timeSeries = dummyDailySeries(X.mat, units = c("GARCH11", "R")) }\cr
         \code{> X.zoo = zoo(X.mat, order.by = as.Date(rownames(x.timeSeries))) } \cr
-        \code{> X.mts = as.ts(X.mat) }\cr
+        \code{> X.mts = as.ts(X.mat) }
     
     To model the GARCH(1,1) process from the first column of the datasets 
     above, we have to express the left hand formula by the desired column
@@ -244,18 +259,18 @@ garchKappa(cond.dist = c("dnorm", "dged", "dstd", "dsnorm", "dsged", "dsstd"),
         \code{> garchFit(GARCH11 ~ garch(1,1), data = X.mat)) }\cr
         \code{> garchFit(GARCH11 ~ garch(1,1), data = X.timeSeries)) }\cr           
         \code{> garchFit(GARCH11 ~ garch(1,1), data = X.zoo)) }\cr  
-        \code{> garchFit(GARCH11 ~ garch(1,1), data = X.ts)) }\cr  
+        \code{> garchFit(GARCH11 ~ garch(1,1), data = X.ts)) }
     
     
     \bold{Extracting the Environment of a Model Formula:}
     
     The \code{garchFit} also allows to make use of the environment of the
-    model formula. As an example we show how to model the spred of two
+    model formula. As an example we show how to model the spread of two
     series from a multivariate data set.
-    Load the LPP2005REC "Swiss Pension Fund" benchmark portfolio time
+    Load the \code{LPP2005REC} "Swiss Pension Fund" benchmark portfolio time
     series, given by a data frame:
     
-        \code{> data(LPP2005REC) }\cr
+        \code{> data(LPP2005REC) }
     
     This data frame consists of 10 columns of financial returns named 
     LPP25, LPP40, and LPP60, together with its 6 major asset classes 
@@ -267,7 +282,7 @@ garchKappa(cond.dist = c("dnorm", "dged", "dstd", "dsnorm", "dsged", "dsstd"),
     ALT (Foreign Alternative Instruments). 
     The first column holds the daily date stamps. From the data frame
     we can extract the core \code{data} matrix and the character vector
-    \code{charvec} of time stamps.
+    \code{charvec} of time stamps:
     
         \code{> data = LPP.mat = as.matrix(LPP.df[, 2:10]) }\cr
         \code{> charvec = as.character(LPP.df[, 1]) }
@@ -275,18 +290,18 @@ garchKappa(cond.dist = c("dnorm", "dged", "dstd", "dsnorm", "dsged", "dsstd"),
     From these two objects we can construct several multivariate time 
     series objects which can serve as input for the \code{garchFit} 
     function, e.g. a \code{"timeSeries"} object, objects of class 
-    \code{zoo} or \code{mts}, or a just a data \code{"matrix"}. Then 
+    \code{"zoo"} or \code{"mts"}, or just a data \code{"matrix"}. Then 
     the percentual spread of the Swiss, SPI, and foreign equity, MPI,
     indexes can be modelled in the following way:
     
         \code{> LPP = as.timeSeries(data(LPP2005REC)) }\cr
         \code{>  garchFit(100*(SPI-MPI) ~ garch(1,1), data = LPP) }
         
-    As a second example we show how to model high/low spreds from 
+    As a second example we show how to model high/low spreads from 
     the Microsoft equity price series:
         
         \code{> MSFT = as.timeSeries(data(msft.dat)) }\cr
-        \code{> garchFit(100*(High-Low) ~ garch(1,1), data = returns(MSFT))
+        \code{> garchFit(100*(High-Low) ~ garch(1,1), data = returns(MSFT)) }
     
         
     \bold{How are time series slots returned by the function \code{garchFit}?}
@@ -298,12 +313,12 @@ garchKappa(cond.dist = c("dnorm", "dged", "dstd", "dsnorm", "dsged", "dsstd"),
     \code{@h.t}, and
     \code{@sigma.t}.
     Their output is always a numeric vector with optional time stamps, 
-    if available. If we want to have the output as objects from thye 
+    if available. If we want to have the output as objects from the 
     same class as the data points we can use the extractor functions
     
         \code{residuals(object) }\cr
         \code{fitted(object) }\cr
-        \code{volatility(object, type = c(sigma", "h")) }\cr
+        \code{volatility(object, type = c("sigma", "h")) }
     
     where object is a fitted model as returned by the function 
     \code{garchFit}. 
@@ -329,10 +344,10 @@ garchKappa(cond.dist = c("dnorm", "dged", "dstd", "dsnorm", "dsged", "dsstd"),
     are included or kept fixed during parameter optimization, respectively. 
     If they are undetermined, then an automate selection is done depending 
     on the choice of the other parameters. The following example shows
-    how to fit Bollerslev’s t-GARCH(1,1) model:
+    how to fit Bollerslev's t-GARCH(1,1) model:
     
-        \code{> data(dem2gbp)
-        \code{> garchFit(~ garch(1,1), data = dem2gbp, cond.dist = "dstd") }\cr
+        \code{> data(dem2gbp) }\cr
+        \code{> garchFit(~ garch(1,1), data = dem2gbp, cond.dist = "dstd") }
         
     Here the shape of the distribution, giving the number of degrees of 
     freedom of the Student-t distribution, has been also estimated. If we
@@ -349,7 +364,7 @@ garchKappa(cond.dist = c("dnorm", "dged", "dstd", "dsnorm", "dsged", "dsstd"),
     optimization algorithms has historical reasons. 
     
     \code{algorithm = "lbfgsb"}\cr
-     When the first version 
+    When the first version 
     was written the only solver implemented in R was the AMC TOMS 778 
     algorithm \code{optim(method="L-BFGS-B")}. 
     
@@ -399,7 +414,7 @@ garchKappa(cond.dist = c("dnorm", "dged", "dstd", "dsnorm", "dsged", "dsstd"),
         \code{> coef(garchFit(~ garch(1,1), dem2gbp, algorithm = "nlminb+nm")) }\cr
         \code{> coef(garchFit(~ garch(1,1), dem2gbp, algorithm = "lbfgsb")) }\cr
         \code{> coef(garchFit(~ garch(1,1), dem2gbp, algorithm = "lbfgsb+nm")) }\cr
-        \code{> coef(garchFit(~ garch(1,1), dem2gbp, algorithm = "sqp")) }\cr
+        \code{> coef(garchFit(~ garch(1,1), dem2gbp, algorithm = "sqp")) } 
         
     The execution times range by a factor of about 4, the fastest is 
     \code{"sqp"}, and the slowest \code{"lbfgsb+nm"}.
@@ -429,7 +444,7 @@ garchKappa(cond.dist = c("dnorm", "dged", "dstd", "dsnorm", "dsged", "dsstd"),
     we refer to the descriptions of the selected solver. This happens often
     using logarithmic returns. A simple trick may circumvent this problem 
     and help in many cases, use percentual returns, i.e. multiply the time 
-    series with a factor of 100.\cr
+    series with a factor of 100. 
       
 }
 
