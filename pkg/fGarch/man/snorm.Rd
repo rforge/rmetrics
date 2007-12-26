@@ -1,62 +1,48 @@
-\name{sged}
-
-\alias{sged}
-
-\alias{dged}
-\alias{pged}
-\alias{qged}
-\alias{rged}
-
-\alias{dsged}
-\alias{psged}
-\alias{qsged}
-\alias{rsged}
-
-\alias{gedFit}
-\alias{sgedFit}
+\name{snorm}
 
 
-\title{Skew GED Distribution and Parameter Estimation}
+\alias{snorm}
+
+\alias{dsnorm}
+\alias{psnorm}
+\alias{qsnorm}
+\alias{rsnorm}
+
+\alias{normFit}
+\alias{snormFit}
+
+
+\title{Skew Normal Distribution and Parameter Estimation}
 
 
 \description{
     
-    \description{
-    
     Functions to compute density, distribution function, 
     quantile function and to generate random variates 
-    for the generalized error distribution. In
-    addition maximum likelihood estimators are available 
-    to fit the parameters of the distribution.
+    for the skew normal distribution. In
+    addition maximum likelihood estimators are available to 
+    fit the parameters of the distribution.
     \cr
     
     The functions are:
     
     \tabular{ll}{
-    \code{[dpqr]ged} \tab Symmetric GED Distribution, \cr
-    \code{[dpqr]sged} \tab Skew GED Distribution, \cr
-    \code{gedFit} \tab MLE parameter fit for a GED distribution, \cr
-    \code{sgedFit} \tab MLE parameter fit for a skew GED distribution. }
+    \code{[dpqr]std} \tab Symmetric Student-t Distribution, \cr
+    \code{[dpqr]snorm} \tab Skew Student-t Distribution, \cr
+    \code{stdFit} \tab MLE parameter fit for a Sudent-t distribution, \cr
+    \code{snormFit} \tab MLE parameter fit for a skew Sudent-t distribution. }
        
-}
-    
-    
 }
 
 
 \usage{
-dged(x, mean = 0, sd = 1, nu = 2)
-pged(q, mean = 0, sd = 1, nu = 2)
-qged(p, mean = 0, sd = 1, nu = 2)
-rged(n, mean = 0, sd = 1, nu = 2)
+dsnorm(x, mean = 0, sd = 1, xi = 1.5)
+psnorm(q, mean = 0, sd = 1, xi = 1.5)
+qsnorm(p, mean = 0, sd = 1, xi = 1.5)
+rsnorm(n, mean = 0, sd = 1, xi = 1.5)
 
-dsged(x, mean = 0, sd = 1, nu = 2, xi = 1.5)
-psged(q, mean = 0, sd = 1, nu = 2, xi = 1.5)
-qsged(p, mean = 0, sd = 1, nu = 2, xi = 1.5)
-rsged(n, mean = 0, sd = 1, nu = 2, xi = 1.5)
-
-gedFit(x, \dots)
-sgedFit(x, \dots)
+normFit(x, \dots)
+snormFit(x, \dots)
 }
 
 
@@ -65,7 +51,6 @@ sgedFit(x, \dots)
     \item{mean, sd, nu, xi}{
         location parameter \code{mean},
         scale parameter \code{sd},
-        shape parameter \code{nu}, 
         skewness parameter \code{xi}.
         }
     \item{n}{
@@ -78,7 +63,7 @@ sgedFit(x, \dots)
         a numeric vector of quantiles.
         }
     \item{\dots}{
-        parameters parsed to the optimization function \code{nlm}. 
+        parameters parsed to the optimization function \code{nlm}.
         }
     
 }
@@ -92,7 +77,7 @@ sgedFit(x, \dots)
     \code{r*} generates random deviates, \cr
     all values are numeric vectors.
     
-    \code{*Fit} returns a list with the following components: \cr
+    \code{*Fit} return a list with the following components: \cr
     \item{estimate}{
         the point at which the maximum value of the log liklihood 
         function is obtained.
@@ -125,11 +110,28 @@ sgedFit(x, \dots)
     \item{steps}{
         number of function calls.
         }
-    
+            
 }
 
 
 \details{
+  
+    \bold{Symmetric Normal Distibution:}
+    \cr\cr
+    The functions for the normal distribution are part of R's
+    base package. The functions for the symmetric Student-t 
+    distribution are rescaled in such a way that they have unit 
+    variance in contrast to the Student-t family \code{dt}, \code{pt}, 
+    \code{qt} and \code{rt} which are part of R's base package.
+    The generalized error distribution functions are defined as 
+    described by Nelson (1991).
+    \cr
+    
+    \bold{Skew Normal Distribution:}
+    \cr\cr
+    The skew normal distribution functions are defined as described
+    by Fernandez and Steel (2000).
+    cr
     
     \bold{Parameter Estimation:}
     \cr\cr
@@ -141,10 +143,6 @@ sgedFit(x, \dots)
 
 
 \references{
-
-Nelson D.B. (1991);
-    \emph{Conditional Heteroscedasticity in Asset Returns: A New Approach},
-    Econometrica, 59, 347--370.
     
 Fernandez C., Steel M.F.J. (2000); 
     \emph{On Bayesian Modelling of Fat Tails and Skewness},
@@ -161,28 +159,28 @@ Fernandez C., Steel M.F.J. (2000);
 
 
 \examples{
-## sged -
+## snorm -
    par(mfrow = c(2, 2))
    set.seed(1953)
-   r = rsged(n = 1000)
-   plot(r, type = "l", main = "sged", col = "steelblue")
+   r = rsnorm(n = 1000)
+   plot(r, type = "l", main = "snorm", col = "steelblue")
    
    # Plot empirical density and compare with true density:
    hist(r, n = 25, probability = TRUE, border = "white", col = "steelblue")
    box()
    x = seq(min(r), max(r), length = 201)
-   lines(x, dsged(x), lwd = 2)
+   lines(x, dsnorm(x), lwd = 2)
    
    # Plot df and compare with true df:
    plot(sort(r), (1:1000/1000), main = "Probability", col = "steelblue",
      ylab = "Probability")
-   lines(x, psged(x), lwd = 2)
+   lines(x, psnorm(x), lwd = 2)
    
    # Compute quantiles:
-   round(qsged(psged(q = seq(-1, 5, by = 1))), digits = 6)
+   round(qsnorm(psnorm(q = seq(-1, 5, by = 1))), digits = 6)
        
-## sgedFit -
-   sgedFit(r, print.level = 2)
+## snormFit -
+   snormFit(r, print.level = 2)
 }
 
 

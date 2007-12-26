@@ -1,62 +1,57 @@
-\name{sged}
+\name{sstd}
 
-\alias{sged}
+\alias{std}
 
-\alias{dged}
-\alias{pged}
-\alias{qged}
-\alias{rged}
+\alias{dstd}
+\alias{pstd}
+\alias{qstd}
+\alias{rstd}
 
-\alias{dsged}
-\alias{psged}
-\alias{qsged}
-\alias{rsged}
+\alias{dsstd}
+\alias{psstd}
+\alias{qsstd}
+\alias{rsstd}
 
-\alias{gedFit}
-\alias{sgedFit}
+\alias{stdFit}
+\alias{sstdFit}
 
 
-\title{Skew GED Distribution and Parameter Estimation}
+\title{Skew Student-t Distribution and Parameter Estimation}
 
 
 \description{
     
-    \description{
-    
     Functions to compute density, distribution function, 
     quantile function and to generate random variates 
-    for the generalized error distribution. In
-    addition maximum likelihood estimators are available 
-    to fit the parameters of the distribution.
+    for the standardized skew Student-t distribution. In
+    addition maximum likelihood estimators are available to 
+    fit the parameters of the distribution.
     \cr
     
     The functions are:
     
     \tabular{ll}{
-    \code{[dpqr]ged} \tab Symmetric GED Distribution, \cr
-    \code{[dpqr]sged} \tab Skew GED Distribution, \cr
-    \code{gedFit} \tab MLE parameter fit for a GED distribution, \cr
-    \code{sgedFit} \tab MLE parameter fit for a skew GED distribution. }
+    \code{[dpqr]std} \tab Symmetric Student-t Distribution, \cr
+    \code{[dpqr]sstd} \tab Skew Student-t Distribution, \cr
+    \code{stdFit} \tab MLE parameter fit for a Sudent-t distribution, \cr
+    \code{sstdFit} \tab MLE parameter fit for a skew Sudent-t distribution. }
        
-}
-    
-    
 }
 
 
 \usage{
-dged(x, mean = 0, sd = 1, nu = 2)
-pged(q, mean = 0, sd = 1, nu = 2)
-qged(p, mean = 0, sd = 1, nu = 2)
-rged(n, mean = 0, sd = 1, nu = 2)
+dstd(x, mean = 0, sd = 1, nu = 5)
+pstd(q, mean = 0, sd = 1, nu = 5)
+qstd(p, mean = 0, sd = 1, nu = 5)
+rstd(n, mean = 0, sd = 1, nu = 5)
 
-dsged(x, mean = 0, sd = 1, nu = 2, xi = 1.5)
-psged(q, mean = 0, sd = 1, nu = 2, xi = 1.5)
-qsged(p, mean = 0, sd = 1, nu = 2, xi = 1.5)
-rsged(n, mean = 0, sd = 1, nu = 2, xi = 1.5)
+dsstd(x, mean = 0, sd = 1, nu = 5, xi = 1.5)
+psstd(q, mean = 0, sd = 1, nu = 5, xi = 1.5)
+qsstd(p, mean = 0, sd = 1, nu = 5, xi = 1.5)
+rsstd(n, mean = 0, sd = 1, nu = 5, xi = 1.5)
 
-gedFit(x, \dots)
-sgedFit(x, \dots)
+stdFit(x, \dots)
+sstdFit(x, \dots)
 }
 
 
@@ -141,11 +136,7 @@ sgedFit(x, \dots)
 
 
 \references{
-
-Nelson D.B. (1991);
-    \emph{Conditional Heteroscedasticity in Asset Returns: A New Approach},
-    Econometrica, 59, 347--370.
-    
+   
 Fernandez C., Steel M.F.J. (2000); 
     \emph{On Bayesian Modelling of Fat Tails and Skewness},
     Preprint, 31 pages. 
@@ -161,28 +152,28 @@ Fernandez C., Steel M.F.J. (2000);
 
 
 \examples{
-## sged -
+## sstd -
    par(mfrow = c(2, 2))
    set.seed(1953)
-   r = rsged(n = 1000)
-   plot(r, type = "l", main = "sged", col = "steelblue")
+   r = rsstd(n = 1000)
+   plot(r, type = "l", main = "sstd", col = "steelblue")
    
    # Plot empirical density and compare with true density:
    hist(r, n = 25, probability = TRUE, border = "white", col = "steelblue")
    box()
    x = seq(min(r), max(r), length = 201)
-   lines(x, dsged(x), lwd = 2)
+   lines(x, dsstd(x), lwd = 2)
    
    # Plot df and compare with true df:
    plot(sort(r), (1:1000/1000), main = "Probability", col = "steelblue",
      ylab = "Probability")
-   lines(x, psged(x), lwd = 2)
+   lines(x, psstd(x), lwd = 2)
    
    # Compute quantiles:
-   round(qsged(psged(q = seq(-1, 5, by = 1))), digits = 6)
+   round(qsstd(psstd(q = seq(-1, 5, by = 1))), digits = 6)
        
-## sgedFit -
-   sgedFit(r, print.level = 2)
+## sstdFit -
+   sstdFit(r, print.level = 2)
 }
 
 
