@@ -45,10 +45,14 @@
 
 
 \examples{
-## residuals -
-   # x = garchSim(n = 500)
-   # fit = garchFit(~garch(1, 1), data = x)
-   # residuals(fit)
+## garchSim -
+   x = garchSim(n = 500)
+  
+## garchFit
+   fit = garchFit(~garch(1, 1), data = x)
+   
+## residuals - 
+   residuals(fit)
 }
 
 

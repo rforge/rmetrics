@@ -1,22 +1,21 @@
-\name{fitted}
+\name{formula}
 
 
-\alias{fitted.fGARCH}
+\alias{formula.fGARCH}
 
 
-
-\title{Extract GARCH Model Fitted Values}
+\title{Extract GARCH Model formula}
 
 
 \description{
 
-    Extracts fitted values from a fitted GARCH object. 
+    Extracts formula from a fitted GARCH object. 
     
 }
 
 
 \usage{
-\method{fitted}{fGARCH}(object, \dots)
+\method{formula}{fGARCH}(object, \dots)
 }
 
 
@@ -27,7 +26,7 @@
         \code{garchFit()}.
         }  
     \item{\dots}{
-        additional arguments to be passed.
+        additional arguments to be passed, not used.
         }   
 
 }
@@ -35,10 +34,9 @@
 
 \note{
 
-    \code{fitted} is a generic function which extracts fitted values 
-    from objects returned by modeling functions. \code{fitted.values} 
-    is an alias for it. 
-
+    \code{formula} is a generic function which extracts the formula
+    expression from objects returned by modeling functions. 
+    
 }
 
 
@@ -57,7 +55,7 @@
    fit = garchFit(~garch(1, 1), data = x)
    
 ## formula - 
-   fitted(fit)
+   formula(fit)
 }
 
 

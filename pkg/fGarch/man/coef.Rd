@@ -49,9 +49,14 @@
 
 
 \examples{
-    # x = garchSim(n = 500)
-    # fit = garchFit(~garch(1, 1), data = x)
-    # coef(fit, type = "h"))
+## garchSim -
+   x = garchSim(n = 500)
+  
+## garchFit
+   fit = garchFit(~garch(1, 1), data = x)
+   
+## coef - 
+   coef(fit)
 }
 
 
