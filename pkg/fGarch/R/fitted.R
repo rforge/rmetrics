@@ -47,18 +47,29 @@ function(object, ...)
     
     # FUNCTION:
     
-    # Numeric vector of fitted values:
-    ans = object@fitted
+    # Get numeric vector of fitted, optionally standardized
+    fitted = object@fitted
     
-    # Check out the return class:
-    dataClass = class(object@data$data)
+    # Get original time series class:
+    data = object@data$data
+    dataClass = class(data)[1]
+    
     if (dataClass == "timeSeries") {
-        fitted = ans
-        ans = data = object@data$data
+        ans = data
         data.mat = matrix(fitted)
         rownames(data.mat) = rownames(data)
         colnames(data.mat) = object@data$unit
         ans@Data = data.mat
+    } else if (dataClass == "zoo") {
+        ans = fitted
+        attr(ans, "index") = attr(data, "index")
+        class(ans) = "zoo"
+    } else if (dataClass == "ts" | dataClass == "mts") {
+        ans = fitted
+        attr(ans, "tsp") = attr(data, "tsp")
+        class(ans) = "ts"
+    } else {
+        ans = data
     }
     
     # Return Value:
