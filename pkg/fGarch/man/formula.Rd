@@ -15,13 +15,13 @@
 
 
 \usage{
-\method{formula}{fGARCH}(object, \dots)
+\method{formula}{fGARCH}(x, \dots)
 }
 
 
 \arguments{
 
-    \item{object}{
+    \item{x}{
         an object of class \code{fGARCH} as returned from the function
         \code{garchFit()}.
         }  

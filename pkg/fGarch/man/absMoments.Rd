@@ -9,8 +9,9 @@
 
 \description{
     
-    Compute Moments of the skew Normal, skew GED, and
-    standardized skew Student-t distributions
+    Computes absolute Moments of the skew Normal, 
+    skew GED, and standardized skew Student-t 
+    distributions
     
 }
 

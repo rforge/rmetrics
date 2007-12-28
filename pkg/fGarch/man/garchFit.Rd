@@ -176,40 +176,6 @@ garchKappa(cond.dist = c("dnorm", "dged", "dstd", "dsnorm", "dsged", "dsstd"),
 
 \details{
 
-    GARCH, Generalized Autoregressive Conditional Heteroskedastic, models 
-    have become important in the analysis of time series data, particularly 
-    in financial applications when the goal is to analyze and forecast 
-    volatility. 
-    
-    For this purpose, the family of GARCH functions offers functions for 
-    simulating, estimating and forecasting various univariate GARCH-type 
-    time series models in the conditional variance and an ARMA specification 
-    in the conditional mean. The function \code{garchFit} is a numerical
-    implementation of the maximum log-likelihood approach under different 
-    assumptions, Normal, Student-t, GED errors or their skewed versions. 
-    The parameter estimates are checked by several diagnostic analysis tools 
-    including graphical features and hypothesis tests. Functions to compute 
-    n-step ahead forecasts of both the conditional mean and variance are also
-    available.
-
-    The number of GARCH models is immense, but the most influential models 
-    were the first. Beside the standard ARCH model introduced by Engle [1982] 
-    and the GARCH model introduced by Bollerslev [1986], the function
-    \code{garchFit} also includes the more general class of asymmetric power
-    ARCH models, named APARCH, introduced by Ding, Granger and Engle [1993]. 
-    The APARCH models include as special cases the TS-GARCH model of 
-    Taylor [1986] and Schwert [1989], the GJR-GARCH model of Glosten, 
-    Jaganathan, and Runkle [1993], the T-ARCH model of Zakoian [1993], the 
-    N-ARCH model of Higgins and Bera [1992], and the Log-ARCH model of
-    Geweke [1986] and Pentula [1986].
-    
-    There exist a collection of review articles by Bollerslev, Chou and 
-    Kroner [1992], Bera and Higgins [1993], Bollerslev, Engle and
-    Nelson [1994], Engle [2001], Engle and Patton [2001], and Li, Ling 
-    and McAleer [2002] that give a good overview of the scope of the 
-    research.\cr
-
-
     \bold{How to specify the formula for an univariate data input?}
     
     \code{formula} and \code{data} arguments are closely related. 

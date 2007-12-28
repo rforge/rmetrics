@@ -29,7 +29,7 @@
 
 ################################################################################
 # METHOD:                 PREDICTION:
-#  predict.fGARCH          S3 prediction method for an object of class 'fGARCH'
+#  predict.fGARCH          Forecasts from an object of class 'fGARCH'
 ################################################################################
 
 

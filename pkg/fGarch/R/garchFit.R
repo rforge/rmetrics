@@ -29,7 +29,7 @@
 
 ##############################################################################
 # FUNCTION:               PARAMETER ESTIMATION:    
-#  garchFit                Fits GARCH and APARCH processes
+#  garchFit                Fits the parameters of GARCH process
 #  .garchArgsParser        Parses formula and data for garchFit
 #  .garchOptimizerControl  Sets default values for Garch Optimizer
 #  .garchFit               ... old Version

@@ -34,7 +34,7 @@
 
 
 formula.fGARCH <-  
-function(object, ...) 
+function(x, ...) 
 {   
     # A function implemented by Diethelm Wuertz
     
@@ -42,14 +42,14 @@ function(object, ...)
     #   Extracts 'fGarch' Model formula
     
     # Arguments:
-    #   object - an object of class fGarch as returned by the function
+    #   x - an object of class fGarch as returned by the function
     #       garchFit
     #   ... - optional argument to be passed, not used.
     
     # FUNCTION:
     
     # Numeric vector of fitted values:
-    ans = object@formula
+    ans = x@formula
     
     # Return Value:
     ans

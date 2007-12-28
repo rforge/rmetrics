@@ -22,10 +22,10 @@
     The family of GARCH time series models includes the following 
     processes:
     
-    \tabular{rll}{
-    1   \tab garch  \tab  generalized AR conditional heteroskedastic models, \cr
-    2   \tab egarch \tab  exponential GARCH models, \cr
-    3   \tab aparch \tab  asymmetretic power ARCH models. } 
+    \tabular{ll}{
+    \code{garch}  \tab  generalized AR conditional heteroskedastic models, \cr
+    \code{egarch} \tab  exponential GARCH models, \cr
+    \code{aparch} \tab  asymmetretic power ARCH models. } 
     
 }
 
