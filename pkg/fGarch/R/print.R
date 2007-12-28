@@ -31,10 +31,10 @@
 # METHOD:                 DESCRIPTION:
 #  'fGARCH'                S4: fGARCH Class representation
 # METHOD:                 DESCRIPTION:
-#  show.fGARCH             S4 print method for an object of class 'fGARCH'
-#  plot.fGARCH             S3 plot method for an object of class 'fGARCH'
-#  .interactiveGarchPlot   Utility Function
-#  summary.fGARCH          S3 summary method for an object of class 'fGARCH'
+#  show                    Print method for an object of class 'fGARCH'
+#  plot                    Plot method for an object of class 'fGARCH'
+#  .interactiveGarchPlot    IUnternal Utility Function
+#  summary                 Summary method for an object of class 'fGARCH'
 ################################################################################
 
 
@@ -58,7 +58,7 @@ setClass("fGARCH",
 ################################################################################
 
 
-.print.fGARCH <-  
+setMethod(f = "show", signature = "fGARCH", description = 
     function(object) 
 {   
     # A function implemented by Diethelm Wuertz
@@ -114,13 +114,7 @@ setClass("fGARCH",
     # Return Value:
     cat("\n")
     invisible()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-setMethod("show", "fGARCH", .print.fGARCH)
+})
 
 
 ################################################################################
@@ -170,10 +164,11 @@ plot.fGARCH <-
 
 .interactiveGarchPlot <-  
     function(x, choices, plotFUN, which, ...)
-{   # A function implemented by Diethelm Wuertz
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Plot method for an object of class "template".
+    #   Internal plot function
     
     # Arguments:
     #   x - an object to be plotted
@@ -226,6 +221,11 @@ plot.fGARCH <-
 .multGarchPlot <-  
     function (x, choices, ...) 
 {    
+    # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Internal plot function
+    
     pick = 1
     while (pick > 0) { 
         pick = menu (
@@ -249,6 +249,11 @@ plot.fGARCH <-
 .plot.garch.1 <- 
     function(x, ...) 
 {
+    # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Internal plot function
+    
     # 1. Time Series:
     xseries = x@data$x
     plot(xseries, type = "l", col = "steelblue", ylab = "x",
@@ -264,6 +269,11 @@ plot.fGARCH <-
 .plot.garch.2 <- 
     function(x, ...) 
 {
+    # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Internal plot function
+    
     # 2. Conditional SD:
     xcsd = x@sigma.t
     plot(xcsd, type = "l", col = "steelblue", ylab = "x",
@@ -279,6 +289,11 @@ plot.fGARCH <-
 .plot.garch.3 <- 
     function(x, ...) 
 {           
+    # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Internal plot function
+    
     # 3. Series with 2 Conditional SD Superimposed:
     xseries = x@data$x
     xcsd = x@sigma.t
@@ -298,6 +313,11 @@ plot.fGARCH <-
 .plot.garch.4 <- 
     function(x, ...) 
 {        
+    # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Internal plot function
+    
     # 4. ACF of the Observations:
     xseries = x@data$x
     n = length(xseries)
@@ -313,6 +333,11 @@ plot.fGARCH <-
 .plot.garch.5 <- 
     function(x, ...) 
 {       
+    # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Internal plot function
+    
     # 5. ACF of the Squared Observations:
     xseries = x@data$x
     xseries2 = xseries^2
@@ -329,6 +354,11 @@ plot.fGARCH <-
 .plot.garch.6 <- 
     function(x, ...) 
 {
+    # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Internal plot function
+    
     # 6. Cross Correlation between x^2 and x:
     xseries = x@data$x
     xseries2 = xseries^2
@@ -345,6 +375,11 @@ plot.fGARCH <-
 .plot.garch.7 <- 
     function(x, ...) 
 {
+    # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Internal plot function
+    
     # 7. Residuals:
     res = residuals(x, standardize = FALSE)
     plot(res, type = "l", main = "Residuals", col = "steelblue", ...)
@@ -359,6 +394,11 @@ plot.fGARCH <-
 .plot.garch.8 <- 
     function(x, ...) 
 {
+    # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Internal plot function
+    
     # 8. Conditional SDs:
     xcsd = x@sigma.t
     plot(xcsd, type = "l", main = "Conditional SD's", 
@@ -374,6 +414,11 @@ plot.fGARCH <-
 .plot.garch.9 <- 
     function(x, ...) 
 {
+    # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Internal plot function
+    
     # 9. Standardized Residuals:
     sres = residuals(x, standardize = FALSE)
     plot(sres, type = "l", main = "Standardized Residuals", 
@@ -389,6 +434,11 @@ plot.fGARCH <-
 .plot.garch.10 <- 
     function(x, ...) 
 {
+    # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Internal plot function
+    
     # 10. ACF of Standardized Residuals:
     sres = residuals(x, standardize = FALSE)
     n = length(sres)
@@ -404,6 +454,11 @@ plot.fGARCH <-
 .plot.garch.11 <- 
     function(x, ...) 
 {
+    # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Internal plot function
+    
     # 11. ACF of Squared Standardized Residuals:
     sres2 = residuals(x, standardize = FALSE)^2
     n = length(sres2)
@@ -419,6 +474,11 @@ plot.fGARCH <-
 .plot.garch.12 <- 
 function(x, ...) 
 {      
+    # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Internal plot function
+    
     # 12. Cross Correlation between r^2 and r:
     sres = residuals(x, standardize = FALSE)
     sres2 = sres^2
@@ -435,6 +495,11 @@ function(x, ...)
 .plot.garch.13 <- 
     function(x, ...) 
 {
+    # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Internal plot function
+    
     # 13. QQ-Plot of Standardized Residuals:
     sres = residuals(x, standardize = FALSE)
     cond.dist = x@fit$params$cond.dist
@@ -556,9 +621,9 @@ function (y, dist = "qnorm", datax = FALSE, ...)
 
 ################################################################################
 
-                           
-.summary.fGARCH = 
-    function(object) 
+
+setMethod(f = "summary", signature = "fGARCH", definition = 
+function(object) 
 {   
     # A function implemented by Diethelm Wuertz
     
@@ -685,13 +750,7 @@ function (y, dist = "qnorm", datax = FALSE, ...)
     # Return Value:
     cat("\n")
     invisible()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-setMethod(f = "summary", signature = "fGARCH", definition = .summary.fGARCH)
+})
 
 
 ################################################################################
