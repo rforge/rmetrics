@@ -7,8 +7,10 @@
 \alias{show.fGARCH}
 \alias{show,fGARCH-method}
 
-\alias{plot.fGARCH}
 \alias{summary.fGARCH}
+\alias{summary,fGARCH-method}
+
+\alias{plot.fGARCH}
 
 
 \title{GARCH Reports and Graphs}
@@ -23,9 +25,9 @@
 
 \usage{
 show.fGARCH(object)
+summary.fGARCH(object)
 
 \method{plot}{fGARCH}(x, which = "ask", \dots)
-\method{summary}{fGARCH}(object, \dots)
 }
 
 
