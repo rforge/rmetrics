@@ -28,16 +28,19 @@
 
 
 ################################################################################
-# FUNCTION:                FORECASTING: 
+# FUNCTION:                DESCRIPTION: 
 #  garchKappa               Computes Expection for APARCH Models
-#  .funE                    Internal function used by kappa()
+#  .garchKappaFun           Internal function used by garchKappa()
+# FUNCTION:                DESCRIPTION:
+#  .truePersistence         Computes true persistence
 ################################################################################
 
 
-garchKappa = 
-function(cond.dist = c("dnorm", "dged", "dstd", "dsnorm", "dsged", "dsstd"), 
-gamma = 0, delta = 2, skew = NA, shape = NA)
-{   # A function implemented by Diethelm Wuertz
+garchKappa <-  
+    function(cond.dist = c("dnorm", "dged", "dstd", "dsnorm", "dsged", "dsstd"), 
+    gamma = 0, delta = 2, skew = NA, shape = NA)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Computes Expection for APARCH Models
@@ -45,7 +48,7 @@ gamma = 0, delta = 2, skew = NA, shape = NA)
     # FUNCTION:
     
     # Compute kappa:
-    kappa = integrate(.funE, lower = -Inf, upper = Inf, cond.dist = 
+    kappa = integrate(.garchKappaFun, lower = -Inf, upper = Inf, cond.dist = 
         cond.dist[1], gamma = gamma, delta = delta, skew = skew, shape = 
         shape)[[1]] 
     names(kappa) = "kappa"
@@ -61,10 +64,12 @@ gamma = 0, delta = 2, skew = NA, shape = NA)
 # ------------------------------------------------------------------------------
 
 
-.funE = 
-function(x, cond.dist = c("dnorm", "dged", "dstd", "dsnorm", "dsged", "dsstd"), 
-gamma = 0, delta = 2, skew = NA, shape = NA)
-{   # A function implemented by Diethelm Wuertz
+.garchKappaFun <-  
+    function(x, 
+    cond.dist = c("dnorm", "dged", "dstd", "dsnorm", "dsged", "dsstd"), 
+    gamma = 0, delta = 2, skew = NA, shape = NA)
+{   
+    # A function implemented by Diethelm Wuertz
     
     # Description:
     #   Internal function used by kappa()
@@ -98,6 +103,56 @@ gamma = 0, delta = 2, skew = NA, shape = NA)
     # Return Value:
     fun
 } 
+
+
+################################################################################
+
+
+.truePersistence <- 
+    function(fun = "dnorm", alpha = 1, gamma = 0, beta = 0, delta = 1, ...)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Computes persistence for an APARCH process
+    
+    # Arguments:
+    #   fun - name of density functions of APARCH innovations
+    #   alpha, gamma - numeric value or vector of APARCH coefficients,
+    #       must be of same length  
+    #   beta - numeric value or vector of APARCH coefficients
+    #   delta - numeric value of APARCH exponent
+    
+    # Note:
+    #   fun is one of: dnorm, dsnorn, dstd, dsstd, dged, dsged
+    
+    # FUNCTION:
+    
+    # Match Density Function:
+    fun = match.fun(fun)
+    
+    # Persisgtence Function: E(|z|-gamma z)^delta
+    e = function(x, gamma, delta, ...) {
+        (abs(x)-gamma*x)^delta * fun(x, ...)
+    }
+        
+    # Compute Persistence by Integration:
+    persistence = sum(beta)
+    for (i in 1:length(alpha)) {
+        I = integrate(e, -Inf, Inf, subdivisions = 1000, 
+            rel.tol = .Machine$double.eps^0.5, 
+            gamma = gamma[i], delta = delta, ...)
+        persistence = persistence + alpha[i] * I[[1]]
+    }
+    
+    # Warning:
+    if (persistence >= 1) {  
+        p = as.character(round(persistence, digits = 3))
+        warning(paste("Divergent persistence p =", p))
+    }
+    
+    # Return Value:
+    persistence
+}
 
 
 ################################################################################
