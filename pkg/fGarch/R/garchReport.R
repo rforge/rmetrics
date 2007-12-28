@@ -55,12 +55,13 @@ setClass("fGARCH",
 )
 
 
-# ------------------------------------------------------------------------------
+################################################################################
 
 
-show.fGARCH = 
-function(object) 
-{   # A function implemented by Diethelm Wuertz
+.print.fGARCH <-  
+    function(object) 
+{   
+    # A function implemented by Diethelm Wuertz
     
     # Description:
     #   Print method for an object of class "fGARCH"
@@ -119,15 +120,16 @@ function(object)
 # ------------------------------------------------------------------------------
 
 
-setMethod("show", "fGARCH", show.fGARCH)
+setMethod("show", "fGARCH", .print.fGARCH)
 
 
 ################################################################################
 
 
-plot.fGARCH =
-function(x, which = "ask", ...)
-{   # A function implemented by Diethelm Wuertz
+plot.fGARCH <- 
+    function(x, which = "ask", ...)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Plot method for an object of class 'fGARCH'
@@ -166,8 +168,8 @@ function(x, which = "ask", ...)
 # ------------------------------------------------------------------------------
 
 
-.interactiveGarchPlot = 
-function(x, choices, plotFUN, which, ...)
+.interactiveGarchPlot <-  
+    function(x, choices, plotFUN, which, ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -221,7 +223,8 @@ function(x, choices, plotFUN, which, ...)
 # ------------------------------------------------------------------------------
 
 
-.multGarchPlot = function (x, choices, ...) 
+.multGarchPlot <-  
+    function (x, choices, ...) 
 {    
     pick = 1
     while (pick > 0) { 
@@ -244,7 +247,7 @@ function(x, choices, plotFUN, which, ...)
 
 
 .plot.garch.1 <- 
-function(x, ...) 
+    function(x, ...) 
 {
     # 1. Time Series:
     xseries = x@data$x
@@ -259,7 +262,7 @@ function(x, ...)
 
    
 .plot.garch.2 <- 
-function(x, ...) 
+    function(x, ...) 
 {
     # 2. Conditional SD:
     xcsd = x@sigma.t
@@ -274,7 +277,7 @@ function(x, ...)
 
 
 .plot.garch.3 <- 
-function(x, ...) 
+    function(x, ...) 
 {           
     # 3. Series with 2 Conditional SD Superimposed:
     xseries = x@data$x
@@ -293,7 +296,7 @@ function(x, ...)
 
      
 .plot.garch.4 <- 
-function(x, ...) 
+    function(x, ...) 
 {        
     # 4. ACF of the Observations:
     xseries = x@data$x
@@ -308,7 +311,7 @@ function(x, ...)
 
 
 .plot.garch.5 <- 
-function(x, ...) 
+    function(x, ...) 
 {       
     # 5. ACF of the Squared Observations:
     xseries = x@data$x
@@ -324,7 +327,7 @@ function(x, ...)
 
          
 .plot.garch.6 <- 
-function(x, ...) 
+    function(x, ...) 
 {
     # 6. Cross Correlation between x^2 and x:
     xseries = x@data$x
@@ -340,7 +343,7 @@ function(x, ...)
 
 
 .plot.garch.7 <- 
-function(x, ...) 
+    function(x, ...) 
 {
     # 7. Residuals:
     res = residuals(x, standardize = FALSE)
@@ -354,7 +357,7 @@ function(x, ...)
 
 
 .plot.garch.8 <- 
-function(x, ...) 
+    function(x, ...) 
 {
     # 8. Conditional SDs:
     xcsd = x@sigma.t
@@ -369,7 +372,7 @@ function(x, ...)
 
 
 .plot.garch.9 <- 
-function(x, ...) 
+    function(x, ...) 
 {
     # 9. Standardized Residuals:
     sres = residuals(x, standardize = FALSE)
@@ -384,7 +387,7 @@ function(x, ...)
 
       
 .plot.garch.10 <- 
-function(x, ...) 
+    function(x, ...) 
 {
     # 10. ACF of Standardized Residuals:
     sres = residuals(x, standardize = FALSE)
@@ -399,7 +402,7 @@ function(x, ...)
 
         
 .plot.garch.11 <- 
-function(x, ...) 
+    function(x, ...) 
 {
     # 11. ACF of Squared Standardized Residuals:
     sres2 = residuals(x, standardize = FALSE)^2
@@ -430,7 +433,7 @@ function(x, ...)
 
 
 .plot.garch.13 <- 
-function(x, ...) 
+    function(x, ...) 
 {
     # 13. QQ-Plot of Standardized Residuals:
     sres = residuals(x, standardize = FALSE)
@@ -453,11 +456,12 @@ function(x, ...)
 # ------------------------------------------------------------------------------
 
 
-.qqDist = 
-function (y, dist = "qnorm", ylim = NULL, main = paste(dist, "- QQ Plot"), 
-xlab = "Theoretical Quantiles", ylab = "Sample Quantiles", doplot = TRUE, 
-datax = FALSE, ...) 
-{   # A function implemented by Diethelm Wuertz
+.qqDist <-  
+    function (y, dist = "qnorm", ylim = NULL, main = paste(dist, "- QQ Plot"), 
+    xlab = "Theoretical Quantiles", ylab = "Sample Quantiles", doplot = TRUE, 
+    datax = FALSE, ...) 
+{   
+    # A function implemented by Diethelm Wuertz
     
     # Description
     #   QQ Plot for arbitray distribution
@@ -512,7 +516,7 @@ datax = FALSE, ...)
 # ------------------------------------------------------------------------------
 
 
-.qqLine = 
+.qqLine <-  
 function (y, dist = "qnorm", datax = FALSE, ...) 
 {   # A function implemented by Diethelm Wuertz
 
@@ -552,13 +556,14 @@ function (y, dist = "qnorm", datax = FALSE, ...)
 
 ################################################################################
 
-
-summary.fGARCH = 
-function(object, ...) 
-{   # A function implemented by Diethelm Wuertz
+                           
+.summary.fGARCH = 
+    function(object) 
+{   
+    # A function implemented by Diethelm Wuertz
     
     # Description:
-    #   Print method for an object of class "fGARCH"
+    #   Summary method for an object of class "fGARCH"
     
     # Arguments:
     #   object - an object of class 'fGARCH'
@@ -681,6 +686,12 @@ function(object, ...)
     cat("\n")
     invisible()
 }
+
+
+# ------------------------------------------------------------------------------
+
+
+setMethod(f = "summary", signature = "fGARCH", definition = .summary.fGARCH)
 
 
 ################################################################################
