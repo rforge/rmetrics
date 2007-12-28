@@ -67,7 +67,7 @@ function(object, ...)
         ans = residuals
         attr(ans, "index") = attr(data, "index")
         class(ans) = "zoo"
-    else if (dataClass == "ts" | dataClass == "mts") {
+    } else if (dataClass == "ts" | dataClass == "mts") {
         ans = residuals
         attr(ans, "tsp") = attr(data, "tsp")
         class(ans) = "ts"
