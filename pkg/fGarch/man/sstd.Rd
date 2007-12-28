@@ -37,7 +37,7 @@
     \code{[dpqr]sstd} \tab Skew Student-t Distribution, \cr
     \code{stdFit} \tab MLE parameter fit for a Sudent-t distribution, \cr
     \code{sstdFit} \tab MLE parameter fit for a skew Sudent-t distribution, \cr
-    \code{sstdSlider} \tab 
+    \code{sstdSlider} \tab Displays interactively skew GED distribution. }
        
 }
 
