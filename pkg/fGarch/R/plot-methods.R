@@ -1,0 +1,757 @@
+
+# This library is free software; you can redistribute it and/or
+# modify it under the terms of the GNU Library General Public
+# License as published by the Free Software Foundation; either
+# version 2 of the License, or (at your option) any later version.
+#
+# This library is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Library General Public License for more details.
+#
+# You should have received a copy of the GNU Library General
+# Public License along with this library; if not, write to the
+# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
+# MA  02111-1307  USA
+
+# Copyrights (C)
+# for this R-port: 
+#   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
+#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
+#   info@rmetrics.org
+#   www.rmetrics.org
+# for the code accessed (or partly included) from other R-ports:
+#   see R's copyright and license files
+# for the code accessed (or partly included) from contributed R-ports
+# and other sources
+#   see Rmetrics's copyright file
+
+
+################################################################################
+# METHOD:                 DESCRIPTION:
+#  'fGARCH'                S4: fGARCH Class representation
+# METHOD:                 DESCRIPTION:
+#  show                    Print method for an object of class 'fGARCH'
+#  plot                    Plot method for an object of class 'fGARCH'
+#  .interactiveGarchPlot    IUnternal Utility Function
+#  summary                 Summary method for an object of class 'fGARCH'
+################################################################################
+
+
+# Class Representation:
+setClass("fGARCH", 
+    representation(
+        call = "call",
+        formula = "list",
+        method = "character",
+        data = "list",
+        fit = "list",
+        residuals = "numeric",
+        fitted = "numeric",
+        h.t = "numeric",
+        sigma.t = "numeric",
+        title = "character",
+        description = "character")  
+)
+
+
+################################################################################
+
+
+setMethod(f = "show", signature = "fGARCH", description = 
+    function(object) 
+{   
+    # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   Print method for an object of class "fGARCH"
+    
+    # Arguments:
+    #   object - an object of class 'fGARCH'
+    
+    # FUNCTION:
+     
+    # Title:
+    cat("\nTitle:\n ")
+    cat(object@title, "\n")
+    
+    # Call:
+    cat("\nCall:\n ")
+    cat(paste(deparse(object@call), sep = "\n", collapse = "\n"), "\n")
+    
+    # Mean Equation:
+    cat("\nMean and Variance Equation:\n ")
+    cat(as.character(object@formula[1]), "+", 
+        as.character(object@formula[2]), "\n")
+        
+    # Conditional Distribution:
+    cat("\nConditional Distribution:\n ")
+    cat(object@fit$params$cond.dist, "\n")
+  
+    # Coefficients:
+    cat("\nCoefficient(s):\n")
+    digits = max(6, getOption("digits") - 4)
+    print.default(format(object@fit$par, digits = digits), print.gap = 2, 
+         quote = FALSE)    
+    
+    # Error Analysis:
+    digits = max(4, getOption("digits") - 5)
+    fit = object@fit 
+    signif.stars = getOption("show.signif.stars")
+    cat("\nError Analysis:\n")
+    printCoefmat(fit$matcoef, digits = digits, signif.stars = signif.stars) 
+    
+    # Log Likelihood:
+    cat("\nLog Likelihood:\n ")
+    LLH = object@fit$value
+    N = length(object@data$x)
+    cat(LLH, "   normalized: ", LLH/N, "\n")
+        
+    # Description:
+    cat("\nDescription:\n ")
+    cat(object@description, "\n")
+
+    # Return Value:
+    cat("\n")
+    invisible()
+})
+
+
+################################################################################
+
+
+plot.fGARCH <- 
+    function(x, which = "ask", ...)
+{   
+    # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Plot method for an object of class 'fGARCH'
+    
+    # Note:
+    #   This method can also be used for plotting graphs fitted by 
+    #   the function 'garch' from the contributed R package 'tseries'.
+    
+    # FUNCTION:
+        
+    # Plot:
+    .interactiveGarchPlot(
+        x,
+        choices = c(
+            "Time Series",
+            "Conditional SD",
+            "Series with 2 Conditional SD Superimposed",
+            "ACF of Observations",
+            "ACF of Squared Observations",
+            "Cross Correlation",
+            "Residuals",
+            "Conditional SDs",
+            "Standardized Residuals",
+            "ACF of Standardized Residuals",
+            "ACF of Squared Standardized Residuals",
+            "Cross Correlation between r^2 and r",
+            "QQ-Plot of Standardized Residuals"),
+        plotFUN = paste(".plot.garch", 1:13, sep = "."),
+        which = which, ...) 
+            
+    # Return Value:
+    invisible(x)
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.interactiveGarchPlot <-  
+    function(x, choices, plotFUN, which, ...)
+{   
+    # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Internal plot function
+    
+    # Arguments:
+    #   x - an object to be plotted
+    #   choices - the character string for the choice menu
+    #   plotFUN - the names of the plot functions
+    #   which - plot selection, which graph should be 
+    #     displayed. If a character string named "ask" the 
+    #     user is interactively asked which to plot, if
+    #     a logical vector of length N, those plots which
+    #     are set "TRUE" are displayed, if a character string
+    #     named "all" all plots are displayed.
+
+    # FUNCTION:
+    
+    # Some cecks:
+    if (length(choices) != length(plotFUN)) 
+        stop("Arguments choices and plotFUN must be of same length.")
+    if (length(which) > length(choices)) 
+        stop("Arguments which has incorrect length.")
+    if (length(which) > length(plotFUN)) 
+        stop("Arguments which has incorrect length.")
+                  
+    # Plot:
+    if (is.numeric(which)) {
+        Which = rep(FALSE, times = length(choices))
+        Which[which] = TRUE
+    }
+    
+    if (which[1] == "all") {
+        Which = rep(TRUE, times = length(choices))
+    }
+    
+    if (which[1] == "ask") {
+        .multGarchPlot(x, choices, plotFUN, ...) 
+    } else {
+        for ( i in 1:length(choices) ) {
+            FUN = match.fun(plotFUN[i])
+            if (Which[i]) FUN(x) 
+        } 
+    }
+            
+    # Return Value:
+    invisible(x)
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.multGarchPlot <-  
+    function (x, choices, ...) 
+{    
+    # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Internal plot function
+    
+    pick = 1
+    while (pick > 0) { 
+        pick = menu (
+            ### choices = paste("plot:", choices),
+            choices = paste(" ", choices), 
+            title = "\nMake a plot selection (or 0 to exit):")
+        # up to 19 plot functions ...
+        switch (pick, 
+            .plot.garch.1(x),  .plot.garch.2(x),  .plot.garch.3(x),  
+            .plot.garch.4(x),  .plot.garch.5(x),  .plot.garch.6(x),  
+            .plot.garch.7(x),  .plot.garch.8(x),  .plot.garch.9(x),  
+            .plot.garch.10(x), .plot.garch.11(x), .plot.garch.12(x), 
+            .plot.garch.13(x)) 
+    } 
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.plot.garch.1 <- 
+    function(x, ...) 
+{
+    # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Internal plot function
+    
+    # 1. Time Series:
+    xseries = x@data$x
+    plot(xseries, type = "l", col = "steelblue", ylab = "x",
+        main = "Time Series")
+    abline(h = 0, col = "grey", lty = 3)
+    grid()
+}    
+
+
+# ------------------------------------------------------------------------------
+
+   
+.plot.garch.2 <- 
+    function(x, ...) 
+{
+    # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Internal plot function
+    
+    # 2. Conditional SD:
+    xcsd = x@sigma.t
+    plot(xcsd, type = "l", col = "steelblue", ylab = "x",
+        main = "Conditional SD")
+    abline(h = 0, col = "grey", lty = 3)
+    grid()
+}   
+
+
+# ------------------------------------------------------------------------------
+
+
+.plot.garch.3 <- 
+    function(x, ...) 
+{           
+    # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Internal plot function
+    
+    # 3. Series with 2 Conditional SD Superimposed:
+    xseries = x@data$x
+    xcsd = x@sigma.t
+    ci = 2
+    plot(xseries, type = "l", col = "steelblue", ylab = "x",
+        main = "Series with 2 Conditional SD Superimposed")
+    lines(+ci * xcsd, col = "grey")
+    lines(-ci * xcsd, col = "grey")
+    abline(h = 0, col = "grey", lty = 3)
+    grid()
+}     
+
+ 
+# ------------------------------------------------------------------------------
+
+     
+.plot.garch.4 <- 
+    function(x, ...) 
+{        
+    # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Internal plot function
+    
+    # 4. ACF of the Observations:
+    xseries = x@data$x
+    n = length(xseries)
+    lag.max = as.integer(10*log10(n))
+    acf(xseries, lag.max = lag.max, xlab = "Lags", col = "steelblue", 
+        main = "ACF of Observations", plot = TRUE)
+}   
+
+
+# ------------------------------------------------------------------------------
+
+
+.plot.garch.5 <- 
+    function(x, ...) 
+{       
+    # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Internal plot function
+    
+    # 5. ACF of the Squared Observations:
+    xseries = x@data$x
+    xseries2 = xseries^2
+    n = length(xseries)
+    lag.max = as.integer(10*log10(n))
+    acf(xseries2, lag.max = lag.max, xlab = "Lags", col = "steelblue", 
+        main = "ACF of Squared Observations", plot = TRUE)
+} 
+
+ 
+# ------------------------------------------------------------------------------
+
+         
+.plot.garch.6 <- 
+    function(x, ...) 
+{
+    # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Internal plot function
+    
+    # 6. Cross Correlation between x^2 and x:
+    xseries = x@data$x
+    xseries2 = xseries^2
+    n = length(xseries)
+    lag.max = as.integer(10*log10(n))
+    ccf(xseries2, xseries, lag.max = lag.max, xlab = "Lags", 
+        main = "Cross Correlation", plot = TRUE, col = "steelblue")
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.plot.garch.7 <- 
+    function(x, ...) 
+{
+    # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Internal plot function
+    
+    # 7. Residuals:
+    res = residuals(x, standardize = FALSE)
+    plot(res, type = "l", main = "Residuals", col = "steelblue", ...)
+    abline(h = 0, lty = 3)
+    grid()
+}  
+
+ 
+# ------------------------------------------------------------------------------
+
+
+.plot.garch.8 <- 
+    function(x, ...) 
+{
+    # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Internal plot function
+    
+    # 8. Conditional SDs:
+    xcsd = x@sigma.t
+    plot(xcsd, type = "l", main = "Conditional SD's", 
+        col = "steelblue", ...)
+    abline(h = 0, lty = 3)
+    grid()
+}   
+
+
+# ------------------------------------------------------------------------------
+
+
+.plot.garch.9 <- 
+    function(x, ...) 
+{
+    # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Internal plot function
+    
+    # 9. Standardized Residuals:
+    sres = residuals(x, standardize = FALSE)
+    plot(sres, type = "l", main = "Standardized Residuals", 
+        col = "steelblue", ...)
+    abline(h = 0, lty = 3)
+    grid()
+} 
+
+
+# ------------------------------------------------------------------------------
+
+      
+.plot.garch.10 <- 
+    function(x, ...) 
+{
+    # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Internal plot function
+    
+    # 10. ACF of Standardized Residuals:
+    sres = residuals(x, standardize = FALSE)
+    n = length(sres)
+    lag.max = as.integer(10*log10(n))
+    acf(sres, lag.max = lag.max, xlab = "Lags", col = "steelblue", 
+        main = "ACF of Standardized Residuals", plot = TRUE)
+}  
+
+ 
+# ------------------------------------------------------------------------------
+
+        
+.plot.garch.11 <- 
+    function(x, ...) 
+{
+    # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Internal plot function
+    
+    # 11. ACF of Squared Standardized Residuals:
+    sres2 = residuals(x, standardize = FALSE)^2
+    n = length(sres2)
+    lag.max = as.integer(10*log10(n))
+    acf(sres2, lag.max = lag.max, xlab = "Lags", col = "steelblue", 
+        main = "ACF of Standardized Residuals", plot = TRUE)
+}    
+
+       
+# ------------------------------------------------------------------------------
+
+
+.plot.garch.12 <- 
+function(x, ...) 
+{      
+    # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Internal plot function
+    
+    # 12. Cross Correlation between r^2 and r:
+    sres = residuals(x, standardize = FALSE)
+    sres2 = sres^2
+    n = length(sres)
+    lag.max = as.integer(10*log10(n))
+    ccf(sres2, sres, lag.max = lag.max, xlab = "Lags", 
+        main = "Cross Correlation", plot = TRUE, col = "steelblue")
+}   
+
+
+# ------------------------------------------------------------------------------
+
+
+.plot.garch.13 <- 
+    function(x, ...) 
+{
+    # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Internal plot function
+    
+    # 13. QQ-Plot of Standardized Residuals:
+    sres = residuals(x, standardize = FALSE)
+    cond.dist = x@fit$params$cond.dist
+    nc = nchar(x@fit$params$cond.dist)
+    cond.dist = paste("q", substr(cond.dist, 2, nc), sep = "")
+    skew = x@fit$params$skew
+    shape = x@fit$params$shape
+    if (cond.dist == "qnorm")
+        .qqDist(sres, dist = cond.dist)
+    if (cond.dist == "qstd" | cond.dist == "qged")
+        .qqDist(sres, dist = cond.dist, nu = shape)
+    if (cond.dist == "qsnorm")
+        .qqDist(sres, dist = cond.dist, xi = skew)
+    if (cond.dist == "qsstd" | cond.dist == "qsged")
+        .qqDist(sres, dist = cond.dist, xi = skew, nu = shape)
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.qqDist <-  
+    function (y, dist = "qnorm", ylim = NULL, main = paste(dist, "- QQ Plot"), 
+    xlab = "Theoretical Quantiles", ylab = "Sample Quantiles", doplot = TRUE, 
+    datax = FALSE, ...) 
+{   
+    # A function implemented by Diethelm Wuertz
+    
+    # Description
+    #   QQ Plot for arbitray distribution
+    
+    # FUNCTION:
+    # print(dist)
+    
+    # Match Function :
+    qDist = match.fun(dist)
+    
+    # Check Arguments:
+    if (substr(dist, 1, 1) != "q") stop("dist is misspecified")
+    # test = class(test = try(qDist(0.5, ...), silent = TRUE))
+    # if (test == "try-error") stop("dist does not exist")
+    
+    # Transform to Vector Mode:
+    y = as.vector(y)
+    
+    # Compute Data:
+    if (has.na <- any(ina <- is.na(y))) {
+        yN = y
+        y = y[!ina]
+    }
+    if (0 == (n <- length(y))) stop("y is empty or has only NAs")
+    x <- qDist(ppoints(n,), ...)[order(order(y))]
+    if (has.na) {
+        y = x
+        x = yN
+        x[!ina] = y
+        y = yN
+    }
+    
+    # Create QQ Plot:
+    if (doplot) { 
+        if (is.null(ylim)) ylim = range(y)
+        if (datax) {
+            plot(y, x, main = main, xlab = ylab, ylab = xlab, xlim = ylim,
+                col = "steelblue", cex = 0.7)
+        } else {
+            plot(x, y, main = main, xlab = xlab, ylab = ylab, ylim = ylim,
+                col = "steelblue", cex = 0.7)
+        }
+        .qqLine(y = y, dist = dist, datax = datax, ...)
+        grid()
+    }
+    
+    # Return Value:
+    invisible(if (datax) list(x = y, y = x) else list(x = x, y = y))
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.qqLine <-  
+function (y, dist = "qnorm", datax = FALSE, ...) 
+{   # A function implemented by Diethelm Wuertz
+
+    # Description
+    #   Add slope to QQ Plot for arbitray distribution
+    
+    # FUNCTION:
+    
+    # Match Function :
+    qDist = match.fun(dist)
+    
+    # Check Arguments:
+    if (substr(dist, 1, 1) != "q") stop("dist is misspecified")
+    # test = class(test = try(qDist(0.5, ...), silent = TRUE))
+    # if (test == "try-error") stop("dist does not exist")
+    
+    # Transform to Vector Mode:
+    y = as.vector(y)
+    
+    # Compute Data:
+    y = quantile(y[!is.na(y)], c(0.25, 0.75))
+    x = qDist(c(0.25, 0.75), ...)
+    
+    # Add Slope:
+    if (datax) {
+        slope <- diff(x)/diff(y)
+        int <- x[1] - slope * y[1]
+    } else {
+        slope <- diff(y)/diff(x)
+        int <- y[1] - slope * x[1]
+    }
+    
+    # Return Value:
+    abline(int, slope)
+}
+
+
+################################################################################
+
+
+setMethod(f = "summary", signature = "fGARCH", definition = 
+function(object) 
+{   
+    # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   Summary method for an object of class "fGARCH"
+    
+    # Arguments:
+    #   object - an object of class 'fGARCH'
+    
+    # FUNCTION:
+     
+    # Title:
+    cat("\nTitle:\n ")
+    cat(object@title, "\n")
+    
+    # Call:
+    cat("\nCall:\n ")
+    cat(paste(deparse(object@call), sep = "\n", collapse = "\n"), "\n")
+    
+    # Mean Equation:
+    cat("\nMean and Variance Equation:\n ")
+    cat(as.character(object@formula[1]), "+", 
+        as.character(object@formula[2]), "\n")
+        
+    # Conditional Distribution:
+    cat("\nConditional Distribution:\n ")
+    cat(object@fit$params$cond.dist, "\n")
+  
+    # Coefficients:
+    cat("\nCoefficient(s):\n")
+    digits = max(6, getOption("digits") - 4)
+    print.default(format(object@fit$par, digits = digits), print.gap = 2, 
+         quote = FALSE)    
+    
+    # Error Analysis:
+    digits = max(4, getOption("digits") - 5)
+    fit = object@fit 
+    # fit$cvar = solve(fit$hessian)
+    # fit$se.coef = sqrt(diag(fit$cvar))
+    # fit$tval = fit$coef/fit$se.coef
+    # fit$matcoef = cbind(fit$coef, fit$se.coef, 
+    #     fit$tval, 2*(1-pnorm(abs(fit$tval))))
+    # dimnames(fit$matcoef) = list(names(fit$tval), c(" Estimate", 
+    #    " Std. Error", " t value", "Pr(>|t|)"))
+    signif.stars = getOption("show.signif.stars")
+    cat("\nError Analysis:\n")
+    printCoefmat(fit$matcoef, digits = digits, signif.stars = signif.stars) 
+    
+    # Log Likelihood:
+    cat("\nLog Likelihood:\n ")
+    LLH = object@fit$value
+    N = length(object@data$x)
+    cat(LLH, "   normalized: ", LLH/N, "\n")
+        
+    # Lagged Series:
+    .tslagGarch = function (x, k = 1) {
+        ans = NULL
+        for (i in k) ans = cbind(ans, .tslag1Garch(x, i))
+        indexes = (1:length(ans[, 1]))[!is.na(apply(ans, 1, sum))]
+        ans = ans[indexes, ]
+        if (length(k) == 1) ans = as.vector(ans)
+        ans }
+    .tslag1Garch = function (x, k) {
+        c(rep(NA, times = k), x[1:(length(x) - k)]) }
+        
+    # Statistical Tests:
+    cat("\nStandadized Residuals Tests:\n")
+    r.s = object@residuals/sqrt(object@h.t)
+    ans = NULL
+    # Normality Tests:
+    jbtest = jarqueberaTest(r.s)@test
+    ans = rbind(ans, c(jbtest[1], jbtest[2]))
+    if (length(r.s) < 5000) {
+        swtest = shapiro.test(r.s)
+        if (swtest[2] < 2.6e-16) swtest[2] = 0
+        ans = rbind(ans, c(swtest[1], swtest[2]))
+    } else {
+        ans = rbind(ans, c(NA, NA))
+    }
+    # Ljung-Box Tests:
+    box10 = Box.test(r.s, lag = 10, type = "Ljung-Box")
+    box15 = Box.test(r.s, lag = 15, type = "Ljung-Box")
+    box20 = Box.test(r.s, lag = 20, type = "Ljung-Box")
+    ans = rbind(ans, c(box10[1], box10[3]))
+    ans = rbind(ans, c(box15[1], box15[3]))
+    ans = rbind(ans, c(box20[1], box20[3]))
+    box10 = Box.test(r.s^2, lag = 10, type = "Ljung-Box")
+    box15 = Box.test(r.s^2, lag = 15, type = "Ljung-Box")
+    box20 = Box.test(r.s^2, lag = 20, type = "Ljung-Box")
+    ans = rbind(ans, c(box10[1], box10[3]))
+    ans = rbind(ans, c(box15[1], box15[3]))
+    ans = rbind(ans, c(box20[1], box20[3]))
+    # Ljung-Box Tests - tslag required 
+    lag.n = 12
+    x.s = as.matrix(r.s)^2
+    n = nrow(x.s)
+    tmp.x = .tslagGarch(x.s[, 1], 1:lag.n)
+    tmp.y = x.s[(lag.n + 1):n, 1]
+    fit = lm(tmp.y ~ tmp.x)
+    stat = (n-lag.n) * summary.lm(fit)$r.squared
+    ans = rbind(ans, c(stat, p.value = 1 - pchisq(stat, lag.n)) )
+    # Add Names:
+    rownames(ans) = c(
+        " Jarque-Bera Test   R    Chi^2 ",
+        " Shapiro-Wilk Test  R    W     ",
+        " Ljung-Box Test     R    Q(10) ",
+        " Ljung-Box Test     R    Q(15) ",
+        " Ljung-Box Test     R    Q(20) ",
+        " Ljung-Box Test     R^2  Q(10) ",
+        " Ljung-Box Test     R^2  Q(15) ",
+        " Ljung-Box Test     R^2  Q(20) ",
+        " LM Arch Test       R    TR^2  ")
+    colnames(ans) = c("Statistic", "p-Value")
+    print(ans)
+    
+    # Information Criterion Statistics:
+    cat("\nInformation Criterion Statistics:\n")
+    print(object@fit$ics)
+        
+    # Description:
+    cat("\nDescription:\n ")
+    cat(object@description, "\n")
+
+    # Return Value:
+    cat("\n")
+    invisible()
+})
+
+
+################################################################################
+
