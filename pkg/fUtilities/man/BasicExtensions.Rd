@@ -1,4 +1,4 @@
-f\name{BasicExtensions}
+\name{BasicExtensions}
 
 \alias{BasicExtensions}
 
