@@ -18,9 +18,11 @@
 
 
 \section{Objects from the Class}{
+
     Objects can be created by calls of the form 
     \code{garchFit(formula, data)}.
     This object is a parameter estimate of an empirical GARCH process.
+    
 }
 
 
@@ -29,7 +31,7 @@
 
     \item{\code{call}:}{Object of class \code{"call"}: 
         the call of the \code{garch} function.
-        }\
+        } 
     \item{\code{formula}:}{Object of class \code{"list"}: 
         a list with two formula entries, one for the mean and the other
         one for the variance equation.
