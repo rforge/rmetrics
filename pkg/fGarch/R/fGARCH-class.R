@@ -28,8 +28,8 @@
 
 
 ################################################################################
-# METHOD:                 DESCRIPTION:
-#  'fGARCH'                S4: fGARCH Class representation
+# FUNCTION:                 DESCRIPTION:
+#  'fGARCH'                  fGARCH Class representation
 ################################################################################
 
 
