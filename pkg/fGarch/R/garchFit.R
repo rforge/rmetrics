@@ -215,8 +215,8 @@ garchFit <-
 # ------------------------------------------------------------------------------
 
 
-.garchOptimizerControl =
-function(algorithm)
+.garchOptimizerControl <- 
+    function(algorithm)
 {
     # A function implemented by Diethelm Wuertz
 
@@ -518,7 +518,7 @@ function(algorithm)
 # ------------------------------------------------------------------------------
       
 
-.garchInitParameters = 
+.garchInitParameters <-  
     function(formula.mean, formula.var, delta, skew, shape, cond.dist, 
     include.mean, include.delta, include.skew, include.shape, leverage, 
     algorithm, control, trace)
@@ -790,13 +790,13 @@ function(algorithm)
 # ------------------------------------------------------------------------------
 
 
-.garchDist = .garchSetCondDist("dnorm")
+.garchDist <- .garchSetCondDist("dnorm")
 
 
 # ------------------------------------------------------------------------------
  
 
-.garchLLH =
+.garchLLH <- 
     function(params, trace) 
 {   
     # A function implemented by Diethelm Wuertz
@@ -1002,7 +1002,7 @@ function(algorithm)
 # ------------------------------------------------------------------------------
 
 
-.garchHessian =
+.garchHessian <- 
     function(par, trace)
 {   
     # A function implemented by Diethelm Wuertz
@@ -1112,7 +1112,7 @@ function(algorithm)
 # ------------------------------------------------------------------------------
 
 
-.garchOptimizeLLH =
+.garchOptimizeLLH <- 
     function(trace) 
 {   
     # A function implemented by Diethelm Wuertz
@@ -1362,7 +1362,7 @@ function(algorithm)
 # ------------------------------------------------------------------------------
 
 
-.garchNames =
+.garchNames <- 
     function(object)
 {   
     # A function implemented by Diethelm Wuertz

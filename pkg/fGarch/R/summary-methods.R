@@ -33,8 +33,8 @@
 ################################################################################
 
 
-setMethod(f = "summary", signature = "fGARCH", definition = 
-function(object) 
+setMethod(f = "summary", signature(object = "fGARCH"), definition = 
+    function(object) 
 {   
     # A function implemented by Diethelm Wuertz
     

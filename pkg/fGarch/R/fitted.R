@@ -33,9 +33,10 @@
 ################################################################################
 
 
-fitted.fGARCH = 
-function(object, ...) 
-{   # A function implemented by Diethelm Wuertz
+fitted.fGARCH <-  
+    function(object, ...) 
+{   
+    # A function implemented by Diethelm Wuertz
     
     # Description:  
     #   S3 Fitted values method for an object of class fGARCH

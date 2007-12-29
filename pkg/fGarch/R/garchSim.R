@@ -112,7 +112,8 @@ garchSim <-
 
 .garchSim <- 
     function(n = 1000, n.start = 1000, spec = garchSpec())
-{   # A function implemented by Diethelm Wuertz
+{   
+    # A function implemented by Diethelm Wuertz
     
     # Description:
     #   Simulates GARCH series from 'garchSpec'

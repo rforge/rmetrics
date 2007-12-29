@@ -1,54 +1,31 @@
-\name{garchReports}
+\name{show-methods}
 
-\alias{garchReports}
 
-\alias{fGARCH-class}
+\docType{methods}
 
-\alias{show.fGARCH}
+
+\alias{show-methods}
+\alias{show,ANY-method}
 \alias{show,fGARCH-method}
 
-\alias{summary.fGARCH}
-\alias{summary,fGARCH-method}
 
-\alias{plot.fGARCH}
-
-
-\title{GARCH Reports and Graphs}
+\title{GARCH Show Methods}
 
 
 \description{
 
-    Creates reports and graphs of a GARCH modelling process. 
+    Show methods for GARCH Modelling. 
 
 }
 
 
-\usage{
-show.fGARCH(object)
-summary.fGARCH(object)
+\section{Methods}{
+    \describe{
 
-\method{plot}{fGARCH}(x, which = "ask", \dots)
-}
-
-
-\arguments{
-      
-    \item{object, x}{
-        an object of class \code{fGARCH} as returned from the 
-        function \code{garchFit()}.
-        }   
-    \item{which}{
-        if \code{which} is set to \code{"ask"} the function will 
-        interactively ask which plot should be displayed. This is
-        the default value and then those plots will
-        be displayed for which the elements in the logical vector
-        \code{which} ar set to \code{TRUE}; by default all four
-        elements are set to \code{"all"}.
-        }
-    \item{\dots}{
-        additional arguments to be passed.
-        }   
-
+    \item{object = "ANY"}{Generic function}
+    \item{object = "fGARCH"}{Print Function}
+        
+    }
 }
 
     
@@ -60,6 +37,7 @@ summary.fGARCH(object)
 
 
 \examples{
+\dontrun{
 ## garchSpec -
    spec = garchSpec()
    spec
@@ -76,6 +54,7 @@ summary.fGARCH(object)
    ## Batch Plot:
    # plot(fit, which = 3)
    # summary(fit)
+}
 }
 
 

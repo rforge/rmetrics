@@ -110,7 +110,8 @@ garchKappa <-
 
 .truePersistence <- 
     function(fun = "dnorm", alpha = 1, gamma = 0, beta = 0, delta = 1, ...)
-{   # A function implemented by Diethelm Wuertz
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Computes persistence for an APARCH process

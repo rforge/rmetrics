@@ -1,57 +1,58 @@
-\name{garchReports}
-
-\alias{garchReports}
-
-\alias{fGARCH-class}
-
-\alias{show.fGARCH}
-\alias{show,fGARCH-method}
-
-\alias{summary.fGARCH}
-\alias{summary,fGARCH-method}
-
-\alias{plot.fGARCH}
+\name{plot-methods}
 
 
-\title{GARCH Reports and Graphs}
+\docType{methods}
+
+
+\alias{plot-methods}
+\alias{plot,ANY,ANY-method}
+\alias{plot,fGARCH,missing-method}
+
+
+\title{GARCH Plot Methods}
 
 
 \description{
 
-    Creates reports and graphs of a GARCH modelling process. 
+    Plot methods for GARCH Modelling. 
 
 }
 
 
 \usage{
-show.fGARCH(object)
-summary.fGARCH(object)
-
-\method{plot}{fGARCH}(x, which = "ask", \dots)
+\S4method{plot}{fGARCH,missing}(x, which = "ask", \dots)
 }
 
 
 \arguments{
-      
-    \item{object, x}{
-        an object of class \code{fGARCH} as returned from the 
-        function \code{garchFit()}.
-        }   
+
+    \item{x}{
+        description
+        } 
     \item{which}{
-        if \code{which} is set to \code{"ask"} the function will 
-        interactively ask which plot should be displayed. This is
-        the default value and then those plots will
-        be displayed for which the elements in the logical vector
-        \code{which} ar set to \code{TRUE}; by default all four
-        elements are set to \code{"all"}.
+        description
         }
     \item{\dots}{
-        additional arguments to be passed.
-        }   
-
+        description
+        }
+ 
 }
 
-    
+
+\section{Methods}{
+    \describe{
+
+    \item{x = "ANY", y = "ANY"}{
+        Generic Function
+        }
+    \item{x = "fGARCH", y = "missing"}{
+        Plot ... Function
+        }
+        
+    }
+}
+
+
 \author{
 
     Diethelm Wuertz for the Rmetrics \R-port.
@@ -60,6 +61,7 @@ summary.fGARCH(object)
 
 
 \examples{
+\dontrun{
 ## garchSpec -
    spec = garchSpec()
    spec
@@ -76,6 +78,7 @@ summary.fGARCH(object)
    ## Batch Plot:
    # plot(fit, which = 3)
    # summary(fit)
+}
 }
 
 

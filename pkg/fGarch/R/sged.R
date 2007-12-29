@@ -46,9 +46,10 @@
 ################################################################################
 
 
-dged =
-function(x, mean = 0, sd = 1, nu = 2)
-{   # A function imlemented by Diethelm Wuertz
+dged <- 
+    function(x, mean = 0, sd = 1, nu = 2)
+{   
+    # A function imlemented by Diethelm Wuertz
 
     # Description:
     #   Compute the density for the 
@@ -70,9 +71,10 @@ function(x, mean = 0, sd = 1, nu = 2)
 # ------------------------------------------------------------------------------
 
 
-pged = 
-function(q, mean = 0, sd = 1, nu = 2)
-{   # A function implemented by Diethelm Wuertz
+pged <-  
+    function(q, mean = 0, sd = 1, nu = 2)
+{   
+    # A function implemented by Diethelm Wuertz
         
     # Description:
     #   Compute the probability for the  
@@ -96,9 +98,10 @@ function(q, mean = 0, sd = 1, nu = 2)
 # ------------------------------------------------------------------------------
 
 
-qged =
-function(p, mean = 0, sd = 1, nu = 2)
-{   # A function implemented by Diethelm Wuertz
+qged <- 
+    function(p, mean = 0, sd = 1, nu = 2)
+{   
+    # A function implemented by Diethelm Wuertz
         
     # Description:
     #   Compute the quantiles for the  
@@ -119,9 +122,10 @@ function(p, mean = 0, sd = 1, nu = 2)
 # ------------------------------------------------------------------------------
 
     
-rged = 
-function(n, mean = 0, sd = 1, nu = 2)
-{   # A function implemented by Diethelm Wuertz
+rged <-  
+    function(n, mean = 0, sd = 1, nu = 2)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Generate GED random deviates. The function uses the 
@@ -146,9 +150,10 @@ function(n, mean = 0, sd = 1, nu = 2)
 # ------------------------------------------------------------------------------
 
 
-.dsged = 
-function(x, nu, xi) 
-{   # A function implemented by Diethelm Wuertz 
+.dsged <-  
+    function(x, nu, xi) 
+{   
+    # A function implemented by Diethelm Wuertz 
 
     # Description:
     #   Internal Function
@@ -173,9 +178,10 @@ function(x, nu, xi)
 }
 
       
-dsged =
-function(x, mean = 0, sd = 1, nu = 2, xi = 1.5)
-{   # A function implemented by Diethelm Wuertz 
+dsged <- 
+    function(x, mean = 0, sd = 1, nu = 2, xi = 1.5)
+{   
+    # A function implemented by Diethelm Wuertz 
 
     # Description:
     #   Compute the density function of the 
@@ -194,9 +200,10 @@ function(x, mean = 0, sd = 1, nu = 2, xi = 1.5)
 # ------------------------------------------------------------------------------
 
 
-.psged =
- function(q, nu, xi) 
-{   # A function implemented by Diethelm Wuertz 
+.psged <- 
+    function(q, nu, xi) 
+{   
+    # A function implemented by Diethelm Wuertz 
 
     # Description:
     #   Internal Function
@@ -221,9 +228,10 @@ function(x, mean = 0, sd = 1, nu = 2, xi = 1.5)
 }
 
       
-psged =
-function(q, mean = 0, sd = 1, nu = 2, xi = 1.5)
-{   # A function implemented by Diethelm Wuertz 
+psged <- 
+    function(q, mean = 0, sd = 1, nu = 2, xi = 1.5)
+{   
+    # A function implemented by Diethelm Wuertz 
 
     # Description:
     #   Compute the distribution function of the 
@@ -242,9 +250,10 @@ function(q, mean = 0, sd = 1, nu = 2, xi = 1.5)
 # ------------------------------------------------------------------------------    
 
 
-.qsged =
-function(p, nu, xi) 
-{   # A function implemented by Diethelm Wuertz 
+.qsged <- 
+    function(p, nu, xi) 
+{   
+    # A function implemented by Diethelm Wuertz 
 
     # Description:
     #   Internal Function
@@ -270,9 +279,10 @@ function(p, nu, xi)
 }
 
         
-qsged =
-function(p, mean = 0, sd = 1, nu = 2, xi = 1.5)
-{   # A function implemented by Diethelm Wuertz 
+qsged <- 
+    function(p, mean = 0, sd = 1, nu = 2, xi = 1.5)
+{   
+    # A function implemented by Diethelm Wuertz 
 
     # Description:
     #   Compute the quantile function of the 
@@ -291,9 +301,10 @@ function(p, mean = 0, sd = 1, nu = 2, xi = 1.5)
 # ------------------------------------------------------------------------------
     
 
-.rsged =
-function(n, nu, xi) 
-{   # A function implemented by Diethelm Wuertz 
+.rsged <- 
+    function(n, nu, xi) 
+{   
+    # A function implemented by Diethelm Wuertz 
 
     # Description:
     #   Internal Function
@@ -322,9 +333,10 @@ function(n, nu, xi)
 # ------------------------------------------------------------------------------
 
 
-rsged =
-function(n, mean = 0, sd = 1, nu = 2, xi = 1.5)
-{   # A function implemented by Diethelm Wuertz 
+rsged <- 
+    function(n, mean = 0, sd = 1, nu = 2, xi = 1.5)
+{   
+    # A function implemented by Diethelm Wuertz 
 
     # Description:
     #   Generate random deviates from the 
@@ -343,9 +355,10 @@ function(n, mean = 0, sd = 1, nu = 2, xi = 1.5)
 ################################################################################
 
 
-gedFit =
-function(x, ...)
-{   # A function implemented by Diethelm Wuertz
+gedFit <- 
+    function(x, ...)
+{   
+    # A function implemented by Diethelm Wuertz
     
     # Description:
     #   Fit the parameters for a GED distribution
@@ -375,9 +388,10 @@ function(x, ...)
 # ------------------------------------------------------------------------------
 
 
-sgedFit =
-function(x, ...)
-{   # A function implemented by Diethelm Wuertz
+sgedFit <- 
+    function(x, ...)
+{   
+    # A function implemented by Diethelm Wuertz
     
     # Description:
     #   Fit the parameters for a skew GED distribution
@@ -407,9 +421,10 @@ function(x, ...)
 ################################################################################
 
 
-sgedSlider = 
-function(type = c("dist", "rand"))
-{   # A function implemented by Diethelm Wuertz
+sgedSlider <-  
+    function(type = c("dist", "rand"))
+{   
+    # A function implemented by Diethelm Wuertz
     
     # Description:
     #   Displays interactively skew GED distribution

@@ -1,34 +1,31 @@
-\name{coef}
+\name{coef-methods}
 
 
-\alias{coef.fGARCH}
+\docType{methods}
 
 
-\title{Extract GARCH Model Coefficients}
+\alias{coef-methods}
+\alias{coef,ANY-method}
+\alias{coef,fGARCH-method}
+
+
+\title{GARCH Coefficients Methods}
 
 
 \description{
 
-    Extracts coefficients from a fitted GARCH object. 
-    
+    Coefficients methods for GARCH Modelling. 
+
 }
 
 
-\usage{
-\method{coef}{fGARCH}(object, \dots)
-}
+\section{Methods}{
+    \describe{
 
-
-\arguments{
-
-    \item{object}{
-        an object of class \code{fGARCH} as returned from the function
-        \code{garchFit()}.
-        }  
-    \item{\dots}{
-        additional arguments to be passed.
-        }   
-
+    \item{object = "ANY"}{Generic function}
+    \item{object = "fGARCH"}{Summary Function}
+        
+    }
 }
 
 

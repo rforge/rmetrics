@@ -79,6 +79,48 @@
 # ------------------------------------------------------------------------------
 
 
+test.garchInputSeries <- 
+function()
+{
+    # Numeric Vector RVs:
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry") 
+    # Simulate normal GARCH(1, 1) numeric Vector:
+    model = list(omega = 1e-06, alpha = 0.1, beta = 0.8)
+    N = 10 
+    
+    
+    # UNIVARIATE:
+    
+    # A numeric Vector:
+    x.vec = 100*garchSim(model, N, returnClass = "numeric")
+    x.vec
+    x.tS = dummyDailySeries(matrix(x.vec), units = "GARCH11")
+    x.tS 
+    x.zoo = zoo(x.vec, order.by = as.Date(rownames(x.tS)))
+    x.zoo
+    x.ts = as.ts(x.vec)
+    x.ts 
+    
+    # MULTIVARIATE:
+    
+    # A numeric matrix:
+    X.mat = cbind(GARCH11 = x.vec, R = rnorm(N))
+    X.mat
+    X.tS = dummyDailySeries(X.mat, units = c("GARCH11", "R"))
+    X.tS
+    X.zoo = zoo(X.mat, order.by = as.Date(rownames(x.tS)))
+    X.zoo
+    X.mts = as.ts(X.mat)
+    X.mts
+    
+    # Return Value:
+    return()   
+}
+ 
+       
+    
+
 test.garchParser = 
 function()
 {       

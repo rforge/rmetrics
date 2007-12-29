@@ -46,9 +46,10 @@
 ################################################################################
 
 
-.dsnorm = 
-function(x, xi) 
-{   # A function implemented by Diethelm Wuertz 
+.dsnorm <-  
+    function(x, xi) 
+{   
+    # A function implemented by Diethelm Wuertz 
 
     # Description:
     #   Compute the density function of the "normalized" skew 
@@ -73,9 +74,10 @@ function(x, xi)
 # ------------------------------------------------------------------------------
         
 
-dsnorm =
-function(x, mean = 0, sd = 1, xi = 1.5)
-{   # A function implemented by Diethelm Wuertz 
+dsnorm <- 
+    function(x, mean = 0, sd = 1, xi = 1.5)
+{   
+    # A function implemented by Diethelm Wuertz 
 
     # Description:
     #   Compute the density function of the skew normal distribution
@@ -98,9 +100,10 @@ function(x, mean = 0, sd = 1, xi = 1.5)
 # ------------------------------------------------------------------------------
 
 
-.psnorm =
-function(q, xi) 
-{   # A function implemented by Diethelm Wuertz 
+.psnorm <- 
+    function(q, xi) 
+{   
+    # A function implemented by Diethelm Wuertz 
 
     # Description:
     #   Internal Function
@@ -124,9 +127,10 @@ function(q, xi)
 # ------------------------------------------------------------------------------
   
 
-psnorm =
-function(q, mean = 0, sd = 1, xi = 1.5)
-{   # A function implemented by Diethelm Wuertz 
+psnorm <- 
+    function(q, mean = 0, sd = 1, xi = 1.5)
+{   
+    # A function implemented by Diethelm Wuertz 
 
     # Description:
     #   Compute the distribution function of the 
@@ -150,9 +154,10 @@ function(q, mean = 0, sd = 1, xi = 1.5)
 # ------------------------------------------------------------------------------    
 
 
-.qsnorm =
-function(p, xi) 
-{   # A function implemented by Diethelm Wuertz 
+.qsnorm <- 
+    function(p, xi) 
+{   
+    # A function implemented by Diethelm Wuertz 
 
     # Description:
     #   Internal Function
@@ -177,9 +182,10 @@ function(p, xi)
 # ------------------------------------------------------------------------------
 
    
-qsnorm =
-function(p, mean = 0, sd = 1, xi = 1.5)
-{   # A function implemented by Diethelm Wuertz 
+qsnorm <- 
+    function(p, mean = 0, sd = 1, xi = 1.5)
+{   
+    # A function implemented by Diethelm Wuertz 
 
     # Description:
     #   Compute the quantile function of the 
@@ -203,9 +209,10 @@ function(p, mean = 0, sd = 1, xi = 1.5)
 # ------------------------------------------------------------------------------
 
 
-.rsnorm =
-function(n, xi) 
-{   # A function implemented by Diethelm Wuertz 
+.rsnorm <- 
+    function(n, xi) 
+{   
+    # A function implemented by Diethelm Wuertz 
 
     # Description:
     #   Internal Function
@@ -230,9 +237,10 @@ function(n, xi)
 # ------------------------------------------------------------------------------
        
 
-rsnorm =
-function(n, mean = 0, sd = 1, xi = 1.5)
-{   # A function implemented by Diethelm Wuertz 
+rsnorm <- 
+    function(n, mean = 0, sd = 1, xi = 1.5)
+{   
+    # A function implemented by Diethelm Wuertz 
 
     # Description:
     #   Generate random deviates from the 
@@ -256,9 +264,10 @@ function(n, mean = 0, sd = 1, xi = 1.5)
 ################################################################################
 
 
-normFit =
-function(x, ...)
-{   # A function implemented by Diethelm Wuertz
+normFit <- 
+    function(x, ...)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Fit the parameters for a Normal distribution
@@ -288,9 +297,10 @@ function(x, ...)
 # ------------------------------------------------------------------------------
 
 
-snormFit =
-function(x, ...)
-{   # A function implemented by Diethelm Wuertz
+snormFit <- 
+    function(x, ...)
+{   
+    # A function implemented by Diethelm Wuertz
     
     # Description:
     #   Fit the parameters for a skew Normal distribution
@@ -320,9 +330,10 @@ function(x, ...)
 ################################################################################
 
 
-snormSlider = 
-function(type = c("dist", "rand"))
-{   # A function implemented by Diethelm Wuertz
+snormSlider <- 
+    function(type = c("dist", "rand"))
+{   
+    # A function implemented by Diethelm Wuertz
     
     # Description:
     #   Displays interactively skew Normal distribution

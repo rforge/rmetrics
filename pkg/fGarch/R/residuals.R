@@ -34,9 +34,10 @@
 ################################################################################
 
 
-residuals.fGARCH = 
-function(object, ...) 
-{   # A function implemented by Diethelm Wuertz
+residuals.fGARCH <-  
+    function(object, ...) 
+{   
+    # A function implemented by Diethelm Wuertz
     
     # Description:
     #   S3 Residuals method for an object of class fGARCH
@@ -83,9 +84,10 @@ function(object, ...)
 # ------------------------------------------------------------------------------
 
 
-.residuals.fGARCH = 
-function(object, standardize = FALSE) 
-{   # A function implemented by Diethelm Wuertz
+.residuals.fGARCH <-  
+    function(object, standardize = FALSE) 
+{   
+    # A function implemented by Diethelm Wuertz
     
     # Description:
     #   S3 Residuals method for an object of class fGARCH
@@ -106,8 +108,7 @@ function(object, standardize = FALSE)
     }
     
     # Return Value:
-    ans
-    
+    ans    
 }
 
 

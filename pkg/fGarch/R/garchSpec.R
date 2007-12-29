@@ -53,7 +53,8 @@ garchSpec <-
     function (model = list(omega = 1.0e-6, alpha = 0.1, beta = 0.8), 
     presample = NULL, cond.dist = c("rnorm", "rged", "rstd", "rsnorm", 
     "rsged", "rsstd"), rseed = NULL)
-{   # A function implemented by Diethelm Wuertz
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Creates a "garchSpec" object from scratch.
@@ -274,9 +275,10 @@ garchSpec <-
 # ------------------------------------------------------------------------------
 
 
-show.garchSpec =
+show.garchSpec <- 
     function(object)
-{   # A function implemented by Diethelm Wuertz
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   S4 Print Method for objects of class 'garchSpec'

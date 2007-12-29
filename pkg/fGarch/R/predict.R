@@ -33,9 +33,10 @@
 ################################################################################
 
 
-predict.fGARCH = 
+predict.fGARCH <-  
 function(object, n.ahead = 10, trace = FALSE, ...)
-{   # A function implemented by Diethelm Wuertz
+{   
+    # A function implemented by Diethelm Wuertz
     
     # Description:  
     #   S3 Prediction method for an object of class fGARCH

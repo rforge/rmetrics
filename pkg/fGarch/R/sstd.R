@@ -46,9 +46,10 @@
 ################################################################################
 
 
-dstd =
-function(x, mean = 0, sd = 1, nu = 5)
-{   # A function implemented by Diethelm Wuertz
+dstd <- 
+    function(x, mean = 0, sd = 1, nu = 5)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Compute the density for the  
@@ -70,9 +71,10 @@ function(x, mean = 0, sd = 1, nu = 5)
 # ------------------------------------------------------------------------------
 
 
-pstd =
-function (q, mean = 0, sd = 1, nu = 5)
-{   # A function implemented by Diethelm Wuertz
+pstd <- 
+    function (q, mean = 0, sd = 1, nu = 5)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Compute the probability for the  
@@ -95,9 +97,10 @@ function (q, mean = 0, sd = 1, nu = 5)
 # ------------------------------------------------------------------------------
 
 
-qstd =
-function (p, mean = 0, sd = 1, nu = 5)
-{   # A function implemented by Diethelm Wuertz
+qstd <- 
+    function (p, mean = 0, sd = 1, nu = 5)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Compute the quantiles for the  
@@ -119,9 +122,10 @@ function (p, mean = 0, sd = 1, nu = 5)
 # ------------------------------------------------------------------------------
 
 
-rstd =
-function(n, mean = 0, sd = 1, nu = 5)
-{   # A function implemented by Diethelm Wuertz
+rstd <- 
+    function(n, mean = 0, sd = 1, nu = 5)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Generate random deviates from the  
@@ -142,9 +146,10 @@ function(n, mean = 0, sd = 1, nu = 5)
 # ------------------------------------------------------------------------------
 
 
-.dsstd =
-function(x, nu, xi) 
-{   # A function implemented by Diethelm Wuertz 
+.dsstd <- 
+    function(x, nu, xi) 
+{   
+    # A function implemented by Diethelm Wuertz 
 
     # Description:
     #   Internal Function
@@ -174,9 +179,10 @@ function(x, nu, xi)
 # ------------------------------------------------------------------------------
 
       
-dsstd =
-function(x, mean = 0, sd = 1, nu = 5, xi = 1.5)
-{   # A function implemented by Diethelm Wuertz 
+dsstd <- 
+    function(x, mean = 0, sd = 1, nu = 5, xi = 1.5)
+{   
+    # A function implemented by Diethelm Wuertz 
 
     # Description:
     #   Compute the density function of the 
@@ -195,9 +201,10 @@ function(x, mean = 0, sd = 1, nu = 5, xi = 1.5)
 # ------------------------------------------------------------------------------
 
 
-.psstd =
-function(q, nu, xi) 
-{   # A function implemented by Diethelm Wuertz 
+.psstd <- 
+    function(q, nu, xi) 
+{   
+    # A function implemented by Diethelm Wuertz 
 
     # Description:
     #   Internal Function
@@ -227,9 +234,10 @@ function(q, nu, xi)
 # ------------------------------------------------------------------------------
 
       
-psstd =
-function(q, mean = 0, sd = 1, nu = 5, xi = 1.5)
-{   # A function implemented by Diethelm Wuertz 
+psstd <- 
+    function(q, mean = 0, sd = 1, nu = 5, xi = 1.5)
+{   
+    # A function implemented by Diethelm Wuertz 
 
     # Description:
     #   Compute the distribution function of the 
@@ -248,9 +256,10 @@ function(q, mean = 0, sd = 1, nu = 5, xi = 1.5)
 # ------------------------------------------------------------------------------    
 
 
-.qsstd =
-function(p, nu, xi) 
-{   # A function implemented by Diethelm Wuertz 
+.qsstd <- 
+    function(p, nu, xi) 
+{   
+    # A function implemented by Diethelm Wuertz 
 
     # Description:
     #   Internal Function
@@ -281,9 +290,10 @@ function(p, nu, xi)
 # ------------------------------------------------------------------------------
 
     
-qsstd =
-function(p, mean = 0, sd = 1, nu = 5, xi = 1.5)
-{   # A function implemented by Diethelm Wuertz 
+qsstd <- 
+    function(p, mean = 0, sd = 1, nu = 5, xi = 1.5)
+{   
+    # A function implemented by Diethelm Wuertz 
 
     # Description:
     #   Compute the quantile function of the 
@@ -302,9 +312,10 @@ function(p, mean = 0, sd = 1, nu = 5, xi = 1.5)
 # ------------------------------------------------------------------------------
 
 
-.rsstd =
-function(n, nu, xi) 
-{   # A function implemented by Diethelm Wuertz 
+.rsstd <- 
+    function(n, nu, xi) 
+{   
+    # A function implemented by Diethelm Wuertz 
 
     # Description:
     #   Internal Function
@@ -335,9 +346,10 @@ function(n, nu, xi)
 # ------------------------------------------------------------------------------
     
 
-rsstd =
-function(n, mean = 0, sd = 1, nu = 5, xi = 1.5)
-{   # A function implemented by Diethelm Wuertz 
+rsstd <- 
+    function(n, mean = 0, sd = 1, nu = 5, xi = 1.5)
+{   
+    # A function implemented by Diethelm Wuertz 
 
     # Description:
     #   Generate random deviates from the 
@@ -356,9 +368,10 @@ function(n, mean = 0, sd = 1, nu = 5, xi = 1.5)
 ################################################################################
 
 
-stdFit =
-function(x, ...)
-{   # A function implemented by Diethelm Wuertz
+stdFit <- 
+    function(x, ...)
+{   
+    # A function implemented by Diethelm Wuertz
     
     # Description:
     #   Fit the parameters for a Sudent-t distribution
@@ -392,9 +405,10 @@ function(x, ...)
 # ------------------------------------------------------------------------------
 
 
-sstdFit =
-function(x, ...)
-{   # A function implemented by Diethelm Wuertz
+sstdFit <- 
+    function(x, ...)
+{   
+    # A function implemented by Diethelm Wuertz
     
     # Description:
     #   Fit the parameters for a skew Sudent-t distribution
@@ -428,9 +442,10 @@ function(x, ...)
 ################################################################################# ------------------------------------------------------------------------------
 
 
-sstdSlider = 
-function(type = c("dist", "rand"))
-{   # A function implemented by Diethelm Wuertz
+sstdSlider <- 
+    function(type = c("dist", "rand"))
+{   
+    # A function implemented by Diethelm Wuertz
     
     # Description:
     #   Displays interactively skew Student-t distribution

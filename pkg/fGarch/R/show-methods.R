@@ -28,17 +28,12 @@
 
 
 ################################################################################
-# METHOD:                 DESCRIPTION:
-#  'fGARCH'                S4: fGARCH Class representation
-# METHOD:                 DESCRIPTION:
-#  show                    Print method for an object of class 'fGARCH'
-#  plot                    Plot method for an object of class 'fGARCH'
-#  .interactiveGarchPlot    IUnternal Utility Function
-#  summary                 Summary method for an object of class 'fGARCH'
+# FUNCTION:                 DESCRIPTION:
+#  show                      Show method for an object of class 'fGARCH'
 ################################################################################
 
 
-setMethod(f = "show", signature = "fGARCH", description = 
+setMethod(f = "show", signature(object = "fGARCH"), definition = 
     function(object) 
 {   
     # A function implemented by Diethelm Wuertz
