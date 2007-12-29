@@ -22,8 +22,12 @@
 \section{Methods}{
     \describe{
 
-    \item{object = "ANY"}{Generic function}
-    \item{object = "fGARCH"}{Summary Function}
+    \item{object = "ANY"}{
+        Generic function
+        }
+    \item{object = "fGARCH"}{
+        Summary Function
+        }
         
     }
 }
@@ -32,9 +36,7 @@
 \note{
 
     \code{coef} is a generic function which extracts coefficients 
-    from objects returned by modeling functions. \code{coefficients} 
-    is an alias for it. 
-
+    from objects returned by modeling functions.
 }
 
 

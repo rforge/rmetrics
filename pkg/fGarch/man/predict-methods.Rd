@@ -44,6 +44,20 @@
 }
 
 
+\section{Methods}{
+    \describe{
+
+    \item{object = "ANY"}{
+        Generic function
+        }
+    \item{object = "fGARCH"}{
+        Predict
+        }
+        
+    }
+}
+
+
 \value{
 
     returns ...

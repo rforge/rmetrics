@@ -19,6 +19,20 @@
 }
 
 
+\section{Methods}{
+    \describe{
+
+    \item{object = "ANY"}{
+        Generic function
+        }
+    \item{object = "fGARCH"}{
+        Fitted
+        }
+        
+    }
+}
+
+
 \note{
 
     \code{fitted} is a generic function which extracts fitted values 

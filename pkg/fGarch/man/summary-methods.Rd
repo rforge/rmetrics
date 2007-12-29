@@ -22,8 +22,12 @@
 \section{Methods}{
     \describe{
 
-    \item{object = "ANY"}{Generic function}
-    \item{object = "fGARCH"}{Summary Function}
+    \item{object = "ANY"}{
+        Generic function
+        }
+    \item{object = "fGARCH"}{
+        Summary Function
+        }
         
     }
 }

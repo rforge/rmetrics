@@ -36,6 +36,20 @@
 }
 
 
+\section{Methods}{
+    \describe{
+
+    \item{object = "ANY"}{
+        Generic function
+        }
+    \item{object = "fGARCH"}{
+        Residuals
+        }
+        
+    }
+}
+
+
 \note{
 
     \code{residuals} is a generic function which extracts residual values 

@@ -19,6 +19,20 @@
 }
 
 
+\section{Methods}{
+    \describe{
+
+    \item{object = "ANY"}{
+        Generic function
+        }
+    \item{object = "fGARCH"}{
+        Formula
+        }
+        
+    }
+}
+
+
 \note{
 
     \code{formula} is a generic function which extracts the formula

@@ -42,6 +42,20 @@
 }
 
 
+\section{Methods}{
+    \describe{
+
+    \item{object = "ANY"}{
+        Generic function
+        }
+    \item{object = "fGARCH"}{
+        Volatility
+        }
+        
+    }
+}
+
+
 \note{
 
     \code{volatility} is a generic function which extracts volatility values 
