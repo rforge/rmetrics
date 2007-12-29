@@ -23,10 +23,10 @@
     \describe{
 
     \item{object = "ANY"}{
-        Generic function
+        Generic function.
         }
     \item{object = "fGARCH"}{
-        Summary Function
+        Coefficients extractor function.
         }
         
     }
