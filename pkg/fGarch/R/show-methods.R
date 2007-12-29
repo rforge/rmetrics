@@ -29,7 +29,8 @@
 
 ################################################################################
 # FUNCTION:                 DESCRIPTION:
-#  show                      Show method for an object of class 'fGARCH'
+#  show.fGARCH               S4 Show method for an object of class 'fGARCH'
+#  show.fGARCHSPEC           S4 Show method for an object of class 'fGARCHSPEC'
 ################################################################################
 
 
@@ -88,6 +89,81 @@ setMethod(f = "show", signature(object = "fGARCH"), definition =
 
     # Return Value:
     cat("\n")
+    invisible()
+})
+
+
+# ------------------------------------------------------------------------------
+
+
+setMethod(f = "show", signature(object = "fGARCHSPEC"), definition = 
+    function(object)
+{   
+    # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   S4 Print Method for objects of class 'fGARCHSPEC'
+    
+    # Arguments:
+    #   object - Object of class 'fGARCHSPEC'
+    
+    # FUNCTION:
+    
+    # Formula:
+    x = object
+    cat("\nFormula: \n ")
+    cat(as.character(x@formula))
+    
+    # Model:
+    cat("\nModel:")
+    if (sum(abs(x@model$ar)) != 0) 
+        cat("\n ar:   ", x@model$ar)
+    if (sum(abs(x@model$ma)) != 0)    
+        cat("\n ma:   ", x@model$ma)
+    if (x@model$mu != 0)              
+        cat("\n mu:   ", x@model$mu)
+    if (x@model$omega != 0)           
+        cat("\n omega:", x@model$omega)
+    if (sum(abs(x@model$alpha)) != 0) 
+        cat("\n alpha:", x@model$alpha)
+    if (sum(abs(x@model$gamma)) != 0) 
+        cat("\n gamma:", x@model$gamma)
+    if (sum(abs(x@model$beta)) != 0)  
+        cat("\n beta: ", x@model$beta)
+    if (x@model$delta != 2)  
+        cat("\n delta:", x@model$delta)
+    
+    # Distribution: 
+    cat("\nDistribution: \n ")
+    cat(x@distribution)   
+    if (x@distribution != "rnorm") {
+        if (x@distribution == "rsnorm") {
+            cat("\nDistributional Parameters: \n")
+            cat(" xi =", x@model$skew)
+        }
+        if (x@distribution == "rged" | x@distribution == "rstd") {
+            cat("\nDistributional Parameter: \n")
+            cat(" nu =", x@model$shape) 
+        }
+        if (x@distribution == "rsged" | x@distribution == "rsstd") {
+            cat("\nDistributional Parameters: \n")
+            cat(" nu =", x@model$shape, " xi =", x@model$skew)
+        }
+    }
+    
+    # Seed: 
+    if (x@rseed != 0) {
+        cat("\nRandom Seed: \n ")
+        cat(x@rseed)
+    }     
+    
+    # Presample:
+    cat("\nPresample: \n")
+    n = -(length(x@presample[, 1])-1)
+    time = 0:n
+    print(data.frame(cbind(time, x@presample)))
+    
+    # Return Value:
     invisible()
 })
 
