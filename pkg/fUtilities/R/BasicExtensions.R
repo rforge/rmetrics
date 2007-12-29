@@ -403,7 +403,7 @@ stdev <-
 
 
 volatility <- 
-function(x, ...)
+function(object, ...)
 {   
     # A function implemented by Diethelm Wuertz
 
@@ -418,13 +418,14 @@ function(x, ...)
 
 
 volatility.default <- 
-function(x, ...)
+function(object, ...)
 {   
     # A function implemented by Diethelm Wuertz
 
     # FUNCTION:
 
     # Compute volatility:
+    x = object
     ans = (x - mean(x))^2
 
     # Return Value:

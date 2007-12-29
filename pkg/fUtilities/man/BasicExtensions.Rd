@@ -1,4 +1,4 @@
-\name{BasicExtensions}
+f\name{BasicExtensions}
 
 \alias{BasicExtensions}
 
@@ -103,7 +103,7 @@
 \method{cor}{default}(x, y = NULL, use = "all.obs", 
     method = c("pearson", "kendall", "spearman"))
     
-\method{volatility}{default}(x, \dots)
+\method{volatility}{default}(object, \dots)
     
 stdev(x, na.rm = FALSE)
 
@@ -162,6 +162,10 @@ as.POSIXlt(x, tz = "")
         [attach] - \cr
         alternative way to specify the database to be attached.
         See for details \code{help(attach,package=base)}.
+        }
+    \item{object}{
+        [volatility] - \cr
+        an object from which to extract the volatility.
         }
     \item{pos}{
         [attach] - \cr
