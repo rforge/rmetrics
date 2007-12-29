@@ -85,29 +85,30 @@
         summarizes an object of class 'fGARCH'.
         }
 
-    \item{predict}{\code{signature(object = "fGARCH")}: 
-        forecasts mean and volatility from an object of class 'fGARCH'.
-        }
-        
-    \item{fitted}{\code{signature(object = "fGARCH")}: 
-        extracts fitted values from an object of class 'fGARCH'.
-        }
-    \item{formula}{\code{signature(x = "fGARCH")}: 
-        extracts formula expression from an object of class 'fGARCH'.
-        }      
-    \item{residuals}{\code{signature(object = "fGARCH")}: 
-        extracts fresiduals from an object of class 'fGARCH'.
-        }
-    \item{volatility}{\code{signature(object = "fGARCH")}: 
-        extracts conditional volatility from an object of class 'fGARCH'.
-        }
+%    \item{predict}{\code{signature(object = "fGARCH")}: 
+%        forecasts mean and volatility from an object of class 'fGARCH'.
+%        }
+%        
+%    \item{fitted}{\code{signature(object = "fGARCH")}: 
+%        extracts fitted values from an object of class 'fGARCH'.
+%        }
+%    \item{formula}{\code{signature(x = "fGARCH")}: 
+%        extracts formula expression from an object of class 'fGARCH'.
+%        }      
+%    \item{residuals}{\code{signature(object = "fGARCH")}: 
+%        extracts fresiduals from an object of class 'fGARCH'.
+%        }
+%    \item{volatility}{\code{signature(object = "fGARCH")}: 
+%        extracts conditional volatility from an object of class 'fGARCH'.
+%        }
+
     }
 }
 
 
 \author{
 
-    DW
+    Diethelm Wuertz and Rmetrics Core Team.
     
 }
 
@@ -122,9 +123,5 @@
 %}
 
 
-
-\keyword{distribution}
-
-
-%\concept{xxx}
+\keyword{programming}
 
