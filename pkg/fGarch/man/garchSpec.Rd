@@ -1,11 +1,7 @@
 \name{garchSpec}
 
 
-\alias{garchSpec-class}
 \alias{garchSpec}
-
-\alias{show.garchSpec}
-\alias{show,garchSpec-method}
 
 
 \title{Univariate GARCH Time Series Specification}
@@ -22,8 +18,6 @@
 garchSpec(model = list(omega = 1.0e-6, alpha = 0.1, beta = 0.8), 
     presample = NULL, cond.dist = c("rnorm", "rged", "rstd", "rsnorm", 
     "rsged", "rsstd"), rseed = NULL)
-    
-show.garchSpec(object)
 }
 
 
@@ -61,10 +55,6 @@ show.garchSpec(object)
         Note, the default model specifies Bollerslev's GARCH(1,1) model
         with normal distributed innovations.
         }   
-    \item{object}{
-        an object of class \code{garchSpec} as returned from the function
-        \code{garchSpec()}.
-        }  
     \item{presample}{
         a numeric three column matrix with start values for the series, 
         for the innovations, and for the conditional variances. For an 
@@ -80,29 +70,7 @@ show.garchSpec(object)
 
 \value{
 
-    \code{garchSpec}\cr
-    \cr
-    returns a S4 object of class \code{garchSpec} with the following slots:
-    
-    \item{@call}{
-        the call of the \code{garch} function.
-        }
-    \item{@formula}{
-        a list with two formula entries for the mean and variance 
-        equation.
-        }
-    \item{@model}{
-        a list with the model parameters.
-        }   
-    \item{@presample}{
-        a numeric matrix with presample values.
-        }
-    \item{@distribution}{
-        a character string with the name of the conditional distribution.
-        }
-    \item{@rseed}{
-        an integer with the random number generator seed.
-        }
+    returns an object of class \code{"fGARCHSPEC"}.
         
 }
 

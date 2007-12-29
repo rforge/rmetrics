@@ -1,7 +1,7 @@
 \name{garchFit}
 
-\alias{garchFit}
 
+\alias{garchFit}
 \alias{garchKappa}
 
 
@@ -126,47 +126,7 @@ garchKappa(cond.dist = c("dnorm", "dged", "dstd", "dsnorm", "dsged", "dsstd"),
 
 \value{
     
-    \code{garchFit}\cr
-    returns a S4 object of class \code{fGARCH} with the following slots:
-
-    \item{@call}{
-        the call of the \code{garch} function.
-        }
-    \item{@formula}{
-        a list with two formula entries, one for the mean and the other
-        one for the variance equation.
-        }
-    \item{@method}{
-        a string denoting the optimization method, by default the 
-        returneds string is "Max Log-Likelihood Estimation".
-        }  
-    \item{@data}{
-        a list with one entry named \code{x}, containing the data of
-        the time series to be estimated, the same as given by the
-        input argument \code{series}.
-        } 
-    \item{@fit}{
-        a list with the results from the parameter estimation. The entries
-        of the list depend on the selected algorithm, see below.
-        }
-    \item{@residuals}{
-        a numeric vector with the residual values.
-        }
-    \item{@fitted}{
-        a numeric vector with the fitted values.
-        }
-    \item{@h.t}{
-        a numeric vector with the conditional variances.
-        }
-    \item{@sigma.t}{
-        a numeric vector with the conditional standard deviations.
-        }
-    \item{@title}{
-        a title string.
-        }
-    \item{@description}{
-        a string with a brief description.
-        } 
+    returns an object of class \code{"fGARCH"}.
         
     The entries of the @fit slot show the results from the
     optimization.

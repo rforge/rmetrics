@@ -45,7 +45,7 @@ garchSim <-
     #   Simulates a time series process from the GARCH family
     
     # Arguments:
-    #   model - either a specification object of class 'garchSpec' 
+    #   model - either a specification object of class 'fGARCHSPEC' 
     #     or a list with the model parameters as entries
     #     ar - a vector of autoregressive coefficients of 
     #       length m for the ARMA specification,
@@ -92,10 +92,10 @@ garchSim <-
         spec = garchSpec(model = model, presample = presample, 
             cond.dist = cond.dist, rseed = rseed)
         ans = .garchSim(n = n, n.start = n.start, spec = spec)
-    } else if (class(model) == "garchSpec") {
+    } else if (class(model) == "fGARCHSPEC") {
         ans = .garchSim(n = n, n.start = n.start, spec = model)
     } else {
-        stop("model must be an object of class list or garchSpec")
+        stop("model must be an object of class list or fGARCHSPEC")
     }
     
     if (returnClass == "numeric") {
@@ -116,7 +116,7 @@ garchSim <-
     # A function implemented by Diethelm Wuertz
     
     # Description:
-    #   Simulates GARCH series from 'garchSpec'
+    #   Simulates GARCH series from 'fGARCHSPEC'
     
     # Arguments:
     #   n - length of time series
@@ -210,7 +210,7 @@ garchSim <-
         
     # Add Series:
     ans = as.ts(as.vector(data[, 3]))
-    class(spec) = "garchSpec"
+    class(spec) = "fGARCHSPEC"
     attr(ans, "control") = list(garchSpec = spec)
   
     # Return Value: 

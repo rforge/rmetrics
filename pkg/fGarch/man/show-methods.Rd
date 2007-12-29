@@ -7,9 +7,10 @@
 \alias{show-methods}
 \alias{show,ANY-method}
 \alias{show,fGARCH-method}
+\alias{show,fGARCHSPEC-method}
 
 
-\title{GARCH Show Methods}
+\title{GARCH Modelling Show Methods}
 
 
 \description{
@@ -26,6 +27,9 @@
         Generic function
         }
     \item{object = "fGARCH"}{
+        Print Function
+        } 
+    \item{object = "fGARCHSPEC"}{
         Print Function
         }
         

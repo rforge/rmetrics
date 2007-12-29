@@ -29,24 +29,9 @@
 
 ################################################################################
 # FUNCTION:               SPECIFICATION: 
-#  'garchSpec'             S4: garchSpec Class representation 
 #  garchSpec               S4: Creates a 'garchSpec' object from scratch
 #  show.garchSpec          S4: Print method for an object of class 'garchSpec'
 ################################################################################
-
-
-setClass("garchSpec", 
-    representation(
-        call = "call",
-        formula = "formula",        
-        model = "list",
-        presample = "matrix",
-        distribution = "character",
-        rseed = "numeric")  
-)
-        
-        
-# ------------------------------------------------------------------------------
 
 
 garchSpec <- 
@@ -255,7 +240,7 @@ garchSpec <-
     
     # Result:
     ans = new(
-        "garchSpec",
+        "fGARCHSPEC",
             call = match.call(),     
             formula = as.formula(formula), 
             model = list(omega = model$omega, alpha = model$alpha, 
@@ -275,16 +260,16 @@ garchSpec <-
 # ------------------------------------------------------------------------------
 
 
-show.garchSpec <- 
+show.fGARCHSPEC <- 
     function(object)
 {   
     # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   S4 Print Method for objects of class 'garchSpec'
+    #   S4 Print Method for objects of class 'fGARCHSPEC'
     
     # Arguments:
-    #   object - Object of class 'garchSpec'
+    #   object - Object of class 'fGARCHSPEC'
     
     # FUNCTION:
     
@@ -350,7 +335,7 @@ show.garchSpec <-
 # ------------------------------------------------------------------------------
    
     
-setMethod("show", "garchSpec", show.garchSpec)
+setMethod("show", "fGARCHSPEC", show.fGARCHSPEC)
 
 
 ################################################################################

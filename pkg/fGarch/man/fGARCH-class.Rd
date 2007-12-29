@@ -19,8 +19,7 @@
 
 \section{Objects from the Class}{
 
-    Objects can be created by calls of the form 
-    \code{garchFit(formula, data)}.
+    Objects can be created by calls of the function \code{garchFit}.
     This object is a parameter estimate of an empirical GARCH process.
     
 }
