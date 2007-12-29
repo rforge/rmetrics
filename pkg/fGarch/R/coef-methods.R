@@ -52,7 +52,7 @@ setMethod(f = "coef", signature(object = "fGARCH"), definition =
     
     # Return Value:
     ans
-}
+})
 
 
 ################################################################################
