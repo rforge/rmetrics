@@ -34,8 +34,8 @@
 ################################################################################
 
 
-residuals.fGARCH <-  
-    function(object, ...) 
+setMethod(f = "residuals", signature(object = "fGARCH"), definition =
+    function(object, standardize = FALSE) 
 {   
     # A function implemented by Diethelm Wuertz
     
@@ -52,7 +52,7 @@ residuals.fGARCH <-
     # FUNCTION:
     
     # Get numeric vector of residuals, optionally standardized
-    residuals = .residuals.fGARCH(object = object, ...) 
+    residuals = .residuals.fGARCH(object = object, standardize = standardize) 
     
     # Get original time series class:
     data = object@data$data
@@ -78,7 +78,7 @@ residuals.fGARCH <-
     
     # Return Value:
     ans
-}
+})
 
 
 # ------------------------------------------------------------------------------

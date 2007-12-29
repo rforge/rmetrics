@@ -33,13 +33,13 @@
 ################################################################################
 
 
-predict.fGARCH <-  
-function(object, n.ahead = 10, trace = FALSE, ...)
+setMethod(f = "predict", signature(object = "fGARCH"), definition =  
+    function(object, n.ahead = 10, trace = FALSE, ...)
 {   
     # A function implemented by Diethelm Wuertz
     
     # Description:  
-    #   S3 Prediction method for an object of class fGARCH
+    #   Prediction method for an object of class fGARCH
     
     # Arguments:
     #   object - an object of class fGARCH as returned by the
@@ -184,7 +184,7 @@ function(object, n.ahead = 10, trace = FALSE, ...)
     
     # Return Value:
     forecast
-}
+})
 
 
 ################################################################################

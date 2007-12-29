@@ -1,7 +1,12 @@
-\name{formula}
+\name{formula-methods}
 
 
-\alias{formula.fGARCH}
+\docType{methods}
+
+
+\alias{formula-methods}
+\alias{formula,ANY-method}
+\alias{formula,fGARCH-method}
 
 
 \title{Extract GARCH Model formula}
@@ -9,26 +14,8 @@
 
 \description{
 
-    Extracts formula from a fitted GARCH object. 
+    Extracts formula from a formula GARCH object. 
     
-}
-
-
-\usage{
-\method{formula}{fGARCH}(x, \dots)
-}
-
-
-\arguments{
-
-    \item{x}{
-        an object of class \code{fGARCH} as returned from the function
-        \code{garchFit()}.
-        }  
-    \item{\dots}{
-        additional arguments to be passed, not used.
-        }   
-
 }
 
 

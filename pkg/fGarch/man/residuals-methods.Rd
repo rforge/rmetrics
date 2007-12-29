@@ -1,6 +1,12 @@
-\name{residuals}
+\name{residuals-methods}
 
-\alias{residuals.fGARCH}
+
+\docType{methods}
+
+
+\alias{residuals-methods}
+\alias{residuals,ANY-method}
+\alias{residuals,fGARCH-method}
 
 
 \title{Extract GARCH Model Residuals}
@@ -13,7 +19,7 @@
 
 
 \usage{
-\method{residuals}{fGARCH}(object, \dots)
+\S4method{residuals}{fGARCH}(object, standardize = TRUE)
 }
 
 
@@ -23,8 +29,8 @@
         an object of class \code{fGARCH} as returned from the function
         \code{garchFit()}.
         }  
-    \item{\dots}{
-        additional arguments to be passed.
+    \item{standardize}{
+        a logical flag, should the residuals be standardized?
         }   
 
 }

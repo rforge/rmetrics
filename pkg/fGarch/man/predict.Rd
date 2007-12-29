@@ -1,8 +1,12 @@
-\name{predict}
+\name{predict-methods}
 
-\alias{garchPredictor}
 
-\alias{predict.fGARCH}
+\docType{methods}
+
+
+\alias{predict-methods}
+\alias{predict,ANY-method}
+\alias{predict,fGARCH-method}
 
 
 \title{GARCH Prediction Function}
@@ -16,7 +20,7 @@
 
 
 \usage{
-    \method{predict}{fGARCH}(object, n.ahead = 10, trace = FALSE, \dots)
+\S4method{predict}{fGARCH}(object, n.ahead = 10, trace = FALSE, \dots)
 }
 
 

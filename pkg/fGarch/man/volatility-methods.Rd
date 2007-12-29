@@ -1,8 +1,12 @@
-\name{volatility}
+\name{volatility-methods}
 
 
-\alias{volatility.fGARCH}
+\docType{methods}
 
+
+\alias{volatility-methods}
+\alias{volatility,ANY-method}
+\alias{volatility,fGARCH-method}
 
 
 \title{Extract GARCH Model Volatility}
@@ -16,7 +20,7 @@
 
 
 \usage{
-\method{volatility}{fGARCH}(object, type = c("sigma", "h"), \dots)
+\S4method{volatility}{fGARCH}(object, type = c("sigma", "h"), \dots)
 }
 
 
@@ -27,7 +31,7 @@
         \code{garchFit()}.
         }  
     \item{type}{
-        type - a character string denoting if the conditional standard
+        a character string denoting if the conditional standard
         deviations \code{"sigma"} or the variances \code{"h"} should 
         be returned.
         }

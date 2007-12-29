@@ -33,8 +33,8 @@
 ################################################################################
 
 
-formula.fGARCH <-  
-    function(x, ...) 
+setMethod(f = "formula", signature(x = "fGARCH"), definition =  
+    function(x) 
 {   
     # A function implemented by Diethelm Wuertz
     
@@ -44,7 +44,6 @@ formula.fGARCH <-
     # Arguments:
     #   x - an object of class fGarch as returned by the function
     #       garchFit
-    #   ... - optional argument to be passed, not used.
     
     # FUNCTION:
     
@@ -53,7 +52,7 @@ formula.fGARCH <-
     
     # Return Value:
     ans
-}
+})
 
 
 ################################################################################

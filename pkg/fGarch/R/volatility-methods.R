@@ -33,9 +33,10 @@
 ################################################################################
 
 
-volatility.fGARCH = 
-function(object, type = c("sigma", "h"), ...) 
-{   # A function implemented by Diethelm Wuertz
+setMethod(f = "volatility", signature(object = "fGARCH"), definition = 
+    function(object, type = c("sigma", "h"), ...) 
+{   
+    # A function implemented by Diethelm Wuertz
     
     # Description:  
     #   Returns conditional volatilities for 'fGARCH' objects
@@ -89,7 +90,7 @@ function(object, type = c("sigma", "h"), ...)
     # Return Value:
     ans
     
-}
+})
 
 
 ################################################################################

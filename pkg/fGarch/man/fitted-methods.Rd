@@ -1,8 +1,12 @@
-\name{fitted}
+\name{fitted-methods}
 
 
-\alias{fitted.fGARCH}
+\docType{methods}
 
+
+\alias{fitted-methods}
+\alias{fitted,ANY-method}
+\alias{fitted,fGARCH-method}
 
 
 \title{Extract GARCH Model Fitted Values}
@@ -15,30 +19,11 @@
 }
 
 
-\usage{
-\method{fitted}{fGARCH}(object, \dots)
-}
-
-
-\arguments{
-
-    \item{object}{
-        an object of class \code{fGARCH} as returned from the function
-        \code{garchFit()}.
-        }  
-    \item{\dots}{
-        additional arguments to be passed.
-        }   
-
-}
-
-
 \note{
 
     \code{fitted} is a generic function which extracts fitted values 
-    from objects returned by modeling functions. \code{fitted.values} 
-    is an alias for it. 
-
+    from objects returned by modeling functions.
+    
 }
 
 
