@@ -39,10 +39,10 @@ terrainPalette(n = 64, \dots)
 topoPalette(n = 64, \dots) 
 cmPalette(n = 64, \dots) 
 
-greyPalette(n = 64)
+greyPalette(n = 64, \dots)
 timPalette(n = 64)
 
-colrampPalette(n, name = c("blue2red", "green2red", "blue2green",     
+rampPalette(n, name = c("blue2red", "green2red", "blue2green",     
     "purple2green", "blue2yellow", "cyan2magenta"))
     
 seqPalette(n, name = c(
@@ -128,15 +128,15 @@ monoPalette(n, name = c("redmono", "greenmono", "bluemono"))
     to red, and passes through the colors cyan, yellow, and orange. It
     comes from the Matlab software, originally used in fluid dynamics
     simulations. The function here is a copy from R's contributed package
-    \coede{fields} doing a spline interpolation on \code{n=64} color points.
+    \code{fields} doing a spline interpolation on \code{n=64} color points.
     \cr
     
     
     \bold{Color Ramp Palettes:}\cr
     \cr
-    The function \code{colorrampPalette} creates several color ramps. 
-    The function is 
-    implemented from Tim Keitt's contributed R package \code{colorRamps}.
+    The function \code{rampPalette} creates several color ramps. The 
+    function is implemented from Tim Keitt's contributed R package 
+    \code{colorRamps}. 
     Supported through the argument \code{name} are the following color
     ramps: \code{"blue2red"}, \code{"green2red"}, \code{"blue2green"}, 
     \code{"purple2green"}, \code{"blue2yellow"}, \code{"cyan2magenta"}.

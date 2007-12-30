@@ -38,18 +38,7 @@
 \alias{volatility}
 \alias{volatility.default}
 
-%DW: moved to Column Row Statistics ...
-%\alias{colSums}
-%\alias{colSums.default}
-%\alias{colMeans}
-%\alias{colMeans.default}
-%\alias{rowSums}
-%\alias{rowSums.default}
-%\alias{rowMeans}
-%\alias{rowMeans.default}
-
 \alias{stdev}
-
 
 \alias{print.control}
 
@@ -283,7 +272,7 @@ as.POSIXlt(x, tz = "")
 
 
 \examples{
-## Outlier Detection:
+## Very Simple Outlier Detection:
    # outlier -
    set.seed(4711)
    x = rnorm(1000)
