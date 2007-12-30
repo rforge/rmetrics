@@ -33,7 +33,7 @@
 19.  fAssets            methods, robustbase, MASS, fBasics, fRegression
 20.  fPortfolio         quadprog, lpSolve, MASS, fAssets
 
-21.  Rmetrics           fEcofin, fUtilities, fCalendar, fSeries, fImport, 
+21.  Rmetrics           fUtilities, fEcofin, fCalendar, fSeries, fImport, 
                         fBasics, fArma, fGarch, fNonlinear, fUnitRoots, 
                         fTrading, fMultivar, fRegression, fExtremes, fCopulae, 
                         fOptions, fExoticOptions, fAsianOptions, fAssets, 
