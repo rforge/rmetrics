@@ -20,8 +20,7 @@
 
 \description{
 
-    A collection and description of functions to compute 
-    skewness and kurtosis.
+    Functions to compute skewness and kurtosis.
     \cr
     
     The functions are:

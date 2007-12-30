@@ -140,8 +140,7 @@
     
     \tabular{ll}{
     \code{tslag} \tab Lagged or leading vector/matrix of selected order(s), \cr
-    \code{pdl} \tab Regressor matrix for polynomial distributed lags. } 
-     
+    \code{pdl} \tab Regressor matrix for polynomial distributed lags. }      
 
 }
 

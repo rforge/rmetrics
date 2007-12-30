@@ -1,16 +1,24 @@
 \name{ColorLocator}
 
+
 \alias{colorLocator}
 \alias{colorMatrix}
 
 
-\title{Color Management}
+\title{Color Selection}
 
 
 \description{
     
-    Plots R's 657 named colors for selection
- 
+    Displays R's 657 named colors for selection
+    \cr
+    
+    The functions are:
+    
+    \tabular{ll}{
+    \code{colorLocator} \tab Plots R's 657 named colors for selection, \cr
+    \code{colorMatrix} \tab Returns matrix of R's color names. }
+    
 }
     
     

@@ -16,7 +16,7 @@
 
 # Copyrights (C)
 # for this R-port:
-#   1999 - 2007, Diethelm Wuertz, GPL
+#   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
 #   www.rmetrics.org
@@ -27,7 +27,6 @@
 #   see Rmetrics's copyright file
 
 
-# fEcofin::3C-SkewnessKurtosis.R
 ################################################################################
 # FUNCTION:                 SKEWNESS::
 #  skewness                  Returns a number which is the skewness of the data

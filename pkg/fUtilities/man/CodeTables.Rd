@@ -12,9 +12,9 @@
 
 \description{
     
-    A collection and description of functions which
-    are useful utilities and tools in selectings
-    characters, symbols and colors for plotting.
+    Functions which are useful utilities and 
+    tools in selecting characters, symbols and 
+    colors for plotting.
     \cr
 
     The plot utility functions are:

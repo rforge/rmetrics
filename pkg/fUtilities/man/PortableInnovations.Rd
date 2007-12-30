@@ -1,5 +1,6 @@
 \name{PortableInnovations}
 
+
 \alias{PortableInnovations}
 
 \alias{set.lcgseed}
@@ -8,14 +9,14 @@
 \alias{rnorm.lcg}
 \alias{rt.lcg}
 
+
 \title{Generator for Portable Random Innovations}
 
 
 \description{
 
-    A collection and description of functions to 
-    generate portable random innovations. The 
-    functions run under R and S-Plus and generate 
+    Functions to generate portable random innovations. 
+    The functions run under R and S-Plus and generate 
     the same sequence of random numbers. Supported 
     are uniform, normal and Student-t distributed 
     random numbers.

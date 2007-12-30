@@ -22,9 +22,8 @@
 
 \description{
 
-    A collection and description of functions to  
-    compute row statistical properties of financial 
-    and economic time series data. 
+    Functions to compute row statistical properties 
+    of financial and economic time series data. 
     \cr
     
     The functions are:

@@ -58,14 +58,36 @@
 \alias{as.matrix.mts}
 
 
-\title{Modify and Extend R Methods}
+\title{Basic Extensions}
 
 
 \description{
 
-    A collection and description of functions which
-    modify and extend generic S functions.
+    Basic extensions which which add and/or modify
+    S function functionality.
     \cr
+    
+    Added and/or modified functions:
+    
+    \tabular{ll}{
+    \code{align} \tab adds align function, \cr
+    \code{as.POSIXlt} \tab adds as.POSIXlt function, \cr
+    \code{atoms} \tab adds atoms function, \cr
+    \code{attach} \tab extends attach function, \cr
+    \code{cor} \tab extends cor function, \cr
+    \code{cov} \tab extends cov function, \cr
+    \code{log} \tab extends log function, \cr
+    \code{outlier} \tab adds outlier function, \cr
+    \code{rank} \tab extends rank function, \cr
+    \code{sample} \tab extends sample function, \cr
+    \code{stdev} \tab adds stdev function, \cr
+    \code{var} \tab extends var function, \cr
+    \code{volatility} \tab adds volatility function, \cr
+    \code{rownames<-} \tab adds rownames assigment, \cr
+    \code{colnames<-} \tab adds colnames assignment, \cr
+    \code{as.matrix.ts} \tab adds as.matrix.ts method, \cr
+    \code{as.matrix.mts} \tab adds as.matrix.mts method, \cr
+    \code{print.control} \tab adds print.control method. }
 
 }
 
@@ -95,18 +117,16 @@
 \method{volatility}{default}(object, \dots)
     
 stdev(x, na.rm = FALSE)
-
-\method{print}{control}(x, \dots)
+atoms(x, \dots)
 
 rownames(x) <- value
 colnames(x) <- value
-
-atoms(x, \dots)
 
 as.POSIXlt(x, tz = "")
 
 \method{as.matrix}{ts}(x, \dots)
 \method{as.matrix}{mts}(x, \dots)
+\method{print}{control}(x, \dots)
 }
 
 

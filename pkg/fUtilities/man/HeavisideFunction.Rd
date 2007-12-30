@@ -14,11 +14,10 @@
 
 \description{
 
-    A collection and description of functions 
-    which compute the Heaviside and related 
-    functions. These include the sign function, 
-    the delta function, the boxcar function, 
-    and the ramp function.
+    Functions which compute the Heaviside and 
+    related functions. These include the sign 
+    function, the delta function, the boxcar 
+    function, and the ramp function.
     \cr
     
     The functions are:

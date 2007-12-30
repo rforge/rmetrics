@@ -16,7 +16,7 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2007, Diethelm Wuertz, GPL
+#   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
 #   www.rmetrics.org
@@ -27,7 +27,6 @@
 #   see Rmetrics's copyright file
 
 
-# fEcofin::5B-BivariateInterpolation.R
 ################################################################################
 # FUNCTION:                 BIVARIATE GRIDDED INTERPOLATION:
 #  linearInterp             Interpolates linearly irregularly spaced data points

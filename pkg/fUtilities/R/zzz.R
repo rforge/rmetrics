@@ -40,7 +40,7 @@ function(lib, pkg)
         # not in test scripts
         MSG(sprintf("\nPackage %s (%s) loaded.\n%s\n",
             pkg, dsc$Version, dsc$Title),
-            "Rmetrics, (C) 1999-2007, Diethelm Wuertz, GPL\n")
+            "Rmetrics, (C) 1999-2008, Diethelm Wuertz, Rmetrics Foundation, GPL\n")
     }
 
     # Load dll:

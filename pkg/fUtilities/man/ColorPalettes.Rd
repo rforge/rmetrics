@@ -26,11 +26,28 @@
 
 \description{
     
-    Creates color palettes.
- 
+    Functions to create color palettes.
+    \cr
+
+    The functions are:
+    
+    \tabular{ll}{
+    \code{rainbowPalette} \tab Contiguous rainbow color palette, \cr
+    \code{heatPalette} \tab Contiguous heat color palette, \cr
+    \code{terrainPalette} \tab Contiguous terrain color palette, \cr
+    \code{topoPalette} \tab Contiguous topo color palette, \cr
+    \code{cmPalette} \tab Contiguous cm color palette, \cr
+    \code{greyPalette} \tab R's gamma-corrected gray palette, \cr
+    \code{timPalette} \tab Tim's Matlab like color palette, \cr
+    \code{rampPalette} \tab Color ramp palettes, \cr
+    \code{seqPalette} \tab Sequential color brewer palettes, \cr
+    \code{divPalette} \tab Diverging color brewer palettes, \cr
+    \code{qualiPalette} \tab Qualified color brewer palettes, \cr
+    \code{focusPalette} \tab Red, green blue focus palettes, \cr
+    \code{monoPalette} \tab Red, green blue mono palettes. }
+    
 }
-    
-    
+       
 
 \usage{ 
 rainbowPalette(n = 64, \dots) 
