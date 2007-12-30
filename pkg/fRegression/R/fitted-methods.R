@@ -29,85 +29,8 @@
 
 ################################################################################
 # S3-METHODS:           DESCRIPTION REGRESSION METHODS:
-#  predict.fREG          Predicts values from a fitted regression model
-#  coefficients.fREG     Returns coefficients from a fitted regression model
 #  fitted.fREG           Returns fitted values from a fitted regression model
-#  residulals.fREG       Returns residuals from a fitted regression model
-#  vcov.fREG             Returns variance-covariance matrix from a fitted model
 ################################################################################
-
-
-.predict.lm = predict.lm
-.predict.gam = predict.gam
-.predict.glm = predict.glm 
-.predict.ppr = function(object, ...) { predict(object, ...) }
-.predict.nnet = function(object, ...) { predict(object, ...) }
-
-
-# ------------------------------------------------------------------------------
-
-
-predict.fREG =
-function(object, newdata, se.fit = FALSE, type = "response", ...)
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Predict method for Regression Modelling, an object of class "fREG"
-    
-    # FUNCTION:
-    
-    # Fit:
-    fit = object@fit
-      
-    # Data:
-    if (missing(newdata)) newdata = object@data
-    newdata = as.data.frame(newdata)
-     
-    # Predict:
-    if (object@method == "nnet" & type == "response") type = "raw"
-    ans = .predict(object = fit, newdata = newdata, se.fit = se.fit, 
-        type = type, ...) 
-    
-    # Make the output from 'predict' unique:
-    if (se.fit) {
-        if (!is.list(ans)) {
-            if (is.matrix(ans)) ans = as.vector(ans)
-            names(ans) = rownames(newdata) 
-            ans = list(fit = ans, se.fit = NA*ans) 
-        } else {
-            ans = ans[1:2]
-        }
-    } else {
-        if (is.matrix(ans)) ans = as.vector(ans)
-        names(ans) = rownames(newdata) 
-    }
-            
-    # Return Value:
-    ans
-}
-
-
-# ------------------------------------------------------------------------------
-
-        
-coef.fREG = 
-function(object, ...)
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Coefficients method for Regression Modelling
-    
-    # FUNCTION:
-    
-    # Fitted Values:
-    ans = coefficients(object@fit) 
-            
-    # Return Value:
-    ans
-}
-
-
-# ------------------------------------------------------------------------------
 
         
 fitted.fREG = 
@@ -126,46 +49,6 @@ function(object, ...)
     ans
 }
         
-
-# ------------------------------------------------------------------------------
-
-                   
-residuals.fREG = 
-function(object, ...)
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Residuals method for Regression Modelling
-    
-    # FUNCTION:
-    
-    # Residuals:
-    ans = object@residuals
-            
-    # Return Value:
-    ans
-}
-
-
-# ------------------------------------------------------------------------------
-
-        
-vcov.fREG = 
-function(object, ...)
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Variance-Covariance Matrix method for Regression Modelling
-    
-    # FUNCTION:
-    
-    # Fitted Values:
-    ans = vcov(object@fit) 
-            
-    # Return Value:
-    ans
-}
-
 
 ################################################################################
 
