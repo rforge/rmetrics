@@ -17,7 +17,7 @@
     used in the examples of the PerformanceAnalytics 
     packages.
     
-    The files are:
+    The data sets are:
     
     \tabular{ll}{
     \code{edhec} \tab composite hedge fund style index returns, \cr

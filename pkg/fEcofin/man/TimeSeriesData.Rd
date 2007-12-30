@@ -34,201 +34,312 @@
     A collection and description of data sets 
     used in the examples of the Rmetrics packages.
     \cr
+    
+    The data sets are:
+    
+    \tabular{ll}{   
+    \code{bmwRet} \tab Daily BMW Stock Returns, \cr
+    \code{CPI.dat} \tab US Consumer Price Index, \cr
+    \code{IP.dat} \tab US Industrial Production Index, \cr
+    \code{danishClaims} \tab Danish Fire Losses, \cr
+    \code{dem2gbp} \tab DEM/GBP Foreign Exchange Rate, \cr
+    \code{DowJones30} \tab Down Jones 30 Stocks, \cr
+    \code{ford.s} \tab Daily Ford Stock Prices, \cr
+    \code{hp.s} \tab Daily Hewlett-Packard Stock Prices, \cr
+    \code{klein} \tab Klein's US Economic Data Set, \cr
+    \code{kmenta} \tab Kmenta's US Economic Data Set, \cr
+    \code{msft.dat} \tab Microsoft Stock Prices, \cr
+    \code{nelsonplosser} \tab Nelson-Plosser US Economic Time Series, \cr
+    \code{nyse} \tab NYSE Composite Index, \cr
+    \code{recession} \tab US Recession Data Set, \cr
+    \code{shiller.dat} \tab Shiller's Data Set, \cr
+    \code{shiller.annual} \tab Shiller's Annual Data Set, \cr
+    \code{singleIndex.dat} \tab US Index and Price Data Records, \cr
+    \code{sp500dge} \tab Daily DGE SP500 Returns, \cr
+    \code{sp500index} \tab Daily SP500 Index Returns, \cr
+    \code{surex1.ts.dat} \tab Exchange Rate Spot Returns, \cr
+    \code{yhoo.df} \tab Yahoo Stock Prices.}
+   
+}
+    
+    
+\details{
+
        
+    \bold{Daily BMW Stock Returns:}\cr
+    \cr
     \code{bmwRet}
-    \cr\cr
-    The file \code{"bmwRet.csv"} contains data representing daily 
-    stock returns of the german BMW shares. The data start on
-    1973-01-03 and end on 1996-07-23.
-    \cr
+    is a daily data set of the German BMW tock returns.\cr
+    The data set ranges from 1973-01-03 to 1996-07-23.\cr
+    The columns are named: BMW.RET.\cr
+    Source:\cr
     
+    
+    \bold{US Consumer Price Index:}\cr
+    \cr
     \code{CPI.dat}\cr
-    \code{IP.dat}
-    \cr\cr
-    The file \code{"IP.dat.csv"} contains data representing seasonally 
-    adjusted US Industrial Production Index and the file 
-    \code{"CPI.dat.csv"} contains data representing seasonally 
-    adjusted US Consumer Price Index. 
-    \cr
+    contains data representing seasonally adjusted US Industrial 
+        Production Index.\cr 
+    The data set ranges from  \cr
+    The columns are named: \cr
+    Source:\cr
     
+    
+    \bold{Industrial Production Index::}\cr
+    \cr
+    \code{IP.dat}\cr
+    contains data representing seasonally adjusted US Consumer 
+        Price Index.\cr   
+    The data set ranges from\cr 
+    The columns are named:\cr 
+    Source:\cr
+    
+    
+    \bold{Danish Fire Losses:}\cr
+    \cr
     \code{danishClaims}
-    \cr\cr
-    The file \code{"danishClaims.csv"} contains data representing daily 
-    danish fire losses in Million Danish Kronors. The data start on
-    1980-01-03 and end on 1990-12-31.
-    \cr
-    
-    \code{dem2gbp}
-    \cr
-    The file \code{"dem2gbp.csv"} contains daily observations of the 
-    Deutschmark / British Pound foreign exchange log returns. 
-    This data set has been promoted as an informal benchmark 
-    for GARCH time-series software validation. See McCullough and 
-    Renfro [1991], and Brooks, Burke, and Persand (2001) for details.
-    The nominal returns are expressed in percent, as published in 
-    Bollerslev and Ghysels (2001). The data set is available from 
-    the \emph{Journal of Business and Economic Statistics}, (JBES), 
-    \emph{ftp://www.amstat.org}. A text file has one column of 
-    data listing the percentual log-returns of the DEM/GBP exchange 
-    rates. The sample period is from January 3, 1984, to December 
-    31, 1991, for a total of 1975 daily observations of FX exchange 
-    rates.
-    \cr 
-    
-    \code{DowJones30}
-    \cr
-    The file \code{"DowJones30.csv"} contains daily observations from 
-    January 2, 1991 to January 2, 2001, of the 30 constitutents of 
-    the Dow Jones Index. Each of the thirty columns represents the 
-    closing price of a stock in the "Dow Jones Industrial Average".
-    \cr 
+    contains data representing daily 
+        danish fire losses in Million Danish Kronors.\cr 
+    The data set ranges from 1980-01-03 to 1990-12-31.\cr
+    The columns are named:\cr 
+    Source:\cr
+ 
        
-    \code{ford.s}\cr
+    \bold{DEM/GBP Foreign Exchange Rate:}\cr
+    \cr
+    \code{dem2gbp}
+    contains daily observations of the 
+        Deutschmark / British Pound foreign exchange log returns. 
+        This data set has been promoted as an informal benchmark 
+        for GARCH time-series software validation. See McCullough and 
+        Renfro [1991], and Brooks, Burke, and Persand (2001) for details.
+        The nominal returns are expressed in percent, as published in 
+        Bollerslev and Ghysels (2001).\cr  
+    The data set ranges from 1984-01-03 to 1991-12-31.\cr
+    The columns are named: \cr
+    Source: Journal of Business and Economic Statistics, 
+        \emph{ftp://www.amstat.org}.\cr
+    
+    
+    \bold{Down Jones 30 Stocks:}\cr
+    \cr
+    \code{DowJones30}
+    contains daily observations from the Dow Jones 30 Index series.
+        Each of the thirty columns represents the closing price 
+        of a stock in the Index.\cr
+    The data set ranges from 1991-01-02 to 2001-01-02.\cr
+    The columns are named: \cr
+    Source:\cr
+    
+    
+    \bold{Daily Ford Stock Prices:}\cr
+    \cr
+    \code{ford.s}
+    contains data representing 2000 daily stock returns for the Ford 
+        shares traded at NYSE.\cr  
+    The data set ranges from 1084-01-02 to 1991-12-31.\cr
+    The columns are named:\cr
+    Source:\cr
+    
+    
+    \bold{Daily Hewlett-Packard Stock Prices:}\cr
+    \cr
     \code{hp.s}
-    \cr\cr
-    The files \code{"ford.s.csv"} and \code{"hp.s.csv"} contain data 
-    representing 2000 daily stock returns for the Ford and HP shares 
-    traded at NYSE. The time series span the period from Feburary 2, 
-    1984, to December 31, 1991. 
-    \cr
+    contains data representing 2000 daily stock returns for the HP 
+        shares traded at NYSE.\cr
+    The data set ranges from 1084-01-02 to 1991-12-31.\cr  
+    The columns are named:\cr 
+    Source:\cr
     
+    
+    \bold{Klein's US Economic Data Set:}\cr
+    \cr
     \code{klein}
+    contains data for Klein's (1950) simple econometric model of the 
+        US economy. The Klein data frame has 22 rows and 10 columns.\cr 
+    The data set ranges from  
+    The columns are named: year, c, p, wp, i, k.lag, x, wg, g, tax.
+        They denote:\cr
+        \code{year} years 1921-1941, in the POSIX data format \%Y-\%m-\%d,  \cr
+        \code{c} the consumption, \cr 
+        \code{p} the private profits, \cr
+        \code{wp} the private wages, \cr
+        \code{i} the investment, \cr 
+        \code{k.lag} the capital stock, lagged one year, \cr 
+        \code{x} the equilibrium demand, \cr 
+        \code{wg} the government wages, \cr
+        \code{g} the government non-wage spending, \cr 
+        \code{tax} indirect business taxes and net exports. \cr
+    Source: Greene (1993)\cr
+    
+    
+    \bold{Kmenta's US Economic Data Set:}\cr
     \cr
-    The file \code{"klein.csv"} contains data for Klein's (1950) simple 
-    econometric model of the US economy. The Klein data frame has 
-    22 rows and 10 columns: \cr
-    This data frame contains the following columns: 
-    \code{year} years 1921-1941, represented in the POSIX data format 
-        \%Y-\%m-\%d,  \cr
-    \code{c} the consumption, \cr 
-    \code{p} the private profits, \cr
-    \code{wp} the private wages, \cr
-    \code{i} the investment, \cr 
-    \code{k.lag} the capital stock, lagged one year, \cr 
-    \code{x} the equilibrium demand, \cr 
-    \code{wg} the government wages, \cr
-    \code{g} the government non-wage spending, \cr 
-    \code{tax} indirect business taxes and net exports. \cr
-    Source: Greene (1993)
-    \cr
-     
     \code{kmenta}
-    \cr
-    The file \code{"kmenta.csv"} contains partly contrived data from 
-    Kmenta (1986), constructed to illustrate estimation of a 
-    simultaneous-equation model. The data set has 20 rows and 6 columns, 
-    where the first holds the ISO-8601 formatted date as "\%Y-\%m-\%d": 
-    The remaining columns are: \cr
-    \code{q} food consumption per capita, \cr
-    \code{p} ratio of food prices to general consumer prices, \cr
-    \code{d} disposable income in constant dollars, \cr
-    \code{f} ratio of preceding year's prices received by farmers 
-        to general consumer prices, \cr
-    \code{a} time in years (numbered from 1 to 20). \cr
-    The exogenous variables \code{d}, \code{f}, and \code{a} are based 
-    on real data; the endogenous variables \code{p} and \code{q} were 
-    generated by simulation. 
-    \cr
+    contains partly contrived data from Kmenta (1986), constructed to 
+        illustrate estimation of a simultaneous-equation model. The data 
+        set has 20 rows and 6 columns, where the first holds the ISO-8601 
+        formatted date as "\%Y-\%m-\%d".
+        The exogenous variables in the first four columns are based 
+        on real data; the endogenous variables in the remaining two
+        columns were generated by simulation.\cr
+    The data set ranges from  \cr
+    The columns are named: q, p, d, f, a.\cr
+        They denote:\cr
+        \code{q} food consumption per capita, \cr
+        \code{p} ratio of food prices to general consumer prices, \cr
+        \code{d} disposable income in constant dollars, \cr
+        \code{f} ratio of preceding year's prices received by farmers 
+            to general consumer prices, \cr
+        \code{a} time in years (numbered from 1 to 20). \cr
+    Source:\cr
     
+    
+    \bold{Microsoft Stock Prices:}\cr
+    \cr
     \code{msft.dat}
-    \cr
-    The file \code{"msft.dat.csv"} contains daily stock prices and volumes for
-    the the Microsoft covering the period from 2000-09-27 until 2001-09-27.
-    The first column lists dates in the format code{"\%Y-\%m-\%d"}, the 
-    next four columns Open, High, Low, and Close Prices, and the final 
-    column volumes.
-    \cr 
+    contains daily stock prices and volumes for the the Microsoft stocks.
+    The data set ranges from 2000-09-27 to 2001-09-27\cr 
+    The columns are named: Open, High, Low, Close, Volume.\cr
+    Source: www.yahoo.com\cr
+
   
+    \bold{Nelson-Plosser US Economic Time Series:}\cr
+    \cr
     \code{nelsonplosser}
-    \cr
-    The file \code{"nelsonplotter.csv"} contains the data set listing 
-    fourteen US economic time series used by Nelson and Plosser in their 
-    seminal paper. The time series are: \cr
-    \code{"\%Y\%m\%d"} - Date index from 18601231 until 19701231, \cr 
-    \code{"gnp.r"} - Real GNP, [Billions of 1958 Dollars], [1909 - 1970], \cr 
-    \code{"gnp.n"} - Nominal GNP, [Millions of Current Dollars], 
-        [1909 - 1970], \cr 
-    \code{"gnp.pc"} - Real Per Capita GNP, [1958 Dollars], [1909 - 1970], \cr  
-    \code{"ip"} - Industrial Production Index, [1967 = 100], [1860 - 1970], \cr  
-    \code{"emp"} - Total Employment, [Thousands], [1890 - 1970], \cr  
-    \code{"ur"} - Total Unemployment Rate, [Percent], [1890 - 1970], \cr  
-    \code{"gnp.p"} - GNP Deflator, [1958 = 100], [1889 - 1970], \cr  
-    \code{"cpi"} - Consumer Price Index, [1967 = 100], [1860 - 1970], \cr  
-    \code{"wg.n"} - Nominal Wages, [current Dollars], [1900 - 1970], \cr  
-    \code{"wg.r"} - Real Wages, [Nominal wages/CPI], [1900 - 1970], \cr  
-    \code{"M"} - Money Stock (M2), [Billions of Dollars, annual averages], 
-        [1889 - 1970], \cr  
-    \code{"vel"} - Velocity of Money, [1869 - 1970], \cr  
-    \code{"bnd"} - Basic Bond Yields of 30-year Corporate Bonds, 
-        [Percent per annum], [1900 - 1970], \cr 
-    \code{"sp"} - Stock Prices, [Index; 1941 - 43 = 100], [1871 - 1970].
-    \cr
+    contains the data set listing fourteen US economic time series used 
+        by Nelson and Plosser in their seminal paper.\cr  
+    The data set ranges from 1860-12-31 until 1970-12-31.\cr
+    The columns are named: gnp.r, gnp.n, gnp.pc, ip, emp, ur, gnp.p,
+        cpi, wg.n, wg.r, M, vel, bnd, sp.\cr
+        They denote:\cr
+        \code{gnp.r}-Real GNP, [Billions of 1958 Dollars], [1909-1970],\cr 
+        \code{gnp.n}-Nominal GNP, [Millions of Current USD], [1909-1970],\cr 
+        \code{gnp.pc}-Real Per Capita GNP, [1958 Dollars], [1909-1970],\cr  
+        \code{ip}-Industrial Production Index, [1967 = 100], [1860-1970],\cr  
+        \code{emp}-Total Employment, [Thousands], [1890-1970],\cr  
+        \code{ur}-Total Unemployment Rate, [Percent], [1890-1970],\cr  
+        \code{gnp.p}-GNP Deflator, [1958 = 100], [1889-1970],\cr  
+        \code{cpi}-Consumer Price Index, [1967 = 100], [1860-1970],\cr  
+        \code{wg.n}-Nominal Wages, [current Dollars], [1900-1970],\cr  
+        \code{wg.r}-Real Wages, [Nominal wages/CPI], [1900-1970],\cr  
+        \code{M}-Money Stock (M2), [Billions USD, annual avgs], [1889-1970],\cr  
+        \code{vel}-Velocity of Money, [1869-1970],\cr  
+        \code{bnd}-Basic Yields 30-year Corporate Bonds, [\% pa], [1900-1970],\cr 
+        \code{sp}-Stock Prices, [Index; 1941-43 = 100], [1871-1970].\cr
+    Source:\cr
       
+    
+    \bold{NYSE Composite Index:}\cr
+    \cr
     \code{nyse}
-    \cr
-    The file \code{"nyse.csv"} archives a two-column dataset, the first
-    contains the date in the format \code{"\%Y\%m-\%d"} and the second
-    daily records of the NYSE Composite Index.
-    \cr
+    contains daily records of the NYSE Composite Index.\cr
+    The data set ranges from  \cr
+    The columns are named: \cr
+    Source: NYSE.\cr
+
     
+    \bold{US Recession Data Set:}\cr
+    \cr
     \code{recession}
-    \cr
-    The file \code{"recession.csv"} holds the data set used in the regression 
-    analysis of US recession.
-    The data include short and long term interest rates from the US,
-    the 3 Month Tbills data from US FED,
-    the 10 Year Tbonds data from US FED, and also the 
-    Stock-Watson experimental recession index.
-    \cr  
+    holds the data set used in the regression analysis of US recession.
+        The data include short and long term interest rates from the US,
+        the 3 Month Tbills data from US FED,
+        the 10 Year Tbonds data from US FED, and also the 
+        Stock-Watson experimental recession index.\cr
+    The data set ranges from \cr 
+    The columns are named: cr
+    Source:\cr 
         
-    \code{shiller.dat}\cr
+    \bold{Shiller's Data Set:}\cr
+    \cr
+    \code{shiller.dat}
+    holds the data used in the book "Irrational Exuberance" by Robert 
+        Shiller.\cr   
+    The data set ranges from January 1871 ato March 2001.\cr 
+    The columns are named:\cr
+        They denote:\cr
+        \code{price} - monthly nominal US SP stock market prices,\cr
+        \code{dividend} - nominal SP Composite Index dividends,\cr
+        \code{earnings} - nominal SP Composite Index earnings,\cr
+        \code{cpi} - US Consumer Price Indexes,\cr
+        \code{real.price} - real US stock market prices,\cr
+        \code{real.dividend} - real SP Composite Index dividends,\cr
+        \code{real.earnings} - real SP Composite Index earnings,\cr
+        \code{pe.10} - price-earnings ratios.\cr
+    Source: Robert Shiller.\cr
+    
+    
+    \bold{Shiller's Annual Data Set:}\cr
+    \cr
     \code{shiller.annual}
-    \cr
-    The files \code{"shiller.dat.csv"} and \code{"shiller.annual.csv"} hold
-    data used in the book "Irrational Exuberance" by Robert Shiller. The 
-    data are 
-    \code{price} - monthly nominal US SP stock market prices,
-    \code{dividend} - nominal SP Composite Index dividends,
-    \code{earnings} - nominal SP Composite Index earnings,
-    \code{cpi} - US Consumer Price Indexes,
-    \code{real.price} - real US stock market prices,
-    \code{real.dividend} - real SP Composite Index dividends,
-    \code{real.earnings} - real SP Composite Index earnings,
-    \code{pe.10} - price-earnings ratios,
-    \code{dp.ratio} - dividend-price ratios,
-    \code{dp.yield} - dividend-price yield. The last two are only 
-    listed in \code{shiller.annual}.
-    The series start January 1871 and end on March 2001.
-    \cr
+    holds the annual data used in the book "Irrational Exuberance" by Robert 
+        Shiller.\cr     
+    The data set ranges from January 1871 ato March 2001. \cr  
+    The columns are named:\cr
+        They denote:\cr
+        They denote:\cr
+        \code{price} - monthly nominal US SP stock market prices,\cr
+        \code{dividend} - nominal SP Composite Index dividends,\cr
+        \code{earnings} - nominal SP Composite Index earnings,\cr
+        \code{cpi} - US Consumer Price Indexes,\cr
+        \code{real.price} - real US stock market prices,\cr
+        \code{real.dividend} - real SP Composite Index dividends,\cr
+        \code{real.earnings} - real SP Composite Index earnings,\cr
+        \code{pe.10} - price-earnings ratios,\cr
+        \code{dp.ratio} - dividend-price ratios,\cr
+        \code{dp.yield} - dividend-price yield.\cr
+    Source: Robert Shiller.\cr
     
+    
+    \bold{US Index and Price Data Records:}\cr
+    \cr
     \code{singleIndex.dat}
-    \cr
-    The file \code{"recession.csv"} holds monthly index and price data 
-    records from January 1990 to January 2001. Included are monthly closing 
-    prices for Microsoft Corporation (MSFT) and SP500 Index (SP500).
-    \cr
+    holds monthly index and price data records. Included are monthly closing 
+        prices for Microsoft Corporation (MSFT) and SP500 Index (SP500).\cr
+    The data set ranges from January 1990 to January 2001.\cr
+    The columns are named: \cr 
+    Source: \cr
     
-    \code{sp500dge}\cr
+    
+    \bold{Daily DGE SP500 Returns:}\cr
+    \cr
+    \code{sp500dge}
+    lists daily returns from the SP500 as used in 
+        the paper of Ding, Granger and Engle.\cr  
+    The data set ranges from\cr 
+    The columns are named: 
+    Source: Ding, Granger and Engle.\cr
+    
+    
+    \bold{Daily SP500 Index Returns:}\cr
+    \cr
     \code{sp500index}
-    \cr
-    The first file \code{"sp500index.csv"} lists daily SP500 index values. 
-    The data cover the period January 1995 until December 1999, and 
-    have 1249 observations. The first column of the file lists 
-    dates, and the second column lists index values. The second file
-    \code{"sp500dge.csv"} lists daily returns from the SP500 as used in 
-    the paper of Ding, Granger and Engle.
-    \cr
+    lists daily SP500 index values. \cr  
+    The data set ranges from January 1995 until December 1999.\cr   
+    The columns are named:\src
+    Source:\cr 
     
+    
+    \bold{Exchange Rate Spot Returns:}\cr
+    \cr
     \code{surex1.ts.dat}
-    \cr 
-    The file \code{"surex1.ts.csv"} contains exchange rate spot returns 
-    and forward premium data as used in the article of E. Zivot (2000).
-  
+    contains exchange rate spot returns and forward premium data as used 
+        in the article of Eric Zivot (2000).\cr
+    The data set ranges from \cr 
+    The columns are named:\cr
+    Source:\cr
+    
+     
+    \bold{Yahoo Stock Prices:}\cr
+    \cr
     \code{yhoo.df}
-    \cr 
-    The file \code{"yhoo.df.csv"} contains data representing daily 
-    transaction information of Yahoo stock, with the following 
-    six columns: Date, Open, High, Low, Close, Volume.
+    contains data representing daily transaction information of Yahoo 
+        stocks.\cr 
+    The data set ranges from \cr
+    The columns are named: Date, Open, High, Low, Close, Volume.\cr
+    Source: \cr
+
 }
 
 

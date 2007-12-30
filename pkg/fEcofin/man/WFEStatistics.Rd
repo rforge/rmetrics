@@ -17,10 +17,10 @@
 
 \description{
     
-    A collection and description of functions to extract 
-    financial and economic market statistics from the
-    data available from the exchange data collected by 
-    the World Federation of Stock Exchanges.
+    Data sets of financial and economic market 
+    statistics from the data available from the exchange 
+    data collected by the World Federation of Stock 
+    Exchanges.
     \cr
     
     To load statistics from the WFE:
