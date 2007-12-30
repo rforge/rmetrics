@@ -42,9 +42,10 @@
 #  colorTable                Shows a table of plot color codes
 
 
-characterTable = 
-function(font = 1, cex = 0.7) 
-{   # A function implemented by Diethelm Wuertz
+characterTable <-  
+    function(font = 1, cex = 0.7) 
+{   
+    # A function implemented by Diethelm Wuertz
     
     # Description:
     #   Prints numeric equivalents to all latin characters.
@@ -95,9 +96,10 @@ function(font = 1, cex = 0.7)
 # ------------------------------------------------------------------------------
 
 
-symbolTable = 
-function(font = par('font'), cex = 0.7) 
-{   # A function implemented by Diethelm Wuertz
+symbolTable <- 
+    function(font = par('font'), cex = 0.7) 
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Shows a table of plot characters.
@@ -130,9 +132,10 @@ function(font = par('font'), cex = 0.7)
 # ------------------------------------------------------------------------------
 
 
-colorTable = 
-function(cex = 0.7) 
-{   # A function implemented by Diethelm Wuertz
+colorTable <- 
+    function(cex = 0.7) 
+{   
+    # A function implemented by Diethelm Wuertz
     
     # Description:
     #   Displays a table of plot colors.

@@ -53,9 +53,10 @@ setClass("fHTEST",
 # ------------------------------------------------------------------------------
 
 
-show.fHTEST = 
-function(object)
-{   # A function implemented by Diethelm Wuertz
+show.fHTEST <- 
+    function(object)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Source:
     #   This function copies code from base:print.htest

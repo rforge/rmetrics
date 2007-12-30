@@ -49,9 +49,10 @@
 # ------------------------------------------------------------------------------
 
    
-set.lcgseed = 
-function(seed = 4711) 
-{   # A function implemented by Diethelm Wuertz
+set.lcgseed <-  
+    function(seed = 4711) 
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Sets the random seed for the linear congruential 
@@ -83,9 +84,10 @@ function(seed = 4711)
 # ------------------------------------------------------------------------------
 
 
-get.lcgseed = 
-function() 
-{   # A function implemented by Diethelm Wuertz
+get.lcgseed <-  
+    function() 
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Returns the random seed for the linear congruential 
@@ -98,15 +100,16 @@ function()
 }
      
 
-# ##############################################################################
+################################################################################
 #  runif.lcg                 Uniform linear congruational generator
 #  rnorm.lcg                 Normal linear congruational generator
 #  rt.lcg                    Student-t linear congruational generator
 
      
-runif.lcg = 
-function(n, min = 0, max = 1)
-{   # A function implemented by Diethelm Wuertz
+runif.lcg <-  
+    function(n, min = 0, max = 1)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #    A linear congruential generator for uniform distributed
@@ -149,9 +152,10 @@ function(n, min = 0, max = 1)
 # ------------------------------------------------------------------------------
 
 
-rnorm.lcg = 
-function(n, mean = 0, sd = 1)
-{   # A function implemented by Diethelm Wuertz
+rnorm.lcg <-  
+    function(n, mean = 0, sd = 1)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #    A linear congruential generator for normal distributed
@@ -167,9 +171,10 @@ function(n, mean = 0, sd = 1)
 # ------------------------------------------------------------------------------
 
 
-rt.lcg = 
-function(n, df)
-{   # A function implemented by Diethelm Wuertz
+rt.lcg <-  
+    function(n, df)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #    A linear congruential generator for Sudent-t distributed

@@ -35,8 +35,9 @@
 
 
 .distCheck = 
-function(fun = "norm", n = 1000, robust = TRUE, subdivisions = 100, ...)
-{   # A function implemented by Diethelm Wuertz
+    function(fun = "norm", n = 1000, robust = TRUE, subdivisions = 100, ...)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Checks consistency of distributions
@@ -119,6 +120,8 @@ function(fun = "norm", n = 1000, robust = TRUE, subdivisions = 100, ...)
         normCheck = normCheck, 
         rmseCheck = rmseCheck, 
         meanvarCheck = meanvarCheck)
+        
+    # Return Value:
     unlist(ans)
 }
 
@@ -126,8 +129,8 @@ function(fun = "norm", n = 1000, robust = TRUE, subdivisions = 100, ...)
 # ------------------------------------------------------------------------------
 
 
-.runitTest =
-function(pkg)
+.runitTest <- 
+    function(pkg)
 {
     # pkg <- "fCalendar"
 
@@ -186,6 +189,7 @@ function(pkg)
     "for package", pkg,"\n")
     #}
     
+    # Return Value:
     invisible()
 }
 

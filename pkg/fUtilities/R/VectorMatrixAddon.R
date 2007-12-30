@@ -118,9 +118,10 @@
 #  colIds<-|rowIds<-    M  ... for assignments
 
 
-triang = 
-function(x) 
-{   # A function implemented by Diethelm Wuertz
+triang <- 
+    function(x) 
+{   
+    # A function implemented by Diethelm Wuertz
         
     # Description:
     #   Returns lower triangle matrix
@@ -138,9 +139,10 @@ function(x)
 # ------------------------------------------------------------------------------
 
             
-Triang = 
-function(x) 
-{   # A function implemented by Diethelm Wuertz
+Triang <- 
+    function(x) 
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Returns upper triangle matrix
@@ -158,9 +160,10 @@ function(x)
 # ------------------------------------------------------------------------------
 
 
-pascal = 
-function(n) 
-{   # A function implemented by Diethelm Wuertz
+pascal <- 
+    function(n) 
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Creates a Pascal matrix
@@ -198,9 +201,10 @@ function(n)
 # ------------------------------------------------------------------------------
  
 
-hilbert = 
-function(n) 
-{   # A function implemented by Diethelm Wuertz
+hilbert <- 
+    function(n) 
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Creates a Hilbert matrix
@@ -222,9 +226,10 @@ function(n)
 # ------------------------------------------------------------------------------
 
 
-colVec = 
-function(x) 
-{   # A function implemented by Diethelm Wuertz
+colVec <- 
+    function(x) 
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Converts a vector to a column vector
@@ -247,9 +252,10 @@ function(x)
 # ------------------------------------------------------------------------------
 
 
-rowVec = 
-function(x) 
-{   # A function implemented by Diethelm Wuertz
+rowVec <- 
+    function(x) 
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Converts a vector to a row vector
@@ -270,9 +276,10 @@ function(x)
 # ------------------------------------------------------------------------------
 
 
-isPositiveDefinite =
-function(x)
-{   # A function implemented by Diethelm Wuertz
+isPositiveDefinite <- 
+    function(x)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Checks if the matrix x is positive definite
@@ -295,8 +302,8 @@ function(x)
 }
 
 
-.is.positive.definite = 
-function (m, tol, method = c("eigen", "chol"))
+.is.positive.definite <- 
+    function (m, tol, method = c("eigen", "chol"))
 {
     # Author:
     #   Copyright 2003-05 Korbinian Strimmer
@@ -331,9 +338,10 @@ function (m, tol, method = c("eigen", "chol"))
 # ------------------------------------------------------------------------------
 
 
-makePositiveDefinite =
-function(x)
-{   # A function implemented by Diethelm Wuertz
+makePositiveDefinite <- 
+    function(x)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Forces the matrix x to be positive definite
@@ -353,8 +361,8 @@ function(x)
 }
 
 
-.make.positive.definite = 
-function(m, tol)
+.make.positive.definite <- 
+    function(m, tol)
 {
     # Author:
     #   Copyright 2003-05 Korbinian Strimmer
@@ -395,9 +403,10 @@ function(m, tol)
 # ------------------------------------------------------------------------------
 
        
-colIds = 
-function(x, ...) 
-{   # A function implemented by Diethelm Wuertz
+colIds <- 
+    function(x, ...) 
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Retrieves row names of a matrix-like object
@@ -415,9 +424,10 @@ function(x, ...)
 # ------------------------------------------------------------------------------
 
         
-rowIds = 
-function(x, ...) 
-{   # A function implemented by Diethelm Wuertz
+rowIds <- 
+    function(x, ...) 
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Retrieves row names of a matrix-like object
@@ -434,9 +444,10 @@ function(x, ...)
 # ------------------------------------------------------------------------------
 
 
-"colIds<-" = 
-function(x, value)
-{   # A function implemented by Diethelm Wuertz
+"colIds<-" <- 
+    function(x, value)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Sets column names of a matrix-like object
@@ -464,9 +475,10 @@ function(x, value)
 # ------------------------------------------------------------------------------
 
        
-"rowIds<-" = 
-function(x, value) 
-{   # A function implemented by Diethelm Wuertz
+"rowIds<-" <- 
+    function(x, value) 
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Sets row names of a matrix-like object
@@ -514,9 +526,10 @@ function(x, value)
 #  vech                 M  is the operator that stacks the lower triangle
 
 
-inv = 
-function(x) 
-{   # A function implemented by Diethelm Wuertz
+inv <- 
+    function(x) 
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Returns the inverse of a matrix
@@ -536,9 +549,10 @@ function(x)
 # ------------------------------------------------------------------------------
 
 
-norm = 
-function(x, p = 2) 
-{   # A function implemented by Diethelm Wuertz
+norm <- 
+    function(x, p = 2) 
+{   
+    # A function implemented by Diethelm Wuertz
     
     # Description:
     #   Returns the spectral norm of a matrix
@@ -583,9 +597,10 @@ function(x, p = 2)
 # ------------------------------------------------------------------------------
 
         
-rk = 
-function(x, method = c("qr", "chol")) 
-{   # A function implemented by Diethelm Wuertz
+rk <- 
+    function(x, method = c("qr", "chol")) 
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Returns the rank of a matrix
@@ -608,9 +623,10 @@ function(x, method = c("qr", "chol"))
 # ------------------------------------------------------------------------------
 
     
-tr = 
-function(x) 
-{   # A function implemented by Diethelm Wuertz
+tr <- 
+    function(x) 
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Returns the trace of a matrix
@@ -632,9 +648,10 @@ function(x)
 # ------------------------------------------------------------------------------
 
 
-kron = 
-function(x, y) 
-{   # A function implemented by Diethelm Wuertz
+kron <- 
+    function(x, y) 
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Returns Kronecker product
@@ -652,9 +669,10 @@ function(x, y)
 # ------------------------------------------------------------------------------
 
 
-vec = 
-function(x)
-{   # A function implemented by Diethelm Wuertz
+vec <- 
+    function(x)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   vec is the operator that stacks a matrix
@@ -674,9 +692,11 @@ function(x)
 
 # ------------------------------------------------------------------------------
 
-vech = 
-function(x)
-{   # A function implemented by Diethelm Wuertz
+
+vech <- 
+    function(x)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   vech is the operator that stacks the lower triangle
@@ -711,9 +731,10 @@ function(x)
 #  pdl                  R  Regressor matrix for polynomial distributed lags
 
 
-.tslag1 = 
-function(x, k) 
-{   # A function implemented by Diethelm Wuertz
+.tslag1 <- 
+    function(x, k) 
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Internal Function used by function tslag.
@@ -731,9 +752,10 @@ function(x, k)
 # ------------------------------------------------------------------------------
 
 
-tslag = 
-function(x, k = 1, trim = FALSE)
-{   # A function implemented by Diethelm Wuertz
+tslag <- 
+    function(x, k = 1, trim = FALSE)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Creates a lagged or leading vector/matrix of selected order(s).
@@ -780,9 +802,10 @@ function(x, k = 1, trim = FALSE)
 # ------------------------------------------------------------------------------
 
 
-pdl = 
-function(x, d = 2, q = 3, trim = FALSE)
-{   # A function implemented by Diethelm Wuertz
+pdl <- 
+    function(x, d = 2, q = 3, trim = FALSE)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Regressor matrix for polynomial distributed lags

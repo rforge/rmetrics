@@ -51,9 +51,10 @@
 #   skewness.POSIXlt      Method for objects of class POSIXlt
 
 
-skewness =
-function (x, ...)
-{   # A function implemented by Diethelm Wuertz
+skewness <- 
+    function (x, ...)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # FUNCTION:
 
@@ -65,9 +66,10 @@ function (x, ...)
 # ------------------------------------------------------------------------------
 
 
-skewness.default =
-function (x, na.rm = FALSE, method = c("moment", "fisher"), ...)
-{   # A function implemented by Diethelm Wuertz
+skewness.default <- 
+    function (x, na.rm = FALSE, method = c("moment", "fisher"), ...)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Returns the value of the skewness of a distribution function.
@@ -114,9 +116,10 @@ function (x, na.rm = FALSE, method = c("moment", "fisher"), ...)
 # ------------------------------------------------------------------------------
 
 
-skewness.data.frame =
-function (x, ...)
-{   # A function implemented by Diethelm Wuertz
+skewness.data.frame <- 
+    function (x, ...)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # FUNCTION:
 
@@ -128,9 +131,10 @@ function (x, ...)
 # ------------------------------------------------------------------------------
 
 
-skewness.POSIXct =
-function (x, ...)
-{   # A function implemented by Diethelm Wuertz
+skewness.POSIXct <- 
+    function (x, ...)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # FUNCTION:
 
@@ -142,9 +146,10 @@ function (x, ...)
 # ------------------------------------------------------------------------------
 
 
-skewness.POSIXlt =
-function (x, ...)
-{   # A function implemented by Diethelm Wuertz
+skewness.POSIXlt <- 
+    function (x, ...)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # FUNCTION:
 
@@ -161,9 +166,10 @@ function (x, ...)
 #   kurtosis.POSIXlt      Method for objects of class POSIXlt
 
 
-kurtosis =
-function (x, ...)
-{   # A function implemented by Diethelm Wuertz
+kurtosis <- 
+    function (x, ...)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # FUNCTION:
 
@@ -175,9 +181,10 @@ function (x, ...)
 # ------------------------------------------------------------------------------
 
 
-kurtosis.default =
-function (x, na.rm = FALSE, method = c("excess", "moment", "fisher"), ...)
-{   # A function implemented by Diethelm Wuertz
+kurtosis.default <- 
+    function (x, na.rm = FALSE, method = c("excess", "moment", "fisher"), ...)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Returns the value of the kurtosis of a distribution function.
@@ -188,7 +195,7 @@ function (x, na.rm = FALSE, method = c("excess", "moment", "fisher"), ...)
     # FUNCTION:
 
     # Method:
-    method = method[1]
+    method = match.arg(method)
 
     # Warnings:
     if (!is.numeric(x) && !is.complex(x) && !is.logical(x)) {
@@ -223,9 +230,10 @@ function (x, na.rm = FALSE, method = c("excess", "moment", "fisher"), ...)
 # ------------------------------------------------------------------------------
 
 
-kurtosis.data.frame =
-function (x, ...)
-{   # A function implemented by Diethelm Wuertz
+kurtosis.data.frame <- 
+    function (x, ...)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # FUNCTION:
 
@@ -237,9 +245,10 @@ function (x, ...)
 # ------------------------------------------------------------------------------
 
 
-kurtosis.POSIXct =
-function (x, ...)
-{   # A function implemented by Diethelm Wuertz
+kurtosis.POSIXct <- 
+    function (x, ...)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # FUNCTION:
 
@@ -251,9 +260,10 @@ function (x, ...)
 # ------------------------------------------------------------------------------
 
 
-kurtosis.POSIXlt =
-function (x, ...)
-{   # A function implemented by Diethelm Wuertz
+kurtosis.POSIXlt <- 
+    function (x, ...)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # FUNCTION:
 

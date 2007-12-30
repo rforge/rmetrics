@@ -48,9 +48,10 @@
 #  Ramp                      Computes ramp function
 
 
-Heaviside = 
-function(x, a = 0) 
-{   # A function implemented by Diethelm Wuertz
+Heaviside <- 
+    function(x, a = 0) 
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Computes the Heaviside or unit step function.
@@ -81,9 +82,10 @@ function(x, a = 0)
 # ------------------------------------------------------------------------------
 
 
-Sign =
-function(x, a = 0) 
-{   # A function implemented by Diethelm Wuertz
+Sign <- 
+    function(x, a = 0) 
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Computes the (modofied) Sign function.
@@ -109,9 +111,10 @@ function(x, a = 0)
 # ------------------------------------------------------------------------------
 
 
-Delta = 
-function(x, a = 0) 
-{   # A function implemented by Diethelm Wuertz
+Delta <- 
+    function(x, a = 0) 
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Computes the delta function.
@@ -136,9 +139,10 @@ function(x, a = 0)
 # ------------------------------------------------------------------------------
 
 
-Boxcar =
-function(x, a = 0.5) 
-{   # A function implemented by Diethelm Wuertz
+Boxcar <- 
+    function(x, a = 0.5) 
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Computes the boxcar function.
@@ -164,9 +168,10 @@ function(x, a = 0.5)
 # ------------------------------------------------------------------------------
 
 
-Ramp =
-function(x, a = 0) 
-{   # A function implemented by Diethelm Wuertz
+Ramp <- 
+    function(x, a = 0) 
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Computes the ramp function.
@@ -193,9 +198,10 @@ function(x, a = 0)
 #  .heavisideSlider      Displays Heaviside and related functions
 
 
-.heavisideSlider =
-function()
-{   # A function implemented by Diethelm Wuertz
+.heavisideSlider <- 
+    function()
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description
     #   Displays Heaviside and related functions

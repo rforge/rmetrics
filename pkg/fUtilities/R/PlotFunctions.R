@@ -51,9 +51,10 @@
 #  .mrlPlot                  Returns a mean residual life plot
 
 
-.residualsPlot =
-function(x, ...)
-{   # A function implemented by Diethelm Wuertz
+.residualsPlot <- 
+    function(x, ...)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Returns time series graph of residuals
@@ -81,9 +82,11 @@ function(x, ...)
 # ------------------------------------------------------------------------------
 
 
-.acfPlot =
-function(x, ...)
+.acfPlot <- 
+    function(x, ...)
 {
+    # A function implemented by Diethelm Wuertz
+    
     # FUNCTION:
 
     # Convert Type:
@@ -100,9 +103,11 @@ function(x, ...)
 # ------------------------------------------------------------------------------
 
 
-.pacfPlot =
-function(x, ...)
+.pacfPlot <- 
+    function(x, ...)
 {
+    # A function implemented by Diethelm Wuertz
+    
     # FUNCTION:
 
     # Convert Type:
@@ -119,10 +124,11 @@ function(x, ...)
 # ------------------------------------------------------------------------------
 
 
-.mrlPlot =
-function(x, ci = 0.95, umin = mean(x), umax = max(x), nint = 100,
-doplot = TRUE, plottype = c("autoscale", ""), labels = TRUE, ...)
-{   # A function implemented by Diethelm Wuertz
+.mrlPlot <- 
+    function(x, ci = 0.95, umin = mean(x), umax = max(x), nint = 100,
+    doplot = TRUE, plottype = c("autoscale", ""), labels = TRUE, ...)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Create a mean residual life plot with
@@ -192,9 +198,10 @@ doplot = TRUE, plottype = c("autoscale", ""), labels = TRUE, ...)
 #  .firePlot                 Returns a fitted values vs.residuals plot
 
 
-.responsesPlot =
-function(x, y = NULL, ...)
-{   # A function implemented by Diethelm Wuertz
+.responsesPlot <- 
+    function(x, y = NULL, ...)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Returns time series graph of responses and fitted values
@@ -227,9 +234,10 @@ function(x, y = NULL, ...)
 # ------------------------------------------------------------------------------
 
 
-.firePlot =
-function(x, y, method = c("scatter", "hist"), ...)
-{   # A function implemented by Diethelm Wuertz
+.firePlot <- 
+    function(x, y, method = c("scatter", "hist"), ...)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Returns fitted values vs. residuals plots
@@ -317,10 +325,11 @@ function(x, y, method = c("scatter", "hist"), ...)
 #  .histStack             Returns a stacked histogram plot
 
 
-.circlesPlot =
-function(x, y = NULL, z = NULL, scale = 1, points = TRUE,
-labels = TRUE, ...)
-{   # A function implemented by Diethelm Wuertz
+.circlesPlot <- 
+    function(x, y = NULL, z = NULL, scale = 1, points = TRUE,
+    labels = TRUE, ...)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Creates a scatterplot with circle size as third variable
@@ -369,9 +378,10 @@ labels = TRUE, ...)
 # ------------------------------------------------------------------------------
 
 
-.perspPlot =
-function(x, y, z, theta = -40, phi = 30, col = "steelblue", ps = 9, ...)
-{   # A function implemented by Diethelm Wuertz
+.perspPlot <- 
+    function(x, y, z, theta = -40, phi = 30, col = "steelblue", ps = 9, ...)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Returns a perspecvtive plot
@@ -403,9 +413,10 @@ function(x, y, z, theta = -40, phi = 30, col = "steelblue", ps = 9, ...)
 # ------------------------------------------------------------------------------
 
 
-.contourPlot =
-function(x, y, z, ...)
-{   # A function implemented by Diethelm Wuertz
+.contourPlot <- 
+    function(x, y, z, ...)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Returns a contour plot
@@ -432,9 +443,10 @@ function(x, y, z, ...)
 # ------------------------------------------------------------------------------
 
 
-.histStack =
-function(x, y = NULL, space = 0, ylab = "frequency", ...)
-{   # A function implemented by Diethelm Wuertz
+.histStack <- 
+    function(x, y = NULL, space = 0, ylab = "frequency", ...)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Returns a stacked histogram Plot

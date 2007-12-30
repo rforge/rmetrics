@@ -36,8 +36,8 @@
 ################################################################################
 
 
-.fjulian =
-function(fdates, origin = 19600101, order = 'mdy', cc = NULL, swap = 20)
+.fjulian <- 
+    function(fdates, origin = 19600101, order = 'mdy', cc = NULL, swap = 20)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -110,9 +110,10 @@ function(fdates, origin = 19600101, order = 'mdy', cc = NULL, swap = 20)
 # ------------------------------------------------------------------------------
 
 
-.julian =
-function(m, d, y, origin = c(month = 1, day = 1, year = 1960))
-{   # A function implemented by Diethelm Wuertz
+.julian <- 
+    function(m, d, y, origin = c(month = 1, day = 1, year = 1960))
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   This function is a synonyme for Splus' "julian()" with the
@@ -162,9 +163,10 @@ function(m, d, y, origin = c(month = 1, day = 1, year = 1960))
 # ------------------------------------------------------------------------------
 
 
-.isPOSIX =
-function(x)
-{   # A function written by Diethelm Wuertz
+.isPOSIX <- 
+    function(x)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Checks for an object of class POSIX
@@ -182,9 +184,10 @@ function(x)
 # ------------------------------------------------------------------------------
 
 
-.by2seconds =
-function(by = "1 h")
-{   # A function written by Diethelm Wuertz
+.by2seconds <- 
+    function(by = "1 h")
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Convert 'by' string into numeric value of seconds

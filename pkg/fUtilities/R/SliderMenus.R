@@ -37,10 +37,14 @@
 .slider.env = new.env()
 
 
-.sliderMenu =
-function(refresh.code, names, minima, maxima, resolutions, starts,
-title = "Slider", no = 0, set.no.value = 0)
-{   # A function implemented by Diethelm Wuertz
+# ------------------------------------------------------------------------------
+
+
+.sliderMenu <- 
+    function(refresh.code, names, minima, maxima, resolutions, starts,
+    title = "Slider", no = 0, set.no.value = 0)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Starts a slider menu
@@ -115,11 +119,12 @@ title = "Slider", no = 0, set.no.value = 0)
 # ------------------------------------------------------------------------------
 
 
-.tdSliderMenu = 
-function(sl.functions, names, minima, maxima, resolutions, starts,
-but.functions, but.names, no, set.no.value, obj.name, obj.value, 
-reset.function, title)
-{   # A function implemented by Diethelm Wuertz
+.tdSliderMenu <- 
+    function(sl.functions, names, minima, maxima, resolutions, starts,
+    but.functions, but.names, no, set.no.value, obj.name, obj.value, 
+    reset.function, title)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description 
     #   Opens a teching demo slider menu

@@ -45,24 +45,13 @@
 ################################################################################
 
 
-################################################################################
-# @comments
-#   DW 2007-09-23           completely new implemented
-#   DW 2007-09-20           further row* functions added, see ADDONS
-################################################################################
-
-
-################################################################################
-# @todo
-#
-################################################################################
-
-
-
 .conflicts.OK = TRUE
 
 
-rowStats =
+# ------------------------------------------------------------------------------
+
+
+rowStats <- 
 function(x, FUN, ...)
 {   # A function implemented by Diethelm Wuertz
 
@@ -76,9 +65,14 @@ function(x, FUN, ...)
 }
 
 
-rowSums = 
+# ------------------------------------------------------------------------------
+
+
+rowSums <- 
 function(x, ...) 
 {
+    # FUNCTION:
+    
     if (class(x) == "timeSeries") {
         return(rowStats(x, "sum", ...))
     } else {
@@ -87,9 +81,14 @@ function(x, ...)
 }
     
 
-rowMeans = 
-function(x, ...)
+# ------------------------------------------------------------------------------
+
+
+rowMeans <-  
+    function(x, ...)
 {
+    # FUNCTION:
+    
     if (class(x) == "timeSeries") {
         return(rowStats(x, "mean", ...))
     } else {
@@ -98,19 +97,32 @@ function(x, ...)
 }
 
 
-rowSds = function(x, ...) { rowStats(x, "sd", ...) }       
-rowVars = function(x, ...) { rowStats(x, "var", ...) }      
-rowSkewness = function(x, ...) { rowStats(x, "skewness", ...) }   
-rowKurtosis = function(x, ...) { rowStats(x, "kurtosis", ...) } 
-rowMaxs = function(x, ...) { rowStats(x, "max", ...) } 
-rowMins = function(x, ...) { rowStats(x, "min", ...) }      
-rowProds = function(x, ...) { rowStats(x, "prod", ...) } 
+# ------------------------------------------------------------------------------
 
 
-rowQuantiles = 
-function(x, prob = 0.05, ...) { 
+rowSds <- function(x, ...) { rowStats(x, "sd", ...) }       
+rowVars <- function(x, ...) { rowStats(x, "var", ...) }      
+rowSkewness <- function(x, ...) { rowStats(x, "skewness", ...) }   
+rowKurtosis <- function(x, ...) { rowStats(x, "kurtosis", ...) } 
+rowMaxs <- function(x, ...) { rowStats(x, "max", ...) } 
+rowMins <- function(x, ...) { rowStats(x, "min", ...) }      
+rowProds <- function(x, ...) { rowStats(x, "prod", ...) } 
+
+
+# ------------------------------------------------------------------------------
+
+
+rowQuantiles <-  
+    function(x, prob = 0.05, ...) 
+{ 
+    # FUNCTION:
+    
     stopifnot(length(prob) == 1)
-    rowStats(x, "quantile", probs = prob, ...) } 
+    rowStats(x, "quantile", probs = prob, ...) 
+} 
+
+
+# ------------------------------------------------------------------------------
 
 
 rowAvgs <- rowMeans

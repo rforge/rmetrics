@@ -47,26 +47,16 @@
 ################################################################################
 
 
-################################################################################
-# @comments
-#   DW 2007-09-23           completely new implemented
-#   DW 2007-09-20           further col* functions added, see ADDONS
-################################################################################
-
-
-################################################################################
-# @todo
-#
-################################################################################
-
-
-
 .conflicts.OK = TRUE
 
 
-colStats =
-function(x, FUN, ...)
-{   # A function implemented by Diethelm Wuertz
+# ------------------------------------------------------------------------------
+
+
+colStats <- 
+    function(x, FUN, ...)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Computes sample statistics by column
@@ -78,9 +68,14 @@ function(x, FUN, ...)
 }
 
 
-colSums = 
-function(x, ...) 
+# ------------------------------------------------------------------------------
+
+
+colSums <- 
+    function(x, ...) 
 {
+    # FUNCTION:
+    
     if (class(x) == "timeSeries") {
         return(colStats(x, "sum", ...))
     } else {
@@ -89,9 +84,14 @@ function(x, ...)
 }
     
 
-colMeans = 
-function(x, ...)
+# ------------------------------------------------------------------------------
+
+
+colMeans <- 
+    function(x, ...)
 {
+    # FUNCTION:
+    
     if (class(x) == "timeSeries") {
         return(colStats(x, "mean", ...))
     } else {
@@ -100,23 +100,40 @@ function(x, ...)
 }
 
 
-colSds = function(x, ...) { colStats(x, "sd", ...) }       
-colVars = function(x, ...) { colStats(x, "var", ...) }      
-colSkewness = function(x, ...) { colStats(x, "skewness", ...) }   
-colKurtosis = function(x, ...) { colStats(x, "kurtosis", ...) } 
-colMaxs = function(x, ...) { colStats(x, "max", ...) } 
-colMins = function(x, ...) { colStats(x, "min", ...) }      
-colProds = function(x, ...) { colStats(x, "prod", ...) } 
+# ------------------------------------------------------------------------------
 
 
-colQuantiles = 
-function(x, prob = 0.05, ...) { 
+colSds <- function(x, ...) { colStats(x, "sd", ...) }       
+colVars <- function(x, ...) { colStats(x, "var", ...) }      
+colSkewness <- function(x, ...) { colStats(x, "skewness", ...) }   
+colKurtosis <- function(x, ...) { colStats(x, "kurtosis", ...) } 
+colMaxs <- function(x, ...) { colStats(x, "max", ...) } 
+colMins <- function(x, ...) { colStats(x, "min", ...) }      
+colProds <- function(x, ...) { colStats(x, "prod", ...) } 
+
+
+# ------------------------------------------------------------------------------
+
+
+colQuantiles <-  
+function(x, prob = 0.05, ...) 
+{ 
+    # FUNCTION:
+    
     stopifnot(length(prob) == 1)
-    colStats(x, "quantile", probs = prob, ...) } 
+    colStats(x, "quantile", probs = prob, ...) 
+} 
+
+
+# ------------------------------------------------------------------------------
 
 
 colAvgs <- colMeans
 colStdevs <- colSds
+
+
+# ------------------------------------------------------------------------------
+
 
 mean.timeSeries <- colMeans
 var.timeSeries <- colVars

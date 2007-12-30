@@ -46,11 +46,12 @@
 #  krigeInterp              Kriges irregularly distributed data points
 
 
-linearInterp =   
-function(x, y = NULL, z = NULL, gridPoints = 21,
-xo = seq(min(x), max(x), length = gridPoints),
-yo = seq(min(y), max(y), length = gridPoints))
-{   # A function implemented by Diethelm Wuertz
+linearInterp <- 
+    function(x, y = NULL, z = NULL, gridPoints = 21,
+    xo = seq(min(x), max(x), length = gridPoints),
+    yo = seq(min(y), max(y), length = gridPoints))
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Interpolates Linearly Irregularly Distributed Data Points
@@ -108,9 +109,10 @@ yo = seq(min(y), max(y), length = gridPoints))
 # ------------------------------------------------------------------------------
 
 
-linearInterpp =   
-function(x, y = NULL, z = NULL, xo, yo)
-{   # A function implemented by Diethelm Wuertz
+linearInterpp <- 
+    function(x, y = NULL, z = NULL, xo, yo)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Interpolates Linearly Irregularly Distributed Data Points
@@ -166,11 +168,12 @@ function(x, y = NULL, z = NULL, xo, yo)
 # ------------------------------------------------------------------------------
 
 
-akimaInterp =   
-function(x, y = NULL, z = NULL, gridPoints = 21,
-xo = seq(min(x), max(x), length = gridPoints),
-yo = seq(min(y), max(y), length = gridPoints), extrap = FALSE)
-{   # A function implemented by Diethelm Wuertz
+akimaInterp <- 
+    function(x, y = NULL, z = NULL, gridPoints = 21,
+    xo = seq(min(x), max(x), length = gridPoints),
+    yo = seq(min(y), max(y), length = gridPoints), extrap = FALSE)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Interpolates and Smoothes Irregularly Distributed Data Points
@@ -228,9 +231,10 @@ yo = seq(min(y), max(y), length = gridPoints), extrap = FALSE)
 # ------------------------------------------------------------------------------
 
 
-akimaInterpp =   
-function(x, y = NULL, z = NULL, xo, yo, extrap = FALSE)
-{   # A function implemented by Diethelm Wuertz
+akimaInterpp <- 
+    function(x, y = NULL, z = NULL, xo, yo, extrap = FALSE)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Interpolates and Smoothes Irregularly Distributed Data Points
@@ -292,11 +296,13 @@ function(x, y = NULL, z = NULL, xo, yo, extrap = FALSE)
 # ------------------------------------------------------------------------------
 
 
-krigeInterp = 
-function(x, y = NULL, z = NULL, gridPoints = 21,
-xo = seq(min(x), max(x), length = gridPoints),
-yo = seq(min(y), max(y), length = gridPoints), extrap = FALSE, polDegree = 6)
-{   # A function implemented by Diethelm Wuertz
+krigeInterp <- 
+    function(x, y = NULL, z = NULL, gridPoints = 21,
+    xo = seq(min(x), max(x), length = gridPoints),
+    yo = seq(min(y), max(y), length = gridPoints), extrap = FALSE, 
+    polDegree = 6)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Kriges Irregularly Distributed Data Points
@@ -361,11 +367,12 @@ yo = seq(min(y), max(y), length = gridPoints), extrap = FALSE, polDegree = 6)
 # with the "new" algorithm!
 
 
-.interp.old =
-function (x, y, z, xo = seq(min(x), max(x), length = 40), yo = seq(min(y), 
-max(y), length = 40), ncp = 0, extrap = FALSE, duplicate = "error", 
-dupfun = NULL) 
-{   # A copy from contributed package akima
+.interp.old <- 
+    function (x, y, z, xo = seq(min(x), max(x), length = 40), yo = seq(min(y), 
+    max(y), length = 40), ncp = 0, extrap = FALSE, duplicate = "error", 
+    dupfun = NULL) 
+{   
+    # A copy from contributed package akima
 
     if (!(all(is.finite(x)) && all(is.finite(y)) && all(is.finite(z)))) 
         stop("missing values and Infs not allowed")
@@ -424,11 +431,12 @@ dupfun = NULL)
 # ------------------------------------------------------------------------------
 
 
-.interp.new = 
-function (x, y, z, xo = seq(min(x), max(x), length = 40), yo = seq(min(y), 
-max(y), length = 40), linear = FALSE, ncp = NULL, extrap = FALSE, 
-duplicate = "error", dupfun = NULL) 
-{   # A copy from contributed package akima
+.interp.new <- 
+    function (x, y, z, xo = seq(min(x), max(x), length = 40), yo = seq(min(y), 
+    max(y), length = 40), linear = FALSE, ncp = NULL, extrap = FALSE, 
+    duplicate = "error", dupfun = NULL) 
+{   
+    # A copy from contributed package akima
 
     if (!(all(is.finite(x)) && all(is.finite(y)) && all(is.finite(z)))) 
         stop("missing values and Infs not allowed")
@@ -494,10 +502,11 @@ duplicate = "error", dupfun = NULL)
 # ------------------------------------------------------------------------------
 
 
-.interpp.old = 
-function (x, y, z, xo, yo, ncp = 0, extrap = FALSE, duplicate = "error", 
-dupfun = NULL) 
-{   # A copy from contributed package akima
+.interpp.old <- 
+    function (x, y, z, xo, yo, ncp = 0, extrap = FALSE, duplicate = "error", 
+    dupfun = NULL) 
+{   
+    # A copy from contributed package akima
 
     if (!(all(is.finite(x)) && all(is.finite(y)) && all(is.finite(z)))) 
         stop("missing values and Infs not allowed")
@@ -566,10 +575,11 @@ dupfun = NULL)
 # ------------------------------------------------------------------------------
 
 
-.interpp.new = 
-function (x, y, z, xo, yo, extrap = FALSE, duplicate = "error", 
-dupfun = NULL) 
-{   # A copy from contributed package akima
+.interpp.new <- 
+    function (x, y, z, xo, yo, extrap = FALSE, duplicate = "error", 
+    dupfun = NULL) 
+{   
+    # A copy from contributed package akima
 
     if (!(all(is.finite(x)) && all(is.finite(y)) && all(is.finite(z)))) 
         stop("missing values and Infs not allowed")

@@ -34,9 +34,10 @@
 ################################################################################
 
 
-.description =
-function()
-{   # A function implemented by Diethelm Wuertz
+.description <- 
+    function()
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Descriptions:
     #   Sets default description string:
@@ -54,10 +55,11 @@ function()
 # ------------------------------------------------------------------------------
 
 
-.unirootNA =
-function(f, interval, lower = min(interval), upper = max(interval),
-tol = .Machine$double.eps^0.25, ...)
-{   # A function implemented by Diethelm Wuertz
+.unirootNA <- 
+    function(f, interval, lower = min(interval), upper = max(interval),
+    tol = .Machine$double.eps^0.25, ...)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Searches the interval from lower to upper for a
@@ -106,8 +108,8 @@ tol = .Machine$double.eps^0.25, ...)
 ################################################################################
 
 
-.print =
-function(x, ...)
+.print <- 
+    function(x, ...)
 {
     UseMethod(".print")
 }
@@ -116,8 +118,8 @@ function(x, ...)
 # ------------------------------------------------------------------------------
 
 
-.plot =
-function(x, ...)
+.plot <- 
+    function(x, ...)
 {
     UseMethod(".plot")
 }
@@ -126,8 +128,8 @@ function(x, ...)
 # ------------------------------------------------------------------------------
 
 
-.summary =
-function(object, ...)
+.summary <- 
+    function(object, ...)
 {
     UseMethod(".summary")
 }
@@ -136,8 +138,8 @@ function(object, ...)
 # ------------------------------------------------------------------------------
 
 
-.predict =
-function(object, ...)
+.predict <- 
+    function(object, ...)
 {
     UseMethod(".predict")
 }

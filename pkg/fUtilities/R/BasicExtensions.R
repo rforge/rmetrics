@@ -104,7 +104,7 @@ if (!exists("Sys.setenv"))
 
 
 align <- 
-function(x, y, xout, ...)
+    function(x, y, xout, ...)
 {   
     # A function implemented by Diethelm Wuertz
 
@@ -119,7 +119,7 @@ function(x, y, xout, ...)
 
 
 align.default <- 
-function(x, y, xout, method = "linear", n = 50, rule = 1, f = 0,
+    function(x, y, xout, method = "linear", n = 50, rule = 1, f = 0,
     ties = mean, ...)
 {   
     # A function implemented by Diethelm Wuertz
@@ -139,7 +139,7 @@ function(x, y, xout, method = "linear", n = 50, rule = 1, f = 0,
 
 
 attach <- 
-function(what, pos = 2, name = deparse(substitute(what)),
+    function(what, pos = 2, name = deparse(substitute(what)),
     warn.conflicts = TRUE)
 {   
     # A function implemented by Diethelm Wuertz
@@ -186,7 +186,7 @@ if(getRversion() < "2.4.0") {
 
 
 sample <-
-function(x, ...)
+    function(x, ...)
 {   # A function implemented by Diethelm Wuertz
 
     # FUNCTION:
@@ -200,7 +200,7 @@ function(x, ...)
 
 
 sample.default <-  
-function (x, size, replace = FALSE, prob = NULL, ...)
+    function (x, size, replace = FALSE, prob = NULL, ...)
 {
     # FUNCTION:
     
@@ -212,7 +212,7 @@ function (x, size, replace = FALSE, prob = NULL, ...)
 
 
 log <- 
-function(x, base = exp(1))
+    function(x, base = exp(1))
 {   # A function implemented by Diethelm Wuertz
 
     # FUNCTION:
@@ -226,7 +226,7 @@ function(x, base = exp(1))
 
 
 log.default <-  
-function(x, base = exp(1)) 
+    function(x, base = exp(1)) 
 {
     # A function implemented by Diethelm Wuertz
 
@@ -241,7 +241,7 @@ function(x, base = exp(1))
 
 
 rank <- 
-function(x, na.last = TRUE, 
+    function(x, na.last = TRUE, 
     ties.method = c("average", "first", "random", "max", "min")) 
 {   
     # A function implemented by Diethelm Wuertz
@@ -257,7 +257,7 @@ function(x, na.last = TRUE,
 
 
 rank.default <-  
-function(x, na.last = TRUE, 
+    function(x, na.last = TRUE, 
     ties.method = c("average", "first", "random", "max", "min")) 
 {
     # A function implemented by Diethelm Wuertz
@@ -273,7 +273,7 @@ function(x, na.last = TRUE,
 
 
 outlier <- 
-function(x, sd = 5, complement = TRUE, ...)
+    function(x, sd = 5, complement = TRUE, ...)
 {   
     # A function implemented by Diethelm Wuertz
 
@@ -287,7 +287,7 @@ function(x, sd = 5, complement = TRUE, ...)
 
 
 outlier.default <- 
-function(x, sd = 5, complement = TRUE, ...)
+    function(x, sd = 5, complement = TRUE, ...)
 {   
     # A function implemented by Diethelm Wuertz
 
@@ -323,7 +323,7 @@ function(x, sd = 5, complement = TRUE, ...)
 
 
 var <- 
-function(x, y = NULL, na.rm = FALSE, use)
+    function(x, y = NULL, na.rm = FALSE, use)
 {   
     # A function implemented by Diethelm Wuertz
 
@@ -344,7 +344,7 @@ var.default <- stats::var
 
 
 cov <-
-function(x, y = NULL, use = "all.obs",
+    function(x, y = NULL, use = "all.obs",
     method = c("pearson", "kendall", "spearman"))
 {   
     # A function implemented by Diethelm Wuertz
@@ -366,7 +366,7 @@ cov.default <- stats::cov
 
 
 cor <- 
-function(x, y = NULL, use = "all.obs",
+    function(x, y = NULL, use = "all.obs",
     method = c("pearson", "kendall", "spearman"))
 {   
     # A function implemented by Diethelm Wuertz
@@ -403,7 +403,7 @@ stdev <-
 
 
 volatility <- 
-function(object, ...)
+    function(object, ...)
 {   
     # A function implemented by Diethelm Wuertz
 
@@ -418,7 +418,7 @@ function(object, ...)
 
 
 volatility.default <- 
-function(object, ...)
+    function(object, ...)
 {   
     # A function implemented by Diethelm Wuertz
 
@@ -469,7 +469,7 @@ print.control <-
 
 
 "rownames<-" =
-function(x, value)
+    function(x, value)
 {   # A function implemented by Diethelm Wuertz
 
     # FUNCTION:
@@ -489,7 +489,7 @@ function(x, value)
 
 
 "colnames<-" =
-function(x, value)
+    function(x, value)
 {   
     # A function implemented by Diethelm Wuertz
 
@@ -512,7 +512,7 @@ function(x, value)
 
 
 atoms <- 
-function(x, ...)
+    function(x, ...)
 {   
     # A function implemented by Diethelm WUertz
 
@@ -527,7 +527,7 @@ function(x, ...)
 
 
 atoms.default <- 
-function(x, ...)
+    function(x, ...)
 {   
     # A function implemented by Diethelm WUertz
 
@@ -542,7 +542,7 @@ function(x, ...)
 
 
 as.POSIXlt <- 
-function(x, tz = "")
+    function(x, tz = "")
 {   
     # A function implemented by Diethelm Wuertz
 
@@ -557,7 +557,7 @@ function(x, tz = "")
 
 
 as.POSIXlt.default <- 
-function (x, tz = "")
+    function (x, tz = "")
 {   
     # A function implemented by Diethelm Wuertz
 
@@ -610,7 +610,7 @@ function (x, tz = "")
 
 
 as.matrix.ts <- 
-function(x, ...)
+    function(x, ...)
 {   
     # A function implemented by Diethelm Wuertz
 
@@ -634,7 +634,7 @@ function(x, ...)
 
 
 as.matrix.mts <- 
-function(x, ...)
+    function(x, ...)
 {   
     # A function implemented by Diethelm Wuertz
 

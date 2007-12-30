@@ -43,10 +43,11 @@
 .n.plots = 0
 
 
-interactivePlot = 
-function(x, choices = paste("Plot", 1:9), 
-plotFUN = paste("plot.", 1:9, sep = ""), which = "all", ...)
-{   # A function implemented by Diethelm Wuertz
+interactivePlot <-  
+    function(x, choices = paste("Plot", 1:9), 
+    plotFUN = paste("plot.", 1:9, sep = ""), which = "all", ...)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Plot method for an object of class "template".
@@ -147,9 +148,10 @@ plotFUN = paste("plot.", 1:9, sep = ""), which = "all", ...)
 # ------------------------------------------------------------------------------
 
 
-gridVector = 
-function(x, y)
-{   # A function implemented by Diethelm Wuertz, GPL
+gridVector <-  
+    function(x, y)
+{   
+    # A function implemented by Diethelm Wuertz, GPL
 
     # Description:
     #   Creates from two vectors x and y all grid points

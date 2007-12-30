@@ -48,9 +48,10 @@
 #  getSlot                   Extracts a specified slot from a S4 object
 
 
-isS4 =
-function(object)
-{   # A function implemented by Rmetrics
+isS4 <- 
+    function(object)
+{   
+    # A function implemented by Rmetrics
 
     # Description:
     #   Tests if an object is an object of class S4
@@ -74,9 +75,10 @@ function(object)
 # ------------------------------------------------------------------------------
 
 
-getCall =
-function(object)
-{   # A function implemented by Rmetrics
+getCall <- 
+    function(object)
+{   
+    # A function implemented by Rmetrics
 
     # Description:
     #   Extracts the "call" slot from an object of class 4
@@ -94,9 +96,10 @@ function(object)
 # ------------------------------------------------------------------------------
 
 
-getModel =
-function(object)
-{   # A function implemented by Rmetrics
+getModel <- 
+    function(object)
+{   
+    # A function implemented by Rmetrics
 
     # Description:
     #   gets the "model" slot from an object of class 4
@@ -114,9 +117,10 @@ function(object)
 # ------------------------------------------------------------------------------
 
 
-getTitle =
-function(object)
-{   # A function implemented by Rmetrics
+getTitle <- 
+    function(object)
+{   
+    # A function implemented by Rmetrics
 
     # Description:
     #   gets the "title" slot from an object of class 4
@@ -134,9 +138,10 @@ function(object)
 # ------------------------------------------------------------------------------
 
 
-getDescription =
-function(object)
-{   # A function implemented by Rmetrics
+getDescription <- 
+    function(object)
+{   
+    # A function implemented by Rmetrics
 
     # Description:
     #   Extracts the "description" slot from an object of class 4
@@ -154,9 +159,10 @@ function(object)
 # ------------------------------------------------------------------------------
 
 
-getSlot =
-function(object, slotName)
-{   # A function implemented by Rmetrics
+getSlot <- 
+    function(object, slotName)
+{   
+    # A function implemented by Rmetrics
 
     # Description:
     #   Extracts the a specified slot from an object of class 4

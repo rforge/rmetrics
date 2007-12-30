@@ -49,7 +49,7 @@
 
 
 colorLocator <- 
-function(locator = FALSE) 
+    function(locator = FALSE) 
 {   
     # A copy from contributed R-package epitools
     
@@ -93,7 +93,7 @@ function(locator = FALSE)
 
 
 colorMatrix <-
-function()
+    function()
 {   
     # A copy from contributed R-package epitools
 
