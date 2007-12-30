@@ -79,12 +79,12 @@ Berndt E.R. (1991);
   
 EDHEC (2003);
     \emph{About EDHEC Alternative Indexes},
-    EDHEC-Risk,
+    EDHEC-Risk,\cr
     \url{http://www.edhec-risk.com/indexes/pure_style/about}.
 
 Vaissie Mathieu (2003);
     \emph{A Detailed Analysis of the Construction Methods and Management 
-        Principles of Hedge Fund Indices},
+        Principles of Hedge Fund Indices},\cr
     \url{http://www.edhec-risk.com/site_edhecrisk/public/indexes/EDHEC_Publications/RISKReview1072705188065793513}.
 }
 

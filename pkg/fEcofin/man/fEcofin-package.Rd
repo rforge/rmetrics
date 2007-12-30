@@ -114,20 +114,39 @@
     Federation of Stock Exchanges.
     \cr
     
-    To load statistics from the WFE:
+    The data sets are:
     
     \tabular{ll}{
-    \code{data(wfe1)} \tab Market capitalization of domestic companies, \cr
-    \code{data(wfe2)} \tab Total number of companies with shares listed, \cr
-    \code{data(wfe3)} \tab Total value of share trading, \cr 
-    \code{data(wfe4)} \tab Market value of bonds listed, \cr
-    \code{data(wfe5)} \tab Total value of bond trading, and \cr
-    \code{data(wfe6)} \tab Price earning ratio an gross dividend yield. }
+    \code{wfe1} \tab Market capitalization of domestic companies, \cr
+    \code{wfe2} \tab Total number of companies with shares listed, \cr
+    \code{wfe3} \tab Total value of share trading, \cr 
+    \code{wfe4} \tab Market value of bonds listed, \cr
+    \code{wfe5} \tab Total value of bond trading, and \cr
+    \code{wfe6} \tab Price earning ratio an gross dividend yield. }
+    
+}
+
+
+\section{CIA Factbook}{
+
+    
+    A collection and description of functions to extract 
+    financial and economic market statistics from the
+    data available in the CIA World Factbook.
+    \cr
+    
+    The functions are:
+    
+    \tabular{ll}{
+    \code{ciaCountries} \tab Returns a list of CIA country codes, \cr
+    \code{ciaIndicators} \tab Returns a list of CIA indicator codes, \cr
+    \code{ciaByCountry} \tab Returns all Indicators by country, \cr 
+    \code{ciaByIndicator} \tab Returns for all countries indicator ranking. }
     
 }
 
     
-\section{{Performance Analytics Data Sets}{
+\section{Performance Analytics Data Sets}{
 
 
     contains data sets for use in the examples of portfolio performance

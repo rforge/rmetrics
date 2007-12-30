@@ -16,7 +16,7 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2007, Diethelm Wuertz, GPL
+#   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
 #   www.rmetrics.org
@@ -41,9 +41,14 @@
 test.wfe = 
 function()
 {
-    # Data
-    NA
-        
+    # Get Data:
+    data(wfe1)
+    data(wfe2)
+    data(wfe3)
+    data(wfe4)
+    data(wfe5)
+    data(wfe6)
+   
     # Return Value:
     return() 
 }

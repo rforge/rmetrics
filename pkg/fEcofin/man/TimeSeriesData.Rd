@@ -317,7 +317,7 @@
     \code{sp500index}
     lists daily SP500 index values. \cr  
     The data set ranges from January 1995 until December 1999.\cr   
-    The columns are named:\src
+    The columns are named:\cr
     Source:\cr 
     
     
