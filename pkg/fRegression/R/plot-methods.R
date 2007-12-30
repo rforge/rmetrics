@@ -1,0 +1,297 @@
+
+# This library is free software; you can redistribute it and/or
+# modify it under the terms of the GNU Library General Public
+# License as published by the Free Software Foundation; either
+# version 2 of the License, or (at your option) any later version.
+#
+# This library is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Library General Public License for more details.
+#
+# You should have received a copy of the GNU Library General
+# Public License along with this library; if not, write to the
+# Free Foundation, Inc., 59 Temple Place, Suite 330, Boston,
+# MA  02111-1307  USA
+
+# Copyrights (C)
+# for this R-port: 
+#   1999 - 2007, Diethelm Wuertz, GPL
+#   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
+#   info@rmetrics.org
+#   www.rmetrics.org
+# for the code accessed (or partly included) from other R-ports:
+#   see R's copyright and license files
+# for the code accessed (or partly included) from contributed R-ports
+# and other sources
+#   see Rmetrics's copyright file
+
+
+################################################################################
+# S3-METHODS:           PLOT METHOD:    
+#  plot.fREG             Plots fit and diagnostics for a regression model
+#  .plot.lm               Linear Regression Model internal plot        
+#  .plot.rlm              Robust Linear Regression Model internal plot
+#  .plot.glm              Generalized Linear Model internal plot
+#  .plot.gam              Generalized Additive Model internal plot
+#  .plot.ppr              Projection Pursuit Regression Model internal plot
+#  .plot.polymars         Polytochomous MARS Model internal plot
+#  .plot.nnet             Feedforward Neural Network Model internal plot
+# PLOTS:                DESCRIPTION:
+#  .interactiveRegPlot
+#  .multRegPlot
+################################################################################
+
+
+plot.fREG = 
+function(x, ...)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Plot method for Regression Modelling, an object of class "fREG"
+    
+    # FUNCTION:
+    
+    # Settings:
+    .plot(x@fit)
+    
+    # Return Value:
+    invisible()
+}    
+
+
+# ------------------------------------------------------------------------------
+
+
+.plot.lm =
+function(x, which = "ask", ...)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Tailored plot function for an object of class 'lm', 'rlm', 'glm'
+    
+    # Note:
+    #   .plot() is a generic function, see fUtilities.
+    
+    # FUNCTION:
+    
+    # 1. Responses + Fitted Values Plot:
+    # 2. Residuals Plot:
+    # 3. Quantile Plot:
+    # 4. Fitted Values vs. Residuals Plot:
+    # 5. ACF Plot
+    # 6. PACF Plot
+    # 7. Positive Mean Excess Plot"
+    # 8. Negative Mean Excess Plot"
+
+    # 1. lm: Residuals vs Fitted:
+    # 2. lm: Normal Q-Q:
+    # 3. lm: Scale-Location:
+    # 4. lm: Cook's distance:
+    # 5. lm: Residuals vs Leverage:
+    # 6. lm: Cook's distance vs Leverage:
+
+    # Plot:
+    .interactiveRegPlot(
+        x,
+        choices = c(
+            "Responses + Fitted Values",
+            "Residuals",
+            "Normal Q-Q",
+            "Residuals vs Fitted",
+            "ACF of Residuals",
+            "PACF of Residuals",
+            "Positive Mean Excess Plot",
+            "Negative Mean Excess Plot",
+            "lm: Residuals vs Fitted", 
+            "lm: Normal Q-Q", 
+            "lm: Scale-Location", 
+            "lm: Cook's distance", 
+            "lm: Residuals vs Leverage", 
+            "lm: Cook's distance vs Leverage"),
+        plotFUN = paste(".plot.lm.", 1:14, sep = ""),
+        which = which) 
+            
+    # Return Value:
+    invisible(x)
+} 
+
+
+# ------------------------------------------------------------------------------
+
+
+.plot.lm.1 <- function(x, ...) .responsesPlot(residuals(x)+fitted(x),fitted(x))
+.plot.lm.2 <- function(x, ...) .residualsPlot(residuals(x))    
+.plot.lm.3 <- function(x, ...) qqnormPlot(residuals(x))
+.plot.lm.4 <- function(x, ...) .firePlot(fitted(x), residuals(x)) 
+.plot.lm.5 <- function(x, ...) .acfPlot(residuals(x))
+.plot.lm.6 <- function(x, ...) .pacfPlot(residuals(x))
+.plot.lm.7 <- function(x, ...) .mrlPlot(residuals(x))
+.plot.lm.8 <- function(x, ...) .mrlPlot(-residuals(x))
+.plot.lm.9 <- function(x, ...) plot(x, 1, pch = 19, col = "steelblue", ...)  
+.plot.lm.10<- function(x, ...) plot(x, 2, pch = 19, col = "steelblue", ...)
+.plot.lm.11<- function(x, ...) plot(x, 3, pch = 19, col = "steelblue", ...)
+.plot.lm.12<- function(x, ...) plot(x, 4, pch = 19, col = "steelblue", ...)
+.plot.lm.13<- function(x, ...) plot(x, 5, pch = 19, col = "steelblue", ...)
+.plot.lm.14<- function(x, ...) plot(x, 6, pch = 19, col = "steelblue", ...)
+    
+    
+# ------------------------------------------------------------------------------
+
+
+.plot.common =
+function(x, which = "ask", ...)
+{
+    # 1. Responses + Fitted Values Plot:
+    # 2. Residuals Plot:
+    # 3. Quantile Plot:
+    # 4. Fitted Values vs. Residuals Plot:
+    
+    # Plot:
+    .interactiveRegPlot(
+        x,
+        choices = c(
+            "Responses + Fitted Values",
+            "Residuals",
+            "Normal Q-Q",
+            "Residuals vs Fitted",
+            "ACF of Residuals",
+            "PACF of Residuals",
+            "Positive Mean Excess Plot",
+            "Negative Mean Excess Plot"),
+        plotFUN = paste(".plot.common.", 1:8, sep = ""),
+        which = which) 
+            
+    # Return Value:
+    invisible(x)
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.plot.common.1 <- function(x, ...) .responsesPlot(residuals(x)+fitted(x),fitted(x))
+.plot.common.2 <- function(x, ...) .residualsPlot(residuals(x))    
+.plot.common.3 <- function(x, ...) qqnormPlot(residuals(x))
+.plot.common.4 <- function(x, ...) .firePlot(fitted(x), residuals(x)) 
+.plot.common.5 <- function(x, ...) .acfPlot(residuals(x))
+.plot.common.6 <- function(x, ...) .pacfPlot(residuals(x))
+.plot.common.7 <- function(x, ...) .mrlPlot(residuals(x))
+.plot.common.8 <- function(x, ...) .mrlPlot(-residuals(x))
+
+
+# ------------------------------------------------------------------------------
+
+
+.plot.gam = .plot.common
+.plot.ppr = .plot.common
+.plot.polymars = .plot.common
+.plot.nnet = .plot.common
+
+
+# ------------------------------------------------------------------------------
+
+
+.interactiveRegPlot = 
+function(x, choices = paste("Plot", 1:19), 
+plotFUN = paste("plot.", 1:19, sep = ""), which = "all", ...)
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Plot method for an object of class "template".
+    
+    # Arguments:
+    #   x - an object to be plotted
+    #   choices - the character string for the choice menu
+    #   plotFUN - the names of the plot functions
+    #   which - plot selection, which graph should be 
+    #     displayed. If a character string named "ask" the 
+    #     user is interactively asked which to plot, if
+    #     a logical vector of length N, those plots which
+    #     are set "TRUE" are displayed, if a character string
+    #     named "all" all plots are displayed.
+    
+    # Note:
+    #   At maximum 19 plots are supported.
+
+    # FUNCTION:
+    
+    # Some cecks:
+    if (length(choices) != length(plotFUN)) 
+        stop("Arguments choices and plotFUN must be of same length.")
+    if (length(which) > length(choices)) 
+        stop("Arguments which has incorrect length.")
+    if (length(which) > length(plotFUN)) 
+        stop("Arguments which has incorrect length.")
+    if (length(choices) > 19)
+        stop("Sorry, only 19 plots at max are supported.")
+    
+                              
+    # Plot:
+    if (is.numeric(which)) {
+        Which = rep(FALSE, times = length(choices))
+        Which[which] = TRUE
+        which = Which
+    }
+    if (which[1] == "all") {
+        which = rep(TRUE, times = length(choices))
+    }
+    if (which[1] == "ask") {
+        .multRegPlot(x, choices, plotFUN = plotFUN, ...) 
+    } else {
+        for ( i in 1:length(which) ) {
+            FUN = match.fun(plotFUN[i])
+            if (which[i]) FUN(x) 
+        } 
+    }
+            
+    # Return Value:
+    invisible(x)
+}
+
+
+# ------------------------------------------------------------------------------
+
+                
+.multRegPlot = 
+function (x, choices, plotFUN, ...) 
+{   # A function implemented by Diethelm Wuertz
+
+    # Description:
+    
+    # Arguments:
+    
+    # FUNCTION:
+    
+    # Match Functions, up to nine ...
+    if (length(plotFUN) < 19) plotFUN = 
+        c(plotFUN, rep(plotFUN[1], times = 19 - length(plotFUN)))
+    plot.1  = match.fun(plotFUN[1]);  plot.2  = match.fun(plotFUN[2]) 
+    plot.3  = match.fun(plotFUN[3]);  plot.4  = match.fun(plotFUN[4]) 
+    plot.5  = match.fun(plotFUN[5]);  plot.6  = match.fun(plotFUN[6]) 
+    plot.7  = match.fun(plotFUN[7]);  plot.8  = match.fun(plotFUN[8]) 
+    plot.9  = match.fun(plotFUN[9]);  plot.10 = match.fun(plotFUN[10])
+    plot.11 = match.fun(plotFUN[11]); plot.12 = match.fun(plotFUN[12]) 
+    plot.13 = match.fun(plotFUN[13]); plot.14 = match.fun(plotFUN[14]) 
+    plot.15 = match.fun(plotFUN[15]); plot.16 = match.fun(plotFUN[16]) 
+    plot.17 = match.fun(plotFUN[17]); plot.18 = match.fun(plotFUN[18]) 
+    plot.19 = match.fun(plotFUN[19])        
+    pick = 1
+    
+    while (pick > 0) { 
+        pick = menu (
+        ### choices = paste("plot:", choices),
+        choices = paste(" ", choices), 
+        title = "\nMake a plot selection (or 0 to exit):")
+        # up to 19 plot functions ...
+        switch (pick, 
+            plot.1(x),  plot.2(x),  plot.3(x),  plot.4(x),  plot.5(x), 
+            plot.6(x),  plot.7(x),  plot.8(x),  plot.9(x),  plot.10(x),
+            plot.11(x), plot.12(x), plot.13(x), plot.14(x), plot.15(x), 
+            plot.16(x), plot.17(x), plot.18(x), plot.19(x)) 
+    } 
+}
+
+
+################################################################################
+
