@@ -27,7 +27,6 @@
 #   see Rmetrics's copyright file
 
 
-# fEcofin::2A-CodeTables
 ################################################################################
 # FUNCTION:                 CHARACTER, SYMBOL AND COLOR TABLES:
 #  characterTable            Shows a table of character codes 
