@@ -50,113 +50,53 @@
 #  .ghtDependencyFit            Estimates tail dependence with GHT marginals   
 ################################################################################
 
-
-################################################################################
-# Gumbel Copula
-
-
-.rgumbelCopula =
-function(n, alpha = 2)
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Generates fast Gumbel copula random variates
-    
-    # Arguments:
-    
-    # FUNCTION:
-    
-    # RVs:
-    dim = 2
-    theta <- runif(n, 0, pi)
-    w <- rexp(n)
-    b = 1/alpha
-    a <- sin((1-b)*theta)*(sin(b*theta))^(b/(1-b))/(sin(theta))^(1/(1-b))
-    fr = (a/w)^((1-b)/b)
-    fr <- matrix(fr, nrow = n, ncol = dim)
-    val <- matrix(runif(dim * n), nrow = n)
-    s = -log(val)/fr
-    ans = exp(-s^(1/alpha))
-    
-    control = list(alpha = alpha, copula = "archm", type = "gumbel")
-    attr(ans, "control") <- unlist(control)
-    
-    # Return Value:
-    ans
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.dgumbelCopula = 
-function(u = 0.5, v = u, alpha = 2, output = c("vector", "list"))
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Computes Bivariate Gumbel Copula Density
-    
-    # FUNCTION:
-    
-    # Conveniance Wrapper:
-    ans = darchmCopula(u, v, alpha, type = "4", output = output)
-    
-    # Return Value:
-    ans
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.pgumbelCopula = 
-function(u = 0.5, v = u, alpha = 2, output = c("vector", "list"))
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Computes Bivariate Gumbel Copula Probability
-    
-    # FUNCTION:
-    
-    # Conveniance Wrapper:
-    ans = parchmCopula(u, v, alpha, type = "4", output = output)
-    
-    # Return Value:
-    ans
-}
- 
     
 ################################################################################
-# Mixed Gumbel-SurvivalGumbel-Normal Copula
 
 
 .rgsgnormCopula = 
-function(n = 1000, alpha = c(2, 2), rho = 0, gamma = c(0.5, 0.5))
+function(n = 1000, alpha = c(2, 2), rho = 0, weights = c(1/3, 1/3))
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Computes RVs from a mixed GSG copula
+    #   Computes RVs from a mixed Gumbel-SurvivalGumbel-Normal Copula
+    
+    # Arguments:
+    #   n - an integer value, the number of random variates to be
+    #       generated.
+    #   alpha - a numeric vector with two entries. The first denotes 
+    #       the parameter value of alpha for the Gumbel copula, and
+    #       the second for the Survival Gumbel Copula.
+    #   rho - a numeric value denoting the correlation parameter for
+    #       the normal copula.
+    #   weights - a numeric vector with two entries. The first denotes 
+    #       the weight of the Gumbel copula, and the second the weight
+    #       of the Survival Gumbel Copula. The weight for the normal
+    #       copula is evaluated by 1 - sum(weights).
     
     # Example:
     #   .rgsgnormCopula(20)
     
     # FUNCTION:
-        
-    # Upper Gumbel = 1 , Lower Gumbel = 2, t = 3:
-    n1 = round(gamma[1]*n)
-    n2 = n - n1
-    n1 = round(gamma[2]*n1)
-    n2 = round(gamma[2]*n2)
-    n3 = n - n1 - n2
     
+    # Checking:
+    stopifnot(any(weights >= 0))
+    stopifnot(sum(weights) <= 1)
+       
+    # Upper Gumbel = 1 , Lower Gumbel = 2, t = 3:
+    weights = c(weights, 1-sum(weights))
+    N = round(n*weights[1:2])
+    N = c(N, n-sum(N))
+       
     # Random Variates:
     r = rbind(
-        if (n1 > 0) .rgumbelCopula(n1, alpha[1]),
-        if (n2 > 0) 1-.rgumbelCopula(n2, alpha[2]),
-        if (n3 > 0) rellipticalCopula(n3, rho, type = "norm") )
+        if (N[1] > 0) .rgumbelCopula(N[1], alpha[1]),
+        if (N[2] > 0) 1-.rgumbelCopula(N[2], alpha[2]),
+        if (N[3] > 0) rellipticalCopula(N[3], rho, type = "norm") )
     index = sample(1:n)
     ans = r[index, ]
-    N = c(n, n1, n2, n3)
+    
+    N = c(n, N)
     names(N) = c("n", "n1", "n2", "n3")
     attr(ans, "control")<-N
     
@@ -169,14 +109,15 @@ function(n = 1000, alpha = c(2, 2), rho = 0, gamma = c(0.5, 0.5))
 
 
 .dgsgnormCopula = 
-function(u = 0.5, v = u, alpha = c(2, 2), rho = 0, gamma = c(0.5, 0.5))
+function(u = 0.5, v = u, alpha = c(2, 2), rho = 0, weights = c(1/3, 1/3),
+    output = c("vector", "list"))
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Computes mixed GSG copula density
+    #   Computes mixed Gumbel-SurvivalGumbel-Normal Copula density
     
     # Example:
-    #   .dgsgnormCopula(grid2d()$x, grid2d()$y)
+    #   .perspPlot(.dgsgnormCopula(u = grid2d()$x, v = grid2d()$y, output = "list"))
    
     # FUNCTION:
     
@@ -190,20 +131,23 @@ function(u = 0.5, v = u, alpha = c(2, 2), rho = 0, gamma = c(0.5, 0.5))
         u = u[, 2]
     }
     
-    # Mix Gumbel + Survival Gumbel:
-    dCopula1 = .dgumbelCopula(u, v, alpha[1], output = "list")
-    dCopula2 = .dgumbelCopula(1-u, 1-v, alpha[2], output = "list")
-    dCopula12 = dCopula1
-    dCopula12$z = gamma[1]*dCopula1$z + (1-gamma[1])*dCopula2$z
+    # Mixed Copula:
+    weights = c(weights, 1-sum(weights))
+    dCopula1 = dgumbelCopula(u, v, alpha[1], output = "list")$z
+    dCopula2 = dgumbelCopula(1-u, 1-v, alpha[2], output = "list")$z
+    dCopula3 = dellipticalCopula(u, v, rho, type = "norm", output = "list")$z
+    c.uv = weights[1]*dCopula1 + weights[2]*dCopula2 + weights[3]*dCopula3
     
-    # Mix Gumbel/SurvivalGumbel + Student-t:
-    dCopula3 = dellipticalCopula(u, v, rho, type = "norm", output = "list")
-    dCopula123 = dCopula12
-    dCopula123$z = gamma[2]*dCopula12$z + (1-gamma[2])*dCopula3$z
-    ans = dCopula123
+    attr(c.uv, "control") <- c(alpha = alpha, rho = rho, weights = weights)
+    if (output == "list") {
+        N = sqrt(length(u))
+        x = u[1:N]
+        y = matrix(v, ncol = N)[1, ]
+        c.uv = list(x = x, y = y, z = matrix(c.uv, ncol = N))
+    }
     
     # Return Value:
-    ans
+    c.uv
 }
 
 
@@ -230,11 +174,17 @@ function(u, v =  NULL, trace = FALSE)
         U = u[, 1]
         V = u[, 2]
     }
+   
+    # From weights to gamma ...
+    # gamma = c(W1/(1-W3), 1-W3)
+    # gamma = c(gamma, 1-sum(gamma))
      
     # Estimate Copula:
     start = c(1.5, 1.5, 0, 1/3, 1/3)
     fun = function(x, U, V, trace) 
     {
+        gamma = x[4:5]
+        
         density = .dgsgnormCopula(u = U, v = V, 
             alpha = x[1:2], rho = x[3], gamma = x[4:5])$z
         density = density[!is.na(density)]
