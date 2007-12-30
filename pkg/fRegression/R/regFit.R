@@ -30,18 +30,13 @@
 ################################################################################
 # FUNCTION:             PARAMETER ESTIMATION:
 #  regFit                Wrapper Function for Regression Models
-#  gregFit               Wrapper Function for Generalized Regression Models
 #  .lmFit                 Linear Regression Model
 #  .rlmFit                Robust Linear Regression Model
-#  .glmFit                Generalized Linear Model
-#  .gamFit                Generalized Additive Model
 #  .pprFit                Projection Pursuit Regression Model
 #  .polymarsFit           Polytochomous MARS Model
 #  .nnetFit               Feedforward Neural Network Model
 # UTILITY:              DESCRIPTION:
 #  .amFormula            Adds s() around term labels
-# REQUIREMENT:          DESCRIPTION:
-#  polspline             Contributes R package polspline
 ################################################################################
 
 
@@ -179,72 +174,6 @@ title = NULL, description = NULL, ...)
 
 
 # ------------------------------------------------------------------------------
-
-
-gregFit = 
-function (formula, family, data, use = c("glm", "gam"), 
-title = NULL, description = NULL, ...) 
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Common function call for generalized regression models.
-    
-    # Details:
-    #   This is a wrapper function for the following regrssion models:
-    #   GLM         Generalized Linear Modelling
-    #   GAM         Generalized Additive Modelling
-    
-    # Notes:
-    #   Available Methods are
-    #   "print", "plot", "summary", and "predict" method
-    #   coefficients, "residuals" "fitted", "vcov" method
-    
-    # FUNCTION:
-    
-    # Get Method:
-    if (class(data) == "data.frame") data = as.timeSeries(data)
-    fun = use = match.arg(use)
-
-    # Title:
-    if (is.null(title)) {
-        if (use == "glm") title = "Generalized Linear Modelling"
-        if (use == "gam") title = "Generalized Additive Modelling"
-    }  
-    
-    # Description:
-    if (is.null(description)) {
-        description  = .description()
-    }  
-    
-    # Evaluate:
-    cmd = match.call()
-    if (!is.null(cmd$use)) cmd = cmd[-match("use", names(cmd), 0)]    
-    cmd[[1]] <- as.name(fun)
-    fit <- eval(cmd, parent.frame()) 
-        
-    # Add to Fit:
-    fit$residuals = as.vector(fit$residuals)    
-    fit$fitted.values = as.vector(fit$fitted.values)
-    fit$parameters = fit$coef
-    class(fit) = c("list", class(fit))
-    
-    # Return Value:
-    new("fREG",     
-        call = as.call(match.call()),
-        formula = as.formula(formula), 
-        family = as.character(gaussian()),
-        method = as.character(use),
-        data = timeSeries(data, rownames(data)),
-        fit = fit,
-        residuals = timeSeries(fit$residuals, rownames(data)),
-        fitted = timeSeries(fit$fitted.values, rownames(data)),
-        title = as.character(title), 
-        description = as.character(description) 
-    )
-}
-
-
-################################################################################
 
 
 .amFormula =

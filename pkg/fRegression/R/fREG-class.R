@@ -16,7 +16,7 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2007, Diethelm Wuertz, GPL
+#   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
 #   www.rmetrics.org
@@ -28,32 +28,27 @@
 
 
 ################################################################################
-# S3-METHODS:           DESCRIPTION REGRESSION METHODS:
-#  coef.fREG             Returns coefficients from a fitted regression model
+# FUNCTION:               DESCRIPTION:
+#  'fREG'                  S4 fREG Class representation
 ################################################################################
 
-        
-setMethod(f = "coef", signature(object = "fREG"), definition = 
-    function(object) 
-{   
-    # A function implemented by Diethelm Wuertz
-    
-    # Description:  
-    #   Extracts 'fGarch' Model Coefficients
-    
-    # Arguments:
-    #   object - an object of class fGarch as returned by the function
-    #       garchFit
-    
-    # FUNCTION:
-    
-    # Numeric vector of fitted values:
-    ans = coefficients(object@fit) 
-    
-    # Return Value:
-    ans
-})
 
+setClass("fREG", 
+    # Class Representation
+    representation(
+        call = "call",
+        formula = "formula",
+        family = "character",  
+        method = "character",
+        data = "timeSeries",
+        fit = "list",
+        residuals = "timeSeries",
+        fitted = "timeSeries",
+        title = "character",
+        description = "character"
+    )  
+)
+      
 
 ################################################################################
 

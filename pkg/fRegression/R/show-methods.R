@@ -28,31 +28,9 @@
 
 
 ################################################################################
-# FUNCTION:             DESCRIPTION:
-#  'fREG'                S4 Class Representation
 # S3-METHODS:           PRINT METHOD:
 #  show.fREG             Prints results from a regression model fit 
 ################################################################################
-
-
-setClass("fREG", 
-    # Class Representation
-    representation(
-        call = "call",
-        formula = "formula",
-        family = "character",  
-        method = "character",
-        data = "timeSeries",
-        fit = "list",
-        residuals = "timeSeries",
-        fitted = "timeSeries",
-        title = "character",
-        description = "character"
-    )  
-)
-      
-
-# ------------------------------------------------------------------------------
 
 
 show.fREG = 
