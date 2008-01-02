@@ -28,26 +28,53 @@
 
 
 ################################################################################
-# S3-METHODS:           DESCRIPTION REGRESSION METHODS:
-#  fitted.fREG           Returns fitted values from a fitted regression model
+# FUMCTION:             DESCRIPTION REGRESSION METHODS:
+#  fitted.fREG           Fitted values method for an object of class fREG
 ################################################################################
 
         
-fitted.fREG = 
-function(object, ...)
-{   # A function implemented by Diethelm Wuertz
+setMethod(f = "fitted", signature(object = "fREG"), definition =  
+    function(object) 
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Fitted values method for Regression Modelling
+    #   Fitted values method for an object of class fREG
     
     # FUNCTION:
     
     # Fitted Values:
-    ans = object@fitted
+    fitted = object@fitted
+    
+    # Get original time series class:
+    data = object@data$data
+    dataClass = class(data)[1]
+    
+    # Transform:
+    if (dataClass == "timeSeries") {
+        ans = data
+        data.mat = matrix(fitted)
+        rownames(data.mat) = rownames(data)
+        colnames(data.mat) = object@data$unit
+        ans@Data = data.mat
+    } else if (dataClass == "zoo") {
+        ans = fitted
+        attr(ans, "index") = attr(data, "index")
+        class(ans) = "zoo"
+    } else if (dataClass == "ts" | dataClass == "mts") {
+        ans = fitted
+        attr(ans, "tsp") = attr(data, "tsp")
+        class(ans) = "ts"
+    } else if (dataClass == "data.frame") {
+        ans = data.frame(matrix(fitted))
+        colnames(ans) = as.character(object@formula[2])
+    } else {
+        ans = data
+    }
             
     # Return Value:
     ans
-}
+})
         
 
 ################################################################################

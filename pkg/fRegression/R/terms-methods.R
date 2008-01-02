@@ -38,9 +38,10 @@
 ################################################################################
 
 
-.terms.fREG = 
-function(object, formula = Y ~ X1)
-{   # A function implemented by Diethelm Wuertz
+.terms.fREG <- 
+    function(object, formula = Y ~ X1)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     

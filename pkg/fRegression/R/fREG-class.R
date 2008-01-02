@@ -29,7 +29,7 @@
 
 ################################################################################
 # FUNCTION:               DESCRIPTION:
-#  'fREG'                  S4 fREG Class representation
+#  'fREG'                  fREG Class representation
 ################################################################################
 
 
@@ -40,10 +40,10 @@ setClass("fREG",
         formula = "formula",
         family = "character",  
         method = "character",
-        data = "timeSeries",
+        data = "list",
         fit = "list",
-        residuals = "timeSeries",
-        fitted = "timeSeries",
+        residuals = "numeric",
+        fitted = "numeric",
         title = "character",
         description = "character"
     )  

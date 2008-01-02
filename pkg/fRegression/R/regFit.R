@@ -59,10 +59,10 @@
 ################################################################################
 
 
-regFit = 
-function (formula, data,
-use = c("lm", "rlm", "am", "ppr", "nnet", "polymars"), 
-title = NULL, description = NULL, ...) 
+regFit <- 
+    function (formula, data,
+    use = c("lm", "rlm", "am", "ppr", "nnet", "polymars"), 
+    trace = TRUE, title = NULL, description = NULL, ...) 
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -87,13 +87,12 @@ title = NULL, description = NULL, ...)
     
     # FUNCTION:
     
-    # Trace:
-    trace = FALSE
+    # Debugging:
+    DEBUG = FALSE
    
-    # Get Method:
-    if (!(class(data) == "timeSeries")) {
-        data = as.timeSeries(data, silent = TRUE)
-    }
+    # Transform data into a dataframe
+    Data = data
+    data = as.data.frame(data)
     
     # Function to be called:
     fun = use = match.arg(use)
@@ -118,7 +117,7 @@ title = NULL, description = NULL, ...)
         description = .description()
     }
     
-    # Evaluate:
+    # Evaluate Command:
     cmd = match.call()
     if (!is.null(cmd$use)) cmd = cmd[-match("use", names(cmd), 0)]    
     cmd[[1]] <- as.name(fun)
@@ -126,9 +125,11 @@ title = NULL, description = NULL, ...)
     if (use == "nnet" & !match("trace",  names(cmd), 0) ) cmd$trace = FALSE
     if (use == "nnet" & !match("size",   names(cmd), 0) ) cmd$size = 2
     if (use == "nnet" & !match("linout", names(cmd), 0) ) cmd$linout = TRUE
-    if (trace) print(cmd)
+    if (DEBUG) print(cmd)
+    
+    # Fit linear Model:
     fit <- eval(cmd, parent.frame()) 
-    if (trace) print(fit)
+    if (DEBUG) print(fit)
       
     # Add to Fit:
     if (is.null(fit$xlevels)) fit$xlevels = list()
@@ -149,26 +150,18 @@ title = NULL, description = NULL, ...)
     class(fit) = c("list", class(fit))
     if (!inherits(fit, "lm")) class(fit) = c(class(fit), "lm")
 
-    # Add Units to timeSeries:
-    resUnits = paste(as.character(formula)[2], "RES", sep = ".")
-    fittedUnits = paste(as.character(formula)[2], "FITTED", sep = ".")
-    residualsTS = 
-        timeSeries(fit$residuals, rownames(data), units = resUnits)
-    fittedTS = 
-        timeSeries(fit$fitted.values, rownames(data), units = fittedUnits)
-        
     # Return Value:
     new("fREG",     
         call = as.call(match.call()),
         formula = as.formula(formula), 
         family = as.character(gaussian()),
         method = use,
-        data = data,
+        data = list(x = data, data = Data),
         fit = fit,
-        residuals = residualsTS,
-        fitted = fittedTS,
+        residuals = fit$residuals,
+        fitted = fit$fitted.values,
         title = as.character(title), 
-        description = as.character(description) 
+        description = as.character(description)
     )
 }
 
@@ -176,11 +169,18 @@ title = NULL, description = NULL, ...)
 # ------------------------------------------------------------------------------
 
 
-.amFormula =
-function(formula)
+.amFormula <- 
+    function(formula)
 {
     # Description:
     #   Adds s() around term labels
+    
+    # Note:
+    #   Called by regFit() for use="am".
+    
+    # Example:
+    #   > .amFormula(z ~ x + y)
+    #   z ~ s(x) + s(y)
     
     # FUNCTION:
     

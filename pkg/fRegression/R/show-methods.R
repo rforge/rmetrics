@@ -33,9 +33,10 @@
 ################################################################################
 
 
-show.fREG = 
-function(object)
-{   # A function implemented by Diethelm Wuertz
+setMethod(f = "show", signature(object = "fREG"), definition = 
+    function(object) 
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Print method for Regression Modelling, an object of class "fREG"
@@ -138,13 +139,7 @@ function(object)
         
     # Return Value:
     invisible()
-}   
-
-
-# ------------------------------------------------------------------------------
-
-
-setMethod("show", "fREG", show.fREG)         
+})      
     
 
 ################################################################################

@@ -28,26 +28,53 @@
 
 
 ################################################################################
-# S3-METHODS:           DESCRIPTION REGRESSION METHODS:
-#  residulals.fREG       Returns residuals from a fitted regression model
+# FUNCTION:             DESCRIPTION REGRESSION METHODS:
+#  residuals.fREG        Residuals method for an object of class 'fREG'
 ################################################################################
 
-                   
-residuals.fREG = 
-function(object, ...)
-{   # A function implemented by Diethelm Wuertz
+        
+setMethod(f = "residuals", signature(object = "fREG"), definition =  
+    function(object) 
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Residuals method for Regression Modelling
+    #   residuals values method for an object of class fREG
     
     # FUNCTION:
     
-    # Residuals:
-    ans = object@residuals
+    # residuals Values:
+    residuals = object@residuals
+    
+    # Get original time series class:
+    data = object@data$data
+    dataClass = class(data)[1]
+    
+    # Transform:
+    if (dataClass == "timeSeries") {
+        ans = data
+        data.mat = matrix(residuals)
+        rownames(data.mat) = rownames(data)
+        colnames(data.mat) = object@data$unit
+        ans@Data = data.mat
+    } else if (dataClass == "zoo") {
+        ans = residuals
+        attr(ans, "index") = attr(data, "index")
+        class(ans) = "zoo"
+    } else if (dataClass == "ts" | dataClass == "mts") {
+        ans = residuals
+        attr(ans, "tsp") = attr(data, "tsp")
+        class(ans) = "ts"
+    } else if (dataClass == "data.frame") {
+        ans = data.frame(matrix(residuals))
+        colnames(ans) = as.character(object@formula[2])
+    } else {
+        ans = data
+    }
             
     # Return Value:
     ans
-}
+})
 
 
 ################################################################################

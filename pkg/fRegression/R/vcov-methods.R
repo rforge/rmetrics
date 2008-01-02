@@ -28,26 +28,31 @@
 
 
 ################################################################################
-# S3-METHODS:           DESCRIPTION REGRESSION METHODS:
-#  vcov.fREG             Returns variance-covariance matrix from a fitted model
+# FUNCTION:             DESCRIPTION REGRESSION METHODS:
+#  vcov.fREG             Returns Covariance from a fitted regression model
 ################################################################################
 
-
-vcov.fREG = 
-function(object, ...)
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Variance-Covariance Matrix method for Regression Modelling
+        
+setMethod(f = "vcov", signature(object = "fREG"), definition = 
+    function(object) 
+{   
+    # A function implemented by Diethelm Wuertz
+    
+    # Description:  
+    #   Extracts 'fREG' Model Covariance
+    
+    # Arguments:
+    #   object - an object of class fREG as returned by the function
+    #       regFit
     
     # FUNCTION:
     
-    # Fitted Values:
+    # Numeric vector of fitted values:
     ans = vcov(object@fit) 
-            
+    
     # Return Value:
     ans
-}
+})
 
 
 ################################################################################

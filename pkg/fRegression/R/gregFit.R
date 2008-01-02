@@ -54,10 +54,11 @@
 ################################################################################
 
 
-gregFit = 
-function (formula, family, data, use = c("glm", "gam"), 
-title = NULL, description = NULL, ...) 
-{   # A function implemented by Diethelm Wuertz
+gregFit <-  
+    function (formula, family, data, use = c("glm", "gam"), 
+    trace = TRUE, title = NULL, description = NULL, ...) 
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Common function call for generalized regression models.
@@ -70,12 +71,15 @@ title = NULL, description = NULL, ...)
     # Notes:
     #   Available Methods are
     #   "print", "plot", "summary", and "predict" method
-    #   coefficients, "residuals" "fitted", "vcov" method
+    #   "coef", "residuals" "fitted", "vcov" method
     
     # FUNCTION:
     
-    # Get Method:
-    if (class(data) == "data.frame") data = as.timeSeries(data)
+    # Transform data into a dataframe
+    Data = data
+    data = as.data.frame(data)
+    
+    # Function to be called:
     fun = use = match.arg(use)
 
     # Title:
@@ -107,12 +111,12 @@ title = NULL, description = NULL, ...)
         formula = as.formula(formula), 
         family = as.character(gaussian()),
         method = as.character(use),
-        data = timeSeries(data, rownames(data)),
+        data = list(),
         fit = fit,
-        residuals = timeSeries(fit$residuals, rownames(data)),
-        fitted = timeSeries(fit$fitted.values, rownames(data)),
+        residuals = fit$residuals,
+        fitted = fit$fitted.values,
         title = as.character(title), 
-        description = as.character(description) 
+        description = .description() 
     )
 }
 

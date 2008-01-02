@@ -43,29 +43,42 @@
 ################################################################################
 
 
-plot.fREG = 
-function(x, ...)
-{   # A function implemented by Diethelm Wuertz
+
+################################################################################
+# FUNCTION:                 DESCRIPTION:
+#  plot                      Plot method for an object of class 'fGARCH'
+################################################################################
+
+
+setMethod(f = "plot", signature(x = "fREG", y = "missing"), definition = 
+    function(x, which = "ask", ...)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Plot method for Regression Modelling, an object of class "fREG"
+    #   Plot method for an object of class 'fGARCH'
+    
+    # Note:
+    #   This method can also be used for plotting graphs fitted by 
+    #   the function 'garch' from the contributed R package 'tseries'.
     
     # FUNCTION:
-    
-    # Settings:
-    .plot(x@fit)
-    
+        
+    # Plot:
+    .plot(x@fit, which = which, ...)
+            
     # Return Value:
-    invisible()
-}    
+    invisible(x)
+})
 
 
 # ------------------------------------------------------------------------------
 
 
 .plot.lm =
-function(x, which = "ask", ...)
-{   # A function implemented by Diethelm Wuertz
+    function(x, which = "ask", ...)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Tailored plot function for an object of class 'lm', 'rlm', 'glm'
@@ -263,7 +276,7 @@ function (x, choices, plotFUN, ...)
     
     # FUNCTION:
     
-    # Match Functions, up to nine ...
+    # Match Functions, up to nine(teen) ...
     if (length(plotFUN) < 19) plotFUN = 
         c(plotFUN, rep(plotFUN[1], times = 19 - length(plotFUN)))
     plot.1  = match.fun(plotFUN[1]);  plot.2  = match.fun(plotFUN[2]) 

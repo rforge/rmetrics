@@ -28,24 +28,15 @@
 
 
 ################################################################################
-# S3-METHODS:           DESCRIPTION REGRESSION METHODS:
+# FUNCTION:             DESCRIPTION REGRESSION METHODS:
 #  predict.fREG          Predicts values from a fitted regression model
 ################################################################################
 
 
-.predict.lm = predict.lm
-.predict.gam = predict.gam
-.predict.glm = predict.glm 
-.predict.ppr = function(object, ...) { predict(object, ...) }
-.predict.nnet = function(object, ...) { predict(object, ...) }
-
-
-# ------------------------------------------------------------------------------
-
-
-predict.fREG =
-function(object, newdata, se.fit = FALSE, type = "response", ...)
-{   # A function implemented by Diethelm Wuertz
+setMethod(f = "predict", signature(object = "fREG"), definition =  
+    function(object, newdata, se.fit = FALSE, type = "response", ...)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Predict method for Regression Modelling, an object of class "fREG"
@@ -80,7 +71,17 @@ function(object, newdata, se.fit = FALSE, type = "response", ...)
             
     # Return Value:
     ans
-}
+})
+
+
+# ------------------------------------------------------------------------------
+
+
+.predict.lm <- predict.lm
+.predict.gam <- predict.gam
+.predict.glm <- predict.glm 
+.predict.ppr <- function(object, ...) { predict(object, ...) }
+.predict.nnet <- function(object, ...) { predict(object, ...) }
 
 
 ################################################################################

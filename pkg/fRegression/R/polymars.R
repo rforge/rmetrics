@@ -35,9 +35,10 @@
 ################################################################################
 
 
-.polymars =
-function(formula, data, ...)
-{   # A function implemented by Diethelm Wuertz
+.polymars <- 
+    function(formula, data, ...)
+{   
+    # A function implemented by Diethelm Wuertz
     
     # FUNCTION:
     
@@ -69,10 +70,10 @@ function(formula, data, ...)
 # ------------------------------------------------------------------------------
 
 
-.polymars.default = 
-function(responses, predictors, maxsize, gcv = 4, additive = FALSE, 
-startmodel, weights, no.interact, knots, knot.space = 3, ts.resp, ts.pred, 
-ts.weights, classify, factors, tolerance = 1e-06, verbose = FALSE) 
+.polymars.default <-  
+    function(responses, predictors, maxsize, gcv = 4, additive = FALSE, 
+    startmodel, weights, no.interact, knots, knot.space = 3, ts.resp, ts.pred, 
+    ts.weights, classify, factors, tolerance = 1e-06, verbose = FALSE) 
 {   # A function implemented by Diethelm Wuertz
     
     # Arguments:
@@ -129,9 +130,10 @@ ts.weights, classify, factors, tolerance = 1e-06, verbose = FALSE)
 # ------------------------------------------------------------------------------
 
 
-.predict.polymars =
-function(object, newdata, se.fit = FALSE, ...)
-{   # A function implemented by Diethelm Wuertz
+.predict.polymars <- 
+    function(object, newdata, se.fit = FALSE, ...)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # FUNCTION:
     
@@ -158,3 +160,4 @@ function(object, newdata, se.fit = FALSE, ...)
 
 
 ################################################################################
+

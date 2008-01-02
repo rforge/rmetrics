@@ -28,14 +28,15 @@
 
 
 ################################################################################
-# S3-METHODS:           SUMMARY METHOD:
-#  summary               Summarizes fit and diagnostics for a regression model
+# FUNCTION:                 DESCRIPTION:
+#  summary                   Summary method for an object of class 'fREG'
 ################################################################################
 
 
-summary.fREG =       
-function(object, ...)
-{   # A function implemented by Diethelm Wuertz
+setMethod(f = "summary", signature(object = "fREG"), definition = 
+    function(object, ...) 
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Summary method for Regression Modelling, an object of class "fREG"
@@ -271,13 +272,6 @@ function(object, ...)
         ans = summary.gam(object = fit, ...)
         print.summary.GAM(x = ans, ...) 
     }   
-    
-    # Regression Model: GAM
-    if (object@method == "gam") {
-        class(fit) = "gam"
-        ans = summary.gam(object = fit, ...)
-        print.summary.GAM(x = ans, ...) 
-    }
         
     # Regression Model: PPR
     if (object@method == "ppr") {
@@ -314,7 +308,7 @@ function(object, ...)
 
     # Return Value:
     invisible() 
-}
+})
 
 
 ################################################################################

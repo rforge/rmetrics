@@ -28,22 +28,22 @@
 
 
 ################################################################################
-# S3-METHODS:           DESCRIPTION REGRESSION METHODS:
+# FUNCTION:             DESCRIPTION REGRESSION METHODS:
 #  coef.fREG             Returns coefficients from a fitted regression model
 ################################################################################
 
         
-setMethod(f = "coef", signature(object = "fREG"), definition = 
+setMethod(f = "fitted", signature(object = "fREG"), definition = 
     function(object) 
 {   
     # A function implemented by Diethelm Wuertz
     
     # Description:  
-    #   Extracts 'fGarch' Model Coefficients
+    #   Extracts 'fREG' Model Coefficients
     
     # Arguments:
-    #   object - an object of class fGarch as returned by the function
-    #       garchFit
+    #   object - an object of class fREG as returned by the function
+    #       regFit
     
     # FUNCTION:
     
