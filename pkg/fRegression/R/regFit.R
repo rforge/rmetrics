@@ -16,7 +16,7 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2007, Diethelm Wuertz, GPL
+#   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
 #   www.rmetrics.org
@@ -63,7 +63,8 @@ regFit <-
     function (formula, data,
     use = c("lm", "rlm", "am", "ppr", "nnet", "polymars"), 
     trace = TRUE, title = NULL, description = NULL, ...) 
-{   # A function implemented by Diethelm Wuertz
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Common function call for several selected regression models.
@@ -83,7 +84,7 @@ regFit <-
     #   coefficients, "residuals" "fitted", "vcov" method
     
     # Example:
-    #   regFit(Y ~ X1 + X2, regSim())
+    #   regFit(Y ~ X1 + X2 + X3, regSim())
     
     # FUNCTION:
     
@@ -97,10 +98,14 @@ regFit <-
     # Function to be called:
     fun = use = match.arg(use)
     if (use == "am") {
+        # Use gam() and add smoothing s()
         fun = "gam"
         formula = .amFormula(formula)
     }
-    if (use == "polymars") fun = ".polymars"
+    if (use == "polymars") {
+        # Use internal call to function .polymars
+        fun = ".polymars"
+    }
 
     # Title:
     if (is.null(title)) {
@@ -117,7 +122,7 @@ regFit <-
         description = .description()
     }
     
-    # Evaluate Command:
+    # Compose Command to be Called:
     cmd = match.call()
     if (!is.null(cmd$use)) cmd = cmd[-match("use", names(cmd), 0)]    
     cmd[[1]] <- as.name(fun)
@@ -127,7 +132,7 @@ regFit <-
     if (use == "nnet" & !match("linout", names(cmd), 0) ) cmd$linout = TRUE
     if (DEBUG) print(cmd)
     
-    # Fit linear Model:
+    # Fit regression Model:
     fit <- eval(cmd, parent.frame()) 
     if (DEBUG) print(fit)
       
@@ -172,6 +177,8 @@ regFit <-
 .amFormula <- 
     function(formula)
 {
+    # A function implemented by Diethelm Wuertz
+    
     # Description:
     #   Adds s() around term labels
     

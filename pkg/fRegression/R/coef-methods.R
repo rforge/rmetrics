@@ -16,7 +16,7 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2007, Diethelm Wuertz, GPL
+#   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
 #   www.rmetrics.org
@@ -33,7 +33,7 @@
 ################################################################################
 
         
-setMethod(f = "fitted", signature(object = "fREG"), definition = 
+setMethod(f = "coef", signature(object = "fREG"), definition = 
     function(object) 
 {   
     # A function implemented by Diethelm Wuertz
@@ -48,7 +48,7 @@ setMethod(f = "fitted", signature(object = "fREG"), definition =
     # FUNCTION:
     
     # Numeric vector of fitted values:
-    ans = coefficients(object@fit) 
+    ans = coef(object@fit) 
     
     # Return Value:
     ans

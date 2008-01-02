@@ -16,7 +16,7 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2007, Diethelm Wuertz, GPL
+#   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
 #   www.rmetrics.org
@@ -75,7 +75,7 @@ setMethod(f = "plot", signature(x = "fREG", y = "missing"), definition =
 # ------------------------------------------------------------------------------
 
 
-.plot.lm =
+.plot.lm <- 
     function(x, which = "ask", ...)
 {   
     # A function implemented by Diethelm Wuertz
@@ -152,13 +152,18 @@ setMethod(f = "plot", signature(x = "fREG", y = "missing"), definition =
 # ------------------------------------------------------------------------------
 
 
-.plot.common =
-function(x, which = "ask", ...)
+.plot.common <- 
+    function(x, which = "ask", ...)
 {
-    # 1. Responses + Fitted Values Plot:
-    # 2. Residuals Plot:
-    # 3. Quantile Plot:
-    # 4. Fitted Values vs. Residuals Plot:
+    # A function implemented by Diethelm Wuertz
+    
+    # Notes:
+    #   1. Responses + Fitted Values Plot:
+    #   2. Residuals Plot:
+    #   3. Quantile Plot:
+    #   4. Fitted Values vs. Residuals Plot:
+    
+    # FUNCTION:
     
     # Plot:
     .interactiveRegPlot(
@@ -196,19 +201,20 @@ function(x, which = "ask", ...)
 # ------------------------------------------------------------------------------
 
 
-.plot.gam = .plot.common
-.plot.ppr = .plot.common
-.plot.polymars = .plot.common
-.plot.nnet = .plot.common
+.plot.gam <- .plot.common
+.plot.ppr <- .plot.common
+.plot.polymars <- .plot.common
+.plot.nnet <- .plot.common
 
 
 # ------------------------------------------------------------------------------
 
 
-.interactiveRegPlot = 
-function(x, choices = paste("Plot", 1:19), 
-plotFUN = paste("plot.", 1:19, sep = ""), which = "all", ...)
-{   # A function implemented by Diethelm Wuertz
+.interactiveRegPlot <- 
+    function(x, choices = paste("Plot", 1:19), 
+    plotFUN = paste("plot.", 1:19, sep = ""), which = "all", ...)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Plot method for an object of class "template".
@@ -266,9 +272,10 @@ plotFUN = paste("plot.", 1:19, sep = ""), which = "all", ...)
 # ------------------------------------------------------------------------------
 
                 
-.multRegPlot = 
-function (x, choices, plotFUN, ...) 
-{   # A function implemented by Diethelm Wuertz
+.multRegPlot <- 
+    function (x, choices, plotFUN, ...) 
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     

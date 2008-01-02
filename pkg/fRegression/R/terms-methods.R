@@ -16,7 +16,7 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2007, Diethelm Wuertz, GPL
+#   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
 #   www.rmetrics.org
@@ -69,9 +69,10 @@
 # ------------------------------------------------------------------------------
 
 
-.response2Plot = 
-function(object, formula = Y ~ X1 + X2, N = 10, fun = mean)
-{   # A function implemented by Diethelm Wuertz
+.response2Plot <- 
+    function(object, formula = Y ~ X1 + X2, N = 10, fun = mean)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     
@@ -127,9 +128,10 @@ function(object, formula = Y ~ X1 + X2, N = 10, fun = mean)
 ################################################################################
 
 
-.termPlot =
-function(object, terms = NULL)
-{   # A function implemented by Diethelm Wuertz
+.termPlot <- 
+    function(object, terms = NULL)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     
@@ -188,9 +190,10 @@ function(object, terms = NULL)
 ################################################################################   
 
 
-.termPersp =
-function(object, terms = NULL, gridPoints = 25)
-{   # A function implemented by Diethelm Wuertz
+.termPersp <- 
+    function(object, terms = NULL, gridPoints = 25)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     
@@ -249,9 +252,10 @@ function(object, terms = NULL, gridPoints = 25)
 ################################################################################   
 
 
-.termContour =
-function(object, terms = NULL, gridPoints = 25)
-{   # A function implemented by Diethelm Wuertz
+.termContour <- 
+    function(object, terms = NULL, gridPoints = 25)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     

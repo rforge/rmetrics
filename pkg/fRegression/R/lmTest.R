@@ -16,7 +16,7 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2007, Diethelm Wuertz, GPL
+#   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
 #   www.rmetrics.org
@@ -57,11 +57,12 @@
 ################################################################################
 
 
-lmTest = 
-function(formula, 
-method = c("bg", "bp", "dw", "gq", "harv", "hmc", "rain", "reset"), 
-data = list(), ...)
-{   # A function implemented by Diethelm Wuertz 
+lmTest <-  
+    function(formula, 
+    method = c("bg", "bp", "dw", "gq", "harv", "hmc", "rain", "reset"), 
+    data = list(), ...)
+{   
+    # A function implemented by Diethelm Wuertz 
 
     # FUNCTION:
     
@@ -112,9 +113,9 @@ data = list(), ...)
 # ******************************************************************************
 
 
-dwTest = 
-function(formula, alternative = c("greater", "two.sided", "less"),
-iterations = 15, exact = NULL, tol = 1.0e-10, data = list())
+dwTest <- 
+    function(formula, alternative = c("greater", "two.sided", "less"),
+    iterations = 15, exact = NULL, tol = 1.0e-10, data = list())
 {   
     .dwtest(formula, alternative, iterations, exact, tol, data)
 }
@@ -123,8 +124,8 @@ iterations = 15, exact = NULL, tol = 1.0e-10, data = list())
 # ------------------------------------------------------------------------------
     
     
-bpTest = 
-function(formula, varformula = NULL, studentize = TRUE, data = list())
+bpTest <- 
+    function(formula, varformula = NULL, studentize = TRUE, data = list())
 {
     .bptest(formula, varformula, studentize, data)
 }
@@ -133,8 +134,8 @@ function(formula, varformula = NULL, studentize = TRUE, data = list())
 # ------------------------------------------------------------------------------
   
     
-gqTest = 
-function(formula, point=0.5, order.by = NULL, data = list())
+gqTest <- 
+    function(formula, point=0.5, order.by = NULL, data = list())
 {
     .gqtest(formula, point, order.by, data)
 }
@@ -143,9 +144,9 @@ function(formula, point=0.5, order.by = NULL, data = list())
 # ------------------------------------------------------------------------------
 
     
-hmcTest = 
-function(formula, point = 0.5, order.by = NULL, simulate.p = TRUE, 
-nsim = 1000, plot = FALSE, data = list()) 
+hmcTest <- 
+    function(formula, point = 0.5, order.by = NULL, simulate.p = TRUE, 
+    nsim = 1000, plot = FALSE, data = list()) 
 {   
     .hmctest(formula, point, order.by, simulate.p, nsim, plot, data) 
 }
@@ -154,8 +155,8 @@ nsim = 1000, plot = FALSE, data = list())
 # ------------------------------------------------------------------------------
 
 
-harvTest = 
-function(formula, order.by = NULL, data = list())
+harvTest <- 
+    function(formula, order.by = NULL, data = list())
 {
     .harvtest(formula, order.by, data)
 }
@@ -165,8 +166,8 @@ function(formula, order.by = NULL, data = list())
 
     
 rainTest = 
-function(formula, fraction = 0.5, order.by = NULL, center = NULL, 
-data = list())
+    function(formula, fraction = 0.5, order.by = NULL, center = NULL, 
+    data = list())
 {
     .raintest(formula, fraction, order.by, center, data)
 }
@@ -175,9 +176,9 @@ data = list())
 # ------------------------------------------------------------------------------
 
     
-resetTest = 
-function(formula, power = 2:3, type = c("fitted", "regressor", "princomp"), 
-data = list())
+resetTest <- 
+    function(formula, power = 2:3, type = c("fitted", "regressor", "princomp"), 
+    data = list())
 {
     .reset(formula, power, type, data)
 }
@@ -186,7 +187,8 @@ data = list())
 # ------------------------------------------------------------------------------
 
     
-bgTest = function(formula, order = 1, type = c("Chisq", "F"), data = list())
+bgTest <- 
+    function(formula, order = 1, type = c("Chisq", "F"), data = list())
 {
     .bgtest(formula, order, type, data)
 }
@@ -216,9 +218,9 @@ bgTest = function(formula, order = 1, type = c("Chisq", "F"), data = list())
 # ------------------------------------------------------------------------------
 
 
-.dwtest = 
-function(formula, alternative = c("greater", "two.sided", "less"),
-iterations = 15, exact = NULL, tol = 1e-10, data = list())
+.dwtest <- 
+    function(formula, alternative = c("greater", "two.sided", "less"),
+    iterations = 15, exact = NULL, tol = 1e-10, data = list())
 {
     dname = paste(deparse(substitute(formula)))
     alternative = match.arg(alternative)
@@ -293,8 +295,8 @@ iterations = 15, exact = NULL, tol = 1e-10, data = list())
 # ------------------------------------------------------------------------------
 
 
-.bptest = 
-function(formula, varformula = NULL, studentize = TRUE, data = list())
+.bptest <- 
+    function(formula, varformula = NULL, studentize = TRUE, data = list())
 {
     dname = paste(deparse(substitute(formula)))
     mf = model.frame(formula, data = data)
@@ -338,8 +340,8 @@ function(formula, varformula = NULL, studentize = TRUE, data = list())
 # ------------------------------------------------------------------------------
 
 
-.gqtest = 
-function(formula, point = 0.5, order.by = NULL, data = list())
+.gqtest <- 
+    function(formula, point = 0.5, order.by = NULL, data = list())
 {
     dname = paste(deparse(substitute(formula)))
     mf = model.frame(formula, data = data)
@@ -381,9 +383,9 @@ function(formula, point = 0.5, order.by = NULL, data = list())
 # ------------------------------------------------------------------------------
 
 
-.hmctest = 
-function(formula, point = 0.5, order.by = NULL, simulate.p = TRUE,
-nsim = 1000, plot = FALSE, data = list()) 
+.hmctest <- 
+    function(formula, point = 0.5, order.by = NULL, simulate.p = TRUE,
+    nsim = 1000, plot = FALSE, data = list()) 
 {
     dname = paste(deparse(substitute(formula)))
     mf = model.frame(formula, data = data)
@@ -437,8 +439,8 @@ nsim = 1000, plot = FALSE, data = list())
 # ------------------------------------------------------------------------------
 
 
-.harvtest = 
-function(formula, order.by = NULL, data = list())
+.harvtest <- 
+    function(formula, order.by = NULL, data = list())
 {
   dname = paste(deparse(substitute(formula)))
   mf = model.frame(formula, data = data)
@@ -499,8 +501,8 @@ function(formula, order.by = NULL, data = list())
 # ------------------------------------------------------------------------------
 
 
-.raintest = 
-function(formula, fraction=0.5, order.by=NULL, center=NULL, data=list())
+.raintest <- 
+    function(formula, fraction=0.5, order.by=NULL, center=NULL, data=list())
 {
   dname = paste(deparse(substitute(formula)))
   mf = model.frame(formula, data = data)
@@ -567,9 +569,9 @@ function(formula, fraction=0.5, order.by=NULL, center=NULL, data=list())
 # ------------------------------------------------------------------------------
 
 
-.reset = 
-function(formula, power=2:3, type=c("fitted", "regressor",
-"princomp"), data=list())
+.reset <- 
+    function(formula, power=2:3, type=c("fitted", "regressor",
+    "princomp"), data=list())
 {
   dname = paste(deparse(substitute(formula)))
   mf = model.frame(formula, data = data)
@@ -622,8 +624,8 @@ function(formula, power=2:3, type=c("fitted", "regressor",
 # ------------------------------------------------------------------------------
 
 
-.bgtest = 
-function(formula, order = 1, type = c("Chisq", "F"), data = list())
+.bgtest <- 
+    function(formula, order = 1, type = c("Chisq", "F"), data = list())
 {
   dname = paste(deparse(substitute(formula)))
   mf = model.frame(formula, data = data)

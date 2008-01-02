@@ -16,7 +16,7 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2007, Diethelm Wuertz, GPL
+#   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
 #   www.rmetrics.org
@@ -57,6 +57,7 @@ setMethod(f = "residuals", signature(object = "fREG"), definition =
         rownames(data.mat) = rownames(data)
         colnames(data.mat) = object@data$unit
         ans@Data = data.mat
+        colnames(ans) = as.character(object@formula[2])
     } else if (dataClass == "zoo") {
         ans = residuals
         attr(ans, "index") = attr(data, "index")
