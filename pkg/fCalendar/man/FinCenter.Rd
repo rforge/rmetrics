@@ -110,9 +110,9 @@ listFinCenter(pattern = ".*")
    listFinCenter("^[^A]") # all *not* beginning with "A"
    listFinCenter(".*/L")  # cities with L*
 
-   stopifnot(identical(listFinCenter(), ## 'A' and 'not A' == everything:
-        union(listFinCenter("^A"),
-            listFinCenter("^[^A]"))))
+   stopifnot(identical(sort(listFinCenter()), ## 'A' and 'not A' == everything:
+        sort(union(listFinCenter("^A"),
+            listFinCenter("^[^A]")))))
 }
 
 

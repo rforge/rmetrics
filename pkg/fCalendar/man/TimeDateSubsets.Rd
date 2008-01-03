@@ -193,7 +193,7 @@ blockEnd(x, block = 20)
 \examples{  
 ## Dates in April, currentYear: 
    tS = timeSequence(
-      from = paste(currentYear, "-04-01", sep = ""),
+      from = paste(currentYear, "-03-01", sep = ""),
       to = paste(currentYear, "-04-30", sep = ""))
    tS
     
