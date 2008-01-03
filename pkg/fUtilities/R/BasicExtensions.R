@@ -42,7 +42,11 @@
 #  sort                      sort has become a generic function                 
 #  sort.default              sort default method                                
 #  var                       var has become a generic function                  
-#  var.default               var default method                                 
+#  var.default               var default method 
+#  volatility                volatility has become a generic function                  
+#  volatility.default        volatility default method
+#  termPlot                  termPlot has become a generic function                  
+#  termPlot.default          termPlot default method                                
 #  cov                       var has become a generic function                  
 #  cov.default               var default method                                 
 #  stdev                     for SPLUS compatibility 
@@ -430,6 +434,36 @@ volatility.default <-
 
     # Return Value:
     ans
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+termPlot <-
+    function(model, ...) 
+{
+    # A function implemented by Diethelm Wuertz
+
+    # FUNCTION:
+
+    # Return Value:   
+    UseMethod("termPlot")
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+termPlot.default <-
+function(model, ...)
+{
+    # A function implemented by Diethelm Wuertz
+
+    # FUNCTION:
+
+    # Return Value:
+    stats::termplot(model, ...)
 }
 
 
