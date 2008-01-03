@@ -47,14 +47,14 @@
     
     ...
     
-    All the functions of the \code{regFit} and \code{gregFit} family 
+    All the functions of the \code{regFit} family 
     return the same object, an object of class \code{"fREG"} with the 
     following slots:
     call, formula, method, data, fit, residuals, fitted, title, and
     description.
     
     Thus, independent of the regression model applied we can use the 
-    same S4 methods for all types of regression. This uncludes, print,
+    same S4 methods for all types of regression. This includes, print,
     plot, summary, predict, fitted, residuals, coef, and formula 
     methods.
     

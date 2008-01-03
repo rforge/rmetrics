@@ -32,11 +32,11 @@
 #  regFit                Wrapper Function for Regression Models
 #  .lmFit                 Linear Regression Model
 #  .rlmFit                Robust Linear Regression Model
+#  .glmFit                Generalized Linear Model
+#  .gamFit                Generalized Additive Model
 #  .pprFit                Projection Pursuit Regression Model
-#  .polymarsFit           Polytochomous MARS Model
 #  .nnetFit               Feedforward Neural Network Model
-# UTILITY:              DESCRIPTION:
-#  .amFormula            Adds s() around term labels
+#  .polymarsFit           Polytochomous MARS Model
 ################################################################################
 
 
@@ -48,21 +48,15 @@
 #   glm         stats       x       -      x         x         x
 #   gam         mgcv        x       x      x         x         x
 #   ppr         modreg      x       x      x         x         x
-#   polymars*   polspline   -       xx     x         -         x
 #   nnet        nnet        x       -      x         x         x
-#
-#   *BUILTIN:
-#    polspline  required!
-#   *IMPORTANT NOTE:
-#    Both packages r-cran-mda and r-cran-polspline are not available on the
-#    Debian Server, therefore we made them accessible as Builtin functions
+#   polymars*   polspline   -       xx     x         -         x
 ################################################################################
 
 
 regFit <- 
-    function (formula, data,
-    use = c("lm", "rlm", "am", "ppr", "nnet", "polymars"), 
-    trace = TRUE, title = NULL, description = NULL, ...) 
+    function (formula, data, family = gaussian, 
+    use = c("lm", "rlm", "glm", "gam", "ppr", "nnet", "polymars"), 
+    title = NULL, description = NULL, ...) 
 {   
     # A function implemented by Diethelm Wuertz
 
@@ -71,50 +65,40 @@ regFit <-
     
     # Details:
     #   This is a wrapper function for the following regrssion models:
-    #   LM          Linear Regression Modelling
-    #   RLM         Robust Linear Regression Modelling
-    #   AM          Additive Modelling
-    #   PPR         Projection Pursuit Regression
-    #   POLYMARS    Polytochomous MARS Modeling
-    #   NNET        Feedforward Neural Net
+    #     LM          Linear Regression Modelling
+    #     RLM         Robust Linear Regression Modelling
+    #     GLM         Generalized Linear Modelling
+    #     GAM         Generalized Additive Modelling
+    #     PPR         Projection Pursuit Regression
+    #     NNET        Feedforward Neural Net
+    #     POLYMARS    Polytochomous MARS Modeling
     
     # Notes:
     #   Available Methods are
-    #   "print", "plot", "summary", and "predict" method
-    #   coefficients, "residuals" "fitted", "vcov" method
+    #   "print", "plot", "summary", "predict"
+    #   "coef", "formula", "residuals" "fitted", "vcov" 
     
     # Example:
     #   regFit(Y ~ X1 + X2 + X3, regSim())
     
     # FUNCTION:
-    
-    # Debugging:
-    DEBUG = FALSE
    
     # Transform data into a dataframe
     Data = data
     data = as.data.frame(data)
     
     # Function to be called:
-    fun = use = match.arg(use)
-    if (use == "am") {
-        # Use gam() and add smoothing s()
-        fun = "gam"
-        formula = .amFormula(formula)
-    }
-    if (use == "polymars") {
-        # Use internal call to function .polymars
-        fun = ".polymars"
-    }
+    fun = paste(".", match.arg(use), sep = "")
 
     # Title:
     if (is.null(title)) {
-        if (use == "lm") title = "Linear Regression Modelling"
-        if (use == "rlm") title = "Robust Linear Regression Modelling"
-        if (use == "am") title = "Additive Modelling"
+        if (use == "lm") title = "Linear Regression Modeling"
+        if (use == "rlm") title = "Robust Linear Regression Modeling"
+        if (use == "glm") title = "Generalized Linear Modeling"
+        if (use == "gam") title = "Generalized Additive Modeling"
         if (use == "ppr") title = "Projection Pursuit Regression"
+        if (use == "nnet") title = "Feedforward Neural Network Modeling" 
         if (use == "polymars") title = "Polytochomous MARS Modeling"
-        if (use == "nnet") title = "Feedforward Neural Network Modelling" 
     } 
     
     # Description:
@@ -126,32 +110,24 @@ regFit <-
     cmd = match.call()
     if (!is.null(cmd$use)) cmd = cmd[-match("use", names(cmd), 0)]    
     cmd[[1]] <- as.name(fun)
-    if (use == "ppr"  & !match("nterm",  names(cmd), 0) ) cmd$nterm = 2
-    if (use == "nnet" & !match("trace",  names(cmd), 0) ) cmd$trace = FALSE
-    if (use == "nnet" & !match("size",   names(cmd), 0) ) cmd$size = 2
-    if (use == "nnet" & !match("linout", names(cmd), 0) ) cmd$linout = TRUE
-    if (DEBUG) print(cmd)
     
-    # Fit regression Model:
+    # Fit Regression Model:
     fit <- eval(cmd, parent.frame()) 
-    if (DEBUG) print(fit)
       
-    # Add to Fit:
+    # Add "cmd" to Fit:
+    fit$cmd = cmd
+    
+    # Add "xlevels" to Fit (if missing):
     if (is.null(fit$xlevels)) fit$xlevels = list()
+    
+    # Add "residuals" and "fitted" to Fit (to be sure ...):
     fit$residuals = as.vector(fit$residuals)    
     fit$fitted.values = as.vector(fit$fitted.values)
+    
+    # Add "parameters" as Alternative:
     fit$parameters = fit$coef
-    if (use == "am") fit$fake.formula = interpret.gam(formula)$fake.formula
-    noFitModels = c("ppr", "nnet")
-    FitModelTest = as.logical(match(use, noFitModels, 0))
-    if (FitModelTest) {
-        mf <- match.call(expand.dots = FALSE)
-        Names = c("formula", "data", "subset", "weights", "na.action", "offset")
-        mf <- mf[c(1, match(Names, names(mf), 0))]
-        mf$drop.unused.levels <- TRUE
-        mf[[1]] <- as.name("model.frame")
-        fit$model <- eval(mf, parent.frame())
-    }
+ 
+    # Extend to class "list":
     class(fit) = c("list", class(fit))
     if (!inherits(fit, "lm")) class(fit) = c(class(fit), "lm")
 
@@ -161,7 +137,8 @@ regFit <-
         formula = as.formula(formula), 
         family = as.character(gaussian()),
         method = use,
-        data = list(x = data, data = Data),
+        # data is data.frame, Data original input:
+        data = list(data = data, Data = Data),
         fit = fit,
         residuals = fit$residuals,
         fitted = fit$fitted.values,
@@ -174,132 +151,15 @@ regFit <-
 # ------------------------------------------------------------------------------
 
 
-.amFormula <- 
-    function(formula)
-{
-    # A function implemented by Diethelm Wuertz
-    
-    # Description:
-    #   Adds s() around term labels
-    
-    # Note:
-    #   Called by regFit() for use="am".
-    
-    # Example:
-    #   > .amFormula(z ~ x + y)
-    #   z ~ s(x) + s(y)
-    
-    # FUNCTION:
-    
-    TF = terms(formula)
-    attTF = attr(TF, "term.labels")
-    newF = NULL
-    for (i in 1:length(attTF)) {
-        addF = paste(" s(", attTF[i], ") ", sep = "")
-        newF = paste(newF, addF, sep = "+")
-    }
-    newF = substr(newF, 3, 99)
-    if (attr(TF, "intercept") == 0) newF = paste(newF, "- 1", sep = "")
-    newF = paste("~", newF)
-    if (attr(TF, "response") == 1) newF = paste(as.character(formula)[2], newF)
-    
-    # Return Value:
-    as.formula(newF)
-}
-
-
-################################################################################
-# FUNCTION:             PARAMETER ESTIMATION:
-#  gregFit               Wrapper Function for Generalized Regression Models
-#  .glmFit                Generalized Linear Model
-#  .gamFit                Generalized Additive Model
-################################################################################
-
-
-################################################################################
-# MODEL:        PACKAGE     print   plot   summary   print     predict
-#                                    persp           summary
-#   lm          stats       x       x      x         x         x
-#   rlm         MASS
-#   glm         stats       x       -      x         x         x
-#   gam         mgcv        x       x      x         x         x
-#   ppr         modreg      x       x      x         x         x
-#   polymars*   polspline   -       xx     x         -         x
-#   nnet        nnet        x       -      x         x         x
-#
-#   *BUILTIN:
-#    polspline  required!
-#   *IMPORTANT NOTE:
-#    Both packages r-cran-mda and r-cran-polspline are not available on the
-#    Debian Server, therefore we made them accessible as Builtin functions
-################################################################################
-
-
-gregFit <-  
-    function (formula, family, data, use = c("glm", "gam"), 
-    trace = TRUE, title = NULL, description = NULL, ...) 
-{   
-    # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Common function call for generalized regression models.
-    
-    # Details:
-    #   This is a wrapper function for the following regrssion models:
-    #   GLM         Generalized Linear Modelling
-    #   GAM         Generalized Additive Modelling
-    
-    # Notes:
-    #   Available Methods are
-    #   "print", "plot", "summary", and "predict" method
-    #   "coef", "residuals" "fitted", "vcov" method
-    
-    # FUNCTION:
-    
-    # Transform data into a dataframe
-    Data = data
-    data = as.data.frame(data)
-    
-    # Function to be called:
-    fun = use = match.arg(use)
-
-    # Title:
-    if (is.null(title)) {
-        if (use == "glm") title = "Generalized Linear Modelling"
-        if (use == "gam") title = "Generalized Additive Modelling"
-    }  
-    
-    # Description:
-    if (is.null(description)) {
-        description  = .description()
-    }  
-    
-    # Evaluate:
-    cmd = match.call()
-    if (!is.null(cmd$use)) cmd = cmd[-match("use", names(cmd), 0)]    
-    cmd[[1]] <- as.name(fun)
-    fit <- eval(cmd, parent.frame()) 
-        
-    # Add to Fit:
-    fit$residuals = as.vector(fit$residuals)    
-    fit$fitted.values = as.vector(fit$fitted.values)
-    fit$parameters = fit$coef
-    class(fit) = c("list", class(fit))
-    
-    # Return Value:
-    new("fREG",     
-        call = as.call(match.call()),
-        formula = as.formula(formula), 
-        family = as.character(gaussian()),
-        method = as.character(use),
-        data = list(),
-        fit = fit,
-        residuals = fit$residuals,
-        fitted = fit$fitted.values,
-        title = as.character(title), 
-        description = .description() 
-    )
-}
+.lm <- stats::lm
+.rlm <- MASS::rlm
+.glm <- stats::glm
+.gam <- mgcv::gam
+.ppr <- function(..., nterms = 2) 
+    stats::ppr(..., nterms = nterms)
+.nnet <- function(..., trace = FALSE, size = 2, linout = TRUE) 
+    nnet::nnet(..., trace = trace, size = size, linout = linout)
+.polymars <- .polymars.formula
 
 
 ################################################################################

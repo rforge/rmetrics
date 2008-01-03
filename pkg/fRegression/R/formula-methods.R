@@ -33,8 +33,8 @@
 ################################################################################
 
         
-setMethod(f = "formula", signature(object = "fREG"), definition = 
-    function(object) 
+setMethod(f = "formula", signature(x = "fREG"), definition = 
+    function(x) 
 {   
     # A function implemented by Diethelm Wuertz
     
@@ -47,8 +47,8 @@ setMethod(f = "formula", signature(object = "fREG"), definition =
     
     # FUNCTION:
     
-    # Numeric vector of fitted values:
-    ans = vcov(object@formula) 
+    # Formula:
+    ans = x@formula 
     
     # Return Value:
     ans

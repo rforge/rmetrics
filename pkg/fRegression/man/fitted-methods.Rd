@@ -63,7 +63,7 @@
    
 ## fitted - 
    val = slot(fit, "fitted")
-   haead(val)
+   head(val)
    class(val)
    val = fitted(fit)
    head(val)
@@ -76,7 +76,7 @@
    
 ## fitted - 
    val = slot(fit, "fitted")
-   haead(val)
+   head(val)
    class(val)
    val = fitted(fit)
    head(val)

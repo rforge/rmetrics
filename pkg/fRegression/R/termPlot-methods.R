@@ -29,32 +29,32 @@
 
 ################################################################################
 # FUNCTIONS:                REGRESSION TERMS:
-#  terms.fREG                Extracts 'fREG' Model Terms
+#  termPlot.fREG             Displays 'fREG' Model Term Plots        
 ################################################################################
 
 
-
-setMethod(f = "terms", signature(x = "fREG"), definition = 
-    function(x, ...) 
+setMethod(f = "termPlot", signature(model = "fREG"), definition = 
+    function(model, ...) 
 {   
     # A function implemented by Diethelm Wuertz
     
     # Description:  
-    #   Extracts 'fREG' Model Terms
+    #   Displays 'fREG' Model Term Plots
     
     # Arguments:
-    #   object - an object of class fREG as returned by the function
+    #   model - an object of class fREG as returned by the function
     #       regFit
     
     # FUNCTION:
     
     # Formula:
-    ans = stats::terms(slot(x, "fit"), ...) 
+    ans = termplot(slot(model, "fit"), ...) 
     
     # Return Value:
     ans
 })
 
 
-################################################################################    
-    
+
+################################################################################
+

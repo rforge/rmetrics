@@ -32,6 +32,18 @@
     }
 }
 
+
+\details{
+
+    The show or print method returns the same information for all
+    supported regression models through the \code{use} argument in
+    the function \code{regFit}.
+    
+    These are the 'title', the 'formula', the 'family' and 
+    the 'model parameters'.
+    
+}
+
     
 \author{
 

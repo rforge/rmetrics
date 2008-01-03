@@ -43,13 +43,6 @@
 ################################################################################
 
 
-
-################################################################################
-# FUNCTION:                 DESCRIPTION:
-#  plot                      Plot method for an object of class 'fGARCH'
-################################################################################
-
-
 setMethod(f = "plot", signature(x = "fREG", y = "missing"), definition = 
     function(x, which = "ask", ...)
 {   
@@ -70,83 +63,6 @@ setMethod(f = "plot", signature(x = "fREG", y = "missing"), definition =
     # Return Value:
     invisible(x)
 })
-
-
-# ------------------------------------------------------------------------------
-
-
-.plot.lm <- 
-    function(x, which = "ask", ...)
-{   
-    # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Tailored plot function for an object of class 'lm', 'rlm', 'glm'
-    
-    # Note:
-    #   .plot() is a generic function, see fUtilities.
-    
-    # FUNCTION:
-    
-    # 1. Responses + Fitted Values Plot:
-    # 2. Residuals Plot:
-    # 3. Quantile Plot:
-    # 4. Fitted Values vs. Residuals Plot:
-    # 5. ACF Plot
-    # 6. PACF Plot
-    # 7. Positive Mean Excess Plot"
-    # 8. Negative Mean Excess Plot"
-
-    # 1. lm: Residuals vs Fitted:
-    # 2. lm: Normal Q-Q:
-    # 3. lm: Scale-Location:
-    # 4. lm: Cook's distance:
-    # 5. lm: Residuals vs Leverage:
-    # 6. lm: Cook's distance vs Leverage:
-
-    # Plot:
-    .interactiveRegPlot(
-        x,
-        choices = c(
-            "Responses + Fitted Values",
-            "Residuals",
-            "Normal Q-Q",
-            "Residuals vs Fitted",
-            "ACF of Residuals",
-            "PACF of Residuals",
-            "Positive Mean Excess Plot",
-            "Negative Mean Excess Plot",
-            "lm: Residuals vs Fitted", 
-            "lm: Normal Q-Q", 
-            "lm: Scale-Location", 
-            "lm: Cook's distance", 
-            "lm: Residuals vs Leverage", 
-            "lm: Cook's distance vs Leverage"),
-        plotFUN = paste(".plot.lm.", 1:14, sep = ""),
-        which = which) 
-            
-    # Return Value:
-    invisible(x)
-} 
-
-
-# ------------------------------------------------------------------------------
-
-
-.plot.lm.1 <- function(x, ...) .responsesPlot(residuals(x)+fitted(x),fitted(x))
-.plot.lm.2 <- function(x, ...) .residualsPlot(residuals(x))    
-.plot.lm.3 <- function(x, ...) qqnormPlot(residuals(x))
-.plot.lm.4 <- function(x, ...) .firePlot(fitted(x), residuals(x)) 
-.plot.lm.5 <- function(x, ...) .acfPlot(residuals(x))
-.plot.lm.6 <- function(x, ...) .pacfPlot(residuals(x))
-.plot.lm.7 <- function(x, ...) .mrlPlot(residuals(x))
-.plot.lm.8 <- function(x, ...) .mrlPlot(-residuals(x))
-.plot.lm.9 <- function(x, ...) plot(x, 1, pch = 19, col = "steelblue", ...)  
-.plot.lm.10<- function(x, ...) plot(x, 2, pch = 19, col = "steelblue", ...)
-.plot.lm.11<- function(x, ...) plot(x, 3, pch = 19, col = "steelblue", ...)
-.plot.lm.12<- function(x, ...) plot(x, 4, pch = 19, col = "steelblue", ...)
-.plot.lm.13<- function(x, ...) plot(x, 5, pch = 19, col = "steelblue", ...)
-.plot.lm.14<- function(x, ...) plot(x, 6, pch = 19, col = "steelblue", ...)
     
     
 # ------------------------------------------------------------------------------
@@ -177,7 +93,7 @@ setMethod(f = "plot", signature(x = "fREG", y = "missing"), definition =
             "PACF of Residuals",
             "Positive Mean Excess Plot",
             "Negative Mean Excess Plot"),
-        plotFUN = paste(".plot.common.", 1:8, sep = ""),
+        plotFUN = paste(".plot.", 1:8, sep = ""),
         which = which) 
             
     # Return Value:
@@ -188,23 +104,26 @@ setMethod(f = "plot", signature(x = "fREG", y = "missing"), definition =
 # ------------------------------------------------------------------------------
 
 
-.plot.common.1 <- function(x, ...) .responsesPlot(residuals(x)+fitted(x),fitted(x))
-.plot.common.2 <- function(x, ...) .residualsPlot(residuals(x))    
-.plot.common.3 <- function(x, ...) qqnormPlot(residuals(x))
-.plot.common.4 <- function(x, ...) .firePlot(fitted(x), residuals(x)) 
-.plot.common.5 <- function(x, ...) .acfPlot(residuals(x))
-.plot.common.6 <- function(x, ...) .pacfPlot(residuals(x))
-.plot.common.7 <- function(x, ...) .mrlPlot(residuals(x))
-.plot.common.8 <- function(x, ...) .mrlPlot(-residuals(x))
+.plot.1 <- function(x, ...) .responsesPlot(residuals(x)+fitted(x),fitted(x))
+.plot.2 <- function(x, ...) .residualsPlot(residuals(x))    
+.plot.3 <- function(x, ...)  qqnormPlot(residuals(x))
+.plot.4 <- function(x, ...) .firePlot(fitted(x), residuals(x)) 
+.plot.5 <- function(x, ...) .acfPlot(residuals(x))
+.plot.6 <- function(x, ...) .pacfPlot(residuals(x))
+.plot.7 <- function(x, ...) .mrlPlot(residuals(x))
+.plot.8 <- function(x, ...) .mrlPlot(-residuals(x))
 
 
 # ------------------------------------------------------------------------------
 
 
+.plot.lm <- .plot.common
+.plot.rlm <- .plot.common
+.plot.glm <- .plot.common
 .plot.gam <- .plot.common
 .plot.ppr <- .plot.common
-.plot.polymars <- .plot.common
 .plot.nnet <- .plot.common
+.plot.polymars <- .plot.common
 
 
 # ------------------------------------------------------------------------------
@@ -217,7 +136,7 @@ setMethod(f = "plot", signature(x = "fREG", y = "missing"), definition =
     # A function implemented by Diethelm Wuertz
 
     # Description:
-    #   Plot method for an object of class "template".
+    #   Interactive plot method.
     
     # Arguments:
     #   x - an object to be plotted

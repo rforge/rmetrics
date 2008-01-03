@@ -16,10 +16,8 @@
 
 
 \usage{    
-regFit(formula, data, use = c("lm", "rlm", "am", "ppr", "nnet", 
-    "polymars"), trace = TRUE, title = NULL, description = NULL, \dots)
-    
-gregFit(formula, family, data, use = c("glm", "gam"), trace = TRUE, 
+regFit(formula, data, family = gaussian, 
+    use = c("lm", "rlm", "glm","gam", "ppr", "nnet", "polymars"), 
     title = NULL, description = NULL, \dots)
 }
 
@@ -68,10 +66,6 @@ gregFit(formula, family, data, use = c("glm", "gam"), trace = TRUE,
     \item{title}{
         a character string which allows for a project title.
         }
-    \item{trace}{
-        a logical flag. Should the parameter estimation be traced.
-        Not used.
-        }
     \item{\dots}{
         additional optional arguments to be passed to the underlying 
         functions. For details we refer to inspect the following help 
@@ -85,104 +79,109 @@ gregFit(formula, family, data, use = c("glm", "gam"), trace = TRUE,
 
 \value{
 
-    \bold{Function regFit:} 
-    \cr
-    returns an S4 object of class \code{"fREG"}, with the following 
-    slots: \code{call}, \code{data}, \code{fit}, 
-
-    \item{call}{
-        the matched function call.
-        }
-    \item{data}{
-        the input data in form of a data.frame.
-        }
-    \item{description}{
-        allows for a brief project description.
-        }
-    \item{fit}{
-        the results as a list returned from the underlying
-        regression model function, e.g.\cr
-        \code{fit$parameters} - the fitted model parameters,\cr
-        \code{fit$residuals} - the model residuals, \cr
-        \code{fit$fitted.values} - the fitted values of the model,\cr
-        and many more. For details we refer to the help pages of
-        the selected regression model. 
-        }
-    \item{method}{
-        the selected regression model naming the applied method.
-        }
-    \item{formula}{
-        the formula expression describing the model.
-        }
-    \item{family}{
-        the selected family and link name if available, otherwise
-        a string vector with to empty strings.
-        }
-    \item{parameters}{
-        named parameters or coefficients of the fitted model.
-        }
-    \item{title}{
-        a title string.
-        }
+    returns an S4 object of class \code{"fREG"}.
             
-    \bold{Methods:}
-    \cr\cr
-    
-    The output from the \code{print} method gives information at 
-    least about the function call, the fitted model parameters,
-    and the residuals variance.
-    \cr\cr
-    
-    The \code{plot} method produces three figures, the first plots
-    the series of residuals, the second does a quantile-quantile plot
-    of the residual plot, and the third plots the fitted values vs.
-    the residuals. Additional plots can be generated from the plot
-    method (if available) of the underlying model, see the example below. 
-    \cr\cr
-    
-    The \code{summary} method provides additional information,
-    like errors on the model parameters as far as available, and adds 
-    additional information about the fit.  
-    \cr\cr
-    
-    The \code{predict} method forecasts from a fitted model. The
-    returned values are the same as produced by the prediction
-    function of the selected regression model. Especially, \code{$fit} 
-    returns the forecast vector.
-    \cr\cr
-     
-    The \code{residuals} and \code{fitted.values} methods return
-    the residuals and the fitted values as numeric vectors.
-
 }
 
 
 \details{
 
+    The function \code{regFit} was created to provide a selection of
+    regression models working together with Rmetrics' \code{"timeSeries"}
+    objects and providing a common S4 object as the returned value. These
+    models include linear modeling, robust linear modeling, generalized
+    linear modeling, generalized additive modelling, projection pursuit
+    regression, neural networks, and polytochomous MARS models.\cr
+    
+
+    % -----------------------------------------------
     \bold{LM -- Linear Modelling:}
     \cr\cr  
     Univariate linear regression analysis is a statistical methodology 
     that assumes a linear relationship between some predictor variables 
     and a response variable. The goal is to estimate the coefficients 
     and to predict new data from the estimated linear relationship.
+
+    R's base function
+
+    \code{lm(formula, data, subset, weights, na.action, method = "qr", }\cr
+    \code{ model = TRUE, x = FALSE, y = FALSE, qr = TRUE, singular.ok = TRUE, }\cr 
+    \code{ contrasts = NULL, offset, ...) }\cr
+
+    is used to fit linear models. It can be used to carry out regression, 
+    single stratum analysis of variance and analysis of covariance, although 
+    \code{aov} may provide a more convenient interface for these. 
+    
+    Rmetrics' function 
+    
+    \code{regFit(formula, data, use = "lm", ...) }\cr
+    
+    calls R's base function \code{lm} but with the difference that the
+    \code{data} argument, may be any rectangular object which can be 
+    transferred by the function \code{as.data.frame} into a data frame
+    with named columns, e.g. an object of class \code{"timeSeries"}. 
+    The function \code{regFit} returns an S4 object of class \code{"fREG"} 
+    whose slot \code{@fit} is the object as returned by the function 
+    \code{"lm"}. In addtion we have S4 methods \code{fitted} and 
+    \code{residuals} which allow to retrieve the fitted values and the 
+    residuals as objects of same classe as defined by the argument 
+    \code{data}.
+    
     The function \code{plot.lm} provides four plots: a plot of residuals 
     against fitted values, a Scale-Location plot of sqrt{| residuals |} 
     against fitted values, a normal QQ plot, and a plot of Cook's 
     distances versus row labels.\cr 
     \code{[stats:lm]}
     \cr
+    
+    
+    % -----------------------------------------------
+    \bold{LM -- Robust Linear Modelling:}
+    \cr\cr  
+    
+    To fit a linear model by robust regression using an M estimator R
+    offers the function 
+    
+    \code{rlm(formula, data, weights, ..., subset, na.action, }\cr
+    \code{  method = c("M", "MM", "model.frame"), }\cr
+    \code{  wt.method = c("inv.var", "case"), }\cr
+    \code{  model = TRUE, x.ret = TRUE, y.ret = FALSE, contrasts = NULL) }\cr
 
+    from package \code{MASS}. Again we can use the Rmetrics' wrapper
+    
+    \code{regFit(formula, data, use = "rlm", ...) }\cr
+    
+    which allows us to use for example S4 \code{timeSeries} objects as
+    input and to get the output as an S4 object with the known slots.\cr
+    \code{[MASS::rlm]}
+    \cr
+    
+    
+    % -----------------------------------------------
     \bold{GLM -- Generalized Linear Models:}
     \cr\cr
     Generalized linear modelling extends the linear model in two directions.
     (i) with a monotonic differentiable link function describing how the 
     expected values are related to the linear predictor, and (ii) with 
     response variables having a probability distribution from an exponential 
-    family. \cr
-    \code{[stats:glm]}
+    family.\cr
+    
+    R's base function from package \code{stats} comes with the function
+    
+    \code{glm(formula, family = gaussian, data, weights, subset, }\cr 
+    \code{  na.action, start = NULL, etastart, mustart, offset, }\cr
+    \code{  control = glm.control(...), model = TRUE, method = "glm.fit", }\cr 
+    \code{  x = FALSE, y = TRUE, contrasts = NULL, ...) }\cr
+
+    Again we can use the Rmetrics' wrapper
+    
+    \code{regFit(formula, data, use = "gam", ...) }\cr
+    
+    \code{[stats::glm]}
     \cr
     
-    \bold{AM, GAM -- Generalized Additive Models:}
+    % -----------------------------------------------
+    \bold{GAM -- Generalized Additive Models:}
     \cr\cr  
     An additive model generalizes a linear model by smoothing individually
     each predictor term. A generalized additive model extends the additive
@@ -192,6 +191,8 @@ gregFit(formula, family, data, use = c("glm", "gam"), trace = TRUE,
     \code{[mgcv:gam]}
     \cr
     
+    
+    % -----------------------------------------------
     \bold{PPR -- Projection Pursuit Regression:}
     \cr\cr  
     The basic method is given by Friedman (1984), and is essentially 
@@ -200,7 +201,7 @@ gregFit(formula, family, data, use = c("glm", "gam"), trace = TRUE,
     first adds up to \code{max.terms}, by default \code{ppr.nterms},
     ridge terms one at a time; it will use less if it is unable to find 
     a term to add that makes sufficient difference. The levels of 
-    optimization (argument \code{optlevel}), by default 2, differ in 
+    optimization, argument \code{optlevel}, by default 2, differ in 
     how thoroughly the models are refitted during this process.
     At level 0 the existing ridge terms are not refitted.  At level 1
     the projection directions are not refitted, but the ridge
@@ -213,148 +214,19 @@ gregFit(formula, family, data, use = c("glm", "gam"), trace = TRUE,
     \code{[stats:ppr]}
     \cr
     
+    
+    % -----------------------------------------------
     \bold{POLYMARS -- Polytochomous MARS:}
     \cr\cr
     The algorithm employed by \code{polymars} is different from the 
     MARS(tm) algorithm of Friedman (1991), though it has many similarities. 
     Also the name \code{polymars} has been used for this algorithm well 
-    before MARS was trademarked. 
-    %Two of the main differences are:
-    %\code{polymars} requires linear terms of a predictor to be in the model
-    %before nonlinear terms using the same predictor can be added; and
-    %\code{polymars} requires a univariate basis function to be in the model
-    %before a tensor-product basis function involving the univariate ...
-    \cr
-    Additional arguments which can be passed to the \code{"polymars"}
-    estimator are:
-    \cr
-    \code{maxsize} - the maximum number of basis functions that the model is 
-        allowed to grow to in the stepwise addition procedure. Default is 
-        \eqn{\min(6*(n^{1/3}),n/4,100)}, where \code{n} is the number of 
-        observations. 
-        \cr
-    \code{gcv} - parameter used to find the overall best model from a 
-        sequence of fitted models. The residual sum of squares of a model 
-        is penalized by dividing by the square of 
-        \code{1-(gcv x model size)/cases}.   
-        A larger gcv value would tend to produce a smaller model.
-        \cr 
-    \code{additive} - Should the fitted model be additive in the predictors? 
-        \cr 
-    \code{startmodel} - the first model that is to be fit by \code{polymars}. 
-        It is either an object of the class \code{polymars} or a model 
-        dreamed up by the user. In that case, it takes the form of a 
-        \code{4 x n} matrix, where \code{n} is the  number of basis 
-        functions in the starting model excluding the intercept. Each 
-        row corresponds to one basis function (with two possible components). 
-        Column 1 is the index of the first predictor involved. Column 2 is 
-        a possible knot in this predictor. If column 2 is \code{NA}, the 
-        first component is linear. Column 3 is the possible second predictor 
-        involved (if column 3 is \code{NA} the basis function only depends 
-        on one predictor). Column 4 contains the possible knot for the 
-        predictor in column 3, and it is \code{NA} when this component is 
-        linear.  Example: if a row reads \code{3 NA 2 4.7}, the corresponding 
-        basis function is \eqn{[X_3 * (X_2-4.7)_+]}; if a row reads 
-        \code{2 4.3 NA NA} the corresponding basis function is 
-        \eqn{[(X_2-4.3)_+]}. 
-        A fifth column can be added with 1s and 0s, The 1s specify which 
-        basis functions of the startmodel must be in each model. Thus, these 
-        functions stay in the model during the whole stepwise fitting 
-        procedure. If \code{startmodel} is not specified \code{polymars} 
-        starts with a model that only contains  the intercept. 
-        \cr
-    \code{weights} - optional vector of observation weights; if supplied, 
-        the algorithm fits to minimize the sum of the weights multiplied 
-        by the squared residuals. The length of weights must be the same 
-        as the number of observations. The weights must be nonnegative. 
-        \cr
-    \code{no.interact} - an optional matrix used if certain predictor 
-        interactions are not allowed in the model. It is given as a 
-        matrix of size \code{2 x m}, with predictor indices as entries.  
-        The two predictors of any row cannot have interaction terms with 
-        each other. 
-        \cr
-    \code{knots} - defines how the function is to find potential knots 
-        for the spline basis functions.  This can be set to the maximum 
-        number of knots you would like to be considered for each predictor. 
-        Usually, to avoid the design matrix becoming singular the actual 
-        number of knots produced is constrained to at most every third 
-        order statistic in any predictor. This constraint can be adjusted 
-        using the \code{knot.space} argument. It can also be a vector with 
-        the number of potential knots for each predictor. Again the actual 
-        number of knots produced is constrained to be at most every 
-        third order statistic any predictor.  
-        A third possibility is to provide a matrix where each columns 
-        corresponds to the ordered knots you would like to have considered 
-        for that predictor. 
-        This matrix should be filled out to a rectangular data structure 
-        with NAs. 
-        The default is \code{min(20, round(n/4))} knots per predictor. 
-        When specifying knots as a vector an entry of \code{-1} indicates 
-        that the predictor is a categorical variable and each unique entry 
-        in it's column is treated as a  level. 
-        When specifying knots as a single number or a matrix and there are 
-        categorical variables these are specified separately as such using 
-        the factor argument. 
-        \cr
-    \code{knot.space} - is an integer describing the minimum number of 
-        order statistics apart that two knots can be. Knots should not 
-        be too close to insure numerical stability. 
-        \cr
-    \code{ts.resp} - testset responses for model selection. Should have 
-        the same number of columns as the training set response. A testset 
-        can be used for the model selection. Depending on the value of 
-        classify, either the model with the smallest testset residual 
-        sum of squares or the smallest testset classification error is 
-        provided. Overrides \code{gcv}. 
-        \cr
-    \code{ts.pred} - testset predictors. Should have the same number of 
-        columns as the training set predictors. 
-        \cr
-    \code{ts.weights} -
-        testset observation weights. A vector of length equal to the number 
-        of cases of the testset. All weights must be non-negative. 
-        \cr
-    \code{classify} - when the response is discrete (categorical), polymars 
-        can be used for classification. In particular, when 
-        \code{classify = TRUE}, a discrete response with \code{K} levels 
-        is replaced by \code{K} indicator variables as response. Model 
-        selection is still being carried out using gcv, except when a 
-        testset is provided, in which case testset misclassification is 
-        used to select the best model. 
-        \cr
-    \code{factors} - used to indicate that certain variables in the predictor 
-        set are categorical variables. Specified as a vector containing the 
-        appropriate predictor indices (column numbers of categorical 
-        variables in predictors matrix). Factors can also be set when the 
-        \code{knots} argument is given as a vector, with \code{-1} as  
-        the appropriate entries for factors. 
-        \cr
-    \code{tolerance} - for each possible candidate to be added/deleted 
-        the resulting residual sums of squares of the model, with/without 
-        this candidate, must be calculated. The inversion of of 
-        the "X-transpose by X" matrix, X being the design matrix,  
-        is done by an updating procedure c.f. C.R. Rao - Linear 
-        Statistical Inference and Its Applications, 2nd. edition, page 33.   
-        In the inversion the size of the bottom right-hand entry of this 
-        matrix is critical. If it\code{s value is near zero or the value 
-        of it}s inverse is almost zero then the  inversion procedure 
-        becomes somewhat inaccurate. The lower the tolerance value the  
-        more careful the procedure is in selecting candidates for addition 
-        to the model but it may exclude too conservatively. And the other 
-        hand if the tolerance is set too high a spurious result with a 
-        singular or otherwise sub-optimal model may occur. By default 
-        tolerance is set to 1.0e-5. 
-        \cr
-    \code{verbose} - when set  to \code{TRUE}, the function will print 
-        out a line for each addition or deletion stage. For 
-        example, " + 8 : 5 3.25 2 NA" means adding interaction basis 
-        function of predictor 5 with knot at 3.25 and predictor 2 (linear), 
-        to make a model of size 8, including intercept. 
-    \cr
+    before MARS was trademarked.\cr
     \code{[polyclass:polymars]}
-    \cr\cr
+    \cr
     
+    
+    % -----------------------------------------------
     \bold{NNET -- Feedforward Neural Network Regression:}
     \cr\cr  
     If the response in \code{formula} is a factor, an appropriate 

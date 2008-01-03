@@ -46,9 +46,10 @@ setMethod(f = "predict", signature(object = "fREG"), definition =
     # Fit:
     fit = object@fit
       
-    # Data:
-    if (missing(newdata)) newdata = object@data
-    newdata = as.data.frame(newdata)
+    # Data as data.frame:
+    if (missing(newdata)) {
+        newdata = object@data$data
+    }
      
     # Predict:
     if (object@method == "nnet" & type == "response") type = "raw"
@@ -78,10 +79,26 @@ setMethod(f = "predict", signature(object = "fREG"), definition =
 
 
 .predict.lm <- predict.lm
+    # <- function (object, newdata, se.fit = FALSE, scale = NULL, df = Inf, 
+    #    interval = c("none", "confidence", "prediction"), level = 0.95, 
+    #    type = c("response", "terms"), terms = NULL, na.action = na.pass, 
+    #    pred.var = res.var/weights, weights = 1, ...) 
+.predict.rlm <- predict.lm
+    #
+.predict.glm <- predict.glm
+    # <- function (object, newdata = NULL, type = c("link", "response", 
+    #    "terms"), se.fit = FALSE, dispersion = NULL, terms = NULL, 
+    #    na.action = na.pass, ...) 
 .predict.gam <- predict.gam
-.predict.glm <- predict.glm 
+    # <- function (object, newdata, type = "link", se.fit = FALSE, terms = NULL, 
+    #    block.size = 1000, newdata.guaranteed = FALSE, na.action = na.pass, 
+    #    ...)  
 .predict.ppr <- function(object, ...) { predict(object, ...) }
+    # <- function(object, newdata, ...)
 .predict.nnet <- function(object, ...) { predict(object, ...) }
+    # <- function(object, newdata, type=c("raw","class"), ...)
+#predict.polymars
+    # <- function(object, newdata, se.fit = FALSE, ...)
 
 
 ################################################################################

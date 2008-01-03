@@ -35,7 +35,7 @@
 ################################################################################
 
 
-.polymars <- 
+.polymars.formula <- 
     function(formula, data, ...)
 {   
     # A function implemented by Diethelm Wuertz
@@ -44,13 +44,14 @@
     
     # Extract Model Data:
     mf = match.call(expand.dots = FALSE)
-    m = match(c("formula", "data"), names(mf), 0)
-    mf = mf[c(1, m)]
+    m = match(c("formula", "data"), names(mf), 0L)
+    mf = mf[c(1L, m)]
     mf$drop.unused.levels <- TRUE
-    mf[[1]] <- as.name("model.frame")
-    Data = eval(mf, parent.frame())
-    y = Data[, 1]
-    x = Data[, -1]
+    mf[[1L]] <- as.name("model.frame")
+    mf = eval(mf, parent.frame())
+    mt <- attr(mf, "terms")
+    y <- model.response(mf, "numeric")
+    x <- model.matrix(mt, mf)
     
     # Fit:
     fit = .polymars.default(responses = y, predictors = x, ...) 
@@ -58,8 +59,8 @@
     # Add to fit:
     fit$fitted.values = fit$fitted
     fit$terms = terms(formula)
-    fit$Model = fit$model
-    fit$model = Data
+    fit$model = mf
+    fit$terms = mt
     class(fit) = "polymars"
     
     # Return Value:
@@ -141,7 +142,6 @@
     if (missing(newdata)) {
         y = as.vector(object$fitted)
     } else {
-        object$model = object$Model
         tt = terms(object)
         Terms = delete.response(tt)
         modelFrame = model.frame(Terms, newdata)

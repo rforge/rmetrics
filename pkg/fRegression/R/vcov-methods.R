@@ -42,8 +42,7 @@ setMethod(f = "vcov", signature(object = "fREG"), definition =
     #   Extracts 'fREG' Model Covariance
     
     # Arguments:
-    #   object - an object of class fREG as returned by the function
-    #       regFit
+    #   object - an object of class fREG as returned by the function regFit
     
     # FUNCTION:
     

@@ -35,7 +35,7 @@
         interactively.
         }
     \item{\dots}{
-        additional arguments to mbe passed to the underlying plot
+        additional arguments to be passed to the underlying plot
         functions.
         }
  
@@ -46,13 +46,32 @@
     \describe{
 
     \item{x = "ANY", y = "ANY"}{
-        Generic Function
+        Generic function.
         }
     \item{x = "fREG", y = "missing"}{
-        Plot ... Function
+        Plot function to display results obtained from a fitted 
+        regression model. 
         }
         
     }
+}
+
+
+\details{
+
+    The plots are a set of graphs which are common to the regression
+    models implemented in the function \code{regFit}. This includes
+    linear regression models \code{use="lm"}, 
+    robust linear regression models \code{use="rlm"}, 
+    generalized linear regression models \code{use = "glm"}, 
+    generalized additive regression models \code{use = "gam"}, 
+    prjection pursuit regression models \code{use = "ppr"}, 
+    neural network regression models \code{use = "nnet"}, and
+    polytochomous MARS models \code{use = "polymars"}.
+    
+    In addition one can also use the original plot functions of the
+    original models, .e.g. \code{plot(slot(object, "fit)}.
+    
 }
 
 
