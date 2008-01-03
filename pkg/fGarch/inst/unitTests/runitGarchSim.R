@@ -40,15 +40,15 @@ function()
     
     # ARCH(1) - default omega and alpha
     spec = garchSpec(model = list())
-    print(garchSim(n = 10, model = spec))
+    garchSim(n = 10, model = spec)
     
     # ARCH(1) - default omega
     spec = garchSpec(model = list(alpha = 0.1))
-    print(garchSim(n = 10, model = spec))
+    garchSim(n = 10, model = spec)
     
     # ARCH(1)
     spec = garchSpec(model = list(omega = 1e-6, alpha = 0.1))
-    print(garchSim(n = 10, model = spec))
+    garchSim(n = 10, model = spec)
     
     # Return Value:
     return()    
@@ -65,15 +65,15 @@ function()
     
     # AR(1)-ARCH(1)
     spec = garchSpec(model = list(ar = 0.5)) 
-    print(garchSim(n = 10, model = spec))
+    garchSim(n = 10, model = spec)
     
     # AR([1,5])-ARCH(1)
     spec = garchSpec(model = list(ar = c(0.5, 0, 0, 0 ,0.1)))
-    print(garchSim(n = 10, model = spec))
+    garchSim(n = 10, model = spec)
     
     # ARMA(1,2)-ARCH(1)
     spec = garchSpec(model = list(ar = 0.5, ma = c(0.3,-0.3)))
-    print(garchSim(n = 10, model = spec))
+    garchSim(n = 10, model = spec)
     
     # Return Value:
     return()    
@@ -91,7 +91,7 @@ function()
     # rsnorn-ARCH(2)
     spec = garchSpec(model = list(alpha = c(0.12, 0.04), dist = 2/3), 
         cond.dist = "rsnorm")
-    print(garchSim(n = 10, model = spec))
+    garchSim(n = 10, model = spec)
     
     # Return Value:
     return()    
@@ -108,23 +108,23 @@ function()
     
     # GARCH(1,1)
     spec = garchSpec()
-    print(garchSim(n = 10, model = spec))
+    garchSim(n = 10, model = spec)
     
     # GARCH(1,1)
     spec = garchSpec(model = list(alpha = 0.1, beta = 0.8))
-    print(garchSim(n = 10, model = spec))
+    garchSim(n = 10, model = spec)
     
     # GARCH(1,1)
     spec = garchSpec(model = list(omega = 1e-6, alpha = 0.1, beta = 0.8))
-    print(garchSim(n = 10, model = spec))
+    garchSim(n = 10, model = spec)
     
     # GARCH(1,2)
     spec = garchSpec(model = list(alpha = 0.1, beta = c(0.4, 0.4)))
-    print(garchSim(n = 10, model = spec))
+    garchSim(n = 10, model = spec)
     
     # GARCH(2,1)
     spec = garchSpec(model = list(alpha = c(0.12, 0.04), beta = 0.08))
-    print(garchSim(n = 10, model = spec))
+    garchSim(n = 10, model = spec)
     
     # Return Value:
     return()    
@@ -141,27 +141,27 @@ function()
     
     # Normal - GARCH(1,1)   
     spec = garchSpec(model = list(), cond.dist = "rnorm")
-    print(garchSim(n = 10, model = spec))
+    garchSim(n = 10, model = spec)
     
     # Skewed Normal - GARCH(1,1)
     spec = garchSpec(model = list(parm = 2), cond.dist = "rsnorm")
-    print(garchSim(n = 10, model = spec))
+    garchSim(n = 10, model = spec)
     
     # GED - GARCH(1,1)
     spec = garchSpec(model = list(parm = 4), cond.dist = "rged")
-    print(garchSim(n = 10, model = spec))
+    garchSim(n = 10, model = spec)
     
     # Skewed GED - GARCH(1,1)
     spec = garchSpec(model = list(parm = c(4, 2)), cond.dist = "rsged")
-    print(garchSim(n = 10, model = spec))
+    garchSim(n = 10, model = spec)
     
     # Normalized Student t - GARCH(1,1)
     spec = garchSpec(model = list(parm = 4), cond.dist = "rstd")
-    print(garchSim(n = 10, model = spec))
+    garchSim(n = 10, model = spec)
     
     # Skewed Normalized Student t - GARCH(1,1)
     spec = garchSpec(model = list(parm = c(4, 2)), cond.dist = "rsstd")
-    print(garchSim(n = 10, model = spec))
+    garchSim(n = 10, model = spec)
  
     # Return Value:
     return()    
@@ -176,7 +176,7 @@ function()
 {         
     # Taylor Schwert Normal GARCH(1,1)
     spec = garchSpec(list(alpha = 0.1, delta = 1))
-    print(garchSim(n = 10, model = spec))
+    garchSim(n = 10, model = spec)
     
     # Return Value:
     return()    

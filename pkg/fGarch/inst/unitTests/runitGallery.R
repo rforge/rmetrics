@@ -39,8 +39,11 @@ function()
     
     # Fit to normal Conditional Distribution:
     fit = garchFit(DEM2GBP ~ garch(1, 1), data = dem2gbp)
+    fit
     
     # garchFit1:
+    # 1:
+    # 2:
     par(mfrow = c(2, 1))
     plot(fit, which = 1)                       # labels = FALSE not implemented!
     mtext("norm-GARCH(1,1) Modeling", line = 0.5, cex = 0.8)
@@ -56,6 +59,9 @@ function()
     mtext("DEM2GBP Data Vector", side = 4, adj = 0, cex = 0.7, col = "darkgrey")
     
     # garchFit3:
+    # 3:
+    # 4:
+    # 5:
     par(mfrow = c(2, 1))
     plot(fit, which = 4)                       # labels = FALSE not implemented!
     mtext("norm-GARCH(1,1) Modeling", line = 0.5, cex = 0.8)
