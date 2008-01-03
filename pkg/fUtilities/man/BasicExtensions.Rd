@@ -38,6 +38,9 @@
 \alias{volatility}
 \alias{volatility.default}
 
+\alias{termPlot}
+\alias{termPlot.default}
+
 \alias{stdev}
 
 \alias{print.control}
@@ -83,6 +86,7 @@
     \code{stdev} \tab adds stdev function, \cr
     \code{var} \tab extends var function, \cr
     \code{volatility} \tab adds volatility function, \cr
+    \code{termPlot} \tab adds term plot function, \cr
     \code{rownames<-} \tab adds rownames assigment, \cr
     \code{colnames<-} \tab adds colnames assignment, \cr
     \code{as.matrix.ts} \tab adds as.matrix.ts method, \cr
@@ -116,6 +120,8 @@
     
 \method{volatility}{default}(object, \dots)
     
+\method{termPlot}{default}(model, \dots)
+
 stdev(x, na.rm = FALSE)
 atoms(x, \dots)
 
@@ -171,6 +177,10 @@ as.POSIXlt(x, tz = "")
         [attach] - \cr
         alternative way to specify the database to be attached.
         See for details \code{help(attach,package=base)}.
+        }
+    \item{model}{
+        [termPlot] - \cr
+        a fitted model object.
         }
     \item{object}{
         [volatility] - \cr
