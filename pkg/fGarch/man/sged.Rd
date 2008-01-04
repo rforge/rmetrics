@@ -23,8 +23,6 @@
 
 \description{
     
-    \description{
-    
     Functions to compute density, distribution function, 
     quantile function and to generate random variates 
     for the generalized error distribution. In
@@ -40,10 +38,7 @@
     \code{gedFit} \tab MLE parameter fit for a GED distribution, \cr
     \code{sgedFit} \tab MLE parameter fit for a skew GED distribution, \cr
     \code{sgedSlider} \tab Displays interactively skew GED distribution. }
-      
-}
-    
-    
+          
 }
 
 

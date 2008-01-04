@@ -57,8 +57,7 @@ setMethod(f = "show", signature(object = "fGARCH"), definition =
     
     # Mean Equation:
     cat("\nMean and Variance Equation:\n ")
-    cat(as.character(object@formula[1]), "+", 
-        as.character(object@formula[2]), "\n")
+    print(object@formula)
         
     # Conditional Distribution:
     cat("\nConditional Distribution:\n ")

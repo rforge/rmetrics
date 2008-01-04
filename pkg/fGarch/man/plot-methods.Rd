@@ -69,7 +69,7 @@
             Standardized Residuals Plot\cr
             ACF Plot of Standardized Residuals\cr
             ACF Plot of Squared Standardized Residuals\cr
-            Cross Correlation Plot between r^2 and r\cr
+            Cross Correlation Plot between $r^2$ and r\cr
             Quantile-Quantile Plot of Standardized Residuals\cr
             
 }
@@ -96,7 +96,7 @@
    print(fit)
    summary(fit)
    
-\dontrun{   
+\dontrun{
 ## Plot:
    
    # Batch Plot:

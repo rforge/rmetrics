@@ -75,6 +75,7 @@
 
 
 \examples{
+\dontrun{
 ## garchSpec -
    spec = garchSpec()
    spec
@@ -86,9 +87,11 @@
 ## garchFit - 
    fit = garchFit(~ garch(1, 1), data = x)
    fit
-   
+
+\dontrun{ 
 ## predict -
    predict(fit, n.ahead = 10)
+}
 }
 
 

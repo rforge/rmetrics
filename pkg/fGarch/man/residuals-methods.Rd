@@ -81,7 +81,6 @@
 ## slot - 
    res = slot(fit, "residuals")
    head(res)
-   class(res)
 }
 
 
