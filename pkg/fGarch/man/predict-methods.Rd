@@ -75,7 +75,6 @@
 
 
 \examples{
-\dontrun{
 ## garchSpec -
    spec = garchSpec()
    spec
