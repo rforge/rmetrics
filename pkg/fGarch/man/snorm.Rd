@@ -169,6 +169,8 @@ Fernandez C., Steel M.F.J. (2000);
 
 \examples{
 ## snorm -
+   
+   # Ranbdom Numbers:
    par(mfrow = c(2, 2))
    set.seed(1953)
    r = rsnorm(n = 1000)
@@ -189,7 +191,13 @@ Fernandez C., Steel M.F.J. (2000);
    round(qsnorm(psnorm(q = seq(-1, 5, by = 1))), digits = 6)
        
 ## snormFit -
-   snormFit(r, print.level = 2)
+   snormFit(r)
+   
+\dontrun{
+## snormSlider -
+   snormSlider("dist")
+   snormSlider("rand")
+}
 }
 
 

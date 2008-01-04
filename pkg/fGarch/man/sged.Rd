@@ -192,7 +192,13 @@ Fernandez C., Steel M.F.J. (2000);
    round(qsged(psged(q = seq(-1, 5, by = 1))), digits = 6)
        
 ## sgedFit -
-   sgedFit(r, print.level = 2)
+   sgedFit(r)
+   
+\dontrun{
+## sgedSlider -
+   sgedSlider("dist")
+   sgedSlider("rand")
+}
 }
 
 

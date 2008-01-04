@@ -54,27 +54,6 @@
     #   description = NULL, 
     #   ...)
 
-    # *** OLD VERSION ***
-    # .garchFit(
-    #   formula.mean = ~arma(0, 0), 
-    #   formula.var = ~garch(1, 1), 
-    #   series = x, 
-    #   init.rec = c("mci", "uev"), delta = 2, 
-    #   skew = 1, 
-    #   shape = 4,
-    #   cond.dist = c("dnorm", "dsnorm", "dged", "dsged", "dstd", "dsstd"), 
-    #   include.mean = TRUE, 
-    #   include.delta = NULL, 
-    #   include.skew = NULL,
-    #   include.shape = NULL, 
-    #   leverage = NULL, 
-    #   trace = TRUE,  
-    #   algorithm = c("sqp", "nlminb", "lbfgsb", "nlminb+nm", "lbfgsb+nm"), 
-    #   control = list(), 
-    #   title = NULL, 
-    #   description = NULL, 
-    #   ...)
-    
     
 # ------------------------------------------------------------------------------
 
@@ -120,92 +99,6 @@ function()
  
        
     
-
-test.garchParser = 
-function()
-{       
-    # Use Simulated Series - an Object of class 'ts' ...
-    
-    # Numeric Vector RVs:
-    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
-    set.seed(4711, kind = "Marsaglia-Multicarry") 
-    # Simulate normal GARCH(1, 1) numeric Vector:
-    model = list(omega = 1e-06, alpha = 0.1, beta = 0.8)
-    N = 1000
-    
-    
-    # UNIVARIATE:
-    
-    # A numeric Vector:
-    x.vec = 100*garchSim(model, N, returnClass = "numeric")
-    x.vec
-    .garchArgsParser(x.vec ~ garch(1,1), data = as.data.frame(x.vec))
-    coef(garchFit( ~ garch(1,1), data = x.vec))
-   
-    # An univariate timeSeries object with dummy dates:
-    x.tS = dummyDailySeries(matrix(x.vec), units = "GARCH11")
-    x.tS 
-    .garchArgsParser(GARCH11 ~ garch(1,1), data = as.data.frame(x.tS)) 
-    coef(garchFit(~ garch(1,1), data = x.tS))           
-
-    # An univariate zoo object with dummy dates:
-    x.zoo = zoo(x.vec, order.by = as.Date(rownames(x.tS)))
-    .garchArgsParser(x.zoo ~ garch(1,1), data = as.data.frame(x.zoo))
-    coef(garchFit(~ garch(1,1), data = x.zoo))   
-    
-    # An univariate "ts" object:
-    x.ts = as.ts(x.vec)
-    .garchArgsParser(x ~ garch(1,1), data = as.data.frame(x.ts))
-    coef(garchFit(~ garch(1,1), data = x.ts))  
-    
-    
-    # MULTIVARIATE:
-    
-    # A numeric matrix:
-    X.mat = cbind(GARCH11 = x.vec, R = rnorm(N))
-    X.mat
-    .garchArgsParser(GARCH11 ~ garch(1,1), data = as.data.frame(X.mat))
-    coef(garchFit(GARCH11 ~ garch(1,1), data = X.mat))
-        
-    # A multivariate timeSeries object with dummy dates:
-    X.tS = dummyDailySeries(X.mat, units = c("GARCH11", "R"))
-    .garchArgsParser(GARCH11 ~ garch(1,1), data = as.data.frame(X.tS)) 
-    coef(garchFit(GARCH11 ~ garch(1,1), data = X.tS))
-    
-    # A multivariate zoo object without column names:
-    X.zoo = zoo(X.mat, order.by = as.Date(rownames(x.tS)))
-    .garchArgsParser(GARCH11 ~ garch(1,1), data = as.data.frame(X.zoo))
-    coef(garchFit(GARCH11 ~ garch(1,1), data = X.zoo))
-
-    # A multivariate "mts" object without column names:
-    X.mts = as.ts(X.mat)
-    .garchArgsParser(V1 ~ garch(1,1), data = as.data.frame(X.mts))
-    coef(garchFit(GARCH11 ~ garch(1,1), data = X.mts))
- 
-       
-    # MODELING THE PERCENTUAL SPI/SBI SPREAD FROM LPP BENCHMARK:
-    
-    X.tS = as.timeSeries(data(LPP2005REC))
-    X.mat = as.matrix(x.tS)
-    X.zoo = zoo(X.mat, order.by = as.Date(rownames(x.mat)))
-    X.mts = ts(X.mat)
-    coef(garchFit(100*(SPI - SBI) ~ garch(1,1), data = X.tS))
-    coef(garchFit(100*(SPI - SBI) ~ garch(1,1), data = X.mat))
-    coef(garchFit(100*(SPI - SBI) ~ garch(1,1), data = X.zoo))
-    coef(garchFit(100*(SPI - SBI) ~ garch(1,1), data = X.mts))
-
-    
-    # MODELING HIGH/LOW SPREADS FROM MSFT PRICE SERIES:
-    
-    X.tS = as.timeSeries(msft.dat)
-    coef(garchFit(Open ~ garch(1,1), data = returns(X.tS)))
-    coef(garchFit(100*(High-Low) ~ garch(1,1), data = returns(X.tS)))
-      
-    # Return Value:
-    return()    
-} 
-
-
 # ------------------------------------------------------------------------------
 
 

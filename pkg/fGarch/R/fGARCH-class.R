@@ -37,7 +37,7 @@
 setClass("fGARCH", 
     representation(
         call = "call",
-        formula = "list",
+        formula = "formula",
         method = "character",
         data = "list",
         fit = "list",

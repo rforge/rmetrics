@@ -41,8 +41,8 @@
 ################################################################################
 
 
-test.normDist = 
-function()
+test.snormDist <- 
+    function()
 {   
     # Normal Distribution:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
@@ -66,29 +66,8 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.normSlider = 
-function()
-{   
-    # Try Distribution:
-    # snormSlider(type = "dist")
-    NA
-   
-    # Try Random Variates:
-    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
-    set.seed(4711, kind = "Marsaglia-Multicarry")
-    # snormSlider(type = "rand")
-    NA 
-    
-    # Return Value:
-    return()    
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-test.normFit = 
-function()
+test.snormFit <- 
+    function()
 {  
     # Parameter Estimation:
     #  normFit - Fit the parameters for a Normal distribution
@@ -96,13 +75,10 @@ function()
     # Normal Distribution:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
+    # Random Variates:
     x = rnorm(n = 1000, mean = 0, sd = 1)
     fit = normFit(x)
     print(fit)
-    target = round(as.vector(fit$estimate), 4)
-    print(target)
-    current = c(0.0114, 0.9904)
-    checkEqualsNumeric(target, current)
 
       
     # Parameter Estimation:
@@ -114,10 +90,27 @@ function()
     x = rsnorm(n = 1000, mean = 0, sd = 1, xi = 1.5)
     fit = snormFit(x)
     print(fit)
-    target = round(as.vector(fit$estimate), 4)
-    print(target)
-    current = c(-0.0017, 1.0259, 1.5632)
-    checkEqualsNumeric(target, current)
+    
+    # Return Value:
+    return()    
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+test.snormSlider <- 
+    function()
+{   
+    # Try Distribution:
+    # snormSlider(type = "dist")
+    NA
+   
+    # Try Random Variates:
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
+    # snormSlider(type = "rand")
+    NA 
     
     # Return Value:
     return()    

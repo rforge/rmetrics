@@ -28,12 +28,6 @@
 
 
 ################################################################################ 
-# FUNCTION:              SKEW NORMAL DISTRIBUTION:
-#  dsnorm                 Density for the skew normal Distribution
-#  psnorm                 Probability function for the skew NORM
-#  qsnorm                 Quantile function for the skew NORM
-#  rsnorm                 Random Number Generator for the skew NORM
-#  .snormSlider           Displays Normal Distribution and RVS
 # FUNCTION:              VARIANCE-1 STUDENT-T DISTRIBUTION:
 #  dstd                   Density for the Student-t Distribution
 #  pstd                   Probability function for the Student-t Distribution
@@ -44,93 +38,27 @@
 #  psstd                  Probability function for the skewed STD
 #  qsstd                  Quantile function for the skewed STD
 #  rsstd                  Random Number Generator for the skewed STD
-#  .stdSlider             Displays Variance-1 Student-t Distribution and RVS
-# FUNCTION:              GED DISTRIBUTION:
-#  dged                   Density for the Generalized Error Distribution
-#  pged                   Probability function for the GED
-#  qged                   Quantile function for the GED
-#  rged                   Random Number Generator for the GED
-# FUNCTION:              SKEW GED DISTRIBUTION:
-#  dsged                  Density for the skewed GED
-#  psged                  Probability function for the skewed GED
-#  qsged                  Quantile function for the skewed GED
-#  rsged                  Random Number Generator for the skewed GED
-# FUNCTION:              GED DISTRIBUTION SLIDER:
-#  .sgedSlider            Displays Generalized Error Distribution and RVS
-# FUNCTION:              PARAMETER ESTIMATION:
-#  normFit                Fit the parameters for a Normal distribution
-#  snormFit               Fit the parameters for a skew Normal distribution
-#  gedFit                 Fit the parameters for a GED distribution
-#  sgedFit                Fit the parameters for a skew GED distribution
+#  stdSlider              Displays Variance-1 Student-t Distribution and RVS
+# FUNCTION:              PARAMETER ESTIMATION:              
 #  stdFit                 Fit the parameters for a Sudent-t distribution
 #  sstdFit                Fit the parameters for a skew Sudent-t distribution
-# FUNCTION:              MOMENTS:
-#  absMoments             Compute absolute moments of a symmetric distribution
 ################################################################################
 
 
-test.normDistribution = 
-function()
-{   
-    # Normal Distribution:
-    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
-    set.seed(4711, kind = "Marsaglia-Multicarry")
-    test = .distCheck("norm",  mean = 0, sd = 1, robust = FALSE)
-    print(test)
-    checkTrue(sum(test) ==3)                                     
-    
-    # Skew Normal Distribution:
-    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
-    set.seed(4711, kind = "Marsaglia-Multicarry")
-    test = .distCheck("snorm", mean = 0, sd = 1, xi = 1.5, robust = FALSE) 
-    print(test)
-    checkTrue(sum(test) == 3)                                      
-    
-    # Return Value:
-    return()    
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-test.snormSlider = 
-function()
-{   
-    # Try Distribution:
-    # .snormSlider(type = "dist")
-    NA
-   
-    # Try Random Variates:
-    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
-    set.seed(4711, kind = "Marsaglia-Multicarry")
-    # .snormSlider(type = "rand")
-    NA 
-    
-    # Return Value:
-    return()    
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-test.sstdDistribution = 
-function()
+test.sstdDist <-  
+    function()
 { 
     # Standardized Student-t Distribution:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
     test = .distCheck("std",  mean = 0, sd = 1, nu = 5, robust = FALSE) 
-    print(test)
-    checkTrue(sum(test) == 3)                                      
+    print(test)                                    
     
     # Skew Standardized Student-t Distribution:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
     test = .distCheck("sstd", mean = 0, sd = 1, nu = 5, xi = 1.5, robust = FALSE) 
-    print(test)
-    checkTrue(sum(test) == 3)                                      
+    print(test)                                     
     
     # Return Value:
     return()    
@@ -140,174 +68,8 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.sstdSlider = 
-function()
-{   
-    # Try Distribution:
-    # .sstdSlider(type = "dist")                              
-    NA
-    
-    # Try Random Variates:
-    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
-    set.seed(4711, kind = "Marsaglia-Multicarry")
-    # .sstdSlider(type = "rand")
-    NA
-    
-    # Return Value:
-    return()    
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-test.sgedDistribution = 
-function()
-{       
-    # Generalized Error Distribution:
-    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
-    set.seed(4711, kind = "Marsaglia-Multicarry")
-    test = .distCheck("ged",  mean = 0, sd = 1, nu = 2, robust = FALSE) 
-    print(test)
-    checkTrue(sum(test) == 3)                                       
-       
-    # Skew Generalized Error Distribution:
-    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
-    set.seed(1953, kind = "Marsaglia-Multicarry")
-    test = .distCheck("sged", mean = 0, sd = 1, nu = 2, xi = 0.8, robust = FALSE) 
-    print(test)
-    checkTrue(sum(test) == 3)                                        
-    
-    # Return Value:
-    return()    
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-test.sgedSlider = 
-function()
-{   
-    # Try Distribution:
-    # .sgedSlider(type = "dist")
-    NA 
-    # Try Random Variates:
-    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
-    set.seed(4711, kind = "Marsaglia-Multicarry")
-    # .sgedSlider(type = "rand")
-    NA
-    
-    # Return Value:
-    return()    
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-test.normFit = 
-function()
-{  
-    # Parameter Estimation:
-    #  normFit - Fit the parameters for a Normal distribution
-    
-    # Normal Distribution:
-    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
-    set.seed(4711, kind = "Marsaglia-Multicarry")
-    x = rnorm(n = 1000, mean = 0, sd = 1)
-    fit = normFit(x)
-    print(fit)
-    target = round(as.vector(fit$estimate), 4)
-    print(target)
-    current = c(0.0114, 0.9904)
-    checkEqualsNumeric(target, current)
-    
-    # Return Value:
-    return()    
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-test.snormFit = 
-function()
-{  
-    # Parameter Estimation:
-    #  snormFit - Fit the parameters for a skew Normal distribution
-    
-    # Skew Normal Distribution:
-    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
-    set.seed(4711, kind = "Marsaglia-Multicarry")
-    x = rsnorm(n = 1000, mean = 0, sd = 1, xi = 1.5)
-    fit = snormFit(x)
-    print(fit)
-    target = round(as.vector(fit$estimate), 4)
-    print(target)
-    current = c(-0.0017, 1.0259, 1.5632)
-    checkEqualsNumeric(target, current)
-    
-    # Return Value:
-    return()    
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-test.gedFit = 
-function()
-{      
-    # Parameter Estimation:
-    #  gedFit - Fit the parameters for a GED distribution
-    
-    # Generalized Error Distribution:
-    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
-    set.seed(4711, kind = "Marsaglia-Multicarry")
-    x = rged(1000, mean = 0, nu = 2)
-    fit = gedFit(x)
-    print(fit)
-    target = round(as.vector(fit$estimate), 4)
-    print(target)
-    current = c(0.0270, 1.0295, 2.4100)
-    checkEqualsNumeric(target, current)
-    
-    # Return Value:
-    return()    
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-test.sgedFit = 
-function()
-{      
-    # Fit the parameters for a skew GED distribution
-    #  sgedFit - Fit the parameters for a skew GED distribution
-    
-    # Skew Generalized Error Distribution:
-    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
-    set.seed(4711, kind = "Marsaglia-Multicarry")
-    x = rsged(1000, mean = 0, sd = 1, nu = 2, xi = 1.5)
-    fit = sgedFit(x)
-    print(fit)
-    target = round(as.vector(fit$estimate), 4)
-    print(target)
-    current = c(0.0128, 1.0128, 2.3499, 1.5328)
-    checkEqualsNumeric(target, current)
-    
-    # Return Value:
-    return()    
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-test.stdFit = 
-function()
+test.stdFit <- 
+    function()
 {         
     # Fit the parameters for a Student-t distribution
     # stdFit - Fit the parameters for a Sudent-t distribution
@@ -318,22 +80,7 @@ function()
     x = rstd(n = 2500, mean = 0, sd = 1, nu = 5)
     fit = stdFit(x)
     print(fit)
-    target = round(as.vector(fit$estimate), 4)
-    print(target)
-    current = c(0.0321, 1.0074, 4.9768)
-    checkEqualsNumeric(target, current)
-    
-    # Return Value:
-    return()    
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-test.sstdFit = 
-function()
-{         
+             
     # Fit the parameters for a skew Sudent-t distribution
     # sstdFit - Fit the parameters for a Sudent-t distribution
     
@@ -343,10 +90,6 @@ function()
     x = rsstd(n = 2500, mean = 0, sd = 1, nu = 5, xi = 1.5)
     fit = sstdFit(x)
     print(fit)
-    target = round(as.vector(fit$estimate), 4)
-    print(target)
-    current = c(-0.0185, 1.0159, 4.9880, 1.4675)
-    checkEqualsNumeric(target, current)
     
     # Return Value:
     return()    
@@ -356,29 +99,23 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.absMoments = 
-function()
-{  
-    #  Compute absolute moments of a symmetric distribution
+test.sstdSlider <- 
+    function()
+{   
+    # Try Distribution:
+    # sstdSlider(type = "dist")                              
+    NA
     
-    # Function Call:
-    #   absMoments(n, density = c("dnorm", "dged", "dstd"), ...) 
-    
-    # Absolute Moments - Normal Distribution:
-    ans = absMoments(1:4, "dnorm")
-    print(ans)
-    
-    # Absolute Moments - Skew Student-t Distribution:
-    ans = absMoments(1:4, "dstd", nu = 20)
-    print(ans)
-    
-    # Absolute Moments - GED Distribution:
-    ans = absMoments(1:4, "dged", nu = 2)
-    print(ans)
+    # Try Random Variates:
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
+    # sstdSlider(type = "rand")
+    NA
     
     # Return Value:
-    return()
+    return()    
 }
+
 
 
 ################################################################################

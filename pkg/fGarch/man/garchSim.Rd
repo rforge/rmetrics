@@ -132,13 +132,94 @@ garchSim(model = list(omega = 1.0e-6, alpha = 0.1, beta = 0.8),
    y = garchSim(model = spec@model, n = 10, returnClass = "numeric")
    class(y)
    print(y)
-   
-   
+    
 ## asVector - 
    # Simulate a numeric vector:
    z = asVector(x)
    class(z)
    print(z)
+   
+\dontrun{
+## More Simulations ...
+    
+    # ARCH(1) - default omega and alpha
+    spec = garchSpec(model = list())
+    garchSim(n = 10, model = spec)
+    
+    # ARCH(1) - default omega
+    spec = garchSpec(model = list(alpha = 0.1))
+    garchSim(n = 10, model = spec)
+    
+    # ARCH(1)
+    spec = garchSpec(model = list(omega = 1e-6, alpha = 0.1))
+    garchSim(n = 10, model = spec)
+    
+    # AR(1) - ARCH(1)
+    spec = garchSpec(model = list(ar = 0.5)) 
+    garchSim(n = 10, model = spec)
+    
+    # AR([1,5]) - ARCH(1)
+    spec = garchSpec(model = list(ar = c(0.5, 0, 0, 0 ,0.1)))
+    garchSim(n = 10, model = spec)
+    
+    # ARMA(1,2) - ARCH(1)
+    spec = garchSpec(model = list(ar = 0.5, ma = c(0.3,-0.3)))
+    garchSim(n = 10, model = spec)
+    
+    # Skew-Normal - ARCH(2)
+    spec = garchSpec(model = list(alpha = c(0.12, 0.04), dist = 2/3), 
+        cond.dist = "rsnorm")
+    garchSim(n = 10, model = spec)
+    
+    # GARCH(1,1)
+    spec = garchSpec()
+    garchSim(n = 10, model = spec)
+    
+    # GARCH(1,1)
+    spec = garchSpec(model = list(alpha = 0.1, beta = 0.8))
+    garchSim(n = 10, model = spec)
+    
+    # GARCH(1,1)
+    spec = garchSpec(model = list(omega = 1e-6, alpha = 0.1, beta = 0.8))
+    garchSim(n = 10, model = spec)
+    
+    # GARCH(1,2)
+    spec = garchSpec(model = list(alpha = 0.1, beta = c(0.4, 0.4)))
+    garchSim(n = 10, model = spec)
+    
+    # GARCH(2,1)
+    spec = garchSpec(model = list(alpha = c(0.12, 0.04), beta = 0.08))
+    garchSim(n = 10, model = spec)   
+    
+    # Normal - GARCH(1,1)   
+    spec = garchSpec(model = list(), cond.dist = "rnorm")
+    garchSim(n = 10, model = spec)
+    
+    # Skewed Normal - GARCH(1,1)
+    spec = garchSpec(model = list(parm = 2), cond.dist = "rsnorm")
+    garchSim(n = 10, model = spec)
+    
+    # GED - GARCH(1,1)
+    spec = garchSpec(model = list(parm = 4), cond.dist = "rged")
+    garchSim(n = 10, model = spec)
+    
+    # Skewed GED - GARCH(1,1)
+    spec = garchSpec(model = list(parm = c(4, 2)), cond.dist = "rsged")
+    garchSim(n = 10, model = spec)
+    
+    # Normalized Student t - GARCH(1,1)
+    spec = garchSpec(model = list(parm = 4), cond.dist = "rstd")
+    garchSim(n = 10, model = spec)
+    
+    # Skewed Normalized Student t - GARCH(1,1)
+    spec = garchSpec(model = list(parm = c(4, 2)), cond.dist = "rsstd")
+    garchSim(n = 10, model = spec)
+             
+    # Taylor Schwert Normal GARCH(1,1)
+    spec = garchSpec(list(alpha = 0.1, delta = 1))
+    garchSim(n = 10, model = spec)
+   
+}
 }
 
 

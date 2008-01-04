@@ -368,23 +368,18 @@ rsstd <-
 ################################################################################
 
 
-stdFit <- 
-    function(x, ...)
+stdFit <-
+function(x, ...)
 {   
     # A function implemented by Diethelm Wuertz
     
     # Description:
-    #   Fit the parameters for a Sudent-t distribution
-    #   with unit variance
+    #   Fit the parameters for a skew Normal distribution
     
     # FUNCTION:
-    
-    # For S-Plus compatibility:
-    if (!exists("nlm")) 
-        nlm = function (f, p, ...) nlminb(start = p, objective = f, ...) 
-        
+     
     # Start Value:
-    p = c(mean = mean(x), sd = sqrt(var(x)), nu = 4)
+    start = c(mean = mean(x), sd = sqrt(var(x)), nu = 4)
 
     # Log-likelihood Function:
     loglik = function(x, y = x){ 
@@ -392,14 +387,15 @@ stdFit <-
         f }
         
     # Minimization:
-    fit = nlm(f = loglik, p = p, y = x, ...)
-    Names = c("mean", "sd", "nu")
-    names(fit$estimate) = Names
-    names(fit$gradient) = Names
+    fit = nlminb(start = start, objective = loglik, 
+        lower = c(-Inf, 0, 2), upper = c(Inf, Inf, Inf), y = x, ...)
+        
+    # Add Names to $par
+    names(fit$par) = c("mean", "sd", "nu")
     
     # Return Value:
     fit
-}   
+}    
 
 
 # ------------------------------------------------------------------------------

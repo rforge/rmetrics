@@ -40,70 +40,29 @@
 ################################################################################
 
 
-test.show.fGARCH = 
+test.garch-methods = 
 function()
 { 
     # show.fGARCH - S4 print method for an object of class 'fGARCH'
     
     # Load Data, convert to numeric Vector:
     data(dem2gbp)  
-    x = dem2gbp[, 1]
     
     # Fit:
-    fit = garchFit(~garch(1,1), data = x, trace = FALSE)
+    fit = garchFit(DEM2GBP ~garch(1,1), data = dem2gbp, trace = FALSE)
     
     # Print:
     print(fit)
     show(fit)
-    
-    # Return Value:
-    return()    
-} 
-
-
-# ------------------------------------------------------------------------------
-
-
-test.plot.fGARCH = 
-function()
-{
-    # plot.fGARCH - S3 plot method for an object of class 'fGARCH'
-    
-    # Load Data, convert to numeric Vector:
-    data(dem2gbp)  
-    x = dem2gbp[, 1]
-    
-    # Fit:
-    fit = garchFit(~garch(1,1), data = x, trace = FALSE)
-    
+   
     # Plot:
-    par(mfrow = c(2, 2))
+    par(mfrow = c(3, 2))
     par(ask = FALSE)
     plot(fit, which = "all")
-    
+     
     # Plot - try interactively:
     # par(mfrow = c(1, 1))
     # plot(fit)
-    
-    # Return Value:
-    return()    
-} 
-
-
-# ------------------------------------------------------------------------------
-
-
-test.summary.fGARCH = 
-function()
-{
-    # summary.fGARCH - S3 summary method for an object of class 'fGARCH'
-    
-    # Load Data, convert to numeric Vector:
-    data(dem2gbp)  
-    x = dem2gbp[, 1]
-    
-    # Fit:
-    fit = garchFit(~garch(1,1), data = x, trace = FALSE)
     
     # Summary:
     summary(fit)
@@ -111,75 +70,6 @@ function()
     # Return Value:
     return()    
 } 
-
-
-# ------------------------------------------------------------------------------
-
-
-test.residuals.fGARCH = 
-function()
-{
-    # residuals.fGARCH - S3 residuals method for an object of class 'fGARCH'
-    
-    # Load Data, convert to numeric Vector:
-    data(dem2gbp)  
-    x = dem2gbp[, 1]
-    
-    # Fit:
-    fit = garchFit(~garch(1,1), data = x, trace = FALSE)
-    
-    # Residuals:
-    residuals(fit)
-    
-    # Return Value:
-    return()    
-} 
-
-
-# ------------------------------------------------------------------------------
-
-
-test.fitted.fGARCH = 
-function()
-{
-    # fitted.fGARCH - S3 fitted values for an object of class 'fGARCH'
-    
-    # Load Data, convert to numeric Vector:
-    data(dem2gbp)  
-    x = dem2gbp[, 1]
-    
-    # Fit:
-    fit = garchFit(~garch(1,1), data = x, trace = FALSE)
-    
-    # Fitted Values:
-    fitted(fit)
-    
-    # Return Value:
-    return()    
-} 
-
-
-# ------------------------------------------------------------------------------
-
-
-test.predict.fGARCH = 
-function()
-{
-    # predict.fGARCH - S3 prediction method for an object of class 'fGARCH'  
-
-    # Load Data, convert to numeric Vector:
-    data(dem2gbp)  
-    x = dem2gbp[, 1]
-    
-    # Fit:
-    fit = garchFit(~garch(1,1), data = x, trace = FALSE)
-    
-    # Predict:
-    predict(object = fit, n.ahead = 10, trace = FALSE)
-    
-    # Return Value:
-    return()    
-}
 
 
 ################################################################################

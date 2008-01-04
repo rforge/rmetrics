@@ -24,13 +24,13 @@
     \describe{
 
     \item{object = "ANY"}{
-        Generic function
+        Generic function.
         }
     \item{object = "fGARCH"}{
-        Print Function
+        Print function for objects of class \code{"fGARCH"}.
         } 
     \item{object = "fGARCHSPEC"}{
-        Print Function
+        Print function for objects of class \code{"fGARCH"}.
         }
         
     }
@@ -45,24 +45,16 @@
 
 
 \examples{
-\dontrun{
 ## garchSpec -
    spec = garchSpec()
-   spec
+   print(spec)
 
 ## garchSim -
-   x = garchSim(model = spec@model, n = 500)
-   head(x) 
+   x = garchSim(model = spec@model, n = 500) 
 
 ## garchFit - 
-   # fit = garchFit(~garch(1, 1), data = x)
-   # print(fit)
-   ## Interactive Plot:
-   ## plot(fit)
-   ## Batch Plot:
-   # plot(fit, which = 3)
-   # summary(fit)
-}
+   fit = garchFit(~ garch(1, 1), data = x)
+   print(fit)
 }
 
 

@@ -42,7 +42,7 @@
 #  gedFit                 Fit the parameters for a GED distribution
 #  sgedFit                Fit the parameters for a skew GED distribution
 # FUNCTION:              SLIDER:
-#  .sgedSlider            Displays Generalized Error Distribution and RVS
+#  sgedSlider             Displays Generalized Error Distribution and RVS
 ################################################################################
 
 
@@ -355,22 +355,18 @@ rsged <-
 ################################################################################
 
 
-gedFit <- 
-    function(x, ...)
+gedFit <-
+function(x, ...)
 {   
     # A function implemented by Diethelm Wuertz
     
     # Description:
-    #   Fit the parameters for a GED distribution
+    #   Fit the parameters for a skew Normal distribution
     
     # FUNCTION:
-    
-    # For S-Plus compatibility:
-    if (!exists("nlm")) 
-        nlm = function (f, p, ...) nlminb(start = p, objective = f, ...) 
-        
+     
     # Start Value:
-    p = c(mean = mean(x), sd = sqrt(var(x)), nu = 2)
+    start = c(mean = mean(x), sd = sqrt(var(x)), nu = 2)
 
     # Log-likelihood Function:
     loglik = function(x, y = x){ 
@@ -378,32 +374,32 @@ gedFit <-
         f }
         
     # Minimization:
-    fit = nlm(f = loglik, p = p, y = x, ...)
+    fit = nlminb(start = start, objective = loglik, 
+        lower = c(-Inf, 0, 0), upper = c(Inf, Inf, Inf), y = x, ...)
+        
+    # Add Names to $par
+    names(fit$par) = c("mean", "sd", "nu")
     
     # Return Value:
     fit
-}   
+}      
 
 
 # ------------------------------------------------------------------------------
 
 
-sgedFit <- 
-    function(x, ...)
+sgedFit <-
+function(x, ...)
 {   
     # A function implemented by Diethelm Wuertz
     
     # Description:
-    #   Fit the parameters for a skew GED distribution
+    #   Fit the parameters for a skew Normal distribution
     
     # FUNCTION:
-    
-    # For S-Plus compatibility:
-    if (!exists("nlm")) 
-        nlm = function (f, p, ...) nlminb(start = p, objective = f, ...) 
-        
+     
     # Start Value:
-    p = c(mean = mean(x), sd = sqrt(var(x)), nu = 2, xi = 1)
+    start = c(mean = mean(x), sd = sqrt(var(x)), nu = 2, xi = 1)
 
     # Log-likelihood Function:
     loglik = function(x, y = x){ 
@@ -411,14 +407,18 @@ sgedFit <-
         f }
         
     # Minimization:
-    fit = nlm(f = loglik, p = p, y = x, ...)
+    fit = nlminb(start = start, objective = loglik, 
+        lower = c(-Inf, 0, 0, 0), upper = c(Inf, Inf, Inf, Inf), y = x, ...)
+        
+    # Add Names to $par
+    names(fit$par) = c("mean", "sd", "nu", "xi")
     
     # Return Value:
     fit
-}   
+}        
 
 
-################################################################################
+# ------------------------------------------------------------------------------
 
 
 sgedSlider <-  

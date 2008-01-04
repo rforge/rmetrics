@@ -92,18 +92,27 @@ garchFit <-
     # Call:
     CALL = match.call()
        
-    # Parse formula and data for garchFit
-    Data = as.data.frame(data)
+    # Parse formula and data for garchFit ...
+    #   Note in the new version we are working with data frames ...
+    Name = as.character(substitute(data))
+    Data = data
+    data = as.data.frame(data)
+    if (isUnivariate(data)) colnames(data) <- Name
+ 
+    # Handle if we have no left-hand-side for the formula ...
+    #   Note in this case the length of the formula is 2 (else 3):
     if (length(formula) == 2) {
-        if (isUnivariate(Data)) {
-            if (is.null(colnames(Data))) colnames(Data) = "x"
-            formula = as.formula(
-                paste(colnames(Data), paste(formula, collapse = " ")))
+        if (isUnivariate(data)) {
+            # Missing lhs -- we substitute the data file name as lhs ...
+            formula = as.formula(paste(Name, paste(formula, collapse = " ")))
+        } else {
+            stop("Multivariate data inputs require lhs for the formula.")
         }
-    }      
-    args = .garchArgsParser(formula, data = Data, trace = FALSE)
-    print(args)
-          
+    }
+        
+    Formula = formula   
+    args = .garchArgsParser(formula = formula, data = data, trace = FALSE)   
+       
     # Fit:
     ans = .garchFit(
         formula.mean = args$formula.mean, 
@@ -113,14 +122,14 @@ garchFit <-
         include.delta, include.skew, include.shape, leverage, 
         trace, algorithm, control, title, description, ...)
     ans@call = CALL
-    ans@data$data = data
-    ans@data$unit = args$formula.lhs
+    ans@data = list(data = args$series, Data = Data)
+    ans@formula = Formula
     
     # Return Value:
     ans
 }
-
-
+ 
+ 
 # ------------------------------------------------------------------------------
 
 
@@ -143,15 +152,16 @@ garchFit <-
     
     # FUNCTION:
     
-    # Check formula expression dependent on data class:
-
     # Get Data:
-    if(length(formula) == 2) stop ("Left hand side of formula is missing")
     allVars = unique(sort(all.vars(formula)))
+    print(allVars)
+    print(colnames(data))
     allVarsTest =  mean(allVars %in% colnames(data))
+    print(allVarsTest)
     if (allVarsTest != 1) stop ("Formula and data units do not match")
     formula.lhs = as.character(formula)[2]
-     
+
+    # Model frame:
     mf = match.call(expand.dots = FALSE)
     if(trace) {
         cat("\nMatched Function Call:\n ")
@@ -159,8 +169,9 @@ garchFit <-
     }
     m = match(c("formula", "data"), names(mf), 0)
     mf = mf[c(1, m)]
-    
+
     # Model the timeSeries - Have a look on the function .modelSeries() ...
+    #   here we cant use "model/frame" !
     mf[[1]] = as.name(".modelSeries")
     mf$fake = FALSE
     mf$lhs = TRUE
@@ -169,16 +180,12 @@ garchFit <-
         print(mf)
     }
     x = eval(mf, parent.frame())
-    if(trace) {
-        print(x)
-    }
+    if(trace) print(x)
     
     # Now extract the modelled series ...
     x = as.vector(x[, 1])
     names(x) = rownames(data)
-    if(trace) {
-        print(x)
-    }        
+    if(trace) print(x)      
               
     # Compose Mean and Variance Formula:
     allLabels = attr(terms(formula), "term.labels")
@@ -210,7 +217,7 @@ garchFit <-
     # Return Value:
     ans
 }
-
+ 
 
 # ------------------------------------------------------------------------------
 
@@ -400,7 +407,7 @@ garchFit <-
     # Return Value:
     new("fGARCH",     
         call = as.call(match.call()),
-        formula = list(formula.mean = formula.mean, formula.var = formula.var),
+        formula = as.formula(paste("~", formula.mean, "+", formula.var)),
         method = "Max Log-Likelihood Estimation", 
         data = list(x = series),
         fit = fit,        

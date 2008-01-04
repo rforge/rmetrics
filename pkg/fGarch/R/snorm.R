@@ -42,7 +42,7 @@
 #  normFit                Fit the parameters for a Normal distribution
 #  snormFit               Fit the parameters for a skew Normal distribution
 # FUNCTION:              SLIDER:
-#  .snormSlider           Displays Normal Distribution and RVS
+#  snormSlider            Displays Normal Distribution and RVS
 ################################################################################
 
 
@@ -268,26 +268,26 @@ normFit <-
     function(x, ...)
 {   
     # A function implemented by Diethelm Wuertz
-
+    
     # Description:
-    #   Fit the parameters for a Normal distribution
+    #   Fit the parameters for a skew Normal distribution
     
     # FUNCTION:
-    
-    # For S-Plus compatibility:
-    if (!exists("nlm")) 
-        nlm = function (f, p, ...) nlminb(start = p, objective = f, ...) 
-        
+     
     # Start Value:
-    p = c(mean = mean(x), sd = sqrt(var(x)))
+    start = c(mean = mean(x), sd = sqrt(var(x)))
 
     # Log-likelihood Function:
     loglik = function(x, y = x){ 
-        f = -sum(log(dnorm(y, x[1], x[2])))
+        f = -sum(log(dsnorm(y, x[1], x[2])))
         f }
         
     # Minimization:
-    fit = nlm(f = loglik, p = p, y = x, ...)
+    fit = nlminb(start = start, objective = loglik, 
+        lower = c(-Inf, 0), upper = c(Inf, Inf), y = x, ...)
+        
+    # Add Names to $par
+    names(fit$par) = c("mean", "sd")
     
     # Return Value:
     fit
@@ -306,13 +306,9 @@ snormFit <-
     #   Fit the parameters for a skew Normal distribution
     
     # FUNCTION:
-    
-    # For S-Plus compatibility:
-    if (!exists("nlm")) 
-        nlm = function (f, p, ...) nlminb(start = p, objective = f, ...) 
-        
+     
     # Start Value:
-    p = c(mean = mean(x), sd = sqrt(var(x)), xi = 1)
+    start = c(mean = mean(x), sd = sqrt(var(x)), xi = 1)
 
     # Log-likelihood Function:
     loglik = function(x, y = x){ 
@@ -320,7 +316,11 @@ snormFit <-
         f }
         
     # Minimization:
-    fit = nlm(f = loglik, p = p, y = x, ...)
+    fit = nlminb(start = start, objective = loglik, 
+        lower = c(-Inf, 0, 0), upper = c(Inf, Inf, Inf), y = x, ...)
+        
+    # Add Names to $par
+    names(fit$par) = c("mean", "sd", "xi")
     
     # Return Value:
     fit

@@ -27,13 +27,13 @@
 \arguments{
 
     \item{x}{
-        description
+        an object of class \code{"fREG"}
         } 
     \item{which}{
-        description
+        a character string denoting which plot should be displayed.
         }
     \item{\dots}{
-        description
+        optional arguments to be passed.
         }
  
 }
@@ -43,13 +43,35 @@
     \describe{
 
     \item{x = "ANY", y = "ANY"}{
-        Generic Function
+        Generic function.
         }
     \item{x = "fGARCH", y = "missing"}{
-        Plot ... Function
+        Plot function for objects of class \code{"fGARCH"}.
         }
         
     }
+}
+
+
+\details{
+
+    The generic function \code{plot} allows to display 13 graphs. These
+    are the \cr
+    
+            Time SeriesPlot\cr
+            Conditional Standard Deviation Plot\cr
+            Series Plot with 2 Conditional SD Superimposed\cr
+            Autocorrelation function Plot of Observations\cr
+            Autocorrelation function Plot of Squared Observations\cr
+            Cross Correlation Plot\cr
+            Residuals Plot\cr
+            Conditional Standard Deviations Plot\cr
+            Standardized Residuals Plot\cr
+            ACF Plot of Standardized Residuals\cr
+            ACF Plot of Squared Standardized Residuals\cr
+            Cross Correlation Plot between r^2 and r\cr
+            Quantile-Quantile Plot of Standardized Residuals\cr
+            
 }
 
 
@@ -61,7 +83,6 @@
 
 
 \examples{
-\dontrun{
 ## garchSpec -
    spec = garchSpec()
    spec
@@ -71,13 +92,18 @@
    head(x) 
 
 ## garchFit - 
-   # fit = garchFit(~garch(1, 1), data = x)
-   # print(fit)
-   ## Interactive Plot:
-   ## plot(fit)
-   ## Batch Plot:
-   # plot(fit, which = 3)
-   # summary(fit)
+   fit = garchFit(formula = ~ garch(1, 1), data = x)
+   print(fit)
+   summary(fit)
+   
+\dontrun{   
+## Plot:
+   
+   # Batch Plot:
+   plot(fit, which = 3)
+   
+   # Interactive Plot:
+   plot(fit) 
 }
 }
 

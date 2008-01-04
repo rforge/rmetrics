@@ -26,7 +26,7 @@
         Generic function.
         }
     \item{object = "fGARCH"}{
-        Coefficients extractor function.
+        Extractor function for coefficients.
         }
         
     }

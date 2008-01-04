@@ -31,9 +31,8 @@
     \item{\code{call}:}{Object of class \code{"call"}: 
         the call of the \code{garch} function.
         } 
-    \item{\code{formula}:}{Object of class \code{"list"}: 
-        a list with two formula entries, one for the mean and the other
-        one for the variance equation.
+    \item{\code{formula}:}{Object of class \code{"formula"}: 
+        a formula object specifying mean and variance equation.
         }
     \item{\code{method}:}{Object of class \code{"character"}: 
         a string denoting the optimization method, by default the 

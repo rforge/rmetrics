@@ -26,8 +26,8 @@
 \arguments{
 
     \item{object}{
-        an object of class \code{fGARCH} as returned from the function
-        \code{garchFit()}.
+        an object of class \code{"fGARCH"} as returned from the function
+        \code{garchFit}.
         }  
     \item{standardize}{
         a logical flag, should the residuals be standardized?
@@ -43,7 +43,8 @@
         Generic function
         }
     \item{object = "fGARCH"}{
-        Residuals
+        Extractor function for residual from an object of 
+        class \code{"fGARCH"}.
         }
         
     }
@@ -65,14 +66,22 @@
 
 
 \examples{
-## garchSim -
-   x = garchSim(n = 500)
+## Swiss Pension func Index -
+   x = as.timeSeries(data(LPP2005REC))
   
 ## garchFit
-   fit = garchFit(~garch(1, 1), data = x)
+   fit = garchFit(LPP40 ~ garch(1, 1), data = 100*x, trace = FALSE)
+   fit
    
 ## residuals - 
-   residuals(fit)
+   res = residuals(fit)
+   head(res)
+   class(res)
+   
+## slot - 
+   res = slot(fit, "residuals")
+   head(res)
+   class(res)
 }
 
 

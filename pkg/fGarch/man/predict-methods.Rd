@@ -27,14 +27,15 @@
 \arguments{
 
     \item{n.ahead}{
-        number of steps to be forecasted, an integer value, by default 10.
+        an integer value, denoting the number of steps to be forecasted,  
+        by default 10.
         }
     \item{object}{
-        an object of class \code{fGARCH} as returned from the function
-        \code{garchFit()}.
+        an object of class \code{fGARCH} as returned by the function
+        \code{garchFit}.
         }   
     \item{trace}{
-        a logical flag. Should the prediction process be printed? By 
+        a logical flag. Should the prediction process be traced? By 
         default \code{trace=FALSE}.
         }  
     \item{\dots}{
@@ -48,10 +49,10 @@
     \describe{
 
     \item{object = "ANY"}{
-        Generic function
+        Generic function.
         }
     \item{object = "fGARCH"}{
-        Predict
+        Predict function for objects of class \code{"fGARCH"}.
         }
         
     }
@@ -60,7 +61,8 @@
 
 \value{
 
-    returns ...
+    returns a data frame with the foloowing columns:
+    \code{"meanForecast"}, \code{meanError}, and \code{"standardDeviation"}.
         
 }
 
@@ -82,16 +84,11 @@
    head(x) 
 
 ## garchFit - 
-   # fit = garchFit(~garch(1, 1), data = x)
-   # print(fit)
-   ## Interactive Plot:
-   ## plot(fit)
-   ## Batch Plot:
-   # plot(fit, which = 3)
-   # summary(fit)
+   fit = garchFit(~ garch(1, 1), data = x)
+   fit
    
 ## predict -
-   # predict(object, n.ahead = 10)
+   predict(fit, n.ahead = 10)
 }
 
 

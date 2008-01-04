@@ -23,10 +23,10 @@
     \describe{
 
     \item{object = "ANY"}{
-        Generic function
+        Generic function. 
         }
     \item{object = "fGARCH"}{
-        Fitted
+        Extractor function for fitted values.
         }
         
     }
@@ -49,14 +49,22 @@
 
 
 \examples{
-## garchSim -
-   x = garchSim(n = 500)
+## Swiss Pension func Index -
+   x = as.timeSeries(data(LPP2005REC))
   
 ## garchFit
-   fit = garchFit(~garch(1, 1), data = x)
+   fit = garchFit(LPP40 ~ garch(1, 1), data = 100*x, trace = FALSE)
+   fit
    
-## formula - 
-   fitted(fit)
+## fitted - 
+   fitted = fitted(fit)
+   head(fitted)
+   class(fitted)
+   
+## slot - 
+   fitted = slot(fit, "fitted")
+   head(fitted)
+   class(fitted)
 }
 
 

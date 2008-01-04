@@ -46,10 +46,11 @@
     \describe{
 
     \item{object = "ANY"}{
-        Generic function
+        Generic function.
         }
     \item{object = "fGARCH"}{
-        Volatility
+        Extractor function for volatility or standard deviation from 
+        an object of class \code{"fGARCH"}.
         }
         
     }
@@ -71,14 +72,30 @@
 
 
 \examples{
-## garchSim -
-   x = garchSim(n = 500)
+## Swiss Pension func Index -
+   x = as.timeSeries(data(LPP2005REC))
   
 ## garchFit
-   fit = garchFit(~garch(1, 1), data = x)
+   fit = garchFit(LPP40 ~ garch(1, 1), data = 100*x, trace = FALSE)
+   fit
    
 ## volatility - 
-   volatility(fit)
+   # Standard Deviation:
+   volatility = volatility(fit, type = "sigma")
+   head(volatility)
+   class(volatility)
+   # Variance:
+   volatility = volatility(fit, type = "h")
+   head(volatility)
+   class(volatility)
+   
+## slot - 
+   volatility = slot(fit, "sigma.t")
+   head(volatility)
+   class(volatility)
+   volatility = slot(fit, "h.t")
+   head(volatility)
+   class(volatility)
 }
 
 
