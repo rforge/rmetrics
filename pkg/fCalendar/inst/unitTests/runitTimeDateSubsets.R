@@ -155,20 +155,22 @@ function()
         current)
 
     # start -
-    tS = timeCalendar(2007)
+    tS = timeCalendar(currentYear)
     target = start(tS)
     print(target)
+    currentDate = paste(currentYear, "-01-01", sep ="")
     checkIdentical(
         format(target),
-        current = format(timeDate("2007-01-01")))
+        current = format(timeDate(currentDate)))
 
     # end -
-    tS = timeCalendar(2007)
+    tS = timeCalendar(currentYear)
     target = end(tS)
     print(target)
+    currentDate = paste(currentYear, "-12-01", sep ="")
     checkIdentical(
         format(target),
-        current = format(timeDate("2007-12-01")))
+        current = format(timeDate(currentDate)))
 
     # head | tail -
     tS = timeCalendar()
