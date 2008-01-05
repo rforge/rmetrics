@@ -97,40 +97,30 @@ sstdSlider(type = c("dist", "rand"))
     \code{r*} generates random deviates, \cr
     all values are numeric vectors.
     
-    \code{*Fit} returns a list with the following components: \cr
-    \item{estimate}{
-        the point at which the maximum value of the log liklihood 
-        function is obtained.
+    \code{[s]stdFit} returns a list with the following components: 
+    \cr
+    \item{par}{
+        The best set of parameters found. 
         }
     \item{objective}{
-        the value of the estimated maximum, i.e. the value of the
-        log liklihood function.
+        The value of objective corresponding to \code{par}.
         }
+    \item{convergence}{
+        An integer code. 0 indicates successful convergence.
+        }  
     \item{message}{
-        an integer indicating why the optimization process terminated.
-        }
-    \item{code}{
-        an integer indicating why the optimization process terminated.\cr
-        1: relative gradient is close to zero, current iterate is probably 
-            solution; \cr
-        2: successive iterates within tolerance, current iterate is probably 
-            solution; \cr
-        3: last global step failed to locate a point lower than \code{estimate}. 
-            Either \code{estimate} is an approximate local minimum of the 
-            function or \code{steptol} is too small; \cr
-        4: iteration limit exceeded; \cr
-        5: maximum step size \code{stepmax} exceeded five consecutive times. 
-            Either the function is unbounded below, becomes asymptotic to a 
-            finite value from above in some direction or \code{stepmax} 
-            is too small.
-            }
-    \item{gradient}{
-        the gradient at the estimated maximum.
-        }
-    \item{steps}{
-        number of function calls.
-        }
-    
+        A character string giving any additional information 
+        returned by the optimizer, or NULL. For details, see 
+        PORT documentation.
+        }  
+    \item{iterations}{
+        Number of iterations performed.
+        } 
+    \item{evaluations}{
+        Number of objective function and gradient function 
+        evaluations.
+        } 
+ 
 }
 
 
@@ -138,9 +128,9 @@ sstdSlider(type = c("dist", "rand"))
     
     \bold{Parameter Estimation:}
     \cr\cr
-    The function \code{\link{nlm}} is used to minimize the "negative" maximum 
-    log-likelihood function. \code{nlm} carries out a minimization using 
-    a Newton-type algorithm.
+    The function \code{\link{nlminb}} is used to minimize the "negative" 
+    maximum log-likelihood function. \code{nlminb} carries out a 
+    minimization using a Newton-type algorithm.
     
 }
 

@@ -51,29 +51,31 @@ setMethod(f = "fitted", signature(object = "fGARCH"), definition =
     fitted = object@fitted
     
     # Get original time series class:
-    data = object@data$data
-    dataClass = class(data)[1]
+    data = slot(object, "data")$data
+    Data = slot(object, "data")$Data
+    Name = as.character(fit@formula[2])
+    dataClass = class(Data)[1]
     
     if (dataClass == "timeSeries") {
-        ans = data
+        ans = Data
         data.mat = matrix(fitted)
-        rownames(data.mat) = rownames(data)
-        colnames(data.mat) = object@data$unit
+        rownames(data.mat) = rownames(Data)
+        colnames(data.mat) = Name
         ans@Data = data.mat
     } else if (dataClass == "zoo") {
         ans = fitted
-        attr(ans, "index") = attr(data, "index")
+        attr(ans, "index") = attr(Data, "index")
         class(ans) = "zoo"
     } else if (dataClass == "ts" | dataClass == "mts") {
         ans = fitted
-        attr(ans, "tsp") = attr(data, "tsp")
+        attr(ans, "tsp") = attr(Data, "tsp")
         class(ans) = "ts"
     } else {
         ans = data
     }
     
     # Return Value:
-    ans
+    ans 
 })
 
 

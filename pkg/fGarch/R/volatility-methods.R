@@ -59,13 +59,13 @@ setMethod(f = "volatility", signature(object = "fGARCH"), definition =
         
     # Numeric vectors of conditional values:
     if (type == "sigma") {
-        volatility = object@sigma.t
+        volatility = slot(object, "sigma.t")
     } else if (type == "h") {
-        volatility = object@h.t
+        volatility = slot(object, "h.t")
     }
     
     # Get original time series class:
-    data = object@data$data
+    data = slot(object, "data")$data
     dataClass = class(data)[1]
     
     if (dataClass == "timeSeries") {

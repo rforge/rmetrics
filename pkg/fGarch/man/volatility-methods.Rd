@@ -57,6 +57,30 @@
 }
 
 
+\details{
+
+    The function extracts the \code{@volatility} from the slots
+    \code{@sigma.t} or \code{@h.t} of an object of class \code{"fGARCH"} 
+    as returned by the function \code{garchFit}.
+    
+    The class of the returned value depends on the input to the
+    function \code{garchFit} who created the object. The returned
+    value is always of the same class as the input object to the
+    argument \code{data} in the function \code{garchFit}, i.e. if
+    you fit a \code{"timeSeries"} object, you will get back from 
+    the function \code{fitted} also a \code{"timeSeries"} object, 
+    if you fit an object of class \code{"zoo"}, you will get back 
+    again a \code{"zoo"} object. The same holds for a \code{"numeric"}
+    vector, for a \code{"data.frame"}, and for objects of class
+    \code{"ts", "mts"}.
+    
+    In contrast, the slot itself returns independent of the class 
+    of the data input always a numceric vector, i.e. the function 
+    call r\code{slot(object, "fitted")} will return a numeric vector.
+    
+}
+
+
 \note{
 
     \code{volatility} is a generic function which extracts volatility values 

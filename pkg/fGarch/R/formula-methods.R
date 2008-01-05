@@ -48,7 +48,7 @@ setMethod(f = "formula", signature(x = "fGARCH"), definition =
     # FUNCTION:
     
     # Numeric vector of fitted values:
-    ans = x@formula
+    ans = slot(x, "formula")
     
     # Return Value:
     ans

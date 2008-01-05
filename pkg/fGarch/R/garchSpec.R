@@ -29,15 +29,15 @@
 
 ################################################################################
 # FUNCTION:               SPECIFICATION: 
-#  garchSpec               S4: Creates a 'garchSpec' object from scratch
-################################################################################
-
+#  garchSpec               Creates a 'garchSpec' object from scratch
+###############################################################################
+   
 
 garchSpec <- 
-    function (model = list(omega = 1.0e-6, alpha = 0.1, beta = 0.8), 
-    presample = NULL, cond.dist = c("rnorm", "rged", "rstd", "rsnorm", 
-    "rsged", "rsstd"), rseed = NULL)
-{   
+    function (model = list(), presample = NULL, 
+    cond.dist = c("norm", "ged", "std", "snorm", "sged", "sstd"), 
+    rseed = NULL)
+{         
     # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -59,8 +59,10 @@ garchSpec <-
     #     ma - a vector of moving average coefficients of 
     #       length n for the ARMA specification,
     #     delta - the exponent value used in the variance equation.
-    #     dist - a numeric value or a vector listing the 
-    #       distributional parameters.
+    #     skew - a numeric value listing the distributional 
+    #        skewness parameter.
+    #     shape - a numeric value listing the distributional 
+    #        shape parameter.
     #   presample - either a multivariate "timeSeries", a 
     #       multivariate "ts", a "data.frame" object or a numeric 
     #       "matrix" with 3 columns and at least max(m,n,p,q) 
@@ -83,6 +85,99 @@ garchSpec <-
    
     # FUNCTION:
     
+    # Match Arguments:
+    cond.dist = match.arg(cond.dist)
+    
+    # Skewness Parameter Settings:
+    skew = list(
+        "norm" = NULL,
+        "ged" = NULL,
+        "std" = NULL,
+        "snorm" = 0.9,
+        "sged" = 0.9,
+        "sstd" = 0.9)
+        
+    # Shape Parameter Settings:
+    shape = list(
+        "norm" = NULL,
+        "ged" = 2,   
+        "std" = 4,   
+        "snorm" = NULL,
+        "sged" = 2,   
+        "sstd" = 4)      
+       
+    # Default Model:
+    control = list(
+        omega = 1.0e-6,
+        alpha = 0.1,
+        gamma = NULL, 
+        beta = 0.8,
+        mu = NULL,
+        ar = NULL,
+        ma = NULL, 
+        delta = 2,
+        skew = skew[[cond.dist]],
+        shape = shape[[cond.dist]]
+        )
+      
+    # Update Control:  
+    control[names(model)] <- model
+    model <- control
+    
+    
+    # Model Orders:
+    order.ar = length(model$ar) 
+    order.ma = length(model$ma) 
+    order.alpha = length(model$alpha) 
+    if (sum(model$beta) == 0) {
+        order.beta = 0 
+    } else {
+        order.beta = length(model$beta) 
+    }
+                               
+    # Compose Mean Formula Object:
+    if (order.ar == 0 && order.ma == 0) {
+        formula.mean = "" 
+    }
+    if (order.ar > 0 && order.ma == 0) {
+        formula.mean = paste ("ar(", as.character(order.ar), ")", sep = "")
+    }
+    if (order.ar == 0 && order.ma > 0) {
+        formula.mean = paste ("ma(", as.character(order.ma), ")",  sep = "")
+    }
+    if (order.ar > 0 && order.ma > 0) {
+        formula.mean = paste ("arma(", as.character(order.ar), ", ",
+            as.character(order.ma), ")", sep = "")
+    } 
+    
+    # Compose Variance Formula Object:
+    formula.var = "garch"
+    if (order.beta == 0) formula.var = "arch"
+    if (!is.null(model$gamma) != 0) formula.var = "aparch"
+    if (model$delta != 2) formula.var = "aparch"
+    
+    if (order.beta == 0) {
+        formula.var = paste(formula.var, "(", as.character(order.alpha), ")", 
+            sep = "")  
+    } else {
+        formula.var = paste(formula.var, "(", as.character(order.alpha), 
+            ", ", as.character(order.beta), ")", sep = "")  
+    }
+    
+    # Compose Mean-Variance Formula Object:
+    if (formula.mean == "") {
+        formula = as.formula(paste("~", formula.var))
+    } else {
+        formula = as.formula(paste("~", formula.mean, "+", formula.var))
+    }
+    
+    # Add NULL default entries:
+    if (is.null(model$mu)) model$mu = 0
+    if (is.null(model$ar)) model$ar = 0
+    if (is.null(model$ma)) model$ma = 0
+    if (is.null(model$gamma)) model$gamma = rep(0, times = order.alpha)
+    # print(unlist(model))
+
     # Seed:
     if (is.null(rseed)) {
         rseed = 0
@@ -90,112 +185,6 @@ garchSpec <-
         set.seed(rseed)
     }
     
-    # Add Missing Default Values:
-    if (!any(names(model) == "omega")) {
-        model$omega = 1.0e-6
-    }
-    if (!any(names(model) == "alpha")) {
-        model$alpha = 0.1
-    }
-    if (!any(names(model) == "beta")) {
-        model$beta = NULL
-    }
-              
-    # Define Missing GARCH Coefficients:
-    formula.var = "garch" 
-    if (is.null(model$omega)) {
-        model$omega = 1.0e-6
-    }
-    if (is.null(model$alpha)) {
-        model$alpha = order.alpha = 0
-    } else {
-        order.alpha = length(model$alpha)     
-    }
-    if (is.null(model$gamma)) {
-        model$gamma = rep(0, times = length(model$alpha)) 
-    } else {
-        formula.var = "aparch" 
-    }   
-    if (is.null(model$beta)) {
-        model$beta = order.beta = 0
-        formula.var = "arch"
-    } else {
-        order.beta = length(model$beta)
-    } 
-       
-    # Define Missing Mean Value and Autoregressive Coefficients:
-    formula.mean = ""
-    if(is.null(model$mu)) {
-        model$mu = 0  
-    }
-    if (is.null(model$ar)) {
-        model$ar = order.ar = 0 
-    } else {
-        order.ar = length(model$ar) 
-    }   
-    if (is.null(model$ma)) {
-        model$ma = order.ma = 0 
-    } else {
-        order.ma = length(model$ma) 
-    }
-           
-    # Define Missing Delta Exponent:
-    if (is.null(model$delta)) {
-        model$delta = 2 
-    } else {
-        formula.var = "aparch" 
-    }
-    
-    # Define Distributional Parameters:
-    distribution = cond.dist[1]
-    if (is.null(model$skew)) {                      
-        if (distribution == "rnorm")  model$skew = c(skew = NULL)
-        if (distribution == "rged")   model$skew = c(skew = NULL)
-        if (distribution == "rstd")   model$skew = c(skew = NULL)
-        if (distribution == "rsnorm") model$skew = c(skew = 0.9)
-        if (distribution == "rsged")  model$skew = c(skew = 0.9)
-        if (distribution == "rsstd")  model$skew = c(skew = 0.9) 
-    } else { 
-        names(model$skew) = "skew" 
-    }
-    if (is.null(model$shape)) {                      
-        if (distribution == "rnorm")  model$shape = c(shape = NULL)
-        if (distribution == "rged")   model$shape = c(shape = 2)
-        if (distribution == "rstd")   model$shape = c(shape = 4)
-        if (distribution == "rsnorm") model$shape = c(shape = NULL)
-        if (distribution == "rsged")  model$shape = c(shape = 2)
-        if (distribution == "rsstd")  model$shape = c(shape = 4) 
-    } else { 
-        names(model$shape) = "shape" 
-    }
-    
-    # Compose Formula Object:
-    if (order.ar > 0 && order.ma == 0) {
-        formula.mean = paste ("~ ar(", as.character(order.ar), ")", 
-            sep = "")
-    }
-    if (order.ar == 0 && order.ma > 0) {
-        formula.mean = paste ("~ ma(", as.character(order.ma), ")", 
-            sep = "")
-    }
-    if (order.ar > 0 && order.ma > 0) {
-        formula.mean = paste ("~ arma(", as.character(order.ar), ", ",
-            as.character(order.ma), ")", sep = "")
-    }
-    if (formula.mean == "") {
-        formula.mean = "~ " 
-    } else {
-        formula.mean = paste(formula.mean, " + ") 
-    }       
-    if (order.beta == 0) {
-        formula.var = paste(formula.var, "(", as.character(order.alpha), 
-            ")", sep = "")  
-    } else {
-        formula.var = paste(formula.var, "(", as.character(order.alpha), 
-            ", ", as.character(order.beta), ")", sep = "")  
-    }
-    formula = paste(formula.mean, formula.var)
-   
     # Define Missing Presample:
     order.max = max(order.ar, order.ma, order.alpha, order.beta)
     iterate = TRUE
@@ -207,18 +196,19 @@ garchSpec <-
             n.start = presample 
         }
         z = rnorm(n = n.start)
-        # GARCH(p, q)
+        # GARCH(p, q):
         h = rep(model$omega/(1-sum(model$alpha)-sum(model$beta)), 
             times = n.start)
         y = rep(model$mu/(1-sum(model$ar)), times = n.start) 
-        # APARCH :
-        # ...
+        # APARCH(p,q):
+        #  ... we initialize all models with norm-GARCH(p,q) processes
     } else {
         z = presample[, 1]
         h = presample[, 2]
         y = presample[, 3]
     }
-    presample = cbind(z, h, y)       
+    presample = cbind(z, h, y)    
+      
     # Presample Iteration:
     if (iterate) {
         n.iterate = length(z) - order.max
@@ -238,21 +228,17 @@ garchSpec <-
     rownames(presample) = as.character(0:(1-length(z)))
     
     # Result:
-    ans = new(
-        "fGARCHSPEC",
-            call = match.call(),     
-            formula = as.formula(formula), 
-            model = list(omega = model$omega, alpha = model$alpha, 
-                gamma = model$gamma, beta = model$beta, mu = model$mu, 
-                ar = model$ar, ma = model$ma, delta = model$delta, 
-                skew = model$skew, shape = model$shape), 
-            presample = as.matrix(presample),
-            distribution = as.character(distribution),
-            rseed = as.numeric(rseed)
-        )    
-        
-    # Return Value:
-    ans     
+    new("fGARCHSPEC",
+        call = match.call(),     
+        formula = formula, 
+        model = list(omega = model$omega, alpha = model$alpha, 
+            gamma = model$gamma, beta = model$beta, mu = model$mu, 
+            ar = model$ar, ma = model$ma, delta = model$delta, 
+            skew = model$skew, shape = model$shape), 
+        presample = as.matrix(presample),
+        distribution = as.character(cond.dist),
+        rseed = as.numeric(rseed)
+    )    
 }
 
 

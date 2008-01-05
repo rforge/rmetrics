@@ -48,7 +48,33 @@ setMethod(f = "coef", signature(object = "fGARCH"), definition =
     # FUNCTION:
     
     # Numeric vector of fitted values:
-    ans = object@fit$coef
+    ans = slot(object, "fit")$coef
+    
+    # Return Value:
+    ans
+})
+
+
+# ------------------------------------------------------------------------------
+
+
+setMethod(f = "coef", signature(object = "fGARCHSPEC"), definition = 
+    function(object) 
+{   
+    # A function implemented by Diethelm Wuertz
+    
+    # Description:  
+    #   Extracts 'fGarch' Model Coefficients
+    
+    # Arguments:
+    #   object - an object of class fGarch as returned by the function
+    #       garchFit
+    
+    # FUNCTION:
+    
+    # Numeric vector of fitted values:
+    ans = unlist(slot(object, "model"))
+    attr(ans, "distribution") <- slot(object, "distribution")
     
     # Return Value:
     ans

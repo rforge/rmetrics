@@ -42,10 +42,10 @@
 # ------------------------------------------------------------------------------
 
 
-garchOxFit = 
-function(formula, data, cond.dist = c("gaussian", "t", "ged", "skewed-t"), 
-include.mean = TRUE, trace = TRUE, control = list(), title = NULL, 
-description = NULL)
+garchOxFit <- 
+    function(formula, data, cond.dist = c("gaussian", "t", "ged", "skewed-t"), 
+    include.mean = TRUE, trace = TRUE, control = list(), title = NULL, 
+    description = NULL)
 {   # A function implemented by Diethelm Wuertz
 
     # Description
@@ -104,11 +104,11 @@ description = NULL)
 # ------------------------------------------------------------------------------
 
 
-.garchOxFit = 
-function(formula.mean = ~ arma(0, 0), formula.var = ~ garch(1, 1), 
-series = x, cond.dist = c("gaussian", "t", "ged", "skewed-t"), 
-include.mean = TRUE, trace = TRUE, control = list(), title = NULL, 
-description = NULL)
+.garchOxFit <- 
+    function(formula.mean = ~ arma(0, 0), formula.var = ~ garch(1, 1), 
+    series = x, cond.dist = c("gaussian", "t", "ged", "skewed-t"), 
+    include.mean = TRUE, trace = TRUE, control = list(), title = NULL, 
+    description = NULL)
 {   # A function implemented by Diethelm Wuertz
     
     # Description:
@@ -282,7 +282,7 @@ description = NULL)
 
 
 print.garchOx =  
-function(x, digits = max(3, getOption("digits") - 3), ...) 
+    function(x, digits = max(3, getOption("digits") - 3), ...) 
 {   # A function implemented by Diethelm Wuertz
     
     # Description:
@@ -433,8 +433,8 @@ function(x, digits = max(3, getOption("digits") - 3), ...)
 # ------------------------------------------------------------------------------
 
 
-summary.garchOx = 
-function(object, ...)
+summary.garchOx <- 
+    function(object, ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -457,8 +457,8 @@ function(object, ...)
 # ------------------------------------------------------------------------------
 
 
-plot.garchOx = 
-function(x, ...) 
+plot.garchOx <- 
+    function(x, ...) 
 {   # A function implemented by Diethelm Wuertz
 
     # Description:

@@ -63,6 +63,9 @@
 
     returns a data frame with the foloowing columns:
     \code{"meanForecast"}, \code{meanError}, and \code{"standardDeviation"}.
+    
+    The number of records equals the number of forecasting steps
+    \code{n.ahead}.
         
 }
 
@@ -75,22 +78,13 @@
 
 
 \examples{
-## garchSpec -
-   spec = garchSpec()
-   spec
-
-## garchSim -
-   x = garchSim(model = spec@model, n = 500)
-   head(x) 
-
 ## garchFit - 
-   fit = garchFit(~ garch(1, 1), data = x)
+   # Parameter Estimation of Default GARCH(1,1) Model:
+   fit = garchFit(~ garch(1, 1), data = garchSim(), trace = FALSE)
    fit
 
-\dontrun{ 
 ## predict -
    predict(fit, n.ahead = 10)
-}
 }
 
 

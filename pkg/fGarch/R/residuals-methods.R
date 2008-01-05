@@ -55,7 +55,7 @@ setMethod(f = "residuals", signature(object = "fGARCH"), definition =
     residuals = .residuals.fGARCH(object = object, standardize = standardize) 
     
     # Get original time series class:
-    data = object@data$data
+    data = slot(object, "data")$data
     dataClass = class(data)[1]
     
     if (dataClass == "timeSeries") {

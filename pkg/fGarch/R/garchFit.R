@@ -44,7 +44,6 @@
 ##############################################################################
   
 
-
 .llh = 1e99
 .garchDist = NA
 .params = NA
@@ -97,7 +96,20 @@ garchFit <-
     Name = as.character(substitute(data))
     Data = data
     data = as.data.frame(data)
-    if (isUnivariate(data)) colnames(data) <- Name
+    
+    # Column Names:
+    if (isUnivariate(data)) {
+        colnames(data) <- Name
+    } else {
+        # Check unique column Names:
+        uniqueNames = unique(sort(colnames(data)))
+        if (is.null(colnames(data))) {
+            stop("Column names of data are missing.")
+        }
+        if (length(colnames(data)) != length(uniqueNames)) {
+            stop("Column names of data are not unique.")
+        }
+    }
  
     # Handle if we have no left-hand-side for the formula ...
     #   Note in this case the length of the formula is 2 (else 3):
@@ -154,10 +166,10 @@ garchFit <-
     
     # Get Data:
     allVars = unique(sort(all.vars(formula)))
-    print(allVars)
-    print(colnames(data))
+    # print(allVars)
+    # print(colnames(data))
     allVarsTest =  mean(allVars %in% colnames(data))
-    print(allVarsTest)
+    # print(allVarsTest)
     if (allVarsTest != 1) stop ("Formula and data units do not match")
     formula.lhs = as.character(formula)[2]
 
@@ -170,9 +182,9 @@ garchFit <-
     m = match(c("formula", "data"), names(mf), 0)
     mf = mf[c(1, m)]
 
-    # Model the timeSeries - Have a look on the function .modelSeries() ...
+    # Model the timeSeries - Have a look on the function .garchModelSeries() ...
     #   here we cant use "model/frame" !
-    mf[[1]] = as.name(".modelSeries")
+    mf[[1]] = as.name(".garchModelSeries")
     mf$fake = FALSE
     mf$lhs = TRUE
     if(trace) {
@@ -218,6 +230,57 @@ garchFit <-
     ans
 }
  
+
+# ------------------------------------------------------------------------------
+
+
+.garchModelSeries <-
+    function (formula, data, fake = FALSE, lhs = FALSE) 
+{
+    # A function implemented by Diethelm Wuertz
+    
+    # Note:
+    #   ... is the same funtion as Rmetrics' .modelSeries()  
+    #   ... have also a look on model.frame()
+    
+    # FUNCTION: 
+    
+    if (length(formula) == 2) {
+        formula = as.formula(paste("x", formula[1], formula[2], 
+            collapse = ""))
+        stopifnot(!missing(data))
+    }
+    if (missing(data)) {
+        data = eval(parse(text = search()[2]), parent.frame())
+    }
+    if (is.numeric(data)) {
+        data = data.frame(data)
+        colnames(data) = all.vars(formula)[1]
+        lhs = TRUE
+    }
+    if (fake) {
+        response = as.character(formula)[2]
+        Call = as.character(match.call()[[2]][[3]])
+        method = Call[1]
+        predictors = Call[2]
+        formula = as.formula(paste(response, "~", predictors))
+    }
+    if (lhs) {
+        response = as.character(formula)[2]
+        formula = as.formula(paste(response, "~", 1))
+    }
+    
+    x = model.frame(formula, data)
+    
+    if (class(data) == "timeSeries") 
+        x = timeSeries(x)
+    if (fake) 
+        attr(x, "control") <- method
+    
+    # Return Value:
+    x
+}
+
 
 # ------------------------------------------------------------------------------
 
@@ -323,7 +386,7 @@ garchFit <-
         
     # Note:
     #   This is the old version of garchFit, we keep it for backward
-    #   compatoibility.
+    #   compatibility.
     
     # FUNCTION:
   

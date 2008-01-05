@@ -88,13 +88,11 @@
    spec
 
 ## garchSim -
-   x = garchSim(model = spec@model, n = 500)
+   x = garchSim(spec, n = 200)
    head(x) 
 
 ## garchFit - 
-   fit = garchFit(formula = ~ garch(1, 1), data = x)
-   print(fit)
-   summary(fit)
+   fit = garchFit(formula = ~ garch(1, 1), data = x, trace = FALSE)
    
 \dontrun{
 ## Plot:

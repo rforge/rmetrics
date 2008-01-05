@@ -79,7 +79,7 @@ setMethod(f = "show", signature(object = "fGARCH"), definition =
     # Log Likelihood:
     cat("\nLog Likelihood:\n ")
     LLH = object@fit$value
-    N = length(object@data$x)
+    N = NROW(object@data$data)
     cat(LLH, "   normalized: ", LLH/N, "\n")
         
     # Description:
@@ -135,16 +135,16 @@ setMethod(f = "show", signature(object = "fGARCHSPEC"), definition =
     # Distribution: 
     cat("\nDistribution: \n ")
     cat(x@distribution)   
-    if (x@distribution != "rnorm") {
-        if (x@distribution == "rsnorm") {
+    if (x@distribution != "norm") {
+        if (x@distribution == "snorm") {
             cat("\nDistributional Parameters: \n")
             cat(" xi =", x@model$skew)
         }
-        if (x@distribution == "rged" | x@distribution == "rstd") {
+        if (x@distribution == "ged" | x@distribution == "std") {
             cat("\nDistributional Parameter: \n")
             cat(" nu =", x@model$shape) 
         }
-        if (x@distribution == "rsged" | x@distribution == "rsstd") {
+        if (x@distribution == "sged" | x@distribution == "sstd") {
             cat("\nDistributional Parameters: \n")
             cat(" nu =", x@model$shape, " xi =", x@model$skew)
         }

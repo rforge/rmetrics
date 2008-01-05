@@ -7,6 +7,7 @@
 \alias{coef-methods}
 \alias{coef,ANY-method}
 \alias{coef,fGARCH-method}
+\alias{coef,fGARCHSPEC-method}
 
 
 \title{GARCH Coefficients Methods}
@@ -26,9 +27,13 @@
         Generic function.
         }
     \item{object = "fGARCH"}{
-        Extractor function for coefficients.
+        Extractor function for coefficients from a fitted
+        GARCH model.
         }
-        
+    \item{object = "fGARCHSPEC"}{
+        Extractor function for coefficients from a GARCH
+        specification structure.
+        }   
     }
 }
 
@@ -37,6 +42,7 @@
 
     \code{coef} is a generic function which extracts coefficients 
     from objects returned by modeling functions.
+    
 }
 
 
@@ -48,11 +54,18 @@
 
 
 \examples{
+## garchSpec -
+   # Use default parameters beside alpha:
+   spec = garchSpec(model = list(alpha = c(0.05, 0.05)))
+   spec
+   coef(spec)
+   
 ## garchSim -
-   x = garchSim(n = 500)
+   # Simulate an univariate "ts" series
+   x = garchSim(spec, n = 200)
   
-## garchFit
-   fit = garchFit(~garch(1, 1), data = x)
+## garchFit - 
+   fit = garchFit(x ~ garch(1, 1), data = x)
    
 ## coef - 
    coef(fit)

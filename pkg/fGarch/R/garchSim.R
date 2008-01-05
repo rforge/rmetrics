@@ -30,14 +30,12 @@
 ################################################################################
 # FUNCTION:               SIMULATION:
 #  garchSim                Simulates a GARCH/APARCH process
-#  .garchSim               Simulates a GARCH/APARCH from specification object
 ################################################################################
 
 
 garchSim <- 
-    function (model = list(omega = 1.0e-6, alpha = 0.1, beta = 0.8), n = 100, 
-    n.start = 100, presample = NULL, cond.dist = c("rnorm", "rged", "rstd", 
-    "rsnorm", "rsged", "rsstd"), rseed = NULL, returnClass = c("ts", "numeric"))
+    function(spec = garchSpec(), n = 100, n.start = 100, 
+    returnClass = c("ts", "numeric", "mts"))
 {   
     # A function implemented by Diethelm Wuertz
 
@@ -45,8 +43,8 @@ garchSim <-
     #   Simulates a time series process from the GARCH family
     
     # Arguments:
-    #   model - either a specification object of class 'fGARCHSPEC' 
-    #     or a list with the model parameters as entries
+    #   model - a specification object of class 'fGARCHSPEC' as
+    #     returned by the function \code{garchSpec}:
     #     ar - a vector of autoregressive coefficients of 
     #       length m for the ARMA specification,
     #     ma - a vector of moving average coefficients of 
@@ -67,137 +65,71 @@ garchSim <-
     #   n - an integer, the length of the series
     #   n.start - the length of the warm-up sequence to reduce the 
     #       effect of initial conditions. 
-    #   presample - either a multivariate "timeSeries", a 
-    #       multivariate "ts", a "data.frame" object or a numeric 
-    #       "matrix" with 3 columns and at least max(m,n,p,q) 
-    #       rows. The first culumn ...
-    #   cond.dist - a character string naming the conditional distribution 
-    #       function. Valid strings are: "rnorm", "rged", "rstd", "rsnorm", 
-    #       "rsged", and "rsstd".
-    
-    # Notes:
-    #   The parameters omega, alpha, and beta in the model list
-    #   must be explicitely specified, otherwise a warning message 
-    #   will be printed. The other parameters will be assigned by 
-    #   default values.
+    #   returnClass - the class of the object to be returned.
     
     # FUNCTION:
     
-    # Match Arguments:
+    # Specification:
+    stopifnot(class(spec) == "fGARCHSPEC")
+    model = spec@model
     returnClass = match.arg(returnClass)
-    
-    # Simulate Series:
-    if (class(model) == "list") {
-        # Create Specification Object:
-        spec = garchSpec(model = model, presample = presample, 
-            cond.dist = cond.dist, rseed = rseed)
-        ans = .garchSim(n = n, n.start = n.start, spec = spec)
-    } else if (class(model) == "fGARCHSPEC") {
-        ans = .garchSim(n = n, n.start = n.start, spec = model)
-    } else {
-        stop("model must be an object of class list or fGARCHSPEC")
-    }
-    
-    if (returnClass == "numeric") {
-        ans = as.numeric(as.vector(ans))
-    }
-
-    # Return Value:
-    ans
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.garchSim <- 
-    function(n = 1000, n.start = 1000, spec = garchSpec())
-{   
-    # A function implemented by Diethelm Wuertz
-    
-    # Description:
-    #   Simulates GARCH series from 'fGARCHSPEC'
-    
-    # Arguments:
-    #   n - length of time series
-    #   spec - GARCH specification structure
-    
-    # FUNCTION:
     
     # Random Seed:
     if (spec@rseed != 0) set.seed(spec@rseed)
   
     # Enlarge Series:
     n = n + n.start
-    
-    # Determine Orders:
-    order.ar = order.ma = order.alpha = order.gamma = order.beta = 1    
-    if (sum(abs(spec@model$ar)) != 0) {  
-        model.ar = spec@model$ar
-        order.ar = length(spec@model$ar) 
-    } else {
-        model.ar = 0
-    }
-    if (sum(abs(spec@model$ma)) != 0) {
-        model.ma = spec@model$ma
-        order.ma = length(spec@model$ma)
-    } else {
-        model.ma = 0
-    }
-    if (sum(abs(spec@model$alpha)) != 0) {
-        model.alpha = spec@model$alpha
-        order.alpha = length(spec@model$alpha)
-    } else {
-        model.alpha = 0
-    }
-    if (sum(abs(spec@model$gamma)) != 0) {
-        model.gamma = spec@model$gamma
-        order.gamma = length(spec@model$gamma)
-    } else {
-        model.gamma = 0
-    }
-    if (sum(abs(spec@model$beta)) != 0) {
-        model.beta = spec@model$beta
-        order.beta = length(spec@model$beta)
-    } else {
-        model.beta = 0
-    }
   
     # Create Innovations:
-    if (spec@distribution == "rnorm")     
+    if (spec@distribution == "norm")     
         z = rnorm(n)
-    if (spec@distribution == "rged")      
-        z = rged(n, nu = spec@model$shape)
-    if (spec@distribution == "rstd")       
-        z = rstd(n, nu = spec@model$shape)
-    if (spec@distribution == "rsnorm") 
-        z = rsnorm(n, xi = spec@model$skew)
-    if (spec@distribution == "rsged")  
-        z = rsged(n, nu = spec@model$shape, xi = spec@model$skew)
-    if (spec@distribution == "rsstd")   
-        z = rsstd(n, nu = spec@model$shape, xi = spec@model$skew)
+    if (spec@distribution == "ged")      
+        z = rged(n, nu = model$shape)
+    if (spec@distribution == "std")       
+        z = rstd(n, nu = model$shape)
+    if (spec@distribution == "snorm") 
+        z = rsnorm(n, xi = model$skew)
+    if (spec@distribution == "sged")  
+        z = rsged(n, nu = model$shape, xi = model$skew)
+    if (spec@distribution == "sstd")   
+        z = rsstd(n, nu = model$shape, xi = model$skew)
     
     # Expand to whole Sample:
-    delta = spec@model$delta
+    delta = model$delta
     z = c(rev(spec@presample[, 1]), z)
     h = c(rev(spec@presample[, 2])^delta, rep(NA, times = n))
     y = c(rev(spec@presample[, 3]), rep(NA, times = n))
     m = length(spec@presample[, 1])
     names(z) = names(h) = names(y) = NULL
         
-    # Iterate APARCH Model:
-    # [This includes the GARCH case]
+    
+    # Determine Coefficients:
+    mu = model$mu
+    ar = model$ar
+    ma = model$ma
+    omega = model$omega
+    alpha = model$alpha
+    gamma = model$gamma
+    beta = model$beta
     deltainv = 1/delta
+    
+    # Determine Orders:
+    order.ar = length(ar)
+    order.ma = length(ma)
+    order.alpha = length(alpha)
+    order.beta = length(beta)
+    
+    # Iterate GARCH / APARCH Model:
     eps = h^deltainv*z
     for (i in (m+1):(n+m)) {
-        h[i] =  spec@model$omega +  
-            sum(model.alpha*(abs(eps[i-(1:order.alpha)]) -  
-                model.gamma*(eps[i-(1:order.alpha)]))^delta) +
-            sum(model.beta*h[i-(1:order.beta)]) 
+        h[i] =  omega +  
+            sum(alpha*(abs(eps[i-(1:order.alpha)]) -  
+                gamma*(eps[i-(1:order.alpha)]))^delta) +
+            sum(beta*h[i-(1:order.beta)]) 
         eps[i] = h[i]^deltainv * z[i]
-        y[i] = spec@model$mu  +    
-            sum(model.ar*y[i-(1:order.ar)]) +
-            sum(model.ma*(h[i-(1:order.ma)]**deltainv)) + eps[i]   
+        y[i] = mu  +    
+            sum(ar*y[i-(1:order.ar)]) +
+            sum(ma*(h[i-(1:order.ma)]**deltainv)) + eps[i]   
     }
     
     # Sample:       
@@ -208,9 +140,22 @@ garchSim <-
     rownames(data) = as.character(1:n)
     data = data[-(1:n.start),]
         
-    # Add Series:
-    ans = as.ts(as.vector(data[, 3]))
+    
+    # Return Values:
     class(spec) = "fGARCHSPEC"
+    if (returnClass == "ts") {
+        ans = as.ts(as.vector(data[, 3]))
+        attr(ans, "control") = list(garchSpec = spec)
+    }
+    if (returnClass == "numeric") {
+        ans = as.numeric(as.vector(data[, 3]))
+        
+    }
+    if (returnClass == "mts") {
+        ans = as.ts(data[, c(3,2,1)])
+        colnames(ans) = c("garch", "h", "eps")
+        attr(ans, "control") = list(garchSpec = spec)
+    }
     attr(ans, "control") = list(garchSpec = spec)
   
     # Return Value: 

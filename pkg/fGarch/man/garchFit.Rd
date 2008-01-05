@@ -148,17 +148,21 @@ garchKappa(cond.dist = c("dnorm", "dged", "dstd", "dsnorm", "dsged", "dsstd"),
     \code{"zoo"}. Let us start to consider univariate objects, defining
     univariate time series objects from several classes:
     
-        \code{> x.vec = 100*garchSim(model, n = 1000, returnClass = "numeric") }\cr
-        \code{> x.timeSeries = dummyDailySeries(matrix(x.vec), units = "GARCH11") }\cr
-        \code{> x.zoo = zoo(x.vec, order.by = as.Date(rownames(x.timeSeries))) } \cr
-        \code{> x.ts = as.ts(x.vec) }
+        \preformatted{ 
+        x.vec = 100*garchSim(model, n = 1000, returnClass = "numeric") 
+        x.timeSeries = dummyDailySeries(matrix(x.vec), units = "GARCH11")  
+        x.zoo = zoo(x.vec, order.by = as.Date(rownames(x.timeSeries)))  
+        x.ts = as.ts(x.vec) 
+        }
     
     Fitting a GARCH(1,1) is done in the following way:
     
-        \code{> garchFit(~ garch(1,1), data = x.vec)) }\cr
-        \code{> garchFit(~ garch(1,1), data = x.timeSeries)) }\cr           
-        \code{> garchFit(~ garch(1,1), data = x.zoo)) }\cr  
-        \code{> garchFit(~ garch(1,1), data = x.ts)) }
+        \preformatted{ 
+        garchFit(~ garch(1,1), data = x.vec))  
+        garchFit(~ garch(1,1), data = x.timeSeries))       
+        garchFit(~ garch(1,1), data = x.zoo))  
+        garchFit(~ garch(1,1), data = x.ts)) 
+        }
     
     Note it is not necessary to specifiy a left hand side for the 
     formula expression.\cr
@@ -172,19 +176,23 @@ garchKappa(cond.dist = c("dnorm", "dged", "dstd", "dsnorm", "dsged", "dsstd"),
     bivariate time series where the first column is a GARCH(1,1) proces
     and the second coulmn random normal variates
     
-        \code{> X.mat = cbind(GARCH11 = x.vec, R = rnorm(1000)) }\cr
-        \code{> X.timeSeries = dummyDailySeries(X.mat, units = c("GARCH11", "R")) }\cr
-        \code{> X.zoo = zoo(X.mat, order.by = as.Date(rownames(x.timeSeries))) } \cr
-        \code{> X.mts = as.ts(X.mat) }
+        \preformatted{ 
+        X.mat = cbind(GARCH11 = x.vec, R = rnorm(1000))  
+        X.timeSeries = dummyDailySeries(X.mat, units = c("GARCH11", "R")) 
+        X.zoo = zoo(X.mat, order.by = as.Date(rownames(x.timeSeries)))  
+        X.mts = as.ts(X.mat) 
+        }
     
     To model the GARCH(1,1) process from the first column of the datasets 
     above, we have to express the left hand formula by the desired column
     name of the bivariate series:
     
-        \code{> garchFit(GARCH11 ~ garch(1,1), data = X.mat)) }\cr
-        \code{> garchFit(GARCH11 ~ garch(1,1), data = X.timeSeries)) }\cr           
-        \code{> garchFit(GARCH11 ~ garch(1,1), data = X.zoo)) }\cr  
-        \code{> garchFit(GARCH11 ~ garch(1,1), data = X.ts)) }\cr
+        \preformatted{ 
+        garchFit(GARCH11 ~ garch(1,1), data = X.mat))  
+        garchFit(GARCH11 ~ garch(1,1), data = X.timeSeries))          
+        garchFit(GARCH11 ~ garch(1,1), data = X.zoo))  
+        garchFit(GARCH11 ~ garch(1,1), data = X.ts))  
+        }
     
     
     \bold{Extracting the Environment of a Model Formula}
@@ -195,7 +203,9 @@ garchKappa(cond.dist = c("dnorm", "dged", "dstd", "dsnorm", "dsged", "dsstd"),
     Load the \code{LPP2005REC} "Swiss Pension Fund" benchmark portfolio time
     series, given by a data frame:
     
-        \code{> data(LPP2005REC) }
+        \preformatted{ 
+        data(LPP2005REC) 
+        }
     
     This data frame consists of 10 columns of financial returns named 
     LPP25, LPP40, and LPP60, together with its 6 major asset classes 
@@ -209,8 +219,10 @@ garchKappa(cond.dist = c("dnorm", "dged", "dstd", "dsnorm", "dsged", "dsstd"),
     we can extract the core \code{data} matrix and the character vector
     \code{charvec} of time stamps:
     
-        \code{> data = LPP.mat = as.matrix(LPP.df[, 2:10]) }\cr
-        \code{> charvec = as.character(LPP.df[, 1]) }
+        \preformatted{ 
+        data = LPP.mat = as.matrix(LPP.df[, 2:10])  
+        charvec = as.character(LPP.df[, 1]) 
+        }
 
     From these two objects we can construct several multivariate time 
     series objects which can serve as input for the \code{garchFit} 
@@ -219,14 +231,18 @@ garchKappa(cond.dist = c("dnorm", "dged", "dstd", "dsnorm", "dsged", "dsstd"),
     the percentual spread of the Swiss, SPI, and foreign equity, MPI,
     indexes can be modelled in the following way:
     
-        \code{> LPP = as.timeSeries(data(LPP2005REC)) }\cr
-        \code{>  garchFit(100*(SPI-MPI) ~ garch(1,1), data = LPP) }
+        \preformatted{ 
+        LPP = as.timeSeries(data(LPP2005REC)) 
+        garchFit(100*(SPI-MPI) ~ garch(1,1), data = LPP) 
+        }
         
     As a second example we show how to model high/low spreads from 
     the Microsoft equity price series:
         
-        \code{> MSFT = as.timeSeries(data(msft.dat)) }\cr
-        \code{> garchFit(100*(High-Low) ~ garch(1,1), data = returns(MSFT)) }\cr
+        \preformatted{ 
+        MSFT = as.timeSeries(data(msft.dat))  
+        garchFit(100*(High-Low) ~ garch(1,1), data = returns(MSFT)) 
+        }
     
         
     \bold{How are time series slots returned by the function \code{garchFit}?}
@@ -241,9 +257,11 @@ garchKappa(cond.dist = c("dnorm", "dged", "dstd", "dsnorm", "dsged", "dsstd"),
     if available. If we want to have the output as objects from the 
     same class as the data points we can use the extractor functions
     
-        \code{residuals(object) }\cr
-        \code{fitted(object) }\cr
-        \code{volatility(object, type = c("sigma", "h")) }
+        \preformatted{ 
+        residuals(object)  
+        fitted(object)  
+        volatility(object, type = c("sigma", "h"))  
+        }
     
     where object is a fitted model as returned by the function 
     \code{garchFit}.\cr
@@ -271,16 +289,20 @@ garchKappa(cond.dist = c("dnorm", "dged", "dstd", "dsnorm", "dsged", "dsstd"),
     on the choice of the other parameters. The following example shows
     how to fit Bollerslev's t-GARCH(1,1) model:
     
-        \code{> data(dem2gbp) }\cr
-        \code{> garchFit(~ garch(1,1), data = dem2gbp, cond.dist = "dstd") }
+        \preformatted{ 
+        data(dem2gbp) 
+        garchFit(~ garch(1,1), data = dem2gbp, cond.dist = "dstd")
+        }
         
     Here the shape of the distribution, giving the number of degrees of 
     freedom of the Student-t distribution, has been also estimated. If we
     like to fix this value to 4, a number which is often observed for
     financial return series, we submit the command
     
-        \code{> garchFit(~ garch(1,1), data = dem2gbp, cond.dist ="dstd", }\cr
-        \code{  shape = 4, include.shape = FALSE) }\cr
+        \preformatted{ 
+        garchFit(~ garch(1,1), data = dem2gbp, cond.dist ="dstd",
+            shape = 4, include.shape = FALSE)
+        }
     
            
     \bold{The Solvers:}
@@ -288,16 +310,19 @@ garchKappa(cond.dist = c("dnorm", "dged", "dstd", "dsnorm", "dsged", "dsstd"),
     The reason why the function \code{garchFit} has implemented different 
     optimization algorithms has historical reasons.\cr
     
+    
     \code{algorithm = "lbfgsb"}\cr
     When the first version 
     was written the only solver implemented in R was the AMC TOMS 778 
     algorithm \code{optim(method="L-BFGS-B")}.\cr 
+    
     
     \code{algorithm = "nlminb"}\cr
     Later when the function 
     \code{nlminb} was added to R's base package, interfacing the PORT 
     Mathematical Software Library, we implemented it in \code{garchFit}.
     This is the default solver.\cr 
+    
     
     \code{algorithm = "nlminb+nm"}\cr
     \code{algorithm = "lbfgsb+nm"}\cr
@@ -313,6 +338,7 @@ garchKappa(cond.dist = c("dnorm", "dged", "dstd", "dsnorm", "dsged", "dsstd"),
     this "hybrid approach" or "mixed method" in many cases an improved 
     solution. The idea of two step approaches is also mentioned in 
     McCullough and Renfro [1999].\cr
+    
     
     \code{algorithm = "sqp"}\cr
     The idea to implement the "Sequential 
@@ -335,11 +361,13 @@ garchKappa(cond.dist = c("dnorm", "dged", "dstd", "dsnorm", "dsged", "dsstd"),
     using different types of solvers, let us compare the fitted
     coefficients:
     
-        \code{> coef(garchFit(~ garch(1,1), dem2gbp, algorithm = "nlminb")) }\cr
-        \code{> coef(garchFit(~ garch(1,1), dem2gbp, algorithm = "nlminb+nm")) }\cr
-        \code{> coef(garchFit(~ garch(1,1), dem2gbp, algorithm = "lbfgsb")) }\cr
-        \code{> coef(garchFit(~ garch(1,1), dem2gbp, algorithm = "lbfgsb+nm")) }\cr
-        \code{> coef(garchFit(~ garch(1,1), dem2gbp, algorithm = "sqp")) } 
+        \preformatted{ 
+        coef(garchFit(~ garch(1,1), dem2gbp, algorithm = "nlminb"))  
+        coef(garchFit(~ garch(1,1), dem2gbp, algorithm = "nlminb+nm")) 
+        coef(garchFit(~ garch(1,1), dem2gbp, algorithm = "lbfgsb"))  
+        coef(garchFit(~ garch(1,1), dem2gbp, algorithm = "lbfgsb+nm")) 
+        coef(garchFit(~ garch(1,1), dem2gbp, algorithm = "sqp"))  
+        }
         
     The execution times range by a factor of about 4, the fastest is 
     \code{"sqp"}, and the slowest \code{"lbfgsb+nm"}.\cr
@@ -371,6 +399,12 @@ garchKappa(cond.dist = c("dnorm", "dged", "dstd", "dsnorm", "dsged", "dsstd"),
     and help in many cases, use percentual returns, i.e. multiply the time 
     series with a factor of 100. 
       
+}
+
+
+\section{Tracing the Output}{
+
+
 }
 
 
@@ -425,29 +459,31 @@ Nocedal J., Wright S.J. (1999);
 }
 
 
-\examples{
-\dontrun{   
+\examples{  
 ## UNIVARIATE TIME SERIES INPUT:
-    
-   # A numeric Vector:
-   x.vec = 100*garchSim(model, N, returnClass = "numeric")
-   garchFit( ~ garch(1,1), data = x.vec)
+   # In the univariate case the lhs formula has not to be specified ... 
+   
+   # A numeric Vector from default GARCH(1,1) - fix the seed:
+   N = 200
+   x.vec = garchSim(garchSpec(rseed = 1985), n = N, returnClass = "numeric")
+   garchFit( ~ garch(1,1), data = x.vec, trace = FALSE)
 
    # An univariate timeSeries object with dummy dates:
    x.timeSeries = dummyDailySeries(matrix(x.vec), units = "GARCH11")
-   garchFit(~ garch(1,1), data = x.timeSeries)         
+   garchFit(~ garch(1,1), data = x.timeSeries, trace = FALSE)         
 
    # An univariate zoo object:
-   x.zoo = zoo(x.vec, order.by = as.Date(rownames(x.timeSeries)))
-   garchFit(~ garch(1,1), data = x.zoo) 
+   x.zoo = zoo(as.vector(x.vec), order.by = as.Date(rownames(x.timeSeries)))
+   garchFit(~ garch(1,1), data = x.zoo, trace = FALSE) 
 
    # An univariate "ts" object:
    x.ts = as.ts(x.vec)
-   garchFit(~ garch(1,1), data = x.ts)
+   garchFit(~ garch(1,1), data = x.ts, trace = FALSE)
     
 ## MULTIVARIATE TIME SERIES INPUT:
-    
-   # A numeric matrix binded with random normal variates:
+   # For multivariate data inputs the lhs formula must be specified ...
+   
+   # A numeric matrix binded with dummy random normal variates:
    X.mat = cbind(GARCH11 = x.vec, R = rnorm(N))
    garchFit(GARCH11 ~ garch(1,1), data = X.mat)
         
@@ -461,18 +497,19 @@ Nocedal J., Wright S.J. (1999);
 
    # A multivariate "mts" object:
    X.mts = as.ts(X.mat)
-   garchFit(GARCH11 ~ garch(1,1), data = X.mts))
+   garchFit(GARCH11 ~ garch(1,1), data = X.mts)
  
 ## MODELING THE PERCENTUAL SPI/SBI SPREAD FROM LPP BENCHMARK:
     
    X.timeSeries = as.timeSeries(data(LPP2005REC))
    X.mat = as.matrix(x.timeSeries)
-   X.zoo = zoo(X.mat, order.by = as.Date(rownames(x.mat)))
+   X.zoo = zoo(X.mat, order.by = as.Date(rownames(X.mat)))
    X.mts = ts(X.mat)
    garchFit(100*(SPI - SBI) ~ garch(1,1), data = X.timeSeries)
-   garchFit(100*(SPI - SBI) ~ garch(1,1), data = X.mat)
-   garchFit(100*(SPI - SBI) ~ garch(1,1), data = X.zoo)
-   garchFit(100*(SPI - SBI) ~ garch(1,1), data = X.mts)
+   # The remaining are not yet supported ...
+   # garchFit(100*(SPI - SBI) ~ garch(1,1), data = X.mat)
+   # garchFit(100*(SPI - SBI) ~ garch(1,1), data = X.zoo)
+   # garchFit(100*(SPI - SBI) ~ garch(1,1), data = X.mts)
     
 ## MODELING HIGH/LOW RETURN SPREADS FROM MSFT PRICE SERIES:
     

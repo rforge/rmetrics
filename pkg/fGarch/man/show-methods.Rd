@@ -50,13 +50,11 @@
    print(spec)
 
 ## garchSim -
-   x = garchSim(model = spec@model, n = 500) 
+   x = garchSim(spec, n = 500) 
 
-\dontrun{
 ## garchFit - 
    fit = garchFit(~ garch(1, 1), data = x)
    print(fit)
-}
 }
 
 
