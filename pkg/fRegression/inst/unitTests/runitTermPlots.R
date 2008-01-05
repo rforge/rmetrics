@@ -16,7 +16,7 @@
 
 # Copyrights (C)
 # for this R-port: 
-#   1999 - 2007, Diethelm Wuertz, GPL
+#   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
 #   www.rmetrics.org
@@ -38,6 +38,11 @@
 test.termPlot = 
 function()
 {    
+    
+    x = regSim(model = "LM3", n = 100)
+    lmfit = regFit(Y ~ X1 + X2 + X3, data = x, use = "lm")
+    
+    
     # Simulate Data - a data frame:
     DATA = regSim(model = "GAM3", n = 100)
     head(DATA)
@@ -51,7 +56,7 @@ function()
     # Fit:
     LM    = regFit(Y ~ 1 + X1 + X2 + X3, data = DATATS, use = "lm") 
     RLM   = regFit(Y ~ 1 + X1 + X2 + X3, data = DATATS, use = "rlm") 
-    AM    = regFit(Y ~ 1 + s(X1)+s(X2)+s(X3),   DATATS, use = "am") 
+    AM    = regFit(Y ~ 1 + X1 + X2 + X3,   DATATS, use = "am") 
     PPR   = regFit(Y ~ X1 + X2 + X3,     data = DATATS, use = "ppr") 
     PPR4  = regFit(Y ~ X1 + X2 + X3,     data = DATATS, use = "ppr", nterms = 4) 
     PMARS = regFit(Y ~ X1 + X2 + X3,     data = DATATS, use = "polymars") 

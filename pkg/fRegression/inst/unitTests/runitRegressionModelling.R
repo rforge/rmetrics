@@ -16,7 +16,7 @@
 
 # Copyrights (C)
 # for this R-port: 
-#  1999 - 2007, Diethelm Wuertz, GPL
+#   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
 #  Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #  info@rmetrics.org
 #  www.rmetrics.org
@@ -450,45 +450,6 @@ function()
     
     fit.glm = glm(Y ~ X1 + X2, data = D2, family = binomial("logit"))
     print(fit.glm)
-    
-    # Return Value:
-    return()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-test.coefficients = 
-function()
-{
-    NA
-    
-    # Return Value:
-    return()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-test.fitted = 
-function()
-{
-    NA
-    
-    # Return Value:
-    return()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-test.residuals = 
-function()
-{
-    NA
     
     # Return Value:
     return()
