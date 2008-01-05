@@ -19,9 +19,9 @@
 
 \section{Objects from the Class}{
 
-    Objects can be created by calls of the function \code{regFit}
-    and \code{gregFit}. The returned objects represent parameter 
-    estimates of linear and generalized linear models.
+    Objects can be created by calls of the function \code{regFit}. 
+    The returned object represents parameter estimates of linear and 
+    generalized linear models.
     
 }
 
@@ -90,6 +90,7 @@
     \item{predict}{\code{signature(object = "fREG")}: 
         forecasts mean and volatility from an object of class 'fREG'.
         }
+        
     \item{fitted}{\code{signature(object = "fREG")}: 
         extracts fitted values from an object of class 'fREG'.
         }     
