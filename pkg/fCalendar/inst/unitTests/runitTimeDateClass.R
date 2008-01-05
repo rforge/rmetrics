@@ -28,10 +28,6 @@
 
 
 ################################################################################
-# FUNCTION:              FINANCIAL CENTERS:
-#  myFinCenter            Sets my financial center
-#  rulesFinCenter         Returns DST rules for a financial center
-#  listFinCenter          Lists all supported financial centers
 # FUNCTION:              GENERATION OF TIMEDATE OBJECTS:
 #  'timeDate'             S4 Class representation for timeDate objects
 #  timeDate               Creates a 'timeDate' object from given dates
@@ -51,62 +47,6 @@
 #  summary.timeDate       Summarizes details of a 'timeDate' object
 #  format.timeDate        Formats 'timeDate' as ISO conform character string
 ################################################################################
-
-
-test.myFinCenter =
-function()
-{
-    # Default Financial Center:
-    # "GMT"
-    
-    # Financial Center:
-    myFinCenter = "Zurich"
-    print(myFinCenter)
-    current = "Zurich"
-    print(current)
-    checkIdentical(myFinCenter, current)
-    
-    # Return Value:
-    return() 
-}
-
-
-# ------------------------------------------------------------------------------
- 
-
-test.rulesFinCenter =
-function()
-{
-    # Default Financial Center:
-    # "GMT"
-    
-    # DST Rules for a given Financial Center:
-    rulesFinCenter("Zurich")[59:60, ]
-    
-    # Return Value:
-    return() 
-}
-
-
-# ------------------------------------------------------------------------------
- 
-
-test.listFinCenter =
-function()
-{
-    # Default Financial Center:
-    # "GMT"
-    
-    # List of all Financial Centers:
-    listFinCenter()
-    listFinCenter("Europe") 
-    
-    # Return Value:
-    return() 
-}
-
-
-# ------------------------------------------------------------------------------
 
     
 test.timeDate = 
@@ -282,7 +222,8 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.midnightStandard <- function()
+test.midnightStandard <- 
+    function()
 {
     ISOform <- "%Y-%m-%d %H:%M:%S"
 
