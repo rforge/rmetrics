@@ -47,7 +47,7 @@ setMethod(f = "fitted", signature(object = "fREG"), definition =
     fitted = object@fitted
     
     # Get original time series class:
-    data = object@data$data
+    data = slot(object, "data")$data
     dataClass = class(data)[1]
     
     # Transform:

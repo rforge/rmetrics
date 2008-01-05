@@ -82,6 +82,9 @@ regFit <-
     #   regFit(Y ~ X1 + X2 + X3, regSim())
     
     # FUNCTION:
+    
+    # Match Arguments:
+    use = match.arg(use)
    
     # Transform data into a dataframe
     Data = data

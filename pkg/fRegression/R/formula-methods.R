@@ -48,7 +48,7 @@ setMethod(f = "formula", signature(x = "fREG"), definition =
     # FUNCTION:
     
     # Formula:
-    ans = x@formula 
+    ans = slot(x, "formula") 
     
     # Return Value:
     ans

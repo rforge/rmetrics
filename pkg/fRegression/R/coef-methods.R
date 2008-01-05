@@ -42,13 +42,12 @@ setMethod(f = "coef", signature(object = "fREG"), definition =
     #   Extracts 'fREG' Model Coefficients
     
     # Arguments:
-    #   object - an object of class fREG as returned by the function
-    #       regFit
+    #   object - an object of class fREG as returned by the function regFit
     
     # FUNCTION:
     
     # Numeric vector of fitted values:
-    ans = coef(object@fit) 
+    ans = slot(object, "fit")$coef
     
     # Return Value:
     ans
