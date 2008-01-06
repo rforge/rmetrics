@@ -54,7 +54,7 @@ test.grid2d =
 function()
 {
     # Grid Data:
-    grid2d(x = (0:10)/10, y = x)
+    grid2d(x = (0:10)/10)
     
     # Return Value:
     return()    
