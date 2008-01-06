@@ -38,8 +38,6 @@
 #  rollingPortfolioFrontier          Rolls a portfolio frontier
 # FUNCTION:                         DESCRIPTION:
 #  portfolioBacktesting              Does portfolio backtesting
-#  .rollingBacktestPortfolio          Rolls a backtesting portfolio
-#  .portfolioBacktestingStats         Computes monthly portfolio statistics
 ################################################################################
 
 
@@ -154,41 +152,6 @@ function()
 
 
 ################################################################################
-
-
-test.rollingBacktestPortfolio =
-function()
-{
-    # Rolls a backtesting portfolio - Internal Function:
-    # rollingBacktestPortfolio(data, spec, constraints, from, to, benchmark, 
-    #   portfolio = "minvariancePortfolio", action = NULL, trace = TRUE, 
-    #   title = NULL, description = NULL, ...)
-    
-    # Load Data:
-    SWXLP = as.timeSeries(data(SWXLP))
-    Data = returnSeries(SWXLP, percentage = TRUE)
-    head(Data)
-    colnames(Data)
-    
-    # Rolling Windows:
-    windows = rollingWindows(x = Data, period = "12m", by = "1m")
-    
-    # Portfolio Backtesting:
-    ans = .rollingBacktestPortfolio(
-        data = Data[, c("SBI", "SPI", "SII")], 
-        spec = portfolioSpec(), 
-        constraints = NULL, 
-        from = windows$from, 
-        to = windows$to, 
-        benchmark = Data[, "LP40"], 
-        portfolio = "minvariancePortfolio")
-    
-    # Return Value:
-    return()
-}
-
-
-# ------------------------------------------------------------------------------
 
 
 test.portfolioBacktesting.MeanVariance.LP60 = 
@@ -347,7 +310,7 @@ function()
 # ------------------------------------------------------------------------------
 
  
-test.XXX = 
+test.Stats = 
 function() 
 {
     # Load Data:
@@ -359,19 +322,27 @@ function()
     # Graph Frame:
     par(mfrow = c(2, 2))
     
+    # Specification Structure:
+    Spec = portfolioSpec()
+    
+    # Set Covariance Estimator to "shrink" Estimator:
+    setEstimator(Spec) = c("mean", "shrink")
+ 
     # Mean-Variance Backtesting:
     ans = portfolioBacktesting(
         formula = LP60 ~ SBI + SPI + SII, 
         data = Data, 
-        spec = portfolioSpec(), 
+        spec = Spec, 
         constraints = NULL, 
         portfolio = "minvariancePortfolio", 
         horizon = "12m", 
         smoothing = "12m", 
         trace = TRUE)  
                 
+    # Moving Average Horizon in Months:
     N = ema = 12
     
+    # Graphics Frame:
     par(mfrow = c(3, 2))
     
     
