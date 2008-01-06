@@ -32,14 +32,12 @@
 #  plot.portfolioBacktest             S3 Plot Method
 #  print.portfolioBacktes             S3 Print Method
 #  summary.portfolioBacktest          S3 Summary Method
-#  .rollingBacktestPortfolio         Rolls a backtesting portfolio
-#  .portfolioBacktestingStats         Computes monthly portfolio statistics
 ################################################################################
 
     
 portfolioBacktesting =   
 function(formula, data, spec = portfolioSpec(), constraints = NULL, 
-portfolio = "minvariancePortfolio", horizon = "12m", smoothing = "11m", 
+portfolio = "minvariancePortfolio", horizon = "12m", smoothing = "6m", 
 trace = TRUE)   
 {   # A function implemented by Diethelm Wuertz
 
