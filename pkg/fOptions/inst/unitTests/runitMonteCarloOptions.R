@@ -33,8 +33,8 @@
 ################################################################################
 
 
-test.MonteCarloOption = 
-function()
+test.MonteCarloOption <- 
+    function()
 {
     # How to perform a Monte Carlo Simulation?
     
@@ -107,10 +107,12 @@ function()
         xlab = "Monte Carlo Loops", ylab = "Option Price")
     
     # Compare with Turnbull-Wakeman Approximation:
-    TW = TurnbullWakemanAsianApproxOption(TypeFlag = "c", S = 100, SA = 100, 
-        X = 100, Time = 1/12, time = 1/12, tau = 0 , r = 0.1, b = 0.1, 
-        sigma = 0.4)$price
-    print(TW)
+    #   ... requires(fExoticOptions)
+    # TW = TurnbullWakemanAsianApproxOption(TypeFlag = "c", S = 100, SA = 100, 
+    #    X = 100, Time = 1/12, time = 1/12, tau = 0 , r = 0.1, b = 0.1, 
+    #    sigma = 0.4)$price
+    # print(TW)
+    TW = 2.859122 
     abline(h = TW, col = 2)
 
     # Return Value:
