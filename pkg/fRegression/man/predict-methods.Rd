@@ -27,20 +27,21 @@
 \arguments{
 
     \item{newdata}{
-        ...
+        new data.
         }
     \item{object}{
         an object of class \code{fREG} as returned from the function
         \code{regFit()}.
         }   
     \item{se.fit}{
-        ...
+        a logical flag. Should standard errors be included?
+        By default \code{FALSE}.
         }  
     \item{type}{
-        ...
+        a character string by default \code{"response"}.
         }  
     \item{\dots}{
-        ...
+        arguments to be passed.
         }   
 
 }
