@@ -78,6 +78,9 @@ setMethod(f = "predict", signature(object = "fREG"), definition =
 # ------------------------------------------------------------------------------
 
 
+# Note, in the following "object" concerns to the slot @fit:
+
+
 .predict.lm <- predict.lm
     # <- function (object, newdata, se.fit = FALSE, scale = NULL, df = Inf, 
     #    interval = c("none", "confidence", "prediction"), level = 0.95, 
@@ -97,8 +100,8 @@ setMethod(f = "predict", signature(object = "fREG"), definition =
     # <- function(object, newdata, ...)
 .predict.nnet <- function(object, ...) { predict(object, ...) }
     # <- function(object, newdata, type=c("raw","class"), ...)
-#predict.polymars
-    # <- function(object, newdata, se.fit = FALSE, ...)
+#predict.polymars ---- can be found in polymars.R
+    # <- function(object, newdata, se.fit = FALSE, type = "response", ...)
 
 
 ################################################################################

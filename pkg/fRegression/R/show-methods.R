@@ -107,7 +107,7 @@ setMethod(f = "show", signature(object = "fREG"), definition =
         
         # Regression Model POLYMARS:
         if (object@method == "polymars") {
-            print(object@fit$Model) 
+            print(object@fit$coef) 
         }  
         
         # Regression Model NNET:

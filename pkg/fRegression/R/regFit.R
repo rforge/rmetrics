@@ -162,7 +162,7 @@ regFit <-
     stats::ppr(..., nterms = nterms)
 .nnet <- function(..., trace = FALSE, size = 2, linout = TRUE) 
     nnet::nnet(..., trace = trace, size = size, linout = linout)
-.polymars <- .polymars.formula
+.polymars <- .polymarsFormula
 
 
 ################################################################################

@@ -185,7 +185,7 @@ setMethod(f = "summary", signature(object = "fREG"), definition =
             }
         cat("\n(Dispersion parameter for ", x$family$family, 
             " family taken to be ", format(x$dispersion), ")\n\n", 
-            apply(cbind(paste(format.char(c("Null", "Residual"), 
+            apply(cbind(paste(format(c("Null", "Residual"), 
             width = 8, flag = ""), "deviance:"), 
             format(unlist(x[c("null.deviance", "deviance")]), 
             digits = max(5, digits + 1)), " on", 
@@ -290,6 +290,7 @@ setMethod(f = "summary", signature(object = "fREG"), definition =
             
     # Regression Model: POLYMARS
     if (object@method == "polymars") {
+        class(fit) = "polymars"
         # This is what summary.polymars produces.
         # There is no print.summary.polymars.
         cat("Model Fitting:\n")
