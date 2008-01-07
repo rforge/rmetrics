@@ -28,14 +28,11 @@
 
 
 ################################################################################
-# FUNCTION:                    GUMBEL COPULA:
-#  .rgumbelCopula               Generates fast Gumbel copula random variates
-#  .dgumbelCopula               Computes Gumbel copula probability
-#  .pgumbelCopula               Computes Gumbel copula probability
 # FUNCTION:                    MIXED GUMBEL-SURVIVALGUMBEL-NORMAL COPULA:
 #  .rgsgnormCopula              Generates G-SG-NORM copula random variates
 #  .dgsgnormCopula              Computes G-SG-NORM copula probability
-#  .gsgnormCopulaFit            Computes G-SG-NORM copula probability
+# FUNCTION:                    MIXED G-SG-NORM COPULA FIT:
+#  .psgnormCopulaFit            Computes G-SG-NORM copula probability
 # FUNCTION:                    NON-PARAMETRIC TAIL DEPENDECY ESTIMATOR:
 #  .cfgTDE                      Estimates non-parametrically tail dependence
 # FUNCTION:                    COPULA FIT WITH NIG MARGINALS:
@@ -45,13 +42,75 @@
 ################################################################################
 
 
-test.mixedCopula =
-function()
+test.rgsgnormCopula  <- 
+    function()
+{ 
+    # Generate G-SG-NORM copula random variates
+    r = .rgsgnormCopula(n = 1000, 
+        alpha = c(2, 2), rho = 0, weights = c(1/3, 1/3))
+    plot(r)
+    
+    # Return Value:
+    return()
+}
+
+    
+# ------------------------------------------------------------------------------
+
+
+test.dgsgnormCopula  <- 
+    function()
+{ 
+    # Compute G-SG-NORM copula probability
+    uv = grid2d(x = (1:24)/25, y = (1:24)/25)
+    d = .dgsgnormCopula(uv, 
+        alpha = c(2, 2), rho = 0, weights = c(1/3, 1/3), output = "list")
+    .perspPlot(d)
+    
+    # Return Value:
+    return()
+}
+
+
+################################################################################
+
+
+test.gsgnormCopulaFit  <- 
+    function()
+{ 
+    # Computes G-SG-NORM copula probability
+    x = .rgsgnormCopula(n = 1000, 
+        alpha = c(2, 2), rho = 0, weights = c(1/3, 1/3))
+   
+    .gsgnormCopulaFit(x, trace = TRUE)    
+        
+    
+    # Return Value:
+    return()
+}
+
+
+################################################################################
+
+
+test.mixedCopula <- 
+    function()
 {    
     # Simulated data:
-    x = .rnormCopula(1000, rho = 0.7)
-    .gsgnormCopulaFit(x, trace = TRUE)
-    
+    x = .rgsgnormCopula(n = 1000, 
+        alpha = c(2, 2), rho = 0, weights = c(1/3, 1/3))
+    fit = .gsgnormCopulaFit(x, trace = TRUE)
+    fit
+}
+
+
+# ------------------------------------------------------------------------------
+
+   
+if(FALSE) {
+test.nigDependencyFit <- 
+    function()
+{    
     # LPP Portfolio:
     require(fPortfolio)
     data(LPP2005REC)
@@ -59,9 +118,9 @@ function()
     head(x)
     
     # Tail Dependency Estimation:
-    par(mfrow = c(2,2), cex = 0.7)   
+    par(mfrow = c(2, 2))   
     ans = .nigDependencyFit(x) 
-    ans 
+    print(ans) 
     
     #         Lower Upper
     # SBI SPI 0     0 
@@ -104,6 +163,7 @@ function()
 
     # Return Value:
     return()
+}
 }
 
   
