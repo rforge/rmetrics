@@ -205,7 +205,7 @@ test.plot.methods5 <-
     par(mfrow = c(2, 2))
     
     # Plot 10:
-    plot(fit, which = 10)                      # labels = FALSE not implemented!
+    plot(fit, which = 10)                      
     mtext("norm-GARCH(1,1) Modeling", line = 0.5, cex = 0.8)
     mtext("DEM2GBP Data Vector", side = 4, adj = 0, cex = 0.7, 
         col = "darkgrey")
