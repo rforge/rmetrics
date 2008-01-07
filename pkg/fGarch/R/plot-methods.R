@@ -168,7 +168,7 @@ setMethod(f = "plot", signature(x = "fGARCH", y = "missing"), definition =
     #   Internal plot function
     
     # 1. Time Series:
-    xseries = x@data$x
+    xseries = x@data$Data
     plot(xseries, type = "l", col = "steelblue", ylab = "x",
         main = "Time Series")
     abline(h = 0, col = "grey", lty = 3)
@@ -188,7 +188,7 @@ setMethod(f = "plot", signature(x = "fGARCH", y = "missing"), definition =
     #   Internal plot function
     
     # 2. Conditional SD:
-    xcsd = x@sigma.t
+    xcsd = volatility(x, "sigma")
     plot(xcsd, type = "l", col = "steelblue", ylab = "x",
         main = "Conditional SD")
     abline(h = 0, col = "grey", lty = 3)
@@ -208,7 +208,7 @@ setMethod(f = "plot", signature(x = "fGARCH", y = "missing"), definition =
     #   Internal plot function
     
     # 3. Series with 2 Conditional SD Superimposed:
-    xseries = x@data$x
+    xseries = x@data$Data
     xcsd = x@sigma.t
     ci = 2
     plot(xseries, type = "l", col = "steelblue", ylab = "x",
@@ -232,7 +232,7 @@ setMethod(f = "plot", signature(x = "fGARCH", y = "missing"), definition =
     #   Internal plot function
     
     # 4. ACF of the Observations:
-    xseries = x@data$x
+    xseries = x@data$Data
     n = length(xseries)
     lag.max = as.integer(10*log10(n))
     acf(xseries, lag.max = lag.max, xlab = "Lags", col = "steelblue", 
@@ -252,7 +252,7 @@ setMethod(f = "plot", signature(x = "fGARCH", y = "missing"), definition =
     #   Internal plot function
     
     # 5. ACF of the Squared Observations:
-    xseries = x@data$x
+    xseries = x@data$Data
     xseries2 = xseries^2
     n = length(xseries)
     lag.max = as.integer(10*log10(n))
@@ -273,7 +273,7 @@ setMethod(f = "plot", signature(x = "fGARCH", y = "missing"), definition =
     #   Internal plot function
     
     # 6. Cross Correlation between x^2 and x:
-    xseries = x@data$x
+    xseries = slot(x, "data")$Data
     xseries2 = xseries^2
     n = length(xseries)
     lag.max = as.integer(10*log10(n))
@@ -313,7 +313,7 @@ setMethod(f = "plot", signature(x = "fGARCH", y = "missing"), definition =
     #   Internal plot function
     
     # 8. Conditional SDs:
-    xcsd = x@sigma.t
+    xcsd = volatility(x, "sigma")
     plot(xcsd, type = "l", main = "Conditional SD's", 
         col = "steelblue", ...)
     abline(h = 0, lty = 3)
@@ -416,10 +416,11 @@ function(x, ...)
     # 13. QQ-Plot of Standardized Residuals:
     sres = residuals(x, standardize = FALSE)
     cond.dist = x@fit$params$cond.dist
+    cond.dist = paste("q", cond.dist, sep = "")
     nc = nchar(x@fit$params$cond.dist)
-    cond.dist = paste("q", substr(cond.dist, 2, nc), sep = "")
     skew = x@fit$params$skew
     shape = x@fit$params$shape
+    
     if (cond.dist == "qnorm")
         .qqDist(sres, dist = cond.dist)
     if (cond.dist == "qstd" | cond.dist == "qged")

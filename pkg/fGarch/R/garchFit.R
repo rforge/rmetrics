@@ -55,7 +55,7 @@
 
 garchFit <-  
     function(formula, data, init.rec = c("mci", "uev"), delta = 2, skew = 1, 
-    shape = 4, cond.dist = c("dnorm", "dsnorm", "dged", "dsged", "dstd", "dsstd"), 
+    shape = 4, cond.dist = c("norm", "snorm", "ged", "sged", "std", "sstd"), 
     include.mean = TRUE, include.delta = NULL, include.skew = NULL, 
     include.shape = NULL, leverage = NULL, trace = TRUE, 
     algorithm = c("nlminb", "sqp", "lbfgsb", "nlminb+nm", "lbfgsb+nm"), 
@@ -166,11 +166,12 @@ garchFit <-
     
     # Get Data:
     allVars = unique(sort(all.vars(formula)))
-    # print(allVars)
-    # print(colnames(data))
     allVarsTest =  mean(allVars %in% colnames(data))
-    # print(allVarsTest)
-    if (allVarsTest != 1) stop ("Formula and data units do not match")
+    if (allVarsTest != 1) {
+        print(allVars)
+        print(colnames(data))
+        stop ("Formula and data units do not match.")
+    }
     formula.lhs = as.character(formula)[2]
 
     # Model frame:
@@ -350,7 +351,7 @@ garchFit <-
 .garchFit <-
     function(formula.mean = ~arma(0, 0), formula.var = ~garch(1, 1), 
     series, init.rec = c("mci", "uev"), delta = 2, skew = 1, shape = 4,
-    cond.dist = c("dnorm", "dsnorm", "dged", "dsged", "dstd", "dsstd"), 
+    cond.dist = c("norm", "snorm", "ged", "sged", "std", "sstd"), 
     include.mean = TRUE, include.delta = NULL, include.skew = NULL,
     include.shape = NULL, leverage = NULL, trace = TRUE,  
     algorithm = c("sqp", "nlminb", "lbfgsb", "nlminb+nm", "lbfgsb+nm"), 
@@ -638,8 +639,8 @@ garchFit <-
     }
     
     # Distributional Includes:
-    if(cond.dist == "t") cond.dist = "dstd"
-    skewed.dists = c("dsnorm", "dsged", "dsstd")
+    if(cond.dist == "t") cond.dist = "std"
+    skewed.dists = c("snorm", "sged", "sstd")
     if(is.null(include.skew)) {
         if(any(skewed.dists == cond.dist)) {
             include.skew = TRUE
@@ -647,7 +648,7 @@ garchFit <-
             include.skew = FALSE
         }
     }
-    shaped.dists = c("dged", "dsged", "dstd", "dsstd")
+    shaped.dists = c("ged", "sged", "std", "sstd")
     if(is.null(include.shape)) {
         if(any(shaped.dists == cond.dist)) {
             include.shape = TRUE
@@ -783,7 +784,7 @@ garchFit <-
 
       
 .garchSetCondDist <- 
-    function(cond.dist = "dnorm") 
+    function(cond.dist = "norm") 
 {   
     # A function implemented by Diethelm Wuertz
 
@@ -793,7 +794,7 @@ garchFit <-
     # Arguments:
     #   cond.dist - a character string with the name of the 
     #       conditional distribution function. Valid strings are:
-    #       "dnorm", "dsnorm", "dstd", "dsstd", "dged", "dsged".
+    #       "norm", "snorm", "std", "sstd", "ged", "sged".
     
     # Value:
     #   Returns the selection conditional distribution function
@@ -801,46 +802,46 @@ garchFit <-
     
     # Details:
     #   Implemented Distributions: 
-    #    dnorm - Normal Distribution: nothing to estimate
-    #    dsnorm - Skew Normal Distribution: xi may be estimated 
-    #    dstd - Student-t Distribution: nu may be estimated
-    #    dsstd - Skew Student-t Distribution: nu and xi may be estimated
-    #    dged - Generalized Error Distribution: nu may be estimated
-    #    dsged - Skew Generalized Error Distribution: nu and xi may be estimated
+    #    norm - Normal Distribution: nothing to estimate
+    #    snorm - Skew Normal Distribution: xi may be estimated 
+    #    std - Student-t Distribution: nu may be estimated
+    #    sstd - Skew Student-t Distribution: nu and xi may be estimated
+    #    ged - Generalized Error Distribution: nu may be estimated
+    #    sged - Skew Generalized Error Distribution: nu and xi may be estimated
     
     # FUNCTION:
     
     # Normal Distribution:
-    if(cond.dist == "dnorm") {
+    if(cond.dist == "norm") {
          .garchDist = function(z, hh, skew, shape) {
             dnorm(x = z/hh, mean = 0, sd = 1) / hh 
         }
     }
-    if(cond.dist == "dsnorm") { 
+    if(cond.dist == "snorm") { 
         .garchDist = function(z, hh, skew, shape) {
             dsnorm(x = z/hh, mean = 0, sd = 1, xi = skew) / hh 
         }
     }
     
     # Standardized Student-t:
-    if(cond.dist == "dstd") { 
+    if(cond.dist == "std") { 
         .garchDist = function(z, hh, skew, shape) {
             dstd(x = z/hh, mean = 0, sd = 1, nu = shape) / hh
         }
     }
-    if(cond.dist == "dsstd") { 
+    if(cond.dist == "sstd") { 
         .garchDist = function(z, hh, skew, shape) {
             dsstd(x = z/hh, mean = 0, sd = 1, nu = shape, xi = skew) / hh
         }
     }
       
     # Generalized Error Distribution:
-    if(cond.dist == "dged") {
+    if(cond.dist == "ged") {
         .garchDist = function(z, hh, skew, shape) {
             dged(x = z/hh, mean = 0, sd = 1, nu = shape) / hh
         }
     }
-    if(cond.dist == "dsged") {
+    if(cond.dist == "sged") {
         .garchDist = function(z, hh, skew, shape) {
             dsged(x = z/hh, mean = 0, sd = 1, nu = shape, xi = skew) / hh
         }
@@ -860,7 +861,7 @@ garchFit <-
 # ------------------------------------------------------------------------------
 
 
-.garchDist <- .garchSetCondDist("dnorm")
+.garchDist <- .garchSetCondDist("norm")
 
 
 # ------------------------------------------------------------------------------
@@ -1143,8 +1144,8 @@ garchFit <-
             XSHAPE = .params$shape
         } 
         DPARM = c(XDELTA, XSKEW, XSHAPE)    
-        MDIST = c(dnorm = 10, dsnorm = 11, dstd = 20, dsstd = 21, dged = 30, 
-            dsged = 31)[.params$cond.dist]                # Which Distribution
+        MDIST = c(norm = 10, snorm = 11, std = 20, sstd = 21, ged = 30, 
+            sged = 31)[.params$cond.dist]                # Which Distribution
         REC = 1
         if(.series$init.rec == "uev") REC = 2
         MYPAR = c(
@@ -1323,8 +1324,8 @@ garchFit <-
             TOLD = .params$control$TOLD,
             TOLS = .params$control$TOLS,
             RPF  = .params$control$RPF)
-        MDIST = c(dnorm = 10, dsnorm = 11, dstd = 20, dsstd = 21, dged = 30, 
-            dsged = 31)[.params$cond.dist]
+        MDIST = c(norm = 10, snorm = 11, std = 20, sstd = 21, ged = 30, 
+            sged = 31)[.params$cond.dist]
         if(.params$control$fscale) NORM = length(.series$x) else NORM = 1
         REC = 1
         if(.series$init.rec == "uev") REC = 2

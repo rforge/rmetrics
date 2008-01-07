@@ -37,7 +37,7 @@
 
 
 garchKappa <-  
-    function(cond.dist = c("dnorm", "dged", "dstd", "dsnorm", "dsged", "dsstd"), 
+    function(cond.dist = c("norm", "ged", "std", "snorm", "sged", "sstd"), 
     gamma = 0, delta = 2, skew = NA, shape = NA)
 {   
     # A function implemented by Diethelm Wuertz
@@ -66,7 +66,7 @@ garchKappa <-
 
 .garchKappaFun <-  
     function(x, 
-    cond.dist = c("dnorm", "dged", "dstd", "dsnorm", "dsged", "dsstd"), 
+    cond.dist = c("norm", "ged", "std", "snorm", "sged", "sstd"), 
     gamma = 0, delta = 2, skew = NA, shape = NA)
 {   
     # A function implemented by Diethelm Wuertz
@@ -81,22 +81,22 @@ garchKappa <-
     
     # Select Appropriate Conditional Density:
     cond.dist = cond.dist[1]
-    if (cond.dist == "dnorm") {
+    if (cond.dist == "norm") {
         fun = funcE * dnorm(x)
     }
-    if (cond.dist == "dged") {
+    if (cond.dist == "ged") {
         fun = funcE * dged(x, nu = shape) 
     }
-    if (cond.dist == "dstd") {
+    if (cond.dist == "std") {
         fun = funcE * dstd(x, nu = shape) 
     }
-    if (cond.dist == "dsnorm") {
+    if (cond.dist == "snorm") {
         fun = funcE * dsnorm(x, xi = skew)
     }
-    if (cond.dist == "dsged") {
+    if (cond.dist == "sged") {
         fun = funcE * dsged(x, nu = shape, xi = skew) 
     }
-    if (cond.dist == "dsstd") {
+    if (cond.dist == "sstd") {
         fun = funcE * dsstd(x, nu = shape, xi = skew) 
     }
     
@@ -109,7 +109,7 @@ garchKappa <-
 
 
 .truePersistence <- 
-    function(fun = "dnorm", alpha = 1, gamma = 0, beta = 0, delta = 1, ...)
+    function(fun = "norm", alpha = 1, gamma = 0, beta = 0, delta = 1, ...)
 {   
     # A function implemented by Diethelm Wuertz
 
@@ -124,7 +124,7 @@ garchKappa <-
     #   delta - numeric value of APARCH exponent
     
     # Note:
-    #   fun is one of: dnorm, dsnorn, dstd, dsstd, dged, dsged
+    #   fun is one of: norm, snorn, std, sstd, ged, sged
     
     # FUNCTION:
     

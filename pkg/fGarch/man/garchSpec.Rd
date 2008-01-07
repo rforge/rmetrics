@@ -25,8 +25,8 @@ garchSpec(model = list(), presample = NULL,
 
     \item{cond.dist}{
         a character string naming the desired conditional distribution.
-        Valid values are \code{"dnorm"}, \code{"dged"}, \code{"dstd"}, 
-        \code{"dsnorm"}, \code{"dsged"}, \code{"dsstd"}. The default value 
+        Valid values are \code{"norm"}, \code{"ged"}, \code{"std"}, 
+        \code{"snorm"}, \code{"sged"}, \code{"sstd"}. The default value 
         is the normal distribution.
         }
     \item{model}{

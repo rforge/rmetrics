@@ -17,13 +17,13 @@
 
 \usage{    
 garchFit(formula, data, init.rec = c("mci", "uev"), delta = 2, skew = 1, 
-    shape = 4, cond.dist = c("dnorm", "dsnorm", "dged", "dsged", "dstd", 
-    "dsstd"), include.mean = TRUE, include.delta = NULL, include.skew = 
+    shape = 4, cond.dist = c("norm", "snorm", "ged", "sged", "std", 
+    "sstd"), include.mean = TRUE, include.delta = NULL, include.skew = 
     NULL, include.shape = NULL, leverage = NULL, trace = TRUE, algorithm = 
     c("nlminb", "sqp", "lbfgsb", "nlminb+nm", "lbfgsb+nm"), control = 
     list(), title = NULL, description = NULL, \dots)
     
-garchKappa(cond.dist = c("dnorm", "dged", "dstd", "dsnorm", "dsged", "dsstd"), 
+garchKappa(cond.dist = c("norm", "ged", "std", "snorm", "sged", "sstd"), 
     gamma = 0, delta = 2, skew = NA, shape = NA)
 }
 
@@ -404,7 +404,7 @@ garchKappa(cond.dist = c("dnorm", "dged", "dstd", "dsnorm", "dsged", "dsstd"),
 
 \section{Tracing the Output}{
 
-
+    to do ...
 }
 
 
@@ -516,7 +516,6 @@ Nocedal J., Wright S.J. (1999);
    X.timeSeries = as.timeSeries(msft.dat)
    garchFit(Open ~ garch(1,1), data = returns(X.timeSeries)) 
    garchFit(100*(High-Low) ~ garch(1,1), data = returns(X.timeSeries)) 
-}
 }
 
 
