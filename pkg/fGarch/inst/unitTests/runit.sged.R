@@ -53,6 +53,8 @@ test.sgedDis <-
     # Generalized Error Distribution:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
+    
+    # Test:
     test = .distCheck("ged",  mean = 0, sd = 1, nu = 2, robust = FALSE) 
     print(test)                                     
        
@@ -79,7 +81,11 @@ test.sgedFit <-
     # Generalized Error Distribution:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
+    
+    # Series:
     x = rged(1000, mean = 0, nu = 2)
+    
+    # Fit:
     fit = gedFit(x)
     print(fit)
       
@@ -111,6 +117,7 @@ test.sgedSlider <-
     # Try Random Variates:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
+    
     # sgedSlider(type = "rand")
     NA
     

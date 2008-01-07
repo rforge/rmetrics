@@ -51,12 +51,16 @@ test.sstdDist <-
     # Standardized Student-t Distribution:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
+    
+    # Test:
     test = .distCheck("std",  mean = 0, sd = 1, nu = 5, robust = FALSE) 
     print(test)                                    
     
     # Skew Standardized Student-t Distribution:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
+    
+    # Test:
     test = .distCheck("sstd", mean = 0, sd = 1, nu = 5, xi = 1.5, robust = FALSE) 
     print(test)                                     
     
@@ -77,7 +81,11 @@ test.stdFit <-
     # Standardized Student-t Distribution:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
+    
+    # Series:
     x = rstd(n = 2500, mean = 0, sd = 1, nu = 5)
+    
+    # Fit:
     fit = stdFit(x)
     print(fit)
              
@@ -87,7 +95,11 @@ test.stdFit <-
     # Skew Standardized Student-t Distribution:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
+    
+    # Series:
     x = rsstd(n = 2500, mean = 0, sd = 1, nu = 5, xi = 1.5)
+    
+    # Fit:
     fit = sstdFit(x)
     print(fit)
     
@@ -109,6 +121,7 @@ test.sstdSlider <-
     # Try Random Variates:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
+    
     # sstdSlider(type = "rand")
     NA
     

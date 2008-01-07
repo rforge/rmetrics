@@ -30,128 +30,161 @@
 ################################################################################
 
 
-test.formula-methods <- 
-function()
+test.formula.methods.univariate <- 
+    function()
 {
     # Numeric Vector RVs:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry") 
+    
     # Simulate normal GARCH(1, 1) numeric Vector:
-    model = list(omega = 1e-06, alpha = 0.1, beta = 0.8)
+    spec = garchSpec()
     N = 250
     
-    
-    # UNIVARIATE DATA:
-    
-    # A numeric Vector:
-    x.vec = 100*garchSim(model, N, returnClass = "numeric")
-    x.vec
+    # Univariate Data Simulation:
+    x.vec = 100*garchSim(spec, N, returnClass = "numeric")
+    print(head(x.vec))
     x.tS = dummyDailySeries(matrix(x.vec), units = "GARCH11")
-    x.tS 
-    x.zoo = zoo(x.vec, order.by = as.Date(rownames(x.tS)))
-    x.zoo
+    print(head(x.tS))
+    x.zoo = zoo(as.vector(x.vec), order.by = as.Date(rownames(x.tS)))
+    print(head(x.zoo))
     x.ts = as.ts(x.vec)
-    x.ts 
-    
-    
-    # MULTIVARIATE DATA:
-    
-    # A numeric matrix:
-    X.mat = cbind(GARCH11 = x.vec, R = rnorm(N))
-    X.mat
-    X.tS = dummyDailySeries(X.mat, units = c("GARCH11", "R"))
-    X.tS
-    X.zoo = zoo(X.mat, order.by = as.Date(rownames(x.tS)))
-    X.zoo
-    X.mts = as.ts(X.mat)
-    X.mts
+    print(head(x.ts))
        
-    # UNIVARIATE:
+    # Univariate Modeling:
     
     # A numeric Vector:
     fit = garchFit(~ garch(1,1), data = x.vec, trace = FALSE)
-    formula(fit)
+    print(formula(fit))
     fit = garchFit(x.vec ~ garch(1,1), data = x.vec, trace = FALSE)
-    formula(fit)
+    print(formula(fit))
    
     # An univariate timeSeries object with dummy dates:
     fit = garchFit(~ garch(1,1), data = x.tS, trace = FALSE)
-    formula(fit)
+    print(formula(fit))
     fit = garchFit(x.tS ~ garch(1,1), data = x.tS, trace = FALSE)
-    formula(fit)       
+    print(formula(fit))      
 
     # An univariate zoo object with dummy dates:
     fit = garchFit(~ garch(1,1), data = x.zoo, trace = FALSE)
-    formula(fit)
+    print(formula(fit))
     fit = garchFit(x.zoo ~ garch(1,1), data = x.zoo, trace = FALSE)
-    formula(fit)    
+    print(formula(fit))  
     
     # An univariate "ts" object:
     fit = garchFit(~ garch(1,1), data = x.ts, trace = FALSE)
-    formula(fit)
+    print(formula(fit))
     fit = garchFit(x.ts ~ garch(1,1), data = x.ts, trace = FALSE)
-    formula(fit)    
-    
-    
-    # MULTIVARIATE:
-    
-    # A numeric matrix:
-    fit = garchFit(GARCH11 ~ garch(1,1), data = X.mat, trace = FALSE)
-    formula(fit)
-    fit = garchFit(100*GARCH11 ~ garch(1,1), data = X.mat, trace = FALSE)
-    formula(fit)    
-    
-    # A multivariate timeSeries object with dummy dates:
-    fit = garchFit(GARCH11 ~ garch(1,1), data = X.tS, trace = FALSE)
-    formula(fit)
-    fit = garchFit(100*GARCH11 ~ garch(1,1), data = X.tS, trace = FALSE)
-    formula(fit)  
-    
-    # A multivariate zoo object without column names:
-    fit = garchFit(GARCH11 ~ garch(1,1), data = X.zoo, trace = FALSE)
-    formula(fit)
-    fit = garchFit(100*GARCH11 + R/100 ~ garch(1,1), data = X.zoo, trace = FALSE)
-    formula(fit)  
-
-    # A multivariate "mts" object without column names:
-    fit = garchFit(GARCH11 ~ garch(1,1), data = X.mts, trace = FALSE)
-    formula(fit)
-    fit = garchFit(100*GARCH11 + R/100 ~ garch(1,1), data = X.mts, trace = FALSE)
-    formula(fit)  
- 
-       
-    # MODELING THE PERCENTUAL SPI/SBI SPREAD FROM LPP BENCHMARK:
-    
-    X.tS = as.timeSeries(data(LPP2005REC))
-    head(X.tS)
-    X.mat = as.matrix(X.tS)
-    head(X.mat)
-    X.zoo = zoo(X.mat, order.by = as.Date(rownames(X.mat)))
-    head(X.zoo)
-    X.mts = mts(X.mat)
-    X.mts # head does not work for ts objects!
-    
-    fit = garchFit(100*(SPI - SBI) ~ garch(1,1), data = X.tS)
-    formula(fit)
-    fit = garchFit(100*(SPI - SBI) ~ garch(1,1), data = X.mat)
-    formula(fit)
-    fit = garchFit(100*(SPI - SBI) ~ garch(1,1), data = X.zoo)
-    formula(fit)
-    fit = garchFit(100*(SPI - SBI) ~ garch(1,1), data = X.mts)
-    formula(fit)
-
-    
-    # MODELING HIGH/LOW SPREADS FROM MSFT PRICE SERIES:
-    
-    X.tS = as.timeSeries(msft.dat)
-    fit = garchFit(Open ~ garch(1,1), data = returns(X.tS))
-    formula(fit)
-    fit = garchFit(100*(High-Low) ~ garch(1,1), data = returns(X.tS))
-    formula(fit)
+    print(formula(fit)) 
       
     # Return Value:
     return()    
 } 
+
+
+# ------------------------------------------------------------------------------
+
+
+test.formula.methods.multivariate <- 
+    function()
+{
+    # Numeric Vector RVs:
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry") 
+
+    # Simulate normal GARCH(1, 1) numeric Vector:
+    spec = garchSpec()
+    N = 250
+    
+    # Univariate Data Simulation:
+    x.vec = 100*garchSim(spec, N, returnClass = "numeric")
+    print(head(x.vec))
+    x.tS = dummyDailySeries(matrix(x.vec), units = "GARCH11")
+    print(head(x.tS))
+    
+    # Multivariate Data Simulation:
+    X.mat = cbind(GARCH11 = x.vec, R = rnorm(N))
+    print(head(X.mat))
+    X.tS = dummyDailySeries(X.mat, units = c("GARCH11", "R"))
+    print(head(X.tS))
+    X.zoo = zoo(X.mat, order.by = as.Date(rownames(x.tS)))
+    print(head(X.zoo))
+    X.mts = as.ts(X.mat)
+    print(head(X.mts)) # head doesn't wor for mts !!!
+       
+    # Multivariate Modeling:
+    
+    # A numeric matrix:
+    fit = garchFit(GARCH11 ~ garch(1,1), data = X.mat, trace = FALSE)
+    print(formula(fit)) 
+    fit = garchFit(100*GARCH11 ~ garch(1,1), data = X.mat, trace = FALSE)
+    print(formula(fit)) 
+    
+    # A multivariate timeSeries object with dummy dates:
+    fit = garchFit(GARCH11 ~ garch(1,1), data = X.tS, trace = FALSE)
+    print(formula(fit)) 
+    fit = garchFit(100*GARCH11 ~ garch(1,1), data = X.tS, trace = FALSE)
+    print(formula(fit)) 
+    
+    # A multivariate zoo object without column names:
+    fit = garchFit(GARCH11 ~ garch(1,1), data = X.zoo, trace = FALSE)
+    print(formula(fit)) 
+    fit = garchFit(100*GARCH11 + R/100 ~ garch(1,1), data = X.zoo, trace = FALSE)
+    print(formula(fit))  
+
+    # A multivariate "mts" object without column names:
+    fit = garchFit(GARCH11 ~ garch(1,1), data = X.mts, trace = FALSE)
+    print(formula(fit)) 
+    fit = garchFit(100*GARCH11 + R/100 ~ garch(1,1), data = X.mts, trace = FALSE)
+    print(formula(fit)) 
+ 
+    # Return Value:
+    return()    
+} 
+
+# ------------------------------------------------------------------------------
+
+
+test.formula.methods.spread <- 
+    function()
+{     
+    # MODELING THE PERCENTUAL SPI/SBI SPREAD FROM LPP BENCHMARK:
+    
+    # Series:
+    X.tS = as.timeSeries(data(LPP2005REC))
+    print(head(X.tS))
+    X.mat = as.matrix(X.tS)
+    print(head(X.mat))
+    X.zoo = zoo(X.mat, order.by = as.Date(rownames(X.tS)))
+    print(head(X.zoo))
+    X.mts = ts(X.mat)
+    print(head(X.mts)) # head does not work for ts objects!
+    
+    # Fit:
+    fit = garchFit(100*(SPI - SBI) ~ garch(1,1), data = X.tS, trace = FALSE)
+    print(formula(fit)) 
+    ## fit = garchFit(100*(SPI - SBI) ~ garch(1,1), data = X.mat, trace = FALSE)
+    ## print(formula(fit)) 
+    ## fit = garchFit(100*(SPI - SBI) ~ garch(1,1), data = X.zoo, trace = FALSE)
+    ## print(formula(fit)) 
+    ## fit = garchFit(100*(SPI - SBI) ~ garch(1,1), data = X.mts, trace = FALSE)
+    ## print(formula(fit)) 
+    
+    # MODELING HIGH/LOW SPREADS FROM MSFT PRICE SERIES:
+    
+    # Series:
+    X.tS = as.timeSeries(msft.dat)
+    
+    # Fit:
+    fit = garchFit(Open ~ garch(1,1), data = returns(X.tS), trace = FALSE)
+    print(formula(fit)) 
+    fit = garchFit(100*(High-Low) ~ garch(1,1), data = returns(X.tS), 
+        trace = FALSE)
+    print(formula(fit)) 
+      
+    # Return Value:
+    return()    
+}
 
 
 ################################################################################

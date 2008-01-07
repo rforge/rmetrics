@@ -40,29 +40,30 @@
 ################################################################################
 
 
-test.garch-methods = 
-function()
+test.garch.methods.show <- 
+    function()
 { 
     # show.fGARCH - S4 print method for an object of class 'fGARCH'
     
-    # Load Data, convert to numeric Vector:
-    data(dem2gbp)  
+    # Garch(1,1) Default Model:
+    x = garchSim(n = 250)
     
     # Fit:
-    fit = garchFit(DEM2GBP ~garch(1,1), data = dem2gbp, trace = FALSE)
+    fit = garchFit( ~ garch(1,1), data = x, trace = FALSE)
     
+    # Note:
+    # Does also work:
+    #   fit = garchFit(dem2gbp ~garch(1,1), data = dem2gbp, trace = FALSE)
+    # Note:
+    #   fit = garchFit(DEM2GBP ~garch(1,1), data = dem2gbp, trace = FALSE)
+    #   [1] "DEM2GBP"
+    #   [1] "dem2gbp"
+    #   Error in .garchArgsParser(formula = formula, data = data, trace = FALSE) : 
+    #     Formula and data units do not match.
+
     # Print:
     print(fit)
     show(fit)
-   
-    # Plot:
-    par(mfrow = c(3, 2))
-    par(ask = FALSE)
-    plot(fit, which = "all")
-     
-    # Plot - try interactively:
-    # par(mfrow = c(1, 1))
-    # plot(fit)
     
     # Summary:
     summary(fit)

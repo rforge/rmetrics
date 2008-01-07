@@ -34,9 +34,15 @@
 ################################################################################
 
 
-test.predict-methods <-  
-function()
+test.predict.methods <-  
+    function()
 {   
+    # RVs:
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
+    
+    print(NA)
+    
     # Return Value:
     return()    
 } 
@@ -46,17 +52,17 @@ function()
 
 
 test.garchKappa <-  
-function()
+    function()
 {
     # garchKappa(
-    #   cond.dist = c("dnorm", "dged", "dstd", "dsnorm", "dsged", "dsstd"), 
+    #   cond.dist = c("norm", "ged", "std", "snorm", "sged", "sstd"), 
     #   gamma = 0, delta = 2, skew = NA, shape = NA)
     
     garchKappa()
     
-    garchKappa("dnorm", gamma = 0.3)
+    garchKappa("norm", gamma = 0.3)
     
-    garchKappa("dged", skew = 0.95, shape = 1)
+    garchKappa("ged", skew = 0.95, shape = 1)
     
     # CHECK !!! garchKappa("dstd", skew = 0.95, shape = 1)
     

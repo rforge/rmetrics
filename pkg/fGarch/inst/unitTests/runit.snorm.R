@@ -47,6 +47,8 @@ test.snormDist <-
     # Normal Distribution:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
+    
+    # Test:
     test = .distCheck("norm",  mean = 0, sd = 1, robust = FALSE)
     print(test)
     checkTrue(sum(test) == 3)                                     
@@ -54,6 +56,8 @@ test.snormDist <-
     # Skew Normal Distribution:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
+    
+    # Test:
     test = .distCheck("snorm", mean = 0, sd = 1, xi = 1.5, robust = FALSE) 
     print(test)
     checkTrue(sum(test) == 3)                                      
@@ -75,6 +79,7 @@ test.snormFit <-
     # Normal Distribution:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
+    
     # Random Variates:
     x = rnorm(n = 1000, mean = 0, sd = 1)
     fit = normFit(x)
@@ -87,7 +92,11 @@ test.snormFit <-
     # Skew Normal Distribution:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
+    
+    # Series:
     x = rsnorm(n = 1000, mean = 0, sd = 1, xi = 1.5)
+    
+    # Fit:
     fit = snormFit(x)
     print(fit)
     
@@ -109,6 +118,7 @@ test.snormSlider <-
     # Try Random Variates:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
     set.seed(4711, kind = "Marsaglia-Multicarry")
+    
     # snormSlider(type = "rand")
     NA 
     

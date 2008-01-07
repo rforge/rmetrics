@@ -58,48 +58,88 @@
 # ------------------------------------------------------------------------------
 
 
-test.garchInputSeries <- 
-function()
-{
-    # Numeric Vector RVs:
+test.aparch11 <- 
+    function()
+{       
+    # Use Simulated Series - an Object of class 'ts' ...
+    
+    # RVs:
     RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
-    set.seed(4711, kind = "Marsaglia-Multicarry") 
+    set.seed(4711, kind = "Marsaglia-Multicarry")
     
-    # Simulate normal GARCH(1, 1) numeric Vector:
-    model = list(omega = 1e-06, alpha = 0.1, beta = 0.8)
+    # Leveraged normal APARCH(1, 1)
+    model = list(omega = 1e-06, alpha = 0.1, beta = 0.8, gamma = 0.1)
     spec = garchSpec(model)
-    print(spec)
-    N = 10 
+    x = garchSim(spec, n = 250, returnClass = "numeric")
     
-    
-    # UNIVARIATE:
-    
-    # A numeric Vector:
-    x.vec = 100*garchSim(spec, N, returnClass = "numeric")
-    print(head(x.vec))
-    x.tS = dummyDailySeries(matrix(x.vec), units = "GARCH11")
-    print(head(x.tS))
-    x.zoo = zoo(as.vector(x.vec), order.by = as.Date(rownames(x.tS)))
-    print(head(x.zoo))
-    x.ts = ts(x.vec)
-    print(head(x.ts))
-    
-    # MULTIVARIATE:
-    
-    # A numeric matrix:
-    X.mat = cbind(GARCH11 = x.vec, R = rnorm(N))
-    print(head(X.mat))
-    X.tS = dummyDailySeries(X.mat, units = c("GARCH11", "R"))
-    print(head(X.tS))
-    X.zoo = zoo(X.mat, order.by = as.Date(rownames(x.tS)))
-    print(head(X.zoo))
-    X.mts = ts(X.mat)
-    print(head(X.mts))
+    # Fit:
+    fit = garchFit(x ~ garch(1,1), data = x, leverage = TRUE, trace = FALSE)
+    print(coef(fit))
     
     # Return Value:
-    return()   
-}
- 
+    return()    
+} 
+
+
+# ------------------------------------------------------------------------------
+
+
+test.aparch11delta <- 
+    function()
+{       
+    # RVs:
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
+    
+    # Leveraged normal APARCH(1, 1) delta = 1.5
+    model = list(omega = 1e-05, alpha = 0.1, beta = 0.8, gamma = 0.1, 
+        delta = 1.5)
+    spec = garchSpec(model)
+    x = garchSim(spec, n = 250, returnClass = "numeric")
+    print(var(x))    
+    
+    # Fit:
+    fit = garchFit(x ~ garch(1,1), data = x, leverage = TRUE,
+        include.delta = TRUE, delta = 2, trace = FALSE)
+    print(coef(fit))
+    
+    # Return Value:
+    return()    
+} 
+
+
+# ------------------------------------------------------------------------------
+
+
+test.ar1aparch21 <- 
+    function()
+{       
+    # RVs:
+    RNGkind(kind = "Marsaglia-Multicarry", normal.kind = "Inversion")
+    set.seed(4711, kind = "Marsaglia-Multicarry")
+    
+    # Leveraged normal AR(1)-APARCH(2, 1) delta = 1
+    model = list(omega = 1e-06, ar = -0.1, alpha = c(0.1, 0.2), beta = 0.6, 
+        delta = 1)
+    spec = garchSpec(model)
+    x = garchSim(spec, n = 250, returnClass = "numeric")
+    
+    # Taylor Plot:
+    taylor = teffectPlot(x)
+    init.delta = mean(taylor$maxDelta)
+    init.delta    
+    
+    ## fit = garchFit(x ~ ar(1) + garch(2,1), data = x, include.delta = TRUE, 
+    ##     delta = init.delta, trace = FALSE)
+    ## print(coef(fit))
+    
+    ## Error in solve.default(fit$hessian) : 
+    ##  Lapack routine dgesv: system is exactly singular            ## CHECK !!!
+    
+    # Return Value:
+    return()    
+} 
+  
 
 ################################################################################
     

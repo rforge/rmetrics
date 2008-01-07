@@ -63,7 +63,7 @@ function()
     garchSpec(model = list(alpha = c(0.12, 0.04)))
     
     # GARCH(1,1) - use just defaults
-    garchSpec())
+    garchSpec()
     
     # GARCH(1,1) - use default omega and specify alpha/beta
     garchSpec(model = list(alpha = 0.2, beta = 0.7))
@@ -78,19 +78,19 @@ function()
     garchSpec(model = list(alpha = c(0.12, 0.04), beta = 0.08))
     
     # rsnorm-ARCH(1) - use defaults with skew Normal
-    garchSpec(model = list(dist = 2), cond.dist = "rsnorm")
+    garchSpec(model = list(dist = 2), cond.dist = "snorm")
     
     # rged-ARCH(1) using default omega and alpha[1]
-    garchSpec(model = list(dist = 4), cond.dist = "rged")
+    garchSpec(model = list(dist = 4), cond.dist = "ged")
     
     # rsged-ARCH(1) using default omega and alpha[1]
-    garchSpec(model = list(dist = c(4, 2)), cond.dist = "rsged")
+    garchSpec(model = list(dist = c(4, 2)), cond.dist = "sged")
     
     # rstd-ARCH(1) using default omega and alpha[1]
-    garchSpec(model = list(dist = 4), cond.dist = "rstd")
+    garchSpec(model = list(dist = 4), cond.dist = "std")
     
     # rsstd-ARCH(1) using default omega and alpha[1]
-    garchSpec(model = list(dist = c(4, 2)), cond.dist = "rsstd")
+    garchSpec(model = list(dist = c(4, 2)), cond.dist = "sstd")
     
     # TS-GARCH(1,1)
     garchSpec(model = list(delta = 1))
@@ -98,7 +98,7 @@ function()
     # AR(1)-t-APARCH(2, 1)
     garchSpec(model = list(mu = 1.0e-4, ar = 0.5, omega = 1.0e-6, 
         alpha = c(0.10, 0.05), gamma = c(0, 0), beta = 0.8, delta = 1.8, 
-        dist = c(nu = 4, xi = 0.5)), cond.dist = "rsstd")
+        dist = c(nu = 4, xi = 0.5)), cond.dist = "sstd")
         
     # Return Value:
     return() 
