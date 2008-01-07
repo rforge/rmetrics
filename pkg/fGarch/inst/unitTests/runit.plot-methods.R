@@ -49,7 +49,7 @@ test.plot.methods1 <-
     par(mfrow = c(2, 1))
     
     # Plot 1:
-    plot(fit, which = 1)                       # labels = FALSE not implemented!
+    plot(fit, which = 1)                      
     mtext("norm-GARCH(1,1) Modeling", line = 0.5, cex = 0.8)
     mtext("DEM2GBP Data Vector", side = 4, adj = 0, cex = 0.7, col = "darkgrey")
     
@@ -83,7 +83,7 @@ test.plot.methods2 <-
     par(mfrow = c(1, 1))
     
     # Plot 3:
-    plot(fit, which = 3)                       # labels = FALSE not implemented!
+    plot(fit, which = 3)                       
     mtext("norm-GARCH(1,1) Modeling", line = 0.5, cex = 0.8)
     mtext("DEM2GBP Data Vector", side = 4, adj = 0, cex = 0.7, 
         col = "darkgrey")
@@ -115,7 +115,7 @@ test.plot.methods3 <-
     par(mfrow = c(2, 1))
     
     # Plot 4:
-    plot(fit, which = 4)                       # labels = FALSE not implemented!
+    plot(fit, which = 4)                       
     mtext("norm-GARCH(1,1) Modeling", line = 0.5, cex = 0.8)
     mtext("DEM2GBP Data Vector", side = 4, adj = 0, cex = 0.7, 
         col = "darkgrey")
@@ -154,7 +154,7 @@ test.plot.methods4 <-
     par(mfrow = c(2, 2))
     
     # Plot 6:
-    plot(fit, which = 6)                       # labels = FALSE not implemented!
+    plot(fit, which = 6)                        
     mtext("norm-GARCH(1,1) Modeling", line = 0.5, cex = 0.8)
     mtext("DEM2GBP Data Vector", side = 4, adj = 0, cex = 0.7, 
         col = "darkgrey")
