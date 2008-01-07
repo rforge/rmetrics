@@ -31,25 +31,9 @@
 # FUNCTION:             REGRESSION MODELLING DESCRIPTION:
 #  'fREG'                S4 Class Representation
 #  regSim                Returns a regression example data set
-#  regFit                Wrapper Function for Regression Models
-#  gregFit                Wrapper Function for Generalized Regression Models
-#  .lmFit                 Linear Regression Model
-#  .rlmFit                Robust Linear Regression Model
-#  .glmFit                Generalized Linear Model
-#  .gamFit                Generalized Additive Model
-#  .pprFit                Projection Pursuit Regression Model
-#  .polymarsFit           Polytochomous MARS Model
-#  .nnetFit               Feedforward Neural Network Model
 # S3-METHODS:           DESCRIPTION:
 #  print.fREG            Prints results from a regression model fit     
 #  plot.fREG             Plots fit and diagnostics for a regression model
-#  .plot.lm               Linear Regression Model internal plot        
-#  .plot.rlm              Robust Linear Regression Model internal plot
-#  .plot.glm              Generalized Linear Model internal plot
-#  .plot.gam              Generalized Additive Model internal plot
-#  .plot.ppr              Projection Pursuit Regression Model internal plot
-#  .plot.polymars         Polytochomous MARS Model internal plot
-#  .plot.nnet             Feedforward Neural Network Model internal plot
 #  summary.fREG           Summarizes fit and diagnostics for a regression model
 # S3-METHODS:           DESCRIPTION:
 #  predict.fREG          Predicts values from a fitted regression model
@@ -60,26 +44,8 @@
 ################################################################################
 
 
-#       LM  RLM  ALM PPR POLYMARS  NNET     
-#       GAM GLM          
-    
-#       see also: 
-#           rlm  -  M                           [MASS]
-#           rlm  -  MM                          [MASS]
-#           lrm  -  logistic regression model   [Design]
-#           glmD -  ...                         [Design]
-#           glsD -  ...                         [Design]   
-#           nls     non-linear least square     [nls] 
-#           lmRob -                             [robust]  
-#                                               [roblm]
-#                                               [robustbase]    
-#           ...
-
-
-# ------------------------------------------------------------------------------
-
-test.regSim =
-function()
+test.regSim <- 
+    function()
 {
     # Plot Parameters:
     par(ask = FALSE)
@@ -108,8 +74,8 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.regFit.dataframe = 
-function()
+test.regFit.dataframe <- 
+    function()
 {
     # Working with timeSeries Objects ...
     DATA = regSim(model = "GAM3", n = 100)
@@ -119,7 +85,7 @@ function()
     # Regression Fit:
     LM       = regFit(Y ~ X1 + X2, data = DATA, use = "lm") 
     RLM      = regFit(Y ~ X1 + X2, data = DATA, use = "rlm") 
-    AM       = regFit(Y ~ X1 + X2, data = DATA, use = "am")                
+    AM       = regFit(Y ~ X1 + X2, data = DATA, use = "gam")                
     PPR      = regFit(Y ~ X1 + X2, data = DATA, use = "ppr") 
     POLYMARS = regFit(Y ~ X1 + X2, data = DATA, use = "polymars") 
     NNET     = regFit(Y ~ X1 + X2, data = DATA, use = "nnet")  
@@ -161,8 +127,8 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.regFit.valueSlots = 
-function()
+test.regFit.valueSlots <- 
+    function()
 {    
     
     # Working with timeSeries Objects ...
@@ -173,7 +139,7 @@ function()
     # Modelling:
     LM    = regFit(Y ~ X1 + X2, data = DATA, use = "lm") 
     RLM   = regFit(Y ~ X1 + X2, data = DATA, use = "rlm") 
-    AM    = regFit(Y ~ s(X1) + s(X2),  DATA, use = "am") 
+    AM    = regFit(Y ~ s(X1) + s(X2),  DATA, use = "gam") 
     PPR   = regFit(Y ~ X1 + X2, data = DATA, use = "ppr") 
     POLYMARS = regFit(Y ~ X1 + X2, data = DATA, use = "polymars") 
     NNET  = regFit(Y ~ X1 + X2, data = DATA, use = "nnet")   
@@ -259,8 +225,8 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.predict.fREG = 
-function()
+test.predict.fREG <- 
+    function()
 {    
     
     # Working with timeSeries Objects ...
@@ -272,7 +238,7 @@ function()
 
     LM    = regFit(Y ~ X1 + X2, data = DATA, use = "lm") 
     RLM   = regFit(Y ~ X1 + X2, data = DATA, use = "rlm") 
-    AM    = regFit(Y ~ s(X1) + s(X2),  DATA, use = "am")       
+    AM    = regFit(Y ~ s(X1) + s(X2),  DATA, use = "gam")       
     PPR   = regFit(Y ~ X1 + X2, data = DATA, use = "ppr")  
     POLYMARS = regFit(Y ~ X1 + X2, data = DATA, use = "polymars") 
     NNET  = regFit(Y ~ X1 + X2, data = DATA, use = "nnet")   
@@ -317,8 +283,8 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.regFit.nonDefaults = 
-function()
+test.regFit.nonDefaults <- 
+    function()
 {   
     # Requirements:
     require(MASS)
@@ -337,35 +303,36 @@ function()
     # LM:
     LM1 = regFit(Y ~ X1 + X2,      DATA, use = "lm") 
     print(LM1)
-    LM2 = regFit(Y ~ 1 + X1 + X2,  DATA, "lm")
+    LM2 = regFit(Y ~ 1 + X1 + X2,  DATA)
     print(LM2)
-    LM3 = regFit(Y ~ -1 + X1 + X2, DATA, "lm")
+    LM3 = regFit(Y ~ -1 + X1 + X2, DATA)
     print(LM3)
-    LM4 = regFit(Y ~ X1 + log(X2), DATA, "lm")
+    LM4 = regFit(Y ~ X1 + log(X2), DATA)
     print(LM4)
     
     # AM:
-    AM1 = regFit(Y ~ s(X1) + s(X2), data = DATA, use = "am")
+    AM1 = regFit(Y ~ s(X1) + s(X2), data = DATA, use = "gam")
     print(AM1)
-    # AM2 = regFit(Y ~ s(X1) + s(X2), DATA, "am", method = gam.method(pearson = TRUE))
+    # AM2 = regFit(Y ~ s(X1) + s(X2), DATA, "gam", 
+    #   method = gam.method(pearson = TRUE))
     # print(AM2)
     
     # PPR:
     par(ask = FALSE)
     par(mfrow = c(1, 1))
     PPR1 = regFit(Y ~ sin(X1) + exp(X2), DATA, "ppr", nterms = 4, 
-        sm.method = "supsmu")
+        sm.method = "supsmu", use = "ppr")
     PPR2 = regFit(Y ~ sin(X1) + exp(X2), DATA, "ppr", nterms = 4, 
-        sm.method = "spline")
+        sm.method = "spline", use = "ppr")
     PPR3 = regFit(Y ~ sin(X1) + exp(X2), DATA, "ppr", nterms = 3, 
-        sm.method = "gcvspline")
-    .termPlot(PPR1)
-    .termPlot(PPR2)
-    .termPlot(PPR3)
+        sm.method = "gcvspline", use = "ppr")
+    ## termPlot(PPR1)
+    ## termPlot(PPR2)
+    ## termPlot(PPR3)
     
     # POLYMARS:
-    POLYMARS = regFit(Y ~ X1 + X2 + X3, DATA, "polymars")
-    POLYMARS = regFit(Y ~ X1*X2 + X2*X3 + X3*X1, DATA, "polymars")
+    POLYMARS = regFit(Y ~ X1 + X2 + X3, DATA, use = "polymars")
+    POLYMARS = regFit(Y ~ X1*X2 + X2*X3 + X3*X1, DATA, use = "polymars")
 
     # NNET
     # todo ...
@@ -378,8 +345,8 @@ function()
 # ------------------------------------------------------------------------------
 
 
-test.generalizedModels = 
-function()
+test.generalizedModels <- 
+    function()
 {
     # Generalized * Models:
     
