@@ -941,7 +941,8 @@ function(u = 0.5, v = u, alpha = 2, output = c("vector", "list"))
     # FUNCTION:
     
     # Bivariate Gumbel Probability:
-    ans = parchmCopula (u, v, alpha, type = "4", output, alternative = FALSE) 
+    ans = parchmCopula (u, v, alpha, type = "4", output = output, 
+        alternative = FALSE) 
     
     # Return Value:
     ans
@@ -961,7 +962,8 @@ function(u = 0.5, v = u, alpha = 2, output = c("vector", "list"))
     # FUNCTION:
     
     # Bivariate Gumbel Density:
-    ans = darchmCopula (u, v, alpha, type = "4", output, alternative = FALSE) 
+    ans = darchmCopula (u, v, alpha, type = "4", output = output, 
+        alternative = FALSE) 
     
     # Return Value:
     ans
