@@ -93,13 +93,13 @@ garchFit <-
        
     # Parse formula and data for garchFit ...
     #   Note in the new version we are working with data frames ...
-    Name = as.character(substitute(data))
+    Name = capture.output(substitute(data))
     Data = data
     data = as.data.frame(data)
     
     # Column Names:
     if (isUnivariate(data)) {
-        colnames(data) <- Name
+        colnames(data) <- "data"
     } else {
         # Check unique column Names:
         uniqueNames = unique(sort(colnames(data)))
@@ -113,16 +113,16 @@ garchFit <-
  
     # Handle if we have no left-hand-side for the formula ...
     #   Note in this case the length of the formula is 2 (else 3):
-    if (length(formula) == 2) {
+    if (length(formula) == 3 && isUnivariate(data) ) formula[2] <- NULL
+    if (length(formula) == 2) {  
         if (isUnivariate(data)) {
             # Missing lhs -- we substitute the data file name as lhs ...
-            formula = as.formula(paste(Name, paste(formula, collapse = " ")))
+            formula = as.formula(paste("data", paste(formula, collapse = " ")))  
         } else {
             stop("Multivariate data inputs require lhs for the formula.")
         }
     }
         
-    Formula = formula   
     args = .garchArgsParser(formula = formula, data = data, trace = FALSE)   
        
     # Fit:
@@ -135,7 +135,8 @@ garchFit <-
         trace, algorithm, control, title, description, ...)
     ans@call = CALL
     ans@data = list(data = args$series, Data = Data)
-    ans@formula = Formula
+    attr(formula, "data") <- paste("data = ", Name, sep = "")
+    ans@formula = formula
     
     # Return Value:
     ans

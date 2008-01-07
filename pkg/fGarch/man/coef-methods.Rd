@@ -65,7 +65,7 @@
    x = garchSim(spec, n = 200)
   
 ## garchFit - 
-   fit = garchFit(x ~ garch(1, 1), data = x)
+   fit = garchFit( ~ garch(1, 1), data = x)
    
 ## coef - 
    coef(fit)

@@ -55,9 +55,13 @@ setMethod(f = "show", signature(object = "fGARCH"), definition =
     cat("\nCall:\n ")
     cat(paste(deparse(object@call), sep = "\n", collapse = "\n"), "\n")
     
-    # Mean Equation:
+    # Mean and Variance Equation:
     cat("\nMean and Variance Equation:\n ")
-    print(object@formula)
+    Name = unclass(attr(object@formula, "data"))
+    Formula = object@formula
+    attr(Formula, "data") <- NULL
+    print(Formula)
+    cat(" [", Name, "]\n", sep = "")
         
     # Conditional Distribution:
     cat("\nConditional Distribution:\n ")
