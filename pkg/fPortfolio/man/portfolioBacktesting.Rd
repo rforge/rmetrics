@@ -24,7 +24,7 @@ portfolioBacktesting(formula, data, spec = portfolioSpec(), constraints = NULL,
     trace = TRUE)
 
 \method{print}{portfolioBacktest}(x, \dots)    
-\method{plot}{portfolioBacktest}(x, which = "all", \dots)
+\method{plot}{portfolioBacktest}(x, which = "all", labels = TRUE, \dots)
 \method{summary}{portfolioBacktest}(object, \dots)
 }
 
@@ -50,6 +50,9 @@ portfolioBacktesting(formula, data, spec = portfolioSpec(), constraints = NULL,
     \item{horizon}{
         a character string, by default \code{"12m"}, which denotes 12
         months. The period over which the portfolio is rolled.
+        }
+    \item{labels}{
+        a logical flag. Should labels be drawn or not? By default TRUE.
         }
     \item{object}{
         an object of class \code{portfolioBacktest} as returned by
