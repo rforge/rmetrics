@@ -40,10 +40,10 @@
 # ------------------------------------------------------------------------------
 
 
-.sliderMenu <- 
+.sliderMenu <-
     function(refresh.code, names, minima, maxima, resolutions, starts,
     title = "Slider", no = 0, set.no.value = 0)
-{   
+{
     # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -55,7 +55,7 @@
     # FUNCTION:
 
     # Requirement:
-    require(tcltk)
+    if (!require(tcltk)) stop("Package tcltk is required for this function")
 
     # Environment:
     if (!exists(".slider.env")) {
@@ -119,47 +119,47 @@
 # ------------------------------------------------------------------------------
 
 
-.tdSliderMenu <- 
+.tdSliderMenu <-
     function(sl.functions, names, minima, maxima, resolutions, starts,
-    but.functions, but.names, no, set.no.value, obj.name, obj.value, 
+    but.functions, but.names, no, set.no.value, obj.name, obj.value,
     reset.function, title)
-{   
+{
     # A function implemented by Diethelm Wuertz
 
-    # Description 
+    # Description
     #   Opens a teching demo slider menu
-    
+
     # Notes:
     #   Build on ideas and code from:
     #   R Package: TeachingDemos
     #   Title: Demonstrations for teaching and learning
     #   Version: 1.5
     #   Author: Greg Snow
-    #   Description: This package is a set of demonstration functions 
-    #       that can be used in a classroom to demonstrate statistical 
-    #       concepts, or on your own to better understand the concepts 
+    #   Description: This package is a set of demonstration functions
+    #       that can be used in a classroom to demonstrate statistical
+    #       concepts, or on your own to better understand the concepts
     #       or the programming.
     #   Maintainer: Greg Snow <greg.snow@intermountainmail.org>
     #   License: Artistic
-    
+
     # FUNCTION:
-    
+
     # Setup:
     if(!missing(no)) {
         return(as.numeric(tclvalue(get(paste(".tdSlider", no, sep=""),
             env = .slider.env))))
     }
-    if(!missing(set.no.value)){ 
+    if(!missing(set.no.value)){
         try(eval(parse(text=paste("tclvalue(.tdSlider", set.no.value[1],")<-",
             set.no.value[2], sep = "")), env = .slider.env))
-        return(set.no.value[2]) 
+        return(set.no.value[2])
     }
     if(!exists(".slider.env")) {
         .slider.env <<- new.env()
     }
     if(!missing(obj.name)){
         if(!missing(obj.value)) {
-            assign(obj.name, obj.value, env = .slider.env) 
+            assign(obj.name, obj.value, env = .slider.env)
         } else {
             obj.value <- get(obj.name, env = .slider.env)
         }
@@ -168,104 +168,104 @@
     if(missing(title)) {
         title = "Control Widget"
     }
-    
+
     # GUI Settings:
-    require(tcltk)
-    nt <- tktoplevel() 
+    if (!require(tcltk)) stop("Package tcltk is required for this function")
+    nt <- tktoplevel()
     tkwm.title(nt, title)
     tkwm.geometry(nt, "+0+0")
 
     # Buttons:
     tkpack(
         f.but <- tkframe(nt), fill = "x")
-        
+
     # Quit Button:
     quitCMD = function() {
         tkdestroy(nt)
-    } 
+    }
     tkpack(
-        tkbutton(f.but, text = "Quit", command = quitCMD, anchor = "sw"), 
+        tkbutton(f.but, text = "Quit", command = quitCMD, anchor = "sw"),
         side = "right",
-        fill = "y")    
-        
-    # Reset Button:    
+        fill = "y")
+
+    # Reset Button:
     if(missing(reset.function)) {
         reset.function <- function(...) print("relax")
     }
     if(!is.function(reset.function)) {
-        reset.function<-eval(parse(text = 
+        reset.function<-eval(parse(text =
             paste("function(...){",reset.function,"}")))
     }
-    resetCMD = function() 
+    resetCMD = function()
     {
         for(i in seq(names))
             eval(parse(text = paste("tclvalue(.tdSlider",i,")<-",
                 starts[i], sep = "")),
             env = .slider.env)
-        reset.function() 
+        reset.function()
     }
     tkpack(
         tkbutton(f.but, text = "Reset", command = resetCMD, anchor = "sw"),
         side = "right",
-        fill = "y")   
+        fill = "y")
     if (missing(but.names)) {
         but.names <- NULL
-    }    
+    }
     for (i in seq(but.names)) {
-        but.fun <- 
-            if (length(but.functions) > 1) 
+        but.fun <-
+            if (length(but.functions) > 1)
                 but.functions[[i]]
-            else 
-                but.functions  
+            else
+                but.functions
         if (!is.function(but.fun)) {
-            but.fun <- 
+            but.fun <-
                 eval(parse(text = paste("function(...){", but.fun, "}")))
-        }    
+        }
         tkpack(
-            tkbutton(f.but, text = but.names[i], command = but.fun, 
-                anchor = "nw"), 
+            tkbutton(f.but, text = but.names[i], command = but.fun,
+                anchor = "nw"),
             # side = "right",
             fill = "x"
             )
     }
-    
-    # Sliders: 
+
+    # Sliders:
     if(missing(names)) {
         names <- NULL
-    }        
+    }
     if(missing(sl.functions)) {
         sl.functions <- function(...){}
     }
     for(i in seq(names)){
-        eval(parse(text = paste("assign('.tdSlider",i,"', 
+        eval(parse(text = paste("assign('.tdSlider",i,"',
             tclVar(starts[i]), env = .slider.env)", sep = "")))
-        tkpack(fr <- tkframe(nt)) 
-        lab <- tklabel(fr, 
-            text = names[i], 
+        tkpack(fr <- tkframe(nt))
+        lab <- tklabel(fr,
+            text = names[i],
             anchor = "sw",
             width = "35")
-        sc <- tkscale(fr, 
-            from = minima[i], 
-            to = maxima[i], 
+        sc <- tkscale(fr,
+            from = minima[i],
+            to = maxima[i],
             showvalue = TRUE,
-            resolution = resolutions[i], 
+            resolution = resolutions[i],
             orient = "horiz")
-        tkpack(lab, 
-            sc, 
+        tkpack(lab,
+            sc,
             anchor = "sw",
-            side = "right"); 
+            side = "right");
         assign("sc", sc, env = .slider.env)
-        
-        eval(parse(text=paste("tkconfigure(sc,variable=.tdSlider",i,")", 
+
+        eval(parse(text=paste("tkconfigure(sc,variable=.tdSlider",i,")",
             sep="")), env = .slider.env)
-        sl.fun <- 
-            if(length(sl.functions)>1) 
-                sl.functions[[i]] 
-            else 
-                sl.functions  
-        if(!is.function(sl.fun)) 
+        sl.fun <-
+            if(length(sl.functions)>1)
+                sl.functions[[i]]
+            else
+                sl.functions
+        if(!is.function(sl.fun))
             sl.fun<-eval(parse(text=paste("function(...){", sl.fun,"}")))
-            
+
         tkconfigure(sc, command = sl.fun)
     }
     assign("slider.values.old", starts, env = .slider.env)
