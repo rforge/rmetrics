@@ -30,7 +30,13 @@
 ################################################################################
 # FUNCTION:                 TESTING:
 #  .distCheck                Checks consistency of distributions
-#  .runitTest                Unit Testing
+#  .runitTest                Perorms RUnit Tests
+#  .rmetricsPackages         Lists all Rmetrics packages
+#  .rmetricsUnitTest         Performs RUnit tests for all Rmetrics packages
+#  .getIndex                 Extracts R package index
+#  .getDescription           Extracts R package description
+#  .listFunctions            Lists all functions in a package
+#  .countFunctions           Counts all functions in a package
 ################################################################################
 
 
@@ -130,67 +136,263 @@
 
 
 .runitTest <- 
-    function(pkg)
+    function(package = "Rmetrics")
 {
-    # pkg <- "fCalendar"
+    # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   Performs RUnit tests
+    
+    # Example:
+    #   .runitTest"fCalendar")
+    
+    # FUNCTION:
 
     # if(require("RUnit", quietly = TRUE)) {
 
-    library(package=pkg, character.only = TRUE)
+    pkg = package
+    library(package = pkg, character.only = TRUE)
     # if(!(exists("path") && file.exists(path)))
         path <- system.file("unitTests", package = pkg)
 
-    ## --- Testing ---
+    # --- Testing ---
 
-    ## Define tests
-    testSuite <- defineTestSuite(name = paste(pkg, "unit testing"), 
-        dirs = path)
+    # Define tests
+    testSuite <- defineTestSuite(name = paste(pkg, "unit testing"), dirs = path)
 
-    # if(interactive()) {
-        cat("Now have RUnit Test Suite 'testSuite' for package '", 
-            pkg, "' :\n", sep='')
-        str(testSuite)
-        cat('', "Consider doing",
-            "\t  tests <- runTestSuite(testSuite)", "\nand later",
-            "\t  printTextProtocol(tests)", '', sep = "\n")
-    # } else { 
-        ## run from shell / Rscript / R CMD Batch / ...
-        ## Run
-        tests <- runTestSuite(testSuite)
+    cat("Now have RUnit Test Suite 'testSuite' for package '", 
+        pkg, "' :\n", sep='')
+    str(testSuite)
+    cat('', "Consider doing",
+        "\t  tests <- runTestSuite(testSuite)", "\nand later",
+        "\t  printTextProtocol(tests)", '', sep = "\n")
+    tests <- runTestSuite(testSuite)
 
-        if(file.access(path, 02) != 0) {
-            ## cannot write to path -> use writable one
-            tdir <- tempfile(paste(pkg, "unitTests", sep="_"))
-            dir.create(tdir)
-            pathReport <- file.path(tdir, "report")
-            cat("RUnit reports are written into ", tdir, "/report.(txt|html)",
-                sep = "")
-        } else {
-            pathReport <- file.path(path, "report")
-        }
+    if(file.access(path, 02) != 0) {
+        # cannot write to path -> use writable one
+        tdir <- tempfile(paste(pkg, "unitTests", sep="_"))
+        dir.create(tdir)
+        pathReport <- file.path(tdir, "report")
+        cat("RUnit reports are written into ", tdir, "/report.(txt|html)",
+            sep = "")
+    } else {
+        pathReport <- file.path(path, "report")
+    }
 
-        ## Print Results:
-        printTextProtocol(tests)
-        printTextProtocol(tests, 
-            fileName = paste(pathReport, ".txt", sep = ""))
-        
-        ## Print HTML Version to a File:
-        printHTMLProtocol(tests, 
-            fileName = paste(pathReport, ".html", sep = ""))
-
-        ## stop() if there are any failures i.e. FALSE to unit test.
-        ## This will cause R CMD check to return error and stop
-        if(getErrors(tests)$nFail > 0) {
-            stop("one of the unit tests failed")
-        }
-    # }
-    # } else {
+    # Print TXT Report to File:
+    printTextProtocol(tests)
+    printTextProtocol(tests, 
+        fileName = paste(pathReport, ".txt", sep = ""))
+    
+    # Print HTML Report to File:
+    fileName = paste(pathReport, ".html", sep = "")
+    printHTMLProtocol(tests, fileName = fileName)
+    
+    # Repair href Links:
+    protocol.html = scan(file = fileName, what = character(0))
+    protocol.html = gsub('href=\"', 'href=\"file://', protocol.html)
+    write(protocol.html, fileName)
+    
+    # stop() if there are any failures i.e. FALSE to unit test.
+    # This will cause R CMD check to return error and stop
+    if(getErrors(tests)$nFail > 0) {
+        stop("one of the unit tests failed")
+    }
+  
+    # Check for RUnit:
+    # ... do we need this ?
     cat("R package 'RUnit' cannot be loaded -- no unit tests run\n",
-    "for package", pkg,"\n")
-    #}
+        "for package", pkg,"\n")
+        
+    # Where you can find me ...
+    cat("\nHTML Report saved to", fileName, "\n\n")
     
     # Return Value:
     invisible()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.rmetricsPackages <- 
+    function()
+{
+    # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   Lists all Rmetrics packages
+    
+    # FUNCTION:
+    
+    # All Rmetrics Packages:
+    ans = c(
+        "fUtilities",     
+        "fEcofin",
+        "fCalendar",
+        "fSeries",
+        "fImport",
+        "fBasics",
+        "fArma",
+        "fGarch",
+        "fNonlinear",
+        "fUnitRoots",   
+        "fTrading",
+        "fMultivar",
+        "fRegression",
+        "fExtremes",
+        "fCopulae",
+        "fOptions",
+        "fExoticOptions",
+        "fAsianOptions",
+        "fAssets",
+        "fPortfolio")
+        
+    # Return Value:
+    ans        
+}
+
+        
+# ------------------------------------------------------------------------------
+
+
+.rmetricsUnitTest =
+    function()
+{       
+    # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   Performs RUnit tests for all Rmetrics packages
+    
+    # FUNCTION:
+    
+    # Do Unit Tests:
+    Packages = .rmetricsPackages()
+    for (package in Packages) {
+        cat("\n\nPackage:", package, "\n")
+        .runitTest(package)
+    }
+    
+    # Return Value:
+    invisible()       
+}   
+
+
+# ------------------------------------------------------------------------------
+
+
+.getIndex <-
+    function(package = "Rmetrics")
+{
+    # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   Extracts R package index
+    
+    # Example:
+    #   .getIndex("fSeries")
+    
+    # FUNCTION:
+    
+    # Extract Index:
+    cmd = paste("library(help =", package, ")", sep = "" )
+    ans = eval(parse(text = cmd))
+    name = ans$name
+    parh = ans$path
+    description = ans$info[[1]]
+    index = ans$info[[2]]
+    cat("\n", package, "Index:\n\n")
+    cat(paste(" ", index), sep = "\n")    
+}   
+
+
+# ------------------------------------------------------------------------------
+
+
+.getDescription <-
+    function(package = "Rmetrics")
+{
+    # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   Extract package description
+    
+    # Example:
+    #   .getIndex("fSeries")
+    
+    # FUNCTION:
+    
+    # Extract Description:
+    cmd = paste("library(help =", package, ")", sep = "" )
+    ans = eval(parse(text = cmd))
+    name = ans$name
+    parh = ans$path
+    description = ans$info[[1]]
+    index = ans$info[[2]]
+    cat("\n", package, "Description:\n\n")
+    cat(paste(" ", description), sep = "\n")
+}   
+
+ 
+# ------------------------------------------------------------------------------                 
+
+
+.listFunctions <- 
+    function(package = "Rmetrics") 
+{   
+    # A function implewmented by Diethelm Wuertz
+
+    # Description:
+    #   Lists all functions in a package
+    
+    # Arguments:
+    #   package - a character string, the name of the Package
+
+    # Author:
+    #   Original code from B. Ripley
+    
+    # FUNCTION:
+    
+    # List:
+    if(require(package, character.only = TRUE)) {
+        env <- paste("package", package, sep = ":")
+        nm <- ls(env, all = TRUE)
+        ans = nm[unlist(lapply(nm, function(n) exists(n, where = env,
+            mode = "function", inherits = FALSE)))]
+    } else {
+        ans = character(0)
+    }
+    
+    # Return Value:
+    ans
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.countFunctions <- 
+    function(package) 
+{   
+    # A function implewmented by Diethelm Wuertz
+
+    # Description:
+    #   Counts all functions in a package
+    
+    # Arguments:
+    #   package - a character string, the name of the Package
+
+    # Author:
+    #   Original code from B. Ripley
+    
+    # FUNCTION:
+    
+    # Count:
+    ans = length(.listFunctions(package))
+    names(ans) = package
+    
+    # Return Value:
+    ans
 }
 
 
