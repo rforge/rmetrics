@@ -360,7 +360,6 @@ Wood (2001);
    # LM       
    regFit(Y ~ X1 + X2 + X3, data = x, use = "lm") 
    
-\dontrun{
    # RLM      
    regFit(Y ~ X1 + X2 + X3, data = x, use = "rlm") 
    # AM       
@@ -371,9 +370,9 @@ Wood (2001);
    regFit(Y ~ X1 + X2 + X3, data = x, use = "nnet") 
    
    # POLYMARS
-   # require(polspline) 
-   # regFit(Y ~ X1 + X2 + X3, data = x, use = "polymars")   
-}
+   if (require(polspline)) {
+   regFit(Y ~ X1 + X2 + X3, data = x, use = "polymars")
+   }
 }
 
 
