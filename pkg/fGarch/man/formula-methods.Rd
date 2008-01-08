@@ -88,7 +88,6 @@
 ## formula - 
    formula(fit)
 
-\dontrun{
 ## A Bivariate series and mis-specified formula:
    x = garchSim(n = 500)
    y = garchSim(n = 500)
@@ -117,7 +116,6 @@
    #   Formula and data units do not match
    # Note, you can use default columnames, the following call would work ...
    garchFit(V1 ~garch(1, 1), data = z, trace = FALSE)
-}
 }
 
 
