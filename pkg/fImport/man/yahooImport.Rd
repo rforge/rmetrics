@@ -219,10 +219,8 @@ briefingImport(query, file = "tempfile",
 
 
 \examples{
-\dontrun{    
 ## yahooImport -
    yahooSeries("IBM")
-}
 }
 
 
