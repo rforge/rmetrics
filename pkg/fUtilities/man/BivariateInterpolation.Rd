@@ -129,10 +129,9 @@ krigeInterp(x, y = NULL, z = NULL, gridPoints = 21,
 
 
 \examples{ 
-\dontrun{
 ## akimaInterp -
    # Akima Interpolation:    
-   require(akima)
+   if (require(akima)) {
    set.seed(1953)
    x = runif(999) - 0.5
    y = runif(999) - 0.5
@@ -146,7 +145,7 @@ krigeInterp(x, y = NULL, z = NULL, gridPoints = 21,
    ans = krigeInterp(x, y, z, extrap = FALSE)
    persp(ans)
    contour(ans)
-}
+   }
 }
 
 
