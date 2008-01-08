@@ -123,10 +123,8 @@ forecastsSeries(query, returnClass = c("timeSeries", "ts", "matrix",
 
 
 \examples{
-\dontrun{
 ## forecastsImport -
    NA
-}
 }
 
 
