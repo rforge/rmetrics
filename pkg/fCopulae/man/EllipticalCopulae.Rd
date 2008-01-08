@@ -195,7 +195,6 @@ dellipticalSlider(type = c("persp", "contour"), B = 20)
 
 
 \examples{
-\dontrun{
 ## [rp]ellipticalCopula -
    # Default Normal Copula:
    rellipticalCopula(10)
@@ -229,7 +228,6 @@ dellipticalSlider(type = c("persp", "contour"), B = 20)
    # Simualtion and Parameter Fitting:
    rv = ellipticalCopulaSim(n = 100, rho = 0.75)
    ellipticalCopulaFit(rv)
-}  
 }
 
 
