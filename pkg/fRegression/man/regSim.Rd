@@ -109,7 +109,6 @@ GAM3(n = 100, seed = 4711)
 
 
 \examples{
-\dontrun{
 ## LM2 -
    # Data for a user defined linear regression model:
    LM2 = function(n){
@@ -123,7 +122,6 @@ GAM3(n = 100, seed = 4711)
      cat(FUN, ":\n", sep = "")
      print(regSim(model = FUN, n = 10))
    }
-}
 }
 
 
