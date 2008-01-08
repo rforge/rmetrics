@@ -215,7 +215,6 @@ Heston S.L., Nandi S. (1997);
 
 
 \examples{
-\dontrun{
 ## hngarchSim -
    # Simulate a Heston Nandi Garch(1,1) Process:
    # Symmetric Model - Parameters:
@@ -240,7 +239,6 @@ Heston S.L., Nandi S. (1997);
 ## hngarchStats - 
    # HN-GARCH Moments:
    hngarchStats(mle$model)     
-}
 }
 
 
