@@ -78,7 +78,6 @@ ISO-8601 (1988);
    holidayNYSE(currentYear)
    
 ## holidayZURICH =
-   \dontrun{
    holidayZURICH = function(year = currentYear) {
      holidays = c(
         NewYearsDay(year),
@@ -100,11 +99,9 @@ ISO-8601 (1988);
      holidays@FinCenter = "Zurich"
      # Return Value:
      holidays }
-   }
+
    holidayZURICH(2007:2009)
 }
-
-
 
 \keyword{chron}
 
