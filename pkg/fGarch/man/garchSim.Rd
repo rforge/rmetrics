@@ -142,7 +142,6 @@ garchSim(spec = garchSpec(), n = 100, n.start = 100,
    class(y)
    print(y)
  
-\dontrun{
 ## More simulations ...
 
    # Default GARCH(1,1) - uses default parameter settings
@@ -198,7 +197,6 @@ garchSim(spec = garchSpec(), n = 100, n.start = 100,
        alpha = c(0.10, 0.05), gamma = c(0, 0), beta = 0.8, delta = 1.8, 
        shape = 4, skew = 0.85), cond.dist = "sstd")
    garchSim(spec, n = 10)
-}       
 }
 
 
