@@ -309,7 +309,6 @@ Schwert G.W. (1989);
 
 
 \examples{
-\dontrun{
 ## Time Series 
    # A time series which contains no unit-root:
    x = rnorm(1000)  
@@ -317,10 +316,10 @@ Schwert G.W. (1989);
    y = cumsum(c(0, x))
    
 ## ERS Test:
-   require(urca)
+   if (require(urca)) {
    urersTest(x)
    urersTest(y)
-}
+   }
 }
 
 
