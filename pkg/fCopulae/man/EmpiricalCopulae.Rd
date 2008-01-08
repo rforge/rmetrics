@@ -106,14 +106,12 @@ dempiricalCopula(u, v, N = 10)
 }
 
 \examples{
-\dontrun{
 ## fCOPULA -
    # getClass("fCOPULA")
    
 ## pcopula -
    # The default Normal Copula:
    # contour(pcopula())
-}
 }
 
 
