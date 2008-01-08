@@ -180,8 +180,10 @@ googleSeries(symbols = c("IBM", "MSFT"), from = NULL, to = NULL,
 
 
 \examples{
+\dontrun{
 ## googleImport -
    googleSeries("IBM")     
+}
 }
 
 
