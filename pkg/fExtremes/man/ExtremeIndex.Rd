@@ -190,7 +190,6 @@ Embrechts, P., Klueppelberg, C., Mikosch, T. (1997);
 
 
 \examples{
-\dontrun{
 ## Extremal Index for the right and left tails 
 ## of the BMW log returns:
    data(bmwRet)
@@ -202,7 +201,6 @@ Embrechts, P., Klueppelberg, C., Mikosch, T. (1997);
 ## of the BMW log returns:
    exindexesPlot( as.timeSeries(bmwRet), block = 65)
    exindexesPlot(-as.timeSeries(bmwRet), block = 65)   
-}
 }
 
 
