@@ -94,7 +94,9 @@
    z = cbind(x, y)
    colnames(z)
    class(z)
+   \dontrun{
    garchFit(z ~garch(1, 1), data = z, trace = FALSE)
+   }
    # Returns:
    # Error in .garchArgsParser(formula = formula, data = data, trace = FALSE) :  
    #   Formula and data units do not match.
@@ -102,7 +104,9 @@
 ## Doubled column names in data set - formula can't fit:
    colnames(z) <- c("x", "x")
    z[1:6,]
+   \dontrun{
    garchFit(x ~garch(1, 1), data = z, trace = FALSE)
+   }
    # Again the error will be noticed:
    # Error in garchFit(x ~ garch(1, 1), data = z) : 
    #   Column names of data are not unique.
@@ -110,7 +114,9 @@
 ## Missing column names in data set - formula can't fit:
    colnames(z) <- NULL
    z[1:6,]
+   \dontrun{
    garchFit(x ~ garch(1, 1), data = z, trace = FALSE)
+   }
    # Again the error will be noticed:
    # Error in .garchArgsParser(formula = formula, data = data, trace = FALSE) : 
    #   Formula and data units do not match
