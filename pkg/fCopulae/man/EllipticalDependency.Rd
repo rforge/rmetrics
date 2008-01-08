@@ -160,7 +160,6 @@ ellipticalTailPlot(param = NULL, type = c("norm", "cauchy", "t"),
 
 
 \examples{
-\dontrun{
 ## [rp]ellipticalCopula -
    # Default Normal Copula:
    rellipticalCopula(10)
@@ -194,7 +193,6 @@ ellipticalTailPlot(param = NULL, type = c("norm", "cauchy", "t"),
    # Simualtion and Parameter Fitting:
    rv = ellipticalCopulaSim(n = 100, rho = 0.75)
    ellipticalCopulaFit(rv)
-}  
 }
 
 
