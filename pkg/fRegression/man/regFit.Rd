@@ -363,7 +363,7 @@ Wood (2001);
    # RLM      
    regFit(Y ~ X1 + X2 + X3, data = x, use = "rlm") 
    # AM       
-   regFit(Y ~ X1 + X2 + X3, data = x, use = "am")                
+   regFit(Y ~ X1 + X2 + X3, data = x, use = "gam")                
    # PPR      
    regFit(Y ~ X1 + X2 + X3, data = x, use = "ppr") 
    # NNET     
