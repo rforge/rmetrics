@@ -76,7 +76,6 @@
 
 
 \examples{
-\dontrun{
 ## regSim -
    x = regSim(model = "LM3", n = 50)
   
@@ -84,7 +83,6 @@
    fit = regFit(Y ~ X1 + X2 + X3, data = x, use = "lm")
    
 ## predict - 
-}
 }
 
 
