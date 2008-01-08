@@ -153,7 +153,6 @@ ellipticalCopulaFit(u, v, type = c("norm", "cauchy", "t"), \dots)
 
 
 \examples{
-\dontrun{
 ## [rp]ellipticalCopula -
    # Default Normal Copula:
    rellipticalCopula(10)
@@ -187,7 +186,6 @@ ellipticalCopulaFit(u, v, type = c("norm", "cauchy", "t"), \dots)
    # Simualtion and Parameter Fitting:
    rv = ellipticalCopulaSim(n = 100, rho = 0.75)
    ellipticalCopulaFit(rv)
-}  
 }
 
 
