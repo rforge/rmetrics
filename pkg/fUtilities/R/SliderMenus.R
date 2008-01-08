@@ -55,7 +55,7 @@
     # FUNCTION:
 
     # Requirement:
-    if (!require(tcltk)) stop("Package tcltk is required for this function")
+    if (!require(tcltk)) stop("Package tcltk not available")
 
     # Environment:
     if (!exists(".slider.env")) {
@@ -144,6 +144,9 @@
 
     # FUNCTION:
 
+    # Requirement:
+    if (!require(tcltk)) stop("Package tcltk not available")
+
     # Setup:
     if(!missing(no)) {
         return(as.numeric(tclvalue(get(paste(".tdSlider", no, sep=""),
@@ -170,7 +173,6 @@
     }
 
     # GUI Settings:
-    if (!require(tcltk)) stop("Package tcltk is required for this function")
     nt <- tktoplevel()
     tkwm.title(nt, title)
     tkwm.geometry(nt, "+0+0")
