@@ -132,11 +132,9 @@ fredSeries(query = "DPRIME", frequency = "daily", returnClass =
 
 
 \examples{
-\dontrun{
 ## fredImport -
    DPRIME = fredImport("DPRIME")
    if (!is.null(DPRIME)) print(DPRIME@data[1:20, ])       
-}
 }
 
 
