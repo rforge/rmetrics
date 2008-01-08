@@ -176,7 +176,7 @@ gfuncSlider(B = 10)
    
 ## gfuncSlider -
    # Try:   
-   gfuncSlider()
+   # gfuncSlider()
 }
 
 
