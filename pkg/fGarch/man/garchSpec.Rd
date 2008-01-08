@@ -150,7 +150,6 @@ garchSpec(model = list(), presample = NULL,
    spec = garchSpec(model = list(skew = 0.9, shape = 4.8), cond.dist = "sged")
    spec
    
-\dontrun{
 ## More specifications ...
 
    # Default GARCH(1,1) - uses default parameter settings
@@ -193,7 +192,6 @@ garchSpec(model = list(), presample = NULL,
    garchSpec(model = list(mu = 1.0e-4, ar = 0.5, omega = 1.0e-6, 
        alpha = c(0.10, 0.05), gamma = c(0, 0), beta = 0.8, delta = 1.8, 
        shape = 4, skew = 0.85), cond.dist = "sstd")
-}       
 }
 
 
