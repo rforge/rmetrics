@@ -160,13 +160,11 @@ economagicSeries(query, frequency = c("quarterly", "monthly", "daily"),
 
 
 \examples{
-\dontrun{
 ## economagicSeries -
    # USDEUR Foreign Exchange Rate:
    economagicSeries("fedny/day-fxus2eu", frequency = "daily")
    # USFEDFUNDS US FedFunds Rate:
    economagicSeries("fedstl/fedfunds+2", frequency = "monthly")
-}
 }
 
 
