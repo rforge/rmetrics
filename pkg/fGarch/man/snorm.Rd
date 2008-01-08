@@ -182,11 +182,11 @@ Fernandez C., Steel M.F.J. (2000);
 ## snormFit -
    snormFit(r)
    
-\dontrun{
 ## snormSlider -
+   if (require(tcltk)) {
    snormSlider("dist")
    snormSlider("rand")
-}
+   }
 }
 
 
