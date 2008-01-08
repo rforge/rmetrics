@@ -49,7 +49,6 @@
 
 
 \examples{
-\dontrun{
 ## regSim -
    x = regSim(model = "LM3", n = 50)
   
@@ -58,7 +57,6 @@
    
 ## coef - 
    coef(fit)
-}
 }
 
 
