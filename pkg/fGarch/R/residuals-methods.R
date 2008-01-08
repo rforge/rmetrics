@@ -15,7 +15,7 @@
 # MA  02111-1307  USA
 
 # Copyrights (C)
-# for this R-port: 
+# for this R-port:
 #   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
@@ -35,29 +35,29 @@
 
 
 setMethod(f = "residuals", signature(object = "fGARCH"), definition =
-    function(object, standardize = FALSE) 
-{   
+    function(object, standardize = FALSE)
+{
     # A function implemented by Diethelm Wuertz
-    
+
     # Description:
     #   S3 Residuals method for an object of class fGARCH
 
     # Arguments:
-    #   object - an object of class fGarch as returned by the  
+    #   object - an object of class fGarch as returned by the
     #       function garchFit
     #   ... - optional argument to be passed, this may be standardize=FALSE
-    #       to return the -non-standardized values of the residuals. 
+    #       to return the -non-standardized values of the residuals.
     #       By default standardized residuals will be returned.
-    
+
     # FUNCTION:
-    
+
     # Get numeric vector of residuals, optionally standardized
-    residuals = .residuals.fGARCH(object = object, standardize = standardize) 
-    
+    residuals = .residuals.fGARCH(object = object, standardize = standardize)
+
     # Get original time series class:
-    data = slot(object, "data")$data
+    data = slot(object, "data")$Data
     dataClass = class(data)[1]
-    
+
     if (dataClass == "timeSeries") {
         ans = data
         data.mat = matrix(residuals)
@@ -75,7 +75,7 @@ setMethod(f = "residuals", signature(object = "fGARCH"), definition =
     } else {
         ans = data
     }
-    
+
     # Return Value:
     ans
 })
@@ -84,31 +84,31 @@ setMethod(f = "residuals", signature(object = "fGARCH"), definition =
 # ------------------------------------------------------------------------------
 
 
-.residuals.fGARCH <-  
-    function(object, standardize = FALSE) 
-{   
+.residuals.fGARCH <-
+    function(object, standardize = FALSE)
+{
     # A function implemented by Diethelm Wuertz
-    
+
     # Description:
     #   S3 Residuals method for an object of class fGARCH
-    
+
     # Arguments:
-    #   object - an object of class fGarch as returned by the 
+    #   object - an object of class fGarch as returned by the
     #       function garchFit
     #   standardize - a logial flag, should the residuals be
-    #       standardized    
+    #       standardized
 
     # FUNCTION:
-    
+
     # Residuals:
     if (standardize) {
         ans = object@residuals/object@sigma.t
     } else {
         ans = object@residuals
     }
-    
+
     # Return Value:
-    ans    
+    ans
 }
 
 
