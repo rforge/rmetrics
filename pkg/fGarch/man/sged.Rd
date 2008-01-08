@@ -179,11 +179,11 @@ Fernandez C., Steel M.F.J. (2000);
 ## sgedFit -
    sgedFit(r)
    
-\dontrun{
 ## sgedSlider -
+   if (require(tcltk)) {
    sgedSlider("dist")
    sgedSlider("rand")
-}
+   }
 }
 
 
