@@ -117,7 +117,9 @@ AfuncSlider()
    
 ## AfuncSlider -
    # Generator, try:
-   # AfuncSlider() 
+   if (require(tcltk)) {
+     AfuncSlider()
+   }
 }
 
 
