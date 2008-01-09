@@ -15,7 +15,7 @@
 # MA  02111-1307  USA
 
 # Copyrights (C)
-# for this R-port: 
+# for this R-port:
 #   1999 - 2008, Diethelm Wuertz, Rmetrics Foundation, GPL
 #   Diethelm Wuertz <wuertz@itp.phys.ethz.ch>
 #   info@rmetrics.org
@@ -33,41 +33,41 @@
 ################################################################################
 
 
-setMethod(f = "volatility", signature(object = "fGARCH"), definition = 
-    function(object, type = c("sigma", "h"), ...) 
-{   
+setMethod(f = "volatility", signature(object = "fGARCH"), definition =
+    function(object, type = c("sigma", "h"), ...)
+{
     # A function implemented by Diethelm Wuertz
-    
-    # Description:  
+
+    # Description:
     #   Returns conditional volatilities for 'fGARCH' objects
-    
+
     # Arguments:
     #   object - an object of class 'fGarch' as returned by the function
     #       garchFit
     #   type - a character string denoting if the conditional standard
     #       deviations "sigma" or the variances "h" should be returned.
     #   ... - optional argument to be passed, not used.
-    
+
     # Note:
     #   "volatility" is a generic function. It's default method calculates
     #   (x-mean(x))^2.
-    
+
     # FUNCTION:
-    
+
     # Match Arguments:
     type = match.arg(type)
-        
+
     # Numeric vectors of conditional values:
     if (type == "sigma") {
         volatility = slot(object, "sigma.t")
     } else if (type == "h") {
         volatility = slot(object, "h.t")
     }
-    
+
     # Get original time series class:
-    data = slot(object, "data")$data
+    data = slot(object, "data")$Data
     dataClass = class(data)[1]
-    
+
     if (dataClass == "timeSeries") {
         ans = data
         data.mat = matrix(volatility)
@@ -86,10 +86,10 @@ setMethod(f = "volatility", signature(object = "fGARCH"), definition =
         ans = data
     }
     attr(ans, "type") <- type
-    
+
     # Return Value:
     ans
-    
+
 })
 
 
