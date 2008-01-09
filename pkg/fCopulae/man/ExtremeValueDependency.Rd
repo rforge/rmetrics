@@ -134,7 +134,9 @@ evTailCoeffSlider(B = 10)
    
 ## AfuncSlider -
    # Generator, try:
-   # AfuncSlider() 
+   if (require(tcltk)) {
+     AfuncSlider()
+   }
 }
 
 
