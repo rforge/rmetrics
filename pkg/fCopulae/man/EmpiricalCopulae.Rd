@@ -105,14 +105,14 @@ dempiricalCopula(u, v, N = 10)
     
 }
 
-\examples{
-## fCOPULA -
-   # getClass("fCOPULA")
+% \examples{
+% ## fCOPULA -
+%    # getClass("fCOPULA")
    
-## pcopula -
-   # The default Normal Copula:
-   # contour(pcopula())
-}
+% ## pcopula -
+%    # The default Normal Copula:
+%    # contour(pcopula())
+% }
 
 
 \keyword{models}
