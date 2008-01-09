@@ -166,7 +166,9 @@ devSlider(type = c("persp", "contour"), B = 10)
    
 ## AfuncSlider -
    # Generator, try:
-   # AfuncSlider() 
+   if (require(tcltk)) {
+     AfuncSlider()
+   }
 }
 
 
