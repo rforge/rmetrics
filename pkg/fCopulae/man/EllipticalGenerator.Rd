@@ -175,8 +175,10 @@ gfuncSlider(B = 10)
    gfunc(x = (0:10)/10, param = 2, type = "t")
    
 ## gfuncSlider -
-   # Try:   
-   # gfuncSlider()
+   # Try:
+   if (require(tcltk)) {   
+   gfuncSlider()
+   }
 }
 
 
