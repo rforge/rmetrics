@@ -94,14 +94,14 @@ archmCopulaFit(u, v = NULL, type = archmList(), \dots)
 }
 
 
-\examples{
-## fCOPULA -
-   # getClass("fCOPULA")
+% \examples{
+% ## fCOPULA -
+%    # getClass("fCOPULA")
    
-## pcopula -
-   # The default Normal Copula:
-   # contour(pcopula())
-}
+% ## pcopula -
+%    # The default Normal Copula:
+%    # contour(pcopula())
+% }
 
 
 \keyword{models}
