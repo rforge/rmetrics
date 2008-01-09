@@ -146,15 +146,15 @@ dgumbelCopula(u = 0.5, v = u, alpha = 2, output = c("vector", "list"))
     
 }
 
-
-\examples{
-## fCOPULA -
-   # getClass("fCOPULA")
+  
+% \examples{
+% ## fCOPULA -
+%    # getClass("fCOPULA")
    
-## pcopula -
-   # The default Normal Copula:
-   # contour(pcopula())
-}
+% ## pcopula -
+%    # The default Normal Copula:
+%    # contour(pcopula())
+% }
 
 
 \keyword{models}
