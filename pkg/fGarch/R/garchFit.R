@@ -27,12 +27,12 @@
 #   see Rmetrics's copyright file
 
 
-##############################################################################
+################################################################################
 # FUNCTION:               PARAMETER ESTIMATION:    
 #  garchFit                Fits the parameters of GARCH process
 #  .garchArgsParser        Parses formula and data for garchFit
 #  .garchOptimizerControl  Sets default values for Garch Optimizer
-#  .garchFit               ... old Version
+#  .garchFit               ... old Version, still in use by garchFit()
 #  .garchInitSeries        Initializes Series
 #  .garchInitParameters    Initializes Parameters
 #  .garchSetCondDist       Selects conditional density function
@@ -41,13 +41,25 @@
 #   .garchLLH               Computes log-likelihood function
 #   .garchHessian           Computes Hessian matrix numerically
 #  .garchNames              Slot names, @fit slot, parameters and controls
-##############################################################################
-  
+################################################################################
+
+
+# Globally need Variables:  
 
 .llh = 1e99
 .garchDist = NA
 .params = NA
 .series = NA
+.trace = NA     # to be added for donlp2 which has no "..." argument
+
+
+# ------------------------------------------------------------------------------
+
+
+# algorithm "donlp2" can be used unofficicially ...
+#   ... we need to call: require("Rdonlp2")
+#   ... "internal" has to be checked, we don't support it currently
+#       inspect .garchOptimizerControl() used fix coded "fixed"
 
 
 # ------------------------------------------------------------------------------
@@ -869,7 +881,7 @@ garchFit <-
  
 
 .garchLLH <- 
-    function(params, trace) 
+    function(params, trace = TRUE) 
 {   
     # A function implemented by Diethelm Wuertz
 
@@ -1035,8 +1047,8 @@ garchFit <-
     # May be Even Faster Compared with R's Filter Representation ...
     if(USE == "internal") {
         if(!.params$leverage) gamma = rep(0, p)
-        # For asymmetric APARCH Models Only !!! 
-        h = .Fortran("aparchllh", as.double(z), as.double(h), as.integer(N),
+        # For asymmetric APARCH Models Only !!! ---- Check it ----
+        h = .Fortran("garchllh", as.double(z), as.double(h), as.integer(N),
             as.double(omega), as.double(alpha), as.double(gamma), 
             as.integer(p), as.double(beta), as.integer(q), as.double(delta), 
             as.integer(h.start), PACKAGE = "fGarch")[[2]]  
@@ -1382,11 +1394,31 @@ garchFit <-
         updateLLH = .garchLLH(fit$par, trace)
     } # End of Third Method
     
-    # Add Names:
+    
+    # Fourth Method:
+    # Rdonlp2 ...
+    if(algorithm == "donlp2") {
+        if(!require(Rdonlp2)) stop("Package Rdonlp2 cannot be loaded")
+        if(trace) cat("\n\n\nNow DONLP2 \n\n\n")
+        parscale = rep(1, length = length(INDEX))
+        names(parscale) = names(.params$params[INDEX])
+        parscale["omega"] = var(.series$x)^(.params$delta/2)
+        parscale["mu"] = abs(mean(.series$x))
+        fit = donlp2(
+            par = .params$params[INDEX],
+            fn = .garchLLH, 
+            par.lower = .params$U[INDEX],
+            par.upper = .params$V[INDEX])
+        fit$value = fit$fx 
+    }
+    
+       
+    # Add Names to Parameter Vector "fit$par" 
+    #   and make the parameters commonly available in f$coef:
     names(fit$par) = names(.params$params[INDEX]) 
     fit$coef = fit$par
     
-    # Compute Hessian:
+    # Compute the Hessian:
     .StartHessian <- Sys.time()
     H = .garchHessian(fit$par, trace)
     Time =  Sys.time() - .StartHessian
@@ -1395,7 +1427,7 @@ garchFit <-
         print(Time)  
     }  
     
-    # Information Criterion Statistics:
+    # Compute Information Criterion Statistics:
     N = length(.series$x)
     NPAR = length(fit$par)
     fit$ics = c(
@@ -1404,7 +1436,7 @@ garchFit <-
         SIC  = (-2*fit$value)/N + log((N+2*NPAR)/N),
         HQIC = (-2*fit$value)/N + (2*NPAR*log(log(N)))/N )
         
-    # Final Function Evaluation: 
+    # Print LLH if we trace: 
     if(trace) {
         # Note, that .garchLLH() will print the final estimate ...
         .llh <<- 1.0e99
@@ -1412,19 +1444,17 @@ garchFit <-
         .llh <<- .garchLLH(fit$par, trace)
     }  
     
-    # Hessian:
+    # Give column names to the Hessian and save it for later
+    #   use in fit$hessian:
     colnames(H) = rownames(H) = names(.params$params[INDEX])
     fit$hessian = H
     
-    # Print Hessian Matrix:
+    # Print Hessian Matrix if we trace:
     if(trace) {
         cat("\nHessian Matrix:\n")
         print(fit$hessian)
         cat("\n--- END OF TRACE ---\n\n") 
     }
-    
-    # Alternative Variable of Coefficients:
-    fit$coef = fit$par
  
     # Return Value:
     fit 
