@@ -135,7 +135,7 @@ garchFit <-
         }
     }
         
-    args = .garchArgsParser(formula = formula, data = data, trace = FALSE)   
+    args = .garchArgsParser(formula = formula, data = data, trace = FALSE)  
        
     # Fit:
     ans = .garchFit(
@@ -316,7 +316,7 @@ garchFit <-
     con <- list(
     
         # In General:
-        fscale = FALSE,
+        fscale = TRUE,
         xscale = FALSE,
         algorithm = algorithm,
         llh = c("filter", "internal", "testing")[1],
@@ -326,9 +326,9 @@ garchFit <-
         tol2 = 1, 
         
         # SQP Algorithm:
-        MIT = 200,     # maximum number of iterations (200)
-        MFV = 500,     # maximum number of function evaluations (500)
-        MET = 2,       # specifies scaling strategy:
+        MIT = 2000,    # maximum number of iterations (200)
+        MFV = 5000,    # maximum number of function evaluations (500)
+        MET = 5,       # specifies scaling strategy:
                        #  MET=1 - no scaling 
                        #  MET=2 - preliminary scaling in 1st iteration (default)
                        #  MET=3 - controlled scaling 
@@ -346,12 +346,12 @@ garchFit <-
                        #  MES=3 - three point quadratic interpolation
                        #  MES=4 - three point cubic interpolation (default)
         XMAX = 1.0e3, 
-        TOLX = 1.0e-16, 
+        TOLX = 1.0e-10, 
         TOLC = 1.0e-6, 
         TOLG = 1.0e-6, 
         TOLD = 1.0e-6, 
         TOLS = 1.0e-4, 
-        RPF  = 1.0e-4) 
+        RPF  = 1.0e-2) # 1.0e-4) 
         
     # Return Value:
     con
@@ -403,7 +403,15 @@ garchFit <-
     #   compatibility.
     
     # FUNCTION:
-  
+    
+    # Allow only full formula specification:
+    fcheck = rev(all.names(formula.mean))[1]
+    if (fcheck == "ma") {
+        stop("Use full formula: arma(0,q) for ma(q)")
+    } else if (fcheck == "ar") {
+        stop("Use full formula expression: arma(p,0) for ar(p)")
+    }   
+    
     # Check for Recursion Initialization:
     if(init.rec[1] != "mci" & algorithm[1] != "sqp") {
         stop("Algorithm only supported for mci Recursion")
@@ -1137,8 +1145,57 @@ garchFit <-
         }
         trace <- keep.trace  
         .params$control <<- keep.control 
-    } else {
+    } else if (algorithm == "sqp") {
         # Case II: SQP
+        N = length(.series$x)
+        NF = length(par)
+        if(.params$includes["delta"]) {
+            XDELTA = par["delta"] 
+        } else {
+            XDELTA = .params$delta
+        } 
+        if(.params$includes["skew"]) {
+            XSKEW = par["skew"] 
+        } else {
+            XSKEW = .params$skew
+        }   
+        if(.params$includes["shape"]) {
+            XSHAPE = par["shape"] 
+        } else {
+            XSHAPE = .params$shape
+        } 
+        DPARM = c(XDELTA, XSKEW, XSHAPE)    
+        MDIST = c(norm = 10, snorm = 11, std = 20, sstd = 21, ged = 30, 
+            sged = 31)[.params$cond.dist]                # Which Distribution
+        REC = 1
+        if(.series$init.rec == "uev") REC = 2
+        MYPAR = c(
+            REC   = REC,                                  # How to initialize
+            LEV   = as.integer(.params$leverage),         # Include Leverage 0|1 
+            MEAN  = as.integer(.params$includes["mu"]),   # Include Mean 0|1 
+            DELTA = as.integer(.params$includes["delta"]),# Include Delta 0|1                          
+            SKEW  = as.integer(.params$includes["skew"]), # Include Skew 0|1 
+            SHAPE = as.integer(.params$includes["shape"]),# Include Shape 0|1 
+            ORDER = .series$order)                        # Order of ARMA-GARCH
+        # Compute Hessian:
+        ans = .Fortran("garchhess",
+            N = as.integer(N), 
+            Y = as.double(.series$x), 
+            Z = as.double(rep(0, times = N)), 
+            H = as.double(rep(0, times = N)), 
+            NF = as.integer(NF), 
+            X = as.double(par), 
+            DPARM = as.double(DPARM), 
+            MDIST = as.integer(MDIST), 
+            MYPAR = as.integer(MYPAR), 
+            E0 = as.double(EPS0),
+            HESS = as.double(rep(0, times = NF*NF)),
+            PACKAGE = "fGarch")
+        # The Matrix:
+        H = matrix(ans[["HESS"]], ncol = NF)  
+        colnames(H) = rownames(H) = names(par)
+    } else if (algorithm == "NLMINB") {
+        # Case II: NLMINB
         N = length(.series$x)
         NF = length(par)
         if(.params$includes["delta"]) {
@@ -1237,8 +1294,11 @@ garchFit <-
             lower = .params$U[INDEX],
             upper = .params$V[INDEX],
             scale = 1/parscale,
-            control = list(eval.max = 2000, iter.max = 1500, 
-                rel.tol = 1e-14*TOL1, x.tol = 1e-14*TOL1),
+            control = list(
+                eval.max = 2000, 
+                iter.max = 1500, 
+                rel.tol = 1e-14*TOL1, 
+                x.tol = 1e-14*TOL1),
             trace = trace)
         fit$value = fit$objective 
         if(algorithm == "nlminb+nm") {          
@@ -1410,8 +1470,99 @@ garchFit <-
             par.lower = .params$U[INDEX],
             par.upper = .params$V[INDEX])
         fit$value = fit$fx 
-    }
+    } # End of Third Method -- donlp2
     
+    
+    # Fivth Method:
+    # NLMINB - full Fortran implementation ...
+    if(algorithm == "NLMINB") {
+        if(trace) cat(" NLMINB FULL FORTRAN Algorithm\n\n")
+        IPAR = c(
+            IPRNT = as.integer(trace),    #  [1, 200, 500, 2, 2, 1, 4]
+            MIT = .params$control$MIT,    
+                        # maximum number of iterations (200)
+            MFV = .params$control$MFV,    
+                        # maximum number of function evaluations (500)
+            MET = .params$control$MET,      
+                        # specifies scaling strategy:
+                        #  MET=1 - no scaling 
+                        #  MET=2 - preliminary scaling in 1st iteration (default)
+                        #  MET=3 - controlled scaling 
+                        #  MET=4 - interval scaling 
+                        #  MET=5 - permanent scaling in all iterations 
+            MEC = .params$control$MEC,    
+                        # correction for negative curvature:
+                        #  MEC=1 - no correction
+                        #  MEC=2 - Powell correction (default)
+            MER = .params$control$MER,    
+                        # restarts after unsuccessful variable metric updates:
+                        #  MER=0 - no restarts
+                        #  MER=1 - standard restart 
+            MES = .params$control$MES) 
+                        # interpolation method selection in a line search:
+                        #  MES=1 - bisection
+                        #  MES=2 - two point quadratic interpolation
+                        #  MES=3 - three point quadratic interpolation
+                        #  MES=4 - three point cubic interpolation (default)            
+        RPAR = c(
+            XMAX = .params$control$XMAX,  
+            TOLX = .params$control$TOLX, 
+            TOLC = .params$control$TOLC,
+            TOLG = .params$control$TOLG, 
+            TOLD = .params$control$TOLD,
+            TOLS = .params$control$TOLS,
+            RPF  = .params$control$RPF)
+        MDIST = c(norm = 10, snorm = 11, std = 20, sstd = 21, ged = 30, 
+            sged = 31)[.params$cond.dist]
+        if(.params$control$fscale) NORM = length(.series$x) else NORM = 1
+        REC = 1
+        if(.series$init.rec == "uev") REC = 2
+        MYPAR = c(
+            REC   = REC,                                  # How to initialize
+            LEV   = as.integer(.params$leverage),         # Include Leverage 0|1 
+            MEAN  = as.integer(.params$includes["mu"]),   # Include Mean 0|1 
+            DELTA = as.integer(.params$includes["delta"]),# Include Delta 0|1                          
+            SKEW  = as.integer(.params$includes["skew"]), # Include Skew 0|1 
+            SHAPE = as.integer(.params$includes["shape"]),# Include Shape 0|1 
+            ORDER = .series$order,                        # Order of ARMA-GARCH
+            NORM  = as.integer(NORM))
+        
+        # Now Estimate Parameters:     
+        MAX = max(.series$order)
+        NF = length(INDEX)
+        N = length(.series$x)
+        DPARM = c(.params$delta, .params$skew, .params$shape)
+        if(IPAR[1] == 0) sink("@sink@")
+        ans = .Fortran("garchfit2",
+            NN = as.integer(N), 
+            YY = as.double(.series$x), 
+            ZZ = as.double(rep(2, times = N)), 
+            HH = as.double(rep(0, times = N)), 
+            NF = as.integer(NF), 
+            X = as.double(.params$params[INDEX]), 
+            XL = as.double(.params$U[INDEX]), 
+            XU = as.double(.params$V[INDEX]), 
+            DPARM = as.double(DPARM), 
+            MDIST = as.integer(MDIST), 
+            IPAR = as.integer(IPAR), 
+            RPAR = as.double(RPAR), 
+            MYPAR = as.integer(MYPAR),
+            F = as.double(0),
+            PACKAGE = "fGarch")  
+        if(IPAR[1] == 0) {
+            sink()        
+            unlink("@sink@")
+        }
+        
+        # Result:
+        fit = list()
+        fit$par = ans[[6]]
+        fit$llh = fit$value = ans[[14]] 
+        
+        # Update .series
+        names(fit$par) = names(.params$params[INDEX]) 
+        updateLLH = .garchLLH(fit$par, trace)
+    } # End of Fivth Method - Full Fortran nlminb
        
     # Add Names to Parameter Vector "fit$par" 
     #   and make the parameters commonly available in f$coef:
@@ -1420,10 +1571,12 @@ garchFit <-
     
     # Compute the Hessian:
     .StartHessian <- Sys.time()
+    if(trace) {
+        cat("\nTime to Compute Hessian:\n ")
+    }
     H = .garchHessian(fit$par, trace)
     Time =  Sys.time() - .StartHessian
     if(trace) {
-        cat("\nTime to Compute Hessian:\n ")
         print(Time)  
     }  
     
