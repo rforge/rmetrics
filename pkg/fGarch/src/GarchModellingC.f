@@ -2,16 +2,16 @@
 
 C ------------------------------------------------------------------------------
 C Hessian:
-C CHOOSE E0=1.0D-4
+C CHOOSE EPS=1.0D-4
 
 
       SUBROUTINE GARCHHESS(NN, YY, ZZ, HH, NF, X, DPARM,
-     +  MDIST, MYPAR, E0, HESS)
+     +  MDIST, MYPAR, EPS, HESS)
       IMPLICIT DOUBLE PRECISION (A-H, O-Z)
       DOUBLE PRECISION YY(NN), ZZ(NN), HH(NN)
       DOUBLE PRECISION Y(99999), Z(99999), H(99999)
       DOUBLE PRECISION X(NF), HESS(NF,NF), DPARM(3)
-      DOUBLE PRECISION X1(99), X2(99), X3(99), X4(99), EPS(99)
+      DOUBLE PRECISION X1(99), X2(99), X3(99), X4(99), DEPS(99)
       INTEGER MYPAR(10)    
       COMMON /HESS1/ Y, Z, H, N     
       COMMON /HESS2/ INCMEAN, NR, NS, NP, NQ, INITREC
@@ -45,7 +45,7 @@ C     MY PARAMETERS:
       XSHAPE   = DPARM(3)             
       
       DO I = 1, NF
-	     EPS(I) = E0 * X(I)
+         DEPS(I) = EPS * X(I)
       END DO
  
       DO I = 1, NF  
@@ -56,30 +56,106 @@ C     MY PARAMETERS:
                X3(K) = X(K)
                X4(K) = X(K)
             END DO
-            X1(I) = X1(I) + EPS(I)
-            X1(J) = X1(J) + EPS(J)
-            X2(I) = X2(I) + EPS(I)
-            X2(J) = X2(J) - EPS(J)
-            X3(I) = X3(I) - EPS(I)
-            X3(J) = X3(J) + EPS(J)
-            X4(I) = X4(I) - EPS(I)
-            X4(J) = X4(J) - EPS(J)           
+            X1(I) = X1(I) + DEPS(I)
+            X1(J) = X1(J) + DEPS(J)
+            X2(I) = X2(I) + DEPS(I)
+            X2(J) = X2(J) - DEPS(J)
+            X3(I) = X3(I) - DEPS(I)
+            X3(J) = X3(J) + DEPS(J)
+            X4(I) = X4(I) - DEPS(I)
+            X4(J) = X4(J) - DEPS(J)           
             CALL LLH4HESS(NF, X1, F1)            
             CALL LLH4HESS(NF, X2, F2)         
             CALL LLH4HESS(NF, X3, F3)     
             CALL LLH4HESS(NF, X4, F4)           
-            HESS(I,J) = (F1-F2-F3+F4)/(4.0D0*EPS(I)*EPS(J))
+            HESS(I,J) = (F1-F2-F3+F4)/(4.0D0*DEPS(I)*DEPS(J))
          END DO
       END DO
      
       RETURN
       END 
 
+      
+C ------------------------------------------------------------------------------
+
+
+      SUBROUTINE GARCHHESS2(NN, YY, ZZ, HH, NF, X, DPARM,
+     +  MDIST, MYPAR, EPS, HESS)
+     
+      IMPLICIT DOUBLE PRECISION (A-H, O-Z)
+      DOUBLE PRECISION YY(NN), ZZ(NN), HH(NN)
+      DOUBLE PRECISION Y(99999), Z(99999), H(99999)
+      DOUBLE PRECISION X(NF), HESS(NF,NF), DPARM(3)
+      DOUBLE PRECISION X1(99), X2(99), X3(99), X4(99), DEPS(99)
+      INTEGER MYPAR(10)    
+      COMMON /HESS1/ Y, Z, H, N     
+      COMMON /HESS2/ INCMEAN, NR, NS, NP, NQ, INITREC
+      COMMON /HESS3/ INCDELTA, LEVERAGE
+      COMMON /HESS4/ XDELTA, XSKEW, XSHAPE
+      COMMON /HESS5/ NDIST, INCSKEW, INCSHAPE
+            
+C     SET COMMON BLOCK:
+      N = NN
+      DO I = 1, NN
+         Y(I) = YY(I)
+         Z(I) = ZZ(I)
+         H(I) = HH(I)
+      END DO       
+   
+C     MY PARAMETERS: 
+      NDIST    = MDIST
+      INITREC  = MYPAR(1)
+      LEVERAGE = MYPAR(2)
+      INCMEAN  = MYPAR(3)
+      INCDELTA = MYPAR(4)
+      INCSKEW  = MYPAR(5)
+      INCSHAPE = MYPAR(6)
+      NR = MYPAR(7)
+      NS = MYPAR(8)
+      NP = MYPAR(9)
+      NQ = MYPAR(10) 
+           
+      XDELTA   = DPARM(1)
+      XSKEW    = DPARM(2)
+      XSHAPE   = DPARM(3)             
+      
+      DO I = 1, NF
+         DEPS(I) = EPS * X(I)
+      END DO
+ 
+      DO I = 1, NF  
+         DO J = 1, NF  
+            DO K = 1, NF
+               X1(K) = X(K)
+               X2(K) = X(K)
+               X3(K) = X(K)
+               X4(K) = X(K)
+            END DO
+            X1(I) = X1(I) + DEPS(I)
+            X1(J) = X1(J) + DEPS(J)
+            X2(I) = X2(I) + DEPS(I)
+            X2(J) = X2(J) - DEPS(J)
+            X3(I) = X3(I) - DEPS(I)
+            X3(J) = X3(J) + DEPS(J)
+            X4(I) = X4(I) - DEPS(I)
+            X4(J) = X4(J) - DEPS(J)          
+            CALL GARCHLLH2(NF, X1, 0, F1)            
+            CALL GARCHLLH2(NF, X2, 0, F2)         
+            CALL GARCHLLH2(NF, X3, 0, F3)     
+            CALL GARCHLLH2(NF, X4, 0, F4)           
+            HESS(I,J) = (F1-F2-F3+F4)/(4.0D0*DEPS(I)*DEPS(J))
+         END DO
+      END DO
+     
+      RETURN
+      END 
+      
             
 C ------------------------------------------------------------------------------
 
      
       SUBROUTINE LLH4HESS(NF, X, F) 
+      
       IMPLICIT DOUBLE PRECISION (A-H, O-Z)
       DOUBLE PRECISION Y(99999), H(99999), Z(99999)
       DOUBLE PRECISION X(*), DIST, LLH, F, MEAN, DD
