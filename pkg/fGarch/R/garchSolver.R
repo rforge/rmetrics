@@ -402,7 +402,7 @@
     N = length(.series$x)
     DPARM = c(.params$delta, .params$skew, .params$shape)
     if(IPAR[1] == 0) sink("@sink@")
-    fit = .Fortran("garchfit2",
+    fit = .Fortran("garchfit",
         NN = as.integer(N), 
         YY = as.double(.series$x), 
         ZZ = as.double(rep(2, times = N)), 
