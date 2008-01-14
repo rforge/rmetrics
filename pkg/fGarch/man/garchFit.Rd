@@ -20,8 +20,8 @@ garchFit(formula, data, init.rec = c("mci", "uev"), delta = 2, skew = 1,
     shape = 4, cond.dist = c("norm", "snorm", "ged", "sged", "std", 
     "sstd"), include.mean = TRUE, include.delta = NULL, include.skew = 
     NULL, include.shape = NULL, leverage = NULL, trace = TRUE, algorithm = 
-    c("nlminb", "sqp", "lbfgsb", "nlminb+nm", "lbfgsb+nm"), control = 
-    list(), title = NULL, description = NULL, \dots)
+    c("nlminb", "sqp", "lbfgsb", "nlminb+nm", "lbfgsb+nm"), hessian = 
+    c("fda", "cda"), control = list(), title = NULL, description = NULL, \dots)
     
 garchKappa(cond.dist = c("norm", "ged", "std", "snorm", "sged", "sstd"), 
     gamma = 0, delta = 2, skew = NA, shape = NA)
@@ -72,6 +72,13 @@ garchKappa(cond.dist = c("norm", "ged", "std", "snorm", "sged", "sstd"),
     \item{gamma}{
         APARCH leverage parameter entering into the formula for calculating
         the expectation value.
+        }
+    \item{hessian}{
+        a string denoting how the Hessian matrix should be evaluated,
+        either \code{hessian ="fda"}, the default, or \code{"cda"}.
+        The forward difference approximation, \code{"fda"} consumes less 
+        computer time, but is usually not as precise as approximations 
+        that use central difference approximation, \code{"cda"}, formula.
         }
     \item{include.delta}{
         a logical flag which determines if the parameter for the recursion
