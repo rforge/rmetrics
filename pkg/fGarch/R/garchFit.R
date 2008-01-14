@@ -93,6 +93,7 @@ garchFit <-
         include.shape = NULL, leverage = NULL, 
     trace = TRUE, 
     algorithm = c("nlminb", "sqp", "lbfgsb", "nlminb+nm", "lbfgsb+nm"), 
+    hessian = c("fda", "cda"),
     control = list(), 
     title = NULL, description = NULL, ...)
 {   
@@ -122,6 +123,10 @@ garchFit <-
     #   description - an optional project description string
     
     # FUNCTION:
+    
+    # Match arguments:
+    init.rec = match.arg(init.rec)
+    hessian = match.arg(hessian)
     
     # Call:
     CALL = match.call()
@@ -166,8 +171,12 @@ garchFit <-
         formula.var = args$formula.var, 
         series = args$series, 
         init.rec, delta, skew, shape, cond.dist, include.mean, 
-        include.delta, include.skew, include.shape, leverage, 
-        trace, algorithm, control, title, description, ...)
+            include.delta, include.skew, include.shape, leverage, 
+        trace, 
+        algorithm, 
+        hessian,
+        control, 
+        title, description, ...)
     ans@call = CALL
     ans@data = list(data = args$series, Data = Data)
     attr(formula, "data") <- paste("data = ", Name, sep = "")
@@ -385,13 +394,19 @@ garchFit <-
 
 
 .garchFit <-
-    function(formula.mean = ~arma(0, 0), formula.var = ~garch(1, 1), 
-    series, init.rec = c("mci", "uev"), delta = 2, skew = 1, shape = 4,
+    function(
+    formula.mean = ~arma(0, 0), formula.var = ~garch(1, 1), 
+    series, 
+    init.rec = c("mci", "uev"), 
+    delta = 2, skew = 1, shape = 4,
     cond.dist = c("norm", "snorm", "ged", "sged", "std", "sstd"), 
     include.mean = TRUE, include.delta = NULL, include.skew = NULL,
-    include.shape = NULL, leverage = NULL, trace = TRUE,  
+        include.shape = NULL, leverage = NULL, 
+    trace = TRUE,  
     algorithm = c("sqp", "nlminb", "lbfgsb", "nlminb+nm", "lbfgsb+nm"), 
-    control = list(), title = NULL, description = NULL, ...)
+    hessian = c("fda", "cda"),
+    control = list(), 
+    title = NULL, description = NULL, ...)
 {   
     # A function implemented by Diethelm Wuertz
 
@@ -477,7 +492,7 @@ garchFit <-
     
     # Estimate Model Parameters - Minimize llh, start from big value: 
     .llh <<- 1.0e99   
-    fit = .garchOptimizeLLH(trace) 
+    fit = .garchOptimizeLLH(hessian, trace) 
     fit$llh = .llh
      
     # Add to Fit: 
@@ -1119,7 +1134,7 @@ garchFit <-
 
 
 .garchOptimizeLLH <- 
-    function(trace) 
+    function(hessian = hessian, trace) 
 {   
     # A function implemented by Diethelm Wuertz
 
@@ -1183,16 +1198,21 @@ garchFit <-
     
     
     # Fivth Method: NLMINB full Fortran implementation ...
-    if(algorithm == "NLMINB") {
+    if(algorithm == "mnfb") {
         fit = .garchFmnfb(.params, .series, .garchLLH, trace)  
     } 
 
       
     # Compute the Hessian:
-    if(trace) cat("\nTime to Compute Hessian:\n ")
-    H = .garchRCDAHessian(par = fit$par, .params = .params, .series = .series)
-    fit$hessian = H
-    if(trace) print(attr(H, "time"))   
+    if (hessian == "cda") {
+        fit$hessian = .garchFCDAHessian(
+            par = fit$par, .params = .params, .series = .series)
+            titleHessian = "Central"
+    } else if (hessian == "fda") {
+        fit$hessian = .garchFFDAHessian(
+            par = fit$par, .params = .params, .series = .series)
+            titleHessian = "Forward"
+    }
     
     # Compute Information Criterion Statistics:
     N = length(.series$x)
@@ -1213,7 +1233,8 @@ garchFit <-
     
     # Print Hessian Matrix if we trace:
     if(trace) {
-        cat("\nHessian Matrix:\n")
+        cat("\n", titleHessian, " Difference Approximated Hessian Matrix:\n",
+            sep = "")
         print(fit$hessian)
         cat("\n--- END OF TRACE ---\n\n") 
     }
