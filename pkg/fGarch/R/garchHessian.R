@@ -43,6 +43,9 @@
     # Description:
     #   Compute R coded CDA (central difference approximated) Hessian
     
+    # Reference:
+    #   http://status.sph.umich.edu/computing/manuals/sas8/stat/chap46/sect26.htm
+    
     # FUNCTION:
     
     # Starttime
