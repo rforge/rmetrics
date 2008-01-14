@@ -1184,13 +1184,13 @@ garchFit <-
     
     # Fivth Method: NLMINB full Fortran implementation ...
     if(algorithm == "NLMINB") {
-        fit = .garchFnlminb(.params, .series, .garchLLH, trace)  
+        fit = .garchFmnfb(.params, .series, .garchLLH, trace)  
     } 
 
       
     # Compute the Hessian:
     if(trace) cat("\nTime to Compute Hessian:\n ")
-    H = .garchFCDAHessian(par = fit$par, .params = .params, .series = .series)
+    H = .garchRCDAHessian(par = fit$par, .params = .params, .series = .series)
     fit$hessian = H
     if(trace) print(attr(H, "time"))   
     

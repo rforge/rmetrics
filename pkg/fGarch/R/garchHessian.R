@@ -78,7 +78,6 @@
                     (4*eps[i]*eps[j])
         }
     } 
-    H = matrix(ans2[["HESS"]], ncol = NF)
     colnames(H) = rownames(H) = names(par)
     time = Sys.time() - .StartHessian
     
@@ -153,7 +152,7 @@
         E0 = as.double(eps),
         HESS = as.double(rep(0, times = NF*NF)),
         PACKAGE = "fGarch")
-    H = matrix(ans2[["HESS"]], ncol = NF)
+    H = matrix(ans[["HESS"]], ncol = NF)
     colnames(H) = rownames(H) = names(par)
     time = Sys.time() - .StartHessian
     
@@ -217,7 +216,7 @@
         ORDER = .series$order)                        # Order of ARMA-GARCH
     # Compute Hessian:
     .StartHessian <- Sys.time()  
-    ans2 = .Fortran("gfdhess",
+    ans = .Fortran("gfdhess",
         N = as.integer(N), 
         Y = as.double(.series$x), 
         Z = as.double(rep(0, times = N)), 
@@ -233,7 +232,7 @@
         STPSZ = as.double(rep(0, times = NF)),
         FNBR = as.double(rep(0, times = NF)),
         PACKAGE = "fGarch")
-    H = matrix(ans2[["HESS"]], ncol = NF)
+    H = matrix(ans[["HESS"]], ncol = NF)
     colnames(H) = rownames(H) = names(par)
     time = Sys.time() - .StartHessian
     
