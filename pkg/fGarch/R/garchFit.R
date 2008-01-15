@@ -92,7 +92,7 @@ garchFit <-
     include.mean = TRUE, include.delta = NULL, include.skew = NULL, 
         include.shape = NULL, leverage = NULL, 
     trace = TRUE, 
-    algorithm = c("nlminb", "sqp", "lbfgsb", "nlminb+nm", "lbfgsb+nm"), 
+    algorithm = c("nlminb", "mnfb", "sqp", "lbfgsb", "nlminb+nm", "lbfgsb+nm"), 
     hessian = c("fda", "cda"),
     control = list(), 
     title = NULL, description = NULL, ...)
@@ -127,6 +127,7 @@ garchFit <-
     # Match arguments:
     init.rec = match.arg(init.rec)
     hessian = match.arg(hessian)
+    algorithm = algorithm[1]
     
     # Call:
     CALL = match.call()

@@ -16,12 +16,14 @@
 
 
 \usage{    
-garchFit(formula, data, init.rec = c("mci", "uev"), delta = 2, skew = 1, 
-    shape = 4, cond.dist = c("norm", "snorm", "ged", "sged", "std", 
-    "sstd"), include.mean = TRUE, include.delta = NULL, include.skew = 
-    NULL, include.shape = NULL, leverage = NULL, trace = TRUE, algorithm = 
-    c("nlminb", "sqp", "lbfgsb", "nlminb+nm", "lbfgsb+nm"), hessian = 
-    c("fda", "cda"), control = list(), title = NULL, description = NULL, \dots)
+garchFit(formula, data, init.rec = c("mci", "uev"), 
+    delta = 2, skew = 1, shape = 4, 
+    cond.dist = c("norm", "snorm", "ged", "sged", "std", "sstd"), 
+    include.mean = TRUE, include.delta = NULL, include.skew = NULL, 
+        include.shape = NULL, leverage = NULL, trace = TRUE, 
+    algorithm = c("nlminb", "mnfb", "sqp", "lbfgsb", "nlminb+nm", "lbfgsb+nm"), 
+    hessian = c("fda", "cda"), control = list(), 
+    title = NULL, description = NULL, \dots)
     
 garchKappa(cond.dist = c("norm", "ged", "std", "snorm", "sged", "sstd"), 
     gamma = 0, delta = 2, skew = NA, shape = NA)
@@ -32,9 +34,10 @@ garchKappa(cond.dist = c("norm", "ged", "std", "snorm", "sged", "sstd"),
 
     \item{algorithm}{
         a string parameter that determines the algorithm used for maximum 
-        likelihood estimation. Allowed values are \code{"sqp"}, 
-        \code{"nlminb"}, and \code{"bfgs"} where the first is the default
-        setting.
+        likelihood estimation. Allowed values are \code{"nmfb"}, \code{"sqp"}, 
+        \code{"nlminb"}, and \code{"bfgs"} where the third is the default
+        setting. \code{"mnfb"} is a fully Fortran implemented and extremely
+        fast version of the R-coded \code{"nlminb"} algorithm. 
         }
     \item{cond.dist}{
         a character string naming the desired conditional distribution.
