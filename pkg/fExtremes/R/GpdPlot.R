@@ -29,55 +29,11 @@
 
 ################################################################################
 # METHODS:                PRINT, PLOT, AND SUMMARY:
-#  show.fGPDFIT            S4 Print Method for object of class "fGPDFIT"
 #  plot.fGPDFIT            S3 Plot Method for object of class "fGPDFIT"
 #  .gpd1Plot                Empirical Distribution Plot
 #  .gpd2Plot                Tail of Underlying Distribution
 #  .gpd3Plot                Scatterplot of GPD Residuals
 #  .gpd4Plot                Quantile-Quantile Plot of GPD Residuals
-#  summary.fGPDFIT         S3 Summary Method for object of class "fGPDFIT"
-################################################################################
-
-
-show.fGPDFIT =
-function(object)
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Print Method for an object of class 'gpdFit'
-    
-    # FUNCTION:
-    
-    # Title:
-    cat("\nTitle:\n ", object@title, "\n")
-    
-    # Function Call:
-    cat("\nCall:\n ")
-    cat(paste(deparse(object@call), sep = "\n", 
-        collapse = "\n"), "\n", sep = "") 
-            
-    # Estimation Type:
-    cat("\nEstimation Method:\n ", object@method, "\n") 
-    
-    # Estimated Parameters:
-    cat("\nEstimated Parameters:\n")
-    print(object@fit$par.ests)
-    
-    # Desription:
-    cat("\nDescription\n ", object@description, "\n\n")
-    
-    
-    # Return Value:
-    invisible(object)
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-setMethod("show", "fGPDFIT", show.fGPDFIT)
-
-
 ################################################################################
 
 
@@ -310,55 +266,6 @@ function(x, labels = TRUE, ...)
     
     # Return Value:
     invisible(list(x = sorted, y = y))
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-summary.fGPDFIT = 
-function(object, doplot = TRUE, which = "all", ...) 
-{   # A function written by Diethelm Wuertz
-
-    # Description:
-    #   Summary method for objects of class "gpdFit"
-    
-    # FUNCTION:
-
-    # Title:
-    cat("\nTitle:\n" , object@title, "\n")
-    
-    # Function Call:
-    cat("\nCall:\n")
-    cat(paste(deparse(object@call), sep = "\n", 
-        collapse = "\n"), "\n", sep = "") 
-            
-    # Estimation Type:
-    cat("\nEstimation Type:\n ", object@method, "\n") 
-    
-    # Estimated Parameters:
-    cat("\nEstimated Parameters:\n")
-    print(object@fit$par.ests)
-    
-    # Summary - For MLE print additionally:
-    if (object@method[2] == "mle") {
-        cat("\nStandard Deviations:\n"); print(object@fit$par.ses)
-        if (!is.na(object@fit$llh))
-            cat("\nLog-Likelihood Value:\n ", object@fit$llh, "\n")
-        if (!is.na(object@fit$convergence))
-            cat("\nType of Convergence:\n ", object@fit$convergence, "\n") 
-    }
-    
-    # Plot:
-    if (doplot) {
-        plot(object, which = which, ...)
-    }
-    
-    # Desription:
-    cat("\nDescription\n ", object@description, "\n\n")
-    
-    # Return Value:
-    invisible(object)
 }
 
 
