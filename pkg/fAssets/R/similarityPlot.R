@@ -37,7 +37,7 @@
 
 assetsDendrogramPlot <- 
     function(x, labels = TRUE, 
-    method = c(dist = "euclidian", clust = "complete"))
+    method = c(dist = "euclidian", clust = "complete"), ...)
 {   
     # A function implemented by Diethelm Wuertz
 
@@ -59,14 +59,14 @@ assetsDendrogramPlot <-
     
     # Plot Dendrogram:
     if (labels) {
-        plot(ans, xlab = "", main = "Dendrogram", sub = "")
+        plot(ans, xlab = "", main = "Dendrogram", sub = "", ...)
         mtext(paste(
             "Distance Method:", method[1], " | ",
             "Clustering Method:", method[2]),
             side = 4, line = 0.1, adj = 0, col = "darkgrey", cex = 0.7)  
         box()
     } else {
-        plot(ans, main = "", sub = "", xlab = "", ylab = "")
+        plot(ans, main = "", sub = "", xlab = "", ylab = "", ...)
     }
    
     # Return Value:
@@ -134,7 +134,7 @@ assetsCorEigenPlot <-
 
 assetsTreePlot <- 
     function(x, labels = TRUE,
-    method = "euclidian", seed = NULL)
+    method = "euclidian", seed = NULL, ...)
 {   
     # A function implemented by Diethelm Wuertz
 
@@ -165,7 +165,7 @@ assetsTreePlot <-
     MST = .mst(DIST)
       
     # Plot Tree:
-    .mstPlot(MST, ".nsca", main = Main)
+    .mstPlot(MST, ".nsca", main = Main, ...)
     mtext(paste("Distance Method:", method), 
         side = 4, line = 0.1, adj = 0, col = "darkgrey", cex = 0.7)
     

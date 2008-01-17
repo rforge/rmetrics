@@ -410,7 +410,7 @@ assetsRiskReturnPlot <-
 
 
 assetsNIGShapeTrianglePlot <- 
-    function(x, col = "steelblue", ...)
+    function(x, labels = TRUE, col = "steelblue", ...)
 {   
     # A function implemented by Diethelm Wuertz
 
@@ -430,7 +430,8 @@ assetsNIGShapeTrianglePlot <-
     # Shape Triangle:
     for (i in 1:n) {
         fit = nigFit(100*x[, i], doplot = FALSE)
-        nigShapeTriangle(fit, add = as.logical(i-1), col = col[i], ...) 
+        nigShapeTriangle(fit, add = as.logical(i-1), labels = labels,
+            col = col[i], ...) 
         
         par = fit@fit$estimate
         alpha = par[1]
