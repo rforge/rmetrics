@@ -166,6 +166,6 @@ assetsHistPairsPlot(x, bins = 30, method = c("square", "hex"), ...)
    
 ## assetsHistPairsPlot -
    assetsHistPairsPlot(x[, c("LMI", "ALT")])
-
+}
 
 \keyword{models}
