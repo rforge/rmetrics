@@ -36,11 +36,12 @@
 ################################################################################
 
 
-ghFit = 
-function(x, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1, scale = TRUE,
-doplot = TRUE, span = "auto", trace = TRUE, title = NULL, description = NULL, 
-...)
-{   # A function implemented by Diethelm Wuertz
+ghFit <- 
+    function(x, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1, 
+    scale = TRUE, doplot = TRUE, span = "auto", trace = TRUE, 
+    title = NULL, description = NULL, ...)
+{   
+    # A function implemented by Diethelm Wuertz
     
     # Description:
     #   Fits parameters of a generalized hyperbolic density
@@ -122,11 +123,12 @@ doplot = TRUE, span = "auto", trace = TRUE, title = NULL, description = NULL,
 # ------------------------------------------------------------------------------
 
 
-hypFit = 
-function(x, alpha = 1, beta = 0, delta = 1, mu = 0, scale = TRUE,
-doplot = TRUE, span = "auto", trace = TRUE, title = NULL, description = NULL, 
-...)
-{   # A function implemented by Diethelm Wuertz
+hypFit <- 
+    function(x, alpha = 1, beta = 0, delta = 1, mu = 0, scale = TRUE,
+    doplot = TRUE, span = "auto", trace = TRUE, 
+    title = NULL, description = NULL, ...)
+{   
+    # A function implemented by Diethelm Wuertz
     
     # Description:
     #   Fits parameters of a hyperbolic density 
@@ -203,11 +205,12 @@ doplot = TRUE, span = "auto", trace = TRUE, title = NULL, description = NULL,
 # ------------------------------------------------------------------------------
 
 
-nigFit = 
-function(x, alpha = 1, beta = 0, delta = 1, mu = 0, scale = TRUE, 
-doplot = TRUE, span = "auto", trace = TRUE, 
-title = NULL, description = NULL, ...)
-{   # A function implemented by Diethelm Wuertz
+nigFit <- 
+    function(x, alpha = 1, beta = 0, delta = 1, mu = 0, scale = TRUE, 
+    doplot = TRUE, span = "auto", trace = TRUE, 
+    title = NULL, description = NULL, ...)
+{   
+    # A function implemented by Diethelm Wuertz
     
     # Description:
     #   Fits parameters of a normal inverse Gaussian density
@@ -283,11 +286,12 @@ title = NULL, description = NULL, ...)
 ################################################################################
 
 
-ghtFit = 
-function(x, beta = 1e-6, delta = 1, mu = 0, nu = 10, scale = TRUE, 
-doplot = TRUE, span = "auto", trace = TRUE, 
-title = NULL, description = NULL, ...)
-{   # A function implemented by Diethelm Wuertz
+ghtFit <- 
+    function(x, beta = 1e-6, delta = 1, mu = 0, nu = 10, scale = TRUE, 
+    doplot = TRUE, span = "auto", trace = TRUE, 
+    title = NULL, description = NULL, ...)
+{   
+    # A function implemented by Diethelm Wuertz
     
     # Description:
     #   Fits parameters of a generalized hyperbolic Student-t density
