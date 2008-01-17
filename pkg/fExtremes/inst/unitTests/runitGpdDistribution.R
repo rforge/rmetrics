@@ -92,6 +92,7 @@ function()
     # Random Variates Slider:
     # print("Activate Slider manually!")
     # gpdSlider(method = "rvs")
+    NA
     
     # Return Value:
     return()    

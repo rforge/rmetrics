@@ -43,14 +43,15 @@
 test.gpdSim = 
 function()
 {
-    # Artificial Data Set:
+    # Generate Artificial Data Set:
     x = gpdSim(model = list(xi = 0.25, mu = 0, beta = 1), n = 1000, seed = 4711)
     class(x) 
+    
+    # Plot Series:
     par(mfrow = c(2, 1), cex = 0.7)
     par(ask = FALSE)
     seriesPlot(x)
       
-
     # Return Value:
     return()    
 }
@@ -79,12 +80,12 @@ function()
 test.gpdFit = 
 function()
 {
-    # Artificial Data Set:
+    # Generate Artificial Data Set:
     model = list(xi = -0.25, mu = 0, beta = 1)
     ts = gpdSim(model = model, n = 5000, seed = 4711) 
     class(ts)
     
-    # As timeSeries:
+    # Transform As timeSeries:
     tS = as.timeSeries(ts)
     class(tS)
     
@@ -118,7 +119,7 @@ function()
     print(fit)
     fit = gpdFit(tS, u = min(tS@Data), type = "mle", information = "expected") 
     print(fit)
-                                                     # CHECK - No difference !!!
+                                                     
     
     # Return Value:
     return()    
