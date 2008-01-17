@@ -263,7 +263,7 @@ assetsCorImagePlot <-
         if (show == "test") Test = "Test" else Test = ""
         title(main = 
             paste(Names[use], "Corrleation ", Test, " Image", sep = ""))
-        mText = paste("Method:", method)
+        mText = paste("Method:", show)
         mtext(mText, side = 4, adj = 0, col = "grey", cex = 0.7)
     } 
     
