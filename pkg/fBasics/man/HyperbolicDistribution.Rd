@@ -22,6 +22,8 @@
 \alias{nigShapeTriangle}
 
 \alias{dght}
+\alias{pght}
+\alias{qght}
 
 \alias{hypSlider}
 \alias{nigSlider}
@@ -47,7 +49,7 @@
     \code{[dpqr]gh} \tab The generalized hyperbolic distribution, \cr
     \code{[dpqr]hyp} \tab The hyperbolic distribution, \cr
     \code{[dpqr]nig} \tab The normal inverse Gaussian distribution, \cr
-    \code{dght} \tab The Student-t limit density, \cr
+    \code{[dpq]ght} \tab The Student-t limit distribution, \cr
     \code{hypMode} \tab the hyperbolic mode, \cr
     \code{nigShapeTriangle} \tab plots NIG Shape Triangle, \cr
     \code{hypSlider} \tab interactive hyperbolic distribution display, \cr
@@ -73,6 +75,8 @@ qnig(p, alpha = 1, beta = 0, delta = 1, mu = 0)
 rnig(n, alpha = 1, beta = 0, delta = 1, mu = 0)
 
 dght(x, beta = 1e-6, delta = 1, mu = 0, nu = 10, log = FALSE)
+pght(q, beta = 1e-6, delta = 1, mu = 0, nu = 10, \dots)
+qght(p, beta = 1e-6, delta = 1, mu = 0, nu = 10, \dots)
 
 nigShapeTriangle(object, add = FALSE, \dots)
 

@@ -29,20 +29,20 @@
 
 ################################################################################
 # FUNCTION:            GENERALIZED DISTRIBUTION:
-#  ghFit                Fits parameters of a generalized hyperbolic density
+#  nigFit               Fits parameters of a normal inverse Gaussian density
 ################################################################################
 
 
-ghFit <- 
-    function(x, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1, 
-    scale = TRUE, doplot = TRUE, span = "auto", trace = TRUE, 
+nigFit <- 
+    function(x, alpha = 1, beta = 0, delta = 1, mu = 0, scale = TRUE, 
+    doplot = TRUE, span = "auto", trace = TRUE, 
     title = NULL, description = NULL, ...)
 {   
     # A function implemented by Diethelm Wuertz
     
     # Description:
-    #   Fits parameters of a generalized hyperbolic density
-  
+    #   Fits parameters of a normal inverse Gaussian density
+    
     # FUNCTION:
     
     # Transform:
@@ -55,35 +55,36 @@ ghFit <-
     
     # Settings:
     CALL = match.call()
-
+    
     # Log-likelihood Function:
-    eghmle = function(x, y = x, trace){ 
-        if (NA %in% x) return(1e99)
+    enigmle = function(x, y = x, trace) { 
         if (abs(x[2]) >= x[1]) return(1e99)
-        f = -sum(dgh(y, x[1], x[2], x[3], x[4], x[5], log = TRUE))
+        f = -sum(dnig(y, x[1], x[2], x[3], x[4], log = TRUE))
         # Print Iteration Path:
         if (trace) {
             cat("\n Objective Function Value:  ", -f)
-            cat("\n Parameter Estimates:       ", x, "\n") 
+            cat("\n Parameter Estimates:       ", x[1], x[2], x[3], x[4], "\n")
         }
         f 
     }
         
     # Minimization:
-    r = # Variable Transformation and Minimization:
     eps = 1e-10
     BIG = 1000
-    f = eghmle(x = c(alpha, beta, delta, mu, lambda), y = x, trace = FALSE)
-    r = nlminb(start = c(alpha, beta, delta, mu, lambda), objective = eghmle, 
-        lower = c(eps, -BIG, eps, -BIG, -BIG), upper = BIG, y = x, 
-        trace = trace) 
+    r = nlminb(start = c(alpha, beta, delta, mu), objective = enigmle, 
+        lower = c(eps, -BIG, eps, -BIG), upper = BIG, y = x, trace = trace) 
+        
+    # Add Title and Description:
+    if (is.null(title)) title = "Normal Inverse Gaussian Parameter Estimation"
+    if (is.null(description)) description = .description() 
     
     # Result:
     if (scale) {
-        r$par = r$par / c(SD, SD, 1/SD, 1/SD, 1)
-        r$objective = eghmle(r$par, y = as.vector(x.orig), trace = trace)
+        r$par = r$par / c(SD, SD, 1/SD, 1/SD)
+        r$objective = enigmle(r$par, y = as.vector(x.orig), trace = trace)
     }   
-    
+    fit = list(estimate = r$par, minimum = -r$objective, code = r$convergence)
+     
     # Optional Plot:
     if (doplot) {
         x = as.vector(x.orig)
@@ -95,21 +96,14 @@ ghFit <-
         ylim = log(c(min(y.points), max(y.points)))
         plot(x, log(y), xlim = c(span[1], span[length(span)]), 
             ylim = ylim, type = "p", xlab = "x", ylab = "log f(x)", ...)
-        title("GH Parameter Estimation")    
+        title("NIG Parameter Estimation")    
         lines(x = span, y = log(y.points), col = "steelblue")
     }
-    
-    # Add Title and Description:
-    if (is.null(title)) title = "Generalized Hyperbolic Parameter Estimation"
-    if (is.null(description)) description = .description()
-        
-    # Fit:
-    fit = list(estimate = r$par, minimum = -r$objective, code = r$convergence)
-        
+       
     # Return Value:
     new("fDISTFIT",     
         call = as.call(CALL),
-        model = "Generalized Hyperbolic Distribution",
+        model = "Normal Inverse Gaussian Distribution",
         data = as.data.frame(x.orig),
         fit = fit,
         title = as.character(title), 

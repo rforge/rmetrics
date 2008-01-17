@@ -29,19 +29,19 @@
 
 ################################################################################
 # FUNCTION:            GENERALIZED DISTRIBUTION:
-#  ghFit                Fits parameters of a generalized hyperbolic density
+#  ghtFit               Fits parameters of a skew Student-t density
 ################################################################################
 
 
-ghFit <- 
-    function(x, alpha = 1, beta = 0, delta = 1, mu = 0, lambda = 1, 
-    scale = TRUE, doplot = TRUE, span = "auto", trace = TRUE, 
+ghtFit <- 
+    function(x, beta = 1e-6, delta = 1, mu = 0, nu = 10, scale = TRUE, 
+    doplot = TRUE, span = "auto", trace = TRUE, 
     title = NULL, description = NULL, ...)
 {   
     # A function implemented by Diethelm Wuertz
     
     # Description:
-    #   Fits parameters of a generalized hyperbolic density
+    #   Fits parameters of a generalized hyperbolic Student-t density
   
     # FUNCTION:
     
@@ -55,57 +55,48 @@ ghFit <-
     
     # Settings:
     CALL = match.call()
-
+    
     # Log-likelihood Function:
-    eghmle = function(x, y = x, trace){ 
-        if (NA %in% x) return(1e99)
-        if (abs(x[2]) >= x[1]) return(1e99)
-        f = -sum(dgh(y, x[1], x[2], x[3], x[4], x[5], log = TRUE))
-        # Print Iteration Path:
+    eghtmle = function(x, y = x, trace) { 
+        f = -sum(dght(y, x[1], x[2], x[3], x[4], log = TRUE))
         if (trace) {
             cat("\n Objective Function Value:  ", -f)
-            cat("\n Parameter Estimates:       ", x, "\n") 
+            cat("\n Parameter Estimates:       ", x[1], x[2], x[3], x[4], "\n")
         }
         f 
     }
         
-    # Minimization:
-    r = # Variable Transformation and Minimization:
-    eps = 1e-10
+    # Variable Transformation and Minimization:
+    eps = 1e-20
     BIG = 1000
-    f = eghmle(x = c(alpha, beta, delta, mu, lambda), y = x, trace = FALSE)
-    r = nlminb(start = c(alpha, beta, delta, mu, lambda), objective = eghmle, 
-        lower = c(eps, -BIG, eps, -BIG, -BIG), upper = BIG, y = x, 
-        trace = trace) 
-    
-    # Result:
-    if (scale) {
-        r$par = r$par / c(SD, SD, 1/SD, 1/SD, 1)
-        r$objective = eghmle(r$par, y = as.vector(x.orig), trace = trace)
-    }   
-    
-    # Optional Plot:
-    if (doplot) {
-        x = as.vector(x.orig)
-        if (span == "auto") span = seq(min(x), max(x), length = 51)
-        z = density(x, n = 100, ...)
-        x = z$x[z$y > 0]
-        y = z$y[z$y > 0]
-        y.points = dnig(span, r$par[1], r$par[2], r$par[3], r$par[4])
-        ylim = log(c(min(y.points), max(y.points)))
-        plot(x, log(y), xlim = c(span[1], span[length(span)]), 
-            ylim = ylim, type = "p", xlab = "x", ylab = "log f(x)", ...)
-        title("GH Parameter Estimation")    
-        lines(x = span, y = log(y.points), col = "steelblue")
-    }
+    r = nlminb(start = c(beta, delta, mu, nu), objective = eghtmle, 
+        lower = c(eps, eps, -BIG, 2), upper = BIG, y = x, trace = trace) 
     
     # Add Title and Description:
     if (is.null(title)) title = "Generalized Hyperbolic Parameter Estimation"
     if (is.null(description)) description = .description()
         
-    # Fit:
+    # Result:
+    if (scale) {
+        r$par = r$par / c(1, 1/SD, 1/SD, 1)
+        r$objective = eghtmle(r$par, y = as.vector(x.orig), trace = trace)
+    }   
     fit = list(estimate = r$par, minimum = -r$objective, code = r$convergence)
-        
+     
+    # Optional Plot:
+    if (doplot) {
+        if (span == "auto") span = seq(min(x), max(x), length = 51)
+        z = density(x, n = 100, ...)
+        x = z$x[z$y > 0]
+        y = z$y[z$y > 0]
+        y.points = dght(span, r$par[1], r$par[2], r$par[3], r$par[4])
+        ylim = log(c(min(y.points), max(y.points)))
+        plot(x, log(y), xlim = c(span[1], span[length(span)]), 
+            ylim = ylim, type = "p", xlab = "x", ylab = "log f(x)", ...)
+        title("GHT Parameter Estimation")    
+        lines(x = span, y = log(y.points), col = "steelblue")
+    }
+       
     # Return Value:
     new("fDISTFIT",     
         call = as.call(CALL),

@@ -33,6 +33,7 @@
 #  phyp                  Returns probability for hyperbolic DF
 #  qhyp                  Returns quantiles for hyperbolic DF
 #  rhyp                  Returns random variates for hyperbolic DF
+# FUNCTION:             DESCRIPTION:
 #  hypMode               Computes the hyperbolic mode
 #  .[dpqr]hyp[1234]       Internal functions called by '*hyp'
 #  .hyp[1234]Mode         Internal functions called by 'hypMode'

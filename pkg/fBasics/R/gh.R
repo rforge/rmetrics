@@ -33,9 +33,6 @@
 #  pgh                   Returns probability for generalized hyperbolic DF
 #  qgh                   Returns quantiles for generalized hyperbolic DF
 #  rgh                   Returns random variates for generalized hyperbolic DF
-#  .rghyp                 Internal functions called by 'rgh'
-#  .rgigjd                Internal functions called by 'rghyp'
-#  .rgigjd1               Internal functions called by 'rghyp'
 ################################################################################
 
 

@@ -33,6 +33,7 @@
 #  pnig                  Returns probability for for inverse Gaussian DF
 #  qnig                  Returns quantiles for for inverse Gaussian DF 
 #  rnig                  Returns random variates for inverse Gaussian DF
+# FUNCTION:             DESCRIPTION:
 #  nigShapeTriangle      Plots NIG Shape Triangle
 ################################################################################
 
