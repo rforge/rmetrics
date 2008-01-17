@@ -30,11 +30,11 @@
 
 \usage{
 assetsDendrogramPlot(x, labels = TRUE, 
-    method = c(dist = "euclidian", clust = "complete"))
+    method = c(dist = "euclidian", clust = "complete"), \dots)
 assetsCorEigenPlot(x, labels = TRUE, 
     method = c("pearson", "kendall", "spearman"), \dots)
 assetsTreePlot(x, labels = TRUE, 
-    method = "euclidian", seed = NULL)
+    method = "euclidian", seed = NULL, \dots)
 }
 
 

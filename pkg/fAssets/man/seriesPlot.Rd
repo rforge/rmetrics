@@ -60,7 +60,7 @@ assetsQQNormPlot(x, col = "steelblue", skipZeros = FALSE, \dots)
 
 assetsRiskReturnPlot(x, col = "steelblue", percentage = FALSE, scale = 252, 
     labels = TRUE, add = TRUE, \dots)
-assetsNIGShapeTrianglePlot(x, col = "steelblue", \dots)
+assetsNIGShapeTrianglePlot(x, labels, col = "steelblue", \dots)
 
 assetsHistPairsPlot(x, bins = 30, method = c("square", "hex"), ...) 
 }
