@@ -40,8 +40,6 @@
 #  assetsNIGShapeTrianglePlot  Displays NIG Shape Triangle
 # FUNCTION:                   BIVARIATE HISTOGRAM PLOTS:
 #  assetsHistPairsPlot         Displays bivariate Histogram Plot
-# FUNCTION:                   DESCRPTION:
-#  .hist                       Show histogram with guaranteed number of bins
 ################################################################################
 
 
@@ -326,10 +324,11 @@ function(x, col = "steelblue", skipZeros = FALSE, ...)
 # ------------------------------------------------------------------------------
 
 
-assetsRiskReturnPlot =
-function(x, col = "steelblue", 
-percentage = FALSE, scale = 252, labels = TRUE, add = TRUE, ...) 
-{   # A function implemented by Diethelm Wuertz
+assetsRiskReturnPlot <- 
+    function(x, col = "steelblue", 
+    percentage = FALSE, scale = 252, labels = TRUE, add = TRUE, ...) 
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Displays risk-return giagram of assets 
@@ -410,9 +409,10 @@ percentage = FALSE, scale = 252, labels = TRUE, add = TRUE, ...)
 # ------------------------------------------------------------------------------
 
 
-assetsNIGShapeTrianglePlot =
-function(x, col = "steelblue", ...)
-{   # A function implemented by Diethelm Wuertz
+assetsNIGShapeTrianglePlot <- 
+    function(x, col = "steelblue", ...)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Displays NIG Shape Triangle
@@ -452,9 +452,10 @@ function(x, col = "steelblue", ...)
 #  assetsHistPairsPlot         Displays bivariate Histogram Plot
 
 
-assetsHistPairsPlot = 
-function(x, bins = 30, method = c("square", "hex"), ...) 
-{   # A function implemented by Diethelm Wuertz
+assetsHistPairsPlot <- 
+    function(x, bins = 30, method = c("square", "hex"), ...) 
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Displays bivariate Histogram Plot
@@ -482,54 +483,6 @@ function(x, bins = 30, method = c("square", "hex"), ...)
     # Return Value:
     invisible(ans)
 }
-
-
-################################################################################
-
-
-.hist = 
-function (x, nbins) 
-{   
-    # Description:
-    #   Show histogram with guaranteed number of bins
-    
-    # FUNCTION:
-    
-    nclass = nbins+1
-    n = length(x)
-    xname = paste(deparse(substitute(x), 500), collapse = "\n")
-    
-    breaks = seq(min(x), max(x), length = nclass)  
-    nB = length(breaks)
-    h = diff(breaks)
-    
-    counts = .C("bincount", 
-        as.double(x), 
-        as.integer(n), 
-        as.double(breaks), 
-        as.integer(nB), 
-        counts = integer(nB - 1), 
-        right = FALSE, 
-        include = TRUE, 
-        naok = FALSE, 
-        NAOK = FALSE, 
-        DUP = FALSE, 
-        PACKAGE = "base")$counts
-             
-    dens = counts/(n * h)
-    mids = 0.5 * (breaks[-1] + breaks[-nB])
-
-    # Return Value:
-    r = structure(list(
-        breaks = breaks, 
-        counts = counts, 
-        intensities = dens, 
-        density = dens, 
-        mids = mids, 
-        xname = xname, 
-        equidist = TRUE), 
-        class = "histogram")  
-}   
 
 
 ################################################################################

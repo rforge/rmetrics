@@ -34,9 +34,10 @@
 ################################################################################
 
 
-assetsBoxPlot =
-function(x, col = "bisque", ...) 
-{   # A function Implemented by Diethelm Wuertz
+assetsBoxPlot <- 
+    function(x, col = "bisque", ...) 
+{   
+    # A function Implemented by Diethelm Wuertz
 
     # Description:
     #   Displays standard box plots
@@ -67,9 +68,10 @@ function(x, col = "bisque", ...)
 # ------------------------------------------------------------------------------
 
 
-assetsBoxPercentilePlot = 
-function(x, col = "bisque", ...) 
-{   # A modified copy from Hmisc
+assetsBoxPercentilePlot <- 
+    function(x, col = "bisque", ...) 
+{   
+    # A modified copy from Hmisc
 
     # Description:
     #   Displays side-by-side box-percentile plots

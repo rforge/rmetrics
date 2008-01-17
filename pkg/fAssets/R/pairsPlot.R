@@ -189,9 +189,10 @@ assetsCorImagePlot <-
     show = c("cor", "test"), use = c("pearson", "kendall", "spearman"),
     abbreviate = 3, ...)
 {   
-    # @author Sandrine Dudoit, sandrine@stat.berkeley.edu, from "SMA" library
-    # @author modified by Peter Carl
-    # @author extended by Diethelm Wuertz
+    # A function implemented by Diethelm Wuertz
+    #   @author Sandrine Dudoit, sandrine@stat.berkeley.edu, from "SMA" library
+    #   @author modified by Peter Carl
+    #   @author extended by Diethelm Wuertz
 
     # Description:
     #   Creates an image plot of a correlations
