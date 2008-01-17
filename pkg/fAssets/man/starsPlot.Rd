@@ -83,6 +83,9 @@ assetsNIGFitPlot(x, oma = c(0,0,0,0), mar = c(4, 4, 4, 4),
     \item{title}{
         a character string, the plot title.
         }
+    \item{titlePosition}{
+        the position of the title string.
+        }
     \item{x}{
         any rectangular time series object which can be converted by the 
         function \code{as.matrix()} into a matrix object, e.g. like an 
@@ -113,21 +116,18 @@ assetsNIGFitPlot(x, oma = c(0,0,0,0), mar = c(4, 4, 4, 4),
 ## LPP2005REC -
    x = as.timeSeries(data(LPP2005REC))
    head(x)
-   
-## assetsStarsPlot -
-   assetsStarsPlot(x)
 
 ## assetsBoxStatsPlot -
-   assetsBoxStatsPlot(x)
+   assetsBoxStatsPlot(x, title = "", description = "")
 
 ## assetsBasicStatsPlot -
-   assetsBasicStatsPlot(x)
+   assetsBasicStatsPlot(x, title = "", description = "")
 
 ## assetsMomentsPlot -
-   assetsMomentsPlot(x)
+   assetsMomentsPlot(x, title = "", description = "")
 
 ## assetsNIGFitPlot -
-   assetsNIGFitPlot(x)
+   assetsNIGFitPlot(x, title = "", description = "")
 }
 
 

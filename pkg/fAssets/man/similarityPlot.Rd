@@ -29,9 +29,12 @@
 
 
 \usage{
-assetsDendrogramPlot(x, method = c(dist = "euclidian", clust = "complete"))
-assetsCorEigenPlot(x, method = c("pearson", "kendall", "spearman"), \dots)
-assetsTreePlot(x, method = "euclidian", seed = NULL)
+assetsDendrogramPlot(x, labels = TRUE, 
+    method = c(dist = "euclidian", clust = "complete"))
+assetsCorEigenPlot(x, labels = TRUE, 
+    method = c("pearson", "kendall", "spearman"), \dots)
+assetsTreePlot(x, labels = TRUE, 
+    method = "euclidian", seed = NULL)
 }
 
 
@@ -42,6 +45,11 @@ assetsTreePlot(x, method = "euclidian", seed = NULL)
         function \code{as.matrix()} into a matrix object, e.g. like an 
         object of class \code{timeSeries}, \code{data.frame}, or \code{mts}. 
         } 
+    \item{labels}{
+        a logical flag, if \code{TRUE} then default labels will be used,
+        otherwise the plots will be displayed without labels and the user
+        can add his own labels.
+        }
     \item{method}{
         [assetsCorgramPlot] - \cr
         a character string, the type of graph used in the lower panel.\cr
@@ -59,6 +67,9 @@ assetsTreePlot(x, method = "euclidian", seed = NULL)
     \item{\dots}{
         optional arguments to be passed.
         }
+        
+}
+
         
 \seealso{
 

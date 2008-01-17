@@ -97,7 +97,7 @@ assetsCorImagePlot(x, labels = TRUE, show = c("cor", "test"),
    head(x)
    
 ## assetsPairsPlot - 
-   assetsPairsPlot((x)
+   assetsPairsPlot(x)
   
 ## assetsCorgramPlot -  
    assetsCorgramPlot(x)

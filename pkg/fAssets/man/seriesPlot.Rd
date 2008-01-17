@@ -137,25 +137,26 @@ assetsHistPairsPlot(x, bins = 30, method = c("square", "hex"), ...)
 \examples{
 ## LPP2005REC -
    x = as.timeSeries(data(LPP2005REC))
+   y = x[, "LPP40"]
    head(x)
    
 ## assetsReturnPlot -
-   assetsReturnPlot(x)
+   assetsReturnPlot(y)
    
 ## assetsCumulatedPlot -
-   assetsCumulatedPlot(x)
+   assetsCumulatedPlot(y)
    
 ## assetsSeriesPlot -
-   assetsSeriesPlot(x)
+   assetsSeriesPlot(y)
    
 ## assetsHistPlot -
-   assetsHistPlot(x)
+   assetsHistPlot(y)
    
 ## assetsLogDensityPlot -
-   assetsLogDensityPlot(x)
+   assetsLogDensityPlot(y)
    
 ## assetsQQNormPlot -
-   assetsQQNormPlot(x)
+   assetsQQNormPlot(y)
    
 ## assetsRiskReturnPlot -
    assetsRiskReturnPlot(x)
@@ -164,8 +165,7 @@ assetsHistPairsPlot(x, bins = 30, method = c("square", "hex"), ...)
    assetsNIGShapeTrianglePlot(x)
    
 ## assetsHistPairsPlot -
-   assetsHistPairsPlot(x) 
-}
+   assetsHistPairsPlot(x[, c("LMI", "ALT")])
 
 
 \keyword{models}

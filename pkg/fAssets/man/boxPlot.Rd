@@ -3,7 +3,7 @@
 
 \alias{boxPlot}
 
-\alias{assetsboxPlot}
+\alias{assetsBoxPlot}
 \alias{assetsBoxPercentilePlot}  
 
 
