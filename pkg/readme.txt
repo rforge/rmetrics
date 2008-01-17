@@ -9,7 +9,7 @@
 02.  fEcofin            fUtilities
 
 03.  fCalendar          methods, MASS, fEcofin, fUtilities
-04.  fSeries            robustbase, fCalendar
+04.  fSeries            MASS, robustbase, fCalendar
 05.  fImport            fSeries
 
 06.  fBasics            fImport
@@ -23,7 +23,7 @@
 12.  fMultivar          methods, sn, fBasics
 13.  fRegression        methods, mgcv, nnet, polspline, fTrading, fMultivar
 
-14.  fExtremes          fBasics
+14.  fExtremes          fBasics, fTrading
 15.  fCopulae           adapt, fBasics, fMultivar
 
 16.  fOptions           fBasics
