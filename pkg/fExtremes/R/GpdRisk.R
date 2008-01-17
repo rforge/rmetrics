@@ -647,12 +647,13 @@ function(object, p = 0.99, ci = 0.95, nLLH = 25, extend = 1.5, labels = TRUE, ..
     location = threshold - (scale*(invProb^(- xi)-1))/xi
     
     # Show Plot:
-    # Plot
-    plot(sort(data), ypoints, xlim = range(plotmin, plotmax), 
-         ylim = range(ypoints, y, na.rm = TRUE), col = "steelblue",
+    xlim = range(plotmin, plotmax)
+    ylim = range(ypoints, y[y>0], na.rm = TRUE)
+    plot(sort(data), ypoints, xlim = xlim, ylim = ylim, col = "steelblue",
          pch = 19, xlab = "", ylab = "", log = "xy", axes = TRUE, ...)
     lines(z[y >= 0], y[y >= 0])
     grid()
+    
     # Labels:
     alog = "xy"
     if (labels) {
