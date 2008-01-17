@@ -31,12 +31,15 @@
 #  seriesPlot               Dispalys a time Series Plot           
 #  cumulatedPlot            Displays a cumulated series given the returns
 #  returnPlot               Displays returns given the cumulated series
+#  drawdownPlot             Displays drawdown series from returns
 # FUNCTION:                TAILORED DENSITY FUNCTIONS:
 #  histPlot                 Returns a tailored histogram plot
 #  densityPlot              Returns a tailored kernel density estimate plot
+#  logDensityPlot           Returns a tailored log kernel density estimate plot
 # FUNCTION:                 TAILORED QUANTILE PLOTS:
 #  qqnormPlot               Returns a tailored normal quantile-quantile plot
 #  qqnigPlot                Returns a tailored NIG quantile-quantile plot
+#  qqghtPlot                Returns a tailored GHT quantile-quantile plot
 # FUNCTION:                TAILORED BOX PLOTS:
 #  boxPlot                  Produces a side-by-side standard box plot
 #  boxPercentilePlot        Produces a side-by-side box-percentile plot
@@ -50,12 +53,14 @@
 #  seriesPlot               Dispalys a time Series Plot           
 #  cumulatedPlot            Displays a cumulated series given the returns
 #  returnPlot               Displays returns given the cumulated series
+#  drawdownPlot             Displays drawdown series from returns
 
 
 seriesPlot <- 
     function(x, labels = TRUE, type = "l", col = "steelblue", 
-    ylab = "Returns", rug = TRUE, ...) 
-{   # A function implemented by Diethelm Wuertz
+    ylab = "Returns", grid = FALSE, rug = TRUE, ...) 
+{   
+    # A function implemented by Diethelm Wuertz
     
     # Description:
     #   Dispalys a time Series Plot  
@@ -106,8 +111,9 @@ seriesPlot <-
 
 cumulatedPlot <-  
     function(x, index = 100, labels = TRUE, type = "l", col = "steelblue", 
-    ylab = "Index", rug = TRUE, ...) 
-{   # A function implemented by Diethelm Wuertz
+    ylab = "Index", grid = FALSE, rug = TRUE, ...) 
+{   
+    # A function implemented by Diethelm Wuertz
     
     # Description:
     #   Displays a cumulated series given the returns
@@ -155,8 +161,9 @@ cumulatedPlot <-
 
 returnPlot <-  
     function(x, labels = TRUE, type = "l", col = "steelblue", 
-    ylab = "Returns", rug = TRUE, ...) 
-{   # A function implemented by Diethelm Wuertz
+    ylab = "Returns", grid = FALSE, rug = TRUE, ...) 
+{   
+    # A function implemented by Diethelm Wuertz
     
     # Description:
     #   Displays returns given the cumulated series
@@ -185,12 +192,63 @@ returnPlot <-
         if (labels) {
             plot(x = X, type = type, col = col[i], 
                 main = Units[i], ylab = ylab, xlab = "Time", ...)
-            # grid()
+            if (grid) grid()
         } else {
             plot(x = X, col = col[i], ...)   
         }
         abline(h = 0, col = "grey")
         if (rug) rug(as.vector(X), ticksize = 0.01, side = 4, quiet = TRUE)
+            
+    }
+         
+    # Return Value:
+    invisible()
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+drawdownPlot <-  
+    function(x, labels = TRUE, type = "l", col = "steelblue", 
+    ylab = "Drawdowns", grid = FALSE, rug = TRUE, ...) 
+{   
+    # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   Displays drawdowns given the return series
+  
+    # Arguments:
+    #   x - an uni- or multivariate return series of class 'timeSeries' 
+    #       or any other object which can be transformed by the function
+    #       'as.timeSeries()' into an object of class 'timeSeries'.
+    
+    # Example:
+    # tS=timeSeries(cbind(rnorm(12),rt(12,4)),timeCalendar(),units=c("N","T"))
+    # seriesPlot(tS)
+    
+    # FUNCTION:
+
+    # timeSeries:
+    if (!is.timeSeries(x)) x = as.timeSeries(x)
+    Units = x@units
+    DIM = dim(x@Data)[2]
+    if (length(col) == 1) col = rep(col, times = DIM)
+    
+    # Return Plots:
+    for (i in 1:DIM) {
+        X = drawdowns(x[, i])
+        if (labels) {
+            plot(x = X, type = type, col = col[i], 
+                main = Units[i], ylab = ylab, xlab = "Time", ...)
+            if (grid) grid()
+        } else {
+            plot(x = X, col = col[i], ...)   
+        }
+        abline(h = 0, col = "grey")
+        if (rug) {
+            rug(as.vector(X), ticksize = 0.01, side = 4, quiet = TRUE)
+        }
             
     }
          
@@ -205,12 +263,14 @@ returnPlot <-
 #  densityPlot              Displays a tailored kernel density estimate plot
 #  qqnormPlot               Returns a tailored normal quantile-quantile plot
 #  qqnigPlot                Returns a tailored NIG quantile-quantile plot
+#  qqghtPlot                Returns a tailored GHT quantile-quantile plot
 
 
 histPlot <-  
-    function(x, labels = TRUE, col = "steelblue", add.fit = TRUE, rug = TRUE, 
-    skipZeros = TRUE, ...) 
-{   # A function implemented by Diethelm Wuertz
+    function(x, labels = TRUE, col = "steelblue", add.fit = TRUE, 
+    grid = FALSE, rug = TRUE, skipZeros = TRUE, ...) 
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Returns a probability histogram plot for each column of a 
@@ -275,11 +335,15 @@ histPlot <-
             mtext(Text, side = 4, adj = 0, col = "darkgrey", cex = 0.7)
         }
   
+        if (grid) grid()
+        
         # Add Zero Line:
         abline(h = 0, col = "grey")
     
         # Add Rug Plot:
-        if(rug) rug(Values, ticksize = 0.01, quiet = TRUE)
+        if(rug) {
+            rug(Values, ticksize = 0.01, quiet = TRUE)
+        }
     }
     
     # Return Value:
@@ -291,9 +355,10 @@ histPlot <-
 
 
 densityPlot <-  
-    function(x, labels = TRUE, col = "steelblue", add.fit = TRUE, rug = TRUE, 
-    skipZeros = TRUE, ...) 
-{   # A function implemented by Diethelm Wuertz
+    function(x, labels = TRUE, col = "steelblue", add.fit = TRUE, 
+    grid = FALSE, rug = TRUE, skipZeros = TRUE, ...) 
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Returns density plots for each column of a timeSeries object
@@ -305,11 +370,12 @@ densityPlot <-
 
     # FUNCTION:
     
-    # Transform 'timeSeries':
+    # timeSeries:
     if (!is.timeSeries(x)) x = as.timeSeries(x)
-    units = x@units
+    Units = x@units
     DIM = dim(x@Data)[2]
     if (length(col) == 1) col = rep(col, times = DIM)
+    
      
     # Histogram Plots:
     for (i in 1:DIM) {
@@ -329,7 +395,7 @@ densityPlot <-
             xlim = c(qnorm(0.001, mean, sd), qnorm(0.999, mean, sd)) 
             plot(x = Density, xlim = xlim, col = col[i], type = "l", 
                 lwd = 2, main = units[i], ...)   
-            grid()
+            if (grid) grid()
         } else {
             plot(x = Density, ...)
         }   
@@ -356,7 +422,9 @@ densityPlot <-
         abline(h = 0, col = "grey")
         
         # Add Rug Plot:
-        if(rug) rug(Values, ticksize = 0.01, quiet = TRUE)     
+        if(rug) {
+            rug(Values, ticksize = 0.01, quiet = TRUE)
+        }     
     }
     
     # Return Value:
@@ -367,10 +435,125 @@ densityPlot <-
 # ------------------------------------------------------------------------------
 
 
+logDensityPlot <- 
+    function(x, labels = TRUE, col = "steelblue", 
+    estimator = c("hubers", "sample", "both"), 
+    grid = FALSE, rug = TRUE, skipZeros = TRUE, ...)
+{   
+    # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   Displays a pdf plot on logarithmic scale 
+    
+    # Arguments:
+    #   x - an uni- or multivariate return series of class 'timeSeries' 
+    #       or any other object which can be transformed by the function
+    #       'as.timeSeries()' into an object of class 'timeSeries'.
+    #   estimator - the type of estimator to fit the mean and variance 
+    #       of the density.
+    #   doplot - a logical flag, by default TRUE. Should a plot be 
+    #       displayed?
+    #   labels - a logical flag, by default TRUE. Should a default main  
+    #       title and labels addet to the plot?
+    #   ... - 
+    
+    # Details:
+    #   Returns a pdf plot on a lin-log scale in comparison to a Gaussian 
+    #   density plot Two type of fits are available: a normal density with
+    #   fitted sample mean and sample standard deviation, or a normal 
+    #   density with Hubers robust mean and standard deviation corfrected
+    #   by the bandwidth of the Kernel estimator.
+    
+    # FUNCTION:
+    
+    # timeSeries:
+    if (!is.timeSeries(x)) x = as.timeSeries(x)
+    Units = x@units
+    DIM = dim(x@Data)[2]
+    if (length(col) == 1) col = rep(col, times = DIM)
+    
+    # Select Type:
+    estimator = match.arg(estimator)
+    
+    # Labels:
+    if (labels) {
+        main = "log PDF"
+        xlab = "x"
+        ylab = "log PDF"    
+    } else {
+        main = xlab = ylab = ""
+    }
+    
+    X = x
+    
+    for (i in 1:ncol(x)) {
+        
+        # Transform Data:
+        x = as.vector(X[, i])
+        if (skipZeros) x = x[x != 0]
+                
+        if (labels) main = Units[i]
+                
+        # Kernel and Histogram Estimators: 
+        Density = density(x)
+        Histogram = hist(x, breaks = "FD", plot = FALSE)
+        result = list(density = Density, hist = Histogram)
+         
+        # Plot Frame:
+        plot(Histogram$mids, log(Histogram$density), type = "n",
+            lwd = 5, main = Units[i], xlab = xlab, ylab = ylab,
+            xlim = range(Density$x), ylim = log(range(Density$y)),
+            col = col, ...)
+
+        # Plot Density:
+        points(Density$x, log(Density$y), pch = 19, col = "darkgrey",
+            cex = 0.7)
+        
+        # Sample Line Fit:
+        s = seq(min(Density$x), max(Density$x), length = 1001)
+        if (estimator == "sample" || estimator == "both") {
+            lines(s, log(dnorm(s, mean(x), sd(x))), col = "red", lwd = 2)
+        } 
+        
+        # Robust Huber Line Fit:
+        if (estimator == "hubers" || estimator == "both") {
+            h = MASS::hubers(x)
+            logDensity = log(dnorm(s, 
+                mean = h[[1]], 
+                sd = sqrt(h[[2]]^2+Density$bw^2)))
+            minLogDensity = log(min(Density$y))
+            lines(
+                x = s[logDensity > minLogDensity], 
+                y = logDensity[logDensity > minLogDensity], 
+                col = "orange", lwd = 2)
+        }
+        
+        # Plot Histogram:
+        points(Histogram$mids, log(Histogram$density), pch = 19,
+            col = "steelblue", ...)
+          
+        # Grid:
+        if (labels) grid()
+        
+        # Add Rug Plot:
+        if(rug) {
+            rug(x, ticksize = 0.01, quiet = TRUE)
+        }     
+    }
+    
+    # Return Value:
+    invisible(result)
+}
+
+
+# ------------------------------------------------------------------------------
+
+
 qqnormPlot <-  
-    function(x, labels = TRUE, col = "steelblue", rug = TRUE, 
+    function(x, labels = TRUE, col = "steelblue", grid = FALSE, rug = TRUE, 
     scale = TRUE, ...) 
-{   # A function implemented by Diethelm Wuertz
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Example of a Normal quantile plot of data x to provide a visual
@@ -434,7 +617,7 @@ qqnormPlot <-
                 xlab = xlab, ylab = ylab, main = main, ...)
                 Text = "Confidence Intervals: 95%"
             mtext(Text, side = 4, adj = 0, col = "darkgrey", cex = 0.7)
-            grid()  
+            if (grid) grid()  
         } else {
             plot(z, x, col = col[i], ...)
         }
@@ -469,8 +652,10 @@ qqnormPlot <-
 
 
 qqnigPlot <-  
-    function (x, labels = TRUE, col = "steelblue", rug = TRUE, ...) 
-{   # A function implemented by Diethelm Wuertz
+    function (x, labels = TRUE, col = "steelblue", grid = FALSE, 
+    rug = TRUE, scale = TRUE, ...) 
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Displays a NIG quantile-quantile Plot
@@ -507,7 +692,7 @@ qqnigPlot <-
         ylab = "Sample Quantiles"
         plot(z, x, main = main, xlab = xlab, ylab = ylab, 
             pch = 19, col = "steelblue")
-        grid()  
+        if (grid) grid()
         rpar = signif(par, 3)
         text = paste(
             "alpha =", rpar[1], 
@@ -516,7 +701,7 @@ qqnigPlot <-
             "| mu =", rpar[4])  
         mtext(text, side = 4, adj = 0, col = "grey", cex = 0.7)
     } else {
-        plot(z, x, col = col, ...)
+        plot(z, x, ...)
     }
     
     # Add Fit:
@@ -536,6 +721,81 @@ qqnigPlot <-
 }
 
 
+# ------------------------------------------------------------------------------
+
+
+qqghtPlot <-  
+    function (x, labels = TRUE, col = "steelblue", grid = FALSE, 
+    rug = TRUE, scale = TRUE, ...) 
+{   
+    # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Displays a NIG quantile-quantile Plot
+    
+    # Arguments:
+    #   x - an uni- or multivariate return series of class 'timeSeries' 
+    #       or any other object which can be transformed by the function
+    #       'as.timeSeries()' into an object of class 'timeSeries'.
+    
+    # Example:
+    #   qqnigPlot(rnig(100))
+    
+    # FUNCTION:
+       
+    # Settings:
+    if (!is.timeSeries(x)) {
+        x = as.timeSeries(x)
+        stopifnot(isUnivariate(x)) 
+        Main = x@units
+    }
+    x = as.vector(x)
+    
+    # Fit:
+    fit = ghtFit(x, doplot = FALSE, scale = FALSE) # CHECK SCALE !!!
+    par = fit@fit$estimate
+    names(par) = c("beta", "delta", "mu", "nu")
+        
+    # Plot:
+    # QGHT IS MISSING !!!
+    x = qght(ppoints(x), par[1], par[2], par[3], par[4])
+    z = sort(x)
+    if (labels) {
+        main = "GHT QQ Plot"
+        xlab = "Theoretical Quantiles"
+        ylab = "Sample Quantiles"
+        plot(z, x, main = main, xlab = xlab, ylab = ylab, 
+            pch = 19, col = "steelblue")
+        if (grid) grid()
+        rpar = signif(par, 3)
+        text = paste(
+            "alpha =", rpar[1], 
+            "| beta =", rpar[2], 
+            "| delta =", rpar[3], 
+            "| mu =", rpar[4])  
+        mtext(text, side = 4, adj = 0, col = "grey", cex = 0.7)
+    } else {
+        plot(z, x, ...)
+    }
+    
+    # Add Fit:
+    abline(lsfit(z, x))
+    
+    # Add Rugs:
+    if(rug) {
+        rug(z, ticksize = 0.01, side = 3, quiet = TRUE)
+        rug(x, ticksize = 0.01, side = 4, quiet = TRUE)
+    }
+    
+    # Result:
+    ans = list(x = z, y = x)
+    attr(ans, "control")<-par
+    
+    # Return Value:
+    invisible(ans)
+}
+
+
 ################################################################################
 # FUNCTION:               BOX PLOTS:
 #  boxPlot                 Produces a side-by-side standard box plot
@@ -544,7 +804,8 @@ qqnigPlot <-
 
 boxPlot <-
     function(x, col = "steelblue", ...) 
-{   # A function Implemented by Diethelm Wuertz
+{   
+    # A function Implemented by Diethelm Wuertz
 
     # Description:
     #   Produces a standard box plot
@@ -679,7 +940,8 @@ boxPercentilePlot <-
 
 returnSeriesGUI <-  
     function(x)
-{   # A function implemented by Diethelm Wuertz
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Descriptions:
     #   Opens a GUI for return series plots
