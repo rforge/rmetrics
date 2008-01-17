@@ -67,7 +67,7 @@ seriesPlot <-
         if (labels) {
             plot(x = X, type = type, col = col[i], 
                 main = Units[i], ylab = ylab, xlab = "Time", ...)
-            # grid()
+            if (grid) grid()
         } else {
             plot(x = X, col = col[i], ...)   
         }
@@ -76,7 +76,9 @@ seriesPlot <-
         abline(h = 0, col = "grey")
         
         # Add Rugs:
-        if (rug) rug(as.vector(X), ticksize = 0.01, side = 4, quiet = TRUE)
+        if (rug) {
+            rug(as.vector(X), ticksize = 0.01, side = 4, quiet = TRUE)
+        }
             
     }
          
@@ -121,12 +123,14 @@ cumulatedPlot <-
         if (labels) {
             plot(x = X, type = type, col = col[i], 
                 main = Units[i], ylab = ylab, xlab = "Time", ...)
-            # grid()
+            if (grid) grid()
         } else {
             plot(x = X, col = col[i], ...)   
         }
         abline(h = 0, col = "grey")
-        if (rug) rug(as.vector(X), ticksize = 0.01, side = 4, quiet = TRUE)
+        if (rug) {
+            rug(as.vector(X), ticksize = 0.01, side = 4, quiet = TRUE)
+        }
             
     }
          
@@ -176,7 +180,9 @@ returnPlot <-
             plot(x = X, col = col[i], ...)   
         }
         abline(h = 0, col = "grey")
-        if (rug) rug(as.vector(X), ticksize = 0.01, side = 4, quiet = TRUE)
+        if (rug) {
+            rug(as.vector(X), ticksize = 0.01, side = 4, quiet = TRUE)
+        }
             
     }
          

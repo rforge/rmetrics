@@ -78,7 +78,7 @@ dght(x, beta = 1e-6, delta = 1, mu = 0, nu = 10, log = FALSE)
 pght(q, beta = 1e-6, delta = 1, mu = 0, nu = 10, \dots)
 qght(p, beta = 1e-6, delta = 1, mu = 0, nu = 10, \dots)
 
-nigShapeTriangle(object, add = FALSE, \dots)
+nigShapeTriangle(object, add = FALSE, labels = TRUE, \dots)
 
 hypMode(alpha = 1, beta = 0, delta = 1, mu = 0, pm = c(1, 2, 3, 4))
 
@@ -115,9 +115,13 @@ nigSlider()
         and \code{beta} take the meaning of the shape parameters
         (usually named) \code{a.bar} and \code{b.bar}.
         }
+    \item{labels}{
+        a logical flag by default \code{TRUE}. 
+        Should the logarithm of the density be returned?
+        }
     \item{log}{
         a logical flag by default \code{FALSE}. 
-        Should the logarithm of the density be returned?
+        Should labels and a main title drawn to the plot?
         }
     \item{n}{
         number of observations.

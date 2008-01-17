@@ -38,9 +38,10 @@
 ################################################################################
 
 
-dnig = 
-function(x, alpha = 1, beta = 0, delta = 1, mu = 0, log = FALSE)
-{   # A function implemented by Diethelm Wuertz
+dnig <- 
+    function(x, alpha = 1, beta = 0, delta = 1, mu = 0, log = FALSE)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # FUNCTION:
     
@@ -53,9 +54,10 @@ function(x, alpha = 1, beta = 0, delta = 1, mu = 0, log = FALSE)
 # ------------------------------------------------------------------------------
 
 
-pnig = 
-function(q, alpha = 1, beta = 0, delta = 1, mu = 0)
-{   # A function implemented by Diethelm Wuertz
+pnig <- 
+    function(q, alpha = 1, beta = 0, delta = 1, mu = 0)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Function:
     
@@ -68,9 +70,10 @@ function(q, alpha = 1, beta = 0, delta = 1, mu = 0)
 # ------------------------------------------------------------------------------
 
 
-qnig = 
-function(p, alpha = 1, beta = 0, delta = 1, mu = 0)
-{   # A function implemented by Diethelm Wuertz
+qnig <- 
+    function(p, alpha = 1, beta = 0, delta = 1, mu = 0)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # FUNCTION:
     
@@ -83,9 +86,10 @@ function(p, alpha = 1, beta = 0, delta = 1, mu = 0)
 # ------------------------------------------------------------------------------
 
 
-rnig = 
-function(n, alpha = 1, beta = 0, delta = 1, mu = 0)
-{   # A function implemented by Diethelm Wuertz
+rnig <- 
+    function(n, alpha = 1, beta = 0, delta = 1, mu = 0)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Return normal inverse Gaussian distributed random variates
@@ -141,8 +145,8 @@ function(n, alpha = 1, beta = 0, delta = 1, mu = 0)
 # ------------------------------------------------------------------------------
 
    
-nigShapeTriangle =
-function(object, add = FALSE, ...)
+nigShapeTriangle <- 
+    function(object, add = FALSE, labels = TRUE, ...)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -161,12 +165,17 @@ function(object, add = FALSE, ...)
     stopifnot(class(object) == "fDISTFIT")
     
     # Plot Frame:
+    if (labels) {
+        xlab = "Asymmetry: chi"
+        ylab = "Steepness: zeta"
+        main = "NIG Shape Traingle"
+    } else {
+        xlab = ylab = main = ""
+    }
     if (!add) {
         x = c(-1, 0, 1, -1)
         y = c( 1, 0, 1,  1)
-        plot(x, y, type = "l", 
-            xlab = "Asymmetry: chi", ylab = "Steepness: zeta")
-        title(main = "NIG Shape Traingle")
+        plot(x, y, type = "l", xlab = xlab, ylab = ylab, main = main, ...)
         for (s in c(0.8, 0.6, 0.4, 0.2)) 
             lines(c(-s, s), c(s, s), lty = 3, col = "grey")  
         lines(c(0, 0), c(0, 1), lty = 3, col = "grey")
@@ -183,7 +192,11 @@ function(object, add = FALSE, ...)
     # Add Points:
     zeta = 1/sqrt(1+delta*sqrt(alpha^2-beta^2))
     chi = zeta*(beta/alpha)
-    points(chi, zeta, pch = 19, ...)
+    if (labels) {
+        points(chi, zeta, pch = 19, ...)
+    } else {
+        points(chi, zeta, ...)
+    }   
     
     # Result:
     ans = list(chi = chi[[1]], zeta = zeta[[1]])
