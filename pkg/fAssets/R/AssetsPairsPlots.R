@@ -36,9 +36,10 @@
 ################################################################################
 
 
-assetsPairsPlot =
-function(x, labels = TRUE, ...)
-{   # A function implemented by Diethelm Wuertz
+assetsPairsPlot <- 
+    function(x, labels = TRUE, ...)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Displays pairs of scatterplots of individual assets
@@ -66,9 +67,10 @@ function(x, labels = TRUE, ...)
 # ------------------------------------------------------------------------------
 
 
-assetsCorgramPlot =
-function(x, labels = TRUE, method = c("pie", "shade", "hist"), ...)
-{   # A function implemented by Diethelm Wuertz
+assetsCorgramPlot <-
+    function(x, labels = TRUE, method = c("pie", "shade", "hist"), ...)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Displays correlations between assets
@@ -123,9 +125,10 @@ function(x, labels = TRUE, method = c("pie", "shade", "hist"), ...)
 # ------------------------------------------------------------------------------
 
 
-assetsCorTestPlot = 
-function(x, labels = TRUE, ...)
-{   # A function implemented by Diethelm Wuertz
+assetsCorTestPlot <- 
+    function(x, labels = TRUE, ...)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Displays and tests pairwise correlations of assets
@@ -182,8 +185,9 @@ function(x, labels = TRUE, ...)
 
    
 assetsCorImagePlot <-
-function(x, show = c("cor", "test"), use = c("pearson", "kendall", "spearman"),
-labels = TRUE, abbreviate = 3, ...)
+    function(x, labels = TRUE, 
+    show = c("cor", "test"), use = c("pearson", "kendall", "spearman"),
+    abbreviate = 3, ...)
 {   
     # @author Sandrine Dudoit, sandrine@stat.berkeley.edu, from "SMA" library
     # @author modified by Peter Carl
@@ -212,7 +216,6 @@ labels = TRUE, abbreviate = 3, ...)
     # Match Arguments:
     show = match.arg(show)
     use = match.arg(use)
-    method = match.arg(method)
     
     # Handle Missing Values:
     R = na.omit(R, ...)
@@ -223,7 +226,7 @@ labels = TRUE, abbreviate = 3, ...)
     # Compute Correlation Matrix:
     R = as.matrix(R)
     n = NCOL(R)
-    if (method == "cor") {
+    if (show == "cor") {
         corr <- cor(R, method = use) 
         if (show == "test") {
             test = corr*NA 
@@ -231,9 +234,9 @@ labels = TRUE, abbreviate = 3, ...)
                 for (j in 1:n)
                     test[i,j] = cor.test(R[,i], R[,j], method = use)$p.value
         }
-    } else if (method == "robust") {
+    } else if (show == "robust") {
         stop("robust: Not Yet Implemented")  
-    } else if (method == "shrink") {
+    } else if (show == "shrink") {
         stop("robust: Not Yet Implemented")  
     }
     
@@ -261,7 +264,6 @@ labels = TRUE, abbreviate = 3, ...)
             paste(Names[use], "Corrleation ", Test, " Image", sep = ""))
         mText = paste("Method:", method)
         mtext(mText, side = 4, adj = 0, col = "grey", cex = 0.7)
-        # Box:
     } 
     
     # Add Box:

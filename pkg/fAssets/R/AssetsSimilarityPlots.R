@@ -35,9 +35,11 @@
 ################################################################################
 
 
-assetsDendrogramPlot =
-function(x, method = c(dist = "euclidian", clust = "complete"))
-{   # A function implemented by Diethelm Wuertz
+assetsDendrogramPlot <- 
+    function(x, labels = TRUE, 
+    method = c(dist = "euclidian", clust = "complete"))
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Displays hierarchical clustering dendrogram
@@ -56,14 +58,17 @@ function(x, method = c(dist = "euclidian", clust = "complete"))
     ans = hclust(DIST, method = method[2]) 
     
     # Plot Dendrogram:
-    # main = substitute(x)
-    plot(ans, xlab = "", main = "", sub = "")
-    mtext(paste(
-        "Distance Method:", method[1], " | ",
-        "Clustering Method:", method[2]),
-        side = 4, line = 0.1, adj = 0, col = "darkgrey", cex = 0.7)  
-    box()
-    
+    if (labels) {
+        plot(ans, xlab = "", main = "Dendrogram", sub = "")
+        mtext(paste(
+            "Distance Method:", method[1], " | ",
+            "Clustering Method:", method[2]),
+            side = 4, line = 0.1, adj = 0, col = "darkgrey", cex = 0.7)  
+        box()
+    } else {
+        plot(ans, main = "", sub = "", xlab = "", ylab = "")
+    }
+   
     # Return Value:
     invisible(list(dist = DIST, hclust = ans))
 }
@@ -72,9 +77,11 @@ function(x, method = c(dist = "euclidian", clust = "complete"))
 # ------------------------------------------------------------------------------
 
 
-assetsCorEigenPlot =
-function(x, method = c("pearson", "kendall", "spearman"), ...)
-{   # A function implemented by Diethelm Wuertz
+assetsCorEigenPlot <- 
+    function(x, labels = TRUE,
+    method = c("pearson", "kendall", "spearman"), ...)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Displays ratio of the largest two eigenvalues
@@ -99,13 +106,23 @@ function(x, method = c("pearson", "kendall", "spearman"), ...)
     x.eig = eigen(x.cor)$vectors[, 1:2]
     e1 = x.eig[, 1]
     e2 = x.eig[, 2]
-    plot(e1, e2, col = 'white', 
-        xlim = range(e1, e2), ylim = range(e1, e2), ...)
-    abline(h = 0, lty = 3, col = "grey")
-    abline(v = 0, lty = 3, col = "grey")
-    arrows(0, 0, e1, e2, cex = 0.5, col = "steelblue", length = 0.1)
-    text(e1, e2, rownames(x.cor))
-    mtext(method, side = 4, adj = 0, cex = 0.7, col = "grey")
+    
+    if (labels) {
+        plot(e1, e2, col = 'white', 
+            xlim = range(e1, e2), ylim = range(e1, e2), ...)
+        abline(h = 0, lty = 3, col = "grey")
+        abline(v = 0, lty = 3, col = "grey")
+        arrows(0, 0, e1, e2, cex = 0.5, col = "steelblue", length = 0.1)
+        text(e1, e2, rownames(x.cor))
+        mtext(method, side = 4, adj = 0, cex = 0.7, col = "grey")
+    } else {
+        plot(e1, e2, col = 'white', main = "", xlab = "", ylab = "", 
+            xlim = range(e1, e2), ylim = range(e1, e2), ...)
+        abline(h = 0, lty = 3, col = "grey")
+        abline(v = 0, lty = 3, col = "grey")
+        arrows(0, 0, e1, e2, cex = 0.5, col = "steelblue", length = 0.1)
+        text(e1, e2, rownames(x.cor))
+    }
     
     # Return Value:
     invisible()
@@ -115,9 +132,11 @@ function(x, method = c("pearson", "kendall", "spearman"), ...)
 # ------------------------------------------------------------------------------
 
 
-assetsTreePlot = 
-function(x, method = "euclidian", seed = NULL)
-{   # A function implemented by Diethelm Wuertz
+assetsTreePlot <- 
+    function(x, labels = TRUE,
+    method = "euclidian", seed = NULL)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Displays a minimum spanning tree of assets
