@@ -62,20 +62,21 @@
     # Colors:
     if (length(col) == 1) col = rep(col, times = DIM)
 
+    # Labels:
+    if (labels) {
+        xlab = "Threshold"
+        ylab = "Mean Excess"
+        main = colnames(X)
+    } else {
+        xlab = ylab = main = ""
+    }
+        
     # Mean Excess:
     for (i in 1:DIM) 
     {   
-        # Labels:
-        if (labels) {
-            xlab = "Threshold"
-            ylab = "Mean Excess"
-            main = colnames(X)
-        } else {
-            xlab = ylab = main = ""
-        }
-        
         # Scale Tail of Series:
         X = -scale(x[, i])
+        if (labels) main = colnames(X)
         
         # Normal Fit:
         me = normMeanExcessFit(X, doplot = TRUE, trace = FALSE, lwd = 2,
