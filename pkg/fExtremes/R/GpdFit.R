@@ -36,19 +36,11 @@
 #  .gpdpwmFit              Fits GPD with probability weighted moments
 #  .gpdmleFit              Fits GPD with max log-likelihood approach
 #   .gpdLLH                 Computes GPD log-likelihood function
-# METHODS:                PRINT, PLOT, AND SUMMARY:
-#  show.fGPDFIT            S4 Print Method for object of class "fGPDFIT"
-#  plot.fGPDFIT            S3 Plot Method for object of class "fGPDFIT"
-#  .gpd1Plot                Empirical Distribution Plot
-#  .gpd2Plot                Tail of Underlying Distribution
-#  .gpd3Plot                Scatterplot of GPD Residuals
-#  .gpd4Plot                Quantile-Quantile Plot of GPD Residuals
-#  summary.fGPDFIT         S3 Summary Method for object of class "fGPDFIT"
 ################################################################################
 
 
-gpdSim = 
-function(model = list(xi = 0.25, mu = 0, beta = 1), n = 1000, seed = NULL)
+gpdSim <- 
+    function(model = list(xi = 0.25, mu = 0, beta = 1), n = 1000, seed = NULL)
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
@@ -92,10 +84,12 @@ setClass("fGPDFIT",
 # ------------------------------------------------------------------------------
 
 
-gpdFit =
-function(x, u = quantile(x, 0.95), type = c("mle", "pwm"),
-information = c("observed", "expected"), title = NULL, description = NULL, ...)
-{   # A function implemented by Diethelm Wuertz
+gpdFit <- 
+    function(x, u = quantile(x, 0.95), type = c("mle", "pwm"),
+    information = c("observed", "expected"), 
+    title = NULL, description = NULL, ...)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Fits a generalized Pareto model to excesses
@@ -172,9 +166,73 @@ information = c("observed", "expected"), title = NULL, description = NULL, ...)
 # ------------------------------------------------------------------------------
 
 
-.gpdmleFit = 
-function(x, u = quantile(x, 0.95), information = c("observed", "expected"), ...) 
-{   # A function implemented by Diethelm Wuertz
+.gpdmleFit <-
+    function (x, u, information = c("observed", "expected"), ...) 
+{
+    # A Copy from Evir
+    
+    data = x
+    threshold = u
+    
+    exceedances <- data[data > threshold]
+    excess <- exceedances - threshold
+    Nu <- length(excess)
+    xbar <- mean(excess)
+    
+    s2 <- var(excess)
+    xi0 <- -0.5 * (((xbar * xbar)/s2) - 1)
+    beta0 <- 0.5 * xbar * (((xbar * xbar)/s2) + 1)
+    theta <- c(xi0, beta0)
+    
+    negloglik <- function(theta, tmp) 
+    {
+        xi <- theta[1]
+        beta <- theta[2]
+        cond1 <- beta <= 0
+        cond2 <- (xi <= 0) && (max(tmp) > (-beta/xi))
+        if (cond1 || cond2) {
+            f <- 1e+06
+        } else {
+            y <- logb(1 + (xi * tmp)/beta)
+            y <- y/xi
+            f <- length(tmp) * logb(beta) + (1 + xi) * sum(y)
+        }
+        f 
+    }
+        
+    fit <- optim(theta, negloglik, hessian = TRUE, ..., tmp = excess)
+    names(fit$par) = c("xi", "beta")
+    
+    if (fit$convergence) warning("Optimization may not have been succeeded.")
+    par.ests <- fit$par
+    converged <- fit$convergence
+    nllh.final <- fit$value
+    
+    information <- match.arg(information)
+    if (information == "observed") 
+        varcov <- solve(fit$hessian)
+    if (information == "expected") {
+        one <- (1 + par.ests[1])^2/Nu
+        two <- (2 * (1 + par.ests[1]) * par.ests[2]^2)/Nu
+        cov <- -((1 + par.ests[1]) * par.ests[2])/Nu
+        varcov <- matrix(c(one, cov, cov, two), 2)
+    }
+    
+    par.ses <- sqrt(diag(varcov))
+    names(par.ses) = c("xi", "beta")
+    
+    list(par.ests = par.ests, par.ses = par.ses, fit = fit, varcov = varcov)
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+.gpdmleFitCheck = 
+    function(x, u = quantile(x, 0.95), 
+    information = c("observed", "expected"), ...) 
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Fits GPD with max log-likelihood approach
@@ -187,7 +245,7 @@ function(x, u = quantile(x, 0.95), information = c("observed", "expected"), ...)
     
     # Parameter Estimation:
     fit = optim(theta, .gpdLLH, hessian = TRUE, excess = excess)
-    names(fit$par) = c("xi", "beta")
+    names(fit$par.ests) = c("xi", "beta")
     
     # Error Estimates:
     if (information[1] == "observed") {
@@ -211,9 +269,90 @@ function(x, u = quantile(x, 0.95), information = c("observed", "expected"), ...)
 # ------------------------------------------------------------------------------
 
 
+.gpdpwmFit <-
+    function (x, u) 
+{
+    # A Copy from Evir
+    
+    data = x
+    threshold = u
+    
+    data <- as.numeric(data)
+    n <- length(data)
+    exceedances <- data[data > threshold]
+    excess <- exceedances - threshold
+    Nu <- length(excess)
+    xbar <- mean(excess)
+   
+    a0 <- xbar
+    gamma <- -0.35
+    delta <- 0
+    pvec <- ((1:Nu) + gamma)/(Nu + delta)
+    a1 <- mean(sort(excess) * (1 - pvec))
+    xi <- 2 - a0/(a0 - 2 * a1)
+    beta <- (2 * a0 * a1)/(a0 - 2 * a1)
+    par.ests <- c(xi, beta)
+    names(par.ests) = c("xi", "beta")
+    
+    denom <- Nu * (1 - 2 * xi) * (3 - 2 * xi)
+    if (xi > 0.5) {
+        denom <- NA
+        warning("Asymptotic Standard Errors not available for PWM when xi>0.5.")
+    }
+    one <- (1 - xi) * (1 - xi + 2 * xi^2) * (2 - xi)^2
+    two <- (7 - 18 * xi + 11 * xi^2 - 2 * xi^3) * beta^2
+    cov <- beta * (2 - xi) * (2 - 6 * xi + 7 * xi^2 - 2 * xi^3)
+    varcov <- matrix(c(one, cov, cov, two), 2)/denom
+    information <- "expected"
+    converged <- NA
+    nllh.final <- NA
+    par.ses <- sqrt(diag(varcov)) 
+    names(par.ses) = c("xi", "beta")
+    
+    list(par.ests = par.ests, par.ses = par.ses, fit = NA, varcov = NA)
+}
+
+
+
+# ------------------------------------------------------------------------------
+
+
+.gpdpwmFitCheck <- 
+    function(x, u = quantile(x, 0.95)) 
+{   
+    # A function implemented by Diethelm Wuertz
+
+    # Description:
+    #   Fits GPD with probability weighted moments
+    
+    # FUNCTION:
+    
+    # PWM Fit:
+    x = as.vector(x)
+    excess = x[x > u] - u 
+    Nu = length(excess)
+    a0 = mean(excess)
+    pvec = ((1:Nu) - 0.35)/Nu
+    a1 = mean(sort(excess) * (1 - pvec))
+    xi = 2 - a0/(a0 - 2 * a1)
+    beta = (2 * a0 * a1)/(a0 - 2 * a1)
+    par.ests = c(xi = xi, beta = beta)
+    names(par.ests) = c("xi", "beta")
+    par.ses = c(xi = NA, beta = NA)
+    names(par.ses) = c("xi", "beta")
+    
+    # Return Value:
+    list(par.ests = par.ests, par.ses = par.ses, fit = NA, varcov = NA)
+}
+
+
+################################################################################
+
+
 .gpdLLH =
 function(theta, excess)
-{   # A function implemented by Diethelm Wuertz
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Computes GPD log-likelihood function
@@ -233,361 +372,6 @@ function(theta, excess)
     
     # Return Value:
     func
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.gpdpwmFit = 
-function(x, u = quantile(x, 0.95)) 
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Fits GPD with probability weighted moments
-    
-    # FUNCTION:
-    
-    # PWM Fit:
-    x = as.vector(x)
-    excess = x[x > u] - u 
-    Nu = length(excess)
-    a0 = mean(excess)
-    pvec = ((1:Nu) - 0.35)/Nu
-    a1 = mean(sort(excess) * (1 - pvec))
-    xi = 2 - a0/(a0 - 2 * a1)
-    beta = (2 * a0 * a1)/(a0 - 2 * a1)
-    par.ests = c(xi = xi, beta = beta)
-    par.ses = c(xi = NA, beta = NA)
-    
-    # Return Value:
-    list(par.ests = par.ests, par.ses = par.ses, fit = NA, varcov = NA)
-}
-
-
-################################################################################
-
-
-show.fGPDFIT =
-function(object)
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Print Method for an object of class 'gpdFit'
-    
-    # FUNCTION:
-    
-    # Title:
-    cat("\nTitle:\n ", object@title, "\n")
-    
-    # Function Call:
-    cat("\nCall:\n ")
-    cat(paste(deparse(object@call), sep = "\n", 
-        collapse = "\n"), "\n", sep = "") 
-            
-    # Estimation Type:
-    cat("\nEstimation Method:\n ", object@method, "\n") 
-    
-    # Estimated Parameters:
-    cat("\nEstimated Parameters:\n")
-    print(object@fit$par.ests)
-    
-    # Desription:
-    cat("\nDescription\n ", object@description, "\n\n")
-    
-    
-    # Return Value:
-    invisible(object)
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-setMethod("show", "fGPDFIT", show.fGPDFIT)
-
-
-################################################################################
-
-
-plot.fGPDFIT =
-function(x, which = "ask", ...)
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Plot method for objects of class 'fGPDFIT'
-
-    # Example:
-    #   x = as.timeSeries(danishClaims); plot(gpdFit(x, 4), "ask")
-    
-    # FUNCTION:
-            
-    # Plot:
-    interactivePlot(
-        x = x,
-        choices = c(
-            "Excess Distribution",
-            "Tail of Underlying Distribution",
-            "Scatterplot of Residuals", 
-            "QQ-Plot of Residuals"),
-        plotFUN = c(
-            ".gpd1Plot", 
-            ".gpd2Plot", 
-            ".gpd3Plot",
-            ".gpd4Plot"),
-        which = which)
-                    
-    # Return Value:
-    invisible(x)
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.gpd1Plot =
-function(x, labels = TRUE, ...)
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Empirical Distribution Plot
-    
-    # Arguments:
-    #   x - an object of class fGPDFIT
-    #   labels - a logical flag. Should labels be printed?
-    
-    # FUNCTION:
-    
-    # Data:
-    extend = 1.5
-    u = x@parameter$u
-    data = as.vector(x@data$exceedances)
-    sorted = sort(data)
-    shape = xi = x@fit$par.ests["xi"]
-    scale = beta = x@fit$par.est["beta"]
-    ypoints = ppoints(sorted)
-    U = max(sorted)*extend
-    z = qgpd(seq(0, 1, length = 1000), xi, u, beta)
-    z = pmax(pmin(z, U), u)
-    y = pgpd(z, xi, u, beta) 
-    
-    # Labels:
-    if (labels) {
-        xlab = "Fu(x-u)"
-        ylab = "x [log Scale]"
-        main = "Excess Distribution"
-    } else {
-        xlab = ylab = main = ""
-    }
-    
-    # Plot:
-    plot(x = sorted, y = ypoints, 
-        xlim = range(u, U), ylim = range(ypoints, y, na.rm = TRUE), 
-        main = main, xlab = xlab, ylab = ylab, 
-        log = "x", axes = TRUE, 
-        col = "steelblue", pch = 19, ...)
-    lines(z[y >= 0], y[y >= 0], col = "brown") 
-    
-    # Addon:
-    if (labels) {
-        u = signif (x@parameter$u, 3)
-        text = paste("u =", u)
-        mtext(text, side = 4, adj = 0, cex = 0.7)
-        grid()
-    }
-    
-    # Return Value:
-    invisible()
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.gpd2Plot =
-function(x, labels = TRUE, ...) 
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Tail of Underlying Distribution
-    
-    # Arguments:
-    #   x - an object of class fGPDFIT
-    #   labels - a logical flag. Should labels be printed?
-    
-    # FUNCTION:
-    
-    # Settings:
-    extend = 1.5
-    u = x@parameter$u
-    data = as.vector(x@data$x)
-    sorted = sort(data[data > u])
-    prob = x@fit$prob
-    shape = xi = x@fit$par.ests["xi"]
-    beta = x@fit$par.ests["beta"]
-    scale = beta * (1-prob)^xi
-    location = u - (scale*((1 - prob)^(-xi)-1))/xi
-
-    # Labels:
-    if (labels) {
-        xlab = "x [log scale]"
-        ylab = "1-F(x) [log scale]"
-        main = "Tail of Underlying Distribution"
-    } else {
-        xlab = ylab = main = ""
-    }
-    
-    # Plot:
-    U = max(data) * extend
-    ypoints = ppoints(sorted)
-    ypoints = (1 - prob) * (1 - ypoints)
-    z = qgpd(seq(0, 1, length = 1000), xi, u, beta)
-    z = pmax(pmin(z, U), u)
-    y = pgpd(z, xi, u, beta)   
-    y = (1 - prob) * (1 - y)
-    plot(x = sorted, y = ypoints, 
-        xlim = range(u, U), ylim = range(ypoints, y[y>0], na.rm = TRUE), 
-        main = main, xlab = xlab, ylab = ylab, 
-        log = "xy", axes = TRUE, 
-        col = "steelblue", pch = 19, ...)
-        
-    # Line:
-    lines(z[y >= 0], y[y >= 0], col = "brown")    
-    if (labels) grid()
-    
-    # Return Value:
-    invisible(list(x = sorted, y = ypoints))
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.gpd3Plot =
-function(x, labels = TRUE, ...) 
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Scatterplot of GPD Residuals
-    
-    # Arguments:
-    #   x - an object of class fGPDFIT
-    #   labels - a logical flag. Should labels be printed?
-    
-    # FUNCTION:
-    
-    # Residuals:
-    residuals = x@residuals
-    
-    # Labels:
-    if (labels) {
-        ylab = "Residuals"
-        xlab = "Ordering"
-        main = "Scatterplot of Residuals"
-    } else {
-        xlab = ylab = main = ""
-    }
-    
-    # Plot:
-    plot(residuals, 
-       main = main, ylab = ylab, xlab = xlab, 
-       col = "steelblue", pch = 19, ...)
-    lines(lowess(1:length(residuals), residuals), col = "brown") 
-    if (labels) grid()
-    
-    # Return Value:
-    invisible(list(x = 1:(length(residuals)), y = residuals))
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-.gpd4Plot = 
-function(x, labels = TRUE, ...) 
-{   # A function implemented by Diethelm Wuertz
-
-    # Description:
-    #   Quantile-Quantile Plot of GPD Residuals
-    
-    # Arguments:
-    #   x - an object of class fGPDFIT
-    #   labels - a logical flag. Should labels be printed?
-    
-    # FUNCTION:
-    
-    # Data:
-    data = x@residuals
-    sorted = sort(data)
-    
-    # Labels:
-    if (labels) {
-        xlab = "Ordered Data"
-        ylab = "Exponential Quantiles"
-        main = "QQ-Plot of Residuals"
-    } else {
-        xlab = ylab = main = ""
-    }
-    
-    # Plot:
-    y = qexp(ppoints(data))
-    plot(x = sorted, y = y, 
-        main = main, xlab = xlab, ylab = ylab, 
-        col = "steelblue", pch = 19, ...)
-    abline(lsfit(sorted, y), col = "brown")
-    if (labels) grid()
-    
-    # Return Value:
-    invisible(list(x = sorted, y = y))
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-summary.fGPDFIT = 
-function(object, doplot = TRUE, which = "all", ...) 
-{   # A function written by Diethelm Wuertz
-
-    # Description:
-    #   Summary method for objects of class "gpdFit"
-    
-    # FUNCTION:
-
-    # Title:
-    cat("\nTitle:\n" , object@title, "\n")
-    
-    # Function Call:
-    cat("\nCall:\n")
-    cat(paste(deparse(object@call), sep = "\n", 
-        collapse = "\n"), "\n", sep = "") 
-            
-    # Estimation Type:
-    cat("\nEstimation Type:\n ", object@method, "\n") 
-    
-    # Estimated Parameters:
-    cat("\nEstimated Parameters:\n")
-    print(object@fit$par.ests)
-    
-    # Summary - For MLE print additionally:
-    if (object@method[2] == "mle") {
-        cat("\nStandard Deviations:\n"); print(object@fit$par.ses)
-        if (!is.na(object@fit$llh))
-            cat("\nLog-Likelihood Value:\n ", object@fit$llh, "\n")
-        if (!is.na(object@fit$convergence))
-            cat("\nType of Convergence:\n ", object@fit$convergence, "\n") 
-    }
-    
-    # Plot:
-    if (doplot) {
-        plot(object, which = which, ...)
-    }
-    
-    # Desription:
-    cat("\nDescription\n ", object@description, "\n\n")
-    
-    # Return Value:
-    invisible(object)
 }
 
 

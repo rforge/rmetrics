@@ -28,27 +28,31 @@
 
 
 ################################################################################
-# FUNCTION:              GPD DISTRIBUTION FAMILY:
-# dgpd                    Density for the Generalized Pareto DF [USE FROM EVIS]
-#  pgpd                    Probability for the Generalized Pareto DF
-#  qgpd                    Quantiles for the Generalized Pareto DF
-#  rgpd                    Random variates for the Generalized Pareto DF
-# gpdMoments              Computes true statistics for GPD distribution
-# gpdSlider               Displays distribution and rvs for GPD distribution
-# FUNCTION:              INTERNAL GPD DISTRIBUTION FAMILY:
-# .depd                    Density for the Generalized Pareto DF 
-#  .pepd                    Probability for the Generalized Pareto DF
-#  .qepd                    Quantiles for the Generalized Pareto DF
-#  .repd                    Random variates for the Generalized Pareto DF
+# FUNCTION:               GPD DISTRIBUTION FAMILY:
+#  dgpd                    Density for the Generalized Pareto DF [USE FROM EVIS]
+#   pgpd                    Probability for the Generalized Pareto DF
+#   qgpd                    Quantiles for the Generalized Pareto DF
+#   rgpd                    Random variates for the Generalized Pareto DF
+# FUNCTION:               GPD MOMENTS:
+#  gpdMoments              Computes true statistics for GPD distribution
+# FUNCTION:               GPD SLIDER:
+#  gpdSlider               Displays distribution and rvs for GPD distribution
+# FUNCTION:               INTERNAL GPD DISTRIBUTION FAMILY:
+#  .depd                   Density for the Generalized Pareto DF 
+#  .pepd                   Probability for the Generalized Pareto DF
+#  .qepd                   Quantiles for the Generalized Pareto DF
+#  .repd                   Random variates for the Generalized Pareto DF
 ################################################################################
 
 
-dgpd = 
-function(x, xi = 1, mu = 0, beta = 1, log = FALSE)
+dgpd <- 
+    function(x, xi = 1, mu = 0, beta = 1, log = FALSE)
 {   # A function written by Diethelm Wuertz
 
     # Description:
     #   Density for the Generalized Pareto DF
+    
+    # Arguments:
     
     # FUNCTION:
     
@@ -72,12 +76,14 @@ function(x, xi = 1, mu = 0, beta = 1, log = FALSE)
 # ------------------------------------------------------------------------------
 
 
-pgpd = 
-function(q, xi = 1, mu = 0, beta = 1, lower.tail = TRUE)
+pgpd <- 
+    function(q, xi = 1, mu = 0, beta = 1, lower.tail = TRUE)
 {   # A function written by Diethelm Wuertz
 
     # Description:
     #   Probability for the Generalized Pareto DF
+    
+    # Arguments:
     
     # FUNCTION:
     
@@ -101,12 +107,14 @@ function(q, xi = 1, mu = 0, beta = 1, lower.tail = TRUE)
 # ------------------------------------------------------------------------------
 
 
-qgpd = 
-function(p, xi = 1, mu = 0, beta = 1, lower.tail = TRUE)
+qgpd <- 
+    function(p, xi = 1, mu = 0, beta = 1, lower.tail = TRUE)
 {   # A function written by Diethelm Wuertz
 
     # Description:
     #   Quantiles for the Generalized Pareto DF
+    
+    # Arguments:
     
     # FUNCTION:
     
@@ -130,12 +138,14 @@ function(p, xi = 1, mu = 0, beta = 1, lower.tail = TRUE)
 # ------------------------------------------------------------------------------
 
 
-rgpd = 
-function(n, xi = 1, mu = 0, beta = 1)
+rgpd <- 
+    function(n, xi = 1, mu = 0, beta = 1)
 {   # A function written by Diethelm Wuertz
 
     # Description:
     #   Random variates for the Generalized Pareto DF
+    
+    # Arguments:
     
     # FUNCTION:
     
@@ -159,12 +169,14 @@ function(n, xi = 1, mu = 0, beta = 1)
 # ------------------------------------------------------------------------------
 
 
-gpdMoments = 
-function(xi = 1, mu = 0, beta = 1)
+gpdMoments <- 
+    function(xi = 1, mu = 0, beta = 1)
 {   # A function implemented by Diethelm Wuertz
  
     # Description:
     #   Compute true statistics for Generalized Pareto distribution
+    
+    # Arguments:
     
     # Value:
     #   Returns true mean of Generalized Pareto distribution 
@@ -194,12 +206,14 @@ function(xi = 1, mu = 0, beta = 1)
 # ------------------------------------------------------------------------------
 
 
-gpdSlider =  
-function(method = c("dist", "rvs"))
+gpdSlider <- 
+    function(method = c("dist", "rvs"))
 {   # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Displays distribution and rvs for GPD distribution
+    
+    # Arguments:
     
     # FUNCTION:
     
@@ -284,10 +298,12 @@ function(method = c("dist", "rvs"))
 ################################################################################
 
 
-.depd = 
-function(x, location = 0, scale = 1, shape = 0, log = FALSE) 
+.depd <- 
+    function(x, location = 0, scale = 1, shape = 0, log = FALSE) 
 {
     # Description:
+    
+    # Arguments:
     
     # FUNCTION:
     
@@ -324,10 +340,12 @@ function(x, location = 0, scale = 1, shape = 0, log = FALSE)
 # ------------------------------------------------------------------------------
 
 
-.pepd = 
-function(q, location = 0, scale = 1, shape = 0, lower.tail = TRUE) 
+.pepd <- 
+    function(q, location = 0, scale = 1, shape = 0, lower.tail = TRUE) 
 {
     # Description:
+    
+    # Arguments:
     
     # FUNCTION:
     
@@ -360,10 +378,12 @@ function(q, location = 0, scale = 1, shape = 0, lower.tail = TRUE)
 # ------------------------------------------------------------------------------
 
 
-.qepd =
-function(p, location = 0, scale = 1, shape = 0, lower.tail = TRUE) 
+.qepd <- 
+    function(p, location = 0, scale = 1, shape = 0, lower.tail = TRUE) 
 { 
     # Description:
+    
+    # Arguments:
     
     # FUNCTION:
     
@@ -396,10 +416,12 @@ function(p, location = 0, scale = 1, shape = 0, lower.tail = TRUE)
 # ------------------------------------------------------------------------------
 
 
-.repd = 
-function(n, location = 0, scale = 1, shape = 0) 
+.repd <- 
+    function(n, location = 0, scale = 1, shape = 0) 
 {
     # Description:
+    
+    # Arguments:
     
     # FUNCTION:
     
