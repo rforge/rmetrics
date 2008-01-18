@@ -132,6 +132,7 @@ as.POSIXlt(x, tz = "")
 
 \method{as.matrix}{ts}(x, \dots)
 \method{as.matrix}{mts}(x, \dots)
+\method{head}{ts}(x, n = 6, \dots)
 \method{print}{control}(x, \dots)
 }
 
@@ -164,7 +165,9 @@ as.POSIXlt(x, tz = "")
     \item{n}{
         [align] - \cr
         if \code{xout} is not specified, alignment takes place at \code{n}
-        equally spaced points spanning the interval \code{range(x)}.
+        equally spaced points spanning the interval \code{range(x)}.\cr
+        [head] - \cr
+        a single integer, the length of the head.
         }
     \item{na.last}{
         [rank] - \cr

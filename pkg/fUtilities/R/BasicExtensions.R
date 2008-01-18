@@ -65,7 +65,8 @@
 #  as.POSIXlt                Converts objects of class POSIXlt                 
 #  as.POSIXlt.default        Default Method                                    
 #  as.matrix.ts              Converts univariate ts to 1-column matrix         
-#  as.matrix.mts             Converts multivariate ts to matrix                
+#  as.matrix.mts             Converts multivariate ts to matrix  
+#  head.ts                   Adds head method              
 #  Sys.putenv                depreciated after 2.4.1                           
 ################################################################################
 
@@ -685,6 +686,32 @@ as.matrix.mts <-
 
     # Return Value:
     ans
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+head.ts <- 
+    function(x, n = 6, ...)
+{
+    # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   Adds head method
+    
+    # Example:
+    #   ts = ts(rnorm(50)); head(ts)
+    #   mts = ts(cbind(rnorm(50), rnorm(50))); head(mts) 
+    
+    # FUNCTION:
+    
+    if (NCOL(x) == 1) {
+        return(stats::as.ts(x[1:n], ...)) 
+    } else {
+        return(stats::as.ts(x[1:n, ], ...))
+    }
+    
 }
 
 
