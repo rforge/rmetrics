@@ -30,17 +30,13 @@
 ################################################################################
 # FUNCTION:                 PLOT UTILITIES:
 #  interactivePlot           Plots several graphs interactively
-#  gridVector                Creates from two vectors rectangular grid points
 ################################################################################
-
- 
-################################################################################
-# FUNCTION:                 PLOT UTILITIES:
-#  interactivePlot           Plots several graphs interactively
-#  gridVector                Creates from two vectors rectangular grid points
 
 
 .n.plots = 0
+
+
+# ------------------------------------------------------------------------------
 
 
 interactivePlot <-  
@@ -142,53 +138,6 @@ interactivePlot <-
             
     # Return Value:
     invisible(x)
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-gridVector <-  
-    function(x, y)
-{   
-    # A function implemented by Diethelm Wuertz, GPL
-
-    # Description:
-    #   Creates from two vectors x and y all grid points
-    
-    # Details: 
-    #   The two vectors x and y span a rectangular grid with nx=length(x) 
-    #   times ny=length(y) points which are returned as a matrix of size
-    #   (nx*ny) times 2.
-    
-    # Arguments:
-    #   x, y - two numeric vectors of length m and n which span the 
-    #   rectangular grid of size m times n.
-    
-    # Value:
-    #   returns a list with two elements X and Y each of length m 
-    #   times n
-    
-    # Example:
-    #   > gridVector(1:3, 1:2)
-    #             [,1] [,2]
-    #       [1,]    1    1
-    #       [2,]    2    1
-    #       [3,]    3    1
-    #       [4,]    1    2
-    #       [5,]    2    2
-    #       [6,]    3    2
-
-    # FUNCTION: 
-    
-    # Prepare for Input:
-    nx = length(x)
-    ny = length(y)
-    xoy = cbind(rep(x, ny), as.vector(matrix(y, nx, ny, byrow = TRUE)))
-    X = matrix(xoy, nx * ny, 2, byrow = FALSE)
-    
-    # Return Value:
-    list(X = X[,1], Y = X[,2])
 }
 
 

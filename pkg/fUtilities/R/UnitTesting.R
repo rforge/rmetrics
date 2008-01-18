@@ -33,8 +33,8 @@
 #  .runitTest                Perorms RUnit Tests
 #  .rmetricsPackages         Lists all Rmetrics packages
 #  .rmetricsUnitTest         Performs RUnit tests for all Rmetrics packages
-#  .getIndex                 Extracts R package index
-#  .getDescription           Extracts R package description
+#  .listIndex                Extracts R package index
+#  .listDescription          Extracts R package description
 #  .listFunctions            Lists all functions in a package
 #  .countFunctions           Counts all functions in a package
 ################################################################################
@@ -281,7 +281,7 @@
 # ------------------------------------------------------------------------------
 
 
-.getIndex <-
+.listIndex <-
     function(package = "Rmetrics")
 {
     # A function implemented by Diethelm Wuertz
@@ -290,7 +290,7 @@
     #   Extracts R package index
     
     # Example:
-    #   .getIndex("fSeries")
+    #   .listIndex("fSeries")
     
     # FUNCTION:
     
@@ -309,7 +309,7 @@
 # ------------------------------------------------------------------------------
 
 
-.getDescription <-
+.listDescription <-
     function(package = "Rmetrics")
 {
     # A function implemented by Diethelm Wuertz
@@ -318,7 +318,7 @@
     #   Extract package description
     
     # Example:
-    #   .getIndex("fSeries")
+    #   .listIndex("fSeries")
     
     # FUNCTION:
     
@@ -340,7 +340,7 @@
 .listFunctions <- 
     function(package = "Rmetrics") 
 {   
-    # A function implewmented by Diethelm Wuertz
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Lists all functions in a package
@@ -374,16 +374,13 @@
 .countFunctions <- 
     function(package) 
 {   
-    # A function implewmented by Diethelm Wuertz
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Counts all functions in a package
     
     # Arguments:
     #   package - a character string, the name of the Package
-
-    # Author:
-    #   Original code from B. Ripley
     
     # FUNCTION:
     
