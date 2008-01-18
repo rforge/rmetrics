@@ -36,8 +36,8 @@
 
 
 seriesPlot <- 
-    function(x, labels = TRUE, type = "l", col = "steelblue", 
-    ylab = "Returns", grid = FALSE, rug = TRUE, ...) 
+    function(x, type = "l", col = "steelblue", 
+    FUN = noDecor, ...) 
 {   
     # A function implemented by Diethelm Wuertz
     
@@ -49,39 +49,22 @@ seriesPlot <-
     #       or any other object which can be transformed by the function
     #       'as.timeSeries()' into an object of class 'timeSeries'.
     
-    # Example:
-    # tS=timeSeries(cbind(rnorm(12),rt(12,4)),timeCalendar(),units=c("N","T"))
-    # seriesPlot(tS)
-    
     # FUNCTION:
-
+ 
     # timeSeries:
-    if (!is.timeSeries(x)) x = as.timeSeries(x)
-    Units = x@units
-    DIM = dim(x@Data)[2]
-    if (length(col) == 1) col = rep(col, times = DIM)
-    
+    stopifnot(is.timeSeries(x))
+    N = NCOL(x)
+    decor = match.fun(FUN)
+    if (length(col) == 1) col = rep(col, times = N)
+     
     # Series Plots:
-    for (i in 1:DIM) {
-        X = x[, i]
-        if (labels) {
-            plot(x = X, type = type, col = col[i], 
-                main = Units[i], ylab = ylab, xlab = "Time", ...)
-            if (grid) grid()
-        } else {
-            plot(x = X, col = col[i], ...)   
-        }
-        
-        # Add Zero Line:
-        abline(h = 0, col = "grey")
-        
-        # Add Rugs:
-        if (rug) {
-            rug(as.vector(X), ticksize = 0.01, side = 4, quiet = TRUE)
-        }
-            
+    for (i in 1:N) {
+        X = x[, i] 
+        plot(x = X, type = type, col = col[i], ann = FALSE, ...)
+        title(...)
+        decor(x = X)      
     }
-         
+    
     # Return Value:
     invisible()
 }
@@ -91,48 +74,20 @@ seriesPlot <-
 
 
 cumulatedPlot <-  
-    function(x, index = 100, labels = TRUE, type = "l", col = "steelblue", 
-    ylab = "Index", grid = FALSE, rug = TRUE, ...) 
+    function(x, index = 100, type = "l", col = "steelblue", 
+    FUN = noDecor, ...) 
 {   
     # A function implemented by Diethelm Wuertz
     
     # Description:
     #   Displays a cumulated series given the returns
-  
-    # Arguments:
-    #   x - an uni- or multivariate return series of class 'timeSeries' 
-    #       or any other object which can be transformed by the function
-    #       'as.timeSeries()' into an object of class 'timeSeries'.
-    
-    # Example:
-    # tS=timeSeries(cbind(rnorm(12),rt(12,4)),timeCalendar(),units=c("N","T"))
-    # seriesPlot(tS)
     
     # FUNCTION:
 
     # timeSeries:
-    if (!is.timeSeries(x)) x = as.timeSeries(x)
+    stopifnot(is.timeSeries(x))
     x = index * exp(colCumsums(x))
-    Units = x@units
-    DIM = dim(x@Data)[2]
-    if (length(col) == 1) col = rep(col, times = DIM)
-    
-    # Series Plots:
-    for (i in 1:DIM) {
-        X = x[, i]
-        if (labels) {
-            plot(x = X, type = type, col = col[i], 
-                main = Units[i], ylab = ylab, xlab = "Time", ...)
-            if (grid) grid()
-        } else {
-            plot(x = X, col = col[i], ...)   
-        }
-        abline(h = 0, col = "grey")
-        if (rug) {
-            rug(as.vector(X), ticksize = 0.01, side = 4, quiet = TRUE)
-        }
-            
-    }
+    seriesPlot(x = x, type = type, col = col, FUN = FUN, ...)
          
     # Return Value:
     invisible()
@@ -143,48 +98,20 @@ cumulatedPlot <-
 
 
 returnPlot <-  
-    function(x, labels = TRUE, type = "l", col = "steelblue", 
-    ylab = "Returns", grid = FALSE, rug = TRUE, ...) 
+    function(x, type = "l", col = "steelblue", 
+    FUN = noDecor, ...) 
 {   
     # A function implemented by Diethelm Wuertz
     
     # Description:
     #   Displays returns given the cumulated series
-  
-    # Arguments:
-    #   x - an uni- or multivariate return series of class 'timeSeries' 
-    #       or any other object which can be transformed by the function
-    #       'as.timeSeries()' into an object of class 'timeSeries'.
-    
-    # Example:
-    # tS=timeSeries(cbind(rnorm(12),rt(12,4)),timeCalendar(),units=c("N","T"))
-    # seriesPlot(tS)
     
     # FUNCTION:
 
     # timeSeries:
-    if (!is.timeSeries(x)) x = as.timeSeries(x)
+    stopifnot(is.timeSeries(x))
     x = returns(x, ...)
-    Units = x@units
-    DIM = dim(x@Data)[2]
-    if (length(col) == 1) col = rep(col, times = DIM)
-    
-    # Return Plots:
-    for (i in 1:DIM) {
-        X = x[, i]
-        if (labels) {
-            plot(x = X, type = type, col = col[i], 
-                main = Units[i], ylab = ylab, xlab = "Time", ...)
-            if (grid) grid()
-        } else {
-            plot(x = X, col = col[i], ...)   
-        }
-        abline(h = 0, col = "grey")
-        if (rug) {
-            rug(as.vector(X), ticksize = 0.01, side = 4, quiet = TRUE)
-        }
-            
-    }
+    seriesPlot(x = x, type = type, col = col, FUN = FUN, ...)
          
     # Return Value:
     invisible()
@@ -195,47 +122,20 @@ returnPlot <-
 
 
 drawdownPlot <-  
-    function(x, labels = TRUE, type = "l", col = "steelblue", 
-    ylab = "Drawdowns", grid = FALSE, rug = TRUE, ...) 
+    function(x, type = "l", col = "steelblue", 
+    FUN = noDecor, ...) 
 {   
     # A function implemented by Diethelm Wuertz
     
     # Description:
     #   Displays drawdowns given the return series
-  
-    # Arguments:
-    #   x - an uni- or multivariate return series of class 'timeSeries' 
-    #       or any other object which can be transformed by the function
-    #       'as.timeSeries()' into an object of class 'timeSeries'.
-    
-    # Example:
-    # tS=timeSeries(cbind(rnorm(12),rt(12,4)),timeCalendar(),units=c("N","T"))
-    # seriesPlot(tS)
     
     # FUNCTION:
 
     # timeSeries:
-    if (!is.timeSeries(x)) x = as.timeSeries(x)
-    Units = x@units
-    DIM = dim(x@Data)[2]
-    if (length(col) == 1) col = rep(col, times = DIM)
-    
-    # Return Plots:
-    for (i in 1:DIM) {
-        X = drawdowns(x[, i])
-        if (labels) {
-            plot(x = X, type = type, col = col[i], 
-                main = Units[i], ylab = ylab, xlab = "Time", ...)
-            if (grid) grid()
-        } else {
-            plot(x = X, col = col[i], ...)   
-        }
-        abline(h = 0, col = "grey")
-        if (rug) {
-            rug(as.vector(X), ticksize = 0.01, side = 4, quiet = TRUE)
-        }
-            
-    }
+    stopifnot(is.timeSeries(x))
+    x = drawdowns(x, ...)
+    seriesPlot(x = x, type = type, col = col, FUN = FUN, ...)
          
     # Return Value:
     invisible()
