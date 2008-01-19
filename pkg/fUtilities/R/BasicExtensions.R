@@ -692,9 +692,9 @@ as.matrix.mts <-
 # ------------------------------------------------------------------------------
 
 
-head.ts <- 
-    function(x, n = 6, ...)
-{
+## head.ts <- 
+##     function(x, n = 6, ...)
+## {
     # A function implemented by Diethelm Wuertz
     
     # Description:
@@ -706,13 +706,13 @@ head.ts <-
     
     # FUNCTION:
     
-    if (NCOL(x) == 1) {
-        return(stats::as.ts(x[1:n], ...)) 
-    } else {
-        return(stats::as.ts(x[1:n, ], ...))
-    }
+##     if (NCOL(x) == 1) {
+##         return(stats::as.ts(x[1:n], ...)) 
+##     } else {
+##         return(stats::as.ts(x[1:n, ], ...))
+##     }
     
-}
+## }
 
 
 ################################################################################
