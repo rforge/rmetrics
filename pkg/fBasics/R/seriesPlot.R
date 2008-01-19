@@ -36,8 +36,9 @@
 
 
 seriesPlot <- 
-    function(x, type = "l", col = "steelblue", 
-    FUN = noDecor, ...) 
+    function(x, labels = TRUE, type = "l", col = "steelblue", 
+    grid = TRUE, rug = TRUE, ...) 
+
 {   
     # A function implemented by Diethelm Wuertz
     
@@ -54,15 +55,20 @@ seriesPlot <-
     # timeSeries:
     stopifnot(is.timeSeries(x))
     N = NCOL(x)
-    decor = match.fun(FUN)
+    Units = colnames(x)
     if (length(col) == 1) col = rep(col, times = N)
      
     # Series Plots:
     for (i in 1:N) {
         X = x[, i] 
         plot(x = X, type = type, col = col[i], ann = FALSE, ...)
-        title(...)
-        decor(x = X)      
+        if (labels) {
+            title(main = Units[i], xlab = "Time", ylab = "Value") 
+        } else {
+            title(...)
+        }  
+        if(grid) grid()
+        if(rug) rug(as.vector(X), ticksize = 0.01, side = 2, quiet = TRUE)
     }
     
     # Return Value:
@@ -74,8 +80,8 @@ seriesPlot <-
 
 
 cumulatedPlot <-  
-    function(x, index = 100, type = "l", col = "steelblue", 
-    FUN = noDecor, ...) 
+    function(x, index = 100, labels = TRUE, type = "l", col = "steelblue", 
+    grid = TRUE, rug = TRUE, ...) 
 {   
     # A function implemented by Diethelm Wuertz
     
@@ -87,7 +93,8 @@ cumulatedPlot <-
     # timeSeries:
     stopifnot(is.timeSeries(x))
     x = index * exp(colCumsums(x))
-    seriesPlot(x = x, type = type, col = col, FUN = FUN, ...)
+    seriesPlot(x, labels = labels, type = type, col = col, 
+        grid = grid, rug = rug, ...) 
          
     # Return Value:
     invisible()
@@ -98,8 +105,8 @@ cumulatedPlot <-
 
 
 returnPlot <-  
-    function(x, type = "l", col = "steelblue", 
-    FUN = noDecor, ...) 
+    function(x, labels = TRUE, type = "l", col = "steelblue", 
+    grid = TRUE, rug = TRUE, ...) 
 {   
     # A function implemented by Diethelm Wuertz
     
@@ -111,7 +118,8 @@ returnPlot <-
     # timeSeries:
     stopifnot(is.timeSeries(x))
     x = returns(x, ...)
-    seriesPlot(x = x, type = type, col = col, FUN = FUN, ...)
+    seriesPlot(x, labels = labels, type = type, col = col, 
+        grid = grid, rug = rug, ...) 
          
     # Return Value:
     invisible()
@@ -122,8 +130,8 @@ returnPlot <-
 
 
 drawdownPlot <-  
-    function(x, type = "l", col = "steelblue", 
-    FUN = noDecor, ...) 
+    function(x, labels = TRUE, type = "l", col = "steelblue", 
+    grid = TRUE, rug = TRUE, ...) 
 {   
     # A function implemented by Diethelm Wuertz
     
@@ -135,7 +143,8 @@ drawdownPlot <-
     # timeSeries:
     stopifnot(is.timeSeries(x))
     x = drawdowns(x, ...)
-    seriesPlot(x = x, type = type, col = col, FUN = FUN, ...)
+    seriesPlot(x, labels = labels, type = type, col = col, 
+        grid = grid, rug = rug, ...) 
          
     # Return Value:
     invisible()
