@@ -77,7 +77,8 @@ boxPlot <-
 
 boxPercentilePlot <-  
     function(x, col = "steelblue", ...) 
-{   # A modified copy from Hmisc
+{   
+    # A modified copy from Hmisc
 
     # Description:
     #   Produces a side-by-side box-percentile plot
@@ -115,7 +116,7 @@ boxPercentilePlot <-
     # Plot:
     if (length(col) == 1) col = rep(col, times = n)
     plot(c(xmin, xmax), c(ymin, ymax), type = "n",  
-        xlab = "", ylab = "", xaxt = "n")
+        xlab = "", ylab = "", xaxt = "n", ...)
     xpos = NULL
     for (i in 1:n) {
         # plot.values = .bpxAssetsPlot(all.x[[i]], centers[i])
@@ -156,7 +157,7 @@ boxPercentilePlot <-
         lines(plot.values$q3.x, plot.values$q3.y)
         lines(plot.values$med.x, plot.values$med.y) 
     }
-    axis(side = 1, at = xpos, labels = assetNames)
+    axis(side = 1, at = xpos, labels = assetNames, ...)
     abline(h = 0, lty = 3, col = "black")
    
     # Return Value:
