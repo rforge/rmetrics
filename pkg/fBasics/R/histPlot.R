@@ -29,7 +29,6 @@
 ################################################################################
 # FUNCTION:                TAILORED DENSITY FUNCTIONS:
 #  histPlot                 Returns a tailored histogram plot
-#  .cumHistPlot             Returns a tailored cumulated histogram plot
 #  densityPlot              Returns a tailored kernel density estimate plot
 #  logDensityPlot           Returns a tailored log kernel density estimate plot
 #  .plot.histogram          Replaces here the function plot.histogram
@@ -115,54 +114,6 @@ histPlot <-
     # Return Value:
     invisible()
 }  
-
-
-# ------------------------------------------------------------------------------
-
-
-.cumHistPlot =
-function(x, ...)
-{
-    ### UNDER CONSTRUCTION - DONT USE IT ###
-    
-    # A function implemented by Diethelm Wuertz
-    
-    # Description:
-    #   Returns a tailored cumulated histogram plot
-    
-    # Source: 
-    #   http://addictedtor.free.fr/graphiques/RGraphGallery.php?graph=126
-    
-    # Example:
-    #   cumHist(x = rnorm(1000))
-    
-    # FUNCTION:
-    
-    # Check:
-    stopifnot(isUnivariate(x))
-    
-    # Histogram:
-    x <- as.vector(x)
-    h <- hist(x, plot = FALSE, breaks = "FD")
-    
-    # Quick hack to transform histogram into cumulative histogram. 
-    # Actually, only the first command is required but this is 
-    # cleaner to do the 3 of them
-    
-    h$counts     <- cumsum(h$counts)
-    h$density    <- cumsum(h$density)
-    h$itensities <- h$density
-    
-    # Plot:
-    plot(h, freq = TRUE, 
-        main = "(Cumulative) histogram of x", 
-        col = "steelblue", 
-        border = "white", ...)
-    box()
-    
-    # Return Value:
-    invisible()
-}
 
 
 # ------------------------------------------------------------------------------

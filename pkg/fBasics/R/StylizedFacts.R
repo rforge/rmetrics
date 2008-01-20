@@ -32,28 +32,15 @@
 #  acfPlot               Displays tailored autocorrelations function plot
 #  pacfPlot              Displays tailored partial autocorrelation function plot
 #  teffectPlot           Estimates and displays the Taylor effect
-#  lmacfPlot             Estimates and displays the long memory ACF
 #  lacfPlot              Displays lagged autocorrelations
-#  logpdfPlot            Displays a pdf plot on logarithmic scale(s)
-#  qqgaussPlot           Displays a tailored Gaussian quantile-quantile plot
-#  scalinglawPlot        Evaluates and displays scaling law behavior
-# FUNCTION:             CROSSCORRELATION:
+# FUNCTION:             OLD FUNCTIONS:
+#  .logpdfPlot           Displays a pdf plot on logarithmic scale(s)
+#  .lmacfPlot            Estimates and displays the long memory ACF
 #  .ccfPlot              Displays tailored cross correlation function plot
+#  .qqgaussPlot          Displays a tailored Gaussian quantile-quantile plot
 # FUNCTION:             GUI:
 #  .stylizedFactsGUI     Opens a GUI for stylized facts
 ################################################################################
-
-
-################################################################################
-# FUNCTION:             DESCRIPTION:
-#  acfPlot               Displays autocorrelations function plot
-#  pacfPlot              Displays partial autocorrelation function plot
-#  teffectPlot           Estimates and plots the Taylor effect
-#  lmacfPlot             Estimates and plots the long memory ACF
-#  lacfPlot              Plots lagged autocorrelations
-#  logpdfPlot            Returns a pdf plot on logarithmic scale(s)
-#  qqgaussPlot           Returns a Gaussian quantile-quantile plot
-#  scalinglawPlot        Evaluates and plots scaling law behavior
 
 
 acfPlot = 
@@ -229,7 +216,7 @@ ymax = NA, standardize = TRUE, labels = TRUE, ...)
 # ------------------------------------------------------------------------------
 
 
-lmacfPlot = 
+.lmacfPlot = 
 function(x, lag.max = max(2, floor(10*log10(length(x)))), 
 ci = 0.95, type = c("both", "acf", "hurst"), labels = TRUE, 
 trace = TRUE, ...)
@@ -483,7 +470,7 @@ function(x, n = 12, lag.max = 20, type = c("returns", "values"),
 # ------------------------------------------------------------------------------
 
 
-logpdfPlot = 
+.logpdfPlot = 
 function(x, breaks = "FD", type = c("lin-log", "log-log"), 
 doplot = TRUE, labels = TRUE, ...)
 {   # A function implemented by Diethelm Wuertz
@@ -630,7 +617,7 @@ doplot = TRUE, labels = TRUE, ...)
 # ------------------------------------------------------------------------------
 
 
-qqgaussPlot = 
+.qqgaussPlot = 
 function(x, span = 5, col = "steelblue", labels = TRUE, ...)
 {   # A function implemented by Diethelm Wuertz
     
@@ -696,110 +683,6 @@ function(x, span = 5, col = "steelblue", labels = TRUE, ...)
 
 
 # ------------------------------------------------------------------------------
-
-
-scalinglawPlot =
-function(x, span = ceiling(log(length(x)/252)/log(2)), doplot = TRUE, 
-labels = TRUE, trace = TRUE, ...)
-{   # A function implemented by Diethelm Wuertz
-  
-    # Description:
-    #   Investigates the scaling law.
-    #   The input "x" requires log-returns.
- 
-    # Arguments:
-    #   x - an uni- or multivariate return series of class 'timeSeries' 
-    #       or any other object which can be transformed by the function
-    #       'as.timeSeries()' into an object of class 'timeSeries'.
-    #   labels - a logical flag, by default true. Should a default 
-    #       main title and labels addet to the plot?
-    
-    # FUNCTION: 
-    
-    # Settings:
-    if (!is.timeSeries(x)) x = as.timeSeries(x)
-    Units = colnames(x)
-    
-    # Labels:
-    if (labels) {
-        main = "Scaling Law Plot"
-        xlab = "log-time"
-        ylab = "log-volatility"
-    } else {
-        main = xlab = ylab = ""
-    }
-    
-    X = x
-    DIM = dim(X)[2]
-    Intercept = Exponent = InverseExponent = NULL
-    for (i in 1:DIM) {
-        
-        # Get Data:
-        x = as.vector(X@Data[, i])
-        if (labels) main = Units[i]
-    
-    
-        # Settings:
-        logtimesteps = span
-        xmean = mean(x)
-        
-        # x have to be logarithmic returns
-        y = (x-xmean)
-        logprices = cumsum(y)
-        
-        # Scaling Power Low:
-        scale = function (nx, logprices) {
-            sum(abs(diff(logprices, lag = (2^nx))))}     
-        nx = 0:logtimesteps; x = nx*log(2)
-        y = log(apply(matrix(nx), 1, scale, logprices))
-        # fit = lsfit(x, y)$coefficients
-        
-        # Runs in both environments, R and SPlus:
-        fit = lsfit(x, y)
-        
-        # Robust Fit:       
-        # fit = l1fit(x, y) 
-        
-        # Fit Result:
-        Fit = unlist(fit)[1:2]
-        alpha = 1.0/Fit[2]
-        if (doplot) { 
-            plot(x, y, main = main, xlab = xlab, ylab = ylab, ...)
-            abline(Fit[1], Fit[2])
-            abline(Fit[1], 0.5, col = "steelblue") 
-        }
-        if (labels) grid()
-        
-        # Trace:
-        if (trace) {
-            cat ("\nScaling Law:         ", Units[i])
-            cat ("\n  Plot Intercept     ", fit$coefficients[1])
-            cat ("\n  Plot Slope         ", fit$coefficients[2])
-            cat ("\n  Plot Inverse Slope ", 1/fit$coefficients[2])
-            cat ("\n\n") 
-        } 
-        Intercept = c(Intercept, fit$coefficients[1])
-        Exponent = c(Exponent, fit$coefficients[2])
-        InverseExponent = c(InverseExponent, 1/fit$coefficients[2])
-        
-    }
-    
-    names(Intercept) = Units
-    names(Exponent) = Units
-    names(InverseExponent) = Units
-    result = list(
-        Intercept = Intercept, 
-        Exponent = Exponent, 
-        InverseExponent = InverseExponent)
-        
-    # Return Value:
-    invisible(result)
-}
-
-
-################################################################################
-#  .ccfPlot              Displays tailored cross correlation function plot
-#                        Note - This should go to the bivariate Tools ...
 
 
 .ccfPlot = 

@@ -94,25 +94,29 @@ qqnormPlot <-
         if (scale) z = z = qnorm(p) else z = qnorm(p, mean(x), sd(x))
      
         # Plot:
-        if (labels) {
+        plot(z, x, col = col[i], ann = FALSE, ...)
+        
+        if (title) {    
             main = Main[i]
             xlab = "Normal Quantiles"
             ylab = paste(Main[i], "Ordered Data")
-            plot(z, x, pch = 19, col = col[i], 
-                xlab = xlab, ylab = ylab, main = main, ...)
-                Text = "Confidence Intervals: 95%"
+            title(main = manin, xlab = xlab, ylab = ylab)
+            Text = "Confidence Intervals: 95%"
             mtext(Text, side = 4, adj = 0, col = "darkgrey", cex = 0.7)
-            if (grid) grid()  
-        } else {
-            plot(z, x, col = col[i], ...)
         }
+            
+        if (grid) {
+            grid() 
+        } 
         
         # Add Diagonal Line:
         abline(0, 1, col = "grey")
         
         # Add Rugs:
-        if(rug) rug(z, ticksize = 0.01, side = 3, quiet = TRUE)
-        if(rug) rug(x, ticksize = 0.01, side = 4, quiet = TRUE)
+        if(rug) {
+            rug(z, ticksize = 0.01, side = 1, quiet = TRUE)
+            rug(x, ticksize = 0.01, side = 2, quiet = TRUE)
+        }
       
         # 95% Confidence Intervals:
         s = 1.96*sqrt(p*(1-p)/n)

@@ -72,13 +72,9 @@ seriesPlot <-
         
         # Add Grid: 
         if(grid) grid()
-        if(grid == "h") hgrid()
-        if(grid == "v") vgrid()
         
         # Add Box: 
         if(box) box()
-        if(box == "_") box_()
-        if(box == "L") boxL()
         
         # Add Rugs:
         if(rug) rug(as.vector(X), ticksize = 0.01, side = 2, quiet = TRUE)
