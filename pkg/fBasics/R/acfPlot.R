@@ -799,10 +799,10 @@ function(x, mfrow = c(3, 3))
         if (type == 5) {
             if (selectedAsset == 0) {
                 par(mfrow = mfrow)
-                lmacfPlot(abs(x))
+                .lmacfPlot(abs(x))
             } else {
                 par(mfrow = c(1, 1))
-                lmacfPlot(abs(x[, selectedAsset]))
+                .lmacfPlot(abs(x[, selectedAsset]))
             }
         }
         
@@ -821,10 +821,10 @@ function(x, mfrow = c(3, 3))
         if (type == 7) {
             if (selectedAsset == 0) {
                 par(mfrow = mfrow)
-                logpdfPlot(x)
+                .logpdfPlot(x)
             } else {
                 par(mfrow = c(1, 1))
-                logpdfPlot(x[, selectedAsset]) 
+                .logpdfPlot(x[, selectedAsset]) 
             }
         } 
         
@@ -832,10 +832,10 @@ function(x, mfrow = c(3, 3))
         if (type == 8) {
             if (selectedAsset == 0) {
                 par(mfrow = mfrow)
-                logpdfPlot(x, type = "log-log")
+                .logpdfPlot(x, type = "log-log")
             } else {
                 par(mfrow = c(1, 1))
-                logpdfPlot(x[, selectedAsset], type = "log-log") 
+                .logpdfPlot(x[, selectedAsset], type = "log-log") 
             }
         } 
         
@@ -843,10 +843,10 @@ function(x, mfrow = c(3, 3))
         if (type == 9) {
             if (selectedAsset == 0) {
                 par(mfrow = mfrow)
-                qqgaussPlot(x, pch = 19)
+                .qqgaussPlot(x, pch = 19)
             } else {
                 par(mfrow = c(1, 1))
-                qqgaussPlot(x[, selectedAsset], pch = 19)
+                .qqgaussPlot(x[, selectedAsset], pch = 19)
             }
         }  
         

@@ -100,7 +100,7 @@ qqnormPlot <-
             main = Main[i]
             xlab = "Normal Quantiles"
             ylab = paste(Main[i], "Ordered Data")
-            title(main = manin, xlab = xlab, ylab = ylab)
+            title(main = main, xlab = xlab, ylab = ylab)
             Text = "Confidence Intervals: 95%"
             mtext(Text, side = 4, adj = 0, col = "darkgrey", cex = 0.7)
         }

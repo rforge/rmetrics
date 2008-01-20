@@ -43,10 +43,6 @@ teffectPlot(x, deltas = seq(from = 0.2, to = 3, by = 0.2), lag.max = 10,
 
 \arguments{
 
-    \item{col}{
-        a character string denoting the plot color, by default
-        \code{"steelblue"}.
-        }
     \item{deltas}{
         the exponents, a numeric vector, by default ranging 
         from 0.2 to 3.0 in steps of 0.2.
