@@ -43,9 +43,7 @@ drawdownPlot(x, labels = TRUE, type = "l", col = "steelblue",
   
     \item{box}{
         a logical flag, should a box be added to the plot? 
-        By default \code{TRUE}. To plot a horizontal lines only
-        use \code{grid="h"} and for vertical lines use \code{grid="h"},
-        respectively.
+        By default \code{TRUE}.
         }
     \item{col}{
         the color for the series. In the univariate case use just a 
@@ -55,9 +53,7 @@ drawdownPlot(x, labels = TRUE, type = "l", col = "steelblue",
         } 
     \item{grid}{
         a logical flag, should a grid be added to the plot? 
-        By default \code{TRUE}. To plot a horizontal lines only
-        use \code{grid="h"} and for vertical lines use \code{grid="h"},
-        respectively.
+        By default \code{TRUE}.
         }
     \item{index}{
         a numeric value, by default 100. The function cumulates 
