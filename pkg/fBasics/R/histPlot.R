@@ -32,12 +32,13 @@
 #  .cumHistPlot             Returns a tailored cumulated histogram plot
 #  densityPlot              Returns a tailored kernel density estimate plot
 #  logDensityPlot           Returns a tailored log kernel density estimate plot
+#  .plot.histogram          Replaces here the function plot.histogram
 ################################################################################
 
 
 histPlot <-  
-    function(x, labels = TRUE, col = "steelblue", add.fit = TRUE, 
-    grid = FALSE, rug = TRUE, skipZeros = TRUE, ...) 
+    function(x, labels = TRUE, col = "steelblue", fit = TRUE, 
+    title = TRUE, grid = TRUE, rug = TRUE, skip = FALSE, ...) 
 {   
     # A function implemented by Diethelm Wuertz
 
@@ -52,66 +53,62 @@ histPlot <-
    
     # FUNCTION:
     
-    # Settings:
-    xlim = NULL
-    
     # timeSeries:
-    if (!is.timeSeries(x)) x = as.timeSeries(x)
-    Units = x@units
-    DIM = dim(x@Data)[2]
-    if (length(col) == 1) col = rep(col, times = DIM)
-      
-    # Construct output list:
-    ans = paste( " hist", 1:DIM, " = NULL", sep = "", collapse = ",")
-    ans = paste( "list(",  ans, ")" )
-    ans = eval(parse(text = ans))
+    stopifnot(is.timeSeries(x))
+    N = NCOL(x)
+    Units = colnames(x)
+    if (length(col) == 1) col = rep(col, times = N)
     
     # Histogram Plots:
-    for (i in 1:DIM) {
+    for (i in 1:N) {
         
         # Histogram:
-        Values = as.vector(x@Data[, i])
-        if (skipZeros) Values = Values[Values != 0]
-        mean = mean(Values)
-        median = median(Values)
-        sd = sd(Values)
-                    
+        X = as.vector(x[, i])
+        if (skip) X = X[X != 0]
+                   
         # Plot:
         if (labels) {
-            xlim = c(qnorm(0.001, mean, sd), qnorm(0.999, mean, sd)) 
-            result = hist(x = Values, col = col[i], 
-            border = "white", breaks = "FD", main = Units[i], 
-            xlim = xlim, probability = TRUE, ...) 
+            H = hist(x = X, , breaks = "FD", plot = FALSE) 
+            .plot(H, col = col[i], freq = FALSE, ...)
             box()
         } else {
-            result = hist(x = Values, ...)
+            H = hist(x = X, plot = FALSE, ...)
+            .plot(H, col = col[i], freq = FALSE, ...)
         }
-             
+        
+        # Add Title:
+        if(title) {
+            title(main = paste(Units[i], "Histogram"), 
+                xlab = "Value", ylab = "Probability")
+        }
+        
         # Add Fit:  
-        if (add.fit) {
+        if (fit) {
+            mean = mean(X)
+            sd = sd(X)
+            xlim = range(H$breaks)
             s = seq(xlim[1], xlim[2], length = 201)
             lines(s, dnorm(s, mean, sd), lwd = 2, col = "brown")
-        }
-        ans[[i]] = result  
+        }  
         
-        # Add Mean/Median:
-        abline(v = mean, lwd = 2, col = "orange")
-        abline(v = median(Values), lwd = 2, col = "darkgreen")
+        # Add Mean:
         if (labels) {
-            Text = paste("Median:", round(median, 2), "| Mean:", 
-                signif(mean, 3))
-            if (skipZeros) Text = paste(Text, "| Zeros skipped")
+            abline(v = mean, lwd = 2, col = "orange")
+            Text = paste("Mean:", signif(mean, 3))
             mtext(Text, side = 4, adj = 0, col = "darkgrey", cex = 0.7)
         }
   
+        # Add Grid:
         if (grid) grid()
         
         # Add Zero Line:
-        abline(h = 0, col = "grey")
+        if(labels) {
+            abline(h = 0, col = "grey")
+        }
     
         # Add Rug Plot:
         if(rug) {
-            rug(Values, ticksize = 0.01, quiet = TRUE)
+            rug(X, ticksize = 0.01, quiet = TRUE)
         }
     }
     
@@ -123,10 +120,11 @@ histPlot <-
 # ------------------------------------------------------------------------------
 
 
- 
 .cumHistPlot =
 function(x, ...)
 {
+    ### UNDER CONSTRUCTION - DONT USE IT ###
+    
     # A function implemented by Diethelm Wuertz
     
     # Description:
@@ -163,7 +161,7 @@ function(x, ...)
     box()
     
     # Return Value:
-    invisible(h)
+    invisible()
 }
 
 
@@ -171,76 +169,79 @@ function(x, ...)
 
 
 densityPlot <-  
-    function(x, labels = TRUE, col = "steelblue", add.fit = TRUE, 
-    grid = FALSE, rug = TRUE, skipZeros = TRUE, ...) 
+    function(x, labels = TRUE, col = "steelblue", fit = TRUE, hist = TRUE, 
+    title = TRUE, grid = TRUE, rug = TRUE, skip = FALSE, ...) 
 {   
     # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Returns density plots for each column of a timeSeries object
-    
-    # Arguments:
-    #   x - an uni- or multivariate return series of class 'timeSeries' 
-    #       or any other object which can be transformed by the function
-    #       'as.timeSeries()' into an object of class 'timeSeries'.
 
     # FUNCTION:
     
     # timeSeries:
-    if (!is.timeSeries(x)) x = as.timeSeries(x)
-    Units = x@units
-    DIM = dim(x@Data)[2]
-    if (length(col) == 1) col = rep(col, times = DIM)
-    
-     
-    # Histogram Plots:
-    for (i in 1:DIM) {
+    stopifnot(is.timeSeries(x))
+    N = NCOL(x)
+    Units = colnames(x)
+    if (length(col) == 1) col = rep(col, times = N)
+        
+    # Density Plots:
+    for (i in 1:N) {
         
         # Density:
-        Values = as.vector(x@Data[, i])
-        if (skipZeros) Values = Values[Values != 0]
+        X = as.vector(x[, i])
+        if (skip) X = X[X != 0]
         
-        # Statistics:
-        mean = mean(Values)
-        median = median(Values)
-        sd = sd(Values) 
-        
-        # Density Plot:
-        Density = density(Values, ...)
-        if (labels) {
-            xlim = c(qnorm(0.001, mean, sd), qnorm(0.999, mean, sd)) 
-            plot(x = Density, xlim = xlim, col = col[i], type = "l", 
-                lwd = 2, main = units[i], ...)   
-            if (grid) grid()
-        } else {
-            plot(x = Density, ...)
-        }   
-        
-        # Add Fit:
-        if (add.fit) {
-            s = seq(xlim[1], xlim[2], length = 201)
-            lines(s, dnorm(s, mean, sd), lwd = 2, col = "brown")
+        # Underlay Histogram:
+        if (hist) {
+            H = hist(x = X, , breaks = "FD", plot = FALSE) 
+            plot(x = H$mids, y = H$density, type = "h", lwd = 2,
+                main = "", xlab = "", ylab = "", col = "grey")
         }
         
-        # Add Mean/Median:
-        abline(v = mean, lwd = 2, col = "orange")
-        abline(v = median(Values), lwd = 2, col = "darkgreen")
+        # Plot Density:
+        D = density(X, ...)
+        if (hist) {
+            lines(D$x, D$y, lwd = 2, col = "brown")
+        } else {
+            plot(D, col = col[i], ann = FALSE, ...)
+        }
+            
+        # Add Title:
+        if (title) {
+            title(main = Units[i], xlab = "Value", ylab = "Density") 
+        }
+ 
+        # Add Fit:  
+        if (fit) {
+            mean = mean(X)
+            sd = sd(X)
+            xlim = range(H$breaks)
+            s = seq(xlim[1], xlim[2], length = 201)
+            lines(s, dnorm(s, mean, sd), lwd = 2, col = "darkgrey")
+        }  
+        
+        # Add Mean:
         if (labels) {
-            Text = paste(
-                "Median:", round(median, 2), 
-                "| Mean:", round(mean, 2),
-                "| Bandwidth:", round(Density$bw, 3) )
-            if (skipZeros) Text = paste(Text, "| Zeros skipped")
+            abline(v = mean, lwd = 2, col = "orange")
+            Text = paste("Mean:", signif(mean, 3))
             mtext(Text, side = 4, adj = 0, col = "darkgrey", cex = 0.7)
         }
   
-        # Add Zero Line:
-        abline(h = 0, col = "grey")
+        # Add Grid:
+        if (grid) {
+            grid()
+        }
         
+        # Add Zero Line:
+        if(labels) {
+            abline(h = 0, col = "grey")
+        }
+    
         # Add Rug Plot:
         if(rug) {
-            rug(Values, ticksize = 0.01, quiet = TRUE)
-        }     
+            rug(X, ticksize = 0.01, quiet = TRUE)
+        }
     }
     
     # Return Value:
@@ -252,26 +253,13 @@ densityPlot <-
 
 
 logDensityPlot <- 
-    function(x, labels = TRUE, col = "steelblue", 
-    estimator = c("hubers", "sample", "both"), 
-    grid = FALSE, rug = TRUE, skipZeros = TRUE, ...)
+    function(x, labels = TRUE, col = "steelblue", robust = TRUE,  
+    title = TRUE, grid = TRUE, rug = TRUE, skip = FALSE,  ...)
 {   
     # A function implemented by Diethelm Wuertz
     
     # Description:
-    #   Displays a pdf plot on logarithmic scale 
-    
-    # Arguments:
-    #   x - an uni- or multivariate return series of class 'timeSeries' 
-    #       or any other object which can be transformed by the function
-    #       'as.timeSeries()' into an object of class 'timeSeries'.
-    #   estimator - the type of estimator to fit the mean and variance 
-    #       of the density.
-    #   doplot - a logical flag, by default TRUE. Should a plot be 
-    #       displayed?
-    #   labels - a logical flag, by default TRUE. Should a default main  
-    #       title and labels addet to the plot?
-    #   ... - 
+    #   Displays a pdf plot on logarithmic scale  
     
     # Details:
     #   Returns a pdf plot on a lin-log scale in comparison to a Gaussian 
@@ -283,57 +271,42 @@ logDensityPlot <-
     # FUNCTION:
     
     # timeSeries:
-    if (!is.timeSeries(x)) x = as.timeSeries(x)
-    Units = x@units
-    DIM = dim(x@Data)[2]
-    if (length(col) == 1) col = rep(col, times = DIM)
+    stopifnot(is.timeSeries(x))
+    N = NCOL(x)
+    Units = colnames(x)
+    if (length(col) == 1) col = rep(col, times = N)
     
-    # Select Type:
-    estimator = match.arg(estimator)
-    
-    # Labels:
-    if (labels) {
-        main = "log PDF"
-        xlab = "x"
-        ylab = "log PDF"    
-    } else {
-        main = xlab = ylab = ""
-    }
-    
-    X = x
-    
-    for (i in 1:ncol(x)) {
+    # Log Density:
+    for (i in 1:N) {
         
         # Transform Data:
-        x = as.vector(X[, i])
-        if (skipZeros) x = x[x != 0]
-                
-        if (labels) main = Units[i]
+        X = as.vector(x[, i])
+        if (skip) X = X[X != 0]
                 
         # Kernel and Histogram Estimators: 
-        Density = density(x)
-        Histogram = hist(x, breaks = "FD", plot = FALSE)
-        result = list(density = Density, hist = Histogram)
+        Density = density(X, ...)
+        Histogram = hist(X, breaks = "FD", plot = FALSE)
          
         # Plot Frame:
-        plot(Histogram$mids, log(Histogram$density), type = "n",
-            lwd = 5, main = Units[i], xlab = xlab, ylab = ylab,
-            xlim = range(Density$x), ylim = log(range(Density$y)),
-            col = col, ...)
+        plot(Histogram$mids, log(Histogram$density), type = "n", 
+            ann = FALSE,
+            xlim = range(Density$x), ylim = log(range(Density$y)))
+        
+        # Add Title:
+        if(title) {
+            title(main = paste(Units[i], "Log Density"),
+                xlab = "Value", ylab = "Log Density")
+        }
 
-        # Plot Density:
-        points(Density$x, log(Density$y), pch = 19, col = "darkgrey",
-            cex = 0.7)
+        # Add Kernel Density Estimated Points:
+        points(Density$x, log(Density$y), pch = 19, cex = 0.7, col = "grey")  
         
         # Sample Line Fit:
         s = seq(min(Density$x), max(Density$x), length = 1001)
-        if (estimator == "sample" || estimator == "both") {
-            lines(s, log(dnorm(s, mean(x), sd(x))), col = "red", lwd = 2)
-        } 
         
-        # Robust Huber Line Fit:
-        if (estimator == "hubers" || estimator == "both") {
-            h = MASS::hubers(x)
+        # Robust Fit:
+        if (robust) {
+            h = MASS::hubers(X)
             logDensity = log(dnorm(s, 
                 mean = h[[1]], 
                 sd = sqrt(h[[2]]^2+Density$bw^2)))
@@ -341,15 +314,21 @@ logDensityPlot <-
             lines(
                 x = s[logDensity > minLogDensity], 
                 y = logDensity[logDensity > minLogDensity], 
-                col = "orange", lwd = 2)
+                col = "red", lwd = 2)
+            
+            # Standard Fit:
+            lines(s, log(dnorm(s, mean(X), sd(X))), 
+                col = "orange", lwd = 2) 
         }
         
         # Plot Histogram:
-        points(Histogram$mids, log(Histogram$density), pch = 19,
-            col = "steelblue", ...)
+        points(Histogram$mids, log(Histogram$density), 
+            pch = 151, col = "steelblue")
           
         # Grid:
-        if (labels) grid()
+        if (grid) {
+            grid()
+        }
         
         # Add Rug Plot:
         if(rug) {
@@ -358,7 +337,50 @@ logDensityPlot <-
     }
     
     # Return Value:
-    invisible(result)
+    invisible()
+}
+
+
+################################################################################
+
+
+.plot.histogram <-
+function (x, freq = equidist, density = NULL, angle = 45,
+    col = NULL, border = "white", lty = NULL,
+    main = NULL, sub = NULL, xlab = NULL, ylab = NULL,
+    xlim = range(x$breaks), ylim = NULL,
+    axes = TRUE, labels = FALSE, add = FALSE, ...)
+{
+    # This replacement of plot.histogram() suppresses title
+    #   printing which would be otherwise not possible!
+    
+    equidist <- if(is.logical(x$equidist)) x$equidist
+    else { h <- diff(x$breaks) ; diff(range(h)) < 1e-7 * mean(h) }
+    if(freq && !equidist)
+    warning("the AREAS in the plot are wrong -- rather use freq=FALSE")
+
+    y <- if (freq) x$counts else { ## x$density -- would be enough, but
+    ## for back compatibility
+    y <- x$density; if(is.null(y)) x$intensities else y}
+    nB <- length(x$breaks)
+    if(is.null(y) || 0 == nB) stop("'x' is wrongly structured")
+
+    if(!add) {
+        if(is.null(ylim)) ylim <- range(y, 0)
+        if (missing(ylab)) ylab <- if (!freq) "Density" else "Frequency"
+        plot.new()
+        plot.window(xlim, ylim, "") #-> ylim's default from 'y'
+        # title(main = main, sub = sub, xlab = xlab, ylab = ylab, ...)
+        if(axes) { axis(1, ...)
+            axis(2, ...) } }
+    rect(x$breaks[-nB], 0, x$breaks[-1], y,
+        col = col, border = border,
+        angle = angle, density = density, lty = lty)
+    if((logl <- is.logical(labels) && labels) || is.character(labels))
+    text(x$mids, y,
+        labels = if(logl) { if(freq) x$counts else round(x$density,3)
+        } else labels, adj = c(0.5, -0.5))
+    invisible()
 }
 
 

@@ -34,7 +34,7 @@
 
 
 boxPlot <-
-    function(x, col = "steelblue", ...) 
+    function(x, col = "steelblue", title = TRUE, ...) 
 {   
     # A function Implemented by Diethelm Wuertz
 
@@ -62,6 +62,11 @@ boxPlot <-
     ans = boxplot(as.data.frame(x), col = col, ...)
     abline(h = 0 , lty = 3)
     
+    # Add Title:
+    if (title) {
+        title(main = "Box Plot", ylab = "Value")
+    }
+    
     # Result:
     colnames(ans$stats) = ans$names
     rownames(ans$stats) = c("lower whisker", "lower hinge", "median", 
@@ -76,7 +81,7 @@ boxPlot <-
 
 
 boxPercentilePlot <-  
-    function(x, col = "steelblue", ...) 
+    function(x, col = "steelblue", title = TRUE, ...) 
 {   
     # A modified copy from Hmisc
 
@@ -159,6 +164,11 @@ boxPercentilePlot <-
     }
     axis(side = 1, at = xpos, labels = assetNames, ...)
     abline(h = 0, lty = 3, col = "black")
+    
+    # Add Title:
+    if (title) {
+        title(main = "Box Percentiles", ylab = "Value")
+    }
    
     # Return Value:
     invisible()

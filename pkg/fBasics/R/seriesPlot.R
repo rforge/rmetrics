@@ -37,7 +37,7 @@
 
 seriesPlot <- 
     function(x, labels = TRUE, type = "l", col = "steelblue", 
-    grid = TRUE, rug = TRUE, ...) 
+    title = TRUE, grid = TRUE, box = TRUE, rug = TRUE, ...) 
 
 {   
     # A function implemented by Diethelm Wuertz
@@ -62,12 +62,25 @@ seriesPlot <-
     for (i in 1:N) {
         X = x[, i] 
         plot(x = X, type = type, col = col[i], ann = FALSE, ...)
-        if (labels) {
+        
+        # Add Title:
+        if (title) {
             title(main = Units[i], xlab = "Time", ylab = "Value") 
         } else {
             title(...)
-        }  
+        } 
+        
+        # Add Grid: 
         if(grid) grid()
+        if(grid == "h") hgrid()
+        if(grid == "v") vgrid()
+        
+        # Add Box: 
+        if(box) box()
+        if(box == "_") box_()
+        if(box == "L") boxL()
+        
+        # Add Rugs:
         if(rug) rug(as.vector(X), ticksize = 0.01, side = 2, quiet = TRUE)
     }
     
@@ -81,7 +94,7 @@ seriesPlot <-
 
 cumulatedPlot <-  
     function(x, index = 100, labels = TRUE, type = "l", col = "steelblue", 
-    grid = TRUE, rug = TRUE, ...) 
+    title = TRUE, grid = TRUE, box = TRUE, rug = TRUE, ...) 
 {   
     # A function implemented by Diethelm Wuertz
     
@@ -94,7 +107,7 @@ cumulatedPlot <-
     stopifnot(is.timeSeries(x))
     x = index * exp(colCumsums(x))
     seriesPlot(x, labels = labels, type = type, col = col, 
-        grid = grid, rug = rug, ...) 
+        title = title, grid = grid, box = box, rug = rug, ...) 
          
     # Return Value:
     invisible()
@@ -106,7 +119,7 @@ cumulatedPlot <-
 
 returnPlot <-  
     function(x, labels = TRUE, type = "l", col = "steelblue", 
-    grid = TRUE, rug = TRUE, ...) 
+    title = TRUE, grid = TRUE, box = TRUE, rug = TRUE, ...) 
 {   
     # A function implemented by Diethelm Wuertz
     
@@ -119,7 +132,7 @@ returnPlot <-
     stopifnot(is.timeSeries(x))
     x = returns(x, ...)
     seriesPlot(x, labels = labels, type = type, col = col, 
-        grid = grid, rug = rug, ...) 
+        title = title, grid = grid, box = box, rug = rug, ...) 
          
     # Return Value:
     invisible()
@@ -131,7 +144,7 @@ returnPlot <-
 
 drawdownPlot <-  
     function(x, labels = TRUE, type = "l", col = "steelblue", 
-    grid = TRUE, rug = TRUE, ...) 
+    title = TRUE, grid = TRUE, box = TRUE, rug = TRUE, ...) 
 {   
     # A function implemented by Diethelm Wuertz
     
@@ -144,7 +157,7 @@ drawdownPlot <-
     stopifnot(is.timeSeries(x))
     x = drawdowns(x, ...)
     seriesPlot(x, labels = labels, type = type, col = col, 
-        grid = grid, rug = rug, ...) 
+        title = title, grid = grid, box = box, rug = rug, ...) 
          
     # Return Value:
     invisible()

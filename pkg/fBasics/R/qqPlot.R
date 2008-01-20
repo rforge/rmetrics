@@ -33,9 +33,10 @@
 #  qqghtPlot                Returns a tailored GHT quantile-quantile plot
 ################################################################################
 
+
 qqnormPlot <-  
-    function(x, labels = TRUE, col = "steelblue", grid = FALSE, rug = TRUE, 
-    scale = TRUE, ...) 
+    function(x, labels = TRUE, col = "steelblue", 
+    title = TRUE, grid = FALSE, rug = TRUE, scale = TRUE, ...) 
 {   
     # A function implemented by Diethelm Wuertz
 
@@ -136,8 +137,8 @@ qqnormPlot <-
 
 
 qqnigPlot <-  
-    function (x, labels = TRUE, col = "steelblue", grid = FALSE, 
-    rug = TRUE, scale = TRUE, ...) 
+    function(x, labels = TRUE, col = "steelblue", 
+    title = TRUE, grid = FALSE, rug = TRUE, scale = TRUE, ...) 
 {   
     # A function implemented by Diethelm Wuertz
 
@@ -209,8 +210,8 @@ qqnigPlot <-
 
 
 qqghtPlot <-  
-    function (x, labels = TRUE, col = "steelblue", grid = FALSE, 
-    rug = TRUE, scale = TRUE, ...) 
+    function(x, labels = TRUE, col = "steelblue", 
+    title = TRUE, grid = FALSE, rug = TRUE, scale = TRUE, ...) 
 {   
     # A function implemented by Diethelm Wuertz
 
@@ -231,36 +232,37 @@ qqghtPlot <-
     if (!is.timeSeries(x)) {
         x = as.timeSeries(x)
         stopifnot(isUnivariate(x)) 
-        Main = x@units
+        Units = x@units
     }
-    x = as.vector(x)
+    X = as.vector(x)
     
     # Fit:
-    fit = ghtFit(x, doplot = FALSE, scale = FALSE) # CHECK SCALE !!!
+    fit = ghtFit(X, doplot = FALSE, scale = FALSE) # CHECK SCALE !!!
     par = fit@fit$estimate
     names(par) = c("beta", "delta", "mu", "nu")
         
     # Plot:
     # QGHT IS MISSING !!!
-    x = qght(ppoints(x), par[1], par[2], par[3], par[4])
+    x = qght(ppoints(X), par[1], par[2], par[3], par[4])
     z = sort(x)
+    
     if (labels) {
-        main = "GHT QQ Plot"
-        xlab = "Theoretical Quantiles"
-        ylab = "Sample Quantiles"
-        plot(z, x, main = main, xlab = xlab, ylab = ylab, 
-            pch = 19, col = "steelblue")
-        if (grid) grid()
-        rpar = signif(par, 3)
-        text = paste(
-            "alpha =", rpar[1], 
-            "| beta =", rpar[2], 
-            "| delta =", rpar[3], 
-            "| mu =", rpar[4])  
-        mtext(text, side = 4, adj = 0, col = "grey", cex = 0.7)
+        plot(z, x, col = col, ann = FALSE, ...)
     } else {
         plot(z, x, ...)
     }
+    
+    # Add Grid:
+    if (grid) {
+        grid()
+    }
+    
+    # Add title:
+    if (title) {
+        title(main = "GHT QQ Plot", 
+            xlab = "Theoretical Quantiles", ylab = "Sample Quantiles")
+    }
+    
     
     # Add Fit:
     abline(lsfit(z, x))
