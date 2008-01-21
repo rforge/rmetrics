@@ -34,24 +34,25 @@
 
 
 \usage{
-assetsStarsPlot(x, method = c("segments", "stars"), 
+assetsStarsPlot(x, method = c("segments", "stars"), locOffset = c(0, 0),
     keyOffset = c(0, 0), \dots)
+    
 assetsBoxStatsPlot(x, par = TRUE, oma = c(0,0,0,0), mar = c(4, 4, 4, 4), 
     keyOffset = c(-0.65, -0.50), main = "Assets Statistics", 
     title = "Assets", titlePosition = c(3, 3.65), 
-    description = "Box Plot Statistics", descriptionPosition = c(3, 3.50))
+    description = "Box Plot Statistics", descriptionPosition = c(3, 3.50), \dots)
 assetsBasicStatsPlot(x, par = TRUE, oma = c(0,0,0,0), mar = c(4, 4, 4, 4), 
     keyOffset = c(-0.65, -0.50), main = "Assets Statistics", 
     title = "Assets", titlePosition = c(3, 3.65), 
-    description = "Basic Returns Statistics", descriptionPosition = c(3, 3.50))
+    description = "Basic Returns Statistics", descriptionPosition = c(3, 3.50), \dots)
 assetsMomentsPlot(x, par = TRUE, oma = c(0,0,0,0), mar = c(4, 4, 4, 4), 
     keyOffset = c(-0.65, -0.50), main = "Assets Statistics", 
     title = "Assets", titlePosition = c(3, 3.65), 
-    description = "Moments Statistics", descriptionPosition = c(3, 3.50))
+    description = "Moments Statistics", descriptionPosition = c(3, 3.50), \dots)
 assetsNIGFitPlot(x, par = TRUE, oma = c(0,0,0,0), mar = c(4, 4, 4, 4), 
     keyOffset = c(-0.65, -0.50), main = "Assets Statistics", 
     title = "Assets", titlePosition = c(3, 3.65), 
-    description = "NIG  Parameters", descriptionPosition = c(3, 3.50))
+    description = "NIG  Parameters", descriptionPosition = c(3, 3.50), \dots)
 }
 
 
@@ -68,7 +69,14 @@ assetsNIGFitPlot(x, par = TRUE, oma = c(0,0,0,0), mar = c(4, 4, 4, 4),
         \code{"star"} or a \code{"segment"} plot.
         }
     \item{keyOffset}{
-        to set the object of the legend.
+        a numeric vector of lenght two, specifying an offset in the
+        legend with respect to \code{x} and
+        \code{y} direction.
+        }
+    \item{locOffset}{
+        a numeric vector of lenght two, specifying an offset in the
+        location of the stars/circles with respect to \code{x} and
+        \code{y} direction.
         }
     \item{main}{
         to set the main title.

@@ -101,7 +101,7 @@ assetsBoxStatsPlot <-
     function(x, par = TRUE, oma = c(0,0,0,0), mar = c(4, 4, 4, 4), 
     keyOffset = c(-0.65, -0.50), main = "Assets Statistics", 
     title = "Assets", titlePosition = c(3, 3.65), 
-    description = "Box Plot Statistics", descriptionPosition = c(3, 3.50))
+    description = "Box Plot Statistics", descriptionPosition = c(3, 3.50), ...)
 {   
     # A function Implemented by Diethelm Wuertz
 
@@ -169,10 +169,10 @@ assetsBasicStatsPlot <-
 
 
 assetsMomentsPlot <- 
-    function(x, oma = c(0,0,0,0), mar = c(4, 4, 4, 4), 
+    function(x, par = TRUE, oma = c(0,0,0,0), mar = c(4, 4, 4, 4), 
     keyOffset = c(-0.65, -0.50), main = "Assets Statistics", 
     title = "Assets", titlePosition = c(3, 3.65), 
-    description = "Moments Statistics", descriptionPosition = c(3, 3.50))
+    description = "Moments Statistics", descriptionPosition = c(3, 3.50), ...)
 {   
     # A function Implemented by Diethelm Wuertz
 
@@ -214,7 +214,7 @@ assetsNIGFitPlot <-
     function(x, par = TRUE, oma = c(0,0,0,0), mar = c(4, 4, 4, 4), 
     keyOffset = c(-0.65, -0.50), main = "Assets Statistics", 
     title = "Assets", titlePosition = c(3, 3.65), 
-    description = "NIG  Parameters", descriptionPosition = c(3, 3.50))
+    description = "NIG  Parameters", descriptionPosition = c(3, 3.50), ...)
 {   
     # A function Implemented by Diethelm Wuertz
 
