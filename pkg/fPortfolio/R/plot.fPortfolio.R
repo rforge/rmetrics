@@ -100,7 +100,7 @@ function(x, which = "ask", control = list(), ...)
         )    
     con[(Names <- names(control))] <- control
     
-    par(mar = c(5, 4, 4, 3) + 0.1)
+    ## par(mar = c(5, 4, 4, 3) + 0.1) ##
 
     attr(x, "control") <- con
    
