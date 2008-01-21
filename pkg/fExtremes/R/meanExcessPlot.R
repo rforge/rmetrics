@@ -34,7 +34,8 @@
 
 
 .meanExcessPlot <- 
-    function(x, labels = TRUE, col = "steelblue", ...)
+    function(x, labels = TRUE, title = FALSE, grid = TRUE, 
+    col = "steelblue", ...)
 {   
     # A function implemented by Diethelm Wuertz
 
@@ -63,7 +64,7 @@
     if (length(col) == 1) col = rep(col, times = DIM)
 
     # Labels:
-    if (labels) {
+    if (title) {
         xlab = "Threshold"
         ylab = "Mean Excess"
         main = colnames(X)
@@ -81,10 +82,15 @@
         # Normal Fit:
         me = normMeanExcessFit(X, doplot = TRUE, trace = FALSE, lwd = 2,
             labels = FALSE, col = col[i], xlim = xLim, ylim = yLim,
-            main = main, xlab = xlab, ylab = ylab)       
+            main = main, xlab = xlab, ylab = ylab)
+                   
         normLLH = attr(me, "control")@fit$minimum
-        if (labels) {
+        
+        if (grid) {
             grid(col = "darkgrey")
+        }
+        
+        if (title) {
             mtext("Scaled Mean Excess", line = 0.5, cex = 0.7)
         }
         
@@ -115,7 +121,7 @@
         }
     
         # Finish:
-        if (labels) {
+        if (title) {
             LLH = c("NORM", "NIG", "GHT")
             colorsLLH = c("black", "green", "red")
             if (test == 0) {
