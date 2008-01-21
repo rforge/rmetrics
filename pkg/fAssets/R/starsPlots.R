@@ -37,9 +37,11 @@
 ################################################################################
 
 
-assetsStarsPlot =
-function(x, method = c("segments", "stars"), keyOffset = c(0, 0), ...)
-{   # A function implemented by Diethelm Wuertz
+assetsStarsPlot <- 
+    function(x, method = c("segments", "stars"), locOffset = c(0, 0),
+    keyOffset = c(0, 0), ...)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Draws segment or star diagrams of a multivariate data set. 
@@ -65,8 +67,7 @@ function(x, method = c("segments", "stars"), keyOffset = c(0, 0), ...)
     NY = NX = ceiling(sqrt(xCol))
     
     if (NX*NY == xCol) NY = NY + 1
-    
-    
+        
     loc = NULL
     for (nx in 1:NY)
         for (ny in 1:NX)
@@ -74,16 +75,19 @@ function(x, method = c("segments", "stars"), keyOffset = c(0, 0), ...)
     loc = loc[1:xCol, ]   
     loc[, 2] = NY + 1 - loc[, 2]
     
+    loc[, 1] = loc[, 1] - locOffset[1]
+    loc[, 2] = loc[, 2] - locOffset[2]
+    
     # Stars:
     palette(rainbow(12, s = 0.6, v = 0.75))
-    ans = stars(t(x), mar = c(4, 2.8, 2.8, 4),
+    ans = stars(t(x), mar = c(0,0,0,0), #mar = c(4, 2.8, 2.8, 4),
         locations = loc,
         len = 0.4, 
         xlim = c(1, NX+0.5), 
         ylim = c(0, NY+1), 
         key.loc = c(NX + 1, 1) + keyOffset, 
         draw.segments = draw.segments, ... )
-    box()
+    # box()
     
     # Return Value:
     invisible(ans)
@@ -93,11 +97,13 @@ function(x, method = c("segments", "stars"), keyOffset = c(0, 0), ...)
 # ------------------------------------------------------------------------------
 
 
-assetsBoxStatsPlot = 
-function(x, oma = c(0,0,0,0), mar = c(4, 4, 4, 4), keyOffset = c(-0.65, -0.50), 
-main = "Assets Statistics", title = "Assets", titlePosition = c(3, 3.65), 
-description = "Box Plot Statistics", descriptionPosition = c(3, 3.50))
-{   # A function Implemented by Diethelm Wuertz
+assetsBoxStatsPlot <- 
+    function(x, par = TRUE, oma = c(0,0,0,0), mar = c(4, 4, 4, 4), 
+    keyOffset = c(-0.65, -0.50), main = "Assets Statistics", 
+    title = "Assets", titlePosition = c(3, 3.65), 
+    description = "Box Plot Statistics", descriptionPosition = c(3, 3.50))
+{   
+    # A function Implemented by Diethelm Wuertz
 
     # Description:
     #   Displays a segment plot of box plot statistics
@@ -109,7 +115,7 @@ description = "Box Plot Statistics", descriptionPosition = c(3, 3.50))
     # FUNCTION:
     
     # Plot:
-    par(mfrow = c(1, 1), oma = oma, mar = mar) 
+    if(par) par(mfrow = c(1, 1), oma = oma, mar = mar) 
     bp = assetsBoxPlot(x, doplot = FALSE)
     ans = assetsStarsPlot(abs(bp$stats), keyOffset = keyOffset)                          
     text(titlePosition[1], titlePosition[2], adj = 0, 
@@ -126,11 +132,14 @@ description = "Box Plot Statistics", descriptionPosition = c(3, 3.50))
 # ------------------------------------------------------------------------------
 
 
-assetsBasicStatsPlot = 
-function(x, oma = c(0,0,0,0), mar = c(4, 4, 4, 4), keyOffset = c(-0.65, -0.50), 
-main = "Assets Statistics", title = "Assets", titlePosition = c(3, 3.65), 
-description = "Basic Returns Statistics", descriptionPosition = c(3, 3.50))
-{   # A function Implemented by Diethelm Wuertz
+assetsBasicStatsPlot <- 
+    function(x, par = TRUE, oma = c(0,0,0,0), mar = c(4, 4, 4, 4), 
+    keyOffset = c(-0.65, -0.50), main = "Assets Statistics", 
+    title = "Assets", titlePosition = c(3, 3.65), 
+    description = "Basic Returns Statistics", descriptionPosition = c(3, 3.50),
+    ...)
+{   
+    # A function Implemented by Diethelm Wuertz
 
     # Description:
     #   Displays a segment plot of basic return statistics
@@ -142,9 +151,9 @@ description = "Basic Returns Statistics", descriptionPosition = c(3, 3.50))
     # FUNCTION:
     
     # Plot:
-    par(mfrow = c(1, 1), oma = oma, mar = mar) 
+    if (par) par(mfrow = c(1, 1), oma = oma, mar = mar) 
     X = basicStats(x)[-(1:2), ] 
-    assetsStarsPlot(X, keyOffset = keyOffset)                          
+    assetsStarsPlot(X, keyOffset = keyOffset, ...)                          
     text(titlePosition[1], titlePosition[2], adj = 0, 
         title, cex = 1.25)
     text(descriptionPosition[1], descriptionPosition[2], adj = 0, 
@@ -159,11 +168,13 @@ description = "Basic Returns Statistics", descriptionPosition = c(3, 3.50))
 # ------------------------------------------------------------------------------
 
 
-assetsMomentsPlot = 
-function(x, oma = c(0,0,0,0), mar = c(4, 4, 4, 4), keyOffset = c(-0.65, -0.50), 
-main = "Assets Statistics", title = "Assets", titlePosition = c(3, 3.65), 
-description = "Moments Statistics", descriptionPosition = c(3, 3.50))
-{   # A function Implemented by Diethelm Wuertz
+assetsMomentsPlot <- 
+    function(x, oma = c(0,0,0,0), mar = c(4, 4, 4, 4), 
+    keyOffset = c(-0.65, -0.50), main = "Assets Statistics", 
+    title = "Assets", titlePosition = c(3, 3.65), 
+    description = "Moments Statistics", descriptionPosition = c(3, 3.50))
+{   
+    # A function Implemented by Diethelm Wuertz
 
     # Description:
     #   Displays a segment plot of distribution moments
@@ -175,7 +186,7 @@ description = "Moments Statistics", descriptionPosition = c(3, 3.50))
     # FUNCTION:
     
     # Plot:
-    par(mfrow = c(1, 1), oma = oma, mar = mar) 
+    if(par) par(mfrow = c(1, 1), oma = oma, mar = mar) 
     param = NULL
     for (i in 1:dim(x)[2]) {
         X = as.vector(seriesData(x[, i]))
@@ -199,11 +210,13 @@ description = "Moments Statistics", descriptionPosition = c(3, 3.50))
 # ------------------------------------------------------------------------------
 
 
-assetsNIGFitPlot =
-function(x, oma = c(0,0,0,0), mar = c(4, 4, 4, 4), keyOffset = c(-0.65, -0.50), 
-main = "Assets Statistics", title = "Assets", titlePosition = c(3, 3.65), 
-description = "NIG  Parameters", descriptionPosition = c(3, 3.50))
-{   # A function Implemented by Diethelm Wuertz
+assetsNIGFitPlot <- 
+    function(x, par = TRUE, oma = c(0,0,0,0), mar = c(4, 4, 4, 4), 
+    keyOffset = c(-0.65, -0.50), main = "Assets Statistics", 
+    title = "Assets", titlePosition = c(3, 3.65), 
+    description = "NIG  Parameters", descriptionPosition = c(3, 3.50))
+{   
+    # A function Implemented by Diethelm Wuertz
 
     # Description:
     #   Displays a segment plot NIG parameter estimates
@@ -220,7 +233,7 @@ description = "NIG  Parameters", descriptionPosition = c(3, 3.50))
         fit = nigFit(x[, i], doplot = FALSE)
         param = cbind(param, fit@fit$estimate)
     }
-    par(mfrow = c(1, 1), oma = oma, mar = mar)
+    if(par) par(mfrow = c(1, 1), oma = oma, mar = mar)
     colnames(param) = colnames(x)
     rownames(param) = c("alpha", "beta", "delta", "mu")
     assetsStarsPlot(param, keyOffset = keyOffset)
