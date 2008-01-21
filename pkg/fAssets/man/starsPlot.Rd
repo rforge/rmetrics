@@ -36,19 +36,19 @@
 \usage{
 assetsStarsPlot(x, method = c("segments", "stars"), 
     keyOffset = c(0, 0), \dots)
-assetsBoxStatsPlot(x, oma = c(0,0,0,0), mar = c(4, 4, 4, 4), 
+assetsBoxStatsPlot(x, par = TRUE, oma = c(0,0,0,0), mar = c(4, 4, 4, 4), 
     keyOffset = c(-0.65, -0.50), main = "Assets Statistics", 
     title = "Assets", titlePosition = c(3, 3.65), 
     description = "Box Plot Statistics", descriptionPosition = c(3, 3.50))
-assetsBasicStatsPlot(x, oma = c(0,0,0,0), mar = c(4, 4, 4, 4), 
+assetsBasicStatsPlot(x, par = TRUE, oma = c(0,0,0,0), mar = c(4, 4, 4, 4), 
     keyOffset = c(-0.65, -0.50), main = "Assets Statistics", 
     title = "Assets", titlePosition = c(3, 3.65), 
     description = "Basic Returns Statistics", descriptionPosition = c(3, 3.50))
-assetsMomentsPlot(x, oma = c(0,0,0,0), mar = c(4, 4, 4, 4), 
+assetsMomentsPlot(x, par = TRUE, oma = c(0,0,0,0), mar = c(4, 4, 4, 4), 
     keyOffset = c(-0.65, -0.50), main = "Assets Statistics", 
     title = "Assets", titlePosition = c(3, 3.65), 
     description = "Moments Statistics", descriptionPosition = c(3, 3.50))
-assetsNIGFitPlot(x, oma = c(0,0,0,0), mar = c(4, 4, 4, 4), 
+assetsNIGFitPlot(x, par = TRUE, oma = c(0,0,0,0), mar = c(4, 4, 4, 4), 
     keyOffset = c(-0.65, -0.50), main = "Assets Statistics", 
     title = "Assets", titlePosition = c(3, 3.65), 
     description = "NIG  Parameters", descriptionPosition = c(3, 3.50))
@@ -79,6 +79,9 @@ assetsNIGFitPlot(x, oma = c(0,0,0,0), mar = c(4, 4, 4, 4),
         }
     \item{oma}{
         to set the size of the outer margins in lines of text.
+        }
+    \item{par}{
+        a logical flag. Should be internal \code{par()} setting be used?
         }
     \item{title}{
         a character string, the plot title.
