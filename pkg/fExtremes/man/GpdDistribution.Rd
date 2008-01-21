@@ -122,7 +122,8 @@ Embrechts, P., Klueppelberg, C., Mikosch, T. (1997);
 ## rgpd  -
    par(mfrow = c(2, 2), cex = 0.7)
    r = rgpd(n = 1000, xi = 1/4)
-   seriesPlot(r)
+   plot(r, type = "l", col = "steelblue", main = "GPD Series")
+   grid()
    
 ## dgpd -
    # Plot empirical density and compare with true density:
