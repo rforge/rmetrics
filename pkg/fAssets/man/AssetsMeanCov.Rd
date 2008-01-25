@@ -1,9 +1,7 @@
-\name{AssetsMeanCovariances}
+\name{assetsMeanCov}
 
-\alias{AssetsMeanCovariances}
 
 \alias{assetsMeanCov}
-\alias{assetsStats}
 
 
 \title{Estimation of Mean and Covariances of Asset Sets}
@@ -14,20 +12,11 @@
     A collection and description of functions which allow
     to estimate the mean and/or covariance matrix of a 
     time series of assets by traditional and robust methods.
-    \cr
-    
-    The functions are:
-    
-    \tabular{ll}{
-    \code{assetsStats} \tab Computes basic statistics of a set of assets, \cr
-    \code{assetsMeanCov} \tab Computes mean and covariance matrix. }
     
 }
     
 
 \usage{
-assetsStats(x)
-
 assetsMeanCov(x, method = c("cov", "mve", "mcd", "MCD", "OGK", "nnve", 
     "shrink", "bagged"), check = TRUE, force = TRUE, baggedR = 100, 
     sigmamu = scaleTau2, alpha = 1/2, \dots)
@@ -166,8 +155,10 @@ Schaefer J., Strimmer K. (2005);
 \examples{
 ## berndtInvest -
    data(berndtInvest)
+   
    # Select "CONTIL" "DATGEN" "TANDY" and "DEC" Stocks:
    select = c("CONTIL", "DATGEN", "TANDY", "DEC")
+   
    # Convert into a timeSeries object:
    berndtAssets.tS = as.timeSeries(berndtInvest)[, select]
    head(berndtAssets.tS)
@@ -175,20 +166,8 @@ Schaefer J., Strimmer K. (2005);
 ## Classical Covariance Estimation:
    assetsMeanCov(berndtAssets.tS, method = "cov")
    
-## mcd Covariance Estimation:
-   # assetsMeanCov(berndtAssets.tS, method = "mcd")
-   
-## mve Covariance Estimation:
-   # assetsMeanCov(berndtAssets.tS, method = "mve")
-   
-## nnve Covariance Estimation:
-   # assetsMeanCov(berndtAssets.tS, method = "nnve")
-   
 ## shrinkage Covariance Estimation:
    assetsMeanCov(berndtAssets.tS, method = "shrink")
-   
-## bagged Covariance Estimation:
-   assetsMeanCov(berndtAssets.tS, method = "bagged")
 }
 
 
