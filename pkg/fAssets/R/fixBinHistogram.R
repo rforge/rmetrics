@@ -29,13 +29,20 @@
 
 ################################################################################
 # FUNCTION:                   SIMILARITY PLOTS:
-#  fixBinHistogram             Histogram with fixed Bins
+#  fixBinHistogram             Returns histogram with fixed bins
 ################################################################################
 
 
 .hist <- 
     function (x, nbins) 
 {
+    # A function implemented by Diethelm Wuertz
+    
+    # Description:
+    #   Returns histogram with fixed bins
+    
+    # FUNCTION:
+    
     # Classes:
     nclass = nbins + 1
     n = length(x)
