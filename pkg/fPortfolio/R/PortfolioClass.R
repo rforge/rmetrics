@@ -71,33 +71,38 @@ portfolioFrontier <-
     
     # FUNCTION:
     
-    # Compose Portfolio Data: 
-    data = portfolioData(data, spec)
-    
-    # Compose Optimization Function:
-    if(is.null(constraints) | length(constraints) == 0) {
-        Model = c("Constrained", "LongOnly")
-        nAssets = getNumberOfAssets(data)
-        constraints = paste("minW[1:", nAssets, "]=0", sep = "")
-    } else if (constraints[1] == "Short") {
-        Model = "Short"
-    } else {
-        Model = "Constrained"
-    }         
-    Type = getType(spec)
-    fun = match.fun(paste(".portfolio", Model[1], Type[1], "Frontier", 
-        sep = ""))
-    attr(constraints, "model") = Model
-    
-    # Compute Portfolio:
-    ans = fun(data, spec, constraints)
-    attr(ans@constraints, "model") = Model
-    
-    # Reset Call:
-    ans@call = match.call() 
+    # Create Data Object:
+    if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
+    if (is.null(constraints)) constraints = "LongOnly"
+
+    # Optimize portfolios along the frontier:
+    nFrontierPoints = getNFrontierPoints(spec)
+    mu = getMu(data)
+    targetReturns = seq(min(mu), max(mu), length = nFrontierPoints)
+    weights = targetReturn = targetRisk = covRiskBudgets = status = NULL
+    for (i in 1:nFrontierPoints) {
+        setTargetReturn(spec) = targetReturns[i]
+        portfolio = efficientPortfolio(data, spec, constraints)
+        if (getStatus(portfolio) == 0) {
+            weights = rbind(weights, getWeights(portfolio))
+            targetReturn = rbind(targetReturn, getTargetReturn(portfolio))
+            targetRisk = rbind(targetRisk, getTargetRisk(portfolio))
+            covRiskBudgets = rbind(covRiskBudgets, getCovRiskBudgets(portfolio))
+        }
+    }
+    setTargetReturn(spec) <- NULL
+  
+    # Compose Frontier:
+    portfolio@call = match.call()
+    portfolio@portfolio$weights  = weights
+    portfolio@portfolio$targetReturn = targetReturn
+    portfolio@portfolio$targetRisk = targetRisk
+    portfolio@portfolio$covRiskBudgets = covRiskBudgets
+    portfolio@portfolio$status = 0
+    portfolio@title = "Portfolio Frontier"    
     
     # Return Value:
-    ans   
+    portfolio   
 }
 
 
@@ -119,36 +124,52 @@ feasiblePortfolio <-
     
     # FUNCTION:
     
-    # Compose Portfolio Data: 
-    data = portfolioData(data, spec)
+    # Check Data:
+    if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
+    if (is.null(constraints)) constraints = "LongOnly"
     
-    # Constraints:
-    # .checkPortfolioConstraints
+    # Get Weights:
+    stopifnot(!is.null(getWeights(spec)))
+    weights = as.vector(getWeights(spec))
+    names(weights) = colnames(data@data$series)
     
-    # Compose Optimization Function:
-    if(is.null(constraints) | length(constraints) == 0) {
-        Model = c("Constrained", "LongOnly")
-        nAssets = getNumberOfAssets(data)
-        constraints = paste("minW[1:", nAssets, "]=0", sep = "")
-    } else if (constraints[1] == "Short") {
-        Model = "Short"
-    } else {
-        Model = "Constrained"
-    }         
-    Type = getType(spec)
-    fun = match.fun(paste(".feasible", Model[1], Type[1], "Portfolio", 
-        sep = ""))
-    attr(constraints, "model") = Model
+    # Compute Return:
+    targetReturn = c(mean = (data@statistics$mean %*% weights)[[1]])
     
-    # Compute Portfolio:
-    ans = fun(data, spec, constraints)
-    attr(ans@constraints, "model") = Model
+    # Compute Covariance Risk:
+    Cov = data@statistics$Cov
+    cov = sqrt((weights %*% Cov %*% weights)[[1]])
     
-    # Reset Call:
-    ans@call = match.call()
+    # Compute VaR:
+    alpha = spec@portfolio$targetAlpha
+    returns = as.matrix(data@data$series) %*% weights
+    VaR = quantile(returns, alpha, type = 1)
     
+    # Compute CVaR:
+    CVaR = VaR - 0.5*mean(((VaR-returns) + abs(VaR-returns))) / alpha 
+    
+    # Compose Risks:
+    targetRisk = c(cov, CVaR, VaR) 
+    names(targetRisk) = c("cov", "CVaR", "VaR")
+    
+    # Compute Risk Budgets:
+    covRiskBudgets = (weights * Cov %*% weights)[,1] / cov^2
+
+    # Compose Portfolio:
+    portfolio = list(weights = t(weights), targetReturn = t(targetReturn), 
+        targetRisk = t(targetRisk), targetAlpha = alpha, 
+        covRiskBudgets = t(covRiskBudgets),
+        status = getStatus(spec))
+
     # Return Value:
-    ans
+    new("fPORTFOLIO", 
+        call = match.call(),
+        data = list(data = data), 
+        spec = list(spec = spec), 
+        constraints = constraints,
+        portfolio = portfolio,
+        title = paste("Feasible Portfolio"),
+        description = .description() ) 
 }
 
 
@@ -170,33 +191,33 @@ cmlPortfolio <-
      
     # FUNCTION:
     
-    # Compose Portfolio Data: 
-    data = portfolioData(data, spec)
+    # Check Data:
+    if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
+    if (is.null(constraints)) constraints = "LongOnly"
     
-    # Compose Optimization Function:
-    if(is.null(constraints) | length(constraints) == 0) {
-        Model = c("Constrained", "LongOnly")
-        nAssets = getNumberOfAssets(data)
-        constraints = paste("minW[1:", nAssets, "]=0", sep = "")
-    } else if (constraints[1] == "Short") {
-        Model = "Short"
-    } else {
-        Model = "Constrained"
-    }         
-    Type = getType(spec)
-    fun = match.fun(paste(".cml", Model[1], Type[1], "Portfolio", 
-        sep = ""))
-    attr(constraints, "model") = Model
+    # Compute Sharpe ratio to be minimized:
+    sharpeRatio = function(x, data, spec, constraints) {
+        # x is the target return ...
+        setTargetReturn(spec) = x
+        ans = efficientPortfolio(data, spec, constraints)
+        sharpeRatio = (x - getRiskFreeRate(spec)) / getTargetRisk(ans)[, "cov"]
+        attr(sharpeRatio, "weights") <- getWeights(ans) 
+        attr(sharpeRatio, "status") <- getStatus(ans) 
+        return(sharpeRatio) }
+
+    # Minimize Sharp Ratio:
+    portfolio = optimize(sharpeRatio, interval = range(getMu(data)), 
+        maximum = TRUE, data = data, spec = spec, constraints = constraints)
+    setWeights(spec) <- attr(portfolio$objective, "weights")
+    setStatus(spec) <- attr(portfolio$objective, "status")
     
-    # Compute Portfolio
-    ans = fun(data, spec, constraints)
-    attr(ans@constraints, "model") = Model
-    
-    # Reset Call:
-    ans@call = match.call()
+    # Compose Portfolio:
+    portfolio = feasiblePortfolio(data, spec, constraints)
+    portfolio@call = match.call()
+    portfolio@title = "Capital Market Line Portfolio"
     
     # Return Value:
-    ans
+    portfolio
 }
 
 
@@ -218,33 +239,20 @@ tangencyPortfolio <-
      
     # FUNCTION:
     
-    # Compose Portfolio Data: 
-    data = portfolioData(data, spec)
+    # Check Data:
+    if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
+    if (is.null(constraints)) constraints = "LongOnly"
     
-    # Compose Optimization Function:
-    if(is.null(constraints) | length(constraints) == 0) {
-        Model = c("Constrained", "LongOnly")
-        nAssets = getNumberOfAssets(data)
-        constraints = paste("minW[1:", nAssets, "]=0", sep = "")
-    } else if (constraints[1] == "Short") {
-        Model = "Short"
-    } else {
-        Model = "Constrained"
-    }        
-    Type = getType(spec)
-    fun = match.fun(paste(".tangency", Model[1], Type[1], "Portfolio", 
-        sep = ""))
-    attr(constraints, "model") = Model
-    
-    # Compute Portfolio:
-    ans = fun(data, spec, constraints)
-    attr(ans@constraints, "model") = Model
-    
-    # Reset Call:
-    ans@call = match.call() 
-
+    # Set zero risk free rate:
+    setRiskFreeRate(spec) = 0
+   
+    # Compose Portfolio:
+    portfolio = cmlPortfolio(data, spec, constraints)
+    portfolio@call = match.call()
+    portfolio@title = "Tangency Portfolio"
+  
     # Return Value:
-    ans
+    portfolio
 }
 
 
@@ -266,34 +274,35 @@ minvariancePortfolio <-
     
     # FUNCTION:
     
-    # Compose Portfolio Data: 
-    data = portfolioData(data, spec)
+    # Check Data:
+    if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
+    if (is.null(constraints)) constraints = "LongOnly"
     
-    # Compose Optimization Function:
-    if(is.null(constraints) | length(constraints) == 0) {
-        Model = c("Constrained", "LongOnly")
-        nAssets = getNumberOfAssets(data)
-        constraints = paste("minW[1:", nAssets, "]=0", sep = "")
-    } else if (constraints[1] == "Short") {
-        Model = "Short"
-    } else {
-        Model = "Constrained"
-    }       
-    Type = getType(spec)
-    fun = match.fun(paste(".minvariance", Model[1], Type[1], "Portfolio", 
-        sep = ""))
-    attr(constraints, "model") = Model
+    # Compute target risk to be minimized:
+    targetRisk = function(x, data, spec, constraints) {
+        # x is the target return ...
+        setTargetReturn(spec) = x
+        ans = efficientPortfolio(data, spec, constraints)
+        targetRisk = getTargetRisk(ans)[, "cov"]
+        attr(targetRisk, "weights") <- getWeights(ans) 
+        attr(targetRisk, "status") <- getStatus(ans) 
+        return(targetRisk) }
+
+    # Minimize target risk:
+    portfolio = optimize(targetRisk, interval = range(getMu(data)),   
+        data = data, spec = spec, constraints = constraints)
+    setWeights(spec) <- attr(portfolio$objective, "weights")
+    setStatus(spec) <- attr(portfolio$objective, "status")
     
-    # Compute Portfolio:
-    ans = fun(data, spec, constraints)
-    attr(ans@constraints, "model") = Model
-    
-    # Reset Call:
-    ans@call = match.call() 
+    # Compose Portfolio:
+    portfolio = feasiblePortfolio(data, spec, constraints)
+    portfolio@call = match.call()
+    portfolio@title = "Minimum Variance Portfolio"
     
     # Return Value:
-    ans   
+    portfolio
 }
+
 
 
 # ------------------------------------------------------------------------------
@@ -314,33 +323,23 @@ efficientPortfolio <-
     
     # FUNCTION:
     
-    # Compose Portfolio Data: 
-    data = portfolioData(data, spec)
+    # Check Data:
+    if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
+    if (is.null(constraints)) constraints = "LongOnly"
     
-    # Compose Optimization Function:
-    if(is.null(constraints) | length(constraints) == 0) {
-        Model = c("Constrained", "LongOnly")
-        nAssets = getNumberOfAssets(data)
-        constraints = paste("minW[1:", nAssets, "]=0", sep = "")
-    } else if (constraints[1] == "Short") {
-        Model = "Short"
-    } else {
-        Model = "Constrained"
-    }         
-    Type = getType(spec)
-    fun = match.fun(paste(".efficient", Model[1], Type[1], "Portfolio", 
-        sep = ""))
-    attr(constraints, "model") = Model
-    
-    # Compute Portfolio:
-    ans = fun(data, spec, constraints)
-    attr(ans@constraints, "model") = Model
-    
-    # Reset Call:
-    ans@call = match.call() 
+    # Optimize Portfolio:
+    Solver = match.fun(getSolver(spec))         
+    portfolio = Solver(data, spec, constraints)  
+    setWeights(spec) = portfolio$weights
+    setStatus(spec) = portfolio$status
+      
+    # Compose Portfolio:
+    portfolio = feasiblePortfolio(data, spec, constraints)
+    portfolio@call = match.call()
+    portfolio@title = "Efficient Portfolio"
     
     # Return Value:
-    ans   
+    portfolio
 }
 
 
