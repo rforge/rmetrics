@@ -60,12 +60,12 @@
 
 \usage{
 portfolioSpec(
-    model = list(type = c("MV", "CVaR"), estimator = c("mean", "cov"), 
+    model = list(type = "MV", estimator = "covEstimator", 
         tailRisk = list(), params = list()), 
     portfolio = list(weights = NULL, targetReturn = NULL, targetRisk = NULL, 
         targetAlpha = 0.05, riskFreeRate = 0, nFrontierPoints = 50),
-    solver = list(solver = c("quadprog", "Rdonlp2", "lpSolve"), trace = FALSE))
-    
+    solver = list(solver = "solvRquadprog", trace = FALSE))
+        
 show.fPFOLIOSPEC(object)
 
 setType(spec) <- value
@@ -89,11 +89,12 @@ setTrace(spec) <- value
 
     \item{estimator}{
         [setEstimator] - \cr
-        a character string vector, determining which estimation type should be
-        used calculating mean and covariance matrix, by default "mean" and "cov"
-        meaning functions mean() and cov(). Other estimators are "mcd", using 
-        an mcd estimator, and "shrink", using an shrinkage estimator.
-        See section details for further information.
+        a character string vector, determining which type of estimator 
+        should be used calculating the mean vector and the covariance 
+        matrix. By default \code{"covEstimator"} which uses the standard
+        mean and covariance estimators, i.e. calling the functions mean() 
+        and cov(). Alternatives include among others robust and shrinkage
+        estimators.
         }
     \item{model}{
         [portfolioSpec] - \cr
@@ -153,7 +154,9 @@ setTrace(spec) <- value
     \item{type}{
         [setType] - \cr
         a character string, determining which risk measure should be taken,
-        by default "MV" meaning mean-variance. Other types are "CVaR" and "LPM".
+        by default \code{"MV"} meaning mean-variance. 
+        Other types are conditional value-at-risk \code{"CVaR"}, 
+        and lower parttial moments \code{"LPM"}.
         }
     \item{value}{
         a value for that component of \code{spec} to be set.

@@ -14,7 +14,8 @@
 \alias{getTargetAlpha.fPFOLIOSPEC}     
 \alias{getRiskFreeRate.fPFOLIOSPEC}    
 \alias{getNFrontierPoints.fPFOLIOSPEC} 
-         
+\alias{getStatus.fPFOLIOSPEC}
+
 \alias{getSolver.fPFOLIOSPEC}         
 \alias{getTrace.fPFOLIOSPEC}           
 
@@ -42,6 +43,7 @@
     \code{getTargetAlpha} \tab Extracts target VaR-alpha specification, \cr
     \code{getRiskFreeRate} \tab Extracts risk free rate from specification, \cr
     \code{getNFrontierPoints} \tab Extracts number of frontier points, \cr 
+    \code{getStatus} \tab Extracts the status of optimization, \cr 
     \code{getSolver} \tab Extracts solver from specification, \cr
     \code{getTrace} \tab Extracts solver's trace flag. }
     
@@ -60,6 +62,7 @@
 \method{getTargetAlpha}{fPFOLIOSPEC}(object)
 \method{getRiskFreeRate}{fPFOLIOSPEC}(object)
 \method{getNFrontierPoints}{fPFOLIOSPEC}(object)
+\method{getStatus}{fPFOLIOSPEC}(object)
 
 \method{getSolver}{fPFOLIOSPEC}(object)
 \method{getTrace}{fPFOLIOSPEC}(object)

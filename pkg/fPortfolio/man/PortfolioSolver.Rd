@@ -2,8 +2,9 @@
 
 \alias{PortfolioSolver}
 
-\alias{solveRQuadprog}
-\alias{solveRDonlp2} 
+\alias{solveShortExact}
+\alias{solveRquadprog}
+\alias{solveRdonlp2} 
 \alias{solveRlpSolve}
 
 
@@ -22,13 +23,13 @@
     \code{solveRQuadprog} \tab Calls Goldfarb and Idnani's QP solver, \cr
     \code{solveRDonlp2} \tab Calls Spelucci's donlp2 solver, \cr
     \code{solveRlpSolve} \tab Calls lp_solve linear/integer programming system, \cr
-    \code{setSolver} \tab Sets the desired solver, \cr
-    \code{setSolver<-} \tab Sets the desired solver. }
+    \code{setSolver} \tab Sets the desired solver. }
 
 }
 
 
 \usage{
+solveShortExact(data, spec, constraints)
 solveRQuadprog(data, spec, constraints)
 solveRDonlp2(data, spec, constraints)
 solveRlpSolve(data, spec, constraints)
@@ -60,9 +61,9 @@ solveRlpSolve(data, spec, constraints)
 
 \seealso{
 
-   \code{\link{PortfolioData}},
-   \code{\link{PortfolioSpec}},
-   \code{\link{PortfolioConstraints}},
+   \code{\link{portfolioData}},
+   \code{\link{portfolioSpec}},
+   \code{\link{portfolioConstraints}},
    \code{\link{fPORTFOLIO}}.
 
 }
@@ -76,13 +77,13 @@ solveRlpSolve(data, spec, constraints)
 
 
 \examples{
-## Solver RQuadprog:
+## Solver Rquadprog:
    # Load Data:
    Data = as.timeSeries(data(smallcap.ts))
    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
    Data
    
-## Solve RDonlp2:
+## Solve Rdonlp2:
    # ...
    
 ## Solve RlpSolve:
