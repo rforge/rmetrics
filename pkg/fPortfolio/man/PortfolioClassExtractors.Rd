@@ -4,13 +4,20 @@
 
 \alias{getData.fPORTFOLIO}
 \alias{getSeries.fPORTFOLIO}
-\alias{getStatistics.fPORTFOLIO}
 \alias{getNAssets.fPORTFOLIO}
+\alias{getNames.fPORTFOLIO}
+\alias{getStatistics.fPORTFOLIO}
+\alias{getMean.fPORTFOLIO}
+\alias{getCov.fPORTFOLIO}
+\alias{getMu.fPORTFOLIO}
+\alias{getSigma.fPORTFOLIO}
+\alias{getEstimator.fPORTFOLIO}
 
 \alias{getSpec.fPORTFOLIO}
 \alias{getType.fPORTFOLIO}
 \alias{getEstimator.fPORTFOLIO}
 \alias{getParams.fPORTFOLIO}
+\alias{getOptim.fPORTFOLIO}
 \alias{getSolver.fPORTFOLIO}
 \alias{getTrace.fPORTFOLIO}
 
@@ -72,13 +79,20 @@
 \usage{
 \method{getData}{fPORTFOLIO}(object)
 \method{getSeries}{fPORTFOLIO}(object)
-\method{getStatistics}{fPORTFOLIO}(object)
 \method{getNAssets}{fPORTFOLIO}(object)
+\method{getNames}{fPORTFOLIO}(object)
+\method{getStatistics}{fPORTFOLIO}(object)
+\method{getMean}{fPORTFOLIO}(object)
+\method{getCov}{fPORTFOLIO}(object)
+\method{getMu}{fPORTFOLIO}(object)
+\method{getSigma}{fPORTFOLIO}(object)
+\method{getEstimator}{fPORTFOLIO}(object)
 
 \method{getSpec}{fPORTFOLIO}(object)
 \method{getType}{fPORTFOLIO}(object)
 \method{getEstimator}{fPORTFOLIO}(object)
 \method{getParams}{fPORTFOLIO}(object)
+\method{getOptim}{fPORTFOLIO}(object)
 \method{getSolver}{fPORTFOLIO}(object)
 \method{getTrace}{fPORTFOLIO}(object)
 

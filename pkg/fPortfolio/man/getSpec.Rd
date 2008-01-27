@@ -4,11 +4,13 @@
 \alias{PortfolioSpecExtractors}
 
 
+\alias{getModel.fPFOLIOSPEC}
 \alias{getType.fPFOLIOSPEC}         
 \alias{getEstimator.fPFOLIOSPEC} 
 \alias{getTailRisk.fPFOLIOSPEC}      
 \alias{getParams.fPFOLIOSPEC}       
-         
+ 
+\alias{getPortfolio.fPFOLIOSPEC}        
 \alias{getWeights.fPFOLIOSPEC}         
 \alias{getTargetReturn.fPFOLIOSPEC}    
 \alias{getTargetRisk.fPFOLIOSPEC}   
@@ -17,6 +19,8 @@
 \alias{getNFrontierPoints.fPFOLIOSPEC} 
 \alias{getStatus.fPFOLIOSPEC}
 
+
+\alias{getOptim.fPFOLIOSPEC}
 \alias{getSolver.fPFOLIOSPEC}         
 \alias{getTrace.fPFOLIOSPEC}           
 

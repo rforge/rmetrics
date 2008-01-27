@@ -15,7 +15,8 @@
     
 
 \usage{
-portfolioFrontier(data, spec = portfolioSpec(), constraints = "LongOnly")
+portfolioFrontier(data, spec = portfolioSpec(), constraints = "LongOnly",
+    title = NULL, description = NULL)
 }
 
 
@@ -33,12 +34,17 @@ portfolioFrontier(data, spec = portfolioSpec(), constraints = "LongOnly")
         object, consult the generic function \code{as.timeSeries} to 
         convert your time series.
         }
+    \item{description}{ 
+        a character string which allows for a brief description. 
+        }
     \item{spec}{
         an S4 object of class \code{fPFOLIOSPEC}, containing slots call, model,
         portfolio, title, description, see \code{\link{PortfolioSpec}}
         for a full slot description.
         }
-
+    \item{title}{
+        a character string which allows for a project title.
+        } 
 }
 
 

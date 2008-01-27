@@ -64,7 +64,7 @@ portfolioSpec(
         tailRisk = list(), params = list()), 
     portfolio = list(weights = NULL, targetReturn = NULL, targetRisk = NULL, 
         targetAlpha = 0.05, riskFreeRate = 0, nFrontierPoints = 50, status = 0),
-    solver = list(solver = "solveRquadprog", trace = FALSE))
+    optim = list(solver = "solveRquadprog", trace = FALSE))
         
 show.fPFOLIOSPEC(object)
 
@@ -126,8 +126,10 @@ setTrace(spec) <- value
         a integer value, determining the percentage of the yearly return for a
         risk free asset.
         }
-    \item{solver}{
-        a character string denoting the type of the solver to be used.
+    \item{optim}{
+        a list with two entries, a character string \code{solver} denoting 
+        the type of the solver to be used, and a logical flag, \code{trace}
+        denoting if the optimization should be traced.
         }
     \item{spec}{
         an S4 object of class \code{fPFOLIOSPEC}, the specification to be 

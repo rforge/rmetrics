@@ -14,8 +14,6 @@
 \alias{covRiskBudgetsPie}
 \alias{tailRiskBudgetsPie}
 
-\alias{covEllipsesPlot}
-
 
 \title{Portfolio Plots}
 
@@ -23,8 +21,7 @@
 \description{
 
     A collection and description of plot functions. 
-    Included are weights, frontier, and related plots,
-    as well as covariance ellipses plots.
+    Included are weights, frontier, and related plots.
     \cr
 
     The functions are:
@@ -38,8 +35,7 @@
     \code{weightsPie} \tab Plots staggered weights, \cr
     \code{attributesPie} \tab Plots weighted means, \cr
     \code{covRiskBudgetPie} \tab Plots weighted risks, \cr
-    \code{tailRiskBudgetPie} \tab Plots weighted risks, \cr
-    \code{covEllipsesPlot} \tab Plots covariance ellipses. }
+    \code{tailRiskBudgetPie} \tab Plots weighted risks.}
 
 }
 
@@ -57,8 +53,6 @@ weightsPie(object, pos = NULL, col = NULL, box = TRUE, legend = TRUE)
 attributesPie(object, pos = NULL, col = NULL, box = TRUE, legend = TRUE)
 covRiskBudgetsPie(object, pos = NULL, col = NULL, box = TRUE, legend = TRUE)
 tailRiskBudgetsPie(object, pos = NULL, col = NULL, box = TRUE, legend = TRUE)
-
-covEllipsesPlot(x = list(), \dots)
 }
 
 
@@ -102,12 +96,7 @@ covEllipsesPlot(x = list(), \dots)
         an S4 object of class \code{fPORTFOLIO}, containing slots call, data,
         specification, constraints, portfolio, title, description.
         }
-    \item{x}{
-        [covEllipsesPlot] - \cr
-        a list of at least two covariance matrices.
-        }
     \item{\dots}{
-        [covEllipsesPlot] - \cr
         optional arguments to be passed.\cr
         }
 
@@ -139,12 +128,6 @@ covEllipsesPlot(x = list(), \dots)
     of the portfolio, i.e. the real return. The risk budget plot shows the 
     risk weighted weights.
     \cr
-
-
-    \bold{Covariance Ellipses Plot:}
-    \cr\cr
-    This plot visualizes the difference between two or more covariance matrices.
-    It is meant to compare different methods of covariance estimation.
 
 }
 

@@ -26,7 +26,7 @@
 }    
 
 \usage{
-portfolioConstraints(data, spec = portfolioSpec(), constraints = NULL)
+portfolioConstraints(data, spec = portfolioSpec(), constraints = "LongOnly")
 }
 
 
@@ -42,29 +42,11 @@ portfolioConstraints(data, spec = portfolioSpec(), constraints = NULL)
         a list, having a statistics named list, having named entries 'mu' and
         'Sigma', containing the information of the statistics\cr
         }
-    %\item{object}{
-    %    [getConstraints] - \cr
-    %    an object of class constraintsMatrix, containing the constraints matrix
-    %    and the exposure vector.
-    %    }
     \item{spec}{
         [setConstraints] - \cr
         an object of class \code{fPFOLIOSPEC}, containing slots call, model,
         portfolio, title, description.
         }
-    %\item{type}{
-    %    [setConstraints] - \cr
-    %    a character string denoting the type of constraints to set.
-    %    }
-    %\item{x}{
-    %    [print] - \cr
-    %    an pbject of class \code{constraintsMatrix} as returned by the 
-    %    function \code{getConstraints}.
-    %    }
-    %\item{\dots}{
-    %    [print] - \cr
-    %    optional arguments passed to the \code{print} function.
-    %    }
 
 }
 

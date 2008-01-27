@@ -1,38 +1,22 @@
-\name{portfolioSolver}
+\name{solveShortExact}
+
 
 \alias{portfolioSolver}
 
-\alias{solveShortExact}
-\alias{solveRquadprog}
-\alias{solveRdonlp2} 
-\alias{solveRlpSolve}
 
-
-\title{Portfolio Solver}
+\title{Exat unlimit Short Selling Solver}
 
 
 \description{
 
-    A collection and description of solver and utility 
-    functions for portfolio optimization.
-    \cr
-
-    The functions are:
-
-    \tabular{ll}{
-    \code{solveRQuadprog} \tab Calls Goldfarb and Idnani's QP solver, \cr
-    \code{solveRDonlp2} \tab Calls Spelucci's donlp2 solver, \cr
-    \code{solveRlpSolve} \tab Calls lp_solve linear/integer programming system, \cr
-    \code{setSolver} \tab Sets the desired solver. }
+    Optimizes an unlimited short selling portfolio 
+    analytically.
 
 }
 
 
 \usage{
 solveShortExact(data, spec, constraints)
-solveRquadprog(data, spec, constraints)
-solveRdonlp2(data, spec, constraints)
-solveRlpSolve(data, spec, constraints)
 }
 
 
@@ -40,7 +24,6 @@ solveRlpSolve(data, spec, constraints)
 \arguments{
 
     \item{data}{
-        [portfolioStatistics] - \cr
         a time series or a named list, containing either a series of returns 
         or named entries 'mu' and 'Sigma' being mean and covariance matrix.
         }
@@ -56,17 +39,8 @@ solveRlpSolve(data, spec, constraints)
         }
 }
 
+
 %\references{}
-
-
-\seealso{
-
-   \code{\link{portfolioData}},
-   \code{\link{portfolioSpec}},
-   \code{\link{portfolioConstraints}},
-   \code{\link{fPORTFOLIO}}.
-
-}
 
 
 \author{
@@ -77,16 +51,13 @@ solveRlpSolve(data, spec, constraints)
 
 
 \examples{
-## Solver Rquadprog:
+## data -
    # Load Data:
    Data = as.timeSeries(data(smallcap.ts))
    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
    Data
    
-## Solve Rdonlp2:
-   # ...
-   
-## Solve RlpSolve:
+## solveShortExact - 
    # ...
 }
 
