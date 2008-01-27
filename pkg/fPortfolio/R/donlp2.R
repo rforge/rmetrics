@@ -1,5 +1,8 @@
 
 
+################################################################################
+
+
 # DW
 # .onLoad <- function(libname, pkgname){
 #   verbose <- .Options$Hverbose
@@ -15,7 +18,7 @@
 
 
 rdonlp2Control <- 
-function(            
+    function(            
     # setup
     iterma = 4000, nstep = 20,fnscale = 1,
     report = FALSE, rep.freq = 1,
@@ -64,24 +67,23 @@ function(
 
 
 rdonlp2 <- 
-function(
-    par, fn,
-    par.upper = rep(+Inf, length(par)),
-    par.lower = rep(-Inf, length(par)),
-    
-    A = NULL,
-    lin.upper = rep(+Inf, length(par)),
-    lin.lower = rep(-Inf, length(par)),
-    
-    nlin = list(),
-    nlin.upper = rep(+Inf, length(nlin)),
-    nlin.lower = rep(-Inf, length(nlin)),
-    
-    control = rdonlp2Control(),
-    control.fun = function(lst){return(TRUE)},
-    env = .GlobalEnv, name = NULL)
-{
-    
+    function(
+        par, fn,
+        par.upper = rep(+Inf, length(par)),
+        par.lower = rep(-Inf, length(par)),
+        
+        A = NULL,
+        lin.upper = rep(+Inf, length(par)),
+        lin.lower = rep(-Inf, length(par)),
+        
+        nlin = list(),
+        nlin.upper = rep(+Inf, length(nlin)),
+        nlin.lower = rep(-Inf, length(nlin)),
+        
+        control = rdonlp2Control(),
+        control.fun = function(lst){return(TRUE)},
+        env = .GlobalEnv, name = NULL)
+{    
     # FUNCTION:
     
     # use analytical gradients?

@@ -37,7 +37,7 @@
 
 
 efficientPortfolio <- 
-    function(data, spec = portfolioSpec(), constraints = NULL)
+    function(data, spec = portfolioSpec(), constraints = "LongOnly")
 {   
     # A function implemented by Rmetrics
 
@@ -53,7 +53,6 @@ efficientPortfolio <-
     
     # Check Data:
     if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
-    if (is.null(constraints)) constraints = "LongOnly"
     
     # Optimize Portfolio:
     Solver = match.fun(getSolver(spec))         
@@ -75,7 +74,7 @@ efficientPortfolio <-
 
 
 cmlPortfolio <-  
-    function(data, spec = portfolioSpec(), constraints = NULL)
+    function(data, spec = portfolioSpec(), constraints = "LongOnly")
 {   
     # A function implemented by Rmetrics
 
@@ -91,7 +90,6 @@ cmlPortfolio <-
     
     # Check Data:
     if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
-    if (is.null(constraints)) constraints = "LongOnly"
     
     # Compute Sharpe ratio to be minimized:
     sharpeRatio = function(x, data, spec, constraints) {
@@ -123,7 +121,7 @@ cmlPortfolio <-
 
 
 tangencyPortfolio <- 
-    function(data, spec = portfolioSpec(), constraints = NULL)
+    function(data, spec = portfolioSpec(), constraints = "LongOnly")
 {   
     # A function implemented by Rmetrics
 
@@ -139,7 +137,6 @@ tangencyPortfolio <-
     
     # Check Data:
     if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
-    if (is.null(constraints)) constraints = "LongOnly"
     
     # Set zero risk free rate:
     setRiskFreeRate(spec) = 0
@@ -158,7 +155,7 @@ tangencyPortfolio <-
 
 
 minvariancePortfolio <- 
-    function(data, spec = portfolioSpec(), constraints = NULL)
+    function(data, spec = portfolioSpec(), constraints = "longOnly")
 {   
     # A function implemented by Rmetrics
 
@@ -174,7 +171,6 @@ minvariancePortfolio <-
     
     # Check Data:
     if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
-    if (is.null(constraints)) constraints = "LongOnly"
     
     # Compute target risk to be minimized:
     targetRisk = function(x, data, spec, constraints) {

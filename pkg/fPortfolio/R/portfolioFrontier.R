@@ -34,7 +34,7 @@
 
 
 portfolioFrontier <- 
-    function(data, spec = portfolioSpec(), constraints = NULL, 
+    function(data, spec = portfolioSpec(), constraints = "LongOnly", 
     title = NULL, description = NULL)
 {   
     # A function implemented by Rmetrics
@@ -51,7 +51,6 @@ portfolioFrontier <-
     
     # Create Data Object:
     if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
-    if (is.null(constraints)) constraints = "LongOnly"
 
     # Optimize portfolios along the frontier:
     nFrontierPoints = getNFrontierPoints(spec)

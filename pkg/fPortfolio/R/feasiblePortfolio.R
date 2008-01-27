@@ -34,7 +34,7 @@
 
 
 feasiblePortfolio <- 
-    function(data, spec = portfolioSpec(), constraints = NULL)
+    function(data, spec = portfolioSpec(), constraints = "LongOnly")
 {   
     # A function implemented by Rmetrics
     
@@ -50,7 +50,6 @@ feasiblePortfolio <-
     
     # Check Data:
     if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
-    if (is.null(constraints)) constraints = "LongOnly"
     
     # Get Weights:
     stopifnot(!is.null(getWeights(spec)))
