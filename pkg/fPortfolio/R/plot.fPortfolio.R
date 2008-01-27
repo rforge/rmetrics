@@ -30,6 +30,7 @@
 ################################################################################
 # FUNCTION:                     PRINT AND PLOT METHODS:           
 #  plot.fPORTFOLIO               S3 Plot method for 'fPORTFOLIO' objects   
+#  frontierPlotControl
 ################################################################################
 
 
@@ -367,7 +368,7 @@ frontierPlotControl <-
         # Pie Settings:
         pieR             = pieR, 
         piePos           = piePos, 
-        pieOffset        = PieOffset
+        pieOffset        = pieOffset
         
         )
         
