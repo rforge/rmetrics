@@ -57,13 +57,13 @@ frontierPlotControl(
     \item{monteCarlo.col}{Color setting.}
     
     \item{minvariance.cex}{Font point size setting.}
-    \item{tangency.cex{Font point size setting.}
-    \item{cml.cex{Font point size setting.}
-    \item{equalWeights.cex{Font point size setting.}
-    \item{singleAsset.cex{Font point size setting.}
-    \item{twoAssets.cex{Font point size setting.}
-    \item{monteCarlo.cex{Font point size setting.}
-    \item{sharpeRatio.cex{Font point size setting.} 
+    \item{tangency.cex}{Font point size setting.}
+    \item{cml.cex}{Font point size setting.}
+    \item{equalWeights.cex}{Font point size setting.}
+    \item{singleAsset.cex}{Font point size setting.}
+    \item{twoAssets.cex}{Font point size setting.}
+    \item{monteCarlo.cex}{Font point size setting.}
+    \item{sharpeRatio.cex}{Font point size setting.} 
 
     \item{xlim}{x-axis limit setting.}
     \item{ylim}{y-axis limit setting.}
