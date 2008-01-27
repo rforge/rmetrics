@@ -56,9 +56,10 @@
 # ------------------------------------------------------------------------------
     
     
-getData.fPFOLIODATA =
-function(object)
-{   # A function implemented by Rmetrics
+getData.fPFOLIODATA <- 
+    function(object)
+{   
+    # A function implemented by Rmetrics
 
     # Description:
     #   Extracts the series from fPOLIODATA
@@ -79,9 +80,10 @@ function(object)
 # ------------------------------------------------------------------------------
     
     
-getSeries.fPFOLIODATA =
-function(object)
-{   # A function implemented by Rmetrics
+getSeries.fPFOLIODATA <- 
+    function(object)
+{   
+    # A function implemented by Rmetrics
 
     # Description:
     #   Extracts the series from fPOLIODATA
@@ -102,9 +104,10 @@ function(object)
 # ------------------------------------------------------------------------------
     
     
-getNumberOfAssets.fPFOLIODATA =
-function(object)
-{   # A function implemented by Rmetrics
+getNumberOfAssets.fPFOLIODATA <- 
+    function(object)
+{   
+    # A function implemented by Rmetrics
 
     # Description:
     #   Extracts the series from fPOLIODATA
@@ -125,9 +128,10 @@ function(object)
 # ------------------------------------------------------------------------------
 
 
-getNames.fPFOLIODATA =
-function(object)
-{   # A function implemented by Rmetrics
+getNames.fPFOLIODATA <- 
+    function(object)
+{   
+    # A function implemented by Rmetrics
 
     # Description:
     #   Extracts the asset names from a 'fPORTFOLIO' object
@@ -150,9 +154,10 @@ function(object)
 # ------------------------------------------------------------------------------
 
 
-getStatistics.fPFOLIODATA =
-function(object)
-{   # A function implemented by Rmetrics
+getStatistics.fPFOLIODATA <- 
+    function(object)
+{   
+    # A function implemented by Rmetrics
 
     # Description:
     #   Extracts the statistics from fPOLIODATA 
@@ -173,9 +178,10 @@ function(object)
 # ------------------------------------------------------------------------------
 
 
-getMu.fPFOLIODATA =
-function(object)
-{   # A function implemented by Rmetrics
+getMu.fPFOLIODATA <- 
+    function(object)
+{   
+    # A function implemented by Rmetrics
 
     # Description:
     #   Extracts the statistics$mu from fPOLIODATA 
@@ -196,9 +202,10 @@ function(object)
 # ------------------------------------------------------------------------------
 
 
-getSigma.fPFOLIODATA =
-function(object)
-{   # A function implemented by Rmetrics
+getSigma.fPFOLIODATA <- 
+    function(object)
+{   
+    # A function implemented by Rmetrics
 
     # Description:
     #   Extracts the statistics$Sigma from fPOLIODATA 
@@ -219,9 +226,10 @@ function(object)
 # ------------------------------------------------------------------------------
 
 
-getTailRisk.fPFOLIODATA =
-function(object)
-{   # A function implemented by Rmetrics
+getTailRisk.fPFOLIODATA <- 
+    function(object)
+{   
+    # A function implemented by Rmetrics
 
     # Description:
     #   Extracts the tailRisk from fPOLIODATA 
