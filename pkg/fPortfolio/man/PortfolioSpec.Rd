@@ -13,14 +13,15 @@
 
 \alias{setType<-}
 \alias{setEstimator<-}
+\alias{setTailRisk<-}
 \alias{setParams<-}
 
 \alias{setWeights<-}
 \alias{setTargetReturn<-}
+\alias{setTargetRisk<-}
 \alias{setTargetAlpha<-}
 \alias{setRiskFreeRate<-}
 \alias{setNFrontierPoints<-}
-\alias{setTailRisk<-}
 
 \alias{setSolver<-}
 \alias{setTrace<-}
@@ -46,6 +47,7 @@
     \code{setParams} \tab Sets optional model parameters, \cr
     \code{setWeights} \tab Sets weights vector, \cr
     \code{setTargetReturn} \tab Sets target return value, \cr
+    \code{setTargetRisk} \tab Sets target risk value, \cr
     \code{setTargetAlpha} \tab Sets CVaR target alpha value, \cr
     \code{setRiskFreeRate} \tab Sets risk-free rate value, \cr
     \code{setNFrontierPoints} \tab Sets number of frontier points, \cr
@@ -57,23 +59,26 @@
 
 
 \usage{
-portfolioSpec(model = list(type = c("MV", "CVaR"), estimator = c("mean", "cov"), 
-    tailRisk = list(), params = list()), portfolio = list(weights = NULL, 
-    targetReturn = NULL, targetRisk = NULL, targetAlpha = 0.05, riskFreeRate = 0, 
-    nFrontierPoints = 50),solver = list(solver = c("quadprog", "Rdonlp2", 
-    "lpSolve"), trace = FALSE))
+portfolioSpec(
+    model = list(type = c("MV", "CVaR"), estimator = c("mean", "cov"), 
+        tailRisk = list(), params = list()), 
+    portfolio = list(weights = NULL, targetReturn = NULL, targetRisk = NULL, 
+        targetAlpha = 0.05, riskFreeRate = 0, nFrontierPoints = 50),
+    solver = list(solver = c("quadprog", "Rdonlp2", "lpSolve"), trace = FALSE))
+    
 show.fPFOLIOSPEC(object)
 
 setType(spec) <- value
 setEstimator(spec) <- value
+setTailRisk(spec) <- value
 setParams(spec) <- value
 
 setWeights(spec) <- value
 setTargetReturn(spec) <- value
+setTargetRisk(spec) <- value
 setTargetAlpha(spec) <- value
 setRiskFreeRate(spec) <- value
 setNFrontierPoints(spec) <- value
-setTailRisk(spec) <- value
 
 setSolver(spec) <- value
 setTrace(spec) <- value
@@ -190,6 +195,8 @@ setTrace(spec) <- value
                 selections include robust covariance estimators, e.g. 
                 \code{c("mean","mcd")}, or \code{c("mean","shrink")}.
                 \cr
+            \code{tailRisk=list()} a list of optional tail risk information,
+                currently not used.\cr
             \code{params=list()} a list of optional model parameters,
                 currently not used.
             }     
@@ -204,6 +211,8 @@ setTrace(spec) <- value
             \code{targetReturn=NULL} a numeric value specifying the target 
                 return. The default value sets the target return.
                 \cr
+            \code{targetRisk=NULL} a numeric value specifying the target 
+                risk.\cr
             \code{targetAlpha=NULL} a numeric value specifying the target 
                 alpha confidence level for CVaR portfolio optimization. 
                 The default value sets the target return.
@@ -218,7 +227,10 @@ setTrace(spec) <- value
             a list, setting the type of solver to be used for portfolio
             optimization:
             \cr 
-            \code{type=c("RQuadprog", "RDonlp2", "RlpSolve")}
+            \code{type=c("quadprog", "Rdonlp2", "lpSolve")} a character
+                string specifying the name of the solver to be used.\cr
+            \code{trace=FALSE} a logical flag, should the optimization be
+                traced?
             }
         \item{@title}{
             a title string, with a default project title. 
@@ -333,7 +345,8 @@ setTrace(spec) <- value
 
 \author{
 
-    Diethelm Wuertz and Oliver Greshake for the Rmetrics port.
+    Diethelm Wuertz for the Rmetrics port,\cr
+    Oliver Greshake for addons.
     
 }
 

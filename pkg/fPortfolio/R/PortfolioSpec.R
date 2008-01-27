@@ -35,14 +35,15 @@
 # FUNCTION:                     MODEL SLOT:
 #  setType<-                     Sets type of portfolio Optimization
 #  setEstimator<-                Sets name of mean-covariance estimator
-#  setParams<-                   Sets optional model parameters
 #  setTailRisk<-                 Sets tail dependency matrix
+#  setParams<-                   Sets optional model parameters
 # FUNCTION:                     PORTFOLIO SLOT:
 #  setWeights<-                  Sets weights vector
 #  setTargetReturn<-             Sets target return value
 #  setTargetAlpha<-              Sets CVaR target alpha value
 #  setRiskFreeRate<-             Sets risk-free rate value
 #  setNFrontierPoints<-          Sets number of frontier points
+#  setStatus<-                   Sets portfolio status information
 # FUNCTION:                     SOLVER SLOT:
 #  setSolver<-                   Sets name of desired solver
 #  setTrace<-                    Sets solver's trace flag
@@ -60,24 +61,26 @@ setClass("fPFOLIOSPEC",
 # ------------------------------------------------------------------------------
 
 
-portfolioSpec = 
-function(
-model = list(
-    type = c("MV", "CVaR"), 
-    estimator = c("mean", "cov"), 
-    tailRisk = list(),
-    params = list()),
-portfolio = list(
-    weights = NULL, 
-    targetReturn = NULL, 
-    targetRisk = NULL,
-    targetAlpha = 0.05, 
-    riskFreeRate = 0, 
-    nFrontierPoints = 50),
-solver = list(
-    solver = c("quadprog", "Rdonlp2", "lpSolve"),
-    trace = FALSE))
-{   # A function implemented by Rmetrics
+portfolioSpec <- 
+    function(
+    model = list(
+        type = "MV",                     # Alternatives: "LPM", "CVaR"
+        estimator = "covEstimator",      # Alternatives: "shrinkEstimator", ...
+        tailRisk = list(),               #               "lpmEstimator", ...
+        params = list()),
+    portfolio = list(
+        weights = NULL, 
+        targetReturn = NULL, 
+        targetRisk = NULL,
+        targetAlpha = 0.05, 
+        riskFreeRate = 0, 
+        nFrontierPoints = 50,
+        status = 0),
+    solver = list(
+        solver = "solveRquadprog",        # Alt: "solveRdonlp2" "solveRlpSolve"
+        trace = FALSE))
+{   
+    # A function implemented by Rmetrics
 
     # Description:
     #   Specifies a portfolio to be optimized
@@ -88,22 +91,22 @@ solver = list(
     # FUNCTION:
     
     # Compose Checklists:
-    model.type = c("MV", "CVaR")
-    model.estimator.mean = "mean"
-    model.estimator.cov = c("cov", "mcd", "Mcd", "shrink")
-    solver.solver = c("quadprog", "Rdonlp2", "lpSolve")
-    solver.trace = FALSE
+    # model.type = c("MV", "CVaR")
+    # model.estimator.mean = "mean"
+    # model.estimator.cov = c("cov", "mcd", "Mcd", "shrink")
+    # solver.solver = c("quadprog", "Rdonlp2", "lpSolve")
+    # solver.trace = FALSE
     
     # Check Arguments:
-    stopifnot(model$type %in% model.type)
-    stopifnot(model$estimator[1] %in% model.estimator.mean)
-    stopifnot(model$estimator[2] %in% model.estimator.cov)
-    stopifnot(solver$solver %in% solver.solver)
+    # stopifnot(model$type %in% model.type)
+    # stopifnot(model$estimator[1] %in% model.estimator.mean)
+    # stopifnot(model$estimator[2] %in% model.estimator.cov)
+    # stopifnot(solver$solver %in% solver.solver)
     
     # Model Slot:
     Model = list(
         type = "MV", 
-        estimator = c("mean", "cov"),
+        estimator = "covEstimator",
         tailRisk = NULL,
         params = list())
     model$type = model$type[1]
@@ -128,8 +131,9 @@ solver = list(
   
     # Solver Slot:
     Solver = list(
-        solver = solver$solver[1], 
-        trace = solver$trace)
+        solver = "solveRquadprog", 
+        trace = FALSE)
+    Solver[(Names <- names(solver))] <- solver
     
     # Return Value:
     new("fPFOLIOSPEC", 
@@ -142,9 +146,10 @@ solver = list(
 # ------------------------------------------------------------------------------
 
 
-show.fPFOLIOSPEC =
-function(object)
-{   # A function implemented by Rmetrics
+show.fPFOLIOSPEC <- 
+    function(object)
+{   
+    # A function implemented by Rmetrics
 
     # Description:
     #   S4 Print Method for an object of class "fPFOLIOSPEC"
@@ -171,8 +176,8 @@ function(object)
         print(object@portfolio$targetReturn)
     }
     if (!is.null(object@portfolio$targetAlpha)) {
-        cat("\nTarget Alpha:\n")
-        print(object@portfolio$targetAlpha)
+        cat("\nTarget Alpha:\n ")
+        cat(object@portfolio$targetAlpha, "\n")
     }
     if (!is.null(object@portfolio$riskFreeRate)) {
         cat("\nPortfolio Risk-Free Rate:\n ")
@@ -202,17 +207,15 @@ setMethod("show", "fPFOLIOSPEC", show.fPFOLIOSPEC)
 
 
 
-"setType<-" =
-function(spec, value)
-{   # A function implemented by Rmetrics
+"setType<-" <- 
+    function(spec, value)
+{   
+    # A function implemented by Rmetrics
 
     # Description:                
-    #   Sets type of portfolio optimization
+    #   Sets the portfolio type for a portfolio structure
     
     # FUNCTION:
-    
-    # Check Validity:
-    #   ...
     
     # Type ?
     spec@model$type = value
@@ -228,17 +231,15 @@ function(spec, value)
 # ------------------------------------------------------------------------------
 
 
-"setEstimator<-" = 
-function(spec, value)
-{   # A function implemented by Rmetrics
+"setEstimator<-" <- 
+    function(spec, value)
+{   
+    # A function implemented by Rmetrics
 
     # Description:                  
-    #   Sets name of mean-covariance estimator
+    #   Sets the type of mean-cov estimator for a portfolio structure
     
     # FUNCTION:
-    
-    # Check Validity:
-    #   ...
     
     # Estimator ?
     spec@model$estimator = value 
@@ -251,18 +252,16 @@ function(spec, value)
 # ------------------------------------------------------------------------------
 
 
-"setParams<-" = 
-function(spec, value)
-{   # A function implemented by Rmetrics
+"setParams<-" <- 
+    function(spec, value)
+{   
+    # A function implemented by Rmetrics
 
     # Description:                  
-    #   Sets optional parameters
+    #   Sets optional parameters for a portfolio structure
     
     # FUNCTION:
-    
-    # Check Validity:
-    #   ...
-    
+
     # Estimator ?
     spec@model$params = value 
     
@@ -274,22 +273,21 @@ function(spec, value)
 ################################################################################
 
 
-"setWeights<-" = 
-function(spec, value)
-{   # A function implemented by Rmetrics
+"setWeights<-" <- 
+    function(spec, value)
+{   
+    # A function implemented by Rmetrics
 
     # Description:                    
-    #   Sets weights vector
+    #   Sets the weights vector for a portfolio structure
     
     # FUNCTION:
-    
-    # Check Validity:
-    #   ...
     
     # Weights ?
     spec@portfolio$weights = value
     if(!is.null(value)) {
         spec@portfolio$targetReturn = NULL
+        spec@portfolio$targetRisk = NULL
     }
     
     # Return Value:
@@ -301,21 +299,20 @@ function(spec, value)
 
 
 "setTargetReturn<-" <- 
-function(spec, value)
-{   # A function implemented by Rmetrics
+    function(spec, value)
+{   
+    # A function implemented by Rmetrics
 
     # Description:                                   
-    #   Sets target return value
+    #   Sets the target return value for a portfolio structure
     
     # FUNCTION:
-    
-    # Check Validity:
-    #   ...
-    
+
     # Target Return ?
     spec@portfolio$targetReturn = value
     if(!is.null(value)) {
         spec@portfolio$weights = NULL
+        spec@portfolio$targetRisk = NULL
     }
     
     # Return Value:
@@ -326,18 +323,41 @@ function(spec, value)
 # ------------------------------------------------------------------------------
 
 
-"setTargetAlpha<-" = 
-function(spec, value)
-{   # A function implemented by Rmetrics
+"setTargetRisk<-" <- 
+    function(spec, value)
+{   
+    # A function implemented by Rmetrics
 
-    # Description:                  
-    #   Sets target Alpha value
+    # Description:                                   
+    #   Sets the target return value for a portfolio structure
     
     # FUNCTION:
+ 
+    # Target Return ?
+    spec@portfolio$targetRisk = value
+    if(!is.null(value)) {
+        spec@portfolio$weights = NULL
+        spec@portfolio$return = NULL
+    }
     
-    # Check Validity:
-    #   ...
+    # Return Value:
+    spec
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+"setTargetAlpha<-" <-
+    function(spec, value)
+{   
+    # A function implemented by Rmetrics
+
+    # Description:                  
+    #   Sets the CVaR alpha significance value for a portfolio structure
     
+    # FUNCTION:
+ 
     # Estimator ?
     spec@portfolio$targetAlpha = value 
     
@@ -350,11 +370,12 @@ function(spec, value)
 
 
 "setRiskFreeRate<-" <- 
-function(spec, value)
-{   # A function implemented by Rmetrics
+    function(spec, value)
+{   
+    # A function implemented by Rmetrics
 
     # Description:                                   
-    #   Sets risk-free rate value
+    #   Sets the risk free rate for a portfolio structure
     
     # FUNCTION:
     
@@ -373,12 +394,13 @@ function(spec, value)
 # ------------------------------------------------------------------------------
 
 
-"setNFrontierPoints<-" = 
-function(spec, value)
-{   # A function implemented by Rmetrics
+"setNFrontierPoints<-" <- 
+    function(spec, value)
+{   
+    # A function implemented by Rmetrics
 
     # Description:                                   
-    #   Sets number of frontier points
+    #   Sets the number of frontier points for a portfolio structure
     
     # FUNCTION:
     
@@ -398,12 +420,38 @@ function(spec, value)
 # ------------------------------------------------------------------------------
 
 
-"setTailRisk<-" = 
-function(spec, value)
-{   # A function implemented by Rmetrics
+"setStatus<-" <- 
+    function(spec, value)
+{   
+    # A function implemented by Rmetrics
+
+    # Description:                                   
+    #   Sets portfolio status information
+    
+    # FUNCTION:
+    
+    # Check Validity:
+    stopifnot(is.numeric(value))
+    stopifnot(length(value) == 1)
+    
+    # Risk-Free Rate ?
+    spec@portfolio$status = value
+    
+    # Return Value:
+    spec
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+"setTailRisk<-" <- 
+    function(spec, value)
+{   
+    # A function implemented by Rmetrics
 
     # Description:                    
-    #   Sets tailRisk
+    #   Sets the tail risk value for a portfolio structure
     
     # Arguments:
     #   value - a list with two matrix elements, $lower and $upper, 
@@ -414,9 +462,6 @@ function(spec, value)
     #   setTailRisk <- .nigDependencyFit(LPP)
     
     # FUNCTION:
-    
-    # Check Validity:
-    #   ...
     
     # Tail Risk ?
     spec@model$tailRisk = value  
@@ -430,17 +475,15 @@ function(spec, value)
  
 
 "setSolver<-" <- 
-function(spec, value)
-{   # A function implemented by Rmetrics
+    function(spec, value)
+{   
+    # A function implemented by Rmetrics
 
     # Description:
+    #   Sets the solver value for a portfolio structure
     
     # FUNCTION:
-    
-    # Valid Solvers:
-    validSolvers = c("quadprog", "Rdonlp2", "lpSolve")
-    stopifnot(value %in% validSolvers)
-    
+      
     # Set Solver:
     spec@solver$solver = value
     
@@ -453,10 +496,12 @@ function(spec, value)
 
 
 "setTrace<-" <- 
-function(spec, value)
-{   # A function implemented by Rmetrics
+    function(spec, value)
+{   
+    # A function implemented by Rmetrics
 
     # Description:
+    #   Sets the trace value for a portfolio structure
     
     # FUNCTION:
     

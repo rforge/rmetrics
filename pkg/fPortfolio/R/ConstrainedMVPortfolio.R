@@ -39,9 +39,10 @@
 ################################################################################
 
 
-.feasibleConstrainedMVPortfolio = 
-function(data, spec, constraints)
-{   # A function implemented by Rmetrics
+.feasibleConstrainedMVPortfolio <- 
+    function(data, spec, constraints)
+{   
+    # A function implemented by Diethelm Wuertz and Rmetrics
 
     # Description:
     #   Computes Risk and Return for a feasible portfolio

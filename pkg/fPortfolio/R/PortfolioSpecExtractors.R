@@ -40,6 +40,7 @@
 #  getTargetAlpha                Extracts target VaR-alpha specification
 #  getRiskFreeRate               Extracts risk free rate from specification 
 #  getNFrontierPoints            Extracts number of frontier points 
+#  getStatus                     Extracts portfolio status information
 # FUNCTION:                     PORTFOLIO S4 EXTRACTORS FROM SPECIFICATION:
 #  getSolver                     Extracts solver from specification
 #  getTrace                      Extracts solver's trace flag
@@ -300,6 +301,31 @@ function(object)
 }
 
 
+# ------------------------------------------------------------------------------
+
+
+getStatus.fPFOLIOSPEC =
+function(object)
+{   # A function implemented by Rmetrics
+
+    # Description:
+    #   Extracts portfolio status information
+
+   
+    # Arguments:
+    #   object - an object of S4 class fPFOLIOSPEC
+    
+    # FUNCTION:
+    
+    # Get Number of Frontier Points:
+    ans = object@portfolio$status
+    names(ans) = "status"
+    
+    # Return Value:
+    ans
+}
+
+                     
 # ------------------------------------------------------------------------------
 
 

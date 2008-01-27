@@ -468,7 +468,7 @@ function(object)
     # FUNCTION:
     
     # Get Portfolio:
-    ans = object@portfolio$riskFreeRate
+    ans = object@spec$riskFreeRate
   
     # Return Value:
     ans  
@@ -543,20 +543,10 @@ function(object, frontier = c("both", "lower", "upper"), doplot = FALSE, ...)
     
     # Get Efficient Frontier:
     Type = getType(object)
-    targetRisk = getTargetRisk(object)[ ,1] 
-    targetReturn = getTargetReturn(object)[ , 1]
-    
-    #if (Type == "MV") {
-    #    ans = cbind(Risk = targetRisk, Return = targetReturn)
-    #} else if (Type == "CVaR") {
-    #    if (is.matrix(targetRisk)) {
-    #        Risk = targetRisk[, 1]
-    #    } else {
-    #        Risk = targetRisk[1]
-    #    }
-        ans = cbind(Risk = targetRisk, Return = targetReturn)
-    #}
-    #rownames(ans) = NULL
+    targetRisk = getTargetRisk(object)[ ,"cov"] 
+    targetReturn = getTargetReturn(object)[ , "mean"]
+   
+    ans = cbind(Risk = targetRisk, Return = targetReturn)
 
     # Extract upper part of frontier
     if(frontier == "upper"){
@@ -589,7 +579,7 @@ function(object, frontier = c("both", "lower", "upper"), doplot = FALSE, ...)
 # ------------------------------------------------------------------------------
 
 
-getCovRiskBudgets.fPORTFOLIO = 
+.getCovRiskBudgets.fPORTFOLIO = 
 function (object) 
 {   # A function implemented by Rmetrics
 
@@ -622,6 +612,30 @@ function (object)
     
     # Return Value:
     ans
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+getCovRiskBudgets.fPORTFOLIO =
+function(object)
+{   # A function implemented by Rmetrics
+
+    # Description:
+    #   Extracts the target Risk from a 'fPORTFOLIO' object
+    
+    # Arguments:
+    #   object - an object of S4 class fPORTFOLIO as returned by the
+    #       functions *Portfolio().
+    
+    # FUNCTION:
+    
+    # Get Portfolio:
+    ans = object@portfolio$covRiskBudgets
+  
+    # Return Value:
+    ans  
 }
 
 

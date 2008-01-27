@@ -10,31 +10,21 @@
 
 \alias{portfolioData}
 
-\alias{portfolioStatistics}
-
 
 \title{Portfolio Data Handling}
 
 
 \description{
   
-    A collection and description of functions to 
-    handle portfolio data. 
+    Creates a fPFOLIODATA object with data set and 
+    statistical measures.
     \cr
-    
-    The functions are:
-    
-    \tabular{ll}{
-    \code{portfolioStatistics} \tab Estimates 'mu' and 'Sigma' statistics, \cr
-    \code{print|show} \tab Print method for \code{fPFOLIOSPEC} objects. }
-    
+      
 }
     
 
 \usage{
 portfolioData(data, spec = portfolioSpec())
-
-portfolioStatistics(data, spec = portfolioSpec())
 
 show.fPFOLIODATA(object)
 }

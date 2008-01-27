@@ -30,8 +30,8 @@
 ################################################################################
 # FUNCTION:                    DESCRIPTION: 
 #  solveShortExact              Solves Analytically Unlimited Short Portfolio 
-#  solveRQuadprog               Calls Goldfarb and Idnani's QP solver
-#  solveRDonlp2                 Calls Spelucci's donlp2 solver
+#  solveRquadprog               Calls Goldfarb and Idnani's QP solver
+#  solveRdonlp2                 Calls Spelucci's donlp2 solver
 #  solveRlpSolve                Calls linear programming solver
 ################################################################################
 
@@ -93,7 +93,7 @@ function(data, spec, constraints)
 # ------------------------------------------------------------------------------
 
 
-solveRQuadprog =
+solveRquadprog =
 function(data, spec, constraints)
 {   # A function implemented by Rmetrics
 
@@ -104,6 +104,19 @@ function(data, spec, constraints)
     #   data - portfolio of assets
     #   spec - specification of the portfolio
     #   constraints - string of constraints
+    
+    # Value of slove.QP():
+    #   solution - vector containing the solution of the quadratic 
+    #       programming problem.
+    #   value - scalar, the value of the quadratic function at the 
+    #       solution
+    #   unconstrained.solution - vector containing the unconstrained 
+    #       minimizer of the quadratic function.
+    #   iterations - vector of length 2, the first component contains 
+    #       the number of iterations the algorithm needed, the second 
+    #       indicates how often constraints became inactive after 
+    #       becoming active first. vector with the indices of the 
+    #       active constraints at the solution.
     
     # FUNCTION:
     
@@ -195,7 +208,7 @@ function(data, spec, constraints)
 # ------------------------------------------------------------------------------
 
 
-solveRDonlp2 =
+solveRdonlp2 =
 function(data, spec, constraints)
 {   # A function implemented by Rmetrics
     
@@ -377,6 +390,21 @@ function(data, spec, constraints)
     #   spec - specification of the portfolio
     #   constraints - string of constraints
     
+    # Value of lp():
+    #   direction - optimization direction, as entered 
+    #   x.count - number of variables in objective function 
+    #   objective - vector of objective function coefficients, 
+    #       as entered 
+    #   const.count - number of constraints entered 
+    #   constraints - constraint matrix, as entered (not 
+    #       returned by lp.assign or lp.transport) 
+    #   int.count - number of integer variables 
+    #   int.vec - vector of integer variables' indices, as entered 
+    #   objval - value of objective function at optimum} 
+    #   solution - vector of optimal coefficients 
+    #   status - numeric indicator: 0 = success, 2 = no feasible 
+    #       solution 
+   
     # Note:
     #   This function requires to load the contributed R package
     #   lpSolve explicitely!

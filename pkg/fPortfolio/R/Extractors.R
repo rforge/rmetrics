@@ -28,6 +28,35 @@
 
 
 ################################################################################
+# FUNCTION:
+#  getConstraints
+#  getCovRiskBudgets
+#  getData
+#  getEstimator
+#  getFrontier
+#  getMu
+#  getNumberOfAssets 
+#  getNames
+#  getNFrontierPoints
+#  getPortfolio
+#  getParams
+#  getRiskFreeRates
+#  getSeries
+#  getSigma
+#  getSolver
+#  getSpec
+#  getStatistics
+#  getStatus
+#  getTargetAlpha
+#  getTailRisk
+#  getTailRiskBudgets
+#  getTargetAlpha
+#  getTargetReturn
+#  getTargetRisk
+#  getTrace
+#  getType
+#  getWeights
+################################################################################
 
 
 getConstraints =
@@ -46,6 +75,17 @@ function(object)
 {   # A function implemented by Rmetrics
 
     UseMethod("getData")
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+getCovRiskBudgets = 
+function(object) 
+{   # A function implemented by Rmetrics
+
+    UseMethod("getCovRiskBudgets")
 }
 
 
@@ -140,17 +180,6 @@ function(object)
 # ------------------------------------------------------------------------------
 
 
-getCovRiskBudgets = 
-function(object) 
-{   # A function implemented by Rmetrics
-
-    UseMethod("getCovRiskBudgets")
-}
-
-
-# ------------------------------------------------------------------------------
-
-
 getRiskFreeRate =
 function(object)
 {   # A function implemented by Rmetrics
@@ -217,11 +246,11 @@ function(object)
 # ------------------------------------------------------------------------------
 
 
-getTargetAlpha =
+getStatus =
 function(object)
 {   # A function implemented by Rmetrics
 
-    UseMethod("getTargetAlpha")
+    UseMethod("getStatus")
 }
 
 
@@ -244,6 +273,17 @@ function(object)
 {   # A function implemented by Rmetrics
 
     UseMethod("getTailRiskBudgets")
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+getTargetAlpha =
+function(object)
+{   # A function implemented by Rmetrics
+
+    UseMethod("getTargetAlpha")
 }
 
 

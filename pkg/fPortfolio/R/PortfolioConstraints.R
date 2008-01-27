@@ -38,9 +38,10 @@
 ################################################################################
  
 
-portfolioConstraints =
-function(data, spec = portfolioSpec(), constraints = NULL)
-{   # A function implemented by Rmetrics
+portfolioConstraints <- 
+    function(data, spec = portfolioSpec(), constraints = NULL)
+{   
+    # A function implemented by Rmetrics
 
     # Description:
     #   Checks Consistency of Constraints Strings
@@ -55,7 +56,7 @@ function(data, spec = portfolioSpec(), constraints = NULL)
     # Check NULL:
     if(is.null(constraints)) {
         # attr(constraints, "control") = "valid" --- Not possible!
-        return(constraints)
+        return(portfolioConstraints("LongOnly"))
     }
     
     # Vector of Valid Strings:
@@ -81,10 +82,11 @@ function(data, spec = portfolioSpec(), constraints = NULL)
 # ------------------------------------------------------------------------------
 
 
-.setConstraints =
-function(data, spec = portfolioSpec(), constraints = NULL,
-type = c("BoxGroup", "RiskBudget"))
-{   # A function implemented by Rmetrics
+.setConstraints <- 
+    function(data, spec = portfolioSpec(), constraints = NULL,
+    type = c("BoxGroup", "RiskBudget"))
+{   
+    # A function implemented by Rmetrics
 
     # Description:
     #   Transforms constraint strings into a list value
@@ -124,9 +126,10 @@ type = c("BoxGroup", "RiskBudget"))
 # ------------------------------------------------------------------------------
 
 
-.setBoxGroupConstraints =
-function(data, spec = portfolioSpec(), constraints = NULL)
-{   # A function implemented by Rmetrics
+.setBoxGroupConstraints <- 
+    function(data, spec = portfolioSpec(), constraints = NULL)
+{   
+    # A function implemented by Rmetrics
 
     # Description:
     #   Transforms constraint strings into a list value
@@ -214,9 +217,10 @@ function(data, spec = portfolioSpec(), constraints = NULL)
 # ------------------------------------------------------------------------------
 
 
-.setRiskBudgetsConstraints =
-function(data, spec = NULL, constraints = NULL)
-{   # A function implemented by Rmetrics
+.setRiskBudgetsConstraints <- 
+    function(data, spec = NULL, constraints = NULL)
+{   
+    # A function implemented by Rmetrics
 
     # Description:
     #   Transforms constraint strings into a list value
@@ -260,9 +264,10 @@ function(data, spec = NULL, constraints = NULL)
 ################################################################################
 
 
-.getConstraints = 
-function(object)
-{   # A function implemented by Rmetrics
+.getConstraints <- 
+    function(object)
+{   
+    # A function implemented by Rmetrics
 
     # Description:
     #   Transforms a constraint list value into strings

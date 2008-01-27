@@ -55,10 +55,11 @@ setClass("fPORTFOLIO",
 # ------------------------------------------------------------------------------
 
 
-portfolioFrontier =
-function(data, spec = portfolioSpec(), constraints = NULL, 
-title = NULL, description = NULL)
-{   # A function implemented by Rmetrics
+portfolioFrontier <- 
+    function(data, spec = portfolioSpec(), constraints = NULL, 
+    title = NULL, description = NULL)
+{   
+    # A function implemented by Rmetrics
 
     # Description:
     #   Computes the efficient frontier of a portfolio
@@ -103,9 +104,11 @@ title = NULL, description = NULL)
 ################################################################################
 
 
-feasiblePortfolio =
-function(data, spec = portfolioSpec(), constraints = NULL)
-{   # A function implemented by Rmetrics
+feasiblePortfolio <- 
+    function(data, spec = portfolioSpec(), constraints = NULL)
+{   
+    # A function implemented by Rmetrics
+    
     # Description:
     #   Computes Risk and Return for a feasible portfolio
     
@@ -152,9 +155,10 @@ function(data, spec = portfolioSpec(), constraints = NULL)
 # ------------------------------------------------------------------------------
 
 
-cmlPortfolio =
-function(data, spec = portfolioSpec(), constraints = NULL)
-{   # A function implemented by Rmetrics
+cmlPortfolio <-  
+    function(data, spec = portfolioSpec(), constraints = NULL)
+{   
+    # A function implemented by Rmetrics
 
     # Description:
     #   Computes Capital Market Line
@@ -199,9 +203,10 @@ function(data, spec = portfolioSpec(), constraints = NULL)
 # ------------------------------------------------------------------------------
 
 
-tangencyPortfolio =
-function(data, spec = portfolioSpec(), constraints = NULL)
-{   # A function implemented by Rmetrics
+tangencyPortfolio <- 
+    function(data, spec = portfolioSpec(), constraints = NULL)
+{   
+    # A function implemented by Rmetrics
 
     # Description:
     #   Computes target risk and weights for the tangency portfolio
@@ -246,9 +251,10 @@ function(data, spec = portfolioSpec(), constraints = NULL)
 # ------------------------------------------------------------------------------
 
 
-minvariancePortfolio =
-function(data, spec = portfolioSpec(), constraints = NULL)
-{   # A function implemented by Rmetrics
+minvariancePortfolio <- 
+    function(data, spec = portfolioSpec(), constraints = NULL)
+{   
+    # A function implemented by Rmetrics
 
     # Description:
     #   Computes minimum variance portfolio
@@ -293,9 +299,10 @@ function(data, spec = portfolioSpec(), constraints = NULL)
 # ------------------------------------------------------------------------------
 
 
-efficientPortfolio =
-function(data, spec = portfolioSpec(), constraints = NULL)
-{   # A function implemented by Rmetrics
+efficientPortfolio <- 
+    function(data, spec = portfolioSpec(), constraints = NULL)
+{   
+    # A function implemented by Rmetrics
 
     # Description:
     #   Computes target risk and weights for an efficient portfolio

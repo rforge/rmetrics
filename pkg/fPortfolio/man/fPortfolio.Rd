@@ -9,7 +9,6 @@
   
     A collection and description of functions for
     portfolio modelling, pptimization and benchmarking.
-    \cr
     
 }
     

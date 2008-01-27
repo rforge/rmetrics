@@ -21,6 +21,7 @@
     \tabular{ll}{
     \code{solveRQuadprog} \tab Calls Goldfarb and Idnani's QP solver, \cr
     \code{solveRDonlp2} \tab Calls Spelucci's donlp2 solver, \cr
+    \code{solveRlpSolve} \tab Calls lp_solve linear/integer programming system, \cr
     \code{setSolver} \tab Sets the desired solver, \cr
     \code{setSolver<-} \tab Sets the desired solver. }
 

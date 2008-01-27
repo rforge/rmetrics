@@ -45,75 +45,44 @@ function(object)
     
     # FUNCTION:
      
-    # Title:
+    # Print Title:
     cat("\nTitle:\n ")
     cat(getTitle(object), "\n")
     
-    # Call:
-    cat("\nCall:\n ")
-    print.default(getCall(object))
+    # Print Call:
+    # cat("\nCall:\n ")
+    # print.default(getCall(object))
     
-    # Target Weights:
-    cat("\nPortfolio Weight(s):\n")
-    weights = round(getWeights(object), digits = 4)
-    if (length(weights) == 1) {
-        cat(" ", weights, "\n")
-    } else {
-        print.table(weights)
-    }
+    # Print Target Weights:
+    cat("\nPortfolio Weights:\n")
+    weights = data.frame(round(getWeights(object), digits = 4))
+    if (NROW(weights) == 1) rownames(weights) = ""
+    print(weights)
     
-    # Covariance Risk Budgets:
-    cat("\nRiskBudget(s):\n")
-    riskBudgets = round(getCovRiskBudgets(object), digits = 4)
-    if (length(riskBudgets) == 1) {
-        cat(" ", riskBudgets, "\n")
-    } else {
-        print.table(riskBudgets)
-    }
+    # Print Covariance Risk Budgets:
+    cat("\nCovariance Risk Budgets:\n")
+    covRiskBudgets = data.frame(round(getCovRiskBudgets(object), digits = 4))
+    if (NROW(covRiskBudgets) == 1) rownames(covRiskBudgets) = ""
+    print(covRiskBudgets)
     
-    # Tail Risk Budgets:
+    # Print Tail Risk Budgets:
     if (FALSE) {
         if (!is.na(getTailRiskBudgets(object))) {
-             cat("\nRiskBudget(s):\n")
+            cat("\nRiskBudget(s):\n")
             riskBudgets = round(getTailRiskBudgets(object), digits = 4)
-            if (length(riskBudgets) == 1) {
-                cat(" ", riskBudgets, "\n")
-            } else {
-                print.table(riskBudgets)
-            }   
-        }  
-    }
-  
-    # Target Returns:   
-    # cat("\nTarget Return(s):\n")
-    targetReturn = object@portfolio$targetReturn # getTargetReturn(object)
-    # print(targetReturn)
- 
-    # Target Risk:
-    # cat("\nTarget Risk(s):\n")
-    targetRisk = object@portfolio$targetRisk # getTargetRisk(object) 
-    # print(targetRisk)
+            print.table(riskBudgets)
+        }   
+    }  
     
-    ##
-    spec = getSpec(object)
-    cat("\nTarget Risk(s) and Return(s):\n")
-    if (is.null(dim(targetReturn))) {
-        targetReturn = matrix(targetReturn, nrow = 1)
-        colnames(targetReturn) = getEstimator(spec)[1]
-    }
-    if (is.null(dim(targetRisk))) {
-        targetRisk = matrix(targetRisk, nrow = 1)
-        colnames(targetRisk) = getEstimator(spec)[2]
-    }
-    target = cbind(targetReturn, targetRisk)
-    colnames(target) = c(colnames(targetReturn), colnames(targetRisk))    
-    if (nrow(target) == 1) {
-        print(target[1, ])
-    } else {
-        print(target)
-    }
+    # Print Target Return and Risks:
+    cat("\nTarget Return and Risks:\n")  
+    targetReturn = getTargetReturn(object) 
+    targetRisk = getTargetRisk(object) 
+    target = data.frame(targetReturn, targetRisk)   
+    if (NROW(target) == 1) rownames(target) = ""
+    print(target)
        
-    # Description:
+    # Print Description:
     cat("\nDescription:\n ")
     cat(getDescription(object), "\n")
         
