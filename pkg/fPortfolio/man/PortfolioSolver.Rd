@@ -1,6 +1,6 @@
-\name{PortfolioSolver}
+\name{portfolioSolver}
 
-\alias{PortfolioSolver}
+\alias{portfolioSolver}
 
 \alias{solveShortExact}
 \alias{solveRquadprog}
@@ -30,8 +30,8 @@
 
 \usage{
 solveShortExact(data, spec, constraints)
-solveRQuadprog(data, spec, constraints)
-solveRDonlp2(data, spec, constraints)
+solveRquadprog(data, spec, constraints)
+solveRdonlp2(data, spec, constraints)
 solveRlpSolve(data, spec, constraints)
 }
 

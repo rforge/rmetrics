@@ -64,7 +64,7 @@ portfolioSpec(
         tailRisk = list(), params = list()), 
     portfolio = list(weights = NULL, targetReturn = NULL, targetRisk = NULL, 
         targetAlpha = 0.05, riskFreeRate = 0, nFrontierPoints = 50, status = 0),
-    solver = list(solver = "solvRquadprog", trace = FALSE))
+    solver = list(solver = "solveRquadprog", trace = FALSE))
         
 show.fPFOLIOSPEC(object)
 
