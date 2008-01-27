@@ -1,5 +1,6 @@
 \name{PortfolioClass}
 
+
 \alias{PortfolioClass}
 
 \alias{fPORTFOLIO}
@@ -7,8 +8,7 @@
 
 \alias{show.fPORTFOLIO}
 \alias{show,fPORTFOLIO-method}
-
-      
+   
 \alias{plot.fPORTFOLIO}
 \alias{summary.fPORTFOLIO}
 
@@ -23,7 +23,7 @@
     portfolios. Generally, optimization is done 
     via three arguments, data, specification of 
     the portfolio, and constraints, while function
-    portfolioFrontier() has two additional 
+    portfolioFrontier has two additional 
     arguments for title and description. 
     
 }
@@ -45,7 +45,7 @@ show.fPORTFOLIO(object)
         a list, defining the plotting parameters. The list modifies amongst
         others the color, e.g. \code{minvariance.col}, type of point, e.g.
         \code{tangency.pch}, or the dimension of the point, e.g. \code{cml.cex},
-         see Notes for a complete list of control parameters.
+        see Notes for a complete list of control parameters.
         }
     \item{object}{
          an S4 object of class \code{fPORTFOLIO}, containing slots call, data,
@@ -73,6 +73,7 @@ show.fPORTFOLIO(object)
 
     \bold{Portfolio Class:}
     \cr\cr
+    
     This S4 class contains all information about the portfolio. Basically 
     these are risk measure, mean and covariance estimation, target return, 
     risk free rate, number of frontier points, ranges for calculation, see 
@@ -300,19 +301,20 @@ show.fPORTFOLIO(object)
         Default setting is maximum of frontier range or single assets 
         portfolios. 
         } 
-    }                 
+    } % end describe  
+                   
 }
+
 
 %\references{}
 
 
 \seealso{
 
-   \code{\link{portfolioData}},
-   \code{\link{portfolioSpec}},
-   \code{\link{portfolioConstraints}},
-   \code{\link{portfolioPlots}},
-   \code{\link{portfolioPlots}}.
+   \code{portfolioData},
+   \code{portfolioSpec},
+   \code{portfolioConstraints},
+   \code{portfolioPlots}.
 
 }
 

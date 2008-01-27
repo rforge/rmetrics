@@ -1,5 +1,6 @@
 \name{PortfolioSpecExtractors}
 
+
 \alias{PortfolioSpecExtractors}
 
 
@@ -35,7 +36,7 @@
     \tabular{ll}{
     \code{getType} \tab Extract portfolio type from specification, \cr
     \code{getEstimator} \tab Extract type of covariance estimator, \cr
-    \code{getEstimator} \tab Extract list of tail dependency risk matrixes, \cr
+    \code{getTailRisk} \tab Extract list of tail dependency risk matrixes, \cr
     \code{getParams} \tab Extract parameters from specification, \cr
     \code{getWeights} \tab Extracts weights from a portfolio object, \cr
     \code{getTargetReturn} \tab Extracts target return from specification, \cr
@@ -90,7 +91,14 @@
 
 
 \examples{
-## ...
+## get -
+   
+   # Create default specification structure:
+   Spec = portfolioSpec()
+   
+   # Get:
+   getType(Spec)
+   getgetRiskFreeRate(Spec)  
 }
 
 

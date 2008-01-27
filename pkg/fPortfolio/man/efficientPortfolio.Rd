@@ -2,7 +2,9 @@
 
 
 \alias{efficientPortfolio}
-
+\alias{cmlPortfolio}
+\alias{tangencyPortfolio}
+\alias{minvariancePortfolio}
 
 \title{Efficient Portfolios}
 
@@ -107,11 +109,11 @@ minvariancePortfolio(data, spec = portfolioSpec(), constraints = "LongOnly")
 
 \seealso{
 
-   \code{\link{portfolioData}},
-   \code{\link{portfolioSpec}},
-   \code{\link{portfolioConstraints}},
-   \code{\link{feasiblePortfolio}},
-   \code{\link{frontierPortfolio}}.
+   \code{portfolioData},
+   \code{portfolioSpec},
+   \code{portfolioConstraints},
+   \code{feasiblePortfolio},
+   \code{frontierPortfolio}.
 
 }
 

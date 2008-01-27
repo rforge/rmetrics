@@ -39,12 +39,15 @@
  
 
 portfolioConstraints <- 
-    function(data, spec = portfolioSpec(), constraints = NULL)
+    function(data, spec = portfolioSpec(), constraints = "LongOnly")
 {   
     # A function implemented by Rmetrics
 
     # Description:
     #   Checks Consistency of Constraints Strings
+    
+    # Example:
+    
     
     # Arguments
     #   data - 
@@ -52,12 +55,6 @@ portfolioConstraints <-
     #   constraints
     
     # FUNCTION:
-    
-    # Check NULL:
-    if(is.null(constraints)) {
-        # attr(constraints, "control") = "valid" --- Not possible!
-        return(portfolioConstraints("LongOnly"))
-    }
     
     # Vector of Valid Strings:
     validStrings = c(    
@@ -148,7 +145,7 @@ portfolioConstraints <-
     # Get Specifications:
     mu = getMu(data) 
     Sigma = getSigma(data)
-    N = nAssets = getNumberOfAssets(data)
+    N = nAssets = getNAssets(data)
     
     # Target Return:
     targetReturn = getTargetReturn(spec) 
@@ -239,7 +236,7 @@ portfolioConstraints <-
     # Get Specifications:
     mu = getMu(data) 
     Sigma = getSigma(data)
-    N = nAssets = getNumberOfAssets(data)
+    N = nAssets = getNAssets(data)
     
     # Compose Risk Budgets:
     minB = rep(0, N)
@@ -275,7 +272,7 @@ portfolioConstraints <-
     # Arguments:
     #   object - the "constraintMatrix", a list with two named elements, 
     #       the constrainded Matrix A and the constrained vector b, satisfying
-    #       A * w >= b, wher b is the exosure.
+    #       A * w >= b, where b is the exosure.
     
     # Value:
     #   A one column matrix with constraint strings.

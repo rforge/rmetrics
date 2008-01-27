@@ -39,9 +39,10 @@
 # ------------------------------------------------------------------------------
 
 
-solveRdonlp2 =
-function(data, spec, constraints)
-{   # A function implemented by Rmetrics
+solveRdonlp2 <- 
+    function(data, spec, constraints)
+{   
+    # A function implemented by Rmetrics
     
     # Description:
     #   Calls Spelucci's donlp2 solver  
@@ -59,7 +60,7 @@ function(data, spec, constraints)
     # Get Specifications:
     mu = getMu(data) 
     Sigma = getSigma(data)
-    nAssets = getNumberOfAssets(data)
+    nAssets = getNAssets(data)
 
     # Extracting data from spec:
     targetReturn = getTargetReturn(spec)  

@@ -36,9 +36,10 @@
 ################################################################################
 
 
-weightsPlot =
-function(object, col = NULL, legend = TRUE)
-{   # A function implemented by Rmetrics
+weightsPlot <- 
+    function(object, col = NULL, legend = TRUE)
+{   
+    # A function implemented by Rmetrics
 
     # Description:
     #   Plots a bar chart of weights
@@ -132,9 +133,10 @@ function(object, col = NULL, legend = TRUE)
 # ------------------------------------------------------------------------------
 
 
-attributesPlot =
-function(object, col = NULL, legend = TRUE)
-{   # A function implemented by Rmetrics
+attributesPlot <- 
+    function(object, col = NULL, legend = TRUE)
+{   
+    # A function implemented by Rmetrics
 
     # Description:
     #   Plots ...
@@ -233,9 +235,10 @@ function(object, col = NULL, legend = TRUE)
 # ------------------------------------------------------------------------------
 
 
-covRiskBudgetsPlot =
-function(object, col = NULL, legend = TRUE)
-{   # A function implemented by Rmetrics
+covRiskBudgetsPlot <- 
+    function(object, col = NULL, legend = TRUE)
+{   
+    # A function implemented by Rmetrics
 
     # Description:
     #   Plots a bar chart of covariance risk budgets
@@ -329,9 +332,10 @@ function(object, col = NULL, legend = TRUE)
 # ------------------------------------------------------------------------------
 
 
-tailRiskBudgetsPlot =
-function(object, col = NULL, legend = TRUE)
-{   # A function implemented by Rmetrics
+tailRiskBudgetsPlot <- 
+    function(object, col = NULL, legend = TRUE)
+{   
+    # A function implemented by Rmetrics
 
     # Description:
     #   Plots a bar chart of tail risk budgets

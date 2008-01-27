@@ -42,9 +42,10 @@
 ################################################################################
 
 
-pfolioVaR = 
-function(x, weights = NULL, alpha = 0.05) 
-{   # A function implemented by Diethelm Wuertz
+pfolioVaR <- 
+    function(x, weights = NULL, alpha = 0.05) 
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Compute Value-at-Risk for a portfolio of assets
@@ -77,9 +78,10 @@ function(x, weights = NULL, alpha = 0.05)
 # ------------------------------------------------------------------------------    
 
 
-pfolioCVaRplus = 
-function(x, weights = NULL, alpha = 0.05) 
-{   # A function implemented by Diethelm Wuertz
+pfolioCVaRplus <- 
+    function(x, weights = NULL, alpha = 0.05) 
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Compute Value-at-Risk Plus for a portfolio of assets
@@ -113,9 +115,10 @@ function(x, weights = NULL, alpha = 0.05)
 # ------------------------------------------------------------------------------    
     
     
-pfolioCVaR = 
-function(x, weights = NULL, alpha = 0.05) 
-{   # A function implemented by Diethelm Wuertz
+pfolioCVaR <- 
+    function(x, weights = NULL, alpha = 0.05) 
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Compute Conditional Value-at-risk for a portfolio of assets
@@ -164,9 +167,10 @@ function(x, weights = NULL, alpha = 0.05)
 # ------------------------------------------------------------------------------
 
 
-lambdaCVaR =
-function(n, alpha = 0.05) 
-{   # A function implemented by Diethelm Wuertz
+lambdaCVaR <- 
+    function(n, alpha = 0.05) 
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Computes CVaR's atomic split value lambda
@@ -189,9 +193,10 @@ function(n, alpha = 0.05)
 ################################################################################    
 
 
-pfolioMaxLoss = 
-function(x, weights = NULL) 
-{   # A function implemented by Diethelm Wuertz
+pfolioMaxLoss <- 
+    function(x, weights = NULL) 
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Computes maximum loss for a portfolio of assets
@@ -222,9 +227,10 @@ function(x, weights = NULL)
 # ------------------------------------------------------------------------------
 
 
-pfolioReturn = 
-function(x, weights = NULL) 
-{   # A function implemented by Diethelm Wuertz
+pfolioReturn <- 
+    function(x, weights = NULL) 
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Computes return value of a portfolio
@@ -266,9 +272,10 @@ function(x, weights = NULL)
 # ------------------------------------------------------------------------------
 
 
-pfolioTargetReturn = 
-function(x, weights = NULL) 
-{   # A function implemented by Diethelm Wuertz
+pfolioTargetReturn <- 
+    function(x, weights = NULL) 
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Computes return value of a portfolio
@@ -295,9 +302,10 @@ function(x, weights = NULL)
 # ------------------------------------------------------------------------------
 
 
-pfolioTargetRisk =
-function(x, weights = NULL) 
-{   # A function implemented by Diethelm Wuertz
+pfolioTargetRisk <- 
+    function(x, weights = NULL) 
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Computes risk from covariance matrix of a portfolio
@@ -327,9 +335,10 @@ function(x, weights = NULL)
 # ------------------------------------------------------------------------------    
 
 
-pfolioHist = 
-function(x, weights = NULL, alpha = 0.05, range = NULL, details = TRUE, ...)
-{   # A function implemented by Diethelm Wuertz
+pfolioHist <- 
+    function(x, weights = NULL, alpha = 0.05, range = NULL, details = TRUE, ...)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Plots a histogram of the returns of a portfolio

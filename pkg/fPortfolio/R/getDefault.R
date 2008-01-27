@@ -30,14 +30,17 @@
 ################################################################################
 # FUNCTION:
 #  getConstraints
+#  getCov
 #  getCovRiskBudgets
 #  getData
 #  getEstimator
 #  getFrontier
+#  getMean
 #  getMu
-#  getNumberOfAssets 
+#  getNAssets 
 #  getNames
 #  getNFrontierPoints
+#  getOptim
 #  getPortfolio
 #  getParams
 #  getRiskFreeRates
@@ -64,6 +67,17 @@ function(object)
 {   # A function implemented by Rmetrics
 
     UseMethod("getConstraints")
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+getCov =
+function(object)
+{   # A function implemented by Rmetrics
+
+    UseMethod("getCov")
 }
 
 
@@ -114,6 +128,17 @@ function(object, ...)
 # ------------------------------------------------------------------------------
 
 
+getMean =
+function(object)
+{   # A function implemented by Rmetrics
+
+    UseMethod("getMean")
+}
+
+
+# ------------------------------------------------------------------------------
+
+
 getMu =
 function(object)
 {   # A function implemented by Rmetrics
@@ -125,11 +150,11 @@ function(object)
 # ------------------------------------------------------------------------------
     
     
-getNumberOfAssets =
+getNAssets =
 function(object)
 {   # A function implemented by Rmetrics
 
-    UseMethod("getNumberOfAssets")
+    UseMethod("getNAssets")
 }
 
 
@@ -152,6 +177,17 @@ function(object)
 {   # A function implemented by Rmetrics
 
     UseMethod("getNFrontierPoints")
+}
+
+
+# ------------------------------------------------------------------------------
+
+
+getOptim =
+function(object)
+{   # A function implemented by Rmetrics
+
+    UseMethod("getOptim")
 }
 
 

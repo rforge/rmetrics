@@ -5,7 +5,7 @@
 \alias{getData.fPORTFOLIO}
 \alias{getSeries.fPORTFOLIO}
 \alias{getStatistics.fPORTFOLIO}
-\alias{getNumberOfAssets.fPORTFOLIO}
+\alias{getNAssets.fPORTFOLIO}
 
 \alias{getSpec.fPORTFOLIO}
 \alias{getType.fPORTFOLIO}
@@ -46,7 +46,7 @@
     \code{getData} \tab Extracts ..., \cr
     \code{getSeries} \tab Extracts ..., \cr
     \code{getStatistics} \tab Extracts ..., \cr
-    \code{getNumberOfAssets} \tab Extracts ..., \cr
+    \code{getNAssets} \tab Extracts ..., \cr
     \code{getSpec} \tab Extracts ..., \cr
     \code{getType} \tab Extracts ..., \cr
     \code{getEstimator} \tab Extracts ..., \cr
@@ -73,7 +73,7 @@
 \method{getData}{fPORTFOLIO}(object)
 \method{getSeries}{fPORTFOLIO}(object)
 \method{getStatistics}{fPORTFOLIO}(object)
-\method{getNumberOfAssets}{fPORTFOLIO}(object)
+\method{getNAssets}{fPORTFOLIO}(object)
 
 \method{getSpec}{fPORTFOLIO}(object)
 \method{getType}{fPORTFOLIO}(object)

@@ -38,9 +38,10 @@
 ################################################################################
 
 
-maxddStats =
-function(mean = 0, sd = 1, horizon = 1000)
-{   # A function implemented by Diethelm Wuertz
+maxddStats <- 
+    function(mean = 0, sd = 1, horizon = 1000)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Calculates Expectation Value E[D] of maximum Drawdowns of
@@ -78,9 +79,10 @@ function(mean = 0, sd = 1, horizon = 1000)
 # ------------------------------------------------------------------------------
 
 
-.maxddStats = 
-function(mu = 0, sigma = 1, horizon = 1000)
-{   # A function implemented by Diethelm Wuertz
+.maxddStats <- 
+    function(mu = 0, sigma = 1, horizon = 1000)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Utility function called by "maxddStats"
@@ -168,8 +170,8 @@ function(mu = 0, sigma = 1, horizon = 1000)
 # Distribution and Random Deviates
 
     
-dmaxdd = 
-function(x, sd = 1, horizon = 100, N = 1000) 
+dmaxdd <- 
+    function(x, sd = 1, horizon = 100, N = 1000) 
 {
     # Description:
     #   Calculates for a trendless Brownian process (mean=0) and
@@ -217,8 +219,8 @@ function(x, sd = 1, horizon = 100, N = 1000)
 # ------------------------------------------------------------------------------
 
 
-pmaxdd = 
-function(q, sd = 1, horizon = 100, N = 1000) 
+pmaxdd <- 
+    function(q, sd = 1, horizon = 100, N = 1000) 
 {
     # Description:
     #   Calculates for a trendless Brownian process (mean=0) 
@@ -265,8 +267,8 @@ function(q, sd = 1, horizon = 100, N = 1000)
 # ------------------------------------------------------------------------------
 
 
-rmaxdd = 
-function(n, mean = 0, sd = 1, horizon = 100) 
+rmaxdd <- 
+    function(n, mean = 0, sd = 1, horizon = 100) 
 {
     # Description:
     #   Generates for a Brownian process with mean "mean" and

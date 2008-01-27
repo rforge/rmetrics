@@ -50,7 +50,7 @@
 
 
 frontierPlot <- 
-function(object, frontier = c("both", "lower", "upper"),
+    function(object, frontier = c("both", "lower", "upper"),
     col = c("black", "grey"), add = FALSE, ...)
 {   
     # A function implemented by Rmetrics
@@ -186,9 +186,10 @@ function(object, frontier = c("both", "lower", "upper"),
 # ------------------------------------------------------------------------------
 
 
-.minvariancePlot = 
-function(object, ...)
-{   # A function implemented by Rmetrics
+.minvariancePlot <- 
+    function(object, ...)
+{   
+    # A function implemented by Rmetrics
 
     # Description:
     #   Adds the minimum risk point to a MV and CVaR portfolio plot
@@ -213,9 +214,10 @@ function(object, ...)
 # ------------------------------------------------------------------------------
 
 
-.cmlPlot = 
-function(object, ...)
-{   # A function implemented by Rmetrics
+.cmlPlot <- 
+    function(object, ...)
+{   
+    # A function implemented by Rmetrics
 
     # Description:
     #   Adds the capital market line to a portfolio plot
@@ -241,9 +243,10 @@ function(object, ...)
 # ------------------------------------------------------------------------------
 
 
-.cmlLinePlot = 
-function(object, ...)
-{   # A function implemented by Rmetrics
+.cmlLinePlot <- 
+    function(object, ...)
+{   
+    # A function implemented by Rmetrics
 
     # Description:
     #   Adds the capital market line to a portfolio plot
@@ -271,9 +274,10 @@ function(object, ...)
 # ------------------------------------------------------------------------------
 
 
-.tangencyPlot = 
-function(object, ...)
-{   # A function implemented by Rmetrics
+.tangencyPlot <- 
+    function(object, ...)
+{   
+    # A function implemented by Rmetrics
 
     # Description:
     #   Adds tangency point and line to a MV and CVaR portfolio plot
@@ -299,9 +303,10 @@ function(object, ...)
 # ------------------------------------------------------------------------------
 
 
-.tangencyLinePlot = 
-function(object, ...)
-{   # A function implemented by Rmetrics
+.tangencyLinePlot <- 
+    function(object, ...)
+{   
+    # A function implemented by Rmetrics
 
     # Description:
     #   Adds tangency point and line to a MV and CVaR portfolio plot
@@ -329,8 +334,9 @@ function(object, ...)
 
 
 .equalWeightsPlot =
-function(object, ...)
-{   # A function implemented by Rmetrics
+    function(object, ...)
+{   
+    # A function implemented by Rmetrics
 
     # Description:
     #   Adds equal weights portfolio to a portfolio plot
@@ -342,7 +348,7 @@ function(object, ...)
     Spec = getSpec(object)
     Constraints = getConstraints(object)
     Type = getType(object)
-    NumberOfAssets = getNumberOfAssets(object)
+    NumberOfAssets = getNAssets(object)
     
     # Set Equal Weights:
     setWeights(Spec) = rep(1/NumberOfAssets, times = NumberOfAssets)
@@ -364,8 +370,8 @@ function(object, ...)
 # ------------------------------------------------------------------------------  
 
 
-.singleAssetPlot =
-function(object, ...)
+.singleAssetPlot <- 
+    function(object, ...)
 {   # A function implemented by Rmetrics
 
     # Description:
@@ -381,7 +387,7 @@ function(object, ...)
     if (Type == "MV") {
         Risk = sqrt(diag(Statistics$Sigma))
     } else if (Type == "CVaR") {
-        nAssets = getNumberOfAssets(object)
+        nAssets = getNAssets(object)
         Data = getSeries(object)
         alpha = getTargetAlpha(object)
         Risk = NULL
@@ -398,8 +404,8 @@ function(object, ...)
 # ------------------------------------------------------------------------------
 
 
-.twoAssetsPlot =
-function(object, ...)
+.twoAssetsPlot <- 
+    function(object, ...)
 {   # A function implemented by Rmetrics
 
     # Description:
@@ -420,7 +426,7 @@ function(object, ...)
     Type = getType(object)
     
     # Add Frontiers for all Two-Assets Portfolios:
-    N = getNumberOfAssets(getData(object))
+    N = getNAssets(getData(object))
     for ( i in 1:(N-1) ) {
         for (j in (i+1):N ) {
             index = c(i, j) 
@@ -439,9 +445,10 @@ function(object, ...)
 # ------------------------------------------------------------------------------
 
   
-.sharpeRatioPlot = 
-function(object, ...)
-{   # A function implemented by Rmetrics
+.sharpeRatioPlot <- 
+    function(object, ...)
+{   
+    # A function implemented by Rmetrics
 
     # Description:
     #   Adds Sharpe Ratio
@@ -495,9 +502,10 @@ function(object, ...)
 # ------------------------------------------------------------------------------
 
 
-.monteCarloPlot =
-function(object, mcSteps = 5000, ...)
-{   # A function implemented by Rmetrics
+    .monteCarloPlot <- 
+    function(object, mcSteps = 5000, ...)
+{   
+    # A function implemented by Rmetrics
 
     # Description:
     #   Adds randomly feasible portfolios to a plot
@@ -559,8 +567,8 @@ function(object, mcSteps = 5000, ...)
 # ------------------------------------------------------------------------------
 
  
-.weightsWheel =
-function(object, piePos = NULL, pieR = NULL, pieOffset = NULL, ...)
+.weightsWheel <- 
+    function(object, piePos = NULL, pieR = NULL, pieOffset = NULL, ...)
 {   
     # A function implemented by Rmetrics
 
@@ -641,9 +649,10 @@ function(object, piePos = NULL, pieR = NULL, pieOffset = NULL, ...)
 # ------------------------------------------------------------------------------
 
 
-.attributesWheel = 
-function(object, piePos = NULL, pieR = NULL, pieOffset = NULL, ...)
-{   # A function implemented by Rmetrics
+.attributesWheel <- 
+    function(object, piePos = NULL, pieR = NULL, pieOffset = NULL, ...)
+{   
+    # A function implemented by Rmetrics
 
     # Description:
     #   Adds a pie plot of the weights
@@ -731,9 +740,10 @@ function(object, piePos = NULL, pieR = NULL, pieOffset = NULL, ...)
 #-------------------------------------------------------------------------------
 
 
-.notStackedWeightsPlot =
-function(object, col = NULL)
-{   # A function implemented by Rmetrics
+.notStackedWeightsPlot <- 
+    function(object, col = NULL)
+{   
+    # A function implemented by Rmetrics
 
     # Description:
     
@@ -810,9 +820,10 @@ function(object, col = NULL)
 #-------------------------------------------------------------------------------
 
 
-.addlegend = 
-function(object, control = list())
-{   # A function implemented by Rmetrics
+.addlegend <- 
+    function(object, control = list())
+{   
+    # A function implemented by Rmetrics
 
     # Description: 
     #   Adds a perdefined legend to sliders
@@ -824,7 +835,7 @@ function(object, control = list())
     # FUNCTION:
     
     # Settings:
-    dim = getNumberOfAssets(object)
+    dim = getNAssets(object)
     namesSingleAsset = names(object@data$statistics$mu)
     # Check if polt is used for forntierSlider...
     if(control$sliderFlag == "frontier"){

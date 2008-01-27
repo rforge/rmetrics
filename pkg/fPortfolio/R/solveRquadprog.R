@@ -73,7 +73,7 @@ solveRquadprog <-
     # Get Specifications:
     mu = getMu(data) 
     Sigma = getSigma(data)
-    nAssets = getNumberOfAssets(data)
+    nAssets = getNAssets(data)
 
     # Extracting data from spec:
     targetReturn = getTargetReturn(spec)  

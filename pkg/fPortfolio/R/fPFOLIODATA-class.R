@@ -57,7 +57,7 @@ portfolioData <-
     #   Creates portfolio data list
     
     # Arguments:
-    #   data - a multivariate timeSeries object
+    #   data - a multivariate 'timeSeries' object
     #   spec -  a portfolio specification structure, from which
     #       the mean and covariance type of estimator will be extracted
     
@@ -65,43 +65,46 @@ portfolioData <-
     
     # Check and Sort Data: 
     stopifnot(class(data) == "timeSeries") 
+    
+    # Data:
     data = sort(data)
     nAssets = NCOL(data)
+    names = colnames(data)
+    if(is.null(names)) names = paste("A", 1:nAssets, sep = "")
+    .data = list(
+        series = data,
+        nAssets = nAssets,
+        names = names)
         
-    # Explore Tail Dependency:
-    tailRisk = spec@model$tailRisk
-    
-    # Convert data to matrix object:
-    series = as.matrix(data)
-    
-    # Select Estimator:
-    estimator = match.fun(spec@model$estimator)
-    muSigma = estimator(series, spec)
-    
-    # Estimates:
-    mean = apply(series, MARGIN = 2, FUN = mean)
-    Cov = cov(series) 
-    mu = muSigma$mu
-    Sigma = muSigma$Sigma
-      
     # Statistics:
-    statistics = list(mu = mu, Sigma = Sigma, mean = mean, Cov = Cov)
-    attr(statistics, "estimator") = spec@model$estimator
-
+    estimator = spec@model$estimator
+    estimatorFun = match.fun(estimator)
+    muSigma = estimatorFun(data, spec)
+    .statistics = list(
+        mu = muSigma$mu, 
+        Sigma = muSigma$Sigma,
+        mean = colMeans(data), 
+        Cov = cov(data),
+        estimator = estimator)
+  
+    # Tail Risk:
+    .tailRisk = spec@model$tailRisk
+        
     # Return Value:
     new("fPFOLIODATA", 
-        data = list(series = data, nAssets = nAssets),
-        statistics = statistics,
-        tailRisk = tailRisk)  
+        data = .data,
+        statistics = .statistics,
+        tailRisk = .tailRisk)  
 }
 
 
 # ------------------------------------------------------------------------------
 
 
-show.fPFOLIODATA =
-function(object)
-{   # A function implemented by Rmetrics
+show.fPFOLIODATA <- 
+    function(object)
+{   
+    # A function implemented by Rmetrics
 
     # Description:
     #   S4 Print Method for an object of class "fPFOLIODATA"

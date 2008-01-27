@@ -33,9 +33,10 @@
 ################################################################################
 
 
-summary.fPORTFOLIO =
-function(object, ...)
-{   # A function implemented by Rmetrics
+summary.fPORTFOLIO <- 
+    function(object, ...)
+{   
+    # A function implemented by Rmetrics
 
     # Description:
     #   Plot method for an object of class 'fPORTFOLIO'

@@ -33,12 +33,16 @@
 ################################################################################
 
 
-.counterWeightsSlider = NA
+.counterWeightsSlider <-  NA
 
 
-weightsSlider =     
-function(object, control = list(), ...)
-{   # A function implemented by Rmetrics
+# ------------------------------------------------------------------------------
+
+
+weightsSlider <-   
+    function(object, control = list(), ...)
+{   
+    # A function implemented by Rmetrics
 
     # Description:
     #    Interactive view of Portfolio Weights

@@ -33,9 +33,10 @@
 ################################################################################
 
 
-show.fPORTFOLIO =
-function(object)
-{   # A function implemented by Rmetrics
+show.fPORTFOLIO <- 
+    function(object)
+{   
+    # A function implemented by Rmetrics
 
     # Description:
     #   S4 Print Method for an object of class "fPORTFOLIO"

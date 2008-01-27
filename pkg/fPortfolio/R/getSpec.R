@@ -29,359 +29,76 @@
 
 ################################################################################
 # FUNCTION:                     PORTFOLIO S4 EXTRACTORS FROM SPECIFICATION:
-#  getType                       Extract portfolio type from specification 
-#  getEstimator                  Extract type of covariance estimator
-#  getTailRisk                   Extract list of tail dependency risk matrixes
-#  getParams                     Extract parameters from specification
+#  getModel                      Extract model slot
+#   getType                       Extract portfolio type from specification 
+#   getEstimator                  Extract type of covariance estimator
+#   getTailRisk                   Extract list of tail dependency risk matrixes
+#   getParams                     Extract parameters from specification
 # FUNCTION:                     PORTFOLIO S4 EXTRACTORS FROM SPECIFICATION:
-#  getWeights                    Extracts weights from a portfolio object
-#  getTargetReturn               Extracts target return from specification
-#  getTargetRisk                 Extracts target riks from specification
-#  getTargetAlpha                Extracts target VaR-alpha specification
-#  getRiskFreeRate               Extracts risk free rate from specification 
-#  getNFrontierPoints            Extracts number of frontier points 
-#  getStatus                     Extracts portfolio status information
+#  getPortfolio                  Extract portfolio slot
+#   getWeights                    Extracts weights from a portfolio object
+#   getTargetReturn               Extracts target return from specification
+#   getTargetRisk                 Extracts target riks from specification
+#   getTargetAlpha                Extracts target VaR-alpha specification
+#   getRiskFreeRate               Extracts risk free rate from specification 
+#   getNFrontierPoints            Extracts number of frontier points 
+#   getStatus                     Extracts portfolio status information
 # FUNCTION:                     PORTFOLIO S4 EXTRACTORS FROM SPECIFICATION:
-#  getSolver                     Extracts solver from specification
-#  getTrace                      Extracts solver's trace flag
+#  getOptim                       Extract optim slot
+#   getSolver                     Extracts solver from specification
+#   getTrace                      Extracts solver's trace flag
 ################################################################################
 
 
-################################################################################
-# fPFOLIOSPEC - S4
-
-    # Slots:
+    # fPFOLIOSPEC
     # model = list(
-    #     type = "MV",
-    #     estimator = "covEstimator",
-    #     tailRisk = NULL,
-    #     params = list())
+    #   type = "MV",
+    #   estimator = "covEstimator",
+    #   tailRisk = NULL,
+    #   params = list())
     # portfolio = list(
-    #     weights = NULL, 
-    #     targetReturn = NULL, 
-    #     targetRisk = NULL, 
-    #     targetAlpha = NULL,
-    #     riskFreeRate = 0, 
-    #     nFrontierPoints = 50),
-    # solver = list(
-    #     solver = "solveRquadprog",
-    #     trace = FALSE)
+    #   weights = NULL, 
+    #   targetReturn = NULL, 
+    #   targetRisk = NULL, 
+    #   targetAlpha = NULL,
+    #   riskFreeRate = 0, 
+    #   nFrontierPoints = 50,
+    #   status = 0),
+    # optim = list(
+    #   solver = "solveRquadprog",
+    #   trace = FALSE)
 
 
 # ------------------------------------------------------------------------------
 
 
-getType.fPFOLIOSPEC <- 
-    function(object)
-{   
-    # A function implemented by Rmetrics
+getModel.fPFOLIOSPEC <- function(object) object@model  
+  getType.fPFOLIOSPEC <- function(object) object@model$type[1]
+  getEstimator.fPFOLIOSPEC <- function(object) object@model$estimator
+  getTailRisk.fPFOLIOSPEC <- function(object) object@model$tailRisk
+  getParams.fPFOLIOSPEC <- function(object) object@model$params
 
-    # Description:
-    #   Extracts the type from specification
-    
-    # Arguments:
-    #   object - an object of S4 class fPFOLIOSPEC
-    
-    # FUNCTION:
-    
-    # Get Type:
-    ans = object@model$type[1]
-    
-    # Return Value:
-    ans  
-}
 
 
 # ------------------------------------------------------------------------------
 
 
-getEstimator.fPFOLIOSPEC <- 
-    function(object)
-{   
-    # A function implemented by Rmetrics
-
-    # Description:
-    #   Extracts the estimator from specification
-    
-    # Arguments:
-    #   object - an object of S4 class fPFOLIOSPEC
-    
-    # FUNCTION:
-    
-    # Get Estimator:
-    ans = object@model$estimator
-    
-    # Return Value:
-    ans  
-}
-
-
+getPortfolio.fPFOLIOSPEC <- function(object) object@model
+  getWeights.fPFOLIOSPEC <- function(object) object@portfolio$weights
+  getTargetReturn.fPFOLIOSPEC <- function(object) object@portfolio$targetReturn
+  getTargetRisk.fPFOLIOSPEC <- function(object) object@portfolio$targetRisk
+  getTargetAlpha.fPFOLIOSPEC <- function(object) object@portfolio$targetAlpha
+  getRiskFreeRate.fPFOLIOSPEC <- function(object) object@portfolio$riskFreeRate
+  getNFrontierPoints.fPFOLIOSPEC <- function(object) object@portfolio$nFrontierPoints
+  getStatus.fPFOLIOSPEC <-  function(object) object@portfolio$status
+ 
+                    
 # ------------------------------------------------------------------------------
 
 
-getTailRisk.fPFOLIOSPEC <- 
-    function(object)
-{   
-    # A function implemented by Rmetrics
-
-    # Description:
-    #   Extract list of tail dependency risk matrixes
-    
-    # Arguments:
-    #   object - an object of S4 class fPFOLIOSPEC
-    
-    # FUNCTION:
-    
-    # Get Estimator:
-    ans = object@model$tailRisk
-    
-    # Return Value:
-    ans  
-}
-                  
-
-# ------------------------------------------------------------------------------
-
-
-getParams.fPFOLIOSPEC <- 
-    function(object)
-{   
-    # A function implemented by Rmetrics
-
-    # Description:
-    #   Extracts the params from specification
-    
-    # Arguments:
-    #   object - an object of S4 class fPFOLIOSPEC
-    
-    # FUNCTION:
-    
-    # Get Params:
-    ans = object@model$params
-    
-    # Return Value:
-    ans  
-}
-
-
-################################################################################
-
-
-getWeights.fPFOLIOSPEC <- 
-    function(object)
-{   
-    # A function implemented by Rmetrics
-
-    # Description:
-    #   Extracts the weights from specification
-    
-    # Arguments:
-    #   object - an object of S4 class fPFOLIOSPEC
-    
-    # FUNCTION:
-    
-    # Get Weights:
-    ans = object@portfolio$weights
-    
-    # Return Value:
-    ans  
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-getTargetReturn.fPFOLIOSPEC <- 
-    function(object)
-{   
-    # A function implemented by Rmetrics
-
-    # Description:
-    #   Extracts the target return from specification
-    
-    # Arguments:
-    #   object - an object of S4 class fPFOLIOSPEC
-    
-    # Example:
-    #   targetReturn()
-    
-    # FUNCTION:
-    
-    # Get Target Return:
-    ans = object@portfolio$targetReturn
-    
-    # Return Value:
-    ans
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-getTargetRisk.fPFOLIOSPEC <- 
-    function(object)
-{   
-    # A function implemented by Rmetrics
-
-    # Description:
-    #   Extracts the target risk from specification
-   
-    # Arguments:
-    #   object - an object of S4 class fPFOLIOSPEC
-    
-    # FUNCTION:
-    
-    # Get Target Risk:
-    ans = object@portfolio$targetRisk
-    
-    # Return Value:
-    ans
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-getTargetAlpha.fPFOLIOSPEC <- 
-    function(object)
-{   
-    # A function implemented by Rmetrics
-
-    # Description:
-    #   Extracts the VaR-alpha from specification
-   
-    # Arguments:
-    #   object - an object of S4 class fPFOLIOSPEC
-    
-    # FUNCTION:
-    
-    # Get Target Alpha:
-    ans = object@portfolio$targetAlpha
-    
-    # Return Value:
-    ans
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-getRiskFreeRate.fPFOLIOSPEC <- 
-    function(object)
-{   
-    # A function implemented by Rmetrics
-
-    # Description:
-    #   Extracts the risk free rate from specification
-   
-    # Arguments:
-    #   object - an object of S4 class fPFOLIOSPEC
-    
-    # FUNCTION:
-    
-    # Get Risk Free Rate:
-    ans = object@portfolio$riskFreeRate
-    
-    # Return Value:
-    ans
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-getNFrontierPoints.fPFOLIOSPEC <- 
-    function(object)
-{   
-    # A function implemented by Rmetrics
-
-    # Description:
-    #   Extracts the number of Frontier Points from specification
-   
-    # Arguments:
-    #   object - an object of S4 class fPFOLIOSPEC
-    
-    # FUNCTION:
-    
-    # Get Number of Frontier Points:
-    ans = object@portfolio$nFrontierPoints
-    
-    # Return Value:
-    ans
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-getStatus.fPFOLIOSPEC <- 
-    function(object)
-{   
-    # A function implemented by Rmetrics
-
-    # Description:
-    #   Extracts portfolio status information
-
-    # Arguments:
-    #   object - an object of S4 class fPFOLIOSPEC
-    
-    # FUNCTION:
-    
-    # Get Number of Frontier Points:
-    ans = object@portfolio$status
-    names(ans) = "status"
-    
-    # Return Value:
-    ans
-}
-
-                     
-# ------------------------------------------------------------------------------
-
-
-getSolver.fPFOLIOSPEC <- 
-    function(object)
-{   
-    # A function implemented by Rmetrics
-
-    # Description:
-    #   Extracts the solver from specification
-    
-    # Arguments:
-    #   object - an object of S4 class fPFOLIOSPEC
-    
-    # FUNCTION:
-    
-    # Get Solver:
-    ans = object@solver$solver[1]
-    
-    # Return Value:
-    ans  
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-getTrace.fPFOLIOSPEC <- 
-    function(object)
-{   
-    # A function implemented by Rmetrics
-
-    # Description:
-    #   Extracts the trace from specification
-    
-    # Arguments:
-    #   object - an object of S4 class fPFOLIOSPEC
-    
-    # FUNCTION:
-    
-    # Get Trace:
-    ans = object@solver$trace
-    
-    # Return Value:
-    ans  
-}
+getOptim.fPFOLIOSPEC <- function(object) object@optim
+  getSolver.fPFOLIOSPEC <- function(object) object@optim$solver 
+  getTrace.fPFOLIOSPEC <- function(object) object@optim$trace
 
 
 ################################################################################

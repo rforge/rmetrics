@@ -44,7 +44,7 @@
 #  setRiskFreeRate<-             Sets risk-free rate value
 #  setNFrontierPoints<-          Sets number of frontier points
 #  setStatus<-                   Sets portfolio status information
-# FUNCTION:                     SOLVER SLOT:
+# FUNCTION:                     OPTIMIZATION SLOT:
 #  setSolver<-                   Sets name of desired solver
 #  setTrace<-                    Sets solver's trace flag
 ################################################################################
@@ -54,7 +54,7 @@ setClass("fPFOLIOSPEC",
     representation(
         model = "list",
         portfolio = "list",
-        solver = "list")  
+        optim = "list")  
 )
 
 
@@ -76,7 +76,7 @@ portfolioSpec <-
         riskFreeRate = 0, 
         nFrontierPoints = 50,
         status = 0),
-    solver = list(
+    optim = list(
         solver = "solveRquadprog",        # Alt: "solveRdonlp2" "solveRlpSolve"
         trace = FALSE))
 {   
@@ -94,14 +94,14 @@ portfolioSpec <-
     # model.type = c("MV", "CVaR")
     # model.estimator.mean = "mean"
     # model.estimator.cov = c("cov", "mcd", "Mcd", "shrink")
-    # solver.solver = c("quadprog", "Rdonlp2", "lpSolve")
-    # solver.trace = FALSE
+    # optim.solver = c("quadprog", "Rdonlp2", "lpSolve")
+    # optim.trace = FALSE
     
     # Check Arguments:
     # stopifnot(model$type %in% model.type)
     # stopifnot(model$estimator[1] %in% model.estimator.mean)
     # stopifnot(model$estimator[2] %in% model.estimator.cov)
-    # stopifnot(solver$solver %in% solver.solver)
+    # stopifnot(optim$solver %in% optim.solver)
     
     # Model Slot:
     Model = list(
@@ -129,17 +129,17 @@ portfolioSpec <-
     if(!is.null(portfolio$targetReturn)) checkPortfolio = checkPortfolio + 1
     stopifnot(checkPortfolio <= 1)
   
-    # Solver Slot:
-    Solver = list(
+    # Optim Slot:
+    Optim = list(
         solver = "solveRquadprog", 
         trace = FALSE)
-    Solver[(Names <- names(solver))] <- solver
+    Optim[(Names <- names(optim))] <- optim
     
     # Return Value:
     new("fPFOLIOSPEC", 
         model = Model,
         portfolio = Portfolio,
-        solver = Solver)    
+        optim = Optim)    
 } 
 
 
@@ -188,9 +188,9 @@ show.fPFOLIOSPEC <-
         cat(object@portfolio$nFrontierPoints, "\n")
     }
     
-    # Solver:
-    cat("\nSolver:\n ")
-    cat(object@solver$solver[1], "\n")
+    # Optimization:
+    cat("\nOptimizer:\n ")
+    cat(object@optim$solver, "\n")
         
     # Return Value: 
     invisible(object)

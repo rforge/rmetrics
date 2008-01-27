@@ -36,9 +36,10 @@
 ################################################################################
 
 
-weightsPie = 
-function(object, pos = NULL, col = NULL, box = TRUE, legend = TRUE)
-{   # A function implemented by Rmetrics
+weightsPie <- 
+    function(object, pos = NULL, col = NULL, box = TRUE, legend = TRUE)
+{   
+    # A function implemented by Rmetrics
 
     # Description:
     #   Plots a Pie Chart of Weigths
@@ -113,9 +114,10 @@ function(object, pos = NULL, col = NULL, box = TRUE, legend = TRUE)
 # ------------------------------------------------------------------------------
 
 
-attributesPie = 
-function(object, pos = NULL, col = NULL, box = TRUE, legend = TRUE)
-{   # A function implemented by Rmetrics
+attributesPie <- 
+    function(object, pos = NULL, col = NULL, box = TRUE, legend = TRUE)
+{   
+    # A function implemented by Rmetrics
 
     # Description:
     #   Adds a pie plot of the weights
@@ -193,9 +195,10 @@ function(object, pos = NULL, col = NULL, box = TRUE, legend = TRUE)
 # ------------------------------------------------------------------------------
 
 
-covRiskBudgetsPie = 
-function(object, pos = NULL, col = NULL, box = TRUE, legend = TRUE)
-{   # A function implemented by Rmetrics
+covRiskBudgetsPie <- 
+    function(object, pos = NULL, col = NULL, box = TRUE, legend = TRUE)
+{   
+    # A function implemented by Rmetrics
 
     # Description:
     #   Plots a Pie Chart of Risk Budgets
@@ -270,9 +273,10 @@ function(object, pos = NULL, col = NULL, box = TRUE, legend = TRUE)
 # ------------------------------------------------------------------------------
 
 
-tailRiskBudgetsPie = 
-function(object, pos = NULL, col = NULL, box = TRUE, legend = TRUE)
-{   # A function implemented by Rmetrics
+tailRiskBudgetsPie <- 
+    function(object, pos = NULL, col = NULL, box = TRUE, legend = TRUE)
+{   
+    # A function implemented by Rmetrics
 
     # Description:
     #   Plots a Pie Chart of Tail Risk Budgets

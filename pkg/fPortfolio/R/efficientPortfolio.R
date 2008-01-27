@@ -155,7 +155,7 @@ tangencyPortfolio <-
 
 
 minvariancePortfolio <- 
-    function(data, spec = portfolioSpec(), constraints = "longOnly")
+    function(data, spec = portfolioSpec(), constraints = "LongOnly")
 {   
     # A function implemented by Rmetrics
 

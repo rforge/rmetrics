@@ -112,11 +112,11 @@ feasiblePortfolio(data, spec = portfolioSpec(), constraints = "LongOnly")
 
 \seealso{
 
-   \code{\link{portfolioData}},
-   \code{\link{portfolioSpec}},
-   \code{\link{portfolioConstraints}},
-   \code{\link{efficientPortfolio}},
-   \code{\link{frontierPortfolio}}.
+   \code{portfolioData},
+   \code{portfolioSpec},
+   \code{portfolioConstraints},
+   \code{efficientPortfolio},
+   \code{frontierPortfolio}.
 
 }
 

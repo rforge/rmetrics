@@ -31,221 +31,57 @@
 # FUNCTION:                     PORTFOLIO S4 EXTRACTORS FROM DATA SLOT:
 #  getData                       Extracts data slot
 #   getSeries                     Extracts assets series data 
-#   getNumberOfAssets             Extracts number of assets from statistics
-#   getNames                      Extracts assets names
+#   getNAssets                    Extracts number of assets from data
+#   getNames                      Extracts assets names from data
 #  getStatistics                 Extracts statistics slot
-#   getMu                         Extracs mean  mu from statistics
-#   getSigma                      Extracs covariance Sigma from statistics
-#  getTailRisk                   Extracts tail risk slot
+#   getMean                       Extracs mean from statistics
+#   getCov                        Extracs covariance Sigma from statistics
+#   getMu                         Extracs mu from statistics
+#   getSigma                      Extracs Sigma from statistics
+#   getEstimator                  Extracts estimator from 
+#  getTailRisk                   Extracts tailRisk slot
 ################################################################################
 
 
-################################################################################
-# fPFOLIODATA - S4
-
-    # Slots:
+    # fPFOLIODATA: 
     # data = list(
     #   series
-    #   nAssets)
+    #   nAssets
+    #   names)
     # statistics = list(
+    #   mean,
+    #   Cov,
     #   mu,
-    #   Sigma) 
-    # tailRisk = list()
+    #   Sigma,
+    #   estimator) 
+    # tailRisk = list()  
     
-    
-# ------------------------------------------------------------------------------
-    
-    
-getData.fPFOLIODATA <- 
-    function(object)
-{   
-    # A function implemented by Rmetrics
 
-    # Description:
-    #   Extracts the series from fPOLIODATA
-    
-    # Arguments:
-    #   object - an object of S4 class fPFOLIODATA
-    
-    # FUNCTION:
-    
-    # Get Series:
-    ans = object@data
-    
-    # Return Value:
-    ans  
-}
-
-
-# ------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------t
     
     
-getSeries.fPFOLIODATA <- 
-    function(object)
-{   
-    # A function implemented by Rmetrics
-
-    # Description:
-    #   Extracts the series from fPOLIODATA
-    
-    # Arguments:
-    #   object - an object of S4 class fPFOLIODATA
-    
-    # FUNCTION:
-    
-    # Get Series:
-    ans = object@data$series
-    
-    # Return Value:
-    ans  
-}
-
-
-# ------------------------------------------------------------------------------
-    
-    
-getNumberOfAssets.fPFOLIODATA <- 
-    function(object)
-{   
-    # A function implemented by Rmetrics
-
-    # Description:
-    #   Extracts the series from fPOLIODATA
-    
-    # Arguments:
-    #   object - an object of S4 class fPFOLIODATA
-    
-    # FUNCTION:
-    
-    # Get Series:
-    ans = object@data$nAssets
-    
-    # Return Value:
-    ans  
-}
+getData.fPFOLIODATA <- function(object) object@data
+getSeries.fPFOLIODATA <- function(object) object@data$series   
+getNAssets.fPFOLIODATA <- function(object) object@data$nAssets
+getNames.fPFOLIODATA <- function(object) object@data$names 
 
 
 # ------------------------------------------------------------------------------
 
 
-getNames.fPFOLIODATA <- 
-    function(object)
-{   
-    # A function implemented by Rmetrics
-
-    # Description:
-    #   Extracts the asset names from a 'fPORTFOLIO' object
-     
-    # FUNCTION:
-      
-    # Get Names of Assets:
-    ans = names(getMu(object))
-    if(is.null(ans)){
-        counter = seq(1, getNumberOfAssets(object), 1)
-        ans = paste("A", counter, sep = "")
-    }
-      
-    # Return Value:
-    ans  
-} 
-
+getStatistics.fPFOLIODATA <- function(object) object@statistics
+getMean.fPFOLIODATA <- function(object) object@statistics$mean
+getCov.fPFOLIODATA <- function(object) object@statistics$Cov
+getMu.fPFOLIODATA <- function(object) object@statistics$mu
+getSigma.fPFOLIODATA <- function(object) object@statistics$Sigma
+getEstimator.fPFOLIODATA <- function(object) object@statistics$estimator
 
 
 # ------------------------------------------------------------------------------
 
 
-getStatistics.fPFOLIODATA <- 
-    function(object)
-{   
-    # A function implemented by Rmetrics
-
-    # Description:
-    #   Extracts the statistics from fPOLIODATA 
-    
-    # Arguments:
-    #   object - an object of S4 class fPFOLIODATA
-    
-    # FUNCTION:
-    
-    # Get Statistics 
-    ans = object@statistics
-    
-    # Return Value:
-    ans  
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-getMu.fPFOLIODATA <- 
-    function(object)
-{   
-    # A function implemented by Rmetrics
-
-    # Description:
-    #   Extracts the statistics$mu from fPOLIODATA 
-    
-    # Arguments:
-    #   object - an object of S4 class fPFOLIODATA
-    
-    # FUNCTION:
-    
-    # Get Statistics 
-    ans = object@statistics$mu
-    
-    # Return Value:
-    ans  
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-getSigma.fPFOLIODATA <- 
-    function(object)
-{   
-    # A function implemented by Rmetrics
-
-    # Description:
-    #   Extracts the statistics$Sigma from fPOLIODATA 
-    
-    # Arguments:
-    #   object - an object of S4 class fPFOLIODATA
-    
-    # FUNCTION:
-    
-    # Get Statistics 
-    ans = object@statistics$Sigma
-    
-    # Return Value:
-    ans  
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-getTailRisk.fPFOLIODATA <- 
-    function(object)
-{   
-    # A function implemented by Rmetrics
-
-    # Description:
-    #   Extracts the tailRisk from fPOLIODATA 
-    
-    # Arguments:
-    #   object - an object of S4 class fPFOLIODATA
-    
-    # FUNCTION:
-    
-    # Get Statistics 
-    ans = object@tailRisk
-    
-    # Return Value:
-    ans  
-}
-    
+getTailRisk.fPFOLIODATA <- function(object) object@tailRisk
+  
 
 ################################################################################
 

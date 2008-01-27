@@ -39,9 +39,10 @@
 ################################################################################
 
 
-rollingWindows =
-function(x, period = "12m", by = "1m")
-{   # A function implemented by Rmetrics
+rollingWindows <- 
+    function(x, period = "12m", by = "1m")
+{   
+    # A function implemented by Rmetrics
 
     # Description:
     #   Returns vectors of start and end dates for a rolling time series
@@ -96,10 +97,11 @@ function(x, period = "12m", by = "1m")
 # ------------------------------------------------------------------------------
 
 
-rollingCmlPortfolio =
-function(data, spec, constraints, from, to, action = NULL, 
-title = NULL, description = NULL, ...)
-{   # A function implemented by Rmetrics
+rollingCmlPortfolio <- 
+    function(data, spec, constraints, from, to, action = NULL, 
+    title = NULL, description = NULL, ...)
+{   
+    # A function implemented by Rmetrics
 
     # Description:
     #   Computes EF on a rolling timeSeries Windows
@@ -134,9 +136,9 @@ title = NULL, description = NULL, ...)
 # ------------------------------------------------------------------------------
 
 
-rollingTangencyPortfolio =
-function(data, spec, constraints, from, to, action = NULL, 
-title = NULL, description = NULL, ...)
+rollingTangencyPortfolio <- 
+    function(data, spec, constraints, from, to, action = NULL, 
+    title = NULL, description = NULL, ...)
 {   # A function implemented by Rmetrics
 
     # Description:
@@ -176,10 +178,11 @@ title = NULL, description = NULL, ...)
 # ------------------------------------------------------------------------------
 
 
-rollingMinvariancePortfolio =
-function(data, spec, constraints, from, to, action = NULL, 
-title = NULL, description = NULL, ...)
-{   # A function implemented by Rmetrics
+rollingMinvariancePortfolio <- 
+    function(data, spec, constraints, from, to, action = NULL, 
+    title = NULL, description = NULL, ...)
+{   
+    # A function implemented by Rmetrics
 
     # Description:
     #   Computes EF on a rolling timeSeries Windows
@@ -218,9 +221,9 @@ title = NULL, description = NULL, ...)
 ################################################################################
 
 
-rollingPortfolioFrontier =
-function(data, spec, constraints, from, to, action = NULL, 
-title = NULL, description = NULL, ...)
+rollingPortfolioFrontier <- 
+    function(data, spec, constraints, from, to, action = NULL, 
+    title = NULL, description = NULL, ...)
 {   # A function implemented by Rmetrics
 
     # Description:

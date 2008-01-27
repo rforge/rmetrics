@@ -1,39 +1,89 @@
-\name{Portfolio}
+\name{fPortfolio-package}
 
-\alias{portfolio}
+
+\alias{fPortfolio}
+
+
+\docType{package}
+
 
 \title{Portfolio Modelling, Optimization and Benchmarking}
 
 
 \description{
-  
-    A collection and description of functions for
-    portfolio modelling, pptimization and benchmarking.
-    
+...
 }
-    
+
 
 \details{
 
-    \bold{Assets Modelling:}
-    \cr\cr
-    Functions for the analysis, simulation and parameter estimation
-    of financial assets.
-    \cr
-       
-    \bold{Portfolio Optimization:}
-    Functions for the optimization of portfolios including the mean-variance
-    Markowitz approach, "MV", the lower partial moment portfolio approach 
-    "PM", and the conditional value-at-risk approach "CVaR".
-    \cr\cr
+    \tabular{ll}{
+        Package:    \tab fPortfolio\cr
+        Type:       \tab Package\cr
+        Version:    \tab 261.73.1\cr
+        Date:       \tab 2008\cr
+        License:    \tab GPL Version 2 or later\cr
+        Copyright:  \tab (c) 1999-2008 Diethelm Wuertz and Rmetrics Foundation\cr
+        URL:        \tab \url{http://www.rmetrics.org}
+    }
     
-    \bold{Benchmarkung:}
-    Functions for the scenario analysis, portfolio performance measures,
-    and benchmarking.
-    \cr\cr
-    
-
 }
 
+   
+\section{fPFOLIOSPEC: Portfolio Specification}{
+
+    To optimize a portfolio of assets we first have to specify it. The
+    portfolio specification is represented by a S4 object of class
+    \code{fPFOLIOSPEC}.
+    
+    \preformatted{
+    setClass("fPFOLIOSPEC", 
+      representation(
+        model = "list",
+        portfolio = "list",
+        optim = "list") )
+    }
+    
+    The first slot \code{@model} holds the model information, the second
+    slot \code{@portfolio} the portfolio information, and the last slot
+    \code{optim} the information about the solver used for optimization.
+    
+    The default settings are as follows:
+    
+    \preformatted{
+    model = list(
+        type = "MV",    
+        estimator = "covEstimator",     
+        tailRisk = list(),               
+        params = list()),
+    portfolio = list(
+        weights = NULL, 
+        targetReturn = NULL, 
+        targetRisk = NULL,
+        targetAlpha = 0.05, 
+        riskFreeRate = 0, 
+        nFrontierPoints = 50,
+        status = 0),
+    optim = list(
+        solver = "solveRquadprog",         
+        trace = FALSE)
+    }
+    
+    In the model slot \code{type} describes the type of the desired
+    portfolio. This may be a Markowitz mean-variance portfolio named
+    \code{"MV"}, a lower partial moment portfolio named \code{"LPM"},
+    or a mean-CVaR condititional value-at-risk portfolio named 
+    \code{"CVaR"}.
+    
+    The next list entry \code{estimator} is used for \code{"MV"} and
+    \code{"LPM"} portfolio optimization. The string denotes a function
+    name. For the default, the default function \code{covEstimator} 
+    can be used in portfolio optimization to compute the standard mean 
+    vector, and standard covariance matrix. The specification of other
+    function names like \code{covMcdEstimator"}, or \code{"shrinkEstimator"}
+    allow to to portfolio estimation with robust or shrinked mean/covariance
+    estimates. 
+    
+}
 
 \keyword{models}

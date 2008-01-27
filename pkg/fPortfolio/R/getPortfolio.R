@@ -28,18 +28,37 @@
 
 
 ################################################################################
-# FUNCTION:                     PORTFOLIO DATA EXTRACTORS:
-#  getData                       Extracts data slot from a 'fPORTFOLIO' object
-#   getSeries                    Extracts series from a 'fPORTFOLIO' object
-#   getStatistics                Extracts statistics from a 'fPORTFOLIO' object
-#   getNumberOfAssets            Extracts number of assets from a 'fPORTFOLIO' object
-#  getSpec                      PORTFOLIO SPEC EXTRACTORS:
-#   getType
-#   getEstimator
-#   getParams 
-#   getSolver
-#   getTrace
-#  getConstraints               PORTFOLIO CONSTRAINTS EXTRACTORS:
+# FUNCTION:                     Description:
+#  getData                       Extracts data slot
+#   getSeries                     Extracts assets series data 
+#   getNAssets                    Extracts number of assets from data
+#   getNames                      Extracts assets names from data
+#  getStatistics                 Extracts statistics slot
+#   getMean                       Extracs mean from statistics
+#   getCov                        Extracs covariance Sigma from statistics
+#   getMu                         Extracs mu from statistics
+#   getSigma                      Extracs Sigma from statistics
+#   getEstimator                  Extracts estimator from 
+#  getTailRisk                   Extracts tailRisk slot
+# FUNCTION:                     Description:
+#  getSpec                       Extracs specification Slot
+#   getType                       Extracts type of portfolio
+#   getEstimator                  Extracts mean-covariance estimator
+#   getParams                     Extracts optional parameter list
+# *getPortfolio                  Extract portfolio slot
+#  *getWeights                    Extracts weights from a portfolio object
+#  *getTargetReturn               Extracts target return from specification
+#  *getTargetRisk                 Extracts target riks from specification
+#  *getTargetAlpha                Extracts target VaR-alpha specification
+#  *getRiskFreeRate               Extracts risk free rate from specification 
+#  *getNFrontierPoints            Extracts number of frontier points 
+#  *getStatus                     Extracts portfolio status information
+#  getOptim                      Extract optim slot
+#   getSolver                     Extracts solver from specification
+#   getTrace                      Extracts solver's trace flag
+# FUNCTION:                     Description:
+#  getConstraints 
+# FUNCTION:                     Description:               
 #  getPortfolio
 #   getWeights
 #   getTargetReturn
@@ -55,471 +74,57 @@
 ################################################################################
 
 
-################################################################################
-# fPORTFOLIO - S4
+        
+getData.fPORTFOLIO = function(object) object@data$data
+ getSeries.fPORTFOLIO = function(object) getSeries(getData(object))
+ getNAssets.fPORTFOLIO = function(object) getNAssets(getData(object))
+ getNames.fPORTFOLIO = function(object) getNames(getData(object))
+ getStatistics.fPORTFOLIO = function(object) getStatistics(getData(object))
+ getMean.fPORTFOLIO = function(object) getMean(getData(object))
+ getCov.fPORTFOLIO = function(object) getCov(getData(object))
+ getMu.fPORTFOLIO = function(object) getMu(getData(object))
+ getSigma.fPORTFOLIO = function(object) getSigma(getData(object))
 
-    #   call = "call",
-    #   data = "list",
-    #   specification = "list",
-    #   constraints = "character",
-    #   portfolio = "list",
-    #   title = "character",
-    #   description = "character")  
+ 
+# ------------------------------------------------------------------------------
+
+
+getSpec.fPORTFOLIO <- function(object) object@spec$spec
+ getModel.fPORTFOLIO <- function(object) object@model  
+  getType.fPORTFOLIO <- function(object) object@model$type[1]
+  getEstimator.fPORTFOLIO <- function(object) object@model$estimator
+  getTailRisk.fPORTFOLIO <- function(object) object@model$tailRisk
+  getParams.fPORTFOLIO <- function(object) object@model$params
+ getPortfolio.fPORTFOLIO <- function(object) object@model
+  getWeights.fPORTFOLIO <- function(object) object@portfolio$weights
+  getTargetReturn.fPORTFOLIO <- function(object) object@portfolio$targetReturn
+  getTargetRisk.fPORTFOLIO <- function(object) object@portfolio$targetRisk
+  getTargetAlpha.fPORTFOLIO <- function(object) object@portfolio$targetAlpha
+  getRiskFreeRate.fPORTFOLIO <- function(object) object@portfolio$riskFreeRate
+  getNFrontierPoints.fPORTFOLIO <- function(object) object@portfolio$nFrontierPoints
+  getStatus.fPORTFOLIO <-  function(object) object@portfolio$status
+ getOptim.fPORTFOLIO <- function(object) object@optim
+  getSolver.fPORTFOLIO <- function(object) object@optim$solver 
+  getTrace.fPORTFOLIO <- function(object) object@optim$trace
 
 
 # ------------------------------------------------------------------------------
 
 
-getData.fPORTFOLIO =
-function(object)
-{   # A function implemented by Rmetrics
-
-    # Description:
-    #   Extracts data slot from a 'fPORTFOLIO' object
-    
-    # Arguments:
-    #   object - an object of S4 class fPORTFOLIO as returned by the
-    #       functions *Portfolio().
-    
-    # FUNCTION:
-    
-    # Get Specification:
-    ans = object@data$data
-    
-    # Return Value:
-    ans  
-}
+getConstraints.fPORTFOLIO <- function(object) object@constraints
 
 
 # ------------------------------------------------------------------------------
 
 
-getSeries.fPORTFOLIO =
-function(object)
-{   # A function implemented by Rmetrics
+getPortfolio.fPORTFOLIO <- function(object) object@portfolio
+ getWeights.fPORTFOLIO <- function(object) object@portfolio$weights
+ getTargetRisk.fPORTFOLIO <- function(object) object@portfolio$targetRisk
+ getTargetAlpha.fPORTFOLIO <- function(object) object@portfolio$targetAlpha
+ getRiskFreeRate.fPORTFOLIO <- function(object) object@spec$riskFreeRate
+ getNFrontierPoints.fPORTFOLIO <- function(object) object@portfolio$nFrontierPoints
+ getStatus.fPORTFOLIO <- function(object) object@portfolio$status
 
-    # Description:
-    #   Extracts series from a 'fPORTFOLIO' object
-    
-    # Arguments:
-    #   object - an object of S4 class fPORTFOLIO as returned by the
-    #       functions *Portfolio().
-    
-    # FUNCTION:
-    
-    # Get Specification:
-    ans = getSeries(getData(object))
-    
-    # Return Value:
-    ans  
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-getStatistics.fPORTFOLIO =
-function(object)
-{   # A function implemented by Rmetrics
-
-    # Description:
-    #   Extracts statistics from a 'fPORTFOLIO' object
-    
-    # Arguments:
-    #   object - an object of S4 class fPORTFOLIO as returned by the
-    #       functions *Portfolio().
-    
-    # FUNCTION:
-    
-    # Get Specification:
-    ans = getStatistics(getData(object))
-    
-    # Return Value:
-    ans  
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-getNumberOfAssets.fPORTFOLIO =
-function(object)
-{   # A function implemented by Rmetrics
-
-    # Description:
-    #   Extracts number of assets from a 'fPORTFOLIO' object
-    
-    # Arguments:
-    #   object - an object of S4 class fPORTFOLIO as returned by the
-    #       functions *Portfolio().
-    
-    # FUNCTION:
-    
-    # Get Specification:
-    ans = getNumberOfAssets(getData(object))
-    
-    # Return Value:
-    ans  
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-getSpec.fPORTFOLIO =
-function(object)
-{   # A function implemented by Rmetrics
-
-    # Description:
-    #   Extracts the specification slot from a 'fPORTFOLIO' object
-    
-    # Arguments:
-    #   object - an object of S4 class fPORTFOLIO as returned by the
-    #       functions *Portfolio().
-    
-    # FUNCTION:
-    
-    # Get Specification:
-    ans = object@spec$spec
-    
-    # Return Value:
-    ans  
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-getType.fPORTFOLIO =
-function(object)
-{   # A function implemented by Rmetrics
-
-    # Description:
-    #   Extracts the specification-type slot from a 'fPORTFOLIO' object
-    
-    # Arguments:
-    #   object - an object of S4 class fPORTFOLIO as returned by the
-    #       functions *Portfolio().
-    
-    # FUNCTION:
-    
-    # Get Specification:
-    ans = getType(getSpec(object))
-    
-    # Return Value:
-    ans  
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-getEstimator.fPORTFOLIO =
-function(object)
-{   # A function implemented by Rmetrics
-
-    # Description:
-    #   Extracts the specification-estimator slot from a 'fPORTFOLIO' object
-    
-    # Arguments:
-    #   object - an object of S4 class fPORTFOLIO as returned by the
-    #       functions *Portfolio().
-    
-    # FUNCTION:
-    
-    # Get Specification:
-    ans = getEstimator(getSpec(object))
-    
-    # Return Value:
-    ans  
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-getParams.fPORTFOLIO =
-function(object)
-{   # A function implemented by Rmetrics
-
-    # Description:
-    #   Extracts the specification-params slot from a 'fPORTFOLIO' object
-    
-    # Arguments:
-    #   object - an object of S4 class fPORTFOLIO as returned by the
-    #       functions *Portfolio().
-    
-    # FUNCTION:
-    
-    # Get Specification:
-    ans = getParams(getSpec(object))
-    
-    # Return Value:
-    ans  
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-getSolver.fPORTFOLIO =
-function(object)
-{   # A function implemented by Rmetrics
-
-    # Description:
-    #   Extracts the specification-solver slot from a 'fPORTFOLIO' object
-    
-    # Arguments:
-    #   object - an object of S4 class fPORTFOLIO as returned by the
-    #       functions *Portfolio().
-    
-    # FUNCTION:
-    
-    # Get Specification:
-    ans = getSolver(getSpec(object))
-    
-    # Return Value:
-    ans  
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-getTrace.fPORTFOLIO =
-function(object)
-{   # A function implemented by Rmetrics
-
-    # Description:
-    #   Extracts the specification-trace slot from a 'fPORTFOLIO' object
-    
-    # Arguments:
-    #   object - an object of S4 class fPORTFOLIO as returned by the
-    #       functions *Portfolio().
-    
-    # FUNCTION:
-    
-    # Get Specification:
-    ans = getTrace(getSpec(object))
-    
-    # Return Value:
-    ans  
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-getConstraints.fPORTFOLIO =
-function(object)
-{   # A function implemented by Rmetrics
-
-    # Description:
-    #   Extracts the statistics from a 'fPORTFOLIO' object
-    
-    # Arguments:
-    #   object - an object of S4 class fPORTFOLIO as returned by the
-    #       functions *Portfolio().
-    
-    # FUNCTION:
-    
-    # Get Portfolio:
-    ans = object@constraints
-  
-    # Return Value:
-    ans  
-}
-
-
-################################################################################
-
-
-getPortfolio.fPORTFOLIO =
-function(object)
-{   # A function implemented by Rmetrics
-
-    # Description:
-    #   Extracts the statistics from a 'fPORTFOLIO' object
-    
-    # Arguments:
-    #   object - an object of S4 class fPORTFOLIO as returned by the
-    #       functions *Portfolio().
-    
-    # FUNCTION:
-    
-    # Get Portfolio:
-    ans = object@portfolio
-  
-    # Return Value:
-    ans  
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-getWeights.fPORTFOLIO =
-function(object)
-{   # A function implemented by Rmetrics
-
-    # Description:
-    #   Extracts the weights from a 'fPORTFOLIO' object
-    
-    # Arguments:
-    #   object - an object of S4 class fPORTFOLIO as returned by the
-    #       functions *Portfolio().
-    
-    # FUNCTION:
-    
-    # Get Portfolio:
-    ans = object@portfolio$weights
-  
-    # Return Value:
-    ans  
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-getTargetReturn.fPORTFOLIO =
-function(object)
-{   # A function implemented by Rmetrics
-
-    # Description:
-    #   Extracts the target Return from a 'fPORTFOLIO' object
-    
-    # Arguments:
-    #   object - an object of S4 class fPORTFOLIO as returned by the
-    #       functions *Portfolio().
-    
-    # FUNCTION:
-    
-    # Get Portfolio:
-    ans = object@portfolio$targetReturn
-  
-    # Return Value:
-    ans  
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-getTargetRisk.fPORTFOLIO =
-function(object)
-{   # A function implemented by Rmetrics
-
-    # Description:
-    #   Extracts the target Risk from a 'fPORTFOLIO' object
-    
-    # Arguments:
-    #   object - an object of S4 class fPORTFOLIO as returned by the
-    #       functions *Portfolio().
-    
-    # FUNCTION:
-    
-    # Get Portfolio:
-    ans = object@portfolio$targetRisk
-  
-    # Return Value:
-    ans  
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-getTargetAlpha.fPORTFOLIO =
-function(object)
-{   # A function implemented by Rmetrics
-
-    # Description:
-    #   Extracts the target Alpha from a 'fPORTFOLIO' object
-    
-    # Arguments:
-    #   object - an object of S4 class fPORTFOLIO as returned by the
-    #       functions *Portfolio().
-    
-    # FUNCTION:
-    
-    # Get Portfolio:
-    ans = object@portfolio$targetAlpha
-  
-    # Return Value:
-    ans  
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-getRiskFreeRate.fPORTFOLIO =
-function(object)
-{   # A function implemented by Rmetrics
-
-    # Description:
-    #   Extracts the risk free rate from a 'fPORTFOLIO' object
-    
-    # Arguments:
-    #   object - an object of S4 class fPORTFOLIO as returned by the
-    #       functions *Portfolio().
-    
-    # FUNCTION:
-    
-    # Get Portfolio:
-    ans = object@spec$riskFreeRate
-  
-    # Return Value:
-    ans  
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-getNFrontierPoints.fPORTFOLIO =
-function(object)
-{   # A function implemented by Rmetrics
-
-    # Description:
-    #   Extracts the Number of Frontier Points from a 'fPORTFOLIO' object
-    
-    # Arguments:
-    #   object - an object of S4 class fPORTFOLIO as returned by the
-    #       functions *Portfolio().
-    
-    # FUNCTION:
-    
-    # Get Portfolio:
-    ans = object@portfolio$nFrontierPoints
-  
-    # Return Value:
-    ans  
-}
-
-# ------------------------------------------------------------------------------
-
-
-getStatus.fPORTFOLIO =
-function(object)
-{   # A function implemented by Rmetrics
-
-    # Description:
-    #   Extracts the status from a 'fPORTFOLIO' object
-    
-    # Arguments:
-    #   object - an object of S4 class fPORTFOLIO as returned by the
-    #       functions *Portfolio().
-    
-    # FUNCTION:
-    
-    # Get Portfolio:
-    ans = object@portfolio$status
-  
-    # Return Value:
-    ans  
-}
 
 
 ################################################################################

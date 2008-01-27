@@ -38,9 +38,10 @@
 ################################################################################
 
 
-.covRisk = 
-function(data, weights)
-{   # A function implemented by Rmetrics
+.covRisk <- 
+    function(data, weights)
+{   
+    # A function implemented by Rmetrics
 
     # Description:
     #   Computes Covariance Risk for assets given weights and alpha
@@ -67,9 +68,10 @@ function(data, weights)
 # ------------------------------------------------------------------------------
 
 
-.varRisk = 
-function(x, weights, alpha = 0.05)
-{   # A function implemented by Rmetrics
+.varRisk <- 
+    function(x, weights, alpha = 0.05)
+{   
+    # A function implemented by Rmetrics
 
     # Description:
     #   Computes VaR for assets given weights and alpha
@@ -95,9 +97,10 @@ function(x, weights, alpha = 0.05)
 # ------------------------------------------------------------------------------
 
 
-.cvarRisk = 
-function(x, weights, alpha = 0.05)
-{   # A function implemented by Rmetrics
+.cvarRisk <- 
+    function(x, weights, alpha = 0.05)
+{   
+    # A function implemented by Rmetrics
 
     # Description:
     #   Computes CVaR for assets given weights and alpha
@@ -124,8 +127,8 @@ function(x, weights, alpha = 0.05)
 ################################################################################
 
 
-.cfgFit = 
-function(x, y, tail = c("upper", "lower"))
+.cfgFit <- 
+    function(x, y, tail = c("upper", "lower"))
 {
     # Description:
     #   Fits bivariate tail dependency parameter lambda
@@ -164,8 +167,8 @@ function(x, y, tail = c("upper", "lower"))
 # ------------------------------------------------------------------------------
 
 
-.lambdaTailRisk =
-function(data, tail = c("upper", "lower"), margins = "norm", ...)
+.lambdaTailRisk <- 
+    function(data, tail = c("upper", "lower"), margins = "norm", ...)
 {
     # Description:
     #   Fits tail dependency parameter lambda for multivariate data

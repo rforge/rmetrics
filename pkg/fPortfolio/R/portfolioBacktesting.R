@@ -35,11 +35,12 @@
 ################################################################################
 
 
-portfolioBacktesting =
-function(formula, data, spec = portfolioSpec(), constraints = NULL,
-portfolio = "minvariancePortfolio", horizon = "12m", smoothing = "6m",
-trace = TRUE)
-{   # A function implemented by Diethelm Wuertz
+portfolioBacktesting <- 
+    function(formula, data, spec = portfolioSpec(), constraints = NULL,
+    portfolio = "minvariancePortfolio", horizon = "12m", smoothing = "6m",
+    trace = TRUE)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Does backtesting on a simple rolling portfolio strategy
@@ -242,9 +243,10 @@ trace = TRUE)
 # ------------------------------------------------------------------------------
 
 
-plot.portfolioBacktest =
-function(x, which = "all", labels = TRUE, ...)
-{   # A function implemented by Diethelm Wuertz
+plot.portfolioBacktest <- 
+    function(x, which = "all", labels = TRUE, ...)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
 
@@ -271,8 +273,9 @@ function(x, which = "all", labels = TRUE, ...)
 
 
 .backtestAssetsPlot <-
-function(object, labels = TRUE, ...)
-{   # A function implemented by Diethelm Wuertz
+    function(object, labels = TRUE, ...)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Backtest Assets Plot
@@ -330,8 +333,9 @@ function(object, labels = TRUE, ...)
 
 
 .backtestWeightsRecommendationPlot <-
-function(object, labels = TRUE, gpars = list())
-{   # A function implemented by Diethelm Wuertz
+    function(object, labels = TRUE, gpars = list())
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Backtest Weights Recommendation Plot:
@@ -388,8 +392,9 @@ function(object, labels = TRUE, gpars = list())
 
 
 .backtestWeightsChangesPlot <-
-function(object, labels = TRUE, gpars = list())
-{   # A function implemented by Diethelm Wuertz
+    function(object, labels = TRUE, gpars = list())
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Backtest Weights Changes Plot
@@ -451,7 +456,8 @@ function(object, labels = TRUE, gpars = list())
 
 .backtestPortfolioPlot <-
     function(object, labels = TRUE, ...)
-{   # A function implemented by Diethelm Wuertz
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Backtest Portfolio Plot:
@@ -509,9 +515,10 @@ function(object, labels = TRUE, gpars = list())
 # ------------------------------------------------------------------------------
 
 
-print.portfolioBacktest =
-function(x, ...)
-{   # A function implemented by Diethelm Wuertz
+print.portfolioBacktest <- 
+    function(x, ...)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
     #   Computes some monthly portfolio performance measures
@@ -532,9 +539,10 @@ function(x, ...)
 # ------------------------------------------------------------------------------
 
 
-summary.portfolioBacktest =
-function(object, ...)
-{   # A function implemented by Diethelm Wuertz
+summary.portfolioBacktest <- 
+    function(object, ...)
+{   
+    # A function implemented by Diethelm Wuertz
 
     # Description:
 

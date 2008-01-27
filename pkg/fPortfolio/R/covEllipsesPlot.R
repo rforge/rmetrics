@@ -33,8 +33,8 @@
 ################################################################################
 
 
-covEllipsesPlot = 
-function(x = list(), ...)
+covEllipsesPlot <- 
+    function(x = list(), ...)
 {
     # Description:
     #   Plots covariance ellipses

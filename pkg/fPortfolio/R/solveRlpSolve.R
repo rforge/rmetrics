@@ -39,9 +39,10 @@
 # ------------------------------------------------------------------------------
 
 
-solveRlpSolve =
-function(data, spec, constraints)
-{   # A function implemented by Rmetrics
+solveRlpSolve <- 
+    function(data, spec, constraints)
+{   
+    # A function implemented by Rmetrics
 
     # Description:
     #   Linear Solver from R package lpSolve for Mean-CVaR Problems
@@ -78,7 +79,7 @@ function(data, spec, constraints)
     # Get Specifications:
     mu = getMu(data) 
     Sigma = getSigma(data)
-    nAssets = getNumberOfAssets(data)
+    nAssets = getNAssets(data)
 
     # Extracting data from spec:
     targetReturn = getTargetReturn(spec)  
