@@ -63,7 +63,7 @@ portfolioSpec(
     model = list(type = "MV", estimator = "covEstimator", 
         tailRisk = list(), params = list()), 
     portfolio = list(weights = NULL, targetReturn = NULL, targetRisk = NULL, 
-        targetAlpha = 0.05, riskFreeRate = 0, nFrontierPoints = 50),
+        targetAlpha = 0.05, riskFreeRate = 0, nFrontierPoints = 50, status = 0),
     solver = list(solver = "solvRquadprog", trace = FALSE))
         
 show.fPFOLIOSPEC(object)

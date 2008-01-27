@@ -1,3 +1,137 @@
+\name{portfolioFrontier}
+
+
+\alias{portfolioFrontier}
+
+
+\title{Efficient Portfolio Frontier}
+
+
+\description{
+  
+    Compoutes the efficient portfolio frontier.
+    
+}
+    
+
+\usage{
+portfolioFrontier(data, spec = portfolioSpec(), constraints = "LongOnly")
+}
+
+
+
+\arguments{
+
+    \item{constraints}{
+        a character string vector, containing the constraints of the form\cr
+        \code{"minW[asset]=percentage"} for box constraints resp. \cr
+        \code{"maxsumW[assets]=percentage"} for sector constraints.
+        }
+    \item{data}{
+        a multivariate time series described by an S4 object of class
+        \code{timeSeries}. If your timeSerie is not a \code{timeSeries}
+        object, consult the generic function \code{as.timeSeries} to 
+        convert your time series.
+        }
+    \item{spec}{
+        an S4 object of class \code{fPFOLIOSPEC}, containing slots call, model,
+        portfolio, title, description, see \code{\link{PortfolioSpec}}
+        for a full slot description.
+        }
+
+}
+
+
+\details{
+    
+    \bold{Portfolio Frontier:}
+    \cr\cr   
+    
+
+    The function \code{portfolioFrontier} calculates the whole efficient 
+    frontier. The portfolio information consists of five arguments: data, 
+    specifications, constraints, title and description. 
+    
+    The range of the frontier is determined from the range of the asset
+    returns, and the number of equidistant points in the returns, is
+    calculated from the number of frontier points hold in the specifrication 
+    structure. To extract or to modify the number of frontier points
+    use the functions \code{getNFrontierPoints} and \code{setNFrontierPoints}.
+   
+    
+    The \code{frontierPortfolio} function returns the properties of 
+    the the efficient frontier as an S4 object of class \code{fPORTFOLIO}.
+
+}
+
+
+\value{
+    
+    \code{portfolioFrontier} function returns an S4 object of class 
+    \code{"fPORTFOLIO"}.
+    
+}
+
+
+
+%\references{}
+
+
+\seealso{
+
+   \code{\link{portfolioData}},
+   \code{\link{portfolioSpec}},
+   \code{\link{portfolioConstraints}},
+   \code{\link{feasiblePortfolio}},
+   \code{\link{efficientFrontier}}.
+
+}
+
+
+\author{
+
+    Diethelm Wuertz and Oliver Greshake for the Rmetrics port.
+    
+}
+
+
+\examples{
+## portfolioFrontier -
+   
+   # Load Data and Convert to timeSeries Object:
+   Data = as.timeSeries(data(smallcap.ts))
+   Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
+   Data
+   
+   # Set Default Specifications:
+   Spec = portfolioSpec()
+   Spec
+   setNFrontierPoints = 10
+   
+   # Allow for unlimited Short Selling:
+   Constraints = "LongOnly"
+   
+   # Compute 10 points efficient frontier:
+   portfolioFrontier(Data, Spec, Constraints)  
+}
+
+
+\keyword{models}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 \name{PortfolioClass}
 
 \alias{PortfolioClass}
@@ -8,6 +142,13 @@
 \alias{show.fPORTFOLIO}
 \alias{show,fPORTFOLIO-method}
 
+\alias{feasiblePortfolio}
+
+\alias{efficientPortfolio}
+\alias{cmlPortfolio}
+\alias{tangencyPortfolio}
+\alias{minvariancePortfolio}
+\alias{portfolioFrontier}
       
 \alias{plot.fPORTFOLIO}
 \alias{summary.fPORTFOLIO}
@@ -25,15 +166,35 @@
     the portfolio, and constraints, while function
     portfolioFrontier() has two additional 
     arguments for title and description. 
+    \cr
+    
+    The functions are:
+    
+    \tabular{ll}{
+    \code{feasiblePortfolio} \tab Returns a feasible portfolio, \cr
+    \code{cmlPortfolio} \tab returns the capital market line portfolio, \cr
+    \code{tangencyPortfolio} \tab returns the tangency portfolio, \cr
+    \code{minvariancePortfolio} \tab returns the minimum variance portfolio, \cr
+    \code{efficientPortfolio} \tab returns an efficient portfolio, \cr
+    \code{portfolioFrontier} \tab returns the efficient frontier, \cr
+    \code{show} \tab print method for 'fPPORTFOLIO' objects, \cr   
+    \code{plot} \tab plot method for objects of class fPORTFOLIO. }
     
 }
     
 
 \usage{
+portfolioFrontier(data, spec = portfolioSpec(), constraints = NULL, 
+    title = NULL, description = NULL)
+
+feasiblePortfolio(data, spec = portfolioSpec(), constraints = NULL)
+cmlPortfolio(data, spec = portfolioSpec(), constraints = NULL)
+tangencyPortfolio(data, spec = portfolioSpec(), constraints = NULL)
+minvariancePortfolio(data, spec = portfolioSpec(), constraints = NULL)
+efficientPortfolio(data, spec = portfolioSpec(), constraints = NULL)
+
 show.fPORTFOLIO(object)
-
 \method{plot}{fPORTFOLIO}(x, which = "ask", control = list(), \dots)
-
 \method{summary}{fPORTFOLIO}(object, \dots)
 }
 
@@ -41,18 +202,46 @@ show.fPORTFOLIO(object)
 
 \arguments{
 
+    \item{constraints}{
+        a character string vector, containing the constraints of the form\cr
+        \code{"minW[asset]=percentage"} for box constraints resp. \cr
+        \code{"maxsumW[assets]=percentage"} for sector constraints.
+        }
     \item{control}{
+        [plot, *Sliders] - \cr
         a list, defining the plotting parameters. The list modifies amongst
         others the color, e.g. \code{minvariance.col}, type of point, e.g.
         \code{tangency.pch}, or the dimension of the point, e.g. \code{cml.cex},
          see Notes for a complete list of control parameters.
         }
+    \item{data}{
+        a multivariate time series described by an S4 object of class
+        \code{timeSeries}. If your timeSerie is not a \code{timeSeries}
+        object, consult the generic function \code{as.timeSeries} to 
+        convert your time series.
+        }
+    \item{description}{
+        [portfolioFrontier] - \cr
+        a character string, allowing for a brief project description,
+        by default NULL, i.e. Date and User.
+        }
     \item{object}{
+        [show, *Sliders] - \cr
          an S4 object of class \code{fPORTFOLIO}, containing slots call, data,
          specification, constraints, portfolio, title, description, see Value 
          for a full slot description.
         }
+    \item{spec}{
+        an S4 object of class \code{fPFOLIOSPEC}, containing slots call, model,
+        portfolio, title, description, see \code{\link{PortfolioSpec}}
+        for a full slot description.
+        }
+    \item{title}{
+        [portfolioFrontier] - \cr
+        a character string, containing the title for the object, by default NULL.
+        }
     \item{which}{
+        [plot] - \cr
         which of the plots should be displayed? \code{which} can be either a 
         character string, \code{"all"} (displays all plots) or \code{"ask"} 
         (interactively asks which one to display), or a vector of integer
@@ -60,9 +249,11 @@ show.fPORTFOLIO(object)
         \code{"ask"}.
         }
     \item{x}{
+        [plot] - \cr
         an S4 object of class \code{fPORTFOLIO}.
         }
     \item{\dots}{
+        [plot, *Sliders] - \cr
         optional arguments to be passed.\cr
         }
 
@@ -73,10 +264,54 @@ show.fPORTFOLIO(object)
 
     \bold{Portfolio Class:}
     \cr\cr
-    This S4 class contains all information about the portfolio. Basically 
-    these are risk measure, mean and covariance estimation, target return, 
-    risk free rate, number of frontier points, ranges for calculation, see 
-    the "Value" section  for a detailed description of the slots. 
+    This S4 class contains all information about the portfolio. Basically this
+    are risk measure, mean and covariance estimation, target return, risk free
+    rate, number of frontier points, ranges for calculation, see the "Value"
+    section  for a detailed description of the slots. 
+    \cr
+    
+    
+    \bold{Portfolio Frontier:}
+    \cr\cr
+    The function \code{portfolioFrontier} calculates the whole efficient frontier.
+    The portfolio information consists of five arguments: data, specifications,
+    constraints, title and description. The data can be either the mean vector
+    and the covariance matrix in a equivalently named list or a time series
+    table. The specifications are done by the \code{portfolioSpec} function,
+    see \code{\link{PortfolioSpec}}. The constrains have the following
+    syntax. For bound constraints: \code{"minW[asset]=percentage"} and for
+    sector constraints \code{"maxsumW[assets]=percentage"}. The function chooses
+    from this information the right algorithm to calculate the efficient frontier.
+    The function returns an S4 object of class \code{fPortfolio} containing
+    amongst others risk, return and weights of the whole efficient frontier,
+    see Value for further details.
+    \cr
+    
+    
+    \bold{Individual Portfolios:}
+    \cr\cr   
+    Individual portfolio functions allow a direct computation of portfolios 
+    with specific properties. The functions are:
+    
+    
+    \tabular{ll}{
+    \code{feasiblePortfolio} \tab a feasible portfolio, \cr
+    \code{cmlPortfolio} \tab the capital market line portfolio, \cr
+    \code{tangencyPortfolio} \tab the tangency portfolio, \cr
+    \code{minvariancePortfolio} \tab the minimum variance portfolio, \cr
+    \code{efficientPortfolio} \tab an efficient portfolio. } 
+    
+    The functions require three arguments: \code{data}, \code{spec} 
+    (specifications), and \code{constraints}, see above. The functions 
+    are named according to their specific property and return the result
+    of the computed or optimized portfolio as an S4 object of class 
+    \code{fPortfolio}.
+    
+    \emph{FeasiblePortfolio:} The weights are retrieved from the 
+    specification structure, by default they are undefined, \code{NULL},
+    and in this case the function \code{feasiblePortfolio} assumes
+    equal weights. To set user specified weights in the specification 
+    structure, use the function \code{setWeights}. 
 
 }
 
@@ -308,11 +543,11 @@ show.fPORTFOLIO(object)
 
 \seealso{
 
-   \code{\link{portfolioData}},
-   \code{\link{portfolioSpec}},
-   \code{\link{portfolioConstraints}},
-   \code{\link{portfolioPlots}},
-   \code{\link{portfolioPlots}}.
+   \code{\link{PortfolioData}},
+   \code{\link{PortfolioSpec}},
+   \code{\link{PortfolioConstraints}},
+   \code{\link{PortfolioPlots}},
+   \code{\link{PortfolioPlots}}.
 
 }
 
@@ -325,7 +560,33 @@ show.fPORTFOLIO(object)
 
 
 \examples{
-## ---
+## minvariancePortfolio -
+   # Load Data and Convert to timeSeries Object:
+   Data = as.timeSeries(data(smallcap.ts))
+   Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
+   Data
+   # Set Default Specifications:
+   Spec = portfolioSpec()
+   Spec
+   # Allow for unlimited Short Selling:
+   Constraints = "Short"
+   # Compute Short Selling Minimum Variance Portfolio
+   minvariancePortfolio(Data, Spec, Constraints)
+    
+## portfolioFrontier -
+   # Modify Constraints - Now Long Only Constraints:
+   Constraint = c("minW[1:nAssets]=0")
+   # Calculation of the Efficient Frontier
+   frontier = portfolioFrontier(Data, Spec, Constraint)
+   print(frontier)
+    
+## plot -
+   # Plot Efficient Frontier with Minimum Variance Portfolio
+   # plot(frontier, which = c(1, 3))
+    
+## frontierSlider -
+   # Try Frontier Slider:
+   # frontierSlider(frontier)
 }
 
 

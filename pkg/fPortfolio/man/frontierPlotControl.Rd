@@ -71,8 +71,9 @@ frontierPlotControl(
     \item{mcSteps}{Numer of Monte Carlo steps.}
 
     \item{pieR}{Pie radius setting.}
-    \item{piePos}{Pie Position coordinates setting.}
+    \item{piePos}{Pie position coordinates setting.}
     \item{pieOffset}{Pie offset coordinates setting.}
+    
 }
 
 
