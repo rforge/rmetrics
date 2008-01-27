@@ -52,8 +52,8 @@
 
     # Slots:
     # model = list(
-    #     type = c("MV", "CVaR"),
-    #     estimator = c("mean", "cov"),
+    #     type = "MV",
+    #     estimator = "covEstimator",
     #     tailRisk = NULL,
     #     params = list())
     # portfolio = list(
@@ -64,16 +64,17 @@
     #     riskFreeRate = 0, 
     #     nFrontierPoints = 50),
     # solver = list(
-    #     solver = c("quadprog", "Rdonlp2", "lpSolve"),
+    #     solver = "solveRquadprog",
     #     trace = FALSE)
 
 
 # ------------------------------------------------------------------------------
 
 
-getType.fPFOLIOSPEC =
-function(object)
-{   # A function implemented by Rmetrics
+getType.fPFOLIOSPEC <- 
+    function(object)
+{   
+    # A function implemented by Rmetrics
 
     # Description:
     #   Extracts the type from specification
@@ -94,9 +95,10 @@ function(object)
 # ------------------------------------------------------------------------------
 
 
-getEstimator.fPFOLIOSPEC =
-function(object)
-{   # A function implemented by Rmetrics
+getEstimator.fPFOLIOSPEC <- 
+    function(object)
+{   
+    # A function implemented by Rmetrics
 
     # Description:
     #   Extracts the estimator from specification
@@ -117,9 +119,10 @@ function(object)
 # ------------------------------------------------------------------------------
 
 
-getTailRisk.fPFOLIOSPEC =
-function(object)
-{   # A function implemented by Rmetrics
+getTailRisk.fPFOLIOSPEC <- 
+    function(object)
+{   
+    # A function implemented by Rmetrics
 
     # Description:
     #   Extract list of tail dependency risk matrixes
@@ -140,9 +143,10 @@ function(object)
 # ------------------------------------------------------------------------------
 
 
-getParams.fPFOLIOSPEC =
-function(object)
-{   # A function implemented by Rmetrics
+getParams.fPFOLIOSPEC <- 
+    function(object)
+{   
+    # A function implemented by Rmetrics
 
     # Description:
     #   Extracts the params from specification
@@ -163,9 +167,10 @@ function(object)
 ################################################################################
 
 
-getWeights.fPFOLIOSPEC =
-function(object)
-{   # A function implemented by Rmetrics
+getWeights.fPFOLIOSPEC <- 
+    function(object)
+{   
+    # A function implemented by Rmetrics
 
     # Description:
     #   Extracts the weights from specification
@@ -186,9 +191,10 @@ function(object)
 # ------------------------------------------------------------------------------
 
 
-getTargetReturn.fPFOLIOSPEC =
-function(object)
-{   # A function implemented by Rmetrics
+getTargetReturn.fPFOLIOSPEC <- 
+    function(object)
+{   
+    # A function implemented by Rmetrics
 
     # Description:
     #   Extracts the target return from specification
@@ -212,9 +218,10 @@ function(object)
 # ------------------------------------------------------------------------------
 
 
-getTargetRisk.fPFOLIOSPEC =
-function(object)
-{   # A function implemented by Rmetrics
+getTargetRisk.fPFOLIOSPEC <- 
+    function(object)
+{   
+    # A function implemented by Rmetrics
 
     # Description:
     #   Extracts the target risk from specification
@@ -235,9 +242,10 @@ function(object)
 # ------------------------------------------------------------------------------
 
 
-getTargetAlpha.fPFOLIOSPEC =
-function(object)
-{   # A function implemented by Rmetrics
+getTargetAlpha.fPFOLIOSPEC <- 
+    function(object)
+{   
+    # A function implemented by Rmetrics
 
     # Description:
     #   Extracts the VaR-alpha from specification
@@ -258,9 +266,10 @@ function(object)
 # ------------------------------------------------------------------------------
 
 
-getRiskFreeRate.fPFOLIOSPEC =
-function(object)
-{   # A function implemented by Rmetrics
+getRiskFreeRate.fPFOLIOSPEC <- 
+    function(object)
+{   
+    # A function implemented by Rmetrics
 
     # Description:
     #   Extracts the risk free rate from specification
@@ -281,9 +290,10 @@ function(object)
 # ------------------------------------------------------------------------------
 
 
-getNFrontierPoints.fPFOLIOSPEC =
-function(object)
-{   # A function implemented by Rmetrics
+getNFrontierPoints.fPFOLIOSPEC <- 
+    function(object)
+{   
+    # A function implemented by Rmetrics
 
     # Description:
     #   Extracts the number of Frontier Points from specification
@@ -304,14 +314,14 @@ function(object)
 # ------------------------------------------------------------------------------
 
 
-getStatus.fPFOLIOSPEC =
-function(object)
-{   # A function implemented by Rmetrics
+getStatus.fPFOLIOSPEC <- 
+    function(object)
+{   
+    # A function implemented by Rmetrics
 
     # Description:
     #   Extracts portfolio status information
 
-   
     # Arguments:
     #   object - an object of S4 class fPFOLIOSPEC
     
@@ -329,9 +339,10 @@ function(object)
 # ------------------------------------------------------------------------------
 
 
-getSolver.fPFOLIOSPEC =
-function(object)
-{   # A function implemented by Rmetrics
+getSolver.fPFOLIOSPEC <- 
+    function(object)
+{   
+    # A function implemented by Rmetrics
 
     # Description:
     #   Extracts the solver from specification
@@ -352,9 +363,10 @@ function(object)
 # ------------------------------------------------------------------------------
 
 
-getTrace.fPFOLIOSPEC =
-function(object)
-{   # A function implemented by Rmetrics
+getTrace.fPFOLIOSPEC <- 
+    function(object)
+{   
+    # A function implemented by Rmetrics
 
     # Description:
     #   Extracts the trace from specification
