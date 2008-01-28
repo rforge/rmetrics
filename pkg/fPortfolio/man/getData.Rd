@@ -96,8 +96,10 @@
    Data = portfolioData(data)
    
    # Get:
-   getNAssets(Data)
-   getNames(Data)  
+   getData(Data)
+   getNames(Data) 
+   getMean(Data)
+   getCov(Data)
 }
 
 

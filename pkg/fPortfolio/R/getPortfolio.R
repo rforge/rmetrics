@@ -130,9 +130,10 @@ getPortfolio.fPORTFOLIO <- function(object) object@portfolio
 ################################################################################
 
 
-getFrontier.fPORTFOLIO =
-function(object, frontier = c("both", "lower", "upper"), doplot = FALSE, ...)
-{   # A function implemented by Rmetrics
+getFrontier.fPORTFOLIO <-
+    function(object, frontier = c("both", "lower", "upper"))
+{   
+    # A function implemented by Rmetrics
 
     # Description:
     #   Extracts the efficient frontier from a 'fPORTFOLO' object
@@ -151,6 +152,7 @@ function(object, frontier = c("both", "lower", "upper"), doplot = FALSE, ...)
     targetRisk = getTargetRisk(object)[ ,"cov"] 
     targetReturn = getTargetReturn(object)[ , "mean"]
    
+    # Whole Frontier
     ans = cbind(Risk = targetRisk, Return = targetReturn)
 
     # Extract upper part of frontier
@@ -172,9 +174,6 @@ function(object, frontier = c("both", "lower", "upper"), doplot = FALSE, ...)
     
     # Add colnames:
     colnames(ans) = c("targetRisk", "targetReturn")
-  
-    # Plot:
-    if(doplot) plot(ans, ...)
     
     # Return Value:
     ans  

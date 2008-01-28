@@ -56,11 +56,13 @@
     
 
 \usage{
+\method{getModel}{fPFOLIOSPEC}(object)
 \method{getType}{fPFOLIOSPEC}(object)
 \method{getEstimator}{fPFOLIOSPEC}(object)
 \method{getTailRisk}{fPFOLIOSPEC}(object)
 \method{getParams}{fPFOLIOSPEC}(object)
 
+\method{getPortfolio}{fPFOLIOSPEC}(object)
 \method{getWeights}{fPFOLIOSPEC}(object)
 \method{getTargetReturn}{fPFOLIOSPEC}(object)
 \method{getTargetRisk}{fPFOLIOSPEC}(object)
@@ -69,6 +71,7 @@
 \method{getNFrontierPoints}{fPFOLIOSPEC}(object)
 \method{getStatus}{fPFOLIOSPEC}(object)
 
+\method{getOptim}{fPFOLIOSPEC}(object)
 \method{getSolver}{fPFOLIOSPEC}(object)
 \method{getTrace}{fPFOLIOSPEC}(object)
 }
@@ -101,8 +104,10 @@
    Spec = portfolioSpec()
    
    # Get:
+   getModel(Spec)
    getType(Spec)
-   getgetRiskFreeRate(Spec)  
+   getRiskFreeRate(Spec)  
+   getPortfolio(Spec)
 }
 
 
