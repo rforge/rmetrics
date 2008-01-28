@@ -89,7 +89,9 @@
 
 
 \examples{
-## -
+## data -
+   LPP = as.timeSeries(data(LPP2005REC))
+   head(LPP)
 }
 
 

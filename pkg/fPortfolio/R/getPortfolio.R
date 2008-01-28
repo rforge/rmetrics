@@ -90,22 +90,22 @@ getData.fPORTFOLIO = function(object) object@data$data
 
 
 getSpec.fPORTFOLIO <- function(object) object@spec$spec
- getModel.fPORTFOLIO <- function(object) object@model  
-  getType.fPORTFOLIO <- function(object) object@model$type[1]
-  getEstimator.fPORTFOLIO <- function(object) object@model$estimator
-  getTailRisk.fPORTFOLIO <- function(object) object@model$tailRisk
-  getParams.fPORTFOLIO <- function(object) object@model$params
- getPortfolio.fPORTFOLIO <- function(object) object@model
-  getWeights.fPORTFOLIO <- function(object) object@portfolio$weights
-  getTargetReturn.fPORTFOLIO <- function(object) object@portfolio$targetReturn
-  getTargetRisk.fPORTFOLIO <- function(object) object@portfolio$targetRisk
-  getTargetAlpha.fPORTFOLIO <- function(object) object@portfolio$targetAlpha
-  getRiskFreeRate.fPORTFOLIO <- function(object) object@portfolio$riskFreeRate
-  getNFrontierPoints.fPORTFOLIO <- function(object) object@portfolio$nFrontierPoints
-  getStatus.fPORTFOLIO <-  function(object) object@portfolio$status
- getOptim.fPORTFOLIO <- function(object) object@optim
-  getSolver.fPORTFOLIO <- function(object) object@optim$solver 
-  getTrace.fPORTFOLIO <- function(object) object@optim$trace
+ getModel.fPORTFOLIO <- function(object) getModel(getSpec(object))
+  getType.fPORTFOLIO <- function(object) getType(getSpec(object))
+  getEstimator.fPORTFOLIO <- function(object) getEstimator(getSpec(object))
+  getTailRisk.fPORTFOLIO <- function(object) getTailRisk(getSpec(object))
+  getParams.fPORTFOLIO <- function(object) getParams(getSpec(object))
+ getPortfolio.fPORTFOLIO <- function(object) getPortfolio(getSpec(object))
+  getWeights.fPORTFOLIO <- function(object) getWeights(getSpec(object))
+  getTargetReturn.fPORTFOLIO <- function(object) getTargetReturn(getSpec(object))
+  getTargetRisk.fPORTFOLIO <- function(object) getTargetRisk(getSpec(object))
+  getTargetAlpha.fPORTFOLIO <- function(object) getTargetAlpha(getSpec(object))
+  getRiskFreeRate.fPORTFOLIO <- function(object) getRiskFreeRate(getSpec(object))
+  getNFrontierPoints.fPORTFOLIO <- function(object) get(getSpec(object))
+  getStatus.fPORTFOLIO <-  function(object) get(getSpec(object))
+ getOptim.fPORTFOLIO <- function(object) getOptim(getSpec(object))
+  getSolver.fPORTFOLIO <- function(object) getSolver(getSpec(object)) 
+  getTrace.fPORTFOLIO <- function(object) getTrace(getSpec(object))
 
 
 # ------------------------------------------------------------------------------
