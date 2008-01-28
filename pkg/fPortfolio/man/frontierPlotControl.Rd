@@ -21,7 +21,7 @@ frontierPlotControl(
         tangency.col      = "steelblue",
         cml.col           = "green",
         equalWeights.col  = "blue",
-        singleAsset.col   = NULL,
+        singleAsset.col   = "topo.colors",
         twoAssets.col     = "grey",
         monteCarlo.col    = "black",
     # Point Sizes:

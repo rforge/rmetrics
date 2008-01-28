@@ -105,6 +105,9 @@ plot.fPORTFOLIO <-
 .fportfolio.plot.1 <- 
     function(x) 
 {
+    # Description:
+    #   Plot Efficient Frontier
+    
     # FUNCTION:
     
     # Control:
@@ -135,13 +138,16 @@ plot.fPORTFOLIO <-
 .fportfolio.plot.2 <- 
     function(x) 
 {
+    # Description:
+    #   Add Minimum Risk Portfolio
+    
     # FUNCTION:
     
     # Control:
     con = attr(x, "control")
     
     # Plot:
-    .minvariancePlot(
+    minvariancePoints(
         object = x, 
         col = con$minvariance.col, 
         cex = con$minvariance.cex, 
@@ -155,17 +161,24 @@ plot.fPORTFOLIO <-
 .fportfolio.plot.3 <-
     function(x) 
 {
+    # Description:
+    #   Add Tangency Portfolio
+    
     # FUNCTION:
     
     # Control:
     con = attr(x, "control")
     
     # Plot:
-    .tangencyPlot(
+    tangencyPoints(
         object = x, 
         col = con$tangency.col, 
         cex = con$tangency.cex, 
         pch = 17)
+    tangencyLines(
+        object = x, 
+        col = con$tangency.col, 
+        cex = con$tangency.cex)
 }
 
 
@@ -175,15 +188,20 @@ plot.fPORTFOLIO <-
 .fportfolio.plot.4 <- 
     function(x) 
 {
+    # Description:
+    #   Add Risk/Return of Single Assets
+    
     # FUNCTION:
     
     # Control:
     con = attr(x, "control")
     
     # Plot:
-    .singleAssetPlot(
-        object =x , 
-        col = con$singleAsset.col, 
+    Palette = match.fun(con$singleAsset.col)
+    col = Palette(getNAssets(x))
+    singleAssetPoints(
+        object = x, 
+        col = col,
         cex = con$singleAsset.cex, 
         pch = 18)
 }       
@@ -195,13 +213,16 @@ plot.fPORTFOLIO <-
 .fportfolio.plot.5 <- 
     function(x) 
 {
+    # Description:
+    #   Add Equal Weights Portfolio
+    
     # FUNCTION:
     
     # Control:
     con = attr(x, "control")
     
     # Plot:
-    .equalWeightsPlot(
+    equalWeightsPoints(
         object = x, 
         col = con$equalWeights.col, 
         cex = con$equalWeights.cex, 
@@ -215,19 +236,26 @@ plot.fPORTFOLIO <-
 .fportfolio.plot.6 <- 
     function(x) 
 {
+    # Description:
+    #   Add Two Asset Frontiers [0-1 PF Only]
+
     # FUNCTION:
     
     # Control:
     con = attr(x, "control")
     
-    # Plot:
-    .singleAssetPlot(
-        object = x , 
-        col = con$singleAsset.col, 
+    # Lines:
+    lines(getFrontier(object = x), col = "grey")
+    twoAssetsLines(object = x, col = con$twoAssets.col) 
+    
+    # Points:
+    Palette = match.fun(con$singleAsset.col)
+    col = Palette(getNAssets(x))
+    singleAssetPoints(
+        object = x, 
+        col = col, 
         cex = con$singleAsset.cex, 
         pch = 18)
-    lines(getFrontier(object = x), col = "grey")
-    .twoAssetsPlot(object = x, col = con$twoAssets.col) 
 }       
 
 
@@ -237,6 +265,9 @@ plot.fPORTFOLIO <-
 .fportfolio.plot.7 <- 
     function(x) 
 {
+    # Description:
+    #   Add Wheel Pie of Weights
+
     # FUNCTION:
     
     # Control:
@@ -257,13 +288,16 @@ plot.fPORTFOLIO <-
 .fportfolio.plot.8 <- 
     function(x) 
 {
+    # Description:
+    #   Add Monte Carlo Portfolios
+
     # FUNCTION:
     
     # Control:
     con = attr(x, "control")
     
     # Plot:
-    .monteCarloPlot(
+    monteCarloPoints(
         object = x, 
         col = con$monteCarlo.col, 
         cex = con$monteCarlo.cex, 
@@ -277,15 +311,16 @@ plot.fPORTFOLIO <-
 .fportfolio.plot.9 <- 
     function(x) 
 {
+    # Description:
+    #   Add Sharpe Ratio [MV PF Only]
     # FUNCTION:
     
     # Control:
     con = attr(x, "control")
     
     # Plot:
-    .sharpeRatioPlot(
+    sharpeRatioLines(
         object = x, 
-        type = "l", 
         col = con$sharpeRatio.col, 
         cex = con$sharpeRatio.cex, 
         lty = 3)
