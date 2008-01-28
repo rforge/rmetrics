@@ -129,22 +129,22 @@ feasiblePortfolio(data, spec = portfolioSpec(), constraints = "LongOnly")
 
 
 \examples{
-## efficientPortfolio -
-   
+## data -
    # Load Data and Convert to timeSeries Object:
    Data = as.timeSeries(data(smallcap.ts))
    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
    Data
    
+## portfolioSpec - 
    # Set Default Specifications:
    Spec = portfolioSpec()
-   Spec
    setWeights(Spec) = rep(0.25, times = 4)
+   Spec
    
-   # Allow for unlimited Short Selling:
+## Allow for unlimited Short Selling:
    Constraints = "LongOnly"
    
-   # Compute properties of Efficient Portfolio
+## Compute properties of Efficient Portfolio
    feasiblePortfolio(Data, Spec, Constraints)
 }
 

@@ -28,7 +28,7 @@
 
 
 ################################################################################
-# FUNCTION:                     Description:
+# FUNCTION:                     DESCRIPTION:
 #  getData                       Extracts data slot
 #   getSeries                     Extracts assets series data 
 #   getNAssets                    Extracts number of assets from data
@@ -40,7 +40,7 @@
 #   getSigma                      Extracs Sigma from statistics
 #   getEstimator                  Extracts estimator from 
 #  getTailRisk                   Extracts tailRisk slot
-# FUNCTION:                     Description:
+# FUNCTION:                     DESCRIPTION:
 #  getSpec                       Extracs specification Slot
 #   getType                       Extracts type of portfolio
 #   getEstimator                  Extracts mean-covariance estimator
@@ -56,21 +56,21 @@
 #  getOptim                      Extract optim slot
 #   getSolver                     Extracts solver from specification
 #   getTrace                      Extracts solver's trace flag
-# FUNCTION:                     Description:
-#  getConstraints 
-# FUNCTION:                     Description:               
-#  getPortfolio
-#   getWeights
-#   getTargetReturn
-#   getTargetRisk
-#   getTargetAlpha
-#   getRiskFreeRate
-#   getNFrontierPoints
-#   getStatus
+# FUNCTION:                     DESCRIPTION:
+#  getConstraints                Extracts weight constraints
+# FUNCTION:                     DESCRIPTION:               
+#  getPortfolio                  Extracts portfolio slot
+#   getWeights                   Extracts weights
+#   getTargetReturn              Extracts target return
+#   getTargetRisk                Extracts target return
+#   getTargetAlpha               Extracts significance level alpha
+#   getRiskFreeRate              Extracts risk free rate
+#   getNFrontierPoints           Extracts number of frontier points
+#   getStatus                    Extracts status
 # FUNCTION:                     GENERAL EXTRACTORS:
-#  getFrontier
-#  getCovRiskBudgets
-#  getTailRiskBudgets
+#  getFrontier                   Extracts frontier line
+#  getCovRiskBudgets             Extracts covariance risk budgets
+#  getTailRiskBudgets            Extracts tail risk budgets
 ################################################################################
 
 
@@ -119,6 +119,7 @@ getConstraints.fPORTFOLIO <- function(object) object@constraints
 
 getPortfolio.fPORTFOLIO <- function(object) object@portfolio
  getWeights.fPORTFOLIO <- function(object) object@portfolio$weights
+ getTargetReturn.fPORTFOLIO <- function(object) object@portfolio$targetReturn
  getTargetRisk.fPORTFOLIO <- function(object) object@portfolio$targetRisk
  getTargetAlpha.fPORTFOLIO <- function(object) object@portfolio$targetAlpha
  getRiskFreeRate.fPORTFOLIO <- function(object) object@spec$riskFreeRate

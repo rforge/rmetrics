@@ -126,25 +126,26 @@ minvariancePortfolio(data, spec = portfolioSpec(), constraints = "LongOnly")
 
 
 \examples{
-## efficientPortfolio -
+## data -
    
    # Load Data and Convert to timeSeries Object:
    Data = as.timeSeries(data(smallcap.ts))
    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
    Data
    
+## portfolioSpec -
    # Set Default Specifications:
    Spec = portfolioSpec()
    Spec
    setTargetReturn(Spec) = mean(colMeans(Data))
    
-   # Allow for unlimited Short Selling:
+## Allow for unlimited Short Selling:
    Constraints = "LongOnly"
    
-   # Compute properties of efficient Portfolio
+## Compute properties of efficient Portfolio
    efficientPortfolio(Data, Spec, Constraints)
    
-   # Compute properties of tangency Portfolio
+## Compute properties of tangency Portfolio
    tangencyPortfolio(Data, Spec, Constraints)   
 }
 

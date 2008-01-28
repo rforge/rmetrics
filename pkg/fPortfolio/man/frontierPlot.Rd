@@ -10,7 +10,22 @@
 \description{
 
     Plots the efficient frontier of an 
-    optimized portfolio.
+    optimized portfolio and allows to add
+    points and lines from specif portfolios
+    
+    The functions are:
+   
+    \code{frontierPlot} \tab Plots efficient frontier, \cr
+    \code{minvariancePoints} \tab Adds minimum variance point, \cr
+    \code{cmlPPoints} \tab Adds market portfolio, \cr
+    \code{cmlLines} \tab  Adds capital market Line, \cr
+    \code{tangencyPoints} \tab Adds tangency portfolio point, \cr
+    \code{tangencyLines} \tab Adds tangency line, \cr
+    \code{equalWeightsPoints} \tab Adds point of equal weights portfolio, \cr
+    \code{singleAssetPoints} \tab Adds points of single asset portfolios, \cr
+    \code{twoAssetsLines} \tab Adds EF for all combinations of two assets, \cr
+    \code{sharpeRatioLines} \tab Adds Sharpe ratio line, \cr
+    \code{monteCarloPoints} \tab Adds randomly produced feasible portfolios. }
 
 }
 
@@ -18,6 +33,19 @@
 \usage{
 frontierPlot(object, frontier = c("both", "lower", "upper"),
     col = c("black", "grey"), add = FALSE, \dots)
+    
+frontierPlot(object, \dots)
+minvariancePoints(object, \dots)
+cmlPPoints(object, \dots)
+cmlLines(object, \dots)
+tangencyPoints(object, \dots)
+tangencyLines(object, \dots)
+equalWeightsPoints(object, \dots)
+singleAssetPoints(object, \dots)
+twoAssetsLines(object, \dots)
+sharpeRatioLines(object, \dots)
+
+monteCarloPoints(object, mcSteps = 5000, \dots)
 }
 
 
@@ -39,6 +67,9 @@ frontierPlot(object, frontier = c("both", "lower", "upper"),
         extracted. \code{"both"} stands for the full hyperbola, \code{"lower"}
         for all points below the minimum variance return and \code{"upper"}
         for the actual efficient frontier, by default "both".
+        }
+    \item{mcSteps}{
+        an integer value, the number of Monte Carlo steps.
         }
     \item{object}{
         an S4 object of class \code{fPORTFOLIO}, containing slots call, data,
@@ -89,21 +120,37 @@ frontierPlot(object, frontier = c("both", "lower", "upper"),
 
 
 \examples{
-## portfolioFrontier -
-   
+## data -
    # Load Data:
    Data = as.timeSeries(data(smallcap.ts))
    Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
    Data
-   
+
+## portfolioFrontier -
    # Compute Long Only Efficient Frontier
-   frontier = portfolioFrontier(Data)
-   frontier
+   Frontier = portfolioFrontier(Data)
+   Frontier
    
 ## frontierPlot -  
-   
    # Plot Upper Part of Frontier:
-   frontierPlot(frontier, frontier = "upper")
+   frontierPlot(Frontier, pch = 19, xlim = c(0, 0.25), ylim = c(0, 0.035))
+   grid()
+   abline(h = 0, col = "grey")
+   abline(v = 0, col = "grey")
+   
+## Plot Addons:
+   minvariancePoints(Frontier, pch = 19, col = "red")
+   tangencyPoints(Frontier, pch = 19, col = "blue")
+   tangencyLines(Frontier, col = "blue")
+   equalWeightsPoints(Frontier, pch = 15, col = "grey")
+   singleAssetPoints(Frontier, pch = 19, cex = 1.5, col = topo.colors(6))
+   twoAssetsLines(Frontier, lty = 3, col = "grey")
+   sharpeRatioLines(Frontier, lty = 3, col = "orange")
+
+## Feasible Portfolios:
+   frontierPlot(Frontier, col = c("orange", "orange"), pch = 19)
+   monteCarloPoints(Frontier, mcSteps = 5000, cex = 0.25, pch = 19)
+   twoAssetsLines(Frontier, lwd = 2, col = "orange")
 }
 
 

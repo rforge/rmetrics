@@ -260,11 +260,11 @@ weightsSlider(object, control = list(), \dots)
 
 \seealso{
 
-   \code{\link{PortfolioClass}},
-   \code{\link{PortfolioData}},
-   \code{\link{PortfolioSpec}},
-   \code{\link{PortfolioConstraints}},
-   \code{\link{PortfolioPlots}}.
+   \code{portfolioClass},
+   \code{portfolioData},
+   \code{portfolioSpec},
+   \code{portfolioConstraints},
+   \code{portfolioPlots}.
 
 }
 

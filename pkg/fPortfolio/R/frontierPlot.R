@@ -29,17 +29,17 @@
 
 ################################################################################
 # FUNCTION:                    EFFICIENT FRONTIER PLOT AND ADDONS:  
-#  frontierPlot                 Plots efficient Frontier
-#   .minvariancePlot             Adds Minimum Variance point
-#   .cmlPlot                     Adds Market Portfolio and Capital Market Line
-#   .cmlLinePlot                 Adds Market Portfolio and Capital Market Line
-#   .tangencyPlot                Adds Tangency Portfolio point and line
-#   .tangencyLinePlot            Adds Tangency Portfolio point and line
-#   .equalWeightsPlot            Adds point of equal weights portfolio
-#   .singleAssetPlot             Adds points of single asset portfolios
-#   .twoAssetsPlot               Adds EF for all combinations of two assets
-#   .sharpeRatioPlot             Adds Sharpe Ratio
-#   .monteCarloPlot              Adds randomly produced feasible portfolios
+#  frontierPlot                 Plots efficient frontier
+#   minvariancePoints             Adds minimum variance point
+#   cmlPPoints                    Adds market portfolio 
+#   cmlLines                      Adds capital market Line
+#   tangencyPoints                Adds tangency portfolio point 
+#   tangencyLines                 Adds tangency line
+#   equalWeightsPoints            Adds point of equal weights portfolio
+#   singleAssetPoints             Adds points of single asset portfolios
+#   twoAssetsLines                Adds EF for all combinations of two assets
+#   sharpeRatioLines              Adds Sharpe ratio line
+#   monteCarloPoints              Adds randomly produced feasible portfolios
 # FUNCTION:                    DESCRIPTION:
 #   .weightsWheel               Adds a pie of weights to frontier plot
 #   .attributesWheel            Adds a pie of attributes to frontier plot
@@ -186,7 +186,7 @@ frontierPlot <-
 # ------------------------------------------------------------------------------
 
 
-.minvariancePlot <- 
+minvariancePoints <- 
     function(object, ...)
 {   
     # A function implemented by Rmetrics
@@ -209,12 +209,12 @@ frontierPlot <-
     # Return Value:
     invisible(assets)
 }
-
+ 
 
 # ------------------------------------------------------------------------------
 
 
-.cmlPlot <- 
+cmlPoints <- 
     function(object, ...)
 {   
     # A function implemented by Rmetrics
@@ -243,7 +243,7 @@ frontierPlot <-
 # ------------------------------------------------------------------------------
 
 
-.cmlLinePlot <- 
+cmlLines <- 
     function(object, ...)
 {   
     # A function implemented by Rmetrics
@@ -274,7 +274,7 @@ frontierPlot <-
 # ------------------------------------------------------------------------------
 
 
-.tangencyPlot <- 
+tangencyPoints <- 
     function(object, ...)
 {   
     # A function implemented by Rmetrics
@@ -303,7 +303,7 @@ frontierPlot <-
 # ------------------------------------------------------------------------------
 
 
-.tangencyLinePlot <- 
+tangencyLines <- 
     function(object, ...)
 {   
     # A function implemented by Rmetrics
@@ -333,7 +333,7 @@ frontierPlot <-
 # ------------------------------------------------------------------------------  
 
 
-.equalWeightsPlot =
+equalWeightsPoints =
     function(object, ...)
 {   
     # A function implemented by Rmetrics
@@ -370,7 +370,7 @@ frontierPlot <-
 # ------------------------------------------------------------------------------  
 
 
-.singleAssetPlot <- 
+singleAssetPoints <- 
     function(object, ...)
 {   # A function implemented by Rmetrics
 
@@ -404,7 +404,7 @@ frontierPlot <-
 # ------------------------------------------------------------------------------
 
 
-.twoAssetsPlot <- 
+twoAssetsLines <- 
     function(object, ...)
 {   # A function implemented by Rmetrics
 
@@ -426,7 +426,8 @@ frontierPlot <-
     Type = getType(object)
     
     # Add Frontiers for all Two-Assets Portfolios:
-    N = getNAssets(getData(object))
+    N = getNAssets(object)
+    Data = getSeries(object)
     for ( i in 1:(N-1) ) {
         for (j in (i+1):N ) {
             index = c(i, j) 
@@ -445,7 +446,7 @@ frontierPlot <-
 # ------------------------------------------------------------------------------
 
   
-.sharpeRatioPlot <- 
+sharpeRatioLines <- 
     function(object, ...)
 {   
     # A function implemented by Rmetrics
@@ -456,7 +457,7 @@ frontierPlot <-
     # FUNCTION:
     
     # Get Portfolio Slots:
-    Data = getData(object)
+    Data = getSeries(object)
     Spec = getSpec(object)
     Constraints = getConstraints(object)
     Type = getType(object)
@@ -477,7 +478,7 @@ frontierPlot <-
     y = y[index]
     y.norm = (y/x*norm)
     assets = cbind(x, y.norm)
-    points(x, y.norm, ...)
+    lines(x, y.norm, ...)
         
     # Add Tailored Labels -  2 may be a good Number ...
     x.tg = x.tg[index]
@@ -502,7 +503,7 @@ frontierPlot <-
 # ------------------------------------------------------------------------------
 
 
-    .monteCarloPlot <- 
+monteCarloPoints <- 
     function(object, mcSteps = 5000, ...)
 {   
     # A function implemented by Rmetrics
