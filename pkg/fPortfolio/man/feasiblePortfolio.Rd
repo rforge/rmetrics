@@ -34,9 +34,8 @@ feasiblePortfolio(data, spec = portfolioSpec(), constraints = "LongOnly")
         convert your time series.
         }
     \item{spec}{
-        an S4 object of class \code{fPFOLIOSPEC}, containing slots call, model,
-        portfolio, title, description, see \code{\link{PortfolioSpec}}
-        for a full slot description.
+        an S4 object of class \code{fPFOLIOSPEC} as returned by the function
+        \code{portfolioSpec}.
         }
 
 }
@@ -96,8 +95,7 @@ feasiblePortfolio(data, spec = portfolioSpec(), constraints = "LongOnly")
     \item{@specification}{
         a list with one named element \code{spec} which represents an object 
         of class \code{fPFOLIOSPEC}, including all information about
-        the portfolio specifications, see \code{\link{PortfolioSpec}}
-        for further details.
+        the portfolio specifications.
         }
     \item{@title}{
         a title string.

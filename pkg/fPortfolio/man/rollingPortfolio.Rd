@@ -90,10 +90,7 @@ rollingPortfolioFrontier(data, spec, constraints, from, to, action = NULL,
         }
     \item{spec}{
         [*Portfolio][*Frontier] - \cr
-        an S4 object of class \code{fPFOLIOSPEC}, containing slots call, 
-        model, portfolio, title, description, 
-        see \code{\link{PortfolioSpec}}
-        for a full slot description.
+        an S4 object of class \code{fPFOLIOSPEC}.
         }
     \item{title}{
         [*Portfolio][*Frontier] - \cr

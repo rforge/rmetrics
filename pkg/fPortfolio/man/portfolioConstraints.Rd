@@ -31,19 +31,16 @@ portfolioConstraints(data, spec = portfolioSpec(), constraints = "LongOnly")
 \arguments{
 
     \item{constraints}{
-        [setConstraints] - \cr
         a character value or character vector, containing the constraint
         strings. Setting constraints is described in the details section 
         }
     \item{data}{
-        [setConstraints] - \cr
         a list, having a statistics named list, having named entries 'mu' and
         'Sigma', containing the information of the statistics\cr
         }
     \item{spec}{
-        [setConstraints] - \cr
-        an object of class \code{fPFOLIOSPEC}, containing slots call, model,
-        portfolio, title, description.
+        an S4 object of class \code{fPFOLIOSPEC} as returned by the function
+        \code{portfolioSpec}.
         }
 
 }

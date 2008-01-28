@@ -1,8 +1,6 @@
 \name{fPORTFOLIO-class}
 
 
-\alias{fPORTFOLIO-class}
-
 \alias{fPORTFOLIO}
 \alias{fPORTFOLIO-class}
 
@@ -46,11 +44,6 @@ show.fPORTFOLIO(object)
         others the color, e.g. \code{minvariance.col}, type of point, e.g.
         \code{tangency.pch}, or the dimension of the point, e.g. \code{cml.cex},
         see Notes for a complete list of control parameters.
-        }
-    \item{object}{
-         an S4 object of class \code{fPORTFOLIO}, containing slots call, data,
-         specification, constraints, portfolio, title, description, see Value 
-         for a full slot description.
         }
     \item{which}{
         which of the plots should be displayed? \code{which} can be either a 
@@ -116,7 +109,7 @@ show.fPORTFOLIO(object)
     \item{@specification}{
         a list with one named element \code{spec} which represents an object 
         of class \code{fPFOLIOSPEC}, including all information about
-        the portfolio specifications, see \code{\link{PortfolioSpec}}
+        the portfolio specifications, see \code{PortfolioSpec}
         for further details.
         }
     \item{@title}{

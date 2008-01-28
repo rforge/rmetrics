@@ -28,9 +28,8 @@ solveShortExact(data, spec, constraints)
         or named entries 'mu' and 'Sigma' being mean and covariance matrix.
         }
     \item{spec}{
-        an S4 object of class \code{fPFOLIOSPEC}, containing slots call, model,
-        portfolio, title, description, see \code{\link{PortfolioSpec}}
-        for a full slot description.
+        an S4 object of class \code{fPFOLIOSPEC} as returned by the function
+        \code{portfolioSpec}.
         }
     \item{constraints}{
         a character string vector, containing the constraints of the form\cr

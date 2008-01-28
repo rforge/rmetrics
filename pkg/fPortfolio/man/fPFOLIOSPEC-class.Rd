@@ -1,8 +1,6 @@
 \name{fPFOLIOSPEC-class}
 
 
-\alias{fPFOLIOSPEC-class}
-
 \alias{fPFOLIOSPEC}
 \alias{fPFOLIOSPEC-class}
 \alias{fPfoliospec}
@@ -11,22 +9,6 @@
 \alias{show,fPFOLIOSPEC-method}
 
 \alias{portfolioSpec}
-
-\alias{setType<-}
-\alias{setEstimator<-}
-\alias{setTailRisk<-}
-\alias{setParams<-}
-
-\alias{setWeights<-}
-\alias{setTargetReturn<-}
-\alias{setTargetRisk<-}
-\alias{setTargetAlpha<-}
-\alias{setRiskFreeRate<-}
-\alias{setNFrontierPoints<-}
-\alias{setStatus<-}
-
-\alias{setSolver<-}
-\alias{setTrace<-}
 
 
 \title{Specification of Portfolios}
@@ -44,16 +26,6 @@
     
     \tabular{ll}{
     \code{portfolioSpec} \tab Specifies a portfolio, \cr
-    \code{setType} \tab Sets type of portfolio optimization, \cr
-    \code{setEstimator} \tab Sets names of mean and covariance estimators, \cr
-    \code{setParams} \tab Sets optional model parameters, \cr
-    \code{setWeights} \tab Sets weights vector, \cr
-    \code{setTargetReturn} \tab Sets target return value, \cr
-    \code{setTargetRisk} \tab Sets target risk value, \cr
-    \code{setTargetAlpha} \tab Sets CVaR target alpha value, \cr
-    \code{setRiskFreeRate} \tab Sets risk-free rate value, \cr
-    \code{setNFrontierPoints} \tab Sets number of frontier points, \cr
-    \code{setNFrontierPoints} \tab Sets tail dependence matrix, \cr
     \code{portfolioStatistics} \tab Estimates 'mu' and 'Sigma' statistics, \cr
     \code{print|show} \tab Print method for \code{fPFOLIOSPEC} objects. }
     
@@ -69,22 +41,6 @@ portfolioSpec(
     optim = list(solver = "solveRquadprog", trace = FALSE))
         
 show.fPFOLIOSPEC(object)
-
-setType(spec) <- value
-setEstimator(spec) <- value
-setTailRisk(spec) <- value
-setParams(spec) <- value
-
-setWeights(spec) <- value
-setTargetReturn(spec) <- value
-setTargetRisk(spec) <- value
-setTargetAlpha(spec) <- value
-setRiskFreeRate(spec) <- value
-setNFrontierPoints(spec) <- value
-setStatus(spec) <- value
-
-setSolver(spec) <- value
-setTrace(spec) <- value
 }
 
 
@@ -162,9 +118,6 @@ setTrace(spec) <- value
         by default \code{"MV"} meaning mean-variance. 
         Other types are conditional value-at-risk \code{"CVaR"}, 
         and lower parttial moments \code{"LPM"}.
-        }
-    \item{value}{
-        a value for that component of \code{spec} to be set.
         }
     \item{weights}{
         [setWeights] - \cr
@@ -306,34 +259,6 @@ setTrace(spec) <- value
     \code{portfolioSpec}\cr
     \cr
     returns an S4 object of class \code{"fPFOLIOSPEC"}.
-
-    \code{setType}\cr
-    \code{setEstimator}\cr 
-    %\code{setParam}\cr
-    \cr
-    \emph{Model Settings:} just modify the model settings including the 
-    portfolio type, the mean/covariance estimator, and optional parameters 
-    of an existing portfolio structure.
-    \cr
-    
-    \code{setWeights}\cr
-    \code{setTargetReturn}\cr
-    \code{setRiskFreeRate}\cr
-    \code{setNFrontierPoints}\cr
-    \code{setReturnRange}\cr
-    \code{setRiskRange}\cr 
-    \cr
-    \emph{Portfolio Settings:} just modify the portfolio settings including 
-    predefined weights, the target return, the risk free rate, the number of 
-    frontier points, and the return and risk range of an existing portfolio 
-    structure.
-    \cr
-    
-    \code{setSolver}\cr
-    \cr
-    \emph{Solver Settings:} just modifies the solver setting, i.e. the type 
-    of solver to be used for portfolio optimization.
-    \cr
 
 }
 

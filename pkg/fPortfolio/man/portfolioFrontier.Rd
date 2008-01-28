@@ -38,9 +38,8 @@ portfolioFrontier(data, spec = portfolioSpec(), constraints = "LongOnly",
         a character string which allows for a brief description. 
         }
     \item{spec}{
-        an S4 object of class \code{fPFOLIOSPEC}, containing slots call, model,
-        portfolio, title, description, see \code{\link{PortfolioSpec}}
-        for a full slot description.
+        an S4 object of class \code{fPFOLIOSPEC} as returned by the function
+        \code{portfolioSpec}.
         }
     \item{title}{
         a character string which allows for a project title.

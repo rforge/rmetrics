@@ -1,7 +1,5 @@
-\name{fPORTFOLIO-class}
+\name{fFOLIODATA-class}
 
-
-\alias{fPORTFOLIO-class}
 
 \alias{fPFOLIODATA}
 \alias{fPFOLIODATA-class}

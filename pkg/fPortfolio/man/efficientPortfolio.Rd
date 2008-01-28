@@ -6,6 +6,7 @@
 \alias{tangencyPortfolio}
 \alias{minvariancePortfolio}
 
+
 \title{Efficient Portfolios}
 
 
@@ -41,9 +42,8 @@ minvariancePortfolio(data, spec = portfolioSpec(), constraints = "LongOnly")
         convert your time series.
         }
     \item{spec}{
-        an S4 object of class \code{fPFOLIOSPEC}, containing slots call, model,
-        portfolio, title, description, see \code{\link{PortfolioSpec}}
-        for a full slot description.
+        an S4 object of class \code{fPFOLIOSPEC} as returned by the function
+        \code{portfolioSpec}.
         }
 
 }

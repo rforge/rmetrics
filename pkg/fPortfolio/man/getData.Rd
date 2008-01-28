@@ -1,8 +1,6 @@
 \name{getData}
 
 
-\alias{getData}
-
 \alias{getData.fPFOLIODATA}
 \alias{getSeries.fPFOLIODATA}
 \alias{getNAssets.fPFOLIODATA}

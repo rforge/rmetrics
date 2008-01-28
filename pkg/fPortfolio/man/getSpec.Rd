@@ -1,9 +1,6 @@
 \name{getSpec}
 
 
-\alias{getSpec}
-
-
 \alias{getModel.fPFOLIOSPEC}
 \alias{getType.fPFOLIOSPEC}         
 \alias{getEstimator.fPFOLIOSPEC} 

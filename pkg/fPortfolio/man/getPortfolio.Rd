@@ -116,13 +116,6 @@
 
 \arguments{
 
-    \item{frontier}{
-        [getFrontier] - \cr
-        a character string, determining which part of the frontier should be
-        extracted. \code{"both"} stands for the full hyperbola, \code{"lower"}
-        for all points below the minimum variance return and \code{"upper"} for
-        the actual efficient frontier, by default "both".
-        }
     \item{object}{
         an object of class \code{fPORTFOLIO}, containing slots call, data,
         specification, constraints, portfolio, title, description.

@@ -69,9 +69,8 @@ portfolioBacktesting(formula, data, spec = portfolioSpec(), constraints = NULL,
         by an exponential moving average.
         }
     \item{spec}{
-        an S4 object of class \code{fPFOLIOSPEC} that specifies a 
-        portfolio, see \code{\link{PortfolioSpec}} for a description
-        of the slots.
+        an S4 object of class \code{fPFOLIOSPEC} as returned by the function
+        \code{portfolioSpec}.
         }    
     \item{trace}{
         a logical value. Should the calculation be traced?
