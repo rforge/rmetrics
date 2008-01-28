@@ -26,7 +26,8 @@
     points and lines from specif portfolios
     
     The functions are:
-   
+    
+    \tabular{ll}{
     \code{frontierPlot} \tab Plots efficient frontier, \cr
     \code{minvariancePoints} \tab Adds minimum variance point, \cr
     \code{cmlPoints} \tab Adds market portfolio, \cr
