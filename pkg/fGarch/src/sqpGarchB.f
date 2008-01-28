@@ -288,7 +288,7 @@
      +                 LDS
       DOUBLE PRECISION MXVDOT, MXVMAX
       COMMON           /STAT/NRES,NDEC,NREM,NADD,NIT,NFV,NFG,NFH
-      IF (ABS(IPRNT).GT.1) WRITE (6,'(1X,''ENTRY TO PSQP :'')')
+C      IF (ABS(IPRNT).GT.1) WRITE (6,'(1X,''ENTRY TO PSQP :'')')
 *
 *     INITIATION
 *
@@ -405,10 +405,10 @@
       LD=LDS
       CALL PC1F01(NF,NC,X,FC,CF,CL,CU,IC,GC,CG,CMAX,KD,LD)
       CF(NC+1)=F
-      IF (ABS(IPRNT).GT.1)
-     + WRITE (6,'(1X,''NIT='',I4,2X,''NFV='',I4,2X,''NFG='',I4,2X,
-     + ''F='',G12.6,2X,''C='',E7.1,2X,''G='',E7.1)')
-     +  NIT,NFV,NFG,F,CMAX,GMAX
+c      IF (ABS(IPRNT).GT.1)
+c     + WRITE (6,'(1X,''NIT='',I4,2X,''NFV='',I4,2X,''NFG='',I4,2X,
+c     + ''F='',G12.6,2X,''C='',E7.1,2X,''G='',E7.1)')
+c     +  NIT,NFV,NFG,F,CMAX,GMAX
 *
 *     START OF THE ITERATION WITH TESTS FOR TERMINATION.
 *
@@ -576,16 +576,17 @@ C      IF (MER.GT.0.AND.ITERH.GT.0) IREST=1
 *
       GO TO 40
 
-   80 IF (IPRNT.GT.1 .OR. IPRNT.LT.0)
-     + WRITE (6,'(1X,''EXIT FROM PSQP :'')')
-      IF (IPRNT.NE.0)
-     + WRITE (6,'(1X,''NIT='',I4,2X,''NFV='',I4,2X,''NFG='',I4,2X,
-     + ''F='',G12.6,2X,''C='',E7.1,2X,''G='',E7.1,2X,''ITERM='',I3)')
-     + NIT,NFV,NFG,F,CMAX,GMAX,ITERM
-      IF (IPRNT.LT.0)
-     + WRITE (6,'(1X,''X='',5(G14.7,1X):/(3X,5(G14.7,1X)))')
-     + (X(I),I=1,NF)
-      RETURN
+
+c   80 IF (IPRNT.GT.1 .OR. IPRNT.LT.0)
+c     + WRITE (6,'(1X,''EXIT FROM PSQP :'')')
+c      IF (IPRNT.NE.0)
+c     + WRITE (6,'(1X,''NIT='',I4,2X,''NFV='',I4,2X,''NFG='',I4,2X,
+c     + ''F='',G12.6,2X,''C='',E7.1,2X,''G='',E7.1,2X,''ITERM='',I3)')
+c     + NIT,NFV,NFG,F,CMAX,GMAX,ITERM
+c      IF (IPRNT.LT.0)
+c     + WRITE (6,'(1X,''X='',5(G14.7,1X):/(3X,5(G14.7,1X)))')
+c     + (X(I),I=1,NF)
+ 80   RETURN
       END
 
 * SUBROUTINE PA0GS1             ALL SYSTEMS                 97/12/01
