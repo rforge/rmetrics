@@ -1,7 +1,7 @@
 \name{solveShortExact}
 
 
-\alias{portfolioSolver}
+\alias{solveShortExact}
 
 
 \title{Exat unlimit Short Selling Solver}

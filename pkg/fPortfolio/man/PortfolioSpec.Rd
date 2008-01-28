@@ -22,6 +22,7 @@
 \alias{setTargetAlpha<-}
 \alias{setRiskFreeRate<-}
 \alias{setNFrontierPoints<-}
+\alias{setStatus<-}
 
 \alias{setSolver<-}
 \alias{setTrace<-}
@@ -79,6 +80,7 @@ setTargetRisk(spec) <- value
 setTargetAlpha(spec) <- value
 setRiskFreeRate(spec) <- value
 setNFrontierPoints(spec) <- value
+setStatus(spec) <- value
 
 setSolver(spec) <- value
 setTrace(spec) <- value

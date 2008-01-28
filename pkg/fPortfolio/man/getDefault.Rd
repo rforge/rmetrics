@@ -4,22 +4,26 @@
 
 
 \alias{getConstraints}
+\alias{getCov}
+\alias{getCovRiskBudgets}
 \alias{getData}
 \alias{getEstimator}
 \alias{getFrontier}
+\alias{getMean}
 \alias{getMu}
 \alias{getNames}
 \alias{getNAssets}
 \alias{getNFrontierPoints}
+\alias{getOptim}
 \alias{getPortfolio}
-\alias{getParams}
-\alias{getCovRiskBudgets} 
+\alias{getParams} 
 \alias{getRiskFreeRate} 
 \alias{getSeries}
 \alias{getSigma}
 \alias{getSolver}
 \alias{getSpec}
 \alias{getStatistics}
+\alias{getStatus}
 \alias{getTargetAlpha}
 \alias{getTailRisk}
 \alias{getTailRiskBudgets} 
@@ -48,22 +52,26 @@
 
 \usage{
 getConstraints(object)
+getCov(object)
+getCovRiskBudgets(object)
 getData(object)
 getEstimator(object)
 getFrontier(object, \dots)
+getMean(object)
 getMu(object)
 getNames(object)
 getNAssets(object)
 getNFrontierPoints(object)
+getOptim(object)
 getPortfolio(object)
 getParams(object)
-getCovRiskBudgets(object)
 getRiskFreeRate(object)
 getSeries(object)
 getSigma(object)
 getSolver(object)
 getSpec(object)
 getStatistics(object)
+getStatus(object)
 getTargetAlpha(object)
 getTailRisk(object)
 getTailRiskBudgets(object) 
