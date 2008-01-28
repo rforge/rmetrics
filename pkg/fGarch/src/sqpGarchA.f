@@ -9,7 +9,7 @@ C PART 0: GARCH PARAMETER ESTIMATION:
 
 
       SUBROUTINE GARCHFIT(NN, YY, ZZ, HH, NF, X, XL, XU, DPARM,  
-     >  MDIST, IPAR, RPAR, MYPAR, F)
+     >  MDIST, IPAR, RPAR, IPRNT, MYPAR, F)
       IMPLICIT DOUBLE PRECISION (A-H, O-Z)
       DOUBLE PRECISION F, CMAX, GMAX
       DOUBLE PRECISION YY(NN), ZZ(NN), HH(NN)
@@ -19,7 +19,7 @@ C PART 0: GARCH PARAMETER ESTIMATION:
       DOUBLE PRECISION XDELTA, XSKEW, XSHAPE
       EXTERNAL PSQPN
       INTEGER IA(200),IC(200),IX(NF),IPAR(7), MYPAR(11)
-      INTEGER I, IERR, IEXT, ITERM, ITIME, NB, NC, NF 
+      INTEGER I, IPRNT, IERR, IEXT, ITERM, ITIME, NB, NC, NF 
       INTEGER NADD, NDEC, NFG, NFH, NFV, NIT, NREM, NRES
       COMMON /STATSQP/ NRES, NDEC, NREM, NADD, NIT, NFV, NFG, NFH      
       COMMON /DATA1/ Y, Z, H, N     
@@ -59,13 +59,9 @@ C     WHICH TYPE OF BOUNDS?
       XSHAPE = DPARM(3)
                  
 C     FIND SOLUTION:
-      CALL PSQPN(NF, 1, 0, X, IX, XL, XU, CF, IC, CL, CU, IA, RA,                  
-     >     IPAR, RPAR, F, CMAX, GMAX, ITERM) 
+      CALL PSQPN(NF, 1, 0, X, IX, XL, XU, CF, IC, CL, CU,
+     >     IPAR, RPAR, F, GMAX, CMAX,-2, ITERM) 
      
-
-      call dblepr("LLH final Value:", -1, f, 1)
-      call dblepr("With X:", -1, x, nf)
-       
       RETURN
       END   
       
