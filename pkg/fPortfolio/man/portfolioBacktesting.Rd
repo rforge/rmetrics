@@ -1,12 +1,12 @@
-\name{PortfolioBacktestesting}
+\name{portfolioBacktestesting}
 
-\alias{PortfolioBacktestesting}
 
 \alias{portfolioBacktesting}
 
 \alias{print.portfolioBacktest}
 \alias{plot.portfolioBacktest}
 \alias{summary.portfolioBacktest}
+
 
 \title{Portfolio Backtestesting}
 
@@ -96,16 +96,6 @@ portfolioBacktesting(formula, data, spec = portfolioSpec(), constraints = NULL,
   
 
 %\references{}
-
-
-\seealso{
-
-   \code{\link{PortfolioClass}},
-   \code{\link{PortfolioData}},
-   \code{\link{PortfolioSpec}},
-   \code{\link{PortfolioConstraints}}.
-
-}
 
 
 \author{

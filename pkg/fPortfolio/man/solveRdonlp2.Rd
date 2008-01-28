@@ -1,10 +1,10 @@
-\name{portfolioSolver}
+\name{solveRdonlp2}
 
 
 \alias{solveRdonlp2} 
 
 
-\title{donlp2 Solver}
+\title{Rdonlp2 Solver}
 
 
 \description{

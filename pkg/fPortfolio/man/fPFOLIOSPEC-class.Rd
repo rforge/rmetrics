@@ -1,6 +1,7 @@
-\name{PortfolioSpec}
+\name{fPFOLIOSPEC-class}
 
-\alias{PortfolioSpec}
+
+\alias{fPFOLIOSPEC-class}
 
 \alias{fPFOLIOSPEC}
 \alias{fPFOLIOSPEC-class}
@@ -338,16 +339,6 @@ setTrace(spec) <- value
 
 
 %\references{}
-
-
-\seealso{
-
-   \code{portfolioData},
-   \code{portfolioConstraints},
-   \code{fPORTFOLIO},
-   \code{portfolioPlots}.
-
-}
 
 
 \author{

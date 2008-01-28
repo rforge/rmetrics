@@ -120,14 +120,16 @@ weightsSlider <-
         mtext("Target Return", side = 2, line = 2, cex = 0.7)
         points(fPoint[1], fPoint[2], col = con$runningPoint.col, pch = 19,
             cex = con$runningPoint.cex)
-        .tangencyPlot(object, col = con$tangency.col, pch = con$tangency.pch)
-        .singleAssetPlot(object, col = con$singleAsset.col,
+        tangencyLines(object, col = con$tangency.col, pch = con$tangency.pch)
+        tangencyPoints(object, col = con$tangency.col)
+        singleAssetPoints(object, col = con$singleAsset.col,
             cex = con$singleAsset.cex, pch = con$singleAsset.pch)
-        .minvariancePlot(object, col = con$minvariance.col,
+        minvariancePoints(object, col = con$minvariance.col,
             cex = con$minvariancePlot.cex, pch = con$minvariance.pch)
         Title = paste(
             "Return =", signif(fPoint[2], 2), "|", 
             "Risk = ", signif(fPoint[1], 2))
+        # Add Legend:
         .addlegend(object = object, control = con)
         title(main = Title)
         grid()

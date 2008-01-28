@@ -127,7 +127,7 @@ rdonlp2Control(iterma = 4000, nstep = 20,fnscale = 1, report = FALSE,
 
 \seealso{
   
-    \code{\link{rdonlp2}}
+    \code{rdonlp2}
     
 }
 

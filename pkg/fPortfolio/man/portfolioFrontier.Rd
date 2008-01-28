@@ -83,17 +83,6 @@ portfolioFrontier(data, spec = portfolioSpec(), constraints = "LongOnly",
 %\references{}
 
 
-\seealso{
-
-   \code{portfolioData},
-   \code{portfolioSpec},
-   \code{portfolioConstraints},
-   \code{feasiblePortfolio},
-   \code{efficientFrontier}.
-
-}
-
-
 \author{
 
     Diethelm Wuertz and Oliver Greshake for the Rmetrics port.

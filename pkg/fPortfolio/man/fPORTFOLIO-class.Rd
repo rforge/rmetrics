@@ -1,7 +1,7 @@
-\name{PortfolioClass}
+\name{fPORTFOLIO-class}
 
 
-\alias{PortfolioClass}
+\alias{fPORTFOLIO-class}
 
 \alias{fPORTFOLIO}
 \alias{fPORTFOLIO-class}
@@ -307,16 +307,6 @@ show.fPORTFOLIO(object)
 
 
 %\references{}
-
-
-\seealso{
-
-   \code{portfolioData},
-   \code{portfolioSpec},
-   \code{portfolioConstraints},
-   \code{portfolioPlots}.
-
-}
 
 
 \author{

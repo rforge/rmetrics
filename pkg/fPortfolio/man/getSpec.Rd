@@ -1,7 +1,7 @@
-\name{PortfolioSpecExtractors}
+\name{getSpec}
 
 
-\alias{PortfolioSpecExtractors}
+\alias{getSpec}
 
 
 \alias{getModel.fPFOLIOSPEC}
@@ -18,7 +18,6 @@
 \alias{getRiskFreeRate.fPFOLIOSPEC}    
 \alias{getNFrontierPoints.fPFOLIOSPEC} 
 \alias{getStatus.fPFOLIOSPEC}
-
 
 \alias{getOptim.fPFOLIOSPEC}
 \alias{getSolver.fPFOLIOSPEC}         

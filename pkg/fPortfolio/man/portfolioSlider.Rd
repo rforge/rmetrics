@@ -1,6 +1,6 @@
-\name{PortfolioSlider}
+\name{portfolioSlider}
 
-\alias{PortfolioSlider}
+\alias{portfolioSlider}
 
 \alias{weightsSlider}     
 \alias{frontierSlider}
@@ -256,17 +256,6 @@ weightsSlider(object, control = list(), \dots)
 }
 
 %\references{}
-
-
-\seealso{
-
-   \code{portfolioClass},
-   \code{portfolioData},
-   \code{portfolioSpec},
-   \code{portfolioConstraints},
-   \code{portfolioPlots}.
-
-}
 
 
 \author{

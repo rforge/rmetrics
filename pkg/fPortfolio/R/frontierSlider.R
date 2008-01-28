@@ -163,14 +163,17 @@ frontierSlider <-
         }   
         
         if (.Add[4] == 1) {
-            .minvariancePlot(object = object, 
+            minvariancePoints(object = object, 
                 col = con$minvariance.col, 
                 cex = con$minvariance.cex, 
                 pch = con$minvariance.pch)
         } 
         
         if (.Add[5] == 1) {
-            .tangencyPlot(object = object, 
+            tangencyLines(object = object, 
+                col = con$tangency.col, 
+                cex = con$tangency.cex)
+            tangencyPoints(object = object, 
                 col = con$tangency.col, 
                 cex = con$tangency.cex,
                 pch = con$tangency.pch)
@@ -178,14 +181,17 @@ frontierSlider <-
             
         if (.Add[6] == 1) {
             object@spec$spec@portfolio$riskFreeRate = riskFreeRate
-            .cmlPlot(object, 
+            cmlLines(object, 
+                col = con$cml.col, 
+                cex = con$cml.cex)
+            cmlPoints(object, 
                 col = con$cml.col, 
                 cex = con$cml.cex, 
                 pch = con$cml.pch)
         }
         
         if (.Add[7] == 1) {
-            .sharpeRatioPlot(object = object, 
+            sharpeRatioLines(object = object, 
                 type = "l", 
                 col = con$sharpeRatio.col, 
                 cex = con$sharpeRatio.cex, 
@@ -193,27 +199,31 @@ frontierSlider <-
         }
            
         if (.Add[8] == 1) {
-            .equalWeightsPlot(object = object, 
+            equalWeightsPoints(object = object, 
                 col = con$equalWeights.col, 
                 cex = con$equalWeights.cex, 
                 pch = con$equalWeights.pch)
         }
         
         if (.Add[9] == 1) {
-            .singleAssetPlot(object = object, 
+            singleAssetPoints(object = object, 
                 col = con$singleAsset.col, 
                 cex = con$singleAsset.cex, 
                 pch = con$singleAsset.pch)
         }
         
         if (.Add[10] == 1) {
-            .twoAssetsPlot(object = object, 
+            twoAssetsLines(object = object, 
                 col = con$twoAssets.col) 
+            singleAssetPoints(object = object, 
+                col = con$singleAsset.col, 
+                cex = con$singleAsset.cex, 
+                pch = con$singleAsset.pch)
         }
         
         
         if (.Add[11] == 1) {
-            .monteCarloPlot(object = object, 
+            monteCarloPoints(object = object, 
                 col = con$monteCarlo.col, 
                 cex = con$monteCarlo.cex, 
                 mcSteps = mcSteps) 

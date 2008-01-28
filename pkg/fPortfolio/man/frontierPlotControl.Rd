@@ -1,5 +1,6 @@
 \name{frontierPlotControl}
 
+
 \alias{frontierPlotControl}
 
 
@@ -82,16 +83,6 @@ frontierPlotControl(
 
 
 %\references{}
-
-
-\seealso{
-
-   \code{\link{PortfolioData}},
-   \code{\link{PortfolioSpec}},
-   \code{\link{PortfolioConstraints}},
-   \code{\link{fPORTFOLIO}}.
-
-}
 
 
 \author{

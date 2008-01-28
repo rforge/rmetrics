@@ -1,5 +1,7 @@
-\name{donlp2}
+\name{Rdonlp2}
 
+
+\alias{Rdonlp2}
 
 \alias{donlp2}
 \alias{rdonlp2}
@@ -273,7 +275,7 @@ rdonlp2(par, fn,
 
 \references{
   
-    \url{http://plato.la.asu.edu/donlp2.html}(original DONLP2), 
+    \url{http://plato.la.asu.edu/donlp2.html}(original DONLP2),\cr
     \url{http://arumat.net/Rdonlp2/}(Rdonlp2)
     
 }

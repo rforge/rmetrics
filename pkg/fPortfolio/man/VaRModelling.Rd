@@ -1,5 +1,6 @@
 \name{VaRModelling}
 
+
 \alias{VaRModelling}
 
 \alias{pfolioVaR}

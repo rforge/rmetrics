@@ -131,7 +131,7 @@ getPortfolio.fPORTFOLIO <- function(object) object@portfolio
 ################################################################################
 
 
-getFrontier.fPORTFOLIO <-
+getFrontier <-
     function(object, frontier = c("both", "lower", "upper"))
 {   
     # A function implemented by Rmetrics

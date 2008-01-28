@@ -110,17 +110,6 @@ feasiblePortfolio(data, spec = portfolioSpec(), constraints = "LongOnly")
 %\references{}
 
 
-\seealso{
-
-   \code{portfolioData},
-   \code{portfolioSpec},
-   \code{portfolioConstraints},
-   \code{efficientPortfolio},
-   \code{frontierPortfolio}.
-
-}
-
-
 \author{
 
     Diethelm Wuertz and Oliver Greshake for the Rmetrics port.

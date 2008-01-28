@@ -1,6 +1,6 @@
-\name{DrawdownStatistics}
+\name{maxdd}
 
-\alias{DrawdownStatistics}
+\alias{maxdd}
 
 \alias{dmaxdd}
 \alias{pmaxdd}

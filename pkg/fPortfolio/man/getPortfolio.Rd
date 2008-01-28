@@ -1,5 +1,6 @@
 \name{getPortfolio}
 
+
 \alias{getData.fPORTFOLIO}
 \alias{getSeries.fPORTFOLIO}
 \alias{getNAssets.fPORTFOLIO}
@@ -32,7 +33,6 @@
 \alias{getNFrontierPoints.fPORTFOLIO}
 \alias{getStatus.fPORTFOLIO}
 
-\alias{getFrontier.fPORTFOLIO}
 \alias{getCovRiskBudgets.fPORTFOLIO}
 \alias{getTailRiskBudgets.fPORTFOLIO}
 
@@ -69,7 +69,6 @@
     \code{getRiskFreeRate} \tab Extracts ..., \cr
     \code{getNFrontierPoints} \tab Extracts ..., \cr
     \code{getStatus} \tab Extracts ..., \cr
-    \code{getFrontier} \tab Extracts ..., \cr
     \code{getCovRiskBudgets} \tab Extracts ..., \cr
     \code{getTailRiskBudgets} \tab Extracts ... . }
     
@@ -109,8 +108,6 @@
 \method{getNFrontierPoints}{fPORTFOLIO}(object)
 \method{getStatus}{fPORTFOLIO}(object)
 
-\method{getFrontier}{fPORTFOLIO}(object, frontier = c("both", "lower", "upper"), 
-    doplot = FALSE, \dots)
 \method{getCovRiskBudgets}{fPORTFOLIO}(object)
 \method{getTailRiskBudgets}{fPORTFOLIO}(object)
 }
@@ -119,12 +116,6 @@
 
 \arguments{
 
-    \item{doplot}{
-        [getPortfolio, getFrontier, getWeights] - \cr
-        a logical value, determining whether the extracted data should be plotted,
-        by default\cr
-        FALSE.
-        }
     \item{frontier}{
         [getFrontier] - \cr
         a character string, determining which part of the frontier should be

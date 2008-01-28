@@ -34,7 +34,6 @@
 #  getCovRiskBudgets
 #  getData
 #  getEstimator
-#  getFrontier
 #  getMean
 #  getMu
 #  getNAssets 
@@ -111,17 +110,6 @@ function(object)
 {   # A function implemented by Rmetrics
 
     UseMethod("getEstimator")
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-getFrontier =
-function(object, ...)
-{   # A function implemented by Rmetrics
-
-    UseMethod("getFrontier")
 }
 
 

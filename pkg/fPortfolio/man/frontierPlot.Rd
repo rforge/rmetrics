@@ -3,6 +3,18 @@
 
 \alias{frontierPlot}
 
+\alias{minvariancePoints}
+\alias{cmlPoints}
+\alias{cmlLines}
+\alias{tangencyPoints}
+\alias{tangencyLines}
+\alias{equalWeightsPoints}
+\alias{singleAssetPoints}
+\alias{twoAssetsLines}
+\alias{sharpeRatioLines}
+
+\alias{monteCarloPoints}
+
 
 \title{Efficient Frontier Plot}
 
@@ -17,7 +29,7 @@
    
     \code{frontierPlot} \tab Plots efficient frontier, \cr
     \code{minvariancePoints} \tab Adds minimum variance point, \cr
-    \code{cmlPPoints} \tab Adds market portfolio, \cr
+    \code{cmlPoints} \tab Adds market portfolio, \cr
     \code{cmlLines} \tab  Adds capital market Line, \cr
     \code{tangencyPoints} \tab Adds tangency portfolio point, \cr
     \code{tangencyLines} \tab Adds tangency line, \cr
@@ -33,10 +45,9 @@
 \usage{
 frontierPlot(object, frontier = c("both", "lower", "upper"),
     col = c("black", "grey"), add = FALSE, \dots)
-    
-frontierPlot(object, \dots)
+
 minvariancePoints(object, \dots)
-cmlPPoints(object, \dots)
+cmlPoints(object, \dots)
 cmlLines(object, \dots)
 tangencyPoints(object, \dots)
 tangencyLines(object, \dots)
@@ -100,16 +111,6 @@ monteCarloPoints(object, mcSteps = 5000, \dots)
 
 
 %\references{}
-
-
-\seealso{
-
-   \code{portfolioData},
-   \code{portfolioSpec},
-   \code{portfolioConstraints},
-   \code{fPORTFOLIO}.
-
-}
 
 
 \author{

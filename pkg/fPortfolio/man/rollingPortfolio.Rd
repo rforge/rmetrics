@@ -1,6 +1,7 @@
-\name{RollingPortfolio}
+\name{rollingPortfolio}
 
-\alias{RollingPortfolio}
+
+\alias{rollingPortfolio}
 
 \alias{rollingWindows}
 
@@ -155,16 +156,6 @@ rollingPortfolioFrontier(data, spec, constraints, from, to, action = NULL,
 
 
 %\references{}
-
-
-\seealso{
-
-   \code{portfolioData},
-   \code{portfolioSpec},
-   \code{portfolioConstraints},
-   \code{fPORTFOLIO}.
-
-}
 
 
 \author{

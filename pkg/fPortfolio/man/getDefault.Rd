@@ -1,6 +1,6 @@
-\name{Extractors}
+\name{getDefault}
 
-\alias{Extractors}
+\alias{getDefault}
 
 
 \alias{getConstraints}

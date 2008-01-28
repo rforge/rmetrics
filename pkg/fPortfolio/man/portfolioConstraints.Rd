@@ -1,7 +1,5 @@
-\name{PortfolioConstraints}
+\name{portfolioConstraints}
 
-
-\alias{PortfolioConstraints}
 
 \alias{portfolioConstraints}
 
@@ -136,16 +134,6 @@ portfolioConstraints(data, spec = portfolioSpec(), constraints = "LongOnly")
 
 
 %\references{}
-
-
-\seealso{
-
-   \code{portfolioData},
-   \code{portfolioSpec},
-   \code{portfolioConstraints},
-   \code{fPORTFOLIO}.
-
-}
 
 
 \author{

@@ -1,6 +1,6 @@
-\name{PortfolioDataSets}
+\name{dataSets}
 
-\alias{PortfolioDataSets}
+\alias{dataSets}
 
 \alias{vanIndices}
 

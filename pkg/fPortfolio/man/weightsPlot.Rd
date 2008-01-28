@@ -1,4 +1,5 @@
-\name{PortfolioPlots}
+\name{weightsPlot}
+
 
 \alias{weightsPlot}
 \alias{attributesPlot}
@@ -39,11 +40,6 @@ weightsPlot(object, col = NULL, legend = TRUE)
 attributesPlot(object, col = NULL, legend = TRUE)
 covRiskBudgetsPlot(object, col = NULL, legend = TRUE)
 tailRiskBudgetsPlot(object, col = NULL, legend = TRUE)
-
-weightsPie(object, pos = NULL, col = NULL, box = TRUE, legend = TRUE)
-attributesPie(object, pos = NULL, col = NULL, box = TRUE, legend = TRUE)
-covRiskBudgetsPie(object, pos = NULL, col = NULL, box = TRUE, legend = TRUE)
-tailRiskBudgetsPie(object, pos = NULL, col = NULL, box = TRUE, legend = TRUE)
 }
 
 
@@ -125,16 +121,6 @@ tailRiskBudgetsPie(object, pos = NULL, col = NULL, box = TRUE, legend = TRUE)
 
 
 %\references{}
-
-
-\seealso{
-
-   \code{portfolioData},
-   \code{portfolioSpec},
-   \code{portfolioConstraints},
-   \code{fPORTFOLIO}.
-
-}
 
 
 \author{

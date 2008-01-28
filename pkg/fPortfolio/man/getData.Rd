@@ -1,6 +1,7 @@
-\name{PortfolioDataExtractors}
+\name{getData}
 
-\alias{PortfolioDataExtractors}
+
+\alias{getData}
 
 \alias{getData.fPFOLIODATA}
 \alias{getSeries.fPFOLIODATA}

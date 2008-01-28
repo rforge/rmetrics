@@ -31,7 +31,7 @@
 # FUNCTION:                    EFFICIENT FRONTIER PLOT AND ADDONS:  
 #  frontierPlot                 Plots efficient frontier
 #   minvariancePoints             Adds minimum variance point
-#   cmlPPoints                    Adds market portfolio 
+#   cmlPoints                     Adds market portfolio 
 #   cmlLines                      Adds capital market Line
 #   tangencyPoints                Adds tangency portfolio point 
 #   tangencyLines                 Adds tangency line

@@ -35,11 +35,6 @@
 \usage{
 frontierPlot(object, frontier = c("both", "lower", "upper"),
     col = c("black", "grey"), add = FALSE, \dots)
-    
-weightsPlot(object, col = NULL, legend = TRUE)
-attributesPlot(object, col = NULL, legend = TRUE)
-covRiskBudgetsPlot(object, col = NULL, legend = TRUE)
-tailRiskBudgetsPlot(object, col = NULL, legend = TRUE)
 
 weightsPie(object, pos = NULL, col = NULL, box = TRUE, legend = TRUE)
 attributesPie(object, pos = NULL, col = NULL, box = TRUE, legend = TRUE)
@@ -126,16 +121,6 @@ tailRiskBudgetsPie(object, pos = NULL, col = NULL, box = TRUE, legend = TRUE)
 
 
 %\references{}
-
-
-\seealso{
-
-   \code{portfolioData},
-   \code{portfolioSpec},
-   \code{portfolioConstraints},
-   \code{fPORTFOLIO}.
-
-}
 
 
 \author{
