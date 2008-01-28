@@ -1,21 +1,12 @@
 \name{PortfolioPlots}
 
-\alias{PortfolioPlots}
-
-\alias{frontierPlot}
-
 \alias{weightsPlot}
 \alias{attributesPlot}
 \alias{covRiskBudgetsPlot}
 \alias{tailRiskBudgetsPlot}
 
-\alias{weightsPie}
-\alias{attributesPie}
-\alias{covRiskBudgetsPie}
-\alias{tailRiskBudgetsPie}
 
-
-\title{Portfolio Plots}
+\title{Portfolio Weights Plots}
 
 
 \description{
@@ -138,10 +129,10 @@ tailRiskBudgetsPie(object, pos = NULL, col = NULL, box = TRUE, legend = TRUE)
 
 \seealso{
 
-   \code{\link{PortfolioData}},
-   \code{\link{PortfolioSpec}},
-   \code{\link{PortfolioConstraints}},
-   \code{\link{fPORTFOLIO}}.
+   \code{portfolioData},
+   \code{portfolioSpec},
+   \code{portfolioConstraints},
+   \code{fPORTFOLIO}.
 
 }
 

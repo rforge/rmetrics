@@ -140,10 +140,10 @@ portfolioConstraints(data, spec = portfolioSpec(), constraints = "LongOnly")
 
 \seealso{
 
-   \code{\link{PortfolioData}},
-   \code{\link{PortfolioSpec}},
-   \code{\link{fPORTFOLIO}},
-   \code{\link{PortfolioPlots}}.
+   \code{portfolioData},
+   \code{portfolioSpec},
+   \code{portfolioConstraints},
+   \code{fPORTFOLIO}.
 
 }
 

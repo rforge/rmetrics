@@ -342,10 +342,10 @@ setTrace(spec) <- value
 
 \seealso{
 
-   \code{\link{PortfolioData}},
-   \code{\link{PortfolioConstraints}},
-   \code{\link{fPORTFOLIO}},
-   \code{\link{PortfolioPlots}}.
+   \code{portfolioData},
+   \code{portfolioConstraints},
+   \code{fPORTFOLIO},
+   \code{portfolioPlots}.
 
 }
 

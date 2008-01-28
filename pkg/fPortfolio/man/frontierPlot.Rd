@@ -73,10 +73,10 @@ frontierPlot(object, frontier = c("both", "lower", "upper"),
 
 \seealso{
 
-   \code{\link{PortfolioData}},
-   \code{\link{PortfolioSpec}},
-   \code{\link{PortfolioConstraints}},
-   \code{\link{fPORTFOLIO}}.
+   \code{portfolioData},
+   \code{portfolioSpec},
+   \code{portfolioConstraints},
+   \code{fPORTFOLIO}.
 
 }
 

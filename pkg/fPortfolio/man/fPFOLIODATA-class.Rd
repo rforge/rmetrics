@@ -111,10 +111,10 @@ show.fPFOLIODATA(object)
 
 \seealso{
 
-   \code{\link{PortfolioSpec}},
-   \code{\link{PortfolioConstraints}},
-   \code{\link{fPORTFOLIO}},
-   \code{\link{PortfolioPlots}}.
+   \code{portfolioSpec},
+   \code{portfolioConstraints},
+   \code{fPORTFOLIO},
+   \code{PortfolioPlots}.
 
 }
 

@@ -159,10 +159,10 @@ rollingPortfolioFrontier(data, spec, constraints, from, to, action = NULL,
 
 \seealso{
 
-   \code{\link{PortfolioClass}},
-   \code{\link{PortfolioData}},
-   \code{\link{PortfolioSpec}},
-   \code{\link{PortfolioConstraints}}.
+   \code{portfolioData},
+   \code{portfolioSpec},
+   \code{portfolioConstraints},
+   \code{fPORTFOLIO}.
 
 }
 

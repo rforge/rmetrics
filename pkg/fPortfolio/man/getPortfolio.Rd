@@ -1,7 +1,5 @@
 \name{getPortfolio}
 
-\alias{getPortfolio}
-
 \alias{getData.fPORTFOLIO}
 \alias{getSeries.fPORTFOLIO}
 \alias{getNAssets.fPORTFOLIO}
