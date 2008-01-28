@@ -61,12 +61,12 @@ plot.fPORTFOLIO <-
     # xLimAssets = c(
     #    min(sqrtSig), 
     #    max(sqrtSig))+ c(-0.4*diff(range(sqrtSig)), 0.1*diff(range(sqrtSig)))
-    xRange = range(getFrontier(x)[, 1])    
+    xRange = range(frontierPoints(x)[, 1])    
     xDiff = diff(xRange)   
     xLimAssets = c(xRange[1] - 2.5*xDiff/10, xRange[2] + xDiff/10)
       
     # ... second take care that the whole frontier appears on the plot:
-    fullFrontier = getFrontier(x)
+    fullFrontier = frontierPoints(x)
     xLimFrontier = range(fullFrontier[, 1])
     xLim = range(c(xLimAssets, xLimFrontier))
 
@@ -245,7 +245,7 @@ plot.fPORTFOLIO <-
     con = attr(x, "control")
     
     # Lines:
-    lines(getFrontier(object = x), col = "grey")
+    lines(frontierPoints(object = x), col = "grey")
     twoAssetsLines(object = x, col = con$twoAssets.col) 
     
     # Points:

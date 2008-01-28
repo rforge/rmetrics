@@ -68,7 +68,6 @@
 #   getNFrontierPoints           Extracts number of frontier points
 #   getStatus                    Extracts status
 # FUNCTION:                     GENERAL EXTRACTORS:
-#  getFrontier                   Extracts frontier line
 #  getCovRiskBudgets             Extracts covariance risk budgets
 #  getTailRiskBudgets            Extracts tail risk budgets
 ################################################################################
@@ -127,61 +126,7 @@ getPortfolio.fPORTFOLIO <- function(object) object@portfolio
  getStatus.fPORTFOLIO <- function(object) object@portfolio$status
 
 
-
 ################################################################################
-
-
-getFrontier <-
-    function(object, frontier = c("both", "lower", "upper"))
-{   
-    # A function implemented by Rmetrics
-
-    # Description:
-    #   Extracts the efficient frontier from a 'fPORTFOLO' object
-    
-    # Arguments:
-    #   object - an object of S4 class fPORTFOLIO as returned by the
-    #       functions *Portfolio().
-    
-    # FUNCTION:
-    
-    # Settings:
-    frontier = match.arg(frontier)
-    
-    # Get Efficient Frontier:
-    Type = getType(object)
-    targetRisk = getTargetRisk(object)[ ,"cov"] 
-    targetReturn = getTargetReturn(object)[ , "mean"]
-   
-    # Whole Frontier
-    ans = cbind(Risk = targetRisk, Return = targetReturn)
-
-    # Extract upper part of frontier
-    if(frontier == "upper"){
-        index = 1:length(ans[, 1])
-        test = c(-1, diff(ans[, 1]))
-        index = index[test > 0]
-        ans = ans[index, ]
-    } else if(frontier == "lower"){
-        index = 1:length(ans[, 1])
-        test = c(-1, diff(ans[, 1]))
-        index = index[test < 0]
-        if (length(index) == 1) {
-            ans = matrix(ans[index, ], ncol = 2)
-        } else {
-            ans = ans[index, ]
-        }         
-    }
-    
-    # Add colnames:
-    colnames(ans) = c("targetRisk", "targetReturn")
-    
-    # Return Value:
-    ans  
-}
-
-
-# ------------------------------------------------------------------------------
 
 
 .getCovRiskBudgets.fPORTFOLIO = 

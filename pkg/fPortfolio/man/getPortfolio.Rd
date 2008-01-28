@@ -120,11 +120,6 @@
         an object of class \code{fPORTFOLIO}, containing slots call, data,
         specification, constraints, portfolio, title, description.
         }
-    \item{\dots}{
-        [getPortfolio, getFrontier, getWeights] - \cr
-        optional arguments to be passed.\cr
-        }
-
 }
 
 
@@ -136,7 +131,7 @@
 
 
 \examples{
-## 
+## ---
 }
 
 

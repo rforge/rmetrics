@@ -67,9 +67,9 @@ frontierPlot <-
     frontier = match.arg(frontier)
     
     # Frontier:
-    fullFrontier = getFrontier(object, frontier = "both")
-    upperFrontier = getFrontier(object, frontier = "upper")
-    lowerFrontier = getFrontier(object, frontier = "lower")
+    fullFrontier = frontierPoints(object, frontier = "both")
+    upperFrontier = frontierPoints(object, frontier = "upper")
+    lowerFrontier = frontierPoints(object, frontier = "lower")
        
     # Check for 'xlim' Argument:
     Arg <- match.call(expand.dots = TRUE)
@@ -203,7 +203,7 @@ minvariancePoints <-
     
     # Add Minimum Variance Point:
     mvPortfolio = minvariancePortfolio(Data, Spec, Constraints)
-    assets = getFrontier(mvPortfolio)
+    assets = frontierPoints(mvPortfolio)
     points(assets, ...)
     
     # Return Value:
@@ -232,7 +232,7 @@ cmlPoints <-
 
     # Add Capital Market Line Tangency Point:
     cmlPortfolio = cmlPortfolio(Data, Spec, Constraints)
-    assets = getFrontier(cmlPortfolio)
+    assets = frontierPoints(cmlPortfolio)
     points(assets, ...)
     
     # Return Value:
@@ -293,7 +293,7 @@ tangencyPoints <-
     tgPortfolio = tangencyPortfolio(Data, Spec, Constraints)
     
     # Add Tangency Point:
-    points(getFrontier(tgPortfolio), ...)
+    points(frontierPoints(tgPortfolio), ...)
     
     # Return Value:
     invisible()
@@ -356,9 +356,9 @@ equalWeightsPoints =
     # Add Equal Weights Portfolio:
     ewPortfolio = feasiblePortfolio(Data, Spec, Constraints)
     if (Type == "MV") {
-        assets = getFrontier(ewPortfolio) 
+        assets = frontierPoints(ewPortfolio) 
     } else if (Type == "CVaR") {
-        assets = getFrontier(ewPortfolio) * c(-1, 1)
+        assets = frontierPoints(ewPortfolio) * c(-1, 1)
     }
     points(assets, ...)
     
@@ -434,7 +434,7 @@ twoAssetsLines <-
             Data2 = Data[, index]
             # Zero-One Constraints2 ?
             ans = portfolioFrontier(data = Data2, spec = Spec)
-            lines(getFrontier(ans), ...)
+            lines(frontierPoints(ans), ...)
         }
     }
    

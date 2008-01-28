@@ -63,7 +63,7 @@ frontierSlider <-
          c(-0.4*diff(range(sqrtSig)), 0.1*diff(range(sqrtSig)))
 
     # ... second take care that the whole frontier appears on the plot:
-    fullFrontier = getFrontier(object)
+    fullFrontier = frontierPoints(object)
     xLimFrontier = range(fullFrontier[, 1])
     xLim = range(c(xLimAssets, xLimFrontier))
     xLim[1] = xLim[1]-diff(xLim)/5
@@ -140,7 +140,7 @@ frontierSlider <-
         # Plots and Addons:
         frontierPlot(object = object, pch = 19, 
             xlim = con$xlim, ylim = con$ylim)
-        ef = getFrontier(object)
+        ef = frontierPoints(object)
         points(ef[N, 1], ef[N, 2], col = "red", pch = 19, cex = 1.5)
         
         

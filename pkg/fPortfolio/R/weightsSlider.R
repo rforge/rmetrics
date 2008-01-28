@@ -65,7 +65,7 @@ weightsSlider <-
          c(-0.4*diff(range(sqrtSig)), 0.1*diff(range(sqrtSig)))
     
     # ... second take care that the whole frontier appears on the plot:
-    fullFrontier = getFrontier(object)
+    fullFrontier = frontierPoints(object)
     xLimFrontier = range(fullFrontier[, 1])
     xLim = range(c(xLimAssets, xLimFrontier))
     xLim[1] = xLim[1]-diff(xLim)/5
@@ -112,7 +112,7 @@ weightsSlider <-
         abline(v = N, col = "black")
 
         # Plot 3 - Frontier Plot:
-        frontier = getFrontier(object)
+        frontier = frontierPoints(object)
         fPoint = frontier[N, ]
         frontierPlot(object, xlim = con$xlim, ylim = con$ylim,
             xlab = "", ylab = "")

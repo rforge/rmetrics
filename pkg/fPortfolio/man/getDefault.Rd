@@ -8,7 +8,6 @@
 \alias{getCovRiskBudgets}
 \alias{getData}
 \alias{getEstimator}
-\alias{getFrontier}
 \alias{getMean}
 \alias{getMu}
 \alias{getNames}
@@ -56,7 +55,6 @@ getCov(object)
 getCovRiskBudgets(object)
 getData(object)
 getEstimator(object)
-getFrontier(object, \dots)
 getMean(object)
 getMu(object)
 getNames(object)
@@ -91,7 +89,6 @@ getWeights(object)
         \code{fPORTFOLIO}.
         }
     \item{\dots}{
-        [getPortfolio, getFrontier, getWeights] - \cr
         optional arguments to be passed.\cr
         }
 

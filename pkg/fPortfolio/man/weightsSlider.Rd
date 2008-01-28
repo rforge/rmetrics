@@ -1,38 +1,21 @@
-\name{fPORTFOLIO-class}
+\name{weightsSlider}
 
 
-\alias{fPORTFOLIO}
-\alias{fPORTFOLIO-class}
-
-\alias{show.fPORTFOLIO}
-\alias{show,fPORTFOLIO-method}
-   
-\alias{plot.fPORTFOLIO}
-\alias{summary.fPORTFOLIO}
+\alias{weightsSlider}     
 
 
-\title{Portfolio Class}
+\title{Portfolio Weights Slider}
 
 
 \description{
   
-    A collection and description of functions 
-    allowing to gain information about optimal 
-    portfolios. Generally, optimization is done 
-    via three arguments, data, specification of 
-    the portfolio, and constraints, while function
-    portfolioFrontier has two additional 
-    arguments for title and description. 
+    Interactive portfolio weights plot.
     
 }
     
 
-\usage{
-show.fPORTFOLIO(object)
-
-\method{plot}{fPORTFOLIO}(x, which = "ask", control = list(), \dots)
-
-\method{summary}{fPORTFOLIO}(object, \dots)
+\usage{     
+weightsSlider(object, control = list(), \dots)
 }
 
 
@@ -43,17 +26,10 @@ show.fPORTFOLIO(object)
         a list, defining the plotting parameters. The list modifies amongst
         others the color, e.g. \code{minvariance.col}, type of point, e.g.
         \code{tangency.pch}, or the dimension of the point, e.g. \code{cml.cex},
-        see Notes for a complete list of control parameters.
+         see Notes for a complete list of control parameters.
         }
-    \item{which}{
-        which of the plots should be displayed? \code{which} can be either a 
-        character string, \code{"all"} (displays all plots) or \code{"ask"} 
-        (interactively asks which one to display), or a vector of integer
-        values displaying the corresponding plot. Default value is 
-        \code{"ask"}.
-        }
-    \item{object, x}{
-        an S4 object of class \code{fPORTFOLIO}.
+    \item{object}{
+         an S4 object of class \code{fPORTFOLIO}.
         }
     \item{\dots}{
         optional arguments to be passed.\cr
@@ -63,66 +39,25 @@ show.fPORTFOLIO(object)
 
 
 \details{
-
-    \bold{Portfolio Class:}
-    \cr\cr
+  
+    The slider has illustrative objectives. The function expects an S4 
+    object of class \code{fPORTFOLIO}.
     
-    This S4 class contains all information about the portfolio. Basically 
-    these are risk measure, mean and covariance estimation, target return, 
-    risk free rate, number of frontier points, ranges for calculation, see 
-    the "Value" section  for a detailed description of the slots. 
+    The weights slider gives an overview of the weights 
+    on the efficient frontier. Three weight plots \code{weightsPlot}, 
+    \code{piePlot} and the not stacked weights and a frontier plot with the
+    single assets, the tangency portfolio and a legend are provided. In the 
+    two weights plots the vertical line indicates the current portfolio and a 
+    dotted one indicates the minimum variance portfolio. The number in the 
+    pie plot stands for the asset and the sign shows whether this asset is 
+    short or long. In all plots colors represent the same asset.
 
 }
 
 
 \value{
     
-    \code{portfolioFrontier()}\cr
-    returns an S4 object of class \code{"fPORTFOLIO"}, with the following 
-    slots:
-
-    \item{@call}{
-        a call, returning the matched function call.
-        }
-    \item{@data}{
-        a list with two named elements, \code{series} holding the time series
-        data if available, otherwise NA, and \code{statistics}, itself a
-        named list with two named elements \code{mu} and \code{Sigma}
-        holding the vector of means and the matrix of covariances.
-        }  
-    \item{@description}{
-        a character string, allowing for a brief project description.
-        }        
-    \item{@portfolio}{
-        a list, containing parameter specifications for the portfolio:\cr 
-        \code{weights} a numeric vector specifying the portfolio 
-            weights,\cr
-        \code{targetReturn} a numeric value specifying the target 
-            return,\cr
-        \code{targetRisk} a numeric value specifying the target 
-            risk,\cr  
-        \code{targetMean} a numeric value specifying the target 
-            return determinated with function mean(),\cr
-        \code{targetStdev} a numeric value specifying the target risk in 
-            standart deviation as risk measure.
-        }
-    \item{@specification}{
-        a list with one named element \code{spec} which represents an object 
-        of class \code{fPFOLIOSPEC}, including all information about
-        the portfolio specifications, see \code{PortfolioSpec}
-        for further details.
-        }
-    \item{@title}{
-        a title string.
-        }
-    
-    \code{feasiblePortfolio}\cr
-    \code{cmlPortfolio}\cr
-    \code{tangencyPortfolio}\cr
-    \code{minvariancePortfolio}\cr
-    \code{efficientPortfolio}\cr
-    return an S4 object of class \code{fPORTFOLIO} having information only 
-    about one portfolio.
+    Creates interactive plots.
     
 }
 
@@ -294,10 +229,8 @@ show.fPORTFOLIO(object)
         Default setting is maximum of frontier range or single assets 
         portfolios. 
         } 
-    } % end describe  
-                   
+    }                 
 }
-
 
 %\references{}
 
@@ -310,7 +243,33 @@ show.fPORTFOLIO(object)
 
 
 \examples{
-## ---
+## minvariancePortfolio -
+   # Load Data and Convert to timeSeries Object:
+   Data = as.timeSeries(data(smallcap.ts))
+   Data = Data[, c("BKE", "GG", "GYMB", "KRON")]
+   Data
+   # Set Default Specifications:
+   Spec = portfolioSpec()
+   Spec
+   # Allow for unlimited Short Selling:
+   Constraints = "Short"
+   # Compute Short Selling Minimum Variance Portfolio
+   minvariancePortfolio(Data, Spec, Constraints)
+    
+## portfolioFrontier -
+   # Modify Constraints - Now Long Only Constraints:
+   Constraint = c("minW[1:nAssets]=0")
+   # Calculation of the Efficient Frontier
+   frontier = portfolioFrontier(Data, Spec, Constraint)
+   print(frontier)
+    
+## frontierSlider -
+   # Try Frontier Slider:
+   # frontierSlider(frontier)
+
+## weightsSlider -
+   # Try Weights Slider:
+   # weightsSlider(frontier)
 }
 
 

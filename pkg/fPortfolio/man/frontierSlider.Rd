@@ -1,32 +1,21 @@
-\name{portfolioSlider}
+\name{frontierSlider}
 
-\alias{portfolioSlider}
-
-\alias{weightsSlider}     
+  
 \alias{frontierSlider}
 
 
-\title{Portfolio Slider}
+\title{Portfoliuo Frontier Slider}
 
 
 \description{
   
-    Pop ups interactive plots onportfolio
-    weights and the portfolio frontier.
-    \cr
-    
-    The functions are:
-    
-    \tabular{ll}{           
-    \code{frontierSlider} \tab starts the efficient frontier Slider, \cr
-    \code{weightsSlider} \tab starts the weights slider. }
+    Interactive portfolio frontier plot.
     
 }
     
 
 \usage{     
 frontierSlider(object, control = list(), \dots)
-weightsSlider(object, control = list(), \dots)
 }
 
 
@@ -51,10 +40,10 @@ weightsSlider(object, control = list(), \dots)
 
 \details{
   
-    The sliders have illustrative objectives. The functions expect an S4 object
-    of class fPortfolio.\cr
+    The slider has illustrative objectives. The function expects an S4 
+    object of class \code{fPORTFOLIO}.
     
-    \code{frontierSlider}: With the frontier slider it is possible to slide 
+    With the frontier slider it is possible to slide 
     over the efficient frontier. Risk and return of the current portfolio is 
     plotted in the title. The frontier slider has several addable plot features 
     listed in the following. Little pies at the current portfolio showing the 
@@ -63,17 +52,7 @@ weightsSlider(object, control = list(), \dots)
     capital market line (risk free rate is slidable), Sharpe ratio plot, equal 
     weights portfolio, single asset portfolios, two assets short selling 
     efficient frontier, Monte Carlo portfolios (number is sliderable in a 
-    range from 0  to 25000).
-    \cr    
-    
-    \code{weightsSlider}: The weights slider gives an overview of the weights 
-    on the efficient frontier. Three weight plots \code{weightsPlot}, 
-    \code{piePlot} and the not stacked weights and a frontier plot with the
-    single assets, the tangency portfolio and a legend are provided. In the 
-    two weights plots the vertical line indicates the current portfolio and a 
-    dotted one indicates the minimum variance portfolio. The number in the 
-    pie plot stands for the asset and the sign shows whether this asset is 
-    short or long. In all plots colors represent the same asset.
+    range from 0  to 25000)
 
 }
 

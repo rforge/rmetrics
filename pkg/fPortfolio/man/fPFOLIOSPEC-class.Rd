@@ -46,84 +46,23 @@ show.fPFOLIOSPEC(object)
 
 \arguments{
 
-    \item{estimator}{
-        [setEstimator] - \cr
-        a character string vector, determining which type of estimator 
-        should be used calculating the mean vector and the covariance 
-        matrix. By default \code{"covEstimator"} which uses the standard
-        mean and covariance estimators, i.e. calling the functions mean() 
-        and cov(). Alternatives include among others robust and shrinkage
-        estimators.
-        }
+
     \item{model}{
-        [portfolioSpec] - \cr
         a list, containing different arguments: type, estimator, params.
         See these arguments for further explanation.
         }
-    \item{nFrontierPoints}{
-        [setNFrontierPoints] - \cr
-        a numeric, determining the number of equidistant steps on the frontier,
-        by default 50.
-        }
     \item{object}{
-        [show] - \cr
-        an S4 object of class \code{fPFOLIOSPEC}, having slots call, model,
-        portfolio, title, description. See \code{value} for slot description.
-        }
-    \item{params}{
-        [setParams] - \cr
-        a list of optional model parameters, currently not used.
+        an S4 object of class \code{fPFOLIOSPEC}.
         }
     \item{portfolio}{
-        [portfolioSpec] - \cr
         a list, containing different arguments: weights, targetReturn,
         riskFreeRate, nFrontierPoints. See these
         arguments for further explanation.
-        }
-    \item{riskFreeRate}{
-        [setRiskFreeRate] - \cr
-        a integer value, determining the percentage of the yearly return for a
-        risk free asset.
         }
     \item{optim}{
         a list with two entries, a character string \code{solver} denoting 
         the type of the solver to be used, and a logical flag, \code{trace}
         denoting if the optimization should be traced.
-        }
-    \item{spec}{
-        an S4 object of class \code{fPFOLIOSPEC}, the specification to be 
-        modified, by default the default of the function \code{portfolioSpec()}.
-        }
-    \item{tailRisk}{
-        a list with two matrices for the upper and lower tail dependence
-        coefficients.
-        }
-    \item{targetAlpha}{
-        [setTargetAlpha] - \cr
-        a numerical value, setting the desired portfolio CVaR alpha.
-        }
-    \item{targetReturn}{
-        [setTargetReturn] - \cr
-        a numerical value, setting the desired portfolio return,
-        by default return of the tangency portfolio.
-        }
-    \item{targetRisk}{
-        [setTargetRisk] - \cr
-        a numerical value, setting the desired portfolio risk,
-        only for the dual portfolio calculation.
-        }
-    \item{type}{
-        [setType] - \cr
-        a character string, determining which risk measure should be taken,
-        by default \code{"MV"} meaning mean-variance. 
-        Other types are conditional value-at-risk \code{"CVaR"}, 
-        and lower parttial moments \code{"LPM"}.
-        }
-    \item{weights}{
-        [setWeights] - \cr
-        a numerical vector, containing the weights of the desired optimal 
-        portfolio. Note that the program stops if desired return and weights 
-        are set.
         }
 
 }       
