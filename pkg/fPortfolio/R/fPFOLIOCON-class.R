@@ -28,56 +28,17 @@
 
 
 ################################################################################
-# FUNCTION:                     PORTFOLIO DATA CLASS:
-#  'fPFOLIODATA'                 S4 Portfolio Data Class
-#  show.fPFOLIODATA              Print method for 'fPFOLIODATA' objects
+# FUNCTION:                     PORTFOLIO CLASS:
+#  'fPORTFOLIO'                  S4 Portfolio Class
 ################################################################################
 
 
-setClass("fPFOLIODATA", 
+setClass("fPFOLIOCON", 
     representation(
-        data = "list",
-        statistics = "list",
-        tailRisk = "list")  
+        stringConstraints = "caharacter",
+        boxgroupConstraints = "matrix",
+        riskbudgetConstraints = "matrix")  
 )
-
-
-# ------------------------------------------------------------------------------
-
-
-show.fPFOLIODATA <- 
-    function(object)
-{   
-    # A function implemented by Rmetrics
-
-    # Description:
-    #   S4 Print Method for an object of class "fPFOLIODATA"
-    
-    # Arguments:
-    #   object - an object of class "fPFOLIOSPEC"
-    
-    # FUNCTION:
-    
-    # Series:
-    cat("\nSeries Data:\n\n")
-    print(object@data$series)
-    
-    # Statistics:
-    cat("\nStatistics:\n\n")
-    print(object@statistics)
-    
-    # Tailrisk:
-    # NYI
-        
-    # Return Value: 
-    invisible(object)
-}
-
-
-# ------------------------------------------------------------------------------
-
-
-setMethod("show", "fPFOLIODATA", show.fPFOLIODATA)
 
 
 ################################################################################

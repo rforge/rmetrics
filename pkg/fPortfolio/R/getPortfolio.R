@@ -49,7 +49,7 @@
 #  *getWeights                    Extracts weights from a portfolio object
 #  *getTargetReturn               Extracts target return from specification
 #  *getTargetRisk                 Extracts target riks from specification
-#  *getTargetAlpha                Extracts target VaR-alpha specification
+#  *getAlpha                Extracts target VaR-alpha specification
 #  *getRiskFreeRate               Extracts risk free rate from specification 
 #  *getNFrontierPoints            Extracts number of frontier points 
 #  *getStatus                     Extracts portfolio status information
@@ -63,7 +63,7 @@
 #   getWeights                   Extracts weights
 #   getTargetReturn              Extracts target return
 #   getTargetRisk                Extracts target return
-#   getTargetAlpha               Extracts significance level alpha
+#   getAlpha               Extracts significance level alpha
 #   getRiskFreeRate              Extracts risk free rate
 #   getNFrontierPoints           Extracts number of frontier points
 #   getStatus                    Extracts status
@@ -98,7 +98,7 @@ getSpec.fPORTFOLIO <- function(object) object@spec$spec
   getWeights.fPORTFOLIO <- function(object) getWeights(getSpec(object))
   getTargetReturn.fPORTFOLIO <- function(object) getTargetReturn(getSpec(object))
   getTargetRisk.fPORTFOLIO <- function(object) getTargetRisk(getSpec(object))
-  getTargetAlpha.fPORTFOLIO <- function(object) getTargetAlpha(getSpec(object))
+  getAlpha.fPORTFOLIO <- function(object) getAlpha(getSpec(object))
   getRiskFreeRate.fPORTFOLIO <- function(object) getRiskFreeRate(getSpec(object))
   getNFrontierPoints.fPORTFOLIO <- function(object) get(getSpec(object))
   getStatus.fPORTFOLIO <-  function(object) get(getSpec(object))
@@ -120,7 +120,7 @@ getPortfolio.fPORTFOLIO <- function(object) object@portfolio
  getWeights.fPORTFOLIO <- function(object) object@portfolio$weights
  getTargetReturn.fPORTFOLIO <- function(object) object@portfolio$targetReturn
  getTargetRisk.fPORTFOLIO <- function(object) object@portfolio$targetRisk
- getTargetAlpha.fPORTFOLIO <- function(object) object@portfolio$targetAlpha
+ getAlpha.fPORTFOLIO <- function(object) object@portfolio$targetAlpha
  getRiskFreeRate.fPORTFOLIO <- function(object) object@spec$riskFreeRate
  getNFrontierPoints.fPORTFOLIO <- function(object) object@portfolio$nFrontierPoints
  getStatus.fPORTFOLIO <- function(object) object@portfolio$status

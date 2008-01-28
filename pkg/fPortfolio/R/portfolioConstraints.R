@@ -45,10 +45,7 @@ portfolioConstraints <-
 
     # Description:
     #   Checks Consistency of Constraints Strings
-    
-    # Example:
-    
-    
+
     # Arguments
     #   data - 
     #   spec - 
@@ -64,15 +61,27 @@ portfolioConstraints <-
         "minB", "maxB")         # Covariance Risk Budgets
                                 # ... Tail Risk Budgets
     
-    # Check Strings:
+    # Check Constraints Strings:
     usedStrings = unique(sort(sub("\\[.*", "", constraints)))
     checkStrings = usedStrings %in% validStrings
     check = (sum(!checkStrings) == 0)
     if (check) check = "valid"
-    attr(constraints, "control") = check
+    stringConstraints = constraints
+    attr(stringConstraints, "control") = check
+    
+    # Set BoxGroup Constraints
+    boxgroupConstraints = 
+        .setConstraints(data, spec, constraints, type = "BoxGroup")
+        
+    # Set RiskBudget Constraints
+    riskbudgetConstraints = 
+        .setConstraints(data, spec, constraints, type = "RiskBudget")
     
     # Return Value:
-    constraints
+    new("fPFOLIOCON",
+        stringConstraints = stringConstraints,
+        boxgroupConstraints = boxgroupConstraints,
+        riskbudgetConstraints = riskbudgetConstraints)
 }
 
 
@@ -80,7 +89,7 @@ portfolioConstraints <-
 
 
 .setConstraints <- 
-    function(data, spec = portfolioSpec(), constraints = NULL,
+    function(data, spec = portfolioSpec(), constraints = "LongOnly",
     type = c("BoxGroup", "RiskBudget"))
 {   
     # A function implemented by Rmetrics
@@ -124,7 +133,7 @@ portfolioConstraints <-
 
 
 .setBoxGroupConstraints <- 
-    function(data, spec = portfolioSpec(), constraints = NULL)
+    function(data, spec = portfolioSpec(), constraints = "LongOnly")
 {   
     # A function implemented by Rmetrics
 
@@ -215,7 +224,7 @@ portfolioConstraints <-
 
 
 .setRiskBudgetsConstraints <- 
-    function(data, spec = NULL, constraints = NULL)
+    function(data, spec = NULL, constraints = "LongOnly")
 {   
     # A function implemented by Rmetrics
 

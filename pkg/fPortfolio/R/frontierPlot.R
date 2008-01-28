@@ -389,7 +389,7 @@ singleAssetPoints <-
     } else if (Type == "CVaR") {
         nAssets = getNAssets(object)
         Data = getSeries(object)
-        alpha = getTargetAlpha(object)
+        alpha = getAlpha(object)
         Risk = NULL
         for (i in 1:nAssets) Risk = c(Risk, -.cvarRisk(Data[ ,i], 1, alpha))    
     }
@@ -550,7 +550,7 @@ monteCarloPoints <-
     } else if (Type == "CVaR") {
         # Monte Carlo Loop - Long Only:
         x = getSeries(object)  
-        alpha = getTargetAlpha(object)
+        alpha = getAlpha(object)
         for (k in 1:mcSteps) {  
             weights = abs(rcauchy(N))        
             weights = weights / sum(weights)

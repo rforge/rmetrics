@@ -5,13 +5,13 @@
 \alias{getType.fPFOLIOSPEC}         
 \alias{getEstimator.fPFOLIOSPEC} 
 \alias{getTailRisk.fPFOLIOSPEC}      
-\alias{getParams.fPFOLIOSPEC}       
+\alias{getParams.fPFOLIOSPEC} 
+\alias{getAlpha.fPFOLIOSPEC}       
  
 \alias{getPortfolio.fPFOLIOSPEC}        
 \alias{getWeights.fPFOLIOSPEC}         
 \alias{getTargetReturn.fPFOLIOSPEC}    
-\alias{getTargetRisk.fPFOLIOSPEC}   
-\alias{getTargetAlpha.fPFOLIOSPEC}     
+\alias{getTargetRisk.fPFOLIOSPEC}       
 \alias{getRiskFreeRate.fPFOLIOSPEC}    
 \alias{getNFrontierPoints.fPFOLIOSPEC} 
 \alias{getStatus.fPFOLIOSPEC}
@@ -41,7 +41,7 @@
     \code{getWeights} \tab Extracts weights from a portfolio object, \cr
     \code{getTargetReturn} \tab Extracts target return from specification, \cr
     \code{getTargetRisk} \tab Extracts target riks from specification, \cr
-    \code{getTargetAlpha} \tab Extracts target VaR-alpha specification, \cr
+    \code{getAlpha} \tab Extracts target VaR-alpha specification, \cr
     \code{getRiskFreeRate} \tab Extracts risk free rate from specification, \cr
     \code{getNFrontierPoints} \tab Extracts number of frontier points, \cr 
     \code{getStatus} \tab Extracts the status of optimization, \cr 
@@ -62,7 +62,7 @@
 \method{getWeights}{fPFOLIOSPEC}(object)
 \method{getTargetReturn}{fPFOLIOSPEC}(object)
 \method{getTargetRisk}{fPFOLIOSPEC}(object)
-\method{getTargetAlpha}{fPFOLIOSPEC}(object)
+\method{getAlpha}{fPFOLIOSPEC}(object)
 \method{getRiskFreeRate}{fPFOLIOSPEC}(object)
 \method{getNFrontierPoints}{fPFOLIOSPEC}(object)
 \method{getStatus}{fPFOLIOSPEC}(object)

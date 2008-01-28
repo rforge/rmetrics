@@ -62,7 +62,7 @@ rdonlp2 <-
     
     # FUNCTION:
     
-    # use analytical gradients?
+    # Use analytical gradients?
     if (is.function(attr(fn, "gr")) &
         all(lapply(nlin, function(e)is.function(attr(e,"gr"))))){
         control["analyt"] = TRUE
@@ -70,12 +70,12 @@ rdonlp2 <-
         control["analyt"] = FALSE
     }
   
-    # check parameter and its box constraints
+    # Check parameter and its box constraints:
     if (length(par) != length(par.upper) | length(par) != length(par.lower) ){
         stop("# of elements for box constraints != # of parameters")
     }
 
-    # check linear constraints matrix A
+    # Check linear constraints matrix A:
     if (is.null(A)){
         num.lin <- 0
         conmat <- c()
@@ -89,11 +89,11 @@ rdonlp2 <-
         conmat <- t(A)
     }
   
-    # nonlinear constraints
+    # Nonlinear constraints:
     num.nlin <- length(nlin)
     if (length(nlin.upper)!=num.nlin | length(nlin.lower)!=num.nlin)
     stop("# of bounds for nonlinear constraints should be equal to length(nlin)")
-    # concatenate bounds for internal use
+    # Concatenate bounds for internal use:
     lbd <- c(par.lower, lin.lower, nlin.lower)
     ubd <- c(par.upper, lin.upper, nlin.upper)
     

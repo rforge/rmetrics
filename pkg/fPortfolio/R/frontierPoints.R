@@ -34,7 +34,8 @@
 
 
 frontierPoints <-
-    function(object, frontier = c("both", "lower", "upper"))
+    function(object, frontier = c("both", "lower", "upper"), 
+        return = "mean", risk = "cov")
 {   
     # A function implemented by Rmetrics
 
@@ -52,8 +53,8 @@ frontierPoints <-
     
     # Get Efficient Frontier:
     Type = getType(object)
-    targetRisk = getTargetRisk(object)[ ,"cov"] 
-    targetReturn = getTargetReturn(object)[ , "mean"]
+    targetRisk = getTargetRisk(object)[, risk] 
+    targetReturn = getTargetReturn(object)[, return]
    
     # Whole Frontier
     ans = cbind(Risk = targetRisk, Return = targetReturn)

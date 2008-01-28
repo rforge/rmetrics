@@ -86,7 +86,7 @@ solveRlpSolve <-
     stopifnot(is.numeric(targetReturn))
     
     # Get quantile measure alpha:
-    targetAlpha = spec@portfolio$targetAlpha
+    targetAlpha = getAlpha(spec)
     
     # Scenarios:
     Data = getSeries(data)

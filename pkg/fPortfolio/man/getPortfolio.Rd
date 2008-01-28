@@ -28,7 +28,7 @@
 \alias{getWeights.fPORTFOLIO}
 \alias{getTargetReturn.fPORTFOLIO}
 \alias{getTargetRisk.fPORTFOLIO}
-\alias{getTargetAlpha.fPORTFOLIO}
+\alias{getAlpha.fPORTFOLIO}
 \alias{getRiskFreeRate.fPORTFOLIO}
 \alias{getNFrontierPoints.fPORTFOLIO}
 \alias{getStatus.fPORTFOLIO}
@@ -65,7 +65,7 @@
     \code{getWeights} \tab Extracts ..., \cr
     \code{getTargetReturn} \tab Extracts ..., \cr
     \code{getTargetRisk} \tab Extracts ..., \cr
-    \code{getTargetAlpha} \tab Extracts ..., \cr
+    \code{getAlpha} \tab Extracts ..., \cr
     \code{getRiskFreeRate} \tab Extracts ..., \cr
     \code{getNFrontierPoints} \tab Extracts ..., \cr
     \code{getStatus} \tab Extracts ..., \cr
@@ -103,7 +103,7 @@
 \method{getWeights}{fPORTFOLIO}(object)
 \method{getTargetReturn}{fPORTFOLIO}(object)
 \method{getTargetRisk}{fPORTFOLIO}(object)
-\method{getTargetAlpha}{fPORTFOLIO}(object)
+\method{getAlpha}{fPORTFOLIO}(object)
 \method{getRiskFreeRate}{fPORTFOLIO}(object)
 \method{getNFrontierPoints}{fPORTFOLIO}(object)
 \method{getStatus}{fPORTFOLIO}(object)

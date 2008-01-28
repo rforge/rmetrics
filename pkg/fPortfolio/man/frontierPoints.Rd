@@ -16,7 +16,8 @@
     
 
 \usage{
-frontierPoints(object, frontier = c("both", "lower", "upper"))
+frontierPoints(object, frontier = c("both", "lower", "upper"), 
+    return = "mean", risk = "cov")
 }
 
 
@@ -29,6 +30,10 @@ frontierPoints(object, frontier = c("both", "lower", "upper"))
     \item{frontier}{
         a character string denoting which part of the
         efficient portfolio should be extractacted.
+        }
+    \item{return, risk}{
+        character strings denoting which return and risk 
+        has to be plotted.
         }
 
 }

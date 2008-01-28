@@ -34,12 +34,12 @@
 #   getEstimator                  Extract type of covariance estimator
 #   getTailRisk                   Extract list of tail dependency risk matrixes
 #   getParams                     Extract parameters from specification
+#   getAlpha                      Extracts target VaR-alpha specification
 # FUNCTION:                     PORTFOLIO S4 EXTRACTORS FROM SPECIFICATION:
 #  getPortfolio                  Extract portfolio slot
 #   getWeights                    Extracts weights from a portfolio object
 #   getTargetReturn               Extracts target return from specification
 #   getTargetRisk                 Extracts target riks from specification
-#   getTargetAlpha                Extracts target VaR-alpha specification
 #   getRiskFreeRate               Extracts risk free rate from specification 
 #   getNFrontierPoints            Extracts number of frontier points 
 #   getStatus                     Extracts portfolio status information
@@ -87,7 +87,7 @@ getPortfolio.fPFOLIOSPEC <- function(object) object@model
   getWeights.fPFOLIOSPEC <- function(object) object@portfolio$weights
   getTargetReturn.fPFOLIOSPEC <- function(object) object@portfolio$targetReturn
   getTargetRisk.fPFOLIOSPEC <- function(object) object@portfolio$targetRisk
-  getTargetAlpha.fPFOLIOSPEC <- function(object) object@portfolio$targetAlpha
+  getAlpha.fPFOLIOSPEC <- function(object) object@model$params$alpha
   getRiskFreeRate.fPFOLIOSPEC <- function(object) object@portfolio$riskFreeRate
   getNFrontierPoints.fPFOLIOSPEC <- function(object) object@portfolio$nFrontierPoints
   getStatus.fPFOLIOSPEC <-  function(object) object@portfolio$status

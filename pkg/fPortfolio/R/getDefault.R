@@ -49,10 +49,10 @@
 #  getSpec
 #  getStatistics
 #  getStatus
-#  getTargetAlpha
+#  getAlpha
 #  getTailRisk
 #  getTailRiskBudgets
-#  getTargetAlpha
+#  getAlpha
 #  getTargetReturn
 #  getTargetRisk
 #  getTrace
@@ -303,11 +303,11 @@ function(object)
 # ------------------------------------------------------------------------------
 
 
-getTargetAlpha =
+getAlpha =
 function(object)
 {   # A function implemented by Rmetrics
 
-    UseMethod("getTargetAlpha")
+    UseMethod("getAlpha")
 }
 
 

@@ -23,7 +23,7 @@
 \alias{getSpec}
 \alias{getStatistics}
 \alias{getStatus}
-\alias{getTargetAlpha}
+\alias{getAlpha}
 \alias{getTailRisk}
 \alias{getTailRiskBudgets} 
 \alias{getTargetReturn}
@@ -70,7 +70,7 @@ getSolver(object)
 getSpec(object)
 getStatistics(object)
 getStatus(object)
-getTargetAlpha(object)
+getAlpha(object)
 getTailRisk(object)
 getTailRiskBudgets(object) 
 getTargetReturn(object)

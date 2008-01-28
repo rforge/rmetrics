@@ -58,9 +58,7 @@
     
     # Type ?
     spec@model$type = value
-    if (value == "LPM") spec@model$estimator = c("lpm", "lpm")
-    if (value == "CVaR") setSolver(spec) <- "lpSolve"
-    if (is.null(spec@portfolio$targetAlpha)) setTargetAlpha(spec) = 0.05
+    if (value == "CVaR") setSolver(spec) <- "solveRlpSolve"
     
     # Return Value:
     spec
@@ -187,7 +185,7 @@
 # ------------------------------------------------------------------------------
 
 
-"setTargetAlpha<-" <-
+"setAlpha<-" <-
     function(spec, value)
 {   
     # A function implemented by Rmetrics
@@ -198,7 +196,7 @@
     # FUNCTION:
  
     # Estimator ?
-    spec@portfolio$targetAlpha = value 
+    spec@model$params$alpha = value 
     
     # Return Value:
     spec
@@ -324,7 +322,7 @@
     # FUNCTION:
       
     # Set Solver:
-    spec@solver$solver = value
+    spec@optim$solver = value
     
     # Return Value:
     spec

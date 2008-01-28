@@ -17,7 +17,6 @@
   
     Creates a fPFOLIODATA object with data set and 
     statistical measures.
-    \cr
       
 }
     

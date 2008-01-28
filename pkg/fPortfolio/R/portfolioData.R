@@ -28,56 +28,59 @@
 
 
 ################################################################################
-# FUNCTION:                     PORTFOLIO DATA CLASS:
-#  'fPFOLIODATA'                 S4 Portfolio Data Class
-#  show.fPFOLIODATA              Print method for 'fPFOLIODATA' objects
+# FUNCTION:                     DESCRIPTION:
+#  portfolioData                 Creates portfolio data list
 ################################################################################
 
 
-setClass("fPFOLIODATA", 
-    representation(
-        data = "list",
-        statistics = "list",
-        tailRisk = "list")  
-)
-
-
-# ------------------------------------------------------------------------------
-
-
-show.fPFOLIODATA <- 
-    function(object)
+portfolioData <- 
+    function(data, spec = portfolioSpec())
 {   
     # A function implemented by Rmetrics
 
     # Description:
-    #   S4 Print Method for an object of class "fPFOLIODATA"
+    #   Creates portfolio data list
     
     # Arguments:
-    #   object - an object of class "fPFOLIOSPEC"
+    #   data - a multivariate 'timeSeries' object
+    #   spec -  a portfolio specification structure, from which
+    #       the mean and covariance type of estimator will be extracted
     
     # FUNCTION:
     
-    # Series:
-    cat("\nSeries Data:\n\n")
-    print(object@data$series)
+    # Check and Sort Data: 
+    stopifnot(class(data) == "timeSeries") 
     
-    # Statistics:
-    cat("\nStatistics:\n\n")
-    print(object@statistics)
-    
-    # Tailrisk:
-    # NYI
+    # Data:
+    data = sort(data)
+    nAssets = NCOL(data)
+    names = colnames(data)
+    if(is.null(names)) names = paste("A", 1:nAssets, sep = "")
+    .data = list(
+        series = data,
+        nAssets = nAssets,
+        names = names)
         
-    # Return Value: 
-    invisible(object)
+    # Statistics:
+    estimator = getEstimator(spec)
+    estimatorFun = match.fun(estimator)
+    muSigma = estimatorFun(data, spec)
+    .statistics = list(
+        mean = colMeans(data), 
+        Cov = cov(data),
+        estimator = estimator,
+        mu = muSigma$mu, 
+        Sigma = muSigma$Sigma)
+  
+    # Tail Risk:
+    .tailRisk = spec@model$tailRisk
+        
+    # Return Value:
+    new("fPFOLIODATA", 
+        data = .data,
+        statistics = .statistics,
+        tailRisk = .tailRisk)  
 }
-
-
-# ------------------------------------------------------------------------------
-
-
-setMethod("show", "fPFOLIODATA", show.fPFOLIODATA)
 
 
 ################################################################################

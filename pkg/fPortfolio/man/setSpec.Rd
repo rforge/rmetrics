@@ -7,11 +7,11 @@
 \alias{setEstimator<-}
 \alias{setTailRisk<-}
 \alias{setParams<-}
+\alias{setAlpha<-}
 
 \alias{setWeights<-}
 \alias{setTargetReturn<-}
 \alias{setTargetRisk<-}
-\alias{setTargetAlpha<-}
 \alias{setRiskFreeRate<-}
 \alias{setNFrontierPoints<-}
 \alias{setStatus<-}
@@ -54,11 +54,11 @@ setType(spec) <- value
 setEstimator(spec) <- value
 setTailRisk(spec) <- value
 setParams(spec) <- value
+setAlpha(spec) <- value
 
 setWeights(spec) <- value
 setTargetReturn(spec) <- value
 setTargetRisk(spec) <- value
-setTargetAlpha(spec) <- value
 setRiskFreeRate(spec) <- value
 setNFrontierPoints(spec) <- value
 setStatus(spec) <- value

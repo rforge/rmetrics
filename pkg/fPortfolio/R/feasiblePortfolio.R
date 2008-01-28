@@ -52,7 +52,10 @@ feasiblePortfolio <-
     if (!inherits(data, "fPFOLIODATA")) data = portfolioData(data, spec)
     
     # Get Weights:
-    stopifnot(!is.null(getWeights(spec)))
+    if(is.null(getWeights(spec))) {
+        nAssets = getNAssets(data)
+        setWeights(spec) = rep(1/nAssets, times = nAssets)
+    }
     weights = as.vector(getWeights(spec))
     names(weights) = colnames(data@data$series)
     
@@ -64,7 +67,7 @@ feasiblePortfolio <-
     cov = sqrt((weights %*% Cov %*% weights)[[1]])
     
     # Compute VaR:
-    alpha = spec@portfolio$targetAlpha
+    alpha = getAlpha(spec)
     returns = as.matrix(data@data$series) %*% weights
     VaR = quantile(returns, alpha, type = 1)
     
