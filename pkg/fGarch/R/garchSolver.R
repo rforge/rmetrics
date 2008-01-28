@@ -211,7 +211,6 @@
 
     # Control:
     INDEX = .params$index
-    if (trace) IPRNT = .params$contorl$IPRNT else IPRNT = 0
     IPAR = c(
         MIT = .params$control$MIT,
                     # maximum number of iterations (200)
@@ -280,7 +279,7 @@
                     MDIST = as.integer(MDIST),
                     IPAR = as.integer(IPAR),
                     RPAR = as.double(RPAR),
-                    IPRNT = as.integer(IPRNT),
+                    IPRNT = as.integer(trace),
                     MYPAR = as.integer(MYPAR),
                     F = as.double(FALSE),
                     PACKAGE = "fGarch")

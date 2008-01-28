@@ -60,8 +60,12 @@ C     WHICH TYPE OF BOUNDS?
                  
 C     FIND SOLUTION:
       CALL PSQPN(NF, 1, 0, X, IX, XL, XU, CF, IC, CL, CU,
-     >     IPAR, RPAR, F, GMAX, CMAX,-2, ITERM) 
-     
+     >     IPAR, RPAR, F, GMAX, CMAX, IPRNT, ITERM) 
+
+      CALL DBLEPR("LLH final Value:", -1, F, 1)
+      call DBLEPR("With X:", -1, X, NF)
+
+
       RETURN
       END   
       
